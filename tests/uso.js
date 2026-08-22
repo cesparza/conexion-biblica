@@ -6,9 +6,17 @@ const js=html.match(/<script>([\s\S]*)<\/script>/)[1];
 
 let store={};
 const nodo=()=>({classList:{add(){},remove(){},toggle(){}},value:'',textContent:'',innerHTML:'',style:{},outerHTML:''});
+/* El stub imita lo mínimo del navegador que usa la app. querySelectorAll
+   devuelve un arreglo de verdad porque el código indexa el resultado
+   (los botones del nav), no solo lo recorre. */
 const stub=`
 let localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>{store[k]=v},removeItem:k=>{delete store[k]}};
-let document={querySelectorAll:()=>({forEach(){}}),getElementById:()=>nodo(),querySelector:()=>nodo()};
+let document={
+  body:nodo(),
+  querySelectorAll:()=>[nodo(),nodo(),nodo(),nodo(),nodo()],
+  getElementById:()=>nodo(),
+  querySelector:()=>nodo(),
+};
 let window={scrollTo(){}};
 let setInterval=()=>0, clearInterval=()=>{}, confirm=()=>true;
 `;
@@ -19,7 +27,8 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         poolDe, opcionesCuantas, segundosPara,
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
-        ponNivel:v=>{nivel=v}};`);
+        ponNivel:v=>{nivel=v},
+        DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre};`);
 const A=fn(store,nodo);
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
@@ -217,6 +226,39 @@ const malos=Object.entries(TITULOS).filter(([id,t])=>
 ok(malos.length===0,'Los subtítulos de P&R son los títulos verificados'+
   (malos.length?' — mal: '+malos.join(', '):''));
 A.ponCat('gm');A.ponAlcance('todo');A.ponCuantas(25);A.ponNivel(0);
+
+// ── Varios participantes: cada uno con su progreso ──
+A.ponCat('av'); A.ponNombre('Uno'); A.avanza('d1',100);
+A.agregaAlumno(); A.ponNombre('Dos'); A.ponCat('dm2');
+ok(A.alumnos().length===2,'Se pueden crear varios participantes');
+ok(A.S().nombre==='Dos' && A.S().cat==='dm2','Al agregar, queda activo el nuevo con su propia categoría');
+ok((A.S().prog.d1||0)===0,'El participante nuevo NO hereda el progreso del anterior');
+
+const ids=A.alumnos().map(([id])=>id);
+A.cambiaAlumno(ids[0]);
+ok(A.S().nombre==='Uno' && A.S().prog.d1===100,'Al volver al primero, su progreso sigue intacto');
+
+// Los errores de uno no aparecen en el otro
+const q0=A.bancoDe()[0];
+A.S().fq[A.claveQ(q0)]={m:2};
+const errUno=A.falladasDe().length;
+A.cambiaAlumno(ids[1]);
+ok(errUno>0 && A.falladasDe().length===0,'Los errores por repasar son de cada participante');
+A.cambiaAlumno(ids[0]);
+
+// El contenedor tolera basura y migra el formato viejo de un solo alumno
+const db1=A.normalizarDB(null);
+ok(Object.keys(db1.alumnos).length===1 && db1.activo,'normalizarDB crea un participante por defecto');
+const db2=A.normalizarDB({nombre:'Legado',cat:'gm',racha:5});
+const primero=Object.values(db2.alumnos)[0];
+ok(Object.keys(db2.alumnos).length===1 && primero.nombre==='Legado' && primero.racha===5,
+  'normalizarDB migra el formato viejo de un solo alumno');
+const db3=A.normalizarDB({activo:'zz',alumnos:{x:{nombre:'A'},y:{nombre:'B'}}});
+ok(Object.keys(db3.alumnos).length===2 && db3.alumnos[db3.activo],
+  'normalizarDB corrige un activo que no existe');
+const muchos={alumnos:{}};
+for(let i=0;i<30;i++)muchos.alumnos['k'+i]={nombre:'n'+i};
+ok(Object.keys(A.normalizarDB(muchos).alumnos).length<=12,'normalizarDB no pasa de 12 participantes');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

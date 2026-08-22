@@ -1,6 +1,32 @@
 /* ───────── estado ───────── */
-const CLAVE='conexion-biblica-v3';
-const BASE={v:3,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},acc:{}};
+/* ───────── categorías ─────────
+   Salen del reglamento del campamento: cada club presenta dos integrantes de
+   4 a 6 años (examen solo del libro de Daniel), dos de 7 a 9 (Daniel más
+   Profetas y Reyes) y dos padres o consejeros con el mismo alcance de 7 a 9.
+   «gm» no está en ese reglamento: es el alcance ampliado de Guías Mayores,
+   que es otro evento.
+     n      preguntas del examen de práctica
+     techo  nivel máximo de dificultad que se le ofrece
+     sinCompletar  el examen no trae sección de completar */
+const CATS={
+  me:{ev:'Conexión Bíblica', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
+      alcance:'Daniel 1, 2, 3 y 6'},
+  av:{ev:'Conexión Bíblica', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
+  pa:{ev:'Conexión Bíblica', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
+  gm:{ev:'Conexión Bíblica', nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
+  dm1:{ev:'Devoción Matutina', nombre:'Matutina menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 15 de octubre'},
+  dm2:{ev:'Devoción Matutina', nombre:'Matutina Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 30 de octubre'},
+};
+
+const CAT=()=>CATS[S.cat]||CATS.av;
+
+const CLAVE='conexion-biblica-v4';
+const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},acc:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -46,9 +72,80 @@ function normalizar(x){
     });
   return s;
 }
-let S;
-try{S=normalizar(JSON.parse(localStorage.getItem(CLAVE)||'null'));}catch(e){S=normalizar(null);}
-function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(S));}catch(e){}}
+/* ───────── varios participantes en un mismo aparato ─────────
+   Los dos eventos llevan niños distintos: dos de 4 a 6 y dos de 7 a 9 en
+   Conexión Bíblica, otros dos y otros dos en la Devoción Matutina, más los
+   padres. Antes la app guardaba un solo progreso, así que si dos niños la
+   usaban en el mismo celular se pisaban los errores y las tarjetas.
+
+   Ahora se guarda { activo, alumnos:{id:datos} } y `S` apunta al alumno
+   activo. Todo lo demás del código sigue leyendo `S` y no se enteró del
+   cambio. La clave subió a v4 y se migra lo que hubiera en v3. */
+const CLAVE_VIEJA='conexion-biblica-v3';
+const MAX_ALUMNOS=12;
+
+function nuevoId(){
+  /* Id corto y estable, sin depender de la hora del sistema. */
+  let n=1;
+  while(DB&&DB.alumnos&&DB.alumnos['a'+n])n++;
+  return 'a'+n;
+}
+
+function normalizarDB(x){
+  const db={v:4,activo:'',alumnos:{}};
+  if(x&&typeof x==='object'&&x.alumnos&&typeof x.alumnos==='object'){
+    for(const id of Object.keys(x.alumnos).slice(0,MAX_ALUMNOS))
+      db.alumnos[String(id).slice(0,8)]=normalizar(x.alumnos[id]);
+    if(typeof x.activo==='string'&&db.alumnos[x.activo])db.activo=x.activo;
+  }else if(x&&typeof x==='object'){
+    /* Formato viejo: un solo alumno suelto. Se convierte en el primero. */
+    db.alumnos.a1=normalizar(x);
+  }
+  if(!Object.keys(db.alumnos).length)db.alumnos.a1=normalizar(null);
+  if(!db.activo)db.activo=Object.keys(db.alumnos)[0];
+  return db;
+}
+
+let DB, S;
+try{
+  const guardado=JSON.parse(localStorage.getItem(CLAVE)||'null');
+  const legado=guardado?null:JSON.parse(localStorage.getItem(CLAVE_VIEJA)||'null');
+  DB=normalizarDB(guardado||legado);
+}catch(e){DB=normalizarDB(null);}
+S=DB.alumnos[DB.activo];
+
+function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(DB));}catch(e){}}
+
+const alumnos=()=>Object.entries(DB.alumnos);
+
+function cambiaAlumno(id){
+  if(!DB.alumnos[id])return;
+  DB.activo=id;S=DB.alumnos[id];guardar();
+  /* Al cambiar de persona se reinicia lo que está en pantalla: el mazo de
+     tarjetas y el examen en curso son de quien estaba antes. */
+  mazo=[];tjI=0;tjFiltro='todas';alcance='todo';cuantas=0;nivel=0;
+  prueba=[];resp={};entregado=false;clearInterval(reloj);
+  marcaCat();pintaInicio();pintaCaps();
+  try{document.getElementById('detalle').style.display='none';}catch(e){}
+  ir('inicio');
+}
+
+function agregaAlumno(){
+  if(alumnos().length>=MAX_ALUMNOS)return;
+  const id=nuevoId();
+  DB.alumnos[id]=normalizar(null);
+  cambiaAlumno(id);
+  try{document.getElementById('nombre').focus();}catch(e){}
+}
+
+function borraAlumno(){
+  if(alumnos().length<=1){
+    borrarTodo();return;
+  }
+  if(!confirm('¿Borrar a '+(S.nombre||'este participante')+' con todo su progreso?'))return;
+  delete DB.alumnos[DB.activo];
+  cambiaAlumno(Object.keys(DB.alumnos)[0]);
+}
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
@@ -62,31 +159,6 @@ const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
 
-/* ───────── categorías ─────────
-   Salen del reglamento del campamento: cada club presenta dos integrantes de
-   4 a 6 años (examen solo del libro de Daniel), dos de 7 a 9 (Daniel más
-   Profetas y Reyes) y dos padres o consejeros con el mismo alcance de 7 a 9.
-   «gm» no está en ese reglamento: es el alcance ampliado de Guías Mayores,
-   que es otro evento.
-     n      preguntas del examen de práctica
-     techo  nivel máximo de dificultad que se le ofrece
-     sinCompletar  el examen no trae sección de completar */
-const CATS={
-  me:{ev:'Conexión Bíblica', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
-      alcance:'Daniel 1, 2, 3 y 6'},
-  av:{ev:'Conexión Bíblica', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  pa:{ev:'Conexión Bíblica', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  gm:{ev:'Conexión Bíblica', nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
-  dm1:{ev:'Devoción Matutina', nombre:'Matutina menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 15 de octubre'},
-  dm2:{ev:'Devoción Matutina', nombre:'Matutina Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 30 de octubre'},
-};
-
-const CAT=()=>CATS[S.cat]||CATS.av;
 /* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
    Lo único confirmado del examen del campamento es el formato de tres
    secciones (múltiple, verdadero/falso, completar), visto en un examen que
@@ -159,12 +231,28 @@ function ir(id){
   window.scrollTo({top:0});
 }
 
-function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();}
+function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();}
 function ponCat(c){
   S.cat=c;guardar();
   marcaCat();
   pintaInicio();pintaCaps();
   document.getElementById('detalle').style.display='none';
+}
+
+/* Selector de participantes. Cada uno con su nombre y su categoría, para
+   que se sepa de quién es el progreso que se está viendo. */
+function pintaAlumnos(){
+  const cont=document.getElementById('alu-sel');
+  if(!cont)return;
+  cont.innerHTML=alumnos().map(([id,al])=>{
+    const c=CATS[al.cat]||CATS.av;
+    return '<button class="alu-btn'+(DB.activo===id?' on':'')+'" onclick="cambiaAlumno(\''+id+'\')">'+
+      '<div class="an">'+esc(al.nombre||'Sin nombre')+'</div>'+
+      '<div class="ac">'+esc(c.nombre)+'</div></button>';
+  }).join('')+
+  (alumnos().length<MAX_ALUMNOS
+    ?'<button class="alu-btn nuevo" onclick="agregaAlumno()"><div class="an">+ Agregar</div>'+
+     '<div class="ac">otro participante</div></button>':'');
 }
 
 /* Selector de categoría, pintado desde los datos de CATS. */
@@ -254,6 +342,7 @@ function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();in
 
 /* ───────── inicio ───────── */
 function pintaInicio(){
+  pintaAlumnos();
   pintaHoy();
   pintaSelectorCat();
   const ni=document.getElementById('nombre');
@@ -811,9 +900,10 @@ function pintaLogros(){
 }
 
 function borrarTodo(){
-  if(!confirm('¿Seguro? Se borra tu progreso, tu racha y tus insignias de este navegador.'))return;
-  try{localStorage.removeItem(CLAVE);}catch(e){}
-  S=normalizar(null);guardar();ir('inicio');
+  if(!confirm('¿Seguro? Se borra el progreso de TODOS los participantes de este navegador.'))return;
+  try{localStorage.removeItem(CLAVE);localStorage.removeItem(CLAVE_VIEJA);}catch(e){}
+  DB=normalizarDB(null);S=DB.alumnos[DB.activo];guardar();
+  marcaCat();ir('inicio');
 }
 
 /* ───────── logo de la iglesia ───────── */

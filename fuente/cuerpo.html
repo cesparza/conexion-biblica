@@ -27,8 +27,12 @@
   </div>
 
   <div class="card">
-    <h2>👤 ¿Quién estudia?</h2>
-    <input id="nombre" class="txti" type="text" placeholder="Escribe tu nombre..." oninput="ponNombre(this.value)">
+    <h2>👥 ¿Quién estudia?</h2>
+    <div class="alu-sel" id="alu-sel"></div>
+    <input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">
+    <p class="nota">Cada participante guarda su <strong>propio progreso</strong>: sus
+    errores, sus tarjetas dominadas y sus exámenes. Toca un nombre para cambiar
+    de persona.</p>
   </div>
 
   <div class="card">
@@ -155,7 +159,10 @@
   <div class="card">
     <h2>⚙️ Datos guardados</h2>
     <p class="nota">Todo se guarda solo en este navegador. Si cambias de dispositivo, empiezas de cero.</p>
-    <button class="btn gho" style="margin-top:.7rem" onclick="borrarTodo()">🗑️ Borrar mi progreso</button>
+    <div style="margin-top:.7rem;display:flex;gap:.6rem;flex-wrap:wrap">
+      <button class="btn gho" onclick="borraAlumno()">🗑️ Borrar solo a este participante</button>
+      <button class="btn gho" onclick="borrarTodo()">🧹 Borrar a todos</button>
+    </div>
   </div>
 </div>
 

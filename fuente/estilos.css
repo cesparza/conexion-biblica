@@ -203,6 +203,15 @@ body.av .q .qt{font-size:.95rem}
 body.av .op{font-size:.9rem;min-height:50px}
 body.av .tj .cara{font-size:1.15rem}
 body.av .tj .rev{font-size:1.08rem}
+/* Selector de participantes: fichas pequeñas, porque pueden ser hasta doce
+   (dos por categoría en los dos eventos, más los padres). */
+.alu-sel{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+.alu-btn{background:#f8f9ff;border:2px solid #e5e7eb;border-radius:10px;padding:.45rem .8rem;cursor:pointer;font-family:inherit;text-align:left;min-height:44px}
+.alu-btn:hover{border-color:var(--cielo)}
+.alu-btn.on{border-color:var(--naranja);background:#fff8f0}
+.alu-btn.nuevo{border-style:dashed}
+.alu-btn .an{font-size:.85rem;font-weight:800;color:var(--azul);line-height:1.2}
+.alu-btn .ac{font-size:.68rem;color:var(--gris);margin-top:2px}
 .pil.az{background:#dbeafe;color:var(--cielo)}
 .pil.na{background:#ffedd5;color:var(--naranja)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
