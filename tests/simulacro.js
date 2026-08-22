@@ -144,12 +144,12 @@ ok(A.S().examenes.some(e=>e.modo==='compartido'),'El examen por link se registra
    que dejó el botón sin efecto la primera vez: aceptaLink() limpia recetaPend,
    así que el liberar no podía colgar de esa variable. */
 async function pruebaLibera(){
-  await A.activaDirector('daniel-director-1995');
+  await A.activaDirector('Daniel-1844');
   A.ponReceta(null);
   A.S().links[String(SEM)]={pts:null,total:15,fecha:'2026-10-09'};
   A.pintaLinkUsado(A.leeReceta(A.escribeReceta(receta)));
   A.pideClaveDir('libera');
-  A.el('dir-clave').value='daniel-director-1995';
+  A.el('dir-clave').value='Daniel-1844';
   await A.entraDirector();
   await new Promise(r=>setTimeout(r,20));
   ok(!A.S().links[String(SEM)],'El director libera un link aunque recetaPend esté vacío');
@@ -165,7 +165,7 @@ async function pruebaLibera(){
   ok(mal!==''&&A.esDirector()===false,'Una clave equivocada no abre el perfil director');
   const vacia=await A.activaDirector('');
   ok(vacia!==''&&A.esDirector()===false,'Una clave vacía no abre el perfil director');
-  const bien=await A.activaDirector('daniel-director-1995');
+  const bien=await A.activaDirector('Daniel-1844');
   ok(bien===''&&A.esDirector()===true,'La clave correcta abre el perfil director');
   ok(sesion['cb-dir']==='1','El perfil queda en sessionStorage, que se borra al cerrar la pestaña');
 
@@ -176,7 +176,20 @@ async function pruebaLibera(){
   ok(A.revelaRespuestas()===false,'Al salir, la revisión vuelve a quedar cerrada');
 
   /* El HTML no puede llevar la clave, solo su huella. */
-  ok(!html.includes('daniel-director-1995'),'La clave en texto plano NO está en el index.html');
+  /* La clave se escribe en un celular y el teclado de iOS pone mayúscula solo:
+     las tres formas tienen que entrar, o el director cree que se equivocó. */
+  A.salirDirector();
+  ok(await A.activaDirector('Daniel-1844')===''&&A.esDirector(),'Entra con la D mayúscula');
+  A.salirDirector();
+  ok(await A.activaDirector('daniel-1844')===''&&A.esDirector(),'Entra en minúsculas');
+  A.salirDirector();
+  ok(await A.activaDirector('  DANIEL-1844  ')===''&&A.esDirector(),'Entra con espacios de sobra y en mayúsculas');
+  A.salirDirector();
+  ok(await A.activaDirector('daniel1844')!==''&&!A.esDirector(),'Sin el guion NO entra: no se normaliza de más');
+  ok(await A.activaDirector('daniel-1995')!==''&&!A.esDirector(),'La clave vieja ya no sirve');
+
+  ok(!html.includes('Daniel-1844')&&!html.toLowerCase().includes('daniel-1844'),
+    'La clave en texto plano NO está en el index.html, ni en minúsculas');
   ok(/CLAVE_DIR='[0-9a-f]{64}'/.test(html),'En el HTML va un SHA-256 de 64 caracteres, no la clave');
 
   console.log('\n'+(f===0?'CANDADO DEL SIMULACRO: TODO BIEN':f+' FALLOS'));

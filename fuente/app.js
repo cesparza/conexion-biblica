@@ -150,11 +150,22 @@ function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(DB));}catch(e){
    localStorage ese celular quedaría en modo director para siempre;
    sessionStorage se borra al cerrar la pestaña.
 
+   POR QUÉ NO DISTINGUE MAYÚSCULAS
+   La clave se escribe en el celular de una niña, de pie, en medio del club, y el
+   teclado de iOS pone mayúscula en la primera letra por su cuenta. Un SHA-256
+   distinto por una D distinta se lee como «me equivoqué» cuando la clave estaba
+   bien. Se normaliza a minúsculas y sin espacios de sobra antes de comparar.
+   Lo que se pierde: nada que importe. La clave no aguanta un ataque de fuerza
+   bruta por ser larga, sino porque nadie la va a probar veinte veces a mano.
+
    LÍMITE
    crypto.subtle solo existe en contexto seguro (https). Abriendo el archivo con
    doble clic (file://) el perfil no se puede activar, y la app lo dice en vez
    de fallar en silencio. */
-const CLAVE_DIR='0a08374f97a30f2e829594d0b9e6f10c48ba974b079197c479efad2c300c9c05';
+const CLAVE_DIR='a2b7e58ccd2bcf62cd1b743833d9f8a406d435e0100fafedb755bdc5291b8228';
+
+/* La clave tal como se compara: sin espacios de sobra y en minúsculas. */
+const normClave=c=>String(c||'').trim().toLowerCase();
 
 let director=false;
 try{director=sessionStorage.getItem('cb-dir')==='1';}catch(e){}
@@ -169,7 +180,7 @@ async function activaDirector(clave){
   if(!(typeof crypto!=='undefined'&&crypto.subtle))
     return 'El perfil director necesita la app abierta desde su dirección de internet, no el archivo abierto a mano.';
   let h='';
-  try{h=await sha256(String(clave||''));}
+  try{h=await sha256(normClave(clave));}
   catch(e){return 'Este navegador no pudo verificar la clave.';}
   if(h!==CLAVE_DIR)return 'Esa clave no es la del director.';
   director=true;
