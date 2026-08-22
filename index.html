@@ -31,7 +31,10 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .hero h1{font-size:1.9rem;font-weight:900;letter-spacing:-.5px}
 .hero p{opacity:.9;margin-top:.4rem;font-size:.92rem}
 
-.cat-sel{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.cat-sel{display:block}
+.cat-grupo{font-size:.72rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin:.75rem 0 .4rem}
+.cat-grupo:first-child{margin-top:0}
+.cat-fila{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
 .cat-btn{background:#f8f9ff;border:3px solid #e5e7eb;border-radius:12px;padding:1rem .8rem;cursor:pointer;font-family:inherit;text-align:center;min-height:46px}
 .cat-btn:hover{border-color:var(--cielo)}
 .cat-btn.on{border-color:var(--naranja);background:#fff8f0}
@@ -215,7 +218,7 @@ body.av .tj .rev{font-size:1.08rem}
   .nav-b span{display:none}
   .nav-t button{padding:0 .6rem;font-size:.76rem}
   .stats{grid-template-columns:repeat(2,1fr)}
-  .cat-sel{grid-template-columns:1fr 1fr}
+  .cat-fila{grid-template-columns:1fr 1fr}
   .hero h1{font-size:1.55rem}
   .info-table{font-size:.79rem}
   .info-table td.key{white-space:normal}
@@ -522,6 +525,332 @@ const CAPS = [
    "pa",
    "gm"
   ]
+ },
+ {
+  "id": "m01",
+  "label": "1.º de octubre",
+  "sub": "El villano pirata Dienterroto",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m02",
+  "label": "2 de octubre",
+  "sub": "El héroe sabe que Dios lo levanta",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m03",
+  "label": "3 de octubre",
+  "sub": "El héroe que dio 5 kinas",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m04",
+  "label": "4 de octubre",
+  "sub": "El héroe que ayudaba a jóvenes estudiantes",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m05",
+  "label": "5 de octubre",
+  "sub": "Estás invitado a la boda",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m06",
+  "label": "6 de octubre",
+  "sub": "Nunca estás solo",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m07",
+  "label": "7 de octubre",
+  "sub": "Una joven heroína alienta a los tripulantes",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m08",
+  "label": "8 de octubre",
+  "sub": "El poder del héroe",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m09",
+  "label": "9 de octubre",
+  "sub": "El héroe narrador de historias",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m10",
+  "label": "10 de octubre",
+  "sub": "El héroe se enamora — 1.ª parte",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m11",
+  "label": "11 de octubre",
+  "sub": "El héroe se enamora — 2.ª parte",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m12",
+  "label": "12 de octubre",
+  "sub": "La pequeña gran mujer",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m13",
+  "label": "13 de octubre",
+  "sub": "«Mujer virtuosa»",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m14",
+  "label": "14 de octubre",
+  "sub": "«No me arrepiento»",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m15",
+  "label": "15 de octubre",
+  "sub": "Testigos de Jesús",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "m16",
+  "label": "16 de octubre",
+  "sub": "Héroes anónimos",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m17",
+  "label": "17 de octubre",
+  "sub": "El amigo villano",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m18",
+  "label": "18 de octubre",
+  "sub": "¿Héroes o no?",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m19",
+  "label": "19 de octubre",
+  "sub": "Di siempre dónde estás",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m20",
+  "label": "20 de octubre",
+  "sub": "El villano del baloncesto",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m21",
+  "label": "21 de octubre",
+  "sub": "Tus maestros son héroes",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m22",
+  "label": "22 de octubre",
+  "sub": "Jesús: el Maestro de los maestros",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m23",
+  "label": "23 de octubre",
+  "sub": "Héroes de ayer y de hoy",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m24",
+  "label": "24 de octubre",
+  "sub": "El villano que maltrató a un animal",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m25",
+  "label": "25 de octubre",
+  "sub": "Fernando, el niño enojado",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m26",
+  "label": "26 de octubre",
+  "sub": "La heroína que ayudó a un niño con sus palabras",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m27",
+  "label": "27 de octubre",
+  "sub": "El niño que se quedó sentado en el banquillo",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m28",
+  "label": "28 de octubre",
+  "sub": "Un héroe diferente",
+  "src": "Matutina Héroes y villanos",
+  "color": "#0F766E",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m29",
+  "label": "29 de octubre",
+  "sub": "Dios provee",
+  "src": "Matutina Héroes y villanos",
+  "color": "#7C3AED",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m30",
+  "label": "30 de octubre",
+  "sub": "Nabal, el villano necio",
+  "src": "Matutina Héroes y villanos",
+  "color": "#B45309",
+  "cats": [
+   "dm2"
+  ]
+ },
+ {
+  "id": "m31",
+  "label": "31 de octubre",
+  "sub": "La sabia Abigail",
+  "src": "Matutina · complemento del día 30",
+  "color": "#0F766E",
+  "cats": [
+   "dm2"
+  ],
+  "extra": true
  }
 ];
 
@@ -840,6 +1169,568 @@ const CONTENIDO = {
   {
    "t": "🎯 Aplicación para los jóvenes",
    "h": "<div class=\"warn-box\">Lo que Daniel decidió <strong>de joven</strong> (Daniel 1) fue lo que lo sostuvo\n    <strong>de anciano</strong> (Daniel 6). Tenía más de ochenta años en el foso.<br><br>\n    Las decisiones de hoy construyen el carácter que responderá mañana.</div>"
+  }
+ ],
+ "m01": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Cuídense ustedes de toda avaricia; porque la vida no depende del poseer muchas cosas» (Lucas 12:15)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Villano: el pirata Dienterroto</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">A Dienterroto le encantaban los tesoros y los llevaba a su isla para sentirse cada vez más rico. Oyó de una cueva con muchísimo oro. Para no dar varios viajes, decidió cargarlo todo de una vez en su barco. A mitad de camino el barco empezó a hundirse, todos se lanzaron al mar y el pirata quedó sin nada.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">La avaricia rompe el saco; aquí hundió el barco. Querer más de lo que necesitas puede hacerte perder lo que tienes. Disfruta lo que Jesús te da y compártelo.</div>"
+  }
+ ],
+ "m02": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«El Señor levanta del suelo al pobre, y saca del lugar más bajo al necesitado» (Salmo 113:7)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Un experimento con dos huevos</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Se llenan dos vasos con la misma cantidad de agua. A uno se le añaden cuatro cucharadas de sal y se remueve. Al poner un huevo en cada vaso, el del agua con sal no se hunde: se va para arriba. La sal marca la diferencia.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Dios se parece a la sal del experimento: con su amor nos levanta. Si tienes fe, podrás levantarte de los errores y de los fracasos.</div>"
+  }
+ ],
+ "m03": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Así como sabemos que Dios oye nuestras oraciones, también sabemos que ya tenemos lo que le hemos pedido» (1 Juan 5:15)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Héroe: el profesor Elisha</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Gibson, estudiante de Teología en Papúa Nueva Guinea, le debía mucho dinero a la universidad. Le dieron el teléfono de un hombre que quería ayudar a un alumno, pero no tenía saldo: la llamada costaba 5 kinas. Iba a predicar a la iglesia orando por eso, cuando el profesor Elisha lo detuvo, oró por él y le dio un billete de 5 kinas sin saber nada de su necesidad.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Así es Dios: responde tus oraciones si confías en él.</div>"
+  }
+ ],
+ "m04": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Si te mantienes puro, serás un utensilio especial para uso honorable. Tu vida será limpia, y estarás listo para que el Maestro te use en toda buena obra» (2 Timoteo 2:21 (NTV))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Héroes: el profesor Elisha y un desconocido</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Con las 5 kinas Gibson compró una tarjeta telefónica. El hombre no le contestaba, así que le envió un mensaje de texto y ahí sí obtuvo respuesta. Al otro día lo llamó para decirle que ya había hecho arreglos con la universidad: pagó los 17.000 kinas que Gibson debía de su colegiatura.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Los héroes son personas que se dejan usar por Dios para ayudar.</div>"
+  }
+ ],
+ "m05": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«[Dios] quiere que todos se salven» (1 Timoteo 2:4)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Las bodas de Papúa Nueva Guinea</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">En Occidente hay que recibir una invitación para ir a una boda, y los novios deciden a quién quieren en el banquete. En Papúa Nueva Guinea no es así: asisten todos los que quieren, se embellece un lugar muy grande, y nadie va con las manos vacías: llevan adornos, manteles, platillos y más.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">En el reino de Dios la invitación está hecha para todas las personas, pero cada uno debe decidir si la acepta.</div>"
+  }
+ ],
+ "m06": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«No temas, pues yo soy tu Dios. Yo te doy fuerzas, yo te ayudo, yo te sostengo con mi mano victoriosa» (Isaías 41:10)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Sophie y su mamá</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Sophie y su mamá viajaron a otra isla del Pacífico sur a visitar al papá y darle la noticia de la boda. De vuelta, con doce pasajeros más, la propela del motor se salió y se hundió en el mar. Divisaron la isla Lavongai a unos 20 kilómetros, pero las olas eran muy fuertes y no había señal telefónica. Pasaron cuatro noches en el mar.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">En nuestras luchas nunca estamos solos: Dios ve lo que nos pasa, nos da fuerzas y nos sostiene.</div>"
+  }
+ ],
+ "m07": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Den gracias a Dios por todo, porque esto es lo que él quiere de ustedes como creyentes en Cristo Jesús» (1 Tesalonicenses 5:18)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Heroína: Sophie</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Durante los días a la deriva oraban juntos y hacían el culto. El cuarto día, viernes, y el sábado, fue Sophie quien lo dirigió, con este mensaje: «En momentos así, debemos confiar en Dios». Ese sábado divisaron islas y llegaron a una playa tras cinco días a la deriva. La gente de Lorengau los ayudó a volver a casa. Jonah, su novio, dijo: «casi pierdo a mi novia».</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">No debería hacer falta un milagro para estar agradecidos. El héroe vive agradecido porque sabe que Jesús lo cuida.</div>"
+  }
+ ],
+ "m08": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Cuando el Espíritu Santo venga sobre ustedes, recibirán poder y saldrán a dar testimonio de mí [...] hasta en las partes más lejanas de la tierra» (Hechos 1:8)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Héroe: Unia Api</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Unia Api quería ser pastor y fue a estudiar Teología a la Universidad Adventista del Pacífico, donde entregó su corazón a Jesús. Un misionero entró al dormitorio buscando estudiantes para un proyecto en un lugar remoto y solo encontró a Unia. Le ofreció ir a Kerema por un año. Unia dijo que sí.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">El héroe no le dice no a una oportunidad de servir a Dios, aunque llegue de manera inesperada. Si no te sientes capaz, el Espíritu Santo te capacita.</div>"
+  }
+ ],
+ "m09": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Tú anuncia el mensaje de Dios en todo momento» (2 Timoteo 4:2)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Héroe: Unia</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">En Kerema, rodeado de agua y selva, Unia quedó a cargo de un grupo de creyentes y de una pequeña escuela donde enseñaba a niños de primaria. Le pidió a Jesús ideas para predicar y se le ocurrió contar historias: los viernes de tarde encendía una fogata, contaba historias de la Biblia y luego organizaba a los jóvenes para representarlas en drama. La congregación creció mucho ese año.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Dios es creativo y te da ideas para que seas un héroe de la predicación del evangelio.</div>"
+  }
+ ],
+ "m10": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Mi amada es, entre las mujeres, como una rosa entre los espinos» (Cantares 2:2)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Unia y Julie</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Al volver del año misionero, Unia llegó al comedor cuando ya no había cena. Una señorita que trabajaba allí se dio cuenta, le preparó comida y se la llevó. Después él le dijo: «Julie, yo quiero una esposa que me acompañe en el ministerio... creo que tú eres la persona que Dios tiene para mí». Ella respondió: «No puedo, tengo novio».</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Lleva todos tus deseos a Jesús en oración y espera su respuesta. No te aceleres ni tomes decisiones sin darle tiempo a que te muestre el camino.</div>"
+  }
+ ],
+ "m11": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Al hombre le toca hacer planes, y al Señor dirigir sus pasos» (Proverbios 16:9)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Unia y Julie</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Solo dos horas después de haberle dicho que no, Julie regresó a proponerle que empezaran el noviazgo: había cortado con su novio, que no era adventista. Fueron novios hasta terminar la universidad; ella se graduó de enfermera y él de pastor, y se casaron en el primer año del máster. Fueron grandes misioneros en el Pacífico sur.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">El héroe ora antes de decidir. Si Jesús dice sí, avanza; si dice no, espera. Es Jesús quien dirige tus pasos.</div>"
+  }
+ ],
+ "m12": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Sigo hacia la meta para ganar el premio que Dios me ofreció cuando me llamó por medio de Jesucristo» (Filipenses 3:14 (PDT))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Heroína: Gladys Aylward</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Gladys leyó en una revista que en China millones de personas no sabían quién es Jesús, y decidió ir a predicar. Se inscribió en una escuela de misioneros y el 15 de octubre de 1932 sacó todos sus ahorros y partió desde Londres. El tren fue detenido en Siberia por una guerra, pero ella siguió. Llegó a China veintisiete días después de salir.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Era de pequeña estatura y de enorme corazón. Pídele a Jesús una meta elevada, y valentía para alcanzarla.</div>"
+  }
+ ],
+ "m13": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Mujer virtuosa, ¿quién la hallará? Su valor sobrepasa largamente al de las piedras preciosas» (Proverbios 31:10 (RV95))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Heroína: Gladys Aylward</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Llegó a un país sin hablar el idioma y conociendo apenas a una persona. Con otra misionera, Jeannie Lawson, abrió una posada: así tenían dinero para comer y podían hablarles de Jesús a los huéspedes. Después el gobierno chino le dio trabajo ayudando a las mujeres, y lo hizo tan bien que la gente la amó y empezó a llamarla «Ai-weh-deh», que en mandarín significa «Mujer virtuosa». Adoptó más de cien niños huérfanos.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Gladys usó la creatividad. El héroe nunca se queda de brazos cruzados: siempre procura hacerse útil donde va.</div>"
+  }
+ ],
+ "m14": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Yo no busco la aprobación de los hombres, sino la aprobación de Dios» (Gálatas 1:10)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Heroína: Gladys Aylward</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">La guerra entre chinos y japoneses llegó a la aldea donde Gladys vivía con los niños que había adoptado, y tuvieron que huir a las montañas. La misión fue bombardeada y destruida. Como era muy difícil hallar comida, atravesó el río Amarillo con los niños para buscar ayuda en otra aldea, donde les abrieron las puertas. Cayó enferma y sanó por completo. No se arrepentía de haber ido a China: sentía que cada niño era una bendición.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">El héroe se goza en hacer aquello que Jesús aprueba.</div>"
+  }
+ ],
+ "m15": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Vete a tu casa, con tus parientes, y cuéntales todo lo que el Señor te ha hecho, y cómo ha tenido compasión de ti» (Marcos 5:19)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Tres personajes de la Biblia</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">El paralítico de la camilla, a quien Jesús le dijo «Levántate, toma tu camilla y vete a tu casa» (Mateo 9:6), y la gente se maravilló y glorificó a Dios. Los dos ciegos que pidieron «¡Ten compasión de nosotros!» (Mateo 9:27) y después contaron por toda la región lo que Jesús había hecho. Y el endemoniado sanado, que comenzó a contarlo por los pueblos (Marcos 5:20).</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Lo que tienen en común es que todos fueron testigos de Jesús, y gracias a su testimonio muchos se hicieron cristianos.</div>"
+  }
+ ],
+ "m16": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Sus nombres ya están escritos en el libro de la vida» (Filipenses 4:3)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Los cristianos de los primeros siglos</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Jesús nació en Belén y se crio en Nazaret, en territorio del Imperio Romano. Después de su muerte había muchos cristianos en el imperio, pero las autoridades no estaban contentas, porque se negaban a participar en costumbres paganas y a creer en muchos dioses. Fueron perseguidos durante años. A pesar del riesgo de la cárcel o la muerte, mantenían su fe: usaban discretamente símbolos como un pez o una cruz para reconocerse, y vivían de forma anónima predicando el evangelio.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">No sabemos sus nombres, pero para Dios no hay anónimos: sabe tu nombre y ama a todos los que viven por fe.</div>"
+  }
+ ],
+ "m17": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Señor, líbrame de los labios mentirosos y de la lengua embustera» (Salmo 120:2)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Villano: Axel</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Axel, de once años, se quedó solo en el aula en el recreo y buscó en la mochila de su amigo David el juego electrónico con el que jugaban. Al ganar la primera partida saltó de la emoción, el juego se le cayó y la pantalla quedó rota. Volvió a guardarlo en la mochila como si nada. Al salir, David descubrió con horror que alguien lo había roto, y Axel nunca le dijo que había sido él.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">A veces las mentiras no tienen consecuencias inmediatas porque nadie se entera, pero Jesús lo sabe. El héroe dice la verdad.</div>"
+  }
+ ],
+ "m18": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Yo soy quien te manda que tengas valor y firmeza. No tengas miedo ni te desanimes porque yo, tu Señor y Dios, estaré contigo dondequiera que vayas» (Josué 1:9)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Marcos, Ana y Lucía, Mónica y Ester</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Tres situaciones para decidir quién es valiente. A Marcos le falta un dedo y usa lentes; lo llaman «cuatro ojos, cuatro dedos», pero él es igual de amable con todos porque sabe que Jesús lo ama. Lucía no estudió y le pide a Ana que la deje copiar; Ana la deja porque Lucía es popular y no quiere caerle mal. Mónica y Ester se ponen nerviosas al hablar en público: Mónica se queda en casa diciendo que está enferma, y Ester ora y sigue adelante aunque le tiembla la voz.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Elegir lo correcto no es fácil, pero si quieres ser valiente de grande, empieza desde ahora.</div>"
+  }
+ ],
+ "m19": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Después de irme y de prepararles un lugar, vendré otra vez para llevarlos conmigo, para que ustedes estén en el mismo lugar en donde yo voy a estar» (Juan 14:3)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>El señor McMullen</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Antes de salir solo al Parque Nacional Death Valley, el señor McMullen le dejó por escrito a su esposa dónde estaría en todo momento y a qué hora regresaría, y prometió llamarla cada tarde al llegar al albergue, porque solo había señal ahí. Esa primera tarde pisó una piedra y se rompió un tobillo. No podía caminar ni tenía señal. Se arrastró hasta una sombra a esperar, seguro de que lo rescatarían: su esposa sabía todo lo que él iba a hacer. Ese conocimiento le salvó la vida.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Decirles a tus padres dónde estás es importante. Jesús también nos dijo dónde está: en el cielo, esperando el momento de volver a buscarnos.</div>"
+  }
+ ],
+ "m20": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Piensen en todo lo verdadero, en todo lo que es digno de respeto, en todo lo recto, en todo lo puro» (Filipenses 4:8)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Villano: Tim Donaghy</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Tim Donaghy era árbitro de baloncesto y parecía muy bueno, hasta que la policía descubrió que apostaba sobre quién ganaría los partidos. Se le ocurrió que, como árbitro, podía influir en el resultado pitando a favor o en contra, y entró en una conspiración para amañar partidos y ganar mucho dinero injustamente. Lo descubrieron, lo juzgaron y acabó en la cárcel.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Si uno piensa mucho en lo malo, al final le dan ganas de hacerlo, y así se convierte en villano. Por eso la Biblia dice que pensemos siempre en cosas buenas y verdaderas.</div>"
+  }
+ ],
+ "m21": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Dios mío, tú me has enseñado desde mi juventud» (Salmo 71:17)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Los maestros</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Ser maestro es una profesión, pero los maestros hacen mucho más que un trabajo: se preocupan de que estés bien, te ayudan a tener buenos modales, quieren que tengas éxito y te tratan con respeto. Además fueron ellos quienes te enseñaron a leer y a escribir, los números y las ciencias.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Los maestros son héroes. Y hubo un Maestro de los maestros: Jesús, que nos enseñó las cosas más importantes de la vida, las que llevan a la salvación.</div>"
+  }
+ ],
+ "m22": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Sentado [Jesús] entre los maestros de la ley, [...] todos los que lo oían se admiraban de su inteligencia y de sus respuestas» (Lucas 2:46-47)</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Jesús a los doce años</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Cuando tenía apenas doce años, Jesús fue con María y José al Templo de Jerusalén, donde había una escuela sagrada con los maestros más brillantes. Jesús se sentó en esa clase, escuchando y haciendo preguntas. Según El Deseado de todas las gentes (cap. 8, p. 62), «hacía ver la verdad desde un nuevo punto de vista», los doctores quedaron asombrados de sus respuestas, y repitió las palabras de la Escritura «dándoles una profundidad de significado que los sabios no habían concebido».</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Es extraño que un niño enseñe a un adulto, pero puede pasar si ese niño busca a Dios y lee la Biblia todos los días.</div>"
+  }
+ ],
+ "m23": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«¡Qué hermoso es ver al que llega por las colinas trayendo buenas noticias: noticias de paz, noticias de salvación» (Isaías 52:7 (TLA))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Los mensajeros</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Desde tiempos del Antiguo Testamento han existido personas que llevan mensajes. Hace miles de años alguien tenía que salir de su comodidad y recorrer grandes distancias para llevar un mensaje, y era especialmente peligroso en tiempos de guerra: si el otro bando sabía que llevabas un mensaje, más peligroso todavía. Hoy tenemos celulares, computadoras, correo electrónico e internet.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Tenemos medios instantáneos, pero ¿qué mensajes enviamos? Puedes ser un héroe si decides compartir el amor de Jesús con los demás.</div>"
+  }
+ ],
+ "m24": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Obedezcan al Espíritu de Dios, y así no desearán hacer lo malo. [...] Ustedes no pueden hacer lo que se les antoje» (Gálatas 5:16-17 (TLA))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Villano: Balaam</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Un rey enemigo quería pagarle a Balaam para que maldijera al pueblo de Dios. Dios le hizo saber que no debía obedecer esa orden, pero Balaam decidió ir y hacerlo a cambio de dinero. Por el camino, montado en su asna, el animal se detuvo y no avanzó más. Balaam creyó que estaba siendo testarudo y le pegó fuertemente con la vara. En realidad era el ángel de Dios el que se interponía para que el asna no avanzara.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Hay personas que pueden pedirte que hagas cosas malas. Ten claro qué piensa Dios: obedecerlo es el camino del héroe.</div>"
+  }
+ ],
+ "m25": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«El que controla su enojo es muy inteligente» (Proverbios 14:29 (NBV))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Fernando</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Fernando, un niño de diez años, jugaba un domingo de mañana cuando su mamá le dijo que se cambiara porque en media hora iban a comer con los Gutiérrez. Él protestó que quería seguir jugando y que no quería ir. Enojado, se levantó, le dio una patada al sofá y dio un portazo al entrar en su habitación. Y no era la primera vez que reaccionaba así.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Es normal que algunas cosas te enojen. Lo importante es manejar ese sentimiento: respirar hondo, orar a Jesús y hablar con tus padres.</div>"
+  }
+ ],
+ "m26": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«La angustia desalienta el corazón del hombre, pero una palabra alentadora lo anima» (Proverbios 12:25 (NBV))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Heroína: Emely</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Ermenegildo andaba siempre solo, llegaba tarde a la escuela con cara triste y no respondía cuando el profesor le preguntaba. El profesor de ciencias puso a Emely a trabajar con él. Emely, a la que le gusta sacar buenas notas, se llevó una gran sorpresa: Ermenegildo era buenísimo en ciencias y nadie lo sabía. Sacaron la mejor nota de la clase, y cuando el profesor dio las notas en voz alta, Emely se levantó y dijo delante de todos que el trabajo lo había hecho él.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">A partir de ese día Ermenegildo fue menos tímido. El héroe sabe elogiar sin sentirse menos, y usa sus palabras para animar.</div>"
+  }
+ ],
+ "m27": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«La envidia y el egoísmo no forman parte de la sabiduría que proviene de Dios» (Santiago 3:15 (NTV))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Víctor</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Víctor le dijo a su mamá que no quería jugar más en el equipo, aunque era el máximo goleador y le encantaba el fútbol. Ella fue al siguiente juego para entender qué pasaba: un niño nuevo, Óscar, salió de titular en la posición de Víctor, que se quedó en el banquillo toda la primera parte, y Óscar marcó tres goles en treinta minutos. Su mamá entendió que Víctor tenía envidia porque ya no era la estrella del equipo.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">La envidia es querer que otro pierda algo que tiene porque tú lo deseas. Es un sentimiento que roba la paz. El héroe no es envidioso.</div>"
+  }
+ ],
+ "m28": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Veo con claridad que Dios no muestra favoritismo» (Hechos 10:34 (NTV))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Héroe: Pablo Pineda</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Pablo Pineda tiene síndrome de Down. Mucha gente cree que las personas así no pueden llevar una vida normal, pero cuando tenía siete años un maestro le dijo que su condición no significaba que no pudiera estudiar ni tener éxito. Pablo se lo creyó: se convirtió en el primer europeo con síndrome de Down en terminar una carrera universitaria. Además es actor, ha actuado en series y en películas taquilleras, y es una celebridad en España.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Si quieres ser un héroe, trata a esa persona igual que a todas las demás. Y si tú eres así, Jesús te ama igual que a todos.</div>"
+  }
+ ],
+ "m29": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«Mi Dios proveerá a todas vuestras necesidades» (Filipenses 4:19 (LBLA))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Héroe: Charles Tindley</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">De niño Charles Tindley no pudo ir a la escuela, pero en su adolescencia aprendió a leer por sí mismo; con el tiempo se preparó para ser pastor, predicó ante miles y compuso himnos cristianos. Un frío invierno llegó con su familia a su nuevo destino y a la mañana siguiente solo tenían pan duro y leche. Aun así pidió a su esposa que pusiera la mesa, y oraron. Nada más terminar de orar, un miembro de la congregación llamó a la puerta con un saco lleno de provisiones: había supuesto que, con la tormenta de nieve, no tendrían qué comer.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Charles lloró y dijo: «Es usted la respuesta a nuestra oración». Dios provee, y proveerá también para ti.</div>"
+  }
+ ],
+ "m30": [
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«El necio da rienda suelta a su ira, pero el sabio sabe dominarla» (Proverbios 29:11 (NVI))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Villano: Nabal</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Un necio es una persona que, de manera terca, se comporta sin entender la situación. La Biblia misma dice que Nabal era un necio: se puede leer en 1 Samuel 25:25. Nabal se había beneficiado mucho tiempo de que David y sus hombres cuidaran sus rebaños y sus empleados, y aun sabiendo que David era el elegido por Dios como futuro rey, cuando le mandaron a pedir algo de comer no solo se negó, sino que habló muy groseramente. David se enfureció muchísimo y decidió ir a matarlo.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">Hablarle groseramente a otra persona es propio de villanos. Y «la respuesta grosera aumenta el enojo» (Proverbios 15:1). Esfuérzate en hablar siempre con calma y bondad.</div>"
+  }
+ ],
+ "m31": [
+  {
+   "t": "⚠️ Fuera del examen, pero necesario",
+   "h": "<div class=\"warn-box\">El reglamento pide hasta el <strong>30 de octubre</strong>, así que este día\n      no entra en el examen. Se incluye porque es la <strong>segunda parte</strong> de la\n      historia del día 30: sin Abigail no se entiende Nabal.</div>"
+  },
+  {
+   "t": "📖 El versículo del día",
+   "h": "<div class=\"verse-box\">«La respuesta amable calma la ira; la respuesta grosera aumenta el enojo» (Proverbios 15:1 (RVC))</div>"
+  },
+  {
+   "t": "👤 Quién es",
+   "h": "<div class=\"highlight-box\"><strong>Heroína: Abigail</strong></div>"
+  },
+  {
+   "t": "📚 Qué pasa",
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Nabal estaba casado con una mujer que tenía tanto de sabia y prudente como él tenía de necio y grosero. En cuanto le contaron lo sucedido, Abigail se dio cuenta de la gravedad: su esposo le había negado comida al futuro rey y había respondido mal a los hombres que cuidaban sus rebaños. Dio la orden de llevarle comida rápidamente a David y a sus hombres, y ella misma salió a su encuentro. Le pidió disculpas sin justificar la grosería de su esposo, y le habló de tal manera que le bajó la ira. Su cortesía, prudencia, sabiduría y humildad evitaron muertes aquel día.</p>"
+  },
+  {
+   "t": "🎯 La lección",
+   "h": "<div class=\"warn-box\">El héroe es sensible, prudente, sabio y humilde. No porque él sea así, sino porque Dios le ayuda a serlo.</div>"
   }
  ]
 };
@@ -4767,6 +5658,1853 @@ const BANCO = [
   "a": true,
   "e": "Verdadero. Lo que decidió de joven en Daniel 1 fue lo que lo sostuvo de anciano en Daniel 6.",
   "nv": 2
+ },
+ {
+  "cap": "m01",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El villano pirata Dienterroto»?",
+  "o": [
+   "1.º de octubre",
+   "3 de octubre",
+   "4 de octubre",
+   "5 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m01",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 1.º de octubre, «El villano pirata Dienterroto»?",
+  "o": [
+   "Lucas 12:15",
+   "1 Juan 5:15",
+   "2 Timoteo 2:21 (NTV)",
+   "1 Timoteo 2:4"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m02",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El héroe sabe que Dios lo levanta»?",
+  "o": [
+   "2 de octubre",
+   "3 de octubre",
+   "4 de octubre",
+   "5 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m02",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 2 de octubre, «El héroe sabe que Dios lo levanta»?",
+  "o": [
+   "Salmo 113:7",
+   "1 Juan 5:15",
+   "2 Timoteo 2:21 (NTV)",
+   "1 Timoteo 2:4"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m03",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El héroe que dio 5 kinas»?",
+  "o": [
+   "3 de octubre",
+   "4 de octubre",
+   "1.º de octubre",
+   "5 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m03",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 3 de octubre, «El héroe que dio 5 kinas»?",
+  "o": [
+   "1 Juan 5:15",
+   "2 Timoteo 2:21 (NTV)",
+   "Lucas 12:15",
+   "1 Timoteo 2:4"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m04",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El héroe que ayudaba a jóvenes estudiantes»?",
+  "o": [
+   "4 de octubre",
+   "5 de octubre",
+   "2 de octubre",
+   "6 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m04",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 4 de octubre, «El héroe que ayudaba a jóvenes estudiantes»?",
+  "o": [
+   "2 Timoteo 2:21 (NTV)",
+   "1 Timoteo 2:4",
+   "Salmo 113:7",
+   "Isaías 41:10"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m05",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Estás invitado a la boda»?",
+  "o": [
+   "5 de octubre",
+   "6 de octubre",
+   "3 de octubre",
+   "7 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m05",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 5 de octubre, «Estás invitado a la boda»?",
+  "o": [
+   "1 Timoteo 2:4",
+   "Isaías 41:10",
+   "1 Juan 5:15",
+   "1 Tesalonicenses 5:18"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m06",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Nunca estás solo»?",
+  "o": [
+   "6 de octubre",
+   "7 de octubre",
+   "4 de octubre",
+   "8 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m06",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 6 de octubre, «Nunca estás solo»?",
+  "o": [
+   "Isaías 41:10",
+   "1 Tesalonicenses 5:18",
+   "2 Timoteo 2:21 (NTV)",
+   "Hechos 1:8"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m07",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Una joven heroína alienta a los tripulantes»?",
+  "o": [
+   "7 de octubre",
+   "8 de octubre",
+   "5 de octubre",
+   "9 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m07",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 7 de octubre, «Una joven heroína alienta a los tripulantes»?",
+  "o": [
+   "1 Tesalonicenses 5:18",
+   "Hechos 1:8",
+   "1 Timoteo 2:4",
+   "2 Timoteo 4:2"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m08",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El poder del héroe»?",
+  "o": [
+   "8 de octubre",
+   "9 de octubre",
+   "6 de octubre",
+   "10 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m08",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 8 de octubre, «El poder del héroe»?",
+  "o": [
+   "Hechos 1:8",
+   "2 Timoteo 4:2",
+   "Isaías 41:10",
+   "Cantares 2:2"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m09",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El héroe narrador de historias»?",
+  "o": [
+   "9 de octubre",
+   "10 de octubre",
+   "7 de octubre",
+   "11 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m09",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 9 de octubre, «El héroe narrador de historias»?",
+  "o": [
+   "2 Timoteo 4:2",
+   "Cantares 2:2",
+   "1 Tesalonicenses 5:18",
+   "Proverbios 16:9"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m10",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El héroe se enamora — 1.ª parte»?",
+  "o": [
+   "10 de octubre",
+   "11 de octubre",
+   "8 de octubre",
+   "12 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m10",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 10 de octubre, «El héroe se enamora — 1.ª parte»?",
+  "o": [
+   "Cantares 2:2",
+   "Proverbios 16:9",
+   "Hechos 1:8",
+   "Filipenses 3:14 (PDT)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m11",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El héroe se enamora — 2.ª parte»?",
+  "o": [
+   "11 de octubre",
+   "12 de octubre",
+   "9 de octubre",
+   "13 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m11",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 11 de octubre, «El héroe se enamora — 2.ª parte»?",
+  "o": [
+   "Proverbios 16:9",
+   "Filipenses 3:14 (PDT)",
+   "2 Timoteo 4:2",
+   "Proverbios 31:10 (RV95)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m12",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «La pequeña gran mujer»?",
+  "o": [
+   "12 de octubre",
+   "13 de octubre",
+   "10 de octubre",
+   "14 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m12",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 12 de octubre, «La pequeña gran mujer»?",
+  "o": [
+   "Filipenses 3:14 (PDT)",
+   "Proverbios 31:10 (RV95)",
+   "Cantares 2:2",
+   "Gálatas 1:10"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m13",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura ««Mujer virtuosa»»?",
+  "o": [
+   "13 de octubre",
+   "14 de octubre",
+   "11 de octubre",
+   "15 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m13",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 13 de octubre, ««Mujer virtuosa»»?",
+  "o": [
+   "Proverbios 31:10 (RV95)",
+   "Gálatas 1:10",
+   "Proverbios 16:9",
+   "Marcos 5:19"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m14",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura ««No me arrepiento»»?",
+  "o": [
+   "14 de octubre",
+   "15 de octubre",
+   "12 de octubre",
+   "16 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m14",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 14 de octubre, ««No me arrepiento»»?",
+  "o": [
+   "Gálatas 1:10",
+   "Marcos 5:19",
+   "Filipenses 3:14 (PDT)",
+   "Filipenses 4:3"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m15",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Testigos de Jesús»?",
+  "o": [
+   "15 de octubre",
+   "16 de octubre",
+   "13 de octubre",
+   "17 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m15",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 15 de octubre, «Testigos de Jesús»?",
+  "o": [
+   "Marcos 5:19",
+   "Filipenses 4:3",
+   "Proverbios 31:10 (RV95)",
+   "Salmo 120:2"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m16",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Héroes anónimos»?",
+  "o": [
+   "16 de octubre",
+   "17 de octubre",
+   "14 de octubre",
+   "18 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m16",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 16 de octubre, «Héroes anónimos»?",
+  "o": [
+   "Filipenses 4:3",
+   "Salmo 120:2",
+   "Gálatas 1:10",
+   "Josué 1:9"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m17",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El amigo villano»?",
+  "o": [
+   "17 de octubre",
+   "18 de octubre",
+   "15 de octubre",
+   "19 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m17",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 17 de octubre, «El amigo villano»?",
+  "o": [
+   "Salmo 120:2",
+   "Josué 1:9",
+   "Marcos 5:19",
+   "Juan 14:3"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m18",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «¿Héroes o no?»?",
+  "o": [
+   "18 de octubre",
+   "19 de octubre",
+   "16 de octubre",
+   "20 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m18",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 18 de octubre, «¿Héroes o no?»?",
+  "o": [
+   "Josué 1:9",
+   "Juan 14:3",
+   "Filipenses 4:3",
+   "Filipenses 4:8"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m19",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Di siempre dónde estás»?",
+  "o": [
+   "19 de octubre",
+   "20 de octubre",
+   "17 de octubre",
+   "21 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m19",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 19 de octubre, «Di siempre dónde estás»?",
+  "o": [
+   "Juan 14:3",
+   "Filipenses 4:8",
+   "Salmo 120:2",
+   "Salmo 71:17"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m20",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El villano del baloncesto»?",
+  "o": [
+   "20 de octubre",
+   "21 de octubre",
+   "18 de octubre",
+   "22 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m20",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 20 de octubre, «El villano del baloncesto»?",
+  "o": [
+   "Filipenses 4:8",
+   "Salmo 71:17",
+   "Josué 1:9",
+   "Lucas 2:46-47"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m21",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Tus maestros son héroes»?",
+  "o": [
+   "21 de octubre",
+   "22 de octubre",
+   "19 de octubre",
+   "23 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m21",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 21 de octubre, «Tus maestros son héroes»?",
+  "o": [
+   "Salmo 71:17",
+   "Lucas 2:46-47",
+   "Juan 14:3",
+   "Isaías 52:7 (TLA)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m22",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Jesús: el Maestro de los maestros»?",
+  "o": [
+   "22 de octubre",
+   "23 de octubre",
+   "20 de octubre",
+   "24 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m22",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 22 de octubre, «Jesús: el Maestro de los maestros»?",
+  "o": [
+   "Lucas 2:46-47",
+   "Isaías 52:7 (TLA)",
+   "Filipenses 4:8",
+   "Gálatas 5:16-17 (TLA)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m23",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Héroes de ayer y de hoy»?",
+  "o": [
+   "23 de octubre",
+   "24 de octubre",
+   "21 de octubre",
+   "25 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m23",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 23 de octubre, «Héroes de ayer y de hoy»?",
+  "o": [
+   "Isaías 52:7 (TLA)",
+   "Gálatas 5:16-17 (TLA)",
+   "Salmo 71:17",
+   "Proverbios 14:29 (NBV)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m24",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El villano que maltrató a un animal»?",
+  "o": [
+   "24 de octubre",
+   "25 de octubre",
+   "22 de octubre",
+   "26 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m24",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 24 de octubre, «El villano que maltrató a un animal»?",
+  "o": [
+   "Gálatas 5:16-17 (TLA)",
+   "Proverbios 14:29 (NBV)",
+   "Lucas 2:46-47",
+   "Proverbios 12:25 (NBV)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m25",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Fernando, el niño enojado»?",
+  "o": [
+   "25 de octubre",
+   "26 de octubre",
+   "23 de octubre",
+   "27 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m25",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 25 de octubre, «Fernando, el niño enojado»?",
+  "o": [
+   "Proverbios 14:29 (NBV)",
+   "Proverbios 12:25 (NBV)",
+   "Isaías 52:7 (TLA)",
+   "Santiago 3:15 (NTV)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m26",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «La heroína que ayudó a un niño con sus palabras»?",
+  "o": [
+   "26 de octubre",
+   "27 de octubre",
+   "24 de octubre",
+   "28 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m26",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 26 de octubre, «La heroína que ayudó a un niño con sus palabras»?",
+  "o": [
+   "Proverbios 12:25 (NBV)",
+   "Santiago 3:15 (NTV)",
+   "Gálatas 5:16-17 (TLA)",
+   "Hechos 10:34 (NTV)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m27",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «El niño que se quedó sentado en el banquillo»?",
+  "o": [
+   "27 de octubre",
+   "28 de octubre",
+   "25 de octubre",
+   "29 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m27",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 27 de octubre, «El niño que se quedó sentado en el banquillo»?",
+  "o": [
+   "Santiago 3:15 (NTV)",
+   "Hechos 10:34 (NTV)",
+   "Proverbios 14:29 (NBV)",
+   "Filipenses 4:19 (LBLA)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m28",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Un héroe diferente»?",
+  "o": [
+   "28 de octubre",
+   "29 de octubre",
+   "26 de octubre",
+   "30 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m28",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 28 de octubre, «Un héroe diferente»?",
+  "o": [
+   "Hechos 10:34 (NTV)",
+   "Filipenses 4:19 (LBLA)",
+   "Proverbios 12:25 (NBV)",
+   "Proverbios 29:11 (NVI)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m29",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Dios provee»?",
+  "o": [
+   "29 de octubre",
+   "30 de octubre",
+   "27 de octubre",
+   "31 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m29",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 29 de octubre, «Dios provee»?",
+  "o": [
+   "Filipenses 4:19 (LBLA)",
+   "Proverbios 29:11 (NVI)",
+   "Santiago 3:15 (NTV)",
+   "Proverbios 15:1 (RVC)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m30",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «Nabal, el villano necio»?",
+  "o": [
+   "30 de octubre",
+   "31 de octubre",
+   "28 de octubre",
+   "27 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m30",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 30 de octubre, «Nabal, el villano necio»?",
+  "o": [
+   "Proverbios 29:11 (NVI)",
+   "Proverbios 15:1 (RVC)",
+   "Hechos 10:34 (NTV)",
+   "Santiago 3:15 (NTV)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m31",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué día de octubre es la lectura «La sabia Abigail»?",
+  "o": [
+   "31 de octubre",
+   "29 de octubre",
+   "28 de octubre",
+   "27 de octubre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m31",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuál es el versículo de la lectura del 31 de octubre, «La sabia Abigail»?",
+  "o": [
+   "Proverbios 15:1 (RVC)",
+   "Filipenses 4:19 (LBLA)",
+   "Hechos 10:34 (NTV)",
+   "Santiago 3:15 (NTV)"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m01",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Por qué se hundió el barco del pirata Dienterroto?",
+  "o": [
+   "Porque quiso cargar todo el oro de una vez en lugar de dar varios viajes",
+   "Porque lo atacó otro pirata",
+   "Porque había una tormenta",
+   "Porque el barco era muy viejo"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m01",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué enseña la historia del pirata Dienterroto?",
+  "o": [
+   "Que querer más de lo que necesitas puede hacerte perder lo que tienes",
+   "Que hay que esconder bien los tesoros",
+   "Que los barcos deben ser grandes",
+   "Que el oro trae mala suerte"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m02",
+  "t": "mc",
+  "nv": 1,
+  "q": "En el experimento de los dos vasos, ¿qué le pasa al huevo del vaso con sal?",
+  "o": [
+   "No se hunde: se va para arriba",
+   "Se hunde más rápido",
+   "Se rompe",
+   "Se queda en el medio"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m02",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Con qué se compara a Dios en ese experimento?",
+  "o": [
+   "Con la sal, que con su amor nos levanta",
+   "Con el agua, que limpia",
+   "Con el huevo, que es frágil",
+   "Con el vaso, que sostiene"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m03",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Cuánto dinero necesitaba Gibson para hacer la llamada?",
+  "o": [
+   "5 kinas",
+   "17.000 kinas",
+   "50 kinas",
+   "2 kinas"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m03",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Quién le dio el dinero a Gibson sin saber de su necesidad?",
+  "o": [
+   "El profesor Elisha",
+   "Un desconocido por teléfono",
+   "El rector de la universidad",
+   "Su compañero de cuarto"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m04",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Cuánto debía Gibson de su colegiatura?",
+  "o": [
+   "17.000 kinas",
+   "5 kinas",
+   "1.700 kinas",
+   "170.000 kinas"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m04",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cómo logró Gibson que el hombre le respondiera?",
+  "o": [
+   "Le envió un mensaje de texto después de varios intentos de llamada",
+   "Fue a buscarlo a su casa",
+   "Le escribió una carta",
+   "Le pidió al profesor que lo llamara"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m05",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Cómo son las bodas en Papúa Nueva Guinea, según la lectura?",
+  "o": [
+   "Asisten todos los que quieren y nadie va con las manos vacías",
+   "Solo asisten los familiares",
+   "Hay que pagar la entrada",
+   "Se celebran en secreto"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m05",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué enseña la comparación con la boda?",
+  "o": [
+   "Que la invitación al reino de Dios es para todos, pero cada uno decide si la acepta",
+   "Que hay que casarse en la iglesia",
+   "Que las fiestas deben ser grandes",
+   "Que solo algunos serán salvos"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m06",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué le pasó a la lancha en la que iban Sophie y su mamá?",
+  "o": [
+   "La propela del motor se salió y se hundió en el mar",
+   "Se le acabó la gasolina",
+   "Choco contra una roca",
+   "Se le rompió el timón"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m06",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Por qué no pudieron pedir auxilio?",
+  "o": [
+   "Porque no había señal de red telefónica",
+   "Porque nadie tenía celular",
+   "Porque se les mojaron los teléfonos",
+   "Porque no sabían el número"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m07",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Quién dirigió el culto el cuarto día y el sábado en la lancha?",
+  "o": [
+   "Sophie",
+   "Su mamá",
+   "Jonah",
+   "El capitán"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m07",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuántos días estuvieron a la deriva antes de llegar a la playa?",
+  "o": [
+   "Cinco días",
+   "Dos días",
+   "Cuatro días",
+   "Ocho días"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m08",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué quería ser Unia Api y dónde estudió?",
+  "o": [
+   "Pastor, en la Universidad Adventista del Pacífico",
+   "Médico, en Australia",
+   "Maestro, en Estados Unidos",
+   "Enfermero, en Papúa"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m08",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué respondió Unia cuando lo invitaron a Kerema por un año?",
+  "o": [
+   "Dijo que sí, aunque la oportunidad llegó de manera inesperada",
+   "Pidió tiempo para pensarlo",
+   "Dijo que no estaba listo",
+   "Mandó a otro estudiante"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m09",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué idea le dio Jesús a Unia para predicar en Kerema?",
+  "o": [
+   "Contar historias, y los viernes de tarde encender una fogata",
+   "Repartir folletos",
+   "Cantar en la plaza",
+   "Escribir cartas"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m09",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué pasó con la congregación ese año?",
+  "o": [
+   "Creció mucho",
+   "Se mantuvo igual",
+   "Se dividió",
+   "Cerró la escuela"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m10",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Cómo conoció Unia a Julie?",
+  "o": [
+   "Ella le preparó comida cuando el comedor ya había cerrado",
+   "Estudiaban la misma carrera",
+   "Se conocieron en Kerema",
+   "Los presentó un misionero"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m10",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué le respondió Julie la primera vez que Unia le propuso unir sus vidas?",
+  "o": [
+   "«No puedo, tengo novio»",
+   "«Déjame pensarlo»",
+   "«Sí, con gusto»",
+   "«Habla con mis padres»"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m11",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Cuánto tiempo después volvió Julie a buscar a Unia?",
+  "o": [
+   "Solo dos horas después",
+   "Al otro día",
+   "Una semana después",
+   "Un año después"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m11",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿De qué se graduaron Julie y Unia?",
+  "o": [
+   "Ella de enfermera y él de pastor",
+   "Ella de maestra y él de médico",
+   "Los dos de pastores",
+   "Ella de pastora y él de enfermero"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m12",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué leyó Gladys Aylward que la decidió a ir a China?",
+  "o": [
+   "Que en China millones de personas no sabían quién es Jesús",
+   "Que faltaban maestros en China",
+   "Que había una escuela de misioneros",
+   "Que su familia era de China"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m12",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿En qué fecha partió Gladys desde Londres?",
+  "o": [
+   "El 15 de octubre de 1932",
+   "El 15 de octubre de 1923",
+   "El 5 de octubre de 1932",
+   "El 25 de octubre de 1942"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m13",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué significa «Ai-weh-deh», el nombre que le dieron a Gladys en China?",
+  "o": [
+   "«Mujer virtuosa»",
+   "«Madre de muchos»",
+   "«La que vino de lejos»",
+   "«Mujer valiente»"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m13",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cuántos niños huérfanos adoptó Gladys?",
+  "o": [
+   "Más de cien",
+   "Más de diez",
+   "Más de mil",
+   "Exactamente cincuenta"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m14",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué le pasó a la misión donde vivía Gladys con los niños?",
+  "o": [
+   "Fue bombardeada y destruida por la guerra",
+   "Se incendió por un descuido",
+   "La cerró el gobierno",
+   "Se inundó"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m14",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Se arrepentía Gladys de haber ido a China?",
+  "o": [
+   "No: sentía que cada uno de sus niños era una bendición",
+   "Sí, por las pruebas que pasó",
+   "Sí, quería volver a Inglaterra",
+   "No lo dijo nunca"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m15",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué tienen en común el paralítico, los dos ciegos y el endemoniado?",
+  "o": [
+   "Que todos fueron testigos de Jesús y contaron lo que él hizo por ellos",
+   "Que todos eran de Nazaret",
+   "Que todos eran discípulos",
+   "Que todos eran ciegos"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m16",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Por qué perseguían a los cristianos en el Imperio Romano?",
+  "o": [
+   "Porque se negaban a participar en costumbres paganas y a creer en muchos dioses",
+   "Porque no pagaban impuestos",
+   "Porque hablaban otro idioma",
+   "Porque no querían trabajar"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m16",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué símbolos usaban para reconocerse entre ellos?",
+  "o": [
+   "Un pez o una cruz",
+   "Una estrella",
+   "Una espada",
+   "Un cordero"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m17",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué hizo Axel con el juego electrónico de su amigo David?",
+  "o": [
+   "Lo tomó sin permiso, lo rompió y lo guardó como si nada",
+   "Lo perdió en el patio",
+   "Lo cambió por otro",
+   "Lo escondió en su casa"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m17",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué enseña la historia de Axel?",
+  "o": [
+   "Que aunque nadie se entere, Jesús lo sabe: el héroe dice la verdad",
+   "Que hay que cuidar los juegos",
+   "Que no se debe jugar en la escuela",
+   "Que David debía perdonarlo"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m18",
+  "t": "mc",
+  "nv": 1,
+  "q": "De las tres situaciones, ¿quién actuó con valentía al hablar en público?",
+  "o": [
+   "Ester, que oró y siguió adelante aunque le temblaba la voz",
+   "Mónica, que se quedó en casa",
+   "Ana, que dejó copiar a Lucía",
+   "Lucía, que no estudió"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m18",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Por qué Ana no actuó como héroe?",
+  "o": [
+   "Porque dejó copiar a Lucía por miedo a caerle mal",
+   "Porque no estudió",
+   "Porque no habló en clase",
+   "Porque se burló de Marcos"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m19",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué le salvó la vida al señor McMullen?",
+  "o": [
+   "Que su esposa sabía por escrito dónde estaría y cuándo volvería",
+   "Que tenía señal en el celular",
+   "Que alguien lo vio caer",
+   "Que pudo caminar hasta el albergue"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m19",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Con qué se compara esa historia?",
+  "o": [
+   "Con que Jesús nos dijo dónde está: en el cielo, esperando volver a buscarnos",
+   "Con que hay que llevar mapa",
+   "Con que no se debe salir solo",
+   "Con que hay que confiar en la policía"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m20",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué hacía Tim Donaghy siendo árbitro de baloncesto?",
+  "o": [
+   "Apostaba sobre los partidos y los amañaba pitando a favor o en contra",
+   "Cobraba de más por arbitrar",
+   "No conocía las reglas",
+   "Faltaba a los partidos"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m20",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Cómo terminó Tim Donaghy?",
+  "o": [
+   "Lo descubrieron, lo juzgaron y acabó en la cárcel",
+   "Se retiró tranquilo",
+   "Siguió arbitrando",
+   "Se fue a otro país"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m21",
+  "t": "mc",
+  "nv": 1,
+  "q": "Según la lectura, ¿por qué son héroes los maestros?",
+  "o": [
+   "Porque hacen mucho más que su trabajo: te cuidan, te enseñan y te tratan con respeto",
+   "Porque ganan poco",
+   "Porque estudiaron mucho",
+   "Porque trabajan muchas horas"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m21",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Quién fue el Maestro de los maestros?",
+  "o": [
+   "Jesús",
+   "Moisés",
+   "Salomón",
+   "Pablo"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m22",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Cuántos años tenía Jesús cuando se sentó entre los maestros del Templo?",
+  "o": [
+   "Doce años",
+   "Diez años",
+   "Treinta años",
+   "Ocho años"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m22",
+  "t": "mc",
+  "nv": 2,
+  "q": "Según la lectura, ¿qué hace posible que un niño enseñe a un adulto?",
+  "o": [
+   "Que busque a Dios y lea la Biblia todos los días",
+   "Que sea muy inteligente",
+   "Que estudie mucho en la escuela",
+   "Que hable en público"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m23",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Por qué eran héroes los mensajeros de la antigüedad?",
+  "o": [
+   "Porque salían de su comodidad y recorrían grandes distancias, sobre todo en tiempos de guerra",
+   "Porque sabían leer",
+   "Porque tenían caballos",
+   "Porque conocían a los reyes"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m23",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué propone hacer la lectura con los medios de hoy?",
+  "o": [
+   "Usarlos también para contarle a alguien que Jesús lo ama",
+   "Usarlos menos",
+   "Solo para cosas prácticas",
+   "Compartir solo con la familia"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m24",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Por qué se detuvo el asna de Balaam?",
+  "o": [
+   "Porque el ángel de Dios se interponía en el camino",
+   "Porque estaba cansada",
+   "Porque era testaruda",
+   "Porque tenía hambre"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m24",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué hizo Balaam cuando el asna no avanzó?",
+  "o": [
+   "Le pegó fuertemente con la vara",
+   "Se bajó y siguió a pie",
+   "La dejó descansar",
+   "Volvió a su casa"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m25",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué hizo Fernando cuando su mamá le dijo que se cambiara?",
+  "o": [
+   "Le dio una patada al sofá y dio un portazo",
+   "Se puso a llorar",
+   "Se escondió",
+   "Obedeció de una vez"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m25",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué propone la lectura para cuando sientas enojo?",
+  "o": [
+   "Respirar hondo, orar a Jesús y hablar con tus padres",
+   "Salir a correr",
+   "Quedarte callado",
+   "Contarlo en la escuela"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m26",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué descubrió Emely al trabajar con Ermenegildo?",
+  "o": [
+   "Que era buenísimo haciendo trabajos de ciencias y nadie lo sabía",
+   "Que no quería trabajar",
+   "Que copiaba de otros",
+   "Que estaba enfermo"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m26",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué hizo Emely cuando el profesor dio las notas?",
+  "o": [
+   "Dijo delante de toda la clase que el trabajo lo había hecho Ermenegildo",
+   "Se quedó callada",
+   "Dijo que lo hicieron entre los dos",
+   "Pidió otra nota"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m27",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Por qué Víctor no quería jugar más en el equipo?",
+  "o": [
+   "Porque tenía envidia: un niño nuevo ocupó su posición y marcó tres goles",
+   "Porque estaba lastimado",
+   "Porque lo trataron mal",
+   "Porque no le gustaba el entrenador"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m27",
+  "t": "mc",
+  "nv": 2,
+  "q": "Según la lectura, ¿qué es sentir envidia?",
+  "o": [
+   "Querer que otro pierda algo que tiene porque tú deseas ese algo",
+   "Estar triste sin motivo",
+   "Enojarse con un amigo",
+   "No querer compartir"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m28",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿En qué fue el primero Pablo Pineda?",
+  "o": [
+   "El primer europeo con síndrome de Down en terminar una carrera universitaria",
+   "El primer actor español con síndrome de Down",
+   "El primer maestro con síndrome de Down",
+   "El primer deportista con síndrome de Down"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m28",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué le dijo un maestro a Pablo cuando tenía siete años?",
+  "o": [
+   "Que tener síndrome de Down no significaba que no pudiera estudiar ni tener éxito",
+   "Que debía cambiarse de escuela",
+   "Que estudiara solo en casa",
+   "Que se dedicara al deporte"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m29",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué tenían para desayunar Charles Tindley y su familia esa mañana?",
+  "o": [
+   "Solo pan duro y leche",
+   "Nada en absoluto",
+   "Pan y frutas",
+   "Huevos y leche"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m29",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué pasó nada más terminar de orar?",
+  "o": [
+   "Un miembro de la congregación llamó a la puerta con un saco lleno de provisiones",
+   "Llegó el pastor de visita",
+   "Encontraron dinero",
+   "Paró la tormenta"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m30",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿En qué texto dice la Biblia que Nabal era un necio?",
+  "o": [
+   "1 Samuel 25:25",
+   "1 Samuel 15:22",
+   "2 Samuel 25:15",
+   "1 Reyes 25:5"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m30",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué hizo Nabal cuando David mandó a pedirle comida?",
+  "o": [
+   "No solo se negó, sino que habló muy groseramente",
+   "Le mandó poca comida",
+   "Le pidió dinero",
+   "Le mandó a sus pastores"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m31",
+  "t": "mc",
+  "nv": 1,
+  "q": "¿Qué hizo Abigail al enterarse de la grosería de su esposo?",
+  "o": [
+   "Mandó comida rápidamente a David y ella misma salió a su encuentro",
+   "Escondió a su familia",
+   "Le reclamó a Nabal",
+   "Avisó al rey Saúl"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m31",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Qué evitaron la cortesía y la prudencia de Abigail?",
+  "o": [
+   "Evitaron muertes aquel día",
+   "Evitaron una guerra entre reinos",
+   "Evitaron que Nabal fuera preso",
+   "Evitaron perder los rebaños"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m01",
+  "t": "tf",
+  "nv": 2,
+  "q": "El pirata Dienterroto perdió todo su oro porque otro pirata lo atacó.",
+  "a": false,
+  "e": "Falso. El barco se hundió porque quiso cargar todo el oro de una vez en lugar de dar varios viajes."
+ },
+ {
+  "cap": "m02",
+  "t": "tf",
+  "nv": 2,
+  "q": "En el experimento, el huevo del vaso con sal se hunde igual que el otro.",
+  "a": false,
+  "e": "Falso. No se hunde: se va para arriba. La sal marca la diferencia."
+ },
+ {
+  "cap": "m03",
+  "t": "tf",
+  "nv": 2,
+  "q": "El profesor Elisha le dio las 5 kinas a Gibson sabiendo de su necesidad.",
+  "a": false,
+  "e": "Falso. Se las dio sin saber nada de su necesidad, después de orar por él."
+ },
+ {
+  "cap": "m04",
+  "t": "tf",
+  "nv": 2,
+  "q": "El hombre desconocido pagó los 17.000 kinas que Gibson debía.",
+  "a": true,
+  "e": "Verdadero. Hizo arreglos con la universidad y pagó todo lo que restaba."
+ },
+ {
+  "cap": "m05",
+  "t": "tf",
+  "nv": 2,
+  "q": "En Papúa Nueva Guinea hay que recibir invitación para ir a una boda.",
+  "a": false,
+  "e": "Falso. Allá asisten todos los que quieren, y nadie va con las manos vacías."
+ },
+ {
+  "cap": "m06",
+  "t": "tf",
+  "nv": 2,
+  "q": "Sophie y su mamá vieron la isla Lavongai a unos 20 kilómetros.",
+  "a": true,
+  "e": "Verdadero. Los varones más jóvenes intentaron remar hacia ella, pero las olas eran muy fuertes."
+ },
+ {
+  "cap": "m07",
+  "t": "tf",
+  "nv": 2,
+  "q": "Sophie dirigió el culto en la lancha el cuarto día y el sábado.",
+  "a": true,
+  "e": "Verdadero. Su mensaje fue: «En momentos así, debemos confiar en Dios»."
+ },
+ {
+  "cap": "m08",
+  "t": "tf",
+  "nv": 2,
+  "q": "Unia Api encontró a varios estudiantes de Teología en el dormitorio cuando el misionero los buscó.",
+  "a": false,
+  "e": "Falso. No había ninguno en ese momento excepto él."
+ },
+ {
+  "cap": "m09",
+  "t": "tf",
+  "nv": 2,
+  "q": "Unia contaba historias de la Biblia los viernes de tarde junto a una fogata.",
+  "a": true,
+  "e": "Verdadero. Después organizaba a los jóvenes para representarlas en drama."
+ },
+ {
+  "cap": "m10",
+  "t": "tf",
+  "nv": 2,
+  "q": "Julie aceptó de inmediato la propuesta de Unia.",
+  "a": false,
+  "e": "Falso. Primero le dijo: «No puedo, tengo novio»."
+ },
+ {
+  "cap": "m11",
+  "t": "tf",
+  "nv": 2,
+  "q": "Julie y Unia se casaron en el primer año del máster.",
+  "a": true,
+  "e": "Verdadero. Fueron novios hasta terminar la universidad."
+ },
+ {
+  "cap": "m12",
+  "t": "tf",
+  "nv": 2,
+  "q": "Gladys Aylward llegó a China veintisiete días después de salir de Londres.",
+  "a": true,
+  "e": "Verdadero. El tren fue detenido en Siberia por una guerra, pero ella siguió."
+ },
+ {
+  "cap": "m13",
+  "t": "tf",
+  "nv": 2,
+  "q": "Gladys abrió una posada junto a otra misionera llamada Jeannie Lawson.",
+  "a": true,
+  "e": "Verdadero. Les servía para tener dinero y para hablarles de Jesús a los huéspedes."
+ },
+ {
+  "cap": "m14",
+  "t": "tf",
+  "nv": 2,
+  "q": "Gladys atravesó el río Amarillo con los niños para buscar ayuda.",
+  "a": true,
+  "e": "Verdadero. En la otra aldea les abrieron las puertas."
+ },
+ {
+  "cap": "m15",
+  "t": "tf",
+  "nv": 2,
+  "q": "Los dos ciegos guardaron en secreto lo que Jesús hizo por ellos.",
+  "a": false,
+  "e": "Falso. «Contaron por toda aquella región lo que Jesús había hecho» (Mateo 9:31)."
+ },
+ {
+  "cap": "m16",
+  "t": "tf",
+  "nv": 2,
+  "q": "Los cristianos de los primeros siglos usaban un pez o una cruz para reconocerse.",
+  "a": true,
+  "e": "Verdadero. Vivían de forma anónima y predicaban sin ser descubiertos."
+ },
+ {
+  "cap": "m17",
+  "t": "tf",
+  "nv": 2,
+  "q": "Axel le confesó a David que él había roto el juego.",
+  "a": false,
+  "e": "Falso. Nunca le dijo que había sido él."
+ },
+ {
+  "cap": "m18",
+  "t": "tf",
+  "nv": 2,
+  "q": "Marcos responde mal a los compañeros que se burlan de él.",
+  "a": false,
+  "e": "Falso. Es igual de amable con todos e ignora lo que le dicen, porque sabe que Jesús lo ama."
+ },
+ {
+  "cap": "m19",
+  "t": "tf",
+  "nv": 2,
+  "q": "El señor McMullen se rompió un tobillo la primera tarde de su excursión.",
+  "a": true,
+  "e": "Verdadero. Pisó una piedra, y no podía seguir caminando ni tenía señal."
+ },
+ {
+  "cap": "m20",
+  "t": "tf",
+  "nv": 2,
+  "q": "Tim Donaghy era jugador de baloncesto.",
+  "a": false,
+  "e": "Falso. Era árbitro, y desde ese puesto influía en los resultados."
+ },
+ {
+  "cap": "m21",
+  "t": "tf",
+  "nv": 2,
+  "q": "Según la lectura, los maestros solo cumplen con su trabajo.",
+  "a": false,
+  "e": "Falso. Hacen mucho más: se preocupan de que estés bien, te ayudan y te tratan con respeto."
+ },
+ {
+  "cap": "m22",
+  "t": "tf",
+  "nv": 2,
+  "q": "Los maestros del Templo quedaron asombrados de las respuestas de Jesús.",
+  "a": true,
+  "e": "Verdadero. Le dirigieron preguntas y quedaron asombrados al oír sus respuestas."
+ },
+ {
+  "cap": "m23",
+  "t": "tf",
+  "nv": 2,
+  "q": "Llevar mensajes en tiempos de guerra era más peligroso todavía.",
+  "a": true,
+  "e": "Verdadero. Si el otro bando sabía que llevabas un mensaje, el riesgo era mayor."
+ },
+ {
+  "cap": "m24",
+  "t": "tf",
+  "nv": 2,
+  "q": "Dios le había dicho a Balaam que sí fuera a maldecir al pueblo.",
+  "a": false,
+  "e": "Falso. Dios le hizo saber que no debía obedecer aquella orden, pero fue por dinero."
+ },
+ {
+  "cap": "m25",
+  "t": "tf",
+  "nv": 2,
+  "q": "Era la primera vez que Fernando reaccionaba con enojo así.",
+  "a": false,
+  "e": "Falso. La lectura dice que no era la primera vez."
+ },
+ {
+  "cap": "m26",
+  "t": "tf",
+  "nv": 2,
+  "q": "Emely y Ermenegildo sacaron la mejor nota de la clase.",
+  "a": true,
+  "e": "Verdadero. Y Emely reconoció delante de todos que el trabajo lo había hecho él."
+ },
+ {
+  "cap": "m27",
+  "t": "tf",
+  "nv": 2,
+  "q": "Óscar marcó tres goles en treinta minutos.",
+  "a": true,
+  "e": "Verdadero. Por eso la mamá de Víctor entendió que era envidia."
+ },
+ {
+  "cap": "m28",
+  "t": "tf",
+  "nv": 2,
+  "q": "Pablo Pineda es actor y ha actuado en series y películas.",
+  "a": true,
+  "e": "Verdadero. Es una celebridad en España."
+ },
+ {
+  "cap": "m29",
+  "t": "tf",
+  "nv": 2,
+  "q": "Charles Tindley aprendió a leer por sí mismo en su adolescencia.",
+  "a": true,
+  "e": "Verdadero. De niño no pudo ir a la escuela."
+ },
+ {
+  "cap": "m30",
+  "t": "tf",
+  "nv": 2,
+  "q": "Nabal nunca se había beneficiado de David.",
+  "a": false,
+  "e": "Falso. David y sus hombres habían cuidado mucho tiempo sus rebaños y sus empleados."
+ },
+ {
+  "cap": "m31",
+  "t": "tf",
+  "nv": 2,
+  "q": "Abigail justificó delante de David la grosería de su esposo.",
+  "a": false,
+  "e": "Falso. Le pidió disculpas sin justificarla, y le habló de tal manera que le bajó la ira."
  }
 ];
 
@@ -4902,6 +7640,39 @@ const MODULOS = [
    "av",
    "pa",
    "gm"
+  ]
+ },
+ {
+  "id": "mm-quien",
+  "label": "Héroes y villanos",
+  "sub": "Quién es quién, día por día",
+  "icono": "🦸",
+  "color": "#B91C1C",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "mm-versiculos",
+  "label": "Versículos de octubre",
+  "sub": "Los 31 versículos con su referencia",
+  "icono": "📖",
+  "color": "#1D4ED8",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ {
+  "id": "mm-plan",
+  "label": "Cómo estudiar la matutina",
+  "sub": "Qué se pregunta y cómo repasarlo",
+  "icono": "🎯",
+  "color": "#0F766E",
+  "cats": [
+   "dm1",
+   "dm2"
   ]
  }
 ];
@@ -5107,6 +7878,60 @@ const CONT_MODULOS = {
   {
    "t": "🧩 Tres frases que hay que entender, no solo repetir",
    "h": "<div class=\"highlight-box\"><strong>«Los hábitos temperantes favorecen la claridad mental.»</strong><br>\n    Quiere decir: comer y beber con dominio propio deja la cabeza despierta\n    para pensar y para entender a Dios. Por eso los cuatro salieron diez veces\n    mejores.</div><div class=\"highlight-box\"><strong>«Su vida pública y privada eran igual de intachables.»</strong><br>\n    Quiere decir: Daniel era el mismo en la oficina del rey y en su casa\n    orando solo. Por eso sus enemigos no encontraron nada.</div><div class=\"highlight-box\"><strong>«La sentencia es por decreto de los vigilantes.»</strong> (4:17)<br>\n    Quiere decir: la decisión de humillar a Nabucodonosor venía del cielo,\n    no de un accidente ni de una enfermedad cualquiera.</div>"
+  }
+ ],
+ "mm-quien": [
+  {
+   "t": "🦸 Del 1 al 16 de octubre",
+   "h": "<table class=\"info-table\"><thead><tr><th>Día</th><th>Título</th><th>Quién es</th></tr></thead><tbody><tr><td class=\"key\">1.º</td><td>El villano pirata Dienterroto</td><td>Villano: el pirata Dienterroto</td></tr><tr><td class=\"key\">2</td><td>El héroe sabe que Dios lo levanta</td><td>Un experimento con dos huevos</td></tr><tr><td class=\"key\">3</td><td>El héroe que dio 5 kinas</td><td>Héroe: el profesor Elisha</td></tr><tr><td class=\"key\">4</td><td>El héroe que ayudaba a jóvenes estudiantes</td><td>Héroes: el profesor Elisha y un desconocido</td></tr><tr><td class=\"key\">5</td><td>Estás invitado a la boda</td><td>Las bodas de Papúa Nueva Guinea</td></tr><tr><td class=\"key\">6</td><td>Nunca estás solo</td><td>Sophie y su mamá</td></tr><tr><td class=\"key\">7</td><td>Una joven heroína alienta a los tripulantes</td><td>Heroína: Sophie</td></tr><tr><td class=\"key\">8</td><td>El poder del héroe</td><td>Héroe: Unia Api</td></tr><tr><td class=\"key\">9</td><td>El héroe narrador de historias</td><td>Héroe: Unia</td></tr><tr><td class=\"key\">10</td><td>El héroe se enamora — 1.ª parte</td><td>Unia y Julie</td></tr><tr><td class=\"key\">11</td><td>El héroe se enamora — 2.ª parte</td><td>Unia y Julie</td></tr><tr><td class=\"key\">12</td><td>La pequeña gran mujer</td><td>Heroína: Gladys Aylward</td></tr><tr><td class=\"key\">13</td><td>«Mujer virtuosa»</td><td>Heroína: Gladys Aylward</td></tr><tr><td class=\"key\">14</td><td>«No me arrepiento»</td><td>Heroína: Gladys Aylward</td></tr><tr><td class=\"key\">15</td><td>Testigos de Jesús</td><td>Tres personajes de la Biblia</td></tr><tr><td class=\"key\">16</td><td>Héroes anónimos</td><td>Los cristianos de los primeros siglos</td></tr></tbody></table>"
+  },
+  {
+   "t": "🦸 Del 17 al 31 de octubre",
+   "h": "<table class=\"info-table\"><thead><tr><th>Día</th><th>Título</th><th>Quién es</th></tr></thead><tbody><tr><td class=\"key\">17</td><td>El amigo villano</td><td>Villano: Axel</td></tr><tr><td class=\"key\">18</td><td>¿Héroes o no?</td><td>Marcos, Ana y Lucía, Mónica y Ester</td></tr><tr><td class=\"key\">19</td><td>Di siempre dónde estás</td><td>El señor McMullen</td></tr><tr><td class=\"key\">20</td><td>El villano del baloncesto</td><td>Villano: Tim Donaghy</td></tr><tr><td class=\"key\">21</td><td>Tus maestros son héroes</td><td>Los maestros</td></tr><tr><td class=\"key\">22</td><td>Jesús: el Maestro de los maestros</td><td>Jesús a los doce años</td></tr><tr><td class=\"key\">23</td><td>Héroes de ayer y de hoy</td><td>Los mensajeros</td></tr><tr><td class=\"key\">24</td><td>El villano que maltrató a un animal</td><td>Villano: Balaam</td></tr><tr><td class=\"key\">25</td><td>Fernando, el niño enojado</td><td>Fernando</td></tr><tr><td class=\"key\">26</td><td>La heroína que ayudó a un niño con sus palabras</td><td>Heroína: Emely</td></tr><tr><td class=\"key\">27</td><td>El niño que se quedó sentado en el banquillo</td><td>Víctor</td></tr><tr><td class=\"key\">28</td><td>Un héroe diferente</td><td>Héroe: Pablo Pineda</td></tr><tr><td class=\"key\">29</td><td>Dios provee</td><td>Héroe: Charles Tindley</td></tr><tr><td class=\"key\">30</td><td>Nabal, el villano necio</td><td>Villano: Nabal</td></tr><tr><td class=\"key\">31</td><td>La sabia Abigail</td><td>Heroína: Abigail</td></tr></tbody></table>"
+  },
+  {
+   "t": "⚠️ Los villanos del mes",
+   "h": "<div class=\"warn-box\">Son cinco y suelen preguntarse juntos:<br><br><strong>1.º de octubre</strong> — el pirata Dienterroto<br><strong>17 de octubre</strong> — Axel<br><strong>20 de octubre</strong> — Tim Donaghy<br><strong>24 de octubre</strong> — Balaam<br><strong>30 de octubre</strong> — Nabal</div>"
+  }
+ ],
+ "mm-versiculos": [
+  {
+   "t": "📖 Del 1.º al 8 de octubre",
+   "h": "<table class=\"info-table\"><thead><tr><th>Día</th><th>Referencia</th><th>Versículo</th></tr></thead><tbody><tr><td class=\"key\">1.º</td><td>Lucas 12:15</td><td>Cuídense ustedes de toda avaricia; porque la vida no depende del poseer muchas cosas</td></tr><tr><td class=\"key\">2</td><td>Salmo 113:7</td><td>El Señor levanta del suelo al pobre, y saca del lugar más bajo al necesitado</td></tr><tr><td class=\"key\">3</td><td>1 Juan 5:15</td><td>Así como sabemos que Dios oye nuestras oraciones, también sabemos que ya tenemos lo que le hemos pedido</td></tr><tr><td class=\"key\">4</td><td>2 Timoteo 2:21 (NTV)</td><td>Si te mantienes puro, serás un utensilio especial para uso honorable. Tu vida será limpia, y estarás listo para que el Maestro te use en toda buena obra</td></tr><tr><td class=\"key\">5</td><td>1 Timoteo 2:4</td><td>[Dios] quiere que todos se salven</td></tr><tr><td class=\"key\">6</td><td>Isaías 41:10</td><td>No temas, pues yo soy tu Dios. Yo te doy fuerzas, yo te ayudo, yo te sostengo con mi mano victoriosa</td></tr><tr><td class=\"key\">7</td><td>1 Tesalonicenses 5:18</td><td>Den gracias a Dios por todo, porque esto es lo que él quiere de ustedes como creyentes en Cristo Jesús</td></tr><tr><td class=\"key\">8</td><td>Hechos 1:8</td><td>Cuando el Espíritu Santo venga sobre ustedes, recibirán poder y saldrán a dar testimonio de mí [...] hasta en las partes más lejanas de la tierra</td></tr></tbody></table>"
+  },
+  {
+   "t": "📖 Del 9 al 16 de octubre",
+   "h": "<table class=\"info-table\"><thead><tr><th>Día</th><th>Referencia</th><th>Versículo</th></tr></thead><tbody><tr><td class=\"key\">9</td><td>2 Timoteo 4:2</td><td>Tú anuncia el mensaje de Dios en todo momento</td></tr><tr><td class=\"key\">10</td><td>Cantares 2:2</td><td>Mi amada es, entre las mujeres, como una rosa entre los espinos</td></tr><tr><td class=\"key\">11</td><td>Proverbios 16:9</td><td>Al hombre le toca hacer planes, y al Señor dirigir sus pasos</td></tr><tr><td class=\"key\">12</td><td>Filipenses 3:14 (PDT)</td><td>Sigo hacia la meta para ganar el premio que Dios me ofreció cuando me llamó por medio de Jesucristo</td></tr><tr><td class=\"key\">13</td><td>Proverbios 31:10 (RV95)</td><td>Mujer virtuosa, ¿quién la hallará? Su valor sobrepasa largamente al de las piedras preciosas</td></tr><tr><td class=\"key\">14</td><td>Gálatas 1:10</td><td>Yo no busco la aprobación de los hombres, sino la aprobación de Dios</td></tr><tr><td class=\"key\">15</td><td>Marcos 5:19</td><td>Vete a tu casa, con tus parientes, y cuéntales todo lo que el Señor te ha hecho, y cómo ha tenido compasión de ti</td></tr><tr><td class=\"key\">16</td><td>Filipenses 4:3</td><td>Sus nombres ya están escritos en el libro de la vida</td></tr></tbody></table>"
+  },
+  {
+   "t": "📖 Del 17 al 24 de octubre",
+   "h": "<table class=\"info-table\"><thead><tr><th>Día</th><th>Referencia</th><th>Versículo</th></tr></thead><tbody><tr><td class=\"key\">17</td><td>Salmo 120:2</td><td>Señor, líbrame de los labios mentirosos y de la lengua embustera</td></tr><tr><td class=\"key\">18</td><td>Josué 1:9</td><td>Yo soy quien te manda que tengas valor y firmeza. No tengas miedo ni te desanimes porque yo, tu Señor y Dios, estaré contigo dondequiera que vayas</td></tr><tr><td class=\"key\">19</td><td>Juan 14:3</td><td>Después de irme y de prepararles un lugar, vendré otra vez para llevarlos conmigo, para que ustedes estén en el mismo lugar en donde yo voy a estar</td></tr><tr><td class=\"key\">20</td><td>Filipenses 4:8</td><td>Piensen en todo lo verdadero, en todo lo que es digno de respeto, en todo lo recto, en todo lo puro</td></tr><tr><td class=\"key\">21</td><td>Salmo 71:17</td><td>Dios mío, tú me has enseñado desde mi juventud</td></tr><tr><td class=\"key\">22</td><td>Lucas 2:46-47</td><td>Sentado [Jesús] entre los maestros de la ley, [...] todos los que lo oían se admiraban de su inteligencia y de sus respuestas</td></tr><tr><td class=\"key\">23</td><td>Isaías 52:7 (TLA)</td><td>¡Qué hermoso es ver al que llega por las colinas trayendo buenas noticias: noticias de paz, noticias de salvación</td></tr><tr><td class=\"key\">24</td><td>Gálatas 5:16-17 (TLA)</td><td>Obedezcan al Espíritu de Dios, y así no desearán hacer lo malo. [...] Ustedes no pueden hacer lo que se les antoje</td></tr></tbody></table>"
+  },
+  {
+   "t": "📖 Del 25 al 31 de octubre",
+   "h": "<table class=\"info-table\"><thead><tr><th>Día</th><th>Referencia</th><th>Versículo</th></tr></thead><tbody><tr><td class=\"key\">25</td><td>Proverbios 14:29 (NBV)</td><td>El que controla su enojo es muy inteligente</td></tr><tr><td class=\"key\">26</td><td>Proverbios 12:25 (NBV)</td><td>La angustia desalienta el corazón del hombre, pero una palabra alentadora lo anima</td></tr><tr><td class=\"key\">27</td><td>Santiago 3:15 (NTV)</td><td>La envidia y el egoísmo no forman parte de la sabiduría que proviene de Dios</td></tr><tr><td class=\"key\">28</td><td>Hechos 10:34 (NTV)</td><td>Veo con claridad que Dios no muestra favoritismo</td></tr><tr><td class=\"key\">29</td><td>Filipenses 4:19 (LBLA)</td><td>Mi Dios proveerá a todas vuestras necesidades</td></tr><tr><td class=\"key\">30</td><td>Proverbios 29:11 (NVI)</td><td>El necio da rienda suelta a su ira, pero el sabio sabe dominarla</td></tr><tr><td class=\"key\">31</td><td>Proverbios 15:1 (RVC)</td><td>La respuesta amable calma la ira; la respuesta grosera aumenta el enojo</td></tr></tbody></table>"
+  },
+  {
+   "t": "💡 Truco para las referencias",
+   "h": "<div class=\"highlight-box\">Lo que más se pregunta es <strong>qué versículo va con qué día</strong>.\n      No hace falta memorizar el versículo entero: basta reconocer el libro.\n      Repasa primero los que están en <strong>Proverbios</strong> (días 11, 25, 26, 30 y 31)\n      y los de <strong>Filipenses</strong> (días 12, 16, 20 y 29), que son los que más se repiten.</div>"
+  }
+ ],
+ "mm-plan": [
+  {
+   "t": "🎯 Qué pide el reglamento",
+   "h": "<div class=\"warn-box\">«Estudiar la matutina de menores, Héroes y villanos, del mes de octubre,\n      y presentar 2 integrantes por categoría para presentar examen escrito de la\n      matutina de ese mes.»<br><br>\n      <strong>4 a 6 años:</strong> del 1 al 15 de octubre.<br>\n      <strong>7 a 9 años:</strong> del 1 al 30 de octubre.<br><br>\n      El día 31 no entra en el examen, pero está en la app porque cierra la\n      historia del día 30.</div>"
+  },
+  {
+   "t": "📋 Qué se pregunta de cada día",
+   "h": "<div class=\"highlight-box\">De cada lectura hay tres cosas que se pueden preguntar:<br>\n      1. <strong>Qué día es</strong> ese título.<br>\n      2. <strong>Cuál es el versículo</strong> de ese día y de qué libro.<br>\n      3. <strong>Qué pasó</strong> en la historia y <strong>qué enseña</strong>.<br><br>\n      Los nombres propios son los que más se olvidan: Dienterroto, Gibson,\n      el profesor Elisha, Sophie, Jonah, Unia Api, Julie, Gladys Aylward,\n      Jeannie Lawson, Axel, David, Marcos, Ester, Mónica, el señor McMullen,\n      Tim Donaghy, Emely, Ermenegildo, Víctor, Óscar, Pablo Pineda,\n      Charles Tindley, Nabal y Abigail.</div>"
+  },
+  {
+   "t": "📅 Cómo repasarlo",
+   "h": "<table class=\"info-table\"><thead><tr><th>Cuándo</th><th>Qué hacer</th></tr></thead><tbody><tr><td class=\"key\">Cada día</td><td>Leer la lectura del día en el libro y marcarla como estudiada en la app.</td></tr><tr><td class=\"key\">Cada semana</td><td>Tarjetas de esa semana: versículo por día y quién es quién.</td></tr><tr><td class=\"key\">Cada quincena</td><td>Un examen del alcance de esa quincena, y después «solo mis errores».</td></tr><tr><td class=\"key\">La víspera</td><td>La tabla de héroes y villanos completa, y la de versículos.</td></tr></tbody></table>"
+  },
+  {
+   "t": "🧠 La confusión más fácil",
+   "h": "<div class=\"highlight-box\">Hay historias que ocupan <strong>varios días seguidos</strong> y se mezclan:<br><br>\n      <strong>Gibson y las 5 kinas:</strong> días 3 y 4.<br>\n      <strong>Sophie en la lancha:</strong> días 6 y 7.<br>\n      <strong>Unia Api:</strong> días 8, 9, 10 y 11.<br>\n      <strong>Gladys Aylward:</strong> días 12, 13 y 14.<br>\n      <strong>Nabal y Abigail:</strong> días 30 y 31.<br><br>\n      Cuando la pregunta diga un día concreto, fíjate en <u>qué parte</u> de la\n      historia pasó ese día, no en la historia completa.</div>"
   }
  ]
 };
@@ -5516,6 +8341,316 @@ const TARJETAS = [
   "cap": "pr44",
   "f": "Qué edad tenía Daniel en el foso",
   "r": "Más de ochenta años"
+ },
+ {
+  "cap": "m01",
+  "f": "Versículo del <b>1.º de octubre</b>",
+  "r": "«Cuídense ustedes de toda avaricia; porque la vida no depende del poseer muchas cosas» (Lucas 12:15)"
+ },
+ {
+  "cap": "m01",
+  "f": "«El villano pirata Dienterroto» — ¿qué día y quién es?",
+  "r": "1.º de octubre · Villano: el pirata Dienterroto"
+ },
+ {
+  "cap": "m02",
+  "f": "Versículo del <b>2 de octubre</b>",
+  "r": "«El Señor levanta del suelo al pobre, y saca del lugar más bajo al necesitado» (Salmo 113:7)"
+ },
+ {
+  "cap": "m02",
+  "f": "«El héroe sabe que Dios lo levanta» — ¿qué día y quién es?",
+  "r": "2 de octubre · Un experimento con dos huevos"
+ },
+ {
+  "cap": "m03",
+  "f": "Versículo del <b>3 de octubre</b>",
+  "r": "«Así como sabemos que Dios oye nuestras oraciones, también sabemos que ya tenemos lo que le hemos pedido» (1 Juan 5:15)"
+ },
+ {
+  "cap": "m03",
+  "f": "«El héroe que dio 5 kinas» — ¿qué día y quién es?",
+  "r": "3 de octubre · Héroe: el profesor Elisha"
+ },
+ {
+  "cap": "m04",
+  "f": "Versículo del <b>4 de octubre</b>",
+  "r": "«Si te mantienes puro, serás un utensilio especial para uso honorable. Tu vida será limpia, y estarás listo para que el Maestro te use en toda buena obra» (2 Timoteo 2:21 (NTV))"
+ },
+ {
+  "cap": "m04",
+  "f": "«El héroe que ayudaba a jóvenes estudiantes» — ¿qué día y quién es?",
+  "r": "4 de octubre · Héroes: el profesor Elisha y un desconocido"
+ },
+ {
+  "cap": "m05",
+  "f": "Versículo del <b>5 de octubre</b>",
+  "r": "«[Dios] quiere que todos se salven» (1 Timoteo 2:4)"
+ },
+ {
+  "cap": "m05",
+  "f": "«Estás invitado a la boda» — ¿qué día y quién es?",
+  "r": "5 de octubre · Las bodas de Papúa Nueva Guinea"
+ },
+ {
+  "cap": "m06",
+  "f": "Versículo del <b>6 de octubre</b>",
+  "r": "«No temas, pues yo soy tu Dios. Yo te doy fuerzas, yo te ayudo, yo te sostengo con mi mano victoriosa» (Isaías 41:10)"
+ },
+ {
+  "cap": "m06",
+  "f": "«Nunca estás solo» — ¿qué día y quién es?",
+  "r": "6 de octubre · Sophie y su mamá"
+ },
+ {
+  "cap": "m07",
+  "f": "Versículo del <b>7 de octubre</b>",
+  "r": "«Den gracias a Dios por todo, porque esto es lo que él quiere de ustedes como creyentes en Cristo Jesús» (1 Tesalonicenses 5:18)"
+ },
+ {
+  "cap": "m07",
+  "f": "«Una joven heroína alienta a los tripulantes» — ¿qué día y quién es?",
+  "r": "7 de octubre · Heroína: Sophie"
+ },
+ {
+  "cap": "m08",
+  "f": "Versículo del <b>8 de octubre</b>",
+  "r": "«Cuando el Espíritu Santo venga sobre ustedes, recibirán poder y saldrán a dar testimonio de mí [...] hasta en las partes más lejanas de la tierra» (Hechos 1:8)"
+ },
+ {
+  "cap": "m08",
+  "f": "«El poder del héroe» — ¿qué día y quién es?",
+  "r": "8 de octubre · Héroe: Unia Api"
+ },
+ {
+  "cap": "m09",
+  "f": "Versículo del <b>9 de octubre</b>",
+  "r": "«Tú anuncia el mensaje de Dios en todo momento» (2 Timoteo 4:2)"
+ },
+ {
+  "cap": "m09",
+  "f": "«El héroe narrador de historias» — ¿qué día y quién es?",
+  "r": "9 de octubre · Héroe: Unia"
+ },
+ {
+  "cap": "m10",
+  "f": "Versículo del <b>10 de octubre</b>",
+  "r": "«Mi amada es, entre las mujeres, como una rosa entre los espinos» (Cantares 2:2)"
+ },
+ {
+  "cap": "m10",
+  "f": "«El héroe se enamora — 1.ª parte» — ¿qué día y quién es?",
+  "r": "10 de octubre · Unia y Julie"
+ },
+ {
+  "cap": "m11",
+  "f": "Versículo del <b>11 de octubre</b>",
+  "r": "«Al hombre le toca hacer planes, y al Señor dirigir sus pasos» (Proverbios 16:9)"
+ },
+ {
+  "cap": "m11",
+  "f": "«El héroe se enamora — 2.ª parte» — ¿qué día y quién es?",
+  "r": "11 de octubre · Unia y Julie"
+ },
+ {
+  "cap": "m12",
+  "f": "Versículo del <b>12 de octubre</b>",
+  "r": "«Sigo hacia la meta para ganar el premio que Dios me ofreció cuando me llamó por medio de Jesucristo» (Filipenses 3:14 (PDT))"
+ },
+ {
+  "cap": "m12",
+  "f": "«La pequeña gran mujer» — ¿qué día y quién es?",
+  "r": "12 de octubre · Heroína: Gladys Aylward"
+ },
+ {
+  "cap": "m13",
+  "f": "Versículo del <b>13 de octubre</b>",
+  "r": "«Mujer virtuosa, ¿quién la hallará? Su valor sobrepasa largamente al de las piedras preciosas» (Proverbios 31:10 (RV95))"
+ },
+ {
+  "cap": "m13",
+  "f": "««Mujer virtuosa»» — ¿qué día y quién es?",
+  "r": "13 de octubre · Heroína: Gladys Aylward"
+ },
+ {
+  "cap": "m14",
+  "f": "Versículo del <b>14 de octubre</b>",
+  "r": "«Yo no busco la aprobación de los hombres, sino la aprobación de Dios» (Gálatas 1:10)"
+ },
+ {
+  "cap": "m14",
+  "f": "««No me arrepiento»» — ¿qué día y quién es?",
+  "r": "14 de octubre · Heroína: Gladys Aylward"
+ },
+ {
+  "cap": "m15",
+  "f": "Versículo del <b>15 de octubre</b>",
+  "r": "«Vete a tu casa, con tus parientes, y cuéntales todo lo que el Señor te ha hecho, y cómo ha tenido compasión de ti» (Marcos 5:19)"
+ },
+ {
+  "cap": "m15",
+  "f": "«Testigos de Jesús» — ¿qué día y quién es?",
+  "r": "15 de octubre · Tres personajes de la Biblia"
+ },
+ {
+  "cap": "m16",
+  "f": "Versículo del <b>16 de octubre</b>",
+  "r": "«Sus nombres ya están escritos en el libro de la vida» (Filipenses 4:3)"
+ },
+ {
+  "cap": "m16",
+  "f": "«Héroes anónimos» — ¿qué día y quién es?",
+  "r": "16 de octubre · Los cristianos de los primeros siglos"
+ },
+ {
+  "cap": "m17",
+  "f": "Versículo del <b>17 de octubre</b>",
+  "r": "«Señor, líbrame de los labios mentirosos y de la lengua embustera» (Salmo 120:2)"
+ },
+ {
+  "cap": "m17",
+  "f": "«El amigo villano» — ¿qué día y quién es?",
+  "r": "17 de octubre · Villano: Axel"
+ },
+ {
+  "cap": "m18",
+  "f": "Versículo del <b>18 de octubre</b>",
+  "r": "«Yo soy quien te manda que tengas valor y firmeza. No tengas miedo ni te desanimes porque yo, tu Señor y Dios, estaré contigo dondequiera que vayas» (Josué 1:9)"
+ },
+ {
+  "cap": "m18",
+  "f": "«¿Héroes o no?» — ¿qué día y quién es?",
+  "r": "18 de octubre · Marcos, Ana y Lucía, Mónica y Ester"
+ },
+ {
+  "cap": "m19",
+  "f": "Versículo del <b>19 de octubre</b>",
+  "r": "«Después de irme y de prepararles un lugar, vendré otra vez para llevarlos conmigo, para que ustedes estén en el mismo lugar en donde yo voy a estar» (Juan 14:3)"
+ },
+ {
+  "cap": "m19",
+  "f": "«Di siempre dónde estás» — ¿qué día y quién es?",
+  "r": "19 de octubre · El señor McMullen"
+ },
+ {
+  "cap": "m20",
+  "f": "Versículo del <b>20 de octubre</b>",
+  "r": "«Piensen en todo lo verdadero, en todo lo que es digno de respeto, en todo lo recto, en todo lo puro» (Filipenses 4:8)"
+ },
+ {
+  "cap": "m20",
+  "f": "«El villano del baloncesto» — ¿qué día y quién es?",
+  "r": "20 de octubre · Villano: Tim Donaghy"
+ },
+ {
+  "cap": "m21",
+  "f": "Versículo del <b>21 de octubre</b>",
+  "r": "«Dios mío, tú me has enseñado desde mi juventud» (Salmo 71:17)"
+ },
+ {
+  "cap": "m21",
+  "f": "«Tus maestros son héroes» — ¿qué día y quién es?",
+  "r": "21 de octubre · Los maestros"
+ },
+ {
+  "cap": "m22",
+  "f": "Versículo del <b>22 de octubre</b>",
+  "r": "«Sentado [Jesús] entre los maestros de la ley, [...] todos los que lo oían se admiraban de su inteligencia y de sus respuestas» (Lucas 2:46-47)"
+ },
+ {
+  "cap": "m22",
+  "f": "«Jesús: el Maestro de los maestros» — ¿qué día y quién es?",
+  "r": "22 de octubre · Jesús a los doce años"
+ },
+ {
+  "cap": "m23",
+  "f": "Versículo del <b>23 de octubre</b>",
+  "r": "«¡Qué hermoso es ver al que llega por las colinas trayendo buenas noticias: noticias de paz, noticias de salvación» (Isaías 52:7 (TLA))"
+ },
+ {
+  "cap": "m23",
+  "f": "«Héroes de ayer y de hoy» — ¿qué día y quién es?",
+  "r": "23 de octubre · Los mensajeros"
+ },
+ {
+  "cap": "m24",
+  "f": "Versículo del <b>24 de octubre</b>",
+  "r": "«Obedezcan al Espíritu de Dios, y así no desearán hacer lo malo. [...] Ustedes no pueden hacer lo que se les antoje» (Gálatas 5:16-17 (TLA))"
+ },
+ {
+  "cap": "m24",
+  "f": "«El villano que maltrató a un animal» — ¿qué día y quién es?",
+  "r": "24 de octubre · Villano: Balaam"
+ },
+ {
+  "cap": "m25",
+  "f": "Versículo del <b>25 de octubre</b>",
+  "r": "«El que controla su enojo es muy inteligente» (Proverbios 14:29 (NBV))"
+ },
+ {
+  "cap": "m25",
+  "f": "«Fernando, el niño enojado» — ¿qué día y quién es?",
+  "r": "25 de octubre · Fernando"
+ },
+ {
+  "cap": "m26",
+  "f": "Versículo del <b>26 de octubre</b>",
+  "r": "«La angustia desalienta el corazón del hombre, pero una palabra alentadora lo anima» (Proverbios 12:25 (NBV))"
+ },
+ {
+  "cap": "m26",
+  "f": "«La heroína que ayudó a un niño con sus palabras» — ¿qué día y quién es?",
+  "r": "26 de octubre · Heroína: Emely"
+ },
+ {
+  "cap": "m27",
+  "f": "Versículo del <b>27 de octubre</b>",
+  "r": "«La envidia y el egoísmo no forman parte de la sabiduría que proviene de Dios» (Santiago 3:15 (NTV))"
+ },
+ {
+  "cap": "m27",
+  "f": "«El niño que se quedó sentado en el banquillo» — ¿qué día y quién es?",
+  "r": "27 de octubre · Víctor"
+ },
+ {
+  "cap": "m28",
+  "f": "Versículo del <b>28 de octubre</b>",
+  "r": "«Veo con claridad que Dios no muestra favoritismo» (Hechos 10:34 (NTV))"
+ },
+ {
+  "cap": "m28",
+  "f": "«Un héroe diferente» — ¿qué día y quién es?",
+  "r": "28 de octubre · Héroe: Pablo Pineda"
+ },
+ {
+  "cap": "m29",
+  "f": "Versículo del <b>29 de octubre</b>",
+  "r": "«Mi Dios proveerá a todas vuestras necesidades» (Filipenses 4:19 (LBLA))"
+ },
+ {
+  "cap": "m29",
+  "f": "«Dios provee» — ¿qué día y quién es?",
+  "r": "29 de octubre · Héroe: Charles Tindley"
+ },
+ {
+  "cap": "m30",
+  "f": "Versículo del <b>30 de octubre</b>",
+  "r": "«El necio da rienda suelta a su ira, pero el sabio sabe dominarla» (Proverbios 29:11 (NVI))"
+ },
+ {
+  "cap": "m30",
+  "f": "«Nabal, el villano necio» — ¿qué día y quién es?",
+  "r": "30 de octubre · Villano: Nabal"
+ },
+ {
+  "cap": "m31",
+  "f": "Versículo del <b>31 de octubre</b>",
+  "r": "«La respuesta amable calma la ira; la respuesta grosera aumenta el enojo» (Proverbios 15:1 (RVC))"
+ },
+ {
+  "cap": "m31",
+  "f": "«La sabia Abigail» — ¿qué día y quién es?",
+  "r": "31 de octubre · Heroína: Abigail"
  }
 ];
 
@@ -5550,13 +8685,13 @@ function normalizar(x){
   CAPS.forEach(c=>s.prog[c.id]=0);
   if(!x||typeof x!=='object')return s;
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
-  if(['me','av','pa','gm'].includes(x.cat))s.cat=x.cat;
+  if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
   if(Array.isArray(x.examenes))
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
       .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,
-        cat:['me','av','pa','gm'].includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
+        cat:Object.keys(CATS).includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
         modo:['simulacro','errores'].includes(e.modo)?e.modo:'normal',
         nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
@@ -5589,7 +8724,12 @@ function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(S));}catch(e){}
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
-const bancoDe=()=>{const ids=capsDe().map(c=>c.id);return BANCO.filter(q=>ids.includes(q.cap));};
+/* Para exámenes se excluyen los capítulos marcados `extra`: están para
+   estudiar, pero el reglamento no los pide (hoy, el 31 de octubre). */
+const bancoDe=()=>{
+  const ids=capsDe().filter(c=>!c.extra).map(c=>c.id);
+  return BANCO.filter(q=>ids.includes(q.cap));
+};
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
@@ -5604,15 +8744,20 @@ const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
      techo  nivel máximo de dificultad que se le ofrece
      sinCompletar  el examen no trae sección de completar */
 const CATS={
-  me:{nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
+  me:{ev:'Conexión Bíblica', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
       alcance:'Daniel 1, 2, 3 y 6'},
-  av:{nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
+  av:{ev:'Conexión Bíblica', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
       alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  pa:{nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
+  pa:{ev:'Conexión Bíblica', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
       alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  gm:{nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
+  gm:{ev:'Conexión Bíblica', nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
       alcance:'Daniel 1 al 6 · P&R 39 al 44'},
+  dm1:{ev:'Devoción Matutina', nombre:'Matutina menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 15 de octubre'},
+  dm2:{ev:'Devoción Matutina', nombre:'Matutina Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 30 de octubre'},
 };
+
 const CAT=()=>CATS[S.cat]||CATS.av;
 /* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
    Lo único confirmado del examen del campamento es el formato de tres
@@ -5627,7 +8772,8 @@ const NPREG=()=>CAT().n;
    9 de octubre de 2026; si el de Guías Mayores queda en otra fecha, se
    cambia solo esta línea y la cuenta de días, la semana del plan y el techo
    de dificultad se recalculan solos para esa categoría. */
-const FECHA_META={me:'2026-10-09',av:'2026-10-09',pa:'2026-10-09',gm:'2026-10-09'};
+const FECHA_META={me:'2026-10-09',av:'2026-10-09',pa:'2026-10-09',gm:'2026-10-09',
+  dm1:'2026-10-09',dm2:'2026-10-09'};
 const SEMANAS_PLAN=7;
 
 function diasParaMeta(){
@@ -5697,10 +8843,13 @@ function ponCat(c){
 function pintaSelectorCat(){
   const cont=document.getElementById('cat-sel');
   if(!cont)return;
-  cont.innerHTML=Object.entries(CATS).map(([k,c])=>
-    '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
-    '<div class="cn">'+esc(c.nombre)+'</div>'+
-    '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('');
+  const eventos=[...new Set(Object.values(CATS).map(c=>c.ev))];
+  cont.innerHTML=eventos.map(ev=>
+    '<div class="cat-grupo">'+esc(ev)+'</div>'+
+    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.ev===ev).map(([k,c])=>
+      '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
+      '<div class="cn">'+esc(c.nombre)+'</div>'+
+      '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('')+'</div>').join('');
 }
 
 /* ───────── qué estudiar hoy ─────────
@@ -5961,8 +9110,14 @@ function poolDe(){
   if(alcance==='todo')return b;
   if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
+  if(alcance==='q1')return b.filter(q=>diaMat(q.cap)>0&&diaMat(q.cap)<=15);
+  if(alcance==='q2')return b.filter(q=>diaMat(q.cap)>15);
   return b.filter(q=>q.cap===alcance);
 }
+
+/* Día del mes de un capítulo de matutina (m01..m31), o 0 si no lo es. */
+const diaMat=id=>/^m\d\d$/.test(id)?Number(id.slice(1)):0;
+const esMatutina=()=>CAT().ev==='Devoción Matutina';
 
 /* Nivel efectivo del examen que se va a armar. */
 const nivelEfectivo=()=>nivel||nivelRecomendado();
@@ -5991,11 +9146,14 @@ function opcionesCuantas(){
 function pintaMenuEx(){
   const sa=document.getElementById('ex-alcance');
   const prev=alcance;
-  sa.innerHTML='<option value="todo">Todo mi material</option>'+
-    '<option value="biblia">Solo el libro de Daniel</option>'+
-    '<option value="pr">Solo Profetas y Reyes</option>'+
+  const grupos=esMatutina()
+    ?'<option value="q1">Solo la primera quincena (1 al 15)</option>'+
+     '<option value="q2">Solo la segunda quincena (16 en adelante)</option>'
+    :'<option value="biblia">Solo el libro de Daniel</option>'+
+     '<option value="pr">Solo Profetas y Reyes</option>';
+  sa.innerHTML='<option value="todo">Todo mi material</option>'+grupos+
     capsDe().map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
-  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr'].includes(prev))alcance='todo';
+  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr','q1','q2'].includes(prev))alcance='todo';
   sa.value=alcance;
 
   const ops=opcionesCuantas();
@@ -6336,7 +9494,7 @@ function borrarTodo(){
 /* La clase en el body permite que los estilos suban un punto el tamaño de
    letra en Aventureros, sin duplicar pantallas. */
 function marcaCat(){
-  try{document.body.className=S.cat;}catch(e){}
+  try{document.body.className=S.cat+' '+(CAT().edad==='4 a 6 años'?'me':CAT().edad==='7 a 9 años'?'av':'gm');}catch(e){}
 }
 
 function pintaLogo(){

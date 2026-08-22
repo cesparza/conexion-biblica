@@ -24,7 +24,10 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .hero h1{font-size:1.9rem;font-weight:900;letter-spacing:-.5px}
 .hero p{opacity:.9;margin-top:.4rem;font-size:.92rem}
 
-.cat-sel{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.cat-sel{display:block}
+.cat-grupo{font-size:.72rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin:.75rem 0 .4rem}
+.cat-grupo:first-child{margin-top:0}
+.cat-fila{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
 .cat-btn{background:#f8f9ff;border:3px solid #e5e7eb;border-radius:12px;padding:1rem .8rem;cursor:pointer;font-family:inherit;text-align:center;min-height:46px}
 .cat-btn:hover{border-color:var(--cielo)}
 .cat-btn.on{border-color:var(--naranja);background:#fff8f0}
@@ -208,7 +211,7 @@ body.av .tj .rev{font-size:1.08rem}
   .nav-b span{display:none}
   .nav-t button{padding:0 .6rem;font-size:.76rem}
   .stats{grid-template-columns:repeat(2,1fr)}
-  .cat-sel{grid-template-columns:1fr 1fr}
+  .cat-fila{grid-template-columns:1fr 1fr}
   .hero h1{font-size:1.55rem}
   .info-table{font-size:.79rem}
   .info-table td.key{white-space:normal}

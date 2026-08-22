@@ -197,5 +197,49 @@ for(const cat of ['av','gm']){
 }
 function NPREG_TEST(c){return c==='av'?15:25;}
 
+// 15. Devoción Matutina: cobertura completa del alcance del reglamento
+const MATU = require(path.join(RAIZ,'fuente','matutina.js'));
+const B_ALL = [...BANCO, ...MATU.MAT_BANCO];
+
+ok(MATU.DIAS.length===31, `La matutina tiene los 31 días de octubre (${MATU.DIAS.length})`);
+
+/* Cada día debe tener contenido completo y al menos 4 preguntas. */
+const flojosDia=[], sinCont=[];
+for(const x of MATU.DIAS){
+  const id=MATU.idDia(x.d);
+  const n=MATU.MAT_BANCO.filter(q=>q.cap===id).length;
+  if(n<4)flojosDia.push(`${x.d} (${n})`);
+  const c=MATU.MAT_CONTENIDO[id]||[];
+  if(c.length<4 || c.some(s=>!s.t||!s.h))sinCont.push(String(x.d));
+  if(!x.t||!x.r||!x.v||!x.q||!x.h||!x.l)sinCont.push(x.d+' datos');
+}
+ok(flojosDia.length===0, 'Cada día de la matutina tiene 4 o más preguntas'
+  + (flojosDia.length?' — flojos: '+flojosDia.join(', '):''));
+ok(sinCont.length===0, 'Cada día de la matutina tiene versículo, quién es, historia y lección'
+  + (sinCont.length?' — incompletos: '+sinCont.join(', '):''));
+
+/* El alcance de cada categoría es el del reglamento. */
+const diasDe=c=>MATU.MAT_CAPS.filter(x=>x.cats.includes(c)).map(x=>Number(x.id.slice(1))).sort((a,b)=>a-b);
+const d1=diasDe('dm1'), d2=diasDe('dm2');
+ok(d1.length===15 && d1[0]===1 && d1[14]===15,
+  `Matutina 4 a 6 años: días 1 al 15 (${d1.length} días)`);
+ok(d2.length===31 && d2[0]===1 && d2[30]===31,
+  `Matutina 7 a 9 años: días 1 al 30 más el 31 de lectura (${d2.length} días)`);
+
+/* El día 31 está fuera del examen porque el reglamento llega al 30. */
+const d31 = MATU.MAT_CAPS.find(x=>x.id==='m31');
+ok(d31 && d31.extra===true, 'El día 31 está marcado como extra: se estudia pero no entra al examen');
+
+/* Las referencias de los versículos no se repiten al azar entre distractores:
+   cada pregunta de «qué versículo va con qué día» debe tener 4 opciones distintas. */
+const malas = MATU.MAT_BANCO.filter(q=>q.t==='mc' && new Set(q.o).size!==q.o.length);
+ok(malas.length===0, 'Ninguna pregunta de matutina repite una opción'
+  + (malas.length?' — '+malas.length+' con opciones repetidas':''));
+
+/* Ninguna pregunta de matutina cae en un capítulo que no existe. */
+const idsMat = new Set(MATU.MAT_CAPS.map(c=>c.id));
+ok(MATU.MAT_BANCO.every(q=>idsMat.has(q.cap)),
+  'Todas las preguntas de matutina apuntan a un día existente');
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

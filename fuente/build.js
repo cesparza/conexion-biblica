@@ -9,10 +9,21 @@ const { MODULOS, CONT_MODULOS } = require('./modulos.js');
 const { TARJETAS } = require('./tarjetas.js');
 const { LOGO_TL } = require('./logo.js');
 const { nivelDe } = require('./niveles.js');
+const MAT = require('./matutina.js');
+
+/* Dos eventos, un solo archivo: al material de Daniel se le suma el de la
+   Devoción Matutina. Cada capítulo lleva sus categorías, así que el filtrado
+   por categoría separa solo lo que corresponde. */
+const CAPS_ALL = [...CAPS, ...MAT.MAT_CAPS];
+const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO };
+const BANCO_ALL = [...BANCO, ...MAT.MAT_BANCO];
+const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS];
+const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS];
+const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS };
 
 /* Cada pregunta sale al HTML con su nivel ya calculado (fuente/niveles.js).
    La app solo lee q.nv: la regla vive en un archivo y no se duplica. */
-const BANCO_NV = BANCO.map(q => ({ ...q, nv: nivelDe(q) }));
+const BANCO_NV = BANCO_ALL.map(q => ({ ...q, nv: nivelDe(q) }));
 
 /* La app se escribe en archivos reales (estilos.css, cuerpo.html, app.js) y
    este script solo los ensambla con los datos. Antes todo vivía dentro de un
@@ -25,17 +36,17 @@ const APP    = leer('app.js');
 
 /* Se serializa con indentación para que ninguna línea pase de 2.000
    caracteres: con una sola línea, ningún visor de diff abre el archivo. */
-const DATA = `const CAPS = ${JSON.stringify(CAPS, null, 1)};
+const DATA = `const CAPS = ${JSON.stringify(CAPS_ALL, null, 1)};
 
-const CONTENIDO = ${JSON.stringify(CONTENIDO, null, 1)};
+const CONTENIDO = ${JSON.stringify(CONTENIDO_ALL, null, 1)};
 
 const BANCO = ${JSON.stringify(BANCO_NV, null, 1)};
 
-const MODULOS = ${JSON.stringify(MODULOS, null, 1)};
+const MODULOS = ${JSON.stringify(MODULOS_ALL, null, 1)};
 
-const CONT_MODULOS = ${JSON.stringify(CONT_MODULOS, null, 1)};
+const CONT_MODULOS = ${JSON.stringify(CONT_MODULOS_ALL, null, 1)};
 
-const TARJETAS = ${JSON.stringify(TARJETAS, null, 1)};
+const TARJETAS = ${JSON.stringify(TARJETAS_ALL, null, 1)};
 
 /* El logo va partido en trozos: como data URI de una sola línea pasaría de
    2.000 caracteres y el hook del repo bloquearía el commit. */

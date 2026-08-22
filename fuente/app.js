@@ -13,13 +13,13 @@ function normalizar(x){
   CAPS.forEach(c=>s.prog[c.id]=0);
   if(!x||typeof x!=='object')return s;
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
-  if(['me','av','pa','gm'].includes(x.cat))s.cat=x.cat;
+  if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
   if(Array.isArray(x.examenes))
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
       .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,
-        cat:['me','av','pa','gm'].includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
+        cat:Object.keys(CATS).includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
         modo:['simulacro','errores'].includes(e.modo)?e.modo:'normal',
         nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
@@ -52,7 +52,12 @@ function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(S));}catch(e){}
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
-const bancoDe=()=>{const ids=capsDe().map(c=>c.id);return BANCO.filter(q=>ids.includes(q.cap));};
+/* Para exámenes se excluyen los capítulos marcados `extra`: están para
+   estudiar, pero el reglamento no los pide (hoy, el 31 de octubre). */
+const bancoDe=()=>{
+  const ids=capsDe().filter(c=>!c.extra).map(c=>c.id);
+  return BANCO.filter(q=>ids.includes(q.cap));
+};
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
@@ -67,15 +72,20 @@ const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
      techo  nivel máximo de dificultad que se le ofrece
      sinCompletar  el examen no trae sección de completar */
 const CATS={
-  me:{nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
+  me:{ev:'Conexión Bíblica', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
       alcance:'Daniel 1, 2, 3 y 6'},
-  av:{nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
+  av:{ev:'Conexión Bíblica', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
       alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  pa:{nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
+  pa:{ev:'Conexión Bíblica', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
       alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  gm:{nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
+  gm:{ev:'Conexión Bíblica', nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
       alcance:'Daniel 1 al 6 · P&R 39 al 44'},
+  dm1:{ev:'Devoción Matutina', nombre:'Matutina menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 15 de octubre'},
+  dm2:{ev:'Devoción Matutina', nombre:'Matutina Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 30 de octubre'},
 };
+
 const CAT=()=>CATS[S.cat]||CATS.av;
 /* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
    Lo único confirmado del examen del campamento es el formato de tres
@@ -90,7 +100,8 @@ const NPREG=()=>CAT().n;
    9 de octubre de 2026; si el de Guías Mayores queda en otra fecha, se
    cambia solo esta línea y la cuenta de días, la semana del plan y el techo
    de dificultad se recalculan solos para esa categoría. */
-const FECHA_META={me:'2026-10-09',av:'2026-10-09',pa:'2026-10-09',gm:'2026-10-09'};
+const FECHA_META={me:'2026-10-09',av:'2026-10-09',pa:'2026-10-09',gm:'2026-10-09',
+  dm1:'2026-10-09',dm2:'2026-10-09'};
 const SEMANAS_PLAN=7;
 
 function diasParaMeta(){
@@ -160,10 +171,13 @@ function ponCat(c){
 function pintaSelectorCat(){
   const cont=document.getElementById('cat-sel');
   if(!cont)return;
-  cont.innerHTML=Object.entries(CATS).map(([k,c])=>
-    '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
-    '<div class="cn">'+esc(c.nombre)+'</div>'+
-    '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('');
+  const eventos=[...new Set(Object.values(CATS).map(c=>c.ev))];
+  cont.innerHTML=eventos.map(ev=>
+    '<div class="cat-grupo">'+esc(ev)+'</div>'+
+    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.ev===ev).map(([k,c])=>
+      '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
+      '<div class="cn">'+esc(c.nombre)+'</div>'+
+      '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('')+'</div>').join('');
 }
 
 /* ───────── qué estudiar hoy ─────────
@@ -424,8 +438,14 @@ function poolDe(){
   if(alcance==='todo')return b;
   if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
+  if(alcance==='q1')return b.filter(q=>diaMat(q.cap)>0&&diaMat(q.cap)<=15);
+  if(alcance==='q2')return b.filter(q=>diaMat(q.cap)>15);
   return b.filter(q=>q.cap===alcance);
 }
+
+/* Día del mes de un capítulo de matutina (m01..m31), o 0 si no lo es. */
+const diaMat=id=>/^m\d\d$/.test(id)?Number(id.slice(1)):0;
+const esMatutina=()=>CAT().ev==='Devoción Matutina';
 
 /* Nivel efectivo del examen que se va a armar. */
 const nivelEfectivo=()=>nivel||nivelRecomendado();
@@ -454,11 +474,14 @@ function opcionesCuantas(){
 function pintaMenuEx(){
   const sa=document.getElementById('ex-alcance');
   const prev=alcance;
-  sa.innerHTML='<option value="todo">Todo mi material</option>'+
-    '<option value="biblia">Solo el libro de Daniel</option>'+
-    '<option value="pr">Solo Profetas y Reyes</option>'+
+  const grupos=esMatutina()
+    ?'<option value="q1">Solo la primera quincena (1 al 15)</option>'+
+     '<option value="q2">Solo la segunda quincena (16 en adelante)</option>'
+    :'<option value="biblia">Solo el libro de Daniel</option>'+
+     '<option value="pr">Solo Profetas y Reyes</option>';
+  sa.innerHTML='<option value="todo">Todo mi material</option>'+grupos+
     capsDe().map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
-  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr'].includes(prev))alcance='todo';
+  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr','q1','q2'].includes(prev))alcance='todo';
   sa.value=alcance;
 
   const ops=opcionesCuantas();
@@ -799,7 +822,7 @@ function borrarTodo(){
 /* La clase en el body permite que los estilos suban un punto el tamaño de
    letra en Aventureros, sin duplicar pantallas. */
 function marcaCat(){
-  try{document.body.className=S.cat;}catch(e){}
+  try{document.body.className=S.cat+' '+(CAT().edad==='4 a 6 años'?'me':CAT().edad==='7 a 9 años'?'av':'gm');}catch(e){}
 }
 
 function pintaLogo(){
