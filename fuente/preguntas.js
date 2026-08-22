@@ -67,9 +67,9 @@ const BANCO = [
 {cap:'d3',t:'mc',q:'¿En qué lugar fue levantada la estatua de oro? (Daniel 3:1)',
  o:['Frente al palacio real','En el campo de Dura, en la provincia de Babilonia','En la llanura de Sinar','En el templo principal'],a:1},
 {cap:'d3',t:'mc',q:'¿Cuál es el PRIMER instrumento de la lista de Daniel 3:5?',
- o:['La flauta','El arpa','La bocina','El tamboril'],a:2},
+ o:['La flauta','El arpa','La bocina','La cítara'],a:2},
 {cap:'d3',t:'mc',q:'¿Cuál de estos instrumentos NO aparece en Daniel 3:5?',
- o:['La zampoña','El salterio','La trompeta','El tamboril'],a:2},
+ o:['La zampoña','El salterio','La trompeta','La cítara'],a:2},
 {cap:'d3',t:'mc',q:'¿Cuántas veces más de lo acostumbrado mandó calentar el horno? (Daniel 3:19)',
  o:['Dos veces','Cuatro veces','Siete veces','Diez veces'],a:2},
 {cap:'d3',t:'mc',q:'¿Con qué ropa fueron echados al horno los tres jóvenes? (Daniel 3:21)',
@@ -85,7 +85,7 @@ const BANCO = [
 {cap:'d3',t:'tf',q:'Los tres jóvenes dijeron que si Dios no los libraba, entonces sí adorarían la estatua.',
  a:false,e:'Falso. Dijeron: «Y si no, no serviremos a tus dioses ni adoraremos la estatua» (Daniel 3:18).'},
 {cap:'d3',t:'fill',ins:'Daniel 3:25 (RV1995) — Completa:',
- p:[{x:'«He aquí yo veo '},{b:'cuatro',h:'¿cuántos?'},{x:' hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los '},{b:'dioses',h:'¿de quiénes? (así lo dijo el rey pagano)'},{x:'.»'}]},
+ p:[{x:'«Sin embargo, yo veo '},{b:'cuatro',h:'¿cuántos?'},{x:' hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los '},{b:'dioses',h:'¿de quiénes? (así lo dijo el rey pagano)'},{x:'.»'}]},
 {cap:'d3',t:'fill',ins:'Daniel 3:27 (RV1995) — Completa:',
  p:[{x:'«...el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había '},{b:'quemado',h:'¿qué le pasó?'},{x:'; sus ropas, intactas, ni siquiera '},{b:'olor',h:'¿ni siquiera qué?'},{x:' de fuego tenían.»'}]},
 
@@ -336,10 +336,10 @@ BANCO.push(
  p:[{x:'«PERES: Tu reino ha sido '},{b:'roto',h:'¿qué le pasó?'},{x:', y dado a los '},{b:'medos',h:'¿a quiénes?'},{x:' y a los persas.»'}]},
 {cap:'d6',t:'fill',ins:'Daniel 6:4 (RV1995) — Completa:',
  p:[{x:'«...porque él era '},{b:'fiel',h:'¿cómo era?'},{x:', y ningún '},{b:'error',h:'¿ni qué? (RV1995)'},{x:' ni falta hallaron en él.»'}]},
-{cap:'d6',t:'fill',ins:'Daniel 6:26-27 (RV1995) — Completa:',
- p:[{x:'«...porque él es el Dios '},{b:'viviente',h:'¿qué Dios?'},{x:' y permanece por todos los '},{b:'siglos',h:'¿por cuánto?'},{x:'.»'}]},
+{cap:'d6',t:'fill',ins:'Daniel 6:26 (RV1995) — Completa:',
+ p:[{x:'«Porque él es el Dios '},{b:'viviente',h:'¿qué Dios?'},{x:' y permanece por todos los '},{b:'siglos',h:'¿por cuánto?'},{x:'.»'}]},
 {cap:'d6',t:'fill',ins:'Daniel 6:23 (RV1995) — Completa:',
- p:[{x:'«...y ninguna '},{b:'lesión',h:'¿qué no se halló?'},{x:' se halló en él, porque había '},{b:'confiado',h:'¿qué había hecho?'},{x:' en su Dios.»'}]},
+ p:[{x:'«...pero ninguna '},{b:'lesión',h:'¿qué no se halló?'},{x:' se halló en él, porque había '},{b:'confiado',h:'¿qué había hecho?'},{x:' en su Dios.»'}]},
 );
 
 /* ─── Ampliación 22-ago: derivadas de citas RV1995 ya verificadas
@@ -357,8 +357,8 @@ BANCO.push(
  p:[{x:'«No hallaremos contra este Daniel '},{b:'motivo',h:'¿qué no hallarán? (RV1995)'},{x:' alguno para acusarlo, si no lo hallamos contra él en relación con la '},{b:'ley',h:'¿con qué de su Dios?'},{x:' de su Dios.»'}]},
 {cap:'d6',t:'fill',ins:'Daniel 6:27 (RV1995) — Completa:',
  p:[{x:'«Él salva y '},{b:'libra',h:'salva y ¿qué más?'},{x:', y hace señales y '},{b:'maravillas',h:'señales y ¿qué?'},{x:' en el cielo y en la tierra.»'}]},
-{cap:'d6',t:'fill',ins:'Daniel 6:26-27 (RV1995) — Completa:',
- p:[{x:'«Su reino no será jamás '},{b:'destruido',h:'¿qué no será?'},{x:', y su dominio perdurará hasta el '},{b:'fin',h:'¿hasta cuándo?'},{x:'.»'}]},
+{cap:'d6',t:'fill',ins:'Daniel 6:27 (RV1995) — Completa:',
+ p:[{x:'«su reino no será jamás '},{b:'destruido',h:'¿qué no será?'},{x:' y su dominio perdurará hasta el '},{b:'fin',h:'¿hasta cuándo?'},{x:'.»'}]},
 {cap:'pr39',t:'tf',q:'Según P&R cap. 39, el vino de la mesa del rey embotaba las facultades mentales y debilitaba el dominio propio.',
  a:true,e:'Verdadero. Es una de las razones por las que rechazaron la comida y el vino del rey.'},
 {cap:'pr40',t:'tf',q:'Según P&R cap. 40, la piedra cortada sin manos representa a Cristo y el establecimiento de su reino eterno.',
@@ -424,8 +424,6 @@ BANCO.push(
  a:false,e:'Falso. Se titula solamente «El horno de fuego». Ese título largo circula en varias guías, pero no es el del libro.'},
 {cap:'d1',t:'fill',ins:'Daniel 1:4 (RV1995) — Completa el requisito de los jóvenes:',
  p:[{x:'«...muchachos en quienes no hubiera '},{b:'tacha',h:'¿qué no debía haber?'},{x:' alguna, de buen parecer, '},{b:'instruidos',h:'¿cómo, en toda sabiduría?'},{x:' en toda sabiduría, sabios en ciencia...»'}]},
-{cap:'d6',t:'fill',ins:'Daniel 6:23 (RV1995) — Completa:',
- p:[{x:'«...pero ninguna '},{b:'lesión',h:'¿qué no se halló?'},{x:' se halló en él, porque había '},{b:'confiado',h:'¿qué había hecho?'},{x:' en su Dios.»'}]},
 {cap:'d4',t:'fill',ins:'Daniel 4:15 (RV1995) — Completa:',
  p:[{x:'«Mas la cepa de sus raíces dejaréis en la tierra, con atadura de '},{b:'hierro',h:'¿de qué metal?'},{x:' y de '},{b:'bronce',h:'¿y de qué otro?'},{x:' entre la hierba del campo...»'}]}
 );
@@ -516,6 +514,190 @@ BANCO.push(
  o:['Que Daniel se enfermara','Que el rey le quitara la cabeza al verlos de peor aspecto que los otros muchachos','Que los demás jóvenes lo imitaran','Que se perdiera la comida'],a:1},
 {cap:'d1',t:'tf',q:'Al cumplirse el tiempo, el rey no halló entre todos los jóvenes ninguno como Daniel, Ananías, Misael y Azarías. (Daniel 1:19)',
  a:true,e:'Verdadero. Daniel 1:19 dice que el rey habló con ellos y no fue hallado entre todos ninguno como ellos, y por eso estuvieron delante del rey.'}
+);
+
+/* ─── Ampliación 22-ago (4): cerrar el alcance oficial versículo por
+   versículo. Cada una verificada contra el texto RV1995 con
+   tools/verificar.js antes de quedar. ─── */
+BANCO.push(
+/* ── Daniel 1: 13, 14, 18 ── */
+{cap:'d1',t:'mc',q:'¿Qué le pidió Daniel a Melsar que hiciera al terminar la prueba? (Daniel 1:13)',
+ o:['Que informara al rey','Que comparara sus rostros con los de los muchachos que comían de la comida del rey','Que los dejara volver a Judá','Que repitiera la prueba otros diez días'],a:1},
+{cap:'d1',t:'tf',q:'Melsar aceptó la propuesta de Daniel y probó con ellos durante diez días. (Daniel 1:14)',
+ a:true,e:'Verdadero. RV1995: «Consintió, pues, con ellos en esto, y probó con ellos durante diez días».'},
+{cap:'d1',t:'mc',q:'¿Quién llevó a los cuatro jóvenes delante de Nabucodonosor al cumplirse el plazo? (Daniel 1:18)',
+ o:['Melsar','El jefe de los eunucos','El capitán de la guardia','Los magos del reino'],a:1},
+
+/* ── Daniel 2: 2 al 15 ── */
+{cap:'d2',t:'mc',q:'¿A quiénes mandó llamar el rey para que le declararan sus sueños? (Daniel 2:2)',
+ o:['Solo a los caldeos','A los magos, astrólogos, encantadores y caldeos','A los sacerdotes del templo','A los sátrapas de las provincias'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:3, ¿qué le dijo el rey a los sabios sobre su sueño?',
+ o:['Que ya lo había olvidado por completo','Que había tenido un sueño y su espíritu se había turbado por saberlo','Que el sueño anunciaba una guerra','Que soñó con una estatua de oro'],a:1},
+{cap:'d2',t:'mc',q:'¿Con qué palabras le respondieron los caldeos al rey? (Daniel 2:4)',
+ o:['«Perdónanos, oh rey»','«¡Rey, para siempre vive! Cuenta el sueño a tus siervos»','«Nadie puede saber eso»','«Danos siete días»'],a:1},
+{cap:'d2',t:'mc',q:'¿Qué les ofreció el rey si le declaraban el sueño y su interpretación? (Daniel 2:6)',
+ o:['La mitad de su reino','Dones, favores y gran honra','Tierras y esclavos','El perdón de sus deudas'],a:1},
+{cap:'d2',t:'tf',q:'Los caldeos volvieron a pedirle al rey que él les contara el sueño primero. (Daniel 2:7)',
+ a:true,e:'Verdadero. Insistieron: «Cuente el rey el sueño a sus siervos, y le daremos la interpretación».'},
+{cap:'d2',t:'mc',q:'¿De qué acusó el rey a los sabios cuando insistieron? (Daniel 2:8)',
+ o:['De burlarse de él','De poner dilaciones porque veían que el asunto se le había ido','De estar aliados con sus enemigos','De no haber estudiado'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:10, ¿qué le contestaron los caldeos al rey?',
+ o:['Que necesitaban más tiempo','Que no hay hombre sobre la tierra que pueda declarar el asunto del rey','Que el sueño no tenía significado','Que buscarían a un profeta hebreo'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:11, ¿quiénes decían los caldeos que podrían declarar el asunto?',
+ o:['Solo los reyes','Solo los dioses','Solo los ancianos','Solo los sacerdotes de Babilonia'],a:1},
+{cap:'d2',t:'mc',q:'¿Qué mandó el rey cuando nadie pudo declararle el sueño? (Daniel 2:12)',
+ o:['Encarcelar a los caldeos','Que mataran a todos los sabios de Babilonia','Desterrarlos del reino','Quitarles sus bienes'],a:1},
+{cap:'d2',t:'tf',q:'Cuando se publicó el edicto de muerte contra los sabios, también buscaron a Daniel. (Daniel 2:13)',
+ a:true,e:'Verdadero. RV1995: «buscaron también a Daniel», aunque él no había estado entre los consultados.'},
+{cap:'d2',t:'mc',q:'¿Qué le preguntó Daniel a Arioc cuando lo buscó? (Daniel 2:15)',
+ o:['Quién lo había acusado','Cuál era la causa de que el edicto se publicara tan apresuradamente','Dónde estaban sus compañeros','Si podía hablar con el rey'],a:1},
+
+/* ── Daniel 3: 2 al 14, 23 y 24 ── */
+{cap:'d3',t:'mc',q:'¿A quiénes mandó reunir el rey para la dedicación de la estatua? (Daniel 3:2)',
+ o:['Solo a los sátrapas','A los sátrapas, magistrados, capitanes, oidores, tesoreros, consejeros, jueces y todos los gobernadores','A los sacerdotes y los magos','Al pueblo de Babilonia solamente'],a:1},
+{cap:'d3',t:'tf',q:'Todos los funcionarios convocados sí se reunieron para la dedicación de la estatua. (Daniel 3:3)',
+ a:true,e:'Verdadero. RV1995: «Se reunieron, pues, los sátrapas, magistrados, capitanes...».'},
+{cap:'d3',t:'mc',q:'¿A quiénes se dirigió el pregonero en alta voz? (Daniel 3:4)',
+ o:['A los sátrapas del reino','A los pueblos, naciones y lenguas','A los soldados del ejército','A los sacerdotes de Marduc'],a:1},
+{cap:'d3',t:'tf',q:'Al oír la música, todos los pueblos se postraron y adoraron la estatua de oro. (Daniel 3:7)',
+ a:true,e:'Verdadero. Todos, menos Sadrac, Mesac y Abed-nego, que son acusados en el versículo siguiente.'},
+{cap:'d3',t:'mc',q:'¿Cómo empezaron los caldeos su acusación ante el rey? (Daniel 3:9)',
+ o:['«Oh rey, hay traidores»','«¡Rey, para siempre vive!»','«Perdona nuestra osadía»','«Escucha, oh gran Nabucodonosor»'],a:1},
+{cap:'d3',t:'mc',q:'Según Daniel 3:12, ¿qué recordaron los acusadores sobre los tres jóvenes?',
+ o:['Que eran extranjeros sin derechos','Que el rey mismo los había puesto sobre los negocios de la provincia de Babilonia','Que eran parientes de Daniel','Que ya habían desobedecido antes'],a:1},
+{cap:'d3',t:'mc',q:'¿Con qué ánimo mandó el rey traer a los tres jóvenes? (Daniel 3:13)',
+ o:['Con calma y curiosidad','Con ira y con enojo','Con tristeza','Con burla'],a:1},
+{cap:'d3',t:'mc',q:'¿Qué les preguntó el rey al tenerlos delante? (Daniel 3:14)',
+ o:['¿Quién os mandó desobedecer?','¿Es verdad que vosotros no honráis a mi dios ni adoráis la estatua de oro que he levantado?','¿De qué pueblo sois?','¿Queréis morir hoy?'],a:1},
+{cap:'d3',t:'tf',q:'Los tres jóvenes cayeron atados dentro del horno de fuego ardiente. (Daniel 3:23)',
+ a:true,e:'Verdadero. Entraron atados; después el rey los vio sueltos caminando en medio del fuego.'},
+{cap:'d3',t:'mc',q:'¿Cómo reaccionó el rey al mirar dentro del horno? (Daniel 3:24)',
+ o:['Se alegró','Se espantó y se levantó apresuradamente','Mandó apagar el fuego','Llamó a Daniel'],a:1}
+);
+
+/* ─── Ampliación 22-ago (5): últimos versículos del alcance oficial. ─── */
+BANCO.push(
+/* ── Daniel 2: 23 al 33, y 49 ── */
+{cap:'d2',t:'mc',q:'Según Daniel 2:23, ¿por qué le dio Daniel gracias al Dios de sus padres?',
+ o:['Porque lo libró de la muerte','Porque le había dado sabiduría y fuerza','Porque le devolvió a su familia','Porque castigó a los caldeos'],a:1},
+{cap:'d2',t:'mc',q:'¿Qué le pidió Daniel a Arioc antes de entrar ante el rey? (Daniel 2:24)',
+ o:['Que lo dejara ver a sus amigos','Que no mataran a los sabios de Babilonia','Que le diera más tiempo','Que lo protegiera del rey'],a:1},
+{cap:'d2',t:'mc',q:'¿Cómo presentó Arioc a Daniel ante el rey? (Daniel 2:25)',
+ o:['Como el más sabio de Babilonia','Como un hombre de los deportados de Judá','Como un profeta enviado por Dios','Como su propio consejero'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:27, ¿quiénes NO podían revelar el misterio que el rey demandaba?',
+ o:['Solo los magos','Ni sabios ni astrólogos, ni magos ni adivinos','Solo los adivinos extranjeros','Los sacerdotes del templo'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:29, ¿dónde estaba el rey cuando le vinieron los pensamientos sobre el futuro?',
+ o:['En el trono','En su cama','En el campo de Dura','En el templo'],a:1},
+{cap:'d2',t:'tf',q:'Daniel dijo que el misterio le fue revelado porque él tenía más sabiduría que los demás. (Daniel 2:30)',
+ a:false,e:'Falso. Dijo exactamente lo contrario: «no porque en mí haya más sabiduría que en los demás».'},
+{cap:'d2',t:'mc',q:'Según Daniel 2:31, ¿cómo describió Daniel la imagen del sueño?',
+ o:['Pequeña pero brillante','Muy grande y su gloria muy sublime','Hecha de piedra','Semejante a un hombre común'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:33, ¿de qué eran las piernas de la imagen?',
+ o:['De bronce','De hierro','De plata','De barro cocido'],a:1},
+{cap:'d2',t:'mc',q:'¿Qué obtuvo Daniel del rey para sus tres compañeros? (Daniel 2:49)',
+ o:['Que volvieran a Judá','Que los pusiera sobre los negocios de la provincia de Babilonia','Que los eximieran del servicio','Que estudiaran con los magos'],a:1},
+{cap:'d2',t:'fill',ins:'Daniel 2:23 (RV1995) — Completa:',
+ p:[{x:'«A ti, Dios de mis padres, te doy '},{b:'gracias',h:'¿qué le da?'},{x:' y te alabo, porque me has dado '},{b:'sabiduría',h:'¿qué le dio?'},{x:' y fuerza.»'}]},
+
+/* ── Daniel 3: 10 y 11 ── */
+{cap:'d3',t:'mc',q:'Al acusar a los tres jóvenes, ¿qué le recordaron los caldeos al rey sobre su propia ley? (Daniel 3:10)',
+ o:['Que era injusta','Que él mismo había dado la ley de postrarse al oír los instrumentos','Que ya nadie la cumplía','Que podía cambiarla'],a:1},
+{cap:'d3',t:'mc',q:'Según Daniel 3:11, ¿qué decía la ley que le pasaría al que no se postrara?',
+ o:['Que perdería su cargo','Que sería echado dentro de un horno de fuego ardiente','Que sería desterrado','Que pagaría una multa'],a:1},
+
+/* ── Daniel 6: 6 al 15, 21, 25 y 28 ── */
+{cap:'d6',t:'mc',q:'¿Cómo saludaron los gobernadores y sátrapas al rey al presentarle el edicto? (Daniel 6:6)',
+ o:['«Oh rey, escúchanos»','«¡Rey Darío, para siempre vive!»','«Señor de Media y Persia»','«Gran rey de Babilonia»'],a:1},
+{cap:'d6',t:'tf',q:'El rey Darío firmó el edicto y la prohibición. (Daniel 6:9)',
+ a:true,e:'Verdadero. RV1995: «Firmó, pues, el rey Darío el edicto y la prohibición».'},
+{cap:'d6',t:'mc',q:'¿Cómo encontraron a Daniel los que lo espiaban? (Daniel 6:11)',
+ o:['Escribiendo cartas','Orando y rogando en presencia de su Dios','Reuniendo a los judíos','Escondido en su casa'],a:1},
+{cap:'d6',t:'mc',q:'Según Daniel 6:13, ¿de qué acusaron a Daniel delante del rey?',
+ o:['De robar del tesoro real','De no respetar al rey ni acatar el edicto, y hacer su petición tres veces al día','De hablar mal del rey','De reunir un ejército'],a:1},
+{cap:'d6',t:'mc',q:'¿Qué le recordaron al rey cuando él quería salvar a Daniel? (Daniel 6:15)',
+ o:['Que Daniel era extranjero','Que es ley de Media y de Persia que ningún edicto que el rey confirme puede ser abrogado','Que el pueblo estaba en contra','Que ya era muy tarde'],a:1},
+{cap:'d6',t:'mc',q:'¿Qué le respondió Daniel al rey desde el foso? (Daniel 6:21)',
+ o:['«Sácame de aquí, oh rey»','«Oh rey, vive para siempre»','«¿Por qué me hiciste esto?»','«Los leones duermen»'],a:1},
+{cap:'d6',t:'mc',q:'¿A quiénes escribió el rey Darío después de sacar a Daniel del foso? (Daniel 6:25)',
+ o:['Solo a los sátrapas','A todos los pueblos, naciones y lenguas que moraban en toda la tierra','A los reyes vecinos','A los sacerdotes de Babilonia'],a:1},
+{cap:'d6',t:'mc',q:'¿Durante los reinados de qué reyes prosperó Daniel? (Daniel 6:28)',
+ o:['Nabucodonosor y Belsasar','Darío y Ciro el persa','Joacim y Darío','Belsasar y Ciro'],a:1},
+{cap:'d6',t:'tf',q:'Daniel prosperó durante los reinados de Darío y de Ciro, el persa. (Daniel 6:28)',
+ a:true,e:'Verdadero. Es el cierre del capítulo 6 y conecta con Daniel 1:21, que menciona el año primero de Ciro.'}
+);
+
+/* ─── Cierre del alcance: los últimos versículos sin pregunta. ─── */
+BANCO.push(
+{cap:'d2',t:'mc',q:'Según Daniel 2:9, ¿qué exigió el rey para comprobar que los sabios podían interpretar?',
+ o:['Que jurasen por sus dioses','Que le contaran el sueño, para saber que podían darle su interpretación','Que trajeran testigos','Que escribieran la respuesta'],a:1},
+{cap:'d2',t:'mc',q:'¿Qué le preguntó el rey a Daniel al tenerlo delante? (Daniel 2:26)',
+ o:['¿De qué pueblo eres?','¿Podrás tú hacerme conocer el sueño que vi, y su interpretación?','¿Cuánto quieres por decírmelo?','¿Quién te envió?'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:38, ¿qué le había entregado Dios en las manos a Nabucodonosor?',
+ o:['Solo la ciudad de Jerusalén','Los hijos de hombres, las bestias del campo y las aves del cielo, dondequiera que habitan','El oro de todas las naciones','La sabiduría de los caldeos'],a:1},
+{cap:'d6',t:'mc',q:'¿Qué le preguntaron al rey antes de acusar a Daniel? (Daniel 6:12)',
+ o:['Si conocía a Daniel','Si no había confirmado el edicto de los treinta días','Si quería cambiar la ley','Si Daniel era su amigo'],a:1}
+);
+
+BANCO.push(
+{cap:'d2',t:'mc',q:'¿Con qué frase cerró Daniel el relato del sueño antes de interpretarlo? (Daniel 2:36)',
+ o:['«Así lo dice el Señor»','«Éste es el sueño. También la interpretación de él diremos en presencia del rey»','«Nadie más pudo verlo»','«Guárdalo en tu corazón, oh rey»'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:42, ¿cómo sería el reino de los dedos de hierro y barro cocido?',
+ o:['Totalmente fuerte','En parte fuerte y en parte frágil','Totalmente frágil','El más grande de todos'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:43, ¿por qué medio se mezclarían y sin embargo no se unirían?',
+ o:['Por medio de guerras','Por medio de alianzas humanas','Por medio del comercio','Por medio de la religión'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:45, ¿qué desmenuzó la piedra que se desprendió del monte?',
+ o:['Solo los pies de barro','El hierro, el bronce, el barro, la plata y el oro','La cabeza de oro únicamente','Todo el monte'],a:1},
+{cap:'d2',t:'fill',ins:'Daniel 2:43 (RV1995) — Completa:',
+ p:[{x:'«Así como viste el hierro mezclado con barro, así se mezclarán por medio de '},{b:'alianzas',h:'¿por medio de qué?'},{x:' humanas; pero no se unirán el uno con el otro, como el hierro no se mezcla con el '},{b:'barro',h:'¿con qué no se mezcla?'},{x:'.»'}]}
+);
+
+/* ─── Profetas y Reyes 39, 41 y 44: equilibrar el peso, porque son 3 de las
+   7 unidades del alcance oficial. Salen del contenido ya auditado en
+   contenido.js. Camilo debe cotejarlas con su edición de IADPA. ─── */
+BANCO.push(
+/* ── P&R 39 ── */
+{cap:'pr39',t:'mc',q:'Según P&R cap. 39, ¿qué clase de carnes incluía la comida del rey?',
+ o:['Solo carnes de res','Carnes que la ley de Dios declaraba inmundas','Únicamente aves','Carnes preparadas por sacerdotes hebreos'],a:1},
+{cap:'pr39',t:'mc',q:'Según P&R cap. 39, ¿cómo se interpretaba participar de la comida del rey?',
+ o:['Como un simple acto de cortesía','Como homenaje a los dioses de Babilonia','Como una obligación militar','Como parte del entrenamiento físico'],a:1},
+{cap:'pr39',t:'mc',q:'Según P&R cap. 39, ¿qué actitud tuvo Daniel al pedir el cambio de alimentación?',
+ o:['Se negó sin explicar nada','Fue firme y cortés a la vez, y propuso una prueba razonable','Amenazó con dejar el palacio','Pidió que otro hablara por él'],a:1},
+{cap:'pr39',t:'mc',q:'Según P&R cap. 39, ¿qué preparó a Daniel para las pruebas mayores?',
+ o:['Su educación en Babilonia','La fidelidad en las cosas pequeñas','El favor del rey','Su origen del linaje real'],a:1},
+{cap:'pr39',t:'tf',q:'Según P&R cap. 39, Daniel tomó su decisión sobre la comida del rey en el momento en que se la sirvieron.',
+ a:false,e:'Falso. Su decisión fue tomada de antemano, no improvisada bajo presión. Esa es la enseñanza central del capítulo.'},
+{cap:'pr39',t:'tf',q:'Según P&R cap. 39, el desarrollo intelectual de los cuatro jóvenes fue resultado solo del estudio.',
+ a:false,e:'Falso. Fue resultado de la obediencia, no solo del estudio: Dios recompensó su fidelidad con salud, vigor y sabiduría superiores.'},
+{cap:'pr39',t:'mc',q:'Según P&R cap. 39, ¿qué efecto tiene la alimentación sencilla sobre la mente?',
+ o:['Ninguno comprobable','Mantiene la mente despejada para discernir la voluntad de Dios','La hace más lenta pero más tranquila','Solo afecta el cuerpo'],a:1},
+
+/* ── P&R 41 ── */
+{cap:'pr41',t:'mc',q:'Según P&R cap. 41, ¿de qué NO los libró Dios a los tres jóvenes?',
+ o:['De la muerte','De la prueba: estuvo con ellos dentro de ella','Del fuego','Del rey'],a:1},
+{cap:'pr41',t:'mc',q:'Según P&R cap. 41, ¿qué significa que no negociaron con Dios?',
+ o:['Que no oraron antes','Que no condicionaron su lealtad al milagro','Que no le pidieron nada al rey','Que no hablaron entre ellos'],a:1},
+{cap:'pr41',t:'mc',q:'Según P&R cap. 41, ¿ante quién fue testimonio el milagro del horno?',
+ o:['Ante los sacerdotes de Babilonia','Ante el rey más poderoso de la tierra','Ante el pueblo de Judá','Ante los otros cautivos'],a:1},
+{cap:'pr41',t:'tf',q:'Según P&R cap. 41, ningún poder humano puede vencer a quienes permanecen fieles.',
+ a:true,e:'Verdadero. Es una de las conclusiones del capítulo, junto con que la fidelidad puede costar la vida y Dios libera a los suyos.'},
+{cap:'pr41',t:'tf',q:'Según P&R cap. 41, la experiencia del horno solo aplica a casos de idolatría con estatuas.',
+ a:false,e:'Falso. Es un modelo de fidelidad ante cualquier presión para desobedecer a Dios, en cualquier época y circunstancia.'},
+
+/* ── P&R 44 ── */
+{cap:'pr44',t:'mc',q:'Según P&R cap. 44, ¿qué buscaron los enemigos de Daniel al investigarlo?',
+ o:['Errores de traducción en sus escritos','Corrupción, y no hallaron nada','Testigos falsos','Deudas impagadas'],a:1},
+{cap:'pr44',t:'mc',q:'Según P&R cap. 44, ¿cuándo se construyó el carácter de Daniel?',
+ o:['En la crisis del foso','Día a día, antes de la crisis','Cuando llegó a Babilonia','Al final de su vida'],a:1},
+{cap:'pr44',t:'mc',q:'Según P&R cap. 44, ¿qué hizo Daniel cuando llegó el decreto?',
+ o:['Oró más fuerte para desafiar al rey','No cambió nada: siguió como solía hacerlo antes','Oró en secreto para no ser visto','Dejó de orar por unos días'],a:1},
+{cap:'pr44',t:'mc',q:'Según P&R cap. 44, ¿hasta dónde llegó el alcance del testimonio de Daniel?',
+ o:['Solo al palacio del rey','A todos los pueblos, naciones y lenguas del imperio','Solo a los cautivos de Judá','A los sátrapas de su provincia'],a:1},
+{cap:'pr44',t:'mc',q:'Según P&R cap. 44, ¿en qué convirtió la liberación de Daniel al rey Darío?',
+ o:['En un rey más severo','En proclamador del Dios verdadero','En enemigo de los judíos','En un rey débil'],a:1},
+{cap:'pr44',t:'tf',q:'Según P&R cap. 44, Daniel fue fiel solo en lo religioso, no en su trabajo de gobierno.',
+ a:false,e:'Falso. Fue fiel en su trabajo como funcionario del gobierno, no solo en lo religioso: su vida pública y privada eran igual de intachables.'},
+{cap:'pr44',t:'tf',q:'Según P&R cap. 44, Daniel tenía más de ochenta años cuando fue echado al foso.',
+ a:true,e:'Verdadero. Lo que decidió de joven en Daniel 1 fue lo que lo sostuvo de anciano en Daniel 6.'}
 );
 
 module.exports = { BANCO };

@@ -2,18 +2,18 @@
    Se genera aquí y se inyecta en el HTML final. */
 
 const CAPS = [
-  { id:'d1', label:'Daniel 1', sub:'Cautivos en Babilonia', src:'Biblia', color:'#E8720C', cats:['av','gm'] },
-  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', cats:['av','gm'] },
-  { id:'d3', label:'Daniel 3', sub:'La imagen de oro y el horno', src:'Biblia', color:'#C0392B', cats:['av','gm'] },
+  { id:'d1', label:'Daniel 1', sub:'Cautivos en Babilonia', src:'Biblia', color:'#E8720C', cats:['me','av','pa','gm'] },
+  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', cats:['me','av','pa','gm'] },
+  { id:'d3', label:'Daniel 3', sub:'La imagen de oro y el horno', src:'Biblia', color:'#C0392B', cats:['me','av','pa','gm'] },
   { id:'d4', label:'Daniel 4', sub:'Nabucodonosor humillado', src:'Biblia', color:'#7B5E00', cats:['gm'] },
   { id:'d5', label:'Daniel 5', sub:'La escritura en la pared', src:'Biblia', color:'#8B1A5E', cats:['gm'] },
-  { id:'d6', label:'Daniel 6', sub:'En el foso de los leones', src:'Biblia', color:'#1A7A1A', cats:['av','gm'] },
-  { id:'pr39', label:'P&R 39', sub:'En la corte de Babilonia', src:'Elena de White', color:'#7B2D8B', cats:['av','gm'] },
-  { id:'pr40', label:'P&R 40', sub:'El sueño de la gran imagen', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
-  { id:'pr41', label:'P&R 41', sub:'La imagen de oro y el horno de fuego', src:'Elena de White', color:'#7B2D8B', cats:['av','gm'] },
-  { id:'pr42', label:'P&R 42', sub:'Nabucodonosor humillado', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
+  { id:'d6', label:'Daniel 6', sub:'En el foso de los leones', src:'Biblia', color:'#1A7A1A', cats:['me','av','pa','gm'] },
+  { id:'pr39', label:'P&R 39', sub:'En la corte de Babilonia', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
+  { id:'pr40', label:'P&R 40', sub:'El sueño de Nabucodonosor', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
+  { id:'pr41', label:'P&R 41', sub:'El horno de fuego', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
+  { id:'pr42', label:'P&R 42', sub:'La verdadera grandeza', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
   { id:'pr43', label:'P&R 43', sub:'El vigía invisible', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
-  { id:'pr44', label:'P&R 44', sub:'En el foso de los leones', src:'Elena de White', color:'#7B2D8B', cats:['av','gm'] },
+  { id:'pr44', label:'P&R 44', sub:'En el foso de los leones', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
 ];
 
 // helpers para armar HTML compacto
@@ -138,7 +138,7 @@ d2: [
         'Fue a su casa e informó a sus compañeros; <strong>oraron pidiendo misericordia</strong> (2:17-18)',
         'El misterio le fue revelado en <strong>visión de noche</strong> (2:19)',
         'Bendijo y alabó a Dios antes de ir ante el rey (2:20-23)',
-        'Declaró: «hay un Dios en los cielos, el cual revela los misterios» (2:28)']) },
+        'Declaró: «hay un Dios en los cielos que revela los misterios» (2:28)']) },
 
   { t:'🗿 La estatua — materiales e imperios', h:
     tbl(['Parte y material','Imperio que representa'],[
@@ -196,10 +196,15 @@ d3: [
     ]) },
 
   { t:'🎵 Los seis instrumentos — orden exacto', h:
-    wa(`<strong>Daniel 3:5 (se repite en 3:7, 3:10 y 3:15):</strong><br><br>
-    1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. TAMBORIL &nbsp;→&nbsp;
+    wa(`<strong>Daniel 3:5 en la RV1995</strong> (la lista se repite en 3:7, 3:10 y 3:15):<br><br>
+    1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;
     4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>
-    <strong>❌ NO aparece en Daniel 3:</strong> la TROMPETA`) },
+    Y después: «y todo instrumento de música».<br><br>
+    <strong>❌ NO aparece:</strong> la TROMPETA`) +
+    hi(`<strong>⚠ Ojo con el tercero.</strong> La RV1995 dice
+    <strong>CÍTARA</strong>. La RV1960, que es la que más se oye, dice
+    <strong>tamboril</strong> en ese lugar.<br>
+    Si la pregunta dice «según la RV1995», la respuesta es <u>cítara</u>.`) },
 
   { t:'🔥 El horno de fuego', h:
     hi(`• El rostro de Nabucodonosor se demudó contra ellos (3:19)<br>
@@ -348,7 +353,7 @@ d6: [
     • No podían hallar motivo alguno o falta, porque <strong>él era fiel</strong>,
       y <strong>ningún error ni falta hallaron en él</strong> (6:4)<br>
     • Concluyeron: «No hallaremos contra este Daniel motivo alguno para acusarlo,
-      si no la hallamos <strong>contra él en relación con la ley de su Dios</strong>» (6:5)`) +
+      si no lo hallamos <strong>contra él en relación con la ley de su Dios</strong>» (6:5)`) +
     tbl(['El edicto','Detalle'],[
       ['Duración','TREINTA días (6:7)'],
       ['Prohibición','Pedir petición a cualquier dios u hombre fuera del rey (6:7)'],
@@ -359,8 +364,8 @@ d6: [
   { t:'🙏 La fidelidad de Daniel — versículo central', h:
     vs(`«Cuando Daniel supo que el edicto había sido firmado, <strong>entró en su casa</strong>;
     abiertas las ventanas de su habitación que daban a Jerusalén,
-    <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,
-    <strong>como lo solía hacer antes</strong>.» (Daniel 6:10)`) +
+    <strong>se arrodillaba tres veces al día</strong>, oraba y daba gracias delante de su Dios
+    <strong>como solía hacerlo antes</strong>.» (Daniel 6:10)`) +
     wa(`Fíjate en tres cosas que suelen preguntarse por separado:
     <strong>hacia Jerusalén</strong>, <strong>tres veces al día</strong>,
     y <strong>como lo solía hacer antes</strong> — no cambió su costumbre por miedo.`) },

@@ -154,12 +154,27 @@ function refsQ(q){
   return out;
 }
 const cub=new Set(); BANCO.forEach(q=>refsQ(q).forEach(r=>cub.add(r)));
+
+/* Alcance OFICIAL del campamento (Daniel 1-3 y 6): la meta es 100%.
+   Si al editar el banco se cae un versículo, esta prueba lo caza. */
+const OFICIAL={d1:21,d2:49,d3:30,d6:28};
+let huecos=[];
+for(const [c,n] of Object.entries(OFICIAL)){
+  const falta=[]; for(let v=1;v<=n;v++) if(!cub.has(c+':'+v)) falta.push(v);
+  if(falta.length) huecos.push(`${c}: ${falta.join(', ')}`);
+}
+ok(huecos.length===0,
+  'Alcance oficial: los 128 versículos de Daniel 1, 2, 3 y 6 tienen pregunta'
+  + (huecos.length?' — SIN PREGUNTA -> '+huecos.join(' · '):''));
+
+/* Alcance ampliado (Guías Mayores): piso más bajo, es otro evento. */
 let flojos=[];
 for(const [c,n] of Object.entries(VERS)){
+  if(OFICIAL[c])continue;
   let k=0; for(let v=1;v<=n;v++) if(cub.has(c+':'+v)) k++;
-  if(k/n < 0.40) flojos.push(`${c} ${Math.round(k/n*100)}%`);
+  if(k/n < 0.35) flojos.push(`${c} ${Math.round(k/n*100)}%`);
 }
-ok(flojos.length===0, 'Cada capítulo de Daniel tiene al menos 40% de sus versículos con pregunta'
+ok(flojos.length===0, 'Alcance ampliado: Daniel 4 y 5 sobre el 35% de cobertura'
   + (flojos.length?' — flojos: '+flojos.join(', '):''));
 
 const nPR = BANCO.filter(q=>q.cap.slice(0,2)==='pr').length;

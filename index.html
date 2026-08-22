@@ -31,7 +31,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .hero h1{font-size:1.9rem;font-weight:900;letter-spacing:-.5px}
 .hero p{opacity:.9;margin-top:.4rem;font-size:.92rem}
 
-.cat-sel{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.cat-sel{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
 .cat-btn{background:#f8f9ff;border:3px solid #e5e7eb;border-radius:12px;padding:1rem .8rem;cursor:pointer;font-family:inherit;text-align:center;min-height:46px}
 .cat-btn:hover{border-color:var(--cielo)}
 .cat-btn.on{border-color:var(--naranja);background:#fff8f0}
@@ -190,8 +190,18 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
   .tbt{width:100%;margin-left:calc(26px + .75rem)}
   .cuenta .cd{font-size:1.7rem}
 }
+/* Categoría de 4 a 6 años: todo más grande, porque quien lee suele ser el
+   papá o la mamá en voz alta y el niño mira la pantalla. */
+body.me .tt,body.me .cap .t,body.me .mod .t{font-size:1rem}
+body.me .q .qt{font-size:1.05rem}
+body.me .op{font-size:.97rem;min-height:56px}
+body.me .tj .cara{font-size:1.25rem}
+body.me .tj .rev{font-size:1.15rem}
+body.me .info-table td,body.me .info-table th{font-size:.88rem}
+
 /* Modo Aventureros: 9 años, texto un punto más grande y botones más altos. */
 body.av .tt,body.av .cap .t,body.av .mod .t{font-size:.94rem}
+@media(max-width:760px){.cat-sel{grid-template-columns:1fr 1fr}}
 body.av .td,body.av .nota{font-size:.82rem}
 body.av .q .qt{font-size:.95rem}
 body.av .op{font-size:.9rem;min-height:50px}
@@ -205,7 +215,7 @@ body.av .tj .rev{font-size:1.08rem}
   .nav-b span{display:none}
   .nav-t button{padding:0 .6rem;font-size:.76rem}
   .stats{grid-template-columns:repeat(2,1fr)}
-  .cat-sel{grid-template-columns:1fr}
+  .cat-sel{grid-template-columns:1fr 1fr}
   .hero h1{font-size:1.55rem}
   .info-table{font-size:.79rem}
   .info-table td.key{white-space:normal}
@@ -248,17 +258,12 @@ body.av .tj .rev{font-size:1.08rem}
 
   <div class="card">
     <h2>🎯 Tu categoría</h2>
-    <div class="cat-sel">
-      <button class="cat-btn" id="cb-av" onclick="ponCat('av')">
-        <div class="cn">Aventureros</div>
-        <div class="cd">7 a 9 años<br>Daniel 1, 2, 3 y 6<br>P&amp;R 39, 41 y 44</div>
-      </button>
-      <button class="cat-btn" id="cb-gm" onclick="ponCat('gm')">
-        <div class="cn">Guías Mayores</div>
-        <div class="cd">Categoría mayor<br>Daniel 1 al 6<br>P&amp;R 39 al 44</div>
-      </button>
-    </div>
-    <p class="nota">La categoría define qué capítulos ves y de dónde salen las preguntas del examen.</p>
+    <div class="cat-sel" id="cat-sel"></div>
+    <p class="nota">Las tres primeras son las del reglamento del campamento: cada
+    club presenta <strong>dos integrantes por categoría</strong>. La categoría
+    define qué capítulos ves y de dónde salen las preguntas.</p>
+    <p class="nota"><strong>Guías Mayores</strong> no está en ese reglamento:
+    es el alcance ampliado (Daniel 1 al 6 y P&amp;R 39 al 44) para el otro evento.</p>
   </div>
 
   <div class="stats" id="stats"></div>
@@ -387,7 +392,9 @@ const CAPS = [
   "src": "Biblia",
   "color": "#E8720C",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -398,7 +405,9 @@ const CAPS = [
   "src": "Biblia",
   "color": "#2E8BC0",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -409,7 +418,9 @@ const CAPS = [
   "src": "Biblia",
   "color": "#C0392B",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -440,7 +451,9 @@ const CAPS = [
   "src": "Biblia",
   "color": "#1A7A1A",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -452,13 +465,14 @@ const CAPS = [
   "color": "#7B2D8B",
   "cats": [
    "av",
+   "pa",
    "gm"
   ]
  },
  {
   "id": "pr40",
   "label": "P&R 40",
-  "sub": "El sueño de la gran imagen",
+  "sub": "El sueño de Nabucodonosor",
   "src": "Elena de White",
   "color": "#7B2D8B",
   "cats": [
@@ -468,18 +482,19 @@ const CAPS = [
  {
   "id": "pr41",
   "label": "P&R 41",
-  "sub": "La imagen de oro y el horno de fuego",
+  "sub": "El horno de fuego",
   "src": "Elena de White",
   "color": "#7B2D8B",
   "cats": [
    "av",
+   "pa",
    "gm"
   ]
  },
  {
   "id": "pr42",
   "label": "P&R 42",
-  "sub": "Nabucodonosor humillado",
+  "sub": "La verdadera grandeza",
   "src": "Elena de White",
   "color": "#7B2D8B",
   "cats": [
@@ -504,6 +519,7 @@ const CAPS = [
   "color": "#7B2D8B",
   "cats": [
    "av",
+   "pa",
    "gm"
   ]
  }
@@ -555,7 +571,7 @@ const CONTENIDO = {
   },
   {
    "t": "🙏 La respuesta de Daniel",
-   "h": "<ul class=\"tight\"><li>Habló a Arioc con <strong>prudencia y sabiduría</strong> (2:14)</li><li>Pidió <strong>tiempo</strong> al rey para mostrar la interpretación (2:16)</li><li>Fue a su casa e informó a sus compañeros; <strong>oraron pidiendo misericordia</strong> (2:17-18)</li><li>El misterio le fue revelado en <strong>visión de noche</strong> (2:19)</li><li>Bendijo y alabó a Dios antes de ir ante el rey (2:20-23)</li><li>Declaró: «hay un Dios en los cielos, el cual revela los misterios» (2:28)</li></ul>"
+   "h": "<ul class=\"tight\"><li>Habló a Arioc con <strong>prudencia y sabiduría</strong> (2:14)</li><li>Pidió <strong>tiempo</strong> al rey para mostrar la interpretación (2:16)</li><li>Fue a su casa e informó a sus compañeros; <strong>oraron pidiendo misericordia</strong> (2:17-18)</li><li>El misterio le fue revelado en <strong>visión de noche</strong> (2:19)</li><li>Bendijo y alabó a Dios antes de ir ante el rey (2:20-23)</li><li>Declaró: «hay un Dios en los cielos que revela los misterios» (2:28)</li></ul>"
   },
   {
    "t": "🗿 La estatua — materiales e imperios",
@@ -585,7 +601,7 @@ const CONTENIDO = {
   },
   {
    "t": "🎵 Los seis instrumentos — orden exacto",
-   "h": "<div class=\"warn-box\"><strong>Daniel 3:5 (se repite en 3:7, 3:10 y 3:15):</strong><br><br>\n    1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. TAMBORIL &nbsp;→&nbsp;\n    4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>\n    <strong>❌ NO aparece en Daniel 3:</strong> la TROMPETA</div>"
+   "h": "<div class=\"warn-box\"><strong>Daniel 3:5 en la RV1995</strong> (la lista se repite en 3:7, 3:10 y 3:15):<br><br>\n    1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;\n    4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>\n    Y después: «y todo instrumento de música».<br><br>\n    <strong>❌ NO aparece:</strong> la TROMPETA</div><div class=\"highlight-box\"><strong>⚠ Ojo con el tercero.</strong> La RV1995 dice\n    <strong>CÍTARA</strong>. La RV1960, que es la que más se oye, dice\n    <strong>tamboril</strong> en ese lugar.<br>\n    Si la pregunta dice «según la RV1995», la respuesta es <u>cítara</u>.</div>"
   },
   {
    "t": "🔥 El horno de fuego",
@@ -659,11 +675,11 @@ const CONTENIDO = {
   },
   {
    "t": "🕸️ El complot",
-   "h": "<div class=\"highlight-box\">• Buscaban ocasión para acusarlo <strong>en lo relacionado con el reino</strong> (6:4)<br>\n    • No podían hallar motivo alguno o falta, porque <strong>él era fiel</strong>,\n      y <strong>ningún error ni falta hallaron en él</strong> (6:4)<br>\n    • Concluyeron: «No hallaremos contra este Daniel motivo alguno para acusarlo,\n      si no la hallamos <strong>contra él en relación con la ley de su Dios</strong>» (6:5)</div><table class=\"info-table\"><thead><tr><th>El edicto</th><th>Detalle</th></tr></thead><tbody><tr><td class=\"key\">Duración</td><td>TREINTA días (6:7)</td></tr><tr><td class=\"key\">Prohibición</td><td>Pedir petición a cualquier dios u hombre fuera del rey (6:7)</td></tr><tr><td class=\"key\">Pena</td><td>Ser echado en el <strong>foso de los leones</strong> (6:7)</td></tr><tr><td class=\"key\">Carácter</td><td>Ley de Media y de Persia, <strong>la cual no puede ser abrogada</strong> (6:8)</td></tr></tbody></table>"
+   "h": "<div class=\"highlight-box\">• Buscaban ocasión para acusarlo <strong>en lo relacionado con el reino</strong> (6:4)<br>\n    • No podían hallar motivo alguno o falta, porque <strong>él era fiel</strong>,\n      y <strong>ningún error ni falta hallaron en él</strong> (6:4)<br>\n    • Concluyeron: «No hallaremos contra este Daniel motivo alguno para acusarlo,\n      si no lo hallamos <strong>contra él en relación con la ley de su Dios</strong>» (6:5)</div><table class=\"info-table\"><thead><tr><th>El edicto</th><th>Detalle</th></tr></thead><tbody><tr><td class=\"key\">Duración</td><td>TREINTA días (6:7)</td></tr><tr><td class=\"key\">Prohibición</td><td>Pedir petición a cualquier dios u hombre fuera del rey (6:7)</td></tr><tr><td class=\"key\">Pena</td><td>Ser echado en el <strong>foso de los leones</strong> (6:7)</td></tr><tr><td class=\"key\">Carácter</td><td>Ley de Media y de Persia, <strong>la cual no puede ser abrogada</strong> (6:8)</td></tr></tbody></table>"
   },
   {
    "t": "🙏 La fidelidad de Daniel — versículo central",
-   "h": "<div class=\"verse-box\">«Cuando Daniel supo que el edicto había sido firmado, <strong>entró en su casa</strong>;\n    abiertas las ventanas de su habitación que daban a Jerusalén,\n    <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,\n    <strong>como lo solía hacer antes</strong>.» (Daniel 6:10)</div><div class=\"warn-box\">Fíjate en tres cosas que suelen preguntarse por separado:\n    <strong>hacia Jerusalén</strong>, <strong>tres veces al día</strong>,\n    y <strong>como lo solía hacer antes</strong> — no cambió su costumbre por miedo.</div>"
+   "h": "<div class=\"verse-box\">«Cuando Daniel supo que el edicto había sido firmado, <strong>entró en su casa</strong>;\n    abiertas las ventanas de su habitación que daban a Jerusalén,\n    <strong>se arrodillaba tres veces al día</strong>, oraba y daba gracias delante de su Dios\n    <strong>como solía hacerlo antes</strong>.» (Daniel 6:10)</div><div class=\"warn-box\">Fíjate en tres cosas que suelen preguntarse por separado:\n    <strong>hacia Jerusalén</strong>, <strong>tres veces al día</strong>,\n    y <strong>como lo solía hacer antes</strong> — no cambió su costumbre por miedo.</div>"
   },
   {
    "t": "🦁 El foso de los leones",
@@ -1230,7 +1246,7 @@ const BANCO = [
    "La flauta",
    "El arpa",
    "La bocina",
-   "El tamboril"
+   "La cítara"
   ],
   "a": 2,
   "nv": 1
@@ -1243,7 +1259,7 @@ const BANCO = [
    "La zampoña",
    "El salterio",
    "La trompeta",
-   "El tamboril"
+   "La cítara"
   ],
   "a": 2,
   "nv": 1
@@ -1335,7 +1351,7 @@ const BANCO = [
   "ins": "Daniel 3:25 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«He aquí yo veo "
+    "x": "«Sin embargo, yo veo "
    },
    {
     "b": "cuatro",
@@ -2774,10 +2790,10 @@ const BANCO = [
  {
   "cap": "d6",
   "t": "fill",
-  "ins": "Daniel 6:26-27 (RV1995) — Completa:",
+  "ins": "Daniel 6:26 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«...porque él es el Dios "
+    "x": "«Porque él es el Dios "
    },
    {
     "b": "viviente",
@@ -2802,7 +2818,7 @@ const BANCO = [
   "ins": "Daniel 6:23 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«...y ninguna "
+    "x": "«...pero ninguna "
    },
    {
     "b": "lesión",
@@ -2974,17 +2990,17 @@ const BANCO = [
  {
   "cap": "d6",
   "t": "fill",
-  "ins": "Daniel 6:26-27 (RV1995) — Completa:",
+  "ins": "Daniel 6:27 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«Su reino no será jamás "
+    "x": "«su reino no será jamás "
    },
    {
     "b": "destruido",
     "h": "¿qué no será?"
    },
    {
-    "x": ", y su dominio perdurará hasta el "
+    "x": " y su dominio perdurará hasta el "
    },
    {
     "b": "fin",
@@ -3339,31 +3355,6 @@ const BANCO = [
    },
    {
     "x": " en toda sabiduría, sabios en ciencia...»"
-   }
-  ],
-  "nv": 3
- },
- {
-  "cap": "d6",
-  "t": "fill",
-  "ins": "Daniel 6:23 (RV1995) — Completa:",
-  "p": [
-   {
-    "x": "«...pero ninguna "
-   },
-   {
-    "b": "lesión",
-    "h": "¿qué no se halló?"
-   },
-   {
-    "x": " se halló en él, porque había "
-   },
-   {
-    "b": "confiado",
-    "h": "¿qué había hecho?"
-   },
-   {
-    "x": " en su Dios.»"
    }
   ],
   "nv": 3
@@ -3878,6 +3869,904 @@ const BANCO = [
   "a": true,
   "e": "Verdadero. Daniel 1:19 dice que el rey habló con ellos y no fue hallado entre todos ninguno como ellos, y por eso estuvieron delante del rey.",
   "nv": 2
+ },
+ {
+  "cap": "d1",
+  "t": "mc",
+  "q": "¿Qué le pidió Daniel a Melsar que hiciera al terminar la prueba? (Daniel 1:13)",
+  "o": [
+   "Que informara al rey",
+   "Que comparara sus rostros con los de los muchachos que comían de la comida del rey",
+   "Que los dejara volver a Judá",
+   "Que repitiera la prueba otros diez días"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d1",
+  "t": "tf",
+  "q": "Melsar aceptó la propuesta de Daniel y probó con ellos durante diez días. (Daniel 1:14)",
+  "a": true,
+  "e": "Verdadero. RV1995: «Consintió, pues, con ellos en esto, y probó con ellos durante diez días».",
+  "nv": 2
+ },
+ {
+  "cap": "d1",
+  "t": "mc",
+  "q": "¿Quién llevó a los cuatro jóvenes delante de Nabucodonosor al cumplirse el plazo? (Daniel 1:18)",
+  "o": [
+   "Melsar",
+   "El jefe de los eunucos",
+   "El capitán de la guardia",
+   "Los magos del reino"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿A quiénes mandó llamar el rey para que le declararan sus sueños? (Daniel 2:2)",
+  "o": [
+   "Solo a los caldeos",
+   "A los magos, astrólogos, encantadores y caldeos",
+   "A los sacerdotes del templo",
+   "A los sátrapas de las provincias"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:3, ¿qué le dijo el rey a los sabios sobre su sueño?",
+  "o": [
+   "Que ya lo había olvidado por completo",
+   "Que había tenido un sueño y su espíritu se había turbado por saberlo",
+   "Que el sueño anunciaba una guerra",
+   "Que soñó con una estatua de oro"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Con qué palabras le respondieron los caldeos al rey? (Daniel 2:4)",
+  "o": [
+   "«Perdónanos, oh rey»",
+   "«¡Rey, para siempre vive! Cuenta el sueño a tus siervos»",
+   "«Nadie puede saber eso»",
+   "«Danos siete días»"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué les ofreció el rey si le declaraban el sueño y su interpretación? (Daniel 2:6)",
+  "o": [
+   "La mitad de su reino",
+   "Dones, favores y gran honra",
+   "Tierras y esclavos",
+   "El perdón de sus deudas"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "tf",
+  "q": "Los caldeos volvieron a pedirle al rey que él les contara el sueño primero. (Daniel 2:7)",
+  "a": true,
+  "e": "Verdadero. Insistieron: «Cuente el rey el sueño a sus siervos, y le daremos la interpretación».",
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿De qué acusó el rey a los sabios cuando insistieron? (Daniel 2:8)",
+  "o": [
+   "De burlarse de él",
+   "De poner dilaciones porque veían que el asunto se le había ido",
+   "De estar aliados con sus enemigos",
+   "De no haber estudiado"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:10, ¿qué le contestaron los caldeos al rey?",
+  "o": [
+   "Que necesitaban más tiempo",
+   "Que no hay hombre sobre la tierra que pueda declarar el asunto del rey",
+   "Que el sueño no tenía significado",
+   "Que buscarían a un profeta hebreo"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:11, ¿quiénes decían los caldeos que podrían declarar el asunto?",
+  "o": [
+   "Solo los reyes",
+   "Solo los dioses",
+   "Solo los ancianos",
+   "Solo los sacerdotes de Babilonia"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué mandó el rey cuando nadie pudo declararle el sueño? (Daniel 2:12)",
+  "o": [
+   "Encarcelar a los caldeos",
+   "Que mataran a todos los sabios de Babilonia",
+   "Desterrarlos del reino",
+   "Quitarles sus bienes"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "tf",
+  "q": "Cuando se publicó el edicto de muerte contra los sabios, también buscaron a Daniel. (Daniel 2:13)",
+  "a": true,
+  "e": "Verdadero. RV1995: «buscaron también a Daniel», aunque él no había estado entre los consultados.",
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué le preguntó Daniel a Arioc cuando lo buscó? (Daniel 2:15)",
+  "o": [
+   "Quién lo había acusado",
+   "Cuál era la causa de que el edicto se publicara tan apresuradamente",
+   "Dónde estaban sus compañeros",
+   "Si podía hablar con el rey"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿A quiénes mandó reunir el rey para la dedicación de la estatua? (Daniel 3:2)",
+  "o": [
+   "Solo a los sátrapas",
+   "A los sátrapas, magistrados, capitanes, oidores, tesoreros, consejeros, jueces y todos los gobernadores",
+   "A los sacerdotes y los magos",
+   "Al pueblo de Babilonia solamente"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "tf",
+  "q": "Todos los funcionarios convocados sí se reunieron para la dedicación de la estatua. (Daniel 3:3)",
+  "a": true,
+  "e": "Verdadero. RV1995: «Se reunieron, pues, los sátrapas, magistrados, capitanes...».",
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿A quiénes se dirigió el pregonero en alta voz? (Daniel 3:4)",
+  "o": [
+   "A los sátrapas del reino",
+   "A los pueblos, naciones y lenguas",
+   "A los soldados del ejército",
+   "A los sacerdotes de Marduc"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d3",
+  "t": "tf",
+  "q": "Al oír la música, todos los pueblos se postraron y adoraron la estatua de oro. (Daniel 3:7)",
+  "a": true,
+  "e": "Verdadero. Todos, menos Sadrac, Mesac y Abed-nego, que son acusados en el versículo siguiente.",
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿Cómo empezaron los caldeos su acusación ante el rey? (Daniel 3:9)",
+  "o": [
+   "«Oh rey, hay traidores»",
+   "«¡Rey, para siempre vive!»",
+   "«Perdona nuestra osadía»",
+   "«Escucha, oh gran Nabucodonosor»"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según Daniel 3:12, ¿qué recordaron los acusadores sobre los tres jóvenes?",
+  "o": [
+   "Que eran extranjeros sin derechos",
+   "Que el rey mismo los había puesto sobre los negocios de la provincia de Babilonia",
+   "Que eran parientes de Daniel",
+   "Que ya habían desobedecido antes"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿Con qué ánimo mandó el rey traer a los tres jóvenes? (Daniel 3:13)",
+  "o": [
+   "Con calma y curiosidad",
+   "Con ira y con enojo",
+   "Con tristeza",
+   "Con burla"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿Qué les preguntó el rey al tenerlos delante? (Daniel 3:14)",
+  "o": [
+   "¿Quién os mandó desobedecer?",
+   "¿Es verdad que vosotros no honráis a mi dios ni adoráis la estatua de oro que he levantado?",
+   "¿De qué pueblo sois?",
+   "¿Queréis morir hoy?"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "tf",
+  "q": "Los tres jóvenes cayeron atados dentro del horno de fuego ardiente. (Daniel 3:23)",
+  "a": true,
+  "e": "Verdadero. Entraron atados; después el rey los vio sueltos caminando en medio del fuego.",
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿Cómo reaccionó el rey al mirar dentro del horno? (Daniel 3:24)",
+  "o": [
+   "Se alegró",
+   "Se espantó y se levantó apresuradamente",
+   "Mandó apagar el fuego",
+   "Llamó a Daniel"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:23, ¿por qué le dio Daniel gracias al Dios de sus padres?",
+  "o": [
+   "Porque lo libró de la muerte",
+   "Porque le había dado sabiduría y fuerza",
+   "Porque le devolvió a su familia",
+   "Porque castigó a los caldeos"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué le pidió Daniel a Arioc antes de entrar ante el rey? (Daniel 2:24)",
+  "o": [
+   "Que lo dejara ver a sus amigos",
+   "Que no mataran a los sabios de Babilonia",
+   "Que le diera más tiempo",
+   "Que lo protegiera del rey"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Cómo presentó Arioc a Daniel ante el rey? (Daniel 2:25)",
+  "o": [
+   "Como el más sabio de Babilonia",
+   "Como un hombre de los deportados de Judá",
+   "Como un profeta enviado por Dios",
+   "Como su propio consejero"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:27, ¿quiénes NO podían revelar el misterio que el rey demandaba?",
+  "o": [
+   "Solo los magos",
+   "Ni sabios ni astrólogos, ni magos ni adivinos",
+   "Solo los adivinos extranjeros",
+   "Los sacerdotes del templo"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:29, ¿dónde estaba el rey cuando le vinieron los pensamientos sobre el futuro?",
+  "o": [
+   "En el trono",
+   "En su cama",
+   "En el campo de Dura",
+   "En el templo"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "tf",
+  "q": "Daniel dijo que el misterio le fue revelado porque él tenía más sabiduría que los demás. (Daniel 2:30)",
+  "a": false,
+  "e": "Falso. Dijo exactamente lo contrario: «no porque en mí haya más sabiduría que en los demás».",
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:31, ¿cómo describió Daniel la imagen del sueño?",
+  "o": [
+   "Pequeña pero brillante",
+   "Muy grande y su gloria muy sublime",
+   "Hecha de piedra",
+   "Semejante a un hombre común"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:33, ¿de qué eran las piernas de la imagen?",
+  "o": [
+   "De bronce",
+   "De hierro",
+   "De plata",
+   "De barro cocido"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué obtuvo Daniel del rey para sus tres compañeros? (Daniel 2:49)",
+  "o": [
+   "Que volvieran a Judá",
+   "Que los pusiera sobre los negocios de la provincia de Babilonia",
+   "Que los eximieran del servicio",
+   "Que estudiaran con los magos"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "fill",
+  "ins": "Daniel 2:23 (RV1995) — Completa:",
+  "p": [
+   {
+    "x": "«A ti, Dios de mis padres, te doy "
+   },
+   {
+    "b": "gracias",
+    "h": "¿qué le da?"
+   },
+   {
+    "x": " y te alabo, porque me has dado "
+   },
+   {
+    "b": "sabiduría",
+    "h": "¿qué le dio?"
+   },
+   {
+    "x": " y fuerza.»"
+   }
+  ],
+  "nv": 3
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Al acusar a los tres jóvenes, ¿qué le recordaron los caldeos al rey sobre su propia ley? (Daniel 3:10)",
+  "o": [
+   "Que era injusta",
+   "Que él mismo había dado la ley de postrarse al oír los instrumentos",
+   "Que ya nadie la cumplía",
+   "Que podía cambiarla"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según Daniel 3:11, ¿qué decía la ley que le pasaría al que no se postrara?",
+  "o": [
+   "Que perdería su cargo",
+   "Que sería echado dentro de un horno de fuego ardiente",
+   "Que sería desterrado",
+   "Que pagaría una multa"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Cómo saludaron los gobernadores y sátrapas al rey al presentarle el edicto? (Daniel 6:6)",
+  "o": [
+   "«Oh rey, escúchanos»",
+   "«¡Rey Darío, para siempre vive!»",
+   "«Señor de Media y Persia»",
+   "«Gran rey de Babilonia»"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d6",
+  "t": "tf",
+  "q": "El rey Darío firmó el edicto y la prohibición. (Daniel 6:9)",
+  "a": true,
+  "e": "Verdadero. RV1995: «Firmó, pues, el rey Darío el edicto y la prohibición».",
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Cómo encontraron a Daniel los que lo espiaban? (Daniel 6:11)",
+  "o": [
+   "Escribiendo cartas",
+   "Orando y rogando en presencia de su Dios",
+   "Reuniendo a los judíos",
+   "Escondido en su casa"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "Según Daniel 6:13, ¿de qué acusaron a Daniel delante del rey?",
+  "o": [
+   "De robar del tesoro real",
+   "De no respetar al rey ni acatar el edicto, y hacer su petición tres veces al día",
+   "De hablar mal del rey",
+   "De reunir un ejército"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Qué le recordaron al rey cuando él quería salvar a Daniel? (Daniel 6:15)",
+  "o": [
+   "Que Daniel era extranjero",
+   "Que es ley de Media y de Persia que ningún edicto que el rey confirme puede ser abrogado",
+   "Que el pueblo estaba en contra",
+   "Que ya era muy tarde"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Qué le respondió Daniel al rey desde el foso? (Daniel 6:21)",
+  "o": [
+   "«Sácame de aquí, oh rey»",
+   "«Oh rey, vive para siempre»",
+   "«¿Por qué me hiciste esto?»",
+   "«Los leones duermen»"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿A quiénes escribió el rey Darío después de sacar a Daniel del foso? (Daniel 6:25)",
+  "o": [
+   "Solo a los sátrapas",
+   "A todos los pueblos, naciones y lenguas que moraban en toda la tierra",
+   "A los reyes vecinos",
+   "A los sacerdotes de Babilonia"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Durante los reinados de qué reyes prosperó Daniel? (Daniel 6:28)",
+  "o": [
+   "Nabucodonosor y Belsasar",
+   "Darío y Ciro el persa",
+   "Joacim y Darío",
+   "Belsasar y Ciro"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d6",
+  "t": "tf",
+  "q": "Daniel prosperó durante los reinados de Darío y de Ciro, el persa. (Daniel 6:28)",
+  "a": true,
+  "e": "Verdadero. Es el cierre del capítulo 6 y conecta con Daniel 1:21, que menciona el año primero de Ciro.",
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:9, ¿qué exigió el rey para comprobar que los sabios podían interpretar?",
+  "o": [
+   "Que jurasen por sus dioses",
+   "Que le contaran el sueño, para saber que podían darle su interpretación",
+   "Que trajeran testigos",
+   "Que escribieran la respuesta"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué le preguntó el rey a Daniel al tenerlo delante? (Daniel 2:26)",
+  "o": [
+   "¿De qué pueblo eres?",
+   "¿Podrás tú hacerme conocer el sueño que vi, y su interpretación?",
+   "¿Cuánto quieres por decírmelo?",
+   "¿Quién te envió?"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:38, ¿qué le había entregado Dios en las manos a Nabucodonosor?",
+  "o": [
+   "Solo la ciudad de Jerusalén",
+   "Los hijos de hombres, las bestias del campo y las aves del cielo, dondequiera que habitan",
+   "El oro de todas las naciones",
+   "La sabiduría de los caldeos"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Qué le preguntaron al rey antes de acusar a Daniel? (Daniel 6:12)",
+  "o": [
+   "Si conocía a Daniel",
+   "Si no había confirmado el edicto de los treinta días",
+   "Si quería cambiar la ley",
+   "Si Daniel era su amigo"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Con qué frase cerró Daniel el relato del sueño antes de interpretarlo? (Daniel 2:36)",
+  "o": [
+   "«Así lo dice el Señor»",
+   "«Éste es el sueño. También la interpretación de él diremos en presencia del rey»",
+   "«Nadie más pudo verlo»",
+   "«Guárdalo en tu corazón, oh rey»"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:42, ¿cómo sería el reino de los dedos de hierro y barro cocido?",
+  "o": [
+   "Totalmente fuerte",
+   "En parte fuerte y en parte frágil",
+   "Totalmente frágil",
+   "El más grande de todos"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:43, ¿por qué medio se mezclarían y sin embargo no se unirían?",
+  "o": [
+   "Por medio de guerras",
+   "Por medio de alianzas humanas",
+   "Por medio del comercio",
+   "Por medio de la religión"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:45, ¿qué desmenuzó la piedra que se desprendió del monte?",
+  "o": [
+   "Solo los pies de barro",
+   "El hierro, el bronce, el barro, la plata y el oro",
+   "La cabeza de oro únicamente",
+   "Todo el monte"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "fill",
+  "ins": "Daniel 2:43 (RV1995) — Completa:",
+  "p": [
+   {
+    "x": "«Así como viste el hierro mezclado con barro, así se mezclarán por medio de "
+   },
+   {
+    "b": "alianzas",
+    "h": "¿por medio de qué?"
+   },
+   {
+    "x": " humanas; pero no se unirán el uno con el otro, como el hierro no se mezcla con el "
+   },
+   {
+    "b": "barro",
+    "h": "¿con qué no se mezcla?"
+   },
+   {
+    "x": ".»"
+   }
+  ],
+  "nv": 3
+ },
+ {
+  "cap": "pr39",
+  "t": "mc",
+  "q": "Según P&R cap. 39, ¿qué clase de carnes incluía la comida del rey?",
+  "o": [
+   "Solo carnes de res",
+   "Carnes que la ley de Dios declaraba inmundas",
+   "Únicamente aves",
+   "Carnes preparadas por sacerdotes hebreos"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr39",
+  "t": "mc",
+  "q": "Según P&R cap. 39, ¿cómo se interpretaba participar de la comida del rey?",
+  "o": [
+   "Como un simple acto de cortesía",
+   "Como homenaje a los dioses de Babilonia",
+   "Como una obligación militar",
+   "Como parte del entrenamiento físico"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr39",
+  "t": "mc",
+  "q": "Según P&R cap. 39, ¿qué actitud tuvo Daniel al pedir el cambio de alimentación?",
+  "o": [
+   "Se negó sin explicar nada",
+   "Fue firme y cortés a la vez, y propuso una prueba razonable",
+   "Amenazó con dejar el palacio",
+   "Pidió que otro hablara por él"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr39",
+  "t": "mc",
+  "q": "Según P&R cap. 39, ¿qué preparó a Daniel para las pruebas mayores?",
+  "o": [
+   "Su educación en Babilonia",
+   "La fidelidad en las cosas pequeñas",
+   "El favor del rey",
+   "Su origen del linaje real"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr39",
+  "t": "tf",
+  "q": "Según P&R cap. 39, Daniel tomó su decisión sobre la comida del rey en el momento en que se la sirvieron.",
+  "a": false,
+  "e": "Falso. Su decisión fue tomada de antemano, no improvisada bajo presión. Esa es la enseñanza central del capítulo.",
+  "nv": 2
+ },
+ {
+  "cap": "pr39",
+  "t": "tf",
+  "q": "Según P&R cap. 39, el desarrollo intelectual de los cuatro jóvenes fue resultado solo del estudio.",
+  "a": false,
+  "e": "Falso. Fue resultado de la obediencia, no solo del estudio: Dios recompensó su fidelidad con salud, vigor y sabiduría superiores.",
+  "nv": 2
+ },
+ {
+  "cap": "pr39",
+  "t": "mc",
+  "q": "Según P&R cap. 39, ¿qué efecto tiene la alimentación sencilla sobre la mente?",
+  "o": [
+   "Ninguno comprobable",
+   "Mantiene la mente despejada para discernir la voluntad de Dios",
+   "La hace más lenta pero más tranquila",
+   "Solo afecta el cuerpo"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr41",
+  "t": "mc",
+  "q": "Según P&R cap. 41, ¿de qué NO los libró Dios a los tres jóvenes?",
+  "o": [
+   "De la muerte",
+   "De la prueba: estuvo con ellos dentro de ella",
+   "Del fuego",
+   "Del rey"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr41",
+  "t": "mc",
+  "q": "Según P&R cap. 41, ¿qué significa que no negociaron con Dios?",
+  "o": [
+   "Que no oraron antes",
+   "Que no condicionaron su lealtad al milagro",
+   "Que no le pidieron nada al rey",
+   "Que no hablaron entre ellos"
+  ],
+  "a": 1,
+  "nv": 3
+ },
+ {
+  "cap": "pr41",
+  "t": "mc",
+  "q": "Según P&R cap. 41, ¿ante quién fue testimonio el milagro del horno?",
+  "o": [
+   "Ante los sacerdotes de Babilonia",
+   "Ante el rey más poderoso de la tierra",
+   "Ante el pueblo de Judá",
+   "Ante los otros cautivos"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr41",
+  "t": "tf",
+  "q": "Según P&R cap. 41, ningún poder humano puede vencer a quienes permanecen fieles.",
+  "a": true,
+  "e": "Verdadero. Es una de las conclusiones del capítulo, junto con que la fidelidad puede costar la vida y Dios libera a los suyos.",
+  "nv": 2
+ },
+ {
+  "cap": "pr41",
+  "t": "tf",
+  "q": "Según P&R cap. 41, la experiencia del horno solo aplica a casos de idolatría con estatuas.",
+  "a": false,
+  "e": "Falso. Es un modelo de fidelidad ante cualquier presión para desobedecer a Dios, en cualquier época y circunstancia.",
+  "nv": 2
+ },
+ {
+  "cap": "pr44",
+  "t": "mc",
+  "q": "Según P&R cap. 44, ¿qué buscaron los enemigos de Daniel al investigarlo?",
+  "o": [
+   "Errores de traducción en sus escritos",
+   "Corrupción, y no hallaron nada",
+   "Testigos falsos",
+   "Deudas impagadas"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr44",
+  "t": "mc",
+  "q": "Según P&R cap. 44, ¿cuándo se construyó el carácter de Daniel?",
+  "o": [
+   "En la crisis del foso",
+   "Día a día, antes de la crisis",
+   "Cuando llegó a Babilonia",
+   "Al final de su vida"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr44",
+  "t": "mc",
+  "q": "Según P&R cap. 44, ¿qué hizo Daniel cuando llegó el decreto?",
+  "o": [
+   "Oró más fuerte para desafiar al rey",
+   "No cambió nada: siguió como solía hacerlo antes",
+   "Oró en secreto para no ser visto",
+   "Dejó de orar por unos días"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr44",
+  "t": "mc",
+  "q": "Según P&R cap. 44, ¿hasta dónde llegó el alcance del testimonio de Daniel?",
+  "o": [
+   "Solo al palacio del rey",
+   "A todos los pueblos, naciones y lenguas del imperio",
+   "Solo a los cautivos de Judá",
+   "A los sátrapas de su provincia"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr44",
+  "t": "mc",
+  "q": "Según P&R cap. 44, ¿en qué convirtió la liberación de Daniel al rey Darío?",
+  "o": [
+   "En un rey más severo",
+   "En proclamador del Dios verdadero",
+   "En enemigo de los judíos",
+   "En un rey débil"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "pr44",
+  "t": "tf",
+  "q": "Según P&R cap. 44, Daniel fue fiel solo en lo religioso, no en su trabajo de gobierno.",
+  "a": false,
+  "e": "Falso. Fue fiel en su trabajo como funcionario del gobierno, no solo en lo religioso: su vida pública y privada eran igual de intachables.",
+  "nv": 2
+ },
+ {
+  "cap": "pr44",
+  "t": "tf",
+  "q": "Según P&R cap. 44, Daniel tenía más de ochenta años cuando fue echado al foso.",
+  "a": true,
+  "e": "Verdadero. Lo que decidió de joven en Daniel 1 fue lo que lo sostuvo de anciano en Daniel 6.",
+  "nv": 2
  }
 ];
 
@@ -3890,6 +4779,7 @@ const MODULOS = [
   "color": "#0F766E",
   "cats": [
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3900,7 +4790,9 @@ const MODULOS = [
   "icono": "👥",
   "color": "#7C3AED",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3911,7 +4803,9 @@ const MODULOS = [
   "icono": "🔢",
   "color": "#B45309",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3923,6 +4817,7 @@ const MODULOS = [
   "color": "#BE123C",
   "cats": [
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3933,7 +4828,9 @@ const MODULOS = [
   "icono": "📖",
   "color": "#1D4ED8",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3964,7 +4861,9 @@ const MODULOS = [
   "icono": "🗺️",
   "color": "#15803D",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3976,6 +4875,7 @@ const MODULOS = [
   "color": "#9D174D",
   "cats": [
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3987,6 +4887,7 @@ const MODULOS = [
   "color": "#B91C1C",
   "cats": [
    "av",
+   "pa",
    "gm"
   ]
  },
@@ -3997,7 +4898,9 @@ const MODULOS = [
   "icono": "💬",
   "color": "#0E7490",
   "cats": [
+   "me",
    "av",
+   "pa",
    "gm"
   ]
  }
@@ -4127,7 +5030,7 @@ const CONT_MODULOS = {
   },
   {
    "t": "🪨 Lo que dice el texto sobre la piedra",
-   "h": "<div class=\"verse-box\">«Y en los días de estos reyes el Dios del cielo levantará <strong>un reino\n    que no será jamás destruido</strong>, ni será el reino dejado a otro pueblo;\n    desmenuzará y consumirá a todos estos reinos, pero él permanecerá para siempre.» (2:44)</div>"
+   "h": "<div class=\"verse-box\">«En los días de estos reyes, el Dios del cielo levantará <strong>un reino\n    que no será jamás destruido</strong>, ni será el reino dejado a otro pueblo;\n    desmenuzará y consumirá a todos estos reinos, pero él permanecerá para siempre.» (2:44)</div>"
   },
   {
    "t": "🔗 Conexión entre el capítulo 3 y el 2",
@@ -4151,7 +5054,7 @@ const CONT_MODULOS = {
   },
   {
    "t": "🔤 Palabra por palabra — Daniel 1 al 3",
-   "h": "<table class=\"info-table\"><thead><tr><th>Ref.</th><th>RV1995 (la que se califica)</th><th>RV1960 (la que suena familiar)</th></tr></thead><tbody><tr><td class=\"key\">1:15</td><td>pareció el rostro de ellos <strong>mejor y más robusto</strong></td><td>más <strong>rozagante</strong> y más robusto</td></tr><tr><td class=\"key\">2:5</td><td>vuestras casas serán convertidas en <strong>estercoleros</strong></td><td>convertidas en <strong>muladares</strong></td></tr><tr><td class=\"key\">3:25</td><td>el aspecto del cuarto es semejante a <strong>un hijo de los dioses</strong></td><td>semejante a hijo de los dioses</td></tr><tr><td class=\"key\">3:27</td><td>el fuego <strong>no había tenido poder alguno</strong> sobre sus cuerpos; sus ropas, <strong>intactas</strong></td><td>el fuego <strong>no se enseñoreó</strong>; sus vestidos <strong>no se alteraron</strong></td></tr><tr><td class=\"key\">3:29</td><td>su casa convertida en <strong>estercolero</strong></td><td>su casa puesta por <strong>muladar</strong></td></tr></tbody></table>"
+   "h": "<table class=\"info-table\"><thead><tr><th>Ref.</th><th>RV1995 (la que se califica)</th><th>RV1960 (la que suena familiar)</th></tr></thead><tbody><tr><td class=\"key\">1:15</td><td>pareció el rostro de ellos <strong>mejor y más robusto</strong></td><td>más <strong>rozagante</strong> y más robusto</td></tr><tr><td class=\"key\">2:5</td><td>vuestras casas serán convertidas en <strong>estercoleros</strong></td><td>convertidas en <strong>muladares</strong></td></tr><tr><td class=\"key\">3:5</td><td>el son de la bocina, la flauta, <strong>la cítara</strong>, el arpa, el salterio, la zampoña</td><td>de la bocina, de la flauta, <strong>del tamboril</strong>...</td></tr><tr><td class=\"key\">3:25</td><td>el aspecto del cuarto es semejante a <strong>un hijo de los dioses</strong></td><td>semejante a hijo de los dioses</td></tr><tr><td class=\"key\">3:27</td><td>el fuego <strong>no había tenido poder alguno</strong> sobre sus cuerpos; sus ropas, <strong>intactas</strong></td><td>el fuego <strong>no se enseñoreó</strong>; sus vestidos <strong>no se alteraron</strong></td></tr><tr><td class=\"key\">3:29</td><td>su casa convertida en <strong>estercolero</strong></td><td>su casa puesta por <strong>muladar</strong></td></tr></tbody></table>"
   },
   {
    "t": "🔤 Palabra por palabra — Daniel 4 al 6",
@@ -4173,7 +5076,7 @@ const CONT_MODULOS = {
   },
   {
    "t": "1️⃣ al 5️⃣ — Los de mayor peso",
-   "h": "<ul class=\"tight\"><li><strong>Los números exactos.</strong> 3 años de instrucción · 10 días de prueba · 10 veces mejores · 2.º año de Nabucodonosor · 60 y 6 codos · 7 veces el horno · 4 varones · 7 tiempos · 12 meses · 1.000 convidados · 62 años Darío · 120 sátrapas · 30 días el decreto · 3 veces al día</li><li><strong>Nombres hebreos → babilónicos.</strong> Daniel→Beltsasar · Ananías→Sadrac · Misael→Mesac · Azarías→Abed-nego</li><li><strong>Aspenaz no es Melsar.</strong> Aspenaz = jefe de los eunucos (1:3). Melsar = el sirviente puesto sobre los cuatro (1:11). Daniel habló con <u>Melsar</u></li><li><strong>Los 6 instrumentos en orden</strong> (3:5): bocina, flauta, tamboril, arpa, salterio, zampoña. <u>La trompeta no aparece</u></li><li><strong>MENE, MENE, TEKEL, UPARSIN</strong> (5:25) y el significado de cada palabra: contó · pesado y hallado falto · roto y dado a medos y persas</li></ul>"
+   "h": "<ul class=\"tight\"><li><strong>Los números exactos.</strong> 3 años de instrucción · 10 días de prueba · 10 veces mejores · 2.º año de Nabucodonosor · 60 y 6 codos · 7 veces el horno · 4 varones · 7 tiempos · 12 meses · 1.000 convidados · 62 años Darío · 120 sátrapas · 30 días el decreto · 3 veces al día</li><li><strong>Nombres hebreos → babilónicos.</strong> Daniel→Beltsasar · Ananías→Sadrac · Misael→Mesac · Azarías→Abed-nego</li><li><strong>Aspenaz no es Melsar.</strong> Aspenaz = jefe de los eunucos (1:3). Melsar = el sirviente puesto sobre los cuatro (1:11). Daniel habló con <u>Melsar</u></li><li><strong>Los 6 instrumentos en orden</strong> (3:5, RV1995): bocina, flauta, <u>cítara</u>, arpa, salterio, zampoña. <u>La trompeta no aparece</u>. Cuidado: la RV1960 dice «tamboril» en el tercer lugar</li><li><strong>MENE, MENE, TEKEL, UPARSIN</strong> (5:25) y el significado de cada palabra: contó · pesado y hallado falto · roto y dado a medos y persas</li></ul>"
   },
   {
    "t": "6️⃣ al 🔟 — Los que deciden el desempate",
@@ -4346,8 +5249,8 @@ const TARJETAS = [
  },
  {
   "cap": "d3",
-  "f": "Los seis instrumentos, en orden",
-  "r": "Bocina, flauta, tamboril, arpa, salterio y zampoña (3:5)"
+  "f": "Los seis instrumentos, en orden (RV1995)",
+  "r": "Bocina, flauta, CÍTARA, arpa, salterio y zampoña (3:5). La RV1960 dice «tamboril» en el tercer lugar"
  },
  {
   "cap": "d3",
@@ -4387,7 +5290,7 @@ const TARJETAS = [
  {
   "cap": "d3",
   "f": "La frase clave de los tres jóvenes",
-  "r": "«Y si no, no serviremos a tus dioses ni adoraremos la estatua» (3:18)"
+  "r": "«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado» (3:18) (3:18)"
  },
  {
   "cap": "d4",
@@ -4647,12 +5550,13 @@ function normalizar(x){
   CAPS.forEach(c=>s.prog[c.id]=0);
   if(!x||typeof x!=='object')return s;
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
-  if(x.cat==='av'||x.cat==='gm')s.cat=x.cat;
+  if(['me','av','pa','gm'].includes(x.cat))s.cat=x.cat;
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
   if(Array.isArray(x.examenes))
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
-      .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,cat:e.cat==='gm'?'gm':'av',fecha:String(e.fecha||''),
+      .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,
+        cat:['me','av','pa','gm'].includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
         modo:['simulacro','errores'].includes(e.modo)?e.modo:'normal',
         nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
@@ -4689,20 +5593,41 @@ const bancoDe=()=>{const ids=capsDe().map(c=>c.id);return BANCO.filter(q=>ids.in
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
+
+/* ───────── categorías ─────────
+   Salen del reglamento del campamento: cada club presenta dos integrantes de
+   4 a 6 años (examen solo del libro de Daniel), dos de 7 a 9 (Daniel más
+   Profetas y Reyes) y dos padres o consejeros con el mismo alcance de 7 a 9.
+   «gm» no está en ese reglamento: es el alcance ampliado de Guías Mayores,
+   que es otro evento.
+     n      preguntas del examen de práctica
+     techo  nivel máximo de dificultad que se le ofrece
+     sinCompletar  el examen no trae sección de completar */
+const CATS={
+  me:{nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
+      alcance:'Daniel 1, 2, 3 y 6'},
+  av:{nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
+  pa:{nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
+  gm:{nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
+};
+const CAT=()=>CATS[S.cat]||CATS.av;
 /* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
    Lo único confirmado del examen del campamento es el formato de tres
    secciones (múltiple, verdadero/falso, completar), visto en un examen que
    Camilo fotografió. La cantidad y el reparto por sección están sin
    confirmar. Estos números son un tamaño de práctica razonable, no un dato:
    cuando se confirme, se cambia aquí y todo lo demás se ajusta. */
-const NPREG=()=>S.cat==='av'?15:25;
+const NPREG=()=>CAT().n;
 
 /* ───────── cuenta hacia el campamento ───────── */
 /* Fecha del evento de cada categoría. El campamento de Aventureros es el
    9 de octubre de 2026; si el de Guías Mayores queda en otra fecha, se
    cambia solo esta línea y la cuenta de días, la semana del plan y el techo
    de dificultad se recalculan solos para esa categoría. */
-const FECHA_META={av:'2026-10-09',gm:'2026-10-09'};
+const FECHA_META={me:'2026-10-09',av:'2026-10-09',pa:'2026-10-09',gm:'2026-10-09'};
 const SEMANAS_PLAN=7;
 
 function diasParaMeta(){
@@ -4733,6 +5658,9 @@ function promedioReciente(){
    · el desempeño — no se sube de nivel sin dominar el anterior.
    Así la dificultad crece de verdad y no de golpe. */
 function nivelRecomendado(){
+  const techoCat=CAT().techo;
+  /* Los adultos no necesitan la rampa: entran directo a lo exigente. */
+  if(S.cat==='pa')return techoCat;
   const sem=semanaPlan();
   const techoSemana=sem<=2?1:sem<=4?2:3;
   const prom=promedioReciente();
@@ -4740,7 +5668,7 @@ function nivelRecomendado(){
   let porDesempeno=1;
   if(prom!==null&&hechos>=2&&prom>=0.85)porDesempeno=3;
   else if(prom!==null&&hechos>=1&&prom>=0.70)porDesempeno=2;
-  return Math.max(1,Math.min(techoSemana,porDesempeno));
+  return Math.max(1,Math.min(techoCat,Math.min(techoSemana,porDesempeno)));
 }
 
 /* ───────── navegación ───────── */
@@ -4763,6 +5691,16 @@ function ponCat(c){
   marcaCat();
   pintaInicio();pintaCaps();
   document.getElementById('detalle').style.display='none';
+}
+
+/* Selector de categoría, pintado desde los datos de CATS. */
+function pintaSelectorCat(){
+  const cont=document.getElementById('cat-sel');
+  if(!cont)return;
+  cont.innerHTML=Object.entries(CATS).map(([k,c])=>
+    '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
+    '<div class="cn">'+esc(c.nombre)+'</div>'+
+    '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('');
 }
 
 /* ───────── qué estudiar hoy ─────────
@@ -4840,8 +5778,7 @@ function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();in
 /* ───────── inicio ───────── */
 function pintaInicio(){
   pintaHoy();
-  document.getElementById('cb-av').classList.toggle('on',S.cat==='av');
-  document.getElementById('cb-gm').classList.toggle('on',S.cat==='gm');
+  pintaSelectorCat();
   const ni=document.getElementById('nombre');
   if(ni.value!==S.nombre)ni.value=S.nombre;
 
@@ -5035,7 +5972,9 @@ const nivelEfectivo=()=>nivel||nivelRecomendado();
    difícil. Si con el filtro no alcanzan preguntas, se usa el pool completo
    para no dejarla sin examen. */
 function poolNivel(){
-  const b=poolDe();
+  let b=poolDe();
+  /* A los 4 a 6 años no se les pide escribir la palabra exacta. */
+  if(CAT().sinCompletar)b=b.filter(q=>q.t!=='fill');
   const n=nivelEfectivo();
   const f=b.filter(q=>(q.nv||1)<=n);
   return f.length>=Math.min(8,b.length)?f:b;
@@ -5107,7 +6046,7 @@ function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||
 
 function pintaExInicio(){
   const n=NPREG(),b=bancoDe().length,f=falladasDe().length;
-  document.getElementById('ex-desc').textContent=n+' preguntas · '+(S.cat==='av'?'Aventureros':'Guías Mayores');
+  document.getElementById('ex-desc').textContent=n+' preguntas · '+CAT().nombre;
   document.getElementById('ex-nota').textContent='Banco completo de tu categoría: '+b+' preguntas. El examen real es de '+n+'.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Mis errores ('+f+')</button>':'';
@@ -5156,7 +6095,7 @@ function barajaOpciones(q){
 /* Tiempo proporcional a la cantidad. El ritmo del examen real tampoco está
    confirmado; se usa algo más de un minuto por pregunta, que es lo cómodo
    para practicar sin acostumbrarse a ir lento. */
-const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='av'?80:72)));
+const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?80:72)));
 
 function iniciar(m){
   modo=m||'normal';
@@ -5380,7 +6319,7 @@ function pintaLogros(){
        const f=new Date(e.fecha);
        const fs=isNaN(f)?'—':f.toLocaleDateString('es-CO',{day:'2-digit',month:'short'})+' '+f.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
        const mt={simulacro:' 🎓',errores:' 🔁'}[e.modo]||'';
-       return '<tr><td class="key">'+fs+'</td><td>'+(e.cat==='gm'?'Guías Mayores':'Aventureros')+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
+       return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
      }).join('')+'</tbody></table>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';
 }
@@ -5397,7 +6336,7 @@ function borrarTodo(){
 /* La clase en el body permite que los estilos suban un punto el tamaño de
    letra en Aventureros, sin duplicar pantallas. */
 function marcaCat(){
-  try{document.body.className=S.cat==='av'?'av':'gm';}catch(e){}
+  try{document.body.className=S.cat;}catch(e){}
 }
 
 function pintaLogo(){

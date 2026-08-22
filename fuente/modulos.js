@@ -12,27 +12,27 @@ const li = a => `<ul class="tight">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
 
 const MODULOS = [
   { id:'m-linea', label:'Línea de tiempo', sub:'Del sitio de Jerusalén a Ciro',
-    icono:'🕰️', color:'#0F766E', cats:['av','gm'] },
+    icono:'🕰️', color:'#0F766E', cats:['av','pa','gm'] },
   { id:'m-personajes', label:'Personajes', sub:'Tabla maestra de todos',
-    icono:'👥', color:'#7C3AED', cats:['av','gm'] },
+    icono:'👥', color:'#7C3AED', cats:['me','av','pa','gm'] },
   { id:'m-numeros', label:'Números', sub:'Todas las cifras del libro',
-    icono:'🔢', color:'#B45309', cats:['av','gm'] },
+    icono:'🔢', color:'#B45309', cats:['me','av','pa','gm'] },
   { id:'m-trampas', label:'Trampas', sub:'Los errores más comunes',
-    icono:'⚠️', color:'#BE123C', cats:['av','gm'] },
+    icono:'⚠️', color:'#BE123C', cats:['av','pa','gm'] },
   { id:'m-versiculos', label:'Versículos', sub:'Para memorizar palabra por palabra',
-    icono:'📖', color:'#1D4ED8', cats:['av','gm'] },
+    icono:'📖', color:'#1D4ED8', cats:['me','av','pa','gm'] },
   { id:'m-reyes', label:'Los reyes', sub:'Cómo reacciona cada uno ante Dios',
     icono:'👑', color:'#A16207', cats:['gm'] },
   { id:'m-profetico', label:'Paralelos', sub:'Daniel 2 y los imperios',
     icono:'🗿', color:'#0369A1', cats:['gm'] },
   { id:'m-lugares', label:'Lugares', sub:'Geografía del libro',
-    icono:'🗺️', color:'#15803D', cats:['av','gm'] },
+    icono:'🗺️', color:'#15803D', cats:['me','av','pa','gm'] },
   { id:'m-version', label:'RV1995 vs RV1960', sub:'Palabras que cambian entre versiones',
-    icono:'📕', color:'#9D174D', cats:['av','gm'] },
+    icono:'📕', color:'#9D174D', cats:['av','pa','gm'] },
   { id:'m-prioridades', label:'Lo que más preguntan', sub:'Los diez temas de mayor rendimiento',
-    icono:'🎯', color:'#B91C1C', cats:['av','gm'] },
+    icono:'🎯', color:'#B91C1C', cats:['av','pa','gm'] },
   { id:'m-palabras', label:'Palabras difíciles', sub:'Qué significan en palabras sencillas',
-    icono:'💬', color:'#0E7490', cats:['av','gm'] },
+    icono:'💬', color:'#0E7490', cats:['me','av','pa','gm'] },
 ];
 
 const CONT_MODULOS = {
@@ -284,7 +284,7 @@ const CONT_MODULOS = {
     <strong>«no se unirán el uno con el otro»</strong> (2:43).`) },
 
   { t:'🪨 Lo que dice el texto sobre la piedra', h:
-    vs(`«Y en los días de estos reyes el Dios del cielo levantará <strong>un reino
+    vs(`«En los días de estos reyes, el Dios del cielo levantará <strong>un reino
     que no será jamás destruido</strong>, ni será el reino dejado a otro pueblo;
     desmenuzará y consumirá a todos estos reinos, pero él permanecerá para siempre.» (2:44)`) },
 
@@ -329,6 +329,7 @@ const CONT_MODULOS = {
     tbl(['Ref.','RV1995 (la que se califica)','RV1960 (la que suena familiar)'],[
       ['1:15','pareció el rostro de ellos <strong>mejor y más robusto</strong>','más <strong>rozagante</strong> y más robusto'],
       ['2:5','vuestras casas serán convertidas en <strong>estercoleros</strong>','convertidas en <strong>muladares</strong>'],
+      ['3:5','el son de la bocina, la flauta, <strong>la cítara</strong>, el arpa, el salterio, la zampoña','de la bocina, de la flauta, <strong>del tamboril</strong>...'],
       ['3:25','el aspecto del cuarto es semejante a <strong>un hijo de los dioses</strong>','semejante a hijo de los dioses'],
       ['3:27','el fuego <strong>no había tenido poder alguno</strong> sobre sus cuerpos; sus ropas, <strong>intactas</strong>','el fuego <strong>no se enseñoreó</strong>; sus vestidos <strong>no se alteraron</strong>'],
       ['3:29','su casa convertida en <strong>estercolero</strong>','su casa puesta por <strong>muladar</strong>'],
@@ -394,7 +395,7 @@ const CONT_MODULOS = {
       '<strong>Los números exactos.</strong> 3 años de instrucción · 10 días de prueba · 10 veces mejores · 2.º año de Nabucodonosor · 60 y 6 codos · 7 veces el horno · 4 varones · 7 tiempos · 12 meses · 1.000 convidados · 62 años Darío · 120 sátrapas · 30 días el decreto · 3 veces al día',
       '<strong>Nombres hebreos → babilónicos.</strong> Daniel→Beltsasar · Ananías→Sadrac · Misael→Mesac · Azarías→Abed-nego',
       '<strong>Aspenaz no es Melsar.</strong> Aspenaz = jefe de los eunucos (1:3). Melsar = el sirviente puesto sobre los cuatro (1:11). Daniel habló con <u>Melsar</u>',
-      '<strong>Los 6 instrumentos en orden</strong> (3:5): bocina, flauta, tamboril, arpa, salterio, zampoña. <u>La trompeta no aparece</u>',
+      '<strong>Los 6 instrumentos en orden</strong> (3:5, RV1995): bocina, flauta, <u>cítara</u>, arpa, salterio, zampoña. <u>La trompeta no aparece</u>. Cuidado: la RV1960 dice «tamboril» en el tercer lugar',
       '<strong>MENE, MENE, TEKEL, UPARSIN</strong> (5:25) y el significado de cada palabra: contó · pesado y hallado falto · roto y dado a medos y persas',
     ]) },
 

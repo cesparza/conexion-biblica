@@ -34,7 +34,7 @@ const TARJETAS = [
   // Daniel 3
   {cap:'d3', f:'Medidas de la estatua de oro', r:'SESENTA codos de alto por SEIS de ancho (3:1)'},
   {cap:'d3', f:'Dónde se levantó la estatua', r:'En el campo de Dura, provincia de Babilonia (3:1)'},
-  {cap:'d3', f:'Los seis instrumentos, en orden', r:'Bocina, flauta, tamboril, arpa, salterio y zampoña (3:5)'},
+  {cap:'d3', f:'Los seis instrumentos, en orden (RV1995)', r:'Bocina, flauta, CÍTARA, arpa, salterio y zampoña (3:5). La RV1960 dice «tamboril» en el tercer lugar'},
   {cap:'d3', f:'Instrumento que NO aparece en Daniel 3', r:'La trompeta'},
   {cap:'d3', f:'Cuántas veces más caliente el horno', r:'SIETE veces más de lo acostumbrado (3:19)'},
   {cap:'d3', f:'Con qué ropa entraron al horno', r:'Con sus mantos, sus calzas, sus turbantes y sus vestidos (3:21)'},
@@ -42,7 +42,7 @@ const TARJETAS = [
   {cap:'d3', f:'Cuántos vio el rey en el horno', r:'CUATRO varones sueltos (3:25)'},
   {cap:'d3', f:'Cómo describió Nabucodonosor al cuarto del horno', r:'«Semejante a un hijo de los dioses» (3:25, RV1995). P&R 41: era el Hijo de Dios mismo'},
   {cap:'d3', f:'Las cuatro cosas que no sufrieron daño (3:27)', r:'El fuego no tuvo poder sobre sus cuerpos, ni aun el cabello se había quemado, sus ropas quedaron intactas, y ni siquiera olor de fuego tenían'},
-  {cap:'d3', f:'La frase clave de los tres jóvenes', r:'«Y si no, no serviremos a tus dioses ni adoraremos la estatua» (3:18)'},
+  {cap:'d3', f:'La frase clave de los tres jóvenes', r:'«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado» (3:18) (3:18)'},
 
   // Daniel 4
   {cap:'d4', f:'Hasta dónde llegaba el árbol', r:'Hasta el cielo; se veía hasta los confines de la tierra (4:11)'},

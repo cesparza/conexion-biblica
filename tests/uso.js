@@ -18,7 +18,8 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
         poolDe, opcionesCuantas, segundosPara,
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
-        barajaOpciones};`);
+        barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
+        ponNivel:v=>{nivel=v}};`);
 const A=fn(store,nodo);
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
@@ -174,6 +175,48 @@ const qm=BANCO.find(q=>q.t==='mc');
 ok(A.barajaOpciones({...qm}).o.slice().sort().join('|')===qm.o.slice().sort().join('|'),
   'barajaOpciones no pierde ni duplica opciones');
 A.ponCuantas(25);
+
+// ── Las cuatro categorías del reglamento ──
+const ESPERADO={
+  me:{caps:['Daniel 1','Daniel 2','Daniel 3','Daniel 6'], pr:false},
+  av:{caps:['Daniel 1','Daniel 2','Daniel 3','Daniel 6','P&R 39','P&R 41','P&R 44'], pr:true},
+  pa:{caps:['Daniel 1','Daniel 2','Daniel 3','Daniel 6','P&R 39','P&R 41','P&R 44'], pr:true},
+};
+for(const [k,e] of Object.entries(ESPERADO)){
+  A.ponCat(k);
+  const labels=A.capsDe().map(c=>c.label);
+  ok(labels.length===e.caps.length && e.caps.every(l=>labels.includes(l)),
+    `Categoría ${k}: alcance exacto del reglamento (${labels.join(', ')})`);
+  ok(!labels.some(l=>['Daniel 4','Daniel 5','P&R 40','P&R 42','P&R 43'].includes(l)),
+    `Categoría ${k}: no incluye lo que el reglamento deja fuera`);
+}
+
+// 4 a 6 años: sin completar y solo nivel básico
+A.ponCat('me');
+A.ponAlcance('todo');A.ponNivel(0);
+ok(A.poolNivel().every(q=>q.t!=='fill'),'Menores: el examen no trae sección de completar');
+ok(A.poolNivel().every(q=>(q.nv||1)===1),'Menores: solo preguntas de nivel básico');
+ok(A.NPREG()===10,'Menores: examen de práctica de 10 preguntas');
+
+// Padres: arrancan en avanzado sin necesidad de rampa
+A.ponCat('pa');
+ok(A.nivelRecomendado()===3,'Padres y consejeros: arrancan en nivel avanzado');
+ok(A.NPREG()===25,'Padres y consejeros: examen de práctica de 25 preguntas');
+ok(A.poolNivel().some(q=>q.t==='fill'),'Padres: sí incluye completar el versículo');
+
+// Guías Mayores conserva el alcance ampliado
+A.ponCat('gm');
+ok(A.capsDe().length===12,'Guías Mayores conserva los 12 capítulos del alcance ampliado');
+
+// Los títulos de P&R que se muestran en las tarjetas son los verificados
+const TITULOS={pr39:'En la corte de Babilonia',pr40:'El sueño de Nabucodonosor',
+  pr41:'El horno de fuego',pr42:'La verdadera grandeza',
+  pr43:'El vigía invisible',pr44:'En el foso de los leones'};
+const malos=Object.entries(TITULOS).filter(([id,t])=>
+  (A.CAPS.find(c=>c.id===id)||{}).sub!==t).map(([id])=>id);
+ok(malos.length===0,'Los subtítulos de P&R son los títulos verificados'+
+  (malos.length?' — mal: '+malos.join(', '):''));
+A.ponCat('gm');A.ponAlcance('todo');A.ponCuantas(25);A.ponNivel(0);
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

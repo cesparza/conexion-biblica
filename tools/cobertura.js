@@ -10,8 +10,15 @@ const { BANCO } = require('../fuente/preguntas.js');
 const { TARJETAS } = require('../fuente/tarjetas.js');
 const { CONT_MODULOS } = require('../fuente/modulos.js');
 
-/* Versículos por capítulo en Daniel (RV1995), para saber el denominador. */
+/* Versículos por capítulo en Daniel, para saber el denominador. */
 const VERSICULOS = { d1: 21, d2: 49, d3: 30, d4: 37, d5: 31, d6: 28 };
+
+/* Alcance OFICIAL del campamento, según el reglamento: Daniel 1-3 y 6, y
+   Profetas y Reyes 39, 41 y 44. Daniel 4 y 5 y P&R 40, 42 y 43 solo aplican
+   al alcance ampliado de Guías Mayores, que es otro evento.
+   La meta en el alcance oficial es 100%: ahí no puede faltar nada. */
+const OFICIAL = ['d1', 'd2', 'd3', 'd6'];
+const OFICIAL_PR = ['pr39', 'pr41', 'pr44'];
 
 const texto = q => [q.q, q.ins, q.e, ...(q.o || []),
   ...(q.p || []).map(p => (p.x || '') + (p.b || ''))].filter(Boolean).join(' ');
@@ -42,7 +49,25 @@ Object.values(CONT_MODULOS).forEach(v => v.forEach(s => trozos.push(s.t + ' ' + 
 TARJETAS.forEach(t => trozos.push(t.f + ' ' + t.r));
 trozos.forEach(t => refsDe({ q: t }).forEach(r => enGuia.add(r)));
 
-console.log('COBERTURA DEL LIBRO DE DANIEL, versículo por versículo\n');
+console.log('ALCANCE OFICIAL DEL CAMPAMENTO — Daniel 1, 2, 3 y 6\n');
+let faltanOficial = [];
+for (const cap of OFICIAL) {
+  const n = VERSICULOS[cap];
+  const falta = [];
+  for (let v = 1; v <= n; v++) if (!cubiertos.has(cap + ':' + v)) falta.push(v);
+  const pct = Math.round((n - falta.length) / n * 100);
+  const barra = '█'.repeat(Math.round(pct / 5)).padEnd(20, '·');
+  console.log(`  ${cap.toUpperCase().padEnd(3)} ${barra} ${String(pct).padStart(3)}%  ` +
+    `${n - falta.length}/${n}` + (falta.length ? '   FALTAN: ' + falta.join(', ') : '   completo'));
+  faltanOficial = faltanOficial.concat(falta.map(v => cap + ':' + v));
+}
+const totOf = OFICIAL.reduce((a, c) => a + VERSICULOS[c], 0);
+console.log(`\n  Total alcance oficial: ${totOf - faltanOficial.length}/${totOf} versículos ` +
+  `(${Math.round((totOf - faltanOficial.length) / totOf * 100)}%)`);
+console.log('  Preguntas de P&R en el alcance oficial: ' +
+  OFICIAL_PR.map(p => p + '=' + BANCO.filter(q => q.cap === p).length).join(' · '));
+
+console.log('\n\nALCANCE AMPLIADO (Guías Mayores), versículo por versículo\n');
 let faltanTotal = [];
 for (const [cap, n] of Object.entries(VERSICULOS)) {
   const falta = [];

@@ -13,12 +13,13 @@ function normalizar(x){
   CAPS.forEach(c=>s.prog[c.id]=0);
   if(!x||typeof x!=='object')return s;
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
-  if(x.cat==='av'||x.cat==='gm')s.cat=x.cat;
+  if(['me','av','pa','gm'].includes(x.cat))s.cat=x.cat;
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
   if(Array.isArray(x.examenes))
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
-      .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,cat:e.cat==='gm'?'gm':'av',fecha:String(e.fecha||''),
+      .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,
+        cat:['me','av','pa','gm'].includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
         modo:['simulacro','errores'].includes(e.modo)?e.modo:'normal',
         nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
@@ -55,20 +56,41 @@ const bancoDe=()=>{const ids=capsDe().map(c=>c.id);return BANCO.filter(q=>ids.in
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
+
+/* ───────── categorías ─────────
+   Salen del reglamento del campamento: cada club presenta dos integrantes de
+   4 a 6 años (examen solo del libro de Daniel), dos de 7 a 9 (Daniel más
+   Profetas y Reyes) y dos padres o consejeros con el mismo alcance de 7 a 9.
+   «gm» no está en ese reglamento: es el alcance ampliado de Guías Mayores,
+   que es otro evento.
+     n      preguntas del examen de práctica
+     techo  nivel máximo de dificultad que se le ofrece
+     sinCompletar  el examen no trae sección de completar */
+const CATS={
+  me:{nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
+      alcance:'Daniel 1, 2, 3 y 6'},
+  av:{nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
+  pa:{nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
+  gm:{nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
+};
+const CAT=()=>CATS[S.cat]||CATS.av;
 /* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
    Lo único confirmado del examen del campamento es el formato de tres
    secciones (múltiple, verdadero/falso, completar), visto en un examen que
    Camilo fotografió. La cantidad y el reparto por sección están sin
    confirmar. Estos números son un tamaño de práctica razonable, no un dato:
    cuando se confirme, se cambia aquí y todo lo demás se ajusta. */
-const NPREG=()=>S.cat==='av'?15:25;
+const NPREG=()=>CAT().n;
 
 /* ───────── cuenta hacia el campamento ───────── */
 /* Fecha del evento de cada categoría. El campamento de Aventureros es el
    9 de octubre de 2026; si el de Guías Mayores queda en otra fecha, se
    cambia solo esta línea y la cuenta de días, la semana del plan y el techo
    de dificultad se recalculan solos para esa categoría. */
-const FECHA_META={av:'2026-10-09',gm:'2026-10-09'};
+const FECHA_META={me:'2026-10-09',av:'2026-10-09',pa:'2026-10-09',gm:'2026-10-09'};
 const SEMANAS_PLAN=7;
 
 function diasParaMeta(){
@@ -99,6 +121,9 @@ function promedioReciente(){
    · el desempeño — no se sube de nivel sin dominar el anterior.
    Así la dificultad crece de verdad y no de golpe. */
 function nivelRecomendado(){
+  const techoCat=CAT().techo;
+  /* Los adultos no necesitan la rampa: entran directo a lo exigente. */
+  if(S.cat==='pa')return techoCat;
   const sem=semanaPlan();
   const techoSemana=sem<=2?1:sem<=4?2:3;
   const prom=promedioReciente();
@@ -106,7 +131,7 @@ function nivelRecomendado(){
   let porDesempeno=1;
   if(prom!==null&&hechos>=2&&prom>=0.85)porDesempeno=3;
   else if(prom!==null&&hechos>=1&&prom>=0.70)porDesempeno=2;
-  return Math.max(1,Math.min(techoSemana,porDesempeno));
+  return Math.max(1,Math.min(techoCat,Math.min(techoSemana,porDesempeno)));
 }
 
 /* ───────── navegación ───────── */
@@ -129,6 +154,16 @@ function ponCat(c){
   marcaCat();
   pintaInicio();pintaCaps();
   document.getElementById('detalle').style.display='none';
+}
+
+/* Selector de categoría, pintado desde los datos de CATS. */
+function pintaSelectorCat(){
+  const cont=document.getElementById('cat-sel');
+  if(!cont)return;
+  cont.innerHTML=Object.entries(CATS).map(([k,c])=>
+    '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
+    '<div class="cn">'+esc(c.nombre)+'</div>'+
+    '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('');
 }
 
 /* ───────── qué estudiar hoy ─────────
@@ -206,8 +241,7 @@ function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();in
 /* ───────── inicio ───────── */
 function pintaInicio(){
   pintaHoy();
-  document.getElementById('cb-av').classList.toggle('on',S.cat==='av');
-  document.getElementById('cb-gm').classList.toggle('on',S.cat==='gm');
+  pintaSelectorCat();
   const ni=document.getElementById('nombre');
   if(ni.value!==S.nombre)ni.value=S.nombre;
 
@@ -401,7 +435,9 @@ const nivelEfectivo=()=>nivel||nivelRecomendado();
    difícil. Si con el filtro no alcanzan preguntas, se usa el pool completo
    para no dejarla sin examen. */
 function poolNivel(){
-  const b=poolDe();
+  let b=poolDe();
+  /* A los 4 a 6 años no se les pide escribir la palabra exacta. */
+  if(CAT().sinCompletar)b=b.filter(q=>q.t!=='fill');
   const n=nivelEfectivo();
   const f=b.filter(q=>(q.nv||1)<=n);
   return f.length>=Math.min(8,b.length)?f:b;
@@ -473,7 +509,7 @@ function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||
 
 function pintaExInicio(){
   const n=NPREG(),b=bancoDe().length,f=falladasDe().length;
-  document.getElementById('ex-desc').textContent=n+' preguntas · '+(S.cat==='av'?'Aventureros':'Guías Mayores');
+  document.getElementById('ex-desc').textContent=n+' preguntas · '+CAT().nombre;
   document.getElementById('ex-nota').textContent='Banco completo de tu categoría: '+b+' preguntas. El examen real es de '+n+'.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Mis errores ('+f+')</button>':'';
@@ -522,7 +558,7 @@ function barajaOpciones(q){
 /* Tiempo proporcional a la cantidad. El ritmo del examen real tampoco está
    confirmado; se usa algo más de un minuto por pregunta, que es lo cómodo
    para practicar sin acostumbrarse a ir lento. */
-const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='av'?80:72)));
+const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?80:72)));
 
 function iniciar(m){
   modo=m||'normal';
@@ -746,7 +782,7 @@ function pintaLogros(){
        const f=new Date(e.fecha);
        const fs=isNaN(f)?'—':f.toLocaleDateString('es-CO',{day:'2-digit',month:'short'})+' '+f.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
        const mt={simulacro:' 🎓',errores:' 🔁'}[e.modo]||'';
-       return '<tr><td class="key">'+fs+'</td><td>'+(e.cat==='gm'?'Guías Mayores':'Aventureros')+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
+       return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
      }).join('')+'</tbody></table>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';
 }
@@ -763,7 +799,7 @@ function borrarTodo(){
 /* La clase en el body permite que los estilos suban un punto el tamaño de
    letra en Aventureros, sin duplicar pantallas. */
 function marcaCat(){
-  try{document.body.className=S.cat==='av'?'av':'gm';}catch(e){}
+  try{document.body.className=S.cat;}catch(e){}
 }
 
 function pintaLogo(){
