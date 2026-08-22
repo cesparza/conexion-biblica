@@ -1,7 +1,24 @@
 #!/bin/sh
-if git diff --cached --name-only --diff-filter=ACM | grep -E '\.(html|js|css|json)$' | xargs -r awk 'length($0) > 2000 { print FILENAME": línea "FNR" tiene "length($0)" caracteres"; found=1 } END { exit found }'; then
-  exit 0
-else
-  echo "✗ Hay líneas de más de 2000 caracteres. Ningún visor de diff las abre."
+# Bloquea líneas de más de 2000 caracteres.
+# Motivo: ningún visor de diff abre un archivo con líneas así, y el
+# historial de git deja de servir para revisar cambios.
+# Activar una sola vez con:  git config core.hooksPath tools
+
+LARGAS=$(git diff --cached --name-only --diff-filter=ACM \
+  | grep -E '\.(html|js|css|json|sql)$' \
+  | while read -r f; do
+      [ -f "$f" ] || continue
+      awk -v F="$f" 'length($0) > 2000 { print F ": línea " FNR " tiene " length($0) " caracteres" }' "$f"
+    done)
+
+if [ -n "$LARGAS" ]; then
+  echo "✗ Commit bloqueado: hay líneas de más de 2000 caracteres."
+  echo ""
+  echo "$LARGAS"
+  echo ""
+  echo "  Si viene de fuente/build.js, revisa que el JSON se serialice"
+  echo "  con indentación: JSON.stringify(x, null, 1)"
   exit 1
 fi
+
+exit 0

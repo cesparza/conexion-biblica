@@ -1,0 +1,18 @@
+# Cloudflare Pages publica TODO el repositorio en una URL pública.
+# Por eso el material impreso vive fuera, en ../material-daniel/
+# Si algún día se copia aquí por error, estas reglas lo detienen:
+*.pdf
+*.docx
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Node (solo si algún día se instalan dependencias para pruebas)
+node_modules/
+package-lock.json
+
+# Notas del proyecto con datos de la familia: nunca al repo público
+ESTADO*.txt
+CONTEXTO*.txt
+LEEME*.txt

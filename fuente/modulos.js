@@ -1,0 +1,315 @@
+/* Módulos transversales de repaso. No pertenecen a un capítulo:
+   cruzan todo el material y son los que más rinden antes del examen. */
+
+const tbl = (head, rows) =>
+  `<table class="info-table"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>` +
+  rows.map(r=>`<tr>${r.map((c,i)=>`<td${i===0?' class="key"':''}>${c}</td>`).join('')}</tr>`).join('') +
+  `</tbody></table>`;
+const hi = t => `<div class="highlight-box">${t}</div>`;
+const wa = t => `<div class="warn-box">${t}</div>`;
+const vs = t => `<div class="verse-box">${t}</div>`;
+const li = a => `<ul class="tight">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+
+const MODULOS = [
+  { id:'m-linea', label:'Línea de tiempo', sub:'Del sitio de Jerusalén a Ciro',
+    icono:'🕰️', color:'#0F766E', cats:['av','gm'] },
+  { id:'m-personajes', label:'Personajes', sub:'Tabla maestra de todos',
+    icono:'👥', color:'#7C3AED', cats:['av','gm'] },
+  { id:'m-numeros', label:'Números', sub:'Todas las cifras del libro',
+    icono:'🔢', color:'#B45309', cats:['av','gm'] },
+  { id:'m-trampas', label:'Trampas', sub:'Los errores más comunes',
+    icono:'⚠️', color:'#BE123C', cats:['av','gm'] },
+  { id:'m-versiculos', label:'Versículos', sub:'Para memorizar palabra por palabra',
+    icono:'📖', color:'#1D4ED8', cats:['av','gm'] },
+  { id:'m-reyes', label:'Los reyes', sub:'Cómo reacciona cada uno ante Dios',
+    icono:'👑', color:'#A16207', cats:['gm'] },
+  { id:'m-profetico', label:'Paralelos', sub:'Daniel 2 y los imperios',
+    icono:'🗿', color:'#0369A1', cats:['gm'] },
+  { id:'m-lugares', label:'Lugares', sub:'Geografía del libro',
+    icono:'🗺️', color:'#15803D', cats:['av','gm'] },
+];
+
+const CONT_MODULOS = {
+
+/* ═══════════ LÍNEA DE TIEMPO ═══════════ */
+'m-linea': [
+  { t:'🕰️ Secuencia de los seis capítulos', h:
+    tbl(['Cuándo','Qué ocurre','Cap.'],[
+      ['Año 3 de Joacim','Nabucodonosor sitia Jerusalén; se llevan a Daniel y sus compañeros','1'],
+      ['Tres años después','Los cuatro se presentan ante el rey; diez veces mejores','1'],
+      ['Año 2 de Nabucodonosor','El sueño de la gran imagen','2'],
+      ['Sin fecha indicada','La estatua de oro en el campo de Dura y el horno','3'],
+      ['Al final de su reinado','El sueño del árbol; siete tiempos de locura','4'],
+      ['Última noche de Babilonia','El banquete de Belsasar y la escritura en la pared','5'],
+      ['Bajo el reino de Darío','El decreto de treinta días y el foso de los leones','6'],
+      ['Año 1 de Ciro','Hasta aquí continuó Daniel (mencionado en 1:21)','1'],
+    ]) },
+
+  { t:'⏳ Detalle importante del orden', h:
+    wa(`El capítulo 1 <strong>termina mencionando el año primero de Ciro</strong> (1:21),
+    que es <u>posterior</u> a todo lo que se narra en los capítulos 2 al 6.<br><br>
+    Es un resumen anticipado, no un error de orden. Daniel sirvió bajo
+    <strong>Nabucodonosor, Belsasar, Darío y Ciro</strong> — cuatro reinados.`) },
+
+  { t:'👴 La edad de Daniel', h:
+    hi(`Daniel era <strong>un muchacho</strong> cuando llegó a Babilonia (cap. 1)
+    y <strong>un anciano de más de ochenta años</strong> cuando fue echado al foso (cap. 6).<br><br>
+    <strong>Lo que decidió de joven fue lo que lo sostuvo de viejo.</strong>
+    Ese contraste es la lección central del libro y aparece en las preguntas de aplicación.`) },
+],
+
+/* ═══════════ PERSONAJES ═══════════ */
+'m-personajes': [
+  { t:'👥 Todos los personajes del libro', h:
+    tbl(['Nombre','Quién es','Dónde aparece'],[
+      ['Joacim','Rey de Judá cuando cae Jerusalén','1:1-2'],
+      ['Nabucodonosor','Rey de Babilonia; protagonista de los caps. 1 al 4','1 – 4'],
+      ['Aspenaz','Jefe de los eunucos; recibió la orden del rey','1:3'],
+      ['Melsar','Sirviente puesto sobre Daniel y sus tres compañeros','1:11, 16'],
+      ['Daniel / Beltsasar','El profeta; nombre babilónico Beltsasar','1 – 6'],
+      ['Ananías / Sadrac','Compañero de Daniel','1 – 3'],
+      ['Misael / Mesac','Compañero de Daniel','1 – 3'],
+      ['Azarías / Abed-nego','Compañero de Daniel','1 – 3'],
+      ['Arioc','Capitán de la guardia del rey','2:14-15, 24-25'],
+      ['El vigilante santo','Ser celestial que anuncia el juicio del árbol','4:13, 23'],
+      ['Belsasar','Rey de Babilonia en la última noche','5'],
+      ['La reina','Entra al banquete y recuerda a Daniel','5:10-12'],
+      ['Darío de Media','Recibe el reino; tenía 62 años','5:31; 6'],
+      ['Ciro','Rey persa; hasta su año primero sirvió Daniel','1:21'],
+    ]) },
+
+  { t:'🔀 Los pares que se confunden', h:
+    wa(`<strong>Aspenaz y Melsar</strong><br>
+    Aspenaz = jefe de los eunucos, recibió la orden del rey (1:3).<br>
+    Melsar = el sirviente que Aspenaz puso sobre los cuatro (1:11).<br>
+    Daniel habló <u>primero</u> con Aspenaz (1:8) y <u>después</u> con Melsar (1:11).`) +
+    wa(`<strong>Beltsasar y Belsasar</strong><br>
+    Beltsasar = el nombre babilónico de <u>Daniel</u> (1:7).<br>
+    Belsasar = el <u>rey</u> del banquete y la escritura en la pared (cap. 5).<br>
+    Son dos personas distintas, y los nombres se parecen a propósito en el examen.`) +
+    wa(`<strong>Darío y Ciro</strong><br>
+    Darío de Media recibió el reino a los 62 años (5:31) y firmó el decreto del cap. 6.<br>
+    Ciro es el rey persa mencionado solo en 1:21.`) },
+],
+
+/* ═══════════ NÚMEROS ═══════════ */
+'m-numeros': [
+  { t:'🔢 Cifras de Daniel 1 al 3', h:
+    tbl(['Número','A qué se refiere','Ref.'],[
+      ['3','Año del reinado de Joacim cuando cae Jerusalén','1:1'],
+      ['3','Años de educación de los jóvenes','1:5'],
+      ['4','Jóvenes hebreos escogidos','1:6'],
+      ['10','Días de la prueba de las legumbres','1:12'],
+      ['10','Veces mejores que los magos y astrólogos','1:20'],
+      ['1','Año de Ciro, hasta donde sirvió Daniel','1:21'],
+      ['2','Año del reinado de Nabucodonosor: el sueño','2:1'],
+      ['60','Codos de altura de la estatua de oro','3:1'],
+      ['6','Codos de anchura de la estatua de oro','3:1'],
+      ['6','Instrumentos musicales en la lista','3:5'],
+      ['7','Veces más caliente el horno','3:19'],
+      ['4','Varones vistos en el horno','3:25'],
+    ]) },
+
+  { t:'🔢 Cifras de Daniel 4 al 6', h:
+    tbl(['Número','A qué se refiere','Ref.'],[
+      ['7','Tiempos de la locura de Nabucodonosor','4:25'],
+      ['12','Meses entre la advertencia y el juicio','4:29'],
+      ['1000','Príncipes en el banquete de Belsasar','5:1'],
+      ['3','El puesto ofrecido: tercer señor del reino','5:7'],
+      ['62','Años de Darío al recibir el reino','5:31'],
+      ['120','Sátrapas sobre el reino','6:1'],
+      ['3','Gobernadores sobre los sátrapas','6:2'],
+      ['30','Días del decreto de Darío','6:7'],
+      ['3','Veces al día que oraba Daniel','6:10'],
+    ]) },
+
+  { t:'🎯 Los que más se preguntan', h:
+    hi(`Si solo alcanzas a memorizar seis, que sean estos:<br><br>
+    <strong>3</strong> años de educación &nbsp;·&nbsp; <strong>10</strong> días de prueba &nbsp;·&nbsp;
+    <strong>10</strong> veces mejores<br>
+    <strong>60 × 6</strong> codos la estatua &nbsp;·&nbsp; <strong>7</strong> veces el horno &nbsp;·&nbsp;
+    <strong>3</strong> veces al día la oración`) },
+
+  { t:'🧠 Truco para no confundirlos', h:
+    hi(`<strong>El 3 aparece cinco veces</strong> y en cosas distintas:
+    año de Joacim, años de educación, gobernadores, tercer señor del reino,
+    y veces al día que oraba Daniel.<br><br>
+    <strong>El 7 aparece dos veces:</strong> veces más caliente el horno (3:19)
+    y tiempos de la locura (4:25).<br><br>
+    <strong>Regla:</strong> el 60 y el 6 van juntos (la estatua), el 120 y el 3 van juntos
+    (sátrapas y gobernadores), el 62 es solo de Darío.`) },
+],
+
+/* ═══════════ TRAMPAS ═══════════ */
+'m-trampas': [
+  { t:'⚠️ Errores comunes — Daniel 1 al 3', h:
+    tbl(['Se suele decir','Pero el texto dice','Ref.'],[
+      ['«más rozagante»','<strong>mejor y más robusto</strong>','1:15'],
+      ['«ágiles en sabiduría»','<strong>instruidos</strong> en toda sabiduría','1:4'],
+      ['«sin defecto»','en quienes no hubiera <strong>tacha alguna</strong>','1:4'],
+      ['Aspenaz aceptó la prueba','fue <strong>Melsar</strong> quien la aceptó','1:11-14'],
+      ['La cabeza era de plata','la cabeza era de <strong>oro fino</strong>','2:32'],
+      ['Golpeó la cabeza','hirió la imagen <strong>en sus pies</strong>','2:34'],
+      ['Aparece la trompeta','<strong>no aparece</strong> en la lista de seis','3:5'],
+      ['Los desnudaron','entraron con <strong>mantos, calzas, turbantes y vestidos</strong>','3:21'],
+      ['«no olían a humo»','<strong>ni olor de fuego había en ellos</strong>','3:27'],
+    ]) },
+
+  { t:'⚠️ Errores comunes — Daniel 4 al 6', h:
+    tbl(['Se suele decir','Pero el texto dice','Ref.'],[
+      ['Atadura de hierro y oro','atadura de <strong>hierro y de bronce</strong>','4:15, 23'],
+      ['El rey vio la mano completa','vio <strong>los dedos</strong> de mano de hombre','5:5'],
+      ['Frente al trono','<strong>delante del candelero</strong>','5:5'],
+      ['MENE una vez','<strong>MENE, MENE</strong> — se repite dos veces','5:25'],
+      ['Segundo señor del reino','<strong>tercer</strong> señor en el reino','5:7'],
+      ['Los magos recordaron a Daniel','fue <strong>la reina</strong>','5:10-12'],
+      ['Cien sátrapas','<strong>ciento veinte</strong> sátrapas','6:1'],
+      ['Solo el anillo del rey','el anillo del rey <strong>y el de sus príncipes</strong>','6:17'],
+      ['El rey durmió intranquilo','<strong>se le fue el sueño</strong>; no durmió','6:18'],
+      ['Daniel dejó de orar','siguió <strong>como lo solía hacer antes</strong>','6:10'],
+    ]) },
+
+  { t:'🎭 Distractores típicos del examen', h:
+    wa(`Las opciones incorrectas suelen ser <strong>casi verdaderas</strong>:<br><br>
+    • Cambian un número por otro que sí aparece en el libro (7 por 3, 60 por 6)<br>
+    • Cambian un nombre por otro parecido (Beltsasar por Belsasar)<br>
+    • Cambian una palabra del versículo por un sinónimo (robusto por rozagante)<br>
+    • Ponen «todas las anteriores» cuando solo dos son ciertas<br><br>
+    <strong>Estrategia:</strong> lee la pregunta completa antes de ver las opciones,
+    y responde mentalmente primero. Si tu respuesta no está tal cual, sospecha.`) },
+],
+
+/* ═══════════ VERSÍCULOS ═══════════ */
+'m-versiculos': [
+  { t:'📖 Daniel 1:8 — La decisión', h:
+    vs(`«Y Daniel <strong>propuso en su corazón</strong> no contaminarse con la porción
+    de la comida del rey, ni con el vino que él bebía; pidió, pues, al jefe de los eunucos
+    que no se le obligase a contaminarse.»`) },
+
+  { t:'📖 Daniel 1:15 — El resultado', h:
+    vs(`«Y al cabo de los diez días pareció el rostro de ellos
+    <strong>mejor y más robusto</strong> que el de los otros muchachos
+    que comían de la porción de la comida del rey.»`) },
+
+  { t:'📖 Daniel 2:20 — La alabanza', h:
+    vs(`«Sea bendito el nombre de Dios de siglos en siglos,
+    porque suyos son <strong>el poder y la sabiduría</strong>.»`) },
+
+  { t:'📖 Daniel 3:17-18 — «Y si no»', h:
+    vs(`«He aquí nuestro Dios a quien servimos <strong>puede librarnos</strong>
+    del horno de fuego ardiendo; y de tu mano, oh rey, nos librará.
+    <strong>Y si no</strong>, sepas, oh rey, que no serviremos a tus dioses,
+    ni tampoco adoraremos la estatua que has levantado.»`) },
+
+  { t:'📖 Daniel 3:25 — El cuarto varón', h:
+    vs(`«He aquí yo veo <strong>cuatro varones sueltos</strong>,
+    que se pasean en medio del fuego, y ningún daño hay en ellos;
+    y el parecer del cuarto es <strong>semejante al Hijo de Dios</strong>.»`) },
+
+  { t:'📖 Daniel 4:37 — El rey humillado', h:
+    vs(`«Ahora yo Nabucodonosor <strong>alabo, engrandezco y glorifico al Rey del cielo</strong>,
+    porque todas sus obras son verdaderas, y sus caminos justos;
+    y él puede humillar a los que andan con soberbia.»`) },
+
+  { t:'📖 Daniel 5:27 — La balanza', h:
+    vs(`«TEKEL: <strong>Pesado has sido en balanza, y fuiste hallado falto</strong>.»`) },
+
+  { t:'📖 Daniel 6:10 — La costumbre', h:
+    vs(`«Cuando Daniel supo que el edicto había sido firmado, entró en su casa;
+    y abiertas las ventanas de su cámara que daban hacia Jerusalén,
+    <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,
+    <strong>como lo solía hacer antes</strong>.»`) },
+
+  { t:'📖 Daniel 6:22 — El ángel', h:
+    vs(`«<strong>Mi Dios envió su ángel</strong>, el cual cerró la boca de los leones,
+    para que no me hiciesen daño, porque ante él fui hallado inocente;
+    y aun delante de ti, oh rey, yo no he hecho nada malo.»`) },
+
+  { t:'📖 Daniel 6:26-27 — El decreto de Darío', h:
+    vs(`«Porque él es el <strong>Dios viviente y permanece por todos los siglos</strong>,
+    y su reino no será jamás destruido, y su dominio perdurará hasta el fin.
+    Él <strong>salva y libra</strong>, y hace señales y maravillas en el cielo y en la tierra.»`) },
+],
+
+/* ═══════════ LOS REYES ═══════════ */
+'m-reyes': [
+  { t:'👑 Cómo reacciona cada rey ante Dios', h:
+    tbl(['Rey','Qué ve de Dios','Cómo responde'],[
+      ['Nabucodonosor (cap. 2)','El sueño interpretado','Se postra ante Daniel y reconoce al Dios de los dioses'],
+      ['Nabucodonosor (cap. 3)','El milagro del horno','Bendice a Dios y prohíbe blasfemar contra él'],
+      ['Nabucodonosor (cap. 4)','Su propia humillación y restauración','Alaba, engrandece y glorifica al Rey del cielo'],
+      ['Belsasar (cap. 5)','La escritura en la pared','Se aterra, viste a Daniel de púrpura, pero <strong>no se arrepiente</strong>'],
+      ['Darío (cap. 6)','La liberación del foso','Decreta que todos teman al Dios de Daniel'],
+    ]) },
+
+  { t:'📈 El contraste central del libro', h:
+    hi(`<strong>Nabucodonosor</strong> tuvo tres encuentros con Dios y en cada uno
+    fue más lejos, hasta terminar adorándolo de verdad.<br><br>
+    <strong>Belsasar</strong> tuvo <u>toda esa historia disponible</u>
+    y no se movió. Murió esa misma noche.<br><br>
+    El libro muestra que <strong>lo decisivo no es cuánta luz recibes,
+    sino qué haces con ella</strong>.`) },
+
+  { t:'⚖️ Preguntas de comparación', h:
+    wa(`Estas suelen aparecer como pregunta de aplicación:<br><br>
+    • ¿Cuál rey terminó adorando al Dios verdadero? → <strong>Nabucodonosor</strong><br>
+    • ¿Cuál tenía más luz y aun así se rebeló? → <strong>Belsasar</strong><br>
+    • ¿Cuál intentó salvar a Daniel hasta la puesta del sol? → <strong>Darío</strong><br>
+    • ¿Cuál emitió un decreto a favor del Dios de los hebreos? → <strong>Nabucodonosor (3:29) y Darío (6:26)</strong>`) },
+],
+
+/* ═══════════ PARALELOS PROFÉTICOS ═══════════ */
+'m-profetico': [
+  { t:'🗿 La imagen de Daniel 2, completa', h:
+    tbl(['Parte','Material','Reino','Texto'],[
+      ['Cabeza','Oro fino','Babilonia','2:32, 37-38'],
+      ['Pecho y brazos','Plata','Medo-Persia','2:32, 39'],
+      ['Vientre y muslos','Bronce','Grecia','2:32, 39'],
+      ['Piernas','Hierro','Roma','2:33, 40'],
+      ['Pies y dedos','Hierro y barro','Reinos divididos','2:33, 41-43'],
+      ['La piedra','Cortada sin manos','Reino eterno de Dios','2:34, 44-45'],
+    ]) },
+
+  { t:'🔍 Por qué cada metal', h:
+    hi(`El valor <strong>baja</strong> del oro al barro, pero la <strong>dureza sube</strong>
+    del oro al hierro.<br><br>
+    Los imperios se vuelven más fuertes militarmente y menos gloriosos.
+    Los pies mezclan hierro con barro: fuerza y fragilidad juntas,
+    <strong>«no se unirán el uno con el otro»</strong> (2:43).`) },
+
+  { t:'🪨 Lo que dice el texto sobre la piedra', h:
+    vs(`«Y en los días de estos reyes el Dios del cielo levantará <strong>un reino
+    que no será jamás destruido</strong>, ni será el reino dejado a otro pueblo;
+    desmenuzará y consumirá a todos estos reinos, pero él permanecerá para siempre.» (2:44)`) },
+
+  { t:'🔗 Conexión entre el capítulo 3 y el 2', h:
+    hi(`Nabucodonosor oyó que él era <strong>solo la cabeza de oro</strong> (2:38),
+    o sea que su reino terminaría.<br><br>
+    Su respuesta en el capítulo 3 fue hacer una estatua
+    <strong>toda de oro</strong> — no solo la cabeza.<br><br>
+    Fue una <u>respuesta de orgullo</u> a la profecía: quiso declarar que su reino
+    no pasaría. Ese detalle conecta los dos capítulos y suele preguntarse.`) },
+],
+
+/* ═══════════ LUGARES ═══════════ */
+'m-lugares': [
+  { t:'🗺️ Los lugares del libro', h:
+    tbl(['Lugar','Qué pasó allí','Ref.'],[
+      ['Jerusalén','Ciudad sitiada; hacia allá oraba Daniel','1:1; 6:10'],
+      ['Tierra de Sinar','A donde fueron llevados los utensilios del templo','1:2'],
+      ['Babilonia','La capital y todo el escenario del libro','1 – 6'],
+      ['Campo de Dura','Donde se levantó la estatua de oro','3:1'],
+      ['Palacio real','Donde apareció la escritura en la pared','5:5'],
+      ['El foso de los leones','Donde fue echado Daniel','6:16'],
+    ]) },
+
+  { t:'🧭 El detalle de las ventanas', h:
+    hi(`Daniel oraba con las ventanas abiertas <strong>hacia Jerusalén</strong> (6:10),
+    a más de mil kilómetros de distancia y con el templo ya destruido.<br><br>
+    No oraba hacia un edificio: oraba hacia la <strong>promesa de Dios</strong>
+    sobre ese lugar. Ese matiz aparece en las preguntas de aplicación.`) },
+],
+
+};
+
+module.exports = { MODULOS, CONT_MODULOS };
