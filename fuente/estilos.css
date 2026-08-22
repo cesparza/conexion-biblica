@@ -88,6 +88,17 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .info-table td{padding:.45rem .7rem;border-bottom:1px solid #eef0f4;vertical-align:top}
 .info-table tr:nth-child(even) td{background:#f7f9ff}
 .info-table td.key{font-weight:700;color:var(--azul);white-space:nowrap}
+/* Una tabla no puede medir menos que el ancho mínimo de su contenido, y con
+   nowrap en la columna clave ese mínimo pasaba de 390px: la tabla se salía de
+   la pantalla y arrastraba la tarjeta con ella. Dos medidas, no una. En el
+   celular la columna clave puede partirse, que es más legible que arrastrar el
+   dedo de lado; y por si aun así no cabe, la tabla va envuelta en algo que
+   scrollea solo, sin mover la página. */
+@media(max-width:560px){.info-table td.key{white-space:normal}}
+.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.4rem 0}
+.tabla-scroll .info-table{margin:0}
+/* En papel no hay scroll: si queda envuelta, tiene que salir completa. */
+@media print{.tabla-scroll{overflow:visible}}
 .highlight-box{background:#e8f5e9;border-left:5px solid var(--verde);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
 .warn-box{background:#fff3e0;border-left:5px solid var(--naranja);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
 .verse-box{background:#e3f2fd;border-left:5px solid var(--cielo);border-radius:8px;padding:.75rem .9rem;font-size:.87rem;font-style:italic;margin:.5rem 0;line-height:1.7}
@@ -206,7 +217,15 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .td{font-size:.76rem;color:var(--gris);line-height:1.45;margin-top:2px}
 .tbt{padding:.45rem .95rem!important;font-size:.79rem!important;min-height:40px!important;flex-shrink:0}
 @media(max-width:620px){
-  .tbt{width:100%;margin-left:calc(26px + .75rem)}
+  /* El botón de la tarea baja a su propia línea y se alinea con el texto, no
+     con el icono: de ahí el margen izquierdo. Pero con box-sizing:border-box
+     width:100% ya es TODO el ancho del contenedor, así que el margen se sumaba
+     por fuera y el botón se salía de la tarjeta justo esos 38px. En un iPhone
+     se veía cortado contra el borde de la pantalla. El ancho tiene que
+     descontar el mismo sangrado que aplica el margen, y por eso el sangrado
+     vive en una variable: escrito dos veces, se arregla uno y no el otro. */
+  .tarea{--sangra:calc(26px + .75rem)}
+  .tbt{width:calc(100% - var(--sangra));margin-left:var(--sangra)}
   .cuenta .cd{font-size:1.7rem}
 }
 /* Categoría de 4 a 6 años: todo más grande, porque quien lee suele ser el

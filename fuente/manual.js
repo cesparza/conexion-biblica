@@ -542,13 +542,14 @@ const MANUAL = [
     h:`<p>El volante dice <strong>«Nueva Reina Valera 1995»</strong>. Con ese
     nombre exacto no existe ninguna Biblia publicada, así que vale aclararlo
     antes de que alguien lo pregunte el día del examen.</p>
-    <table class="info-table"><thead><tr><th>Nombre real</th><th>Ediciones</th>
+    <div class="tabla-scroll"><table class="info-table">
+    <thead><tr><th>Nombre real</th><th>Ediciones</th>
     <th>Quién la publica</th></tr></thead><tbody>
     <tr><td class="key">Reina-Valera 1995 (RV95)</td><td>1995</td>
     <td>Sociedades Bíblicas Unidas</td></tr>
     <tr><td class="key">Nueva Reina-Valera (NRV)</td><td>1990 y 2000</td>
     <td>Sociedad Bíblica Emanuel</td></tr>
-    </tbody></table>` },
+    </tbody></table></div>` },
   { t:'El año es el que decide',
     h:`<p>La <em>Nueva</em> Reina-Valera no tiene ninguna edición de 1995: solo
     1990 y 2000. La única Biblia de 1995 es la Reina-Valera 1995. Entonces

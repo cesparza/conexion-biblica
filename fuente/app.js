@@ -1084,7 +1084,7 @@ function pintaLogros(){
 
   const h=S.examenes.slice().reverse();
   document.getElementById('historial').innerHTML=h.length
-    ?'<table class="info-table"><thead><tr><th>Fecha</th><th>Categoría</th><th>Puntaje</th></tr></thead><tbody>'+
+    ?'<div class="tabla-scroll"><table class="info-table"><thead><tr><th>Fecha</th><th>Categoría</th><th>Puntaje</th></tr></thead><tbody>'+
      h.map(e=>{
        const f=new Date(e.fecha);
        const fs=isNaN(f)?'—':f.toLocaleDateString('es-CO',{day:'2-digit',month:'short'})+' '+f.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
@@ -1093,7 +1093,7 @@ function pintaLogros(){
           comparable entre dos niños: es el mismo examen. */
        const mt={simulacro:' 🎓',errores:' 🔁',compartido:' 🔗'}[e.modo]||'';
        return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
-     }).join('')+'</tbody></table>'
+     }).join('')+'</tbody></table></div>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';
 }
 
@@ -1537,9 +1537,12 @@ function tablaCats(){
         '<td style="text-align:center">'+bancoDe().length+'</td></tr>';
     }
   }finally{S.cat=prev;}
-  return '<table class="info-table"><thead><tr><th>Categoría</th><th>Edad</th>'+
+  /* Cinco columnas no caben en un celular: va envuelta para que scrollee ella
+     sola en vez de empujar la pantalla. */
+  return '<div class="tabla-scroll"><table class="info-table">'+
+    '<thead><tr><th>Categoría</th><th>Edad</th>'+
     '<th>Evento</th><th>Alcance</th><th>Preg.</th></tr></thead><tbody>'+
-    filas+'</tbody></table>';
+    filas+'</tbody></table></div>';
 }
 
 const aplicaMarcas=(txt,m)=>String(txt).replace(/\{([A-Z_]+)\}/g,

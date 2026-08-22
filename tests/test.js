@@ -481,6 +481,43 @@ const faltanEx=btsExamen.filter(t=>!manPorId['d-imprimir'].includes(t));
 ok(faltanEx.length===0,'El manual documenta los botones de impresión del director'+
   (faltanEx.length?' — falta: '+faltanEx.join(' / '):''));
 
+/* ───────── toda tabla ancha va envuelta para que scrollee sola ─────────
+   La tabla de las categorías tiene cinco columnas y la columna clave llevaba
+   white-space:nowrap, así que su ancho mínimo pasaba de 390px: en el celular se
+   salía de la pantalla y arrastraba la tarjeta. Una tabla no puede medir menos
+   que su contenido, así que el arreglo no es CSS sobre la tabla: es envolverla.
+   Se cuenta sobre el código y el manual, no sobre index.html, porque ahí el
+   chequeo sería circular. */
+const CSS=fs.readFileSync(FUENTE('estilos.css'),'utf8');
+const FUENTES_TABLA=['app.js','manual.js'].map(f=>fs.readFileSync(FUENTE(f),'utf8')).join('\n');
+const tablas=(FUENTES_TABLA.match(/<table class="info-table"/g)||[]).length;
+ok(tablas>0,'Hay tablas info-table que revisar ('+tablas+')');
+const sinEnvolver=tablas-(FUENTES_TABLA.match(/tabla-scroll">\s*<table class="info-table"/g)||[]).length;
+ok(sinEnvolver===0,'Toda tabla info-table va dentro de un .tabla-scroll'+
+  (sinEnvolver?' — quedan '+sinEnvolver+' sueltas':''));
+ok(/\.tabla-scroll\{overflow-x:auto/.test(CSS),'El contenedor .tabla-scroll scrollea de lado');
+ok(/@media print\{\.tabla-scroll\{overflow:visible\}\}/.test(CSS),
+  'En papel la tabla envuelta sale completa, sin recorte');
+
+/* ───────── width:100% junto a un margen horizontal desborda ─────────
+   El botón de «Qué estudiar hoy» se salía de la tarjeta en el celular: tenía
+   width:100% y margin-left a la vez, y con box-sizing:border-box el 100% ya es
+   todo el contenedor, así que el margen se suma por fuera. En pantalla de
+   escritorio no se nota porque sobra ancho; en un iPhone el botón queda cortado
+   contra el borde. Se revisa el CSS regla por regla en vez de confiar en el ojo. */
+const reglas=[...CSS.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(m=>({sel:m[1].trim(),cuerpo:m[2]}));
+const desbordan=reglas.filter(r=>
+  /width:\s*100%/.test(r.cuerpo)&&
+  /margin-(left|right):\s*(?!0)/.test(r.cuerpo)&&
+  !/width:\s*calc\(100%/.test(r.cuerpo));
+ok(desbordan.length===0,'Ninguna regla junta width:100% con un margen horizontal'+
+  (desbordan.length?' — revisar: '+desbordan.map(r=>r.sel).join(', '):''));
+
+/* Y que el arreglo siga puesto: si alguien vuelve a poner width:100% ahí, la
+   prueba de arriba lo caza, pero esta dice qué se esperaba. */
+ok(/\.tbt\{width:calc\(100% - var\(--sangra\)\)/.test(CSS),
+  'El botón de la tarea descuenta su sangrado del ancho');
+
 /* ───────── los iconos del historial ─────────
    El historial marca cada examen con un icono según su modo. Ya pasó una vez
    que el manual prometía la marca del examen por link y la interfaz no la

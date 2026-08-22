@@ -95,6 +95,17 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .info-table td{padding:.45rem .7rem;border-bottom:1px solid #eef0f4;vertical-align:top}
 .info-table tr:nth-child(even) td{background:#f7f9ff}
 .info-table td.key{font-weight:700;color:var(--azul);white-space:nowrap}
+/* Una tabla no puede medir menos que el ancho mínimo de su contenido, y con
+   nowrap en la columna clave ese mínimo pasaba de 390px: la tabla se salía de
+   la pantalla y arrastraba la tarjeta con ella. Dos medidas, no una. En el
+   celular la columna clave puede partirse, que es más legible que arrastrar el
+   dedo de lado; y por si aun así no cabe, la tabla va envuelta en algo que
+   scrollea solo, sin mover la página. */
+@media(max-width:560px){.info-table td.key{white-space:normal}}
+.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.4rem 0}
+.tabla-scroll .info-table{margin:0}
+/* En papel no hay scroll: si queda envuelta, tiene que salir completa. */
+@media print{.tabla-scroll{overflow:visible}}
 .highlight-box{background:#e8f5e9;border-left:5px solid var(--verde);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
 .warn-box{background:#fff3e0;border-left:5px solid var(--naranja);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
 .verse-box{background:#e3f2fd;border-left:5px solid var(--cielo);border-radius:8px;padding:.75rem .9rem;font-size:.87rem;font-style:italic;margin:.5rem 0;line-height:1.7}
@@ -213,7 +224,15 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .td{font-size:.76rem;color:var(--gris);line-height:1.45;margin-top:2px}
 .tbt{padding:.45rem .95rem!important;font-size:.79rem!important;min-height:40px!important;flex-shrink:0}
 @media(max-width:620px){
-  .tbt{width:100%;margin-left:calc(26px + .75rem)}
+  /* El botón de la tarea baja a su propia línea y se alinea con el texto, no
+     con el icono: de ahí el margen izquierdo. Pero con box-sizing:border-box
+     width:100% ya es TODO el ancho del contenedor, así que el margen se sumaba
+     por fuera y el botón se salía de la tarjeta justo esos 38px. En un iPhone
+     se veía cortado contra el borde de la pantalla. El ancho tiene que
+     descontar el mismo sangrado que aplica el margen, y por eso el sangrado
+     vive en una variable: escrito dos veces, se arregla uno y no el otro. */
+  .tarea{--sangra:calc(26px + .75rem)}
+  .tbt{width:calc(100% - var(--sangra));margin-left:var(--sangra)}
   .cuenta .cd{font-size:1.7rem}
 }
 /* Categoría de 4 a 6 años: todo más grande, porque quien lee suele ser el
@@ -9580,7 +9599,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "El problema del nombre",
-    "h": "<p>El volante dice <strong>«Nueva Reina Valera 1995»</strong>. Con ese\n    nombre exacto no existe ninguna Biblia publicada, así que vale aclararlo\n    antes de que alguien lo pregunte el día del examen.</p>\n    <table class=\"info-table\"><thead><tr><th>Nombre real</th><th>Ediciones</th>\n    <th>Quién la publica</th></tr></thead><tbody>\n    <tr><td class=\"key\">Reina-Valera 1995 (RV95)</td><td>1995</td>\n    <td>Sociedades Bíblicas Unidas</td></tr>\n    <tr><td class=\"key\">Nueva Reina-Valera (NRV)</td><td>1990 y 2000</td>\n    <td>Sociedad Bíblica Emanuel</td></tr>\n    </tbody></table>"
+    "h": "<p>El volante dice <strong>«Nueva Reina Valera 1995»</strong>. Con ese\n    nombre exacto no existe ninguna Biblia publicada, así que vale aclararlo\n    antes de que alguien lo pregunte el día del examen.</p>\n    <div class=\"tabla-scroll\"><table class=\"info-table\">\n    <thead><tr><th>Nombre real</th><th>Ediciones</th>\n    <th>Quién la publica</th></tr></thead><tbody>\n    <tr><td class=\"key\">Reina-Valera 1995 (RV95)</td><td>1995</td>\n    <td>Sociedades Bíblicas Unidas</td></tr>\n    <tr><td class=\"key\">Nueva Reina-Valera (NRV)</td><td>1990 y 2000</td>\n    <td>Sociedad Bíblica Emanuel</td></tr>\n    </tbody></table></div>"
    },
    {
     "t": "El año es el que decide",
@@ -10996,7 +11015,7 @@ function pintaLogros(){
 
   const h=S.examenes.slice().reverse();
   document.getElementById('historial').innerHTML=h.length
-    ?'<table class="info-table"><thead><tr><th>Fecha</th><th>Categoría</th><th>Puntaje</th></tr></thead><tbody>'+
+    ?'<div class="tabla-scroll"><table class="info-table"><thead><tr><th>Fecha</th><th>Categoría</th><th>Puntaje</th></tr></thead><tbody>'+
      h.map(e=>{
        const f=new Date(e.fecha);
        const fs=isNaN(f)?'—':f.toLocaleDateString('es-CO',{day:'2-digit',month:'short'})+' '+f.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
@@ -11005,7 +11024,7 @@ function pintaLogros(){
           comparable entre dos niños: es el mismo examen. */
        const mt={simulacro:' 🎓',errores:' 🔁',compartido:' 🔗'}[e.modo]||'';
        return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
-     }).join('')+'</tbody></table>'
+     }).join('')+'</tbody></table></div>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';
 }
 
@@ -11449,9 +11468,12 @@ function tablaCats(){
         '<td style="text-align:center">'+bancoDe().length+'</td></tr>';
     }
   }finally{S.cat=prev;}
-  return '<table class="info-table"><thead><tr><th>Categoría</th><th>Edad</th>'+
+  /* Cinco columnas no caben en un celular: va envuelta para que scrollee ella
+     sola en vez de empujar la pantalla. */
+  return '<div class="tabla-scroll"><table class="info-table">'+
+    '<thead><tr><th>Categoría</th><th>Edad</th>'+
     '<th>Evento</th><th>Alcance</th><th>Preg.</th></tr></thead><tbody>'+
-    filas+'</tbody></table>';
+    filas+'</tbody></table></div>';
 }
 
 const aplicaMarcas=(txt,m)=>String(txt).replace(/\{([A-Z_]+)\}/g,
