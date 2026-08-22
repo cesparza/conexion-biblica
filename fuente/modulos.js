@@ -318,6 +318,27 @@ const CONT_MODULOS = {
 
 /* ═══════════ RV1995 vs RV1960 ═══════════ */
 'm-version': [
+  { t:'📛 «Nueva Reina Valera 1995»: qué es exactamente', h:
+    hi(`El volante del campamento dice <strong>«Nueva Reina Valera 1995»</strong>.
+    Con ese nombre exacto no existe ninguna Biblia publicada, y por eso confunde.
+    Lo que existe es esto:`) +
+    tbl(['Nombre real','Año','Quién la publica'],[
+      ['Reina-Valera 1995 (RV95)','1995','Sociedades Bíblicas Unidas'],
+      ['Nueva Reina-Valera (NRV)','1990 y 2000','Sociedad Bíblica Emanuel'],
+    ]) +
+    wa(`<strong>El año es el dato que decide.</strong> La <em>Nueva</em>
+    Reina-Valera no tiene ninguna edición de 1995: solo 1990 y 2000. La única
+    Biblia de 1995 es la Reina-Valera 1995. Entonces «Nueva Reina Valera 1995»
+    está diciendo <strong>Reina-Valera 1995</strong>, con «nueva» usada como
+    adjetivo: era la nueva revisión frente a la de 1960, que es la que todos
+    oían en la iglesia.`) +
+    `<p style="font-size:.87rem;line-height:1.7;margin:.4rem 0">
+    <strong>Dos datos más que apuntan a lo mismo:</strong> la Biblia del Club de
+    Aventureros que vende la Casa Editora es RV95, y la IADPA, que es la
+    editorial del Profetas y Reyes que usamos, vende Biblias RV95.</p>` +
+    hi(`<strong>Regla:</strong> si dice 1995, es la Reina-Valera 1995. Todo este
+    material está verificado contra ella palabra por palabra.`) },
+
   { t:'📕 Por qué importa esta lista', h:
     wa(`El examen se califica sobre la <strong>Reina Valera 1995</strong>. La RV1960
     es la que más se oye en la iglesia, y en varios versículos famosos usa

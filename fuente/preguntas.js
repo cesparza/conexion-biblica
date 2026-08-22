@@ -697,7 +697,22 @@ BANCO.push(
 {cap:'pr44',t:'tf',q:'Según P&R cap. 44, Daniel fue fiel solo en lo religioso, no en su trabajo de gobierno.',
  a:false,e:'Falso. Fue fiel en su trabajo como funcionario del gobierno, no solo en lo religioso: su vida pública y privada eran igual de intachables.'},
 {cap:'pr44',t:'tf',q:'Según P&R cap. 44, Daniel tenía más de ochenta años cuando fue echado al foso.',
- a:true,e:'Verdadero. Lo que decidió de joven en Daniel 1 fue lo que lo sostuvo de anciano en Daniel 6.'}
+ a:true,e:'Verdadero. Lo que decidió de joven en Daniel 1 fue lo que lo sostuvo de anciano en Daniel 6.'},
+
+/* ── La versión de la Biblia ──
+   El volante del campamento dice «Nueva Reina Valera 1995», y con ese nombre
+   exacto no existe ninguna Biblia. El año es el que resuelve: la Nueva
+   Reina-Valera solo tiene ediciones de 1990 y 2000, así que 1995 es la
+   Reina-Valera 1995. Estas preguntas están para que el concursante no dude si
+   alguien le hace la pregunta en el campamento. */
+{cap:'d1',t:'mc',nv:2,q:'¿Quién publica la Reina-Valera 1995, la versión sobre la que se estudia?',
+ o:['Sociedades Bíblicas Unidas','Sociedad Bíblica Emanuel','La IADPA','La Casa Editora Sudamericana'],a:0},
+{cap:'d1',t:'mc',nv:3,q:'La «Nueva Reina-Valera» es otra Biblia distinta. ¿De qué años son sus ediciones?',
+ o:['1990 y 2000','1995 y 2005','1960 y 1995','Solo 1995'],a:0},
+{cap:'d1',t:'tf',nv:2,q:'Existe una Biblia publicada que se llama «Nueva Reina-Valera 1995».',
+ a:false,e:'Falso. La Nueva Reina-Valera solo tiene ediciones de 1990 y 2000. La única Biblia de 1995 es la Reina-Valera 1995: «nueva» ahí es un adjetivo, porque era la nueva revisión frente a la de 1960.'},
+{cap:'d1',t:'tf',nv:1,q:'La Reina-Valera 1995 y la Reina-Valera 1960 usan las mismas palabras en todos los versículos.',
+ a:false,e:'Falso. La idea es la misma, pero varias palabras cambian. Por eso las preguntas dicen «según la RV1995»: piden la palabra exacta de esa versión.'}
 );
 
 module.exports = { BANCO };

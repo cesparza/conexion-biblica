@@ -219,6 +219,7 @@ function nivelRecomendado(){
 
 /* ───────── navegación ───────── */
 const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
+/* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
 function ir(id){
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
@@ -232,6 +233,7 @@ function ir(id){
   if(id==='tarjetas')pintaTarjetas();
   if(id==='examen')pintaExInicio();
   if(id==='logros')pintaLogros();
+  if(id==='ayuda')pintaAyuda();
   window.scrollTo({top:0});
 }
 
@@ -1072,6 +1074,95 @@ function marcaCat(){
 
 function pintaLogo(){
   try{document.querySelectorAll('.logo-tl').forEach(i=>{i.src=LOGO_TL;});}catch(e){}
+}
+
+/* ───────── manual dentro de la app ─────────
+   MECANISMO
+   El texto vive en fuente/manual.js y llega al HTML como datos, igual que los
+   capítulos. Las cifras no están escritas en el texto: van como marcas
+   {ENTRE_LLAVES} que se reemplazan al pintar con los datos del participante
+   activo. Así el manual dice «tienes 57 tarjetas» y no «hay muchas tarjetas»,
+   y si el banco crece el manual crece con él.
+
+   POR QUÉ REEMPLAZO Y NO TEXTO FIJO
+   Un manual con cifras escritas a mano se desactualiza en el primer cambio de
+   contenido, y nadie se acuerda de corregirlo. Estas marcas fallan de forma
+   visible si alguien escribe una que no existe, en vez de mentir en silencio. */
+
+let ayGrupoAct='estudia';
+
+function marcasManual(){
+  return {
+    CAPS_CAT:String(capsDe().length),
+    MODS_CAT:String(modsDe().length),
+    TJ_CAT:String(tarjetasDe().length),
+    BANCO_CAT:String(bancoDe().length),
+    BANCO_TOTAL:String(BANCO.length),
+    TJ_TOTAL:String(TARJETAS.length),
+    CAT_NOMBRE:esc(CAT().nombre),
+    CAT_EV:esc(CAT().ev),
+    TABLA_CATS:tablaCats(),
+  };
+}
+
+/* Tabla de las seis categorías, con el conteo real de cada una. Se calcula
+   cambiando S.cat temporalmente porque bancoDe() lee la categoría activa. */
+function tablaCats(){
+  const prev=S.cat;
+  let filas='';
+  try{
+    for(const k of Object.keys(CATS)){
+      S.cat=k;
+      const c=CATS[k];
+      filas+='<tr><td class="key">'+esc(c.nombre)+'</td><td>'+esc(c.edad)+
+        '</td><td>'+esc(c.ev)+'</td><td>'+esc(c.alcance)+'</td>'+
+        '<td style="text-align:center">'+bancoDe().length+'</td></tr>';
+    }
+  }finally{S.cat=prev;}
+  return '<table class="info-table"><thead><tr><th>Categoría</th><th>Edad</th>'+
+    '<th>Evento</th><th>Alcance</th><th>Preg.</th></tr></thead><tbody>'+
+    filas+'</tbody></table>';
+}
+
+const aplicaMarcas=(txt,m)=>String(txt).replace(/\{([A-Z_]+)\}/g,
+  (todo,k)=>m[k]!==undefined?m[k]:todo);
+
+function pintaAyuda(){
+  const m=marcasManual();
+  const lista=MANUAL.filter(x=>x.para===ayGrupoAct);
+  document.getElementById('ay-lista').innerHTML=lista.map(x=>
+    '<details class="card ay-item"><summary>'+
+    '<span class="ay-ic">'+x.icono+'</span>'+
+    '<span class="ay-tx"><b>'+esc(x.t)+'</b><small>'+esc(x.d)+'</small></span>'+
+    '</summary><div class="det-cuerpo">'+
+    x.secs.map(s=>'<h4 class="ay-h">'+esc(s.t)+'</h4>'+aplicaMarcas(s.h,m)).join('')+
+    '</div></details>').join('');
+  document.getElementById('ay-t1').className=ayGrupoAct==='estudia'?'on':'';
+  document.getElementById('ay-t2').className=ayGrupoAct==='director'?'on':'';
+}
+
+function ayGrupo(g){ayGrupoAct=g;pintaAyuda();window.scrollTo({top:0});}
+
+/* El manual también en papel, generado desde la app: no hay un PDF aparte que
+   pueda quedar describiendo una versión vieja. */
+function imprimeManual(){
+  const m=marcasManual();
+  const grupos=[['estudia','PARA QUIEN ESTUDIA'],['director','PARA EL DIRECTOR']];
+  const hojas=grupos.map(([g,tit])=>hojaGuia({
+    caps:MANUAL.filter(x=>x.para===g).map(x=>({
+      id:x.id, label:x.icono+' '+x.t, sub:x.d, src:'',
+    })),
+    contenido:Object.fromEntries(MANUAL.filter(x=>x.para===g)
+      .map(x=>[x.id,x.secs.map(s=>({t:s.t,h:aplicaMarcas(s.h,m)}))])),
+    modulos:[], contModulos:{}, logo:LOGO_TL,
+    titulo:'CÓMO SE USA LA APP',
+    sub:tit,
+    meta:'Conexión Bíblica y Devoción Matutina · Club de Aventureros',
+    pie:'Impreso desde la app, con los datos de hoy',
+  }));
+  imprimeDoc(docExamen(hojas,'Manual de la app',
+    'El manual completo. En el cuadro de impresión escoge «Guardar como PDF» si lo quieres en archivo.'),
+    'Manual de la app');
 }
 
 /* ───────── imprimir el material de estudio ─────────

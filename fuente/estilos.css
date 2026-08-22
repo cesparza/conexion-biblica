@@ -354,3 +354,43 @@ textarea.cod:focus{outline:none;border-color:var(--cielo)}
 .bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.78rem}
 .bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
 .bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
+
+/* ❓ en la barra: la ayuda tiene que estar a un toque desde cualquier
+   pantalla, pero una sexta pestaña no cabe en un teléfono. */
+.nav-ayuda{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:.95rem;
+  width:30px;height:30px;border-radius:50%;cursor:pointer;margin-left:.4rem;line-height:1;
+  font-family:inherit}
+.nav-ayuda:hover{background:rgba(255,255,255,.3)}
+
+/* Entrada al manual desde el Inicio. */
+.ir-ayuda{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;
+  border:none;cursor:pointer;font-family:inherit;padding:1.1rem 1.2rem}
+.ir-ayuda .ia-ic{font-size:1.5rem;flex:none}
+.ir-ayuda .ia-tx{flex:1}
+.ir-ayuda .ia-tx b{display:block;font-size:.95rem;font-weight:800;color:var(--azul)}
+.ir-ayuda .ia-tx small{display:block;font-size:.78rem;color:var(--gris);margin-top:2px;line-height:1.4}
+.ir-ayuda .ia-fl{color:var(--cielo);font-size:1.2rem;font-weight:800;flex:none}
+
+/* Pantalla del manual. */
+.ay-hero{padding:1.4rem 1.2rem}
+.ay-hero h1{font-size:1.5rem}
+.ay-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.1rem}
+.ay-tabs button{background:var(--card);border:3px solid #e5e7eb;border-radius:12px;
+  padding:.75rem .5rem;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:800;
+  color:var(--gris);min-height:50px}
+.ay-tabs button.on{border-color:var(--naranja);color:var(--azul);background:#fff8f0}
+details.card.ay-item>summary{display:flex;align-items:center;gap:.8rem;padding:.95rem 1.2rem}
+.ay-ic{font-size:1.3rem;flex:none}
+.ay-tx{flex:1}
+.ay-tx b{display:block;font-size:.92rem;font-weight:800;color:var(--azul)}
+.ay-tx small{display:block;font-size:.76rem;color:var(--gris);margin-top:1px;line-height:1.4;font-weight:600}
+h4.ay-h{font-size:.87rem;font-weight:800;color:var(--azul);margin:1rem 0 .35rem;
+  border-left:3px solid var(--naranja);padding-left:.5rem}
+.ay-item .det-cuerpo p{font-size:.87rem;line-height:1.7;color:var(--txt);margin:.5rem 0}
+.ay-item .det-cuerpo ul,.ay-item .det-cuerpo ol{margin:.4rem 0 .6rem 1.1rem;padding:0}
+.ay-item .det-cuerpo li{font-size:.86rem;line-height:1.65;margin:.25rem 0;color:var(--txt)}
+
+/* Dos columnas fijas cuando son dos botones: tres en una fila de dos deja uno
+   suelto a lo ancho y pesa más que el contenido de arriba. */
+.menu-impr.dos{grid-template-columns:1fr 1fr}
+@media(max-width:560px){.menu-impr.dos{grid-template-columns:1fr}}

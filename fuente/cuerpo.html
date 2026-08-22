@@ -3,6 +3,7 @@
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
     <span>Conexión Bíblica</span>
+    <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app">❓</button>
   </div>
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')"><i>🏠</i><b>Inicio</b></button>
@@ -100,24 +101,30 @@
     <div class="stats" id="stats"></div>
   </div>
 
-  <details class="card ayuda">
-    <summary>❓ ¿Cómo se usa esta app?</summary>
-    <div class="ayuda-cuerpo">
-      <p><strong>1. Empieza siempre por «Qué estudiar hoy».</strong> Ahí sale
-      lo que más te conviene hacer ahora, en orden.</p>
-      <p><strong>2. 📖 Estudiar</strong> es para leer. Al final de cada
-      capítulo tocas «Ya lo estudié» y el círculo se llena.</p>
-      <p><strong>3. 🃏 Tarjetas</strong> es para memorizar. Lees el frente,
-      respondes en voz alta y volteas la tarjeta. Una tarjeta queda dominada
-      al acertarla dos veces seguidas.</p>
-      <p><strong>4. ✏️ Examen</strong> es para practicar. Las preguntas
-      cambian cada vez. Al terminar ves la respuesta correcta de cada una.</p>
-      <p><strong>5. 🏆 Logros</strong> guarda tus errores para repasarlos y
-      el historial de tus exámenes.</p>
-      <p class="nota">Todo se guarda solo en este teléfono o computador. Si
-      abres la app en otro aparato, empiezas de cero.</p>
+  <button class="card ir-ayuda" onclick="ir('ayuda')">
+    <span class="ia-ic">❓</span>
+    <span class="ia-tx"><b>¿Cómo se usa esta app?</b>
+    <small>El manual completo, aquí mismo. También para directores.</small></span>
+    <span class="ia-fl">→</span>
+  </button>
+</div>
+
+<div id="p-ayuda" class="pantalla">
+  <div class="hero ay-hero">
+    <h1>❓ Cómo se usa</h1>
+    <p>El manual de la app, dentro de la app. Toca un tema para abrirlo.</p>
+  </div>
+  <div class="ay-tabs">
+    <button class="on" id="ay-t1" onclick="ayGrupo('estudia')">🎒 Para quien estudia</button>
+    <button id="ay-t2" onclick="ayGrupo('director')">🧑‍🏫 Para el director</button>
+  </div>
+  <div id="ay-lista"></div>
+  <div class="card">
+    <div class="menu-impr">
+      <button class="btn azul" onclick="imprimeManual()">🖨️ Imprimir este manual</button>
+      <button class="btn gho" onclick="ir('inicio')">← Volver al inicio</button>
     </div>
-  </details>
+  </div>
 </div>
 
 <div id="p-estudio" class="pantalla">
@@ -130,10 +137,9 @@
     <div class="det-cuerpo">
       <p class="nota">Se abre el cuadro de impresión. Ahí puedes mandarlo a la
       impresora o escoger <strong>Guardar como PDF</strong>.</p>
-      <div class="menu-impr">
-        <button class="btn azul" onclick="imprimeGuia()">📕 Toda mi guía de estudio</button>
-        <button class="btn azul" onclick="imprimeTarjetas()">✂️ Mis tarjetas, para recortar</button>
-        <button class="btn gho" onclick="imprimeGuiasTodo()">📚 Las guías de los dos eventos</button>
+      <div class="menu-impr dos">
+        <button class="btn gho" onclick="imprimeGuia()">📕 Toda mi guía</button>
+        <button class="btn gho" onclick="imprimeTarjetas()">✂️ Mis tarjetas, para recortar</button>
       </div>
       <p class="nota">Para imprimir <strong>un solo capítulo</strong>, ábrelo
       arriba y usa el botón de imprimir que aparece al final.</p>
@@ -208,6 +214,10 @@
         </div>
         <p class="nota"><strong>Las hojas con respuestas son solo para quien
         califica.</strong> Van marcadas «SOLO PARA LÍDERES» en el encabezado.</p>
+        <div class="menu-impr dos">
+          <button class="btn gho" onclick="imprimeGuiasTodo()">📚 Las guías de los dos eventos</button>
+          <button class="btn gho" onclick="imprimeManual()">📘 El manual de la app</button>
+        </div>
         <div id="impr-alt"></div>
       </div>
     </details>

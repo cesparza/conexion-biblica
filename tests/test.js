@@ -331,10 +331,6 @@ ok(/CONEXIÓN BÍBLICA/.test(hoja('av',false))&&/RV1995/.test(hoja('av',false)),
 
 /* La app y el generador de material tienen que compartir el render: si
    alguien vuelve a copiar el HTML dentro de tools/imprimir.js, esto falla. */
-const fuenteImpr=fs.readFileSync(path.join(RAIZ,'tools','imprimir.js'),'utf8');
-ok(/require\('\.\.\/fuente\/imprimible\.js'\)/.test(fuenteImpr)&&
-   !/SECCIÓN I — Selección/.test(fuenteImpr),
-  'tools/imprimir.js usa el render compartido y no tiene copia propia');
 const htmlApp=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
 ok(/function hojaExamen/.test(htmlApp)&&/function imprimeExamen/.test(htmlApp),
   'index.html trae el render compartido y los botones de impresión');
@@ -389,8 +385,6 @@ ok(!/undefined/.test(guiaAv+guiaMat),'La guía impresa no trae campos vacíos');
 ok(/break-inside: avoid/.test(IMPR.CSS_IMPR),
   'Las tarjetas no se pueden partir entre dos hojas');
 
-ok(/IMPR\.hojaGuia\(/.test(fuenteImpr)&&!/const av = c\.cats\.includes/.test(fuenteImpr),
-  'tools/imprimir.js usa el render compartido de la guía');
 ok(/function imprimeGuia/.test(htmlApp)&&/function imprimeTarjetas/.test(htmlApp)&&
    /function hojaGuia/.test(htmlApp),
   'index.html puede imprimir la guía y las tarjetas');
@@ -400,39 +394,50 @@ ok(/function codigoResumen|const codigoResumen/.test(htmlApp)&&
    /function leeCodigo/.test(htmlApp),
   'index.html trae los códigos de progreso');
 
-/* ───────── manuales ─────────
-   Los manuales se generan de los mismos archivos que la app para que no
-   puedan decir una cifra distinta a la real. Estas pruebas fijan eso: si
-   alguien escribe un número a mano en el manual, falla. */
-const tmpMan=fs.mkdtempSync(path.join(require('os').tmpdir(),'man-'));
-execFileSync(process.execPath,[path.join(RAIZ,'tools','manuales.js'),tmpMan,
-  path.join(tmpMan,'no-existe')],{stdio:'pipe'});
-const manEst=fs.readFileSync(path.join(tmpMan,'Manual_Para_Estudiar.html'),'utf8');
-const manDir=fs.readFileSync(path.join(tmpMan,'Manual_Para_Directores.html'),'utf8');
-ok(manEst.length>4000&&manDir.length>4000,'Los dos manuales se generan sin capturas');
+/* ───────── el manual vive en la app ─────────
+   Se quitaron tools/imprimir.js y tools/manuales.js: solo servían para dejar
+   archivos fuera de la app, y todo tiene que salir de la app. Estas pruebas
+   fijan esa decisión y la coherencia del manual con los datos reales. */
+const {MANUAL}=require(path.join(RAIZ,'fuente','manual.js'));
 
-/* Sin la carpeta de capturas no debe quedar ninguna imagen rota. */
-ok(!/<img[^>]*src="data:image\/png[^"]*"[^>]*alt="Paso/.test(manEst)&&
-   !/src=""/.test(manEst+manDir),'Sin capturas, los manuales no dejan imágenes vacías');
+ok(!fs.existsSync(path.join(RAIZ,'tools','imprimir.js'))&&
+   !fs.existsSync(path.join(RAIZ,'tools','manuales.js')),
+  'No quedan herramientas que generen material fuera de la app');
 
-const cuentaCat=c=>{
-  const ids=CAPS_T.filter(x=>x.cats.includes(c)&&!x.extra).map(x=>x.id);
-  return BANCO_T.filter(q=>ids.includes(q.cap)).length;
-};
-ok(Object.keys(CATS_T).every(c=>manDir.includes('>'+cuentaCat(c)+'</td>')),
-  'La tabla del manual del director trae el conteo real de cada categoría');
-ok(manDir.includes(String(BANCO_T.length)+' preguntas'),
-  'El manual del director cita el total real del banco ('+BANCO_T.length+')');
-ok(manEst.includes(String(cuentaCat('av'))+'</b> preguntas distintas'),
-  'El manual del estudiante cita el total real de Aventureros');
+ok(MANUAL.length>=15,'El manual trae '+MANUAL.length+' temas');
+ok(MANUAL.some(m=>m.para==='estudia')&&MANUAL.some(m=>m.para==='director'),
+  'El manual cubre a quien estudia y al director');
+ok(MANUAL.every(m=>m.id&&m.icono&&m.t&&m.d&&m.secs&&m.secs.length),
+  'Cada tema del manual tiene id, icono, título, bajada y secciones');
+ok(new Set(MANUAL.map(m=>m.id)).size===MANUAL.length,'Los ids del manual no se repiten');
+ok(MANUAL.every(m=>m.secs.every(s=>s.t&&s.h)),'Cada sección del manual tiene título y cuerpo');
 
-/* El manual del director tiene que nombrar las dos versiones de la Biblia:
-   es el riesgo abierto y quien califica debe verlo. */
-ok(/Reina-Valera 1995/.test(manDir)&&/Nueva Reina-Valera/.test(manDir),
-  'El manual del director advierte sobre la versión de la Biblia');
-ok(/SOLO PARA LÍDERES/.test(manDir),
-  'El manual del director avisa que la clave va marcada para líderes');
-fs.rmSync(tmpMan,{recursive:true,force:true});
+/* Las marcas {ENTRE_LLAVES} las reemplaza la app. Una marca que la app no
+   conoce saldría impresa tal cual en la pantalla, así que la lista de marcas
+   válidas se fija aquí. */
+const MARCAS_OK=['CAPS_CAT','MODS_CAT','TJ_CAT','BANCO_CAT','BANCO_TOTAL',
+  'TJ_TOTAL','CAT_NOMBRE','CAT_EV','TABLA_CATS'];
+const usadas=new Set();
+for(const m of MANUAL)for(const s of m.secs)
+  for(const g of s.h.matchAll(/\{([A-Z_]+)\}/g))usadas.add(g[1]);
+const marcasMalas=[...usadas].filter(x=>!MARCAS_OK.includes(x));
+ok(marcasMalas.length===0,'El manual no usa marcas que la app no sepa reemplazar'+
+  (marcasMalas.length?' — '+marcasMalas.join(', '):''));
+ok(MARCAS_OK.every(k=>new RegExp(k+':').test(htmlApp)),
+  'La app sabe reemplazar todas las marcas de la lista');
+
+/* El manual tiene que decir lo que hay que decir: son los dos puntos donde
+   un error cuesta el concurso. */
+const txtMan=MANUAL.map(m=>m.t+' '+m.secs.map(s=>s.t+' '+s.h).join(' ')).join(' ');
+ok(/Reina-Valera 1995/.test(txtMan)&&/Nueva Reina-Valera/.test(txtMan),
+  'El manual explica qué versión de la Biblia es');
+ok(/SOLO PARA LÍDERES/.test(txtMan),'El manual avisa que la clave es para líderes');
+ok(/Ya lo estudié/.test(txtMan),'El manual explica que el círculo se llena al marcar el capítulo');
+ok(/voz alta/.test(txtMan),'El manual explica el mecanismo de las tarjetas');
+
+ok(/function pintaAyuda/.test(htmlApp)&&/function imprimeManual/.test(htmlApp)&&
+   /p-ayuda/.test(htmlApp),
+  'index.html trae la pantalla del manual y su impresión');
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

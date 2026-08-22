@@ -361,6 +361,46 @@ textarea.cod:focus{outline:none;border-color:var(--cielo)}
 .bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.78rem}
 .bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
 .bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
+
+/* ❓ en la barra: la ayuda tiene que estar a un toque desde cualquier
+   pantalla, pero una sexta pestaña no cabe en un teléfono. */
+.nav-ayuda{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:.95rem;
+  width:30px;height:30px;border-radius:50%;cursor:pointer;margin-left:.4rem;line-height:1;
+  font-family:inherit}
+.nav-ayuda:hover{background:rgba(255,255,255,.3)}
+
+/* Entrada al manual desde el Inicio. */
+.ir-ayuda{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;
+  border:none;cursor:pointer;font-family:inherit;padding:1.1rem 1.2rem}
+.ir-ayuda .ia-ic{font-size:1.5rem;flex:none}
+.ir-ayuda .ia-tx{flex:1}
+.ir-ayuda .ia-tx b{display:block;font-size:.95rem;font-weight:800;color:var(--azul)}
+.ir-ayuda .ia-tx small{display:block;font-size:.78rem;color:var(--gris);margin-top:2px;line-height:1.4}
+.ir-ayuda .ia-fl{color:var(--cielo);font-size:1.2rem;font-weight:800;flex:none}
+
+/* Pantalla del manual. */
+.ay-hero{padding:1.4rem 1.2rem}
+.ay-hero h1{font-size:1.5rem}
+.ay-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.1rem}
+.ay-tabs button{background:var(--card);border:3px solid #e5e7eb;border-radius:12px;
+  padding:.75rem .5rem;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:800;
+  color:var(--gris);min-height:50px}
+.ay-tabs button.on{border-color:var(--naranja);color:var(--azul);background:#fff8f0}
+details.card.ay-item>summary{display:flex;align-items:center;gap:.8rem;padding:.95rem 1.2rem}
+.ay-ic{font-size:1.3rem;flex:none}
+.ay-tx{flex:1}
+.ay-tx b{display:block;font-size:.92rem;font-weight:800;color:var(--azul)}
+.ay-tx small{display:block;font-size:.76rem;color:var(--gris);margin-top:1px;line-height:1.4;font-weight:600}
+h4.ay-h{font-size:.87rem;font-weight:800;color:var(--azul);margin:1rem 0 .35rem;
+  border-left:3px solid var(--naranja);padding-left:.5rem}
+.ay-item .det-cuerpo p{font-size:.87rem;line-height:1.7;color:var(--txt);margin:.5rem 0}
+.ay-item .det-cuerpo ul,.ay-item .det-cuerpo ol{margin:.4rem 0 .6rem 1.1rem;padding:0}
+.ay-item .det-cuerpo li{font-size:.86rem;line-height:1.65;margin:.25rem 0;color:var(--txt)}
+
+/* Dos columnas fijas cuando son dos botones: tres en una fila de dos deja uno
+   suelto a lo ancho y pesa más que el contenido de arriba. */
+.menu-impr.dos{grid-template-columns:1fr 1fr}
+@media(max-width:560px){.menu-impr.dos{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -369,6 +409,7 @@ textarea.cod:focus{outline:none;border-color:var(--cielo)}
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
     <span>Conexión Bíblica</span>
+    <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app">❓</button>
   </div>
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')"><i>🏠</i><b>Inicio</b></button>
@@ -466,24 +507,30 @@ textarea.cod:focus{outline:none;border-color:var(--cielo)}
     <div class="stats" id="stats"></div>
   </div>
 
-  <details class="card ayuda">
-    <summary>❓ ¿Cómo se usa esta app?</summary>
-    <div class="ayuda-cuerpo">
-      <p><strong>1. Empieza siempre por «Qué estudiar hoy».</strong> Ahí sale
-      lo que más te conviene hacer ahora, en orden.</p>
-      <p><strong>2. 📖 Estudiar</strong> es para leer. Al final de cada
-      capítulo tocas «Ya lo estudié» y el círculo se llena.</p>
-      <p><strong>3. 🃏 Tarjetas</strong> es para memorizar. Lees el frente,
-      respondes en voz alta y volteas la tarjeta. Una tarjeta queda dominada
-      al acertarla dos veces seguidas.</p>
-      <p><strong>4. ✏️ Examen</strong> es para practicar. Las preguntas
-      cambian cada vez. Al terminar ves la respuesta correcta de cada una.</p>
-      <p><strong>5. 🏆 Logros</strong> guarda tus errores para repasarlos y
-      el historial de tus exámenes.</p>
-      <p class="nota">Todo se guarda solo en este teléfono o computador. Si
-      abres la app en otro aparato, empiezas de cero.</p>
+  <button class="card ir-ayuda" onclick="ir('ayuda')">
+    <span class="ia-ic">❓</span>
+    <span class="ia-tx"><b>¿Cómo se usa esta app?</b>
+    <small>El manual completo, aquí mismo. También para directores.</small></span>
+    <span class="ia-fl">→</span>
+  </button>
+</div>
+
+<div id="p-ayuda" class="pantalla">
+  <div class="hero ay-hero">
+    <h1>❓ Cómo se usa</h1>
+    <p>El manual de la app, dentro de la app. Toca un tema para abrirlo.</p>
+  </div>
+  <div class="ay-tabs">
+    <button class="on" id="ay-t1" onclick="ayGrupo('estudia')">🎒 Para quien estudia</button>
+    <button id="ay-t2" onclick="ayGrupo('director')">🧑‍🏫 Para el director</button>
+  </div>
+  <div id="ay-lista"></div>
+  <div class="card">
+    <div class="menu-impr">
+      <button class="btn azul" onclick="imprimeManual()">🖨️ Imprimir este manual</button>
+      <button class="btn gho" onclick="ir('inicio')">← Volver al inicio</button>
     </div>
-  </details>
+  </div>
 </div>
 
 <div id="p-estudio" class="pantalla">
@@ -496,10 +543,9 @@ textarea.cod:focus{outline:none;border-color:var(--cielo)}
     <div class="det-cuerpo">
       <p class="nota">Se abre el cuadro de impresión. Ahí puedes mandarlo a la
       impresora o escoger <strong>Guardar como PDF</strong>.</p>
-      <div class="menu-impr">
-        <button class="btn azul" onclick="imprimeGuia()">📕 Toda mi guía de estudio</button>
-        <button class="btn azul" onclick="imprimeTarjetas()">✂️ Mis tarjetas, para recortar</button>
-        <button class="btn gho" onclick="imprimeGuiasTodo()">📚 Las guías de los dos eventos</button>
+      <div class="menu-impr dos">
+        <button class="btn gho" onclick="imprimeGuia()">📕 Toda mi guía</button>
+        <button class="btn gho" onclick="imprimeTarjetas()">✂️ Mis tarjetas, para recortar</button>
       </div>
       <p class="nota">Para imprimir <strong>un solo capítulo</strong>, ábrelo
       arriba y usa el botón de imprimir que aparece al final.</p>
@@ -574,6 +620,10 @@ textarea.cod:focus{outline:none;border-color:var(--cielo)}
         </div>
         <p class="nota"><strong>Las hojas con respuestas son solo para quien
         califica.</strong> Van marcadas «SOLO PARA LÍDERES» en el encabezado.</p>
+        <div class="menu-impr dos">
+          <button class="btn gho" onclick="imprimeGuiasTodo()">📚 Las guías de los dos eventos</button>
+          <button class="btn gho" onclick="imprimeManual()">📘 El manual de la app</button>
+        </div>
         <div id="impr-alt"></div>
       </div>
     </details>
@@ -5931,6 +5981,48 @@ const BANCO = [
   "nv": 2
  },
  {
+  "cap": "d1",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Quién publica la Reina-Valera 1995, la versión sobre la que se estudia?",
+  "o": [
+   "Sociedades Bíblicas Unidas",
+   "Sociedad Bíblica Emanuel",
+   "La IADPA",
+   "La Casa Editora Sudamericana"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "d1",
+  "t": "mc",
+  "nv": 3,
+  "q": "La «Nueva Reina-Valera» es otra Biblia distinta. ¿De qué años son sus ediciones?",
+  "o": [
+   "1990 y 2000",
+   "1995 y 2005",
+   "1960 y 1995",
+   "Solo 1995"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "d1",
+  "t": "tf",
+  "nv": 2,
+  "q": "Existe una Biblia publicada que se llama «Nueva Reina-Valera 1995».",
+  "a": false,
+  "e": "Falso. La Nueva Reina-Valera solo tiene ediciones de 1990 y 2000. La única Biblia de 1995 es la Reina-Valera 1995: «nueva» ahí es un adjetivo, porque era la nueva revisión frente a la de 1960."
+ },
+ {
+  "cap": "d1",
+  "t": "tf",
+  "nv": 1,
+  "q": "La Reina-Valera 1995 y la Reina-Valera 1960 usan las mismas palabras en todos los versículos.",
+  "a": false,
+  "e": "Falso. La idea es la misma, pero varias palabras cambian. Por eso las preguntas dicen «según la RV1995»: piden la palabra exacta de esa versión."
+ },
+ {
   "cap": "m01",
   "t": "mc",
   "nv": 1,
@@ -8143,6 +8235,10 @@ const CONT_MODULOS = {
  ],
  "m-version": [
   {
+   "t": "📛 «Nueva Reina Valera 1995»: qué es exactamente",
+   "h": "<div class=\"highlight-box\">El volante del campamento dice <strong>«Nueva Reina Valera 1995»</strong>.\n    Con ese nombre exacto no existe ninguna Biblia publicada, y por eso confunde.\n    Lo que existe es esto:</div><table class=\"info-table\"><thead><tr><th>Nombre real</th><th>Año</th><th>Quién la publica</th></tr></thead><tbody><tr><td class=\"key\">Reina-Valera 1995 (RV95)</td><td>1995</td><td>Sociedades Bíblicas Unidas</td></tr><tr><td class=\"key\">Nueva Reina-Valera (NRV)</td><td>1990 y 2000</td><td>Sociedad Bíblica Emanuel</td></tr></tbody></table><div class=\"warn-box\"><strong>El año es el dato que decide.</strong> La <em>Nueva</em>\n    Reina-Valera no tiene ninguna edición de 1995: solo 1990 y 2000. La única\n    Biblia de 1995 es la Reina-Valera 1995. Entonces «Nueva Reina Valera 1995»\n    está diciendo <strong>Reina-Valera 1995</strong>, con «nueva» usada como\n    adjetivo: era la nueva revisión frente a la de 1960, que es la que todos\n    oían en la iglesia.</div><p style=\"font-size:.87rem;line-height:1.7;margin:.4rem 0\">\n    <strong>Dos datos más que apuntan a lo mismo:</strong> la Biblia del Club de\n    Aventureros que vende la Casa Editora es RV95, y la IADPA, que es la\n    editorial del Profetas y Reyes que usamos, vende Biblias RV95.</p><div class=\"highlight-box\"><strong>Regla:</strong> si dice 1995, es la Reina-Valera 1995. Todo este\n    material está verificado contra ella palabra por palabra.</div>"
+  },
+  {
    "t": "📕 Por qué importa esta lista",
    "h": "<div class=\"warn-box\">El examen se califica sobre la <strong>Reina Valera 1995</strong>. La RV1960\n    es la que más se oye en la iglesia, y en varios versículos famosos usa\n    <strong>otras palabras</strong>. Si respondes con la RV1960 donde piden RV1995,\n    la idea es correcta pero la palabra no.<br><br>\n    Regla: <strong>si la pregunta dice «según la RV1995», usa la columna de la izquierda.</strong></div>"
   },
@@ -8977,6 +9073,436 @@ const TARJETAS = [
  }
 ];
 
+const MANUAL = [
+ {
+  "id": "a-empezar",
+  "para": "estudia",
+  "icono": "🚀",
+  "t": "Los tres pasos del principio",
+  "d": "Qué te pregunta la app la primera vez",
+  "secs": [
+   {
+    "t": "Por qué te pregunta antes de dejarte entrar",
+    "h": "<p>La app necesita saber dos cosas para mostrarte <strong>tu</strong>\n    material y no el de otro: tu edad y tu evento. De esas dos respuestas sale\n    tu categoría, y la categoría decide qué capítulos ves y de dónde salen tus\n    preguntas.</p>\n    <p>Por eso no te pone a escoger entre seis categorías con nombres raros:\n    te hace dos preguntas que sí sabes contestar.</p>"
+   },
+   {
+    "t": "Paso 1 — tu nombre",
+    "h": "<p>Escríbelo y toca <strong>Siguiente</strong>. Sirve para que tu\n    progreso sea tuyo: en un mismo teléfono pueden estudiar varias personas sin\n    mezclarse.</p>"
+   },
+   {
+    "t": "Paso 2 — tu edad",
+    "h": "<p>Tres botones: <strong>4, 5 o 6 años</strong>, <strong>7, 8 o 9\n    años</strong>, o <strong>soy adulto</strong>. Si eres Guía Mayor, hay un\n    enlace abajo.</p>\n    <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de\n    empezar a estudiar.</p>"
+   },
+   {
+    "t": "Paso 3 — tu evento",
+    "h": "<p><strong>Conexión Bíblica</strong> es el libro de Daniel y Profetas y\n    Reyes. <strong>Devoción Matutina</strong> es «Héroes y villanos», la\n    lectura de octubre. Son dos concursos distintos con material distinto.</p>\n    <p>Si vas a los dos, toca <strong>En los dos</strong>: la app te crea dos\n    fichas con tu nombre, una por evento, y cambias entre ellas cuando\n    quieras.</p>"
+   },
+   {
+    "t": "Si escogiste mal",
+    "h": "<p>No hay que empezar de cero. En <strong>Inicio</strong>, en la barra de\n    arriba que dice tu nombre, toca <strong>Cambiar</strong> y escoge la\n    correcta. Tu progreso no se pierde.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-hoy",
+  "para": "estudia",
+  "icono": "📌",
+  "t": "Empieza siempre por «Qué estudiar hoy»",
+  "d": "La única decisión que no tienes que tomar",
+  "secs": [
+   {
+    "t": "Qué es",
+    "h": "<p>Es la tarjeta naranja del <strong>Inicio</strong>. Trae tres o cuatro\n    cosas, en orden, escogidas según cómo vas tú: no es un plan general.</p>\n    <p>Arriba te dice cuántos días faltan para el campamento y en qué semana\n    del plan estás.</p>"
+   },
+   {
+    "t": "Por qué salen en ese orden",
+    "h": "<p>De arriba abajo va lo que más puntos recupera:</p>\n    <ul><li><strong>Repasar errores</strong> primero, si ya fallaste\n    preguntas. Es lo que más rinde: son puntos que ya sabes que estás\n    perdiendo.</li>\n    <li><strong>Tarjetas</strong> por dominar, para lo que hay que memorizar.</li>\n    <li><strong>Leer</strong> el capítulo que sigue.</li>\n    <li><strong>Reforzar</strong> el capítulo en el que vas más flojo, si los\n    exámenes ya mostraron cuál es.</li>\n    <li><strong>Un examen</strong> del nivel que te toca hoy.</li></ul>"
+   },
+   {
+    "t": "La regla",
+    "h": "<p>Si algún día no sabes qué hacer, abre «Qué estudiar hoy» y haz la\n    primera. No tienes que decidir nada más.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-estudiar",
+  "para": "estudia",
+  "icono": "📖",
+  "t": "Estudiar: leer y marcar",
+  "d": "Y por qué el círculo se queda en 0%",
+  "secs": [
+   {
+    "t": "Cómo se lee un capítulo",
+    "h": "<p>Toca la tarjeta del capítulo. Cada uno empieza con\n    <strong>«En pocas palabras»</strong>, que es el resumen, y después vienen\n    los datos, los versículos y las trampas.</p>\n    <p>Tú tienes {CAPS_CAT} capítulos y {MODS_CAT} repasos generales.</p>"
+   },
+   {
+    "t": "Lo que más se olvida",
+    "h": "<p>Al final del capítulo hay un botón <strong>«✅ Ya lo estudié»</strong>.\n    Ese botón es el que llena el círculo del Inicio.</p>\n    <p>Leer sin tocarlo deja el círculo en 0%. No es un castigo: la app no\n    puede saber si terminaste de leer, solo sabe lo que le dices.</p>"
+   },
+   {
+    "t": "Repaso general",
+    "h": "<p>Abajo de los capítulos están los repasos: la línea de tiempo, los\n    personajes, los números, las trampas, los versículos para memorizar, las\n    palabras difíciles. No son capítulos del libro, son resúmenes cruzados que\n    sirven cuando ya leíste todo.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-tarjetas",
+  "para": "estudia",
+  "icono": "🃏",
+  "t": "Tarjetas: memorizar",
+  "d": "Responder en voz alta antes de voltear",
+  "secs": [
+   {
+    "t": "El mecanismo, que es lo importante",
+    "h": "<p>Una tarjeta tiene la pregunta por delante y la respuesta por detrás.\n    Lo que hace que se te quede no es leer la respuesta: es\n    <strong>intentar recordarla y fallar</strong>. Ese esfuerzo es el que fija\n    el dato.</p>\n    <p>Por eso el orden importa: lee el frente, <strong>responde en voz\n    alta</strong>, y solo entonces toca la tarjeta para comprobar.</p>"
+   },
+   {
+    "t": "Cómo se usa",
+    "h": "<ol><li>Lee el frente.</li>\n    <li>Di la respuesta en voz alta.</li>\n    <li>Toca la tarjeta para ver si acertaste.</li>\n    <li>Toca <strong>✅ La sabía</strong> o <strong>🔁 Repasar</strong>.</li></ol>\n    <p>Tú tienes {TJ_CAT} tarjetas.</p>"
+   },
+   {
+    "t": "Cuándo queda dominada",
+    "h": "<p>Cuando la aciertas <strong>dos veces seguidas</strong>. Las que fallas\n    vuelven a salir primero, y las dominadas salen cada vez menos.</p>"
+   },
+   {
+    "t": "La trampa que se hace uno mismo",
+    "h": "<p>Si tocas «La sabía» sin haberla sabido, la app deja de mostrártela. Ahí\n    no engañaste a la app: te quedaste sin repasar justo lo que no sabes, y eso\n    se paga el día del examen. Nadie te está calificando en las tarjetas.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-examen",
+  "para": "estudia",
+  "icono": "✏️",
+  "t": "Examen: practicar",
+  "d": "Cómo es, y qué pasa al terminar",
+  "secs": [
+   {
+    "t": "Empezar",
+    "h": "<p>La pantalla abre con <strong>un solo botón</strong>. Arriba dice\n    cuántas preguntas trae y de qué nivel; con tocar\n    <strong>🚀 Comenzar</strong> arranca.</p>\n    <p>Si quieres otro tamaño, otro capítulo u otra dificultad, está en\n    <strong>⚙️ Cambiar este examen</strong>.</p>"
+   },
+   {
+    "t": "Mientras lo haces",
+    "h": "<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>\n    <li>Las preguntas <strong>cambian cada vez</strong>: salen al azar de\n    {BANCO_CAT} preguntas, así que nunca te sale el mismo examen dos veces.</li>\n    <li>Las opciones también se barajan. No se puede aprobar marcando siempre\n    la misma letra.</li>\n    <li>Al terminar, toca <strong>✅ Entregar</strong>.</li></ul>"
+   },
+   {
+    "t": "Las tres secciones",
+    "h": "<p><strong>Sección I</strong> — Selección múltiple.<br>\n    <strong>Sección II</strong> — Verdadero o Falso.<br>\n    <strong>Sección III</strong> — Completar el versículo.</p>\n    <p>Esas son las tres del examen del campamento.\n    <strong>Cuántas preguntas trae el real no lo sabemos todavía</strong>, y por\n    eso aquí puedes practicar con varios tamaños.</p>"
+   },
+   {
+    "t": "Al terminar, la parte que sirve",
+    "h": "<p>Ves tu puntaje y, más abajo, <strong>todas las preguntas con la\n    respuesta correcta</strong>. Esa revisión es la mitad del ejercicio: léela,\n    sobre todo las que fallaste.</p>\n    <p>Las que falles quedan guardadas y puedes hacer un examen\n    <strong>solo con tus errores</strong> desde «Qué estudiar hoy».</p>"
+   },
+   {
+    "t": "El simulacro",
+    "h": "<p>Es el mismo examen sin las pistas de la sección de completar, para que\n    se parezca más al de verdad. Está dentro de «Cambiar este examen».</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-logros",
+  "para": "estudia",
+  "icono": "🏆",
+  "t": "Logros: tus errores y tu historial",
+  "d": "Donde se ve si estás mejorando",
+  "secs": [
+   {
+    "t": "Puntos débiles",
+    "h": "<p>Dice en qué capítulo vas más flojo, según tus exámenes. Es la pantalla\n    que hay que mirar cuando no sabes qué repasar.</p>"
+   },
+   {
+    "t": "Insignias e historial",
+    "h": "<p>Las insignias son metas cumplidas. El historial muestra cada examen con\n    su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-papel",
+  "para": "estudia",
+  "icono": "🖨️",
+  "t": "Estudiar en papel",
+  "d": "Todo se puede imprimir desde la app",
+  "secs": [
+   {
+    "t": "Dónde está",
+    "h": "<p>En <strong>📖 Estudiar</strong>, al final de la pantalla, hay una\n    sección de imprimir. Y dentro de cada capítulo hay un\n    <strong>Imprimir este capítulo</strong>.</p>"
+   },
+   {
+    "t": "Qué puedes sacar",
+    "h": "<ul><li><strong>Toda mi guía de estudio</strong> — tus capítulos y\n    repasos, en orden.</li>\n    <li><strong>Mis tarjetas, para recortar</strong> — en papel no se puede\n    voltear, así que la respuesta va debajo: la tapas con la mano, contestas en\n    voz alta, y destapas.</li>\n    <li><strong>Este manual</strong> — lo que estás leyendo.</li></ul>"
+   },
+   {
+    "t": "Si no vas a usar impresora",
+    "h": "<p>Se abre el cuadro de impresión igual. Ahí escoge\n    <strong>Guardar como PDF</strong> y te queda el archivo en el teléfono o el\n    computador.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-compartir",
+  "para": "estudia",
+  "icono": "📤",
+  "t": "Mandarle a tu director cómo vas",
+  "d": "Un código que se copia y se pega",
+  "secs": [
+   {
+    "t": "Por qué hace falta un código",
+    "h": "<p>Tu progreso se guarda <strong>en este aparato</strong>, no en internet.\n    Tu director no puede verlo desde el suyo, aunque quiera. La única forma de\n    mostrárselo es convertirlo en texto y mandárselo.</p>"
+   },
+   {
+    "t": "Cómo se hace",
+    "h": "<ol><li>Entra a <strong>🏆 Logros</strong> y abre\n    <strong>📤 Pasar o compartir mi progreso</strong>.</li>\n    <li>Toca <strong>«Código para mostrar cómo voy»</strong>. Sale un código\n    corto que empieza en <strong>CB1R</strong>.</li>\n    <li>Toca <strong>📋 Copiar</strong> y pégalo en el chat.</li></ol>\n    <p>Tu director lo pega en su app y ve tus capítulos, tus exámenes y tu\n    racha. <strong>No recibe tu progreso</strong>: solo ve una foto de cómo\n    vas.</p>"
+   },
+   {
+    "t": "El otro código, el largo",
+    "h": "<p><strong>«Código para pasar todo a otro aparato»</strong> sirve para\n    cuando cambias de teléfono. Ese sí lleva todo, incluidos tus errores y tus\n    tarjetas, y es mucho más largo. Si el chat lo corta, guárdalo como archivo\n    con el botón de al lado.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-reglas",
+  "para": "estudia",
+  "icono": "✅",
+  "t": "Tres reglas y las dudas de todos",
+  "d": "Lo que hay que recordar",
+  "secs": [
+   {
+    "t": "Las tres reglas",
+    "h": "<div class=\"highlight-box\"><strong>1.</strong> Todos los días un rato\n    corto, mejor que un día entero.</div>\n    <div class=\"highlight-box\"><strong>2.</strong> Responde en voz alta antes de\n    ver la respuesta.</div>\n    <div class=\"highlight-box\"><strong>3.</strong> Sé honesto con «La sabía».\n    Nadie te está calificando ahí.</div>"
+   },
+   {
+    "t": "¿Se me borra si cierro la app?",
+    "h": "<p>No. Se guarda en este teléfono o computador. Pero <strong>solo\n    ahí</strong>: si la abres en otro aparato, empiezas de cero. Y si es una\n    ventana de incógnito, se borra al cerrarla.</p>"
+   },
+   {
+    "t": "¿Necesito internet?",
+    "h": "<p>Solo para abrirla la primera vez. Después funciona sin internet.</p>"
+   },
+   {
+    "t": "¿Cuántas preguntas trae el examen del campamento?",
+    "h": "<p>No lo sabemos. Sí sabemos que trae las tres secciones. Por eso aquí\n    puedes practicar con varios tamaños.</p>"
+   }
+  ]
+ },
+ {
+  "id": "d-que-es",
+  "para": "director",
+  "icono": "🧭",
+  "t": "Qué es y qué no es",
+  "d": "Antes de repartirla en el club",
+  "secs": [
+   {
+    "t": "Qué es",
+    "h": "<p>Una <strong>sola página web</strong>. Se abre en el navegador del\n    celular o del computador, no se instala nada, y después de abrirla una vez\n    funciona sin internet. El progreso se guarda en ese aparato.</p>\n    <p>Cubre los <strong>dos eventos</strong> del campamento con material\n    verificado contra la fuente: los capítulos de Conexión Bíblica y los 31 días\n    de la matutina de octubre. En total {BANCO_TOTAL} preguntas y {TJ_TOTAL}\n    tarjetas.</p>"
+   },
+   {
+    "t": "Qué no es",
+    "h": "<p>No es el examen del campamento ni lo reemplaza. Es práctica: las\n    preguntas las armamos nosotros a partir del material que pide el\n    reglamento.</p>"
+   }
+  ]
+ },
+ {
+  "id": "d-cats",
+  "para": "director",
+  "icono": "🎯",
+  "t": "Las seis categorías",
+  "d": "El dato del que depende todo",
+  "secs": [
+   {
+    "t": "Por qué importa tanto",
+    "h": "<p>La categoría decide qué capítulos ve el participante, de dónde salen\n    sus preguntas y hasta qué dificultad le llega. Una categoría mal puesta son\n    semanas estudiando el material equivocado, y no se nota hasta el\n    examen.</p>"
+   },
+   {
+    "t": "La tabla",
+    "h": "{TABLA_CATS}"
+   },
+   {
+    "t": "Guías Mayores",
+    "h": "<div class=\"warn-box\">No está en el reglamento del campamento: es el\n    alcance ampliado, Daniel 1 al 6 y P&R 39 al 44, para el otro evento.</div>"
+   }
+  ]
+ },
+ {
+  "id": "d-montar",
+  "para": "director",
+  "icono": "👥",
+  "t": "Montar a los participantes",
+  "d": "Varias personas en un mismo aparato",
+  "secs": [
+   {
+    "t": "La bienvenida hace el trabajo",
+    "h": "<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce\n    la categoría. <strong>El participante nunca escoge entre las seis</strong>,\n    justamente para que un niño de cinco años no termine con el material de\n    nueve.</p>\n    <p>Si dice que participa en los dos eventos, se le crean\n    <strong>dos fichas</strong> con el mismo nombre. Son cuentas separadas a\n    propósito: el progreso de Daniel y el de la matutina no se deben\n    mezclar.</p>"
+   },
+   {
+    "t": "Cambiar de persona",
+    "h": "<p>En el <strong>Inicio</strong>, la barra de arriba dice quién está\n    estudiando. Al tocar <strong>Cambiar</strong> se abre el selector de\n    personas y de categoría. Caben <strong>hasta 12 fichas</strong> por aparato,\n    cada una con su progreso, sus errores y sus exámenes.</p>"
+   },
+   {
+    "t": "Lo primero que hay que revisar",
+    "h": "<div class=\"warn-box\">Cuando un niño lleva días estudiando, revisa que la\n    barra de arriba diga la categoría correcta. Si dice otra, toca Cambiar y\n    corrige: el progreso no se pierde.</div>"
+   }
+  ]
+ },
+ {
+  "id": "d-progreso",
+  "para": "director",
+  "icono": "📊",
+  "t": "Ver si están estudiando de verdad",
+  "d": "Tres lugares, en orden de utilidad",
+  "secs": [
+   {
+    "t": "Progreso por capítulo",
+    "h": "<p>Un círculo por capítulo, en el Inicio. Se llena cuando el participante\n    toca «Ya lo estudié» al final del capítulo, no por abrirlo.</p>\n    <div class=\"warn-box\">Círculos en 0% con exámenes hechos significa que está\n    adivinando en vez de leer.</div>"
+   },
+   {
+    "t": "Tus números",
+    "h": "<p>Capítulos leídos, mejor puntaje, exámenes hechos, días de racha y\n    errores pendientes. La tarjeta aparece cuando ya hay algo que mostrar.</p>"
+   },
+   {
+    "t": "Logros",
+    "h": "<p><strong>Puntos débiles</strong> es la más útil: dice en qué capítulo va\n    más flojo. <strong>Historial</strong> muestra cada examen con su fecha, así\n    que se ve si mejora o se estancó.</p>"
+   }
+  ]
+ },
+ {
+  "id": "d-dificultad",
+  "para": "director",
+  "icono": "📈",
+  "t": "Cómo sube la dificultad",
+  "d": "Dos frenos, y manda el más bajo",
+  "secs": [
+   {
+    "t": "Los tres niveles",
+    "h": "<p><strong>1 Básico</strong> — nombres, números, lugares.<br>\n    <strong>2 Intermedio</strong> — verdadero o falso y matices.<br>\n    <strong>3 Avanzado</strong> — citas literales, completar el versículo,\n    diferencias entre versiones.</p>"
+   },
+   {
+    "t": "El mecanismo",
+    "h": "<p>La app sube de nivel sola, con dos frenos, y aplica el más bajo de los\n    dos:</p>\n    <ul><li><strong>El calendario:</strong> las dos primeras semanas solo nivel\n    1, hasta la cuarta nivel 2, después nivel 3.</li>\n    <li><strong>El desempeño:</strong> no sube a nivel 2 hasta promediar 70%, ni\n    a nivel 3 hasta promediar 85% en los últimos exámenes.</li></ul>\n    <p>Sirve para que la dificultad crezca de verdad y no de golpe: no se llega\n    a lo literal sin dominar los datos.</p>"
+   },
+   {
+    "t": "Las excepciones",
+    "h": "<p>Los de 4 a 6 años se quedan en nivel 1 y no ven la sección de\n    completar: el reglamento no les pide escribir la palabra exacta. Los adultos\n    entran directo a nivel 3.</p>\n    <p>Se puede fijar el nivel a mano en <strong>Examen → Cambiar este\n    examen</strong>, pero lo normal es dejarlo en Progresivo.</p>"
+   }
+  ]
+ },
+ {
+  "id": "d-imprimir",
+  "para": "director",
+  "icono": "🖨️",
+  "t": "Imprimir exámenes y claves",
+  "d": "Todo sale de la app, no de una carpeta",
+  "secs": [
+   {
+    "t": "Dónde está",
+    "h": "<p>En <strong>✏️ Examen → Para el director: imprimir</strong>. Cuatro\n    botones:</p>\n    <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del\n    concursante, con espacio para nombre, club y puntaje.</li>\n    <li><strong>Este examen, con respuestas</strong> — la clave para\n    calificar.</li>\n    <li><strong>Las 6 categorías, sin respuestas</strong> — un documento con los\n    seis exámenes, cada uno en su hoja.</li>\n    <li><strong>Las 6 categorías, con respuestas</strong> — las seis claves.</li></ul>"
+   },
+   {
+    "t": "Cómo sale el PDF",
+    "h": "<p>Se abre el cuadro de impresión del aparato. Ahí se manda a la\n    impresora o se escoge <strong>Guardar como PDF</strong>. No hay una carpeta\n    con archivos viejos: cada hoja se genera en el momento, del material que la\n    app tiene hoy.</p>"
+   },
+   {
+    "t": "La clave",
+    "h": "<div class=\"warn-box\">La hoja con respuestas dice\n    <strong>«SOLO PARA LÍDERES»</strong> en el encabezado. Revísalo antes de\n    repartir.</div>\n    <p>El examen y su clave salen del mismo armado, así que el número 7 de la\n    hoja del niño es el número 7 de la clave.</p>"
+   },
+   {
+    "t": "En iPhone y iPad",
+    "h": "<p>El cuadro de impresión no siempre abre solo. Si no abre, aparece un\n    enlace debajo de los botones para ver el examen en otra pestaña y usar\n    Compartir → Imprimir. Lo cómodo es imprimir desde un computador.</p>"
+   }
+  ]
+ },
+ {
+  "id": "d-recibir",
+  "para": "director",
+  "icono": "📥",
+  "t": "Ver el progreso de otro aparato",
+  "d": "Los dos códigos y para qué es cada uno",
+  "secs": [
+   {
+    "t": "Cómo se hace",
+    "h": "<ol><li>El participante entra a <strong>Logros → Pasar o compartir mi\n    progreso</strong> y toca <strong>«Código para mostrar cómo voy»</strong>.</li>\n    <li>Toca <strong>Copiar</strong> y te lo manda por chat.</li>\n    <li>Tú lo pegas en el recuadro de abajo de esa misma pantalla y tocas\n    <strong>Ver el código</strong>.</li></ol>\n    <p>Sale un boletín con capítulos leídos, mejor puntaje, exámenes, racha,\n    tarjetas dominadas, errores pendientes y los últimos cinco exámenes con\n    fecha.</p>\n    <div class=\"highlight-box\">Ver un resumen no cambia nada de tus propios\n    datos.</div>"
+   },
+   {
+    "t": "Los dos códigos",
+    "h": "<p><strong>CB1R — resumen.</strong> Unos 300 caracteres, cabe en un\n    mensaje. Solo se ve, no se importa.</p>\n    <p><strong>CB1F — ficha completa.</strong> Mil caracteres y sube. Trae todo,\n    y al pegarlo se puede agregar como ficha nueva o reemplazar la actual.</p>"
+   },
+   {
+    "t": "Si el código no se entiende",
+    "h": "<div class=\"warn-box\">Casi siempre llegó cortado. Que lo copie otra vez con\n    el botón <strong>Copiar</strong>, no seleccionando a mano. Los saltos de\n    línea que mete el chat no importan: la app los ignora.</div>"
+   }
+  ]
+ },
+ {
+  "id": "d-limites",
+  "para": "director",
+  "icono": "🚫",
+  "t": "Lo que la app no hace",
+  "d": "Mejor saberlo hoy que el 8 de octubre",
+  "secs": [
+   {
+    "t": "No sincroniza entre aparatos",
+    "h": "<p>El progreso vive en el navegador donde se estudió. Si el niño estudia\n    en el celular de la mamá y después abre la app en la tablet, la tablet\n    empieza en cero. Para ver el progreso de otro aparato hay que pedir el\n    código.</p>"
+   },
+   {
+    "t": "Se puede perder",
+    "h": "<p>La app no borra nada sola, pero si alguien limpia los datos del\n    navegador el progreso se va. <strong>El modo incógnito no sirve</strong> para\n    esto: borra todo al cerrar.</p>"
+   },
+   {
+    "t": "No es el examen oficial",
+    "h": "<p>No sabemos cuántas preguntas trae el real ni cómo reparte las\n    secciones. Sabemos el formato de tres secciones y el alcance.</p>"
+   }
+  ]
+ },
+ {
+  "id": "d-version",
+  "para": "director",
+  "icono": "📛",
+  "t": "«Nueva Reina Valera 1995»: qué versión es",
+  "d": "El nombre del volante confunde",
+  "secs": [
+   {
+    "t": "El problema del nombre",
+    "h": "<p>El volante dice <strong>«Nueva Reina Valera 1995»</strong>. Con ese\n    nombre exacto no existe ninguna Biblia publicada, así que vale aclararlo\n    antes de que alguien lo pregunte el día del examen.</p>\n    <table class=\"info-table\"><thead><tr><th>Nombre real</th><th>Ediciones</th>\n    <th>Quién la publica</th></tr></thead><tbody>\n    <tr><td class=\"key\">Reina-Valera 1995 (RV95)</td><td>1995</td>\n    <td>Sociedades Bíblicas Unidas</td></tr>\n    <tr><td class=\"key\">Nueva Reina-Valera (NRV)</td><td>1990 y 2000</td>\n    <td>Sociedad Bíblica Emanuel</td></tr>\n    </tbody></table>"
+   },
+   {
+    "t": "El año es el que decide",
+    "h": "<p>La <em>Nueva</em> Reina-Valera no tiene ninguna edición de 1995: solo\n    1990 y 2000. La única Biblia de 1995 es la Reina-Valera 1995. Entonces\n    «Nueva Reina Valera 1995» está diciendo\n    <strong>Reina-Valera 1995</strong>, con «nueva» usada como adjetivo: era la\n    nueva revisión frente a la de 1960.</p>\n    <p>Dos datos más apuntan a lo mismo: la <strong>Biblia del Club de\n    Aventureros</strong> que vende la Casa Editora es RV95, y la\n    <strong>IADPA</strong>, editorial del Profetas y Reyes que usa el club,\n    vende Biblias RV95.</p>\n    <div class=\"highlight-box\">Todo el material está verificado palabra por\n    palabra contra la Reina-Valera 1995.</div>"
+   },
+   {
+    "t": "Cuánto dependería de esto",
+    "h": "<p>Por si alguien quiere confirmarlo igual, esto es lo que estaría en\n    juego: de las preguntas de Conexión Bíblica, unas <strong>77 tocan la\n    palabra exacta</strong> (las 35 de completar y las que citan texto entre\n    comillas). El resto son <strong>datos</strong> —nombres, números, lugares,\n    hechos— y no cambian con la versión.</p>\n    <p>La app además enseña la diferencia: el repaso\n    <strong>«RV1995 vs RV1960»</strong> trae la lista de palabras que cambian.</p>"
+   }
+  ]
+ },
+ {
+  "id": "d-fallas",
+  "para": "director",
+  "icono": "🔧",
+  "t": "Si algo no funciona",
+  "d": "Las cinco de siempre",
+  "secs": [
+   {
+    "t": "El progreso apareció en cero",
+    "h": "<p>Casi siempre es otro navegador, otro aparato, o modo incógnito. Revisa\n    también que la barra de arriba tenga seleccionada la ficha correcta.</p>"
+   },
+   {
+    "t": "Los círculos no se llenan aunque el niño lee",
+    "h": "<p>Falta tocar <strong>«Ya lo estudié»</strong> al final de cada\n    capítulo.</p>"
+   },
+   {
+    "t": "El examen sale con menos preguntas de las pedidas",
+    "h": "<p>El alcance escogido no tiene tantas. La app avisa «Se usarán todas» y\n    usa las que hay.</p>"
+   },
+   {
+    "t": "Volvió a salir la pantalla de bienvenida",
+    "h": "<p>Solo aparece cuando no hay ningún dato guardado, así que se borraron\n    los datos del navegador.</p>"
+   },
+   {
+    "t": "Quiero empezar de cero con un participante",
+    "h": "<p>Logros → Datos guardados → <strong>Borrar solo a este\n    participante</strong>.</p>"
+   }
+  ]
+ }
+];
+
 /* El logo va partido en trozos: como data URI de una sola línea pasaría de
    2.000 caracteres y el hook del repo bloquearía el commit. */
 const LOGO_TL = [
@@ -9485,6 +10011,7 @@ function nivelRecomendado(){
 
 /* ───────── navegación ───────── */
 const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
+/* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
 function ir(id){
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
@@ -9498,6 +10025,7 @@ function ir(id){
   if(id==='tarjetas')pintaTarjetas();
   if(id==='examen')pintaExInicio();
   if(id==='logros')pintaLogros();
+  if(id==='ayuda')pintaAyuda();
   window.scrollTo({top:0});
 }
 
@@ -10338,6 +10866,95 @@ function marcaCat(){
 
 function pintaLogo(){
   try{document.querySelectorAll('.logo-tl').forEach(i=>{i.src=LOGO_TL;});}catch(e){}
+}
+
+/* ───────── manual dentro de la app ─────────
+   MECANISMO
+   El texto vive en fuente/manual.js y llega al HTML como datos, igual que los
+   capítulos. Las cifras no están escritas en el texto: van como marcas
+   {ENTRE_LLAVES} que se reemplazan al pintar con los datos del participante
+   activo. Así el manual dice «tienes 57 tarjetas» y no «hay muchas tarjetas»,
+   y si el banco crece el manual crece con él.
+
+   POR QUÉ REEMPLAZO Y NO TEXTO FIJO
+   Un manual con cifras escritas a mano se desactualiza en el primer cambio de
+   contenido, y nadie se acuerda de corregirlo. Estas marcas fallan de forma
+   visible si alguien escribe una que no existe, en vez de mentir en silencio. */
+
+let ayGrupoAct='estudia';
+
+function marcasManual(){
+  return {
+    CAPS_CAT:String(capsDe().length),
+    MODS_CAT:String(modsDe().length),
+    TJ_CAT:String(tarjetasDe().length),
+    BANCO_CAT:String(bancoDe().length),
+    BANCO_TOTAL:String(BANCO.length),
+    TJ_TOTAL:String(TARJETAS.length),
+    CAT_NOMBRE:esc(CAT().nombre),
+    CAT_EV:esc(CAT().ev),
+    TABLA_CATS:tablaCats(),
+  };
+}
+
+/* Tabla de las seis categorías, con el conteo real de cada una. Se calcula
+   cambiando S.cat temporalmente porque bancoDe() lee la categoría activa. */
+function tablaCats(){
+  const prev=S.cat;
+  let filas='';
+  try{
+    for(const k of Object.keys(CATS)){
+      S.cat=k;
+      const c=CATS[k];
+      filas+='<tr><td class="key">'+esc(c.nombre)+'</td><td>'+esc(c.edad)+
+        '</td><td>'+esc(c.ev)+'</td><td>'+esc(c.alcance)+'</td>'+
+        '<td style="text-align:center">'+bancoDe().length+'</td></tr>';
+    }
+  }finally{S.cat=prev;}
+  return '<table class="info-table"><thead><tr><th>Categoría</th><th>Edad</th>'+
+    '<th>Evento</th><th>Alcance</th><th>Preg.</th></tr></thead><tbody>'+
+    filas+'</tbody></table>';
+}
+
+const aplicaMarcas=(txt,m)=>String(txt).replace(/\{([A-Z_]+)\}/g,
+  (todo,k)=>m[k]!==undefined?m[k]:todo);
+
+function pintaAyuda(){
+  const m=marcasManual();
+  const lista=MANUAL.filter(x=>x.para===ayGrupoAct);
+  document.getElementById('ay-lista').innerHTML=lista.map(x=>
+    '<details class="card ay-item"><summary>'+
+    '<span class="ay-ic">'+x.icono+'</span>'+
+    '<span class="ay-tx"><b>'+esc(x.t)+'</b><small>'+esc(x.d)+'</small></span>'+
+    '</summary><div class="det-cuerpo">'+
+    x.secs.map(s=>'<h4 class="ay-h">'+esc(s.t)+'</h4>'+aplicaMarcas(s.h,m)).join('')+
+    '</div></details>').join('');
+  document.getElementById('ay-t1').className=ayGrupoAct==='estudia'?'on':'';
+  document.getElementById('ay-t2').className=ayGrupoAct==='director'?'on':'';
+}
+
+function ayGrupo(g){ayGrupoAct=g;pintaAyuda();window.scrollTo({top:0});}
+
+/* El manual también en papel, generado desde la app: no hay un PDF aparte que
+   pueda quedar describiendo una versión vieja. */
+function imprimeManual(){
+  const m=marcasManual();
+  const grupos=[['estudia','PARA QUIEN ESTUDIA'],['director','PARA EL DIRECTOR']];
+  const hojas=grupos.map(([g,tit])=>hojaGuia({
+    caps:MANUAL.filter(x=>x.para===g).map(x=>({
+      id:x.id, label:x.icono+' '+x.t, sub:x.d, src:'',
+    })),
+    contenido:Object.fromEntries(MANUAL.filter(x=>x.para===g)
+      .map(x=>[x.id,x.secs.map(s=>({t:s.t,h:aplicaMarcas(s.h,m)}))])),
+    modulos:[], contModulos:{}, logo:LOGO_TL,
+    titulo:'CÓMO SE USA LA APP',
+    sub:tit,
+    meta:'Conexión Bíblica y Devoción Matutina · Club de Aventureros',
+    pie:'Impreso desde la app, con los datos de hoy',
+  }));
+  imprimeDoc(docExamen(hojas,'Manual de la app',
+    'El manual completo. En el cuadro de impresión escoge «Guardar como PDF» si lo quieres en archivo.'),
+    'Manual de la app');
 }
 
 /* ───────── imprimir el material de estudio ─────────
