@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conexión Bíblica — Aventureros</title>
+<style>
+  :root{
+    --primary:#1F3864; --accent:#2E8BC0; --orange:#E8720C; --green:#1A7A1A;
+    --red:#C0392B; --gold:#D4AC0D; --bg:#F0F4F8; --card:#fff; --text:#1a1a2e;
+    --muted:#6b7280; --radius:16px; --shadow:0 4px 20px rgba(0,0,0,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+  .nav{background:var(--primary);display:flex;align-items:stretch;position:sticky;top:0;z-index:50}
+  .nav-brand{color:#fff;font-size:1.05rem;font-weight:800;padding:.9rem 1.2rem;display:flex;align-items:center;gap:8px}
+  .nav-tabs{display:flex;flex:1}
+  .nav-tab{color:rgba(255,255,255,.65);font-size:.82rem;font-weight:600;padding:0 .9rem;cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:all .2s;min-height:44px}
+  .nav-tab:hover{color:#fff}
+  .nav-tab.active{color:#fff;border-bottom-color:var(--gold)}
+
+  .screen{display:none;padding:1.5rem;max-width:900px;margin:0 auto}
+  .screen.active{display:block}
+
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;margin-bottom:1.2rem}
+  .card-title{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:.8rem;display:flex;align-items:center;gap:8px}
+
+  .hero{background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:var(--radius);padding:2rem;color:#fff;text-align:center;margin-bottom:1.5rem}
+  .hero h1{font-size:2rem;font-weight:900;letter-spacing:-1px}
+  .hero p{opacity:.85;margin-top:.4rem;font-size:.95rem}
+
+  .progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1rem}
+  .prog-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem;text-align:center;cursor:pointer;transition:transform .2s;border:2px solid transparent}
+  .prog-card:hover{transform:translateY(-3px)}
+  .prog-card.done{border-color:var(--green)}
+  .prog-card .ring svg{transform:rotate(-90deg)}
+  .prog-card .ring circle.bg{fill:none;stroke:#e5e7eb;stroke-width:6}
+  .prog-card .ring circle.fg{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s}
+  .prog-card .ch-label{font-size:.78rem;font-weight:700;color:var(--primary)}
+  .prog-card .ch-sub{font-size:.7rem;color:var(--muted);margin-top:2px}
+
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem;margin-bottom:1.5rem}
+  .stat{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem;text-align:center}
+  .stat .val{font-size:2rem;font-weight:900;color:var(--orange);line-height:1}
+  .stat .lbl{font-size:.72rem;color:var(--muted);margin-top:4px;font-weight:600}
+
+  .chapter-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+  .ch-btn{background:var(--card);border:2px solid #e5e7eb;border-radius:var(--radius);padding:1.2rem 1rem;cursor:pointer;text-align:left;font-family:inherit;transition:all .2s;min-height:44px}
+  .ch-btn:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .ch-btn.active-ch{border-color:var(--orange);background:#fff8f0}
+  .ch-btn .ch-num{font-size:1.8rem;font-weight:900;line-height:1}
+  .ch-btn .ch-name{font-size:.82rem;font-weight:700;color:var(--primary);margin-top:4px}
+  .ch-btn .ch-src{font-size:.72rem;color:var(--muted);margin-top:2px}
+  .ch-btn .ch-pct{font-size:.72rem;color:var(--green);font-weight:700;margin-top:6px}
+
+  .study-content{display:none}
+  .study-content.visible{display:block}
+  .study-section{margin-bottom:1.4rem}
+  .study-section h3{font-size:.95rem;color:var(--primary);font-weight:700;margin-bottom:.6rem;border-left:4px solid var(--orange);padding-left:.6rem}
+  .info-table{width:100%;border-collapse:collapse;font-size:.85rem}
+  .info-table th{background:var(--primary);color:#fff;padding:.5rem .8rem;text-align:left;font-size:.78rem}
+  .info-table td{padding:.45rem .8rem;border-bottom:1px solid #f0f0f0}
+  .info-table tr:nth-child(even) td{background:#f8f9ff}
+  .info-table .key{font-weight:700;color:var(--primary)}
+  .highlight-box{background:#e8f5e9;border-left:5px solid var(--green);border-radius:8px;padding:.8rem 1rem;font-size:.85rem;margin:.6rem 0;line-height:1.6}
+  .warn-box{background:#fff3e0;border-left:5px solid var(--orange);border-radius:8px;padding:.8rem 1rem;font-size:.85rem;margin:.6rem 0;line-height:1.6}
+  .verse-box{background:#e3f2fd;border-left:5px solid var(--accent);border-radius:8px;padding:.8rem 1rem;font-size:.88rem;font-style:italic;margin:.6rem 0;line-height:1.7}
+
+  .exam-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem}
+  .timer{font-size:1.4rem;font-weight:900;color:var(--orange);font-variant-numeric:tabular-nums}
+  .timer.urgent{color:var(--red);animation:pulse .5s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+  .section-divider{background:var(--primary);color:#fff;padding:.5rem 1rem;border-radius:8px;font-size:.85rem;font-weight:700;margin:1.2rem 0 .8rem}
+
+  .q-card{background:var(--card);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.07);padding:1.2rem;margin-bottom:1rem;border:2px solid transparent}
+  .q-card.answered{border-color:#d1fae5}
+  .q-card.wrong{border-color:#fee2e2}
+  .q-text{font-size:.9rem;font-weight:600;margin-bottom:.8rem;line-height:1.5}
+  .q-num{color:var(--orange);font-weight:800;margin-right:4px}
+
+  .opts{display:flex;flex-direction:column;gap:.4rem}
+  .opt-btn{display:flex;align-items:center;gap:.7rem;background:#f8f9ff;border:2px solid #e5e7eb;border-radius:8px;padding:.55rem .9rem;cursor:pointer;font-family:inherit;font-size:.85rem;text-align:left;transition:all .15s;min-height:44px}
+  .opt-btn:hover:not(:disabled){border-color:var(--accent);background:#eff6ff}
+  .opt-btn.selected{border-color:var(--accent);background:#eff6ff}
+  .opt-btn.correct{border-color:var(--green);background:#e8f5e9;color:var(--green);font-weight:700}
+  .opt-btn.incorrect{border-color:var(--red);background:#fee2e2;color:var(--red)}
+  .opt-btn:disabled{cursor:default}
+  .opt-letter{width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+  .opt-btn.correct .opt-letter{background:var(--green)}
+  .opt-btn.incorrect .opt-letter{background:var(--red)}
+  .opt-btn.selected .opt-letter{background:var(--accent)}
+
+  .tf-btns{display:flex;gap:.6rem}
+  .tf-btn{flex:1;padding:.6rem;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:700;background:#f8f9ff;min-height:44px}
+  .tf-btn.sel{border-color:var(--accent);background:#eff6ff}
+  .tf-btn.ok{border-color:var(--green);background:#e8f5e9;color:var(--green)}
+  .tf-btn.ko{border-color:var(--red);background:#fee2e2;color:var(--red)}
+  .tf-btn:disabled{cursor:default}
+
+  .fill-container{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;font-size:.88rem;line-height:2}
+  .fill-input{border:none;border-bottom:2px solid var(--accent);background:#eff6ff;border-radius:4px 4px 0 0;padding:.15rem .4rem;font-family:inherit;font-size:.88rem;color:var(--primary);min-width:90px;max-width:170px;outline:none}
+  .fill-input:focus{background:#dbeafe}
+  .fill-input.correct{background:#d1fae5;border-bottom-color:var(--green);color:var(--green);font-weight:700}
+  .fill-input.incorrect{background:#fee2e2;border-bottom-color:var(--red);color:var(--red)}
+
+  .feedback{font-size:.8rem;margin-top:.5rem;padding:.35rem .6rem;border-radius:6px;font-weight:600}
+  .feedback.ok{background:#d1fae5;color:var(--green)}
+  .feedback.ko{background:#fee2e2;color:var(--red)}
+
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:.6rem 1.4rem;border-radius:50px;border:none;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:700;min-height:44px}
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-orange{background:var(--orange);color:#fff}
+  .btn-green{background:var(--green);color:#fff}
+  .btn-ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+  .btn:disabled{opacity:.5;cursor:default}
+
+  .result-hero{background:linear-gradient(135deg,#1A7A1A,#2E8BC0);color:#fff;border-radius:var(--radius);padding:2rem;text-align:center;margin-bottom:1.2rem}
+  .result-hero .score{font-size:3.5rem;font-weight:900;line-height:1}
+  .section-scores{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1rem}
+  .sec-score{background:rgba(255,255,255,.2);border-radius:10px;padding:.8rem;text-align:center}
+  .sec-score .sv{font-size:1.5rem;font-weight:800}
+  .sec-score .sl{font-size:.72rem;opacity:.85;margin-top:2px}
+
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:.4rem 1rem;border-radius:50px;font-size:.8rem;font-weight:700;margin:.3rem}
+  .badge-gold{background:#fef3c7;color:#92400e;border:2px solid var(--gold)}
+  .badge-silver{background:#f1f5f9;color:#475569;border:2px solid #94a3b8}
+
+  .lb-row{display:flex;align-items:center;padding:.7rem 1rem;border-radius:10px;margin-bottom:.5rem;font-size:.88rem;background:#f8f9ff}
+  .lb-row.me{background:#eff6ff;font-weight:700}
+  .lb-pos{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;flex-shrink:0;margin-right:.8rem}
+  .lb-pos.g{background:var(--gold);color:#fff}
+  .lb-pos.s{background:#94a3b8;color:#fff}
+  .lb-pos.b{background:#fb923c;color:#fff}
+  .lb-pos.n{background:#e5e7eb}
+  .lb-name{flex:1}
+  .lb-score{font-weight:700;color:var(--orange)}
+
+  .pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
+  .pill-blue{background:#dbeafe;color:var(--accent)}
+  .pill-orange{background:#ffedd5;color:var(--orange)}
+
+  .sync-dot{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:20px}
+  .sync-dot.on{background:#d1fae5;color:var(--green)}
+  .sync-dot.off{background:#fef3c7;color:#92400e}
+  input[type=text]{font-family:inherit}
+  .txt-input{width:100%;max-width:320px;padding:.55rem .8rem;border:2px solid #e5e7eb;border-radius:8px;font-size:.9rem;min-height:44px}
+  @media(max-width:600px){.nav-brand span{display:none}.nav-tab{padding:0 .55rem;font-size:.75rem}.stats-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">🕊️ <span>Conexión Bíblica</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showScreen('home')">🏠 Inicio</button>
+    <button class="nav-tab" onclick="showScreen('study')">📖 Estudiar</button>
+    <button class="nav-tab" onclick="showScreen('exam')">✏️ Examen</button>
+    <button class="nav-tab" onclick="showScreen('ranking')">🏆 Ranking</button>
+  </div>
+</nav>
+
+<div id="screen-home" class="screen active">
+  <div class="hero">
+    <h1>🕊️ Conexión Bíblica</h1>
+    <p>Campamento Aventureros · Daniel 1, 2, 3, 6 · P&amp;R 39, 41, 44</p>
+    <div style="margin-top:.8rem"><span id="sync-status" class="sync-dot off">● Sin conexión</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">👤 ¿Quién eres?</div>
+    <input id="player-name-home" class="txt-input" type="text" placeholder="Escribe tu nombre..." oninput="setName(this.value)">
+    <p style="font-size:.78rem;color:var(--muted);margin-top:.5rem">Tu nombre aparece en el ranking del campamento.</p>
+  </div>
+  <div class="stats-row" id="home-stats"></div>
+  <div class="card">
+    <div class="card-title">📊 Tu progreso por capítulo</div>
+    <div class="progress-grid" id="progress-grid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🔥 Racha de estudio</div>
+    <div id="streak-display" style="text-align:center;padding:.5rem 0"></div>
+  </div>
+</div>
+
+<div id="screen-study" class="screen">
+  <h2 style="color:var(--primary);margin-bottom:1rem">📖 Material de estudio</h2>
+  <div class="chapter-list" id="chapter-list"></div>
+  <div id="study-content-area" class="study-content card" style="margin-top:1rem"></div>
+</div>
+
+<div id="screen-exam" class="screen">
+  <div id="exam-start-panel">
+    <div class="hero">
+      <h1>✏️ Examen</h1>
+      <p>15 preguntas · Selección múltiple + V/F + Completar</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Instrucciones</div>
+      <p style="font-size:.88rem;line-height:1.8;color:var(--muted)">
+        <strong>Sección I</strong> — Selección múltiple (1–8)<br>
+        <strong>Sección II</strong> — Verdadero o Falso (9–12)<br>
+        <strong>Sección III</strong> — Completar el versículo (13–15)<br><br>
+        Tienes <strong>20 minutos</strong>. Al terminar ves tu puntaje y las respuestas correctas.
+      </p>
+      <div style="margin-top:1rem">
+        <label style="font-size:.88rem;font-weight:600;color:var(--primary)">Tu nombre:</label>
+        <input id="player-name" class="txt-input" type="text" placeholder="Escribe tu nombre..." style="margin-top:.4rem">
+      </div>
+      <div style="margin-top:1rem"><button class="btn btn-orange" onclick="startExam()">🚀 Comenzar examen</button></div>
+    </div>
+  </div>
+  <div id="exam-panel" style="display:none">
+    <div class="exam-header">
+      <div>
+        <div style="font-size:1rem;font-weight:800;color:var(--primary)">✏️ Examen en curso</div>
+        <div id="exam-progress-text" style="font-size:.85rem;color:var(--muted)"></div>
+      </div>
+      <div class="timer" id="timer-display">20:00</div>
+    </div>
+    <div id="questions-container"></div>
+    <div style="display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-top:1.5rem">
+      <button class="btn btn-green" onclick="submitExam()">✅ Entregar examen</button>
+      <span id="answered-count" style="font-size:.85rem;color:var(--muted)"></span>
+    </div>
+  </div>
+  <div id="results-panel" style="display:none"></div>
+</div>
+
+<div id="screen-ranking" class="screen">
+  <h2 style="color:var(--primary);margin-bottom:1rem">🏆 Ranking del campamento</h2>
+  <div class="card">
+    <div class="card-title">🥇 Tabla de puntajes <span id="lb-status" style="font-size:.72rem;font-weight:500;color:var(--muted)"></span></div>
+    <div id="leaderboard"></div>
+    <button class="btn btn-ghost" style="margin-top:1rem" onclick="loadLeaderboard()">🔄 Actualizar</button>
+  </div>
+  <div class="card">
+    <div class="card-title">🎖️ Insignias</div>
+    <div id="badges-display"></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   1. CONFIGURACIÓN DE SUPABASE
+   Reemplaza estos dos valores con los de tu proyecto.
+   Se encuentran en: Supabase → Project Settings → API
+   La anon key es pública por diseño; lo que protege los datos
+   son las políticas RLS, no esconder esta llave.
+══════════════════════════════════════════════════════════════ */
+const SUPABASE_URL  = 'https://TU-PROYECTO.supabase.co';
+const SUPABASE_ANON  = 'TU-ANON-KEY';
+
+const SB_OK = !SUPABASE_URL.includes('TU-PROYECTO');
+
+async function sb(path, opts = {}) {
+  if (!SB_OK) throw new Error('offline');
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...opts,
+    headers: {
+      'apikey': SUPABASE_ANON,
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation,resolution=merge-duplicates',
+      ...(opts.headers || {})
+    }
+  });
+  if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
+  return res.status === 204 ? null : res.json();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. ESTADO
+══════════════════════════════════════════════════════════════ */
+const LS_KEY = 'conexion-biblica-v2';
+
+function nuevoId() {
+  return (crypto.randomUUID ? crypto.randomUUID()
+    : 'x' + Date.now() + Math.random().toString(36).slice(2));
+}
+
+const BASE = {
+  v: 2,
+  alumnoId: null,
+  playerName: '',
+  studyProgress: { d1:0, d2:0, d3:0, d6:0, pr39:0, pr41:0, pr44:0 },
+  examResults: [],
+  streak: 0,
+  lastStudyDate: null,
+  badges: []
+};
+
+/* normalizar profundo: un estado viejo o dañado nunca deja la página en blanco */
+function normalizar(x) {
+  const s = JSON.parse(JSON.stringify(BASE));
+  if (!x || typeof x !== 'object') return s;
+  if (typeof x.alumnoId === 'string') s.alumnoId = x.alumnoId;
+  if (typeof x.playerName === 'string') s.playerName = x.playerName.slice(0, 60);
+  if (x.studyProgress && typeof x.studyProgress === 'object') {
+    for (const k of Object.keys(s.studyProgress)) {
+      const v = Number(x.studyProgress[k]);
+      s.studyProgress[k] = Number.isFinite(v) ? Math.min(100, Math.max(0, v)) : 0;
+    }
+  }
+  if (Array.isArray(x.examResults)) {
+    s.examResults = x.examResults.filter(r => r && Number.isFinite(Number(r.score)))
+      .map(r => ({ name: String(r.name || ''), score: Number(r.score), pct: Number(r.pct) || 0, date: String(r.date || '') }))
+      .slice(-50);
+  }
+  const st = Number(x.streak); s.streak = Number.isFinite(st) ? Math.max(0, st) : 0;
+  if (typeof x.lastStudyDate === 'string') s.lastStudyDate = x.lastStudyDate;
+  if (Array.isArray(x.badges)) s.badges = x.badges.filter(b => typeof b === 'string').slice(0, 20);
+  return s;
+}
+
+let state;
+try {
+  state = normalizar(JSON.parse(localStorage.getItem(LS_KEY) || 'null'));
+} catch (e) {
+  state = normalizar(null);
+}
+if (!state.alumnoId) state.alumnoId = nuevoId();
+
+function saveState() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {}
+}
+saveState();
+
+/* escapar texto del usuario antes de pintarlo */
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. SINCRONIZACIÓN CON SUPABASE
+══════════════════════════════════════════════════════════════ */
+let online = false;
+
+async function initSync() {
+  const dot = document.getElementById('sync-status');
+  if (!SB_OK) {
+    dot.className = 'sync-dot off';
+    dot.textContent = '● Modo local (sin Supabase)';
+    return;
+  }
+  try {
+    await sb('resultados?select=id&limit=1');
+    online = true;
+    dot.className = 'sync-dot on';
+    dot.textContent = '● Conectado';
+    await pullProgreso();
+  } catch (e) {
+    online = false;
+    dot.className = 'sync-dot off';
+    dot.textContent = '● Sin conexión — se guarda local';
+  }
+}
+
+async function pullProgreso() {
+  if (!online) return;
+  try {
+    const rows = await sb(`progreso?alumno_id=eq.${state.alumnoId}&select=*`);
+    if (rows && rows.length) {
+      const r = rows[0];
+      // el remoto nunca pisa: se toma el mayor de cada capítulo
+      for (const k of Object.keys(state.studyProgress)) {
+        const remoto = Number(r.capitulos?.[k]) || 0;
+        state.studyProgress[k] = Math.max(state.studyProgress[k], remoto);
+      }
+      state.streak = Math.max(state.streak, Number(r.racha) || 0);
+      if (!state.playerName && r.nombre) state.playerName = r.nombre;
+      saveState(); renderHome();
+    }
+  } catch(e) {}
+}
+
+async function pushProgreso() {
+  if (!online) return;
+  try {
+    await sb('progreso', {
+      method: 'POST',
+      headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({
+        alumno_id: state.alumnoId,
+        nombre: state.playerName || 'Sin nombre',
+        capitulos: state.studyProgress,
+        racha: state.streak,
+        actualizado: new Date().toISOString()
+      })
+    });
+  } catch(e) {}
+}
+
+async function pushResultado(score, pct) {
+  if (!online) return false;
+  try {
+    await sb('resultados', {
+      method: 'POST',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        alumno_id: state.alumnoId,
+        nombre: state.playerName || 'Sin nombre',
+        puntaje: score,
+        porcentaje: pct
+      })
+    });
+    return true;
+  } catch(e) { return false; }
+}
+
+async function loadLeaderboard() {
+  const lb = document.getElementById('leaderboard');
+  const st = document.getElementById('lb-status');
+  if (!online) {
+    st.textContent = '(local)';
+    renderLeaderboard(state.examResults.map(r => ({ nombre: r.name, puntaje: r.score })));
+    return;
+  }
+  st.textContent = '(cargando...)';
+  try {
+    const rows = await sb('ranking?select=*&order=puntaje.desc&limit=30');
+    st.textContent = '(en vivo)';
+    renderLeaderboard(rows || []);
+  } catch(e) {
+    st.textContent = '(local)';
+    renderLeaderboard(state.examResults.map(r => ({ nombre: r.name, puntaje: r.score })));
+  }
+}
+
+function renderLeaderboard(rows) {
+  const lb = document.getElementById('leaderboard');
+  if (!rows.length) {
+    lb.innerHTML = '<p style="color:var(--muted);font-size:.88rem;text-align:center;padding:1rem">Todavía no hay puntajes. ¡Sé el primero!</p>';
+    return;
+  }
+  const cls = ['g','s','b'];
+  lb.innerHTML = rows.map((r, i) => {
+    const me = r.nombre === state.playerName;
+    return `<div class="lb-row ${me?'me':''}">
+      <div class="lb-pos ${cls[i]||'n'}">${i+1}</div>
+      <div class="lb-name">${esc(r.nombre)}${me?' <span class="pill pill-orange">Tú</span>':''}</div>
+      <div class="lb-score">${Number(r.puntaje)}/15</div>
+    </div>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4. CONTENIDO DE ESTUDIO
+══════════════════════════════════════════════════════════════ */
+const chapters = [
+  { id:'d1',  label:'Daniel 1', sub:'Cautivos en Babilonia',     src:'Biblia',          color:'#E8720C' },
+  { id:'d2',  label:'Daniel 2', sub:'La gran imagen',            src:'Biblia',          color:'#2E8BC0' },
+  { id:'d3',  label:'Daniel 3', sub:'El horno de fuego',         src:'Biblia',          color:'#C0392B' },
+  { id:'d6',  label:'Daniel 6', sub:'El foso de los leones',     src:'Biblia',          color:'#1A7A1A' },
+  { id:'pr39',label:'P&R 39',   sub:'Cautivos en Babilonia',     src:'Elena de White',  color:'#7B2D8B' },
+  { id:'pr41',label:'P&R 41',   sub:'La imagen de oro y el horno',src:'Elena de White', color:'#7B2D8B' },
+  { id:'pr44',label:'P&R 44',   sub:'En el foso de los leones',  src:'Elena de White',  color:'#7B2D8B' },
+];
+
+const studyData = {
+  d1:{sections:[
+    {title:'👑 Contexto histórico',content:`<div class="warn-box"><strong>Año:</strong> TERCER año del reinado de Joacim, rey de Judá (1:1)<br>Nabucodonosor sitia Jerusalén y el Señor le entrega la ciudad.<br>Lleva parte de los <strong>utensilios de la casa de Dios</strong> a tierra de Sinar, a la <strong>casa del tesoro de su dios</strong> (1:2).</div>`},
+    {title:'👤 Personajes clave',content:`<table class="info-table"><thead><tr><th>Persona</th><th>¿Quién es?</th></tr></thead><tbody>
+      <tr><td class="key">Aspenaz</td><td>Jefe de los eunucos — recibió la orden del rey (1:3)</td></tr>
+      <tr><td class="key">Melsar</td><td>Sirviente puesto <u>directamente</u> sobre Daniel y sus 3 compañeros (1:11,16)</td></tr>
+      <tr><td class="key">Daniel → Beltsasar</td><td>Nombre hebreo → babilónico (1:7)</td></tr>
+      <tr><td class="key">Ananías → Sadrac</td><td>Nombre hebreo → babilónico (1:7)</td></tr>
+      <tr><td class="key">Misael → Mesac</td><td>Nombre hebreo → babilónico (1:7)</td></tr>
+      <tr><td class="key">Azarías → Abed-nego</td><td>Nombre hebreo → babilónico (1:7)</td></tr></tbody></table>
+      <div class="warn-box" style="margin-top:.6rem"><strong>⚠ Aspenaz ≠ Melsar.</strong> Aspenaz era el jefe; Melsar el sirviente asignado a Daniel. Fue Daniel quien habló con Melsar para proponer la prueba.</div>`},
+    {title:'🔢 Números exactos',content:`<table class="info-table"><thead><tr><th>Dato</th><th>Texto RV1995</th></tr></thead><tbody>
+      <tr><td class="key">Instrucción</td><td>TRES años (1:5)</td></tr>
+      <tr><td class="key">Duración prueba</td><td>DIEZ días (1:12)</td></tr>
+      <tr><td class="key">Alimentos</td><td>Legumbres para comer y agua para beber (1:12)</td></tr>
+      <tr><td class="key">Resultado (1:15)</td><td>«mejor y más robusto que el de los otros muchachos»</td></tr>
+      <tr><td class="key">Superioridad (1:20)</td><td>DIEZ VECES mejores que todos los magos y astrólogos</td></tr>
+      <tr><td class="key">Hasta (1:21)</td><td>Año PRIMERO del rey Ciro</td></tr></tbody></table>`},
+    {title:'✨ Dones de Dios (1:17)',content:`<div class="highlight-box">A los <strong>cuatro</strong>: conocimiento e inteligencia en todas las letras y ciencias.<br>Solo a <strong>Daniel</strong>: entendimiento en toda <u>visión y sueños</u>.</div>`},
+    {title:'📖 Versículo clave',content:`<div class="verse-box">«Y al cabo de los diez días pareció el rostro de ellos <strong>mejor y más robusto</strong> que el de los otros muchachos que comían de la porción de la comida del rey.» (Daniel 1:15)</div>`},
+  ]},
+  d2:{sections:[
+    {title:'💭 El sueño',content:`<div class="warn-box"><strong>Año:</strong> SEGUNDO año del reinado de Nabucodonosor (2:1)<br><strong>Arioc</strong> (capitán de la guardia) iba a ejecutar a todos los sabios (2:14).<br>Daniel pidió <strong>tiempo</strong>, oró con sus amigos (2:17-18).<br>Dios reveló el misterio en una <strong>visión nocturna</strong> (2:19).</div>`},
+    {title:'🗿 Los materiales de la estatua',content:`<table class="info-table"><thead><tr><th>Parte — Material</th><th>Imperio</th></tr></thead><tbody>
+      <tr><td class="key">Cabeza — ORO</td><td>Babilonia / Nabucodonosor (2:32,37-38)</td></tr>
+      <tr><td class="key">Pecho y brazos — PLATA</td><td>Medo-Persia (2:32,39)</td></tr>
+      <tr><td class="key">Vientre y muslos — BRONCE</td><td>Grecia (2:32,39)</td></tr>
+      <tr><td class="key">Piernas — HIERRO</td><td>Roma (2:33,40)</td></tr>
+      <tr><td class="key">Pies — HIERRO Y BARRO</td><td>Reinos divididos (2:33,41-43)</td></tr>
+      <tr><td class="key">La PIEDRA (sin manos)</td><td>Reino eterno de Dios / Cristo (2:34,44-45)</td></tr></tbody></table>`},
+    {title:'🪨 La piedra',content:`<div class="highlight-box">• Cortada <strong>sin que la cortara mano alguna</strong> (2:34)<br>• Golpeó los <strong>pies de hierro y de barro cocido</strong> (2:34)<br>• Todo fue desmenuzado <strong>como tamo de las eras del verano</strong> (2:35)<br>• La piedra se hizo <strong>un gran monte que llenó toda la tierra</strong> (2:35)</div>`},
+    {title:'🏅 Cargos recibidos',content:`<div class="highlight-box"><strong>Daniel</strong>: gobernador de toda la provincia de Babilonia + principal de los gobernadores sobre los sabios (2:48)<br><strong>Sadrac, Mesac y Abed-nego</strong>: administradores de la provincia (2:49)</div>`},
+  ]},
+  d3:{sections:[
+    {title:'🗿 La estatua de oro',content:`<table class="info-table"><thead><tr><th>Dato</th><th>Texto RV1995</th></tr></thead><tbody>
+      <tr><td class="key">Altura</td><td>SESENTA codos (3:1)</td></tr>
+      <tr><td class="key">Anchura</td><td>SEIS codos (3:1)</td></tr>
+      <tr><td class="key">Lugar</td><td>Campo de DURA, provincia de Babilonia (3:1)</td></tr></tbody></table>`},
+    {title:'🎵 Los 6 instrumentos — ¡en orden!',content:`<div class="warn-box"><strong>Orden exacto en Daniel 3:5:</strong><br>1. Bocina &nbsp; 2. Flauta &nbsp; 3. Tamboril &nbsp; 4. Arpa &nbsp; 5. Salterio &nbsp; 6. Zampoña<br><br><strong>❌ NO aparece:</strong> TROMPETA</div>`},
+    {title:'🔥 El horno de fuego',content:`<div class="highlight-box">• Calentado <strong>SIETE veces</strong> más de lo acostumbrado (3:19)<br>• Ropa al entrar: <strong>sus mantos, sus calzas, sus turbantes y sus vestidos</strong> (3:21)<br>• Los hombres que los lanzaron: <strong>la llama del fuego los mató</strong> (3:22)<br>• Vio <strong>CUATRO</strong> varones sueltos caminando (3:25)<br>• El cuarto: <strong>«semejante al Hijo de Dios»</strong> (3:25)</div>`},
+    {title:'✨ El milagro (3:27)',content:`<div class="verse-box">«...de cuyo cuerpo el fuego no se enseñoreó, ni cabello de sus cabezas fue quemado, ni sus vestidos se alteraron, ni olor de fuego había en ellos.»</div>`},
+    {title:'📜 El decreto (3:29)',content:`<div class="verse-box">«Todo pueblo, nación o lengua que dijere blasfemia contra el Dios de Sadrac, Mesac y Abed-nego, sea descuartizado y su casa puesta por muladar.»</div>`},
+  ]},
+  d6:{sections:[
+    {title:'🏛️ La organización del reino',content:`<table class="info-table"><thead><tr><th>Cargo</th><th>Detalle</th></tr></thead><tbody>
+      <tr><td class="key">120 sátrapas</td><td>Sobre todo el reino (6:1)</td></tr>
+      <tr><td class="key">3 gobernadores</td><td>Daniel era el PRIMERO (6:2)</td></tr></tbody></table>
+      <div class="highlight-box" style="margin-top:.6rem">No hallaron cargo porque Daniel era <strong>fiel, y ningún motivo de acusación ni falta fue hallado en él</strong> (6:4).</div>`},
+    {title:'📜 El decreto',content:`<div class="warn-box">Duración: <strong>TREINTA días</strong> sin pedir petición a ningún dios ni hombre fuera del rey (6:7)<br>Pena: el <strong>foso de los leones</strong> (6:7)<br>Ley <strong>irrevocable</strong> de medos y persas (6:8)</div>`},
+    {title:'🙏 La fidelidad de Daniel',content:`<div class="verse-box">«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios, <strong>como solía hacerlo antes</strong>.» (Daniel 6:10)</div>`},
+    {title:'🦁 El foso de los leones',content:`<table class="info-table"><thead><tr><th>Momento</th><th>Texto RV1995</th></tr></thead><tbody>
+      <tr><td class="key">Sello del foso</td><td>Anillo del rey Y de sus príncipes (6:17)</td></tr>
+      <tr><td class="key">Esa noche el rey</td><td>Pasó la noche en ayuno; no trajeron instrumentos de música ante él, y se le fue el sueño (6:18)</td></tr>
+      <tr><td class="key">¿Cuándo fue?</td><td>Muy de mañana, al alba (6:19)</td></tr>
+      <tr><td class="key">Respuesta de Daniel</td><td>«Mi Dios envió su ángel, el cual cerró la boca de los leones...» (6:22)</td></tr>
+      <tr><td class="key">Destino enemigos</td><td>Echados al foso con sus hijos y mujeres; los leones quebraron todos sus huesos (6:24)</td></tr></tbody></table>`},
+  ]},
+  pr39:{sections:[{title:'📗 Cap. 39 — Cautivos en Babilonia',content:`<div class="highlight-box"><strong>Título exacto:</strong> «Cautivos en Babilonia»<br><br>• La comida del rey había sido ofrecida a ídolos → violaba las leyes de Dios.<br>• Los hábitos físicos temperantes favorecen la claridad mental y espiritual.<br>• La fidelidad en cosas pequeñas prepara para pruebas más grandes.<br>• Daniel fue firme y cortés — no rebelde ni grosero.<br>• Dios recompensó su fidelidad con salud y sabiduría superiores.</div>`}]},
+  pr41:{sections:[{title:'📗 Cap. 41 — La imagen de oro y el horno de fuego',content:`<div class="highlight-box"><strong>Título exacto:</strong> «La imagen de oro y el horno de fuego»<br><br>• El cuarto en el horno = el <strong>Hijo de Dios mismo</strong>.<br>• La fidelidad puede costar la vida, pero Dios libera a los suyos.<br>• Modelo para el tiempo del fin cuando se pida adorar lo que está mal.<br>• «Nuestro Dios puede librarnos… y si no, de todos modos no adoraremos tu estatua.»<br>• La fe verdadera confía aunque no vea el resultado de antemano.</div>`}]},
+  pr44:{sections:[{title:'📗 Cap. 44 — En el foso de los leones',content:`<div class="highlight-box"><strong>Título exacto:</strong> «En el foso de los leones»<br><br>• La integridad de Daniel era perfecta — nadie podía encontrarle falla.<br>• La oración era la <strong>fuente diaria</strong> de su fortaleza.<br>• Siguió orando sabiendo el decreto — lealtad absoluta.<br>• Modelo para los jóvenes: fiel a Dios en cualquier lugar.<br>• Su testimonio hizo que Darío proclamara al Dios de Daniel.</div>`}]},
+};
+
+/* ══════════════════════════════════════════════════════════════
+   5. PREGUNTAS DEL EXAMEN
+   NOTA: las respuestas están en este archivo. Quien sepa mirar el
+   código fuente puede verlas. Es autoevaluación, no examen vigilado.
+══════════════════════════════════════════════════════════════ */
+const examQuestions = [
+  {id:'q1',section:'I',type:'mc',text:'¿En qué año del reinado de Joacim vino Nabucodonosor a Jerusalén y la sitió? (Daniel 1:1)',
+   opts:['A) En el primer año','B) En el segundo año','C) En el tercer año','D) En el cuarto año'],ans:'C'},
+  {id:'q2',section:'I',type:'mc',text:'¿Cómo se llamaba el sirviente asignado directamente a Daniel y sus compañeros? (Daniel 1:11)',
+   opts:['A) Aspenaz','B) Arioc','C) Nabuzaradán','D) Melsar'],ans:'D'},
+  {id:'q3',section:'I',type:'mc',text:'¿Cuántas veces más caliente mandó Nabucodonosor calentar el horno? (Daniel 3:19)',
+   opts:['A) Dos veces más','B) Cuatro veces más','C) Siete veces más','D) Diez veces más'],ans:'C'},
+  {id:'q4',section:'I',type:'mc',text:'¿Cómo describió Nabucodonosor al cuarto personaje del horno? (Daniel 3:25)',
+   opts:['A) Como un ángel de gran poder','B) Como un hombre de fuego','C) Semejante al Hijo de Dios','D) Como una estrella brillante'],ans:'C'},
+  {id:'q5',section:'I',type:'mc',text:'¿Cuántas veces al día se arrodillaba Daniel a orar? (Daniel 6:10)',
+   opts:['A) Una vez','B) Dos veces','C) Tres veces','D) Siete veces'],ans:'C'},
+  {id:'q6',section:'I',type:'mc',text:'¿Con qué fue sellada la piedra puesta sobre el foso? (Daniel 6:17)',
+   opts:['A) Con el anillo del rey solamente','B) Con el anillo del rey y el de sus príncipes','C) Con cadenas de hierro','D) Con cera y barro cocido'],ans:'B'},
+  {id:'q7',section:'I',type:'mc',text:'¿Cuál de estos instrumentos NO aparece en Daniel 3:5?',
+   opts:['A) La bocina','B) La zampoña','C) La trompeta','D) El arpa'],ans:'C'},
+  {id:'q8',section:'I',type:'mc',text:'¿Cuál es el título exacto del capítulo 41 de Profetas y Reyes?',
+   opts:['A) El horno de fuego','B) La imagen de oro y el horno de fuego','C) Los tres hebreos fieles','D) La prueba del fuego'],ans:'B'},
+
+  {id:'q9',section:'II',type:'tf',text:'El pecho y los brazos de la estatua del sueño eran de plata. (Daniel 2:32)',
+   ans:'V',explanation:'Verdadero. Daniel 2:32: «su pecho y sus brazos, de plata».'},
+  {id:'q10',section:'II',type:'tf',text:'Darío el Medo puso cien sátrapas sobre su reino. (Daniel 6:1)',
+   ans:'F',explanation:'Falso. Daniel 6:1 dice CIENTO VEINTE sátrapas.'},
+  {id:'q11',section:'II',type:'tf',text:'Al salir del horno, ni olor de fuego había en ellos. (Daniel 3:27)',
+   ans:'V',explanation:'Verdadero. Daniel 3:27 lo dice exactamente así.'},
+  {id:'q12',section:'II',type:'tf',text:'Según P&R cap. 44, Daniel solo oraba en momentos de crisis.',
+   ans:'F',explanation:'Falso. La oración era su fuente DIARIA de fortaleza, no solo en crisis.'},
+
+  {id:'q13',section:'III',type:'fill',instruction:'Daniel 1:20 (RV1995) — Completa:',
+   parts:[{text:'«...los halló '},{blank:true,ans:'diez',hint:'¿cuántas veces?'},
+          {text:' veces mejores que todos los '},{blank:true,ans:'magos',hint:'¿quiénes?'},
+          {text:' y astrólogos que había en todo su reino.»'}]},
+  {id:'q14',section:'III',type:'fill',instruction:'Daniel 6:10 (RV1995) — Completa:',
+   parts:[{text:'«...abiertas las ventanas de su habitación que daban a '},{blank:true,ans:'Jerusalén',hint:'¿hacia dónde?'},
+          {text:', se arrodillaba '},{blank:true,ans:'tres',hint:'¿cuántas veces?'},
+          {text:' veces al día, y oraba y daba gracias delante de su Dios, como solía hacerlo antes.»'}]},
+  {id:'q15',section:'III',type:'fill',instruction:'Daniel 3:25 (RV1995) — Completa:',
+   parts:[{text:'«...y el parecer del cuarto es semejante al '},{blank:true,ans:'Hijo de Dios',hint:'¿a quién?'},{text:'.»'}]},
+];
+
+/* ══════════════════════════════════════════════════════════════
+   6. NAVEGACIÓN Y PANTALLAS
+══════════════════════════════════════════════════════════════ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  const idx = { home:0, study:1, exam:2, ranking:3 }[id];
+  document.querySelectorAll('.nav-tab')[idx]?.classList.add('active');
+  if (id === 'home') renderHome();
+  if (id === 'study') renderStudy();
+  if (id === 'ranking') loadLeaderboard(), renderBadges();
+}
+
+function setName(v) {
+  state.playerName = String(v).slice(0, 60);
+  saveState();
+  const other = document.getElementById('player-name');
+  if (other) other.value = state.playerName;
+  pushProgreso();
+}
+
+function renderHome() {
+  const done = Object.values(state.studyProgress).filter(v => v >= 100).length;
+  const best = state.examResults.length ? Math.max(...state.examResults.map(r => r.score)) : 0;
+  document.getElementById('home-stats').innerHTML = `
+    <div class="stat"><div class="val">${done}<small style="font-size:1rem">/7</small></div><div class="lbl">Capítulos<br>estudiados</div></div>
+    <div class="stat"><div class="val">${best}<small style="font-size:1rem">/15</small></div><div class="lbl">Mejor<br>puntaje</div></div>
+    <div class="stat"><div class="val">${state.examResults.length}</div><div class="lbl">Exámenes<br>hechos</div></div>
+    <div class="stat"><div class="val">${state.streak}🔥</div><div class="lbl">Días de<br>racha</div></div>`;
+
+  document.getElementById('progress-grid').innerHTML = chapters.map(ch => {
+    const pct = state.studyProgress[ch.id] || 0;
+    const c = Math.PI * 2 * 24, off = c * (1 - pct / 100);
+    return `<div class="prog-card ${pct>=100?'done':''}" onclick="goStudy('${ch.id}')">
+      <div class="ring"><svg viewBox="0 0 56 56" width="64" height="64">
+        <circle class="bg" cx="28" cy="28" r="24"/>
+        <circle class="fg" cx="28" cy="28" r="24" stroke="${ch.color}" stroke-dasharray="${c}" stroke-dashoffset="${off}"/>
+        <text x="28" y="28" font-size="11" font-weight="800" fill="${ch.color}" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 28 28)">${pct}%</text>
+      </svg></div>
+      <div class="ch-label">${ch.label}</div><div class="ch-sub">${ch.sub}</div></div>`;
+  }).join('');
+
+  document.getElementById('streak-display').innerHTML = state.streak > 0
+    ? `<div style="font-size:3rem">🔥</div><div style="font-size:1.4rem;font-weight:800;color:var(--orange)">${state.streak} día${state.streak!==1?'s':''} seguido${state.streak!==1?'s':''}</div>`
+    : `<div style="font-size:.9rem;color:var(--muted)">Estudia hoy para empezar tu racha 🔥</div>`;
+
+  const ni = document.getElementById('player-name-home');
+  if (ni && ni.value !== state.playerName) ni.value = state.playerName;
+}
+
+function goStudy(id) { showScreen('study'); openChapter(id); }
+
+function renderStudy() {
+  document.getElementById('chapter-list').innerHTML = chapters.map(ch => `
+    <button class="ch-btn ch-${ch.id}" onclick="openChapter('${ch.id}')">
+      <div class="ch-num" style="color:${ch.color}">${ch.label.split(' ').pop()}</div>
+      <div class="ch-name">${esc(ch.sub)}</div>
+      <div class="ch-src">${esc(ch.src)}</div>
+      <div class="ch-pct">${state.studyProgress[ch.id]||0}% leído</div>
+    </button>`).join('');
+}
+
+function openChapter(id) {
+  document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active-ch'));
+  document.querySelector('.ch-' + id)?.classList.add('active-ch');
+  const data = studyData[id], ch = chapters.find(c => c.id === id);
+  const area = document.getElementById('study-content-area');
+  if (!data) { area.classList.remove('visible'); return; }
+  area.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+      <div><div style="font-size:1.2rem;font-weight:800;color:var(--primary)">${esc(ch.label)}</div>
+      <div style="font-size:.85rem;color:var(--muted)">${esc(ch.sub)} · ${esc(ch.src)}</div></div>
+      <span class="pill pill-blue">RV1995</span>
+    </div>
+    ${data.sections.map(s => `<div class="study-section"><h3>${s.title}</h3>${s.content}</div>`).join('')}
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #f0f0f0;display:flex;gap:.8rem;flex-wrap:wrap">
+      <button class="btn btn-green" onclick="markStudied('${id}')">✅ Listo, siguiente</button>
+      <button class="btn btn-primary" onclick="showScreen('exam')">✏️ Ir al examen</button>
+    </div>`;
+  area.classList.add('visible');
+  setProgress(id, 60);
+}
+
+function setProgress(id, pct) {
+  state.studyProgress[id] = Math.max(state.studyProgress[id] || 0, pct);
+  saveState(); renderStudy(); pushProgreso();
+}
+
+function markStudied(id) {
+  setProgress(id, 100);
+  updateStreak();
+  const i = chapters.findIndex(c => c.id === id) + 1;
+  if (i < chapters.length) { openChapter(chapters[i].id); window.scrollTo({top:0,behavior:'smooth'}); }
+  else showScreen('home');
+}
+
+function updateStreak() {
+  const hoy = new Date().toDateString();
+  if (state.lastStudyDate !== hoy) {
+    const ayer = new Date(Date.now() - 86400000).toDateString();
+    state.streak = state.lastStudyDate === ayer ? state.streak + 1 : 1;
+    state.lastStudyDate = hoy;
+    saveState(); pushProgreso();
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   7. EXAMEN
+══════════════════════════════════════════════════════════════ */
+let timerInterval = null, secondsLeft = 1200, examSubmitted = false, userAnswers = {};
+
+function startExam() {
+  const ni = document.getElementById('player-name');
+  if (ni && ni.value.trim()) setName(ni.value.trim());
+  showScreen('exam');
+  document.getElementById('exam-start-panel').style.display = 'none';
+  document.getElementById('exam-panel').style.display = 'block';
+  document.getElementById('results-panel').style.display = 'none';
+  examSubmitted = false; userAnswers = {}; secondsLeft = 1200;
+  renderQuestions(); startTimer();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    const el = document.getElementById('timer-display');
+    if (el) {
+      el.textContent = `${String(Math.floor(secondsLeft/60)).padStart(2,'0')}:${String(secondsLeft%60).padStart(2,'0')}`;
+      el.className = 'timer' + (secondsLeft < 120 ? ' urgent' : '');
+    }
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+
+const SEC_LABEL = { I:'📋 Sección I — Selección Múltiple', II:'✔ Sección II — Verdadero o Falso', III:'✏️ Sección III — Completar el Versículo' };
+
+function renderQuestions() {
+  let html = '', n = 1;
+  for (const sec of ['I','II','III']) {
+    html += `<div class="section-divider">${SEC_LABEL[sec]}</div>`;
+    examQuestions.filter(q => q.section === sec).forEach(q => { html += qHTML(q, n++, false); });
+  }
+  document.getElementById('questions-container').innerHTML = html;
+  document.getElementById('exam-progress-text').textContent = `${examQuestions.length} preguntas · ${state.playerName || 'Estudiante'}`;
+  updateCount();
+}
+
+function qHTML(q, n, show) {
+  let inner = '';
+  if (q.type === 'mc') {
+    inner = `<div class="opts">${q.opts.map(o => {
+      const L = o.charAt(0);
+      let c = 'opt-btn';
+      if (show) { if (L === q.ans) c += ' correct'; else if (userAnswers[q.id] === L) c += ' incorrect'; }
+      else if (userAnswers[q.id] === L) c += ' selected';
+      return `<button class="${c}" ${show?'disabled':''} onclick="pickMC('${q.id}','${L}')">
+        <span class="opt-letter">${L}</span>${esc(o.slice(3))}</button>`;
+    }).join('')}</div>`;
+  } else if (q.type === 'tf') {
+    const ua = userAnswers[q.id];
+    let v = 'tf-btn', f = 'tf-btn';
+    if (show) { v += q.ans==='V'?' ok':(ua==='V'?' ko':''); f += q.ans==='F'?' ko':(ua==='F'?' ko':''); if(q.ans==='F') f = 'tf-btn ok'; }
+    else { if (ua==='V') v += ' sel'; if (ua==='F') f += ' sel'; }
+    inner = `<div class="tf-btns">
+      <button class="${v}" ${show?'disabled':''} onclick="pickTF('${q.id}','V')">✅ Verdadero</button>
+      <button class="${f}" ${show?'disabled':''} onclick="pickTF('${q.id}','F')">❌ Falso</button></div>
+      ${show ? `<div class="feedback ${isCorrect(q)?'ok':'ko'}">${esc(q.explanation)}</div>` : ''}`;
+  } else {
+    const parts = q.parts.map((p, i) => {
+      if (!p.blank) return `<span>${esc(p.text)}</span>`;
+      const val = userAnswers[q.id + '_' + i] || '';
+      let c = 'fill-input';
+      if (show) c += (norm(val) === norm(p.ans)) ? ' correct' : ' incorrect';
+      return `<input class="${c}" type="text" placeholder="${esc(p.hint||'...')}" value="${esc(val)}"
+        ${show?'disabled':''} oninput="pickFill('${q.id}',${i},this.value)">`;
+    }).join('');
+    inner = `<div style="font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:.5rem">${esc(q.instruction)}</div>
+      <div class="fill-container">${parts}</div>
+      ${show ? `<div class="feedback ${isCorrect(q)?'ok':'ko'}">${isCorrect(q)?'✅ ¡Correcto!':'❌ Respuestas: '+esc(q.parts.filter(p=>p.blank).map(p=>p.ans).join(' / '))}</div>` : ''}`;
+  }
+  return `<div class="q-card ${show?(isCorrect(q)?'answered':'wrong'):''}" id="qc-${q.id}">
+    <div class="q-text"><span class="q-num">${n}.</span> ${esc(q.text||'')}</div>${inner}</div>`;
+}
+
+function norm(s) { return String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+function isCorrect(q) {
+  if (q.type === 'mc' || q.type === 'tf') return userAnswers[q.id] === q.ans;
+  return q.parts.every((p, i) => !p.blank || norm(userAnswers[q.id+'_'+i] || '') === norm(p.ans));
+}
+
+function isAnswered(q) {
+  if (q.type === 'fill') return q.parts.some((p,i) => p.blank && (userAnswers[q.id+'_'+i]||'').trim());
+  return !!userAnswers[q.id];
+}
+
+function pickMC(id, L) { if(examSubmitted) return; userAnswers[id]=L; refreshQ(id); }
+function pickTF(id, v) { if(examSubmitted) return; userAnswers[id]=v; refreshQ(id); }
+function pickFill(id, i, v) { if(examSubmitted) return; userAnswers[id+'_'+i]=v; updateCount(); }
+
+function refreshQ(id) {
+  const q = examQuestions.find(x => x.id === id);
+  const n = examQuestions.indexOf(q) + 1;
+  const el = document.getElementById('qc-' + id);
+  if (el) el.outerHTML = qHTML(q, n, false);
+  updateCount();
+}
+
+function updateCount() {
+  const a = examQuestions.filter(isAnswered).length;
+  const el = document.getElementById('answered-count');
+  if (el) el.textContent = `${a} de ${examQuestions.length} respondidas`;
+}
+
+async function submitExam() {
+  if (examSubmitted) return;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+
+  const score = examQuestions.filter(isCorrect).length;
+  const pct = Math.round(score / examQuestions.length * 100);
+
+  state.examResults.push({ name: state.playerName || 'Estudiante', score, pct, date: new Date().toISOString() });
+  checkBadges(score); updateStreak(); saveState();
+  const saved = await pushResultado(score, pct);
+
+  document.getElementById('exam-panel').style.display = 'none';
+  const rp = document.getElementById('results-panel');
+  rp.style.display = 'block';
+
+  const secScores = ['I','II','III'].map(s => {
+    const qs = examQuestions.filter(q => q.section === s);
+    const lbl = { I:'Múltiple', II:'V o F', III:'Completar' }[s];
+    return `<div class="sec-score"><div class="sv">${qs.filter(isCorrect).length}/${qs.length}</div><div class="sl">${lbl}</div></div>`;
+  }).join('');
+
+  const medal = score>=14?'🥇':score>=11?'🥈':score>=8?'🥉':'📖';
+  const msg = score>=14?'¡Excelente! Eres un campeón bíblico.':score>=11?'¡Muy bien! Sigue repasando.':score>=8?'Buen intento. Estudia un poco más.':'Repasa la guía y vuelve a intentarlo.';
+
+  let review = '', n = 1;
+  for (const sec of ['I','II','III']) {
+    review += `<div class="section-divider" style="font-size:.8rem;margin:.8rem 0 .5rem">${SEC_LABEL[sec]}</div>`;
+    examQuestions.filter(q => q.section === sec).forEach(q => { review += qHTML(q, n++, true); });
+  }
+
+  rp.innerHTML = `
+    <div class="result-hero">
+      <div style="font-size:3rem">${medal}</div>
+      <div class="score">${score}<span style="font-size:2rem;opacity:.7">/15</span></div>
+      <div style="opacity:.85;margin-top:.3rem">${pct}% · ${msg}</div>
+      <div class="section-scores">${secScores}</div>
+      <div style="margin-top:.8rem;font-size:.75rem;opacity:.8">${saved?'✅ Guardado en el ranking':'💾 Guardado solo en este dispositivo'}</div>
+    </div>
+    <div class="card"><div class="card-title">🎖️ Tus insignias</div>
+      <div>${state.badges.length ? state.badges.map(b=>`<span class="badge badge-gold">🏅 ${esc(b)}</span>`).join('') : '<span style="color:var(--muted);font-size:.85rem">Sigue practicando para ganar insignias.</span>'}</div></div>
+    <div class="card"><div class="card-title">📋 Revisión detallada</div>${review}</div>
+    <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem">
+      <button class="btn btn-orange" onclick="resetExam()">🔄 Intentar de nuevo</button>
+      <button class="btn btn-primary" onclick="showScreen('study')">📖 Seguir estudiando</button>
+      <button class="btn btn-ghost" onclick="showScreen('ranking')">🏆 Ver ranking</button>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkBadges(score) {
+  const b = state.badges;
+  const add = x => { if (!b.includes(x)) b.push(x); };
+  if (score === 15) add('Perfecto 🌟');
+  if (score >= 14) add('Campeón bíblico');
+  if (score >= 11) add('Estudioso');
+  if (state.examResults.length >= 3) add('Persistente');
+  if (state.streak >= 3) add('Racha de fuego 🔥');
+}
+
+function resetExam() {
+  examSubmitted = false; userAnswers = {};
+  document.getElementById('exam-start-panel').style.display = 'block';
+  document.getElementById('exam-panel').style.display = 'none';
+  document.getElementById('results-panel').style.display = 'none';
+  const ni = document.getElementById('player-name');
+  if (ni) ni.value = state.playerName;
+}
+
+function renderBadges() {
+  const all = [
+    { i:'🌟', n:'Perfecto',        d:'15/15 en el examen' },
+    { i:'🥇', n:'Campeón bíblico', d:'14 o más puntos' },
+    { i:'📚', n:'Estudioso',       d:'11 o más puntos' },
+    { i:'🔄', n:'Persistente',     d:'3 exámenes hechos' },
+    { i:'🔥', n:'Racha de fuego',  d:'3 días seguidos' },
+  ];
+  document.getElementById('badges-display').innerHTML = all.map(b => {
+    const own = state.badges.some(s => s.includes(b.n));
+    return `<span class="badge ${own?'badge-gold':'badge-silver'}" title="${esc(b.d)}">${b.i} ${b.n}</span>`;
+  }).join('');
+}
+
+/* ── arranque ── */
+try {
+  renderHome();
+  initSync().then(loadLeaderboard);
+} catch (e) {
+  console.error(e);
+}
+</script>
+</body>
+</html>
