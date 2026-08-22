@@ -9241,11 +9241,11 @@ const MANUAL = [
    },
    {
     "t": "Al terminar, la parte que sirve",
-    "h": "<p>Ves tu puntaje y, más abajo, <strong>todas las preguntas con la\n    respuesta correcta</strong>. Esa revisión es la mitad del ejercicio: léela,\n    sobre todo las que fallaste.</p>\n    <p>Las que falles quedan guardadas y puedes hacer un examen\n    <strong>solo con tus errores</strong> desde «Qué estudiar hoy».</p>"
+    "h": "<p>En un examen normal ves tu puntaje y, más abajo,\n    <strong>todas las preguntas con la respuesta correcta</strong>. Esa revisión\n    es la mitad del ejercicio: léela, sobre todo las que fallaste.</p>\n    <p>Las que falles quedan guardadas y puedes hacer un examen\n    <strong>solo con tus errores</strong> desde «Qué estudiar hoy».</p>"
    },
    {
-    "t": "El simulacro",
-    "h": "<p>Es el mismo examen sin las pistas de la sección de completar, para que\n    se parezca más al de verdad. Está dentro de «Cambiar este examen».</p>"
+    "t": "El simulacro y el examen por link son distintos",
+    "h": "<div class=\"warn-box\">En el simulacro y en el examen por link\n    <strong>no sale la revisión</strong>: ves la nota, no las respuestas.</div>\n    <p>El simulacro también quita las pistas de la sección de completar. Las dos\n    cosas son a propósito: el examen del campamento tampoco te devuelve la hoja\n    corregida, y una nota solo dice algo si no viste las respuestas primero.</p>\n    <p>El simulacro está dentro de <strong>⚙️ Cambiar este examen</strong>. Para\n    ver qué falló, tu director entra su clave en ese mismo aparato.</p>"
    }
   ]
  },
@@ -9262,7 +9262,7 @@ const MANUAL = [
    },
    {
     "t": "Insignias e historial",
-    "h": "<p>Las insignias son metas cumplidas. El historial muestra cada examen con\n    su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>"
+    "h": "<p>Las insignias son metas cumplidas. El historial muestra cada examen con\n    su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>\n    <p>Al lado de la categoría puede salir un dibujito: <strong>🎓</strong> si fue\n    un simulacro, <strong>🔗</strong> si fue un examen que te mandaron por link y\n    <strong>🔁</strong> si fue un repaso de tus errores. Sin dibujito, fue un\n    examen normal.</p>"
    }
   ]
  },
@@ -9434,7 +9434,7 @@ const MANUAL = [
    },
    {
     "t": "Logros",
-    "h": "<p><strong>Puntos débiles</strong> es la más útil: dice en qué capítulo va\n    más flojo. <strong>Historial</strong> muestra cada examen con su fecha, así\n    que se ve si mejora o se estancó.</p>"
+    "h": "<p><strong>Puntos débiles</strong> es la más útil: dice en qué capítulo va\n    más flojo. <strong>Historial</strong> muestra cada examen con su fecha, así\n    que se ve si mejora o se estancó.</p>\n    <p>En el historial, cada examen viene marcado: <strong>🎓</strong> simulacro,\n    <strong>🔗</strong> examen por link, <strong>🔁</strong> repaso de errores, y\n    sin marca los normales. Para comparar dos niños entre sí solo sirven los\n    <strong>🔗</strong>: son el mismo examen. Los demás salen al azar.</p>"
    }
   ]
  },
@@ -9560,6 +9560,10 @@ const MANUAL = [
    {
     "t": "No es el examen oficial",
     "h": "<p>No sabemos cuántas preguntas trae el real ni cómo reparte las\n    secciones. Sabemos el formato de tres secciones y el alcance.</p>"
+   },
+   {
+    "t": "Dos vueltas que sí quedan abiertas",
+    "h": "<div class=\"warn-box\">Esto no rompe la nota de un simulacro, que ya quedó\n    registrada. Pero conviene que lo sepas.</div>\n    <p><strong>Repasar mis errores.</strong> Las preguntas que falló en un\n    simulacro entran a «mis errores», y ese repaso sí muestra las respuestas. O\n    sea que después del simulacro puede llegar a las respuestas de las que\n    falló, dando la vuelta.</p>\n    <p>Se dejó así a propósito: repasar los errores es como aprende la app, y\n    cerrarlo mataría lo que más sirve. El examen por link ya no se puede\n    repetir, así que la nota no cambia.</p>\n    <p><strong>Otra ficha en el mismo aparato.</strong> El link se marca como\n    usado en la ficha del participante, no en el celular. Eso es a propósito:\n    dos hermanas en el mismo celular tienen que poder hacer el mismo examen.\n    El precio es que la misma niña, creando una segunda ficha, puede rehacer un\n    link. Para eso el control es mirar, no técnico.</p>"
    },
    {
     "t": "No es a prueba de trampa, y hasta dónde llega",
@@ -10996,7 +11000,10 @@ function pintaLogros(){
      h.map(e=>{
        const f=new Date(e.fecha);
        const fs=isNaN(f)?'—':f.toLocaleDateString('es-CO',{day:'2-digit',month:'short'})+' '+f.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-       const mt={simulacro:' 🎓',errores:' 🔁'}[e.modo]||'';
+       /* El examen por link se marca aparte. El director necesita distinguirlo
+          de uno que el participante armó solo, porque solo el compartido es
+          comparable entre dos niños: es el mismo examen. */
+       const mt={simulacro:' 🎓',errores:' 🔁',compartido:' 🔗'}[e.modo]||'';
        return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
      }).join('')+'</tbody></table>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';

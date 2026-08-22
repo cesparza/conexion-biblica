@@ -1088,7 +1088,10 @@ function pintaLogros(){
      h.map(e=>{
        const f=new Date(e.fecha);
        const fs=isNaN(f)?'—':f.toLocaleDateString('es-CO',{day:'2-digit',month:'short'})+' '+f.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-       const mt={simulacro:' 🎓',errores:' 🔁'}[e.modo]||'';
+       /* El examen por link se marca aparte. El director necesita distinguirlo
+          de uno que el participante armó solo, porque solo el compartido es
+          comparable entre dos niños: es el mismo examen. */
+       const mt={simulacro:' 🎓',errores:' 🔁',compartido:' 🔗'}[e.modo]||'';
        return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
      }).join('')+'</tbody></table>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';

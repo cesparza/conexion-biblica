@@ -143,14 +143,19 @@ const MANUAL = [
     <strong>Cuántas preguntas trae el real no lo sabemos todavía</strong>, y por
     eso aquí puedes practicar con varios tamaños.</p>` },
   { t:'Al terminar, la parte que sirve',
-    h:`<p>Ves tu puntaje y, más abajo, <strong>todas las preguntas con la
-    respuesta correcta</strong>. Esa revisión es la mitad del ejercicio: léela,
-    sobre todo las que fallaste.</p>
+    h:`<p>En un examen normal ves tu puntaje y, más abajo,
+    <strong>todas las preguntas con la respuesta correcta</strong>. Esa revisión
+    es la mitad del ejercicio: léela, sobre todo las que fallaste.</p>
     <p>Las que falles quedan guardadas y puedes hacer un examen
     <strong>solo con tus errores</strong> desde «Qué estudiar hoy».</p>` },
-  { t:'El simulacro',
-    h:`<p>Es el mismo examen sin las pistas de la sección de completar, para que
-    se parezca más al de verdad. Está dentro de «Cambiar este examen».</p>` },
+  { t:'El simulacro y el examen por link son distintos',
+    h:`<div class="warn-box">En el simulacro y en el examen por link
+    <strong>no sale la revisión</strong>: ves la nota, no las respuestas.</div>
+    <p>El simulacro también quita las pistas de la sección de completar. Las dos
+    cosas son a propósito: el examen del campamento tampoco te devuelve la hoja
+    corregida, y una nota solo dice algo si no viste las respuestas primero.</p>
+    <p>El simulacro está dentro de <strong>⚙️ Cambiar este examen</strong>. Para
+    ver qué falló, tu director entra su clave en ese mismo aparato.</p>` },
   ]},
 
 { id:'a-logros', para:'estudia', icono:'🏆', t:'Logros: tus errores y tu historial',
@@ -161,7 +166,11 @@ const MANUAL = [
     que hay que mirar cuando no sabes qué repasar.</p>` },
   { t:'Insignias e historial',
     h:`<p>Las insignias son metas cumplidas. El historial muestra cada examen con
-    su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>` },
+    su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>
+    <p>Al lado de la categoría puede salir un dibujito: <strong>🎓</strong> si fue
+    un simulacro, <strong>🔗</strong> si fue un examen que te mandaron por link y
+    <strong>🔁</strong> si fue un repaso de tus errores. Sin dibujito, fue un
+    examen normal.</p>` },
   ]},
 
 { id:'a-papel', para:'estudia', icono:'🖨️', t:'Estudiar en papel',
@@ -327,7 +336,11 @@ const MANUAL = [
   { t:'Logros',
     h:`<p><strong>Puntos débiles</strong> es la más útil: dice en qué capítulo va
     más flojo. <strong>Historial</strong> muestra cada examen con su fecha, así
-    que se ve si mejora o se estancó.</p>` },
+    que se ve si mejora o se estancó.</p>
+    <p>En el historial, cada examen viene marcado: <strong>🎓</strong> simulacro,
+    <strong>🔗</strong> examen por link, <strong>🔁</strong> repaso de errores, y
+    sin marca los normales. Para comparar dos niños entre sí solo sirven los
+    <strong>🔗</strong>: son el mismo examen. Los demás salen al azar.</p>` },
   ]},
 
 { id:'d-dificultad', para:'director', icono:'📈', t:'Cómo sube la dificultad',
@@ -494,6 +507,21 @@ const MANUAL = [
   { t:'No es el examen oficial',
     h:`<p>No sabemos cuántas preguntas trae el real ni cómo reparte las
     secciones. Sabemos el formato de tres secciones y el alcance.</p>` },
+  { t:'Dos vueltas que sí quedan abiertas',
+    h:`<div class="warn-box">Esto no rompe la nota de un simulacro, que ya quedó
+    registrada. Pero conviene que lo sepas.</div>
+    <p><strong>Repasar mis errores.</strong> Las preguntas que falló en un
+    simulacro entran a «mis errores», y ese repaso sí muestra las respuestas. O
+    sea que después del simulacro puede llegar a las respuestas de las que
+    falló, dando la vuelta.</p>
+    <p>Se dejó así a propósito: repasar los errores es como aprende la app, y
+    cerrarlo mataría lo que más sirve. El examen por link ya no se puede
+    repetir, así que la nota no cambia.</p>
+    <p><strong>Otra ficha en el mismo aparato.</strong> El link se marca como
+    usado en la ficha del participante, no en el celular. Eso es a propósito:
+    dos hermanas en el mismo celular tienen que poder hacer el mismo examen.
+    El precio es que la misma niña, creando una segunda ficha, puede rehacer un
+    link. Para eso el control es mirar, no técnico.</p>` },
   { t:'No es a prueba de trampa, y hasta dónde llega',
     h:`<div class="warn-box">La app es un solo archivo que el navegador se baja
     completo. Las respuestas correctas están ahí adentro.</div>

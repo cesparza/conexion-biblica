@@ -40,7 +40,7 @@ return {S:()=>S, ponCat, normalizar, guardar, huellaBanco, escribeReceta, leeRec
         ponModo:m=>{modo=m}, modoActual:()=>modo,
         esDirector:()=>director, semLinkActual:()=>semLink,
         prueba:()=>prueba, ultimoRes:()=>ultimoRes,
-        entraDirector, pideClaveDir, pintaLinkUsado,
+        entraDirector, pideClaveDir, pintaLinkUsado, pintaLogros,
         el:id=>document.getElementById(id)};`);
 const A=fn(store,sesion,nodo,Buffer);
 
@@ -129,6 +129,15 @@ ok(A.semLinkActual()===null,'Un examen armado en el aparato no lleva semilla de 
 const antes=Object.keys(A.S().links).length;
 A.entregar();
 ok(Object.keys(A.S().links).length===antes,'Entregar un simulacro propio no anota ningún link');
+
+/* ── el historial distingue de dónde vino cada examen ──
+   Sin esto el director no puede comparar: solo los exámenes por link son el
+   mismo examen para dos niños, y en la tabla se veían iguales a los normales. */
+A.pintaLogros();
+const hist=A.el('historial').innerHTML;
+ok(/🔗/.test(hist),'El historial marca con 🔗 el examen que vino por link');
+ok(/🎓/.test(hist),'El historial marca con 🎓 el simulacro');
+ok(A.S().examenes.some(e=>e.modo==='compartido'),'El examen por link se registra como compartido');
 
 /* ── liberar un link que se abrió por error ──
    Se prueba llegando a la pantalla SIN pasar por revisaLink, que es el camino

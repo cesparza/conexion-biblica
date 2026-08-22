@@ -481,6 +481,36 @@ const faltanEx=btsExamen.filter(t=>!manPorId['d-imprimir'].includes(t));
 ok(faltanEx.length===0,'El manual documenta los botones de impresión del director'+
   (faltanEx.length?' — falta: '+faltanEx.join(' / '):''));
 
+/* ───────── los iconos del historial ─────────
+   El historial marca cada examen con un icono según su modo. Ya pasó una vez
+   que el manual prometía la marca del examen por link y la interfaz no la
+   ponía: el manual decía «queda marcado como examen compartido» y en la tabla
+   no salía nada. Se leen los iconos del código y se exige que el manual
+   explique cada uno, para que el director no vea un dibujito sin significado. */
+const APP=fs.readFileSync(FUENTE('app.js'),'utf8');
+const mtBloque=/const mt=\{([^}]*)\}\[e\.modo\]/.exec(APP);
+ok(!!mtBloque,'Se encuentra en el código la tabla de iconos del historial');
+const iconosHist=mtBloque?[...mtBloque[1].matchAll(/'([^']*)'/g)].map(m=>m[1].trim()).filter(Boolean):[];
+ok(iconosHist.length>=3,'El historial marca al menos simulacro, errores y link ('+iconosHist.length+')');
+const iconosSinDocu=iconosHist.filter(i=>!txtMan.includes(i));
+ok(iconosSinDocu.length===0,'El manual explica todos los iconos del historial'+
+  (iconosSinDocu.length?' — falta: '+iconosSinDocu.join(' '):''));
+ok(/compartido/.test(mtBloque?mtBloque[1]:''),
+  'El examen por link tiene su propia marca en el historial');
+
+/* ───────── el manual no puede prometer una revisión que ya no sale ─────────
+   Antes de v15 el manual decía que al terminar se ven «todas las preguntas con
+   la respuesta correcta», sin excepción. Con el simulacro y el link cerrados
+   eso quedó falso, y es justo la clase de frase que nadie vuelve a leer. */
+ok(/no sale la revisión/.test(txtMan),
+  'El manual avisa que en el simulacro y en el link no sale la revisión');
+ok(/clave/.test(manPorId['a-examen']),
+  'El tema del examen dice que la revisión la abre el director con su clave');
+ok(/Repasar mis errores/.test(manPorId['d-limites'])||/mis errores/.test(manPorId['d-limites']),
+  'El manual del director documenta la vuelta por «mis errores»');
+ok(/segunda ficha|otra ficha/.test(manPorId['d-limites']),
+  'El manual del director documenta que otra ficha puede rehacer un link');
+
 /* La afirmación exacta que estaba mal: el manual de la app no se imprime desde
    Estudiar, y el tema de Estudiar no debe decir que sí. */
 ok(!btsEstudio.some(t=>/manual/i.test(t)),
