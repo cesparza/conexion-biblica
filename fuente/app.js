@@ -218,11 +218,15 @@ function nivelRecomendado(){
 }
 
 /* ───────── navegación ───────── */
+const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
+
 function ir(id){
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-t button').forEach(b=>b.classList.remove('on'));
   document.getElementById('p-'+id).classList.add('on');
-  document.querySelectorAll('.nav-t button')[{inicio:0,estudio:1,tarjetas:2,examen:3,logros:4}[id]].classList.add('on');
+  document.querySelector('.nav').style.display=id==='bienvenida'?'none':'flex';
+  if(TABS[id]!==undefined)
+    document.querySelectorAll('.nav-t button')[TABS[id]].classList.add('on');
   if(id==='inicio')pintaInicio();
   if(id==='estudio')pintaCaps();
   if(id==='tarjetas')pintaTarjetas();
@@ -341,8 +345,18 @@ function irTarjetasDificiles(){tjFiltro='dificiles';ir('tarjetas');tjBaraja();}
 function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();iniciar('normal');}
 
 /* ───────── inicio ───────── */
+/* Una línea con quién estudia y qué estudia, en vez de las seis categorías
+   siempre a la vista. El resto del selector vive dentro del <details>. */
+function pintaIdent(){
+  const s=document.getElementById('ident-sum');
+  if(!s)return;
+  s.innerHTML='<span class="id-quien">👤 '+esc(S.nombre||'Sin nombre')+'</span>'+
+    '<span class="id-que">'+esc(CAT().nombre)+' · '+esc(CAT().ev)+'</span>';
+}
+
 function pintaInicio(){
   pintaAlumnos();
+  pintaIdent();
   pintaHoy();
   pintaSelectorCat();
   const ni=document.getElementById('nombre');
@@ -352,6 +366,19 @@ function pintaInicio(){
   const listos=cs.filter(c=>S.prog[c.id]>=100).length;
   const mios=S.examenes.filter(e=>e.cat===S.cat);
   const mejor=mios.length?Math.max(...mios.map(e=>Math.round(e.pts/e.total*100))):0;
+
+  /* El primer día todo va en cero. Cinco tarjetas con un cero no enseñan
+     nada y empujan hacia abajo lo único que sí sirve, que es «Qué estudiar
+     hoy»; la tarjeta aparece cuando ya hay algo que contar. */
+  const hayNumeros=listos>0||mios.length>0||S.racha>0||falladasDe().length>0;
+  const cardStats=document.getElementById('card-stats');
+  if(cardStats)cardStats.style.display=hayNumeros?'block':'none';
+
+  const pn=document.getElementById('prog-nota');
+  if(pn)pn.textContent=listos>=cs.length
+    ?'Terminaste de leer los '+cs.length+' capítulos. Ahora toca repasar.'
+    :'Al terminar de leer un capítulo toca «Ya lo estudié» y el círculo se llena. Vas '+listos+' de '+cs.length+'.';
+
   document.getElementById('stats').innerHTML=
     '<div class="stat"><div class="v">'+listos+'<small style="font-size:.9rem">/'+cs.length+'</small></div><div class="l">Capítulos<br>estudiados</div></div>'+
     '<div class="stat"><div class="v">'+mejor+'<small style="font-size:.9rem">%</small></div><div class="l">Mejor<br>puntaje</div></div>'+
@@ -371,9 +398,6 @@ function pintaInicio(){
       '</svg><div class="al">'+esc(c.label)+'</div><div class="as">'+esc(c.sub)+'</div></button>';
   }).join('');
 
-  document.getElementById('racha').innerHTML=S.racha>0
-    ?'<div style="font-size:2.6rem">🔥</div><div style="font-size:1.3rem;font-weight:800;color:var(--naranja)">'+S.racha+' día'+(S.racha!==1?'s':'')+' seguido'+(S.racha!==1?'s':'')+'</div>'
-    :'<div style="font-size:.88rem;color:var(--gris)">Marca un capítulo como estudiado para empezar tu racha 🔥</div>';
 }
 
 /* ───────── estudio ───────── */
@@ -406,12 +430,13 @@ function verCap(id){
     '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">'+
     '<div><div style="font-size:1.15rem;font-weight:800;color:var(--azul)">'+esc(c.label)+'</div>'+
     '<div style="font-size:.83rem;color:var(--gris)">'+esc(c.sub)+(c.src?' · '+esc(c.src):'')+'</div></div>'+
-    '<span class="pil az">RV1995</span></div>'+
+    '<span class="pil az">'+(esMatutina()?'Matutina':'RV1995')+'</span></div>'+
     secs.map(s=>'<div class="sec"><h3>'+s.t+'</h3>'+s.h+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
     '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+
-    '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button></div>';
+    '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button>'+
+    '<button class="btn gho" onclick="imprimeCapitulo(\''+id+'\')">🖨️ Imprimir este capítulo</button></div>';
   d.style.display='block';
   avanza(id,60);
 }
@@ -615,17 +640,27 @@ function textoNivel(){
     (d>0?' Faltan '+d+' días para el campamento.':'');
 }
 
-function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;pintaMenuEx();}
-function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();pintaMenuEx();}
-function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||0;pintaMenuEx();}
+function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;refrescaEx();}
+function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();refrescaEx();}
+function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||0;refrescaEx();}
+
+/* La pantalla abre diciendo en palabras qué examen va a salir si toca
+   «Comenzar». Antes abría con tres listas desplegables y el usuario tenía
+   que armar el examen para poder empezarlo. */
+const refrescaEx=()=>{pintaExInicio();};
 
 function pintaExInicio(){
-  const n=NPREG(),b=bancoDe().length,f=falladasDe().length;
-  document.getElementById('ex-desc').textContent=n+' preguntas · '+CAT().nombre;
-  document.getElementById('ex-nota').textContent='Banco completo de tu categoría: '+b+' preguntas. El examen real es de '+n+'.';
-  document.getElementById('ex-err').innerHTML=f>=3
-    ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Mis errores ('+f+')</button>':'';
   pintaMenuEx();
+  const b=bancoDe().length,f=falladasDe().length;
+  const nv=nivelEfectivo();
+  const n=Math.min(cuantas||NPREG(),poolNivel().length);
+  document.getElementById('ex-resumen').textContent=n+' preguntas · nivel '+nv+' '+ETIQ_NIVEL[nv];
+  document.getElementById('ex-desc').innerHTML=esc(textoAlcanceImpr())+
+    '<br>'+esc(CAT().nombre)+' · '+esc(CAT().ev);
+  document.getElementById('ex-nota').textContent=
+    'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces.';
+  document.getElementById('ex-err').innerHTML=f>=3
+    ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
 }
 
 function mezcla(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
@@ -1039,5 +1074,303 @@ function pintaLogo(){
   try{document.querySelectorAll('.logo-tl').forEach(i=>{i.src=LOGO_TL;});}catch(e){}
 }
 
+/* ───────── imprimir el material de estudio ─────────
+   Mismo render que la herramienta de Node (fuente/imprimible.js), pero
+   filtrado a lo que le toca al participante activo. Antes la guía en papel
+   solo existía si un adulto corría un script; ahora sale de la app, que es
+   donde está el niño. */
+
+function imprimeGuia(){
+  const html=docExamen([hojaGuia({
+    caps:capsDe(), contenido:CONTENIDO, modulos:modsDe(), contModulos:CONT_MODULOS,
+    logo:LOGO_TL,
+    titulo:'GUÍA DE ESTUDIO',
+    sub:esc(CAT().nombre)+' · '+esc(CAT().edad),
+    meta:CAT().ev+' · '+CAT().alcance,
+    pie:'Mismo material que la app · '+esc(S.nombre||'sin nombre'),
+  })],'Guía de estudio — '+CAT().nombre,
+  'Tu guía completa. En el cuadro de impresión escoge «Guardar como PDF» si la quieres en archivo.');
+  imprimeDoc(html,'Guía de estudio');
+}
+
+function imprimeCapitulo(id){
+  const c=[...capsDe(),...modsDe()].find(x=>x.id===id);
+  if(!c)return;
+  const esMod=!!c.icono;
+  const html=docExamen([hojaGuia({
+    caps:esMod?[]:[c], contenido:CONTENIDO,
+    modulos:esMod?[c]:[], contModulos:CONT_MODULOS,
+    logo:LOGO_TL,
+    titulo:esc(c.label).toUpperCase(),
+    sub:esc(c.sub),
+    meta:CAT().ev+' · '+esc(CAT().nombre),
+  })],esc(c.label),'Un solo capítulo para imprimir.');
+  imprimeDoc(html,c.label);
+}
+
+function imprimeTarjetas(){
+  const t=tarjetasDe();
+  if(!t.length){alertaImpr('No hay tarjetas en esta categoría.');return;}
+  const html=docExamen([hojaTarjetas({
+    tarjetas:t, caps:CAPS, logo:LOGO_TL,
+    titulo:'TARJETAS DE MEMORIA',
+    sub:esc(CAT().nombre)+' · '+esc(CAT().ev),
+  })],'Tarjetas — '+CAT().nombre,
+  'Tarjetas para recortar. Tapa la respuesta con la mano antes de leerla.');
+  imprimeDoc(html,'Tarjetas');
+}
+
+/* Las dos guías completas de los dos eventos, para el director. */
+function imprimeGuiasTodo(){
+  const hojas=[];
+  for(const ev of ['Conexión Bíblica','Devoción Matutina']){
+    const cats=Object.keys(CATS).filter(k=>CATS[k].ev===ev);
+    const ids=new Set();
+    const caps=CAPS.filter(c=>c.cats.some(x=>cats.includes(x))&&!ids.has(c.id)&&ids.add(c.id));
+    const mods=MODULOS.filter(m=>m.cats.some(x=>cats.includes(x)));
+    if(!caps.length)continue;
+    hojas.push(hojaGuia({
+      caps, contenido:CONTENIDO, modulos:mods, contModulos:CONT_MODULOS,
+      logo:LOGO_TL,
+      titulo:'GUÍA DE ESTUDIO — '+ev.toUpperCase(),
+      sub:'Material completo del evento',
+      meta:'Los capítulos marcados con ★ también aplican para la categoría de 7 a 9 años',
+      marca:c=>c.cats.includes('av')||c.cats.includes('dm2'),
+    }));
+  }
+  imprimeDoc(docExamen(hojas,'Guías de los dos eventos',
+    'Las guías completas de los dos eventos, cada una desde su propia hoja.'),
+    'Guías completas');
+}
+
+/* ───────── pasar y compartir el progreso ─────────
+   MECANISMO
+   Todo el progreso vive en el localStorage del navegador donde se estudió.
+   Eso no se puede consultar desde otro aparato, así que la única forma de
+   moverlo es sacarlo como texto. El estado se convierte a JSON, se pasa a
+   base64 (para que sobreviva a WhatsApp, que rompe los saltos de línea y las
+   comillas) y se le pone un prefijo que dice qué trae.
+
+   DOS CÓDIGOS DISTINTOS, A PROPÓSITO
+   · CB1R = resumen. Corto, para mandar por chat. Trae cómo va: capítulos
+     leídos, exámenes, racha, insignias, cuántos errores le faltan. Al
+     importarlo NO se toca nada: se muestra en pantalla como un boletín.
+   · CB1F = ficha completa. Trae todo, incluidos los errores y las tarjetas
+     pregunta por pregunta, para restaurarla en otro aparato. Es largo, así
+     que además se ofrece como archivo.
+
+   Se separan porque son dos necesidades distintas: el director quiere VER, y
+   quien cambia de teléfono quiere RECUPERAR. Un solo código haría que el
+   director pegue por chat 4.000 caracteres para ver un porcentaje. */
+
+const aB64=s=>btoa(unescape(encodeURIComponent(s)));
+const deB64=s=>decodeURIComponent(escape(atob(s)));
+
+function resumenDe(al){
+  const c=CATS[al.cat]||CATS.av;
+  const caps=CAPS.filter(x=>x.cats.includes(al.cat));
+  return {
+    n:al.nombre, c:al.cat, r:al.racha, i:al.insignias||[],
+    p:caps.map(x=>x.id+'='+(al.prog[x.id]||0)),
+    e:(al.examenes||[]).filter(x=>x.cat===al.cat).slice(-12)
+      .map(x=>[x.fecha,x.pts,x.total,x.nv,x.modo].join('/')),
+    f:Object.keys(al.fq||{}).length,
+    d:Object.values(al.ft||{}).filter(v=>v>=2).length,
+    tt:tarjetasDe().length, cn:c.nombre, ce:c.ev,
+  };
+}
+
+const codigoResumen=()=>'CB1R'+aB64(JSON.stringify(resumenDe(S)));
+const codigoCompleto=()=>'CB1F'+aB64(JSON.stringify({n:S.nombre,a:S}));
+
+function leeCodigo(txt){
+  const s=String(txt||'').replace(/\s+/g,'');
+  const m=/^CB1([RF])([A-Za-z0-9+/=]+)$/.exec(s);
+  if(!m)return null;
+  try{const o=JSON.parse(deB64(m[2]));o.tipo=m[1];return o;}catch(e){return null;}
+}
+
+function ponCodigo(cual){
+  const t=document.getElementById('exp-txt');
+  if(!t)return;
+  const cod=cual==='full'?codigoCompleto():codigoResumen();
+  t.value=cod;
+  document.getElementById('exp-info').innerHTML=cual==='full'
+    ?'<strong>Ficha completa</strong> de '+esc(S.nombre||'este participante')+
+     ', '+cod.length+' caracteres. Sirve para recuperar todo en otro aparato. '+
+     'Si es muy largo para el chat, usa el botón de guardar como archivo.'
+    :'<strong>Resumen</strong> de '+esc(S.nombre||'este participante')+', '+
+     cod.length+' caracteres. Se puede pegar en un chat. Muestra cómo va, '+
+     'pero no restaura el progreso.';
+  const g=document.getElementById('exp-guardar');
+  if(g){
+    try{
+      const b=new Blob([cod],{type:'text/plain'});
+      g.href=URL.createObjectURL(b);
+      g.download='progreso-'+(S.nombre||'participante').replace(/[^\w-]+/g,'-')+'.txt';
+      g.style.display=cual==='full'?'inline-block':'none';
+    }catch(e){g.style.display='none';}
+  }
+}
+
+function copiaCodigo(){
+  const t=document.getElementById('exp-txt');
+  if(!t||!t.value){ponCodigo('res');return;}
+  try{t.select();document.execCommand('copy');}catch(e){}
+  if(navigator.clipboard)navigator.clipboard.writeText(t.value).catch(()=>{});
+  document.getElementById('exp-info').innerHTML='<strong>Copiado.</strong> Pégalo en el chat.';
+}
+
+/* Boletín de solo lectura: lo que ve el director al pegar un resumen. */
+function pintaBoletin(o){
+  const caps=o.p.map(s=>s.split('='));
+  const listos=caps.filter(([,v])=>Number(v)>=100).length;
+  const ex=o.e.map(s=>s.split('/'));
+  const mejor=ex.length?Math.max(...ex.map(x=>Math.round(x[1]/x[2]*100))):0;
+  const ult=ex.slice(-5).map(x=>'<tr><td>'+esc(x[0])+'</td><td>'+esc(x[1])+'/'+esc(x[2])+
+    '</td><td>'+Math.round(x[1]/x[2]*100)+'%</td><td>nivel '+esc(x[3])+'</td></tr>').join('');
+  return '<div class="bol"><h3>'+esc(o.n||'Sin nombre')+'</h3>'+
+    '<p class="nota">'+esc(o.cn||'')+' · '+esc(o.ce||'')+'</p>'+
+    '<div class="bol-g">'+
+    '<div><b>'+listos+'/'+caps.length+'</b><span>capítulos leídos</span></div>'+
+    '<div><b>'+mejor+'%</b><span>mejor puntaje</span></div>'+
+    '<div><b>'+ex.length+'</b><span>exámenes</span></div>'+
+    '<div><b>'+o.r+'🔥</b><span>días de racha</span></div>'+
+    '<div><b>'+o.d+'/'+(o.tt||'?')+'</b><span>tarjetas dominadas</span></div>'+
+    '<div><b>'+o.f+'</b><span>errores por repasar</span></div>'+
+    '</div>'+
+    (ult?'<table class="bol-t"><thead><tr><th>Fecha</th><th>Puntaje</th><th>%</th>'+
+      '<th>Nivel</th></tr></thead><tbody>'+ult+'</tbody></table>':
+      '<p class="nota">Todavía no ha hecho exámenes.</p>')+
+    '<p class="nota">Esto es solo una foto de cómo va. No cambió nada de tus datos.</p></div>';
+}
+
+function importaCodigo(){
+  const t=document.getElementById('imp-txt');
+  const out=document.getElementById('imp-out');
+  if(!t||!out)return;
+  const o=leeCodigo(t.value);
+  if(!o){out.innerHTML='<p class="nota" style="color:var(--rojo)">Ese código no se '+
+    'entiende. Tiene que empezar en <strong>CB1R</strong> o <strong>CB1F</strong> y '+
+    'venir completo, sin cortar.</p>';return;}
+  if(o.tipo==='R'){out.innerHTML=pintaBoletin(o);return;}
+  impPendiente=o;
+  out.innerHTML='<p class="nota"><strong>Ficha completa de '+esc(o.n||'sin nombre')+
+    '.</strong> ¿Qué quieres hacer?</p>'+
+    '<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">'+
+    '<button class="btn azul" onclick="aplicaImport(\'nueva\')">➕ Agregarla como ficha nueva</button>'+
+    '<button class="btn gho" onclick="aplicaImport(\'reemplaza\')">♻️ Reemplazar la ficha actual</button>'+
+    '</div>';
+}
+
+let impPendiente=null;
+
+function aplicaImport(como){
+  if(!impPendiente)return;
+  const al=normalizar(impPendiente.a);
+  if(como==='nueva'){
+    if(alumnos().length>=MAX_ALUMNOS){
+      document.getElementById('imp-out').innerHTML='<p class="nota" style="color:var(--rojo)">'+
+        'Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una antes de agregar otra.</p>';
+      return;
+    }
+    const id=nuevoId();
+    DB.alumnos[id]=al;guardar();
+    impPendiente=null;
+    cambiaAlumno(id);
+    return;
+  }
+  if(!confirm('¿Reemplazar el progreso de '+(S.nombre||'esta ficha')+' por el de '+
+    (al.nombre||'la ficha importada')+'? Lo actual se pierde.'))return;
+  DB.alumnos[DB.activo]=al;S=al;guardar();
+  impPendiente=null;
+  marcaCat();pintaInicio();pintaCaps();ir('inicio');
+}
+
+/* ───────── bienvenida ─────────
+   MECANISMO
+   La categoría (me / av / pa / gm / dm1 / dm2) es el dato del que dependen
+   los capítulos que se ven, las preguntas que salen y el techo de
+   dificultad. Antes se escogía tocando una de seis tarjetas en el Inicio,
+   con «Aventureros» puesto por defecto: un niño de cinco años que no
+   tocaba nada estudiaba durante semanas el material de siete a nueve.
+   Aquí la categoría ya no se escoge: se deduce de dos preguntas que un
+   niño sí sabe contestar, su edad y su evento.
+
+   CUÁNDO SE MUESTRA
+   Solo la primera vez: cuando hay un único participante, sin nombre y sin
+   nada de progreso. Cualquier dato guardado significa que ya pasó por aquí.
+
+   Si compite en los dos eventos se crean dos fichas, porque el progreso de
+   Daniel y el de la matutina no se mezclan. */
+
+let bvEdadSel='av';
+
+const esNuevo=()=>alumnos().length===1&&!S.nombre&&!S.examenes.length&&
+  !Object.values(S.prog).some(v=>v>0);
+
+function bvPaso(n){
+  ['bv-1','bv-2','bv-3'].forEach((id,i)=>{
+    const e=document.getElementById(id);
+    if(e)e.classList.toggle('on',i===n-1);
+  });
+  window.scrollTo({top:0});
+}
+
+function bvSigue(){
+  const v=document.getElementById('bv-nombre').value.trim();
+  const err=document.getElementById('bv-err');
+  if(v.length<2){err.textContent='Escribe tu nombre para seguir.';return;}
+  err.textContent='';
+  S.nombre=v.slice(0,60);guardar();
+  document.getElementById('bv-saludo').textContent='Hola, '+v.split(' ')[0]+'. ¿Cuántos años tienes?';
+  bvPaso(2);
+}
+
+function bvAtras(n){bvPaso(n);}
+
+function bvEdad(e){
+  bvEdadSel=e;
+  /* Adultos y Guías Mayores no tienen categoría en la matutina: el
+     reglamento solo abre 4 a 6 y 7 a 9. Para ellos no hay paso 3. */
+  if(e==='pa'||e==='gm'){ponCatBV(e);bvTermina();return;}
+  bvPaso(3);
+}
+
+function bvEvento(ev){
+  const cb=bvEdadSel;
+  const dm=bvEdadSel==='me'?'dm1':'dm2';
+  if(ev==='cb')ponCatBV(cb);
+  else if(ev==='dm')ponCatBV(dm);
+  else{
+    /* Dos fichas con el mismo nombre, una por evento: el progreso de Daniel
+       y el de la matutina son cuentas separadas y no se deben mezclar.
+       Se escribe directo en DB en vez de usar agregaAlumno() porque ese
+       cambia de participante y navega, y aquí todavía estamos en la
+       bienvenida. */
+    ponCatBV(cb);
+    if(alumnos().length<MAX_ALUMNOS){
+      const id=nuevoId();
+      const otro=normalizar(null);
+      otro.nombre=S.nombre;otro.cat=dm;
+      DB.alumnos[id]=otro;
+      guardar();
+    }
+  }
+  bvTermina();
+}
+
+function ponCatBV(c){S.cat=c;guardar();}
+
+function bvTermina(){
+  marcaCat();
+  ir('inicio');
+  const id=document.getElementById('ident');
+  if(id)id.open=false;
+}
+
 /* ───────── arranque ───────── */
-try{pintaLogo();marcaCat();pintaInicio();}catch(e){console.error(e);}
+try{
+  pintaLogo();marcaCat();pintaInicio();
+  if(esNuevo()){ir('bienvenida');bvPaso(1);}
+}catch(e){console.error(e);}

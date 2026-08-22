@@ -11,16 +11,24 @@ const nodo=()=>({classList:{add(){},remove(){},toggle(){}},value:'',textContent:
    (los botones del nav), no solo lo recorre. */
 const stub=`
 let localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>{store[k]=v},removeItem:k=>{delete store[k]}};
+/* getElementById devuelve siempre el MISMO nodo por id. Antes devolvía uno
+   nuevo cada vez, así que un valor escrito en un campo no se podía volver a
+   leer y el recorrido de la bienvenida no era comprobable. */
+let cacheEl={};
 let document={
   body:nodo(),
   querySelectorAll:()=>[nodo(),nodo(),nodo(),nodo(),nodo()],
-  getElementById:()=>nodo(),
+  getElementById:id=>(cacheEl[id]=cacheEl[id]||nodo()),
   querySelector:()=>nodo(),
 };
 let window={scrollTo(){}};
 let setInterval=()=>0, clearInterval=()=>{}, confirm=()=>true;
+let navigator={};
+let Blob=function(){}, URL={createObjectURL:()=>'blob:x'};
+let btoa=s=>Buffer.from(s,'binary').toString('base64');
+let atob=s=>Buffer.from(s,'base64').toString('binary');
 `;
-const fn=new Function('store','nodo',stub+js+`
+const fn=new Function('store','nodo','Buffer',stub+js+`
 return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
@@ -28,8 +36,11 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
         ponNivel:v=>{nivel=v},
-        DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre};`);
-const A=fn(store,nodo);
+        DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre,
+        esNuevo, bvSigue, bvEdad, bvEvento, bvPaso, ir,
+        codigoResumen, codigoCompleto, leeCodigo, resumenDe, tarjetasDe,
+        el:id=>document.getElementById(id)};`);
+const A=fn(store,nodo,Buffer);
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 
@@ -259,6 +270,141 @@ ok(Object.keys(db3.alumnos).length===2 && db3.alumnos[db3.activo],
 const muchos={alumnos:{}};
 for(let i=0;i<30;i++)muchos.alumnos['k'+i]={nombre:'n'+i};
 ok(Object.keys(A.normalizarDB(muchos).alumnos).length<=12,'normalizarDB no pasa de 12 participantes');
+
+
+/* ───────── bienvenida ─────────
+   Es el punto donde más se puede perder el concurso sin darse cuenta: si un
+   niño de cinco años queda con la categoría de siete a nueve, estudia el
+   material equivocado durante semanas y nadie lo nota hasta el examen. */
+
+/* Arranque limpio: un solo participante, sin nombre y sin progreso. */
+store={};
+const B=fn(store,nodo,Buffer);
+ok(B.esNuevo(),'Un usuario recién llegado se detecta como nuevo');
+
+/* Sin nombre no avanza: el nombre es lo que separa una ficha de otra. */
+B.bvSigue();
+ok(B.el('bv-err').textContent.length>0,'Sin nombre, la bienvenida no deja seguir');
+
+B.el('bv-nombre').value='Isabella';
+B.bvSigue();
+ok(B.S().nombre==='Isabella','El nombre queda guardado en el paso 1');
+
+/* Edad + evento definen la categoría. Nadie escoge «av» ni «dm1» a mano. */
+B.bvEdad('me'); B.bvEvento('cb');
+ok(B.S().cat==='me','4 a 6 años en Conexión Bíblica queda en Menores');
+ok(B.capsDe().every(c=>c.id.charAt(0)==='d'),'Menores solo ve capítulos de Daniel');
+ok(!B.esNuevo(),'Después de la bienvenida ya no se considera usuario nuevo');
+
+store={};
+const C=fn(store,nodo,Buffer);
+C.el('bv-nombre').value='Camilo';
+C.bvSigue(); C.bvEdad('me'); C.bvEvento('dm');
+ok(C.S().cat==='dm1','4 a 6 años en matutina queda en Matutina menores');
+
+store={};
+const D=fn(store,nodo,Buffer);
+D.el('bv-nombre').value='Ana';
+D.bvSigue(); D.bvEdad('av'); D.bvEvento('dm');
+ok(D.S().cat==='dm2','7 a 9 años en matutina queda en Matutina Aventureros');
+
+/* Los adultos no tienen categoría en la matutina: el reglamento solo abre
+   4 a 6 y 7 a 9, así que para ellos no hay paso 3. */
+store={};
+const E=fn(store,nodo,Buffer);
+E.el('bv-nombre').value='Papá';
+E.bvSigue(); E.bvEdad('pa');
+ok(E.S().cat==='pa','Un adulto queda en Padres y consejeros sin pasar por el paso 3');
+
+store={};
+const G=fn(store,nodo,Buffer);
+G.el('bv-nombre').value='Guía';
+G.bvSigue(); G.bvEdad('gm');
+ok(G.S().cat==='gm','Guía Mayor queda en su categoría directamente');
+
+/* Quien compite en los dos eventos necesita dos fichas: el progreso de
+   Daniel y el de la matutina son cuentas separadas. */
+store={};
+const H=fn(store,nodo,Buffer);
+H.el('bv-nombre').value='María Camila';
+H.bvSigue(); H.bvEdad('av'); H.bvEvento('dos');
+const fichas=H.alumnos().map(([,al])=>al.cat).sort();
+ok(H.alumnos().length===2,'«En los dos» crea dos fichas de estudio');
+ok(fichas.join(',')==='av,dm2','Las dos fichas son Aventureros y Matutina Aventureros');
+ok(H.alumnos().every(([,al])=>al.nombre==='María Camila'),'Las dos fichas llevan el mismo nombre');
+
+/* Un usuario que ya tiene progreso nunca debe volver a ver la bienvenida. */
+store={};
+const I=fn(store,nodo,Buffer);
+I.ponNombre('Con progreso');
+ok(!I.esNuevo(),'Con nombre guardado ya no se muestra la bienvenida');
+
+
+/* ───────── códigos de progreso ─────────
+   Son dos códigos con propósitos distintos y el riesgo está en confundirlos:
+   el resumen no debe poder escribir nada, y la ficha completa no debe perder
+   nada al ir y volver. */
+store={};
+const J=fn(store,nodo,Buffer);
+J.ponNombre('Isabella');
+J.ponCat('av');
+J.S().prog.d1=100; J.S().prog.d2=100; J.S().racha=4;
+J.S().examenes=[{pts:11,total:15,cat:'av',fecha:'2026-08-20',modo:'normal',nv:1},
+                {pts:14,total:15,cat:'av',fecha:'2026-08-21',modo:'normal',nv:2}];
+const qJ=J.bancoDe()[0];
+J.S().fq[J.claveQ(qJ)]={m:2};
+J.tarjetasDe().slice(0,9).forEach(t=>{J.S().ft[J.claveT(t)]=2});
+
+const cRes=J.codigoResumen();
+const cFull=J.codigoCompleto();
+ok(cRes.startsWith('CB1R'),'El código de resumen empieza en CB1R');
+ok(cFull.startsWith('CB1F'),'El código completo empieza en CB1F');
+
+/* El resumen tiene que caber en un mensaje de chat. Si un día crece, esta
+   prueba avisa antes de que alguien intente pegar 4.000 caracteres. */
+ok(cRes.length<700,'El resumen cabe en un mensaje de chat ('+cRes.length+' caracteres)');
+ok(cFull.length>cRes.length,'El código completo es más grande que el resumen');
+
+const leidoR=J.leeCodigo(cRes);
+ok(leidoR&&leidoR.tipo==='R','El resumen se reconoce como resumen');
+ok(leidoR.n==='Isabella'&&leidoR.c==='av','El resumen trae el nombre y la categoría');
+ok(leidoR.e.length===2&&leidoR.r===4,'El resumen trae los exámenes y la racha');
+ok(leidoR.f===1&&leidoR.d===9,'El resumen trae los errores pendientes y las tarjetas dominadas');
+
+/* Lo que NO debe traer: el resumen es para ver, no para restaurar. Si llevara
+   el estado completo, pegarlo en un chat expondría todo y además invitaría a
+   usarlo para importar, que es lo que no queremos. */
+ok(!leidoR.a&&!leidoR.fq&&!leidoR.ft,'El resumen no lleva el estado completo');
+
+const leidoF=J.leeCodigo(cFull);
+ok(leidoF&&leidoF.tipo==='F','El código completo se reconoce como ficha completa');
+const rest=J.normalizar(leidoF.a);
+ok(rest.nombre==='Isabella'&&rest.cat==='av'&&rest.prog.d1===100&&rest.racha===4,
+  'La ficha completa se restaura con nombre, categoría, progreso y racha');
+ok(rest.examenes.length===2,'La ficha completa conserva el historial de exámenes');
+ok(Object.keys(rest.fq).length===1&&Object.values(rest.ft).filter(v=>v>=2).length===9,
+  'La ficha completa conserva los errores y las tarjetas dominadas');
+
+/* Un código roto no puede tumbar la app ni pasar como bueno. */
+ok(J.leeCodigo('')===null,'Un código vacío se rechaza');
+ok(J.leeCodigo('CB1Rbasura!!!')===null,'Un código con basura se rechaza');
+ok(J.leeCodigo('CB1X'+cRes.slice(4))===null,'Un prefijo desconocido se rechaza');
+ok(J.leeCodigo(cRes.slice(0,cRes.length-20))===null,'Un código cortado se rechaza');
+ok(J.leeCodigo('hola, mira como voy')===null,'Un texto cualquiera se rechaza');
+
+/* WhatsApp mete saltos de línea y espacios al copiar y pegar. */
+const partido=cRes.slice(0,40)+'\n '+cRes.slice(40,90)+'\n'+cRes.slice(90);
+const leidoP=J.leeCodigo(partido);
+ok(leidoP&&leidoP.n==='Isabella','Un código con saltos de línea y espacios se lee igual');
+
+/* Tildes y eñes: si el nombre se rompe al codificar, el boletín sale mal. */
+store={};
+const K=fn(store,nodo,Buffer);
+K.ponNombre('María Camila Ñuñez');
+K.ponCat('dm2');
+const leidoK=K.leeCodigo(K.codigoResumen());
+ok(leidoK.n==='María Camila Ñuñez','Los nombres con tildes y eñes sobreviven al código');
+ok(leidoK.c==='dm2'&&leidoK.ce==='Devoción Matutina','El resumen dice de qué evento es');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

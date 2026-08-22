@@ -16,10 +16,23 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 .nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .nav-b{color:#fff;font-size:1.05rem;font-weight:800;padding:.9rem 1rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.nav-t{display:flex;flex:1;overflow-x:auto}
-.nav-t button{color:rgba(255,255,255,.65);font-size:.82rem;font-weight:600;padding:0 .9rem;cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;min-height:46px;white-space:nowrap;font-family:inherit}
+.nav-t{display:flex;flex:1}
+.nav-t button{color:rgba(255,255,255,.7);font-weight:700;cursor:pointer;border:none;background:none;
+  border-bottom:3px solid transparent;min-height:52px;font-family:inherit;flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:.3rem .1rem}
+.nav-t button i{font-style:normal;font-size:1.15rem;line-height:1}
+.nav-t button b{font-size:.68rem;font-weight:700;letter-spacing:-.1px}
 .nav-t button:hover{color:#fff}
 .nav-t button.on{color:#fff;border-bottom-color:#D4AC0D}
+/* En un teléfono la barra no cabe en una fila: el logo mas cinco pestañas
+   se pasaban 16px y «Logros» quedaba cortado. En pantalla angosta el logo va
+   arriba y las pestañas abajo, a lo ancho. */
+@media(max-width:620px){
+  .nav{flex-direction:column}
+  .nav-b{padding:.5rem .8rem;font-size:.92rem;justify-content:center}
+  .nav-t{border-top:1px solid rgba(255,255,255,.15)}
+  .nav-t button{min-height:50px}
+}
 
 .pantalla{display:none;padding:1.5rem 1rem;max-width:880px;margin:0 auto}
 .pantalla.on{display:block}
@@ -47,6 +60,15 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .stat .l{font-size:.71rem;color:var(--gris);margin-top:5px;font-weight:600}
 
 .rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:.9rem}
+/* Con 118px de mínimo caben dos por fila en un teléfono y siete capítulos se
+   vuelven una columna de scroll. A 96px caben tres y el progreso completo se
+   ve de un vistazo, que es para lo que sirve. */
+@media(max-width:560px){
+  .rejilla{grid-template-columns:repeat(3,1fr);gap:.6rem}
+  .anillo{padding:.7rem .25rem}
+  .anillo .al{font-size:.7rem}
+  .anillo .as{display:none}
+}
 .anillo{background:var(--card);border-radius:14px;box-shadow:var(--sh);padding:1rem .5rem;text-align:center;cursor:pointer;border:2px solid transparent;font-family:inherit}
 .anillo:hover{transform:translateY(-2px)}
 .anillo.full{border-color:var(--verde)}
@@ -244,6 +266,101 @@ body.av .tj .rev{font-size:1.08rem}
   .nav,.menu-ex,.menu-impr,.tj-btns,.btn{display:none!important}
   .pantalla{display:block!important}
 }
+
+/* ───────── bienvenida ─────────
+   La primera vez la app no puede ser un muro. Antes, una niña de nueve años
+   caía en un Inicio de 3.200px de alto con seis categorías a escoger, entre
+   ellas «Padres y consejeros» y «Guías Mayores». Escoger mal significa
+   estudiar el material equivocado durante siete semanas, así que la
+   categoría ya no se escoge: se deduce de la edad y del evento. */
+.pantalla.bv{padding:1.2rem 1rem 3rem;max-width:520px}
+.bv-caja{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:1.6rem 1.3rem 1.8rem;text-align:center}
+.bv-caja .logo-hero{height:52px;margin:0 auto .6rem;display:block}
+.bv-paso{display:none}
+.bv-paso.on{display:block}
+.bv-num{font-size:.7rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.8px}
+.bv-caja h1{font-size:1.6rem;font-weight:900;color:var(--azul);margin:.4rem 0 .5rem;line-height:1.2}
+.bv-p{font-size:.9rem;color:var(--gris);line-height:1.6;margin-bottom:1.2rem}
+.bv-lb{display:block;font-size:.9rem;font-weight:800;color:var(--azul);margin-bottom:.4rem;text-align:left}
+.bv-in{width:100%;padding:.9rem 1rem;border:3px solid #e5e7eb;border-radius:12px;font-size:1.05rem;font-family:inherit;min-height:54px}
+.bv-in:focus{outline:none;border-color:var(--cielo)}
+.bv-err{color:var(--rojo);font-size:.83rem;font-weight:700;min-height:1.1rem;margin:.35rem 0;text-align:left}
+.bv-btn{width:100%;justify-content:center;font-size:1rem;min-height:54px}
+.bv-op{display:block;width:100%;background:#f8f9ff;border:3px solid #e5e7eb;border-radius:14px;
+  padding:.95rem 1rem;margin-bottom:.7rem;cursor:pointer;font-family:inherit;text-align:left;min-height:60px}
+.bv-op:hover{border-color:var(--cielo);background:#fff}
+.bv-op b{display:block;font-size:1.02rem;font-weight:800;color:var(--azul)}
+.bv-op small{display:block;font-size:.79rem;color:var(--gris);margin-top:2px;line-height:1.4}
+.bv-link{background:none;border:none;color:var(--gris);font-family:inherit;font-size:.83rem;
+  text-decoration:underline;cursor:pointer;padding:.7rem;min-height:44px}
+
+/* ───────── barra de identidad ─────────
+   Reemplaza al muro de seis categorías: una línea con quién estudia y qué
+   estudia. Se abre solo si hay que cambiar algo. */
+.ident{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:1.1rem;overflow:hidden}
+.ident>summary{padding:.9rem 1.1rem;cursor:pointer;font-size:.9rem;font-weight:700;color:var(--azul);
+  list-style:none;display:flex;align-items:center;gap:.5rem;min-height:50px;flex-wrap:wrap}
+.ident>summary::-webkit-details-marker{display:none}
+.ident>summary::after{content:'Cambiar';margin-left:auto;font-size:.76rem;font-weight:800;color:var(--cielo);
+  border:2px solid var(--cielo);border-radius:50px;padding:.25rem .7rem;white-space:nowrap}
+.ident[open]>summary::after{content:'Cerrar'}
+.ident-cuerpo{padding:0 1.1rem 1.2rem;border-top:1px solid #eef0f5}
+.ident-cuerpo h3{font-size:.85rem;font-weight:800;color:var(--azul);margin:1rem 0 .5rem}
+.id-quien{font-weight:900}
+.id-que{color:var(--gris);font-weight:600;font-size:.82rem}
+
+/* ───────── secciones que se abren ─────────
+   Lo que no se necesita para estudiar hoy no ocupa pantalla: ajustes del
+   examen, impresión del director, ayuda y borrado de datos. */
+details.card{padding:0}
+details.card>summary{padding:1.1rem 1.4rem;cursor:pointer;font-size:.93rem;font-weight:700;
+  color:var(--azul);list-style:none;display:flex;align-items:center;min-height:50px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:'▸';margin-left:auto;color:var(--cielo);font-size:1.1rem}
+details.card[open]>summary::after{content:'▾'}
+details.card.dir>summary{color:var(--gris)}
+.det-cuerpo,.ayuda-cuerpo{padding:.2rem 1.4rem 1.3rem;border-top:1px solid #eef0f5}
+.det-cuerpo>p,.ayuda-cuerpo>p{font-size:.87rem;line-height:1.65;color:var(--gris);margin:.7rem 0}
+.det-cuerpo>p strong,.ayuda-cuerpo>p strong{color:var(--azul)}
+
+/* ───────── examen: la acción primero ─────────
+   Antes esta pantalla abría con tres listas desplegables, dos botones de
+   empezar y cuatro de imprimir: nueve controles antes de hacer nada. */
+.card.ex-hoy{border-left:5px solid var(--naranja);text-align:center}
+.ex-h{font-size:.78rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.8px}
+.ex-big{font-size:1.45rem;font-weight:900;color:var(--azul);margin:.35rem 0 .2rem;line-height:1.25}
+.ex-sub{font-size:.85rem;color:var(--gris);margin-bottom:1.1rem;line-height:1.5}
+.ex-go{width:100%;justify-content:center;font-size:1.05rem;min-height:56px}
+#ex-err{margin-top:.8rem}
+
+/* Franja de identidad de la iglesia. Sustituye al hero grande que ocupaba
+   una pantalla entera sin decir nada nuevo, pero mantiene el logo visible:
+   quien abre la app tiene que ver de dónde viene el material. */
+.marca{display:flex;align-items:center;gap:.8rem;background:var(--card);border-radius:var(--r);
+  box-shadow:var(--sh);padding:.8rem 1.1rem;margin-bottom:1.1rem}
+.logo-marca{height:34px;width:auto;flex:none}
+.marca .mt{font-size:.9rem;font-weight:800;color:var(--azul);line-height:1.3}
+.marca .ms{font-size:.72rem;color:var(--gris);line-height:1.4;margin-top:2px}
+@media(max-width:560px){.marca{padding:.65rem .9rem;gap:.6rem}.marca .mt{font-size:.82rem}.logo-marca{height:28px}}
+
+/* Código de progreso: un area de texto que se pueda seleccionar completa de
+   un toque, con letra monoespaciada para que se note si quedó cortado. */
+textarea.cod{width:100%;min-height:80px;padding:.6rem .7rem;border:2px solid #e5e7eb;
+  border-radius:8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;
+  line-height:1.45;resize:vertical;word-break:break-all}
+textarea.cod:focus{outline:none;border-color:var(--cielo)}
+
+/* Boletín: lo que se ve al pegar un código de resumen. Es de solo lectura, y
+   se ve distinto al resto para que nadie lo confunda con su propio progreso. */
+.bol{background:#f8f9ff;border:2px solid var(--cielo);border-radius:12px;padding:1rem}
+.bol h3{font-size:1.05rem;font-weight:900;color:var(--azul)}
+.bol-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:.6rem;margin:.8rem 0}
+.bol-g>div{background:#fff;border-radius:10px;padding:.6rem .4rem;text-align:center}
+.bol-g b{display:block;font-size:1.25rem;font-weight:900;color:var(--naranja);line-height:1.1}
+.bol-g span{display:block;font-size:.66rem;color:var(--gris);font-weight:600;margin-top:3px}
+.bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.78rem}
+.bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
+.bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
 </style>
 </head>
 <body>
@@ -254,21 +371,84 @@ body.av .tj .rev{font-size:1.08rem}
     <span>Conexión Bíblica</span>
   </div>
   <div class="nav-t">
-    <button class="on" onclick="ir('inicio')">🏠 Inicio</button>
-    <button onclick="ir('estudio')">📖 Estudiar</button>
-    <button onclick="ir('tarjetas')">🃏 Tarjetas</button>
-    <button onclick="ir('examen')">✏️ Examen</button>
-    <button onclick="ir('logros')">🏆 Logros</button>
+    <button class="on" onclick="ir('inicio')"><i>🏠</i><b>Inicio</b></button>
+    <button onclick="ir('estudio')"><i>📖</i><b>Estudiar</b></button>
+    <button onclick="ir('tarjetas')"><i>🃏</i><b>Tarjetas</b></button>
+    <button onclick="ir('examen')"><i>✏️</i><b>Examen</b></button>
+    <button onclick="ir('logros')"><i>🏆</i><b>Logros</b></button>
   </div>
 </nav>
 
-<div id="p-inicio" class="pantalla on">
-  <div class="hero">
+<div id="p-bienvenida" class="pantalla bv">
+  <div class="bv-caja">
     <img class="logo-hero logo-tl" alt="Iglesia Adventista Tierra Linda">
-    <h1>Conexión Bíblica</h1>
-    <p>Libro de Daniel · Profetas y Reyes · Reina Valera 1995</p>
-    <p class="hero-igl">Iglesia Adventista del Séptimo Día · Tierra Linda</p>
+
+    <div class="bv-paso on" id="bv-1">
+      <div class="bv-num">Paso 1 de 3</div>
+      <h1>¡Hola!</h1>
+      <p class="bv-p">Esta app te prepara para el campamento del 9 de octubre.
+      Antes de empezar, dos preguntas.</p>
+      <label class="bv-lb" for="bv-nombre">¿Cómo te llamas?</label>
+      <input id="bv-nombre" class="bv-in" type="text" placeholder="Tu nombre"
+             autocomplete="off" onkeydown="if(event.key==='Enter')bvSigue()">
+      <div class="bv-err" id="bv-err"></div>
+      <button class="btn nar bv-btn" onclick="bvSigue()">Siguiente →</button>
+    </div>
+
+    <div class="bv-paso" id="bv-2">
+      <div class="bv-num">Paso 2 de 3</div>
+      <h1 id="bv-saludo">¿Cuántos años tienes?</h1>
+      <p class="bv-p">Esto decide qué capítulos vas a estudiar. Si te
+      equivocas, se puede cambiar después.</p>
+      <button class="bv-op" onclick="bvEdad('me')">
+        <b>4, 5 o 6 años</b><small>Solo el libro de Daniel</small></button>
+      <button class="bv-op" onclick="bvEdad('av')">
+        <b>7, 8 o 9 años</b><small>Daniel y Profetas y Reyes</small></button>
+      <button class="bv-op" onclick="bvEdad('pa')">
+        <b>Soy adulto</b><small>Papá, mamá o consejero del club</small></button>
+      <button class="bv-link" onclick="bvEdad('gm')">Soy Guía Mayor (otro evento)</button>
+      <button class="bv-link" onclick="bvAtras(1)">← Volver</button>
+    </div>
+
+    <div class="bv-paso" id="bv-3">
+      <div class="bv-num">Paso 3 de 3</div>
+      <h1>¿En qué evento participas?</h1>
+      <p class="bv-p">Son dos concursos distintos, con material distinto.</p>
+      <button class="bv-op" onclick="bvEvento('cb')">
+        <b>📖 Conexión Bíblica</b><small>El libro de Daniel y Profetas y Reyes</small></button>
+      <button class="bv-op" onclick="bvEvento('dm')">
+        <b>🌅 Devoción Matutina</b><small>«Héroes y villanos», el mes de octubre</small></button>
+      <button class="bv-op" onclick="bvEvento('dos')">
+        <b>🏆 En los dos</b><small>Te creo una ficha de estudio para cada uno</small></button>
+      <button class="bv-link" onclick="bvAtras(2)">← Volver</button>
+    </div>
   </div>
+</div>
+
+<div id="p-inicio" class="pantalla on">
+  <div class="marca">
+    <img class="logo-marca logo-tl" alt="Iglesia Adventista Tierra Linda">
+    <div>
+      <div class="mt">Conexión Bíblica · Devoción Matutina</div>
+      <div class="ms">Club de Aventureros · Iglesia Adventista Tierra Linda</div>
+    </div>
+  </div>
+
+  <details class="ident" id="ident">
+    <summary id="ident-sum"></summary>
+    <div class="ident-cuerpo">
+      <h3>👥 ¿Quién estudia?</h3>
+      <div class="alu-sel" id="alu-sel"></div>
+      <input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">
+      <p class="nota">Cada participante guarda su <strong>propio progreso</strong>.
+      Toca un nombre para cambiar de persona.</p>
+      <h3>🎯 Categoría y evento</h3>
+      <div class="cat-sel" id="cat-sel"></div>
+      <p class="nota">La categoría define qué capítulos ves y de dónde salen
+      las preguntas. Las del reglamento son las tres primeras de cada evento;
+      <strong>Guías Mayores</strong> es el alcance ampliado de otro evento.</p>
+    </div>
+  </details>
 
   <div class="card hoy">
     <h2>📌 Qué estudiar hoy</h2>
@@ -276,41 +456,56 @@ body.av .tj .rev{font-size:1.08rem}
   </div>
 
   <div class="card">
-    <h2>👥 ¿Quién estudia?</h2>
-    <div class="alu-sel" id="alu-sel"></div>
-    <input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">
-    <p class="nota">Cada participante guarda su <strong>propio progreso</strong>: sus
-    errores, sus tarjetas dominadas y sus exámenes. Toca un nombre para cambiar
-    de persona.</p>
-  </div>
-
-  <div class="card">
-    <h2>🎯 Tu categoría</h2>
-    <div class="cat-sel" id="cat-sel"></div>
-    <p class="nota">Las tres primeras son las del reglamento del campamento: cada
-    club presenta <strong>dos integrantes por categoría</strong>. La categoría
-    define qué capítulos ves y de dónde salen las preguntas.</p>
-    <p class="nota"><strong>Guías Mayores</strong> no está en ese reglamento:
-    es el alcance ampliado (Daniel 1 al 6 y P&amp;R 39 al 44) para el otro evento.</p>
-  </div>
-
-  <div class="stats" id="stats"></div>
-
-  <div class="card">
     <h2>📊 Progreso por capítulo</h2>
+    <p class="nota" id="prog-nota"></p>
     <div class="rejilla" id="anillos"></div>
   </div>
 
-  <div class="card">
-    <h2>🔥 Racha de estudio</h2>
-    <div id="racha" style="text-align:center;padding:.4rem 0"></div>
+  <div class="card" id="card-stats">
+    <h2>🏅 Tus números</h2>
+    <div class="stats" id="stats"></div>
   </div>
+
+  <details class="card ayuda">
+    <summary>❓ ¿Cómo se usa esta app?</summary>
+    <div class="ayuda-cuerpo">
+      <p><strong>1. Empieza siempre por «Qué estudiar hoy».</strong> Ahí sale
+      lo que más te conviene hacer ahora, en orden.</p>
+      <p><strong>2. 📖 Estudiar</strong> es para leer. Al final de cada
+      capítulo tocas «Ya lo estudié» y el círculo se llena.</p>
+      <p><strong>3. 🃏 Tarjetas</strong> es para memorizar. Lees el frente,
+      respondes en voz alta y volteas la tarjeta. Una tarjeta queda dominada
+      al acertarla dos veces seguidas.</p>
+      <p><strong>4. ✏️ Examen</strong> es para practicar. Las preguntas
+      cambian cada vez. Al terminar ves la respuesta correcta de cada una.</p>
+      <p><strong>5. 🏆 Logros</strong> guarda tus errores para repasarlos y
+      el historial de tus exámenes.</p>
+      <p class="nota">Todo se guarda solo en este teléfono o computador. Si
+      abres la app en otro aparato, empiezas de cero.</p>
+    </div>
+  </details>
 </div>
 
 <div id="p-estudio" class="pantalla">
   <h2 style="color:var(--azul);margin-bottom:.9rem">📖 Material de estudio</h2>
   <div class="caps" id="lista-caps"></div>
   <div id="detalle" class="card" style="margin-top:1rem;display:none"></div>
+
+  <details class="card">
+    <summary>🖨️ Imprimir o guardar en PDF para estudiar en papel</summary>
+    <div class="det-cuerpo">
+      <p class="nota">Se abre el cuadro de impresión. Ahí puedes mandarlo a la
+      impresora o escoger <strong>Guardar como PDF</strong>.</p>
+      <div class="menu-impr">
+        <button class="btn azul" onclick="imprimeGuia()">📕 Toda mi guía de estudio</button>
+        <button class="btn azul" onclick="imprimeTarjetas()">✂️ Mis tarjetas, para recortar</button>
+        <button class="btn gho" onclick="imprimeGuiasTodo()">📚 Las guías de los dos eventos</button>
+      </div>
+      <p class="nota">Para imprimir <strong>un solo capítulo</strong>, ábrelo
+      arriba y usa el botón de imprimir que aparece al final.</p>
+      <div id="impr-est"></div>
+    </div>
+  </details>
 </div>
 
 <div id="p-tarjetas" class="pantalla">
@@ -336,67 +531,68 @@ body.av .tj .rev{font-size:1.08rem}
 
 <div id="p-examen" class="pantalla">
   <div id="ex-inicio">
-    <div class="hero"><h1>✏️ Examen</h1><p id="ex-desc"></p></div>
-
-    <div class="card">
-      <h2>🎛️ Arma tu examen</h2>
-      <div class="menu-ex">
-        <label>Sobre qué
-          <select id="ex-alcance" onchange="cambiaAlcance()"></select>
-        </label>
-        <label>Cuántas preguntas
-          <select id="ex-cuantas" onchange="cambiaCuantas()"></select>
-        </label>
-        <label>Dificultad
-          <select id="ex-nivel" onchange="cambiaNivel()"></select>
-        </label>
-      </div>
-      <div id="ex-disponible" class="nota"></div>
-      <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
-        <button class="btn nar" onclick="iniciar('normal')">🚀 Comenzar</button>
-        <button class="btn azul" onclick="iniciar('simulacro')">🎓 Simulacro</button>
-        <span id="ex-err"></span>
-      </div>
-      <p class="nota">El <strong>simulacro</strong> quita las pistas de la sección
-      de completar. Del examen del campamento sabemos que trae esas tres
-      secciones; <strong>cuántas preguntas trae no lo sabemos todavía</strong>,
-      así que practica con varios tamaños.</p>
+    <div class="card ex-hoy">
+      <div class="ex-h">✏️ Tu examen de hoy</div>
+      <div class="ex-big" id="ex-resumen"></div>
+      <div class="ex-sub" id="ex-desc"></div>
+      <button class="btn nar ex-go" onclick="iniciar('normal')">🚀 Comenzar</button>
+      <div id="ex-err"></div>
     </div>
 
-    <div class="card">
-      <h2>🖨️ Imprimir o guardar en PDF</h2>
-      <p class="nota">Usa <strong>la misma selección de arriba</strong>: el
-      capítulo, la cantidad y la dificultad que escogiste. Se abre el cuadro de
-      impresión del computador; ahí puedes mandarlo a la impresora o escoger
-      <strong>Guardar como PDF</strong>.</p>
-      <div class="menu-impr">
-        <button class="btn azul" onclick="imprimeExamen(false)">🖨️ Este examen, sin respuestas</button>
-        <button class="btn gho" onclick="imprimeExamen(true)">🔑 Este examen, con respuestas</button>
-        <button class="btn azul" onclick="imprimeTodos(false)">📚 Las 6 categorías, sin respuestas</button>
-        <button class="btn gho" onclick="imprimeTodos(true)">🗝️ Las 6 categorías, con respuestas</button>
+    <details class="card">
+      <summary>⚙️ Cambiar este examen</summary>
+      <div class="det-cuerpo">
+        <div class="menu-ex">
+          <label>Sobre qué
+            <select id="ex-alcance" onchange="cambiaAlcance()"></select>
+          </label>
+          <label>Cuántas preguntas
+            <select id="ex-cuantas" onchange="cambiaCuantas()"></select>
+          </label>
+          <label>Dificultad
+            <select id="ex-nivel" onchange="cambiaNivel()"></select>
+          </label>
+        </div>
+        <div id="ex-disponible" class="nota"></div>
+        <button class="btn azul" style="margin-top:.8rem" onclick="iniciar('simulacro')">🎓 Hacer un simulacro</button>
+        <p class="nota">El <strong>simulacro</strong> quita las pistas de la
+        sección de completar, para que se parezca más al examen de verdad.</p>
       </div>
-      <p class="nota"><strong>Las hojas con respuestas son solo para quien
-      califica.</strong> Van marcadas «SOLO PARA LÍDERES» en el encabezado.</p>
-      <div id="impr-alt"></div>
-    </div>
+    </details>
 
-    <div class="card">
-      <h2>📋 Cómo funciona</h2>
-      <p style="font-size:.87rem;line-height:1.8;color:var(--gris)">
-        <strong>Sección I</strong> — Selección múltiple<br>
+    <details class="card dir">
+      <summary>🖨️ Para el director: imprimir en papel o PDF</summary>
+      <div class="det-cuerpo">
+        <p class="nota">Se imprime lo que esté escogido arriba. Se abre el
+        cuadro de impresión; ahí se manda a la impresora o se escoge
+        <strong>Guardar como PDF</strong>.</p>
+        <div class="menu-impr">
+          <button class="btn azul" onclick="imprimeExamen(false)">🖨️ Este examen, sin respuestas</button>
+          <button class="btn gho" onclick="imprimeExamen(true)">🔑 Este examen, con respuestas</button>
+          <button class="btn azul" onclick="imprimeTodos(false)">📚 Las 6 categorías, sin respuestas</button>
+          <button class="btn gho" onclick="imprimeTodos(true)">🗝️ Las 6 categorías, con respuestas</button>
+        </div>
+        <p class="nota"><strong>Las hojas con respuestas son solo para quien
+        califica.</strong> Van marcadas «SOLO PARA LÍDERES» en el encabezado.</p>
+        <div id="impr-alt"></div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary>📋 Cómo es el examen</summary>
+      <div class="det-cuerpo">
+        <p><strong>Sección I</strong> — Selección múltiple<br>
         <strong>Sección II</strong> — Verdadero o Falso<br>
-        <strong>Sección III</strong> — Completar el versículo<br><br>
-        Esas tres secciones son las del examen del campamento. La
-        <strong>cantidad de preguntas del examen real no está confirmada</strong>:
-        por eso puedes escoger cuántas quieres practicar.<br><br>
-        Las preguntas <strong>cambian cada vez</strong>, salen al azar del banco.
-        Al terminar ves tu puntaje y la respuesta correcta de cada una.<br><br>
-        Puedes escoger <strong>sobre qué capítulo</strong> quieres el examen y
-        <strong>cuántas preguntas</strong>. Y si ya fallaste preguntas, puedes hacer
-        un examen <strong>solo con tus errores</strong> hasta dominarlos.
-      </p>
-      <p class="nota" id="ex-nota"></p>
-    </div>
+        <strong>Sección III</strong> — Completar el versículo</p>
+        <p>Esas son las tres secciones del examen del campamento.
+        <strong>Cuántas preguntas trae no lo sabemos todavía</strong>, así que
+        aquí puedes practicar con varios tamaños.</p>
+        <p>Las preguntas <strong>cambian cada vez</strong>. Al terminar ves tu
+        puntaje y la respuesta correcta de cada una. Las que falles quedan
+        guardadas para repasarlas.</p>
+        <p class="nota" id="ex-nota"></p>
+      </div>
+    </details>
   </div>
 
   <div id="ex-curso" style="display:none">
@@ -422,14 +618,44 @@ body.av .tj .rev{font-size:1.08rem}
   <div class="card"><h2>🎯 Puntos débiles</h2><div id="debiles"></div></div>
   <div class="card"><h2>🎖️ Insignias</h2><div id="insignias"></div></div>
   <div class="card"><h2>📈 Historial de exámenes</h2><div id="historial"></div></div>
-  <div class="card">
-    <h2>⚙️ Datos guardados</h2>
-    <p class="nota">Todo se guarda solo en este navegador. Si cambias de dispositivo, empiezas de cero.</p>
-    <div style="margin-top:.7rem;display:flex;gap:.6rem;flex-wrap:wrap">
-      <button class="btn gho" onclick="borraAlumno()">🗑️ Borrar solo a este participante</button>
-      <button class="btn gho" onclick="borrarTodo()">🧹 Borrar a todos</button>
+  <details class="card">
+    <summary>📤 Pasar o compartir mi progreso</summary>
+    <div class="det-cuerpo">
+      <p>El progreso vive solo en este aparato. Para que otra persona lo vea, o
+      para pasarlo a otro teléfono, se convierte en un <strong>código de
+      texto</strong> que se copia y se pega.</p>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin:.7rem 0">
+        <button class="btn azul" onclick="ponCodigo('res')">📊 Código para mostrar cómo voy</button>
+        <button class="btn gho" onclick="ponCodigo('full')">💾 Código para pasar todo a otro aparato</button>
+      </div>
+      <textarea id="exp-txt" class="cod" readonly placeholder="Toca uno de los dos botones de arriba"></textarea>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:.5rem 0">
+        <button class="btn ver" onclick="copiaCodigo()">📋 Copiar</button>
+        <a id="exp-guardar" class="btn gho" style="display:none;text-decoration:none" href="#">💾 Guardar como archivo</a>
+      </div>
+      <p class="nota" id="exp-info">El <strong>código para mostrar cómo voy</strong>
+      es corto y sirve para mandarlo por chat: quien lo pegue ve tus capítulos,
+      tus exámenes y tu racha, pero no recibe tu progreso. El
+      <strong>código para pasar todo</strong> es largo y sí restaura la ficha
+      completa en otro aparato.</p>
+
+      <h3 style="font-size:.9rem;color:var(--azul);margin:1.2rem 0 .4rem">Pegar un código que me mandaron</h3>
+      <textarea id="imp-txt" class="cod" placeholder="Pega aquí el código que empieza en CB1R o CB1F"></textarea>
+      <button class="btn azul" style="margin-top:.5rem" onclick="importaCodigo()">👁️ Ver el código</button>
+      <div id="imp-out" style="margin-top:.8rem"></div>
     </div>
-  </div>
+  </details>
+
+  <details class="card">
+    <summary>⚙️ Datos guardados</summary>
+    <div class="det-cuerpo">
+      <p class="nota">Todo se guarda solo en este navegador. Si cambias de dispositivo, empiezas de cero.</p>
+      <div style="margin-top:.7rem;display:flex;gap:.6rem;flex-wrap:wrap">
+        <button class="btn gho" onclick="borraAlumno()">🗑️ Borrar solo a este participante</button>
+        <button class="btn gho" onclick="borrarTodo()">🧹 Borrar a todos</button>
+      </div>
+    </div>
+  </details>
 </div>
 <script>
 const CAPS = [
@@ -8834,6 +9060,13 @@ ul.tight li { margin: 1.5pt 0; font-size: 9.8pt; }
 .logo { display: block; margin: 0 auto 6pt; height: 34pt; }
 .igl { text-align: center; color: #555; font-size: 8.5pt; margin: 0 0 8pt;
        letter-spacing: .3px; }
+.tarjetas { column-count: 2; column-gap: 12pt; }
+.tarjeta { break-inside: avoid; page-break-inside: avoid; border: 1px dashed #999;
+  border-radius: 4pt; padding: 6pt 8pt; margin: 0 0 8pt; }
+.tj-n { font-size: 7.5pt; color: #7B2D8B; font-weight: bold; margin-bottom: 2pt; }
+.tj-f { font-size: 10pt; font-weight: bold; color: #1F3864; line-height: 1.35; }
+.tj-d { font-size: 9.5pt; color: #1a1a2e; line-height: 1.4; margin-top: 4pt;
+  border-top: 1px dotted #bbb; padding-top: 3pt; }
 .hoja { page-break-before: always; }
 .hoja:first-child { page-break-before: auto; }
 @media screen {
@@ -8965,9 +9198,71 @@ function docExamen(hojas, titulo, aviso) {
   return paginaImpr(titulo, av + hojas.join(''));
 }
 
+/* ─────────────────────────────────────────────────────────────
+   GUÍA DE ESTUDIO IMPRIMIBLE
+   Mismo criterio que el examen: un solo render, usado por la herramienta de
+   Node (que saca la guía completa de los dos eventos) y por la app (que saca
+   la del participante que está estudiando). Sin esto, quien no tiene celular
+   a mano se queda sin material, que es justo lo que pasaba: la guía existía
+   solo como archivo generado en el computador de un adulto.
+   ───────────────────────────────────────────────────────────── */
+
+/* Un bloque por capítulo o módulo, cada uno empezando en página nueva. */
+function bloquesGuia(items, contenido, marca) {
+  return items.map(c => {
+    const est = marca && marca(c) ? ' ★' : '';
+    const tit = (c.icono ? c.icono + ' ' : '') + c.label + est +
+      (c.sub && !c.icono ? ' — ' + c.sub : '');
+    return '<div class="gcap"><div class="gtit">' + tit + '</div>' +
+      '<div class="gsub">' + (c.icono ? c.sub : (c.src || '')) + '</div>' +
+      (contenido[c.id] || []).map(s => '<h3>' + s.t + '</h3>' + s.h).join('') +
+      '</div>';
+  }).join('');
+}
+
+/* o = {caps, contenido, modulos, contModulos, logo, titulo, sub, meta,
+        marca, extra, pie} */
+function hojaGuia(o) {
+  const h = [];
+  h.push('<div class="hoja">');
+  if (o.logo) h.push('<img class="logo" src="' + o.logo + '" alt="Iglesia Adventista Tierra Linda">');
+  h.push('<div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>');
+  h.push('<h1>' + o.titulo + '</h1>');
+  if (o.sub) h.push('<div class="sub">' + o.sub + '</div>');
+  if (o.meta) h.push('<div class="meta">' + o.meta + '</div>');
+  if (o.extra) h.push(o.extra);
+  h.push(bloquesGuia(o.caps || [], o.contenido || {}, o.marca));
+  if (o.modulos && o.modulos.length)
+    h.push(bloquesGuia(o.modulos, o.contModulos || {}, o.marca));
+  h.push('<div class="pie">' + (o.pie || 'Mismo material de la app') + '</div>');
+  h.push('</div>');
+  return h.join('');
+}
+
+/* Tarjetas para recortar: dos columnas, frente y respuesta en la misma
+   tarjeta porque en papel no se puede voltear. */
+function hojaTarjetas(o) {
+  const capDe = id => (o.caps || []).find(c => c.id === id);
+  const cartas = (o.tarjetas || []).map((t, i) => {
+    const c = capDe(t.cap);
+    return '<div class="tarjeta"><div class="tj-n">' + (i + 1) +
+      (c ? ' · ' + c.label : '') + '</div>' +
+      '<div class="tj-f">' + t.f + '</div>' +
+      '<div class="tj-d">' + t.r + '</div></div>';
+  }).join('');
+  return '<div class="hoja">' +
+    (o.logo ? '<img class="logo" src="' + o.logo + '" alt="Iglesia Adventista Tierra Linda">' : '') +
+    '<div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>' +
+    '<h1>' + (o.titulo || 'TARJETAS DE MEMORIA') + '</h1>' +
+    (o.sub ? '<div class="sub">' + o.sub + '</div>' : '') +
+    '<div class="meta">Tapa la parte de abajo con la mano, responde en voz alta, ' +
+    'y después destapa. Son ' + (o.tarjetas || []).length + ' tarjetas.</div>' +
+    '<div class="tarjetas">' + cartas + '</div></div>';
+}
+
 if (typeof module !== 'undefined' && module.exports) module.exports = {
   CSS_IMPR, paginaImpr, EVENTO_IMPR, ordenaYNumera, htmlExamenImpr,
-  hojaExamen, docExamen,
+  hojaExamen, docExamen, hojaGuia, hojaTarjetas, bloquesGuia,
 };
 /* ───────── estado ───────── */
 /* ───────── categorías ─────────
@@ -9189,11 +9484,15 @@ function nivelRecomendado(){
 }
 
 /* ───────── navegación ───────── */
+const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
+
 function ir(id){
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-t button').forEach(b=>b.classList.remove('on'));
   document.getElementById('p-'+id).classList.add('on');
-  document.querySelectorAll('.nav-t button')[{inicio:0,estudio:1,tarjetas:2,examen:3,logros:4}[id]].classList.add('on');
+  document.querySelector('.nav').style.display=id==='bienvenida'?'none':'flex';
+  if(TABS[id]!==undefined)
+    document.querySelectorAll('.nav-t button')[TABS[id]].classList.add('on');
   if(id==='inicio')pintaInicio();
   if(id==='estudio')pintaCaps();
   if(id==='tarjetas')pintaTarjetas();
@@ -9312,8 +9611,18 @@ function irTarjetasDificiles(){tjFiltro='dificiles';ir('tarjetas');tjBaraja();}
 function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();iniciar('normal');}
 
 /* ───────── inicio ───────── */
+/* Una línea con quién estudia y qué estudia, en vez de las seis categorías
+   siempre a la vista. El resto del selector vive dentro del <details>. */
+function pintaIdent(){
+  const s=document.getElementById('ident-sum');
+  if(!s)return;
+  s.innerHTML='<span class="id-quien">👤 '+esc(S.nombre||'Sin nombre')+'</span>'+
+    '<span class="id-que">'+esc(CAT().nombre)+' · '+esc(CAT().ev)+'</span>';
+}
+
 function pintaInicio(){
   pintaAlumnos();
+  pintaIdent();
   pintaHoy();
   pintaSelectorCat();
   const ni=document.getElementById('nombre');
@@ -9323,6 +9632,19 @@ function pintaInicio(){
   const listos=cs.filter(c=>S.prog[c.id]>=100).length;
   const mios=S.examenes.filter(e=>e.cat===S.cat);
   const mejor=mios.length?Math.max(...mios.map(e=>Math.round(e.pts/e.total*100))):0;
+
+  /* El primer día todo va en cero. Cinco tarjetas con un cero no enseñan
+     nada y empujan hacia abajo lo único que sí sirve, que es «Qué estudiar
+     hoy»; la tarjeta aparece cuando ya hay algo que contar. */
+  const hayNumeros=listos>0||mios.length>0||S.racha>0||falladasDe().length>0;
+  const cardStats=document.getElementById('card-stats');
+  if(cardStats)cardStats.style.display=hayNumeros?'block':'none';
+
+  const pn=document.getElementById('prog-nota');
+  if(pn)pn.textContent=listos>=cs.length
+    ?'Terminaste de leer los '+cs.length+' capítulos. Ahora toca repasar.'
+    :'Al terminar de leer un capítulo toca «Ya lo estudié» y el círculo se llena. Vas '+listos+' de '+cs.length+'.';
+
   document.getElementById('stats').innerHTML=
     '<div class="stat"><div class="v">'+listos+'<small style="font-size:.9rem">/'+cs.length+'</small></div><div class="l">Capítulos<br>estudiados</div></div>'+
     '<div class="stat"><div class="v">'+mejor+'<small style="font-size:.9rem">%</small></div><div class="l">Mejor<br>puntaje</div></div>'+
@@ -9342,9 +9664,6 @@ function pintaInicio(){
       '</svg><div class="al">'+esc(c.label)+'</div><div class="as">'+esc(c.sub)+'</div></button>';
   }).join('');
 
-  document.getElementById('racha').innerHTML=S.racha>0
-    ?'<div style="font-size:2.6rem">🔥</div><div style="font-size:1.3rem;font-weight:800;color:var(--naranja)">'+S.racha+' día'+(S.racha!==1?'s':'')+' seguido'+(S.racha!==1?'s':'')+'</div>'
-    :'<div style="font-size:.88rem;color:var(--gris)">Marca un capítulo como estudiado para empezar tu racha 🔥</div>';
 }
 
 /* ───────── estudio ───────── */
@@ -9377,12 +9696,13 @@ function verCap(id){
     '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">'+
     '<div><div style="font-size:1.15rem;font-weight:800;color:var(--azul)">'+esc(c.label)+'</div>'+
     '<div style="font-size:.83rem;color:var(--gris)">'+esc(c.sub)+(c.src?' · '+esc(c.src):'')+'</div></div>'+
-    '<span class="pil az">RV1995</span></div>'+
+    '<span class="pil az">'+(esMatutina()?'Matutina':'RV1995')+'</span></div>'+
     secs.map(s=>'<div class="sec"><h3>'+s.t+'</h3>'+s.h+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
     '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+
-    '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button></div>';
+    '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button>'+
+    '<button class="btn gho" onclick="imprimeCapitulo(\''+id+'\')">🖨️ Imprimir este capítulo</button></div>';
   d.style.display='block';
   avanza(id,60);
 }
@@ -9586,17 +9906,27 @@ function textoNivel(){
     (d>0?' Faltan '+d+' días para el campamento.':'');
 }
 
-function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;pintaMenuEx();}
-function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();pintaMenuEx();}
-function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||0;pintaMenuEx();}
+function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;refrescaEx();}
+function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();refrescaEx();}
+function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||0;refrescaEx();}
+
+/* La pantalla abre diciendo en palabras qué examen va a salir si toca
+   «Comenzar». Antes abría con tres listas desplegables y el usuario tenía
+   que armar el examen para poder empezarlo. */
+const refrescaEx=()=>{pintaExInicio();};
 
 function pintaExInicio(){
-  const n=NPREG(),b=bancoDe().length,f=falladasDe().length;
-  document.getElementById('ex-desc').textContent=n+' preguntas · '+CAT().nombre;
-  document.getElementById('ex-nota').textContent='Banco completo de tu categoría: '+b+' preguntas. El examen real es de '+n+'.';
-  document.getElementById('ex-err').innerHTML=f>=3
-    ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Mis errores ('+f+')</button>':'';
   pintaMenuEx();
+  const b=bancoDe().length,f=falladasDe().length;
+  const nv=nivelEfectivo();
+  const n=Math.min(cuantas||NPREG(),poolNivel().length);
+  document.getElementById('ex-resumen').textContent=n+' preguntas · nivel '+nv+' '+ETIQ_NIVEL[nv];
+  document.getElementById('ex-desc').innerHTML=esc(textoAlcanceImpr())+
+    '<br>'+esc(CAT().nombre)+' · '+esc(CAT().ev);
+  document.getElementById('ex-nota').textContent=
+    'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces.';
+  document.getElementById('ex-err').innerHTML=f>=3
+    ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
 }
 
 function mezcla(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
@@ -10010,8 +10340,306 @@ function pintaLogo(){
   try{document.querySelectorAll('.logo-tl').forEach(i=>{i.src=LOGO_TL;});}catch(e){}
 }
 
+/* ───────── imprimir el material de estudio ─────────
+   Mismo render que la herramienta de Node (fuente/imprimible.js), pero
+   filtrado a lo que le toca al participante activo. Antes la guía en papel
+   solo existía si un adulto corría un script; ahora sale de la app, que es
+   donde está el niño. */
+
+function imprimeGuia(){
+  const html=docExamen([hojaGuia({
+    caps:capsDe(), contenido:CONTENIDO, modulos:modsDe(), contModulos:CONT_MODULOS,
+    logo:LOGO_TL,
+    titulo:'GUÍA DE ESTUDIO',
+    sub:esc(CAT().nombre)+' · '+esc(CAT().edad),
+    meta:CAT().ev+' · '+CAT().alcance,
+    pie:'Mismo material que la app · '+esc(S.nombre||'sin nombre'),
+  })],'Guía de estudio — '+CAT().nombre,
+  'Tu guía completa. En el cuadro de impresión escoge «Guardar como PDF» si la quieres en archivo.');
+  imprimeDoc(html,'Guía de estudio');
+}
+
+function imprimeCapitulo(id){
+  const c=[...capsDe(),...modsDe()].find(x=>x.id===id);
+  if(!c)return;
+  const esMod=!!c.icono;
+  const html=docExamen([hojaGuia({
+    caps:esMod?[]:[c], contenido:CONTENIDO,
+    modulos:esMod?[c]:[], contModulos:CONT_MODULOS,
+    logo:LOGO_TL,
+    titulo:esc(c.label).toUpperCase(),
+    sub:esc(c.sub),
+    meta:CAT().ev+' · '+esc(CAT().nombre),
+  })],esc(c.label),'Un solo capítulo para imprimir.');
+  imprimeDoc(html,c.label);
+}
+
+function imprimeTarjetas(){
+  const t=tarjetasDe();
+  if(!t.length){alertaImpr('No hay tarjetas en esta categoría.');return;}
+  const html=docExamen([hojaTarjetas({
+    tarjetas:t, caps:CAPS, logo:LOGO_TL,
+    titulo:'TARJETAS DE MEMORIA',
+    sub:esc(CAT().nombre)+' · '+esc(CAT().ev),
+  })],'Tarjetas — '+CAT().nombre,
+  'Tarjetas para recortar. Tapa la respuesta con la mano antes de leerla.');
+  imprimeDoc(html,'Tarjetas');
+}
+
+/* Las dos guías completas de los dos eventos, para el director. */
+function imprimeGuiasTodo(){
+  const hojas=[];
+  for(const ev of ['Conexión Bíblica','Devoción Matutina']){
+    const cats=Object.keys(CATS).filter(k=>CATS[k].ev===ev);
+    const ids=new Set();
+    const caps=CAPS.filter(c=>c.cats.some(x=>cats.includes(x))&&!ids.has(c.id)&&ids.add(c.id));
+    const mods=MODULOS.filter(m=>m.cats.some(x=>cats.includes(x)));
+    if(!caps.length)continue;
+    hojas.push(hojaGuia({
+      caps, contenido:CONTENIDO, modulos:mods, contModulos:CONT_MODULOS,
+      logo:LOGO_TL,
+      titulo:'GUÍA DE ESTUDIO — '+ev.toUpperCase(),
+      sub:'Material completo del evento',
+      meta:'Los capítulos marcados con ★ también aplican para la categoría de 7 a 9 años',
+      marca:c=>c.cats.includes('av')||c.cats.includes('dm2'),
+    }));
+  }
+  imprimeDoc(docExamen(hojas,'Guías de los dos eventos',
+    'Las guías completas de los dos eventos, cada una desde su propia hoja.'),
+    'Guías completas');
+}
+
+/* ───────── pasar y compartir el progreso ─────────
+   MECANISMO
+   Todo el progreso vive en el localStorage del navegador donde se estudió.
+   Eso no se puede consultar desde otro aparato, así que la única forma de
+   moverlo es sacarlo como texto. El estado se convierte a JSON, se pasa a
+   base64 (para que sobreviva a WhatsApp, que rompe los saltos de línea y las
+   comillas) y se le pone un prefijo que dice qué trae.
+
+   DOS CÓDIGOS DISTINTOS, A PROPÓSITO
+   · CB1R = resumen. Corto, para mandar por chat. Trae cómo va: capítulos
+     leídos, exámenes, racha, insignias, cuántos errores le faltan. Al
+     importarlo NO se toca nada: se muestra en pantalla como un boletín.
+   · CB1F = ficha completa. Trae todo, incluidos los errores y las tarjetas
+     pregunta por pregunta, para restaurarla en otro aparato. Es largo, así
+     que además se ofrece como archivo.
+
+   Se separan porque son dos necesidades distintas: el director quiere VER, y
+   quien cambia de teléfono quiere RECUPERAR. Un solo código haría que el
+   director pegue por chat 4.000 caracteres para ver un porcentaje. */
+
+const aB64=s=>btoa(unescape(encodeURIComponent(s)));
+const deB64=s=>decodeURIComponent(escape(atob(s)));
+
+function resumenDe(al){
+  const c=CATS[al.cat]||CATS.av;
+  const caps=CAPS.filter(x=>x.cats.includes(al.cat));
+  return {
+    n:al.nombre, c:al.cat, r:al.racha, i:al.insignias||[],
+    p:caps.map(x=>x.id+'='+(al.prog[x.id]||0)),
+    e:(al.examenes||[]).filter(x=>x.cat===al.cat).slice(-12)
+      .map(x=>[x.fecha,x.pts,x.total,x.nv,x.modo].join('/')),
+    f:Object.keys(al.fq||{}).length,
+    d:Object.values(al.ft||{}).filter(v=>v>=2).length,
+    tt:tarjetasDe().length, cn:c.nombre, ce:c.ev,
+  };
+}
+
+const codigoResumen=()=>'CB1R'+aB64(JSON.stringify(resumenDe(S)));
+const codigoCompleto=()=>'CB1F'+aB64(JSON.stringify({n:S.nombre,a:S}));
+
+function leeCodigo(txt){
+  const s=String(txt||'').replace(/\s+/g,'');
+  const m=/^CB1([RF])([A-Za-z0-9+/=]+)$/.exec(s);
+  if(!m)return null;
+  try{const o=JSON.parse(deB64(m[2]));o.tipo=m[1];return o;}catch(e){return null;}
+}
+
+function ponCodigo(cual){
+  const t=document.getElementById('exp-txt');
+  if(!t)return;
+  const cod=cual==='full'?codigoCompleto():codigoResumen();
+  t.value=cod;
+  document.getElementById('exp-info').innerHTML=cual==='full'
+    ?'<strong>Ficha completa</strong> de '+esc(S.nombre||'este participante')+
+     ', '+cod.length+' caracteres. Sirve para recuperar todo en otro aparato. '+
+     'Si es muy largo para el chat, usa el botón de guardar como archivo.'
+    :'<strong>Resumen</strong> de '+esc(S.nombre||'este participante')+', '+
+     cod.length+' caracteres. Se puede pegar en un chat. Muestra cómo va, '+
+     'pero no restaura el progreso.';
+  const g=document.getElementById('exp-guardar');
+  if(g){
+    try{
+      const b=new Blob([cod],{type:'text/plain'});
+      g.href=URL.createObjectURL(b);
+      g.download='progreso-'+(S.nombre||'participante').replace(/[^\w-]+/g,'-')+'.txt';
+      g.style.display=cual==='full'?'inline-block':'none';
+    }catch(e){g.style.display='none';}
+  }
+}
+
+function copiaCodigo(){
+  const t=document.getElementById('exp-txt');
+  if(!t||!t.value){ponCodigo('res');return;}
+  try{t.select();document.execCommand('copy');}catch(e){}
+  if(navigator.clipboard)navigator.clipboard.writeText(t.value).catch(()=>{});
+  document.getElementById('exp-info').innerHTML='<strong>Copiado.</strong> Pégalo en el chat.';
+}
+
+/* Boletín de solo lectura: lo que ve el director al pegar un resumen. */
+function pintaBoletin(o){
+  const caps=o.p.map(s=>s.split('='));
+  const listos=caps.filter(([,v])=>Number(v)>=100).length;
+  const ex=o.e.map(s=>s.split('/'));
+  const mejor=ex.length?Math.max(...ex.map(x=>Math.round(x[1]/x[2]*100))):0;
+  const ult=ex.slice(-5).map(x=>'<tr><td>'+esc(x[0])+'</td><td>'+esc(x[1])+'/'+esc(x[2])+
+    '</td><td>'+Math.round(x[1]/x[2]*100)+'%</td><td>nivel '+esc(x[3])+'</td></tr>').join('');
+  return '<div class="bol"><h3>'+esc(o.n||'Sin nombre')+'</h3>'+
+    '<p class="nota">'+esc(o.cn||'')+' · '+esc(o.ce||'')+'</p>'+
+    '<div class="bol-g">'+
+    '<div><b>'+listos+'/'+caps.length+'</b><span>capítulos leídos</span></div>'+
+    '<div><b>'+mejor+'%</b><span>mejor puntaje</span></div>'+
+    '<div><b>'+ex.length+'</b><span>exámenes</span></div>'+
+    '<div><b>'+o.r+'🔥</b><span>días de racha</span></div>'+
+    '<div><b>'+o.d+'/'+(o.tt||'?')+'</b><span>tarjetas dominadas</span></div>'+
+    '<div><b>'+o.f+'</b><span>errores por repasar</span></div>'+
+    '</div>'+
+    (ult?'<table class="bol-t"><thead><tr><th>Fecha</th><th>Puntaje</th><th>%</th>'+
+      '<th>Nivel</th></tr></thead><tbody>'+ult+'</tbody></table>':
+      '<p class="nota">Todavía no ha hecho exámenes.</p>')+
+    '<p class="nota">Esto es solo una foto de cómo va. No cambió nada de tus datos.</p></div>';
+}
+
+function importaCodigo(){
+  const t=document.getElementById('imp-txt');
+  const out=document.getElementById('imp-out');
+  if(!t||!out)return;
+  const o=leeCodigo(t.value);
+  if(!o){out.innerHTML='<p class="nota" style="color:var(--rojo)">Ese código no se '+
+    'entiende. Tiene que empezar en <strong>CB1R</strong> o <strong>CB1F</strong> y '+
+    'venir completo, sin cortar.</p>';return;}
+  if(o.tipo==='R'){out.innerHTML=pintaBoletin(o);return;}
+  impPendiente=o;
+  out.innerHTML='<p class="nota"><strong>Ficha completa de '+esc(o.n||'sin nombre')+
+    '.</strong> ¿Qué quieres hacer?</p>'+
+    '<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">'+
+    '<button class="btn azul" onclick="aplicaImport(\'nueva\')">➕ Agregarla como ficha nueva</button>'+
+    '<button class="btn gho" onclick="aplicaImport(\'reemplaza\')">♻️ Reemplazar la ficha actual</button>'+
+    '</div>';
+}
+
+let impPendiente=null;
+
+function aplicaImport(como){
+  if(!impPendiente)return;
+  const al=normalizar(impPendiente.a);
+  if(como==='nueva'){
+    if(alumnos().length>=MAX_ALUMNOS){
+      document.getElementById('imp-out').innerHTML='<p class="nota" style="color:var(--rojo)">'+
+        'Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una antes de agregar otra.</p>';
+      return;
+    }
+    const id=nuevoId();
+    DB.alumnos[id]=al;guardar();
+    impPendiente=null;
+    cambiaAlumno(id);
+    return;
+  }
+  if(!confirm('¿Reemplazar el progreso de '+(S.nombre||'esta ficha')+' por el de '+
+    (al.nombre||'la ficha importada')+'? Lo actual se pierde.'))return;
+  DB.alumnos[DB.activo]=al;S=al;guardar();
+  impPendiente=null;
+  marcaCat();pintaInicio();pintaCaps();ir('inicio');
+}
+
+/* ───────── bienvenida ─────────
+   MECANISMO
+   La categoría (me / av / pa / gm / dm1 / dm2) es el dato del que dependen
+   los capítulos que se ven, las preguntas que salen y el techo de
+   dificultad. Antes se escogía tocando una de seis tarjetas en el Inicio,
+   con «Aventureros» puesto por defecto: un niño de cinco años que no
+   tocaba nada estudiaba durante semanas el material de siete a nueve.
+   Aquí la categoría ya no se escoge: se deduce de dos preguntas que un
+   niño sí sabe contestar, su edad y su evento.
+
+   CUÁNDO SE MUESTRA
+   Solo la primera vez: cuando hay un único participante, sin nombre y sin
+   nada de progreso. Cualquier dato guardado significa que ya pasó por aquí.
+
+   Si compite en los dos eventos se crean dos fichas, porque el progreso de
+   Daniel y el de la matutina no se mezclan. */
+
+let bvEdadSel='av';
+
+const esNuevo=()=>alumnos().length===1&&!S.nombre&&!S.examenes.length&&
+  !Object.values(S.prog).some(v=>v>0);
+
+function bvPaso(n){
+  ['bv-1','bv-2','bv-3'].forEach((id,i)=>{
+    const e=document.getElementById(id);
+    if(e)e.classList.toggle('on',i===n-1);
+  });
+  window.scrollTo({top:0});
+}
+
+function bvSigue(){
+  const v=document.getElementById('bv-nombre').value.trim();
+  const err=document.getElementById('bv-err');
+  if(v.length<2){err.textContent='Escribe tu nombre para seguir.';return;}
+  err.textContent='';
+  S.nombre=v.slice(0,60);guardar();
+  document.getElementById('bv-saludo').textContent='Hola, '+v.split(' ')[0]+'. ¿Cuántos años tienes?';
+  bvPaso(2);
+}
+
+function bvAtras(n){bvPaso(n);}
+
+function bvEdad(e){
+  bvEdadSel=e;
+  /* Adultos y Guías Mayores no tienen categoría en la matutina: el
+     reglamento solo abre 4 a 6 y 7 a 9. Para ellos no hay paso 3. */
+  if(e==='pa'||e==='gm'){ponCatBV(e);bvTermina();return;}
+  bvPaso(3);
+}
+
+function bvEvento(ev){
+  const cb=bvEdadSel;
+  const dm=bvEdadSel==='me'?'dm1':'dm2';
+  if(ev==='cb')ponCatBV(cb);
+  else if(ev==='dm')ponCatBV(dm);
+  else{
+    /* Dos fichas con el mismo nombre, una por evento: el progreso de Daniel
+       y el de la matutina son cuentas separadas y no se deben mezclar.
+       Se escribe directo en DB en vez de usar agregaAlumno() porque ese
+       cambia de participante y navega, y aquí todavía estamos en la
+       bienvenida. */
+    ponCatBV(cb);
+    if(alumnos().length<MAX_ALUMNOS){
+      const id=nuevoId();
+      const otro=normalizar(null);
+      otro.nombre=S.nombre;otro.cat=dm;
+      DB.alumnos[id]=otro;
+      guardar();
+    }
+  }
+  bvTermina();
+}
+
+function ponCatBV(c){S.cat=c;guardar();}
+
+function bvTermina(){
+  marcaCat();
+  ir('inicio');
+  const id=document.getElementById('ident');
+  if(id)id.open=false;
+}
+
 /* ───────── arranque ───────── */
-try{pintaLogo();marcaCat();pintaInicio();}catch(e){console.error(e);}
+try{
+  pintaLogo();marcaCat();pintaInicio();
+  if(esNuevo()){ir('bienvenida');bvPaso(1);}
+}catch(e){console.error(e);}
 </script>
 </body>
 </html>

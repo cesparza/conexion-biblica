@@ -65,6 +65,13 @@ ul.tight li { margin: 1.5pt 0; font-size: 9.8pt; }
 .logo { display: block; margin: 0 auto 6pt; height: 34pt; }
 .igl { text-align: center; color: #555; font-size: 8.5pt; margin: 0 0 8pt;
        letter-spacing: .3px; }
+.tarjetas { column-count: 2; column-gap: 12pt; }
+.tarjeta { break-inside: avoid; page-break-inside: avoid; border: 1px dashed #999;
+  border-radius: 4pt; padding: 6pt 8pt; margin: 0 0 8pt; }
+.tj-n { font-size: 7.5pt; color: #7B2D8B; font-weight: bold; margin-bottom: 2pt; }
+.tj-f { font-size: 10pt; font-weight: bold; color: #1F3864; line-height: 1.35; }
+.tj-d { font-size: 9.5pt; color: #1a1a2e; line-height: 1.4; margin-top: 4pt;
+  border-top: 1px dotted #bbb; padding-top: 3pt; }
 .hoja { page-break-before: always; }
 .hoja:first-child { page-break-before: auto; }
 @media screen {
@@ -196,7 +203,69 @@ function docExamen(hojas, titulo, aviso) {
   return paginaImpr(titulo, av + hojas.join(''));
 }
 
+/* ─────────────────────────────────────────────────────────────
+   GUÍA DE ESTUDIO IMPRIMIBLE
+   Mismo criterio que el examen: un solo render, usado por la herramienta de
+   Node (que saca la guía completa de los dos eventos) y por la app (que saca
+   la del participante que está estudiando). Sin esto, quien no tiene celular
+   a mano se queda sin material, que es justo lo que pasaba: la guía existía
+   solo como archivo generado en el computador de un adulto.
+   ───────────────────────────────────────────────────────────── */
+
+/* Un bloque por capítulo o módulo, cada uno empezando en página nueva. */
+function bloquesGuia(items, contenido, marca) {
+  return items.map(c => {
+    const est = marca && marca(c) ? ' ★' : '';
+    const tit = (c.icono ? c.icono + ' ' : '') + c.label + est +
+      (c.sub && !c.icono ? ' — ' + c.sub : '');
+    return '<div class="gcap"><div class="gtit">' + tit + '</div>' +
+      '<div class="gsub">' + (c.icono ? c.sub : (c.src || '')) + '</div>' +
+      (contenido[c.id] || []).map(s => '<h3>' + s.t + '</h3>' + s.h).join('') +
+      '</div>';
+  }).join('');
+}
+
+/* o = {caps, contenido, modulos, contModulos, logo, titulo, sub, meta,
+        marca, extra, pie} */
+function hojaGuia(o) {
+  const h = [];
+  h.push('<div class="hoja">');
+  if (o.logo) h.push('<img class="logo" src="' + o.logo + '" alt="Iglesia Adventista Tierra Linda">');
+  h.push('<div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>');
+  h.push('<h1>' + o.titulo + '</h1>');
+  if (o.sub) h.push('<div class="sub">' + o.sub + '</div>');
+  if (o.meta) h.push('<div class="meta">' + o.meta + '</div>');
+  if (o.extra) h.push(o.extra);
+  h.push(bloquesGuia(o.caps || [], o.contenido || {}, o.marca));
+  if (o.modulos && o.modulos.length)
+    h.push(bloquesGuia(o.modulos, o.contModulos || {}, o.marca));
+  h.push('<div class="pie">' + (o.pie || 'Mismo material de la app') + '</div>');
+  h.push('</div>');
+  return h.join('');
+}
+
+/* Tarjetas para recortar: dos columnas, frente y respuesta en la misma
+   tarjeta porque en papel no se puede voltear. */
+function hojaTarjetas(o) {
+  const capDe = id => (o.caps || []).find(c => c.id === id);
+  const cartas = (o.tarjetas || []).map((t, i) => {
+    const c = capDe(t.cap);
+    return '<div class="tarjeta"><div class="tj-n">' + (i + 1) +
+      (c ? ' · ' + c.label : '') + '</div>' +
+      '<div class="tj-f">' + t.f + '</div>' +
+      '<div class="tj-d">' + t.r + '</div></div>';
+  }).join('');
+  return '<div class="hoja">' +
+    (o.logo ? '<img class="logo" src="' + o.logo + '" alt="Iglesia Adventista Tierra Linda">' : '') +
+    '<div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>' +
+    '<h1>' + (o.titulo || 'TARJETAS DE MEMORIA') + '</h1>' +
+    (o.sub ? '<div class="sub">' + o.sub + '</div>' : '') +
+    '<div class="meta">Tapa la parte de abajo con la mano, responde en voz alta, ' +
+    'y después destapa. Son ' + (o.tarjetas || []).length + ' tarjetas.</div>' +
+    '<div class="tarjetas">' + cartas + '</div></div>';
+}
+
 if (typeof module !== 'undefined' && module.exports) module.exports = {
   CSS_IMPR, paginaImpr, EVENTO_IMPR, ordenaYNumera, htmlExamenImpr,
-  hojaExamen, docExamen,
+  hojaExamen, docExamen, hojaGuia, hojaTarjetas, bloquesGuia,
 };

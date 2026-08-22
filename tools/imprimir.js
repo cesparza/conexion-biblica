@@ -12,6 +12,7 @@ const path = require('path');
 const { CAPS, CONTENIDO } = require('../fuente/contenido.js');
 const { BANCO } = require('../fuente/preguntas.js');
 const { MODULOS, CONT_MODULOS } = require('../fuente/modulos.js');
+const { TARJETAS } = require('../fuente/tarjetas.js');
 const { LOGO_TL } = require('../fuente/logo.js');
 const MAT = require('../fuente/matutina.js');
 const IMPR = require('../fuente/imprimible.js');
@@ -83,49 +84,47 @@ function generaExamen(cat, nmc, ntf, nfill, semilla, etiqueta, alcance) {
 }
 
 function generaGuia() {
-  let h = `<img class="logo" src="${LOGO_TL}" alt="Iglesia Adventista Tierra Linda">
-    <div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>
-    <h1>GUÍA DE ESTUDIO — CONEXIÓN BÍBLICA</h1>
-    <div class="sub">Daniel 1–6 · Profetas y Reyes caps. 39–44</div>
-    <div class="meta">Texto bíblico: Reina Valera 1995 · Libro complementario: Elena G. de White<br>
-    Los capítulos marcados con ★ también aplican para Aventureros (Daniel 1, 2, 3 y 6 · P&amp;R 39, 41 y 44)</div>`;
-  for (const c of CAPS) {
-    const av = c.cats.includes('av') ? ' ★' : '';
-    h += `<div class="gcap"><div class="gtit">${c.label}${av} — ${c.sub}</div>
-      <div class="gsub">${c.src}</div>` +
-      (CONTENIDO[c.id] || []).map(s => `<h3>${s.t}</h3>${s.h}`).join('') + `</div>`;
-  }
-  for (const m of MODULOS) {
-    const av = m.cats.includes('av') ? ' ★' : '';
-    h += `<div class="gcap"><div class="gtit">${m.icono} Repaso general: ${m.label}${av}</div>
-      <div class="gsub">${m.sub}</div>` +
-      (CONT_MODULOS[m.id] || []).map(s => `<h3>${s.t}</h3>${s.h}`).join('') + `</div>`;
-  }
-  h += `<div class="pie">Generada desde fuente/contenido.js y fuente/modulos.js — mismo material de la app</div>`;
-  return pagina('Guía de estudio — Conexión Bíblica', h);
+  return pagina('Guía de estudio — Conexión Bíblica', IMPR.hojaGuia({
+    caps: CAPS, contenido: CONTENIDO, modulos: MODULOS, contModulos: CONT_MODULOS,
+    logo: LOGO_TL,
+    titulo: 'GUÍA DE ESTUDIO — CONEXIÓN BÍBLICA',
+    sub: 'Daniel 1–6 · Profetas y Reyes caps. 39–44',
+    meta: 'Texto bíblico: Reina Valera 1995 · Libro complementario: Elena G. de White<br>' +
+      'Los capítulos marcados con ★ también aplican para Aventureros ' +
+      '(Daniel 1, 2, 3 y 6 · P&amp;R 39, 41 y 44)',
+    marca: c => c.cats.includes('av'),
+    pie: 'Generada desde fuente/contenido.js y fuente/modulos.js — mismo material de la app',
+  }));
 }
 
 function generaGuiaMatutina() {
-  let h = `<img class="logo" src="${LOGO_TL}" alt="Iglesia Adventista Tierra Linda">
-    <div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>
-    <h1>DEVOCIÓN MATUTINA — HÉROES Y VILLANOS</h1>
-    <div class="sub">Guía de estudio de octubre</div>
-    <div class="meta">Matutina de menores · 4 a 6 años: del 1 al 15 · 7 a 9 años: del 1 al 30<br>
-    Resúmenes en nuestras palabras; los versículos van con la versión que usa la matutina.</div>`;
-  h += `<h2>Tabla de héroes y villanos</h2>` +
-    `<table class="info-table"><thead><tr><th>Día</th><th>Título</th><th>Quién es</th><th>Versículo</th></tr></thead><tbody>` +
-    MAT.DIAS.map(x => `<tr><td class="key">${MAT.MES[x.d]}</td><td>${x.t}</td><td>${x.q}</td><td>${x.r}</td></tr>`).join('') +
-    `</tbody></table>`;
-  for (const x of MAT.DIAS) {
-    const extra = x.d === 31 ? ' — fuera del examen, complementa el día 30' : '';
-    h += `<div class="gcap"><div class="gtit">${MAT.MES[x.d]} de octubre — ${x.t}</div>
-      <div class="gsub">${x.q}${extra}</div>
-      <h3>📖 El versículo del día</h3><div class="verse-box">${x.v} (${x.r})</div>
-      <h3>📚 Qué pasa</h3><p style="font-size:9.8pt;line-height:1.6">${x.h}</p>
-      <h3>🎯 La lección</h3><div class="warn-box">${x.l}</div></div>`;
-  }
-  h += `<div class="pie">Generada desde fuente/matutina.js</div>`;
-  return pagina('Guía de la matutina — octubre', h);
+  /* La tabla de los 31 días va antes de las páginas por día: sirve de índice
+     y de repaso rápido de quién es quién. */
+  const tabla = '<h2>Tabla de héroes y villanos</h2>' +
+    '<table class="info-table"><thead><tr><th>Día</th><th>Título</th>' +
+    '<th>Quién es</th><th>Versículo</th></tr></thead><tbody>' +
+    MAT.DIAS.map(x => '<tr><td class="key">' + MAT.MES[x.d] + '</td><td>' + x.t +
+      '</td><td>' + x.q + '</td><td>' + x.r + '</td></tr>').join('') +
+    '</tbody></table>';
+  return pagina('Guía de la matutina — octubre', IMPR.hojaGuia({
+    caps: MAT.MAT_CAPS, contenido: MAT.MAT_CONTENIDO,
+    modulos: MAT.MAT_MODULOS, contModulos: MAT.MAT_CONT_MODULOS,
+    logo: LOGO_TL,
+    titulo: 'DEVOCIÓN MATUTINA — HÉROES Y VILLANOS',
+    sub: 'Guía de estudio de octubre',
+    meta: 'Matutina de menores · 4 a 6 años: del 1 al 15 · 7 a 9 años: del 1 al 30<br>' +
+      'Resúmenes en nuestras palabras; los versículos van con la versión que usa la matutina.',
+    extra: tabla,
+    pie: 'Generada desde fuente/matutina.js',
+  }));
+}
+
+function generaTarjetas() {
+  return pagina('Tarjetas de memoria', IMPR.docExamen ? IMPR.hojaTarjetas({
+    tarjetas: [...TARJETAS, ...MAT.MAT_TARJETAS], caps: TODOS_CAPS, logo: LOGO_TL,
+    titulo: 'TARJETAS DE MEMORIA',
+    sub: 'Conexión Bíblica y Devoción Matutina',
+  }) : '');
 }
 
 const gm = generaExamen('gm', 60, 25, 15, 20260822,
@@ -157,6 +156,7 @@ const SALIDAS = {
   'Examen_Matutina_7a9_Clave.html': dm2.clave,
   'Guia_Estudio_Completa.html': generaGuia(),
   'Guia_Matutina_Octubre.html': generaGuiaMatutina(),
+  'Tarjetas_Para_Recortar.html': generaTarjetas(),
 };
 for (const [nombre, html] of Object.entries(SALIDAS)) {
   fs.writeFileSync(path.join(DESTINO, nombre), html);

@@ -339,5 +339,100 @@ const htmlApp=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
 ok(/function hojaExamen/.test(htmlApp)&&/function imprimeExamen/.test(htmlApp),
   'index.html trae el render compartido y los botones de impresión');
 
+
+/* ───────── guía y tarjetas imprimibles ─────────
+   El render de la guía también es compartido: la herramienta saca la de los
+   dos eventos y la app la del participante. Si alguien vuelve a duplicarlo,
+   la última prueba de este bloque falla. */
+const TARJ=require(path.join(RAIZ,'fuente','tarjetas.js')).TARJETAS;
+const TARJ_ALL=[...TARJ,...MATU2.MAT_TARJETAS];
+
+const guiaAv=IMPR.hojaGuia({
+  caps:CAPS.filter(c=>c.cats.includes('av')), contenido:CONTENIDO,
+  modulos:MODULOS.filter(m=>m.cats.includes('av')), contModulos:CONT_MODULOS,
+  logo:'', titulo:'T', sub:'S', meta:'M'});
+const nAvCaps=CAPS.filter(c=>c.cats.includes('av')).length;
+const nAvMods=MODULOS.filter(m=>m.cats.includes('av')).length;
+ok((guiaAv.match(/class="gcap"/g)||[]).length===nAvCaps+nAvMods,
+  'La guía de Aventureros trae sus '+nAvCaps+' capítulos y '+nAvMods+' módulos');
+ok(CAPS.filter(c=>c.cats.includes('av')).every(c=>guiaAv.includes(c.label)),
+  'La guía nombra cada capítulo de la categoría');
+ok(!CAPS.filter(c=>!c.cats.includes('av')).some(c=>guiaAv.includes('>'+c.label+' —')),
+  'La guía de Aventureros no incluye capítulos de otra categoría');
+
+/* Cada sección del contenido tiene que llegar al papel: si el render se salta
+   una, el que estudia impreso queda con menos material que el que estudia en
+   la app, y eso no se nota hasta el examen. */
+const secsAv=CAPS.filter(c=>c.cats.includes('av'))
+  .reduce((n,c)=>n+(CONTENIDO[c.id]||[]).length,0);
+ok((guiaAv.match(/<h3>/g)||[]).length>=secsAv,
+  'La guía impresa trae todas las secciones del contenido ('+secsAv+')');
+
+const guiaMat=IMPR.hojaGuia({
+  caps:MATU2.MAT_CAPS, contenido:MATU2.MAT_CONTENIDO,
+  modulos:MATU2.MAT_MODULOS, contModulos:MATU2.MAT_CONT_MODULOS,
+  logo:'', titulo:'T'});
+ok((guiaMat.match(/class="gcap"/g)||[]).length===MATU2.MAT_CAPS.length+MATU2.MAT_MODULOS.length,
+  'La guía de la matutina trae los 31 días y sus módulos');
+ok(MATU2.DIAS.every(x=>guiaMat.includes(x.t)),'La guía de la matutina nombra los 31 títulos');
+
+const tj=IMPR.hojaTarjetas({tarjetas:TARJ_ALL, caps:CAPS_T, logo:'', titulo:'T'});
+ok((tj.match(/class="tarjeta"/g)||[]).length===TARJ_ALL.length,
+  'Las tarjetas imprimibles son las '+TARJ_ALL.length+' del banco');
+/* La respuesta vive en `r`, no en `d`. Con `t.d` la prueba pasaba porque el
+   HTML traía literalmente la palabra «undefined» y includes('undefined') era
+   verdadero: 143 tarjetas impresas sin respuesta y la prueba en verde. De ahí
+   el chequeo explícito de que no aparezca «undefined». */
+ok(TARJ_ALL.every(t=>tj.includes(t.r)),'Cada tarjeta impresa trae su respuesta');
+ok(!/undefined/.test(tj),'Las tarjetas impresas no traen campos vacíos');
+ok(!/undefined/.test(guiaAv+guiaMat),'La guía impresa no trae campos vacíos');
+ok(/break-inside: avoid/.test(IMPR.CSS_IMPR),
+  'Las tarjetas no se pueden partir entre dos hojas');
+
+ok(/IMPR\.hojaGuia\(/.test(fuenteImpr)&&!/const av = c\.cats\.includes/.test(fuenteImpr),
+  'tools/imprimir.js usa el render compartido de la guía');
+ok(/function imprimeGuia/.test(htmlApp)&&/function imprimeTarjetas/.test(htmlApp)&&
+   /function hojaGuia/.test(htmlApp),
+  'index.html puede imprimir la guía y las tarjetas');
+
+/* Los códigos de progreso: el resumen no debe llevar el estado completo. */
+ok(/function codigoResumen|const codigoResumen/.test(htmlApp)&&
+   /function leeCodigo/.test(htmlApp),
+  'index.html trae los códigos de progreso');
+
+/* ───────── manuales ─────────
+   Los manuales se generan de los mismos archivos que la app para que no
+   puedan decir una cifra distinta a la real. Estas pruebas fijan eso: si
+   alguien escribe un número a mano en el manual, falla. */
+const tmpMan=fs.mkdtempSync(path.join(require('os').tmpdir(),'man-'));
+execFileSync(process.execPath,[path.join(RAIZ,'tools','manuales.js'),tmpMan,
+  path.join(tmpMan,'no-existe')],{stdio:'pipe'});
+const manEst=fs.readFileSync(path.join(tmpMan,'Manual_Para_Estudiar.html'),'utf8');
+const manDir=fs.readFileSync(path.join(tmpMan,'Manual_Para_Directores.html'),'utf8');
+ok(manEst.length>4000&&manDir.length>4000,'Los dos manuales se generan sin capturas');
+
+/* Sin la carpeta de capturas no debe quedar ninguna imagen rota. */
+ok(!/<img[^>]*src="data:image\/png[^"]*"[^>]*alt="Paso/.test(manEst)&&
+   !/src=""/.test(manEst+manDir),'Sin capturas, los manuales no dejan imágenes vacías');
+
+const cuentaCat=c=>{
+  const ids=CAPS_T.filter(x=>x.cats.includes(c)&&!x.extra).map(x=>x.id);
+  return BANCO_T.filter(q=>ids.includes(q.cap)).length;
+};
+ok(Object.keys(CATS_T).every(c=>manDir.includes('>'+cuentaCat(c)+'</td>')),
+  'La tabla del manual del director trae el conteo real de cada categoría');
+ok(manDir.includes(String(BANCO_T.length)+' preguntas'),
+  'El manual del director cita el total real del banco ('+BANCO_T.length+')');
+ok(manEst.includes(String(cuentaCat('av'))+'</b> preguntas distintas'),
+  'El manual del estudiante cita el total real de Aventureros');
+
+/* El manual del director tiene que nombrar las dos versiones de la Biblia:
+   es el riesgo abierto y quien califica debe verlo. */
+ok(/Reina-Valera 1995/.test(manDir)&&/Nueva Reina-Valera/.test(manDir),
+  'El manual del director advierte sobre la versión de la Biblia');
+ok(/SOLO PARA LÍDERES/.test(manDir),
+  'El manual del director avisa que la clave va marcada para líderes');
+fs.rmSync(tmpMan,{recursive:true,force:true});
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

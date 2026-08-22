@@ -9,10 +9,23 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 .nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .nav-b{color:#fff;font-size:1.05rem;font-weight:800;padding:.9rem 1rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.nav-t{display:flex;flex:1;overflow-x:auto}
-.nav-t button{color:rgba(255,255,255,.65);font-size:.82rem;font-weight:600;padding:0 .9rem;cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;min-height:46px;white-space:nowrap;font-family:inherit}
+.nav-t{display:flex;flex:1}
+.nav-t button{color:rgba(255,255,255,.7);font-weight:700;cursor:pointer;border:none;background:none;
+  border-bottom:3px solid transparent;min-height:52px;font-family:inherit;flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:.3rem .1rem}
+.nav-t button i{font-style:normal;font-size:1.15rem;line-height:1}
+.nav-t button b{font-size:.68rem;font-weight:700;letter-spacing:-.1px}
 .nav-t button:hover{color:#fff}
 .nav-t button.on{color:#fff;border-bottom-color:#D4AC0D}
+/* En un teléfono la barra no cabe en una fila: el logo mas cinco pestañas
+   se pasaban 16px y «Logros» quedaba cortado. En pantalla angosta el logo va
+   arriba y las pestañas abajo, a lo ancho. */
+@media(max-width:620px){
+  .nav{flex-direction:column}
+  .nav-b{padding:.5rem .8rem;font-size:.92rem;justify-content:center}
+  .nav-t{border-top:1px solid rgba(255,255,255,.15)}
+  .nav-t button{min-height:50px}
+}
 
 .pantalla{display:none;padding:1.5rem 1rem;max-width:880px;margin:0 auto}
 .pantalla.on{display:block}
@@ -40,6 +53,15 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .stat .l{font-size:.71rem;color:var(--gris);margin-top:5px;font-weight:600}
 
 .rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:.9rem}
+/* Con 118px de mínimo caben dos por fila en un teléfono y siete capítulos se
+   vuelven una columna de scroll. A 96px caben tres y el progreso completo se
+   ve de un vistazo, que es para lo que sirve. */
+@media(max-width:560px){
+  .rejilla{grid-template-columns:repeat(3,1fr);gap:.6rem}
+  .anillo{padding:.7rem .25rem}
+  .anillo .al{font-size:.7rem}
+  .anillo .as{display:none}
+}
 .anillo{background:var(--card);border-radius:14px;box-shadow:var(--sh);padding:1rem .5rem;text-align:center;cursor:pointer;border:2px solid transparent;font-family:inherit}
 .anillo:hover{transform:translateY(-2px)}
 .anillo.full{border-color:var(--verde)}
@@ -237,3 +259,98 @@ body.av .tj .rev{font-size:1.08rem}
   .nav,.menu-ex,.menu-impr,.tj-btns,.btn{display:none!important}
   .pantalla{display:block!important}
 }
+
+/* ───────── bienvenida ─────────
+   La primera vez la app no puede ser un muro. Antes, una niña de nueve años
+   caía en un Inicio de 3.200px de alto con seis categorías a escoger, entre
+   ellas «Padres y consejeros» y «Guías Mayores». Escoger mal significa
+   estudiar el material equivocado durante siete semanas, así que la
+   categoría ya no se escoge: se deduce de la edad y del evento. */
+.pantalla.bv{padding:1.2rem 1rem 3rem;max-width:520px}
+.bv-caja{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:1.6rem 1.3rem 1.8rem;text-align:center}
+.bv-caja .logo-hero{height:52px;margin:0 auto .6rem;display:block}
+.bv-paso{display:none}
+.bv-paso.on{display:block}
+.bv-num{font-size:.7rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.8px}
+.bv-caja h1{font-size:1.6rem;font-weight:900;color:var(--azul);margin:.4rem 0 .5rem;line-height:1.2}
+.bv-p{font-size:.9rem;color:var(--gris);line-height:1.6;margin-bottom:1.2rem}
+.bv-lb{display:block;font-size:.9rem;font-weight:800;color:var(--azul);margin-bottom:.4rem;text-align:left}
+.bv-in{width:100%;padding:.9rem 1rem;border:3px solid #e5e7eb;border-radius:12px;font-size:1.05rem;font-family:inherit;min-height:54px}
+.bv-in:focus{outline:none;border-color:var(--cielo)}
+.bv-err{color:var(--rojo);font-size:.83rem;font-weight:700;min-height:1.1rem;margin:.35rem 0;text-align:left}
+.bv-btn{width:100%;justify-content:center;font-size:1rem;min-height:54px}
+.bv-op{display:block;width:100%;background:#f8f9ff;border:3px solid #e5e7eb;border-radius:14px;
+  padding:.95rem 1rem;margin-bottom:.7rem;cursor:pointer;font-family:inherit;text-align:left;min-height:60px}
+.bv-op:hover{border-color:var(--cielo);background:#fff}
+.bv-op b{display:block;font-size:1.02rem;font-weight:800;color:var(--azul)}
+.bv-op small{display:block;font-size:.79rem;color:var(--gris);margin-top:2px;line-height:1.4}
+.bv-link{background:none;border:none;color:var(--gris);font-family:inherit;font-size:.83rem;
+  text-decoration:underline;cursor:pointer;padding:.7rem;min-height:44px}
+
+/* ───────── barra de identidad ─────────
+   Reemplaza al muro de seis categorías: una línea con quién estudia y qué
+   estudia. Se abre solo si hay que cambiar algo. */
+.ident{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:1.1rem;overflow:hidden}
+.ident>summary{padding:.9rem 1.1rem;cursor:pointer;font-size:.9rem;font-weight:700;color:var(--azul);
+  list-style:none;display:flex;align-items:center;gap:.5rem;min-height:50px;flex-wrap:wrap}
+.ident>summary::-webkit-details-marker{display:none}
+.ident>summary::after{content:'Cambiar';margin-left:auto;font-size:.76rem;font-weight:800;color:var(--cielo);
+  border:2px solid var(--cielo);border-radius:50px;padding:.25rem .7rem;white-space:nowrap}
+.ident[open]>summary::after{content:'Cerrar'}
+.ident-cuerpo{padding:0 1.1rem 1.2rem;border-top:1px solid #eef0f5}
+.ident-cuerpo h3{font-size:.85rem;font-weight:800;color:var(--azul);margin:1rem 0 .5rem}
+.id-quien{font-weight:900}
+.id-que{color:var(--gris);font-weight:600;font-size:.82rem}
+
+/* ───────── secciones que se abren ─────────
+   Lo que no se necesita para estudiar hoy no ocupa pantalla: ajustes del
+   examen, impresión del director, ayuda y borrado de datos. */
+details.card{padding:0}
+details.card>summary{padding:1.1rem 1.4rem;cursor:pointer;font-size:.93rem;font-weight:700;
+  color:var(--azul);list-style:none;display:flex;align-items:center;min-height:50px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:'▸';margin-left:auto;color:var(--cielo);font-size:1.1rem}
+details.card[open]>summary::after{content:'▾'}
+details.card.dir>summary{color:var(--gris)}
+.det-cuerpo,.ayuda-cuerpo{padding:.2rem 1.4rem 1.3rem;border-top:1px solid #eef0f5}
+.det-cuerpo>p,.ayuda-cuerpo>p{font-size:.87rem;line-height:1.65;color:var(--gris);margin:.7rem 0}
+.det-cuerpo>p strong,.ayuda-cuerpo>p strong{color:var(--azul)}
+
+/* ───────── examen: la acción primero ─────────
+   Antes esta pantalla abría con tres listas desplegables, dos botones de
+   empezar y cuatro de imprimir: nueve controles antes de hacer nada. */
+.card.ex-hoy{border-left:5px solid var(--naranja);text-align:center}
+.ex-h{font-size:.78rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.8px}
+.ex-big{font-size:1.45rem;font-weight:900;color:var(--azul);margin:.35rem 0 .2rem;line-height:1.25}
+.ex-sub{font-size:.85rem;color:var(--gris);margin-bottom:1.1rem;line-height:1.5}
+.ex-go{width:100%;justify-content:center;font-size:1.05rem;min-height:56px}
+#ex-err{margin-top:.8rem}
+
+/* Franja de identidad de la iglesia. Sustituye al hero grande que ocupaba
+   una pantalla entera sin decir nada nuevo, pero mantiene el logo visible:
+   quien abre la app tiene que ver de dónde viene el material. */
+.marca{display:flex;align-items:center;gap:.8rem;background:var(--card);border-radius:var(--r);
+  box-shadow:var(--sh);padding:.8rem 1.1rem;margin-bottom:1.1rem}
+.logo-marca{height:34px;width:auto;flex:none}
+.marca .mt{font-size:.9rem;font-weight:800;color:var(--azul);line-height:1.3}
+.marca .ms{font-size:.72rem;color:var(--gris);line-height:1.4;margin-top:2px}
+@media(max-width:560px){.marca{padding:.65rem .9rem;gap:.6rem}.marca .mt{font-size:.82rem}.logo-marca{height:28px}}
+
+/* Código de progreso: un area de texto que se pueda seleccionar completa de
+   un toque, con letra monoespaciada para que se note si quedó cortado. */
+textarea.cod{width:100%;min-height:80px;padding:.6rem .7rem;border:2px solid #e5e7eb;
+  border-radius:8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;
+  line-height:1.45;resize:vertical;word-break:break-all}
+textarea.cod:focus{outline:none;border-color:var(--cielo)}
+
+/* Boletín: lo que se ve al pegar un código de resumen. Es de solo lectura, y
+   se ve distinto al resto para que nadie lo confunda con su propio progreso. */
+.bol{background:#f8f9ff;border:2px solid var(--cielo);border-radius:12px;padding:1rem}
+.bol h3{font-size:1.05rem;font-weight:900;color:var(--azul)}
+.bol-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:.6rem;margin:.8rem 0}
+.bol-g>div{background:#fff;border-radius:10px;padding:.6rem .4rem;text-align:center}
+.bol-g b{display:block;font-size:1.25rem;font-weight:900;color:var(--naranja);line-height:1.1}
+.bol-g span{display:block;font-size:.66rem;color:var(--gris);font-weight:600;margin-top:3px}
+.bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.78rem}
+.bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
+.bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
