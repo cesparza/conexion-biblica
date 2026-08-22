@@ -115,6 +115,23 @@
     </div>
 
     <div class="card">
+      <h2>🖨️ Imprimir o guardar en PDF</h2>
+      <p class="nota">Usa <strong>la misma selección de arriba</strong>: el
+      capítulo, la cantidad y la dificultad que escogiste. Se abre el cuadro de
+      impresión del computador; ahí puedes mandarlo a la impresora o escoger
+      <strong>Guardar como PDF</strong>.</p>
+      <div class="menu-impr">
+        <button class="btn azul" onclick="imprimeExamen(false)">🖨️ Este examen, sin respuestas</button>
+        <button class="btn gho" onclick="imprimeExamen(true)">🔑 Este examen, con respuestas</button>
+        <button class="btn azul" onclick="imprimeTodos(false)">📚 Las 6 categorías, sin respuestas</button>
+        <button class="btn gho" onclick="imprimeTodos(true)">🗝️ Las 6 categorías, con respuestas</button>
+      </div>
+      <p class="nota"><strong>Las hojas con respuestas son solo para quien
+      califica.</strong> Van marcadas «SOLO PARA LÍDERES» en el encabezado.</p>
+      <div id="impr-alt"></div>
+    </div>
+
+    <div class="card">
       <h2>📋 Cómo funciona</h2>
       <p style="font-size:.87rem;line-height:1.8;color:var(--gris)">
         <strong>Sección I</strong> — Selección múltiple<br>

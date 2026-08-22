@@ -232,6 +232,18 @@ body.av .tj .rev{font-size:1.08rem}
   .info-table{font-size:.79rem}
   .info-table td.key{white-space:normal}
 }
+
+.menu-impr{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.8rem 0 .4rem}
+.menu-impr .btn{width:100%;justify-content:center;font-size:.83rem;padding:.7rem .5rem}
+@media(max-width:560px){.menu-impr{grid-template-columns:1fr}}
+
+/* La app no se imprime a sí misma: el examen se imprime desde un iframe con
+   su propio CSS. Esta regla solo evita un desperdicio de papel si alguien
+   le da Imprimir estando en la app. */
+@media print{
+  .nav,.menu-ex,.menu-impr,.tj-btns,.btn{display:none!important}
+  .pantalla{display:block!important}
+}
 </style>
 </head>
 <body>
@@ -349,6 +361,23 @@ body.av .tj .rev{font-size:1.08rem}
       de completar. Del examen del campamento sabemos que trae esas tres
       secciones; <strong>cuántas preguntas trae no lo sabemos todavía</strong>,
       así que practica con varios tamaños.</p>
+    </div>
+
+    <div class="card">
+      <h2>🖨️ Imprimir o guardar en PDF</h2>
+      <p class="nota">Usa <strong>la misma selección de arriba</strong>: el
+      capítulo, la cantidad y la dificultad que escogiste. Se abre el cuadro de
+      impresión del computador; ahí puedes mandarlo a la impresora o escoger
+      <strong>Guardar como PDF</strong>.</p>
+      <div class="menu-impr">
+        <button class="btn azul" onclick="imprimeExamen(false)">🖨️ Este examen, sin respuestas</button>
+        <button class="btn gho" onclick="imprimeExamen(true)">🔑 Este examen, con respuestas</button>
+        <button class="btn azul" onclick="imprimeTodos(false)">📚 Las 6 categorías, sin respuestas</button>
+        <button class="btn gho" onclick="imprimeTodos(true)">🗝️ Las 6 categorías, con respuestas</button>
+      </div>
+      <p class="nota"><strong>Las hojas con respuestas son solo para quien
+      califica.</strong> Van marcadas «SOLO PARA LÍDERES» en el encabezado.</p>
+      <div id="impr-alt"></div>
     </div>
 
     <div class="card">
@@ -1274,7 +1303,7 @@ const CONTENIDO = {
   },
   {
    "t": "🎯 La lección",
-   "h": "<div class=\"warn-box\">En el reino de Dios la invitación está hecha para todas las personas, pero cada uno debe decidir si la acepta.</div>"
+   "h": "<div class=\"warn-box\">Jesús quiere que todos disfrutemos de la cena de las bodas del Cordero, es decir, que todos seamos salvos. La invitación está hecha para todas las personas, pero cada uno debe decidir si la acepta.</div>"
   }
  ],
  "m06": [
@@ -1324,7 +1353,7 @@ const CONTENIDO = {
   },
   {
    "t": "📚 Qué pasa",
-   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Unia Api quería ser pastor y fue a estudiar Teología a la Universidad Adventista del Pacífico, donde entregó su corazón a Jesús. Un misionero entró al dormitorio buscando estudiantes para un proyecto en un lugar remoto y solo encontró a Unia. Le ofreció ir a Kerema por un año. Unia dijo que sí.</p>"
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Unia Api quería ser pastor y fue a estudiar Teología a la Universidad Adventista del Pacífico, donde entregó su corazón a Jesús. Un misionero entró al dormitorio buscando estudiantes para un proyecto en un lugar remoto y solo encontró a Unia. Le ofreció ir a Kerema, un lugar remoto de Papúa Nueva Guinea, por un año. Unia dijo que sí.</p>"
   },
   {
    "t": "🎯 La lección",
@@ -1342,7 +1371,7 @@ const CONTENIDO = {
   },
   {
    "t": "📚 Qué pasa",
-   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">En Kerema, rodeado de agua y selva, Unia quedó a cargo de un grupo de creyentes y de una pequeña escuela donde enseñaba a niños de primaria. Le pidió a Jesús ideas para predicar y se le ocurrió contar historias: los viernes de tarde encendía una fogata, contaba historias de la Biblia y luego organizaba a los jóvenes para representarlas en drama. La congregación creció mucho ese año.</p>"
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">En Kerema, rodeado de agua y selva, Unia quedó a cargo de un grupo de creyentes mientras los misioneros estaban en Estados Unidos, y de la pequeña escuela que ellos habían fundado, donde enseñaba a niños de primaria. Le pidió a Jesús ideas para predicar y se le ocurrió contar historias: los viernes de tarde encendía una fogata, contaba historias de la Biblia y luego organizaba a los jóvenes para representarlas en drama. La congregación creció mucho ese año.</p>"
   },
   {
    "t": "🎯 La lección",
@@ -1400,7 +1429,7 @@ const CONTENIDO = {
   },
   {
    "t": "🎯 La lección",
-   "h": "<div class=\"warn-box\">Era de pequeña estatura y de enorme corazón. Pídele a Jesús una meta elevada, y valentía para alcanzarla.</div>"
+   "h": "<div class=\"warn-box\">Era de pequeña estatura y de enorme corazón, y dejó su vida tranquila en Inglaterra por ser misionera en tierras lejanas. Pídele a Jesús una meta elevada, y valentía para alcanzarla.</div>"
   }
  ],
  "m13": [
@@ -1720,7 +1749,7 @@ const CONTENIDO = {
   },
   {
    "t": "📚 Qué pasa",
-   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Un necio es una persona que, de manera terca, se comporta sin entender la situación. La Biblia misma dice que Nabal era un necio: se puede leer en 1 Samuel 25:25. Nabal se había beneficiado mucho tiempo de que David y sus hombres cuidaran sus rebaños y sus empleados, y aun sabiendo que David era el elegido por Dios como futuro rey, cuando le mandaron a pedir algo de comer no solo se negó, sino que habló muy groseramente. David se enfureció muchísimo y decidió ir a matarlo.</p>"
+   "h": "<p style=\"font-size:.87rem;line-height:1.7;margin:.3rem 0\">Un necio es una persona que, de manera terca, se comporta sin entender la situación. La Biblia misma dice que Nabal era un necio: se puede leer en 1 Samuel 25:25. Nabal se había beneficiado mucho tiempo de que David y sus hombres cuidaran sus rebaños y sus empleados, y aun sabiendo que David era el elegido por Dios como futuro rey de Israel, cuando le mandaron a pedir algo de comer no solo se negó, sino que habló muy groseramente. David se enfureció muchísimo y decidió ir a matarlo.</p>"
   },
   {
    "t": "🎯 La lección",
@@ -6482,6 +6511,58 @@ const BANCO = [
   "a": 0
  },
  {
+  "cap": "m08",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿A qué país fue enviado Unia Api con el misionero?",
+  "o": [
+   "A un lugar remoto de Papúa Nueva Guinea",
+   "A Australia",
+   "A Estados Unidos",
+   "A Filipinas"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m09",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿Dónde estaban los misioneros mientras Unia quedaba a cargo en Kerema?",
+  "o": [
+   "En Estados Unidos",
+   "En Australia",
+   "En la capital del país",
+   "En Inglaterra"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m12",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿De qué país salió Gladys Aylward para ir a predicar a China?",
+  "o": [
+   "De Inglaterra",
+   "De Estados Unidos",
+   "De Australia",
+   "De Canadá"
+  ],
+  "a": 0
+ },
+ {
+  "cap": "m30",
+  "t": "mc",
+  "nv": 2,
+  "q": "¿De qué pueblo era David el futuro rey elegido por Dios?",
+  "o": [
+   "De Israel",
+   "De Judá solamente",
+   "De Filistea",
+   "De Moab"
+  ],
+  "a": 0
+ },
+ {
   "cap": "m01",
   "t": "mc",
   "nv": 1,
@@ -8686,6 +8767,208 @@ const LOGO_TL = [
  "RFirvxBSgCX5HeWaSaKaGWmyjt9LFCFIzzAHVCV0O1fIB7WVg0U7lStAIPy6tYGT+L5EVWNcs2svuHbCAwvwmPZIMuBpKImQWrgWUgshjOWqD4iVPOzXmspM6QKug1WWSCQQ6steKOBYiKB/ewAsKBI1hPvGJeWei9wBvgLTDlhbVNAuuEMcCx9TLb0BGqg81TyFJyggc7gYcVgSAWqLRL3DkK/QehWzevmfZN+Af8zfJdiGuQnpL2BZ5UkdHQTbmVr+xvU3MFNx4j4i5i1tjmGWNmgflsTeA2mJm1t5nwYGD4JFV6nsUmZCPwAi6iDlA55Gr2HHom0HKDEMmA5VtkAwN40H/KpVvv2eD2WU6AART+Ef1IoiAAAY/mGZAdedpkWOs5g3Sgkrjd7MFljhwfqgx2g6zP5OTJJ3SCpAl8F1Bl+M/S883vIzDPyq1hxJrqAeJn1QtEE7RBMV+YIppg0VltehfrCeGQaBf2N9MkZyoQjSnot0hd4zLJTgnwLGtMZ3YcsrJykwXNMXdz8ZE0Y5THRVyupfjMEydqDo9MLskZuiFUnI9JiJBOUkWLxeCWNxKPzMqdxBfRx8jfnA9fFYD9OjxVgjpJagxCyn5mV2EyDVVfvbsiR32wnNGJXp7sX9UCrDKlvbaLuTZoIhXUO/l2khcaRHpHszhRmXuPcYA7APHcXNSDLPudyu6MQqmsL/LdRPdRi7voNnJvaAQ9elLfIls1Ju5z46PkvEK3kL2ep9a3h/b34NE8tM0whJwheugwytyTmWQvJz9RlB1cM3KAYZkN2IZbYytvEgcLhgiTXD4x6cYiQzAvpJ/Xpkpu4QE4IoPEsxjJB7hQtP54NC/Ksl0YrYp7qReeGrXQns42piZV9GFKluQMnwKLyz3ZLPhidZoBz/GeyVS8OLuWOonPXNlzvweP1CzUxukPYdAC6vYna7hZy2y/YwErIkaOpUP8gQGebbnrw3J7NfwSa7ZN0LIoIj/rIaUhVssjuOUiwPw47jRhdTd/6cCYoDfm97Lz3vGXQYxuNJHfzODvliRu4WaVDv6XR4QkUZKxrz9FgvMD7H/i3nndvG6GgVUth0Pwh6Ft/xfwHJxDcGoP4Bp40G1FEFy0HApCZm4ICqxz99wLzi1oLFTw8ksZrE/HO/mZDwq6jSbJDionP++A+7A8goNwjJ/g9PqKw8XZgWBb/qoEfBcQLHfBcusRexX46xE2RNmAyQJakSJWvSfuYEJo67ST/NJqIl1+c8LJj5zwhzqcbduL8xffxshk5e/DA/Gp0XcWxHhIZOulaMrJ8BjRO2+4t0721TnZjGekVlrqP4L8UgZ/tgHjC0zgCAAVE78cP7fBBVlwC46XyQ1Y1wesuEnReP5ygZMfBuHJeMtaLj5WhUTKcF",
  "i7jsOyvctJRQHrSbUKTn5yhT9vwH2olR4BOzgmH1kNhRGd499Kz/8ApMzzwSOXOfcAAAAASUVORK5CYII="
 ].join('');
+/* Render del examen imprimible: una sola implementación para los dos
+   consumidores.
+
+   POR QUÉ EXISTE ESTE ARCHIVO
+   El HTML del examen impreso se armaba solo en tools/imprimir.js, que corre
+   en Node al generar la carpeta de material. La app del navegador no podía
+   imprimir sin duplicar ese render, y dos copias del mismo layout se
+   desincronizan: se arregla el ancho de una raya en una y en la otra no.
+   Aquí las funciones son puras (entra datos, sale texto), sin fs y sin DOM,
+   así que sirven igual en Node y dentro del navegador.
+
+   CÓMO SE CONSUME
+   - Node:      require('./imprimible.js')
+   - Navegador: fuente/build.js pega este archivo tal cual dentro del
+                <script>, antes de app.js. El module.exports del final va
+                protegido porque en el navegador no existe `module`.        */
+
+const CSS_IMPR = `
+@page { size: letter; margin: 18mm 16mm; }
+* { box-sizing: border-box; }
+body { font-family: Arial, Helvetica, sans-serif; color: #1a1a2e;
+       font-size: 10.5pt; line-height: 1.45; margin: 0; }
+h1 { color: #1F3864; text-align: center; font-size: 17pt; margin: 0 0 2pt; }
+.sub { text-align: center; color: #2E8BC0; font-weight: bold; margin: 0 0 2pt; }
+.meta { text-align: center; color: #555; font-size: 9pt; margin: 0 0 10pt; }
+.linea { display: flex; gap: 14pt; margin: 8pt 0 12pt; font-size: 10pt; }
+.linea span { flex: 1; border-bottom: 1px solid #999; padding-bottom: 2pt; }
+h2 { color: #1F3864; font-size: 12.5pt; border-bottom: 2.5px solid #E8720C;
+     padding-bottom: 3pt; margin: 16pt 0 8pt; page-break-after: avoid; }
+.q { margin: 0 0 9pt; page-break-inside: avoid; }
+.q b { display: block; margin-bottom: 2pt; }
+.ops { margin: 0 0 0 14pt; padding: 0; list-style: none; }
+.ops li { margin: 1.5pt 0; }
+.vf { margin-left: 14pt; color: #333; }
+.fill { margin-left: 14pt; font-style: italic; }
+.fill u { text-decoration: none; border-bottom: 1.2px solid #333;
+          display: inline-block; min-width: 70pt; }
+.clave td, .clave th { border: 1px solid #bbb; padding: 3pt 6pt;
+  font-size: 9.5pt; text-align: left; }
+.clave { border-collapse: collapse; width: 100%; }
+.clave th { background: #1F3864; color: #fff; }
+.capref { color: #7B2D8B; font-size: 8.5pt; font-weight: normal;
+  white-space: nowrap; }
+.gcap { page-break-before: always; }
+.gcap:first-of-type { page-break-before: auto; }
+.gtit { background: #1F3864; color: #fff; padding: 6pt 10pt;
+        border-radius: 4pt; font-size: 13pt; font-weight: bold; }
+.gsub { color: #555; font-size: 9.5pt; margin: 3pt 0 8pt; }
+h3 { color: #1F3864; font-size: 11pt; border-left: 4px solid #E8720C;
+     padding-left: 6pt; margin: 12pt 0 5pt; page-break-after: avoid; }
+table { border-collapse: collapse; width: 100%; margin: 4pt 0; }
+.info-table td, .info-table th { border: 1px solid #ccc; padding: 3.5pt 6pt;
+  font-size: 9.5pt; vertical-align: top; text-align: left; }
+.info-table th { background: #1F3864; color: #fff; }
+.info-table td.key { font-weight: bold; color: #1F3864; }
+.highlight-box { background: #eef7ee; border-left: 4px solid #1A7A1A;
+  padding: 5pt 8pt; margin: 4pt 0; font-size: 9.8pt; }
+.warn-box { background: #fff3e0; border-left: 4px solid #E8720C;
+  padding: 5pt 8pt; margin: 4pt 0; font-size: 9.8pt; }
+.verse-box { background: #e8f1fb; border-left: 4px solid #2E8BC0;
+  padding: 5pt 8pt; margin: 4pt 0; font-style: italic; font-size: 9.8pt; }
+ul.tight { margin: 3pt 0 3pt 14pt; padding: 0; }
+ul.tight li { margin: 1.5pt 0; font-size: 9.8pt; }
+.pie { text-align: center; color: #888; font-size: 8pt; margin-top: 14pt; }
+.logo { display: block; margin: 0 auto 6pt; height: 34pt; }
+.igl { text-align: center; color: #555; font-size: 8.5pt; margin: 0 0 8pt;
+       letter-spacing: .3px; }
+.hoja { page-break-before: always; }
+.hoja:first-child { page-break-before: auto; }
+@media screen {
+  body { max-width: 800px; margin: 0 auto; padding: 24px 20px 60px; }
+  .aviso-pant { background: #1F3864; color: #fff; border-radius: 6px;
+    padding: 10px 14px; font-size: 10pt; margin: 0 0 18px; text-align: center; }
+}
+@media print { .aviso-pant { display: none; } }
+`;
+
+/* Documento completo, autocontenido: sirve para escribirlo a disco y para
+   metérselo a un iframe en el navegador. */
+const paginaImpr = (titulo, cuerpo) =>
+  '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">' +
+  '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+  '<title>' + titulo + '</title><style>' + CSS_IMPR + '</style></head><body>' +
+  cuerpo + '</body></html>';
+
+/* Nombre del evento y la línea de fuente, según la categoría. Sin esto, el
+   examen de la matutina salía titulado «Conexión Bíblica» y citando la
+   RV1995, que no es su fuente. */
+const EVENTO_IMPR = {
+  me:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
+  av:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
+  pa:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
+  gm:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
+  dm1: { t: 'EXAMEN DE DEVOCIÓN MATUTINA', f: 'Matutina de menores «Héroes y villanos»' },
+  dm2: { t: 'EXAMEN DE DEVOCIÓN MATUTINA', f: 'Matutina de menores «Héroes y villanos»' },
+};
+
+const SEC_IMPR = {
+  mc: 'SECCIÓN I — Selección múltiple',
+  tf: 'SECCIÓN II — Verdadero o Falso',
+  fill: 'SECCIÓN III — Completar el versículo',
+};
+const INST_IMPR = {
+  mc: 'Marca con una X la letra de la respuesta correcta.',
+  tf: 'Escribe V si es verdadero o F si es falso.',
+  fill: 'Completa con la palabra exacta de la RV1995.',
+};
+
+/* Ordena por sección y numera de 1 a n. Los dos consumidores entregan el
+   arreglo ya mezclado; la numeración se hace aquí para que el impreso y la
+   clave siempre coincidan número por número. */
+function ordenaYNumera(sel) {
+  const ord = [];
+  for (const t of ['mc', 'tf', 'fill'])
+    for (const q of sel) if (q.t === t) ord.push({ ...q });
+  ord.forEach((q, i) => { q.n = i + 1; });
+  return ord;
+}
+
+function htmlFillImpr(q, conR, refCap) {
+  const cuerpo = q.p.map(p => p.b
+    ? (conR ? '<u style="color:#1A7A1A;font-weight:bold">&nbsp;' + p.b + '&nbsp;</u>'
+            : '<u>&nbsp;</u>')
+    : p.x).join('');
+  return '<div class="q"><b>' + q.n + '. ' + q.ins + ' ' + refCap(q.cap) + '</b>' +
+    '<div class="fill">' + cuerpo + '</div></div>';
+}
+
+/* Las tres secciones. `conR` decide si se marca la correcta: es el único
+   interruptor entre el examen del alumno y la clave del líder. */
+function htmlExamenImpr(sel, conR, caps) {
+  const capDe = id => caps.find(c => c.id === id);
+  const refCap = id => {
+    const c = capDe(id);
+    return c ? '<span class="capref">[' + c.label + ']</span>' : '';
+  };
+  let h = '';
+  for (const t of ['mc', 'tf', 'fill']) {
+    const qs = sel.filter(q => q.t === t);
+    if (!qs.length) continue;
+    h += '<h2>' + SEC_IMPR[t] + ' (Preguntas ' + qs[0].n + '–' +
+      qs[qs.length - 1].n + ')</h2>' +
+      '<p style="font-size:9.5pt;color:#555;margin:0 0 8pt">' + INST_IMPR[t] + '</p>';
+    for (const q of qs) {
+      if (t === 'mc') {
+        h += '<div class="q"><b>' + q.n + '. ' + q.q + ' ' + refCap(q.cap) +
+          '</b><ul class="ops">' + q.o.map((o, i) => {
+            const ok = conR && i === q.a;
+            return '<li' + (ok ? ' style="color:#1A7A1A;font-weight:bold"' : '') + '>' +
+              'ABCD'[i] + ') ' + o + (ok ? ' ✔' : '') + '</li>';
+          }).join('') + '</ul></div>';
+      } else if (t === 'tf') {
+        const r = conR
+          ? '<b style="color:#1A7A1A">' + (q.a ? 'V' : 'F') +
+            '</b> — <span style="font-size:9pt">' + (q.e || '') + '</span>'
+          : 'V&nbsp;&nbsp;/&nbsp;&nbsp;F&nbsp;&nbsp;______';
+        h += '<div class="q"><b>' + q.n + '. ' + q.q + ' ' + refCap(q.cap) +
+          '</b><div class="vf">' + r + '</div></div>';
+      } else h += htmlFillImpr(q, conR, refCap);
+    }
+  }
+  return h;
+}
+
+/* Una hoja de examen: encabezado + secciones. Devuelve solo el cuerpo, para
+   poder pegar varias hojas en un mismo documento. */
+function hojaExamen(o) {
+  const sel = ordenaYNumera(o.sel);
+  const total = sel.length;
+  const ev = EVENTO_IMPR[o.cat] || EVENTO_IMPR.av;
+  const conR = !!o.conR;
+  const nota = String(o.cat).slice(0, 2) === 'dm'
+    ? 'El reglamento pide examen escrito de la matutina del mes. No se conoce la cantidad de preguntas: este tamaño es de práctica.'
+    : 'Del examen del campamento se conoce el formato de tres secciones, no la cantidad de preguntas. Este tamaño es de práctica.';
+  return '<div class="hoja">' +
+    (o.logo ? '<img class="logo" src="' + o.logo + '" alt="Iglesia Adventista Tierra Linda">' : '') +
+    '<div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>' +
+    '<h1>' + ev.t + (conR ? ' — CLAVE DE RESPUESTAS' : '') + '</h1>' +
+    '<div class="sub">' + o.etiqueta + ' — examen de práctica de ' + total + ' preguntas</div>' +
+    '<div class="meta">' + ev.f + ' · ' + o.alcance + '</div>' +
+    '<div class="meta" style="font-size:8pt">' + nota + '</div>' +
+    (conR
+      ? '<div class="meta" style="color:#C0392B;font-weight:bold">SOLO PARA LÍDERES — no compartir con los concursantes</div>'
+      : '<div class="linea"><span>Nombre:</span><span>Club:</span>' +
+        '<span style="max-width:90pt">Puntaje: ___ / ' + total + '</span></div>') +
+    htmlExamenImpr(sel, conR, o.caps) +
+    (conR ? '' : '<div class="pie">Generado desde el banco verificado de la app</div>') +
+    '</div>';
+}
+
+/* Documento imprimible con una o varias hojas. `aviso` sale solo en
+   pantalla: le dice al usuario qué hacer si el diálogo de impresión no
+   apareció solo. */
+function docExamen(hojas, titulo, aviso) {
+  const av = aviso ? '<div class="aviso-pant">' + aviso + '</div>' : '';
+  return paginaImpr(titulo, av + hojas.join(''));
+}
+
+if (typeof module !== 'undefined' && module.exports) module.exports = {
+  CSS_IMPR, paginaImpr, EVENTO_IMPR, ordenaYNumera, htmlExamenImpr,
+  hojaExamen, docExamen,
+};
 /* ───────── estado ───────── */
 /* ───────── categorías ─────────
    Salen del reglamento del campamento: cada club presenta dos integrantes de
@@ -9592,6 +9875,126 @@ function borrarTodo(){
   try{localStorage.removeItem(CLAVE);localStorage.removeItem(CLAVE_VIEJA);}catch(e){}
   DB=normalizarDB(null);S=DB.alumnos[DB.activo];guardar();
   marcaCat();ir('inicio');
+}
+
+/* ───────── imprimir y guardar en PDF ───────── */
+/* MECANISMO
+   No se genera el PDF con una librería. Se arma un documento HTML completo
+   (fuente/imprimible.js, el mismo render que usa tools/imprimir.js), se
+   mete en un iframe oculto y se llama a print() sobre ese iframe. El motor
+   de impresión del navegador es el que pagina: @page pone tamaño carta y
+   márgenes, y page-break-inside evita que una pregunta quede partida entre
+   dos hojas. El diálogo de impresión de cualquier sistema trae «Guardar
+   como PDF», así que el PDF sale del mismo camino que el papel.
+
+   POR QUÉ EN UN IFRAME Y NO EN LA MISMA PÁGINA
+   La app tiene sus propios estilos de pantalla. Imprimiéndola directo
+   habría que apagarlos uno por uno con @media print y cada estilo nuevo
+   podría dañar el impreso. El iframe es un documento aparte: solo tiene el
+   CSS del examen, así que lo que se ve en el papel no depende de la app.
+
+   POR QUÉ NO UNA LIBRERÍA DE PDF
+   Sumaría cientos de kilobytes al archivo único, tocaría reimplementar la
+   paginación a mano, y el resultado tipográfico es peor en un documento de
+   puro texto. Lo que se pierde: no se puede fijar el nombre del archivo ni
+   generar el PDF sin que el usuario pase por el diálogo. */
+
+let ifrImpr=null;
+
+function imprimeDoc(html,titulo){
+  try{
+    if(ifrImpr&&ifrImpr.parentNode)ifrImpr.parentNode.removeChild(ifrImpr);
+    ifrImpr=document.createElement('iframe');
+    ifrImpr.setAttribute('title',titulo||'Examen para imprimir');
+    ifrImpr.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0';
+    /* El iframe dispara onload dos veces: primero por el about:blank con que
+       nace y después por el srcdoc. Sin esta bandera saldrían dos diálogos de
+       impresión, y el primero sobre un documento en blanco. */
+    let yaImprimio=false;
+    ifrImpr.onload=()=>{
+      if(yaImprimio)return;
+      const w=ifrImpr.contentWindow;
+      if(!w||!w.document||!w.document.body||!w.document.body.innerHTML)return;
+      yaImprimio=true;
+      try{w.focus();w.print();}catch(e){avisoImpr(html);}
+    };
+    ifrImpr.srcdoc=html;
+    document.body.appendChild(ifrImpr);
+    return true;
+  }catch(e){avisoImpr(html);return false;}
+}
+
+/* Salida de emergencia. En iPhone y iPad el print() sobre un iframe no
+   siempre abre el diálogo; con el documento en una pestaña aparte se
+   imprime desde Compartir → Imprimir. */
+function avisoImpr(html){
+  try{
+    const b=new Blob([html],{type:'text/html'});
+    const u=URL.createObjectURL(b);
+    const c=document.getElementById('impr-alt');
+    if(c)c.innerHTML='<p class="nota">Si no se abrió el cuadro de impresión, '+
+      '<a href="'+u+'" target="_blank" rel="noopener"><strong>abre el examen en otra pestaña</strong></a> '+
+      'y usa Compartir → Imprimir.</p>';
+  }catch(e){}
+}
+
+/* Los datos que el render necesita de la categoría actual. */
+const etiqImpr=c=>CATS[c].nombre+' · '+CATS[c].edad;
+
+/* Una hoja con la selección que esté armada en el menú de arriba: mismo
+   alcance, misma cantidad, mismo nivel que el examen que haría en pantalla. */
+function hojaActual(conR){
+  const sel=armar('normal');
+  if(!sel.length)return null;
+  return hojaExamen({sel,cat:S.cat,conR,logo:LOGO_TL,caps:CAPS,
+    etiqueta:etiqImpr(S.cat),alcance:textoAlcanceImpr()});
+}
+
+/* Alcance en palabras, para el encabezado del impreso. */
+function textoAlcanceImpr(){
+  if(alcance==='todo')return CAT().alcance;
+  if(alcance==='biblia')return 'Solo el libro de Daniel';
+  if(alcance==='pr')return 'Solo Profetas y Reyes';
+  if(alcance==='q1')return 'Del 1 al 15 de octubre';
+  if(alcance==='q2')return 'Del 16 en adelante';
+  const c=CAPS.find(x=>x.id===alcance);
+  return c?c.label+' — '+c.sub:CAT().alcance;
+}
+
+function imprimeExamen(conR){
+  const h=hojaActual(!!conR);
+  if(!h){alertaImpr('No hay preguntas con esta selección.');return;}
+  const t=(conR?'Clave — ':'Examen — ')+etiqImpr(S.cat);
+  imprimeDoc(docExamen([h],t,conR
+    ?'Clave de respuestas. En el cuadro de impresión escoge «Guardar como PDF» si lo quieres en archivo.'
+    :'Examen para imprimir. En el cuadro de impresión escoge «Guardar como PDF» si lo quieres en archivo.'),t);
+}
+
+/* Las seis categorías en un solo documento, cada una en su hoja. Cambia la
+   categoría activa, arma, y la devuelve como estaba: el progreso guardado no
+   se toca porque armar() solo lee. */
+function imprimeTodos(conR){
+  const prevCat=S.cat,prevAl=alcance,prevN=nivel,prevC=cuantas;
+  const hojas=[];
+  try{
+    for(const c of Object.keys(CATS)){
+      S.cat=c;alcance='todo';nivel=CATS[c].techo;cuantas=CATS[c].n;
+      const sel=armar('normal');
+      if(!sel.length)continue;
+      hojas.push(hojaExamen({sel,cat:c,conR:!!conR,logo:LOGO_TL,caps:CAPS,
+        etiqueta:etiqImpr(c),alcance:CATS[c].alcance}));
+    }
+  }finally{S.cat=prevCat;alcance=prevAl;nivel=prevN;cuantas=prevC;}
+  if(!hojas.length){alertaImpr('No se pudo armar ningún examen.');return;}
+  const t=conR?'Claves de las seis categorías':'Exámenes de las seis categorías';
+  imprimeDoc(docExamen(hojas,t,'Seis exámenes, uno por categoría, cada uno en su hoja.'+
+    (conR?' Contiene las respuestas: solo para líderes.':'')),t);
+  pintaMenuEx();
+}
+
+function alertaImpr(msj){
+  const c=document.getElementById('impr-alt');
+  if(c)c.innerHTML='<p class="nota" style="color:var(--rojo)">'+esc(msj)+'</p>';
 }
 
 /* ───────── logo de la iglesia ───────── */

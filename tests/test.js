@@ -241,5 +241,103 @@ const idsMat = new Set(MATU.MAT_CAPS.map(c=>c.id));
 ok(MATU.MAT_BANCO.every(q=>idsMat.has(q.cap)),
   'Todas las preguntas de matutina apuntan a un día existente');
 
+
+/* ───────── examen imprimible ─────────
+   El render es puro: no toca disco ni DOM, así que se prueba aquí mismo.
+   Eso es todo el punto de haberlo sacado de tools/imprimir.js: antes solo se
+   podía revisar abriendo el HTML generado a ojo. */
+const IMPR=require(path.join(RAIZ,'fuente','imprimible.js'));
+const MATU2=require(path.join(RAIZ,'fuente','matutina.js'));
+const CAPS_T=[...CAPS,...MATU2.MAT_CAPS];
+const BANCO_T=[...BANCO,...MATU2.MAT_BANCO];
+const CATS_T={me:10,av:15,pa:25,gm:25,dm1:10,dm2:15};
+
+function selDe(cat,n){
+  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!c.extra).map(c=>c.id);
+  const b=BANCO_T.filter(q=>ids.includes(q.cap));
+  const mc=b.filter(q=>q.t==='mc').slice(0,Math.max(1,Math.round(n*.6)));
+  const tf=b.filter(q=>q.t==='tf').slice(0,Math.max(1,Math.round(n*.25)));
+  const fl=b.filter(q=>q.t==='fill').slice(0,Math.round(n*.15));
+  return [...mc,...tf,...fl];
+}
+const hoja=(cat,conR)=>IMPR.hojaExamen({sel:selDe(cat,CATS_T[cat]),cat,conR,
+  logo:'',caps:CAPS_T,etiqueta:cat,alcance:'prueba'});
+
+/* Las seis categorías tienen que poder imprimirse: es el «para todos los
+   casos». Si una queda vacía, el examen sale en blanco. */
+ok(Object.keys(CATS_T).every(c=>hoja(c,false).length>1200),
+  'Las 6 categorías generan una hoja de examen con contenido');
+
+/* La numeración corre de 1 a n sin saltos y en orden de sección. */
+const numsOk=Object.keys(CATS_T).every(c=>{
+  const sel=IMPR.ordenaYNumera(selDe(c,CATS_T[c]));
+  const tipos=sel.map(q=>q.t);
+  const pos=t=>tipos.indexOf(t);
+  const orden=['mc','tf','fill'].filter(t=>pos(t)>=0).map(pos);
+  return sel.every((q,i)=>q.n===i+1)&&
+    orden.every((v,i)=>i===0||v>orden[i-1]);
+});
+ok(numsOk,'Numeración de 1 a n y secciones en orden I, II, III');
+
+/* El examen del alumno no puede traer ni una respuesta. Se revisa el marcador
+   verde, el visto y la palabra subrayada de completar. */
+const sinR=Object.keys(CATS_T).map(c=>hoja(c,false)).join('');
+ok(!/#1A7A1A/.test(sinR),'El examen sin respuestas no marca ninguna correcta');
+ok(!/✔/.test(sinR),'El examen sin respuestas no trae vistos');
+ok(!/SOLO PARA LÍDERES/.test(sinR),'El examen sin respuestas no lleva el aviso de líderes');
+
+/* La clave sí las trae: una marca por cada múltiple y el aviso de líderes. */
+const claveAv=hoja('av',true);
+const nmcAv=selDe('av',15).filter(q=>q.t==='mc').length;
+ok((claveAv.match(/✔/g)||[]).length===nmcAv,
+  'La clave marca exactamente una opción por pregunta de selección múltiple');
+ok(/SOLO PARA LÍDERES/.test(claveAv),'La clave avisa que es solo para líderes');
+
+/* Examen y clave deben ser la misma prueba: mismo orden, mismas preguntas.
+   Si se desincronizan, el líder califica con la hoja equivocada. */
+const sel15=selDe('av',15);
+const texto=h=>(h.match(/<b>\d+\.[^<]*/g)||[]).join('|');
+ok(texto(IMPR.hojaExamen({sel:sel15,cat:'av',conR:false,logo:'',caps:CAPS_T,etiqueta:'x',alcance:'y'}))
+  ===texto(IMPR.hojaExamen({sel:sel15,cat:'av',conR:true,logo:'',caps:CAPS_T,etiqueta:'x',alcance:'y'})),
+  'La clave trae las mismas preguntas en el mismo orden que el examen');
+
+/* En completar, la palabra de la respuesta no puede aparecer en la hoja del
+   alumno ni siquiera oculta en el HTML. */
+const fills=BANCO_T.filter(q=>q.t==='fill').slice(0,20);
+const hojaFill=IMPR.hojaExamen({sel:fills,cat:'gm',conR:false,logo:'',caps:CAPS_T,
+  etiqueta:'x',alcance:'y'});
+const palabras=fills.flatMap(q=>q.p.filter(p=>p.b).map(p=>p.b));
+ok(palabras.every(w=>!hojaFill.includes('>&nbsp;'+w)),
+  'Completar: la palabra correcta no viaja en la hoja del alumno');
+
+/* Documento autocontenido: sin CSS externo no hay nada que cargar, así que
+   imprime igual sin internet. */
+const doc=IMPR.docExamen([hoja('av',false)],'t','aviso');
+ok(doc.startsWith('<!DOCTYPE html')&&/@page/.test(doc)&&/page-break-inside/.test(doc),
+  'El documento imprimible es autocontenido y trae reglas de paginación');
+ok(!/<link|src="http|@import/.test(doc),'El documento imprimible no pide archivos externos');
+
+/* Las seis hojas en un documento: cada una debe empezar en página nueva. */
+const seis=IMPR.docExamen(Object.keys(CATS_T).map(c=>hoja(c,false)),'t');
+ok((seis.match(/class="hoja"/g)||[]).length===6,
+  'El documento de las 6 categorías trae 6 hojas con salto de página');
+
+/* La matutina no puede salir titulada «Conexión Bíblica» ni citando la
+   RV1995: es otro evento y otra fuente. */
+ok(/DEVOCIÓN MATUTINA/.test(hoja('dm2',false))&&!/RV1995/.test(hoja('dm2',false)),
+  'El examen de matutina lleva su propio título y su propia fuente');
+ok(/CONEXIÓN BÍBLICA/.test(hoja('av',false))&&/RV1995/.test(hoja('av',false)),
+  'El examen de Conexión Bíblica cita la RV1995');
+
+/* La app y el generador de material tienen que compartir el render: si
+   alguien vuelve a copiar el HTML dentro de tools/imprimir.js, esto falla. */
+const fuenteImpr=fs.readFileSync(path.join(RAIZ,'tools','imprimir.js'),'utf8');
+ok(/require\('\.\.\/fuente\/imprimible\.js'\)/.test(fuenteImpr)&&
+   !/SECCIÓN I — Selección/.test(fuenteImpr),
+  'tools/imprimir.js usa el render compartido y no tiene copia propia');
+const htmlApp=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
+ok(/function hojaExamen/.test(htmlApp)&&/function imprimeExamen/.test(htmlApp),
+  'index.html trae el render compartido y los botones de impresión');
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

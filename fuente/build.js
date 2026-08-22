@@ -32,6 +32,7 @@ const BANCO_NV = BANCO_ALL.map(q => ({ ...q, nv: nivelDe(q) }));
 const leer = f => fs.readFileSync(path.join(__dirname, f), 'utf8').replace(/\n+$/, '');
 const CSS    = leer('estilos.css');
 const CUERPO = leer('cuerpo.html');
+const IMPR   = leer('imprimible.js');
 const APP    = leer('app.js');
 
 /* Se serializa con indentación para que ninguna línea pase de 2.000
@@ -68,6 +69,7 @@ ${CSS}
 ${CUERPO}
 <script>
 ${DATA}
+${IMPR}
 ${APP}
 </script>
 </body>

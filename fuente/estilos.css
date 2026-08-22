@@ -225,3 +225,15 @@ body.av .tj .rev{font-size:1.08rem}
   .info-table{font-size:.79rem}
   .info-table td.key{white-space:normal}
 }
+
+.menu-impr{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.8rem 0 .4rem}
+.menu-impr .btn{width:100%;justify-content:center;font-size:.83rem;padding:.7rem .5rem}
+@media(max-width:560px){.menu-impr{grid-template-columns:1fr}}
+
+/* La app no se imprime a sí misma: el examen se imprime desde un iframe con
+   su propio CSS. Esta regla solo evita un desperdicio de papel si alguien
+   le da Imprimir estando en la app. */
+@media print{
+  .nav,.menu-ex,.menu-impr,.tj-btns,.btn{display:none!important}
+  .pantalla{display:block!important}
+}

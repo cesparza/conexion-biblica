@@ -906,6 +906,126 @@ function borrarTodo(){
   marcaCat();ir('inicio');
 }
 
+/* ───────── imprimir y guardar en PDF ───────── */
+/* MECANISMO
+   No se genera el PDF con una librería. Se arma un documento HTML completo
+   (fuente/imprimible.js, el mismo render que usa tools/imprimir.js), se
+   mete en un iframe oculto y se llama a print() sobre ese iframe. El motor
+   de impresión del navegador es el que pagina: @page pone tamaño carta y
+   márgenes, y page-break-inside evita que una pregunta quede partida entre
+   dos hojas. El diálogo de impresión de cualquier sistema trae «Guardar
+   como PDF», así que el PDF sale del mismo camino que el papel.
+
+   POR QUÉ EN UN IFRAME Y NO EN LA MISMA PÁGINA
+   La app tiene sus propios estilos de pantalla. Imprimiéndola directo
+   habría que apagarlos uno por uno con @media print y cada estilo nuevo
+   podría dañar el impreso. El iframe es un documento aparte: solo tiene el
+   CSS del examen, así que lo que se ve en el papel no depende de la app.
+
+   POR QUÉ NO UNA LIBRERÍA DE PDF
+   Sumaría cientos de kilobytes al archivo único, tocaría reimplementar la
+   paginación a mano, y el resultado tipográfico es peor en un documento de
+   puro texto. Lo que se pierde: no se puede fijar el nombre del archivo ni
+   generar el PDF sin que el usuario pase por el diálogo. */
+
+let ifrImpr=null;
+
+function imprimeDoc(html,titulo){
+  try{
+    if(ifrImpr&&ifrImpr.parentNode)ifrImpr.parentNode.removeChild(ifrImpr);
+    ifrImpr=document.createElement('iframe');
+    ifrImpr.setAttribute('title',titulo||'Examen para imprimir');
+    ifrImpr.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0';
+    /* El iframe dispara onload dos veces: primero por el about:blank con que
+       nace y después por el srcdoc. Sin esta bandera saldrían dos diálogos de
+       impresión, y el primero sobre un documento en blanco. */
+    let yaImprimio=false;
+    ifrImpr.onload=()=>{
+      if(yaImprimio)return;
+      const w=ifrImpr.contentWindow;
+      if(!w||!w.document||!w.document.body||!w.document.body.innerHTML)return;
+      yaImprimio=true;
+      try{w.focus();w.print();}catch(e){avisoImpr(html);}
+    };
+    ifrImpr.srcdoc=html;
+    document.body.appendChild(ifrImpr);
+    return true;
+  }catch(e){avisoImpr(html);return false;}
+}
+
+/* Salida de emergencia. En iPhone y iPad el print() sobre un iframe no
+   siempre abre el diálogo; con el documento en una pestaña aparte se
+   imprime desde Compartir → Imprimir. */
+function avisoImpr(html){
+  try{
+    const b=new Blob([html],{type:'text/html'});
+    const u=URL.createObjectURL(b);
+    const c=document.getElementById('impr-alt');
+    if(c)c.innerHTML='<p class="nota">Si no se abrió el cuadro de impresión, '+
+      '<a href="'+u+'" target="_blank" rel="noopener"><strong>abre el examen en otra pestaña</strong></a> '+
+      'y usa Compartir → Imprimir.</p>';
+  }catch(e){}
+}
+
+/* Los datos que el render necesita de la categoría actual. */
+const etiqImpr=c=>CATS[c].nombre+' · '+CATS[c].edad;
+
+/* Una hoja con la selección que esté armada en el menú de arriba: mismo
+   alcance, misma cantidad, mismo nivel que el examen que haría en pantalla. */
+function hojaActual(conR){
+  const sel=armar('normal');
+  if(!sel.length)return null;
+  return hojaExamen({sel,cat:S.cat,conR,logo:LOGO_TL,caps:CAPS,
+    etiqueta:etiqImpr(S.cat),alcance:textoAlcanceImpr()});
+}
+
+/* Alcance en palabras, para el encabezado del impreso. */
+function textoAlcanceImpr(){
+  if(alcance==='todo')return CAT().alcance;
+  if(alcance==='biblia')return 'Solo el libro de Daniel';
+  if(alcance==='pr')return 'Solo Profetas y Reyes';
+  if(alcance==='q1')return 'Del 1 al 15 de octubre';
+  if(alcance==='q2')return 'Del 16 en adelante';
+  const c=CAPS.find(x=>x.id===alcance);
+  return c?c.label+' — '+c.sub:CAT().alcance;
+}
+
+function imprimeExamen(conR){
+  const h=hojaActual(!!conR);
+  if(!h){alertaImpr('No hay preguntas con esta selección.');return;}
+  const t=(conR?'Clave — ':'Examen — ')+etiqImpr(S.cat);
+  imprimeDoc(docExamen([h],t,conR
+    ?'Clave de respuestas. En el cuadro de impresión escoge «Guardar como PDF» si lo quieres en archivo.'
+    :'Examen para imprimir. En el cuadro de impresión escoge «Guardar como PDF» si lo quieres en archivo.'),t);
+}
+
+/* Las seis categorías en un solo documento, cada una en su hoja. Cambia la
+   categoría activa, arma, y la devuelve como estaba: el progreso guardado no
+   se toca porque armar() solo lee. */
+function imprimeTodos(conR){
+  const prevCat=S.cat,prevAl=alcance,prevN=nivel,prevC=cuantas;
+  const hojas=[];
+  try{
+    for(const c of Object.keys(CATS)){
+      S.cat=c;alcance='todo';nivel=CATS[c].techo;cuantas=CATS[c].n;
+      const sel=armar('normal');
+      if(!sel.length)continue;
+      hojas.push(hojaExamen({sel,cat:c,conR:!!conR,logo:LOGO_TL,caps:CAPS,
+        etiqueta:etiqImpr(c),alcance:CATS[c].alcance}));
+    }
+  }finally{S.cat=prevCat;alcance=prevAl;nivel=prevN;cuantas=prevC;}
+  if(!hojas.length){alertaImpr('No se pudo armar ningún examen.');return;}
+  const t=conR?'Claves de las seis categorías':'Exámenes de las seis categorías';
+  imprimeDoc(docExamen(hojas,t,'Seis exámenes, uno por categoría, cada uno en su hoja.'+
+    (conR?' Contiene las respuestas: solo para líderes.':'')),t);
+  pintaMenuEx();
+}
+
+function alertaImpr(msj){
+  const c=document.getElementById('impr-alt');
+  if(c)c.innerHTML='<p class="nota" style="color:var(--rojo)">'+esc(msj)+'</p>';
+}
+
 /* ───────── logo de la iglesia ───────── */
 /* El data URI vive en una constante y se asigna aquí, no en el HTML: así
    ninguna línea del archivo generado pasa de 2.000 caracteres. */

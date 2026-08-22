@@ -50,7 +50,7 @@ const DIAS = [
   v:'«[Dios] quiere que todos se salven»',
   q:'Las bodas de Papúa Nueva Guinea',
   h:'En Occidente hay que recibir una invitación para ir a una boda, y los novios deciden a quién quieren en el banquete. En Papúa Nueva Guinea no es así: asisten todos los que quieren, se embellece un lugar muy grande, y nadie va con las manos vacías: llevan adornos, manteles, platillos y más.',
-  l:'En el reino de Dios la invitación está hecha para todas las personas, pero cada uno debe decidir si la acepta.' },
+  l:'Jesús quiere que todos disfrutemos de la cena de las bodas del Cordero, es decir, que todos seamos salvos. La invitación está hecha para todas las personas, pero cada uno debe decidir si la acepta.' },
 { d:6, t:'Nunca estás solo', r:'Isaías 41:10',
   v:'«No temas, pues yo soy tu Dios. Yo te doy fuerzas, yo te ayudo, yo te sostengo con mi mano victoriosa»',
   q:'Sophie y su mamá',
@@ -64,12 +64,12 @@ const DIAS = [
 { d:8, t:'El poder del héroe', r:'Hechos 1:8',
   v:'«Cuando el Espíritu Santo venga sobre ustedes, recibirán poder y saldrán a dar testimonio de mí [...] hasta en las partes más lejanas de la tierra»',
   q:'Héroe: Unia Api',
-  h:'Unia Api quería ser pastor y fue a estudiar Teología a la Universidad Adventista del Pacífico, donde entregó su corazón a Jesús. Un misionero entró al dormitorio buscando estudiantes para un proyecto en un lugar remoto y solo encontró a Unia. Le ofreció ir a Kerema por un año. Unia dijo que sí.',
+  h:'Unia Api quería ser pastor y fue a estudiar Teología a la Universidad Adventista del Pacífico, donde entregó su corazón a Jesús. Un misionero entró al dormitorio buscando estudiantes para un proyecto en un lugar remoto y solo encontró a Unia. Le ofreció ir a Kerema, un lugar remoto de Papúa Nueva Guinea, por un año. Unia dijo que sí.',
   l:'El héroe no le dice no a una oportunidad de servir a Dios, aunque llegue de manera inesperada. Si no te sientes capaz, el Espíritu Santo te capacita.' },
 { d:9, t:'El héroe narrador de historias', r:'2 Timoteo 4:2',
   v:'«Tú anuncia el mensaje de Dios en todo momento»',
   q:'Héroe: Unia',
-  h:'En Kerema, rodeado de agua y selva, Unia quedó a cargo de un grupo de creyentes y de una pequeña escuela donde enseñaba a niños de primaria. Le pidió a Jesús ideas para predicar y se le ocurrió contar historias: los viernes de tarde encendía una fogata, contaba historias de la Biblia y luego organizaba a los jóvenes para representarlas en drama. La congregación creció mucho ese año.',
+  h:'En Kerema, rodeado de agua y selva, Unia quedó a cargo de un grupo de creyentes mientras los misioneros estaban en Estados Unidos, y de la pequeña escuela que ellos habían fundado, donde enseñaba a niños de primaria. Le pidió a Jesús ideas para predicar y se le ocurrió contar historias: los viernes de tarde encendía una fogata, contaba historias de la Biblia y luego organizaba a los jóvenes para representarlas en drama. La congregación creció mucho ese año.',
   l:'Dios es creativo y te da ideas para que seas un héroe de la predicación del evangelio.' },
 { d:10, t:'El héroe se enamora — 1.ª parte', r:'Cantares 2:2',
   v:'«Mi amada es, entre las mujeres, como una rosa entre los espinos»',
@@ -85,7 +85,7 @@ const DIAS = [
   v:'«Sigo hacia la meta para ganar el premio que Dios me ofreció cuando me llamó por medio de Jesucristo»',
   q:'Heroína: Gladys Aylward',
   h:'Gladys leyó en una revista que en China millones de personas no sabían quién es Jesús, y decidió ir a predicar. Se inscribió en una escuela de misioneros y el 15 de octubre de 1932 sacó todos sus ahorros y partió desde Londres. El tren fue detenido en Siberia por una guerra, pero ella siguió. Llegó a China veintisiete días después de salir.',
-  l:'Era de pequeña estatura y de enorme corazón. Pídele a Jesús una meta elevada, y valentía para alcanzarla.' },
+  l:'Era de pequeña estatura y de enorme corazón, y dejó su vida tranquila en Inglaterra por ser misionera en tierras lejanas. Pídele a Jesús una meta elevada, y valentía para alcanzarla.' },
 { d:13, t:'«Mujer virtuosa»', r:'Proverbios 31:10 (RV95)',
   v:'«Mujer virtuosa, ¿quién la hallará? Su valor sobrepasa largamente al de las piedras preciosas»',
   q:'Heroína: Gladys Aylward',
@@ -174,7 +174,7 @@ const DIAS = [
 { d:30, t:'Nabal, el villano necio', r:'Proverbios 29:11 (NVI)',
   v:'«El necio da rienda suelta a su ira, pero el sabio sabe dominarla»',
   q:'Villano: Nabal',
-  h:'Un necio es una persona que, de manera terca, se comporta sin entender la situación. La Biblia misma dice que Nabal era un necio: se puede leer en 1 Samuel 25:25. Nabal se había beneficiado mucho tiempo de que David y sus hombres cuidaran sus rebaños y sus empleados, y aun sabiendo que David era el elegido por Dios como futuro rey, cuando le mandaron a pedir algo de comer no solo se negó, sino que habló muy groseramente. David se enfureció muchísimo y decidió ir a matarlo.',
+  h:'Un necio es una persona que, de manera terca, se comporta sin entender la situación. La Biblia misma dice que Nabal era un necio: se puede leer en 1 Samuel 25:25. Nabal se había beneficiado mucho tiempo de que David y sus hombres cuidaran sus rebaños y sus empleados, y aun sabiendo que David era el elegido por Dios como futuro rey de Israel, cuando le mandaron a pedir algo de comer no solo se negó, sino que habló muy groseramente. David se enfureció muchísimo y decidió ir a matarlo.',
   l:'Hablarle groseramente a otra persona es propio de villanos. Y «la respuesta grosera aumenta el enojo» (Proverbios 15:1). Esfuérzate en hablar siempre con calma y bondad.' },
 { d:31, t:'La sabia Abigail', r:'Proverbios 15:1 (RVC)',
   v:'«La respuesta amable calma la ira; la respuesta grosera aumenta el enojo»',
@@ -317,6 +317,18 @@ const A_MANO = [
 [31,'¿Qué hizo Abigail al enterarse de la grosería de su esposo?','Mandó comida rápidamente a David y ella misma salió a su encuentro',['Escondió a su familia','Le reclamó a Nabal','Avisó al rey Saúl'],
    '¿Qué evitaron la cortesía y la prudencia de Abigail?','Evitaron muertes aquel día',['Evitaron una guerra entre reinos','Evitaron que Nabal fuera preso','Evitaron perder los rebaños']],
 ];
+
+/* Detalle geográfico. La lectura nombra el país o la región de cada día y
+   es lo primero que se olvida al resumir; estas preguntas lo fijan. */
+const GEO = [
+[8,'¿A qué país fue enviado Unia Api con el misionero?','A un lugar remoto de Papúa Nueva Guinea',['A Australia','A Estados Unidos','A Filipinas']],
+[9,'¿Dónde estaban los misioneros mientras Unia quedaba a cargo en Kerema?','En Estados Unidos',['En Australia','En la capital del país','En Inglaterra']],
+[12,'¿De qué país salió Gladys Aylward para ir a predicar a China?','De Inglaterra',['De Estados Unidos','De Australia','De Canadá']],
+[30,'¿De qué pueblo era David el futuro rey elegido por Dios?','De Israel',['De Judá solamente','De Filistea','De Moab']],
+];
+
+for (const fila of GEO)
+  MAT_BANCO.push({ cap: id(fila[0]), t: 'mc', nv: 2, q: fila[1], o: [fila[2], ...fila[3]], a: 0 });
 
 for (const fila of A_MANO) {
   const d = fila[0];
