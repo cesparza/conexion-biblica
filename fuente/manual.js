@@ -177,7 +177,9 @@ const MANUAL = [
     <li><strong>Mis tarjetas, para recortar</strong> — en papel no se puede
     voltear, así que la respuesta va debajo: la tapas con la mano, contestas en
     voz alta, y destapas.</li>
-    <li><strong>Este manual</strong> — lo que estás leyendo.</li></ul>` },
+    </ul>
+    <p>Y este manual se imprime desde su propia pantalla, con el botón
+    <strong>🖨️ Imprimir este manual</strong> que está al final.</p>` },
   { t:'Si no vas a usar impresora',
     h:`<p>Se abre el cuadro de impresión igual. Ahí escoge
     <strong>Guardar como PDF</strong> y te queda el archivo en el teléfono o el
@@ -348,15 +350,21 @@ const MANUAL = [
   d:'Todo sale de la app, no de una carpeta',
   secs:[
   { t:'Dónde está',
-    h:`<p>En <strong>✏️ Examen → Para el director: imprimir</strong>. Cuatro
-    botones:</p>
+    h:`<p>En <strong>✏️ Examen</strong>, debajo del separador que dice
+    <em>Para el director del club</em>, en
+    <strong>🖨️ Imprimir exámenes y claves</strong>:</p>
     <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del
     concursante, con espacio para nombre, club y puntaje.</li>
     <li><strong>Este examen, con respuestas</strong> — la clave para
     calificar.</li>
     <li><strong>Las 6 categorías, sin respuestas</strong> — un documento con los
     seis exámenes, cada uno en su hoja.</li>
-    <li><strong>Las 6 categorías, con respuestas</strong> — las seis claves.</li></ul>` },
+    <li><strong>Las 6 categorías, con respuestas</strong> — las seis claves.</li>
+    <li><strong>Las guías de los dos eventos</strong> — todo el material de
+    estudio de Conexión Bíblica y de la matutina en un solo documento.</li>
+    <li><strong>El manual de la app</strong> — este mismo manual, en papel.</li></ul>
+    <p>Los dos primeros usan lo que esté armado en <strong>⚙️ Cambiar este
+    examen</strong>: capítulo, cantidad y dificultad.</p>` },
   { t:'Cómo sale el PDF',
     h:`<p>Se abre el cuadro de impresión del aparato. Ahí se manda a la
     impresora o se escoge <strong>Guardar como PDF</strong>. No hay una carpeta

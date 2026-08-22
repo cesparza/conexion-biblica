@@ -439,5 +439,69 @@ ok(/function pintaAyuda/.test(htmlApp)&&/function imprimeManual/.test(htmlApp)&&
    /p-ayuda/.test(htmlApp),
   'index.html trae la pantalla del manual y su impresión');
 
+/* ───────── el manual no puede quedarse atrás de la interfaz ─────────
+   Las cifras del manual se resuelven con marcas, pero los nombres de los
+   botones son prosa escrita a mano, y al reorganizar pantallas quedaron tres
+   afirmaciones falsas: el manual decía que se imprimía desde Estudiar algo que
+   está en otra pantalla, citaba un bloque con un nombre que ya no existía, y
+   listaba cuatro botones donde hay seis.
+
+   Se compara contra fuente/cuerpo.html, que es la interfaz de verdad. Contra
+   index.html el chequeo sería circular: el manual va incrustado ahí dentro y
+   se validaría a sí mismo. */
+const CUERPO=fs.readFileSync(FUENTE('cuerpo.html'),'utf8');
+const manPorId=Object.fromEntries(MANUAL.map(m=>[m.id,m.secs.map(s=>s.h).join(' ')]));
+
+/* Botones de impresión que hay en cada pantalla, leídos de la interfaz. */
+function pantalla(id){
+  const i=CUERPO.indexOf('id="'+id+'"');
+  if(i<0)return '';
+  const j=CUERPO.indexOf('<div id="p-', i+10);
+  return CUERPO.slice(i, j<0?CUERPO.length:j);
+}
+const etiquetasImpr=trozo=>[...trozo.matchAll(/onclick="imprime\w+\([^)]*\)"[^>]*>([^<]+)</g)]
+  .map(m=>m[1].replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,'').trim());
+
+const btsEstudio=etiquetasImpr(pantalla('p-estudio'));
+const btsExamen=etiquetasImpr(pantalla('p-examen'));
+const btsAyuda=etiquetasImpr(pantalla('p-ayuda'));
+
+ok(btsEstudio.length>0&&btsExamen.length>0&&btsAyuda.length>0,
+  'Cada pantalla con impresión tiene botones detectables');
+
+/* Todo botón de impresión de Estudiar tiene que estar documentado en el tema
+   del manual que habla de estudiar en papel, y ninguno de otra pantalla puede
+   aparecer ahí como si estuviera. */
+const faltanEst=btsEstudio.filter(t=>!manPorId['a-papel'].includes(t));
+ok(faltanEst.length===0,'El manual documenta los botones de impresión de Estudiar'+
+  (faltanEst.length?' — falta: '+faltanEst.join(' / '):''));
+
+/* Y los del bloque del director, en su tema. */
+const faltanEx=btsExamen.filter(t=>!manPorId['d-imprimir'].includes(t));
+ok(faltanEx.length===0,'El manual documenta los botones de impresión del director'+
+  (faltanEx.length?' — falta: '+faltanEx.join(' / '):''));
+
+/* La afirmación exacta que estaba mal: el manual de la app no se imprime desde
+   Estudiar, y el tema de Estudiar no debe decir que sí. */
+ok(!btsEstudio.some(t=>/manual/i.test(t)),
+  'El manual de la app no se imprime desde Estudiar (la interfaz)');
+ok(!/<li><strong>Este manual<\/strong>/.test(manPorId['a-papel']),
+  'El manual no dice que se imprime a sí mismo desde Estudiar');
+
+/* Cada <summary> que el manual cita tiene que existir tal cual en la
+   interfaz. Comparación exacta sobre el texto sin emojis: la comparación
+   difusa daba cero y dejaba pasar un nombre viejo. */
+const limpiaEtq=s=>s.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,'')
+  .replace(/\s+/g,' ').trim();
+const sumarios=[...CUERPO.matchAll(/<summary[^>]*>([^<]+)</g)]
+  .map(m=>limpiaEtq(m[1])).filter(Boolean);
+const textoMan=MANUAL.map(m=>m.secs.map(s=>s.h).join(' ')).join(' ');
+const citadas=[...textoMan.matchAll(/<strong>[^<]*→\s*([^<]+)<\/strong>/g)]
+  .map(m=>limpiaEtq(m[1]));
+const inventadas=citadas.filter(c=>!sumarios.some(s=>s===c));
+ok(inventadas.length===0,'El manual no cita bloques que ya no existen'+
+  (inventadas.length?' — '+inventadas.join(' / '):''));
+
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);
