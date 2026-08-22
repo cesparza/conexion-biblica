@@ -198,9 +198,18 @@ const MANUAL = [
     toca <strong>Hacer este examen</strong> y ya.</p>
     <p>Si dice que es de otra categoría, lo puedes hacer igual: no te cambia tu
     material ni tu progreso.</p>` },
-  { t:'No hace trampa quien lo abre primero',
+  { t:'El link se usa una sola vez',
     h:`<p>El link no lleva las respuestas dentro, así que no hay nada que leer
-    antes. Lleva solo la receta, y la app arma el examen cuando lo abres.</p>` },
+    antes. Lleva solo la receta, y la app arma el examen cuando lo abres.</p>
+    <p>Y se gasta al abrirlo. Si lo abres, miras las preguntas y te sales sin
+    contestar, <strong>no lo puedes volver a abrir</strong>. Ábrelo cuando ya
+    estés listo para hacerlo.</p>` },
+  { t:'Al final sale la nota, no las respuestas',
+    h:`<p>En el examen por link y en el simulacro no aparece la revisión: ves
+    cuántas quedaron bien y en qué sección, pero no cuál era la correcta. El
+    examen del campamento funciona igual.</p>
+    <p>Si quieres ver qué falló, pídeselo a tu director: él entra su clave en
+    ese mismo aparato y la revisión se abre.</p>` },
   ]},
 
 { id:'a-compartir', para:'estudia', icono:'📤', t:'Mandarle a tu director cómo vas',
@@ -421,6 +430,28 @@ const MANUAL = [
   { t:'Si es un niño que nunca ha abierto la app',
     h:`<p>Primero le pide su nombre y su edad, como a cualquiera, y después le
     aparece la invitación al examen. No se pierde el link.</p>` },
+  { t:'Cómo se cierra el simulacro en el tiempo',
+    h:`<p>La app no tiene servidor, así que <strong>no tiene un reloj de
+    confianza</strong>: una fecha escrita en el programa se burla cambiándole la
+    hora al celular. Lo que sí no se puede adivinar es la semilla del link, y esa
+    semilla solo existe cuando tú generas el link.</p>
+    <p>O sea que <strong>el control no es el día, es el momento en que lo
+    mandas</strong>. Si el simulacro es a las 3:00, manda el link a las 3:00.</p>
+    <p>Para que eso sirva de algo, el link se gasta al abrirse: un segundo
+    intento se rechaza. Si alguien lo abrió por error antes de la hora, tú lo
+    liberas con tu clave.</p>` },
+  { t:'La clave del director',
+    h:`<div class="warn-box">La clave es <strong>solo tuya</strong>. Quien la
+    tenga ve las respuestas.</div>
+    <p>Sirve para dos cosas: <strong>abrir la revisión</strong> al final de un
+    simulacro o de un examen por link, y <strong>liberar un link</strong> que se
+    abrió por error.</p>
+    <p>Se entra en el aparato del participante, al terminar, con el botón
+    <strong>🔑 Soy el director</strong>. Se borra al cerrar la pestaña, así que
+    ese celular no queda abierto en modo director.</p>
+    <p>Necesita la app abierta desde su dirección de internet. Si el archivo se
+    abrió a mano desde el escritorio, la clave no funciona y la app lo dice en
+    vez de quedarse callada.</p>` },
   ]},
 
 { id:'d-recibir', para:'director', icono:'📥', t:'Ver el progreso de otro aparato',
@@ -463,6 +494,17 @@ const MANUAL = [
   { t:'No es el examen oficial',
     h:`<p>No sabemos cuántas preguntas trae el real ni cómo reparte las
     secciones. Sabemos el formato de tres secciones y el alcance.</p>` },
+  { t:'No es a prueba de trampa, y hasta dónde llega',
+    h:`<div class="warn-box">La app es un solo archivo que el navegador se baja
+    completo. Las respuestas correctas están ahí adentro.</div>
+    <p>Lo que sí protege, de verdad: <strong>cuáles</strong> preguntas trae un
+    examen por link no se puede saber antes, porque hace falta la semilla; y el
+    link no se puede repetir.</p>
+    <p>Lo que no protege: un adulto que sepa mirar el código de una página web
+    encuentra las respuestas mientras contesta. Contra eso no hay nada que
+    hacer sin un servidor, y el control ahí es estar presente, no técnico.</p>
+    <p>Para niños de 4 a 9 años eso alcanza. Si algún día hace falta que
+    tampoco un adulto pueda, toca servidor.</p>` },
   ]},
 
 { id:'d-version', para:'director', icono:'📛', t:'«Nueva Reina Valera 1995»: qué versión es',

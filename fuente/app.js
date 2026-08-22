@@ -26,7 +26,7 @@ const CATS={
 const CAT=()=>CATS[S.cat]||CATS.av;
 
 const CLAVE='conexion-biblica-v4';
-const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},acc:{}};
+const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},acc:{},links:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -70,6 +70,23 @@ function normalizar(x){
                      m:Number.isFinite(m)?Math.min(9999,Math.max(0,Math.round(m))):0};
       }
     });
+  /* Semillas de link ya usadas. La entrada se crea al ACEPTAR el link, no al
+     entregar: si se creara al entregar, bastaba con abrir el link, leer las
+     quince preguntas, salir sin contestar y volver a entrar con calma. */
+  if(x.links&&typeof x.links==='object')
+    for(const k of Object.keys(x.links).slice(0,200)){
+      const v=x.links[k];
+      if(!v||typeof v!=='object')continue;
+      /* pts null significa «abierto y sin terminar», y hay que distinguirlo de
+         cero de verdad: Number(null) es 0, así que leerlo con Number a secas
+         convertía un examen abandonado en un examen sacado en cero. */
+      const p=(v.pts===null||v.pts===undefined)?NaN:Number(v.pts);
+      const t=Number(v.total);
+      s.links[String(k).slice(0,12)]={
+        pts:Number.isFinite(p)?Math.max(0,Math.round(p)):null,
+        total:Number.isFinite(t)?Math.max(0,Math.round(t)):0,
+        fecha:String(v.fecha||'').slice(0,40)};
+    }
   return s;
 }
 /* ───────── varios participantes en un mismo aparato ─────────
@@ -115,6 +132,61 @@ try{
 S=DB.alumnos[DB.activo];
 
 function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(DB));}catch(e){}}
+
+/* ───────── perfil director ─────────
+   MECANISMO
+   La app es un solo archivo estático: todo lo que sabe está en el HTML que el
+   navegador ya descargó, respuestas correctas incluidas. Así que el perfil
+   director no esconde datos, esconde la pantalla que los muestra. Lo que sí es
+   real: en el HTML no va la clave, va su SHA-256, y de un SHA-256 no se saca la
+   clave. Quien mire el código encuentra 64 caracteres inútiles.
+
+   POR QUÉ NO UN PARÁMETRO EN LA DIRECCIÓN
+   ?director se copia una vez y se pasa entre primas. La clave hay que saberla,
+   y queda en el aparato del director, no en el link.
+
+   POR QUÉ sessionStorage Y NO localStorage
+   El director entra su clave en el celular de la niña para revisar. Con
+   localStorage ese celular quedaría en modo director para siempre;
+   sessionStorage se borra al cerrar la pestaña.
+
+   LÍMITE
+   crypto.subtle solo existe en contexto seguro (https). Abriendo el archivo con
+   doble clic (file://) el perfil no se puede activar, y la app lo dice en vez
+   de fallar en silencio. */
+const CLAVE_DIR='0a08374f97a30f2e829594d0b9e6f10c48ba974b079197c479efad2c300c9c05';
+
+let director=false;
+try{director=sessionStorage.getItem('cb-dir')==='1';}catch(e){}
+
+async function sha256(t){
+  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+/* Devuelve el texto del error, o cadena vacía si entró. */
+async function activaDirector(clave){
+  if(!(typeof crypto!=='undefined'&&crypto.subtle))
+    return 'El perfil director necesita la app abierta desde su dirección de internet, no el archivo abierto a mano.';
+  let h='';
+  try{h=await sha256(String(clave||''));}
+  catch(e){return 'Este navegador no pudo verificar la clave.';}
+  if(h!==CLAVE_DIR)return 'Esa clave no es la del director.';
+  director=true;
+  try{sessionStorage.setItem('cb-dir','1');}catch(e){}
+  return '';
+}
+
+function salirDirector(){
+  director=false;
+  try{sessionStorage.removeItem('cb-dir');}catch(e){}
+  if(ultimoRes)pintaResultado();
+}
+
+/* En el simulacro y en el examen por link, quien contesta ve la nota y no la
+   revisión: ni cuál falló ni cuál era la correcta. El director sí, con su
+   clave, en el mismo aparato y al terminar. */
+const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='compartido');
 
 const alumnos=()=>Object.entries(DB.alumnos);
 
@@ -724,6 +796,10 @@ const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?8
 
 function iniciar(m){
   modo=m||'normal';
+  /* Un examen que se arma aquí no viene de ningún link: se limpia la semilla
+     para no marcar como usado un link ajeno, y el resultado anterior para que
+     el director no vea la revisión del examen pasado. */
+  semLink=null;ultimoRes=null;
   ir('examen');
   prueba=armar(modo);resp={};entregado=false;
   if(!prueba.length){reinicia();return;}
@@ -864,6 +940,22 @@ function entregar(){
   const med=pct>=93?'🥇':pct>=75?'🥈':pct>=60?'🥉':'📖';
   const msg=pct>=93?'¡Excelente! Dominas el material.':pct>=75?'¡Muy bien! Repasa lo que falló.':pct>=60?'Buen intento. Vuelve al material.':'Estudia la guía y vuelve a intentarlo.';
 
+  /* Un examen por link se cierra aquí: queda la nota y no se puede repetir. */
+  if(modo==='compartido'&&semLink!==null){
+    S.links[String(semLink)]={pts,total:tot,fecha:new Date().toISOString()};
+    guardar();
+  }
+
+  ultimoRes={pts,tot,pct,med,msg,s3};
+  document.getElementById('ex-curso').style.display='none';
+  pintaResultado();
+}
+
+/* Resultado del examen que acabó, guardado para poder re-pintar la pantalla
+   cuando el director entra su clave, sin volver a calificar. */
+let ultimoRes=null;
+
+function htmlRevision(){
   let rev='',n=1;
   for(const t of ['mc','tf','fill']){
     const qs=prueba.filter(q=>q.t===t);
@@ -871,8 +963,13 @@ function entregar(){
     rev+='<div class="divisor" style="font-size:.79rem;margin:.8rem 0 .5rem">'+ETQ[t]+'</div>';
     qs.forEach(q=>{rev+=htmlQ(q,n++,true);});
   }
+  return rev;
+}
 
-  document.getElementById('ex-curso').style.display='none';
+function pintaResultado(){
+  if(!ultimoRes)return;
+  const {pts,tot,pct,med,msg,s3}=ultimoRes;
+  const ver=revelaRespuestas();
   const r=document.getElementById('ex-result');
   r.style.display='block';
   r.innerHTML=
@@ -880,13 +977,59 @@ function entregar(){
     '<div class="pt">'+pts+'<span style="font-size:1.7rem;opacity:.7">/'+tot+'</span></div>'+
     '<div style="opacity:.9;margin-top:.3rem">'+pct+'% · '+msg+'</div>'+
     '<div class="sec3">'+s3+'</div></div>'+
-    '<div class="card"><h2>📋 Revisión</h2>'+rev+'</div>'+
+    (ver
+      ?'<div class="card"><h2>📋 Revisión</h2>'+htmlRevision()+
+       (director?'<p class="nota">Estás viendo esto como <strong>director</strong>. '+
+        '<button class="btn gho" onclick="salirDirector()">Salir del modo director</button></p>':'')+
+       '</div>'
+      :'<div class="card"><h2>🔒 La revisión está cerrada</h2>'+
+       '<p class="nota">Esto fue un <strong>simulacro</strong>: queda la nota, no '+
+       'las respuestas. El examen del campamento funciona igual. Para ver qué '+
+       'falló, el director entra su clave en este mismo aparato.</p>'+
+       '<div id="dir-caja"></div>'+
+       '<button class="btn gho" style="margin-top:.7rem" onclick="pideClaveDir(\'res\')">🔑 Soy el director</button>'+
+       '</div>')+
     '<div style="display:flex;gap:.7rem;flex-wrap:wrap">'+
-    (falladasDe().length>=3?'<button class="btn azul" onclick="iniciar(\'errores\')">🔁 Repasar mis errores ('+falladasDe().length+')</button>':'')+
+    (ver&&falladasDe().length>=3?'<button class="btn azul" onclick="iniciar(\'errores\')">🔁 Repasar mis errores ('+falladasDe().length+')</button>':'')+
     '<button class="btn nar" onclick="reinicia()">🔄 Otro examen</button>'+
     '<button class="btn azul" onclick="ir(\'estudio\')">📖 Estudiar</button>'+
     '<button class="btn gho" onclick="ir(\'logros\')">🏆 Logros</button></div>';
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Qué se hace después de entrar la clave: 'res' vuelve a pintar el resultado
+   con la revisión abierta; 'libera' devuelve un link quemado por error. */
+let trasDir='res';
+
+/* Caja de clave dentro de la pantalla, no prompt() del navegador: en iPhone el
+   teclado tapa el prompt y no se ve lo que se escribe. */
+function pideClaveDir(que){
+  trasDir=que||'res';
+  const c=document.getElementById('dir-caja');
+  if(!c)return;
+  c.innerHTML='<input id="dir-clave" type="password" class="clave-dir" '+
+    'placeholder="Clave del director" autocomplete="off" '+
+    'onkeydown="if(event.key===\'Enter\')entraDirector()">'+
+    '<div id="dir-msg" class="nota"></div>'+
+    '<button class="btn nar" style="margin-top:.5rem" onclick="entraDirector()">Entrar</button>';
+  const i=document.getElementById('dir-clave');
+  if(i)i.focus();
+}
+
+function entraDirector(){
+  const i=document.getElementById('dir-clave');
+  if(!i)return;
+  activaDirector(i.value).then(err=>{
+    const m=document.getElementById('dir-msg');
+    if(err){if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(err)+'</span>';return;}
+    if(trasDir==='libera'&&recetaUsada){
+      delete S.links[String(recetaUsada.s)];
+      guardar();
+      pintaInvitacion(recetaUsada);
+      return;
+    }
+    pintaResultado();
+  });
 }
 
 function reinicia(){
@@ -1115,7 +1258,17 @@ function pintaLogo(){
    LO QUE NO CAMBIA
    Abrir un link ajeno no cambia la categoría del participante ni su nombre.
    Si la categoría del link es otra, la app lo advierte y el examen corre como
-   invitado. */
+   invitado.
+
+   UN SOLO USO, Y POR QUÉ ESO ES EL CONTROL DE ACCESO
+   El link es lo que hace que el simulacro se pueda cerrar en el tiempo. No hay
+   servidor, así que no hay reloj confiable: una fecha escrita en el código se
+   burla cambiando la hora del aparato. Lo que sí no se puede adivinar es la
+   semilla, y la semilla solo existe cuando el director genera el link. Por eso
+   el control es «cuándo lo mando», no «qué día es».
+   Para que eso valga, el link se gasta al abrirlo: la semilla queda anotada en
+   la ficha y un segundo intento se rechaza. El director lo libera con su clave
+   si se abrió por error. */
 
 const CLAVE_LINK='x';
 
@@ -1123,9 +1276,23 @@ const CLAVE_LINK='x';
    armado con otro banco se detecta en vez de pasar por bueno. */
 const huellaBanco=()=>hashTxt(BANCO.length+'|'+BANCO.map(q=>q.cap).join(''));
 
-/* Semilla nueva a partir del reloj. Va en el link, así que basta con que sea
-   distinta cada vez, no con que sea impredecible. */
-const semillaNueva=()=>(Date.now()^Math.floor(Math.random()*1e9))>>>0;
+/* Semilla nueva, impredecible a propósito.
+
+   MECANISMO
+   La semilla ES el secreto del examen: el link no lleva las preguntas, y quien
+   no tenga la semilla no puede saber cuáles salen ni en qué orden. El control
+   de acceso del simulacro no es una fecha escrita en el código — el reloj del
+   aparato se cambia en dos toques — sino el momento en que el director manda
+   el link.
+
+   POR QUÉ YA NO SIRVE Date.now()
+   Con la hora del sistema como base, quien sepa el minuto aproximado en que se
+   generó el link tiene un espacio de búsqueda chico. getRandomValues toma 32
+   bits de azar del sistema operativo y ese atajo desaparece. */
+const semillaNueva=()=>{
+  try{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]>>>0;}
+  catch(e){return (Date.now()^Math.floor(Math.random()*1e9))>>>0;}
+};
 
 function recetaActual(){
   return {c:S.cat, a:alcance, n:nivelEfectivo(),
@@ -1218,7 +1385,38 @@ function pintaLinkMalo(){
     'onclick="salirLink()">Ir al examen</button></div>';
 }
 
+/* Receta del link que la pantalla de «ya se usó» está mostrando. Va aparte de
+   recetaPend a propósito: aceptaLink() limpia recetaPend, así que colgar el
+   liberar de esa variable dejaba el botón sin efecto según por dónde se
+   hubiera llegado a la pantalla. */
+let recetaUsada=null;
+
+/* Un link ya usado no se vuelve a abrir. El director lo puede liberar con su
+   clave para el caso legítimo: se abrió por error antes de la hora. */
+function pintaLinkUsado(r){
+  recetaUsada=r;
+  const u=S.links[String(r.s)]||{};
+  const nota=(u.pts===null||u.pts===undefined)
+    ?'Este examen ya se abrió en este aparato y no se terminó. Un examen por link se hace una sola vez.'
+    :'Este examen ya se hizo en este aparato: '+u.pts+' de '+u.total+'.';
+  ir('examen');
+  document.getElementById('ex-inicio').style.display='none';
+  document.getElementById('ex-curso').style.display='none';
+  const d=document.getElementById('ex-result');
+  d.style.display='block';
+  d.innerHTML='<div class="card"><h2>🔒 Ese examen ya se usó</h2>'+
+    '<p class="nota">'+esc(nota)+'</p>'+
+    '<p class="nota">Si se abrió por error, el director lo puede liberar con su clave.</p>'+
+    '<div id="dir-caja"></div>'+
+    '<button class="btn gho" style="margin-top:.7rem" onclick="pideClaveDir(\'libera\')">🔑 Soy el director</button>'+
+    '<button class="btn nar" style="margin-top:.6rem;width:100%;justify-content:center" '+
+    'onclick="salirLink()">Ir al examen</button></div>';
+}
+
 function pintaInvitacion(r){
+  /* Un link se hace una sola vez. Sin esto se podía abrir, leer las preguntas,
+     salir sin contestar y volver a entrar ya sabiendo qué venía. */
+  if(S.links[String(r.s)]&&!director){pintaLinkUsado(r);return;}
   const t=textoReceta(r);
   const mismaCat=r.c===S.cat;
   const mismoBanco=r.h===huellaBanco();
@@ -1269,6 +1467,12 @@ function aceptaLink(){
   }
   recetaPend=null;
   if(!sel.length){pintaLinkMalo();return;}
+  /* Se marca usada AL ABRIR, no al entregar. Si se marcara al entregar, el
+     camino de trampa seguía abierto: abrir, leer las quince, salir sin
+     contestar, estudiarlas y volver a entrar. */
+  semLink=r.s;
+  S.links[String(r.s)]={pts:null,total:sel.length,fecha:new Date().toISOString()};
+  guardar();
   catLink=r.c;nvLink=r.n;
   modo='compartido';prueba=sel;resp={};entregado=false;
   seg=segundosPara(prueba.length);
@@ -1282,6 +1486,10 @@ function aceptaLink(){
 /* Categoría y nivel con que se registra un examen compartido, para que el
    historial no lo anote como si fuera de la categoría propia. */
 let catLink=null,nvLink=null;
+
+/* Semilla del link que se está haciendo ahora, o null si el examen no vino de
+   un link. Es la que se marca como usada. */
+let semLink=null;
 
 /* ───────── manual dentro de la app ─────────
    MECANISMO

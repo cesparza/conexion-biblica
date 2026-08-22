@@ -343,6 +343,11 @@ textarea.cod{width:100%;min-height:80px;padding:.6rem .7rem;border:2px solid #e5
   border-radius:8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;
   line-height:1.45;resize:vertical;word-break:break-all}
 textarea.cod:focus{outline:none;border-color:var(--cielo)}
+/* Campo de la clave del director. Alto de 34px mínimo y letra de 16px: con
+   menos de 16px Safari en iPhone hace zoom al enfocar y descuadra la pantalla. */
+input.clave-dir{width:100%;min-height:38px;margin-top:.7rem;padding:.5rem .7rem;
+ border:2px solid #e5e7eb;border-radius:10px;font-size:16px;font-family:inherit}
+input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 
 /* Boletín: lo que se ve al pegar un código de resumen. Es de solo lectura, y
    se ve distinto al resto para que nadie lo confunda con su propio progreso. */
