@@ -30,6 +30,17 @@ const CONTENIDO = {
 
 /* ═══════════════ DANIEL 1 ═══════════════ */
 d1: [
+  { t:'📚 En pocas palabras', h:
+    hi(`El rey de Babilonia gana la guerra y se lleva a cuatro muchachos de
+    Jerusalén: <strong>Daniel, Ananías, Misael y Azarías</strong>.<br><br>
+    En el palacio les cambian el nombre y les sirven la comida del rey. Daniel
+    dice que no, porque esa comida iba contra lo que Dios había mandado. Pide
+    una prueba: <strong>diez días comiendo solo legumbres y agua</strong>.<br><br>
+    A los diez días los cuatro se ven mejor que todos los demás. Y cuando el
+    rey los examina, los encuentra <strong>diez veces mejores</strong> que sus
+    sabios.<br><br>
+    <em>La idea del capítulo: Daniel decidió antes de que llegara la prueba.</em>`) },
+
   { t:'👑 Contexto histórico', h:
     wa(`<strong>Año:</strong> TERCER año del reinado de Joacim, rey de Judá (1:1)<br>
     Nabucodonosor, rey de Babilonia, vino a Jerusalén y la sitió.<br>
@@ -99,6 +110,20 @@ d1: [
 
 /* ═══════════════ DANIEL 2 ═══════════════ */
 d2: [
+  { t:'📚 En pocas palabras', h:
+    hi(`El rey tiene un sueño que lo asusta y no quiere contarlo. Les exige a
+    sus sabios que le digan <strong>qué soñó y qué significa</strong>. Nadie
+    puede, y el rey manda matarlos a todos.<br><br>
+    Daniel pide tiempo, ora con sus amigos, y Dios le muestra el sueño esa
+    noche.<br><br>
+    El sueño era <strong>una estatua gigante</strong>: cabeza de oro, pecho de
+    plata, vientre de bronce, piernas de hierro, y pies de hierro con barro.
+    Cada parte es un reino que iba a venir. Después una <strong>piedra</strong>
+    que nadie cortó con la mano golpea la estatua y la deshace, y esa piedra se
+    hace un monte que llena toda la tierra: ese es el reino de Dios.<br><br>
+    <em>La idea del capítulo: Dios sabe y maneja lo que va a pasar en la
+    historia.</em>`) },
+
   { t:'💭 El sueño y la crisis', h:
     wa(`<strong>Año:</strong> SEGUNDO año del reinado de Nabucodonosor (2:1)<br>
     El sueño perturbó su espíritu y se le fue el sueño.<br>
@@ -148,6 +173,20 @@ d2: [
 
 /* ═══════════════ DANIEL 3 ═══════════════ */
 d3: [
+  { t:'📚 En pocas palabras', h:
+    hi(`El rey manda hacer <strong>una estatua de oro enorme</strong> y ordena
+    que todos se arrodillen cuando suene la música. El que no lo haga va a un
+    horno de fuego.<br><br>
+    <strong>Sadrac, Mesac y Abed-nego</strong> no se arrodillan. El rey los
+    llama, les da otra oportunidad y les pregunta qué dios podrá salvarlos.
+    Ellos responden que su Dios puede salvarlos, <strong>y que si no lo hace,
+    igual no van a adorar la estatua</strong>.<br><br>
+    El rey manda calentar el horno siete veces más y los echa adentro. Y
+    entonces ve <strong>cuatro</strong> caminando en el fuego, no tres. Al
+    salir, ni el pelo se les había quemado.<br><br>
+    <em>La idea del capítulo: obedecer a Dios sin condiciones, aunque no se vea
+    el milagro de antemano.</em>`) },
+
   { t:'🗿 La estatua de oro', h:
     tbl(['Dato','Valor exacto'],[
       ['Altura','SESENTA codos (3:1)'],
@@ -280,6 +319,21 @@ d5: [
 
 /* ═══════════════ DANIEL 6 ═══════════════ */
 d6: [
+  { t:'📚 En pocas palabras', h:
+    hi(`Daniel ya es un anciano y es el primero de los tres gobernadores del
+    reino. A los demás les da envidia y lo espían buscando algo malo.
+    <strong>No encuentran nada.</strong><br><br>
+    Entonces convencen al rey Darío de firmar una ley: por
+    <strong>treinta días</strong>, el que le pida algo a un dios o a un hombre
+    que no sea el rey, va al foso de los leones.<br><br>
+    Daniel se entera y sigue orando igual que siempre: con las ventanas
+    abiertas hacia Jerusalén, <strong>tres veces al día</strong>. Lo acusan y
+    el rey, que no puede cambiar su propia ley, lo manda al foso.<br><br>
+    Al amanecer el rey corre a llamarlo, y Daniel está vivo: Dios envió su
+    ángel y le cerró la boca a los leones.<br><br>
+    <em>La idea del capítulo: lo que Daniel hacía todos los días fue lo que lo
+    sostuvo el día difícil.</em>`) },
+
   { t:'🏛️ La organización del reino', h:
     tbl(['Cargo','Detalle'],[
       ['120 sátrapas','Constituidos sobre todo el reino (6:1)'],
@@ -343,6 +397,17 @@ d6: [
 
 /* ═══════════════ P&R 39 ═══════════════ */
 pr39: [
+  { t:'📚 En pocas palabras', h:
+    hi(`Este capítulo del libro de Elena de White explica <strong>por qué</strong>
+    Daniel no quiso la comida del rey.<br><br>
+    No fue capricho ni mala educación. Esa comida se le ofrecía primero a los
+    ídolos, y comerla era como aceptar a esos dioses. Además el vino del rey
+    <strong>ponía la mente torpe</strong>.<br><br>
+    Daniel pidió el cambio <strong>con respeto</strong>, no peleando. Y Dios le
+    dio salud y una cabeza más despierta que la de todos.<br><br>
+    <em>La idea: lo que comemos y cómo cuidamos el cuerpo también afecta la
+    mente y la vida con Dios.</em>`) },
+
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 39: «En la corte de Babilonia»</strong>`) },
 
@@ -403,6 +468,17 @@ pr40: [
 
 /* ═══════════════ P&R 41 ═══════════════ */
 pr41: [
+  { t:'📚 En pocas palabras', h:
+    hi(`Aquí Elena de White explica quién era <strong>el cuarto</strong> que el
+    rey vio caminando en el horno: era <strong>el Hijo de Dios mismo</strong>.<br><br>
+    Fíjate en algo importante: Dios <u>no</u> los sacó de la prueba. Los
+    acompañó <strong>dentro</strong> de ella.<br><br>
+    Lo más fuerte del capítulo es la frase de los tres jóvenes:
+    <strong>«y si no»</strong>. Querían decir que iban a obedecer aunque Dios
+    no los salvara. No estaban haciendo un trato con Dios.<br><br>
+    <em>La idea: la fe de verdad obedece sin pedir el resultado por
+    adelantado.</em>`) },
+
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 41: «El horno de fuego»</strong>`) },
 
@@ -492,6 +568,17 @@ pr43: [
 
 /* ═══════════════ P&R 44 ═══════════════ */
 pr44: [
+  { t:'📚 En pocas palabras', h:
+    hi(`Este capítulo explica <strong>por qué</strong> los enemigos de Daniel no
+    le encontraron ninguna falta.<br><br>
+    Daniel era el mismo en el trabajo y en su casa. Cumplía bien su cargo con
+    reyes que no creían en Dios, y nunca dejó de ser fiel.<br><br>
+    Su fuerza no apareció el día del foso: venía de <strong>orar todos los
+    días</strong>, mucho antes de que hubiera peligro. Cuando salió el decreto,
+    no cambió nada.<br><br>
+    <em>La idea: se puede servir a Dios en cualquier trabajo y en cualquier
+    lugar, y eso se construye día por día.</em>`) },
+
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 44: «En el foso de los leones»</strong>`) },
 
