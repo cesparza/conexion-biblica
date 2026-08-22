@@ -148,6 +148,13 @@ const MANUAL = [
     es la mitad del ejercicio: léela, sobre todo las que fallaste.</p>
     <p>Las que falles quedan guardadas y puedes hacer un examen
     <strong>solo con tus errores</strong> desde «Qué estudiar hoy».</p>` },
+  { t:'Si dice que los exámenes están cerrados',
+    h:`<p>Tu director los puede cerrar hasta el día de la prueba. No es que la
+    app se dañó: mientras estén cerrados puedes <strong>estudiar los
+    capítulos</strong> y usar las <strong>tarjetas</strong>, que es donde de
+    verdad se aprende.</p>
+    <p>Y si te llega un examen por link, <strong>ese sí lo puedes hacer</strong>
+    aunque los demás estén cerrados.</p>` },
   { t:'El simulacro y el examen por link son distintos',
     h:`<div class="warn-box">En el simulacro y en el examen por link
     <strong>no sale la revisión</strong>: ves la nota, no las respuestas.</div>
@@ -453,6 +460,22 @@ const MANUAL = [
     <p>Para que eso sirva de algo, el link se gasta al abrirse: un segundo
     intento se rechaza. Si alguien lo abrió por error antes de la hora, tú lo
     liberas con tu clave.</p>` },
+  { t:'Cerrar los exámenes hasta el día de la prueba',
+    h:`<p>En la pantalla de Examen, abajo, en
+    <strong>Examen → Cerrar los exámenes hasta el día de la prueba</strong>. Pide
+    tu clave y queda hecho de una.</p>
+    <p>Cerrados, el participante no puede armar exámenes en ese aparato: ni el
+    normal, ni el simulacro, ni el repaso de errores. Lo que <strong>sí</strong>
+    sigue funcionando: el examen que tú mandes por link, estudiar los capítulos y
+    las tarjetas.</p>
+    <div class="warn-box">Vale para <strong>ese aparato</strong>. Hay que
+    cerrarlo en el celular de cada participante, y quien borre los datos del
+    navegador lo abre otra vez. Sin servidor no hay forma de cerrarlos todos de
+    una, así que esto ordena, no obliga.</div>
+    <p>Para qué sirve: durante las siete semanas los exámenes de práctica están
+    abiertos y muestran las respuestas, que es como se aprende. El día de la
+    prueba eso estorba, porque cualquiera puede abrir uno mientras espera. Se
+    cierran, se manda el link, y ese es el único examen que se puede hacer.</p>` },
   { t:'La clave del director',
     h:`<div class="warn-box">La clave es <strong>solo tuya</strong>. Quien la
     tenga ve las respuestas.</div>

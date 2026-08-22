@@ -109,7 +109,7 @@ function nuevoId(){
 }
 
 function normalizarDB(x){
-  const db={v:4,activo:'',alumnos:{}};
+  const db={v:4,activo:'',alumnos:{},evento:false};
   if(x&&typeof x==='object'&&x.alumnos&&typeof x.alumnos==='object'){
     for(const id of Object.keys(x.alumnos).slice(0,MAX_ALUMNOS))
       db.alumnos[String(id).slice(0,8)]=normalizar(x.alumnos[id]);
@@ -120,6 +120,10 @@ function normalizarDB(x){
   }
   if(!Object.keys(db.alumnos).length)db.alumnos.a1=normalizar(null);
   if(!db.activo)db.activo=Object.keys(db.alumnos)[0];
+  /* Modo evento: vive en el aparato, no en la ficha, porque lo que se cierra es
+     el aparato. Solo `true` cuenta; cualquier otra cosa deja los exámenes
+     abiertos, que es el estado normal de las siete semanas de estudio. */
+  db.evento=!!(x&&typeof x==='object'&&x.evento===true);
   return db;
 }
 
@@ -198,6 +202,31 @@ function salirDirector(){
    revisión: ni cuál falló ni cuál era la correcta. El director sí, con su
    clave, en el mismo aparato y al terminar. */
 const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='compartido');
+
+/* ───────── modo evento ─────────
+   MECANISMO
+   Un interruptor por aparato que apaga los exámenes que el participante arma
+   solo: el normal, el simulacro, el repaso de errores y el examen de capítulo.
+   NO apaga el examen que llega por link, que es justo el que el director quiere
+   que se haga ese día, ni estudiar, ni las tarjetas, ni el manual.
+
+   POR QUÉ EN EL APARATO Y NO EN LA FICHA
+   Se cierra el celular, no la persona. Si dos hermanas usan el mismo aparato,
+   el examen del evento se hace ahí para las dos.
+
+   POR QUÉ localStorage Y NO sessionStorage
+   Al contrario del perfil director, esto tiene que sobrevivir a cerrar la
+   pestaña: el director cierra los exámenes la noche antes y siguen cerrados al
+   otro día.
+
+   EL LÍMITE, Y HAY QUE DECIRLO
+   Es el navegador de la niña el que guarda el interruptor. Quien borre los
+   datos del navegador lo apaga, y en un aparato nuevo el interruptor no existe.
+   Sin servidor no hay forma de que un cierre valga para todos los aparatos a la
+   vez. Contra eso el control es mirar, no técnico. */
+const examenesCerrados=()=>!!(DB&&DB.evento)&&!director;
+
+function alternaEvento(){DB.evento=!DB.evento;guardar();}
 
 const alumnos=()=>Object.entries(DB.alumnos);
 
@@ -402,6 +431,17 @@ function tareasDeHoy(){
   tareas.push({ic:'✏️',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
     d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
     b:'Comenzar',f:"iniciar('normal')"});
+
+  /* Con los exámenes cerrados, las tareas que arrancan uno no se ofrecen: leer y
+     las tarjetas siguen igual, y en su lugar entra una que explica por qué, para
+     que la pantalla no quede muda. */
+  if(examenesCerrados()){
+    const quedan=tareas.filter(t=>!/iniciar\(|examenDeCapitulo\(/.test(t.f));
+    quedan.push({ic:'🔒',t:'Los exámenes están cerrados',
+      d:'El director los abre el día de la prueba. Si te llega un examen por link, ese sí se puede hacer.',
+      b:'Ver',f:"ir('examen')"});
+    return quedan.slice(0,4);
+  }
 
   return tareas.slice(0,4);
 }
@@ -746,6 +786,32 @@ function pintaExInicio(){
     'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
+  pintaCierre();
+}
+
+/* El aviso de cerrado y el interruptor van los dos en la pantalla de Examen: es
+   donde el cierre tiene efecto y donde el director lo va a buscar. */
+function pintaCierre(){
+  const cerrado=examenesCerrados();
+  const tarjeta=document.querySelector('#ex-inicio .card.ex-hoy');
+  const cambiar=document.querySelector('#ex-inicio details');
+  if(tarjeta)tarjeta.style.display=cerrado?'none':'';
+  if(cambiar)cambiar.style.display=cerrado?'none':'';
+  const av=document.getElementById('ex-cerrado');
+  if(av)av.innerHTML=cerrado
+    ?'<div class="card"><h2>🔒 Los exámenes están cerrados</h2>'+
+     '<p class="nota">El director los cerró hasta el día de la prueba. Mientras '+
+     'tanto puedes <strong>estudiar los capítulos</strong> y practicar con las '+
+     '<strong>tarjetas</strong>, que es donde de verdad se aprende.</p>'+
+     '<p class="nota">Si te llega un examen por link, <strong>ese sí se puede '+
+     'hacer</strong>.</p></div>'
+    :'';
+  const nota=document.getElementById('ex-dir-nota');
+  if(nota)nota.innerHTML=DB.evento
+    ?'Ahora mismo los exámenes de práctica están <strong>cerrados</strong> en este aparato. El examen por link sigue funcionando.'
+    :'Ahora mismo los exámenes de práctica están <strong>abiertos</strong>.';
+  const bt=document.getElementById('ex-dir-bt');
+  if(bt)bt.textContent=DB.evento?'🔓 Abrir los exámenes de práctica':'🔒 Cerrar los exámenes de práctica';
 }
 
 /* Mezcla con fuente de azar explícita. mezcla() usa Math.random y es la de
@@ -806,6 +872,11 @@ function barajaOpciones(q){
 const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?80:72)));
 
 function iniciar(m){
+  /* Guarda de verdad, no cosmética. Aunque un botón quede pintado de antes o
+     alguien llame iniciar() por otro camino, aquí se detiene: esconder el botón
+     sin esto sería una puerta con letrero y sin cerradura. El examen por link
+     no pasa por aquí, y por eso el cierre no lo toca. */
+  if(examenesCerrados()){ir('examen');pintaExInicio();return;}
   modo=m||'normal';
   /* Un examen que se arma aquí no viene de ningún link: se limpia la semilla
      para no marcar como usado un link ajeno, y el resultado anterior para que
@@ -1014,9 +1085,16 @@ let trasDir='res';
 
 /* Caja de clave dentro de la pantalla, no prompt() del navegador: en iPhone el
    teclado tapa el prompt y no se ve lo que se escribe. */
-function pideClaveDir(que){
+const CAJAS_DIR=['dir-caja','dir-caja-ex'];
+
+function pideClaveDir(que,caja){
   trasDir=que||'res';
-  const c=document.getElementById('dir-caja');
+  /* Hay dos cajas de clave en el documento (la del resultado y la de la pantalla
+     de Examen) y el input siempre se llama igual. Se limpian las dos antes de
+     abrir una, o getElementById encuentra el input de la otra y la clave se
+     escribe en un campo que nadie está viendo. */
+  for(const id of CAJAS_DIR){const e=document.getElementById(id);if(e)e.innerHTML='';}
+  const c=document.getElementById(caja||'dir-caja');
   if(!c)return;
   c.innerHTML='<input id="dir-clave" type="password" class="clave-dir" '+
     'placeholder="Clave del director" autocomplete="off" '+
@@ -1033,6 +1111,17 @@ function entraDirector(){
   activaDirector(i.value).then(err=>{
     const m=document.getElementById('dir-msg');
     if(err){if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(err)+'</span>';return;}
+    if(trasDir==='evento'){
+      /* La clave se usó para el interruptor, no para ver respuestas: se apaga el
+         perfil director de una, para no dejar abierto el celular de la niña. El
+         orden importa, porque examenesCerrados() mira `director`. */
+      alternaEvento();
+      director=false;
+      try{sessionStorage.removeItem('cb-dir');}catch(e){}
+      ir('examen');
+      pintaExInicio();
+      return;
+    }
     if(trasDir==='libera'&&recetaUsada){
       delete S.links[String(recetaUsada.s)];
       guardar();

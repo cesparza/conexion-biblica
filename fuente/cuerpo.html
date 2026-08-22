@@ -175,6 +175,7 @@
 
 <div id="p-examen" class="pantalla">
   <div id="ex-inicio">
+    <div id="ex-cerrado"></div>
     <div class="card ex-hoy">
       <div class="ex-h">✏️ Tu examen de hoy</div>
       <div class="ex-big" id="ex-resumen"></div>
@@ -215,9 +216,11 @@
         <p>Esas son las tres secciones del examen del campamento.
         <strong>Cuántas preguntas trae no lo sabemos todavía</strong>, así que
         aquí puedes practicar con varios tamaños.</p>
-        <p>Las preguntas <strong>cambian cada vez</strong>. Al terminar ves tu
-        puntaje y la respuesta correcta de cada una. Las que falles quedan
-        guardadas para repasarlas.</p>
+        <p>Las preguntas <strong>cambian cada vez</strong>. En un examen normal,
+        al terminar ves tu puntaje y la respuesta correcta de cada una, y las que
+        falles quedan guardadas para repasarlas. En el <strong>simulacro</strong>
+        y en el examen que llega <strong>por link</strong> sale la nota y no las
+        respuestas.</p>
         <p class="nota" id="ex-nota"></p>
       </div>
     </details>
@@ -226,6 +229,23 @@
     <div class="sep">
       <span>Para el director del club</span>
     </div>
+
+    <details class="card dir">
+      <summary>🔒 Cerrar los exámenes hasta el día de la prueba</summary>
+      <div class="det-cuerpo">
+        <p class="nota" id="ex-dir-nota"></p>
+        <p class="nota">Cerrados, el participante no puede armar exámenes en este
+        aparato: ni normal, ni simulacro, ni repaso de errores. <strong>El examen
+        que mandes por link sí funciona</strong>, y estudiar y las tarjetas
+        también.</p>
+        <div id="dir-caja-ex"></div>
+        <button class="btn gho" id="ex-dir-bt" style="margin-top:.7rem"
+          onclick="pideClaveDir('evento','dir-caja-ex')">🔒 Cerrar los exámenes de práctica</button>
+        <p class="nota">Vale para <strong>este aparato</strong>. Hay que hacerlo
+        en el celular de cada participante, y quien borre los datos del navegador
+        lo abre de nuevo. Sin servidor no hay forma de cerrarlos todos de una.</p>
+      </div>
+    </details>
 
     <details class="card dir">
       <summary>🔗 Mandar este examen por link</summary>

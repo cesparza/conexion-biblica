@@ -41,6 +41,8 @@ return {S:()=>S, ponCat, normalizar, guardar, huellaBanco, escribeReceta, leeRec
         esDirector:()=>director, semLinkActual:()=>semLink,
         prueba:()=>prueba, ultimoRes:()=>ultimoRes,
         entraDirector, pideClaveDir, pintaLinkUsado, pintaLogros,
+        examenesCerrados, alternaEvento, normalizarDB, tareasDeHoy, pintaCierre,
+        DB:()=>DB,
         el:id=>document.getElementById(id)};`);
 const A=fn(store,sesion,nodo,Buffer);
 
@@ -130,6 +132,65 @@ const antes=Object.keys(A.S().links).length;
 A.entregar();
 ok(Object.keys(A.S().links).length===antes,'Entregar un simulacro propio no anota ningún link');
 
+/* ── modo evento: el director cierra los exámenes que se arman en el aparato ──
+   Lo que importa: que el cierre NO toque el examen por link, que es el único que
+   el director quiere que se haga ese día. */
+ok(A.examenesCerrados()===false,'De entrada los exámenes están abiertos');
+ok(A.DB().evento===false,'El interruptor arranca apagado');
+
+A.alternaEvento();
+ok(A.DB().evento===true&&A.examenesCerrados(),'El interruptor cierra los exámenes');
+
+/* Ningún examen que se arme en el aparato arranca. */
+for(const m of ['normal','simulacro','errores']){
+  A.reinicia();
+  A.iniciar(m);
+  ok(A.prueba().length===0,'Con los exámenes cerrados, iniciar('+m+') no arranca nada');
+}
+
+/* Pero el que llega por link sí. Esa es toda la gracia. */
+A.S().links={};
+A.ponReceta(A.leeReceta(A.escribeReceta(receta)));
+A.aceptaLink();
+ok(A.prueba().length===15,'Con los exámenes cerrados, el examen por link SÍ se puede hacer');
+ok(A.modoActual()==='compartido','Y corre como examen compartido');
+A.entregar();
+ok(typeof A.S().links[String(SEM)].pts==='number','El examen por link se cierra con su nota igual');
+
+/* La pantalla de Inicio no ofrece tareas que arranquen un examen. */
+const hoyCerrado=A.tareasDeHoy();
+ok(!hoyCerrado.some(t=>/iniciar\(|examenDeCapitulo\(/.test(t.f)),
+  'Cerrados, «Qué estudiar hoy» no ofrece ninguna tarea de examen');
+ok(hoyCerrado.some(t=>/cerrados/i.test(t.t)),'Y en su lugar dice que están cerrados');
+ok(hoyCerrado.some(t=>/tarjetas|Leer/i.test(t.t)),'Estudiar y las tarjetas siguen ofreciéndose');
+
+/* El director ve todo aunque el aparato esté cerrado, para poder probar.
+   Va como función y no como IIFE, y monta y desmonta su propio estado: un await
+   cede el control al resto del archivo, que es síncrono y ya había vuelto a
+   abrir el interruptor. La prueba fallaba por el orden, no por la app. */
+async function pruebaDirectorSobreCierre(){
+  const antes=A.DB().evento;
+  if(!A.DB().evento)A.alternaEvento();
+  await A.activaDirector('Daniel-1844');
+  ok(A.examenesCerrados()===false,'Con el perfil director activo el cierre no le aplica');
+  A.salirDirector();
+  ok(A.examenesCerrados()===true,'Al salir del perfil, el aparato sigue cerrado');
+  if(A.DB().evento!==antes)A.alternaEvento();
+}
+
+/* normalizarDB solo acepta true: cualquier basura deja los exámenes abiertos,
+   que es el estado normal de las siete semanas de estudio. */
+ok(A.normalizarDB({evento:true}).evento===true,'Un aparato cerrado sigue cerrado al recargar');
+ok(A.normalizarDB({evento:'si'}).evento===false,'Un valor que no es true deja los exámenes abiertos');
+ok(A.normalizarDB({}).evento===false,'Sin el campo, los exámenes están abiertos');
+ok(A.normalizarDB(null).evento===false,'Un aparato nuevo arranca con los exámenes abiertos');
+
+A.alternaEvento();
+ok(A.DB().evento===false&&!A.examenesCerrados(),'El interruptor los vuelve a abrir');
+A.reinicia();
+A.iniciar('normal');
+ok(A.prueba().length>0,'Abiertos otra vez, un examen normal arranca');
+
 /* ── el historial distingue de dónde vino cada examen ──
    Sin esto el director no puede comparar: solo los exámenes por link son el
    mismo examen para dos niños, y en la tabla se veían iguales a los normales. */
@@ -160,6 +221,7 @@ async function pruebaLibera(){
 
 /* ── la clave del director ── */
 (async()=>{
+  await pruebaDirectorSobreCierre();
   await pruebaLibera();
   const mal=await A.activaDirector('esta-no-es');
   ok(mal!==''&&A.esDirector()===false,'Una clave equivocada no abre el perfil director');
