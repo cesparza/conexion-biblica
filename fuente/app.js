@@ -46,7 +46,7 @@ function normalizar(x){
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
       .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,
         cat:Object.keys(CATS).includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
-        modo:['simulacro','errores'].includes(e.modo)?e.modo:'normal',
+        modo:['simulacro','errores','compartido'].includes(e.modo)?e.modo:'normal',
         nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
   if(typeof x.ultimo==='string')s.ultimo=x.ultimo;
@@ -665,7 +665,20 @@ function pintaExInicio(){
     ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
 }
 
-function mezcla(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+/* Mezcla con fuente de azar explícita. mezcla() usa Math.random y es la de
+   siempre; mezclaR() acepta un generador con semilla, y eso es lo que hace
+   reproducible un examen compartido por link. */
+function mezclaR(a,r){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+function mezcla(a){return mezclaR(a,Math.random);}
+
+/* Generador con semilla (congruencial lineal). La misma semilla da la misma
+   secuencia en cualquier aparato, que es lo que permite que un link
+   reconstruya el examen idéntico sin llevar las preguntas dentro. */
+function prng(semilla){let s=semilla>>>0;return()=>(s=(s*1664525+1013904223)>>>0)/4294967296;}
+
+/* Azar que usa el armado del examen. Es Math.random salvo cuando se está
+   reconstruyendo un examen compartido. */
+let rndEx=Math.random;
 
 function armar(m){
   if(m==='errores'){
@@ -674,9 +687,9 @@ function armar(m){
   }
   const b=poolNivel();
   const n=Math.min(cuantas||NPREG(),b.length);
-  const mc=mezcla(b.filter(q=>q.t==='mc'));
-  const tf=mezcla(b.filter(q=>q.t==='tf'));
-  const fl=mezcla(b.filter(q=>q.t==='fill'));
+  const mc=mezclaR(b.filter(q=>q.t==='mc'),rndEx);
+  const tf=mezclaR(b.filter(q=>q.t==='tf'),rndEx);
+  const fl=mezclaR(b.filter(q=>q.t==='fill'),rndEx);
   /* Proporción del examen real: 60% múltiple, 25% V/F, 15% completar.
      Si un tipo no alcanza en el alcance elegido, el faltante lo cubren
      los otros tipos para que siempre salgan n preguntas. */
@@ -700,7 +713,7 @@ function armar(m){
    aprobar por patrón en vez de por contenido. */
 function barajaOpciones(q){
   if(q.t!=='mc'||!q.o)return q;
-  const idx=mezcla(q.o.map((_,i)=>i));
+  const idx=mezclaR(q.o.map((_,i)=>i),rndEx);
   return {...q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a)};
 }
 
@@ -826,7 +839,9 @@ function entregar(){
   if(entregado)return;
   entregado=true;clearInterval(reloj);
   const pts=prueba.filter(bien).length,tot=prueba.length,pct=Math.round(pts/tot*100);
-  S.examenes.push({pts,total:tot,cat:S.cat,fecha:new Date().toISOString(),modo,nv:nivelEfectivo()});
+  const catReg=modo==='compartido'&&catLink?catLink:S.cat;
+  const nvReg=modo==='compartido'&&nvLink?nvLink:nivelEfectivo();
+  S.examenes.push({pts,total:tot,cat:catReg,fecha:new Date().toISOString(),modo,nv:nvReg});
   /* Registro por pregunta y por capítulo: alimenta «mis errores»,
      el panel de puntos débiles y la repetición espaciada. */
   for(const q of prueba){
@@ -1075,6 +1090,198 @@ function marcaCat(){
 function pintaLogo(){
   try{document.querySelectorAll('.logo-tl').forEach(i=>{i.src=LOGO_TL;});}catch(e){}
 }
+
+/* ───────── examen compartido por link ─────────
+   MECANISMO
+   El link no lleva las preguntas: lleva la receta. En el hash van la
+   categoría, el alcance, el nivel, la cantidad y una semilla, y del otro lado
+   la app vuelve a armar el examen con esa semilla. Como el banco está
+   ordenado de forma fija en el archivo y la mezcla usa un generador con
+   semilla (prng), la misma receta produce las mismas preguntas, en el mismo
+   orden, con las opciones en el mismo orden, en cualquier aparato.
+
+   POR QUÉ RECETA Y NO PREGUNTAS
+   Meter 15 preguntas con sus opciones en una URL da miles de caracteres, que
+   WhatsApp corta. La receta son unos 40. Además, si mandara las preguntas,
+   el link llevaría también las respuestas correctas dentro y cualquiera podría
+   leerlas antes de contestar.
+
+   EL LÍMITE HONESTO
+   La receta reconstruye el examen solo si las dos partes tienen el mismo
+   banco. Si se publica una versión con preguntas nuevas, un link viejo arma
+   otro examen. Por eso va una huella del banco en el link: si no coincide, la
+   app lo dice en vez de fingir que es el mismo examen.
+
+   LO QUE NO CAMBIA
+   Abrir un link ajeno no cambia la categoría del participante ni su nombre.
+   Si la categoría del link es otra, la app lo advierte y el examen corre como
+   invitado. */
+
+const CLAVE_LINK='x';
+
+/* Huella del banco: si cambia el contenido, cambia la huella, y un link
+   armado con otro banco se detecta en vez de pasar por bueno. */
+const huellaBanco=()=>hashTxt(BANCO.length+'|'+BANCO.map(q=>q.cap).join(''));
+
+/* Semilla nueva a partir del reloj. Va en el link, así que basta con que sea
+   distinta cada vez, no con que sea impredecible. */
+const semillaNueva=()=>(Date.now()^Math.floor(Math.random()*1e9))>>>0;
+
+function recetaActual(){
+  return {c:S.cat, a:alcance, n:nivelEfectivo(),
+    q:Math.min(cuantas||NPREG(),poolNivel().length),
+    s:semillaNueva(), h:huellaBanco()};
+}
+
+const escribeReceta=r=>[r.c,r.a,r.n,r.q,r.s,r.h].join('.');
+
+function leeReceta(txt){
+  const p=String(txt||'').split('.');
+  if(p.length!==6)return null;
+  const [c,a,n,q,s,h]=p;
+  if(!Object.keys(CATS).includes(c))return null;
+  const nv=Number(n), cn=Number(q), sm=Number(s);
+  if(![1,2,3].includes(nv)||!Number.isFinite(cn)||cn<1||cn>300)return null;
+  if(!Number.isFinite(sm))return null;
+  return {c,a,n:nv,q:cn,s:sm>>>0,h};
+}
+
+function linkExamen(){
+  const r=recetaActual();
+  const base=location.href.split('#')[0];
+  return base+'#'+CLAVE_LINK+'='+escribeReceta(r);
+}
+
+function copiaLink(){
+  const url=linkExamen();
+  const c=document.getElementById('link-out');
+  try{if(navigator.clipboard)navigator.clipboard.writeText(url).catch(()=>{});}catch(e){}
+  if(c)c.innerHTML='<p class="nota"><strong>Link copiado.</strong> Quien lo abra hará '+
+    '<strong>exactamente este examen</strong>: las mismas preguntas, en el mismo orden.</p>'+
+    '<textarea class="cod" readonly onclick="this.select()">'+esc(url)+'</textarea>'+
+    '<p class="nota">Si no se copió solo, toca el recuadro y cópialo a mano.</p>';
+}
+
+/* ── recibir un link ── */
+
+let recetaPend=null;
+
+function textoReceta(r){
+  const c=CATS[r.c];
+  const prev=S.cat, prevA=alcance, prevN=nivel, prevQ=cuantas;
+  let alc='';
+  try{S.cat=r.c;alcance=r.a;alc=textoAlcanceImpr();}
+  finally{S.cat=prev;alcance=prevA;nivel=prevN;cuantas=prevQ;}
+  return {cat:c.nombre+' · '+c.edad, ev:c.ev, alc,
+    det:r.q+' preguntas · nivel '+r.n+' '+ETIQ_NIVEL[r.n]};
+}
+
+/* Último hash atendido. Sin esto, limpiar el hash puede volver a disparar el
+   mismo link, y en file:// (donde replaceState no siempre funciona) la
+   invitación reaparecería en bucle. */
+let hashVisto=null;
+
+function revisaLink(){
+  const h=String(location.hash||'').replace(/^#/,'');
+  const m=new RegExp('^'+CLAVE_LINK+'=(.+)$').exec(h);
+  if(!m)return false;
+  if(h===hashVisto)return false;
+  hashVisto=h;
+  const r=leeReceta(m[1]);
+  /* Se limpia la barra de direcciones para que recargar no vuelva a abrir la
+     invitación, y para que el link no quede a la vista con la semilla. */
+  try{history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}
+  if(!r){pintaLinkMalo();return true;}
+  recetaPend=r;
+  /* Si todavía no hay participante, la invitación espera: sin ficha no hay
+     dónde registrar el resultado. La bienvenida la atiende al terminar. */
+  if(esNuevo())return true;
+  pintaInvitacion(r);
+  return true;
+}
+
+/* Tocar un link cuando la app ya está abierta no recarga la página: cambiar
+   solo el hash es navegación dentro del mismo documento y el arranque no se
+   vuelve a ejecutar. Sin este escuchador, el link no hacía nada para quien ya
+   tenía la app abierta. */
+try{window.addEventListener('hashchange',()=>{try{revisaLink();}catch(e){}});}catch(e){}
+
+function pintaLinkMalo(){
+  ir('examen');
+  document.getElementById('ex-inicio').style.display='none';
+  document.getElementById('ex-curso').style.display='none';
+  const d=document.getElementById('ex-result');
+  d.style.display='block';
+  d.innerHTML='<div class="card"><h2>🔗 Ese link no se entiende</h2>'+
+    '<p class="nota">Llegó incompleto o cortado. Pídelo otra vez, o haz un '+
+    'examen normal.</p><button class="btn nar" style="margin-top:.8rem" '+
+    'onclick="salirLink()">Ir al examen</button></div>';
+}
+
+function pintaInvitacion(r){
+  const t=textoReceta(r);
+  const mismaCat=r.c===S.cat;
+  const mismoBanco=r.h===huellaBanco();
+  ir('examen');
+  document.getElementById('ex-inicio').style.display='none';
+  document.getElementById('ex-curso').style.display='none';
+  const d=document.getElementById('ex-result');
+  d.style.display='block';
+  d.innerHTML='<div class="card ex-hoy">'+
+    '<div class="ex-h">🔗 Examen compartido</div>'+
+    '<div class="ex-big">'+esc(t.det)+'</div>'+
+    '<div class="ex-sub">'+esc(t.alc)+'<br>'+esc(t.cat)+' · '+esc(t.ev)+'</div>'+
+    (mismaCat?''
+      :'<p class="nota" style="color:var(--rojo)"><strong>Este examen es de otra '+
+       'categoría que la tuya</strong> ('+esc(CAT().nombre)+'). Lo puedes hacer, '+
+       'pero no te cambia tu categoría ni tu material.</p>')+
+    (mismoBanco?''
+      :'<p class="nota" style="color:var(--rojo)"><strong>Se armó con otra versión '+
+       'del material.</strong> Las preguntas no van a ser exactamente las mismas '+
+       'que le salieron a quien te lo mandó.</p>')+
+    '<button class="btn nar ex-go" onclick="aceptaLink()">🚀 Hacer este examen</button>'+
+    '<button class="btn gho" style="margin-top:.6rem;width:100%;justify-content:center" '+
+    'onclick="salirLink()">No, gracias</button></div>';
+}
+
+function salirLink(){
+  recetaPend=null;
+  document.getElementById('ex-result').style.display='none';
+  document.getElementById('ex-inicio').style.display='block';
+  ir('examen');
+}
+
+/* Arma el examen de la receta. La categoría, el alcance, el nivel y la
+   cantidad se aplican solo para armar y se devuelven como estaban: el link no
+   toca la configuración del participante. */
+function aceptaLink(){
+  if(!recetaPend)return;
+  const r=recetaPend;
+  const prev={c:S.cat,a:alcance,n:nivel,q:cuantas};
+  let sel=[];
+  try{
+    S.cat=r.c;alcance=r.a;nivel=r.n;cuantas=r.q;
+    rndEx=prng(r.s);
+    sel=armar('normal');
+  }finally{
+    rndEx=Math.random;
+    S.cat=prev.c;alcance=prev.a;nivel=prev.n;cuantas=prev.q;
+  }
+  recetaPend=null;
+  if(!sel.length){pintaLinkMalo();return;}
+  catLink=r.c;nvLink=r.n;
+  modo='compartido';prueba=sel;resp={};entregado=false;
+  seg=segundosPara(prueba.length);
+  document.getElementById('ex-result').style.display='none';
+  document.getElementById('ex-inicio').style.display='none';
+  document.getElementById('ex-curso').style.display='block';
+  pintaPreguntas();corre();
+  window.scrollTo({top:0});
+}
+
+/* Categoría y nivel con que se registra un examen compartido, para que el
+   historial no lo anote como si fuera de la categoría propia. */
+let catLink=null,nvLink=null;
 
 /* ───────── manual dentro de la app ─────────
    MECANISMO
@@ -1458,10 +1665,18 @@ function bvTermina(){
   ir('inicio');
   const id=document.getElementById('ident');
   if(id)id.open=false;
+  /* Si entró por un link de examen, ahora sí se puede atender: ya hay ficha
+     donde registrar el resultado. El hash pudo haberse consumido al arrancar,
+     así que primero se mira si quedó una receta esperando. */
+  try{if(recetaPend)pintaInvitacion(recetaPend);else revisaLink();}catch(e){}
 }
 
 /* ───────── arranque ───────── */
 try{
   pintaLogo();marcaCat();pintaInicio();
+  /* Un link de examen manda sobre la bienvenida solo si ya hay un
+     participante: a quien llega por primera vez hay que preguntarle el nombre
+     antes, o su examen no queda registrado en ninguna ficha. */
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
+  else revisaLink();
 }catch(e){console.error(e);}

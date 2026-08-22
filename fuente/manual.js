@@ -184,6 +184,23 @@ const MANUAL = [
     computador.</p>` },
   ]},
 
+{ id:'a-link', para:'estudia', icono:'🔗', t:'Si te mandan un examen por link',
+  d:'Todos hacen el mismo',
+  secs:[
+  { t:'Qué es',
+    h:`<p>Tu director puede mandar un link con un examen. Todos los que lo abren
+    hacen <strong>exactamente el mismo examen</strong>, así que sí se pueden
+    comparar los puntajes.</p>` },
+  { t:'Qué tienes que hacer',
+    h:`<p>Tocar el link. Se abre la app y sale una tarjeta que dice qué examen es;
+    toca <strong>Hacer este examen</strong> y ya.</p>
+    <p>Si dice que es de otra categoría, lo puedes hacer igual: no te cambia tu
+    material ni tu progreso.</p>` },
+  { t:'No hace trampa quien lo abre primero',
+    h:`<p>El link no lleva las respuestas dentro, así que no hay nada que leer
+    antes. Lleva solo la receta, y la app arma el examen cuando lo abres.</p>` },
+  ]},
+
 { id:'a-compartir', para:'estudia', icono:'📤', t:'Mandarle a tu director cómo vas',
   d:'Un código que se copia y se pega',
   secs:[
@@ -355,6 +372,47 @@ const MANUAL = [
     h:`<p>El cuadro de impresión no siempre abre solo. Si no abre, aparece un
     enlace debajo de los botones para ver el examen en otra pestaña y usar
     Compartir → Imprimir. Lo cómodo es imprimir desde un computador.</p>` },
+  ]},
+
+{ id:'d-link', para:'director', icono:'🔗', t:'Mandar el mismo examen por link',
+  d:'Para que todos hagan exactamente el mismo',
+  secs:[
+  { t:'Para qué sirve',
+    h:`<p>Normalmente cada examen sale distinto: las preguntas se sacan al azar.
+    Eso es bueno para practicar, pero <strong>no sirve para comparar</strong>: si
+    dos niños sacan 12 de 15 en exámenes distintos, no sabes cuál va mejor.</p>
+    <p>El link resuelve eso. Todos los que lo abran hacen
+    <strong>exactamente el mismo examen</strong>: las mismas preguntas, en el
+    mismo orden, con las opciones en el mismo orden.</p>` },
+  { t:'Cómo se hace',
+    h:`<ol><li>Arma el examen que quieres en
+    <strong>Examen → Cambiar este examen</strong>: capítulo, cantidad y
+    dificultad.</li>
+    <li>Abre <strong>🔗 Mandar este examen por link</strong> y toca
+    <strong>Copiar el link de este examen</strong>.</li>
+    <li>Pégalo en el grupo del club.</li></ol>
+    <p>Son unos 60 caracteres. No lo corta ningún chat.</p>` },
+  { t:'Cómo funciona por dentro',
+    h:`<p>El link <strong>no lleva las preguntas</strong>: lleva la receta
+    —categoría, alcance, nivel, cantidad y un número de semilla— y la app del
+    otro lado vuelve a armar el examen con esa semilla.</p>
+    <p>Dos razones para hacerlo así. Un examen de 15 preguntas con sus opciones
+    dentro de una dirección web son miles de caracteres, y el chat lo corta. Y
+    si el link llevara las preguntas, llevaría también
+    <strong>las respuestas correctas</strong>, que cualquiera podría leer antes
+    de contestar.</p>` },
+  { t:'Lo que pasa al abrirlo',
+    h:`<p>Sale una tarjeta que dice qué examen es, y hay que aceptarlo. Antes de
+    empezar, la app avisa dos cosas si aplican:</p>
+    <ul><li><strong>Es de otra categoría que la tuya.</strong> Se puede hacer
+    igual; no le cambia la categoría ni el material al participante.</li>
+    <li><strong>Se armó con otra versión del material.</strong> Si después de
+    mandar el link se publican preguntas nuevas, el examen ya no es el mismo, y
+    la app lo dice en vez de fingir que sí.</li></ul>
+    <p>El resultado queda en el historial marcado como examen compartido.</p>` },
+  { t:'Si es un niño que nunca ha abierto la app',
+    h:`<p>Primero le pide su nombre y su edad, como a cualquiera, y después le
+    aparece la invitación al examen. No se pierde el link.</p>` },
   ]},
 
 { id:'d-recibir', para:'director', icono:'📥', t:'Ver el progreso de otro aparato',

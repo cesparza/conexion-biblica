@@ -132,8 +132,12 @@
   <div class="caps" id="lista-caps"></div>
   <div id="detalle" class="card" style="margin-top:1rem;display:none"></div>
 
-  <details class="card">
-    <summary>🖨️ Imprimir o guardar en PDF para estudiar en papel</summary>
+  <div class="sep">
+    <span>Para estudiar sin pantalla</span>
+  </div>
+
+  <details class="card sec">
+    <summary>🖨️ Imprimir o guardar en PDF</summary>
     <div class="det-cuerpo">
       <p class="nota">Se abre el cuadro de impresión. Ahí puedes mandarlo a la
       impresora o escoger <strong>Guardar como PDF</strong>.</p>
@@ -200,8 +204,47 @@
       </div>
     </details>
 
+    <details class="card">
+      <summary>📋 Cómo es el examen</summary>
+      <div class="det-cuerpo">
+        <p><strong>Sección I</strong> — Selección múltiple<br>
+        <strong>Sección II</strong> — Verdadero o Falso<br>
+        <strong>Sección III</strong> — Completar el versículo</p>
+        <p>Esas son las tres secciones del examen del campamento.
+        <strong>Cuántas preguntas trae no lo sabemos todavía</strong>, así que
+        aquí puedes practicar con varios tamaños.</p>
+        <p>Las preguntas <strong>cambian cada vez</strong>. Al terminar ves tu
+        puntaje y la respuesta correcta de cada una. Las que falles quedan
+        guardadas para repasarlas.</p>
+        <p class="nota" id="ex-nota"></p>
+      </div>
+    </details>
+  </div>
+
+    <div class="sep">
+      <span>Para el director del club</span>
+    </div>
+
     <details class="card dir">
-      <summary>🖨️ Para el director: imprimir en papel o PDF</summary>
+      <summary>🔗 Mandar este examen por link</summary>
+      <div class="det-cuerpo">
+        <p class="nota">Genera un link con <strong>el examen que está armado
+        arriba</strong>. Todos los que lo abran hacen exactamente el mismo
+        examen: las mismas preguntas, en el mismo orden, con las opciones en el
+        mismo orden. Sirve para comparar resultados entre los del club.</p>
+        <div class="menu-impr dos">
+          <button class="btn azul" onclick="copiaLink()">🔗 Copiar el link de este examen</button>
+        </div>
+        <div id="link-out"></div>
+        <p class="nota">El link <strong>no lleva las respuestas</strong>: lleva
+        la receta del examen y la app lo vuelve a armar del otro lado. Si más
+        adelante se publican preguntas nuevas, un link viejo avisa que se armó
+        con otra versión.</p>
+      </div>
+    </details>
+
+    <details class="card dir">
+      <summary>🖨️ Imprimir exámenes y claves</summary>
       <div class="det-cuerpo">
         <p class="nota">Se imprime lo que esté escogido arriba. Se abre el
         cuadro de impresión; ahí se manda a la impresora o se escoge
@@ -221,23 +264,6 @@
         <div id="impr-alt"></div>
       </div>
     </details>
-
-    <details class="card">
-      <summary>📋 Cómo es el examen</summary>
-      <div class="det-cuerpo">
-        <p><strong>Sección I</strong> — Selección múltiple<br>
-        <strong>Sección II</strong> — Verdadero o Falso<br>
-        <strong>Sección III</strong> — Completar el versículo</p>
-        <p>Esas son las tres secciones del examen del campamento.
-        <strong>Cuántas preguntas trae no lo sabemos todavía</strong>, así que
-        aquí puedes practicar con varios tamaños.</p>
-        <p>Las preguntas <strong>cambian cada vez</strong>. Al terminar ves tu
-        puntaje y la respuesta correcta de cada una. Las que falles quedan
-        guardadas para repasarlas.</p>
-        <p class="nota" id="ex-nota"></p>
-      </div>
-    </details>
-  </div>
 
   <div id="ex-curso" style="display:none">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem;margin-bottom:1rem">

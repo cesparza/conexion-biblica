@@ -71,7 +71,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .anillo .al{font-size:.76rem;font-weight:700;color:var(--azul);margin-top:.4rem}
 .anillo .as{font-size:.67rem;color:var(--gris);margin-top:2px;line-height:1.3}
 
-.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.9rem}
+.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.9rem;margin-bottom:.4rem}
+@media(max-width:560px){.caps{grid-template-columns:repeat(2,1fr);gap:.65rem}}
 .cap{background:var(--card);border:2px solid #e5e7eb;border-radius:14px;padding:1rem;cursor:pointer;text-align:left;font-family:inherit;min-height:46px}
 .cap:hover{border-color:var(--cielo)}
 .cap.on{border-color:var(--naranja);background:#fff8f0}
@@ -394,3 +395,19 @@ h4.ay-h{font-size:.87rem;font-weight:800;color:var(--azul);margin:1rem 0 .35rem;
    suelto a lo ancho y pesa más que el contenido de arriba. */
 .menu-impr.dos{grid-template-columns:1fr 1fr}
 @media(max-width:560px){.menu-impr.dos{grid-template-columns:1fr}}
+
+/* ───────── separador con etiqueta ─────────
+   La barra de imprimir quedaba a ras del último capítulo y con el mismo ancho
+   del contenedor, así que se leía como una tarjeta más de la reja. El problema
+   no era solo el espacio: faltaba decir que lo de abajo es de otra clase de
+   cosa. Esta línea con etiqueta separa y clasifica al mismo tiempo. */
+.sep{display:flex;align-items:center;gap:.8rem;margin:2.4rem 0 1.1rem}
+.sep::before,.sep::after{content:'';height:1px;background:#dbe2ec;flex:1}
+.sep span{font-size:.7rem;font-weight:800;color:var(--gris);text-transform:uppercase;
+  letter-spacing:.9px;white-space:nowrap}
+@media(max-width:560px){.sep{margin:2rem 0 .9rem}.sep span{font-size:.66rem;letter-spacing:.6px}}
+
+/* Bloque secundario: es una utilidad, no material de estudio, y no debe
+   competir visualmente con los capítulos. */
+details.card.sec>summary{color:var(--gris);font-weight:700}
+details.card.sec[open]>summary{color:var(--azul)}
