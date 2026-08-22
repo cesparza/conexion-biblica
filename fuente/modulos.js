@@ -27,6 +27,10 @@ const MODULOS = [
     icono:'🗿', color:'#0369A1', cats:['gm'] },
   { id:'m-lugares', label:'Lugares', sub:'Geografía del libro',
     icono:'🗺️', color:'#15803D', cats:['av','gm'] },
+  { id:'m-version', label:'RV1995 vs RV1960', sub:'Palabras que cambian entre versiones',
+    icono:'📕', color:'#9D174D', cats:['av','gm'] },
+  { id:'m-prioridades', label:'Lo que más preguntan', sub:'Los diez temas de mayor rendimiento',
+    icono:'🎯', color:'#B91C1C', cats:['av','gm'] },
 ];
 
 const CONT_MODULOS = {
@@ -204,7 +208,7 @@ const CONT_MODULOS = {
   { t:'📖 Daniel 3:25 — El cuarto varón', h:
     vs(`«He aquí yo veo <strong>cuatro varones sueltos</strong>,
     que se pasean en medio del fuego, y ningún daño hay en ellos;
-    y el parecer del cuarto es <strong>semejante al Hijo de Dios</strong>.»`) },
+    y el aspecto del cuarto es <strong>semejante a un hijo de los dioses</strong>.»`) },
 
   { t:'📖 Daniel 4:37 — El rey humillado', h:
     vs(`«Ahora yo Nabucodonosor <strong>alabo, engrandezco y glorifico al Rey del cielo</strong>,
@@ -216,7 +220,7 @@ const CONT_MODULOS = {
 
   { t:'📖 Daniel 6:10 — La costumbre', h:
     vs(`«Cuando Daniel supo que el edicto había sido firmado, entró en su casa;
-    y abiertas las ventanas de su cámara que daban hacia Jerusalén,
+    abiertas las ventanas de su habitación que daban a Jerusalén,
     <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,
     <strong>como lo solía hacer antes</strong>.»`) },
 
@@ -308,6 +312,111 @@ const CONT_MODULOS = {
     a más de mil kilómetros de distancia y con el templo ya destruido.<br><br>
     No oraba hacia un edificio: oraba hacia la <strong>promesa de Dios</strong>
     sobre ese lugar. Ese matiz aparece en las preguntas de aplicación.`) },
+],
+
+/* ═══════════ RV1995 vs RV1960 ═══════════ */
+'m-version': [
+  { t:'📕 Por qué importa esta lista', h:
+    wa(`El examen se califica sobre la <strong>Reina Valera 1995</strong>. La RV1960
+    es la que más se oye en la iglesia, y en varios versículos famosos usa
+    <strong>otras palabras</strong>. Si respondes con la RV1960 donde piden RV1995,
+    la idea es correcta pero la palabra no.<br><br>
+    Regla: <strong>si la pregunta dice «según la RV1995», usa la columna de la izquierda.</strong>`) },
+
+  { t:'🔤 Palabra por palabra — Daniel 1 al 3', h:
+    tbl(['Ref.','RV1995 (la que se califica)','RV1960 (la que suena familiar)'],[
+      ['1:15','pareció el rostro de ellos <strong>mejor y más robusto</strong>','más <strong>rozagante</strong> y más robusto'],
+      ['2:5','vuestras casas serán convertidas en <strong>estercoleros</strong>','convertidas en <strong>muladares</strong>'],
+      ['3:25','el aspecto del cuarto es semejante a <strong>un hijo de los dioses</strong>','semejante a hijo de los dioses'],
+      ['3:27','el fuego <strong>no había tenido poder alguno</strong> sobre sus cuerpos; sus ropas, <strong>intactas</strong>','el fuego <strong>no se enseñoreó</strong>; sus vestidos <strong>no se alteraron</strong>'],
+      ['3:29','su casa convertida en <strong>estercolero</strong>','su casa puesta por <strong>muladar</strong>'],
+    ]) },
+
+  { t:'🔤 Palabra por palabra — Daniel 4 al 6', h:
+    tbl(['Ref.','RV1995 (la que se califica)','RV1960 (la que suena familiar)'],[
+      ['4:27','<strong>redime tus pecados</strong> con justicia... misericordias <strong>con</strong> los oprimidos','tus pecados <strong>redime</strong> con justicia... <strong>para con</strong> los oprimidos'],
+      ['5:27','Pesado has sido en balanza <strong>y hallado falto</strong>','y <strong>fuiste</strong> hallado falto'],
+      ['6:4','ningún <strong>error</strong> ni falta <strong>hallaron</strong> en él','ningún <strong>vicio</strong> ni falta <strong>fue hallado</strong> en él'],
+      ['6:5','no hallaremos contra este Daniel <strong>motivo alguno para acusarlo</strong>','<strong>ocasión alguna</strong>'],
+      ['6:10','las ventanas de su <strong>habitación</strong>','las ventanas de su <strong>cámara</strong>'],
+      ['6:22','para que no me <strong>hicieran</strong> daño','para que no me <strong>hiciesen</strong> daño'],
+    ]) },
+
+  { t:'✝️ El caso especial de Daniel 3:25', h:
+    hi(`Esta es la trampa más fina de todo el material, y hay que entender el
+    mecanismo, no memorizar la respuesta.<br><br>
+    <strong>Quién habla:</strong> el que describe al cuarto varón es
+    <strong>Nabucodonosor</strong>, un rey pagano que adoraba muchos dioses.
+    Él dijo lo que su mente pagana podía nombrar: «semejante a
+    <strong>un hijo de los dioses</strong>» (3:25).<br><br>
+    <strong>Quién lo identifica:</strong> Elena de White, en
+    <strong>P&amp;R cap. 41</strong>, dice que ese cuarto era
+    <strong>el Hijo de Dios mismo</strong>.<br><br>
+    Las dos cosas son ciertas y no se contradicen: una es lo que el rey
+    <em>vio y dijo</em>; la otra es lo que la inspiración <em>revela</em>.`) +
+    tbl(['Si la pregunta dice...','Responde'],[
+      ['«según Daniel 3:25»','semejante a <strong>un hijo de los dioses</strong>'],
+      ['«según P&amp;R cap. 41»','<strong>el Hijo de Dios</strong> mismo'],
+    ]) },
+
+  { t:'📗 Títulos de Profetas y Reyes — verificados', h:
+    wa(`Circulan listas equivocadas de estos títulos. Estos son los del índice
+    del libro:`) +
+    tbl(['Cap.','Título exacto','Con qué va'],[
+      ['39','En la corte de Babilonia','Daniel 1'],
+      ['40','El sueño de Nabucodonosor','Daniel 2'],
+      ['41','El horno de fuego','Daniel 3'],
+      ['42','La verdadera grandeza','Daniel 4'],
+      ['43','El vigía invisible','Daniel 5'],
+      ['44','En el foso de los leones','Daniel 6'],
+    ]) +
+    hi(`Los tres que más se equivocan: el <strong>41</strong> no es «La imagen de
+    oro y el horno de fuego», el <strong>42</strong> no es «Nabucodonosor
+    humillado», y el <strong>43</strong> no es «La escritura en la pared».`) },
+],
+
+/* ═══════════ LO QUE MÁS PREGUNTAN ═══════════ */
+'m-prioridades': [
+  { t:'🎯 Si solo te queda una hora, estudia esto', h:
+    wa(`Estos diez temas son los que más aparecen en los concursos de Daniel.
+    Están ordenados por rendimiento: el primero da más puntos que el último.`) },
+
+  { t:'1️⃣ al 5️⃣ — Los de mayor peso', h:
+    li([
+      '<strong>Los números exactos.</strong> 3 años de instrucción · 10 días de prueba · 10 veces mejores · 2.º año de Nabucodonosor · 60 y 6 codos · 7 veces el horno · 4 varones · 7 tiempos · 12 meses · 1.000 convidados · 62 años Darío · 120 sátrapas · 30 días el decreto · 3 veces al día',
+      '<strong>Nombres hebreos → babilónicos.</strong> Daniel→Beltsasar · Ananías→Sadrac · Misael→Mesac · Azarías→Abed-nego',
+      '<strong>Aspenaz no es Melsar.</strong> Aspenaz = jefe de los eunucos (1:3). Melsar = el sirviente puesto sobre los cuatro (1:11). Daniel habló con <u>Melsar</u>',
+      '<strong>Los 6 instrumentos en orden</strong> (3:5): bocina, flauta, tamboril, arpa, salterio, zampoña. <u>La trompeta no aparece</u>',
+      '<strong>MENE, MENE, TEKEL, UPARSIN</strong> (5:25) y el significado de cada palabra: contó · pesado y hallado falto · roto y dado a medos y persas',
+    ]) },
+
+  { t:'6️⃣ al 🔟 — Los que deciden el desempate', h:
+    li([
+      '<strong>El cuarto del horno.</strong> Daniel 3:25 (RV1995): «semejante a un hijo de los dioses», así lo dijo el rey pagano. P&amp;R 41: era el Hijo de Dios mismo. Fíjate qué te preguntan',
+      '<strong>Títulos de P&amp;R 39 al 44 en orden:</strong> En la corte de Babilonia · El sueño de Nabucodonosor · El horno de fuego · La verdadera grandeza · El vigía invisible · En el foso de los leones',
+      '<strong>Los materiales de la estatua y sus imperios</strong> (2:32-45): oro, plata, bronce, hierro, hierro con barro, y la piedra',
+      '<strong>El año de cada evento:</strong> 3.er año de Joacim (cap. 1) · 2.º año de Nabucodonosor (cap. 2) · año 1.º de Ciro (1:21)',
+      '<strong>Los versículos de completar:</strong> 1:15 · 2:20 · 3:18 · 4:37 · 6:10 · 6:22 · 6:26-27',
+    ]) },
+
+  { t:'📅 Plan para los días que quedan', h:
+    tbl(['Cuándo','Qué hacer'],[
+      ['Día 1','Leer la guía sección por sección. Decir los versículos <strong>en voz alta</strong>. Repasar las tablas de números y personajes.'],
+      ['Día 2','Un examen completo sin mirar. Después, <strong>examen de solo mis errores</strong> hasta que quede vacío. Releer los títulos de P&amp;R en orden.'],
+      ['Día 3','Simulacro cronometrado, como el examen real. Tarjetas: solo las que están «por dominar».'],
+      ['La víspera','Repaso general: este módulo y el de RV1995 vs RV1960. Dormir bien.'],
+      ['Antes del examen','Orar juntas. Leer una sola vez los diez temas de arriba.'],
+    ]) },
+
+  { t:'🧠 Cómo responder cuando dudas', h:
+    hi(`• Si la pregunta cita un versículo, la respuesta está en <u>las palabras
+    exactas</u> de ese versículo, no en la idea general.<br>
+    • Si dice «según la RV1995», descarta la opción que suene a como lo has
+    oído en la iglesia: suele ser la RV1960.<br>
+    • Si dice «según Profetas y Reyes», la respuesta es la <u>explicación</u> de
+    Elena de White, no el dato bíblico.<br>
+    • En verdadero o falso, un solo detalle cambiado hace falsa toda la frase:
+    lee los números y los nombres dos veces.`) },
 ],
 
 };

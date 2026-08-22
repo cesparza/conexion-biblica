@@ -40,8 +40,8 @@ const TARJETAS = [
   {cap:'d3', f:'Con qué ropa entraron al horno', r:'Con sus mantos, sus calzas, sus turbantes y sus vestidos (3:21)'},
   {cap:'d3', f:'Qué les pasó a los que los echaron', r:'La llama del fuego los mató (3:22)'},
   {cap:'d3', f:'Cuántos vio el rey en el horno', r:'CUATRO varones sueltos (3:25)'},
-  {cap:'d3', f:'Cómo era el cuarto varón', r:'«Semejante al Hijo de Dios» (3:25)'},
-  {cap:'d3', f:'Las cuatro cosas que no sufrieron daño', r:'El fuego no se enseñoreó de sus cuerpos, ni cabello fue quemado, ni sus vestidos se alteraron, ni olor de fuego había en ellos (3:27)'},
+  {cap:'d3', f:'Cómo describió Nabucodonosor al cuarto del horno', r:'«Semejante a un hijo de los dioses» (3:25, RV1995). P&R 41: era el Hijo de Dios mismo'},
+  {cap:'d3', f:'Las cuatro cosas que no sufrieron daño (3:27)', r:'El fuego no tuvo poder sobre sus cuerpos, ni aun el cabello se había quemado, sus ropas quedaron intactas, y ni siquiera olor de fuego tenían'},
   {cap:'d3', f:'La frase clave de los tres jóvenes', r:'«Y si no, no serviremos a tus dioses ni adoraremos la estatua» (3:18)'},
 
   // Daniel 4
@@ -70,7 +70,7 @@ const TARJETAS = [
   {cap:'d6', f:'Cuántos sátrapas puso Darío', r:'CIENTO VEINTE (6:1)'},
   {cap:'d6', f:'Cuántos gobernadores sobre ellos', r:'TRES, y Daniel era uno de ellos (6:2)'},
   {cap:'d6', f:'Por qué sobresalía Daniel', r:'Porque había en él un espíritu superior (6:3)'},
-  {cap:'d6', f:'Por qué no hallaron falta en él', r:'Porque él era fiel, y ningún vicio ni falta fue hallado en él (6:4)'},
+  {cap:'d6', f:'Por qué no hallaron falta en él', r:'Porque él era fiel, y ningún error ni falta hallaron en él (6:4)'},
   {cap:'d6', f:'Cuántos días duraba el edicto', r:'TREINTA días (6:7)'},
   {cap:'d6', f:'Cuántas veces al día oraba', r:'TRES veces al día (6:10)'},
   {cap:'d6', f:'Hacia dónde daban sus ventanas', r:'Hacia Jerusalén (6:10)'},

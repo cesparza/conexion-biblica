@@ -176,6 +176,11 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .tj-btns{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:.9rem}
 .prog-lin{height:7px;background:#e5e7eb;border-radius:5px;overflow:hidden;margin:.5rem 0}
 .prog-lin div{height:100%;background:var(--verde);transition:width .3s}
+.menu-ex{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.menu-ex label{display:flex;flex-direction:column;gap:.3rem;font-size:.78rem;font-weight:700;color:var(--gris);min-width:0}
+.menu-ex select{width:100%;max-width:100%;padding:.5rem .6rem;border:2px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.85rem;min-height:44px;background:#fff;color:var(--txt)}
+.menu-ex select:focus{border-color:var(--cielo);outline:none}
+@media(max-width:620px){.menu-ex{grid-template-columns:1fr}}
 .pil.az{background:#dbeafe;color:var(--cielo)}
 .pil.na{background:#ffedd5;color:var(--naranja)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
@@ -273,6 +278,27 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 <div id="p-examen" class="pantalla">
   <div id="ex-inicio">
     <div class="hero"><h1>✏️ Examen</h1><p id="ex-desc"></p></div>
+
+    <div class="card">
+      <h2>🎛️ Arma tu examen</h2>
+      <div class="menu-ex">
+        <label>Sobre qué
+          <select id="ex-alcance" onchange="cambiaAlcance()"></select>
+        </label>
+        <label>Cuántas preguntas
+          <select id="ex-cuantas" onchange="cambiaCuantas()"></select>
+        </label>
+      </div>
+      <div id="ex-disponible" class="nota"></div>
+      <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
+        <button class="btn nar" onclick="iniciar('normal')">🚀 Comenzar</button>
+        <button class="btn azul" onclick="iniciar('simulacro')">🎓 Simulacro</button>
+        <span id="ex-err"></span>
+      </div>
+      <p class="nota">El <strong>simulacro</strong> quita las pistas de la sección
+      de completar, como en el examen del campamento.</p>
+    </div>
+
     <div class="card">
       <h2>📋 Cómo funciona</h2>
       <p style="font-size:.87rem;line-height:1.8;color:var(--gris)">
@@ -281,15 +307,10 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
         <strong>Sección III</strong> — Completar el versículo<br><br>
         Las preguntas <strong>cambian cada vez</strong>, salen al azar del banco.
         Al terminar ves tu puntaje y la respuesta correcta de cada una.<br><br>
-        El <strong>🎓 Simulacro</strong> es como el examen del campamento: sin pistas
-        en la sección de completar. Y si ya fallaste preguntas, puedes hacer un
-        examen <strong>solo con tus errores</strong> hasta dominarlos.
+        Puedes escoger <strong>sobre qué capítulo</strong> quieres el examen y
+        <strong>cuántas preguntas</strong>. Y si ya fallaste preguntas, puedes hacer
+        un examen <strong>solo con tus errores</strong> hasta dominarlos.
       </p>
-      <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
-        <button class="btn nar" onclick="iniciar('normal')">🚀 Comenzar</button>
-        <button class="btn azul" onclick="iniciar('simulacro')">🎓 Simulacro</button>
-        <span id="ex-err"></span>
-      </div>
       <p class="nota" id="ex-nota"></p>
     </div>
   </div>
@@ -580,15 +601,65 @@ function tjSabia(si){
 
 /* ───────── examen ───────── */
 let reloj=null,seg=1200,entregado=false,resp={},prueba=[],modo='normal';
+/* alcance: 'todo' | 'biblia' | 'pr' | id de capítulo. cuantas: número o 'max' */
+let alcance='todo',cuantas=0;
 
 const falladasDe=()=>{const p=bancoDe();return p.filter(q=>(S.fq[claveQ(q)]||{}).m>0);};
+
+/* Preguntas disponibles según categoría + alcance elegido. */
+function poolDe(){
+  const b=bancoDe();
+  if(alcance==='todo')return b;
+  if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
+  if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
+  return b.filter(q=>q.cap===alcance);
+}
+
+/* Opciones de cantidad que caben en el pool, más el máximo real. */
+function opcionesCuantas(){
+  const t=poolDe().length;
+  const base=[10,15,25,40,60,100].filter(n=>n<=t);
+  if(!base.length||base[base.length-1]!==t)base.push(t);
+  return base;
+}
+
+function pintaMenuEx(){
+  const sa=document.getElementById('ex-alcance');
+  const prev=alcance;
+  sa.innerHTML='<option value="todo">Todo mi material</option>'+
+    '<option value="biblia">Solo el libro de Daniel</option>'+
+    '<option value="pr">Solo Profetas y Reyes</option>'+
+    capsDe().map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
+  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr'].includes(prev))alcance='todo';
+  sa.value=alcance;
+
+  const ops=opcionesCuantas();
+  if(!ops.includes(cuantas))cuantas=ops.includes(NPREG())?NPREG():ops[0];
+  const sc=document.getElementById('ex-cuantas');
+  sc.innerHTML=ops.map(n=>'<option value="'+n+'">'+n+' pregunta'+(n===1?'':'s')+
+    (n===NPREG()?' (como el examen real)':'')+'</option>').join('');
+  sc.value=cuantas;
+
+  const t=poolDe().length;
+  const porTipo=['mc','tf','fill'].map(x=>{
+    const L={mc:'múltiple',tf:'V/F',fill:'completar'}[x];
+    return poolDe().filter(q=>q.t===x).length+' de '+L;
+  }).join(' · ');
+  document.getElementById('ex-disponible').innerHTML=
+    'Disponibles con esta selección: <strong>'+t+'</strong> preguntas ('+porTipo+').'+
+    (t<cuantas?' <span style="color:var(--rojo)">Se usarán todas.</span>':'');
+}
+
+function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;pintaMenuEx();}
+function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();pintaMenuEx();}
 
 function pintaExInicio(){
   const n=NPREG(),b=bancoDe().length,f=falladasDe().length;
   document.getElementById('ex-desc').textContent=n+' preguntas · '+(S.cat==='av'?'Aventureros':'Guías Mayores');
-  document.getElementById('ex-nota').textContent='Banco disponible para tu categoría: '+b+' preguntas. Cada examen toma '+n+' al azar.';
+  document.getElementById('ex-nota').textContent='Banco completo de tu categoría: '+b+' preguntas. El examen real es de '+n+'.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="iniciar(\\'errores\\')">🔁 Mis errores ('+f+')</button>':'';
+  pintaMenuEx();
 }
 
 function mezcla(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
@@ -596,23 +667,49 @@ function mezcla(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.
 function armar(m){
   if(m==='errores'){
     const sel=mezcla(falladasDe()).slice(0,NPREG());
-    return sel.map((q,i)=>({...q,id:'q'+i}));
+    return sel.map((q,i)=>barajaOpciones({...q,id:'q'+i}));
   }
-  const b=bancoDe(),n=NPREG();
+  const b=poolDe();
+  const n=Math.min(cuantas||NPREG(),b.length);
   const mc=mezcla(b.filter(q=>q.t==='mc'));
   const tf=mezcla(b.filter(q=>q.t==='tf'));
   const fl=mezcla(b.filter(q=>q.t==='fill'));
-  // proporción: 60% múltiple, 25% V/F, 15% completar
-  const nf=Math.max(2,Math.round(n*.15)), nt=Math.max(2,Math.round(n*.25)), nm=n-nf-nt;
+  /* Proporción del examen real: 60% múltiple, 25% V/F, 15% completar.
+     Si un tipo no alcanza en el alcance elegido, el faltante lo cubren
+     los otros tipos para que siempre salgan n preguntas. */
+  let nf=Math.min(fl.length,Math.max(1,Math.round(n*.15)));
+  let nt=Math.min(tf.length,Math.max(1,Math.round(n*.25)));
+  let nm=Math.min(mc.length,n-nf-nt);
+  let falta=n-(nm+nt+nf);
+  while(falta>0){
+    const antes=falta;
+    if(nf<fl.length){nf++;falta--;}
+    if(falta>0&&nt<tf.length){nt++;falta--;}
+    if(falta>0&&nm<mc.length){nm++;falta--;}
+    if(falta===antes)break;
+  }
   const sel=[...mc.slice(0,nm),...tf.slice(0,nt),...fl.slice(0,nf)];
-  return sel.map((q,i)=>({...q,id:'q'+i}));
+  return sel.map((q,i)=>barajaOpciones({...q,id:'q'+i}));
 }
+
+/* Baraja las opciones de una pregunta múltiple y reubica la respuesta.
+   Sin esto, la correcta cae casi siempre en la misma letra y se puede
+   aprobar por patrón en vez de por contenido. */
+function barajaOpciones(q){
+  if(q.t!=='mc'||!q.o)return q;
+  const idx=mezcla(q.o.map((_,i)=>i));
+  return {...q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a)};
+}
+
+/* Minutos proporcionales: el examen real da ~1,2 min por pregunta. */
+const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='av'?80:72)));
 
 function iniciar(m){
   modo=m||'normal';
   ir('examen');
-  prueba=armar(modo);resp={};entregado=false;seg=S.cat==='av'?1200:1800;
+  prueba=armar(modo);resp={};entregado=false;
   if(!prueba.length){reinicia();return;}
+  seg=segundosPara(prueba.length);
   document.getElementById('ex-inicio').style.display='none';
   document.getElementById('ex-curso').style.display='block';
   document.getElementById('ex-result').style.display='none';
@@ -642,7 +739,10 @@ function pintaPreguntas(){
   }
   document.getElementById('preguntas').innerHTML=h;
   const ET={normal:'',simulacro:' · 🎓 Simulacro',errores:' · 🔁 Repaso de errores'};
-  document.getElementById('ex-meta').textContent=prueba.length+' preguntas · '+(S.nombre||'Estudiante')+(ET[modo]||'');
+  const NA={todo:'todo el material',biblia:'solo Daniel',pr:'solo Profetas y Reyes'};
+  const alc=modo==='errores'?'mis errores':(NA[alcance]||(buscaItem(alcance)||{}).label||'');
+  document.getElementById('ex-meta').textContent=prueba.length+' preguntas · '+alc+
+    ' · '+(S.nombre||'Estudiante')+(ET[modo]||'');
   cuenta();
 }
 

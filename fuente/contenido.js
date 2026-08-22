@@ -103,7 +103,7 @@ d2: [
     wa(`<strong>Año:</strong> SEGUNDO año del reinado de Nabucodonosor (2:1)<br>
     El sueño perturbó su espíritu y se le fue el sueño.<br>
     <strong>Exigencia imposible:</strong> los sabios debían <u>decir el sueño</u> Y darle la interpretación (2:5).<br>
-    <strong>Amenaza (2:5):</strong> serían hechos pedazos y sus casas convertidas en muladares.<br>
+    <strong>Amenaza (2:5):</strong> serían hechos pedazos y sus casas convertidas en <strong>estercoleros</strong>.<br>
     <strong>Decreto (2:12):</strong> que todos los sabios de Babilonia fueran muertos.<br>
     <strong>Arioc:</strong> capitán de la guardia del rey, enviado a ejecutar la sentencia (2:14).`) },
 
@@ -168,13 +168,14 @@ d3: [
     • Fueron atados con <strong>sus mantos, sus calzas, sus turbantes y sus vestidos</strong> (3:21)<br>
     • A los <strong>varones vigorosos</strong> que los echaron, <strong>la llama del fuego los mató</strong> (3:22)<br>
     • Nabucodonosor vio <strong>CUATRO varones sueltos</strong> paseándose en medio del fuego (3:25)<br>
-    • El parecer del cuarto: <strong>«semejante al Hijo de Dios»</strong> (3:25)`) },
+    • El aspecto del cuarto: <strong>«semejante a un hijo de los dioses»</strong> (3:25, RV1995)<br>
+    Así lo describió Nabucodonosor, que era pagano. <strong>P&amp;R cap. 41 aclara que era el Hijo de Dios mismo.</strong>`) },
 
   { t:'✨ El milagro verificado (3:27)', h:
-    vs(`«...de cuyo cuerpo <strong>el fuego no se enseñoreó</strong>,
-    ni cabello de sus cabezas fue quemado,
-    ni sus vestidos se alteraron,
-    <strong>ni olor de fuego había en ellos</strong>.»`) +
+    vs(`«...cómo <strong>el fuego no había tenido poder alguno</strong> sobre sus cuerpos
+    y ni aun el cabello de sus cabezas se había quemado;
+    sus ropas, <strong>intactas</strong>,
+    <strong>ni siquiera olor de fuego tenían</strong>.» (RV1995)`) +
     hi(`Se juntaron los sátrapas, los gobernadores, los capitanes y los consejeros del rey
     <u>para verificarlo con sus propios ojos</u> (3:27).`) },
 
@@ -185,7 +186,7 @@ d3: [
 
   { t:'👑 El decreto de Nabucodonosor (3:28-30)', h:
     li(['Bendijo al Dios de Sadrac, Mesac y Abed-nego, que <strong>envió su ángel</strong> y los libró (3:28)',
-        'Decretó que todo pueblo, nación o lengua que dijere blasfemia contra ese Dios <strong>sea descuartizado y su casa puesta por muladar</strong> (3:29)',
+        'Decretó que quien hablara blasfemia contra ese Dios <strong>sea descuartizado y su casa convertida en estercolero</strong> (3:29)',
         'Reconoció: <strong>«no hay dios que pueda librar como éste»</strong> (3:29)',
         'Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)']) },
 ],
@@ -290,9 +291,9 @@ d6: [
 
   { t:'🕸️ El complot', h:
     hi(`• Buscaban ocasión para acusarlo <strong>en lo relacionado con el reino</strong> (6:4)<br>
-    • No pudieron hallar ocasión alguna ni falta, porque <strong>él era fiel</strong>,
-      y <strong>ningún vicio ni falta fue hallado en él</strong> (6:4)<br>
-    • Concluyeron: «no hallaremos contra este Daniel ocasión alguna,
+    • No podían hallar motivo alguno o falta, porque <strong>él era fiel</strong>,
+      y <strong>ningún error ni falta hallaron en él</strong> (6:4)<br>
+    • Concluyeron: «No hallaremos contra este Daniel motivo alguno para acusarlo,
       si no la hallamos <strong>contra él en relación con la ley de su Dios</strong>» (6:5)`) +
     tbl(['El edicto','Detalle'],[
       ['Duración','TREINTA días (6:7)'],
@@ -303,7 +304,7 @@ d6: [
 
   { t:'🙏 La fidelidad de Daniel — versículo central', h:
     vs(`«Cuando Daniel supo que el edicto había sido firmado, <strong>entró en su casa</strong>;
-    y abiertas las ventanas de su cámara que daban hacia Jerusalén,
+    abiertas las ventanas de su habitación que daban a Jerusalén,
     <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,
     <strong>como lo solía hacer antes</strong>.» (Daniel 6:10)`) +
     wa(`Fíjate en tres cosas que suelen preguntarse por separado:

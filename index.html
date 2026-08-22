@@ -152,6 +152,11 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .tj-btns{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:.9rem}
 .prog-lin{height:7px;background:#e5e7eb;border-radius:5px;overflow:hidden;margin:.5rem 0}
 .prog-lin div{height:100%;background:var(--verde);transition:width .3s}
+.menu-ex{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.menu-ex label{display:flex;flex-direction:column;gap:.3rem;font-size:.78rem;font-weight:700;color:var(--gris);min-width:0}
+.menu-ex select{width:100%;max-width:100%;padding:.5rem .6rem;border:2px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.85rem;min-height:44px;background:#fff;color:var(--txt)}
+.menu-ex select:focus{border-color:var(--cielo);outline:none}
+@media(max-width:620px){.menu-ex{grid-template-columns:1fr}}
 .pil.az{background:#dbeafe;color:var(--cielo)}
 .pil.na{background:#ffedd5;color:var(--naranja)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
@@ -249,6 +254,27 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 <div id="p-examen" class="pantalla">
   <div id="ex-inicio">
     <div class="hero"><h1>✏️ Examen</h1><p id="ex-desc"></p></div>
+
+    <div class="card">
+      <h2>🎛️ Arma tu examen</h2>
+      <div class="menu-ex">
+        <label>Sobre qué
+          <select id="ex-alcance" onchange="cambiaAlcance()"></select>
+        </label>
+        <label>Cuántas preguntas
+          <select id="ex-cuantas" onchange="cambiaCuantas()"></select>
+        </label>
+      </div>
+      <div id="ex-disponible" class="nota"></div>
+      <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
+        <button class="btn nar" onclick="iniciar('normal')">🚀 Comenzar</button>
+        <button class="btn azul" onclick="iniciar('simulacro')">🎓 Simulacro</button>
+        <span id="ex-err"></span>
+      </div>
+      <p class="nota">El <strong>simulacro</strong> quita las pistas de la sección
+      de completar, como en el examen del campamento.</p>
+    </div>
+
     <div class="card">
       <h2>📋 Cómo funciona</h2>
       <p style="font-size:.87rem;line-height:1.8;color:var(--gris)">
@@ -257,15 +283,10 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
         <strong>Sección III</strong> — Completar el versículo<br><br>
         Las preguntas <strong>cambian cada vez</strong>, salen al azar del banco.
         Al terminar ves tu puntaje y la respuesta correcta de cada una.<br><br>
-        El <strong>🎓 Simulacro</strong> es como el examen del campamento: sin pistas
-        en la sección de completar. Y si ya fallaste preguntas, puedes hacer un
-        examen <strong>solo con tus errores</strong> hasta dominarlos.
+        Puedes escoger <strong>sobre qué capítulo</strong> quieres el examen y
+        <strong>cuántas preguntas</strong>. Y si ya fallaste preguntas, puedes hacer
+        un examen <strong>solo con tus errores</strong> hasta dominarlos.
       </p>
-      <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
-        <button class="btn nar" onclick="iniciar('normal')">🚀 Comenzar</button>
-        <button class="btn azul" onclick="iniciar('simulacro')">🎓 Simulacro</button>
-        <span id="ex-err"></span>
-      </div>
       <p class="nota" id="ex-nota"></p>
     </div>
   </div>
@@ -465,7 +486,7 @@ const CONTENIDO = {
  "d2": [
   {
    "t": "💭 El sueño y la crisis",
-   "h": "<div class=\"warn-box\"><strong>Año:</strong> SEGUNDO año del reinado de Nabucodonosor (2:1)<br>\n    El sueño perturbó su espíritu y se le fue el sueño.<br>\n    <strong>Exigencia imposible:</strong> los sabios debían <u>decir el sueño</u> Y darle la interpretación (2:5).<br>\n    <strong>Amenaza (2:5):</strong> serían hechos pedazos y sus casas convertidas en muladares.<br>\n    <strong>Decreto (2:12):</strong> que todos los sabios de Babilonia fueran muertos.<br>\n    <strong>Arioc:</strong> capitán de la guardia del rey, enviado a ejecutar la sentencia (2:14).</div>"
+   "h": "<div class=\"warn-box\"><strong>Año:</strong> SEGUNDO año del reinado de Nabucodonosor (2:1)<br>\n    El sueño perturbó su espíritu y se le fue el sueño.<br>\n    <strong>Exigencia imposible:</strong> los sabios debían <u>decir el sueño</u> Y darle la interpretación (2:5).<br>\n    <strong>Amenaza (2:5):</strong> serían hechos pedazos y sus casas convertidas en <strong>estercoleros</strong>.<br>\n    <strong>Decreto (2:12):</strong> que todos los sabios de Babilonia fueran muertos.<br>\n    <strong>Arioc:</strong> capitán de la guardia del rey, enviado a ejecutar la sentencia (2:14).</div>"
   },
   {
    "t": "🙏 La respuesta de Daniel",
@@ -499,11 +520,11 @@ const CONTENIDO = {
   },
   {
    "t": "🔥 El horno de fuego",
-   "h": "<div class=\"highlight-box\">• El rostro de Nabucodonosor se demudó contra ellos (3:19)<br>\n    • Mandó calentar el horno <strong>SIETE veces más</strong> de lo acostumbrado (3:19)<br>\n    • Fueron atados con <strong>sus mantos, sus calzas, sus turbantes y sus vestidos</strong> (3:21)<br>\n    • A los <strong>varones vigorosos</strong> que los echaron, <strong>la llama del fuego los mató</strong> (3:22)<br>\n    • Nabucodonosor vio <strong>CUATRO varones sueltos</strong> paseándose en medio del fuego (3:25)<br>\n    • El parecer del cuarto: <strong>«semejante al Hijo de Dios»</strong> (3:25)</div>"
+   "h": "<div class=\"highlight-box\">• El rostro de Nabucodonosor se demudó contra ellos (3:19)<br>\n    • Mandó calentar el horno <strong>SIETE veces más</strong> de lo acostumbrado (3:19)<br>\n    • Fueron atados con <strong>sus mantos, sus calzas, sus turbantes y sus vestidos</strong> (3:21)<br>\n    • A los <strong>varones vigorosos</strong> que los echaron, <strong>la llama del fuego los mató</strong> (3:22)<br>\n    • Nabucodonosor vio <strong>CUATRO varones sueltos</strong> paseándose en medio del fuego (3:25)<br>\n    • El aspecto del cuarto: <strong>«semejante a un hijo de los dioses»</strong> (3:25, RV1995)<br>\n    Así lo describió Nabucodonosor, que era pagano. <strong>P&amp;R cap. 41 aclara que era el Hijo de Dios mismo.</strong></div>"
   },
   {
    "t": "✨ El milagro verificado (3:27)",
-   "h": "<div class=\"verse-box\">«...de cuyo cuerpo <strong>el fuego no se enseñoreó</strong>,\n    ni cabello de sus cabezas fue quemado,\n    ni sus vestidos se alteraron,\n    <strong>ni olor de fuego había en ellos</strong>.»</div><div class=\"highlight-box\">Se juntaron los sátrapas, los gobernadores, los capitanes y los consejeros del rey\n    <u>para verificarlo con sus propios ojos</u> (3:27).</div>"
+   "h": "<div class=\"verse-box\">«...cómo <strong>el fuego no había tenido poder alguno</strong> sobre sus cuerpos\n    y ni aun el cabello de sus cabezas se había quemado;\n    sus ropas, <strong>intactas</strong>,\n    <strong>ni siquiera olor de fuego tenían</strong>.» (RV1995)</div><div class=\"highlight-box\">Se juntaron los sátrapas, los gobernadores, los capitanes y los consejeros del rey\n    <u>para verificarlo con sus propios ojos</u> (3:27).</div>"
   },
   {
    "t": "📜 La respuesta de los tres jóvenes (3:17-18)",
@@ -511,7 +532,7 @@ const CONTENIDO = {
   },
   {
    "t": "👑 El decreto de Nabucodonosor (3:28-30)",
-   "h": "<ul class=\"tight\"><li>Bendijo al Dios de Sadrac, Mesac y Abed-nego, que <strong>envió su ángel</strong> y los libró (3:28)</li><li>Decretó que todo pueblo, nación o lengua que dijere blasfemia contra ese Dios <strong>sea descuartizado y su casa puesta por muladar</strong> (3:29)</li><li>Reconoció: <strong>«no hay dios que pueda librar como éste»</strong> (3:29)</li><li>Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)</li></ul>"
+   "h": "<ul class=\"tight\"><li>Bendijo al Dios de Sadrac, Mesac y Abed-nego, que <strong>envió su ángel</strong> y los libró (3:28)</li><li>Decretó que quien hablara blasfemia contra ese Dios <strong>sea descuartizado y su casa convertida en estercolero</strong> (3:29)</li><li>Reconoció: <strong>«no hay dios que pueda librar como éste»</strong> (3:29)</li><li>Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)</li></ul>"
   }
  ],
  "d4": [
@@ -565,11 +586,11 @@ const CONTENIDO = {
   },
   {
    "t": "🕸️ El complot",
-   "h": "<div class=\"highlight-box\">• Buscaban ocasión para acusarlo <strong>en lo relacionado con el reino</strong> (6:4)<br>\n    • No pudieron hallar ocasión alguna ni falta, porque <strong>él era fiel</strong>,\n      y <strong>ningún vicio ni falta fue hallado en él</strong> (6:4)<br>\n    • Concluyeron: «no hallaremos contra este Daniel ocasión alguna,\n      si no la hallamos <strong>contra él en relación con la ley de su Dios</strong>» (6:5)</div><table class=\"info-table\"><thead><tr><th>El edicto</th><th>Detalle</th></tr></thead><tbody><tr><td class=\"key\">Duración</td><td>TREINTA días (6:7)</td></tr><tr><td class=\"key\">Prohibición</td><td>Pedir petición a cualquier dios u hombre fuera del rey (6:7)</td></tr><tr><td class=\"key\">Pena</td><td>Ser echado en el <strong>foso de los leones</strong> (6:7)</td></tr><tr><td class=\"key\">Carácter</td><td>Ley de Media y de Persia, <strong>la cual no puede ser abrogada</strong> (6:8)</td></tr></tbody></table>"
+   "h": "<div class=\"highlight-box\">• Buscaban ocasión para acusarlo <strong>en lo relacionado con el reino</strong> (6:4)<br>\n    • No podían hallar motivo alguno o falta, porque <strong>él era fiel</strong>,\n      y <strong>ningún error ni falta hallaron en él</strong> (6:4)<br>\n    • Concluyeron: «No hallaremos contra este Daniel motivo alguno para acusarlo,\n      si no la hallamos <strong>contra él en relación con la ley de su Dios</strong>» (6:5)</div><table class=\"info-table\"><thead><tr><th>El edicto</th><th>Detalle</th></tr></thead><tbody><tr><td class=\"key\">Duración</td><td>TREINTA días (6:7)</td></tr><tr><td class=\"key\">Prohibición</td><td>Pedir petición a cualquier dios u hombre fuera del rey (6:7)</td></tr><tr><td class=\"key\">Pena</td><td>Ser echado en el <strong>foso de los leones</strong> (6:7)</td></tr><tr><td class=\"key\">Carácter</td><td>Ley de Media y de Persia, <strong>la cual no puede ser abrogada</strong> (6:8)</td></tr></tbody></table>"
   },
   {
    "t": "🙏 La fidelidad de Daniel — versículo central",
-   "h": "<div class=\"verse-box\">«Cuando Daniel supo que el edicto había sido firmado, <strong>entró en su casa</strong>;\n    y abiertas las ventanas de su cámara que daban hacia Jerusalén,\n    <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,\n    <strong>como lo solía hacer antes</strong>.» (Daniel 6:10)</div><div class=\"warn-box\">Fíjate en tres cosas que suelen preguntarse por separado:\n    <strong>hacia Jerusalén</strong>, <strong>tres veces al día</strong>,\n    y <strong>como lo solía hacer antes</strong> — no cambió su costumbre por miedo.</div>"
+   "h": "<div class=\"verse-box\">«Cuando Daniel supo que el edicto había sido firmado, <strong>entró en su casa</strong>;\n    abiertas las ventanas de su habitación que daban a Jerusalén,\n    <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,\n    <strong>como lo solía hacer antes</strong>.» (Daniel 6:10)</div><div class=\"warn-box\">Fíjate en tres cosas que suelen preguntarse por separado:\n    <strong>hacia Jerusalén</strong>, <strong>tres veces al día</strong>,\n    y <strong>como lo solía hacer antes</strong> — no cambió su costumbre por miedo.</div>"
   },
   {
    "t": "🦁 El foso de los leones",
@@ -1152,10 +1173,10 @@ const BANCO = [
   "t": "mc",
   "q": "¿Cómo describió Nabucodonosor al cuarto personaje del horno? (Daniel 3:25)",
   "o": [
-   "Como un ángel de gran poder",
-   "Como un hombre de fuego",
-   "Semejante al Hijo de Dios",
-   "Como una estrella brillante"
+   "Semejante a un ángel del cielo",
+   "Semejante a un hombre de fuego",
+   "Semejante a un hijo de los dioses",
+   "Semejante al Hijo de Dios"
   ],
   "a": 2
  },
@@ -1166,7 +1187,7 @@ const BANCO = [
   "o": [
    "Prisión perpetua",
    "Destierro del reino",
-   "Que sea descuartizado y su casa puesta por muladar",
+   "Que sea descuartizado y su casa convertida en estercolero",
    "Pérdida de todos sus bienes"
   ],
   "a": 2
@@ -1174,9 +1195,9 @@ const BANCO = [
  {
   "cap": "d3",
   "t": "tf",
-  "q": "Al salir del horno, ni olor de fuego había en los tres jóvenes. (Daniel 3:27)",
+  "q": "Al salir del horno, sus ropas quedaron intactas y ni siquiera olor de fuego tenían. (Daniel 3:27)",
   "a": true,
-  "e": "Verdadero. Daniel 3:27 lo dice textualmente, junto con que el fuego no se enseñoreó de sus cuerpos."
+  "e": "Verdadero. RV1995: «el fuego no había tenido poder alguno sobre sus cuerpos... sus ropas, intactas, ni siquiera olor de fuego tenían»."
  },
  {
   "cap": "d3",
@@ -1198,11 +1219,11 @@ const BANCO = [
     "h": "¿cuántos?"
    },
    {
-    "x": " varones sueltos, que se pasean en medio del fuego... y el parecer del cuarto es semejante al "
+    "x": " hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los "
    },
    {
-    "b": "Hijo de Dios",
-    "h": "¿a quién?"
+    "b": "dioses",
+    "h": "¿de quiénes? (así lo dijo el rey pagano)"
    },
    {
     "x": ".»"
@@ -1215,21 +1236,21 @@ const BANCO = [
   "ins": "Daniel 3:27 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«...ni cabello de sus cabezas fue "
+    "x": "«...el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había "
    },
    {
     "b": "quemado",
     "h": "¿qué le pasó?"
    },
    {
-    "x": ", ni sus vestidos se alteraron, ni "
+    "x": "; sus ropas, intactas, ni siquiera "
    },
    {
     "b": "olor",
-    "h": "¿qué no había?"
+    "h": "¿ni siquiera qué?"
    },
    {
-    "x": " de fuego había en ellos.»"
+    "x": " de fuego tenían.»"
    }
   ]
  },
@@ -1471,7 +1492,7 @@ const BANCO = [
     "h": "¿qué te hicieron?"
    },
    {
-    "x": " has sido en balanza, y fuiste hallado "
+    "x": " has sido en balanza y hallado "
    },
    {
     "b": "falto",
@@ -1524,7 +1545,7 @@ const BANCO = [
   "q": "¿Por qué no pudieron hallar ocasión para acusar a Daniel? (Daniel 6:4)",
   "o": [
    "Porque el rey lo protegía",
-   "Porque él era fiel y ningún vicio ni falta fue hallado en él",
+   "Porque él era fiel y ningún error ni falta hallaron en él",
    "Porque era demasiado poderoso",
    "Porque sus enemigos eran torpes"
   ],
@@ -1545,7 +1566,7 @@ const BANCO = [
  {
   "cap": "d6",
   "t": "mc",
-  "q": "¿Hacia dónde daban las ventanas de la cámara donde oraba Daniel? (Daniel 6:10)",
+  "q": "¿Hacia dónde daban las ventanas de la habitación donde oraba Daniel? (Daniel 6:10)",
   "o": [
    "Hacia el palacio real",
    "Hacia el oriente",
@@ -1622,7 +1643,7 @@ const BANCO = [
   "ins": "Daniel 6:10 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«...abiertas las ventanas de su cámara que daban hacia "
+    "x": "«...abiertas las ventanas de su habitación que daban a "
    },
    {
     "b": "Jerusalén",
@@ -1636,7 +1657,7 @@ const BANCO = [
     "h": "¿cuántas veces?"
    },
    {
-    "x": " veces al día, y oraba y daba gracias delante de su Dios, como lo solía hacer antes.»"
+    "x": " veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»"
    }
   ]
  },
@@ -1660,7 +1681,7 @@ const BANCO = [
     "h": "¿de qué?"
    },
    {
-    "x": ", para que no me hiciesen daño.»"
+    "x": " para que no me hicieran daño.»"
    }
   ]
  },
@@ -2020,7 +2041,7 @@ const BANCO = [
   "o": [
    "Prisión perpetua",
    "Destierro",
-   "Ser hechos pedazos y sus casas convertidas en muladares",
+   "Ser hechos pedazos y sus casas convertidas en estercoleros",
    "Perder sus cargos"
   ],
   "a": 2
@@ -2313,7 +2334,7 @@ const BANCO = [
   "ins": "Daniel 1:8 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«Y Daniel propuso en su "
+    "x": "«Daniel propuso en su "
    },
    {
     "b": "corazón",
@@ -2368,7 +2389,7 @@ const BANCO = [
     "h": "¿dónde?"
    },
    {
-    "x": ", el cual revela los "
+    "x": " que revela los "
    },
    {
     "b": "misterios",
@@ -2416,14 +2437,14 @@ const BANCO = [
     "h": "una palabra"
    },
    {
-    "x": ", sepas, oh rey, que no serviremos a tus "
+    "x": ", has de saber, oh rey, que no serviremos a tus "
    },
    {
     "b": "dioses",
     "h": "¿a quiénes?"
    },
    {
-    "x": ", ni tampoco adoraremos la estatua que has levantado.»"
+    "x": " ni tampoco adoraremos la estatua que has levantado.»"
    }
   ]
  },
@@ -2512,21 +2533,21 @@ const BANCO = [
     "h": "¿cómo era?"
    },
    {
-    "x": ", y ningún vicio ni "
+    "x": ", y ningún "
    },
    {
-    "b": "falta",
-    "h": "¿ni qué?"
+    "b": "error",
+    "h": "¿ni qué? (RV1995)"
    },
    {
-    "x": " fue hallado en él.»"
+    "x": " ni falta hallaron en él.»"
    }
   ]
  },
  {
   "cap": "d6",
   "t": "fill",
-  "ins": "Daniel 6:26 (RV1995) — Completa:",
+  "ins": "Daniel 6:26-27 (RV1995) — Completa:",
   "p": [
    {
     "x": "«...porque él es el Dios "
@@ -2601,14 +2622,14 @@ const BANCO = [
   "ins": "Daniel 3:17 (RV1995) — Completa:",
   "p": [
    {
-    "x": "«He aquí nuestro Dios a quien "
+    "x": "«Nuestro Dios, a quien "
    },
    {
     "b": "servimos",
     "h": "¿qué hacemos ante él?"
    },
    {
-    "x": " puede librarnos del horno de fuego ardiendo; y de tu mano, oh rey, nos "
+    "x": ", puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos "
    },
    {
     "b": "librará",
@@ -2625,7 +2646,7 @@ const BANCO = [
   "ins": "Daniel 4:27 (RV1995) — Completa el consejo de Daniel al rey:",
   "p": [
    {
-    "x": "«...tus pecados redime con "
+    "x": "«...redime tus pecados con "
    },
    {
     "b": "justicia",
@@ -2639,7 +2660,7 @@ const BANCO = [
     "h": "¿haciendo qué?"
    },
    {
-    "x": " para con los oprimidos...»"
+    "x": " con los oprimidos...»"
    }
   ]
  },
@@ -2673,14 +2694,14 @@ const BANCO = [
   "ins": "Daniel 6:5 (RV1995) — Completa lo que dijeron los enemigos:",
   "p": [
    {
-    "x": "«no hallaremos contra este Daniel "
+    "x": "«No hallaremos contra este Daniel "
    },
    {
-    "b": "ocasión",
-    "h": "¿qué no hallarán?"
+    "b": "motivo",
+    "h": "¿qué no hallarán? (RV1995)"
    },
    {
-    "x": " alguna, si no la hallamos contra él en relación con la "
+    "x": " alguno para acusarlo, si no lo hallamos contra él en relación con la "
    },
    {
     "b": "ley",
@@ -2718,7 +2739,7 @@ const BANCO = [
  {
   "cap": "d6",
   "t": "fill",
-  "ins": "Daniel 6:26 (RV1995) — Completa:",
+  "ins": "Daniel 6:26-27 (RV1995) — Completa:",
   "p": [
    {
     "x": "«Su reino no será jamás "
@@ -2840,6 +2861,269 @@ const BANCO = [
    "Que descuidaba su cargo por orar"
   ],
   "a": 1
+ },
+ {
+  "cap": "d1",
+  "t": "mc",
+  "q": "Según la RV1995, ¿cómo pareció el rostro de los cuatro jóvenes al cabo de los diez días? (Daniel 1:15)",
+  "o": [
+   "Más rozagante y más robusto",
+   "Mejor y más robusto",
+   "Más sano y más fuerte",
+   "Mejor y más hermoso"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d1",
+  "t": "tf",
+  "q": "La RV1995 dice que el rostro de los jóvenes pareció «más rozagante» que el de los otros muchachos. (Daniel 1:15)",
+  "a": false,
+  "e": "Falso. «Más rozagante» es de la RV1960. La RV1995 dice «mejor y más robusto»."
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según la RV1995, ¿en qué serían convertidas las casas de los sabios si no declaraban el sueño? (Daniel 2:5)",
+  "o": [
+   "En muladares",
+   "En estercoleros",
+   "En ruinas",
+   "En sepulcros"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según la RV1995, ¿cómo describió Nabucodonosor el aspecto del cuarto hombre del horno? (Daniel 3:25)",
+  "o": [
+   "Semejante al Hijo de Dios",
+   "Semejante a un ángel del cielo",
+   "Semejante a un hijo de los dioses",
+   "Semejante a un varón de fuego"
+  ],
+  "a": 2
+ },
+ {
+  "cap": "pr41",
+  "t": "mc",
+  "q": "Según P&R cap. 41, ¿quién era en realidad ese cuarto personaje que el rey vio en el horno?",
+  "o": [
+   "Un ángel de alto rango",
+   "El Hijo de Dios mismo",
+   "El profeta Ezequiel",
+   "Una visión sin persona real"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d3",
+  "t": "tf",
+  "q": "Daniel 3:25 y Profetas y Reyes 41 se contradicen sobre quién era el cuarto varón del horno.",
+  "a": false,
+  "e": "Falso. Daniel 3:25 registra lo que dijo Nabucodonosor, un rey pagano: «un hijo de los dioses». P&R 41 revela que era el Hijo de Dios. Una cosa es lo que el rey vio y dijo; la otra, lo que la inspiración identifica."
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según la RV1995, ¿cómo quedaron las ropas de los tres jóvenes al salir del horno? (Daniel 3:27)",
+  "o": [
+   "Chamuscadas en los bordes",
+   "Intactas, sin siquiera olor de fuego",
+   "Quemadas, aunque su cuerpo ileso",
+   "Cubiertas de ceniza"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según la RV1995, ¿en qué sería convertida la casa del que hablara blasfemia contra el Dios de los tres jóvenes? (Daniel 3:29)",
+  "o": [
+   "En un muladar",
+   "En un estercolero",
+   "En un campo baldío",
+   "En propiedad del rey"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "Según la RV1995, ¿qué no hallaron en Daniel sus acusadores? (Daniel 6:4)",
+  "o": [
+   "Ningún vicio ni falta",
+   "Ningún error ni falta",
+   "Ninguna ocasión ni pecado",
+   "Ninguna mancha ni sombra"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "Según la RV1995, ¿qué dijeron los enemigos que no hallarían contra Daniel? (Daniel 6:5)",
+  "o": [
+   "Ocasión alguna",
+   "Motivo alguno para acusarlo",
+   "Falta alguna de trabajo",
+   "Testigo alguno"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "Según la RV1995, ¿de qué habitación estaban abiertas las ventanas cuando Daniel oraba? (Daniel 6:10)",
+  "o": [
+   "De su cámara",
+   "De su habitación",
+   "Del salón del trono",
+   "Del patio de su casa"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d6",
+  "t": "tf",
+  "q": "Según la RV1995, Daniel oraba con las ventanas de su habitación abiertas hacia Jerusalén. (Daniel 6:10)",
+  "a": true,
+  "e": "Verdadero. La RV1995 dice «habitación»; la RV1960 dice «cámara». La dirección es la misma: Jerusalén."
+ },
+ {
+  "cap": "d4",
+  "t": "mc",
+  "q": "Según la RV1995, ¿cómo le dijo Daniel al rey que tratara sus pecados? (Daniel 4:27)",
+  "o": [
+   "Que los confesara ante los sacerdotes",
+   "Que redimiera sus pecados con justicia y sus iniquidades haciendo misericordias con los oprimidos",
+   "Que ofreciera sacrificios en el templo",
+   "Que ayunara y se vistiera de luto"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "d5",
+  "t": "mc",
+  "q": "Según la RV1995, ¿qué significa PERES? (Daniel 5:28)",
+  "o": [
+   "Tu reino ha sido dividido entre tus hijos",
+   "Tu reino ha sido roto y dado a los medos y a los persas",
+   "Tu reino ha sido pesado y hallado falto",
+   "Tu reino ha sido contado y terminado"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "pr42",
+  "t": "mc",
+  "q": "¿Con qué capítulo de Daniel va el capítulo 42 de Profetas y Reyes, «La verdadera grandeza»?",
+  "o": [
+   "Daniel 3",
+   "Daniel 4",
+   "Daniel 5",
+   "Daniel 6"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "pr43",
+  "t": "mc",
+  "q": "¿Con qué capítulo de Daniel va el capítulo 43 de Profetas y Reyes, «El vigía invisible»?",
+  "o": [
+   "Daniel 4",
+   "Daniel 5",
+   "Daniel 6",
+   "Daniel 2"
+  ],
+  "a": 1
+ },
+ {
+  "cap": "pr40",
+  "t": "tf",
+  "q": "El capítulo 40 de Profetas y Reyes se titula «La imagen de oro».",
+  "a": false,
+  "e": "Falso. El capítulo 40 se titula «El sueño de Nabucodonosor». La imagen de oro del capítulo 3 se trata en el capítulo 41, «El horno de fuego»."
+ },
+ {
+  "cap": "pr41",
+  "t": "tf",
+  "q": "El capítulo 41 de Profetas y Reyes se titula «La imagen de oro y el horno de fuego».",
+  "a": false,
+  "e": "Falso. Se titula solamente «El horno de fuego». Ese título largo circula en varias guías, pero no es el del libro."
+ },
+ {
+  "cap": "d1",
+  "t": "fill",
+  "ins": "Daniel 1:4 (RV1995) — Completa el requisito de los jóvenes:",
+  "p": [
+   {
+    "x": "«...muchachos en quienes no hubiera "
+   },
+   {
+    "b": "tacha",
+    "h": "¿qué no debía haber?"
+   },
+   {
+    "x": " alguna, de buen parecer, "
+   },
+   {
+    "b": "instruidos",
+    "h": "¿cómo, en toda sabiduría?"
+   },
+   {
+    "x": " en toda sabiduría, sabios en ciencia...»"
+   }
+  ]
+ },
+ {
+  "cap": "d6",
+  "t": "fill",
+  "ins": "Daniel 6:23 (RV1995) — Completa:",
+  "p": [
+   {
+    "x": "«...pero ninguna "
+   },
+   {
+    "b": "lesión",
+    "h": "¿qué no se halló?"
+   },
+   {
+    "x": " se halló en él, porque había "
+   },
+   {
+    "b": "confiado",
+    "h": "¿qué había hecho?"
+   },
+   {
+    "x": " en su Dios.»"
+   }
+  ]
+ },
+ {
+  "cap": "d4",
+  "t": "fill",
+  "ins": "Daniel 4:15 (RV1995) — Completa:",
+  "p": [
+   {
+    "x": "«Mas la cepa de sus raíces dejaréis en la tierra, con atadura de "
+   },
+   {
+    "b": "hierro",
+    "h": "¿de qué metal?"
+   },
+   {
+    "x": " y de "
+   },
+   {
+    "b": "bronce",
+    "h": "¿y de qué otro?"
+   },
+   {
+    "x": " entre la hierba del campo...»"
+   }
+  ]
  }
 ];
 
@@ -2929,6 +3213,28 @@ const MODULOS = [
    "av",
    "gm"
   ]
+ },
+ {
+  "id": "m-version",
+  "label": "RV1995 vs RV1960",
+  "sub": "Palabras que cambian entre versiones",
+  "icono": "📕",
+  "color": "#9D174D",
+  "cats": [
+   "av",
+   "gm"
+  ]
+ },
+ {
+  "id": "m-prioridades",
+  "label": "Lo que más preguntan",
+  "sub": "Los diez temas de mayor rendimiento",
+  "icono": "🎯",
+  "color": "#B91C1C",
+  "cats": [
+   "av",
+   "gm"
+  ]
  }
 ];
 
@@ -3008,7 +3314,7 @@ const CONT_MODULOS = {
   },
   {
    "t": "📖 Daniel 3:25 — El cuarto varón",
-   "h": "<div class=\"verse-box\">«He aquí yo veo <strong>cuatro varones sueltos</strong>,\n    que se pasean en medio del fuego, y ningún daño hay en ellos;\n    y el parecer del cuarto es <strong>semejante al Hijo de Dios</strong>.»</div>"
+   "h": "<div class=\"verse-box\">«He aquí yo veo <strong>cuatro varones sueltos</strong>,\n    que se pasean en medio del fuego, y ningún daño hay en ellos;\n    y el aspecto del cuarto es <strong>semejante a un hijo de los dioses</strong>.»</div>"
   },
   {
    "t": "📖 Daniel 4:37 — El rey humillado",
@@ -3020,7 +3326,7 @@ const CONT_MODULOS = {
   },
   {
    "t": "📖 Daniel 6:10 — La costumbre",
-   "h": "<div class=\"verse-box\">«Cuando Daniel supo que el edicto había sido firmado, entró en su casa;\n    y abiertas las ventanas de su cámara que daban hacia Jerusalén,\n    <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,\n    <strong>como lo solía hacer antes</strong>.»</div>"
+   "h": "<div class=\"verse-box\">«Cuando Daniel supo que el edicto había sido firmado, entró en su casa;\n    abiertas las ventanas de su habitación que daban a Jerusalén,\n    <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,\n    <strong>como lo solía hacer antes</strong>.»</div>"
   },
   {
    "t": "📖 Daniel 6:22 — El ángel",
@@ -3071,6 +3377,50 @@ const CONT_MODULOS = {
   {
    "t": "🧭 El detalle de las ventanas",
    "h": "<div class=\"highlight-box\">Daniel oraba con las ventanas abiertas <strong>hacia Jerusalén</strong> (6:10),\n    a más de mil kilómetros de distancia y con el templo ya destruido.<br><br>\n    No oraba hacia un edificio: oraba hacia la <strong>promesa de Dios</strong>\n    sobre ese lugar. Ese matiz aparece en las preguntas de aplicación.</div>"
+  }
+ ],
+ "m-version": [
+  {
+   "t": "📕 Por qué importa esta lista",
+   "h": "<div class=\"warn-box\">El examen se califica sobre la <strong>Reina Valera 1995</strong>. La RV1960\n    es la que más se oye en la iglesia, y en varios versículos famosos usa\n    <strong>otras palabras</strong>. Si respondes con la RV1960 donde piden RV1995,\n    la idea es correcta pero la palabra no.<br><br>\n    Regla: <strong>si la pregunta dice «según la RV1995», usa la columna de la izquierda.</strong></div>"
+  },
+  {
+   "t": "🔤 Palabra por palabra — Daniel 1 al 3",
+   "h": "<table class=\"info-table\"><thead><tr><th>Ref.</th><th>RV1995 (la que se califica)</th><th>RV1960 (la que suena familiar)</th></tr></thead><tbody><tr><td class=\"key\">1:15</td><td>pareció el rostro de ellos <strong>mejor y más robusto</strong></td><td>más <strong>rozagante</strong> y más robusto</td></tr><tr><td class=\"key\">2:5</td><td>vuestras casas serán convertidas en <strong>estercoleros</strong></td><td>convertidas en <strong>muladares</strong></td></tr><tr><td class=\"key\">3:25</td><td>el aspecto del cuarto es semejante a <strong>un hijo de los dioses</strong></td><td>semejante a hijo de los dioses</td></tr><tr><td class=\"key\">3:27</td><td>el fuego <strong>no había tenido poder alguno</strong> sobre sus cuerpos; sus ropas, <strong>intactas</strong></td><td>el fuego <strong>no se enseñoreó</strong>; sus vestidos <strong>no se alteraron</strong></td></tr><tr><td class=\"key\">3:29</td><td>su casa convertida en <strong>estercolero</strong></td><td>su casa puesta por <strong>muladar</strong></td></tr></tbody></table>"
+  },
+  {
+   "t": "🔤 Palabra por palabra — Daniel 4 al 6",
+   "h": "<table class=\"info-table\"><thead><tr><th>Ref.</th><th>RV1995 (la que se califica)</th><th>RV1960 (la que suena familiar)</th></tr></thead><tbody><tr><td class=\"key\">4:27</td><td><strong>redime tus pecados</strong> con justicia... misericordias <strong>con</strong> los oprimidos</td><td>tus pecados <strong>redime</strong> con justicia... <strong>para con</strong> los oprimidos</td></tr><tr><td class=\"key\">5:27</td><td>Pesado has sido en balanza <strong>y hallado falto</strong></td><td>y <strong>fuiste</strong> hallado falto</td></tr><tr><td class=\"key\">6:4</td><td>ningún <strong>error</strong> ni falta <strong>hallaron</strong> en él</td><td>ningún <strong>vicio</strong> ni falta <strong>fue hallado</strong> en él</td></tr><tr><td class=\"key\">6:5</td><td>no hallaremos contra este Daniel <strong>motivo alguno para acusarlo</strong></td><td><strong>ocasión alguna</strong></td></tr><tr><td class=\"key\">6:10</td><td>las ventanas de su <strong>habitación</strong></td><td>las ventanas de su <strong>cámara</strong></td></tr><tr><td class=\"key\">6:22</td><td>para que no me <strong>hicieran</strong> daño</td><td>para que no me <strong>hiciesen</strong> daño</td></tr></tbody></table>"
+  },
+  {
+   "t": "✝️ El caso especial de Daniel 3:25",
+   "h": "<div class=\"highlight-box\">Esta es la trampa más fina de todo el material, y hay que entender el\n    mecanismo, no memorizar la respuesta.<br><br>\n    <strong>Quién habla:</strong> el que describe al cuarto varón es\n    <strong>Nabucodonosor</strong>, un rey pagano que adoraba muchos dioses.\n    Él dijo lo que su mente pagana podía nombrar: «semejante a\n    <strong>un hijo de los dioses</strong>» (3:25).<br><br>\n    <strong>Quién lo identifica:</strong> Elena de White, en\n    <strong>P&amp;R cap. 41</strong>, dice que ese cuarto era\n    <strong>el Hijo de Dios mismo</strong>.<br><br>\n    Las dos cosas son ciertas y no se contradicen: una es lo que el rey\n    <em>vio y dijo</em>; la otra es lo que la inspiración <em>revela</em>.</div><table class=\"info-table\"><thead><tr><th>Si la pregunta dice...</th><th>Responde</th></tr></thead><tbody><tr><td class=\"key\">«según Daniel 3:25»</td><td>semejante a <strong>un hijo de los dioses</strong></td></tr><tr><td class=\"key\">«según P&amp;R cap. 41»</td><td><strong>el Hijo de Dios</strong> mismo</td></tr></tbody></table>"
+  },
+  {
+   "t": "📗 Títulos de Profetas y Reyes — verificados",
+   "h": "<div class=\"warn-box\">Circulan listas equivocadas de estos títulos. Estos son los del índice\n    del libro:</div><table class=\"info-table\"><thead><tr><th>Cap.</th><th>Título exacto</th><th>Con qué va</th></tr></thead><tbody><tr><td class=\"key\">39</td><td>En la corte de Babilonia</td><td>Daniel 1</td></tr><tr><td class=\"key\">40</td><td>El sueño de Nabucodonosor</td><td>Daniel 2</td></tr><tr><td class=\"key\">41</td><td>El horno de fuego</td><td>Daniel 3</td></tr><tr><td class=\"key\">42</td><td>La verdadera grandeza</td><td>Daniel 4</td></tr><tr><td class=\"key\">43</td><td>El vigía invisible</td><td>Daniel 5</td></tr><tr><td class=\"key\">44</td><td>En el foso de los leones</td><td>Daniel 6</td></tr></tbody></table><div class=\"highlight-box\">Los tres que más se equivocan: el <strong>41</strong> no es «La imagen de\n    oro y el horno de fuego», el <strong>42</strong> no es «Nabucodonosor\n    humillado», y el <strong>43</strong> no es «La escritura en la pared».</div>"
+  }
+ ],
+ "m-prioridades": [
+  {
+   "t": "🎯 Si solo te queda una hora, estudia esto",
+   "h": "<div class=\"warn-box\">Estos diez temas son los que más aparecen en los concursos de Daniel.\n    Están ordenados por rendimiento: el primero da más puntos que el último.</div>"
+  },
+  {
+   "t": "1️⃣ al 5️⃣ — Los de mayor peso",
+   "h": "<ul class=\"tight\"><li><strong>Los números exactos.</strong> 3 años de instrucción · 10 días de prueba · 10 veces mejores · 2.º año de Nabucodonosor · 60 y 6 codos · 7 veces el horno · 4 varones · 7 tiempos · 12 meses · 1.000 convidados · 62 años Darío · 120 sátrapas · 30 días el decreto · 3 veces al día</li><li><strong>Nombres hebreos → babilónicos.</strong> Daniel→Beltsasar · Ananías→Sadrac · Misael→Mesac · Azarías→Abed-nego</li><li><strong>Aspenaz no es Melsar.</strong> Aspenaz = jefe de los eunucos (1:3). Melsar = el sirviente puesto sobre los cuatro (1:11). Daniel habló con <u>Melsar</u></li><li><strong>Los 6 instrumentos en orden</strong> (3:5): bocina, flauta, tamboril, arpa, salterio, zampoña. <u>La trompeta no aparece</u></li><li><strong>MENE, MENE, TEKEL, UPARSIN</strong> (5:25) y el significado de cada palabra: contó · pesado y hallado falto · roto y dado a medos y persas</li></ul>"
+  },
+  {
+   "t": "6️⃣ al 🔟 — Los que deciden el desempate",
+   "h": "<ul class=\"tight\"><li><strong>El cuarto del horno.</strong> Daniel 3:25 (RV1995): «semejante a un hijo de los dioses», así lo dijo el rey pagano. P&amp;R 41: era el Hijo de Dios mismo. Fíjate qué te preguntan</li><li><strong>Títulos de P&amp;R 39 al 44 en orden:</strong> En la corte de Babilonia · El sueño de Nabucodonosor · El horno de fuego · La verdadera grandeza · El vigía invisible · En el foso de los leones</li><li><strong>Los materiales de la estatua y sus imperios</strong> (2:32-45): oro, plata, bronce, hierro, hierro con barro, y la piedra</li><li><strong>El año de cada evento:</strong> 3.er año de Joacim (cap. 1) · 2.º año de Nabucodonosor (cap. 2) · año 1.º de Ciro (1:21)</li><li><strong>Los versículos de completar:</strong> 1:15 · 2:20 · 3:18 · 4:37 · 6:10 · 6:22 · 6:26-27</li></ul>"
+  },
+  {
+   "t": "📅 Plan para los días que quedan",
+   "h": "<table class=\"info-table\"><thead><tr><th>Cuándo</th><th>Qué hacer</th></tr></thead><tbody><tr><td class=\"key\">Día 1</td><td>Leer la guía sección por sección. Decir los versículos <strong>en voz alta</strong>. Repasar las tablas de números y personajes.</td></tr><tr><td class=\"key\">Día 2</td><td>Un examen completo sin mirar. Después, <strong>examen de solo mis errores</strong> hasta que quede vacío. Releer los títulos de P&amp;R en orden.</td></tr><tr><td class=\"key\">Día 3</td><td>Simulacro cronometrado, como el examen real. Tarjetas: solo las que están «por dominar».</td></tr><tr><td class=\"key\">La víspera</td><td>Repaso general: este módulo y el de RV1995 vs RV1960. Dormir bien.</td></tr><tr><td class=\"key\">Antes del examen</td><td>Orar juntas. Leer una sola vez los diez temas de arriba.</td></tr></tbody></table>"
+  },
+  {
+   "t": "🧠 Cómo responder cuando dudas",
+   "h": "<div class=\"highlight-box\">• Si la pregunta cita un versículo, la respuesta está en <u>las palabras\n    exactas</u> de ese versículo, no en la idea general.<br>\n    • Si dice «según la RV1995», descarta la opción que suene a como lo has\n    oído en la iglesia: suele ser la RV1960.<br>\n    • Si dice «según Profetas y Reyes», la respuesta es la <u>explicación</u> de\n    Elena de White, no el dato bíblico.<br>\n    • En verdadero o falso, un solo detalle cambiado hace falsa toda la frase:\n    lee los números y los nombres dos veces.</div>"
   }
  ]
 };
@@ -3243,13 +3593,13 @@ const TARJETAS = [
  },
  {
   "cap": "d3",
-  "f": "Cómo era el cuarto varón",
-  "r": "«Semejante al Hijo de Dios» (3:25)"
+  "f": "Cómo describió Nabucodonosor al cuarto del horno",
+  "r": "«Semejante a un hijo de los dioses» (3:25, RV1995). P&R 41: era el Hijo de Dios mismo"
  },
  {
   "cap": "d3",
-  "f": "Las cuatro cosas que no sufrieron daño",
-  "r": "El fuego no se enseñoreó de sus cuerpos, ni cabello fue quemado, ni sus vestidos se alteraron, ni olor de fuego había en ellos (3:27)"
+  "f": "Las cuatro cosas que no sufrieron daño (3:27)",
+  "r": "El fuego no tuvo poder sobre sus cuerpos, ni aun el cabello se había quemado, sus ropas quedaron intactas, y ni siquiera olor de fuego tenían"
  },
  {
   "cap": "d3",
@@ -3364,7 +3714,7 @@ const TARJETAS = [
  {
   "cap": "d6",
   "f": "Por qué no hallaron falta en él",
-  "r": "Porque él era fiel, y ningún vicio ni falta fue hallado en él (6:4)"
+  "r": "Porque él era fiel, y ningún error ni falta hallaron en él (6:4)"
  },
  {
   "cap": "d6",
@@ -3736,15 +4086,65 @@ function tjSabia(si){
 
 /* ───────── examen ───────── */
 let reloj=null,seg=1200,entregado=false,resp={},prueba=[],modo='normal';
+/* alcance: 'todo' | 'biblia' | 'pr' | id de capítulo. cuantas: número o 'max' */
+let alcance='todo',cuantas=0;
 
 const falladasDe=()=>{const p=bancoDe();return p.filter(q=>(S.fq[claveQ(q)]||{}).m>0);};
+
+/* Preguntas disponibles según categoría + alcance elegido. */
+function poolDe(){
+  const b=bancoDe();
+  if(alcance==='todo')return b;
+  if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
+  if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
+  return b.filter(q=>q.cap===alcance);
+}
+
+/* Opciones de cantidad que caben en el pool, más el máximo real. */
+function opcionesCuantas(){
+  const t=poolDe().length;
+  const base=[10,15,25,40,60,100].filter(n=>n<=t);
+  if(!base.length||base[base.length-1]!==t)base.push(t);
+  return base;
+}
+
+function pintaMenuEx(){
+  const sa=document.getElementById('ex-alcance');
+  const prev=alcance;
+  sa.innerHTML='<option value="todo">Todo mi material</option>'+
+    '<option value="biblia">Solo el libro de Daniel</option>'+
+    '<option value="pr">Solo Profetas y Reyes</option>'+
+    capsDe().map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
+  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr'].includes(prev))alcance='todo';
+  sa.value=alcance;
+
+  const ops=opcionesCuantas();
+  if(!ops.includes(cuantas))cuantas=ops.includes(NPREG())?NPREG():ops[0];
+  const sc=document.getElementById('ex-cuantas');
+  sc.innerHTML=ops.map(n=>'<option value="'+n+'">'+n+' pregunta'+(n===1?'':'s')+
+    (n===NPREG()?' (como el examen real)':'')+'</option>').join('');
+  sc.value=cuantas;
+
+  const t=poolDe().length;
+  const porTipo=['mc','tf','fill'].map(x=>{
+    const L={mc:'múltiple',tf:'V/F',fill:'completar'}[x];
+    return poolDe().filter(q=>q.t===x).length+' de '+L;
+  }).join(' · ');
+  document.getElementById('ex-disponible').innerHTML=
+    'Disponibles con esta selección: <strong>'+t+'</strong> preguntas ('+porTipo+').'+
+    (t<cuantas?' <span style="color:var(--rojo)">Se usarán todas.</span>':'');
+}
+
+function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;pintaMenuEx();}
+function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();pintaMenuEx();}
 
 function pintaExInicio(){
   const n=NPREG(),b=bancoDe().length,f=falladasDe().length;
   document.getElementById('ex-desc').textContent=n+' preguntas · '+(S.cat==='av'?'Aventureros':'Guías Mayores');
-  document.getElementById('ex-nota').textContent='Banco disponible para tu categoría: '+b+' preguntas. Cada examen toma '+n+' al azar.';
+  document.getElementById('ex-nota').textContent='Banco completo de tu categoría: '+b+' preguntas. El examen real es de '+n+'.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Mis errores ('+f+')</button>':'';
+  pintaMenuEx();
 }
 
 function mezcla(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
@@ -3752,23 +4152,49 @@ function mezcla(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.
 function armar(m){
   if(m==='errores'){
     const sel=mezcla(falladasDe()).slice(0,NPREG());
-    return sel.map((q,i)=>({...q,id:'q'+i}));
+    return sel.map((q,i)=>barajaOpciones({...q,id:'q'+i}));
   }
-  const b=bancoDe(),n=NPREG();
+  const b=poolDe();
+  const n=Math.min(cuantas||NPREG(),b.length);
   const mc=mezcla(b.filter(q=>q.t==='mc'));
   const tf=mezcla(b.filter(q=>q.t==='tf'));
   const fl=mezcla(b.filter(q=>q.t==='fill'));
-  // proporción: 60% múltiple, 25% V/F, 15% completar
-  const nf=Math.max(2,Math.round(n*.15)), nt=Math.max(2,Math.round(n*.25)), nm=n-nf-nt;
+  /* Proporción del examen real: 60% múltiple, 25% V/F, 15% completar.
+     Si un tipo no alcanza en el alcance elegido, el faltante lo cubren
+     los otros tipos para que siempre salgan n preguntas. */
+  let nf=Math.min(fl.length,Math.max(1,Math.round(n*.15)));
+  let nt=Math.min(tf.length,Math.max(1,Math.round(n*.25)));
+  let nm=Math.min(mc.length,n-nf-nt);
+  let falta=n-(nm+nt+nf);
+  while(falta>0){
+    const antes=falta;
+    if(nf<fl.length){nf++;falta--;}
+    if(falta>0&&nt<tf.length){nt++;falta--;}
+    if(falta>0&&nm<mc.length){nm++;falta--;}
+    if(falta===antes)break;
+  }
   const sel=[...mc.slice(0,nm),...tf.slice(0,nt),...fl.slice(0,nf)];
-  return sel.map((q,i)=>({...q,id:'q'+i}));
+  return sel.map((q,i)=>barajaOpciones({...q,id:'q'+i}));
 }
+
+/* Baraja las opciones de una pregunta múltiple y reubica la respuesta.
+   Sin esto, la correcta cae casi siempre en la misma letra y se puede
+   aprobar por patrón en vez de por contenido. */
+function barajaOpciones(q){
+  if(q.t!=='mc'||!q.o)return q;
+  const idx=mezcla(q.o.map((_,i)=>i));
+  return {...q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a)};
+}
+
+/* Minutos proporcionales: el examen real da ~1,2 min por pregunta. */
+const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='av'?80:72)));
 
 function iniciar(m){
   modo=m||'normal';
   ir('examen');
-  prueba=armar(modo);resp={};entregado=false;seg=S.cat==='av'?1200:1800;
+  prueba=armar(modo);resp={};entregado=false;
   if(!prueba.length){reinicia();return;}
+  seg=segundosPara(prueba.length);
   document.getElementById('ex-inicio').style.display='none';
   document.getElementById('ex-curso').style.display='block';
   document.getElementById('ex-result').style.display='none';
@@ -3798,7 +4224,10 @@ function pintaPreguntas(){
   }
   document.getElementById('preguntas').innerHTML=h;
   const ET={normal:'',simulacro:' · 🎓 Simulacro',errores:' · 🔁 Repaso de errores'};
-  document.getElementById('ex-meta').textContent=prueba.length+' preguntas · '+(S.nombre||'Estudiante')+(ET[modo]||'');
+  const NA={todo:'todo el material',biblia:'solo Daniel',pr:'solo Profetas y Reyes'};
+  const alc=modo==='errores'?'mis errores':(NA[alcance]||(buscaItem(alcance)||{}).label||'');
+  document.getElementById('ex-meta').textContent=prueba.length+' preguntas · '+alc+
+    ' · '+(S.nombre||'Estudiante')+(ET[modo]||'');
   cuenta();
 }
 

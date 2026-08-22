@@ -15,7 +15,10 @@ let setInterval=()=>0, clearInterval=()=>{}, confirm=()=>true;
 const fn=new Function('store','nodo',stub+js+`
 return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
-        claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar};`);
+        claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
+        poolDe, opcionesCuantas, segundosPara,
+        ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
+        barajaOpciones};`);
 const A=fn(store,nodo);
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
@@ -23,7 +26,7 @@ let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 // Aventureros
 A.ponCat('av');
 ok(A.capsDe().length===7,'Aventureros ve 7 capítulos');
-ok(A.modsDe().length===6,'Aventureros ve 6 módulos de repaso ('+A.modsDe().length+')');
+ok(A.modsDe().length===8,'Aventureros ve 8 módulos de repaso ('+A.modsDe().length+')');
 ok(A.tarjetasDe().length===57,'Aventureros: 57 tarjetas');
 ok(!A.capsDe().some(c=>['d4','d5'].includes(c.id)),'Aventureros NO ve Daniel 4 ni 5');
 ok(!A.modsDe().some(m=>['m-reyes','m-profetico'].includes(m.id)),'Aventureros NO ve módulos avanzados');
@@ -31,7 +34,7 @@ ok(!A.modsDe().some(m=>['m-reyes','m-profetico'].includes(m.id)),'Aventureros NO
 // Guías Mayores
 A.ponCat('gm');
 ok(A.capsDe().length===12,'Guías Mayores ve 12 capítulos');
-ok(A.modsDe().length===8,'Guías Mayores ve 8 módulos');
+ok(A.modsDe().length===10,'Guías Mayores ve 10 módulos');
 ok(A.tarjetasDe().length===81,'Guías Mayores: 81 tarjetas');
 
 // buscaItem resuelve ambos tipos
@@ -106,6 +109,71 @@ const n1=A.normalizar({fq:{a:{m:3},b:{m:-1},c:'roto'},ft:{x:2,y:99,z:'no'},acc:{
 ok(n1.fq.a.m===3&&!n1.fq.b&&!n1.fq.c,'normalizar: fq conserva fallos válidos y bota lo dañado');
 ok(n1.ft.x===2&&n1.ft.y===2&&!('z' in n1.ft),'normalizar: ft acota cajas a 0-2');
 ok(n1.acc.d1.b===5&&n1.acc.d1.m===2&&!n1.acc.zz,'normalizar: acc solo acepta capítulos reales');
+
+// ── Menú de examen: alcance, cantidad y proporción ──
+A.ponCat('gm');
+A.ponAlcance('todo');
+const totalGM=A.poolDe().length;
+A.ponAlcance('biblia');
+const soloBiblia=A.poolDe();
+ok(soloBiblia.length>0&&soloBiblia.every(q=>q.cap.charAt(0)==='d'),'Alcance «solo Daniel» trae únicamente capítulos bíblicos');
+A.ponAlcance('pr');
+const soloPR=A.poolDe();
+ok(soloPR.length>0&&soloPR.every(q=>q.cap.slice(0,2)==='pr'),'Alcance «solo P&R» trae únicamente capítulos de Profetas y Reyes');
+ok(soloBiblia.length+soloPR.length===totalGM,'Los dos alcances suman el banco completo');
+
+A.ponAlcance('d1');
+const soloD1=A.poolDe();
+ok(soloD1.length>0&&soloD1.every(q=>q.cap==='d1'),'Alcance por capítulo filtra bien (Daniel 1)');
+
+// La cantidad pedida se respeta y nunca pasa del disponible
+A.ponAlcance('todo');
+let malCant=0;
+for(const n of [10,15,25,40,60]){
+  A.ponCuantas(n);
+  for(let i=0;i<40;i++){
+    const p=A.armar('normal');
+    if(p.length!==Math.min(n,A.poolDe().length))malCant++;
+    if(new Set(p).size!==p.length)malCant++;
+  }
+}
+ok(malCant===0,'El examen respeta la cantidad elegida (10 a 60) sin repetir preguntas');
+
+// Un alcance pequeño no rompe: entrega todo lo que hay
+A.ponAlcance('pr44');
+A.ponCuantas(100);
+const chico=A.armar('normal');
+ok(chico.length===A.poolDe().length&&chico.length>0,'Si piden más preguntas que las disponibles, entrega todas las que hay');
+
+// Las opciones de cantidad nunca exceden el pool
+A.ponAlcance('d1');
+ok(A.opcionesCuantas().every(n=>n<=A.poolDe().length),'Las opciones de cantidad caben en el alcance');
+
+// El tiempo escala con el número de preguntas
+ok(A.segundosPara(25)>A.segundosPara(10)&&A.segundosPara(10)>=300,'El tiempo del examen escala con la cantidad');
+A.ponAlcance('todo');A.ponCuantas(25);
+
+// ── Barajado de opciones: la correcta no se queda en una sola letra ──
+A.ponCat('gm');A.ponAlcance('todo');A.ponCuantas(60);
+const letras={0:0,1:0,2:0,3:0};
+let textoOk=true;
+for(let i=0;i<40;i++){
+  for(const q of A.armar('normal').filter(x=>x.t==='mc')){
+    letras[q.a]++;
+    // la opción marcada como correcta debe seguir siendo el mismo texto
+    const orig=BANCO.find(o=>(o.q||'')===(q.q||'')&&o.cap===q.cap);
+    if(orig&&orig.o[orig.a]!==q.o[q.a])textoOk=false;
+  }
+}
+const tot=Object.values(letras).reduce((a,b)=>a+b,0);
+const minimo=Math.min(...Object.values(letras));
+ok(textoOk,'Al barajar opciones, la respuesta correcta sigue siendo el mismo texto');
+ok(minimo>tot*0.15,'La respuesta correcta se reparte entre las cuatro letras (mínimo '+
+  Math.round(minimo/tot*100)+'% por letra)');
+const qm=BANCO.find(q=>q.t==='mc');
+ok(A.barajaOpciones({...qm}).o.slice().sort().join('|')===qm.o.slice().sort().join('|'),
+  'barajaOpciones no pierde ni duplica opciones');
+A.ponCuantas(25);
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

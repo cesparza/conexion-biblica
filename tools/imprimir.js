@@ -19,6 +19,19 @@ function prng(seed) {
   return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
 }
 
+/* Baraja las opciones de una múltiple y reubica la respuesta correcta.
+   Sin esto la clave queda sesgada (en el examen original: C=47, B=44,
+   A=6, D=3) y se puede aprobar adivinando la letra más frecuente. */
+function barajaOpciones(q, rnd) {
+  if (q.t !== 'mc' || !q.o) return q;
+  const idx = q.o.map((_, i) => i);
+  for (let i = idx.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [idx[i], idx[j]] = [idx[j], idx[i]];
+  }
+  return { ...q, o: idx.map(i => q.o[i]), a: idx.indexOf(q.a) };
+}
+
 /* Reparte n preguntas entre capítulos de forma pareja (round-robin). */
 function elegir(pool, n, rnd) {
   const porCap = {};
@@ -141,7 +154,7 @@ function generaExamen(cat, nmc, ntf, nfill, semilla, etiqueta, alcance) {
     ...elegir(pool.filter(q => q.t === 'mc'), nmc, rnd),
     ...elegir(pool.filter(q => q.t === 'tf'), ntf, rnd),
     ...elegir(pool.filter(q => q.t === 'fill'), nfill, rnd),
-  ];
+  ].map(q => barajaOpciones(q, rnd));
   sel.forEach((q, i) => q.n = i + 1);
   const total = sel.length;
   const cab = (conR) => `
