@@ -26,7 +26,7 @@ let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 // Aventureros
 A.ponCat('av');
 ok(A.capsDe().length===7,'Aventureros ve 7 capítulos');
-ok(A.modsDe().length===8,'Aventureros ve 8 módulos de repaso ('+A.modsDe().length+')');
+ok(A.modsDe().length===9,'Aventureros ve 9 módulos de repaso ('+A.modsDe().length+')');
 ok(A.tarjetasDe().length===57,'Aventureros: 57 tarjetas');
 ok(!A.capsDe().some(c=>['d4','d5'].includes(c.id)),'Aventureros NO ve Daniel 4 ni 5');
 ok(!A.modsDe().some(m=>['m-reyes','m-profetico'].includes(m.id)),'Aventureros NO ve módulos avanzados');
@@ -34,7 +34,7 @@ ok(!A.modsDe().some(m=>['m-reyes','m-profetico'].includes(m.id)),'Aventureros NO
 // Guías Mayores
 A.ponCat('gm');
 ok(A.capsDe().length===12,'Guías Mayores ve 12 capítulos');
-ok(A.modsDe().length===10,'Guías Mayores ve 10 módulos');
+ok(A.modsDe().length===11,'Guías Mayores ve 11 módulos');
 ok(A.tarjetasDe().length===81,'Guías Mayores: 81 tarjetas');
 
 // buscaItem resuelve ambos tipos

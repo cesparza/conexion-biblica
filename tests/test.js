@@ -117,5 +117,70 @@ ok(nLargas===0,`index.html: 0 líneas sobre 2000 caracteres (máx ${maxL})`);
 ok(BANCO.filter(q=>q.t==='fill').length>=15,`Banco: ${BANCO.filter(q=>q.t==='fill').length} preguntas de completar`);
 ok(BANCO.length>=130,`Banco total: ${BANCO.length} preguntas`);
 
+// 12. Arquitectura: la app vive en archivos reales y se puede chequear
+const { execFileSync } = require('child_process');
+const FUENTE = f => path.join(RAIZ, 'fuente', f);
+let sintaxis = true;
+try { execFileSync(process.execPath, ['--check', FUENTE('app.js')], { stdio: 'pipe' }); }
+catch (e) { sintaxis = false; console.log('   ' + String(e.stderr || e.message).split('\n')[0]); }
+ok(sintaxis, 'fuente/app.js pasa el chequeo de sintaxis de Node');
+
+for (const f of ['estilos.css', 'cuerpo.html', 'app.js']) {
+  ok(fs.existsSync(FUENTE(f)) && fs.readFileSync(FUENTE(f), 'utf8').length > 500,
+    `fuente/${f} existe y tiene contenido`);
+}
+
+// El HTML generado incluye de verdad los tres pedazos
+const cssF = fs.readFileSync(FUENTE('estilos.css'), 'utf8').trim().split('\n')[0];
+const appF = fs.readFileSync(FUENTE('app.js'), 'utf8');
+ok(html.includes(cssF), 'index.html incluye los estilos de fuente/estilos.css');
+ok(html.includes(appF.trim().split('\n').find(l => l.startsWith('const CLAVE'))),
+  'index.html incluye el código de fuente/app.js');
+
+// El build es reproducible: correrlo dos veces da el mismo archivo
+const antes = fs.readFileSync(path.join(RAIZ, 'index.html'), 'utf8');
+execFileSync(process.execPath, [path.join(RAIZ, 'fuente', 'build.js')], { stdio: 'pipe' });
+ok(antes === fs.readFileSync(path.join(RAIZ, 'index.html'), 'utf8'),
+  'El build es reproducible (dos corridas dan el mismo index.html)');
+
+// 13. Cobertura mínima: que no se pierda terreno al editar el banco
+const VERS = { d1:21, d2:49, d3:30, d4:37, d5:31, d6:28 };
+function refsQ(q){
+  const t=[q.q,q.ins,q.e,...(q.o||[]),...(q.p||[]).map(p=>(p.x||'')+(p.b||''))].filter(Boolean).join(' ');
+  const out=new Set(); const re=/(?:Daniel\s*)?(\d{1,2})\s*:\s*(\d{1,2})(?:\s*[-,–]\s*(\d{1,2}))?/g;
+  let m; while((m=re.exec(t))){ const c='d'+m[1]; if(!VERS[c])continue;
+    const a=Number(m[2]), b=Number(m[3]||m[2]);
+    for(let v=a;v<=Math.min(b,VERS[c]);v++)out.add(c+':'+v); }
+  return out;
+}
+const cub=new Set(); BANCO.forEach(q=>refsQ(q).forEach(r=>cub.add(r)));
+let flojos=[];
+for(const [c,n] of Object.entries(VERS)){
+  let k=0; for(let v=1;v<=n;v++) if(cub.has(c+':'+v)) k++;
+  if(k/n < 0.40) flojos.push(`${c} ${Math.round(k/n*100)}%`);
+}
+ok(flojos.length===0, 'Cada capítulo de Daniel tiene al menos 40% de sus versículos con pregunta'
+  + (flojos.length?' — flojos: '+flojos.join(', '):''));
+
+const nPR = BANCO.filter(q=>q.cap.slice(0,2)==='pr').length;
+const pctPR = nPR/BANCO.length;
+ok(pctPR>=0.15 && pctPR<=0.28,
+  `Profetas y Reyes pesa ${Math.round(pctPR*100)}% del banco (objetivo 15-28%; ` +
+  `el reparto del examen real no se conoce)`);
+
+// 14. Niveles: los tres existen y crecen de forma usable
+const { nivelDe } = require(path.join(RAIZ,'fuente','niveles.js'));
+const porNv = {1:0,2:0,3:0};
+BANCO.forEach(q=>porNv[nivelDe(q)]++);
+ok([1,2,3].every(n=>porNv[n]>=25),
+  `Cada nivel tiene material suficiente (1:${porNv[1]} 2:${porNv[2]} 3:${porNv[3]})`);
+for(const cat of ['av','gm']){
+  const ids=CAPS.filter(c=>c.cats.includes(cat)).map(c=>c.id);
+  const b=BANCO.filter(q=>ids.includes(q.cap));
+  ok(b.filter(q=>nivelDe(q)===1).length>=NPREG_TEST(cat),
+    `Categoría ${cat}: alcanza para un examen de práctica completo solo de nivel 1`);
+}
+function NPREG_TEST(c){return c==='av'?15:25;}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

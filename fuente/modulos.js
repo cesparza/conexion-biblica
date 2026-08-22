@@ -31,6 +31,8 @@ const MODULOS = [
     icono:'📕', color:'#9D174D', cats:['av','gm'] },
   { id:'m-prioridades', label:'Lo que más preguntan', sub:'Los diez temas de mayor rendimiento',
     icono:'🎯', color:'#B91C1C', cats:['av','gm'] },
+  { id:'m-palabras', label:'Palabras difíciles', sub:'Qué significan en palabras sencillas',
+    icono:'💬', color:'#0E7490', cats:['av','gm'] },
 ];
 
 const CONT_MODULOS = {
@@ -379,7 +381,13 @@ const CONT_MODULOS = {
 'm-prioridades': [
   { t:'🎯 Si solo te queda una hora, estudia esto', h:
     wa(`Estos diez temas son los que más aparecen en los concursos de Daniel.
-    Están ordenados por rendimiento: el primero da más puntos que el último.`) },
+    Están ordenados por rendimiento: el primero da más puntos que el último.`) +
+    hi(`<strong>Lo que sí sabemos del examen del campamento:</strong> tiene tres
+    secciones — selección múltiple, verdadero o falso, y completar el
+    versículo — y se califica sobre la <strong>RV1995</strong>.<br>
+    <strong>Lo que no sabemos:</strong> cuántas preguntas trae ni cuántas por
+    sección. Por eso conviene practicar con exámenes de distintos tamaños en
+    vez de acostumbrarse a uno solo.`) },
 
   { t:'1️⃣ al 5️⃣ — Los de mayor peso', h:
     li([
@@ -399,14 +407,23 @@ const CONT_MODULOS = {
       '<strong>Los versículos de completar:</strong> 1:15 · 2:20 · 3:18 · 4:37 · 6:10 · 6:22 · 6:26-27',
     ]) },
 
-  { t:'📅 Plan para los días que quedan', h:
-    tbl(['Cuándo','Qué hacer'],[
-      ['Día 1','Leer la guía sección por sección. Decir los versículos <strong>en voz alta</strong>. Repasar las tablas de números y personajes.'],
-      ['Día 2','Un examen completo sin mirar. Después, <strong>examen de solo mis errores</strong> hasta que quede vacío. Releer los títulos de P&amp;R en orden.'],
-      ['Día 3','Simulacro cronometrado, como el examen real. Tarjetas: solo las que están «por dominar».'],
-      ['La víspera','Repaso general: este módulo y el de RV1995 vs RV1960. Dormir bien.'],
-      ['Antes del examen','Orar juntas. Leer una sola vez los diez temas de arriba.'],
-    ]) },
+  { t:'📅 Plan de siete semanas hasta el campamento', h:
+    wa(`El campamento de Aventureros es el <strong>9 de octubre de 2026</strong>.
+    Hay siete semanas, y la dificultad sube de a poco: primero los datos,
+    después las palabras exactas, al final los simulacros.
+    La app muestra en «Qué estudiar hoy» en qué semana vas.`) +
+    tbl(['Semana','Foco','Qué hacer'],[
+      ['1','Conocer el material','Leer capítulo por capítulo sin apuro. Exámenes de <strong>nivel 1</strong> para fijar nombres, números y lugares.'],
+      ['2','Fijar los datos','Terminar todos los capítulos y los repasos. Tarjetas todos los días, aunque sean diez minutos.'],
+      ['3','Entrar a lo literal','Empiezan las citas exactas. Módulo RV1995 vs RV1960. Exámenes de <strong>nivel 2</strong>.'],
+      ['4','Dominar las trampas','Módulos de Trampas y de RV1995 vs RV1960. Repasar errores hasta vaciar la lista.'],
+      ['5','Precisión palabra por palabra','Completar el versículo, <strong>nivel 3</strong>. Aquí se decide el concurso.'],
+      ['6','Simulacros','Exámenes cronometrados sin pistas, con las tres secciones. Practicar con distintos tamaños: no sabemos cuántas preguntas trae el examen real.'],
+      ['7','Afinar y descansar','Solo errores pendientes y este módulo. Dormir bien la noche anterior.'],
+    ]) +
+    hi(`Regla de las sesiones: <strong>cortas y seguidas</strong> rinde más que
+    una jornada larga. Veinte minutos diarios de tarjetas ganan a dos horas
+    el sábado.`) },
 
   { t:'🧠 Cómo responder cuando dudas', h:
     hi(`• Si la pregunta cita un versículo, la respuesta está en <u>las palabras
@@ -417,6 +434,59 @@ const CONT_MODULOS = {
     Elena de White, no el dato bíblico.<br>
     • En verdadero o falso, un solo detalle cambiado hace falsa toda la frase:
     lee los números y los nombres dos veces.`) },
+],
+
+/* ═══════════ PALABRAS DIFÍCILES ═══════════ */
+'m-palabras': [
+  { t:'💬 Para qué es esta lista', h:
+    wa(`El examen usa las palabras del libro, no palabras fáciles. Aquí están
+    explicadas en sencillo, <strong>sin cambiarlas</strong>: hay que entenderlas
+    y también reconocerlas cuando aparezcan tal cual en una opción.`) },
+
+  { t:'📖 Palabras del texto bíblico', h:
+    tbl(['Palabra','Qué significa','Dónde sale'],[
+      ['Sitiar','Rodear una ciudad con el ejército para que no entre ni salga nadie','1:1'],
+      ['Eunuco','Funcionario de confianza del palacio del rey','1:3'],
+      ['Tacha','Defecto, algo que esté mal en el cuerpo o en la persona','1:4'],
+      ['Idóneo','Que sirve para algo, que tiene lo que se necesita','1:4'],
+      ['Legumbres','Comida que viene de plantas: granos, verduras','1:12'],
+      ['Robusto','Fuerte y sano de cuerpo','1:15'],
+      ['Astrólogo','El que dice adivinar mirando las estrellas','1:20'],
+      ['Estercolero','Basurero, montón de desperdicios. Era la peor humillación','2:5; 3:29'],
+      ['Tamo','La cascarilla del trigo, tan liviana que se la lleva el viento','2:35'],
+      ['Desmenuzar','Romper algo en pedacitos muy pequeños','2:34-35'],
+      ['Sátrapa','Gobernador de una provincia del reino','6:1'],
+      ['Edicto / decreto','Una ley que el rey firma y todos deben obedecer','6:8'],
+      ['Abrogar','Cancelar una ley, dejarla sin efecto','6:8'],
+      ['Vigilante','Un ser del cielo que anuncia lo que Dios ha decidido','4:13'],
+      ['Lesión','Herida o daño en el cuerpo','6:23'],
+    ]) },
+
+  { t:'📗 Palabras de Profetas y Reyes', h:
+    tbl(['Palabra','Qué significa'],[
+      ['Temperante','Que se domina, que no se pasa en la comida ni en la bebida'],
+      ['Embotar','Poner torpe, dejar la mente lenta y sin filo'],
+      ['Dominio propio','Poder controlarse a sí mismo'],
+      ['Intachable','Que no tiene ninguna falta que se le pueda señalar'],
+      ['Integridad','Ser el mismo en público y a solas'],
+      ['Soberbia / arrogancia','Creerse más que los demás y más que Dios'],
+      ['Iniquidad','Maldad, hacer lo que está mal a propósito'],
+      ['Profanar','Tratar como cualquier cosa algo que es sagrado'],
+      ['Idolatría','Adorar a algo o alguien en lugar de Dios'],
+      ['Providencia','El cuidado de Dios que va guiando la historia'],
+    ]) },
+
+  { t:'🧩 Tres frases que hay que entender, no solo repetir', h:
+    hi(`<strong>«Los hábitos temperantes favorecen la claridad mental.»</strong><br>
+    Quiere decir: comer y beber con dominio propio deja la cabeza despierta
+    para pensar y para entender a Dios. Por eso los cuatro salieron diez veces
+    mejores.`) +
+    hi(`<strong>«Su vida pública y privada eran igual de intachables.»</strong><br>
+    Quiere decir: Daniel era el mismo en la oficina del rey y en su casa
+    orando solo. Por eso sus enemigos no encontraron nada.`) +
+    hi(`<strong>«La sentencia es por decreto de los vigilantes.»</strong> (4:17)<br>
+    Quiere decir: la decisión de humillar a Nabucodonosor venía del cielo,
+    no de un accidente ni de una enfermedad cualquiera.`) },
 ],
 
 };

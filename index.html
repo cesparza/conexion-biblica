@@ -152,11 +152,51 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .tj-btns{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:.9rem}
 .prog-lin{height:7px;background:#e5e7eb;border-radius:5px;overflow:hidden;margin:.5rem 0}
 .prog-lin div{height:100%;background:var(--verde);transition:width .3s}
-.menu-ex{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.menu-ex{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
 .menu-ex label{display:flex;flex-direction:column;gap:.3rem;font-size:.78rem;font-weight:700;color:var(--gris);min-width:0}
 .menu-ex select{width:100%;max-width:100%;padding:.5rem .6rem;border:2px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.85rem;min-height:44px;background:#fff;color:var(--txt)}
 .menu-ex select:focus{border-color:var(--cielo);outline:none}
+@media(max-width:900px){.menu-ex{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.menu-ex{grid-template-columns:1fr}}
+/* Logo de la iglesia. En la barra va sobre azul: el logo tiene fondo
+   blanco, así que se le pone una tarjeta blanca con esquinas suaves
+   en vez de intentar recortarlo. */
+.logo-nav{height:26px;width:auto;display:block;background:#fff;border-radius:5px;padding:3px 6px}
+.logo-hero{height:44px;width:auto;background:#fff;border-radius:8px;padding:6px 10px;margin:0 auto .9rem;display:block}
+.hero-igl{font-size:.76rem!important;opacity:.75!important;margin-top:.5rem!important;letter-spacing:.3px}
+@media(max-width:620px){
+  .logo-nav{height:22px;padding:2px 5px}
+  .logo-hero{height:36px}
+}
+@media print{.logo-nav{display:none}}
+/* Panel «Qué estudiar hoy»: es lo primero que se ve, así que lleva el
+   borde de acento y va antes que cualquier otra tarjeta. */
+.card.hoy{border-left:5px solid var(--naranja)}
+.hoy-cab{display:flex;gap:1rem;align-items:center;background:#fff8f0;border-radius:12px;padding:.8rem 1rem;margin-bottom:.9rem;flex-wrap:wrap}
+.cuenta{text-align:center;min-width:78px}
+.cuenta .cd{font-size:2rem;font-weight:900;color:var(--naranja);line-height:1}
+.cuenta .cl{font-size:.68rem;color:var(--gris);font-weight:700;line-height:1.25;margin-top:3px}
+.sem{flex:1;min-width:190px}
+.sem .st{font-size:.86rem;font-weight:800;color:var(--azul)}
+.sem .sd{font-size:.78rem;color:var(--gris);line-height:1.5;margin-top:2px}
+.tarea{display:flex;gap:.75rem;align-items:center;padding:.7rem 0;border-top:1px solid #eef0f4;flex-wrap:wrap}
+.tarea:first-of-type{border-top:none}
+.tic{font-size:1.4rem;line-height:1;width:26px;text-align:center;flex-shrink:0}
+.ttx{flex:1;min-width:150px}
+.tt{font-size:.87rem;font-weight:700;color:var(--azul)}
+.td{font-size:.76rem;color:var(--gris);line-height:1.45;margin-top:2px}
+.tbt{padding:.45rem .95rem!important;font-size:.79rem!important;min-height:40px!important;flex-shrink:0}
+@media(max-width:620px){
+  .tbt{width:100%;margin-left:calc(26px + .75rem)}
+  .cuenta .cd{font-size:1.7rem}
+}
+/* Modo Aventureros: 9 años, texto un punto más grande y botones más altos. */
+body.av .tt,body.av .cap .t,body.av .mod .t{font-size:.94rem}
+body.av .td,body.av .nota{font-size:.82rem}
+body.av .q .qt{font-size:.95rem}
+body.av .op{font-size:.9rem;min-height:50px}
+body.av .tj .cara{font-size:1.15rem}
+body.av .tj .rev{font-size:1.08rem}
 .pil.az{background:#dbeafe;color:var(--cielo)}
 .pil.na{background:#ffedd5;color:var(--naranja)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
@@ -175,7 +215,10 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 <body>
 
 <nav class="nav">
-  <div class="nav-b">🕊️ <span>Conexión Bíblica</span></div>
+  <div class="nav-b">
+    <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
+    <span>Conexión Bíblica</span>
+  </div>
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')">🏠 Inicio</button>
     <button onclick="ir('estudio')">📖 Estudiar</button>
@@ -187,8 +230,15 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 
 <div id="p-inicio" class="pantalla on">
   <div class="hero">
-    <h1>🕊️ Conexión Bíblica</h1>
+    <img class="logo-hero logo-tl" alt="Iglesia Adventista Tierra Linda">
+    <h1>Conexión Bíblica</h1>
     <p>Libro de Daniel · Profetas y Reyes · Reina Valera 1995</p>
+    <p class="hero-igl">Iglesia Adventista del Séptimo Día · Tierra Linda</p>
+  </div>
+
+  <div class="card hoy">
+    <h2>📌 Qué estudiar hoy</h2>
+    <div id="hoy"></div>
   </div>
 
   <div class="card">
@@ -264,6 +314,9 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
         <label>Cuántas preguntas
           <select id="ex-cuantas" onchange="cambiaCuantas()"></select>
         </label>
+        <label>Dificultad
+          <select id="ex-nivel" onchange="cambiaNivel()"></select>
+        </label>
       </div>
       <div id="ex-disponible" class="nota"></div>
       <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
@@ -272,7 +325,9 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
         <span id="ex-err"></span>
       </div>
       <p class="nota">El <strong>simulacro</strong> quita las pistas de la sección
-      de completar, como en el examen del campamento.</p>
+      de completar. Del examen del campamento sabemos que trae esas tres
+      secciones; <strong>cuántas preguntas trae no lo sabemos todavía</strong>,
+      así que practica con varios tamaños.</p>
     </div>
 
     <div class="card">
@@ -281,6 +336,9 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
         <strong>Sección I</strong> — Selección múltiple<br>
         <strong>Sección II</strong> — Verdadero o Falso<br>
         <strong>Sección III</strong> — Completar el versículo<br><br>
+        Esas tres secciones son las del examen del campamento. La
+        <strong>cantidad de preguntas del examen real no está confirmada</strong>:
+        por eso puedes escoger cuántas quieres practicar.<br><br>
         Las preguntas <strong>cambian cada vez</strong>, salen al azar del banco.
         Al terminar ves tu puntaje y la respuesta correcta de cada una.<br><br>
         Puedes escoger <strong>sobre qué capítulo</strong> quieres el examen y
@@ -320,7 +378,6 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
     <button class="btn gho" style="margin-top:.7rem" onclick="borrarTodo()">🗑️ Borrar mi progreso</button>
   </div>
 </div>
-
 <script>
 const CAPS = [
  {
@@ -754,7 +811,8 @@ const BANCO = [
    "En el tercer año",
    "En el cuarto año"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -766,7 +824,8 @@ const BANCO = [
    "Al templo de Marduc",
    "A la fortaleza de Susa"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -778,7 +837,8 @@ const BANCO = [
    "Aspenaz",
    "Nabuzaradán"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -790,7 +850,8 @@ const BANCO = [
    "Nabuzaradán",
    "Melsar"
   ],
-  "a": 3
+  "a": 3,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -802,7 +863,8 @@ const BANCO = [
    "Cinco años",
    "Siete años"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -814,7 +876,8 @@ const BANCO = [
    "Abed-nego",
    "Beltsasar"
   ],
-  "a": 0
+  "a": 0,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -826,7 +889,8 @@ const BANCO = [
    "Abed-nego",
    "Beltsasar"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -838,7 +902,8 @@ const BANCO = [
    "Frutas y miel",
    "Grano y aceite"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -850,7 +915,8 @@ const BANCO = [
    "Mejor y más robusto que el de los otros muchachos",
    "Más delgado pero más fuerte"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -862,7 +928,8 @@ const BANCO = [
    "Diez veces",
    "Cien veces"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -874,21 +941,24 @@ const BANCO = [
    "Dominio de todas las lenguas",
    "Fuerza física superior"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d1",
   "t": "tf",
   "q": "Daniel continuó en el servicio del rey hasta el año primero del rey Ciro. (Daniel 1:21)",
   "a": true,
-  "e": "Verdadero. Daniel 1:21 lo dice textualmente."
+  "e": "Verdadero. Daniel 1:21 lo dice textualmente.",
+  "nv": 2
  },
  {
   "cap": "d1",
   "t": "tf",
   "q": "Fue Aspenaz quien aceptó directamente la prueba de los diez días propuesta por Daniel.",
   "a": false,
-  "e": "Falso. Daniel habló con MELSAR, el sirviente que Aspenaz había puesto sobre ellos (Daniel 1:11)."
+  "e": "Falso. Daniel habló con MELSAR, el sirviente que Aspenaz había puesto sobre ellos (Daniel 1:11).",
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -912,7 +982,8 @@ const BANCO = [
    {
     "x": " y astrólogos que había en todo su reino.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d1",
@@ -936,7 +1007,8 @@ const BANCO = [
    {
     "x": " que el de los otros muchachos.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d2",
@@ -948,7 +1020,8 @@ const BANCO = [
    "En el tercer año",
    "En el décimo año"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d2",
@@ -960,7 +1033,8 @@ const BANCO = [
    "El principal de los magos",
    "El mayordomo del palacio"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d2",
@@ -972,7 +1046,8 @@ const BANCO = [
    "Por voz audible desde el cielo",
    "Leyendo los libros de los profetas"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d2",
@@ -984,7 +1059,8 @@ const BANCO = [
    "De bronce",
    "De barro cocido"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d2",
@@ -996,7 +1072,8 @@ const BANCO = [
    "En sus pies de hierro y de barro cocido",
    "En las piernas de hierro"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d2",
@@ -1008,7 +1085,8 @@ const BANCO = [
    "Con tamo de las eras del verano",
    "Con polvo del camino"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 2
  },
  {
   "cap": "d2",
@@ -1020,7 +1098,8 @@ const BANCO = [
    "Consejero personal del rey",
    "Jefe del ejército"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d2",
@@ -1032,21 +1111,24 @@ const BANCO = [
    "El imperio romano",
    "La restauración de Jerusalén"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d2",
   "t": "tf",
   "q": "La cabeza de la gran imagen era de plata. (Daniel 2:32)",
   "a": false,
-  "e": "Falso. La cabeza era de ORO FINO; el pecho y los brazos eran de plata."
+  "e": "Falso. La cabeza era de ORO FINO; el pecho y los brazos eran de plata.",
+  "nv": 2
  },
  {
   "cap": "d2",
   "t": "tf",
   "q": "Daniel pidió tiempo al rey y oró con sus compañeros antes de recibir la revelación. (Daniel 2:16-18)",
   "a": true,
-  "e": "Verdadero. Pidió tiempo, fue a su casa e hizo saber el asunto a sus compañeros para pedir misericordia."
+  "e": "Verdadero. Pidió tiempo, fue a su casa e hizo saber el asunto a sus compañeros para pedir misericordia.",
+  "nv": 2
  },
  {
   "cap": "d2",
@@ -1070,7 +1152,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d3",
@@ -1082,7 +1165,8 @@ const BANCO = [
    "Sesenta codos",
    "Cien codos"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1094,7 +1178,8 @@ const BANCO = [
    "Doce codos",
    "Veinte codos"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1106,7 +1191,8 @@ const BANCO = [
    "En la llanura de Sinar",
    "En el templo principal"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1118,7 +1204,8 @@ const BANCO = [
    "La bocina",
    "El tamboril"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1130,7 +1217,8 @@ const BANCO = [
    "La trompeta",
    "El tamboril"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1142,7 +1230,8 @@ const BANCO = [
    "Siete veces",
    "Diez veces"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1154,7 +1243,8 @@ const BANCO = [
    "Sin ropa alguna",
    "Con armaduras de guerra"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1166,7 +1256,8 @@ const BANCO = [
    "Huyeron aterrados",
    "Fueron perdonados"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1178,7 +1269,8 @@ const BANCO = [
    "Semejante a un hijo de los dioses",
    "Semejante al Hijo de Dios"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -1190,21 +1282,24 @@ const BANCO = [
    "Que sea descuartizado y su casa convertida en estercolero",
    "Pérdida de todos sus bienes"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d3",
   "t": "tf",
   "q": "Al salir del horno, sus ropas quedaron intactas y ni siquiera olor de fuego tenían. (Daniel 3:27)",
   "a": true,
-  "e": "Verdadero. RV1995: «el fuego no había tenido poder alguno sobre sus cuerpos... sus ropas, intactas, ni siquiera olor de fuego tenían»."
+  "e": "Verdadero. RV1995: «el fuego no había tenido poder alguno sobre sus cuerpos... sus ropas, intactas, ni siquiera olor de fuego tenían».",
+  "nv": 2
  },
  {
   "cap": "d3",
   "t": "tf",
   "q": "Los tres jóvenes dijeron que si Dios no los libraba, entonces sí adorarían la estatua.",
   "a": false,
-  "e": "Falso. Dijeron: «Y si no, no serviremos a tus dioses ni adoraremos la estatua» (Daniel 3:18)."
+  "e": "Falso. Dijeron: «Y si no, no serviremos a tus dioses ni adoraremos la estatua» (Daniel 3:18).",
+  "nv": 2
  },
  {
   "cap": "d3",
@@ -1228,7 +1323,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d3",
@@ -1252,7 +1348,8 @@ const BANCO = [
    {
     "x": " de fuego tenían.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d4",
@@ -1264,7 +1361,8 @@ const BANCO = [
    "Hasta los confines del mar",
    "Hasta la cima del monte"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d4",
@@ -1276,7 +1374,8 @@ const BANCO = [
    "Con atadura de hierro y de bronce",
    "Con ataduras de plata"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 2
  },
  {
   "cap": "d4",
@@ -1288,7 +1387,8 @@ const BANCO = [
    "Siete tiempos",
    "Doce tiempos"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d4",
@@ -1300,7 +1400,8 @@ const BANCO = [
    "Doce meses",
    "Tres años"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d4",
@@ -1312,7 +1413,8 @@ const BANCO = [
    "Como ramas secas",
    "Como crin de caballo"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d4",
@@ -1324,7 +1426,8 @@ const BANCO = [
    "Daniel oró por él",
    "Sus consejeros lo llamaron"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d4",
@@ -1336,14 +1439,16 @@ const BANCO = [
    "Que ayunara cuarenta días",
    "Que liberara a los cautivos judíos"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d4",
   "t": "tf",
   "q": "Las uñas de Nabucodonosor crecieron como las de las aves. (Daniel 4:33)",
   "a": true,
-  "e": "Verdadero. Daniel 4:33 lo dice junto con que su cabello creció como plumas de águila."
+  "e": "Verdadero. Daniel 4:33 lo dice junto con que su cabello creció como plumas de águila.",
+  "nv": 2
  },
  {
   "cap": "d4",
@@ -1367,7 +1472,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d5",
@@ -1379,7 +1485,8 @@ const BANCO = [
    "Mil",
    "Dos mil"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -1391,7 +1498,8 @@ const BANCO = [
    "Del templo que estaba en Jerusalén",
    "De Persia"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -1403,7 +1511,8 @@ const BANCO = [
    "Sobre el altar",
    "Junto a la puerta principal"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -1415,7 +1524,8 @@ const BANCO = [
    "MENE, MENE, TEKEL, UPARSIN",
    "TEKEL, MENE, PERES, UPARSIN"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -1427,7 +1537,8 @@ const BANCO = [
    "Tu reino ha sido roto y dado a otros",
    "Tus días están contados"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -1439,7 +1550,8 @@ const BANCO = [
    "Tu reino ha sido roto y dado a los medos y a los persas",
    "Serás humillado hasta el polvo"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -1451,7 +1563,8 @@ const BANCO = [
    "Un palacio, siervos y honores militares",
    "La mitad de su reino"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d5",
@@ -1463,21 +1576,24 @@ const BANCO = [
    "Setenta años",
    "Cuarenta y cinco años"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d5",
   "t": "tf",
   "q": "Belsasar fue muerto esa misma noche en que apareció la escritura. (Daniel 5:30)",
   "a": true,
-  "e": "Verdadero. «La misma noche fue muerto Belsasar, rey de los caldeos» (Daniel 5:30)."
+  "e": "Verdadero. «La misma noche fue muerto Belsasar, rey de los caldeos» (Daniel 5:30).",
+  "nv": 2
  },
  {
   "cap": "d5",
   "t": "tf",
   "q": "Fueron los magos de Babilonia quienes recordaron a Daniel ante el rey Belsasar.",
   "a": false,
-  "e": "Falso. Fue LA REINA quien entró a la sala del banquete y le habló al rey de Daniel (Daniel 5:10-12)."
+  "e": "Falso. Fue LA REINA quien entró a la sala del banquete y le habló al rey de Daniel (Daniel 5:10-12).",
+  "nv": 2
  },
  {
   "cap": "d5",
@@ -1501,7 +1617,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -1513,7 +1630,8 @@ const BANCO = [
    "Ciento veinte",
    "Ciento cincuenta"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1525,7 +1643,8 @@ const BANCO = [
    "Cuatro",
    "Siete"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1537,7 +1656,8 @@ const BANCO = [
    "Porque era pariente del rey",
    "Porque hablaba muchos idiomas"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1549,7 +1669,8 @@ const BANCO = [
    "Porque era demasiado poderoso",
    "Porque sus enemigos eran torpes"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1561,7 +1682,8 @@ const BANCO = [
    "Treinta días",
    "Cuarenta días"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1573,7 +1695,8 @@ const BANCO = [
    "Hacia Jerusalén",
    "Hacia el río"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1585,7 +1708,8 @@ const BANCO = [
    "Con cadenas de hierro",
    "Con cera y el sello del templo"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1597,7 +1721,8 @@ const BANCO = [
    "Consultó a sus adivinos",
    "Durmió profundamente"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d6",
@@ -1609,7 +1734,8 @@ const BANCO = [
    "Muy de mañana, al rayar el alba",
    "A la hora tercera"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -1621,21 +1747,24 @@ const BANCO = [
    "Que se hizo invisible",
    "Que los leones ya estaban saciados"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
   "t": "tf",
   "q": "El rey Darío trabajó hasta la puesta del sol tratando de librar a Daniel. (Daniel 6:14)",
   "a": true,
-  "e": "Verdadero. «...y hasta la puesta del sol trabajó para librarle» (Daniel 6:14)."
+  "e": "Verdadero. «...y hasta la puesta del sol trabajó para librarle» (Daniel 6:14).",
+  "nv": 2
  },
  {
   "cap": "d6",
   "t": "tf",
   "q": "Daniel dejó de orar durante los treinta días del edicto para no arriesgarse.",
   "a": false,
-  "e": "Falso. Siguió orando tres veces al día, «como lo solía hacer antes» (Daniel 6:10)."
+  "e": "Falso. Siguió orando tres veces al día, «como lo solía hacer antes» (Daniel 6:10).",
+  "nv": 2
  },
  {
   "cap": "d6",
@@ -1659,7 +1788,8 @@ const BANCO = [
    {
     "x": " veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -1683,7 +1813,8 @@ const BANCO = [
    {
     "x": " para que no me hicieran daño.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "pr39",
@@ -1695,7 +1826,8 @@ const BANCO = [
    "El fiel en tierra extraña",
    "En la corte del rey"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "pr39",
@@ -1707,7 +1839,8 @@ const BANCO = [
    "Era demasiado costosa",
    "No le gustaba su sabor"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr39",
@@ -1719,7 +1852,8 @@ const BANCO = [
    "Solo la oración afecta el intelecto",
    "El cuerpo y la mente son independientes"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr39",
@@ -1731,14 +1865,16 @@ const BANCO = [
    "El clima de Babilonia",
    "La falta de alimentos"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr39",
   "t": "tf",
   "q": "Según P&R cap. 39, Daniel se negó a la comida del rey de forma rebelde y desafiante.",
   "a": false,
-  "e": "Falso. Elena de White destaca que fue firme y cortés a la vez, y propuso una prueba razonable."
+  "e": "Falso. Elena de White destaca que fue firme y cortés a la vez, y propuso una prueba razonable.",
+  "nv": 2
  },
  {
   "cap": "pr40",
@@ -1750,7 +1886,8 @@ const BANCO = [
    "El misterio revelado",
    "La piedra y el monte"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "pr40",
@@ -1762,7 +1899,8 @@ const BANCO = [
    "A los libros de los sabios",
    "A pedir clemencia al rey"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr40",
@@ -1774,14 +1912,16 @@ const BANCO = [
    "La restauración de Israel",
    "El fin del imperio griego"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr40",
   "t": "tf",
   "q": "Según P&R cap. 40, la sucesión de los imperios muestra que la historia es gobernada por Dios.",
   "a": true,
-  "e": "Verdadero. La imagen revela que Dios gobierna el reino de los hombres y dirige el curso de la historia."
+  "e": "Verdadero. La imagen revela que Dios gobierna el reino de los hombres y dirige el curso de la historia.",
+  "nv": 2
  },
  {
   "cap": "pr41",
@@ -1793,7 +1933,8 @@ const BANCO = [
    "Los tres hebreos fieles",
    "La prueba de la fe"
   ],
-  "a": 0
+  "a": 0,
+  "nv": 1
  },
  {
   "cap": "pr41",
@@ -1805,7 +1946,8 @@ const BANCO = [
    "El Hijo de Dios mismo",
    "El profeta Elías"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 2
  },
  {
   "cap": "pr41",
@@ -1817,7 +1959,8 @@ const BANCO = [
    "Que negociaban con el rey",
    "Que esperaban morir"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr41",
@@ -1829,14 +1972,16 @@ const BANCO = [
    "Para los conflictos políticos",
    "No tiene aplicación moderna"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr41",
   "t": "tf",
   "q": "Según P&R cap. 41, Dios libró a los tres jóvenes evitando que entraran al horno.",
   "a": false,
-  "e": "Falso. No los libró DE la prueba: el Hijo de Dios estuvo con ellos DENTRO del horno."
+  "e": "Falso. No los libró DE la prueba: el Hijo de Dios estuvo con ellos DENTRO del horno.",
+  "nv": 2
  },
  {
   "cap": "pr42",
@@ -1848,7 +1993,8 @@ const BANCO = [
    "La verdadera grandeza",
    "El rey entre las bestias"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "pr42",
@@ -1860,7 +2006,8 @@ const BANCO = [
    "La crueldad con los cautivos",
    "El saqueo del templo"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr42",
@@ -1872,14 +2019,16 @@ const BANCO = [
    "Un año completo",
    "Tres años"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 2
  },
  {
   "cap": "pr42",
   "t": "tf",
   "q": "Según P&R cap. 42, Nabucodonosor murió sin reconocer nunca la soberanía de Dios.",
   "a": false,
-  "e": "Falso. Fue restaurado y terminó siendo adorador del Dios verdadero; su testimonio final es uno de los más poderosos de la Biblia."
+  "e": "Falso. Fue restaurado y terminó siendo adorador del Dios verdadero; su testimonio final es uno de los más poderosos de la Biblia.",
+  "nv": 2
  },
  {
   "cap": "pr43",
@@ -1891,7 +2040,8 @@ const BANCO = [
    "El vigía invisible",
    "El último rey"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "pr43",
@@ -1903,7 +2053,8 @@ const BANCO = [
    "Porque los profetas le hablaron en persona",
    "Porque había leído las Escrituras"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr43",
@@ -1915,14 +2066,16 @@ const BANCO = [
    "Un desafío deliberado a Dios y la cima de su impiedad",
    "Un gesto de generosidad"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 2
  },
  {
   "cap": "pr43",
   "t": "tf",
   "q": "Según P&R cap. 43, mayor conocimiento implica mayor responsabilidad delante de Dios.",
   "a": true,
-  "e": "Verdadero. Belsasar tenía más luz que Nabucodonosor, y por eso su culpa fue mayor."
+  "e": "Verdadero. Belsasar tenía más luz que Nabucodonosor, y por eso su culpa fue mayor.",
+  "nv": 2
  },
  {
   "cap": "pr44",
@@ -1934,7 +2087,8 @@ const BANCO = [
    "En el foso de los leones",
    "Fidelidad hasta el fin"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "pr44",
@@ -1946,7 +2100,8 @@ const BANCO = [
    "Que oraba para ser visto",
    "Que era una formalidad religiosa"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr44",
@@ -1958,7 +2113,8 @@ const BANCO = [
    "Porque era muy poderoso",
    "Porque escondía bien sus faltas"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr44",
@@ -1970,14 +2126,16 @@ const BANCO = [
    "Que la fidelidad siempre trae milagros visibles",
    "Que deben apartarse de la sociedad"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr44",
   "t": "tf",
   "q": "Según P&R cap. 44, Daniel era un hombre joven cuando fue echado al foso de los leones.",
   "a": false,
-  "e": "Falso. Tenía más de ochenta años. Lo que decidió de joven (Daniel 1) fue lo que lo sostuvo de anciano."
+  "e": "Falso. Tenía más de ochenta años. Lo que decidió de joven (Daniel 1) fue lo que lo sostuvo de anciano.",
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -1989,7 +2147,8 @@ const BANCO = [
    "La astrología babilónica",
    "La administración del reino"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -2001,7 +2160,8 @@ const BANCO = [
    "Le habló por medio de un ángel",
    "Lo hizo enfermar"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -2013,7 +2173,8 @@ const BANCO = [
    "Por consejo de sus compañeros",
    "Después de consultar a un sacerdote"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -2025,14 +2186,16 @@ const BANCO = [
    "Los castigó",
    "Extendió la prueba a todos"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d1",
   "t": "tf",
   "q": "Los jóvenes escogidos debían ser de aquellos en quienes no hubiera tacha alguna. (Daniel 1:4)",
   "a": true,
-  "e": "Verdadero. Ésa es la primera condición que menciona Daniel 1:4."
+  "e": "Verdadero. Ésa es la primera condición que menciona Daniel 1:4.",
+  "nv": 2
  },
  {
   "cap": "d2",
@@ -2044,7 +2207,8 @@ const BANCO = [
    "Ser hechos pedazos y sus casas convertidas en estercoleros",
    "Perder sus cargos"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d2",
@@ -2056,7 +2220,8 @@ const BANCO = [
    "Que lo dedujo de los astros",
    "Que se lo dijo un ángel en secreto"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d2",
@@ -2068,14 +2233,16 @@ const BANCO = [
    "Porque están separados por el tiempo",
    "Porque uno destruye al otro"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d2",
   "t": "tf",
   "q": "Daniel pidió a sus compañeros que oraran pidiendo misericordias del Dios del cielo sobre el misterio. (Daniel 2:18)",
   "a": true,
-  "e": "Verdadero. Daniel 2:18 lo dice textualmente."
+  "e": "Verdadero. Daniel 2:18 lo dice textualmente.",
+  "nv": 2
  },
  {
   "cap": "d3",
@@ -2087,7 +2254,8 @@ const BANCO = [
    "Tres veces",
    "Cuatro veces (vv. 5, 7, 10 y 15)"
   ],
-  "a": 3
+  "a": 3,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -2099,7 +2267,8 @@ const BANCO = [
    "Sonrió con desprecio",
    "Se llenó de lágrimas"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d3",
@@ -2111,7 +2280,8 @@ const BANCO = [
    "Los sátrapas, gobernadores, capitanes y consejeros del rey",
    "Los sacerdotes del templo"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d3",
@@ -2123,14 +2293,16 @@ const BANCO = [
    "Que era el dios de una nación pequeña",
    "Que su poder era limitado"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d3",
   "t": "tf",
   "q": "Después del milagro, Nabucodonosor engrandeció a los tres jóvenes en la provincia de Babilonia. (Daniel 3:30)",
   "a": true,
-  "e": "Verdadero. Daniel 3:30 cierra el capítulo con esa promoción."
+  "e": "Verdadero. Daniel 3:30 cierra el capítulo con esa promoción.",
+  "nv": 2
  },
  {
   "cap": "d4",
@@ -2142,7 +2314,8 @@ const BANCO = [
    "Ejércitos acampados",
    "Ciudades enteras"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d4",
@@ -2154,7 +2327,8 @@ const BANCO = [
    "Vengar a los cautivos",
    "Destruir Babilonia"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d4",
@@ -2166,14 +2340,16 @@ const BANCO = [
    "«Nadie puede tocar mi reino»",
    "«Los dioses me han bendecido»"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d4",
   "t": "tf",
   "q": "Después de su restauración, a Nabucodonosor le fue añadida mayor grandeza. (Daniel 4:36)",
   "a": true,
-  "e": "Verdadero. Fue restituido en su reino y «mayor grandeza me fue añadida»."
+  "e": "Verdadero. Fue restituido en su reino y «mayor grandeza me fue añadida».",
+  "nv": 2
  },
  {
   "cap": "d5",
@@ -2185,7 +2361,8 @@ const BANCO = [
    "Los sacerdotes de Babilonia",
    "Los embajadores extranjeros"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -2197,7 +2374,8 @@ const BANCO = [
    "A los dioses del cielo",
    "A los antepasados del rey"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d5",
@@ -2209,14 +2387,16 @@ const BANCO = [
    "Se enfureció",
    "Huyó de la sala"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d5",
   "t": "tf",
   "q": "Belsasar cumplió lo prometido y vistió a Daniel de púrpura antes de morir. (Daniel 5:29)",
   "a": true,
-  "e": "Verdadero. Daniel 5:29 dice que lo vistieron de púrpura y fue proclamado tercer señor del reino."
+  "e": "Verdadero. Daniel 5:29 dice que lo vistieron de púrpura y fue proclamado tercer señor del reino.",
+  "nv": 2
  },
  {
   "cap": "d6",
@@ -2228,7 +2408,8 @@ const BANCO = [
    "Documentos secretos",
    "Testimonios de sus enemigos"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -2240,7 +2421,8 @@ const BANCO = [
    "Acusarlo de robo",
    "Convencer al rey de destituirlo"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -2252,7 +2434,8 @@ const BANCO = [
    "Toda la noche",
    "Solo unos minutos"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -2264,7 +2447,8 @@ const BANCO = [
    "Porque el foso era poco profundo",
    "Porque lo sacaron rápido"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -2276,14 +2460,16 @@ const BANCO = [
    "El dios de los hebreos",
    "Un dios poderoso entre otros"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d6",
   "t": "tf",
   "q": "Los acusadores de Daniel fueron echados al foso junto con sus hijos y sus mujeres. (Daniel 6:24)",
   "a": true,
-  "e": "Verdadero. Daniel 6:24 lo dice, y añade que los leones se apoderaron de ellos."
+  "e": "Verdadero. Daniel 6:24 lo dice, y añade que los leones se apoderaron de ellos.",
+  "nv": 2
  },
  {
   "cap": "d5",
@@ -2295,7 +2481,8 @@ const BANCO = [
    "Darío",
    "Joacim"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "d6",
@@ -2307,7 +2494,8 @@ const BANCO = [
    "Darío",
    "Ciro"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 1
  },
  {
   "cap": "d1",
@@ -2319,14 +2507,16 @@ const BANCO = [
    "Tres",
    "Cuatro: Nabucodonosor, Belsasar, Darío y Ciro"
   ],
-  "a": 3
+  "a": 3,
+  "nv": 2
  },
  {
   "cap": "d2",
   "t": "tf",
   "q": "Beltsasar y Belsasar son la misma persona.",
   "a": false,
-  "e": "Falso. Beltsasar es el nombre babilónico de DANIEL (1:7); Belsasar es el REY del capítulo 5."
+  "e": "Falso. Beltsasar es el nombre babilónico de DANIEL (1:7); Belsasar es el REY del capítulo 5.",
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -2350,7 +2540,8 @@ const BANCO = [
    {
     "x": " con la porción de la comida del rey.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d1",
@@ -2374,7 +2565,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d2",
@@ -2398,7 +2590,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d2",
@@ -2422,7 +2615,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d3",
@@ -2446,7 +2640,8 @@ const BANCO = [
    {
     "x": " ni tampoco adoraremos la estatua que has levantado.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d4",
@@ -2470,7 +2665,8 @@ const BANCO = [
    {
     "x": ", y mi razón me fue devuelta.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d5",
@@ -2494,7 +2690,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d5",
@@ -2518,7 +2715,8 @@ const BANCO = [
    {
     "x": " y a los persas.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2542,7 +2740,8 @@ const BANCO = [
    {
     "x": " ni falta hallaron en él.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2566,7 +2765,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2590,7 +2790,8 @@ const BANCO = [
    {
     "x": " en su Dios.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d2",
@@ -2614,7 +2815,8 @@ const BANCO = [
    {
     "x": " que llenó toda la tierra.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d3",
@@ -2638,7 +2840,8 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d4",
@@ -2662,7 +2865,8 @@ const BANCO = [
    {
     "x": " con los oprimidos...»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d4",
@@ -2686,7 +2890,8 @@ const BANCO = [
    {
     "x": "?»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2710,7 +2915,8 @@ const BANCO = [
    {
     "x": " de su Dios.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2734,7 +2940,8 @@ const BANCO = [
    {
     "x": " en el cielo y en la tierra.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2758,49 +2965,56 @@ const BANCO = [
    {
     "x": ".»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "pr39",
   "t": "tf",
   "q": "Según P&R cap. 39, el vino de la mesa del rey embotaba las facultades mentales y debilitaba el dominio propio.",
   "a": true,
-  "e": "Verdadero. Es una de las razones por las que rechazaron la comida y el vino del rey."
+  "e": "Verdadero. Es una de las razones por las que rechazaron la comida y el vino del rey.",
+  "nv": 2
  },
  {
   "cap": "pr40",
   "t": "tf",
   "q": "Según P&R cap. 40, la piedra cortada sin manos representa a Cristo y el establecimiento de su reino eterno.",
   "a": true,
-  "e": "Verdadero. La piedra destruye todos los reinos terrenales y permanece para siempre."
+  "e": "Verdadero. La piedra destruye todos los reinos terrenales y permanece para siempre.",
+  "nv": 3
  },
  {
   "cap": "pr41",
   "t": "tf",
   "q": "Según P&R cap. 41, los tres jóvenes condicionaron su obediencia a que Dios les garantizara el milagro.",
   "a": false,
-  "e": "Falso. La frase «y si no» muestra que obedecieron sin condicionar su lealtad al resultado."
+  "e": "Falso. La frase «y si no» muestra que obedecieron sin condicionar su lealtad al resultado.",
+  "nv": 2
  },
  {
   "cap": "pr42",
   "t": "tf",
   "q": "Según P&R cap. 42, Dios le concedió a Nabucodonosor un año completo para arrepentirse antes del juicio.",
   "a": true,
-  "e": "Verdadero. El juicio solo cayó cuando la jactancia salió de su boca."
+  "e": "Verdadero. El juicio solo cayó cuando la jactancia salió de su boca.",
+  "nv": 2
  },
  {
   "cap": "pr43",
   "t": "tf",
   "q": "Según P&R cap. 43, Belsasar pecó por ignorancia porque no conocía la historia de Nabucodonosor.",
   "a": false,
-  "e": "Falso. Conocía el orgullo, la humillación y la restauración de Nabucodonosor, y aun así eligió el mal."
+  "e": "Falso. Conocía el orgullo, la humillación y la restauración de Nabucodonosor, y aun así eligió el mal.",
+  "nv": 2
  },
  {
   "cap": "pr44",
   "t": "tf",
   "q": "Según P&R cap. 44, cuando llegó el decreto Daniel siguió orando como solía hacerlo antes, sin cambiar nada.",
   "a": true,
-  "e": "Verdadero. No oró más para desafiar, ni menos para esconderse."
+  "e": "Verdadero. No oró más para desafiar, ni menos para esconderse.",
+  "nv": 2
  },
  {
   "cap": "pr39",
@@ -2812,7 +3026,8 @@ const BANCO = [
    "Era saludable en pequeñas cantidades",
    "Solo se servía en las fiestas"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr40",
@@ -2824,7 +3039,8 @@ const BANCO = [
    "Una virtud del carácter",
    "Una época de la iglesia"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr42",
@@ -2836,7 +3052,8 @@ const BANCO = [
    "Al cumplirse siete años del sueño",
    "Cuando atacó Jerusalén"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr43",
@@ -2848,7 +3065,8 @@ const BANCO = [
    "Encarcelar a los sabios",
    "Negarse a leer la escritura"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "pr44",
@@ -2860,7 +3078,8 @@ const BANCO = [
    "Errores solo en su juventud",
    "Que descuidaba su cargo por orar"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -2872,14 +3091,16 @@ const BANCO = [
    "Más sano y más fuerte",
    "Mejor y más hermoso"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d1",
   "t": "tf",
   "q": "La RV1995 dice que el rostro de los jóvenes pareció «más rozagante» que el de los otros muchachos. (Daniel 1:15)",
   "a": false,
-  "e": "Falso. «Más rozagante» es de la RV1960. La RV1995 dice «mejor y más robusto»."
+  "e": "Falso. «Más rozagante» es de la RV1960. La RV1995 dice «mejor y más robusto».",
+  "nv": 3
  },
  {
   "cap": "d2",
@@ -2891,7 +3112,8 @@ const BANCO = [
    "En ruinas",
    "En sepulcros"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d3",
@@ -2903,7 +3125,8 @@ const BANCO = [
    "Semejante a un hijo de los dioses",
    "Semejante a un varón de fuego"
   ],
-  "a": 2
+  "a": 2,
+  "nv": 3
  },
  {
   "cap": "pr41",
@@ -2915,14 +3138,16 @@ const BANCO = [
    "El profeta Ezequiel",
    "Una visión sin persona real"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 2
  },
  {
   "cap": "d3",
   "t": "tf",
   "q": "Daniel 3:25 y Profetas y Reyes 41 se contradicen sobre quién era el cuarto varón del horno.",
   "a": false,
-  "e": "Falso. Daniel 3:25 registra lo que dijo Nabucodonosor, un rey pagano: «un hijo de los dioses». P&R 41 revela que era el Hijo de Dios. Una cosa es lo que el rey vio y dijo; la otra, lo que la inspiración identifica."
+  "e": "Falso. Daniel 3:25 registra lo que dijo Nabucodonosor, un rey pagano: «un hijo de los dioses». P&R 41 revela que era el Hijo de Dios. Una cosa es lo que el rey vio y dijo; la otra, lo que la inspiración identifica.",
+  "nv": 2
  },
  {
   "cap": "d3",
@@ -2934,7 +3159,8 @@ const BANCO = [
    "Quemadas, aunque su cuerpo ileso",
    "Cubiertas de ceniza"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d3",
@@ -2946,7 +3172,8 @@ const BANCO = [
    "En un campo baldío",
    "En propiedad del rey"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2958,7 +3185,8 @@ const BANCO = [
    "Ninguna ocasión ni pecado",
    "Ninguna mancha ni sombra"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2970,7 +3198,8 @@ const BANCO = [
    "Falta alguna de trabajo",
    "Testigo alguno"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -2982,14 +3211,16 @@ const BANCO = [
    "Del salón del trono",
    "Del patio de su casa"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d6",
   "t": "tf",
   "q": "Según la RV1995, Daniel oraba con las ventanas de su habitación abiertas hacia Jerusalén. (Daniel 6:10)",
   "a": true,
-  "e": "Verdadero. La RV1995 dice «habitación»; la RV1960 dice «cámara». La dirección es la misma: Jerusalén."
+  "e": "Verdadero. La RV1995 dice «habitación»; la RV1960 dice «cámara». La dirección es la misma: Jerusalén.",
+  "nv": 3
  },
  {
   "cap": "d4",
@@ -3001,7 +3232,8 @@ const BANCO = [
    "Que ofreciera sacrificios en el templo",
    "Que ayunara y se vistiera de luto"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "d5",
@@ -3013,7 +3245,8 @@ const BANCO = [
    "Tu reino ha sido pesado y hallado falto",
    "Tu reino ha sido contado y terminado"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 3
  },
  {
   "cap": "pr42",
@@ -3025,7 +3258,8 @@ const BANCO = [
    "Daniel 5",
    "Daniel 6"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "pr43",
@@ -3037,21 +3271,24 @@ const BANCO = [
    "Daniel 6",
    "Daniel 2"
   ],
-  "a": 1
+  "a": 1,
+  "nv": 1
  },
  {
   "cap": "pr40",
   "t": "tf",
   "q": "El capítulo 40 de Profetas y Reyes se titula «La imagen de oro».",
   "a": false,
-  "e": "Falso. El capítulo 40 se titula «El sueño de Nabucodonosor». La imagen de oro del capítulo 3 se trata en el capítulo 41, «El horno de fuego»."
+  "e": "Falso. El capítulo 40 se titula «El sueño de Nabucodonosor». La imagen de oro del capítulo 3 se trata en el capítulo 41, «El horno de fuego».",
+  "nv": 2
  },
  {
   "cap": "pr41",
   "t": "tf",
   "q": "El capítulo 41 de Profetas y Reyes se titula «La imagen de oro y el horno de fuego».",
   "a": false,
-  "e": "Falso. Se titula solamente «El horno de fuego». Ese título largo circula en varias guías, pero no es el del libro."
+  "e": "Falso. Se titula solamente «El horno de fuego». Ese título largo circula en varias guías, pero no es el del libro.",
+  "nv": 2
  },
  {
   "cap": "d1",
@@ -3075,7 +3312,8 @@ const BANCO = [
    {
     "x": " en toda sabiduría, sabios en ciencia...»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d6",
@@ -3099,7 +3337,8 @@ const BANCO = [
    {
     "x": " en su Dios.»"
    }
-  ]
+  ],
+  "nv": 3
  },
  {
   "cap": "d4",
@@ -3123,7 +3362,494 @@ const BANCO = [
    {
     "x": " entre la hierba del campo...»"
    }
-  ]
+  ],
+  "nv": 3
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:37, ¿qué le dijo Daniel a Nabucodonosor que era él?",
+  "o": [
+   "El más sabio de los reyes",
+   "Rey de reyes, a quien el Dios del cielo ha dado reino, poder, fuerza y majestad",
+   "El elegido de los dioses de Babilonia",
+   "Señor de toda la tierra para siempre"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:39, ¿cómo describió Daniel al reino que se levantaría después de Nabucodonosor?",
+  "o": [
+   "Más fuerte que el tuyo",
+   "Inferior al tuyo",
+   "Semejante al tuyo",
+   "Más rico que el tuyo"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:40, ¿con qué comparó Daniel la fuerza del cuarto reino?",
+  "o": [
+   "Con el bronce que resiste",
+   "Con el hierro que desmenuza y rompe todas las cosas",
+   "Con la piedra que no se mueve",
+   "Con el oro que no se corroe"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "Según Daniel 2:41, ¿qué significan los pies y los dedos en parte de barro cocido y en parte de hierro?",
+  "o": [
+   "Un reino de artesanos",
+   "Un reino dividido",
+   "Un reino de dos reyes",
+   "Un reino sin ejército"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué hizo el rey Nabucodonosor después de oír la interpretación? (Daniel 2:46)",
+  "o": [
+   "Se enojó y calló a Daniel",
+   "Se postró sobre su rostro y se humilló ante Daniel",
+   "Mandó destruir la estatua de su sueño",
+   "Reunió otra vez a sus magos"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "q": "¿Qué confesó Nabucodonosor acerca del Dios de Daniel? (Daniel 2:47)",
+  "o": [
+   "Que era un dios más entre muchos",
+   "Que era Dios de dioses, Señor de los reyes y el que revela los misterios",
+   "Que era el dios de los hebreos solamente",
+   "Que era más fuerte que Marduc"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "tf",
+  "q": "Según Daniel 2:21, Dios muda los tiempos y las edades, quita reyes y pone reyes.",
+  "a": true,
+  "e": "Verdadero. Daniel 2:21 lo dice así, y es la base de toda la profecía de los imperios.",
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "fill",
+  "ins": "Daniel 2:21 (RV1995) — Completa:",
+  "p": [
+   {
+    "x": "«Él muda los "
+   },
+   {
+    "b": "tiempos",
+    "h": "¿qué muda?"
+   },
+   {
+    "x": " y las edades, quita reyes y pone "
+   },
+   {
+    "b": "reyes",
+    "h": "¿pone qué?"
+   },
+   {
+    "x": ".»"
+   }
+  ],
+  "nv": 3
+ },
+ {
+  "cap": "d2",
+  "t": "fill",
+  "ins": "Daniel 2:22 (RV1995) — Completa:",
+  "p": [
+   {
+    "x": "«Él revela lo "
+   },
+   {
+    "b": "profundo",
+    "h": "¿qué revela?"
+   },
+   {
+    "x": " y lo escondido, conoce lo que está en tinieblas y con él mora la "
+   },
+   {
+    "b": "luz",
+    "h": "¿qué mora con él?"
+   },
+   {
+    "x": ".»"
+   }
+  ],
+  "nv": 3
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según Daniel 3:6, ¿qué le pasaría a quien no se postrara y adorara la estatua?",
+  "o": [
+   "Sería desterrado del reino",
+   "Sería echado dentro de un horno de fuego ardiente",
+   "Perdería su cargo",
+   "Sería entregado a los leones"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿Quiénes acusaron maliciosamente a los judíos ante el rey? (Daniel 3:8)",
+  "o": [
+   "Los sátrapas persas",
+   "Algunos hombres caldeos",
+   "Los sacerdotes de Marduc",
+   "Los capitanes del ejército"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según Daniel 3:15, ¿qué preguntó desafiante Nabucodonosor a los tres jóvenes?",
+  "o": [
+   "¿Quién os ha enseñado a desobedecer?",
+   "¿Y qué dios será el que os libre de mis manos?",
+   "¿No teméis al rey de Babilonia?",
+   "¿Dónde está vuestro Dios ahora?"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "Según Daniel 3:16, ¿qué le respondieron los tres jóvenes al rey?",
+  "o": [
+   "Que necesitaban tiempo para pensarlo",
+   "Que no era necesario que le respondieran sobre ese asunto",
+   "Que obedecerían por respeto al rey",
+   "Que consultarían a Daniel primero"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿A quiénes ordenó el rey que ataran a los tres jóvenes? (Daniel 3:20)",
+  "o": [
+   "A los sacerdotes del templo",
+   "A hombres muy vigorosos de su ejército",
+   "A los sátrapas de la provincia",
+   "A los guardias del palacio"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d3",
+  "t": "mc",
+  "q": "¿Cómo llamó Nabucodonosor a los tres jóvenes cuando los mandó salir del horno? (Daniel 3:26)",
+  "o": [
+   "Hijos de Judá",
+   "Siervos del Dios Altísimo",
+   "Amigos del rey",
+   "Varones de fe"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d3",
+  "t": "tf",
+  "q": "Según Daniel 3:28, los tres jóvenes entregaron sus cuerpos antes que servir y adorar a otro dios que su Dios.",
+  "a": true,
+  "e": "Verdadero. Daniel 3:28 lo dice así, y además que Dios envió su ángel y libró a sus siervos que confiaron en él.",
+  "nv": 2
+ },
+ {
+  "cap": "d4",
+  "t": "mc",
+  "q": "Según Daniel 4:13, ¿quién descendía del cielo en la visión del rey?",
+  "o": [
+   "Un ángel con espada",
+   "Un vigilante y santo",
+   "El profeta Daniel",
+   "Una voz sin figura"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d4",
+  "t": "mc",
+  "q": "Según Daniel 4:14, ¿qué clamaba fuertemente el vigilante?",
+  "o": [
+   "«Arrepiéntete, oh rey»",
+   "«Derribad el árbol y cortad sus ramas»",
+   "«Guardad el árbol para siempre»",
+   "«Venga el juicio sobre Babilonia»"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d4",
+  "t": "mc",
+  "q": "Según Daniel 4:17, ¿para qué era la sentencia de los vigilantes?",
+  "o": [
+   "Para castigar a Babilonia",
+   "Para que los vivientes conozcan que el Altísimo gobierna el reino de los hombres",
+   "Para probar la fe de Daniel",
+   "Para cumplir el sueño de la estatua"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d4",
+  "t": "mc",
+  "q": "¿Cómo reaccionó Daniel al oír el sueño del árbol? (Daniel 4:19)",
+  "o": [
+   "Se alegró por el rey",
+   "Quedó atónito casi una hora y sus pensamientos lo turbaban",
+   "Se negó a interpretarlo",
+   "Pidió que llamaran a los magos"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d4",
+  "t": "tf",
+  "q": "Cuando Daniel oyó el sueño del árbol lo interpretó de inmediato, sin turbarse. (Daniel 4:19)",
+  "a": false,
+  "e": "Falso. Quedó atónito casi una hora y sus pensamientos lo turbaban, porque la sentencia era contra el rey.",
+  "nv": 2
+ },
+ {
+  "cap": "d4",
+  "t": "fill",
+  "ins": "Daniel 4:17 (RV1995) — Completa:",
+  "p": [
+   {
+    "x": "«...para que conozcan los vivientes que el "
+   },
+   {
+    "b": "Altísimo",
+    "h": "¿quién gobierna?"
+   },
+   {
+    "x": " gobierna el reino de los "
+   },
+   {
+    "b": "hombres",
+    "h": "¿el reino de quiénes?"
+   },
+   {
+    "x": ".»"
+   }
+  ],
+  "nv": 3
+ },
+ {
+  "cap": "d5",
+  "t": "mc",
+  "q": "¿Qué le respondió Daniel a Belsasar sobre los regalos que le ofrecía? (Daniel 5:17)",
+  "o": [
+   "Que los aceptaba con gratitud",
+   "Que sus dones fueran para él y diera sus recompensas a otros",
+   "Que los repartiera entre los pobres",
+   "Que los guardara hasta el otro día"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d5",
+  "t": "mc",
+  "q": "Según Daniel 5:20, ¿qué le pasó a Nabucodonosor cuando su corazón se ensoberbeció?",
+  "o": [
+   "Fue desterrado a Persia",
+   "Fue depuesto del trono de su reino y despojado de su gloria",
+   "Perdió a sus hijos",
+   "Fue entregado a los medos"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d5",
+  "t": "mc",
+  "q": "¿Cuál fue el reproche central de Daniel a Belsasar? (Daniel 5:22)",
+  "o": [
+   "Que no había leído las Escrituras",
+   "Que no había humillado su corazón sabiendo todo esto",
+   "Que no había consultado a los sabios",
+   "Que había perdido las batallas"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d5",
+  "t": "mc",
+  "q": "Según Daniel 5:23, ¿a qué clase de dioses dio alabanza Belsasar?",
+  "o": [
+   "A los dioses del cielo y de la tierra",
+   "A dioses de plata y oro, de bronce, de hierro, de madera y de piedra, que ni ven ni oyen ni saben",
+   "A los dioses de los medos y persas",
+   "A los dioses de sus padres solamente"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d5",
+  "t": "tf",
+  "q": "Según Daniel 5:23, Belsasar nunca honró al Dios en cuya mano está su vida.",
+  "a": true,
+  "e": "Verdadero. Daniel 5:23 termina así: «pero nunca honraste al Dios en cuya mano está tu vida y de quien son todos tus caminos».",
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "Según Daniel 6:7, ¿quiénes dijeron haber acordado el edicto contra la oración?",
+  "o": [
+   "Solo los tres gobernadores",
+   "Todos los gobernadores del reino, magistrados, sátrapas, príncipes y capitanes",
+   "Los sacerdotes de Babilonia",
+   "La reina y sus consejeros"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "Según Daniel 6:8, ¿por qué el edicto no podía ser revocado?",
+  "o": [
+   "Porque lo había jurado el rey",
+   "Conforme a la ley de Media y de Persia, que no puede ser abrogada",
+   "Porque estaba escrito en piedra",
+   "Porque lo aprobaron los sátrapas"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Qué le dijo el rey a Daniel al echarlo al foso? (Daniel 6:16)",
+  "o": [
+   "«Que tu Dios te juzgue»",
+   "«El Dios tuyo, a quien tú continuamente sirves, él te libre»",
+   "«Nada puedo hacer por ti»",
+   "«Mañana te sacaré de aquí»"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d6",
+  "t": "mc",
+  "q": "¿Cómo llamó el rey Darío a Daniel al llegar al foso de mañana? (Daniel 6:20)",
+  "o": [
+   "«Daniel, mi amigo fiel»",
+   "«Daniel, siervo del Dios viviente»",
+   "«Daniel, profeta de Judá»",
+   "«Daniel, gobernador del reino»"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d6",
+  "t": "tf",
+  "q": "Darío llamó a Daniel con voz alegre al llegar al foso. (Daniel 6:20)",
+  "a": false,
+  "e": "Falso. RV1995 dice que lo llamó a gritos «con voz triste».",
+  "nv": 2
+ },
+ {
+  "cap": "d6",
+  "t": "fill",
+  "ins": "Daniel 6:20 (RV1995) — Completa lo que dijo el rey:",
+  "p": [
+   {
+    "x": "«Daniel, siervo del Dios "
+   },
+   {
+    "b": "viviente",
+    "h": "¿qué Dios?"
+   },
+   {
+    "x": ", el Dios tuyo, a quien tú "
+   },
+   {
+    "b": "continuamente",
+    "h": "¿cómo le sirves?"
+   },
+   {
+    "x": " sirves, ¿te ha podido librar de los leones?»"
+   }
+  ],
+  "nv": 3
+ },
+ {
+  "cap": "d1",
+  "t": "mc",
+  "q": "¿Cuáles eran los nombres hebreos de los cuatro jóvenes? (Daniel 1:6)",
+  "o": [
+   "Daniel, Ananías, Misael y Azarías",
+   "Daniel, Sadrac, Mesac y Abed-nego",
+   "Daniel, Josué, Esdras y Nehemías",
+   "Daniel, Aspenaz, Melsar y Arioc"
+  ],
+  "a": 0,
+  "nv": 1
+ },
+ {
+  "cap": "d1",
+  "t": "mc",
+  "q": "¿Qué temía el jefe de los eunucos si Daniel no comía la comida del rey? (Daniel 1:10)",
+  "o": [
+   "Que Daniel se enfermara",
+   "Que el rey le quitara la cabeza al verlos de peor aspecto que los otros muchachos",
+   "Que los demás jóvenes lo imitaran",
+   "Que se perdiera la comida"
+  ],
+  "a": 1,
+  "nv": 2
+ },
+ {
+  "cap": "d1",
+  "t": "tf",
+  "q": "Al cumplirse el tiempo, el rey no halló entre todos los jóvenes ninguno como Daniel, Ananías, Misael y Azarías. (Daniel 1:19)",
+  "a": true,
+  "e": "Verdadero. Daniel 1:19 dice que el rey habló con ellos y no fue hallado entre todos ninguno como ellos, y por eso estuvieron delante del rey.",
+  "nv": 2
  }
 ];
 
@@ -3231,6 +3957,17 @@ const MODULOS = [
   "sub": "Los diez temas de mayor rendimiento",
   "icono": "🎯",
   "color": "#B91C1C",
+  "cats": [
+   "av",
+   "gm"
+  ]
+ },
+ {
+  "id": "m-palabras",
+  "label": "Palabras difíciles",
+  "sub": "Qué significan en palabras sencillas",
+  "icono": "💬",
+  "color": "#0E7490",
   "cats": [
    "av",
    "gm"
@@ -3404,7 +4141,7 @@ const CONT_MODULOS = {
  "m-prioridades": [
   {
    "t": "🎯 Si solo te queda una hora, estudia esto",
-   "h": "<div class=\"warn-box\">Estos diez temas son los que más aparecen en los concursos de Daniel.\n    Están ordenados por rendimiento: el primero da más puntos que el último.</div>"
+   "h": "<div class=\"warn-box\">Estos diez temas son los que más aparecen en los concursos de Daniel.\n    Están ordenados por rendimiento: el primero da más puntos que el último.</div><div class=\"highlight-box\"><strong>Lo que sí sabemos del examen del campamento:</strong> tiene tres\n    secciones — selección múltiple, verdadero o falso, y completar el\n    versículo — y se califica sobre la <strong>RV1995</strong>.<br>\n    <strong>Lo que no sabemos:</strong> cuántas preguntas trae ni cuántas por\n    sección. Por eso conviene practicar con exámenes de distintos tamaños en\n    vez de acostumbrarse a uno solo.</div>"
   },
   {
    "t": "1️⃣ al 5️⃣ — Los de mayor peso",
@@ -3415,12 +4152,30 @@ const CONT_MODULOS = {
    "h": "<ul class=\"tight\"><li><strong>El cuarto del horno.</strong> Daniel 3:25 (RV1995): «semejante a un hijo de los dioses», así lo dijo el rey pagano. P&amp;R 41: era el Hijo de Dios mismo. Fíjate qué te preguntan</li><li><strong>Títulos de P&amp;R 39 al 44 en orden:</strong> En la corte de Babilonia · El sueño de Nabucodonosor · El horno de fuego · La verdadera grandeza · El vigía invisible · En el foso de los leones</li><li><strong>Los materiales de la estatua y sus imperios</strong> (2:32-45): oro, plata, bronce, hierro, hierro con barro, y la piedra</li><li><strong>El año de cada evento:</strong> 3.er año de Joacim (cap. 1) · 2.º año de Nabucodonosor (cap. 2) · año 1.º de Ciro (1:21)</li><li><strong>Los versículos de completar:</strong> 1:15 · 2:20 · 3:18 · 4:37 · 6:10 · 6:22 · 6:26-27</li></ul>"
   },
   {
-   "t": "📅 Plan para los días que quedan",
-   "h": "<table class=\"info-table\"><thead><tr><th>Cuándo</th><th>Qué hacer</th></tr></thead><tbody><tr><td class=\"key\">Día 1</td><td>Leer la guía sección por sección. Decir los versículos <strong>en voz alta</strong>. Repasar las tablas de números y personajes.</td></tr><tr><td class=\"key\">Día 2</td><td>Un examen completo sin mirar. Después, <strong>examen de solo mis errores</strong> hasta que quede vacío. Releer los títulos de P&amp;R en orden.</td></tr><tr><td class=\"key\">Día 3</td><td>Simulacro cronometrado, como el examen real. Tarjetas: solo las que están «por dominar».</td></tr><tr><td class=\"key\">La víspera</td><td>Repaso general: este módulo y el de RV1995 vs RV1960. Dormir bien.</td></tr><tr><td class=\"key\">Antes del examen</td><td>Orar juntas. Leer una sola vez los diez temas de arriba.</td></tr></tbody></table>"
+   "t": "📅 Plan de siete semanas hasta el campamento",
+   "h": "<div class=\"warn-box\">El campamento de Aventureros es el <strong>9 de octubre de 2026</strong>.\n    Hay siete semanas, y la dificultad sube de a poco: primero los datos,\n    después las palabras exactas, al final los simulacros.\n    La app muestra en «Qué estudiar hoy» en qué semana vas.</div><table class=\"info-table\"><thead><tr><th>Semana</th><th>Foco</th><th>Qué hacer</th></tr></thead><tbody><tr><td class=\"key\">1</td><td>Conocer el material</td><td>Leer capítulo por capítulo sin apuro. Exámenes de <strong>nivel 1</strong> para fijar nombres, números y lugares.</td></tr><tr><td class=\"key\">2</td><td>Fijar los datos</td><td>Terminar todos los capítulos y los repasos. Tarjetas todos los días, aunque sean diez minutos.</td></tr><tr><td class=\"key\">3</td><td>Entrar a lo literal</td><td>Empiezan las citas exactas. Módulo RV1995 vs RV1960. Exámenes de <strong>nivel 2</strong>.</td></tr><tr><td class=\"key\">4</td><td>Dominar las trampas</td><td>Módulos de Trampas y de RV1995 vs RV1960. Repasar errores hasta vaciar la lista.</td></tr><tr><td class=\"key\">5</td><td>Precisión palabra por palabra</td><td>Completar el versículo, <strong>nivel 3</strong>. Aquí se decide el concurso.</td></tr><tr><td class=\"key\">6</td><td>Simulacros</td><td>Exámenes cronometrados sin pistas, con las tres secciones. Practicar con distintos tamaños: no sabemos cuántas preguntas trae el examen real.</td></tr><tr><td class=\"key\">7</td><td>Afinar y descansar</td><td>Solo errores pendientes y este módulo. Dormir bien la noche anterior.</td></tr></tbody></table><div class=\"highlight-box\">Regla de las sesiones: <strong>cortas y seguidas</strong> rinde más que\n    una jornada larga. Veinte minutos diarios de tarjetas ganan a dos horas\n    el sábado.</div>"
   },
   {
    "t": "🧠 Cómo responder cuando dudas",
    "h": "<div class=\"highlight-box\">• Si la pregunta cita un versículo, la respuesta está en <u>las palabras\n    exactas</u> de ese versículo, no en la idea general.<br>\n    • Si dice «según la RV1995», descarta la opción que suene a como lo has\n    oído en la iglesia: suele ser la RV1960.<br>\n    • Si dice «según Profetas y Reyes», la respuesta es la <u>explicación</u> de\n    Elena de White, no el dato bíblico.<br>\n    • En verdadero o falso, un solo detalle cambiado hace falsa toda la frase:\n    lee los números y los nombres dos veces.</div>"
+  }
+ ],
+ "m-palabras": [
+  {
+   "t": "💬 Para qué es esta lista",
+   "h": "<div class=\"warn-box\">El examen usa las palabras del libro, no palabras fáciles. Aquí están\n    explicadas en sencillo, <strong>sin cambiarlas</strong>: hay que entenderlas\n    y también reconocerlas cuando aparezcan tal cual en una opción.</div>"
+  },
+  {
+   "t": "📖 Palabras del texto bíblico",
+   "h": "<table class=\"info-table\"><thead><tr><th>Palabra</th><th>Qué significa</th><th>Dónde sale</th></tr></thead><tbody><tr><td class=\"key\">Sitiar</td><td>Rodear una ciudad con el ejército para que no entre ni salga nadie</td><td>1:1</td></tr><tr><td class=\"key\">Eunuco</td><td>Funcionario de confianza del palacio del rey</td><td>1:3</td></tr><tr><td class=\"key\">Tacha</td><td>Defecto, algo que esté mal en el cuerpo o en la persona</td><td>1:4</td></tr><tr><td class=\"key\">Idóneo</td><td>Que sirve para algo, que tiene lo que se necesita</td><td>1:4</td></tr><tr><td class=\"key\">Legumbres</td><td>Comida que viene de plantas: granos, verduras</td><td>1:12</td></tr><tr><td class=\"key\">Robusto</td><td>Fuerte y sano de cuerpo</td><td>1:15</td></tr><tr><td class=\"key\">Astrólogo</td><td>El que dice adivinar mirando las estrellas</td><td>1:20</td></tr><tr><td class=\"key\">Estercolero</td><td>Basurero, montón de desperdicios. Era la peor humillación</td><td>2:5; 3:29</td></tr><tr><td class=\"key\">Tamo</td><td>La cascarilla del trigo, tan liviana que se la lleva el viento</td><td>2:35</td></tr><tr><td class=\"key\">Desmenuzar</td><td>Romper algo en pedacitos muy pequeños</td><td>2:34-35</td></tr><tr><td class=\"key\">Sátrapa</td><td>Gobernador de una provincia del reino</td><td>6:1</td></tr><tr><td class=\"key\">Edicto / decreto</td><td>Una ley que el rey firma y todos deben obedecer</td><td>6:8</td></tr><tr><td class=\"key\">Abrogar</td><td>Cancelar una ley, dejarla sin efecto</td><td>6:8</td></tr><tr><td class=\"key\">Vigilante</td><td>Un ser del cielo que anuncia lo que Dios ha decidido</td><td>4:13</td></tr><tr><td class=\"key\">Lesión</td><td>Herida o daño en el cuerpo</td><td>6:23</td></tr></tbody></table>"
+  },
+  {
+   "t": "📗 Palabras de Profetas y Reyes",
+   "h": "<table class=\"info-table\"><thead><tr><th>Palabra</th><th>Qué significa</th></tr></thead><tbody><tr><td class=\"key\">Temperante</td><td>Que se domina, que no se pasa en la comida ni en la bebida</td></tr><tr><td class=\"key\">Embotar</td><td>Poner torpe, dejar la mente lenta y sin filo</td></tr><tr><td class=\"key\">Dominio propio</td><td>Poder controlarse a sí mismo</td></tr><tr><td class=\"key\">Intachable</td><td>Que no tiene ninguna falta que se le pueda señalar</td></tr><tr><td class=\"key\">Integridad</td><td>Ser el mismo en público y a solas</td></tr><tr><td class=\"key\">Soberbia / arrogancia</td><td>Creerse más que los demás y más que Dios</td></tr><tr><td class=\"key\">Iniquidad</td><td>Maldad, hacer lo que está mal a propósito</td></tr><tr><td class=\"key\">Profanar</td><td>Tratar como cualquier cosa algo que es sagrado</td></tr><tr><td class=\"key\">Idolatría</td><td>Adorar a algo o alguien en lugar de Dios</td></tr><tr><td class=\"key\">Providencia</td><td>El cuidado de Dios que va guiando la historia</td></tr></tbody></table>"
+  },
+  {
+   "t": "🧩 Tres frases que hay que entender, no solo repetir",
+   "h": "<div class=\"highlight-box\"><strong>«Los hábitos temperantes favorecen la claridad mental.»</strong><br>\n    Quiere decir: comer y beber con dominio propio deja la cabeza despierta\n    para pensar y para entender a Dios. Por eso los cuatro salieron diez veces\n    mejores.</div><div class=\"highlight-box\"><strong>«Su vida pública y privada eran igual de intachables.»</strong><br>\n    Quiere decir: Daniel era el mismo en la oficina del rey y en su casa\n    orando solo. Por eso sus enemigos no encontraron nada.</div><div class=\"highlight-box\"><strong>«La sentencia es por decreto de los vigilantes.»</strong> (4:17)<br>\n    Quiere decir: la decisión de humillar a Nabucodonosor venía del cielo,\n    no de un accidente ni de una enfermedad cualquiera.</div>"
   }
  ]
 };
@@ -3833,6 +4588,22 @@ const TARJETAS = [
  }
 ];
 
+/* El logo va partido en trozos: como data URI de una sola línea pasaría de
+   2.000 caracteres y el hook del repo bloquearía el commit. */
+const LOGO_TL = [
+ "data:image/png;base64,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"
+].join('');
 /* ───────── estado ───────── */
 const CLAVE='conexion-biblica-v3';
 const BASE={v:3,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},acc:{}};
@@ -3854,7 +4625,8 @@ function normalizar(x){
   if(Array.isArray(x.examenes))
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
       .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,cat:e.cat==='gm'?'gm':'av',fecha:String(e.fecha||''),
-        modo:['simulacro','errores'].includes(e.modo)?e.modo:'normal'})).slice(-40);
+        modo:['simulacro','errores'].includes(e.modo)?e.modo:'normal',
+        nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
   if(typeof x.ultimo==='string')s.ultimo=x.ultimo;
   if(Array.isArray(x.insignias))s.insignias=x.insignias.filter(i=>typeof i==='string').slice(0,20);
@@ -3889,7 +4661,59 @@ const bancoDe=()=>{const ids=capsDe().map(c=>c.id);return BANCO.filter(q=>ids.in
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
+/* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
+   Lo único confirmado del examen del campamento es el formato de tres
+   secciones (múltiple, verdadero/falso, completar), visto en un examen que
+   Camilo fotografió. La cantidad y el reparto por sección están sin
+   confirmar. Estos números son un tamaño de práctica razonable, no un dato:
+   cuando se confirme, se cambia aquí y todo lo demás se ajusta. */
 const NPREG=()=>S.cat==='av'?15:25;
+
+/* ───────── cuenta hacia el campamento ───────── */
+/* Fecha del evento de cada categoría. El campamento de Aventureros es el
+   9 de octubre de 2026; si el de Guías Mayores queda en otra fecha, se
+   cambia solo esta línea y la cuenta de días, la semana del plan y el techo
+   de dificultad se recalculan solos para esa categoría. */
+const FECHA_META={av:'2026-10-09',gm:'2026-10-09'};
+const SEMANAS_PLAN=7;
+
+function diasParaMeta(){
+  const hoy=new Date(); hoy.setHours(0,0,0,0);
+  const meta=new Date((FECHA_META[S.cat]||FECHA_META.av)+'T00:00:00');
+  return Math.round((meta-hoy)/864e5);
+}
+/* Semana del plan en la que vamos: 1 la más lejana, SEMANAS_PLAN la última. */
+function semanaPlan(){
+  const d=diasParaMeta();
+  if(d<=0)return SEMANAS_PLAN;
+  return Math.max(1,Math.min(SEMANAS_PLAN,SEMANAS_PLAN-Math.floor((d-1)/7)));
+}
+
+/* ───────── niveles de dificultad ───────── */
+const ETIQ_NIVEL={1:'Básico',2:'Intermedio',3:'Avanzado'};
+
+/* Promedio de los últimos tres exámenes de la categoría (0 a 1).
+   Se ignoran los de «solo mis errores»: ahí el puntaje no es comparable. */
+function promedioReciente(){
+  const mios=S.examenes.filter(e=>e.cat===S.cat&&e.modo!=='errores').slice(-3);
+  if(!mios.length)return null;
+  return mios.reduce((a,e)=>a+(e.total?e.pts/e.total:0),0)/mios.length;
+}
+
+/* Nivel recomendado. Dos frenos, y manda el más bajo:
+   · el calendario — en las primeras semanas no tiene sentido lo avanzado;
+   · el desempeño — no se sube de nivel sin dominar el anterior.
+   Así la dificultad crece de verdad y no de golpe. */
+function nivelRecomendado(){
+  const sem=semanaPlan();
+  const techoSemana=sem<=2?1:sem<=4?2:3;
+  const prom=promedioReciente();
+  const hechos=S.examenes.filter(e=>e.cat===S.cat&&e.modo!=='errores').length;
+  let porDesempeno=1;
+  if(prom!==null&&hechos>=2&&prom>=0.85)porDesempeno=3;
+  else if(prom!==null&&hechos>=1&&prom>=0.70)porDesempeno=2;
+  return Math.max(1,Math.min(techoSemana,porDesempeno));
+}
 
 /* ───────── navegación ───────── */
 function ir(id){
@@ -3908,12 +4732,86 @@ function ir(id){
 function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();}
 function ponCat(c){
   S.cat=c;guardar();
+  marcaCat();
   pintaInicio();pintaCaps();
   document.getElementById('detalle').style.display='none';
 }
 
+/* ───────── qué estudiar hoy ─────────
+   El panel existe porque la app tenía todas las herramientas pero ninguna
+   decía por dónde empezar. Cada tarea sale de un dato real del progreso,
+   no de un plan genérico, y se ordena por lo que más rinde: primero cerrar
+   errores, después memorizar lo pendiente, después leer lo que falta. */
+const PLAN_SEMANAS=[
+  {t:'Conocer el material',d:'Leer capítulo por capítulo sin apuro. Exámenes de nivel básico para fijar nombres, números y lugares.'},
+  {t:'Fijar los datos',d:'Terminar de leer todos los capítulos y los repasos. Tarjetas todos los días.'},
+  {t:'Entrar a lo literal',d:'Empiezan las citas exactas y las diferencias entre RV1995 y RV1960. Nivel intermedio.'},
+  {t:'Dominar las trampas',d:'Los módulos de Trampas y de RV1995 vs RV1960. Repasar errores hasta vaciarlos.'},
+  {t:'Precisión palabra por palabra',d:'Completar el versículo, nivel avanzado. Aquí se decide el concurso.'},
+  {t:'Simulacros',d:'Exámenes completos cronometrados, con el formato del campamento.'},
+  {t:'Afinar y descansar',d:'Solo errores pendientes y el módulo «Lo que más preguntan». Dormir bien.'},
+];
+
+function tareasDeHoy(){
+  const tareas=[];
+  const err=falladasDe().length;
+  if(err>=3)tareas.push({ic:'🔁',t:'Repasar '+err+' errores',
+    d:'Preguntas que fallaste y todavía no dominas. Es lo que más puntos recupera.',
+    b:'Repasar ahora',f:"iniciar('errores')"});
+
+  const porDominar=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
+  if(porDominar)tareas.push({ic:'🃏',t:porDominar+' tarjetas por dominar',
+    d:'Salen primero las que fallaste. Una tarjeta queda dominada al acertarla dos veces seguidas.',
+    b:'Abrir tarjetas',f:"irTarjetasDificiles()"});
+
+  const sinLeer=[...capsDe(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
+  if(sinLeer.length)tareas.push({ic:'📖',t:'Leer '+esc(sinLeer[0].label),
+    d:'Te faltan '+sinLeer.length+' secciones por marcar como estudiadas.',
+    b:'Estudiar',f:"verCap('"+sinLeer[0].id+"')"});
+
+  /* Capítulo más flojo según los exámenes: dirige el estudio a donde duele. */
+  const flojo=capsDe().map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
+    .filter(x=>x.a.b+x.a.m>=3)
+    .map(x=>({...x,pct:x.a.b/(x.a.b+x.a.m)}))
+    .sort((p,q)=>p.pct-q.pct)[0];
+  if(flojo&&flojo.pct<0.8)tareas.push({ic:'🎯',t:'Reforzar '+esc(flojo.c.label),
+    d:'Vas en '+Math.round(flojo.pct*100)+'% en ese capítulo, tu punto más flojo.',
+    b:'Examen de ese capítulo',f:"examenDeCapitulo('"+flojo.c.id+"')"});
+
+  const n=nivelEfectivo();
+  tareas.push({ic:'✏️',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
+    d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
+    b:'Comenzar',f:"iniciar('normal')"});
+
+  return tareas.slice(0,4);
+}
+
+function pintaHoy(){
+  const d=diasParaMeta(), sem=semanaPlan(), p=PLAN_SEMANAS[sem-1];
+  const cuenta=d>0
+    ?'<div class="cuenta"><div class="cd">'+d+'</div><div class="cl">día'+(d===1?'':'s')+
+     '<br>para el campamento</div></div>'
+    :'<div class="cuenta"><div class="cd">¡Hoy!</div><div class="cl">es el día</div></div>';
+
+  const cab=cuenta+
+    '<div class="sem"><div class="st">Semana '+sem+' de '+SEMANAS_PLAN+' · '+esc(p.t)+'</div>'+
+    '<div class="sd">'+esc(p.d)+'</div></div>';
+
+  const lista=tareasDeHoy().map(t=>
+    '<div class="tarea"><div class="tic">'+t.ic+'</div>'+
+    '<div class="ttx"><div class="tt">'+t.t+'</div><div class="td">'+t.d+'</div></div>'+
+    '<button class="btn nar tbt" onclick="'+t.f+'">'+t.b+'</button></div>').join('');
+
+  document.getElementById('hoy').innerHTML='<div class="hoy-cab">'+cab+'</div>'+lista;
+}
+
+/* Atajos que usa el panel. */
+function irTarjetasDificiles(){tjFiltro='dificiles';ir('tarjetas');tjBaraja();}
+function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();iniciar('normal');}
+
 /* ───────── inicio ───────── */
 function pintaInicio(){
+  pintaHoy();
   document.getElementById('cb-av').classList.toggle('on',S.cat==='av');
   document.getElementById('cb-gm').classList.toggle('on',S.cat==='gm');
   const ni=document.getElementById('nombre');
@@ -4086,8 +4984,9 @@ function tjSabia(si){
 
 /* ───────── examen ───────── */
 let reloj=null,seg=1200,entregado=false,resp={},prueba=[],modo='normal';
-/* alcance: 'todo' | 'biblia' | 'pr' | id de capítulo. cuantas: número o 'max' */
-let alcance='todo',cuantas=0;
+/* alcance: 'todo' | 'biblia' | 'pr' | id de capítulo.
+   nivel: 0 = progresivo (lo decide la app), o 1, 2, 3 fijo. */
+let alcance='todo',cuantas=0,nivel=0;
 
 const falladasDe=()=>{const p=bancoDe();return p.filter(q=>(S.fq[claveQ(q)]||{}).m>0);};
 
@@ -4100,9 +4999,23 @@ function poolDe(){
   return b.filter(q=>q.cap===alcance);
 }
 
+/* Nivel efectivo del examen que se va a armar. */
+const nivelEfectivo=()=>nivel||nivelRecomendado();
+
+/* Pool filtrado por nivel. Un nivel incluye todo lo de abajo: al llegar al
+   avanzado no se dejan de practicar los datos básicos, solo se agrega lo
+   difícil. Si con el filtro no alcanzan preguntas, se usa el pool completo
+   para no dejarla sin examen. */
+function poolNivel(){
+  const b=poolDe();
+  const n=nivelEfectivo();
+  const f=b.filter(q=>(q.nv||1)<=n);
+  return f.length>=Math.min(8,b.length)?f:b;
+}
+
 /* Opciones de cantidad que caben en el pool, más el máximo real. */
 function opcionesCuantas(){
-  const t=poolDe().length;
+  const t=poolNivel().length;
   const base=[10,15,25,40,60,100].filter(n=>n<=t);
   if(!base.length||base[base.length-1]!==t)base.push(t);
   return base;
@@ -4122,21 +5035,47 @@ function pintaMenuEx(){
   if(!ops.includes(cuantas))cuantas=ops.includes(NPREG())?NPREG():ops[0];
   const sc=document.getElementById('ex-cuantas');
   sc.innerHTML=ops.map(n=>'<option value="'+n+'">'+n+' pregunta'+(n===1?'':'s')+
-    (n===NPREG()?' (como el examen real)':'')+'</option>').join('');
+    (n===NPREG()?' (tamaño de práctica)':'')+'</option>').join('');
   sc.value=cuantas;
 
-  const t=poolDe().length;
+  const rec=nivelRecomendado();
+  const sn=document.getElementById('ex-nivel');
+  sn.innerHTML='<option value="0">Progresivo — hoy nivel '+rec+', '+ETIQ_NIVEL[rec]+'</option>'+
+    [1,2,3].map(n=>'<option value="'+n+'">Nivel '+n+' — '+ETIQ_NIVEL[n]+
+      ' ('+poolDe().filter(q=>(q.nv||1)<=n).length+' preguntas)</option>').join('');
+  sn.value=nivel;
+
+  const pool=poolNivel();
+  const t=pool.length;
   const porTipo=['mc','tf','fill'].map(x=>{
     const L={mc:'múltiple',tf:'V/F',fill:'completar'}[x];
-    return poolDe().filter(q=>q.t===x).length+' de '+L;
+    return pool.filter(q=>q.t===x).length+' de '+L;
   }).join(' · ');
   document.getElementById('ex-disponible').innerHTML=
     'Disponibles con esta selección: <strong>'+t+'</strong> preguntas ('+porTipo+').'+
-    (t<cuantas?' <span style="color:var(--rojo)">Se usarán todas.</span>':'');
+    (t<cuantas?' <span style="color:var(--rojo)">Se usarán todas.</span>':'')+
+    '<br>'+textoNivel();
+}
+
+/* Explica en una línea por qué está en ese nivel: sin el motivo, subir de
+   nivel se siente arbitrario. */
+function textoNivel(){
+  const n=nivelEfectivo();
+  const prom=promedioReciente();
+  const d=diasParaMeta();
+  let por;
+  if(nivel)por='Nivel fijado a mano.';
+  else if(prom===null)por='Primera sesión: se empieza por los datos directos.';
+  else if(n===3)por='Vas en '+Math.round(prom*100)+'%: ya entra lo de precisión literal.';
+  else por='Promedio reciente '+Math.round(prom*100)+'%: se sube de nivel al llegar a '+
+    (n===1?'70':'85')+'%.';
+  return '<strong>Nivel '+n+' · '+ETIQ_NIVEL[n]+'.</strong> '+por+
+    (d>0?' Faltan '+d+' días para el campamento.':'');
 }
 
 function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;pintaMenuEx();}
 function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();pintaMenuEx();}
+function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||0;pintaMenuEx();}
 
 function pintaExInicio(){
   const n=NPREG(),b=bancoDe().length,f=falladasDe().length;
@@ -4154,7 +5093,7 @@ function armar(m){
     const sel=mezcla(falladasDe()).slice(0,NPREG());
     return sel.map((q,i)=>barajaOpciones({...q,id:'q'+i}));
   }
-  const b=poolDe();
+  const b=poolNivel();
   const n=Math.min(cuantas||NPREG(),b.length);
   const mc=mezcla(b.filter(q=>q.t==='mc'));
   const tf=mezcla(b.filter(q=>q.t==='tf'));
@@ -4186,7 +5125,9 @@ function barajaOpciones(q){
   return {...q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a)};
 }
 
-/* Minutos proporcionales: el examen real da ~1,2 min por pregunta. */
+/* Tiempo proporcional a la cantidad. El ritmo del examen real tampoco está
+   confirmado; se usa algo más de un minuto por pregunta, que es lo cómodo
+   para practicar sin acostumbrarse a ir lento. */
 const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='av'?80:72)));
 
 function iniciar(m){
@@ -4306,7 +5247,7 @@ function entregar(){
   if(entregado)return;
   entregado=true;clearInterval(reloj);
   const pts=prueba.filter(bien).length,tot=prueba.length,pct=Math.round(pts/tot*100);
-  S.examenes.push({pts,total:tot,cat:S.cat,fecha:new Date().toISOString(),modo});
+  S.examenes.push({pts,total:tot,cat:S.cat,fecha:new Date().toISOString(),modo,nv:nivelEfectivo()});
   /* Registro por pregunta y por capítulo: alimenta «mis errores»,
      el panel de puntos débiles y la repetición espaciada. */
   for(const q of prueba){
@@ -4422,8 +5363,21 @@ function borrarTodo(){
   S=normalizar(null);guardar();ir('inicio');
 }
 
+/* ───────── logo de la iglesia ───────── */
+/* El data URI vive en una constante y se asigna aquí, no en el HTML: así
+   ninguna línea del archivo generado pasa de 2.000 caracteres. */
+/* La clase en el body permite que los estilos suban un punto el tamaño de
+   letra en Aventureros, sin duplicar pantallas. */
+function marcaCat(){
+  try{document.body.className=S.cat==='av'?'av':'gm';}catch(e){}
+}
+
+function pintaLogo(){
+  try{document.querySelectorAll('.logo-tl').forEach(i=>{i.src=LOGO_TL;});}catch(e){}
+}
+
 /* ───────── arranque ───────── */
-try{pintaInicio();}catch(e){console.error(e);}
+try{pintaLogo();marcaCat();pintaInicio();}catch(e){console.error(e);}
 </script>
 </body>
 </html>

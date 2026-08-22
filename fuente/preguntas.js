@@ -430,4 +430,92 @@ BANCO.push(
  p:[{x:'«Mas la cepa de sus raíces dejaréis en la tierra, con atadura de '},{b:'hierro',h:'¿de qué metal?'},{x:' y de '},{b:'bronce',h:'¿y de qué otro?'},{x:' entre la hierba del campo...»'}]}
 );
 
+/* ─── Ampliación 22-ago (3): bloques que no tenían ninguna pregunta.
+   Todas verificadas contra el texto RV1995 antes de escribirlas. ─── */
+BANCO.push(
+/* ── Daniel 2: la interpretación reino por reino (2:36-45) ── */
+{cap:'d2',t:'mc',q:'Según Daniel 2:37, ¿qué le dijo Daniel a Nabucodonosor que era él?',
+ o:['El más sabio de los reyes','Rey de reyes, a quien el Dios del cielo ha dado reino, poder, fuerza y majestad','El elegido de los dioses de Babilonia','Señor de toda la tierra para siempre'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:39, ¿cómo describió Daniel al reino que se levantaría después de Nabucodonosor?',
+ o:['Más fuerte que el tuyo','Inferior al tuyo','Semejante al tuyo','Más rico que el tuyo'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:40, ¿con qué comparó Daniel la fuerza del cuarto reino?',
+ o:['Con el bronce que resiste','Con el hierro que desmenuza y rompe todas las cosas','Con la piedra que no se mueve','Con el oro que no se corroe'],a:1},
+{cap:'d2',t:'mc',q:'Según Daniel 2:41, ¿qué significan los pies y los dedos en parte de barro cocido y en parte de hierro?',
+ o:['Un reino de artesanos','Un reino dividido','Un reino de dos reyes','Un reino sin ejército'],a:1},
+{cap:'d2',t:'mc',q:'¿Qué hizo el rey Nabucodonosor después de oír la interpretación? (Daniel 2:46)',
+ o:['Se enojó y calló a Daniel','Se postró sobre su rostro y se humilló ante Daniel','Mandó destruir la estatua de su sueño','Reunió otra vez a sus magos'],a:1},
+{cap:'d2',t:'mc',q:'¿Qué confesó Nabucodonosor acerca del Dios de Daniel? (Daniel 2:47)',
+ o:['Que era un dios más entre muchos','Que era Dios de dioses, Señor de los reyes y el que revela los misterios','Que era el dios de los hebreos solamente','Que era más fuerte que Marduc'],a:1},
+{cap:'d2',t:'tf',q:'Según Daniel 2:21, Dios muda los tiempos y las edades, quita reyes y pone reyes.',
+ a:true,e:'Verdadero. Daniel 2:21 lo dice así, y es la base de toda la profecía de los imperios.'},
+{cap:'d2',t:'fill',ins:'Daniel 2:21 (RV1995) — Completa:',
+ p:[{x:'«Él muda los '},{b:'tiempos',h:'¿qué muda?'},{x:' y las edades, quita reyes y pone '},{b:'reyes',h:'¿pone qué?'},{x:'.»'}]},
+{cap:'d2',t:'fill',ins:'Daniel 2:22 (RV1995) — Completa:',
+ p:[{x:'«Él revela lo '},{b:'profundo',h:'¿qué revela?'},{x:' y lo escondido, conoce lo que está en tinieblas y con él mora la '},{b:'luz',h:'¿qué mora con él?'},{x:'.»'}]},
+
+/* ── Daniel 3: la acusación y el desafío del rey (3:6-20, 26-28) ── */
+{cap:'d3',t:'mc',q:'Según Daniel 3:6, ¿qué le pasaría a quien no se postrara y adorara la estatua?',
+ o:['Sería desterrado del reino','Sería echado dentro de un horno de fuego ardiente','Perdería su cargo','Sería entregado a los leones'],a:1},
+{cap:'d3',t:'mc',q:'¿Quiénes acusaron maliciosamente a los judíos ante el rey? (Daniel 3:8)',
+ o:['Los sátrapas persas','Algunos hombres caldeos','Los sacerdotes de Marduc','Los capitanes del ejército'],a:1},
+{cap:'d3',t:'mc',q:'Según Daniel 3:15, ¿qué preguntó desafiante Nabucodonosor a los tres jóvenes?',
+ o:['¿Quién os ha enseñado a desobedecer?','¿Y qué dios será el que os libre de mis manos?','¿No teméis al rey de Babilonia?','¿Dónde está vuestro Dios ahora?'],a:1},
+{cap:'d3',t:'mc',q:'Según Daniel 3:16, ¿qué le respondieron los tres jóvenes al rey?',
+ o:['Que necesitaban tiempo para pensarlo','Que no era necesario que le respondieran sobre ese asunto','Que obedecerían por respeto al rey','Que consultarían a Daniel primero'],a:1},
+{cap:'d3',t:'mc',q:'¿A quiénes ordenó el rey que ataran a los tres jóvenes? (Daniel 3:20)',
+ o:['A los sacerdotes del templo','A hombres muy vigorosos de su ejército','A los sátrapas de la provincia','A los guardias del palacio'],a:1},
+{cap:'d3',t:'mc',q:'¿Cómo llamó Nabucodonosor a los tres jóvenes cuando los mandó salir del horno? (Daniel 3:26)',
+ o:['Hijos de Judá','Siervos del Dios Altísimo','Amigos del rey','Varones de fe'],a:1},
+{cap:'d3',t:'tf',q:'Según Daniel 3:28, los tres jóvenes entregaron sus cuerpos antes que servir y adorar a otro dios que su Dios.',
+ a:true,e:'Verdadero. Daniel 3:28 lo dice así, y además que Dios envió su ángel y libró a sus siervos que confiaron en él.'},
+
+/* ── Daniel 4: el árbol, el vigilante santo y la sentencia ── */
+{cap:'d4',t:'mc',q:'Según Daniel 4:13, ¿quién descendía del cielo en la visión del rey?',
+ o:['Un ángel con espada','Un vigilante y santo','El profeta Daniel','Una voz sin figura'],a:1},
+{cap:'d4',t:'mc',q:'Según Daniel 4:14, ¿qué clamaba fuertemente el vigilante?',
+ o:['«Arrepiéntete, oh rey»','«Derribad el árbol y cortad sus ramas»','«Guardad el árbol para siempre»','«Venga el juicio sobre Babilonia»'],a:1},
+{cap:'d4',t:'mc',q:'Según Daniel 4:17, ¿para qué era la sentencia de los vigilantes?',
+ o:['Para castigar a Babilonia','Para que los vivientes conozcan que el Altísimo gobierna el reino de los hombres','Para probar la fe de Daniel','Para cumplir el sueño de la estatua'],a:1},
+{cap:'d4',t:'mc',q:'¿Cómo reaccionó Daniel al oír el sueño del árbol? (Daniel 4:19)',
+ o:['Se alegró por el rey','Quedó atónito casi una hora y sus pensamientos lo turbaban','Se negó a interpretarlo','Pidió que llamaran a los magos'],a:1},
+{cap:'d4',t:'tf',q:'Cuando Daniel oyó el sueño del árbol lo interpretó de inmediato, sin turbarse. (Daniel 4:19)',
+ a:false,e:'Falso. Quedó atónito casi una hora y sus pensamientos lo turbaban, porque la sentencia era contra el rey.'},
+{cap:'d4',t:'fill',ins:'Daniel 4:17 (RV1995) — Completa:',
+ p:[{x:'«...para que conozcan los vivientes que el '},{b:'Altísimo',h:'¿quién gobierna?'},{x:' gobierna el reino de los '},{b:'hombres',h:'¿el reino de quiénes?'},{x:'.»'}]},
+
+/* ── Daniel 5: el discurso de Daniel a Belsasar ── */
+{cap:'d5',t:'mc',q:'¿Qué le respondió Daniel a Belsasar sobre los regalos que le ofrecía? (Daniel 5:17)',
+ o:['Que los aceptaba con gratitud','Que sus dones fueran para él y diera sus recompensas a otros','Que los repartiera entre los pobres','Que los guardara hasta el otro día'],a:1},
+{cap:'d5',t:'mc',q:'Según Daniel 5:20, ¿qué le pasó a Nabucodonosor cuando su corazón se ensoberbeció?',
+ o:['Fue desterrado a Persia','Fue depuesto del trono de su reino y despojado de su gloria','Perdió a sus hijos','Fue entregado a los medos'],a:1},
+{cap:'d5',t:'mc',q:'¿Cuál fue el reproche central de Daniel a Belsasar? (Daniel 5:22)',
+ o:['Que no había leído las Escrituras','Que no había humillado su corazón sabiendo todo esto','Que no había consultado a los sabios','Que había perdido las batallas'],a:1},
+{cap:'d5',t:'mc',q:'Según Daniel 5:23, ¿a qué clase de dioses dio alabanza Belsasar?',
+ o:['A los dioses del cielo y de la tierra','A dioses de plata y oro, de bronce, de hierro, de madera y de piedra, que ni ven ni oyen ni saben','A los dioses de los medos y persas','A los dioses de sus padres solamente'],a:1},
+{cap:'d5',t:'tf',q:'Según Daniel 5:23, Belsasar nunca honró al Dios en cuya mano está su vida.',
+ a:true,e:'Verdadero. Daniel 5:23 termina así: «pero nunca honraste al Dios en cuya mano está tu vida y de quien son todos tus caminos».'},
+
+/* ── Daniel 6: cómo armaron la trampa, y el foso ── */
+{cap:'d6',t:'mc',q:'Según Daniel 6:7, ¿quiénes dijeron haber acordado el edicto contra la oración?',
+ o:['Solo los tres gobernadores','Todos los gobernadores del reino, magistrados, sátrapas, príncipes y capitanes','Los sacerdotes de Babilonia','La reina y sus consejeros'],a:1},
+{cap:'d6',t:'mc',q:'Según Daniel 6:8, ¿por qué el edicto no podía ser revocado?',
+ o:['Porque lo había jurado el rey','Conforme a la ley de Media y de Persia, que no puede ser abrogada','Porque estaba escrito en piedra','Porque lo aprobaron los sátrapas'],a:1},
+{cap:'d6',t:'mc',q:'¿Qué le dijo el rey a Daniel al echarlo al foso? (Daniel 6:16)',
+ o:['«Que tu Dios te juzgue»','«El Dios tuyo, a quien tú continuamente sirves, él te libre»','«Nada puedo hacer por ti»','«Mañana te sacaré de aquí»'],a:1},
+{cap:'d6',t:'mc',q:'¿Cómo llamó el rey Darío a Daniel al llegar al foso de mañana? (Daniel 6:20)',
+ o:['«Daniel, mi amigo fiel»','«Daniel, siervo del Dios viviente»','«Daniel, profeta de Judá»','«Daniel, gobernador del reino»'],a:1},
+{cap:'d6',t:'tf',q:'Darío llamó a Daniel con voz alegre al llegar al foso. (Daniel 6:20)',
+ a:false,e:'Falso. RV1995 dice que lo llamó a gritos «con voz triste».'},
+{cap:'d6',t:'fill',ins:'Daniel 6:20 (RV1995) — Completa lo que dijo el rey:',
+ p:[{x:'«Daniel, siervo del Dios '},{b:'viviente',h:'¿qué Dios?'},{x:', el Dios tuyo, a quien tú '},{b:'continuamente',h:'¿cómo le sirves?'},{x:' sirves, ¿te ha podido librar de los leones?»'}]},
+
+/* ── Daniel 1: los versículos que faltaban ── */
+{cap:'d1',t:'mc',q:'¿Cuáles eran los nombres hebreos de los cuatro jóvenes? (Daniel 1:6)',
+ o:['Daniel, Ananías, Misael y Azarías','Daniel, Sadrac, Mesac y Abed-nego','Daniel, Josué, Esdras y Nehemías','Daniel, Aspenaz, Melsar y Arioc'],a:0},
+{cap:'d1',t:'mc',q:'¿Qué temía el jefe de los eunucos si Daniel no comía la comida del rey? (Daniel 1:10)',
+ o:['Que Daniel se enfermara','Que el rey le quitara la cabeza al verlos de peor aspecto que los otros muchachos','Que los demás jóvenes lo imitaran','Que se perdiera la comida'],a:1},
+{cap:'d1',t:'tf',q:'Al cumplirse el tiempo, el rey no halló entre todos los jóvenes ninguno como Daniel, Ananías, Misael y Azarías. (Daniel 1:19)',
+ a:true,e:'Verdadero. Daniel 1:19 dice que el rey habló con ellos y no fue hallado entre todos ninguno como ellos, y por eso estuvieron delante del rey.'}
+);
+
 module.exports = { BANCO };

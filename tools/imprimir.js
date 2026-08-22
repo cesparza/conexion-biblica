@@ -8,6 +8,7 @@ const path = require('path');
 const { CAPS, CONTENIDO } = require('../fuente/contenido.js');
 const { BANCO } = require('../fuente/preguntas.js');
 const { MODULOS, CONT_MODULOS } = require('../fuente/modulos.js');
+const { LOGO_TL } = require('../fuente/logo.js');
 
 const DESTINO = process.argv[2] ||
   path.join(__dirname, '..', '..', '..', 'material-daniel', 'generado');
@@ -96,6 +97,9 @@ table { border-collapse: collapse; width: 100%; margin: 4pt 0; }
 ul.tight { margin: 3pt 0 3pt 14pt; padding: 0; }
 ul.tight li { margin: 1.5pt 0; font-size: 9.8pt; }
 .pie { text-align: center; color: #888; font-size: 8pt; margin-top: 14pt; }
+.logo { display: block; margin: 0 auto 6pt; height: 34pt; }
+.igl { text-align: center; color: #555; font-size: 8.5pt; margin: 0 0 8pt;
+       letter-spacing: .3px; }
 `;
 
 const pagina = (titulo, cuerpo) =>
@@ -158,9 +162,14 @@ function generaExamen(cat, nmc, ntf, nfill, semilla, etiqueta, alcance) {
   sel.forEach((q, i) => q.n = i + 1);
   const total = sel.length;
   const cab = (conR) => `
+    <img class="logo" src="${LOGO_TL}" alt="Iglesia Adventista Tierra Linda">
+    <div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>
     <h1>EXAMEN DE CONEXIÓN BÍBLICA${conR ? ' — CLAVE DE RESPUESTAS' : ''}</h1>
-    <div class="sub">${etiqueta} — ${total} preguntas</div>
-    <div class="meta">Reina Valera 1995 (RV1995) · ${alcance}</div>` +
+    <div class="sub">${etiqueta} — examen de práctica de ${total} preguntas</div>
+    <div class="meta">Reina Valera 1995 (RV1995) · ${alcance}</div>
+    <div class="meta" style="font-size:8pt">Del examen del campamento se conoce
+    el formato de tres secciones, no la cantidad de preguntas. Este tamaño es
+    de práctica.</div>` +
     (conR ? `<div class="meta" style="color:#C0392B;font-weight:bold">
        SOLO PARA LÍDERES — no compartir con los concursantes</div>`
           : `<div class="linea"><span>Nombre:</span><span>Club:</span>
@@ -173,7 +182,9 @@ function generaExamen(cat, nmc, ntf, nfill, semilla, etiqueta, alcance) {
 }
 
 function generaGuia() {
-  let h = `<h1>GUÍA DE ESTUDIO — CONEXIÓN BÍBLICA</h1>
+  let h = `<img class="logo" src="${LOGO_TL}" alt="Iglesia Adventista Tierra Linda">
+    <div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>
+    <h1>GUÍA DE ESTUDIO — CONEXIÓN BÍBLICA</h1>
     <div class="sub">Daniel 1–6 · Profetas y Reyes caps. 39–44</div>
     <div class="meta">Texto bíblico: Reina Valera 1995 · Libro complementario: Elena G. de White<br>
     Los capítulos marcados con ★ también aplican para Aventureros (Daniel 1, 2, 3 y 6 · P&amp;R 39, 41 y 44)</div>`;
