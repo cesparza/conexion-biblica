@@ -706,6 +706,71 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
   }
 }
 
+
+/* ───────── v20.3: la estructura, no solo la piel ─────────
+   MECANISMO
+   En un celular el pulgar alcanza el tercio de abajo de la pantalla, no la
+   barra de arriba. Con cinco pestañas arriba, cambiar de sección es un
+   estiramiento; abajo es un toque. Por eso en pantalla angosta la marca se
+   queda arriba, delgada, y las pestañas bajan al borde inferior.
+   Los dos hijos de .nav se fijan por separado, así que no hace falta tocar el
+   HTML: el <nav> queda de contenedor vacío. */
+@media (max-width:620px){
+  .nav{position:static;background:none;box-shadow:none;backdrop-filter:none}
+
+  .nav-b{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    background:rgba(31,56,100,.94);
+    backdrop-filter:saturate(1.6) blur(10px);
+    -webkit-backdrop-filter:saturate(1.6) blur(10px);
+    padding:.45rem .8rem;font-size:.88rem;
+    padding-top:calc(.45rem + env(safe-area-inset-top));
+    box-shadow:0 1px 0 rgba(255,255,255,.06);
+  }
+
+  .nav-t{
+    position:fixed;bottom:0;left:0;right:0;z-index:60;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:saturate(1.6) blur(14px);
+    -webkit-backdrop-filter:saturate(1.6) blur(14px);
+    border-top:1px solid var(--v-linea);
+    padding-bottom:env(safe-area-inset-bottom);
+    box-shadow:0 -6px 20px -12px rgba(16,24,40,.35);
+  }
+  .nav-t button{color:var(--v-tinta3);min-height:58px;gap:3px}
+  .nav-t button i{font-size:1.30rem}
+  .nav-t button b{font-size:.63rem;font-weight:700}
+  .nav-t button.on{color:var(--v-cat)}
+  /* El subrayado no funciona abajo: se lee como el borde de la pantalla. En su
+     lugar, una pastilla suave detrás del icono. */
+  .nav-t button::after{
+    top:6px;bottom:auto;height:30px;width:0;border-radius:15px;
+    background:var(--v-cat-suave);z-index:-1;
+    transition:width var(--v-paso);
+  }
+  .nav-t button.on::after{width:54px}
+  .nav-t button i,.nav-t button b{position:relative;z-index:1}
+
+  /* El contenido no puede quedar debajo de ninguna de las dos barras. */
+  body{padding-top:46px;padding-bottom:66px}
+  .pantalla{padding:1.1rem .9rem 1.5rem}
+
+  /* Una acción principal por pantalla, y que se vea. */
+  .ex-go{width:100%;min-height:56px;font-size:var(--v-t1)}
+  .hero{padding:1.5rem 1.1rem;border-radius:20px}
+  .card{padding:1.1rem;border-radius:18px}
+}
+
+/* La barra del examen se queda a la vista: saber cuánto falta no puede
+   depender de subir a buscarlo. */
+@media (max-width:620px){
+  #ex-curso .timer{
+    position:sticky;top:52px;z-index:40;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  }
+}
+
 }  /* fin @media screen */
 </style>
 </head>
