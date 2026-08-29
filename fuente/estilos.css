@@ -764,4 +764,112 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
   }
 }
 
+
+/* ═════════ v21: el escritorio también cambia ═════════
+   POR QUÉ ESTE BLOQUE EXISTE
+   En v20.3 la estructura nueva quedó detrás de @media(max-width:620px), así que
+   en un computador la app se veía igual que siempre. La barra de arriba con
+   cinco pestañas es el patrón de una página web de 2010; en pantalla ancha hay
+   espacio de sobra a la izquierda y ninguna razón para gastar alto vertical en
+   navegación. Aquí la barra se convierte en un riel lateral y el contenido
+   respira. */
+@media (min-width:900px){
+  .nav{
+    position:fixed;left:0;top:0;bottom:0;width:92px;
+    flex-direction:column;align-items:center;
+    background:linear-gradient(180deg,#22406F,#16305B);
+    border-right:1px solid rgba(255,255,255,.08);
+    box-shadow:6px 0 24px -18px rgba(16,24,40,.9);
+    padding:.9rem 0;gap:.4rem;z-index:60;
+  }
+  .nav-b{flex-direction:column;padding:.2rem;gap:.4rem;font-size:0}
+  .nav-b span{display:none}
+  .nav-b .logo-nav{height:34px}
+  .nav-ayuda{margin:0}
+
+  .nav-t{flex-direction:column;flex:1;width:100%;gap:.25rem;padding-top:.6rem}
+  .nav-t button{
+    flex:0 0 auto;height:70px;width:100%;border-radius:0;
+    color:rgba(255,255,255,.62);gap:5px;
+  }
+  .nav-t button i{font-size:1.45rem}
+  .nav-t button b{font-size:.66rem;letter-spacing:.01em}
+  .nav-t button.on{color:#fff}
+  /* El indicador es una barra vertical en el borde interior del riel: sigue el
+     eje del riel en vez de cruzarlo. */
+  .nav-t button::after{
+    left:auto;right:0;top:50%;bottom:auto;transform:translateY(-50%);
+    width:3px;height:0;border-radius:3px 0 0 3px;
+    background:var(--v-cat);
+    transition:height var(--v-paso);
+  }
+  .nav-t button.on::after{width:3px;height:42px}
+  .nav-t button.on i{transform:scale(1.12)}
+
+  body{padding-left:92px}
+  .pantalla{max-width:1000px;padding:2.4rem 2rem 4rem}
+}
+
+/* ═════════ v21: portada, no encabezado ═════════
+   Un título sobre un rectángulo azul es un encabezado. Lo que sigue es una
+   portada: tipografía de display, malla de color de la categoría, y el dato que
+   de verdad importa (cuánto llevas) como pieza principal y no como estadística
+   perdida entre otras cuatro. */
+.hero{
+  padding:clamp(2rem,1.2rem + 3vw,3.4rem) clamp(1.2rem,.8rem + 2vw,2.4rem);
+  border-radius:clamp(20px,1rem + 1.4vw,32px);
+  text-align:left;
+}
+.hero::after{
+  content:'';position:absolute;right:-12%;bottom:-60%;width:70%;height:170%;
+  background:radial-gradient(50% 50% at 50% 50%, var(--v-cat) 0%, rgba(0,0,0,0) 70%);
+  opacity:.22;pointer-events:none;
+}
+.hero h1{
+  font-size:clamp(2rem,1.3rem + 3.4vw,3.4rem);
+  font-weight:900;letter-spacing:-.04em;line-height:.98;
+}
+.hero p{max-width:46ch;font-size:clamp(.9rem,.86rem + .3vw,1.05rem)}
+
+/* ═════════ v21: las cifras como pieza de diseño ═════════ */
+.stats{gap:.7rem}
+.stat{
+  position:relative;overflow:hidden;
+  padding:1.15rem .7rem 1rem;
+  border-radius:18px;
+}
+/* Una línea de acento arriba en vez de un borde alrededor: marca sin encerrar. */
+.stat::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,var(--v-cat),transparent);
+}
+.stat .v{
+  font-size:clamp(1.8rem,1.4rem + 1.4vw,2.5rem);
+  font-weight:900;letter-spacing:-.045em;
+}
+
+/* ═════════ v21: superficies y acción ═════════ */
+.card{border-radius:clamp(18px,.9rem + .8vw,26px)}
+.card h2{font-size:var(--v-t1);text-transform:none}
+
+/* El botón principal en forma de píldora: es la única acción de la pantalla y
+   tiene que leerse distinto a todo lo demás, no solo más naranja. */
+.ex-go,.btn.nar{border-radius:999px;padding-left:1.5rem;padding-right:1.5rem}
+.btn{border-radius:12px}
+
+/* Foco visible en todo lo que se puede tocar con teclado. Sin esto la app es
+   inusable para quien navega con tabulador. */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+  outline:3px solid var(--v-cat);outline-offset:2px;border-radius:6px;
+}
+
+/* La rejilla de capítulos con más aire y tarjetas que se levantan al pasar. */
+.rejilla{gap:1rem}
+.cap{padding:1rem .8rem;border-radius:16px}
+
+/* La pregunta, con más aire: leer una pregunta apretada cansa, y son quince. */
+.q{padding:1.25rem;border-radius:20px;margin-bottom:1rem}
+.ops{gap:.6rem}
+.op{padding:.85rem 1rem}
+
 }  /* fin @media screen */
