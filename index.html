@@ -879,23 +879,85 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .ops{gap:.6rem}
 .op{padding:.85rem 1rem}
 
+
+/* ═════════ v22: iconos de trazo con eje de grosor y de relleno ═════════
+   MECANISMO
+   Un emoji lo dibuja el sistema operativo: la misma app se ve distinta en
+   iPhone, Android y Windows, no se puede teñir, y su peso visual no cambia
+   cuando la pestaña está activa. Estos son SVG en línea que usan currentColor,
+   así que heredan el color de la categoría, y el grosor del trazo es una
+   variable CSS: la pestaña activa engorda el trazo y enciende un relleno suave.
+   Eso es un icono variable, que es a donde va la tendencia de 2026: un solo
+   dibujo con eje de peso y eje de relleno, en vez de dos juegos de archivos. */
+.ico{
+  width:26px;height:26px;display:block;
+  fill:none;stroke:currentColor;
+  stroke-width:var(--ico-w,1.7);
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:stroke-width var(--v-paso);
+  overflow:visible;
+}
+.ico .f{fill:currentColor;fill-opacity:0;transition:fill-opacity var(--v-paso)}
+.nav-t button.on .ico{--ico-w:2.2}
+.nav-t button.on .ico .f{fill-opacity:.14}
+.nav-t button i{display:flex;align-items:center;justify-content:center;font-size:0}
+.nav-ayuda .ico{width:22px;height:22px}
+@media (min-width:900px){.nav-t button .ico{width:28px;height:28px}}
+
 }  /* fin @media screen */
 </style>
 </head>
 <body>
+<!-- Iconos. Van EN LÍNEA, no como fuente ni como archivo aparte: la app es un
+     solo index.html sin dependencias y sin red, y un icono que no carga deja la
+     barra de navegación muda.
+     Trazo, no emoji: el emoji lo dibuja el sistema operativo, así que la misma
+     app se ve distinta en iPhone, en Android y en Windows, y no se puede teñir
+     con el color de la categoría. Un SVG en línea usa currentColor y hereda el
+     color y el grosor que le pida el estado. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-casa" viewBox="0 0 24 24">
+    <path class="f" d="M4.5 10.2 12 3.6l7.5 6.6V20a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z"/>
+    <path d="M9.6 21v-6h4.8v6"/>
+  </symbol>
+  <symbol id="i-libro" viewBox="0 0 24 24">
+    <path class="f" d="M12 6.6C10.6 5.2 8.6 4.6 6.2 4.6H3.8v13h2.4c2.4 0 4.4.6 5.8 2 1.4-1.4 3.4-2 5.8-2h2.4v-13h-2.4c-2.4 0-4.4.6-5.8 2z"/>
+    <path d="M12 6.6v13"/>
+  </symbol>
+  <symbol id="i-tarjetas" viewBox="0 0 24 24">
+    <path d="M8 4.2h9.2A2.8 2.8 0 0 1 20 7v9.2"/>
+    <rect class="f" x="3.4" y="7.4" width="13.2" height="12.4" rx="2.4"/>
+  </symbol>
+  <symbol id="i-examen" viewBox="0 0 24 24">
+    <path class="f" d="M6.2 3h7.4l4.2 4.2V20a1 1 0 0 1-1 1H6.2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
+    <path d="M13.4 3v4.4h4.4"/>
+    <path d="M8.6 14.4l2.4 2.4 4.4-4.8"/>
+  </symbol>
+  <symbol id="i-trofeo" viewBox="0 0 24 24">
+    <path class="f" d="M7.6 4h8.8v4.6a4.4 4.4 0 0 1-8.8 0z"/>
+    <path d="M7.6 5.4H5a2.6 2.6 0 0 0 2.6 4.2M16.4 5.4H19a2.6 2.6 0 0 1-2.6 4.2"/>
+    <path d="M12 13.2V17M8.8 20.4h6.4"/>
+  </symbol>
+  <symbol id="i-ayuda" viewBox="0 0 24 24">
+    <circle class="f" cx="12" cy="12" r="8.8"/>
+    <path d="M9.5 9.6a2.6 2.6 0 1 1 3.4 3c-.6.3-.9.8-.9 1.5v.4"/>
+    <path d="M12 17.6h.01"/>
+  </symbol>
+</svg>
+
 
 <nav class="nav">
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
     <span>Conexión Bíblica</span>
-    <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app">❓</button>
+    <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app" aria-label="Cómo se usa esta app"><svg class="ico" aria-hidden="true"><use href="#i-ayuda"/></svg></button>
   </div>
   <div class="nav-t">
-    <button class="on" onclick="ir('inicio')"><i>🏠</i><b>Inicio</b></button>
-    <button onclick="ir('estudio')"><i>📖</i><b>Estudiar</b></button>
-    <button onclick="ir('tarjetas')"><i>🃏</i><b>Tarjetas</b></button>
-    <button onclick="ir('examen')"><i>✏️</i><b>Examen</b></button>
-    <button onclick="ir('logros')"><i>🏆</i><b>Logros</b></button>
+    <button class="on" onclick="ir('inicio')"><i><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></i><b>Inicio</b></button>
+    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Estudiar</b></button>
+    <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Tarjetas</b></button>
+    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Examen</b></button>
+    <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b></button>
   </div>
 </nav>
 

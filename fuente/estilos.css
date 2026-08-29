@@ -872,4 +872,29 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .ops{gap:.6rem}
 .op{padding:.85rem 1rem}
 
+
+/* ═════════ v22: iconos de trazo con eje de grosor y de relleno ═════════
+   MECANISMO
+   Un emoji lo dibuja el sistema operativo: la misma app se ve distinta en
+   iPhone, Android y Windows, no se puede teñir, y su peso visual no cambia
+   cuando la pestaña está activa. Estos son SVG en línea que usan currentColor,
+   así que heredan el color de la categoría, y el grosor del trazo es una
+   variable CSS: la pestaña activa engorda el trazo y enciende un relleno suave.
+   Eso es un icono variable, que es a donde va la tendencia de 2026: un solo
+   dibujo con eje de peso y eje de relleno, en vez de dos juegos de archivos. */
+.ico{
+  width:26px;height:26px;display:block;
+  fill:none;stroke:currentColor;
+  stroke-width:var(--ico-w,1.7);
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:stroke-width var(--v-paso);
+  overflow:visible;
+}
+.ico .f{fill:currentColor;fill-opacity:0;transition:fill-opacity var(--v-paso)}
+.nav-t button.on .ico{--ico-w:2.2}
+.nav-t button.on .ico .f{fill-opacity:.14}
+.nav-t button i{display:flex;align-items:center;justify-content:center;font-size:0}
+.nav-ayuda .ico{width:22px;height:22px}
+@media (min-width:900px){.nav-t button .ico{width:28px;height:28px}}
+
 }  /* fin @media screen */
