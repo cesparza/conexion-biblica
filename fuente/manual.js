@@ -28,6 +28,18 @@ const MANUAL = [
     preguntas.</p>
     <p>Por eso no te pone a escoger entre seis categorías con nombres raros:
     te hace dos preguntas que sí sabes contestar.</p>` },
+  { t:'Tu código, si el director te dio uno',
+    h:`<p>En la pantalla de <strong>Examen</strong>, arriba, hay un cuadro que
+    dice <strong>Entra con tu código</strong>. Son 6 letras y números que te da
+    el director del club. Se escriben <strong>una sola vez</strong> en tu
+    celular y la app se acuerda.</p>
+    <p>Para qué sirve: tus notas le llegan al director con tu nombre, y el
+    examen del día de la prueba sabe que eres tú. Sin código puedes estudiar y
+    practicar igual, pero el examen del evento sí lo necesita.</p>
+    <p>Si el código no te sirve, revisa que lo hayas copiado completo. Las letras
+    pueden ir en mayúscula o minúscula, da lo mismo. Si sigue sin servir,
+    pídeselo otra vez al director.</p>` },
+
   { t:'Paso 1 — tu nombre',
     h:`<p>Escríbelo y toca <strong>Siguiente</strong>. Sirve para que tu
     progreso sea tuyo: en un mismo teléfono pueden estudiar varias personas sin
