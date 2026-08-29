@@ -941,6 +941,47 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
   .nav-ayuda:hover{color:#fff;background:rgba(255,255,255,.10)}
 }
 
+
+/* ═════════ v23: la tarjeta de «Qué estudiar hoy» ═════════
+   El icono ya no es un emoji suelto al lado del texto: va en una ficha
+   redondeada teñida con el color de la categoría. Eso hace dos cosas que un
+   emoji no puede: alinea todas las filas a la misma caja óptica, y liga
+   visualmente la tarea con el resto de la app. */
+.card h2{display:flex;align-items:center;gap:.55rem}
+.card h2 .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9;flex:0 0 auto}
+.card h2 .ico .f{fill:currentColor;fill-opacity:.14}
+
+.hoy-cab{
+  background:linear-gradient(135deg,var(--v-cat-suave),var(--v-sup) 82%);
+  border:1px solid var(--v-linea);
+  border-radius:16px;padding:1rem 1.1rem;gap:1.1rem;
+}
+
+.tarea{
+  gap:.9rem;padding:.85rem;margin-top:.5rem;border-top:none;
+  align-items:center;
+}
+.tarea:first-of-type{margin-top:.2rem}
+.tic{
+  width:42px;height:42px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:13px;
+  background:var(--v-cat-suave);
+  color:var(--v-cat);
+  font-size:0;
+}
+.tic .ico{width:22px;height:22px;--ico-w:1.9}
+.tic .ico .f{fill:currentColor;fill-opacity:.16}
+.tt{font-size:var(--v-t0);letter-spacing:-.01em}
+.tbt{border-radius:999px!important}
+
+
+/* Un h2 fuera de .card (la cabecera de Logros) necesita la misma regla, o el
+   icono queda pegado al texto y sin el color de la categoría. */
+h2.h2-suelto{display:flex;align-items:center;gap:.55rem}
+h2.h2-suelto .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9;flex:0 0 auto}
+h2.h2-suelto .ico .f{fill:currentColor;fill-opacity:.14}
+
 }  /* fin @media screen */
 </style>
 </head>
@@ -979,6 +1020,35 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
     <circle class="f" cx="12" cy="12" r="8.8"/>
     <path d="M9.5 9.6a2.6 2.6 0 1 1 3.4 3c-.6.3-.9.8-.9 1.5v.4"/>
     <path d="M12 17.6h.01"/>
+  </symbol>
+  <symbol id="i-diana" viewBox="0 0 24 24">
+    <circle class="f" cx="12" cy="12" r="8.6"/>
+    <circle cx="12" cy="12" r="4.6"/>
+    <circle cx="12" cy="12" r="1.1"/>
+  </symbol>
+  <symbol id="i-grafico" viewBox="0 0 24 24">
+    <path d="M4 20.2h16"/>
+    <rect class="f" x="5.4" y="12" width="3.6" height="6"/>
+    <rect class="f" x="10.2" y="7.6" width="3.6" height="10.4"/>
+    <rect class="f" x="15" y="10" width="3.6" height="8"/>
+  </symbol>
+  <symbol id="i-medalla" viewBox="0 0 24 24">
+    <path d="M8.4 3.2 12 9.6 15.6 3.2"/>
+    <circle class="f" cx="12" cy="15.4" r="5.4"/>
+    <path d="M12 12.8v5.2"/>
+  </symbol>
+  <symbol id="i-historial" viewBox="0 0 24 24">
+    <path d="M4 6.4h13M4 12h13M4 17.6h9"/>
+    <circle class="f" cx="19.4" cy="17.6" r="1.6"/>
+  </symbol>
+  <symbol id="i-repetir" viewBox="0 0 24 24">
+    <path d="M20 11.4a8 8 0 1 1-2.5-5.6"/>
+    <path d="M20.2 3.6v4.6h-4.6"/>
+  </symbol>
+  <symbol id="i-candado" viewBox="0 0 24 24">
+    <rect class="f" x="4.6" y="10.2" width="14.8" height="10.2" rx="2.4"/>
+    <path d="M8.4 10.2V7.6a3.6 3.6 0 0 1 7.2 0v2.6"/>
+    <path d="M12 14.4v2.2"/>
   </symbol>
 </svg>
 
@@ -1071,18 +1141,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
   </details>
 
   <div class="card hoy">
-    <h2>📌 Qué estudiar hoy</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg><span>Qué estudiar hoy</span></h2>
     <div id="hoy"></div>
   </div>
 
   <div class="card">
-    <h2>📊 Progreso por capítulo</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-grafico"/></svg><span>Progreso por capítulo</span></h2>
     <p class="nota" id="prog-nota"></p>
     <div class="rejilla" id="anillos"></div>
   </div>
 
   <div class="card" id="card-stats">
-    <h2>🏅 Tus números</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-medalla"/></svg><span>Tus números</span></h2>
     <div class="stats" id="stats"></div>
   </div>
 
@@ -1113,7 +1183,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 </div>
 
 <div id="p-estudio" class="pantalla">
-  <h2 style="color:var(--azul);margin-bottom:.9rem">📖 Material de estudio</h2>
+  <h2 class="h2-suelto" style="color:var(--azul);margin-bottom:.9rem"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg><span>Material de estudio</span></h2>
   <div class="caps" id="lista-caps"></div>
   <div id="detalle" class="card" style="margin-top:1rem;display:none"></div>
 
@@ -1297,10 +1367,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 </div>
 
 <div id="p-logros" class="pantalla">
-  <h2 style="color:var(--azul);margin-bottom:.9rem">🏆 Tus logros</h2>
-  <div class="card"><h2>🎯 Puntos débiles</h2><div id="debiles"></div></div>
-  <div class="card"><h2>🎖️ Insignias</h2><div id="insignias"></div></div>
-  <div class="card"><h2>📈 Historial de exámenes</h2><div id="historial"></div></div>
+  <h2 class="h2-suelto" style="color:var(--azul);margin-bottom:.9rem"><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg><span>Tus logros</span></h2>
+  <div class="card"><h2><svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg><span>Puntos débiles</span></h2><div id="debiles"></div></div>
+  <div class="card"><h2><svg class="ico" aria-hidden="true"><use href="#i-medalla"/></svg><span>Insignias</span></h2><div id="insignias"></div></div>
+  <div class="card"><h2><svg class="ico" aria-hidden="true"><use href="#i-historial"/></svg><span>Historial de exámenes</span></h2><div id="historial"></div></div>
   <details class="card">
     <summary>📤 Pasar o compartir mi progreso</summary>
     <div class="det-cuerpo">
@@ -3508,6 +3578,48 @@ const BANCO = [
    }
   ],
   "nv": 3
+ },
+ {
+  "cap": "d4",
+  "t": "mc",
+  "q": "En el sueño de Nabucodonosor, ¿dónde estaba el árbol y cómo era su altura? (Daniel 4:10)",
+  "o": [
+   "En un valle, y era pequeño",
+   "En medio de la tierra, y su altura era grande",
+   "En la orilla del río, y era torcido",
+   "En el monte, y era seco"
+  ],
+  "a": 1,
+  "nv": 1
+ },
+ {
+  "cap": "d4",
+  "t": "tf",
+  "q": "Sobre el rey debían pasar siete tiempos. (Daniel 4:16)",
+  "a": true,
+  "e": "Verdadero. Daniel 4:16 y 4:25 dicen que siete tiempos pasarían sobre él.",
+  "nv": 2
+ },
+ {
+  "cap": "d4",
+  "t": "mc",
+  "q": "¿En qué momento exacto vino la voz del cielo sobre Nabucodonosor? (Daniel 4:31)",
+  "o": [
+   "Un año después de la jactancia",
+   "Mientras dormía esa noche",
+   "Aún estaba la palabra en su boca",
+   "Al amanecer del día siguiente"
+  ],
+  "a": 2,
+  "nv": 1
+ },
+ {
+  "cap": "d5",
+  "t": "tf",
+  "q": "Alguno de los sabios de Babilonia logró leer la escritura de la pared, pero no supo interpretarla. (Daniel 5:8)",
+  "a": false,
+  "e": "Falso. Daniel 5:8 dice que ninguno pudo leer la escritura NI mostrar al rey su interpretación.",
+  "nv": 2
  },
  {
   "cap": "d6",
@@ -10998,17 +11110,17 @@ const PLAN_SEMANAS=[
 function tareasDeHoy(){
   const tareas=[];
   const err=falladasDe().length;
-  if(err>=3)tareas.push({ic:'🔁',t:'Repasar '+err+' errores',
+  if(err>=3)tareas.push({ic:'repetir',t:'Repasar '+err+' errores',
     d:'Preguntas que fallaste y todavía no dominas. Es lo que más puntos recupera.',
     b:'Repasar ahora',f:"arrancaExamen('errores')"});
 
   const porDominar=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
-  if(porDominar)tareas.push({ic:'🃏',t:porDominar+' tarjetas por dominar',
+  if(porDominar)tareas.push({ic:'tarjetas',t:porDominar+' tarjetas por dominar',
     d:'Salen primero las que fallaste. Una tarjeta queda dominada al acertarla dos veces seguidas.',
     b:'Abrir tarjetas',f:"irTarjetasDificiles()"});
 
   const sinLeer=[...capsDe(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
-  if(sinLeer.length)tareas.push({ic:'📖',t:'Leer '+esc(sinLeer[0].label),
+  if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
     d:'Te faltan '+sinLeer.length+' secciones por marcar como estudiadas.',
     b:'Estudiar',f:"verCap('"+sinLeer[0].id+"')"});
 
@@ -11017,12 +11129,12 @@ function tareasDeHoy(){
     .filter(x=>x.a.b+x.a.m>=3)
     .map(x=>({...x,pct:x.a.b/(x.a.b+x.a.m)}))
     .sort((p,q)=>p.pct-q.pct)[0];
-  if(flojo&&flojo.pct<0.8)tareas.push({ic:'🎯',t:'Reforzar '+esc(flojo.c.label),
+  if(flojo&&flojo.pct<0.8)tareas.push({ic:'diana',t:'Reforzar '+esc(flojo.c.label),
     d:'Vas en '+Math.round(flojo.pct*100)+'% en ese capítulo, tu punto más flojo.',
     b:'Examen de ese capítulo',f:"examenDeCapitulo('"+flojo.c.id+"')"});
 
   const n=nivelEfectivo();
-  tareas.push({ic:'✏️',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
+  tareas.push({ic:'examen',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
     d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
     b:'Comenzar',f:"arrancaExamen('normal')"});
 
@@ -11031,7 +11143,7 @@ function tareasDeHoy(){
      que la pantalla no quede muda. */
   if(examenesCerrados()){
     const quedan=tareas.filter(t=>!/arrancaExamen\(|examenDeCapitulo\(/.test(t.f));
-    quedan.push({ic:'🔒',t:'Los exámenes están cerrados',
+    quedan.push({ic:'candado',t:'Los exámenes están cerrados',
       d:'El director los abre el día de la prueba. Si te llega un examen por link, ese sí se puede hacer.',
       b:'Ver',f:"ir('examen')"});
     return quedan.slice(0,4);
@@ -11052,7 +11164,7 @@ function pintaHoy(){
     '<div class="sd">'+esc(p.d)+'</div></div>';
 
   const lista=tareasDeHoy().map(t=>
-    '<div class="tarea"><div class="tic">'+t.ic+'</div>'+
+    '<div class="tarea"><div class="tic"><svg class="ico" aria-hidden="true"><use href="#i-'+t.ic+'"/></svg></div>'+
     '<div class="ttx"><div class="tt">'+t.t+'</div><div class="td">'+t.d+'</div></div>'+
     '<button class="btn nar tbt" onclick="'+t.f+'">'+t.b+'</button></div>').join('');
 

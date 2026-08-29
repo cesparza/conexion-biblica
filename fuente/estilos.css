@@ -934,4 +934,45 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
   .nav-ayuda:hover{color:#fff;background:rgba(255,255,255,.10)}
 }
 
+
+/* ═════════ v23: la tarjeta de «Qué estudiar hoy» ═════════
+   El icono ya no es un emoji suelto al lado del texto: va en una ficha
+   redondeada teñida con el color de la categoría. Eso hace dos cosas que un
+   emoji no puede: alinea todas las filas a la misma caja óptica, y liga
+   visualmente la tarea con el resto de la app. */
+.card h2{display:flex;align-items:center;gap:.55rem}
+.card h2 .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9;flex:0 0 auto}
+.card h2 .ico .f{fill:currentColor;fill-opacity:.14}
+
+.hoy-cab{
+  background:linear-gradient(135deg,var(--v-cat-suave),var(--v-sup) 82%);
+  border:1px solid var(--v-linea);
+  border-radius:16px;padding:1rem 1.1rem;gap:1.1rem;
+}
+
+.tarea{
+  gap:.9rem;padding:.85rem;margin-top:.5rem;border-top:none;
+  align-items:center;
+}
+.tarea:first-of-type{margin-top:.2rem}
+.tic{
+  width:42px;height:42px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:13px;
+  background:var(--v-cat-suave);
+  color:var(--v-cat);
+  font-size:0;
+}
+.tic .ico{width:22px;height:22px;--ico-w:1.9}
+.tic .ico .f{fill:currentColor;fill-opacity:.16}
+.tt{font-size:var(--v-t0);letter-spacing:-.01em}
+.tbt{border-radius:999px!important}
+
+
+/* Un h2 fuera de .card (la cabecera de Logros) necesita la misma regla, o el
+   icono queda pegado al texto y sin el color de la categoría. */
+h2.h2-suelto{display:flex;align-items:center;gap:.55rem}
+h2.h2-suelto .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9;flex:0 0 auto}
+h2.h2-suelto .ico .f{fill:currentColor;fill-opacity:.14}
+
 }  /* fin @media screen */

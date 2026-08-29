@@ -133,6 +133,21 @@ const BANCO = [
 {cap:'d5',t:'fill',ins:'Daniel 5:27 (RV1995) — Completa:',
  p:[{x:'«TEKEL: '},{b:'Pesado',h:'¿qué te hicieron?'},{x:' has sido en balanza y hallado '},{b:'falto',h:'¿cómo?'},{x:'.»'}]},
 
+/* Agregadas el 29 ago 2026 para cerrar huecos que marcó tools/cobertura.js.
+   SOLO se escribieron las de versículos cuyo texto RV1995 ya está citado y
+   verificado dentro del propio material de la app (fuente/contenido.js). Los
+   demás huecos de Daniel 4 y 5 quedan abiertos a propósito: sin el archivo de
+   referencia que pide tools/verificar.js no se puede garantizar precisión
+   literal, y una pregunta que no se puede verificar no entra al banco. */
+{cap:'d4',t:'mc',q:'En el sueño de Nabucodonosor, ¿dónde estaba el árbol y cómo era su altura? (Daniel 4:10)',
+ o:['En un valle, y era pequeño','En medio de la tierra, y su altura era grande','En la orilla del río, y era torcido','En el monte, y era seco'],a:1},
+{cap:'d4',t:'tf',q:'Sobre el rey debían pasar siete tiempos. (Daniel 4:16)',
+ a:true,e:'Verdadero. Daniel 4:16 y 4:25 dicen que siete tiempos pasarían sobre él.'},
+{cap:'d4',t:'mc',q:'¿En qué momento exacto vino la voz del cielo sobre Nabucodonosor? (Daniel 4:31)',
+ o:['Un año después de la jactancia','Mientras dormía esa noche','Aún estaba la palabra en su boca','Al amanecer del día siguiente'],a:2},
+{cap:'d5',t:'tf',q:'Alguno de los sabios de Babilonia logró leer la escritura de la pared, pero no supo interpretarla. (Daniel 5:8)',
+ a:false,e:'Falso. Daniel 5:8 dice que ninguno pudo leer la escritura NI mostrar al rey su interpretación.'},
+
 /* ─────────── DANIEL 6 ─────────── */
 {cap:'d6',t:'mc',q:'¿Cuántos sátrapas constituyó Darío sobre el reino? (Daniel 6:1)',
  o:['Ochenta','Cien','Ciento veinte','Ciento cincuenta'],a:2},

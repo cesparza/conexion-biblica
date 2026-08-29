@@ -483,17 +483,17 @@ const PLAN_SEMANAS=[
 function tareasDeHoy(){
   const tareas=[];
   const err=falladasDe().length;
-  if(err>=3)tareas.push({ic:'🔁',t:'Repasar '+err+' errores',
+  if(err>=3)tareas.push({ic:'repetir',t:'Repasar '+err+' errores',
     d:'Preguntas que fallaste y todavía no dominas. Es lo que más puntos recupera.',
     b:'Repasar ahora',f:"arrancaExamen('errores')"});
 
   const porDominar=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
-  if(porDominar)tareas.push({ic:'🃏',t:porDominar+' tarjetas por dominar',
+  if(porDominar)tareas.push({ic:'tarjetas',t:porDominar+' tarjetas por dominar',
     d:'Salen primero las que fallaste. Una tarjeta queda dominada al acertarla dos veces seguidas.',
     b:'Abrir tarjetas',f:"irTarjetasDificiles()"});
 
   const sinLeer=[...capsDe(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
-  if(sinLeer.length)tareas.push({ic:'📖',t:'Leer '+esc(sinLeer[0].label),
+  if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
     d:'Te faltan '+sinLeer.length+' secciones por marcar como estudiadas.',
     b:'Estudiar',f:"verCap('"+sinLeer[0].id+"')"});
 
@@ -502,12 +502,12 @@ function tareasDeHoy(){
     .filter(x=>x.a.b+x.a.m>=3)
     .map(x=>({...x,pct:x.a.b/(x.a.b+x.a.m)}))
     .sort((p,q)=>p.pct-q.pct)[0];
-  if(flojo&&flojo.pct<0.8)tareas.push({ic:'🎯',t:'Reforzar '+esc(flojo.c.label),
+  if(flojo&&flojo.pct<0.8)tareas.push({ic:'diana',t:'Reforzar '+esc(flojo.c.label),
     d:'Vas en '+Math.round(flojo.pct*100)+'% en ese capítulo, tu punto más flojo.',
     b:'Examen de ese capítulo',f:"examenDeCapitulo('"+flojo.c.id+"')"});
 
   const n=nivelEfectivo();
-  tareas.push({ic:'✏️',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
+  tareas.push({ic:'examen',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
     d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
     b:'Comenzar',f:"arrancaExamen('normal')"});
 
@@ -516,7 +516,7 @@ function tareasDeHoy(){
      que la pantalla no quede muda. */
   if(examenesCerrados()){
     const quedan=tareas.filter(t=>!/arrancaExamen\(|examenDeCapitulo\(/.test(t.f));
-    quedan.push({ic:'🔒',t:'Los exámenes están cerrados',
+    quedan.push({ic:'candado',t:'Los exámenes están cerrados',
       d:'El director los abre el día de la prueba. Si te llega un examen por link, ese sí se puede hacer.',
       b:'Ver',f:"ir('examen')"});
     return quedan.slice(0,4);
@@ -537,7 +537,7 @@ function pintaHoy(){
     '<div class="sd">'+esc(p.d)+'</div></div>';
 
   const lista=tareasDeHoy().map(t=>
-    '<div class="tarea"><div class="tic">'+t.ic+'</div>'+
+    '<div class="tarea"><div class="tic"><svg class="ico" aria-hidden="true"><use href="#i-'+t.ic+'"/></svg></div>'+
     '<div class="ttx"><div class="tt">'+t.t+'</div><div class="td">'+t.d+'</div></div>'+
     '<button class="btn nar tbt" onclick="'+t.f+'">'+t.b+'</button></div>').join('');
 
