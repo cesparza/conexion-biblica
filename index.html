@@ -627,8 +627,8 @@ body{
   min-height:44px;
   transition:border-color var(--v-paso), background var(--v-paso), transform var(--v-paso);
 }
-.op:hover{border-color:var(--v-cat);background:var(--v-sup2)}
-.op:active{transform:scale(.995)}
+.op:hover:not(:disabled){border-color:var(--v-cat);background:var(--v-sup2)}
+.op:active:not(:disabled){transform:scale(.995)}
 
 /* La marca de correcto entra con un pulso corto. Una respuesta acertada tiene
    que SENTIRSE distinta, no solo verse verde. */
@@ -637,7 +637,7 @@ body{
   40%{transform:scale(1.035)}
   100%{transform:scale(1)}
 }
-.op.bien,.op.ok{animation:v-pulso .28s cubic-bezier(.2,.7,.3,1)}
+.op.ok{animation:v-pulso .28s cubic-bezier(.2,.7,.3,1)}
 
 .timer{
   font-variant-numeric:tabular-nums;
@@ -12743,7 +12743,7 @@ async function borraParticipante(id){
     await srvRefresca();
     await srvQuienSoy();
     pintaSesion();
-    if(srvYo&&srvYo.rol==='director')await pintaPanel();else await pintaPanel();
+    await pintaPanel();
     if(typeof pintaExInicio==='function')pintaExInicio();
     if(typeof pintaInicio==='function')pintaInicio();
   }catch(e){}

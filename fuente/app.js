@@ -2228,7 +2228,7 @@ async function borraParticipante(id){
     await srvRefresca();
     await srvQuienSoy();
     pintaSesion();
-    if(srvYo&&srvYo.rol==='director')await pintaPanel();else await pintaPanel();
+    await pintaPanel();
     if(typeof pintaExInicio==='function')pintaExInicio();
     if(typeof pintaInicio==='function')pintaInicio();
   }catch(e){}
