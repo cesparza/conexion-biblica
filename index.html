@@ -904,6 +904,43 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .nav-ayuda .ico{width:22px;height:22px}
 @media (min-width:900px){.nav-t button .ico{width:28px;height:28px}}
 
+
+/* ═════════ v22.1: la marca en el riel ═════════
+   EL PROBLEMA
+   El logo de la iglesia es un lockup horizontal con fondo blanco. Metido en un
+   riel de 92px sobre azul se veía como una pastilla blanca desbordada, no como
+   una marca. Un logo apaisado no cabe en una columna angosta, y encogerlo hasta
+   que quepa lo vuelve ilegible.
+
+   LA SALIDA
+   En el riel no va el logo: va una marca compacta, el mismo icono de libro
+   dentro de un cuadrado redondeado. El logo de la iglesia sigue completo y
+   legible en la cabecera de la página, que es donde tiene el ancho para
+   respirar. En celular no cambia nada: ahí la barra es horizontal y el logo sí
+   cabe. */
+.rail-marca{display:none}
+
+@media (min-width:900px){
+  .nav-b .logo-nav{display:none}
+  .nav-b{padding:.35rem 0 .1rem;gap:.55rem}
+  /* Con más peso que el `.nav-b span{display:none}` de v21, que si no la esconde. */
+  .nav-b .rail-marca{
+    display:flex;align-items:center;justify-content:center;
+    width:42px;height:42px;border-radius:13px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.16);
+    color:#fff;
+  }
+  .nav-b .rail-marca .ico{width:23px;height:23px;--ico-w:1.9}
+  .nav-b .rail-marca .ico .f{fill:currentColor;fill-opacity:.16}
+  .nav-ayuda{
+    color:rgba(255,255,255,.62);
+    width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+    border-radius:10px;transition:color var(--v-paso), background var(--v-paso);
+  }
+  .nav-ayuda:hover{color:#fff;background:rgba(255,255,255,.10)}
+}
+
 }  /* fin @media screen */
 </style>
 </head>
@@ -949,6 +986,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 <nav class="nav">
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
+    <span class="rail-marca" aria-hidden="true"><svg class="ico"><use href="#i-libro"/></svg></span>
     <span>Conexión Bíblica</span>
     <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app" aria-label="Cómo se usa esta app"><svg class="ico" aria-hidden="true"><use href="#i-ayuda"/></svg></button>
   </div>
