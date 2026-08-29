@@ -203,6 +203,77 @@ function salirDirector(){
    clave, en el mismo aparato y al terminar. */
 const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='compartido');
 
+/* ───────── el servidor (v20) ─────────
+   MECANISMO, Y ES EL CAMBIO DE FONDO DE ESTA VERSIÓN
+   Hasta v19 el cierre vivía en el localStorage de cada celular. localStorage es
+   por origen y por navegador: ningún aparato puede preguntarle nada a otro, así
+   que cerrar había que repetirlo celular por celular y borrar los datos del
+   navegador lo abría. Ahora hay una fila en D1 que todos los aparatos leen. La
+   app dejó de decidir si puede arrancar un examen: lo PREGUNTA.
+
+   CÓMO SE COMPORTA SIN SEÑAL, QUE ES EL CASO QUE IMPORTA
+   El campamento puede no tener red. Por eso:
+     · La respuesta del servidor se guarda en el aparato con su hora.
+     · Si el servidor no contesta, manda lo último que dijo. Si dijo «cerrado»,
+       sigue cerrado: se falla CERRADO, nunca abierto por accidente.
+     · Si nunca contestó, manda el interruptor local de v19, que sigue vivo como
+       respaldo.
+   Estudiar, las tarjetas y el manual no le preguntan nada a nadie: la app sigue
+   funcionando completa sin señal. */
+const SRV_CACHE='cb-srv';
+const SRV_TIMEOUT=2500;
+let srvYo=null;
+
+function srvLee(){
+  try{
+    const x=JSON.parse(localStorage.getItem(SRV_CACHE)||'null');
+    return x&&typeof x==='object'&&typeof x.abierto==='boolean'?x:null;
+  }catch(e){return null;}
+}
+
+function srvGuarda(abierto){
+  try{localStorage.setItem(SRV_CACHE,JSON.stringify({abierto:!!abierto,visto:Date.now()}));}catch(e){}
+}
+
+/* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
+   la niña mirando un botón que no responde. */
+async function srvFetch(ruta,opciones){
+  const ctrl=typeof AbortController!=='undefined'?new AbortController():null;
+  const t=ctrl?setTimeout(()=>ctrl.abort(),SRV_TIMEOUT):0;
+  try{
+    const o=Object.assign({credentials:'same-origin'},opciones||{});
+    if(ctrl)o.signal=ctrl.signal;
+    if(o.body)o.headers=Object.assign({'content-type':'application/json'},o.headers||{});
+    const r=await fetch('/api'+ruta,o);
+    let d=null;try{d=await r.json();}catch(e){}
+    if(!r.ok){const err=new Error((d&&d.error)||'No se pudo conectar');err.datos=d;err.status=r.status;throw err;}
+    return d;
+  }finally{if(t)clearTimeout(t);}
+}
+
+/* Refresca el interruptor global. Devuelve true si el servidor contestó. */
+async function srvRefresca(){
+  try{const d=await srvFetch('/estado');srvGuarda(d.abierto);return true;}
+  catch(e){return false;}
+}
+
+async function srvQuienSoy(){
+  try{const d=await srvFetch('/yo');srvYo=d&&d.rol?d:null;}
+  catch(e){srvYo=null;}
+  return srvYo;
+}
+
+/* La nota se manda al servidor pero NO se espera: si no hay señal, la nota ya
+   quedó guardada en el aparato y la pantalla no se puede quedar esperando. */
+function srvIntento(modo,semilla,nota,total){
+  if(!srvYo||srvYo.rol!=='participante')return;
+  let idem='';
+  try{idem=crypto.randomUUID();}catch(e){idem=String(Date.now())+Math.random();}
+  srvFetch('/intento',{method:'POST',body:JSON.stringify(
+    {modo:modo,semilla:semilla==null?null:String(semilla),nota:nota,total:total,idempotency_key:idem})})
+    .catch(function(){});
+}
+
 /* ───────── modo evento ─────────
    MECANISMO
    Un interruptor por aparato que apaga los exámenes que el participante arma
@@ -224,7 +295,15 @@ const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='compartido');
    datos del navegador lo apaga, y en un aparato nuevo el interruptor no existe.
    Sin servidor no hay forma de que un cierre valga para todos los aparatos a la
    vez. Contra eso el control es mirar, no técnico. */
-const examenesCerrados=()=>!!(DB&&DB.evento)&&!director;
+/* El cierre efectivo: manda el servidor, y el interruptor del aparato queda de
+   respaldo para cuando el servidor no contesta. El director se salta los dos. */
+const examenesCerrados=()=>{
+  if(director)return false;
+  const c=srvLee();
+  if(c&&c.abierto===false)return true;
+  if(c&&c.abierto===true)return !!(DB&&DB.evento);
+  return !!(DB&&DB.evento);
+};
 
 function alternaEvento(){DB.evento=!DB.evento;guardar();}
 
@@ -406,7 +485,7 @@ function tareasDeHoy(){
   const err=falladasDe().length;
   if(err>=3)tareas.push({ic:'🔁',t:'Repasar '+err+' errores',
     d:'Preguntas que fallaste y todavía no dominas. Es lo que más puntos recupera.',
-    b:'Repasar ahora',f:"iniciar('errores')"});
+    b:'Repasar ahora',f:"arrancaExamen('errores')"});
 
   const porDominar=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
   if(porDominar)tareas.push({ic:'🃏',t:porDominar+' tarjetas por dominar',
@@ -430,13 +509,13 @@ function tareasDeHoy(){
   const n=nivelEfectivo();
   tareas.push({ic:'✏️',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
     d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
-    b:'Comenzar',f:"iniciar('normal')"});
+    b:'Comenzar',f:"arrancaExamen('normal')"});
 
   /* Con los exámenes cerrados, las tareas que arrancan uno no se ofrecen: leer y
      las tarjetas siguen igual, y en su lugar entra una que explica por qué, para
      que la pantalla no quede muda. */
   if(examenesCerrados()){
-    const quedan=tareas.filter(t=>!/iniciar\(|examenDeCapitulo\(/.test(t.f));
+    const quedan=tareas.filter(t=>!/arrancaExamen\(|examenDeCapitulo\(/.test(t.f));
     quedan.push({ic:'🔒',t:'Los exámenes están cerrados',
       d:'El director los abre el día de la prueba. Si te llega un examen por link, ese sí se puede hacer.',
       b:'Ver',f:"ir('examen')"});
@@ -467,7 +546,7 @@ function pintaHoy(){
 
 /* Atajos que usa el panel. */
 function irTarjetasDificiles(){tjFiltro='dificiles';ir('tarjetas');tjBaraja();}
-function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();iniciar('normal');}
+async function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();await arrancaExamen('normal');}
 
 /* ───────── inicio ───────── */
 /* Una línea con quién estudia y qué estudia, en vez de las seis categorías
@@ -785,7 +864,7 @@ function pintaExInicio(){
   document.getElementById('ex-nota').textContent=
     'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces.';
   document.getElementById('ex-err').innerHTML=f>=3
-    ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
+    ?'<button class="btn gho" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
   pintaCierre();
 }
 
@@ -871,6 +950,10 @@ function barajaOpciones(q){
    para practicar sin acostumbrarse a ir lento. */
 const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?80:72)));
 
+/* iniciar() sigue siendo la GUARDA y sigue siendo síncrona: decide con lo que
+   ya sabe. Quien le da frescura es arrancaExamen(), que es lo que llaman los
+   botones: pregunta al servidor y después llama aquí. Separarlos deja la
+   cerradura en un solo lugar y mantiene la app probable sin red. */
 function iniciar(m){
   /* Guarda de verdad, no cosmética. Aunque un botón quede pintado de antes o
      alguien llame iniciar() por otro camino, aquí se detiene: esconder el botón
@@ -890,6 +973,13 @@ function iniciar(m){
   document.getElementById('ex-curso').style.display='block';
   document.getElementById('ex-result').style.display='none';
   pintaPreguntas();corre();
+}
+
+/* Lo que llaman todos los botones. Le pregunta al servidor y luego arranca.
+   Si el servidor no contesta, iniciar() decide con lo último conocido. */
+async function arrancaExamen(m){
+  await srvRefresca();
+  iniciar(m);
 }
 
 function corre(){
@@ -1028,6 +1118,10 @@ function entregar(){
     guardar();
   }
 
+  /* La nota también al servidor, cuando hay ficha de participante. Es lo que
+     permite que el link se gaste por PERSONA y no por aparato. */
+  srvIntento(modo,modo==='compartido'?semLink:null,pts,tot);
+
   ultimoRes={pts,tot,pct,med,msg,s3};
   document.getElementById('ex-curso').style.display='none';
   pintaResultado();
@@ -1072,7 +1166,7 @@ function pintaResultado(){
        '<button class="btn gho" style="margin-top:.7rem" onclick="pideClaveDir(\'res\')">🔑 Soy el director</button>'+
        '</div>')+
     '<div style="display:flex;gap:.7rem;flex-wrap:wrap">'+
-    (ver&&falladasDe().length>=3?'<button class="btn azul" onclick="iniciar(\'errores\')">🔁 Repasar mis errores ('+falladasDe().length+')</button>':'')+
+    (ver&&falladasDe().length>=3?'<button class="btn azul" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis errores ('+falladasDe().length+')</button>':'')+
     '<button class="btn nar" onclick="reinicia()">🔄 Otro examen</button>'+
     '<button class="btn azul" onclick="ir(\'estudio\')">📖 Estudiar</button>'+
     '<button class="btn gho" onclick="ir(\'logros\')">🏆 Logros</button></div>';
@@ -1994,3 +2088,148 @@ try{
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
   else revisaLink();
 }catch(e){console.error(e);}
+
+/* ───────── entrar con el código (v20) ─────────
+   POR QUÉ UN CÓDIGO Y NO UN USUARIO CON CONTRASEÑA
+   Quien usa esto tiene entre 4 y 9 años. Un correo y una contraseña son dos
+   cosas que olvidar y una que se escribe mal en un teclado de celular. El
+   director entrega un código de 6 caracteres, se escribe UNA vez, y el aparato
+   guarda una cookie de 60 días: las siete semanas de estudio caben enteras. */
+function pintaSesion(){
+  const d=document.getElementById('cb-sesion');
+  if(!d)return;
+  if(srvYo&&srvYo.rol==='participante'){
+    d.innerHTML='<div class="card sesion"><div class="ses-h">Hola, '+esc(srvYo.nombre)+'</div>'+
+      '<p class="nota">Categoría '+esc(srvYo.categoria)+'. Tus notas le llegan al director del club.</p>'+
+      '<button class="btn gho" onclick="salirCodigo()">Salir de mi ficha</button></div>';
+    return;
+  }
+  d.innerHTML='<div class="card sesion"><div class="ses-h">Entra con tu código</div>'+
+    '<p class="nota">El director del club te da un código de 6 letras y números. '+
+    'Se escribe una sola vez en este celular.</p>'+
+    '<div class="ses-fila"><input id="cb-cod" maxlength="9" autocomplete="off" '+
+    'spellcheck="false" placeholder="ABC234" oninput="this.value=this.value.toUpperCase()">'+
+    '<button class="btn nar" onclick="entraCodigo()">Entrar</button></div>'+
+    '<p class="nota" id="cb-cod-msg"></p>'+
+    '<p class="nota">Sin código también puedes estudiar y practicar. El código sirve '+
+    'para que tus notas queden con tu nombre y para el examen del día del evento.</p></div>';
+}
+
+async function entraCodigo(){
+  const i=document.getElementById('cb-cod'),m=document.getElementById('cb-cod-msg');
+  if(!i)return;
+  if(m)m.textContent='Un momento...';
+  try{
+    const d=await srvFetch('/entrar',{method:'POST',body:JSON.stringify({codigo:i.value})});
+    srvYo={rol:'participante',nombre:d.nombre,categoria:d.categoria};
+    pintaSesion();pintaExInicio();pintaInicio();
+  }catch(e){
+    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+  }
+}
+
+async function salirCodigo(){
+  try{await srvFetch('/salir',{method:'POST'});}catch(e){}
+  srvYo=null;pintaSesion();
+}
+
+/* ───────── el panel del director (v20) ─────────
+   La clave es la MISMA que la de v18. Aquí viaja al servidor para abrir una
+   sesión de director; la de v18 sigue viviendo en el aparato y sirve para ver
+   la revisión sin señal. Dos caminos, una sola clave que recordar. */
+async function entraPanel(){
+  const i=document.getElementById('pan-clave'),m=document.getElementById('pan-msg');
+  if(!i)return;
+  if(m)m.textContent='Un momento...';
+  try{
+    await srvFetch('/panel/entrar',{method:'POST',body:JSON.stringify({clave:i.value})});
+    srvYo={rol:'director'};
+    await pintaPanel();
+  }catch(e){
+    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+  }
+}
+
+async function pintaPanel(){
+  const d=document.getElementById('cb-panel');
+  if(!d)return;
+  if(!srvYo||srvYo.rol!=='director'){
+    d.innerHTML='<div class="det-cuerpo"><p class="nota">Entra con la clave del director para '+
+      'cerrar los exámenes de TODOS los aparatos a la vez y para manejar los códigos.</p>'+
+      '<div class="ses-fila"><input id="pan-clave" type="password" autocomplete="off" placeholder="Clave">'+
+      '<button class="btn azul" onclick="entraPanel()">Entrar</button></div>'+
+      '<p class="nota" id="pan-msg"></p></div>';
+    return;
+  }
+  const c=srvLee();
+  const abierto=!c||c.abierto!==false;
+  let lista='<p class="nota">Cargando...</p>';
+  d.innerHTML='<div class="det-cuerpo">'+
+    '<div class="pan-sw"><strong>Exámenes de práctica: '+(abierto?'ABIERTOS':'CERRADOS')+'</strong>'+
+    '<button class="btn '+(abierto?'gho':'nar')+'" onclick="alternaServidor('+(abierto?'false':'true')+')">'+
+    (abierto?'Cerrar para todos':'Abrir para todos')+'</button></div>'+
+    '<p class="nota">Vale para <strong>todos los aparatos a la vez</strong>. El examen que '+
+    'mandes por link sigue funcionando cerrado, y estudiar y las tarjetas también.</p>'+
+    '<div class="divisor">Participantes</div>'+
+    '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
+    '<select id="pan-cat"><option value="4-6">4-6</option><option value="7-9">7-9</option>'+
+    '<option value="padres">Padres</option></select>'+
+    '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
+    '<div id="pan-lista">'+lista+'</div></div>';
+  await cargaParticipantes();
+}
+
+async function alternaServidor(abrir){
+  try{
+    const d=await srvFetch('/panel/examenes',{method:'POST',body:JSON.stringify({abiertos:!!abrir})});
+    srvGuarda(d.abierto);
+    await pintaPanel();pintaExInicio();pintaInicio();
+  }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+async function cargaParticipantes(){
+  const d=document.getElementById('pan-lista');
+  if(!d)return;
+  try{
+    const r=await srvFetch('/panel/participantes');
+    const p=r.participantes||[];
+    if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
+    d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
+      '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
+        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(x.categoria)+'</td>'+
+          '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
+          '<td><button class="btn gho" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
+      }).join('')+'</table></div>';
+  }catch(e){d.innerHTML='<p class="nota">No se pudo cargar: '+esc(e.message||'')+'</p>';}
+}
+
+async function creaParticipante(){
+  const n=document.getElementById('pan-nom'),c=document.getElementById('pan-cat');
+  if(!n||!n.value.trim())return;
+  try{
+    await srvFetch('/panel/participantes',{method:'POST',
+      body:JSON.stringify({nombre:n.value,categoria:c.value})});
+    n.value='';
+    await cargaParticipantes();
+  }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+async function borraParticipante(id){
+  try{
+    await srvFetch('/panel/participantes/'+encodeURIComponent(id)+'/borrar',{method:'POST'});
+    await cargaParticipantes();
+  }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+/* Arranque: se le pregunta al servidor sin bloquear la pantalla. Si no hay
+   señal, la app abre igual con lo último que supo. */
+(async function(){
+  try{
+    await srvRefresca();
+    await srvQuienSoy();
+    pintaSesion();
+    if(srvYo&&srvYo.rol==='director')await pintaPanel();else await pintaPanel();
+    if(typeof pintaExInicio==='function')pintaExInicio();
+    if(typeof pintaInicio==='function')pintaInicio();
+  }catch(e){}
+})();

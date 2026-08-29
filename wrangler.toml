@@ -1,0 +1,29 @@
+# Conexión Bíblica en Cloudflare Pages, ahora con base de datos.
+#
+# Pasos que tiene que correr Camilo UNA vez (yo no tengo su cuenta):
+#   1. wrangler d1 create conexion-biblica
+#   2. pegar abajo el database_id que devuelve, en los DOS bloques
+#   3. wrangler d1 execute conexion-biblica --remote --file=migraciones/001_base.sql
+#      wrangler d1 execute conexion-biblica --remote --file=migraciones/002_dominio.sql
+#      wrangler d1 execute conexion-biblica --remote --file=migraciones/003_datos.sql
+#   4. en el panel de Cloudflare Pages, Settings -> Variables and Secrets:
+#        CLAVE_PANEL = la clave del director (secreto)
+#        SAL_IP      = cualquier cadena larga al azar (secreto)
+#
+# OJO: con pages_build_output_dir presente, ESTE archivo es la fuente de verdad
+# y el dashboard queda de solo lectura para los bindings.
+name = "conexion-biblica"
+compatibility_date = "2026-08-01"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "conexion-biblica"
+database_id = "423a0b4c-790a-4682-88b6-385faf12f049"
+
+# Los entornos con nombre NO heredan lo de arriba: sin este bloque, cada rama
+# distinta de main despliega sin base de datos y falla en silencio.
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "conexion-biblica"
+database_id = "423a0b4c-790a-4682-88b6-385faf12f049"

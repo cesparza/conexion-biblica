@@ -159,7 +159,7 @@ ok(typeof A.S().links[String(SEM)].pts==='number','El examen por link se cierra 
 
 /* La pantalla de Inicio no ofrece tareas que arranquen un examen. */
 const hoyCerrado=A.tareasDeHoy();
-ok(!hoyCerrado.some(t=>/iniciar\(|examenDeCapitulo\(/.test(t.f)),
+ok(!hoyCerrado.some(t=>/arrancaExamen\(|examenDeCapitulo\(/.test(t.f)),
   'Cerrados, «Qué estudiar hoy» no ofrece ninguna tarea de examen');
 ok(hoyCerrado.some(t=>/cerrados/i.test(t.t)),'Y en su lugar dice que están cerrados');
 ok(hoyCerrado.some(t=>/tarjetas|Leer/i.test(t.t)),'Estudiar y las tarjetas siguen ofreciéndose');
@@ -171,7 +171,7 @@ ok(hoyCerrado.some(t=>/tarjetas|Leer/i.test(t.t)),'Estudiar y las tarjetas sigue
 async function pruebaDirectorSobreCierre(){
   const antes=A.DB().evento;
   if(!A.DB().evento)A.alternaEvento();
-  await A.activaDirector('Daniel-1844');
+  await A.activaDirector(CLAVE);
   ok(A.examenesCerrados()===false,'Con el perfil director activo el cierre no le aplica');
   A.salirDirector();
   ok(A.examenesCerrados()===true,'Al salir del perfil, el aparato sigue cerrado');
@@ -205,12 +205,12 @@ ok(A.S().examenes.some(e=>e.modo==='compartido'),'El examen por link se registra
    que dejó el botón sin efecto la primera vez: aceptaLink() limpia recetaPend,
    así que el liberar no podía colgar de esa variable. */
 async function pruebaLibera(){
-  await A.activaDirector('Daniel-1844');
+  await A.activaDirector(CLAVE);
   A.ponReceta(null);
   A.S().links[String(SEM)]={pts:null,total:15,fecha:'2026-10-09'};
   A.pintaLinkUsado(A.leeReceta(A.escribeReceta(receta)));
   A.pideClaveDir('libera');
-  A.el('dir-clave').value='Daniel-1844';
+  A.el('dir-clave').value=CLAVE;
   await A.entraDirector();
   await new Promise(r=>setTimeout(r,20));
   ok(!A.S().links[String(SEM)],'El director libera un link aunque recetaPend esté vacío');
@@ -220,6 +220,19 @@ async function pruebaLibera(){
 }
 
 /* ── la clave del director ── */
+/* LA CLAVE NO VIVE EN ESTE ARCHIVO, Y ES EL ARREGLO DE v20.
+   Hasta v19 estaba escrita aquí diez veces, en un repositorio PÚBLICO. La
+   huella en el HTML era segura y el proceso no: la prueba de abajo verificaba
+   que la clave no estuviera en index.html y pasaba en verde, porque miraba el
+   archivo equivocado. Ahora entra por variable de entorno y la prueba barre
+   TODO el repositorio.
+     CB_CLAVE='la clave' node tests/simulacro.js */
+const CLAVE=process.env.CB_CLAVE;
+if(!CLAVE){
+  console.error('\nFalta CB_CLAVE. Corre:  CB_CLAVE=\'la clave del director\' node tests/simulacro.js');
+  process.exit(1);
+}
+
 (async()=>{
   await pruebaDirectorSobreCierre();
   await pruebaLibera();
@@ -227,7 +240,7 @@ async function pruebaLibera(){
   ok(mal!==''&&A.esDirector()===false,'Una clave equivocada no abre el perfil director');
   const vacia=await A.activaDirector('');
   ok(vacia!==''&&A.esDirector()===false,'Una clave vacía no abre el perfil director');
-  const bien=await A.activaDirector('Daniel-1844');
+  const bien=await A.activaDirector(CLAVE);
   ok(bien===''&&A.esDirector()===true,'La clave correcta abre el perfil director');
   ok(sesion['cb-dir']==='1','El perfil queda en sessionStorage, que se borra al cerrar la pestaña');
 
@@ -241,17 +254,40 @@ async function pruebaLibera(){
   /* La clave se escribe en un celular y el teclado de iOS pone mayúscula solo:
      las tres formas tienen que entrar, o el director cree que se equivocó. */
   A.salirDirector();
-  ok(await A.activaDirector('Daniel-1844')===''&&A.esDirector(),'Entra con la D mayúscula');
+  ok(await A.activaDirector(CLAVE)===''&&A.esDirector(),'Entra tal como se escribió');
   A.salirDirector();
-  ok(await A.activaDirector('daniel-1844')===''&&A.esDirector(),'Entra en minúsculas');
+  ok(await A.activaDirector(CLAVE.toLowerCase())===''&&A.esDirector(),'Entra en minúsculas');
   A.salirDirector();
-  ok(await A.activaDirector('  DANIEL-1844  ')===''&&A.esDirector(),'Entra con espacios de sobra y en mayúsculas');
+  ok(await A.activaDirector('  '+CLAVE.toUpperCase()+'  ')===''&&A.esDirector(),'Entra con espacios de sobra y en mayúsculas');
   A.salirDirector();
-  ok(await A.activaDirector('daniel1844')!==''&&!A.esDirector(),'Sin el guion NO entra: no se normaliza de más');
-  ok(await A.activaDirector('daniel-1995')!==''&&!A.esDirector(),'La clave vieja ya no sirve');
+  /* Solo aplica si la clave lleva guion: quitarlo la convertiría en un prefijo,
+     y normalizar de más es justo lo que no se puede hacer. */
+  if(CLAVE.includes('-')){
+    A.salirDirector();
+    ok(await A.activaDirector(CLAVE.replace(/-/g,''))!==''&&!A.esDirector(),
+      'Sin el guion NO entra: no se normaliza de más');
+  }
+  ok(await A.activaDirector('clave-que-no-es-1995')!==''&&!A.esDirector(),'Cualquier otra clave no sirve');
 
-  ok(!html.includes('Daniel-1844')&&!html.toLowerCase().includes('daniel-1844'),
-    'La clave en texto plano NO está en el index.html, ni en minúsculas');
+  /* El barrido que faltaba: la clave no puede estar en NINGÚN archivo del
+     repositorio, no solo en index.html. Así se detecta el caso que se nos pasó:
+     estaba en las pruebas. */
+  const fs2=require('fs'),path2=require('path');
+  const raiz=path2.join(__dirname,'..');
+  const salta=new Set(['.git','node_modules','.wrangler','files']);
+  const sospechosos=[];
+  (function barre(dir){
+    for(const e of fs2.readdirSync(dir,{withFileTypes:true})){
+      if(salta.has(e.name))continue;
+      const full=path2.join(dir,e.name);
+      if(e.isDirectory()){barre(full);continue;}
+      if(!/\.(js|html|css|json|toml|sql|md|txt)$/.test(e.name))continue;
+      let t='';try{t=fs2.readFileSync(full,'utf8');}catch(_){continue;}
+      if(t.toLowerCase().includes(CLAVE.toLowerCase()))sospechosos.push(path2.relative(raiz,full));
+    }
+  })(raiz);
+  ok(sospechosos.length===0,
+    'La clave en texto plano no está en NINGÚN archivo del repo'+(sospechosos.length?' — aparece en '+sospechosos.join(', '):''));
   ok(/CLAVE_DIR='[0-9a-f]{64}'/.test(html),'En el HTML va un SHA-256 de 64 caracteres, no la clave');
 
   console.log('\n'+(f===0?'CANDADO DEL SIMULACRO: TODO BIEN':f+' FALLOS'));

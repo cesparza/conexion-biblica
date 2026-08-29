@@ -460,9 +460,38 @@ const MANUAL = [
     <p>Para que eso sirva de algo, el link se gasta al abrirse: un segundo
     intento se rechaza. Si alguien lo abrió por error antes de la hora, tú lo
     liberas con tu clave.</p>` },
-  { t:'Cerrar los exámenes hasta el día de la prueba',
+  { t:'Cerrar los exámenes de TODOS los aparatos',
     h:`<p>En la pantalla de Examen, abajo, en
-    <strong>Examen → Cerrar los exámenes hasta el día de la prueba</strong>. Pide
+    <strong>Examen → Cerrar los exámenes de TODOS los aparatos</strong>. Entras
+    con tu clave una vez y desde ahí cierras o abres para todo el club.</p>
+    <p>La diferencia con el interruptor de abajo: este vive en el servidor, no
+    en el celular. Lo cierras en tu teléfono y queda cerrado en el de cada
+    participante, sin tener que tocar ninguno. Quien borre los datos de su
+    navegador tampoco lo abre.</p>
+    <p>Cerrados, nadie puede armar un examen: ni el normal, ni el simulacro, ni
+    el repaso de errores. Lo que <strong>sí</strong> sigue funcionando: el examen
+    que tú mandes por link, estudiar y las tarjetas.</p>
+    <div class="warn-box">Si un celular se queda sin señal, la app usa lo último
+    que supo del servidor. Si lo último fue <strong>cerrado</strong>, sigue
+    cerrado. Nunca se abre solo por falta de señal.</div>` },
+
+  { t:'Los códigos de las participantes',
+    h:`<p>En el mismo panel, debajo del interruptor. Escribes el nombre, eliges
+    la categoría y sale un <strong>código de 6 letras y números</strong>. Ese
+    código se lo das a la participante y ella lo escribe una sola vez en su
+    celular.</p>
+    <p>Para qué sirve: las notas quedan con su nombre y las ves todas juntas, y
+    el <strong>examen por link se gasta por persona, no por aparato</strong>.
+    Antes, con otra ficha en otro celular se podía repetir el mismo examen; ahora
+    no.</p>
+    <p>Del código no se saca nada más: en la base solo quedan el nombre de pila y
+    la categoría. Ni apellido, ni edad exacta, ni teléfono, ni foto.</p>
+    <p>Sin código la app funciona igual para estudiar y practicar. El código hace
+    falta para el examen del día del evento.</p>` },
+
+  { t:'Cerrar los exámenes solo de este aparato',
+    h:`<p>En la pantalla de Examen, abajo, en
+    <strong>Examen → Cerrar los exámenes solo de este aparato</strong>. Pide
     tu clave y queda hecho de una.</p>
     <p>Cerrados, el participante no puede armar exámenes en ese aparato: ni el
     normal, ni el simulacro, ni el repaso de errores. Lo que <strong>sí</strong>

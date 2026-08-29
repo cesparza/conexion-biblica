@@ -176,11 +176,12 @@
 <div id="p-examen" class="pantalla">
   <div id="ex-inicio">
     <div id="ex-cerrado"></div>
+    <div id="cb-sesion"></div>
     <div class="card ex-hoy">
       <div class="ex-h">✏️ Tu examen de hoy</div>
       <div class="ex-big" id="ex-resumen"></div>
       <div class="ex-sub" id="ex-desc"></div>
-      <button class="btn nar ex-go" onclick="iniciar('normal')">🚀 Comenzar</button>
+      <button class="btn nar ex-go" onclick="arrancaExamen('normal')">🚀 Comenzar</button>
       <div id="ex-err"></div>
     </div>
 
@@ -199,7 +200,7 @@
           </label>
         </div>
         <div id="ex-disponible" class="nota"></div>
-        <button class="btn azul" style="margin-top:.8rem" onclick="iniciar('simulacro')">🎓 Hacer un simulacro</button>
+        <button class="btn azul" style="margin-top:.8rem" onclick="arrancaExamen('simulacro')">🎓 Hacer un simulacro</button>
         <p class="nota">El <strong>simulacro</strong> quita las pistas de la
         sección de completar y <strong>no muestra las respuestas al final</strong>:
         queda la nota, como en el examen de verdad. Para ver qué falló, el
@@ -231,7 +232,12 @@
     </div>
 
     <details class="card dir">
-      <summary>🔒 Cerrar los exámenes hasta el día de la prueba</summary>
+      <summary>🌐 Cerrar los exámenes de TODOS los aparatos</summary>
+      <div id="cb-panel"></div>
+    </details>
+
+    <details class="card dir">
+      <summary>🔒 Cerrar los exámenes solo de este aparato</summary>
       <div class="det-cuerpo">
         <p class="nota" id="ex-dir-nota"></p>
         <p class="nota">Cerrados, el participante no puede armar exámenes en este

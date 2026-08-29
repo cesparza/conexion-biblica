@@ -435,3 +435,268 @@ h4.ay-h{font-size:.87rem;font-weight:800;color:var(--azul);margin:1rem 0 .35rem;
    competir visualmente con los capítulos. */
 details.card.sec>summary{color:var(--gris);font-weight:700}
 details.card.sec[open]>summary{color:var(--azul)}
+
+/* ───────── v20: ficha del participante y panel del director ───────── */
+.sesion{border-left:4px solid var(--nar)}
+.ses-h{font-weight:700;font-size:1.02rem;margin-bottom:.3rem}
+.ses-fila{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0}
+.ses-fila input,.ses-fila select{
+  flex:1 1 8rem;min-width:0;min-height:38px;padding:.45rem .6rem;
+  border:1px solid var(--linea);border-radius:8px;font:inherit;font-size:1rem}
+.ses-fila input#cb-cod{letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.ses-fila .btn{flex:0 0 auto;min-height:38px}
+.pan-sw{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin:.4rem 0 .6rem}
+.pan-sw .btn{flex:0 0 auto}
+
+/* ═══════════════════════════════════════════════════════════════════
+   v20 — CAPA DE DISEÑO
+
+   POR QUÉ VA AL FINAL Y DENTRO DE @media screen
+   Va al final porque con la misma especificidad gana la última regla: así se
+   redefine la piel sin tocar ninguna de las reglas de arriba, y quitar este
+   bloque devuelve la app exacta a v19. Va dentro de @media screen porque el
+   papel es el diseño principal de esta app y no puede cambiar: todo lo de
+   abajo es pantalla y el PDF sale idéntico a antes.
+
+   LA IDEA
+   Para niñas de 4 a 9, pero sin infantilismo: en vez de colores planos y
+   bordes gruesos, superficies con profundidad suave, una escala tipográfica
+   fluida que crece con la pantalla, y color que IDENTIFICA la categoría en
+   vez de decorar. Cada categoría tiene su acento y la niña reconoce su app.
+   ═══════════════════════════════════════════════════════════════════ */
+@media screen{
+
+:root{
+  /* Tinta y superficie */
+  --v-tinta:#0F172A; --v-tinta2:#4A5568; --v-tinta3:#6B7785;
+  --v-lienzo:#F4F6FB; --v-sup:#FFFFFF; --v-sup2:#FAFBFD;
+  --v-linea:#E4E8F0; --v-linea2:#EDF0F6;
+
+  /* Marca. El azul y el naranja siguen siendo los de la iglesia; lo que
+     cambia es la saturación de los tonos de apoyo, que antes competían. */
+  --v-marca:#1F3864; --v-marca2:#2E8BC0; --v-acento:#E8720C;
+  --v-ok:#15803D; --v-mal:#C0392B;
+
+  /* Acento por categoría. Lo pisa body.me / body.av / body.gm más abajo. */
+  --v-cat:#E8720C; --v-cat-suave:#FFF3E8;
+
+  /* Radios: una sola escala, tres pasos. */
+  --v-r-lg:22px; --v-r-md:14px; --v-r-sm:10px;
+
+  /* Sombras en dos capas: una de contacto y otra de elevación. Una sola
+     sombra grande se ve como una mancha; dos leen como profundidad. */
+  --v-s1:0 1px 2px rgba(16,24,40,.05);
+  --v-s2:0 1px 2px rgba(16,24,40,.05), 0 10px 24px -10px rgba(16,24,40,.18);
+  --v-s3:0 2px 4px rgba(16,24,40,.06), 0 22px 44px -16px rgba(31,56,100,.28);
+
+  /* Tipografía fluida: crece con el ancho sin saltos ni media queries. */
+  --v-t-1:clamp(.70rem, .66rem + .18vw, .78rem);
+  --v-t0:clamp(.86rem, .82rem + .20vw, .95rem);
+  --v-t1:clamp(1.00rem, .94rem + .30vw, 1.15rem);
+  --v-t2:clamp(1.25rem, 1.10rem + .70vw, 1.60rem);
+  --v-t3:clamp(1.70rem, 1.35rem + 1.60vw, 2.60rem);
+
+  --v-paso:.18s cubic-bezier(.2,.7,.3,1);
+}
+
+body.me{--v-cat:#7C3AED; --v-cat-suave:#F4EEFF}   /* 4 a 6: violeta */
+body.av{--v-cat:#0E7490; --v-cat-suave:#E6F6FA}   /* 7 a 9: turquesa profundo */
+body.pa{--v-cat:#B45309; --v-cat-suave:#FFF4E5}
+body.gm{--v-cat:#1F3864; --v-cat-suave:#EAF0FA}
+
+body{
+  background:
+    radial-gradient(120% 60% at 50% -10%, #EAF1FB 0%, rgba(234,241,251,0) 60%),
+    var(--v-lienzo);
+  color:var(--v-tinta);
+  font-size:var(--v-t0);
+  line-height:1.55;
+  letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── barra superior ── */
+.nav{
+  background:rgba(31,56,100,.92);
+  backdrop-filter:saturate(1.6) blur(10px);
+  -webkit-backdrop-filter:saturate(1.6) blur(10px);
+  box-shadow:0 1px 0 rgba(255,255,255,.06), 0 6px 20px -8px rgba(16,24,40,.45);
+}
+.nav-t button{
+  border-bottom:none;
+  position:relative;
+  transition:color var(--v-paso);
+  min-height:56px;
+}
+.nav-t button i{transition:transform var(--v-paso)}
+.nav-t button.on i{transform:translateY(-1px) scale(1.08)}
+/* El subrayado es un pseudo-elemento y no un borde: así se puede animar de
+   ancho sin mover el texto de su sitio. */
+.nav-t button::after{
+  content:'';position:absolute;left:50%;bottom:6px;height:3px;width:0;
+  background:var(--v-cat);border-radius:2px;
+  transform:translateX(-50%);transition:width var(--v-paso);
+}
+.nav-t button.on::after{width:38%}
+
+/* ── superficies ── */
+.pantalla{padding:1.6rem 1rem 3rem}
+.card{
+  background:var(--v-sup);
+  border:1px solid var(--v-linea);
+  border-radius:var(--v-r-lg);
+  box-shadow:var(--v-s2);
+  padding:1.35rem;
+  margin-bottom:1rem;
+}
+.card h2{font-size:var(--v-t1);letter-spacing:-.02em;color:var(--v-marca)}
+
+.hero{
+  background:linear-gradient(145deg,#22406F 0%,#1F3864 45%,#16305B 100%);
+  border-radius:26px;
+  box-shadow:var(--v-s3);
+  padding:2rem 1.4rem;
+  position:relative;overflow:hidden;
+}
+/* Un halo del color de la categoría dentro del héroe: identifica sin gritar. */
+.hero::before{
+  content:'';position:absolute;inset:-40% -10% auto -10%;height:150%;
+  background:radial-gradient(60% 60% at 20% 0%, var(--v-cat) 0%, rgba(0,0,0,0) 62%);
+  opacity:.30;pointer-events:none;
+}
+.hero h1{font-size:var(--v-t3);letter-spacing:-.03em;line-height:1.05;position:relative}
+.hero p{font-size:var(--v-t0);opacity:.88;position:relative}
+
+/* ── botones ── */
+.btn{
+  border-radius:var(--v-r-md);
+  min-height:44px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  box-shadow:var(--v-s1);
+  transition:transform var(--v-paso), box-shadow var(--v-paso), background var(--v-paso);
+}
+.btn:hover{box-shadow:var(--v-s2)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:3px solid var(--v-cat);outline-offset:2px}
+.ex-go{
+  background:linear-gradient(180deg,#F2860F,#D9620A);
+  box-shadow:0 1px 2px rgba(16,24,40,.10), 0 10px 22px -10px rgba(217,98,10,.85);
+  font-size:var(--v-t1);
+  min-height:52px;
+}
+
+/* ── tarjetas de estado y capítulos ── */
+.stat{
+  background:var(--v-sup);border:1px solid var(--v-linea);
+  border-radius:var(--v-r-md);box-shadow:var(--v-s1);
+}
+.stat .v{color:var(--v-cat);font-size:var(--v-t2);letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums}
+.stat .l{color:var(--v-tinta3);font-size:var(--v-t-1);letter-spacing:.02em}
+
+.cap,.cat-btn{
+  border:1px solid var(--v-linea);
+  border-radius:var(--v-r-md);
+  background:var(--v-sup);
+  box-shadow:var(--v-s1);
+  transition:transform var(--v-paso), box-shadow var(--v-paso), border-color var(--v-paso);
+}
+.cap:hover,.cat-btn:hover{transform:translateY(-2px);box-shadow:var(--v-s2);border-color:var(--v-cat)}
+.cat-btn.on{
+  border-color:var(--v-cat);background:var(--v-cat-suave);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--v-cat) 18%, transparent);
+}
+.cat-btn .cn{color:var(--v-marca);letter-spacing:-.01em}
+
+/* ── la pregunta, que es donde vive la app ── */
+.q{
+  background:var(--v-sup);border:1px solid var(--v-linea);
+  border-radius:var(--v-r-lg);box-shadow:var(--v-s1);
+}
+.op{
+  border:1.5px solid var(--v-linea);
+  border-radius:var(--v-r-md);
+  min-height:44px;
+  transition:border-color var(--v-paso), background var(--v-paso), transform var(--v-paso);
+}
+.op:hover{border-color:var(--v-cat);background:var(--v-sup2)}
+.op:active{transform:scale(.995)}
+
+/* La marca de correcto entra con un pulso corto. Una respuesta acertada tiene
+   que SENTIRSE distinta, no solo verse verde. */
+@keyframes v-pulso{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.035)}
+  100%{transform:scale(1)}
+}
+.op.bien,.op.ok{animation:v-pulso .28s cubic-bezier(.2,.7,.3,1)}
+
+.timer{
+  font-variant-numeric:tabular-nums;
+  border-radius:999px;
+  letter-spacing:.01em;
+  box-shadow:var(--v-s1);
+}
+
+/* ── tarea de «qué estudiar hoy» ── */
+.tarea{
+  border-radius:var(--v-r-md);
+  border:1px solid var(--v-linea);
+  background:var(--v-sup);
+  box-shadow:var(--v-s1);
+  transition:box-shadow var(--v-paso), transform var(--v-paso);
+}
+.tarea:hover{box-shadow:var(--v-s2);transform:translateY(-1px)}
+
+/* ── separadores y notas ── */
+.sep span,.divisor{color:var(--v-tinta3);letter-spacing:.08em;font-size:var(--v-t-1)}
+.nota{color:var(--v-tinta2);font-size:var(--v-t-1);line-height:1.6}
+
+/* ── detalles plegables ── */
+details.card summary{
+  font-weight:700;letter-spacing:-.01em;min-height:44px;
+  display:flex;align-items:center;gap:.5rem;cursor:pointer;
+  border-radius:var(--v-r-md);
+}
+details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset:2px}
+
+/* ── ficha del participante y panel del director ── */
+.sesion{
+  border-left:none;
+  border:1px solid var(--v-linea);
+  border-radius:var(--v-r-lg);
+  background:linear-gradient(180deg,var(--v-cat-suave),var(--v-sup) 60%);
+}
+.ses-h{font-size:var(--v-t1);letter-spacing:-.02em;color:var(--v-marca)}
+.ses-fila input,.ses-fila select{
+  border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
+  min-height:44px;background:var(--v-sup);
+  transition:border-color var(--v-paso), box-shadow var(--v-paso);
+}
+.ses-fila input:focus,.ses-fila select:focus{
+  outline:none;border-color:var(--v-cat);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--v-cat) 18%, transparent);
+}
+.pan-sw{
+  background:var(--v-sup2);border:1px solid var(--v-linea);
+  border-radius:var(--v-r-md);padding:.8rem;justify-content:space-between;
+}
+
+/* ── tablas ── */
+.info-table{font-size:var(--v-t-1)}
+.info-table th{color:var(--v-tinta3);letter-spacing:.04em}
+
+/* ── accesibilidad y respeto por el usuario ──
+   Quien pidió menos movimiento en su sistema no ve ninguna animación. Esto no
+   es opcional: hay niñas con sensibilidad al movimiento y el ajuste existe
+   justo para eso. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+}  /* fin @media screen */

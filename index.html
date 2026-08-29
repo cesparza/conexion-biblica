@@ -442,6 +442,271 @@ h4.ay-h{font-size:.87rem;font-weight:800;color:var(--azul);margin:1rem 0 .35rem;
    competir visualmente con los capítulos. */
 details.card.sec>summary{color:var(--gris);font-weight:700}
 details.card.sec[open]>summary{color:var(--azul)}
+
+/* ───────── v20: ficha del participante y panel del director ───────── */
+.sesion{border-left:4px solid var(--nar)}
+.ses-h{font-weight:700;font-size:1.02rem;margin-bottom:.3rem}
+.ses-fila{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0}
+.ses-fila input,.ses-fila select{
+  flex:1 1 8rem;min-width:0;min-height:38px;padding:.45rem .6rem;
+  border:1px solid var(--linea);border-radius:8px;font:inherit;font-size:1rem}
+.ses-fila input#cb-cod{letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.ses-fila .btn{flex:0 0 auto;min-height:38px}
+.pan-sw{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin:.4rem 0 .6rem}
+.pan-sw .btn{flex:0 0 auto}
+
+/* ═══════════════════════════════════════════════════════════════════
+   v20 — CAPA DE DISEÑO
+
+   POR QUÉ VA AL FINAL Y DENTRO DE @media screen
+   Va al final porque con la misma especificidad gana la última regla: así se
+   redefine la piel sin tocar ninguna de las reglas de arriba, y quitar este
+   bloque devuelve la app exacta a v19. Va dentro de @media screen porque el
+   papel es el diseño principal de esta app y no puede cambiar: todo lo de
+   abajo es pantalla y el PDF sale idéntico a antes.
+
+   LA IDEA
+   Para niñas de 4 a 9, pero sin infantilismo: en vez de colores planos y
+   bordes gruesos, superficies con profundidad suave, una escala tipográfica
+   fluida que crece con la pantalla, y color que IDENTIFICA la categoría en
+   vez de decorar. Cada categoría tiene su acento y la niña reconoce su app.
+   ═══════════════════════════════════════════════════════════════════ */
+@media screen{
+
+:root{
+  /* Tinta y superficie */
+  --v-tinta:#0F172A; --v-tinta2:#4A5568; --v-tinta3:#6B7785;
+  --v-lienzo:#F4F6FB; --v-sup:#FFFFFF; --v-sup2:#FAFBFD;
+  --v-linea:#E4E8F0; --v-linea2:#EDF0F6;
+
+  /* Marca. El azul y el naranja siguen siendo los de la iglesia; lo que
+     cambia es la saturación de los tonos de apoyo, que antes competían. */
+  --v-marca:#1F3864; --v-marca2:#2E8BC0; --v-acento:#E8720C;
+  --v-ok:#15803D; --v-mal:#C0392B;
+
+  /* Acento por categoría. Lo pisa body.me / body.av / body.gm más abajo. */
+  --v-cat:#E8720C; --v-cat-suave:#FFF3E8;
+
+  /* Radios: una sola escala, tres pasos. */
+  --v-r-lg:22px; --v-r-md:14px; --v-r-sm:10px;
+
+  /* Sombras en dos capas: una de contacto y otra de elevación. Una sola
+     sombra grande se ve como una mancha; dos leen como profundidad. */
+  --v-s1:0 1px 2px rgba(16,24,40,.05);
+  --v-s2:0 1px 2px rgba(16,24,40,.05), 0 10px 24px -10px rgba(16,24,40,.18);
+  --v-s3:0 2px 4px rgba(16,24,40,.06), 0 22px 44px -16px rgba(31,56,100,.28);
+
+  /* Tipografía fluida: crece con el ancho sin saltos ni media queries. */
+  --v-t-1:clamp(.70rem, .66rem + .18vw, .78rem);
+  --v-t0:clamp(.86rem, .82rem + .20vw, .95rem);
+  --v-t1:clamp(1.00rem, .94rem + .30vw, 1.15rem);
+  --v-t2:clamp(1.25rem, 1.10rem + .70vw, 1.60rem);
+  --v-t3:clamp(1.70rem, 1.35rem + 1.60vw, 2.60rem);
+
+  --v-paso:.18s cubic-bezier(.2,.7,.3,1);
+}
+
+body.me{--v-cat:#7C3AED; --v-cat-suave:#F4EEFF}   /* 4 a 6: violeta */
+body.av{--v-cat:#0E7490; --v-cat-suave:#E6F6FA}   /* 7 a 9: turquesa profundo */
+body.pa{--v-cat:#B45309; --v-cat-suave:#FFF4E5}
+body.gm{--v-cat:#1F3864; --v-cat-suave:#EAF0FA}
+
+body{
+  background:
+    radial-gradient(120% 60% at 50% -10%, #EAF1FB 0%, rgba(234,241,251,0) 60%),
+    var(--v-lienzo);
+  color:var(--v-tinta);
+  font-size:var(--v-t0);
+  line-height:1.55;
+  letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── barra superior ── */
+.nav{
+  background:rgba(31,56,100,.92);
+  backdrop-filter:saturate(1.6) blur(10px);
+  -webkit-backdrop-filter:saturate(1.6) blur(10px);
+  box-shadow:0 1px 0 rgba(255,255,255,.06), 0 6px 20px -8px rgba(16,24,40,.45);
+}
+.nav-t button{
+  border-bottom:none;
+  position:relative;
+  transition:color var(--v-paso);
+  min-height:56px;
+}
+.nav-t button i{transition:transform var(--v-paso)}
+.nav-t button.on i{transform:translateY(-1px) scale(1.08)}
+/* El subrayado es un pseudo-elemento y no un borde: así se puede animar de
+   ancho sin mover el texto de su sitio. */
+.nav-t button::after{
+  content:'';position:absolute;left:50%;bottom:6px;height:3px;width:0;
+  background:var(--v-cat);border-radius:2px;
+  transform:translateX(-50%);transition:width var(--v-paso);
+}
+.nav-t button.on::after{width:38%}
+
+/* ── superficies ── */
+.pantalla{padding:1.6rem 1rem 3rem}
+.card{
+  background:var(--v-sup);
+  border:1px solid var(--v-linea);
+  border-radius:var(--v-r-lg);
+  box-shadow:var(--v-s2);
+  padding:1.35rem;
+  margin-bottom:1rem;
+}
+.card h2{font-size:var(--v-t1);letter-spacing:-.02em;color:var(--v-marca)}
+
+.hero{
+  background:linear-gradient(145deg,#22406F 0%,#1F3864 45%,#16305B 100%);
+  border-radius:26px;
+  box-shadow:var(--v-s3);
+  padding:2rem 1.4rem;
+  position:relative;overflow:hidden;
+}
+/* Un halo del color de la categoría dentro del héroe: identifica sin gritar. */
+.hero::before{
+  content:'';position:absolute;inset:-40% -10% auto -10%;height:150%;
+  background:radial-gradient(60% 60% at 20% 0%, var(--v-cat) 0%, rgba(0,0,0,0) 62%);
+  opacity:.30;pointer-events:none;
+}
+.hero h1{font-size:var(--v-t3);letter-spacing:-.03em;line-height:1.05;position:relative}
+.hero p{font-size:var(--v-t0);opacity:.88;position:relative}
+
+/* ── botones ── */
+.btn{
+  border-radius:var(--v-r-md);
+  min-height:44px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  box-shadow:var(--v-s1);
+  transition:transform var(--v-paso), box-shadow var(--v-paso), background var(--v-paso);
+}
+.btn:hover{box-shadow:var(--v-s2)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:3px solid var(--v-cat);outline-offset:2px}
+.ex-go{
+  background:linear-gradient(180deg,#F2860F,#D9620A);
+  box-shadow:0 1px 2px rgba(16,24,40,.10), 0 10px 22px -10px rgba(217,98,10,.85);
+  font-size:var(--v-t1);
+  min-height:52px;
+}
+
+/* ── tarjetas de estado y capítulos ── */
+.stat{
+  background:var(--v-sup);border:1px solid var(--v-linea);
+  border-radius:var(--v-r-md);box-shadow:var(--v-s1);
+}
+.stat .v{color:var(--v-cat);font-size:var(--v-t2);letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums}
+.stat .l{color:var(--v-tinta3);font-size:var(--v-t-1);letter-spacing:.02em}
+
+.cap,.cat-btn{
+  border:1px solid var(--v-linea);
+  border-radius:var(--v-r-md);
+  background:var(--v-sup);
+  box-shadow:var(--v-s1);
+  transition:transform var(--v-paso), box-shadow var(--v-paso), border-color var(--v-paso);
+}
+.cap:hover,.cat-btn:hover{transform:translateY(-2px);box-shadow:var(--v-s2);border-color:var(--v-cat)}
+.cat-btn.on{
+  border-color:var(--v-cat);background:var(--v-cat-suave);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--v-cat) 18%, transparent);
+}
+.cat-btn .cn{color:var(--v-marca);letter-spacing:-.01em}
+
+/* ── la pregunta, que es donde vive la app ── */
+.q{
+  background:var(--v-sup);border:1px solid var(--v-linea);
+  border-radius:var(--v-r-lg);box-shadow:var(--v-s1);
+}
+.op{
+  border:1.5px solid var(--v-linea);
+  border-radius:var(--v-r-md);
+  min-height:44px;
+  transition:border-color var(--v-paso), background var(--v-paso), transform var(--v-paso);
+}
+.op:hover{border-color:var(--v-cat);background:var(--v-sup2)}
+.op:active{transform:scale(.995)}
+
+/* La marca de correcto entra con un pulso corto. Una respuesta acertada tiene
+   que SENTIRSE distinta, no solo verse verde. */
+@keyframes v-pulso{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.035)}
+  100%{transform:scale(1)}
+}
+.op.bien,.op.ok{animation:v-pulso .28s cubic-bezier(.2,.7,.3,1)}
+
+.timer{
+  font-variant-numeric:tabular-nums;
+  border-radius:999px;
+  letter-spacing:.01em;
+  box-shadow:var(--v-s1);
+}
+
+/* ── tarea de «qué estudiar hoy» ── */
+.tarea{
+  border-radius:var(--v-r-md);
+  border:1px solid var(--v-linea);
+  background:var(--v-sup);
+  box-shadow:var(--v-s1);
+  transition:box-shadow var(--v-paso), transform var(--v-paso);
+}
+.tarea:hover{box-shadow:var(--v-s2);transform:translateY(-1px)}
+
+/* ── separadores y notas ── */
+.sep span,.divisor{color:var(--v-tinta3);letter-spacing:.08em;font-size:var(--v-t-1)}
+.nota{color:var(--v-tinta2);font-size:var(--v-t-1);line-height:1.6}
+
+/* ── detalles plegables ── */
+details.card summary{
+  font-weight:700;letter-spacing:-.01em;min-height:44px;
+  display:flex;align-items:center;gap:.5rem;cursor:pointer;
+  border-radius:var(--v-r-md);
+}
+details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset:2px}
+
+/* ── ficha del participante y panel del director ── */
+.sesion{
+  border-left:none;
+  border:1px solid var(--v-linea);
+  border-radius:var(--v-r-lg);
+  background:linear-gradient(180deg,var(--v-cat-suave),var(--v-sup) 60%);
+}
+.ses-h{font-size:var(--v-t1);letter-spacing:-.02em;color:var(--v-marca)}
+.ses-fila input,.ses-fila select{
+  border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
+  min-height:44px;background:var(--v-sup);
+  transition:border-color var(--v-paso), box-shadow var(--v-paso);
+}
+.ses-fila input:focus,.ses-fila select:focus{
+  outline:none;border-color:var(--v-cat);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--v-cat) 18%, transparent);
+}
+.pan-sw{
+  background:var(--v-sup2);border:1px solid var(--v-linea);
+  border-radius:var(--v-r-md);padding:.8rem;justify-content:space-between;
+}
+
+/* ── tablas ── */
+.info-table{font-size:var(--v-t-1)}
+.info-table th{color:var(--v-tinta3);letter-spacing:.04em}
+
+/* ── accesibilidad y respeto por el usuario ──
+   Quien pidió menos movimiento en su sistema no ve ninguna animación. Esto no
+   es opcional: hay niñas con sensibilidad al movimiento y el ajuste existe
+   justo para eso. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+}  /* fin @media screen */
 </style>
 </head>
 <body>
@@ -623,11 +888,12 @@ details.card.sec[open]>summary{color:var(--azul)}
 <div id="p-examen" class="pantalla">
   <div id="ex-inicio">
     <div id="ex-cerrado"></div>
+    <div id="cb-sesion"></div>
     <div class="card ex-hoy">
       <div class="ex-h">✏️ Tu examen de hoy</div>
       <div class="ex-big" id="ex-resumen"></div>
       <div class="ex-sub" id="ex-desc"></div>
-      <button class="btn nar ex-go" onclick="iniciar('normal')">🚀 Comenzar</button>
+      <button class="btn nar ex-go" onclick="arrancaExamen('normal')">🚀 Comenzar</button>
       <div id="ex-err"></div>
     </div>
 
@@ -646,7 +912,7 @@ details.card.sec[open]>summary{color:var(--azul)}
           </label>
         </div>
         <div id="ex-disponible" class="nota"></div>
-        <button class="btn azul" style="margin-top:.8rem" onclick="iniciar('simulacro')">🎓 Hacer un simulacro</button>
+        <button class="btn azul" style="margin-top:.8rem" onclick="arrancaExamen('simulacro')">🎓 Hacer un simulacro</button>
         <p class="nota">El <strong>simulacro</strong> quita las pistas de la
         sección de completar y <strong>no muestra las respuestas al final</strong>:
         queda la nota, como en el examen de verdad. Para ver qué falló, el
@@ -678,7 +944,12 @@ details.card.sec[open]>summary{color:var(--azul)}
     </div>
 
     <details class="card dir">
-      <summary>🔒 Cerrar los exámenes hasta el día de la prueba</summary>
+      <summary>🌐 Cerrar los exámenes de TODOS los aparatos</summary>
+      <div id="cb-panel"></div>
+    </details>
+
+    <details class="card dir">
+      <summary>🔒 Cerrar los exámenes solo de este aparato</summary>
       <div class="det-cuerpo">
         <p class="nota" id="ex-dir-nota"></p>
         <p class="nota">Cerrados, el participante no puede armar exámenes en este
@@ -9559,8 +9830,16 @@ const MANUAL = [
     "h": "<p>La app no tiene servidor, así que <strong>no tiene un reloj de\n    confianza</strong>: una fecha escrita en el programa se burla cambiándole la\n    hora al celular. Lo que sí no se puede adivinar es la semilla del link, y esa\n    semilla solo existe cuando tú generas el link.</p>\n    <p>O sea que <strong>el control no es el día, es el momento en que lo\n    mandas</strong>. Si el simulacro es a las 3:00, manda el link a las 3:00.</p>\n    <p>Para que eso sirva de algo, el link se gasta al abrirse: un segundo\n    intento se rechaza. Si alguien lo abrió por error antes de la hora, tú lo\n    liberas con tu clave.</p>"
    },
    {
-    "t": "Cerrar los exámenes hasta el día de la prueba",
-    "h": "<p>En la pantalla de Examen, abajo, en\n    <strong>Examen → Cerrar los exámenes hasta el día de la prueba</strong>. Pide\n    tu clave y queda hecho de una.</p>\n    <p>Cerrados, el participante no puede armar exámenes en ese aparato: ni el\n    normal, ni el simulacro, ni el repaso de errores. Lo que <strong>sí</strong>\n    sigue funcionando: el examen que tú mandes por link, estudiar los capítulos y\n    las tarjetas.</p>\n    <div class=\"warn-box\">Vale para <strong>ese aparato</strong>. Hay que\n    cerrarlo en el celular de cada participante, y quien borre los datos del\n    navegador lo abre otra vez. Sin servidor no hay forma de cerrarlos todos de\n    una, así que esto ordena, no obliga.</div>\n    <p>Para qué sirve: durante las siete semanas los exámenes de práctica están\n    abiertos y muestran las respuestas, que es como se aprende. El día de la\n    prueba eso estorba, porque cualquiera puede abrir uno mientras espera. Se\n    cierran, se manda el link, y ese es el único examen que se puede hacer.</p>"
+    "t": "Cerrar los exámenes de TODOS los aparatos",
+    "h": "<p>En la pantalla de Examen, abajo, en\n    <strong>Examen → Cerrar los exámenes de TODOS los aparatos</strong>. Entras\n    con tu clave una vez y desde ahí cierras o abres para todo el club.</p>\n    <p>La diferencia con el interruptor de abajo: este vive en el servidor, no\n    en el celular. Lo cierras en tu teléfono y queda cerrado en el de cada\n    participante, sin tener que tocar ninguno. Quien borre los datos de su\n    navegador tampoco lo abre.</p>\n    <p>Cerrados, nadie puede armar un examen: ni el normal, ni el simulacro, ni\n    el repaso de errores. Lo que <strong>sí</strong> sigue funcionando: el examen\n    que tú mandes por link, estudiar y las tarjetas.</p>\n    <div class=\"warn-box\">Si un celular se queda sin señal, la app usa lo último\n    que supo del servidor. Si lo último fue <strong>cerrado</strong>, sigue\n    cerrado. Nunca se abre solo por falta de señal.</div>"
+   },
+   {
+    "t": "Los códigos de las participantes",
+    "h": "<p>En el mismo panel, debajo del interruptor. Escribes el nombre, eliges\n    la categoría y sale un <strong>código de 6 letras y números</strong>. Ese\n    código se lo das a la participante y ella lo escribe una sola vez en su\n    celular.</p>\n    <p>Para qué sirve: las notas quedan con su nombre y las ves todas juntas, y\n    el <strong>examen por link se gasta por persona, no por aparato</strong>.\n    Antes, con otra ficha en otro celular se podía repetir el mismo examen; ahora\n    no.</p>\n    <p>Del código no se saca nada más: en la base solo quedan el nombre de pila y\n    la categoría. Ni apellido, ni edad exacta, ni teléfono, ni foto.</p>\n    <p>Sin código la app funciona igual para estudiar y practicar. El código hace\n    falta para el examen del día del evento.</p>"
+   },
+   {
+    "t": "Cerrar los exámenes solo de este aparato",
+    "h": "<p>En la pantalla de Examen, abajo, en\n    <strong>Examen → Cerrar los exámenes solo de este aparato</strong>. Pide\n    tu clave y queda hecho de una.</p>\n    <p>Cerrados, el participante no puede armar exámenes en ese aparato: ni el\n    normal, ni el simulacro, ni el repaso de errores. Lo que <strong>sí</strong>\n    sigue funcionando: el examen que tú mandes por link, estudiar los capítulos y\n    las tarjetas.</p>\n    <div class=\"warn-box\">Vale para <strong>ese aparato</strong>. Hay que\n    cerrarlo en el celular de cada participante, y quien borre los datos del\n    navegador lo abre otra vez. Sin servidor no hay forma de cerrarlos todos de\n    una, así que esto ordena, no obliga.</div>\n    <p>Para qué sirve: durante las siete semanas los exámenes de práctica están\n    abiertos y muestran las respuestas, que es como se aprende. El día de la\n    prueba eso estorba, porque cualquiera puede abrir uno mientras espera. Se\n    cierran, se manda el link, y ese es el único examen que se puede hacer.</p>"
    },
    {
     "t": "La clave del director",
@@ -10162,6 +10441,77 @@ function salirDirector(){
    clave, en el mismo aparato y al terminar. */
 const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='compartido');
 
+/* ───────── el servidor (v20) ─────────
+   MECANISMO, Y ES EL CAMBIO DE FONDO DE ESTA VERSIÓN
+   Hasta v19 el cierre vivía en el localStorage de cada celular. localStorage es
+   por origen y por navegador: ningún aparato puede preguntarle nada a otro, así
+   que cerrar había que repetirlo celular por celular y borrar los datos del
+   navegador lo abría. Ahora hay una fila en D1 que todos los aparatos leen. La
+   app dejó de decidir si puede arrancar un examen: lo PREGUNTA.
+
+   CÓMO SE COMPORTA SIN SEÑAL, QUE ES EL CASO QUE IMPORTA
+   El campamento puede no tener red. Por eso:
+     · La respuesta del servidor se guarda en el aparato con su hora.
+     · Si el servidor no contesta, manda lo último que dijo. Si dijo «cerrado»,
+       sigue cerrado: se falla CERRADO, nunca abierto por accidente.
+     · Si nunca contestó, manda el interruptor local de v19, que sigue vivo como
+       respaldo.
+   Estudiar, las tarjetas y el manual no le preguntan nada a nadie: la app sigue
+   funcionando completa sin señal. */
+const SRV_CACHE='cb-srv';
+const SRV_TIMEOUT=2500;
+let srvYo=null;
+
+function srvLee(){
+  try{
+    const x=JSON.parse(localStorage.getItem(SRV_CACHE)||'null');
+    return x&&typeof x==='object'&&typeof x.abierto==='boolean'?x:null;
+  }catch(e){return null;}
+}
+
+function srvGuarda(abierto){
+  try{localStorage.setItem(SRV_CACHE,JSON.stringify({abierto:!!abierto,visto:Date.now()}));}catch(e){}
+}
+
+/* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
+   la niña mirando un botón que no responde. */
+async function srvFetch(ruta,opciones){
+  const ctrl=typeof AbortController!=='undefined'?new AbortController():null;
+  const t=ctrl?setTimeout(()=>ctrl.abort(),SRV_TIMEOUT):0;
+  try{
+    const o=Object.assign({credentials:'same-origin'},opciones||{});
+    if(ctrl)o.signal=ctrl.signal;
+    if(o.body)o.headers=Object.assign({'content-type':'application/json'},o.headers||{});
+    const r=await fetch('/api'+ruta,o);
+    let d=null;try{d=await r.json();}catch(e){}
+    if(!r.ok){const err=new Error((d&&d.error)||'No se pudo conectar');err.datos=d;err.status=r.status;throw err;}
+    return d;
+  }finally{if(t)clearTimeout(t);}
+}
+
+/* Refresca el interruptor global. Devuelve true si el servidor contestó. */
+async function srvRefresca(){
+  try{const d=await srvFetch('/estado');srvGuarda(d.abierto);return true;}
+  catch(e){return false;}
+}
+
+async function srvQuienSoy(){
+  try{const d=await srvFetch('/yo');srvYo=d&&d.rol?d:null;}
+  catch(e){srvYo=null;}
+  return srvYo;
+}
+
+/* La nota se manda al servidor pero NO se espera: si no hay señal, la nota ya
+   quedó guardada en el aparato y la pantalla no se puede quedar esperando. */
+function srvIntento(modo,semilla,nota,total){
+  if(!srvYo||srvYo.rol!=='participante')return;
+  let idem='';
+  try{idem=crypto.randomUUID();}catch(e){idem=String(Date.now())+Math.random();}
+  srvFetch('/intento',{method:'POST',body:JSON.stringify(
+    {modo:modo,semilla:semilla==null?null:String(semilla),nota:nota,total:total,idempotency_key:idem})})
+    .catch(function(){});
+}
+
 /* ───────── modo evento ─────────
    MECANISMO
    Un interruptor por aparato que apaga los exámenes que el participante arma
@@ -10183,7 +10533,15 @@ const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='compartido');
    datos del navegador lo apaga, y en un aparato nuevo el interruptor no existe.
    Sin servidor no hay forma de que un cierre valga para todos los aparatos a la
    vez. Contra eso el control es mirar, no técnico. */
-const examenesCerrados=()=>!!(DB&&DB.evento)&&!director;
+/* El cierre efectivo: manda el servidor, y el interruptor del aparato queda de
+   respaldo para cuando el servidor no contesta. El director se salta los dos. */
+const examenesCerrados=()=>{
+  if(director)return false;
+  const c=srvLee();
+  if(c&&c.abierto===false)return true;
+  if(c&&c.abierto===true)return !!(DB&&DB.evento);
+  return !!(DB&&DB.evento);
+};
 
 function alternaEvento(){DB.evento=!DB.evento;guardar();}
 
@@ -10365,7 +10723,7 @@ function tareasDeHoy(){
   const err=falladasDe().length;
   if(err>=3)tareas.push({ic:'🔁',t:'Repasar '+err+' errores',
     d:'Preguntas que fallaste y todavía no dominas. Es lo que más puntos recupera.',
-    b:'Repasar ahora',f:"iniciar('errores')"});
+    b:'Repasar ahora',f:"arrancaExamen('errores')"});
 
   const porDominar=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
   if(porDominar)tareas.push({ic:'🃏',t:porDominar+' tarjetas por dominar',
@@ -10389,13 +10747,13 @@ function tareasDeHoy(){
   const n=nivelEfectivo();
   tareas.push({ic:'✏️',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
     d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
-    b:'Comenzar',f:"iniciar('normal')"});
+    b:'Comenzar',f:"arrancaExamen('normal')"});
 
   /* Con los exámenes cerrados, las tareas que arrancan uno no se ofrecen: leer y
      las tarjetas siguen igual, y en su lugar entra una que explica por qué, para
      que la pantalla no quede muda. */
   if(examenesCerrados()){
-    const quedan=tareas.filter(t=>!/iniciar\(|examenDeCapitulo\(/.test(t.f));
+    const quedan=tareas.filter(t=>!/arrancaExamen\(|examenDeCapitulo\(/.test(t.f));
     quedan.push({ic:'🔒',t:'Los exámenes están cerrados',
       d:'El director los abre el día de la prueba. Si te llega un examen por link, ese sí se puede hacer.',
       b:'Ver',f:"ir('examen')"});
@@ -10426,7 +10784,7 @@ function pintaHoy(){
 
 /* Atajos que usa el panel. */
 function irTarjetasDificiles(){tjFiltro='dificiles';ir('tarjetas');tjBaraja();}
-function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();iniciar('normal');}
+async function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();await arrancaExamen('normal');}
 
 /* ───────── inicio ───────── */
 /* Una línea con quién estudia y qué estudia, en vez de las seis categorías
@@ -10744,7 +11102,7 @@ function pintaExInicio(){
   document.getElementById('ex-nota').textContent=
     'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces.';
   document.getElementById('ex-err').innerHTML=f>=3
-    ?'<button class="btn gho" onclick="iniciar(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
+    ?'<button class="btn gho" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
   pintaCierre();
 }
 
@@ -10830,6 +11188,10 @@ function barajaOpciones(q){
    para practicar sin acostumbrarse a ir lento. */
 const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?80:72)));
 
+/* iniciar() sigue siendo la GUARDA y sigue siendo síncrona: decide con lo que
+   ya sabe. Quien le da frescura es arrancaExamen(), que es lo que llaman los
+   botones: pregunta al servidor y después llama aquí. Separarlos deja la
+   cerradura en un solo lugar y mantiene la app probable sin red. */
 function iniciar(m){
   /* Guarda de verdad, no cosmética. Aunque un botón quede pintado de antes o
      alguien llame iniciar() por otro camino, aquí se detiene: esconder el botón
@@ -10849,6 +11211,13 @@ function iniciar(m){
   document.getElementById('ex-curso').style.display='block';
   document.getElementById('ex-result').style.display='none';
   pintaPreguntas();corre();
+}
+
+/* Lo que llaman todos los botones. Le pregunta al servidor y luego arranca.
+   Si el servidor no contesta, iniciar() decide con lo último conocido. */
+async function arrancaExamen(m){
+  await srvRefresca();
+  iniciar(m);
 }
 
 function corre(){
@@ -10987,6 +11356,10 @@ function entregar(){
     guardar();
   }
 
+  /* La nota también al servidor, cuando hay ficha de participante. Es lo que
+     permite que el link se gaste por PERSONA y no por aparato. */
+  srvIntento(modo,modo==='compartido'?semLink:null,pts,tot);
+
   ultimoRes={pts,tot,pct,med,msg,s3};
   document.getElementById('ex-curso').style.display='none';
   pintaResultado();
@@ -11031,7 +11404,7 @@ function pintaResultado(){
        '<button class="btn gho" style="margin-top:.7rem" onclick="pideClaveDir(\'res\')">🔑 Soy el director</button>'+
        '</div>')+
     '<div style="display:flex;gap:.7rem;flex-wrap:wrap">'+
-    (ver&&falladasDe().length>=3?'<button class="btn azul" onclick="iniciar(\'errores\')">🔁 Repasar mis errores ('+falladasDe().length+')</button>':'')+
+    (ver&&falladasDe().length>=3?'<button class="btn azul" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis errores ('+falladasDe().length+')</button>':'')+
     '<button class="btn nar" onclick="reinicia()">🔄 Otro examen</button>'+
     '<button class="btn azul" onclick="ir(\'estudio\')">📖 Estudiar</button>'+
     '<button class="btn gho" onclick="ir(\'logros\')">🏆 Logros</button></div>';
@@ -11953,6 +12326,151 @@ try{
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
   else revisaLink();
 }catch(e){console.error(e);}
+
+/* ───────── entrar con el código (v20) ─────────
+   POR QUÉ UN CÓDIGO Y NO UN USUARIO CON CONTRASEÑA
+   Quien usa esto tiene entre 4 y 9 años. Un correo y una contraseña son dos
+   cosas que olvidar y una que se escribe mal en un teclado de celular. El
+   director entrega un código de 6 caracteres, se escribe UNA vez, y el aparato
+   guarda una cookie de 60 días: las siete semanas de estudio caben enteras. */
+function pintaSesion(){
+  const d=document.getElementById('cb-sesion');
+  if(!d)return;
+  if(srvYo&&srvYo.rol==='participante'){
+    d.innerHTML='<div class="card sesion"><div class="ses-h">Hola, '+esc(srvYo.nombre)+'</div>'+
+      '<p class="nota">Categoría '+esc(srvYo.categoria)+'. Tus notas le llegan al director del club.</p>'+
+      '<button class="btn gho" onclick="salirCodigo()">Salir de mi ficha</button></div>';
+    return;
+  }
+  d.innerHTML='<div class="card sesion"><div class="ses-h">Entra con tu código</div>'+
+    '<p class="nota">El director del club te da un código de 6 letras y números. '+
+    'Se escribe una sola vez en este celular.</p>'+
+    '<div class="ses-fila"><input id="cb-cod" maxlength="9" autocomplete="off" '+
+    'spellcheck="false" placeholder="ABC234" oninput="this.value=this.value.toUpperCase()">'+
+    '<button class="btn nar" onclick="entraCodigo()">Entrar</button></div>'+
+    '<p class="nota" id="cb-cod-msg"></p>'+
+    '<p class="nota">Sin código también puedes estudiar y practicar. El código sirve '+
+    'para que tus notas queden con tu nombre y para el examen del día del evento.</p></div>';
+}
+
+async function entraCodigo(){
+  const i=document.getElementById('cb-cod'),m=document.getElementById('cb-cod-msg');
+  if(!i)return;
+  if(m)m.textContent='Un momento...';
+  try{
+    const d=await srvFetch('/entrar',{method:'POST',body:JSON.stringify({codigo:i.value})});
+    srvYo={rol:'participante',nombre:d.nombre,categoria:d.categoria};
+    pintaSesion();pintaExInicio();pintaInicio();
+  }catch(e){
+    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+  }
+}
+
+async function salirCodigo(){
+  try{await srvFetch('/salir',{method:'POST'});}catch(e){}
+  srvYo=null;pintaSesion();
+}
+
+/* ───────── el panel del director (v20) ─────────
+   La clave es la MISMA que la de v18. Aquí viaja al servidor para abrir una
+   sesión de director; la de v18 sigue viviendo en el aparato y sirve para ver
+   la revisión sin señal. Dos caminos, una sola clave que recordar. */
+async function entraPanel(){
+  const i=document.getElementById('pan-clave'),m=document.getElementById('pan-msg');
+  if(!i)return;
+  if(m)m.textContent='Un momento...';
+  try{
+    await srvFetch('/panel/entrar',{method:'POST',body:JSON.stringify({clave:i.value})});
+    srvYo={rol:'director'};
+    await pintaPanel();
+  }catch(e){
+    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+  }
+}
+
+async function pintaPanel(){
+  const d=document.getElementById('cb-panel');
+  if(!d)return;
+  if(!srvYo||srvYo.rol!=='director'){
+    d.innerHTML='<div class="det-cuerpo"><p class="nota">Entra con la clave del director para '+
+      'cerrar los exámenes de TODOS los aparatos a la vez y para manejar los códigos.</p>'+
+      '<div class="ses-fila"><input id="pan-clave" type="password" autocomplete="off" placeholder="Clave">'+
+      '<button class="btn azul" onclick="entraPanel()">Entrar</button></div>'+
+      '<p class="nota" id="pan-msg"></p></div>';
+    return;
+  }
+  const c=srvLee();
+  const abierto=!c||c.abierto!==false;
+  let lista='<p class="nota">Cargando...</p>';
+  d.innerHTML='<div class="det-cuerpo">'+
+    '<div class="pan-sw"><strong>Exámenes de práctica: '+(abierto?'ABIERTOS':'CERRADOS')+'</strong>'+
+    '<button class="btn '+(abierto?'gho':'nar')+'" onclick="alternaServidor('+(abierto?'false':'true')+')">'+
+    (abierto?'Cerrar para todos':'Abrir para todos')+'</button></div>'+
+    '<p class="nota">Vale para <strong>todos los aparatos a la vez</strong>. El examen que '+
+    'mandes por link sigue funcionando cerrado, y estudiar y las tarjetas también.</p>'+
+    '<div class="divisor">Participantes</div>'+
+    '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
+    '<select id="pan-cat"><option value="4-6">4-6</option><option value="7-9">7-9</option>'+
+    '<option value="padres">Padres</option></select>'+
+    '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
+    '<div id="pan-lista">'+lista+'</div></div>';
+  await cargaParticipantes();
+}
+
+async function alternaServidor(abrir){
+  try{
+    const d=await srvFetch('/panel/examenes',{method:'POST',body:JSON.stringify({abiertos:!!abrir})});
+    srvGuarda(d.abierto);
+    await pintaPanel();pintaExInicio();pintaInicio();
+  }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+async function cargaParticipantes(){
+  const d=document.getElementById('pan-lista');
+  if(!d)return;
+  try{
+    const r=await srvFetch('/panel/participantes');
+    const p=r.participantes||[];
+    if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
+    d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
+      '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
+        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(x.categoria)+'</td>'+
+          '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
+          '<td><button class="btn gho" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
+      }).join('')+'</table></div>';
+  }catch(e){d.innerHTML='<p class="nota">No se pudo cargar: '+esc(e.message||'')+'</p>';}
+}
+
+async function creaParticipante(){
+  const n=document.getElementById('pan-nom'),c=document.getElementById('pan-cat');
+  if(!n||!n.value.trim())return;
+  try{
+    await srvFetch('/panel/participantes',{method:'POST',
+      body:JSON.stringify({nombre:n.value,categoria:c.value})});
+    n.value='';
+    await cargaParticipantes();
+  }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+async function borraParticipante(id){
+  try{
+    await srvFetch('/panel/participantes/'+encodeURIComponent(id)+'/borrar',{method:'POST'});
+    await cargaParticipantes();
+  }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+/* Arranque: se le pregunta al servidor sin bloquear la pantalla. Si no hay
+   señal, la app abre igual con lo último que supo. */
+(async function(){
+  try{
+    await srvRefresca();
+    await srvQuienSoy();
+    pintaSesion();
+    if(srvYo&&srvYo.rol==='director')await pintaPanel();else await pintaPanel();
+    if(typeof pintaExInicio==='function')pintaExInicio();
+    if(typeof pintaInicio==='function')pintaInicio();
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
