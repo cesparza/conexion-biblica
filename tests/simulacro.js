@@ -1,10 +1,11 @@
-/* Prueba el candado del simulacro contra el JS real del index.html.
+/* Prueba la evaluación del día contra el JS real del index.html.
 
    QUÉ SE PRUEBA Y POR QUÉ
-   El simulacro se cierra en el tiempo sin servidor, y eso se apoya en tres
-   piezas: la semilla es impredecible, el link se gasta al abrirse, y la
-   revisión solo se abre con la clave del director. Cada una se puede romper con
-   un cambio inocente en otra parte, y las tres son invisibles a ojo. */
+   La app de preparación se apoya en cuatro piezas: la práctica se cierra sola
+   cuando hay una evaluación abierta, sin señal se falla CERRADO, la evaluación
+   no muestra las respuestas, y la revisión solo se abre con la clave del
+   director. Cada una se puede romper con un cambio inocente en otra parte, y
+   las cuatro son invisibles a ojo. */
 const fs=require('fs'),path=require('path');
 const RAIZ=path.join(__dirname,'..');
 const html=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
@@ -33,194 +34,114 @@ let btoa=s=>Buffer.from(s,'binary').toString('base64');
 let atob=s=>Buffer.from(s,'base64').toString('binary');
 `;
 const fn=new Function('store','sesion','nodo','Buffer',stub+js+`
-return {S:()=>S, ponCat, normalizar, guardar, huellaBanco, escribeReceta, leeReceta,
-        semillaNueva, revelaRespuestas, activaDirector, salirDirector,
-        aceptaLink, entregar, pintaInvitacion, iniciar, reinicia,
-        ponReceta:r=>{recetaPend=r}, receta:()=>recetaPend,
+return {S:()=>S, ponCat, normalizar, guardar, huellaBanco,
+        revelaRespuestas, activaDirector, salirDirector,
+        entregar, iniciar, reinicia, prng, armar, claveQ,
         ponModo:m=>{modo=m}, modoActual:()=>modo,
-        esDirector:()=>director, semLinkActual:()=>semLink,
+        ponRnd:f=>{rndEx=f}, rndNormal:()=>{rndEx=Math.random},
+        ponAlcance:v=>{alcance=v}, ponNivel:v=>{nivel=v}, ponCuantas:v=>{cuantas=v},
+        esDirector:()=>director,
         prueba:()=>prueba, ultimoRes:()=>ultimoRes,
-        entraDirector, pideClaveDir, pintaLinkUsado, pintaLogros,
-        examenesCerrados, alternaEvento, normalizarDB, tareasDeHoy, pintaCierre,
+        entraDirector, pideClaveDir, pintaLogros,
+        examenesCerrados, normalizarDB, tareasDeHoy, pintaCierre,
+        srvLee, srvGuarda, pintaEvaluacion,
+        ponEval:e=>{evalPend=e;evalHecha=false}, evalPend:()=>evalPend,
+        haceEvaluacion, evalActual:()=>evalActual,
         DB:()=>DB,
         el:id=>document.getElementById(id)};`);
 const A=fn(store,sesion,nodo,Buffer);
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 
-/* ── la semilla es el secreto, así que tiene que ser impredecible ── */
-const semillas=new Set();
-for(let i=0;i<500;i++)semillas.add(A.semillaNueva());
-ok(semillas.size===500,'500 semillas seguidas no repiten ninguna ('+semillas.size+')');
-ok([...semillas].every(s=>Number.isInteger(s)&&s>=0&&s<=4294967295),
-  'Toda semilla es un entero de 32 bits sin signo');
-/* Con Date.now() como base, las semillas de un mismo segundo comparten los
-   bits altos. Con azar del sistema no: se reparten por todo el rango. */
-const altos=new Set([...semillas].map(s=>s>>>24));
-ok(altos.size>=200,'Las semillas se reparten por todo el rango, no por reloj ('+altos.size+' de 256 bytes altos)');
-
-/* ── normalizar() sanea el registro de links usados ── */
-const n1=A.normalizar({links:{'123':{pts:12,total:15,fecha:'2026-10-09'}}});
-ok(n1.links['123']&&n1.links['123'].pts===12,'normalizar conserva un link usado con su nota');
-const n2=A.normalizar({links:{'9':{pts:null,total:15,fecha:''}}});
-ok(n2.links['9']&&n2.links['9'].pts===null,'normalizar conserva un link abierto y sin terminar');
-const n3=A.normalizar({links:{'x':'basura','y':null,'z':{pts:'no'}}});
-ok(n3.links['x']===undefined&&n3.links['y']===undefined,'normalizar descarta entradas que no son objeto');
-ok(n3.links['z']&&n3.links['z'].pts===null,'Un puntaje que no es número queda como sin terminar');
-ok(A.normalizar(null).links&&Object.keys(A.normalizar(null).links).length===0,
-  'Una ficha sin links arranca con el registro vacío');
-
-/* ── un link se gasta al abrirlo ── */
+/* ───────── UNA SOLA PERILLA ─────────
+   La práctica está cerrada exactamente cuando hay una evaluación abierta. Antes
+   había dos interruptores y un link; si vuelve a aparecer un segundo estado,
+   estas pruebas lo tienen que ver. */
 A.ponCat('av');
-const SEM=987654321;
-const receta={c:'av',a:'todo',n:1,q:15,s:SEM,h:A.huellaBanco()};
-const r=A.leeReceta(A.escribeReceta(receta));
-ok(r&&r.s===SEM,'La receta de prueba se lee bien');
+ok(A.examenesCerrados()===false,'Sin nada en el servidor, la práctica está abierta');
 
-A.ponReceta(r);
-A.aceptaLink();
-ok(A.prueba().length===15,'El link armó las 15 preguntas');
-ok(A.modoActual()==='compartido','El examen del link corre en modo compartido');
-ok(A.semLinkActual()===SEM,'La semilla del link queda activa');
-const reg=A.S().links[String(SEM)];
-ok(reg&&reg.pts===null,'Al ABRIR el link su semilla queda anotada, todavía sin nota');
-ok(reg&&reg.total===15,'La anotación guarda cuántas preguntas eran');
+A.srvGuarda(false,'ev1','Sábado de prueba');
+ok(A.examenesCerrados()===true,'Con una evaluación abierta, la práctica se cierra');
 
-/* Segundo intento con la misma semilla: la app lo rechaza. */
-A.ponReceta(r);
-A.pintaInvitacion(r);
-const pantalla=A.el('ex-result').innerHTML;
-ok(/ya se usó/.test(pantalla),'Un segundo intento con la misma semilla se rechaza');
-ok(/Soy el director/.test(pantalla),'La pantalla de link usado ofrece liberarlo con la clave');
+A.srvGuarda(true,null,null);
+ok(A.examenesCerrados()===false,'Al cerrar la evaluación, la práctica vuelve');
 
-/* ── la revisión está cerrada en simulacro y en link ── */
-A.ponModo('compartido');
-ok(A.revelaRespuestas()===false,'En un examen por link la revisión está cerrada');
+/* SIN SEÑAL SE FALLA CERRADO. Es la regla que no se puede romper: si el
+   servidor no contesta, manda lo último que dijo. */
+A.srvGuarda(false,'ev1','x');
+ok(A.srvLee().practica===false,'Lo último que dijo el servidor queda guardado');
+ok(A.examenesCerrados()===true,'Sin señal, si lo último fue cerrado, sigue cerrado');
+
+/* Ningún examen que la participante arme sola arranca con la práctica cerrada. */
+for(const m of ['normal','simulacro','errores']){
+  A.reinicia();
+  A.iniciar(m);
+  ok(A.prueba().length===0,'Con la práctica cerrada, iniciar('+m+') no arranca nada');
+}
+
+/* La pantalla de Inicio deja de ofrecer exámenes y dice por qué. */
+const hoyCerrado=A.tareasDeHoy();
+ok(!hoyCerrado.some(t=>/arrancaExamen\(|examenDeCapitulo\(/.test(t.f)),
+  'Cerrada, «Qué estudiar hoy» no ofrece ninguna tarea de examen');
+ok(hoyCerrado.some(t=>/cerrados/i.test(t.t)),'Y en su lugar dice que están cerrados');
+ok(hoyCerrado.some(t=>/tarjetas|Leer/i.test(t.t)),'Estudiar y las tarjetas siguen ofreciéndose');
+
+/* ───────── LA EVALUACIÓN SÍ CORRE CON LA PRÁCTICA CERRADA ─────────
+   Esa es toda la gracia: lo que se cierra es la práctica, no la evaluación. */
+A.reinicia();
+A.ponEval({id:'ev1',titulo:'Sábado 6',alcance:'todo',cuantas:15,nivel:2,semilla:123456789});
+A.haceEvaluacion();
+ok(A.prueba().length===15,'Con la práctica cerrada, la evaluación SÍ se puede hacer');
+ok(A.modoActual()==='evaluacion','Y corre en modo evaluación');
+ok(A.evalActual()&&A.evalActual().id==='ev1','Queda registrada cuál evaluación se está haciendo');
+
+/* La revisión está cerrada en la evaluación y en el simulacro, y abierta en el
+   examen normal y en el repaso de errores. */
+ok(A.revelaRespuestas()===false,'En la evaluación no se ven las respuestas');
 A.ponModo('simulacro');
-ok(A.revelaRespuestas()===false,'En un simulacro la revisión está cerrada');
+ok(A.revelaRespuestas()===false,'En el simulacro tampoco');
 A.ponModo('normal');
-ok(A.revelaRespuestas()===true,'En un examen normal la revisión se muestra');
+ok(A.revelaRespuestas()===true,'En un examen normal sí');
 A.ponModo('errores');
-ok(A.revelaRespuestas()===true,'El repaso de errores sí muestra las respuestas');
+ok(A.revelaRespuestas()===true,'Y en el repaso de errores también');
 
-/* ── entregar cierra el link con su nota ── */
-A.ponReceta(r);
-A.S().links={};
-A.aceptaLink();
+A.ponModo('evaluacion');
 A.entregar();
-const cerrado=A.S().links[String(SEM)];
-ok(cerrado&&typeof cerrado.pts==='number','Al entregar, el link queda cerrado con una nota');
-ok(cerrado&&cerrado.pts===0,'Sin responder nada la nota es cero');
 const res=A.el('ex-result').innerHTML;
-ok(/revisión está cerrada/.test(res),'La pantalla de resultado de un link no muestra la revisión');
+ok(/revisión está cerrada/.test(res),'La pantalla de resultado de la evaluación no muestra la revisión');
 ok(!/Respuesta:/.test(res),'La pantalla no deja ver ninguna respuesta correcta');
 ok(/Soy el director/.test(res),'La pantalla ofrece la clave del director');
 
-/* ── el examen de todos los días no cambió: sigue mostrando la revisión ── */
+/* Una evaluación ya hecha no se puede repetir desde la app. La regla de verdad
+   vive en la base (índice único), esto solo evita el intento. */
+const antes=A.prueba().length;
+A.haceEvaluacion();
+ok(A.prueba().length===antes,'Una evaluación ya entregada no se vuelve a armar');
+
+/* ───────── EL EXAMEN NORMAL NO CAMBIÓ ───────── */
+A.srvGuarda(true,null,null);
 A.reinicia();
 A.iniciar('normal');
+ok(A.prueba().length>0,'Con la práctica abierta, un examen normal arranca');
 A.entregar();
 const normal=A.el('ex-result').innerHTML;
 ok(/Revisión/.test(normal)&&!/revisión está cerrada/.test(normal),
   'Un examen normal sigue mostrando la revisión completa');
-ok(/Repasar mis errores|Otro examen/.test(normal),'Un examen normal conserva sus botones');
 
-/* ── un examen normal no toca el registro de links ── */
-A.iniciar('simulacro');
-ok(A.semLinkActual()===null,'Un examen armado en el aparato no lleva semilla de link');
-const antes=Object.keys(A.S().links).length;
-A.entregar();
-ok(Object.keys(A.S().links).length===antes,'Entregar un simulacro propio no anota ningún link');
-
-/* ── modo evento: el director cierra los exámenes que se arman en el aparato ──
-   Lo que importa: que el cierre NO toque el examen por link, que es el único que
-   el director quiere que se haga ese día. */
-ok(A.examenesCerrados()===false,'De entrada los exámenes están abiertos');
-ok(A.DB().evento===false,'El interruptor arranca apagado');
-
-A.alternaEvento();
-ok(A.DB().evento===true&&A.examenesCerrados(),'El interruptor cierra los exámenes');
-
-/* Ningún examen que se arme en el aparato arranca. */
-for(const m of ['normal','simulacro','errores']){
-  A.reinicia();
-  A.iniciar(m);
-  ok(A.prueba().length===0,'Con los exámenes cerrados, iniciar('+m+') no arranca nada');
-}
-
-/* Pero el que llega por link sí. Esa es toda la gracia. */
-A.S().links={};
-A.ponReceta(A.leeReceta(A.escribeReceta(receta)));
-A.aceptaLink();
-ok(A.prueba().length===15,'Con los exámenes cerrados, el examen por link SÍ se puede hacer');
-ok(A.modoActual()==='compartido','Y corre como examen compartido');
-A.entregar();
-ok(typeof A.S().links[String(SEM)].pts==='number','El examen por link se cierra con su nota igual');
-
-/* La pantalla de Inicio no ofrece tareas que arranquen un examen. */
-const hoyCerrado=A.tareasDeHoy();
-ok(!hoyCerrado.some(t=>/arrancaExamen\(|examenDeCapitulo\(/.test(t.f)),
-  'Cerrados, «Qué estudiar hoy» no ofrece ninguna tarea de examen');
-ok(hoyCerrado.some(t=>/cerrados/i.test(t.t)),'Y en su lugar dice que están cerrados');
-ok(hoyCerrado.some(t=>/tarjetas|Leer/i.test(t.t)),'Estudiar y las tarjetas siguen ofreciéndose');
-
-/* El director ve todo aunque el aparato esté cerrado, para poder probar.
-   Va como función y no como IIFE, y monta y desmonta su propio estado: un await
-   cede el control al resto del archivo, que es síncrono y ya había vuelto a
-   abrir el interruptor. La prueba fallaba por el orden, no por la app. */
-async function pruebaDirectorSobreCierre(){
-  const antes=A.DB().evento;
-  if(!A.DB().evento)A.alternaEvento();
-  await A.activaDirector(CLAVE);
-  ok(A.examenesCerrados()===false,'Con el perfil director activo el cierre no le aplica');
-  A.salirDirector();
-  ok(A.examenesCerrados()===true,'Al salir del perfil, el aparato sigue cerrado');
-  if(A.DB().evento!==antes)A.alternaEvento();
-}
-
-/* normalizarDB solo acepta true: cualquier basura deja los exámenes abiertos,
-   que es el estado normal de las siete semanas de estudio. */
-ok(A.normalizarDB({evento:true}).evento===true,'Un aparato cerrado sigue cerrado al recargar');
-ok(A.normalizarDB({evento:'si'}).evento===false,'Un valor que no es true deja los exámenes abiertos');
-ok(A.normalizarDB({}).evento===false,'Sin el campo, los exámenes están abiertos');
-ok(A.normalizarDB(null).evento===false,'Un aparato nuevo arranca con los exámenes abiertos');
-
-A.alternaEvento();
-ok(A.DB().evento===false&&!A.examenesCerrados(),'El interruptor los vuelve a abrir');
+/* ───────── EL HISTORIAL DISTINGUE DE DÓNDE VINO CADA EXAMEN ─────────
+   Solo la evaluación es comparable entre dos niñas: es el mismo examen el
+   mismo día. En la tabla se tienen que ver distintos. */
 A.reinicia();
-A.iniciar('normal');
-ok(A.prueba().length>0,'Abiertos otra vez, un examen normal arranca');
-
-/* ── el historial distingue de dónde vino cada examen ──
-   Sin esto el director no puede comparar: solo los exámenes por link son el
-   mismo examen para dos niños, y en la tabla se veían iguales a los normales. */
+A.iniciar('simulacro');
+A.entregar();
 A.pintaLogros();
 const hist=A.el('historial').innerHTML;
-ok(/🔗/.test(hist),'El historial marca con 🔗 el examen que vino por link');
-ok(/🎓/.test(hist),'El historial marca con 🎓 el simulacro');
-ok(A.S().examenes.some(e=>e.modo==='compartido'),'El examen por link se registra como compartido');
+ok(/simulacro/.test(hist),'El historial marca el simulacro');
+ok(/evaluación/.test(hist),'El historial marca la evaluación');
+ok(!/[\u{1F300}-\u{1FAFF}]/u.test(hist),'El historial ya no usa emojis, usa palabras');
 
-/* ── liberar un link que se abrió por error ──
-   Se prueba llegando a la pantalla SIN pasar por revisaLink, que es el camino
-   que dejó el botón sin efecto la primera vez: aceptaLink() limpia recetaPend,
-   así que el liberar no podía colgar de esa variable. */
-async function pruebaLibera(){
-  await A.activaDirector(CLAVE);
-  A.ponReceta(null);
-  A.S().links[String(SEM)]={pts:null,total:15,fecha:'2026-10-09'};
-  A.pintaLinkUsado(A.leeReceta(A.escribeReceta(receta)));
-  A.pideClaveDir('libera');
-  A.el('dir-clave').value=CLAVE;
-  await A.entraDirector();
-  await new Promise(r=>setTimeout(r,20));
-  ok(!A.S().links[String(SEM)],'El director libera un link aunque recetaPend esté vacío');
-  ok(/Examen compartido/.test(A.el('ex-result').innerHTML),
-    'Al liberarlo vuelve a salir la invitación al examen');
-  A.salirDirector();
-}
-
-/* ── la clave del director ── */
-/* LA CLAVE NO VIVE EN ESTE ARCHIVO, Y ES EL ARREGLO DE v20.
+/* ───────── LA CLAVE DEL DIRECTOR ─────────
+   LA CLAVE NO VIVE EN ESTE ARCHIVO, Y ES EL ARREGLO DE v20.
    Hasta v19 estaba escrita aquí diez veces, en un repositorio PÚBLICO. La
    huella en el HTML era segura y el proceso no: la prueba de abajo verificaba
    que la clave no estuviera en index.html y pasaba en verde, porque miraba el
@@ -234,23 +155,26 @@ if(!CLAVE){
 }
 
 (async()=>{
-  await pruebaDirectorSobreCierre();
-  await pruebaLibera();
-  const mal=await A.activaDirector('esta-no-es');
+  const mal=await A.activaDirector('esta-no-es-la-clave');
   ok(mal!==''&&A.esDirector()===false,'Una clave equivocada no abre el perfil director');
   const vacia=await A.activaDirector('');
   ok(vacia!==''&&A.esDirector()===false,'Una clave vacía no abre el perfil director');
+
   const bien=await A.activaDirector(CLAVE);
   ok(bien===''&&A.esDirector()===true,'La clave correcta abre el perfil director');
   ok(sesion['cb-dir']==='1','El perfil queda en sessionStorage, que se borra al cerrar la pestaña');
 
-  A.ponModo('compartido');
-  ok(A.revelaRespuestas()===true,'Con el perfil director la revisión de un link se abre');
-  A.salirDirector();
-  ok(A.esDirector()===false&&!sesion['cb-dir'],'Salir del modo director lo cierra y limpia el rastro');
-  ok(A.revelaRespuestas()===false,'Al salir, la revisión vuelve a quedar cerrada');
+  /* El director ve la revisión de la evaluación, que es para lo que existe. */
+  A.ponModo('evaluacion');
+  ok(A.revelaRespuestas()===true,'Con el perfil director la revisión de la evaluación se abre');
 
-  /* El HTML no puede llevar la clave, solo su huella. */
+  /* Y se salta el cierre, para poder probar el día antes. */
+  A.srvGuarda(false,'ev2','x');
+  ok(A.examenesCerrados()===false,'Con el perfil director activo el cierre no le aplica');
+  A.salirDirector();
+  ok(A.examenesCerrados()===true,'Al salir del perfil, la práctica sigue cerrada');
+  A.srvGuarda(true,null,null);
+
   /* La clave se escribe en un celular y el teclado de iOS pone mayúscula solo:
      las tres formas tienen que entrar, o el director cree que se equivocó. */
   A.salirDirector();
@@ -258,8 +182,8 @@ if(!CLAVE){
   A.salirDirector();
   ok(await A.activaDirector(CLAVE.toLowerCase())===''&&A.esDirector(),'Entra en minúsculas');
   A.salirDirector();
-  ok(await A.activaDirector('  '+CLAVE.toUpperCase()+'  ')===''&&A.esDirector(),'Entra con espacios de sobra y en mayúsculas');
-  A.salirDirector();
+  ok(await A.activaDirector('  '+CLAVE.toUpperCase()+'  ')===''&&A.esDirector(),
+    'Entra con espacios de sobra y en mayúsculas');
   /* Solo aplica si la clave lleva guion: quitarlo la convertiría en un prefijo,
      y normalizar de más es justo lo que no se puede hacer. */
   if(CLAVE.includes('-')){
@@ -267,7 +191,7 @@ if(!CLAVE){
     ok(await A.activaDirector(CLAVE.replace(/-/g,''))!==''&&!A.esDirector(),
       'Sin el guion NO entra: no se normaliza de más');
   }
-  ok(await A.activaDirector('clave-que-no-es-1995')!==''&&!A.esDirector(),'Cualquier otra clave no sirve');
+  A.salirDirector();
 
   /* El barrido que faltaba: la clave no puede estar en NINGÚN archivo del
      repositorio, no solo en index.html. Así se detecta el caso que se nos pasó:
@@ -290,6 +214,6 @@ if(!CLAVE){
     'La clave en texto plano no está en NINGÚN archivo del repo'+(sospechosos.length?' — aparece en '+sospechosos.join(', '):''));
   ok(/CLAVE_DIR='[0-9a-f]{64}'/.test(html),'En el HTML va un SHA-256 de 64 caracteres, no la clave');
 
-  console.log('\n'+(f===0?'CANDADO DEL SIMULACRO: TODO BIEN':f+' FALLOS'));
+  console.log('\n'+(f===0?'LA EVALUACIÓN DEL DÍA: TODO BIEN':f+' FALLOS'));
   process.exit(f?1:0);
 })();

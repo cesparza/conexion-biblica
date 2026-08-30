@@ -62,6 +62,29 @@
     <path d="M8.4 10.2V7.6a3.6 3.6 0 0 1 7.2 0v2.6"/>
     <path d="M12 14.4v2.2"/>
   </symbol>
+  <symbol id="i-persona" viewBox="0 0 24 24">
+    <circle class="f" cx="12" cy="8" r="4"/>
+    <path d="M4.6 20.4a7.4 7.4 0 0 1 14.8 0"/>
+  </symbol>
+  <symbol id="i-imprimir" viewBox="0 0 24 24">
+    <path d="M7 9V3.6h10V9"/>
+    <rect class="f" x="3.6" y="9" width="16.8" height="7.4" rx="2"/>
+    <rect x="7" y="14.4" width="10" height="6" rx="1"/>
+  </symbol>
+  <symbol id="i-lista" viewBox="0 0 24 24">
+    <path d="M9 6.4h11M9 12h11M9 17.6h11"/>
+    <circle class="f" cx="4.6" cy="6.4" r="1.5"/>
+    <circle class="f" cx="4.6" cy="12" r="1.5"/>
+    <circle class="f" cx="4.6" cy="17.6" r="1.5"/>
+  </symbol>
+  <symbol id="i-compartir" viewBox="0 0 24 24">
+    <path d="M12 15.6V3.8M8.2 7.4 12 3.6l3.8 3.8"/>
+    <path d="M5 13.4v5.6a1.4 1.4 0 0 0 1.4 1.4h11.2a1.4 1.4 0 0 0 1.4-1.4v-5.6"/>
+  </symbol>
+  <symbol id="i-ajustes" viewBox="0 0 24 24">
+    <circle class="f" cx="12" cy="12" r="3.2"/>
+    <path d="M12 3.4v2.4M12 18.2v2.4M20.6 12h-2.4M5.8 12H3.4M18.1 5.9l-1.7 1.7M7.6 16.4l-1.7 1.7M18.1 18.1l-1.7-1.7M7.6 7.6 5.9 5.9"/>
+  </symbol>
 </svg>
 
 
@@ -204,7 +227,7 @@
   </div>
 
   <details class="card sec">
-    <summary>🖨️ Imprimir o guardar en PDF</summary>
+    <summary><svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg><span>Imprimir o guardar en PDF</span></summary>
     <div class="det-cuerpo">
       <p class="nota">Se abre el cuadro de impresión. Ahí puedes mandarlo a la
       impresora o escoger <strong>Guardar como PDF</strong>.</p>
@@ -243,6 +266,7 @@
 <div id="p-examen" class="pantalla">
   <div id="ex-inicio">
     <div id="ex-cerrado"></div>
+    <div id="cb-eval"></div>
     <div id="cb-sesion"></div>
     <div class="card ex-hoy">
       <div class="ex-h">✏️ Tu examen de hoy</div>
@@ -253,7 +277,7 @@
     </div>
 
     <details class="card">
-      <summary>⚙️ Cambiar este examen</summary>
+      <summary><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg><span>Cambiar este examen</span></summary>
       <div class="det-cuerpo">
         <div class="menu-ex">
           <label>Sobre qué
@@ -276,7 +300,7 @@
     </details>
 
     <details class="card">
-      <summary>📋 Cómo es el examen</summary>
+      <summary><svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg><span>Cómo es el examen</span></summary>
       <div class="det-cuerpo">
         <p><strong>Sección I</strong> — Selección múltiple<br>
         <strong>Sección II</strong> — Verdadero o Falso<br>
@@ -287,7 +311,7 @@
         <p>Las preguntas <strong>cambian cada vez</strong>. En un examen normal,
         al terminar ves tu puntaje y la respuesta correcta de cada una, y las que
         falles quedan guardadas para repasarlas. En el <strong>simulacro</strong>
-        y en el examen que llega <strong>por link</strong> sale la nota y no las
+        y en la <strong>evaluación del día</strong> sale la nota y no las
         respuestas.</p>
         <p class="nota" id="ex-nota"></p>
       </div>
@@ -299,47 +323,12 @@
     </div>
 
     <details class="card dir">
-      <summary>🌐 Cerrar los exámenes de TODOS los aparatos</summary>
+      <summary>La evaluación del día</summary>
       <div id="cb-panel"></div>
     </details>
 
     <details class="card dir">
-      <summary>🔒 Cerrar los exámenes solo de este aparato</summary>
-      <div class="det-cuerpo">
-        <p class="nota" id="ex-dir-nota"></p>
-        <p class="nota">Cerrados, el participante no puede armar exámenes en este
-        aparato: ni normal, ni simulacro, ni repaso de errores. <strong>El examen
-        que mandes por link sí funciona</strong>, y estudiar y las tarjetas
-        también.</p>
-        <div id="dir-caja-ex"></div>
-        <button class="btn gho" id="ex-dir-bt" style="margin-top:.7rem"
-          onclick="pideClaveDir('evento','dir-caja-ex')">🔒 Cerrar los exámenes de práctica</button>
-        <p class="nota">Vale para <strong>este aparato</strong>. Hay que hacerlo
-        en el celular de cada participante, y quien borre los datos del navegador
-        lo abre de nuevo. Sin servidor no hay forma de cerrarlos todos de una.</p>
-      </div>
-    </details>
-
-    <details class="card dir">
-      <summary>🔗 Mandar este examen por link</summary>
-      <div class="det-cuerpo">
-        <p class="nota">Genera un link con <strong>el examen que está armado
-        arriba</strong>. Todos los que lo abran hacen exactamente el mismo
-        examen: las mismas preguntas, en el mismo orden, con las opciones en el
-        mismo orden. Sirve para comparar resultados entre los del club.</p>
-        <div class="menu-impr dos">
-          <button class="btn azul" onclick="copiaLink()">🔗 Copiar el link de este examen</button>
-        </div>
-        <div id="link-out"></div>
-        <p class="nota">El link <strong>no lleva las respuestas</strong>: lleva
-        la receta del examen y la app lo vuelve a armar del otro lado. Si más
-        adelante se publican preguntas nuevas, un link viejo avisa que se armó
-        con otra versión.</p>
-      </div>
-    </details>
-
-    <details class="card dir">
-      <summary>🖨️ Imprimir exámenes y claves</summary>
+      <summary><svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg><span>Imprimir exámenes y claves</span></summary>
       <div class="det-cuerpo">
         <p class="nota">Se imprime lo que esté escogido arriba. Se abre el
         cuadro de impresión; ahí se manda a la impresora o se escoge
@@ -384,7 +373,7 @@
   <div class="card"><h2><svg class="ico" aria-hidden="true"><use href="#i-medalla"/></svg><span>Insignias</span></h2><div id="insignias"></div></div>
   <div class="card"><h2><svg class="ico" aria-hidden="true"><use href="#i-historial"/></svg><span>Historial de exámenes</span></h2><div id="historial"></div></div>
   <details class="card">
-    <summary>📤 Pasar o compartir mi progreso</summary>
+    <summary><svg class="ico" aria-hidden="true"><use href="#i-compartir"/></svg><span>Pasar o compartir mi progreso</span></summary>
     <div class="det-cuerpo">
       <p>El progreso vive solo en este aparato. Para que otra persona lo vea, o
       para pasarlo a otro teléfono, se convierte en un <strong>código de
@@ -412,7 +401,7 @@
   </details>
 
   <details class="card">
-    <summary>⚙️ Datos guardados</summary>
+    <summary><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg><span>Datos guardados</span></summary>
     <div class="det-cuerpo">
       <p class="nota">Todo se guarda solo en este navegador. Si cambias de dispositivo, empiezas de cero.</p>
       <div style="margin-top:.7rem;display:flex;gap:.6rem;flex-wrap:wrap">

@@ -975,4 +975,33 @@ h2.h2-suelto{display:flex;align-items:center;gap:.55rem}
 h2.h2-suelto .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9;flex:0 0 auto}
 h2.h2-suelto .ico .f{fill:currentColor;fill-opacity:.14}
 
+
+/* La evaluación del día: es la única cosa que puede aparecer en esa pantalla
+   ese día, así que se lleva el peso visual entero. */
+.card.eval{
+  border:1px solid var(--v-cat);
+  background:linear-gradient(180deg,var(--v-cat-suave),var(--v-sup) 70%);
+  box-shadow:var(--v-s3);
+}
+.card.eval .ev-t{
+  font-size:var(--v-t1);font-weight:800;letter-spacing:-.02em;
+  color:var(--v-marca);margin-bottom:.3rem;
+}
+.card.eval .ex-go{margin-top:.7rem}
+.card.eval.hecha{border-color:var(--v-linea);box-shadow:var(--v-s1);background:var(--v-sup2)}
+
+
+/* El icono del summary hereda el color de la categoría igual que el de las
+   cabeceras. El marcador nativo se esconde: con un icono al lado, el triángulo
+   del navegador es ruido. */
+details.card summary .ico{width:19px;height:19px;color:var(--v-cat);--ico-w:1.9;flex:0 0 auto}
+details.card summary .ico .f{fill:currentColor;fill-opacity:.14}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::marker{content:''}
+
+
+.id-quien{display:inline-flex;align-items:center;gap:.4rem}
+.id-quien .ico{width:17px;height:17px;color:var(--v-cat);--ico-w:1.9}
+.id-quien .ico .f{fill:currentColor;fill-opacity:.14}
+
 }  /* fin @media screen */

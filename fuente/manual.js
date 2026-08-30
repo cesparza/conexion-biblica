@@ -186,9 +186,9 @@ const MANUAL = [
   { t:'Insignias e historial',
     h:`<p>Las insignias son metas cumplidas. El historial muestra cada examen con
     su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>
-    <p>Al lado de la categoría puede salir un dibujito: <strong>🎓</strong> si fue
-    un simulacro, <strong>🔗</strong> si fue un examen que te mandaron por link y
-    <strong>🔁</strong> si fue un repaso de tus errores. Sin dibujito, fue un
+    <p>Al lado de la categoría puede salir una palabra: <strong>· simulacro</strong>
+    si fue un simulacro, <strong>· evaluación</strong> si fue la evaluación del día
+    y <strong>· repaso</strong> si fue un repaso de tus errores. Sin palabra, fue un
     examen normal.</p>` },
   ]},
 
@@ -214,30 +214,33 @@ const MANUAL = [
     computador.</p>` },
   ]},
 
-{ id:'a-link', para:'estudia', icono:'🔗', t:'Si te mandan un examen por link',
-  d:'Todos hacen el mismo',
+{ id:'a-eval', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg>', t:'La evaluación del día',
+  d:'El examen que hacen todos el mismo día',
   secs:[
   { t:'Qué es',
-    h:`<p>Tu director puede mandar un link con un examen. Todos los que lo abren
-    hacen <strong>exactamente el mismo examen</strong>, así que sí se pueden
-    comparar los puntajes.</p>` },
-  { t:'Qué tienes que hacer',
-    h:`<p>Tocar el link. Se abre la app y sale una tarjeta que dice qué examen es;
-    toca <strong>Hacer este examen</strong> y ya.</p>
-    <p>Si dice que es de otra categoría, lo puedes hacer igual: no te cambia tu
-    material ni tu progreso.</p>` },
-  { t:'El link se usa una sola vez',
-    h:`<p>El link no lleva las respuestas dentro, así que no hay nada que leer
-    antes. Lleva solo la receta, y la app arma el examen cuando lo abres.</p>
-    <p>Y se gasta al abrirlo. Si lo abres, miras las preguntas y te sales sin
-    contestar, <strong>no lo puedes volver a abrir</strong>. Ábrelo cuando ya
-    estés listo para hacerlo.</p>` },
+    h:`<p>Cada cierto tiempo tu director abre una <strong>evaluación</strong>:
+    un examen que hacen todos el mismo día para ver cómo va el estudio. No es el
+    examen del campamento, es para medir el avance.</p>` },
+  { t:'Cómo se hace',
+    h:`<p>Entra a <strong>Examen</strong>. Si hay una evaluación abierta, sale
+    arriba una tarjeta con su nombre y un botón que dice
+    <strong>Hacer la evaluación</strong>. Tócalo y empieza.</p>
+    <p>Necesitas haber entrado con tu <strong>código</strong>. Si no lo has
+    hecho, la tarjeta no aparece: el director necesita saber de quién es cada
+    nota.</p>` },
+  { t:'Se hace una sola vez',
+    h:`<p>Cuando entregas, queda registrada y <strong>no se puede repetir</strong>,
+    ni en ese celular ni en otro. Empieza cuando ya estés lista.</p>` },
   { t:'Al final sale la nota, no las respuestas',
-    h:`<p>En el examen por link y en el simulacro no aparece la revisión: ves
-    cuántas quedaron bien y en qué sección, pero no cuál era la correcta. El
-    examen del campamento funciona igual.</p>
+    h:`<p>En la evaluación y en el simulacro no aparece la revisión: ves cuántas
+    quedaron bien y en qué sección, pero no cuál era la correcta. El examen del
+    campamento funciona igual.</p>
     <p>Si quieres ver qué falló, pídeselo a tu director: él entra su clave en
     ese mismo aparato y la revisión se abre.</p>` },
+  { t:'Mientras hay evaluación no puedes practicar',
+    h:`<p>El día de la evaluación los exámenes de práctica se cierran solos, para
+    que nadie se ponga a buscar las respuestas mientras contesta.
+    <strong>Estudiar y las tarjetas siguen abiertos</strong> siempre.</p>` },
   ]},
 
 { id:'a-compartir', para:'estudia', icono:'📤', t:'Mandarle a tu director cómo vas',
@@ -356,10 +359,10 @@ const MANUAL = [
     h:`<p><strong>Puntos débiles</strong> es la más útil: dice en qué capítulo va
     más flojo. <strong>Historial</strong> muestra cada examen con su fecha, así
     que se ve si mejora o se estancó.</p>
-    <p>En el historial, cada examen viene marcado: <strong>🎓</strong> simulacro,
-    <strong>🔗</strong> examen por link, <strong>🔁</strong> repaso de errores, y
+    <p>En el historial, cada examen viene marcado: <strong>· simulacro</strong>,
+    <strong>· evaluación</strong>, <strong>· repaso</strong> de errores, y
     sin marca los normales. Para comparar dos niños entre sí solo sirven los
-    <strong>🔗</strong>: son el mismo examen. Los demás salen al azar.</p>` },
+    <strong>· evaluación</strong>: son el mismo examen. Los demás salen al azar.</p>` },
   ]},
 
 { id:'d-dificultad', para:'director', icono:'📈', t:'Cómo sube la dificultad',
@@ -423,70 +426,41 @@ const MANUAL = [
     Compartir → Imprimir. Lo cómodo es imprimir desde un computador.</p>` },
   ]},
 
-{ id:'d-link', para:'director', icono:'🔗', t:'Mandar el mismo examen por link',
-  d:'Para que todos hagan exactamente el mismo',
+{ id:'d-eval', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg>', t:'La evaluación del día',
+  d:'Abrirla, verla correr y cerrarla',
   secs:[
   { t:'Para qué sirve',
     h:`<p>Normalmente cada examen sale distinto: las preguntas se sacan al azar.
     Eso es bueno para practicar, pero <strong>no sirve para comparar</strong>: si
-    dos niños sacan 12 de 15 en exámenes distintos, no sabes cuál va mejor.</p>
-    <p>El link resuelve eso. Todos los que lo abran hacen
+    dos niñas sacan 12 de 15 en exámenes distintos, no sabes cuál va mejor.</p>
+    <p>La evaluación resuelve eso. Todas las de una misma categoría hacen
     <strong>exactamente el mismo examen</strong>: las mismas preguntas, en el
     mismo orden, con las opciones en el mismo orden.</p>` },
-  { t:'Cómo se hace',
-    h:`<ol><li>Arma el examen que quieres en
-    <strong>Examen → Cambiar este examen</strong>: capítulo, cantidad y
-    dificultad.</li>
-    <li>Abre <strong>🔗 Mandar este examen por link</strong> y toca
-    <strong>Copiar el link de este examen</strong>.</li>
-    <li>Pégalo en el grupo del club.</li></ol>
-    <p>Son unos 60 caracteres. No lo corta ningún chat.</p>` },
-  { t:'Cómo funciona por dentro',
-    h:`<p>El link <strong>no lleva las preguntas</strong>: lleva la receta
-    —categoría, alcance, nivel, cantidad y un número de semilla— y la app del
-    otro lado vuelve a armar el examen con esa semilla.</p>
-    <p>Dos razones para hacerlo así. Un examen de 15 preguntas con sus opciones
-    dentro de una dirección web son miles de caracteres, y el chat lo corta. Y
-    si el link llevara las preguntas, llevaría también
-    <strong>las respuestas correctas</strong>, que cualquiera podría leer antes
-    de contestar.</p>` },
-  { t:'Lo que pasa al abrirlo',
-    h:`<p>Sale una tarjeta que dice qué examen es, y hay que aceptarlo. Antes de
-    empezar, la app avisa dos cosas si aplican:</p>
-    <ul><li><strong>Es de otra categoría que la tuya.</strong> Se puede hacer
-    igual; no le cambia la categoría ni el material al participante.</li>
-    <li><strong>Se armó con otra versión del material.</strong> Si después de
-    mandar el link se publican preguntas nuevas, el examen ya no es el mismo, y
-    la app lo dice en vez de fingir que sí.</li></ul>
-    <p>El resultado queda en el historial marcado como examen compartido.</p>` },
-  { t:'Si es un niño que nunca ha abierto la app',
-    h:`<p>Primero le pide su nombre y su edad, como a cualquiera, y después le
-    aparece la invitación al examen. No se pierde el link.</p>` },
-  { t:'Cómo se cierra el simulacro en el tiempo',
-    h:`<p>La app no tiene servidor, así que <strong>no tiene un reloj de
-    confianza</strong>: una fecha escrita en el programa se burla cambiándole la
-    hora al celular. Lo que sí no se puede adivinar es la semilla del link, y esa
-    semilla solo existe cuando tú generas el link.</p>
-    <p>O sea que <strong>el control no es el día, es el momento en que lo
-    mandas</strong>. Si el simulacro es a las 3:00, manda el link a las 3:00.</p>
-    <p>Para que eso sirva de algo, el link se gasta al abrirse: un segundo
-    intento se rechaza. Si alguien lo abrió por error antes de la hora, tú lo
-    liberas con tu clave.</p>` },
-  { t:'Cerrar los exámenes de TODOS los aparatos',
-    h:`<p>En la pantalla de Examen, abajo, en
-    <strong>Examen → Cerrar los exámenes de TODOS los aparatos</strong>. Entras
-    con tu clave una vez y desde ahí cierras o abres para todo el club.</p>
-    <p>La diferencia con el interruptor de abajo: este vive en el servidor, no
-    en el celular. Lo cierras en tu teléfono y queda cerrado en el de cada
-    participante, sin tener que tocar ninguno. Quien borre los datos de su
-    navegador tampoco lo abre.</p>
-    <p>Cerrados, nadie puede armar un examen: ni el normal, ni el simulacro, ni
-    el repaso de errores. Lo que <strong>sí</strong> sigue funcionando: el examen
-    que tú mandes por link, estudiar y las tarjetas.</p>
-    <div class="warn-box">Si un celular se queda sin señal, la app usa lo último
-    que supo del servidor. Si lo último fue <strong>cerrado</strong>, sigue
-    cerrado. Nunca se abre solo por falta de señal.</div>` },
-
+  { t:'Cómo se abre',
+    h:`<ol><li>Entra a <strong>Examen</strong>, abajo, en
+    <strong>La evaluación del día</strong>, y pon tu clave.</li>
+    <li>Escribe un nombre (por ejemplo «Sábado 6 de septiembre») y cuántas
+    preguntas.</li>
+    <li>Toca <strong>Abrir una evaluación</strong>.</li></ol>
+    <p>Desde ese momento, cada participante que ya entró con su código ve la
+    tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar
+    ningún link.</p>` },
+  { t:'Mientras corre',
+    h:`<p>En el mismo panel ves <strong>quiénes ya la hicieron con su nota</strong>
+    y, sobre todo, <strong>quiénes faltan</strong>. Ese es el dato que sirve: con
+    él vas y las buscas, en vez de adivinar si ya terminaron.</p>
+    <p>La práctica queda cerrada sola en todos los aparatos mientras la
+    evaluación esté abierta. Al cerrarla, vuelve.</p>` },
+  { t:'Cómo se cierra',
+    h:`<p>El botón <strong>Cerrar la evaluación</strong> en el mismo panel. Las
+    notas quedan guardadas y la práctica se reabre para todas.</p>` },
+  { t:'Una sola vez por persona, de verdad',
+    h:`<p>Esto no depende del navegador de nadie: la base de datos tiene una
+    regla que impide que la misma participante registre dos veces la misma
+    evaluación. Cambiar de celular o crear otra ficha no la repite.</p>
+    <div class="warn-box">Lo que sí hace falta es <strong>señal</strong>. La
+    evaluación se pide al servidor. Si un celular se queda sin datos, esa niña no
+    la puede hacer hasta que vuelva la conexión.</div>` },
   { t:'Los códigos de las participantes',
     h:`<p>En el mismo panel, debajo del interruptor. Escribes el nombre, eliges
     la categoría y sale un <strong>código de 6 letras y números</strong>. Ese
@@ -500,23 +474,6 @@ const MANUAL = [
     la categoría. Ni apellido, ni edad exacta, ni teléfono, ni foto.</p>
     <p>Sin código la app funciona igual para estudiar y practicar. El código hace
     falta para el examen del día del evento.</p>` },
-
-  { t:'Cerrar los exámenes solo de este aparato',
-    h:`<p>En la pantalla de Examen, abajo, en
-    <strong>Examen → Cerrar los exámenes solo de este aparato</strong>. Pide
-    tu clave y queda hecho de una.</p>
-    <p>Cerrados, el participante no puede armar exámenes en ese aparato: ni el
-    normal, ni el simulacro, ni el repaso de errores. Lo que <strong>sí</strong>
-    sigue funcionando: el examen que tú mandes por link, estudiar los capítulos y
-    las tarjetas.</p>
-    <div class="warn-box">Vale para <strong>ese aparato</strong>. Hay que
-    cerrarlo en el celular de cada participante, y quien borre los datos del
-    navegador lo abre otra vez. Sin servidor no hay forma de cerrarlos todos de
-    una, así que esto ordena, no obliga.</div>
-    <p>Para qué sirve: durante las siete semanas los exámenes de práctica están
-    abiertos y muestran las respuestas, que es como se aprende. El día de la
-    prueba eso estorba, porque cualquiera puede abrir uno mientras espera. Se
-    cierran, se manda el link, y ese es el único examen que se puede hacer.</p>` },
   { t:'La clave del director',
     h:`<div class="warn-box">La clave es <strong>solo tuya</strong>. Quien la
     tenga ve las respuestas.</div>

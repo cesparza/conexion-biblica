@@ -89,8 +89,16 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
   return token;
 }
 
-const leerAjuste = (env, clave) =>
-  env.DB.prepare('SELECT valor FROM ajuste WHERE clave = ?').bind(clave).first();
+const evaluacionAbierta = env =>
+  env.DB.prepare('SELECT * FROM evaluacion WHERE abierta = 1 ORDER BY creada_en DESC LIMIT 1').first();
+
+/* Semilla del examen. La genera el SERVIDOR, nunca el aparato del director: así
+   el examen es idéntico para todas y nadie puede adivinarlo antes de tiempo. */
+const semillaNueva = () => {
+  const b = new Uint32Array(2);
+  crypto.getRandomValues(b);
+  return String(b[0]) + String(b[1] % 100000);
+};
 
 /**
  * Límite de intentos de código por IP.
@@ -116,9 +124,18 @@ export async function onRequest(context) {
     /* El endpoint más importante de la app. Sin caché a propósito: si el
        director cierra los exámenes la noche antes, no puede quedar un edge
        sirviendo "abierto" diez minutos más. */
+    /* UNA SOLA PERILLA, y es el cambio que quita la confusión.
+       Antes había dos interruptores (uno por aparato y uno global) más el link.
+       Ahora hay un solo estado: o hay una evaluación abierta, o no la hay.
+       Con evaluación abierta la práctica se cierra sola; al cerrarla, vuelve.
+       El detalle del examen NO viaja aquí: este endpoint es público. */
     if (metodo === 'GET' && ruta === '/estado') {
-      const a = await leerAjuste(env, 'examenes_abiertos');
-      return json({ abierto: !a || a.valor !== '0', hora: new Date().toISOString() });
+      const ev = await evaluacionAbierta(env);
+      return json({
+        practica: !ev,
+        evaluacion: ev ? { id: ev.id, titulo: ev.titulo } : null,
+        hora: new Date().toISOString(),
+      });
     }
 
     // ─────────────────────────────────────── entrar con el código
@@ -195,11 +212,28 @@ export async function onRequest(context) {
       return json({ rol: 'participante', nombre: p.nombre, categoria: p.categoria });
     }
 
+    /* La receta del examen SOLO se entrega a una participante con sesión. Si
+       viajara en /estado, que es público, cualquiera podría precalcular las
+       preguntas antes de que se abra. */
+    if (metodo === 'GET' && ruta === '/evaluacion') {
+      if (!sesion || sesion.rol !== 'participante') return error('Entra con tu código primero.', 401);
+      const ev = await evaluacionAbierta(env);
+      if (!ev) return json({ evaluacion: null });
+      const hecho = await env.DB.prepare(
+        'SELECT nota, total FROM intento WHERE participante_id = ? AND evaluacion_id = ?'
+      ).bind(sesion.persona_id, ev.id).first();
+      return json({ evaluacion: {
+        id: ev.id, titulo: ev.titulo, alcance: ev.alcance,
+        cuantas: ev.cuantas, nivel: ev.nivel, semilla: ev.semilla,
+      }, hecha: !!hecho, nota: hecho ? hecho.nota : null, total: hecho ? hecho.total : null });
+    }
+
     if (metodo === 'POST' && ruta === '/intento') {
       if (!sesion || sesion.rol !== 'participante') return error('Entra con tu código primero.', 401);
       const b = await request.json().catch(() => ({}));
       const modo = limpiar(b.modo, 20) || 'normal';
       const semilla = limpiar(b.semilla, 40);
+      const evalId = limpiar(b.evaluacion_id, 60);
       const nota = Number.isFinite(+b.nota) ? Math.round(+b.nota) : null;
       const total = Number.isFinite(+b.total) ? Math.round(+b.total) : null;
       const idem = limpiar(b.idempotency_key, 60);
@@ -208,18 +242,18 @@ export async function onRequest(context) {
         const ya = await env.DB.prepare('SELECT id FROM intento WHERE idempotency_key = ?').bind(idem).first();
         if (ya) return json({ ok: true, repetido: true });
       }
-      /* El link se gasta por PERSONA, no por aparato: esto es lo que la versión
-         sin servidor no podía hacer. Una segunda ficha en otro celular ya no
-         rehace el mismo examen. */
-      if (semilla) {
+      /* La evaluación se hace UNA vez por PERSONA, en el aparato que sea. Eso
+         es lo que la versión con links no podía garantizar. */
+      if (evalId) {
         const hecho = await env.DB.prepare(
-          'SELECT id FROM intento WHERE participante_id = ? AND semilla = ?'
-        ).bind(sesion.persona_id, semilla).first();
-        if (hecho) return error('Ese examen ya lo hiciste.', 409, { ya_hecho: true });
+          'SELECT id FROM intento WHERE participante_id = ? AND evaluacion_id = ?'
+        ).bind(sesion.persona_id, evalId).first();
+        if (hecho) return error('Esa evaluación ya la hiciste.', 409, { ya_hecho: true });
       }
       await env.DB.prepare(
-        'INSERT INTO intento (id, participante_id, modo, semilla, nota, total, idempotency_key) VALUES (?,?,?,?,?,?,?)'
-      ).bind(id(), sesion.persona_id, modo, semilla, nota, total, idem).run();
+        'INSERT INTO intento (id, participante_id, modo, semilla, nota, total, idempotency_key, evaluacion_id) ' +
+        'VALUES (?,?,?,?,?,?,?,?)'
+      ).bind(id(), sesion.persona_id, modo, semilla, nota, total, idem, evalId).run();
       return json({ ok: true });
     }
 
@@ -228,18 +262,54 @@ export async function onRequest(context) {
       return error('Necesitas entrar como director.', 401);
     }
 
-    if (metodo === 'POST' && ruta === '/panel/examenes') {
+    /* Abrir una evaluación: se cierra cualquier otra, se genera la semilla en el
+       servidor y con eso la práctica queda cerrada sola. Un solo acto. */
+    if (metodo === 'POST' && ruta === '/panel/evaluacion') {
       const b = await request.json().catch(() => ({}));
-      const valor = b.abiertos ? '1' : '0';
+      const titulo = limpiar(b.titulo, 60) || 'Evaluación del día';
+      const alcance = limpiar(b.alcance, 20) || 'todo';
+      const cuantas = Math.min(60, Math.max(5, Math.round(+b.cuantas || 15)));
+      const nivel = [0, 1, 2, 3].includes(+b.nivel) ? +b.nivel : 0;
       await env.DB.prepare(
-        "INSERT INTO ajuste (clave, valor, cambiado_en, cambiado_por) " +
-        "VALUES ('examenes_abiertos', ?, datetime('now'), ?) " +
-        "ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor, " +
-        "cambiado_en = excluded.cambiado_en, cambiado_por = excluded.cambiado_por"
-      ).bind(valor, sesion.cuenta_id).run();
-      await auditar(env, sesion.cuenta_id, valor === '1' ? 'abrir_examenes' : 'cerrar_examenes',
-        'ajuste', 'examenes_abiertos', ipHash);
-      return json({ ok: true, abierto: valor === '1' });
+        "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE abierta = 1"
+      ).run();
+      const eid = id();
+      await env.DB.prepare(
+        'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, abierta) VALUES (?,?,?,?,?,?,?,1)'
+      ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40)).run();
+      await auditar(env, sesion.cuenta_id, 'abrir_evaluacion', 'evaluacion', eid, ipHash);
+      return json({ ok: true, id: eid });
+    }
+
+    if (metodo === 'POST' && ruta === '/panel/evaluacion/cerrar') {
+      await env.DB.prepare(
+        "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE abierta = 1"
+      ).run();
+      await auditar(env, sesion.cuenta_id, 'cerrar_evaluacion', 'evaluacion', null, ipHash);
+      return json({ ok: true });
+    }
+
+    /* Lo que el director mira mientras corre: quién ya la hizo, con qué nota, y
+       sobre todo QUIÉN FALTA, que es el dato que sirve para ir a buscarla. */
+    if (metodo === 'GET' && ruta === '/panel/evaluacion') {
+      const ev = await evaluacionAbierta(env);
+      const eid = ev ? ev.id : (await env.DB.prepare(
+        'SELECT id, titulo FROM evaluacion ORDER BY creada_en DESC LIMIT 1').first() || {}).id;
+      if (!eid) return json({ evaluacion: null, hechas: [], faltan: [] });
+      const { results: hechas } = await env.DB.prepare(
+        'SELECT p.nombre, p.categoria, i.nota, i.total, i.creado_en FROM intento i ' +
+        'JOIN participante p ON p.id = i.participante_id ' +
+        'WHERE i.evaluacion_id = ? AND p.borrado_en IS NULL ORDER BY i.creado_en'
+      ).bind(eid).all();
+      const { results: faltan } = await env.DB.prepare(
+        'SELECT p.nombre, p.categoria FROM participante p WHERE p.borrado_en IS NULL ' +
+        'AND p.id NOT IN (SELECT participante_id FROM intento WHERE evaluacion_id = ?) ' +
+        'ORDER BY p.categoria, p.nombre'
+      ).bind(eid).all();
+      return json({
+        evaluacion: ev ? { id: ev.id, titulo: ev.titulo, cuantas: ev.cuantas, alcance: ev.alcance, nivel: ev.nivel } : null,
+        hechas: hechas || [], faltan: faltan || [],
+      });
     }
 
     if (metodo === 'GET' && ruta === '/panel/participantes') {

@@ -39,7 +39,7 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre,
         esNuevo, bvSigue, bvEdad, bvEvento, bvPaso, ir,
         codigoResumen, codigoCompleto, leeCodigo, resumenDe, tarjetasDe,
-        leeReceta, escribeReceta, huellaBanco, prng, mezclaR, armar,
+        huellaBanco, prng, mezclaR, armar,
         ponRnd:f=>{rndEx=f}, rndNormal:()=>{rndEx=Math.random},
         claveQ, BANCO,
         el:id=>document.getElementById(id)};`);
@@ -410,74 +410,62 @@ ok(leidoK.n==='María Camila Ñuñez','Los nombres con tildes y eñes sobreviven
 ok(leidoK.c==='dm2'&&leidoK.ce==='Devoción Matutina','El resumen dice de qué evento es');
 
 
-/* ───────── examen por link ─────────
-   La promesa es fuerte: dos personas en dos aparatos distintos tienen que
-   obtener el MISMO examen a partir de un link de 60 caracteres. Si eso se
-   rompe, el director compara puntajes de exámenes distintos sin saberlo. */
+/* ───────── la evaluación del día ─────────
+   La promesa es fuerte: dos niñas en dos aparatos distintos tienen que obtener
+   el MISMO examen a partir de la receta que manda el servidor. Si eso se rompe,
+   el director compara notas de exámenes distintos sin saberlo. */
 store={};
 const L=fn(store,nodo,Buffer);
 L.ponNombre('Director'); L.ponCat('av');
 
-const receta={c:'av',a:'todo',n:2,q:15,s:123456789,h:L.huellaBanco()};
-const txt=L.escribeReceta(receta);
-ok(txt.split('.').length===6,'La receta se escribe con seis campos');
-ok(txt.length<60,'La receta cabe en un link corto ('+txt.length+' caracteres)');
+/* La receta que hoy llega del servidor: alcance, cuántas, nivel y semilla.
+   La categoría NO viaja: cada niña contesta sobre el material de su grupo. */
+const receta={a:'todo',n:2,q:15,s:123456789};
 
-const vuelta=L.leeReceta(txt);
-ok(vuelta&&vuelta.c==='av'&&vuelta.a==='todo'&&vuelta.n===2&&vuelta.q===15&&vuelta.s===123456789,
-  'La receta se lee igual que se escribió');
-
-/* La misma semilla arma el mismo examen. Se compara la identidad de cada
-   pregunta Y el orden de sus opciones: si solo coincidieran las preguntas,
-   la letra correcta podría cambiar de un aparato a otro. */
-function armaCon(A,r){
-  A.ponCat(r.c); A.ponAlcance(r.a); A.ponNivel(r.n); A.ponCuantas(r.q);
+/* Se compara la identidad de cada pregunta Y el orden de sus opciones: si solo
+   coincidieran las preguntas, la letra correcta podría cambiar de un aparato a
+   otro. */
+function armaCon(A,r,cat){
+  A.ponCat(cat); A.ponAlcance(r.a); A.ponNivel(r.n); A.ponCuantas(r.q);
   A.ponRnd(A.prng(r.s));
   const sel=A.armar('normal');
   A.rndNormal();
   return sel.map(q=>A.claveQ(q)+'#'+(q.o?q.o.join('|'):'')).join(' ~ ');
 }
-const uno=armaCon(L,receta);
+const uno=armaCon(L,receta,'av');
 
-/* Segundo «aparato»: almacenamiento nuevo, otro nombre, otra categoría
-   guardada y con historial propio, para que nada del estado local influya. */
+/* Segundo «aparato»: almacenamiento nuevo, otro nombre y con historial propio,
+   para que nada del estado local influya. */
 store={};
 const M2=fn(store,nodo,Buffer);
-M2.ponNombre('María'); M2.ponCat('pa');
-M2.S().examenes=[{pts:24,total:25,cat:'pa',fecha:'x',modo:'normal',nv:3}];
+M2.ponNombre('María');
+M2.S().examenes=[{pts:24,total:25,cat:'av',fecha:'x',modo:'normal',nv:3}];
 M2.S().prog.d1=100;
-const dos=armaCon(M2,receta);
+const dos=armaCon(M2,receta,'av');
 ok(uno===dos,'La misma receta arma el mismo examen en dos aparatos distintos');
-ok(uno.split(' ~ ').length===15,'El examen del link trae las 15 preguntas pedidas');
+ok(uno.split(' ~ ').length===15,'La evaluación trae las 15 preguntas pedidas');
 
-/* Semilla distinta, examen distinto: si no, el link no estaría barajando. */
-const otra=armaCon(L,{...receta,s:987654321});
-ok(uno!==otra,'Con otra semilla sale otro examen');
+/* Semilla distinta, examen distinto: si no, no estaría barajando. */
+const otra=armaCon(L,{...receta,s:987654321},'av');
+ok(uno!==otra,'Con otra semilla sale otra evaluación');
 
-/* El nivel del link manda. Si dependiera del historial local, dos personas
-   con distinto desempeño harían exámenes distintos desde el mismo link. */
-const nivBajo=armaCon(L,{...receta,n:1});
-const nivAlto=armaCon(L,{...receta,n:3});
+/* El nivel de la receta manda. Si dependiera del historial local, dos niñas con
+   distinto desempeño harían exámenes distintos en la misma evaluación. */
+const nivBajo=armaCon(L,{...receta,n:1},'av');
+const nivAlto=armaCon(L,{...receta,n:3},'av');
 ok(nivBajo!==nivAlto,'El nivel de la receta cambia el examen, no lo decide el aparato');
 
-/* Recetas inválidas: ninguna puede pasar por buena. */
-ok(L.leeReceta('')===null,'Una receta vacía se rechaza');
-ok(L.leeReceta('av.todo.2.15')===null,'Una receta incompleta se rechaza');
-ok(L.leeReceta('zz.todo.2.15.1.abc')===null,'Una categoría inexistente se rechaza');
-ok(L.leeReceta('av.todo.9.15.1.abc')===null,'Un nivel fuera de 1 a 3 se rechaza');
-ok(L.leeReceta('av.todo.2.0.1.abc')===null,'Una cantidad de cero preguntas se rechaza');
-ok(L.leeReceta('av.todo.2.9999.1.abc')===null,'Una cantidad absurda se rechaza');
-ok(L.leeReceta('av.todo.2.15.x.abc')===null,'Una semilla que no es número se rechaza');
+/* Cada categoría contesta sobre SU material, con la misma semilla. */
+const otroGrupo=armaCon(L,receta,'me');
+ok(uno!==otroGrupo,'Con la misma semilla, otra categoría recibe otras preguntas');
 
-/* La huella del banco es la que detecta que el link se armó con otro
-   contenido. Tiene que cambiar si el banco cambia. */
+/* La huella del banco detecta que una evaluación se armó con otro contenido. */
 ok(L.huellaBanco()===M2.huellaBanco(),'La huella del banco es igual en la misma versión');
 ok(typeof L.huellaBanco()==='string'&&L.huellaBanco().length>3,'La huella es un texto corto');
 
-/* El link no puede llevar las respuestas dentro: si las llevara, cualquiera
-   las leería antes de contestar. La receta son solo cinco números y dos
-   palabras cortas. */
-ok(!/[¿?]/.test(txt)&&txt.length<60,'El link no lleva preguntas ni respuestas, solo la receta');
+/* Ya no hay link: la receta nunca sale del servidor hacia una URL, así que no
+   hay nada que un tercero pueda leer del portapapeles ni de WhatsApp. */
+ok(typeof L.escribeReceta==='undefined','El armado por link ya no existe en la app');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

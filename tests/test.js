@@ -560,7 +560,7 @@ ok(!/<li><strong>Este manual<\/strong>/.test(manPorId['a-papel']),
    difusa daba cero y dejaba pasar un nombre viejo. */
 const limpiaEtq=s=>s.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,'')
   .replace(/\s+/g,' ').trim();
-const sumarios=[...CUERPO.matchAll(/<summary[^>]*>([^<]+)</g)]
+const sumarios=[...CUERPO.matchAll(/<summary[^>]*>([\s\S]*?)<\/summary>/g)].map(m=>[m[0],m[1].replace(/<[^>]*>/g,' ')])
   .map(m=>limpiaEtq(m[1])).filter(Boolean);
 const textoMan=MANUAL.map(m=>m.secs.map(s=>s.h).join(' ')).join(' ');
 const citadas=[...textoMan.matchAll(/<strong>[^<]*→\s*([^<]+)<\/strong>/g)]

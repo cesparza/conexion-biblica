@@ -46,7 +46,7 @@ function normalizar(x){
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
       .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,
         cat:Object.keys(CATS).includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
-        modo:['simulacro','errores','compartido'].includes(e.modo)?e.modo:'normal',
+        modo:['simulacro','errores','evaluacion','compartido'].includes(e.modo)?e.modo:'normal',
         nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
   if(typeof x.ultimo==='string')s.ultimo=x.ultimo;
@@ -70,9 +70,9 @@ function normalizar(x){
                      m:Number.isFinite(m)?Math.min(9999,Math.max(0,Math.round(m))):0};
       }
     });
-  /* Semillas de link ya usadas. La entrada se crea al ACEPTAR el link, no al
-     entregar: si se creara al entregar, bastaba con abrir el link, leer las
-     quince preguntas, salir sin contestar y volver a entrar con calma. */
+  /* Compatibilidad: fichas guardadas antes de v24 traen `links`. Ya no se usan
+     (la evaluación vive en el servidor), pero se conservan para no borrarle el
+     historial a nadie al actualizar. */
   if(x.links&&typeof x.links==='object')
     for(const k of Object.keys(x.links).slice(0,200)){
       const v=x.links[k];
@@ -120,10 +120,6 @@ function normalizarDB(x){
   }
   if(!Object.keys(db.alumnos).length)db.alumnos.a1=normalizar(null);
   if(!db.activo)db.activo=Object.keys(db.alumnos)[0];
-  /* Modo evento: vive en el aparato, no en la ficha, porque lo que se cierra es
-     el aparato. Solo `true` cuenta; cualquier otra cosa deja los exámenes
-     abiertos, que es el estado normal de las siete semanas de estudio. */
-  db.evento=!!(x&&typeof x==='object'&&x.evento===true);
   return db;
 }
 
@@ -147,7 +143,7 @@ function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(DB));}catch(e){
 
    POR QUÉ NO UN PARÁMETRO EN LA DIRECCIÓN
    ?director se copia una vez y se pasa entre primas. La clave hay que saberla,
-   y queda en el aparato del director, no en el link.
+   y queda en el aparato del director.
 
    POR QUÉ sessionStorage Y NO localStorage
    El director entra su clave en el celular de la niña para revisar. Con
@@ -198,10 +194,10 @@ function salirDirector(){
   if(ultimoRes)pintaResultado();
 }
 
-/* En el simulacro y en el examen por link, quien contesta ve la nota y no la
+/* En el simulacro y en la evaluación del día, quien contesta ve la nota y no la
    revisión: ni cuál falló ni cuál era la correcta. El director sí, con su
    clave, en el mismo aparato y al terminar. */
-const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='compartido');
+const revelaRespuestas=()=>director||!(modo==='simulacro'||modo==='evaluacion');
 
 /* ───────── el servidor (v20) ─────────
    MECANISMO, Y ES EL CAMBIO DE FONDO DE ESTA VERSIÓN
@@ -227,12 +223,13 @@ let srvYo=null;
 function srvLee(){
   try{
     const x=JSON.parse(localStorage.getItem(SRV_CACHE)||'null');
-    return x&&typeof x==='object'&&typeof x.abierto==='boolean'?x:null;
+    return x&&typeof x==='object'&&typeof x.practica==='boolean'?x:null;
   }catch(e){return null;}
 }
 
-function srvGuarda(abierto){
-  try{localStorage.setItem(SRV_CACHE,JSON.stringify({abierto:!!abierto,visto:Date.now()}));}catch(e){}
+function srvGuarda(practica,evalId,evalTitulo){
+  try{localStorage.setItem(SRV_CACHE,JSON.stringify(
+    {practica:!!practica,evalId:evalId||null,evalTitulo:evalTitulo||null,visto:Date.now()}));}catch(e){}
 }
 
 /* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
@@ -253,8 +250,11 @@ async function srvFetch(ruta,opciones){
 
 /* Refresca el interruptor global. Devuelve true si el servidor contestó. */
 async function srvRefresca(){
-  try{const d=await srvFetch('/estado');srvGuarda(d.abierto);return true;}
-  catch(e){return false;}
+  try{
+    const d=await srvFetch('/estado');
+    srvGuarda(d.practica, d.evaluacion&&d.evaluacion.id, d.evaluacion&&d.evaluacion.titulo);
+    return true;
+  }catch(e){return false;}
 }
 
 async function srvQuienSoy(){
@@ -265,47 +265,28 @@ async function srvQuienSoy(){
 
 /* La nota se manda al servidor pero NO se espera: si no hay señal, la nota ya
    quedó guardada en el aparato y la pantalla no se puede quedar esperando. */
-function srvIntento(modo,semilla,nota,total){
+function srvIntento(modo,evalId,nota,total){
   if(!srvYo||srvYo.rol!=='participante')return;
   let idem='';
   try{idem=crypto.randomUUID();}catch(e){idem=String(Date.now())+Math.random();}
   srvFetch('/intento',{method:'POST',body:JSON.stringify(
-    {modo:modo,semilla:semilla==null?null:String(semilla),nota:nota,total:total,idempotency_key:idem})})
+    {modo:modo,evaluacion_id:evalId||null,nota:nota,total:total,idempotency_key:idem})})
     .catch(function(){});
 }
 
-/* ───────── modo evento ─────────
-   MECANISMO
-   Un interruptor por aparato que apaga los exámenes que el participante arma
-   solo: el normal, el simulacro, el repaso de errores y el examen de capítulo.
-   NO apaga el examen que llega por link, que es justo el que el director quiere
-   que se haga ese día, ni estudiar, ni las tarjetas, ni el manual.
-
-   POR QUÉ EN EL APARATO Y NO EN LA FICHA
-   Se cierra el celular, no la persona. Si dos hermanas usan el mismo aparato,
-   el examen del evento se hace ahí para las dos.
-
-   POR QUÉ localStorage Y NO sessionStorage
-   Al contrario del perfil director, esto tiene que sobrevivir a cerrar la
-   pestaña: el director cierra los exámenes la noche antes y siguen cerrados al
-   otro día.
-
-   EL LÍMITE, Y HAY QUE DECIRLO
-   Es el navegador de la niña el que guarda el interruptor. Quien borre los
-   datos del navegador lo apaga, y en un aparato nuevo el interruptor no existe.
-   Sin servidor no hay forma de que un cierre valga para todos los aparatos a la
-   vez. Contra eso el control es mirar, no técnico. */
-/* El cierre efectivo: manda el servidor, y el interruptor del aparato queda de
-   respaldo para cuando el servidor no contesta. El director se salta los dos. */
+/* ───────── el cierre de la práctica ─────────
+/* UNA SOLA PERILLA.
+   La práctica está cerrada exactamente cuando hay una evaluación abierta. No
+   hay interruptor por aparato ni segundo estado que sincronizar: el servidor
+   dice «hay evaluación» y con eso ya está dicho todo.
+   Sin señal manda lo último que se supo, y si eso era «cerrado», sigue cerrado:
+   se falla CERRADO, nunca abierto por accidente. El director se lo salta. */
 const examenesCerrados=()=>{
   if(director)return false;
   const c=srvLee();
-  if(c&&c.abierto===false)return true;
-  if(c&&c.abierto===true)return !!(DB&&DB.evento);
-  return !!(DB&&DB.evento);
+  return !!(c&&c.practica===false);
 };
 
-function alternaEvento(){DB.evento=!DB.evento;guardar();}
 
 const alumnos=()=>Object.entries(DB.alumnos);
 
@@ -517,7 +498,7 @@ function tareasDeHoy(){
   if(examenesCerrados()){
     const quedan=tareas.filter(t=>!/arrancaExamen\(|examenDeCapitulo\(/.test(t.f));
     quedan.push({ic:'candado',t:'Los exámenes están cerrados',
-      d:'El director los abre el día de la prueba. Si te llega un examen por link, ese sí se puede hacer.',
+      d:'Hay una evaluación abierta. Si tienes tu código, te sale arriba en Examen.',
       b:'Ver',f:"ir('examen')"});
     return quedan.slice(0,4);
   }
@@ -554,7 +535,7 @@ async function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuE
 function pintaIdent(){
   const s=document.getElementById('ident-sum');
   if(!s)return;
-  s.innerHTML='<span class="id-quien">👤 '+esc(S.nombre||'Sin nombre')+'</span>'+
+  s.innerHTML='<span class="id-quien"><svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg>'+esc(S.nombre||'Sin nombre')+'</span>'+
     '<span class="id-que">'+esc(CAT().nombre)+' · '+esc(CAT().ev)+'</span>';
 }
 
@@ -877,30 +858,26 @@ function pintaCierre(){
   if(tarjeta)tarjeta.style.display=cerrado?'none':'';
   if(cambiar)cambiar.style.display=cerrado?'none':'';
   const av=document.getElementById('ex-cerrado');
+  const c=srvLee();
   if(av)av.innerHTML=cerrado
-    ?'<div class="card"><h2>🔒 Los exámenes están cerrados</h2>'+
-     '<p class="nota">El director los cerró hasta el día de la prueba. Mientras '+
-     'tanto puedes <strong>estudiar los capítulos</strong> y practicar con las '+
+    ?'<div class="card"><h2><svg class="ico" aria-hidden="true"><use href="#i-candado"/></svg>'+
+     '<span>Los exámenes de práctica están cerrados</span></h2>'+
+     '<p class="nota">Hay una <strong>evaluación abierta</strong>'+
+     (c&&c.evalTitulo?': '+esc(c.evalTitulo):'')+'. Mientras tanto puedes '+
+     '<strong>estudiar los capítulos</strong> y practicar con las '+
      '<strong>tarjetas</strong>, que es donde de verdad se aprende.</p>'+
-     '<p class="nota">Si te llega un examen por link, <strong>ese sí se puede '+
-     'hacer</strong>.</p></div>'
+     '<p class="nota">Si tienes tu código, la evaluación te sale arriba.</p></div>'
     :'';
-  const nota=document.getElementById('ex-dir-nota');
-  if(nota)nota.innerHTML=DB.evento
-    ?'Ahora mismo los exámenes de práctica están <strong>cerrados</strong> en este aparato. El examen por link sigue funcionando.'
-    :'Ahora mismo los exámenes de práctica están <strong>abiertos</strong>.';
-  const bt=document.getElementById('ex-dir-bt');
-  if(bt)bt.textContent=DB.evento?'🔓 Abrir los exámenes de práctica':'🔒 Cerrar los exámenes de práctica';
 }
 
 /* Mezcla con fuente de azar explícita. mezcla() usa Math.random y es la de
    siempre; mezclaR() acepta un generador con semilla, y eso es lo que hace
-   reproducible un examen compartido por link. */
+   reproducible la evaluación del día. */
 function mezclaR(a,r){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
 function mezcla(a){return mezclaR(a,Math.random);}
 
 /* Generador con semilla (congruencial lineal). La misma semilla da la misma
-   secuencia en cualquier aparato, que es lo que permite que un link
+   secuencia en cualquier aparato, que es lo que permite que una evaluación
    reconstruya el examen idéntico sin llevar las preguntas dentro. */
 function prng(semilla){let s=semilla>>>0;return()=>(s=(s*1664525+1013904223)>>>0)/4294967296;}
 
@@ -957,14 +934,13 @@ const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?8
 function iniciar(m){
   /* Guarda de verdad, no cosmética. Aunque un botón quede pintado de antes o
      alguien llame iniciar() por otro camino, aquí se detiene: esconder el botón
-     sin esto sería una puerta con letrero y sin cerradura. El examen por link
-     no pasa por aquí, y por eso el cierre no lo toca. */
+     sin esto sería una puerta con letrero y sin cerradura. La evaluación no
+     pasa por aquí, y por eso el cierre no la toca. */
   if(examenesCerrados()){ir('examen');pintaExInicio();return;}
   modo=m||'normal';
-  /* Un examen que se arma aquí no viene de ningún link: se limpia la semilla
-     para no marcar como usado un link ajeno, y el resultado anterior para que
-     el director no vea la revisión del examen pasado. */
-  semLink=null;ultimoRes=null;
+  /* Se limpia el resultado anterior para que el director no vea la revisión del
+     examen pasado, y la evaluación en curso porque este examen no es ella. */
+  evalActual=null;ultimoRes=null;
   ir('examen');
   prueba=armar(modo);resp={};entregado=false;
   if(!prueba.length){reinicia();return;}
@@ -1087,8 +1063,8 @@ function entregar(){
   if(entregado)return;
   entregado=true;clearInterval(reloj);
   const pts=prueba.filter(bien).length,tot=prueba.length,pct=Math.round(pts/tot*100);
-  const catReg=modo==='compartido'&&catLink?catLink:S.cat;
-  const nvReg=modo==='compartido'&&nvLink?nvLink:nivelEfectivo();
+  const catReg=S.cat;
+  const nvReg=modo==='evaluacion'&&evalActual&&evalActual.nivel?evalActual.nivel:nivelEfectivo();
   S.examenes.push({pts,total:tot,cat:catReg,fecha:new Date().toISOString(),modo,nv:nvReg});
   /* Registro por pregunta y por capítulo: alimenta «mis errores»,
      el panel de puntos débiles y la repetición espaciada. */
@@ -1112,15 +1088,11 @@ function entregar(){
   const med=pct>=93?'🥇':pct>=75?'🥈':pct>=60?'🥉':'📖';
   const msg=pct>=93?'¡Excelente! Dominas el material.':pct>=75?'¡Muy bien! Repasa lo que falló.':pct>=60?'Buen intento. Vuelve al material.':'Estudia la guía y vuelve a intentarlo.';
 
-  /* Un examen por link se cierra aquí: queda la nota y no se puede repetir. */
-  if(modo==='compartido'&&semLink!==null){
-    S.links[String(semLink)]={pts,total:tot,fecha:new Date().toISOString()};
-    guardar();
-  }
-
-  /* La nota también al servidor, cuando hay ficha de participante. Es lo que
-     permite que el link se gaste por PERSONA y no por aparato. */
-  srvIntento(modo,modo==='compartido'?semLink:null,pts,tot);
+  /* La nota al servidor. Con la evaluación va su id, y el índice único de la
+     base garantiza que cada participante la haga una sola vez, en el aparato
+     que sea. Eso es lo que la versión con links no podía cumplir. */
+  srvIntento(modo,modo==='evaluacion'&&evalActual?evalActual.id:null,pts,tot);
+  if(modo==='evaluacion')evalHecha=true;
 
   ultimoRes={pts,tot,pct,med,msg,s3};
   document.getElementById('ex-curso').style.display='none';
@@ -1174,7 +1146,7 @@ function pintaResultado(){
 }
 
 /* Qué se hace después de entrar la clave: 'res' vuelve a pintar el resultado
-   con la revisión abierta; 'libera' devuelve un link quemado por error. */
+   con la revisión abierta. */
 let trasDir='res';
 
 /* Caja de clave dentro de la pantalla, no prompt() del navegador: en iPhone el
@@ -1214,12 +1186,6 @@ function entraDirector(){
       try{sessionStorage.removeItem('cb-dir');}catch(e){}
       ir('examen');
       pintaExInicio();
-      return;
-    }
-    if(trasDir==='libera'&&recetaUsada){
-      delete S.links[String(recetaUsada.s)];
-      guardar();
-      pintaInvitacion(recetaUsada);
       return;
     }
     pintaResultado();
@@ -1282,10 +1248,12 @@ function pintaLogros(){
      h.map(e=>{
        const f=new Date(e.fecha);
        const fs=isNaN(f)?'—':f.toLocaleDateString('es-CO',{day:'2-digit',month:'short'})+' '+f.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-       /* El examen por link se marca aparte. El director necesita distinguirlo
-          de uno que el participante armó solo, porque solo el compartido es
-          comparable entre dos niños: es el mismo examen. */
-       const mt={simulacro:' 🎓',errores:' 🔁',compartido:' 🔗'}[e.modo]||'';
+       /* La evaluación se marca aparte. El director necesita distinguirla de un
+          examen que la participante armó sola, porque solo la evaluación es
+          comparable entre dos niñas: es el mismo examen el mismo día.
+          Van como texto y no como emoji: un emoji lo dibuja el sistema y se ve
+          distinto en cada aparato. */
+       const mt={simulacro:' · simulacro',errores:' · repaso',evaluacion:' · evaluación',compartido:' · evaluación'}[e.modo]||'';
        return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
      }).join('')+'</tbody></table></div>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';
@@ -1431,262 +1399,102 @@ function pintaLogo(){
   try{document.querySelectorAll('.logo-tl').forEach(i=>{i.src=LOGO_TL;});}catch(e){}
 }
 
-/* ───────── examen compartido por link ─────────
+/* ───────── la evaluación del día ─────────
+   QUÉ ES ESTA APP, PORQUE DE AHÍ SALE TODO EL DISEÑO
+   Esta no es la app del campamento. Es la de preparación: cada sábado, o el
+   día que el director escoja, se mide el avance con un simulacro que solo está
+   disponible ESE día. El resto de la semana se practica libremente y con las
+   respuestas a la vista, que es como se aprende.
+
    MECANISMO
-   El link no lleva las preguntas: lleva la receta. En el hash van la
-   categoría, el alcance, el nivel, la cantidad y una semilla, y del otro lado
-   la app vuelve a armar el examen con esa semilla. Como el banco está
-   ordenado de forma fija en el archivo y la mezcla usa un generador con
-   semilla (prng), la misma receta produce las mismas preguntas, en el mismo
-   orden, con las opciones en el mismo orden, en cualquier aparato.
+   El director abre la evaluación desde su panel. El servidor genera la semilla
+   y guarda la receta: alcance, cuántas preguntas, nivel. Cada participante que
+   entró con su código pide esa receta y su aparato arma el examen. Como el
+   banco está ordenado igual en todas partes y la mezcla usa un generador con
+   semilla (prng), la misma receta produce las mismas preguntas en el mismo
+   orden. La categoría NO viaja en la receta a propósito: cada niña contesta
+   sobre el material de su categoría, y aun así es "el mismo examen" para las
+   de su grupo.
 
-   POR QUÉ RECETA Y NO PREGUNTAS
-   Meter 15 preguntas con sus opciones en una URL da miles de caracteres, que
-   WhatsApp corta. La receta son unos 40. Además, si mandara las preguntas,
-   el link llevaría también las respuestas correctas dentro y cualquiera podría
-   leerlas antes de contestar.
+   POR QUÉ SE FUE EL LINK
+   Hasta v22 esto se hacía con un link que llevaba la receta adentro y se
+   mandaba por WhatsApp a la hora exacta. Ese link era una muleta para no tener
+   servidor: sin reloj confiable, el control de acceso tenía que ser «cuándo lo
+   mando». Con base de datos el control es «está abierta o no», que es lo que
+   el director ya tenía en la cabeza. Se fueron con el link: copiar y pegar,
+   liberar un link gastado, el interruptor por aparato, y que agregar preguntas
+   invalidara los links viejos.
 
-   EL LÍMITE HONESTO
-   La receta reconstruye el examen solo si las dos partes tienen el mismo
-   banco. Si se publica una versión con preguntas nuevas, un link viejo arma
-   otro examen. Por eso va una huella del banco en el link: si no coincide, la
-   app lo dice en vez de fingir que es el mismo examen.
+   UNA VEZ POR PERSONA, DE VERDAD
+   El índice único (participante, evaluación) vive en la base. No es una
+   promesa del navegador: una segunda ficha en otro celular tampoco la repite. */
 
-   LO QUE NO CAMBIA
-   Abrir un link ajeno no cambia la categoría del participante ni su nombre.
-   Si la categoría del link es otra, la app lo advierte y el examen corre como
-   invitado.
-
-   UN SOLO USO, Y POR QUÉ ESO ES EL CONTROL DE ACCESO
-   El link es lo que hace que el simulacro se pueda cerrar en el tiempo. No hay
-   servidor, así que no hay reloj confiable: una fecha escrita en el código se
-   burla cambiando la hora del aparato. Lo que sí no se puede adivinar es la
-   semilla, y la semilla solo existe cuando el director genera el link. Por eso
-   el control es «cuándo lo mando», no «qué día es».
-   Para que eso valga, el link se gasta al abrirlo: la semilla queda anotada en
-   la ficha y un segundo intento se rechaza. El director lo libera con su clave
-   si se abrió por error. */
-
-const CLAVE_LINK='x';
-
-/* Huella del banco: si cambia el contenido, cambia la huella, y un link
-   armado con otro banco se detecta en vez de pasar por bueno. */
+/* Huella del banco: si cambia el contenido, cambia la huella. Sirve para saber
+   si una evaluación se armó con otra versión del material. */
 const huellaBanco=()=>hashTxt(BANCO.length+'|'+BANCO.map(q=>q.cap).join(''));
 
-/* Semilla nueva, impredecible a propósito.
+/* La evaluación que el servidor tiene abierta, o null. La semilla la genera el
+   SERVIDOR, nunca este aparato: así el examen es idéntico para todas y nadie
+   puede adivinarlo antes de que se abra. */
+let evalPend=null;   // la que se puede hacer ahora
+let evalActual=null; // la que se está contestando
+let evalHecha=false; // ya la hizo esta participante
 
-   MECANISMO
-   La semilla ES el secreto del examen: el link no lleva las preguntas, y quien
-   no tenga la semilla no puede saber cuáles salen ni en qué orden. El control
-   de acceso del simulacro no es una fecha escrita en el código — el reloj del
-   aparato se cambia en dos toques — sino el momento en que el director manda
-   el link.
-
-   POR QUÉ YA NO SIRVE Date.now()
-   Con la hora del sistema como base, quien sepa el minuto aproximado en que se
-   generó el link tiene un espacio de búsqueda chico. getRandomValues toma 32
-   bits de azar del sistema operativo y ese atajo desaparece. */
-const semillaNueva=()=>{
-  try{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]>>>0;}
-  catch(e){return (Date.now()^Math.floor(Math.random()*1e9))>>>0;}
-};
-
-function recetaActual(){
-  return {c:S.cat, a:alcance, n:nivelEfectivo(),
-    q:Math.min(cuantas||NPREG(),poolNivel().length),
-    s:semillaNueva(), h:huellaBanco()};
+async function cargaEvaluacion(){
+  if(!srvYo||srvYo.rol!=='participante'){evalPend=null;pintaEvaluacion();return;}
+  try{
+    const d=await srvFetch('/evaluacion');
+    evalPend=d&&d.evaluacion?d.evaluacion:null;
+    evalHecha=!!(d&&d.hecha);
+    evalNota=d&&d.hecha?{pts:d.nota,total:d.total}:null;
+  }catch(e){evalPend=null;}
+  pintaEvaluacion();
 }
 
-const escribeReceta=r=>[r.c,r.a,r.n,r.q,r.s,r.h].join('.');
+let evalNota=null;
 
-function leeReceta(txt){
-  const p=String(txt||'').split('.');
-  if(p.length!==6)return null;
-  const [c,a,n,q,s,h]=p;
-  if(!Object.keys(CATS).includes(c))return null;
-  const nv=Number(n), cn=Number(q), sm=Number(s);
-  if(![1,2,3].includes(nv)||!Number.isFinite(cn)||cn<1||cn>300)return null;
-  if(!Number.isFinite(sm))return null;
-  return {c,a,n:nv,q:cn,s:sm>>>0,h};
+function pintaEvaluacion(){
+  const d=document.getElementById('cb-eval');
+  if(!d)return;
+  if(!evalPend){d.innerHTML='';return;}
+  if(evalHecha){
+    d.innerHTML='<div class="card eval hecha"><div class="ev-t">'+esc(evalPend.titulo)+'</div>'+
+      '<p class="nota">Ya la hiciste'+(evalNota&&evalNota.total?': <strong>'+evalNota.pts+'/'+evalNota.total+'</strong>':'')+
+      '. Para ver qué fallaste, el director entra su clave.</p></div>';
+    return;
+  }
+  d.innerHTML='<div class="card eval"><div class="ev-t">'+esc(evalPend.titulo)+'</div>'+
+    '<p class="nota">'+evalPend.cuantas+' preguntas. Se hace <strong>una sola vez</strong> '+
+    'y al final sale la nota, no las respuestas.</p>'+
+    '<button class="btn nar ex-go" onclick="haceEvaluacion()">Hacer la evaluación</button></div>';
 }
 
-function linkExamen(){
-  const r=recetaActual();
-  const base=location.href.split('#')[0];
-  return base+'#'+CLAVE_LINK+'='+escribeReceta(r);
-}
-
-function copiaLink(){
-  const url=linkExamen();
-  const c=document.getElementById('link-out');
-  try{if(navigator.clipboard)navigator.clipboard.writeText(url).catch(()=>{});}catch(e){}
-  if(c)c.innerHTML='<p class="nota"><strong>Link copiado.</strong> Quien lo abra hará '+
-    '<strong>exactamente este examen</strong>: las mismas preguntas, en el mismo orden.</p>'+
-    '<textarea class="cod" readonly onclick="this.select()">'+esc(url)+'</textarea>'+
-    '<p class="nota">Si no se copió solo, toca el recuadro y cópialo a mano.</p>';
-}
-
-/* ── recibir un link ── */
-
-let recetaPend=null;
-
-function textoReceta(r){
-  const c=CATS[r.c];
-  const prev=S.cat, prevA=alcance, prevN=nivel, prevQ=cuantas;
-  let alc='';
-  try{S.cat=r.c;alcance=r.a;alc=textoAlcanceImpr();}
-  finally{S.cat=prev;alcance=prevA;nivel=prevN;cuantas=prevQ;}
-  return {cat:c.nombre+' · '+c.edad, ev:c.ev, alc,
-    det:r.q+' preguntas · nivel '+r.n+' '+ETIQ_NIVEL[r.n]};
-}
-
-/* Último hash atendido. Sin esto, limpiar el hash puede volver a disparar el
-   mismo link, y en file:// (donde replaceState no siempre funciona) la
-   invitación reaparecería en bucle. */
-let hashVisto=null;
-
-function revisaLink(){
-  const h=String(location.hash||'').replace(/^#/,'');
-  const m=new RegExp('^'+CLAVE_LINK+'=(.+)$').exec(h);
-  if(!m)return false;
-  if(h===hashVisto)return false;
-  hashVisto=h;
-  const r=leeReceta(m[1]);
-  /* Se limpia la barra de direcciones para que recargar no vuelva a abrir la
-     invitación, y para que el link no quede a la vista con la semilla. */
-  try{history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}
-  if(!r){pintaLinkMalo();return true;}
-  recetaPend=r;
-  /* Si todavía no hay participante, la invitación espera: sin ficha no hay
-     dónde registrar el resultado. La bienvenida la atiende al terminar. */
-  if(esNuevo())return true;
-  pintaInvitacion(r);
-  return true;
-}
-
-/* Tocar un link cuando la app ya está abierta no recarga la página: cambiar
-   solo el hash es navegación dentro del mismo documento y el arranque no se
-   vuelve a ejecutar. Sin este escuchador, el link no hacía nada para quien ya
-   tenía la app abierta. */
-try{window.addEventListener('hashchange',()=>{try{revisaLink();}catch(e){}});}catch(e){}
-
-function pintaLinkMalo(){
-  ir('examen');
-  document.getElementById('ex-inicio').style.display='none';
-  document.getElementById('ex-curso').style.display='none';
-  const d=document.getElementById('ex-result');
-  d.style.display='block';
-  d.innerHTML='<div class="card"><h2>🔗 Ese link no se entiende</h2>'+
-    '<p class="nota">Llegó incompleto o cortado. Pídelo otra vez, o haz un '+
-    'examen normal.</p><button class="btn nar" style="margin-top:.8rem" '+
-    'onclick="salirLink()">Ir al examen</button></div>';
-}
-
-/* Receta del link que la pantalla de «ya se usó» está mostrando. Va aparte de
-   recetaPend a propósito: aceptaLink() limpia recetaPend, así que colgar el
-   liberar de esa variable dejaba el botón sin efecto según por dónde se
-   hubiera llegado a la pantalla. */
-let recetaUsada=null;
-
-/* Un link ya usado no se vuelve a abrir. El director lo puede liberar con su
-   clave para el caso legítimo: se abrió por error antes de la hora. */
-function pintaLinkUsado(r){
-  recetaUsada=r;
-  const u=S.links[String(r.s)]||{};
-  const nota=(u.pts===null||u.pts===undefined)
-    ?'Este examen ya se abrió en este aparato y no se terminó. Un examen por link se hace una sola vez.'
-    :'Este examen ya se hizo en este aparato: '+u.pts+' de '+u.total+'.';
-  ir('examen');
-  document.getElementById('ex-inicio').style.display='none';
-  document.getElementById('ex-curso').style.display='none';
-  const d=document.getElementById('ex-result');
-  d.style.display='block';
-  d.innerHTML='<div class="card"><h2>🔒 Ese examen ya se usó</h2>'+
-    '<p class="nota">'+esc(nota)+'</p>'+
-    '<p class="nota">Si se abrió por error, el director lo puede liberar con su clave.</p>'+
-    '<div id="dir-caja"></div>'+
-    '<button class="btn gho" style="margin-top:.7rem" onclick="pideClaveDir(\'libera\')">🔑 Soy el director</button>'+
-    '<button class="btn nar" style="margin-top:.6rem;width:100%;justify-content:center" '+
-    'onclick="salirLink()">Ir al examen</button></div>';
-}
-
-function pintaInvitacion(r){
-  /* Un link se hace una sola vez. Sin esto se podía abrir, leer las preguntas,
-     salir sin contestar y volver a entrar ya sabiendo qué venía. */
-  if(S.links[String(r.s)]&&!director){pintaLinkUsado(r);return;}
-  const t=textoReceta(r);
-  const mismaCat=r.c===S.cat;
-  const mismoBanco=r.h===huellaBanco();
-  ir('examen');
-  document.getElementById('ex-inicio').style.display='none';
-  document.getElementById('ex-curso').style.display='none';
-  const d=document.getElementById('ex-result');
-  d.style.display='block';
-  d.innerHTML='<div class="card ex-hoy">'+
-    '<div class="ex-h">🔗 Examen compartido</div>'+
-    '<div class="ex-big">'+esc(t.det)+'</div>'+
-    '<div class="ex-sub">'+esc(t.alc)+'<br>'+esc(t.cat)+' · '+esc(t.ev)+'</div>'+
-    (mismaCat?''
-      :'<p class="nota" style="color:var(--rojo)"><strong>Este examen es de otra '+
-       'categoría que la tuya</strong> ('+esc(CAT().nombre)+'). Lo puedes hacer, '+
-       'pero no te cambia tu categoría ni tu material.</p>')+
-    (mismoBanco?''
-      :'<p class="nota" style="color:var(--rojo)"><strong>Se armó con otra versión '+
-       'del material.</strong> Las preguntas no van a ser exactamente las mismas '+
-       'que le salieron a quien te lo mandó.</p>')+
-    '<button class="btn nar ex-go" onclick="aceptaLink()">🚀 Hacer este examen</button>'+
-    '<button class="btn gho" style="margin-top:.6rem;width:100%;justify-content:center" '+
-    'onclick="salirLink()">No, gracias</button></div>';
-}
-
-function salirLink(){
-  recetaPend=null;
-  document.getElementById('ex-result').style.display='none';
-  document.getElementById('ex-inicio').style.display='block';
-  ir('examen');
-}
-
-/* Arma el examen de la receta. La categoría, el alcance, el nivel y la
-   cantidad se aplican solo para armar y se devuelven como estaban: el link no
-   toca la configuración del participante. */
-function aceptaLink(){
-  if(!recetaPend)return;
-  const r=recetaPend;
-  const prev={c:S.cat,a:alcance,n:nivel,q:cuantas};
+/* Arma la evaluación con la receta del servidor. El alcance, el nivel y la
+   cantidad se aplican solo para armar y se devuelven como estaban: la
+   evaluación no toca la configuración del participante. */
+function haceEvaluacion(){
+  if(!evalPend||evalHecha)return;
+  const r=evalPend;
+  const prev={a:alcance,n:nivel,q:cuantas};
   let sel=[];
   try{
-    S.cat=r.c;alcance=r.a;nivel=r.n;cuantas=r.q;
-    rndEx=prng(r.s);
+    alcance=r.alcance||'todo';nivel=r.nivel||0;cuantas=r.cuantas;
+    rndEx=prng(Number(r.semilla)>>>0);
     sel=armar('normal');
   }finally{
-    rndEx=Math.random;
-    S.cat=prev.c;alcance=prev.a;nivel=prev.n;cuantas=prev.q;
+    rndEx=Math.random;alcance=prev.a;nivel=prev.n;cuantas=prev.q;
   }
-  recetaPend=null;
-  if(!sel.length){pintaLinkMalo();return;}
-  /* Se marca usada AL ABRIR, no al entregar. Si se marcara al entregar, el
-     camino de trampa seguía abierto: abrir, leer las quince, salir sin
-     contestar, estudiarlas y volver a entrar. */
-  semLink=r.s;
-  S.links[String(r.s)]={pts:null,total:sel.length,fecha:new Date().toISOString()};
-  guardar();
-  catLink=r.c;nvLink=r.n;
-  modo='compartido';prueba=sel;resp={};entregado=false;
+  if(!sel.length)return;
+  evalActual=r;
+  modo='evaluacion';prueba=sel;resp={};entregado=false;ultimoRes=null;
   seg=segundosPara(prueba.length);
+  ir('examen');
   document.getElementById('ex-result').style.display='none';
   document.getElementById('ex-inicio').style.display='none';
   document.getElementById('ex-curso').style.display='block';
   pintaPreguntas();corre();
   window.scrollTo({top:0});
 }
-
-/* Categoría y nivel con que se registra un examen compartido, para que el
-   historial no lo anote como si fuera de la categoría propia. */
-let catLink=null,nvLink=null;
-
-/* Semilla del link que se está haciendo ahora, o null si el examen no vino de
-   un link. Es la que se marca como usada. */
-let semLink=null;
 
 /* ───────── manual dentro de la app ─────────
    MECANISMO
@@ -2073,20 +1881,13 @@ function bvTermina(){
   ir('inicio');
   const id=document.getElementById('ident');
   if(id)id.open=false;
-  /* Si entró por un link de examen, ahora sí se puede atender: ya hay ficha
-     donde registrar el resultado. El hash pudo haberse consumido al arrancar,
-     así que primero se mira si quedó una receta esperando. */
-  try{if(recetaPend)pintaInvitacion(recetaPend);else revisaLink();}catch(e){}
+  try{cargaEvaluacion();}catch(e){}
 }
 
 /* ───────── arranque ───────── */
 try{
   pintaLogo();marcaCat();pintaInicio();
-  /* Un link de examen manda sobre la bienvenida solo si ya hay un
-     participante: a quien llega por primera vez hay que preguntarle el nombre
-     antes, o su examen no queda registrado en ninguna ficha. */
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
-  else revisaLink();
 }catch(e){console.error(e);}
 
 /* ───────── entrar con el código (v20) ─────────
@@ -2122,7 +1923,7 @@ async function entraCodigo(){
   try{
     const d=await srvFetch('/entrar',{method:'POST',body:JSON.stringify({codigo:i.value})});
     srvYo={rol:'participante',nombre:d.nombre,categoria:d.categoria};
-    pintaSesion();pintaExInicio();pintaInicio();
+    pintaSesion();await cargaEvaluacion();pintaExInicio();pintaInicio();
   }catch(e){
     if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
   }
@@ -2130,7 +1931,7 @@ async function entraCodigo(){
 
 async function salirCodigo(){
   try{await srvFetch('/salir',{method:'POST'});}catch(e){}
-  srvYo=null;pintaSesion();
+  srvYo=null;evalPend=null;evalHecha=false;pintaSesion();pintaEvaluacion();
 }
 
 /* ───────── el panel del director (v20) ─────────
@@ -2162,29 +1963,60 @@ async function pintaPanel(){
     return;
   }
   const c=srvLee();
-  const abierto=!c||c.abierto!==false;
-  let lista='<p class="nota">Cargando...</p>';
+  const hayEval=!!(c&&c.practica===false);
   d.innerHTML='<div class="det-cuerpo">'+
-    '<div class="pan-sw"><strong>Exámenes de práctica: '+(abierto?'ABIERTOS':'CERRADOS')+'</strong>'+
-    '<button class="btn '+(abierto?'gho':'nar')+'" onclick="alternaServidor('+(abierto?'false':'true')+')">'+
-    (abierto?'Cerrar para todos':'Abrir para todos')+'</button></div>'+
-    '<p class="nota">Vale para <strong>todos los aparatos a la vez</strong>. El examen que '+
-    'mandes por link sigue funcionando cerrado, y estudiar y las tarjetas también.</p>'+
+    '<div class="pan-sw"><strong>'+(hayEval?'Evaluación ABIERTA'+(c.evalTitulo?': '+esc(c.evalTitulo):''):'Sin evaluación abierta')+'</strong>'+
+    (hayEval
+      ?'<button class="btn nar" onclick="cierraEvaluacion()">Cerrar la evaluación</button>'
+      :'<button class="btn azul" onclick="abreEvaluacion()">Abrir una evaluación</button>')+'</div>'+
+    (hayEval?'':'<div class="ses-fila"><input id="pan-eval-t" placeholder="Nombre, p. ej. Sábado 6 de septiembre" maxlength="60">'+
+      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem">'+
+      '</div>')+
+    '<p class="nota">Mientras hay una evaluación abierta, la práctica se cierra sola en '+
+    '<strong>todos los aparatos</strong>. Al cerrarla vuelve. Estudiar y las tarjetas nunca se cierran.</p>'+
+    '<div id="pan-eval"></div>'+
     '<div class="divisor">Participantes</div>'+
     '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
     '<select id="pan-cat"><option value="4-6">4-6</option><option value="7-9">7-9</option>'+
     '<option value="padres">Padres</option></select>'+
     '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
-    '<div id="pan-lista">'+lista+'</div></div>';
+    '<div id="pan-lista"><p class="nota">Cargando...</p></div></div>';
   await cargaParticipantes();
+  await cargaResultados();
 }
 
-async function alternaServidor(abrir){
+async function abreEvaluacion(){
+  const t=document.getElementById('pan-eval-t'),n=document.getElementById('pan-eval-n');
   try{
-    const d=await srvFetch('/panel/examenes',{method:'POST',body:JSON.stringify({abiertos:!!abrir})});
-    srvGuarda(d.abierto);
-    await pintaPanel();pintaExInicio();pintaInicio();
+    await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
+      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',nivel:0,huella:huellaBanco()})});
+    await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
   }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+async function cierraEvaluacion(){
+  try{
+    await srvFetch('/panel/evaluacion/cerrar',{method:'POST'});
+    await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
+  }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+/* Lo que el director mira mientras corre la evaluación. Quién FALTA es el dato
+   que sirve: con eso va y la busca, en vez de adivinar si ya terminaron. */
+async function cargaResultados(){
+  const d=document.getElementById('pan-eval');
+  if(!d)return;
+  try{
+    const r=await srvFetch('/panel/evaluacion');
+    if(!r.evaluacion&&!(r.hechas||[]).length){d.innerHTML='';return;}
+    const h=r.hechas||[],f=r.faltan||[];
+    d.innerHTML='<div class="divisor">Cómo va</div>'+
+      '<p class="nota"><strong>'+h.length+'</strong> la hicieron · <strong>'+f.length+'</strong> faltan</p>'+
+      (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th></tr>'+
+        h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(x.categoria)+'</td><td><strong>'+
+          x.nota+'/'+x.total+'</strong></td></tr>';}).join('')+'</table></div>':'')+
+      (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'');
+  }catch(e){d.innerHTML='';}
 }
 
 async function cargaParticipantes(){
@@ -2228,6 +2060,7 @@ async function borraParticipante(id){
     await srvRefresca();
     await srvQuienSoy();
     pintaSesion();
+    await cargaEvaluacion();
     await pintaPanel();
     if(typeof pintaExInicio==='function')pintaExInicio();
     if(typeof pintaInicio==='function')pintaInicio();
