@@ -459,8 +459,14 @@ function pantalla(id){
   const j=CUERPO.indexOf('<div id="p-', i+10);
   return CUERPO.slice(i, j<0?CUERPO.length:j);
 }
-const etiquetasImpr=trozo=>[...trozo.matchAll(/onclick="imprime\w+\([^)]*\)"[^>]*>([^<]+)</g)]
-  .map(m=>m[1].replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,'').trim());
+/* Se lee el botón COMPLETO y se le quitan las etiquetas. Con la captura vieja
+   («hasta el primer <») un icono SVG dentro del botón dejaba la etiqueta vacía
+   y la prueba decía que la pantalla no tenía botones de impresión. Es el mismo
+   error de método que ya se había cometido con los <summary>. */
+const etiquetasImpr=trozo=>[...trozo.matchAll(/onclick="imprime\w+\([^)]*\)"[^>]*>([\s\S]*?)<\/button>/g)]
+  .map(m=>m[1].replace(/<[^>]*>/g,' ')
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,'')
+    .replace(/\s+/g,' ').trim());
 
 const btsEstudio=etiquetasImpr(pantalla('p-estudio'));
 const btsExamen=etiquetasImpr(pantalla('p-examen'));
@@ -540,13 +546,17 @@ ok(/compartido/.test(mtBloque?mtBloque[1]:''),
    la respuesta correcta», sin excepción. Con el simulacro y el link cerrados
    eso quedó falso, y es justo la clase de frase que nadie vuelve a leer. */
 ok(/no sale la revisión/.test(txtMan),
-  'El manual avisa que en el simulacro y en el link no sale la revisión');
+  'El manual avisa que en el simulacro y en la evaluación no sale la revisión');
 ok(/clave/.test(manPorId['a-examen']),
   'El tema del examen dice que la revisión la abre el director con su clave');
 ok(/Repasar mis errores/.test(manPorId['d-limites'])||/mis errores/.test(manPorId['d-limites']),
   'El manual del director documenta la vuelta por «mis errores»');
-ok(/segunda ficha|otra ficha/.test(manPorId['d-limites']),
-  'El manual del director documenta que otra ficha puede rehacer un link');
+/* Antes esto verificaba que el manual documentara una TRAMPA: con una segunda
+   ficha se podía rehacer el examen. Desde v24 esa puerta la cierra la base de
+   datos, así que ahora se verifica lo contrario: que el manual explique la
+   garantía, y no una limitación que ya no existe. */
+ok(/cada una hace la evaluación una vez|una vez por persona|propio código/.test(manPorId['d-limites']),
+  'El manual del director explica que cada participante hace la evaluación una sola vez');
 
 /* La afirmación exacta que estaba mal: el manual de la app no se imprime desde
    Estudiar, y el tema de Estudiar no debe decir que sí. */

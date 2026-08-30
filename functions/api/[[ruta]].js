@@ -89,6 +89,8 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
   return token;
 }
 
+const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2'];
+
 const evaluacionAbierta = env =>
   env.DB.prepare('SELECT * FROM evaluacion WHERE abierta = 1 ORDER BY creada_en DESC LIMIT 1').first();
 
@@ -219,6 +221,15 @@ export async function onRequest(context) {
       if (!sesion || sesion.rol !== 'participante') return error('Entra con tu código primero.', 401);
       const ev = await evaluacionAbierta(env);
       if (!ev) return json({ evaluacion: null });
+      /* Si la evaluación va dirigida a unas categorías y esta participante no
+         está en ellas, para ella es como si no existiera: no la ve y su
+         práctica sigue abierta. */
+      const yo = await env.DB.prepare('SELECT categoria FROM participante WHERE id = ?')
+        .bind(sesion.persona_id).first();
+      const cats = ev.categorias || '*';
+      if (cats !== '*' && !(cats.split(',').includes(yo && yo.categoria))) {
+        return json({ evaluacion: null, noMeToca: true });
+      }
       const hecho = await env.DB.prepare(
         'SELECT nota, total FROM intento WHERE participante_id = ? AND evaluacion_id = ?'
       ).bind(sesion.persona_id, ev.id).first();
@@ -270,13 +281,20 @@ export async function onRequest(context) {
       const alcance = limpiar(b.alcance, 20) || 'todo';
       const cuantas = Math.min(60, Math.max(5, Math.round(+b.cuantas || 15)));
       const nivel = [0, 1, 2, 3].includes(+b.nivel) ? +b.nivel : 0;
+      /* A quién le toca. Una lista de categorías, o '*' para todas. Sin esto el
+         director no puede evaluar solo a matutina, o solo a las de 4 a 6. */
+      const pedidas = Array.isArray(b.categorias) ? b.categorias
+        : String(b.categorias || '').split(',');
+      const limpias = pedidas.map(x => String(x).trim()).filter(x => CATS_VALIDAS.includes(x));
+      const categorias = (!limpias.length || limpias.length === CATS_VALIDAS.length) ? '*' : limpias.join(',');
       await env.DB.prepare(
         "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE abierta = 1"
       ).run();
       const eid = id();
       await env.DB.prepare(
-        'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, abierta) VALUES (?,?,?,?,?,?,?,1)'
-      ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40)).run();
+        'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, categorias, abierta) ' +
+        'VALUES (?,?,?,?,?,?,?,?,1)'
+      ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40), categorias).run();
       await auditar(env, sesion.cuenta_id, 'abrir_evaluacion', 'evaluacion', eid, ipHash);
       return json({ ok: true, id: eid });
     }
@@ -301,13 +319,18 @@ export async function onRequest(context) {
         'JOIN participante p ON p.id = i.participante_id ' +
         'WHERE i.evaluacion_id = ? AND p.borrado_en IS NULL ORDER BY i.creado_en'
       ).bind(eid).all();
+      const cats = ev && ev.categorias ? ev.categorias : '*';
+      const filtro = cats === '*' ? '' :
+        " AND p.categoria IN (" + cats.split(',').map(() => '?').join(',') + ")";
+      const args = cats === '*' ? [eid] : [eid, ...cats.split(',')];
       const { results: faltan } = await env.DB.prepare(
         'SELECT p.nombre, p.categoria FROM participante p WHERE p.borrado_en IS NULL ' +
-        'AND p.id NOT IN (SELECT participante_id FROM intento WHERE evaluacion_id = ?) ' +
-        'ORDER BY p.categoria, p.nombre'
-      ).bind(eid).all();
+        'AND p.id NOT IN (SELECT participante_id FROM intento WHERE evaluacion_id = ?)' +
+        filtro + ' ORDER BY p.categoria, p.nombre'
+      ).bind(...args).all();
       return json({
-        evaluacion: ev ? { id: ev.id, titulo: ev.titulo, cuantas: ev.cuantas, alcance: ev.alcance, nivel: ev.nivel } : null,
+        evaluacion: ev ? { id: ev.id, titulo: ev.titulo, cuantas: ev.cuantas,
+          alcance: ev.alcance, nivel: ev.nivel, categorias: ev.categorias || '*' } : null,
         hechas: hechas || [], faltan: faltan || [],
       });
     }
@@ -325,9 +348,9 @@ export async function onRequest(context) {
     if (metodo === 'POST' && ruta === '/panel/participantes') {
       const b = await request.json().catch(() => ({}));
       const nombre = limpiar(b.nombre, 40);
-      const categoria = ['4-6', '7-9', 'padres'].includes(b.categoria) ? b.categoria : null;
+      const categoria = CATS_VALIDAS.includes(b.categoria) ? b.categoria : null;
       if (!nombre) return error('Falta el nombre.');
-      if (!categoria) return error('La categoría es 4-6, 7-9 o padres.');
+      if (!categoria) return error('Categoría inválida: ' + CATS_VALIDAS.join(', ') + '.');
       /* Reintentar si el código ya existía: con 31^6 combinaciones el choque es
          improbable, pero improbable no es imposible y el índice es único. */
       let codigo = null;

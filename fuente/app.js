@@ -1923,9 +1923,26 @@ async function entraCodigo(){
   try{
     const d=await srvFetch('/entrar',{method:'POST',body:JSON.stringify({codigo:i.value})});
     srvYo={rol:'participante',nombre:d.nombre,categoria:d.categoria};
+    /* El código es la identidad: el nombre y la categoría los manda el
+       servidor, y la ficha local se alinea con ellos. Antes había dos verdades
+       sobre quién era la niña y cuál era su material; ahora hay una. */
+    adoptaFicha(d);
     pintaSesion();await cargaEvaluacion();pintaExInicio();pintaInicio();
   }catch(e){
     if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+  }
+}
+
+/* Alinea la ficha local con lo que dice el servidor. No borra el progreso: el
+   estudio hecho sigue siendo suyo; solo se corrigen el nombre y la categoría,
+   que son los datos que el director necesita que coincidan. */
+function adoptaFicha(d){
+  if(!d)return;
+  let cambio=false;
+  if(d.nombre&&S.nombre!==d.nombre){S.nombre=d.nombre;cambio=true;}
+  if(d.categoria&&CATS[d.categoria]&&S.cat!==d.categoria){S.cat=d.categoria;cambio=true;}
+  if(cambio){
+    guardar();marcaCat();pintaIdent();pintaCaps();pintaInicio();
   }
 }
 
@@ -1970,15 +1987,21 @@ async function pintaPanel(){
       ?'<button class="btn nar" onclick="cierraEvaluacion()">Cerrar la evaluación</button>'
       :'<button class="btn azul" onclick="abreEvaluacion()">Abrir una evaluación</button>')+'</div>'+
     (hayEval?'':'<div class="ses-fila"><input id="pan-eval-t" placeholder="Nombre, p. ej. Sábado 6 de septiembre" maxlength="60">'+
-      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem">'+
-      '</div>')+
+      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem" title="Cuántas preguntas">'+
+      '</div>'+
+      '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
+      '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
+        return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'"> '+
+          '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc(CATS[k].ev)+' · '+esc(CATS[k].edad)+'</small></span></label>';
+      }).join('')+'</div>')+
     '<p class="nota">Mientras hay una evaluación abierta, la práctica se cierra sola en '+
     '<strong>todos los aparatos</strong>. Al cerrarla vuelve. Estudiar y las tarjetas nunca se cierran.</p>'+
     '<div id="pan-eval"></div>'+
     '<div class="divisor">Participantes</div>'+
     '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
-    '<select id="pan-cat"><option value="4-6">4-6</option><option value="7-9">7-9</option>'+
-    '<option value="padres">Padres</option></select>'+
+    '<select id="pan-cat">'+Object.keys(CATS).map(function(k){
+      return '<option value="'+k+'">'+esc(CATS[k].nombre)+' · '+esc(CATS[k].edad)+'</option>';
+    }).join('')+'</select>'+
     '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
     '<div id="pan-lista"><p class="nota">Cargando...</p></div></div>';
   await cargaParticipantes();
@@ -1988,8 +2011,11 @@ async function pintaPanel(){
 async function abreEvaluacion(){
   const t=document.getElementById('pan-eval-t'),n=document.getElementById('pan-eval-n');
   try{
+    const cats=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
+      .filter(function(c){return c.checked;}).map(function(c){return c.value;});
     await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
-      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',nivel:0,huella:huellaBanco()})});
+      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',nivel:0,
+      categorias:cats,huella:huellaBanco()})});
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
   }catch(e){alert(e.message||'No se pudo conectar');}
 }
@@ -2013,7 +2039,7 @@ async function cargaResultados(){
     d.innerHTML='<div class="divisor">Cómo va</div>'+
       '<p class="nota"><strong>'+h.length+'</strong> la hicieron · <strong>'+f.length+'</strong> faltan</p>'+
       (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th></tr>'+
-        h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(x.categoria)+'</td><td><strong>'+
+        h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc((CATS[x.categoria]||{}).nombre||x.categoria)+'</td><td><strong>'+
           x.nota+'/'+x.total+'</strong></td></tr>';}).join('')+'</table></div>':'')+
       (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'');
   }catch(e){d.innerHTML='';}
@@ -2028,7 +2054,8 @@ async function cargaParticipantes(){
     if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
       '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
-        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(x.categoria)+'</td>'+
+        const cn=CATS[x.categoria]?CATS[x.categoria].nombre:x.categoria;
+        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(cn)+'</td>'+
           '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
           '<td><button class="btn gho" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
       }).join('')+'</table></div>';

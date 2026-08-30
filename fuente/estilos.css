@@ -1004,4 +1004,28 @@ details.card summary::marker{content:''}
 .id-quien .ico{width:17px;height:17px;color:var(--v-cat);--ico-w:1.9}
 .id-quien .ico .f{fill:currentColor;fill-opacity:.14}
 
+
+/* A quién le toca la evaluación. Casillas grandes y con el nombre completo de
+   la categoría: el director la abre de pie, en el celular, y «dm2» no le dice
+   nada a nadie. */
+.pan-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.5rem;margin:.5rem 0 .8rem}
+.pan-cat{
+  display:flex;gap:.6rem;align-items:flex-start;
+  border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
+  padding:.6rem .7rem;background:var(--v-sup);cursor:pointer;min-height:44px;
+  transition:border-color var(--v-paso), background var(--v-paso);
+}
+.pan-cat:hover{border-color:var(--v-cat)}
+.pan-cat input{margin-top:.15rem;width:18px;height:18px;flex:0 0 auto;accent-color:var(--v-cat)}
+.pan-cat small{color:var(--v-tinta3)}
+.pan-cat:has(input:checked){border-color:var(--v-cat);background:var(--v-cat-suave)}
+
+
+.ay-tabs button{display:inline-flex;align-items:center;gap:.45rem;min-height:44px}
+.ay-tabs button .ico{width:18px;height:18px;--ico-w:1.9}
+.menu-impr .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+.menu-impr .btn .ico{width:18px;height:18px;--ico-w:1.9}
+.ay-ic .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9}
+.ay-ic .ico .f{fill:currentColor;fill-opacity:.14}
+
 }  /* fin @media screen */

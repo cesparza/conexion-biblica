@@ -1011,6 +1011,30 @@ details.card summary::marker{content:''}
 .id-quien .ico{width:17px;height:17px;color:var(--v-cat);--ico-w:1.9}
 .id-quien .ico .f{fill:currentColor;fill-opacity:.14}
 
+
+/* A quién le toca la evaluación. Casillas grandes y con el nombre completo de
+   la categoría: el director la abre de pie, en el celular, y «dm2» no le dice
+   nada a nadie. */
+.pan-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.5rem;margin:.5rem 0 .8rem}
+.pan-cat{
+  display:flex;gap:.6rem;align-items:flex-start;
+  border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
+  padding:.6rem .7rem;background:var(--v-sup);cursor:pointer;min-height:44px;
+  transition:border-color var(--v-paso), background var(--v-paso);
+}
+.pan-cat:hover{border-color:var(--v-cat)}
+.pan-cat input{margin-top:.15rem;width:18px;height:18px;flex:0 0 auto;accent-color:var(--v-cat)}
+.pan-cat small{color:var(--v-tinta3)}
+.pan-cat:has(input:checked){border-color:var(--v-cat);background:var(--v-cat-suave)}
+
+
+.ay-tabs button{display:inline-flex;align-items:center;gap:.45rem;min-height:44px}
+.ay-tabs button .ico{width:18px;height:18px;--ico-w:1.9}
+.menu-impr .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+.menu-impr .btn .ico{width:18px;height:18px;--ico-w:1.9}
+.ay-ic .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9}
+.ay-ic .ico .f{fill:currentColor;fill-opacity:.14}
+
 }  /* fin @media screen */
 </style>
 </head>
@@ -1218,17 +1242,17 @@ details.card summary::marker{content:''}
 
 <div id="p-ayuda" class="pantalla">
   <div class="hero ay-hero">
-    <h1>❓ Cómo se usa</h1>
+    <h1>Cómo se usa</h1>
     <p>El manual de la app, dentro de la app. Toca un tema para abrirlo.</p>
   </div>
   <div class="ay-tabs">
-    <button class="on" id="ay-t1" onclick="ayGrupo('estudia')">🎒 Para quien estudia</button>
-    <button id="ay-t2" onclick="ayGrupo('director')">🧑‍🏫 Para el director</button>
+    <button class="on" id="ay-t1" onclick="ayGrupo('estudia')"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg><span>Para quien estudia</span></button>
+    <button id="ay-t2" onclick="ayGrupo('director')"><svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg><span>Para el director</span></button>
   </div>
   <div id="ay-lista"></div>
   <div class="card">
     <div class="menu-impr">
-      <button class="btn azul" onclick="imprimeManual()">🖨️ Imprimir este manual</button>
+      <button class="btn azul" onclick="imprimeManual()"><svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg><span>Imprimir este manual</span></button>
       <button class="btn gho" onclick="ir('inicio')">← Volver al inicio</button>
     </div>
   </div>
@@ -9840,7 +9864,7 @@ const MANUAL = [
  {
   "id": "a-empezar",
   "para": "estudia",
-  "icono": "🚀",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-diana\"/></svg>",
   "t": "Los tres pasos del principio",
   "d": "Qué te pregunta la app la primera vez",
   "secs": [
@@ -9873,7 +9897,7 @@ const MANUAL = [
  {
   "id": "a-hoy",
   "para": "estudia",
-  "icono": "📌",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-lista\"/></svg>",
   "t": "Empieza siempre por «Qué estudiar hoy»",
   "d": "La única decisión que no tienes que tomar",
   "secs": [
@@ -9894,7 +9918,7 @@ const MANUAL = [
  {
   "id": "a-estudiar",
   "para": "estudia",
-  "icono": "📖",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-libro\"/></svg>",
   "t": "Estudiar: leer y marcar",
   "d": "Y por qué el círculo se queda en 0%",
   "secs": [
@@ -9904,7 +9928,7 @@ const MANUAL = [
    },
    {
     "t": "Lo que más se olvida",
-    "h": "<p>Al final del capítulo hay un botón <strong>«✅ Ya lo estudié»</strong>.\n    Ese botón es el que llena el círculo del Inicio.</p>\n    <p>Leer sin tocarlo deja el círculo en 0%. No es un castigo: la app no\n    puede saber si terminaste de leer, solo sabe lo que le dices.</p>"
+    "h": "<p>Al final del capítulo hay un botón <strong>«Ya lo estudié»</strong>.\n    Ese botón es el que llena el círculo del Inicio.</p>\n    <p>Leer sin tocarlo deja el círculo en 0%. No es un castigo: la app no\n    puede saber si terminaste de leer, solo sabe lo que le dices.</p>"
    },
    {
     "t": "Repaso general",
@@ -9915,7 +9939,7 @@ const MANUAL = [
  {
   "id": "a-tarjetas",
   "para": "estudia",
-  "icono": "🃏",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-tarjetas\"/></svg>",
   "t": "Tarjetas: memorizar",
   "d": "Responder en voz alta antes de voltear",
   "secs": [
@@ -9925,7 +9949,7 @@ const MANUAL = [
    },
    {
     "t": "Cómo se usa",
-    "h": "<ol><li>Lee el frente.</li>\n    <li>Di la respuesta en voz alta.</li>\n    <li>Toca la tarjeta para ver si acertaste.</li>\n    <li>Toca <strong>✅ La sabía</strong> o <strong>🔁 Repasar</strong>.</li></ol>\n    <p>Tú tienes {TJ_CAT} tarjetas.</p>"
+    "h": "<ol><li>Lee el frente.</li>\n    <li>Di la respuesta en voz alta.</li>\n    <li>Toca la tarjeta para ver si acertaste.</li>\n    <li>Toca <strong>La sabía</strong> o <strong>Repasar</strong>.</li></ol>\n    <p>Tú tienes {TJ_CAT} tarjetas.</p>"
    },
    {
     "t": "Cuándo queda dominada",
@@ -9940,17 +9964,17 @@ const MANUAL = [
  {
   "id": "a-examen",
   "para": "estudia",
-  "icono": "✏️",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-examen\"/></svg>",
   "t": "Examen: practicar",
   "d": "Cómo es, y qué pasa al terminar",
   "secs": [
    {
     "t": "Empezar",
-    "h": "<p>La pantalla abre con <strong>un solo botón</strong>. Arriba dice\n    cuántas preguntas trae y de qué nivel; con tocar\n    <strong>🚀 Comenzar</strong> arranca.</p>\n    <p>Si quieres otro tamaño, otro capítulo u otra dificultad, está en\n    <strong>⚙️ Cambiar este examen</strong>.</p>"
+    "h": "<p>La pantalla abre con <strong>un solo botón</strong>. Arriba dice\n    cuántas preguntas trae y de qué nivel; con tocar\n    <strong>Comenzar</strong> arranca.</p>\n    <p>Si quieres otro tamaño, otro capítulo u otra dificultad, está en\n    <strong>Cambiar este examen</strong>.</p>"
    },
    {
     "t": "Mientras lo haces",
-    "h": "<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>\n    <li>Las preguntas <strong>cambian cada vez</strong>: salen al azar de\n    {BANCO_CAT} preguntas, así que nunca te sale el mismo examen dos veces.</li>\n    <li>Las opciones también se barajan. No se puede aprobar marcando siempre\n    la misma letra.</li>\n    <li>Al terminar, toca <strong>✅ Entregar</strong>.</li></ul>"
+    "h": "<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>\n    <li>Las preguntas <strong>cambian cada vez</strong>: salen al azar de\n    {BANCO_CAT} preguntas, así que nunca te sale el mismo examen dos veces.</li>\n    <li>Las opciones también se barajan. No se puede aprobar marcando siempre\n    la misma letra.</li>\n    <li>Al terminar, toca <strong>Entregar</strong>.</li></ul>"
    },
    {
     "t": "Las tres secciones",
@@ -9962,18 +9986,18 @@ const MANUAL = [
    },
    {
     "t": "Si dice que los exámenes están cerrados",
-    "h": "<p>Tu director los puede cerrar hasta el día de la prueba. No es que la\n    app se dañó: mientras estén cerrados puedes <strong>estudiar los\n    capítulos</strong> y usar las <strong>tarjetas</strong>, que es donde de\n    verdad se aprende.</p>\n    <p>Y si te llega un examen por link, <strong>ese sí lo puedes hacer</strong>\n    aunque los demás estén cerrados.</p>"
+    "h": "<p>Tu director los puede cerrar hasta el día de la prueba. No es que la\n    app se dañó: mientras estén cerrados puedes <strong>estudiar los\n    capítulos</strong> y usar las <strong>tarjetas</strong>, que es donde de\n    verdad se aprende.</p>\n    <p>Se cierran cuando hay una <strong>evaluación abierta</strong>. Si tienes\n    tu código, esa sí la puedes hacer: te sale arriba en Examen.</p>"
    },
    {
-    "t": "El simulacro y el examen por link son distintos",
-    "h": "<div class=\"warn-box\">En el simulacro y en el examen por link\n    <strong>no sale la revisión</strong>: ves la nota, no las respuestas.</div>\n    <p>El simulacro también quita las pistas de la sección de completar. Las dos\n    cosas son a propósito: el examen del campamento tampoco te devuelve la hoja\n    corregida, y una nota solo dice algo si no viste las respuestas primero.</p>\n    <p>El simulacro está dentro de <strong>⚙️ Cambiar este examen</strong>. Para\n    ver qué falló, tu director entra su clave en ese mismo aparato.</p>"
+    "t": "El simulacro y la evaluación son distintos",
+    "h": "<div class=\"warn-box\">En el simulacro y en la evaluación del día\n    <strong>no sale la revisión</strong>: ves la nota, no las respuestas.</div>\n    <p>El simulacro también quita las pistas de la sección de completar. Las dos\n    cosas son a propósito: el examen del campamento tampoco te devuelve la hoja\n    corregida, y una nota solo dice algo si no viste las respuestas primero.</p>\n    <p>El simulacro está dentro de <strong>Cambiar este examen</strong>. Para\n    ver qué falló, tu director entra su clave en ese mismo aparato.</p>"
    }
   ]
  },
  {
   "id": "a-logros",
   "para": "estudia",
-  "icono": "🏆",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-trofeo\"/></svg>",
   "t": "Logros: tus errores y tu historial",
   "d": "Donde se ve si estás mejorando",
   "secs": [
@@ -9990,17 +10014,17 @@ const MANUAL = [
  {
   "id": "a-papel",
   "para": "estudia",
-  "icono": "🖨️",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-imprimir\"/></svg>",
   "t": "Estudiar en papel",
   "d": "Todo se puede imprimir desde la app",
   "secs": [
    {
     "t": "Dónde está",
-    "h": "<p>En <strong>📖 Estudiar</strong>, al final de la pantalla, hay una\n    sección de imprimir. Y dentro de cada capítulo hay un\n    <strong>Imprimir este capítulo</strong>.</p>"
+    "h": "<p>En <strong>Estudiar</strong>, al final de la pantalla, hay una\n    sección de imprimir. Y dentro de cada capítulo hay un\n    <strong>Imprimir este capítulo</strong>.</p>"
    },
    {
     "t": "Qué puedes sacar",
-    "h": "<ul><li><strong>Toda mi guía de estudio</strong> — tus capítulos y\n    repasos, en orden.</li>\n    <li><strong>Mis tarjetas, para recortar</strong> — en papel no se puede\n    voltear, así que la respuesta va debajo: la tapas con la mano, contestas en\n    voz alta, y destapas.</li>\n    </ul>\n    <p>Y este manual se imprime desde su propia pantalla, con el botón\n    <strong>🖨️ Imprimir este manual</strong> que está al final.</p>"
+    "h": "<ul><li><strong>Toda mi guía de estudio</strong> — tus capítulos y\n    repasos, en orden.</li>\n    <li><strong>Mis tarjetas, para recortar</strong> — en papel no se puede\n    voltear, así que la respuesta va debajo: la tapas con la mano, contestas en\n    voz alta, y destapas.</li>\n    </ul>\n    <p>Y este manual se imprime desde su propia pantalla, con el botón\n    <strong>Imprimir este manual</strong> que está al final.</p>"
    },
    {
     "t": "Si no vas a usar impresora",
@@ -10040,7 +10064,7 @@ const MANUAL = [
  {
   "id": "a-compartir",
   "para": "estudia",
-  "icono": "📤",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-compartir\"/></svg>",
   "t": "Mandarle a tu director cómo vas",
   "d": "Un código que se copia y se pega",
   "secs": [
@@ -10050,7 +10074,7 @@ const MANUAL = [
    },
    {
     "t": "Cómo se hace",
-    "h": "<ol><li>Entra a <strong>🏆 Logros</strong> y abre\n    <strong>📤 Pasar o compartir mi progreso</strong>.</li>\n    <li>Toca <strong>«Código para mostrar cómo voy»</strong>. Sale un código\n    corto que empieza en <strong>CB1R</strong>.</li>\n    <li>Toca <strong>📋 Copiar</strong> y pégalo en el chat.</li></ol>\n    <p>Tu director lo pega en su app y ve tus capítulos, tus exámenes y tu\n    racha. <strong>No recibe tu progreso</strong>: solo ve una foto de cómo\n    vas.</p>"
+    "h": "<ol><li>Entra a <strong>Logros</strong> y abre\n    <strong>Pasar o compartir mi progreso</strong>.</li>\n    <li>Toca <strong>«Código para mostrar cómo voy»</strong>. Sale un código\n    corto que empieza en <strong>CB1R</strong>.</li>\n    <li>Toca <strong>Copiar</strong> y pégalo en el chat.</li></ol>\n    <p>Tu director lo pega en su app y ve tus capítulos, tus exámenes y tu\n    racha. <strong>No recibe tu progreso</strong>: solo ve una foto de cómo\n    vas.</p>"
    },
    {
     "t": "El otro código, el largo",
@@ -10061,7 +10085,7 @@ const MANUAL = [
  {
   "id": "a-reglas",
   "para": "estudia",
-  "icono": "✅",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-lista\"/></svg>",
   "t": "Tres reglas y las dudas de todos",
   "d": "Lo que hay que recordar",
   "secs": [
@@ -10086,7 +10110,7 @@ const MANUAL = [
  {
   "id": "d-que-es",
   "para": "director",
-  "icono": "🧭",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-diana\"/></svg>",
   "t": "Qué es y qué no es",
   "d": "Antes de repartirla en el club",
   "secs": [
@@ -10103,7 +10127,7 @@ const MANUAL = [
  {
   "id": "d-cats",
   "para": "director",
-  "icono": "🎯",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-diana\"/></svg>",
   "t": "Las seis categorías",
   "d": "El dato del que depende todo",
   "secs": [
@@ -10124,7 +10148,7 @@ const MANUAL = [
  {
   "id": "d-montar",
   "para": "director",
-  "icono": "👥",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-persona\"/></svg>",
   "t": "Montar a los participantes",
   "d": "Varias personas en un mismo aparato",
   "secs": [
@@ -10145,7 +10169,7 @@ const MANUAL = [
  {
   "id": "d-progreso",
   "para": "director",
-  "icono": "📊",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-grafico\"/></svg>",
   "t": "Ver si están estudiando de verdad",
   "d": "Tres lugares, en orden de utilidad",
   "secs": [
@@ -10166,7 +10190,7 @@ const MANUAL = [
  {
   "id": "d-dificultad",
   "para": "director",
-  "icono": "📈",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-grafico\"/></svg>",
   "t": "Cómo sube la dificultad",
   "d": "Dos frenos, y manda el más bajo",
   "secs": [
@@ -10187,13 +10211,13 @@ const MANUAL = [
  {
   "id": "d-imprimir",
   "para": "director",
-  "icono": "🖨️",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-imprimir\"/></svg>",
   "t": "Imprimir exámenes y claves",
   "d": "Todo sale de la app, no de una carpeta",
   "secs": [
    {
     "t": "Dónde está",
-    "h": "<p>En <strong>✏️ Examen</strong>, debajo del separador que dice\n    <em>Para el director del club</em>, en\n    <strong>🖨️ Imprimir exámenes y claves</strong>:</p>\n    <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del\n    concursante, con espacio para nombre, club y puntaje.</li>\n    <li><strong>Este examen, con respuestas</strong> — la clave para\n    calificar.</li>\n    <li><strong>Las 6 categorías, sin respuestas</strong> — un documento con los\n    seis exámenes, cada uno en su hoja.</li>\n    <li><strong>Las 6 categorías, con respuestas</strong> — las seis claves.</li>\n    <li><strong>Las guías de los dos eventos</strong> — todo el material de\n    estudio de Conexión Bíblica y de la matutina en un solo documento.</li>\n    <li><strong>El manual de la app</strong> — este mismo manual, en papel.</li></ul>\n    <p>Los dos primeros usan lo que esté armado en <strong>⚙️ Cambiar este\n    examen</strong>: capítulo, cantidad y dificultad.</p>"
+    "h": "<p>En <strong>Examen</strong>, debajo del separador que dice\n    <em>Para el director del club</em>, en\n    <strong>Imprimir exámenes y claves</strong>:</p>\n    <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del\n    concursante, con espacio para nombre, club y puntaje.</li>\n    <li><strong>Este examen, con respuestas</strong> — la clave para\n    calificar.</li>\n    <li><strong>Las 6 categorías, sin respuestas</strong> — un documento con los\n    seis exámenes, cada uno en su hoja.</li>\n    <li><strong>Las 6 categorías, con respuestas</strong> — las seis claves.</li>\n    <li><strong>Las guías de los dos eventos</strong> — todo el material de\n    estudio de Conexión Bíblica y de la matutina en un solo documento.</li>\n    <li><strong>El manual de la app</strong> — este mismo manual, en papel.</li></ul>\n    <p>Los dos primeros usan lo que esté armado en <strong>Cambiar este\n    examen</strong>: capítulo, cantidad y dificultad.</p>"
    },
    {
     "t": "Cómo sale el PDF",
@@ -10238,18 +10262,18 @@ const MANUAL = [
    },
    {
     "t": "Los códigos de las participantes",
-    "h": "<p>En el mismo panel, debajo del interruptor. Escribes el nombre, eliges\n    la categoría y sale un <strong>código de 6 letras y números</strong>. Ese\n    código se lo das a la participante y ella lo escribe una sola vez en su\n    celular.</p>\n    <p>Para qué sirve: las notas quedan con su nombre y las ves todas juntas, y\n    el <strong>examen por link se gasta por persona, no por aparato</strong>.\n    Antes, con otra ficha en otro celular se podía repetir el mismo examen; ahora\n    no.</p>\n    <p>Del código no se saca nada más: en la base solo quedan el nombre de pila y\n    la categoría. Ni apellido, ni edad exacta, ni teléfono, ni foto.</p>\n    <p>Sin código la app funciona igual para estudiar y practicar. El código hace\n    falta para el examen del día del evento.</p>"
+    "h": "<p>En el mismo panel, debajo del interruptor. Escribes el nombre, eliges\n    la categoría y sale un <strong>código de 6 letras y números</strong>. Ese\n    código se lo das a la participante y ella lo escribe una sola vez en su\n    celular.</p>\n    <p>Para qué sirve: las notas quedan con su nombre y las ves todas juntas, y\n    la <strong>evaluación se hace una vez por persona, no por aparato</strong>.\n    Antes, con otra ficha en otro celular se podía repetir el mismo examen; ahora\n    no, porque la regla vive en la base de datos.</p>\n    <p>Del código no se saca nada más: en la base solo quedan el nombre de pila y\n    la categoría. Ni apellido, ni edad exacta, ni teléfono, ni foto.</p>\n    <p>Sin código la app funciona igual para estudiar y practicar. El código hace\n    falta para la evaluación del día.</p>"
    },
    {
     "t": "La clave del director",
-    "h": "<div class=\"warn-box\">La clave es <strong>solo tuya</strong>. Quien la\n    tenga ve las respuestas.</div>\n    <p>Sirve para dos cosas: <strong>abrir la revisión</strong> al final de un\n    simulacro o de un examen por link, y <strong>liberar un link</strong> que se\n    abrió por error.</p>\n    <p>Se entra en el aparato del participante, al terminar, con el botón\n    <strong>🔑 Soy el director</strong>. Se borra al cerrar la pestaña, así que\n    ese celular no queda abierto en modo director.</p>\n    <p>Necesita la app abierta desde su dirección de internet. Si el archivo se\n    abrió a mano desde el escritorio, la clave no funciona y la app lo dice en\n    vez de quedarse callada.</p>"
+    "h": "<div class=\"warn-box\">La clave es <strong>solo tuya</strong>. Quien la\n    tenga ve las respuestas.</div>\n    <p>Sirve para dos cosas: <strong>abrir la revisión</strong> al final de un\n    simulacro o de una evaluación, y <strong>entrar al panel</strong> para abrir\n    o cerrar la evaluación del día y manejar los códigos.</p>\n    <p>Se entra en el aparato del participante, al terminar, con el botón\n    <strong>Soy el director</strong>. Se borra al cerrar la pestaña, así que\n    ese celular no queda abierto en modo director.</p>\n    <p>Necesita la app abierta desde su dirección de internet. Si el archivo se\n    abrió a mano desde el escritorio, la clave no funciona y la app lo dice en\n    vez de quedarse callada.</p>"
    }
   ]
  },
  {
   "id": "d-recibir",
   "para": "director",
-  "icono": "📥",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-compartir\"/></svg>",
   "t": "Ver el progreso de otro aparato",
   "d": "Los dos códigos y para qué es cada uno",
   "secs": [
@@ -10270,7 +10294,7 @@ const MANUAL = [
  {
   "id": "d-limites",
   "para": "director",
-  "icono": "🚫",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-candado\"/></svg>",
   "t": "Lo que la app no hace",
   "d": "Mejor saberlo hoy que el 8 de octubre",
   "secs": [
@@ -10288,18 +10312,18 @@ const MANUAL = [
    },
    {
     "t": "Dos vueltas que sí quedan abiertas",
-    "h": "<div class=\"warn-box\">Esto no rompe la nota de un simulacro, que ya quedó\n    registrada. Pero conviene que lo sepas.</div>\n    <p><strong>Repasar mis errores.</strong> Las preguntas que falló en un\n    simulacro entran a «mis errores», y ese repaso sí muestra las respuestas. O\n    sea que después del simulacro puede llegar a las respuestas de las que\n    falló, dando la vuelta.</p>\n    <p>Se dejó así a propósito: repasar los errores es como aprende la app, y\n    cerrarlo mataría lo que más sirve. El examen por link ya no se puede\n    repetir, así que la nota no cambia.</p>\n    <p><strong>Otra ficha en el mismo aparato.</strong> El link se marca como\n    usado en la ficha del participante, no en el celular. Eso es a propósito:\n    dos hermanas en el mismo celular tienen que poder hacer el mismo examen.\n    El precio es que la misma niña, creando una segunda ficha, puede rehacer un\n    link. Para eso el control es mirar, no técnico.</p>"
+    "h": "<div class=\"warn-box\">Esto no rompe la nota de un simulacro, que ya quedó\n    registrada. Pero conviene que lo sepas.</div>\n    <p><strong>Repasar mis errores.</strong> Las preguntas que falló en un\n    simulacro entran a «mis errores», y ese repaso sí muestra las respuestas. O\n    sea que después del simulacro puede llegar a las respuestas de las que\n    falló, dando la vuelta.</p>\n    <p>Se dejó así a propósito: repasar los errores es como aprende la app, y\n    cerrarlo mataría lo que más sirve. La evaluación ya no se puede repetir, así\n    que la nota no cambia.</p>\n    <p><strong>Dos hermanas en el mismo celular.</strong> Cada una entra con su\n    propio código y cada una hace la evaluación una vez. Antes esto era un\n    problema porque el control vivía en el aparato; ahora vive en la ficha de\n    cada participante, en la base de datos.</p>"
    },
    {
     "t": "No es a prueba de trampa, y hasta dónde llega",
-    "h": "<div class=\"warn-box\">La app es un solo archivo que el navegador se baja\n    completo. Las respuestas correctas están ahí adentro.</div>\n    <p>Lo que sí protege, de verdad: <strong>cuáles</strong> preguntas trae un\n    examen por link no se puede saber antes, porque hace falta la semilla; y el\n    link no se puede repetir.</p>\n    <p>Lo que no protege: un adulto que sepa mirar el código de una página web\n    encuentra las respuestas mientras contesta. Contra eso no hay nada que\n    hacer sin un servidor, y el control ahí es estar presente, no técnico.</p>\n    <p>Para niños de 4 a 9 años eso alcanza. Si algún día hace falta que\n    tampoco un adulto pueda, toca servidor.</p>"
+    "h": "<div class=\"warn-box\">La app es un solo archivo que el navegador se baja\n    completo. Las respuestas correctas están ahí adentro.</div>\n    <p>Lo que sí protege, de verdad: <strong>cuáles</strong> preguntas trae la\n    evaluación no se puede saber antes, porque la semilla la genera el servidor\n    cuando la abres; y la evaluación no se puede repetir.</p>\n    <p>Lo que no protege: un adulto que sepa mirar el código de una página web\n    encuentra las respuestas mientras contesta. Las preguntas y sus respuestas\n    viajan con la app para que se pueda estudiar sin señal, y ese es el precio.\n    El control ahí es estar presente, no técnico.</p>\n    <p>Para niñas de 4 a 9 años eso alcanza.</p>"
    }
   ]
  },
  {
   "id": "d-version",
   "para": "director",
-  "icono": "📛",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-libro\"/></svg>",
   "t": "«Nueva Reina Valera 1995»: qué versión es",
   "d": "El nombre del volante confunde",
   "secs": [
@@ -10320,7 +10344,7 @@ const MANUAL = [
  {
   "id": "d-fallas",
   "para": "director",
-  "icono": "🔧",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-ajustes\"/></svg>",
   "t": "Si algo no funciona",
   "d": "Las cinco de siempre",
   "secs": [
@@ -12560,9 +12584,26 @@ async function entraCodigo(){
   try{
     const d=await srvFetch('/entrar',{method:'POST',body:JSON.stringify({codigo:i.value})});
     srvYo={rol:'participante',nombre:d.nombre,categoria:d.categoria};
+    /* El código es la identidad: el nombre y la categoría los manda el
+       servidor, y la ficha local se alinea con ellos. Antes había dos verdades
+       sobre quién era la niña y cuál era su material; ahora hay una. */
+    adoptaFicha(d);
     pintaSesion();await cargaEvaluacion();pintaExInicio();pintaInicio();
   }catch(e){
     if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+  }
+}
+
+/* Alinea la ficha local con lo que dice el servidor. No borra el progreso: el
+   estudio hecho sigue siendo suyo; solo se corrigen el nombre y la categoría,
+   que son los datos que el director necesita que coincidan. */
+function adoptaFicha(d){
+  if(!d)return;
+  let cambio=false;
+  if(d.nombre&&S.nombre!==d.nombre){S.nombre=d.nombre;cambio=true;}
+  if(d.categoria&&CATS[d.categoria]&&S.cat!==d.categoria){S.cat=d.categoria;cambio=true;}
+  if(cambio){
+    guardar();marcaCat();pintaIdent();pintaCaps();pintaInicio();
   }
 }
 
@@ -12607,15 +12648,21 @@ async function pintaPanel(){
       ?'<button class="btn nar" onclick="cierraEvaluacion()">Cerrar la evaluación</button>'
       :'<button class="btn azul" onclick="abreEvaluacion()">Abrir una evaluación</button>')+'</div>'+
     (hayEval?'':'<div class="ses-fila"><input id="pan-eval-t" placeholder="Nombre, p. ej. Sábado 6 de septiembre" maxlength="60">'+
-      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem">'+
-      '</div>')+
+      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem" title="Cuántas preguntas">'+
+      '</div>'+
+      '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
+      '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
+        return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'"> '+
+          '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc(CATS[k].ev)+' · '+esc(CATS[k].edad)+'</small></span></label>';
+      }).join('')+'</div>')+
     '<p class="nota">Mientras hay una evaluación abierta, la práctica se cierra sola en '+
     '<strong>todos los aparatos</strong>. Al cerrarla vuelve. Estudiar y las tarjetas nunca se cierran.</p>'+
     '<div id="pan-eval"></div>'+
     '<div class="divisor">Participantes</div>'+
     '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
-    '<select id="pan-cat"><option value="4-6">4-6</option><option value="7-9">7-9</option>'+
-    '<option value="padres">Padres</option></select>'+
+    '<select id="pan-cat">'+Object.keys(CATS).map(function(k){
+      return '<option value="'+k+'">'+esc(CATS[k].nombre)+' · '+esc(CATS[k].edad)+'</option>';
+    }).join('')+'</select>'+
     '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
     '<div id="pan-lista"><p class="nota">Cargando...</p></div></div>';
   await cargaParticipantes();
@@ -12625,8 +12672,11 @@ async function pintaPanel(){
 async function abreEvaluacion(){
   const t=document.getElementById('pan-eval-t'),n=document.getElementById('pan-eval-n');
   try{
+    const cats=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
+      .filter(function(c){return c.checked;}).map(function(c){return c.value;});
     await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
-      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',nivel:0,huella:huellaBanco()})});
+      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',nivel:0,
+      categorias:cats,huella:huellaBanco()})});
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
   }catch(e){alert(e.message||'No se pudo conectar');}
 }
@@ -12650,7 +12700,7 @@ async function cargaResultados(){
     d.innerHTML='<div class="divisor">Cómo va</div>'+
       '<p class="nota"><strong>'+h.length+'</strong> la hicieron · <strong>'+f.length+'</strong> faltan</p>'+
       (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th></tr>'+
-        h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(x.categoria)+'</td><td><strong>'+
+        h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc((CATS[x.categoria]||{}).nombre||x.categoria)+'</td><td><strong>'+
           x.nota+'/'+x.total+'</strong></td></tr>';}).join('')+'</table></div>':'')+
       (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'');
   }catch(e){d.innerHTML='';}
@@ -12665,7 +12715,8 @@ async function cargaParticipantes(){
     if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
       '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
-        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(x.categoria)+'</td>'+
+        const cn=CATS[x.categoria]?CATS[x.categoria].nombre:x.categoria;
+        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(cn)+'</td>'+
           '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
           '<td><button class="btn gho" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
       }).join('')+'</table></div>';

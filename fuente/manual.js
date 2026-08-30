@@ -18,7 +18,7 @@ const MANUAL = [
 
 /* ═══════════ PARA QUIEN ESTUDIA ═══════════ */
 
-{ id:'a-empezar', para:'estudia', icono:'🚀', t:'Los tres pasos del principio',
+{ id:'a-empezar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Los tres pasos del principio',
   d:'Qué te pregunta la app la primera vez',
   secs:[
   { t:'Por qué te pregunta antes de dejarte entrar',
@@ -63,7 +63,7 @@ const MANUAL = [
     correcta. Tu progreso no se pierde.</p>` },
   ]},
 
-{ id:'a-hoy', para:'estudia', icono:'📌', t:'Empieza siempre por «Qué estudiar hoy»',
+{ id:'a-hoy', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Empieza siempre por «Qué estudiar hoy»',
   d:'La única decisión que no tienes que tomar',
   secs:[
   { t:'Qué es',
@@ -86,7 +86,7 @@ const MANUAL = [
     primera. No tienes que decidir nada más.</p>` },
   ]},
 
-{ id:'a-estudiar', para:'estudia', icono:'📖', t:'Estudiar: leer y marcar',
+{ id:'a-estudiar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Estudiar: leer y marcar',
   d:'Y por qué el círculo se queda en 0%',
   secs:[
   { t:'Cómo se lee un capítulo',
@@ -95,7 +95,7 @@ const MANUAL = [
     los datos, los versículos y las trampas.</p>
     <p>Tú tienes {CAPS_CAT} capítulos y {MODS_CAT} repasos generales.</p>` },
   { t:'Lo que más se olvida',
-    h:`<p>Al final del capítulo hay un botón <strong>«✅ Ya lo estudié»</strong>.
+    h:`<p>Al final del capítulo hay un botón <strong>«Ya lo estudié»</strong>.
     Ese botón es el que llena el círculo del Inicio.</p>
     <p>Leer sin tocarlo deja el círculo en 0%. No es un castigo: la app no
     puede saber si terminaste de leer, solo sabe lo que le dices.</p>` },
@@ -106,7 +106,7 @@ const MANUAL = [
     sirven cuando ya leíste todo.</p>` },
   ]},
 
-{ id:'a-tarjetas', para:'estudia', icono:'🃏', t:'Tarjetas: memorizar',
+{ id:'a-tarjetas', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg>', t:'Tarjetas: memorizar',
   d:'Responder en voz alta antes de voltear',
   secs:[
   { t:'El mecanismo, que es lo importante',
@@ -120,7 +120,7 @@ const MANUAL = [
     h:`<ol><li>Lee el frente.</li>
     <li>Di la respuesta en voz alta.</li>
     <li>Toca la tarjeta para ver si acertaste.</li>
-    <li>Toca <strong>✅ La sabía</strong> o <strong>🔁 Repasar</strong>.</li></ol>
+    <li>Toca <strong>La sabía</strong> o <strong>Repasar</strong>.</li></ol>
     <p>Tú tienes {TJ_CAT} tarjetas.</p>` },
   { t:'Cuándo queda dominada',
     h:`<p>Cuando la aciertas <strong>dos veces seguidas</strong>. Las que fallas
@@ -131,22 +131,22 @@ const MANUAL = [
     se paga el día del examen. Nadie te está calificando en las tarjetas.</p>` },
   ]},
 
-{ id:'a-examen', para:'estudia', icono:'✏️', t:'Examen: practicar',
+{ id:'a-examen', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg>', t:'Examen: practicar',
   d:'Cómo es, y qué pasa al terminar',
   secs:[
   { t:'Empezar',
     h:`<p>La pantalla abre con <strong>un solo botón</strong>. Arriba dice
     cuántas preguntas trae y de qué nivel; con tocar
-    <strong>🚀 Comenzar</strong> arranca.</p>
+    <strong>Comenzar</strong> arranca.</p>
     <p>Si quieres otro tamaño, otro capítulo u otra dificultad, está en
-    <strong>⚙️ Cambiar este examen</strong>.</p>` },
+    <strong>Cambiar este examen</strong>.</p>` },
   { t:'Mientras lo haces',
     h:`<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>
     <li>Las preguntas <strong>cambian cada vez</strong>: salen al azar de
     {BANCO_CAT} preguntas, así que nunca te sale el mismo examen dos veces.</li>
     <li>Las opciones también se barajan. No se puede aprobar marcando siempre
     la misma letra.</li>
-    <li>Al terminar, toca <strong>✅ Entregar</strong>.</li></ul>` },
+    <li>Al terminar, toca <strong>Entregar</strong>.</li></ul>` },
   { t:'Las tres secciones',
     h:`<p><strong>Sección I</strong> — Selección múltiple.<br>
     <strong>Sección II</strong> — Verdadero o Falso.<br>
@@ -165,19 +165,19 @@ const MANUAL = [
     app se dañó: mientras estén cerrados puedes <strong>estudiar los
     capítulos</strong> y usar las <strong>tarjetas</strong>, que es donde de
     verdad se aprende.</p>
-    <p>Y si te llega un examen por link, <strong>ese sí lo puedes hacer</strong>
-    aunque los demás estén cerrados.</p>` },
-  { t:'El simulacro y el examen por link son distintos',
-    h:`<div class="warn-box">En el simulacro y en el examen por link
+    <p>Se cierran cuando hay una <strong>evaluación abierta</strong>. Si tienes
+    tu código, esa sí la puedes hacer: te sale arriba en Examen.</p>` },
+  { t:'El simulacro y la evaluación son distintos',
+    h:`<div class="warn-box">En el simulacro y en la evaluación del día
     <strong>no sale la revisión</strong>: ves la nota, no las respuestas.</div>
     <p>El simulacro también quita las pistas de la sección de completar. Las dos
     cosas son a propósito: el examen del campamento tampoco te devuelve la hoja
     corregida, y una nota solo dice algo si no viste las respuestas primero.</p>
-    <p>El simulacro está dentro de <strong>⚙️ Cambiar este examen</strong>. Para
+    <p>El simulacro está dentro de <strong>Cambiar este examen</strong>. Para
     ver qué falló, tu director entra su clave en ese mismo aparato.</p>` },
   ]},
 
-{ id:'a-logros', para:'estudia', icono:'🏆', t:'Logros: tus errores y tu historial',
+{ id:'a-logros', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg>', t:'Logros: tus errores y tu historial',
   d:'Donde se ve si estás mejorando',
   secs:[
   { t:'Puntos débiles',
@@ -192,11 +192,11 @@ const MANUAL = [
     examen normal.</p>` },
   ]},
 
-{ id:'a-papel', para:'estudia', icono:'🖨️', t:'Estudiar en papel',
+{ id:'a-papel', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg>', t:'Estudiar en papel',
   d:'Todo se puede imprimir desde la app',
   secs:[
   { t:'Dónde está',
-    h:`<p>En <strong>📖 Estudiar</strong>, al final de la pantalla, hay una
+    h:`<p>En <strong>Estudiar</strong>, al final de la pantalla, hay una
     sección de imprimir. Y dentro de cada capítulo hay un
     <strong>Imprimir este capítulo</strong>.</p>` },
   { t:'Qué puedes sacar',
@@ -207,7 +207,7 @@ const MANUAL = [
     voz alta, y destapas.</li>
     </ul>
     <p>Y este manual se imprime desde su propia pantalla, con el botón
-    <strong>🖨️ Imprimir este manual</strong> que está al final.</p>` },
+    <strong>Imprimir este manual</strong> que está al final.</p>` },
   { t:'Si no vas a usar impresora',
     h:`<p>Se abre el cuadro de impresión igual. Ahí escoge
     <strong>Guardar como PDF</strong> y te queda el archivo en el teléfono o el
@@ -243,7 +243,7 @@ const MANUAL = [
     <strong>Estudiar y las tarjetas siguen abiertos</strong> siempre.</p>` },
   ]},
 
-{ id:'a-compartir', para:'estudia', icono:'📤', t:'Mandarle a tu director cómo vas',
+{ id:'a-compartir', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-compartir"/></svg>', t:'Mandarle a tu director cómo vas',
   d:'Un código que se copia y se pega',
   secs:[
   { t:'Por qué hace falta un código',
@@ -251,11 +251,11 @@ const MANUAL = [
     Tu director no puede verlo desde el suyo, aunque quiera. La única forma de
     mostrárselo es convertirlo en texto y mandárselo.</p>` },
   { t:'Cómo se hace',
-    h:`<ol><li>Entra a <strong>🏆 Logros</strong> y abre
-    <strong>📤 Pasar o compartir mi progreso</strong>.</li>
+    h:`<ol><li>Entra a <strong>Logros</strong> y abre
+    <strong>Pasar o compartir mi progreso</strong>.</li>
     <li>Toca <strong>«Código para mostrar cómo voy»</strong>. Sale un código
     corto que empieza en <strong>CB1R</strong>.</li>
-    <li>Toca <strong>📋 Copiar</strong> y pégalo en el chat.</li></ol>
+    <li>Toca <strong>Copiar</strong> y pégalo en el chat.</li></ol>
     <p>Tu director lo pega en su app y ve tus capítulos, tus exámenes y tu
     racha. <strong>No recibe tu progreso</strong>: solo ve una foto de cómo
     vas.</p>` },
@@ -266,7 +266,7 @@ const MANUAL = [
     con el botón de al lado.</p>` },
   ]},
 
-{ id:'a-reglas', para:'estudia', icono:'✅', t:'Tres reglas y las dudas de todos',
+{ id:'a-reglas', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Tres reglas y las dudas de todos',
   d:'Lo que hay que recordar',
   secs:[
   { t:'Las tres reglas',
@@ -289,7 +289,7 @@ const MANUAL = [
 
 /* ═══════════ PARA EL DIRECTOR ═══════════ */
 
-{ id:'d-que-es', para:'director', icono:'🧭', t:'Qué es y qué no es',
+{ id:'d-que-es', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Qué es y qué no es',
   d:'Antes de repartirla en el club',
   secs:[
   { t:'Qué es',
@@ -306,7 +306,7 @@ const MANUAL = [
     reglamento.</p>` },
   ]},
 
-{ id:'d-cats', para:'director', icono:'🎯', t:'Las seis categorías',
+{ id:'d-cats', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Las seis categorías',
   d:'El dato del que depende todo',
   secs:[
   { t:'Por qué importa tanto',
@@ -321,7 +321,7 @@ const MANUAL = [
     alcance ampliado, Daniel 1 al 6 y P&R 39 al 44, para el otro evento.</div>` },
   ]},
 
-{ id:'d-montar', para:'director', icono:'👥', t:'Montar a los participantes',
+{ id:'d-montar', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg>', t:'Montar a los participantes',
   d:'Varias personas en un mismo aparato',
   secs:[
   { t:'La bienvenida hace el trabajo',
@@ -344,7 +344,7 @@ const MANUAL = [
     corrige: el progreso no se pierde.</div>` },
   ]},
 
-{ id:'d-progreso', para:'director', icono:'📊', t:'Ver si están estudiando de verdad',
+{ id:'d-progreso', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-grafico"/></svg>', t:'Ver si están estudiando de verdad',
   d:'Tres lugares, en orden de utilidad',
   secs:[
   { t:'Progreso por capítulo',
@@ -365,7 +365,7 @@ const MANUAL = [
     <strong>· evaluación</strong>: son el mismo examen. Los demás salen al azar.</p>` },
   ]},
 
-{ id:'d-dificultad', para:'director', icono:'📈', t:'Cómo sube la dificultad',
+{ id:'d-dificultad', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-grafico"/></svg>', t:'Cómo sube la dificultad',
   d:'Dos frenos, y manda el más bajo',
   secs:[
   { t:'Los tres niveles',
@@ -390,13 +390,13 @@ const MANUAL = [
     examen</strong>, pero lo normal es dejarlo en Progresivo.</p>` },
   ]},
 
-{ id:'d-imprimir', para:'director', icono:'🖨️', t:'Imprimir exámenes y claves',
+{ id:'d-imprimir', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg>', t:'Imprimir exámenes y claves',
   d:'Todo sale de la app, no de una carpeta',
   secs:[
   { t:'Dónde está',
-    h:`<p>En <strong>✏️ Examen</strong>, debajo del separador que dice
+    h:`<p>En <strong>Examen</strong>, debajo del separador que dice
     <em>Para el director del club</em>, en
-    <strong>🖨️ Imprimir exámenes y claves</strong>:</p>
+    <strong>Imprimir exámenes y claves</strong>:</p>
     <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del
     concursante, con espacio para nombre, club y puntaje.</li>
     <li><strong>Este examen, con respuestas</strong> — la clave para
@@ -407,7 +407,7 @@ const MANUAL = [
     <li><strong>Las guías de los dos eventos</strong> — todo el material de
     estudio de Conexión Bíblica y de la matutina en un solo documento.</li>
     <li><strong>El manual de la app</strong> — este mismo manual, en papel.</li></ul>
-    <p>Los dos primeros usan lo que esté armado en <strong>⚙️ Cambiar este
+    <p>Los dos primeros usan lo que esté armado en <strong>Cambiar este
     examen</strong>: capítulo, cantidad y dificultad.</p>` },
   { t:'Cómo sale el PDF',
     h:`<p>Se abre el cuadro de impresión del aparato. Ahí se manda a la
@@ -467,28 +467,28 @@ const MANUAL = [
     código se lo das a la participante y ella lo escribe una sola vez en su
     celular.</p>
     <p>Para qué sirve: las notas quedan con su nombre y las ves todas juntas, y
-    el <strong>examen por link se gasta por persona, no por aparato</strong>.
+    la <strong>evaluación se hace una vez por persona, no por aparato</strong>.
     Antes, con otra ficha en otro celular se podía repetir el mismo examen; ahora
-    no.</p>
+    no, porque la regla vive en la base de datos.</p>
     <p>Del código no se saca nada más: en la base solo quedan el nombre de pila y
     la categoría. Ni apellido, ni edad exacta, ni teléfono, ni foto.</p>
     <p>Sin código la app funciona igual para estudiar y practicar. El código hace
-    falta para el examen del día del evento.</p>` },
+    falta para la evaluación del día.</p>` },
   { t:'La clave del director',
     h:`<div class="warn-box">La clave es <strong>solo tuya</strong>. Quien la
     tenga ve las respuestas.</div>
     <p>Sirve para dos cosas: <strong>abrir la revisión</strong> al final de un
-    simulacro o de un examen por link, y <strong>liberar un link</strong> que se
-    abrió por error.</p>
+    simulacro o de una evaluación, y <strong>entrar al panel</strong> para abrir
+    o cerrar la evaluación del día y manejar los códigos.</p>
     <p>Se entra en el aparato del participante, al terminar, con el botón
-    <strong>🔑 Soy el director</strong>. Se borra al cerrar la pestaña, así que
+    <strong>Soy el director</strong>. Se borra al cerrar la pestaña, así que
     ese celular no queda abierto en modo director.</p>
     <p>Necesita la app abierta desde su dirección de internet. Si el archivo se
     abrió a mano desde el escritorio, la clave no funciona y la app lo dice en
     vez de quedarse callada.</p>` },
   ]},
 
-{ id:'d-recibir', para:'director', icono:'📥', t:'Ver el progreso de otro aparato',
+{ id:'d-recibir', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-compartir"/></svg>', t:'Ver el progreso de otro aparato',
   d:'Los dos códigos y para qué es cada uno',
   secs:[
   { t:'Cómo se hace',
@@ -513,7 +513,7 @@ const MANUAL = [
     línea que mete el chat no importan: la app los ignora.</div>` },
   ]},
 
-{ id:'d-limites', para:'director', icono:'🚫', t:'Lo que la app no hace',
+{ id:'d-limites', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-candado"/></svg>', t:'Lo que la app no hace',
   d:'Mejor saberlo hoy que el 8 de octubre',
   secs:[
   { t:'No sincroniza entre aparatos',
@@ -536,27 +536,26 @@ const MANUAL = [
     sea que después del simulacro puede llegar a las respuestas de las que
     falló, dando la vuelta.</p>
     <p>Se dejó así a propósito: repasar los errores es como aprende la app, y
-    cerrarlo mataría lo que más sirve. El examen por link ya no se puede
-    repetir, así que la nota no cambia.</p>
-    <p><strong>Otra ficha en el mismo aparato.</strong> El link se marca como
-    usado en la ficha del participante, no en el celular. Eso es a propósito:
-    dos hermanas en el mismo celular tienen que poder hacer el mismo examen.
-    El precio es que la misma niña, creando una segunda ficha, puede rehacer un
-    link. Para eso el control es mirar, no técnico.</p>` },
+    cerrarlo mataría lo que más sirve. La evaluación ya no se puede repetir, así
+    que la nota no cambia.</p>
+    <p><strong>Dos hermanas en el mismo celular.</strong> Cada una entra con su
+    propio código y cada una hace la evaluación una vez. Antes esto era un
+    problema porque el control vivía en el aparato; ahora vive en la ficha de
+    cada participante, en la base de datos.</p>` },
   { t:'No es a prueba de trampa, y hasta dónde llega',
     h:`<div class="warn-box">La app es un solo archivo que el navegador se baja
     completo. Las respuestas correctas están ahí adentro.</div>
-    <p>Lo que sí protege, de verdad: <strong>cuáles</strong> preguntas trae un
-    examen por link no se puede saber antes, porque hace falta la semilla; y el
-    link no se puede repetir.</p>
+    <p>Lo que sí protege, de verdad: <strong>cuáles</strong> preguntas trae la
+    evaluación no se puede saber antes, porque la semilla la genera el servidor
+    cuando la abres; y la evaluación no se puede repetir.</p>
     <p>Lo que no protege: un adulto que sepa mirar el código de una página web
-    encuentra las respuestas mientras contesta. Contra eso no hay nada que
-    hacer sin un servidor, y el control ahí es estar presente, no técnico.</p>
-    <p>Para niños de 4 a 9 años eso alcanza. Si algún día hace falta que
-    tampoco un adulto pueda, toca servidor.</p>` },
+    encuentra las respuestas mientras contesta. Las preguntas y sus respuestas
+    viajan con la app para que se pueda estudiar sin señal, y ese es el precio.
+    El control ahí es estar presente, no técnico.</p>
+    <p>Para niñas de 4 a 9 años eso alcanza.</p>` },
   ]},
 
-{ id:'d-version', para:'director', icono:'📛', t:'«Nueva Reina Valera 1995»: qué versión es',
+{ id:'d-version', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'«Nueva Reina Valera 1995»: qué versión es',
   d:'El nombre del volante confunde',
   secs:[
   { t:'El problema del nombre',
@@ -593,7 +592,7 @@ const MANUAL = [
     <strong>«RV1995 vs RV1960»</strong> trae la lista de palabras que cambian.</p>` },
   ]},
 
-{ id:'d-fallas', para:'director', icono:'🔧', t:'Si algo no funciona',
+{ id:'d-fallas', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg>', t:'Si algo no funciona',
   d:'Las cinco de siempre',
   secs:[
   { t:'El progreso apareció en cero',
