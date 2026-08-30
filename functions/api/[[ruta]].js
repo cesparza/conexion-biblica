@@ -81,6 +81,9 @@ async function sesionActual(request, env) {
 
 async function crearSesion(env, cuentaId, dias, ipHash) {
   await env.DB.prepare("DELETE FROM sesion WHERE expira_en < datetime('now')").run();
+  /* Higiene: la auditoría existe para revisar lo reciente, no para acumular
+     años. Se purga al entrar, que es cuando ya se está escribiendo igual. */
+  await env.DB.prepare("DELETE FROM auditoria WHERE cuando < datetime('now', '-180 days')").run();
   const token = crypto.randomUUID() + crypto.randomUUID().replace(/-/g, '');
   await env.DB.prepare(
     "INSERT INTO sesion (token, cuenta_id, expira_en, ip_hash) VALUES (?,?, datetime('now', ?), ?)"
@@ -265,6 +268,24 @@ export async function onRequest(context) {
           'SELECT id FROM intento WHERE participante_id = ? AND evaluacion_id = ?'
         ).bind(sesion.persona_id, evalId).first();
         if (hecho) return error('Esa evaluación ya la hiciste.', 409, { ya_hecho: true });
+      }
+      /* LA NOTA LA CALCULA EL APARATO, ASÍ QUE AL MENOS SE VALIDA SU FORMA.
+         El servidor no ve las respuestas (el examen corre en el navegador para
+         que se pueda estudiar sin señal), así que no puede recalificar. Lo que
+         sí puede es rechazar lo imposible: una nota mayor que el total, un
+         total que no es el que la evaluación pidió, o números negativos. Eso
+         convierte el caso trivial en uno deliberado, y deja rastro. */
+      if (nota == null || total == null || nota < 0 || total <= 0 || nota > total) {
+        return error('Nota inválida.', 400);
+      }
+      if (evalId) {
+        const ev = await env.DB.prepare('SELECT cuantas, abierta FROM evaluacion WHERE id = ?')
+          .bind(evalId).first();
+        if (!ev) return error('Esa evaluación no existe.', 404);
+        if (total !== ev.cuantas) {
+          await auditar(env, sesion.cuenta_id, 'intento_raro', 'intento', evalId, ipHash);
+          return error('El examen entregado no coincide con la evaluación.', 409);
+        }
       }
       await env.DB.prepare(
         'INSERT INTO intento (id, participante_id, modo, semilla, nota, total, idempotency_key, evaluacion_id) ' +

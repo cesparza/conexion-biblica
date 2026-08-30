@@ -2028,6 +2028,15 @@ async function pintaPanel(){
     (hayEval?'':'<div class="ses-fila"><input id="pan-eval-t" placeholder="Nombre, p. ej. Sábado 6 de septiembre" maxlength="60">'+
       '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem" title="Cuántas preguntas">'+
       '</div>'+
+      '<div class="ses-fila"><label class="pan-lb">Dificultad'+
+      '<select id="pan-eval-nv">'+
+        '<option value="0">La de cada categoría (recomendado)</option>'+
+        '<option value="1">1 · básica</option>'+
+        '<option value="2">2 · intermedia</option>'+
+        '<option value="3">3 · avanzada</option>'+
+      '</select></label></div>'+
+      '<p class="nota">Con «la de cada categoría» todas las de un mismo grupo reciben '+
+      'exactamente el mismo examen. No depende del desempeño de cada una.</p>'+
       '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
       '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
         return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'"> '+
@@ -2053,7 +2062,8 @@ async function abreEvaluacion(){
     const cats=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
       .filter(function(c){return c.checked;}).map(function(c){return c.value;});
     await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
-      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',nivel:0,
+      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',
+      nivel:Number((document.getElementById('pan-eval-nv')||{}).value||0),
       categorias:cats,huella:huellaBanco()})});
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
   }catch(e){alert(e.message||'No se pudo conectar');}

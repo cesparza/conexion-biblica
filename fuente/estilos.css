@@ -1028,4 +1028,8 @@ details.card summary::marker{content:''}
 .ay-ic .ico{width:20px;height:20px;color:var(--v-cat);--ico-w:1.9}
 .ay-ic .ico .f{fill:currentColor;fill-opacity:.14}
 
+
+.pan-lb{display:flex;flex-direction:column;gap:.25rem;font-size:var(--v-t-1);color:var(--v-tinta2);flex:1}
+.pan-lb select{min-height:44px}
+
 }  /* fin @media screen */
