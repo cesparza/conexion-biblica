@@ -10926,13 +10926,42 @@ async function srvQuienSoy(){
 
 /* La nota se manda al servidor pero NO se espera: si no hay señal, la nota ya
    quedó guardada en el aparato y la pantalla no se puede quedar esperando. */
+/* La nota se manda sin esperar, pero NO se puede perder.
+   Antes esto era un `.catch(function(){})`: si el celular se quedaba sin señal
+   justo al entregar, la nota quedaba en el aparato y el director no la veía
+   nunca. Ahora el intento se guarda en una cola y se reintenta al abrir la app.
+   La clave de idempotencia se genera UNA vez y viaja con el intento, así que
+   reintentar no puede duplicar la nota. */
+const COLA='cb-cola';
+
+function colaLee(){
+  try{const x=JSON.parse(localStorage.getItem(COLA)||'[]');return Array.isArray(x)?x.slice(0,20):[];}
+  catch(e){return [];}
+}
+function colaGuarda(a){try{localStorage.setItem(COLA,JSON.stringify(a.slice(0,20)));}catch(e){}}
+
 function srvIntento(modo,evalId,nota,total){
   if(!srvYo||srvYo.rol!=='participante')return;
   let idem='';
   try{idem=crypto.randomUUID();}catch(e){idem=String(Date.now())+Math.random();}
-  srvFetch('/intento',{method:'POST',body:JSON.stringify(
-    {modo:modo,evaluacion_id:evalId||null,nota:nota,total:total,idempotency_key:idem})})
-    .catch(function(){});
+  const cuerpo={modo:modo,evaluacion_id:evalId||null,nota:nota,total:total,idempotency_key:idem};
+  const cola=colaLee();cola.push(cuerpo);colaGuarda(cola);
+  enviaCola();
+}
+
+/* Vacía la cola. Un 409 («ya la hiciste») también saca el intento: reintentarlo
+   para siempre no lo va a arreglar. Un fallo de red lo deja para la próxima. */
+async function enviaCola(){
+  let cola=colaLee();
+  if(!cola.length||!srvYo||srvYo.rol!=='participante')return;
+  const quedan=[];
+  for(const it of cola){
+    try{await srvFetch('/intento',{method:'POST',body:JSON.stringify(it)});}
+    catch(e){
+      if(!(e&&e.status>=400&&e.status<500))quedan.push(it);
+    }
+  }
+  colaGuarda(quedan);
 }
 
 /* ───────── el cierre de la práctica ─────────
@@ -11753,7 +11782,7 @@ function entregar(){
      base garantiza que cada participante la haga una sola vez, en el aparato
      que sea. Eso es lo que la versión con links no podía cumplir. */
   srvIntento(modo,modo==='evaluacion'&&evalActual?evalActual.id:null,pts,tot);
-  if(modo==='evaluacion')evalHecha=true;
+  if(modo==='evaluacion'){evalHecha=true;evalNota={pts,total:tot};try{pintaEvaluacion();}catch(e){}}
 
   ultimoRes={pts,tot,pct,med,msg,s3};
   document.getElementById('ex-curso').style.display='none';
@@ -12108,6 +12137,10 @@ async function cargaEvaluacion(){
     evalPend=d&&d.evaluacion?d.evaluacion:null;
     evalHecha=!!(d&&d.hecha);
     evalNota=d&&d.hecha?{pts:d.nota,total:d.total}:null;
+    /* Este endpoint sí sabe quién soy, así que es el que decide si a MÍ me
+       cierra la práctica. /estado no puede: es público y no sabe mi categoría. */
+    if(evalPend)srvGuarda(false,evalPend.id,evalPend.titulo);
+    else if(d&&d.noMeToca)srvGuarda(true,null,null);
   }catch(e){evalPend=null;}
   pintaEvaluacion();
 }
@@ -12139,7 +12172,13 @@ function haceEvaluacion(){
   const prev={a:alcance,n:nivel,q:cuantas};
   let sel=[];
   try{
-    alcance=r.alcance||'todo';nivel=r.nivel||0;cuantas=r.cuantas;
+    /* EL NIVEL TIENE QUE SER DETERMINISTA.
+       nivelEfectivo() es `nivel || nivelRecomendado()`, y nivelRecomendado()
+       mira el historial LOCAL. Con nivel 0 en la receta, dos niñas de la misma
+       categoría y distinto desempeño recibían pools distintos: el director
+       comparaba notas de exámenes que no eran el mismo. Cuando el director no
+       fija nivel, se usa el techo de la categoría, que es igual para todas. */
+    alcance=r.alcance||'todo';nivel=r.nivel||CAT().techo;cuantas=r.cuantas;
     rndEx=prng(Number(r.semilla)>>>0);
     sel=armar('normal');
   }finally{
@@ -12749,6 +12788,7 @@ async function borraParticipante(id){
     await srvQuienSoy();
     pintaSesion();
     await cargaEvaluacion();
+    try{await enviaCola();}catch(e){}
     await pintaPanel();
     if(typeof pintaExInicio==='function')pintaExInicio();
     if(typeof pintaInicio==='function')pintaInicio();

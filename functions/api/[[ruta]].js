@@ -133,9 +133,14 @@ export async function onRequest(context) {
        El detalle del examen NO viaja aquí: este endpoint es público. */
     if (metodo === 'GET' && ruta === '/estado') {
       const ev = await evaluacionAbierta(env);
+      const paraTodas = !!ev && (ev.categorias || '*') === '*';
+      /* Si la evaluación va dirigida a unas categorías, este endpoint público no
+         puede cerrarle la práctica a todo el mundo: quien no está invitada
+         sigue practicando. Para las invitadas, /evaluacion (que sí sabe quién
+         es) cierra la práctica en su aparato. */
       return json({
-        practica: !ev,
-        evaluacion: ev ? { id: ev.id, titulo: ev.titulo } : null,
+        practica: !ev || !paraTodas,
+        evaluacion: ev ? { id: ev.id, titulo: ev.titulo, paraTodas } : null,
         hora: new Date().toISOString(),
       });
     }

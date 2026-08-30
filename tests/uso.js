@@ -39,7 +39,7 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre,
         esNuevo, bvSigue, bvEdad, bvEvento, bvPaso, ir,
         codigoResumen, codigoCompleto, leeCodigo, resumenDe, tarjetasDe,
-        huellaBanco, prng, mezclaR, armar,
+        huellaBanco, prng, mezclaR, armar, techoDe:c=>CATS[c].techo,
         ponRnd:f=>{rndEx=f}, rndNormal:()=>{rndEx=Math.random},
         claveQ, BANCO,
         el:id=>document.getElementById(id)};`);
@@ -454,6 +454,33 @@ ok(uno!==otra,'Con otra semilla sale otra evaluación');
 const nivBajo=armaCon(L,{...receta,n:1},'av');
 const nivAlto=armaCon(L,{...receta,n:3},'av');
 ok(nivBajo!==nivAlto,'El nivel de la receta cambia el examen, no lo decide el aparato');
+
+/* EL BUG QUE ESTA PRUEBA EXISTE PARA IMPEDIR QUE VUELVA.
+   nivelEfectivo() es `nivel || nivelRecomendado()`, y nivelRecomendado() mira
+   el historial LOCAL. Cuando el director no fija nivel, la receta trae 0, y con
+   0 cada niña armaba el examen con SU nivel: el director comparaba notas de
+   exámenes distintos creyendo que eran el mismo. El arreglo es usar el techo de
+   la categoría, que es igual para todas. */
+store={};
+const N1=fn(store,nodo,Buffer);
+N1.ponNombre('Sin historial');
+store={};
+const N2=fn(store,nodo,Buffer);
+N2.ponNombre('Con historial');
+/* A esta le va bien: sin el arreglo, nivelRecomendado() la subiría de nivel. */
+N2.S().examenes=[{pts:15,total:15,cat:'av',fecha:'x',modo:'normal',nv:3},
+                 {pts:15,total:15,cat:'av',fecha:'x',modo:'normal',nv:3},
+                 {pts:15,total:15,cat:'av',fecha:'x',modo:'normal',nv:3}];
+function armaSinNivel(A){
+  A.ponCat('av'); A.ponAlcance('todo'); A.ponCuantas(15);
+  A.ponNivel(A.techoDe('av'));
+  A.ponRnd(A.prng(123456789));
+  const sel=A.armar('normal');
+  A.rndNormal();
+  return sel.map(q=>A.claveQ(q)).join(' ');
+}
+ok(armaSinNivel(N1)===armaSinNivel(N2),
+  'Sin nivel fijado, dos niñas con distinto historial reciben la MISMA evaluación');
 
 /* Cada categoría contesta sobre SU material, con la misma semilla. */
 const otroGrupo=armaCon(L,receta,'me');
