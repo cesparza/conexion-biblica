@@ -580,5 +580,41 @@ ok(inventadas.length===0,'El manual no cita bloques que ya no existen'+
   (inventadas.length?' — '+inventadas.join(' / '):''));
 
 
+/* ───────── el panel del director va en tres pasos ─────────
+   Los tres defectos que se vieron en el panel real: el botón «Abrir una
+   evaluación» pintado ARRIBA del formulario, el texto de ayuda describiendo
+   siempre la opción 0 del desplegable aunque estuviera puesta otra, y el
+   «no hay participantes» en letra pequeña al final.
+   Se comprueba sobre fuente/app.js, no sobre index.html, porque ahí el chequeo
+   sería circular. Es una prueba de ORDEN DE TEXTO en el fuente: barata y frágil
+   ante un refactor. Si el panel se reescribe, esta prueba se reescribe. */
+const APPJS=fs.readFileSync(FUENTE('app.js'),'utf8');
+const posCampo=APPJS.indexOf('id="pan-eval-t"');
+const posBoton=APPJS.indexOf('id="pan-abrir"');
+ok(posCampo>0&&posBoton>posCampo,
+  'El botón de abrir la evaluación se pinta DESPUÉS de los campos que hay que llenar');
+ok(/id="pan-abrir"[^']*disabled/.test(APPJS),
+  'El botón de abrir nace deshabilitado y lo habilita revisaAbrir()');
+ok(/pan-abrir-razon/.test(APPJS),
+  'Cuando el botón está apagado, la razón queda a la vista');
+
+/* El texto de ayuda de Dificultad tiene que existir para CADA opción del
+   desplegable y cambiar con la selección, no ser un párrafo fijo. */
+const opcionesNv=[...APPJS.matchAll(/<option value="([0-3])">[^<]*<\/option>/g)].map(m=>m[1]);
+const notas=[...APPJS.matchAll(/^  ([0-3]):'/gm)].map(m=>m[1]);
+ok(opcionesNv.length>=4&&opcionesNv.every(v=>notas.includes(v)),
+  'Cada opción de Dificultad tiene su propio texto de ayuda en NOTA_NIVEL'+
+  (opcionesNv.length?' (opciones '+opcionesNv.join(',')+' · notas '+notas.join(',')+')':''));
+ok(/id="pan-eval-nv" onchange="pintaNotaNivel\(\)"/.test(APPJS),
+  'Al cambiar la dificultad, el texto de ayuda se repinta');
+
+/* Una sola forma de cerrar: mientras hay evaluación abierta, el panel no puede
+   ofrecer también el botón de abrir. Eran dos caminos y de ahí venía la
+   confusión al cerrar. */
+const bloquePanel=APPJS.slice(APPJS.indexOf('async function pintaPanel'),APPJS.indexOf('const NOTA_NIVEL'));
+const trozoAbierta=bloquePanel.slice(bloquePanel.indexOf('if(hayEval){'),bloquePanel.indexOf('d.innerHTML=\'<div class="det-cuerpo">\'+\n\n'));
+ok(/cierraEvaluacion/.test(trozoAbierta)&&!/abreEvaluacion/.test(trozoAbierta),
+  'Con evaluación abierta el panel solo ofrece cerrarla, nunca abrir otra');
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

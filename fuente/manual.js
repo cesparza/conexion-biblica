@@ -437,11 +437,19 @@ const MANUAL = [
     <strong>exactamente el mismo examen</strong>: las mismas preguntas, en el
     mismo orden, con las opciones en el mismo orden.</p>` },
   { t:'Cómo se abre',
-    h:`<ol><li>Entra a <strong>Examen</strong>, abajo, en
-    <strong>La evaluación del día</strong>, y pon tu clave.</li>
-    <li>Escribe un nombre (por ejemplo «Sábado 6 de septiembre») y cuántas
-    preguntas.</li>
-    <li>Toca <strong>Abrir una evaluación</strong>.</li></ol>
+    h:`<p>Entra a <strong>Examen</strong>, abajo, en <strong>La evaluación del
+    día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay
+    que hacerlos en ese orden.</p>
+    <ol><li><strong>Paso 1, ¿quiénes participan?</strong> Crear a las
+    participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle
+    la evaluación.</li>
+    <li><strong>Paso 2, ¿qué examen?</strong> Nombre (por ejemplo «Sábado 6 de
+    septiembre»), cuántas preguntas, dificultad y a qué categorías les toca. El
+    texto debajo de Dificultad describe <strong>la opción que tengas
+    puesta</strong>, así que cámbiala y vuelve a leerlo.</li>
+    <li><strong>Paso 3, abrir.</strong> El botón está al final y arranca
+    apagado. Se prende cuando la evaluación tiene nombre y hay por lo menos una
+    participante creada; mientras esté apagado, al lado dice qué falta.</li></ol>
     <p>Desde ese momento, cada participante que ya entró con su código ve la
     tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar
     ningún link.</p>` },
@@ -452,8 +460,10 @@ const MANUAL = [
     <p>La práctica queda cerrada sola en todos los aparatos mientras la
     evaluación esté abierta. Al cerrarla, vuelve.</p>` },
   { t:'Cómo se cierra',
-    h:`<p>El botón <strong>Cerrar la evaluación</strong> en el mismo panel. Las
-    notas quedan guardadas y la práctica se reabre para todas.</p>` },
+    h:`<p>El botón <strong>Cerrar la evaluación</strong> en el mismo panel, al
+    lado del conteo de quiénes ya la hicieron y quiénes faltan. Es la
+    <strong>única</strong> forma de cerrar y vale para todos los aparatos a la
+    vez. Las notas quedan guardadas y la práctica se reabre para todas.</p>` },
   { t:'Una sola vez por persona, de verdad',
     h:`<p>Esto no depende del navegador de nadie: la base de datos tiene una
     regla que impide que la misma participante registre dos veces la misma
@@ -462,7 +472,7 @@ const MANUAL = [
     evaluación se pide al servidor. Si un celular se queda sin datos, esa niña no
     la puede hacer hasta que vuelva la conexión.</div>` },
   { t:'Los códigos de las participantes',
-    h:`<p>En el mismo panel, debajo del interruptor. Escribes el nombre, eliges
+    h:`<p>En el mismo panel, en el <strong>paso 1</strong>. Escribes el nombre, eliges
     la categoría y sale un <strong>código de 6 letras y números</strong>. Ese
     código se lo das a la participante y ella lo escribe una sola vez en su
     celular.</p>

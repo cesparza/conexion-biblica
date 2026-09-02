@@ -2007,12 +2007,20 @@ async function entraPanel(){
   }
 }
 
+/* ───────── el panel del director ─────────
+   TRES PASOS, EN EL ORDEN EN QUE HAY QUE HACERLOS
+   Antes el botón «Abrir una evaluación» se pintaba ARRIBA del formulario: se
+   veía el botón antes de saber que había campos, y abrir sin llenar nada era lo
+   natural. Ahora el botón va al final y arranca deshabilitado.
+   Los participantes se piden ANTES de pintar, no después: el paso 3 no puede
+   decidir si el botón va habilitado sin saber cuántas hay. Pedirlos después
+   obligaría a pintar el botón y corregirlo, que es cómo se ven los parpadeos. */
 async function pintaPanel(){
   const d=document.getElementById('cb-panel');
   if(!d)return;
   if(!srvYo||srvYo.rol!=='director'){
     d.innerHTML='<div class="det-cuerpo"><p class="nota">Entra con la clave del director para '+
-      'cerrar los exámenes de TODOS los aparatos a la vez y para manejar los códigos.</p>'+
+      'abrir y cerrar la evaluación del día y para manejar los códigos.</p>'+
       '<div class="ses-fila"><input id="pan-clave" type="password" autocomplete="off" placeholder="Clave">'+
       '<button class="btn azul" onclick="entraPanel()">Entrar</button></div>'+
       '<p class="nota" id="pan-msg"></p></div>';
@@ -2020,40 +2028,114 @@ async function pintaPanel(){
   }
   const c=srvLee();
   const hayEval=!!(c&&c.practica===false);
+  /* null = no se pudo preguntar. No es lo mismo que «no hay»: con la red caída
+     no se puede afirmar que falten participantes, así que el paso 3 no bloquea
+     y lo dice. */
+  let parts=null;
+  try{parts=(await srvFetch('/panel/participantes')).participantes||[];}catch(e){parts=null;}
+  const cuantasP=parts?parts.length:null;
+
+  if(hayEval){
+    /* UNA SOLA FORMA DE CERRAR, y el conteo al lado del botón: quién falta es
+       el dato con el que el director va y la busca. */
+    d.innerHTML='<div class="det-cuerpo">'+
+      '<div class="pan-paso"><div class="pan-paso-t">Evaluación en curso</div>'+
+      '<p class="nota"><strong>'+esc((c&&c.evalTitulo)||'Sin nombre')+'</strong></p>'+
+      '<div id="pan-eval"></div>'+
+      '<div class="pan-sw"><button class="btn nar" onclick="cierraEvaluacion()">Cerrar la evaluación</button></div>'+
+      '<p class="nota">Mientras está abierta, la práctica se cierra sola en <strong>todos los '+
+      'aparatos</strong>. Al cerrarla vuelve, y las notas quedan guardadas. Estudiar y las '+
+      'tarjetas nunca se cierran.</p></div>'+
+      '<div class="pan-paso"><div class="pan-paso-t">Participantes</div>'+
+      '<div id="pan-lista"><p class="nota">Cargando...</p></div></div></div>';
+    cargaParticipantes(parts);
+    await cargaResultados();
+    return;
+  }
+
   d.innerHTML='<div class="det-cuerpo">'+
-    '<div class="pan-sw"><strong>'+(hayEval?'Evaluación ABIERTA'+(c.evalTitulo?': '+esc(c.evalTitulo):''):'Sin evaluación abierta')+'</strong>'+
-    (hayEval
-      ?'<button class="btn nar" onclick="cierraEvaluacion()">Cerrar la evaluación</button>'
-      :'<button class="btn azul" onclick="abreEvaluacion()">Abrir una evaluación</button>')+'</div>'+
-    (hayEval?'':'<div class="ses-fila"><input id="pan-eval-t" placeholder="Nombre, p. ej. Sábado 6 de septiembre" maxlength="60">'+
-      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem" title="Cuántas preguntas">'+
-      '</div>'+
-      '<div class="ses-fila"><label class="pan-lb">Dificultad'+
-      '<select id="pan-eval-nv">'+
-        '<option value="0">La de cada categoría (recomendado)</option>'+
-        '<option value="1">1 · básica</option>'+
-        '<option value="2">2 · intermedia</option>'+
-        '<option value="3">3 · avanzada</option>'+
-      '</select></label></div>'+
-      '<p class="nota">Con «la de cada categoría» todas las de un mismo grupo reciben '+
-      'exactamente el mismo examen. No depende del desempeño de cada una.</p>'+
-      '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
-      '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
-        return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'"> '+
-          '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc(CATS[k].ev)+' · '+esc(CATS[k].edad)+'</small></span></label>';
-      }).join('')+'</div>')+
-    '<p class="nota">Mientras hay una evaluación abierta, la práctica se cierra sola en '+
-    '<strong>todos los aparatos</strong>. Al cerrarla vuelve. Estudiar y las tarjetas nunca se cierran.</p>'+
-    '<div id="pan-eval"></div>'+
-    '<div class="divisor">Participantes</div>'+
+
+    '<div class="pan-paso"><div class="pan-paso-t">Paso 1 · ¿Quiénes participan?</div>'+
+    '<p class="nota">Cada participante necesita un código de 6 caracteres. Se lo das y ella lo '+
+    'escribe una sola vez en su celular. Sin participantes, abrir una evaluación no sirve de nada.</p>'+
     '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
     '<select id="pan-cat">'+Object.keys(CATS).map(function(k){
       return '<option value="'+k+'">'+esc(CATS[k].nombre)+' · '+esc(CATS[k].edad)+'</option>';
     }).join('')+'</select>'+
     '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
-    '<div id="pan-lista"><p class="nota">Cargando...</p></div></div>';
-  await cargaParticipantes();
+    '<div id="pan-lista"><p class="nota">Cargando...</p></div></div>'+
+
+    '<div class="pan-paso'+(cuantasP===0?' pan-off':'')+'"><div class="pan-paso-t">Paso 2 · ¿Qué examen?</div>'+
+    (cuantasP===0?'<p class="nota pan-razon">Primero crea al menos una participante en el paso 1.</p>':'')+
+    '<div class="ses-fila"><input id="pan-eval-t" placeholder="Nombre, p. ej. Sábado 6 de septiembre" '+
+    'maxlength="60" oninput="revisaAbrir()">'+
+    '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem" '+
+    'title="Cuántas preguntas"></div>'+
+    '<div class="ses-fila"><label class="pan-lb">Dificultad'+
+    '<select id="pan-eval-nv" onchange="pintaNotaNivel()">'+
+      '<option value="0">La de cada categoría (recomendado)</option>'+
+      '<option value="1">1 · básica</option>'+
+      '<option value="2">2 · intermedia</option>'+
+      '<option value="3">3 · avanzada</option>'+
+    '</select></label></div>'+
+    /* El texto describe LA OPCIÓN SELECCIONADA. Antes era fijo y describía
+       siempre la opción 0: con «1 · básica» escogido, el panel afirmaba algo
+       que no era cierto de lo que estaba puesto. */
+    '<p class="nota" id="pan-nota-nv">'+NOTA_NIVEL[0]+'</p>'+
+    '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
+    '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
+      return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'"> '+
+        '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc(CATS[k].ev)+' · '+esc(CATS[k].edad)+'</small></span></label>';
+    }).join('')+'</div></div>'+
+
+    '<div class="pan-paso"><div class="pan-paso-t">Paso 3 · Abrir</div>'+
+    '<div class="pan-sw"><button class="btn azul" id="pan-abrir" disabled '+
+    'onclick="abreEvaluacion()">Abrir una evaluación</button>'+
+    '<span class="nota pan-razon" id="pan-abrir-razon"></span></div>'+
+    '<p class="nota">Al abrirla, la práctica se cierra sola en <strong>todos los aparatos</strong> '+
+    'y cada participante que ya entró con su código ve la evaluación en su pantalla.</p></div>'+
+
+    '<div id="pan-eval"></div></div>';
+  cargaParticipantes(parts);
+  revisaAbrir(cuantasP);
   await cargaResultados();
+}
+
+/* Un texto por opción de dificultad. Los niveles los calcula fuente/niveles.js:
+   1 es dato directo, 2 agrega verdadero/falso y redacciones, 3 agrega completar
+   el versículo y las diferencias entre versiones. Un nivel incluye los de
+   abajo, así que subir agrega preguntas, no las reemplaza. */
+const NOTA_NIVEL={
+  0:'Cada grupo recibe la dificultad máxima de su categoría. Todas las de un mismo grupo hacen '+
+    'exactamente el mismo examen y no depende del desempeño de cada una. Es la opción que hace '+
+    'comparables las notas.',
+  1:'Solo datos directos: nombres, números, lugares, materiales. Sin completar el versículo.',
+  2:'Datos directos más verdadero o falso y preguntas que piden reconocer la redacción exacta.',
+  3:'Todo lo anterior más completar el versículo y las diferencias entre RV1995 y RV1960. Es lo '+
+    'más exigente del banco; en las categorías de 4 a 6 años no aplica.'
+};
+
+function pintaNotaNivel(){
+  const s=document.getElementById('pan-eval-nv'),p=document.getElementById('pan-nota-nv');
+  if(!s||!p)return;
+  p.textContent=NOTA_NIVEL[Number(s.value)||0]||'';
+}
+
+/* Guarda del paso 3. Sin nombre no hay cómo llamar a la evaluación después, y
+   sin participantes no hay a quién abrírsela: en los dos casos el botón queda
+   apagado CON LA RAZÓN A LA VISTA, que es lo que faltaba. */
+let panHayPart=null;
+function revisaAbrir(cuantasP){
+  if(cuantasP!==undefined)panHayPart=cuantasP;
+  const b=document.getElementById('pan-abrir'),r=document.getElementById('pan-abrir-razon');
+  if(!b)return;
+  const t=(document.getElementById('pan-eval-t')||{}).value||'';
+  const faltaNom=!t.trim();
+  const faltaPart=panHayPart===0;
+  b.disabled=faltaNom||faltaPart;
+  if(r)r.textContent=faltaPart?'Falta crear participantes en el paso 1.'
+    :faltaNom?'Falta ponerle nombre a la evaluación.'
+    :panHayPart===null?'No se pudo confirmar cuántas participantes hay: revisa la señal.':'';
 }
 
 async function abreEvaluacion(){
@@ -2094,12 +2176,14 @@ async function cargaResultados(){
   }catch(e){d.innerHTML='';}
 }
 
-async function cargaParticipantes(){
+/* Acepta la lista que pintaPanel() ya pidió. Sin el parámetro la pide ella,
+   que es lo que hacen creaParticipante() y borraParticipante(). */
+async function cargaParticipantes(pre){
   const d=document.getElementById('pan-lista');
   if(!d)return;
   try{
-    const r=await srvFetch('/panel/participantes');
-    const p=r.participantes||[];
+    const p=pre||((await srvFetch('/panel/participantes')).participantes||[]);
+    revisaAbrir(p.length);
     if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
       '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
