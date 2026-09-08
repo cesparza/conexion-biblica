@@ -304,7 +304,12 @@ export async function onRequest(context) {
     if (metodo === 'POST' && ruta === '/panel/evaluacion') {
       const b = await request.json().catch(() => ({}));
       const titulo = limpiar(b.titulo, 60) || 'Evaluación del día';
-      const alcance = limpiar(b.alcance, 20) || 'todo';
+      /* El alcance decide QUÉ material se evalúa, así que tiene que ser uno de
+         los que la app sabe armar. Con una cadena libre, una evaluación queda
+         abierta y sin preguntas posibles: el director la ve abierta y las
+         participantes no reciben nada. */
+      const ALCANCES = ['todo', 'creencias', 'biblia', 'pr', 'q1', 'q2'];
+      const alcance = ALCANCES.includes(limpiar(b.alcance, 20)) ? limpiar(b.alcance, 20) : 'todo';
       const cuantas = Math.min(60, Math.max(5, Math.round(+b.cuantas || 15)));
       const nivel = [0, 1, 2, 3].includes(+b.nivel) ? +b.nivel : 0;
       /* A quién le toca. Una lista de categorías, o '*' para todas. Sin esto el

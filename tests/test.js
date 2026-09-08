@@ -660,5 +660,69 @@ ok(bancoCat('av').every(q=>!['pr40','pr42','pr43'].includes(q.cap)),
 ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APPJS),
   'La lista de capítulos marca «Solo para estudiar» el que no entra al examen');
 
+/* ───────── CALIDAD DEL BANCO: patrones que se pueden explotar ─────────
+   MECANISMO DEL PROBLEMA: en una pregunta de selección múltiple, la respuesta
+   correcta se escribe con cuidado y los distractores se escriben rápido. La
+   correcta termina siendo la opción más larga, y entonces se puede aprobar
+   sin saber nada: escoger siempre la más larga. Con 4 opciones, el azar da
+   25%. Esta prueba mide el sesgo real y le pone un TECHO para que no empeore.
+   El techo es la línea de base de hoy, no la meta: la meta es bajarlo
+   reescribiendo distractores, y cada vez que baje, se baja el techo. */
+const TODO_MC=[...BANCO,...MATU2.MAT_BANCO,...require(path.join(RAIZ,'fuente','creencias.js')).CR_BANCO]
+  .filter(q=>q.t==='mc'&&q.o&&q.o.length===4);
+/* Lo que se mide es la brecha, no el empate. Que la correcta sea dos
+   caracteres más larga no lo nota nadie; que sea el doble de larga se ve a un
+   metro. El umbral es 25% más larga que el mejor distractor. */
+const delatoras=TODO_MC.filter(q=>{
+  const L=q.o.map(o=>String(o).length);
+  const otras=Math.max(...L.filter((_,i)=>i!==q.a));
+  return L[q.a]>otras*1.25;
+}).length;
+const pctDelata=Math.round(delatoras/TODO_MC.length*100);
+const masLarga=TODO_MC.filter(q=>{
+  const L=q.o.map(o=>String(o).length);
+  return L[q.a]===Math.max(...L);
+}).length;
+ok(pctDelata<=38,
+  'La correcta se delata por tamaño (más de 25% más larga) en el '+pctDelata+'% de '+
+  TODO_MC.length+' múltiples — techo 38%; y es la más larga en el '+
+  Math.round(masLarga/TODO_MC.length*100)+'%');
+
+/* Lo mismo con verdadero o falso: si la mayoría son verdaderas, contestar
+   siempre «verdadero» saca nota. */
+const TODO_TF=[...BANCO,...MATU2.MAT_BANCO].filter(q=>q.t==='tf');
+const pctV=Math.round(TODO_TF.filter(q=>q.a).length/TODO_TF.length*100);
+ok(pctV>=35&&pctV<=65,
+  'Las de verdadero o falso están repartidas: '+pctV+'% verdaderas de '+TODO_TF.length+' (rango 35-65%)');
+
+/* Dos preguntas de completar con el MISMO rótulo dentro del mismo capítulo: en
+   la revisión el estudiante ve dos veces el mismo encabezado y no sabe cuál
+   falló. Pasó al renombrar una referencia mal puesta. */
+const rot={};
+BANCO.filter(q=>q.t==='fill').forEach(q=>{const k=q.cap+'|'+q.ins;rot[k]=(rot[k]||0)+1;});
+const rotDup=Object.entries(rot).filter(([,n])=>n>1).map(([k])=>k);
+ok(rotDup.length===0,'Ningún rótulo de completar se repite dentro del mismo capítulo'+
+  (rotDup.length?' — '+rotDup.join(' / '):''));
+
+/* La pregunta «¿a qué creencia corresponde esta declaración?» no puede llevar
+   el título de la creencia dentro de la cita: se contestaría sola. */
+const CRE=require(path.join(RAIZ,'fuente','creencias.js'));
+const titCre={};CRE.CR_CAPS.forEach(c=>{titCre[c.id]=c.sub;});
+const delatan=CRE.CR_BANCO.filter(q=>/corresponde esta declaración/.test(q.q||''))
+  .filter(q=>{
+    const cita=(q.q.split('«')[1]||'').toLowerCase().slice(0,60);
+    return cita.includes(titCre[q.cap].toLowerCase().slice(0,14));
+  }).map(q=>q.cap);
+ok(delatan.length===0,'Ninguna declaración de creencia se autodelata'+
+  (delatan.length?' — '+delatan.join(', '):''));
+
+/* La guía impresa del campamento no puede traer las 28 creencias: se imprime
+   para estudiar lo que el examen del campamento pregunta. */
+const APP2=fs.readFileSync(FUENTE('app.js'),'utf8');
+const bloqueGuias=APP2.slice(APP2.indexOf('function imprimeGuiasTodo'),
+                             APP2.indexOf('function imprimeGuiasTodo')+1200);
+ok(/c\.ev!=='creencias'/.test(bloqueGuias),
+  'La guía impresa de los dos eventos excluye las creencias');
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

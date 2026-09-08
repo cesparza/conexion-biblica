@@ -41,7 +41,7 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         codigoResumen, codigoCompleto, leeCodigo, resumenDe, tarjetasDe,
         huellaBanco, prng, mezclaR, armar, techoDe:c=>CATS[c].techo,
         ponRnd:f=>{rndEx=f}, rndNormal:()=>{rndEx=Math.random},
-        claveQ, BANCO,
+        claveQ, BANCO, capsDelEvento, pintaMenuEx, gruposEx, soloEstudio, ponFq:(k,n)=>{S.fq[k]={m:n}},
         el:id=>document.getElementById(id)};`);
 const A=fn(store,nodo,Buffer);
 
@@ -539,6 +539,73 @@ ok(Object.keys(CR.CR_CONTENIDO).length===28 &&
 ok(CR.CR_BANCO.length>=84 && CR.CR_BANCO.every(q=>q.o&&new Set(q.o).size===4),
   'El banco de creencias tiene '+CR.CR_BANCO.length+' preguntas y ninguna repite opción');
 ok(CR.CR_TARJETAS.length>=56,'Las creencias traen '+CR.CR_TARJETAS.length+' tarjetas');
+
+/* ───────── LO QUE ENCONTRÓ LA REVISIÓN DE QA ─────────
+   Cuatro defectos que ninguna prueba veía porque salieron de mezclar dos
+   eventos dentro de la misma categoría. */
+
+/* 1. El alcance vive en el aparato y sobrevive al cambio de categoría.
+   «creencias» no existe en Aventureros: si no se revalida, el examen queda en
+   CERO preguntas y el desplegable muestra un valor que no está en su lista. */
+A.ponCat('pa'); A.ponAlcance('creencias'); A.pintaMenuEx();
+ok(A.alcanceActual()==='creencias','Padres conserva el alcance «creencias», que sí tiene');
+A.ponCat('av'); A.pintaMenuEx();
+ok(A.alcanceActual()==='todo',
+  'Al pasar a Aventureros, un alcance que esa categoría no tiene vuelve a «todo»');
+A.ponCat('dm2'); A.ponAlcance('pr'); A.pintaMenuEx();
+ok(A.alcanceActual()==='todo','Y lo mismo con «solo P&R» en una categoría de matutina');
+A.ponCat('av'); A.ponAlcance('todo');
+
+/* 2. Los errores por repasar son del evento que se está practicando. Mezclarlos
+   daba un examen de errores con Daniel y doctrina juntos. */
+A.ponCat('pa'); A.ponAlcance('todo');
+const unoDaniel=A.poolDe().find(q=>q.cap==='d1');
+A.ponAlcance('creencias');
+const unaCreencia=A.poolDe()[0];
+A.ponFq(A.claveQ(unoDaniel),2); A.ponFq(A.claveQ(unaCreencia),2);
+ok(A.falladasDe().every(q=>/^cr\d\d$/.test(q.cap)),
+  'Con alcance «creencias», los errores por repasar son solo de creencias');
+A.ponAlcance('todo');
+ok(A.falladasDe().every(q=>!/^cr\d\d$/.test(q.cap))&&A.falladasDe().length>0,
+  'Con el alcance del campamento, los errores por repasar no traen creencias');
+
+/* 3. Las cuentas de progreso del campamento son de 12 capítulos, no de 40.
+   Con capsDe() la insignia «Lector completo» quedaba fuera de alcance para
+   padres y consejeros: había que leerse también las 28 creencias. */
+A.ponCat('gm');
+ok(A.capsDelEvento().length===12 && A.capsDe().length===40,
+  'Guías Mayores: 12 capítulos del campamento de 40 cargados ('+A.capsDe().length+')');
+A.capsDelEvento().forEach(c=>{A.S().prog[c.id]=100;});
+A.modsDe().forEach(m=>{A.S().prog[m.id]=100;});
+A.revisaInsignias(0);
+ok(A.S().insignias.includes('Lector completo'),
+  '«Lector completo» se alcanza leyendo el material del campamento, sin las 28 creencias');
+A.ponCat('av'); A.ponAlcance('todo');
+
+/* 4. NINGUNA OPCIÓN DEL DESPLEGABLE PUEDE QUEDARSE SIN PREGUNTAS.
+   El barrido por las seis categorías encontró dos: «Solo Profetas y Reyes» en
+   Menores, que no tiene P&R, y «Solo la segunda quincena» en Matutina menores,
+   cuyos días pasados del 15 son de otra categoría. En los dos casos el examen
+   arrancaba en cero y el botón no hacía nada. Ahora los grupos se prueban
+   contra poolDe() antes de ofrecerse, y esta prueba lo vigila para las seis. */
+const vacios=[];
+for(const cat of Object.keys(A.CATS)){
+  A.ponCat(cat);
+  for(const g of [['todo','Todo mi material']].concat(A.gruposEx())){
+    A.ponAlcance(g[0]); A.ponNivel(0); A.ponCuantas(0);
+    if(!A.poolNivel().length) vacios.push(cat+'/'+g[0]);
+    if(!A.armar('normal').length) vacios.push(cat+'/'+g[0]+' (armar)');
+  }
+  /* y cada capítulo suelto del desplegable también tiene que traer algo. Los
+     marcados «solo para estudiar» ya no se ofrecen, así que no cuentan. */
+  for(const c of A.capsDe().filter(c=>!A.soloEstudio(c,A.S().cat))){
+    A.ponAlcance(c.id);
+    if(!A.poolDe().length) vacios.push(cat+'/'+c.id);
+  }
+}
+ok(vacios.length===0,'Ninguna opción de alcance se queda sin preguntas, en las 6 categorías'+
+  (vacios.length?' — vacías: '+vacios.join(', '):''));
+A.ponCat('av'); A.ponAlcance('todo'); A.ponNivel(0); A.ponCuantas(0);
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

@@ -511,13 +511,13 @@ function tareasDeHoy(){
     d:'Salen primero las que fallaste. Una tarjeta queda dominada al acertarla dos veces seguidas.',
     b:'Abrir tarjetas',f:"irTarjetasDificiles()"});
 
-  const sinLeer=[...capsDe(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
+  const sinLeer=[...capsDelEvento(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
   if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
     d:'Te faltan '+sinLeer.length+' secciones por marcar como estudiadas.',
     b:'Estudiar',f:"verCap('"+sinLeer[0].id+"')"});
 
   /* Capítulo más flojo según los exámenes: dirige el estudio a donde duele. */
-  const flojo=capsDe().map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
+  const flojo=capsDelEvento().map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
     .filter(x=>x.a.b+x.a.m>=3)
     .map(x=>({...x,pct:x.a.b/(x.a.b+x.a.m)}))
     .sort((p,q)=>p.pct-q.pct)[0];
@@ -773,7 +773,13 @@ let reloj=null,seg=1200,entregado=false,resp={},prueba=[],modo='normal';
    nivel: 0 = progresivo (lo decide la app), o 1, 2, 3 fijo. */
 let alcance='todo',cuantas=0,nivel=0;
 
-const falladasDe=()=>{const p=bancoDe();return p.filter(q=>(S.fq[claveQ(q)]||{}).m>0);};
+/* Los errores por repasar, del MISMO evento que se está practicando. Sin este
+   filtro, un examen de errores de Padres mezclaba Daniel con doctrina, que es
+   justo lo que el reglamento separa. */
+const falladasDe=()=>{
+  const cr=alcance==='creencias';
+  return bancoDe().filter(q=>esCreencia(q.cap)===cr&&(S.fq[claveQ(q)]||{}).m>0);
+};
 
 /* Preguntas disponibles según categoría + alcance elegido. */
 function poolDe(){
@@ -796,6 +802,28 @@ const esMatutina=()=>CAT().ev==='Devoción Matutina';
    Daniel con doctrina y no correspondería a ninguna de las dos actividades. */
 const esCreencia=id=>/^cr\d\d$/.test(id);
 const hayCreencias=()=>capsDe().some(c=>esCreencia(c.id));
+
+/* Los capítulos del evento que se está estudiando. capsDe() trae TODO lo que la
+   categoría tiene cargado, y para padres y consejeros eso son 12 capítulos del
+   campamento MÁS las 28 creencias. Cualquier cuenta de progreso del campamento
+   tiene que usar esta, o el plan diario y las insignias empiezan a contar 40
+   capítulos donde el reglamento pide 12. */
+const capsDelEvento=()=>capsDe().filter(c=>!esCreencia(c.id));
+
+/* Los grupos de alcance que de verdad tienen preguntas en esta categoría. Se
+   calcula probando cada uno contra poolDe(), no con una lista fija: la lista
+   fija fue la que ofrecía «Solo Profetas y Reyes» a Menores, que no lo tiene. */
+function gruposEx(){
+  const cand=esMatutina()
+    ?[['q1','Solo la primera quincena (1 al 15)'],['q2','Solo la segunda quincena (16 en adelante)']]
+    :[['biblia','Solo el libro de Daniel'],['pr','Solo Profetas y Reyes'],
+      ['creencias','Solo En esto creemos (28 creencias)']];
+  const prev=alcance,out=[];
+  try{
+    for(const g of cand){alcance=g[0];if(poolDe().length)out.push(g);}
+  }finally{alcance=prev;}
+  return out;
+}
 
 /* Nivel efectivo del examen que se va a armar. */
 const nivelEfectivo=()=>nivel||nivelRecomendado();
@@ -824,15 +852,25 @@ function opcionesCuantas(){
 function pintaMenuEx(){
   const sa=document.getElementById('ex-alcance');
   const prev=alcance;
-  const grupos=esMatutina()
-    ?'<option value="q1">Solo la primera quincena (1 al 15)</option>'+
-     '<option value="q2">Solo la segunda quincena (16 en adelante)</option>'
-    :'<option value="biblia">Solo el libro de Daniel</option>'+
-     '<option value="pr">Solo Profetas y Reyes</option>'+
-     (hayCreencias()?'<option value="creencias">Solo En esto creemos (28 creencias)</option>':'');
+  /* Se ofrecen SOLO los grupos que tienen preguntas en esta categoría.
+     Menores no tiene Profetas y Reyes, y la matutina de menores no llega al 16
+     de octubre: ofrecerlos dejaba el examen en CERO preguntas y el botón
+     «Comenzar» sin hacer nada, que es una puerta con letrero y sin cerradura. */
+  const disp=gruposEx();
+  const grupos=disp.map(g=>'<option value="'+g[0]+'">'+g[1]+'</option>').join('');
+  /* Y de los capítulos, solo los que SE EXAMINAN. Un capítulo marcado «solo
+     para estudiar» no tiene preguntas en el sorteo: escogerlo dejaba el examen
+     en cero. Pasaba con Daniel 2 desde que salió del reglamento, y con el día
+     31 de la matutina desde antes. */
+  const capsEx=capsDe().filter(c=>!soloEstudio(c,S.cat));
   sa.innerHTML='<option value="todo">Todo mi material</option>'+grupos+
-    capsDe().map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
-  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr','q1','q2','creencias'].includes(prev))alcance='todo';
+    capsEx.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
+    /* El alcance vive en el aparato y sobrevive al cambio de categoría. «q1» de
+     la matutina, o «creencias» de padres, no existen en Aventureros: si no se
+     revalida, el examen queda en CERO preguntas y el desplegable muestra un
+     valor que no está en la lista. Se valida contra los grupos que esta
+     categoría tiene de verdad, no contra una lista fija. */
+  if(!capsEx.some(c=>c.id===prev)&&!['todo'].concat(disp.map(g=>g[0])).includes(prev))alcance='todo';
   sa.value=alcance;
 
   const ops=opcionesCuantas();
@@ -1268,7 +1306,7 @@ function revisaInsignias(pct){
   if(pct>=75)a('Estudioso');
   if(S.examenes.length>=3)a('Persistente');
   if(S.racha>=3)a('Racha de fuego');
-  if([...capsDe(),...modsDe()].every(x=>S.prog[x.id]>=100))a('Lector completo');
+  if([...capsDelEvento(),...modsDe()].every(x=>S.prog[x.id]>=100))a('Lector completo');
 }
 
 function pintaLogros(){
@@ -1712,7 +1750,10 @@ function imprimeGuiasTodo(){
   for(const ev of ['Conexión Bíblica','Devoción Matutina']){
     const cats=Object.keys(CATS).filter(k=>CATS[k].ev===ev);
     const ids=new Set();
-    const caps=CAPS.filter(c=>c.cats.some(x=>cats.includes(x))&&!ids.has(c.id)&&ids.add(c.id));
+    /* Las 28 creencias son otro evento y no van en la guía del campamento: la
+       guía impresa se usa para estudiar lo que el examen pide. */
+    const caps=CAPS.filter(c=>c.cats.some(x=>cats.includes(x))&&c.ev!=='creencias'
+      &&!ids.has(c.id)&&ids.add(c.id));
     const mods=MODULOS.filter(m=>m.cats.some(x=>cats.includes(x)));
     if(!caps.length)continue;
     hojas.push(hojaGuia({
