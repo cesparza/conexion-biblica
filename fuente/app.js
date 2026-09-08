@@ -42,6 +42,12 @@ const claveT=t=>t.cap+'.'+hashTxt(t.f||'');
    para acotar fechas del futuro, y normalizar() corre al leer el estado
    guardado, mucho antes de la sección de tarjetas. Definirla allá abajo dejaba
    la app sin arrancar. */
+/* Van aca arriba, no junto a habla(): ir() llama paraVoz() y esta declarado
+   antes que la seccion de voz. Un `let` usado antes de su declaracion lanza
+   por TDZ y la app no arranca, y el chequeo de sintaxis no lo detecta. Ya
+   paso una vez en este archivo con diaHoy. */
+let vozBtn=null, vozReloj=null;
+
 const diaHoy=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
 
 function normalizar(x){
@@ -462,6 +468,7 @@ const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
 /* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
 function ir(id){
+  paraVoz();
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-t button').forEach(b=>b.classList.remove('on'));
   document.getElementById('p-'+id).classList.add('on');
@@ -758,19 +765,20 @@ function refsTocables(html,capId){
   }).join('');
 }
 
-/** Un versiculo o un rango, ya numerado y listo para leer o para escuchar. */
+/** Un versiculo o un rango. Cada versiculo en su propio parrafo y con el
+ *  numero volado: asi se puede seguir con el dedo y no se lee como un muro. */
 function htmlVers(cid,de,hasta){
   const n=cid.replace('d','');
-  const filas=[];
+  const partes=[];
   for(let i=de;i<=hasta;i++)
     if(VERS[cid]&&VERS[cid][i])
-      filas.push('<b>'+i+'</b> '+esc(VERS[cid][i]));
-  if(!filas.length)return '';
+      partes.push('<p><span class="vn">'+i+'</span>'+esc(VERS[cid][i])+'</p>');
+  if(!partes.length)return '';
   const ref='Daniel '+n+':'+de+(hasta>de?'-'+hasta:'');
   return '<div class="vpanel" data-vid="'+cid+'.'+de+'.'+hasta+'">'+
-    '<div class="vp-cab"><span>'+ref+' · RV1995</span>'+
-    (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" onclick="leeCerca(this)">🔊</button>':'')+
-    '</div><div class="vp-txt" data-leer>'+filas.join('<br>')+'</div></div>';
+    '<div class="vp-cab"><span class="vp-ref">'+ref+' · RV1995</span>'+
+    (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button>':'')+
+    '</div><div class="biblia" data-leer>'+partes.join('')+'</div></div>';
 }
 
 /* UNO A LA VEZ. Tocar la misma referencia cierra, y tocar otra mueve el panel
@@ -795,19 +803,23 @@ function verVers(btn,cid,de,hasta){
   caja.parentNode.insertBefore(tmp.firstChild,caja.nextSibling);
 }
 
-/* El capitulo completo, en bloques de cinco versiculos con su propio boton de
-   voz: uno solo leeria los 49 de corrido, que no sirve para memorizar, y de
-   paso el bloque queda de un tamano que se alcanza a seguir con el dedo. */
+/* El capitulo completo, en bloques de cinco versiculos con su propio boton
+   de voz: uno solo leeria los 49 de corrido, que no sirve para memorizar, y
+   de paso el bloque queda de un tamano que se alcanza a seguir con el dedo.
+   El boton va en su propia fila, no al lado del texto: al lado le quitaba
+   unos 50px de ancho a las cinco lineas. */
 function seccionLectura(cid){
   if(typeof VERS==='undefined'||!VERS[cid])return '';
   const nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
   const bloques=[];
   for(let i=0;i<nums.length;i+=5){
     const grupo=nums.slice(i,i+5);
-    const txt=grupo.map(v=>'<b>'+v+'</b> '+esc(VERS[cid][v])).join('<br>');
+    const rot='Vers. '+grupo[0]+(grupo.length>1?'-'+grupo[grupo.length-1]:'');
+    const txt=grupo.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('');
     bloques.push('<div class="lect-bl">'+
-      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar estos versículos" onclick="leeCerca(this)">🔊</button>':'')+
-      '<div data-leer>'+txt+'</div></div>');
+      '<div class="lect-cab"><span class="lect-rot">'+rot+'</span>'+
+      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar estos versículos" aria-label="Escuchar '+rot+'" onclick="leeCerca(this)">🔊</button>':'')+
+      '</div><div class="biblia" data-leer>'+txt+'</div></div>');
   }
   return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
     nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo">'+
@@ -815,6 +827,7 @@ function seccionLectura(cid){
 }
 
 function verCap(id){
+  paraVoz();
   ir('estudio');
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
   document.querySelector('.c-'+id)?.classList.add('on');
@@ -881,22 +894,75 @@ const puedeHablar=()=>typeof speechSynthesis!=='undefined'&&
 
 /* Voz en español, un poco más lenta que el habla normal: se está memorizando,
    no escuchando una noticia. */
-function habla(txt){
+/* ── LEER EN VOZ ALTA, Y PODER PARAR ────────────────────────────────────
+   MECANISMO
+   speechSynthesis es una cola global del navegador: speak() encola y cancel()
+   vacia la cola entera. No hay «parar este audio», solo «parar todo», asi que
+   la app tiene que recordar QUE boton esta leyendo para saber a quien
+   devolverle su icono.
+
+   Antes no habia forma de parar: se tocaba 🔊 y el versiculo se leia hasta el
+   final. Con un capitulo de 49 versiculos eso son bloques de cinco que no se
+   podian cortar, y si se tocaba otro boton se encimaban.
+
+   AHORA el boton alterna: 🔊 lee, ⏹ para. Y se corta solo al cambiar de
+   pantalla o de capitulo, porque una voz que sigue leyendo Daniel 2 mientras
+   la nina ya esta en las tarjetas se siente como una falla de la app.
+
+   OJO CON iOS: onend no siempre dispara, sobre todo si se cancela. Por eso el
+   icono se restaura tambien con un reloj de seguridad y al cancelar a mano;
+   si se dependiera solo de onend, el boton se quedaria en ⏹ para siempre. */
+function paraVoz(){
+  if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
+  if(vozBtn){
+    try{vozBtn.textContent='🔊';vozBtn.setAttribute('title','Escuchar');
+        vozBtn.classList.remove('sonando');}catch(e){}
+    vozBtn=null;
+  }
+  try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
+}
+
+function habla(txt,btn){
   if(!puedeHablar()||!txt)return;
+  paraVoz();
   try{
-    speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(String(txt).replace(/\s+/g,' ').trim().slice(0,600));
+    const limpio=String(txt).replace(/\s+/g,' ').trim().slice(0,600);
+    const u=new SpeechSynthesisUtterance(limpio);
     u.lang='es-ES';u.rate=.85;u.pitch=1;
+    if(btn){
+      vozBtn=btn;
+      btn.textContent='⏹';btn.setAttribute('title','Parar');
+      btn.classList.add('sonando');
+      u.onend=paraVoz; u.onerror=paraVoz;
+      /* Reloj de seguridad: unas 12 palabras por segundo a rate .85, con
+         margen. Si onend no llega (pasa en iOS), el icono vuelve solo. */
+      vozReloj=setTimeout(paraVoz, Math.max(4000, limpio.length*95));
+    }
     speechSynthesis.speak(u);
-  }catch(e){}
+  }catch(e){paraVoz();}
 }
 
 /* Lee el texto del bloque al que pertenece el botón. Así el HTML generado no
    tiene que repetir el versículo dentro de un atributo. */
 function leeCerca(btn){
   if(!btn)return;
-  const cont=btn.closest?btn.closest('[data-leer]'):null;
-  const base=cont||btn.parentNode;
+  /* Tocar el boton que ya esta leyendo lo para. Es lo que espera cualquiera:
+     el mismo boton que empezo el audio es el que lo corta. */
+  if(btn===vozBtn){paraVoz();return;}
+  /* De donde se saca el texto. El boton puede estar DENTRO del bloque
+     [data-leer], como en las secciones de versiculos clave, o FUERA, en una
+     cabecera hermana, como en el panel de un versiculo y en los bloques de
+     lectura, donde se movio para que el texto use todo el ancho.
+     Cuando esta fuera, closest('[data-leer]') da null y antes se caia a
+     btn.parentNode: eso hacia que la voz leyera «Daniel 3:5 · RV1995», o sea
+     la referencia en vez del versiculo. Se detecto midiendo el texto que se
+     manda a hablar; en una captura no se ve. */
+  let base=btn.closest?btn.closest('[data-leer]'):null;
+  if(!base&&btn.closest){
+    const caja=btn.closest('.vpanel,.lect-bl,.sec');
+    if(caja&&caja.querySelector)base=caja.querySelector('[data-leer]');
+  }
+  if(!base)base=btn.parentNode;
   if(!base)return;
   /* Se lee una COPIA sin el botón: si no, el sintetizador pronuncia el emoji
      del altavoz al final de cada versículo. */
@@ -908,7 +974,7 @@ function leeCerca(btn){
   }catch(e){ t=(base.textContent||'').replace(/🔊/g,''); }
   /* Fuera la referencia del principio («1:8»): se está memorizando el texto,
      no el número. */
-  habla(t.replace(/^\s*[\d:]+\s*/,''));
+  habla(t.replace(/^\s*[\d:]+\s*/,''),btn);
 }
 
 const BTN_VOZ='<button class="btn-voz" title="Escuchar" aria-label="Escuchar" onclick="leeCerca(this)">🔊</button>';

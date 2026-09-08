@@ -23,12 +23,13 @@ let document={
 };
 let window={scrollTo(){}};
 let setInterval=()=>0, clearInterval=()=>{}, confirm=()=>true;
+
 let navigator={};
 let Blob=function(){}, URL={createObjectURL:()=>'blob:x'};
 let btoa=s=>Buffer.from(s,'binary').toString('base64');
 let atob=s=>Buffer.from(s,'base64').toString('binary');
 `;
-const fn=new Function('store','nodo','Buffer',stub+js+`
+const RET=`
 return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
@@ -36,6 +37,7 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
         ponNivel:v=>{nivel=v},
+        htmlVers, seccionLectura, refsTocables, VERS,
         DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre,
         esNuevo, bvSigue, bvEdad, bvEvento, bvPaso, ir,
         codigoResumen, codigoCompleto, leeCodigo, resumenDe, tarjetasDe,
@@ -45,8 +47,20 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
         puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
-        el:id=>document.getElementById(id)};`);
+        el:id=>document.getElementById(id)};`;
+const fn=new Function('store','nodo','Buffer',stub+js+RET);
 const A=fn(store,nodo,Buffer);
+
+/* La app se monta OTRA VEZ con un sintetizador de mentiras. Hacen falta las
+   dos: el montaje de arriba prueba que puedeHablar() es una guarda real sin
+   navegador, y este prueba los bloques CON boton de voz, que es la version
+   que de verdad usa la nina. Darle voz al stub general rompia la primera. */
+const VOZ=`
+let speechSynthesis={speak(){},cancel(){},speaking:false,pending:false};
+let SpeechSynthesisUtterance=function(txt){this.text=txt;};
+`;
+const fnVoz=new Function('store','nodo','Buffer',stub+VOZ+js+RET);
+const AV=fnVoz({},nodo,Buffer);
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 
@@ -738,6 +752,46 @@ const pFill=ex.filter(q=>q.t==='fill').length/ex.length;
 ok(Math.abs(pFill-A.REPARTO.fill)<=0.06,
   'El examen armado respeta el reparto de la sección III ('+Math.round(pFill*100)+'% con REPARTO '+Math.round(A.REPARTO.fill*100)+'%)');
 A.ponCat('av'); A.ponNivel(0); A.ponCuantas(0);
+
+
+/* ── QUE LA VOZ LEA EL VERSICULO, NO LA REFERENCIA ──────────────────────
+   El boton de voz se movio a su propia fila para que el texto use todo el
+   ancho, y con eso quedo FUERA del bloque [data-leer]. leeCerca() se caia a
+   btn.parentNode y la voz empezo a leer «Daniel 3:5 · RV1995» en vez del
+   versiculo. No se ve en una captura: hay que mirar el texto que se manda a
+   hablar. Estas pruebas fijan la estructura de la que depende el arreglo. */
+const hv=AV.htmlVers('d3',5,5);
+const cuerpoV=(hv.match(/data-leer>([\s\S]*?)<\/div>/)||[])[1]||'';
+ok(cuerpoV.includes('que al oír el son de la bocina'),
+  'El bloque [data-leer] del panel trae el texto del versiculo');
+ok(!/RV1995/.test(cuerpoV),
+  'El bloque [data-leer] NO trae la referencia (si la trae, la voz la lee)');
+ok(/class="vp-cab"[\s\S]*?btn-voz[\s\S]*?<\/div>\s*<div class="biblia" data-leer>/.test(hv),
+  'El boton de voz esta en la cabecera, hermano del bloque de texto');
+ok((hv.match(/data-leer/g)||[]).length===1,
+  'Hay exactamente un [data-leer] por panel, o leeCerca no sabria cual tomar');
+
+const sl=AV.seccionLectura('d3');
+const bloquesL=sl.split('class="lect-bl"').slice(1);
+ok(bloquesL.length===6,'Daniel 3 se parte en 6 bloques de cinco versiculos (30)');
+ok(bloquesL.every(b=>(b.match(/data-leer/g)||[]).length===1),
+  'Cada bloque de lectura tiene exactamente un [data-leer]');
+ok(bloquesL.every(b=>/class="lect-rot">Vers\. \d/.test(b)),
+  'Cada bloque de lectura dice que versiculos son');
+const bl1=(bloquesL[0].match(/data-leer>([\s\S]*?)<\/div>/)||[])[1]||'';
+ok(bl1.includes('El rey Nabucodonosor hizo una estatua de oro'),
+  'El primer bloque de lectura arranca en el versiculo 1');
+ok(!/Vers\./.test(bl1),'El rotulo del bloque queda fuera del texto que se lee');
+
+/* Cada versiculo en su parrafo con el numero volado: si van corridos, un
+   capitulo de 49 se lee como un muro. */
+ok((bl1.match(/<p><span class="vn">/g)||[]).length===5,
+  'Los cinco versiculos del bloque van cada uno en su parrafo, con su numero');
+
+/* La clase .biblia es la que le pone la serif y el interlineado de lectura.
+   Sin ella el texto biblico se ve igual que el de la app. */
+ok(/class="biblia"/.test(hv)&&/class="biblia"/.test(sl),
+  'El texto biblico lleva la clase .biblia en el panel y en la lectura');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

@@ -869,6 +869,55 @@ ok(/Daniel\\\\s\+\(\\\\d\{1,2\}\)/.test(APP_REF.replace(/\s/g,''))||
 ok(/OTRO_LIBRO/.test(APP_REF)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP_REF),
   'La segunda pasada solo actua dentro de un capitulo de Daniel y descarta otros libros');
 
+/* ── PARAR LA LECTURA EN AUDIO ──────────────────────────────────────────
+   speechSynthesis es una cola global del navegador: no hay «parar este
+   audio», solo cancel(), que vacia todo. Antes no habia forma de parar: se
+   tocaba 🔊 y el bloque se leia completo. Ahora el boton alterna y se corta
+   al navegar. */
+const APP_VOZ=fs.readFileSync(FUENTE('app.js'),'utf8');
+ok(/function paraVoz\(\)/.test(APP_VOZ),'Existe paraVoz()');
+ok(/if\(btn===vozBtn\)\{paraVoz\(\);return;\}/.test(APP_VOZ),
+  'Tocar el boton que ya esta leyendo lo para');
+ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP_VOZ),
+  'Cambiar de pantalla corta la lectura');
+ok(/function verCap\(id\)\{\s*paraVoz\(\);/.test(APP_VOZ),
+  'Cambiar de capitulo corta la lectura');
+/* En iOS onend no siempre dispara, sobre todo si se cancela. Sin el reloj de
+   seguridad el boton se quedaria en ⏹ para siempre. */
+ok(/u\.onend=paraVoz/.test(APP_VOZ)&&/u\.onerror=paraVoz/.test(APP_VOZ),
+  'El icono se restaura con onend y con onerror');
+ok(/vozReloj=setTimeout\(paraVoz/.test(APP_VOZ),
+  'Hay un reloj de seguridad por si onend no llega (pasa en iOS)');
+/* vozBtn es un `let` y ir() lo usa antes de la seccion de voz: si se declara
+   abajo, la app no arranca por TDZ. Ya paso con diaHoy. */
+const posVoz=APP_VOZ.indexOf('let vozBtn'), posIr=APP_VOZ.indexOf('function ir(id)');
+ok(posVoz>=0&&posVoz<posIr,
+  'vozBtn se declara ANTES de ir(), que es quien llama paraVoz (si no, TDZ)');
+
+/* ── EL ESTILO DEL TEXTO BIBLICO ────────────────────────────────────────
+   Que se vea distinto del texto de la app no es adorno: con la misma sans, la
+   cita y la explicacion se leian como lo mismo. */
+ok(/\.biblia\{font-family:Georgia/.test(CSS),
+  'El texto biblico usa una serif, no la sans de la interfaz');
+ok(/\.biblia \.vn\{[^}]*vertical-align:\.45em/.test(CSS),
+  'El numero de versiculo va volado, como en una Biblia impresa');
+/* Un <button> es inline-block: su caja crece con el line-height y un
+   border-bottom se dibuja al FONDO de esa caja, no bajo el texto. En el
+   iPhone quedaba una rayita flotando, y con padding vertical caia encima de
+   la linea siguiente. */
+ok(!/\.vref\{[^}]*border-bottom:1px/.test(CSS),
+  'La referencia tocable NO usa border-bottom (se dibuja fuera del texto)');
+ok(/\.vref\{[^}]*text-decoration:underline/.test(CSS),
+  'La referencia tocable se subraya con text-decoration, que sigue al texto');
+ok(!/\.vref\{[^}]*margin:-6px/.test(CSS),
+  'La referencia no lleva margen negativo (caia sobre la linea siguiente)');
+ok(/\.btn-voz\.sonando\{/.test(CSS),
+  'El boton que esta sonando se distingue de los demas');
+/* El boton de voz en su propia fila: al lado del texto le quitaba unos 50px
+   de ancho a las cinco lineas del bloque. */
+ok(/\.lect-cab\{[^}]*justify-content:flex-end/.test(CSS),
+  'El boton de voz de la lectura va en su propia fila, no al lado del texto');
+
 /* ── EL SELECT QUE SE SALIA DEL ANCHO EN EL IPHONE ──────────────────────
    MECANISMO. Un elemento dentro de un flex tiene min-width:auto, o sea que no
    puede encogerse por debajo del ancho intrinseco de su contenido. El ancho

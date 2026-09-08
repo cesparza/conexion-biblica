@@ -117,6 +117,16 @@ const MANUAL = [
     <p>Toca otra vez el mismo número y se cierra. Si tocas otro, el versículo
     se mueve a ese: <strong>siempre hay uno solo abierto</strong>, para que la
     página no se llene.</p>` },
+  { t:'Escucharlo, y pararlo',
+    h:`<p>Cada bloque de versículos tiene un botón <strong>🔊</strong>. Tócalo
+    y la app lee en voz alta.</p>
+    <p><strong>Para pararlo, toca el mismo botón otra vez.</strong> Mientras
+    está leyendo, el botón cambia a <strong>⏹</strong> y se pone azul, así
+    sabes cuál de todos hay que tocar.</p>
+    <p>También se corta solo si <strong>cambias de pantalla o de
+    capítulo</strong>, para que la voz no te siga hablando de Daniel 2 cuando
+    ya estás en las tarjetas.</p>` },
+
   { t:'Leer el capítulo completo',
     h:`<p>Arriba de cada capítulo de Daniel hay una franja que dice
     <strong>«Leer el capítulo completo»</strong> con el número de versículos.

@@ -119,42 +119,82 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 @media print{.tabla-scroll{overflow:visible}}
 .highlight-box{background:#e8f5e9;border-left:5px solid var(--verde);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
 .warn-box{background:#fff3e0;border-left:5px solid var(--naranja);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
-/* ═══ LOS VERSICULOS DENTRO DEL ESTUDIO ═══
-   La referencia tocable tiene que verse tocable sin gritar: el material esta
-   lleno de ellas (163) y si cada una fuera un boton de color, la pagina
-   quedaria un arbol de navidad. Se marca con el azul de marca y un subrayado
-   punteado, que es como se lee «esto se puede abrir». */
-.vref{background:none;border:0;padding:0 1px;font:inherit;color:var(--cielo);
-  font-weight:700;cursor:pointer;border-bottom:1px dotted var(--cielo);
-  line-height:inherit}
-.vref:hover{color:var(--azul);border-bottom-color:var(--azul)}
-/* 34px de alto minimo tocable sin agrandar la letra ni romper el renglon:
-   el area se estira con el padding vertical, que no ocupa espacio de linea. */
-@media(hover:none){.vref{padding:6px 2px;margin:-6px 0}}
+/* ═══ EL TEXTO BIBLICO ═══
+   El texto de la Biblia se ve DISTINTO del texto de la app, a proposito. Con
+   la misma tipografia sans de la interfaz, la cita y la explicacion se leian
+   como lo mismo, y en un capitulo de 49 versiculos eso es un muro. Una serif
+   dice «esto es la cita» sin necesidad de rotularlo, y en parrafos largos se
+   sigue mejor con el ojo.
+   Georgia y Palatino existen en iOS y en macOS; la lista termina en serif
+   genérica por si acaso. */
+.biblia{font-family:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+  font-size:1rem;line-height:1.78;color:#23262e}
+.biblia p{margin:0 0 .75rem}
+.biblia p:last-child{margin-bottom:0}
+/* El numero va volado y en la sans de la app, como en una Biblia impresa: si
+   va del mismo tamano y en la misma familia, compite con la lectura. */
+.biblia .vn{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  font-size:.63rem;font-weight:800;color:var(--cielo);vertical-align:.45em;
+  margin-right:3px;letter-spacing:.2px}
 
-.vpanel{background:#eef6fd;border:1px solid #cfe4f6;border-left:5px solid var(--cielo);
-  border-radius:8px;padding:.6rem .8rem;margin:.5rem 0 .9rem;font-size:.86rem;line-height:1.65}
+/* ═══ LA REFERENCIA TOCABLE ═══
+   El material esta lleno de ellas (183), asi que se marca sin gritar: el azul
+   de marca y un subrayado, que es como se lee «esto se puede abrir».
+   NO lleva padding vertical ni margen negativo. Los llevaba, para agrandar el
+   area tocable, y el borde inferior caia 6px mas abajo: en la captura del
+   iPhone el punteado aparecia debajo de la LINEA SIGUIENTE, como si el texto
+   normal estuviera subrayado. Un enlace en linea no puede crecer en alto sin
+   romper el renglon; lo que si se puede es agrandar la letra un poco. */
+.vref{background:none;border:0;padding:0;font:inherit;font-size:1.02em;
+  color:var(--cielo);font-weight:700;cursor:pointer;line-height:inherit;
+  -webkit-tap-highlight-color:rgba(46,139,192,.25);
+  /* display:inline y text-decoration, NO border-bottom. Un <button> es
+     inline-block por defecto, asi que su caja crece con el line-height y el
+     borde inferior se dibuja al FONDO de esa caja: quedaba una rayita
+     flotando cuatro pixeles debajo del texto, y en la primera version, con
+     padding vertical, caia encima de la linea siguiente. text-decoration se
+     dibuja sobre el texto y no depende de la caja. */
+  display:inline;text-decoration:underline;
+  text-decoration-color:rgba(46,139,192,.5);text-decoration-thickness:1px;
+  text-underline-offset:2px}
+.vref:hover{color:var(--azul);text-decoration-color:var(--azul)}
+.vref:active{background:rgba(46,139,192,.14)}
+
+/* ═══ EL PANEL DE UN VERSICULO ═══
+   Menos caja de app y mas cita: sin borde alrededor, una barra a la izquierda
+   y un fondo apenas tenido. Lo que tiene que resaltar es el texto, no el
+   recuadro. */
+.vpanel{background:#f7fbfe;border-left:4px solid var(--cielo);
+  border-radius:0 10px 10px 0;padding:.75rem .95rem;margin:.7rem 0 1rem}
 .vp-cab{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
-  font-size:.72rem;font-weight:800;color:var(--azul);text-transform:uppercase;
-  letter-spacing:.3px;margin-bottom:.35rem}
-.vp-txt b{color:var(--cielo);font-size:.78rem;vertical-align:top;margin-right:2px}
+  margin-bottom:.45rem}
+.vp-ref{font-size:.68rem;font-weight:800;color:var(--azul);
+  text-transform:uppercase;letter-spacing:.6px}
 
+/* ═══ LEER EL CAPITULO COMPLETO ═══ */
 .lect{border:2px solid #e5e7eb;border-radius:12px;margin-bottom:1.3rem;background:#fff}
-.lect>summary{cursor:pointer;padding:.8rem .9rem;font-weight:800;color:var(--azul);
+.lect>summary{cursor:pointer;padding:.85rem .9rem;font-weight:800;color:var(--azul);
   font-size:.92rem;min-height:44px;display:flex;align-items:center;list-style:none}
 .lect>summary::-webkit-details-marker{display:none}
 .lect>summary::after{content:'▾';margin-left:auto;font-size:1.1rem;color:var(--gris)}
 .lect[open]>summary::after{content:'▴'}
 .lect[open]>summary{border-bottom:1px solid #eef0f4}
-.lect-cuerpo{padding:.5rem .9rem .9rem}
-/* Cada bloque de cinco versiculos con su boton de voz a la derecha. El texto
-   no se envuelve por debajo del boton: con float el renglon largo se metia
-   bajo el altavoz y se leia mal. */
-.lect-bl{display:flex;gap:.6rem;align-items:flex-start;padding:.55rem 0;
-  border-bottom:1px dashed #eef0f4;font-size:.87rem;line-height:1.7}
-.lect-bl:last-child{border-bottom:0}
-.lect-bl>div{flex:1;min-width:0}
-.lect-bl b{color:var(--cielo);font-size:.76rem;vertical-align:top;margin-right:2px}
+.lect-cuerpo{padding:.3rem 1rem 1rem}
+/* El boton de voz va en una fila propia y alineado a la derecha, NO al lado
+   del texto. Estaba al lado y le quitaba unos 50px de ancho a las cinco
+   lineas del bloque: el texto quedaba comprimido en una columna angosta. En
+   su propia fila el texto usa todo el ancho, y de paso el rotulo dice que
+   versiculos son. */
+.lect-bl{padding:.8rem 0;border-bottom:1px solid #f1f3f7}
+.lect-bl:last-child{border-bottom:0;padding-bottom:.2rem}
+.lect-cab{display:flex;align-items:center;justify-content:flex-end;gap:.5rem;
+  margin-bottom:.15rem}
+.lect-rot{font-size:.66rem;font-weight:800;color:var(--gris);
+  text-transform:uppercase;letter-spacing:.5px;margin-right:auto}
+
+/* El boton que esta sonando se distingue: sin esto no se sabe cual de los
+   diez botones de un capitulo hay que tocar para parar. */
+.btn-voz.sonando{background:var(--cielo);border-color:var(--cielo);color:#fff}
 
 .verse-box{background:#e3f2fd;border-left:5px solid var(--cielo);border-radius:8px;padding:.75rem .9rem;font-size:.87rem;font-style:italic;margin:.5rem 0;line-height:1.7}
 ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
