@@ -262,7 +262,9 @@ const CATS_T={me:10,av:15,pa:25,gm:25,dm1:10,dm2:15};
 const soloEstudioT=(c,cat)=>Array.isArray(c.extra)?c.extra.includes(cat):!!c.extra;
 
 function selDe(cat,n){
-  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!soloEstudioT(c,cat)).map(c=>c.id);
+  /* Mismo criterio que poolDe() con alcance «todo»: las 28 creencias son otro
+     evento y no entran al examen del campamento ni a su hoja impresa. */
+  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!soloEstudioT(c,cat)&&c.ev!=='creencias').map(c=>c.id);
   const b=BANCO_T.filter(q=>ids.includes(q.cap));
   const mc=b.filter(q=>q.t==='mc').slice(0,Math.max(1,Math.round(n*.6)));
   const tf=b.filter(q=>q.t==='tf').slice(0,Math.max(1,Math.round(n*.25)));
@@ -634,7 +636,7 @@ ok(/cierraEvaluacion/.test(trozoAbierta)&&!/abreEvaluacion/.test(trozoAbierta),
    Estas pruebas existen porque el error se vería en un examen, no en la app. */
 const CAMPAMENTO=['me','av','pa'];
 const bancoCat=cat=>{
-  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!soloEstudioT(c,cat)).map(c=>c.id);
+  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!soloEstudioT(c,cat)&&c.ev!=='creencias').map(c=>c.id);
   return BANCO_T.filter(q=>ids.includes(q.cap));
 };
 for(const cat of CAMPAMENTO){

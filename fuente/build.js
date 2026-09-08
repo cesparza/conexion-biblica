@@ -11,14 +11,15 @@ const { LOGO_TL } = require('./logo.js');
 const { nivelDe } = require('./niveles.js');
 const { MANUAL } = require('./manual.js');
 const MAT = require('./matutina.js');
+const CR = require('./creencias.js');
 
 /* Dos eventos, un solo archivo: al material de Daniel se le suma el de la
    Devoción Matutina. Cada capítulo lleva sus categorías, así que el filtrado
    por categoría separa solo lo que corresponde. */
-const CAPS_ALL = [...CAPS, ...MAT.MAT_CAPS];
-const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO };
-const BANCO_ALL = [...BANCO, ...MAT.MAT_BANCO];
-const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS];
+const CAPS_ALL = [...CAPS, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
+const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
+const BANCO_ALL = [...BANCO, ...MAT.MAT_BANCO, ...CR.CR_BANCO];
+const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
 const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS };
 
@@ -64,6 +65,10 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Conexión Bíblica — Daniel</title>
+<!-- Favicon en linea: sin archivo aparte, el HTML sigue siendo autonomo y
+     abre con doble clic. El azul y el naranja son los de la marca. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231F3864'/><path d='M11 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff'/><path d='M33.5 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff' opacity='.85'/><path d='M32 17.5v31' stroke='%23E8720C' stroke-width='3.4' stroke-linecap='round'/></svg>">
+<meta name="theme-color" content="#1F3864">
 <style>
 ${CSS}
 </style>

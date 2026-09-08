@@ -656,7 +656,10 @@ function verCap(id){
     '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">'+
     '<div><div style="font-size:1.15rem;font-weight:800;color:var(--azul)">'+esc(c.label)+'</div>'+
     '<div style="font-size:.83rem;color:var(--gris)">'+esc(c.sub)+(c.src?' · '+esc(c.src):'')+'</div></div>'+
-    '<span class="pil az">'+(esMatutina()?'Matutina':'RV1995')+'</span></div>'+
+    /* La píldora dice de qué fuente sale el texto del capítulo. En las 28
+       creencias no es la RV1995: la guía «En esto creemos» cita RV1960, y decir
+       lo contrario sería justo el error que este proyecto persigue. */
+    '<span class="pil az">'+(esCreencia(id)?'RV1960':esMatutina()?'Matutina':'RV1995')+'</span></div>'+
     secs.map(s=>'<div class="sec"><h3>'+s.t+'</h3>'+s.h+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
@@ -775,7 +778,8 @@ const falladasDe=()=>{const p=bancoDe();return p.filter(q=>(S.fq[claveQ(q)]||{})
 /* Preguntas disponibles según categoría + alcance elegido. */
 function poolDe(){
   const b=bancoDe();
-  if(alcance==='todo')return b;
+  if(alcance==='todo')return b.filter(q=>!esCreencia(q.cap));
+  if(alcance==='creencias')return b.filter(q=>esCreencia(q.cap));
   if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
   if(alcance==='q1')return b.filter(q=>diaMat(q.cap)>0&&diaMat(q.cap)<=15);
@@ -786,6 +790,12 @@ function poolDe(){
 /* Día del mes de un capítulo de matutina (m01..m31), o 0 si no lo es. */
 const diaMat=id=>/^m\d\d$/.test(id)?Number(id.slice(1)):0;
 const esMatutina=()=>CAT().ev==='Devoción Matutina';
+/* Las 28 creencias son un evento aparte dentro de la misma categoría: el
+   reglamento las pide a padres y consejeros, con su propio examen. Por eso NO
+   entran al alcance «todo»: si entraran, el examen del campamento mezclaría
+   Daniel con doctrina y no correspondería a ninguna de las dos actividades. */
+const esCreencia=id=>/^cr\d\d$/.test(id);
+const hayCreencias=()=>capsDe().some(c=>esCreencia(c.id));
 
 /* Nivel efectivo del examen que se va a armar. */
 const nivelEfectivo=()=>nivel||nivelRecomendado();
@@ -818,10 +828,11 @@ function pintaMenuEx(){
     ?'<option value="q1">Solo la primera quincena (1 al 15)</option>'+
      '<option value="q2">Solo la segunda quincena (16 en adelante)</option>'
     :'<option value="biblia">Solo el libro de Daniel</option>'+
-     '<option value="pr">Solo Profetas y Reyes</option>';
+     '<option value="pr">Solo Profetas y Reyes</option>'+
+     (hayCreencias()?'<option value="creencias">Solo En esto creemos (28 creencias)</option>':'');
   sa.innerHTML='<option value="todo">Todo mi material</option>'+grupos+
     capsDe().map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
-  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr','q1','q2'].includes(prev))alcance='todo';
+  if(!capsDe().some(c=>c.id===prev)&&!['todo','biblia','pr','q1','q2','creencias'].includes(prev))alcance='todo';
   sa.value=alcance;
 
   const ops=opcionesCuantas();
@@ -1385,6 +1396,7 @@ function textoAlcanceImpr(){
   if(alcance==='todo')return CAT().alcance;
   if(alcance==='biblia')return 'Solo el libro de Daniel';
   if(alcance==='pr')return 'Solo Profetas y Reyes';
+  if(alcance==='creencias')return 'En esto creemos — las 28 creencias';
   if(alcance==='q1')return 'Del 1 al 15 de octubre';
   if(alcance==='q2')return 'Del 16 en adelante';
   const c=CAPS.find(x=>x.id===alcance);
@@ -1535,7 +1547,16 @@ function haceEvaluacion(){
   }finally{
     rndEx=Math.random;alcance=prev.a;nivel=prev.n;cuantas=prev.q;
   }
-  if(!sel.length)return;
+  /* Antes, si la receta no daba preguntas para esta participante, el botón no
+     hacía nada y parecía que la app estuviera trabada. Pasa cuando el director
+     abre una evaluación de un material que esta categoría no tiene cargado. */
+  if(!sel.length){
+    const d=document.getElementById('cb-eval');
+    if(d)d.innerHTML='<div class="card eval"><div class="ev-t">'+esc(r.titulo)+'</div>'+
+      '<p class="nota">Esta evaluación es de un material que <strong>tu categoría no '+
+      'tiene</strong>, así que no se puede armar. Avísale al director.</p></div>';
+    return;
+  }
   evalActual=r;
   modo='evaluacion';prueba=sel;resp={};entregado=false;ultimoRes=null;
   seg=segundosPara(prueba.length);
@@ -2083,6 +2104,16 @@ async function pintaPanel(){
     'maxlength="60" oninput="revisaAbrir()">'+
     '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem" '+
     'title="Cuántas preguntas"></div>'+
+    /* El reglamento tiene tres actividades distintas y cada una es un examen
+       aparte. Sin este selector el panel solo podía abrir la de Daniel. */
+    '<div class="ses-fila"><label class="pan-lb">Qué material'+
+    '<select id="pan-eval-al" onchange="pintaNotaAlcance()">'+
+      '<option value="todo">El material del campamento (Daniel y P&amp;R)</option>'+
+      '<option value="creencias">En esto creemos — las 28 creencias</option>'+
+      '<option value="biblia">Solo el libro de Daniel</option>'+
+      '<option value="pr">Solo Profetas y Reyes</option>'+
+    '</select></label></div>'+
+    '<p class="nota" id="pan-nota-al">'+NOTA_ALCANCE.todo+'</p>'+
     '<div class="ses-fila"><label class="pan-lb">Dificultad'+
     '<select id="pan-eval-nv" onchange="pintaNotaNivel()">'+
       '<option value="0">La de cada categoría (recomendado)</option>'+
@@ -2117,6 +2148,24 @@ async function pintaPanel(){
    1 es dato directo, 2 agrega verdadero/falso y redacciones, 3 agrega completar
    el versículo y las diferencias entre versiones. Un nivel incluye los de
    abajo, así que subir agrega preguntas, no las reemplaza. */
+/* Un texto por material. El de las creencias avisa a quién le toca: el
+   reglamento las pide a padres, consejeros y acompañantes, y solo esas dos
+   categorías tienen ese material cargado. */
+const NOTA_ALCANCE={
+  todo:'Daniel 1, 3 y 6 más los capítulos 39, 41 y 44 de Profetas y Reyes. Es el examen del campamento.',
+  creencias:'Las 28 creencias fundamentales. Es OTRA actividad del reglamento, para padres, '+
+    'consejeros y acompañantes. Solo «Padres y consejeros» y «Guías Mayores» tienen este material: '+
+    'si se la abres a una categoría de niños, a ellas no les va a salir nada.',
+  biblia:'Solo el libro de Daniel, sin Profetas y Reyes.',
+  pr:'Solo los capítulos de Profetas y Reyes que le tocan a la categoría.'
+};
+
+function pintaNotaAlcance(){
+  const s=document.getElementById('pan-eval-al'),p=document.getElementById('pan-nota-al');
+  if(!s||!p)return;
+  p.textContent=NOTA_ALCANCE[s.value]||'';
+}
+
 const NOTA_NIVEL={
   0:'Cada grupo recibe la dificultad máxima de su categoría. Todas las de un mismo grupo hacen '+
     'exactamente el mismo examen y no depende del desempeño de cada una. Es la opción que hace '+
@@ -2156,7 +2205,8 @@ async function abreEvaluacion(){
     const cats=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
       .filter(function(c){return c.checked;}).map(function(c){return c.value;});
     await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
-      titulo:t?t.value:'',cuantas:n?Number(n.value):15,alcance:'todo',
+      titulo:t?t.value:'',cuantas:n?Number(n.value):15,
+      alcance:(document.getElementById('pan-eval-al')||{}).value||'todo',
       nivel:Number((document.getElementById('pan-eval-nv')||{}).value||0),
       categorias:cats,huella:huellaBanco()})});
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();

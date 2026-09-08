@@ -58,9 +58,14 @@ ok(A.tarjetasDe().length>=102,'Aventureros: '+A.tarjetasDe().length+' tarjetas (
 ok(!A.capsDe().some(c=>['d4','d5'].includes(c.id)),'Aventureros NO ve Daniel 4 ni 5');
 ok(!A.modsDe().some(m=>['m-reyes','m-profetico'].includes(m.id)),'Aventureros NO ve módulos avanzados');
 
+/* Las 28 creencias son otro evento dentro de la misma categoría (ev:'creencias')
+   y no entran al alcance del campamento. Estas cuentas son del campamento, así
+   que se filtran; si se contaran juntas, la prueba dejaría de decir lo que dice. */
+const capsCampamento=()=>A.capsDe().filter(c=>c.ev!=='creencias');
+
 // Guías Mayores
 A.ponCat('gm');
-ok(A.capsDe().length===12,'Guías Mayores ve 12 capítulos');
+ok(capsCampamento().length===12,'Guías Mayores ve 12 capítulos del campamento');
 ok(A.modsDe().length===11,'Guías Mayores ve 11 módulos');
 ok(A.tarjetasDe().length>=126,'Guías Mayores: '+A.tarjetasDe().length+' tarjetas (piso 126)');
 
@@ -210,7 +215,7 @@ const ESPERADO={
 };
 for(const [k,e] of Object.entries(ESPERADO)){
   A.ponCat(k);
-  const labels=A.capsDe().map(c=>c.label);
+  const labels=A.capsDe().filter(c=>c.ev!=='creencias').map(c=>c.label);
   ok(labels.length===e.caps.length && e.caps.every(l=>labels.includes(l)),
     `Categoría ${k}: alcance exacto del reglamento (${labels.join(', ')})`);
   ok(!labels.some(l=>['Daniel 4','Daniel 5','P&R 40','P&R 42','P&R 43'].includes(l)),
@@ -232,7 +237,7 @@ ok(A.poolNivel().some(q=>q.t==='fill'),'Padres: sí incluye completar el versíc
 
 // Guías Mayores conserva el alcance ampliado
 A.ponCat('gm');
-ok(A.capsDe().length===12,'Guías Mayores conserva los 12 capítulos del alcance ampliado');
+ok(capsCampamento().length===12,'Guías Mayores conserva los 12 capítulos del alcance ampliado');
 
 // Los títulos de P&R que se muestran en las tarjetas son los verificados
 const TITULOS={pr39:'En la corte de Babilonia',pr40:'El sueño de Nabucodonosor',
@@ -496,6 +501,44 @@ ok(typeof L.huellaBanco()==='string'&&L.huellaBanco().length>3,'La huella es un 
 /* Ya no hay link: la receta nunca sale del servidor hacia una URL, así que no
    hay nada que un tercero pueda leer del portapapeles ni de WhatsApp. */
 ok(typeof L.escribeReceta==='undefined','El armado por link ya no existe en la app');
+
+/* ───────── EN ESTO CREEMOS, el tercer evento ─────────
+   MECANISMO: las 28 creencias son capítulos como cualquier otro, pero llevan
+   `ev:'creencias'` y poolDe() las saca del alcance «todo». Así el examen del
+   campamento sigue siendo Daniel y P&R, y las creencias son un examen aparte
+   que el director abre escogiendo ese material en el panel.
+   Si esta separación se rompe, el examen del campamento empieza a preguntar
+   doctrina y nadie se da cuenta hasta que la niña lo está contestando. */
+A.ponCat('pa'); A.ponNivel(3); A.ponCuantas(60);
+A.ponAlcance('todo');
+ok(A.poolDe().length>0 && A.poolDe().every(q=>!/^cr\d\d$/.test(q.cap)),
+  'Padres: el alcance «todo» NO trae ninguna de las 28 creencias');
+A.ponAlcance('creencias');
+const poolCr=A.poolDe();
+ok(poolCr.length>0 && poolCr.every(q=>/^cr\d\d$/.test(q.cap)),
+  'Padres: el alcance «creencias» trae SOLO creencias ('+poolCr.length+' preguntas)');
+ok(new Set(poolCr.map(q=>q.cap)).size===28,'Están las 28 creencias, no menos');
+A.ponCat('gm'); A.ponAlcance('creencias');
+ok(A.poolDe().length===poolCr.length,'Guías Mayores tiene el mismo material de creencias');
+for(const cat of ['me','av']){
+  A.ponCat(cat); A.ponAlcance('todo');
+  ok(!A.capsDe().some(c=>/^cr\d\d$/.test(c.id)),
+    'Categoría '+cat+': las creencias no le aparecen ni para estudiar');
+}
+A.ponCat('av'); A.ponAlcance('todo'); A.ponNivel(0); A.ponCuantas(15);
+
+/* El material de estudio de cada creencia trae la declaración oficial y los
+   textos clave: sin eso, la tarjeta y la pregunta no tienen de dónde salir. */
+const CR=require(path.join(RAIZ,'fuente','creencias.js'));
+ok(CR.CR_CAPS.length===28,'Las 28 creencias están cargadas');
+ok(CR.CR_CAPS.every(c=>c.sub&&c.ev==='creencias'&&c.cats.includes('pa')),
+  'Cada creencia tiene título, evento propio y le toca a padres y consejeros');
+ok(Object.keys(CR.CR_CONTENIDO).length===28 &&
+   Object.values(CR.CR_CONTENIDO).every(v=>/Declaración oficial/.test(v[0].h)&&/Textos clave/.test(v[1].h)),
+  'Cada creencia trae su declaración oficial y sus textos clave');
+ok(CR.CR_BANCO.length>=84 && CR.CR_BANCO.every(q=>q.o&&new Set(q.o).size===4),
+  'El banco de creencias tiene '+CR.CR_BANCO.length+' preguntas y ninguna repite opción');
+ok(CR.CR_TARJETAS.length>=56,'Las creencias traen '+CR.CR_TARJETAS.length+' tarjetas');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);
