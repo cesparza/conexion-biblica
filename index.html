@@ -1762,7 +1762,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '89a9a240547a';
+const VERSION_APP = 'a6b523ecb943';
 
 const CAPS = [
  {
@@ -14492,7 +14492,7 @@ const MANUAL = [
    },
    {
     "t": "Cómo agregar la segunda",
-    "h": "<p>Toca <strong>tu nombre en la barra azul de arriba</strong> y después\n    <strong>+ Agregar</strong>. Escribes el mismo nombre y escoges la otra\n    actividad y su categoría.</p>\n    <p>Se hace así, y no en los tres pasos del principio, porque la mayoría\n    está en una sola actividad: cobrarle a todos una pantalla más el primer día\n    para algo que hace una minoría es mal negocio.</p>"
+    "h": "<p><strong>No hay que hacer nada especial.</strong> Toca tu nombre en la\n    barra azul y escoge una categoría de la otra actividad: la app te lleva a tu\n    ficha de esa actividad, o te la crea con tu mismo nombre.</p>\n    <p>También puedes hacerlo a mano con <strong>+ Agregar</strong>, que sirve\n    para meter a otra persona en el mismo teléfono.</p>\n    <p>Se hace así, y no en los tres pasos del principio, porque la mayoría\n    está en una sola actividad: cobrarle a todos una pantalla más el primer día\n    para algo que hace una minoría es mal negocio.</p>"
    },
    {
     "t": "Cambiar de una a otra no borra nada",
@@ -16060,7 +16060,42 @@ function ir(id){
 }
 
 function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();pintaYo();}
+/* ───────── UNA FICHA, UNA ACTIVIDAD: invariante, no recomendación ─────────
+   MECANISMO
+   `racha`, `insignias` y `examenes` son campos de la FICHA. Eso da el
+   comportamiento correcto mientras cada ficha pertenezca a una sola actividad,
+   que es como la app se usa. Pero `ponCat` permitía saltar de `av` a `ec1`
+   DENTRO de la misma ficha, y entonces esos tres campos se arrastraban.
+
+   MEDIDO, no supuesto: con racha 7, dos insignias y tres exámenes de Conexión
+   Bíblica, al pasar a las creencias la ficha llegaba con la racha, las
+   insignias y los tres exámenes puestos, y `revisaInsignias` le daba
+   «Persistente» en creencias por exámenes que había hecho en Daniel.
+
+   El manual lo tapaba pidiéndole al usuario que agregara otro participante a
+   mano. **Una nota que le pide al usuario mantener un invariante no es un
+   invariante.**
+
+   DECISIÓN
+   Cambiar a una categoría de OTRA actividad ya no muta la ficha: busca la ficha
+   de esa actividad con el mismo nombre y se pasa a ella, o la crea. Es
+   exactamente lo que decía la nota, hecho por la app. El selector sigue
+   mostrando las tres actividades, que es lo que las hace descubribles.
+
+   Sin migración: usa `DB.alumnos`, que ya existía. */
+/** Una ficha SIN NADA que proteger: ni progreso, ni exámenes, ni racha, ni
+ *  insignias, ni errores. El nombre no cuenta, porque escribirlo no es haber
+ *  estudiado. Solo cuando hay algo guardado vale la pena partir la ficha. */
+const sinProgreso=al=>!al||(
+  !Object.values(al.prog||{}).some(v=>v>0) &&
+  !(al.examenes||[]).length &&
+  !(al.insignias||[]).length &&
+  !(al.racha>0) &&
+  !Object.keys(al.fq||{}).length);
+
 function ponCat(c){
+  if(!CATS[c])return;
+  if(ACT_DE(c)!==ACT_DE(S.cat)&&pasaAActividad(c))return;
   S.cat=c;guardar();
   marcaCat();
   pintaInicio();pintaCaps();pintaYo();
@@ -16071,6 +16106,43 @@ function ponCat(c){
   try{clearInterval(reloj);}catch(e){}
   cierraHoja();
   ir('inicio');
+}
+
+/**
+ * Lleva a la ficha que le corresponde a la categoría `c`, que es de otra
+ * actividad. Devuelve `true` si se encargó del cambio, y `false` si `ponCat`
+ * debe seguir y escribir la categoría en la ficha actual.
+ *
+ * El orden de los tres casos importa:
+ * 1. Si ya existe una ficha de esa actividad con el mismo nombre, se pasa a
+ *    ella. Va PRIMERO, incluso si la ficha actual está vacía: si no, la ficha
+ *    vacía se queda con la actividad y la que tiene el progreso queda huérfana.
+ * 2. Si la ficha actual no tiene nada que proteger, se le escribe la categoría
+ *    encima. Es el caso de «+ Agregar», que crea la ficha en `av` por defecto;
+ *    sin esto quedaban dos fichas, una vacía en Conexión Bíblica y la buena.
+ * 3. Si hay progreso y no hay ficha destino, se crea. En el tope de fichas no
+ *    se crea ni se muta: se avisa y no se pierde nada.
+ */
+function pasaAActividad(c){
+  const nom=(S.nombre||'').trim().toLowerCase();
+  const act=ACT_DE(c);
+  const mia=alumnos().find(([,al])=>ACT_DE(al.cat)===act&&(al.nombre||'').trim().toLowerCase()===nom);
+  if(mia){
+    /* Se respeta SU categoría, no la que se acabó de tocar: su progreso es de
+       esa. Quien quiera cambiarla, ya estando ahí, la cambia dentro. */
+    cambiaAlumno(mia[0]);
+    return true;
+  }
+  if(sinProgreso(S))return false;
+  if(alumnos().length>=MAX_ALUMNOS){
+    try{alert('Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una antes de agregar otra.');}catch(e){}
+    return true;
+  }
+  const id=nuevoId();
+  DB.alumnos[id]=normalizar({nombre:S.nombre,cat:c});
+  guardar();
+  cambiaAlumno(id);
+  return true;
 }
 
 /* Selector de participantes. Cada uno con su nombre y su categoría, para
@@ -16270,9 +16342,10 @@ function abreYo(){
       '<div class="cat-sel" id="cat-sel"></div>'+
       '<p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y '+
       'define qué capítulos ves, de dónde salen las preguntas y hasta qué '+
-      'dificultad llegan. Si estudias dos actividades, no cambies de categoría '+
-      'aquí: agrega <strong>otro participante</strong> con tu mismo nombre, así '+
-      'cada actividad guarda su progreso aparte.</p>'+
+      'dificultad llegan. Si tocas una categoría de <strong>otra actividad</strong>, '+
+      'la app te lleva a tu ficha de esa actividad, o te la crea con tu mismo '+
+      'nombre: así cada actividad guarda su progreso, su racha y sus insignias '+
+      'aparte, y nada se revuelve.</p>'+
       '<p class="nota">En Conexión Bíblica el reglamento del campamento pide '+
       '<strong>Daniel 1, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y '+
       'Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro '+
@@ -17429,7 +17502,10 @@ function revisaInsignias(pct){
   if(pct===100)a('Perfecto');
   if(pct>=93)a('Casi perfecto');
   if(pct>=75)a('Estudioso');
-  if(S.examenes.length>=3)a('Persistente');
+  /* Filtrado por categoría: «tres exámenes» quiere decir tres de ESTE material.
+     Sin el filtro, una ficha que hubiera cambiado de actividad estrenaba la
+     insignia con exámenes de la otra. */
+  if(S.examenes.filter(e=>e.cat===S.cat).length>=3)a('Persistente');
   if(S.racha>=3)a('Racha de fuego');
   if([...capsDe(),...modsDe()].every(x=>S.prog[x.id]>=100))a('Lector completo');
 }

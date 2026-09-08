@@ -1,40 +1,10 @@
-// Simula el recorrido de un usuario contra el JS real del index.html
-const fs=require('fs'),path=require('path');
-const RAIZ=path.join(__dirname,'..');
-const html=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
-const js=html.match(/<script>([\s\S]*)<\/script>/)[1];
+// Simula el recorrido de un usuario contra el JS real del index.html.
+// El stub del navegador vive en tests/entorno.js, compartido por las tres suites.
+const {montar,RAIZ}=require('./entorno.js');
+const path=require('path');
 
-let store={};
-/* `attrs` guarda lo que el codigo real pone con setAttribute (por ejemplo el
-   aria-label de la ficha de identidad), para poder afirmar sobre el. */
-const nodo=()=>({classList:{add(){},remove(){},toggle(){}},value:'',textContent:'',
-  innerHTML:'',style:{},outerHTML:'',attrs:{},
-  setAttribute(k,v){this.attrs[k]=String(v);},getAttribute(k){return this.attrs[k];}});
-/* El stub imita lo mínimo del navegador que usa la app. querySelectorAll
-   devuelve un arreglo de verdad porque el código indexa el resultado
-   (los botones del nav), no solo lo recorre. */
-const stub=`
-let localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>{store[k]=v},removeItem:k=>{delete store[k]}};
-/* getElementById devuelve siempre el MISMO nodo por id. Antes devolvía uno
-   nuevo cada vez, así que un valor escrito en un campo no se podía volver a
-   leer y el recorrido de la bienvenida no era comprobable. */
-let cacheEl={};
-let document={
-  body:nodo(),
-  querySelectorAll:()=>[nodo(),nodo(),nodo(),nodo(),nodo()],
-  getElementById:id=>(cacheEl[id]=cacheEl[id]||nodo()),
-  querySelector:()=>nodo(),
-};
-let window={scrollTo(){}};
-let setInterval=()=>0, clearInterval=()=>{}, confirm=()=>true;
-
-let navigator={};
-let Blob=function(){}, URL={createObjectURL:()=>'blob:x'};
-let btoa=s=>Buffer.from(s,'binary').toString('base64');
-let atob=s=>Buffer.from(s,'base64').toString('binary');
-`;
-const RET=`
-return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
+/* Lo que esta suite necesita de la app. Es su superficie, no duplicacion. */
+const RET=`S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
         poolDe, opcionesCuantas, segundosPara,
@@ -53,20 +23,19 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
         puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
         abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
-        el:id=>document.getElementById(id)};`;
-const fn=new Function('store','nodo','Buffer',stub+js+RET);
-const A=fn(store,nodo,Buffer);
+        pasaAActividad, MAX_ALUMNOS, borraAlumno,
+        el:id=>document.getElementById(id)`;
 
-/* La app se monta OTRA VEZ con un sintetizador de mentiras. Hacen falta las
-   dos: el montaje de arriba prueba que puedeHablar() es una guarda real sin
-   navegador, y este prueba los bloques CON boton de voz, que es la version
-   que de verdad usa la nina. Darle voz al stub general rompia la primera. */
+let store={};
+const A=montar(RET,{store});
+
+/* La app se monta OTRA VEZ con un sintetizador de mentiras, para probar la voz
+   sin depender de que el entorno traiga speechSynthesis. */
 const VOZ=`
 let speechSynthesis={speak(){},cancel(){},speaking:false,pending:false};
 let SpeechSynthesisUtterance=function(txt){this.text=txt;};
 `;
-const fnVoz=new Function('store','nodo','Buffer',stub+VOZ+js+RET);
-const AV=fnVoz({},nodo,Buffer);
+const AV=montar(RET,{antes:VOZ});
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 
@@ -313,7 +282,7 @@ ok(Object.keys(A.normalizarDB(muchos).alumnos).length<=12,'normalizarDB no pasa 
 
 /* Arranque limpio: un solo participante, sin nombre y sin progreso. */
 store={};
-const B=fn(store,nodo,Buffer);
+const B=montar(RET,{store});
 ok(B.esNuevo(),'Un usuario recién llegado se detecta como nuevo');
 
 /* Sin nombre no avanza: el nombre es lo que separa una ficha de otra. */
@@ -352,14 +321,14 @@ ok(Object.keys(B.CATS).every(k=>B.ACTIVIDADES[B.CATS[k].act]),
   'Toda categoría declara una actividad que existe');
 
 store={};
-const C=fn(store,nodo,Buffer);
+const C=montar(RET,{store});
 C.el('bv-nombre').value='Camilo';
 C.bvSigue(); C.bvActividad('dm'); C.bvCategoria('dm1');
 ok(C.S().cat==='dm1','Matutina + 4 a 6 años queda en Matutina menores');
 ok(C.capsDe().every(c=>/^m\d\d$/.test(c.id)),'Y solo ve los días de la matutina');
 
 store={};
-const D=fn(store,nodo,Buffer);
+const D=montar(RET,{store});
 D.el('bv-nombre').value='Ana';
 D.bvSigue(); D.bvActividad('dm'); D.bvCategoria('dm2');
 ok(D.S().cat==='dm2','Matutina + 7 a 9 años queda en Matutina Aventureros');
@@ -367,7 +336,7 @@ ok(D.S().cat==='dm2','Matutina + 7 a 9 años queda en Matutina Aventureros');
 /* Las 28 creencias, que antes no cabían en el modelo y se resolvían con un
    interruptor aparte, ahora son una actividad con sus dos categorías. */
 store={};
-const F2=fn(store,nodo,Buffer);
+const F2=montar(RET,{store});
 F2.el('bv-nombre').value='Papá';
 F2.bvSigue(); F2.bvActividad('ec'); F2.bvCategoria('ec1');
 ok(F2.S().cat==='ec1','En esto creemos + examen escrito queda en ec1');
@@ -381,7 +350,7 @@ ok(F2.poolDe().length===84&&F2.poolDe().every(q=>/^cr\d\d$/.test(q.cap)),
 /* Al revés: una categoría de Conexión Bíblica no ve ni una creencia. Esta es
    la garantía que antes dependía de un filtro a mano en poolDe(). */
 store={};
-const G=fn(store,nodo,Buffer);
+const G=montar(RET,{store});
 G.el('bv-nombre').value='Guía';
 G.bvSigue(); G.bvActividad('cb'); G.bvCategoria('gm');
 ok(G.S().cat==='gm','Guía Mayor queda en su categoría');
@@ -396,7 +365,7 @@ ok(G.poolDe().length>0&&G.poolDe().every(q=>!/^cr\d\d$/.test(q.cap)),
    app ya tenía para la matutina: cada ficha lleva su propio progreso, racha e
    insignias, así que las cuentas quedan separadas por construcción. */
 store={};
-const H=fn(store,nodo,Buffer);
+const H=montar(RET,{store});
 H.el('bv-nombre').value='María Camila';
 H.bvSigue(); H.bvActividad('cb'); H.bvCategoria('av');
 H.agregaAlumno(); H.ponNombre('María Camila'); H.ponCat('dm2');
@@ -411,7 +380,7 @@ ok((fichaCb[1].prog['m01']||0)===0,'El progreso de una actividad no aparece en l
 
 /* Un usuario que ya tiene progreso nunca debe volver a ver la bienvenida. */
 store={};
-const I=fn(store,nodo,Buffer);
+const I=montar(RET,{store});
 I.ponNombre('Con progreso');
 ok(!I.esNuevo(),'Con nombre guardado ya no se muestra la bienvenida');
 
@@ -421,7 +390,7 @@ ok(!I.esNuevo(),'Con nombre guardado ya no se muestra la bienvenida');
    el resumen no debe poder escribir nada, y la ficha completa no debe perder
    nada al ir y volver. */
 store={};
-const J=fn(store,nodo,Buffer);
+const J=montar(RET,{store});
 J.ponNombre('Isabella');
 J.ponCat('av');
 J.S().prog.d1=100; J.S().prog.d2=100; J.S().racha=4;
@@ -475,7 +444,7 @@ ok(leidoP&&leidoP.n==='Isabella','Un código con saltos de línea y espacios se 
 
 /* Tildes y eñes: si el nombre se rompe al codificar, el boletín sale mal. */
 store={};
-const K=fn(store,nodo,Buffer);
+const K=montar(RET,{store});
 K.ponNombre('María Camila Ñuñez');
 K.ponCat('dm2');
 const leidoK=K.leeCodigo(K.codigoResumen());
@@ -488,7 +457,7 @@ ok(leidoK.c==='dm2'&&leidoK.ce==='Devoción Matutina','El resumen dice de qué e
    el MISMO examen a partir de la receta que manda el servidor. Si eso se rompe,
    el director compara notas de exámenes distintos sin saberlo. */
 store={};
-const L=fn(store,nodo,Buffer);
+const L=montar(RET,{store});
 L.ponNombre('Director'); L.ponCat('av');
 
 /* La receta que hoy llega del servidor: alcance, cuántas, nivel y semilla.
@@ -510,7 +479,7 @@ const uno=armaCon(L,receta,'av');
 /* Segundo «aparato»: almacenamiento nuevo, otro nombre y con historial propio,
    para que nada del estado local influya. */
 store={};
-const M2=fn(store,nodo,Buffer);
+const M2=montar(RET,{store});
 M2.ponNombre('María');
 M2.S().examenes=[{pts:24,total:25,cat:'av',fecha:'x',modo:'normal',nv:3}];
 M2.S().prog.d1=100;
@@ -535,10 +504,10 @@ ok(nivBajo!==nivAlto,'El nivel de la receta cambia el examen, no lo decide el ap
    exámenes distintos creyendo que eran el mismo. El arreglo es usar el techo de
    la categoría, que es igual para todas. */
 store={};
-const N1=fn(store,nodo,Buffer);
+const N1=montar(RET,{store});
 N1.ponNombre('Sin historial');
 store={};
-const N2=fn(store,nodo,Buffer);
+const N2=montar(RET,{store});
 N2.ponNombre('Con historial');
 /* A esta le va bien: sin el arreglo, nivelRecomendado() la subiría de nivel. */
 N2.S().examenes=[{pts:15,total:15,cat:'av',fecha:'x',modo:'normal',nv:3},
@@ -974,7 +943,7 @@ ok(true,'pintaInicio() no revienta con la hoja cerrada');
    categoria. Se salio vacia la ficha en un render a 390px, con las suites en
    verde, porque ninguna cubria el camino completo de la bienvenida. */
 store={};
-const Y=fn(store,nodo,Buffer);
+const Y=montar(RET,{store});
 Y.el('bv-nombre').value='María Camila';
 Y.bvSigue();
 Y.bvActividad('cb');
@@ -983,6 +952,76 @@ ok(/María Camila/.test(Y.el('nav-yo').innerHTML),
   'Al salir de la bienvenida la ficha de la barra ya dice el nombre');
 ok(/Padres y consejeros/.test(Y.el('nav-yo').innerHTML),
   '  y la categoria que se acabo de escoger');
+
+
+/* ───────── UNA FICHA, UNA ACTIVIDAD: invariante, no recomendacion ─────────
+   `racha`, `insignias` y `examenes` son campos de la FICHA, y eso funciona
+   mientras cada ficha pertenezca a una sola actividad. `ponCat` permitia saltar
+   de `av` a `ec1` dentro de la misma ficha y los tres campos se arrastraban:
+   medido, una ficha con racha 7, dos insignias y tres examenes de Conexion
+   Biblica llegaba a las creencias con todo puesto, y se ganaba «Persistente»
+   con examenes de la otra actividad. El manual lo tapaba pidiendole al usuario
+   que creara la segunda ficha a mano. */
+store={};
+const Z=montar(RET,{store});
+Z.ponNombre('Camilo');
+Z.ponCat('av');
+Z.S().racha=7;
+Z.S().insignias=['Racha de fuego','Lector completo'];
+Z.S().examenes=[{cat:'av',pts:10,total:10},{cat:'av',pts:9,total:10},{cat:'av',pts:8,total:10}];
+ok(Z.alumnos().length===1,'Arranca con una sola ficha');
+
+Z.ponCat('ec1');
+ok(Z.alumnos().length===2,'Tocar una categoria de otra actividad crea la ficha de esa actividad');
+ok(Z.S().cat==='ec1','  y deja activa la nueva');
+ok(Z.S().nombre==='Camilo','  con el mismo nombre');
+ok(Z.S().racha===0,'  sin arrastrar la racha de la otra actividad');
+ok(Z.S().insignias.length===0,'  sin arrastrar las insignias');
+ok(Z.S().examenes.length===0,'  sin arrastrar los examenes');
+Z.revisaInsignias(50);
+ok(!Z.S().insignias.includes('Persistente'),
+  'No se gana «Persistente» en una actividad con examenes hechos en la otra');
+
+/* La ficha de Conexion Biblica sigue intacta: no se movio nada de ella. */
+const cb=Z.alumnos().find(([,al])=>Z.ACT_DE(al.cat)==='cb')[1];
+ok(cb.racha===7&&cb.insignias.length===2&&cb.examenes.length===3,
+  'La ficha de la otra actividad queda intacta');
+
+/* Volver no crea una tercera: se pasa a la que ya existe, con SU categoria. */
+Z.ponCat('av');
+ok(Z.alumnos().length===2,'Volver a la primera actividad no crea otra ficha');
+ok(Z.S().racha===7&&Z.S().examenes.length===3,'  y recupera su progreso');
+
+/* Y dentro de la MISMA actividad cambiar de categoria sigue siendo cambiar de
+   categoria, sin crear fichas. */
+Z.ponCat('pa');
+ok(Z.alumnos().length===2&&Z.S().cat==='pa',
+  'Cambiar de categoria dentro de la misma actividad no crea ficha');
+ok(Z.S().racha===7,'  y no reinicia la racha, que es de la persona en esa actividad');
+
+/* En el tope de fichas no se pierde nada ni se muta la ficha actual. */
+store={};
+const W=montar(RET,{store});
+W.ponNombre('Tope');
+W.ponCat('av');
+W.avanza('d1',100);            // hay progreso: la ficha ya vale partirla
+for(let i=0;i<W.MAX_ALUMNOS-1;i++)W.agregaAlumno();
+const idTope=W.alumnos().find(([,al])=>al.nombre==='Tope')[0];
+W.cambiaAlumno(idTope);
+const antesCat=W.S().cat, antesN=W.alumnos().length;
+ok(antesN===W.MAX_ALUMNOS,'El aparato queda en el tope de fichas ('+antesN+')');
+W.ponCat('ec1');
+ok(W.alumnos().length===antesN,'En el tope de fichas no se crea una mas');
+ok(W.S().cat===antesCat,'  y la ficha con progreso NO cambia de actividad a la fuerza');
+ok((W.S().prog.d1||0)===100,'  y su progreso sigue ahi');
+
+/* Una ficha VACIA si se deja cambiar de actividad en el sitio, aun en el tope:
+   no hay nada que proteger, y es el caso de «+ Agregar». */
+const idVacia=W.alumnos().find(([,al])=>al.nombre!=='Tope')[0];
+W.cambiaAlumno(idVacia);
+W.ponCat('ec1');
+ok(W.S().cat==='ec1'&&W.alumnos().length===antesN,
+  'Una ficha sin progreso cambia de actividad en el sitio, sin crear otra');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

@@ -6,36 +6,12 @@
    no muestra las respuestas, y la revisión solo se abre con la clave del
    director. Cada una se puede romper con un cambio inocente en otra parte, y
    las cuatro son invisibles a ojo. */
-const fs=require('fs'),path=require('path');
-const RAIZ=path.join(__dirname,'..');
-const html=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
-const js=html.match(/<script>([\s\S]*)<\/script>/)[1];
+// El stub del navegador vive en tests/entorno.js, compartido por las tres suites.
+const {montar,HTML:html}=require('./entorno.js');
 
 let store={},sesion={};
-const nodo=()=>({classList:{add(){},remove(){},toggle(){}},value:'',textContent:'',
-  innerHTML:'',style:{},outerHTML:'',focus(){},attrs:{},
-  setAttribute(k,v){this.attrs[k]=String(v);},getAttribute(k){return this.attrs[k];}});
-const stub=`
-let localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>{store[k]=v},removeItem:k=>{delete store[k]}};
-let sessionStorage={getItem:k=>sesion[k]||null,setItem:(k,v)=>{sesion[k]=v},removeItem:k=>{delete sesion[k]}};
-let cacheEl={};
-let document={
-  body:nodo(),
-  querySelectorAll:()=>[nodo(),nodo(),nodo(),nodo(),nodo()],
-  getElementById:id=>(cacheEl[id]=cacheEl[id]||nodo()),
-  querySelector:()=>nodo(),
-};
-let window={scrollTo(){}};
-let setInterval=()=>0, clearInterval=()=>{}, confirm=()=>true;
-let navigator={};
-let history={replaceState(){}};
-let location={href:'https://conexion-biblica.pages.dev/',hash:''};
-let Blob=function(){}, URL={createObjectURL:()=>'blob:x'};
-let btoa=s=>Buffer.from(s,'binary').toString('base64');
-let atob=s=>Buffer.from(s,'base64').toString('binary');
-`;
-const fn=new Function('store','sesion','nodo','Buffer',stub+js+`
-return {S:()=>S, ponCat, normalizar, guardar, huellaBanco,
+/* Lo que esta suite necesita de la app. Es su superficie, no duplicacion. */
+const A=montar(`S:()=>S, ponCat, normalizar, guardar, huellaBanco,
         revelaRespuestas, activaDirector, salirDirector,
         entregar, iniciar, reinicia, prng, armar, claveQ,
         ponModo:m=>{modo=m}, modoActual:()=>modo,
@@ -49,8 +25,7 @@ return {S:()=>S, ponCat, normalizar, guardar, huellaBanco,
         ponEval:e=>{evalPend=e;evalHecha=false}, evalPend:()=>evalPend,
         haceEvaluacion, evalActual:()=>evalActual,
         DB:()=>DB,
-        el:id=>document.getElementById(id)};`);
-const A=fn(store,sesion,nodo,Buffer);
+        el:id=>document.getElementById(id)`,{store,sesion});
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 

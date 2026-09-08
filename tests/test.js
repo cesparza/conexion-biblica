@@ -1,6 +1,6 @@
 const fs=require('fs');
 const path=require('path');
-const RAIZ=path.join(__dirname,'..');
+const {montar,RAIZ,FUENTE,HTML:html,JS:js}=require('./entorno.js');
 const {CAPS,CONTENIDO}=require(path.join(RAIZ,'fuente','contenido.js'));
 const {BANCO}=require(path.join(RAIZ,'fuente','preguntas.js'));
 const {MODULOS,CONT_MODULOS}=require(path.join(RAIZ,'fuente','modulos.js'));
@@ -52,17 +52,10 @@ ok(igual('Hijo de Dios','hijo  de  dios'),'Acepta espacios múltiples');
 ok(!igual('cuatro','tres'),'Rechaza respuesta incorrecta');
 
 // 5. normalizar() con estados dañados
-const html=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
-const js=html.match(/<script>([\s\S]*)<\/script>/)[1];
-const stub=`
-let localStorage={getItem:()=>null,setItem:()=>{},removeItem:()=>{}};
-let document={querySelectorAll:()=>({forEach:()=>{}}),getElementById:()=>({classList:{toggle:()=>{},add:()=>{},remove:()=>{}},value:'',textContent:'',innerHTML:'',style:{}}),querySelector:()=>null};
-let window={scrollTo:()=>{}};
-let setInterval=()=>0, clearInterval=()=>{}, confirm=()=>false;
-`;
-const fn=new Function(stub+js+`
-return {normalizar, esc};`);
-const {normalizar,esc}=fn();
+/* El stub del navegador y la lectura del index.html vienen de tests/entorno.js.
+   Esta era la cuarta copia del stub: una mini, distinta de las otras tres, que
+   nadie volvió a mirar. */
+const {normalizar,esc}=montar('normalizar, esc');
 const casos=[null,undefined,{},'texto',{prog:'roto'},{cat:'xx',racha:-5},{examenes:'no es array'},{prog:{d1:999,d2:-3}},{nombre:'x'.repeat(500)}];
 let sano=true;
 for(const c of casos){
@@ -119,7 +112,6 @@ ok(BANCO.length>=130,`Banco total: ${BANCO.length} preguntas`);
 
 // 12. Arquitectura: la app vive en archivos reales y se puede chequear
 const { execFileSync } = require('child_process');
-const FUENTE = f => path.join(RAIZ, 'fuente', f);
 let sintaxis = true;
 try { execFileSync(process.execPath, ['--check', FUENTE('app.js')], { stdio: 'pipe' }); }
 catch (e) { sintaxis = false; console.log('   ' + String(e.stderr || e.message).split('\n')[0]); }
@@ -132,9 +124,14 @@ for (const f of ['estilos.css', 'cuerpo.html', 'app.js']) {
 
 // El HTML generado incluye de verdad los tres pedazos
 const cssF = fs.readFileSync(FUENTE('estilos.css'), 'utf8').trim().split('\n')[0];
-const appF = fs.readFileSync(FUENTE('app.js'), 'utf8');
+/* UNA sola lectura de fuente/app.js para toda la suite. Habia siete, con siete
+   nombres distintos (APP, APP, APP, APP, APP, APP, APP), y eso
+   invitaba a agregar la octava en vez de reusar. `APP` es la fuente; `js` es el
+   JS extraido del index.html desplegado. Para afirmar sobre lo que se SIRVE,
+   preferir `js`. */
+const APP = fs.readFileSync(FUENTE('app.js'), 'utf8');
 ok(html.includes(cssF), 'index.html incluye los estilos de fuente/estilos.css');
-ok(html.includes(appF.trim().split('\n').find(l => l.startsWith('const CLAVE'))),
+ok(html.includes(APP.trim().split('\n').find(l => l.startsWith('const CLAVE'))),
   'index.html incluye el código de fuente/app.js');
 
 // El build es reproducible: correrlo dos veces da el mismo archivo
@@ -543,7 +540,6 @@ ok(/\.tbt\{width:calc\(100% - var\(--sangra\)\)/.test(CSS),
    ponía: el manual decía «queda marcado como examen compartido» y en la tabla
    no salía nada. Se leen los iconos del código y se exige que el manual
    explique cada uno, para que el director no vea un dibujito sin significado. */
-const APP=fs.readFileSync(FUENTE('app.js'),'utf8');
 const mtBloque=/const mt=\{([^}]*)\}\[e\.modo\]/.exec(APP);
 ok(!!mtBloque,'Se encuentra en el código la tabla de iconos del historial');
 const iconosHist=mtBloque?[...mtBloque[1].matchAll(/'([^']*)'/g)].map(m=>m[1].trim()).filter(Boolean):[];
@@ -601,30 +597,29 @@ ok(inventadas.length===0,'El manual no cita bloques que ya no existen'+
    Se comprueba sobre fuente/app.js, no sobre index.html, porque ahí el chequeo
    sería circular. Es una prueba de ORDEN DE TEXTO en el fuente: barata y frágil
    ante un refactor. Si el panel se reescribe, esta prueba se reescribe. */
-const APPJS=fs.readFileSync(FUENTE('app.js'),'utf8');
-const posCampo=APPJS.indexOf('id="pan-eval-t"');
-const posBoton=APPJS.indexOf('id="pan-abrir"');
+const posCampo=APP.indexOf('id="pan-eval-t"');
+const posBoton=APP.indexOf('id="pan-abrir"');
 ok(posCampo>0&&posBoton>posCampo,
   'El botón de abrir la evaluación se pinta DESPUÉS de los campos que hay que llenar');
-ok(/id="pan-abrir"[^']*disabled/.test(APPJS),
+ok(/id="pan-abrir"[^']*disabled/.test(APP),
   'El botón de abrir nace deshabilitado y lo habilita revisaAbrir()');
-ok(/pan-abrir-razon/.test(APPJS),
+ok(/pan-abrir-razon/.test(APP),
   'Cuando el botón está apagado, la razón queda a la vista');
 
 /* El texto de ayuda de Dificultad tiene que existir para CADA opción del
    desplegable y cambiar con la selección, no ser un párrafo fijo. */
-const opcionesNv=[...APPJS.matchAll(/<option value="([0-3])">[^<]*<\/option>/g)].map(m=>m[1]);
-const notas=[...APPJS.matchAll(/^  ([0-3]):'/gm)].map(m=>m[1]);
+const opcionesNv=[...APP.matchAll(/<option value="([0-3])">[^<]*<\/option>/g)].map(m=>m[1]);
+const notas=[...APP.matchAll(/^  ([0-3]):'/gm)].map(m=>m[1]);
 ok(opcionesNv.length>=4&&opcionesNv.every(v=>notas.includes(v)),
   'Cada opción de Dificultad tiene su propio texto de ayuda en NOTA_NIVEL'+
   (opcionesNv.length?' (opciones '+opcionesNv.join(',')+' · notas '+notas.join(',')+')':''));
-ok(/id="pan-eval-nv" onchange="pintaNotaNivel\(\)"/.test(APPJS),
+ok(/id="pan-eval-nv" onchange="pintaNotaNivel\(\)"/.test(APP),
   'Al cambiar la dificultad, el texto de ayuda se repinta');
 
 /* Una sola forma de cerrar: mientras hay evaluación abierta, el panel no puede
    ofrecer también el botón de abrir. Eran dos caminos y de ahí venía la
    confusión al cerrar. */
-const bloquePanel=APPJS.slice(APPJS.indexOf('async function pintaPanel'),APPJS.indexOf('const NOTA_NIVEL'));
+const bloquePanel=APP.slice(APP.indexOf('async function pintaPanel'),APP.indexOf('const NOTA_NIVEL'));
 const trozoAbierta=bloquePanel.slice(bloquePanel.indexOf('if(hayEval){'),bloquePanel.indexOf('d.innerHTML=\'<div class="det-cuerpo">\'+\n\n'));
 ok(/cierraEvaluacion/.test(trozoAbierta)&&!/abreEvaluacion/.test(trozoAbierta),
   'Con evaluación abierta el panel solo ofrece cerrarla, nunca abrir otra');
@@ -659,7 +654,7 @@ ok(bancoCat('av').every(q=>!['pr40','pr42','pr43'].includes(q.cap)),
   'Aventureros no examina los capítulos de P&R que no le tocan');
 /* El aviso en pantalla: un capítulo que se estudia y nunca sale en el examen
    parece un error de la app si no se dice. */
-ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APPJS),
+ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
   'La lista de capítulos marca «Solo para estudiar» el que no entra al examen');
 
 /* ───────── CALIDAD DEL BANCO: patrones que se pueden explotar ─────────
@@ -742,16 +737,15 @@ ok(delatan.length===0,'Ninguna declaración de creencia se autodelata'+
 
 /* La guía impresa del campamento no puede traer las 28 creencias: se imprime
    para estudiar lo que el examen del campamento pregunta. */
-const APP2=fs.readFileSync(FUENTE('app.js'),'utf8');
 /* La guia impresa ya no filtra creencias a mano: se arma por categoria, y
    una categoria de Conexion Biblica no tiene creencias que excluir. Antes
    llevaba un `c.ev!=='creencias'` pegado, que era el sintoma del modelo
    mezclado. */
-const bloqueGuias=APP2.slice(APP2.indexOf('function imprimeGuiasTodo'),
-                             APP2.indexOf('function imprimeGuiasTodo')+1400);
+const bloqueGuias=APP.slice(APP.indexOf('function imprimeGuiasTodo'),
+                             APP.indexOf('function imprimeGuiasTodo')+1400);
 ok(!/c\.ev!=='creencias'/.test(bloqueGuias),
   'La guía impresa ya no necesita excluir las creencias a mano');
-ok(/CATS\[k\]\.act===ev/.test(APP2)||/c\.act===ev/.test(APP2),
+ok(/CATS\[k\]\.act===ev/.test(APP)||/c\.act===ev/.test(APP),
   'La guía impresa agrupa por actividad');
 
 
@@ -868,11 +862,10 @@ ok(citasMal.length===0,
    28 creencias hay doce citas con formato N:M de Juan, Tito, Joel, Amos,
    Romanos, Filipenses y 1 Samuel: «Jn 3:16» abriria Daniel 3:16, y un
    versiculo equivocado con la etiqueta RV1995 es peor que no ofrecerlo. */
-const APP_REF = fs.readFileSync(FUENTE('app.js'),'utf8');
-ok(/Daniel\\\\s\+\(\\\\d\{1,2\}\)/.test(APP_REF.replace(/\s/g,''))||
-   /Daniel\\s\+/.test(APP_REF),
+ok(/Daniel\\\\s\+\(\\\\d\{1,2\}\)/.test(APP.replace(/\s/g,''))||
+   /Daniel\\s\+/.test(APP),
   'La primera pasada de refsTocables exige el nombre «Daniel» explicito');
-ok(/OTRO_LIBRO/.test(APP_REF)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP_REF),
+ok(/OTRO_LIBRO/.test(APP)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP),
   'La segunda pasada solo actua dentro de un capitulo de Daniel y descarta otros libros');
 
 /* ── EL ATRIBUTO hidden TIENE QUE GANAR ─────────────────────────────────
@@ -895,12 +888,11 @@ for(const id of ['aviso-nuevo','hoja'])
    ev:'Conexion Biblica' y edad:'Otro evento': el dato se contradecia solo.
    Ahora ACTIVIDADES es el dato de primer nivel y cada categoria declara a
    cual pertenece. */
-const APP_ACT=fs.readFileSync(FUENTE('app.js'),'utf8');
 const { CATS: CATS_APP, ACTIVIDADES: ACTS_APP } = (() => {
   /* Se leen del fuente evaluando solo esos dos bloques: son datos, no logica,
      y asi la prueba no depende de montar la app entera. */
-  const bloque=APP_ACT.slice(APP_ACT.indexOf('const ACTIVIDADES={'),
-                             APP_ACT.indexOf('const ACT_DE='));
+  const bloque=APP.slice(APP.indexOf('const ACTIVIDADES={'),
+                             APP.indexOf('const ACT_DE='));
   return new Function(bloque+'\nreturn {CATS,ACTIVIDADES};')();
 })();
 
@@ -941,19 +933,19 @@ ok(!!CATS_APP.ec1&&!!CATS_APP.ec2,
 /* El interruptor de la version anterior se retiro entero: era un cuarto
    mecanismo para lo mismo. */
 for(const resto of ['S.evento','dosActividades','cambiaEvento','pintaActividad','capsDelEvento','capsCat'])
-  ok(!APP_ACT.includes(resto+'('),'No queda rastro de '+resto);
+  ok(!APP.includes(resto+'('),'No queda rastro de '+resto);
 /* capsDelEvento() existia SOLO para desmezclar. Con una categoria por
    actividad, capsDe() ya trae lo correcto. */
-ok(/const capsDe=\(\)=>CAPS\.filter\(c=>c\.cats\.includes\(S\.cat\)\)/.test(APP_ACT),
+ok(/const capsDe=\(\)=>CAPS\.filter\(c=>c\.cats\.includes\(S\.cat\)\)/.test(APP),
   'capsDe() volvio a ser un filtro simple por categoria');
 
 /* La bienvenida pregunta la actividad ANTES de la categoria. Al revés hacia
    falta mapear cada edad a cada actividad a mano. */
-const posAct=APP_ACT.indexOf('function bvActividad'), posCat=APP_ACT.indexOf('function bvCategoria');
+const posAct=APP.indexOf('function bvActividad'), posCat=APP.indexOf('function bvCategoria');
 ok(posAct>0&&posCat>posAct,'La bienvenida tiene el paso de actividad antes del de categoria');
 ok(/id="bv-acts"/.test(CUERPO)&&/id="bv-cats"/.test(CUERPO),
   'Los dos pasos se generan desde el modelo, no escritos a mano en el HTML');
-ok(!/bvEdad\(|bvEvento\(/.test(APP_ACT),
+ok(!/bvEdad\(|bvEvento\(/.test(APP),
   'Ya no existen bvEdad ni bvEvento, que eran el mapeo edad→evento');
 
 /* El servidor acepta las nuevas SIN quitar ninguna de las viejas: hay filas
@@ -968,23 +960,22 @@ for(const k of ['me','av','pa','gm','dm1','dm2','ec1','ec2'])
    audio», solo cancel(), que vacia todo. Antes no habia forma de parar: se
    tocaba 🔊 y el bloque se leia completo. Ahora el boton alterna y se corta
    al navegar. */
-const APP_VOZ=fs.readFileSync(FUENTE('app.js'),'utf8');
-ok(/function paraVoz\(\)/.test(APP_VOZ),'Existe paraVoz()');
-ok(/if\(btn===vozBtn\)\{paraVoz\(\);return;\}/.test(APP_VOZ),
+ok(/function paraVoz\(\)/.test(APP),'Existe paraVoz()');
+ok(/if\(btn===vozBtn\)\{paraVoz\(\);return;\}/.test(APP),
   'Tocar el boton que ya esta leyendo lo para');
-ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP_VOZ),
+ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de pantalla corta la lectura');
-ok(/function verCap\(id\)\{\s*paraVoz\(\);/.test(APP_VOZ),
+ok(/function verCap\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de capitulo corta la lectura');
 /* En iOS onend no siempre dispara, sobre todo si se cancela. Sin el reloj de
    seguridad el boton se quedaria en ⏹ para siempre. */
-ok(/u\.onend=paraVoz/.test(APP_VOZ)&&/u\.onerror=paraVoz/.test(APP_VOZ),
+ok(/u\.onend=paraVoz/.test(APP)&&/u\.onerror=paraVoz/.test(APP),
   'El icono se restaura con onend y con onerror');
-ok(/vozReloj=setTimeout\(paraVoz/.test(APP_VOZ),
+ok(/vozReloj=setTimeout\(paraVoz/.test(APP),
   'Hay un reloj de seguridad por si onend no llega (pasa en iOS)');
 /* vozBtn es un `let` y ir() lo usa antes de la seccion de voz: si se declara
    abajo, la app no arranca por TDZ. Ya paso con diaHoy. */
-const posVoz=APP_VOZ.indexOf('let vozBtn'), posIr=APP_VOZ.indexOf('function ir(id)');
+const posVoz=APP.indexOf('let vozBtn'), posIr=APP.indexOf('function ir(id)');
 ok(posVoz>=0&&posVoz<posIr,
   'vozBtn se declara ANTES de ir(), que es quien llama paraVoz (si no, TDZ)');
 
@@ -1027,19 +1018,18 @@ ok(/\.lect-cab\{[^}]*justify-content:flex-end/.test(CSS),
    ancho contra la version ANTERIOR, la que si desbordaba en el iPhone de
    Camilo, y reporto «sin desbordes». Asi que lo unico que se puede sostener
    desde aca son las tres capas del arreglo. */
-const CSS_TJ=CSS;
 /* Los tres eventos, porque el select de tarjetas ofrece los capitulos de la
    categoria activa y las opciones mas largas son las de la matutina. */
 const MATC=require(path.join(RAIZ,'fuente','matutina.js'));
 const CREC=require(path.join(RAIZ,'fuente','creencias.js'));
 const CAPS_TODOS=[...CAPS,...MATC.MAT_CAPS,...CREC.CR_CAPS];
 
-ok(/#tj-filtro\{[^}]*min-width:0/.test(CSS_TJ),
+ok(/#tj-filtro\{[^}]*min-width:0/.test(CSS),
   'El select de tarjetas declara min-width:0 (sin eso no puede encogerse en un flex)');
-ok(/#tj-filtro\{[^}]*max-width:100%/.test(CSS_TJ),
+ok(/#tj-filtro\{[^}]*max-width:100%/.test(CSS),
   'El select de tarjetas declara max-width:100%');
 ok(/\.tj-barra\{flex-direction:column|\.tj-barra\s*\{\s*flex-direction:\s*column/.test(
-     CSS_TJ.replace(/\s*\n\s*/g,'')),
+     CSS.replace(/\s*\n\s*/g,'')),
   'En pantalla angosta la barra de tarjetas pasa a columna, y el select va en su propia fila');
 
 /* Los estilos del select tienen que vivir en el CSS, no en un style= del
@@ -1109,9 +1099,9 @@ ok(fuera.length===0,'Ninguna referencia apunta mas alla del final de su capitulo
   (fuera.length?' — '+fuera.slice(0,5).join(' / '):''));
 
 /* Y que el dato se vea, no solo que exista en los datos. */
-ok(/c\.vs\?' · '\+c\.vs\+' vers\.'/.test(APP2),
+ok(/c\.vs\?' · '\+c\.vs\+' vers\.'/.test(APP),
   'La ficha de cada capitulo muestra cuantos versiculos trae');
-ok(/c\.vs\?' · '\+c\.vs\+' versículo'/.test(APP2),
+ok(/c\.vs\?' · '\+c\.vs\+' versículo'/.test(APP),
   'La cabecera del capitulo abierto muestra cuantos versiculos trae');
 
 /* ── LA APP INSTALABLE ───────────────────────────────────────────────────
@@ -1179,10 +1169,10 @@ ok(recalculada===vApp,
   'La huella corresponde de verdad al contenido del index (olvidar build.js falla aqui)');
 
 /* Y que la app compare de verdad: sin esto el aviso no se enciende nunca. */
-ok(/VERSION_APP/.test(APP2)&&/version\.json/.test(APP2),
+ok(/VERSION_APP/.test(APP)&&/version\.json/.test(APP),
   'La app consulta version.json y lo compara con VERSION_APP');
 /* En medio de un examen no se recarga: se perderian las respuestas. */
-ok(/examenEnCurso\(\)/.test(APP2)&&/prueba&&prueba\.length>0&&!entregado/.test(APP2),
+ok(/examenEnCurso\(\)/.test(APP)&&/prueba&&prueba\.length>0&&!entregado/.test(APP),
   'Actualizar no recarga si hay un examen empezado y sin entregar');
 /* El service worker no puede cachear justamente el archivo con el que se
    pregunta si hay algo nuevo. */
@@ -1276,6 +1266,46 @@ ok(/\.nav-yo \.yo-tip\{[^}]*pointer-events:none/.test(ESCRITORIO),
   'El globo no se come el clic del boton');
 ok(!/b\.setAttribute\('title'/.test(js),
   'La ficha ya no usa el title del navegador, que se doblaria con el globo');
+
+/* ───────── una ficha, una actividad: el invariante, en el codigo ─────────
+   `racha`, `insignias` y `examenes` son campos de la ficha, no de la actividad.
+   Eso da el comportamiento correcto SOLO si cada ficha pertenece a una sola
+   actividad. `ponCat` permitia saltar de actividad dentro de la misma ficha y
+   arrastraba los tres campos; el manual lo tapaba pidiendole al usuario que
+   creara la segunda ficha a mano. Si alguien vuelve a dejar que una ficha
+   cambie de actividad en el sitio teniendo progreso, esta prueba avisa. */
+ok(/function pasaAActividad\(c\)/.test(APP),
+  'Existe pasaAActividad(), que lleva a la ficha de la otra actividad');
+ok(/if\(ACT_DE\(c\)!==ACT_DE\(S\.cat\)&&pasaAActividad\(c\)\)return;/.test(APP),
+  'ponCat() delega el salto de actividad antes de escribir la categoria');
+ok(/const sinProgreso=al=>/.test(APP),
+  'sinProgreso() decide cuando NO vale partir la ficha');
+ok(/S\.examenes\.filter\(e=>e\.cat===S\.cat\)\.length>=3\)a\('Persistente'\)/.test(APP),
+  '«Persistente» cuenta solo los examenes de la categoria activa');
+/* Y que el manual ya no le pida al usuario mantener el invariante a mano. */
+ok(!/no cambies de categor.a\s*'\+\s*'?aqu/.test(APP)&&!/agrega <strong>otro participante<\/strong> con tu mismo/.test(APP),
+  'El texto que le pedia al usuario crear la ficha a mano quedo retirado');
+
+/* ───────── que la deuda de infraestructura no vuelva ─────────
+   Habia CUATRO copias del stub del navegador y SIETE lecturas de fuente/app.js
+   con siete nombres distintos. Ninguna de las dos cosas hace fallar nada por si
+   sola: lo que hacen es que el siguiente arreglo se aplique en una copia y no en
+   las otras, que es como `setAttribute` rompio dos suites de a una. Estas
+   pruebas fijan la forma, no el comportamiento. */
+const SUITES=['test.js','uso.js','simulacro.js','api.js']
+  .map(f=>({f,t:fs.readFileSync(path.join(RAIZ,'tests',f),'utf8')}));
+const conStub=SUITES.filter(x=>/let localStorage=\{/.test(x.t)).map(x=>x.f);
+ok(conStub.length===0,
+  'Ninguna suite trae su propia copia del stub del navegador'+
+  (conStub.length?' — la traen: '+conStub.join(', '):''));
+ok(/let localStorage=\{/.test(fs.readFileSync(path.join(RAIZ,'tests','entorno.js'),'utf8')),
+  'El unico stub vive en tests/entorno.js');
+const lecturas=SUITES.map(x=>(x.t.match(/readFileSync\([^)]*app\.js/g)||[]).length)
+  .reduce((a,b)=>a+b,0);
+ok(lecturas<=1,'fuente/app.js se lee una sola vez en toda la suite (hoy '+lecturas+')');
+const alias=(TXT=>[...TXT.matchAll(/const (APP[A-Z0-9_]*|CSS[A-Z0-9_]+)\s*=\s*(APP|CSS)\s*;/g)])(SUITES[0].t);
+ok(alias.length===0,'Sin alias de APP ni de CSS'+
+  (alias.length?' — sobran: '+alias.map(m=>m[1]).join(', '):''));
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

@@ -142,9 +142,11 @@ const MANUAL = [
     ficha, la sesión de tarjetas del día le mezclaba un versículo de Daniel con
     una creencia y esa sesión no servía para ninguna de las dos.</p>` },
   { t:'Cómo agregar la segunda',
-    h:`<p>Toca <strong>tu nombre en la barra azul de arriba</strong> y después
-    <strong>+ Agregar</strong>. Escribes el mismo nombre y escoges la otra
-    actividad y su categoría.</p>
+    h:`<p><strong>No hay que hacer nada especial.</strong> Toca tu nombre en la
+    barra azul y escoge una categoría de la otra actividad: la app te lleva a tu
+    ficha de esa actividad, o te la crea con tu mismo nombre.</p>
+    <p>También puedes hacerlo a mano con <strong>+ Agregar</strong>, que sirve
+    para meter a otra persona en el mismo teléfono.</p>
     <p>Se hace así, y no en los tres pasos del principio, porque la mayoría
     está en una sola actividad: cobrarle a todos una pantalla más el primer día
     para algo que hace una minoría es mal negocio.</p>` },
