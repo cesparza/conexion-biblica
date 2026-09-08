@@ -42,6 +42,8 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         huellaBanco, prng, mezclaR, armar, techoDe:c=>CATS[c].techo,
         ponRnd:f=>{rndEx=f}, rndNormal:()=>{rndEx=Math.random},
         claveQ, BANCO, capsDelEvento, pintaMenuEx, gruposEx, soloEstudio, ponFq:(k,n)=>{S.fq[k]={m:n}},
+        diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
+        ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
         el:id=>document.getElementById(id)};`);
 const A=fn(store,nodo,Buffer);
 
@@ -606,6 +608,66 @@ for(const cat of Object.keys(A.CATS)){
 ok(vacios.length===0,'Ninguna opción de alcance se queda sin preguntas, en las 6 categorías'+
   (vacios.length?' — vacías: '+vacios.join(', '):''));
 A.ponCat('av'); A.ponAlcance('todo'); A.ponNivel(0); A.ponCuantas(0);
+
+/* ───────── REPETICIÓN ESPACIADA ─────────
+   MECANISMO: cada tarjeta tiene una caja (0 nueva o fallada, 1 en repaso, 2
+   dominada) y el día del último acierto. Solo vuelve a salir cuando se cumple
+   el plazo de su caja: 0 siempre, 1 al día siguiente, 2 a los cuatro días.
+   Antes el mazo traía las 102 tarjetas todos los días, dominadas incluidas, y
+   el tiempo de estudio se gastaba en lo que ya sabía. */
+A.ponCat('av');
+const T=A.tarjetasDe();
+ok(A.tocanHoy().length===T.length,'Al empezar, todas las tarjetas tocan hoy ('+T.length+')');
+ok(A.topeSesion()===15,'Aventureros: la sesión del día se corta en 15 tarjetas');
+
+/* Una tarjeta dominada HOY no vuelve a salir hoy. */
+const k0=A.claveT(T[0]);
+A.S().ft[k0]=2; A.ponVisto(k0,A.diaHoy());
+ok(!A.vencidaT(T[0]),'Una dominada hoy no vuelve a salir hoy');
+A.ponVisto(k0,A.diaHoy()-3);
+ok(!A.vencidaT(T[0]),'Ni a los tres días');
+A.ponVisto(k0,A.diaHoy()-4);
+ok(A.vencidaT(T[0]),'A los cuatro días sí vuelve a salir');
+
+/* La caja 1 es de un día, y la 0 siempre está vencida. */
+const k1=A.claveT(T[1]);
+A.S().ft[k1]=1; A.ponVisto(k1,A.diaHoy());
+ok(!A.vencidaT(T[1]),'Una en repaso, acertada hoy, espera al día siguiente');
+A.ponVisto(k1,A.diaHoy()-1);
+ok(A.vencidaT(T[1]),'Al día siguiente vuelve');
+const k2=A.claveT(T[2]);
+A.S().ft[k2]=0; A.ponVisto(k2,A.diaHoy());
+ok(A.vencidaT(T[2]),'Una de la caja 0 sale hoy aunque se haya visto hoy');
+
+/* El mazo del día se corta en el tope; el mazo completo no se corta. */
+A.filtraTj('hoy');
+ok(A.mazoActual().length===A.topeSesion(),
+  'La sesión del día trae '+A.mazoActual().length+' tarjetas, no las '+T.length);
+A.filtraTj('todas');
+ok(A.mazoActual().length===T.length,'«Todos los capítulos» sigue trayendo el mazo completo');
+
+/* Fallar borra la fecha: la tarjeta vuelve HOY, no en cuatro días. */
+A.filtraTj('todas');
+const primera=A.mazoActual()[0], kp=A.claveT(primera);
+A.S().ft[kp]=2; A.ponVisto(kp,A.diaHoy());
+A.tjSabia(false);
+ok(A.cajaT(primera)===0 && !A.S().fv[kp] && A.vencidaT(primera),
+  'Al fallar, la tarjeta vuelve a la caja 0 y sale hoy mismo');
+
+/* Un reloj adelantado no puede dejar una tarjeta fuera para siempre. */
+const sucio=A.normalizar({ft:{x:2}, fv:{x:A.diaHoy()+500}});
+ok(sucio.fv.x<=A.diaHoy(),'normalizar: una fecha del futuro se acota a hoy');
+A.filtraTj('hoy');
+
+/* Sin carta que contestar, los botones se apagan. Un botón encendido que no
+   hace nada al tocarlo parece que la app se trabó. */
+A.ponCat('av'); A.filtraTj('hoy');
+ok(A.el('tj-si').disabled===false,'Con carta en pantalla, «La sabía» está habilitado');
+ok(A.el('tj-ant').disabled===true,'En la primera carta, «Anterior» está apagado');
+A.ponTjI(A.mazoActual().length); A.muestraTj();
+ok(A.el('tj-si').disabled===true&&A.el('tj-sig').disabled===true,
+  'Al terminar el mazo, «La sabía» y «Siguiente» quedan apagados');
+A.filtraTj('hoy');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

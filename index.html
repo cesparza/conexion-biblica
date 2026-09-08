@@ -1323,10 +1323,10 @@ details.card summary::marker{content:''}
     <div class="prog-lin"><div id="tj-prog" style="width:0%"></div></div>
     <div class="tj" id="tj-carta" onclick="voltea()"></div>
     <div class="tj-btns">
-      <button class="btn gho" onclick="tjAnt()">← Anterior</button>
-      <button class="btn ver" onclick="tjSabia(true)">✅ La sabía</button>
-      <button class="btn nar" onclick="tjSabia(false)">🔁 Repasar</button>
-      <button class="btn gho" onclick="tjSig()">Siguiente →</button>
+      <button class="btn gho" id="tj-ant" onclick="tjAnt()">← Anterior</button>
+      <button class="btn ver" id="tj-si" onclick="tjSabia(true)">✅ La sabía</button>
+      <button class="btn nar" id="tj-no" onclick="tjSabia(false)">🔁 Repasar</button>
+      <button class="btn gho" id="tj-sig" onclick="tjSig()">Siguiente →</button>
     </div>
     <div class="tj-btns"><button class="btn azul" onclick="tjBaraja()">🔀 Barajar de nuevo</button></div>
     <p class="nota" id="tj-resumen" style="text-align:center"></p>
@@ -14347,13 +14347,23 @@ const CATS={
 const CAT=()=>CATS[S.cat]||CATS.av;
 
 const CLAVE='conexion-biblica-v4';
-const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},acc:{},links:{}};
+/* `ft` es la caja de cada tarjeta (0, 1 o 2) y ya venía de antes. `fv` es
+   NUEVO: el día en que se acertó por última vez. Se agrega como mapa aparte, y
+   no cambiando la forma de `ft`, para que el progreso que ya está guardado en
+   los celulares siga valiendo sin migración. */
+const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},links:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
 function hashTxt(s){let h=5381;s=String(s);for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36);}
 const claveQ=q=>q.cap+'.'+hashTxt((q.q||q.ins||'')+(q.p?q.p.map(p=>p.b||p.x).join('¦'):''));
 const claveT=t=>t.cap+'.'+hashTxt(t.f||'');
+
+/* Día local, no UTC ni horas. Va ACÁ ARRIBA a propósito: normalizar() la usa
+   para acotar fechas del futuro, y normalizar() corre al leer el estado
+   guardado, mucho antes de la sección de tarjetas. Definirla allá abajo dejaba
+   la app sin arrancar. */
+const diaHoy=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
 
 function normalizar(x){
   const s=JSON.parse(JSON.stringify(BASE));
@@ -14376,6 +14386,13 @@ function normalizar(x){
     for(const k of Object.keys(x.fq).slice(0,600)){
       const m=Number(x.fq[k]&&x.fq[k].m);
       if(Number.isFinite(m)&&m>0)s.fq[k]={m:Math.min(99,Math.round(m))};
+    }
+  if(x.fv&&typeof x.fv==='object')
+    for(const k of Object.keys(x.fv).slice(0,600)){
+      const d=Number(x.fv[k]);
+      /* Una fecha del futuro sería un reloj mal puesto: se acota a hoy, o la
+         tarjeta no volvería a salir nunca. */
+      if(Number.isFinite(d)&&d>0)s.fv[k]=Math.min(diaHoy(),Math.round(d));
     }
   if(x.ft&&typeof x.ft==='object')
     for(const k of Object.keys(x.ft).slice(0,600)){
@@ -14645,7 +14662,7 @@ function cambiaAlumno(id){
   DB.activo=id;S=DB.alumnos[id];guardar();
   /* Al cambiar de persona se reinicia lo que está en pantalla: el mazo de
      tarjetas y el examen en curso son de quien estaba antes. */
-  mazo=[];tjI=0;tjFiltro='todas';alcance='todo';cuantas=0;nivel=0;
+  mazo=[];tjI=0;tjFiltro='hoy';alcance='todo';cuantas=0;nivel=0;
   prueba=[];resp={};entregado=false;clearInterval(reloj);
   marcaCat();pintaInicio();pintaCaps();
   try{document.getElementById('detalle').style.display='none';}catch(e){}
@@ -14827,10 +14844,17 @@ function tareasDeHoy(){
     d:'Preguntas que fallaste y todavía no dominas. Es lo que más puntos recupera.',
     b:'Repasar ahora',f:"arrancaExamen('errores')"});
 
-  const porDominar=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
-  if(porDominar)tareas.push({ic:'tarjetas',t:porDominar+' tarjetas por dominar',
-    d:'Salen primero las que fallaste. Una tarjeta queda dominada al acertarla dos veces seguidas.',
-    b:'Abrir tarjetas',f:"irTarjetasDificiles()"});
+  /* La tarea del día es la SESIÓN, no el total pendiente. «102 tarjetas por
+     dominar» no le dice a nadie qué hacer hoy; «15 tarjetas hoy» sí. */
+  const nHoy=Math.min(tocanHoy().length,topeSesion());
+  const porDominar=tarjetasDe().filter(t=>cajaT(t)<2).length;
+  if(nHoy)tareas.push({ic:'tarjetas',t:nHoy+' tarjetas para hoy',
+    d:'La sesión del día: primero lo que fallaste, y las dominadas vuelven a salir a los cuatro días. '+
+      'Quedan '+porDominar+' por dominar en total.',
+    b:'Abrir la sesión',f:"irTarjetasHoy()"});
+  else if(tarjetasDe().length)tareas.push({ic:'tarjetas',t:'Tarjetas al día',
+    d:'Ya repasaste lo que tocaba hoy. Las dominadas vuelven a salir en unos días.',
+    b:'Repasar igual',f:"irTarjetasTodas()"});
 
   const sinLeer=[...capsDelEvento(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
   if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
@@ -14886,6 +14910,8 @@ function pintaHoy(){
 
 /* Atajos que usa el panel. */
 function irTarjetasDificiles(){tjFiltro='dificiles';ir('tarjetas');tjBaraja();}
+function irTarjetasHoy(){tjFiltro='hoy';ir('tarjetas');tjBaraja();}
+function irTarjetasTodas(){tjFiltro='todas';ir('tarjetas');tjBaraja();}
 async function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();await arrancaExamen('normal');}
 
 /* ───────── inicio ───────── */
@@ -15009,14 +15035,40 @@ function sumaRacha(){
   }
 }
 
-/* ───────── tarjetas ───────── */
-let mazo=[],tjI=0,tjVolteada=false,tjFiltro='todas',tjSabidas=new Set();
+/* ───────── tarjetas ─────────
+   REPETICIÓN ESPACIADA, EL MECANISMO
+   Cada tarjeta vive en una caja: 0 recién vista o fallada, 1 en repaso, 2
+   dominada. Al acertar sube de caja y se guarda EL DÍA. Al fallar vuelve a la
+   caja 0. Una tarjeta solo vuelve a salir cuando se le cumple el plazo de su
+   caja: la 0 siempre, la 1 al día siguiente, la 2 a los cuatro días.
+
+   DÓNDE NACÍA EL PROBLEMA
+   Antes el mazo traía SIEMPRE las 126 tarjetas, ordenadas por caja. Las
+   dominadas seguían apareciendo todos los días, así que el tiempo de estudio se
+   gastaba en lo que ya sabía, y un mazo de 126 cartas desanima a los diez
+   minutos. Lo que rinde es una sesión corta con lo que toca hoy.
+
+   EL PLAZO ES EN DÍAS LOCALES, no en horas: repasar a las 8 de la noche y
+   volver a las 7 de la mañana cuenta como dos días distintos, que es lo que la
+   niña espera. */
+const PLAZO={0:0,1:1,2:4};
+const cajaT=t=>S.ft[claveT(t)]||0;
+const vistoT=t=>S.fv[claveT(t)]||0;
+const vencidaT=t=>diaHoy()-vistoT(t)>=PLAZO[cajaT(t)];
+const tocanHoy=()=>tarjetasDe().filter(vencidaT);
+/* Tope de la sesión: el tamaño del examen de la categoría, con un piso de 12.
+   Sale de un dato que ya existe en vez de inventar otra tabla. */
+const topeSesion=()=>Math.max(12,CAT().n);
+
+let mazo=[],tjI=0,tjVolteada=false,tjFiltro='hoy',tjSabidas=new Set();
 
 function pintaTarjetas(){
   const sel=document.getElementById('tj-filtro');
   const cs=capsDe();
   const nDif=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
-  sel.innerHTML='<option value="todas">Todos los capítulos</option>'+
+  const nHoy=Math.min(tocanHoy().length,topeSesion());
+  sel.innerHTML='<option value="hoy">🎯 La sesión de hoy ('+nHoy+')</option>'+
+    '<option value="todas">Todos los capítulos ('+tarjetasDe().length+')</option>'+
     '<option value="dificiles">🔁 Solo por dominar ('+nDif+')</option>'+
     cs.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
   sel.value=tjFiltro;
@@ -15028,14 +15080,26 @@ function filtraTj(v){tjFiltro=v;tjBaraja();}
 
 function tjBaraja(){
   let base=tarjetasDe();
-  if(tjFiltro==='dificiles')base=base.filter(t=>(S.ft[claveT(t)]||0)<2);
+  if(tjFiltro==='hoy')base=base.filter(vencidaT);
+  else if(tjFiltro==='dificiles')base=base.filter(t=>cajaT(t)<2);
   else if(tjFiltro!=='todas')base=base.filter(t=>t.cap===tjFiltro);
-  /* Repetición espaciada (Leitner): caja 0 = fallada o nueva, sale
-     primero; caja 1 = en repaso; caja 2 = dominada, sale al final. */
-  const caja=t=>S.ft[claveT(t)]||0;
-  mazo=[0,1,2].flatMap(n=>mezcla(base.filter(t=>caja(t)===n)));
+  /* Orden Leitner: lo fallado o nuevo primero, lo dominado al final. */
+  mazo=[0,1,2].flatMap(n=>mezcla(base.filter(t=>cajaT(t)===n)));
+  /* La sesión del día se corta en el tope. Los otros filtros no se cortan:
+     si alguien pide un capítulo o el mazo completo, es porque lo quiere
+     completo. */
+  if(tjFiltro==='hoy')mazo=mazo.slice(0,topeSesion());
   tjI=0;tjVolteada=false;tjSabidas=new Set();
   muestraTj();
+}
+
+/* Los botones de la tarjeta se apagan cuando no hay nada que contestar. Un
+   botón encendido que no hace nada al tocarlo es el mismo defecto que
+   arreglamos en el panel: parece que la app se trabó. */
+function botonesTj(hayCarta){
+  const on=(id,v)=>{const e=document.getElementById(id);if(e)e.disabled=!v;};
+  on('tj-si',hayCarta);on('tj-no',hayCarta);on('tj-sig',hayCarta);
+  on('tj-ant',hayCarta&&tjI>0);
 }
 
 function muestraTj(){
@@ -15043,20 +15107,37 @@ function muestraTj(){
   if(!c)return;
   if(!mazo.length){
     c.className='tj';
-    c.innerHTML='<div class="cara">No hay tarjetas para este filtro.</div>';
+    /* Un mazo vacío con el filtro del día NO es un error: es que ya repasó lo
+       que tocaba. Decirlo así, y ofrecer el mazo completo, evita que parezca
+       que la app se dañó. */
+    c.innerHTML=tjFiltro==='hoy'
+      ?'<div class="cara">✅ Ya repasaste lo de hoy</div>'+
+       '<div class="rev" style="margin-top:.7rem">Las que dominaste vuelven a salir en unos días. '+
+       'Si quieres seguir, escoge <strong>Todos los capítulos</strong> arriba.</div>'
+      :'<div class="cara">No hay tarjetas para este filtro.</div>';
     document.getElementById('tj-pos').textContent='';
     document.getElementById('tj-prog').style.width='0%';
     document.getElementById('tj-resumen').textContent='';
+    botonesTj(false);
     return;
   }
   if(tjI>=mazo.length){
     c.className='tj volteada';
     const s=tjSabidas.size,t=mazo.length;
-    c.innerHTML='<div class="cara">🎉 Terminaste el mazo</div>'+
-      '<div class="rev" style="margin-top:.7rem">Sabías '+s+' de '+t+' ('+Math.round(s/t*100)+'%)</div>';
+    /* Al terminar una sesión corta hay que decir CUÁNTO QUEDA, porque es el
+       momento en que la niña decide si sigue o cierra. «Terminaste el mazo» con
+       87 tarjetas pendientes detrás era una media verdad. */
+    const quedan=tjFiltro==='hoy'?tocanHoy().length:0;
+    c.innerHTML='<div class="cara">🎉 '+(tjFiltro==='hoy'?'Terminaste la sesión':'Terminaste el mazo')+'</div>'+
+      '<div class="rev" style="margin-top:.7rem">Sabías '+s+' de '+t+' ('+Math.round(s/t*100)+'%)'+
+      (quedan?'<br>Todavía te toca repasar <strong>'+quedan+'</strong> hoy.'
+             :(tjFiltro==='hoy'?'<br>Ya no te toca nada más hoy.':''))+'</div>';
     document.getElementById('tj-pos').textContent='Completado';
     document.getElementById('tj-prog').style.width='100%';
-    document.getElementById('tj-resumen').textContent='Toca «Barajar de nuevo» para repetir.';
+    document.getElementById('tj-resumen').textContent=quedan
+      ?'Toca «Barajar de nuevo» y te salen las siguientes.'
+      :'Toca «Barajar de nuevo» para repetir.';
+    botonesTj(false);
     return;
   }
   const t=mazo[tjI];
@@ -15070,6 +15151,7 @@ function muestraTj(){
   document.getElementById('tj-pos').textContent='Tarjeta '+(tjI+1)+' de '+mazo.length;
   document.getElementById('tj-prog').style.width=Math.round(tjI/mazo.length*100)+'%';
   document.getElementById('tj-resumen').textContent=tjSabidas.size+' marcadas como sabidas · «La sabía» dos veces seguidas = dominada';
+  botonesTj(true);
 }
 
 function voltea(){if(mazo.length&&tjI<mazo.length){tjVolteada=!tjVolteada;muestraTj();}}
@@ -15080,6 +15162,9 @@ function tjSabia(si){
   if(si)tjSabidas.add(tjI);else tjSabidas.delete(tjI);
   const k=claveT(mazo[tjI]);
   S.ft[k]=si?Math.min(2,(S.ft[k]||0)+1):0;
+  /* El día solo se guarda al acertar. Al fallar se borra, para que vuelva a
+     salir hoy mismo y no dentro de cuatro días. */
+  if(si)S.fv[k]=diaHoy();else delete S.fv[k];
   sumaRacha();
   tjI++;tjVolteada=false;
   if(tjI>=mazo.length&&mazo.length>=10&&tjSabidas.size===mazo.length){
