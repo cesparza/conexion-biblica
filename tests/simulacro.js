@@ -214,6 +214,20 @@ if(!CLAVE){
     'La clave en texto plano no está en NINGÚN archivo del repo'+(sospechosos.length?' — aparece en '+sospechosos.join(', '):''));
   ok(/CLAVE_DIR='[0-9a-f]{64}'/.test(html),'En el HTML va un SHA-256 de 64 caracteres, no la clave');
 
-  console.log('\n'+(f===0?'LA EVALUACIÓN DEL DÍA: TODO BIEN':f+' FALLOS'));
+  /* El acumulador por tipo se llena al entregar, y es lo que alimenta el panel
+   de puntos débiles por sección del examen. */
+A.srvGuarda(true,null,null);
+A.reinicia();
+A.S().act={};
+A.iniciar('normal');
+const tipos=[...new Set(A.prueba().map(q=>q.t))];
+A.entregar();
+const act=A.S().act;
+ok(tipos.every(t=>act[t]&&(act[t].b+act[t].m)>0),
+  'Al entregar, el acierto queda registrado por tipo de pregunta ('+tipos.join(', ')+')');
+const suma=Object.values(act).reduce((s,x)=>s+x.b+x.m,0);
+ok(suma===A.prueba().length,'La suma por tipo cuadra con las preguntas del examen ('+suma+')');
+
+console.log('\n'+(f===0?'LA EVALUACIÓN DEL DÍA: TODO BIEN':f+' FALLOS'));
   process.exit(f?1:0);
 })();

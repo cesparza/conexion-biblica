@@ -30,7 +30,7 @@ const CLAVE='conexion-biblica-v4';
    NUEVO: el día en que se acertó por última vez. Se agrega como mapa aparte, y
    no cambiando la forma de `ft`, para que el progreso que ya está guardado en
    los celulares siga valiendo sin migración. */
-const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},links:{}};
+const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},act:{},links:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -65,6 +65,19 @@ function normalizar(x){
     for(const k of Object.keys(x.fq).slice(0,600)){
       const m=Number(x.fq[k]&&x.fq[k].m);
       if(Number.isFinite(m)&&m>0)s.fq[k]={m:Math.min(99,Math.round(m))};
+    }
+  /* `act` es NUEVO: acierto por TIPO de pregunta (múltiple, V/F, completar).
+     `acc` ya guardaba por capítulo, y eso dice DÓNDE falla pero no EN QUÉ. La
+     sección III del examen real es completar el versículo: ir al 90% en
+     múltiple y al 40% en completar da el mismo promedio por capítulo que ir
+     al 65% en las dos, y son dos situaciones muy distintas. */
+  if(x.act&&typeof x.act==='object')
+    for(const t of ['mc','tf','fill']){
+      const v=x.act[t];
+      if(v&&typeof v==='object'){
+        const b=Math.max(0,Math.round(Number(v.b)||0)),m=Math.max(0,Math.round(Number(v.m)||0));
+        if(b+m>0)s.act[t]={b:Math.min(9999,b),m:Math.min(9999,m)};
+      }
     }
   if(x.fv&&typeof x.fv==='object')
     for(const k of Object.keys(x.fv).slice(0,600)){
@@ -590,6 +603,13 @@ function pintaHoy(){
 /* Atajos que usa el panel. */
 function irTarjetasDificiles(){tjFiltro='dificiles';ir('tarjetas');tjBaraja();}
 function irTarjetasHoy(){tjFiltro='hoy';ir('tarjetas');tjBaraja();}
+/* Del punto débil al examen de ese capítulo en un toque. Antes el panel decía
+   dónde estaba flojo y dejaba al usuario armando el examen a mano. */
+function examenDelCapitulo(id){
+  if(!capsDe().some(c=>c.id===id&&!soloEstudio(c,S.cat)))return;
+  alcance=id;nivel=0;cuantas=0;
+  arrancaExamen('normal');
+}
 function irTarjetasTodas(){tjFiltro='todas';ir('tarjetas');tjBaraja();}
 async function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();await arrancaExamen('normal');}
 
@@ -714,6 +734,57 @@ function sumaRacha(){
   }
 }
 
+/* ───────── leer en voz alta ─────────
+   MECANISMO
+   El navegador trae un sintetizador de voz (speechSynthesis). Se le pasa el
+   texto y el idioma, y él usa una voz instalada en el aparato. No se descarga
+   nada, no hay archivos de audio en el repo y funciona sin señal.
+
+   PARA QUÉ, EN ESTE PROYECTO
+   La sección III del examen es completar el versículo palabra por palabra, y
+   memorizar escuchando rinde distinto que memorizar leyendo: se puede repasar
+   caminando o con los ojos cerrados. Por eso el botón está en los versículos
+   clave y en el reverso de las tarjetas.
+
+   SI EL APARATO NO PUEDE, EL BOTÓN NO APARECE. Un botón de audio que no suena
+   es peor que no tenerlo. */
+const puedeHablar=()=>typeof speechSynthesis!=='undefined'&&
+  typeof SpeechSynthesisUtterance!=='undefined';
+
+/* Voz en español, un poco más lenta que el habla normal: se está memorizando,
+   no escuchando una noticia. */
+function habla(txt){
+  if(!puedeHablar()||!txt)return;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(String(txt).replace(/\s+/g,' ').trim().slice(0,600));
+    u.lang='es-ES';u.rate=.85;u.pitch=1;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* Lee el texto del bloque al que pertenece el botón. Así el HTML generado no
+   tiene que repetir el versículo dentro de un atributo. */
+function leeCerca(btn){
+  if(!btn)return;
+  const cont=btn.closest?btn.closest('[data-leer]'):null;
+  const base=cont||btn.parentNode;
+  if(!base)return;
+  /* Se lee una COPIA sin el botón: si no, el sintetizador pronuncia el emoji
+     del altavoz al final de cada versículo. */
+  let t='';
+  try{
+    const c=base.cloneNode(true);
+    (c.querySelectorAll?[...c.querySelectorAll('.btn-voz')]:[]).forEach(b=>b.remove());
+    t=c.textContent||'';
+  }catch(e){ t=(base.textContent||'').replace(/🔊/g,''); }
+  /* Fuera la referencia del principio («1:8»): se está memorizando el texto,
+     no el número. */
+  habla(t.replace(/^\s*[\d:]+\s*/,''));
+}
+
+const BTN_VOZ='<button class="btn-voz" title="Escuchar" aria-label="Escuchar" onclick="leeCerca(this)">🔊</button>';
+
 /* ───────── tarjetas ─────────
    REPETICIÓN ESPACIADA, EL MECANISMO
    Cada tarjeta vive en una caja: 0 recién vista o fallada, 1 en repaso, 2
@@ -824,7 +895,8 @@ function muestraTj(){
   const est=cj===2?'<span class="pil az">✅ dominada</span>':cj===1?'<span class="pil na">🔁 en repaso</span>':'<span class="pil na">🆕 por aprender</span>';
   c.className='tj'+(tjVolteada?' volteada':'');
   c.innerHTML=(tjVolteada
-    ? '<div class="rev">'+t.r+'</div><div class="pista">toca para volver</div>'
+    ? '<div class="rev" data-leer>'+t.r+(puedeHablar()?' '+BTN_VOZ:'')+'</div>'+
+      '<div class="pista">toca para volver</div>'
     : '<div class="cara">'+t.f+'</div><div class="pista">toca para ver la respuesta</div>')+
     '<div style="position:absolute;top:.6rem;right:.6rem">'+est+'</div>';
   document.getElementById('tj-pos').textContent='Tarjeta '+(tjI+1)+' de '+mazo.length;
@@ -1250,6 +1322,9 @@ function entregar(){
     const a=S.acc[q.cap]||{b:0,m:0};
     if(bien(q))a.b++;else a.m++;
     S.acc[q.cap]=a;
+    const at=S.act[q.t]||{b:0,m:0};
+    if(bien(q))at.b++;else at.m++;
+    S.act[q.t]=at;
   }
   revisaInsignias(pct);sumaRacha();guardar();
 
@@ -1409,8 +1484,33 @@ function pintaLogros(){
       '<button class="btn gho" style="min-height:34px;padding:.2rem .7rem;font-size:.75rem" onclick="verCap(\''+x.c.id+'\')">'+esc(x.c.label)+'</button>'+
       '<div class="prog-lin" style="flex:1;margin:0"><div style="width:'+x.pct+'%;background:'+(x.pct<60?'var(--rojo)':x.pct<85?'var(--naranja)':'var(--verde)')+'"></div></div>'+
       '<span style="font-size:.8rem;font-weight:700;width:44px;text-align:right;color:'+(x.pct<60?'var(--rojo)':'var(--azul)')+'">'+x.pct+'%</span></div>').join('')+
-      '<p class="nota">Con base en '+filas.reduce((s,x)=>s+x.a.b+x.a.m,0)+' respuestas de examen. Toca un capítulo para estudiarlo.</p>'
+      '<p class="nota">Con base en '+filas.reduce((s,x)=>s+x.a.b+x.a.m,0)+' respuestas de examen. '+
+      'Toca un capítulo para estudiarlo, o <button class="btn gho" style="min-height:30px;padding:.1rem .6rem;font-size:.72rem" '+
+      'onclick="examenDelCapitulo(\''+filas[0].c.id+'\')">examina el más flojo</button>.</p>'
     :'<p class="nota">Haz un examen y aquí verás en qué capítulos estás fallando.</p>';
+
+  /* Por TIPO de pregunta. Es el dato que dice qué hay que practicar, no solo
+     qué hay que leer: si completar va en rojo, el problema es memorización
+     literal y las tarjetas de versículo clave son la respuesta. */
+  const TIPOS=[['mc','Selección múltiple','Sección I'],['tf','Verdadero o falso','Sección II'],
+               ['fill','Completar el versículo','Sección III']];
+  const porTipo=TIPOS.map(([t,nom,sec])=>({t,nom,sec,a:S.act[t]||{b:0,m:0}}))
+    .filter(x=>x.a.b+x.a.m>0)
+    .map(x=>({...x,pct:Math.round(x.a.b/(x.a.b+x.a.m)*100)}));
+  const dt=document.getElementById('debiles-tipo');
+  if(dt)dt.innerHTML=porTipo.length
+    ?porTipo.map(x=>
+      '<div style="display:flex;align-items:center;gap:.7rem;margin:.45rem 0">'+
+      '<span style="font-size:.78rem;font-weight:700;width:96px;color:var(--azul)">'+esc(x.sec)+'</span>'+
+      '<div class="prog-lin" style="flex:1;margin:0"><div style="width:'+x.pct+'%;background:'+
+        (x.pct<60?'var(--rojo)':x.pct<85?'var(--naranja)':'var(--verde)')+'"></div></div>'+
+      '<span style="font-size:.8rem;font-weight:700;width:44px;text-align:right;color:'+
+        (x.pct<60?'var(--rojo)':'var(--azul)')+'">'+x.pct+'%</span></div>'+
+      '<p class="nota" style="margin:0 0 .5rem">'+esc(x.nom)+' · '+(x.a.b+x.a.m)+' respondidas</p>').join('')+
+      (porTipo.some(x=>x.t==='fill'&&x.pct<70)
+        ?'<div class="warn-box">Completar el versículo es la sección que decide el examen. '+
+         'Repasa las <strong>tarjetas de versículo clave</strong> y vuelve a intentar.</div>':'')
+    :'<p class="nota">Aquí verás si fallas más en múltiple, en verdadero o falso, o en completar.</p>';
 
   document.getElementById('insignias').innerHTML=TODAS.map(b=>{
     const t=S.insignias.includes(b.k);

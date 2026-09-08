@@ -44,6 +44,7 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         claveQ, BANCO, capsDelEvento, pintaMenuEx, gruposEx, soloEstudio, ponFq:(k,n)=>{S.fq[k]={m:n}},
         diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
+        puedeHablar, examenDelCapitulo, pintaLogros,
         el:id=>document.getElementById(id)};`);
 const A=fn(store,nodo,Buffer);
 
@@ -667,6 +668,44 @@ ok(A.el('tj-ant').disabled===true,'En la primera carta, «Anterior» está apaga
 A.ponTjI(A.mazoActual().length); A.muestraTj();
 ok(A.el('tj-si').disabled===true&&A.el('tj-sig').disabled===true,
   'Al terminar el mazo, «La sabía» y «Siguiente» quedan apagados');
+A.filtraTj('hoy');
+
+/* ───────── PUNTOS DÉBILES POR TIPO Y VOZ ─────────
+   `acc` dice en qué capítulo falla; `act` dice en qué TIPO de pregunta. Ir al
+   90% en múltiple y al 40% en completar da el mismo promedio por capítulo que
+   ir al 65% en las dos, y son dos situaciones distintas: la primera se arregla
+   con tarjetas de versículo, la segunda leyendo el capítulo. */
+const nAct=A.normalizar({act:{mc:{b:9,m:1},fill:{b:2,m:8},zz:{b:5,m:5},tf:'basura'}});
+ok(nAct.act.mc.b===9&&nAct.act.fill.m===8,'normalizar: act conserva los tipos válidos');
+ok(!nAct.act.zz&&!nAct.act.tf,'normalizar: act descarta tipos inventados y basura');
+const nNeg=A.normalizar({act:{mc:{b:-5,m:99999}}});
+ok(nNeg.act.mc.b===0&&nNeg.act.mc.m<=9999,'normalizar: act acota negativos y cifras absurdas');
+
+/* El panel se pinta con datos por tipo sin reventar. */
+A.ponCat('av');
+A.S().act={mc:{b:18,m:2},tf:{b:6,m:2},fill:{b:2,m:8}};
+A.S().acc={d1:{b:5,m:5}};
+A.pintaLogros();
+const htmlTipo=A.el('debiles-tipo').innerHTML;
+ok(/Sección I/.test(htmlTipo)&&/Sección III/.test(htmlTipo),'El panel muestra las tres secciones del examen');
+ok(/decide el examen/.test(htmlTipo),'Con completar por debajo del 70%, el panel dice qué hacer');
+A.S().act={};A.S().acc={};
+
+/* Examinar un capítulo desde el punto débil, con guarda: un capítulo que para
+   esta categoría es solo material de estudio no se puede examinar. */
+A.ponCat('av'); A.ponAlcance('todo');
+A.examenDelCapitulo('d2');
+ok(A.alcanceActual()==='todo','examenDelCapitulo ignora un capítulo de solo estudio (Daniel 2 en Aventureros)');
+A.examenDelCapitulo('d3');
+ok(A.alcanceActual()==='d3','examenDelCapitulo sí arma el examen de un capítulo examinable');
+A.ponAlcance('todo');
+
+/* La voz: si el aparato no la tiene, el botón NO se pinta. Un botón de audio
+   que no suena es peor que no tenerlo. En estas pruebas no hay navegador, así
+   que speechSynthesis no existe y sirve de caso de prueba. */
+ok(A.puedeHablar()===false,'Sin navegador, puedeHablar() dice que no');
+A.filtraTj('todas'); A.muestraTj();
+ok(!/btn-voz/.test(A.el('tj-carta').innerHTML),'Y la tarjeta no pinta el botón de voz');
 A.filtraTj('hoy');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

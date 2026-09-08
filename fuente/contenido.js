@@ -658,13 +658,30 @@ const VERS_CLAVE = {
   ],
 };
 
+/* data-leer marca el bloque que el botón de voz tiene que leer: el texto no se
+   repite dentro de un atributo, se lee del propio párrafo.
+   SE PARTE EN BLOQUES DE TRES. Ninguna línea del index.html puede pasar de 2000
+   caracteres, y seis versículos con su botón se pasaban. Ya había ocurrido con
+   los módulos de «trampas» y de «números»: la solución del proyecto es partir
+   la sección, no acortar el contenido. */
+const versHTML = v =>
+  '<p data-leer><strong>' + v[0] + '</strong><br>«' + v[1] + '»' +
+  ' <button class="btn-voz" aria-label="Escuchar el versículo"' +
+  ' onclick="leeCerca(this)">🔊</button></p>';
+
 for (const cap of Object.keys(VERS_CLAVE)) {
-  CONTENIDO[cap].push({
-    t: '📖 Versículos clave (RV1995)',
-    h: '<div class="highlight-box"><strong>Estos son los que el examen pide completar.</strong> ' +
-       'Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.</div>' +
-       VERS_CLAVE[cap].map(v =>
-         '<p><strong>' + v[0] + '</strong><br>«' + v[1] + '»</p>').join(''),
+  const lista = VERS_CLAVE[cap];
+  const bloques = [];
+  for (let i = 0; i < lista.length; i += 3) bloques.push(lista.slice(i, i + 3));
+  bloques.forEach((b, i) => {
+    CONTENIDO[cap].push({
+      t: '📖 Versículos clave (RV1995)' + (bloques.length > 1 ? ' · ' + (i + 1) : ''),
+      h: (i === 0
+          ? '<div class="highlight-box"><strong>Estos son los que el examen pide completar.</strong> ' +
+            'Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.' +
+            '<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div>'
+          : '') + b.map(versHTML).join(''),
+    });
   });
 }
 
