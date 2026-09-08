@@ -42,7 +42,15 @@ const APP    = leer('app.js');
 
 /* Se serializa con indentación para que ninguna línea pase de 2.000
    caracteres: con una sola línea, ningún visor de diff abre el archivo. */
-const DATA = `const CAPS = ${JSON.stringify(CAPS_ALL, null, 1)};
+/* La huella se calcula sobre el html, asi que no puede ir dentro del html
+   antes de existir. Se deja un marcador del MISMO largo que la huella (12
+   caracteres) y se sustituye despues: el hash se calcula con el marcador
+   puesto, y reemplazar 12 caracteres por otros 12 no cambia nada mas. */
+const MARCA_V = 'HUELLAxxxxxx';
+
+const DATA = `const VERSION_APP = '${MARCA_V}';
+
+const CAPS = ${JSON.stringify(CAPS_ALL, null, 1)};
 
 const CONTENIDO = ${JSON.stringify(CONTENIDO_ALL, null, 1)};
 
@@ -93,16 +101,21 @@ ${APP}
 </body>
 </html>`;
 
-fs.writeFileSync(SALIDA, html);
+const huellaHtml = crypto.createHash('sha1').update(html).digest('hex').slice(0, 12);
+const htmlFinal = html.replace(MARCA_V, huellaHtml);
+fs.writeFileSync(SALIDA, htmlFinal);
 
 /* El manifest y el service worker se escriben junto al index.html porque el
    navegador exige archivos propios del mismo origen: el service worker saca su
    alcance de su ruta, y iOS no acepta el manifest como data URI. El index.html
    sigue abriendo con doble clic: en file:// el registro no se intenta. */
 const RAIZ = f => path.join(__dirname, '..', f);
-const huella = crypto.createHash('sha1').update(html).digest('hex').slice(0, 12);
+const huella = huellaHtml;
 fs.writeFileSync(RAIZ('manifest.webmanifest'), PWA.manifest());
 fs.writeFileSync(RAIZ('sw.js'), PWA.sw(huella));
+/* La misma huella que nombra la cache va en version.json y dentro del HTML.
+   La app compara las dos: si difieren, lo que esta abierto es viejo. */
+fs.writeFileSync(RAIZ('version.json'), PWA.version(huella, new Date().toISOString().slice(0,10)));
 
-console.log('✅ index.html regenerado —', html.length, 'bytes');
-console.log('✅ manifest.webmanifest y sw.js — cache cb-' + huella);
+console.log('✅ index.html regenerado —', htmlFinal.length, 'bytes');
+console.log('✅ manifest.webmanifest, sw.js y version.json — version ' + huella);

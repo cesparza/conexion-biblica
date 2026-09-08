@@ -1,5 +1,5 @@
 /* Generado por fuente/build.js. No editar a mano: se sobrescribe. */
-const CACHE='cb-4d072c941e6f';
+const CACHE='cb-c8e33b55bd97';
 const ACTIVOS=["/","/manifest.webmanifest","/icono-512.png","/icono-mask-512.png","/icono-180.png"];
 const RED_MS=4000;
 
@@ -43,5 +43,9 @@ self.addEventListener('fetch',e=>{
   /* La evaluacion NUNCA se cachea: participantes, codigos y notas viven en D1,
      y una respuesta guardada aqui seria una nota vieja o el examen de otra. */
   if(url.pathname.startsWith('/api/'))return;
+  /* version.json tampoco: es justo el archivo con el que se pregunta si hay
+     algo nuevo, y servirlo de la cache haria que la respuesta fuera siempre
+     «no hay nada nuevo». */
+  if(url.pathname==='/version.json')return;
   e.respondWith(redPrimero(req));
 });

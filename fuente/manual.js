@@ -324,6 +324,41 @@ const MANUAL = [
     con el botón de al lado.</p>` },
   ]},
 
+{ id:'a-nuevo', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Cuando se agrega material nuevo',
+  d:'La app se actualiza sola, y tú decides cuándo',
+  secs:[
+  { t:'Cómo te enteras',
+    h:`<p>Cada vez que abres la app <strong>con internet</strong>, ella revisa
+    sola si hay material nuevo. Si lo hay, sale una
+    <strong>franja naranja arriba</strong> que dice «Hay material nuevo» con un
+    botón <strong>Actualizar</strong>.</p>
+    <p>También revisa cuando vuelves a la app después de haberla dejado. Eso
+    hace falta porque el iPhone <strong>no recarga la app al volver a
+    ella</strong>: te devuelve la pantalla donde la dejaste, y sin ese aviso
+    podrías pasar días con lo viejo.</p>` },
+  { t:'Tú decides cuándo',
+    h:`<p><strong>La app nunca se recarga sola.</strong> Si estás
+    <strong>a mitad de un examen</strong>, recargar borraría tus respuestas sin
+    entregarlas, así que si tocas Actualizar en ese momento te dice que
+    entregues primero.</p>
+    <p>Si tocas la <strong>✕</strong> el aviso se va, pero vuelve la próxima
+    vez que abras la app. No se descarta para siempre a propósito: el material
+    del campamento sí importa que esté al día.</p>` },
+  { t:'Revisarlo tú mismo',
+    h:`<p>En esta misma pantalla, más abajo, hay un bloque que dice
+    <strong>«¿Hay material nuevo?»</strong> con un botón
+    <strong>Revisar</strong>. Sirve para cuando quieras comprobarlo sin
+    esperar.</p>
+    <p>Te contesta siempre: o <strong>«Ya tienes la versión más
+    reciente»</strong>, o te manda a la franja naranja.</p>` },
+  { t:'Qué NO se pierde al actualizar',
+    h:`<p><strong>Tu progreso no se toca.</strong> Lo que has estudiado, las
+    tarjetas que ya dominas, tus notas y tu historial siguen ahí: eso se guarda
+    aparte del material.</p>
+    <p>Lo único que se reemplaza es el material: capítulos, preguntas, tarjetas
+    y versículos.</p>` },
+  ]},
+
 { id:'a-reglas', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Tres reglas y las dudas de todos',
   d:'Lo que hay que recordar',
   secs:[

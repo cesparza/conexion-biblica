@@ -1005,14 +1005,46 @@ const iconosMal=man.icons.filter(i=>{
 ok(iconosMal.length===0,'Todos los iconos del manifest existen y miden lo que declaran'+
   (iconosMal.length?' — '+iconosMal.join(', '):''));
 
-/* EL SEGURO QUE IMPORTA: la cache lleva la huella del index.html vigente. Si
-   alguien regenera el index y no el sw.js, los celulares siguen sirviendo el
-   material anterior, y el dia del examen la huella del banco no coincide con
-   la del servidor. Con esto, olvidarse de correr build.js falla aqui. */
+/* EL SEGURO QUE IMPORTA: los cuatro artefactos que build.js escribe tienen
+   que ser de la MISMA corrida. Son cuatro y cada uno cumple un papel:
+     index.html      → VERSION_APP, la huella de lo que esta corriendo
+     sw.js           → el nombre de la cache
+     version.json    → lo que la app consulta para saber si hay algo nuevo
+   Si el index se regenera y el sw.js no, los celulares siguen sirviendo el
+   material anterior. Si version.json se queda atras, el aviso de «material
+   nuevo» no sale nunca. Con esto, olvidarse de correr build.js falla aqui.
+
+   OJO CON EL CALCULO: la huella se calcula sobre el html con un MARCADOR de
+   doce caracteres en el lugar de VERSION_APP, porque no se puede meter dentro
+   del html un hash del propio html. Para recalcularla hay que volver a poner
+   el marcador. */
 const swSrc=fs.readFileSync(RZ('sw.js'),'utf8');
-const huellaHoy=cryptoPwa.createHash('sha1').update(htmlPwa).digest('hex').slice(0,12);
-ok(swSrc.includes("const CACHE='cb-"+huellaHoy+"'"),
-  'La cache del service worker corresponde al index.html vigente (cb-'+huellaHoy+')');
+const verJson=JSON.parse(fs.readFileSync(RZ('version.json'),'utf8'));
+const vApp=(htmlPwa.match(/const VERSION_APP = '([^']+)'/)||[])[1];
+
+ok(!!vApp&&vApp.length===12,'El index.html trae su propia huella en VERSION_APP');
+ok(swSrc.includes("const CACHE='cb-"+vApp+"'"),
+  'El nombre de la cache del service worker es la huella del index vigente');
+ok(verJson.v===vApp,'version.json declara la misma huella que el index');
+ok(/^\d{4}-\d{2}-\d{2}$/.test(String(verJson.fecha||'')),
+  'version.json trae la fecha de la publicacion');
+
+const MARCA='HUELLAxxxxxx';
+const recalculada=cryptoPwa.createHash('sha1')
+  .update(htmlPwa.replace(vApp,MARCA)).digest('hex').slice(0,12);
+ok(recalculada===vApp,
+  'La huella corresponde de verdad al contenido del index (olvidar build.js falla aqui)');
+
+/* Y que la app compare de verdad: sin esto el aviso no se enciende nunca. */
+ok(/VERSION_APP/.test(APP2)&&/version\.json/.test(APP2),
+  'La app consulta version.json y lo compara con VERSION_APP');
+/* En medio de un examen no se recarga: se perderian las respuestas. */
+ok(/examenEnCurso\(\)/.test(APP2)&&/prueba&&prueba\.length>0&&!entregado/.test(APP2),
+  'Actualizar no recarga si hay un examen empezado y sin entregar');
+/* El service worker no puede cachear justamente el archivo con el que se
+   pregunta si hay algo nuevo. */
+ok(/pathname==='\/version\.json'\)return/.test(swSrc),
+  'El service worker deja version.json fuera de la cache');
 
 /* Y que de verdad no toque la evaluacion: se ejecuta el sw con un self de
    mentiras y se mira si pide responder. Verificar el texto del guard no basta,

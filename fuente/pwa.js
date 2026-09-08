@@ -46,6 +46,11 @@ const manifest = () => JSON.stringify({
  *  el mismo contenido que '/' y duplicarlo son 700 KB de cache al doble. */
 const ACTIVOS = ['/', '/manifest.webmanifest', '/icono-512.png', '/icono-mask-512.png', '/icono-180.png'];
 
+/** Lo mas pequeno que sirve para saber si hay material nuevo: unos 60 bytes.
+ *  Preguntar por el index.html completo son 772 KB cada vez, y con datos del
+ *  celular eso no se puede hacer en cada apertura. */
+const version = (huella, fecha) => JSON.stringify({ v: huella, fecha }, null, 1);
+
 const sw = huella => `/* Generado por fuente/build.js. No editar a mano: se sobrescribe. */
 const CACHE='cb-${huella}';
 const ACTIVOS=${JSON.stringify(ACTIVOS)};
@@ -91,6 +96,10 @@ self.addEventListener('fetch',e=>{
   /* La evaluacion NUNCA se cachea: participantes, codigos y notas viven en D1,
      y una respuesta guardada aqui seria una nota vieja o el examen de otra. */
   if(url.pathname.startsWith('/api/'))return;
+  /* version.json tampoco: es justo el archivo con el que se pregunta si hay
+     algo nuevo, y servirlo de la cache haria que la respuesta fuera siempre
+     «no hay nada nuevo». */
+  if(url.pathname==='/version.json')return;
   e.respondWith(redPrimero(req));
 });
 `;
@@ -105,4 +114,4 @@ const head = `<link rel="manifest" href="/manifest.webmanifest">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Conexión">`;
 
-module.exports = { NOMBRE, ACTIVOS, manifest, sw, head };
+module.exports = { NOMBRE, ACTIVOS, manifest, sw, head, version };

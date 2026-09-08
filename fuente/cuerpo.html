@@ -88,6 +88,13 @@
 </svg>
 
 
+<!-- Aviso de material nuevo. Empieza oculto con [hidden] y lo enciende
+     pintaAvisoVer() cuando /version.json no coincide con VERSION_APP. -->
+<div id="aviso-nuevo" class="av-nuevo" hidden>
+  <span>📘 Hay material nuevo</span>
+  <button type="button" class="btn ver av-ok" onclick="aplicaVersion()">Actualizar</button>
+  <button type="button" class="av-x" onclick="cierraAvisoVer()" title="Después">✕</button>
+</div>
 <nav class="nav">
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
@@ -210,6 +217,19 @@
     <button id="ay-t2" onclick="ayGrupo('director')"><svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg><span>Para el director</span></button>
   </div>
   <div id="ay-lista"></div>
+  <!-- Buscar material nuevo a mano. La app lo hace sola al abrir y al volver
+       a ella, pero tener el boton evita la pregunta «¿y como la actualizo?». -->
+  <div class="card ver-card">
+    <div class="ver-fila">
+      <div>
+        <div class="ver-tit">¿Hay material nuevo?</div>
+        <div class="nota">La app lo revisa sola cada vez que la abres con
+        internet. Aquí puedes revisarlo cuando quieras.</div>
+      </div>
+      <button type="button" class="btn azul" onclick="revisaAhora(this)">Revisar</button>
+    </div>
+    <div id="ver-res" class="nota" style="margin-top:.6rem"></div>
+  </div>
   <div class="card">
     <div class="menu-impr">
       <button class="btn azul" onclick="imprimeManual()"><svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg><span>Imprimir este manual</span></button>

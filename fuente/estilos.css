@@ -7,6 +7,24 @@
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
 
+.ver-fila{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.ver-fila>div{flex:1;min-width:0}
+.ver-tit{font-weight:800;color:var(--azul);margin-bottom:.2rem}
+.ver-fila .btn{flex:0 0 auto}
+@media(max-width:620px){.ver-fila .btn{width:100%}}
+
+/* ═══ AVISO DE MATERIAL NUEVO ═══
+   Arriba de la barra de navegacion, para que se vea entre en la pantalla que
+   sea y sin tapar las pestanas. Naranja de marca: es un aviso, no un error. */
+.av-nuevo{background:var(--naranja);color:#fff;display:flex;align-items:center;
+  gap:.6rem;padding:.5rem .8rem;font-size:.86rem;font-weight:700}
+.av-nuevo>span{flex:1;min-width:0}
+.av-nuevo .av-ok{padding:.35rem .8rem;font-size:.82rem;min-height:36px;flex:0 0 auto}
+.av-x{background:none;border:0;color:#fff;font-size:1.05rem;cursor:pointer;
+  padding:6px 8px;line-height:1;flex:0 0 auto;opacity:.85;font-family:inherit}
+.av-x:hover{opacity:1}
+@media print{.av-nuevo{display:none!important}}
+
 .nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .nav-b{color:#fff;font-size:1.05rem;font-weight:800;padding:.9rem 1rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .nav-t{display:flex;flex:1}

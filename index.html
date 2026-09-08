@@ -23,6 +23,24 @@
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
 
+.ver-fila{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.ver-fila>div{flex:1;min-width:0}
+.ver-tit{font-weight:800;color:var(--azul);margin-bottom:.2rem}
+.ver-fila .btn{flex:0 0 auto}
+@media(max-width:620px){.ver-fila .btn{width:100%}}
+
+/* ═══ AVISO DE MATERIAL NUEVO ═══
+   Arriba de la barra de navegacion, para que se vea entre en la pantalla que
+   sea y sin tapar las pestanas. Naranja de marca: es un aviso, no un error. */
+.av-nuevo{background:var(--naranja);color:#fff;display:flex;align-items:center;
+  gap:.6rem;padding:.5rem .8rem;font-size:.86rem;font-weight:700}
+.av-nuevo>span{flex:1;min-width:0}
+.av-nuevo .av-ok{padding:.35rem .8rem;font-size:.82rem;min-height:36px;flex:0 0 auto}
+.av-x{background:none;border:0;color:#fff;font-size:1.05rem;cursor:pointer;
+  padding:6px 8px;line-height:1;flex:0 0 auto;opacity:.85;font-family:inherit}
+.av-x:hover{opacity:1}
+@media print{.av-nuevo{display:none!important}}
+
 .nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .nav-b{color:#fff;font-size:1.05rem;font-weight:800;padding:.9rem 1rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .nav-t{display:flex;flex:1}
@@ -1244,6 +1262,13 @@ details.card summary::marker{content:''}
 </svg>
 
 
+<!-- Aviso de material nuevo. Empieza oculto con [hidden] y lo enciende
+     pintaAvisoVer() cuando /version.json no coincide con VERSION_APP. -->
+<div id="aviso-nuevo" class="av-nuevo" hidden>
+  <span>📘 Hay material nuevo</span>
+  <button type="button" class="btn ver av-ok" onclick="aplicaVersion()">Actualizar</button>
+  <button type="button" class="av-x" onclick="cierraAvisoVer()" title="Después">✕</button>
+</div>
 <nav class="nav">
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
@@ -1366,6 +1391,19 @@ details.card summary::marker{content:''}
     <button id="ay-t2" onclick="ayGrupo('director')"><svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg><span>Para el director</span></button>
   </div>
   <div id="ay-lista"></div>
+  <!-- Buscar material nuevo a mano. La app lo hace sola al abrir y al volver
+       a ella, pero tener el boton evita la pregunta «¿y como la actualizo?». -->
+  <div class="card ver-card">
+    <div class="ver-fila">
+      <div>
+        <div class="ver-tit">¿Hay material nuevo?</div>
+        <div class="nota">La app lo revisa sola cada vez que la abres con
+        internet. Aquí puedes revisarlo cuando quieras.</div>
+      </div>
+      <button type="button" class="btn azul" onclick="revisaAhora(this)">Revisar</button>
+    </div>
+    <div id="ver-res" class="nota" style="margin-top:.6rem"></div>
+  </div>
   <div class="card">
     <div class="menu-impr">
       <button class="btn azul" onclick="imprimeManual()"><svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg><span>Imprimir este manual</span></button>
@@ -1569,6 +1607,8 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
+const VERSION_APP = 'c8e33b55bd97';
+
 const CAPS = [
  {
   "id": "d1",
@@ -14501,6 +14541,31 @@ const MANUAL = [
   ]
  },
  {
+  "id": "a-nuevo",
+  "para": "estudia",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-lista\"/></svg>",
+  "t": "Cuando se agrega material nuevo",
+  "d": "La app se actualiza sola, y tú decides cuándo",
+  "secs": [
+   {
+    "t": "Cómo te enteras",
+    "h": "<p>Cada vez que abres la app <strong>con internet</strong>, ella revisa\n    sola si hay material nuevo. Si lo hay, sale una\n    <strong>franja naranja arriba</strong> que dice «Hay material nuevo» con un\n    botón <strong>Actualizar</strong>.</p>\n    <p>También revisa cuando vuelves a la app después de haberla dejado. Eso\n    hace falta porque el iPhone <strong>no recarga la app al volver a\n    ella</strong>: te devuelve la pantalla donde la dejaste, y sin ese aviso\n    podrías pasar días con lo viejo.</p>"
+   },
+   {
+    "t": "Tú decides cuándo",
+    "h": "<p><strong>La app nunca se recarga sola.</strong> Si estás\n    <strong>a mitad de un examen</strong>, recargar borraría tus respuestas sin\n    entregarlas, así que si tocas Actualizar en ese momento te dice que\n    entregues primero.</p>\n    <p>Si tocas la <strong>✕</strong> el aviso se va, pero vuelve la próxima\n    vez que abras la app. No se descarta para siempre a propósito: el material\n    del campamento sí importa que esté al día.</p>"
+   },
+   {
+    "t": "Revisarlo tú mismo",
+    "h": "<p>En esta misma pantalla, más abajo, hay un bloque que dice\n    <strong>«¿Hay material nuevo?»</strong> con un botón\n    <strong>Revisar</strong>. Sirve para cuando quieras comprobarlo sin\n    esperar.</p>\n    <p>Te contesta siempre: o <strong>«Ya tienes la versión más\n    reciente»</strong>, o te manda a la franja naranja.</p>"
+   },
+   {
+    "t": "Qué NO se pierde al actualizar",
+    "h": "<p><strong>Tu progreso no se toca.</strong> Lo que has estudiado, las\n    tarjetas que ya dominas, tus notas y tu historial siguen ahí: eso se guarda\n    aparte del material.</p>\n    <p>Lo único que se reemplaza es el material: capítulos, preguntas, tarjetas\n    y versículos.</p>"
+   }
+  ]
+ },
+ {
   "id": "a-reglas",
   "para": "estudia",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-lista\"/></svg>",
@@ -18006,6 +18071,111 @@ async function borraParticipante(id){
     if(typeof pintaInicio==='function')pintaInicio();
   }catch(e){}
 })();
+
+/* ── MATERIAL NUEVO: COMO SE ENTERA LA APP ───────────────────────────────
+   MECANISMO, Y POR QUE NO BASTABA CON LO QUE YA HABIA
+   El service worker pide el index a la red primero, asi que cada vez que la
+   app ARRANCA con internet ya trae lo ultimo. El problema es otro: iOS no
+   recarga una app instalada al volver a ella, restaura la pantalla donde
+   quedo. Se puede pasar dias con la app abierta viendo material viejo sin
+   que nada avise, y eso es justo lo que paso.
+
+   Asi que se pregunta por /version.json, que son unos 60 bytes, y se compara
+   con VERSION_APP, la huella que va incrustada en el HTML que esta corriendo
+   ahora. Preguntar por el index completo serian 772 KB cada vez, y con datos
+   del celular eso no se puede hacer en cada apertura.
+
+   NO SE RECARGA SOLA, A PROPOSITO. Si la nina esta a mitad de un examen,
+   recargar le borra las respuestas sin entregar. Se avisa y ella decide
+   cuando. La unica excepcion es que nunca aplica durante un examen aunque lo
+   pida: primero hay que entregar. */
+let verNueva=null, verUltimo=0;
+
+/** Un examen empezado y sin entregar. Recargar aqui pierde las respuestas. */
+const examenEnCurso=()=>prueba&&prueba.length>0&&!entregado;
+
+async function buscaVersion(manual){
+  if(typeof VERSION_APP==='undefined')return null;
+  if(typeof location==='undefined'||location.protocol.indexOf('http')!==0)return null;
+  const ahora=Date.now();
+  /* Sin este freno, cambiar de app y volver diez veces son diez peticiones.
+     Un minuto es de sobra: el material no cambia cada minuto. */
+  if(!manual&&ahora-verUltimo<60000)return verNueva;
+  verUltimo=ahora;
+  try{
+    const r=await fetch('/version.json?t='+ahora,{cache:'no-store'});
+    if(!r.ok)return null;
+    const j=await r.json();
+    verNueva=(j&&j.v&&j.v!==VERSION_APP)?j.v:null;
+  }catch(e){ /* sin internet no hay novedad que reportar */ }
+  pintaAvisoVer();
+  return verNueva;
+}
+
+function pintaAvisoVer(){
+  const el=document.getElementById('aviso-nuevo');
+  if(!el)return;
+  el.hidden=!verNueva;
+}
+
+/** «Después»: se esconde hasta la proxima apertura, no se descarta para
+ *  siempre. Si alguien no quiere actualizar ahora, mañana se le vuelve a
+ *  ofrecer, porque el material del campamento si importa que este al dia. */
+function cierraAvisoVer(){
+  const el=document.getElementById('aviso-nuevo');
+  if(el)el.hidden=true;
+}
+
+async function aplicaVersion(){
+  if(examenEnCurso()){
+    const el=document.getElementById('aviso-nuevo');
+    if(el)el.innerHTML='<span>⚠️ Primero entrega el examen y vuelve a tocar Actualizar.</span>'+
+      '<button type="button" class="av-x" onclick="cierraAvisoVer()" title="Cerrar">✕</button>';
+    return;
+  }
+  /* Se borran las caches y se le pide al service worker que se revise. Sin
+     borrar la cache, la app podria volver a abrir con el mismo HTML: el
+     nombre de la cache lleva la huella, asi que la vieja quedaria huerfana
+     igual, pero borrarla evita que la caida a cache sirva lo viejo mientras
+     llega lo nuevo. */
+  try{
+    if(typeof caches!=='undefined')
+      for(const k of await caches.keys())await caches.delete(k);
+  }catch(e){}
+  try{
+    if(navigator.serviceWorker){
+      const rs=await navigator.serviceWorker.getRegistrations();
+      for(const r of rs)await r.update();
+    }
+  }catch(e){}
+  location.reload();
+}
+
+/** El boton del manual. Dice siempre algo: «ya estas al dia» tambien es una
+ *  respuesta, y sin ella el boton parece no hacer nada. */
+async function revisaAhora(btn){
+  const res=document.getElementById('ver-res');
+  if(btn)btn.disabled=true;
+  if(res)res.textContent='Revisando…';
+  const nueva=await buscaVersion(true);
+  if(btn)btn.disabled=false;
+  if(!res)return;
+  if(nueva)res.innerHTML='📘 <strong>Hay material nuevo.</strong> Toca '+
+    '<strong>Actualizar</strong> en la franja naranja de arriba.';
+  else if(typeof VERSION_APP==='undefined')res.textContent=
+    'Esta copia se abrió como archivo, no desde internet, así que no hay nada que revisar.';
+  else res.textContent='✅ Ya tienes la versión más reciente.';
+}
+
+if(typeof document!=='undefined'&&document.addEventListener){
+  /* Volver a la app es el momento que importa: es cuando iOS restaura la
+     pantalla vieja sin recargar. */
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible')buscaVersion(false);
+  });
+}
+if(typeof addEventListener==='function')
+  addEventListener('load',()=>{setTimeout(()=>buscaVersion(false),1500);});
 
 /* ── REGISTRO DEL SERVICE WORKER ─────────────────────────────────────────
    Va al final y con tres guardas. typeof navigator, porque las pruebas cargan

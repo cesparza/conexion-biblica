@@ -2709,6 +2709,111 @@ async function borraParticipante(id){
   }catch(e){}
 })();
 
+/* ── MATERIAL NUEVO: COMO SE ENTERA LA APP ───────────────────────────────
+   MECANISMO, Y POR QUE NO BASTABA CON LO QUE YA HABIA
+   El service worker pide el index a la red primero, asi que cada vez que la
+   app ARRANCA con internet ya trae lo ultimo. El problema es otro: iOS no
+   recarga una app instalada al volver a ella, restaura la pantalla donde
+   quedo. Se puede pasar dias con la app abierta viendo material viejo sin
+   que nada avise, y eso es justo lo que paso.
+
+   Asi que se pregunta por /version.json, que son unos 60 bytes, y se compara
+   con VERSION_APP, la huella que va incrustada en el HTML que esta corriendo
+   ahora. Preguntar por el index completo serian 772 KB cada vez, y con datos
+   del celular eso no se puede hacer en cada apertura.
+
+   NO SE RECARGA SOLA, A PROPOSITO. Si la nina esta a mitad de un examen,
+   recargar le borra las respuestas sin entregar. Se avisa y ella decide
+   cuando. La unica excepcion es que nunca aplica durante un examen aunque lo
+   pida: primero hay que entregar. */
+let verNueva=null, verUltimo=0;
+
+/** Un examen empezado y sin entregar. Recargar aqui pierde las respuestas. */
+const examenEnCurso=()=>prueba&&prueba.length>0&&!entregado;
+
+async function buscaVersion(manual){
+  if(typeof VERSION_APP==='undefined')return null;
+  if(typeof location==='undefined'||location.protocol.indexOf('http')!==0)return null;
+  const ahora=Date.now();
+  /* Sin este freno, cambiar de app y volver diez veces son diez peticiones.
+     Un minuto es de sobra: el material no cambia cada minuto. */
+  if(!manual&&ahora-verUltimo<60000)return verNueva;
+  verUltimo=ahora;
+  try{
+    const r=await fetch('/version.json?t='+ahora,{cache:'no-store'});
+    if(!r.ok)return null;
+    const j=await r.json();
+    verNueva=(j&&j.v&&j.v!==VERSION_APP)?j.v:null;
+  }catch(e){ /* sin internet no hay novedad que reportar */ }
+  pintaAvisoVer();
+  return verNueva;
+}
+
+function pintaAvisoVer(){
+  const el=document.getElementById('aviso-nuevo');
+  if(!el)return;
+  el.hidden=!verNueva;
+}
+
+/** «Después»: se esconde hasta la proxima apertura, no se descarta para
+ *  siempre. Si alguien no quiere actualizar ahora, mañana se le vuelve a
+ *  ofrecer, porque el material del campamento si importa que este al dia. */
+function cierraAvisoVer(){
+  const el=document.getElementById('aviso-nuevo');
+  if(el)el.hidden=true;
+}
+
+async function aplicaVersion(){
+  if(examenEnCurso()){
+    const el=document.getElementById('aviso-nuevo');
+    if(el)el.innerHTML='<span>⚠️ Primero entrega el examen y vuelve a tocar Actualizar.</span>'+
+      '<button type="button" class="av-x" onclick="cierraAvisoVer()" title="Cerrar">✕</button>';
+    return;
+  }
+  /* Se borran las caches y se le pide al service worker que se revise. Sin
+     borrar la cache, la app podria volver a abrir con el mismo HTML: el
+     nombre de la cache lleva la huella, asi que la vieja quedaria huerfana
+     igual, pero borrarla evita que la caida a cache sirva lo viejo mientras
+     llega lo nuevo. */
+  try{
+    if(typeof caches!=='undefined')
+      for(const k of await caches.keys())await caches.delete(k);
+  }catch(e){}
+  try{
+    if(navigator.serviceWorker){
+      const rs=await navigator.serviceWorker.getRegistrations();
+      for(const r of rs)await r.update();
+    }
+  }catch(e){}
+  location.reload();
+}
+
+/** El boton del manual. Dice siempre algo: «ya estas al dia» tambien es una
+ *  respuesta, y sin ella el boton parece no hacer nada. */
+async function revisaAhora(btn){
+  const res=document.getElementById('ver-res');
+  if(btn)btn.disabled=true;
+  if(res)res.textContent='Revisando…';
+  const nueva=await buscaVersion(true);
+  if(btn)btn.disabled=false;
+  if(!res)return;
+  if(nueva)res.innerHTML='📘 <strong>Hay material nuevo.</strong> Toca '+
+    '<strong>Actualizar</strong> en la franja naranja de arriba.';
+  else if(typeof VERSION_APP==='undefined')res.textContent=
+    'Esta copia se abrió como archivo, no desde internet, así que no hay nada que revisar.';
+  else res.textContent='✅ Ya tienes la versión más reciente.';
+}
+
+if(typeof document!=='undefined'&&document.addEventListener){
+  /* Volver a la app es el momento que importa: es cuando iOS restaura la
+     pantalla vieja sin recargar. */
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible')buscaVersion(false);
+  });
+}
+if(typeof addEventListener==='function')
+  addEventListener('load',()=>{setTimeout(()=>buscaVersion(false),1500);});
+
 /* ── REGISTRO DEL SERVICE WORKER ─────────────────────────────────────────
    Va al final y con tres guardas. typeof navigator, porque las pruebas cargan
    este archivo con un DOM de mentiras que no lo tiene. El protocolo, porque en
