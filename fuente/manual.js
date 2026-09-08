@@ -192,6 +192,36 @@ const MANUAL = [
     examen normal.</p>` },
   ]},
 
+{ id:'a-instalar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-compartir"/></svg>', t:'Ponerla como app en el celular',
+  d:'Queda con icono propio y abre sin internet',
+  secs:[
+  { t:'En iPhone',
+    h:`<p>Abre la app en <strong>Safari</strong> (con Chrome no aparece la
+    opción), toca el botón de <strong>compartir</strong> abajo, el cuadrito con
+    la flecha hacia arriba, y busca <strong>Añadir a pantalla de inicio</strong>.
+    Luego toca <strong>Añadir</strong>.</p>
+    <p>Queda un icono azul con un libro, igual que cualquier otra app. Al
+    abrirla desde ahí ya no se ve la barra de direcciones.</p>` },
+  { t:'En Android',
+    h:`<p>Ábrela en <strong>Chrome</strong>. Sale un aviso abajo que dice
+    <strong>Instalar app</strong>. Si no sale, está en el menú de los tres
+    puntos, arriba a la derecha, como <strong>Instalar aplicación</strong> o
+    <strong>Añadir a pantalla de inicio</strong>.</p>` },
+  { t:'Para qué sirve, de verdad',
+    h:`<p>Para <strong>estudiar sin internet</strong>. La primera vez que la
+    abres, el celular se guarda la app completa; después las lecciones, las
+    tarjetas y los exámenes de práctica funcionan en el bus, en el campamento
+    o donde no haya señal.</p>
+    <p>Lo único que <strong>siempre necesita internet es la evaluación del
+    día</strong>, porque tu nota se guarda en el servidor y no en el celular.
+    Si no tienes señal en ese momento, la evaluación no arranca. Eso es a
+    propósito.</p>` },
+  { t:'Si algo se ve viejo',
+    h:`<p>Cuando se agrega material nuevo, el celular lo trae solo la próxima
+    vez que abras la app con internet. <strong>No hay que reinstalarla.</strong></p>
+    <p>Si alguna vez ves algo raro, ciérrala del todo y ábrela otra vez con
+    internet. Con eso queda al día.</p>` },
+  ]},
 { id:'a-papel', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-imprimir"/></svg>', t:'Estudiar en papel',
   d:'Todo se puede imprimir desde la app',
   secs:[

@@ -1,0 +1,15 @@
+# Cabeceras de Cloudflare Pages. Pages lee este archivo del directorio de
+# salida y no lo publica como archivo.
+#
+# no-cache no quiere decir "no guardar", quiere decir "revalidar siempre":
+# permite el 304 y evita que un service worker viejo se quede pegado en el CDN
+# o en el navegador. Sin esto, cambiar sw.js podia tardar horas en llegar, y
+# ese es justo el archivo que decide que version del material se sirve.
+/sw.js
+  Cache-Control: no-cache
+
+# Content-Type explicito: si Pages sirviera el manifest como octet-stream,
+# Chrome lo descarta y la app deja de ser instalable, sin error visible.
+/manifest.webmanifest
+  Cache-Control: no-cache
+  Content-Type: application/manifest+json; charset=utf-8

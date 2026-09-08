@@ -8,6 +8,11 @@
      abre con doble clic. El azul y el naranja son los de la marca. -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231F3864'/><path d='M11 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff'/><path d='M33.5 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff' opacity='.85'/><path d='M32 17.5v31' stroke='%23E8720C' stroke-width='3.4' stroke-linecap='round'/></svg>">
 <meta name="theme-color" content="#1F3864">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icono-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Conexión">
 <style>
 :root{
   --azul:#1F3864; --cielo:#2E8BC0; --naranja:#E8720C; --verde:#1A7A1A;
@@ -14130,6 +14135,31 @@ const MANUAL = [
   ]
  },
  {
+  "id": "a-instalar",
+  "para": "estudia",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-compartir\"/></svg>",
+  "t": "Ponerla como app en el celular",
+  "d": "Queda con icono propio y abre sin internet",
+  "secs": [
+   {
+    "t": "En iPhone",
+    "h": "<p>Abre la app en <strong>Safari</strong> (con Chrome no aparece la\n    opción), toca el botón de <strong>compartir</strong> abajo, el cuadrito con\n    la flecha hacia arriba, y busca <strong>Añadir a pantalla de inicio</strong>.\n    Luego toca <strong>Añadir</strong>.</p>\n    <p>Queda un icono azul con un libro, igual que cualquier otra app. Al\n    abrirla desde ahí ya no se ve la barra de direcciones.</p>"
+   },
+   {
+    "t": "En Android",
+    "h": "<p>Ábrela en <strong>Chrome</strong>. Sale un aviso abajo que dice\n    <strong>Instalar app</strong>. Si no sale, está en el menú de los tres\n    puntos, arriba a la derecha, como <strong>Instalar aplicación</strong> o\n    <strong>Añadir a pantalla de inicio</strong>.</p>"
+   },
+   {
+    "t": "Para qué sirve, de verdad",
+    "h": "<p>Para <strong>estudiar sin internet</strong>. La primera vez que la\n    abres, el celular se guarda la app completa; después las lecciones, las\n    tarjetas y los exámenes de práctica funcionan en el bus, en el campamento\n    o donde no haya señal.</p>\n    <p>Lo único que <strong>siempre necesita internet es la evaluación del\n    día</strong>, porque tu nota se guarda en el servidor y no en el celular.\n    Si no tienes señal en ese momento, la evaluación no arranca. Eso es a\n    propósito.</p>"
+   },
+   {
+    "t": "Si algo se ve viejo",
+    "h": "<p>Cuando se agrega material nuevo, el celular lo trae solo la próxima\n    vez que abras la app con internet. <strong>No hay que reinstalarla.</strong></p>\n    <p>Si alguna vez ves algo raro, ciérrala del todo y ábrela otra vez con\n    internet. Con eso queda al día.</p>"
+   }
+  ]
+ },
+ {
   "id": "a-papel",
   "para": "estudia",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-imprimir\"/></svg>",
@@ -17341,6 +17371,18 @@ async function borraParticipante(id){
     if(typeof pintaInicio==='function')pintaInicio();
   }catch(e){}
 })();
+
+/* ── REGISTRO DEL SERVICE WORKER ─────────────────────────────────────────
+   Va al final y con tres guardas. typeof navigator, porque las pruebas cargan
+   este archivo con un DOM de mentiras que no lo tiene. El protocolo, porque en
+   file:// la llamada lanza y el index.html tiene que seguir abriendo con doble
+   clic. Y el catch, porque un registro fallido no puede tumbar la app: sin
+   service worker sigue funcionando, solo deja de abrir sin senal. */
+if(typeof navigator!=='undefined'&&navigator.serviceWorker&&
+   typeof location!=='undefined'&&location.protocol.indexOf('http')===0&&
+   typeof addEventListener==='function'){
+  addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>

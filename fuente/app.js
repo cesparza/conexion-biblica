@@ -2558,3 +2558,15 @@ async function borraParticipante(id){
     if(typeof pintaInicio==='function')pintaInicio();
   }catch(e){}
 })();
+
+/* ── REGISTRO DEL SERVICE WORKER ─────────────────────────────────────────
+   Va al final y con tres guardas. typeof navigator, porque las pruebas cargan
+   este archivo con un DOM de mentiras que no lo tiene. El protocolo, porque en
+   file:// la llamada lanza y el index.html tiene que seguir abriendo con doble
+   clic. Y el catch, porque un registro fallido no puede tumbar la app: sin
+   service worker sigue funcionando, solo deja de abrir sin senal. */
+if(typeof navigator!=='undefined'&&navigator.serviceWorker&&
+   typeof location!=='undefined'&&location.protocol.indexOf('http')===0&&
+   typeof addEventListener==='function'){
+  addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+}

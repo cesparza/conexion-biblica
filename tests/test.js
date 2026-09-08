@@ -748,5 +748,72 @@ const bloqueGuias=APP2.slice(APP2.indexOf('function imprimeGuiasTodo'),
 ok(/c\.ev!=='creencias'/.test(bloqueGuias),
   'La guía impresa de los dos eventos excluye las creencias');
 
+
+/* ── LA APP INSTALABLE ───────────────────────────────────────────────────
+   Tres cosas que se rompen en silencio y sin error visible: un manifest que
+   el navegador descarta, un icono que no mide lo que dice, y un sw.js
+   regenerado a medias que sigue sirviendo material de otra version. */
+const cryptoPwa=require('crypto');
+const RZ=f=>path.join(RAIZ,f);
+const htmlPwa=fs.readFileSync(RZ('index.html'),'utf8');
+
+ok(/<link rel="manifest" href="\/manifest\.webmanifest">/.test(htmlPwa),
+  'El HTML declara el manifest');
+ok(/<link rel="apple-touch-icon" href="\/icono-180\.png">/.test(htmlPwa),
+  'El HTML declara el apple-touch-icon (iOS no acepta SVG para ese icono)');
+ok(/navigator\.serviceWorker\.register\('\/sw\.js'\)/.test(htmlPwa),
+  'El HTML registra el service worker');
+/* Sin la guarda de protocolo, abrir el index.html con doble clic lanza. */
+ok(/location\.protocol\.indexOf\('http'\)===0/.test(htmlPwa),
+  'El registro del service worker esta protegido para file://');
+
+const man=JSON.parse(fs.readFileSync(RZ('manifest.webmanifest'),'utf8'));
+ok(man.display==='standalone'&&man.start_url==='/'&&man.scope==='/',
+  'El manifest pide standalone en la raiz');
+ok(man.theme_color==='#1F3864','El theme_color del manifest es el azul de marca');
+ok(man.icons.some(i=>i.purpose==='maskable'),
+  'El manifest trae un icono maskable (el launcher de Android recorta el otro)');
+
+/** Ancho y alto reales de un PNG: van big-endian en el IHDR, bytes 16 a 24. */
+const tamPng=f=>{const b=fs.readFileSync(RZ(f));return b.readUInt32BE(16)+'x'+b.readUInt32BE(20);};
+const iconosMal=man.icons.filter(i=>{
+  const f=i.src.replace(/^\//,'');
+  return !fs.existsSync(RZ(f))||tamPng(f)!==i.sizes;
+}).map(i=>i.src);
+ok(iconosMal.length===0,'Todos los iconos del manifest existen y miden lo que declaran'+
+  (iconosMal.length?' — '+iconosMal.join(', '):''));
+
+/* EL SEGURO QUE IMPORTA: la cache lleva la huella del index.html vigente. Si
+   alguien regenera el index y no el sw.js, los celulares siguen sirviendo el
+   material anterior, y el dia del examen la huella del banco no coincide con
+   la del servidor. Con esto, olvidarse de correr build.js falla aqui. */
+const swSrc=fs.readFileSync(RZ('sw.js'),'utf8');
+const huellaHoy=cryptoPwa.createHash('sha1').update(htmlPwa).digest('hex').slice(0,12);
+ok(swSrc.includes("const CACHE='cb-"+huellaHoy+"'"),
+  'La cache del service worker corresponde al index.html vigente (cb-'+huellaHoy+')');
+
+/* Y que de verdad no toque la evaluacion: se ejecuta el sw con un self de
+   mentiras y se mira si pide responder. Verificar el texto del guard no basta,
+   porque un return mal puesto lo deja pasar igual. */
+function corteSw(url,metodo){
+  const oyentes={};
+  const selfSw={addEventListener:(t,f)=>{oyentes[t]=f;},skipWaiting(){},clients:{claim(){}}};
+  const cachesSw={open:()=>Promise.resolve({addAll:()=>Promise.resolve(),put(){}}),
+                  match:()=>Promise.resolve(null),keys:()=>Promise.resolve([])};
+  new Function('self','location','caches','fetch','Response','setTimeout','clearTimeout','URL',swSrc)
+    (selfSw,{origin:'https://x.dev'},cachesSw,()=>new Promise(()=>{}),{error:()=>({})},
+     ()=>0,()=>{},URL);
+  let pidio=false;
+  oyentes.fetch({request:{method:metodo||'GET',url:'https://x.dev'+url},
+                 respondWith(){pidio=true;}});
+  return pidio;
+}
+ok(corteSw('/api/evaluacion')===false,
+  'El service worker NO intercepta /api/evaluacion (la nota siempre va al servidor)');
+ok(corteSw('/api/participantes')===false,
+  'El service worker NO intercepta ninguna ruta de /api/');
+ok(corteSw('/')===true,'El service worker si atiende la pagina');
+ok(corteSw('/','POST')===false,'El service worker no toca los POST');
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

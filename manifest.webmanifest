@@ -1,0 +1,31 @@
+{
+  "name": "Conexión Bíblica — Daniel",
+  "short_name": "Conexión",
+  "description": "Estudio y evaluación de Daniel, la Devoción Matutina y las 28 creencias.",
+  "lang": "es-CO",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F0F4F8",
+  "theme_color": "#1F3864",
+  "icons": [
+    {
+      "src": "/icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icono-mask-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icono-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
