@@ -138,6 +138,15 @@ d2: [
     <em>La idea del capítulo: Dios sabe y maneja lo que va a pasar en la
     historia.</em>`) },
 
+  { t:'👑 Contexto histórico', h:
+    hi(`Daniel 2 pasa en el <strong>segundo año del reinado de
+    Nabucodonosor</strong> (2:1). Daniel y sus tres amigos ya salieron del
+    entrenamiento de tres años de Daniel 1, así que ya cuentan como
+    <strong>sabios de Babilonia</strong>: por eso el decreto de muerte los
+    incluye (2:13), aunque a ellos nunca les preguntaron nada.<br><br>
+    Ese detalle es la bisagra de todo el capítulo. Daniel no se mete de
+    voluntario: <strong>la sentencia ya lo cubría</strong>.`) },
+
   { t:'💭 El sueño y la crisis', h:
     wa(`<strong>Año:</strong> SEGUNDO año del reinado de Nabucodonosor (2:1)<br>
     El sueño perturbó su espíritu y se le fue el sueño.<br>
@@ -145,6 +154,51 @@ d2: [
     <strong>Amenaza (2:5):</strong> serían hechos pedazos y sus casas convertidas en <strong>estercoleros</strong>.<br>
     <strong>Decreto (2:12):</strong> que todos los sabios de Babilonia fueran muertos.<br>
     <strong>Arioc:</strong> capitán de la guardia del rey, enviado a ejecutar la sentencia (2:14).`) },
+
+  { t:'🔮 Los cuatro grupos que llamó el rey', h:
+    tbl(['Grupo','Qué hacían'],[
+      ['Magos','Los sabios de la corte, expertos en los libros y los ritos'],
+      ['Astrólogos','Leían el cielo para adivinar lo que iba a pasar'],
+      ['Encantadores','Usaban conjuros y fórmulas'],
+      ['Caldeos','La clase sacerdotal de Babilonia; son los que le contestan al rey'],
+    ]) +
+    li([`Los cuatro nombres están en <strong>2:2</strong>, en ese orden.`,
+        `En <strong>2:27</strong> Daniel los nombra distinto: «ni sabios ni
+         astrólogos, ni magos ni <strong>adivinos</strong>».`,
+        `Los que hablan en arameo con el rey son los <strong>caldeos</strong> (2:4).`]) },
+
+  { t:'💬 El pulso con los caldeos (2:4-11)', h:
+    li([`Piden lo de siempre: <strong>«Cuenta el sueño a tus siervos, y te
+         daremos la interpretación»</strong> (2:4). Lo piden <strong>dos
+         veces</strong> (2:7).`,
+        `El rey los acusa de <strong>poner dilaciones</strong> porque «veis que
+         el asunto se me ha ido» (2:8).`,
+        `La amenaza: <strong>hechos pedazos</strong> y las casas
+         <strong>convertidas en estercoleros</strong> (2:5).`,
+        `La promesa si aciertan: <strong>dones, favores y gran honra</strong> (2:6).`]) +
+    wa(`La excusa con la que se rinden es la frase clave del capítulo:
+    <strong>«no hay quien lo pueda declarar al rey, salvo los dioses cuya
+    morada no está entre los hombres»</strong> (2:11). Ellos mismos dicen que
+    hace falta un dios que viva cerca de la gente. Lo que sigue es Daniel
+    demostrando que ese Dios existe.`) },
+
+  { t:'🙌 La oración de Daniel, entera (2:20-23)', h:
+    vs(`«Sea bendito el nombre de Dios de siglos en siglos, porque suyos son el
+    poder y la sabiduría. Él muda los tiempos y las edades, quita reyes y pone
+    reyes; da la sabiduría a los sabios y la ciencia a los entendidos. Él
+    revela lo profundo y lo escondido, conoce lo que está en tinieblas y con él
+    mora la luz.»`) +
+    tbl(['Lo que dice de Dios','Versículo'],[
+      ['Suyos son el poder y la sabiduría','2:20'],
+      ['Muda los tiempos y las edades','2:21'],
+      ['Quita reyes y pone reyes','2:21'],
+      ['Da la sabiduría a los sabios y la ciencia a los entendidos','2:21'],
+      ['Revela lo profundo y lo escondido','2:22'],
+      ['Conoce lo que está en tinieblas, y con él mora la luz','2:22'],
+    ]) +
+    hi(`Daniel <strong>alaba antes de ir donde el rey</strong>, no después de
+    que le salga bien (2:19-24). Y en 2:23 dice «nos has dado a conocer»: en
+    plural, contando a los tres que oraron con él.`) },
 
   { t:'🙏 La respuesta de Daniel', h:
     li(['Habló a Arioc con <strong>prudencia y sabiduría</strong> (2:14)',
@@ -165,7 +219,7 @@ d2: [
     ]) },
 
   { t:'🪨 La piedra — detalles exactos', h:
-    hi(`• Cortada del monte <strong>sin que la cortara mano alguna</strong> (2:34)<br>
+    hi(`• Se desprendió <strong>sin que la cortara mano alguna</strong> (2:34). Que salió del monte lo dice 2:45<br>
     • Hirió la imagen <strong>en sus pies de hierro y de barro cocido</strong> (2:34)<br>
     • Fueron desmenuzados el hierro, el barro cocido, el bronce, la plata y el oro,
       y fueron <strong>como tamo de las eras del verano</strong> (2:35)<br>
@@ -173,11 +227,57 @@ d2: [
     • La piedra se hizo <strong>un gran monte que llenó toda la tierra</strong> (2:35)<br>
     • Ese reino <strong>no será jamás destruido</strong> ni dejado a otro pueblo (2:44)`) },
 
+  { t:'☝️ Lo que Daniel aclaró antes de interpretar', h:
+    li([`Primero dice quién <strong>no</strong> puede: «ni sabios ni
+         astrólogos, ni magos ni adivinos» (2:27).`,
+        `Después quién sí: <strong>«hay un Dios en los cielos que revela los
+         misterios»</strong> (2:28).`,
+        `Y aclara que <strong>no es mérito suyo</strong>: «no porque en mí haya
+         más sabiduría que en los demás vivientes» (2:30).`,
+        `Le dice para qué es el sueño: «lo que ha de acontecer en los
+         <strong>últimos días</strong>» (2:28).`]) +
+    hi(`Daniel tenía el problema resuelto y aun así <strong>dedicó tres
+    versículos a decir que el crédito no era suyo</strong>. Ese es el gesto que
+    el capítulo quiere que se vea, no el acertijo.`) },
+
+  { t:'🦶 Los pies: por qué no se unen (2:41-43)', h:
+    li([`El reino será <strong>dividido</strong>, pero con «algo de la fuerza
+         del hierro» (2:41).`,
+        `Por los dedos, en parte de hierro y en parte de barro, será
+         <strong>en parte fuerte y en parte frágil</strong> (2:42).`,
+        `<strong>«Se mezclarán por medio de alianzas humanas; pero no se unirán
+         el uno con el otro, como el hierro no se mezcla con el barro»</strong>
+         (2:43).`]) +
+    hi(`Aquí está el único detalle del sueño que trae su propia explicación de
+    por qué falla: <strong>las alianzas se intentan y no pegan</strong>. Si en
+    el examen preguntan qué representan los pies, la respuesta lleva las dos
+    partes: divididos, y que no logran unirse.`) },
+
+  { t:'👑 El reino que no será destruido (2:44-45)', h:
+    tbl(['Lo que dice el texto','Versículo'],[
+      ['Lo levanta <strong>el Dios del cielo</strong>','2:44'],
+      ['Aparece <strong>«en los días de estos reyes»</strong>','2:44'],
+      ['<strong>No será jamás destruido</strong>','2:44'],
+      ['No será dejado a otro pueblo','2:44'],
+      ['Desmenuzará y consumirá a todos estos reinos','2:44'],
+      ['Él permanecerá para siempre','2:44'],
+      ['«El sueño es verdadero, y fiel su interpretación»','2:45'],
+    ]) },
+
+  { t:'🙇 La reacción de Nabucodonosor (2:46-47)', h:
+    li([`<strong>Se postró sobre su rostro</strong> y se humilló ante Daniel (2:46).`,
+        `Mandó que le ofrecieran <strong>presentes e incienso</strong> (2:46).`,
+        `Dijo: <strong>«Ciertamente el Dios vuestro es Dios de dioses, Señor de
+         los reyes y el que revela los misterios»</strong> (2:47).`]) +
+    wa(`Ojo con esto, porque en Daniel 3 el mismo rey manda hacer una estatua
+    de oro entera y exige que la adoren. <strong>Reconocer a Dios una vez no
+    fue lo mismo que seguirlo.</strong>`) },
+
   { t:'🏅 Consecuencias', h:
     tbl(['Persona','Lo que recibió'],[
-      ['Daniel','Gobernador de toda la provincia de Babilonia y principal de los gobernadores sobre todos los sabios (2:48)'],
-      ['Sadrac, Mesac y Abed-nego','Administradores de la provincia de Babilonia, por petición de Daniel (2:49)'],
-      ['Daniel (además)','Permaneció en la puerta del rey (2:49)'],
+      ['Daniel','Gobernador de toda la provincia de Babilonia y <strong>jefe supremo de todos los sabios</strong> de Babilonia (2:48)'],
+      ['Sadrac, Mesac y Abed-nego','Puestos <strong>sobre los negocios</strong> de la provincia de Babilonia, por petición de Daniel (2:49)'],
+      ['Daniel (además)','Se quedó <strong>en la corte del rey</strong> (2:49)'],
     ]) },
 
   { t:'📖 Versículo clave', h:
@@ -218,7 +318,7 @@ d3: [
     hi(`<strong>⚠ Ojo con el tercero.</strong> La RV1995 dice
     <strong>CÍTARA</strong>. La RV1960, que es la que más se oye, dice
     <strong>tamboril</strong> en ese lugar.<br>
-    Si la pregunta dice «según la RV1995», la respuesta es <u>cítara</u>.`) },
+    Si la pregunta dice <em>según la RV1995</em>, la respuesta es <u>cítara</u>.`) },
 
   { t:'🔥 El horno de fuego', h:
     hi(`• El rostro de Nabucodonosor se demudó contra ellos (3:19)<br>
@@ -238,9 +338,9 @@ d3: [
     <u>para verificarlo con sus propios ojos</u> (3:27).`) },
 
   { t:'📜 La respuesta de los tres jóvenes (3:17-18)', h:
-    vs(`«He aquí nuestro Dios a quien servimos <strong>puede librarnos</strong> del horno de fuego ardiendo;
-    y de tu mano, oh rey, nos librará. <strong>Y si no</strong>, sepas, oh rey, que no serviremos a tus dioses,
-    ni tampoco adoraremos la estatua que has levantado.»`) },
+    vs(`«Nuestro Dios, a quien servimos, <strong>puede librarnos</strong> del horno de fuego ardiente;
+    y de tus manos, rey, nos librará. <strong>Y si no</strong>, has de saber, oh rey, que no serviremos
+    a tus dioses ni tampoco adoraremos la estatua que has levantado.»`) },
 
   { t:'👑 El decreto de Nabucodonosor (3:28-30)', h:
     li(['Bendijo al Dios de Sadrac, Mesac y Abed-nego, que <strong>envió su ángel</strong> y los libró (3:28)',
@@ -251,6 +351,42 @@ d3: [
 
 /* ═══════════════ DANIEL 4 ═══════════════ */
 d4: [
+  { t:'📚 En pocas palabras', h:
+    hi(`El rey Nabucodonosor está en la cima: tranquilo en su casa, floreciente
+    en su palacio. Sueña con <strong>un árbol enorme</strong> que da sombra y
+    alimento a todos, y oye a un mensajero del cielo ordenar que lo
+    derriben.<br><br>
+    Daniel le dice que el árbol <strong>es él</strong>, y le da un consejo para
+    evitarlo. El rey no lo toma. <strong>Doce meses después</strong>, mirando
+    Babilonia desde su palacio, se atribuye la gloria, y en esa misma hora
+    pierde la razón y vive como una bestia por <strong>siete tiempos</strong>.<br><br>
+    Al final alza los ojos al cielo, recupera la razón y recupera el reino con
+    <strong>mayor grandeza</strong>. El capítulo entero lo cuenta él mismo.`) },
+
+  { t:'✍️ Quién escribe este capítulo', h:
+    hi(`Daniel 4 es el único capítulo del libro escrito como
+    <strong>carta del propio Nabucodonosor</strong>. Abre así:
+    «Nabucodonosor, rey, a todos los pueblos, naciones y lenguas que moran en
+    toda la tierra: Paz os sea multiplicada» (4:1).<br><br>
+    Por eso el texto habla en primera persona: «Yo, Nabucodonosor, estaba
+    tranquilo en mi casa, floreciente en mi palacio» (4:4). Es
+    <strong>el rey contando su propia humillación</strong> y publicándola en
+    todo el imperio.`) },
+
+  { t:'🔮 Los sabios fallaron otra vez (4:6-9)', h:
+    li([`Llamó a <strong>todos los sabios de Babilonia</strong> (4:6).`,
+        `Vinieron <strong>magos, astrólogos, caldeos y adivinos</strong> (4:7).
+         Es una lista distinta a la de 2:2, donde eran magos, astrólogos,
+         encantadores y caldeos.`,
+        `Les contó el sueño y <strong>«no me pudieron dar su
+         interpretación»</strong> (4:7). Esta vez el rey sí les dijo qué había
+         soñado, y aun así fallaron.`,
+        `A Daniel lo llama <strong>«jefe de los magos»</strong> (4:9), el cargo
+         que recibió en 2:48.`]) +
+    hi(`Vale comparar los dos capítulos: en Daniel 2 la excusa fue que el rey
+    no contaba el sueño. Aquí lo contó, y <strong>el resultado fue el
+    mismo</strong>.`) },
+
   { t:'🌳 El sueño del árbol', h:
     hi(`• Un árbol en medio de la tierra, cuya altura era grande (4:10)<br>
     • Crecía y su copa <strong>llegaba hasta el cielo</strong>, se veía hasta los confines de la tierra (4:11)<br>
@@ -269,31 +405,122 @@ d4: [
     ]) },
 
   { t:'⚠️ El consejo de Daniel (4:27)', h:
-    vs(`«Por tanto, oh rey, acepta mi consejo: tus pecados <strong>redime con justicia</strong>,
-    y tus iniquidades <strong>haciendo misericordias para con los oprimidos</strong>;
-    quizá será eso una prolongación de tu tranquilidad.»`) },
+    vs(`«Por tanto, oh rey, acepta mi consejo: <strong>redime tus pecados con justicia</strong>,
+    y tus iniquidades <strong>haciendo misericordias con los oprimidos</strong>,
+    pues tal vez será eso una prolongación de tu tranquilidad.»`) },
 
   { t:'⏳ El cumplimiento', h:
     tbl(['Momento','Detalle'],[
       ['Tiempo de gracia','<strong>DOCE MESES</strong> (al cabo de un año) después de la advertencia (4:29)'],
-      ['La jactancia','«¿No es ésta la gran Babilonia que yo edifiqué... con la fuerza de mi poder y para gloria de mi majestad?» (4:30)'],
+      ['La jactancia','«¿No es ésta la gran Babilonia que yo edifiqué para casa real con la fuerza de mi poder, y para gloria de mi majestad?» (4:30)'],
       ['El juicio','Aún estaba la palabra en su boca cuando vino una voz del cielo (4:31)'],
       ['Su cabello','Le creció <strong>como plumas de águila</strong> (4:33)'],
       ['Sus uñas','Como las <strong>de las aves</strong> (4:33)'],
       ['Su alimento','Comía hierba como los bueyes; su cuerpo se mojaba con el rocío (4:33)'],
     ]) },
 
+  { t:'👤 Cómo reaccionó Daniel al entender el sueño (4:19)', h:
+    li([`<strong>Quedó atónito casi una hora</strong> y sus pensamientos lo
+         turbaban (4:19).`,
+        `El rey tuvo que calmarlo a él: «no te turben ni el sueño ni su
+         interpretación» (4:19).`,
+        `Daniel le contestó: <strong>«Señor mío, el sueño sea para tus enemigos
+         y su interpretación para los que mal te quieren»</strong> (4:19).`]) +
+    hi(`Daniel llevaba décadas cautivo del imperio de este hombre y aun así
+    <strong>le dolió tener que darle la noticia</strong>. Eso es lo que hace
+    creíble el consejo que da ocho versículos después: no venía de rencor.`) },
+
+  { t:'⚖️ Qué significaba cada parte (4:20-26)', h:
+    tbl(['En el sueño','Qué significaba'],[
+      ['El árbol grande y fuerte','El rey mismo: «tú mismo eres, oh rey» (4:22)'],
+      ['La copa hasta el cielo','Su grandeza, que «ha llegado hasta el cielo» (4:22)'],
+      ['Verse desde los confines','Su dominio «hasta los confines de la tierra» (4:22)'],
+      ['Derribar el árbol','Que lo echarían de entre los hombres (4:25)'],
+      ['Vivir con las bestias','Comer hierba «como a los bueyes» y ser bañado por el rocío (4:25)'],
+      ['<strong>La cepa que queda</strong>','Que <strong>el reino le quedaría firme</strong> después de reconocer «que es el cielo el que gobierna» (4:26)'],
+    ]) +
+    hi(`La cepa es la parte que suele olvidarse. <strong>El castigo traía la
+    restauración adentro desde el primer día</strong>: nunca fue el fin del
+    reino, fue un plazo.`) },
+
+  { t:'🎯 Para qué era todo, según el texto', h:
+    li([`«Para que <strong>conozcan los vivientes</strong> que el Altísimo
+         gobierna el reino de los hombres» (4:17).`,
+        `«Hasta que <strong>conozcas</strong> que el Altísimo tiene dominio en
+         el reino de los hombres, y que lo da a quien él quiere» (4:25).`,
+        `«Hasta que <strong>reconozcas</strong> que el Altísimo tiene el dominio
+         en el reino de los hombres, y lo da a quien él quiere» (4:32).`]) +
+    hi(`La misma idea aparece <strong>tres veces</strong>, en boca del
+    mensajero, de Daniel y de la voz del cielo. Cuando un capítulo repite algo
+    tres veces con palabras casi iguales, eso es lo que va a preguntar el
+    examen.`) },
+
   { t:'🙌 La restauración (4:34-37)', h:
     hi(`• Al fin del tiempo, Nabucodonosor <strong>alzó sus ojos al cielo</strong> (4:34)<br>
     • Su razón le fue devuelta; bendijo al Altísimo y lo alabó (4:34)<br>
     • Fue restituido en su reino, y <strong>mayor grandeza le fue añadida</strong> (4:36)`) +
-    vs(`«Ahora yo Nabucodonosor <strong>alabo, engrandezco y glorifico al Rey del cielo</strong>,
-    porque todas sus obras son verdaderas, y sus caminos justos;
+    vs(`«Ahora yo, Nabucodonosor, <strong>alabo, engrandezco y glorifico al Rey del cielo</strong>,
+    porque todas sus obras son verdaderas y sus caminos justos;
     y él puede humillar a los que andan con soberbia.» (Daniel 4:37)`) },
 ],
 
 /* ═══════════════ DANIEL 5 ═══════════════ */
 d5: [
+  { t:'📚 En pocas palabras', h:
+    hi(`El rey Belsasar hace una fiesta para <strong>mil príncipes</strong> y,
+    ya con el vino, manda traer <strong>los vasos del templo de
+    Jerusalén</strong> para beber en ellos y brindar por sus dioses.<br><br>
+    En esa misma hora aparece <strong>una mano escribiendo en la pared</strong>.
+    Ningún sabio puede leerla. La reina se acuerda de Daniel; Daniel entra,
+    <strong>rechaza los regalos</strong>, le recuerda lo que le pasó a
+    Nabucodonosor y le lee la sentencia.<br><br>
+    <strong>Esa misma noche</strong> Belsasar fue muerto y Darío de Media tomó
+    el reino (5:30-31).`) },
+
+  { t:'⚡ Cómo quedó el rey al ver la mano (5:6)', h:
+    li([`<strong>Palideció</strong>.`,
+        `Sus pensamientos lo turbaron.`,
+        `<strong>Se debilitaron sus caderas</strong>.`,
+        `<strong>Sus rodillas daban la una contra la otra</strong>.`]) +
+    hi(`Son cuatro detalles físicos en un solo versículo, y el examen los puede
+    pedir. Vale memorizarlos como una escena: <strong>color, cabeza, caderas,
+    rodillas</strong>, de arriba abajo.`) },
+
+  { t:'👸 La reina fue la que se acordó de Daniel (5:10-12)', h:
+    li([`Entró sola a la sala del banquete, sin que la llamaran (5:10).`,
+        `Dijo que en Daniel había <strong>«luz, inteligencia y
+         sabiduría»</strong> (5:11).`,
+        `Recordó que Nabucodonosor lo puso <strong>jefe sobre todos los magos,
+         astrólogos, caldeos y adivinos</strong> (5:11).`,
+        `Nombró tres capacidades: <strong>interpretar sueños, descifrar enigmas
+         y resolver dudas</strong> (5:12).`]) +
+    wa(`Dato que se pregunta: <strong>Belsasar no conocía a Daniel</strong>,
+    o no lo tenía presente, aunque Daniel llevaba décadas sirviendo en ese
+    mismo palacio. Hizo falta que alguien más se acordara.`) },
+
+  { t:'🚫 Daniel rechazó el pago (5:17)', h:
+    vs(`«Tus dones sean para ti; da tus recompensas a otros. Leeré la escritura
+    al rey y le daré la interpretación.»`) +
+    hi(`Lo dijo <strong>antes</strong> de leer la escritura, no después. Y al
+    final igual recibió la púrpura, el collar y el tercer puesto, porque el rey
+    lo mandó (5:29). <strong>Rechazar el pago no fue lo mismo que rechazar el
+    cargo</strong>: lo que hizo fue no cobrar por decir la verdad.`) },
+
+  { t:'📖 La acusación exacta (5:18-23)', h:
+    tbl(['Lo que Daniel le recordó','Versículo'],[
+      ['A Nabucodonosor Dios le dio el reino, la grandeza, la gloria y la majestad','5:18'],
+      ['Cuando «su corazón se ensoberbeció», fue depuesto del trono','5:20'],
+      ['Vivió con las bestias hasta reconocer que el Altísimo tiene dominio','5:21'],
+      ['<strong>«Pero tú, su hijo Belsasar, no has humillado tu corazón sabiendo todo esto»</strong>','5:22'],
+      ['Bebió en los vasos de la Casa de Dios','5:23'],
+      ['Alabó dioses «que ni ven ni oyen ni saben»','5:23'],
+      ['<strong>«Nunca honraste al Dios en cuya mano está tu vida»</strong>','5:23'],
+    ]) +
+    hi(`El cargo no es la fiesta ni los vasos: es <strong>«sabiendo todo
+    esto»</strong> (5:22). Belsasar tenía el caso de su propio padre delante y
+    no aprendió. Ahí está la diferencia con Daniel 4, donde el rey sí
+    reaccionó.`) },
+
   { t:'🍷 El banquete de Belsasar', h:
     hi(`• Belsasar hizo un gran banquete a <strong>MIL de sus príncipes</strong> (5:1)<br>
     • Bebía vino en presencia de los mil<br>
@@ -390,7 +617,7 @@ d6: [
       ['2','Lo acusan ante el rey recordándole el edicto','6:12-13'],
       ['3','El rey se afligió y <strong>hasta la puesta del sol trabajó por librarlo</strong>','6:14'],
       ['4','Los hombres insisten: la ley no puede ser abrogada','6:15'],
-      ['5','Daniel es echado al foso; el rey le dice: «El Dios tuyo te libre»','6:16'],
+      ['5','Daniel es echado al foso; el rey le dice: «El Dios tuyo, a quien tú continuamente sirves, él te libre»','6:16'],
       ['6','Una piedra sella la puerta, con el <strong>anillo del rey y el de sus príncipes</strong>','6:17'],
       ['7','El rey <strong>se acostó en ayunas</strong>; no trajeron ante él instrumentos musicales, y se le fue el sueño','6:18'],
       ['8','<strong>Se levantó muy de mañana</strong> y fue apresuradamente al foso','6:19'],
@@ -401,15 +628,15 @@ d6: [
     ]) },
 
   { t:'📖 La respuesta de Daniel (6:22)', h:
-    vs(`«<strong>Mi Dios envió su ángel</strong>, el cual cerró la boca de los leones,
-    para que no me hiciesen daño, porque ante él fui hallado inocente;
+    vs(`«<strong>Mi Dios envió su ángel</strong>, el cual cerró la boca de los leones
+    para que no me hicieran daño, porque ante él fui hallado inocente;
     y aun delante de ti, oh rey, yo no he hecho nada malo.»`) },
 
   { t:'👑 El decreto de Darío (6:25-27)', h:
     hi(`Escribió a todos los pueblos, naciones y lenguas:<br><br>
     • Que <strong>teman y tiemblen ante la presencia del Dios de Daniel</strong><br>
     • «Porque él es el <strong>Dios viviente y permanece por todos los siglos</strong>»<br>
-    • «Su reino no será jamás destruido, y su dominio perdurará hasta el fin»<br>
+    • «Su reino no será jamás destruido y su dominio perdurará hasta el fin»<br>
     • «Él <strong>salva y libra</strong>, y hace señales y maravillas en el cielo y en la tierra»<br>
     • «Él ha librado a Daniel del poder de los leones»`) },
 ],
