@@ -749,6 +749,47 @@ ok(/c\.ev!=='creencias'/.test(bloqueGuias),
   'La guía impresa de los dos eventos excluye las creencias');
 
 
+/* ── PISOS DE CONTENIDO DE ESTUDIO ──────────────────────────────────────
+   El material habia crecido desparejo sin que nada lo notara: Daniel 2 tenia
+   49 versiculos y 3.845 caracteres de explicacion, menos que Daniel 1 que
+   tiene 21 y tenia 7.448. Los de Profetas y Reyes estaban entre 1.291 y
+   2.358, la mitad de un capitulo biblico. Estos pisos son floor, no igualdad:
+   agregar contenido nunca rompe la suite, quitarlo si. */
+const largoDe = id => (CONTENIDO[id]||[]).reduce((a,s)=>a+s.h.length,0);
+const flacosBib = CAPS.filter(c=>c.src==='Biblia')
+  .filter(c=>CONTENIDO[c.id].length<8||largoDe(c.id)<5500)
+  .map(c=>`${c.label} (${CONTENIDO[c.id].length} secs, ${largoDe(c.id)} chars)`);
+ok(flacosBib.length===0,
+  'Cada capitulo de la Biblia tiene 8+ secciones y 5.500+ caracteres de estudio'+
+  (flacosBib.length?' — '+flacosBib.join(', '):''));
+
+const flacosPR = CAPS.filter(c=>c.src==='Elena de White')
+  .filter(c=>CONTENIDO[c.id].length<7||largoDe(c.id)<2500)
+  .map(c=>`${c.label} (${CONTENIDO[c.id].length} secs, ${largoDe(c.id)} chars)`);
+ok(flacosPR.length===0,
+  'Cada capitulo de P&R tiene 7+ secciones y 2.500+ caracteres de estudio'+
+  (flacosPR.length?' — '+flacosPR.join(', '):''));
+
+/* Los tres del alcance del campamento son los que se estudian de verdad, asi
+   que llevan un piso mas alto. */
+const TRES_CAMP=['d1','d3','d6'];
+const camppobres=TRES_CAMP.filter(id=>largoDe(id)<7000)
+  .map(id=>id+' ('+largoDe(id)+')');
+ok(camppobres.length===0,
+  'Los tres capitulos del campamento pasan de 7.000 caracteres de estudio'+
+  (camppobres.length?' — '+camppobres.join(', '):''));
+
+/* Cada capitulo de P&R esta basado en un capitulo de Daniel, y el libro lo
+   dice en su primera linea. Es la correspondencia que el examen pregunta, y
+   estaba en el PDF pero no en la app. */
+const PAREJA={pr39:'Daniel 1',pr40:'Daniel 2',pr41:'Daniel 3',
+              pr42:'Daniel 4',pr43:'Daniel 5',pr44:'Daniel 6'};
+const sinBase=Object.entries(PAREJA).filter(([id,dan])=>
+  !CONTENIDO[id].some(s=>s.h.includes('Este capítulo está basado en '+dan)))
+  .map(([id])=>id);
+ok(sinBase.length===0,'Cada capitulo de P&R dice en que capitulo de Daniel se basa'+
+  (sinBase.length?' — falta en '+sinBase.join(', '):''));
+
 /* ── CUANTOS VERSICULOS TRAE CADA CAPITULO ───────────────────────────────
    El numero sale de files/rv1995-daniel-N.txt, el texto RV1995 verificado.
    Sirve para dos cosas: el estudiante sabe cuanto va a leer antes de abrir el

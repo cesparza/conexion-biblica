@@ -309,6 +309,54 @@ d3: [
       ['Lugar','Campo de DURA, en la provincia de Babilonia (3:1)'],
     ]) },
 
+  { t:'👔 Los ocho cargos que convocó el rey (3:2-3)', h:
+    hi(`<strong>Sátrapas, magistrados, capitanes, oidores, tesoreros,
+    consejeros, jueces</strong> y todos los gobernadores de las
+    provincias.<br><br>
+    La lista aparece <strong>dos veces seguidas</strong>, en 3:2 (cuando el rey
+    ordena que vengan) y en 3:3 (cuando llegan), palabra por palabra. Ese es un
+    recurso del capítulo: repetir la lista completa para que se sienta el
+    tamaño del acto oficial.`) +
+    wa(`Ojo con no confundirla con los cuatro grupos de sabios de Daniel 2:2
+    (magos, astrólogos, encantadores, caldeos). Aquí son
+    <strong>funcionarios de gobierno</strong>, no adivinos.`) },
+
+  { t:'📢 La orden y la amenaza (3:4-6)', h:
+    li([`Quién lo anuncia: <strong>el pregonero</strong>, en alta voz (3:4).`,
+        `A quiénes: <strong>«pueblos, naciones y lenguas»</strong> (3:4).`,
+        `Qué hay que hacer: <strong>postrarse y adorar</strong> al oír la música (3:5).`,
+        `El castigo: <strong>«inmediatamente será echado dentro de un horno de
+         fuego ardiente»</strong> (3:6).`]) +
+    hi(`En 3:7 dice que <strong>«todos los pueblos, naciones y lenguas se
+    postraron»</strong>. Los tres jóvenes no se enfrentaron a una ley
+    impopular: se quedaron de pie cuando <strong>todo el mundo se
+    arrodilló</strong>.`) },
+
+  { t:'🕵️ Quién los acusó, y de qué (3:8-12)', h:
+    li([`Fueron <strong>«algunos hombres caldeos»</strong> los que
+         «acusaron maliciosamente a los judíos» (3:8).`,
+        `Primero le recordaron al rey su propia ley (3:10-11), para que no
+         pudiera echarse atrás.`,
+        `Los identificaron por el cargo: <strong>«a los cuales pusiste sobre
+         los negocios de la provincia de Babilonia»</strong> (3:12), el puesto
+         que Daniel les consiguió en 2:49.`,
+        `Tres acusaciones: <strong>no te han respetado</strong>, no adoran a
+         tus dioses, y no adoran la estatua (3:12).`]) +
+    hi(`La acusación no salió de un desconocido: salió de gente que sabía
+    exactamente <strong>qué cargo tenían y quién los había puesto ahí</strong>.
+    El ascenso de Daniel 2 fue lo que los volvió un blanco.`) },
+
+  { t:'🗣️ El desafío del rey, y la respuesta corta (3:14-16)', h:
+    li([`El rey pregunta si es verdad, y les <strong>ofrece una segunda
+         oportunidad</strong>: si adoran al oír la música, no pasa nada (3:15).`,
+        `Cierra con un reto directo: <strong>«¿y qué dios será el que os libre
+         de mis manos?»</strong> (3:15).`,
+        `Ellos contestan primero una sola frase: <strong>«No es necesario que
+         te respondamos sobre este asunto»</strong> (3:16).`]) +
+    hi(`Esa frase es lo que hace fuerte lo que dicen después. <strong>No
+    estaban decidiendo en ese momento</strong>: la decisión ya estaba tomada,
+    y no había nada que deliberar.`) },
+
   { t:'🎵 Los seis instrumentos — orden exacto', h:
     wa(`<strong>Daniel 3:5 en la RV1995</strong> (la lista se repite en 3:7, 3:10 y 3:15):<br><br>
     1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;
@@ -328,6 +376,24 @@ d3: [
     • Nabucodonosor vio <strong>CUATRO varones sueltos</strong> paseándose en medio del fuego (3:25)<br>
     • El aspecto del cuarto: <strong>«semejante a un hijo de los dioses»</strong> (3:25, RV1995)<br>
     Así lo describió Nabucodonosor, que era pagano. <strong>P&amp;R cap. 41 aclara que era el Hijo de Dios mismo.</strong>`) },
+
+  { t:'🔢 Lo que pasó dentro del horno (3:19-25)', h:
+    tbl(['Dato','Texto RV1995'],[
+      ['Cuánto lo calentaron','<strong>Siete veces más</strong> de lo acostumbrado (3:19)'],
+      ['Quién los ató','Hombres <strong>muy vigorosos</strong> del ejército (3:20)'],
+      ['Con qué ropa entraron','Sus <strong>mantos, calzados, turbantes y vestidos</strong> (3:21)'],
+      ['Quiénes murieron','<strong>Los que los alzaron</strong>, por la llama (3:22)'],
+      ['Cómo cayeron','<strong>Atados</strong>, dentro del horno (3:23)'],
+      ['Cuántos vio el rey','<strong>Cuatro</strong> hombres <strong>sueltos</strong>, paseándose (3:25)'],
+      ['El cuarto','«El aspecto del cuarto es semejante a un hijo de los dioses» (3:25)'],
+    ]) +
+    hi(`El contraste que el capítulo arma es exacto: <strong>entraron atados y
+    vestidos, y adentro estaban sueltos y paseándose</strong>. Lo único que se
+    quemó fueron las cuerdas, y eso lo confirma 3:27 al decir que la ropa no se
+    dañó.`) +
+    wa(`Cuidado con una pregunta trampa: <strong>el rey no cambió el aspecto
+    del horno, cambió «el aspecto de su rostro»</strong> (3:19). Y el que se
+    espantó y se levantó apresuradamente fue él (3:24).`) },
 
   { t:'✨ El milagro verificado (3:27)', h:
     vs(`«...cómo <strong>el fuego no había tenido poder alguno</strong> sobre sus cuerpos
@@ -657,6 +723,48 @@ pr39: [
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 39: «En la corte de Babilonia»</strong>`) },
 
+  { t:'🔗 En qué capítulo de Daniel se basa', h:
+    hi(`El libro lo dice en la primera línea:
+    <strong>“Este capítulo está basado en Daniel 1.”</strong><br><br>
+    Los seis van emparejados uno a uno:<br>
+    <strong>P&amp;R 39 → Daniel 1</strong> · P&amp;R 40 → Daniel 2 ·
+    P&amp;R 41 → Daniel 3 · P&amp;R 42 → Daniel 4 · P&amp;R 43 → Daniel 5 ·
+    P&amp;R 44 → Daniel 6.`) },
+
+  { t:'⚙️ Para qué estaban ahí, según P&R', h:
+    li([`Eran <strong>“cautivos puestos en un país extraño por la Sabiduría
+         infinita”</strong>: no los llevó allá el orgullo ni la ambición.`,
+        `Su tarea era <strong>dar a las naciones paganas el conocimiento de
+         Jehová</strong>. Iban a ser <strong>representantes de Dios</strong>.`,
+        `<strong>No debían transigir con los idólatras</strong> en ningún caso.`,
+        `Honraron a Dios <strong>en la prosperidad y en la adversidad</strong>,
+         y Dios los honró a ellos.`]) +
+    hi(`Ese es el giro del capítulo: los babilonios usaban el cautiverio y los
+    vasos del templo <strong>como prueba de que su religión era
+    superior</strong>. Dios dio evidencia de lo contrario
+    <strong>por medio de los que le eran leales</strong>, y de la única manera
+    en que podía darse.`) },
+
+  { t:'📈 Cómo les fue en los tres años', h:
+    tbl(['Momento','Lo que dice el capítulo'],[
+      ['A los diez días','El resultado fue <strong>lo opuesto</strong> de lo que temía el príncipe'],
+      ['Qué estudiaron','<strong>Tres años</strong> las letras y la lengua de los caldeos'],
+      ['Qué unían a sus hábitos','<strong>Propósito ferviente, diligencia y constancia</strong>'],
+      ['Qué les dio Dios','Conocimiento e inteligencia en todas las letras y ciencia'],
+      ['Lo propio de Daniel','<strong>Entendimiento en toda visión y sueños</strong>'],
+      ['En el examen final','No fue hallado otro como ellos entre todos los candidatos'],
+    ]) +
+    hi(`La promesa que el capítulo aplica al caso es de otro libro:
+    <strong>“Yo honraré a los que me honran”</strong> (1 Samuel 2:30). Vale
+    saberla, porque es una cita que no está en Daniel.`) },
+
+  { t:'🚫 Lo que NO fue', h:
+    wa(`Tres cosas que el capítulo descarta expresamente, y que son las
+    respuestas equivocadas típicas:<br><br>
+    • <strong>No fue capricho ni moda</strong>: la comida iba contra la ley de Dios.<br>
+    • <strong>No fue orgullo ni ambición</strong> lo que los llevó a la corte.<br>
+    • <strong>No fue rebeldía</strong>: Daniel propuso una prueba y pidió permiso.`) },
+
   { t:'🍽️ Por qué rechazaron la comida del rey', h:
     hi(`• La comida <strong>había sido ofrecida a los ídolos</strong> antes de servirse<br>
     • Incluía carnes que la ley de Dios declaraba <strong>inmundas</strong><br>
@@ -687,6 +795,28 @@ pr39: [
 pr40: [
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 40: «El sueño de Nabucodonosor»</strong>`) },
+  { t:'🔗 En qué capítulo de Daniel se basa', h:
+    hi(`El libro lo dice en la primera línea:
+    <strong>“Este capítulo está basado en Daniel 2.”</strong><br><br>
+    Los seis van emparejados uno a uno:<br>
+    P&amp;R 39 → Daniel 1 · <strong>P&amp;R 40 → Daniel 2</strong> · P&amp;R 41 → Daniel 3 · P&amp;R 42 → Daniel 4 · P&amp;R 43 → Daniel 5 · P&amp;R 44 → Daniel 6`) },
+
+  { t:'🔁 Las dos veces que los sabios evadieron', h:
+    li([`El rey los llamó y les contó su problema, no el sueño, porque
+         <strong>al despertar no pudo recordar los detalles</strong>.`,
+        `Ellos contestaron: <em>di el sueño a tus siervos, y mostraremos la
+         declaración</em>. Es una <strong>respuesta evasiva</strong>.`,
+        `El rey sospechó que, <strong>a pesar de sus aseveraciones jactanciosas
+         de poder revelar los secretos</strong>, no estaban dispuestos a
+         ayudarle.`,
+        `Puso las dos cosas en la mesa: <strong>riquezas y honores por un lado,
+         amenazas de muerte por el otro</strong>.`,
+        `Y ellos <strong>repitieron exactamente lo mismo</strong>.`]) +
+    hi(`Ese es el punto que P&amp;R agrega a Daniel 2: el rey no estaba siendo
+    caprichoso. <strong>Estaba probando si sus sabios podían lo que
+    decían</strong> que podían, y la segunda respuesta idéntica fue lo que lo
+    hizo estallar.`) },
+
 
   { t:'🙏 La oración antes de la revelación', h:
     hi(`• Ante la sentencia de muerte, Daniel y sus compañeros
@@ -728,6 +858,45 @@ pr41: [
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 41: «El horno de fuego»</strong>`) },
 
+  { t:'🔗 En qué capítulo de Daniel se basa', h:
+    hi(`El libro lo dice en la primera línea del capítulo:
+    <strong>“Este capítulo está basado en Daniel 3.”</strong><br><br>
+    Los seis van emparejados uno a uno, y esa correspondencia se pregunta:<br>
+    P&amp;R 39 → Daniel 1 · P&amp;R 40 → Daniel 2 ·
+    <strong>P&amp;R 41 → Daniel 3</strong> · P&amp;R 42 → Daniel 4 ·
+    P&amp;R 43 → Daniel 5 · P&amp;R 44 → Daniel 6.`) },
+
+  { t:'🗿 Por qué la estatua era TODA de oro', h:
+    hi(`Este dato <strong>solo está en P&amp;R</strong>, no en Daniel 3, y por
+    eso es de los que más se preguntan.<br><br>
+    La frase <strong>“Tú eres aquella cabeza de oro”</strong> (Daniel 2:38) le
+    quedó marcada al rey. Sus propios sabios le propusieron
+    <strong>hacer una imagen parecida a la del sueño</strong> y levantarla
+    donde todos pudieran verla.`) +
+    li([`El rey no se conformó con copiarla: decidió
+         <strong>superar el original</strong>.`,
+        `En su estatua <strong>no habría descenso de valores</strong> de la
+         cabeza a los pies: sería <strong>toda de oro</strong>.`,
+        `El mensaje era que Babilonia sería un <strong>reino eterno,
+         indestructible y todopoderoso</strong>, y no uno de cuatro que serían
+         reemplazados.`]) +
+    wa(`O sea que la estatua de Daniel 3 fue <strong>una respuesta al sueño de
+    Daniel 2</strong>: el rey estaba contradiciendo la profecía a propósito.`) },
+
+  { t:'⏳ Qué pasó entre Daniel 2 y Daniel 3', h:
+    li([`Después de reconocer a Dios, Nabucodonosor <strong>sintió el temor de
+         Dios por un tiempo</strong>.`,
+        `Pero su corazón <strong>no quedó limpio de ambición</strong> ni del
+         deseo de ensalzarse a sí mismo.`,
+        `<strong>La prosperidad lo llenó de orgullo</strong>.`,
+        `Con el tiempo dejó de honrar a Dios y volvió a los ídolos
+         <strong>con más celo y fanatismo que antes</strong>.`]) +
+    hi(`Eso contesta la pregunta que a los niños se les hace sola: <em>¿cómo el
+    mismo rey que se postró ante Daniel manda quemar a tres muchachos?</em>
+    Según P&amp;R, <strong>reconocer a Dios una vez no le cambió el
+    carácter</strong>, y fue la prosperidad, no la desgracia, la que lo
+    tumbó.`) },
+
   { t:'🔥 El cuarto personaje', h:
     hi(`El cuarto que apareció en el horno era <strong>el Hijo de Dios mismo</strong>,
     quien acompañó a sus fieles en el momento de la prueba.<br><br>
@@ -757,6 +926,27 @@ pr41: [
 pr42: [
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 42: «La verdadera grandeza»</strong>`) },
+  { t:'🔗 En qué capítulo de Daniel se basa', h:
+    hi(`El libro lo dice en la primera línea:
+    <strong>“Este capítulo está basado en Daniel 4.”</strong><br><br>
+    Los seis van emparejados uno a uno:<br>
+    P&amp;R 39 → Daniel 1 · P&amp;R 40 → Daniel 2 · P&amp;R 41 → Daniel 3 · <strong>P&amp;R 42 → Daniel 4</strong> · P&amp;R 43 → Daniel 5 · P&amp;R 44 → Daniel 6`) },
+
+  { t:'👑 Lo que Dios pudo usar en un rey idólatra', h:
+    li([`La Inspiración misma lo llama <strong>“rey de reyes”</strong>
+         (Ezequiel 26:7).`,
+        `Varias veces <strong>había atribuido la gloria de su reino al favor de
+         Jehová</strong>, sobre todo después del sueño de la gran imagen.`,
+        `Después <strong>perdió de vista</strong> el propósito de Dios con las
+         naciones.`,
+        `Aun siendo <strong>idólatra por nacimiento y educación</strong>, tenía
+         <strong>un sentido innato de la justicia y de lo recto</strong>, y por
+         eso Dios pudo usarlo.`]) +
+    hi(`El título del capítulo es <strong>“La verdadera grandeza”</strong> y
+    ahí está la tesis: la grandeza del rey no estaba en el imperio sino en lo
+    que reconocía. El capítulo no lo pinta como un monstruo, lo pinta como
+    alguien que <strong>subía y bajaba</strong>.`) },
+
 
   { t:'👑 El pecado de Nabucodonosor', h:
     hi(`• Su pecado principal fue el <strong>orgullo y la arrogancia</strong><br>
@@ -787,6 +977,44 @@ pr42: [
 pr43: [
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 43: «El vigía invisible»</strong>`) },
+  { t:'🔗 En qué capítulo de Daniel se basa', h:
+    hi(`El libro lo dice en la primera línea:
+    <strong>“Este capítulo está basado en Daniel 5.”</strong><br><br>
+    Los seis van emparejados uno a uno:<br>
+    P&amp;R 39 → Daniel 1 · P&amp;R 40 → Daniel 2 · P&amp;R 41 → Daniel 3 · P&amp;R 42 → Daniel 4 · <strong>P&amp;R 43 → Daniel 5</strong> · P&amp;R 44 → Daniel 6`) },
+
+  { t:'👨‍👦 ¿Padre o abuelo? El dato que aclara P&R', h:
+    wa(`<strong>Daniel 5 llama a Nabucodonosor “su padre”</strong> (5:2, 11,
+    13, 18). <strong>P&amp;R dice que Belsasar era su nieto.</strong><br><br>
+    No es una contradicción: en el lenguaje de la Biblia
+    <strong>“padre” incluye al antepasado</strong>, como «hijo de David» se le
+    dice a alguien de generaciones después. Si en el examen preguntan por el
+    parentesco, hay que fijarse en <strong>cuál de los dos libros</strong>
+    están preguntando.`) },
+
+  { t:'⏳ Cuánto tiempo había pasado', h:
+    li([`Los cambios pasan <strong>hacia el fin de la vida de Daniel</strong>.`,
+        `Habían sido llevados cautivos <strong>más de sesenta años
+         antes</strong>.`,
+        `Nabucodonosor ya había muerto, y Babilonia quedó en manos de
+         <strong>sucesores imprudentes</strong>: el resultado fue
+         <strong>“una disolución gradual pero segura”</strong>.`,
+        `Belsasar fue <strong>admitido en su juventud a compartir la autoridad
+         real</strong>.`]) +
+    hi(`Eso pone en escala todo el libro: entre Daniel 1 y Daniel 5 pasan más
+    de sesenta años. <strong>El muchacho que pidió legumbres y agua ya es un
+    anciano</strong> cuando lee la escritura en la pared.`) },
+
+  { t:'⚖️ Por qué Belsasar no tenía excusa, según P&R', h:
+    li([`Tuvo <strong>muchas oportunidades</strong> de conocer la voluntad
+         divina.`,
+        `<strong>Sabía</strong> que su abuelo había sido desterrado de la
+         sociedad de los hombres por decreto divino.`,
+        `<strong>Sabía también de su conversión</strong> y de su curación
+         milagrosa.`,
+        `Dejó que <strong>el amor por los placeres y la glorificación
+         propia</strong> borraran esas lecciones.`]) },
+
 
   { t:'⚖️ Por qué Belsasar no tenía excusa', h:
     hi(`• <strong>Conocía la experiencia de Nabucodonosor</strong>: su orgullo, su humillación y su restauración<br>
@@ -827,6 +1055,42 @@ pr44: [
 
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 44: «En el foso de los leones»</strong>`) },
+
+  { t:'🔗 En qué capítulo de Daniel se basa', h:
+    hi(`El libro lo dice en la primera línea:
+    <strong>“Este capítulo está basado en Daniel 6.”</strong><br><br>
+    Los seis van emparejados uno a uno:<br>
+    P&amp;R 39 → Daniel 1 · P&amp;R 40 → Daniel 2 · P&amp;R 41 → Daniel 3 ·
+    P&amp;R 42 → Daniel 4 · P&amp;R 43 → Daniel 5 ·
+    <strong>P&amp;R 44 → Daniel 6</strong>.`) },
+
+  { t:'😠 De dónde salió el complot', h:
+    li([`Darío reorganizó el gobierno al subir al trono: <strong>120
+         gobernadores y tres presidentes</strong>, y Daniel era uno de los tres.`,
+        `El rey <strong>pensaba ponerlo sobre todo el reino</strong>. Eso fue
+         lo que encendió todo.`,
+        `Los honores <strong>despertaron los celos</strong> de los principales,
+         que buscaron de qué quejarse <strong>y no encontraron nada</strong>.`,
+        `<strong>Su conducta intachable les dio más rabia</strong>, no menos.`]) +
+    hi(`La frase que resume el capítulo la dicen los enemigos, no Daniel:
+    <strong>“No hallaremos contra este Daniel ocasión alguna, si no la
+    hallamos contra él en la ley de su Dios.”</strong><br><br>
+    O sea que <strong>tuvieron que inventar una ley</strong> que lo obligara a
+    escoger. No lo acusaron de robar ni de mentir: no había de qué.`) },
+
+  { t:'🪤 Cómo lograron que el rey firmara', h:
+    li([`El decreto lo redactaron <strong>los presidentes y príncipes</strong>,
+         no el rey.`,
+        `Prohibía por <strong>treinta días</strong> pedir algo a Dios o a los
+         hombres, <strong>excepto al rey Darío</strong>.`,
+        `El castigo: ser arrojado <strong>al foso de los leones</strong>.`,
+        `Convencieron a Darío <strong>apelando a su vanidad</strong>: le
+         dijeron que el edicto aumentaría su honor y su autoridad.`,
+        `<strong>El rey no vio la trampa</strong>: no conocía el propósito de
+         los príncipes y cedió a sus adulaciones.`]) +
+    wa(`Dato de examen: <strong>Darío no quería perjudicar a Daniel</strong>.
+    Firmó por vanidad y por no darse cuenta, y por eso después pasó la noche
+    sin comer tratando de salvarlo. La trampa fue de los príncipes.`) },
 
   { t:'💎 La integridad de Daniel', h:
     hi(`• Sus enemigos lo investigaron a fondo buscando corrupción y <strong>no hallaron nada</strong><br>
