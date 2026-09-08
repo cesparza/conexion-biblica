@@ -749,6 +749,45 @@ ok(/c\.ev!=='creencias'/.test(bloqueGuias),
   'La guía impresa de los dos eventos excluye las creencias');
 
 
+/* ── CUANTOS VERSICULOS TRAE CADA CAPITULO ───────────────────────────────
+   El numero sale de files/rv1995-daniel-N.txt, el texto RV1995 verificado.
+   Sirve para dos cosas: el estudiante sabe cuanto va a leer antes de abrir el
+   capitulo, y aqui se vuelve el tope contra el que se mide toda referencia. */
+const conVs=CAPS.filter(c=>c.src==='Biblia');
+ok(conVs.every(c=>typeof c.vs==='number'&&c.vs>0),
+  'Todos los capitulos de la Biblia declaran cuantos versiculos tienen');
+ok(conVs.reduce((a,c)=>a+c.vs,0)===196,
+  'Daniel 1-6 suman 196 versiculos (21+49+30+37+31+28)');
+/* Ojo con Daniel 5: en RV1995 son 31 porque 5:31 va ahi. Otras ediciones lo
+   mueven a 6:1 y darian 30 y 29; si alguien "corrige" eso, esta prueba avisa. */
+ok(CAPS.find(c=>c.id==='d5').vs===31&&CAPS.find(c=>c.id==='d6').vs===28,
+  'Daniel 5 son 31 versiculos y Daniel 6 son 28, como en RV1995');
+
+/* Una referencia a Daniel 1:25 seria un error de contenido invisible: el
+   capitulo termina en 21. Se revisan preguntas, rotulos, explicaciones y el
+   texto de estudio contra el tope declarado. */
+const TOPE={};CAPS.forEach(c=>{if(c.vs)TOPE[c.id]=c.vs;});
+const fuera=[];
+const revisaRef=(donde,txt)=>{
+  if(!txt)return;
+  for(const m of String(txt).matchAll(/(?:Daniel )?(\d{1,2}):(\d{1,2})/g)){
+    const cid='d'+m[1];
+    if(TOPE[cid]&&+m[2]>TOPE[cid])fuera.push(donde+' → '+m[0]+' (tiene '+TOPE[cid]+')');
+  }
+};
+BANCO.filter(q=>TOPE[q.cap]).forEach(q=>{
+  revisaRef(q.cap,q.q);revisaRef(q.cap,q.ins);revisaRef(q.cap,q.e);});
+Object.keys(CONTENIDO).filter(k=>TOPE[k]).forEach(k=>CONTENIDO[k].forEach(s=>{
+  revisaRef(k,s.t);revisaRef(k,s.h);}));
+ok(fuera.length===0,'Ninguna referencia apunta mas alla del final de su capitulo'+
+  (fuera.length?' — '+fuera.slice(0,5).join(' / '):''));
+
+/* Y que el dato se vea, no solo que exista en los datos. */
+ok(/c\.vs\?' · '\+c\.vs\+' vers\.'/.test(APP2),
+  'La ficha de cada capitulo muestra cuantos versiculos trae');
+ok(/c\.vs\?' · '\+c\.vs\+' versículo'/.test(APP2),
+  'La cabecera del capitulo abierto muestra cuantos versiculos trae');
+
 /* ── LA APP INSTALABLE ───────────────────────────────────────────────────
    Tres cosas que se rompen en silencio y sin error visible: un manifest que
    el navegador descarta, un icono que no mide lo que dice, y un sw.js

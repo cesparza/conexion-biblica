@@ -1,17 +1,27 @@
 /* Contenido de estudio — profundidad completa, Daniel 1-6 y P&R 39-44.
-   Se genera aquí y se inyecta en el HTML final. */
+   Se genera aquí y se inyecta en el HTML final.
+
+   `vs` es el numero de versiculos del capitulo, contado sobre
+   files/rv1995-daniel-N.txt, que es el texto RV1995 verificado: 21, 49, 30,
+   37, 31 y 28, o sea 196. Se declara solo en los capitulos de la Biblia; los
+   de Profetas y Reyes son capitulos de libro y no tienen versiculos. Una
+   prueba usa este numero para rechazar cualquier referencia del banco que
+   apunte mas alla del final del capitulo.
+
+   Ojo con Daniel 5: en RV1995 tiene 31 versiculos porque 5:31 («Y Dario...»)
+   va ahi. Otras ediciones lo mueven a 6:1, y con esa cuenta darian 30 y 29. */
 
 const CAPS = [
-  { id:'d1', label:'Daniel 1', sub:'Cautivos en Babilonia', src:'Biblia', color:'#E8720C', cats:['me','av','pa','gm'] },
+  { id:'d1', label:'Daniel 1', sub:'Cautivos en Babilonia', src:'Biblia', color:'#E8720C', vs:21, cats:['me','av','pa','gm'] },
   /* El reglamento del campamento quedo en Daniel 1, 3 y 6, asi que Daniel 2
      sale del EXAMEN de esas categorias pero se sigue estudiando: `extra`
      lista las categorias para las que el capitulo es solo material. Guias
      Mayores es otro evento y ahi Daniel 2 si cuenta. */
-  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', cats:['me','av','pa','gm'], extra:['me','av','pa'] },
-  { id:'d3', label:'Daniel 3', sub:'La imagen de oro y el horno', src:'Biblia', color:'#C0392B', cats:['me','av','pa','gm'] },
-  { id:'d4', label:'Daniel 4', sub:'Nabucodonosor humillado', src:'Biblia', color:'#7B5E00', cats:['gm'] },
-  { id:'d5', label:'Daniel 5', sub:'La escritura en la pared', src:'Biblia', color:'#8B1A5E', cats:['gm'] },
-  { id:'d6', label:'Daniel 6', sub:'En el foso de los leones', src:'Biblia', color:'#1A7A1A', cats:['me','av','pa','gm'] },
+  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', vs:49, cats:['me','av','pa','gm'], extra:['me','av','pa'] },
+  { id:'d3', label:'Daniel 3', sub:'La imagen de oro y el horno', src:'Biblia', color:'#C0392B', vs:30, cats:['me','av','pa','gm'] },
+  { id:'d4', label:'Daniel 4', sub:'Nabucodonosor humillado', src:'Biblia', color:'#7B5E00', vs:37, cats:['gm'] },
+  { id:'d5', label:'Daniel 5', sub:'La escritura en la pared', src:'Biblia', color:'#8B1A5E', vs:31, cats:['gm'] },
+  { id:'d6', label:'Daniel 6', sub:'En el foso de los leones', src:'Biblia', color:'#1A7A1A', vs:28, cats:['me','av','pa','gm'] },
   { id:'pr39', label:'P&R 39', sub:'En la corte de Babilonia', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
   { id:'pr40', label:'P&R 40', sub:'El sueño de Nabucodonosor', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
   { id:'pr41', label:'P&R 41', sub:'El horno de fuego', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },

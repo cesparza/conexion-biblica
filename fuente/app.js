@@ -674,7 +674,11 @@ function pintaCaps(){
   const caps=capsDe().map(c=>
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     '<div class="n" style="color:'+c.color+'">'+esc(c.label.replace(/^(Daniel |P&R )/,''))+'</div>'+
-    '<div class="t">'+esc(c.sub)+'</div><div class="f">'+esc(c.src)+'</div>'+
+    '<div class="t">'+esc(c.sub)+'</div>'+
+    /* Cuantos versiculos trae, para poder repartir la lectura antes de abrirlo:
+       Daniel 2 son 49 y Daniel 1 son 21, y eso cambia como se planea la semana.
+       Solo los capitulos de la Biblia lo tienen; los de P&R no son versiculos. */
+    '<div class="f">'+esc(c.src)+(c.vs?' · '+c.vs+' vers.':'')+'</div>'+
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
     (soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
@@ -701,7 +705,8 @@ function verCap(id){
   d.innerHTML=
     '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">'+
     '<div><div style="font-size:1.15rem;font-weight:800;color:var(--azul)">'+esc(c.label)+'</div>'+
-    '<div style="font-size:.83rem;color:var(--gris)">'+esc(c.sub)+(c.src?' · '+esc(c.src):'')+'</div></div>'+
+    '<div style="font-size:.83rem;color:var(--gris)">'+esc(c.sub)+(c.src?' · '+esc(c.src):'')+
+    (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
     /* La píldora dice de qué fuente sale el texto del capítulo. En las 28
        creencias no es la RV1995: la guía «En esto creemos» cita RV1960, y decir
        lo contrario sería justo el error que este proyecto persigue. */
