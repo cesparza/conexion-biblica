@@ -185,6 +185,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
      debajo de ella y no se alcanza a tocar. */
   padding-bottom:env(safe-area-inset-bottom,0)}
 .hoja.abierta .hoja-caja{transform:translateY(0)}
+/* La hoja de identidad lleva dos selectores y tres notas, así que sube más que
+   la del versículo. El scroll sigue estando en .hoja-txt. */
+.hoja-yo .hoja-caja{max-height:88vh}
 /* El asa: dice «esto se cierra hacia abajo» sin ponerle texto. */
 .hoja-asa{width:42px;height:5px;border-radius:3px;background:#d3d9e2;
   margin:.55rem auto .2rem;flex:0 0 auto;cursor:pointer}
@@ -481,17 +484,11 @@ body.av .tj .rev{font-size:1.08rem}
 /* ───────── barra de identidad ─────────
    Reemplaza al muro de seis categorías: una línea con quién estudia y qué
    estudia. Se abre solo si hay que cambiar algo. */
-.ident{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:1.1rem;overflow:hidden}
-.ident>summary{padding:.9rem 1.1rem;cursor:pointer;font-size:.9rem;font-weight:700;color:var(--azul);
-  list-style:none;display:flex;align-items:center;gap:.5rem;min-height:50px;flex-wrap:wrap}
-.ident>summary::-webkit-details-marker{display:none}
-.ident>summary::after{content:'Cambiar';margin-left:auto;font-size:.76rem;font-weight:800;color:var(--cielo);
-  border:2px solid var(--cielo);border-radius:50px;padding:.25rem .7rem;white-space:nowrap}
-.ident[open]>summary::after{content:'Cerrar'}
-.ident-cuerpo{padding:0 1.1rem 1.2rem;border-top:1px solid #eef0f5}
+/* El cuerpo del selector de identidad. Antes era el interior de un <details>
+   en el Inicio; ahora es el contenido de la hoja, y por eso ya no lleva ni
+   sombra ni borde propios: la hoja los pone. */
+.ident-cuerpo h3:first-child{margin-top:.2rem}
 .ident-cuerpo h3{font-size:.85rem;font-weight:800;color:var(--azul);margin:1rem 0 .5rem}
-.id-quien{font-weight:900}
-.id-que{color:var(--gris);font-weight:600;font-size:.82rem}
 
 /* ───────── secciones que se abren ─────────
    Lo que no se necesita para estudiar hoy no ocupa pantalla: ajustes del
@@ -550,6 +547,43 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.78rem}
 .bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
 .bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
+
+/* ───────── la ficha de quién estudia, en la barra ─────────
+   Va en la barra superior, que en celular tiene el logo a la izquierda y el ❓
+   a la derecha y deja libre todo el centro. `min-width:0` y el ellipsis son
+   obligatorios: un nombre largo con «Padres y consejeros» debajo desbordaría la
+   barra a 390 px, que es el mismo error del `select` de v42.
+   Dos renglones y no uno: el nombre en negrita y la actividad debajo en
+   pequeño, para que se distinga de un botón de navegación. */
+.nav-yo{
+  display:flex;align-items:center;gap:.5rem;flex:1 1 auto;min-width:0;
+  margin-left:.5rem;padding:.28rem .55rem;
+  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);
+  border-radius:11px;color:#fff;font-family:inherit;cursor:pointer;
+  text-align:left;
+  transition:background var(--v-paso)}
+.nav-yo:hover{background:rgba(255,255,255,.24)}
+/* OJO CON LA ESPECIFICIDAD, que aquí ya costó una corrida: en celular hay un
+   `.nav-b span{display:none}` (de v21, para esconder el rótulo de texto de la
+   barra) que pesa 0-1-1 y le gana a un `.yo-ini{display:flex}` de 0-1-0. La
+   ficha salía como una pastilla vacía, con el innerHTML correcto y la suite en
+   verde. Por eso los tres van escritos como `.nav-yo .yo-*`, que pesa 0-2-0 y
+   sí gana. Es el mismo error que `.av-nuevo{display:flex}` contra `[hidden]`:
+   una regla ancha que le gana en silencio a una específica. */
+.nav-yo .yo-ini{
+  flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  /* Blanco translúcido y NO el color de la categoría: `--v-cat` va de un azul
+     casi negro a un morado, así que un texto fijo encima queda ilegible en
+     alguna de las ocho categorías. Translúcido funciona sobre las ocho. */
+  background:rgba(255,255,255,.22);color:#fff;
+  font-size:.82rem;font-weight:900;line-height:1}
+.nav-yo .yo-tx{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+.nav-yo .yo-n{display:block;font-size:.82rem;font-weight:800;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-yo .yo-c{display:block;font-size:.66rem;font-weight:600;color:rgba(255,255,255,.72);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media print{.nav-yo{display:none}}
 
 /* ❓ en la barra: la ayuda tiene que estar a un toque desde cualquier
    pantalla, pero una sexta pestaña no cabe en un teléfono. */
@@ -1103,6 +1137,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
     border-radius:10px;transition:color var(--v-paso), background var(--v-paso);
   }
   .nav-ayuda:hover{color:#fff;background:rgba(255,255,255,.10)}
+  /* En el riel no cabe un nombre: la ficha se reduce a la inicial, con el
+     nombre completo en el title. La hoja que abre es la misma. */
+  .nav-yo{flex:0 0 auto;margin:0;padding:0;width:42px;height:42px;
+    justify-content:center;border-radius:13px;background:rgba(255,255,255,.10)}
+  .nav-yo .yo-tx{display:none}
+  .nav-yo .yo-ini{display:flex;width:28px;height:28px;font-size:.9rem}
 }
 
 
@@ -1171,9 +1211,6 @@ details.card summary::-webkit-details-marker{display:none}
 details.card summary::marker{content:''}
 
 
-.id-quien{display:inline-flex;align-items:center;gap:.4rem}
-.id-quien .ico{width:17px;height:17px;color:var(--v-cat);--ico-w:1.9}
-.id-quien .ico .f{fill:currentColor;fill-opacity:.14}
 
 
 /* A quién le toca la evaluación. Casillas grandes y con el nombre completo de

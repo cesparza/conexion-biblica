@@ -201,6 +201,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
      debajo de ella y no se alcanza a tocar. */
   padding-bottom:env(safe-area-inset-bottom,0)}
 .hoja.abierta .hoja-caja{transform:translateY(0)}
+/* La hoja de identidad lleva dos selectores y tres notas, así que sube más que
+   la del versículo. El scroll sigue estando en .hoja-txt. */
+.hoja-yo .hoja-caja{max-height:88vh}
 /* El asa: dice «esto se cierra hacia abajo» sin ponerle texto. */
 .hoja-asa{width:42px;height:5px;border-radius:3px;background:#d3d9e2;
   margin:.55rem auto .2rem;flex:0 0 auto;cursor:pointer}
@@ -497,17 +500,11 @@ body.av .tj .rev{font-size:1.08rem}
 /* ───────── barra de identidad ─────────
    Reemplaza al muro de seis categorías: una línea con quién estudia y qué
    estudia. Se abre solo si hay que cambiar algo. */
-.ident{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:1.1rem;overflow:hidden}
-.ident>summary{padding:.9rem 1.1rem;cursor:pointer;font-size:.9rem;font-weight:700;color:var(--azul);
-  list-style:none;display:flex;align-items:center;gap:.5rem;min-height:50px;flex-wrap:wrap}
-.ident>summary::-webkit-details-marker{display:none}
-.ident>summary::after{content:'Cambiar';margin-left:auto;font-size:.76rem;font-weight:800;color:var(--cielo);
-  border:2px solid var(--cielo);border-radius:50px;padding:.25rem .7rem;white-space:nowrap}
-.ident[open]>summary::after{content:'Cerrar'}
-.ident-cuerpo{padding:0 1.1rem 1.2rem;border-top:1px solid #eef0f5}
+/* El cuerpo del selector de identidad. Antes era el interior de un <details>
+   en el Inicio; ahora es el contenido de la hoja, y por eso ya no lleva ni
+   sombra ni borde propios: la hoja los pone. */
+.ident-cuerpo h3:first-child{margin-top:.2rem}
 .ident-cuerpo h3{font-size:.85rem;font-weight:800;color:var(--azul);margin:1rem 0 .5rem}
-.id-quien{font-weight:900}
-.id-que{color:var(--gris);font-weight:600;font-size:.82rem}
 
 /* ───────── secciones que se abren ─────────
    Lo que no se necesita para estudiar hoy no ocupa pantalla: ajustes del
@@ -566,6 +563,43 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.78rem}
 .bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
 .bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
+
+/* ───────── la ficha de quién estudia, en la barra ─────────
+   Va en la barra superior, que en celular tiene el logo a la izquierda y el ❓
+   a la derecha y deja libre todo el centro. `min-width:0` y el ellipsis son
+   obligatorios: un nombre largo con «Padres y consejeros» debajo desbordaría la
+   barra a 390 px, que es el mismo error del `select` de v42.
+   Dos renglones y no uno: el nombre en negrita y la actividad debajo en
+   pequeño, para que se distinga de un botón de navegación. */
+.nav-yo{
+  display:flex;align-items:center;gap:.5rem;flex:1 1 auto;min-width:0;
+  margin-left:.5rem;padding:.28rem .55rem;
+  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);
+  border-radius:11px;color:#fff;font-family:inherit;cursor:pointer;
+  text-align:left;
+  transition:background var(--v-paso)}
+.nav-yo:hover{background:rgba(255,255,255,.24)}
+/* OJO CON LA ESPECIFICIDAD, que aquí ya costó una corrida: en celular hay un
+   `.nav-b span{display:none}` (de v21, para esconder el rótulo de texto de la
+   barra) que pesa 0-1-1 y le gana a un `.yo-ini{display:flex}` de 0-1-0. La
+   ficha salía como una pastilla vacía, con el innerHTML correcto y la suite en
+   verde. Por eso los tres van escritos como `.nav-yo .yo-*`, que pesa 0-2-0 y
+   sí gana. Es el mismo error que `.av-nuevo{display:flex}` contra `[hidden]`:
+   una regla ancha que le gana en silencio a una específica. */
+.nav-yo .yo-ini{
+  flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  /* Blanco translúcido y NO el color de la categoría: `--v-cat` va de un azul
+     casi negro a un morado, así que un texto fijo encima queda ilegible en
+     alguna de las ocho categorías. Translúcido funciona sobre las ocho. */
+  background:rgba(255,255,255,.22);color:#fff;
+  font-size:.82rem;font-weight:900;line-height:1}
+.nav-yo .yo-tx{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+.nav-yo .yo-n{display:block;font-size:.82rem;font-weight:800;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-yo .yo-c{display:block;font-size:.66rem;font-weight:600;color:rgba(255,255,255,.72);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media print{.nav-yo{display:none}}
 
 /* ❓ en la barra: la ayuda tiene que estar a un toque desde cualquier
    pantalla, pero una sexta pestaña no cabe en un teléfono. */
@@ -1119,6 +1153,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
     border-radius:10px;transition:color var(--v-paso), background var(--v-paso);
   }
   .nav-ayuda:hover{color:#fff;background:rgba(255,255,255,.10)}
+  /* En el riel no cabe un nombre: la ficha se reduce a la inicial, con el
+     nombre completo en el title. La hoja que abre es la misma. */
+  .nav-yo{flex:0 0 auto;margin:0;padding:0;width:42px;height:42px;
+    justify-content:center;border-radius:13px;background:rgba(255,255,255,.10)}
+  .nav-yo .yo-tx{display:none}
+  .nav-yo .yo-ini{display:flex;width:28px;height:28px;font-size:.9rem}
 }
 
 
@@ -1187,9 +1227,6 @@ details.card summary::-webkit-details-marker{display:none}
 details.card summary::marker{content:''}
 
 
-.id-quien{display:inline-flex;align-items:center;gap:.4rem}
-.id-quien .ico{width:17px;height:17px;color:var(--v-cat);--ico-w:1.9}
-.id-quien .ico .f{fill:currentColor;fill-opacity:.14}
 
 
 /* A quién le toca la evaluación. Casillas grandes y con el nombre completo de
@@ -1352,7 +1389,11 @@ details.card summary::marker{content:''}
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
     <span class="rail-marca" aria-hidden="true"><svg class="ico"><use href="#i-libro"/></svg></span>
-    <span>Conexión Bíblica</span>
+    <!-- La ficha de quién estudia. Va en la barra y no en el Inicio porque es
+         ESTADO: decide todo lo que se ve en las cinco pantallas, así que tiene
+         que leerse desde cualquiera de ellas. La llena pintaYo() y al tocarla
+         abreYo() sube la hoja inferior. -->
+    <button class="nav-yo" id="nav-yo" type="button" onclick="abreYo()"></button>
     <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app" aria-label="Cómo se usa esta app"><svg class="ico" aria-hidden="true"><use href="#i-ayuda"/></svg></button>
   </div>
   <div class="nav-t">
@@ -1411,32 +1452,13 @@ details.card summary::marker{content:''}
   <div class="marca">
     <img class="logo-marca logo-tl" alt="Iglesia Adventista Tierra Linda">
     <div>
-      <div class="mt">Conexión Bíblica · Devoción Matutina · En esto creemos</div>
+      <!-- Ya no lista las tres actividades: la ficha de la barra dice en cuál
+           estás, y una lista fija justo debajo competía con ella y en celular
+           gastaba tres renglones para no decir nada de tu caso. -->
+      <div class="mt">Preparación para el campamento</div>
       <div class="ms">Club de Aventureros · Iglesia Adventista Tierra Linda</div>
     </div>
   </div>
-
-  <details class="ident" id="ident">
-    <summary id="ident-sum"></summary>
-    <div class="ident-cuerpo">
-      <h3>👥 ¿Quién estudia?</h3>
-      <div class="alu-sel" id="alu-sel"></div>
-      <input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">
-      <p class="nota">Cada participante guarda su <strong>propio progreso</strong>.
-      Toca un nombre para cambiar de persona.</p>
-      <h3>🎯 Actividad y categoría</h3>
-      <div class="cat-sel" id="cat-sel"></div>
-      <p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y
-      define qué capítulos ves, de dónde salen las preguntas y hasta qué
-      dificultad llegan. Si estudias dos actividades, no cambies de categoría
-      aquí: agrega <strong>otro participante</strong> con tu mismo nombre, así
-      cada actividad guarda su progreso aparte.</p>
-      <p class="nota">En Conexión Bíblica el reglamento del campamento pide
-      <strong>Daniel 1, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y
-      Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro
-      evento.</p>
-    </div>
-  </details>
 
   <div class="card hoy">
     <h2><svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg><span>Qué estudiar hoy</span></h2>
@@ -1688,7 +1710,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'f6d9a8fcb1f4';
+const VERSION_APP = '17775b208144';
 
 const CAPS = [
  {
@@ -14355,7 +14377,7 @@ const MANUAL = [
    },
    {
     "t": "Si escogiste mal",
-    "h": "<p>No hay que empezar de cero. En <strong>Inicio</strong>, en la barra de\n    arriba que dice tu nombre, toca <strong>Cambiar</strong>. Ahí están todas\n    las categorías <strong>agrupadas por actividad</strong>, así que desde el\n    mismo sitio corriges la categoría o te pasas a otra actividad. Tu progreso\n    no se pierde.</p>"
+    "h": "<p>No hay que empezar de cero. <strong>Arriba, en la barra azul</strong>,\n    está tu nombre con tu actividad debajo. Tócalo y sube una hoja con todas las\n    categorías <strong>agrupadas por actividad</strong>, así que desde el mismo\n    sitio corriges la categoría o te pasas a otra actividad. Tu progreso no se\n    pierde.</p>\n    <p>Esa ficha se ve en <strong>todas las pantallas</strong>, no solo en\n    Inicio, así que no hay que ir a buscarla.</p>"
    }
   ]
  },
@@ -14418,11 +14440,11 @@ const MANUAL = [
    },
    {
     "t": "Cómo agregar la segunda",
-    "h": "<p>En <strong>Inicio</strong>, en la barra de arriba con tu nombre, toca\n    <strong>Cambiar</strong> y después <strong>+ Agregar</strong>. Escribes el\n    mismo nombre y escoges la otra actividad y su categoría.</p>\n    <p>Se hace así, y no en los tres pasos del principio, porque la mayoría\n    está en una sola actividad: cobrarle a todos una pantalla más el primer día\n    para algo que hace una minoría es mal negocio.</p>"
+    "h": "<p>Toca <strong>tu nombre en la barra azul de arriba</strong> y después\n    <strong>+ Agregar</strong>. Escribes el mismo nombre y escoges la otra\n    actividad y su categoría.</p>\n    <p>Se hace así, y no en los tres pasos del principio, porque la mayoría\n    está en una sola actividad: cobrarle a todos una pantalla más el primer día\n    para algo que hace una minoría es mal negocio.</p>"
    },
    {
     "t": "Cambiar de una a otra no borra nada",
-    "h": "<p>Tocas tu nombre arriba y escoges la otra ficha. El progreso de cada\n    una <strong>se guarda por separado</strong> y siempre está: lo leído, lo\n    memorizado, los exámenes y los errores.</p>\n    <p>Lo único que se reinicia al cambiar es el <strong>examen que tenías\n    armado</strong> y el mazo de tarjetas en pantalla, porque eran de la otra\n    actividad.</p>"
+    "h": "<p>Tocas tu nombre en la barra de arriba y escoges la otra ficha, estés\n    en la pantalla que estés. El progreso de cada una <strong>se guarda por\n    separado</strong> y siempre está: lo leído, lo memorizado, los exámenes y\n    los errores.</p>\n    <p>Después de cambiar la app te deja en <strong>Inicio</strong>, a\n    propósito: el material es otro, así que «Qué estudiar hoy» te dice por dónde\n    seguir con lo nuevo.</p>\n    <p>Lo único que se reinicia al cambiar es el <strong>examen que tenías\n    armado</strong> y el mazo de tarjetas en pantalla, porque eran de la otra\n    actividad.</p>"
    }
   ]
  },
@@ -14727,15 +14749,15 @@ const MANUAL = [
   "secs": [
    {
     "t": "La bienvenida hace el trabajo",
-    "h": "<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce\n    la categoría. <strong>El participante nunca escoge entre las seis</strong>,\n    justamente para que un niño de cinco años no termine con el material de\n    nueve.</p>\n    <p>Si dice que participa en los dos eventos, se le crean\n    <strong>dos fichas</strong> con el mismo nombre. Son cuentas separadas a\n    propósito: el progreso de Daniel y el de la matutina no se deben\n    mezclar.</p>"
+    "h": "<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce\n    la categoría. <strong>El participante nunca escoge entre las seis</strong>,\n    justamente para que un niño de cinco años no termine con el material de\n    nueve.</p>\n    <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>\n    con el mismo nombre. Son cuentas separadas a propósito: el progreso de una\n    actividad y el de la otra no se deben mezclar.</p>"
    },
    {
     "t": "Cambiar de persona",
-    "h": "<p>En el <strong>Inicio</strong>, la barra de arriba dice quién está\n    estudiando. Al tocar <strong>Cambiar</strong> se abre el selector de\n    personas y de categoría. Caben <strong>hasta 12 fichas</strong> por aparato,\n    cada una con su progreso, sus errores y sus exámenes.</p>"
+    "h": "<p><strong>La barra azul de arriba dice siempre quién está estudiando</strong>\n    y en qué actividad, en todas las pantallas. Al tocarla sube una hoja con el\n    selector de personas y de categoría. Caben <strong>hasta 12 fichas</strong>\n    por aparato, cada una con su progreso, sus errores y sus exámenes.</p>"
    },
    {
     "t": "Lo primero que hay que revisar",
-    "h": "<div class=\"warn-box\">Cuando un niño lleva días estudiando, revisa que la\n    barra de arriba diga la categoría correcta. Si dice otra, toca Cambiar y\n    corrige: el progreso no se pierde.</div>"
+    "h": "<div class=\"warn-box\">En un teléfono compartido, lo primero es mirar la\n    barra de arriba: dice el nombre y la actividad. Si no es la persona que va a\n    estudiar, tócala y cambia antes de empezar; si la categoría está mal, se\n    corrige ahí mismo y el progreso no se pierde.</div>"
    }
   ]
  },
@@ -15859,8 +15881,12 @@ function cambiaAlumno(id){
      tarjetas y el examen en curso son de quien estaba antes. */
   mazo=[];tjI=0;tjFiltro='hoy';alcance='todo';cuantas=0;nivel=0;
   prueba=[];resp={};entregado=false;clearInterval(reloj);
-  marcaCat();pintaInicio();pintaCaps();
+  marcaCat();pintaInicio();pintaCaps();pintaYo();
   try{document.getElementById('detalle').style.display='none';}catch(e){}
+  cierraHoja();
+  /* Se aterriza en Inicio a propósito: al cambiar de persona o de actividad el
+     mazo y el examen se reiniciaron, y quedarse en Tarjetas con un mazo vacío
+     no se entiende. Inicio dice qué estudiar hoy con el material nuevo. */
   ir('inicio');
 }
 
@@ -15981,12 +16007,18 @@ function ir(id){
   window.scrollTo({top:0});
 }
 
-function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();}
+function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();pintaYo();}
 function ponCat(c){
   S.cat=c;guardar();
   marcaCat();
-  pintaInicio();pintaCaps();
-  document.getElementById('detalle').style.display='none';
+  pintaInicio();pintaCaps();pintaYo();
+  try{document.getElementById('detalle').style.display='none';}catch(e){}
+  /* Cambiar de categoría cambia el material entero, así que el mazo y el examen
+     armado eran de la categoría anterior. Igual que al cambiar de persona. */
+  mazo=[];tjI=0;prueba=[];resp={};entregado=false;
+  try{clearInterval(reloj);}catch(e){}
+  cierraHoja();
+  ir('inicio');
 }
 
 /* Selector de participantes. Cada uno con su nombre y su categoría, para
@@ -16122,22 +16154,90 @@ function irTarjetasTodas(){tjFiltro='todas';ir('tarjetas');tjBaraja();}
 async function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();await arrancaExamen('normal');}
 
 /* ───────── inicio ───────── */
-/* Una línea con quién estudia y qué estudia, en vez de las seis categorías
-   siempre a la vista. El resto del selector vive dentro del <details>. */
-function pintaIdent(){
-  const s=document.getElementById('ident-sum');
-  if(!s)return;
-  s.innerHTML='<span class="id-quien"><svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg>'+esc(S.nombre||'Sin nombre')+'</span>'+
-    '<span class="id-que">'+esc(CAT().nombre)+' · '+esc(ACT().nombre)+'</span>';
+/* ───────── quién estudia: la ficha de la barra y la hoja ─────────
+   MECANISMO
+   Las pantallas se conmutan con `ir()`, que solo prende una `.pantalla`. El
+   panel de identidad vivía DENTRO de la pantalla de Inicio, así que solo
+   existía ahí: para cambiar de persona o de actividad desde Estudiar había que
+   volver a Inicio, abrirlo, cambiar, y navegar otra vez.
+
+   POR QUÉ ESO IMPORTA MÁS DE LO QUE PARECE
+   No es solo comodidad. El problema real es que en Estudiar, Tarjetas, Examen
+   y Logros NADA en pantalla decía de quién era el progreso ni de qué actividad.
+   Las dos hijas de Camilo comparten teléfono: María Camila podía hacer una
+   sesión entera de tarjetas dentro de la ficha de Isabella y ninguna de las dos
+   se daba cuenta hasta ver la racha rara. La identidad es ESTADO, y el estado
+   que decide todo lo que se ve tiene que estar siempre a la vista, no a tres
+   toques.
+
+   DECISIÓN
+   La ficha va en la barra, visible en las cinco pantallas, y al tocarla sube la
+   MISMA hoja inferior que ya se usa para los versículos. Dos cosas de un golpe:
+   se lee siempre quién estudia y qué estudia, y se cambia desde donde uno esté.
+   No se estrenó ningún mecanismo: la hoja, su fondo, su asa y su Escape ya
+   estaban probados. */
+function pintaYo(){
+  const b=document.getElementById('nav-yo');
+  if(!b)return;
+  const nom=S.nombre||'Sin nombre';
+  b.innerHTML='<span class="yo-ini" aria-hidden="true">'+esc(nom.trim().charAt(0).toUpperCase()||'?')+'</span>'+
+    '<span class="yo-tx"><span class="yo-n">'+esc(nom)+'</span>'+
+    '<span class="yo-c">'+esc(ACT().icono+' '+CAT().nombre)+'</span></span>';
+  const dice='Estudia '+nom+', '+CAT().nombre+' de '+ACT().nombre+'. Toca para cambiar.';
+  b.setAttribute('aria-label',dice);
+  /* En escritorio la ficha se reduce a la inicial y sin el title queda un botón
+     mudo: el aria-label no lo muestra ningún navegador al pasar el mouse. */
+  b.setAttribute('title',dice);
+}
+
+/** Sube la hoja de identidad. El esqueleto trae los mismos ids que ya usan
+ *  pintaAlumnos() y pintaSelectorCat(), así que esas dos siguen sirviendo sin
+ *  cambios: pintan si su contenedor existe, y existe solo con la hoja abierta. */
+function abreYo(){
+  abreHojaHtml(
+    '<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="Quién estudia y qué estudia">'+
+    '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-cab">'+
+      /* El subtítulo dice solo la actividad: el nombre y la categoría ya están
+         dos centímetros más abajo, y repetirlos aquí solo lograba que se
+         cortaran con puntos suspensivos. */
+      '<div><div class="hoja-ref">Quién estudia</div>'+
+      '<div class="hoja-sub">'+esc(ACT().icono+' '+ACT().nombre)+'</div></div>'+
+      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
+    '</div>'+
+    '<div class="hoja-txt ident-cuerpo">'+
+      '<h3>👥 ¿Quién estudia?</h3>'+
+      '<div class="alu-sel" id="alu-sel"></div>'+
+      '<input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">'+
+      '<p class="nota">Cada participante guarda su <strong>propio progreso</strong>. '+
+      'Toca un nombre para cambiar de persona.</p>'+
+      '<h3>🎯 Actividad y categoría</h3>'+
+      '<div class="cat-sel" id="cat-sel"></div>'+
+      '<p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y '+
+      'define qué capítulos ves, de dónde salen las preguntas y hasta qué '+
+      'dificultad llegan. Si estudias dos actividades, no cambies de categoría '+
+      'aquí: agrega <strong>otro participante</strong> con tu mismo nombre, así '+
+      'cada actividad guarda su progreso aparte.</p>'+
+      '<p class="nota">En Conexión Bíblica el reglamento del campamento pide '+
+      '<strong>Daniel 1, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y '+
+      'Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro '+
+      'evento.</p>'+
+    '</div></div>','yo');
+  pintaAlumnos();pintaSelectorCat();
+  const ni=document.getElementById('nombre');
+  if(ni)ni.value=S.nombre||'';
 }
 
 function pintaInicio(){
   pintaAlumnos();
-  pintaIdent();
+  pintaYo();
   pintaHoy();
   pintaSelectorCat();
+  /* El campo del nombre vive en la hoja, que casi siempre está cerrada. Sin la
+     guarda, pintaInicio() revienta al leer `.value` de null. */
   const ni=document.getElementById('nombre');
-  if(ni.value!==S.nombre)ni.value=S.nombre;
+  if(ni&&ni.value!==S.nombre)ni.value=S.nombre;
 
   const cs=capsDe();
   const listos=cs.filter(c=>S.prog[c.id]>=100).length;
@@ -16278,16 +16378,24 @@ function refsTocables(html,capId){
    cerrar, que es como se lee una Biblia de verdad. */
 let hojaCid=null, hojaDe=0, hojaHasta=0;
 
+/* La hoja es UNA sola pieza reutilizable, no dos. `hojaTipo` dice qué está
+   mostrando ('vers' o 'yo'); `hojaCid` sigue siendo estado exclusivo del
+   versículo. Tener dos hojas con su propio abrir, cerrar, fondo, asa y Escape
+   habría sido el mismo error que v47 arrancó: dos mecanismos para un concepto. */
+let hojaTipo=null;
+
 function verVers(btn,cid,de,hasta){
   abreHoja(cid,de,hasta);
 }
 
-function abreHoja(cid,de,hasta){
-  if(typeof VERS==='undefined'||!VERS[cid])return;
-  hojaCid=cid; hojaDe=de; hojaHasta=hasta||de;
+/** Sube la hoja con el HTML que se le pase. `tipo` solo sirve para saber qué
+ *  hay abierto y para teñir la caja con una clase. */
+function abreHojaHtml(html,tipo){
   const h=document.getElementById('hoja');
   if(!h)return;
-  h.innerHTML=htmlHoja();
+  hojaTipo=tipo||'vers';
+  h.className='hoja hoja-'+hojaTipo;
+  h.innerHTML=html;
   h.hidden=false;
   /* El translate arranca abajo y la clase lo sube. Hay que dejar pasar un
      cuadro entre quitar [hidden] y poner la clase, o el navegador aplica los
@@ -16296,15 +16404,21 @@ function abreHoja(cid,de,hasta){
   else h.classList.add('abierta');
 }
 
+function abreHoja(cid,de,hasta){
+  if(typeof VERS==='undefined'||!VERS[cid])return;
+  hojaCid=cid; hojaDe=de; hojaHasta=hasta||de;
+  abreHojaHtml(htmlHoja(),'vers');
+}
+
 function cierraHoja(){
   paraVoz();
   const h=document.getElementById('hoja');
   if(!h)return;
   h.classList.remove('abierta');
-  hojaCid=null;
+  hojaCid=null; hojaTipo=null;
   /* Se espera a que termine de bajar antes de esconderla: con [hidden] de
      una, desaparece de golpe y no se ve el gesto de cierre. */
-  setTimeout(()=>{if(!hojaCid){h.hidden=true;h.innerHTML='';}},220);
+  setTimeout(()=>{if(!hojaTipo){h.hidden=true;h.innerHTML='';}},220);
 }
 
 /** Pasa al versiculo anterior o siguiente sin cerrar la hoja. Se mueve de a
@@ -16354,7 +16468,7 @@ function htmlHoja(cid,de,hasta){
 
 /* Escape cierra, como cualquier hoja o modal del sistema. */
 if(typeof document!=='undefined'&&document.addEventListener)
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&hojaCid)cierraHoja();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&hojaTipo)cierraHoja();});
 
 /* El capitulo completo, en bloques de cinco versiculos con su propio boton
    de voz: uno solo leeria los 49 de corrido, que no sirve para memorizar, y
@@ -17976,9 +18090,13 @@ function ponCatBV(c){S.cat=c;guardar();}
 
 function bvTermina(){
   marcaCat();
+  /* Hay que repintar, no solo navegar: `ir()` prende la pantalla pero no vuelve
+     a dibujar su contenido, y al terminar la bienvenida cambiaron el nombre Y la
+     categoria, o sea todo. Antes esto no se veia porque el panel de identidad
+     vivia dentro del Inicio y nadie lo miraba de primeras; con la ficha en la
+     barra, salia vacia en las cinco pantallas. */
+  pintaInicio();pintaCaps();
   ir('inicio');
-  const id=document.getElementById('ident');
-  if(id)id.open=false;
   try{cargaEvaluacion();}catch(e){}
 }
 
@@ -18040,7 +18158,7 @@ function adoptaFicha(d){
   if(d.nombre&&S.nombre!==d.nombre){S.nombre=d.nombre;cambio=true;}
   if(d.categoria&&CATS[d.categoria]&&S.cat!==d.categoria){S.cat=d.categoria;cambio=true;}
   if(cambio){
-    guardar();marcaCat();pintaIdent();pintaCaps();pintaInicio();
+    guardar();marcaCat();pintaYo();pintaCaps();pintaInicio();
   }
 }
 

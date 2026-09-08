@@ -13,7 +13,8 @@ const js=html.match(/<script>([\s\S]*)<\/script>/)[1];
 
 let store={},sesion={};
 const nodo=()=>({classList:{add(){},remove(){},toggle(){}},value:'',textContent:'',
-  innerHTML:'',style:{},outerHTML:'',focus(){}});
+  innerHTML:'',style:{},outerHTML:'',focus(){},attrs:{},
+  setAttribute(k,v){this.attrs[k]=String(v);},getAttribute(k){return this.attrs[k];}});
 const stub=`
 let localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>{store[k]=v},removeItem:k=>{delete store[k]}};
 let sessionStorage={getItem:k=>sesion[k]||null,setItem:(k,v)=>{sesion[k]=v},removeItem:k=>{delete sesion[k]}};

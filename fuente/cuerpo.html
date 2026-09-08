@@ -99,7 +99,11 @@
   <div class="nav-b">
     <img class="logo-nav logo-tl" alt="Iglesia Adventista Tierra Linda">
     <span class="rail-marca" aria-hidden="true"><svg class="ico"><use href="#i-libro"/></svg></span>
-    <span>Conexión Bíblica</span>
+    <!-- La ficha de quién estudia. Va en la barra y no en el Inicio porque es
+         ESTADO: decide todo lo que se ve en las cinco pantallas, así que tiene
+         que leerse desde cualquiera de ellas. La llena pintaYo() y al tocarla
+         abreYo() sube la hoja inferior. -->
+    <button class="nav-yo" id="nav-yo" type="button" onclick="abreYo()"></button>
     <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app" aria-label="Cómo se usa esta app"><svg class="ico" aria-hidden="true"><use href="#i-ayuda"/></svg></button>
   </div>
   <div class="nav-t">
@@ -158,32 +162,13 @@
   <div class="marca">
     <img class="logo-marca logo-tl" alt="Iglesia Adventista Tierra Linda">
     <div>
-      <div class="mt">Conexión Bíblica · Devoción Matutina · En esto creemos</div>
+      <!-- Ya no lista las tres actividades: la ficha de la barra dice en cuál
+           estás, y una lista fija justo debajo competía con ella y en celular
+           gastaba tres renglones para no decir nada de tu caso. -->
+      <div class="mt">Preparación para el campamento</div>
       <div class="ms">Club de Aventureros · Iglesia Adventista Tierra Linda</div>
     </div>
   </div>
-
-  <details class="ident" id="ident">
-    <summary id="ident-sum"></summary>
-    <div class="ident-cuerpo">
-      <h3>👥 ¿Quién estudia?</h3>
-      <div class="alu-sel" id="alu-sel"></div>
-      <input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">
-      <p class="nota">Cada participante guarda su <strong>propio progreso</strong>.
-      Toca un nombre para cambiar de persona.</p>
-      <h3>🎯 Actividad y categoría</h3>
-      <div class="cat-sel" id="cat-sel"></div>
-      <p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y
-      define qué capítulos ves, de dónde salen las preguntas y hasta qué
-      dificultad llegan. Si estudias dos actividades, no cambies de categoría
-      aquí: agrega <strong>otro participante</strong> con tu mismo nombre, así
-      cada actividad guarda su progreso aparte.</p>
-      <p class="nota">En Conexión Bíblica el reglamento del campamento pide
-      <strong>Daniel 1, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y
-      Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro
-      evento.</p>
-    </div>
-  </details>
 
   <div class="card hoy">
     <h2><svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg><span>Qué estudiar hoy</span></h2>

@@ -410,8 +410,12 @@ function cambiaAlumno(id){
      tarjetas y el examen en curso son de quien estaba antes. */
   mazo=[];tjI=0;tjFiltro='hoy';alcance='todo';cuantas=0;nivel=0;
   prueba=[];resp={};entregado=false;clearInterval(reloj);
-  marcaCat();pintaInicio();pintaCaps();
+  marcaCat();pintaInicio();pintaCaps();pintaYo();
   try{document.getElementById('detalle').style.display='none';}catch(e){}
+  cierraHoja();
+  /* Se aterriza en Inicio a propósito: al cambiar de persona o de actividad el
+     mazo y el examen se reiniciaron, y quedarse en Tarjetas con un mazo vacío
+     no se entiende. Inicio dice qué estudiar hoy con el material nuevo. */
   ir('inicio');
 }
 
@@ -532,12 +536,18 @@ function ir(id){
   window.scrollTo({top:0});
 }
 
-function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();}
+function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();pintaYo();}
 function ponCat(c){
   S.cat=c;guardar();
   marcaCat();
-  pintaInicio();pintaCaps();
-  document.getElementById('detalle').style.display='none';
+  pintaInicio();pintaCaps();pintaYo();
+  try{document.getElementById('detalle').style.display='none';}catch(e){}
+  /* Cambiar de categoría cambia el material entero, así que el mazo y el examen
+     armado eran de la categoría anterior. Igual que al cambiar de persona. */
+  mazo=[];tjI=0;prueba=[];resp={};entregado=false;
+  try{clearInterval(reloj);}catch(e){}
+  cierraHoja();
+  ir('inicio');
 }
 
 /* Selector de participantes. Cada uno con su nombre y su categoría, para
@@ -673,22 +683,90 @@ function irTarjetasTodas(){tjFiltro='todas';ir('tarjetas');tjBaraja();}
 async function examenDeCapitulo(id){alcance=id;cuantas=0;ir('examen');pintaMenuEx();await arrancaExamen('normal');}
 
 /* ───────── inicio ───────── */
-/* Una línea con quién estudia y qué estudia, en vez de las seis categorías
-   siempre a la vista. El resto del selector vive dentro del <details>. */
-function pintaIdent(){
-  const s=document.getElementById('ident-sum');
-  if(!s)return;
-  s.innerHTML='<span class="id-quien"><svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg>'+esc(S.nombre||'Sin nombre')+'</span>'+
-    '<span class="id-que">'+esc(CAT().nombre)+' · '+esc(ACT().nombre)+'</span>';
+/* ───────── quién estudia: la ficha de la barra y la hoja ─────────
+   MECANISMO
+   Las pantallas se conmutan con `ir()`, que solo prende una `.pantalla`. El
+   panel de identidad vivía DENTRO de la pantalla de Inicio, así que solo
+   existía ahí: para cambiar de persona o de actividad desde Estudiar había que
+   volver a Inicio, abrirlo, cambiar, y navegar otra vez.
+
+   POR QUÉ ESO IMPORTA MÁS DE LO QUE PARECE
+   No es solo comodidad. El problema real es que en Estudiar, Tarjetas, Examen
+   y Logros NADA en pantalla decía de quién era el progreso ni de qué actividad.
+   Las dos hijas de Camilo comparten teléfono: María Camila podía hacer una
+   sesión entera de tarjetas dentro de la ficha de Isabella y ninguna de las dos
+   se daba cuenta hasta ver la racha rara. La identidad es ESTADO, y el estado
+   que decide todo lo que se ve tiene que estar siempre a la vista, no a tres
+   toques.
+
+   DECISIÓN
+   La ficha va en la barra, visible en las cinco pantallas, y al tocarla sube la
+   MISMA hoja inferior que ya se usa para los versículos. Dos cosas de un golpe:
+   se lee siempre quién estudia y qué estudia, y se cambia desde donde uno esté.
+   No se estrenó ningún mecanismo: la hoja, su fondo, su asa y su Escape ya
+   estaban probados. */
+function pintaYo(){
+  const b=document.getElementById('nav-yo');
+  if(!b)return;
+  const nom=S.nombre||'Sin nombre';
+  b.innerHTML='<span class="yo-ini" aria-hidden="true">'+esc(nom.trim().charAt(0).toUpperCase()||'?')+'</span>'+
+    '<span class="yo-tx"><span class="yo-n">'+esc(nom)+'</span>'+
+    '<span class="yo-c">'+esc(ACT().icono+' '+CAT().nombre)+'</span></span>';
+  const dice='Estudia '+nom+', '+CAT().nombre+' de '+ACT().nombre+'. Toca para cambiar.';
+  b.setAttribute('aria-label',dice);
+  /* En escritorio la ficha se reduce a la inicial y sin el title queda un botón
+     mudo: el aria-label no lo muestra ningún navegador al pasar el mouse. */
+  b.setAttribute('title',dice);
+}
+
+/** Sube la hoja de identidad. El esqueleto trae los mismos ids que ya usan
+ *  pintaAlumnos() y pintaSelectorCat(), así que esas dos siguen sirviendo sin
+ *  cambios: pintan si su contenedor existe, y existe solo con la hoja abierta. */
+function abreYo(){
+  abreHojaHtml(
+    '<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="Quién estudia y qué estudia">'+
+    '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-cab">'+
+      /* El subtítulo dice solo la actividad: el nombre y la categoría ya están
+         dos centímetros más abajo, y repetirlos aquí solo lograba que se
+         cortaran con puntos suspensivos. */
+      '<div><div class="hoja-ref">Quién estudia</div>'+
+      '<div class="hoja-sub">'+esc(ACT().icono+' '+ACT().nombre)+'</div></div>'+
+      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
+    '</div>'+
+    '<div class="hoja-txt ident-cuerpo">'+
+      '<h3>👥 ¿Quién estudia?</h3>'+
+      '<div class="alu-sel" id="alu-sel"></div>'+
+      '<input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">'+
+      '<p class="nota">Cada participante guarda su <strong>propio progreso</strong>. '+
+      'Toca un nombre para cambiar de persona.</p>'+
+      '<h3>🎯 Actividad y categoría</h3>'+
+      '<div class="cat-sel" id="cat-sel"></div>'+
+      '<p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y '+
+      'define qué capítulos ves, de dónde salen las preguntas y hasta qué '+
+      'dificultad llegan. Si estudias dos actividades, no cambies de categoría '+
+      'aquí: agrega <strong>otro participante</strong> con tu mismo nombre, así '+
+      'cada actividad guarda su progreso aparte.</p>'+
+      '<p class="nota">En Conexión Bíblica el reglamento del campamento pide '+
+      '<strong>Daniel 1, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y '+
+      'Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro '+
+      'evento.</p>'+
+    '</div></div>','yo');
+  pintaAlumnos();pintaSelectorCat();
+  const ni=document.getElementById('nombre');
+  if(ni)ni.value=S.nombre||'';
 }
 
 function pintaInicio(){
   pintaAlumnos();
-  pintaIdent();
+  pintaYo();
   pintaHoy();
   pintaSelectorCat();
+  /* El campo del nombre vive en la hoja, que casi siempre está cerrada. Sin la
+     guarda, pintaInicio() revienta al leer `.value` de null. */
   const ni=document.getElementById('nombre');
-  if(ni.value!==S.nombre)ni.value=S.nombre;
+  if(ni&&ni.value!==S.nombre)ni.value=S.nombre;
 
   const cs=capsDe();
   const listos=cs.filter(c=>S.prog[c.id]>=100).length;
@@ -829,16 +907,24 @@ function refsTocables(html,capId){
    cerrar, que es como se lee una Biblia de verdad. */
 let hojaCid=null, hojaDe=0, hojaHasta=0;
 
+/* La hoja es UNA sola pieza reutilizable, no dos. `hojaTipo` dice qué está
+   mostrando ('vers' o 'yo'); `hojaCid` sigue siendo estado exclusivo del
+   versículo. Tener dos hojas con su propio abrir, cerrar, fondo, asa y Escape
+   habría sido el mismo error que v47 arrancó: dos mecanismos para un concepto. */
+let hojaTipo=null;
+
 function verVers(btn,cid,de,hasta){
   abreHoja(cid,de,hasta);
 }
 
-function abreHoja(cid,de,hasta){
-  if(typeof VERS==='undefined'||!VERS[cid])return;
-  hojaCid=cid; hojaDe=de; hojaHasta=hasta||de;
+/** Sube la hoja con el HTML que se le pase. `tipo` solo sirve para saber qué
+ *  hay abierto y para teñir la caja con una clase. */
+function abreHojaHtml(html,tipo){
   const h=document.getElementById('hoja');
   if(!h)return;
-  h.innerHTML=htmlHoja();
+  hojaTipo=tipo||'vers';
+  h.className='hoja hoja-'+hojaTipo;
+  h.innerHTML=html;
   h.hidden=false;
   /* El translate arranca abajo y la clase lo sube. Hay que dejar pasar un
      cuadro entre quitar [hidden] y poner la clase, o el navegador aplica los
@@ -847,15 +933,21 @@ function abreHoja(cid,de,hasta){
   else h.classList.add('abierta');
 }
 
+function abreHoja(cid,de,hasta){
+  if(typeof VERS==='undefined'||!VERS[cid])return;
+  hojaCid=cid; hojaDe=de; hojaHasta=hasta||de;
+  abreHojaHtml(htmlHoja(),'vers');
+}
+
 function cierraHoja(){
   paraVoz();
   const h=document.getElementById('hoja');
   if(!h)return;
   h.classList.remove('abierta');
-  hojaCid=null;
+  hojaCid=null; hojaTipo=null;
   /* Se espera a que termine de bajar antes de esconderla: con [hidden] de
      una, desaparece de golpe y no se ve el gesto de cierre. */
-  setTimeout(()=>{if(!hojaCid){h.hidden=true;h.innerHTML='';}},220);
+  setTimeout(()=>{if(!hojaTipo){h.hidden=true;h.innerHTML='';}},220);
 }
 
 /** Pasa al versiculo anterior o siguiente sin cerrar la hoja. Se mueve de a
@@ -905,7 +997,7 @@ function htmlHoja(cid,de,hasta){
 
 /* Escape cierra, como cualquier hoja o modal del sistema. */
 if(typeof document!=='undefined'&&document.addEventListener)
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&hojaCid)cierraHoja();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&hojaTipo)cierraHoja();});
 
 /* El capitulo completo, en bloques de cinco versiculos con su propio boton
    de voz: uno solo leeria los 49 de corrido, que no sirve para memorizar, y
@@ -2527,9 +2619,13 @@ function ponCatBV(c){S.cat=c;guardar();}
 
 function bvTermina(){
   marcaCat();
+  /* Hay que repintar, no solo navegar: `ir()` prende la pantalla pero no vuelve
+     a dibujar su contenido, y al terminar la bienvenida cambiaron el nombre Y la
+     categoria, o sea todo. Antes esto no se veia porque el panel de identidad
+     vivia dentro del Inicio y nadie lo miraba de primeras; con la ficha en la
+     barra, salia vacia en las cinco pantallas. */
+  pintaInicio();pintaCaps();
   ir('inicio');
-  const id=document.getElementById('ident');
-  if(id)id.open=false;
   try{cargaEvaluacion();}catch(e){}
 }
 
@@ -2591,7 +2687,7 @@ function adoptaFicha(d){
   if(d.nombre&&S.nombre!==d.nombre){S.nombre=d.nombre;cambio=true;}
   if(d.categoria&&CATS[d.categoria]&&S.cat!==d.categoria){S.cat=d.categoria;cambio=true;}
   if(cambio){
-    guardar();marcaCat();pintaIdent();pintaCaps();pintaInicio();
+    guardar();marcaCat();pintaYo();pintaCaps();pintaInicio();
   }
 }
 

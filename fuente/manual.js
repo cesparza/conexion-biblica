@@ -68,11 +68,13 @@ const MANUAL = [
     <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de
     empezar a estudiar.</p>` },
   { t:'Si escogiste mal',
-    h:`<p>No hay que empezar de cero. En <strong>Inicio</strong>, en la barra de
-    arriba que dice tu nombre, toca <strong>Cambiar</strong>. Ahí están todas
-    las categorías <strong>agrupadas por actividad</strong>, así que desde el
-    mismo sitio corriges la categoría o te pasas a otra actividad. Tu progreso
-    no se pierde.</p>` },
+    h:`<p>No hay que empezar de cero. <strong>Arriba, en la barra azul</strong>,
+    está tu nombre con tu actividad debajo. Tócalo y sube una hoja con todas las
+    categorías <strong>agrupadas por actividad</strong>, así que desde el mismo
+    sitio corriges la categoría o te pasas a otra actividad. Tu progreso no se
+    pierde.</p>
+    <p>Esa ficha se ve en <strong>todas las pantallas</strong>, no solo en
+    Inicio, así que no hay que ir a buscarla.</p>` },
   ]},
 
 { id:'a-hoy', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Empieza siempre por «Qué estudiar hoy»',
@@ -138,16 +140,20 @@ const MANUAL = [
     ficha, la sesión de tarjetas del día le mezclaba un versículo de Daniel con
     una creencia y esa sesión no servía para ninguna de las dos.</p>` },
   { t:'Cómo agregar la segunda',
-    h:`<p>En <strong>Inicio</strong>, en la barra de arriba con tu nombre, toca
-    <strong>Cambiar</strong> y después <strong>+ Agregar</strong>. Escribes el
-    mismo nombre y escoges la otra actividad y su categoría.</p>
+    h:`<p>Toca <strong>tu nombre en la barra azul de arriba</strong> y después
+    <strong>+ Agregar</strong>. Escribes el mismo nombre y escoges la otra
+    actividad y su categoría.</p>
     <p>Se hace así, y no en los tres pasos del principio, porque la mayoría
     está en una sola actividad: cobrarle a todos una pantalla más el primer día
     para algo que hace una minoría es mal negocio.</p>` },
   { t:'Cambiar de una a otra no borra nada',
-    h:`<p>Tocas tu nombre arriba y escoges la otra ficha. El progreso de cada
-    una <strong>se guarda por separado</strong> y siempre está: lo leído, lo
-    memorizado, los exámenes y los errores.</p>
+    h:`<p>Tocas tu nombre en la barra de arriba y escoges la otra ficha, estés
+    en la pantalla que estés. El progreso de cada una <strong>se guarda por
+    separado</strong> y siempre está: lo leído, lo memorizado, los exámenes y
+    los errores.</p>
+    <p>Después de cambiar la app te deja en <strong>Inicio</strong>, a
+    propósito: el material es otro, así que «Qué estudiar hoy» te dice por dónde
+    seguir con lo nuevo.</p>
     <p>Lo único que se reinicia al cambiar es el <strong>examen que tenías
     armado</strong> y el mazo de tarjetas en pantalla, porque eran de la otra
     actividad.</p>` },
@@ -497,19 +503,19 @@ const MANUAL = [
     la categoría. <strong>El participante nunca escoge entre las seis</strong>,
     justamente para que un niño de cinco años no termine con el material de
     nueve.</p>
-    <p>Si dice que participa en los dos eventos, se le crean
-    <strong>dos fichas</strong> con el mismo nombre. Son cuentas separadas a
-    propósito: el progreso de Daniel y el de la matutina no se deben
-    mezclar.</p>` },
+    <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>
+    con el mismo nombre. Son cuentas separadas a propósito: el progreso de una
+    actividad y el de la otra no se deben mezclar.</p>` },
   { t:'Cambiar de persona',
-    h:`<p>En el <strong>Inicio</strong>, la barra de arriba dice quién está
-    estudiando. Al tocar <strong>Cambiar</strong> se abre el selector de
-    personas y de categoría. Caben <strong>hasta 12 fichas</strong> por aparato,
-    cada una con su progreso, sus errores y sus exámenes.</p>` },
+    h:`<p><strong>La barra azul de arriba dice siempre quién está estudiando</strong>
+    y en qué actividad, en todas las pantallas. Al tocarla sube una hoja con el
+    selector de personas y de categoría. Caben <strong>hasta 12 fichas</strong>
+    por aparato, cada una con su progreso, sus errores y sus exámenes.</p>` },
   { t:'Lo primero que hay que revisar',
-    h:`<div class="warn-box">Cuando un niño lleva días estudiando, revisa que la
-    barra de arriba diga la categoría correcta. Si dice otra, toca Cambiar y
-    corrige: el progreso no se pierde.</div>` },
+    h:`<div class="warn-box">En un teléfono compartido, lo primero es mirar la
+    barra de arriba: dice el nombre y la actividad. Si no es la persona que va a
+    estudiar, tócala y cambia antes de empezar; si la categoría está mal, se
+    corrige ahí mismo y el progreso no se pierde.</div>` },
   ]},
 
 { id:'d-progreso', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-grafico"/></svg>', t:'Ver si están estudiando de verdad',

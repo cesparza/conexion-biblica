@@ -5,7 +5,11 @@ const html=fs.readFileSync(path.join(RAIZ,'index.html'),'utf8');
 const js=html.match(/<script>([\s\S]*)<\/script>/)[1];
 
 let store={};
-const nodo=()=>({classList:{add(){},remove(){},toggle(){}},value:'',textContent:'',innerHTML:'',style:{},outerHTML:''});
+/* `attrs` guarda lo que el codigo real pone con setAttribute (por ejemplo el
+   aria-label de la ficha de identidad), para poder afirmar sobre el. */
+const nodo=()=>({classList:{add(){},remove(){},toggle(){}},value:'',textContent:'',
+  innerHTML:'',style:{},outerHTML:'',attrs:{},
+  setAttribute(k,v){this.attrs[k]=String(v);},getAttribute(k){return this.attrs[k];}});
 /* El stub imita lo mínimo del navegador que usa la app. querySelectorAll
    devuelve un arreglo de verdad porque el código indexa el resultado
    (los botones del nav), no solo lo recorre. */
@@ -48,6 +52,7 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
         puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
+        abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
         el:id=>document.getElementById(id)};`;
 const fn=new Function('store','nodo','Buffer',stub+js+RET);
 const A=fn(store,nodo,Buffer);
@@ -930,6 +935,54 @@ ok(A.normalizar({cat:'inventada'}).cat==='av',
 /* Y el campo `evento` del interruptor retirado se ignora sin romper nada. */
 ok(A.normalizar({cat:'pa',evento:'creencias'}).cat==='pa',
   'El campo `evento` de la version anterior se ignora sin efecto');
+
+
+/* ───────── la identidad es global, no una seccion del Inicio ─────────
+   El panel vivia dentro de la pantalla de Inicio, asi que para cambiar de
+   persona desde Estudiar habia que volver. Peor: en Estudiar, Tarjetas, Examen
+   y Logros nada decia de quien era el progreso, y dos hermanas comparten
+   telefono. Ahora la ficha va en la barra y la hoja se abre desde donde sea. */
+A.ponCat('pa'); A.ponNombre('Isabella');
+A.pintaYo();
+const chip=A.el('nav-yo');
+ok(/Isabella/.test(chip.innerHTML),'La ficha de la barra dice quien estudia');
+ok(/Padres y consejeros/.test(chip.innerHTML),'La ficha dice su categoria');
+ok(/Conexi/.test(chip.getAttribute('aria-label')||''),
+  'La ficha nombra la actividad para quien usa lector de pantalla');
+
+/* La hoja se abre sin pasar por Inicio, y al abrirse pinta los dos selectores:
+   si el esqueleto no trajera los ids, pintaAlumnos() y pintaSelectorCat() se
+   irian en silencio y la hoja saldria vacia. */
+A.ir('estudio');
+A.abreYo();
+ok(A.hojaTipoActual()==='yo','La hoja de identidad se abre desde cualquier pantalla');
+ok(/alu-sel/.test(A.el('hoja').innerHTML),'La hoja trae el selector de participantes');
+ok(A.el('alu-sel').innerHTML.length>0,'  y viene pintado, no vacio');
+ok(A.el('cat-sel').innerHTML.length>0,'La hoja trae el selector de actividad y categoria pintado');
+ok(/Conexi.n B.blica/.test(A.el('cat-sel').innerHTML)&&/En esto creemos/.test(A.el('cat-sel').innerHTML),
+  '  con las tres actividades agrupadas');
+A.cierraHoja();
+ok(A.hojaTipoActual()===null,'La hoja de identidad se cierra');
+
+/* pintaInicio() ya no puede suponer que el campo del nombre existe: vive en la
+   hoja, que casi siempre esta cerrada. Sin la guarda revienta al leer .value. */
+A.pintaInicio();
+ok(true,'pintaInicio() no revienta con la hoja cerrada');
+
+/* Al terminar la bienvenida hay que REPINTAR, no solo navegar: `ir()` prende la
+   pantalla pero no la vuelve a dibujar, y ahi acaban de cambiar el nombre y la
+   categoria. Se salio vacia la ficha en un render a 390px, con las suites en
+   verde, porque ninguna cubria el camino completo de la bienvenida. */
+store={};
+const Y=fn(store,nodo,Buffer);
+Y.el('bv-nombre').value='María Camila';
+Y.bvSigue();
+Y.bvActividad('cb');
+Y.bvCategoria('pa');
+ok(/María Camila/.test(Y.el('nav-yo').innerHTML),
+  'Al salir de la bienvenida la ficha de la barra ya dice el nombre');
+ok(/Padres y consejeros/.test(Y.el('nav-yo').innerHTML),
+  '  y la categoria que se acabo de escoger');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

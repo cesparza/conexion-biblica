@@ -1212,5 +1212,40 @@ ok(corteSw('/api/participantes')===false,
 ok(corteSw('/')===true,'El service worker si atiende la pagina');
 ok(corteSw('/','POST')===false,'El service worker no toca los POST');
 
+/* ───────── la identidad va en la barra, no dentro del Inicio ─────────
+   Las pantallas se conmutan prendiendo una `.pantalla`, asi que todo lo que
+   viva dentro de `p-inicio` solo existe estando en Inicio. La ficha de quien
+   estudia decide TODO lo que se ve en las cinco pantallas, asi que tiene que
+   vivir en la barra: si vuelve a caer dentro de una pantalla, esta prueba
+   avisa. */
+const BARRA=CUERPO.slice(CUERPO.indexOf('<nav class="nav">'),CUERPO.indexOf('</nav>'));
+ok(/id="nav-yo"/.test(BARRA),'La ficha de quien estudia vive en la barra, no en una pantalla');
+ok(/onclick="abreYo\(\)"/.test(BARRA),'La ficha abre la hoja de identidad');
+const INICIO=pantalla('p-inicio');
+ok(!/id="alu-sel"/.test(INICIO)&&!/id="cat-sel"/.test(INICIO),
+  'Los selectores de participante y categoria ya no viven dentro del Inicio');
+ok(!/class="ident"/.test(CUERPO),'El <details> de identidad del Inicio quedo retirado');
+/* Y la hoja sigue siendo UNA: dos hojas con su propio abrir, cerrar y Escape
+   serian el mismo error de tres mecanismos que v47 arranco. */
+ok((CUERPO.match(/class="hoja"/g)||[]).length===1,'Hay una sola hoja inferior en el HTML');
+ok(/\.hoja-yo \.hoja-caja\{max-height/.test(CSS),
+  'La hoja de identidad sube mas que la del versiculo, que trae menos contenido');
+/* La ficha es un item flexible dentro de una barra estrecha: sin min-width:0 un
+   nombre largo la desborda a 390px, que es el error del select de v42. */
+const rYo=(CSS.match(/\.nav-yo\{[^}]*\}/)||[''])[0];
+ok(/min-width:0/.test(rYo)&&/flex:1 1 auto/.test(rYo),
+  'La ficha de la barra no desborda: flex con min-width:0');
+ok(/\.nav-yo \.yo-n\{[^}]*text-overflow:ellipsis/.test(CSS),
+  'Un nombre largo se corta con puntos suspensivos en vez de estirar la barra');
+/* En celular hay un `.nav-b span{display:none}` que pesa mas que un `.yo-*` a
+   secas y dejaba la ficha vacia. Los hijos van escritos con el padre delante
+   para ganarle; si alguien los vuelve a poner sueltos, esta prueba avisa. */
+for(const cl of ['yo-ini','yo-tx','yo-n','yo-c']){
+  ok(new RegExp('\\.nav-yo \\.'+cl+'\\{').test(CSS),
+    'La regla de .'+cl+' va calificada con .nav-yo, para ganarle a .nav-b span');
+  ok(!new RegExp('(^|\\})\\s*\\.'+cl+'\\{').test(CSS),
+    '  y no queda una version suelta que pierda la pelea');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);
