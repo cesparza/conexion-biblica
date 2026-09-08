@@ -1090,7 +1090,8 @@ function pintaExInicio(){
   document.getElementById('ex-desc').innerHTML=esc(textoAlcanceImpr())+
     '<br>'+esc(CAT().nombre)+' · '+esc(CAT().ev);
   document.getElementById('ex-nota').textContent=
-    'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces.';
+    'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces. '+
+    'Reparto: '+textoReparto()+'.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
   pintaCierre();
@@ -1145,8 +1146,8 @@ function armar(m){
   /* Proporción del examen real: 60% múltiple, 25% V/F, 15% completar.
      Si un tipo no alcanza en el alcance elegido, el faltante lo cubren
      los otros tipos para que siempre salgan n preguntas. */
-  let nf=Math.min(fl.length,Math.max(1,Math.round(n*.15)));
-  let nt=Math.min(tf.length,Math.max(1,Math.round(n*.25)));
+  let nf=Math.min(fl.length,Math.max(1,Math.round(n*REPARTO.fill)));
+  let nt=Math.min(tf.length,Math.max(1,Math.round(n*REPARTO.tf)));
   let nm=Math.min(mc.length,n-nf-nt);
   let falta=n-(nm+nt+nf);
   while(falta>0){
@@ -1159,6 +1160,16 @@ function armar(m){
   const sel=[...mc.slice(0,nm),...tf.slice(0,nt),...fl.slice(0,nf)];
   return sel.map((q,i)=>barajaOpciones({...q,id:'q'+i}));
 }
+
+/* REPARTO DE LAS TRES SECCIONES DEL EXAMEN.
+   Está aquí, en un solo lugar y con nombre, porque es el número que hay que
+   cambiar el día que se sepa el reparto real del campamento. Hoy no se conoce:
+   del examen que Camilo fotografió se sabe que tiene tres secciones, no cuántas
+   preguntas trae cada una. 60/25/15 es una estimación, no un dato.
+   El resto de la sección I sale de lo que quede: mc = n - fill - tf. */
+const REPARTO={fill:.15,tf:.25};
+const textoReparto=()=>'Sección I '+Math.round((1-REPARTO.fill-REPARTO.tf)*100)+'% · '+
+  'Sección II '+Math.round(REPARTO.tf*100)+'% · Sección III '+Math.round(REPARTO.fill*100)+'%';
 
 /* Baraja las opciones de una pregunta múltiple y reubica la respuesta.
    Sin esto, la correcta cae casi siempre en la misma letra y se puede
@@ -2460,12 +2471,44 @@ async function cargaResultados(){
       (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th></tr>'+
         h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc((CATS[x.categoria]||{}).nombre||x.categoria)+'</td><td><strong>'+
           x.nota+'/'+x.total+'</strong></td></tr>';}).join('')+'</table></div>':'')+
-      (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'');
+      (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'')+
+      sumaClub(h);
   }catch(e){d.innerHTML='';}
 }
 
 /* Acepta la lista que pintaPanel() ya pidió. Sin el parámetro la pide ella,
    que es lo que hacen creaParticipante() y borraParticipante(). */
+/* SUMA DEL CLUB.
+   El reglamento de «En esto creemos» dice: dos personas presentan un examen
+   escrito, los demás miembros desarrollan otro cuestionario, y «el puntaje de
+   los dos exámenes se sumará y el resultado de este será el resultado final».
+   La app guardaba una nota por participante y dejaba la suma a mano.
+   Se reparte en los dos grupos que el reglamento distingue: los adultos que
+   presentan el escrito (padres, consejeros y Guías Mayores) y el resto del
+   club. Y se muestra la suma, que es el numero que se reporta. */
+const ADULTOS=['pa','gm'];
+function sumaClub(hechas){
+  if(!hechas||hechas.length<2)return '';
+  const tot=g=>g.reduce(function(a,x){return {n:a.n+(x.nota||0),t:a.t+(x.total||0),c:a.c+1};},{n:0,t:0,c:0});
+  const ad=tot(hechas.filter(function(x){return ADULTOS.indexOf(x.categoria)>=0;}));
+  const cl=tot(hechas.filter(function(x){return ADULTOS.indexOf(x.categoria)<0;}));
+  const to=tot(hechas);
+  const fila=function(tit,g){
+    return g.c?'<tr><td>'+tit+'</td><td>'+g.c+'</td><td><strong>'+g.n+'/'+g.t+'</strong></td>'+
+      '<td>'+(g.t?Math.round(g.n/g.t*100):0)+'%</td></tr>':'';
+  };
+  return '<div class="divisor">Resultado del club</div>'+
+    '<div class="tabla-scroll"><table class="info-table">'+
+    '<tr><th>Grupo</th><th>Cuántos</th><th>Puntaje</th><th>%</th></tr>'+
+    fila('Adultos (escrito)',ad)+fila('Resto del club',cl)+
+    '<tr><td><strong>Suma</strong></td><td><strong>'+to.c+'</strong></td>'+
+    '<td><strong>'+to.n+'/'+to.t+'</strong></td><td><strong>'+
+    (to.t?Math.round(to.n/to.t*100):0)+'%</strong></td></tr>'+
+    '</table></div>'+
+    '<p class="nota">El reglamento suma el examen escrito de los adultos con el cuestionario '+
+    'del resto del club. <strong>La suma es el número que se reporta.</strong></p>';
+}
+
 async function cargaParticipantes(pre){
   const d=document.getElementById('pan-lista');
   if(!d)return;

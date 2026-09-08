@@ -170,15 +170,17 @@ ok(huecos.length===0,
   'Alcance oficial: los 79 versículos de Daniel 1, 3 y 6 tienen pregunta'
   + (huecos.length?' — SIN PREGUNTA -> '+huecos.join(' · '):''));
 
-/* Alcance ampliado (Guías Mayores): piso más bajo, es otro evento. */
+/* Alcance ampliado (Guías Mayores): Daniel 2, 4 y 5. Empezó con un piso del
+   35% porque era otro evento y no alcanzaba el tiempo. Ya están los tres al
+   100%, así que el piso pasa a ser 100%: lo ganado no se puede perder. */
 let flojos=[];
 for(const [c,n] of Object.entries(VERS)){
   if(OFICIAL[c])continue;
-  let k=0; for(let v=1;v<=n;v++) if(cub.has(c+':'+v)) k++;
-  if(k/n < 0.35) flojos.push(`${c} ${Math.round(k/n*100)}%`);
+  const falta=[]; for(let v=1;v<=n;v++) if(!cub.has(c+':'+v)) falta.push(v);
+  if(falta.length) flojos.push(`${c}: ${falta.join(', ')}`);
 }
-ok(flojos.length===0, 'Alcance ampliado: Daniel 2, 4 y 5 sobre el 35% de cobertura'
-  + (flojos.length?' — flojos: '+flojos.join(', '):''));
+ok(flojos.length===0, 'Alcance ampliado: los 117 versículos de Daniel 2, 4 y 5 tienen pregunta'
+  + (flojos.length?' — SIN PREGUNTA -> '+flojos.join(' · '):''));
 
 const nPR = BANCO.filter(q=>q.cap.slice(0,2)==='pr').length;
 const pctPR = nPR/BANCO.length;

@@ -44,7 +44,7 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         claveQ, BANCO, capsDelEvento, pintaMenuEx, gruposEx, soloEstudio, ponFq:(k,n)=>{S.fq[k]={m:n}},
         diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
-        puedeHablar, examenDelCapitulo, pintaLogros,
+        puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
         el:id=>document.getElementById(id)};`);
 const A=fn(store,nodo,Buffer);
 
@@ -707,6 +707,37 @@ ok(A.puedeHablar()===false,'Sin navegador, puedeHablar() dice que no');
 A.filtraTj('todas'); A.muestraTj();
 ok(!/btn-voz/.test(A.el('tj-carta').innerHTML),'Y la tarjeta no pinta el botón de voz');
 A.filtraTj('hoy');
+
+/* ───────── LA SUMA DEL CLUB ─────────
+   El reglamento de «En esto creemos»: dos adultos presentan un examen escrito,
+   los demás desarrollan otro cuestionario, «el puntaje de los dos exámenes se
+   sumará y el resultado de este será el resultado final». La app guardaba una
+   nota por participante y dejaba la suma a mano. */
+const HECHAS=[{nombre:'Consejera',categoria:'pa',nota:20,total:25},
+              {nombre:'Guía',categoria:'gm',nota:18,total:25},
+              {nombre:'Isabella',categoria:'av',nota:12,total:15},
+              {nombre:'María Camila',categoria:'me',nota:8,total:10}];
+const tabla=A.sumaClub(HECHAS);
+ok(/Adultos \(escrito\)/.test(tabla)&&/Resto del club/.test(tabla),
+  'La suma del club separa a los adultos del escrito y al resto');
+ok(/38\/50/.test(tabla),'Suma correcta de los adultos: 20+18 de 25+25');
+ok(/20\/25/.test(tabla),'Suma correcta del resto del club: 12+8 de 15+10');
+ok(/<strong>58\/75<\/strong>/.test(tabla),'Y la suma total, que es el número que se reporta');
+ok(A.sumaClub([HECHAS[0]])==='','Con una sola nota no hay nada que sumar: no se pinta la tabla');
+ok(A.sumaClub([])===''&&A.sumaClub(null)==='','Sin notas tampoco');
+
+/* El reparto de las tres secciones vive en UN solo lugar, con nombre, porque es
+   el número que hay que cambiar el día que se sepa el reparto real. */
+ok(A.REPARTO.fill>0&&A.REPARTO.tf>0&&A.REPARTO.fill+A.REPARTO.tf<1,
+  'REPARTO deja sitio a las tres secciones');
+ok(/Sección I 60%/.test(A.textoReparto())&&/Sección III 15%/.test(A.textoReparto()),
+  'El reparto se puede leer en palabras: '+A.textoReparto());
+A.ponCat('gm'); A.ponAlcance('todo'); A.ponNivel(3); A.ponCuantas(40);
+const ex=A.armar('normal');
+const pFill=ex.filter(q=>q.t==='fill').length/ex.length;
+ok(Math.abs(pFill-A.REPARTO.fill)<=0.06,
+  'El examen armado respeta el reparto de la sección III ('+Math.round(pFill*100)+'% con REPARTO '+Math.round(A.REPARTO.fill*100)+'%)');
+A.ponCat('av'); A.ponNivel(0); A.ponCuantas(0);
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);
