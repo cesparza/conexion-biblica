@@ -839,6 +839,10 @@ function abreYo(){
    depende de dónde quedó la ficha dentro del riel, así que se mide al abrir y
    se pasa en dos variables. El CSS decide si las usa o no; en celular las
    ignora y la hoja sigue subiendo desde abajo. */
+/* Debajo de esto el popover no vale la pena: no alcanza para el selector de
+   participantes y el primer grupo de categorías. */
+const MIN_POPOVER=380;
+
 function ancla(){
   try{
     if(!window.matchMedia||!window.matchMedia('(min-width:900px)').matches)return;
@@ -851,7 +855,23 @@ function ancla(){
     const nav=document.querySelector('.nav');
     const borde=nav&&nav.getBoundingClientRect?nav.getBoundingClientRect().right:r.right;
     h.style.setProperty('--yo-x',Math.round(Math.max(r.right,borde)+12)+'px');
-    h.style.setProperty('--yo-y',Math.round(r.top)+'px');
+
+    /* HACIA ARRIBA O HACIA ABAJO, medido y no supuesto.
+       El popover crecía siempre hacia abajo desde el borde superior de la
+       ficha. Con la ficha al pie del riel eso dejó el panel en 91 px de alto:
+       `max-height` se calcula contra lo que queda de pantalla, y abajo no
+       quedaba nada. Si el espacio de abajo no alcanza, se ancla por el borde
+       INFERIOR y crece hacia arriba, que es lo que hace cualquier menú de
+       sistema cuando el botón está al pie. */
+    const alto=window.innerHeight||800;
+    const abajo=alto-r.top-24;
+    if(abajo>=MIN_POPOVER){
+      h.classList.remove('hoja-arriba');
+      h.style.setProperty('--yo-y',Math.round(r.top)+'px');
+    }else{
+      h.classList.add('hoja-arriba');
+      h.style.setProperty('--yo-b',Math.round(Math.max(16,alto-r.bottom))+'px');
+    }
   }catch(e){}
 }
 

@@ -74,9 +74,10 @@ const MANUAL = [
     mismo sitio corriges la categoría o te pasas a otra actividad. Tu progreso
     no se pierde.</p>
     <p>Esa ficha se ve en <strong>todas las pantallas</strong>, no solo en
-    Inicio, así que no hay que ir a buscarla. En el computador la barra está de
-    lado y la ficha es el <strong>círculo con tu inicial</strong>: pasa el mouse
-    por encima y dice quién estudia sin abrir nada.</p>` },
+    Inicio, así que no hay que ir a buscarla. En el computador la barra va de
+    lado, a la izquierda, y la ficha es el <strong>círculo con tu inicial, abajo
+    del todo</strong>: pasa el mouse por encima y dice quién estudia sin abrir
+    nada.</p>` },
   ]},
 
 { id:'a-hoy', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Empieza siempre por «Qué estudiar hoy»',

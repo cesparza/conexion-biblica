@@ -1267,6 +1267,38 @@ ok(/\.nav-yo \.yo-tip\{[^}]*pointer-events:none/.test(ESCRITORIO),
 ok(!/b\.setAttribute\('title'/.test(js),
   'La ficha ya no usa el title del navegador, que se doblaria con el globo');
 
+/* ───────── el orden del riel de escritorio ─────────
+   `.nav` es una columna con dos hijos: `.nav-b` (marca, identidad, ayuda) y
+   `.nav-t` (los cinco tabs). En el HTML la identidad y la ayuda van DENTRO de
+   `.nav-b`, asi que salian apiladas arriba: tres circulos sin etiqueta antes de
+   la navegacion y 375px vacios al pie. `display:contents` disuelve la caja de
+   `.nav-b` para poder ordenar sus hijos por separado, sin tocar el HTML. */
+ok(/\.nav-b\{display:contents\}/.test(ESCRITORIO),
+  'En el riel .nav-b se disuelve con display:contents, para poder ordenar sus hijos');
+const orden=['rail-marca','nav-t','nav-yo','nav-ayuda']
+  .map(c=>{const m=new RegExp('\\.'+c+'\\{order:(\\d)\\}').exec(ESCRITORIO);return m?+m[1]:null;});
+ok(orden.join()==='1,2,3,4',
+  'El orden es marca, tabs, identidad, ayuda ('+orden.join()+')');
+ok(/\.nav-t\{flex-direction:column;flex:1/.test(ESCRITORIO),
+  'El flex:1 de los tabs es lo que empuja identidad y ayuda al pie');
+/* La regla base pone `border:1px` en los cuatro lados; sobrescribir solo el de
+   arriba dejaba un recuadro completo alrededor de la inicial. */
+ok(/\.nav-yo\{margin:0 0 \.1rem;position:relative;\s*border:0;border-top:1px/.test(ESCRITORIO),
+  'La separacion de la identidad es una linea, no un recuadro (border:0 antes del border-top)');
+ok(/\.nav-ayuda\{[^}]*background:none/.test(ESCRITORIO),
+  'La ayuda no lleva fondo en reposo, para no ser el unico boton relleno del riel');
+
+/* ── el popover crece hacia arriba si abajo no cabe ──────────────────────
+   Con la ficha al pie del riel, anclar el borde SUPERIOR del popover a la
+   ficha lo dejo en 91px de alto: el max-height se calcula contra lo que queda
+   de pantalla, y abajo no quedaba nada. Se ancla por el borde inferior. */
+ok(/const MIN_POPOVER=\d+;/.test(js),'Hay un minimo medido para decidir hacia donde abre');
+ok(/h\.classList\.add\('hoja-arriba'\)/.test(js)&&/h\.classList\.remove\('hoja-arriba'\)/.test(js),
+  'ancla() pone y quita la clase segun el espacio que mide');
+ok(/--yo-b/.test(js),'y pasa el anclaje inferior en su propia variable');
+ok(/\.hoja-yo\.hoja-arriba \.hoja-caja\{[\s\S]*?bottom:var\(--yo-b/.test(ESCRITORIO),
+  'El CSS usa esa variable para anclar por abajo');
+
 /* ───────── una ficha, una actividad: el invariante, en el codigo ─────────
    `racha`, `insignias` y `examenes` son campos de la ficha, no de la actividad.
    Eso da el comportamiento correcto SOLO si cada ficha pertenece a una sola

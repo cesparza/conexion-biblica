@@ -990,10 +990,38 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
     box-shadow:6px 0 24px -18px rgba(16,24,40,.9);
     padding:.9rem 0;gap:.4rem;z-index:60;
   }
-  .nav-b{flex-direction:column;padding:.2rem;gap:.4rem;font-size:0}
+  /* ───────── el orden del riel: qué es, dónde estoy, quién soy ─────────
+     MECANISMO
+     `.nav` es una columna flex con dos hijos: `.nav-b` (marca, identidad,
+     ayuda) y `.nav-t` (los cinco tabs). En el HTML la identidad y la ayuda van
+     DENTRO de `.nav-b`, así que en el riel salían las tres cosas apiladas
+     arriba: tres círculos sin etiqueta antes de la navegación, y 375 px vacíos
+     al pie.
+     `display:contents` disuelve la caja de `.nav-b` sin tocar el HTML: sus tres
+     hijos pasan a ser hijos directos de `.nav`, y ahí sí se pueden ordenar por
+     separado. Con `order` la marca queda arriba, los tabs en el medio y la
+     identidad con la ayuda al pie; el `flex:1` de `.nav-t` es lo que los
+     empuja hasta abajo, sin un `margin-top:auto` aparte.
+     En celular no cambia nada: `.nav-b` sigue siendo una barra horizontal de
+     verdad y este bloque no aplica. */
+  .nav-b{display:contents}
   .nav-b span{display:none}
   .nav-b .logo-nav{height:34px}
-  .nav-ayuda{margin:0}
+  .rail-marca{order:1}
+  .nav-t{order:2}
+  .nav-yo{order:3}
+  .nav-ayuda{order:4}
+  /* Una línea que separa «quién soy» de «dónde estoy». Va en la identidad y no
+     en un elemento nuevo, para no agregar HTML por una raya. */
+  /* `border:0` ANTES del border-top: la regla base pone `border:1px` en los
+     cuatro lados, y sobrescribir solo el de arriba dejaba un recuadro completo
+     alrededor de la inicial. Se vio midiendo `borderLeftWidth`, no a ojo. */
+  .nav-yo{margin:0 0 .1rem;position:relative;
+    border:0;border-top:1px solid rgba(255,255,255,.12);border-radius:0;
+    padding-top:.7rem;background:none;width:auto;height:auto}
+  .nav-yo:hover{background:none}
+  .nav-yo:hover .yo-ini{background:rgba(255,255,255,.34)}
+  .nav-ayuda{margin:0 0 .3rem}
 
   .nav-t{flex-direction:column;flex:1;width:100%;gap:.25rem;padding-top:.6rem}
   .nav-t button{
@@ -1123,7 +1151,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 
 @media (min-width:900px){
   .nav-b .logo-nav{display:none}
-  .nav-b{padding:.35rem 0 .1rem;gap:.55rem}
+  /* Ojo: con `display:contents` en `.nav-b` no sirve ponerle padding ni gap a
+     esa caja, porque ya no existe como caja. El espaciado del riel lo pone el
+     `gap` de `.nav`. Aquí había un `padding`/`gap` que no hacía nada. */
   /* Con más peso que el `.nav-b span{display:none}` de v21, que si no la esconde. */
   .nav-b .rail-marca{
     display:flex;align-items:center;justify-content:center;
@@ -1136,17 +1166,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
   .nav-b .rail-marca .ico .f{fill:currentColor;fill-opacity:.16}
   .nav-ayuda{
     color:rgba(255,255,255,.62);
+    /* Sin fondo en reposo: la regla de celular le pone uno translúcido, y al
+       pie del riel, junto a la identidad que va desnuda, se leía como el único
+       botón relleno del riel. El fondo aparece solo al pasar el mouse. */
+    background:none;
     width:36px;height:36px;display:flex;align-items:center;justify-content:center;
     border-radius:10px;transition:color var(--v-paso), background var(--v-paso);
   }
   .nav-ayuda:hover{color:#fff;background:rgba(255,255,255,.10)}
-  /* En el riel no cabe un nombre: la ficha se reduce a la inicial, con el
-     nombre completo en el title. La hoja que abre es la misma. */
-  .nav-yo{flex:0 0 auto;margin:0;padding:0;width:42px;height:42px;
-    justify-content:center;border-radius:13px;background:rgba(255,255,255,.10)}
-  .nav-yo{position:relative}
+  /* En el riel no cabe un nombre: la ficha se reduce a la inicial, con el globo
+     al pasar el mouse. La hoja que abre es la misma. */
+  .nav-yo{flex:0 0 auto;justify-content:center}
   .nav-yo .yo-tx{display:none}
-  .nav-yo .yo-ini{display:flex;width:28px;height:28px;font-size:.9rem}
+  .nav-yo .yo-ini{display:flex;width:34px;height:34px;font-size:1rem;
+    border:1px solid rgba(255,255,255,.18)}
 
   /* El globo sale a la derecha del riel, centrado con la inicial. `nowrap` y
      `width:max-content` para que no se parta en una columna de 92 px, y
@@ -1184,6 +1217,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
     transition:opacity var(--v-paso), transform var(--v-paso);
     padding-bottom:0}
   .hoja-yo.abierta .hoja-caja{transform:translateX(0);opacity:1}
+  /* Anclado por el borde inferior, para cuando la ficha está al pie del riel y
+     abajo no queda espacio. Lo decide ancla() midiendo, no el CSS. */
+  .hoja-yo.hoja-arriba .hoja-caja{
+    top:auto;bottom:var(--yo-b,16px);
+    max-height:min(78vh, calc(100vh - var(--yo-b, 16px) - 24px))}
   /* Un popover no oscurece lo que hay detrás; el fondo se queda solo para
      cerrar al hacer clic afuera. */
   .hoja-yo .hoja-fondo{background:none}
