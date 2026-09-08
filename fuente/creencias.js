@@ -15,40 +15,42 @@
    NO se inventó ni se parafraseó ninguna declaración.
 
    POR QUÉ NO ENTRA AL EXAMEN DE DANIEL
-   Cada capítulo lleva `ev:'creencias'`, y poolDe() saca ese evento del alcance
+   Cada capítulo pertenece a las categorías `ec1` y `ec2`, que son las de la
+   actividad «En esto creemos». Antes llevaban `ev:'creencias'` y poolDe() los
+   sacaba del alcance a mano; ahora la actividad ya los separa
    «todo». Así el examen del campamento sigue siendo Daniel 1, 3 y 6 más P&R, y
    las creencias son un examen aparte con su propio alcance. Mezclarlos daría un
    examen que no corresponde a ninguna de las dos actividades. */
 
 const CR_CAPS = [
-  { id:'cr01', label:'Creencia 1', sub:"La Palabra de Dios", src:'En esto creemos', color:'#1F3864', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr02', label:'Creencia 2', sub:"La Deidad", src:'En esto creemos', color:'#2E8BC0', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr03', label:'Creencia 3', sub:"Dios el Padre", src:'En esto creemos', color:'#1A7A1A', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr04', label:'Creencia 4', sub:"Dios el Hijo", src:'En esto creemos', color:'#B8860B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr05', label:'Creencia 5', sub:"Dios el Espíritu Santo", src:'En esto creemos', color:'#C0392B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr06', label:'Creencia 6', sub:"La creación", src:'En esto creemos', color:'#7C3AED', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr07', label:'Creencia 7', sub:"La naturaleza humana", src:'En esto creemos', color:'#0E7490', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr08', label:'Creencia 8', sub:"El gran conflicto", src:'En esto creemos', color:'#1F3864', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr09', label:'Creencia 9', sub:"La vida, muerte y resurrección de Cristo", src:'En esto creemos', color:'#2E8BC0', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr10', label:'Creencia 10', sub:"La experiencia de la salvación", src:'En esto creemos', color:'#1A7A1A', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr11', label:'Creencia 11', sub:"Crecer en Cristo", src:'En esto creemos', color:'#B8860B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr12', label:'Creencia 12', sub:"La iglesia", src:'En esto creemos', color:'#C0392B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr13', label:'Creencia 13', sub:"El remanente y su misión", src:'En esto creemos', color:'#7C3AED', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr14', label:'Creencia 14', sub:"La unidad en el cuerpo de Cristo", src:'En esto creemos', color:'#0E7490', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr15', label:'Creencia 15', sub:"El bautismo", src:'En esto creemos', color:'#1F3864', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr16', label:'Creencia 16', sub:"La Cena del Señor", src:'En esto creemos', color:'#2E8BC0', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr17', label:'Creencia 17', sub:"Los dones y ministerios espirituales", src:'En esto creemos', color:'#1A7A1A', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr18', label:'Creencia 18', sub:"El don de profecía", src:'En esto creemos', color:'#B8860B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr19', label:'Creencia 19', sub:"La ley de Dios", src:'En esto creemos', color:'#C0392B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr20', label:'Creencia 20', sub:"El sábado", src:'En esto creemos', color:'#7C3AED', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr21', label:'Creencia 21', sub:"La mayordomía", src:'En esto creemos', color:'#0E7490', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr22', label:'Creencia 22', sub:"La conducta cristiana", src:'En esto creemos', color:'#1F3864', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr23', label:'Creencia 23', sub:"El matrimonio y la familia", src:'En esto creemos', color:'#2E8BC0', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr24', label:'Creencia 24', sub:"El ministerio de Cristo en el Santuario celestial", src:'En esto creemos', color:'#1A7A1A', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr25', label:'Creencia 25', sub:"La segunda venida de Cristo", src:'En esto creemos', color:'#B8860B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr26', label:'Creencia 26', sub:"La muerte y la resurrección", src:'En esto creemos', color:'#C0392B', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr27', label:'Creencia 27', sub:"El milenio y el fin del pecado", src:'En esto creemos', color:'#7C3AED', cats:['pa','gm'], ev:'creencias' },
-  { id:'cr28', label:'Creencia 28', sub:"La Tierra Nueva", src:'En esto creemos', color:'#0E7490', cats:['pa','gm'], ev:'creencias' },
+  { id:'cr01', label:'Creencia 1', sub:"La Palabra de Dios", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
+  { id:'cr02', label:'Creencia 2', sub:"La Deidad", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
+  { id:'cr03', label:'Creencia 3', sub:"Dios el Padre", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
+  { id:'cr04', label:'Creencia 4', sub:"Dios el Hijo", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
+  { id:'cr05', label:'Creencia 5', sub:"Dios el Espíritu Santo", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
+  { id:'cr06', label:'Creencia 6', sub:"La creación", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
+  { id:'cr07', label:'Creencia 7', sub:"La naturaleza humana", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
+  { id:'cr08', label:'Creencia 8', sub:"El gran conflicto", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
+  { id:'cr09', label:'Creencia 9', sub:"La vida, muerte y resurrección de Cristo", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
+  { id:'cr10', label:'Creencia 10', sub:"La experiencia de la salvación", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
+  { id:'cr11', label:'Creencia 11', sub:"Crecer en Cristo", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
+  { id:'cr12', label:'Creencia 12', sub:"La iglesia", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
+  { id:'cr13', label:'Creencia 13', sub:"El remanente y su misión", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
+  { id:'cr14', label:'Creencia 14', sub:"La unidad en el cuerpo de Cristo", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
+  { id:'cr15', label:'Creencia 15', sub:"El bautismo", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
+  { id:'cr16', label:'Creencia 16', sub:"La Cena del Señor", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
+  { id:'cr17', label:'Creencia 17', sub:"Los dones y ministerios espirituales", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
+  { id:'cr18', label:'Creencia 18', sub:"El don de profecía", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
+  { id:'cr19', label:'Creencia 19', sub:"La ley de Dios", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
+  { id:'cr20', label:'Creencia 20', sub:"El sábado", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
+  { id:'cr21', label:'Creencia 21', sub:"La mayordomía", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
+  { id:'cr22', label:'Creencia 22', sub:"La conducta cristiana", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
+  { id:'cr23', label:'Creencia 23', sub:"El matrimonio y la familia", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
+  { id:'cr24', label:'Creencia 24', sub:"El ministerio de Cristo en el Santuario celestial", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
+  { id:'cr25', label:'Creencia 25', sub:"La segunda venida de Cristo", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
+  { id:'cr26', label:'Creencia 26', sub:"La muerte y la resurrección", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
+  { id:'cr27', label:'Creencia 27', sub:"El milenio y el fin del pecado", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
+  { id:'cr28', label:'Creencia 28', sub:"La Tierra Nueva", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
 ];
 
 /* Material de estudio: la declaración oficial y los textos clave. */

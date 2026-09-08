@@ -8,20 +8,67 @@
      n      preguntas del examen de práctica
      techo  nivel máximo de dificultad que se le ofrece
      sinCompletar  el examen no trae sección de completar */
-const CATS={
-  me:{ev:'Conexión Bíblica', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
-      alcance:'Daniel 1, 2, 3 y 6'},
-  av:{ev:'Conexión Bíblica', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  pa:{ev:'Conexión Bíblica', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  gm:{ev:'Conexión Bíblica', nombre:'Guías Mayores', edad:'Otro evento', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
-  dm1:{ev:'Devoción Matutina', nombre:'Matutina menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 15 de octubre'},
-  dm2:{ev:'Devoción Matutina', nombre:'Matutina Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 30 de octubre'},
+/* ── EL MODELO: ACTIVIDAD × CATEGORIA ───────────────────────────────────
+   Hay TRES actividades distintas, con fechas, jurados y reglamentos propios,
+   y categorias por edad o rol DENTRO de cada una. Son dos dimensiones, no
+   una.
+
+   POR QUE ESTABA MAL Y COMO SE ARREGLO
+   Antes cada actividad se resolvia distinto: Conexion Biblica con un campo
+   `ev` de texto libre, la Devocion Matutina con claves propias (dm1, dm2), y
+   las 28 creencias con un `S.evento` aparte y un conmutador. Tres mecanismos
+   para el mismo concepto. Y `gm` declaraba a la vez ev:'Conexion Biblica' y
+   edad:'Otro evento': el dato se contradecia solo.
+
+   Ahora ACTIVIDADES es el dato de primer nivel y CATS declara a que actividad
+   pertenece cada categoria. La clave de categoria NO cambio (av sigue siendo
+   av), asi que el progreso guardado en los celulares y las 7 participantes de
+   la base siguen valiendo tal cual: este rediseno no migra nada.
+
+   UNA FICHA POR ACTIVIDAD, que es el patron que la app ya tenia
+   La bienvenida ya creaba dos fichas para quien hacia Conexion Biblica y
+   Matutina, con el comentario «el progreso de Daniel y el de la matutina son
+   cuentas separadas y no se deben mezclar». Eso era lo correcto y ahora
+   aplica a las tres: cada ficha tiene su prog, su racha y sus insignias, asi
+   que el progreso queda separado POR CONSTRUCCION y no hace falta ninguna
+   funcion que lo desmezcle. */
+const ACTIVIDADES={
+  cb:{nombre:'Conexión Bíblica', icono:'📘', cuando:'9 de octubre',
+      que:'El libro de Daniel y Profetas y Reyes', cats:['me','av','pa','gm']},
+  dm:{nombre:'Devoción Matutina', icono:'🌅', cuando:'Todo octubre',
+      que:'Héroes y villanos, un día a la vez', cats:['dm1','dm2']},
+  ec:{nombre:'En esto creemos', icono:'✝️', cuando:'Por confirmar',
+      que:'Las 28 creencias', cats:['ec1','ec2']},
 };
+
+const CATS={
+  me:{act:'cb', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
+      alcance:'Daniel 1, 3 y 6'},
+  av:{act:'cb', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 3 y 6 · P&R 39, 41 y 44'},
+  pa:{act:'cb', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1, 3 y 6 · P&R 39, 41 y 44'},
+  gm:{act:'cb', nombre:'Guías Mayores', edad:'Guías Mayores', n:25, techo:3, sinCompletar:false,
+      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
+  dm1:{act:'dm', nombre:'Menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 15 de octubre'},
+  dm2:{act:'dm', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
+      alcance:'Héroes y villanos · 1 al 30 de octubre'},
+  /* El reglamento de «En esto creemos» reparte el club en dos: dos adultos
+     presentan un examen escrito y el resto contesta otro cuestionario, y las
+     dos notas SE SUMAN. Por eso son dos categorias y no una. */
+  ec1:{act:'ec', nombre:'Los dos del examen escrito', edad:'Adultos', n:25, techo:3, sinCompletar:false,
+      alcance:'Las 28 creencias'},
+  ec2:{act:'ec', nombre:'El resto del club', edad:'Cuestionario', n:15, techo:2, sinCompletar:true,
+      alcance:'Las 28 creencias'},
+};
+
+/** La actividad de una categoria, y su ficha completa. */
+const ACT_DE=c=>(CATS[c]||CATS.av).act;
+const ACT=()=>ACTIVIDADES[ACT_DE(S.cat)]||ACTIVIDADES.cb;
+/** Las categorias de una actividad, en el orden en que se ofrecen. */
+const CATS_DE_ACT=a=>(ACTIVIDADES[a]||ACTIVIDADES.cb).cats.filter(c=>CATS[c]);
+
 
 const CAT=()=>CATS[S.cat]||CATS.av;
 
@@ -30,7 +77,7 @@ const CLAVE='conexion-biblica-v4';
    NUEVO: el día en que se acertó por última vez. Se agrega como mapa aparte, y
    no cambiando la forma de `ft`, para que el progreso que ya está guardado en
    los celulares siga valiendo sin migración. */
-const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},act:{},evento:'biblia',links:{}};
+const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},act:{},links:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -56,9 +103,7 @@ function normalizar(x){
   if(!x||typeof x!=='object')return s;
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
   if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
-  /* La actividad activa. Solo dos valores posibles; cualquier otra cosa cae
-     en Daniel, que es la que sirve para el campamento del 9 de octubre. */
-  if(x.evento==='creencias'||x.evento==='biblia')s.evento=x.evento;
+
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
   if(Array.isArray(x.examenes))
@@ -368,7 +413,6 @@ function cambiaAlumno(id){
   marcaCat();pintaInicio();pintaCaps();
   try{document.getElementById('detalle').style.display='none';}catch(e){}
   ir('inicio');
-  pintaActividad();
 }
 
 function agregaAlumno(){
@@ -389,36 +433,18 @@ function borraAlumno(){
 }
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-/* ── LAS DOS ACTIVIDADES SON COSAS DISTINTAS ─────────────────────────────
-   Padres y Guias Mayores participan en DOS actividades con el mismo perfil:
-   Conexion Biblica (Daniel y P&R) y En esto creemos (las 28 creencias). Antes
-   solo el EXAMEN las separaba: la lista de Estudiar mostraba 35 y 40
-   capitulos en un solo monton, y la sesion de tarjetas del dia mezclaba un
-   versiculo de Daniel con una creencia. Son actividades distintas, con
-   fechas y jurados distintos, y estudiarlas revueltas no le sirve a nadie.
-
-   capsCat() es todo lo que la categoria tiene cargado.
-   capsDe()  es lo de la categoria Y de la actividad activa.
-   De capsDe() cuelgan el banco, las tarjetas, la lista y los alcances, asi
-   que filtrar aqui filtra la app entera desde un solo punto. */
-const capsCat=()=>CAPS.filter(c=>c.cats.includes(S.cat));
-const capsDe=()=>{
-  const todos=capsCat();
-  if(!dosActividades())return todos;
-  const cr=S.evento==='creencias';
-  return todos.filter(c=>esCreencia(c.id)===cr);
-};
-/* Un capítulo `extra` se estudia pero no se examina.
-   MECANISMO: `extra` era un booleano global y eso alcanzaba mientras el
-   capítulo estuviera fuera del examen de TODOS. Con el reglamento nuevo no
-   alcanza: el campamento quedó en Daniel 1, 3 y 6, así que Daniel 2 sale del
-   examen de Menores, Aventureros y Padres, pero Guías Mayores es otro evento y
-   ahí sí cuenta. Por eso `extra` acepta también una lista de categorías.
-   El booleano sigue funcionando y es lo que usa el día 31 de la matutina. */
+/* La categoria ya identifica la actividad (av es Conexion Biblica de 7 a 9,
+   dm2 es Matutina de 7 a 9, ec1 son los dos adultos de las creencias), asi
+   que filtrar por categoria filtra por actividad. Esto era un enredo de tres
+   funciones (capsCat, dosActividades y un conmutador) mientras las creencias
+   vivian colgadas de las categorias de Conexion Biblica. */
+const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
+/* Un capitulo puede ser material de estudio y NO salir en el examen. `extra`
+   lista las categorias para las que es solo lectura: el reglamento dejo
+   Daniel 2 fuera del examen de Menores, Aventureros y Padres, pero se sigue
+   estudiando, y para Guias Mayores si cuenta. */
 const soloEstudio=(c,cat)=>Array.isArray(c.extra)?c.extra.includes(cat):!!c.extra;
 
-/* Para exámenes se excluyen los capítulos que para ESTA categoría son solo
-   material de estudio. */
 const bancoDe=()=>{
   const ids=capsDe().filter(c=>!soloEstudio(c,S.cat)).map(c=>c.id);
   return BANCO.filter(q=>ids.includes(q.cap));
@@ -489,41 +515,6 @@ function nivelRecomendado(){
 const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
 /* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
-/** Cambia de actividad y repinta todo. Se resetean el alcance y el mazo: un
- *  alcance de la otra actividad («Solo Profetas y Reyes» dentro de las
- *  creencias) dejaria el examen en cero preguntas sin decir por que. */
-function cambiaEvento(v){
-  if(v!=='biblia'&&v!=='creencias')return;
-  if(S.evento===v)return;
-  paraVoz();
-  S.evento=v;
-  alcance='todo'; cuantas=0; nivel=0;
-  mazo=[]; tjI=0; tjFiltro='hoy';
-  guardar();
-  pintaActividad();
-  if(typeof pintaCaps==='function')pintaCaps();
-  if(typeof pintaTarjetas==='function')pintaTarjetas();
-  if(typeof pintaMenuEx==='function')pintaMenuEx();
-  if(typeof pintaInicio==='function')pintaInicio();
-  if(typeof pintaLogros==='function')pintaLogros();
-  const d=document.getElementById('detalle');
-  if(d)d.innerHTML='';
-}
-
-/** Las dos pestanas. Solo se pintan cuando la categoria tiene las dos
- *  actividades: para Menores, Aventureros y Devocion Matutina no existen. */
-function pintaActividad(){
-  const el=document.getElementById('actividad');
-  if(!el)return;
-  if(!dosActividades()){el.hidden=true;el.innerHTML='';return;}
-  el.hidden=false;
-  el.innerHTML=['biblia','creencias'].map(k=>
-    '<button type="button" class="act-b'+(S.evento===k?' on':'')+'"'+
-    ' aria-pressed="'+(S.evento===k?'true':'false')+'"'+
-    ' onclick="cambiaEvento(\''+k+'\')">'+
-    (k==='biblia'?'📘 ':'✝️ ')+NOMBRE_ACT[k]+'</button>').join('');
-}
-
 function ir(id){
   paraVoz();
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
@@ -545,9 +536,6 @@ function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();}
 function ponCat(c){
   S.cat=c;guardar();
   marcaCat();
-  /* El conmutador aparece o desaparece segun la categoria: un padre tiene las
-     dos actividades y una nina de Aventureros solo una. */
-  pintaActividad();
   pintaInicio();pintaCaps();
   document.getElementById('detalle').style.display='none';
 }
@@ -572,10 +560,14 @@ function pintaAlumnos(){
 function pintaSelectorCat(){
   const cont=document.getElementById('cat-sel');
   if(!cont)return;
-  const eventos=[...new Set(Object.values(CATS).map(c=>c.ev))];
+  /* Agrupado por actividad y con su nombre completo, no con la clave: este
+     selector es tambien donde alguien que estudia dos actividades cambia de
+     una a otra, asi que tiene que leerse como «Conexion Biblica», no «cb». */
+  const eventos=Object.keys(ACTIVIDADES);
   cont.innerHTML=eventos.map(ev=>
-    '<div class="cat-grupo">'+esc(ev)+'</div>'+
-    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.ev===ev).map(([k,c])=>
+    '<div class="cat-grupo">'+ACTIVIDADES[ev].icono+' '+esc(ACTIVIDADES[ev].nombre)+
+    ' <small>· '+esc(ACTIVIDADES[ev].cuando)+'</small></div>'+
+    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.act===ev).map(([k,c])=>
       '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
       '<div class="cn">'+esc(c.nombre)+'</div>'+
       '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('')+'</div>').join('');
@@ -615,13 +607,13 @@ function tareasDeHoy(){
     d:'Ya repasaste lo que tocaba hoy. Las dominadas vuelven a salir en unos días.',
     b:'Repasar igual',f:"irTarjetasTodas()"});
 
-  const sinLeer=[...capsDelEvento(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
+  const sinLeer=[...capsDe(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
   if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
     d:'Te faltan '+sinLeer.length+' secciones por marcar como estudiadas.',
     b:'Estudiar',f:"verCap('"+sinLeer[0].id+"')"});
 
   /* Capítulo más flojo según los exámenes: dirige el estudio a donde duele. */
-  const flojo=capsDelEvento().map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
+  const flojo=capsDe().map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
     .filter(x=>x.a.b+x.a.m>=3)
     .map(x=>({...x,pct:x.a.b/(x.a.b+x.a.m)}))
     .sort((p,q)=>p.pct-q.pct)[0];
@@ -687,7 +679,7 @@ function pintaIdent(){
   const s=document.getElementById('ident-sum');
   if(!s)return;
   s.innerHTML='<span class="id-quien"><svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg>'+esc(S.nombre||'Sin nombre')+'</span>'+
-    '<span class="id-que">'+esc(CAT().nombre)+' · '+esc(CAT().ev)+'</span>';
+    '<span class="id-que">'+esc(CAT().nombre)+' · '+esc(ACT().nombre)+'</span>';
 }
 
 function pintaInicio(){
@@ -760,7 +752,7 @@ function pintaCaps(){
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
-    (S.evento==='creencias'&&dosActividades()?'✝️ Las 28 creencias':'📘 Capítulos')+
+    ACT().icono+' '+(ACT_DE(S.cat)==='ec'?'Las 28 creencias':'Capítulos')+
     '</div>'+caps+
     '<div class="grupo" style="grid-column:1/-1">🔎 Repaso general</div>'+mods;
 }
@@ -1285,28 +1277,11 @@ function poolDe(){
 
 /* Día del mes de un capítulo de matutina (m01..m31), o 0 si no lo es. */
 const diaMat=id=>/^m\d\d$/.test(id)?Number(id.slice(1)):0;
-const esMatutina=()=>CAT().ev==='Devoción Matutina';
-/* Las 28 creencias son un evento aparte dentro de la misma categoría: el
-   reglamento las pide a padres y consejeros, con su propio examen. Por eso NO
-   entran al alcance «todo»: si entraran, el examen del campamento mezclaría
-   Daniel con doctrina y no correspondería a ninguna de las dos actividades. */
+const esMatutina=()=>ACT_DE(S.cat)==='dm';
+/* Un id de creencia. Ya no se usa para filtrar (la actividad lo hace), pero
+   sigue sirviendo para reconocerlas en el material impreso y en las cuentas
+   del reglamento, que reparte el club en dos. */
 const esCreencia=id=>/^cr\d\d$/.test(id);
-const hayCreencias=()=>capsCat().some(c=>esCreencia(c.id));
-/* El conmutador solo tiene sentido cuando de verdad hay dos: Menores y
-   Aventureros no tienen creencias, y la Devocion Matutina es otra categoria.
-   Para ellas la app se ve igual que antes, sin pestanas de mas. */
-const dosActividades=()=>{
-  const todos=capsCat();
-  return todos.some(c=>esCreencia(c.id))&&todos.some(c=>!esCreencia(c.id));
-};
-const NOMBRE_ACT={biblia:'Conexión Bíblica',creencias:'En esto creemos'};
-
-/* Los capítulos del evento que se está estudiando. capsDe() trae TODO lo que la
-   categoría tiene cargado, y para padres y consejeros eso son 12 capítulos del
-   campamento MÁS las 28 creencias. Cualquier cuenta de progreso del campamento
-   tiene que usar esta, o el plan diario y las insignias empiezan a contar 40
-   capítulos donde el reglamento pide 12. */
-const capsDelEvento=()=>capsDe().filter(c=>!esCreencia(c.id));
 
 /* Los grupos de alcance que de verdad tienen preguntas en esta categoría. Se
    calcula probando cada uno contra poolDe(), no con una lista fija: la lista
@@ -1428,7 +1403,7 @@ function pintaExInicio(){
   const n=Math.min(cuantas||NPREG(),poolNivel().length);
   document.getElementById('ex-resumen').textContent=n+' preguntas · nivel '+nv+' '+ETIQ_NIVEL[nv];
   document.getElementById('ex-desc').innerHTML=esc(textoAlcanceImpr())+
-    '<br>'+esc(CAT().nombre)+' · '+esc(CAT().ev);
+    '<br>'+esc(CAT().nombre)+' · '+esc(ACT().nombre);
   document.getElementById('ex-nota').textContent=
     'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces. '+
     'Reparto: '+textoReparto()+'.';
@@ -1817,7 +1792,7 @@ function revisaInsignias(pct){
   if(pct>=75)a('Estudioso');
   if(S.examenes.length>=3)a('Persistente');
   if(S.racha>=3)a('Racha de fuego');
-  if([...capsDelEvento(),...modsDe()].every(x=>S.prog[x.id]>=100))a('Lector completo');
+  if([...capsDe(),...modsDe()].every(x=>S.prog[x.id]>=100))a('Lector completo');
 }
 
 function pintaLogros(){
@@ -2166,7 +2141,7 @@ function marcasManual(){
     BANCO_TOTAL:String(BANCO.length),
     TJ_TOTAL:String(TARJETAS.length),
     CAT_NOMBRE:esc(CAT().nombre),
-    CAT_EV:esc(CAT().ev),
+    CAT_EV:esc(ACT().nombre),
     TABLA_CATS:tablaCats(),
   };
 }
@@ -2181,7 +2156,7 @@ function tablaCats(){
       S.cat=k;
       const c=CATS[k];
       filas+='<tr><td class="key">'+esc(c.nombre)+'</td><td>'+esc(c.edad)+
-        '</td><td>'+esc(c.ev)+'</td><td>'+esc(c.alcance)+'</td>'+
+        '</td><td>'+esc((ACTIVIDADES[c.act]||{}).nombre||'')+'</td><td>'+esc(c.alcance)+'</td>'+
         '<td style="text-align:center">'+bancoDe().length+'</td></tr>';
     }
   }finally{S.cat=prev;}
@@ -2246,7 +2221,7 @@ function imprimeGuia(){
     logo:LOGO_TL,
     titulo:'GUÍA DE ESTUDIO',
     sub:esc(CAT().nombre)+' · '+esc(CAT().edad),
-    meta:CAT().ev+' · '+CAT().alcance,
+    meta:ACT().nombre+' · '+CAT().alcance,
     pie:'Mismo material que la app · '+esc(S.nombre||'sin nombre'),
   })],'Guía de estudio — '+CAT().nombre,
   'Tu guía completa. En el cuadro de impresión escoge «Guardar como PDF» si la quieres en archivo.');
@@ -2263,7 +2238,7 @@ function imprimeCapitulo(id){
     logo:LOGO_TL,
     titulo:esc(c.label).toUpperCase(),
     sub:esc(c.sub),
-    meta:CAT().ev+' · '+esc(CAT().nombre),
+    meta:ACT().nombre+' · '+esc(CAT().nombre),
   })],esc(c.label),'Un solo capítulo para imprimir.');
   imprimeDoc(html,c.label);
 }
@@ -2274,7 +2249,7 @@ function imprimeTarjetas(){
   const html=docExamen([hojaTarjetas({
     tarjetas:t, caps:CAPS, logo:LOGO_TL,
     titulo:'TARJETAS DE MEMORIA',
-    sub:esc(CAT().nombre)+' · '+esc(CAT().ev),
+    sub:esc(CAT().nombre)+' · '+esc(ACT().nombre),
   })],'Tarjetas — '+CAT().nombre,
   'Tarjetas para recortar. Tapa la respuesta con la mano antes de leerla.');
   imprimeDoc(html,'Tarjetas');
@@ -2284,11 +2259,11 @@ function imprimeTarjetas(){
 function imprimeGuiasTodo(){
   const hojas=[];
   for(const ev of ['Conexión Bíblica','Devoción Matutina']){
-    const cats=Object.keys(CATS).filter(k=>CATS[k].ev===ev);
+    const cats=Object.keys(CATS).filter(k=>CATS[k].act===ev);
     const ids=new Set();
     /* Las 28 creencias son otro evento y no van en la guía del campamento: la
        guía impresa se usa para estudiar lo que el examen pide. */
-    const caps=CAPS.filter(c=>c.cats.some(x=>cats.includes(x))&&c.ev!=='creencias'
+    const caps=CAPS.filter(c=>c.cats.some(x=>cats.includes(x))
       &&!ids.has(c.id)&&ids.add(c.id));
     const mods=MODULOS.filter(m=>m.cats.some(x=>cats.includes(x)));
     if(!caps.length)continue;
@@ -2339,7 +2314,7 @@ function resumenDe(al){
       .map(x=>[x.fecha,x.pts,x.total,x.nv,x.modo].join('/')),
     f:Object.keys(al.fq||{}).length,
     d:Object.values(al.ft||{}).filter(v=>v>=2).length,
-    tt:tarjetasDe().length, cn:c.nombre, ce:c.ev,
+    tt:tarjetasDe().length, cn:c.nombre, ce:(ACTIVIDADES[c.act]||{}).nombre||'',
   };
 }
 
@@ -2467,10 +2442,27 @@ function aplicaImport(como){
    Si compite en los dos eventos se crean dos fichas, porque el progreso de
    Daniel y el de la matutina no se mezclan. */
 
-let bvEdadSel='av';
 
 const esNuevo=()=>alumnos().length===1&&!S.nombre&&!S.examenes.length&&
   !Object.values(S.prog).some(v=>v>0);
+
+/* ── LA BIENVENIDA: NOMBRE → ACTIVIDAD → CATEGORIA ──────────────────────
+   El orden importa. Antes preguntaba la EDAD primero y el evento despues, y
+   eso obligaba a mapear una edad a cada evento a mano: «si eligio 4 a 6 y
+   matutina, entonces dm1». Con tres actividades ese mapeo se vuelve una tabla
+   de casos, y las creencias no tienen 4-6 ni 7-9 sino «los dos del examen» y
+   «el resto del club».
+
+   Preguntando la ACTIVIDAD primero, el paso 3 solo ofrece las categorias de
+   esa actividad y no hay mapeo que mantener. Las dos pantallas se generan
+   desde ACTIVIDADES y CATS, asi que agregar una actividad es agregar una
+   entrada al modelo.
+
+   UNA SOLA ACTIVIDAD AQUI, a proposito. La mayoria participa en una. Quien
+   este en dos la agrega despues desde el selector de fichas, que ya existe:
+   cobrarle a todos una pantalla mas en el primer minuto, para algo que hace
+   una minoria, es mal negocio. */
+let bvActSel='cb';
 
 function bvPaso(n){
   ['bv-1','bv-2','bv-3'].forEach((id,i)=>{
@@ -2486,40 +2478,48 @@ function bvSigue(){
   if(v.length<2){err.textContent='Escribe tu nombre para seguir.';return;}
   err.textContent='';
   S.nombre=v.slice(0,60);guardar();
-  document.getElementById('bv-saludo').textContent='Hola, '+v.split(' ')[0]+'. ¿Cuántos años tienes?';
+  const el=document.getElementById('bv-saludo');
+  if(el)el.textContent='Hola, '+v.split(' ')[0]+'. ¿En qué actividad participas?';
+  pintaBvActs();
   bvPaso(2);
 }
 
 function bvAtras(n){bvPaso(n);}
 
-function bvEdad(e){
-  bvEdadSel=e;
-  /* Adultos y Guías Mayores no tienen categoría en la matutina: el
-     reglamento solo abre 4 a 6 y 7 a 9. Para ellos no hay paso 3. */
-  if(e==='pa'||e==='gm'){ponCatBV(e);bvTermina();return;}
+/** Paso 2: las actividades, con lo que se estudia y cuándo. */
+function pintaBvActs(){
+  const c=document.getElementById('bv-acts');
+  if(!c)return;
+  c.innerHTML=Object.keys(ACTIVIDADES).map(k=>{
+    const a=ACTIVIDADES[k];
+    return '<button type="button" class="bv-op" onclick="bvActividad(\''+k+'\')">'+
+      '<b>'+a.icono+' '+esc(a.nombre)+'</b>'+
+      '<small>'+esc(a.que)+' · '+esc(a.cuando)+'</small></button>';
+  }).join('');
+}
+
+function bvActividad(a){
+  if(!ACTIVIDADES[a])return;
+  bvActSel=a;
+  const cats=CATS_DE_ACT(a);
+  /* Si la actividad tuviera una sola categoria, preguntar seria un toque de
+     mas sin informacion: se elige sola. Hoy las tres tienen varias, pero la
+     guarda evita una pantalla tonta si manana se agrega una que no. */
+  if(cats.length===1){ponCatBV(cats[0]);bvTermina();return;}
+  const t3=document.getElementById('bv-t3'), p3=document.getElementById('bv-p3');
+  if(t3)t3.textContent=ACTIVIDADES[a].icono+' '+ACTIVIDADES[a].nombre;
+  if(p3)p3.textContent='¿Cuál es tu categoría? Esto decide qué vas a estudiar.';
+  const c=document.getElementById('bv-cats');
+  if(c)c.innerHTML=cats.map(k=>
+    '<button type="button" class="bv-op" onclick="bvCategoria(\''+k+'\')">'+
+    '<b>'+esc(CATS[k].edad)+'</b><small>'+esc(CATS[k].nombre)+' · '+
+    esc(CATS[k].alcance)+'</small></button>').join('');
   bvPaso(3);
 }
 
-function bvEvento(ev){
-  const cb=bvEdadSel;
-  const dm=bvEdadSel==='me'?'dm1':'dm2';
-  if(ev==='cb')ponCatBV(cb);
-  else if(ev==='dm')ponCatBV(dm);
-  else{
-    /* Dos fichas con el mismo nombre, una por evento: el progreso de Daniel
-       y el de la matutina son cuentas separadas y no se deben mezclar.
-       Se escribe directo en DB en vez de usar agregaAlumno() porque ese
-       cambia de participante y navega, y aquí todavía estamos en la
-       bienvenida. */
-    ponCatBV(cb);
-    if(alumnos().length<MAX_ALUMNOS){
-      const id=nuevoId();
-      const otro=normalizar(null);
-      otro.nombre=S.nombre;otro.cat=dm;
-      DB.alumnos[id]=otro;
-      guardar();
-    }
-  }
+function bvCategoria(c){
+  if(!CATS[c])return;
+  ponCatBV(c);
   bvTermina();
 }
 
@@ -2527,7 +2527,6 @@ function ponCatBV(c){S.cat=c;guardar();}
 
 function bvTermina(){
   marcaCat();
-  pintaActividad();
   ir('inicio');
   const id=document.getElementById('ident');
   if(id)id.open=false;
@@ -2536,7 +2535,7 @@ function bvTermina(){
 
 /* ───────── arranque ───────── */
 try{
-  pintaLogo();marcaCat();pintaActividad();pintaInicio();
+  pintaLogo();marcaCat();pintaInicio();
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
 }catch(e){console.error(e);}
 
@@ -2706,7 +2705,7 @@ async function pintaPanel(){
     '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
     '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
       return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'"> '+
-        '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc(CATS[k].ev)+' · '+esc(CATS[k].edad)+'</small></span></label>';
+        '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+esc(CATS[k].edad)+'</small></span></label>';
     }).join('')+'</div></div>'+
 
     '<div class="pan-paso"><div class="pan-paso-t">Paso 3 · Abrir</div>'+
@@ -2827,7 +2826,11 @@ async function cargaResultados(){
    Se reparte en los dos grupos que el reglamento distingue: los adultos que
    presentan el escrito (padres, consejeros y Guías Mayores) y el resto del
    club. Y se muestra la suma, que es el numero que se reporta. */
-const ADULTOS=['pa','gm'];
+/* El reglamento de «En esto creemos» suma dos notas: la de los dos adultos
+   que presentan el examen escrito y la del resto del club. Con las creencias
+   como actividad propia, esos dos grupos son sus dos categorias, y ya no hay
+   que adivinarlos a partir de las categorias de Conexion Biblica. */
+const ADULTOS=['ec1','pa','gm'];
 function sumaClub(hechas){
   if(!hechas||hechas.length<2)return '';
   const tot=g=>g.reduce(function(a,x){return {n:a.n+(x.nota||0),t:a.t+(x.total||0),c:a.c+1};},{n:0,t:0,c:0});

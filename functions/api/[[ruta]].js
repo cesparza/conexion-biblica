@@ -92,7 +92,12 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
   return token;
 }
 
-const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2'];
+/* Las categorias que el servidor acepta. Las seis primeras son las que ya
+   estan en la base: hay 7 participantes creadas con `me`, `av` y `pa`, asi
+   que NINGUNA se quita nunca de esta lista o esas filas quedarian
+   invalidas. `ec1` y `ec2` son las de «En esto creemos», que paso a ser una
+   actividad con sus propias categorias en vez de colgarse de `pa` y `gm`. */
+const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2'];
 
 const evaluacionAbierta = env =>
   env.DB.prepare('SELECT * FROM evaluacion WHERE abierta = 1 ORDER BY creada_en DESC LIMIT 1').first();

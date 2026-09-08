@@ -111,10 +111,6 @@
   </div>
 </nav>
 
-<!-- Las dos actividades. Oculta con [hidden] salvo para las categorias que
-     de verdad tienen las dos: la enciende pintaActividad(). -->
-<div id="actividad" class="actividad" hidden></div>
-
 <!-- La hoja del versiculo. Vive fuera de las pantallas porque es global: se
      abre desde cualquier referencia del material. La llena htmlHoja(). -->
 <div id="hoja" class="hoja" hidden></div>
@@ -135,31 +131,24 @@
       <button class="btn nar bv-btn" onclick="bvSigue()">Siguiente →</button>
     </div>
 
+    <!-- Paso 2 y 3: los rellena pintaBienvenida() desde ACTIVIDADES y CATS.
+         No van escritos a mano para que agregar una actividad sea agregar una
+         entrada al modelo, no editar el HTML en tres sitios. -->
     <div class="bv-paso" id="bv-2">
       <div class="bv-num">Paso 2 de 3</div>
-      <h1 id="bv-saludo">¿Cuántos años tienes?</h1>
-      <p class="bv-p">Esto decide qué capítulos vas a estudiar. Si te
-      equivocas, se puede cambiar después.</p>
-      <button class="bv-op" onclick="bvEdad('me')">
-        <b>4, 5 o 6 años</b><small>Solo el libro de Daniel</small></button>
-      <button class="bv-op" onclick="bvEdad('av')">
-        <b>7, 8 o 9 años</b><small>Daniel y Profetas y Reyes</small></button>
-      <button class="bv-op" onclick="bvEdad('pa')">
-        <b>Soy adulto</b><small>Papá, mamá o consejero del club</small></button>
-      <button class="bv-link" onclick="bvEdad('gm')">Soy Guía Mayor (otro evento)</button>
+      <h1 id="bv-saludo">¿En qué actividad participas?</h1>
+      <p class="bv-p">Son actividades distintas, con fechas y material
+      distintos. Después puedes agregar otra.</p>
+      <div id="bv-acts"></div>
       <button class="bv-link" onclick="bvAtras(1)">← Volver</button>
     </div>
 
     <div class="bv-paso" id="bv-3">
       <div class="bv-num">Paso 3 de 3</div>
-      <h1>¿En qué evento participas?</h1>
-      <p class="bv-p">Son dos concursos distintos, con material distinto.</p>
-      <button class="bv-op" onclick="bvEvento('cb')">
-        <b>📖 Conexión Bíblica</b><small>El libro de Daniel y Profetas y Reyes</small></button>
-      <button class="bv-op" onclick="bvEvento('dm')">
-        <b>🌅 Devoción Matutina</b><small>«Héroes y villanos», el mes de octubre</small></button>
-      <button class="bv-op" onclick="bvEvento('dos')">
-        <b>🏆 En los dos</b><small>Te creo una ficha de estudio para cada uno</small></button>
+      <h1 id="bv-t3">¿Cuál es tu categoría?</h1>
+      <p class="bv-p" id="bv-p3">Esto decide qué vas a estudiar. Si te
+      equivocas, se puede cambiar después.</p>
+      <div id="bv-cats"></div>
       <button class="bv-link" onclick="bvAtras(2)">← Volver</button>
     </div>
   </div>
@@ -169,7 +158,7 @@
   <div class="marca">
     <img class="logo-marca logo-tl" alt="Iglesia Adventista Tierra Linda">
     <div>
-      <div class="mt">Conexión Bíblica · Devoción Matutina</div>
+      <div class="mt">Conexión Bíblica · Devoción Matutina · En esto creemos</div>
       <div class="ms">Club de Aventureros · Iglesia Adventista Tierra Linda</div>
     </div>
   </div>
@@ -182,12 +171,17 @@
       <input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">
       <p class="nota">Cada participante guarda su <strong>propio progreso</strong>.
       Toca un nombre para cambiar de persona.</p>
-      <h3>🎯 Categoría y evento</h3>
+      <h3>🎯 Actividad y categoría</h3>
       <div class="cat-sel" id="cat-sel"></div>
-      <p class="nota">La categoría define qué capítulos ves y de dónde salen
-      las preguntas. El reglamento del campamento pide <strong>Daniel 1, 3 y 6</strong>
-      y los capítulos 39, 41 y 44 de Profetas y Reyes;
-      <strong>Guías Mayores</strong> es el alcance ampliado de otro evento.</p>
+      <p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y
+      define qué capítulos ves, de dónde salen las preguntas y hasta qué
+      dificultad llegan. Si estudias dos actividades, no cambies de categoría
+      aquí: agrega <strong>otro participante</strong> con tu mismo nombre, así
+      cada actividad guarda su progreso aparte.</p>
+      <p class="nota">En Conexión Bíblica el reglamento del campamento pide
+      <strong>Daniel 1, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y
+      Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro
+      evento.</p>
     </div>
   </details>
 

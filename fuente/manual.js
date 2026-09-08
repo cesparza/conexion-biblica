@@ -23,11 +23,14 @@ const MANUAL = [
   secs:[
   { t:'Por qué te pregunta antes de dejarte entrar',
     h:`<p>La app necesita saber dos cosas para mostrarte <strong>tu</strong>
-    material y no el de otro: tu edad y tu evento. De esas dos respuestas sale
-    tu categoría, y la categoría decide qué capítulos ves y de dónde salen tus
-    preguntas.</p>
-    <p>Por eso no te pone a escoger entre seis categorías con nombres raros:
-    te hace dos preguntas que sí sabes contestar.</p>` },
+    material y no el de otro: <strong>en qué actividad estás</strong> y
+    <strong>cuál es tu categoría dentro de ella</strong>. De ahí sale qué
+    capítulos ves, de dónde salen tus preguntas y hasta qué dificultad
+    llegan.</p>
+    <p>Pregunta la actividad primero porque cada actividad tiene sus propias
+    categorías: Conexión Bíblica va por edad, y las 28 creencias no van por
+    edad sino por quién presenta el examen escrito. Preguntando la actividad
+    de una, el paso siguiente solo te ofrece lo que sí te aplica.</p>` },
   { t:'Tu código, si el director te dio uno',
     h:`<p>En la pantalla de <strong>Examen</strong>, arriba, hay un cuadro que
     dice <strong>Entra con tu código</strong>. Son 6 letras y números que te da
@@ -44,23 +47,32 @@ const MANUAL = [
     h:`<p>Escríbelo y toca <strong>Siguiente</strong>. Sirve para que tu
     progreso sea tuyo: en un mismo teléfono pueden estudiar varias personas sin
     mezclarse.</p>` },
-  { t:'Paso 2 — tu edad',
-    h:`<p>Tres botones: <strong>4, 5 o 6 años</strong>, <strong>7, 8 o 9
-    años</strong>, o <strong>soy adulto</strong>. Si eres Guía Mayor, hay un
-    enlace abajo.</p>
+  { t:'Paso 2 — tu actividad',
+    h:`<p>Tres tarjetas, y cada una dice <strong>cuándo es</strong> y
+    <strong>qué se estudia</strong>:</p>
+    <p><strong>Conexión Bíblica</strong> es el libro de Daniel y Profetas y
+    Reyes, el 9 de octubre. <strong>Devoción Matutina</strong> es «Héroes y
+    villanos», la lectura de todo octubre. <strong>En esto creemos</strong> son
+    las 28 creencias.</p>
+    <p>Escoge <strong>una</strong>, la que vas a estudiar ahora. Si estás en
+    dos, la otra se agrega después y no se pierde nada: mira «Las actividades,
+    separadas» más abajo.</p>` },
+  { t:'Paso 3 — tu categoría',
+    h:`<p>Aquí solo aparecen las categorías de la actividad que escogiste, con
+    el material de cada una escrito debajo.</p>
+    <p>En Conexión Bíblica y en la matutina van por edad: <strong>4 a 6</strong>,
+    <strong>7 a 9</strong>, <strong>adultos</strong> y, en Conexión Bíblica,
+    <strong>Guías Mayores</strong>. En las 28 creencias no van por edad:
+    <strong>Adultos</strong> son los dos del examen escrito y
+    <strong>Cuestionario</strong> es el resto del club.</p>
     <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de
     empezar a estudiar.</p>` },
-  { t:'Paso 3 — tu evento',
-    h:`<p><strong>Conexión Bíblica</strong> es el libro de Daniel y Profetas y
-    Reyes. <strong>Devoción Matutina</strong> es «Héroes y villanos», la
-    lectura de octubre. Son dos concursos distintos con material distinto.</p>
-    <p>Si vas a los dos, toca <strong>En los dos</strong>: la app te crea dos
-    fichas con tu nombre, una por evento, y cambias entre ellas cuando
-    quieras.</p>` },
   { t:'Si escogiste mal',
     h:`<p>No hay que empezar de cero. En <strong>Inicio</strong>, en la barra de
-    arriba que dice tu nombre, toca <strong>Cambiar</strong> y escoge la
-    correcta. Tu progreso no se pierde.</p>` },
+    arriba que dice tu nombre, toca <strong>Cambiar</strong>. Ahí están todas
+    las categorías <strong>agrupadas por actividad</strong>, así que desde el
+    mismo sitio corriges la categoría o te pasas a otra actividad. Tu progreso
+    no se pierde.</p>` },
   ]},
 
 { id:'a-hoy', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Empieza siempre por «Qué estudiar hoy»',
@@ -106,30 +118,39 @@ const MANUAL = [
     sirven cuando ya leíste todo.</p>` },
   ]},
 
-{ id:'a-actividades', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Las dos actividades, separadas',
-  d:'Conexión Bíblica y En esto creemos no se mezclan',
+{ id:'a-actividades', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Las actividades, separadas',
+  d:'Una ficha por actividad, para que el material no se revuelva',
   secs:[
-  { t:'Para quién aparece',
-    h:`<p>Los <strong>padres, consejeros y Guías Mayores</strong> participan en
-    <strong>dos actividades distintas</strong>: Conexión Bíblica, que es Daniel
-    y Profetas y Reyes, y En esto creemos, que son las 28 creencias.</p>
-    <p>Por eso arriba hay <strong>dos pestañas</strong>. Los niños de 4 a 6 y
-    de 7 a 9 no las ven, porque ellos solo tienen una actividad.</p>` },
-  { t:'Qué cambia al tocar una',
-    h:`<p><strong>Toda la app.</strong> Lo que ves en Estudiar, las tarjetas
-    que te tocan hoy, el examen y tus logros son de la actividad que tengas
-    puesta.</p>
-    <p>Son dos actividades con <strong>fechas y jurados distintos</strong>, así
-    que estudiarlas revueltas no sirve. Antes, un papá veía 35 capítulos en una
-    sola lista y la sesión de tarjetas del día le mezclaba un versículo de
-    Daniel con una creencia.</p>` },
-  { t:'Se queda donde la dejaste',
-    h:`<p>La app <strong>recuerda en qué actividad estabas</strong>, así que al
-    volver sigues ahí. Cambiar de una a otra <strong>no borra nada</strong>: tu
-    progreso de las dos se guarda por separado y siempre está.</p>
+  { t:'Qué es una actividad',
+    h:`<p>Hay <strong>tres</strong>: Conexión Bíblica (Daniel y Profetas y
+    Reyes), Devoción Matutina («Héroes y villanos») y En esto creemos (las 28
+    creencias). Cada una tiene <strong>su fecha, su jurado y su material</strong>,
+    y no se parecen en nada entre ellas.</p>
+    <p>Tu <strong>categoría</strong> ya dice en qué actividad estás: «7 a 9
+    años» de Conexión Bíblica y «7 a 9 años» de la matutina son dos categorías
+    distintas. Por eso no hay que escoger la actividad en dos sitios.</p>` },
+  { t:'Si estás en dos, son dos fichas',
+    h:`<p>La app guarda <strong>una ficha por actividad</strong>, no una ficha
+    con dos actividades adentro. Un papá que está en Conexión Bíblica y en las
+    creencias tiene dos fichas con su nombre.</p>
+    <p>Por qué así: la lectura, las tarjetas del día, el examen armado y los
+    logros son de <strong>una</strong> actividad. Antes, con todo en una sola
+    ficha, la sesión de tarjetas del día le mezclaba un versículo de Daniel con
+    una creencia y esa sesión no servía para ninguna de las dos.</p>` },
+  { t:'Cómo agregar la segunda',
+    h:`<p>En <strong>Inicio</strong>, en la barra de arriba con tu nombre, toca
+    <strong>Cambiar</strong> y después <strong>+ Agregar</strong>. Escribes el
+    mismo nombre y escoges la otra actividad y su categoría.</p>
+    <p>Se hace así, y no en los tres pasos del principio, porque la mayoría
+    está en una sola actividad: cobrarle a todos una pantalla más el primer día
+    para algo que hace una minoría es mal negocio.</p>` },
+  { t:'Cambiar de una a otra no borra nada',
+    h:`<p>Tocas tu nombre arriba y escoges la otra ficha. El progreso de cada
+    una <strong>se guarda por separado</strong> y siempre está: lo leído, lo
+    memorizado, los exámenes y los errores.</p>
     <p>Lo único que se reinicia al cambiar es el <strong>examen que tenías
-    armado</strong>, porque un material de la otra actividad dejaría el examen
-    en cero preguntas.</p>` },
+    armado</strong> y el mazo de tarjetas en pantalla, porque eran de la otra
+    actividad.</p>` },
   ]},
 
 { id:'a-versiculos', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Ver el versículo sin salir del estudio',

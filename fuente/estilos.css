@@ -54,18 +54,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .nav-t button{min-height:50px}
 }
 
-/* ═══ LAS DOS ACTIVIDADES ═══
-   Un cambio de contexto tiene que verse como tal: dos pestanas anchas, la
-   activa con el fondo de marca. No es un filtro mas dentro de una pantalla,
-   es en que actividad esta trabajando la persona. */
-.actividad{display:flex;gap:0;background:#e8edf3;border-bottom:1px solid #d7dee7}
-.act-b{flex:1;min-width:0;background:none;border:0;border-bottom:3px solid transparent;
-  padding:.7rem .4rem;font-family:inherit;font-size:.82rem;font-weight:700;
-  color:var(--gris);cursor:pointer;min-height:46px;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.act-b.on{color:var(--azul);background:var(--bg);border-bottom-color:var(--naranja)}
-@media print{.actividad{display:none!important}}
-
 .pantalla{display:none;padding:1.5rem 1rem;max-width:880px;margin:0 auto}
 .pantalla.on{display:block}
 

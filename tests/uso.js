@@ -38,13 +38,13 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
         ponNivel:v=>{nivel=v},
         htmlHoja, seccionLectura, refsTocables, VERS,
-        capsCat, dosActividades, cambiaEvento, evento:()=>S.evento,
+        ACTIVIDADES, ACT, ACT_DE, CATS_DE_ACT, bvActividad, bvCategoria,
         DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre,
-        esNuevo, bvSigue, bvEdad, bvEvento, bvPaso, ir,
+        esNuevo, bvSigue, bvPaso, ir,
         codigoResumen, codigoCompleto, leeCodigo, resumenDe, tarjetasDe,
         huellaBanco, prng, mezclaR, armar, techoDe:c=>CATS[c].techo,
         ponRnd:f=>{rndEx=f}, rndNormal:()=>{rndEx=Math.random},
-        claveQ, BANCO, capsDelEvento, pintaMenuEx, gruposEx, soloEstudio, ponFq:(k,n)=>{S.fq[k]={m:n}},
+        claveQ, BANCO, pintaMenuEx, gruposEx, soloEstudio, ponFq:(k,n)=>{S.fq[k]={m:n}},
         diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
         puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
@@ -319,48 +319,90 @@ B.el('bv-nombre').value='Isabella';
 B.bvSigue();
 ok(B.S().nombre==='Isabella','El nombre queda guardado en el paso 1');
 
-/* Edad + evento definen la categoría. Nadie escoge «av» ni «dm1» a mano. */
-B.bvEdad('me'); B.bvEvento('cb');
-ok(B.S().cat==='me','4 a 6 años en Conexión Bíblica queda en Menores');
+/* ACTIVIDAD primero, categoría después. El orden importa: antes se preguntaba
+   la edad y luego el evento, y eso obligaba a mapear cada edad a cada evento
+   a mano («4 a 6 en matutina es dm1»). Con tres actividades ese mapeo es una
+   tabla de casos, y las creencias no tienen 4-6 ni 7-9 sino «los dos del
+   examen escrito» y «el resto del club». Preguntando la actividad primero, el
+   paso 3 solo ofrece las categorías de esa actividad. */
+B.bvActividad('cb'); B.bvCategoria('me');
+ok(B.S().cat==='me','Conexión Bíblica + 4 a 6 años queda en Menores');
 ok(B.capsDe().every(c=>c.id.charAt(0)==='d'),'Menores solo ve capítulos de Daniel');
 ok(!B.esNuevo(),'Después de la bienvenida ya no se considera usuario nuevo');
+
+/* Cada actividad ofrece SOLO sus categorías. Es lo que hace que no haya
+   mapeos que mantener. */
+ok(B.CATS_DE_ACT('cb').join(',')==='me,av,pa,gm',
+  'Conexión Bíblica ofrece sus cuatro categorías');
+ok(B.CATS_DE_ACT('dm').join(',')==='dm1,dm2',
+  'Devoción Matutina ofrece sus dos');
+ok(B.CATS_DE_ACT('ec').join(',')==='ec1,ec2',
+  'En esto creemos ofrece sus dos: los del examen escrito y el resto del club');
+/* Y toda categoría pertenece a exactamente una actividad. */
+const huerfanas=Object.keys(B.CATS).filter(k=>
+  !Object.keys(B.ACTIVIDADES).some(a=>B.CATS_DE_ACT(a).includes(k)));
+ok(huerfanas.length===0,'Ninguna categoría queda fuera de una actividad'+
+  (huerfanas.length?' — '+huerfanas.join(', '):''));
+ok(Object.keys(B.CATS).every(k=>B.ACTIVIDADES[B.CATS[k].act]),
+  'Toda categoría declara una actividad que existe');
 
 store={};
 const C=fn(store,nodo,Buffer);
 C.el('bv-nombre').value='Camilo';
-C.bvSigue(); C.bvEdad('me'); C.bvEvento('dm');
-ok(C.S().cat==='dm1','4 a 6 años en matutina queda en Matutina menores');
+C.bvSigue(); C.bvActividad('dm'); C.bvCategoria('dm1');
+ok(C.S().cat==='dm1','Matutina + 4 a 6 años queda en Matutina menores');
+ok(C.capsDe().every(c=>/^m\d\d$/.test(c.id)),'Y solo ve los días de la matutina');
 
 store={};
 const D=fn(store,nodo,Buffer);
 D.el('bv-nombre').value='Ana';
-D.bvSigue(); D.bvEdad('av'); D.bvEvento('dm');
-ok(D.S().cat==='dm2','7 a 9 años en matutina queda en Matutina Aventureros');
+D.bvSigue(); D.bvActividad('dm'); D.bvCategoria('dm2');
+ok(D.S().cat==='dm2','Matutina + 7 a 9 años queda en Matutina Aventureros');
 
-/* Los adultos no tienen categoría en la matutina: el reglamento solo abre
-   4 a 6 y 7 a 9, así que para ellos no hay paso 3. */
+/* Las 28 creencias, que antes no cabían en el modelo y se resolvían con un
+   interruptor aparte, ahora son una actividad con sus dos categorías. */
 store={};
-const E=fn(store,nodo,Buffer);
-E.el('bv-nombre').value='Papá';
-E.bvSigue(); E.bvEdad('pa');
-ok(E.S().cat==='pa','Un adulto queda en Padres y consejeros sin pasar por el paso 3');
+const F2=fn(store,nodo,Buffer);
+F2.el('bv-nombre').value='Papá';
+F2.bvSigue(); F2.bvActividad('ec'); F2.bvCategoria('ec1');
+ok(F2.S().cat==='ec1','En esto creemos + examen escrito queda en ec1');
+ok(F2.capsDe().length===28&&F2.capsDe().every(c=>/^cr\d\d$/.test(c.id)),
+  'Y ve las 28 creencias, y nada más');
+ok(F2.tarjetasDe().every(x=>/^cr\d\d$/.test(x.cap)),'Sus tarjetas son solo de creencias');
+F2.ponAlcance('todo');
+ok(F2.poolDe().length===84&&F2.poolDe().every(q=>/^cr\d\d$/.test(q.cap)),
+  'Y su examen son las 84 preguntas de creencias');
 
+/* Al revés: una categoría de Conexión Bíblica no ve ni una creencia. Esta es
+   la garantía que antes dependía de un filtro a mano en poolDe(). */
 store={};
 const G=fn(store,nodo,Buffer);
 G.el('bv-nombre').value='Guía';
-G.bvSigue(); G.bvEdad('gm');
-ok(G.S().cat==='gm','Guía Mayor queda en su categoría directamente');
+G.bvSigue(); G.bvActividad('cb'); G.bvCategoria('gm');
+ok(G.S().cat==='gm','Guía Mayor queda en su categoría');
+ok(G.capsDe().every(c=>!/^cr\d\d$/.test(c.id)),
+  'Guías Mayores no ve ni un capítulo de creencias en Conexión Bíblica');
+ok(G.tarjetasDe().every(x=>!/^cr\d\d$/.test(x.cap)),'Ni una tarjeta de creencias');
+G.ponAlcance('todo');
+ok(G.poolDe().length>0&&G.poolDe().every(q=>!/^cr\d\d$/.test(q.cap)),
+  'Ni una pregunta de creencias en su examen');
 
-/* Quien compite en los dos eventos necesita dos fichas: el progreso de
-   Daniel y el de la matutina son cuentas separadas. */
+/* Quien participa en dos actividades usa dos fichas, que es el patrón que la
+   app ya tenía para la matutina: cada ficha lleva su propio progreso, racha e
+   insignias, así que las cuentas quedan separadas por construcción. */
 store={};
 const H=fn(store,nodo,Buffer);
 H.el('bv-nombre').value='María Camila';
-H.bvSigue(); H.bvEdad('av'); H.bvEvento('dos');
+H.bvSigue(); H.bvActividad('cb'); H.bvCategoria('av');
+H.agregaAlumno(); H.ponNombre('María Camila'); H.ponCat('dm2');
 const fichas=H.alumnos().map(([,al])=>al.cat).sort();
-ok(H.alumnos().length===2,'«En los dos» crea dos fichas de estudio');
+ok(H.alumnos().length===2,'Se puede tener una ficha por actividad');
 ok(fichas.join(',')==='av,dm2','Las dos fichas son Aventureros y Matutina Aventureros');
-ok(H.alumnos().every(([,al])=>al.nombre==='María Camila'),'Las dos fichas llevan el mismo nombre');
+ok(H.alumnos().every(([,al])=>al.nombre==='María Camila'),'Las dos llevan el mismo nombre');
+/* Y el progreso de una no se ve en la otra. */
+H.S().prog['m01']=100;
+const fichaCb=H.alumnos().find(([,al])=>al.cat==='av');
+ok((fichaCb[1].prog['m01']||0)===0,'El progreso de una actividad no aparece en la otra');
 
 /* Un usuario que ya tiene progreso nunca debe volver a ver la bienvenida. */
 store={};
@@ -531,17 +573,19 @@ A.ponCat('pa'); A.ponNivel(3); A.ponCuantas(60);
 A.ponAlcance('todo');
 ok(A.poolDe().length>0 && A.poolDe().every(q=>!/^cr\d\d$/.test(q.cap)),
   'Padres: el alcance «todo» NO trae ninguna de las 28 creencias');
-/* Las creencias ya no son un alcance dentro del examen de Daniel: son una
-   ACTIVIDAD aparte. Se llega a ellas con el conmutador. */
-A.cambiaEvento('creencias'); A.ponAlcance('todo');
+/* Las creencias no son un alcance del examen de Daniel ni un interruptor:
+   son una ACTIVIDAD con sus propias categorías, ec1 y ec2. Cambiar de
+   actividad es elegir una categoría de la otra actividad, que es el mismo
+   gesto de siempre. */
+A.ponCat('ec1'); A.ponAlcance('todo');
 const poolCr=A.poolDe();
 ok(poolCr.length>0 && poolCr.every(q=>/^cr\d\d$/.test(q.cap)),
-  'Padres, en «En esto creemos»: el examen trae SOLO creencias ('+poolCr.length+' preguntas)');
+  'En esto creemos (ec1): el examen trae SOLO creencias ('+poolCr.length+' preguntas)');
 ok(new Set(poolCr.map(q=>q.cap)).size===28,'Están las 28 creencias, no menos');
-A.cambiaEvento('biblia');
-A.ponCat('gm'); A.cambiaEvento('creencias'); A.ponAlcance('todo');
-ok(A.poolDe().length===poolCr.length,'Guías Mayores tiene el mismo material de creencias');
-A.cambiaEvento('biblia');
+A.ponCat('ec2'); A.ponAlcance('todo');
+ok(A.poolDe().length===poolCr.length,
+  'El resto del club (ec2) estudia el mismo material de creencias');
+A.ponCat('pa');
 for(const cat of ['me','av']){
   A.ponCat(cat); A.ponAlcance('todo');
   ok(!A.capsDe().some(c=>/^cr\d\d$/.test(c.id)),
@@ -553,8 +597,12 @@ A.ponCat('av'); A.ponAlcance('todo'); A.ponNivel(0); A.ponCuantas(15);
    textos clave: sin eso, la tarjeta y la pregunta no tienen de dónde salir. */
 const CR=require(path.join(RAIZ,'fuente','creencias.js'));
 ok(CR.CR_CAPS.length===28,'Las 28 creencias están cargadas');
-ok(CR.CR_CAPS.every(c=>c.sub&&c.ev==='creencias'&&c.cats.includes('pa')),
-  'Cada creencia tiene título, evento propio y le toca a padres y consejeros');
+/* Ya no llevan `ev:'creencias'`: pertenecen a las categorias de su propia
+   actividad, que es lo que las separa sin filtros a mano. */
+ok(CR.CR_CAPS.every(c=>c.sub&&c.cats.includes('ec1')&&c.cats.includes('ec2')),
+  'Cada creencia tiene título y pertenece a las dos categorías de su actividad');
+ok(CR.CR_CAPS.every(c=>!('ev' in c)),
+  'Y ya no lleva la marca `ev` con la que se filtraban a mano');
 ok(Object.keys(CR.CR_CONTENIDO).length===28 &&
    Object.values(CR.CR_CONTENIDO).every(v=>/Declaración oficial/.test(v[0].h)&&/Textos clave/.test(v[1].h)),
   'Cada creencia trae su declaración oficial y sus textos clave');
@@ -581,30 +629,30 @@ A.ponCat('dm2'); A.ponAlcance('pr'); A.pintaMenuEx();
 ok(A.alcanceActual()==='todo','Y lo mismo con «solo P&R» en una categoría de matutina');
 A.ponCat('av'); A.ponAlcance('todo');
 
-/* 2. Los errores por repasar son de la ACTIVIDAD que se está practicando.
-   Mezclarlos daba un examen de errores con Daniel y doctrina juntos. Antes
-   esto colgaba del alcance; ahora del conmutador, que es donde de verdad se
-   decide en qué se está trabajando. */
-A.ponCat('pa'); A.cambiaEvento('biblia'); A.ponAlcance('todo');
+/* 2. Los errores por repasar son de la actividad en la que se está. Antes
+   colgaban del alcance del examen y daban un repaso con Daniel y doctrina
+   juntos; ahora cuelgan de la categoría, que ya dice la actividad. */
+A.ponCat('pa'); A.ponAlcance('todo');
 const unoDaniel=A.poolDe().find(q=>q.cap==='d1');
-A.cambiaEvento('creencias'); A.ponAlcance('todo');
+A.ponCat('ec1'); A.ponAlcance('todo');
 const unaCreencia=A.poolDe()[0];
 A.ponFq(A.claveQ(unoDaniel),2); A.ponFq(A.claveQ(unaCreencia),2);
 ok(A.falladasDe().length>0&&A.falladasDe().every(q=>/^cr\d\d$/.test(q.cap)),
   'En «En esto creemos», los errores por repasar son solo de creencias');
-A.cambiaEvento('biblia');
+A.ponCat('pa');
 ok(A.falladasDe().length>0&&A.falladasDe().every(q=>!/^cr\d\d$/.test(q.cap)),
   'En «Conexión Bíblica», los errores por repasar no traen creencias');
 
 /* 3. Las cuentas de progreso del campamento son de 12 capítulos, no de 40.
    Con capsDe() la insignia «Lector completo» quedaba fuera de alcance para
    padres y consejeros: había que leerse también las 28 creencias. */
-A.ponCat('gm'); A.cambiaEvento('biblia');
-/* capsCat() sigue trayendo los 40 cargados; capsDe() ahora trae solo los de
-   la actividad activa, que es justo el arreglo. */
-ok(A.capsDelEvento().length===12 && A.capsDe().length===12 && A.capsCat().length===40,
-  'Guías Mayores: 12 capítulos en la actividad de Daniel, de 40 cargados ('+A.capsCat().length+')');
-A.capsDelEvento().forEach(c=>{A.S().prog[c.id]=100;});
+A.ponCat('gm');
+/* capsDelEvento() ya no existe: existia SOLO para desmezclar las creencias de
+   los capitulos del campamento. Con una categoria por actividad, capsDe() ya
+   trae los 12 correctos y no hay nada que desmezclar. */
+ok(A.capsDe().length===12,
+  'Guías Mayores: 12 capítulos, sin creencias que descontar ('+A.capsDe().length+')');
+A.capsDe().forEach(c=>{A.S().prog[c.id]=100;});
 A.modsDe().forEach(m=>{A.S().prog[m.id]=100;});
 A.revisaInsignias(0);
 ok(A.S().insignias.includes('Lector completo'),
@@ -821,50 +869,67 @@ ok(/class="[^"]*\bbiblia\b/.test(hv)&&/class="[^"]*\bbiblia\b/.test(sl),
   'El texto biblico lleva la clase .biblia en la hoja y en la lectura');
 
 
-/* ── LAS DOS ACTIVIDADES, SEPARADAS DE VERDAD ───────────────────────────
+/* ── CADA ACTIVIDAD, SEPARADA POR CONSTRUCCION ──────────────────────────
    Antes solo el examen las separaba: la lista de Estudiar de un padre tenia
    35 capitulos en un monton (4 Daniel + 3 P&R + 28 creencias) y la sesion de
-   tarjetas del dia mezclaba un versiculo de Daniel con una creencia. */
-const esCr=id=>/^cr\d\d$/.test(id);
-A.ponCat('me'); ok(!A.dosActividades(),'Menores no tiene conmutador: solo estudia Daniel');
-A.ponCat('av'); ok(!A.dosActividades(),'Aventureros no tiene conmutador');
-A.ponCat('dm1'); ok(!A.dosActividades(),'Devocion Matutina no tiene conmutador');
+   tarjetas del dia mezclaba un versiculo de Daniel con una creencia. Se
+   parcheo con un interruptor, que era un cuarto mecanismo.
 
-for(const cat of ['pa','gm']){
-  A.ponCat(cat);
-  ok(A.dosActividades(),cat+': tiene las dos actividades, asi que lleva conmutador');
-  A.cambiaEvento('biblia');
-  ok(A.capsDe().every(c=>!esCr(c.id)),
-    cat+' en Conexion Biblica: ni un capitulo de creencias en la lista');
-  ok(A.tarjetasDe().every(t=>!esCr(t.cap)),
-    cat+' en Conexion Biblica: ni una tarjeta de creencias');
-  A.ponAlcance('todo');
-  ok(A.poolDe().length>0&&A.poolDe().every(q=>!esCr(q.cap)),
-    cat+' en Conexion Biblica: el examen no trae ni una creencia');
-  A.cambiaEvento('creencias');
-  ok(A.capsDe().length===28&&A.capsDe().every(c=>esCr(c.id)),
-    cat+' en En esto creemos: las 28 creencias y nada mas');
-  ok(A.tarjetasDe().every(t=>esCr(t.cap)),
-    cat+' en En esto creemos: solo tarjetas de creencias');
-  A.ponAlcance('todo');
-  ok(A.poolDe().length>0&&A.poolDe().every(q=>esCr(q.cap)),
-    cat+' en En esto creemos: el examen es solo de creencias');
-  A.cambiaEvento('biblia');
+   Ahora la categoria dice la actividad, asi que no hay nada que filtrar
+   aparte: si estas en `av` no existen las creencias, y si estas en `ec1` no
+   existe Daniel. Esta tabla lo recorre entero. */
+const esCrAct=id=>/^cr\d\d$/.test(id);
+const esDanAct=id=>/^d\d$/.test(id)||/^pr\d\d$/.test(id);
+const esMatAct=id=>/^m\d\d$/.test(id);
+
+const POR_CAT={
+  me:{act:'cb', caps:4,  suyo:esDanAct},
+  av:{act:'cb', caps:7,  suyo:esDanAct},
+  pa:{act:'cb', caps:7,  suyo:esDanAct},
+  gm:{act:'cb', caps:12, suyo:esDanAct},
+  dm1:{act:'dm', caps:15, suyo:esMatAct},
+  dm2:{act:'dm', caps:31, suyo:esMatAct},
+  ec1:{act:'ec', caps:28, suyo:esCrAct},
+  ec2:{act:'ec', caps:28, suyo:esCrAct},
+};
+for(const cat of Object.keys(ESPERADO)){
+  const e=POR_CAT[cat];
+  A.ponCat(cat); A.ponAlcance('todo');
+  ok(A.ACT_DE(cat)===e.act,cat+' pertenece a la actividad '+e.act);
+  ok(A.capsDe().length===e.caps,
+    cat+': '+e.caps+' capitulos ('+A.capsDe().length+')');
+  ok(A.capsDe().every(c=>e.suyo(c.id)),
+    cat+': todos los capitulos son de su actividad, ninguno de otra');
+  ok(A.tarjetasDe().every(x=>e.suyo(x.cap)),
+    cat+': todas las tarjetas son de su actividad');
+  ok(A.poolDe().length>0&&A.poolDe().every(q=>e.suyo(q.cap)),
+    cat+': el examen solo trae preguntas de su actividad ('+A.poolDe().length+')');
 }
 
-/* Cambiar de actividad resetea el material: un alcance de la otra («Solo
-   Profetas y Reyes» dentro de las creencias) dejaria el examen en cero. */
-A.ponCat('gm'); A.cambiaEvento('biblia'); A.ponAlcance('pr');
-A.cambiaEvento('creencias');
-ok(A.alcanceActual()==='todo','Al cambiar de actividad, el material vuelve a «todo»');
-ok(A.poolDe().length===84,'Y el examen de creencias tiene sus 84 preguntas');
-A.cambiaEvento('biblia');
+/* La garantia que mas importa, dicha al reves: ninguna categoria del
+   campamento puede ver una creencia, porque el examen del 9 de octubre no
+   pregunta doctrina. */
+for(const cat of ['me','av','pa','gm']){
+  A.ponCat(cat); A.ponAlcance('todo');
+  ok(!A.capsDe().some(c=>esCrAct(c.id))&&!A.poolDe().some(q=>esCrAct(q.cap)),
+    cat+': ni una creencia, ni para estudiar ni en el examen');
+}
+A.ponCat('av'); A.ponAlcance('todo');
 
-/* Un valor raro guardado no puede dejar la app sin capitulos. */
-ok(A.normalizar({cat:'gm',evento:'cualquier-cosa'}).evento==='biblia',
-  'Una actividad invalida en el estado guardado cae en Daniel');
-ok(A.normalizar({cat:'gm',evento:'creencias'}).evento==='creencias',
-  'Una actividad valida se respeta al cargar');
+/* Un estado guardado de una version anterior tiene que abrir intacto. Este
+   rediseno NO cambio ninguna clave de categoria justamente para eso: quien
+   tenga `av` guardado en su celular sigue en Aventureros. */
+for(const cat of ['me','av','pa','gm','dm1','dm2']){
+  const s=A.normalizar({cat,nombre:'De antes',prog:{d1:60},racha:5});
+  ok(s.cat===cat,'Un estado guardado con cat='+cat+' sigue en esa categoria');
+  ok(s.prog.d1===60&&s.racha===5,'  y conserva su progreso y su racha');
+}
+/* Una categoria que no existe cae en la de siempre, no deja la app vacia. */
+ok(A.normalizar({cat:'inventada'}).cat==='av',
+  'Una categoria invalida cae en Aventureros');
+/* Y el campo `evento` del interruptor retirado se ignora sin romper nada. */
+ok(A.normalizar({cat:'pa',evento:'creencias'}).cat==='pa',
+  'El campo `evento` de la version anterior se ignora sin efecto');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

@@ -743,10 +743,16 @@ ok(delatan.length===0,'Ninguna declaración de creencia se autodelata'+
 /* La guía impresa del campamento no puede traer las 28 creencias: se imprime
    para estudiar lo que el examen del campamento pregunta. */
 const APP2=fs.readFileSync(FUENTE('app.js'),'utf8');
+/* La guia impresa ya no filtra creencias a mano: se arma por categoria, y
+   una categoria de Conexion Biblica no tiene creencias que excluir. Antes
+   llevaba un `c.ev!=='creencias'` pegado, que era el sintoma del modelo
+   mezclado. */
 const bloqueGuias=APP2.slice(APP2.indexOf('function imprimeGuiasTodo'),
-                             APP2.indexOf('function imprimeGuiasTodo')+1200);
-ok(/c\.ev!=='creencias'/.test(bloqueGuias),
-  'La guía impresa de los dos eventos excluye las creencias');
+                             APP2.indexOf('function imprimeGuiasTodo')+1400);
+ok(!/c\.ev!=='creencias'/.test(bloqueGuias),
+  'La guía impresa ya no necesita excluir las creencias a mano');
+ok(/CATS\[k\]\.act===ev/.test(APP2)||/c\.act===ev/.test(APP2),
+  'La guía impresa agrupa por actividad');
 
 
 /* ── PISOS DE CONTENIDO DE ESTUDIO ──────────────────────────────────────
@@ -877,30 +883,85 @@ ok(/OTRO_LIBRO/.test(APP_REF)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP_REF),
    encendido. Se vio en una captura; ningun test de los que habia lo miraba. */
 ok(/\[hidden\]\{display:none!important\}/.test(CSS.replace(/\s/g,'')),
   'El CSS hace que [hidden] gane sobre cualquier display de autor');
-/* Y que los tres elementos que se esconden asi sigan usando el atributo. */
-for(const id of ['aviso-nuevo','actividad','hoja'])
+/* Y que los elementos que se esconden asi sigan usando el atributo. */
+for(const id of ['aviso-nuevo','hoja'])
   ok(new RegExp('id="'+id+'"[^>]*hidden').test(CUERPO),
     'El elemento #'+id+' arranca oculto con el atributo hidden');
 
-/* ── LAS DOS ACTIVIDADES ────────────────────────────────────────────────
-   Son actividades distintas, con fechas y jurados distintos. capsDe() es el
-   punto unico del que cuelgan el banco, las tarjetas, la lista y los
-   alcances: filtrar ahi filtra la app entera. */
+/* ── EL MODELO: ACTIVIDAD × CATEGORIA ──────────────────────────────────
+   Habia TRES mecanismos para el mismo concepto: Conexion Biblica con un campo
+   `ev` de texto libre, la Devocion Matutina con claves propias, y las 28
+   creencias con un `S.evento` y un interruptor. Y `gm` declaraba a la vez
+   ev:'Conexion Biblica' y edad:'Otro evento': el dato se contradecia solo.
+   Ahora ACTIVIDADES es el dato de primer nivel y cada categoria declara a
+   cual pertenece. */
 const APP_ACT=fs.readFileSync(FUENTE('app.js'),'utf8');
-ok(/const capsCat=\(\)=>CAPS\.filter/.test(APP_ACT),
-  'capsCat() trae la categoria completa, para saber si hay dos actividades');
-ok(/const capsDe=\(\)=>\{[\s\S]*?dosActividades\(\)[\s\S]*?esCreencia\(c\.id\)===cr/.test(APP_ACT),
-  'capsDe() filtra por la actividad activa');
-ok(/const hayCreencias=\(\)=>capsCat\(\)/.test(APP_ACT),
-  'hayCreencias() mira la categoria completa, o el conmutador desapareceria al pasar a Daniel');
-ok(/alcance='todo'; cuantas=0; nivel=0;/.test(APP_ACT)&&/mazo=\[\]/.test(APP_ACT),
-  'Cambiar de actividad resetea el material y el mazo');
-/* El alcance «creencias» salio del selector de material: ahora es el
-   conmutador quien decide, y tenerlo en los dos sitios confundia. */
-ok(!/'creencias','Solo En esto creemos/.test(APP_ACT),
-  'El selector de material ya no ofrece «Solo En esto creemos»');
-ok(/if\(x\.evento==='creencias'\|\|x\.evento==='biblia'\)/.test(APP_ACT),
-  'normalizar() sanea la actividad guardada');
+const { CATS: CATS_APP, ACTIVIDADES: ACTS_APP } = (() => {
+  /* Se leen del fuente evaluando solo esos dos bloques: son datos, no logica,
+     y asi la prueba no depende de montar la app entera. */
+  const bloque=APP_ACT.slice(APP_ACT.indexOf('const ACTIVIDADES={'),
+                             APP_ACT.indexOf('const ACT_DE='));
+  return new Function(bloque+'\nreturn {CATS,ACTIVIDADES};')();
+})();
+
+ok(Object.keys(ACTS_APP).length===3,'Hay tres actividades declaradas');
+ok(['cb','dm','ec'].every(a=>ACTS_APP[a]),'Las tres son cb, dm y ec');
+ok(Object.values(ACTS_APP).every(a=>a.nombre&&a.icono&&a.cuando&&a.que&&Array.isArray(a.cats)),
+  'Cada actividad dice su nombre, su icono, cuando es, que se estudia y sus categorias');
+
+/* Toda categoria pertenece a exactamente UNA actividad, y toda actividad
+   lista solo categorias que existen. Sin esto vuelven los huerfanos: `gm`
+   estaba en Conexion Biblica y decia «Otro evento» a la vez. */
+const catsSueltas=Object.keys(CATS_APP).filter(k=>
+  !Object.values(ACTS_APP).some(a=>a.cats.includes(k)));
+ok(catsSueltas.length===0,'Ninguna categoria queda fuera de una actividad'+
+  (catsSueltas.length?' — '+catsSueltas.join(', '):''));
+const catsFantasma=Object.values(ACTS_APP).flatMap(a=>a.cats).filter(k=>!CATS_APP[k]);
+ok(catsFantasma.length===0,'Ninguna actividad lista una categoria que no existe'+
+  (catsFantasma.length?' — '+catsFantasma.join(', '):''));
+const dobles=Object.keys(CATS_APP).filter(k=>
+  Object.values(ACTS_APP).filter(a=>a.cats.includes(k)).length>1);
+ok(dobles.length===0,'Ninguna categoria pertenece a dos actividades'+
+  (dobles.length?' — '+dobles.join(', '):''));
+ok(Object.keys(CATS_APP).every(k=>ACTS_APP[CATS_APP[k].act]),
+  'Cada categoria declara `act` y apunta a una actividad que existe');
+/* Y el campo `ev` de texto libre, que era la raiz del enredo, no vuelve. */
+ok(Object.values(CATS_APP).every(c=>!('ev' in c)),
+  'Ninguna categoria trae el viejo campo `ev` de texto libre');
+
+/* Las claves NO cambiaron, y eso es deliberado: hay progreso guardado en los
+   celulares y participantes en la base con estas mismas claves. Un rediseno
+   que las renombrara obligaria a migrar las dos cosas a 31 dias del
+   campamento. */
+for(const k of ['me','av','pa','gm','dm1','dm2'])
+  ok(!!CATS_APP[k],'La categoria `'+k+'` sigue existiendo con su clave de siempre');
+ok(!!CATS_APP.ec1&&!!CATS_APP.ec2,
+  'Y «En esto creemos» aporta ec1 y ec2 en vez de colgarse de pa y gm');
+
+/* El interruptor de la version anterior se retiro entero: era un cuarto
+   mecanismo para lo mismo. */
+for(const resto of ['S.evento','dosActividades','cambiaEvento','pintaActividad','capsDelEvento','capsCat'])
+  ok(!APP_ACT.includes(resto+'('),'No queda rastro de '+resto);
+/* capsDelEvento() existia SOLO para desmezclar. Con una categoria por
+   actividad, capsDe() ya trae lo correcto. */
+ok(/const capsDe=\(\)=>CAPS\.filter\(c=>c\.cats\.includes\(S\.cat\)\)/.test(APP_ACT),
+  'capsDe() volvio a ser un filtro simple por categoria');
+
+/* La bienvenida pregunta la actividad ANTES de la categoria. Al revés hacia
+   falta mapear cada edad a cada actividad a mano. */
+const posAct=APP_ACT.indexOf('function bvActividad'), posCat=APP_ACT.indexOf('function bvCategoria');
+ok(posAct>0&&posCat>posAct,'La bienvenida tiene el paso de actividad antes del de categoria');
+ok(/id="bv-acts"/.test(CUERPO)&&/id="bv-cats"/.test(CUERPO),
+  'Los dos pasos se generan desde el modelo, no escritos a mano en el HTML');
+ok(!/bvEdad\(|bvEvento\(/.test(APP_ACT),
+  'Ya no existen bvEdad ni bvEvento, que eran el mapeo edad→evento');
+
+/* El servidor acepta las nuevas SIN quitar ninguna de las viejas: hay filas
+   en la base con me, av y pa. */
+const API=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
+const validas=(API.match(/CATS_VALIDAS = \[([^\]]+)\]/)||[])[1]||'';
+for(const k of ['me','av','pa','gm','dm1','dm2','ec1','ec2'])
+  ok(validas.includes("'"+k+"'"),'El servidor acepta la categoria `'+k+'`');
 
 /* ── PARAR LA LECTURA EN AUDIO ──────────────────────────────────────────
    speechSynthesis es una cola global del navegador: no hay «parar este
