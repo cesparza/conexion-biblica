@@ -37,7 +37,8 @@ return {S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, lim
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
         ponNivel:v=>{nivel=v},
-        htmlVers, seccionLectura, refsTocables, VERS,
+        htmlHoja, seccionLectura, refsTocables, VERS,
+        capsCat, dosActividades, cambiaEvento, evento:()=>S.evento,
         DB:()=>DB, alumnos, cambiaAlumno, agregaAlumno, normalizarDB, ponNombre,
         esNuevo, bvSigue, bvEdad, bvEvento, bvPaso, ir,
         codigoResumen, codigoCompleto, leeCodigo, resumenDe, tarjetasDe,
@@ -530,13 +531,17 @@ A.ponCat('pa'); A.ponNivel(3); A.ponCuantas(60);
 A.ponAlcance('todo');
 ok(A.poolDe().length>0 && A.poolDe().every(q=>!/^cr\d\d$/.test(q.cap)),
   'Padres: el alcance «todo» NO trae ninguna de las 28 creencias');
-A.ponAlcance('creencias');
+/* Las creencias ya no son un alcance dentro del examen de Daniel: son una
+   ACTIVIDAD aparte. Se llega a ellas con el conmutador. */
+A.cambiaEvento('creencias'); A.ponAlcance('todo');
 const poolCr=A.poolDe();
 ok(poolCr.length>0 && poolCr.every(q=>/^cr\d\d$/.test(q.cap)),
-  'Padres: el alcance «creencias» trae SOLO creencias ('+poolCr.length+' preguntas)');
+  'Padres, en «En esto creemos»: el examen trae SOLO creencias ('+poolCr.length+' preguntas)');
 ok(new Set(poolCr.map(q=>q.cap)).size===28,'Están las 28 creencias, no menos');
-A.ponCat('gm'); A.ponAlcance('creencias');
+A.cambiaEvento('biblia');
+A.ponCat('gm'); A.cambiaEvento('creencias'); A.ponAlcance('todo');
 ok(A.poolDe().length===poolCr.length,'Guías Mayores tiene el mismo material de creencias');
+A.cambiaEvento('biblia');
 for(const cat of ['me','av']){
   A.ponCat(cat); A.ponAlcance('todo');
   ok(!A.capsDe().some(c=>/^cr\d\d$/.test(c.id)),
@@ -562,36 +567,43 @@ ok(CR.CR_TARJETAS.length>=56,'Las creencias traen '+CR.CR_TARJETAS.length+' tarj
    eventos dentro de la misma categoría. */
 
 /* 1. El alcance vive en el aparato y sobrevive al cambio de categoría.
-   «creencias» no existe en Aventureros: si no se revalida, el examen queda en
-   CERO preguntas y el desplegable muestra un valor que no está en su lista. */
-A.ponCat('pa'); A.ponAlcance('creencias'); A.pintaMenuEx();
-ok(A.alcanceActual()==='creencias','Padres conserva el alcance «creencias», que sí tiene');
-A.ponCat('av'); A.pintaMenuEx();
+   «pr» no existe en la matutina: si no se revalida, el examen queda en CERO
+   preguntas y el desplegable muestra un valor que no está en su lista.
+   Ojo: «creencias» ya NO es un alcance. Las 28 creencias pasaron a ser una
+   ACTIVIDAD aparte, con su conmutador, porque mezclarlas con Daniel dentro
+   del mismo selector de material era el problema de fondo. */
+A.ponCat('gm'); A.ponAlcance('pr'); A.pintaMenuEx();
+ok(A.alcanceActual()==='pr','Guías Mayores conserva el alcance «solo P&R», que sí tiene');
+A.ponCat('me'); A.pintaMenuEx();
 ok(A.alcanceActual()==='todo',
-  'Al pasar a Aventureros, un alcance que esa categoría no tiene vuelve a «todo»');
+  'Al pasar a Menores, un alcance que esa categoría no tiene vuelve a «todo»');
 A.ponCat('dm2'); A.ponAlcance('pr'); A.pintaMenuEx();
 ok(A.alcanceActual()==='todo','Y lo mismo con «solo P&R» en una categoría de matutina');
 A.ponCat('av'); A.ponAlcance('todo');
 
-/* 2. Los errores por repasar son del evento que se está practicando. Mezclarlos
-   daba un examen de errores con Daniel y doctrina juntos. */
-A.ponCat('pa'); A.ponAlcance('todo');
+/* 2. Los errores por repasar son de la ACTIVIDAD que se está practicando.
+   Mezclarlos daba un examen de errores con Daniel y doctrina juntos. Antes
+   esto colgaba del alcance; ahora del conmutador, que es donde de verdad se
+   decide en qué se está trabajando. */
+A.ponCat('pa'); A.cambiaEvento('biblia'); A.ponAlcance('todo');
 const unoDaniel=A.poolDe().find(q=>q.cap==='d1');
-A.ponAlcance('creencias');
+A.cambiaEvento('creencias'); A.ponAlcance('todo');
 const unaCreencia=A.poolDe()[0];
 A.ponFq(A.claveQ(unoDaniel),2); A.ponFq(A.claveQ(unaCreencia),2);
-ok(A.falladasDe().every(q=>/^cr\d\d$/.test(q.cap)),
-  'Con alcance «creencias», los errores por repasar son solo de creencias');
-A.ponAlcance('todo');
-ok(A.falladasDe().every(q=>!/^cr\d\d$/.test(q.cap))&&A.falladasDe().length>0,
-  'Con el alcance del campamento, los errores por repasar no traen creencias');
+ok(A.falladasDe().length>0&&A.falladasDe().every(q=>/^cr\d\d$/.test(q.cap)),
+  'En «En esto creemos», los errores por repasar son solo de creencias');
+A.cambiaEvento('biblia');
+ok(A.falladasDe().length>0&&A.falladasDe().every(q=>!/^cr\d\d$/.test(q.cap)),
+  'En «Conexión Bíblica», los errores por repasar no traen creencias');
 
 /* 3. Las cuentas de progreso del campamento son de 12 capítulos, no de 40.
    Con capsDe() la insignia «Lector completo» quedaba fuera de alcance para
    padres y consejeros: había que leerse también las 28 creencias. */
-A.ponCat('gm');
-ok(A.capsDelEvento().length===12 && A.capsDe().length===40,
-  'Guías Mayores: 12 capítulos del campamento de 40 cargados ('+A.capsDe().length+')');
+A.ponCat('gm'); A.cambiaEvento('biblia');
+/* capsCat() sigue trayendo los 40 cargados; capsDe() ahora trae solo los de
+   la actividad activa, que es justo el arreglo. */
+ok(A.capsDelEvento().length===12 && A.capsDe().length===12 && A.capsCat().length===40,
+  'Guías Mayores: 12 capítulos en la actividad de Daniel, de 40 cargados ('+A.capsCat().length+')');
 A.capsDelEvento().forEach(c=>{A.S().prog[c.id]=100;});
 A.modsDe().forEach(m=>{A.S().prog[m.id]=100;});
 A.revisaInsignias(0);
@@ -760,16 +772,31 @@ A.ponCat('av'); A.ponNivel(0); A.ponCuantas(0);
    btn.parentNode y la voz empezo a leer «Daniel 3:5 · RV1995» en vez del
    versiculo. No se ve en una captura: hay que mirar el texto que se manda a
    hablar. Estas pruebas fijan la estructura de la que depende el arreglo. */
-const hv=AV.htmlVers('d3',5,5);
+const hv=AV.htmlHoja('d3',5,5);
 const cuerpoV=(hv.match(/data-leer>([\s\S]*?)<\/div>/)||[])[1]||'';
 ok(cuerpoV.includes('que al oír el son de la bocina'),
-  'El bloque [data-leer] del panel trae el texto del versiculo');
+  'El bloque [data-leer] de la hoja trae el texto del versiculo');
 ok(!/RV1995/.test(cuerpoV),
   'El bloque [data-leer] NO trae la referencia (si la trae, la voz la lee)');
-ok(/class="vp-cab"[\s\S]*?btn-voz[\s\S]*?<\/div>\s*<div class="biblia" data-leer>/.test(hv),
-  'El boton de voz esta en la cabecera, hermano del bloque de texto');
+ok(/class="hoja-cab"[\s\S]*?btn-voz/.test(hv),
+  'El boton de voz esta en la cabecera de la hoja');
 ok((hv.match(/data-leer/g)||[]).length===1,
-  'Hay exactamente un [data-leer] por panel, o leeCerca no sabria cual tomar');
+  'Hay exactamente un [data-leer] en la hoja, o leeCerca no sabria cual tomar');
+/* La hoja no empuja el contenido, pero por eso tiene que poder cerrarse de
+   varias formas: el fondo, el asa y la X. Si solo tuviera una y fallara, la
+   nina se queda atrapada en el versiculo. */
+ok(/hoja-fondo[^>]*onclick="cierraHoja\(\)"/.test(hv),'El fondo de la hoja cierra');
+ok(/hoja-asa[^>]*onclick="cierraHoja\(\)"/.test(hv),'El asa cierra');
+ok(/hoja-x[^>]*onclick="cierraHoja\(\)"/.test(hv),'La X cierra');
+ok(/aria-modal="true"/.test(hv),'La hoja se anuncia como dialogo');
+/* Anterior y siguiente para recorrer sin cerrar, y desactivados en los
+   topes: Daniel 3 va del 1 al 30. */
+const h1=AV.htmlHoja('d3',1,1), h30=AV.htmlHoja('d3',30,30);
+ok(/hojaMueve\(-1\)"\s*disabled/.test(h1),'En el versiculo 1, «Anterior» esta desactivado');
+ok(/hojaMueve\(1\)"\s*disabled/.test(h30),'En el ultimo versiculo, «Siguiente» esta desactivado');
+ok(/hoja-cta">1 de 30</.test(h1),'La hoja dice en que versiculo va y cuantos hay');
+ok(!/disabled/.test(hv.match(/hojaMueve\(-1\)[^>]*/)[0]),
+  'En un versiculo del medio, «Anterior» esta activo');
 
 const sl=AV.seccionLectura('d3');
 const bloquesL=sl.split('class="lect-bl"').slice(1);
@@ -790,8 +817,54 @@ ok((bl1.match(/<p><span class="vn">/g)||[]).length===5,
 
 /* La clase .biblia es la que le pone la serif y el interlineado de lectura.
    Sin ella el texto biblico se ve igual que el de la app. */
-ok(/class="biblia"/.test(hv)&&/class="biblia"/.test(sl),
-  'El texto biblico lleva la clase .biblia en el panel y en la lectura');
+ok(/class="[^"]*\bbiblia\b/.test(hv)&&/class="[^"]*\bbiblia\b/.test(sl),
+  'El texto biblico lleva la clase .biblia en la hoja y en la lectura');
+
+
+/* ── LAS DOS ACTIVIDADES, SEPARADAS DE VERDAD ───────────────────────────
+   Antes solo el examen las separaba: la lista de Estudiar de un padre tenia
+   35 capitulos en un monton (4 Daniel + 3 P&R + 28 creencias) y la sesion de
+   tarjetas del dia mezclaba un versiculo de Daniel con una creencia. */
+const esCr=id=>/^cr\d\d$/.test(id);
+A.ponCat('me'); ok(!A.dosActividades(),'Menores no tiene conmutador: solo estudia Daniel');
+A.ponCat('av'); ok(!A.dosActividades(),'Aventureros no tiene conmutador');
+A.ponCat('dm1'); ok(!A.dosActividades(),'Devocion Matutina no tiene conmutador');
+
+for(const cat of ['pa','gm']){
+  A.ponCat(cat);
+  ok(A.dosActividades(),cat+': tiene las dos actividades, asi que lleva conmutador');
+  A.cambiaEvento('biblia');
+  ok(A.capsDe().every(c=>!esCr(c.id)),
+    cat+' en Conexion Biblica: ni un capitulo de creencias en la lista');
+  ok(A.tarjetasDe().every(t=>!esCr(t.cap)),
+    cat+' en Conexion Biblica: ni una tarjeta de creencias');
+  A.ponAlcance('todo');
+  ok(A.poolDe().length>0&&A.poolDe().every(q=>!esCr(q.cap)),
+    cat+' en Conexion Biblica: el examen no trae ni una creencia');
+  A.cambiaEvento('creencias');
+  ok(A.capsDe().length===28&&A.capsDe().every(c=>esCr(c.id)),
+    cat+' en En esto creemos: las 28 creencias y nada mas');
+  ok(A.tarjetasDe().every(t=>esCr(t.cap)),
+    cat+' en En esto creemos: solo tarjetas de creencias');
+  A.ponAlcance('todo');
+  ok(A.poolDe().length>0&&A.poolDe().every(q=>esCr(q.cap)),
+    cat+' en En esto creemos: el examen es solo de creencias');
+  A.cambiaEvento('biblia');
+}
+
+/* Cambiar de actividad resetea el material: un alcance de la otra («Solo
+   Profetas y Reyes» dentro de las creencias) dejaria el examen en cero. */
+A.ponCat('gm'); A.cambiaEvento('biblia'); A.ponAlcance('pr');
+A.cambiaEvento('creencias');
+ok(A.alcanceActual()==='todo','Al cambiar de actividad, el material vuelve a «todo»');
+ok(A.poolDe().length===84,'Y el examen de creencias tiene sus 84 preguntas');
+A.cambiaEvento('biblia');
+
+/* Un valor raro guardado no puede dejar la app sin capitulos. */
+ok(A.normalizar({cat:'gm',evento:'cualquier-cosa'}).evento==='biblia',
+  'Una actividad invalida en el estado guardado cae en Daniel');
+ok(A.normalizar({cat:'gm',evento:'creencias'}).evento==='creencias',
+  'Una actividad valida se respeta al cargar');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

@@ -30,7 +30,7 @@ const CLAVE='conexion-biblica-v4';
    NUEVO: el día en que se acertó por última vez. Se agrega como mapa aparte, y
    no cambiando la forma de `ft`, para que el progreso que ya está guardado en
    los celulares siga valiendo sin migración. */
-const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},act:{},links:{}};
+const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},act:{},evento:'biblia',links:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -56,6 +56,9 @@ function normalizar(x){
   if(!x||typeof x!=='object')return s;
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
   if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
+  /* La actividad activa. Solo dos valores posibles; cualquier otra cosa cae
+     en Daniel, que es la que sirve para el campamento del 9 de octubre. */
+  if(x.evento==='creencias'||x.evento==='biblia')s.evento=x.evento;
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
   if(Array.isArray(x.examenes))
@@ -365,6 +368,7 @@ function cambiaAlumno(id){
   marcaCat();pintaInicio();pintaCaps();
   try{document.getElementById('detalle').style.display='none';}catch(e){}
   ir('inicio');
+  pintaActividad();
 }
 
 function agregaAlumno(){
@@ -385,7 +389,25 @@ function borraAlumno(){
 }
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
+/* ── LAS DOS ACTIVIDADES SON COSAS DISTINTAS ─────────────────────────────
+   Padres y Guias Mayores participan en DOS actividades con el mismo perfil:
+   Conexion Biblica (Daniel y P&R) y En esto creemos (las 28 creencias). Antes
+   solo el EXAMEN las separaba: la lista de Estudiar mostraba 35 y 40
+   capitulos en un solo monton, y la sesion de tarjetas del dia mezclaba un
+   versiculo de Daniel con una creencia. Son actividades distintas, con
+   fechas y jurados distintos, y estudiarlas revueltas no le sirve a nadie.
+
+   capsCat() es todo lo que la categoria tiene cargado.
+   capsDe()  es lo de la categoria Y de la actividad activa.
+   De capsDe() cuelgan el banco, las tarjetas, la lista y los alcances, asi
+   que filtrar aqui filtra la app entera desde un solo punto. */
+const capsCat=()=>CAPS.filter(c=>c.cats.includes(S.cat));
+const capsDe=()=>{
+  const todos=capsCat();
+  if(!dosActividades())return todos;
+  const cr=S.evento==='creencias';
+  return todos.filter(c=>esCreencia(c.id)===cr);
+};
 /* Un capítulo `extra` se estudia pero no se examina.
    MECANISMO: `extra` era un booleano global y eso alcanzaba mientras el
    capítulo estuviera fuera del examen de TODOS. Con el reglamento nuevo no
@@ -467,6 +489,41 @@ function nivelRecomendado(){
 const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
 /* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
+/** Cambia de actividad y repinta todo. Se resetean el alcance y el mazo: un
+ *  alcance de la otra actividad («Solo Profetas y Reyes» dentro de las
+ *  creencias) dejaria el examen en cero preguntas sin decir por que. */
+function cambiaEvento(v){
+  if(v!=='biblia'&&v!=='creencias')return;
+  if(S.evento===v)return;
+  paraVoz();
+  S.evento=v;
+  alcance='todo'; cuantas=0; nivel=0;
+  mazo=[]; tjI=0; tjFiltro='hoy';
+  guardar();
+  pintaActividad();
+  if(typeof pintaCaps==='function')pintaCaps();
+  if(typeof pintaTarjetas==='function')pintaTarjetas();
+  if(typeof pintaMenuEx==='function')pintaMenuEx();
+  if(typeof pintaInicio==='function')pintaInicio();
+  if(typeof pintaLogros==='function')pintaLogros();
+  const d=document.getElementById('detalle');
+  if(d)d.innerHTML='';
+}
+
+/** Las dos pestanas. Solo se pintan cuando la categoria tiene las dos
+ *  actividades: para Menores, Aventureros y Devocion Matutina no existen. */
+function pintaActividad(){
+  const el=document.getElementById('actividad');
+  if(!el)return;
+  if(!dosActividades()){el.hidden=true;el.innerHTML='';return;}
+  el.hidden=false;
+  el.innerHTML=['biblia','creencias'].map(k=>
+    '<button type="button" class="act-b'+(S.evento===k?' on':'')+'"'+
+    ' aria-pressed="'+(S.evento===k?'true':'false')+'"'+
+    ' onclick="cambiaEvento(\''+k+'\')">'+
+    (k==='biblia'?'📘 ':'✝️ ')+NOMBRE_ACT[k]+'</button>').join('');
+}
+
 function ir(id){
   paraVoz();
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
@@ -488,6 +545,9 @@ function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();}
 function ponCat(c){
   S.cat=c;guardar();
   marcaCat();
+  /* El conmutador aparece o desaparece segun la categoria: un padre tiene las
+     dos actividades y una nina de Aventureros solo una. */
+  pintaActividad();
   pintaInicio();pintaCaps();
   document.getElementById('detalle').style.display='none';
 }
@@ -697,7 +757,11 @@ function pintaCaps(){
     '<div class="p" style="font-size:.7rem;color:var(--verde);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>').join('');
   document.getElementById('lista-caps').innerHTML=
-    '<div class="grupo" style="grid-column:1/-1">📘 Capítulos</div>'+caps+
+    /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
+       se lee como si fueran capitulos de la Biblia. */
+    '<div class="grupo" style="grid-column:1/-1">'+
+    (S.evento==='creencias'&&dosActividades()?'✝️ Las 28 creencias':'📘 Capítulos')+
+    '</div>'+caps+
     '<div class="grupo" style="grid-column:1/-1">🔎 Repaso general</div>'+mods;
 }
 
@@ -706,12 +770,6 @@ function pintaCaps(){
    una referencia tocable al lado de cada dato, y el capitulo completo
    desplegable arriba. La idea es no tener que salir de la seccion para
    comprobar de donde sale un dato. */
-
-/* Donde se abre el versiculo: despues del bloque mas cercano que lo
-   contenga. Se lista de lo mas pequeno a lo mas grande y closest() devuelve
-   el primero que coincida, asi que dentro de una tabla el panel sale DEBAJO
-   de la tabla y no rompe la fila. */
-const CAJA_V='li,p,.highlight-box,.warn-box,.verse-box,table,.sec';
 
 /* MECANISMO DEL REEMPLAZO, Y POR QUE VA EN DOS PASADAS
    El material ya trae 163 referencias escritas como «(2:41)», «(Daniel 2:38)»
@@ -765,43 +823,97 @@ function refsTocables(html,capId){
   }).join('');
 }
 
-/** Un versiculo o un rango. Cada versiculo en su propio parrafo y con el
- *  numero volado: asi se puede seguir con el dedo y no se lee como un muro. */
-function htmlVers(cid,de,hasta){
-  const n=cid.replace('d','');
-  const partes=[];
-  for(let i=de;i<=hasta;i++)
-    if(VERS[cid]&&VERS[cid][i])
-      partes.push('<p><span class="vn">'+i+'</span>'+esc(VERS[cid][i])+'</p>');
-  if(!partes.length)return '';
-  const ref='Daniel '+n+':'+de+(hasta>de?'-'+hasta:'');
-  return '<div class="vpanel" data-vid="'+cid+'.'+de+'.'+hasta+'">'+
-    '<div class="vp-cab"><span class="vp-ref">'+ref+' · RV1995</span>'+
-    (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button>':'')+
-    '</div><div class="biblia" data-leer>'+partes.join('')+'</div></div>';
+/* ── LA HOJA DEL VERSICULO ───────────────────────────────────────────────
+   POR QUE UNA HOJA Y NO UN PANEL EN LINEA
+   El panel en linea empujaba el contenido: el versiculo aparecia y todo lo de
+   abajo bajaba, asi que en una lista de seis puntos se perdia el renglon que
+   se estaba leyendo. Un modal centrado no empuja, pero tapa el dato, que era
+   justo lo que se queria ver al lado.
+   La hoja sube desde abajo, cubre la mitad inferior y deja a la vista la
+   parte de arriba, donde esta el dato. Y como no toca el flujo, se puede
+   abrir y cerrar diez veces sin mover el texto ni un pixel.
+
+   Ademas permite algo que el panel no: pasar al versiculo de al lado sin
+   cerrar, que es como se lee una Biblia de verdad. */
+let hojaCid=null, hojaDe=0, hojaHasta=0;
+
+function verVers(btn,cid,de,hasta){
+  abreHoja(cid,de,hasta);
 }
 
-/* UNO A LA VEZ. Tocar la misma referencia cierra, y tocar otra mueve el panel
-   en vez de abrir un segundo. Con 47 referencias en Daniel 2, dejar todas
-   abiertas convierte la seccion en una lista de versiculos y se pierde el
-   hilo del estudio, que es justo lo que se queria evitar. */
-function verVers(btn,cid,de,hasta){
-  const caja=(btn.closest?btn.closest(CAJA_V):null)||btn.parentNode;
-  if(!caja||!caja.parentNode)return;
-  const vid=cid+'.'+de+'.'+hasta;
-  const sig=caja.nextElementSibling;
-  const mismo=sig&&sig.classList&&sig.classList.contains('vpanel')&&
-              sig.getAttribute('data-vid')===vid;
-  const det=document.getElementById('detalle');
-  if(det&&det.querySelectorAll)
-    [...det.querySelectorAll('.vpanel')].forEach(x=>x.remove());
-  if(mismo)return;
-  const html=htmlVers(cid,de,hasta);
-  if(!html)return;
-  const tmp=document.createElement('div');
-  tmp.innerHTML=html;
-  caja.parentNode.insertBefore(tmp.firstChild,caja.nextSibling);
+function abreHoja(cid,de,hasta){
+  if(typeof VERS==='undefined'||!VERS[cid])return;
+  hojaCid=cid; hojaDe=de; hojaHasta=hasta||de;
+  const h=document.getElementById('hoja');
+  if(!h)return;
+  h.innerHTML=htmlHoja();
+  h.hidden=false;
+  /* El translate arranca abajo y la clase lo sube. Hay que dejar pasar un
+     cuadro entre quitar [hidden] y poner la clase, o el navegador aplica los
+     dos cambios juntos y la hoja aparece de golpe, sin subir. */
+  if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>h.classList.add('abierta'));
+  else h.classList.add('abierta');
 }
+
+function cierraHoja(){
+  paraVoz();
+  const h=document.getElementById('hoja');
+  if(!h)return;
+  h.classList.remove('abierta');
+  hojaCid=null;
+  /* Se espera a que termine de bajar antes de esconderla: con [hidden] de
+     una, desaparece de golpe y no se ve el gesto de cierre. */
+  setTimeout(()=>{if(!hojaCid){h.hidden=true;h.innerHTML='';}},220);
+}
+
+/** Pasa al versiculo anterior o siguiente sin cerrar la hoja. Se mueve de a
+ *  uno y se queda en los topes del capitulo. */
+function hojaMueve(d){
+  if(!hojaCid)return;
+  const nums=Object.keys(VERS[hojaCid]).map(Number).sort((a,b)=>a-b);
+  const min=nums[0], max=nums[nums.length-1];
+  const rango=hojaHasta-hojaDe;
+  let de=hojaDe+d;
+  if(de<min||de+rango>max)return;
+  paraVoz();
+  hojaDe=de; hojaHasta=de+rango;
+  const h=document.getElementById('hoja');
+  if(h)h.innerHTML=htmlHoja();
+}
+
+function htmlHoja(cid,de,hasta){
+  cid=cid||hojaCid; de=de||hojaDe; hasta=hasta||hojaHasta;
+  if(!cid||typeof VERS==='undefined'||!VERS[cid])return '';
+  const n=cid.replace('d','');
+  const nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
+  const min=nums[0], max=nums[nums.length-1];
+  const cap=buscaItem(cid);
+  const partes=[];
+  for(let i=de;i<=hasta;i++)
+    if(VERS[cid][i])partes.push('<p><span class="vn">'+i+'</span>'+esc(VERS[cid][i])+'</p>');
+  const ref='Daniel '+n+':'+de+(hasta>de?'-'+hasta:'');
+  return '<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="'+ref+'">'+
+    '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-cab">'+
+      '<div><div class="hoja-ref">'+ref+' · RV1995</div>'+
+      '<div class="hoja-sub">'+esc(cap?cap.sub:'')+'</div></div>'+
+      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button>':'')+
+      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
+    '</div>'+
+    '<div class="hoja-txt biblia" data-leer>'+partes.join('')+'</div>'+
+    '<div class="hoja-pie">'+
+      '<button type="button" class="hoja-nav" onclick="hojaMueve(-1)"'+
+        (de<=min?' disabled':'')+' aria-label="Versículo anterior">‹ Anterior</button>'+
+      '<span class="hoja-cta">'+de+(hasta>de?'-'+hasta:'')+' de '+max+'</span>'+
+      '<button type="button" class="hoja-nav" onclick="hojaMueve(1)"'+
+        (hasta>=max?' disabled':'')+' aria-label="Versículo siguiente">Siguiente ›</button>'+
+    '</div></div>';
+}
+
+/* Escape cierra, como cualquier hoja o modal del sistema. */
+if(typeof document!=='undefined'&&document.addEventListener)
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&hojaCid)cierraHoja();});
 
 /* El capitulo completo, en bloques de cinco versiculos con su propio boton
    de voz: uno solo leeria los 49 de corrido, que no sirve para memorizar, y
@@ -959,7 +1071,7 @@ function leeCerca(btn){
      manda a hablar; en una captura no se ve. */
   let base=btn.closest?btn.closest('[data-leer]'):null;
   if(!base&&btn.closest){
-    const caja=btn.closest('.vpanel,.lect-bl,.sec');
+    const caja=btn.closest('.hoja-caja,.lect-bl,.sec');
     if(caja&&caja.querySelector)base=caja.querySelector('[data-leer]');
   }
   if(!base)base=btn.parentNode;
@@ -1149,15 +1261,20 @@ let alcance='todo',cuantas=0,nivel=0;
 /* Los errores por repasar, del MISMO evento que se está practicando. Sin este
    filtro, un examen de errores de Padres mezclaba Daniel con doctrina, que es
    justo lo que el reglamento separa. */
-const falladasDe=()=>{
-  const cr=alcance==='creencias';
-  return bancoDe().filter(q=>esCreencia(q.cap)===cr&&(S.fq[claveQ(q)]||{}).m>0);
-};
+/* Los errores que se repasan son los de la ACTIVIDAD activa. Antes esto
+   colgaba del alcance del examen; ahora cuelga del conmutador, que es donde
+   de verdad se decide en que se esta trabajando. bancoDe() ya viene filtrado,
+   asi que basta con mirar los fallados. */
+const falladasDe=()=>bancoDe().filter(q=>(S.fq[claveQ(q)]||{}).m>0);
 
 /* Preguntas disponibles según categoría + alcance elegido. */
 function poolDe(){
   const b=bancoDe();
-  if(alcance==='todo')return b.filter(q=>!esCreencia(q.cap));
+  /* «todo» es todo lo de la ACTIVIDAD activa, no todo lo cargado. El filtro
+     de creencias ya lo hizo capsDe(); dejarlo aqui tambien vaciaria el examen
+     de las 28 creencias. La garantia sigue en pie por otro camino: con la
+     actividad en Daniel, el banco no tiene ni una creencia. */
+  if(alcance==='todo')return b;
   if(alcance==='creencias')return b.filter(q=>esCreencia(q.cap));
   if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
@@ -1174,7 +1291,15 @@ const esMatutina=()=>CAT().ev==='Devoción Matutina';
    entran al alcance «todo»: si entraran, el examen del campamento mezclaría
    Daniel con doctrina y no correspondería a ninguna de las dos actividades. */
 const esCreencia=id=>/^cr\d\d$/.test(id);
-const hayCreencias=()=>capsDe().some(c=>esCreencia(c.id));
+const hayCreencias=()=>capsCat().some(c=>esCreencia(c.id));
+/* El conmutador solo tiene sentido cuando de verdad hay dos: Menores y
+   Aventureros no tienen creencias, y la Devocion Matutina es otra categoria.
+   Para ellas la app se ve igual que antes, sin pestanas de mas. */
+const dosActividades=()=>{
+  const todos=capsCat();
+  return todos.some(c=>esCreencia(c.id))&&todos.some(c=>!esCreencia(c.id));
+};
+const NOMBRE_ACT={biblia:'Conexión Bíblica',creencias:'En esto creemos'};
 
 /* Los capítulos del evento que se está estudiando. capsDe() trae TODO lo que la
    categoría tiene cargado, y para padres y consejeros eso son 12 capítulos del
@@ -1189,8 +1314,7 @@ const capsDelEvento=()=>capsDe().filter(c=>!esCreencia(c.id));
 function gruposEx(){
   const cand=esMatutina()
     ?[['q1','Solo la primera quincena (1 al 15)'],['q2','Solo la segunda quincena (16 en adelante)']]
-    :[['biblia','Solo el libro de Daniel'],['pr','Solo Profetas y Reyes'],
-      ['creencias','Solo En esto creemos (28 creencias)']];
+    :[['biblia','Solo el libro de Daniel'],['pr','Solo Profetas y Reyes']];
   const prev=alcance,out=[];
   try{
     for(const g of cand){alcance=g[0];if(poolDe().length)out.push(g);}
@@ -2403,6 +2527,7 @@ function ponCatBV(c){S.cat=c;guardar();}
 
 function bvTermina(){
   marcaCat();
+  pintaActividad();
   ir('inicio');
   const id=document.getElementById('ident');
   if(id)id.open=false;
@@ -2411,7 +2536,7 @@ function bvTermina(){
 
 /* ───────── arranque ───────── */
 try{
-  pintaLogo();marcaCat();pintaInicio();
+  pintaLogo();marcaCat();pintaActividad();pintaInicio();
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
 }catch(e){console.error(e);}
 

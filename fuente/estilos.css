@@ -4,6 +4,15 @@
   --gris:#6b7280; --r:16px; --sh:0 4px 20px rgba(0,0,0,.10);
 }
 *{box-sizing:border-box;margin:0;padding:0}
+/* EL ATRIBUTO hidden GANA SIEMPRE.
+   La hoja de estilos del navegador le da [hidden] un display:none de baja
+   prioridad, asi que CUALQUIER regla de autor con display lo pisa. Paso de
+   verdad: .av-nuevo{display:flex} dejaba la franja de «Hay material nuevo»
+   visible en todo momento, aunque el HTML dijera hidden y el JS nunca la
+   hubiera encendido. Se descubrio mirando una captura, no un test.
+   Con esta regla, esconder algo con el atributo funciona sin tener que
+   acordarse de escribir la excepcion en cada componente. */
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
 
@@ -44,6 +53,18 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .nav-t{border-top:1px solid rgba(255,255,255,.15)}
   .nav-t button{min-height:50px}
 }
+
+/* ═══ LAS DOS ACTIVIDADES ═══
+   Un cambio de contexto tiene que verse como tal: dos pestanas anchas, la
+   activa con el fondo de marca. No es un filtro mas dentro de una pantalla,
+   es en que actividad esta trabajando la persona. */
+.actividad{display:flex;gap:0;background:#e8edf3;border-bottom:1px solid #d7dee7}
+.act-b{flex:1;min-width:0;background:none;border:0;border-bottom:3px solid transparent;
+  padding:.7rem .4rem;font-family:inherit;font-size:.82rem;font-weight:700;
+  color:var(--gris);cursor:pointer;min-height:46px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.act-b.on{color:var(--azul);background:var(--bg);border-bottom-color:var(--naranja)}
+@media print{.actividad{display:none!important}}
 
 .pantalla{display:none;padding:1.5rem 1rem;max-width:880px;margin:0 auto}
 .pantalla.on{display:block}
@@ -160,16 +181,46 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .vref:hover{color:var(--azul);text-decoration-color:var(--azul)}
 .vref:active{background:rgba(46,139,192,.14)}
 
-/* ═══ EL PANEL DE UN VERSICULO ═══
-   Menos caja de app y mas cita: sin borde alrededor, una barra a la izquierda
-   y un fondo apenas tenido. Lo que tiene que resaltar es el texto, no el
-   recuadro. */
-.vpanel{background:#f7fbfe;border-left:4px solid var(--cielo);
-  border-radius:0 10px 10px 0;padding:.75rem .95rem;margin:.7rem 0 1rem}
-.vp-cab{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
-  margin-bottom:.45rem}
-.vp-ref{font-size:.68rem;font-weight:800;color:var(--azul);
+/* ═══ LA HOJA DEL VERSICULO ═══
+   Sube desde abajo y cubre la mitad inferior. No empuja el contenido, asi que
+   el dato que se estaba leyendo sigue en su sitio, y se puede abrir y cerrar
+   sin mover el texto. Va por encima de la barra de navegacion. */
+.hoja{position:fixed;inset:0;z-index:200;display:block}
+.hoja-fondo{position:absolute;inset:0;background:rgba(20,28,40,.45);
+  opacity:0;transition:opacity .2s ease}
+.hoja.abierta .hoja-fondo{opacity:1}
+.hoja-caja{position:absolute;left:0;right:0;bottom:0;background:#fff;
+  border-radius:18px 18px 0 0;box-shadow:0 -6px 30px rgba(0,0,0,.25);
+  max-height:72vh;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .22s ease;
+  /* El iPhone tiene barra de gestos abajo: sin esto, el pie de la hoja queda
+     debajo de ella y no se alcanza a tocar. */
+  padding-bottom:env(safe-area-inset-bottom,0)}
+.hoja.abierta .hoja-caja{transform:translateY(0)}
+/* El asa: dice «esto se cierra hacia abajo» sin ponerle texto. */
+.hoja-asa{width:42px;height:5px;border-radius:3px;background:#d3d9e2;
+  margin:.55rem auto .2rem;flex:0 0 auto;cursor:pointer}
+.hoja-cab{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem .95rem .6rem;
+  border-bottom:1px solid #eef0f4;flex:0 0 auto}
+.hoja-cab>div:first-child{flex:1;min-width:0}
+.hoja-ref{font-size:.72rem;font-weight:800;color:var(--azul);
   text-transform:uppercase;letter-spacing:.6px}
+.hoja-sub{font-size:.78rem;color:var(--gris);margin-top:1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hoja-x{background:none;border:0;color:var(--gris);font-size:1.05rem;
+  cursor:pointer;padding:4px 6px;line-height:1;font-family:inherit;flex:0 0 auto}
+/* El texto tiene su propio scroll: un versiculo largo no puede empujar el pie
+   fuera de la pantalla, porque ahi estan los botones para pasar al siguiente. */
+.hoja-txt{padding:.85rem .95rem;overflow-y:auto;flex:1 1 auto;
+  -webkit-overflow-scrolling:touch}
+.hoja-pie{display:flex;align-items:center;gap:.5rem;padding:.6rem .95rem .85rem;
+  border-top:1px solid #eef0f4;flex:0 0 auto}
+.hoja-nav{background:#f4f7fb;border:2px solid #e5e7eb;border-radius:9px;
+  padding:.45rem .7rem;font-family:inherit;font-size:.8rem;font-weight:700;
+  color:var(--azul);cursor:pointer;min-height:40px;flex:0 0 auto}
+.hoja-nav:disabled{opacity:.4;cursor:default}
+.hoja-cta{flex:1;text-align:center;font-size:.74rem;font-weight:700;color:var(--gris)}
+@media print{.hoja{display:none!important}}
 
 /* ═══ LEER EL CAPITULO COMPLETO ═══ */
 .lect{border:2px solid #e5e7eb;border-radius:12px;margin-bottom:1.3rem;background:#fff}

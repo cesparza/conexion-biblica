@@ -869,6 +869,39 @@ ok(/Daniel\\\\s\+\(\\\\d\{1,2\}\)/.test(APP_REF.replace(/\s/g,''))||
 ok(/OTRO_LIBRO/.test(APP_REF)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP_REF),
   'La segunda pasada solo actua dentro de un capitulo de Daniel y descarta otros libros');
 
+/* ── EL ATRIBUTO hidden TIENE QUE GANAR ─────────────────────────────────
+   La hoja del navegador le da a [hidden] un display:none de baja prioridad,
+   asi que cualquier regla de autor con display lo pisa. Paso de verdad:
+   .av-nuevo{display:flex} dejaba la franja de «Hay material nuevo» visible en
+   todo momento, aunque el HTML dijera hidden y el JS nunca la hubiera
+   encendido. Se vio en una captura; ningun test de los que habia lo miraba. */
+ok(/\[hidden\]\{display:none!important\}/.test(CSS.replace(/\s/g,'')),
+  'El CSS hace que [hidden] gane sobre cualquier display de autor');
+/* Y que los tres elementos que se esconden asi sigan usando el atributo. */
+for(const id of ['aviso-nuevo','actividad','hoja'])
+  ok(new RegExp('id="'+id+'"[^>]*hidden').test(CUERPO),
+    'El elemento #'+id+' arranca oculto con el atributo hidden');
+
+/* ── LAS DOS ACTIVIDADES ────────────────────────────────────────────────
+   Son actividades distintas, con fechas y jurados distintos. capsDe() es el
+   punto unico del que cuelgan el banco, las tarjetas, la lista y los
+   alcances: filtrar ahi filtra la app entera. */
+const APP_ACT=fs.readFileSync(FUENTE('app.js'),'utf8');
+ok(/const capsCat=\(\)=>CAPS\.filter/.test(APP_ACT),
+  'capsCat() trae la categoria completa, para saber si hay dos actividades');
+ok(/const capsDe=\(\)=>\{[\s\S]*?dosActividades\(\)[\s\S]*?esCreencia\(c\.id\)===cr/.test(APP_ACT),
+  'capsDe() filtra por la actividad activa');
+ok(/const hayCreencias=\(\)=>capsCat\(\)/.test(APP_ACT),
+  'hayCreencias() mira la categoria completa, o el conmutador desapareceria al pasar a Daniel');
+ok(/alcance='todo'; cuantas=0; nivel=0;/.test(APP_ACT)&&/mazo=\[\]/.test(APP_ACT),
+  'Cambiar de actividad resetea el material y el mazo');
+/* El alcance «creencias» salio del selector de material: ahora es el
+   conmutador quien decide, y tenerlo en los dos sitios confundia. */
+ok(!/'creencias','Solo En esto creemos/.test(APP_ACT),
+  'El selector de material ya no ofrece «Solo En esto creemos»');
+ok(/if\(x\.evento==='creencias'\|\|x\.evento==='biblia'\)/.test(APP_ACT),
+  'normalizar() sanea la actividad guardada');
+
 /* ── PARAR LA LECTURA EN AUDIO ──────────────────────────────────────────
    speechSynthesis es una cola global del navegador: no hay «parar este
    audio», solo cancel(), que vacia todo. Antes no habia forma de parar: se

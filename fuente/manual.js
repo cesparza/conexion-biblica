@@ -106,17 +106,51 @@ const MANUAL = [
     sirven cuando ya leíste todo.</p>` },
   ]},
 
+{ id:'a-actividades', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Las dos actividades, separadas',
+  d:'Conexión Bíblica y En esto creemos no se mezclan',
+  secs:[
+  { t:'Para quién aparece',
+    h:`<p>Los <strong>padres, consejeros y Guías Mayores</strong> participan en
+    <strong>dos actividades distintas</strong>: Conexión Bíblica, que es Daniel
+    y Profetas y Reyes, y En esto creemos, que son las 28 creencias.</p>
+    <p>Por eso arriba hay <strong>dos pestañas</strong>. Los niños de 4 a 6 y
+    de 7 a 9 no las ven, porque ellos solo tienen una actividad.</p>` },
+  { t:'Qué cambia al tocar una',
+    h:`<p><strong>Toda la app.</strong> Lo que ves en Estudiar, las tarjetas
+    que te tocan hoy, el examen y tus logros son de la actividad que tengas
+    puesta.</p>
+    <p>Son dos actividades con <strong>fechas y jurados distintos</strong>, así
+    que estudiarlas revueltas no sirve. Antes, un papá veía 35 capítulos en una
+    sola lista y la sesión de tarjetas del día le mezclaba un versículo de
+    Daniel con una creencia.</p>` },
+  { t:'Se queda donde la dejaste',
+    h:`<p>La app <strong>recuerda en qué actividad estabas</strong>, así que al
+    volver sigues ahí. Cambiar de una a otra <strong>no borra nada</strong>: tu
+    progreso de las dos se guarda por separado y siempre está.</p>
+    <p>Lo único que se reinicia al cambiar es el <strong>examen que tenías
+    armado</strong>, porque un material de la otra actividad dejaría el examen
+    en cero preguntas.</p>` },
+  ]},
+
 { id:'a-versiculos', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Ver el versículo sin salir del estudio',
   d:'Toca cualquier número azul, o abre el capítulo completo',
   secs:[
   { t:'Los números azules se tocan',
     h:`<p>En el estudio, cada vez que dice de dónde sale un dato aparece algo
-    como <strong>(2:41)</strong> en azul y subrayado con puntitos. Eso
-    <strong>se toca</strong>, y el versículo se abre ahí mismo, justo debajo,
-    sin que tengas que salir de lo que estabas leyendo.</p>
-    <p>Toca otra vez el mismo número y se cierra. Si tocas otro, el versículo
-    se mueve a ese: <strong>siempre hay uno solo abierto</strong>, para que la
-    página no se llene.</p>` },
+    como <strong>(2:41)</strong> en azul y subrayado. Eso <strong>se
+    toca</strong>, y el versículo <strong>sube desde abajo</strong> en una hoja
+    que cubre la mitad de la pantalla.</p>
+    <p>Lo que estabas leyendo <strong>no se mueve</strong> y sigue a la vista
+    arriba, así que puedes comparar el dato con el versículo. Se cierra
+    tocando afuera, con la <strong>✕</strong> o con la rayita de arriba.</p>` },
+
+  { t:'Pasar al versículo de al lado',
+    h:`<p>Abajo de la hoja hay <strong>‹ Anterior</strong> y <strong>Siguiente
+    ›</strong>, y en el medio dice en qué versículo vas: por ejemplo
+    <strong>5 de 30</strong>.</p>
+    <p>Sirve para leer el pedazo completo sin cerrar y volver a abrir, como
+    cuando pasas la hoja de una Biblia. En el primero y en el último el botón
+    que no aplica se ve apagado.</p>` },
   { t:'Escucharlo, y pararlo',
     h:`<p>Cada bloque de versículos tiene un botón <strong>🔊</strong>. Tócalo
     y la app lee en voz alta.</p>
