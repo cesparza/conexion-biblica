@@ -790,6 +790,69 @@ const sinBase=Object.entries(PAREJA).filter(([id,dan])=>
 ok(sinBase.length===0,'Cada capitulo de P&R dice en que capitulo de Daniel se basa'+
   (sinBase.length?' — falta en '+sinBase.join(', '):''));
 
+/* ── EL SELECT QUE SE SALIA DEL ANCHO EN EL IPHONE ──────────────────────
+   MECANISMO. Un elemento dentro de un flex tiene min-width:auto, o sea que no
+   puede encogerse por debajo del ancho intrinseco de su contenido. El ancho
+   intrinseco de un <select> es el de su opcion mas larga. Las opciones por
+   capitulo llevaban el subtitulo completo y llegaban a 63 caracteres
+   («26 de octubre — La heroina que ayudo a un nino con sus palabras»): unos
+   470px. El select se plantaba ahi, empujaba la barra fuera de la pantalla, y
+   de paso comprimia el contador hasta partirlo en tres lineas.
+
+   POR QUE ESTAS PRUEBAS SON ESTATICAS. El recorrido con iframe en Chrome de
+   macOS NO reproduce este bug: Chrome de escritorio encoge el select y Safari
+   de iOS respeta su ancho intrinseco. Se comprobo corriendo la auditoria de
+   ancho contra la version ANTERIOR, la que si desbordaba en el iPhone de
+   Camilo, y reporto «sin desbordes». Asi que lo unico que se puede sostener
+   desde aca son las tres capas del arreglo. */
+const CSS_TJ=CSS;
+/* Los tres eventos, porque el select de tarjetas ofrece los capitulos de la
+   categoria activa y las opciones mas largas son las de la matutina. */
+const MATC=require(path.join(RAIZ,'fuente','matutina.js'));
+const CREC=require(path.join(RAIZ,'fuente','creencias.js'));
+const CAPS_TODOS=[...CAPS,...MATC.MAT_CAPS,...CREC.CR_CAPS];
+
+ok(/#tj-filtro\{[^}]*min-width:0/.test(CSS_TJ),
+  'El select de tarjetas declara min-width:0 (sin eso no puede encogerse en un flex)');
+ok(/#tj-filtro\{[^}]*max-width:100%/.test(CSS_TJ),
+  'El select de tarjetas declara max-width:100%');
+ok(/\.tj-barra\{flex-direction:column|\.tj-barra\s*\{\s*flex-direction:\s*column/.test(
+     CSS_TJ.replace(/\s*\n\s*/g,'')),
+  'En pantalla angosta la barra de tarjetas pasa a columna, y el select va en su propia fila');
+
+/* Los estilos del select tienen que vivir en el CSS, no en un style= del
+   HTML: un estilo inline gana sobre el media query, asi que el arreglo de
+   telefono no lo alcanzaria. */
+const selectsInline=[...CUERPO.matchAll(/<select[^>]*>/g)]
+  .map(m=>m[0]).filter(s=>/\sstyle=/.test(s));
+ok(selectsInline.length===0,
+  'Ningun <select> del HTML lleva estilos inline (un style= gana sobre el media query)'+
+  (selectsInline.length?' — '+selectsInline.map(s=>(s.match(/id="([^"]+)"/)||[,'?'])[1]).join(', '):''));
+
+/* Y la capa que no depende del motor: que ninguna opcion sea tan larga que no
+   quepa en una fila de telefono. A 0,82rem, 40 caracteres son unos 260px mas
+   el padding y la flecha; una fila completa a 390px da unos 358px. */
+const TOPE_CH=40;
+const largas=CAPS_TODOS.map(c=>{
+  const sub=String(c.sub||'');
+  if(!sub)return c.label;
+  const corto=sub.length>22?sub.slice(0,21).replace(/[\s—–\-,;:]+$/,'')+'…':sub;
+  return c.label+' — '+corto;
+}).filter(s=>s.length>TOPE_CH);
+ok(largas.length===0,
+  `Ninguna opcion del select de tarjetas pasa de ${TOPE_CH} caracteres`+
+  (largas.length?' — '+largas.slice(0,3).map(s=>s.length+': '+s).join(' / '):''));
+
+/* Y que el recorte no deje un guion colgando: «El heroe se enamora —…» se lee
+   como un error de la app, no como un texto cortado. */
+const colgando=CAPS_TODOS.map(c=>{
+  const sub=String(c.sub||'');
+  if(!sub||sub.length<=22)return '';
+  return sub.slice(0,21).replace(/[\s—–\-,;:]+$/,'')+'…';
+}).filter(s=>/[\s—–\-,;:]…$/.test(s));
+ok(colgando.length===0,'Ningun subtitulo recortado deja un guion o una coma colgando'+
+  (colgando.length?' — '+colgando.slice(0,3).join(' / '):''));
+
 /* ── CUANTOS VERSICULOS TRAE CADA CAPITULO ───────────────────────────────
    El numero sale de files/rv1995-daniel-N.txt, el texto RV1995 verificado.
    Sirve para dos cosas: el estudiante sabe cuanto va a leer antes de abrir el

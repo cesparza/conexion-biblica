@@ -249,7 +249,7 @@
   <div class="tj-zona">
     <div class="tj-barra">
       <span id="tj-pos"></span>
-      <select id="tj-filtro" onchange="filtraTj(this.value)" style="padding:.4rem .6rem;border:2px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.82rem;min-height:38px"></select>
+      <select id="tj-filtro" onchange="filtraTj(this.value)"></select>
     </div>
     <div class="prog-lin"><div id="tj-prog" style="width:0%"></div></div>
     <div class="tj" id="tj-carta" onclick="voltea()"></div>
@@ -259,7 +259,7 @@
       <button class="btn nar" id="tj-no" onclick="tjSabia(false)">🔁 Repasar</button>
       <button class="btn gho" id="tj-sig" onclick="tjSig()">Siguiente →</button>
     </div>
-    <div class="tj-btns"><button class="btn azul" onclick="tjBaraja()">🔀 Barajar de nuevo</button></div>
+    <div class="tj-btns tj-solo"><button class="btn azul" onclick="tjBaraja()">🔀 Barajar de nuevo</button></div>
     <p class="nota" id="tj-resumen" style="text-align:center"></p>
   </div>
 </div>

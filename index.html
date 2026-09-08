@@ -195,7 +195,44 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .tj .rev{font-size:1rem;color:var(--verde);font-weight:600;line-height:1.65}
 .tj .pista{position:absolute;bottom:.7rem;font-size:.7rem;color:var(--gris);font-weight:600}
 .tj-barra{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:.9rem 0;font-size:.83rem;color:var(--gris);font-weight:600}
+/* MECANISMO DEL DESBORDE QUE SE VIO EN EL IPHONE
+   Un elemento dentro de un flex tiene min-width:auto, o sea que NO puede
+   encogerse por debajo del ancho intrinseco de su contenido. El ancho
+   intrinseco de un <select> es el de su opcion mas larga, y aqui las opciones
+   por capitulo llegan a 63 caracteres («26 de octubre — La heroina que ayudo
+   a un nino con sus palabras»). El select se plantaba en unos 470px, empujaba
+   la barra fuera de la pantalla, y de paso comprimia el contador hasta
+   partirlo en tres lineas: «Tarjeta / 1 de / 25».
+   min-width:0 es lo unico que lo deja ceder. Medir el ancho no habria mostrado
+   nada raro: el select medía justo lo que su contenido pedía. */
+.tj-barra>span{flex:0 0 auto;white-space:nowrap}
+#tj-filtro{flex:1 1 auto;min-width:0;max-width:100%;padding:.4rem .6rem;
+  border:2px solid #e5e7eb;border-radius:8px;font-family:inherit;
+  font-size:.82rem;min-height:38px;background:#fff;color:var(--txt)}
+#tj-filtro:focus{border-color:var(--cielo);outline:none}
+/* En telefono el select va en su propia fila, a lo ancho: en la misma linea
+   que el contador queda tan angosto que no se alcanza a leer que filtro esta
+   puesto, y saber eso es justo para lo que sirve. */
+@media(max-width:620px){
+  .tj-barra{flex-direction:column;align-items:stretch;gap:.45rem}
+  .tj-barra>span{text-align:center}
+  #tj-filtro{width:100%}
+}
 .tj-btns{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:.9rem}
+/* En el telefono los cinco botones caian en tres filas desalineadas:
+   «Anterior | La sabia | Repasar», luego «Siguiente» solo y centrado, y
+   «Barajar» abajo. Con una rejilla de dos columnas quedan las dos acciones
+   arriba y la navegacion debajo, que es el orden en que se usan. El `order`
+   los reacomoda sin tocar el HTML, porque en el DOM van ant, si, no, sig. */
+@media(max-width:620px){
+  .tj-btns{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+  .tj-btns .btn{width:100%;margin:0}
+  #tj-si{order:1} #tj-no{order:2} #tj-ant{order:3} #tj-sig{order:4}
+  /* Barajar de nuevo vive en su propio .tj-btns y va a lo ancho. Se marca con
+     una clase en vez de :has(), que un iPhone viejo puede no entender: si la
+     regla no aplicara, el boton quedaria ocupando media fila. */
+  .tj-solo{grid-template-columns:1fr}
+}
 .prog-lin{height:7px;background:#e5e7eb;border-radius:5px;overflow:hidden;margin:.5rem 0}
 .prog-lin div{height:100%;background:var(--verde);transition:width .3s}
 .menu-ex{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
@@ -1331,7 +1368,7 @@ details.card summary::marker{content:''}
   <div class="tj-zona">
     <div class="tj-barra">
       <span id="tj-pos"></span>
-      <select id="tj-filtro" onchange="filtraTj(this.value)" style="padding:.4rem .6rem;border:2px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.82rem;min-height:38px"></select>
+      <select id="tj-filtro" onchange="filtraTj(this.value)"></select>
     </div>
     <div class="prog-lin"><div id="tj-prog" style="width:0%"></div></div>
     <div class="tj" id="tj-carta" onclick="voltea()"></div>
@@ -1341,7 +1378,7 @@ details.card summary::marker{content:''}
       <button class="btn nar" id="tj-no" onclick="tjSabia(false)">🔁 Repasar</button>
       <button class="btn gho" id="tj-sig" onclick="tjSig()">Siguiente →</button>
     </div>
-    <div class="tj-btns"><button class="btn azul" onclick="tjBaraja()">🔀 Barajar de nuevo</button></div>
+    <div class="tj-btns tj-solo"><button class="btn azul" onclick="tjBaraja()">🔀 Barajar de nuevo</button></div>
     <p class="nota" id="tj-resumen" style="text-align:center"></p>
   </div>
 </div>
@@ -15804,6 +15841,28 @@ const topeSesion=()=>Math.max(12,CAT().n);
 
 let mazo=[],tjI=0,tjVolteada=false,tjFiltro='hoy',tjSabidas=new Set();
 
+/* El texto de cada opcion se recorta a proposito. El ancho intrinseco de un
+   <select> es el de su opcion mas larga, y con el subtitulo completo la mas
+   larga llegaba a 63 caracteres («26 de octubre — La heroina que ayudo a un
+   nino con sus palabras»): unos 470px, que en un telefono no caben de
+   ninguna manera. Recortar el subtitulo baja el maximo a unos 37 caracteres,
+   que sí entran en los 358px de una fila completa a 390px.
+   Esto NO reemplaza el min-width:0 del CSS, lo complementa: aquel deja que el
+   select ceda, y esto hace que no tenga que ceder tanto. Son dos capas porque
+   Safari de iOS y Chrome de escritorio no tratan igual el ancho intrinseco de
+   un select, y el bug se vio en un iPhone. */
+const TOPE_OP=22;
+const opTj=c=>{
+  const sub=String(c.sub||'');
+  if(!sub)return c.label;
+  /* Al cortar se limpia el guion o la coma que quede colgando al final, o sale
+     «El heroe se enamora —…», que se lee como un error. */
+  const corto=sub.length>TOPE_OP
+    ? sub.slice(0,TOPE_OP-1).replace(/[\s—–\-,;:]+$/,'')+'…'
+    : sub;
+  return c.label+' — '+corto;
+};
+
 function pintaTarjetas(){
   const sel=document.getElementById('tj-filtro');
   const cs=capsDe();
@@ -15812,7 +15871,7 @@ function pintaTarjetas(){
   sel.innerHTML='<option value="hoy">🎯 La sesión de hoy ('+nHoy+')</option>'+
     '<option value="todas">Todos los capítulos ('+tarjetasDe().length+')</option>'+
     '<option value="dificiles">🔁 Solo por dominar ('+nDif+')</option>'+
-    cs.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
+    cs.map(c=>'<option value="'+c.id+'">'+esc(opTj(c))+'</option>').join('');
   sel.value=tjFiltro;
   if(!mazo.length)tjBaraja();
   else muestraTj();

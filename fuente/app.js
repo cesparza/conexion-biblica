@@ -817,6 +817,28 @@ const topeSesion=()=>Math.max(12,CAT().n);
 
 let mazo=[],tjI=0,tjVolteada=false,tjFiltro='hoy',tjSabidas=new Set();
 
+/* El texto de cada opcion se recorta a proposito. El ancho intrinseco de un
+   <select> es el de su opcion mas larga, y con el subtitulo completo la mas
+   larga llegaba a 63 caracteres («26 de octubre — La heroina que ayudo a un
+   nino con sus palabras»): unos 470px, que en un telefono no caben de
+   ninguna manera. Recortar el subtitulo baja el maximo a unos 37 caracteres,
+   que sí entran en los 358px de una fila completa a 390px.
+   Esto NO reemplaza el min-width:0 del CSS, lo complementa: aquel deja que el
+   select ceda, y esto hace que no tenga que ceder tanto. Son dos capas porque
+   Safari de iOS y Chrome de escritorio no tratan igual el ancho intrinseco de
+   un select, y el bug se vio en un iPhone. */
+const TOPE_OP=22;
+const opTj=c=>{
+  const sub=String(c.sub||'');
+  if(!sub)return c.label;
+  /* Al cortar se limpia el guion o la coma que quede colgando al final, o sale
+     «El heroe se enamora —…», que se lee como un error. */
+  const corto=sub.length>TOPE_OP
+    ? sub.slice(0,TOPE_OP-1).replace(/[\s—–\-,;:]+$/,'')+'…'
+    : sub;
+  return c.label+' — '+corto;
+};
+
 function pintaTarjetas(){
   const sel=document.getElementById('tj-filtro');
   const cs=capsDe();
@@ -825,7 +847,7 @@ function pintaTarjetas(){
   sel.innerHTML='<option value="hoy">🎯 La sesión de hoy ('+nHoy+')</option>'+
     '<option value="todas">Todos los capítulos ('+tarjetasDe().length+')</option>'+
     '<option value="dificiles">🔁 Solo por dominar ('+nDif+')</option>'+
-    cs.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
+    cs.map(c=>'<option value="'+c.id+'">'+esc(opTj(c))+'</option>').join('');
   sel.value=tjFiltro;
   if(!mazo.length)tjBaraja();
   else muestraTj();
