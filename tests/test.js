@@ -790,6 +790,85 @@ const sinBase=Object.entries(PAREJA).filter(([id,dan])=>
 ok(sinBase.length===0,'Cada capitulo de P&R dice en que capitulo de Daniel se basa'+
   (sinBase.length?' — falta en '+sinBase.join(', '):''));
 
+/* ── TODA CITA BIBLICA, EN CADA CORRIDA ─────────────────────────────────
+   Antes esto vivia solo en tools/citas.js, que necesita los .txt de files/ y
+   por lo tanto se corria cuando alguien se acordaba. Con fuente/biblia.js en
+   el repo se puede cotejar aqui, en cada corrida. Los dos niveles:
+     - esta prueba: el material coincide con biblia.js
+     - tools/citas.js: biblia.js coincide con el texto RV1995 de files/
+   Se colaron ocho errores de version en agosto y otros ocho en septiembre,
+   uno de ellos en la opcion marcada como CORRECTA de una pregunta. */
+const { VERS: BIBLIA } = require(path.join(RAIZ, 'fuente', 'biblia.js'));
+const BIB6 = ['d1','d2','d3','d4','d5','d6'];
+
+ok(BIB6.every(c=>BIBLIA[c]) && BIB6.reduce((a,c)=>a+Object.keys(BIBLIA[c]).length,0)===196,
+  'fuente/biblia.js trae los 196 versiculos de Daniel 1-6');
+/* Tres fuentes que tienen que decir lo mismo: el `vs` de cada capitulo, el
+   conteo que esta prueba usa para la cobertura, y los versiculos reales de
+   biblia.js. Si alguien cambia una sola, esto avisa. */
+ok(BIB6.every(c=>Object.keys(BIBLIA[c]).length===CAPS.find(x=>x.id===c).vs
+                 && Object.keys(BIBLIA[c]).length===VERS[c]),
+  'El `vs` declarado, el conteo de la cobertura y biblia.js coinciden en los seis');
+
+const normB = s => String(s).replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ')
+  .replace(/[«»“”]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+const TEXTO = normB(BIB6.map(c=>Object.keys(BIBLIA[c]).map(Number).sort((a,b)=>a-b)
+  .map(v=>BIBLIA[c][v]).join(' ')).join(' '));
+
+let citasOk = 0;
+const citasMal = [];
+const coteja = (cap, txt, donde) => {
+  if (!txt) return;
+  for (const m of String(txt).matchAll(/«([^»]{12,500})»/g))
+    for (const parte of normB(m[1]).split(/\.\.\.|…/)) {
+      const f = parte.replace(/^[ ,;:.¿?¡!]+|[ ,;:.¿?¡!]+$/g,'').trim();
+      if (f.length < 12) continue;
+      if (TEXTO.includes(f)) citasOk++; else citasMal.push(`[${cap}/${donde}] ${f.slice(0,90)}`);
+    }
+};
+for (const cap of BIB6)
+  for (const sec of CONTENIDO[cap]) coteja(cap, sec.h, sec.t);
+for (const q of BANCO.filter(q=>BIB6.includes(q.cap))) {
+  /* rv60:true marca las preguntas que citan RV1960 A PROPOSITO, para ensenar
+     la diferencia. Son las que mas cuidan el punto del proyecto. */
+  if (q.rv60) continue;
+  coteja(q.cap, q.q, 'pregunta');
+  coteja(q.cap, q.e, 'explicación');
+  /* Las opciones INCORRECTAS son texto inventado por definicion: cotejarlas
+     daba 32 falsos positivos («que venga el juicio de los dioses»). */
+  if (Array.isArray(q.o) && typeof q.a === 'number') coteja(q.cap, q.o[q.a], 'opción correcta');
+  /* En una pregunta de completar el enunciado ENTERO es el versiculo, y se
+     coteja contra EL versiculo que dice su rotulo. Es la clase de pregunta
+     que se memoriza palabra por palabra, asi que aqui una coma si importa. */
+  if (q.t === 'fill' && Array.isArray(q.p)) {
+    const ref = (String(q.ins||'').match(/(\d{1,2}):(\d{1,2})/)||[])[2];
+    const real = BIBLIA[q.cap] && BIBLIA[q.cap][+ref] ? normB(BIBLIA[q.cap][+ref]) : TEXTO;
+    for (const parte of normB(q.p.map(x=>x.x!==undefined?x.x:x.b).join('')).split(/\.\.\.|…/)) {
+      const f = parte.replace(/^[ ,;:.¿?¡!]+|[ ,;:.¿?¡!]+$/g,'').trim();
+      if (f.length < 12) continue;
+      if (real.includes(f)) citasOk++; else citasMal.push(`[${q.cap}/completar ${q.ins}] ${f.slice(0,90)}`);
+    }
+  }
+}
+for (const tj of TARJETAS.filter(t=>BIB6.includes(t.cap))) {
+  coteja(tj.cap, tj.f, 'tarjeta (frente)');
+  coteja(tj.cap, tj.d, 'tarjeta (dorso)');
+}
+ok(citasMal.length===0,
+  `Las ${citasOk} citas de Daniel coinciden literal con RV1995`+
+  (citasMal.length?' — '+citasMal.slice(0,4).join(' / '):''));
+
+/* Las referencias tocables no pueden abrir el versiculo de otro libro. En las
+   28 creencias hay doce citas con formato N:M de Juan, Tito, Joel, Amos,
+   Romanos, Filipenses y 1 Samuel: «Jn 3:16» abriria Daniel 3:16, y un
+   versiculo equivocado con la etiqueta RV1995 es peor que no ofrecerlo. */
+const APP_REF = fs.readFileSync(FUENTE('app.js'),'utf8');
+ok(/Daniel\\\\s\+\(\\\\d\{1,2\}\)/.test(APP_REF.replace(/\s/g,''))||
+   /Daniel\\s\+/.test(APP_REF),
+  'La primera pasada de refsTocables exige el nombre «Daniel» explicito');
+ok(/OTRO_LIBRO/.test(APP_REF)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP_REF),
+  'La segunda pasada solo actua dentro de un capitulo de Daniel y descarta otros libros');
+
 /* ── EL SELECT QUE SE SALIA DEL ANCHO EN EL IPHONE ──────────────────────
    MECANISMO. Un elemento dentro de un flex tiene min-width:auto, o sea que no
    puede encogerse por debajo del ancho intrinseco de su contenido. El ancho

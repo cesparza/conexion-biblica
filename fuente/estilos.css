@@ -101,6 +101,43 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 @media print{.tabla-scroll{overflow:visible}}
 .highlight-box{background:#e8f5e9;border-left:5px solid var(--verde);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
 .warn-box{background:#fff3e0;border-left:5px solid var(--naranja);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
+/* ═══ LOS VERSICULOS DENTRO DEL ESTUDIO ═══
+   La referencia tocable tiene que verse tocable sin gritar: el material esta
+   lleno de ellas (163) y si cada una fuera un boton de color, la pagina
+   quedaria un arbol de navidad. Se marca con el azul de marca y un subrayado
+   punteado, que es como se lee «esto se puede abrir». */
+.vref{background:none;border:0;padding:0 1px;font:inherit;color:var(--cielo);
+  font-weight:700;cursor:pointer;border-bottom:1px dotted var(--cielo);
+  line-height:inherit}
+.vref:hover{color:var(--azul);border-bottom-color:var(--azul)}
+/* 34px de alto minimo tocable sin agrandar la letra ni romper el renglon:
+   el area se estira con el padding vertical, que no ocupa espacio de linea. */
+@media(hover:none){.vref{padding:6px 2px;margin:-6px 0}}
+
+.vpanel{background:#eef6fd;border:1px solid #cfe4f6;border-left:5px solid var(--cielo);
+  border-radius:8px;padding:.6rem .8rem;margin:.5rem 0 .9rem;font-size:.86rem;line-height:1.65}
+.vp-cab{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+  font-size:.72rem;font-weight:800;color:var(--azul);text-transform:uppercase;
+  letter-spacing:.3px;margin-bottom:.35rem}
+.vp-txt b{color:var(--cielo);font-size:.78rem;vertical-align:top;margin-right:2px}
+
+.lect{border:2px solid #e5e7eb;border-radius:12px;margin-bottom:1.3rem;background:#fff}
+.lect>summary{cursor:pointer;padding:.8rem .9rem;font-weight:800;color:var(--azul);
+  font-size:.92rem;min-height:44px;display:flex;align-items:center;list-style:none}
+.lect>summary::-webkit-details-marker{display:none}
+.lect>summary::after{content:'▾';margin-left:auto;font-size:1.1rem;color:var(--gris)}
+.lect[open]>summary::after{content:'▴'}
+.lect[open]>summary{border-bottom:1px solid #eef0f4}
+.lect-cuerpo{padding:.5rem .9rem .9rem}
+/* Cada bloque de cinco versiculos con su boton de voz a la derecha. El texto
+   no se envuelve por debajo del boton: con float el renglon largo se metia
+   bajo el altavoz y se leia mal. */
+.lect-bl{display:flex;gap:.6rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px dashed #eef0f4;font-size:.87rem;line-height:1.7}
+.lect-bl:last-child{border-bottom:0}
+.lect-bl>div{flex:1;min-width:0}
+.lect-bl b{color:var(--cielo);font-size:.76rem;vertical-align:top;margin-right:2px}
+
 .verse-box{background:#e3f2fd;border-left:5px solid var(--cielo);border-radius:8px;padding:.75rem .9rem;font-size:.87rem;font-style:italic;margin:.5rem 0;line-height:1.7}
 ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 

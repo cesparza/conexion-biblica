@@ -13,6 +13,7 @@ const { nivelDe } = require('./niveles.js');
 const { MANUAL } = require('./manual.js');
 const MAT = require('./matutina.js');
 const CR = require('./creencias.js');
+const { VERS } = require('./biblia.js');
 const PWA = require('./pwa.js');
 
 /* Dos eventos, un solo archivo: al material de Daniel se le suma el de la
@@ -54,6 +55,12 @@ const CONT_MODULOS = ${JSON.stringify(CONT_MODULOS_ALL, null, 1)};
 const TARJETAS = ${JSON.stringify(TARJETAS_ALL, null, 1)};
 
 const MANUAL = ${JSON.stringify(MANUAL, null, 1)};
+
+/* Daniel 1-6 en RV1995, para la seccion «Leer el capitulo» y las referencias
+   tocables. Va con indentacion 1 para que ninguna linea del index.html pase
+   de 2.000 caracteres: en una sola linea, ningun visor de diff abre el
+   archivo y el hook del repo bloquea el commit. */
+const VERS = ${JSON.stringify(VERS, null, 1)};
 
 /* El logo va partido en trozos: como data URI de una sola línea pasaría de
    2.000 caracteres y el hook del repo bloquearía el commit. */

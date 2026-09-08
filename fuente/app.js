@@ -694,6 +694,126 @@ function pintaCaps(){
     '<div class="grupo" style="grid-column:1/-1">🔎 Repaso general</div>'+mods;
 }
 
+/* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
+   Dos formas de llegar al texto, y usan el mismo VERS de fuente/biblia.js:
+   una referencia tocable al lado de cada dato, y el capitulo completo
+   desplegable arriba. La idea es no tener que salir de la seccion para
+   comprobar de donde sale un dato. */
+
+/* Donde se abre el versiculo: despues del bloque mas cercano que lo
+   contenga. Se lista de lo mas pequeno a lo mas grande y closest() devuelve
+   el primero que coincida, asi que dentro de una tabla el panel sale DEBAJO
+   de la tabla y no rompe la fila. */
+const CAJA_V='li,p,.highlight-box,.warn-box,.verse-box,table,.sec';
+
+/* MECANISMO DEL REEMPLAZO, Y POR QUE VA EN DOS PASADAS
+   El material ya trae 163 referencias escritas como «(2:41)», «(Daniel 2:38)»
+   o «(3:2-3)». En vez de reescribir los doce archivos de contenido, se
+   convierten al pintar.
+
+   Un regex suelto de \d+:\d+ NO sirve, y esto se probo: en las 28 creencias
+   y en P&R hay doce citas de otros libros con ese mismo formato, y «Jn 3:16»
+   habria abierto Daniel 3:16. Un versiculo equivocado presentado con la
+   etiqueta «RV1995» es peor que no ofrecer el versiculo.
+
+   Por eso: se acepta «Daniel N:M» en cualquier parte, y «N:M» a secas SOLO
+   dentro de un parentesis y SOLO en un capitulo de Daniel, donde «(2:41)» no
+   puede querer decir otra cosa. Si el parentesis trae una palabra con
+   mayuscula que no sea Daniel ni RV1995, se deja quieto: ahi puede haber un
+   nombre de libro.
+
+   El texto se parte por etiquetas y solo se toca lo que esta FUERA de una: si
+   el regex entrara en un atributo (un onclick, una clase) romperia el HTML
+   sin avisar. */
+const BIBLIA_CAPS=['d1','d2','d3','d4','d5','d6'];
+const OTRO_LIBRO=/\b(?!Daniel\b|RV1995\b)(?:[123]\s?)?[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{1,}\b/;
+
+function botonRef(todo,c,v,v2){
+  const cid='d'+c;
+  if(!VERS[cid]||!VERS[cid][+v])return todo;
+  const hasta=(v2&&+v2>+v&&VERS[cid][+v2])?+v2:+v;
+  return '<button type="button" class="vref" title="Ver el versículo"'+
+    ' onclick="verVers(this,\''+cid+'\','+(+v)+','+hasta+')">'+todo+'</button>';
+}
+
+function refsTocables(html,capId){
+  if(typeof VERS==='undefined')return html;
+  const enDaniel=BIBLIA_CAPS.indexOf(capId)>=0;
+  return html.split(/(<[^>]+>)/).map(tr=>{
+    if(tr.charAt(0)==='<')return tr;
+    /* Pasada 1: «Daniel N:M» dice el libro, asi que vale en cualquier lado.
+       Se marca el trozo ya convertido con \u0000 para que la pasada 2 no
+       vuelva a entrar en el, que anidaria un boton dentro de otro. */
+    let out=tr.replace(/Daniel\s+(\d{1,2}):(\d{1,2})(?:[-–](\d{1,2}))?/g,
+      (todo,c,v,v2)=>'\u0000'+botonRef(todo,c,v,v2)+'\u0000');
+    if(enDaniel){
+      /* Pasada 2: dentro de un parentesis, en un capitulo de Daniel. */
+      out=out.replace(/\(([^)]*)\)/g,(todo,dentro)=>{
+        if(dentro.indexOf('\u0000')>=0||OTRO_LIBRO.test(dentro))return todo;
+        return '('+dentro.replace(/(\d{1,2}):(\d{1,2})(?:[-–](\d{1,2}))?/g,
+          (t2,c,v,v2)=>botonRef(t2,c,v,v2))+')';
+      });
+    }
+    return out.split('\u0000').join('');
+  }).join('');
+}
+
+/** Un versiculo o un rango, ya numerado y listo para leer o para escuchar. */
+function htmlVers(cid,de,hasta){
+  const n=cid.replace('d','');
+  const filas=[];
+  for(let i=de;i<=hasta;i++)
+    if(VERS[cid]&&VERS[cid][i])
+      filas.push('<b>'+i+'</b> '+esc(VERS[cid][i]));
+  if(!filas.length)return '';
+  const ref='Daniel '+n+':'+de+(hasta>de?'-'+hasta:'');
+  return '<div class="vpanel" data-vid="'+cid+'.'+de+'.'+hasta+'">'+
+    '<div class="vp-cab"><span>'+ref+' · RV1995</span>'+
+    (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" onclick="leeCerca(this)">🔊</button>':'')+
+    '</div><div class="vp-txt" data-leer>'+filas.join('<br>')+'</div></div>';
+}
+
+/* UNO A LA VEZ. Tocar la misma referencia cierra, y tocar otra mueve el panel
+   en vez de abrir un segundo. Con 47 referencias en Daniel 2, dejar todas
+   abiertas convierte la seccion en una lista de versiculos y se pierde el
+   hilo del estudio, que es justo lo que se queria evitar. */
+function verVers(btn,cid,de,hasta){
+  const caja=(btn.closest?btn.closest(CAJA_V):null)||btn.parentNode;
+  if(!caja||!caja.parentNode)return;
+  const vid=cid+'.'+de+'.'+hasta;
+  const sig=caja.nextElementSibling;
+  const mismo=sig&&sig.classList&&sig.classList.contains('vpanel')&&
+              sig.getAttribute('data-vid')===vid;
+  const det=document.getElementById('detalle');
+  if(det&&det.querySelectorAll)
+    [...det.querySelectorAll('.vpanel')].forEach(x=>x.remove());
+  if(mismo)return;
+  const html=htmlVers(cid,de,hasta);
+  if(!html)return;
+  const tmp=document.createElement('div');
+  tmp.innerHTML=html;
+  caja.parentNode.insertBefore(tmp.firstChild,caja.nextSibling);
+}
+
+/* El capitulo completo, en bloques de cinco versiculos con su propio boton de
+   voz: uno solo leeria los 49 de corrido, que no sirve para memorizar, y de
+   paso el bloque queda de un tamano que se alcanza a seguir con el dedo. */
+function seccionLectura(cid){
+  if(typeof VERS==='undefined'||!VERS[cid])return '';
+  const nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
+  const bloques=[];
+  for(let i=0;i<nums.length;i+=5){
+    const grupo=nums.slice(i,i+5);
+    const txt=grupo.map(v=>'<b>'+v+'</b> '+esc(VERS[cid][v])).join('<br>');
+    bloques.push('<div class="lect-bl">'+
+      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar estos versículos" onclick="leeCerca(this)">🔊</button>':'')+
+      '<div data-leer>'+txt+'</div></div>');
+  }
+  return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
+    nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo">'+
+    bloques.join('')+'</div></details>';
+}
+
 function verCap(id){
   ir('estudio');
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
@@ -711,7 +831,10 @@ function verCap(id){
        creencias no es la RV1995: la guía «En esto creemos» cita RV1960, y decir
        lo contrario sería justo el error que este proyecto persigue. */
     '<span class="pil az">'+(esCreencia(id)?'RV1960':esMatutina()?'Matutina':'RV1995')+'</span></div>'+
-    secs.map(s=>'<div class="sec"><h3>'+s.t+'</h3>'+s.h+'</div>').join('')+
+    /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
+       leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
+    seccionLectura(id)+
+    secs.map(s=>'<div class="sec"><h3>'+s.t+'</h3>'+refsTocables(s.h,id)+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
     '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+

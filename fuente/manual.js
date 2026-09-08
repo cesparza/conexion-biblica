@@ -106,6 +106,34 @@ const MANUAL = [
     sirven cuando ya leíste todo.</p>` },
   ]},
 
+{ id:'a-versiculos', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Ver el versículo sin salir del estudio',
+  d:'Toca cualquier número azul, o abre el capítulo completo',
+  secs:[
+  { t:'Los números azules se tocan',
+    h:`<p>En el estudio, cada vez que dice de dónde sale un dato aparece algo
+    como <strong>(2:41)</strong> en azul y subrayado con puntitos. Eso
+    <strong>se toca</strong>, y el versículo se abre ahí mismo, justo debajo,
+    sin que tengas que salir de lo que estabas leyendo.</p>
+    <p>Toca otra vez el mismo número y se cierra. Si tocas otro, el versículo
+    se mueve a ese: <strong>siempre hay uno solo abierto</strong>, para que la
+    página no se llene.</p>` },
+  { t:'Leer el capítulo completo',
+    h:`<p>Arriba de cada capítulo de Daniel hay una franja que dice
+    <strong>«Leer el capítulo completo»</strong> con el número de versículos.
+    Tócala y se abre el capítulo entero, numerado, en la
+    <strong>Reina-Valera 1995</strong>, que es la del campamento.</p>
+    <p>Viene <strong>de a cinco versículos</strong>, cada grupo con su botón
+    🔊 para escucharlos. Está cerrada al abrir el capítulo, así que si vienes
+    a repasar un dato no te estorba.</p>` },
+  { t:'Qué versión es y en qué capítulos está',
+    h:`<p>El texto es la <strong>Reina-Valera 1995</strong>, la misma contra la
+    que se revisó todo el material.</p>
+    <p>Está en <strong>Daniel 1 al 6</strong>. En los capítulos de Profetas y
+    Reyes no hay versículos que mostrar, porque son capítulos de un libro; ahí
+    solo se tocan las referencias que dicen <strong>«Daniel»</strong> y con
+    esas sí se abre el versículo.</p>` },
+  ]},
+
 { id:'a-tarjetas', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg>', t:'Tarjetas: memorizar',
   d:'Responder en voz alta antes de voltear',
   secs:[
