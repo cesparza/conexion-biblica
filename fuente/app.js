@@ -711,12 +711,14 @@ function pintaYo(){
   const nom=S.nombre||'Sin nombre';
   b.innerHTML='<span class="yo-ini" aria-hidden="true">'+esc(nom.trim().charAt(0).toUpperCase()||'?')+'</span>'+
     '<span class="yo-tx"><span class="yo-n">'+esc(nom)+'</span>'+
-    '<span class="yo-c">'+esc(ACT().icono+' '+CAT().nombre)+'</span></span>';
-  const dice='Estudia '+nom+', '+CAT().nombre+' de '+ACT().nombre+'. Toca para cambiar.';
-  b.setAttribute('aria-label',dice);
-  /* En escritorio la ficha se reduce a la inicial y sin el title queda un botón
-     mudo: el aria-label no lo muestra ningún navegador al pasar el mouse. */
-  b.setAttribute('title',dice);
+    '<span class="yo-c">'+esc(ACT().icono+' '+CAT().nombre)+'</span></span>'+
+    /* El globo es un nodo propio, no el `title` del navegador, por dos razones:
+       el title tarda un segundo largo en salir y no admite dos renglones. En
+       escritorio la ficha se reduce a la inicial, así que sin esto queda un
+       botón mudo y hay que abrir el panel para saber quién estudia. */
+    '<span class="yo-tip" aria-hidden="true"><b>'+esc(nom)+'</b>'+
+    esc(ACT().icono+' '+ACT().nombre+' · '+CAT().nombre)+'</span>';
+  b.setAttribute('aria-label','Estudia '+nom+', '+CAT().nombre+' de '+ACT().nombre+'. Toca para cambiar.');
 }
 
 /** Sube la hoja de identidad. El esqueleto trae los mismos ids que ya usan
@@ -756,6 +758,28 @@ function abreYo(){
   pintaAlumnos();pintaSelectorCat();
   const ni=document.getElementById('nombre');
   if(ni)ni.value=S.nombre||'';
+  ancla();
+}
+
+/* En escritorio el panel no es una hoja: es un popover al lado del riel, a la
+   altura de la ficha. La posición exacta no se puede escribir en el CSS porque
+   depende de dónde quedó la ficha dentro del riel, así que se mide al abrir y
+   se pasa en dos variables. El CSS decide si las usa o no; en celular las
+   ignora y la hoja sigue subiendo desde abajo. */
+function ancla(){
+  try{
+    if(!window.matchMedia||!window.matchMedia('(min-width:900px)').matches)return;
+    const b=document.getElementById('nav-yo'), h=document.getElementById('hoja');
+    if(!b||!h||!b.getBoundingClientRect)return;
+    const r=b.getBoundingClientRect();
+    /* La X se mide contra el borde del RIEL, no de la ficha: la ficha es un
+       cuadro de 42 px centrado dentro de un riel de 92, así que anclar a su
+       borde derecho dejaba el popover metido debajo del riel. */
+    const nav=document.querySelector('.nav');
+    const borde=nav&&nav.getBoundingClientRect?nav.getBoundingClientRect().right:r.right;
+    h.style.setProperty('--yo-x',Math.round(Math.max(r.right,borde)+12)+'px');
+    h.style.setProperty('--yo-y',Math.round(r.top)+'px');
+  }catch(e){}
 }
 
 function pintaInicio(){

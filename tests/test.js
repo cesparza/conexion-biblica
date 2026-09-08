@@ -1247,5 +1247,35 @@ for(const cl of ['yo-ini','yo-tx','yo-n','yo-c']){
     '  y no queda una version suelta que pierda la pelea');
 }
 
+/* ───────── en escritorio el panel es popover, no hoja ─────────
+   Una hoja que sube del borde inferior es un patron de celular. A 1900px queda
+   pegada abajo, los parrafos se estiran a una linea de 1900px y las ocho
+   categorias se leen como un muro de cuatro columnas. El MISMO nodo se
+   convierte en popover anclado al riel: 380px, sin oscurecer, una columna. */
+const ESCRITORIO=CSS.slice(CSS.indexOf('@media (min-width:900px){',CSS.indexOf('.nav-yo')));
+ok(/\.hoja-yo \.hoja-caja\{[^}]*width:380px/.test(ESCRITORIO),
+  'En escritorio el panel de identidad mide 380px, no el ancho de la pantalla');
+ok(/\.hoja-yo \.hoja-caja\{[^}]*left:var\(--yo-x/.test(ESCRITORIO)&&
+   /\.hoja-yo \.hoja-caja\{[^}]*top:var\(--yo-y/.test(ESCRITORIO),
+  'El popover se ancla con las dos variables que mide ancla()');
+ok(/\.hoja-yo \.hoja-fondo\{background:none\}/.test(ESCRITORIO),
+  'El popover no oscurece la pagina: el fondo solo sirve para cerrar');
+ok(/\.hoja-yo \.hoja-asa\{display:none\}/.test(ESCRITORIO),
+  'El asa de arrastrar no aparece con mouse');
+ok(/\.hoja-yo \.cat-fila\{grid-template-columns:1fr/.test(ESCRITORIO),
+  'Las categorias van en una columna dentro del popover, no en cuatro');
+/* La X se mide contra el borde del RIEL: la ficha es un cuadro de 42px centrado
+   en un riel de 92, asi que anclar a SU borde deja el popover bajo el riel. */
+ok(/const nav=document\.querySelector\('\.nav'\)/.test(js)&&/Math\.max\(r\.right,borde\)/.test(js),
+  'ancla() mide contra el borde del riel, no el de la ficha');
+/* El globo del riel: nodo propio y no el `title`, que tarda y no admite dos
+   renglones. En celular sobra, porque el nombre ya se lee en la barra. */
+ok(/\.nav-yo \.yo-tip\{display:none\}/.test(CSS),'El globo esta apagado por defecto (celular)');
+ok(/\.nav-yo:hover \.yo-tip/.test(ESCRITORIO),'y se prende al pasar el mouse en escritorio');
+ok(/\.nav-yo \.yo-tip\{[^}]*pointer-events:none/.test(ESCRITORIO),
+  'El globo no se come el clic del boton');
+ok(!/b\.setAttribute\('title'/.test(js),
+  'La ficha ya no usa el title del navegador, que se doblaria con el globo');
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

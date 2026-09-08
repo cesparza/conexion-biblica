@@ -69,12 +69,14 @@ const MANUAL = [
     empezar a estudiar.</p>` },
   { t:'Si escogiste mal',
     h:`<p>No hay que empezar de cero. <strong>Arriba, en la barra azul</strong>,
-    está tu nombre con tu actividad debajo. Tócalo y sube una hoja con todas las
-    categorías <strong>agrupadas por actividad</strong>, así que desde el mismo
-    sitio corriges la categoría o te pasas a otra actividad. Tu progreso no se
-    pierde.</p>
+    está tu nombre con tu actividad debajo. Tócalo y se abre el panel con todas
+    las categorías <strong>agrupadas por actividad</strong>, así que desde el
+    mismo sitio corriges la categoría o te pasas a otra actividad. Tu progreso
+    no se pierde.</p>
     <p>Esa ficha se ve en <strong>todas las pantallas</strong>, no solo en
-    Inicio, así que no hay que ir a buscarla.</p>` },
+    Inicio, así que no hay que ir a buscarla. En el computador la barra está de
+    lado y la ficha es el <strong>círculo con tu inicial</strong>: pasa el mouse
+    por encima y dice quién estudia sin abrir nada.</p>` },
   ]},
 
 { id:'a-hoy', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Empieza siempre por «Qué estudiar hoy»',
@@ -507,10 +509,11 @@ const MANUAL = [
     con el mismo nombre. Son cuentas separadas a propósito: el progreso de una
     actividad y el de la otra no se deben mezclar.</p>` },
   { t:'Cambiar de persona',
-    h:`<p><strong>La barra azul de arriba dice siempre quién está estudiando</strong>
-    y en qué actividad, en todas las pantallas. Al tocarla sube una hoja con el
-    selector de personas y de categoría. Caben <strong>hasta 12 fichas</strong>
-    por aparato, cada una con su progreso, sus errores y sus exámenes.</p>` },
+    h:`<p><strong>La barra azul dice siempre quién está estudiando</strong> y en
+    qué actividad, en todas las pantallas. Al tocarla se abre el selector de
+    personas y de categoría: en el celular sube desde abajo, en el computador
+    sale al lado de la barra. Caben <strong>hasta 12 fichas</strong> por aparato,
+    cada una con su progreso, sus errores y sus exámenes.</p>` },
   { t:'Lo primero que hay que revisar',
     h:`<div class="warn-box">En un teléfono compartido, lo primero es mirar la
     barra de arriba: dice el nombre y la actividad. Si no es la persona que va a

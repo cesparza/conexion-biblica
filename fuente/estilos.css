@@ -583,6 +583,9 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nav-yo .yo-c{display:block;font-size:.66rem;font-weight:600;color:rgba(255,255,255,.72);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* El globo solo existe en escritorio, donde la ficha se reduce a la inicial.
+   En celular el nombre ya se lee, así que sobra. */
+.nav-yo .yo-tip{display:none}
 @media print{.nav-yo{display:none}}
 
 /* ❓ en la barra: la ayuda tiene que estar a un toque desde cualquier
@@ -1141,8 +1144,57 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
      nombre completo en el title. La hoja que abre es la misma. */
   .nav-yo{flex:0 0 auto;margin:0;padding:0;width:42px;height:42px;
     justify-content:center;border-radius:13px;background:rgba(255,255,255,.10)}
+  .nav-yo{position:relative}
   .nav-yo .yo-tx{display:none}
   .nav-yo .yo-ini{display:flex;width:28px;height:28px;font-size:.9rem}
+
+  /* El globo sale a la derecha del riel, centrado con la inicial. `nowrap` y
+     `width:max-content` para que no se parta en una columna de 92 px, y
+     `pointer-events:none` para que no se coma el clic del botón. */
+  .nav-yo .yo-tip{
+    display:block;position:absolute;left:calc(100% + 10px);top:50%;
+    transform:translateY(-50%);
+    width:max-content;max-width:230px;white-space:nowrap;
+    background:#12213c;color:#fff;border:1px solid rgba(255,255,255,.14);
+    border-radius:10px;padding:.45rem .6rem;
+    font-size:.72rem;font-weight:600;line-height:1.3;text-align:left;
+    box-shadow:0 8px 22px rgba(8,14,26,.4);
+    opacity:0;visibility:hidden;transition:opacity var(--v-paso);
+    pointer-events:none;z-index:70}
+  .nav-yo .yo-tip b{display:block;font-size:.8rem;font-weight:800}
+  .nav-yo:hover .yo-tip,.nav-yo:focus-visible .yo-tip{opacity:1;visibility:visible}
+
+  /* ───────── el panel de identidad en escritorio ─────────
+     MECANISMO
+     Una hoja que sube desde el borde inferior es un patrón de celular: el
+     pulgar está abajo. Con mouse y 1900 px de ancho el mismo elemento queda
+     pegado al borde de abajo, los párrafos se estiran a una sola línea de 1900
+     px (ilegible) y las ocho categorías se leen como un muro de cuatro
+     columnas.
+     Aquí el MISMO nodo se convierte en un popover anclado al riel, a la altura
+     de la ficha: 380 px de ancho, sin oscurecer la página, y una columna de
+     categorías. No hay HTML ni JS nuevo, solo esta caja de reglas. */
+  .hoja-yo .hoja-caja{
+    left:var(--yo-x,104px);right:auto;top:var(--yo-y,72px);bottom:auto;
+    width:380px;max-width:calc(100vw - var(--yo-x, 104px) - 24px);
+    max-height:min(78vh, calc(100vh - var(--yo-y, 72px) - 24px));
+    border-radius:14px;
+    box-shadow:0 18px 44px -12px rgba(8,14,26,.45),0 0 0 1px rgba(16,24,40,.07);
+    transform:translateX(-8px);opacity:0;
+    transition:opacity var(--v-paso), transform var(--v-paso);
+    padding-bottom:0}
+  .hoja-yo.abierta .hoja-caja{transform:translateX(0);opacity:1}
+  /* Un popover no oscurece lo que hay detrás; el fondo se queda solo para
+     cerrar al hacer clic afuera. */
+  .hoja-yo .hoja-fondo{background:none}
+  /* El asa dice «arrástrame hacia abajo». Con mouse no significa nada. */
+  .hoja-yo .hoja-asa{display:none}
+  .hoja-yo .hoja-cab{padding:.85rem .95rem .6rem}
+  /* Una columna: cuatro tarjetas en 380 px dejan 80 px cada una y el alcance
+     («Daniel 1, 3 y 6 · P&R 39, 41 y 44») no cabe en ningún renglón. */
+  .hoja-yo .cat-fila{grid-template-columns:1fr;gap:.5rem}
+  .hoja-yo .cat-btn{padding:.6rem .75rem;text-align:left;border-width:2px}
+  .hoja-yo .alu-sel{gap:.5rem}
 }
 
 
