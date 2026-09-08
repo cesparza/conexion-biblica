@@ -214,6 +214,46 @@ const MANUAL = [
     completo.</p>` },
   ]},
 
+{ id:'a-dividida', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'En el computador, texto y estudio a la vez',
+  d:'Solo en pantalla ancha, y solo en los capítulos de la Biblia',
+  secs:[
+  { t:'Qué cambia',
+    h:`<p>Si abres un capítulo de Daniel en un computador con pantalla ancha, el
+    <strong>texto queda a la izquierda</strong> y el <strong>estudio a la
+    derecha</strong>, los dos a la vista. El texto se queda quieto mientras
+    bajas por el estudio, así que puedes comparar el dato con el versículo sin
+    abrir ni cerrar nada.</p>` },
+  { t:'En el celular no cambia nada',
+    h:`<p>En un teléfono no hay ancho para dos columnas, así que sigue igual que
+    siempre: primero el texto, después el estudio, uno debajo del otro. Y ahí es
+    donde sirve el <strong>📖 Leer sin distracciones</strong>.</p>` },
+  { t:'Solo en los capítulos de la Biblia',
+    h:`<p>Profetas y Reyes y las creencias no se parten en dos, porque de esos la
+    app no tiene el capítulo palabra por palabra: no habría nada que poner en la
+    columna izquierda.</p>` },
+  ]},
+
+{ id:'a-paleta', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Buscar escribiendo, con el teclado',
+  d:'Solo en computador. Cmd+K o Ctrl+K',
+  secs:[
+  { t:'Para quién es',
+    h:`<p>Esto es para quien estudia en un <strong>computador con teclado</strong>.
+    En el teléfono no aparece, y no hace falta: ahí todo está a un toque.</p>` },
+  { t:'Cómo se usa',
+    h:`<p>Pulsa <strong>Cmd+K</strong> en Mac o <strong>Ctrl+K</strong> en Windows
+    y escribe. Aparecen los capítulos, los repasos y las acciones que coincidan.
+    Con <strong>↑ ↓</strong> te mueves, con <strong>Enter</strong> abres y con
+    <strong>Esc</strong> cierras.</p>
+    <p>No hay que escribir bien las tildes ni las mayúsculas: «babilonia» y
+    «Babilonia» encuentran lo mismo.</p>` },
+  { t:'Qué se puede abrir así',
+    h:`<p>Cualquier capítulo o repaso de tu categoría, las tarjetas de hoy, un
+    examen, repasar tus errores, el manual, y también <strong>cambiar de
+    material</strong> a otra categoría o actividad.</p>
+    <p>Si no escribes nada, lo primero que muestra son las <strong>acciones</strong>,
+    que es lo que uno suele querer sin buscar.</p>` },
+  ]},
+
 { id:'a-versiculos', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Ver el versículo sin salir del estudio',
   d:'Toca cualquier número azul, o abre el capítulo completo',
   secs:[

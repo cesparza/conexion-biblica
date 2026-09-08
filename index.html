@@ -564,6 +564,68 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
 .bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
 
+/* ───────── PALETA DE COMANDOS ─────────
+   Se abre con teclado, asi que se disena para teclado: la fila seleccionada se
+   marca con fondo y una barra al borde, no solo con color de texto, porque el
+   dedo no esta guiando la vista. */
+#paleta[hidden]{display:none}
+.pc-fondo{position:fixed;inset:0;z-index:500;background:rgba(16,24,40,.5);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.pc{position:fixed;z-index:501;left:50%;top:12vh;transform:translateX(-50%);
+  width:min(620px,94vw);background:var(--card,#fff);border-radius:16px;
+  box-shadow:0 30px 70px -20px rgba(8,14,26,.55),0 0 0 1px rgba(16,24,40,.08);
+  overflow:hidden;display:flex;flex-direction:column;max-height:76vh}
+.pc-in{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.05rem;
+  border-bottom:1px solid #eef0f4;flex:0 0 auto}
+.pc-in>span{font-size:.8rem;font-weight:800;color:#94a3b8;letter-spacing:.5px}
+.pc-in input{flex:1;min-width:0;border:0;outline:none;background:none;
+  font-family:inherit;font-size:1.02rem;color:var(--azul)}
+.pc-in input::placeholder{color:#9aa7ba;font-weight:500}
+.pc-l{flex:1 1 auto;overflow-y:auto;padding:.4rem 0 .6rem;-webkit-overflow-scrolling:touch}
+.pc-g{font-size:.63rem;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;
+  color:#94a3b8;padding:.7rem 1.05rem .3rem}
+.pc-r{display:flex;align-items:center;gap:.75rem;padding:.5rem 1.05rem;width:100%;
+  border:0;background:none;font-family:inherit;font-size:.9rem;text-align:left;
+  cursor:pointer;min-height:40px}
+.pc-r .ic{width:26px;height:26px;border-radius:8px;background:#eef2ff;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.pc-r b{font-weight:700;color:var(--azul);flex:0 0 auto}
+.pc-r small{color:var(--gris);font-weight:500;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;min-width:0}
+.pc-r.on,.pc-r:hover{background:#eff6ff}
+.pc-r.on{box-shadow:inset 3px 0 0 var(--cielo)}
+.pc-r.on .ic{background:#dbeafe}
+.pc-nada{padding:1.6rem 1.05rem;color:var(--gris);font-size:.9rem;text-align:center}
+.pc-pie{display:flex;gap:1.1rem;padding:.55rem 1.05rem;border-top:1px solid #eef0f4;
+  font-size:.68rem;color:var(--gris);font-weight:600;flex:0 0 auto}
+.pc-pie kbd{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:5px;padding:0 5px;
+  font-family:inherit;font-size:.66rem}
+@media print{#paleta{display:none!important}}
+
+/* ───────── VISTA DIVIDIDA (solo escritorio ancho) ─────────
+   El DOM ya viene en dos columnas desde divideVista(); aqui se decide si se
+   pintan una al lado de la otra. Por debajo de 1200px el flex no aplica y las
+   dos cajas se apilan, que es exactamente el orden de antes: texto y despues
+   estudio. Sin listener de resize, sin rearmar nada. */
+.vd-rot{font-size:.7rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;
+  color:var(--gris);margin:0 0 .55rem}
+@media (max-width:1199px){.vd-rot{display:none}}
+@media (min-width:1200px){
+  .vd{display:flex;gap:1.7rem;align-items:flex-start}
+  .vd>div{flex:1 1 0;min-width:0}
+  /* Pegado, con su propio scroll: el estudio de la derecha se recorre solo y el
+     texto se queda a la vista. `max-height` con la altura de la ventana, o la
+     columna izquierda crece y deja de estar pegada. */
+  .vd-izq{position:sticky;top:.5rem;max-height:calc(100vh - 1.5rem);overflow-y:auto}
+  .vd-izq details.lect{margin:0}
+  /* El resumen sobra: en dos columnas el texto ya esta abierto y titulado. */
+  .vd-izq details.lect>summary{display:none}
+  .vd-der .sec{margin-bottom:1.1rem}
+  /* El boton de lectura sin cromo no va en dos columnas: la vista dividida ya
+     resuelve lo que ese boton resuelve, y ocuparia el sitio del versiculo 1. */
+  .vd-izq .lect-full{display:none}
+}
+
 /* ───────── MODO LECTURA ─────────
    Un mundo visual distinto a proposito: papel calido y serif, para que se sienta
    una Biblia y no una pantalla de datos. Es el unico sitio de la app que se sale
@@ -1591,6 +1653,9 @@ details.card summary::marker{content:''}
      Lo llena abreLectura(cid) con el mismo texto de VERS. -->
 <div id="lectura" class="lec" hidden></div>
 
+<!-- La paleta de comandos. Se abre con Cmd+K o Ctrl+K; la llena abrePaleta(). -->
+<div id="paleta" hidden></div>
+
 <div id="p-bienvenida" class="pantalla bv">
   <div class="bv-caja">
     <img class="logo-hero logo-tl" alt="Iglesia Adventista Tierra Linda">
@@ -1892,7 +1957,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '7cc0fb8cb4ab';
+const VERSION_APP = 'cd02c388894e';
 
 const CAPS = [
  {
@@ -14677,6 +14742,48 @@ const MANUAL = [
   ]
  },
  {
+  "id": "a-dividida",
+  "para": "estudia",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-libro\"/></svg>",
+  "t": "En el computador, texto y estudio a la vez",
+  "d": "Solo en pantalla ancha, y solo en los capítulos de la Biblia",
+  "secs": [
+   {
+    "t": "Qué cambia",
+    "h": "<p>Si abres un capítulo de Daniel en un computador con pantalla ancha, el\n    <strong>texto queda a la izquierda</strong> y el <strong>estudio a la\n    derecha</strong>, los dos a la vista. El texto se queda quieto mientras\n    bajas por el estudio, así que puedes comparar el dato con el versículo sin\n    abrir ni cerrar nada.</p>"
+   },
+   {
+    "t": "En el celular no cambia nada",
+    "h": "<p>En un teléfono no hay ancho para dos columnas, así que sigue igual que\n    siempre: primero el texto, después el estudio, uno debajo del otro. Y ahí es\n    donde sirve el <strong>📖 Leer sin distracciones</strong>.</p>"
+   },
+   {
+    "t": "Solo en los capítulos de la Biblia",
+    "h": "<p>Profetas y Reyes y las creencias no se parten en dos, porque de esos la\n    app no tiene el capítulo palabra por palabra: no habría nada que poner en la\n    columna izquierda.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-paleta",
+  "para": "estudia",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-lista\"/></svg>",
+  "t": "Buscar escribiendo, con el teclado",
+  "d": "Solo en computador. Cmd+K o Ctrl+K",
+  "secs": [
+   {
+    "t": "Para quién es",
+    "h": "<p>Esto es para quien estudia en un <strong>computador con teclado</strong>.\n    En el teléfono no aparece, y no hace falta: ahí todo está a un toque.</p>"
+   },
+   {
+    "t": "Cómo se usa",
+    "h": "<p>Pulsa <strong>Cmd+K</strong> en Mac o <strong>Ctrl+K</strong> en Windows\n    y escribe. Aparecen los capítulos, los repasos y las acciones que coincidan.\n    Con <strong>↑ ↓</strong> te mueves, con <strong>Enter</strong> abres y con\n    <strong>Esc</strong> cierras.</p>\n    <p>No hay que escribir bien las tildes ni las mayúsculas: «babilonia» y\n    «Babilonia» encuentran lo mismo.</p>"
+   },
+   {
+    "t": "Qué se puede abrir así",
+    "h": "<p>Cualquier capítulo o repaso de tu categoría, las tarjetas de hoy, un\n    examen, repasar tus errores, el manual, y también <strong>cambiar de\n    material</strong> a otra categoría o actividad.</p>\n    <p>Si no escribes nada, lo primero que muestra son las <strong>acciones</strong>,\n    que es lo que uno suele querer sin buscar.</p>"
+   }
+  ]
+ },
+ {
   "id": "a-versiculos",
   "para": "estudia",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-libro\"/></svg>",
@@ -16999,7 +17106,194 @@ function verCap(id){
     '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button>'+
     '<button class="btn gho" onclick="imprimeCapitulo(\''+id+'\')">🖨️ Imprimir este capítulo</button></div>';
   d.style.display='block';
+  divideVista(d,id);
   avanza(id,60);
+}
+
+/* ───────── PALETA DE COMANDOS (⌘K) ─────────
+   MECANISMO
+   Para abrir un capítulo hay que ir a Estudiar, encontrar su tarjeta entre las
+   siete y las nueve de repaso, y tocarla. Con teclado eso son cuatro gestos
+   para algo que se puede escribir en tres letras.
+
+   HONESTO, Y VA EN EL MANUAL: esto sirve a quien tiene teclado. Las niñas
+   estudian en el teléfono y no lo van a ver nunca. Se construye porque el
+   mantenedor arma exámenes y revisa capítulos todos los días, no porque haga
+   la app mejor para quien la usa en el celular.
+
+   La lista sale de los MISMOS datos: `capsDe()`, `modsDe()` y `CATS`. No hay un
+   catálogo aparte que se pueda desincronizar del material.
+
+   El filtro normaliza sin tildes y sin mayúsculas, igual que la comparación de
+   respuestas del examen: quien escribe «babilonia» no debería quedarse sin
+   resultados por escribir «Babilonia». */
+let pcAbierta=false, pcSel=0, pcItems=[];
+
+/** Todo lo que la paleta puede abrir, en el orden en que sirve. */
+function pcCatalogo(){
+  const it=[];
+  capsDe().forEach(c=>it.push({g:'Capítulos',ic:'📖',t:c.label,
+    s:c.sub+' · '+(S.prog[c.id]||0)+'% leído',f:()=>verCap(c.id)}));
+  modsDe().forEach(m=>it.push({g:'Repasos',ic:'🔎',t:m.label,
+    s:(m.sub||'')+' · '+(S.prog[m.id]||0)+'%',f:()=>verCap(m.id)}));
+  it.push({g:'Acciones',ic:'🃏',t:'Tarjetas de hoy',
+    s:Math.min(tocanHoy().length,topeSesion())+' para hacer',f:()=>ir('tarjetas')});
+  const err=falladasDe().length;
+  if(err>0)it.push({g:'Acciones',ic:'↺',t:'Repasar mis '+err+' errores',
+    s:'Lo que más puntos recupera',f:()=>arrancaExamen('errores')});
+  it.push({g:'Acciones',ic:'✏️',t:'Examen de práctica',
+    s:CAT().n+' preguntas',f:()=>ir('examen')});
+  it.push({g:'Acciones',ic:'📘',t:'Leer sin distracciones',
+    s:'El capítulo completo, sin nada alrededor',f:()=>{
+      const c=capsDe().find(x=>typeof VERS!=='undefined'&&VERS[x.id]);
+      if(c)abreLectura(c.id);else ir('estudio');}});
+  it.push({g:'Acciones',ic:'❓',t:'Cómo se usa esta app',s:'El manual completo',f:()=>ir('ayuda')});
+  /* Cambiar de categoría entra aquí con el nombre de su actividad delante,
+     porque «Aventureros» solo no dice de cuál de las tres es. */
+  Object.keys(CATS).forEach(k=>{
+    if(k===S.cat)return;
+    const a=ACTIVIDADES[CATS[k].act];
+    it.push({g:'Cambiar de material',ic:a?a.icono:'✳️',
+      t:(a?a.nombre+' · ':'')+CATS[k].nombre,s:CATS[k].alcance,f:()=>ponCat(k)});
+  });
+  return it;
+}
+
+const pcLimpia=t=>String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+function pcFiltra(q){
+  const todo=pcCatalogo();
+  const n=pcLimpia(q).trim();
+  /* SIN escribir nada, las ACCIONES van primero. Con el catálogo en su orden
+     natural el tope de doce se lo comían los capítulos y los repasos, y la
+     paleta abría mostrando justo lo que uno puede encontrar solo en Estudiar.
+     Se vio en el render: doce filas y ni una acción.
+     Escribiendo algo se respeta el orden natural, porque ahí uno ya sabe qué
+     está buscando. */
+  if(!n){
+    const acc=todo.filter(i=>i.g==='Acciones');
+    const resto=todo.filter(i=>i.g!=='Acciones');
+    return acc.concat(resto).slice(0,12);
+  }
+  return todo.filter(i=>pcLimpia(i.t+' '+i.s+' '+i.g).includes(n)).slice(0,12);
+}
+
+function abrePaleta(){
+  const c=document.getElementById('paleta');
+  if(!c)return;
+  pcAbierta=true;pcSel=0;
+  c.innerHTML='<div class="pc-fondo" onclick="cierraPaleta()"></div>'+
+    '<div class="pc" role="dialog" aria-modal="true" aria-label="Buscar y abrir">'+
+    '<div class="pc-in"><span aria-hidden="true">⌘K</span>'+
+    '<input id="pc-q" type="text" autocomplete="off" placeholder="Escribe un capítulo, un repaso o una acción..." '+
+    'oninput="pcPinta()" aria-label="Buscar"></div>'+
+    '<div class="pc-l" id="pc-l"></div>'+
+    '<div class="pc-pie"><span><kbd>↑↓</kbd> mueve</span><span><kbd>↵</kbd> abre</span>'+
+    '<span><kbd>esc</kbd> cierra</span></div></div>';
+  c.hidden=false;
+  pcPinta();
+  try{document.getElementById('pc-q').focus();}catch(e){}
+}
+
+function cierraPaleta(){
+  const c=document.getElementById('paleta');
+  if(!c)return;
+  pcAbierta=false;c.hidden=true;c.innerHTML='';
+}
+
+function pcPinta(){
+  const l=document.getElementById('pc-l'), q=document.getElementById('pc-q');
+  if(!l)return;
+  pcItems=pcFiltra(q?q.value:'');
+  if(pcSel>=pcItems.length)pcSel=Math.max(0,pcItems.length-1);
+  if(!pcItems.length){
+    l.innerHTML='<p class="pc-nada">Nada con eso. Prueba con «daniel», «trampas» o «errores».</p>';
+    return;
+  }
+  let g='',h='';
+  pcItems.forEach((i,n)=>{
+    if(i.g!==g){g=i.g;h+='<div class="pc-g">'+esc(g)+'</div>';}
+    h+='<button type="button" class="pc-r'+(n===pcSel?' on':'')+'" onclick="pcAbre('+n+')">'+
+      '<span class="ic" aria-hidden="true">'+i.ic+'</span>'+
+      '<b>'+esc(i.t)+'</b><small>'+esc(i.s||'')+'</small></button>';
+  });
+  l.innerHTML=h;
+}
+
+function pcAbre(n){
+  const i=pcItems[n];
+  if(!i)return;
+  cierraPaleta();
+  try{i.f();}catch(e){}
+}
+
+function pcTecla(e){
+  /* Se abre con ⌘K o Ctrl+K, que es lo que ya esperan los dedos de cualquiera
+     que use un editor. */
+  const k=(e.key||'').toLowerCase();
+  if(k==='k'&&(e.metaKey||e.ctrlKey)){
+    e.preventDefault();
+    if(pcAbierta)cierraPaleta();else abrePaleta();
+    return;
+  }
+  if(!pcAbierta)return;
+  if(e.key==='Escape'){e.preventDefault();cierraPaleta();return;}
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    if(!pcItems.length)return;
+    pcSel=(pcSel+(e.key==='ArrowDown'?1:-1)+pcItems.length)%pcItems.length;
+    pcPinta();
+    return;
+  }
+  if(e.key==='Enter'){e.preventDefault();pcAbre(pcSel);}
+}
+
+if(typeof document!=='undefined'&&document.addEventListener)
+  document.addEventListener('keydown',pcTecla);
+
+/* ───────── VISTA DIVIDIDA ─────────
+   MECANISMO
+   El dato y el versículo están en la misma pantalla pero uno debajo del otro,
+   así que compararlos es abrir la hoja del versículo, leerla, cerrarla y volver
+   a buscar el renglón. En un celular no hay alternativa: no hay ancho. En
+   escritorio sí, y a 1440 px sobran 412 px de margen sin usar.
+
+   Aquí el texto queda a la izquierda, PEGADO con `position:sticky`, y el
+   estudio se desplaza solo a la derecha. Es lo único que el escritorio puede
+   hacer y el celular no.
+
+   DECISIÓN DE IMPLEMENTACIÓN: el DOM se reestructura SIEMPRE y el CSS decide si
+   lo pinta en dos columnas. Poner el ancho en un `matchMedia` de JS obligaría a
+   escuchar el `resize` y a rearmar el DOM en cada cambio de tamaño; con la media
+   query, por debajo de 1200 px el flex simplemente no aplica y todo se apila
+   igual que antes.
+
+   Solo en capítulos con texto en `VERS`: Profetas y Reyes y las creencias no
+   tienen el capítulo palabra por palabra, así que no hay nada que poner a la
+   izquierda. */
+function divideVista(d,id){
+  try{
+    if(typeof VERS==='undefined'||!VERS[id])return;
+    const det=d.querySelector(':scope>details.lect');
+    const secs=[...d.querySelectorAll(':scope>.sec')];
+    if(!det||!secs.length)return;
+    /* Abierto de entrada SOLO en dos columnas: ahí un acordeón cerrado deja
+       media pantalla en blanco. En una sola columna sigue cerrado, que es lo
+       que v43 decidió para no estorbarle a quien viene a repasar un dato, y se
+       vio en el render que sin esta guarda quedaba abierto también a 390 px.
+       Es el único sitio donde el JS mira el ancho, y no necesita `resize`: el
+       acordeón lo abre y lo cierra quien quiera con un toque. */
+    det.open=!!(window.matchMedia&&window.matchMedia('(min-width:1200px)').matches);
+    const fila=document.createElement('div');fila.className='vd';
+    const iz=document.createElement('div');iz.className='vd-izq';
+    const de=document.createElement('div');de.className='vd-der';
+    iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
+    de.innerHTML='<p class="vd-rot">El estudio</p>';
+    iz.appendChild(det);
+    secs.forEach(x=>de.appendChild(x));
+    fila.appendChild(iz);fila.appendChild(de);
+    d.insertBefore(fila,d.children[1]);
+  }catch(e){}
 }
 
 function avanza(id,p){S.prog[id]=Math.max(S.prog[id]||0,p);guardar();pintaCaps();}

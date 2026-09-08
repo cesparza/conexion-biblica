@@ -25,6 +25,8 @@ const RET=`S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, 
         abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
         pasaAActividad, MAX_ALUMNOS, borraAlumno,
         pintaSenales, senal, abreLectura, cierraLectura, lectAvance,
+        abrePaleta, cierraPaleta, pcFiltra, pcCatalogo,
+        pcLimpia, pcAbre, pcItemsActuales:()=>pcItems, pcEstaAbierta:()=>pcAbierta,
         lectCidActual:()=>lectCid, listoDesdeLectura, modsDe, avanza,
         el:id=>document.getElementById(id)`;
 
@@ -1107,6 +1109,55 @@ N.abreLectura('d6');
 N.listoDesdeLectura();
 ok((N.S().prog.d6||0)===100,'«Ya lo estudie» desde la lectura marca el capitulo');
 ok(N.lectCidActual()===null,'y cierra la capa');
+
+
+/* La vista dividida NO se prueba aqui, y vale decir por que: el stub del DOM
+   es PLANO, no un arbol. `getElementById` devuelve nodos independientes que se
+   guardan en cache, sin padres ni hijos, asi que `createElement`,
+   `appendChild` e `insertBefore` no existen y `divideVista()` se va por su
+   try/catch sin hacer nada. Reestructurar el DOM se verifica con el render de
+   Playwright (medido: dos columnas de 432px a 1440, apiladas a 1100 y a 390) y
+   con las pruebas estructurales de test.js. Levantar un DOM de verdad para el
+   stub cuesta mas de lo que rinde, que es la misma decision que api.js tomo
+   con la base de datos. */
+
+
+/* ───────── paleta de comandos ─────────
+   La lista sale de capsDe(), modsDe() y CATS: no hay un catalogo aparte que se
+   pueda desincronizar del material. */
+N.ponCat('pa');
+const cat=N.pcCatalogo();
+ok(cat.length>0,'El catalogo de la paleta trae items ('+cat.length+')');
+const nCaps=cat.filter(i=>i.g==='Capítulos').length;
+ok(nCaps===N.capsDe().length,
+  'Trae exactamente los capitulos de la categoria activa ('+nCaps+' de '+N.capsDe().length+')');
+ok(!cat.some(i=>i.g==='Cambiar de material'&&/^\s*$/.test(i.t)),'Ninguna fila queda sin nombre');
+/* La categoria activa NO se ofrece para cambiar a ella misma. */
+ok(!cat.some(i=>i.g==='Cambiar de material'&&i.t.indexOf(N.CATS[N.S().cat].nombre)>=0
+   &&i.t.indexOf(N.ACTIVIDADES[N.CATS[N.S().cat].act].nombre)>=0),
+  'No ofrece cambiar a la categoria en la que ya estas');
+
+/* Sin escribir nada, las ACCIONES van primero: con el orden natural el tope de
+   doce se lo comian los capitulos y la paleta abria sin una sola accion. */
+const vacio=N.pcFiltra('');
+ok(vacio[0].g==='Acciones','Sin escribir nada, la primera fila es una accion');
+ok(vacio.some(i=>i.g!=='Acciones'),'y despues siguen los capitulos');
+
+/* El filtro normaliza sin tildes ni mayusculas, igual que la comparacion de
+   respuestas del examen. */
+const a=N.pcFiltra('babilonia').map(i=>i.t).join('|');
+const bb=N.pcFiltra('BABILONIA').map(i=>i.t).join('|');
+ok(a===bb&&a.length>0,'El filtro ignora mayusculas y tildes ('+a+')');
+ok(N.pcFiltra('zzzznoexiste').length===0,'Una busqueda sin resultados devuelve vacio, no todo');
+ok(N.pcFiltra('').length<=12&&N.pcFiltra('daniel').length<=12,'La lista nunca pasa de 12 filas');
+
+N.abrePaleta();
+ok(N.pcEstaAbierta(),'La paleta se abre');
+/* Ojo con el stub plano: el markup de las filas lo escribe pcPinta() en
+   `#pc-l`, que aqui es un nodo hermano y no un hijo de `#paleta`. */
+ok(N.el('pc-l').innerHTML.indexOf('pc-r')>0,'y las filas quedan pintadas');
+N.cierraPaleta();
+ok(!N.pcEstaAbierta()&&N.el('paleta').hidden,'y se cierra');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

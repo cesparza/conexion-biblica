@@ -1300,7 +1300,194 @@ function verCap(id){
     '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button>'+
     '<button class="btn gho" onclick="imprimeCapitulo(\''+id+'\')">🖨️ Imprimir este capítulo</button></div>';
   d.style.display='block';
+  divideVista(d,id);
   avanza(id,60);
+}
+
+/* ───────── PALETA DE COMANDOS (⌘K) ─────────
+   MECANISMO
+   Para abrir un capítulo hay que ir a Estudiar, encontrar su tarjeta entre las
+   siete y las nueve de repaso, y tocarla. Con teclado eso son cuatro gestos
+   para algo que se puede escribir en tres letras.
+
+   HONESTO, Y VA EN EL MANUAL: esto sirve a quien tiene teclado. Las niñas
+   estudian en el teléfono y no lo van a ver nunca. Se construye porque el
+   mantenedor arma exámenes y revisa capítulos todos los días, no porque haga
+   la app mejor para quien la usa en el celular.
+
+   La lista sale de los MISMOS datos: `capsDe()`, `modsDe()` y `CATS`. No hay un
+   catálogo aparte que se pueda desincronizar del material.
+
+   El filtro normaliza sin tildes y sin mayúsculas, igual que la comparación de
+   respuestas del examen: quien escribe «babilonia» no debería quedarse sin
+   resultados por escribir «Babilonia». */
+let pcAbierta=false, pcSel=0, pcItems=[];
+
+/** Todo lo que la paleta puede abrir, en el orden en que sirve. */
+function pcCatalogo(){
+  const it=[];
+  capsDe().forEach(c=>it.push({g:'Capítulos',ic:'📖',t:c.label,
+    s:c.sub+' · '+(S.prog[c.id]||0)+'% leído',f:()=>verCap(c.id)}));
+  modsDe().forEach(m=>it.push({g:'Repasos',ic:'🔎',t:m.label,
+    s:(m.sub||'')+' · '+(S.prog[m.id]||0)+'%',f:()=>verCap(m.id)}));
+  it.push({g:'Acciones',ic:'🃏',t:'Tarjetas de hoy',
+    s:Math.min(tocanHoy().length,topeSesion())+' para hacer',f:()=>ir('tarjetas')});
+  const err=falladasDe().length;
+  if(err>0)it.push({g:'Acciones',ic:'↺',t:'Repasar mis '+err+' errores',
+    s:'Lo que más puntos recupera',f:()=>arrancaExamen('errores')});
+  it.push({g:'Acciones',ic:'✏️',t:'Examen de práctica',
+    s:CAT().n+' preguntas',f:()=>ir('examen')});
+  it.push({g:'Acciones',ic:'📘',t:'Leer sin distracciones',
+    s:'El capítulo completo, sin nada alrededor',f:()=>{
+      const c=capsDe().find(x=>typeof VERS!=='undefined'&&VERS[x.id]);
+      if(c)abreLectura(c.id);else ir('estudio');}});
+  it.push({g:'Acciones',ic:'❓',t:'Cómo se usa esta app',s:'El manual completo',f:()=>ir('ayuda')});
+  /* Cambiar de categoría entra aquí con el nombre de su actividad delante,
+     porque «Aventureros» solo no dice de cuál de las tres es. */
+  Object.keys(CATS).forEach(k=>{
+    if(k===S.cat)return;
+    const a=ACTIVIDADES[CATS[k].act];
+    it.push({g:'Cambiar de material',ic:a?a.icono:'✳️',
+      t:(a?a.nombre+' · ':'')+CATS[k].nombre,s:CATS[k].alcance,f:()=>ponCat(k)});
+  });
+  return it;
+}
+
+const pcLimpia=t=>String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+function pcFiltra(q){
+  const todo=pcCatalogo();
+  const n=pcLimpia(q).trim();
+  /* SIN escribir nada, las ACCIONES van primero. Con el catálogo en su orden
+     natural el tope de doce se lo comían los capítulos y los repasos, y la
+     paleta abría mostrando justo lo que uno puede encontrar solo en Estudiar.
+     Se vio en el render: doce filas y ni una acción.
+     Escribiendo algo se respeta el orden natural, porque ahí uno ya sabe qué
+     está buscando. */
+  if(!n){
+    const acc=todo.filter(i=>i.g==='Acciones');
+    const resto=todo.filter(i=>i.g!=='Acciones');
+    return acc.concat(resto).slice(0,12);
+  }
+  return todo.filter(i=>pcLimpia(i.t+' '+i.s+' '+i.g).includes(n)).slice(0,12);
+}
+
+function abrePaleta(){
+  const c=document.getElementById('paleta');
+  if(!c)return;
+  pcAbierta=true;pcSel=0;
+  c.innerHTML='<div class="pc-fondo" onclick="cierraPaleta()"></div>'+
+    '<div class="pc" role="dialog" aria-modal="true" aria-label="Buscar y abrir">'+
+    '<div class="pc-in"><span aria-hidden="true">⌘K</span>'+
+    '<input id="pc-q" type="text" autocomplete="off" placeholder="Escribe un capítulo, un repaso o una acción..." '+
+    'oninput="pcPinta()" aria-label="Buscar"></div>'+
+    '<div class="pc-l" id="pc-l"></div>'+
+    '<div class="pc-pie"><span><kbd>↑↓</kbd> mueve</span><span><kbd>↵</kbd> abre</span>'+
+    '<span><kbd>esc</kbd> cierra</span></div></div>';
+  c.hidden=false;
+  pcPinta();
+  try{document.getElementById('pc-q').focus();}catch(e){}
+}
+
+function cierraPaleta(){
+  const c=document.getElementById('paleta');
+  if(!c)return;
+  pcAbierta=false;c.hidden=true;c.innerHTML='';
+}
+
+function pcPinta(){
+  const l=document.getElementById('pc-l'), q=document.getElementById('pc-q');
+  if(!l)return;
+  pcItems=pcFiltra(q?q.value:'');
+  if(pcSel>=pcItems.length)pcSel=Math.max(0,pcItems.length-1);
+  if(!pcItems.length){
+    l.innerHTML='<p class="pc-nada">Nada con eso. Prueba con «daniel», «trampas» o «errores».</p>';
+    return;
+  }
+  let g='',h='';
+  pcItems.forEach((i,n)=>{
+    if(i.g!==g){g=i.g;h+='<div class="pc-g">'+esc(g)+'</div>';}
+    h+='<button type="button" class="pc-r'+(n===pcSel?' on':'')+'" onclick="pcAbre('+n+')">'+
+      '<span class="ic" aria-hidden="true">'+i.ic+'</span>'+
+      '<b>'+esc(i.t)+'</b><small>'+esc(i.s||'')+'</small></button>';
+  });
+  l.innerHTML=h;
+}
+
+function pcAbre(n){
+  const i=pcItems[n];
+  if(!i)return;
+  cierraPaleta();
+  try{i.f();}catch(e){}
+}
+
+function pcTecla(e){
+  /* Se abre con ⌘K o Ctrl+K, que es lo que ya esperan los dedos de cualquiera
+     que use un editor. */
+  const k=(e.key||'').toLowerCase();
+  if(k==='k'&&(e.metaKey||e.ctrlKey)){
+    e.preventDefault();
+    if(pcAbierta)cierraPaleta();else abrePaleta();
+    return;
+  }
+  if(!pcAbierta)return;
+  if(e.key==='Escape'){e.preventDefault();cierraPaleta();return;}
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    if(!pcItems.length)return;
+    pcSel=(pcSel+(e.key==='ArrowDown'?1:-1)+pcItems.length)%pcItems.length;
+    pcPinta();
+    return;
+  }
+  if(e.key==='Enter'){e.preventDefault();pcAbre(pcSel);}
+}
+
+if(typeof document!=='undefined'&&document.addEventListener)
+  document.addEventListener('keydown',pcTecla);
+
+/* ───────── VISTA DIVIDIDA ─────────
+   MECANISMO
+   El dato y el versículo están en la misma pantalla pero uno debajo del otro,
+   así que compararlos es abrir la hoja del versículo, leerla, cerrarla y volver
+   a buscar el renglón. En un celular no hay alternativa: no hay ancho. En
+   escritorio sí, y a 1440 px sobran 412 px de margen sin usar.
+
+   Aquí el texto queda a la izquierda, PEGADO con `position:sticky`, y el
+   estudio se desplaza solo a la derecha. Es lo único que el escritorio puede
+   hacer y el celular no.
+
+   DECISIÓN DE IMPLEMENTACIÓN: el DOM se reestructura SIEMPRE y el CSS decide si
+   lo pinta en dos columnas. Poner el ancho en un `matchMedia` de JS obligaría a
+   escuchar el `resize` y a rearmar el DOM en cada cambio de tamaño; con la media
+   query, por debajo de 1200 px el flex simplemente no aplica y todo se apila
+   igual que antes.
+
+   Solo en capítulos con texto en `VERS`: Profetas y Reyes y las creencias no
+   tienen el capítulo palabra por palabra, así que no hay nada que poner a la
+   izquierda. */
+function divideVista(d,id){
+  try{
+    if(typeof VERS==='undefined'||!VERS[id])return;
+    const det=d.querySelector(':scope>details.lect');
+    const secs=[...d.querySelectorAll(':scope>.sec')];
+    if(!det||!secs.length)return;
+    /* Abierto de entrada SOLO en dos columnas: ahí un acordeón cerrado deja
+       media pantalla en blanco. En una sola columna sigue cerrado, que es lo
+       que v43 decidió para no estorbarle a quien viene a repasar un dato, y se
+       vio en el render que sin esta guarda quedaba abierto también a 390 px.
+       Es el único sitio donde el JS mira el ancho, y no necesita `resize`: el
+       acordeón lo abre y lo cierra quien quiera con un toque. */
+    det.open=!!(window.matchMedia&&window.matchMedia('(min-width:1200px)').matches);
+    const fila=document.createElement('div');fila.className='vd';
+    const iz=document.createElement('div');iz.className='vd-izq';
+    const de=document.createElement('div');de.className='vd-der';
+    iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
+    de.innerHTML='<p class="vd-rot">El estudio</p>';
+    iz.appendChild(det);
+    secs.forEach(x=>de.appendChild(x));
+    fila.appendChild(iz);fila.appendChild(de);
+    d.insertBefore(fila,d.children[1]);
+  }catch(e){}
 }
 
 function avanza(id,p){S.prog[id]=Math.max(S.prog[id]||0,p);guardar();pintaCaps();}

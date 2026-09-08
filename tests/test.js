@@ -505,6 +505,12 @@ ok(faltanEx.length===0,'El manual documenta los botones de impresión del direct
    Se cuenta sobre el código y el manual, no sobre index.html, porque ahí el
    chequeo sería circular. */
 const CSS=fs.readFileSync(FUENTE('estilos.css'),'utf8');
+/* El CSS sin comentarios, declarado JUNTO a su fuente y no donde se usa por
+   primera vez: es la cuarta vez que este proyecto se cae por TDZ (diaHoy,
+   MARCA_V, vozBtn y ahora esta). Hace falta porque una afirmacion NEGATIVA
+   sobre una regla se cae con su propio comentario: `[^}]*` cruza el comentario
+   que EXPLICA por que la propiedad no esta, y la encuentra ahi. */
+const CSS_SIN=CSS.replace(/\/\*[\s\S]*?\*\//g,'');
 const FUENTES_TABLA=['app.js','manual.js'].map(f=>fs.readFileSync(FUENTE(f),'utf8')).join('\n');
 const tablas=(FUENTES_TABLA.match(/<table class="info-table"/g)||[]).length;
 ok(tablas>0,'Hay tablas info-table que revisar ('+tablas+')');
@@ -1267,6 +1273,44 @@ ok(/\.nav-yo \.yo-tip\{[^}]*pointer-events:none/.test(ESCRITORIO),
 ok(!/b\.setAttribute\('title'/.test(js),
   'La ficha ya no usa el title del navegador, que se doblaria con el globo');
 
+/* ───────── vista dividida ─────────
+   El DOM se reestructura SIEMPRE y el CSS decide si lo pinta en dos columnas.
+   Un matchMedia de JS para el layout obligaria a escuchar el resize y rearmar
+   el DOM en cada cambio de tamano; con la media query, por debajo de 1200px el
+   flex no aplica y todo se apila igual que antes. */
+ok(/function divideVista\(d,id\)/.test(js),'Existe divideVista()');
+ok(/divideVista\(d,id\);/.test(js)&&js.indexOf('divideVista(d,id);')<js.indexOf('function divideVista'),
+  'y verCap() la llama despues de armar el detalle');
+const bloqueVd=js.slice(js.indexOf('function divideVista'),js.indexOf('function divideVista')+1400);
+ok(/if\(typeof VERS==='undefined'\|\|!VERS\[id\]\)return;/.test(bloqueVd),
+  'Solo parte capitulos con texto RV1995: en P&R no habria nada en la izquierda');
+ok(/@media \(min-width:1200px\)\{\s*\.vd\{display:flex/.test(CSS_SIN),
+  'Las dos columnas son una media query, no una decision del JS');
+ok(/\.vd-izq\{position:sticky/.test(CSS_SIN),
+  'La columna del texto se queda pegada mientras el estudio se desplaza');
+ok(/\.vd-izq\{[^}]*max-height:calc\(100vh/.test(CSS_SIN),
+  'con max-height, o la columna crece y deja de estar pegada');
+/* El unico sitio donde el JS mira el ancho es el `open` inicial del acordeon:
+   sin la guarda quedaba abierto tambien a 390px, contra la decision de v43. */
+ok(/det\.open=!!\(window\.matchMedia&&window\.matchMedia\('\(min-width:1200px\)'\)\.matches\);/.test(js),
+  'El acordeon se abre de entrada SOLO en dos columnas');
+
+/* ───────── paleta de comandos ─────────
+   La lista sale de los mismos datos del material: no hay un catalogo aparte. */
+ok(/function pcCatalogo\(\)/.test(js)&&/id="paleta"/.test(CUERPO),'Existe la paleta y su capa');
+const bloquePc=js.slice(js.indexOf('function pcCatalogo'),js.indexOf('function abrePaleta'));
+ok(/capsDe\(\)\.forEach/.test(bloquePc)&&/modsDe\(\)\.forEach/.test(bloquePc)
+   &&/Object\.keys\(CATS\)/.test(bloquePc),
+  'El catalogo se arma de capsDe(), modsDe() y CATS, no de una lista a mano');
+ok(/k==='k'&&\(e\.metaKey\|\|e\.ctrlKey\)/.test(js),'Se abre con Cmd+K o Ctrl+K');
+ok(/e\.key==='Escape'\).*cierraPaleta\(\)/s.test(js),'Escape cierra');
+ok(/normalize\('NFD'\)\.replace\(\/\[\\u0300-\\u036f\]\/g,''\)/.test(js.slice(js.indexOf('const pcLimpia'))),
+  'El filtro normaliza sin tildes, igual que la comparacion de respuestas');
+/* La fila seleccionada se marca con fondo Y barra al borde: se navega con
+   teclado, y el dedo no esta guiando la vista. */
+ok(/\.pc-r\.on\{box-shadow:inset 3px 0 0/.test(CSS_SIN),
+  'La fila activa lleva barra al borde, no solo color de texto');
+
 /* ───────── las senales no pueden empujar la barra ─────────
    Si una insignia ocupara sitio en el flujo, la barra de cinco pestanas
    cambiaria de alto cada vez que aparece o desaparece un numero, y eso mueve
@@ -1302,10 +1346,6 @@ ok(/body\.leyendo\{overflow:hidden\}/.test(CSS),
   'Mientras se lee, el scroll de atras esta bloqueado');
 ok(/\.lec-caja>\*\{max-width:62ch/.test(CSS),
   'El ancho de linea esta acotado a 62 caracteres, que es la medida que manda');
-/* CSS_SIN es el CSS sin comentarios. Hace falta porque una afirmacion negativa
-   sobre una regla se cae con su propio comentario: `[^}]*` cruza el comentario
-   que EXPLICA por que la propiedad no esta, y la encuentra ahi. */
-const CSS_SIN=CSS.replace(/\/\*[\s\S]*?\*\//g,'');
 ok(!/\.lec-caja\{[^}]*scroll-behavior:smooth/.test(CSS_SIN),
   'Sin scroll-behavior:smooth: pelea con el flick del dedo y atrasa la barra de avance');
 ok(/e\.key==='Escape'&&lectCid/.test(js),'Escape cierra la lectura, igual que la hoja');
