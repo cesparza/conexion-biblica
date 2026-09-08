@@ -678,12 +678,18 @@ const TODO_MC=[...BANCO,...MATU2.MAT_BANCO,...require(path.join(RAIZ,'fuente','c
    HISTORIA DEL TECHO: empezó en 38% cuando se midió por primera vez, y bajó a
    22% al reescribir los distractores de 82 preguntas. Cada vez que baje de
    verdad, se baja el techo: así la deuda no puede volver a crecer. */
+/* Dos condiciones, no una: 25% más larga Y al menos 10 caracteres de
+   diferencia. Sin la segunda, la medida se queja de «Cuatro» contra «Tres» en
+   opciones de una palabra, que es una diferencia que nadie ve, y esconde las
+   que sí importan detrás del ruido. */
 const larga=q=>{const L=q.o.map(o=>String(o).length);
-  return L[q.a]>Math.max(...L.filter((_,i)=>i!==q.a))*1.25;};
+  const ot=Math.max(...L.filter((_,i)=>i!==q.a));
+  return L[q.a]>ot*1.25 && L[q.a]-ot>=10;};
 /* La medida es de DOS LADOS. Al alargar distractores se puede caer en el sesgo
    contrario, que se explota igual: escoger siempre la más corta. */
 const corta=q=>{const L=q.o.map(o=>String(o).length);
-  return L[q.a]*1.25<Math.min(...L.filter((_,i)=>i!==q.a));};
+  const ot=Math.min(...L.filter((_,i)=>i!==q.a));
+  return L[q.a]*1.25<ot && ot-L[q.a]>=10;};
 const delatoras=TODO_MC.filter(larga).length;
 const pctDelata=Math.round(delatoras/TODO_MC.length*100);
 const pctCorta=Math.round(TODO_MC.filter(corta).length/TODO_MC.length*100);
@@ -692,10 +698,19 @@ const masLarga=TODO_MC.filter(q=>{
   const L=q.o.map(o=>String(o).length);
   return L[q.a]===Math.max(...L);
 }).length;
-ok(pctDelata<=22,
+ok(pctDelata<=13,
   'La correcta se delata por tamaño (más de 25% más larga) en el '+pctDelata+'% de '+
-  TODO_MC.length+' múltiples — techo 22%; y es la más larga en el '+
+  TODO_MC.length+' múltiples — techo 13%; y es la más larga en el '+
   Math.round(masLarga/TODO_MC.length*100)+'%');
+
+/* El alcance del campamento tiene techo propio y más bajo: es el examen que se
+   va a presentar. El resto del banco puede ir más atrás sin que eso afecte la
+   nota del 9 de octubre. */
+const CAMP_MC=BANCO.filter(q=>q.t==='mc'&&q.o&&q.o.length===4&&
+  ['d1','d3','d6','pr39','pr41','pr44'].includes(q.cap));
+const pctCamp=Math.round(CAMP_MC.filter(larga).length/CAMP_MC.length*100);
+ok(pctCamp<=5,'En el alcance del campamento el sesgo por tamaño es del '+pctCamp+
+  '% de '+CAMP_MC.length+' múltiples (techo 5%)');
 
 /* Lo mismo con verdadero o falso: si la mayoría son verdaderas, contestar
    siempre «verdadero» saca nota. */
