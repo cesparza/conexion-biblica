@@ -3,7 +3,11 @@
 
 const CAPS = [
   { id:'d1', label:'Daniel 1', sub:'Cautivos en Babilonia', src:'Biblia', color:'#E8720C', cats:['me','av','pa','gm'] },
-  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', cats:['me','av','pa','gm'] },
+  /* El reglamento del campamento quedo en Daniel 1, 3 y 6, asi que Daniel 2
+     sale del EXAMEN de esas categorias pero se sigue estudiando: `extra`
+     lista las categorias para las que el capitulo es solo material. Guias
+     Mayores es otro evento y ahi Daniel 2 si cuenta. */
+  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', cats:['me','av','pa','gm'], extra:['me','av','pa'] },
   { id:'d3', label:'Daniel 3', sub:'La imagen de oro y el horno', src:'Biblia', color:'#C0392B', cats:['me','av','pa','gm'] },
   { id:'d4', label:'Daniel 4', sub:'Nabucodonosor humillado', src:'Biblia', color:'#7B5E00', cats:['gm'] },
   { id:'d5', label:'Daniel 5', sub:'La escritura en la pared', src:'Biblia', color:'#8B1A5E', cats:['gm'] },

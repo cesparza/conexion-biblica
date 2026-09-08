@@ -319,6 +319,16 @@ const MANUAL = [
   { t:'Guías Mayores',
     h:`<div class="warn-box">No está en el reglamento del campamento: es el
     alcance ampliado, Daniel 1 al 6 y P&R 39 al 44, para el otro evento.</div>` },
+  { t:'Daniel 2 se estudia pero no se examina',
+    h:`<p>El reglamento del campamento pide <strong>Daniel 1, 3 y 6</strong> y los
+    capítulos <strong>39, 41 y 44</strong> de Profetas y Reyes. Daniel 2 quedó
+    fuera de esa lista.</p>
+    <p>En la app sigue estando completo para leerlo, con sus tarjetas y sus
+    módulos de repaso, pero <strong>ninguna de sus preguntas sale en un examen</strong>
+    de Menores, Aventureros o Padres. En la lista de capítulos va marcado
+    «Solo para estudiar», para que nadie crea que la app se equivocó.</p>
+    <p>En <strong>Guías Mayores</strong> sí entra al examen: ese es otro evento y su
+    alcance no lo toca el reglamento del campamento.</p>` },
   ]},
 
 { id:'d-montar', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg>', t:'Montar a los participantes',

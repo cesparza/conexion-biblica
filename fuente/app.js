@@ -350,10 +350,19 @@ function borraAlumno(){
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
-/* Para exámenes se excluyen los capítulos marcados `extra`: están para
-   estudiar, pero el reglamento no los pide (hoy, el 31 de octubre). */
+/* Un capítulo `extra` se estudia pero no se examina.
+   MECANISMO: `extra` era un booleano global y eso alcanzaba mientras el
+   capítulo estuviera fuera del examen de TODOS. Con el reglamento nuevo no
+   alcanza: el campamento quedó en Daniel 1, 3 y 6, así que Daniel 2 sale del
+   examen de Menores, Aventureros y Padres, pero Guías Mayores es otro evento y
+   ahí sí cuenta. Por eso `extra` acepta también una lista de categorías.
+   El booleano sigue funcionando y es lo que usa el día 31 de la matutina. */
+const soloEstudio=(c,cat)=>Array.isArray(c.extra)?c.extra.includes(cat):!!c.extra;
+
+/* Para exámenes se excluyen los capítulos que para ESTA categoría son solo
+   material de estudio. */
 const bancoDe=()=>{
-  const ids=capsDe().filter(c=>!c.extra).map(c=>c.id);
+  const ids=capsDe().filter(c=>!soloEstudio(c,S.cat)).map(c=>c.id);
   return BANCO.filter(q=>ids.includes(q.cap));
 };
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
@@ -620,6 +629,9 @@ function pintaCaps(){
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     '<div class="n" style="color:'+c.color+'">'+esc(c.label.replace(/^(Daniel |P&R )/,''))+'</div>'+
     '<div class="t">'+esc(c.sub)+'</div><div class="f">'+esc(c.src)+'</div>'+
+    /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
+       parece un error de la app. Se dice donde se toma la decisión de leerlo. */
+    (soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
     '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>').join('');
   const mods=modsDe().map(m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+

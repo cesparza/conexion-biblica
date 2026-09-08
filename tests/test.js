@@ -155,16 +155,19 @@ function refsQ(q){
 }
 const cub=new Set(); BANCO.forEach(q=>refsQ(q).forEach(r=>cub.add(r)));
 
-/* Alcance OFICIAL del campamento (Daniel 1-3 y 6): la meta es 100%.
-   Si al editar el banco se cae un versículo, esta prueba lo caza. */
-const OFICIAL={d1:21,d2:49,d3:30,d6:28};
+/* Alcance OFICIAL del campamento: el reglamento quedó en DANIEL 1, 3 y 6, más
+   los capítulos 39, 41 y 44 de Profetas y Reyes. La meta es 100%: si al editar
+   el banco se cae un versículo, esta prueba lo caza.
+   Daniel 2 salió de esta lista y pasa al piso del alcance ampliado. Está al
+   100% y así se queda, pero ya no es la prueba la que lo obliga. */
+const OFICIAL={d1:21,d3:30,d6:28};
 let huecos=[];
 for(const [c,n] of Object.entries(OFICIAL)){
   const falta=[]; for(let v=1;v<=n;v++) if(!cub.has(c+':'+v)) falta.push(v);
   if(falta.length) huecos.push(`${c}: ${falta.join(', ')}`);
 }
 ok(huecos.length===0,
-  'Alcance oficial: los 128 versículos de Daniel 1, 2, 3 y 6 tienen pregunta'
+  'Alcance oficial: los 79 versículos de Daniel 1, 3 y 6 tienen pregunta'
   + (huecos.length?' — SIN PREGUNTA -> '+huecos.join(' · '):''));
 
 /* Alcance ampliado (Guías Mayores): piso más bajo, es otro evento. */
@@ -174,7 +177,7 @@ for(const [c,n] of Object.entries(VERS)){
   let k=0; for(let v=1;v<=n;v++) if(cub.has(c+':'+v)) k++;
   if(k/n < 0.35) flojos.push(`${c} ${Math.round(k/n*100)}%`);
 }
-ok(flojos.length===0, 'Alcance ampliado: Daniel 4 y 5 sobre el 35% de cobertura'
+ok(flojos.length===0, 'Alcance ampliado: Daniel 2, 4 y 5 sobre el 35% de cobertura'
   + (flojos.length?' — flojos: '+flojos.join(', '):''));
 
 const nPR = BANCO.filter(q=>q.cap.slice(0,2)==='pr').length;
@@ -252,8 +255,14 @@ const CAPS_T=[...CAPS,...MATU2.MAT_CAPS];
 const BANCO_T=[...BANCO,...MATU2.MAT_BANCO];
 const CATS_T={me:10,av:15,pa:25,gm:25,dm1:10,dm2:15};
 
+/* Mismo criterio que bancoDe() en la app: `extra` puede ser un booleano
+   (fuera del examen de todos) o una lista de categorías (fuera del de esas).
+   Si este helper y la app filtran distinto, el examen impreso trae capítulos
+   que el de pantalla no, y nadie lo nota hasta que la hoja está en la mano. */
+const soloEstudioT=(c,cat)=>Array.isArray(c.extra)?c.extra.includes(cat):!!c.extra;
+
 function selDe(cat,n){
-  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!c.extra).map(c=>c.id);
+  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!soloEstudioT(c,cat)).map(c=>c.id);
   const b=BANCO_T.filter(q=>ids.includes(q.cap));
   const mc=b.filter(q=>q.t==='mc').slice(0,Math.max(1,Math.round(n*.6)));
   const tf=b.filter(q=>q.t==='tf').slice(0,Math.max(1,Math.round(n*.25)));
@@ -615,6 +624,39 @@ const bloquePanel=APPJS.slice(APPJS.indexOf('async function pintaPanel'),APPJS.i
 const trozoAbierta=bloquePanel.slice(bloquePanel.indexOf('if(hayEval){'),bloquePanel.indexOf('d.innerHTML=\'<div class="det-cuerpo">\'+\n\n'));
 ok(/cierraEvaluacion/.test(trozoAbierta)&&!/abreEvaluacion/.test(trozoAbierta),
   'Con evaluación abierta el panel solo ofrece cerrarla, nunca abrir otra');
+
+/* ───────── el alcance del campamento ─────────
+   MECANISMO: `extra` marca un capítulo que se estudia y no se examina. Era un
+   booleano global, y con el reglamento nuevo eso ya no alcanza: el campamento
+   quedó en Daniel 1, 3 y 6, pero Guías Mayores es otro evento y ahí Daniel 2 sí
+   entra al examen. El mismo capítulo tiene que estar fuera del examen de unas
+   categorías y dentro del de otras, así que `extra` acepta una lista.
+   Estas pruebas existen porque el error se vería en un examen, no en la app. */
+const CAMPAMENTO=['me','av','pa'];
+const bancoCat=cat=>{
+  const ids=CAPS_T.filter(c=>c.cats.includes(cat)&&!soloEstudioT(c,cat)).map(c=>c.id);
+  return BANCO_T.filter(q=>ids.includes(q.cap));
+};
+for(const cat of CAMPAMENTO){
+  ok(bancoCat(cat).every(q=>q.cap!=='d2'),
+    'Campamento ('+cat+'): ninguna pregunta de Daniel 2 entra al examen');
+  ok(CAPS_T.some(c=>c.id==='d2'&&c.cats.includes(cat)),
+    'Campamento ('+cat+'): Daniel 2 SIGUE disponible para estudiar');
+}
+ok(bancoCat('gm').some(q=>q.cap==='d2'),
+  'Guías Mayores conserva Daniel 2 en su examen: es otro evento');
+for(const c of ['d1','d3','d6']){
+  ok(bancoCat('av').some(q=>q.cap===c),'Aventureros examina '+c);
+}
+for(const c of ['pr39','pr41','pr44']){
+  ok(bancoCat('av').some(q=>q.cap===c),'Aventureros examina '+c);
+}
+ok(bancoCat('av').every(q=>!['pr40','pr42','pr43'].includes(q.cap)),
+  'Aventureros no examina los capítulos de P&R que no le tocan');
+/* El aviso en pantalla: un capítulo que se estudia y nunca sale en el examen
+   parece un error de la app si no se dice. */
+ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APPJS),
+  'La lista de capítulos marca «Solo para estudiar» el que no entra al examen');
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);
