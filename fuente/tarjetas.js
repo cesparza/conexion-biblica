@@ -37,7 +37,7 @@ const TARJETAS = [
   {cap:'d3', f:'Los seis instrumentos, en orden (RV1995)', r:'Bocina, flauta, CÍTARA, arpa, salterio y zampoña (3:5). La RV1960 dice «tamboril» en el tercer lugar'},
   {cap:'d3', f:'Instrumento que NO aparece en Daniel 3', r:'La trompeta'},
   {cap:'d3', f:'Cuántas veces más caliente el horno', r:'SIETE veces más de lo acostumbrado (3:19)'},
-  {cap:'d3', f:'Con qué ropa entraron al horno', r:'Con sus mantos, sus calzas, sus turbantes y sus vestidos (3:21)'},
+  {cap:'d3', f:'Con qué ropa entraron al horno', r:'Con sus mantos, sus calzados, sus turbantes y sus vestidos (3:21)'},
   {cap:'d3', f:'Qué les pasó a los que los echaron', r:'La llama del fuego los mató (3:22)'},
   {cap:'d3', f:'Cuántos vio el rey en el horno', r:'CUATRO varones sueltos (3:25)'},
   {cap:'d3', f:'Cómo describió Nabucodonosor al cuarto del horno', r:'«Semejante a un hijo de los dioses» (3:25, RV1995). P&R 41: era el Hijo de Dios mismo'},
@@ -74,10 +74,10 @@ const TARJETAS = [
   {cap:'d6', f:'Cuántos días duraba el edicto', r:'TREINTA días (6:7)'},
   {cap:'d6', f:'Cuántas veces al día oraba', r:'TRES veces al día (6:10)'},
   {cap:'d6', f:'Hacia dónde daban sus ventanas', r:'Hacia Jerusalén (6:10)'},
-  {cap:'d6', f:'La frase final de Daniel 6:10', r:'«...como lo solía hacer antes»'},
+  {cap:'d6', f:'La frase final de Daniel 6:10', r:'«...como solía hacerlo antes»'},
   {cap:'d6', f:'Con qué se selló la piedra del foso', r:'Con el anillo del rey y con el de sus príncipes (6:17)'},
-  {cap:'d6', f:'Qué hizo el rey esa noche', r:'Pasó la noche en ayuno, sin instrumentos de música, y se le fue el sueño (6:18)'},
-  {cap:'d6', f:'Cuándo fue el rey al foso', r:'Muy de mañana, al rayar el alba (6:19)'},
+  {cap:'d6', f:'Qué hizo el rey esa noche', r:'Se acostó en ayunas; no trajeron ante él instrumentos musicales, y se le fue el sueño (6:18)'},
+  {cap:'d6', f:'Cuándo fue el rey al foso', r:'Se levantó muy de mañana y fue apresuradamente al foso (6:19)'},
   {cap:'d6', f:'Qué respondió Daniel desde el foso', r:'«Mi Dios envió su ángel, el cual cerró la boca de los leones» (6:22)'},
 
   // P&R
@@ -97,5 +97,67 @@ const TARJETAS = [
   {cap:'pr44', f:'Qué caracterizaba la oración de Daniel', r:'Era la fuente diaria de su fortaleza, no una emergencia'},
   {cap:'pr44', f:'Qué edad tenía Daniel en el foso', r:'Más de ochenta años'},
 ];
+
+
+/* ─── Ampliación 8-sep: más tarjetas para los tres capítulos del reglamento
+   nuevo (Daniel 1, 3 y 6), con dos formas que no existían: el VERSÍCULO CLAVE
+   (frente la referencia, reverso el texto exacto) y la CIFRA. Todo el texto
+   entre comillas viene verificado del RV1995. ─── */
+TARJETAS.push(
+  // Daniel 1
+  {cap:'d1', f:'¿Quién entregó a Joacim en manos de Nabucodonosor?', r:'<b>El Señor</b> (1:2). No fue el ejército: el texto lo dice así'},
+  {cap:'d1', f:'Tierra a donde llevaron los utensilios', r:'Tierra de <b>Sinar</b>, a la casa del tesoro de su dios (1:2)'},
+  {cap:'d1', f:'Linaje de los muchachos escogidos', r:'Del <b>linaje real de los príncipes</b> (1:3)'},
+  {cap:'d1', f:'Qué debía enseñarles Aspenaz', r:'Las <b>letras y la lengua de los caldeos</b> (1:4)'},
+  {cap:'d1', f:'Para qué debían ser idóneos', r:'Para <b>estar en el palacio del rey</b> (1:4)'},
+  {cap:'d1', f:'Beltsasar o Belsasar', r:'<b>Beltsasar</b> es Daniel (1:7). <b>Belsasar</b> es el rey del banquete del capítulo 5. Dos personas distintas'},
+  {cap:'d1', f:'Cuántos versículos tiene Daniel 1', r:'<b>21</b> versículos'},
+  {cap:'d1', f:'Cuántos capítulos tiene el libro de Daniel', r:'<b>12</b> capítulos. El campamento cubre 1, 3 y 6'},
+  {cap:'d1', f:'Versículo clave <b>1:8</b>', r:'«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía»'},
+  {cap:'d1', f:'Versículo clave <b>1:17</b>', r:'«Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños»'},
+  // Daniel 3
+  {cap:'d3', f:'De qué material era la estatua', r:'De <b>oro</b> (3:1)'},
+  {cap:'d3', f:'Quién hizo levantar la estatua', r:'El rey <b>Nabucodonosor</b> (3:1)'},
+  {cap:'d3', f:'Sobre qué estaban puestos los tres jóvenes', r:'Sobre los <b>negocios de la provincia de Babilonia</b> (3:12)'},
+  {cap:'d3', f:'De qué dijeron que Dios podía librarlos', r:'Del <b>horno de fuego ardiente</b> y de <b>las manos del rey</b> (3:17)'},
+  {cap:'d3', f:'Quién NO aparece en Daniel 3', r:'<b>Daniel</b>. Los tres del horno son Sadrac, Mesac y Abed-nego'},
+  {cap:'d3', f:'Cómo llamó el rey a los tres al sacarlos', r:'«Siervos del <b>Dios Altísimo</b>» (3:26)'},
+  {cap:'d3', f:'Qué dijo Nabucodonosor que Dios envió', r:'Su <b>ángel</b>, que libró a sus siervos que confiaron en él (3:28)'},
+  {cap:'d3', f:'Qué hizo el rey con los tres al final', r:'Los <b>engrandeció</b> en la provincia de Babilonia (3:30)'},
+  {cap:'d3', f:'Cuántos versículos tiene Daniel 3', r:'<b>30</b> versículos'},
+  {cap:'d3', f:'Versículo clave <b>3:17</b>', r:'«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará»'},
+  // Daniel 6
+  {cap:'d6', f:'Para qué puso Darío tres gobernadores', r:'Para que <b>el rey no fuera perjudicado</b> (6:2)'},
+  {cap:'d6', f:'Qué pensó el rey hacer con Daniel', r:'<b>Ponerlo sobre todo el reino</b> (6:3)'},
+  {cap:'d6', f:'Qué pusieron sobre la puerta del foso', r:'Una <b>piedra</b>, sellada con el anillo del rey y con el de sus príncipes (6:17)'},
+  {cap:'d6', f:'Qué les pasó a los acusadores', r:'Fueron echados al foso con sus hijos y sus mujeres; los leones <b>quebraron todos sus huesos</b> (6:24)'},
+  {cap:'d6', f:'A quiénes escribió Darío al final', r:'A <b>todos los pueblos, naciones y lenguas</b>: «Paz os sea multiplicada» (6:25)'},
+  {cap:'d6', f:'Cuántos versículos tiene Daniel 6', r:'<b>28</b> versículos'},
+  {cap:'d6', f:'Versículo clave <b>6:10</b>', r:'«se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes»'},
+  {cap:'d6', f:'Versículo clave <b>6:22</b>', r:'«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño»'},
+  {cap:'d6', f:'Versículo clave <b>6:26</b>', r:'«su reino no será jamás destruido y su dominio perdurará hasta el fin»'},
+  {cap:'d6', f:'Reyes en cuyos reinados prosperó Daniel', r:'<b>Darío</b> y <b>Ciro</b>, el persa (6:28)'}
+);
+
+
+/* ─── Ampliación 8-sep: tarjetas de P&R 39, 41 y 44, los tres que entran al
+   reglamento. Pasan de 3 a 8 por capítulo, con FRASE CLAVE del libro. ─── */
+TARJETAS.push(
+  {cap:'pr39', f:'A quién ordenó el rey traer a los jóvenes', r:'A <b>Aspenaz</b>, príncipe de sus eunucos'},
+  {cap:'pr39', f:'Por qué les cambiaron los nombres', r:'Por otros que <b>conmemoraban divinidades caldeas</b>: era el primer paso para que renunciaran a su fe'},
+  {cap:'pr39', f:'Qué historia sobre la intemperancia conocían', r:'La de <b>Nadab y Abihú</b>, descrita en el Pentateuco'},
+  {cap:'pr39', f:'Quién les inculcó la templanza', r:'Sus <b>padres</b>, desde temprano en la vida'},
+  {cap:'pr39', f:'Frase clave de P&R 39', r:'«Fué la fidelidad en las <b>cosas pequeñas</b> lo que dió carácter a toda su vida»'},
+  {cap:'pr41', f:'En qué se diferenció la imagen de Dura', r:'Era <b>toda de oro</b>. En el sueño había descenso de valores desde la cabeza hasta los pies'},
+  {cap:'pr41', f:'Quiénes propusieron hacer la imagen', r:'Los <b>sabios del reino</b>, aprovechando la frase «tú eres aquella cabeza de oro»'},
+  {cap:'pr41', f:'Qué fue lo único que se quemó', r:'Solo <b>sus ligaduras</b>'},
+  {cap:'pr41', f:'Qué promesa recordaron en la prueba', r:'Isaías 43:2: «Cuando pasares por el fuego, no te quemarás»'},
+  {cap:'pr41', f:'Frase clave de P&R 41', r:'«Nunca compele Dios a los hombres a <b>obedecer</b>. Deja a todos libres para elegir a quien quieren servir»'},
+  {cap:'pr44', f:'Qué despertaron los honores de Daniel', r:'Los <b>celos</b> de los principales del reino'},
+  {cap:'pr44', f:'A qué apelaron para que Darío firmara', r:'A su <b>vanidad</b>: le dijeron que el edicto acrecentaría su honor y autoridad'},
+  {cap:'pr44', f:'Quién estaba detrás de la conspiración', r:'<b>Satanás</b>, por medio de los príncipes envidiosos'},
+  {cap:'pr44', f:'Cuántas veces lo vieron orar', r:'<b>Tres veces</b> en un solo día: lo vigilaron todo el día'},
+  {cap:'pr44', f:'Frase clave de P&R 44', r:'«...ninguna potencia terrenal tiene derecho a interponerse entre el <b>alma</b> y Dios»'}
+);
 
 module.exports = { TARJETAS };

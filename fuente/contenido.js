@@ -213,7 +213,7 @@ d3: [
   { t:'🔥 El horno de fuego', h:
     hi(`• El rostro de Nabucodonosor se demudó contra ellos (3:19)<br>
     • Mandó calentar el horno <strong>SIETE veces más</strong> de lo acostumbrado (3:19)<br>
-    • Fueron atados con <strong>sus mantos, sus calzas, sus turbantes y sus vestidos</strong> (3:21)<br>
+    • Fueron atados con <strong>sus mantos, sus calzados, sus turbantes y sus vestidos</strong> (3:21)<br>
     • A los <strong>varones vigorosos</strong> que los echaron, <strong>la llama del fuego los mató</strong> (3:22)<br>
     • Nabucodonosor vio <strong>CUATRO varones sueltos</strong> paseándose en medio del fuego (3:25)<br>
     • El aspecto del cuarto: <strong>«semejante a un hijo de los dioses»</strong> (3:25, RV1995)<br>
@@ -372,7 +372,7 @@ d6: [
     <strong>como solía hacerlo antes</strong>.» (Daniel 6:10)`) +
     wa(`Fíjate en tres cosas que suelen preguntarse por separado:
     <strong>hacia Jerusalén</strong>, <strong>tres veces al día</strong>,
-    y <strong>como lo solía hacer antes</strong> — no cambió su costumbre por miedo.`) },
+    y <strong>como solía hacerlo antes</strong> — no cambió su costumbre por miedo.`) },
 
   { t:'🦁 El foso de los leones', h:
     tbl(['#','Evento','Ref.'],[
@@ -382,8 +382,8 @@ d6: [
       ['4','Los hombres insisten: la ley no puede ser abrogada','6:15'],
       ['5','Daniel es echado al foso; el rey le dice: «El Dios tuyo te libre»','6:16'],
       ['6','Una piedra sella la puerta, con el <strong>anillo del rey y el de sus príncipes</strong>','6:17'],
-      ['7','El rey pasó <strong>la noche en ayuno</strong>, sin instrumentos de música, y se le fue el sueño','6:18'],
-      ['8','<strong>Muy de mañana, al rayar el alba</strong>, fue apresuradamente al foso','6:19'],
+      ['7','El rey <strong>se acostó en ayunas</strong>; no trajeron ante él instrumentos musicales, y se le fue el sueño','6:18'],
+      ['8','<strong>Se levantó muy de mañana</strong> y fue apresuradamente al foso','6:19'],
       ['9','Clamó con voz triste: «¿te ha podido librar de los leones?»','6:20'],
       ['10','Daniel responde desde el foso','6:21-22'],
       ['11','Sacado del foso, <strong>ninguna lesión se halló en él, porque había confiado en su Dios</strong>','6:23'],
@@ -622,5 +622,50 @@ pr44: [
 ],
 
 };
+
+
+/* ─── Ampliación 8-sep: sección de VERSÍCULOS CLAVE en los tres capítulos del
+   reglamento del campamento (Daniel 1, 3 y 6).
+   POR QUÉ: la sección III del examen real es completar el versículo, y hasta
+   ahora el material de estudio explicaba el capítulo pero no ponía el texto
+   literal a la vista. Estos son los mismos versículos que el banco pide
+   completar, así que se estudia exactamente lo que se evalúa.
+   El texto es RV1995 verbatim, sin abreviar. ─── */
+const VERS_CLAVE = {
+  d1: [
+    ['1:8','Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.'],
+    ['1:12','Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.'],
+    ['1:15','Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.'],
+    ['1:17','A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.'],
+    ['1:20','En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.'],
+    ['1:21','Así continuó Daniel hasta el año primero del rey Ciro.'],
+  ],
+  d3: [
+    ['3:1','El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.'],
+    ['3:17','Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.'],
+    ['3:18','Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.'],
+    ['3:25','Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.'],
+    ['3:27','...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.'],
+    ['3:28','Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...'],
+  ],
+  d6: [
+    ['6:4','Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.'],
+    ['6:10','Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.'],
+    ['6:16','El Dios tuyo, a quien tú continuamente sirves, él te libre.'],
+    ['6:22','Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.'],
+    ['6:26','...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.'],
+    ['6:27','Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.'],
+  ],
+};
+
+for (const cap of Object.keys(VERS_CLAVE)) {
+  CONTENIDO[cap].push({
+    t: '📖 Versículos clave (RV1995)',
+    h: '<div class="highlight-box"><strong>Estos son los que el examen pide completar.</strong> ' +
+       'Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.</div>' +
+       VERS_CLAVE[cap].map(v =>
+         '<p><strong>' + v[0] + '</strong><br>«' + v[1] + '»</p>').join(''),
+  });
+}
 
 module.exports = { CAPS, CONTENIDO };

@@ -157,7 +157,7 @@ const CONT_MODULOS = {
       ['La cabeza era de plata','la cabeza era de <strong>oro fino</strong>','2:32'],
       ['Golpeó la cabeza','hirió la imagen <strong>en sus pies</strong>','2:34'],
       ['Aparece la trompeta','<strong>no aparece</strong> en la lista de seis','3:5'],
-      ['Los desnudaron','entraron con <strong>mantos, calzas, turbantes y vestidos</strong>','3:21'],
+      ['Los desnudaron','entraron con <strong>mantos, calzados, turbantes y vestidos</strong>','3:21'],
       ['«no olían a humo»','<strong>ni olor de fuego había en ellos</strong>','3:27'],
     ]) },
 
@@ -172,7 +172,7 @@ const CONT_MODULOS = {
       ['Cien sátrapas','<strong>ciento veinte</strong> sátrapas','6:1'],
       ['Solo el anillo del rey','el anillo del rey <strong>y el de sus príncipes</strong>','6:17'],
       ['El rey durmió intranquilo','<strong>se le fue el sueño</strong>; no durmió','6:18'],
-      ['Daniel dejó de orar','siguió <strong>como lo solía hacer antes</strong>','6:10'],
+      ['Daniel dejó de orar','siguió <strong>como solía hacerlo antes</strong>','6:10'],
     ]) },
 
   { t:'🎭 Distractores típicos del examen', h:
@@ -224,7 +224,7 @@ const CONT_MODULOS = {
     vs(`«Cuando Daniel supo que el edicto había sido firmado, entró en su casa;
     abiertas las ventanas de su habitación que daban a Jerusalén,
     <strong>se arrodillaba tres veces al día</strong>, y oraba y daba gracias delante de su Dios,
-    <strong>como lo solía hacer antes</strong>.»`) },
+    <strong>como solía hacerlo antes</strong>.»`) },
 
   { t:'📖 Daniel 6:22 — El ángel', h:
     vs(`«<strong>Mi Dios envió su ángel</strong>, el cual cerró la boca de los leones,
