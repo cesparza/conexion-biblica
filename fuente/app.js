@@ -533,6 +533,7 @@ function ir(id){
   if(id==='examen')pintaExInicio();
   if(id==='logros')pintaLogros();
   if(id==='ayuda')pintaAyuda();
+  pintaSenales();
   window.scrollTo({top:0});
 }
 
@@ -875,9 +876,54 @@ function ancla(){
   }catch(e){}
 }
 
+/* ───────── las senales de la barra ─────────
+   MECANISMO
+   Los cuatro datos ya los calcula la app: el promedio de `S.prog`, `tocanHoy()`,
+   `falladasDe()` y `evalPend`. Lo que faltaba no era el dato, era que se viera
+   sin entrar a la pantalla: hasta v51 había que abrir Tarjetas para saber si
+   tocaban tarjetas, y abrir Logros para saber cuántos errores quedaban.
+
+   POR QUÉ ES UN TABLERO Y NO ADORNO
+   La app ya tiene «Qué estudiar hoy», pero solo en Inicio. Estando en Estudiar,
+   nada decía que había 25 tarjetas esperando. La barra está en las cinco
+   pantallas, así que es el único sitio donde el pendiente cabe siempre.
+
+   Se llama desde `ir()`, o sea en cada navegación, y desde `pintaInicio()`. Los
+   nodos ya existen en el HTML: aquí solo se llenan o se esconden. */
+function senal(id,valor){
+  const e=document.getElementById(id);
+  if(!e)return;
+  const n=Number(valor)||0;
+  e.hidden=n<=0;
+  if(n>0)e.textContent=n>99?'99+':String(n);
+}
+
+function pintaSenales(){
+  try{
+    /* El anillo de Estudiar promedia capítulos Y repasos, que es lo que la
+       insignia «Lector completo» exige: promediar solo capítulos daría 100%
+       con los repasos sin leer. */
+    const items=[...capsDe(),...modsDe()];
+    const pct=items.length
+      ?Math.round(items.reduce((a,c)=>a+Math.min(100,S.prog[c.id]||0),0)/items.length):0;
+    const est=document.getElementById('nv-est');
+    /* En 0 no se muestra: un cero ocupa lugar y no dice nada que la pantalla de
+       Inicio no diga mejor. En 100 sí se muestra, porque «100%» es justo lo que
+       uno quiere ver de reojo. */
+    if(est){est.hidden=pct<=0; if(!est.hidden)est.textContent=pct+'%';}
+    senal('nv-tj',Math.min(tocanHoy().length,topeSesion()));
+    senal('nv-lg',falladasDe().length);
+    /* El punto verde del examen es lo único que NO sale del progreso propio:
+       sale del servidor, y solo si la evaluación está abierta y sin hacer. */
+    const ex=document.getElementById('nv-ex');
+    if(ex)ex.hidden=!(evalPend&&!evalHecha);
+  }catch(e){}
+}
+
 function pintaInicio(){
   pintaAlumnos();
   pintaYo();
+  pintaSenales();
   pintaHoy();
   pintaSelectorCat();
   /* El campo del nombre vive en la hoja, que casi siempre está cerrada. Sin la
@@ -1136,8 +1182,95 @@ function seccionLectura(cid){
   }
   return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
     nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo">'+
+    '<button type="button" class="btn gho lect-full" onclick="abreLectura(\''+cid+'\')">'+
+    '📖 Leer sin distracciones</button>'+
     bloques.join('')+'</div></details>';
 }
+
+/* ───────── MODO LECTURA ─────────
+   MECANISMO
+   El capítulo se lee hoy dentro de la tarjeta de estudio: con el riel al lado,
+   las pestañas abajo, los botones de voz de cada bloque y las secciones de
+   estudio esperando debajo. Eso está bien para repasar un dato y mal para leer
+   treinta versículos seguidos, que es lo que hay que hacer primero.
+
+   Aquí no hay nada nuevo que aprender ni ningún dato que la app no tenga: es el
+   MISMO texto de `VERS` (los 196 versículos que `tools/citas.js` verifica byte
+   a byte contra la RV1995) en una capa que tapa todo lo demás. Se abre, se lee,
+   se cierra. No reemplaza la pantalla de estudio.
+
+   LA MEDIDA QUE MANDA es el ancho de línea: 62 caracteres. Más largo y el ojo
+   pierde el renglón al volver; en la tarjeta de estudio a 1440 px una línea de
+   la Biblia llega a 110 caracteres.
+
+   Al cerrar ofrece marcar el capítulo como leído, que es el gesto que la app ya
+   necesitaba y que hoy hay que ir a buscar abajo de las secciones. */
+let lectCid=null;
+
+function abreLectura(cid){
+  if(typeof VERS==='undefined'||!VERS[cid])return;
+  paraVoz();
+  const c=buscaItem(cid), nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
+  const n=String(cid).replace('d','');
+  const cap=document.getElementById('lectura');
+  if(!cap)return;
+  lectCid=cid;
+  cap.innerHTML=
+    '<div class="lec-barra">'+
+      '<div class="lec-prog"><i id="lec-i" style="width:0%"></i></div>'+
+      '<span class="lec-pct" id="lec-pct">Daniel '+n+'</span>'+
+      (puedeHablar()?'<button type="button" class="lec-voz" onclick="leeCerca(this)" '+
+        'aria-label="Escuchar el capítulo">🔊</button>':'')+
+      '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">✕</button>'+
+    '</div>'+
+    '<div class="lec-caja" id="lec-caja"><h1>'+esc(c?c.sub:'Daniel '+n)+'</h1>'+
+    '<p class="lec-sub">Daniel '+n+' · Reina-Valera 1995 · '+nums.length+' versículos</p>'+
+    '<div class="lec-txt biblia" data-leer>'+
+    nums.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('')+
+    '</div>'+
+    '<div class="lec-fin">'+
+      '<p>Terminaste de leer <strong>Daniel '+n+'</strong>.</p>'+
+      ((S.prog[cid]||0)>=100
+        ?'<p class="lec-ok">✓ Ya lo tenías marcado como estudiado.</p>'
+        :'<button type="button" class="btn nar" onclick="listoDesdeLectura()">Ya lo estudié</button>')+
+      '<button type="button" class="btn gho" onclick="cierraLectura()">Volver al estudio</button>'+
+    '</div></div>';
+  cap.hidden=false;
+  document.body.classList.add('leyendo');
+  const caja=document.getElementById('lec-caja');
+  if(caja){caja.scrollTop=0;caja.onscroll=lectAvance;}
+  lectAvance();
+}
+
+/** La barra de arriba dice cuánto del capítulo se ha recorrido, no cuánto se ha
+ *  entendido: es la posición del scroll, y se dice así en el manual. */
+function lectAvance(){
+  const caja=document.getElementById('lec-caja'), i=document.getElementById('lec-i'),
+        t=document.getElementById('lec-pct');
+  if(!caja||!i)return;
+  const max=caja.scrollHeight-caja.clientHeight;
+  const pct=max>8?Math.min(100,Math.round(caja.scrollTop/max*100)):100;
+  i.style.width=pct+'%';
+  if(t&&lectCid)t.textContent='Daniel '+String(lectCid).replace('d','')+' · '+pct+'%';
+}
+
+function cierraLectura(){
+  paraVoz();
+  const cap=document.getElementById('lectura');
+  if(!cap)return;
+  cap.hidden=true;cap.innerHTML='';
+  lectCid=null;
+  document.body.classList.remove('leyendo');
+}
+
+function listoDesdeLectura(){
+  if(lectCid)listo(lectCid);
+  cierraLectura();
+}
+
+/* Escape cierra, igual que la hoja del versículo. */
+if(typeof document!=='undefined'&&document.addEventListener)
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lectCid)cierraLectura();});
 
 function verCap(id){
   paraVoz();
@@ -1878,6 +2011,7 @@ function entregar(){
      que sea. Eso es lo que la versión con links no podía cumplir. */
   srvIntento(modo,modo==='evaluacion'&&evalActual?evalActual.id:null,pts,tot);
   if(modo==='evaluacion'){evalHecha=true;evalNota={pts,total:tot};try{pintaEvaluacion();}catch(e){}}
+  try{pintaSenales();}catch(e){}
 
   ultimoRes={pts,tot,pct,med,msg,s3};
   document.getElementById('ex-curso').style.display='none';

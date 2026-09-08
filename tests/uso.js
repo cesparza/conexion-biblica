@@ -24,6 +24,8 @@ const RET=`S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, 
         puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
         abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
         pasaAActividad, MAX_ALUMNOS, borraAlumno,
+        pintaSenales, senal, abreLectura, cierraLectura, lectAvance,
+        lectCidActual:()=>lectCid, listoDesdeLectura, modsDe, avanza,
         el:id=>document.getElementById(id)`;
 
 let store={};
@@ -1022,6 +1024,89 @@ W.cambiaAlumno(idVacia);
 W.ponCat('ec1');
 ok(W.S().cat==='ec1'&&W.alumnos().length===antesN,
   'Una ficha sin progreso cambia de actividad en el sitio, sin crear otra');
+
+
+/* ───────── las senales de la barra ─────────
+   Los cuatro datos ya los calculaba la app; lo que faltaba era verlos sin
+   entrar a la pantalla. Lo que estas pruebas fijan es que la senal diga la
+   VERDAD, porque una insignia con un numero viejo es peor que ninguna. */
+store={};
+const N=montar(RET,{store});
+N.ponNombre('Senales'); N.ponCat('av');
+N.pintaSenales();
+ok(N.el('nv-est').hidden,'Sin nada leido, la senal de Estudiar no aparece');
+/* OJO: en una ficha nueva la senal de Tarjetas SI aparece, y esta bien. Todas
+   las tarjetas arrancan en la caja 0, y PLAZO[0] es 0 dias, o sea que el dia
+   uno estan todas vencidas. La barra diciendo «15» el primer dia es la app
+   avisando que hay trabajo hoy, que es justo para lo que sirve. */
+ok(!N.el('nv-tj').hidden&&Number(N.el('nv-tj').textContent)>0,
+  'En una ficha nueva la senal de Tarjetas aparece: todas vencen el dia uno');
+ok(N.el('nv-lg').hidden,'Sin errores, la de Logros no aparece');
+ok(N.el('nv-ex').hidden,'Sin evaluacion abierta, el punto del Examen no aparece');
+
+/* Errores: la senal tiene que cuadrar con falladasDe(), que es lo que el boton
+   «Repasar mis errores» va a armar. */
+const bk=N.bancoDe();
+for(let i=0;i<5;i++)N.ponFq(N.claveQ(bk[i]),2);
+N.pintaSenales();
+ok(N.el('nv-lg').textContent===String(N.falladasDe().length)&&!N.el('nv-lg').hidden,
+  'La senal de Logros dice los errores pendientes ('+N.el('nv-lg').textContent+')');
+
+/* Progreso: promedia capitulos Y repasos. Promediar solo capitulos daria 100%
+   con los repasos sin leer, y la insignia «Lector completo» exige los dos. */
+const items=[...N.capsDe(),...N.modsDe()];
+N.avanza(items[0].id,100);
+N.pintaSenales();
+const esperado=Math.round(items.reduce((a,c)=>a+Math.min(100,N.S().prog[c.id]||0),0)/items.length);
+ok(N.el('nv-est').textContent===esperado+'%',
+  'La senal de Estudiar promedia capitulos y repasos ('+N.el('nv-est').textContent+')');
+
+/* Tope de la sesion: la senal dice lo que se va a estudiar hoy, no el total
+   pendiente. «102 por dominar» no es una tarea; «25 hoy» si. */
+const t=N.tarjetasDe();
+for(let i=0;i<40&&i<t.length;i++)N.ponVisto(N.claveT(t[i]),N.diaHoy()-9);
+N.pintaSenales();
+ok(Number(N.el('nv-tj').textContent)<=N.topeSesion(),
+  'La senal de Tarjetas no pasa del tope de la sesion ('+N.el('nv-tj').textContent+
+  ' con tope '+N.topeSesion()+')');
+/* Un numero de tres cifras rompe la insignia: se corta en 99+. */
+N.senal('nv-tj',250);
+ok(N.el('nv-tj').textContent==='99+','Un numero de tres cifras se corta en 99+');
+/* Y cero esconde, no escribe «0». */
+N.senal('nv-tj',0);
+ok(N.el('nv-tj').hidden,'Cero esconde la senal en vez de escribir un 0');
+
+/* Cada senal es un nodo que YA existe en el HTML: llamar dos veces no duplica. */
+N.pintaSenales();N.pintaSenales();
+ok(!/nv-est.*nv-est/s.test(N.el('nv-est').innerHTML||''),
+  'Repintar las senales no duplica nodos');
+
+
+/* ───────── modo lectura ─────────
+   El mismo texto de VERS en una capa que tapa todo. Lo que se fija: que sea el
+   capitulo completo, que el avance no minta y que al cerrar no deje el body
+   bloqueado, que es como se queda una pagina muerta. */
+N.abreLectura('d3');
+ok(N.lectCidActual()==='d3','El modo lectura se abre en el capitulo pedido');
+ok(!N.el('lectura').hidden,'y la capa queda visible');
+const vs=(N.el('lectura').innerHTML.match(/class="vn"/g)||[]).length;
+ok(vs===Object.keys(N.VERS['d3']).length,
+  'Trae el capitulo COMPLETO, no los bloques de cinco ('+vs+' versiculos)');
+ok(/Reina-Valera 1995/.test(N.el('lectura').innerHTML),
+  'Dice de que version es el texto, que es de lo que vive este proyecto');
+N.cierraLectura();
+ok(N.el('lectura').hidden&&N.lectCidActual()===null,'Se cierra y suelta el capitulo');
+
+/* Un capitulo que no tiene texto en VERS (los de Profetas y Reyes) no abre el
+   modo lectura en blanco: simplemente no abre. */
+N.abreLectura('pr39');
+ok(N.lectCidActual()===null,'Un capitulo sin texto RV1995 no abre el modo lectura');
+
+/* Marcar como leido desde la lectura hace lo mismo que el boton de siempre. */
+N.abreLectura('d6');
+N.listoDesdeLectura();
+ok((N.S().prog.d6||0)===100,'«Ya lo estudie» desde la lectura marca el capitulo');
+ok(N.lectCidActual()===null,'y cierra la capa');
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

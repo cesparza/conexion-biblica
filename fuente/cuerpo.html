@@ -106,18 +106,25 @@
     <button class="nav-yo" id="nav-yo" type="button" onclick="abreYo()"></button>
     <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app" aria-label="Cómo se usa esta app"><svg class="ico" aria-hidden="true"><use href="#i-ayuda"/></svg></button>
   </div>
+  <!-- Las senales de cada pestana. Van en el HTML y no las crea el JS, para que
+       pintaSenales() solo tenga que llenarlas o esconderlas: un nodo que ya
+       existe no se puede duplicar por llamar dos veces a la funcion. -->
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')"><i><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></i><b>Inicio</b></button>
-    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Estudiar</b></button>
-    <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Tarjetas</b></button>
-    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Examen</b></button>
-    <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b></button>
+    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Estudiar</b><span class="nv gris" id="nv-est" hidden></span></button>
+    <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Tarjetas</b><span class="nv" id="nv-tj" hidden></span></button>
+    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Examen</b><span class="nv-punto" id="nv-ex" hidden></span></button>
+    <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b><span class="nv" id="nv-lg" hidden></span></button>
   </div>
 </nav>
 
 <!-- La hoja del versiculo. Vive fuera de las pantallas porque es global: se
      abre desde cualquier referencia del material. La llena htmlHoja(). -->
 <div id="hoja" class="hoja" hidden></div>
+
+<!-- El modo lectura. Tambien vive fuera de las pantallas, porque tapa todas.
+     Lo llena abreLectura(cid) con el mismo texto de VERS. -->
+<div id="lectura" class="lec" hidden></div>
 
 <div id="p-bienvenida" class="pantalla bv">
   <div class="bv-caja">

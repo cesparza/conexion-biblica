@@ -1267,6 +1267,55 @@ ok(/\.nav-yo \.yo-tip\{[^}]*pointer-events:none/.test(ESCRITORIO),
 ok(!/b\.setAttribute\('title'/.test(js),
   'La ficha ya no usa el title del navegador, que se doblaria con el globo');
 
+/* ───────── las senales no pueden empujar la barra ─────────
+   Si una insignia ocupara sitio en el flujo, la barra de cinco pestanas
+   cambiaria de alto cada vez que aparece o desaparece un numero, y eso mueve
+   el contenido de la pagina bajo el dedo. Por eso van en absoluto. */
+const rNv=(CSS.match(/\.nv\{[^}]*\}/)||[''])[0];
+ok(/position:absolute/.test(rNv),'Las senales van en absoluto, no empujan la barra');
+ok(/\.nav-t button\{position:relative\}/.test(CSS),
+  'y la pestana es el contenedor de posicionamiento');
+ok(/box-shadow:0 0 0 2px/.test(rNv),
+  'La senal lleva troquel del color de la barra, o se lee como parte del icono');
+/* Los nodos van en el HTML: pintaSenales() solo los llena. Crearlos en JS
+   abriria la puerta a duplicarlos en la segunda llamada. */
+for(const id of ['nv-est','nv-tj','nv-ex','nv-lg'])
+  ok(new RegExp('id="'+id+'"').test(CUERPO),'El nodo '+id+' vive en el HTML, no lo crea el JS');
+ok(!/nv-anillo/.test(CUERPO)&&!/\.nv-ring\{/.test(CSS),
+  'No quedo el anillo de progreso, que se descarto por ilegible y por el mask en Safari');
+ok(/function pintaSenales\(\)/.test(js)&&/pintaSenales\(\);\s*window\.scrollTo/.test(js),
+  'pintaSenales() se llama en cada navegacion, dentro de ir()');
+
+/* ───────── modo lectura ─────────
+   Es el MISMO texto de VERS, en una capa aparte. Lo que se fija es que no se
+   convierta en una segunda fuente del texto biblico, que es la deuda que este
+   proyecto persigue. */
+ok(/function abreLectura\(cid\)/.test(js),'Existe el modo lectura');
+ok(/id="lectura"/.test(CUERPO),'y su capa vive fuera de las pantallas, porque tapa todas');
+const bloqueLec=js.slice(js.indexOf('function abreLectura'),js.indexOf('function lectAvance'));
+ok(/VERS\[cid\]/.test(bloqueLec),'Lee de VERS: no hay un segundo texto biblico');
+ok(!/RV1960/.test(bloqueLec)&&/Reina-Valera 1995/.test(bloqueLec),
+  'y rotula RV1995, que es la version del examen');
+ok(/document\.body\.classList\.remove\('leyendo'\)/.test(js),
+  'Al cerrar suelta el body: si no, la pagina queda sin scroll y parece muerta');
+ok(/body\.leyendo\{overflow:hidden\}/.test(CSS),
+  'Mientras se lee, el scroll de atras esta bloqueado');
+ok(/\.lec-caja>\*\{max-width:62ch/.test(CSS),
+  'El ancho de linea esta acotado a 62 caracteres, que es la medida que manda');
+/* CSS_SIN es el CSS sin comentarios. Hace falta porque una afirmacion negativa
+   sobre una regla se cae con su propio comentario: `[^}]*` cruza el comentario
+   que EXPLICA por que la propiedad no esta, y la encuentra ahi. */
+const CSS_SIN=CSS.replace(/\/\*[\s\S]*?\*\//g,'');
+ok(!/\.lec-caja\{[^}]*scroll-behavior:smooth/.test(CSS_SIN),
+  'Sin scroll-behavior:smooth: pelea con el flick del dedo y atrasa la barra de avance');
+ok(/e\.key==='Escape'&&lectCid/.test(js),'Escape cierra la lectura, igual que la hoja');
+/* Justificar reparte el sobrante entre los espacios: a 38 caracteres por linea
+   deja huecos de tres espacios entre palabras. Se enciende con la linea larga. */
+ok(/\.lec-txt p\{[^}]*text-align:left/.test(CSS_SIN),
+  'El texto de lectura va alineado a la izquierda por defecto');
+ok(/@media \(min-width:640px\)\{\.lec-txt p\{text-align:justify\}\}/.test(CSS_SIN),
+  'y solo se justifica cuando la linea da para repartir');
+
 /* ───────── el orden del riel de escritorio ─────────
    `.nav` es una columna con dos hijos: `.nav-b` (marca, identidad, ayuda) y
    `.nav-t` (los cinco tabs). En el HTML la identidad y la ayuda van DENTRO de

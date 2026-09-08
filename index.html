@@ -564,6 +564,91 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .bol-t th{background:var(--azul);color:#fff;padding:.35rem .5rem;text-align:left}
 .bol-t td{border-bottom:1px solid #e5e7eb;padding:.35rem .5rem;color:var(--gris)}
 
+/* ───────── MODO LECTURA ─────────
+   Un mundo visual distinto a proposito: papel calido y serif, para que se sienta
+   una Biblia y no una pantalla de datos. Es el unico sitio de la app que se sale
+   de la paleta azul, y por eso mismo se entiende que uno esta «adentro».
+   La medida que manda: 62 caracteres de ancho de linea. */
+.lec{position:fixed;inset:0;z-index:300;background:#fbfaf7;display:flex;flex-direction:column}
+body.leyendo{overflow:hidden}
+.lec-barra{flex:0 0 auto;display:flex;align-items:center;gap:.75rem;height:46px;
+  padding:0 .8rem 0 1rem;background:rgba(251,250,247,.95);border-bottom:1px solid #ece7dd;
+  padding-top:env(safe-area-inset-top,0);height:calc(46px + env(safe-area-inset-top,0))}
+.lec-prog{flex:1;height:5px;border-radius:3px;background:#e7e1d5;overflow:hidden}
+.lec-prog i{display:block;height:100%;width:0;background:#c98a2b;border-radius:3px;
+  transition:width .12s linear}
+.lec-pct{font-size:.7rem;font-weight:700;color:#8a7a5f;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.lec-voz,.lec-x{background:none;border:0;font-size:1rem;color:#8a7a5f;cursor:pointer;
+  padding:4px 6px;line-height:1;font-family:inherit;min-height:34px}
+.lec-voz:hover,.lec-x:hover{color:#5b4d33}
+/* El scroll vive en la caja, no en el body: asi la barra de avance se queda
+   arriba y la medimos contra un elemento con altura conocida. */
+.lec-caja{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  /* SIN `scroll-behavior:smooth`: en un capitulo de 30 versiculos anima cada
+     salto y pelea con el flick del dedo en iOS, y de paso la barra de avance
+     queda atras del dedo mientras la animacion corre. */
+  padding:2.6rem 1.3rem 5rem}
+.lec-caja>*{max-width:62ch;margin-left:auto;margin-right:auto}
+.lec-caja h1{font-family:Georgia,'Times New Roman',serif;font-size:1.5rem;font-weight:600;
+  color:#2b2418;text-align:center;margin:0 0 .4rem;line-height:1.25;text-wrap:balance}
+.lec-sub{text-align:center;font-size:.7rem;letter-spacing:1.4px;text-transform:uppercase;
+  color:#a3946f;margin:0 0 2.4rem;font-weight:600}
+/* Se reescribe .biblia adentro: el cuerpo de la app es mas chico y va en azul. */
+/* Alineado a la IZQUIERDA por defecto. Justificar reparte el sobrante entre los
+   espacios, y a 38 caracteres por linea (un iPhone de 390 px) eso deja huecos
+   de tres espacios entre palabras: se ve en el render, no en el codigo.
+   Justificar solo se enciende cuando la linea da para repartir. */
+.lec-txt p{font-family:Georgia,'Times New Roman',serif;font-size:1.16rem;line-height:1.95;
+  color:#2b2418;margin:0 0 1.25rem;text-align:left;hyphens:auto;-webkit-hyphens:auto}
+@media (min-width:640px){.lec-txt p{text-align:justify}}
+.lec-txt .vn{font-family:inherit;font-size:.64rem;font-weight:700;color:#c98a2b;
+  vertical-align:super;margin-right:.35rem;top:auto}
+.lec-fin{margin-top:3rem;padding-top:1.6rem;border-top:1px solid #ece7dd;text-align:center}
+.lec-fin p{font-size:.92rem;color:#6b5f47;margin:0 0 1rem}
+.lec-fin .lec-ok{color:#2f7a4f;font-weight:700}
+.lec-fin .btn{margin:.3rem .25rem}
+.lect-full{width:100%;margin-bottom:.9rem}
+@media (min-width:900px){
+  .lec-caja{padding:3.4rem 1.3rem 6rem}
+  .lec-txt p{font-size:1.2rem}
+}
+@media print{.lec{display:none!important}}
+
+/* ───────── las senales de las pestanas ─────────
+   MECANISMO
+   Cada pestana es un `button` con el icono y la etiqueta. La senal va encima,
+   en posicion absoluta, para no empujar ni el icono ni el texto: si empujara,
+   la barra de cinco pestanas cambiaria de alto cada vez que aparece o
+   desaparece un numero, y eso mueve el contenido de la pagina.
+   El `box-shadow` de dos pixeles del color de la barra hace de troquel: sin el,
+   un numero encima del icono se lee como parte del dibujo. */
+.nav-t button{position:relative}
+.nv{position:absolute;min-width:18px;height:18px;padding:0 5px;border-radius:9px;
+  background:var(--naranja);color:#fff;font-size:.62rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;line-height:1;
+  font-family:inherit;letter-spacing:0;
+  box-shadow:0 0 0 2px rgba(22,48,91,.92);pointer-events:none}
+.nv.gris{background:#7c8ba1}
+.nv-punto{position:absolute;width:9px;height:9px;border-radius:50%;background:#22c55e;
+  box-shadow:0 0 0 2px rgba(22,48,91,.92),0 0 9px 2px rgba(34,197,94,.55);
+  pointer-events:none}
+/* NO hay anillo de progreso alrededor del icono, y se probo: un anillo de 3px
+   sobre el azul oscuro de la barra no se distingue, duplica el numero que ya
+   esta al lado, y necesita un `mask` de CSS que Safari de iOS puede pintar
+   distinto, en un iPhone que todavia no hemos probado. Menos es mas.
+   En celular la barra va abajo y las pestanas son anchas: la senal se cuelga
+   del icono, que esta centrado. En el riel hay sitio a la derecha. */
+@media (max-width:899px){
+  .nv{top:4px;left:calc(50% + 6px)}
+  .nv-punto{top:7px;left:calc(50% + 8px)}
+}
+@media (min-width:900px){
+  .nv{top:12px;right:14px}
+  .nv-punto{top:15px;right:20px}
+}
+@media print{.nv,.nv-punto{display:none!important}}
+
 /* ───────── la ficha de quién estudia, en la barra ─────────
    Va en la barra superior, que en celular tiene el logo a la izquierda y el ❓
    a la derecha y deja libre todo el centro. `min-width:0` y el ellipsis son
@@ -1486,18 +1571,25 @@ details.card summary::marker{content:''}
     <button class="nav-yo" id="nav-yo" type="button" onclick="abreYo()"></button>
     <button class="nav-ayuda" onclick="ir('ayuda')" title="Cómo se usa esta app" aria-label="Cómo se usa esta app"><svg class="ico" aria-hidden="true"><use href="#i-ayuda"/></svg></button>
   </div>
+  <!-- Las senales de cada pestana. Van en el HTML y no las crea el JS, para que
+       pintaSenales() solo tenga que llenarlas o esconderlas: un nodo que ya
+       existe no se puede duplicar por llamar dos veces a la funcion. -->
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')"><i><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></i><b>Inicio</b></button>
-    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Estudiar</b></button>
-    <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Tarjetas</b></button>
-    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Examen</b></button>
-    <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b></button>
+    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Estudiar</b><span class="nv gris" id="nv-est" hidden></span></button>
+    <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Tarjetas</b><span class="nv" id="nv-tj" hidden></span></button>
+    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Examen</b><span class="nv-punto" id="nv-ex" hidden></span></button>
+    <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b><span class="nv" id="nv-lg" hidden></span></button>
   </div>
 </nav>
 
 <!-- La hoja del versiculo. Vive fuera de las pantallas porque es global: se
      abre desde cualquier referencia del material. La llena htmlHoja(). -->
 <div id="hoja" class="hoja" hidden></div>
+
+<!-- El modo lectura. Tambien vive fuera de las pantallas, porque tapa todas.
+     Lo llena abreLectura(cid) con el mismo texto de VERS. -->
+<div id="lectura" class="lec" hidden></div>
 
 <div id="p-bienvenida" class="pantalla bv">
   <div class="bv-caja">
@@ -1800,7 +1892,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'be255998a0f2';
+const VERSION_APP = '7cc0fb8cb4ab';
 
 const CAPS = [
  {
@@ -14539,6 +14631,52 @@ const MANUAL = [
   ]
  },
  {
+  "id": "a-senales",
+  "para": "estudia",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-lista\"/></svg>",
+  "t": "Los números de la barra",
+  "d": "Qué te falta hoy, sin entrar a buscarlo",
+  "secs": [
+   {
+    "t": "Qué significa cada uno",
+    "h": "<p>La barra de las cinco pestañas lleva los pendientes encima, así que se\n    ven desde cualquier pantalla:</p>\n    <p><strong>Estudiar</strong> · el porcentaje que llevas leído, contando los\n    capítulos <em>y</em> los repasos.<br>\n    <strong>Tarjetas</strong> · cuántas te toca hacer <strong>hoy</strong>, no\n    cuántas te faltan en total.<br>\n    <strong>Examen</strong> · un <strong>punto verde</strong> solo cuando el\n    director tiene una evaluación abierta y tú no la has hecho.<br>\n    <strong>Logros</strong> · cuántos errores tienes por repasar.</p>"
+   },
+   {
+    "t": "Si no aparece un número",
+    "h": "<p>Es porque no hay nada que hacer ahí. Un cero no se muestra, para que la\n    barra solo hable cuando tiene algo que decir.</p>\n    <p>El primer día sí vas a ver un número en Tarjetas aunque no hayas empezado:\n    todas las tarjetas están vencidas al principio, y eso es justo lo que la app\n    te está diciendo.</p>"
+   },
+   {
+    "t": "De dónde salen",
+    "h": "<p>De tu propio progreso guardado en este aparato, menos el punto verde del\n    Examen, que sale del servidor. Son los mismos datos de «Qué estudiar hoy»,\n    puestos donde se ven siempre.</p>"
+   }
+  ]
+ },
+ {
+  "id": "a-lectura",
+  "para": "estudia",
+  "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-libro\"/></svg>",
+  "t": "Leer sin distracciones",
+  "d": "El capítulo completo, sin nada alrededor",
+  "secs": [
+   {
+    "t": "Cómo se abre",
+    "h": "<p>Abre un capítulo de la Biblia en <strong>Estudiar</strong>, toca\n    <strong>Leer el capítulo completo</strong> y arriba te sale el botón\n    <strong>📖 Leer sin distracciones</strong>.</p>\n    <p>Se esconde todo: la barra, las pestañas, las secciones de estudio. Queda\n    solo el texto, más grande y en letra de libro.</p>"
+   },
+   {
+    "t": "La barra de arriba",
+    "h": "<p>Dice qué parte del capítulo has recorrido, no cuánto entendiste: es\n    dónde vas con el dedo. Al lado está el <strong>🔊</strong> para escucharlo y\n    la <strong>✕</strong> para salir. La tecla <strong>Esc</strong> también\n    cierra.</p>"
+   },
+   {
+    "t": "Al final del capítulo",
+    "h": "<p>Abajo aparece <strong>Ya lo estudié</strong>: es el mismo botón que\n    llena el círculo del progreso, para no tener que ir a buscarlo. Si ya lo\n    tenías marcado, te lo dice y no lo cuenta dos veces.</p>"
+   },
+   {
+    "t": "Solo en los capítulos de la Biblia",
+    "h": "<p>Los capítulos de <strong>Profetas y Reyes</strong> y las\n    <strong>creencias</strong> no tienen este modo, porque su texto no está en la\n    app palabra por palabra: de esos hay resumen y citas, no el capítulo\n    completo.</p>"
+   }
+  ]
+ },
+ {
   "id": "a-versiculos",
   "para": "estudia",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-libro\"/></svg>",
@@ -16094,6 +16232,7 @@ function ir(id){
   if(id==='examen')pintaExInicio();
   if(id==='logros')pintaLogros();
   if(id==='ayuda')pintaAyuda();
+  pintaSenales();
   window.scrollTo({top:0});
 }
 
@@ -16436,9 +16575,54 @@ function ancla(){
   }catch(e){}
 }
 
+/* ───────── las senales de la barra ─────────
+   MECANISMO
+   Los cuatro datos ya los calcula la app: el promedio de `S.prog`, `tocanHoy()`,
+   `falladasDe()` y `evalPend`. Lo que faltaba no era el dato, era que se viera
+   sin entrar a la pantalla: hasta v51 había que abrir Tarjetas para saber si
+   tocaban tarjetas, y abrir Logros para saber cuántos errores quedaban.
+
+   POR QUÉ ES UN TABLERO Y NO ADORNO
+   La app ya tiene «Qué estudiar hoy», pero solo en Inicio. Estando en Estudiar,
+   nada decía que había 25 tarjetas esperando. La barra está en las cinco
+   pantallas, así que es el único sitio donde el pendiente cabe siempre.
+
+   Se llama desde `ir()`, o sea en cada navegación, y desde `pintaInicio()`. Los
+   nodos ya existen en el HTML: aquí solo se llenan o se esconden. */
+function senal(id,valor){
+  const e=document.getElementById(id);
+  if(!e)return;
+  const n=Number(valor)||0;
+  e.hidden=n<=0;
+  if(n>0)e.textContent=n>99?'99+':String(n);
+}
+
+function pintaSenales(){
+  try{
+    /* El anillo de Estudiar promedia capítulos Y repasos, que es lo que la
+       insignia «Lector completo» exige: promediar solo capítulos daría 100%
+       con los repasos sin leer. */
+    const items=[...capsDe(),...modsDe()];
+    const pct=items.length
+      ?Math.round(items.reduce((a,c)=>a+Math.min(100,S.prog[c.id]||0),0)/items.length):0;
+    const est=document.getElementById('nv-est');
+    /* En 0 no se muestra: un cero ocupa lugar y no dice nada que la pantalla de
+       Inicio no diga mejor. En 100 sí se muestra, porque «100%» es justo lo que
+       uno quiere ver de reojo. */
+    if(est){est.hidden=pct<=0; if(!est.hidden)est.textContent=pct+'%';}
+    senal('nv-tj',Math.min(tocanHoy().length,topeSesion()));
+    senal('nv-lg',falladasDe().length);
+    /* El punto verde del examen es lo único que NO sale del progreso propio:
+       sale del servidor, y solo si la evaluación está abierta y sin hacer. */
+    const ex=document.getElementById('nv-ex');
+    if(ex)ex.hidden=!(evalPend&&!evalHecha);
+  }catch(e){}
+}
+
 function pintaInicio(){
   pintaAlumnos();
   pintaYo();
+  pintaSenales();
   pintaHoy();
   pintaSelectorCat();
   /* El campo del nombre vive en la hoja, que casi siempre está cerrada. Sin la
@@ -16697,8 +16881,95 @@ function seccionLectura(cid){
   }
   return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
     nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo">'+
+    '<button type="button" class="btn gho lect-full" onclick="abreLectura(\''+cid+'\')">'+
+    '📖 Leer sin distracciones</button>'+
     bloques.join('')+'</div></details>';
 }
+
+/* ───────── MODO LECTURA ─────────
+   MECANISMO
+   El capítulo se lee hoy dentro de la tarjeta de estudio: con el riel al lado,
+   las pestañas abajo, los botones de voz de cada bloque y las secciones de
+   estudio esperando debajo. Eso está bien para repasar un dato y mal para leer
+   treinta versículos seguidos, que es lo que hay que hacer primero.
+
+   Aquí no hay nada nuevo que aprender ni ningún dato que la app no tenga: es el
+   MISMO texto de `VERS` (los 196 versículos que `tools/citas.js` verifica byte
+   a byte contra la RV1995) en una capa que tapa todo lo demás. Se abre, se lee,
+   se cierra. No reemplaza la pantalla de estudio.
+
+   LA MEDIDA QUE MANDA es el ancho de línea: 62 caracteres. Más largo y el ojo
+   pierde el renglón al volver; en la tarjeta de estudio a 1440 px una línea de
+   la Biblia llega a 110 caracteres.
+
+   Al cerrar ofrece marcar el capítulo como leído, que es el gesto que la app ya
+   necesitaba y que hoy hay que ir a buscar abajo de las secciones. */
+let lectCid=null;
+
+function abreLectura(cid){
+  if(typeof VERS==='undefined'||!VERS[cid])return;
+  paraVoz();
+  const c=buscaItem(cid), nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
+  const n=String(cid).replace('d','');
+  const cap=document.getElementById('lectura');
+  if(!cap)return;
+  lectCid=cid;
+  cap.innerHTML=
+    '<div class="lec-barra">'+
+      '<div class="lec-prog"><i id="lec-i" style="width:0%"></i></div>'+
+      '<span class="lec-pct" id="lec-pct">Daniel '+n+'</span>'+
+      (puedeHablar()?'<button type="button" class="lec-voz" onclick="leeCerca(this)" '+
+        'aria-label="Escuchar el capítulo">🔊</button>':'')+
+      '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">✕</button>'+
+    '</div>'+
+    '<div class="lec-caja" id="lec-caja"><h1>'+esc(c?c.sub:'Daniel '+n)+'</h1>'+
+    '<p class="lec-sub">Daniel '+n+' · Reina-Valera 1995 · '+nums.length+' versículos</p>'+
+    '<div class="lec-txt biblia" data-leer>'+
+    nums.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('')+
+    '</div>'+
+    '<div class="lec-fin">'+
+      '<p>Terminaste de leer <strong>Daniel '+n+'</strong>.</p>'+
+      ((S.prog[cid]||0)>=100
+        ?'<p class="lec-ok">✓ Ya lo tenías marcado como estudiado.</p>'
+        :'<button type="button" class="btn nar" onclick="listoDesdeLectura()">Ya lo estudié</button>')+
+      '<button type="button" class="btn gho" onclick="cierraLectura()">Volver al estudio</button>'+
+    '</div></div>';
+  cap.hidden=false;
+  document.body.classList.add('leyendo');
+  const caja=document.getElementById('lec-caja');
+  if(caja){caja.scrollTop=0;caja.onscroll=lectAvance;}
+  lectAvance();
+}
+
+/** La barra de arriba dice cuánto del capítulo se ha recorrido, no cuánto se ha
+ *  entendido: es la posición del scroll, y se dice así en el manual. */
+function lectAvance(){
+  const caja=document.getElementById('lec-caja'), i=document.getElementById('lec-i'),
+        t=document.getElementById('lec-pct');
+  if(!caja||!i)return;
+  const max=caja.scrollHeight-caja.clientHeight;
+  const pct=max>8?Math.min(100,Math.round(caja.scrollTop/max*100)):100;
+  i.style.width=pct+'%';
+  if(t&&lectCid)t.textContent='Daniel '+String(lectCid).replace('d','')+' · '+pct+'%';
+}
+
+function cierraLectura(){
+  paraVoz();
+  const cap=document.getElementById('lectura');
+  if(!cap)return;
+  cap.hidden=true;cap.innerHTML='';
+  lectCid=null;
+  document.body.classList.remove('leyendo');
+}
+
+function listoDesdeLectura(){
+  if(lectCid)listo(lectCid);
+  cierraLectura();
+}
+
+/* Escape cierra, igual que la hoja del versículo. */
+if(typeof document!=='undefined'&&document.addEventListener)
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lectCid)cierraLectura();});
 
 function verCap(id){
   paraVoz();
@@ -17439,6 +17710,7 @@ function entregar(){
      que sea. Eso es lo que la versión con links no podía cumplir. */
   srvIntento(modo,modo==='evaluacion'&&evalActual?evalActual.id:null,pts,tot);
   if(modo==='evaluacion'){evalHecha=true;evalNota={pts,total:tot};try{pintaEvaluacion();}catch(e){}}
+  try{pintaSenales();}catch(e){}
 
   ultimoRes={pts,tot,pct,med,msg,s3};
   document.getElementById('ex-curso').style.display='none';

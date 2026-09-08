@@ -164,6 +164,56 @@ const MANUAL = [
     actividad.</p>` },
   ]},
 
+{ id:'a-senales', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>', t:'Los números de la barra',
+  d:'Qué te falta hoy, sin entrar a buscarlo',
+  secs:[
+  { t:'Qué significa cada uno',
+    h:`<p>La barra de las cinco pestañas lleva los pendientes encima, así que se
+    ven desde cualquier pantalla:</p>
+    <p><strong>Estudiar</strong> · el porcentaje que llevas leído, contando los
+    capítulos <em>y</em> los repasos.<br>
+    <strong>Tarjetas</strong> · cuántas te toca hacer <strong>hoy</strong>, no
+    cuántas te faltan en total.<br>
+    <strong>Examen</strong> · un <strong>punto verde</strong> solo cuando el
+    director tiene una evaluación abierta y tú no la has hecho.<br>
+    <strong>Logros</strong> · cuántos errores tienes por repasar.</p>` },
+  { t:'Si no aparece un número',
+    h:`<p>Es porque no hay nada que hacer ahí. Un cero no se muestra, para que la
+    barra solo hable cuando tiene algo que decir.</p>
+    <p>El primer día sí vas a ver un número en Tarjetas aunque no hayas empezado:
+    todas las tarjetas están vencidas al principio, y eso es justo lo que la app
+    te está diciendo.</p>` },
+  { t:'De dónde salen',
+    h:`<p>De tu propio progreso guardado en este aparato, menos el punto verde del
+    Examen, que sale del servidor. Son los mismos datos de «Qué estudiar hoy»,
+    puestos donde se ven siempre.</p>` },
+  ]},
+
+{ id:'a-lectura', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Leer sin distracciones',
+  d:'El capítulo completo, sin nada alrededor',
+  secs:[
+  { t:'Cómo se abre',
+    h:`<p>Abre un capítulo de la Biblia en <strong>Estudiar</strong>, toca
+    <strong>Leer el capítulo completo</strong> y arriba te sale el botón
+    <strong>📖 Leer sin distracciones</strong>.</p>
+    <p>Se esconde todo: la barra, las pestañas, las secciones de estudio. Queda
+    solo el texto, más grande y en letra de libro.</p>` },
+  { t:'La barra de arriba',
+    h:`<p>Dice qué parte del capítulo has recorrido, no cuánto entendiste: es
+    dónde vas con el dedo. Al lado está el <strong>🔊</strong> para escucharlo y
+    la <strong>✕</strong> para salir. La tecla <strong>Esc</strong> también
+    cierra.</p>` },
+  { t:'Al final del capítulo',
+    h:`<p>Abajo aparece <strong>Ya lo estudié</strong>: es el mismo botón que
+    llena el círculo del progreso, para no tener que ir a buscarlo. Si ya lo
+    tenías marcado, te lo dice y no lo cuenta dos veces.</p>` },
+  { t:'Solo en los capítulos de la Biblia',
+    h:`<p>Los capítulos de <strong>Profetas y Reyes</strong> y las
+    <strong>creencias</strong> no tienen este modo, porque su texto no está en la
+    app palabra por palabra: de esos hay resumen y citas, no el capítulo
+    completo.</p>` },
+  ]},
+
 { id:'a-versiculos', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Ver el versículo sin salir del estudio',
   d:'Toca cualquier número azul, o abre el capítulo completo',
   secs:[
