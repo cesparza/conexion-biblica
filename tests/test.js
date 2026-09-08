@@ -672,20 +672,27 @@ const TODO_MC=[...BANCO,...MATU2.MAT_BANCO,...require(path.join(RAIZ,'fuente','c
   .filter(q=>q.t==='mc'&&q.o&&q.o.length===4);
 /* Lo que se mide es la brecha, no el empate. Que la correcta sea dos
    caracteres más larga no lo nota nadie; que sea el doble de larga se ve a un
-   metro. El umbral es 25% más larga que el mejor distractor. */
-const delatoras=TODO_MC.filter(q=>{
-  const L=q.o.map(o=>String(o).length);
-  const otras=Math.max(...L.filter((_,i)=>i!==q.a));
-  return L[q.a]>otras*1.25;
-}).length;
+   metro. El umbral es 25% más larga que el mejor distractor.
+   HISTORIA DEL TECHO: empezó en 38% cuando se midió por primera vez, y bajó a
+   22% al reescribir los distractores de 82 preguntas. Cada vez que baje de
+   verdad, se baja el techo: así la deuda no puede volver a crecer. */
+const larga=q=>{const L=q.o.map(o=>String(o).length);
+  return L[q.a]>Math.max(...L.filter((_,i)=>i!==q.a))*1.25;};
+/* La medida es de DOS LADOS. Al alargar distractores se puede caer en el sesgo
+   contrario, que se explota igual: escoger siempre la más corta. */
+const corta=q=>{const L=q.o.map(o=>String(o).length);
+  return L[q.a]*1.25<Math.min(...L.filter((_,i)=>i!==q.a));};
+const delatoras=TODO_MC.filter(larga).length;
 const pctDelata=Math.round(delatoras/TODO_MC.length*100);
+const pctCorta=Math.round(TODO_MC.filter(corta).length/TODO_MC.length*100);
+ok(pctCorta<=8,'Y tampoco se delata por ser la más CORTA: '+pctCorta+'% (techo 8%)');
 const masLarga=TODO_MC.filter(q=>{
   const L=q.o.map(o=>String(o).length);
   return L[q.a]===Math.max(...L);
 }).length;
-ok(pctDelata<=38,
+ok(pctDelata<=22,
   'La correcta se delata por tamaño (más de 25% más larga) en el '+pctDelata+'% de '+
-  TODO_MC.length+' múltiples — techo 38%; y es la más larga en el '+
+  TODO_MC.length+' múltiples — techo 22%; y es la más larga en el '+
   Math.round(masLarga/TODO_MC.length*100)+'%');
 
 /* Lo mismo con verdadero o falso: si la mayoría son verdaderas, contestar
