@@ -1039,4 +1039,69 @@ BANCO.push(
     {x:' que trazó esta '},{b:'escritura',h:'¿qué cosa?'},{x:'.»'}]}
 );
 
+
+/* ─────────── DANIEL 7 (v54) ───────────
+   Solo mc y tf: no hay archivo RV1995 verificado para Daniel 7 todavia, asi
+   que no se arma ningun 'fill' citando texto biblico literal (ver nota en
+   daniel-7-a-12-pendiente.md). Preguntas de dato e interpretacion, redactadas
+   propias sobre los hechos de Maxwell, no copiadas del libro. */
+BANCO.push(
+{cap:'d7',t:'mc',q:'¿En qué año tuvo Daniel esta visión? (Daniel 7:1)',
+ o:['En el año primero de Nabucodonosor','En el año primero de Belsasar','En el año primero de Darío','En el año primero de Ciro'],a:1},
+{cap:'d7',t:'mc',q:'¿Cuántas bestias vio Daniel salir del mar? (Daniel 7:3)',
+ o:['Tres','Cuatro','Cinco','Siete'],a:1},
+{cap:'d7',t:'mc',q:'¿Cómo era la primera bestia? (Daniel 7:4)',
+ o:['Un oso alzado de un costado','Un león con alas de águila','Un leopardo con cuatro alas','Una bestia espantosa con diez cuernos'],a:1},
+{cap:'d7',t:'mc',q:'¿Qué reino representa el león con alas de águila?',
+ o:['Medo-Persia','Grecia','Babilonia','Roma'],a:2},
+{cap:'d7',t:'mc',q:'¿Qué tenía la segunda bestia en la boca? (Daniel 7:5)',
+ o:['Tres costillas','Diez cuernos','Cuatro cabezas','Un cuerno pequeño'],a:0},
+{cap:'d7',t:'mc',q:'¿Cuántas cabezas tenía la tercera bestia, el leopardo? (Daniel 7:6)',
+ o:['Dos','Tres','Cuatro','Seis'],a:2},
+{cap:'d7',t:'mc',q:'¿Qué reino representa el leopardo de cuatro cabezas?',
+ o:['Babilonia','Medo-Persia','Grecia','Roma'],a:2},
+{cap:'d7',t:'mc',q:'¿Por qué el leopardo tiene cuatro cabezas y cuatro alas?',
+ o:['Porque Alejandro tuvo cuatro esposas','Porque el imperio se repartió entre cuatro generales tras su muerte','Porque conquistó en cuatro batallas distintas','Porque cuatro reyes lo gobernaron a la vez desde el principio'],a:1},
+{cap:'d7',t:'mc',q:'¿Cuál de estos NO fue uno de los cuatro generales que se repartieron el imperio de Alejandro?',
+ o:['Casandro','Lisímaco','Tolomeo','Ciro'],a:3},
+{cap:'d7',t:'mc',q:'¿Qué reino representa la cuarta bestia, la que no se parecía a ningún animal? (Daniel 7:7)',
+ o:['Grecia','Roma','Medo-Persia','Egipto'],a:1},
+{cap:'d7',t:'mc',q:'¿Cuántos cuernos tenía la cuarta bestia? (Daniel 7:7)',
+ o:['Siete','Ocho','Diez','Doce'],a:2},
+{cap:'d7',t:'mc',q:'¿Cuántos cuernos arrancó el cuerno pequeño al salir? (Daniel 7:8)',
+ o:['Uno','Dos','Tres','Cuatro'],a:2},
+{cap:'d7',t:'mc',q:'¿Qué tenía el cuerno pequeño, además de ojos de hombre? (Daniel 7:8)',
+ o:['Una corona de oro','Una boca que hablaba grandes cosas','Alas como de águila','Siete cabezas'],a:1},
+{cap:'d7',t:'mc',q:'¿Qué tres pueblos, los tres arrianos, fueron arrancados por el cuerno pequeño?',
+ o:['Francos, sajones y suevos','Hérulos, vándalos y ostrogodos','Visigodos, burgundios y lombardos','Alamanes, hérulos y francos'],a:1},
+{cap:'d7',t:'mc',q:'¿En qué año fue eliminado el último de los tres pueblos arrianos, los ostrogodos?',
+ o:['493','534','538','1798'],a:2},
+{cap:'d7',t:'mc',q:'¿Quién se sienta a juzgar en la visión del capítulo 7? (Daniel 7:9)',
+ o:['El Hijo de hombre','El Anciano de días','Un ángel guerrero','El profeta Daniel'],a:1},
+{cap:'d7',t:'mc',q:'¿Qué se abre en la escena del juicio, además de instalarse los tronos? (Daniel 7:10)',
+ o:['Los sellos','Los cielos','Los libros','Los sepulcros'],a:2},
+{cap:'d7',t:'mc',q:'¿A quién se le entrega el reino al final del juicio? (Daniel 7:18, 27)',
+ o:['Solo a Daniel','A los santos del Altísimo','Al Hijo de hombre en solitario','A los cuatro reyes'],a:1},
+{cap:'d7',t:'mc',q:'¿Cuánto dura el poder del cuerno pequeño, según Daniel 7:25?',
+ o:['Cuarenta días','Un tiempo, tiempos y medio tiempo','Setenta semanas','Mil años'],a:1},
+{cap:'d7',t:'mc',q:'¿A cuántos años equivale «tiempo, tiempos y medio tiempo», con la regla de día por año?',
+ o:['490 años','1.000 años','1.260 años','2.300 años'],a:2},
+{cap:'d7',t:'mc',q:'¿En qué libro de la Biblia está la regla de día por año que se usa para interpretar Daniel 7:25?',
+ o:['Génesis','Ezequiel','Isaías','Apocalipsis'],a:1},
+{cap:'d7',t:'mc',q:'Los 1.260 años de Daniel 7:25 corren tradicionalmente entre estos dos años:',
+ o:['31 d.C. y 1291','476 y 1736','538 y 1798','1054 y 2314'],a:2},
+{cap:'d7',t:'mc',q:'¿Qué le pasó al papa Pío VI en 1798?',
+ o:['Fue coronado emperador','Fue arrestado por el general francés Berthier y llevado al exilio','Firmó la paz con las diez tribus','Convocó el primer concilio de Roma'],a:1},
+{cap:'d7',t:'tf',q:'Las cuatro bestias de Daniel 7 representan los mismos cuatro reinos que las cuatro partes de la estatua de Daniel 2.',
+ a:true,e:'Verdadero: león=oro=Babilonia, oso=plata=Medo-Persia, leopardo=bronce=Grecia, cuarta bestia=hierro=Roma.'},
+{cap:'d7',t:'tf',q:'La visión de Daniel 7 ocurre después de los sucesos de Daniel 5 y 6, en orden cronológico.',
+ a:false,e:'Falso. Ocurre en el año primero de Belsasar, antes de la caída de Babilonia (cap. 5) y del foso de los leones (cap. 6): Daniel no está en orden cronológico.'},
+{cap:'d7',t:'tf',q:'El juicio de Daniel 7 termina con el reino entregado a los santos, no en su contra.',
+ a:true,e:'Verdadero: la escena se repite cuatro veces en el capítulo y las cuatro veces termina con el reino dado a los santos del Altísimo.'},
+{cap:'d7',t:'tf',q:'Los diez cuernos de la cuarta bestia salen todos al mismo tiempo que el cuerno pequeño.',
+ a:false,e:'Falso. El cuerno pequeño sale DESPUÉS de los diez, y de entre ellos (Daniel 7:8, 24).'},
+{cap:'d7',t:'tf',q:'Alejandro Magno murió muy joven, antes de cumplir treinta y cinco años.',
+ a:true,e:'Verdadero: murió a los treinta y dos años, doce años después de comenzar a vencer a Persia.'}
+);
+
 module.exports = { BANCO };

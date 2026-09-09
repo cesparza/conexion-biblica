@@ -22,6 +22,15 @@ const CAPS = [
   { id:'d4', label:'Daniel 4', sub:'Nabucodonosor humillado', src:'Biblia', color:'#7B5E00', vs:37, cats:['gm'] },
   { id:'d5', label:'Daniel 5', sub:'La escritura en la pared', src:'Biblia', color:'#8B1A5E', vs:31, cats:['gm'] },
   { id:'d6', label:'Daniel 6', sub:'En el foso de los leones', src:'Biblia', color:'#1A7A1A', vs:28, cats:['me','av','pa','gm'] },
+  /* Ampliacion Daniel 7-12 (v54): material de estudio con dos libros que
+     prohiben reproduccion literal (Maxwell y Holbrook), asi que preguntas y
+     estudio se redactan propios. cats:['gm'], extra:['gm'] => aparece como
+     material para Guias Mayores pero NO entra al examen de ninguna
+     categoria (soloEstudio() en app.js). Sin texto en fuente/biblia.js: no
+     tiene referencia tocable, capitulo completo ni modo lectura, igual que
+     Profetas y Reyes. vs:28 sale de Maxwell, no de un .txt RV1995 propio. */
+  { id:'d7', label:'Daniel 7', sub:'Las cuatro bestias y el juicio', src:'Biblia',
+    color:'#4A5568', vs:28, cats:['gm'], extra:['gm'] },
   { id:'pr39', label:'P&R 39', sub:'En la corte de Babilonia', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
   { id:'pr40', label:'P&R 40', sub:'El sueño de Nabucodonosor', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
   { id:'pr41', label:'P&R 41', sub:'El horno de fuego', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
@@ -1120,6 +1129,151 @@ pr44: [
     wa(`Lo que Daniel decidió <strong>de joven</strong> (Daniel 1) fue lo que lo sostuvo
     <strong>de anciano</strong> (Daniel 6). Tenía más de ochenta años en el foso.<br><br>
     Las decisiones de hoy construyen el carácter que responderá mañana.`) },
+],
+/* ═══════════════ DANIEL 7 ═══════════════ */
+d7: [
+  { t:'📚 En pocas palabras', h:
+    hi(`Daniel, ya con unos <strong>setenta años</strong>, sueña de noche con
+    <strong>cuatro bestias que salen del mar</strong>: un león con alas, un oso,
+    un leopardo de cuatro cabezas y una cuarta que no se parece a ningún
+    animal.<br><br>
+    De la cuarta salen <strong>diez cuernos</strong>, y entre ellos brota
+    <strong>uno pequeño</strong> que arranca a tres, habla contra Dios y persigue
+    a los santos.<br><br>
+    Entonces se abre un <strong>tribunal en el cielo</strong>: el Anciano se
+    sienta, se abren los libros, y el reino se le entrega al pueblo de Dios para
+    siempre.<br><br>
+    <em>La idea del capítulo: el juicio no es contra el pueblo de Dios, es a
+    favor de él.</em>`) },
+
+  { t:'🌊 Cuándo y dónde fue la visión', h:
+    wa(`<strong>Año:</strong> el año primero de Belsasar (7:1), unos
+    <strong>553 a.C.</strong><br>
+    <strong>Dónde:</strong> en su cama, soñando. No es una visión de día.<br>
+    <strong>Qué hizo después:</strong> «escribió el sueño» (7:1).<br><br>
+    Los capítulos de Daniel <strong>no van en orden cronológico</strong>: esta
+    visión ocurre ANTES de la caída de Babilonia (capítulo 5) y del foso de los
+    leones (capítulo 6), aunque esos capítulos se leen antes. Habían pasado unos
+    <strong>cincuenta años</strong> desde el sueño de la estatua de Daniel 2.`) },
+
+  { t:'🦁 Las cuatro bestias, una por una', h:
+    tbl(['Bestia','Cómo la describe (7:4-7)','Qué reino es'],[
+      ['1ª — León','Con alas de águila; le arrancan las alas y se para como hombre','Babilonia'],
+      ['2ª — Oso','Alzado de un costado, tres costillas en la boca','Medo-Persia'],
+      ['3ª — Leopardo','Cuatro alas de ave y cuatro cabezas','Grecia'],
+      ['4ª — Sin nombre','Espantosa, dientes de hierro, diez cuernos','Roma'],
+    ]) + `<p class="nota">Las cuatro salen del <strong>mar</strong> agitado por
+    los cuatro vientos (7:2-3). En la profecía las aguas representan multitudes
+    de gente, y el ángel dice que las bestias son «cuatro reyes» o reinos
+    (7:17).</p>` },
+
+  { t:'🔗 Por qué el leopardo tiene cuatro cabezas', h:
+    `<p>Alejandro Magno unió a los griegos y venció a Persia en
+    <strong>doce años</strong>, y murió a los <strong>treinta y dos</strong>.
+    Sus generales se pelearon el imperio, y tras la batalla de
+    <strong>Ipso (301 a.C.)</strong> quedaron cuatro reinos:</p>` +
+    tbl(['General','Lo que le tocó'],[
+      ['Casandro','Macedonia y Grecia'],
+      ['Lisímaco','Tracia y buena parte de Asia Menor'],
+      ['Tolomeo','Egipto, Cirenaica y Palestina'],
+      ['Seleuco','Siria y las tierras del oriente'],
+    ]) + `<p class="nota">Cuatro cabezas, cuatro reinos. Y las cuatro alas son la
+    velocidad: Alejandro conquistó más rápido que nadie.</p>` },
+
+  { t:'🗿 Daniel 7 y la estatua de Daniel 2 dicen lo mismo', h:
+    tbl(['Daniel 2 — la estatua','Daniel 7 — las bestias','Reino'],[
+      ['Cabeza de oro','León con alas','Babilonia'],
+      ['Pecho y brazos de plata','Oso','Medo-Persia'],
+      ['Vientre y muslos de bronce','Leopardo','Grecia'],
+      ['Piernas de hierro','Cuarta bestia','Roma'],
+      ['Pies de hierro y barro','Diez cuernos','Europa dividida'],
+      ['La piedra que crece','El reino dado a los santos','El reino de Dios'],
+    ]) + `<p class="nota">Es la misma historia contada dos veces. Lo que Daniel 7
+    agrega es <strong>el cuerno pequeño y la escena del juicio</strong>, que en
+    Daniel 2 no aparecen.</p>` },
+
+  { t:'👑 Los diez cuernos', h:
+    `<p>Roma no cayó de golpe: se fue partiendo mientras entraban las tribus
+    germánicas, y de ahí salieron las naciones de Europa. Las más nombradas son
+    <strong>diez</strong>:</p>` +
+    li(['Visigodos','Ostrogodos','Vándalos','Burgundios','Lombardos',
+        'Anglosajones','Francos','Alamanes','Hérulos','Suevos']) +
+    `<p class="nota">«De este reino saldrán diez reyes» (7:24). Concuerda con los
+    pies de hierro y barro de Daniel 2: un imperio que se divide y ya no se
+    vuelve a pegar.</p>` },
+
+  { t:'🔍 Las ocho marcas del cuerno pequeño', h:
+    `<p>El capítulo da ocho señas para identificarlo. Todas salen del texto:</p>` +
+    tbl(['#','La seña','Versículo'],[
+      ['1','Sale de la cuarta bestia','7:8, 24'],
+      ['2','Aparece después de los diez cuernos','7:24'],
+      ['3','Empieza pequeño y termina mayor que los otros','7:8, 20'],
+      ['4','Arranca a tres de los primeros cuernos','7:8, 24'],
+      ['5','Tiene ojos de hombre y una boca que habla contra el Altísimo','7:8, 25'],
+      ['6','Pone a prueba a los santos','7:25'],
+      ['7','Pretende cambiar los tiempos y la ley','7:25'],
+      ['8','Tiene poder por «tiempo, tiempos y medio tiempo»','7:25'],
+    ]) },
+
+  { t:'⚔️ Los tres cuernos arrancados', h:
+    tbl(['Tribu','Año en que fue eliminada'],[
+      ['Hérulos','493'],
+      ['Vándalos','534'],
+      ['Ostrogodos','538'],
+    ]) + wa(`Las tres eran <strong>arrianas</strong>: creían que Jesús no es Dios
+    en esencia sino un ser creado. Por eso chocaban con la iglesia católica de
+    Roma, y por eso el texto dice que el cuerno pequeño «derribará a tres
+    reyes».`) },
+
+  { t:'⏳ «Tiempo, tiempos y medio tiempo»', h:
+    `<p>Un tiempo (1) + tiempos (2) + medio tiempo (½) = <strong>3 años y
+    medio</strong>. En el calendario profético son
+    <strong>1.260 días</strong>, y el mismo período aparece en otras palabras:</p>` +
+    tbl(['Pasaje','Cómo lo dice'],[
+      ['Daniel 7:25','Tiempo, tiempos y medio tiempo'],
+      ['Apocalipsis 13:5','Cuarenta y dos meses'],
+      ['Apocalipsis 12:6','Mil doscientos sesenta días'],
+    ]) +
+    hi(`<strong>La regla de día por año.</strong> En la profecía simbólica un día
+    representa un año, y Dios se lo dijo así a Ezequiel: «día por año te lo he
+    dado» (Ezequiel 4:6). Ezequiel vivía cerca de Daniel, en Nipur.<br><br>
+    Con esa regla, 1.260 días son <strong>1.260 años: del 538 al 1798</strong>.
+    En 1798 el general francés Berthier arrestó al papa Pío VI en Roma y lo
+    llevó al exilio.`) },
+
+  { t:'⚖️ El tribunal y los libros', h:
+    vs(`«Se aderezaron unos tronos y un Anciano se sentó... El juicio abrió
+    sesión, y se abrieron los libros» (7:9-10).`) +
+    `<p>El mensaje del juicio se repite <strong>cuatro veces</strong> en el
+    capítulo: 7:9-14, 7:18, 7:22 y 7:26-27. Y las cuatro veces termina igual:
+    <strong>el reino se le entrega a los santos</strong>.</p>` +
+    tbl(['En la escena','Qué es'],[
+      ['El Anciano','Dios Padre, sentado como juez (7:9)'],
+      ['Los libros','El registro de las obras (7:10; Apocalipsis 20:12)'],
+      ['El Hijo de hombre','Cristo, que se acerca al Anciano (7:13)'],
+      ['Los santos','Los que reciben el reino para siempre (7:18, 27)'],
+    ]) +
+    hi(`El juicio de Daniel 7 <strong>no es contra el pueblo de Dios</strong>:
+    «vino el Anciano a hacer justicia a los santos del Altísimo» (7:22). El
+    tribunal se abre y el resultado es que los santos reciben el reino.`) },
+
+  { t:'🗂️ Secuencia completa del capítulo', h:
+    li(['<strong>7:1</strong> — Año primero de Belsasar. Daniel sueña y escribe el sueño.',
+        '<strong>7:2-3</strong> — Cuatro vientos agitan el mar; salen cuatro bestias.',
+        '<strong>7:4-7</strong> — León, oso, leopardo y la cuarta bestia con diez cuernos.',
+        '<strong>7:8</strong> — Sale el cuerno pequeño y arranca a tres.',
+        '<strong>7:9-10</strong> — Se sienta el Anciano. Se abren los libros.',
+        '<strong>7:11-12</strong> — La bestia es muerta; a las otras se les prolonga la vida.',
+        '<strong>7:13-14</strong> — El Hijo de hombre recibe un reino eterno.',
+        '<strong>7:15-16</strong> — Daniel queda turbado y pregunta.',
+        '<strong>7:17-18</strong> — Las bestias son cuatro reyes; los santos reciben el reino.',
+        '<strong>7:19-22</strong> — Daniel pregunta por la cuarta bestia y el cuerno.',
+        '<strong>7:23-26</strong> — La explicación del ángel y el juicio.',
+        '<strong>7:27-28</strong> — El reino a los santos. Daniel guarda todo en su corazón.']) },
+
+  { t:'📖 Versículo clave', h:
+    vs(`«Su dominio es dominio eterno, que nunca pasará, y su reino uno que no
+    será destruido» (Daniel 7:14).`) },
 ],
 
 };

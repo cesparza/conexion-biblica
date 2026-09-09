@@ -10,8 +10,12 @@ const { BANCO } = require('../fuente/preguntas.js');
 const { TARJETAS } = require('../fuente/tarjetas.js');
 const { CONT_MODULOS } = require('../fuente/modulos.js');
 
-/* Versículos por capítulo en Daniel, para saber el denominador. */
-const VERSICULOS = { d1: 21, d2: 49, d3: 30, d4: 37, d5: 31, d6: 28 };
+/* Versículos por capítulo en Daniel, para saber el denominador.
+   v54: antes era una tabla escrita a mano, una segunda fuente de verdad que
+   se le podía olvidar actualizar a alguien agregando un capítulo. Ahora sale
+   de CAPS, que es donde vive el número real (fuente/contenido.js). */
+const VERSICULOS = {};
+CAPS.forEach(c => { if (c.src === 'Biblia' && c.vs) VERSICULOS[c.id] = c.vs; });
 
 /* Alcance OFICIAL del campamento, según el reglamento: Daniel 1-3 y 6, y
    Profetas y Reyes 39, 41 y 44. Daniel 4 y 5 y P&R 40, 42 y 43 solo aplican

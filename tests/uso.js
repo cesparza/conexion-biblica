@@ -61,7 +61,10 @@ const capsCampamento=()=>A.capsDe().filter(c=>c.ev!=='creencias');
 
 // Guías Mayores
 A.ponCat('gm');
-ok(capsCampamento().length===12,'Guías Mayores ve 12 capítulos del campamento');
+/* v54: Daniel 7 se agrega como material de estudio para Guías Mayores
+   (cats:['gm'], extra:['gm']), asi que el conteo de capitulos sube a 13
+   aunque Daniel 7 no entre al examen de nadie (extra lo saca del pool). */
+ok(capsCampamento().length===13,'Guías Mayores ve 13 capítulos del campamento (12 del alcance original + Daniel 7)');
 ok(A.modsDe().length===11,'Guías Mayores ve 11 módulos');
 ok(A.tarjetasDe().length>=126,'Guías Mayores: '+A.tarjetasDe().length+' tarjetas (piso 126)');
 
@@ -233,7 +236,7 @@ ok(A.poolNivel().some(q=>q.t==='fill'),'Padres: sí incluye completar el versíc
 
 // Guías Mayores conserva el alcance ampliado
 A.ponCat('gm');
-ok(capsCampamento().length===12,'Guías Mayores conserva los 12 capítulos del alcance ampliado');
+ok(capsCampamento().length===13,'Guías Mayores conserva los 12 capítulos del alcance ampliado más Daniel 7');
 
 // Los títulos de P&R que se muestran en las tarjetas son los verificados
 const TITULOS={pr39:'En la corte de Babilonia',pr40:'El sueño de Nabucodonosor',
@@ -628,8 +631,8 @@ A.ponCat('gm');
 /* capsDelEvento() ya no existe: existia SOLO para desmezclar las creencias de
    los capitulos del campamento. Con una categoria por actividad, capsDe() ya
    trae los 12 correctos y no hay nada que desmezclar. */
-ok(A.capsDe().length===12,
-  'Guías Mayores: 12 capítulos, sin creencias que descontar ('+A.capsDe().length+')');
+ok(A.capsDe().length===13,
+  'Guías Mayores: 13 capítulos, sin creencias que descontar ('+A.capsDe().length+')');
 A.capsDe().forEach(c=>{A.S().prog[c.id]=100;});
 A.modsDe().forEach(m=>{A.S().prog[m.id]=100;});
 A.revisaInsignias(0);

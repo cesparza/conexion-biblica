@@ -160,4 +160,26 @@ TARJETAS.push(
   {cap:'pr44', f:'Frase clave de P&R 44', r:'«...ninguna potencia terrenal tiene derecho a interponerse entre el <b>alma</b> y Dios»'}
 );
 
+
+/* Daniel 7 (v54): tarjetas basicas de repaso rapido, no exhaustivas. */
+TARJETAS.push(
+  {cap:'d7', f:'En qué año tuvo Daniel esta visión', r:'El año primero de <b>Belsasar</b> (7:1), unos 553 a.C.'},
+  {cap:'d7', f:'Cuántas bestias salen del mar', r:'<b>Cuatro</b>: león, oso, leopardo y una cuarta sin nombre'},
+  {cap:'d7', f:'Qué reino es el león con alas', r:'<b>Babilonia</b>'},
+  {cap:'d7', f:'Qué reino es el oso alzado de un costado', r:'<b>Medo-Persia</b>'},
+  {cap:'d7', f:'Qué reino es el leopardo de cuatro cabezas', r:'<b>Grecia</b>'},
+  {cap:'d7', f:'Por qué el leopardo tiene cuatro cabezas', r:'Por los <b>cuatro generales</b> que se repartieron el imperio de Alejandro tras Ipso (301 a.C.)'},
+  {cap:'d7', f:'Qué reino es la cuarta bestia, la que no se parece a ningún animal', r:'<b>Roma</b>'},
+  {cap:'d7', f:'Cuántos cuernos tiene la cuarta bestia', r:'<b>Diez</b> (7:24)'},
+  {cap:'d7', f:'Cuántos cuernos arranca el cuerno pequeño', r:'<b>Tres</b> (7:8, 24)'},
+  {cap:'d7', f:'Qué tres tribus arrianas fueron eliminadas', r:'<b>Hérulos (493), vándalos (534) y ostrogodos (538)</b>'},
+  {cap:'d7', f:'Cuánto es «tiempo, tiempos y medio tiempo»', r:'<b>3 años y medio</b>, o 1.260 días proféticos (7:25)'},
+  {cap:'d7', f:'A cuántos años equivalen esos 1.260 días', r:'<b>1.260 años: del 538 al 1798</b>, con la regla de día por año (Ezequiel 4:6)'},
+  {cap:'d7', f:'Qué pasó en 1798 con el papa', r:'El general francés <b>Berthier</b> arrestó a Pío VI y lo llevó al exilio'},
+  {cap:'d7', f:'Quién se sienta a juzgar en la visión', r:'El <b>Anciano de días</b> (7:9)'},
+  {cap:'d7', f:'A quién se le entrega el reino al final del juicio', r:'A <b>los santos del Altísimo</b>, para siempre (7:18, 27)'},
+  {cap:'d7', f:'Cuántas veces se repite la escena del juicio en el capítulo', r:'<b>Cuatro veces</b>: 7:9-14, 7:18, 7:22 y 7:26-27'},
+  {cap:'d7', f:'A qué corresponde el cuerno pequeño en la estatua de Daniel 2', r:'A los <b>pies de hierro y barro</b>: Europa dividida, sin volver a unirse'}
+);
+
 module.exports = { TARJETAS };

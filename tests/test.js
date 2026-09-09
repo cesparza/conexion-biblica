@@ -1078,8 +1078,22 @@ ok(colgando.length===0,'Ningun subtitulo recortado deja un guion o una coma colg
 const conVs=CAPS.filter(c=>c.src==='Biblia');
 ok(conVs.every(c=>typeof c.vs==='number'&&c.vs>0),
   'Todos los capitulos de la Biblia declaran cuantos versiculos tienen');
-ok(conVs.reduce((a,c)=>a+c.vs,0)===196,
+/* v54: Daniel 7-12 tambien son src:'Biblia', asi que sumar TODO lo que
+   declare vs dejo de significar "Daniel 1-6". El total de 196 se acota a
+   esos seis capitulos por id; los de 7-12 se validan aparte, uno por uno,
+   solo si ya estan declarados (se van agregando de a poco). */
+const D1_D6=['d1','d2','d3','d4','d5','d6'];
+ok(conVs.filter(c=>D1_D6.includes(c.id)).reduce((a,c)=>a+c.vs,0)===196,
   'Daniel 1-6 suman 196 versiculos (21+49+30+37+31+28)');
+/* Daniel 7 al 12: los numeros salen de Maxwell, «El Porvenir del Mundo
+   Revelado», y solo el de Daniel 7 esta cruzado contra un .txt RV1995 en
+   files/. Si algun dia se agrega el texto verificado de 8 a 12, este mapa es
+   el que hay que corregir. */
+const VS_D7_D12={d7:28,d8:27,d9:27,d10:21,d11:45,d12:13};
+Object.keys(VS_D7_D12).forEach(cid=>{
+  const c=CAPS.find(x=>x.id===cid);
+  if(c)ok(c.vs===VS_D7_D12[cid],cid+' declara '+VS_D7_D12[cid]+' versiculos, como en Maxwell');
+});
 /* Ojo con Daniel 5: en RV1995 son 31 porque 5:31 va ahi. Otras ediciones lo
    mueven a 6:1 y darian 30 y 29; si alguien "corrige" eso, esta prueba avisa. */
 ok(CAPS.find(c=>c.id==='d5').vs===31&&CAPS.find(c=>c.id==='d6').vs===28,
@@ -1090,11 +1104,26 @@ ok(CAPS.find(c=>c.id==='d5').vs===31&&CAPS.find(c=>c.id==='d6').vs===28,
    texto de estudio contra el tope declarado. */
 const TOPE={};CAPS.forEach(c=>{if(c.vs)TOPE[c.id]=c.vs;});
 const fuera=[];
+/* v54: con Daniel 7-12 en TOPE, un regex de una sola pasada empieza a leer
+   citas de OTRO libro (Apocalipsis 12:6, 13:5, 20:12 — las tres ya estan en
+   el contenido de Daniel 7) como si fueran de Daniel. Es el mismo problema
+   que refsTocables() resolvio en v43: «Daniel N:M» vale en cualquier parte
+   porque nombra el libro; un «N:M» a secas solo cuenta si esta entre
+   parentesis y ese parentesis no nombra otro libro. */
+const OTRO_LIBRO_TEST=/\b(?!Daniel\b|RV1995\b)(?:[123]\s?)?[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{1,}\b/;
 const revisaRef=(donde,txt)=>{
   if(!txt)return;
-  for(const m of String(txt).matchAll(/(?:Daniel )?(\d{1,2}):(\d{1,2})/g)){
+  const s=String(txt);
+  for(const m of s.matchAll(/Daniel\s+(\d{1,2}):(\d{1,2})/g)){
     const cid='d'+m[1];
     if(TOPE[cid]&&+m[2]>TOPE[cid])fuera.push(donde+' → '+m[0]+' (tiene '+TOPE[cid]+')');
+  }
+  for(const p of s.matchAll(/\(([^)]*)\)/g)){
+    if(OTRO_LIBRO_TEST.test(p[1]))continue;
+    for(const m of p[1].matchAll(/(\d{1,2}):(\d{1,2})/g)){
+      const cid='d'+m[1];
+      if(TOPE[cid]&&+m[2]>TOPE[cid])fuera.push(donde+' → ('+m[0]+') (tiene '+TOPE[cid]+')');
+    }
   }
 };
 BANCO.filter(q=>TOPE[q.cap]).forEach(q=>{
