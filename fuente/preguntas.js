@@ -1749,5 +1749,16 @@ BANCO.push(
    o:['Se casó con una princesa persa y promovió miles de matrimonios mixtos entre sus soldados y mujeres persas','Prohibió el idioma griego en los territorios conquistados','Destruyó todos los templos paganos','Se retiró a Grecia después de vencer'],a:0},
 );
 
+BANCO.push(
+  {cap:'d9',t:'mc',q:'¿Cuáles son los tres pasajes del Antiguo Testamento que Daniel había estado leyendo antes de su oración de Daniel 9?',
+   o:['Levítico 26, 1 Reyes 8 (oración de Salomón) y Jeremías 29','Génesis, Éxodo y Levítico','Los Salmos de David','Isaías y Ezequiel'],a:0},
+  {cap:'d9',t:'tf',q:'Daniel oró "hemos pecado, hemos hecho iniquidad" (9:5) a pesar de que ni sus propios enemigos podían encontrar falla en su conducta.',
+   a:true,e:'Daniel 6:4 dice que no hallaron ninguna falta en él, pero en su oración se identificó con el pecado colectivo de su pueblo.'},
+  {cap:'d9',t:'mc',q:'¿Qué significa literalmente la palabra hebrea "jathak", traducida como "fijadas" o "determinadas" en Daniel 9:24?',
+   o:['Cortar o amputar','Multiplicar','Iluminar','Sellar para siempre'],a:0},
+  {cap:'d9',t:'mc',q:'¿Por qué el significado literal de "jathak" (cortar/amputar) resuelve el enigma de los 2.300 días de Daniel 8:14?',
+   o:['Porque no se pueden "cortar" 490 años de solo 2.300 días literales, así que esos días tienen que ser 2.300 años simbólicos','Porque confirma que los 2.300 días son literales','Porque cambia la fecha del decreto de 457 a.C.','Porque elimina la necesidad del principio día por año'],a:0},
+);
+
 
 module.exports = { BANCO };

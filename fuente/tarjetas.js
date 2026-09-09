@@ -337,6 +337,9 @@ TARJETAS.push(
   {cap:'d8', f:'¿Qué arma de tecnología avanzada usó Alejandro Magno en sus batallas?', r:'La artillería de torsión: catapultas capaces de lanzar piedras de 26 kilos con gran precisión'},
   {cap:'d8', f:'¿Qué hizo el rey Darío III en cada una de sus tres derrotas frente a Alejandro?', r:'Perdió el ánimo, dio la vuelta y huyó, arrastrando la moral de todo su ejército'},
   {cap:'d8', f:'¿Con qué texto ilustra Maxwell el control de Dios sobre el corazón de los reyes?', r:'Proverbios 21:1: "el corazón del rey es como el agua del canal en mano de Yahvéh"'},
-  {cap:'d8', f:'¿Cómo cumplió Alejandro la "vida prolongada durante un tiempo" de Daniel 7:12?', r:'Se casó con la princesa Roxana y promovió el matrimonio de diez mil soldados griegos con mujeres persas, fusionando las culturas'});
+  {cap:'d8', f:'¿Cómo cumplió Alejandro la "vida prolongada durante un tiempo" de Daniel 7:12?', r:'Se casó con la princesa Roxana y promovió el matrimonio de diez mil soldados griegos con mujeres persas, fusionando las culturas'},
+  {cap:'d9', f:'¿Qué tres pasajes del Antiguo Testamento había leído Daniel antes de su oración del capítulo 9?', r:'Levítico 26, la oración de Salomón (1 Reyes 8:46-53) y la carta de Jeremías a los exiliados (Jeremías 29)'},
+  {cap:'d9', f:'¿Qué significa literalmente la palabra hebrea "jathak", traducida "fijadas" en Daniel 9:24?', r:'"Cortar" o "amputar"'},
+  {cap:'d9', f:'¿Por qué el sentido de "cortar/amputar" de jathak prueba que los 2.300 días de Daniel 8:14 son simbólicos?', r:'Porque no se pueden "cortar" 490 años literales de solo 2.300 días literales (menos de 7 años)'});
 
 module.exports = { TARJETAS };
