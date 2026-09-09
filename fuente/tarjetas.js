@@ -333,6 +333,10 @@ TARJETAS.push(
   {cap:'d7', f:'En el orden real del juicio de Daniel 7, ¿qué pasaje queda fuera de secuencia, como un paréntesis?', r:'Daniel 7:11-12, la destrucción de la bestia'},
   {cap:'d7', f:'¿Qué dos funciones cumple Cristo a la vez en el juicio celestial?', r:'Es Juez (Juan le delegó todo el juicio) y Abogado/Mediador de su pueblo (1 Juan 2:1; Hebreos 7:25)'},
   {cap:'d7', f:'¿Cuántos mártires cristianos calcula el historiador W. H. C. Frend bajo toda la Roma pagana (31-313 d.C.)?', r:'Cerca de cinco mil'},
-  {cap:'d7', f:'¿Qué conflicto religioso del siglo XVII, entre cristianos, dejó más víctimas que toda la persecución de Roma pagana?', r:'La Guerra de los Treinta Años (1618-1648), más de ocho millones de víctimas'});
+  {cap:'d7', f:'¿Qué conflicto religioso del siglo XVII, entre cristianos, dejó más víctimas que toda la persecución de Roma pagana?', r:'La Guerra de los Treinta Años (1618-1648), más de ocho millones de víctimas'},
+  {cap:'d8', f:'¿Qué arma de tecnología avanzada usó Alejandro Magno en sus batallas?', r:'La artillería de torsión: catapultas capaces de lanzar piedras de 26 kilos con gran precisión'},
+  {cap:'d8', f:'¿Qué hizo el rey Darío III en cada una de sus tres derrotas frente a Alejandro?', r:'Perdió el ánimo, dio la vuelta y huyó, arrastrando la moral de todo su ejército'},
+  {cap:'d8', f:'¿Con qué texto ilustra Maxwell el control de Dios sobre el corazón de los reyes?', r:'Proverbios 21:1: "el corazón del rey es como el agua del canal en mano de Yahvéh"'},
+  {cap:'d8', f:'¿Cómo cumplió Alejandro la "vida prolongada durante un tiempo" de Daniel 7:12?', r:'Se casó con la princesa Roxana y promovió el matrimonio de diez mil soldados griegos con mujeres persas, fusionando las culturas'});
 
 module.exports = { TARJETAS };

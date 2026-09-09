@@ -1738,5 +1738,16 @@ BANCO.push(
    o:['La Guerra de los Treinta Años','Las Cruzadas','La Guerra Civil inglesa','Las guerras napoleónicas'],a:0},
 );
 
+BANCO.push(
+  {cap:'d8',t:'mc',q:'¿Qué tecnología militar ayudó a Alejandro Magno en sus campañas, según un artículo de Scientific American?',
+   o:['La artillería de torsión (catapultas)','El caballo de hierro','Los arietes con ruedas','Los barcos de guerra con remos dobles'],a:0},
+  {cap:'d8',t:'mc',q:'¿Qué hizo el rey persa Darío III en cada una de las tres grandes batallas contra Alejandro (Gránico, Iso y Arbela)?',
+   o:['Se rindió de inmediato','Perdió el ánimo, dio la vuelta a su carro y huyó','Negoció una tregua','Envió a un general en su lugar'],a:1},
+  {cap:'d8',t:'tf',q:'Según Proverbios 21:1, citado por Maxwell, Dios no tiene ninguna influencia sobre las decisiones de los reyes paganos.',
+   a:false,e:'El texto dice justo lo contrario: "el corazón del rey es como el agua del canal en mano de Yahvéh, que él dirige donde quiere".'},
+  {cap:'d8',t:'mc',q:'¿Con qué gesto simbólico cumplió Alejandro la "prolongación de vida durante un tiempo" de Daniel 7:12 para las civilizaciones que conquistó?',
+   o:['Se casó con una princesa persa y promovió miles de matrimonios mixtos entre sus soldados y mujeres persas','Prohibió el idioma griego en los territorios conquistados','Destruyó todos los templos paganos','Se retiró a Grecia después de vencer'],a:0},
+);
+
 
 module.exports = { BANCO };
