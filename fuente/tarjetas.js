@@ -298,6 +298,12 @@ TARJETAS.push(
   {cap:'d12', f:'¿Qué dice el ángel de Apocalipsis 10:6 que no dice el de Daniel 12:7?', r:'Que "ya no habrá más dilación"'},
   {cap:'d12', f:'¿A quiénes, además de algunos justos, incluye la resurrección especial de Daniel 12:2?', r:'A quienes participaron directamente en la crucifixión de Jesús'},
   {cap:'d12', f:'¿En qué seis puntos resume Maxwell el mensaje final del libro de Daniel?', r:'Dios conoce el futuro; dirige el destino de los imperios; el juicio ya está en sesión; puede librarnos de toda dificultad; Cristo anhela que su alianza prevalezca; y no concibe la eternidad sin nosotros'},
+
+  {cap:'d10', f:'¿En torno a quién giran realmente los capítulos 10 a 12, y no en torno a un ángel intermediario?', r:'En torno a Jesucristo mismo (Miguel), glorificado antes de recorrer la historia hasta el fin'},
+  {cap:'d10', f:'¿Cuál fue el último acto registrado de Daniel en el libro?', r:'Un ayuno de tres semanas, seguido de la visión más larga y detallada de los doce capítulos'},
+
+  {cap:'d12', f:'Según el primer punto del resumen de Maxwell, ¿qué sabe Dios?', r:'El pasado, el presente y el futuro; nada lo sorprende'},
+  {cap:'d12', f:'Según el cuarto punto del resumen de Maxwell, ¿de qué nos librará pronto Dios?', r:'De la muerte misma, igual que ya libra de leones y hornos de fuego'},
 );
 
 module.exports = { TARJETAS };

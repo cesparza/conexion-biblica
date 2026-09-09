@@ -1594,5 +1594,22 @@ BANCO.push(
  o:['Que todos los imperios humanos desaparezcan de inmediato','Que su alianza con su pueblo prevalezca','Que el conocimiento humano deje de aumentar','Que el juicio investigador termine antes de tiempo'],a:1},
 
 );
+BANCO.push(
+{cap:'d10',t:'mc',q:'Según el capítulo, ¿en torno a quién giran realmente los capítulos 10 a 12, y no en torno a un ángel intermediario o un "anticristo" abstracto?',
+ o:['En torno a Jesucristo mismo, glorificado antes de recorrer la historia hasta el fin','En torno al rey Ciro y su decreto de restauración','En torno al ángel Gabriel, que ya había aparecido en Daniel 8 y 9','En torno al príncipe de Persia, como figura central de la profecía'],a:0},
+{cap:'d10',t:'mc',q:'¿Cuál fue el último acto registrado de Daniel en el libro, según el capítulo 10?',
+ o:['Un discurso final ante los príncipes de Persia','Un ayuno de tres semanas, seguido de la visión más larga y detallada de los doce capítulos','La escritura de una carta a los judíos que quedaban en Babilonia','Una segunda noche en el foso de los leones'],a:1},
+{cap:'d10',t:'tf',q:'Según el capítulo, la vejez fue para Daniel el final de su utilidad espiritual.',
+ a:false,e:'Falso. Fue la continuación natural de una vida entera de fidelidad: a los noventa años ayunó y recibió la visión más larga del libro.'},
+
+{cap:'d12',t:'mc',q:'Según el primero de los seis puntos con que Maxwell cierra el libro de Daniel, ¿qué sabe Dios?',
+ o:['Solo el pasado y el presente, no el futuro','El pasado, el presente y el futuro; nada lo sorprende','Únicamente lo que los profetas le revelan','El futuro de las naciones, pero no el de cada persona'],a:1},
+{cap:'d12',t:'mc',q:'Según el segundo punto del resumen de Maxwell, ¿qué dirige Dios, y qué les espera a todos?',
+ o:['El destino de los imperios y de cada persona; todos serán llevados a juicio','Solo el destino de los imperios, no el de las personas','El calendario religioso de cada nación','El resultado de las guerras entre reyes, sin más'],a:0},
+{cap:'d12',t:'mc',q:'Según el cuarto punto del resumen de Maxwell, ¿de qué puede librarnos Dios ahora, y de qué nos librará pronto?',
+ o:['De leones, hornos de fuego y toda dificultad presente; pronto, de la muerte misma','Solo de dificultades pasadas, ya superadas','De los imperios humanos, pero no de la muerte','De la muerte únicamente, sin relación con las dificultades presentes'],a:0},
+{cap:'d12',t:'tf',q:'Según el sexto punto del resumen de Maxwell, Dios no concibe la eternidad sin nosotros a su lado.',
+ a:true,e:'Verdadero. Es el cierre del resumen de seis puntos con que Maxwell termina el libro.'},
+);
 
 module.exports = { BANCO };
