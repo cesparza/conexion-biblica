@@ -1794,5 +1794,12 @@ BANCO.push(
    a:false,e:'Ha crecido de forma sostenida: 14 en 1914, 25 en 1922, 50 en 1958 y más de 170 en la actualidad.'},
 );
 
+BANCO.push(
+  {cap:'d12',t:'mc',q:'¿Qué frase usó Miguel en la disputa por el cuerpo de Moisés en vez de maldecir directamente a Satanás (Judas 9)?',
+   o:['"El Señor te reprenda"','"Apártate de mí"','"No tienes autoridad aquí"','"Vete al abismo"'],a:0},
+  {cap:'d12',t:'tf',q:'El hecho de que Miguel no maldijera directamente a Satanás en Judas 9 demuestra que tenía menos poder que Jesús.',
+   a:false,e:'Jesús usó la misma clase de autoridad divina para maldecir una higuera con efecto inmediato (Marcos 11); Miguel no lo hizo porque todavía no era el momento de destruir a Satanás, no por falta de poder.'},
+);
+
 
 module.exports = { BANCO };
