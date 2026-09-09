@@ -1771,5 +1771,12 @@ BANCO.push(
    o:['"No temas, que hay más con nosotros que con ellos"','"Hoy moriremos"','"Debemos escapar de inmediato"','"Llamemos a los soldados del rey"'],a:0},
 );
 
+BANCO.push(
+  {cap:'d11',t:'mc',q:'¿Qué objeto hoy exhibido en el Museo Británico confirma el cumplimiento de Daniel 11:14 ("se levantarán muchos contra el rey del Mediodía")?',
+   o:['La Piedra Rosetta','El Cilindro de Ciro','El Prisma de Senaquerib','La Estela de Merneptah'],a:0},
+  {cap:'d11',t:'tf',q:'La Piedra Rosetta registra concesiones que los regentes de un rey egipcio adulto hicieron a Roma.',
+   a:false,e:'Registra concesiones hechas al pueblo egipcio, rebelado contra sus gobernantes griegos, durante el reinado del niño-rey Ptolomeo V, de apenas seis años.'},
+);
+
 
 module.exports = { BANCO };

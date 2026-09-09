@@ -344,6 +344,7 @@ TARJETAS.push(
   {cap:'d10', f:'¿Qué le dijo a Josué el "jefe del ejército de Yahvéh" antes del ataque a Jericó?', r:'Que se quitara las sandalias, porque el lugar donde estaba era sagrado (Josué 5:13-15)'},
   {cap:'d10', f:'¿Cómo se llama, en Éxodo 3, al mismo Ser que se identifica como "YO SOY EL QUE SOY"?', r:'"El Ángel de Yahvéh" (Éxodo 3:2), aunque es el propio Dios quien habla'},
   {cap:'d10', f:'¿Qué vio el siervo de Eliseo en Dotán cuando Dios le abrió los ojos?', r:'El monte lleno de caballos y carros de fuego alrededor de Eliseo (2 Reyes 6)'},
-  {cap:'d10', f:'¿Qué frase de Eliseo resume la protección angélica invisible, la misma idea detrás de la guerra de Daniel 10?', r:'"No temas, que hay más con nosotros que con ellos"'});
+  {cap:'d10', f:'¿Qué frase de Eliseo resume la protección angélica invisible, la misma idea detrás de la guerra de Daniel 10?', r:'"No temas, que hay más con nosotros que con ellos"'},
+  {cap:'d11', f:'¿Qué objeto famoso, hoy en el Museo Británico, ilustra el cumplimiento de Daniel 11:14?', r:'La Piedra Rosetta, con las concesiones del niño-rey Ptolomeo V a los egipcios rebelados'});
 
 module.exports = { TARJETAS };
