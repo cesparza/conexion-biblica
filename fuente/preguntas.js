@@ -1778,5 +1778,12 @@ BANCO.push(
    a:false,e:'Registra concesiones hechas al pueblo egipcio, rebelado contra sus gobernantes griegos, durante el reinado del niño-rey Ptolomeo V, de apenas seis años.'},
 );
 
+BANCO.push(
+  {cap:'d12',t:'mc',q:'¿Qué convicción llevó a los anabautistas Oswald Glait y Andreas Fischer a la muerte en el siglo XVI, según el ejemplo que da Maxwell de los "doctos" de Daniel 12:3?',
+   o:['Guardar el sábado bíblico, tras estudiar Daniel 7:25','Rechazar el bautismo infantil únicamente','Predicar en un idioma prohibido','Negarse a pagar impuestos al imperio'],a:0},
+  {cap:'d12',t:'tf',q:'Según Maxwell, los "doctos" que "brillarán como el fulgor del firmamento" (Daniel 12:3) son necesariamente una élite de eruditos y teólogos.',
+   a:false,e:'Son quienes estudiaron las profecías hasta comprenderlas, las compartieron con otros y se dejaron purificar por ellas, sin importar su nivel académico.'},
+);
+
 
 module.exports = { BANCO };
