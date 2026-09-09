@@ -1198,7 +1198,7 @@ function htmlHoja(cid,de,hasta){
     '<div class="hoja-cab">'+
       '<div><div class="hoja-ref">'+ref+' · '+t.version+'</div>'+
       '<div class="hoja-sub">'+esc(cap?cap.sub:'')+'</div></div>'+
-      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button>':'')+
+      (puedeHablar()?grupoVoz('btn-voz','Escuchar','Escuchar el versículo'):'')+
       '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
     '</div>'+
     '<div class="hoja-txt biblia" data-leer>'+partes.join('')+'</div>'+
@@ -1230,7 +1230,7 @@ function seccionLectura(cid){
     const txt=grupo.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('');
     bloques.push('<div class="lect-bl">'+
       '<div class="lect-cab"><span class="lect-rot">'+rot+'</span>'+
-      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar estos versículos" aria-label="Escuchar '+rot+'" onclick="leeCerca(this)">🔊</button>':'')+
+      (puedeHablar()?grupoVoz('btn-voz','Escuchar estos versículos','Escuchar '+rot):'')+
       '</div><div class="biblia" data-leer>'+txt+'</div></div>');
   }
   return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
@@ -1272,8 +1272,7 @@ function abreLectura(cid){
     '<div class="lec-barra">'+
       '<div class="lec-prog"><i id="lec-i" style="width:0%"></i></div>'+
       '<span class="lec-pct" id="lec-pct">Daniel '+n+'</span>'+
-      (puedeHablar()?'<button type="button" class="lec-voz" onclick="leeCerca(this)" '+
-        'aria-label="Escuchar el capítulo">🔊</button>':'')+
+      (puedeHablar()?grupoVoz('lec-voz','Escuchar','Escuchar el capítulo'):'')+
       '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">✕</button>'+
     '</div>'+
     '<div class="lec-caja" id="lec-caja"><h1>'+esc(c?c.sub:'Daniel '+n)+'</h1>'+
@@ -1682,7 +1681,28 @@ function leeCerca(btn){
   habla(t.replace(/^\s*[\d:]+\s*/,''),btn);
 }
 
-const BTN_VOZ='<button class="btn-voz" title="Escuchar" aria-label="Escuchar" onclick="leeCerca(this)">🔊</button>';
+/* Reinicia desde el principio, sin esperar a que termine ni a pausar primero.
+   El boton ↺ solo se ve mientras el de al lado esta activo (CSS, :has()), y
+   vive en el MISMO grupo — reusa el texto que habla() ya guardo en dataset.txt
+   del boton de audio, asi no hay que volver a buscar el bloque [data-leer]. */
+function reiniciaVoz(btn){
+  const grupo=btn.closest?btn.closest('.grupo-voz'):null;
+  const voz=grupo?grupo.querySelector('.btn-voz'):null;
+  if(!voz||!voz.dataset.txt)return;
+  habla(voz.dataset.txt,voz);
+}
+
+/* Envuelve un boton de audio con su compañero de reinicio, en un solo grupo
+   para que el CSS (:has()) decida cuando mostrar el segundo. Un solo punto
+   de armado evita que las ocho ubicaciones que reproducen audio se
+   desincronicen entre si. */
+const grupoVoz=(claseVoz,title,aria)=>
+  '<span class="grupo-voz"><button type="button" class="btn-reinicia" title="Reiniciar"'+
+  ' aria-label="Reiniciar" onclick="reiniciaVoz(this)">↺</button>'+
+  '<button type="button" class="'+claseVoz+'" title="'+title+'" aria-label="'+aria+'"'+
+  ' onclick="leeCerca(this)">🔊</button></span>';
+
+const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');'<button class="btn-voz" title="Escuchar" aria-label="Escuchar" onclick="leeCerca(this)">🔊</button>';
 
 /* ───────── tarjetas ─────────
    REPETICIÓN ESPACIADA, EL MECANISMO

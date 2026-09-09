@@ -1268,6 +1268,15 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
   outline:3px solid var(--v-cat);outline-offset:2px;border-radius:6px;
 }
+/* Safari dibuja su propio foco nativo (un halo azul difuso) en CUALQUIER
+   click de mouse sobre un boton, no solo al navegar con teclado — se nota
+   mas en un boton redondo como .btn-voz, donde el halo nativo se ve como una
+   mancha borrosa mas grande que el boton mismo. :focus-visible ya distingue
+   teclado de mouse; esto apaga el foco nativo de Safari cuando NO es
+   :focus-visible, sin tocar el anillo de arriba que si se quiere conservar. */
+a:focus:not(:focus-visible),button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),select:focus:not(:focus-visible),
+summary:focus:not(:focus-visible){outline:none}
 
 /* La rejilla de capítulos con más aire y tarjetas que se levantan al pasar. */
 .rejilla{gap:1rem}
@@ -1524,6 +1533,22 @@ details.card summary::marker{content:''}
    el texto que lee. */
 .vc-cab{display:flex;align-items:center;justify-content:space-between;
   gap:.5rem;margin-bottom:.3rem}
+
+/* Reiniciar el audio desde cero, sin esperar a que termine ni pausarlo
+   primero. v62 solo traia pausa/reanudar; a Camilo le hizo falta un tercer
+   control. El boton ↺ vive SIEMPRE en el HTML pero solo se ve mientras el de
+   al lado esta activo (leyendo o en pausa) — :has() lee el estado del
+   hermano sin que el JS tenga que tocar una clase mas. */
+.grupo-voz{display:inline-flex;align-items:center;gap:.3rem;vertical-align:middle}
+.btn-reinicia{display:none;border:1.5px solid var(--v-linea);background:var(--v-sup);
+  color:var(--v-cat);border-radius:999px;min-width:32px;min-height:32px;padding:0 .3rem;
+  font-size:.85rem;line-height:1;cursor:pointer;align-items:center;justify-content:center}
+.btn-reinicia:hover{border-color:var(--v-cat);background:var(--v-cat-suave)}
+.grupo-voz:has(.btn-voz.sonando) .btn-reinicia{display:inline-flex}
+/* En la barra clara del modo lectura (.lec-voz) el boton de audio no lleva
+   borde ni fondo: el de reiniciar hace juego, no el circulo azul de arriba. */
+.lec-barra .btn-reinicia{border:0;background:none;color:#8a7a5f;min-width:28px;min-height:28px}
+.lec-barra .btn-reinicia:hover{color:#5b4d33}
 
 .pan-paso{
   border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
@@ -1974,7 +1999,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'f487acf7d95b';
+const VERSION_APP = '56418349746f';
 
 const CAPS = [
  {
@@ -2894,11 +2919,11 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>1:8</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.»</p><p data-leer><span class=\"vc-cab\"><strong>1:12</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.»</p><p data-leer><span class=\"vc-cab\"><strong>1:15</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.»</p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>1:8</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.»</p><p data-leer><span class=\"vc-cab\"><strong>1:12</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.»</p><p data-leer><span class=\"vc-cab\"><strong>1:15</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
-   "h": "<p data-leer><span class=\"vc-cab\"><strong>1:17</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.»</p><p data-leer><span class=\"vc-cab\"><strong>1:20</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.»</p><p data-leer><span class=\"vc-cab\"><strong>1:21</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Así continuó Daniel hasta el año primero del rey Ciro.»</p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>1:17</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.»</p><p data-leer><span class=\"vc-cab\"><strong>1:20</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.»</p><p data-leer><span class=\"vc-cab\"><strong>1:21</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Así continuó Daniel hasta el año primero del rey Ciro.»</p>"
   }
  ],
  "d2": [
@@ -3022,11 +3047,11 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>3:1</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.»</p><p data-leer><span class=\"vc-cab\"><strong>3:17</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.»</p><p data-leer><span class=\"vc-cab\"><strong>3:18</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.»</p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>3:1</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.»</p><p data-leer><span class=\"vc-cab\"><strong>3:17</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.»</p><p data-leer><span class=\"vc-cab\"><strong>3:18</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
-   "h": "<p data-leer><span class=\"vc-cab\"><strong>3:25</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.»</p><p data-leer><span class=\"vc-cab\"><strong>3:27</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.»</p><p data-leer><span class=\"vc-cab\"><strong>3:28</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...»</p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>3:25</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.»</p><p data-leer><span class=\"vc-cab\"><strong>3:27</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.»</p><p data-leer><span class=\"vc-cab\"><strong>3:28</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...»</p>"
   }
  ],
  "d4": [
@@ -3160,11 +3185,11 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>6:4</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.»</p><p data-leer><span class=\"vc-cab\"><strong>6:10</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»</p><p data-leer><span class=\"vc-cab\"><strong>6:16</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«El Dios tuyo, a quien tú continuamente sirves, él te libre.»</p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>6:4</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.»</p><p data-leer><span class=\"vc-cab\"><strong>6:10</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»</p><p data-leer><span class=\"vc-cab\"><strong>6:16</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«El Dios tuyo, a quien tú continuamente sirves, él te libre.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
-   "h": "<p data-leer><span class=\"vc-cab\"><strong>6:22</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.»</p><p data-leer><span class=\"vc-cab\"><strong>6:26</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.»</p><p data-leer><span class=\"vc-cab\"><strong>6:27</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.»</p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>6:22</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.»</p><p data-leer><span class=\"vc-cab\"><strong>6:26</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.»</p><p data-leer><span class=\"vc-cab\"><strong>6:27</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.»</p>"
   }
  ],
  "pr39": [
@@ -3488,7 +3513,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
   }
  ],
  "d9": [
@@ -3542,7 +3567,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende que desde la salida de la orden para restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende que desde la salida de la orden para restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
   }
  ],
  "d10": [
@@ -3588,7 +3613,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 10:12</strong><br>«Daniel, no temas, porque desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron oídas tus palabras» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><strong>Daniel 10:12</strong><br>«Daniel, no temas, porque desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron oídas tus palabras» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
   }
  ],
  "d11": [
@@ -3638,7 +3663,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 11:45</strong><br>«Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo; pero llegará a su fin, y no tendrá quien lo ayude» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><strong>Daniel 11:45</strong><br>«Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo; pero llegará a su fin, y no tendrá quien lo ayude» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
   }
  ],
  "d12": [
@@ -3688,7 +3713,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 12:3</strong><br>«Los entendidos resplandecerán como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><strong>Daniel 12:3</strong><br>«Los entendidos resplandecerán como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
   }
  ],
  "m01": [
@@ -20343,7 +20368,7 @@ function htmlHoja(cid,de,hasta){
     '<div class="hoja-cab">'+
       '<div><div class="hoja-ref">'+ref+' · '+t.version+'</div>'+
       '<div class="hoja-sub">'+esc(cap?cap.sub:'')+'</div></div>'+
-      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button>':'')+
+      (puedeHablar()?grupoVoz('btn-voz','Escuchar','Escuchar el versículo'):'')+
       '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
     '</div>'+
     '<div class="hoja-txt biblia" data-leer>'+partes.join('')+'</div>'+
@@ -20375,7 +20400,7 @@ function seccionLectura(cid){
     const txt=grupo.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('');
     bloques.push('<div class="lect-bl">'+
       '<div class="lect-cab"><span class="lect-rot">'+rot+'</span>'+
-      (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar estos versículos" aria-label="Escuchar '+rot+'" onclick="leeCerca(this)">🔊</button>':'')+
+      (puedeHablar()?grupoVoz('btn-voz','Escuchar estos versículos','Escuchar '+rot):'')+
       '</div><div class="biblia" data-leer>'+txt+'</div></div>');
   }
   return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
@@ -20417,8 +20442,7 @@ function abreLectura(cid){
     '<div class="lec-barra">'+
       '<div class="lec-prog"><i id="lec-i" style="width:0%"></i></div>'+
       '<span class="lec-pct" id="lec-pct">Daniel '+n+'</span>'+
-      (puedeHablar()?'<button type="button" class="lec-voz" onclick="leeCerca(this)" '+
-        'aria-label="Escuchar el capítulo">🔊</button>':'')+
+      (puedeHablar()?grupoVoz('lec-voz','Escuchar','Escuchar el capítulo'):'')+
       '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">✕</button>'+
     '</div>'+
     '<div class="lec-caja" id="lec-caja"><h1>'+esc(c?c.sub:'Daniel '+n)+'</h1>'+
@@ -20827,7 +20851,28 @@ function leeCerca(btn){
   habla(t.replace(/^\s*[\d:]+\s*/,''),btn);
 }
 
-const BTN_VOZ='<button class="btn-voz" title="Escuchar" aria-label="Escuchar" onclick="leeCerca(this)">🔊</button>';
+/* Reinicia desde el principio, sin esperar a que termine ni a pausar primero.
+   El boton ↺ solo se ve mientras el de al lado esta activo (CSS, :has()), y
+   vive en el MISMO grupo — reusa el texto que habla() ya guardo en dataset.txt
+   del boton de audio, asi no hay que volver a buscar el bloque [data-leer]. */
+function reiniciaVoz(btn){
+  const grupo=btn.closest?btn.closest('.grupo-voz'):null;
+  const voz=grupo?grupo.querySelector('.btn-voz'):null;
+  if(!voz||!voz.dataset.txt)return;
+  habla(voz.dataset.txt,voz);
+}
+
+/* Envuelve un boton de audio con su compañero de reinicio, en un solo grupo
+   para que el CSS (:has()) decida cuando mostrar el segundo. Un solo punto
+   de armado evita que las ocho ubicaciones que reproducen audio se
+   desincronicen entre si. */
+const grupoVoz=(claseVoz,title,aria)=>
+  '<span class="grupo-voz"><button type="button" class="btn-reinicia" title="Reiniciar"'+
+  ' aria-label="Reiniciar" onclick="reiniciaVoz(this)">↺</button>'+
+  '<button type="button" class="'+claseVoz+'" title="'+title+'" aria-label="'+aria+'"'+
+  ' onclick="leeCerca(this)">🔊</button></span>';
+
+const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');'<button class="btn-voz" title="Escuchar" aria-label="Escuchar" onclick="leeCerca(this)">🔊</button>';
 
 /* ───────── tarjetas ─────────
    REPETICIÓN ESPACIADA, EL MECANISMO

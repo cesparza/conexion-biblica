@@ -1252,6 +1252,15 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
   outline:3px solid var(--v-cat);outline-offset:2px;border-radius:6px;
 }
+/* Safari dibuja su propio foco nativo (un halo azul difuso) en CUALQUIER
+   click de mouse sobre un boton, no solo al navegar con teclado — se nota
+   mas en un boton redondo como .btn-voz, donde el halo nativo se ve como una
+   mancha borrosa mas grande que el boton mismo. :focus-visible ya distingue
+   teclado de mouse; esto apaga el foco nativo de Safari cuando NO es
+   :focus-visible, sin tocar el anillo de arriba que si se quiere conservar. */
+a:focus:not(:focus-visible),button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),select:focus:not(:focus-visible),
+summary:focus:not(:focus-visible){outline:none}
 
 /* La rejilla de capítulos con más aire y tarjetas que se levantan al pasar. */
 .rejilla{gap:1rem}
@@ -1508,6 +1517,22 @@ details.card summary::marker{content:''}
    el texto que lee. */
 .vc-cab{display:flex;align-items:center;justify-content:space-between;
   gap:.5rem;margin-bottom:.3rem}
+
+/* Reiniciar el audio desde cero, sin esperar a que termine ni pausarlo
+   primero. v62 solo traia pausa/reanudar; a Camilo le hizo falta un tercer
+   control. El boton ↺ vive SIEMPRE en el HTML pero solo se ve mientras el de
+   al lado esta activo (leyendo o en pausa) — :has() lee el estado del
+   hermano sin que el JS tenga que tocar una clase mas. */
+.grupo-voz{display:inline-flex;align-items:center;gap:.3rem;vertical-align:middle}
+.btn-reinicia{display:none;border:1.5px solid var(--v-linea);background:var(--v-sup);
+  color:var(--v-cat);border-radius:999px;min-width:32px;min-height:32px;padding:0 .3rem;
+  font-size:.85rem;line-height:1;cursor:pointer;align-items:center;justify-content:center}
+.btn-reinicia:hover{border-color:var(--v-cat);background:var(--v-cat-suave)}
+.grupo-voz:has(.btn-voz.sonando) .btn-reinicia{display:inline-flex}
+/* En la barra clara del modo lectura (.lec-voz) el boton de audio no lleva
+   borde ni fondo: el de reiniciar hace juego, no el circulo azul de arriba. */
+.lec-barra .btn-reinicia{border:0;background:none;color:#8a7a5f;min-width:28px;min-height:28px}
+.lec-barra .btn-reinicia:hover{color:#5b4d33}
 
 .pan-paso{
   border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);

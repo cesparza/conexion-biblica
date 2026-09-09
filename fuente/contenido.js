@@ -58,6 +58,16 @@ const hi = t => `<div class="highlight-box">${t}</div>`;
 const wa = t => `<div class="warn-box">${t}</div>`;
 const vs = t => `<div class="verse-box">${t}</div>`;
 const li = arr => `<ul class="tight">${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+/* Mismo boton de audio que fuente/app.js arma en runtime (grupoVoz), pero
+   escrito aqui a mano porque este archivo se ejecuta en el build, sin DOM:
+   no hay puedeHablar() que consultar. reiniciaVoz() y leeCerca() ya saben
+   leer este marcado — un solo mecanismo compartido, dos lugares que lo
+   generan. */
+const vozPar = aria =>
+  '<span class="grupo-voz"><button type="button" class="btn-reinicia" title="Reiniciar"' +
+  ' aria-label="Reiniciar" onclick="reiniciaVoz(this)">↺</button>' +
+  '<button type="button" class="btn-voz" aria-label="' + aria + '"' +
+  ' onclick="leeCerca(this)">🔊</button></span>';
 
 const CONTENIDO = {
 
@@ -1362,7 +1372,7 @@ d7: [
     { t: '🔗 Daniel 2, 7 y 8-9: una misma historia repetida y ampliada',
       h: '<p>Cada visión de Daniel repite el esquema de la anterior y le añade detalle. Daniel 2 muestra el ascenso y la caída de los imperios y termina con el reino eterno de Dios (la piedra). Daniel 7 recorre el mismo camino político y culmina con el tribunal celestial que entrega el reino a los santos: mira a Cristo como <strong>Juez</strong>. Daniel 8 y 9 recorren de nuevo la historia (omitiendo a Babilonia, que ya había dejado de tener futuro profético) y culminan con la obra de Cristo como <strong>Sumo Sacerdote</strong> que purifica el santuario y perdona el pecado. Daniel 2 mira a Cristo Rey, Daniel 7 a Cristo Juez, Daniel 8-9 a Cristo Sumo Sacerdote.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» ' + vozPar('Escuchar el versículo') + '</p>'},
   ],
   d9: [
     { t: '📚 En pocas palabras',
@@ -1390,7 +1400,7 @@ d7: [
     { t: '🌅 De la confesión a la certeza',
       h: '<p>Es notable el contraste entre el tono de la oración de Daniel —angustiado, consciente de una deuda que su pueblo no puede pagar— y la respuesta que recibe: no un simple perdón puntual, sino un mapa de 490 años que culmina en el Mesías que "hará cesar el sacrificio y la ofrenda" para siempre. La misma estructura se repite en el resto del libro: cada vez que Daniel busca a Dios con sinceridad (el sueño de la estatua, los leones, esta oración), la respuesta no solo resuelve el problema inmediato sino que revela algo mayor sobre el plan de salvación.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende que desde la salida de la orden para restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende que desde la salida de la orden para restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas» ' + vozPar('Escuchar el versículo') + '</p>'},
   ],
   d10: [
     { t: '📚 En pocas palabras',
@@ -1414,7 +1424,7 @@ d7: [
     { t: '🕰️ Daniel, anciano y todavía útil',
       h: '<p>Cuando ocurre esta visión Daniel se acercaba a los noventa años: fue llevado cautivo siendo apenas un adolescente de unos 17 años, y ahora, más de setenta años después, seguía orando con el mismo fervor de su juventud. El libro no presenta a Daniel como una figura del pasado que ya cumplió su función: su último acto registrado es un ayuno de tres semanas por el bienestar de su pueblo, seguido de la visión más larga y detallada de todo el libro (capítulos 10-12). La vejez, para Daniel, no fue el final de su utilidad espiritual sino la continuación natural de una vida entera de fidelidad.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 10:12</strong><br>«Daniel, no temas, porque desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron oídas tus palabras» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 10:12</strong><br>«Daniel, no temas, porque desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron oídas tus palabras» ' + vozPar('Escuchar el versículo') + '</p>'},
   ],
   d11: [
     { t: '📚 En pocas palabras',
@@ -1440,7 +1450,7 @@ d7: [
     { t: '🔗 Por qué Daniel 11 repite el mensaje de Daniel 7 y 8',
       h: '<p>Pese a su detalle histórico, el propósito de Daniel 11 no es distinto del de las visiones anteriores: mostrar que un poder político-religioso surgiría entre los imperios de la tierra para oscurecer el ministerio sacerdotal de Cristo y perseguir a su pueblo fiel, y que ese poder llegaría finalmente a su fin sin ayuda ni remedio —igual que el cuerno pequeño de Daniel 7 es "destrozado y arrojado al fuego" en el juicio (Daniel 7:11, 26)—.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 11:45</strong><br>«Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo; pero llegará a su fin, y no tendrá quien lo ayude» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 11:45</strong><br>«Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo; pero llegará a su fin, y no tendrá quien lo ayude» ' + vozPar('Escuchar el versículo') + '</p>'},
   ],
   d12: [
     { t: '📚 En pocas palabras',
@@ -1466,7 +1476,7 @@ d7: [
     { t: '🌍 Buenas noticias, en seis frases',
       h: '<p>Maxwell resume el mensaje final de todo el libro de Daniel en seis puntos: (1) Dios conoce el pasado, el presente y el futuro; nada lo sorprende. (2) Dios dirige el destino de los imperios y de cada persona, y todos serán llevados a juicio. (3) La primera fase del juicio final ya está en sesión: Jesús revela ante el universo la identidad de sus seguidores fieles. (4) Dios puede librarnos de leones, hornos de fuego y toda dificultad presente, y pronto nos librará de la muerte misma. (5) Cristo anhela que su alianza prevalezca, a un costo infinito para sí mismo. (6) Dios está tan interesado en nosotros que no concibe la eternidad sin nosotros a su lado.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 12:3</strong><br>«Los entendidos resplandecerán como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 12:3</strong><br>«Los entendidos resplandecerán como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad» ' + vozPar('Escuchar el versículo') + '</p>'},
   ],
 };
 
@@ -1513,8 +1523,7 @@ const VERS_CLAVE = {
    la sección, no acortar el contenido. */
 const versHTML = v =>
   '<p data-leer><span class="vc-cab"><strong>' + v[0] + '</strong>' +
-  '<button class="btn-voz" aria-label="Escuchar el versículo"' +
-  ' onclick="leeCerca(this)">🔊</button></span>' +
+  vozPar('Escuchar el versículo') + '</span>' +
   '«' + v[1] + '»</p>';
 
 for (const cap of Object.keys(VERS_CLAVE)) {
