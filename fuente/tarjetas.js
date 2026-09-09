@@ -182,4 +182,81 @@ TARJETAS.push(
   {cap:'d7', f:'A qué corresponde el cuerno pequeño en la estatua de Daniel 2', r:'A los <b>pies de hierro y barro</b>: Europa dividida, sin volver a unirse'}
 );
 
+TARJETAS.push(
+{cap:'d8', f:'¿En qué año de qué rey tuvo Daniel la visión del capítulo 8?', r:'Año tercero de Belsasar, 551 a.C. (dos años después de Daniel 7).'},
+{cap:'d8', f:'¿Dónde estaba Daniel en la visión?', r:'Junto al río Ulay, en Susa, provincia de Elam (futura capital de invierno de Medo-Persia).'},
+{cap:'d8', f:'¿Qué representa el carnero de dos cuernos?', r:'Medo-Persia (Daniel 8:20); el cuerno más alto, que despuntó después, es Persia.'},
+{cap:'d8', f:'¿Qué representa el macho cabrío?', r:'Grecia (Yaván), Daniel 8:21.'},
+{cap:'d8', f:'¿Qué representa el cuerno grande del macho cabrío?', r:'El primer rey de Grecia, Alejandro Magno (Daniel 8:21).'},
+{cap:'d8', f:'¿En qué tres batallas Alejandro derrotó a los persas?', r:'Río Gránico (334 a.C.), Iso (333 a.C.) y Arbela/Gaugamela (331 a.C.).'},
+{cap:'d8', f:'¿Qué representan los cuatro cuernos que salen tras romperse el grande?', r:'Los cuatro reinos en que se repartió el imperio de Alejandro: Casandro, Lisímaco, Seleuco y Tolomeo.'},
+{cap:'d8', f:'¿A qué edad murió Alejandro Magno y en qué año?', r:'A los 32 años, en el 323 a.C.'},
+{cap:'d8', f:'¿De dónde sale el cuerno pequeño de Daniel 8, según el hebreo del pasaje?', r:'De uno de los cuatro "vientos" (puntos cardinales), no de uno de los cuatro cuernos griegos: por eso apunta a un poder que crece desde afuera, Roma.'},
+{cap:'d8', f:'¿Qué tres cosas hace el cuerno pequeño de Daniel 8?', r:'Crece hacia el sur, el oriente y la Tierra del Esplendor; abole el sacrificio continuo (tamid); hace caer el lugar del santuario.'},
+{cap:'d8', f:'¿Por qué el cuerno pequeño de Daniel 8 no puede ser Antíoco Epífanes?', r:'Antíoco aparece hacia la mitad de la dinastía seléucida, no "al término" del reino helénico como pide el texto; murió en 164 a.C., casi 200 años antes de que Jesús hablara de esta profecía como futura (Mateo 24:15); y los cuernos representan reinos, no reyes individuales.'},
+{cap:'d8', f:'¿Qué territorios conquistó Roma que cumplen "creció mucho hacia el sur, el oriente y la Tierra del Esplendor"?', r:'Macedonia (168 a.C.), Siria (65 a.C.), Palestina (63 a.C.) y Egipto (30 a.C.).'},
+{cap:'d8', f:'¿Qué significa la palabra hebrea tamid?', r:'"Continuo" o "permanente"; en el santuario se aplicaba al holocausto diario, las lámparas y el pan siempre presentes. En Daniel 8 representa el ministerio permanente de Cristo como Sumo Sacerdote.'},
+{cap:'d8', f:'¿Cuánto duran las "2.300 tardes y mañanas" de Daniel 8:14, con la regla de día por año?', r:'2.300 años.'},
+{cap:'d8', f:'¿Qué significa la palabra hebrea nitsdaq, traducida "reivindicado" o "purificado"?', r:'Está emparentada con "justificar"; señala el Día de la Expiación, el día de juicio del santuario del Antiguo Testamento.'},
+{cap:'d8', f:'¿En qué decreto y año comienzan las 2.300 años, y en qué año terminan?', r:'En el decreto de Artajerjes I para restaurar Jerusalén, año 457 a.C. (Esdras 7); terminan en el año 1844.'},
+{cap:'d8', f:'¿Qué pasó en 1844 según esta interpretación?', r:'Comenzó el juicio investigador en el santuario celestial (no el regreso visible de Cristo, que era lo que esperaba el movimiento de William Miller).'},
+{cap:'d8', f:'¿A qué enfoca cada visión de Daniel según su tema central?', r:'Daniel 2: a Cristo Rey. Daniel 7: a Cristo Juez. Daniel 8-9: a Cristo Sumo Sacerdote.'},
+);
+TARJETAS.push(
+{cap:'d9', f:'¿Qué estaba leyendo Daniel cuando entendió que los 70 años de exilio estaban por cumplirse?', r:'Los libros del profeta Jeremías (Jeremías 25:11-12; 29:10), Daniel 9:2.'},
+{cap:'d9', f:'¿Qué hizo Daniel al entender esto?', r:'Oró con ayuno, cilicio y ceniza, confesando el pecado de su pueblo (Daniel 9:3-19).'},
+{cap:'d9', f:'¿Qué le trae Gabriel a Daniel en respuesta a su oración?', r:'No los 70 años de Jeremías, sino "setenta semanas" (490 años) reservadas para su pueblo y su ciudad santa (Daniel 9:24).'},
+{cap:'d9', f:'¿A cuántos años equivalen las setenta semanas de Daniel 9:24?', r:'490 años (70 semanas × 7 días = 490, con la regla de día por año).'},
+{cap:'d9', f:'¿Qué decreto y en qué año marca el inicio de las setenta semanas?', r:'El decreto de Artajerjes I para restaurar Jerusalén, año 457 a.C. (Esdras 7).'},
+{cap:'d9', f:'¿En qué tres bloques se dividen las setenta semanas?', r:'Siete semanas (49 años, 457-408 a.C.); sesenta y dos semanas (434 años, 408 a.C.-27 d.C.); una última semana (7 años, 27-34 d.C.).'},
+{cap:'d9', f:'¿Qué significa la palabra "Mesías"?', r:'"Ungido". En tiempos bíblicos se ungía con aceite a reyes, sacerdotes y profetas para consagrarlos.'},
+{cap:'d9', f:'¿Cuándo y cómo fue ungido Jesús como el Mesías Príncipe?', r:'En su bautismo en el río Jordán, hacia fines del año 27 d.C., ungido por el Espíritu Santo (Mateo 3:16-17).'},
+{cap:'d9', f:'¿Qué pasó "a la mitad de la semana" final, según Daniel 9:27?', r:'El Mesías hizo cesar el sacrificio y la ofrenda: Jesús fue crucificado en la primavera del año 31 d.C., tres años y medio después de su bautismo.'},
+{cap:'d9', f:'¿Qué significa "se quitará la vida al Mesías, mas no por sí" (Daniel 9:26)?', r:'Que Jesús murió no por sus propios pecados sino por los de la humanidad.'},
+{cap:'d9', f:'¿En qué año terminan las setenta semanas (490 años) y qué evento marcó ese cierre?', r:'En el año 34 d.C., con el apedreamiento de Esteban (Hechos 7), el primer mártir cristiano.'},
+{cap:'d9', f:'¿Qué pasó poco después del año 34 d.C. con la predicación del evangelio?', r:'Se extendió abiertamente a los gentiles (conversión de Cornelio, Hechos 10; misión de Pablo, Hechos 22:21), sin dejar de incluir a los judíos.'},
+{cap:'d9', f:'¿Cómo se relacionan los 2.300 años de Daniel 8 y las 490 años de Daniel 9?', r:'Comparten el mismo punto de partida (457 a.C.); las 490 años son la primera parte de los 2.300. Restando: 2.300 − 490 = 1.810 años después del 34 d.C.'},
+{cap:'d9', f:'Sumando 1.810 años al 34 d.C., ¿a qué año se llega?', r:'Al año 1844, el mismo punto que Daniel 8:14 señala para la purificación del santuario celestial.'},
+{cap:'d9', f:'¿Por qué Daniel 9 es la continuación directa de Daniel 8?', r:'Porque Gabriel había sido interrumpido en Daniel 8:27 antes de explicar cuándo empezaban las 2.300 tardes y mañanas; en Daniel 9 retoma exactamente ese punto y da el dato que faltaba, el decreto del 457 a.C.'},
+);
+TARJETAS.push(
+{cap:'d10', f:'¿Cuándo y dónde ocurre la visión de Daniel 10?', r:'En la primavera del año tercero de Ciro (hacia el 535 a.C.), junto al río Tigris.'},
+{cap:'d10', f:'¿Por qué ayunaba Daniel tres semanas?', r:'Por la reconstrucción del templo de Jerusalén, que enfrentaba fuerte oposición de los pueblos vecinos (Esdras 4).'},
+{cap:'d10', f:'¿Con qué otra visión bíblica coincide en detalle la descripción del Ser glorioso de Daniel 10?', r:'Con la descripción que Juan hace de Jesús glorificado en Apocalipsis 1:13-16.'},
+{cap:'d10', f:'¿Quién es el "Príncipe del reino de Persia" que resiste al ángel 21 días?', r:'Un ángel maligno identificado con el Imperio Persa, no el rey Ciro.'},
+{cap:'d10', f:'¿Quién viene a ayudar y vence esa resistencia?', r:'Miguel, "uno de los Primeros Príncipes" (Daniel 10:13).'},
+{cap:'d10', f:'¿Qué significa el nombre "Miguel" en hebreo?', r:'Es una pregunta: "¿Quién es semejante a Dios?"'},
+{cap:'d10', f:'¿Qué título le da Judas 9 a Miguel?', r:'"El arcángel", es decir, el jefe de los ángeles; en las Escrituras solo hay uno.'},
+{cap:'d10', f:'¿Qué evidencia bíblica identifica a Miguel con Jesucristo?', r:'1 Tesalonicenses 4:16 y Juan 5:28-29 atribuyen la resurrección de los muertos tanto a "la voz del arcángel" como a "la voz del Hijo de Dios"; y Daniel 12:1 llama a Miguel "el gran Príncipe que defiende a los hijos de tu pueblo".'},
+{cap:'d10', f:'¿Qué corrige la traducción Reina-Valera de Daniel 10:13 sobre quién es el Ser resplandeciente de la visión?', r:'Aclara que Miguel vino a ayudar a Gabriel y que el Ser glorioso de la visión no era Gabriel sino Miguel mismo, es decir, Jesús.'},
+{cap:'d10', f:'¿Qué patrón de vida de Daniel corona el capítulo 10?', r:'Su vida de oración constante: oró ante el peligro de muerte (cap. 2), dio gracias frente a los leones (cap. 6), confesó el pecado de su pueblo (cap. 9) y ahora ayuna tres semanas por su pueblo.'},
+{cap:'d10', f:'¿Cuándo empezó a ser oída la oración de Daniel, según el ángel?', r:'Desde el primer día en que oró y se humilló, aunque la respuesta visible tardó tres semanas por la resistencia angélica invisible (Daniel 10:12-13).'},
+);
+TARJETAS.push(
+{cap:'d11', f:'¿Quién es el cuarto rey persa que "acumulará más riquezas que todos" e incita contra Grecia? (Daniel 11:2)', r:'Jerjes I (486-465 a.C.), que lanzó la gran invasión persa de Grecia.'},
+{cap:'d11', f:'¿En qué se divide el reino de Alejandro tras su muerte, según Daniel 11:4?', r:'Se reparte "a los cuatro vientos del cielo": el mismo reparto entre cuatro generales que describe Daniel 8.'},
+{cap:'d11', f:'¿A qué dos reinos se refieren "rey del sur" y "rey del norte" en Daniel 11?', r:'Egipto (dinastía ptolemaica) y Siria (dinastía seléucida), los dos reinos entre los que quedó Palestina.'},
+{cap:'d11', f:'¿Qué matrimonio anuncia Daniel 11:6 y cómo termina?', r:'El matrimonio de Berenice (hija de Tolomeo II) con Antíoco II; termina en tragedia cuando Laodicea, la primera esposa repudiada, hace asesinar a Antíoco, a Berenice y a su hijo.'},
+{cap:'d11', f:'¿Quién es Antíoco III "el Grande" y qué batalla gana en 198 a.C.?', r:'Rey seléucida (223-187 a.C.); gana la batalla de Panias y toma el control de Palestina.'},
+{cap:'d11', f:'¿Qué potencia nueva aparece en Daniel 11:30 como "naves de Quitim" que detienen a Antíoco III?', r:'Roma.'},
+{cap:'d11', f:'¿Quién es el "Príncipe de la alianza" del versículo 22, quebrantado en la profecía?', r:'Jesucristo, no un sumo sacerdote humano como Onías III.'},
+{cap:'d11', f:'¿A qué período histórico corresponde la persecución de "los doctos" en Daniel 11:33?', r:'A los 1.260 años (538-1798) de persecución medieval y de la Reforma: valdenses, lolardos, husitas, luteranos, anabaptistas, hugonotes.'},
+{cap:'d11', f:'¿A qué poder identifica la lectura adventista con "el rey que se engreirá por encima de todo dios" (vv. 36-38)?', r:'Al papado medieval, por reclamar prerrogativas que corresponden solo a Dios (perdonar pecados, cambiar los mandamientos) y desarrollar un culto opulento en oro y piedras preciosas.'},
+{cap:'d11', f:'¿Con qué actitud tratan los comentaristas adventistas, incluida Elena de White, los versículos 40-45 de Daniel 11?', r:'Con especial cautela: evitan parafrasearlos con precisión, porque los eventos exactos de su cumplimiento final no se conocen del todo por anticipado.'},
+{cap:'d11', f:'¿Con qué otro pasaje de Daniel es paralelo el final del "rey del norte" en Daniel 11:45?', r:'Con el fin del cuerno pequeño de Daniel 7:11, 26, que también "llega a su fin" sin ayuda en el juicio celestial.'},
+);
+TARJETAS.push(
+{cap:'d12', f:'¿Qué marca la aparición de Miguel en Daniel 12:1?', r:'Que el juicio celestial de Daniel 7:9-14 y 8:14 ha concluido, y Jesús se levanta para venir a la tierra.'},
+{cap:'d12', f:'¿En qué se diferencia la tribulación final de Daniel 12:1 de la tribulación anterior de Mateo 24:9?', r:'En la anterior los santos son entregados a la muerte; en la tribulación final los santos son librados de la muerte.'},
+{cap:'d12', f:'¿Es la resurrección de Daniel 12:2 la resurrección general de todos los muertos?', r:'No: es una resurrección especial y limitada, que incluye a algunos justos recién fallecidos y a quienes participaron en la crucifixión de Jesús.'},
+{cap:'d12', f:'¿Quiénes son "los doctos" que "brillarán como el fulgor del firmamento" (Daniel 12:3)?', r:'Los que estudiaron las profecías de Daniel hasta comprenderlas, las compartieron con otros y se dejaron purificar por ellas.'},
+{cap:'d12', f:'¿Qué significa "sella el libro hasta el tiempo del Fin" (Daniel 12:4)?', r:'No todo el libro quedaba sellado (Babilonia, Media-Persia y Grecia ya estaban identificadas sin misterio); lo sellado eran los acontecimientos del tiempo del fin, que se comprenderían plenamente más cerca de su cumplimiento.'},
+{cap:'d12', f:'¿A qué período corresponde "un tiempo, tiempos y medio tiempo" de Daniel 12:7?', r:'A los mismos 1.260 años (538-1798) que señala Daniel 7:25.'},
+{cap:'d12', f:'¿Qué pregunta de Daniel no respondió Miguel, y qué nos enseña eso?', r:'"¿Cuál será la última de estas cosas?"; enseña que la profecía se da con propósitos prácticos, no para satisfacer la curiosidad.'},
+{cap:'d12', f:'¿Qué diferencia hay entre el libro "cerrado y sellado" de Daniel 12 y el mismo Ser que aparece en Apocalipsis 10?', r:'En Apocalipsis 10 el libro aparece abierto, y el ángel jura que "ya no habrá más dilación": queda abierto para los últimos días.'},
+{cap:'d12', f:'¿Qué dos plazos de días menciona Daniel 12:11-12?', r:'1.290 días y 1.335 días, contados desde que sea abolido el sacrificio perpetuo e instalada la abominación desoladora.'},
+{cap:'d12', f:'¿Qué reconoce Maxwell sobre el cumplimiento exacto de los 1.290 y 1.335 días?', r:'Que, al no darse un acontecimiento específico que marque su inicio o cierre, no es posible aún establecer con certeza cómo se cumplirán.'},
+{cap:'d12', f:'¿Cuál es la promesa personal de despedida para Daniel en el versículo 13?', r:'"Vete a descansar; te levantarás para recibir tu suerte al Fin de los días": Daniel dormiría hasta la resurrección y tendría asegurado su lugar entre los santos.'},
+);
+
 module.exports = { TARJETAS };
