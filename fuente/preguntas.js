@@ -1632,5 +1632,22 @@ BANCO.push(
    o:['La coronación de Carlomagno','La toma prisionero del papa Pío VI por tropas francesas','El Concilio de Trento','La Reforma protestante'],a:1},
 );
 
+BANCO.push(
+  {cap:'d11',t:'mc',q:'¿Qué evento del siglo XV multiplicó la difusión de la Biblia y ayudó a distraer al poder perseguidor de Roma, según el "pequeño socorro" del verso 34?',
+   o:['La invención de la imprenta de Gutenberg (1455)','El Concilio de Trento','La Donación de Constantino','La coronación de Carlomagno'],a:0},
+  {cap:'d11',t:'tf',q:'Según el verso 34, el "pequeño socorro" liberó por completo al pueblo de Dios de la persecución antes de 1798.',
+   a:false,e:'Es un socorro "pequeño" o parcial: distrae y debilita al perseguidor en varios momentos, pero la persecución solo termina con el fin de los 1.260 años en 1798.'},
+  {cap:'d11',t:'mc',q:'¿Qué hecho de 1789-1798 le dio al papado la "herida de muerte" con la que se cierran los 1.260 años?',
+   o:['El Concilio Vaticano I','La Revolución Francesa','La Reforma protestante','Las Cruzadas'],a:1},
+  {cap:'d11',t:'mc',q:'En la lectura de Daniel 11:37, ¿a quién identifica más plausiblemente la enigmática frase "el amado de las mujeres"?',
+   o:['A un papa concreto','Al Mesías, el Redentor esperado por las mujeres de Israel','A la Virgen María','A un emperador romano'],a:1},
+  {cap:'d11',t:'mc',q:'¿Con qué práctica religiosa se identifica más plausiblemente el "dios de las fortalezas" o "dios ajeno" de Daniel 11:38-39?',
+   o:['El bautismo','El Santísimo Sacramento de la Eucaristía, con la transubstanciación','El sacramento del matrimonio','La confirmación'],a:1},
+  {cap:'d11',t:'mc',q:'¿En qué año se declaró el dogma de la infalibilidad papal, identificado con el "hablará maravillas" de Daniel 11:36?',
+   o:['1517','1648','1870','1965'],a:2},
+  {cap:'d11',t:'tf',q:'El Concilio Vaticano II (1965) eliminó el dogma de la infalibilidad papal declarado en 1870.',
+   a:false,e:'Lo reafirmó, con palabras muy similares, en el documento Lumen Gentium (1964).'},
+);
+
 
 module.exports = { BANCO };

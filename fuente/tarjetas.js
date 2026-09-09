@@ -309,6 +309,10 @@ TARJETAS.push(
   {cap:'d11', f:'¿Qué edicto de 538 marcó, según la lectura histórica, el inicio de los 1.260 años?', r:'El Edicto de Justiniano, que reconoció al papa como cabeza de todas las iglesias'},
   {cap:'d11', f:'¿Qué emperador se humilló ante el papa en Canossa en 1077?', r:'Enrique IV, del Sacro Imperio Romano Germánico, ante el papa Gregorio VII'},
   {cap:'d11', f:'¿Quién coronó a Carlomagno como emperador en la Navidad del año 800?', r:'El papa León III'},
-  {cap:'d11', f:'¿Qué evento de 1798 se asocia con el fin de los 1.260 años de predominio papal?', r:'La captura del papa Pío VI por tropas francesas'});
+  {cap:'d11', f:'¿Qué evento de 1798 se asocia con el fin de los 1.260 años de predominio papal?', r:'La captura del papa Pío VI por tropas francesas'},
+  {cap:'d11', f:'¿Qué invento de 1455 multiplicó la difusión de la Biblia?', r:'La imprenta de tipos móviles de Johannes Gutenberg'},
+  {cap:'d11', f:'¿Qué evento de 1789-1798 le dio al papado la "herida de muerte" que cierra los 1.260 años?', r:'La Revolución Francesa'},
+  {cap:'d11', f:'¿A quién identifica la lectura histórica con "el amado de las mujeres" de Daniel 11:37?', r:'Al Mesías, el Redentor que toda mujer de Israel esperaba dar a luz'},
+  {cap:'d11', f:'¿En qué año se declaró el dogma de la infalibilidad papal?', r:'1870, y fue reafirmado por el Concilio Vaticano II en 1964'});
 
 module.exports = { TARJETAS };
