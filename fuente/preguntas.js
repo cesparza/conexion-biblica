@@ -1686,5 +1686,16 @@ BANCO.push(
    o:['Iwo Jima','Las barrancas de Maeda, en Okinawa','Normandía','Guadalcanal'],a:1},
 );
 
+BANCO.push(
+  {cap:'d4',t:'tf',q:'Daniel obedeció al rey en inscribirse en la escuela pagana de Babilonia, pero rehusó comer los alimentos que la ley de Dios prohibía.',
+   a:true,e:'Obedeció al Estado hasta el punto donde chocaba con un mandamiento explícito de Dios; ahí se detuvo.'},
+  {cap:'d4',t:'mc',q:'¿Qué otros dos profetas de Dios estaban activos al mismo tiempo que Daniel servía en el palacio de Babilonia?',
+   o:['Isaías y Miqueas','Jeremías y Ezequiel','Elías y Eliseo','Amós y Oseas'],a:1},
+  {cap:'d4',t:'mc',q:'¿A qué distancia de Babilonia vivía Ezequiel, junto al canal de Kebar?',
+   o:['A unos 80 km','A unos 800 km','A unos 8 km','A unos 8.000 km'],a:0},
+  {cap:'d4',t:'tf',q:'Unos 19 años antes de que Nabucodonosor soñara con el gran árbol derribado, Ezequiel ya había recibido una advertencia paralela, comparando a otro gobernante con un árbol destinado a ser talado.',
+   a:true,e:'Fue una advertencia dirigida al faraón de Egipto, y es razonable pensar que Daniel se la haya mostrado a Nabucodonosor.'},
+);
+
 
 module.exports = { BANCO };

@@ -321,6 +321,8 @@ TARJETAS.push(
   {cap:'d2', f:'¿Qué fenómeno astronómico deja fuera de lugar los signos del zodiaco moderno?', r:'La precesión de los equinoccios, desde los tiempos de Claudio Tolomeo (siglo II)'},
   {cap:'d2', f:'Menciona dos gobernantes que intentaron reunificar Europa, contradiciendo sin éxito Daniel 2:43', r:'Carlomagno y Napoleón (también Carlos V y Hitler)'},
   {cap:'d3', f:'¿Qué significa la frase "y si no" de Sadrac, Mesac y Abed-nego (3:17-18)?', r:'Que obedecerían a Dios sin importar si los libraba del horno o no'},
-  {cap:'d3', f:'¿Qué soldado cristiano de la Segunda Guerra Mundial rescató a 75 heridos sin portar armas, en las barrancas de Maeda?', r:'Desmond Doss, único no combatiente condecorado con la Medalla de Honor del Congreso'});
+  {cap:'d3', f:'¿Qué soldado cristiano de la Segunda Guerra Mundial rescató a 75 heridos sin portar armas, en las barrancas de Maeda?', r:'Desmond Doss, único no combatiente condecorado con la Medalla de Honor del Congreso'},
+  {cap:'d4', f:'¿Qué otros dos profetas servían al mismo tiempo que Daniel?', r:'Jeremías (en Judá y Egipto) y Ezequiel (junto al canal de Kebar, cerca de Babilonia)'},
+  {cap:'d4', f:'¿Cuál es el límite práctico de la obediencia al Estado, según el ejemplo de Daniel?', r:'Se obedece hasta el punto donde una orden choca con un mandamiento explícito de Dios'});
 
 module.exports = { TARJETAS };

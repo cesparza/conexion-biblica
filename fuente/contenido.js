@@ -641,6 +641,11 @@ d4: [
         '"no existen ni familia ni clan..."',
         '"lloró amargamente ante Marduk..."']) +
     '<p class="nota">No es un relato completo ni una confirmación definitiva, pero coincide con el cuadro general de un rey que atravesó una crisis profunda que lo alejó de su propia familia y de su reino, tal como describe Daniel 4:33.</p>' },
+
+  { t: '🙇 Por qué Dios respeta a los gobiernos, aun a los malos',
+    h: hi(`<strong>El capítulo dice que el Altísimo "domina sobre el reino de los hombres, y a quien quiere lo da" (4:17): la misma idea que Pablo repite en Romanos 13, que hasta un mal gobierno presta algún servicio y merece respeto, no solo obediencia forzada.</strong> Pero ese respeto tiene un límite concreto, y el propio Daniel lo muestra en la práctica: obedeció al rey al inscribirse en la "universidad" pagana de Babilonia, porque ninguna ley de Dios se lo prohibía; pero rehusó comer los alimentos prohibidos por la ley, y Sadrac, Mesac y Abed-nego rehusaron inclinarse ante la estatua, porque ahí sí había un mandamiento explícito de por medio. El principio práctico es simple: se obedece al Estado hasta el punto exacto en que una orden choca con un mandamiento bíblico claro, ni un paso antes ni un paso después.`) },
+  { t: '📜 Tres profetas al mismo tiempo: Daniel, Ezequiel y Jeremías',
+    h: hi(`<strong>Mientras Daniel servía en el palacio de Babilonia, Dios tenía activos a otros dos profetas al mismo tiempo: Jeremías, en Judá y luego en Egipto, y Ezequiel, en una colonia judía junto al canal de Kebar, a solo 80 km de Babilonia.</strong> Es un patrón que se repite en la Biblia —Isaías y Miqueas fueron contemporáneos, y en el Nuevo Testamento las cuatro hijas de Felipe profetizaban a la vez que Agabo—: Dios no se limita a un solo mensajero cuando el momento lo exige. Hay incluso un posible vínculo directo con el propio sueño de Nabucodonosor: 19 años antes de que el rey soñara con el gran árbol derribado (Daniel 4), Ezequiel ya había recibido una advertencia paralela para el faraón de Egipto, comparado también con un árbol destinado a ser talado. Dado que Daniel conocía y usaba los escritos de sus contemporáneos, es razonable pensar que le haya mostrado ese pasaje a Nabucodonosor.`) },
 ],
 
 /* ═══════════════ DANIEL 5 ═══════════════ */
