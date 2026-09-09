@@ -1697,5 +1697,16 @@ BANCO.push(
    a:true,e:'Fue una advertencia dirigida al faraón de Egipto, y es razonable pensar que Daniel se la haya mostrado a Nabucodonosor.'},
 );
 
+BANCO.push(
+  {cap:'d5',t:'mc',q:'¿Qué oficial arrojó al Éufrates un pergamino de Jeremías atado a una piedra, décadas antes de la caída de Babilonia, como señal de que la ciudad se hundiría para no levantarse más?',
+   o:['Seraías','Aspenaz','Arioc','Melsar'],a:0},
+  {cap:'d5',t:'mc',q:'¿Qué emperador, ya dueño del mundo conocido, puso a 10.000 hombres a reconstruir Babilonia como su capital y murió en esa misma ciudad sin lograrlo?',
+   o:['Ciro el Grande','Jerjes','Alejandro Magno','Darío I'],a:2},
+  {cap:'d5',t:'mc',q:'¿Qué general de Alejandro Magno se llevó a gran parte de la población de Babilonia y millones de ladrillos para fundar una ciudad rival, Seleucia?',
+   o:['Seleuco Nicátor','Ptolomeo','Antígono','Casandro'],a:0},
+  {cap:'d5',t:'mc',q:'Según Daniel 5:22, ¿por qué era Baltasar más culpable que Nabucodonosor?',
+   o:['Porque era más joven','Porque sabía todo lo que le había pasado a Nabucodonosor y aun así no humilló su corazón','Porque no era de sangre real','Porque gobernaba un imperio más grande'],a:1},
+);
+
 
 module.exports = { BANCO };

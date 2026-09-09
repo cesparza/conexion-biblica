@@ -323,6 +323,9 @@ TARJETAS.push(
   {cap:'d3', f:'¿Qué significa la frase "y si no" de Sadrac, Mesac y Abed-nego (3:17-18)?', r:'Que obedecerían a Dios sin importar si los libraba del horno o no'},
   {cap:'d3', f:'¿Qué soldado cristiano de la Segunda Guerra Mundial rescató a 75 heridos sin portar armas, en las barrancas de Maeda?', r:'Desmond Doss, único no combatiente condecorado con la Medalla de Honor del Congreso'},
   {cap:'d4', f:'¿Qué otros dos profetas servían al mismo tiempo que Daniel?', r:'Jeremías (en Judá y Egipto) y Ezequiel (junto al canal de Kebar, cerca de Babilonia)'},
-  {cap:'d4', f:'¿Cuál es el límite práctico de la obediencia al Estado, según el ejemplo de Daniel?', r:'Se obedece hasta el punto donde una orden choca con un mandamiento explícito de Dios'});
+  {cap:'d4', f:'¿Cuál es el límite práctico de la obediencia al Estado, según el ejemplo de Daniel?', r:'Se obedece hasta el punto donde una orden choca con un mandamiento explícito de Dios'},
+  {cap:'d5', f:'¿Qué oficial arrojó al Éufrates la profecía de Jeremías atada a una piedra?', r:'Seraías, décadas antes de que Babilonia cayera'},
+  {cap:'d5', f:'¿Qué emperador murió en Babilonia intentando reconstruirla como su capital?', r:'Alejandro Magno, en 323 a.C.'},
+  {cap:'d5', f:'¿Por qué era Baltasar más culpable que Nabucodonosor, según Daniel 5:22?', r:'Sabía todo lo que le había pasado a Nabucodonosor y aun así no humilló su corazón'});
 
 module.exports = { TARJETAS };
