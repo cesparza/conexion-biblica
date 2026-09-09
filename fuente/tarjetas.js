@@ -278,6 +278,26 @@ TARJETAS.push(
   {cap:'pr43', f:'Qué sabía Belsasar sobre su abuelo y aun así no aprendió', r:'Que Dios lo había desterrado de la sociedad de los hombres, y que después se había convertido y sanado'},
   {cap:'pr43', f:'Qué dejó que le borrara a Belsasar las lecciones que ya conocía', r:'El amor por los placeres y la glorificación propia'},
   {cap:'pr43', f:'Qué enseña el capítulo sobre el pecado que llega a su colmo', r:'Que cuando se colma la medida del pecado, no hay demora en el juicio'},
+
+  {cap:'d9', f:'¿Quién emitió el decreto de 457 a.C., y en qué libro bíblico se registra?', r:'Artajerjes I, en su séptimo año de reinado, registrado en Esdras 7'},
+  {cap:'d9', f:'¿Qué autoridad le dio ese decreto a Esdras?', r:'Autoridad civil y judicial para reorganizar la nación judía'},
+  {cap:'d9', f:'¿En qué basa Daniel su pedido en la oración de Daniel 9:18?', r:'No en los méritos de su pueblo, sino en las grandes misericordias de Dios'},
+  {cap:'d9', f:'¿Qué actitud muestra Daniel en su oración, comparada con Daniel 6:4?', r:'Se identificaba con las faltas de su nación aun siendo personalmente irreprochable'},
+
+  {cap:'d10', f:'¿De qué se abstuvo Daniel durante las tres semanas de ayuno?', r:'De alimentos suculentos, carne y vino'},
+  {cap:'d10', f:'¿A qué edad fue Daniel llevado cautivo, y a cuál se acercaba en Daniel 10?', r:'Cautivo a los 17 años; se acercaba a los noventa'},
+  {cap:'d10', f:'¿Con qué pasaje de Pablo se compara la guerra invisible de Daniel 10?', r:'Efesios 6:12: "no tenemos lucha contra sangre y carne..."'},
+  {cap:'d10', f:'¿Qué lección práctica deja que la respuesta tardara tres semanas en manifestarse?', r:'Que una oración sin respuesta inmediata no significa una oración no escuchada'},
+
+  {cap:'d11', f:'¿Quién es "un rey valeroso" cuyo imperio se reparte entre cuatro generales?', r:'Alejandro Magno'},
+  {cap:'d11', f:'¿Quién es la última reina de la dinastía ptolemaica?', r:'Cleopatra VI'},
+  {cap:'d11', f:'¿Qué distingue a "rey del norte" después de la derrota de Antíoco III frente a Roma?', r:'Deja de referirse solo a Siria y pasa a describir a Roma'},
+  {cap:'d11', f:'¿Qué dijo Jesús en Mateo 24:15 sobre la abominación desoladora?', r:'Que todavía era futura en su tiempo, casi dos siglos después de Antíoco Epífanes'},
+
+  {cap:'d12', f:'¿Qué otra cosa ocurriría, según Daniel 12:4, mientras "muchos andaban errantes"?', r:'La ciencia (el conocimiento) se aumentaría'},
+  {cap:'d12', f:'¿Qué dice el ángel de Apocalipsis 10:6 que no dice el de Daniel 12:7?', r:'Que "ya no habrá más dilación"'},
+  {cap:'d12', f:'¿A quiénes, además de algunos justos, incluye la resurrección especial de Daniel 12:2?', r:'A quienes participaron directamente en la crucifixión de Jesús'},
+  {cap:'d12', f:'¿En qué seis puntos resume Maxwell el mensaje final del libro de Daniel?', r:'Dios conoce el futuro; dirige el destino de los imperios; el juicio ya está en sesión; puede librarnos de toda dificultad; Cristo anhela que su alianza prevalezca; y no concibe la eternidad sin nosotros'},
 );
 
 module.exports = { TARJETAS };
