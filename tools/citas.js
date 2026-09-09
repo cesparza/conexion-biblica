@@ -43,7 +43,7 @@ let iguales = 0;
 const fallos = [];
 let totalTxt = 0;
 
-for (let n = 1; n <= 6; n++) {
+for (let n = 1; n <= 12; n++) {
   const cid = 'd' + n;
   const enTxt = {};
   const bruto = fs.readFileSync(path.join(CARPETA, `rv1995-daniel-${n}.txt`), 'utf8');

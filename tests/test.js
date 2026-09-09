@@ -806,9 +806,10 @@ ok(sinBase.length===0,'Cada capitulo de P&R dice en que capitulo de Daniel se ba
    uno de ellos en la opcion marcada como CORRECTA de una pregunta. */
 const { VERS: BIBLIA } = require(path.join(RAIZ, 'fuente', 'biblia.js'));
 const BIB6 = ['d1','d2','d3','d4','d5','d6'];
+const BIB12 = ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12'];
 
-ok(BIB6.every(c=>BIBLIA[c]) && BIB6.reduce((a,c)=>a+Object.keys(BIBLIA[c]).length,0)===196,
-  'fuente/biblia.js trae los 196 versiculos de Daniel 1-6');
+ok(BIB12.every(c=>BIBLIA[c]) && BIB12.reduce((a,c)=>a+Object.keys(BIBLIA[c]).length,0)===357,
+  'fuente/biblia.js trae los 357 versiculos de Daniel 1-12');
 /* Tres fuentes que tienen que decir lo mismo: el `vs` de cada capitulo, el
    conteo que esta prueba usa para la cobertura, y los versiculos reales de
    biblia.js. Si alguien cambia una sola, esto avisa. */
@@ -818,7 +819,7 @@ ok(BIB6.every(c=>Object.keys(BIBLIA[c]).length===CAPS.find(x=>x.id===c).vs
 
 const normB = s => String(s).replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ')
   .replace(/[«»“”]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
-const TEXTO = normB(BIB6.map(c=>Object.keys(BIBLIA[c]).map(Number).sort((a,b)=>a-b)
+const TEXTO = normB(BIB12.map(c=>Object.keys(BIBLIA[c]).map(Number).sort((a,b)=>a-b)
   .map(v=>BIBLIA[c][v]).join(' ')).join(' '));
 
 let citasOk = 0;
@@ -832,9 +833,9 @@ const coteja = (cap, txt, donde) => {
       if (TEXTO.includes(f)) citasOk++; else citasMal.push(`[${cap}/${donde}] ${f.slice(0,90)}`);
     }
 };
-for (const cap of BIB6)
+for (const cap of BIB12)
   for (const sec of CONTENIDO[cap]) coteja(cap, sec.h, sec.t);
-for (const q of BANCO.filter(q=>BIB6.includes(q.cap))) {
+for (const q of BANCO.filter(q=>BIB12.includes(q.cap))) {
   /* rv60:true marca las preguntas que citan RV1960 A PROPOSITO, para ensenar
      la diferencia. Son las que mas cuidan el punto del proyecto. */
   if (q.rv60) continue;
@@ -856,7 +857,7 @@ for (const q of BANCO.filter(q=>BIB6.includes(q.cap))) {
     }
   }
 }
-for (const tj of TARJETAS.filter(t=>BIB6.includes(t.cap))) {
+for (const tj of TARJETAS.filter(t=>BIB12.includes(t.cap))) {
   coteja(tj.cap, tj.f, 'tarjeta (frente)');
   coteja(tj.cap, tj.d, 'tarjeta (dorso)');
 }

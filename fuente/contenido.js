@@ -1229,7 +1229,7 @@ d7: [
     <strong>diez</strong>:</p>` +
     li(['Visigodos','Ostrogodos','Vándalos','Burgundios','Lombardos',
         'Anglosajones','Francos','Alamanes','Hérulos','Suevos']) +
-    `<p class="nota">«De este reino saldrán diez reyes» (7:24). Concuerda con los
+    `<p class="nota">«De aquel reino se levantarán diez reyes» (7:24). Concuerda con los
     pies de hierro y barro de Daniel 2: un imperio que se divide y ya no se
     vuelve a pegar.</p>` },
 
@@ -1266,15 +1266,15 @@ d7: [
       ['Apocalipsis 12:6','Mil doscientos sesenta días'],
     ]) +
     hi(`<strong>La regla de día por año.</strong> En la profecía simbólica un día
-    representa un año, y Dios se lo dijo así a Ezequiel: «día por año te lo he
-    dado» (Ezequiel 4:6). Ezequiel vivía cerca de Daniel, en Nipur.<br><br>
+    representa un año, y Dios se lo dijo así a Ezequiel: día por año te lo he
+    dado (Ezequiel 4:6). Ezequiel vivía cerca de Daniel, en Nipur.<br><br>
     Con esa regla, 1.260 días son <strong>1.260 años: del 538 al 1798</strong>.
     En 1798 el general francés Berthier arrestó al papa Pío VI en Roma y lo
     llevó al exilio.`) },
 
   { t:'⚖️ El tribunal y los libros', h:
-    vs(`«Se aderezaron unos tronos y un Anciano se sentó... El juicio abrió
-    sesión, y se abrieron los libros» (7:9-10).`) +
+    vs(`«Estuve mirando hasta que fueron puestos unos tronos y se sentó un
+    Anciano de días... El Juez se sentó y los libros fueron abiertos» (7:9-10).`) +
     `<p>El mensaje del juicio se repite <strong>cuatro veces</strong> en el
     capítulo: 7:9-14, 7:18, 7:22 y 7:26-27. Y las cuatro veces termina igual:
     <strong>el reino se le entrega a los santos</strong>.</p>` +
@@ -1285,7 +1285,7 @@ d7: [
       ['Los santos','Los que reciben el reino para siempre (7:18, 27)'],
     ]) +
     hi(`El juicio de Daniel 7 <strong>no es contra el pueblo de Dios</strong>:
-    «vino el Anciano a hacer justicia a los santos del Altísimo» (7:22). El
+    «se hizo justicia a los santos del Altísimo» (7:22). El
     tribunal se abre y el resultado es que los santos reciben el reino.`) },
 
   { t:'🗂️ Secuencia completa del capítulo', h:
@@ -1303,8 +1303,8 @@ d7: [
         '<strong>7:27-28</strong> — El reino a los santos. Daniel guarda todo en su corazón.']) },
 
   { t:'📖 Versículo clave', h:
-    vs(`«Su dominio es dominio eterno, que nunca pasará, y su reino uno que no
-    será destruido» (Daniel 7:14).`) },
+    vs(`«Su dominio es dominio eterno, que nunca pasará; y su reino es uno que
+    nunca será destruido» (Daniel 7:14).`) },
 ],
 
   d8: [
@@ -1333,7 +1333,7 @@ d7: [
     { t: '🔗 Daniel 2, 7 y 8-9: una misma historia repetida y ampliada',
       h: '<p>Cada visión de Daniel repite el esquema de la anterior y le añade detalle. Daniel 2 muestra el ascenso y la caída de los imperios y termina con el reino eterno de Dios (la piedra). Daniel 7 recorre el mismo camino político y culmina con el tribunal celestial que entrega el reino a los santos: mira a Cristo como <strong>Juez</strong>. Daniel 8 y 9 recorren de nuevo la historia (omitiendo a Babilonia, que ya había dejado de tener futuro profético) y culminan con la obra de Cristo como <strong>Sumo Sacerdote</strong> que purifica el santuario y perdona el pecado. Daniel 2 mira a Cristo Rey, Daniel 7 a Cristo Juez, Daniel 8-9 a Cristo Sumo Sacerdote.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas: después será reivindicado el santuario» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
   ],
   d9: [
     { t: '📚 En pocas palabras',
@@ -1361,7 +1361,7 @@ d7: [
     { t: '🌅 De la confesión a la certeza',
       h: '<p>Es notable el contraste entre el tono de la oración de Daniel —angustiado, consciente de una deuda que su pueblo no puede pagar— y la respuesta que recibe: no un simple perdón puntual, sino un mapa de 490 años que culmina en el Mesías que "hará cesar el sacrificio y la ofrenda" para siempre. La misma estructura se repite en el resto del libro: cada vez que Daniel busca a Dios con sinceridad (el sueño de la estatua, los leones, esta oración), la respuesta no solo resuelve el problema inmediato sino que revela algo mayor sobre el plan de salvación.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende: desde que salió la orden de restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas, y sesenta y dos semanas» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende que desde la salida de la orden para restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
   ],
   d10: [
     { t: '📚 En pocas palabras',
@@ -1385,7 +1385,7 @@ d7: [
     { t: '🕰️ Daniel, anciano y todavía útil',
       h: '<p>Cuando ocurre esta visión Daniel se acercaba a los noventa años: fue llevado cautivo siendo apenas un adolescente de unos 17 años, y ahora, más de setenta años después, seguía orando con el mismo fervor de su juventud. El libro no presenta a Daniel como una figura del pasado que ya cumplió su función: su último acto registrado es un ayuno de tres semanas por el bienestar de su pueblo, seguido de la visión más larga y detallada de todo el libro (capítulos 10-12). La vejez, para Daniel, no fue el final de su utilidad espiritual sino la continuación natural de una vida entera de fidelidad.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 10:12</strong><br>«No temas, Daniel, porque desde el primer día en que tú intentaste de corazón comprender y te humillaste delante de tu Dios, fueron oídas tus palabras» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 10:12</strong><br>«Daniel, no temas, porque desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron oídas tus palabras» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
   ],
   d11: [
     { t: '📚 En pocas palabras',
@@ -1411,7 +1411,7 @@ d7: [
     { t: '🔗 Por qué Daniel 11 repite el mensaje de Daniel 7 y 8',
       h: '<p>Pese a su detalle histórico, el propósito de Daniel 11 no es distinto del de las visiones anteriores: mostrar que un poder político-religioso surgiría entre los imperios de la tierra para oscurecer el ministerio sacerdotal de Cristo y perseguir a su pueblo fiel, y que ese poder llegaría finalmente a su fin sin ayuda ni remedio —igual que el cuerno pequeño de Daniel 7 es "destrozado y arrojado al fuego" en el juicio (Daniel 7:11, 26)—.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 11:45</strong><br>«Y plantará las tiendas de su palacio entre los mares, en el monte glorioso y santo; y llegará a su fin, y no tendrá quien le ayude» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 11:45</strong><br>«Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo; pero llegará a su fin, y no tendrá quien lo ayude» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
   ],
   d12: [
     { t: '📚 En pocas palabras',
@@ -1437,7 +1437,7 @@ d7: [
     { t: '🌍 Buenas noticias, en seis frases',
       h: '<p>Maxwell resume el mensaje final de todo el libro de Daniel en seis puntos: (1) Dios conoce el pasado, el presente y el futuro; nada lo sorprende. (2) Dios dirige el destino de los imperios y de cada persona, y todos serán llevados a juicio. (3) La primera fase del juicio final ya está en sesión: Jesús revela ante el universo la identidad de sus seguidores fieles. (4) Dios puede librarnos de leones, hornos de fuego y toda dificultad presente, y pronto nos librará de la muerte misma. (5) Cristo anhela que su alianza prevalezca, a un costo infinito para sí mismo. (6) Dios está tan interesado en nosotros que no concibe la eternidad sin nosotros a su lado.</p>'},
     { t: '📖 Versículo clave',
-      h: '<p data-leer><strong>Daniel 12:3</strong><br>«Los doctos brillarán como el fulgor del firmamento, y los que enseñaron a muchos la justicia, como las estrellas, por toda la eternidad» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
+      h: '<p data-leer><strong>Daniel 12:3</strong><br>«Los entendidos resplandecerán como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad» <button class="btn-voz" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button></p>'},
   ],
 };
 
