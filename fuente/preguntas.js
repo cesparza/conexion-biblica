@@ -1719,5 +1719,24 @@ BANCO.push(
    a:true,e:'Eso explica en parte su confianza esa noche: ya sabía que Dios vence a poderes mucho más temibles que un león.'},
 );
 
+BANCO.push(
+  {cap:'d7',t:'mc',q:'¿En qué cartas del Nuevo Testamento aparece la palabra "anticristo"?',
+   o:['Las cartas de Juan','Las cartas de Pablo','El libro de Apocalipsis','El libro de Hechos'],a:0},
+  {cap:'d7',t:'mc',q:'¿Qué arzobispo europeo del siglo XIII (sínodo de Regensburgo, 1240) llamó "anticristo" al papado, mucho antes de la Reforma?',
+   o:['Martín Lutero','Eberardo II de Salzburgo','Juan Wiclef','Arnulfo de Orleans'],a:1},
+  {cap:'d7',t:'tf',q:'Según las tres lecturas cristianas de la profecía, los "historicistas" creen que el anticristo ya apareció por completo en el siglo I y no volverá a manifestarse.',
+   a:false,e:'Esa es la lectura "preterista". Los historicistas creen que el anticristo ha actuado a lo largo de toda la historia de la iglesia.'},
+  {cap:'d7',t:'mc',q:'En el orden real de los sucesos del juicio de Daniel 7, ¿qué ocurre justo después de que el Anciano de días toma asiento?',
+   o:['Se destruye a la bestia','Se le da la bienvenida al Hijo del hombre','Se entrega el reino a los santos','Se instalan los tronos'],a:1},
+  {cap:'d7',t:'mc',q:'Además del registro de las obras, ¿qué otro libro menciona la Biblia con las buenas acciones de quienes temen a Dios?',
+   o:['El libro memorial (Malaquías 3:16)','El libro de los reyes','El libro de las crónicas','El libro de los jueces'],a:0},
+  {cap:'d7',t:'tf',q:'Que Cristo sea Juez en el juicio de Daniel 7 contradice que también sea Abogado y Mediador de su pueblo.',
+   a:false,e:'Cumple ambos papeles a la vez: juzga a favor de las mismas personas por las que intercede, según la primera carta de Juan y Hebreos 7:25.'},
+  {cap:'d7',t:'mc',q:'Según el historiador W. H. C. Frend, ¿aproximadamente cuántos cristianos murieron como mártires bajo la Roma pagana, entre el año 31 y el 313 d.C.?',
+   o:['Cerca de 500.000','Cerca de cinco mil','Más de un millón','Cerca de cincuenta mil'],a:1},
+  {cap:'d7',t:'mc',q:'¿Qué conflicto religioso europeo del siglo XVII dejó más de ocho millones de víctimas, muy por encima de los mártires de la Roma pagana?',
+   o:['La Guerra de los Treinta Años','Las Cruzadas','La Guerra Civil inglesa','Las guerras napoleónicas'],a:0},
+);
+
 
 module.exports = { BANCO };

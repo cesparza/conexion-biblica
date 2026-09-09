@@ -328,6 +328,11 @@ TARJETAS.push(
   {cap:'d5', f:'¿Qué emperador murió en Babilonia intentando reconstruirla como su capital?', r:'Alejandro Magno, en 323 a.C.'},
   {cap:'d5', f:'¿Por qué era Baltasar más culpable que Nabucodonosor, según Daniel 5:22?', r:'Sabía todo lo que le había pasado a Nabucodonosor y aun así no humilló su corazón'},
   {cap:'d6', f:'¿Cuántos años tenía Daniel aproximadamente cuando lo arrojaron al foso de los leones?', r:'Unos 84 años'},
-  {cap:'d6', f:'¿Qué visión ya había recibido Daniel, años antes de esa noche en el foso, que explica su confianza?', r:'La visión de Daniel 7, con la promesa de que Dios derrota poderes mucho peores que un león'});
+  {cap:'d6', f:'¿Qué visión ya había recibido Daniel, años antes de esa noche en el foso, que explica su confianza?', r:'La visión de Daniel 7, con la promesa de que Dios derrota poderes mucho peores que un león'},
+  {cap:'d7', f:'¿Qué figura eclesiástica ya llamaba "anticristo" al papado en el año 991, siglos antes de la Reforma?', r:'Arnulfo, obispo de Orleans, en un concilio francés'},
+  {cap:'d7', f:'En el orden real del juicio de Daniel 7, ¿qué pasaje queda fuera de secuencia, como un paréntesis?', r:'Daniel 7:11-12, la destrucción de la bestia'},
+  {cap:'d7', f:'¿Qué dos funciones cumple Cristo a la vez en el juicio celestial?', r:'Es Juez (Juan le delegó todo el juicio) y Abogado/Mediador de su pueblo (1 Juan 2:1; Hebreos 7:25)'},
+  {cap:'d7', f:'¿Cuántos mártires cristianos calcula el historiador W. H. C. Frend bajo toda la Roma pagana (31-313 d.C.)?', r:'Cerca de cinco mil'},
+  {cap:'d7', f:'¿Qué conflicto religioso del siglo XVII, entre cristianos, dejó más víctimas que toda la persecución de Roma pagana?', r:'La Guerra de los Treinta Años (1618-1648), más de ocho millones de víctimas'});
 
 module.exports = { TARJETAS };
