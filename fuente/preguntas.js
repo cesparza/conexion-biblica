@@ -1675,5 +1675,16 @@ BANCO.push(
    a:false,e:'El estudio no encontró ninguna diferencia: la astrología no predijo nada real en ese caso.'},
 );
 
+BANCO.push(
+  {cap:'d3',t:'tf',q:'Sadrac, Mesac y Abed-nego condicionaron su fidelidad a Dios a que él los librara del horno.',
+   a:false,e:'Al contrario: dijeron "y si no", es decir, obedecerían a Dios sin importar si los libraba o no.'},
+  {cap:'d3',t:'mc',q:'¿Qué profeta, poco antes del episodio del horno, predicó contra los crímenes del rey Joacim y no fue librado por Dios de morir?',
+   o:['Urías','Ezequiel','Daniel','Jeremías'],a:0},
+  {cap:'d3',t:'mc',q:'¿Qué soldado cristiano de la Segunda Guerra Mundial, camillero que se negó a portar armas y a trabajar en sábado, recibió la Medalla de Honor del Congreso por rescatar a 75 heridos bajo fuego cruzado?',
+   o:['Desmond Doss','Harry Truman','Douglas MacArthur','Audie Murphy'],a:0},
+  {cap:'d3',t:'mc',q:'¿En qué batalla de 1945 Desmond Doss rescató a 75 heridos, solo y bajo fuego enemigo?',
+   o:['Iwo Jima','Las barrancas de Maeda, en Okinawa','Normandía','Guadalcanal'],a:1},
+);
+
 
 module.exports = { BANCO };
