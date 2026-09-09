@@ -352,7 +352,15 @@ d2: [
     ]) },
 
   { t: '🗓️ Los "tres años" de Daniel: un cálculo que sí cuadra',
-    h: '<p>Los críticos señalaron una aparente contradicción: Daniel 1:5 y 1:18 dicen que Daniel y sus amigos estudiaron "tres años" antes de presentarse ante el rey, pero Daniel 2:1 sitúa el sueño de Nabucodonosor apenas en su "año segundo" de reinado. La solución está en el calendario babilónico. Nabopolasar murió el 15 de agosto del 605 a.C. y Nabucodonosor "ascendió" al trono el 7 de septiembre siguiente; pero, según el sistema del "año de ascensión", ese período no contaba todavía como su "año primero" oficial: ese año comenzó recién en el Año Nuevo de la primavera del 604 a.C. Contando de manera inclusiva —como era costumbre en la época—, los tres años de estudio de Daniel fueron: el año de ascensión de Nabucodonosor (605-604 a.C.), su año primero (604-603 a.C.) y su año segundo (603-602 a.C.), exactamente el período en que, según Daniel 2:1, el rey tuvo el sueño de la estatua. Los dos textos, lejos de contradecirse, describen el mismo calendario visto desde dos ángulos distintos.</p>' },
+    h: '<p>Los críticos señalaron una contradicción: Daniel 1:5 y 1:18 dicen que Daniel estudió <strong>"tres años"</strong> antes de presentarse ante el rey, pero Daniel 2:1 sitúa el sueño apenas en el <strong>"año segundo"</strong> de reinado de Nabucodonosor. La solución está en el calendario babilónico y en el "año de ascensión", que no contaba todavía como el "año primero" oficial de un rey.</p>' +
+    tbl(['Fecha','Qué pasó'],[
+      ['15 de agosto, 605 a.C.','Muere Nabopolasar, padre de Nabucodonosor.'],
+      ['7 de septiembre, 605 a.C.','Nabucodonosor "asciende" al trono, pero ese período todavía no cuenta como su año primero oficial.'],
+      ['605-604 a.C.','Año de ascensión de Nabucodonosor — primer año de estudio de Daniel.'],
+      ['604-603 a.C.','Año primero oficial (empieza en el Año Nuevo de primavera del 604 a.C.) — segundo año de estudio.'],
+      ['603-602 a.C.','Año segundo de Nabucodonosor: el mismo que menciona Daniel 2:1 — tercer año de estudio, y el del sueño de la estatua.'],
+    ]) +
+    '<p>Contando de manera inclusiva, como era costumbre en la época, los tres años de estudio de Daniel 1 terminan justo en el año en que Nabucodonosor tuvo el sueño. Los dos textos, lejos de contradecirse, describen el mismo calendario visto desde dos ángulos distintos.</p>' },
 
   { t:'📖 Versículo clave', h:
     vs(`«Sea bendito el nombre de Dios de siglos en siglos, porque suyos son
@@ -489,7 +497,8 @@ d3: [
         'Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)']) },
 
   { t: '🎶 Los instrumentos griegos y la fecha del capítulo',
-    h: '<p>Entre los instrumentos que suenan para ordenar la adoración de la estatua (Daniel 3:5) hay al menos uno de origen griego: la "zampoña" (un tipo de gaita). Durante mucho tiempo los críticos usaron este detalle como prueba de que Daniel 3 fue escrito siglos después, cuando la cultura griega ya se había extendido por el Cercano Oriente. Pero la arqueología muestra que, ya en el siglo VI a.C. —el propio siglo de Nabucodonosor—, comerciantes, soldados y obreros griegos estaban activos en Babilonia, algunos empleados en proyectos de construcción del imperio. No hace falta esperar a Alejandro Magno para explicar un instrumento griego sonando en la corte babilónica: es lo que cabría esperar de un rey que reunía en su capital a gente de todo el mundo conocido.</p>' },
+    h: wa(`Entre los instrumentos que suenan para ordenar la adoración de la estatua (Daniel 3:5) hay uno de origen griego: la <strong>"zampoña"</strong> (un tipo de gaita). Durante mucho tiempo los críticos usaron este detalle como prueba de que Daniel 3 fue escrito siglos después, cuando la cultura griega ya se había extendido por el Cercano Oriente.`) +
+    hi(`Pero la arqueología muestra que, ya en el <strong>siglo VI a.C.</strong> —el propio siglo de Nabucodonosor—, comerciantes, soldados y obreros griegos estaban activos en Babilonia, algunos empleados en proyectos de construcción del imperio. No hace falta esperar a Alejandro Magno para explicar un instrumento griego sonando en la corte babilónica: es lo que cabría esperar de un rey que reunía en su capital a gente de todo el mundo conocido.`) },
 ],
 
 /* ═══════════════ DANIEL 4 ═══════════════ */
@@ -607,7 +616,13 @@ d4: [
     y él puede humillar a los que andan con soberbia.» (Daniel 4:37)`) },
 
   { t: '🏺 La tablilla que registra la locura de Nabucodonosor',
-    h: '<p>En 1975 se publicó la traducción de una tablilla de arcilla muy dañada del Museo Británico (B.M. 34.113), que según el asiriólogo A. K. Grayson podría referirse al mismo episodio narrado en Daniel 4. Muchas palabras de cada línea son ilegibles, pero las frases que sí se conservan incluyen: "Nabucodonosor consideró...", "su vida parecía no tener valor...", "no manifiesta amor ni a hijo ni a hija...", "no existen ni familia ni clan..." y "lloró amargamente ante Marduk...". No es un relato completo ni una confirmación definitiva, pero coincide con el cuadro general de un rey que atravesó una crisis profunda que lo alejó de su propia familia y de su reino, tal como describe Daniel 4:33.</p>' },
+    h: '<p>En 1975 se publicó la traducción de una tablilla de arcilla muy dañada del Museo Británico (<strong>B.M. 34.113</strong>), que según el asiriólogo A. K. Grayson podría referirse al mismo episodio narrado en Daniel 4. Muchas palabras de cada línea son ilegibles, pero las frases que sí se conservan incluyen:</p>' +
+    li(['"Nabucodonosor consideró..."',
+        '"su vida parecía no tener valor..."',
+        '"no manifiesta amor ni a hijo ni a hija..."',
+        '"no existen ni familia ni clan..."',
+        '"lloró amargamente ante Marduk..."']) +
+    '<p class="nota">No es un relato completo ni una confirmación definitiva, pero coincide con el cuadro general de un rey que atravesó una crisis profunda que lo alejó de su propia familia y de su reino, tal como describe Daniel 4:33.</p>' },
 ],
 
 /* ═══════════════ DANIEL 5 ═══════════════ */
@@ -709,7 +724,12 @@ d5: [
     ]) },
 
   { t: '👑 Belsasar en las crónicas: el corregente olvidado',
-    h: '<p>Durante mucho tiempo los críticos señalaron que ningún documento fuera de la Biblia mencionaba a un rey llamado Belsasar, y concluyeron que el personaje era ficticio. Eso cambió en 1861, cuando W. H. Fox Talbot publicó la traducción de una plegaria cuneiforme en la que el rey Nabonido pedía a su dios que bendijera a su hijo Belsasar. Más decisivo fue el hallazgo de la Crónica en Verso de Nabonido (tablilla del Museo Británico N.º 38.299, traducida por Sidney Smith en 1924): este documento oficial confirma que, al partir Nabonido hacia el oasis de Tema, dejó el "campamento" y el reinado en manos de su hijo mayor. Esto explica por qué Daniel 5:16 y 29 dicen que Belsasar solo podía ofrecerle a Daniel el tercer lugar del reino: el propio Belsasar ocupaba el segundo lugar, como corregente bajo la autoridad de su padre Nabonido, el verdadero primer rey.</p>' },
+    h: wa(`Durante mucho tiempo los críticos señalaron que ningún documento fuera de la Biblia mencionaba a un rey llamado <strong>Belsasar</strong>, y concluyeron que el personaje era ficticio.`) +
+    tbl(['Año','Hallazgo'],[
+      ['1861','W. H. Fox Talbot publica una plegaria cuneiforme en la que el rey Nabonido pide a su dios que bendiga a su hijo Belsasar.'],
+      ['1924','Sidney Smith traduce la Crónica en Verso de Nabonido (Museo Británico N.º 38.299): al partir Nabonido hacia el oasis de Tema, deja el "campamento" y el reinado en manos de su hijo mayor.'],
+    ]) +
+    hi(`Esto explica por qué Daniel 5:16 y 29 dicen que Belsasar solo podía ofrecerle a Daniel el <strong>tercer</strong> lugar del reino: el propio Belsasar ocupaba el segundo lugar, como corregente bajo la autoridad de su padre Nabonido, el verdadero primer rey.`) },
 ],
 
 /* ═══════════════ DANIEL 6 ═══════════════ */
@@ -790,7 +810,12 @@ d6: [
     • «Él ha librado a Daniel del poder de los leones»`) },
 
   { t: '🔍 ¿Quién fue Darío el Medo?',
-    h: '<p>Durante años los críticos señalaron que "Darío el Medo" (Daniel 6:1) no aparece en ningún documento fuera de la Biblia, y concluyeron —como antes habían hecho con Belsasar— que era un personaje inventado. La Crónica de Nabonido registra que el general que tomó Babilonia el 12 de octubre del 539 a.C. se llamaba Gubaru, y que gobernaba la provincia meda de Gutium; el historiador griego Jenofonte, por su parte, describe la ayuda que un tal Gobryas —equivalente griego de Gubaru— le dio a Ciro para conquistar la ciudad. La misma crónica dice que Gubaru "nombró gobernadores en Babilonia", igual que Daniel 6:2 describe a Darío nombrando sátrapas. Sobre esa base, algunos eruditos proponen identificar a Gubaru/Gobryas con el "Darío el Medo" de Daniel: un gobernador de origen medo puesto por Ciro al frente de Babilonia. No es la única propuesta que existe, pero muestra que el silencio inicial de las fuentes extrabíblicas —como ocurrió antes con Belsasar— no equivale a que el personaje no haya existido.</p>' },
+    h: wa(`Durante años los críticos señalaron que <strong>"Darío el Medo"</strong> (Daniel 6:1) no aparece en ningún documento fuera de la Biblia, y concluyeron —como antes habían hecho con Belsasar— que era un personaje inventado.`) +
+    tbl(['Fuente','Qué aporta'],[
+      ['Crónica de Nabonido','El general que tomó Babilonia el 12 de octubre del 539 a.C. se llamaba <strong>Gubaru</strong>, y gobernaba la provincia meda de Gutium. La crónica dice que Gubaru "nombró gobernadores en Babilonia", igual que Daniel 6:2 describe a Darío nombrando sátrapas.'],
+      ['Jenofonte (historiador griego)','Describe la ayuda que un tal <strong>Gobryas</strong> —equivalente griego de Gubaru— le dio a Ciro para conquistar la ciudad.'],
+    ]) +
+    hi(`Sobre esa base, algunos eruditos proponen identificar a Gubaru/Gobryas con el "Darío el Medo" de Daniel: un gobernador de origen medo puesto por Ciro al frente de Babilonia. No es la única propuesta que existe, pero muestra que el silencio inicial de las fuentes extrabíblicas —como ocurrió antes con Belsasar— no equivale a que el personaje no haya existido.`) },
 ],
 
 /* ═══════════════ P&R 39 ═══════════════ */
