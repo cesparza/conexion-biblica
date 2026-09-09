@@ -1499,6 +1499,16 @@ details.card summary::marker{content:''}
 .btn-voz:hover{border-color:var(--v-cat);background:var(--v-cat-suave)}
 .tj .btn-voz{background:#fff}
 
+/* Cabecera de un versiculo clave: referencia a la izquierda, boton de audio a
+   la derecha, en su propia fila. Antes el boton iba DESPUES de toda la cita,
+   en linea con el texto, y en una cita larga terminaba solo en su propio
+   renglon (huerfano) porque el navegador no tenia mas ancho para acomodarlo.
+   Separar la cabecera del cuerpo de la cita es el mismo patron que ya usan
+   .hoja-cab y .lect-cab: el control de audio nunca compite por espacio con
+   el texto que lee. */
+.vc-cab{display:flex;align-items:center;justify-content:space-between;
+  gap:.5rem;margin-bottom:.3rem}
+
 .pan-paso{
   border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
   padding:.85rem .85rem .7rem;margin:.7rem 0;background:var(--v-sup);

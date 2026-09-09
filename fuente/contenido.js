@@ -155,9 +155,17 @@ d1: [
 
   { t: '🗓️ La primera de tres deportaciones a Babilonia',
     h: '<p>Lo que cuenta Daniel 1:1-2 es la <strong>primera</strong> de tres deportaciones de Judá a Babilonia, no un hecho aislado.</p>' +
-    '<p><strong>605 a.C.</strong> — tercer año de Joacim: Nabucodonosor sitia Jerusalén, se lleva parte de los utensilios del templo y un grupo de jóvenes nobles, entre ellos Daniel, Ananías, Misael y Azarías (2 Reyes 24:1; Daniel 1:1-2).</p>' +
-    '<p><strong>597 a.C.</strong> — reinando ya Joaquín, hijo de Joacim, Nabucodonosor vuelve a sitiar Jerusalén; Joaquín se rinde y es llevado cautivo junto con su corte, sus oficiales y miles de personas más, entre ellas el profeta Ezequiel; Nabucodonosor pone en su lugar a Sedequías, tío de Joaquín, como rey vasallo: “Entonces salió Joachîn rey de Judá al rey de Babilonia, él, y su madre, y sus siervos, y sus príncipes, y sus eunucos: y prendiólo el rey de Babilonia en el octavo año de su reinado” (2 Reyes 24:12).</p>' +
-    '<p><strong>586 a.C.</strong> — Sedequías se rebela contra Babilonia; tras un sitio de año y medio, Jerusalén cae, el templo y la ciudad son destruidos, y la mayoría de la población restante es deportada: “Y quemaron la casa de Dios, y rompieron el muro de Jerusalem, y consumieron al fuego todos sus palacios, y destruyeron todos sus vasos deseables” (2 Crónicas 36:19; ver también 2 Reyes 25:1-21). Daniel llega a Babilonia en la primera de las tres, diecinueve años antes de que el templo mismo desapareciera.</p>' +
+    tbl(['Año','Qué pasó'],[
+      ['605 a.C.','Nabucodonosor sitia Jerusalén, se lleva utensilios del templo y jóvenes nobles — Daniel, Ananías, Misael y Azarías entre ellos (2 Reyes 24:1; Daniel 1:1-2).'],
+      ['597 a.C.','Nabucodonosor vuelve a sitiar Jerusalén; Joaquín se rinde y es deportado con su corte y el profeta Ezequiel. Pone en su lugar a Sedequías, como rey vasallo (2 Reyes 24:12).'],
+      ['586 a.C.','Sedequías se rebela; tras un sitio de año y medio, Jerusalén y el templo son destruidos y el resto del pueblo es deportado (2 Crónicas 36:19; 2 Reyes 25:1-21). Daniel llega en la primera de las tres, 19 años antes de que el templo desapareciera.'],
+    ]) +
+    vs(`2 Reyes 24:12: “Entonces salió Joachîn rey de Judá al rey de Babilonia,
+    él, y su madre, y sus siervos, y sus príncipes, y sus eunucos: y prendiólo
+    el rey de Babilonia en el octavo año de su reinado.”`) +
+    vs(`2 Crónicas 36:19: “Y quemaron la casa de Dios, y rompieron el muro de
+    Jerusalem, y consumieron al fuego todos sus palacios, y destruyeron todos
+    sus vasos deseables.”`) +
     '<p class="nota">Las citas de 2 Reyes y 2 Crónicas de esta sección son de la <strong>Reina-Valera 1909</strong> (traducción de dominio público), no de RV1995: esta app todavía no tiene el texto RV1995 de esos dos libros verificado verso por verso como sí lo tiene de Daniel 1-6. Por eso estas dos citas no cuentan como preguntas de completar (esas solo se hacen sobre texto RV1995 verificado).</p>' },
 
   { t: '🧱 Nabucodonosor fuera de la Biblia',
@@ -1504,9 +1512,10 @@ const VERS_CLAVE = {
    los módulos de «trampas» y de «números»: la solución del proyecto es partir
    la sección, no acortar el contenido. */
 const versHTML = v =>
-  '<p data-leer><strong>' + v[0] + '</strong><br>«' + v[1] + '»' +
-  ' <button class="btn-voz" aria-label="Escuchar el versículo"' +
-  ' onclick="leeCerca(this)">🔊</button></p>';
+  '<p data-leer><span class="vc-cab"><strong>' + v[0] + '</strong>' +
+  '<button class="btn-voz" aria-label="Escuchar el versículo"' +
+  ' onclick="leeCerca(this)">🔊</button></span>' +
+  '«' + v[1] + '»</p>';
 
 for (const cap of Object.keys(VERS_CLAVE)) {
   const lista = VERS_CLAVE[cap];

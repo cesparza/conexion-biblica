@@ -1580,24 +1580,26 @@ const puedeHablar=()=>typeof speechSynthesis!=='undefined'&&
 
 /* Voz en español, un poco más lenta que el habla normal: se está memorizando,
    no escuchando una noticia. */
-/* ── LEER EN VOZ ALTA, Y PODER PARAR ────────────────────────────────────
+/* ── LEER EN VOZ ALTA, CON PAUSA Y REANUDAR DE VERDAD ───────────────────
    MECANISMO
-   speechSynthesis es una cola global del navegador: speak() encola y cancel()
-   vacia la cola entera. No hay «parar este audio», solo «parar todo», asi que
-   la app tiene que recordar QUE boton esta leyendo para saber a quien
-   devolverle su icono.
+   speechSynthesis es una cola global del navegador: speak() encola, cancel()
+   vacia la cola entera, y pause()/resume() congelan y sueltan la lectura
+   ACTUAL sin perder el lugar. La app recuerda que boton esta leyendo (y si
+   esta en pausa) para saber a quien devolverle su icono.
 
-   Antes no habia forma de parar: se tocaba 🔊 y el versiculo se leia hasta el
-   final. Con un capitulo de 49 versiculos eso son bloques de cinco que no se
-   podian cortar, y si se tocaba otro boton se encimaban.
+   Version anterior: el boton solo alternaba 🔊 lee / ⏹ para-y-hay-que-
+   reiniciar. Ahora es un control de tres estados, como cualquier reproductor:
+   🔊 en reposo → toca y empieza (⏸, se puede pausar) → toca y pausa (▶, se
+   puede reanudar DESDE EL MISMO PUNTO) → toca y reanuda.
 
-   AHORA el boton alterna: 🔊 lee, ⏹ para. Y se corta solo al cambiar de
-   pantalla o de capitulo, porque una voz que sigue leyendo Daniel 2 mientras
-   la nina ya esta en las tarjetas se siente como una falla de la app.
+   OJO CON iOS: onend no siempre dispara, sobre todo si se cancela, y el
+   soporte de pause()/resume() en Safari ha sido historicamente menos fiable
+   que en Chrome. Por eso el icono se restaura tambien con un reloj de
+   seguridad; si resume() no despertara la voz en un aparato viejo, el peor
+   caso es que quede en ▶ y haya que tocar 🔊 en otro boton para reiniciar,
+   nunca una voz que seorda para siempre en silencio. */
+let vozPausado=false;
 
-   OJO CON iOS: onend no siempre dispara, sobre todo si se cancela. Por eso el
-   icono se restaura tambien con un reloj de seguridad y al cancelar a mano;
-   si se dependiera solo de onend, el boton se quedaria en ⏹ para siempre. */
 function paraVoz(){
   if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
   if(vozBtn){
@@ -1605,8 +1607,14 @@ function paraVoz(){
         vozBtn.classList.remove('sonando');}catch(e){}
     vozBtn=null;
   }
+  vozPausado=false;
   try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
 }
+
+/* Cuanto falta, en milisegundos, a un ritmo de unas 12 palabras por segundo a
+   rate .85 (con margen). Se recalcula al pausar y al reanudar porque el
+   reloj de seguridad no sabe cuanto se alcanzo a leer. */
+const msRestantes = txt => Math.max(4000, String(txt).length*95);
 
 function habla(txt,btn){
   if(!puedeHablar()||!txt)return;
@@ -1616,13 +1624,11 @@ function habla(txt,btn){
     const u=new SpeechSynthesisUtterance(limpio);
     u.lang='es-ES';u.rate=.85;u.pitch=1;
     if(btn){
-      vozBtn=btn;
-      btn.textContent='⏹';btn.setAttribute('title','Parar');
+      vozBtn=btn; vozPausado=false; btn.dataset.txt=limpio;
+      btn.textContent='⏸';btn.setAttribute('title','Pausar');
       btn.classList.add('sonando');
       u.onend=paraVoz; u.onerror=paraVoz;
-      /* Reloj de seguridad: unas 12 palabras por segundo a rate .85, con
-         margen. Si onend no llega (pasa en iOS), el icono vuelve solo. */
-      vozReloj=setTimeout(paraVoz, Math.max(4000, limpio.length*95));
+      vozReloj=setTimeout(paraVoz, msRestantes(limpio));
     }
     speechSynthesis.speak(u);
   }catch(e){paraVoz();}
@@ -1632,9 +1638,22 @@ function habla(txt,btn){
    tiene que repetir el versículo dentro de un atributo. */
 function leeCerca(btn){
   if(!btn)return;
-  /* Tocar el boton que ya esta leyendo lo para. Es lo que espera cualquiera:
-     el mismo boton que empezo el audio es el que lo corta. */
-  if(btn===vozBtn){paraVoz();return;}
+  /* Tocar el MISMO boton que ya esta leyendo pausa o reanuda, segun toque. */
+  if(btn===vozBtn){
+    if(vozPausado){
+      try{speechSynthesis.resume();}catch(e){}
+      vozPausado=false;
+      btn.textContent='⏸';btn.setAttribute('title','Pausar');
+      if(vozReloj)clearTimeout(vozReloj);
+      vozReloj=setTimeout(paraVoz, msRestantes(btn.dataset.txt||''));
+    }else{
+      try{speechSynthesis.pause();}catch(e){}
+      vozPausado=true;
+      btn.textContent='▶';btn.setAttribute('title','Reanudar');
+      if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
+    }
+    return;
+  }
   /* De donde se saca el texto. El boton puede estar DENTRO del bloque
      [data-leer], como en las secciones de versiculos clave, o FUERA, en una
      cabecera hermana, como en el panel de un versiculo y en los bloques de

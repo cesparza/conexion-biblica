@@ -1515,6 +1515,16 @@ details.card summary::marker{content:''}
 .btn-voz:hover{border-color:var(--v-cat);background:var(--v-cat-suave)}
 .tj .btn-voz{background:#fff}
 
+/* Cabecera de un versiculo clave: referencia a la izquierda, boton de audio a
+   la derecha, en su propia fila. Antes el boton iba DESPUES de toda la cita,
+   en linea con el texto, y en una cita larga terminaba solo en su propio
+   renglon (huerfano) porque el navegador no tenia mas ancho para acomodarlo.
+   Separar la cabecera del cuerpo de la cita es el mismo patron que ya usan
+   .hoja-cab y .lect-cab: el control de audio nunca compite por espacio con
+   el texto que lee. */
+.vc-cab{display:flex;align-items:center;justify-content:space-between;
+  gap:.5rem;margin-bottom:.3rem}
+
 .pan-paso{
   border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
   padding:.85rem .85rem .7rem;margin:.7rem 0;background:var(--v-sup);
@@ -1964,7 +1974,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'd1b2a59179a0';
+const VERSION_APP = 'f487acf7d95b';
 
 const CAPS = [
  {
@@ -2872,7 +2882,7 @@ const CONTENIDO = {
   },
   {
    "t": "🗓️ La primera de tres deportaciones a Babilonia",
-   "h": "<p>Lo que cuenta Daniel 1:1-2 es la <strong>primera</strong> de tres deportaciones de Judá a Babilonia, no un hecho aislado.</p><p><strong>605 a.C.</strong> — tercer año de Joacim: Nabucodonosor sitia Jerusalén, se lleva parte de los utensilios del templo y un grupo de jóvenes nobles, entre ellos Daniel, Ananías, Misael y Azarías (2 Reyes 24:1; Daniel 1:1-2).</p><p><strong>597 a.C.</strong> — reinando ya Joaquín, hijo de Joacim, Nabucodonosor vuelve a sitiar Jerusalén; Joaquín se rinde y es llevado cautivo junto con su corte, sus oficiales y miles de personas más, entre ellas el profeta Ezequiel; Nabucodonosor pone en su lugar a Sedequías, tío de Joaquín, como rey vasallo: “Entonces salió Joachîn rey de Judá al rey de Babilonia, él, y su madre, y sus siervos, y sus príncipes, y sus eunucos: y prendiólo el rey de Babilonia en el octavo año de su reinado” (2 Reyes 24:12).</p><p><strong>586 a.C.</strong> — Sedequías se rebela contra Babilonia; tras un sitio de año y medio, Jerusalén cae, el templo y la ciudad son destruidos, y la mayoría de la población restante es deportada: “Y quemaron la casa de Dios, y rompieron el muro de Jerusalem, y consumieron al fuego todos sus palacios, y destruyeron todos sus vasos deseables” (2 Crónicas 36:19; ver también 2 Reyes 25:1-21). Daniel llega a Babilonia en la primera de las tres, diecinueve años antes de que el templo mismo desapareciera.</p><p class=\"nota\">Las citas de 2 Reyes y 2 Crónicas de esta sección son de la <strong>Reina-Valera 1909</strong> (traducción de dominio público), no de RV1995: esta app todavía no tiene el texto RV1995 de esos dos libros verificado verso por verso como sí lo tiene de Daniel 1-6. Por eso estas dos citas no cuentan como preguntas de completar (esas solo se hacen sobre texto RV1995 verificado).</p>"
+   "h": "<p>Lo que cuenta Daniel 1:1-2 es la <strong>primera</strong> de tres deportaciones de Judá a Babilonia, no un hecho aislado.</p><table class=\"info-table\"><thead><tr><th>Año</th><th>Qué pasó</th></tr></thead><tbody><tr><td class=\"key\">605 a.C.</td><td>Nabucodonosor sitia Jerusalén, se lleva utensilios del templo y jóvenes nobles — Daniel, Ananías, Misael y Azarías entre ellos (2 Reyes 24:1; Daniel 1:1-2).</td></tr><tr><td class=\"key\">597 a.C.</td><td>Nabucodonosor vuelve a sitiar Jerusalén; Joaquín se rinde y es deportado con su corte y el profeta Ezequiel. Pone en su lugar a Sedequías, como rey vasallo (2 Reyes 24:12).</td></tr><tr><td class=\"key\">586 a.C.</td><td>Sedequías se rebela; tras un sitio de año y medio, Jerusalén y el templo son destruidos y el resto del pueblo es deportado (2 Crónicas 36:19; 2 Reyes 25:1-21). Daniel llega en la primera de las tres, 19 años antes de que el templo desapareciera.</td></tr></tbody></table><div class=\"verse-box\">2 Reyes 24:12: “Entonces salió Joachîn rey de Judá al rey de Babilonia,\n    él, y su madre, y sus siervos, y sus príncipes, y sus eunucos: y prendiólo\n    el rey de Babilonia en el octavo año de su reinado.”</div><div class=\"verse-box\">2 Crónicas 36:19: “Y quemaron la casa de Dios, y rompieron el muro de\n    Jerusalem, y consumieron al fuego todos sus palacios, y destruyeron todos\n    sus vasos deseables.”</div><p class=\"nota\">Las citas de 2 Reyes y 2 Crónicas de esta sección son de la <strong>Reina-Valera 1909</strong> (traducción de dominio público), no de RV1995: esta app todavía no tiene el texto RV1995 de esos dos libros verificado verso por verso como sí lo tiene de Daniel 1-6. Por eso estas dos citas no cuentan como preguntas de completar (esas solo se hacen sobre texto RV1995 verificado).</p>"
   },
   {
    "t": "🧱 Nabucodonosor fuera de la Biblia",
@@ -2884,11 +2894,11 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><strong>1:8</strong><br>«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>1:12</strong><br>«Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>1:15</strong><br>«Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>1:8</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.»</p><p data-leer><span class=\"vc-cab\"><strong>1:12</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.»</p><p data-leer><span class=\"vc-cab\"><strong>1:15</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
-   "h": "<p data-leer><strong>1:17</strong><br>«A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>1:20</strong><br>«En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>1:21</strong><br>«Así continuó Daniel hasta el año primero del rey Ciro.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>1:17</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.»</p><p data-leer><span class=\"vc-cab\"><strong>1:20</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.»</p><p data-leer><span class=\"vc-cab\"><strong>1:21</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Así continuó Daniel hasta el año primero del rey Ciro.»</p>"
   }
  ],
  "d2": [
@@ -3012,11 +3022,11 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><strong>3:1</strong><br>«El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>3:17</strong><br>«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>3:18</strong><br>«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>3:1</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.»</p><p data-leer><span class=\"vc-cab\"><strong>3:17</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.»</p><p data-leer><span class=\"vc-cab\"><strong>3:18</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
-   "h": "<p data-leer><strong>3:25</strong><br>«Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>3:27</strong><br>«...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>3:28</strong><br>«Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>3:25</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.»</p><p data-leer><span class=\"vc-cab\"><strong>3:27</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.»</p><p data-leer><span class=\"vc-cab\"><strong>3:28</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...»</p>"
   }
  ],
  "d4": [
@@ -3150,11 +3160,11 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><strong>6:4</strong><br>«Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>6:10</strong><br>«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>6:16</strong><br>«El Dios tuyo, a quien tú continuamente sirves, él te libre.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>6:4</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.»</p><p data-leer><span class=\"vc-cab\"><strong>6:10</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»</p><p data-leer><span class=\"vc-cab\"><strong>6:16</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«El Dios tuyo, a quien tú continuamente sirves, él te libre.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
-   "h": "<p data-leer><strong>6:22</strong><br>«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>6:26</strong><br>«...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p><p data-leer><strong>6:27</strong><br>«Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.» <button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>6:22</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.»</p><p data-leer><span class=\"vc-cab\"><strong>6:26</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.»</p><p data-leer><span class=\"vc-cab\"><strong>6:27</strong><button class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span>«Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.»</p>"
   }
  ],
  "pr39": [
@@ -20715,24 +20725,26 @@ const puedeHablar=()=>typeof speechSynthesis!=='undefined'&&
 
 /* Voz en español, un poco más lenta que el habla normal: se está memorizando,
    no escuchando una noticia. */
-/* ── LEER EN VOZ ALTA, Y PODER PARAR ────────────────────────────────────
+/* ── LEER EN VOZ ALTA, CON PAUSA Y REANUDAR DE VERDAD ───────────────────
    MECANISMO
-   speechSynthesis es una cola global del navegador: speak() encola y cancel()
-   vacia la cola entera. No hay «parar este audio», solo «parar todo», asi que
-   la app tiene que recordar QUE boton esta leyendo para saber a quien
-   devolverle su icono.
+   speechSynthesis es una cola global del navegador: speak() encola, cancel()
+   vacia la cola entera, y pause()/resume() congelan y sueltan la lectura
+   ACTUAL sin perder el lugar. La app recuerda que boton esta leyendo (y si
+   esta en pausa) para saber a quien devolverle su icono.
 
-   Antes no habia forma de parar: se tocaba 🔊 y el versiculo se leia hasta el
-   final. Con un capitulo de 49 versiculos eso son bloques de cinco que no se
-   podian cortar, y si se tocaba otro boton se encimaban.
+   Version anterior: el boton solo alternaba 🔊 lee / ⏹ para-y-hay-que-
+   reiniciar. Ahora es un control de tres estados, como cualquier reproductor:
+   🔊 en reposo → toca y empieza (⏸, se puede pausar) → toca y pausa (▶, se
+   puede reanudar DESDE EL MISMO PUNTO) → toca y reanuda.
 
-   AHORA el boton alterna: 🔊 lee, ⏹ para. Y se corta solo al cambiar de
-   pantalla o de capitulo, porque una voz que sigue leyendo Daniel 2 mientras
-   la nina ya esta en las tarjetas se siente como una falla de la app.
+   OJO CON iOS: onend no siempre dispara, sobre todo si se cancela, y el
+   soporte de pause()/resume() en Safari ha sido historicamente menos fiable
+   que en Chrome. Por eso el icono se restaura tambien con un reloj de
+   seguridad; si resume() no despertara la voz en un aparato viejo, el peor
+   caso es que quede en ▶ y haya que tocar 🔊 en otro boton para reiniciar,
+   nunca una voz que seorda para siempre en silencio. */
+let vozPausado=false;
 
-   OJO CON iOS: onend no siempre dispara, sobre todo si se cancela. Por eso el
-   icono se restaura tambien con un reloj de seguridad y al cancelar a mano;
-   si se dependiera solo de onend, el boton se quedaria en ⏹ para siempre. */
 function paraVoz(){
   if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
   if(vozBtn){
@@ -20740,8 +20752,14 @@ function paraVoz(){
         vozBtn.classList.remove('sonando');}catch(e){}
     vozBtn=null;
   }
+  vozPausado=false;
   try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
 }
+
+/* Cuanto falta, en milisegundos, a un ritmo de unas 12 palabras por segundo a
+   rate .85 (con margen). Se recalcula al pausar y al reanudar porque el
+   reloj de seguridad no sabe cuanto se alcanzo a leer. */
+const msRestantes = txt => Math.max(4000, String(txt).length*95);
 
 function habla(txt,btn){
   if(!puedeHablar()||!txt)return;
@@ -20751,13 +20769,11 @@ function habla(txt,btn){
     const u=new SpeechSynthesisUtterance(limpio);
     u.lang='es-ES';u.rate=.85;u.pitch=1;
     if(btn){
-      vozBtn=btn;
-      btn.textContent='⏹';btn.setAttribute('title','Parar');
+      vozBtn=btn; vozPausado=false; btn.dataset.txt=limpio;
+      btn.textContent='⏸';btn.setAttribute('title','Pausar');
       btn.classList.add('sonando');
       u.onend=paraVoz; u.onerror=paraVoz;
-      /* Reloj de seguridad: unas 12 palabras por segundo a rate .85, con
-         margen. Si onend no llega (pasa en iOS), el icono vuelve solo. */
-      vozReloj=setTimeout(paraVoz, Math.max(4000, limpio.length*95));
+      vozReloj=setTimeout(paraVoz, msRestantes(limpio));
     }
     speechSynthesis.speak(u);
   }catch(e){paraVoz();}
@@ -20767,9 +20783,22 @@ function habla(txt,btn){
    tiene que repetir el versículo dentro de un atributo. */
 function leeCerca(btn){
   if(!btn)return;
-  /* Tocar el boton que ya esta leyendo lo para. Es lo que espera cualquiera:
-     el mismo boton que empezo el audio es el que lo corta. */
-  if(btn===vozBtn){paraVoz();return;}
+  /* Tocar el MISMO boton que ya esta leyendo pausa o reanuda, segun toque. */
+  if(btn===vozBtn){
+    if(vozPausado){
+      try{speechSynthesis.resume();}catch(e){}
+      vozPausado=false;
+      btn.textContent='⏸';btn.setAttribute('title','Pausar');
+      if(vozReloj)clearTimeout(vozReloj);
+      vozReloj=setTimeout(paraVoz, msRestantes(btn.dataset.txt||''));
+    }else{
+      try{speechSynthesis.pause();}catch(e){}
+      vozPausado=true;
+      btn.textContent='▶';btn.setAttribute('title','Reanudar');
+      if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
+    }
+    return;
+  }
   /* De donde se saca el texto. El boton puede estar DENTRO del bloque
      [data-leer], como en las secciones de versiculos clave, o FUERA, en una
      cabecera hermana, como en el panel de un versiculo y en los bloques de

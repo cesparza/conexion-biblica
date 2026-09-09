@@ -1002,20 +1002,20 @@ const validas=(API.match(/CATS_VALIDAS = \[([^\]]+)\]/)||[])[1]||'';
 for(const k of ['me','av','pa','gm','dm1','dm2','ec1','ec2'])
   ok(validas.includes("'"+k+"'"),'El servidor acepta la categoria `'+k+'`');
 
-/* ── PARAR LA LECTURA EN AUDIO ──────────────────────────────────────────
-   speechSynthesis es una cola global del navegador: no hay «parar este
-   audio», solo cancel(), que vacia todo. Antes no habia forma de parar: se
-   tocaba 🔊 y el bloque se leia completo. Ahora el boton alterna y se corta
-   al navegar. */
+/* ── PAUSAR Y REANUDAR LA LECTURA EN AUDIO ───────────────────────────────
+   v61: antes el boton solo alternaba leer/parar-y-reiniciar. Ahora es un
+   control de tres estados (🔊 → ⏸ → ▶ → ⏸...) usando pause()/resume() de
+   verdad, no cancel(). Cancel() (via paraVoz) sigue siendo el corte total al
+   navegar, porque una voz que sigue sonando en otra pantalla es una falla. */
 ok(/function paraVoz\(\)/.test(APP),'Existe paraVoz()');
-ok(/if\(btn===vozBtn\)\{paraVoz\(\);return;\}/.test(APP),
-  'Tocar el boton que ya esta leyendo lo para');
+ok(/if\(btn===vozBtn\)\{/.test(APP)&&/speechSynthesis\.pause\(\)/.test(APP)&&/speechSynthesis\.resume\(\)/.test(APP),
+  'Tocar el boton que ya esta leyendo pausa o reanuda, no solo para');
 ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de pantalla corta la lectura');
 ok(/function verCap\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de capitulo corta la lectura');
 /* En iOS onend no siempre dispara, sobre todo si se cancela. Sin el reloj de
-   seguridad el boton se quedaria en ⏹ para siempre. */
+   seguridad el boton se quedaria pegado para siempre. */
 ok(/u\.onend=paraVoz/.test(APP)&&/u\.onerror=paraVoz/.test(APP),
   'El icono se restaura con onend y con onerror');
 ok(/vozReloj=setTimeout\(paraVoz/.test(APP),
