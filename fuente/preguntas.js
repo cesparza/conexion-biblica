@@ -1785,5 +1785,14 @@ BANCO.push(
    a:false,e:'Son quienes estudiaron las profecías hasta comprenderlas, las compartieron con otros y se dejaron purificar por ellas, sin importar su nivel académico.'},
 );
 
+BANCO.push(
+  {cap:'d11',t:'mc',q:'¿Qué concilio proclamó la infalibilidad papal justo cuando el papado perdía sus últimos territorios políticos (1870)?',
+   o:['El Concilio Vaticano I','El Concilio de Trento','El Concilio de Nicea','El Concilio Vaticano II'],a:0},
+  {cap:'d11',t:'mc',q:'¿Qué acuerdo de 1929, firmado entre Mussolini y el Vaticano, restauró el poder temporal del papado sobre un pequeño territorio?',
+   o:['Los Tratados de Letrán','El Congreso de Viena','La Paz de Westfalia','El Concordato de Worms'],a:0},
+  {cap:'d11',t:'tf',q:'Según el análisis de Daniel 11:40-45 en Enigmas descifrados, el número de países con relaciones diplomáticas con el Vaticano ha disminuido desde 1914.',
+   a:false,e:'Ha crecido de forma sostenida: 14 en 1914, 25 en 1922, 50 en 1958 y más de 170 en la actualidad.'},
+);
+
 
 module.exports = { BANCO };

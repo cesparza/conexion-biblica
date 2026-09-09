@@ -346,6 +346,8 @@ TARJETAS.push(
   {cap:'d10', f:'¿Qué vio el siervo de Eliseo en Dotán cuando Dios le abrió los ojos?', r:'El monte lleno de caballos y carros de fuego alrededor de Eliseo (2 Reyes 6)'},
   {cap:'d10', f:'¿Qué frase de Eliseo resume la protección angélica invisible, la misma idea detrás de la guerra de Daniel 10?', r:'"No temas, que hay más con nosotros que con ellos"'},
   {cap:'d11', f:'¿Qué objeto famoso, hoy en el Museo Británico, ilustra el cumplimiento de Daniel 11:14?', r:'La Piedra Rosetta, con las concesiones del niño-rey Ptolomeo V a los egipcios rebelados'},
-  {cap:'d12', f:'¿Qué dos anabautistas del siglo XVI cita Maxwell como ejemplo de los "doctos" de Daniel 12:3?', r:'Oswald Glait y Andreas Fischer, ejecutados por guardar el sábado bíblico tras estudiar Daniel 7:25'});
+  {cap:'d12', f:'¿Qué dos anabautistas del siglo XVI cita Maxwell como ejemplo de los "doctos" de Daniel 12:3?', r:'Oswald Glait y Andreas Fischer, ejecutados por guardar el sábado bíblico tras estudiar Daniel 7:25'},
+  {cap:'d11', f:'¿Qué cinco hitos marcan, segun Treiyer, la recuperacion del poder papal despues de 1798?', r:'1800: eleccion de Pio VII. 1815: Congreso de Viena. 1870: infalibilidad papal (Vaticano I). 1929: Tratados de Letran. Y el crecimiento diplomatico de 14 a mas de 170 paises'},
+  {cap:'d11', f:'¿Que gano el papado en 1870 justo cuando perdia sus ultimos territorios politicos?', r:'El dogma de la infalibilidad papal, proclamado por el Concilio Vaticano I'});
 
 module.exports = { TARJETAS };
