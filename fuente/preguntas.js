@@ -1708,5 +1708,16 @@ BANCO.push(
    o:['Porque era más joven','Porque sabía todo lo que le había pasado a Nabucodonosor y aun así no humilló su corazón','Porque no era de sangre real','Porque gobernaba un imperio más grande'],a:1},
 );
 
+BANCO.push(
+  {cap:'d6',t:'mc',q:'¿Aproximadamente cuántos años tenía Daniel cuando fue arrojado al foso de los leones?',
+   o:['Unos 40 años','Unos 60 años','Unos 84 años','Unos 100 años'],a:2},
+  {cap:'d6',t:'mc',q:'Según el contraste que hace Isaías, ¿qué tenían que hacer con los ídolos Bel y Nebo cada Año Nuevo en Babilonia, a diferencia del Dios verdadero?',
+   o:['Esconderlos','Cargarlos a lomo de animales, porque no podían moverse solos','Enterrarlos','Pintarlos de oro'],a:1},
+  {cap:'d6',t:'tf',q:'Cuando Daniel se enteró del decreto que prohibía orar, comenzó a orar pidiendo ayuda antes que nada.',
+   a:false,e:'El texto dice que oraba "dando gracias... así como lo había hecho siempre" (6:10): agradecía primero.'},
+  {cap:'d6',t:'tf',q:'Daniel ya había recibido la visión de Daniel 7, con la promesa de la resurrección, varios años antes de ser arrojado al foso de los leones.',
+   a:true,e:'Eso explica en parte su confianza esa noche: ya sabía que Dios vence a poderes mucho más temibles que un león.'},
+);
+
 
 module.exports = { BANCO };

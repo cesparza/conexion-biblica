@@ -1259,6 +1259,11 @@ pr44: [
     wa(`Lo que Daniel decidió <strong>de joven</strong> (Daniel 1) fue lo que lo sostuvo
     <strong>de anciano</strong> (Daniel 6). Tenía más de ochenta años en el foso.<br><br>
     Las decisiones de hoy construyen el carácter que responderá mañana.`) },
+
+  { t: '👴 Daniel, de unos 84 años, y el Dios que carga a los suyos hasta la vejez',
+    h: hi(`<strong>Daniel tenía cerca de 84 años cuando lo arrojaron al foso: Dios seguía interesado en él en la ancianidad tanto como en su juventud.</strong> El profeta Isaías había contrastado esto mismo con los ídolos de Babilonia: cada primavera, en la fiesta de Año Nuevo, las estatuas de los dioses Bel y Nebo tenían que ser cargadas a lomo de animales por las calles, porque no podían moverse por sí solas. El Dios verdadero, en cambio, promete lo contrario: "hasta la vejez seré el mismo, hasta las canas los llevaré" — es Dios quien carga a su pueblo, no al revés. Daniel vivió esa promesa en carne propia esa noche en el foso.`) },
+  { t: '🙏 Por qué Daniel dio gracias frente a los leones',
+    h: hi(`<strong>Al enterarse del decreto que le prohibía orar, Daniel "se ponía de rodillas tres veces al día, orando y dando gracias... así como lo había hecho siempre" (6:10).</strong> No pidió primero, agradeció primero: una vida entera de oraciones respondidas le daba con qué. Y tenía una razón adicional para no temer: varios años antes de esa noche ya había recibido la visión de Daniel 7, donde vio a Dios derrotar a "bestias" mucho más temibles que cualquier león, y conocía la promesa de la resurrección. Si los leones lo hubieran devorado esa noche, no habría sido una derrota definitiva para él.`) },
 ],
 /* ═══════════════ DANIEL 7 ═══════════════ */
 d7: [

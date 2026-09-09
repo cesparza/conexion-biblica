@@ -326,6 +326,8 @@ TARJETAS.push(
   {cap:'d4', f:'¿Cuál es el límite práctico de la obediencia al Estado, según el ejemplo de Daniel?', r:'Se obedece hasta el punto donde una orden choca con un mandamiento explícito de Dios'},
   {cap:'d5', f:'¿Qué oficial arrojó al Éufrates la profecía de Jeremías atada a una piedra?', r:'Seraías, décadas antes de que Babilonia cayera'},
   {cap:'d5', f:'¿Qué emperador murió en Babilonia intentando reconstruirla como su capital?', r:'Alejandro Magno, en 323 a.C.'},
-  {cap:'d5', f:'¿Por qué era Baltasar más culpable que Nabucodonosor, según Daniel 5:22?', r:'Sabía todo lo que le había pasado a Nabucodonosor y aun así no humilló su corazón'});
+  {cap:'d5', f:'¿Por qué era Baltasar más culpable que Nabucodonosor, según Daniel 5:22?', r:'Sabía todo lo que le había pasado a Nabucodonosor y aun así no humilló su corazón'},
+  {cap:'d6', f:'¿Cuántos años tenía Daniel aproximadamente cuando lo arrojaron al foso de los leones?', r:'Unos 84 años'},
+  {cap:'d6', f:'¿Qué visión ya había recibido Daniel, años antes de esa noche en el foso, que explica su confianza?', r:'La visión de Daniel 7, con la promesa de que Dios derrota poderes mucho peores que un león'});
 
 module.exports = { TARJETAS };
