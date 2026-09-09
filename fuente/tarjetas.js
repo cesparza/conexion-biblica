@@ -340,6 +340,10 @@ TARJETAS.push(
   {cap:'d8', f:'¿Cómo cumplió Alejandro la "vida prolongada durante un tiempo" de Daniel 7:12?', r:'Se casó con la princesa Roxana y promovió el matrimonio de diez mil soldados griegos con mujeres persas, fusionando las culturas'},
   {cap:'d9', f:'¿Qué tres pasajes del Antiguo Testamento había leído Daniel antes de su oración del capítulo 9?', r:'Levítico 26, la oración de Salomón (1 Reyes 8:46-53) y la carta de Jeremías a los exiliados (Jeremías 29)'},
   {cap:'d9', f:'¿Qué significa literalmente la palabra hebrea "jathak", traducida "fijadas" en Daniel 9:24?', r:'"Cortar" o "amputar"'},
-  {cap:'d9', f:'¿Por qué el sentido de "cortar/amputar" de jathak prueba que los 2.300 días de Daniel 8:14 son simbólicos?', r:'Porque no se pueden "cortar" 490 años literales de solo 2.300 días literales (menos de 7 años)'});
+  {cap:'d9', f:'¿Por qué el sentido de "cortar/amputar" de jathak prueba que los 2.300 días de Daniel 8:14 son simbólicos?', r:'Porque no se pueden "cortar" 490 años literales de solo 2.300 días literales (menos de 7 años)'},
+  {cap:'d10', f:'¿Qué le dijo a Josué el "jefe del ejército de Yahvéh" antes del ataque a Jericó?', r:'Que se quitara las sandalias, porque el lugar donde estaba era sagrado (Josué 5:13-15)'},
+  {cap:'d10', f:'¿Cómo se llama, en Éxodo 3, al mismo Ser que se identifica como "YO SOY EL QUE SOY"?', r:'"El Ángel de Yahvéh" (Éxodo 3:2), aunque es el propio Dios quien habla'},
+  {cap:'d10', f:'¿Qué vio el siervo de Eliseo en Dotán cuando Dios le abrió los ojos?', r:'El monte lleno de caballos y carros de fuego alrededor de Eliseo (2 Reyes 6)'},
+  {cap:'d10', f:'¿Qué frase de Eliseo resume la protección angélica invisible, la misma idea detrás de la guerra de Daniel 10?', r:'"No temas, que hay más con nosotros que con ellos"'});
 
 module.exports = { TARJETAS };

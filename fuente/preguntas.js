@@ -1760,5 +1760,16 @@ BANCO.push(
    o:['Porque no se pueden "cortar" 490 años de solo 2.300 días literales, así que esos días tienen que ser 2.300 años simbólicos','Porque confirma que los 2.300 días son literales','Porque cambia la fecha del decreto de 457 a.C.','Porque elimina la necesidad del principio día por año'],a:0},
 );
 
+BANCO.push(
+  {cap:'d10',t:'mc',q:'¿Qué le respondió el "jefe del ejército de Yahvéh" a Josué cuando este le preguntó de qué bando era, antes del ataque a Jericó?',
+   o:['Que se quitara las sandalias porque el lugar era sagrado','Que huyera de inmediato','Que reuniera más soldados','Que esperara tres días'],a:0},
+  {cap:'d10',t:'tf',q:'En Éxodo 3, el mismo Ser que se identifica como "YO SOY EL QUE SOY" (Yahvéh) es llamado, en ese mismo relato, "el Ángel de Yahvéh".',
+   a:true,e:'Eso muestra que "ángel" (mensajero) puede referirse al propio Dios revelándose, y ayuda a entender por qué Miguel puede ser tanto "un príncipe" como el Señor mismo en Daniel 10.'},
+  {cap:'d10',t:'mc',q:'¿Qué vio el joven siervo de Eliseo cuando Dios le abrió los ojos, en la ciudad sitiada de Dotán?',
+   o:['El monte lleno de caballos y carros de fuego alrededor de Eliseo','Una tormenta de arena','Un ángel con espada de fuego solo','Un ejército de la ciudad vecina viniendo a ayudar'],a:0},
+  {cap:'d10',t:'mc',q:'¿Qué le dijo Eliseo a su siervo aterrado al ver al ejército enemigo rodeando la ciudad?',
+   o:['"No temas, que hay más con nosotros que con ellos"','"Hoy moriremos"','"Debemos escapar de inmediato"','"Llamemos a los soldados del rey"'],a:0},
+);
+
 
 module.exports = { BANCO };
