@@ -1023,13 +1023,53 @@ function pintaCaps(){
    El texto se parte por etiquetas y solo se toca lo que esta FUERA de una: si
    el regex entrara en un atributo (un onclick, una clase) romperia el HTML
    sin avisar. */
-const BIBLIA_CAPS=['d1','d2','d3','d4','d5','d6'];
+const BIBLIA_CAPS=['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12'];
 const OTRO_LIBRO=/\b(?!Daniel\b|RV1995\b)(?:[123]\s?)?[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{1,}\b/;
+
+/* CITAS A OTROS LIBROS (fuente/biblia-otros.js, RV1909, dominio publico).
+   Mismo boton, misma hoja: solo cambia de que tabla sale el texto y que
+   version se rotula. Un cid de Daniel es 'd'+numero; uno de otro libro es
+   'slug-capitulo' (por ejemplo 'apocalipsis-1'), y los dos formatos nunca se
+   confunden porque Daniel no lleva guion. */
+function tablaDeCid(cid){
+  if(typeof VERS!=='undefined'&&VERS[cid]){
+    return {mapa:VERS[cid], ref:'Daniel '+cid.replace('d',''), version:'RV1995'};
+  }
+  if(typeof OTRAS_VERS!=='undefined'&&OTRAS_VERS[cid]){
+    const meta=(typeof OTRAS_META!=='undefined'&&OTRAS_META[cid])||{};
+    return {mapa:OTRAS_VERS[cid], ref:(meta.libro||'')+' '+(meta.cap||''), version:meta.version||'RV1909'};
+  }
+  return null;
+}
+
+/* Regex de citas a otro libro, armado desde NOMBRES_OTROS: «Apocalipsis
+   1:13-16», «2 Reyes 24:1», etc. Si biblia-otros.js no esta cargado (por
+   ejemplo en una prueba que solo mira un fragmento del archivo) esto queda
+   en null y esa pasada simplemente no corre. */
+const KEY_POR_NOMBRE=(typeof NOMBRES_OTROS!=='undefined')
+  ?Object.keys(NOMBRES_OTROS).reduce((m,k)=>{m[NOMBRES_OTROS[k]]=k;return m;},{})
+  :{};
+const OTRO_LIBRO_CITA=(typeof NOMBRES_OTROS!=='undefined')
+  ?new RegExp('\\b('+Object.values(NOMBRES_OTROS).map(n=>n.replace(/\s+/g,'\\s+'))
+      .sort((a,b)=>b.length-a.length).join('|')+')\\s+(\\d{1,3}):(\\d{1,3})(?:[-–](\\d{1,3}))?','g')
+  :null;
 
 function botonRef(todo,c,v,v2){
   const cid='d'+c;
-  if(!VERS[cid]||!VERS[cid][+v])return todo;
-  const hasta=(v2&&+v2>+v&&VERS[cid][+v2])?+v2:+v;
+  const t=tablaDeCid(cid);
+  if(!t||!t.mapa[+v])return todo;
+  const hasta=(v2&&+v2>+v&&t.mapa[+v2])?+v2:+v;
+  return '<button type="button" class="vref" title="Ver el versículo"'+
+    ' onclick="verVers(this,\''+cid+'\','+(+v)+','+hasta+')">'+todo+'</button>';
+}
+
+function botonRefOtro(todo,nombre,c,v,v2){
+  const key=KEY_POR_NOMBRE[nombre];
+  if(!key)return todo;
+  const cid=key+'-'+c;
+  const t=tablaDeCid(cid);
+  if(!t||!t.mapa[+v])return todo;
+  const hasta=(v2&&+v2>+v&&t.mapa[+v2])?+v2:+v;
   return '<button type="button" class="vref" title="Ver el versículo"'+
     ' onclick="verVers(this,\''+cid+'\','+(+v)+','+hasta+')">'+todo+'</button>';
 }
@@ -1040,12 +1080,23 @@ function refsTocables(html,capId){
   return html.split(/(<[^>]+>)/).map(tr=>{
     if(tr.charAt(0)==='<')return tr;
     /* Pasada 1: «Daniel N:M» dice el libro, asi que vale en cualquier lado.
-       Se marca el trozo ya convertido con \u0000 para que la pasada 2 no
-       vuelva a entrar en el, que anidaria un boton dentro de otro. */
+       Se marca el trozo ya convertido con \u0000 para que las pasadas
+       siguientes no vuelvan a entrar en el, que anidaria un boton dentro de
+       otro. */
     let out=tr.replace(/Daniel\s+(\d{1,2}):(\d{1,2})(?:[-–](\d{1,2}))?/g,
       (todo,c,v,v2)=>'\u0000'+botonRef(todo,c,v,v2)+'\u0000');
+    /* Pasada 2: «Libro N:M» para un libro distinto de Daniel, en cualquier
+       parte (fuera o dentro de parentesis). El nombre completo del libro ya
+       distingue la cita: no hace falta el candado de la pasada 3. */
+    if(OTRO_LIBRO_CITA){
+      out=out.replace(OTRO_LIBRO_CITA,(todo,nombre,c,v,v2)=>{
+        if(todo.indexOf('\u0000')>=0)return todo;
+        return '\u0000'+botonRefOtro(todo,nombre,c,v,v2)+'\u0000';
+      });
+    }
     if(enDaniel){
-      /* Pasada 2: dentro de un parentesis, en un capitulo de Daniel. */
+      /* Pasada 3: (N:M) suelto dentro de parentesis, solo en un capitulo de
+         Daniel, y solo si el parentesis no nombra ya otro libro. */
       out=out.replace(/\(([^)]*)\)/g,(todo,dentro)=>{
         if(dentro.indexOf('\u0000')>=0||OTRO_LIBRO.test(dentro))return todo;
         return '('+dentro.replace(/(\d{1,2}):(\d{1,2})(?:[-–](\d{1,2}))?/g,
@@ -1097,7 +1148,7 @@ function abreHojaHtml(html,tipo){
 }
 
 function abreHoja(cid,de,hasta){
-  if(typeof VERS==='undefined'||!VERS[cid])return;
+  if(!tablaDeCid(cid))return;
   hojaCid=cid; hojaDe=de; hojaHasta=hasta||de;
   abreHojaHtml(htmlHoja(),'vers');
 }
@@ -1117,7 +1168,9 @@ function cierraHoja(){
  *  uno y se queda en los topes del capitulo. */
 function hojaMueve(d){
   if(!hojaCid)return;
-  const nums=Object.keys(VERS[hojaCid]).map(Number).sort((a,b)=>a-b);
+  const t=tablaDeCid(hojaCid);
+  if(!t)return;
+  const nums=Object.keys(t.mapa).map(Number).sort((a,b)=>a-b);
   const min=nums[0], max=nums[nums.length-1];
   const rango=hojaHasta-hojaDe;
   let de=hojaDe+d;
@@ -1130,20 +1183,20 @@ function hojaMueve(d){
 
 function htmlHoja(cid,de,hasta){
   cid=cid||hojaCid; de=de||hojaDe; hasta=hasta||hojaHasta;
-  if(!cid||typeof VERS==='undefined'||!VERS[cid])return '';
-  const n=cid.replace('d','');
-  const nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
+  const t=cid?tablaDeCid(cid):null;
+  if(!cid||!t)return '';
+  const nums=Object.keys(t.mapa).map(Number).sort((a,b)=>a-b);
   const min=nums[0], max=nums[nums.length-1];
   const cap=buscaItem(cid);
   const partes=[];
   for(let i=de;i<=hasta;i++)
-    if(VERS[cid][i])partes.push('<p><span class="vn">'+i+'</span>'+esc(VERS[cid][i])+'</p>');
-  const ref='Daniel '+n+':'+de+(hasta>de?'-'+hasta:'');
+    if(t.mapa[i])partes.push('<p><span class="vn">'+i+'</span>'+esc(t.mapa[i])+'</p>');
+  const ref=t.ref+':'+de+(hasta>de?'-'+hasta:'');
   return '<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
     '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="'+ref+'">'+
     '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
     '<div class="hoja-cab">'+
-      '<div><div class="hoja-ref">'+ref+' · RV1995</div>'+
+      '<div><div class="hoja-ref">'+ref+' · '+t.version+'</div>'+
       '<div class="hoja-sub">'+esc(cap?cap.sub:'')+'</div></div>'+
       (puedeHablar()?'<button type="button" class="btn-voz" title="Escuchar" aria-label="Escuchar el versículo" onclick="leeCerca(this)">🔊</button>':'')+
       '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+

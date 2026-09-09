@@ -875,6 +875,46 @@ ok(/Daniel\\\\s\+\(\\\\d\{1,2\}\)/.test(APP.replace(/\s/g,''))||
 ok(/OTRO_LIBRO/.test(APP)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP),
   'La segunda pasada solo actua dentro de un capitulo de Daniel y descarta otros libros');
 
+/* ── CITAS A OTROS LIBROS: TODAS TIENEN QUE ABRIR UN VERSICULO REAL ──────
+   v60: BIBLIA_CAPS ahora cubre d1-d12 (antes se quedaba en d1-d6 y las
+   citas sueltas (N:M) de Daniel 7-12 no abrian nada), y refsTocables()
+   suma una pasada para «Libro N:M» de un libro distinto de Daniel
+   (fuente/biblia-otros.js, RV1909, dominio publico). Esta prueba no repite
+   ese mecanismo: solo comprueba que CADA cita de otro libro que aparece en
+   el material tiene su versiculo ya sourced, para que el boton no quede
+   mudo (texto sin \u0000 → sin onclick → sin hoja). */
+ok(/BIBLIA_CAPS=\['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12'\]/.test(APP),
+  'BIBLIA_CAPS cubre Daniel 1-12: las citas (N:M) sueltas de 7-12 tambien abren');
+
+const { NOMBRES_OTROS, OTRAS_VERS } = require(path.join(RAIZ, 'fuente', 'biblia-otros.js'));
+const NOMBRE_A_SLUG = Object.keys(NOMBRES_OTROS).reduce((m,k)=>{m[NOMBRES_OTROS[k]]=k;return m;},{});
+const RE_OTRO_LIBRO_CITA = new RegExp('\\b('+Object.values(NOMBRES_OTROS)
+  .map(n=>n.replace(/\s+/g,'\\s+')).sort((a,b)=>b.length-a.length).join('|')+
+  ')\\s+(\\d{1,3}):(\\d{1,3})(?:[-–](\\d{1,3}))?','g');
+
+const sinFuente=[];
+const revisaOtroLibro=(donde,txt)=>{
+  if(!txt)return;
+  for(const m of String(txt).matchAll(RE_OTRO_LIBRO_CITA)){
+    const slug=NOMBRE_A_SLUG[m[1]], cid=slug+'-'+m[2];
+    const de=+m[3], hasta=m[4]?+m[4]:de;
+    const mapa=OTRAS_VERS[cid];
+    if(!mapa||!mapa[de])sinFuente.push(donde+' → '+m[0]+' (falta '+cid+':'+de+')');
+    else if(m[4]&&!mapa[hasta])sinFuente.push(donde+' → '+m[0]+' (falta '+cid+':'+hasta+')');
+  }
+};
+Object.keys(CONTENIDO).forEach(k=>CONTENIDO[k].forEach(s=>{
+  revisaOtroLibro('contenido/'+k,s.t);revisaOtroLibro('contenido/'+k,s.h);}));
+BANCO.forEach(q=>{
+  revisaOtroLibro('pregunta '+q.cap,q.q);revisaOtroLibro('pregunta '+q.cap,q.ins);
+  revisaOtroLibro('pregunta '+q.cap,q.e);
+  if(Array.isArray(q.o))q.o.forEach(o=>revisaOtroLibro('pregunta '+q.cap+'/opcion',o));
+});
+TARJETAS.forEach(tj=>{revisaOtroLibro('tarjeta '+tj.cap,tj.f);revisaOtroLibro('tarjeta '+tj.cap,tj.d);});
+ok(sinFuente.length===0,
+  `Toda cita a otro libro tiene su versiculo en biblia-otros.js`+
+  (sinFuente.length?' — '+sinFuente.slice(0,6).join(' / '):''));
+
 /* ── EL ATRIBUTO hidden TIENE QUE GANAR ─────────────────────────────────
    La hoja del navegador le da a [hidden] un display:none de baja prioridad,
    asi que cualquier regla de autor con display lo pisa. Paso de verdad:

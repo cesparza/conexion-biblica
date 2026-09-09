@@ -14,6 +14,7 @@ const { MANUAL } = require('./manual.js');
 const MAT = require('./matutina.js');
 const CR = require('./creencias.js');
 const { VERS } = require('./biblia.js');
+const { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META } = require('./biblia-otros.js');
 const PWA = require('./pwa.js');
 
 /* Dos eventos, un solo archivo: al material de Daniel se le suma el de la
@@ -69,6 +70,12 @@ const MANUAL = ${JSON.stringify(MANUAL, null, 1)};
    de 2.000 caracteres: en una sola linea, ningun visor de diff abre el
    archivo y el hook del repo bloquea el commit. */
 const VERS = ${JSON.stringify(VERS, null, 1)};
+
+/* Citas a libros distintos de Daniel (RV1909, dominio publico), para las
+   mismas referencias tocables. Ver fuente/biblia-otros.js. */
+const NOMBRES_OTROS = ${JSON.stringify(NOMBRES_OTROS, null, 1)};
+const OTRAS_VERS = ${JSON.stringify(OTRAS_VERS, null, 1)};
+const OTRAS_META = ${JSON.stringify(OTRAS_META, null, 1)};
 
 /* El logo va partido en trozos: como data URI de una sola línea pasaría de
    2.000 caracteres y el hook del repo bloquearía el commit. */

@@ -78,3 +78,46 @@ if (fallos.length) {
   process.exit(1);
 }
 console.log('✅ fuente/biblia.js es identico al texto RV1995 de ' + CARPETA);
+
+/* ── SEGUNDO NIVEL: fuente/biblia-otros.js contra files/rv1909-*.txt ──────
+   Mismo mecanismo, para las citas a libros distintos de Daniel (RV1909,
+   dominio publico). OTRAS_META dice de que archivo sale cada capitulo. */
+const { OTRAS_VERS, OTRAS_META } = require(path.join(RAIZ, 'fuente', 'biblia-otros.js'));
+
+let igualesO = 0;
+const fallosO = [];
+let totalTxtO = 0;
+
+for (const cid of Object.keys(OTRAS_META)) {
+  const [slug, cap] = cid.split(/-(?=[0-9]+$)/);
+  const archivo = path.join(CARPETA, `rv1909-${slug}-${cap}.txt`);
+  if (!fs.existsSync(archivo)) { fallosO.push(`${cid}: no se encontro ${archivo}`); continue; }
+  const enTxt = {};
+  const bruto = fs.readFileSync(archivo, 'utf8');
+  for (const linea of bruto.split('\n')) {
+    const m = linea.match(/^(\d+)\|(.*)$/);
+    if (m) { enTxt[+m[1]] = m[2]; totalTxtO++; }
+  }
+  const numsTxt = Object.keys(enTxt).map(Number).sort((a, b) => a - b);
+  const numsJs = Object.keys(OTRAS_VERS[cid] || {}).map(Number).sort((a, b) => a - b);
+
+  if (numsTxt.length !== numsJs.length)
+    fallosO.push(`${cid}: el .txt trae ${numsTxt.length} versiculos y biblia-otros.js ${numsJs.length}`);
+
+  for (const v of numsTxt) {
+    const a = enTxt[v];
+    const b = (OTRAS_VERS[cid] || {})[v];
+    if (b === undefined) { fallosO.push(`${cid}:${v} falta en biblia-otros.js`); continue; }
+    if (a === b) igualesO++;
+    else fallosO.push(`${cid}:${v} no es identico\n     txt: ${a.slice(0, 110)}\n     js:  ${String(b).slice(0, 110)}`);
+  }
+}
+
+console.log(`\nOtros libros comparados: ${igualesO} identicos de ${totalTxtO} en los .txt.`);
+if (fallosO.length) {
+  console.log('');
+  fallosO.slice(0, 12).forEach(f => console.log('❌ ' + f));
+  if (fallosO.length > 12) console.log(`   … y ${fallosO.length - 12} mas.`);
+  process.exit(1);
+}
+console.log('✅ fuente/biblia-otros.js es identico al texto RV1909 de ' + CARPETA);
