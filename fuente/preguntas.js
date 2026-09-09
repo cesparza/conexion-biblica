@@ -1400,4 +1400,31 @@ BANCO.push(
  o:['Los leones los despedazaron antes de tocar fondo','Fueron desterrados de por vida del reino entero','El rey los perdonó por respeto hacia Daniel','Lograron escapar antes de que llegara el castigo'],a:0},
 );
 
+BANCO.push(
+{cap:"d7",t:'fill',ins:"Daniel 7:14 (RV1995) — Completa:",p:[{"x":"su dominio es dominio "},{"b":"eterno","h":"¿cómo es su dominio?"},{"x":", que nunca pasará; y su reino es uno que nunca será "},{"b":"destruido","h":"¿qué nunca será su reino?"},{"x":"."}]},
+{cap:"d7",t:'fill',ins:"Daniel 7:9 (RV1995) — Completa:",p:[{"x":"Su vestido era "},{"b":"blanco","h":"¿de qué color?"},{"x":" como la nieve; el pelo de su cabeza, como lana "},{"b":"limpia","h":"¿cómo era su pelo?"}]},
+{cap:"d7",t:'fill',ins:"Daniel 7:18 (RV1995) — Completa:",p:[{"x":"recibirán el reino los santos del "},{"b":"Altísimo","h":"¿de quién son los santos?"},{"x":", y poseerán el reino hasta el siglo, "},{"b":"eternamente","h":"¿por cuánto tiempo?"},{"x":" y para siempre."}]},
+{cap:"d7",t:'fill',ins:"Daniel 7:25 (RV1995) — Completa:",p:[{"x":"pensará en cambiar los "},{"b":"tiempos","h":"¿qué pretende cambiar, junto con la ley?"},{"x":" y la "},{"b":"Ley","h":"¿qué más pretende cambiar?"},{"x":"; y serán entregados en sus manos hasta tiempo, tiempos y medio tiempo."}]},
+{cap:"d8",t:'fill',ins:"Daniel 8:14 (RV1995) — Completa:",p:[{"x":"Hasta dos mil trescientas "},{"b":"tardes","h":"¿tardes y qué más?"},{"x":" y "},{"b":"mañanas","h":"¿tardes y qué más?"},{"x":"; luego el santuario será purificado."}]},
+{cap:"d8",t:'fill',ins:"Daniel 8:19 (RV1995) — Completa:",p:[{"x":"Yo te enseñaré lo que ha de venir al fin de la ira; porque eso es para el tiempo del "},{"b":"fin","h":"¿para cuándo es la visión?"},{"x":"."}]},
+{cap:"d8",t:'fill',ins:"Daniel 8:25 (RV1995) — Completa:",p:[{"x":"Se levantará contra el Príncipe de los príncipes, pero será "},{"b":"quebrantado","h":"¿qué le pasará al fin?"},{"x":", aunque no por mano "},{"b":"humana","h":"¿por mano de quién no será quebrantado?"},{"x":"."}]},
+{cap:"d8",t:'fill',ins:"Daniel 8:27 (RV1995) — Completa:",p:[{"x":"Yo, Daniel, quedé "},{"b":"quebrantado","h":"¿cómo quedó Daniel?"},{"x":", y estuve enfermo algunos días."}]},
+{cap:"d9",t:'fill',ins:"Daniel 9:24 (RV1995) — Completa:",p:[{"x":"Setenta semanas están "},{"b":"determinadas","h":"¿qué son las setenta semanas?"},{"x":" sobre tu pueblo y sobre tu santa ciudad"}]},
+{cap:"d9",t:'fill',ins:"Daniel 9:25 (RV1995) — Completa:",p:[{"x":"habrá siete "},{"b":"semanas","h":"¿siete qué?"},{"x":" y sesenta y dos "},{"b":"semanas","h":"¿sesenta y dos qué?"},{"x":"; se volverán a edificar la plaza y el muro en tiempos angustiosos."}]},
+{cap:"d9",t:'fill',ins:"Daniel 9:19 (RV1995) — Completa:",p:[{"x":"¡Oye, Señor! ¡Señor, "},{"b":"perdona","h":"¿qué le pide a Dios, además de oír?"},{"x":"! ¡Presta oído, Señor, y hazlo!"}]},
+{cap:"d9",t:'fill',ins:"Daniel 9:5 (RV1995) — Completa:",p:[{"x":"hemos "},{"b":"pecado","h":"¿qué confiesa primero?"},{"x":", hemos cometido "},{"b":"iniquidad","h":"¿qué más confiesa?"},{"x":", hemos actuado impíamente, hemos sido rebeldes y nos hemos apartado de tus mandamientos y de tus ordenanzas."}]},
+{cap:"d10",t:'fill',ins:"Daniel 10:12 (RV1995) — Completa:",p:[{"x":"desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron "},{"b":"oídas","h":"¿qué pasó con sus palabras?"},{"x":" tus palabras; y a causa de tus palabras yo he venido."}]},
+{cap:"d10",t:'fill',ins:"Daniel 10:13 (RV1995) — Completa:",p:[{"x":"Miguel, uno de los principales "},{"b":"príncipes","h":"¿qué era Miguel?"},{"x":", vino para ayudarme, y quedé allí con los reyes de Persia."}]},
+{cap:"d10",t:'fill',ins:"Daniel 10:19 (RV1995) — Completa:",p:[{"x":"no temas; la paz sea contigo; "},{"b":"esfuérzate","h":"¿qué le dice que haga, además de cobrar aliento?"},{"x":" y cobra "},{"b":"aliento","h":"¿qué más debe cobrar?"},{"x":"."}]},
+{cap:"d10",t:'fill',ins:"Daniel 10:6 (RV1995) — Completa:",p:[{"x":"sus ojos como "},{"b":"antorchas","h":"¿como qué eran sus ojos?"},{"x":" de fuego, sus brazos y sus pies como de color de bronce bruñido"}]},
+{cap:"d11",t:'fill',ins:"Daniel 11:45 (RV1995) — Completa:",p:[{"x":"llegará a su "},{"b":"fin","h":"¿a qué llegará?"},{"x":", y no tendrá quien lo "},{"b":"ayude","h":"¿qué no tendrá?"},{"x":"."}]},
+{cap:"d11",t:'fill',ins:"Daniel 11:32 (RV1995) — Completa:",p:[{"x":"el pueblo que conoce a su Dios se "},{"b":"esforzará","h":"¿qué hará el pueblo que conoce a Dios?"},{"x":" y actuará."}]},
+{cap:"d11",t:'fill',ins:"Daniel 11:33 (RV1995) — Completa:",p:[{"x":"Los sabios del pueblo "},{"b":"instruirán","h":"¿qué harán los sabios?"},{"x":" a muchos; pero durante algunos días caerán a espada y a fuego, en cautividad y despojo."}]},
+{cap:"d11",t:'fill',ins:"Daniel 11:36 (RV1995) — Completa:",p:[{"x":"se ensoberbecerá y se "},{"b":"engrandecerá","h":"¿qué hará, además de ensoberbecerse?"},{"x":" sobre todo dios; contra el Dios de los dioses hablará maravillas"}]},
+{cap:"d12",t:'fill',ins:"Daniel 12:3 (RV1995) — Completa:",p:[{"x":"Los entendidos "},{"b":"resplandecerán","h":"¿qué harán los entendidos?"},{"x":" como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad."}]},
+{cap:"d12",t:'fill',ins:"Daniel 12:1 (RV1995) — Completa:",p:[{"x":"en aquel tiempo será "},{"b":"libertado","h":"¿qué le pasará al pueblo de Dios?"},{"x":" tu pueblo, todos los que se hallen inscritos en el libro."}]},
+{cap:"d12",t:'fill',ins:"Daniel 12:4 (RV1995) — Completa:",p:[{"x":"cierra las palabras y "},{"b":"sella","h":"¿qué debe hacer con el libro, además de cerrarlo?"},{"x":" el libro hasta el tiempo del fin. Muchos correrán de aquí para allá, y la ciencia aumentará."}]},
+{cap:"d12",t:'fill',ins:"Daniel 12:10 (RV1995) — Completa:",p:[{"x":"los impíos procederán impíamente, y ninguno de los impíos entenderá; pero los "},{"b":"entendidos","h":"¿quiénes sí comprenderán?"},{"x":" comprenderán."}]},
+);
+
 module.exports = { BANCO };
