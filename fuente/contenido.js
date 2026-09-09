@@ -95,6 +95,23 @@ d1: [
     la orden del rey. Melsar era el sirviente que Aspenaz puso al cuidado de los cuatro jóvenes.
     <strong>Fue Daniel quien habló con Melsar</strong> para proponer la prueba de los diez días (1:11).`) },
 
+  { t:'🏷️ Por qué les cambiaron el nombre (1:7)', h:
+    hi(`Los cuatro nombres hebreos originales <strong>honran al Dios de Israel</strong>; los cuatro
+    nombres babilónicos que Aspenaz les puso <strong>honran a dioses de Babilonia</strong>. No es un
+    detalle administrativo: era una forma de borrar su identidad y su lealtad religiosa, empezando
+    por lo primero que alguien oye de una persona.`) +
+    tbl(['Nombre','Significado hebreo','Nombre babilónico','A qué dios honra'],[
+      ['Daniel','"Dios es mi juez"','Beltsasar','A Bel (Marduk), "que Bel proteja su vida"'],
+      ['Ananías','"Jehová ha tenido misericordia"','Sadrac','Asociado a Aku, el dios luna'],
+      ['Misael','"¿Quién es lo que Dios es?"','Mesac','De origen incierto, también ligado a Aku'],
+      ['Azarías','"Jehová ha ayudado"','Abed-nego','A Nebo, dios babilónico de la sabiduría y la escritura'],
+    ]) +
+    `<p class="nota">El patrón importa más que cada etimología puntual (algunas, como Mesac, no
+    tienen una traducción segura entre los eruditos): los cuatro nombres hebreos nombran al Dios
+    de Israel: Daniel se propuso en su corazón no contaminarse (1:8), pero nunca dice haberse
+    negado a usar el nombre que le impusieron. El capítulo no hace de esto un punto de conflicto:
+    lo que sí decide defender, la comida, lo pide explícitamente.</p>` },
+
   { t:'📋 Requisitos de los jóvenes escogidos (1:4)', h:
     li(['En quienes no hubiera <strong>tacha alguna</strong>',
         'De <strong>buen parecer</strong>',
