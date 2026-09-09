@@ -313,6 +313,9 @@ TARJETAS.push(
   {cap:'d11', f:'¿Qué invento de 1455 multiplicó la difusión de la Biblia?', r:'La imprenta de tipos móviles de Johannes Gutenberg'},
   {cap:'d11', f:'¿Qué evento de 1789-1798 le dio al papado la "herida de muerte" que cierra los 1.260 años?', r:'La Revolución Francesa'},
   {cap:'d11', f:'¿A quién identifica la lectura histórica con "el amado de las mujeres" de Daniel 11:37?', r:'Al Mesías, el Redentor que toda mujer de Israel esperaba dar a luz'},
-  {cap:'d11', f:'¿En qué año se declaró el dogma de la infalibilidad papal?', r:'1870, y fue reafirmado por el Concilio Vaticano II en 1964'});
+  {cap:'d11', f:'¿En qué año se declaró el dogma de la infalibilidad papal?', r:'1870, y fue reafirmado por el Concilio Vaticano II en 1964'},
+  {cap:'d1', f:'¿Cuántos utensilios del templo terminó reuniendo Nabucodonosor?', r:'5.469, en tres viajes a Jerusalén'},
+  {cap:'d1', f:'¿Qué significa el nombre "Daniel"?', r:'"Dios es mi juez"'},
+  {cap:'d1', f:'¿Qué profeta, activo en Jerusalén cuando Daniel era niño, pudo haber sido su maestro?', r:'Jeremías'});
 
 module.exports = { TARJETAS };

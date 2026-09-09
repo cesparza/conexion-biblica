@@ -188,6 +188,12 @@ d1: [
       ['Ladrillos y documentos','El nombre de Nabucodonosor aparece estampado en miles de ladrillos de construcción hallados en Babilonia, y en numerosos documentos comerciales de la época.'],
     ]) },
 
+  { t: '🏺 5.469 utensilios: por qué a Dios le importa el templo',
+    h: hi(`Cuando Nabucodonosor se llevó los utensilios sagrados del templo de Jerusalén a la Esagila, el templo de su dios Marduc en Babilonia, dio por hecho que su dios había vencido al Dios de Israel (1:2). Pero el texto dice que fue Dios mismo quien "entregó" esos utensilios, por la misma razón por la que entregó el reino de Judá: no una derrota, sino una consecuencia. Nabucodonosor hizo tres viajes a Jerusalén hasta reunir una colección de <strong>5.469 utensilios</strong>, que no le trajeron ningún bien a Babilonia (ver Daniel 5 y Esdras 1:9-11): el tema del santuario, lejos de cerrarse aquí, reaparece en el corazón de Daniel 8 ("será purificado el santuario") y en la visión del santuario celestial que abre Apocalipsis.`) },
+
+  { t: '💔 Por qué Dios "entregó" a Judá, y quién le enseñó la Biblia a Daniel',
+    h: hi(`El libro no dice que Babilonia venció a Dios, sino que Dios "entregó" a Joacim y a Judá (1:2) después de siglos de advertencias por medio de los profetas — Elías, Amós y Oseas en el reino del norte, y luego Miqueas, Isaías, Habacuc, Sofonías y Jeremías en Judá. Los pecados que denunciaban eran concretos: deshonestidad, injusticia con los pobres, homicidio, profanación del sábado, persecución de los profetas verdaderos y la adoración a Baal. La entrega no fue abandono: Dios prometió que después de setenta años de exilio permitiría el regreso (Jeremías 25:11-12) y un corazón nuevo. ¿Quién le enseñó esto a Daniel desde niño? El profeta Jeremías profetizaba en Jerusalén cuando Daniel era pequeño, así que es razonable que haya sido su maestro; y su propio nombre —"Daniel", que significa "Dios es mi juez"— sugiere un hogar piadoso. Casi un siglo antes de que naciera, el profeta Isaías ya le había anunciado al rey Ezequías que algunos de sus descendientes servirían como eunucos en el palacio del rey de Babilonia: una profecía que Daniel bien pudo haber conocido sobre sí mismo.`) },
+
   { t:'📖 Versículo clave', h:
     vs(`«Y al cabo de los diez días pareció el rostro de ellos <strong>mejor y más robusto</strong>
     que el de los otros muchachos que comían de la porción de la comida del rey.» (Daniel 1:15)`) },

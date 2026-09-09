@@ -1649,5 +1649,18 @@ BANCO.push(
    a:false,e:'Lo reafirmó, con palabras muy similares, en el documento Lumen Gentium (1964).'},
 );
 
+BANCO.push(
+  {cap:'d1',t:'mc',q:'¿Cuántos utensilios del templo de Jerusalén terminó reuniendo Nabucodonosor, en tres viajes distintos?',
+   o:['490','1.260','2.300','5.469'],a:3},
+  {cap:'d1',t:'tf',q:'Según el texto de Daniel 1:2, fue el dios Marduc quien venció al Dios de Israel, y por eso Nabucodonosor pudo llevarse los utensilios del templo.',
+   a:false,e:'El texto dice que fue Dios mismo quien "entregó" a Judá y sus utensilios, como consecuencia de la infidelidad del pueblo, no como una derrota divina.'},
+  {cap:'d1',t:'mc',q:'¿Qué significa el nombre "Daniel"?',
+   o:['"Dios es mi juez"','"Fortaleza de Dios"','"Amado del Señor"','"Siervo fiel"'],a:0},
+  {cap:'d1',t:'mc',q:'¿Qué profeta, activo en Jerusalén mientras Daniel era niño, pudo razonablemente haber sido su maestro?',
+   o:['Isaías','Ezequiel','Jeremías','Oseas'],a:2},
+  {cap:'d1',t:'mc',q:'¿Cuál de estos NO aparece entre los pecados que los profetas denunciaron en Judá antes del exilio?',
+   o:['La deshonestidad y la injusticia con los pobres','La profanación del día de reposo','La adoración a Baal','El exceso de estudio de la Palabra de Dios'],a:3},
+);
+
 
 module.exports = { BANCO };
