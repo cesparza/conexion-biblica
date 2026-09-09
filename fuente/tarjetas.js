@@ -304,6 +304,11 @@ TARJETAS.push(
 
   {cap:'d12', f:'Según el primer punto del resumen de Maxwell, ¿qué sabe Dios?', r:'El pasado, el presente y el futuro; nada lo sorprende'},
   {cap:'d12', f:'Según el cuarto punto del resumen de Maxwell, ¿de qué nos librará pronto Dios?', r:'De la muerte misma, igual que ya libra de leones y hornos de fuego'},
-);
+  {cap:'d11', f:'¿Qué batalla de 217 a.C. usó elefantes de guerra de ambos bandos?', r:'La batalla de Rafia, en las guerras sirias entre Egipto y Siria'},
+  {cap:'d11', f:'¿Qué batalla de 198 a.C. terminó con 103 años de dominio ptolemaico sobre Judea?', r:'La batalla de Panias, que dio paso al dominio seléucida'},
+  {cap:'d11', f:'¿Qué edicto de 538 marcó, según la lectura histórica, el inicio de los 1.260 años?', r:'El Edicto de Justiniano, que reconoció al papa como cabeza de todas las iglesias'},
+  {cap:'d11', f:'¿Qué emperador se humilló ante el papa en Canossa en 1077?', r:'Enrique IV, del Sacro Imperio Romano Germánico, ante el papa Gregorio VII'},
+  {cap:'d11', f:'¿Quién coronó a Carlomagno como emperador en la Navidad del año 800?', r:'El papa León III'},
+  {cap:'d11', f:'¿Qué evento de 1798 se asocia con el fin de los 1.260 años de predominio papal?', r:'La captura del papa Pío VI por tropas francesas'});
 
 module.exports = { TARJETAS };

@@ -1611,5 +1611,26 @@ BANCO.push(
 {cap:'d12',t:'tf',q:'Según el sexto punto del resumen de Maxwell, Dios no concibe la eternidad sin nosotros a su lado.',
  a:true,e:'Verdadero. Es el cierre del resumen de seis puntos con que Maxwell termina el libro.'},
 );
+BANCO.push(
+  {cap:'d11',t:'mc',q:'¿Qué batalla de las guerras sirias (217 a.C.) es recordada por el uso de elefantes de guerra en ambos bandos?',
+   o:['La batalla de Rafia','La batalla de Panias','La batalla de Magnesia','La batalla de las Termópilas'],a:0},
+  {cap:'d11',t:'mc',q:'¿Qué batalla (198 a.C.) puso fin a 103 años de dominio ptolemaico sobre Judea e inició el dominio seléucida?',
+   o:['La batalla de Rafia','La batalla de Panias','La batalla de Actium','La batalla de Issos'],a:1},
+  {cap:'d11',t:'tf',q:'Los "hombres turbulentos" del verso 14 identifican sin ninguna ambigüedad a los hermanos Macabeos.',
+   a:false,e:'El hebreo original admite otra lectura, más cercana a "saqueadores" u "opresores", que los identifica con los invasores romanos que tomaban control de Judea en ese mismo siglo.'},
+  {cap:'d11',t:'mc',q:'¿Qué edicto imperial, vigente desde el año 538, marcó según la lectura histórica el inicio de los 1.260 años al reconocer al papa como cabeza de todas las iglesias?',
+   o:['El Edicto de Milán','El Edicto de Justiniano','El Edicto de Tesalónica','El Edicto de Nantes'],a:1},
+  {cap:'d11',t:'mc',q:'¿Qué documento fraudulento reforzó, siglos después de Constantino, la pretensión de que el obispo de Roma había recibido autoridad imperial sobre Occidente?',
+   o:['La Donación de Constantino','El Concilio de Nicea','La Bula de Oro','El Edicto de Milán'],a:0},
+  {cap:'d11',t:'mc',q:'¿Qué emperador protagonizó la llamada "humillación de Canossa" ante el papa Gregorio VII en 1077?',
+   o:['Carlomagno','Enrique IV','Justiniano','Teodosio I'],a:1},
+  {cap:'d11',t:'tf',q:'En Canossa (1077), Enrique IV logró someter al papa Gregorio VII gracias al apoyo incondicional de sus propios príncipes.',
+   a:false,e:'Fue exactamente lo contrario: sus propios príncipes lo abandonaron, y por eso tuvo que humillarse ante el papa para recuperar su trono.'},
+  {cap:'d11',t:'mc',q:'¿Qué papa coronó a Carlomagno como emperador la Navidad del año 800?',
+   o:['Gregorio I','León III','Esteban II','Juan XII'],a:1},
+  {cap:'d11',t:'mc',q:'¿Qué hecho de 1798 se identifica con el giro anunciado en Daniel 11:29 ("no será la postrera venida como la primera")?',
+   o:['La coronación de Carlomagno','La toma prisionero del papa Pío VI por tropas francesas','El Concilio de Trento','La Reforma protestante'],a:1},
+);
+
 
 module.exports = { BANCO };
