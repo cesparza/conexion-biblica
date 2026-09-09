@@ -1662,5 +1662,18 @@ BANCO.push(
    o:['La deshonestidad y la injusticia con los pobres','La profanación del día de reposo','La adoración a Baal','El exceso de estudio de la Palabra de Dios'],a:3},
 );
 
+BANCO.push(
+  {cap:'d2',t:'mc',q:'¿En qué venida de Cristo cae la Piedra de Daniel 2 sobre la estatua y establece el reino eterno?',
+   o:['En la primera venida, cuando Jesús nació en Belén','En la segunda venida, todavía futura','En el bautismo de Jesús','En la resurrección de Jesús'],a:1},
+  {cap:'d2',t:'tf',q:'El "reino de la gracia" que Jesús estableció en su primera venida es el mismo "reino de gloria" que describe Daniel 2:44.',
+   a:false,e:'Son dos etapas distintas: el reino de la gracia crece despacio en los corazones desde la primera venida; el reino de gloria, el que destruye a las naciones, llega solo con la segunda venida.'},
+  {cap:'d2',t:'mc',q:'¿Cuál de estos gobernantes NO intentó reunificar Europa bajo un solo poder, contradiciendo (sin éxito) la profecía de Daniel 2:43?',
+   o:['Carlomagno','Napoleón','Hitler','Ciro el Grande'],a:3},
+  {cap:'d2',t:'mc',q:'¿Qué fenómeno astronómico hace que alguien "nacido bajo Libra" según los horóscopos modernos, en realidad haya nacido bajo Virgo?',
+   o:['Un eclipse solar','La precesión de los equinoccios','Una supernova','La órbita de Marte'],a:1},
+  {cap:'d2',t:'tf',q:'Un estudio sobre 154.000 reclutas de la Marina de Estados Unidos encontró que los nacidos bajo Aries o Escorpio se hacían soldados con más frecuencia que los demás.',
+   a:false,e:'El estudio no encontró ninguna diferencia: la astrología no predijo nada real en ese caso.'},
+);
+
 
 module.exports = { BANCO };

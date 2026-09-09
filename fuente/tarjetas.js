@@ -316,6 +316,9 @@ TARJETAS.push(
   {cap:'d11', f:'¿En qué año se declaró el dogma de la infalibilidad papal?', r:'1870, y fue reafirmado por el Concilio Vaticano II en 1964'},
   {cap:'d1', f:'¿Cuántos utensilios del templo terminó reuniendo Nabucodonosor?', r:'5.469, en tres viajes a Jerusalén'},
   {cap:'d1', f:'¿Qué significa el nombre "Daniel"?', r:'"Dios es mi juez"'},
-  {cap:'d1', f:'¿Qué profeta, activo en Jerusalén cuando Daniel era niño, pudo haber sido su maestro?', r:'Jeremías'});
+  {cap:'d1', f:'¿Qué profeta, activo en Jerusalén cuando Daniel era niño, pudo haber sido su maestro?', r:'Jeremías'},
+  {cap:'d2', f:'¿En qué venida de Cristo cae la Piedra de Daniel 2 sobre la estatua?', r:'En la segunda venida, todavía futura; en la primera estableció el "reino de la gracia"'},
+  {cap:'d2', f:'¿Qué fenómeno astronómico deja fuera de lugar los signos del zodiaco moderno?', r:'La precesión de los equinoccios, desde los tiempos de Claudio Tolomeo (siglo II)'},
+  {cap:'d2', f:'Menciona dos gobernantes que intentaron reunificar Europa, contradiciendo sin éxito Daniel 2:43', r:'Carlomagno y Napoleón (también Carlos V y Hitler)'});
 
 module.exports = { TARJETAS };
