@@ -136,6 +136,9 @@ d1: [
       ['13','Daniel continúa hasta el año primero de Ciro','1:21'],
     ]) },
 
+  { t: '🧱 Nabucodonosor fuera de la Biblia',
+    h: '<p>La conquista de Nabucodonosor que abre Daniel 1 no depende solo del relato bíblico: una tablilla cuneiforme conservada en el Museo Británico (B.M. 21946), conocida como la Crónica Babilónica, registra los mismos hechos con fechas exactas. Según esa crónica, Nabucodonosor —entonces todavía príncipe heredero— derrotó al ejército egipcio en Carquemis, a orillas del Éufrates, y tomó el control de toda la región de Siria y Palestina. Nabopolasar, su padre, murió el 8 de Ab (15 de agosto del 605 a.C.) tras 21 años de reinado; Nabucodonosor asumió el trono de Babilonia el 1 de Elul (7 de septiembre del 605 a.C.). El historiador judío Josefo (siglo I d.C.) cita de forma independiente al sacerdote babilonio Beroso (c. 300-250 a.C.), quien narra la misma victoria en Carquemis y la misma sucesión al trono. El nombre de Nabucodonosor aparece además estampado en miles de ladrillos de construcción hallados en Babilonia, y en numerosos documentos comerciales de la época.</p>' },
+
   { t:'📖 Versículo clave', h:
     vs(`«Y al cabo de los diez días pareció el rostro de ellos <strong>mejor y más robusto</strong>
     que el de los otros muchachos que comían de la porción de la comida del rey.» (Daniel 1:15)`) },
@@ -299,6 +302,9 @@ d2: [
       ['Daniel (además)','Se quedó <strong>en la corte del rey</strong> (2:49)'],
     ]) },
 
+  { t: '🗓️ Los "tres años" de Daniel: un cálculo que sí cuadra',
+    h: '<p>Los críticos señalaron una aparente contradicción: Daniel 1:5 y 1:18 dicen que Daniel y sus amigos estudiaron "tres años" antes de presentarse ante el rey, pero Daniel 2:1 sitúa el sueño de Nabucodonosor apenas en su "año segundo" de reinado. La solución está en el calendario babilónico. Nabopolasar murió el 15 de agosto del 605 a.C. y Nabucodonosor "ascendió" al trono el 7 de septiembre siguiente; pero, según el sistema del "año de ascensión", ese período no contaba todavía como su "año primero" oficial: ese año comenzó recién en el Año Nuevo de la primavera del 604 a.C. Contando de manera inclusiva —como era costumbre en la época—, los tres años de estudio de Daniel fueron: el año de ascensión de Nabucodonosor (605-604 a.C.), su año primero (604-603 a.C.) y su año segundo (603-602 a.C.), exactamente el período en que, según Daniel 2:1, el rey tuvo el sueño de la estatua. Los dos textos, lejos de contradecirse, describen el mismo calendario visto desde dos ángulos distintos.</p>' },
+
   { t:'📖 Versículo clave', h:
     vs(`«Sea bendito el nombre de Dios de siglos en siglos, porque suyos son
     <strong>el poder y la sabiduría</strong>.» (Daniel 2:20)`) },
@@ -432,6 +438,9 @@ d3: [
         'Decretó que quien hablara blasfemia contra ese Dios <strong>sea descuartizado y su casa convertida en estercolero</strong> (3:29)',
         'Reconoció: <strong>«no hay dios que pueda librar como éste»</strong> (3:29)',
         'Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)']) },
+
+  { t: '🎶 Los instrumentos griegos y la fecha del capítulo',
+    h: '<p>Entre los instrumentos que suenan para ordenar la adoración de la estatua (Daniel 3:5) hay al menos uno de origen griego: la "zampoña" (un tipo de gaita). Durante mucho tiempo los críticos usaron este detalle como prueba de que Daniel 3 fue escrito siglos después, cuando la cultura griega ya se había extendido por el Cercano Oriente. Pero la arqueología muestra que, ya en el siglo VI a.C. —el propio siglo de Nabucodonosor—, comerciantes, soldados y obreros griegos estaban activos en Babilonia, algunos empleados en proyectos de construcción del imperio. No hace falta esperar a Alejandro Magno para explicar un instrumento griego sonando en la corte babilónica: es lo que cabría esperar de un rey que reunía en su capital a gente de todo el mundo conocido.</p>' },
 ],
 
 /* ═══════════════ DANIEL 4 ═══════════════ */
@@ -547,6 +556,9 @@ d4: [
     vs(`«Ahora yo, Nabucodonosor, <strong>alabo, engrandezco y glorifico al Rey del cielo</strong>,
     porque todas sus obras son verdaderas y sus caminos justos;
     y él puede humillar a los que andan con soberbia.» (Daniel 4:37)`) },
+
+  { t: '🏺 La tablilla que registra la locura de Nabucodonosor',
+    h: '<p>En 1975 se publicó la traducción de una tablilla de arcilla muy dañada del Museo Británico (B.M. 34.113), que según el asiriólogo A. K. Grayson podría referirse al mismo episodio narrado en Daniel 4. Muchas palabras de cada línea son ilegibles, pero las frases que sí se conservan incluyen: "Nabucodonosor consideró...", "su vida parecía no tener valor...", "no manifiesta amor ni a hijo ni a hija...", "no existen ni familia ni clan..." y "lloró amargamente ante Marduk...". No es un relato completo ni una confirmación definitiva, pero coincide con el cuadro general de un rey que atravesó una crisis profunda que lo alejó de su propia familia y de su reino, tal como describe Daniel 4:33.</p>' },
 ],
 
 /* ═══════════════ DANIEL 5 ═══════════════ */
@@ -646,6 +658,9 @@ d5: [
       ['El fin de Belsasar','<strong>La misma noche</strong> fue muerto Belsasar, rey de los caldeos (5:30)'],
       ['Quién tomó el reino','Darío de Media, de <strong>SESENTA Y DOS años</strong> (5:31)'],
     ]) },
+
+  { t: '👑 Belsasar en las crónicas: el corregente olvidado',
+    h: '<p>Durante mucho tiempo los críticos señalaron que ningún documento fuera de la Biblia mencionaba a un rey llamado Belsasar, y concluyeron que el personaje era ficticio. Eso cambió en 1861, cuando W. H. Fox Talbot publicó la traducción de una plegaria cuneiforme en la que el rey Nabonido pedía a su dios que bendijera a su hijo Belsasar. Más decisivo fue el hallazgo de la Crónica en Verso de Nabonido (tablilla del Museo Británico N.º 38.299, traducida por Sidney Smith en 1924): este documento oficial confirma que, al partir Nabonido hacia el oasis de Tema, dejó el "campamento" y el reinado en manos de su hijo mayor. Esto explica por qué Daniel 5:16 y 29 dicen que Belsasar solo podía ofrecerle a Daniel el tercer lugar del reino: el propio Belsasar ocupaba el segundo lugar, como corregente bajo la autoridad de su padre Nabonido, el verdadero primer rey.</p>' },
 ],
 
 /* ═══════════════ DANIEL 6 ═══════════════ */
@@ -724,6 +739,9 @@ d6: [
     • «Su reino no será jamás destruido y su dominio perdurará hasta el fin»<br>
     • «Él <strong>salva y libra</strong>, y hace señales y maravillas en el cielo y en la tierra»<br>
     • «Él ha librado a Daniel del poder de los leones»`) },
+
+  { t: '🔍 ¿Quién fue Darío el Medo?',
+    h: '<p>Durante años los críticos señalaron que "Darío el Medo" (Daniel 6:1) no aparece en ningún documento fuera de la Biblia, y concluyeron —como antes habían hecho con Belsasar— que era un personaje inventado. La Crónica de Nabonido registra que el general que tomó Babilonia el 12 de octubre del 539 a.C. se llamaba Gubaru, y que gobernaba la provincia meda de Gutium; el historiador griego Jenofonte, por su parte, describe la ayuda que un tal Gobryas —equivalente griego de Gubaru— le dio a Ciro para conquistar la ciudad. La misma crónica dice que Gubaru "nombró gobernadores en Babilonia", igual que Daniel 6:2 describe a Darío nombrando sátrapas. Sobre esa base, algunos eruditos proponen identificar a Gubaru/Gobryas con el "Darío el Medo" de Daniel: un gobernador de origen medo puesto por Ciro al frente de Babilonia. No es la única propuesta que existe, pero muestra que el silencio inicial de las fuentes extrabíblicas —como ocurrió antes con Belsasar— no equivale a que el personaje no haya existido.</p>' },
 ],
 
 /* ═══════════════ P&R 39 ═══════════════ */

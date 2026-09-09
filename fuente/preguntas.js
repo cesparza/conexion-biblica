@@ -1293,6 +1293,31 @@ BANCO.push(
  a:false,e:'Falso: es una resurrección especial y limitada, distinta de las dos resurrecciones generales de Apocalipsis 20.'},
 {cap:'d12',t:'tf',q:'Todo el libro de Daniel, sin excepción, quedó sellado hasta el tiempo del fin.',
  a:false,e:'Falso: la identidad de Babilonia, Media-Persia y Grecia ya estaba clara sin misterio; lo sellado eran específicamente los acontecimientos del tiempo del fin.'}
+,
+{cap:'d1',t:'mc',q:'¿En qué museo se conserva la Crónica Babilónica (B.M. 21946) que confirma la victoria de Nabucodonosor en Carquemis?',
+ o:['En el Museo Británico, en Londres','En el Museo del Louvre, en París','En el Museo de Bagdad, en Irak','En el Museo Vaticano, en Roma'],a:0},
+{cap:'d1',t:'mc',q:'Según la Crónica Babilónica, ¿cuándo asumió Nabucodonosor el trono de Babilonia tras la muerte de su padre?',
+ o:['El 7 de septiembre del año 605 a.C.','El 15 de agosto del año 605 a.C.','El 1 de enero del año 604 a.C.','El 12 de octubre del año 539 a.C.'],a:0},
+{cap:'d2',t:'mc',q:'¿Qué sistema de cómputo babilónico explica que Daniel estudiara "tres años" (1:5) y el sueño ocurriera en el "año segundo" del rey (2:1)?',
+ o:['El sistema del año de ascensión al trono','El sistema del calendario lunar hebreo','El sistema de los siete tiempos proféticos','El sistema del cómputo día por año'],a:0},
+{cap:'d2',t:'mc',q:'¿Qué fecha exacta señala la Crónica Babilónica para la muerte de Nabopolasar, padre de Nabucodonosor?',
+ o:['El 15 de agosto del año 605 a.C.','El 7 de septiembre del año 605 a.C.','El 1 de abril del año 604 a.C.','El 4 de octubre del año 605 a.C.'],a:0},
+{cap:'d3',t:'mc',q:'¿Qué explica la presencia de instrumentos musicales griegos, como la zampoña, en la corte de Nabucodonosor (Daniel 3:5)?',
+ o:['Ya en el siglo VI a.C. había griegos trabajando en Babilonia','El libro fue escrito bastante después, ya bajo influencia griega','Los griegos habían conquistado Babilonia antes que los persas','Nabucodonosor pasó parte de su juventud viviendo en Grecia'],a:0},
+{cap:'d3',t:'tf',q:'La presencia de instrumentos musicales de origen griego en Daniel 3 es una prueba arqueológica de que el capítulo fue escrito varios siglos después de Nabucodonosor.',
+ a:false,e:'Falso: ya en el siglo VI a.C. había griegos trabajando y comerciando en Babilonia, así que no hace falta una fecha posterior para explicarlo.'},
+{cap:'d4',t:'mc',q:'¿Qué institución conserva la tablilla (B.M. 34.113) que según A. K. Grayson podría referirse a la locura de Nabucodonosor?',
+ o:['El Museo Británico, en Londres','El Museo del Louvre, en París','El Museo de Pérgamo, en Berlín','El Museo Arqueológico de Bagdad'],a:0},
+{cap:'d4',t:'tf',q:'La tablilla británica traducida en 1975 conserva un relato completo y perfectamente legible de la locura de Nabucodonosor.',
+ a:false,e:'Falso: la tablilla está muy dañada y solo se conservan frases sueltas y fragmentarias.'},
+{cap:'d5',t:'mc',q:'¿Qué documento cuneiforme confirma que Belsasar gobernó Babilonia como corregente mientras su padre Nabonido estaba en Tema?',
+ o:['La Crónica en Verso de Nabonido','La Crónica Babilónica de Carquemis','El Cilindro de Ciro el Persa','El Prisma de Senaquerib de Nínive'],a:0},
+{cap:'d5',t:'mc',q:'¿Por qué Belsasar solo podía ofrecerle a Daniel el "tercer lugar" del reino (Daniel 5:16)?',
+ o:['Porque el propio Belsasar era apenas el segundo, bajo Nabonido','Porque Daniel ya ocupaba el segundo lugar en la corte','Porque el primer lugar estaba reservado para el sumo sacerdote','Porque el reino de Babilonia tenía tres reyes al mismo tiempo'],a:0},
+{cap:'d6',t:'mc',q:'¿Con qué personaje de la Crónica de Nabonido proponen algunos eruditos identificar a Darío el Medo?',
+ o:['Con Gubaru, gobernador medo de la provincia de Gutium','Con Ciro el Persa, quien fundó el Imperio aqueménida','Con Nabonido, quien fue el último rey nativo de Babilonia','Con Astiages, quien fue el último rey de los medos'],a:0},
+{cap:'d6',t:'tf',q:'Según Jenofonte, un personaje llamado Gobryas ayudó a Ciro a conquistar Babilonia, y "Gobryas" es el equivalente griego del nombre "Gubaru".',
+ a:true,e:'Verdadero: la Crónica de Nabonido y el relato de Jenofonte describen al mismo personaje con su nombre babilonio y su nombre griego.'}
 );
 
 module.exports = { BANCO };
