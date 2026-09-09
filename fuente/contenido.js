@@ -179,7 +179,14 @@ d1: [
     '<p class="nota">Las citas de 2 Reyes y 2 Crónicas de esta sección son de la <strong>Reina-Valera 1909</strong> (traducción de dominio público), no de RV1995: esta app todavía no tiene el texto RV1995 de esos dos libros verificado verso por verso como sí lo tiene de Daniel 1-6. Por eso estas dos citas no cuentan como preguntas de completar (esas solo se hacen sobre texto RV1995 verificado).</p>' },
 
   { t: '🧱 Nabucodonosor fuera de la Biblia',
-    h: '<p>La conquista de Nabucodonosor que abre Daniel 1 no depende solo del relato bíblico: una tablilla cuneiforme conservada en el Museo Británico (B.M. 21946), conocida como la Crónica Babilónica, registra los mismos hechos con fechas exactas. Según esa crónica, Nabucodonosor —entonces todavía príncipe heredero— derrotó al ejército egipcio en Carquemis, a orillas del Éufrates, y tomó el control de toda la región de Siria y Palestina. Nabopolasar, su padre, murió el 8 de Ab (15 de agosto del 605 a.C.) tras 21 años de reinado; Nabucodonosor asumió el trono de Babilonia el 1 de Elul (7 de septiembre del 605 a.C.). El historiador judío Josefo (siglo I d.C.) cita de forma independiente al sacerdote babilonio Beroso (c. 300-250 a.C.), quien narra la misma victoria en Carquemis y la misma sucesión al trono. El nombre de Nabucodonosor aparece además estampado en miles de ladrillos de construcción hallados en Babilonia, y en numerosos documentos comerciales de la época.</p>' },
+    h: '<p>La conquista que abre Daniel 1 no depende solo del relato bíblico: hay registro extrabíblico independiente, con fechas exactas.</p>' +
+    tbl(['Fuente','Qué aporta'],[
+      ['Crónica Babilónica<br>(B.M. 21946)','Tablilla cuneiforme del Museo Británico: Nabucodonosor, todavía príncipe heredero, derrota al ejército egipcio en Carquemis (Éufrates) y toma Siria y Palestina.'],
+      ['8 de Ab, 605 a.C.<br>(15 de agosto)','Muere Nabopolasar, padre de Nabucodonosor, tras 21 años de reinado.'],
+      ['1 de Elul, 605 a.C.<br>(7 de septiembre)','Nabucodonosor asume el trono de Babilonia.'],
+      ['Beroso<br>(c. 300-250 a.C.)','Sacerdote babilonio citado por el historiador judío Josefo (s. I d.C.): narra, de forma independiente, la misma victoria en Carquemis y la misma sucesión al trono.'],
+      ['Ladrillos y documentos','El nombre de Nabucodonosor aparece estampado en miles de ladrillos de construcción hallados en Babilonia, y en numerosos documentos comerciales de la época.'],
+    ]) },
 
   { t:'📖 Versículo clave', h:
     vs(`«Y al cabo de los diez días pareció el rostro de ellos <strong>mejor y más robusto</strong>
