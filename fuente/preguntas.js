@@ -1802,4 +1802,21 @@ BANCO.push(
 );
 
 
+BANCO.push(
+  {cap:'d2',t:'mc',q:'¿Qué obispo cristiano del siglo II ya sostenía que la piedra de Daniel 2 era Cristo destruyendo los reinos del mundo en su Segunda Venida?',
+   o:['Ireneo de Lyon','Agustín de Hipona','Jerónimo','Orígenes'],a:0},
+  {cap:'d2',t:'tf',q:'Según el capítulo de Douglas Bennett en Simposio sobre Daniel, la lectura de que el reino de la piedra llega en la Segunda Venida (y no antes) es un invento del siglo XIX.',
+   a:false,e:'Es la lectura más antigua que se conserva de la iglesia cristiana, documentada ya en el siglo II con Ireneo de Lyon.'},
+  {cap:'d7',t:'mc',q:'¿Qué filósofo pagano, en su obra "Contra los cristianos" (h. 270-280 d.C.), fue el primero en identificar el cuerno pequeño de Daniel 7 con Antíoco Epífanes?',
+   o:['Porfirio','Hipólito','Jerónimo','Policronio'],a:0},
+  {cap:'d7',t:'mc',q:'¿Cuál era el verdadero objetivo de Porfirio al proponer que Daniel fue escrito después de los sucesos que narra?',
+   o:['Refutar que Daniel fuera una profecía auténtica, y con ello debilitar al cristianismo','Ayudar a los judíos a entender mejor el libro','Defender la inspiración del libro de Daniel','Traducir Daniel al griego con mayor precisión'],a:0},
+  {cap:'d7',t:'tf',q:'La obra de Porfirio contra Daniel se conserva completa hasta hoy en bibliotecas cristianas.',
+   a:false,e:'Se ordenó quemarla dos veces en el siglo V; hoy solo se conoce por las citas que hizo Jerónimo para refutarla.'},
+  {cap:'d8',t:'mc',q:'¿Quién fue el primer intérprete conocido en dividir los 2.300 tardes y mañanas de Daniel 8:14 por la mitad (1.150)?',
+   o:['Policronio, en el siglo V','Isaac Newton, en el siglo XVII','Josefo, en el siglo I','Hipólito, en el siglo III'],a:0},
+  {cap:'d8',t:'tf',q:'Jerónimo, autor del comentario cristiano más influyente sobre Daniel en su época, rechazó por completo la lectura de Antíoco Epífanes para todo el libro de Daniel.',
+   a:false,e:'Coincidió con Antíoco para los capítulos 8 y 11, aunque no la aplicó a los capítulos 2, 7 ni 9.'},
+);
+
 module.exports = { BANCO };

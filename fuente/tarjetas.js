@@ -349,6 +349,12 @@ TARJETAS.push(
   {cap:'d12', f:'¿Qué dos anabautistas del siglo XVI cita Maxwell como ejemplo de los "doctos" de Daniel 12:3?', r:'Oswald Glait y Andreas Fischer, ejecutados por guardar el sábado bíblico tras estudiar Daniel 7:25'},
   {cap:'d11', f:'¿Qué cinco hitos marcan, segun Treiyer, la recuperacion del poder papal despues de 1798?', r:'1800: eleccion de Pio VII. 1815: Congreso de Viena. 1870: infalibilidad papal (Vaticano I). 1929: Tratados de Letran. Y el crecimiento diplomatico de 14 a mas de 170 paises'},
   {cap:'d11', f:'¿Que gano el papado en 1870 justo cuando perdia sus ultimos territorios politicos?', r:'El dogma de la infalibilidad papal, proclamado por el Concilio Vaticano I'},
-  {cap:'d12', f:'¿Que frase de Zacarias 3:1-2 usa tambien Miguel en Judas 9, mostrando que ambos son el mismo Ser divino?', r:'"Jehova (el Senor) te reprenda, oh Satanas"'});
+  {cap:'d12', f:'¿Que frase de Zacarias 3:1-2 usa tambien Miguel en Judas 9, mostrando que ambos son el mismo Ser divino?', r:'"Jehova (el Senor) te reprenda, oh Satanas"'},
+  {cap:'d2', f:'¿Que autor cristiano del siglo II ya sostenia que la piedra de Daniel 2 era Cristo destruyendo los reinos del mundo en su Segunda Venida?', r:'Ireneo, obispo de Lyon'},
+  {cap:'d2', f:'¿Que presbitero de Cesarea (ca. 185-254) dio "el primer paso fatal" hacia alegorizar las profecias de Daniel en vez de leerlas literalmente?', r:'Origenes'},
+  {cap:'d7', f:'¿Que filosofo pagano, hacia 270-280 d.C., fue el primero en identificar el cuerno pequeño de Daniel 7 con Antioco Epifanes?', r:'Porfirio, en su obra "Contra los cristianos"'},
+  {cap:'d7', f:'¿Por que se ordeno quemar la obra de Porfirio contra Daniel, y como se conocen hoy sus argumentos?', r:'Se quemo dos veces en el siglo V; se conocen solo por las citas que hizo Jeronimo para refutarlos'},
+  {cap:'d8', f:'¿Quien fue el primer interprete conocido en dividir los 2.300 dias de Daniel 8:14 por la mitad (1.150)?', r:'Policronio, interprete sirio del siglo V (374-430 d.C.)'},
+);
 
 module.exports = { TARJETAS };
