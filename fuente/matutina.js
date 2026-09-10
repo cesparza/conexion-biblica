@@ -239,6 +239,23 @@ const otros = (d, n, campo) => DIAS.filter(x => x.d !== d)
   .sort((a, b) => Math.abs(a.d - d) - Math.abs(b.d - d))
   .slice(1, 1 + n).map(x => x[campo]);
 
+/* Para el versículo: si se eligiera solo por cercanía de fecha, a veces salían
+   referencias mucho más cortas que la correcta (p.ej. «Hechos 1:8» contra
+   «1 Tesalonicenses 5:18»), lo que delata la respuesta por tamaño. Se ordena
+   por parecido de longitud con la correcta, y la cercanía de fecha solo
+   desempata. */
+const otrosVersiculo = (d) => {
+  const correcta = DIAS.find(x => x.d === d).r;
+  return DIAS.filter(x => x.d !== d)
+    .sort((a, b) => {
+      const da = Math.abs(a.r.length - correcta.length);
+      const db = Math.abs(b.r.length - correcta.length);
+      if (da !== db) return da - db;
+      return Math.abs(a.d - d) - Math.abs(b.d - d);
+    })
+    .slice(0, 3).map(x => x.r);
+};
+
 for (const x of DIAS) {
   /* Qué día corresponde a este título */
   const opDias = [MES[x.d] + ' de octubre', ...otros(x.d, 3, 'd').map(d => MES[d] + ' de octubre')];
@@ -249,57 +266,57 @@ for (const x of DIAS) {
   /* Qué versículo va con este día */
   MAT_BANCO.push({ cap: id(x.d), t: 'mc', nv: 2,
     q: `¿Cuál es el versículo de la lectura del ${MES[x.d]} de octubre, «${x.t}»?`,
-    o: [x.r, ...otros(x.d, 3, 'r')], a: 0 });
+    o: [x.r, ...otrosVersiculo(x.d)], a: 0 });
 }
 
 /* Preguntas de historia y de lección, una y una por día, escritas a mano.
    nv 1 = dato de la historia (lo que pasó). nv 2 = la lección o un matiz. */
 const A_MANO = [
 [1,'¿Por qué se hundió el barco del pirata Dienterroto?','Porque quiso cargar todo el oro de una vez en lugar de dar varios viajes',['Porque lo atacó otro pirata que también buscaba la cueva','Porque había una tormenta muy fuerte a mitad de camino','Porque el barco era muy viejo y ya venía haciendo agua'],
-   '¿Qué enseña la historia del pirata Dienterroto?','Que querer más de lo que necesitas puede hacerte perder lo que tienes',['Que hay que esconder bien los tesoros','Que los barcos deben ser grandes','Que el oro trae mala suerte']],
-[2,'En el experimento de los dos vasos, ¿qué le pasa al huevo del vaso con sal?','No se hunde: se va para arriba',['Se hunde más rápido','Se rompe','Se queda en el medio'],
+   '¿Qué enseña la historia del pirata Dienterroto?','Que querer más de lo que necesitas puede hacerte perder lo que tienes',['Que hay que esconder bien los tesoros','Que los barcos deben ser muy grandes y resistentes','Que el oro siempre trae mala suerte a quien lo busca']],
+[2,'En el experimento de los dos vasos, ¿qué le pasa al huevo del vaso con sal?','No se hunde: se va para arriba',['Se hunde más rápido','Se rompe en pedazos','Se queda en el medio'],
    '¿Con qué se compara a Dios en ese experimento?','Con la sal, que con su amor nos levanta',['Con el agua, que limpia','Con el huevo, que es frágil','Con el vaso, que sostiene']],
 [3,'¿Cuánto dinero necesitaba Gibson para hacer la llamada?','5 kinas',['17.000 kinas','50 kinas','2 kinas'],
    '¿Quién le dio el dinero a Gibson sin saber de su necesidad?','El profesor Elisha',['Un desconocido por teléfono','El rector de la universidad','Su compañero de cuarto']],
 [4,'¿Cuánto debía Gibson de su colegiatura?','17.000 kinas',['5 kinas','1.700 kinas','170.000 kinas'],
-   '¿Cómo logró Gibson que el hombre le respondiera?','Le envió un mensaje de texto después de varios intentos de llamada',['Fue a buscarlo a su casa','Le escribió una carta','Le pidió al profesor que lo llamara']],
+   '¿Cómo logró Gibson que el hombre le respondiera?','Le envió un mensaje de texto después de varios intentos de llamada',['Fue a buscarlo personalmente a su casa','Le escribió una carta larga explicando todo','Le pidió al profesor que lo llamara']],
 [5,'¿Cómo son las bodas en Papúa Nueva Guinea, según la lectura?','Asisten todos los que quieren y nadie va con las manos vacías',['Solo asisten los familiares y los amigos más cercanos','Hay que pagar la entrada para ayudar con la fiesta','Se celebran en secreto y con muy pocos invitados'],
    '¿Qué enseña la comparación con la boda?','Que la invitación al reino de Dios es para todos, pero cada uno decide si la acepta',['Que hay que casarse en la iglesia y no en un lugar cualquiera','Que las fiestas deben ser grandes para que nadie quede afuera','Que solo algunos serán salvos, los que reciban la invitación']],
 [6,'¿Qué le pasó a la lancha en la que iban Sophie y su mamá?','La propela del motor se salió y se hundió en el mar',['Se le acabó la gasolina a mitad del viaje','Chocó contra una roca y se abrió por debajo','Se le rompió el timón y quedó sin dirección'],
    '¿Por qué no pudieron pedir auxilio?','Porque no había señal de red telefónica',['Porque nadie tenía celular','Porque se les mojaron los teléfonos','Porque no sabían el número']],
 [7,'¿Quién dirigió el culto el cuarto día y el sábado en la lancha?','Sophie',['Su mamá','Jonah','El capitán'],
    '¿Cuántos días estuvieron a la deriva antes de llegar a la playa?','Cinco días',['Dos días','Cuatro días','Ocho días']],
-[8,'¿Qué quería ser Unia Api y dónde estudió?','Pastor, en la Universidad Adventista del Pacífico',['Médico, en Australia','Maestro, en Estados Unidos','Enfermero, en Papúa'],
+[8,'¿Qué quería ser Unia Api y dónde estudió?','Pastor, en la Universidad Adventista del Pacífico',['Médico, en un hospital de Australia','Maestro, en una escuela de Estados Unidos','Enfermero, en un hospital de Papúa'],
    '¿Qué respondió Unia cuando lo invitaron a Kerema por un año?','Dijo que sí, aunque la oportunidad llegó de manera inesperada',['Pidió tiempo para pensarlo y hablar con su familia','Dijo que no estaba listo para irse tan lejos','Mandó a otro estudiante de la escuela en su lugar']],
 [9,'¿Qué idea le dio Jesús a Unia para predicar en Kerema?','Contar historias, y los viernes de tarde encender una fogata',['Repartir folletos casa por casa todos los sábados','Cantar en la plaza del pueblo al caer la tarde','Escribir cartas a los misioneros de Estados Unidos'],
    '¿Qué pasó con la congregación ese año?','Creció mucho',['Se mantuvo igual','Se dividió','Cerró la escuela']],
 [10,'¿Cómo conoció Unia a Julie?','Ella le preparó comida cuando el comedor ya había cerrado',['Estudiaban la misma carrera y se sentaban juntos','Se conocieron en Kerema mientras él enseñaba allá','Los presentó un misionero que volvía de Estados Unidos'],
    '¿Qué le respondió Julie la primera vez que Unia le propuso unir sus vidas?','«No puedo, tengo novio»',['«Déjame pensarlo»','«Sí, con gusto»','«Habla con mis padres»']],
-[11,'¿Cuánto tiempo después volvió Julie a buscar a Unia?','Solo dos horas después',['Al otro día','Una semana después','Un año después'],
+[11,'¿Cuánto tiempo después volvió Julie a buscar a Unia?','Solo dos horas después',['Al otro día por la mañana','Una semana después','Un año después'],
    '¿De qué se graduaron Julie y Unia?','Ella de enfermera y él de pastor',['Ella de maestra y él de médico','Los dos de pastores','Ella de pastora y él de enfermero']],
-[12,'¿Qué leyó Gladys Aylward que la decidió a ir a China?','Que en China millones de personas no sabían quién es Jesús',['Que faltaban maestros en China','Que había una escuela de misioneros','Que su familia era de China'],
+[12,'¿Qué leyó Gladys Aylward que la decidió a ir a China?','Que en China millones de personas no sabían quién es Jesús',['Que faltaban maestros en China','Que había una escuela de misioneros','Que su familia entera era originaria de China'],
    '¿En qué fecha partió Gladys desde Londres?','El 15 de octubre de 1932',['El 15 de octubre de 1923','El 5 de octubre de 1932','El 25 de octubre de 1942']],
 [13,'¿Qué significa «Ai-weh-deh», el nombre que le dieron a Gladys en China?','«Mujer virtuosa»',['«Madre de muchos»','«La que vino de lejos»','«Mujer valiente»'],
    '¿Cuántos niños huérfanos adoptó Gladys?','Más de cien',['Más de diez','Más de mil','Exactamente cincuenta']],
-[14,'¿Qué le pasó a la misión donde vivía Gladys con los niños?','Fue bombardeada y destruida por la guerra',['Se incendió por un descuido','La cerró el gobierno','Se inundó'],
-   '¿Se arrepentía Gladys de haber ido a China?','No: sentía que cada uno de sus niños era una bendición',['Sí, por las pruebas que pasó','Sí, quería volver a Inglaterra','No lo dijo nunca']],
+[14,'¿Qué le pasó a la misión donde vivía Gladys con los niños?','Fue bombardeada y destruida por la guerra',['Se incendió por un descuido','La cerró el gobierno local','Se inundó por completo con las lluvias'],
+   '¿Se arrepentía Gladys de haber ido a China?','No: sentía que cada uno de sus niños era una bendición',['Sí, por las pruebas que pasó','Sí, quería volver a Inglaterra','No lo dijo nunca en ninguna de sus cartas']],
 [15,'¿Qué tienen en común el paralítico, los dos ciegos y el endemoniado?','Que todos fueron testigos de Jesús y contaron lo que él hizo por ellos',['Que todos eran de Nazaret, el pueblo donde Jesús se crio','Que todos fueron después discípulos y anduvieron con Jesús','Que todos estaban ciegos y Jesús les devolvió la vista']],
 [16,'¿Por qué perseguían a los cristianos en el Imperio Romano?','Porque se negaban a participar en costumbres paganas y a creer en muchos dioses',['Porque no pagaban los impuestos que el imperio les exigía','Porque hablaban otro idioma y no obedecían a las autoridades','Porque no querían trabajar en las obras del emperador'],
    '¿Qué símbolos usaban para reconocerse entre ellos?','Un pez o una cruz',['Una estrella','Una espada','Un cordero']],
 [17,'¿Qué hizo Axel con el juego electrónico de su amigo David?','Lo tomó sin permiso, lo rompió y lo guardó como si nada',['Lo perdió en el patio y no se atrevió a decirlo','Lo cambió por otro juego y no le avisó a David','Lo escondió en su casa y dijo que nunca lo vio'],
-   '¿Qué enseña la historia de Axel?','Que aunque nadie se entere, Jesús lo sabe: el héroe dice la verdad',['Que hay que cuidar los juegos','Que no se debe jugar en la escuela','Que David debía perdonarlo']],
+   '¿Qué enseña la historia de Axel?','Que aunque nadie se entere, Jesús lo sabe: el héroe dice la verdad',['Que hay que cuidar bien los juegos de la escuela','Que no se debe jugar en la escuela','Que David debía perdonarlo sin guardarle rencor']],
 [18,'De las tres situaciones, ¿quién actuó con valentía al hablar en público?','Ester, que oró y siguió adelante aunque le temblaba la voz',['Mónica, que se quedó en casa para no pasar el susto','Ana, que dejó copiar a Lucía para que no la regañaran','Lucía, que no estudió y le pidió ayuda a una amiga'],
-   '¿Por qué Ana no actuó como héroe?','Porque dejó copiar a Lucía por miedo a caerle mal',['Porque no estudió','Porque no habló en clase','Porque se burló de Marcos']],
-[19,'¿Qué le salvó la vida al señor McMullen?','Que su esposa sabía por escrito dónde estaría y cuándo volvería',['Que tenía señal en el celular','Que alguien lo vio caer','Que pudo caminar hasta el albergue'],
+   '¿Por qué Ana no actuó como héroe?','Porque dejó copiar a Lucía por miedo a caerle mal',['Porque no estudió nada para el examen','Porque no habló nunca en clase','Porque se burló varias veces de Marcos']],
+[19,'¿Qué le salvó la vida al señor McMullen?','Que su esposa sabía por escrito dónde estaría y cuándo volvería',['Que tenía buena señal en su celular','Que alguien lo vio caer desde lejos','Que pudo caminar hasta el albergue'],
    '¿Con qué se compara esa historia?','Con que Jesús nos dijo dónde está: en el cielo, esperando volver a buscarnos',['Con que hay que llevar mapa cuando uno sale de viaje','Con que no se debe salir solo a un lugar desconocido','Con que hay que confiar en la policía cuando uno se pierde']],
 [20,'¿Qué hacía Tim Donaghy siendo árbitro de baloncesto?','Apostaba sobre los partidos y los amañaba pitando a favor o en contra',['Cobraba de más por arbitrar y no declaraba ese dinero','No conocía bien las reglas y se equivocaba en los pitos','Faltaba a los partidos y mandaba a otro en su lugar'],
    '¿Cómo terminó Tim Donaghy?','Lo descubrieron, lo juzgaron y acabó en la cárcel',['Se retiró tranquilo y nadie supo nunca nada','Siguió arbitrando partidos por muchos años más','Se fue a otro país a arbitrar con otro nombre']],
 [21,'Según la lectura, ¿por qué son héroes los maestros?','Porque hacen mucho más que su trabajo: te cuidan, te enseñan y te tratan con respeto',['Porque ganan poco y aun así siguen yendo todos los días a clase','Porque estudiaron mucho y saben más que cualquiera del colegio','Porque trabajan muchas horas y casi no descansan en el año'],
    '¿Quién fue el Maestro de los maestros?','Jesús',['Moisés','Salomón','Pablo']],
 [22,'¿Cuántos años tenía Jesús cuando se sentó entre los maestros del Templo?','Doce años',['Diez años','Treinta años','Ocho años'],
-   'Según la lectura, ¿qué hace posible que un niño enseñe a un adulto?','Que busque a Dios y lea la Biblia todos los días',['Que sea muy inteligente','Que estudie mucho en la escuela','Que hable en público']],
+   'Según la lectura, ¿qué hace posible que un niño enseñe a un adulto?','Que busque a Dios y lea la Biblia todos los días',['Que sea muy inteligente desde pequeño','Que estudie mucho en la escuela','Que hable muy bien en público']],
 [23,'¿Por qué eran héroes los mensajeros de la antigüedad?','Porque salían de su comodidad y recorrían grandes distancias, sobre todo en tiempos de guerra',['Porque sabían leer y escribir en varios idiomas del imperio','Porque tenían caballos y podían viajar más rápido que nadie','Porque conocían a los reyes y comían en sus palacios'],
-   '¿Qué propone hacer la lectura con los medios de hoy?','Usarlos también para contarle a alguien que Jesús lo ama',['Usarlos menos','Solo para cosas prácticas','Compartir solo con la familia']],
+   '¿Qué propone hacer la lectura con los medios de hoy?','Usarlos también para contarle a alguien que Jesús lo ama',['Usarlos mucho menos que antes','Solo para cosas prácticas del día a día','Compartir solo con la familia']],
 [24,'¿Por qué se detuvo el asna de Balaam?','Porque el ángel de Dios se interponía en el camino',['Porque estaba cansada del camino tan largo','Porque era testaruda y no quería seguir','Porque tenía hambre y quiso comer hierba'],
    '¿Qué hizo Balaam cuando el asna no avanzó?','Le pegó fuertemente con la vara',['Se bajó y siguió a pie','La dejó descansar','Volvió a su casa']],
 [25,'¿Qué hizo Fernando cuando su mamá le dijo que se cambiara?','Le dio una patada al sofá y dio un portazo',['Se puso a llorar y se encerró en su cuarto','Se escondió detrás del sofá sin decir nada','Obedeció de una vez y se cambió de ropa'],
@@ -308,7 +325,7 @@ const A_MANO = [
    '¿Qué hizo Emely cuando el profesor dio las notas?','Dijo delante de toda la clase que el trabajo lo había hecho Ermenegildo',['Se quedó callada y recibió la nota sin decir nada','Dijo delante de la clase que el trabajo lo hicieron entre los dos','Pidió otra nota al profesor por hacerlo casi todo ella']],
 [27,'¿Por qué Víctor no quería jugar más en el equipo?','Porque tenía envidia: un niño nuevo ocupó su posición y marcó tres goles',['Porque estaba lastimado de una pierna y le dolía','Porque lo trataron mal sus propios compañeros de equipo','Porque no le gustaba el entrenador nuevo del equipo'],
    'Según la lectura, ¿qué es sentir envidia?','Querer que otro pierda algo que tiene porque tú deseas ese algo',['Estar triste sin motivo y no saber explicar por qué','Enojarse con un amigo y no volver a hablarle nunca','No querer compartir lo que tienes con los demás']],
-[28,'¿En qué fue el primero Pablo Pineda?','El primer europeo con síndrome de Down en terminar una carrera universitaria',['El primer actor español con síndrome de Down','El primer maestro con síndrome de Down','El primer deportista con síndrome de Down'],
+[28,'¿En qué fue el primero Pablo Pineda?','El primer europeo con síndrome de Down en terminar una carrera universitaria',['El primer actor español con síndrome de Down','El primer maestro conocido con síndrome de Down','El primer deportista con síndrome de Down'],
    '¿Qué le dijo un maestro a Pablo cuando tenía siete años?','Que tener síndrome de Down no significaba que no pudiera estudiar ni tener éxito',['Que debía cambiarse a una escuela especial para niños como él','Que estudiara en casa, porque en el colegio no iba a poder','Que se dedicara al deporte, que era lo suyo, y dejara el estudio']],
 [29,'¿Qué tenían para desayunar Charles Tindley y su familia esa mañana?','Solo pan duro y leche',['Nada en absoluto','Pan y frutas','Huevos y leche'],
    '¿Qué pasó nada más terminar de orar?','Un miembro de la congregación llamó a la puerta con un saco lleno de provisiones',['Llegó el pastor de la iglesia con una carta y algo de dinero','Encontraron dinero guardado en un abrigo viejo del invierno','Paró la tormenta y pudieron salir a buscar comida al pueblo']],
