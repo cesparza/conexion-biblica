@@ -2586,9 +2586,12 @@ function imprimeExamen(conR){
     :'Examen para imprimir. En el cuadro de impresión escoge «Guardar como PDF» si lo quieres en archivo.'),t);
 }
 
-/* Las seis categorías en un solo documento, cada una en su hoja. Cambia la
+/* TODAS las categorías en un solo documento, cada una en su hoja. Cambia la
    categoría activa, arma, y la devuelve como estaba: el progreso guardado no
-   se toca porque armar() solo lee. */
+   se toca porque armar() solo lee.
+   Decía «las seis» en el botón y en el título: son ocho desde que «En esto
+   creemos» trajo ec1 y ec2. El bucle siempre recorrió Object.keys(CATS), así
+   que el número estaba solo en el texto, que es donde envejece sin avisar. */
 function imprimeTodos(conR){
   const prevCat=S.cat,prevAl=alcance,prevN=nivel,prevC=cuantas;
   const hojas=[];
@@ -2602,8 +2605,8 @@ function imprimeTodos(conR){
     }
   }finally{S.cat=prevCat;alcance=prevAl;nivel=prevN;cuantas=prevC;}
   if(!hojas.length){alertaImpr('No se pudo armar ningún examen.');return;}
-  const t=conR?'Claves de las seis categorías':'Exámenes de las seis categorías';
-  imprimeDoc(docExamen(hojas,t,'Seis exámenes, uno por categoría, cada uno en su hoja.'+
+  const t=conR?'Claves de todas las categorías':'Exámenes de todas las categorías';
+  imprimeDoc(docExamen(hojas,t,hojas.length+' exámenes, uno por categoría, cada uno en su hoja.'+
     (conR?' Contiene las respuestas: solo para líderes.':'')),t);
   pintaMenuEx();
 }

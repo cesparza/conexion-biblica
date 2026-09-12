@@ -93,13 +93,30 @@ const paginaImpr = (titulo, cuerpo) =>
 /* Nombre del evento y la línea de fuente, según la categoría. Sin esto, el
    examen de la matutina salía titulado «Conexión Bíblica» y citando la
    RV1995, que no es su fuente. */
+/* UNA FILA POR CATEGORÍA, Y LA NOTA ADENTRO.
+   Faltaban `ec1` y `ec2`: la tabla se escribió cuando las creencias todavía
+   no eran actividad propia, y el `|| EVENTO_IMPR.av` de abajo hacía que el
+   examen de «En esto creemos» saliera titulado EXAMEN DE CONEXIÓN BÍBLICA y
+   citando la RV1995 como fuente. Es el mismo defecto que esta tabla ya había
+   arreglado para la matutina, repetido en la actividad que llegó después.
+   La nota vive aquí y no en un `if` aparte por la misma razón: con dos
+   mecanismos para un dato, el que se agrega después se olvida en uno. */
 const EVENTO_IMPR = {
-  me:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
-  av:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
-  pa:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
-  gm:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)' },
-  dm1: { t: 'EXAMEN DE DEVOCIÓN MATUTINA', f: 'Matutina de menores «Héroes y villanos»' },
-  dm2: { t: 'EXAMEN DE DEVOCIÓN MATUTINA', f: 'Matutina de menores «Héroes y villanos»' },
+  me:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)', n: 'cb' },
+  av:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)', n: 'cb' },
+  pa:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)', n: 'cb' },
+  gm:  { t: 'EXAMEN DE CONEXIÓN BÍBLICA', f: 'Reina Valera 1995 (RV1995)', n: 'cb' },
+  dm1: { t: 'EXAMEN DE DEVOCIÓN MATUTINA', f: 'Matutina de menores «Héroes y villanos»', n: 'dm' },
+  dm2: { t: 'EXAMEN DE DEVOCIÓN MATUTINA', f: 'Matutina de menores «Héroes y villanos»', n: 'dm' },
+  ec1: { t: 'EXAMEN DE «EN ESTO CREEMOS»', f: 'Creencias fundamentales de la Iglesia Adventista', n: 'ec1' },
+  ec2: { t: 'CUESTIONARIO DE «EN ESTO CREEMOS»', f: 'Creencias fundamentales de la Iglesia Adventista', n: 'ec2' },
+};
+
+const NOTA_IMPR = {
+  cb: 'Del examen del campamento se conoce el formato de tres secciones, no la cantidad de preguntas. Este tamaño es de práctica.',
+  dm: 'El reglamento pide examen escrito de la matutina del mes. No se conoce la cantidad de preguntas: este tamaño es de práctica.',
+  ec1: 'El reglamento pide que dos personas del club presenten este examen escrito. Su puntaje se suma al del cuestionario del resto del club.',
+  ec2: 'El reglamento pide que el resto del club desarrolle este cuestionario. Su puntaje se suma al del examen escrito de los dos adultos.',
 };
 
 const SEC_IMPR = {
@@ -176,9 +193,7 @@ function hojaExamen(o) {
   const total = sel.length;
   const ev = EVENTO_IMPR[o.cat] || EVENTO_IMPR.av;
   const conR = !!o.conR;
-  const nota = String(o.cat).slice(0, 2) === 'dm'
-    ? 'El reglamento pide examen escrito de la matutina del mes. No se conoce la cantidad de preguntas: este tamaño es de práctica.'
-    : 'Del examen del campamento se conoce el formato de tres secciones, no la cantidad de preguntas. Este tamaño es de práctica.';
+  const nota = NOTA_IMPR[ev.n] || NOTA_IMPR.cb;
   return '<div class="hoja">' +
     (o.logo ? '<img class="logo" src="' + o.logo + '" alt="Iglesia Adventista Tierra Linda">' : '') +
     '<div class="igl">Iglesia Adventista del Séptimo Día · Tierra Linda</div>' +
@@ -266,6 +281,6 @@ function hojaTarjetas(o) {
 }
 
 if (typeof module !== 'undefined' && module.exports) module.exports = {
-  CSS_IMPR, paginaImpr, EVENTO_IMPR, ordenaYNumera, htmlExamenImpr,
+  CSS_IMPR, paginaImpr, EVENTO_IMPR, NOTA_IMPR, ordenaYNumera, htmlExamenImpr,
   hojaExamen, docExamen, hojaGuia, hojaTarjetas, bloquesGuia,
 };

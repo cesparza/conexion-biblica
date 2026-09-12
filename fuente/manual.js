@@ -671,9 +671,11 @@ const MANUAL = [
     concursante, con espacio para nombre, club y puntaje.</li>
     <li><strong>Este examen, con respuestas</strong> — la clave para
     calificar.</li>
-    <li><strong>Las 6 categorías, sin respuestas</strong> — un documento con los
-    seis exámenes, cada uno en su hoja.</li>
-    <li><strong>Las 6 categorías, con respuestas</strong> — las seis claves.</li>
+    <li><strong>Todas las categorías, sin respuestas</strong> — un documento con
+    un examen por categoría, cada uno en su hoja: las cuatro de Conexión
+    Bíblica, las dos de la Devoción Matutina y las dos de En esto creemos.</li>
+    <li><strong>Todas las categorías, con respuestas</strong> — las mismas
+    hojas, con la clave.</li>
     <li><strong>Las guías de los dos eventos</strong> — todo el material de
     estudio de Conexión Bíblica y de la matutina en un solo documento.</li>
     <li><strong>El manual de la app</strong> — este mismo manual, en papel.</li></ul>
