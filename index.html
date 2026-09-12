@@ -1561,7 +1561,12 @@ details.card summary::marker{content:''}
 #pan-abrir[disabled]{opacity:.5;cursor:not-allowed}
 
 .pan-lb{display:flex;flex-direction:column;gap:.25rem;font-size:var(--v-t-1);color:var(--v-tinta2);flex:1}
-.pan-lb select{min-height:44px}
+/* DENTRO DE UNA ETIQUETA EN COLUMNA, `flex-basis` ES ALTURA, NO ANCHO.
+   .ses-fila da a sus campos `flex:1 1 8rem` contando con una fila horizontal.
+   Metido en .pan-lb, que es columna, ese 8rem pasa a ser el eje principal
+   vertical: el select quedaba de 128 px de alto con el texto flotando en la
+   mitad. Se reponen los dos ejes a mano. */
+.pan-lb input,.pan-lb select{flex:0 1 auto;width:100%;min-height:44px}
 
 }  /* fin @media screen */
 </style>
@@ -1999,7 +2004,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'de84aa0b0e20';
+const VERSION_APP = '8ba084ce1344';
 
 const CAPS = [
  {
@@ -25412,6 +25417,7 @@ async function pintaPanel(){
       '<div class="pan-paso"><div class="pan-paso-t">Participantes</div>'+
       '<div id="pan-lista"><p class="nota">Cargando...</p></div></div></div>';
     cargaParticipantes(parts);
+    panLatido();
     await cargaResultados();
     return;
   }
@@ -25428,22 +25434,44 @@ async function pintaPanel(){
     '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
     '<div id="pan-lista"><p class="nota">Cargando...</p></div></div>'+
 
-    '<div class="pan-paso'+(cuantasP===0?' pan-off':'')+'"><div class="pan-paso-t">Paso 2 · ¿Qué examen?</div>'+
-    (cuantasP===0?'<p class="nota pan-razon">Primero crea al menos una participante en el paso 1.</p>':'')+
-    '<div class="ses-fila"><input id="pan-eval-t" placeholder="Nombre, p. ej. Sábado 6 de septiembre" '+
-    'maxlength="60" oninput="revisaAbrir()">'+
-    '<input id="pan-eval-n" type="number" min="5" max="60" value="15" style="max-width:5.5rem" '+
-    'title="Cuántas preguntas"></div>'+
+    /* El apagado del paso 2 lo maneja revisaAbrir(), no este armado: antes se
+       calculaba UNA vez al pintar, así que crear la primera participante dejaba
+       el paso 2 gris y con el letrero puesto hasta recargar. */
+    '<div class="pan-paso" id="pan-paso2"><div class="pan-paso-t">Paso 2 · ¿Qué examen?</div>'+
+    '<p class="nota pan-razon" id="pan-paso2-razon"></p>'+
+    /* LOS DOS CAMPOS LLEVAN ETIQUETA A LA VISTA.
+       «Cuántas preguntas» vivía en un `title`, que es el globo del navegador y
+       solo aparece al dejar el puntero encima. En un celular no hay puntero:
+       el campo se veía como un 15 suelto, sin decir de qué era. */
+    '<div class="ses-fila"><label class="pan-lb">Nombre de la evaluación'+
+    '<input id="pan-eval-t" placeholder="p. ej. Sábado 6 de septiembre" '+
+    'maxlength="60" oninput="revisaAbrir()"></label>'+
+    '<label class="pan-lb" style="flex:0 0 8rem">Cuántas preguntas'+
+    '<input id="pan-eval-n" type="number" min="5" max="60" value="15"></label></div>'+
     /* El reglamento tiene tres actividades distintas y cada una es un examen
        aparte. Sin este selector el panel solo podía abrir la de Daniel. */
+    /* AGRUPADO POR ACTIVIDAD, que es la dimensión de arriba del modelo.
+       Antes la lista mezclaba materiales de dos actividades y OMITÍA la
+       Devoción Matutina: el servidor ya aceptaba «q1» y «q2», y la práctica ya
+       los ofrecía, pero el panel no tenía cómo pedirlos. Con los grupos a la
+       vista se ve de una a qué actividad pertenece cada material. */
     '<div class="ses-fila"><label class="pan-lb">Qué material'+
     '<select id="pan-eval-al" onchange="pintaNotaAlcance()">'+
-      '<option value="todo">El material del campamento (Daniel y P&amp;R)</option>'+
-      '<option value="creencias">En esto creemos — las 28 creencias</option>'+
-      '<option value="biblia">Solo el libro de Daniel</option>'+
-      '<option value="pr">Solo Profetas y Reyes</option>'+
+      '<option value="todo">Todo el material de cada categoría</option>'+
+      '<optgroup label="Conexión Bíblica">'+
+        '<option value="biblia">Solo el libro de Daniel</option>'+
+        '<option value="pr">Solo Profetas y Reyes</option>'+
+      '</optgroup>'+
+      '<optgroup label="Devoción Matutina">'+
+        '<option value="q1">Solo la primera quincena (1 al 15 de octubre)</option>'+
+        '<option value="q2">Solo la segunda quincena (16 en adelante)</option>'+
+      '</optgroup>'+
+      '<optgroup label="En esto creemos">'+
+        '<option value="creencias">Las 28 creencias</option>'+
+      '</optgroup>'+
     '</select></label></div>'+
     '<p class="nota" id="pan-nota-al">'+NOTA_ALCANCE.todo+'</p>'+
+    '<p class="nota" id="pan-aviso-cats"></p>'+
     '<div class="ses-fila"><label class="pan-lb">Dificultad'+
     '<select id="pan-eval-nv" onchange="pintaNotaNivel()">'+
       '<option value="0">La de cada categoría (recomendado)</option>'+
@@ -25457,7 +25485,8 @@ async function pintaPanel(){
     '<p class="nota" id="pan-nota-nv">'+NOTA_NIVEL[0]+'</p>'+
     '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
     '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
-      return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'"> '+
+      return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'" '+
+        'onchange="pintaAvisoCats()"> '+
         '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+esc(CATS[k].edad)+'</small></span></label>';
     }).join('')+'</div></div>'+
 
@@ -25471,6 +25500,8 @@ async function pintaPanel(){
     '<div id="pan-eval"></div></div>';
   cargaParticipantes(parts);
   revisaAbrir(cuantasP);
+  pintaAvisoCats();
+  panLatido();
   await cargaResultados();
 }
 
@@ -25482,18 +25513,69 @@ async function pintaPanel(){
    reglamento las pide a padres, consejeros y acompañantes, y solo esas dos
    categorías tienen ese material cargado. */
 const NOTA_ALCANCE={
-  todo:'Daniel 1, 3 y 6 más los capítulos 39, 41 y 44 de Profetas y Reyes. Es el examen del campamento.',
-  creencias:'Las 28 creencias fundamentales. Es OTRA actividad del reglamento, para padres, '+
-    'consejeros y acompañantes. Solo «Padres y consejeros» y «Guías Mayores» tienen este material: '+
-    'si se la abres a una categoría de niños, a ellas no les va a salir nada.',
-  biblia:'Solo el libro de Daniel, sin Profetas y Reyes.',
-  pr:'Solo los capítulos de Profetas y Reyes que le tocan a la categoría.'
+  todo:'Cada categoría recibe el material de SU actividad: las de Conexión Bíblica reciben '+
+    'Daniel y Profetas y Reyes, las de Devoción Matutina reciben las lecturas de octubre y las '+
+    'de En esto creemos reciben las 28 creencias. Es la opción del examen del campamento.',
+  creencias:'Las 28 creencias fundamentales. Solo las dos categorías de «En esto creemos» '+
+    'tienen este material: si se la abres a una de Conexión Bíblica o de la matutina, a ellas '+
+    'no les va a salir nada.',
+  biblia:'Solo el libro de Daniel, sin Profetas y Reyes. Es material de Conexión Bíblica.',
+  pr:'Solo los capítulos de Profetas y Reyes que le tocan a la categoría. Es material de '+
+    'Conexión Bíblica.',
+  q1:'Las lecturas de la Devoción Matutina del 1 al 15 de octubre. Es material de Devoción '+
+    'Matutina: las categorías de Conexión Bíblica y de las creencias no lo tienen.',
+  q2:'Las lecturas de la Devoción Matutina del 16 de octubre en adelante. «Menores» de la '+
+    'matutina solo estudia hasta el 15, así que a esa categoría no le sale nada.'
 };
+
+/* CUÁNTAS PREGUNTAS LE SALDRÍAN A UNA CATEGORÍA CON ESTE MATERIAL.
+   El pool cuelga de dos globales, S.cat y alcance, así que no hay forma de
+   preguntarlo sin pararse un momento en esa categoría y devolver las dos como
+   estaban. Es el mismo truco de gruposEx(), que ya hace esto en la práctica. */
+function cuantasPara(cat,alc){
+  const pc=S.cat,pa=alcance;
+  try{S.cat=cat;alcance=alc;return poolDe().length;}
+  finally{S.cat=pc;alcance=pa;}
+}
+
+/* AVISO DE COMBINACIÓN VACÍA.
+   El material y las categorías son dos listas independientes y una
+   combinación imposible no falla en ninguna parte: abre una evaluación que al
+   participante le sale con CERO preguntas, y eso solo se descubre el día del
+   examen. Se advertía en prosa, y solo para las creencias. Ahora se cuenta de
+   verdad, contra el mismo banco que arma el examen. */
+function pintaAvisoCats(){
+  const p=document.getElementById('pan-aviso-cats');
+  if(!p)return;
+  const al=(document.getElementById('pan-eval-al')||{}).value||'todo';
+  const marcadas=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
+    .filter(function(c){return c.checked;}).map(function(c){return c.value;});
+  /* Sin marcar ninguna les toca a todas, y ahí el dato útil es al revés: no
+     la lista de las siete que se quedan sin nada, sino la de las que sí
+     reciben. Nombrarlas todas era un párrafo que nadie lee. */
+  const todas=!marcadas.length;
+  const cats=todas?Object.keys(CATS):marcadas;
+  const nom=function(c){
+    return '<strong>'+esc(((ACTIVIDADES[CATS[c].act]||{}).nombre||'')+' · '+CATS[c].nombre)+'</strong>';
+  };
+  const con=cats.filter(function(c){return cuantasPara(c,al)>0;});
+  const sin=cats.filter(function(c){return cuantasPara(c,al)===0;});
+  let t='';
+  if(!con.length)t='⚠️ Con este material <strong>ninguna categoría recibe preguntas</strong>. '+
+    'Escoge otro material.';
+  else if(!sin.length)t='';
+  else if(todas)t='⚠️ Con este material solo reciben preguntas '+con.map(nom).join(' y ')+
+    '. A las demás no les sale nada, así que marca abajo a quiénes les toca.';
+  else t='⚠️ '+sin.map(nom).join(', ')+(sin.length===1?' no recibe':' no reciben')+
+    ' ninguna pregunta con este material.';
+  p.innerHTML=t?'<span style="color:var(--rojo)">'+t+'</span>':'';
+}
 
 function pintaNotaAlcance(){
   const s=document.getElementById('pan-eval-al'),p=document.getElementById('pan-nota-al');
   if(!s||!p)return;
   p.textContent=NOTA_ALCANCE[s.value]||'';
+  pintaAvisoCats();
 }
 
 const NOTA_NIVEL={
@@ -25518,6 +25600,11 @@ function pintaNotaNivel(){
 let panHayPart=null;
 function revisaAbrir(cuantasP){
   if(cuantasP!==undefined)panHayPart=cuantasP;
+  /* El paso 2 se apaga y se prende AQUÍ, que es el único punto que sabe
+     cuántas participantes hay en este momento. */
+  const p2=document.getElementById('pan-paso2'),p2r=document.getElementById('pan-paso2-razon');
+  if(p2)p2.classList.toggle('pan-off',panHayPart===0);
+  if(p2r)p2r.textContent=panHayPart===0?'Primero crea al menos una participante en el paso 1.':'';
   const b=document.getElementById('pan-abrir'),r=document.getElementById('pan-abrir-razon');
   if(!b)return;
   const t=(document.getElementById('pan-eval-t')||{}).value||'';
@@ -25604,6 +25691,58 @@ function sumaClub(hechas){
     '</table></div>'+
     '<p class="nota">El reglamento suma el examen escrito de los adultos con el cuestionario '+
     'del resto del club. <strong>La suma es el número que se reporta.</strong></p>';
+}
+
+/* ───────── REFRESCO VIVO DEL PANEL ─────────
+   MECANISMO DEL PROBLEMA
+   El panel se armaba UNA vez, al abrirlo, y después nadie le volvía a
+   preguntar nada al servidor. Pero los participantes no viven en este aparato:
+   viven en D1 y los crea cualquier director desde cualquier celular. Una
+   participante creada en otro teléfono simplemente no existía para esta
+   pantalla hasta rehacer el HTML, y eso solo pasaba recargando la página.
+   En la app instalada es peor todavía: iOS no recarga al volver, restaura la
+   pantalla congelada tal como quedó. Por eso tocaba cerrarla y abrirla.
+
+   POR QUÉ NO SE REPINTA EL PANEL ENTERO
+   pintaPanel() rehace el innerHTML, y con él se va el nombre de la evaluación
+   a medio escribir y las categorías marcadas. Un refresco que borra lo que el
+   director está escribiendo es peor que no refrescar. Así que el latido toca
+   solo los dos pedazos que son del servidor —la lista y los resultados— y deja
+   el formulario quieto. El repintado completo se reserva para cuando cambia el
+   MODO (evaluación abierta o cerrada), porque ahí el panel sí es otro. */
+const PAN_MS=8000;
+let panReloj=null;
+
+/* Visible de verdad: el panel vive dentro de un <details> dentro de una
+   pantalla, y con cualquiera de los dos cerrado no hay nada que refrescar.
+   getClientRects() vacío cubre los dos casos sin preguntar por cada uno. */
+function panelALaVista(){
+  const d=document.getElementById('cb-panel');
+  if(!d||!srvYo||srvYo.rol!=='director')return false;
+  /* El DOM de mentiras de las pruebas no trae getClientRects. Sin la guarda,
+     cargar este archivo en las suites lanza. */
+  return typeof d.getClientRects!=='function'||d.getClientRects().length>0;
+}
+
+async function refrescaPanel(){
+  if(!panelALaVista())return;
+  const antes=!!(srvLee()||{}).evalId;
+  if(!await srvRefresca())return;   // sin señal no se toca nada de lo que hay
+  if(!!(srvLee()||{}).evalId!==antes){
+    await pintaPanel();pintaExInicio();pintaInicio();return;
+  }
+  await cargaParticipantes();
+  await cargaResultados();
+}
+
+/* Un solo reloj, siempre. Arrancarlo dos veces dejaba dos latidos pidiendo lo
+   mismo, que es como se duplican las peticiones sin que se note. */
+function panLatido(){
+  if(panReloj||typeof setInterval!=='function')return;
+  panReloj=setInterval(function(){refrescaPanel().catch(function(){});},PAN_MS);
+  /* unref solo existe en node: evita que un latido deje colgada una suite de
+     pruebas. En el navegador la propiedad no está y la línea no hace nada. */
+  if(panReloj&&typeof panReloj.unref==='function')panReloj.unref();
 }
 
 async function cargaParticipantes(pre){
@@ -25755,7 +25894,14 @@ if(typeof document!=='undefined'&&document.addEventListener){
   /* Volver a la app es el momento que importa: es cuando iOS restaura la
      pantalla vieja sin recargar. */
   document.addEventListener('visibilitychange',()=>{
-    if(document.visibilityState==='visible')buscaVersion(false);
+    if(document.visibilityState!=='visible')return;
+    buscaVersion(false);
+    /* Y el estado del servidor, no solo la versión del material. Esto es lo
+       que faltaba en la app instalada: iOS restaura la pantalla como estaba y
+       sin esta línea la lista de participantes, la evaluación abierta y la
+       nota siguen siendo las de la última vez que se abrió la app. */
+    refrescaPanel().catch(()=>{});
+    cargaEvaluacion().catch(()=>{});
   });
 }
 if(typeof addEventListener==='function')

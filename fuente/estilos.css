@@ -1545,6 +1545,11 @@ details.card summary::marker{content:''}
 #pan-abrir[disabled]{opacity:.5;cursor:not-allowed}
 
 .pan-lb{display:flex;flex-direction:column;gap:.25rem;font-size:var(--v-t-1);color:var(--v-tinta2);flex:1}
-.pan-lb select{min-height:44px}
+/* DENTRO DE UNA ETIQUETA EN COLUMNA, `flex-basis` ES ALTURA, NO ANCHO.
+   .ses-fila da a sus campos `flex:1 1 8rem` contando con una fila horizontal.
+   Metido en .pan-lb, que es columna, ese 8rem pasa a ser el eje principal
+   vertical: el select quedaba de 128 px de alto con el texto flotando en la
+   mitad. Se reponen los dos ejes a mano. */
+.pan-lb input,.pan-lb select{flex:0 1 auto;width:100%;min-height:44px}
 
 }  /* fin @media screen */
