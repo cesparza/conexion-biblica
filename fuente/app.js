@@ -437,6 +437,20 @@ function borraAlumno(){
 }
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* Lleva el ojo adonde pasó algo. Abrir un examen o entrar con el código
+   repinta la pantalla, pero un repintado silencioso en un punto que ya no
+   coincide con el scroll de quien lo pidió SE VE como que no pasó nada: la
+   confirmación queda arriba o abajo del marco visible. Se usa después de esas
+   acciones para que la persona vea de una el resultado, no para navegar. */
+function llevaA(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  el.classList.remove('destaca');
+  void el.offsetWidth;             // reinicia la animación si ya se usó antes
+  el.classList.add('destaca');
+}
 /* La categoria ya identifica la actividad (av es Conexion Biblica de 7 a 9,
    dm2 es Matutina de 7 a 9, ec1 son los dos adultos de las creencias), asi
    que filtrar por categoria filtra por actividad. Esto era un enredo de tres
@@ -2390,8 +2404,18 @@ function entraDirector(){
   });
 }
 
+/* Salir de un examen en curso sin entregarlo. No hace falta avisarle al
+   servidor: nada queda guardado hasta «Entregar», así que cancelar es tan
+   simple como volver al inicio. Antes la única forma de salir de una
+   evaluación de prueba era refrescar la página entera. */
+function cancelaExamen(){
+  clearInterval(reloj);
+  reinicia();
+}
+
 function reinicia(){
-  entregado=false;resp={};prueba=[];
+  clearInterval(reloj);
+  entregado=false;resp={};prueba=[];evalActual=null;
   document.getElementById('ex-inicio').style.display='block';
   document.getElementById('ex-curso').style.display='none';
   document.getElementById('ex-result').style.display='none';
@@ -3209,6 +3233,8 @@ async function entraCodigo(){
        sobre quién era la niña y cuál era su material; ahora hay una. */
     adoptaFicha(d);
     pintaSesion();await cargaEvaluacion();pintaExInicio();pintaInicio();
+    if(document.getElementById('cb-panel'))await pintaPanel();
+    llevaA(evalPend?'cb-eval':'cb-sesion');
   }catch(e){
     if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
   }
@@ -3230,6 +3256,8 @@ function adoptaFicha(d){
 async function salirCodigo(){
   try{await srvFetch('/salir',{method:'POST'});}catch(e){}
   srvYo=null;evalPend=null;evalHecha=false;pintaSesion();pintaEvaluacion();
+  pintaExInicio();pintaInicio();
+  if(document.getElementById('cb-panel'))await pintaPanel();
 }
 
 /* ───────── el panel del director (v20) ─────────
@@ -3322,6 +3350,10 @@ async function pintaPanel(){
     'maxlength="60" oninput="revisaAbrir()"></label>'+
     '<label class="pan-lb" style="flex:0 0 8rem">Cuántas preguntas'+
     '<input id="pan-eval-n" type="number" min="5" max="60" value="15"></label></div>'+
+    /* Confusión real: al probar con «Comenzar» (practicar), este número no
+       cambiaba nada, porque practicar usa su PROPIO selector de cantidad en
+       la ficha del capítulo. Este campo solo rige la evaluación con código. */
+    '<p class="nota">Esta cantidad es solo para la evaluación con código (botón <strong>Hacer la evaluación</strong>). Practicar con «Comenzar» tiene su propio número, en la ficha del capítulo.</p>'+
     /* El reglamento tiene tres actividades distintas y cada una es un examen
        aparte. Sin este selector el panel solo podía abrir la de Daniel. */
     /* AGRUPADO POR ACTIVIDAD, que es la dimensión de arriba del modelo.
@@ -3501,6 +3533,7 @@ async function abreEvaluacion(){
       nivel:Number((document.getElementById('pan-eval-nv')||{}).value||0),
       categorias:cats,huella:huellaBanco()})});
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
+    llevaA('cb-panel');
   }catch(e){alert(e.message||'No se pudo conectar');}
 }
 

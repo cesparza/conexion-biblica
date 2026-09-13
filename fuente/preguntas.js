@@ -1294,31 +1294,6 @@ BANCO.push(
 {cap:'d12',t:'tf',q:'Todo el libro de Daniel, sin excepción, quedó sellado hasta el tiempo del fin.',
  a:false,e:'Falso: la identidad de Babilonia, Media-Persia y Grecia ya estaba clara sin misterio; lo sellado eran específicamente los acontecimientos del tiempo del fin.'}
 ,
-{cap:'d1',t:'mc',q:'¿En qué museo se conserva la Crónica Babilónica (B.M. 21946) que confirma la victoria de Nabucodonosor en Carquemis?',
- o:['En el Museo Británico, en Londres','En el Museo del Louvre, en París','En el Museo de Bagdad, en Irak','En el Museo Vaticano, en Roma'],a:0},
-{cap:'d1',t:'mc',q:'Según la Crónica Babilónica, ¿cuándo asumió Nabucodonosor el trono de Babilonia tras la muerte de su padre?',
- o:['El 7 de septiembre del año 605 a.C.','El 15 de agosto del año 605 a.C.','El 1 de enero del año 604 a.C.','El 12 de octubre del año 539 a.C.'],a:0},
-{cap:'d2',t:'mc',q:'¿Qué sistema de cómputo babilónico explica que Daniel estudiara "tres años" (1:5) y el sueño ocurriera en el "año segundo" del rey (2:1)?',
- o:['El sistema del año de ascensión al trono','El sistema del calendario lunar hebreo','El sistema de los siete tiempos proféticos','El sistema del cómputo día por año'],a:0},
-{cap:'d2',t:'mc',q:'¿Qué fecha exacta señala la Crónica Babilónica para la muerte de Nabopolasar, padre de Nabucodonosor?',
- o:['El 15 de agosto del año 605 a.C.','El 7 de septiembre del año 605 a.C.','El 1 de abril del año 604 a.C.','El 4 de octubre del año 605 a.C.'],a:0},
-{cap:'d3',t:'mc',q:'¿Qué explica la presencia de instrumentos musicales griegos, como la zampoña, en la corte de Nabucodonosor (Daniel 3:5)?',
- o:['Ya en el siglo VI a.C. había griegos trabajando en Babilonia','El libro fue escrito bastante después, ya bajo influencia griega','Los griegos habían conquistado Babilonia antes que los persas','Nabucodonosor pasó parte de su juventud viviendo en Grecia'],a:0},
-{cap:'d3',t:'tf',q:'La presencia de instrumentos musicales de origen griego en Daniel 3 es una prueba arqueológica de que el capítulo fue escrito varios siglos después de Nabucodonosor.',
- a:false,e:'Falso: ya en el siglo VI a.C. había griegos trabajando y comerciando en Babilonia, así que no hace falta una fecha posterior para explicarlo.'},
-{cap:'d4',t:'mc',q:'¿Qué institución conserva la tablilla (B.M. 34.113) que según A. K. Grayson podría referirse a la locura de Nabucodonosor?',
- o:['El Museo Británico, en Londres','El Museo del Louvre, en París','El Museo de Pérgamo, en Berlín','El Museo Arqueológico de Bagdad'],a:0},
-{cap:'d4',t:'tf',q:'La tablilla británica traducida en 1975 conserva un relato completo y perfectamente legible de la locura de Nabucodonosor.',
- a:false,e:'Falso: la tablilla está muy dañada y solo se conservan frases sueltas y fragmentarias.'},
-{cap:'d5',t:'mc',q:'¿Qué documento cuneiforme confirma que Belsasar gobernó Babilonia como corregente mientras su padre Nabonido estaba en Tema?',
- o:['La Crónica en Verso de Nabonido','La Crónica Babilónica de Carquemis','El Cilindro de Ciro el Persa','El Prisma de Senaquerib de Nínive'],a:0},
-{cap:'d5',t:'mc',q:'¿Por qué Belsasar solo podía ofrecerle a Daniel el "tercer lugar" del reino (Daniel 5:16)?',
- o:['Porque el propio Belsasar era apenas el segundo, bajo Nabonido','Porque Daniel ya ocupaba el segundo lugar en la corte','Porque el primer lugar estaba reservado para el sumo sacerdote','Porque el reino de Babilonia tenía tres reyes al mismo tiempo'],a:0},
-{cap:'d6',t:'mc',q:'¿Con qué personaje de la Crónica de Nabonido proponen algunos eruditos identificar a Darío el Medo?',
- o:['Con Gubaru, gobernador medo de la provincia de Gutium','Con Ciro el Persa, quien fundó el Imperio aqueménida','Con Nabonido, quien fue el último rey nativo de Babilonia','Con Astiages, quien fue el último rey de los medos'],a:0},
-{cap:'d6',t:'tf',q:'Según Jenofonte, un personaje llamado Gobryas ayudó a Ciro a conquistar Babilonia, y "Gobryas" es el equivalente griego del nombre "Gubaru".',
- a:true,e:'Verdadero: la Crónica de Nabonido y el relato de Jenofonte describen al mismo personaje con su nombre babilonio y su nombre griego.'}
-,
 {cap:'d1',t:'mc',q:'¿En qué año ocurrió la deportación en la que Nabucodonosor se llevó a Daniel, Ananías, Misael y Azarías?',
  o:['605 a.C., la primera de las tres deportaciones','597 a.C., la segunda de las tres deportaciones','586 a.C., la tercera y más grave de las tres','539 a.C., cuando Babilonia cayó ante los persas'],a:0},
 {cap:'d1',t:'mc',q:'¿Qué profeta fue llevado cautivo a Babilonia en la segunda deportación (597 a.C.), junto con el rey Joaquín?',
@@ -1669,10 +1644,6 @@ BANCO.push(
    a:false,e:'Son dos etapas distintas: el reino de la gracia crece despacio en los corazones desde la primera venida; el reino de gloria, el que destruye a las naciones, llega solo con la segunda venida.'},
   {cap:'d2',t:'mc',q:'¿Cuál de estos gobernantes NO intentó reunificar Europa bajo un solo poder, contradiciendo (sin éxito) la profecía de Daniel 2:43?',
    o:['Carlomagno','Napoleón','Hitler, en el siglo XX','Ciro el Grande'],a:3},
-  {cap:'d2',t:'mc',q:'¿Qué fenómeno astronómico hace que alguien "nacido bajo Libra" según los horóscopos modernos, en realidad haya nacido bajo Virgo?',
-   o:['Un eclipse solar','La precesión de los equinoccios','Una supernova lejana','La órbita de Marte'],a:1},
-  {cap:'d2',t:'tf',q:'Un estudio sobre 154.000 reclutas de la Marina de Estados Unidos encontró que los nacidos bajo Aries o Escorpio se hacían soldados con más frecuencia que los demás.',
-   a:false,e:'El estudio no encontró ninguna diferencia: la astrología no predijo nada real en ese caso.'},
 );
 
 BANCO.push(
@@ -1680,10 +1651,6 @@ BANCO.push(
    a:false,e:'Al contrario: dijeron "y si no", es decir, obedecerían a Dios sin importar si los libraba o no.'},
   {cap:'d3',t:'mc',q:'¿Qué profeta, poco antes del episodio del horno, predicó contra los crímenes del rey Joacim y no fue librado por Dios de morir?',
    o:['Urías','Ezequiel','Daniel','Jeremías'],a:0},
-  {cap:'d3',t:'mc',q:'¿Qué soldado cristiano de la Segunda Guerra Mundial, camillero que se negó a portar armas y a trabajar en sábado, recibió la Medalla de Honor del Congreso por rescatar a 75 heridos bajo fuego cruzado?',
-   o:['Desmond Doss','Harry Truman','Douglas MacArthur','Audie Murphy'],a:0},
-  {cap:'d3',t:'mc',q:'¿En qué batalla de 1945 Desmond Doss rescató a 75 heridos, solo y bajo fuego enemigo?',
-   o:['Iwo Jima, en el Pacífico','Las barrancas de Maeda, en Okinawa','Normandía, en Francia','Guadalcanal, en el Pacífico'],a:1},
 );
 
 BANCO.push(
@@ -1722,8 +1689,6 @@ BANCO.push(
 BANCO.push(
   {cap:'d7',t:'mc',q:'¿En qué cartas del Nuevo Testamento aparece la palabra "anticristo"?',
    o:['Las cartas de Juan','Las cartas de Pablo','El libro de Apocalipsis','El libro de Hechos'],a:0},
-  {cap:'d7',t:'mc',q:'¿Qué arzobispo europeo del siglo XIII (sínodo de Regensburgo, 1240) llamó "anticristo" al papado, mucho antes de la Reforma?',
-   o:['Martín Lutero','Eberardo II de Salzburgo','Juan Wiclef, en Inglaterra','Arnulfo de Orleans'],a:1},
   {cap:'d7',t:'tf',q:'Según las tres lecturas cristianas de la profecía, los "historicistas" creen que el anticristo ya apareció por completo en el siglo I y no volverá a manifestarse.',
    a:false,e:'Esa es la lectura "preterista". Los historicistas creen que el anticristo ha actuado a lo largo de toda la historia de la iglesia.'},
   {cap:'d7',t:'mc',q:'En el orden real de los sucesos del juicio de Daniel 7, ¿qué ocurre justo después de que el Anciano de días toma asiento?',
@@ -1732,17 +1697,9 @@ BANCO.push(
    o:['El libro memorial (Malaquías 3:16)','El libro de los reyes','El libro de las crónicas','El libro de los jueces'],a:0},
   {cap:'d7',t:'tf',q:'En el juicio de Daniel 7, Cristo puede ser Juez y, al mismo tiempo, Abogado y Mediador de su pueblo.',
    a:true,e:'Cumple ambos papeles a la vez: juzga a favor de las mismas personas por las que intercede, según la primera carta de Juan y Hebreos 7:25.'},
-  {cap:'d7',t:'mc',q:'Según el historiador W. H. C. Frend, ¿aproximadamente cuántos cristianos murieron como mártires bajo la Roma pagana, entre el año 31 y el 313 d.C.?',
-   o:['Cerca de 500.000','Cerca de cinco mil','Más de un millón','Cerca de cincuenta mil'],a:1},
-  {cap:'d7',t:'mc',q:'¿Qué conflicto religioso europeo del siglo XVII dejó más de ocho millones de víctimas, muy por encima de los mártires de la Roma pagana?',
-   o:['La Guerra de los Treinta Años','Las Cruzadas medievales','La Guerra Civil inglesa','Las guerras napoleónicas'],a:0},
 );
 
 BANCO.push(
-  {cap:'d8',t:'mc',q:'¿Qué tecnología militar ayudó a Alejandro Magno en sus campañas, según un artículo de Scientific American?',
-   o:['La artillería de torsión (catapultas)','El caballo de hierro','Los arietes con ruedas','Los barcos de guerra con remos dobles'],a:0},
-  {cap:'d8',t:'mc',q:'¿Qué hizo el rey persa Darío III en cada una de las tres grandes batallas contra Alejandro (Gránico, Iso y Arbela)?',
-   o:['Se rindió de inmediato ante el ejército griego','Perdió el ánimo, dio la vuelta a su carro y huyó','Negoció una tregua temporal','Envió a un general en su lugar'],a:1},
   {cap:'d8',t:'tf',q:'Según Proverbios 21:1, citado por Maxwell, Dios no tiene ninguna influencia sobre las decisiones de los reyes paganos.',
    a:false,e:'El texto dice justo lo contrario: "el corazón del rey es como el agua del canal en mano de Yahvéh, que él dirige donde quiere".'},
   {cap:'d8',t:'mc',q:'¿Con qué gesto simbólico cumplió Alejandro la "prolongación de vida durante un tiempo" de Daniel 7:12 para las civilizaciones que conquistó?',
@@ -1779,8 +1736,6 @@ BANCO.push(
 );
 
 BANCO.push(
-  {cap:'d12',t:'mc',q:'¿Qué convicción llevó a los anabautistas Oswald Glait y Andreas Fischer a la muerte en el siglo XVI, según el ejemplo que da Maxwell de los "doctos" de Daniel 12:3?',
-   o:['Guardar el sábado bíblico, tras estudiar Daniel 7:25','Rechazar el bautismo infantil únicamente','Predicar en un idioma prohibido','Negarse a pagar impuestos al imperio'],a:0},
   {cap:'d12',t:'tf',q:'Según Maxwell, los "doctos" que "brillarán como el fulgor del firmamento" (Daniel 12:3) son necesariamente una élite de eruditos y teólogos.',
    a:false,e:'Son quienes estudiaron las profecías hasta comprenderlas, las compartieron con otros y se dejaron purificar por ellas, sin importar su nivel académico.'},
 );
@@ -1809,14 +1764,6 @@ BANCO.push(
    a:false,e:'Es la lectura más antigua que se conserva de la iglesia cristiana, documentada ya en el siglo II con Ireneo de Lyon.'},
   {cap:'d7',t:'mc',q:'¿Qué filósofo pagano, en su obra "Contra los cristianos" (h. 270-280 d.C.), fue el primero en identificar el cuerno pequeño de Daniel 7 con Antíoco Epífanes?',
    o:['Porfirio','Hipólito','Jerónimo','Policronio'],a:0},
-  {cap:'d7',t:'mc',q:'¿Cuál era el verdadero objetivo de Porfirio al proponer que Daniel fue escrito después de los sucesos que narra?',
-   o:['Refutar que Daniel fuera una profecía auténtica, y con ello debilitar al cristianismo','Ayudar a los judíos a entender mejor el libro','Defender la inspiración del libro de Daniel','Traducir Daniel al griego con mayor precisión'],a:0},
-  {cap:'d7',t:'tf',q:'La obra de Porfirio contra Daniel se conserva completa hasta hoy en bibliotecas cristianas.',
-   a:false,e:'Se ordenó quemarla dos veces en el siglo V; hoy solo se conoce por las citas que hizo Jerónimo para refutarla.'},
-  {cap:'d8',t:'mc',q:'¿Quién fue el primer intérprete conocido en dividir los 2.300 tardes y mañanas de Daniel 8:14 por la mitad (1.150)?',
-   o:['Policronio, en el siglo V','Isaac Newton, en el siglo XVII','Josefo, en el siglo I','Hipólito, en el siglo III'],a:0},
-  {cap:'d8',t:'tf',q:'Jerónimo, autor del comentario cristiano más influyente sobre Daniel en su época, rechazó por completo la lectura de Antíoco Epífanes para todo el libro de Daniel.',
-   a:false,e:'Coincidió con Antíoco para los capítulos 8 y 11, aunque no la aplicó a los capítulos 2, 7 ni 9.'},
 );
 
 module.exports = { BANCO };
