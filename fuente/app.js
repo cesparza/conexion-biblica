@@ -311,9 +311,24 @@ function srvLee(){
   }catch(e){return null;}
 }
 
-function srvGuarda(practica,evalId,evalTitulo){
-  try{localStorage.setItem(SRV_CACHE,JSON.stringify(
-    {practica:!!practica,evalId:evalId||null,evalTitulo:evalTitulo||null,visto:Date.now()}));}catch(e){}
+/* evalId/evalTitulo siguen siendo UNA evaluación (la que le toca a ESTE
+   aparato: la de la participante que entró con código, o ninguna). Eso no
+   cambió, porque a un aparato nunca le pueden tocar dos a la vez.
+   `evaluaciones` es nuevo y es la lista COMPLETA de lo que /estado ve abierto
+   en el servidor ahora mismo (puede haber varias, una por categoría); solo la
+   usa el panel del director para saber que hay algo corriendo antes de que
+   termine de cargar el detalle. Si no se pasa (como en las llamadas viejas,
+   con 3 argumentos), se conserva lo último que había, para no borrarle al
+   director esa lista cada vez que un aparato de participante escribe en esta
+   misma llave de localStorage. */
+function srvGuarda(practica,evalId,evalTitulo,evaluaciones){
+  try{
+    const prev=srvLee();
+    localStorage.setItem(SRV_CACHE,JSON.stringify(
+      {practica:!!practica,evalId:evalId||null,evalTitulo:evalTitulo||null,
+       evaluaciones:evaluaciones!==undefined?evaluaciones:((prev&&prev.evaluaciones)||[]),
+       visto:Date.now()}));
+  }catch(e){}
 }
 
 /* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
@@ -336,7 +351,16 @@ async function srvFetch(ruta,opciones){
 async function srvRefresca(){
   try{
     const d=await srvFetch('/estado');
-    srvGuarda(d.practica, d.evaluacion&&d.evaluacion.id, d.evaluacion&&d.evaluacion.titulo);
+    const evaluaciones=d.evaluaciones||[];
+    /* evalId/evalTitulo (el aviso genérico de "hay una evaluación abierta",
+       que usa pintaCierre() para cualquier aparato sin código) toman la que
+       de verdad cierra la práctica para todos, si hay una así. Con varias
+       abiertas dirigidas cada una a su categoría, ninguna es "la" de este
+       aviso general: ese aparato sigue practicando y no hay nada que avisar
+       aquí (a la participante invitada se lo dice /evaluacion, que sí sabe
+       quién es ella). */
+    const paraTodas=evaluaciones.find(function(e){return e.paraTodas;});
+    srvGuarda(d.practica, paraTodas&&paraTodas.id, paraTodas&&paraTodas.titulo, evaluaciones);
     return true;
   }catch(e){return false;}
 }
@@ -3296,18 +3320,6 @@ async function pintaPanel(){
       '<p class="nota" id="pan-msg"></p></div>';
     return;
   }
-  const c=srvLee();
-  /* OJO: no se usa c.practica aqui. Ese campo contesta «¿debo cerrarle la
-     practica a TODO el mundo?», y /estado lo apaga a proposito cuando la
-     evaluacion esta dirigida a unas categorias nada mas (paraTodas=false),
-     porque a quien no le toca sigue practicando. Para el director eso es la
-     pregunta equivocada: el necesita saber si SU evaluacion quedo abierta,
-     sin importar a quienes convoca. Antes este panel usaba c.practica y por
-     eso abrir una evaluacion dirigida a una sola categoria dejaba al director
-     viendo el asistente de siempre, como si el clic no hubiera hecho nada:
-     dos preguntas distintas resueltas por el mismo campo. c.evalId es el que
-     de verdad dice «hay una evaluacion registrada», la pregunta del director. */
-  const hayEval=!!(c&&c.evalId);
   /* null = no se pudo preguntar. No es lo mismo que «no hay»: con la red caída
      no se puede afirmar que falten participantes, así que el paso 3 no bloquea
      y lo dice. */
@@ -3315,25 +3327,17 @@ async function pintaPanel(){
   try{parts=(await srvFetch('/panel/participantes')).participantes||[];}catch(e){parts=null;}
   const cuantasP=parts?parts.length:null;
 
-  if(hayEval){
-    /* UNA SOLA FORMA DE CERRAR, y el conteo al lado del botón: quién falta es
-       el dato con el que el director va y la busca. */
-    d.innerHTML='<div class="det-cuerpo">'+
-      '<div class="pan-paso"><div class="pan-paso-t">Evaluación en curso</div>'+
-      '<p class="nota"><strong>'+esc((c&&c.evalTitulo)||'Sin nombre')+'</strong></p>'+
-      '<div id="pan-eval"></div>'+
-      '<div class="pan-sw"><button class="btn nar" onclick="cierraEvaluacion()">Cerrar la evaluación</button></div>'+
-      '<p class="nota">Mientras está abierta, la práctica se cierra sola en <strong>todos los '+
-      'aparatos</strong>. Al cerrarla vuelve, y las notas quedan guardadas. Estudiar y las '+
-      'tarjetas nunca se cierran.</p></div>'+
-      '<div class="pan-paso"><div class="pan-paso-t">Participantes</div>'+
-      '<div id="pan-lista"><p class="nota">Cargando...</p></div></div></div>';
-    cargaParticipantes(parts);
-    panLatido();
-    await cargaResultados();
-    return;
-  }
-
+  /* ANTES: con una evaluación abierta, este panel SOLO ofrecía cerrarla —
+     "una sola forma de cerrar" — y escondía el asistente de abrir por
+     completo, para que abrir y cerrar nunca se confundieran.
+     CASO REAL DE CAMILO: eso le impedía tener a Guías Mayores, Aventureros y
+     Devoción Matutina cada uno con SU evaluación corriendo el mismo rato,
+     porque abrir la segunda escondía el control de la primera. Ahora el
+     asistente (Paso 1/2/3) SIEMPRE está a la vista, y lo que esté en curso se
+     pinta aparte, en #pan-eval-en-curso (una tarjeta por evaluación abierta,
+     cada una con su propio botón «Cerrar»). El servidor es quien de verdad
+     evita la ambigüedad: nunca deja dos evaluaciones abiertas compartiendo
+     categoría, así que abrir una nueva solo reemplaza la que se le cruce. */
   d.innerHTML='<div class="det-cuerpo">'+
 
     '<div class="pan-paso"><div class="pan-paso-t">Paso 1 · ¿Quiénes participan?</div>'+
@@ -3410,10 +3414,15 @@ async function pintaPanel(){
     '<div class="pan-sw"><button class="btn azul" id="pan-abrir" disabled '+
     'onclick="abreEvaluacion()">Abrir una evaluación</button>'+
     '<span class="nota pan-razon" id="pan-abrir-razon"></span></div>'+
-    '<p class="nota">Al abrirla, la práctica se cierra sola en <strong>todos los aparatos</strong> '+
-    'y cada participante que ya entró con su código ve la evaluación en su pantalla.</p></div>'+
+    /* Ya no dice "todos los aparatos": con categorías marcadas, solo se les
+       cierra la práctica a esas — a las demás no les cambia nada. Si de
+       verdad se marcan todas (o ninguna), pintaAvisoCats() ya lo advierte
+       con más detalle (incluida cuál evaluación en curso se reemplazaría). */
+    '<p class="nota">Al abrirla, la práctica se cierra sola en los aparatos de las categorías '+
+    'que le tocan, y cada participante que ya entró con su código ve la evaluación en su '+
+    'pantalla.</p></div>'+
 
-    '<div id="pan-eval"></div></div>';
+    '<div id="pan-eval-en-curso"></div></div>';
   cargaParticipantes(parts);
   revisaAbrir(cuantasP);
   pintaAvisoCats();
@@ -3484,6 +3493,18 @@ function pintaAvisoCats(){
     '. A las demás no les sale nada, así que marca abajo a quiénes les toca.';
   else t='⚠️ '+sin.map(nom).join(', ')+(sin.length===1?' no recibe':' no reciben')+
     ' ninguna pregunta con este material.';
+  /* Aviso de solape: si lo que se va a abrir se cruza en categoría con algo
+     que YA está en curso (panAbiertas, cargado por cargaResultados()), abrir
+     lo reemplaza. Se avisa ANTES de que el director le dé al botón, no
+     después: sin esto, cerrar una evaluación en curso por accidente se veía
+     igual que abrir una nueva sin más. */
+  const catsPend=todas?Object.keys(CATS):marcadas;
+  const solapa=panAbiertas.filter(function(ev){
+    const catsEv=(!ev.categorias||ev.categorias==='*')?Object.keys(CATS):ev.categorias.split(',');
+    return catsPend.some(function(c){return catsEv.indexOf(c)>=0;});
+  });
+  if(solapa.length)t+=(t?'<br>':'')+'🔁 Si la abres, se cierra: '+
+    solapa.map(function(ev){return '<strong>'+esc(ev.titulo)+'</strong>';}).join(', ')+'.';
   p.innerHTML=t?'<span style="color:var(--rojo)">'+t+'</span>':'';
 }
 
@@ -3543,50 +3564,85 @@ async function abreEvaluacion(){
       alcance:(document.getElementById('pan-eval-al')||{}).value||'todo',
       nivel:Number((document.getElementById('pan-eval-nv')||{}).value||0),
       categorias:cats,huella:huellaBanco()})});
-    /* El POST de arriba YA abrió la evaluación en el servidor: eso es lo que
-       importa. Antes, lo que el panel pintaba a continuación dependía de un
-       SEGUNDO viaje de red (srvRefresca(), que llama a /estado) para enterarse
-       de que había funcionado. Con wifi débil ese segundo viaje puede fallar
-       o llegar tarde (srvFetch corta a los 2.5s) sin que abreEvaluacion() se
-       entere: el catch de srvRefresca() se traga el error y devuelve false,
-       la caché local se queda con el estado viejo («cerrada»), y el panel
-       repinta el asistente de siempre como si el clic no hubiera hecho nada,
-       aunque la evaluación sí quedó abierta. Por eso el director la abre,
-       ve la misma pantalla, y no hay ningún error que avisar.
-       Con el id que ya nos devolvió el POST no hace falta preguntarle nada
-       más al servidor para saber que abrió: se guarda esa verdad de una vez,
-       y srvRefresca() queda solo como una confirmación de más, no como el
-       único camino para enterarse. */
-    srvGuarda(false,d&&d.id,titulo);
+    /* pintaPanel() ya NO decide qué mostrar leyendo una caché local: la
+       tarjeta de "en curso" sale de preguntarle a /panel/evaluacion cada vez
+       (cargaResultados()), así que no hace falta adivinar aquí si el POST de
+       arriba funcionó — el repintado de abajo lo confirma solo, sin depender
+       de que un segundo viaje de red (srvRefresca()) llegue a tiempo. */
+    if(d&&d.cerradas&&d.cerradas.length){
+      /* Avisar CUÁL se reemplazó: con varias evaluaciones corriendo a la vez,
+         un clic sin darse cuenta del solape podría cerrar la de otro grupo
+         sin que el director lo note hasta que alguien reclame. */
+      alert('Al abrir esta se cerró, por compartir categoría: '+
+        d.cerradas.map(function(x){return x.titulo;}).join(', '));
+    }
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
     llevaA('cb-panel');
   }catch(e){alert(e.message||'No se pudo conectar');}
 }
 
-async function cierraEvaluacion(){
+async function cierraEvaluacion(id){
+  if(!id)return;
   try{
-    await srvFetch('/panel/evaluacion/cerrar',{method:'POST'});
-    await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
+    await srvFetch('/panel/evaluacion/cerrar',{method:'POST',body:JSON.stringify({id:id})});
+    await srvRefresca();await cargaResultados();pintaExInicio();pintaInicio();
   }catch(e){alert(e.message||'No se pudo conectar');}
 }
 
-/* Lo que el director mira mientras corre la evaluación. Quién FALTA es el dato
-   que sirve: con eso va y la busca, en vez de adivinar si ya terminaron. */
+/* Nombres legibles de un conjunto de categorías ('*' o 'gm,av'), para las
+   tarjetas de "en curso" y el aviso de solape. */
+function nombresCats(cats){
+  const claves=(!cats||cats==='*')?Object.keys(CATS):cats.split(',');
+  return claves.map(function(c){
+    return (CATS[c]?((ACTIVIDADES[CATS[c].act]||{}).nombre||'')+' · '+CATS[c].nombre:c);
+  }).join(', ');
+}
+
+/* El cuerpo que comparten la tarjeta "en curso" y la de "última evaluación":
+   cuántas la hicieron, quién falta, y la suma del club si aplica. */
+function cuerpoResultado(ev){
+  const h=ev.hechas||[],f=ev.faltan||[];
+  return '<p class="nota"><strong>'+h.length+'</strong> la hicieron · <strong>'+f.length+'</strong> faltan</p>'+
+    (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th></tr>'+
+      h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc((CATS[x.categoria]||{}).nombre||x.categoria)+'</td><td><strong>'+
+        x.nota+'/'+x.total+'</strong></td></tr>';}).join('')+'</table></div>':'')+
+    (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'')+
+    sumaClub(h);
+}
+
+/* Lo que hay corriendo AHORA MISMO, según el último /panel/evaluacion. La usa
+   pintaAvisoCats() para avisar, ANTES de que el director confirme abrir, cuál
+   evaluación en curso se cerraría por compartir categoría con la nueva. */
+let panAbiertas=[];
+
+/* Lo que el director mira mientras corre cada evaluación. Quién FALTA es el
+   dato que sirve: con eso va y la busca, en vez de adivinar si ya terminaron.
+   Puede haber varias a la vez, así que esto pinta una tarjeta por cada una —
+   o, si no hay ninguna abierta, el resultado de la última que hubo. */
 async function cargaResultados(){
-  const d=document.getElementById('pan-eval');
+  const d=document.getElementById('pan-eval-en-curso');
   if(!d)return;
   try{
     const r=await srvFetch('/panel/evaluacion');
-    if(!r.evaluacion&&!(r.hechas||[]).length){d.innerHTML='';return;}
-    const h=r.hechas||[],f=r.faltan||[];
-    d.innerHTML='<div class="divisor">Cómo va</div>'+
-      '<p class="nota"><strong>'+h.length+'</strong> la hicieron · <strong>'+f.length+'</strong> faltan</p>'+
-      (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th></tr>'+
-        h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc((CATS[x.categoria]||{}).nombre||x.categoria)+'</td><td><strong>'+
-          x.nota+'/'+x.total+'</strong></td></tr>';}).join('')+'</table></div>':'')+
-      (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'')+
-      sumaClub(h);
-  }catch(e){d.innerHTML='';}
+    panAbiertas=r.evaluaciones||[];
+    if(panAbiertas.length){
+      d.innerHTML=panAbiertas.map(function(ev){
+        return '<div class="pan-paso"><div class="pan-paso-t">Evaluación en curso: '+esc(ev.titulo)+'</div>'+
+          '<p class="nota">Para: <strong>'+esc(nombresCats(ev.categorias))+'</strong></p>'+
+          cuerpoResultado(ev)+
+          '<div class="pan-sw"><button class="btn nar" onclick="cierraEvaluacion(\''+esc(ev.id)+'\')">'+
+          'Cerrar esta evaluación</button></div>'+
+          '<p class="nota">Mientras está abierta, la práctica se cierra sola para esas categorías. '+
+          'Al cerrarla vuelve, y las notas quedan guardadas. Estudiar y las tarjetas nunca se cierran.</p></div>';
+      }).join('');
+    }else{
+      panAbiertas=[];
+      d.innerHTML=r.ultima?
+        '<div class="pan-paso"><div class="pan-paso-t">Última evaluación (cerrada): '+esc(r.ultima.titulo)+'</div>'+
+        cuerpoResultado(r.ultima)+'</div>':'';
+    }
+    pintaAvisoCats();
+  }catch(e){d.innerHTML='';panAbiertas=[];}
 }
 
 /* Acepta la lista que pintaPanel() ya pidió. Sin el parámetro la pide ella,
@@ -3641,8 +3697,13 @@ function sumaClub(hechas){
    a medio escribir y las categorías marcadas. Un refresco que borra lo que el
    director está escribiendo es peor que no refrescar. Así que el latido toca
    solo los dos pedazos que son del servidor —la lista y los resultados— y deja
-   el formulario quieto. El repintado completo se reserva para cuando cambia el
-   MODO (evaluación abierta o cerrada), porque ahí el panel sí es otro. */
+   el formulario quieto.
+   Antes había además un repintado COMPLETO reservado para cuando cambiaba el
+   MODO (evaluación abierta o cerrada), porque el panel entero era otro en cada
+   modo. Ya no: el asistente de abrir y las tarjetas de "en curso" conviven
+   siempre en la misma pantalla, así que ese caso especial no hace falta —
+   cargaResultados() (parte del refresco de siempre) ya trae y pinta las
+   tarjetas que correspondan. */
 const PAN_MS=8000;
 let panReloj=null;
 
@@ -3659,11 +3720,7 @@ function panelALaVista(){
 
 async function refrescaPanel(){
   if(!panelALaVista())return;
-  const antes=!!(srvLee()||{}).evalId;
   if(!await srvRefresca())return;   // sin señal no se toca nada de lo que hay
-  if(!!(srvLee()||{}).evalId!==antes){
-    await pintaPanel();pintaExInicio();pintaInicio();return;
-  }
   await cargaParticipantes();
   await cargaResultados();
 }

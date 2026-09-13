@@ -622,13 +622,24 @@ ok(opcionesNv.length>=4&&opcionesNv.every(v=>notas.includes(v)),
 ok(/id="pan-eval-nv" onchange="pintaNotaNivel\(\)"/.test(APP),
   'Al cambiar la dificultad, el texto de ayuda se repinta');
 
-/* Una sola forma de cerrar: mientras hay evaluación abierta, el panel no puede
-   ofrecer también el botón de abrir. Eran dos caminos y de ahí venía la
-   confusión al cerrar. */
+/* CASO REAL: Camilo necesita varias evaluaciones abiertas a la vez (Guías,
+   Aventureros y Devoción Matutina cada uno con la suya, el mismo rato). Antes
+   esta prueba exigía lo contrario ("una sola forma de cerrar", el asistente de
+   abrir se escondía mientras hubiera una abierta) — esa regla era la que lo
+   impedía, y se cambió a propósito. Ahora se prueba lo que sí tiene que
+   seguir siendo cierto: el asistente para abrir y el botón para cerrar
+   conviven SIEMPRE en el mismo panel, y el panel nunca decide qué mostrar
+   leyendo una caché local (esa fue la causa del bug de v74). */
 const bloquePanel=APP.slice(APP.indexOf('async function pintaPanel'),APP.indexOf('const NOTA_NIVEL'));
-const trozoAbierta=bloquePanel.slice(bloquePanel.indexOf('if(hayEval){'),bloquePanel.indexOf('d.innerHTML=\'<div class="det-cuerpo">\'+\n\n'));
-ok(/cierraEvaluacion/.test(trozoAbierta)&&!/abreEvaluacion/.test(trozoAbierta),
-  'Con evaluación abierta el panel solo ofrece cerrarla, nunca abrir otra');
+ok(/abreEvaluacion/.test(bloquePanel),
+  'El panel siempre ofrece el asistente para abrir, aunque ya haya evaluaciones en curso');
+ok(!/const c=srvLee\(\)/.test(bloquePanel)&&!/hayEval/.test(bloquePanel),
+  'pintaPanel() ya no decide qué mostrar leyendo la caché local de /estado');
+const bloqueResultados=APP.slice(APP.indexOf('async function cargaResultados'),APP.indexOf('async function refrescaPanel'));
+ok(/cierraEvaluacion/.test(bloqueResultados),
+  'Cada tarjeta de "en curso" trae su propio botón para cerrar, con el id de esa evaluación');
+ok(/panAbiertas=r\.evaluaciones/.test(bloqueResultados),
+  'La lista de "en curso" sale de preguntarle al servidor cada vez, no de una caché');
 
 /* ───────── el alcance del campamento ─────────
    MECANISMO: `extra` marca un capítulo que se estudia y no se examina. Era un

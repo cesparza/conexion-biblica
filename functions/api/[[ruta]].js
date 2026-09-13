@@ -99,8 +99,26 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
    actividad con sus propias categorias en vez de colgarse de `pa` y `gm`. */
 const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2'];
 
-const evaluacionAbierta = env =>
-  env.DB.prepare('SELECT * FROM evaluacion WHERE abierta = 1 ORDER BY creada_en DESC LIMIT 1').first();
+/* Antes esto traía UNA sola fila (LIMIT 1): solo podía existir una
+   evaluación abierta a la vez en toda la app. Camilo necesita un caso real:
+   Guías Mayores, Aventureros y Devoción Matutina corriendo su propia
+   evaluación el mismo rato. Ahora puede haber varias abiertas a la vez, y lo
+   único que se protege es que dos abiertas NUNCA compartan categoría — así
+   una participante nunca queda con dos evaluaciones aplicándole al tiempo,
+   que sería ambiguo (¿cuál le corresponde?). */
+const evaluacionesAbiertas = async env => {
+  const { results } = await env.DB.prepare(
+    'SELECT * FROM evaluacion WHERE abierta = 1 ORDER BY creada_en DESC'
+  ).all();
+  return results || [];
+};
+
+/* El conjunto real de categorías de una fila: '*' se expande a las ocho, para
+   poder comparar por intersección sin tratar '*' como un caso aparte. */
+const catsDeFila = ev => {
+  const c = ev && ev.categorias ? ev.categorias : '*';
+  return c === '*' ? CATS_VALIDAS : c.split(',');
+};
 
 /* Semilla del examen. La genera el SERVIDOR, nunca el aparato del director: así
    el examen es idéntico para todas y nadie puede adivinarlo antes de tiempo. */
@@ -140,15 +158,19 @@ export async function onRequest(context) {
        Con evaluación abierta la práctica se cierra sola; al cerrarla, vuelve.
        El detalle del examen NO viaja aquí: este endpoint es público. */
     if (metodo === 'GET' && ruta === '/estado') {
-      const ev = await evaluacionAbierta(env);
-      const paraTodas = !!ev && (ev.categorias || '*') === '*';
-      /* Si la evaluación va dirigida a unas categorías, este endpoint público no
-         puede cerrarle la práctica a todo el mundo: quien no está invitada
-         sigue practicando. Para las invitadas, /evaluacion (que sí sabe quién
-         es) cierra la práctica en su aparato. */
+      const abiertas = await evaluacionesAbiertas(env);
+      /* Si TODAS las evaluaciones abiertas están dirigidas a unas categorías
+         nada más, este endpoint público no puede cerrarle la práctica a todo
+         el mundo: quien no está invitada en ninguna sigue practicando. Para
+         las invitadas, /evaluacion (que sí sabe quién es) cierra la práctica
+         en su aparato. Solo se cierra para todos cuando ALGUNA abierta es
+         para todas las categorías. */
+      const algunaParaTodas = abiertas.some(ev => (ev.categorias || '*') === '*');
       return json({
-        practica: !ev || !paraTodas,
-        evaluacion: ev ? { id: ev.id, titulo: ev.titulo, paraTodas } : null,
+        practica: !algunaParaTodas,
+        evaluaciones: abiertas.map(ev => ({
+          id: ev.id, titulo: ev.titulo, paraTodas: (ev.categorias || '*') === '*',
+        })),
         hora: new Date().toISOString(),
       });
     }
@@ -232,16 +254,19 @@ export async function onRequest(context) {
        preguntas antes de que se abra. */
     if (metodo === 'GET' && ruta === '/evaluacion') {
       if (!sesion || sesion.rol !== 'participante') return error('Entra con tu código primero.', 401);
-      const ev = await evaluacionAbierta(env);
-      if (!ev) return json({ evaluacion: null });
-      /* Si la evaluación va dirigida a unas categorías y esta participante no
-         está en ellas, para ella es como si no existiera: no la ve y su
-         práctica sigue abierta. */
+      const abiertas = await evaluacionesAbiertas(env);
       const yo = await env.DB.prepare('SELECT categoria FROM participante WHERE id = ?')
         .bind(sesion.persona_id).first();
-      const cats = ev.categorias || '*';
-      if (cats !== '*' && !(cats.split(',').includes(yo && yo.categoria))) {
-        return json({ evaluacion: null, noMeToca: true });
+      /* Puede haber varias evaluaciones abiertas a la vez (una por cada
+         categoría o grupo de categorías), pero nunca dos que compartan
+         categoría — eso lo garantiza /panel/evaluacion al abrir. Así que a
+         lo sumo UNA de las abiertas incluye la categoría de esta
+         participante, y esa es la suya. */
+      const ev = abiertas.find(e => catsDeFila(e).includes(yo && yo.categoria));
+      if (!ev) {
+        /* Si hay evaluaciones abiertas pero ninguna es para su categoría, para
+           ella es como si no existiera: no la ve y su práctica sigue abierta. */
+        return json({ evaluacion: null, noMeToca: abiertas.length > 0 });
       }
       const hecho = await env.DB.prepare(
         'SELECT nota, total FROM intento WHERE participante_id = ? AND evaluacion_id = ?'
@@ -323,52 +348,88 @@ export async function onRequest(context) {
         : String(b.categorias || '').split(',');
       const limpias = pedidas.map(x => String(x).trim()).filter(x => CATS_VALIDAS.includes(x));
       const categorias = (!limpias.length || limpias.length === CATS_VALIDAS.length) ? '*' : limpias.join(',');
-      await env.DB.prepare(
-        "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE abierta = 1"
-      ).run();
+      /* Puede haber varias evaluaciones abiertas a la vez (una para Guías, otra
+         para Aventureros, otra para Devoción Matutina...), pero nunca dos que
+         compartan categoría: si eso pasara, una participante en esa categoría
+         no tendría forma de saber cuál de las dos le toca. Así que abrir esta
+         NO cierra todo lo que estaba abierto — antes sí lo hacía, y era lo que
+         impedía tener varias a la vez — sino solo lo que SE CRUZA en
+         categoría con la que se está abriendo ahora. */
+      const catsNuevas = categorias === '*' ? CATS_VALIDAS : categorias.split(',');
+      const abiertas = await evaluacionesAbiertas(env);
+      const solapadas = abiertas.filter(ev => catsDeFila(ev).some(c => catsNuevas.includes(c)));
+      for (const ev of solapadas) {
+        await env.DB.prepare(
+          "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE id = ?"
+        ).bind(ev.id).run();
+      }
       const eid = id();
       await env.DB.prepare(
         'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, categorias, abierta) ' +
         'VALUES (?,?,?,?,?,?,?,?,1)'
       ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40), categorias).run();
       await auditar(env, sesion.cuenta_id, 'abrir_evaluacion', 'evaluacion', eid, ipHash);
-      return json({ ok: true, id: eid });
+      return json({
+        ok: true, id: eid,
+        cerradas: solapadas.map(ev => ({ id: ev.id, titulo: ev.titulo })),
+      });
     }
 
     if (metodo === 'POST' && ruta === '/panel/evaluacion/cerrar') {
+      /* Ahora puede haber varias abiertas a la vez, así que cerrar SIEMPRE
+         necesita saber CUÁL: ya no existe "la" evaluación abierta. Sin id no
+         hay ambigüedad que adivinar, se rechaza. */
+      const b = await request.json().catch(() => ({}));
+      const evalId = limpiar(b.id, 60);
+      if (!evalId) return error('Falta indicar cuál evaluación cerrar.', 400);
+      const existe = await env.DB.prepare(
+        'SELECT id FROM evaluacion WHERE id = ? AND abierta = 1'
+      ).bind(evalId).first();
+      if (!existe) return error('Esa evaluación ya no estaba abierta.', 404);
       await env.DB.prepare(
-        "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE abierta = 1"
-      ).run();
-      await auditar(env, sesion.cuenta_id, 'cerrar_evaluacion', 'evaluacion', null, ipHash);
+        "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE id = ?"
+      ).bind(evalId).run();
+      await auditar(env, sesion.cuenta_id, 'cerrar_evaluacion', 'evaluacion', evalId, ipHash);
       return json({ ok: true });
     }
 
     /* Lo que el director mira mientras corre: quién ya la hizo, con qué nota, y
        sobre todo QUIÉN FALTA, que es el dato que sirve para ir a buscarla. */
     if (metodo === 'GET' && ruta === '/panel/evaluacion') {
-      const ev = await evaluacionAbierta(env);
-      const eid = ev ? ev.id : (await env.DB.prepare(
-        'SELECT id, titulo FROM evaluacion ORDER BY creada_en DESC LIMIT 1').first() || {}).id;
-      if (!eid) return json({ evaluacion: null, hechas: [], faltan: [] });
-      const { results: hechas } = await env.DB.prepare(
-        'SELECT p.nombre, p.categoria, i.nota, i.total, i.creado_en FROM intento i ' +
-        'JOIN participante p ON p.id = i.participante_id ' +
-        'WHERE i.evaluacion_id = ? AND p.borrado_en IS NULL ORDER BY i.creado_en'
-      ).bind(eid).all();
-      const cats = ev && ev.categorias ? ev.categorias : '*';
-      const filtro = cats === '*' ? '' :
-        " AND p.categoria IN (" + cats.split(',').map(() => '?').join(',') + ")";
-      const args = cats === '*' ? [eid] : [eid, ...cats.split(',')];
-      const { results: faltan } = await env.DB.prepare(
-        'SELECT p.nombre, p.categoria FROM participante p WHERE p.borrado_en IS NULL ' +
-        'AND p.id NOT IN (SELECT participante_id FROM intento WHERE evaluacion_id = ?)' +
-        filtro + ' ORDER BY p.categoria, p.nombre'
-      ).bind(...args).all();
-      return json({
-        evaluacion: ev ? { id: ev.id, titulo: ev.titulo, cuantas: ev.cuantas,
-          alcance: ev.alcance, nivel: ev.nivel, categorias: ev.categorias || '*' } : null,
-        hechas: hechas || [], faltan: faltan || [],
-      });
+      /* Quién la hizo y quién falta, POR evaluación: con varias abiertas a la
+         vez, "faltan" solo tiene sentido dentro de las categorías a las que
+         CADA UNA convoca (Aventureros no "falta" en la evaluación de Guías). */
+      const detalle = async ev => {
+        const { results: hechas } = await env.DB.prepare(
+          'SELECT p.nombre, p.categoria, i.nota, i.total, i.creado_en FROM intento i ' +
+          'JOIN participante p ON p.id = i.participante_id ' +
+          'WHERE i.evaluacion_id = ? AND p.borrado_en IS NULL ORDER BY i.creado_en'
+        ).bind(ev.id).all();
+        const cats = ev.categorias || '*';
+        const filtro = cats === '*' ? '' :
+          " AND p.categoria IN (" + cats.split(',').map(() => '?').join(',') + ")";
+        const args = cats === '*' ? [ev.id] : [ev.id, ...cats.split(',')];
+        const { results: faltan } = await env.DB.prepare(
+          'SELECT p.nombre, p.categoria FROM participante p WHERE p.borrado_en IS NULL ' +
+          'AND p.id NOT IN (SELECT participante_id FROM intento WHERE evaluacion_id = ?)' +
+          filtro + ' ORDER BY p.categoria, p.nombre'
+        ).bind(...args).all();
+        return {
+          id: ev.id, titulo: ev.titulo, cuantas: ev.cuantas, alcance: ev.alcance,
+          nivel: ev.nivel, categorias: cats, hechas: hechas || [], faltan: faltan || [],
+        };
+      };
+      const abiertas = await evaluacionesAbiertas(env);
+      const evaluaciones = [];
+      for (const ev of abiertas) evaluaciones.push(await detalle(ev));
+      /* Sin ninguna abierta, se muestra el resultado de la última que hubo
+         (cerrada), para que cerrar no le borre al director lo que acaba de ver. */
+      let ultima = null;
+      if (!evaluaciones.length) {
+        const u = await env.DB.prepare('SELECT * FROM evaluacion ORDER BY creada_en DESC LIMIT 1').first();
+        if (u) ultima = await detalle(u);
+      }
+      return json({ evaluaciones, ultima });
     }
 
     if (metodo === 'GET' && ruta === '/panel/participantes') {
