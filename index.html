@@ -2015,7 +2015,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '98c444974e88';
+const VERSION_APP = 'b5b45489d1d8';
 
 const CAPS = [
  {
@@ -24754,7 +24754,17 @@ async function pintaPanel(){
     return;
   }
   const c=srvLee();
-  const hayEval=!!(c&&c.practica===false);
+  /* OJO: no se usa c.practica aqui. Ese campo contesta «¿debo cerrarle la
+     practica a TODO el mundo?», y /estado lo apaga a proposito cuando la
+     evaluacion esta dirigida a unas categorias nada mas (paraTodas=false),
+     porque a quien no le toca sigue practicando. Para el director eso es la
+     pregunta equivocada: el necesita saber si SU evaluacion quedo abierta,
+     sin importar a quienes convoca. Antes este panel usaba c.practica y por
+     eso abrir una evaluacion dirigida a una sola categoria dejaba al director
+     viendo el asistente de siempre, como si el clic no hubiera hecho nada:
+     dos preguntas distintas resueltas por el mismo campo. c.evalId es el que
+     de verdad dice «hay una evaluacion registrada», la pregunta del director. */
+  const hayEval=!!(c&&c.evalId);
   /* null = no se pudo preguntar. No es lo mismo que «no hay»: con la red caída
      no se puede afirmar que falten participantes, así que el paso 3 no bloquea
      y lo dice. */
@@ -24984,11 +24994,27 @@ async function abreEvaluacion(){
   try{
     const cats=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
       .filter(function(c){return c.checked;}).map(function(c){return c.value;});
-    await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
-      titulo:t?t.value:'',cuantas:n?Number(n.value):15,
+    const titulo=t?t.value:'';
+    const d=await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
+      titulo,cuantas:n?Number(n.value):15,
       alcance:(document.getElementById('pan-eval-al')||{}).value||'todo',
       nivel:Number((document.getElementById('pan-eval-nv')||{}).value||0),
       categorias:cats,huella:huellaBanco()})});
+    /* El POST de arriba YA abrió la evaluación en el servidor: eso es lo que
+       importa. Antes, lo que el panel pintaba a continuación dependía de un
+       SEGUNDO viaje de red (srvRefresca(), que llama a /estado) para enterarse
+       de que había funcionado. Con wifi débil ese segundo viaje puede fallar
+       o llegar tarde (srvFetch corta a los 2.5s) sin que abreEvaluacion() se
+       entere: el catch de srvRefresca() se traga el error y devuelve false,
+       la caché local se queda con el estado viejo («cerrada»), y el panel
+       repinta el asistente de siempre como si el clic no hubiera hecho nada,
+       aunque la evaluación sí quedó abierta. Por eso el director la abre,
+       ve la misma pantalla, y no hay ningún error que avisar.
+       Con el id que ya nos devolvió el POST no hace falta preguntarle nada
+       más al servidor para saber que abrió: se guarda esa verdad de una vez,
+       y srvRefresca() queda solo como una confirmación de más, no como el
+       único camino para enterarse. */
+    srvGuarda(false,d&&d.id,titulo);
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
     llevaA('cb-panel');
   }catch(e){alert(e.message||'No se pudo conectar');}
