@@ -86,12 +86,12 @@ const DIAS = [
   q:'Heroína: Gladys Aylward',
   h:'Gladys leyó en una revista que en China millones de personas no sabían quién es Jesús, y decidió ir a predicar. Se inscribió en una escuela de misioneros y el 15 de octubre de 1932 sacó todos sus ahorros y partió desde Londres. El tren fue detenido en Siberia por una guerra, pero ella siguió. Llegó a China veintisiete días después de salir.',
   l:'Era de pequeña estatura y de enorme corazón, y dejó su vida tranquila en Inglaterra por ser misionera en tierras lejanas. Pídele a Jesús una meta elevada, y valentía para alcanzarla.' },
-{ d:13, t:'«Mujer virtuosa»', r:'Proverbios 31:10 (RV95)',
+{ d:13, t:'Mujer virtuosa', r:'Proverbios 31:10 (RV95)',
   v:'«Mujer virtuosa, ¿quién la hallará? Su valor sobrepasa largamente al de las piedras preciosas»',
   q:'Heroína: Gladys Aylward',
   h:'Llegó a un país sin hablar el idioma y conociendo apenas a una persona. Con otra misionera, Jeannie Lawson, abrió una posada: así tenían dinero para comer y podían hablarles de Jesús a los huéspedes. Después el gobierno chino le dio trabajo ayudando a las mujeres, y lo hizo tan bien que la gente la amó y empezó a llamarla «Ai-weh-deh», que en mandarín significa «Mujer virtuosa». Adoptó más de cien niños huérfanos.',
   l:'Gladys usó la creatividad. El héroe nunca se queda de brazos cruzados: siempre procura hacerse útil donde va.' },
-{ d:14, t:'«No me arrepiento»', r:'Gálatas 1:10',
+{ d:14, t:'No me arrepiento', r:'Gálatas 1:10',
   v:'«Yo no busco la aprobación de los hombres, sino la aprobación de Dios»',
   q:'Heroína: Gladys Aylward',
   h:'La guerra entre chinos y japoneses llegó a la aldea donde Gladys vivía con los niños que había adoptado, y tuvieron que huir a las montañas. La misión fue bombardeada y destruida. Como era muy difícil hallar comida, atravesó el río Amarillo con los niños para buscar ayuda en otra aldea, donde les abrieron las puertas. Cayó enferma y sanó por completo. No se arrepentía de haber ido a China: sentía que cada niño era una bendición.',
@@ -230,14 +230,14 @@ for (const x of DIAS) {
 }
 
 /* ── Preguntas ──
-   Las de «qué día es» y «qué versículo va con qué día» se generan con
-   distractores tomados de otros días: así son correctas por construcción y
-   crecen solas si el mes cambia. Las de historia y lección van escritas a
-   mano, una por día, porque ahí el matiz importa. */
+   La de «qué versículo va con qué día» se genera con distractores tomados
+   de otros días: así es correcta por construcción y crece sola si el mes
+   cambia. No se genera una pregunta de «qué día es la lectura X»: el
+   encabezado del examen ya muestra ese día cuando se practica un solo
+   capítulo (label de MAT_CAPS), así que esa pregunta se contestaría con
+   la propia pantalla. Las de historia y lección van escritas a mano, una
+   por día, porque ahí el matiz importa. */
 const MAT_BANCO = [];
-const otros = (d, n, campo) => DIAS.filter(x => x.d !== d)
-  .sort((a, b) => Math.abs(a.d - d) - Math.abs(b.d - d))
-  .slice(1, 1 + n).map(x => x[campo]);
 
 /* Para el versículo: si se eligiera solo por cercanía de fecha, a veces salían
    referencias mucho más cortas que la correcta (p.ej. «Hechos 1:8» contra
@@ -257,14 +257,8 @@ const otrosVersiculo = (d) => {
 };
 
 for (const x of DIAS) {
-  /* Qué día corresponde a este título */
-  const opDias = [MES[x.d] + ' de octubre', ...otros(x.d, 3, 'd').map(d => MES[d] + ' de octubre')];
-  MAT_BANCO.push({ cap: id(x.d), t: 'mc', nv: 1,
-    q: `¿Qué día de octubre es la lectura «${x.t}»?`,
-    o: opDias, a: 0 });
-
   /* Qué versículo va con este día */
-  MAT_BANCO.push({ cap: id(x.d), t: 'mc', nv: 2,
+  MAT_BANCO.push({ cap: id(x.d), t: 'mc', nv: 1,
     q: `¿Cuál es el versículo de la lectura del ${MES[x.d]} de octubre, «${x.t}»?`,
     o: [x.r, ...otrosVersiculo(x.d)], a: 0 });
 }
@@ -300,7 +294,8 @@ const A_MANO = [
    '¿Cuántos niños huérfanos adoptó Gladys?','Más de cien',['Más de diez','Más de mil','Exactamente cincuenta']],
 [14,'¿Qué le pasó a la misión donde vivía Gladys con los niños?','Fue bombardeada y destruida por la guerra',['Se incendió por un descuido','La cerró el gobierno local','Se inundó por completo con las lluvias'],
    '¿Se arrepentía Gladys de haber ido a China?','No: sentía que cada uno de sus niños era una bendición',['Sí, por las pruebas que pasó','Sí, quería volver a Inglaterra','No lo dijo nunca en ninguna de sus cartas']],
-[15,'¿Qué tienen en común el paralítico, los dos ciegos y el endemoniado?','Que todos fueron testigos de Jesús y contaron lo que él hizo por ellos',['Que todos eran de Nazaret, el pueblo donde Jesús se crio','Que todos fueron después discípulos y anduvieron con Jesús','Que todos estaban ciegos y Jesús les devolvió la vista']],
+[15,'¿Qué tienen en común el paralítico, los dos ciegos y el endemoniado?','Que todos fueron testigos de Jesús y contaron lo que él hizo por ellos',['Que todos eran de Nazaret, el pueblo donde Jesús se crio','Que todos fueron después discípulos y anduvieron con Jesús','Que todos estaban ciegos y Jesús les devolvió la vista'],
+   '¿Qué efecto tuvo el testimonio de estos tres personajes, según la lectura?','Que muchas personas se hicieran cristianas',['Que Jesús los volviera a sanar','Que los fariseos los persiguieran','Que se hicieran discípulos de Jesús']],
 [16,'¿Por qué perseguían a los cristianos en el Imperio Romano?','Porque se negaban a participar en costumbres paganas y a creer en muchos dioses',['Porque no pagaban los impuestos que el imperio les exigía','Porque hablaban otro idioma y no obedecían a las autoridades','Porque no querían trabajar en las obras del emperador'],
    '¿Qué símbolos usaban para reconocerse entre ellos?','Un pez o una cruz',['Una estrella','Una espada','Un cordero']],
 [17,'¿Qué hizo Axel con el juego electrónico de su amigo David?','Lo tomó sin permiso, lo rompió y lo guardó como si nada',['Lo perdió en el patio y no se atrevió a decirlo','Lo cambió por otro juego y no le avisó a David','Lo escondió en su casa y dijo que nunca lo vio'],
