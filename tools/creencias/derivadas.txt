@@ -1,0 +1,60 @@
+/* ─────────────── PREGUNTAS DERIVADAS DE LA TABLA DE DOCTRINAS ───────────────
+   MECANISMO
+   «¿A que doctrina pertenece la creencia 20?» es una pregunta cuya respuesta
+   YA ESTA en `doc` de CR_CAPS. Escribirla a mano seria copiar el dato a un
+   segundo lugar, y dos copias del mismo dato se desincronizan: es el error
+   que este proyecto ya pago con `capsDelEvento()`.
+
+   Asi que se generan. Si manana se corrige el reparto de una doctrina, las
+   preguntas se corrigen solas y ninguna queda mintiendo.
+
+   Las opciones salen sin barajar (la respuesta en la posicion 0) porque
+   `barajaOpciones()` las mezcla al armar cada examen. */
+const CR_BANCO_DOC = (() => {
+  const qs = [];
+  const nom = id => (CR_CAPS.find(c => c.id === id) || {}).sub;
+  const num = id => Number(id.slice(2));
+
+  for (const c of CR_CAPS) {
+    const mia = DOCTRINAS.find(d => d.id === c.doc);
+    const otras = DOCTRINAS.filter(d => d.id !== mia.id).slice(0, 3).map(d => d.nombre);
+    qs.push({ cap:c.id, t:'mc', nv:2,
+      q:'¿A qué doctrina pertenece la creencia ' + num(c.id) + ', «' + c.sub + '»?',
+      o:[mia.nombre, ...otras], a:0 });
+  }
+
+  for (const d of DOCTRINAS) {
+    const cuantas = d.hasta - d.desde + 1;
+    const capD = 'cr' + String(d.desde).padStart(2, '0');
+    const otros = [...new Set(DOCTRINAS.map(x => x.hasta - x.desde + 1))]
+      .filter(n => n !== cuantas).slice(0, 3);
+    qs.push({ cap:capD, t:'mc', nv:1,
+      q:'¿Cuántas creencias tiene «' + d.nombre + '»?',
+      o:[String(cuantas), ...otros.map(String)], a:0 });
+    qs.push({ cap:capD, t:'mc', nv:1,
+      q:'¿Qué número de doctrina es «' + d.nombre + '»?',
+      o:[String(d.n), ...DOCTRINAS.filter(x => x.n !== d.n).slice(0, 3).map(x => String(x.n))], a:0 });
+    qs.push({ cap:capD, t:'mc', nv:2,
+      q:'¿Con cuál creencia ABRE «' + d.nombre + '»?',
+      o:[nom(capD), ...CR_CAPS.filter(c => c.doc !== d.id).slice(0, 3).map(c => c.sub)], a:0 });
+  }
+
+  qs.push({ cap:'cr01', t:'mc', nv:1,
+    q:'¿En cuántas doctrinas se reparten las 28 creencias fundamentales?',
+    o:['Seis', 'Cuatro', 'Siete', 'Cinco'], a:0 });
+  qs.push({ cap:'cr01', t:'mc', nv:1,
+    q:'¿Cuántas creencias fundamentales hay en total?',
+    o:['28', '27', '25', '30'], a:0 });
+  qs.push({ cap:'cr01', t:'mc', nv:2,
+    q:'¿Cuál es la doctrina con MÁS creencias?',
+    o:['La doctrina de la iglesia', 'La doctrina de Dios',
+       'La doctrina de los acontecimientos finales', 'La doctrina de la salvación'], a:0 });
+  qs.push({ cap:'cr01', t:'mc', nv:2,
+    q:'¿Cuál es la doctrina con MENOS creencias?',
+    o:['La doctrina del hombre', 'La doctrina de la salvación',
+       'La doctrina de Dios', 'La doctrina de la vida cristiana'], a:0 });
+  return qs;
+})();
+
+const CR_BANCO = [...CR_BANCO_FIJO, ...CR_BANCO_DOC];
+

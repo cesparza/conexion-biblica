@@ -1613,3 +1613,31 @@ details.card summary::marker{content:''}
   .jg-g{font-size:.9rem}
   .jg-gr{max-width:600px;margin-left:auto;margin-right:auto}
 }
+
+/* ── BLOQUES QUE SE REVELAN DENTRO DEL MATERIAL DE ESTUDIO ──
+   La pregunta es un boton de ancho completo y alto de dedo; la respuesta
+   aparece debajo, no encima, para que la vista no tenga que volver a buscar
+   donde iba. */
+.rev{margin:.55rem 0}
+.rev-q{display:flex;width:100%;gap:.6rem;align-items:center;justify-content:space-between;
+  min-height:46px;padding:.6rem .85rem;border-radius:12px;cursor:pointer;text-align:left;
+  border:1.5px solid var(--borde);background:#fff;color:var(--tinta);font-size:.88rem;
+  font-weight:600;line-height:1.35}
+.rev-q .rev-p{flex:0 0 auto;font-size:.68rem;font-weight:600;color:var(--nar);
+  text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+.rev-q .rev-t{min-width:0}
+.rev-q.abierto{border-color:var(--azul);background:#EEF3FB;border-bottom-left-radius:0;
+  border-bottom-right-radius:0}
+.rev-a{border:1.5px solid var(--azul);border-top:0;border-radius:0 0 12px 12px;
+  padding:.7rem .85rem;background:#F7FAFF;font-size:.9rem;line-height:1.5}
+/* La frase activa del juego de completar se distingue de las ya hechas */
+.jg-frase{margin-bottom:.6rem}
+.jg-frase.lista{opacity:.55}
+.jg-frase.activa{border-color:var(--azul);box-shadow:0 0 0 2px #EEF3FB}
+
+/* El banco de palabras queda pegado abajo. Con cuatro frases la lista de
+   palabras se iba debajo del pliegue y tocaba bajar y subir por cada palabra:
+   el dedo esta abajo, y ahi tiene que estar lo que se toca. */
+.jg-gr.banco{position:sticky;bottom:0;z-index:2;margin-top:.5rem;padding:.6rem .2rem calc(.6rem + env(safe-area-inset-bottom));
+  background:linear-gradient(to bottom,rgba(247,249,252,0),var(--fondo,#F7F9FC) 28%);
+  border-top:1px solid var(--borde)}

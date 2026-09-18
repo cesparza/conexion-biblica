@@ -1087,8 +1087,17 @@ function tablaDeCid(cid){
 const KEY_POR_NOMBRE=(typeof NOMBRES_OTROS!=='undefined')
   ?Object.keys(NOMBRES_OTROS).reduce((m,k)=>{m[NOMBRES_OTROS[k]]=k;return m;},{})
   :{};
+/* SIN \b AL PRINCIPIO, A PROPOSITO.
+   `\b` en JavaScript se define sobre [A-Za-z0-9_], asi que entre un espacio y
+   una «E» no hay frontera de palabra: las dos son no-palabra. Con `\b` delante,
+   «Exodo 31:13-17» NO enganchaba y era el unico de los 42 libros que jamas se
+   volvia tocable, sin error ni aviso. Se quita el `\b` y el borde izquierdo se
+   comprueba a mano en el reemplazo, mirando el caracter anterior: hace lo mismo
+   y ademas funciona con acentos. Sin lookbehind, que no esta en los iPhone
+   viejos. */
+const LETRA_ANTES=/[0-9A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/;
 const OTRO_LIBRO_CITA=(typeof NOMBRES_OTROS!=='undefined')
-  ?new RegExp('\\b('+Object.values(NOMBRES_OTROS).map(n=>n.replace(/\s+/g,'\\s+'))
+  ?new RegExp('('+Object.values(NOMBRES_OTROS).map(n=>n.replace(/\s+/g,'\\s+'))
       .sort((a,b)=>b.length-a.length).join('|')+')\\s+(\\d{1,3}):(\\d{1,3})(?:[-–](\\d{1,3}))?','g')
   :null;
 
@@ -1112,6 +1121,27 @@ function botonRefOtro(todo,nombre,c,v,v2){
     ' onclick="verVers(this,\''+cid+'\','+(+v)+','+hasta+')">'+todo+'</button>';
 }
 
+/* ─────────────────── BLOQUES QUE SE REVELAN AL TOCAR ───────────────────
+   MECANISMO
+   Leer una respuesta y reconocerla se siente igual de facil que saberla, y
+   no es lo mismo: al reconocer, la respuesta ya esta en la pantalla. Lo que
+   fija es PRODUCIRLA. Por eso el material de estudio no muestra la respuesta:
+   muestra la pregunta, y la respuesta sale cuando la persona ya intento.
+
+   Es el mismo principio de las tarjetas, metido dentro del texto de estudio
+   en vez de en una pantalla aparte.
+
+   Se alterna, no es de un solo sentido: volver a tocar la tapa otra vez, para
+   poder repasar la misma pregunta sin recargar. */
+function revela(b){
+  const a=b.nextElementSibling;
+  if(!a)return;
+  a.hidden=!a.hidden;
+  b.classList.toggle('abierto',!a.hidden);
+  const p=b.querySelector('.rev-p');
+  if(p)p.textContent=a.hidden?'tocar para ver':'tocar para tapar';
+}
+
 function refsTocables(html,capId){
   if(typeof VERS==='undefined')return html;
   const enDaniel=BIBLIA_CAPS.indexOf(capId)>=0;
@@ -1127,8 +1157,11 @@ function refsTocables(html,capId){
        parte (fuera o dentro de parentesis). El nombre completo del libro ya
        distingue la cita: no hace falta el candado de la pasada 3. */
     if(OTRO_LIBRO_CITA){
-      out=out.replace(OTRO_LIBRO_CITA,(todo,nombre,c,v,v2)=>{
+      out=out.replace(OTRO_LIBRO_CITA,(todo,nombre,c,v,v2,pos,cadena)=>{
         if(todo.indexOf('\u0000')>=0)return todo;
+        /* El borde izquierdo, que antes hacia el \b: que no venga pegado a otra
+           letra o numero, o «1 Juan» se tomaria de dentro de «21 Juan». */
+        if(pos>0&&LETRA_ANTES.test(cadena.charAt(pos-1)))return todo;
         return '\u0000'+botonRefOtro(todo,nombre,c,v,v2)+'\u0000';
       });
     }
@@ -1984,12 +2017,19 @@ function nuevaRonda(){
     const bien=sel.slice().sort((a,b)=>ordenCap(a)-ordenCap(b));
     jgR={tipo:'ordenar',bien:bien,pool:mezcla(sel.slice()),puestos:[],total:bien.length};
   } else if(jgModo==='banco'){
-    const q=mezcla(fillsDe().slice())[0];
-    const huecos=q.p.map((x,i)=>({i:i,b:x.b})).filter(x=>x.b);
-    const señuelos=mezcla(fillsDe().flatMap(f=>f.p).filter(x=>x.b&&!huecos.some(h=>h.b===x.b))
+    /* Varias frases por ronda, no una. Con una sola la ronda se acababa en
+       tres toques y no alcanzaba a ser practica: era una pregunta suelta.
+       Se toman hasta cuatro y se encadenan, y la bolsa de palabras es comun a
+       todas, asi que los señuelos de una frase son las respuestas de otra. */
+    const disp=mezcla(fillsDe().slice()).slice(0,4);
+    const frases=disp.map(q=>({q:q,huecos:q.p.map((x,i)=>({i:i,b:x.b})).filter(x=>x.b),puestas:{}}))
+      .filter(f=>f.huecos.length);
+    const todas=frases.flatMap(f=>f.huecos.map(h=>h.b));
+    const señuelos=mezcla(fillsDe().flatMap(f=>f.p).filter(x=>x.b&&todas.indexOf(x.b)<0)
       .map(x=>x.b)).slice(0,3);
-    jgR={tipo:'banco',q:q,huecos:huecos,puestas:{},
-         bolsa:mezcla(huecos.map(h=>h.b).concat(señuelos)),total:huecos.length};
+    jgR={tipo:'banco',frases:frases,i:0,
+         bolsa:mezcla(todas.concat(señuelos)),
+         total:frases.reduce((n,f)=>n+f.huecos.length,0)};
   }
   pintaJuego();
 }
@@ -2007,7 +2047,7 @@ function pintaJuego(){
   const hechos=jgR.tipo==='parear'?jgR.listos.length
     :jgR.tipo==='clasif'?jgR.i
     :jgR.tipo==='ordenar'?jgR.puestos.length
-    :Object.keys(jgR.puestas).length;
+    :jgR.frases.reduce((n,f)=>n+Object.keys(f.puestas).length,0);
   const pct=Math.round(hechos/jgR.total*100);
   let h='<div class="prog-lin"><div style="width:'+pct+'%"></div></div>';
 
@@ -2036,14 +2076,21 @@ function pintaJuego(){
         jgR.puestos.includes(c)?'':'<button class="jg-g" onclick="jgOrden('+i+')">'+
         esc(c.label)+' — '+esc(c.sub)+'</button>').join('')+'</div>';
   } else {
-    const q=jgR.q;
-    h+='<div class="jg-ins">'+esc(q.ins||'')+'</div><div class="jg-frase">'+
-      q.p.map((x,i)=>x.b
-        ? '<span class="jg-h'+(jgR.puestas[i]?' ok':'')+'">'+esc(jgR.puestas[i]||'______')+'</span>'
-        : '<span>'+esc(x.x)+'</span>').join('')+'</div>'+
-      '<div class="jg-gr">'+jgR.bolsa.map((w,i)=>
-        Object.values(jgR.puestas).includes(w)?'':
-        '<button class="jg-g" onclick="jgBanco('+i+')">'+esc(w)+'</button>').join('')+'</div>';
+    const usadas=jgR.frases.flatMap(f=>Object.values(f.puestas));
+    h+=jgR.frases.map((f,n)=>{
+      const lista=n===jgR.i?' activa':(Object.keys(f.puestas).length>=f.huecos.length?' lista':'');
+      return '<div class="jg-ins">'+esc(f.q.ins||'')+'</div>'+
+        '<div class="jg-frase'+lista+'">'+f.q.p.map((x,i)=>x.b
+          ? '<span class="jg-h'+(f.puestas[i]?' ok':'')+'">'+esc(f.puestas[i]||'______')+'</span>'
+          : '<span>'+esc(x.x)+'</span>').join('')+'</div>';
+    }).join('')+
+      '<div class="jg-gr banco">'+jgR.bolsa.map((w,i)=>{
+        let quedan=jgR.bolsa.filter(x=>x===w).length-usadas.filter(x=>x===w).length;
+        if(quedan<=0)return '';
+        if(jgR.bolsa.indexOf(w)!==i)return '';
+        return '<button class="jg-g" onclick="jgBanco('+i+')">'+esc(w)+
+          (quedan>1?' <small>×'+quedan+'</small>':'')+'</button>';
+      }).join('')+'</div>';
   }
   h+='<p class="nota" style="text-align:center">'+jgBien+' bien · '+jgMal+' con error</p>';
   z.innerHTML=h;
@@ -2086,11 +2133,18 @@ function jgOrden(i){
 function jgBanco(i){
   if(!jgR)return;
   const w=jgR.bolsa[i];
-  const hueco=jgR.huecos.find(h=>!jgR.puestas[h.i]);
+  /* Se llena la frase en curso; cuando queda completa se pasa a la siguiente.
+     Asi el orden de las palabras dentro de cada frase sigue importando. */
+  let f=jgR.frases[jgR.i];
+  while(f&&Object.keys(f.puestas).length>=f.huecos.length){jgR.i++;f=jgR.frases[jgR.i];}
+  if(!f)return;
+  const hueco=f.huecos.find(h=>!f.puestas[h.i]);
   if(!hueco)return;
-  if(igual(w,hueco.b)){jgR.puestas[hueco.i]=w;jgBien++;}else{jgMal++;}
+  if(igual(w,hueco.b)){f.puestas[hueco.i]=w;jgBien++;}else{jgMal++;}
+  if(Object.keys(f.puestas).length>=f.huecos.length&&jgR.i<jgR.frases.length-1)jgR.i++;
   pintaJuego();
-  if(Object.keys(jgR.puestas).length>=jgR.total)cierraRonda();
+  const hechos=jgR.frases.reduce((n,x)=>n+Object.keys(x.puestas).length,0);
+  if(hechos>=jgR.total)cierraRonda();
 }
 
 /* Terminar una ronda cuenta como haber estudiado hoy: es la misma racha de

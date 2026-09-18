@@ -600,14 +600,22 @@ ok(CR.CR_CAPS.every(c=>!('ev' in c)),
    Los textos se buscan en el TITULO de la pestaña, que es donde de verdad
    estan: buscarlos en el cuerpo obligaba a repetir el rotulo dentro del HTML
    solo para que la prueba lo encontrara. */
+/* La 14 es la excepcion DOCUMENTADA: la cartilla 2026 imprime ahi, por error,
+   el texto de la 13. No se cita una declaracion equivocada, que seria peor que
+   no citar ninguna, asi que esa pestaña lleva el aviso en vez de la cita. La
+   prueba nombra la excepcion en vez de bajar el liston para todas. */
+const SIN_DECL=['cr14'];
 ok(Object.keys(CR.CR_CONTENIDO).length===28 &&
-   Object.values(CR.CR_CONTENIDO).every(v=>/«/.test(v[0].h)&&/[Tt]extos clave/.test(v[1].t)),
-  'Cada creencia trae su declaración citada y sus textos clave');
-/* Las cinco de la doctrina de Dios ya llevan las cinco pestañas. Es un piso:
-   cuando las otras 23 se completen, esto se sube a las 28. */
-const CINCO=['cr01','cr02','cr03','cr04','cr05'];
-ok(CINCO.every(id=>CR.CR_CONTENIDO[id].length===5),
-  'Las cinco creencias de la doctrina de Dios traen sus cinco pestañas');
+   Object.entries(CR.CR_CONTENIDO).every(([k,v])=>
+     (SIN_DECL.includes(k)?/error/i.test(v[0].h):/«/.test(v[0].h)) && /[Tt]extos clave/.test(v[1].t)),
+  'Cada creencia trae su declaración citada y sus textos clave (la 14 lleva el aviso de la errata)');
+/* Las cinco pestañas ya son de las 28, no solo de la doctrina de Dios. */
+ok(Object.values(CR.CR_CONTENIDO).every(v=>v.length===5),
+  'Las 28 creencias traen sus cinco pestañas');
+/* Y el material de estudio es interactivo: cada creencia trae bloques que
+   tapan la respuesta hasta que la persona la intenta. */
+ok(Object.values(CR.CR_CONTENIDO).every(v=>v.some(x=>/rev-q/.test(x.h))),
+  'Las 28 traen bloques que se revelan al tocar, no solo texto para leer');
 ok(CR.DOCTRINAS.length===6 &&
    CR.DOCTRINAS.reduce((a,d)=>a+(d.hasta-d.desde+1),0)===28 &&
    CR.CR_CAPS.every(c=>c.doc&&CR.DOCTRINAS.some(d=>d.id===c.doc)),
@@ -1240,11 +1248,14 @@ ok(JG.ronda().puestos.length===1,'Ordenar acepta el que va primero');
 /* Banco de palabras: es una pregunta de completar del examen, sin teclado. */
 JG.ponJuego('banco');
 r=JG.ronda();
-ok(r.huecos.length>0&&r.bolsa.length>r.huecos.length,
-  'El banco trae huecos y mas palabras que huecos (hay señuelos)');
-const palJG=r.bolsa.indexOf(r.huecos[0].b);
+ok(r.frases.length>1,'El banco arma VARIAS frases por ronda, no una ('+r.frases.length+')');
+ok(r.total===r.frases.reduce((n,f)=>n+f.huecos.length,0)&&r.total>2,
+  'Y el avance se cuenta sobre los huecos de todas ('+r.total+')');
+ok(r.bolsa.length>r.total,'La bolsa trae mas palabras que huecos: hay señuelos');
+const palJG=r.bolsa.indexOf(r.frases[0].huecos[0].b);
 JG.jgBanco(palJG);
-ok(Object.keys(JG.ronda().puestas).length===1,'Tocar la palabra correcta llena el primer hueco');
+ok(Object.keys(JG.ronda().frases[0].puestas).length===1,
+  'Tocar la palabra correcta llena el primer hueco de la primera frase');
 
 /* LA PRUEBA QUE IMPORTA: los mismos juegos en otraDoc actividad, sin tocar nada. */
 store={};

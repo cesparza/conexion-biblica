@@ -1,0 +1,31 @@
+GENERADORES DE «EN ESTO CREEMOS»
+
+POR QUE ESTAN AQUI
+fuente/creencias.js y fuente/cartilla.txt NO se editan a mano: se generan.
+Si el generador vive fuera del repositorio, el generador es la fuente y se
+pierde. Asi que vive aqui.
+
+QUE HACE CADA UNO
+  datos.py       Las 28 declaraciones y listas de textos, transcritas de la
+                 cartilla 2026. Es lo unico que se edita a mano.
+  editorial.py   Lo que hay que saber de cada creencia y con cual se confunde.
+                 Sale de la declaracion y de la guia de estudio 2017.
+  refs.py        Parser de las listas de textos de la cartilla.
+  gen_cartilla.py -> fuente/cartilla.txt
+  gen_creencias.py -> fuente/creencias.js
+  gen_biblia.py  -> files/rv1909-*.txt, desde files/_biblia-libre-raw.txt
+  gen_otros.py   -> fuente/biblia-otros.js, desde files/rv1909-*.txt
+
+ORDEN PARA REHACER TODO
+  python3 tools/creencias/gen_cartilla.py
+  python3 tools/creencias/gen_biblia.py
+  python3 tools/creencias/gen_otros.py
+  python3 tools/creencias/gen_creencias.py
+  node fuente/build.js
+  node tools/cartilla.js && node tools/citas.js && node tests/test.js
+
+DE DONDE SALE EL TEXTO BIBLICO
+files/_biblia-libre-raw.txt es la Biblia Libre (Reina Valera Antigua, licencia
+libre), bajada de github.com/biblia-libre. Se comprobo contra los 21 archivos
+que ya existian: 95 de 107 versiculos identicos, y los 12 restantes difieren
+solo en tipografia. Los versiculos que ya estaban NO se reescriben.

@@ -740,6 +740,28 @@ const rotDup=Object.entries(rot).filter(([,n])=>n>1).map(([k])=>k);
 ok(rotDup.length===0,'Ningún rótulo de completar se repite dentro del mismo capítulo'+
   (rotDup.length?' — '+rotDup.join(' / '):''));
 
+/* ── EL BORDE IZQUIERDO DE LAS CITAS A OTROS LIBROS ──────────────────────
+   `\b` en JavaScript se define sobre [A-Za-z0-9_]. Entre un espacio y una «É»
+   no hay frontera de palabra, asi que con `\b` delante «Éxodo 31:13-17» nunca
+   enganchaba: era el unico de los 42 libros que jamas se volvia tocable, y no
+   fallaba nada, simplemente se quedaba en texto negro. Lo encontro una captura,
+   no una prueba. Esta es la prueba. */
+{
+  ok(!/new RegExp\('\\\\b\('\+Object\.values\(NOMBRES_OTROS\)/.test(APP),
+    'La regex de citas a otros libros ya no arranca con \\b, que no sirve con acentos');
+  ok(/LETRA_ANTES/.test(APP),
+    'Y el borde izquierdo se comprueba mirando el caracter anterior');
+  /* Se pide aqui adentro y no arriba: `NOMBRES_OTROS` se declara mas abajo en
+     este mismo archivo, y un const usado antes de su declaracion lanza TDZ. */
+  const NOMS = require(path.join(RAIZ, 'fuente', 'biblia-otros.js')).NOMBRES_OTROS;
+  /* Los que empiezan con numero («1 Juan») nunca tuvieron problema: un digito
+     SI es caracter de palabra. El caso roto era el que empieza con letra
+     acentuada. */
+  const acentuados = Object.values(NOMS).filter(n => /^[^\x00-\x7F]/.test(n));
+  ok(acentuados.length > 0,
+    'Y hay libros que empiezan con letra acentuada, que es lo que lo rompia: ' + acentuados.join(', '));
+}
+
 /* La pregunta «¿a qué creencia corresponde esta declaración?» no puede llevar
    el título de la creencia dentro de la cita: se contestaría sola. */
 const CRE=require(path.join(RAIZ,'fuente','creencias.js'));

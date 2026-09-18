@@ -1,0 +1,60 @@
+/* EN ESTO CREEMOS — las 28 creencias fundamentales.
+
+   TERCER EVENTO DEL CAMPAMENTO, y con un reglamento distinto:
+   «Esta actividad va dirigida a padres, consejeros y acompañantes. Deben
+   estudiar el folleto En esto creemos... Dos personas presentarán un examen
+   escrito, y a su vez todos los demás miembros del club deberán desarrollar
+   otro cuestionario en su club; el puntaje de los dos exámenes se sumará.»
+
+   DE DÓNDE SALE EL TEXTO
+   Las declaraciones oficiales y los textos clave se tomaron de la guía «En esto
+   creemos» de la División Interamericana (2017), que a su vez las cita del
+   libro oficial «Creencias de los Adventistas del Séptimo Día» (Asociación
+   Ministerial de la Asociación General, 2007). Los dos PDF quedaron en files/:
+   guia-28-creencias.pdf y creencias-28.pdf.
+   NO se inventó ni se parafraseó ninguna declaración.
+
+   POR QUÉ NO ENTRA AL EXAMEN DE DANIEL
+   Cada capítulo pertenece a las categorías `ec1` y `ec2`, que son las de la
+   actividad «En esto creemos». Antes llevaban `ev:'creencias'` y poolDe() los
+   sacaba del alcance a mano; ahora la actividad ya los separa
+   «todo». Así el examen del campamento sigue siendo Daniel 1, 3 y 6 más P&R, y
+   las creencias son un examen aparte con su propio alcance. Mezclarlos daría un
+   examen que no corresponde a ninguna de las dos actividades. */
+
+/* ───────────────── LA DOCTRINA: LA DIMENSION DE ARRIBA ─────────────────
+   MECANISMO
+   La cartilla no presenta 28 creencias sueltas: las reparte en SEIS
+   doctrinas, y lo dice con todas las letras («Es la primera de nuestras
+   seis doctrinas y esta compuesta por la Palabra de Dios, la Deidad,
+   Dios el Padre, Dios el Hijo, Dios el Espiritu Santo»).
+
+   POR QUE ES UNA TABLA Y NO UN CAMPO DE TEXTO
+   Mientras la doctrina no existia como dato, «a que doctrina pertenece
+   el sabado» no se podia ni preguntar ni responder: habia que escribir
+   la pregunta y la respuesta a mano y mantenerlas sincronizadas. Con la
+   tabla, las preguntas de conteo y de pertenencia SALEN DEL DATO, igual
+   que `capsDe()` sale de `cats`. Es el mismo criterio del ADR-01: una
+   dimension por concepto, y la de arriba se declara primero.
+
+   Los ids van `dt*` y no `d*` porque `d1`..`d12` ya son los capitulos de
+   Daniel. Dos cosas distintas no comparten espacio de nombres. */
+const DOCTRINAS = [
+  { id:'dt1', n:1, nombre:'La doctrina de Dios',
+    desde:1,  hasta:5,  color:'#1F3864', icono:'👑' },
+  { id:'dt2', n:2, nombre:'La doctrina del hombre',
+    desde:6,  hasta:7,  color:'#0E7490', icono:'🧍' },
+  { id:'dt3', n:3, nombre:'La doctrina de la salvación',
+    desde:8,  hasta:10, color:'#B8860B', icono:'✝️' },
+  { id:'dt4', n:4, nombre:'La doctrina de la iglesia',
+    desde:11, hasta:18, color:'#1A7A1A', icono:'⛪' },
+  { id:'dt5', n:5, nombre:'La doctrina de la vida cristiana',
+    desde:19, hasta:23, color:'#7C3AED', icono:'🕊️' },
+  { id:'dt6', n:6, nombre:'La doctrina de los acontecimientos finales',
+    desde:24, hasta:28, color:'#C0392B', icono:'🌅' },
+];
+
+/* El numero de la creencia decide su doctrina: una sola regla, sin tabla
+   de mapeo que mantener a mano. */
+const doctrinaDe = num => DOCTRINAS.find(d => num >= d.desde && num <= d.hasta);
+

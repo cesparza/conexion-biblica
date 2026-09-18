@@ -16,3 +16,4 @@ package-lock.json
 ESTADO*.txt
 CONTEXTO*.txt
 LEEME*.txt
+tools/creencias/__pycache__/

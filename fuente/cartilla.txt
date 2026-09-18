@@ -4,55 +4,211 @@ Union Colombiana del Sur, 2026. Lema «Viviendo la Mision 7-70».
 Material preparado por el pastor Ludwing Morales.
 
 QUE ES ESTE ARCHIVO
-Es la transcripcion palabra por palabra de la cartilla que se evalua.
+La transcripcion palabra por palabra de la cartilla que se evalua.
 tools/cartilla.js exige que cada declaracion de fuente/creencias.js
-aparezca literal aqui. Si cambia la edicion de la cartilla, se cambia
-este archivo y las declaraciones, y nada mas.
+aparezca literal aqui. Si cambia la edicion, se cambia este archivo
+y las declaraciones, y nada mas.
 
-OJO: la cartilla trae erratas (por ejemplo «de la doctrinas» en la
-creencia 1, y declaraciones sin punto final). Se transcriben tal como
-estan: lo que se evalua es la cartilla, no la version corregida.
+SE TRANSCRIBE TAL CUAL, ERRATAS INCLUIDAS
+La cartilla trae erratas y aqui quedan como estan, porque lo que se
+evalua es la cartilla y no la version corregida:
+  - creencia 1: «de la doctrinas», y cierra sin punto final
+  - creencia 3, 6 y 13: cierran sin punto final
+  - creencia 16: «1 Corintios 10-16,17» donde el libro dice «10:16,17»
+  - creencia 26: «Ecleciastes», y abrevia «Col. 3:4»
+  - creencia 14: la cartilla imprime AQUI el texto de la creencia 13.
+    Es un error de imprenta, no una variante. Queda sin declaracion
+    hasta confirmarlo contra el impreso.
 
 === PRIMERA DOCTRINA — LA DOCTRINA DE DIOS ===
 
-La doctrina de Dios, es la primera de nuestras doctrinas y es tambien conocida como teologia propia, es una rama fundamental de la teologia que estudia la naturaleza, atributos y obras de Dios. Esta doctrina se centra en aspectos esenciales como la existencia de Dios, su unidad y trinidad, su infinitud, su omnisciencia, omnipotencia, omnipresencia, santidad, justicia, amor, misericordia y soberania.
-
-La comprension de estas caracteristicas divinas ofrece a los creyentes una base solida para su fe y practica religiosa, proporcionando un marco a traves del cual interpretan la relacion de Dios con el mundo y la humanidad. Es la primera de nuestras seis doctrinas y esta compuesta por la Palabra de Dios, la Deidad, Dios el Padre, Dios el Hijo, Dios el Espiritu Santo
+La doctrina de Dios, es la primera de nuestras doctrinas y es también conocida como teología propia, es una rama fundamental de la teología que estudia la naturaleza, atributos y obras de Dios. Esta doctrina se centra en aspectos esenciales como la existencia de Dios, su unidad y trinidad, su infinitud, su omnisciencia, omnipotencia, omnipresencia, santidad, justicia, amor, misericordia y soberanía.
 
 --- Creencia 01 — LA PALABRA DE DIOS ---
 
-Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiracion divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espiritu Santo. Por medio de esta Palabra, Dios comunica a los seres humanos el conocimiento necesario para alcanzar la salvacion. Las Sagradas Escrituras son la infalible revelacion de la voluntad divina. Son la norma del caracter, el criterio para evaluar la experiencia, la revelacion autorizada de la doctrinas, y un registro fidedigno de los actos de Dios realizados en el curso de la historia
+Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiración divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espíritu Santo. Por medio de esta Palabra, Dios comunica a los seres humanos el conocimiento necesario para alcanzar la salvación. Las Sagradas Escrituras son la infalible revelación de la voluntad divina. Son la norma del carácter, el criterio para evaluar la experiencia, la revelación autorizada de la doctrinas, y un registro fidedigno de los actos de Dios realizados en el curso de la historia
 
-TEXTOS: 2 Pedro 1:20,21; 2 Timoteo 3:16,17; Salmos 119:105; Proverbios 30:5, 6; Isaias 8:20; Juan 17:17; 1 Tesalonicenses 2:13; Hebreos 4:12.
+TEXTOS: 2 Pedro 1:20,21; 2 Timoteo 3:16,17; Salmos 119:105; Proverbios 30:5, 6; Isaías 8:20; Juan 17:17; 1 Tesalonicenses 2:13; Hebreos 4:12.
 
 --- Creencia 02 — LA DEIDAD ---
 
-Hay un solo Dios: Padre, Hijo y Espiritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escapa a la comprension humana, aunque se lo puede conocer por medio de su autorrevelacion. Es digno para siempre de reverencia, adoracion y servicio por parte de toda la creacion.
+Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escapa a la comprensión humana, aunque se lo puede conocer por medio de su autorrevelación. Es digno para siempre de reverencia, adoración y servicio por parte de toda la creación.
 
 TEXTOS: Deuteronomio 6:4; Mateo 28:19; 2 Corintios 13:14; Efesios 4:4-6; 1 Pedro 1:2; 1 Timoteo 1:17; Apocalipsis 14:7.
 
 --- Creencia 03 — DIOS EL PADRE ---
 
-Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creacion. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad. Las cualidades y las facultades del Padre se manifiestan tambien en el Hijo y en el Espiritu Santo
+Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad. Las cualidades y las facultades del Padre se manifiestan también en el Hijo y en el Espíritu Santo
 
-TEXTOS: Genesis 1:1; Apocalipsis 4:11; 1 Corintios 15:28; Juan 3:16; 1 Juan 4:8; 1 Timoteo 1:17; Exodo 34:6, 7; Juan 14:9
+TEXTOS: Génesis 1:1; Apocalipsis 4:11; 1 Corintios 15:28; Juan 3:16; 1 Juan 4:8; 1 Timoteo 1:17; Éxodo 34:6, 7; Juan 14:9
 
 --- Creencia 04 — DIOS EL HIJO ---
 
-El Hijo Eterno se encarno en Jesucristo. Por medio de El fueron creadas todas las cosas, se revelo el caracter de Dios, se realizo la salvacion y se juzga al mundo. Aunque era eternamente Dios, tambien se hizo verdaderamente hombre. Fue concebido por el Espiritu Santo, nacio de Maria, vivio sin pecado y revelo el amor y la justicia divina. Sus milagros confirmaron que era el Mesias prometido. Murio en la cruz por nuestros pecados, resucito, ascendio al cielo y hoy ministra en el Santuario celestial. Pronto volvera en gloria para liberar a su pueblo y restaurar todas las cosas.
+El Hijo Eterno se encarnó en Jesucristo. Por medio de Él fueron creadas todas las cosas, se reveló el carácter de Dios, se realizó la salvación y se juzga al mundo. Aunque era eternamente Dios, también se hizo verdaderamente hombre. Fue concebido por el Espíritu Santo, nació de María, vivió sin pecado y reveló el amor y la justicia divina. Sus milagros confirmaron que era el Mesías prometido. Murió en la cruz por nuestros pecados, resucitó, ascendió al cielo y hoy ministra en el Santuario celestial. Pronto volverá en gloria para liberar a su pueblo y restaurar todas las cosas.
 
 TEXTOS: Juan 1:1-3,14; Colosenses 1:15-19; Juan 10:30; 14:9; Romanos 6:23; 2 Corintios 5:17-19; Juan 5:22.
 
---- Creencia 05 — DIOS ESPIRITU SANTO ---
+--- Creencia 05 — DIOS EL ESPÍRITU SANTO ---
 
-Dios el Espiritu Eterno desempeno una parte activa con el Padre y el Hijo en la creacion, la encarnacion y la redencion. Inspiro a los autores de las Escrituras. Infundio poder a la vida de Cristo. Atrae y convence a los seres humanos, y renueva a los que responden y los transforma a la imagen de Dios. Enviado por el Padre y el Hijo para estar siempre con sus hijos, concede dones espirituales a la iglesia, la capacita para dar testimonio en favor de Cristo y, en armonia con las Escrituras, la guia a toda la verdad.
+Dios el Espíritu Eterno desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención. Inspiró a los autores de las Escrituras. Infundió poder a la vida de Cristo. Atrae y convence a los seres humanos, y renueva a los que responden y los transforma a la imagen de Dios. Enviado por el Padre y el Hijo para estar siempre con sus hijos, concede dones espirituales a la iglesia, la capacita para dar testimonio en favor de Cristo y, en armonía con las Escrituras, la guía a toda la verdad.
 
-TEXTOS: Genesis 1:1,2; Lucas 1:35; 4:18; Hechos 10:38; 2 Pedro 1:21; 2 Corintios 3:18; Efesios 4:11, 12; Hechos 1:8; Juan 14:16-18, 26; 15:26, 27; 16:7-13.
+TEXTOS: Génesis 1:1,2; Lucas 1:35; 4:18; Hechos 10:38; 2 Pedro 1:21; 2 Corintios 3:18; Efesios 4:11, 12; Hechos 1:8; Juan 14:16-18, 26; 15:26, 27; 16:7-13.
 
 === SEGUNDA DOCTRINA — LA DOCTRINA DEL HOMBRE ===
 
-La doctrina del hombre, segun la Biblia, se centra en la creacion del ser humano a imagen y semejanza de Dios (Genesis 1:26-27). Este acto de creacion confiere a cada individuo un valor intrinseco y una dignidad inigualable, dado que refleja el caracter divino.
+La doctrina del hombre, según la Biblia, se centra en la creación del ser humano a imagen y semejanza de Dios (Génesis 1:26-27). Este acto de creación confiere a cada individuo un valor intrínseco y una dignidad inigualable, dado que refleja el carácter divino. La naturaleza humana, aunque creada perfecta, fue afectada por el pecado cometido por Adán y Eva en el Jardín del Edén.
 
-La naturaleza humana, aunque creada perfecta, fue afectada por el pecado cometido por Adan y Eva en el Jardin del Eden, lo que condujo a una separacion de Dios y a la entrada del pecado y la muerte en el mundo (Genesis 3:1-24)
+--- Creencia 06 — LA CREACIÓN ---
 
-El hombre fue constituido mayordomo de la creacion y a pesar del pecado sigue conservando esa tarea en el mundo actual. Su nivel de responsabilidad sigue orientando su amor a Dios y a sus semejantes y esta compuesta por dos creencias, la creacion y la naturaleza del hombre.
+Dios es el Creador de todas las cosas, y reveló en las Escrituras el relato auténtico de su actividad creadora. El Señor hizo en seis días «los cielos y la tierra» y todo ser viviente que la habita, y reposó en el séptimo día de esa primera semana. De ese modo estableció el sábado como un monumento perpetuo conmemorativo de la terminación de su obra creadora. Hizo al primer hombre y la primera mujer a su imagen como corona de la creación, y les dio dominio sobre el mundo y la responsabilidad de cuidar de él. Cuando el mundo quedó terminado era «bueno en gran manera», proclamando la gloria de Dios
+
+TEXTOS: Génesis 1; 2; Éxodo 20:8-11; Salmos 19:1-6; 33:6, 9; 104; Hebreos 11:3.
+
+--- Creencia 07 — LA NATURALEZA HUMANA ---
+
+Dios creó al hombre y la mujer a su imagen, con libertad para pensar y actuar, siendo una unidad de cuerpo, mente y espíritu dependiente de Él. Al desobedecer, Adán y Eva cayeron, distorsionaron la imagen divina y quedaron sujetos a la muerte. Sus descendientes heredan una naturaleza caída, con tendencias al mal. Pero en Cristo, Dios reconcilió al mundo consigo mismo y, por medio del Espíritu Santo, restaura su imagen en los arrepentidos. Fuimos creados para su gloria, llamados a amar a Dios, al prójimo y a cuidar el entorno que nos rodea.
+
+TEXTOS: Génesis 1:26-28; 2:7; Salmos 8:4-8; Hechos 17:24-28; Génesis 3; Salmos 51:5; Romanos 5:12-17; 2 Corintios 5:19,20.
+
+=== TERCERA DOCTRINA — LA DOCTRINA DE LA SALVACION ===
+
+La doctrina de la salvación, según la Biblia, se centra en el plan divino para rescatar a la humanidad del pecado y sus consecuencias. La salvación no es algo que los seres humanos puedan ganar por sus propios méritos; es un regalo inmerecido que se recibe por medio de la fe (Efesios 2:8-9). La salvación implica varias etapas, comenzando con la justificación, continuando con la santificación y culminando con la glorificación.
+
+--- Creencia 08 — EL GRAN CONFLICTO ---
+
+La humanidad está inmersa en un conflicto entre Cristo y Satanás sobre el carácter de Dios, su ley y su soberanía. Este conflicto comenzó en el cielo cuando Lucifer, un ser creado, se rebeló y se convirtió en Satanás, arrastrando a otros ángeles. Introdujo el pecado en la Tierra al tentar a Adán y Eva, distorsionando la imagen de Dios en la humanidad y alterando la creación, culminando en el diluvio. El mundo es el escenario de este conflicto, observado por el universo. Cristo envía al Espíritu Santo y a sus ángeles para guiar, proteger y fortalecer a su pueblo.
+
+TEXTOS: Apocalipsis 12:4-9; Isaías 14:12-14; Ezequiel 28:12-18; Génesis 3; Romanos 1:19-32; 5:12-21; 8:19-22; Génesis 6:8; 2 Pedro 3:6; 1 Corintios 4:9; Hebreos 1:14
+
+--- Creencia 09 — LA VIDA, MUERTE Y RESURRECCIÓN DE CRISTO ---
+
+La vida, muerte y resurrección de Cristo son el único medio provisto por Dios para expiar el pecado humano. Quienes aceptan esta expiación por fe reciben vida eterna y comprenden mejor el amor divino. La muerte de Jesús vindica la justicia de la ley de Dios y garantiza el perdón. Su sacrificio es vicario, expiatorio, reconciliador y transformador. Su resurrección proclama la victoria sobre el mal y asegura el triunfo final sobre el pecado y la muerte. Ella confirma el señorío de Cristo, ante quien toda rodilla se doblará en el cielo y en la tierra.
+
+TEXTOS: Juan 3:16; Isaías 53; 1 Pedro 2:21,22; 1 Corintios 15:3,4,20-22; 2 Corintios 5:14,15,19-21; Romanos 1:4; 3:25; 4:25; 8:3,4; 1 Juan 2:2; 4:10; Colosenses 2:15; Filipenses 2:6-11.
+
+--- Creencia 10 — LA EXPERIENCIA DE LA SALVACIÓN ---
+
+Con amor infinito, Dios hizo que Cristo tomara nuestro lugar, para que fuéramos hechos justicia de Dios en Él. Guiados por el Espíritu Santo, reconocemos nuestro pecado, nos arrepentimos y creemos en Jesús como Salvador y ejemplo. Esta fe, don de la gracia divina, viene por la Palabra de Dios. A través de Cristo somos justificados, adoptados como hijos y liberados del pecado. El Espíritu nos hace nacer de nuevo, renueva nuestros corazones y nuestras mentes, graba su ley en nuestras mentes y nos capacita para una vida santa. Al permanecer en Cristo, participamos de su naturaleza y tenemos seguridad de salvación.
+
+TEXTOS: 2 Corintios 5:17-21; Juan 3:16; Gálatas 1:4; 4:4-7; Tito 3:3-7; Juan 16:8; Gálatas 3:13,14; 1 Pedro 2:21,22; Romanos 10:17; Lucas 17:5; Marcos 9:23,24.
+
+=== CUARTA DOCTRINA — LA DOCTRINA DE LA IGLESIA ===
+
+La iglesia, según la Biblia, es el cuerpo de Cristo, compuesto por todos los creyentes llamados por el Espíritu Santo. Cristo es la cabeza de esta comunidad espiritual, que se reúne para adorar, edificarse en el amor y vivir la verdad del evangelio. A través del bautismo, los creyentes se incorporan a esta familia, y la Cena del Señor celebra su gracia y unidad.
+
+--- Creencia 11 — CRECER EN CRISTO ---
+
+Jesús venció a las fuerzas del mal en la cruz, asegurando su destrucción final. Su victoria nos da poder sobre el mal, paz, gozo y la certeza de su amor. El Espíritu Santo habita en nosotros y nos libera de nuestro pasado. En Cristo, ya no vivimos en temor ni oscuridad. Somos llamados a crecer a su semejanza, mediante la oración, el estudio de su Palabra, la alabanza, la adoración y la misión. Al servir con amor y testificar de la salvación, cada momento se transforma en una experiencia espiritual guiada por su presencia.
+
+TEXTOS: Salmos 1:1,2; 23:4; 77:11,12; Colosenses 1:13,14; 2:6,14,15; Lucas 10:17-20; Efesios 5:19,20; 6:12-18; 1 Tesalonicenses 5:23; 2 Pedro 2:9; 3:18; 2 Corintios 3:17,18; Filipenses 3:7-14; 1 Tesalonicenses 5:16-18; Mateo 20:25-28; Juan 20:21; Gálatas 5:22-25; Romanos 8:38,39; 1 Juan 4:4; Hebreos 10:25.
+
+--- Creencia 12 — LA IGLESIA ---
+
+La iglesia es la comunidad de creyentes que confiesan a Jesús como Señor y Salvador. Como pueblo de Dios, somos llamados a salir del mundo, reunirnos para adorar, estudiar la Palabra, compartir la Cena del Señor, servir y proclamar el evangelio. La iglesia recibe su autoridad de Cristo y las Escrituras. Es la familia de Dios, hijos adoptivos bajo el nuevo pacto; el cuerpo de Cristo, cuya cabeza es Él; y la esposa que Él santifica con su sacrificio. Al regresar, Cristo presentará una iglesia gloriosa, santa y sin mancha, formada por los fieles de todas las edades.
+
+TEXTOS: Génesis 12:3; Hechos 7:38; Efesios 4:11-15; 3:8-11; Mateo 28:19,20; 16:13-20; 18:18; Efesios 2:19-22; 1:22,23; 5:23-27; Colosenses 1:17,18.
+
+--- Creencia 13 — EL REMANENTE Y SU MISIÓN ---
+
+La iglesia universal está compuesta de todos los que creen verdaderamente en Cristo; pero en los últimos días, una época de apostasía generalizada, se llamó a un remanente para que guarde los mandamientos de Dios y la fe de Jesús. Este remanente anuncia la llegada de la hora del juicio, proclama la salvación por medio de Cristo y pregona la proximidad de su segunda venida. Esta proclamación está simbolizada por los tres ángeles de Apocalipsis 14; coincide con la hora del juicio en los cielos y, como resultado, se produce una obra de arrepentimiento y reforma en la Tierra. Se invita a todos los creyentes a participar personalmente en este testimonio mundial
+
+TEXTOS: Apocalipsis 12:17; 14:6-12; 18:1-4; 2 Corintios 5:10; Judas 3,14; 1 Pedro 1:16-19; 2 Pedro 3:10-14; Apocalipsis 21:1-14.
+
+--- Creencia 14 — LA UNIDAD EN EL CUERPO DE CRISTO ---
+
+(SIN DECLARACION: errata. Ver la nota de arriba.)
+
+TEXTOS: Romanos 12:4, 5; 1 Corintios 12:12-14; Mateo 28:19,20; Salmos 133:1; 2 Corintios 5:16,17; Hechos 17:26,27; Gálatas 3:27, 29; Colosenses 3:10-15; Efesios 4:14-16.
+
+--- Creencia 15 — EL BAUTISMO ---
+
+Por medio del bautismo confesamos nuestra fe en la muerte y resurrección de Jesucristo, y damos testimonio de nuestra muerte al pecado y de nuestro propósito de andar en novedad de vida. De este modo reconocemos a Cristo como nuestro Señor y Salvador, llegamos a ser su pueblo y somos recibidos como miembros de su iglesia. El bautismo es un símbolo de nuestra unión con Cristo, del perdón de nuestros pecados y de nuestro recibimiento del Espíritu Santo. Se realiza por inmersión en agua, y depende de una afirmación de fe en Jesús y de la evidencia de arrepentimiento del pecado. Sigue a la instrucción en las Sagradas Escrituras y a la aceptación de sus enseñanzas.
+
+TEXTOS: Romanos 6:1-6; Colosenses 2:12, 13; Hechos 16:30-33; 22:16; 2:38; Mateo 28:19-20
+
+--- Creencia 16 — LA CENA DEL SEÑOR ---
+
+La Cena del Señor es una participación en los emblemas del cuerpo y la sangre de Jesús como expresión de fe en él, nuestro Señor y Salvador. Cristo está presente en esta experiencia de comunión para encontrarse con su pueblo y fortalecerlo. Al participar de la Cena, proclamamos gozosamente la muerte del Señor hasta que venga. La preparación para la Cena incluye un examen de conciencia, el arrepentimiento y la confesión. El Maestro ordenó el servicio del lavamiento de los pies para denotar una renovada purificación, para expresar la disposición a servirnos mutuamente en humildad cristiana, y para unir nuestros corazones en amor. El servicio de comunión está abierto a todos los creyentes cristianos.
+
+TEXTOS: 1 Corintios 10-16,17; 11:23-30; Mateo 26:17-30; Apocalipsis 3:20; Juan 6:48-63; 13:1-17.
+
+--- Creencia 17 — LOS DONES Y MINISTERIOS ESPIRITUALES ---
+
+Dios otorga dones espirituales a todos los miembros de su iglesia en todas las épocas, para servir con amor al prójimo y edificar la iglesia. Estos dones, distribuidos por el Espíritu Santo según su voluntad, incluyen fe, sanidad, profecía, enseñanza, administración, compasión, entre otros. Algunos son llamados a funciones específicas como pastores, evangelistas o maestros, para preparar a los creyentes, fortalecer la iglesia y promover la unidad en la fe. Cuando los miembros usan fielmente estos dones, la iglesia crece, se protege de errores, y se edifica en la fe y el amor.
+
+TEXTOS: Romanos 12:4-8; 1 Corintios 12:9-11,27,28; Efesios 4:8,11-16; Hechos 6:1-7; 1 Timoteo 3:1-13; 1 Pedro 4:10,11.
+
+--- Creencia 18 — EL DON DE PROFECÍA ---
+
+Uno de los dones del Espíritu Santo es el de profecía. Este don es una señal identificadora de la iglesia remanente y se manifestó en el ministerio de Elena G. de White. Como mensajera del Señor, sus escritos son una permanente y autorizada fuente de verdad que proporciona consuelo, dirección, instrucción y corrección a la iglesia. Ellos también establecen con claridad que la Biblia es la norma por la cual debe ser probada toda enseñanza y toda experiencia
+
+TEXTOS: Joel 2:28,29; Hechos 2:14-21; Hebreos 1:1-3; Apocalipsis 12:17; 19:10.
+
+=== QUINTA DOCTRINA — LA DOCTRINA DE LA VIDA CRISTIANA ===
+
+Reconocemos como adventistas que fuimos creados a la imagen y semejanza de Dios y por su gracia vivimos en el camino de la obediencia a sus mandamientos y principios de vida, establecidos en los diez mandamientos, siendo mayordomos de lo que nos ha sido confiado y reconociendo el matrimonio como una institución sagrada establecida por Dios entre un hombre y una mujer.
+
+--- Creencia 19 — LA LEY DE DIOS ---
+
+Los Diez Mandamientos reflejan los principios de la ley de Dios y se cumplen en la vida de Cristo. Expresan su amor, voluntad y propósito para la conducta humana, y son válidos para todos en todo tiempo. Son la base del pacto divino y la norma en el juicio. El Espíritu Santo usa la ley para revelar el pecado y mostrar la necesidad de un Salvador. Aunque la salvación es por gracia, la obediencia es su fruto. Obedecer desarrolla el carácter cristiano, muestra amor a Dios y al prójimo, y evidencia el poder de Cristo para transformar vidas.
+
+TEXTOS: Éxodo 20:1-17; Salmos 40:7,8; Mateo 22:36-40; Deuteronomio 28:1-14; Mateo 5:17-20; Hebreos 8:8-10; Juan 15:7-10; Efesios 2:8-10; 1 Juan 5:3; Romanos 8:3, 4; Salmos 19:7-14.
+
+--- Creencia 20 — EL SÁBADO ---
+
+Después de crear el mundo en seis días, Dios descansó el séptimo e instituyó el sábado como recordatorio de la Creación para toda la humanidad. El cuarto mandamiento ordena su observancia como día de reposo, adoración y servicio, siguiendo el ejemplo de Jesús. El sábado representa nuestra redención en Cristo, es señal de santificación, lealtad y esperanza en la vida eterna. También es un pacto perpetuo entre Dios y su pueblo. Su observancia, de puesta de sol a puesta de sol, es una celebración gozosa de la obra creadora y redentora de Dios.
+
+TEXTOS: Génesis 2:1-3; Éxodo 20:8-11; Lucas 4:16; Isaías 56:5,6; 58:13,14; Mateo 12:1-12; Éxodo 31:13-17; Ezequiel 20:12,20; Deuteronomio 5:12-15; Hebreos 4:1-11; Levítico 23:32; Marcos 1:32.
+
+--- Creencia 21 — LA MAYORDOMÍA ---
+
+Somos mayordomos de Dios, a quienes se nos ha confiado tiempo y oportunidades, capacidades y posesiones, y las bendiciones de la tierra y sus recursos. Y somos responsables ante él por el empleo adecuado de todas esas dádivas. Reconocemos el derecho de propiedad por parte de Dios mediante nuestro servicio fiel a él y a nuestros semejantes, y mediante la devolución de los diezmos y las ofrendas que damos para la proclamación de su evangelio y para el sostén y desarrollo de su iglesia. La mayordomía es un privilegio que Dios nos ha concedido para que crezcamos en amor y para que logremos la victoria sobre el egoísmo y la codicia. El mayordomo fiel se regocija por las bendiciones que reciben los demás como fruto de su fidelidad.
+
+TEXTOS: Génesis 1:26-28; 2:15; 1 Crónicas 29:14; Hageo 1:3-11; Malaquías 3:8-12; 1 Corintios 9:9-14; Mateo 23:23; 2 Corintios 8:1-15; Romanos 15:26,27.
+
+--- Creencia 22 — LA CONDUCTA CRISTIANA ---
+
+Somos llamados a reflejar los principios del cielo, dejando que el Espíritu Santo forme en nosotros el carácter de Cristo. Por eso, elegimos actividades que promuevan pureza, salud y gozo cristiano. Nuestra vestimenta debe ser modesta y de buen gusto, mostrando una belleza interior. Como templos del Espíritu Santo, cuidamos nuestro cuerpo con ejercicio, descanso y una alimentación saludable. Nos abstenemos del alcohol, tabaco, drogas y alimentos inmundos, según las Escrituras. Vivimos en armonía con la disciplina de Cristo, quien desea que tengamos salud, alegría y todo lo bueno.
+
+TEXTOS: Romanos 12:1,2; 1 Juan 2:6; Efesios 5:1-21; Filipenses 4:8; 2 Corintios 10:5; 6:14-7:1; 1 Pedro 3:1-4; 1 Corintios 6:19,20; 10:31; Levítico 11:1-47; 3 Juan 2.
+
+--- Creencia 23 — EL MATRIMONIO Y LA FAMILIA ---
+
+El matrimonio fue establecido por Dios como una unión para toda la vida entre un hombre y una mujer, basada en el amor y la fe compartida. Es un compromiso sagrado que refleja la relación entre Cristo y su iglesia. Jesús enseñó que el divorcio solo es aceptable por inmoralidad sexual; fuera de eso, volver a casarse es adulterio. Aunque no todas las familias son ideales, en Cristo los esposos pueden alcanzar unidad. Dios desea que la familia crezca en amor y madurez, y que los padres eduquen a sus hijos con ejemplo y fidelidad.
+
+TEXTOS: Génesis 2:18-25; Mateo 19:3-9; Juan 2:1-11; 2 Corintios 6:14; Efesios 5:21-33; Mateo 5:31,32; Marcos 10:11,12; Lucas 16:18; 1 Corintios 7:10,11; Éxodo 20:12; Efesios 6:1-4; Deuteronomio 6:5-9; Proverbios 22:6; Malaquías 4:5,6.
+
+=== SEXTA DOCTRINA — LA DOCTRINA DE LOS ACONTECIMIENTOS FINALES ===
+
+La doctrina de los acontecimientos finales se centra en los eventos que precederán el regreso de Cristo y la conclusión de la historia humana en esta tierra. Esta doctrina se basa en las profecías bíblicas, principalmente los libros de Daniel y Apocalipsis. Los adventistas creemos que estamos viviendo en los últimos días y que es esencial estar preparados para la segunda venida de Cristo.
+
+--- Creencia 24 — EL MINISTERIO DE CRISTO EN EL SANTUARIO CELESTIAL ---
+
+Hay un santuario en el cielo donde Cristo ministra como nuestro Sumo Sacerdote desde su ascensión. Su sacrificio en la cruz fue suficiente, pero en 1844 comenzó la fase final de su ministerio: el juicio investigador. Este proceso, simbolizado en el Día de la Expiación, busca revelar quiénes, muertos o vivos, están en Cristo y preparados para la vida eterna. Esta obra celestial vindica la justicia de Dios y confirma que los fieles recibirán el reino. Cuando Cristo concluya este ministerio, terminará el tiempo de prueba antes de su regreso.
+
+TEXTOS: Hebreos 8:1-5; 4:14-16; 9:11-28; 10:19-22; 1:3; 2:16,17; Daniel 7:9-27; 8:13,14; 9:24-27; Números 14:34; Ezequiel 4:6; Levítico 16; Apocalipsis 14:6,7; 20:12; 14:12; 22:12.
+
+--- Creencia 25 — LA SEGUNDA VENIDA DE CRISTO ---
+
+La segunda venida de Cristo es la esperanza suprema de la iglesia y la culminación del evangelio. Será un evento literal, personal, visible y global. En su regreso, los justos muertos resucitarán y, junto con los vivos fieles, serán glorificados y llevados al cielo. Los impíos morirán. El cumplimiento de las profecías y las condiciones actuales del mundo indican que este evento es inminente. Aunque la fecha exacta no ha sido revelada, se nos llama a vivir preparados en todo momento para su regreso.
+
+TEXTOS: Tito 2:13; Hebreos 9:28; Juan 14:1-3; Hechos 1:9-11; Mateo 24:14; Apocalipsis 1:7; Mateo 24:43,44; 1 Tesalonicenses 4:13-18; 1 Corintios 15:51-54; 2 Tesalonicenses 1:7-10; 2:8; Apocalipsis 14:14-20; 19:11-21; Mateo 24; Marcos 13; Lucas 21; 2 Timoteo 3:1-5; 1 Tesalonicenses 5:1-6.
+
+--- Creencia 26 — LA MUERTE Y LA RESURRECCIÓN ---
+
+La consecuencia del pecado es la muerte, pero Dios, el único inmortal, dará vida eterna a los redimidos. Hasta entonces, la muerte es un estado de inconsciencia. Cuando Cristo regrese, los justos muertos resucitarán y, junto con los vivos fieles, serán glorificados y llevados con Él. La resurrección de los impíos ocurrirá mil años después, como parte del juicio final.
+
+TEXTOS: Romanos 6:23; 1 Timoteo 6:15,16; Ecleciastés 9:5,6; Salmos 146:3,4; Juan 11:11-14; Col. 3:4; 1 Corintios 15:51-54; 1 Tesalonicenses 4:13-17; Juan 5:28,29; Apocalipsis 20:1-10.
+
+--- Creencia 27 — EL MILENIO Y EL FIN DEL PECADO ---
+
+El milenio es el período de mil años en que Cristo reinará con sus santos en el cielo, entre la primera y la segunda resurrección. Durante ese tiempo, los impíos serán juzgados, y la Tierra quedará desolada, habitada solo por Satanás y sus ángeles. Al final del milenio, Cristo, los redimidos y la Santa Ciudad descenderán del cielo. Los impíos resucitarán y, junto con Satanás, rodearán la ciudad, pero serán destruidos por el fuego de Dios. Así, el pecado y los pecadores serán eliminados para siempre.
+
+TEXTOS: Apocalipsis 20; 1 Corintios 6:2,3; Jeremías 4:23-26; Apocalipsis 21:1-5; Malaquías 4:1; Ezequiel 28:18,19.
+
+--- Creencia 28 — LA TIERRA NUEVA ---
+
+En la Tierra Nueva, donde habita la justicia, Dios dará un hogar eterno a los redimidos. Será un lugar perfecto de vida, amor, gozo y aprendizaje continuo en su presencia. Allí Dios vivirá con su pueblo, y ya no habrá más sufrimiento ni muerte. El gran conflicto habrá terminado, y el pecado no existirá jamás. Todo el universo proclamará que Dios es amor, y Él reinará por la eternidad.
+
+TEXTOS: 2 Pedro 3:13; Isaías 35; 65:17-25; Mateo 5:5; Apocalipsis 21:1-7; 22:1-5; 11:5.
+
