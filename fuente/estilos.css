@@ -1563,3 +1563,53 @@ details.card summary::marker{content:''}
 .pan-lb input,.pan-lb select{flex:0 1 auto;width:100%;min-height:44px}
 
 }  /* fin @media screen */
+
+/* ───────────────────────── EJERCICIOS INTERACTIVOS ─────────────────────────
+   Se tocan con el pulgar, asi que todo lo tocable pasa de 44px de alto. Las
+   columnas de emparejar se quedan en dos SIEMPRE, tambien en escritorio:
+   emparejar es un gesto de mirar a izquierda y a derecha, y estirarlo a
+   1900px lo vuelve ilegible igual que un parrafo de una sola linea. */
+.jg-modos{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.35rem;margin-bottom:.5rem;
+  -webkit-overflow-scrolling:touch}
+.jg-modos::-webkit-scrollbar{display:none}
+.jg-m{flex:0 0 auto;min-height:38px;padding:.45rem .8rem;border-radius:999px;cursor:pointer;
+  border:1.5px solid var(--borde);background:#fff;color:var(--gris);font-size:.82rem;
+  font-weight:600;white-space:nowrap}
+.jg-m.on{background:var(--azul);border-color:var(--azul);color:#fff}
+.jg-zona{max-width:640px;margin:0 auto}
+.jg-zona .prog-lin{margin-bottom:.9rem}
+.jg-par{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.jg-col{display:flex;flex-direction:column;gap:.5rem;min-width:0}
+.jg-gr{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.9rem}
+/* Los rotulos largos (una doctrina entera, «Creencia 24 — El ministerio de
+   Cristo en el Santuario celestial») no caben en fila: cada boton queda de un
+   ancho distinto y el borde izquierdo sale en escalera. En columna se leen y
+   ademas el pulgar los alcanza todos sin moverse de lado. */
+.jg-gr.col{flex-direction:column;align-items:stretch}
+.jg-g{min-height:46px;padding:.6rem .85rem;border-radius:12px;cursor:pointer;
+  border:1.5px solid var(--borde);background:#fff;color:var(--tinta);font-size:.86rem;
+  font-weight:600;text-align:left;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  box-shadow:0 1.5px 0 var(--borde)}
+.jg-g:active{transform:translateY(1.5px);box-shadow:none}
+.jg-g.sel{border-color:var(--azul);background:#EEF3FB}
+.jg-g.ok{border-color:#1A7A1A;background:#EAF7EA;color:#1A7A1A}
+.jg-g[style*="--c"]{border-left:5px solid var(--c)}
+.jg-carta{background:#fff;border:1.5px solid var(--borde);border-radius:14px;padding:1.1rem;
+  text-align:center;font-size:.8rem;color:var(--gris)}
+.jg-carta b{display:block;margin-top:.3rem;font-size:1.05rem;color:var(--tinta);line-height:1.3}
+.jg-fila{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;min-height:38px}
+.jg-p{padding:.35rem .6rem;border-radius:999px;font-size:.8rem;font-weight:600;
+  background:#EAF7EA;color:#1A7A1A}
+.jg-ins{font-size:.79rem;color:var(--gris);font-style:italic;margin-bottom:.5rem}
+.jg-frase{background:#fff;border:1.5px solid var(--borde);border-radius:14px;padding:1rem;
+  line-height:2.1;font-size:.95rem}
+.jg-h{display:inline-block;min-width:82px;text-align:center;border-bottom:2.5px solid var(--nar);
+  padding:0 .3rem;font-weight:700;color:var(--gris)}
+.jg-h.ok{border-color:#1A7A1A;color:#1A7A1A}
+.jg-fin{text-align:center;padding:1.6rem 1rem}
+.jg-fin-t{font-size:1.5rem;font-weight:800;color:var(--azul)}
+.jg-fin-s{margin:.4rem 0 1.1rem;color:var(--gris);font-size:.88rem}
+@media (min-width:700px){
+  .jg-g{font-size:.9rem}
+  .jg-gr{max-width:600px;margin-left:auto;margin-right:auto}
+}

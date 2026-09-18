@@ -2,9 +2,15 @@
 // El stub del navegador vive en tests/entorno.js, compartido por las tres suites.
 const {montar,RAIZ}=require('./entorno.js');
 const path=require('path');
+/* Arriba del todo: se usa desde la mitad del archivo en adelante, y un
+   `const` usado antes de su declaracion lanza TDZ. Es el mismo tropiezo que
+   ya costo tres veces en fuente/app.js. */
+const CR=require(path.join(RAIZ,'fuente','creencias.js'));
 
 /* Lo que esta suite necesita de la app. Es su superficie, no duplicacion. */
-const RET=`S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
+const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jgBanco,
+        gruposDe, ronda:()=>jgR, bien_:()=>jgBien, mal_:()=>jgMal, modoJuego:()=>jgModo,
+        S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
         poolDe, opcionesCuantas, segundosPara,
@@ -351,8 +357,12 @@ ok(F2.capsDe().length===28&&F2.capsDe().every(c=>/^cr\d\d$/.test(c.id)),
   'Y ve las 28 creencias, y nada más');
 ok(F2.tarjetasDe().every(x=>/^cr\d\d$/.test(x.cap)),'Sus tarjetas son solo de creencias');
 F2.ponAlcance('todo');
-ok(F2.poolDe().length===84&&F2.poolDe().every(q=>/^cr\d\d$/.test(q.cap)),
-  'Y su examen son las 84 preguntas de creencias');
+/* El numero se lee del banco, no se escribe. Estaba clavado en 84 y al crecer
+   el banco la prueba fallaba sin que nada estuviera mal: una prueba que hay
+   que editar cada vez que el material crece no protege nada, estorba. Lo que
+   de verdad importa es que no se cuele NI UNA pregunta de otra actividad. */
+ok(F2.poolDe().length===CR.CR_BANCO.length&&F2.poolDe().every(q=>/^cr\d\d$/.test(q.cap)),
+  'Y su examen son las '+CR.CR_BANCO.length+' preguntas de creencias, y solo esas');
 
 /* Al revés: una categoría de Conexión Bíblica no ve ni una creencia. Esta es
    la garantía que antes dependía de un filtro a mano en poolDe(). */
@@ -576,7 +586,6 @@ A.ponCat('av'); A.ponAlcance('todo'); A.ponNivel(0); A.ponCuantas(15);
 
 /* El material de estudio de cada creencia trae la declaración oficial y los
    textos clave: sin eso, la tarjeta y la pregunta no tienen de dónde salir. */
-const CR=require(path.join(RAIZ,'fuente','creencias.js'));
 ok(CR.CR_CAPS.length===28,'Las 28 creencias están cargadas');
 /* Ya no llevan `ev:'creencias'`: pertenecen a las categorias de su propia
    actividad, que es lo que las separa sin filtros a mano. */
@@ -584,11 +593,34 @@ ok(CR.CR_CAPS.every(c=>c.sub&&c.cats.includes('ec1')&&c.cats.includes('ec2')),
   'Cada creencia tiene título y pertenece a las dos categorías de su actividad');
 ok(CR.CR_CAPS.every(c=>!('ev' in c)),
   'Y ya no lleva la marca `ev` con la que se filtraban a mano');
+/* La primera pestaña trae la declaracion citada y la segunda los textos. Se
+   comprueba por la comilla angular, no por el rotulo: el rotulo cambio al
+   pasar a la cartilla («Creencia 1 — La Palabra de Dios») y la prueba fallo
+   sin que faltara nada. Lo verificable es que la cita este, no como se titula.
+   Los textos se buscan en el TITULO de la pestaña, que es donde de verdad
+   estan: buscarlos en el cuerpo obligaba a repetir el rotulo dentro del HTML
+   solo para que la prueba lo encontrara. */
 ok(Object.keys(CR.CR_CONTENIDO).length===28 &&
-   Object.values(CR.CR_CONTENIDO).every(v=>/Declaración oficial/.test(v[0].h)&&/Textos clave/.test(v[1].h)),
-  'Cada creencia trae su declaración oficial y sus textos clave');
-ok(CR.CR_BANCO.length>=84 && CR.CR_BANCO.every(q=>q.o&&new Set(q.o).size===4),
-  'El banco de creencias tiene '+CR.CR_BANCO.length+' preguntas y ninguna repite opción');
+   Object.values(CR.CR_CONTENIDO).every(v=>/«/.test(v[0].h)&&/[Tt]extos clave/.test(v[1].t)),
+  'Cada creencia trae su declaración citada y sus textos clave');
+/* Las cinco de la doctrina de Dios ya llevan las cinco pestañas. Es un piso:
+   cuando las otras 23 se completen, esto se sube a las 28. */
+const CINCO=['cr01','cr02','cr03','cr04','cr05'];
+ok(CINCO.every(id=>CR.CR_CONTENIDO[id].length===5),
+  'Las cinco creencias de la doctrina de Dios traen sus cinco pestañas');
+ok(CR.DOCTRINAS.length===6 &&
+   CR.DOCTRINAS.reduce((a,d)=>a+(d.hasta-d.desde+1),0)===28 &&
+   CR.CR_CAPS.every(c=>c.doc&&CR.DOCTRINAS.some(d=>d.id===c.doc)),
+  'Las 6 doctrinas cubren las 28 creencias y cada creencia declara la suya');
+/* La comprobacion de las cuatro opciones vale solo para las de seleccion
+   multiple. Antes se le aplicaba a TODO el banco, y pasaba unicamente porque
+   no habia ni una de verdadero/falso ni de completar: la prueba no estaba
+   comprobando lo que decia, se estaba apoyando en que el banco era pobre. */
+const CR_MC=CR.CR_BANCO.filter(q=>q.t==='mc');
+ok(CR.CR_BANCO.length>=84 && CR_MC.every(q=>q.o&&new Set(q.o).size===4),
+  'El banco de creencias tiene '+CR.CR_BANCO.length+' preguntas y ninguna de selección repite opción');
+ok(CR.CR_BANCO.some(q=>q.t==='tf') && CR.CR_BANCO.some(q=>q.t==='fill'),
+  'Y ya no es solo selección múltiple: trae verdadero/falso y completar');
 ok(CR.CR_TARJETAS.length>=56,'Las creencias traen '+CR.CR_TARJETAS.length+' tarjetas');
 
 /* ───────── LO QUE ENCONTRÓ LA REVISIÓN DE QA ─────────
@@ -1162,5 +1194,73 @@ ok(N.el('pc-l').innerHTML.indexOf('pc-r')>0,'y las filas quedan pintadas');
 N.cierraPaleta();
 ok(!N.pcEstaAbierta()&&N.el('paleta').hidden,'y se cierra');
 
+/* ── EJERCICIOS INTERACTIVOS ───────────────────────────────────────────────
+   Lo que hay que proteger no es que los juegos "funcionen": es que sean
+   GENERICOS. El dia que se enciendan en Daniel y en la matutina, lo unico
+   que puede romperlos es que alguno haya quedado leyendo algo propio de las
+   creencias. Por eso la prueba central es la ultima: en una categoria de
+   Daniel siguen estando los tres que no necesitan grupos, y clasificar NO
+   aparece porque Daniel todavia no declara los suyos. */
+store={};
+const JG=montar(RET,{store});
+JG.el('bv-nombre').value='Camilo';
+JG.bvSigue(); JG.bvActividad('ec'); JG.bvCategoria('ec1');
+
+ok(JG.gruposDe().length===6,'En creencias hay 6 grupos para clasificar (las doctrinas)');
+const idsJ=JG.juegosDisponibles().map(j=>j.id);
+ok(['tarjetas','parear','clasif','ordenar','banco'].every(x=>idsJ.includes(x)),
+  'En creencias se ofrecen los cinco modos: '+idsJ.join(', '));
+
+/* Clasificar: acertar la doctrina suma, equivocarse no bloquea. */
+JG.ponJuego('clasif');
+let r=JG.ronda();
+ok(r&&r.tipo==='clasif'&&r.items.length>0,'La ronda de clasificar trae items');
+const itemJG=r.items[0];
+JG.jgClasif(itemJG.doc);
+ok(JG.bien_()===1&&JG.mal_()===0,'Clasificar en la doctrina correcta cuenta como acierto');
+const otraDoc=JG.gruposDe().find(g=>g.id!==r.items[1].doc);
+JG.jgClasif(otraDoc.id);
+ok(JG.mal_()===1,'Y en la doctrina equivocada cuenta como error, sin trabar la ronda');
+
+/* Emparejar: la pareja es el MISMO capitulo visto por su clave y por su valor. */
+JG.ponJuego('parear');
+r=JG.ronda();
+ok(r.izq.length===5&&r.der.length===5,'Emparejar saca cinco parejas');
+const cualDer=r.der.findIndex(c=>c.id===r.izq[0].id);
+JG.jgPar('i',0); JG.jgPar('d',cualDer);
+ok(JG.ronda().listos.length===1,'Tocar la clave y su valor cierra la pareja');
+
+/* Ordenar: el orden sale del numero del id, no de una lista aparte. */
+JG.ponJuego('ordenar');
+r=JG.ronda();
+const primeroJG=r.pool.findIndex(c=>c.id===r.bien[0].id);
+JG.jgOrden(primeroJG);
+ok(JG.ronda().puestos.length===1,'Ordenar acepta el que va primero');
+
+/* Banco de palabras: es una pregunta de completar del examen, sin teclado. */
+JG.ponJuego('banco');
+r=JG.ronda();
+ok(r.huecos.length>0&&r.bolsa.length>r.huecos.length,
+  'El banco trae huecos y mas palabras que huecos (hay señuelos)');
+const palJG=r.bolsa.indexOf(r.huecos[0].b);
+JG.jgBanco(palJG);
+ok(Object.keys(JG.ronda().puestas).length===1,'Tocar la palabra correcta llena el primer hueco');
+
+/* LA PRUEBA QUE IMPORTA: los mismos juegos en otraDoc actividad, sin tocar nada. */
+store={};
+const JD=montar(RET,{store});
+JD.el('bv-nombre').value='Camilo';
+JD.bvSigue(); JD.bvActividad('cb'); JD.bvCategoria('av');
+const idsK=JD.juegosDisponibles().map(j=>j.id);
+ok(JD.gruposDe().length===0,'Daniel todavia no declara grupos');
+ok(!idsK.includes('clasif'),'Por eso clasificar NO se ofrece en Daniel, en vez de salir vacio');
+ok(['parear','ordenar','banco'].every(x=>idsK.includes(x)),
+  'Pero emparejar, ordenar y completar si funcionan en Daniel sin una linea nueva: '+idsK.join(', '));
+JD.ponJuego('parear');
+ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
+  'Y emparejan capitulos de Daniel, no creencias');
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
+
+
 process.exit(f?1:0);

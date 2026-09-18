@@ -24,8 +24,8 @@ const CAPS_ALL = [...CAPS, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
 const BANCO_ALL = [...BANCO, ...MAT.MAT_BANCO, ...CR.CR_BANCO];
 const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
-const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS];
-const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS };
+const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
+const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
 
 /* Cada pregunta sale al HTML con su nivel ya calculado (fuente/niveles.js).
    La app solo lee q.nv: la regla vive en un archivo y no se duplica. */
@@ -58,6 +58,17 @@ const CONTENIDO = ${JSON.stringify(CONTENIDO_ALL, null, 1)};
 const BANCO = ${JSON.stringify(BANCO_NV, null, 1)};
 
 const MODULOS = ${JSON.stringify(MODULOS_ALL, null, 1)};
+
+/* GRUPOS: la dimension de arriba de cada actividad. Hoy la unica que la
+   declara es «En esto creemos», con sus seis doctrinas, y por eso el
+   contenido sale de CR.DOCTRINAS. Un capitulo pertenece a un grupo por su
+   campo doc.
+
+   Se llama GRUPOS y no DOCTRINAS a proposito: el juego de clasificar no
+   sabe nada de doctrinas, sabe agrupar. El dia que Daniel declare los
+   suyos (los reyes, por ejemplo) se agregan aqui con otros ids y el juego
+   se enciende para Daniel sin tocar una linea de la app. */
+const GRUPOS = ${JSON.stringify(CR.DOCTRINAS, null, 1)};
 
 const CONT_MODULOS = ${JSON.stringify(CONT_MODULOS_ALL, null, 1)};
 

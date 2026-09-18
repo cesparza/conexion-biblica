@@ -22,49 +22,100 @@
    las creencias son un examen aparte con su propio alcance. Mezclarlos daría un
    examen que no corresponde a ninguna de las dos actividades. */
 
+/* ───────────────── LA DOCTRINA: LA DIMENSION DE ARRIBA ─────────────────
+   MECANISMO
+   La cartilla no presenta 28 creencias sueltas: las reparte en SEIS
+   doctrinas, y lo dice con todas las letras («Es la primera de nuestras
+   seis doctrinas y esta compuesta por la Palabra de Dios, la Deidad,
+   Dios el Padre, Dios el Hijo, Dios el Espiritu Santo»).
+
+   POR QUE ES UNA TABLA Y NO UN CAMPO DE TEXTO
+   Mientras la doctrina no existia como dato, «a que doctrina pertenece
+   el sabado» no se podia ni preguntar ni responder: habia que escribir
+   la pregunta y la respuesta a mano y mantenerlas sincronizadas. Con la
+   tabla, las preguntas de conteo y de pertenencia SALEN DEL DATO, igual
+   que `capsDe()` sale de `cats`. Es el mismo criterio del ADR-01: una
+   dimension por concepto, y la de arriba se declara primero.
+
+   Los ids van `dt*` y no `d*` porque `d1`..`d12` ya son los capitulos de
+   Daniel. Dos cosas distintas no comparten espacio de nombres. */
+const DOCTRINAS = [
+  { id:'dt1', n:1, nombre:'La doctrina de Dios',
+    desde:1,  hasta:5,  color:'#1F3864', icono:'👑' },
+  { id:'dt2', n:2, nombre:'La doctrina del hombre',
+    desde:6,  hasta:7,  color:'#0E7490', icono:'🧍' },
+  { id:'dt3', n:3, nombre:'La doctrina de la salvación',
+    desde:8,  hasta:10, color:'#B8860B', icono:'✝️' },
+  { id:'dt4', n:4, nombre:'La doctrina de la iglesia',
+    desde:11, hasta:18, color:'#1A7A1A', icono:'⛪' },
+  { id:'dt5', n:5, nombre:'La doctrina de la vida cristiana',
+    desde:19, hasta:23, color:'#7C3AED', icono:'🕊️' },
+  { id:'dt6', n:6, nombre:'La doctrina de los acontecimientos finales',
+    desde:24, hasta:28, color:'#C0392B', icono:'🌅' },
+];
+
+/* El numero de la creencia decide su doctrina: una sola regla, sin tabla
+   de mapeo que mantener a mano. */
+const doctrinaDe = num => DOCTRINAS.find(d => num >= d.desde && num <= d.hasta);
+
 const CR_CAPS = [
-  { id:'cr01', label:'Creencia 1', sub:"La Palabra de Dios", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
-  { id:'cr02', label:'Creencia 2', sub:"La Deidad", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
-  { id:'cr03', label:'Creencia 3', sub:"Dios el Padre", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
-  { id:'cr04', label:'Creencia 4', sub:"Dios el Hijo", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
-  { id:'cr05', label:'Creencia 5', sub:"Dios el Espíritu Santo", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
-  { id:'cr06', label:'Creencia 6', sub:"La creación", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
-  { id:'cr07', label:'Creencia 7', sub:"La naturaleza humana", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
-  { id:'cr08', label:'Creencia 8', sub:"El gran conflicto", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
-  { id:'cr09', label:'Creencia 9', sub:"La vida, muerte y resurrección de Cristo", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
-  { id:'cr10', label:'Creencia 10', sub:"La experiencia de la salvación", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
-  { id:'cr11', label:'Creencia 11', sub:"Crecer en Cristo", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
-  { id:'cr12', label:'Creencia 12', sub:"La iglesia", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
-  { id:'cr13', label:'Creencia 13', sub:"El remanente y su misión", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
-  { id:'cr14', label:'Creencia 14', sub:"La unidad en el cuerpo de Cristo", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
-  { id:'cr15', label:'Creencia 15', sub:"El bautismo", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
-  { id:'cr16', label:'Creencia 16', sub:"La Cena del Señor", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
-  { id:'cr17', label:'Creencia 17', sub:"Los dones y ministerios espirituales", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
-  { id:'cr18', label:'Creencia 18', sub:"El don de profecía", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
-  { id:'cr19', label:'Creencia 19', sub:"La ley de Dios", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
-  { id:'cr20', label:'Creencia 20', sub:"El sábado", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
-  { id:'cr21', label:'Creencia 21', sub:"La mayordomía", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
-  { id:'cr22', label:'Creencia 22', sub:"La conducta cristiana", src:'En esto creemos', color:'#1F3864', cats:['ec1','ec2'] },
-  { id:'cr23', label:'Creencia 23', sub:"El matrimonio y la familia", src:'En esto creemos', color:'#2E8BC0', cats:['ec1','ec2'] },
-  { id:'cr24', label:'Creencia 24', sub:"El ministerio de Cristo en el Santuario celestial", src:'En esto creemos', color:'#1A7A1A', cats:['ec1','ec2'] },
-  { id:'cr25', label:'Creencia 25', sub:"La segunda venida de Cristo", src:'En esto creemos', color:'#B8860B', cats:['ec1','ec2'] },
-  { id:'cr26', label:'Creencia 26', sub:"La muerte y la resurrección", src:'En esto creemos', color:'#C0392B', cats:['ec1','ec2'] },
-  { id:'cr27', label:'Creencia 27', sub:"El milenio y el fin del pecado", src:'En esto creemos', color:'#7C3AED', cats:['ec1','ec2'] },
-  { id:'cr28', label:'Creencia 28', sub:"La Tierra Nueva", src:'En esto creemos', color:'#0E7490', cats:['ec1','ec2'] },
+  { id:'cr01', label:'Creencia 1', sub:"La Palabra de Dios", src:'En esto creemos', color:'#1F3864', doc:'dt1', cats:['ec1','ec2'] },
+  { id:'cr02', label:'Creencia 2', sub:"La Deidad", src:'En esto creemos', color:'#2E8BC0', doc:'dt1', cats:['ec1','ec2'] },
+  { id:'cr03', label:'Creencia 3', sub:"Dios el Padre", src:'En esto creemos', color:'#1A7A1A', doc:'dt1', cats:['ec1','ec2'] },
+  { id:'cr04', label:'Creencia 4', sub:"Dios el Hijo", src:'En esto creemos', color:'#B8860B', doc:'dt1', cats:['ec1','ec2'] },
+  { id:'cr05', label:'Creencia 5', sub:"Dios el Espíritu Santo", src:'En esto creemos', color:'#C0392B', doc:'dt1', cats:['ec1','ec2'] },
+  { id:'cr06', label:'Creencia 6', sub:"La creación", src:'En esto creemos', color:'#7C3AED', doc:'dt2', cats:['ec1','ec2'] },
+  { id:'cr07', label:'Creencia 7', sub:"La naturaleza humana", src:'En esto creemos', color:'#0E7490', doc:'dt2', cats:['ec1','ec2'] },
+  { id:'cr08', label:'Creencia 8', sub:"El gran conflicto", src:'En esto creemos', color:'#1F3864', doc:'dt3', cats:['ec1','ec2'] },
+  { id:'cr09', label:'Creencia 9', sub:"La vida, muerte y resurrección de Cristo", src:'En esto creemos', color:'#2E8BC0', doc:'dt3', cats:['ec1','ec2'] },
+  { id:'cr10', label:'Creencia 10', sub:"La experiencia de la salvación", src:'En esto creemos', color:'#1A7A1A', doc:'dt3', cats:['ec1','ec2'] },
+  { id:'cr11', label:'Creencia 11', sub:"Crecer en Cristo", src:'En esto creemos', color:'#B8860B', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr12', label:'Creencia 12', sub:"La iglesia", src:'En esto creemos', color:'#C0392B', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr13', label:'Creencia 13', sub:"El remanente y su misión", src:'En esto creemos', color:'#7C3AED', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr14', label:'Creencia 14', sub:"La unidad en el cuerpo de Cristo", src:'En esto creemos', color:'#0E7490', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr15', label:'Creencia 15', sub:"El bautismo", src:'En esto creemos', color:'#1F3864', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr16', label:'Creencia 16', sub:"La Cena del Señor", src:'En esto creemos', color:'#2E8BC0', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr17', label:'Creencia 17', sub:"Los dones y ministerios espirituales", src:'En esto creemos', color:'#1A7A1A', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr18', label:'Creencia 18', sub:"El don de profecía", src:'En esto creemos', color:'#B8860B', doc:'dt4', cats:['ec1','ec2'] },
+  { id:'cr19', label:'Creencia 19', sub:"La ley de Dios", src:'En esto creemos', color:'#C0392B', doc:'dt5', cats:['ec1','ec2'] },
+  { id:'cr20', label:'Creencia 20', sub:"El sábado", src:'En esto creemos', color:'#7C3AED', doc:'dt5', cats:['ec1','ec2'] },
+  { id:'cr21', label:'Creencia 21', sub:"La mayordomía", src:'En esto creemos', color:'#0E7490', doc:'dt5', cats:['ec1','ec2'] },
+  { id:'cr22', label:'Creencia 22', sub:"La conducta cristiana", src:'En esto creemos', color:'#1F3864', doc:'dt5', cats:['ec1','ec2'] },
+  { id:'cr23', label:'Creencia 23', sub:"El matrimonio y la familia", src:'En esto creemos', color:'#2E8BC0', doc:'dt5', cats:['ec1','ec2'] },
+  { id:'cr24', label:'Creencia 24', sub:"El ministerio de Cristo en el Santuario celestial", src:'En esto creemos', color:'#1A7A1A', doc:'dt6', cats:['ec1','ec2'] },
+  { id:'cr25', label:'Creencia 25', sub:"La segunda venida de Cristo", src:'En esto creemos', color:'#B8860B', doc:'dt6', cats:['ec1','ec2'] },
+  { id:'cr26', label:'Creencia 26', sub:"La muerte y la resurrección", src:'En esto creemos', color:'#C0392B', doc:'dt6', cats:['ec1','ec2'] },
+  { id:'cr27', label:'Creencia 27', sub:"El milenio y el fin del pecado", src:'En esto creemos', color:'#7C3AED', doc:'dt6', cats:['ec1','ec2'] },
+  { id:'cr28', label:'Creencia 28', sub:"La Tierra Nueva", src:'En esto creemos', color:'#0E7490', doc:'dt6', cats:['ec1','ec2'] },
 ];
 
 /* Material de estudio: la declaración oficial y los textos clave. */
 const CR_CONTENIDO = {
-  cr01: [{ t:'📜 En esto creemos', h:"<div class=\"highlight-box\"><strong>Declaración oficial</strong><br>«Las Sagradas Escrituras, compuestas por Antiguo Testamento (AT) y Nuevo Testamento (NT), son la Palabra de Dios escrita, transmitida por inspiración divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espíritu Santo (2 Ped. 1:20-21). “Por medio de esta Palabra, Dios comunica a los seres humanos el conocimiento necesario para alcanzar la salvación. Las Sagradas Escrituras son la infalible revelación de la voluntad divina. Son la norma del carácter, el criterio para evaluar la experiencia, la revelación autorizada de las doctrinas, y un registro fidedigno de los actos de Dios realizados en el curso de la historia.»<br><small>Creencias de los Adventistas del Séptimo Día</small></div>" },
-        { t:'📖 Textos clave', h:"<div class=\"warn-box\"><strong>Textos clave</strong><br>2 Ped. 1:20,21; 2 Tim. 3:16,17; Sal. 119:105; Prov. 30:5, 6; Isa. 8:20; Jn. 17:17; 1 Tes. 2:13; Heb. 4:12)</div>" }],
-  cr02: [{ t:'📜 En esto creemos', h:"<div class=\"highlight-box\"><strong>Declaración oficial</strong><br>«Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escapa a la comprensión humana, aunque se lo puede conocer por medio de su autorrevelación. Es digno para siempre de reverencia, adoración y servicio por parte de toda la creación.»<br><small>Creencias de los Adventistas del Séptimo Día</small></div>" },
-        { t:'📖 Textos clave', h:"<div class=\"warn-box\"><strong>Textos clave</strong><br>Deut. 6:4; Mat. 28:19; 2 Cor. 13:14; Efe. 4:4-6; 1 Ped. 1:2; 1 Tim. 1:17; Apoc. 14:7)</div>" }],
-  cr03: [{ t:'📜 En esto creemos', h:"<div class=\"highlight-box\"><strong>Declaración oficial</strong><br>«Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad. Las cualidades y las facultades del Padre se manifiestan también en el Hijo y en el Espíritu Santo.»<br><small>Creencias de los Adventistas del Séptimo Día</small></div>" },
-        { t:'📖 Textos clave', h:"<div class=\"warn-box\"><strong>Textos clave</strong><br>Gén. 1:1; Apoc. 4:11; 1 Cor. 15:28; Jn. 3:16; 1 Jn. 4:8; 1 Tim. 1:17; Éxo. 34:6, 7; Jn. 14:9). Conceptos acerca del Padre 1. ¿Cuál es el concepto que mucha gente tiene de Dios el Padre? (Mat. 5:38-41; Éxo. 21:24). ____________________________________ ___________________________________________________________ ___________________________________________________________ Dios el Padre en el Antiguo Testamento 2. Repasa y comparte las muchas maneras como Dios se muestra en el Antiguo Testamento. Un Dios de misericordia (Éx.34:6-7; 25:8).____________________ El Dios del pacto (Gén. 9:1-17; 12:1-3,7; 15:5-7)._______________ El Dios Redentor (Éx. 12:37-42; Sal. 8:3-4).____________________ Un Dios de refugio (Sal. 46:1; 62:8)._________________________ Un Dios perdonador (Sal. 51:1; 103:11-14).___________________ Un Dios de bondad (Sal. 146:7-9).___________________________ Un Dios de fidelidad (Lev. 26; Deut.28; Isa. 41:9-10).__________ Un Dios de salvación y venganza (Isa. 35:4)._________________ Un Dios paternal (Isa.64:8; Mal. 2:10)._______________________ 15</div>" }],
-  cr04: [{ t:'📜 En esto creemos', h:"<div class=\"highlight-box\"><strong>Declaración oficial</strong><br>«Dios el Hijo Eterno se encarnó en Jesucristo. Por medio de él se crearon todas las cosas, se reveló el carácter de Dios, se llevó a cabo la salvación de la humanidad y se juzga al mundo. Aunque es Dios verdadero y eterno, llegó a ser también verdaderamente hombre. Jesús el Cristo, fue concebido por el Espíritu Santo y nació de la virgen María. Vivió y experimentó la tentación como ser humano, pero ejemplificó perfectamente la justicia y el amor de Dios. Mediante sus milagros manifestó el poder de Dios y éstos dieron testimonio de que era el prometido Mesías de Dios. Sufrió y murió voluntariamente en la cruz por nuestros pecados y en nuestro lugar; resucitó de entre los muertos y ascendió para ministrar en el Santuario celestial en favor de nosotros. Volverá otra vez en gloria para librar definitivamente a su pueblo y restaurar todas las cosas.»<br><small>Creencias de los Adventistas del Séptimo Día</small></div>" },
-        { t:'📖 Textos clave', h:"<div class=\"warn-box\"><strong>Textos clave</strong><br>Jn. 1:1-3,14; Col. 1:15-19; Jn. 10:30; 14:9; Rom. 6:23; 2 Cor. 5:17-19; Jn. 5:22; Luc. 1:35; Fil. 2:5-11; Heb. 2:9-18; 1 Cor. 15:3,4; Heb. 8:1,2; Jn. 14:1-3). La encarnación: Predicciones y cumplimiento 1. ¿Qué plan desarrolló Dios para rescatar a la raza humana? (Jn. 3:16; 1 Ped. 1:19-20; 3:18; Gén. 3:15). ___________________________ ___________________________________________________________ ___________________________________________________________ 2. Explique el proceso del sacrificio de animales por el pecado (Gén. 4:4; Éxo.25:8-9,40; Lev. 1; Heb. 9:22).______________________ ___________________________________________________________ ___________________________________________________________</div>" }],
-  cr05: [{ t:'📜 En esto creemos', h:"<div class=\"highlight-box\"><strong>Declaración oficial</strong><br>«Dios el Espíritu Eterno desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención. Inspiró a los autores de las Escrituras. Infundió poder a la vida de Cristo. Atrae y convence a los seres humanos, y renueva a los que responden y los transforma a la imagen de Dios. Enviado por el Padre y el Hijo para estar siempre con sus hijos, concede dones espirituales a la iglesia, la capacita para dar testimonio en favor de Cristo y, en armonía con las Escrituras, la guía a toda la verdad.»<br><small>Creencias de los Adventistas del Séptimo Día</small></div>" },
-        { t:'📖 Textos clave', h:"<div class=\"warn-box\"><strong>Textos clave</strong><br>Gén. 1:1,2; Luc. 1:35; 4:18; Hech. 10:38; 2 Ped. 1:21; 2 Cor. 3:18; Efe. 4:11, 12; Hech. 1:8; Jn. 14:16-18, 26; 15:26, 27; 16:7-13). ¿Quién es el Espíritu Santo? 1. El Espíritu Santo es una persona y no una fuerza interpersonal. ¿Cuáles son los rasgos de su personalidad? (Gen. 6:3) _______________________________________________ (Luc. 12:12) _____________________________________________ (Jn. 16:8) ________________________________________________ (Hech. 13:2) _____________________________________________ (Rom. 8:26) ______________________________________________ (1 Ped. 1:2) ______________________________________________ (2 Ped. 1:21) _____________________________________________ “Esas actividades no pueden ser realizadas por un mero poder, una influencia o un atributo de Dios. Solamente una persona puede llevarlas a cabo”. Creencias… pág. 68</div>" }],
+  cr01: [{ t:"📜 La declaración", h:"<div class=\"highlight-box\"><strong>Creencia 1 — La Palabra de Dios</strong><br>«Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiración divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espíritu Santo. Por medio de esta Palabra, Dios comunica a los seres humanos el conocimiento necesario para alcanzar la salvación. Las Sagradas Escrituras son la infalible revelación de la voluntad divina. Son la norma del carácter, el criterio para evaluar la experiencia, la revelación autorizada de la doctrinas, y un registro fidedigno de los actos de Dios realizados en el curso de la historia»<br><small>Cartilla <i>En esto creemos</i>, Union Colombiana del Sur, 2026. Es la redaccion que se evalua: se transcribe tal cual, erratas incluidas.</small></div><div class=\"warn-box\"><strong>Ojo con la letra</strong><br>La cartilla dice «la revelación autorizada de <b>la</b> doctrinas» y cierra <b>sin punto final</b>. El libro de las 28 creencias dice «de <b>las</b> doctrinas». Es una errata de la cartilla, pero la cartilla es lo que se evalúa.</div>" },
+         { t:"📖 Textos clave", h:"<div class=\"verse-box\"><strong>Los 8 textos, en el orden de la cartilla</strong><ul class=\"tight\"><li><b>1.</b> 2 Pedro 1:20,21 &nbsp;<small>← el primero</small></li><li><b>2.</b> 2 Timoteo 3:16,17</li><li><b>3.</b> Salmos 119:105</li><li><b>4.</b> Proverbios 30:5, 6</li><li><b>5.</b> Isaías 8:20</li><li><b>6.</b> Juan 17:17</li><li><b>7.</b> 1 Tesalonicenses 2:13</li><li><b>8.</b> Hebreos 4:12</li></ul></div><div class=\"warn-box\"><strong>Por qué importa el orden</strong><br>El banco pregunta cuál es el <b>primer</b> texto clave de cada creencia. Aquí el primero es <b>2 Pedro 1:20,21</b>.</div>" },
+         { t:"🔍 Qué significa", h:"<div class=\"highlight-box\"><strong>El orden del capítulo en el libro</strong><br>La revelación divina, el enfoque de las Escrituras, el origen, la inspiración y la unidad. Todo el capítulo se apoya en una idea: a Dios no se lo descubre investigando, él se da a conocer porque quiere.</div><div class=\"highlight-box\"><strong>Qué dice la declaración sobre cómo se escribió</strong><br>No dice que Dios dictó palabras. Dice que hombres «hablaron y escribieron impulsados por el Espíritu Santo». Lo inspirado es la persona, no el dictado.</div><div class=\"highlight-box\"><strong>Las cuatro cosas que la Biblia ES</strong><br>La declaración cierra con una lista de cuatro, y es la parte que más se pregunta: norma del carácter, criterio para evaluar la experiencia, revelación autorizada de las doctrinas, y registro fidedigno de los actos de Dios.</div>" },
+         { t:"⚠️ No confundir", h:"<div class=\"warn-box\"><strong>Creencia 1 contra creencia 18</strong><br>La 1 es sobre la Biblia. La 18, el don de profecía, es sobre Elena de White. La Biblia es la norma; el don de profecía se somete a ella, no al revés.</div>" },
+         { t:"🧭 Dónde encaja", h:"<div class=\"highlight-box\"><strong>Primera doctrina: la doctrina de Dios</strong><br>Cinco creencias: <b>1</b> la Palabra de Dios, <b>2</b> la Deidad, <b>3</b> Dios el Padre, <b>4</b> Dios el Hijo, <b>5</b> Dios el Espíritu Santo.</div><div class=\"highlight-box\"><strong>Esta creencia</strong><br>Es la <b>primera</b> creencia de la <b>primera</b> doctrina. Va primera por una razón que se puede decir en una frase: todo lo que sigue se prueba con ella.</div><div class=\"warn-box\"><strong>El conteo que se pregunta</strong><br>28 creencias repartidas en 6 doctrinas. La doctrina de Dios es la <b>primera</b> y tiene <b>5</b>.</div>" }],
+  cr02: [{ t:"📜 La declaración", h:"<div class=\"highlight-box\"><strong>Creencia 2 — La Deidad</strong><br>«Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escapa a la comprensión humana, aunque se lo puede conocer por medio de su autorrevelación. Es digno para siempre de reverencia, adoración y servicio por parte de toda la creación.»<br><small>Cartilla <i>En esto creemos</i>, Union Colombiana del Sur, 2026. Es la redaccion que se evalua: se transcribe tal cual, erratas incluidas.</small></div>" },
+         { t:"📖 Textos clave", h:"<div class=\"verse-box\"><strong>Los 7 textos, en el orden de la cartilla</strong><ul class=\"tight\"><li><b>1.</b> Deuteronomio 6:4 &nbsp;<small>← el primero</small></li><li><b>2.</b> Mateo 28:19</li><li><b>3.</b> 2 Corintios 13:14</li><li><b>4.</b> Efesios 4:4-6</li><li><b>5.</b> 1 Pedro 1:2</li><li><b>6.</b> 1 Timoteo 1:17</li><li><b>7.</b> Apocalipsis 14:7</li></ul></div><div class=\"warn-box\"><strong>Por qué importa el orden</strong><br>El banco pregunta cuál es el <b>primer</b> texto clave de cada creencia. Aquí el primero es <b>Deuteronomio 6:4</b>.</div>" },
+         { t:"🔍 Qué significa", h:"<div class=\"highlight-box\"><strong>La frase que hay que saber exacta</strong><br>«Una unidad de tres personas coeternas». Un solo Dios, no tres. Tres personas, no una con tres disfraces. Coeternas: ninguna empezó a existir después de otra.</div><div class=\"highlight-box\"><strong>Por qué esos dos primeros textos</strong><br>Deuteronomio 6:4 es el «un solo Dios». Mateo 28:19 es la fórmula del bautismo, donde aparecen los tres nombres juntos. Uno sostiene la unidad, el otro la trinidad.</div><div class=\"highlight-box\"><strong>Los cinco atributos de la lista</strong><br>Inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Se preguntan por cantidad y por orden, así que conviene contarlos: son cinco.</div>" },
+         { t:"⚠️ No confundir", h:"<div class=\"warn-box\"><strong>Creencia 2 contra creencias 3, 4 y 5</strong><br>La 2 habla de los tres <b>juntos</b>. Las tres siguientes toman a cada persona por separado. El orden de la cartilla es ese: primero el conjunto, después uno por uno.</div>" },
+         { t:"🧭 Dónde encaja", h:"<div class=\"highlight-box\"><strong>Primera doctrina: la doctrina de Dios</strong><br>Cinco creencias: <b>1</b> la Palabra de Dios, <b>2</b> la Deidad, <b>3</b> Dios el Padre, <b>4</b> Dios el Hijo, <b>5</b> Dios el Espíritu Santo.</div><div class=\"highlight-box\"><strong>Esta creencia</strong><br>Segunda de las cinco de la doctrina de Dios.</div><div class=\"warn-box\"><strong>El conteo que se pregunta</strong><br>28 creencias repartidas en 6 doctrinas. La doctrina de Dios es la <b>primera</b> y tiene <b>5</b>.</div>" }],
+  cr03: [{ t:"📜 La declaración", h:"<div class=\"highlight-box\"><strong>Creencia 3 — Dios el Padre</strong><br>«Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad. Las cualidades y las facultades del Padre se manifiestan también en el Hijo y en el Espíritu Santo»<br><small>Cartilla <i>En esto creemos</i>, Union Colombiana del Sur, 2026. Es la redaccion que se evalua: se transcribe tal cual, erratas incluidas.</small></div><div class=\"warn-box\"><strong>Ojo con la letra</strong><br>La cartilla cierra esta declaración <b>sin punto final</b>.</div>" },
+         { t:"📖 Textos clave", h:"<div class=\"verse-box\"><strong>Los 8 textos, en el orden de la cartilla</strong><ul class=\"tight\"><li><b>1.</b> Génesis 1:1 &nbsp;<small>← el primero</small></li><li><b>2.</b> Apocalipsis 4:11</li><li><b>3.</b> 1 Corintios 15:28</li><li><b>4.</b> Juan 3:16</li><li><b>5.</b> 1 Juan 4:8</li><li><b>6.</b> 1 Timoteo 1:17</li><li><b>7.</b> Éxodo 34:6, 7</li><li><b>8.</b> Juan 14:9</li></ul></div><div class=\"warn-box\"><strong>Por qué importa el orden</strong><br>El banco pregunta cuál es el <b>primer</b> texto clave de cada creencia. Aquí el primero es <b>Génesis 1:1</b>.</div>" },
+         { t:"🔍 Qué significa", h:"<div class=\"highlight-box\"><strong>Cuatro títulos y seis rasgos</strong><br>Títulos: Creador, Originador, Sustentador y Soberano. Rasgos: justo, santo, misericordioso, clemente, tardo en airarse, abundante en amor y fidelidad. Los seis rasgos salen casi palabra por palabra de Éxodo 34:6, 7, que por eso está en la lista de textos.</div><div class=\"highlight-box\"><strong>Contra qué se escribió este capítulo</strong><br>El libro dedica el capítulo a desarmar una idea muy común: que el Padre del Antiguo Testamento es un Dios de venganza y el Hijo del Nuevo es uno de amor. Su respuesta es que es el mismo Dios hablando y actuando en los dos Testamentos.</div>" },
+         { t:"⚠️ No confundir", h:"<div class=\"warn-box\"><strong>El error típico</strong><br>Pensar que el Padre es el severo y el Hijo el bondadoso. La última frase de la declaración lo cierra: las cualidades del Padre se manifiestan <b>también</b> en el Hijo y en el Espíritu Santo.</div>" },
+         { t:"🧭 Dónde encaja", h:"<div class=\"highlight-box\"><strong>Primera doctrina: la doctrina de Dios</strong><br>Cinco creencias: <b>1</b> la Palabra de Dios, <b>2</b> la Deidad, <b>3</b> Dios el Padre, <b>4</b> Dios el Hijo, <b>5</b> Dios el Espíritu Santo.</div><div class=\"highlight-box\"><strong>Esta creencia</strong><br>Tercera de la doctrina de Dios. Abre la serie de las tres personas por separado.</div><div class=\"warn-box\"><strong>El conteo que se pregunta</strong><br>28 creencias repartidas en 6 doctrinas. La doctrina de Dios es la <b>primera</b> y tiene <b>5</b>.</div>" }],
+  cr04: [{ t:"📜 La declaración", h:"<div class=\"highlight-box\"><strong>Creencia 4 — Dios el Hijo</strong><br>«El Hijo Eterno se encarnó en Jesucristo. Por medio de Él fueron creadas todas las cosas, se reveló el carácter de Dios, se realizó la salvación y se juzga al mundo. Aunque era eternamente Dios, también se hizo verdaderamente hombre. Fue concebido por el Espíritu Santo, nació de María, vivió sin pecado y reveló el amor y la justicia divina. Sus milagros confirmaron que era el Mesías prometido. Murió en la cruz por nuestros pecados, resucitó, ascendió al cielo y hoy ministra en el Santuario celestial. Pronto volverá en gloria para liberar a su pueblo y restaurar todas las cosas.»<br><small>Cartilla <i>En esto creemos</i>, Union Colombiana del Sur, 2026. Es la redaccion que se evalua: se transcribe tal cual, erratas incluidas.</small></div><div class=\"warn-box\"><strong>Ojo con la letra</strong><br>Esta es la declaración que <b>más se aparta</b> del libro de las 28 creencias. El libro empieza «<i>Dios</i> el Hijo Eterno», dice «nació de la <i>virgen</i> María» y agrega «Vivió y experimentó la tentación como ser humano». La cartilla la abrevia. Si el examen sale de la cartilla, se memoriza la cartilla.</div>" },
+         { t:"📖 Textos clave", h:"<div class=\"verse-box\"><strong>Los 7 textos, en el orden de la cartilla</strong><ul class=\"tight\"><li><b>1.</b> Juan 1:1-3,14 &nbsp;<small>← el primero</small></li><li><b>2.</b> Colosenses 1:15-19</li><li><b>3.</b> Juan 10:30</li><li><b>4.</b> Juan 14:9</li><li><b>5.</b> Romanos 6:23</li><li><b>6.</b> 2 Corintios 5:17-19</li><li><b>7.</b> Juan 5:22</li></ul></div><div class=\"warn-box\"><strong>Por qué importa el orden</strong><br>El banco pregunta cuál es el <b>primer</b> texto clave de cada creencia. Aquí el primero es <b>Juan 1:1-3,14</b>.</div>" },
+         { t:"🔍 Qué significa", h:"<div class=\"highlight-box\"><strong>Es una biografía en orden</strong><br>La declaración va en línea de tiempo y por eso es fácil de memorizar por pasos: existía antes, creó todo, se encarnó, vivió sin pecado, hizo milagros, murió, resucitó, ascendió, hoy ministra en el Santuario, y pronto vuelve.</div><div class=\"highlight-box\"><strong>Lo que el libro desarrolla y la cartilla solo menciona</strong><br>Las dos naturalezas de Jesucristo y su unión: verdadero Dios y verdadero hombre al mismo tiempo, no mitad y mitad. La cartilla lo resuelve en una frase: «Aunque era eternamente Dios, también se hizo verdaderamente hombre».</div>" },
+         { t:"⚠️ No confundir", h:"<div class=\"warn-box\"><strong>Creencia 4 contra 9, 24 y 25</strong><br>La 4 los nombra todos de pasada. La <b>9</b> desarrolla la vida, muerte y resurrección. La <b>24</b> desarrolla el ministerio en el Santuario celestial. La <b>25</b> desarrolla la segunda venida. Si la pregunta pide el desarrollo, no es la 4.</div>" },
+         { t:"🧭 Dónde encaja", h:"<div class=\"highlight-box\"><strong>Primera doctrina: la doctrina de Dios</strong><br>Cinco creencias: <b>1</b> la Palabra de Dios, <b>2</b> la Deidad, <b>3</b> Dios el Padre, <b>4</b> Dios el Hijo, <b>5</b> Dios el Espíritu Santo.</div><div class=\"highlight-box\"><strong>Esta creencia</strong><br>Cuarta de la doctrina de Dios.</div><div class=\"warn-box\"><strong>El conteo que se pregunta</strong><br>28 creencias repartidas en 6 doctrinas. La doctrina de Dios es la <b>primera</b> y tiene <b>5</b>.</div>" }],
+  cr05: [{ t:"📜 La declaración", h:"<div class=\"highlight-box\"><strong>Creencia 5 — Dios el Espíritu Santo</strong><br>«Dios el Espíritu Eterno desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención. Inspiró a los autores de las Escrituras. Infundió poder a la vida de Cristo. Atrae y convence a los seres humanos, y renueva a los que responden y los transforma a la imagen de Dios. Enviado por el Padre y el Hijo para estar siempre con sus hijos, concede dones espirituales a la iglesia, la capacita para dar testimonio en favor de Cristo y, en armonía con las Escrituras, la guía a toda la verdad.»<br><small>Cartilla <i>En esto creemos</i>, Union Colombiana del Sur, 2026. Es la redaccion que se evalua: se transcribe tal cual, erratas incluidas.</small></div><div class=\"warn-box\"><strong>Ojo con la letra</strong><br>En la cartilla el título va sin la palabra «Dios el»: dice <b>DIOS ESPIRITU SANTO</b>.</div>" },
+         { t:"📖 Textos clave", h:"<div class=\"verse-box\"><strong>Los 11 textos, en el orden de la cartilla</strong><ul class=\"tight\"><li><b>1.</b> Génesis 1:1,2 &nbsp;<small>← el primero</small></li><li><b>2.</b> Lucas 1:35</li><li><b>3.</b> Lucas 4:18</li><li><b>4.</b> Hechos 10:38</li><li><b>5.</b> 2 Pedro 1:21</li><li><b>6.</b> 2 Corintios 3:18</li><li><b>7.</b> Efesios 4:11, 12</li><li><b>8.</b> Hechos 1:8</li><li><b>9.</b> Juan 14:16-18, 26</li><li><b>10.</b> Juan 15:26, 27</li><li><b>11.</b> Juan 16:7-13</li></ul></div><div class=\"warn-box\"><strong>Por qué importa el orden</strong><br>El banco pregunta cuál es el <b>primer</b> texto clave de cada creencia. Aquí el primero es <b>Génesis 1:1,2</b>.</div>" },
+         { t:"🔍 Qué significa", h:"<div class=\"highlight-box\"><strong>Tres momentos y ocho verbos</strong><br>Los tres momentos donde estuvo con el Padre y el Hijo: la creación, la encarnación y la redención. Después vienen los verbos de lo que hace: inspiró, infundió, atrae, convence, renueva, transforma, concede, capacita y guía.</div><div class=\"highlight-box\"><strong>La frase que amarra con la creencia 1</strong><br>«En armonía con las Escrituras, la guía a toda la verdad». El Espíritu nunca va a contradecir la Biblia. Es la misma regla de la creencia 1 dicha desde el otro lado.</div>" },
+         { t:"⚠️ No confundir", h:"<div class=\"warn-box\"><strong>Creencia 5 contra creencia 17</strong><br>La 5 dice <b>quién es</b> el Espíritu y menciona que concede dones. La <b>17</b>, los dones y ministerios espirituales, es la que los desarrolla.</div>" },
+         { t:"🧭 Dónde encaja", h:"<div class=\"highlight-box\"><strong>Primera doctrina: la doctrina de Dios</strong><br>Cinco creencias: <b>1</b> la Palabra de Dios, <b>2</b> la Deidad, <b>3</b> Dios el Padre, <b>4</b> Dios el Hijo, <b>5</b> Dios el Espíritu Santo.</div><div class=\"highlight-box\"><strong>Esta creencia</strong><br>Quinta y <b>última</b> de la doctrina de Dios. La doctrina cierra en un orden con sentido: primero la fuente que lo prueba todo, después Dios en conjunto, y después cada persona por separado.</div><div class=\"warn-box\"><strong>El conteo que se pregunta</strong><br>28 creencias repartidas en 6 doctrinas. La doctrina de Dios es la <b>primera</b> y tiene <b>5</b>.</div>" }],
   cr06: [{ t:'📜 En esto creemos', h:"<div class=\"highlight-box\"><strong>Declaración oficial</strong><br>«Dios es el Creador de todas las cosas, y reveló en las Escrituras el relato auténtico de su actividad creadora. El Señor hizo en seis días “los cielos y la tierra” y todo ser viviente que la habita, y reposó en el séptimo día de esa primera semana. De ese modo estableció el sábado como un monumento perpetuo conmemorativo de la terminación de su obra creadora. Hizo al primer hombre y la primera mujer a su imagen como corona de la creación, y les dio dominio sobre el mundo y la responsabilidad de cuidar de él. Cuando el mundo quedó terminado era “bueno en gran manera”, proclamando la gloria de Dios.»<br><small>Creencias de los Adventistas del Séptimo Día</small></div>" },
         { t:'📖 Textos clave', h:"<div class=\"warn-box\"><strong>Textos clave</strong><br>Gén. Cap 1-2; Éxo. 20:8-11; Sal. 19:1-6; 33:6, 9; 104; Heb. 11:3). La palabra creadora de Dios 1. Cada mandato de Dios, estuvo cargado de energía creadora que transformó al planeta ¿Cómo actúa la palabra creadora de Dios? (Sal. 33:6; Heb. 11:3; Gén. 2: 7, 19, 22).__________________________ ___________________________________________________________ ___________________________________________________________ El relato de la creación 2. ¿Son literales los días de la creación o representan grandes periodos? Gén. 1:1-2:25). _____________________________________ ___________________________________________________________ 3. ¿Qué relación tiene Lev. 23:32; Deut. 16:6; Éxo. 20:8-11 con el relato de la creación de Gén. 1-2 ? _____________________________ ___________________________________________________________ ___________________________________________________________ 25</div>" }],
   cr07: [{ t:'📜 En esto creemos', h:"<div class=\"highlight-box\"><strong>Declaración oficial</strong><br>«Dios hizo al hombre y la mujer a su imagen, con individualidad propia, y con la facultad y la libertad de pensar y obrar. Aunque los creó como seres libres, cada uno es una unidad indivisible de cuerpo, mente y espíritu, que depende de Dios para la vida, el aliento y todo lo demás. Cuando nuestros primeros padres desobedecieron a Dios, negaron su dependencia de él y cayeron de la elevada posición que ocupaban bajo el gobierno de Dios. La imagen de Dios en ellos se desfiguró y quedaron sujetos a la muerte. Sus descendientes participan de esta naturaleza caída y de sus consecuencias. Nacen con debilidades y tendencias hacia el mal. Pero Dios, en Cristo, reconcilió al mundo consigo mismo y, por medio de su Espíritu Santo, restaura en los mortales penitentes la imagen de su Hacedor. Creados para la gloria de Dios, se los llama a amarlo a él y a amarse mutuamente, y a cuidar del ambiente que los rodea.»<br><small>Creencias de los Adventistas del Séptimo Día</small></div>" },
@@ -116,37 +167,95 @@ const CR_CONTENIDO = {
 /* Banco. Tres preguntas por creencia, con distractores tomados de otras
    creencias por desplazamiento fijo: el examen queda reproducible y la
    respuesta correcta nunca aparece dos veces entre las opciones. */
-const CR_BANCO = [
-  {cap:'cr01',t:'mc',nv:1,q:"¿Cuál es la creencia número 1?",
-   o:["La Palabra de Dios","El gran conflicto","La unidad en el cuerpo de Cristo","El don de profecía"],a:0},
-  {cap:'cr01',t:'mc',nv:2,q:"¿A qué creencia corresponde esta declaración? «Las Sagradas Escrituras, compuestas por Antiguo Testamento (AT) y Nuevo Testamento (NT), son la Palabra de Dios escrita, transmitida por inspiración divina...»",
-   o:["La Palabra de Dios","La iglesia","El don de profecía","El ministerio de Cristo en el Santuario celestial"],a:0},
-  {cap:'cr01',t:'mc',nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «La Palabra de Dios»?",
-   o:["2 Ped. 1:20,21","Gén. Cap 1-2","2 Cor. 5:17-21","Rom. 12:1,2"],a:0},
-  {cap:'cr02',t:'mc',nv:1,q:"¿Cuál es la creencia número 2?",
-   o:["La Deidad","La vida, muerte y resurrección de Cristo","El bautismo","La mayordomía"],a:0},
-  {cap:'cr02',t:'mc',nv:2,q:"¿A qué creencia corresponde esta declaración? «Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a...»",
-   o:["La Deidad","El remanente y su misión","La ley de Dios","La segunda venida de Cristo"],a:0},
-  {cap:'cr02',t:'mc',nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «La Deidad»?",
-   o:["Deut. 6:4","Gén. 1:26-28","Sal. 1:1,2","Gén. 2:18-25"],a:0},
-  {cap:'cr03',t:'mc',nv:1,q:"¿Cuál es la creencia número 3?",
-   o:["Dios el Padre","La experiencia de la salvación","La Cena del Señor","La conducta cristiana"],a:0},
-  {cap:'cr03',t:'mc',nv:2,q:"¿A qué creencia corresponde esta declaración? «Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente,...»",
-   o:["Dios el Padre","La unidad en el cuerpo de Cristo","El sábado","La muerte y la resurrección"],a:0},
-  {cap:'cr03',t:'mc',nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «Dios el Padre»?",
-   o:["Gén. 1:1","Apoc. 12:4-9","Gén. 12:3","Heb. 8:1-5"],a:0},
-  {cap:'cr04',t:'mc',nv:1,q:"¿Cuál es la creencia número 4?",
-   o:["Dios el Hijo","Crecer en Cristo","Los dones y ministerios espirituales","El matrimonio y la familia"],a:0},
-  {cap:'cr04',t:'mc',nv:2,q:"¿A qué creencia corresponde esta declaración? «...se encarnó en Jesucristo. Por medio de él se crearon todas las cosas, se reveló el carácter de...»",
-   o:["Dios el Hijo","El bautismo","La mayordomía","El milenio y el fin del pecado"],a:0},
-  {cap:'cr04',t:'mc',nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «Dios el Hijo»?",
-   o:["Jn. 1:1-3,14","Jn. 3:16","Apoc. 12:17","Tito 2:13"],a:0},
-  {cap:'cr05',t:'mc',nv:1,q:"¿Cuál es la creencia número 5?",
-   o:["Dios el Espíritu Santo","La conducta cristiana","El don de profecía","El ministerio de Cristo en el Santuario celestial"],a:0},
-  {cap:'cr05',t:'mc',nv:2,q:"¿A qué creencia corresponde esta declaración? «...desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención....»",
-   o:["Dios el Espíritu Santo","La Cena del Señor","La conducta cristiana","La Tierra Nueva"],a:0},
-  {cap:'cr05',t:'mc',nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «Dios el Espíritu Santo»?",
-   o:["Gén. 1:1,2","2 Cor. 5:17-21","Rom. 12:4, 5","Rom. 6:23"],a:0},
+const CR_BANCO_FIJO = [
+  {cap:"cr01",t:"mc",nv:1,q:"¿Cuál es la creencia número 1?",
+   o:["La Palabra de Dios","La Deidad","Dios el Padre","Dios el Hijo"],a:0},
+  {cap:"cr01",t:"mc",nv:2,q:"¿A qué creencia corresponde esta declaración? «Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiración divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espíritu Santo...»",
+   o:["La Palabra de Dios","La Deidad","Dios el Padre","Dios el Hijo"],a:0},
+  {cap:"cr01",t:"mc",nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «La Palabra de Dios»?",
+   o:["2 Pedro 1:20,21","Deuteronomio 6:4","Génesis 1:1","Juan 1:1-3,14"],a:0},
+  {cap:"cr02",t:"mc",nv:1,q:"¿Cuál es la creencia número 2?",
+   o:["La Deidad","La Palabra de Dios","Dios el Padre","Dios el Hijo"],a:0},
+  {cap:"cr02",t:"mc",nv:2,q:"¿A qué creencia corresponde esta declaración? «Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente...»",
+   o:["La Deidad","La Palabra de Dios","Dios el Padre","Dios el Hijo"],a:0},
+  {cap:"cr02",t:"mc",nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «La Deidad»?",
+   o:["Deuteronomio 6:4","2 Pedro 1:20,21","Génesis 1:1","Juan 1:1-3,14"],a:0},
+  {cap:"cr03",t:"mc",nv:1,q:"¿Cuál es la creencia número 3?",
+   o:["Dios el Padre","La Palabra de Dios","La Deidad","Dios el Hijo"],a:0},
+  {cap:"cr03",t:"mc",nv:2,q:"¿A qué creencia corresponde esta declaración? «...es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad...»",
+   o:["Dios el Padre","La Palabra de Dios","La Deidad","Dios el Hijo"],a:0},
+  {cap:"cr03",t:"mc",nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «Dios el Padre»?",
+   o:["Génesis 1:1","2 Pedro 1:20,21","Deuteronomio 6:4","Juan 1:1-3,14"],a:0},
+  {cap:"cr04",t:"mc",nv:1,q:"¿Cuál es la creencia número 4?",
+   o:["Dios el Hijo","La Palabra de Dios","La Deidad","Dios el Padre"],a:0},
+  {cap:"cr04",t:"mc",nv:2,q:"¿A qué creencia corresponde esta declaración? «El Hijo Eterno se encarnó en Jesucristo. Por medio de Él fueron creadas todas las cosas, se reveló el carácter de Dios, se realizó la salvación y se juzga al mundo...»",
+   o:["Dios el Hijo","La Palabra de Dios","La Deidad","Dios el Padre"],a:0},
+  {cap:"cr04",t:"mc",nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «Dios el Hijo»?",
+   o:["Juan 1:1-3,14","2 Pedro 1:20,21","Deuteronomio 6:4","Génesis 1:1"],a:0},
+  {cap:"cr05",t:"mc",nv:1,q:"¿Cuál es la creencia número 5?",
+   o:["Dios el Espíritu Santo","La Palabra de Dios","La Deidad","Dios el Padre"],a:0},
+  {cap:"cr05",t:"mc",nv:2,q:"¿A qué creencia corresponde esta declaración? «...desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención. Inspiró a los autores de las Escrituras. Infundió poder a la vida de Cristo...»",
+   o:["Dios el Espíritu Santo","La Palabra de Dios","La Deidad","Dios el Padre"],a:0},
+  {cap:"cr05",t:"mc",nv:2,q:"¿Cuál de estos es el primer texto clave de la creencia «Dios el Espíritu Santo»?",
+   o:["Génesis 1:1,2","2 Pedro 1:20,21","Deuteronomio 6:4","Génesis 1:1"],a:0},
+  {cap:"cr01",t:"mc",nv:2,q:"Según la declaración, ¿qué comunica Dios a los seres humanos por medio de esta Palabra?",
+   o:["El conocimiento necesario para alcanzar la salvación","La fecha del regreso de Cristo","El don de profecía","La autoridad para interpretar las doctrinas"],a:0},
+  {cap:"cr01",t:"mc",nv:2,q:"La declaración cierra diciendo cuatro cosas que son las Escrituras. ¿Cuál de estas NO es una de ellas?",
+   o:["El único medio de sanidad divina","La norma del carácter","El criterio para evaluar la experiencia","Un registro fidedigno de los actos de Dios"],a:0},
+  {cap:"cr01",t:"mc",nv:1,q:"¿Cuántos textos clave trae la cartilla para la creencia «La Palabra de Dios»?",
+   o:["Ocho","Seis","Diez","Doce"],a:0},
+  {cap:"cr01",t:"tf",q:"Según la declaración, los hombres que escribieron las Escrituras lo hicieron «impulsados por el Espíritu Santo».",a:true,
+   e:"Correcto. La declaración no dice que Dios dictó las palabras: dice que hombres hablaron y escribieron impulsados por el Espíritu Santo."},
+  {cap:"cr01",t:"tf",q:"Según la declaración, las Sagradas Escrituras abarcan únicamente el Nuevo Testamento.",a:false,
+   e:"Falso. Abarcan «el Antiguo y el Nuevo Testamento»."},
+  {cap:"cr01",t:"fill",ins:"Creencia 1, cierre de la declaración — Completa:",
+   p:[{x:"«Son la norma del "},{b:"carácter",h:"¿la norma de qué?"},{x:", el criterio para evaluar la "},{b:"experiencia",h:"¿evaluar qué?"},{x:", la revelación autorizada de la doctrinas, y un registro "},{b:"fidedigno",h:"¿cómo es el registro?"},{x:" de los actos de Dios.»"}]},
+  {cap:"cr02",t:"mc",nv:2,q:"¿Cómo describe la declaración la relación entre el Padre, el Hijo y el Espíritu Santo?",
+   o:["Una unidad de tres personas coeternas","Tres manifestaciones de una sola persona","Tres dioses unidos en propósito","Un Dios que cambia de forma según la época"],a:0},
+  {cap:"cr02",t:"mc",nv:1,q:"¿Cuántos atributos de Dios enumera la declaración de «La Deidad»?",
+   o:["Cinco","Tres","Siete","Cuatro"],a:0},
+  {cap:"cr02",t:"mc",nv:2,q:"Según la declaración, ¿cómo se puede conocer a Dios, si escapa a la comprensión humana?",
+   o:["Por medio de su autorrevelación","Por medio de la razón y la filosofía","Por medio de la naturaleza solamente","Por medio de los profetas modernos"],a:0},
+  {cap:"cr02",t:"tf",q:"La declaración dice que Dios «es infinito y escapa a la comprensión humana».",a:true,
+   e:"Correcto, y sigue: «aunque se lo puede conocer por medio de su autorrevelación»."},
+  {cap:"cr02",t:"tf",q:"Según la declaración, las tres personas de la Deidad son coeternas.",a:true,
+   e:"Correcto. Coeternas quiere decir que ninguna empezó a existir después de otra."},
+  {cap:"cr02",t:"fill",ins:"Creencia 2, primera frase — Completa:",
+   p:[{x:"«Hay un solo Dios: Padre, Hijo y Espíritu Santo, una "},{b:"unidad",h:"¿una qué?"},{x:" de tres personas "},{b:"coeternas",h:"¿cómo son?"},{x:".»"}]},
+  {cap:"cr03",t:"mc",nv:2,q:"¿Cuáles son los cuatro títulos que la declaración da al Padre?",
+   o:["Creador, Originador, Sustentador y Soberano","Creador, Redentor, Juez y Rey","Padre, Pastor, Maestro y Juez","Originador, Salvador, Consolador y Señor"],a:0},
+  {cap:"cr03",t:"mc",nv:2,q:"Según la declaración, ¿dónde se manifiestan también las cualidades y las facultades del Padre?",
+   o:["En el Hijo y en el Espíritu Santo","Solamente en el Hijo","En los profetas y en la iglesia","En la creación visible"],a:0},
+  {cap:"cr03",t:"tf",q:"La declaración describe al Padre como «tardo en airarse y abundante en amor y fidelidad».",a:true,
+   e:"Correcto. Esa frase viene casi palabra por palabra de Éxodo 34:6, 7, que está en la lista de textos clave."},
+  {cap:"cr03",t:"tf",q:"Según la declaración, el Padre es el Creador, pero no el Sustentador de la creación.",a:false,
+   e:"Falso. La declaración lo llama «Creador, Originador, Sustentador y Soberano de toda la creación»."},
+  {cap:"cr03",t:"fill",ins:"Creencia 3, los rasgos del carácter del Padre — Completa:",
+   p:[{x:"«Es justo y "},{b:"santo",h:"¿y qué más?"},{x:", misericordioso y "},{b:"clemente",h:"¿y qué más?"},{x:", tardo en "},{b:"airarse",h:"¿tardo en qué?"},{x:" y abundante en amor y fidelidad.»"}]},
+  {cap:"cr04",t:"mc",nv:2,q:"Según la declaración, ¿dónde ministra hoy Jesucristo?",
+   o:["En el Santuario celestial","En la iglesia de la tierra","En el trono del Padre, sin oficio","En el cielo, esperando sin ministrar"],a:0},
+  {cap:"cr04",t:"mc",nv:2,q:"Según la declaración, ¿por quién fue concebido y de quién nació?",
+   o:["Concebido por el Espíritu Santo, nació de María","Concebido por el Padre, nació de María","Concebido por el Espíritu Santo, nació de Isabel","Concebido por el Verbo, nació en Belén"],a:0},
+  {cap:"cr04",t:"mc",nv:2,q:"Según la declaración, ¿para qué volverá en gloria?",
+   o:["Para liberar a su pueblo y restaurar todas las cosas","Para juzgar a las naciones y reinar mil años","Para establecer su reino en Jerusalén","Para resucitar a todos los muertos a la vez"],a:0},
+  {cap:"cr04",t:"tf",q:"Según la declaración, sus milagros confirmaron que era el Mesías prometido.",a:true,
+   e:"Correcto: «Sus milagros confirmaron que era el Mesías prometido»."},
+  {cap:"cr04",t:"tf",q:"La declaración de la cartilla dice que Jesús nació de la «virgen María».",a:false,
+   e:"Falso en la cartilla: dice solamente «nació de María». Es el libro de las 28 creencias el que dice «la virgen María». Si el examen sale de la cartilla, manda la cartilla."},
+  {cap:"cr04",t:"fill",ins:"Creencia 4, el tramo final — Completa:",
+   p:[{x:"«Murió en la cruz por nuestros "},{b:"pecados",h:"¿por qué murió?"},{x:", "},{b:"resucitó",h:"¿qué hizo después?"},{x:", ascendió al cielo y hoy ministra en el "},{b:"Santuario",h:"¿dónde ministra?"},{x:" celestial.»"}]},
+  {cap:"cr05",t:"mc",nv:2,q:"Según la declaración, ¿en cuáles tres obras desempeñó el Espíritu una parte activa con el Padre y el Hijo?",
+   o:["La creación, la encarnación y la redención","La creación, el juicio y la redención","La encarnación, la resurrección y el juicio","La creación, la inspiración y la resurrección"],a:0},
+  {cap:"cr05",t:"mc",nv:2,q:"Según la declaración, ¿quién envió al Espíritu Santo?",
+   o:["El Padre y el Hijo","Solamente el Padre","Solamente el Hijo","La iglesia, por medio de la oración"],a:0},
+  {cap:"cr05",t:"mc",nv:3,q:"La declaración dice que el Espíritu guía a la iglesia a toda la verdad, pero con una condición. ¿Cuál?",
+   o:["En armonía con las Escrituras","En armonía con los dones espirituales","En armonía con el don de profecía","En armonía con la unidad de la iglesia"],a:0},
+  {cap:"cr05",t:"tf",q:"Según la declaración, el Espíritu Santo inspiró a los autores de las Escrituras e infundió poder a la vida de Cristo.",a:true,
+   e:"Correcto. Las dos cosas están en la declaración, una detrás de la otra."},
+  {cap:"cr05",t:"tf",q:"Según la declaración, el Espíritu Santo puede guiar a la iglesia a verdades nuevas aunque contradigan las Escrituras.",a:false,
+   e:"Falso. La declaración dice «en armonía con las Escrituras». Es la misma regla de la creencia 1 dicha desde el otro lado."},
+  {cap:"cr05",t:"fill",ins:"Creencia 5, primera frase — Completa:",
+   p:[{x:"«Dios el Espíritu Eterno desempeñó una parte activa con el Padre y el Hijo en la "},{b:"creación",h:"¿la primera obra?"},{x:", la "},{b:"encarnación",h:"¿la segunda?"},{x:" y la "},{b:"redención",h:"¿la tercera?"},{x:".»"}]},
   {cap:'cr06',t:'mc',nv:1,q:"¿Cuál es la creencia número 6?",
    o:["La creación","El remanente y su misión","La ley de Dios","La segunda venida de Cristo"],a:0},
   {cap:'cr06',t:'mc',nv:2,q:"¿A qué creencia corresponde esta declaración? «Dios es el Creador de todas las cosas, y reveló en las Escrituras el relato auténtico de su actividad creadora. El Señor...»",
@@ -287,17 +396,92 @@ const CR_BANCO = [
    o:["2 Ped. 3:13","Gén. 1:1,2","Jn. 3:16","Gén. 1:26-28"],a:0},
 ];
 
+/* ─────────────── PREGUNTAS DERIVADAS DE LA TABLA DE DOCTRINAS ───────────────
+   MECANISMO
+   «¿A que doctrina pertenece la creencia 20?» es una pregunta cuya respuesta
+   YA ESTA en `doc` de CR_CAPS. Escribirla a mano seria copiar el dato a un
+   segundo lugar, y dos copias del mismo dato se desincronizan: es el error
+   que este proyecto ya pago con `capsDelEvento()`.
+
+   Asi que se generan. Si manana se corrige el reparto de una doctrina, las
+   preguntas se corrigen solas y ninguna queda mintiendo.
+
+   Las opciones salen sin barajar (la respuesta en la posicion 0) porque
+   `barajaOpciones()` las mezcla al armar cada examen. */
+const CR_BANCO_DOC = (() => {
+  const qs = [];
+  const nom = id => (CR_CAPS.find(c => c.id === id) || {}).sub;
+  const num = id => Number(id.slice(2));
+
+  for (const c of CR_CAPS) {
+    const mia = DOCTRINAS.find(d => d.id === c.doc);
+    const otras = DOCTRINAS.filter(d => d.id !== mia.id).slice(0, 3).map(d => d.nombre);
+    qs.push({ cap:c.id, t:'mc', nv:2,
+      q:'¿A qué doctrina pertenece la creencia ' + num(c.id) + ', «' + c.sub + '»?',
+      o:[mia.nombre, ...otras], a:0 });
+  }
+
+  for (const d of DOCTRINAS) {
+    const cuantas = d.hasta - d.desde + 1;
+    const capD = 'cr' + String(d.desde).padStart(2, '0');
+    const otros = [...new Set(DOCTRINAS.map(x => x.hasta - x.desde + 1))]
+      .filter(n => n !== cuantas).slice(0, 3);
+    qs.push({ cap:capD, t:'mc', nv:1,
+      q:'¿Cuántas creencias tiene «' + d.nombre + '»?',
+      o:[String(cuantas), ...otros.map(String)], a:0 });
+    qs.push({ cap:capD, t:'mc', nv:1,
+      q:'¿Qué número de doctrina es «' + d.nombre + '»?',
+      o:[String(d.n), ...DOCTRINAS.filter(x => x.n !== d.n).slice(0, 3).map(x => String(x.n))], a:0 });
+    qs.push({ cap:capD, t:'mc', nv:2,
+      q:'¿Con cuál creencia ABRE «' + d.nombre + '»?',
+      o:[nom(capD), ...CR_CAPS.filter(c => c.doc !== d.id).slice(0, 3).map(c => c.sub)], a:0 });
+  }
+
+  qs.push({ cap:'cr01', t:'mc', nv:1,
+    q:'¿En cuántas doctrinas se reparten las 28 creencias fundamentales?',
+    o:['Seis', 'Cuatro', 'Siete', 'Cinco'], a:0 });
+  qs.push({ cap:'cr01', t:'mc', nv:1,
+    q:'¿Cuántas creencias fundamentales hay en total?',
+    o:['28', '27', '25', '30'], a:0 });
+  qs.push({ cap:'cr01', t:'mc', nv:2,
+    q:'¿Cuál es la doctrina con MÁS creencias?',
+    o:['La doctrina de la iglesia', 'La doctrina de Dios',
+       'La doctrina de los acontecimientos finales', 'La doctrina de la salvación'], a:0 });
+  qs.push({ cap:'cr01', t:'mc', nv:2,
+    q:'¿Cuál es la doctrina con MENOS creencias?',
+    o:['La doctrina del hombre', 'La doctrina de la salvación',
+       'La doctrina de Dios', 'La doctrina de la vida cristiana'], a:0 });
+  return qs;
+})();
+
+const CR_BANCO = [...CR_BANCO_FIJO, ...CR_BANCO_DOC];
+
 const CR_TARJETAS = [
-  {cap:'cr01', f:"Creencia <b>1</b>", r:"La Palabra de Dios"},
-  {cap:'cr01', f:"<b>La Palabra de Dios</b> — textos clave", r:"2 Ped. 1:20,21; 2 Tim. 3:16,17; Sal. 119:105; Prov. 30:5, 6; Isa. 8:20; Jn. 17:17; 1 Tes. 2:13; Heb. 4:12)"},
-  {cap:'cr02', f:"Creencia <b>2</b>", r:"La Deidad"},
-  {cap:'cr02', f:"<b>La Deidad</b> — textos clave", r:"Deut. 6:4; Mat. 28:19; 2 Cor. 13:14; Efe. 4:4-6; 1 Ped. 1:2; 1 Tim. 1:17; Apoc. 14:7)"},
-  {cap:'cr03', f:"Creencia <b>3</b>", r:"Dios el Padre"},
-  {cap:'cr03', f:"<b>Dios el Padre</b> — textos clave", r:"Gén. 1:1; Apoc. 4:11; 1 Cor. 15:28; Jn. 3:16; 1 Jn. 4:8; 1 Tim. 1:17; Éxo. 34:6, 7; Jn. 14:9). Conceptos acerca del Padre 1. ¿Cuál es el concepto que mucha gente tiene de Dios el Padre? (Mat. 5:38-41; Éxo. 21:24). ____________________________________ ___________________________________________________________ ___________________________________________________________ Dios el Padre en el Antiguo Testamento 2. Repasa y comparte las muchas maneras como Dios se muestra en el Antiguo Testamento. Un Dios de misericordia (Éx.34:6-7; 25:8).____________________ El Dios del pacto (Gén. 9:1-17; 12:1-3,7; 15:5-7)._______________ El Dios Redentor (Éx. 12:37-42; Sal. 8:3-4).____________________ Un Dios de refugio (Sal. 46:1; 62:8)._________________________ Un Dios perdonador (Sal. 51:1; 103:11-14).___________________ Un Dios de bondad (Sal. 146:7-9).___________________________ Un Dios de fidelidad (Lev. 26; Deut.28; Isa. 41:9-10).__________ Un Dios de salvación y venganza (Isa. 35:4)._________________ Un Dios paternal (Isa.64:8; Mal. 2:10)._______________________ 15"},
-  {cap:'cr04', f:"Creencia <b>4</b>", r:"Dios el Hijo"},
-  {cap:'cr04', f:"<b>Dios el Hijo</b> — textos clave", r:"Jn. 1:1-3,14; Col. 1:15-19; Jn. 10:30; 14:9; Rom. 6:23; 2 Cor. 5:17-19; Jn. 5:22; Luc. 1:35; Fil. 2:5-11; Heb. 2:9-18; 1 Cor. 15:3,4; Heb. 8:1,2; Jn. 14:1-3). La encarnación: Predicciones y cumplimiento 1. ¿Qué plan desarrolló Dios para rescatar a la raza humana? (Jn. 3:16; 1 Ped. 1:19-20; 3:18; Gén. 3:15). ___________________________ ___________________________________________________________ ___________________________________________________________ 2. Explique el proceso del sacrificio de animales por el pecado (Gén. 4:4; Éxo.25:8-9,40; Lev. 1; Heb. 9:22).______________________ ___________________________________________________________ ___________________________________________________________"},
-  {cap:'cr05', f:"Creencia <b>5</b>", r:"Dios el Espíritu Santo"},
-  {cap:'cr05', f:"<b>Dios el Espíritu Santo</b> — textos clave", r:"Gén. 1:1,2; Luc. 1:35; 4:18; Hech. 10:38; 2 Ped. 1:21; 2 Cor. 3:18; Efe. 4:11, 12; Hech. 1:8; Jn. 14:16-18, 26; 15:26, 27; 16:7-13). ¿Quién es el Espíritu Santo? 1. El Espíritu Santo es una persona y no una fuerza interpersonal. ¿Cuáles son los rasgos de su personalidad? (Gen. 6:3) _______________________________________________ (Luc. 12:12) _____________________________________________ (Jn. 16:8) ________________________________________________ (Hech. 13:2) _____________________________________________ (Rom. 8:26) ______________________________________________ (1 Ped. 1:2) ______________________________________________ (2 Ped. 1:21) _____________________________________________ “Esas actividades no pueden ser realizadas por un mero poder, una influencia o un atributo de Dios. Solamente una persona puede llevarlas a cabo”. Creencias… pág. 68"},
+  {cap:"cr01", f:"Creencia <b>1</b>", r:"La Palabra de Dios"},
+  {cap:"cr01", f:"<b>La Palabra de Dios</b> — ¿qué número es?", r:"La creencia <b>1</b>, de la doctrina de Dios"},
+  {cap:"cr01", f:"<b>La Palabra de Dios</b> — textos clave", r:"2 Pedro 1:20,21; 2 Timoteo 3:16,17; Salmos 119:105; Proverbios 30:5, 6; Isaías 8:20; Juan 17:17; 1 Tesalonicenses 2:13; Hebreos 4:12"},
+  {cap:"cr01", f:"<b>La Palabra de Dios</b> — ¿a qué doctrina pertenece?", r:"A la <b>primera</b>: la doctrina de Dios (creencias 1 a 5)"},
+  {cap:"cr01", f:"Las cuatro cosas que la Biblia ES, según la declaración", r:"Norma del carácter · criterio para evaluar la experiencia · revelación autorizada de las doctrinas · registro fidedigno de los actos de Dios"},
+  {cap:"cr02", f:"Creencia <b>2</b>", r:"La Deidad"},
+  {cap:"cr02", f:"<b>La Deidad</b> — ¿qué número es?", r:"La creencia <b>2</b>, de la doctrina de Dios"},
+  {cap:"cr02", f:"<b>La Deidad</b> — textos clave", r:"Deuteronomio 6:4; Mateo 28:19; 2 Corintios 13:14; Efesios 4:4-6; 1 Pedro 1:2; 1 Timoteo 1:17; Apocalipsis 14:7"},
+  {cap:"cr02", f:"<b>La Deidad</b> — ¿a qué doctrina pertenece?", r:"A la <b>primera</b>: la doctrina de Dios (creencias 1 a 5)"},
+  {cap:"cr02", f:"Los cinco atributos de «La Deidad»", r:"Inmortal · todopoderoso · omnisapiente · superior a todos · omnipresente"},
+  {cap:"cr03", f:"Creencia <b>3</b>", r:"Dios el Padre"},
+  {cap:"cr03", f:"<b>Dios el Padre</b> — ¿qué número es?", r:"La creencia <b>3</b>, de la doctrina de Dios"},
+  {cap:"cr03", f:"<b>Dios el Padre</b> — textos clave", r:"Génesis 1:1; Apocalipsis 4:11; 1 Corintios 15:28; Juan 3:16; 1 Juan 4:8; 1 Timoteo 1:17; Éxodo 34:6, 7; Juan 14:9"},
+  {cap:"cr03", f:"<b>Dios el Padre</b> — ¿a qué doctrina pertenece?", r:"A la <b>primera</b>: la doctrina de Dios (creencias 1 a 5)"},
+  {cap:"cr03", f:"Los cuatro títulos del Padre", r:"Creador · Originador · Sustentador · Soberano de toda la creación"},
+  {cap:"cr04", f:"Creencia <b>4</b>", r:"Dios el Hijo"},
+  {cap:"cr04", f:"<b>Dios el Hijo</b> — ¿qué número es?", r:"La creencia <b>4</b>, de la doctrina de Dios"},
+  {cap:"cr04", f:"<b>Dios el Hijo</b> — textos clave", r:"Juan 1:1-3,14; Colosenses 1:15-19; Juan 10:30; 14:9; Romanos 6:23; 2 Corintios 5:17-19; Juan 5:22"},
+  {cap:"cr04", f:"<b>Dios el Hijo</b> — ¿a qué doctrina pertenece?", r:"A la <b>primera</b>: la doctrina de Dios (creencias 1 a 5)"},
+  {cap:"cr04", f:"¿Dónde ministra hoy Jesucristo, según la declaración?", r:"En el Santuario celestial. Y «pronto volverá en gloria para liberar a su pueblo y restaurar todas las cosas»"},
+  {cap:"cr05", f:"Creencia <b>5</b>", r:"Dios el Espíritu Santo"},
+  {cap:"cr05", f:"<b>Dios el Espíritu Santo</b> — ¿qué número es?", r:"La creencia <b>5</b>, de la doctrina de Dios"},
+  {cap:"cr05", f:"<b>Dios el Espíritu Santo</b> — textos clave", r:"Génesis 1:1,2; Lucas 1:35; 4:18; Hechos 10:38; 2 Pedro 1:21; 2 Corintios 3:18; Efesios 4:11, 12; Hechos 1:8; Juan 14:16-18, 26; 15:26, 27; 16:7-13"},
+  {cap:"cr05", f:"<b>Dios el Espíritu Santo</b> — ¿a qué doctrina pertenece?", r:"A la <b>primera</b>: la doctrina de Dios (creencias 1 a 5)"},
+  {cap:"cr05", f:"Las tres obras en que el Espíritu tuvo parte activa", r:"La creación · la encarnación · la redención"},
   {cap:'cr06', f:"Creencia <b>6</b>", r:"La creación"},
   {cap:'cr06', f:"<b>La creación</b> — textos clave", r:"Gén. Cap 1-2; Éxo. 20:8-11; Sal. 19:1-6; 33:6, 9; 104; Heb. 11:3). La palabra creadora de Dios 1. Cada mandato de Dios, estuvo cargado de energía creadora que transformó al planeta ¿Cómo actúa la palabra creadora de Dios? (Sal. 33:6; Heb. 11:3; Gén. 2: 7, 19, 22).__________________________ ___________________________________________________________ ___________________________________________________________ El relato de la creación 2. ¿Son literales los días de la creación o representan grandes periodos? Gén. 1:1-2:25). _____________________________________ ___________________________________________________________ 3. ¿Qué relación tiene Lev. 23:32; Deut. 16:6; Éxo. 20:8-11 con el relato de la creación de Gén. 1-2 ? _____________________________ ___________________________________________________________ ___________________________________________________________ 25"},
   {cap:'cr07', f:"Creencia <b>7</b>", r:"La naturaleza humana"},
@@ -346,4 +530,24 @@ const CR_TARJETAS = [
   {cap:'cr28', f:"<b>La Tierra Nueva</b> — textos clave", r:"2 Ped. 3:13; Isa. 35; 65:17-25; Mat. 5:5; Apoc. 21:1-7; 22:1-5; 11:5). La naturaleza de la Tierra Nueva 1. Estudia por qué la tierra nueva es una realidad tangible (2 Pedro 3). ___________________________________________________ ___________________________________________________________ ___________________________________________________________ 2. Describe por qué la tierra nueva tiene una continuidad y una diferencia renovada (Apoc. 21:1). _____________________________ ___________________________________________________________ ___________________________________________________________"},
 ];
 
-module.exports = { CR_CAPS, CR_CONTENIDO, CR_BANCO, CR_TARJETAS };
+/* ───────────────────── MODULOS DE «EN ESTO CREEMOS» ─────────────────────
+   Repaso transversal: no pertenecen a una creencia, cruzan las 28. Es lo
+   que en Daniel hacen `m-numeros` y `m-personajes`, y lo que a las
+   creencias le faltaba por completo. */
+const CR_MODULOS = [
+  { id:'mc-doctrinas', label:'Las 6 doctrinas', sub:'Cómo se reparten las 28 creencias',
+    icono:'🗺️', color:'#1F3864', cats:['ec1','ec2'] },
+  { id:'mc-lista', label:'Las 28 de corrido', sub:'Número, nombre y doctrina',
+    icono:'🔢', color:'#B45309', cats:['ec1','ec2'] },
+];
+
+const CR_CONT_MODULOS = {
+  'mc-doctrinas': [{ t:"🗺️ El reparto", h:"<div class=\"highlight-box\"><strong>El conteo que hay que saber de memoria</strong><br><b>28</b> creencias repartidas en <b>6</b> doctrinas. El reparto no es parejo: <b>5 · 2 · 3 · 8 · 5 · 5</b>. La más grande es la de la iglesia, con 8. La más pequeña es la del hombre, con 2.</div><table class=\"info-table\"><thead><tr><th>Doctrina</th><th>Creencias</th><th>Cuántas</th></tr></thead><tbody><tr><td class=\"key\"><b>1.</b> La doctrina de Dios</td><td>1 a 5</td><td><b>5</b></td></tr><tr><td class=\"key\"><b>2.</b> La doctrina del hombre</td><td>6 a 7</td><td><b>2</b></td></tr><tr><td class=\"key\"><b>3.</b> La doctrina de la salvación</td><td>8 a 10</td><td><b>3</b></td></tr><tr><td class=\"key\"><b>4.</b> La doctrina de la iglesia</td><td>11 a 18</td><td><b>8</b></td></tr><tr><td class=\"key\"><b>5.</b> La doctrina de la vida cristiana</td><td>19 a 23</td><td><b>5</b></td></tr><tr><td class=\"key\"><b>6.</b> La doctrina de los acontecimientos finales</td><td>24 a 28</td><td><b>5</b></td></tr></tbody></table><div class=\"warn-box\"><strong>La regla para no perderse</strong><br>Las tres primeras van en orden de historia: quién es Dios, qué es el hombre, cómo se salva. Las tres últimas van en orden de vida: la iglesia a la que entra, cómo vive, y cómo termina todo.</div>" },
+    { t:"👑 Doctrinas 1 a 3", h:"<div class=\"highlight-box\"><strong>1. La doctrina de Dios &nbsp;<small>(5 creencias)</small></strong><ul class=\"tight\"><li><b>1.</b> La Palabra de Dios</li><li><b>2.</b> La Deidad</li><li><b>3.</b> Dios el Padre</li><li><b>4.</b> Dios el Hijo</li><li><b>5.</b> Dios el Espíritu Santo</li></ul></div><div class=\"highlight-box\"><strong>2. La doctrina del hombre &nbsp;<small>(2 creencias)</small></strong><ul class=\"tight\"><li><b>6.</b> La creación</li><li><b>7.</b> La naturaleza humana</li></ul></div><div class=\"highlight-box\"><strong>3. La doctrina de la salvación &nbsp;<small>(3 creencias)</small></strong><ul class=\"tight\"><li><b>8.</b> El gran conflicto</li><li><b>9.</b> La vida, muerte y resurrección de Cristo</li><li><b>10.</b> La experiencia de la salvación</li></ul></div>" },
+    { t:"⛪ Doctrinas 4 a 6", h:"<div class=\"highlight-box\"><strong>4. La doctrina de la iglesia &nbsp;<small>(8 creencias)</small></strong><ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"highlight-box\"><strong>5. La doctrina de la vida cristiana &nbsp;<small>(5 creencias)</small></strong><ul class=\"tight\"><li><b>19.</b> La ley de Dios</li><li><b>20.</b> El sábado</li><li><b>21.</b> La mayordomía</li><li><b>22.</b> La conducta cristiana</li><li><b>23.</b> El matrimonio y la familia</li></ul></div><div class=\"highlight-box\"><strong>6. La doctrina de los acontecimientos finales &nbsp;<small>(5 creencias)</small></strong><ul class=\"tight\"><li><b>24.</b> El ministerio de Cristo en el Santuario celestial</li><li><b>25.</b> La segunda venida de Cristo</li><li><b>26.</b> La muerte y la resurrección</li><li><b>27.</b> El milenio y el fin del pecado</li><li><b>28.</b> La Tierra Nueva</li></ul></div>" }],
+  'mc-lista': [{ t:"🔢 Creencias 1 a 14", h:"<table class=\"info-table\"><thead><tr><th>N°</th><th>Creencia</th><th>Doctrina</th></tr></thead><tbody><tr><td class=\"key\"><b>1</b></td><td>La Palabra de Dios</td><td><small>La doctrina de Dios</small></td></tr><tr><td class=\"key\"><b>2</b></td><td>La Deidad</td><td><small>La doctrina de Dios</small></td></tr><tr><td class=\"key\"><b>3</b></td><td>Dios el Padre</td><td><small>La doctrina de Dios</small></td></tr><tr><td class=\"key\"><b>4</b></td><td>Dios el Hijo</td><td><small>La doctrina de Dios</small></td></tr><tr><td class=\"key\"><b>5</b></td><td>Dios el Espíritu Santo</td><td><small>La doctrina de Dios</small></td></tr><tr><td class=\"key\"><b>6</b></td><td>La creación</td><td><small>La doctrina del hombre</small></td></tr><tr><td class=\"key\"><b>7</b></td><td>La naturaleza humana</td><td><small>La doctrina del hombre</small></td></tr><tr><td class=\"key\"><b>8</b></td><td>El gran conflicto</td><td><small>La doctrina de la salvación</small></td></tr><tr><td class=\"key\"><b>9</b></td><td>La vida, muerte y resurrección de Cristo</td><td><small>La doctrina de la salvación</small></td></tr><tr><td class=\"key\"><b>10</b></td><td>La experiencia de la salvación</td><td><small>La doctrina de la salvación</small></td></tr><tr><td class=\"key\"><b>11</b></td><td>Crecer en Cristo</td><td><small>La doctrina de la iglesia</small></td></tr><tr><td class=\"key\"><b>12</b></td><td>La iglesia</td><td><small>La doctrina de la iglesia</small></td></tr><tr><td class=\"key\"><b>13</b></td><td>El remanente y su misión</td><td><small>La doctrina de la iglesia</small></td></tr><tr><td class=\"key\"><b>14</b></td><td>La unidad en el cuerpo de Cristo</td><td><small>La doctrina de la iglesia</small></td></tr></tbody></table>" },
+    { t:"🔢 Creencias 15 a 28", h:"<table class=\"info-table\"><thead><tr><th>N°</th><th>Creencia</th><th>Doctrina</th></tr></thead><tbody><tr><td class=\"key\"><b>15</b></td><td>El bautismo</td><td><small>La doctrina de la iglesia</small></td></tr><tr><td class=\"key\"><b>16</b></td><td>La Cena del Señor</td><td><small>La doctrina de la iglesia</small></td></tr><tr><td class=\"key\"><b>17</b></td><td>Los dones y ministerios espirituales</td><td><small>La doctrina de la iglesia</small></td></tr><tr><td class=\"key\"><b>18</b></td><td>El don de profecía</td><td><small>La doctrina de la iglesia</small></td></tr><tr><td class=\"key\"><b>19</b></td><td>La ley de Dios</td><td><small>La doctrina de la vida cristiana</small></td></tr><tr><td class=\"key\"><b>20</b></td><td>El sábado</td><td><small>La doctrina de la vida cristiana</small></td></tr><tr><td class=\"key\"><b>21</b></td><td>La mayordomía</td><td><small>La doctrina de la vida cristiana</small></td></tr><tr><td class=\"key\"><b>22</b></td><td>La conducta cristiana</td><td><small>La doctrina de la vida cristiana</small></td></tr><tr><td class=\"key\"><b>23</b></td><td>El matrimonio y la familia</td><td><small>La doctrina de la vida cristiana</small></td></tr><tr><td class=\"key\"><b>24</b></td><td>El ministerio de Cristo en el Santuario celestial</td><td><small>La doctrina de los acontecimientos finales</small></td></tr><tr><td class=\"key\"><b>25</b></td><td>La segunda venida de Cristo</td><td><small>La doctrina de los acontecimientos finales</small></td></tr><tr><td class=\"key\"><b>26</b></td><td>La muerte y la resurrección</td><td><small>La doctrina de los acontecimientos finales</small></td></tr><tr><td class=\"key\"><b>27</b></td><td>El milenio y el fin del pecado</td><td><small>La doctrina de los acontecimientos finales</small></td></tr><tr><td class=\"key\"><b>28</b></td><td>La Tierra Nueva</td><td><small>La doctrina de los acontecimientos finales</small></td></tr></tbody></table>" },
+    { t:"⚠️ Los saltos", h:"<div class=\"warn-box\"><strong>Dónde se pierde la gente al recitarlas</strong><br>Del <b>5</b> al <b>6</b> se cambia de doctrina, de la de Dios a la del hombre, y esa solo tiene dos. Del <b>10</b> al <b>11</b> arranca la más larga, ocho seguidas. Del <b>23</b> al <b>24</b> entra la última, la del fin.</div><div class=\"highlight-box\"><strong>Los tres bordes que más se preguntan</strong><ul class=\"tight\"><li><b>5 → 6</b>: cierra Dios el Espíritu Santo, abre La creación.</li><li><b>10 → 11</b>: cierra La experiencia de la salvación, abre Crecer en Cristo.</li><li><b>23 → 24</b>: cierra El matrimonio y la familia, abre El ministerio de Cristo en el Santuario celestial.</li></ul></div>" }],
+};
+
+module.exports = { DOCTRINAS, doctrinaDe, CR_CAPS, CR_CONTENIDO, CR_BANCO, CR_TARJETAS, CR_MODULOS, CR_CONT_MODULOS };

@@ -1801,6 +1801,10 @@ function pintaTarjetas(){
     '<option value="dificiles">🔁 Solo por dominar ('+nDif+')</option>'+
     cs.map(c=>'<option value="'+c.id+'">'+esc(opTj(c))+'</option>').join('');
   sel.value=tjFiltro;
+  /* Los modos se repintan en cada entrada porque dependen de la categoria:
+     al cambiar de actividad puede aparecer o desaparecer «Clasificar». */
+  pintaModosJuego();
+  if(jgModo!=='tarjetas'){ if(!jgR)nuevaRonda(); else pintaJuego(); return; }
   if(!mazo.length)tjBaraja();
   else muestraTj();
 }
@@ -1883,6 +1887,216 @@ function muestraTj(){
   document.getElementById('tj-resumen').textContent=tjSabidas.size+' marcadas como sabidas · «La sabía» dos veces seguidas = dominada';
   botonesTj(true);
 }
+
+/* ══════════════════════════ EJERCICIOS INTERACTIVOS ══════════════════════════
+   POR QUE EXISTEN
+   El examen simula el examen: multiple, verdadero/falso y completar, en la
+   proporcion real. Eso NO se toca, porque su trabajo es parecerse al de
+   verdad. Pero repasar 28 declaraciones leyendo y volteando tarjetas es lo
+   mas parecido que hay a no repasar: se pasa la vista y la cabeza no hace
+   nada. Un ejercicio obliga a producir la respuesta, y producir es lo que
+   fija.
+
+   Por eso los cuatro juegos viven en «Tarjetas», del lado de la practica, y
+   ninguno entra al examen.
+
+   POR QUE SON GENERICOS
+   Ninguno sabe que existen las creencias. Leen tres cosas de cada capitulo:
+   `label` (la clave), `sub` (el valor) y `doc` (el grupo, opcional). Daniel y
+   la matutina ya tienen label y sub, asi que emparejar, ordenar y completar
+   les funcionan tal cual. Clasificar aparece SOLO donde hay grupos
+   declarados, que hoy es «En esto creemos» con sus seis doctrinas: la funcion
+   no pregunta por la actividad, pregunta si hay grupos.
+
+   Y NO HAY VIDAS NI CORAZONES
+   A proposito. Castigar el error con un recurso que se acaba empuja a dejar
+   de practicar, que es justo lo contrario de lo que se necesita. Lo que se
+   refuerza es la racha, que ya existe, y el error manda la ficha al repaso. */
+
+const JUEGOS = [
+  { id:'tarjetas', et:'🃏 Tarjetas',   ayuda:'Lee el frente y comprueba.' },
+  { id:'parear',   et:'🔗 Emparejar',  ayuda:'Toca a la izquierda y después su pareja a la derecha.' },
+  { id:'clasif',   et:'🗂️ Clasificar', ayuda:'¿A qué grupo pertenece?' },
+  { id:'ordenar',  et:'🔢 Ordenar',    ayuda:'Tócalos en el orden correcto.' },
+  { id:'banco',    et:'✍️ Completar',  ayuda:'Toca las palabras en orden para llenar los espacios.' },
+];
+
+let jgModo='tarjetas', jgR=null, jgSel=null, jgN=0, jgBien=0, jgMal=0;
+
+/* Los grupos disponibles en la actividad actual. Si ningun capitulo declara
+   `doc`, no hay grupos y el juego de clasificar ni se ofrece. */
+function gruposDe(){
+  const cs=capsDe();
+  if(!cs.some(c=>c.doc))return [];
+  return (typeof GRUPOS!=='undefined'?GRUPOS:[]).filter(g=>cs.some(c=>c.doc===g.id));
+}
+const grupoDe=c=>(typeof GRUPOS!=='undefined'?GRUPOS:[]).find(g=>g.id===c.doc)||null;
+
+/* Las preguntas de completar de la actividad actual sirven de insumo al juego
+   del banco de palabras: la misma pregunta del examen, sin teclado. */
+const fillsDe=()=>poolDe().filter(q=>q.t==='fill'&&(q.p||[]).some(x=>x.b));
+
+function juegosDisponibles(){
+  return JUEGOS.filter(j=>{
+    if(j.id==='tarjetas')return true;
+    if(j.id==='clasif')return gruposDe().length>1;
+    if(j.id==='banco')return fillsDe().length>0;
+    return capsDe().length>=4;   // parear y ordenar
+  });
+}
+
+function pintaModosJuego(){
+  const z=document.getElementById('jg-modos');
+  if(!z)return;
+  const disp=juegosDisponibles();
+  if(!disp.some(j=>j.id===jgModo))jgModo='tarjetas';
+  z.innerHTML=disp.map(j=>'<button class="jg-m'+(j.id===jgModo?' on':'')+
+    '" onclick="ponJuego(\''+j.id+'\')">'+j.et+'</button>').join('');
+  const esTj=jgModo==='tarjetas';
+  document.querySelector('.tj-zona').hidden=!esTj;
+  const jz=document.getElementById('jg-zona');
+  jz.hidden=esTj;
+  const ay=document.getElementById('jg-ayuda');
+  if(ay)ay.textContent=(disp.find(j=>j.id===jgModo)||{}).ayuda||'';
+}
+
+function ponJuego(id){
+  jgModo=id;
+  if(id!=='tarjetas')nuevaRonda();
+  pintaModosJuego();
+  if(id==='tarjetas')muestraTj();
+}
+
+/* Cada ronda es corta a proposito: seis pasos se terminan en un minuto y
+   medio, que es el tiempo que alguien de verdad le dedica en el bus. */
+const PASOS_RONDA=6;
+
+function nuevaRonda(){
+  jgSel=null;jgN=0;jgBien=0;jgMal=0;
+  const cs=mezcla(capsDe().slice());
+  if(jgModo==='parear'){
+    const sel=cs.slice(0,5);
+    jgR={tipo:'parear',izq:sel,der:mezcla(sel.slice()),listos:[],total:sel.length};
+  } else if(jgModo==='clasif'){
+    jgR={tipo:'clasif',items:cs.slice(0,PASOS_RONDA),grupos:gruposDe(),i:0,total:Math.min(PASOS_RONDA,cs.length)};
+  } else if(jgModo==='ordenar'){
+    const sel=cs.slice(0,5);
+    const bien=sel.slice().sort((a,b)=>ordenCap(a)-ordenCap(b));
+    jgR={tipo:'ordenar',bien:bien,pool:mezcla(sel.slice()),puestos:[],total:bien.length};
+  } else if(jgModo==='banco'){
+    const q=mezcla(fillsDe().slice())[0];
+    const huecos=q.p.map((x,i)=>({i:i,b:x.b})).filter(x=>x.b);
+    const señuelos=mezcla(fillsDe().flatMap(f=>f.p).filter(x=>x.b&&!huecos.some(h=>h.b===x.b))
+      .map(x=>x.b)).slice(0,3);
+    jgR={tipo:'banco',q:q,huecos:huecos,puestas:{},
+         bolsa:mezcla(huecos.map(h=>h.b).concat(señuelos)),total:huecos.length};
+  }
+  pintaJuego();
+}
+
+/* El orden natural de un capitulo. Se saca del id (cr07 -> 7, d12 -> 12): no
+   hace falta un campo nuevo ni mantener una lista aparte. */
+function ordenCap(c){
+  const m=String(c.id).match(/(\d+)/);
+  return m?Number(m[1]):0;
+}
+
+function pintaJuego(){
+  const z=document.getElementById('jg-zona');
+  if(!z||!jgR)return;
+  const hechos=jgR.tipo==='parear'?jgR.listos.length
+    :jgR.tipo==='clasif'?jgR.i
+    :jgR.tipo==='ordenar'?jgR.puestos.length
+    :Object.keys(jgR.puestas).length;
+  const pct=Math.round(hechos/jgR.total*100);
+  let h='<div class="prog-lin"><div style="width:'+pct+'%"></div></div>';
+
+  if(hechos>=jgR.total){
+    const nota=jgMal===0?'🎉 Perfecto':jgBien>=jgMal?'👍 Bien':'🔁 A repasar';
+    h+='<div class="jg-fin"><div class="jg-fin-t">'+nota+'</div>'+
+       '<div class="jg-fin-s">'+jgBien+' a la primera · '+jgMal+' con error</div>'+
+       '<button class="btn azul" onclick="nuevaRonda()">🔀 Otra ronda</button></div>';
+    z.innerHTML=h;return;
+  }
+
+  if(jgR.tipo==='parear'){
+    h+='<div class="jg-par">'+
+      '<div class="jg-col">'+jgR.izq.map((c,i)=>btnPar('i',i,c.label,c)).join('')+'</div>'+
+      '<div class="jg-col">'+jgR.der.map((c,i)=>btnPar('d',i,c.sub,c)).join('')+'</div></div>';
+  } else if(jgR.tipo==='clasif'){
+    const c=jgR.items[jgR.i];
+    h+='<div class="jg-carta">'+esc(c.label)+'<b>'+esc(c.sub)+'</b></div>'+
+       '<div class="jg-gr col">'+jgR.grupos.map(g=>
+         '<button class="jg-g" style="--c:'+g.color+'" onclick="jgClasif(\''+g.id+'\')">'+
+         (g.icono||'')+' '+esc(g.nombre)+'</button>').join('')+'</div>';
+  } else if(jgR.tipo==='ordenar'){
+    h+='<div class="jg-fila">'+jgR.puestos.map((c,i)=>
+        '<span class="jg-p ok">'+(i+1)+'. '+esc(c.sub)+'</span>').join('')+'</div>'+
+       '<div class="jg-gr col">'+jgR.pool.map((c,i)=>
+        jgR.puestos.includes(c)?'':'<button class="jg-g" onclick="jgOrden('+i+')">'+
+        esc(c.label)+' — '+esc(c.sub)+'</button>').join('')+'</div>';
+  } else {
+    const q=jgR.q;
+    h+='<div class="jg-ins">'+esc(q.ins||'')+'</div><div class="jg-frase">'+
+      q.p.map((x,i)=>x.b
+        ? '<span class="jg-h'+(jgR.puestas[i]?' ok':'')+'">'+esc(jgR.puestas[i]||'______')+'</span>'
+        : '<span>'+esc(x.x)+'</span>').join('')+'</div>'+
+      '<div class="jg-gr">'+jgR.bolsa.map((w,i)=>
+        Object.values(jgR.puestas).includes(w)?'':
+        '<button class="jg-g" onclick="jgBanco('+i+')">'+esc(w)+'</button>').join('')+'</div>';
+  }
+  h+='<p class="nota" style="text-align:center">'+jgBien+' bien · '+jgMal+' con error</p>';
+  z.innerHTML=h;
+}
+
+function btnPar(lado,i,txt,c){
+  const hecho=jgR.listos.includes(c.id);
+  const sel=jgSel&&jgSel.lado===lado&&jgSel.i===i;
+  return '<button class="jg-g'+(hecho?' ok':'')+(sel?' sel':'')+'"'+(hecho?' disabled':'')+
+    ' onclick="jgPar(\''+lado+'\','+i+')">'+esc(txt)+'</button>';
+}
+
+function jgPar(lado,i){
+  if(!jgR)return;
+  if(!jgSel||jgSel.lado===lado){jgSel={lado:lado,i:i};pintaJuego();return;}
+  const a=jgSel.lado==='i'?jgR.izq[jgSel.i]:jgR.der[jgSel.i];
+  const b=lado==='i'?jgR.izq[i]:jgR.der[i];
+  if(a.id===b.id){jgR.listos.push(a.id);jgBien++;}else{jgMal++;}
+  jgSel=null;pintaJuego();
+  if(jgR.listos.length>=jgR.total)cierraRonda();
+}
+
+function jgClasif(gid){
+  if(!jgR)return;
+  const c=jgR.items[jgR.i];
+  if(c.doc===gid)jgBien++;else jgMal++;
+  jgR.i++;pintaJuego();
+  if(jgR.i>=jgR.total)cierraRonda();
+}
+
+function jgOrden(i){
+  if(!jgR)return;
+  const c=jgR.pool[i];
+  const toca=jgR.bien[jgR.puestos.length];
+  if(toca&&toca.id===c.id){jgR.puestos.push(c);jgBien++;}else{jgMal++;}
+  pintaJuego();
+  if(jgR.puestos.length>=jgR.total)cierraRonda();
+}
+
+function jgBanco(i){
+  if(!jgR)return;
+  const w=jgR.bolsa[i];
+  const hueco=jgR.huecos.find(h=>!jgR.puestas[h.i]);
+  if(!hueco)return;
+  if(igual(w,hueco.b)){jgR.puestas[hueco.i]=w;jgBien++;}else{jgMal++;}
+  pintaJuego();
+  if(Object.keys(jgR.puestas).length>=jgR.total)cierraRonda();
+}
+
+/* Terminar una ronda cuenta como haber estudiado hoy: es la misma racha de
+   las tarjetas y del examen, no un contador nuevo. Un solo concepto, un solo
+   mecanismo. */
+function cierraRonda(){ sumaRacha(); }
 
 function voltea(){if(mazo.length&&tjI<mazo.length){tjVolteada=!tjVolteada;muestraTj();}}
 function tjSig(){if(tjI<mazo.length){tjI++;tjVolteada=false;muestraTj();}}

@@ -1,0 +1,58 @@
+FUENTE LITERAL DE «EN ESTO CREEMOS»
+Cartilla «En esto creemos», Iglesia Adventista del Septimo Dia,
+Union Colombiana del Sur, 2026. Lema «Viviendo la Mision 7-70».
+Material preparado por el pastor Ludwing Morales.
+
+QUE ES ESTE ARCHIVO
+Es la transcripcion palabra por palabra de la cartilla que se evalua.
+tools/cartilla.js exige que cada declaracion de fuente/creencias.js
+aparezca literal aqui. Si cambia la edicion de la cartilla, se cambia
+este archivo y las declaraciones, y nada mas.
+
+OJO: la cartilla trae erratas (por ejemplo «de la doctrinas» en la
+creencia 1, y declaraciones sin punto final). Se transcriben tal como
+estan: lo que se evalua es la cartilla, no la version corregida.
+
+=== PRIMERA DOCTRINA — LA DOCTRINA DE DIOS ===
+
+La doctrina de Dios, es la primera de nuestras doctrinas y es tambien conocida como teologia propia, es una rama fundamental de la teologia que estudia la naturaleza, atributos y obras de Dios. Esta doctrina se centra en aspectos esenciales como la existencia de Dios, su unidad y trinidad, su infinitud, su omnisciencia, omnipotencia, omnipresencia, santidad, justicia, amor, misericordia y soberania.
+
+La comprension de estas caracteristicas divinas ofrece a los creyentes una base solida para su fe y practica religiosa, proporcionando un marco a traves del cual interpretan la relacion de Dios con el mundo y la humanidad. Es la primera de nuestras seis doctrinas y esta compuesta por la Palabra de Dios, la Deidad, Dios el Padre, Dios el Hijo, Dios el Espiritu Santo
+
+--- Creencia 01 — LA PALABRA DE DIOS ---
+
+Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiracion divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espiritu Santo. Por medio de esta Palabra, Dios comunica a los seres humanos el conocimiento necesario para alcanzar la salvacion. Las Sagradas Escrituras son la infalible revelacion de la voluntad divina. Son la norma del caracter, el criterio para evaluar la experiencia, la revelacion autorizada de la doctrinas, y un registro fidedigno de los actos de Dios realizados en el curso de la historia
+
+TEXTOS: 2 Pedro 1:20,21; 2 Timoteo 3:16,17; Salmos 119:105; Proverbios 30:5, 6; Isaias 8:20; Juan 17:17; 1 Tesalonicenses 2:13; Hebreos 4:12.
+
+--- Creencia 02 — LA DEIDAD ---
+
+Hay un solo Dios: Padre, Hijo y Espiritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escapa a la comprension humana, aunque se lo puede conocer por medio de su autorrevelacion. Es digno para siempre de reverencia, adoracion y servicio por parte de toda la creacion.
+
+TEXTOS: Deuteronomio 6:4; Mateo 28:19; 2 Corintios 13:14; Efesios 4:4-6; 1 Pedro 1:2; 1 Timoteo 1:17; Apocalipsis 14:7.
+
+--- Creencia 03 — DIOS EL PADRE ---
+
+Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creacion. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad. Las cualidades y las facultades del Padre se manifiestan tambien en el Hijo y en el Espiritu Santo
+
+TEXTOS: Genesis 1:1; Apocalipsis 4:11; 1 Corintios 15:28; Juan 3:16; 1 Juan 4:8; 1 Timoteo 1:17; Exodo 34:6, 7; Juan 14:9
+
+--- Creencia 04 — DIOS EL HIJO ---
+
+El Hijo Eterno se encarno en Jesucristo. Por medio de El fueron creadas todas las cosas, se revelo el caracter de Dios, se realizo la salvacion y se juzga al mundo. Aunque era eternamente Dios, tambien se hizo verdaderamente hombre. Fue concebido por el Espiritu Santo, nacio de Maria, vivio sin pecado y revelo el amor y la justicia divina. Sus milagros confirmaron que era el Mesias prometido. Murio en la cruz por nuestros pecados, resucito, ascendio al cielo y hoy ministra en el Santuario celestial. Pronto volvera en gloria para liberar a su pueblo y restaurar todas las cosas.
+
+TEXTOS: Juan 1:1-3,14; Colosenses 1:15-19; Juan 10:30; 14:9; Romanos 6:23; 2 Corintios 5:17-19; Juan 5:22.
+
+--- Creencia 05 — DIOS ESPIRITU SANTO ---
+
+Dios el Espiritu Eterno desempeno una parte activa con el Padre y el Hijo en la creacion, la encarnacion y la redencion. Inspiro a los autores de las Escrituras. Infundio poder a la vida de Cristo. Atrae y convence a los seres humanos, y renueva a los que responden y los transforma a la imagen de Dios. Enviado por el Padre y el Hijo para estar siempre con sus hijos, concede dones espirituales a la iglesia, la capacita para dar testimonio en favor de Cristo y, en armonia con las Escrituras, la guia a toda la verdad.
+
+TEXTOS: Genesis 1:1,2; Lucas 1:35; 4:18; Hechos 10:38; 2 Pedro 1:21; 2 Corintios 3:18; Efesios 4:11, 12; Hechos 1:8; Juan 14:16-18, 26; 15:26, 27; 16:7-13.
+
+=== SEGUNDA DOCTRINA — LA DOCTRINA DEL HOMBRE ===
+
+La doctrina del hombre, segun la Biblia, se centra en la creacion del ser humano a imagen y semejanza de Dios (Genesis 1:26-27). Este acto de creacion confiere a cada individuo un valor intrinseco y una dignidad inigualable, dado que refleja el caracter divino.
+
+La naturaleza humana, aunque creada perfecta, fue afectada por el pecado cometido por Adan y Eva en el Jardin del Eden, lo que condujo a una separacion de Dios y a la entrada del pecado y la muerte en el mundo (Genesis 3:1-24)
+
+El hombre fue constituido mayordomo de la creacion y a pesar del pecado sigue conservando esa tarea en el mundo actual. Su nivel de responsabilidad sigue orientando su amor a Dios y a sus semejantes y esta compuesta por dos creencias, la creacion y la naturaleza del hombre.
