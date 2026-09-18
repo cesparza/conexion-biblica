@@ -8,7 +8,7 @@ const path=require('path');
 const CR=require(path.join(RAIZ,'fuente','creencias.js'));
 
 /* Lo que esta suite necesita de la app. Es su superficie, no duplicacion. */
-const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jgBanco,
+const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jgBanco, jgPaso, jgSigue,
         gruposDe, ronda:()=>jgR, bien_:()=>jgBien, mal_:()=>jgMal, modoJuego:()=>jgModo,
         S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
@@ -1217,7 +1217,7 @@ JG.bvSigue(); JG.bvActividad('ec'); JG.bvCategoria('ec1');
 ok(JG.gruposDe().length===6,'En creencias hay 6 grupos para clasificar (las doctrinas)');
 const idsJ=JG.juegosDisponibles().map(j=>j.id);
 ok(['tarjetas','parear','clasif','ordenar','banco'].every(x=>idsJ.includes(x)),
-  'En creencias se ofrecen los cinco modos: '+idsJ.join(', '));
+  'En creencias se ofrecen los nueve modos: '+idsJ.join(', '));
 
 /* Clasificar: acertar la doctrina suma, equivocarse no bloquea. */
 JG.ponJuego('clasif');
@@ -1257,14 +1257,47 @@ JG.jgBanco(palJG);
 ok(Object.keys(JG.ronda().frases[0].puestas).length===1,
   'Tocar la palabra correcta llena el primer hueco de la primera frase');
 
-/* LA PRUEBA QUE IMPORTA: los mismos juegos en otraDoc actividad, sin tocar nada. */
+/* ── LOS MODOS PASO A PASO ──
+   Los cuatro comparten una sola funcion de avance. Si cada uno trajera la
+   suya, en el tercero ya habria tres maneras distintas de contar un acierto,
+   que es el olor que este proyecto persigue. */
+for(const modo of ['quiz','vf','error','cita']){
+  JG.ponJuego(modo);
+  const rr=JG.ronda();
+  ok(rr&&rr.total>0,'«'+modo+'» arma una ronda de '+(rr?rr.total:0)+' pasos');
+  const antes=JG.bien_()+JG.mal_();
+  JG.jgPaso(0);
+  ok(JG.bien_()+JG.mal_()===antes+1,'  y responder cuenta exactamente una vez');
+  JG.jgPaso(1);
+  ok(JG.bien_()+JG.mal_()===antes+1,'  y volver a tocar NO cuenta otra vez');
+  JG.jgSigue();
+  ok(JG.ronda().i===1&&JG.ronda().elegida===null,'  y «Siguiente» pasa al paso 2 limpio');
+}
+/* «Caza el error» exige dos palabras tapadas: con una sola, la cambiada es la
+   unica que se puede tocar y acertar no prueba nada. */
+JG.ponJuego('error');
+ok(JG.ronda().pasos.every(p=>p.q.p.filter(x=>x.b).length>=2),
+  'Caza el error solo usa frases con dos o mas palabras tapadas');
+
+/* LA PRUEBA QUE IMPORTA: los mismos juegos en otra actividad, sin tocar nada. */
 store={};
 const JD=montar(RET,{store});
 JD.el('bv-nombre').value='Camilo';
 JD.bvSigue(); JD.bvActividad('cb'); JD.bvCategoria('av');
 const idsK=JD.juegosDisponibles().map(j=>j.id);
-ok(JD.gruposDe().length===0,'Daniel todavia no declara grupos');
-ok(!idsK.includes('clasif'),'Por eso clasificar NO se ofrece en Daniel, en vez de salir vacio');
+/* Daniel YA declara sus grupos: relatos, visiones y Profetas y Reyes. Lo que
+   la prueba fija no es cuantos hay, sino que clasificar se enciende solo donde
+   los hay: el juego no sabe que existe Daniel, sabe que existe `doc`. */
+ok(JD.gruposDe().length===2,
+  'Aventureros ve DOS grupos, no tres: no tiene las visiones ('+JD.gruposDe().map(g=>g.nombre).join(' / ')+')');
+ok(idsK.includes('clasif'),'Y clasificar se enciende solo, sin una linea nueva en el juego');
+/* Guias Mayores si ve los tres, porque si ve Daniel 7 a 12. El grupo se filtra
+   por lo que la participante tiene delante, no por la actividad: clasificar en
+   una caja que nunca vio no enseña nada. */
+JD.ponCat('gm');
+ok(JD.gruposDe().length===3,
+  'Guías Mayores ve los tres: '+JD.gruposDe().map(g=>g.nombre).join(' / '));
+JD.ponCat('av');
 ok(['parear','ordenar','banco'].every(x=>idsK.includes(x)),
   'Pero emparejar, ordenar y completar si funcionan en Daniel sin una linea nueva: '+idsK.join(', '));
 JD.ponJuego('parear');

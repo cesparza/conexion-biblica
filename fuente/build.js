@@ -6,13 +6,16 @@ const crypto = require('crypto');
 const SALIDA = path.join(__dirname, '..', 'index.html');
 const { CAPS, CONTENIDO } = require('./contenido.js');
 const { BANCO } = require('./preguntas.js');
+const { BANCO_COBERTURA } = require('./preguntas-cobertura.js');
 const { MODULOS, CONT_MODULOS } = require('./modulos.js');
 const { TARJETAS } = require('./tarjetas.js');
 const { LOGO_TL } = require('./logo.js');
 const { nivelDe } = require('./niveles.js');
 const { MANUAL } = require('./manual.js');
 const MAT = require('./matutina.js');
+const { MAT_COMPLETAR } = require('./matutina-completar.js');
 const CR = require('./creencias.js');
+const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
 const { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META } = require('./biblia-otros.js');
 const PWA = require('./pwa.js');
@@ -20,12 +23,78 @@ const PWA = require('./pwa.js');
 /* Dos eventos, un solo archivo: al material de Daniel se le suma el de la
    Devoción Matutina. Cada capítulo lleva sus categorías, así que el filtrado
    por categoría separa solo lo que corresponde. */
-const CAPS_ALL = [...CAPS, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
+/* Los capitulos de Daniel declaran su grupo aqui y no en contenido.js: el
+   grupo se deduce del id (fuente/grupos.js), asi que escribirlo a mano en 18
+   lineas seria copiar el dato a un segundo lugar. */
+const CAPS_DANIEL = CAPS.map(c => ({ ...c, doc: grupoDaniel(c.id) || undefined }));
+const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
-const BANCO_ALL = [...BANCO, ...MAT.MAT_BANCO, ...CR.CR_BANCO];
+/* Las de cobertura van con las demas: son del mismo banco, solo que las
+   escribio un generador a partir de los versiculos que no tenian ninguna. */
+const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...CR.CR_BANCO];
 const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
 const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
+
+/* ───────────── LA PESTANA «COMPRUEBALO», DERIVADA DE LAS TARJETAS ─────────────
+   MECANISMO
+   Leer una explicacion y sentir que se entendio es distinto de poder
+   responderla. Lo que fija es PRODUCIR la respuesta, no reconocerla. Esta
+   pestana cierra cada capitulo con preguntas cuya respuesta esta tapada.
+
+   POR QUE SE DERIVA Y NO SE ESCRIBE
+   Una tarjeta ya es exactamente eso: frente = pregunta, reverso = respuesta.
+   Hay 360 escritas. Volverlas a escribir a mano seria copiar el dato a un
+   segundo lugar, y las dos copias se desincronizarian en la primera
+   correccion. Asi, cuando crecen las tarjetas crece el repaso, solo.
+
+   Se toman cinco repartidas a lo largo del capitulo (no las cinco primeras),
+   para que el repaso cubra el capitulo entero y no su arranque. */
+const COMPRUEBA = 5;
+function pestanaComprueba(capId) {
+  /* Primero las tarjetas, que ya son pregunta y respuesta. Si el capitulo trae
+     pocas (la matutina trae dos por dia), se completa con sus propias preguntas
+     del banco: una de seleccion se lee como pregunta y su opcion correcta es la
+     respuesta; una de verdadero o falso trae ademas su explicacion. Asi ningun
+     capitulo se queda sin repaso por tener el mazo corto. */
+  const deTarjetas = TARJETAS_ALL.filter(t => t.cap === capId)
+    .map(t => ({ f: t.f, r: t.r }));
+  const delBanco = BANCO_ALL.filter(q => q.cap === capId)
+    .filter(q => q.t === 'mc' || q.t === 'tf')
+    .map(q => q.t === 'mc'
+      ? { f: q.q, r: q.o[q.a] }
+      : { f: q.q, r: (q.a ? 'Verdadero' : 'Falso') + (q.e ? ' — ' + q.e : '') });
+  const mias = deTarjetas.length >= 3 ? deTarjetas : deTarjetas.concat(delBanco);
+  if (mias.length < 3) return null;
+  const paso = Math.max(1, Math.floor(mias.length / COMPRUEBA));
+  const sel = [];
+  for (let i = 0; i < mias.length && sel.length < COMPRUEBA; i += paso) sel.push(mias[i]);
+  const bloques = sel.map(t =>
+    '<div class="rev"><button type="button" class="rev-q" onclick="revela(this)">' +
+    '<span class="rev-t">' + t.f + '</span><span class="rev-p">tocar para ver</span></button>' +
+    '<div class="rev-a" hidden>' + t.r + '</div></div>').join('');
+  const cabeza =
+    '<div class="highlight-box"><strong>Antes de pasar al siguiente</strong><br>' +
+    'Responde en voz alta y después comprueba. Si fallas una, está en ' +
+    '<strong>Practicar</strong> para repetirla.</div>';
+  /* Si los cinco bloques juntos pasan de 2.000 caracteres, la pestana se parte
+     en dos. El hook del repositorio bloquea lineas mas largas, y con razon:
+     ningun visor de diff abre el archivo. */
+  const TOPE = 1800;
+  if ((cabeza + bloques).length <= TOPE) return [{ t: '✅ Compruébalo', h: cabeza + bloques }];
+  const mitad = Math.ceil(sel.length / 2);
+  const corte = bloques.indexOf('<div class="rev">', bloques.indexOf('<div class="rev">') * 0 + 1);
+  const trozo = n => sel.slice(n === 1 ? 0 : mitad, n === 1 ? mitad : sel.length).map(t =>
+    '<div class="rev"><button type="button" class="rev-q" onclick="revela(this)">' +
+    '<span class="rev-t">' + t.f + '</span><span class="rev-p">tocar para ver</span></button>' +
+    '<div class="rev-a" hidden>' + t.r + '</div></div>').join('');
+  return [{ t: '✅ Compruébalo', h: cabeza + trozo(1) },
+          { t: '✅ Y estas', h: trozo(2) }];
+}
+for (const c of CAPS_ALL) {
+  const extra = pestanaComprueba(c.id);
+  if (extra && CONTENIDO_ALL[c.id]) CONTENIDO_ALL[c.id] = [...CONTENIDO_ALL[c.id], ...extra];
+}
 
 /* Cada pregunta sale al HTML con su nivel ya calculado (fuente/niveles.js).
    La app solo lee q.nv: la regla vive en un archivo y no se duplica. */
@@ -68,7 +137,7 @@ const MODULOS = ${JSON.stringify(MODULOS_ALL, null, 1)};
    sabe nada de doctrinas, sabe agrupar. El dia que Daniel declare los
    suyos (los reyes, por ejemplo) se agregan aqui con otros ids y el juego
    se enciende para Daniel sin tocar una linea de la app. */
-const GRUPOS = ${JSON.stringify(CR.DOCTRINAS, null, 1)};
+const GRUPOS = ${JSON.stringify(GRUPOS, null, 1)};
 
 const CONT_MODULOS = ${JSON.stringify(CONT_MODULOS_ALL, null, 1)};
 

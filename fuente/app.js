@@ -1948,10 +1948,14 @@ function muestraTj(){
 
 const JUEGOS = [
   { id:'tarjetas', et:'🃏 Tarjetas',   ayuda:'Lee el frente y comprueba.' },
+  { id:'quiz',     et:'⚡ Quiz',        ayuda:'Una pregunta a la vez, y te dice al instante si acertaste.' },
+  { id:'vf',       et:'✅ ¿V o F?',     ayuda:'Decide si la frase es verdadera o falsa.' },
   { id:'parear',   et:'🔗 Emparejar',  ayuda:'Toca a la izquierda y después su pareja a la derecha.' },
   { id:'clasif',   et:'🗂️ Clasificar', ayuda:'¿A qué grupo pertenece?' },
   { id:'ordenar',  et:'🔢 Ordenar',    ayuda:'Tócalos en el orden correcto.' },
   { id:'banco',    et:'✍️ Completar',  ayuda:'Toca las palabras en orden para llenar los espacios.' },
+  { id:'error',    et:'🔍 Caza el error', ayuda:'Una palabra fue cambiada. Tócala.' },
+  { id:'cita',     et:'📖 ¿De dónde es?', ayuda:'Lee el texto y di de dónde sale.' },
 ];
 
 let jgModo='tarjetas', jgR=null, jgSel=null, jgN=0, jgBien=0, jgMal=0;
@@ -1968,12 +1972,29 @@ const grupoDe=c=>(typeof GRUPOS!=='undefined'?GRUPOS:[]).find(g=>g.id===c.doc)||
 /* Las preguntas de completar de la actividad actual sirven de insumo al juego
    del banco de palabras: la misma pregunta del examen, sin teclado. */
 const fillsDe=()=>poolDe().filter(q=>q.t==='fill'&&(q.p||[]).some(x=>x.b));
+/* Los modos nuevos no traen material propio: salen del banco que ya existe.
+   Asi cualquier actividad los hereda, y crecen cuando crece el banco. */
+const mcsDe=()=>poolDe().filter(q=>q.t==='mc'&&(q.o||[]).length>=3);
+const tfsDe=()=>poolDe().filter(q=>q.t==='tf');
+/* Para «¿de donde es?» sirve la pregunta de completar cuyo rotulo nombra la
+   fuente («Daniel 1:20 (RV1995) — Completa:»): el texto es la frase armada y
+   la respuesta es ese rotulo, limpio. */
+const REF_INS=/^([^—]+?)\s*(?:\([^)]*\))?\s*—/;
+const citasDe=()=>fillsDe().filter(q=>REF_INS.test(q.ins||''));
+const refDe=q=>((q.ins||'').match(REF_INS)||[])[1].trim();
+const fraseDe=q=>q.p.map(x=>x.b||x.x).join('');
 
+/* Un modo se ofrece solo si tiene con que. Un boton que abre una ronda vacia
+   es el mismo defecto del panel: parece que la app se trabo. */
 function juegosDisponibles(){
   return JUEGOS.filter(j=>{
     if(j.id==='tarjetas')return true;
     if(j.id==='clasif')return gruposDe().length>1;
     if(j.id==='banco')return fillsDe().length>0;
+    if(j.id==='error')return fillsDe().filter(q=>q.p.filter(x=>x.b).length>=2).length>0;
+    if(j.id==='quiz')return mcsDe().length>=4;
+    if(j.id==='vf')return tfsDe().length>=4;
+    if(j.id==='cita')return citasDe().length>=4;
     return capsDe().length>=4;   // parear y ordenar
   });
 }
@@ -2016,6 +2037,37 @@ function nuevaRonda(){
     const sel=cs.slice(0,5);
     const bien=sel.slice().sort((a,b)=>ordenCap(a)-ordenCap(b));
     jgR={tipo:'ordenar',bien:bien,pool:mezcla(sel.slice()),puestos:[],total:bien.length};
+  } else if(jgModo==='quiz'){
+    const qs=mezcla(mcsDe().slice()).slice(0,PASOS_RONDA).map(q=>barajaOpciones({...q}));
+    jgR={tipo:'quiz',qs:qs,i:0,elegida:null,total:qs.length};
+  } else if(jgModo==='vf'){
+    const qs=mezcla(tfsDe().slice()).slice(0,PASOS_RONDA);
+    jgR={tipo:'vf',qs:qs,i:0,elegida:null,total:qs.length};
+  } else if(jgModo==='error'){
+    /* Se arma una frase con TODAS sus palabras puestas menos una, que se
+       cambia por un señuelo sacado de otra pregunta. Es el ejercicio que mas
+       se parece a lo que pide un examen de texto literal: no completar, sino
+       notar que una palabra no es la que va. */
+    /* Solo frases con DOS o mas palabras tapadas. Con una sola, la palabra
+       cambiada es la unica que se puede tocar: no hay nada que cazar, y
+       acertar no prueba nada. Medido en la matutina, donde varios versiculos
+       son de una linea. */
+    const pasos=mezcla(fillsDe().filter(q=>q.p.filter(x=>x.b).length>=2).slice())
+      .slice(0,PASOS_RONDA).map(q=>{
+      const huecos=q.p.map((x,i)=>({i:i,b:x.b})).filter(x=>x.b);
+      const cual=huecos[Math.floor(Math.random()*huecos.length)];
+      const otras=mezcla(fillsDe().flatMap(f=>f.p).filter(x=>x.b&&x.b!==cual.b).map(x=>x.b));
+      return {q:q,malo:cual.i,puesto:otras[0]||cual.b,correcta:cual.b};
+    }).filter(x=>x.puesto!==x.correcta);
+    jgR={tipo:'error',pasos:pasos,i:0,elegida:null,total:pasos.length};
+  } else if(jgModo==='cita'){
+    const base=mezcla(citasDe().slice()).slice(0,PASOS_RONDA);
+    const pasos=base.map(q=>{
+      const otras=mezcla(citasDe().filter(x=>refDe(x)!==refDe(q)).map(refDe))
+        .filter((v,i,a)=>a.indexOf(v)===i).slice(0,3);
+      return {texto:fraseDe(q),ops:mezcla([refDe(q)].concat(otras)),bien:refDe(q)};
+    }).filter(p=>p.ops.length>=2);
+    jgR={tipo:'cita',pasos:pasos,i:0,elegida:null,total:pasos.length};
   } else if(jgModo==='banco'){
     /* Varias frases por ronda, no una. Con una sola la ronda se acababa en
        tres toques y no alcanzaba a ser practica: era una pregunta suelta.
@@ -2044,9 +2096,11 @@ function ordenCap(c){
 function pintaJuego(){
   const z=document.getElementById('jg-zona');
   if(!z||!jgR)return;
+  const PASO_A_PASO=['quiz','vf','error','cita'];
   const hechos=jgR.tipo==='parear'?jgR.listos.length
     :jgR.tipo==='clasif'?jgR.i
     :jgR.tipo==='ordenar'?jgR.puestos.length
+    :PASO_A_PASO.indexOf(jgR.tipo)>=0?jgR.i
     :jgR.frases.reduce((n,f)=>n+Object.keys(f.puestas).length,0);
   const pct=Math.round(hechos/jgR.total*100);
   let h='<div class="prog-lin"><div style="width:'+pct+'%"></div></div>';
@@ -2059,7 +2113,51 @@ function pintaJuego(){
     z.innerHTML=h;return;
   }
 
-  if(jgR.tipo==='parear'){
+  if(jgR.tipo==='quiz'||jgR.tipo==='vf'){
+    const q=jgR.qs[jgR.i];
+    const resuelto=jgR.elegida!==null;
+    h+='<div class="jg-preg">'+esc(q.q)+'</div>';
+    if(jgR.tipo==='quiz'){
+      h+='<div class="jg-gr col">'+q.o.map((o,i)=>{
+        let c='jg-g';
+        if(resuelto){ if(i===q.a)c+=' ok'; else if(i===jgR.elegida)c+=' ko'; }
+        return '<button class="'+c+'"'+(resuelto?' disabled':'')+
+          ' onclick="jgPaso('+i+')">'+esc(o)+'</button>';
+      }).join('')+'</div>';
+    } else {
+      const bt=(v,et)=>{
+        let c='jg-g';
+        if(resuelto){ if(v===q.a)c+=' ok'; else if(v===jgR.elegida)c+=' ko'; }
+        return '<button class="'+c+'"'+(resuelto?' disabled':'')+
+          ' onclick="jgPaso('+v+')">'+et+'</button>';
+      };
+      h+='<div class="jg-gr">'+bt(true,'✅ Verdadero')+bt(false,'❌ Falso')+'</div>';
+    }
+    if(resuelto)h+=avisoPaso(jgR.tipo==='quiz'?jgR.elegida===q.a:jgR.elegida===q.a, q.e||'');
+  } else if(jgR.tipo==='error'){
+    const p=jgR.pasos[jgR.i], resuelto=jgR.elegida!==null;
+    h+='<div class="jg-ins">'+esc(p.q.ins||'')+'</div><div class="jg-frase">'+
+      p.q.p.map((x,i)=>{
+        if(!x.b)return '<span>'+esc(x.x)+'</span>';
+        const txt=i===p.malo?p.puesto:x.b;
+        let c='jg-w';
+        if(resuelto){ if(i===p.malo)c+=' ok'; else if(i===jgR.elegida)c+=' ko'; }
+        return '<button class="'+c+'"'+(resuelto?' disabled':'')+
+          ' onclick="jgPaso('+i+')">'+esc(txt)+'</button>';
+      }).join('')+'</div>';
+    if(resuelto)h+=avisoPaso(jgR.elegida===p.malo,
+      'La palabra cambiada era «'+p.puesto+'». Va «'+p.correcta+'».');
+  } else if(jgR.tipo==='cita'){
+    const p=jgR.pasos[jgR.i], resuelto=jgR.elegida!==null;
+    h+='<div class="jg-frase">'+esc(p.texto)+'</div>'+
+      '<div class="jg-gr col">'+p.ops.map((o,i)=>{
+        let c='jg-g';
+        if(resuelto){ if(o===p.bien)c+=' ok'; else if(i===jgR.elegida)c+=' ko'; }
+        return '<button class="'+c+'"'+(resuelto?' disabled':'')+
+          ' onclick="jgPaso('+i+')">'+esc(o)+'</button>';
+      }).join('')+'</div>';
+    if(resuelto)h+=avisoPaso(p.ops[jgR.elegida]===p.bien,'Es '+p.bien+'.');
+  } else if(jgR.tipo==='parear'){
     h+='<div class="jg-par">'+
       '<div class="jg-col">'+jgR.izq.map((c,i)=>btnPar('i',i,c.label,c)).join('')+'</div>'+
       '<div class="jg-col">'+jgR.der.map((c,i)=>btnPar('d',i,c.sub,c)).join('')+'</div></div>';
@@ -2094,6 +2192,38 @@ function pintaJuego(){
   }
   h+='<p class="nota" style="text-align:center">'+jgBien+' bien · '+jgMal+' con error</p>';
   z.innerHTML=h;
+}
+
+/* El aviso sale DESPUES de responder, nunca antes: si la explicacion esta en
+   pantalla mientras se decide, se lee en vez de pensarse. Y el boton de seguir
+   va aqui abajo, donde quedo el dedo. */
+function avisoPaso(bien,texto){
+  return '<div class="jg-fb '+(bien?'ok':'ko')+'">'+
+    '<b>'+(bien?'✅ Correcto':'❌ No era')+'</b>'+(texto?'<br>'+esc(texto):'')+'</div>'+
+    '<div class="jg-gr"><button class="btn azul" onclick="jgSigue()">Siguiente →</button></div>';
+}
+
+/* Los cuatro modos paso a paso comparten el mismo mecanismo: se elige, se
+   marca bien o mal UNA sola vez, y se avanza a mano. Una sola funcion para
+   los cuatro; si cada uno trajera la suya, en el tercero ya habria tres
+   maneras distintas de contar un acierto. */
+function jgPaso(v){
+  if(!jgR||jgR.elegida!==null)return;
+  jgR.elegida=v;
+  let bien=false;
+  if(jgR.tipo==='quiz')      bien=(v===jgR.qs[jgR.i].a);
+  else if(jgR.tipo==='vf')   bien=(v===jgR.qs[jgR.i].a);
+  else if(jgR.tipo==='error')bien=(v===jgR.pasos[jgR.i].malo);
+  else if(jgR.tipo==='cita') bien=(jgR.pasos[jgR.i].ops[v]===jgR.pasos[jgR.i].bien);
+  if(bien)jgBien++;else jgMal++;
+  pintaJuego();
+}
+
+function jgSigue(){
+  if(!jgR)return;
+  jgR.i++;jgR.elegida=null;
+  pintaJuego();
+  if(jgR.i>=jgR.total)cierraRonda();
 }
 
 function btnPar(lado,i,txt,c){

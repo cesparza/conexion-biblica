@@ -649,6 +649,9 @@ const OTRAS_VERS = {
   "16": "No hablarás contra tu prójimo falso testimonio.",
   "17": "No codiciarás la casa de tu prójimo, no codiciarás la mujer de tu prójimo, ni su siervo, ni su criada, ni su buey, ni su asno, ni cosa alguna de tu prójimo."
  },
+ "exodo-3": {
+  "2": "Y apareciósele el Angel de Jehová en una llama de fuego en medio de una zarza: y él miró, y vió que la zarza ardía en fuego, y la zarza no se consumía."
+ },
  "exodo-31": {
   "13": "Y tú hablarás á los hijos de Israel, diciendo: Con todo eso vosotros guardaréis mis sábados: porque es señal entre mí y vosotros por vuestras edades, para que sepáis que yo soy Jehová que os santifico.",
   "14": "Así que guardaréis el sábado, porque santo es á vosotros: el que lo profanare, de cierto morirá; porque cualquiera que hiciere obra alguna en él, aquella alma será cortada de en medio de sus pueblos.",
@@ -2079,6 +2082,11 @@ const OTRAS_META = {
  "exodo-20": {
   "libro": "Éxodo",
   "cap": "20",
+  "version": "RV1909"
+ },
+ "exodo-3": {
+  "libro": "Éxodo",
+  "cap": "3",
   "version": "RV1909"
  },
  "exodo-31": {

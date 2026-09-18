@@ -1641,3 +1641,16 @@ details.card summary::marker{content:''}
 .jg-gr.banco{position:sticky;bottom:0;z-index:2;margin-top:.5rem;padding:.6rem .2rem calc(.6rem + env(safe-area-inset-bottom));
   background:linear-gradient(to bottom,rgba(247,249,252,0),var(--fondo,#F7F9FC) 28%);
   border-top:1px solid var(--borde)}
+
+/* ── MODOS PASO A PASO: quiz, verdadero/falso, caza el error, ¿de dónde es? ── */
+.jg-preg{background:#fff;border:1.5px solid var(--borde);border-radius:14px;padding:1rem;
+  font-size:.98rem;line-height:1.45;font-weight:600;color:var(--tinta)}
+.jg-fb{margin-top:.8rem;padding:.75rem .9rem;border-radius:12px;font-size:.88rem;line-height:1.45}
+.jg-fb.ok{background:#EAF7EA;border:1.5px solid #1A7A1A;color:#135613}
+.jg-fb.ko{background:#FDECEC;border:1.5px solid #C0392B;color:#8E2A1F}
+/* Las palabras tocables de «caza el error» van dentro del renglón, no en fila
+   aparte: hay que verlas en su frase, que es donde chirría la que no va. */
+.jg-w{display:inline;padding:.12rem .38rem;margin:0 .1rem;border-radius:8px;cursor:pointer;
+  border:1.5px solid var(--borde);background:#fff;color:var(--tinta);font:inherit;font-weight:700}
+.jg-w.ok{border-color:#1A7A1A;background:#EAF7EA;color:#1A7A1A}
+.jg-w.ko{border-color:#C0392B;background:#FDECEC;color:#C0392B}

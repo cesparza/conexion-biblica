@@ -6,7 +6,13 @@
    Uso:  node tools/cobertura.js            (resumen)
          node tools/cobertura.js --detalle  (lista versículo por versículo) */
 const { CAPS, CONTENIDO } = require('../fuente/contenido.js');
-const { BANCO } = require('../fuente/preguntas.js');
+/* El banco de Daniel son DOS archivos: el escrito a mano y el que cierra los
+   huecos de cobertura (preguntas-cobertura.js, generado). Medir solo el
+   primero daria un hueco que ya no existe, y esta herramienta existe
+   justamente para no creerle a una cuenta incompleta. */
+const { BANCO: BANCO_MANO } = require('../fuente/preguntas.js');
+const { BANCO_COBERTURA } = require('../fuente/preguntas-cobertura.js');
+const BANCO = [...BANCO_MANO, ...BANCO_COBERTURA];
 const { TARJETAS } = require('../fuente/tarjetas.js');
 const { CONT_MODULOS } = require('../fuente/modulos.js');
 
