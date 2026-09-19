@@ -565,7 +565,7 @@ const MANUAL = [
     reglamento.</p>` },
   ]},
 
-{ id:'d-cats', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Las seis categorías',
+{ id:'d-cats', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Las {N_CATS} categorías',
   d:'El dato del que depende todo',
   secs:[
   { t:'Por qué importa tanto',
@@ -596,7 +596,7 @@ const MANUAL = [
   secs:[
   { t:'La bienvenida hace el trabajo',
     h:`<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce
-    la categoría. <strong>El participante nunca escoge entre las seis</strong>,
+    la categoría. <strong>El participante nunca escoge entre las {N_CATS}</strong>,
     justamente para que un niño de cinco años no termine con el material de
     nueve.</p>
     <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>
@@ -717,8 +717,8 @@ const MANUAL = [
     participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle
     la evaluación.</li>
     <li><strong>Paso 2, ¿qué examen?</strong> Nombre (por ejemplo «Sábado 6 de
-    septiembre»), cuántas preguntas, dificultad y a qué categorías les toca. El
-    texto debajo de Dificultad describe <strong>la opción que tengas
+    septiembre»), cuántas preguntas, qué material, dificultad y a quiénes les
+    toca. El texto debajo de cada lista describe <strong>la opción que tengas
     puesta</strong>, así que cámbiala y vuelve a leerlo.</li>
     <li><strong>Paso 3, abrir.</strong> El botón está al final y arranca
     apagado. Se prende cuando la evaluación tiene nombre y hay por lo menos una
@@ -726,17 +726,44 @@ const MANUAL = [
     <p>Desde ese momento, cada participante que ya entró con su código ve la
     tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar
     ningún link.</p>` },
+  { t:'Qué material: todo, un grupo, un capítulo o un tramo',
+    h:`<p>La lista <strong>Qué material</strong> va de lo más amplio a lo más
+    fino: todo el material de cada categoría, un grupo (solo Daniel, solo
+    Profetas y Reyes, una quincena de la matutina, las 28 creencias), un
+    capítulo suelto, o <strong>un tramo</strong>.</p>
+    <p>El tramo es para cuando se reparten el material: escoges
+    <strong>desde dónde y hasta dónde</strong>, por ejemplo del 2 al 18 de
+    octubre, o de Daniel 1 a Daniel 3, o de la creencia 10 a la 20. Los dos
+    extremos tienen que ser del mismo material; si no, el botón de abrir se
+    queda apagado y dice por qué.</p>
+    <div class="warn-box">A una categoría que no tenga ese material no le sale
+    ninguna pregunta. El aviso debajo de la lista te dice cuáles reciben y
+    cuáles no, antes de abrir.</div>` },
+  { t:'A quiénes: por categoría o por persona',
+    h:`<p>Lo normal es marcar categorías. Si no marcas ninguna, les toca a
+    todas.</p>
+    <p>Debajo hay <strong>«O escoger personas, una por una»</strong>. Sirve
+    justo para cuando se reparten la evaluación: le abres a Camila del 2 al 10 y
+    a Daniel del 11 al 18, <strong>las dos al mismo tiempo</strong>, aunque sean
+    de la misma categoría.</p>
+    <p>La regla: una evaluación dirigida a una persona <strong>le gana</strong> a
+    la de su categoría. Así puedes tener la del grupo abierta y, encima, una
+    distinta para quien la necesite, sin cerrarle la del grupo a las demás.</p>` },
   { t:'Mientras corre',
     h:`<p>En el mismo panel ves <strong>quiénes ya la hicieron con su nota</strong>
     y, sobre todo, <strong>quiénes faltan</strong>. Ese es el dato que sirve: con
-    él vas y las buscas, en vez de adivinar si ya terminaron.</p>
-    <p>La práctica queda cerrada sola en todos los aparatos mientras la
-    evaluación esté abierta. Al cerrarla, vuelve.</p>` },
+    él vas y las buscas, en vez de adivinar si ya terminaron. Si la evaluación va
+    dirigida a personas, «faltan» son solo esas, no toda la categoría.</p>
+    <p>Puede haber <strong>varias abiertas a la vez</strong>, cada una con su
+    tarjeta: una por categoría, y encima las que hayas dirigido a personas. Cada
+    tarjeta dice a quiénes les toca y qué material es.</p>
+    <p>Los exámenes de práctica <strong>no se cierran</strong>. Abrir una
+    evaluación no le quita nada a nadie.</p>` },
   { t:'Cómo se cierra',
-    h:`<p>El botón <strong>Cerrar la evaluación</strong> en el mismo panel, al
-    lado del conteo de quiénes ya la hicieron y quiénes faltan. Es la
-    <strong>única</strong> forma de cerrar y vale para todos los aparatos a la
-    vez. Las notas quedan guardadas y la práctica se reabre para todas.</p>` },
+    h:`<p>El botón <strong>Cerrar esta evaluación</strong>, en su propia tarjeta.
+    Con varias abiertas, cada una se cierra por aparte: el botón dice cuál.</p>
+    <p>Las notas quedan guardadas. Al abrir una nueva que se cruce con otra, la
+    que se cruza se cierra sola y la app te dice cuál fue.</p>` },
   { t:'Una sola vez por persona, de verdad',
     h:`<p>Esto no depende del navegador de nadie: la base de datos tiene una
     regla que impide que la misma participante registre dos veces la misma

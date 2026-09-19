@@ -3487,10 +3487,16 @@ function marcasManual(){
     CAT_NOMBRE:esc(CAT().nombre),
     CAT_EV:esc(ACT().nombre),
     TABLA_CATS:tablaCats(),
+    /* La CUENTA de categorías también es una cifra, así que va como marca.
+       Estaba escrita a mano en dos sitios del manual, decía «seis» y son ocho
+       desde que entró «En esto creemos». Escrita a mano se desactualiza en el
+       primer cambio y nadie se acuerda. */
+    N_CATS:String(Object.keys(CATS).length),
+    N_ACTS:String(Object.keys(ACTIVIDADES).length),
   };
 }
 
-/* Tabla de las seis categorías, con el conteo real de cada una. Se calcula
+/* Tabla de las categorías, con el conteo real de cada una. Se calcula
    cambiando S.cat temporalmente porque bancoDe() lee la categoría activa. */
 function tablaCats(){
   const prev=S.cat;
@@ -3514,6 +3520,13 @@ function tablaCats(){
 
 const aplicaMarcas=(txt,m)=>String(txt).replace(/\{([A-Z_]+)\}/g,
   (todo,k)=>m[k]!==undefined?m[k]:todo);
+/* LAS MARCAS TAMBIEN VALEN EN EL TITULO Y EN EL SUBTITULO de cada seccion.
+   Antes solo se reemplazaban en el cuerpo, asi que una cifra puesta en el
+   titulo se pintaba literal, «Las {N_CATS} categorias», y eso es peor que la
+   cifra escrita a mano: se ve roto. Se descubrio justo al mover «seis» a una
+   marca. */
+const tituloManual=(x,m)=>aplicaMarcas(x.t,m);
+const subManual=(x,m)=>aplicaMarcas(x.d,m);
 
 function pintaAyuda(){
   const m=marcasManual();
@@ -3521,7 +3534,7 @@ function pintaAyuda(){
   document.getElementById('ay-lista').innerHTML=lista.map(x=>
     '<details class="card ay-item"><summary>'+
     '<span class="ay-ic">'+x.icono+'</span>'+
-    '<span class="ay-tx"><b>'+esc(x.t)+'</b><small>'+esc(x.d)+'</small></span>'+
+    '<span class="ay-tx"><b>'+esc(tituloManual(x,m))+'</b><small>'+esc(subManual(x,m))+'</small></span>'+
     '</summary><div class="det-cuerpo">'+
     x.secs.map(s=>'<h4 class="ay-h">'+esc(s.t)+'</h4>'+aplicaMarcas(s.h,m)).join('')+
     '</div></details>').join('');
@@ -3538,7 +3551,7 @@ function imprimeManual(){
   const grupos=[['estudia','PARA QUIEN ESTUDIA'],['director','PARA EL DIRECTOR']];
   const hojas=grupos.map(([g,tit])=>hojaGuia({
     caps:MANUAL.filter(x=>x.para===g).map(x=>({
-      id:x.id, label:x.icono+' '+x.t, sub:x.d, src:'',
+      id:x.id, label:x.icono+' '+tituloManual(x,m), sub:subManual(x,m), src:'',
     })),
     contenido:Object.fromEntries(MANUAL.filter(x=>x.para===g)
       .map(x=>[x.id,x.secs.map(s=>({t:s.t,h:aplicaMarcas(s.h,m)}))])),

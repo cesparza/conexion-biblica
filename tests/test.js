@@ -423,13 +423,25 @@ ok(new Set(MANUAL.map(m=>m.id)).size===MANUAL.length,'Los ids del manual no se r
 ok(MANUAL.every(m=>m.secs.every(s=>s.t&&s.h)),'Cada sección del manual tiene título y cuerpo');
 
 /* Las marcas {ENTRE_LLAVES} las reemplaza la app. Una marca que la app no
-   conoce saldría impresa tal cual en la pantalla, así que la lista de marcas
-   válidas se fija aquí. */
-const MARCAS_OK=['CAPS_CAT','MODS_CAT','TJ_CAT','BANCO_CAT','BANCO_TOTAL',
-  'TJ_TOTAL','CAT_NOMBRE','CAT_EV','TABLA_CATS'];
+   conoce saldría impresa tal cual en la pantalla.
+   LA LISTA VÁLIDA SE LEE DE marcasManual(), no se copia aquí: una lista
+   escrita a mano en la prueba es un segundo sitio que mantener, y cuando se
+   agregó N_CATS la prueba falló por estar desactualizada ELLA, no el manual.
+   Una prueba que hay que arreglar cada vez que el código crece bien es una
+   prueba que se termina apagando. */
+const MARCAS_OK=(() => {
+  const b = APP.slice(APP.indexOf('function marcasManual()'));
+  const cuerpo = b.slice(0, b.indexOf('\n}'));
+  return [...cuerpo.matchAll(/^\s{4}([A-Z_]+):/gm)].map(m => m[1]);
+})();
+ok(MARCAS_OK.length >= 9, 'Se leyeron las marcas que la app sabe reemplazar ('+MARCAS_OK.length+')');
 const usadas=new Set();
-for(const m of MANUAL)for(const s of m.secs)
-  for(const g of s.h.matchAll(/\{([A-Z_]+)\}/g))usadas.add(g[1]);
+/* También en el título y la bajada: ahí también se reemplazan. */
+for(const m of MANUAL){
+  for(const g of (m.t+' '+m.d).matchAll(/\{([A-Z_]+)\}/g))usadas.add(g[1]);
+  for(const s of m.secs)
+    for(const g of (s.t+' '+s.h).matchAll(/\{([A-Z_]+)\}/g))usadas.add(g[1]);
+}
 const marcasMalas=[...usadas].filter(x=>!MARCAS_OK.includes(x));
 ok(marcasMalas.length===0,'El manual no usa marcas que la app no sepa reemplazar'+
   (marcasMalas.length?' — '+marcasMalas.join(', '):''));

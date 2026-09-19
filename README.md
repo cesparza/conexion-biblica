@@ -105,11 +105,17 @@ npx wrangler pages secret put SAL_IP --project-name conexion-biblica
 **Regla de las migraciones:** los `ALTER`/`CREATE` se corren una vez; los
 `INSERT OR REPLACE`, las veces que sea. Nunca mezclar estructura y datos.
 
+**Y el orden:** la migración va ANTES del push, no después. El código nuevo
+nombra la columna nueva; si llega antes que ella, la operación falla en
+producción hasta que alguien corra el SQL. Pasó de cerca con la 007.
+
 ## Síntoma → causa → salida
 
 | Síntoma | Causa | Salida |
 |---|---|---|
 | La evaluación no le sale a una niña | No entró con su código, o su categoría no está marcada | Que entre con el código; revisar las casillas al abrirla |
+| La evaluación no le sale a una niña | Está creada en la actividad equivocada: «Aventureros» existe en Conexión Bíblica y en Devoción Matutina | En el panel, la tabla dice de cuál es; si está mal, quitarla y crearla otra vez (el código va amarrado a la categoría) |
+| La evaluación se abre sin preguntas | El material no le aplica a esa categoría (un tramo de matutina abierto a una de Daniel) | El aviso debajo de «Qué material» lo dice antes de abrir |
 | Todas ven la práctica cerrada y la evaluación era de un solo grupo | Caché viejo del navegador | Recargar. `/api/estado` solo cierra a todas si la evaluación es para todas |
 | «Esa evaluación ya la hiciste» y no la hizo | Otra participante usó ese código | Un código por persona, nunca compartido |
 | El panel responde 401 | La sesión de director venció (30 días) | Volver a entrar con la clave |

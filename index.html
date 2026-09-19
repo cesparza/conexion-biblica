@@ -2121,7 +2121,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'f01f8e2d0793';
+const VERSION_APP = '85027f9ed621';
 
 const CAPS = [
  {
@@ -29578,7 +29578,7 @@ const MANUAL = [
   "id": "d-cats",
   "para": "director",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-diana\"/></svg>",
-  "t": "Las seis categorías",
+  "t": "Las {N_CATS} categorías",
   "d": "El dato del que depende todo",
   "secs": [
    {
@@ -29608,7 +29608,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "La bienvenida hace el trabajo",
-    "h": "<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce\n    la categoría. <strong>El participante nunca escoge entre las seis</strong>,\n    justamente para que un niño de cinco años no termine con el material de\n    nueve.</p>\n    <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>\n    con el mismo nombre. Son cuentas separadas a propósito: el progreso de una\n    actividad y el de la otra no se deben mezclar.</p>"
+    "h": "<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce\n    la categoría. <strong>El participante nunca escoge entre las {N_CATS}</strong>,\n    justamente para que un niño de cinco años no termine con el material de\n    nueve.</p>\n    <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>\n    con el mismo nombre. Son cuentas separadas a propósito: el progreso de una\n    actividad y el de la otra no se deben mezclar.</p>"
    },
    {
     "t": "Cambiar de persona",
@@ -29700,15 +29700,23 @@ const MANUAL = [
    },
    {
     "t": "Cómo se abre",
-    "h": "<p>Entra a <strong>Examen</strong>, abajo, en <strong>La evaluación del\n    día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay\n    que hacerlos en ese orden.</p>\n    <ol><li><strong>Paso 1, ¿quiénes participan?</strong> Crear a las\n    participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle\n    la evaluación.</li>\n    <li><strong>Paso 2, ¿qué examen?</strong> Nombre (por ejemplo «Sábado 6 de\n    septiembre»), cuántas preguntas, dificultad y a qué categorías les toca. El\n    texto debajo de Dificultad describe <strong>la opción que tengas\n    puesta</strong>, así que cámbiala y vuelve a leerlo.</li>\n    <li><strong>Paso 3, abrir.</strong> El botón está al final y arranca\n    apagado. Se prende cuando la evaluación tiene nombre y hay por lo menos una\n    participante creada; mientras esté apagado, al lado dice qué falta.</li></ol>\n    <p>Desde ese momento, cada participante que ya entró con su código ve la\n    tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar\n    ningún link.</p>"
+    "h": "<p>Entra a <strong>Examen</strong>, abajo, en <strong>La evaluación del\n    día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay\n    que hacerlos en ese orden.</p>\n    <ol><li><strong>Paso 1, ¿quiénes participan?</strong> Crear a las\n    participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle\n    la evaluación.</li>\n    <li><strong>Paso 2, ¿qué examen?</strong> Nombre (por ejemplo «Sábado 6 de\n    septiembre»), cuántas preguntas, qué material, dificultad y a quiénes les\n    toca. El texto debajo de cada lista describe <strong>la opción que tengas\n    puesta</strong>, así que cámbiala y vuelve a leerlo.</li>\n    <li><strong>Paso 3, abrir.</strong> El botón está al final y arranca\n    apagado. Se prende cuando la evaluación tiene nombre y hay por lo menos una\n    participante creada; mientras esté apagado, al lado dice qué falta.</li></ol>\n    <p>Desde ese momento, cada participante que ya entró con su código ve la\n    tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar\n    ningún link.</p>"
+   },
+   {
+    "t": "Qué material: todo, un grupo, un capítulo o un tramo",
+    "h": "<p>La lista <strong>Qué material</strong> va de lo más amplio a lo más\n    fino: todo el material de cada categoría, un grupo (solo Daniel, solo\n    Profetas y Reyes, una quincena de la matutina, las 28 creencias), un\n    capítulo suelto, o <strong>un tramo</strong>.</p>\n    <p>El tramo es para cuando se reparten el material: escoges\n    <strong>desde dónde y hasta dónde</strong>, por ejemplo del 2 al 18 de\n    octubre, o de Daniel 1 a Daniel 3, o de la creencia 10 a la 20. Los dos\n    extremos tienen que ser del mismo material; si no, el botón de abrir se\n    queda apagado y dice por qué.</p>\n    <div class=\"warn-box\">A una categoría que no tenga ese material no le sale\n    ninguna pregunta. El aviso debajo de la lista te dice cuáles reciben y\n    cuáles no, antes de abrir.</div>"
+   },
+   {
+    "t": "A quiénes: por categoría o por persona",
+    "h": "<p>Lo normal es marcar categorías. Si no marcas ninguna, les toca a\n    todas.</p>\n    <p>Debajo hay <strong>«O escoger personas, una por una»</strong>. Sirve\n    justo para cuando se reparten la evaluación: le abres a Camila del 2 al 10 y\n    a Daniel del 11 al 18, <strong>las dos al mismo tiempo</strong>, aunque sean\n    de la misma categoría.</p>\n    <p>La regla: una evaluación dirigida a una persona <strong>le gana</strong> a\n    la de su categoría. Así puedes tener la del grupo abierta y, encima, una\n    distinta para quien la necesite, sin cerrarle la del grupo a las demás.</p>"
    },
    {
     "t": "Mientras corre",
-    "h": "<p>En el mismo panel ves <strong>quiénes ya la hicieron con su nota</strong>\n    y, sobre todo, <strong>quiénes faltan</strong>. Ese es el dato que sirve: con\n    él vas y las buscas, en vez de adivinar si ya terminaron.</p>\n    <p>La práctica queda cerrada sola en todos los aparatos mientras la\n    evaluación esté abierta. Al cerrarla, vuelve.</p>"
+    "h": "<p>En el mismo panel ves <strong>quiénes ya la hicieron con su nota</strong>\n    y, sobre todo, <strong>quiénes faltan</strong>. Ese es el dato que sirve: con\n    él vas y las buscas, en vez de adivinar si ya terminaron. Si la evaluación va\n    dirigida a personas, «faltan» son solo esas, no toda la categoría.</p>\n    <p>Puede haber <strong>varias abiertas a la vez</strong>, cada una con su\n    tarjeta: una por categoría, y encima las que hayas dirigido a personas. Cada\n    tarjeta dice a quiénes les toca y qué material es.</p>\n    <p>Los exámenes de práctica <strong>no se cierran</strong>. Abrir una\n    evaluación no le quita nada a nadie.</p>"
    },
    {
     "t": "Cómo se cierra",
-    "h": "<p>El botón <strong>Cerrar la evaluación</strong> en el mismo panel, al\n    lado del conteo de quiénes ya la hicieron y quiénes faltan. Es la\n    <strong>única</strong> forma de cerrar y vale para todos los aparatos a la\n    vez. Las notas quedan guardadas y la práctica se reabre para todas.</p>"
+    "h": "<p>El botón <strong>Cerrar esta evaluación</strong>, en su propia tarjeta.\n    Con varias abiertas, cada una se cierra por aparte: el botón dice cuál.</p>\n    <p>Las notas quedan guardadas. Al abrir una nueva que se cruce con otra, la\n    que se cruza se cierra sola y la app te dice cuál fue.</p>"
    },
    {
     "t": "Una sola vez por persona, de verdad",
@@ -36717,10 +36725,16 @@ function marcasManual(){
     CAT_NOMBRE:esc(CAT().nombre),
     CAT_EV:esc(ACT().nombre),
     TABLA_CATS:tablaCats(),
+    /* La CUENTA de categorías también es una cifra, así que va como marca.
+       Estaba escrita a mano en dos sitios del manual, decía «seis» y son ocho
+       desde que entró «En esto creemos». Escrita a mano se desactualiza en el
+       primer cambio y nadie se acuerda. */
+    N_CATS:String(Object.keys(CATS).length),
+    N_ACTS:String(Object.keys(ACTIVIDADES).length),
   };
 }
 
-/* Tabla de las seis categorías, con el conteo real de cada una. Se calcula
+/* Tabla de las categorías, con el conteo real de cada una. Se calcula
    cambiando S.cat temporalmente porque bancoDe() lee la categoría activa. */
 function tablaCats(){
   const prev=S.cat;
@@ -36744,6 +36758,13 @@ function tablaCats(){
 
 const aplicaMarcas=(txt,m)=>String(txt).replace(/\{([A-Z_]+)\}/g,
   (todo,k)=>m[k]!==undefined?m[k]:todo);
+/* LAS MARCAS TAMBIEN VALEN EN EL TITULO Y EN EL SUBTITULO de cada seccion.
+   Antes solo se reemplazaban en el cuerpo, asi que una cifra puesta en el
+   titulo se pintaba literal, «Las {N_CATS} categorias», y eso es peor que la
+   cifra escrita a mano: se ve roto. Se descubrio justo al mover «seis» a una
+   marca. */
+const tituloManual=(x,m)=>aplicaMarcas(x.t,m);
+const subManual=(x,m)=>aplicaMarcas(x.d,m);
 
 function pintaAyuda(){
   const m=marcasManual();
@@ -36751,7 +36772,7 @@ function pintaAyuda(){
   document.getElementById('ay-lista').innerHTML=lista.map(x=>
     '<details class="card ay-item"><summary>'+
     '<span class="ay-ic">'+x.icono+'</span>'+
-    '<span class="ay-tx"><b>'+esc(x.t)+'</b><small>'+esc(x.d)+'</small></span>'+
+    '<span class="ay-tx"><b>'+esc(tituloManual(x,m))+'</b><small>'+esc(subManual(x,m))+'</small></span>'+
     '</summary><div class="det-cuerpo">'+
     x.secs.map(s=>'<h4 class="ay-h">'+esc(s.t)+'</h4>'+aplicaMarcas(s.h,m)).join('')+
     '</div></details>').join('');
@@ -36768,7 +36789,7 @@ function imprimeManual(){
   const grupos=[['estudia','PARA QUIEN ESTUDIA'],['director','PARA EL DIRECTOR']];
   const hojas=grupos.map(([g,tit])=>hojaGuia({
     caps:MANUAL.filter(x=>x.para===g).map(x=>({
-      id:x.id, label:x.icono+' '+x.t, sub:x.d, src:'',
+      id:x.id, label:x.icono+' '+tituloManual(x,m), sub:subManual(x,m), src:'',
     })),
     contenido:Object.fromEntries(MANUAL.filter(x=>x.para===g)
       .map(x=>[x.id,x.secs.map(s=>({t:s.t,h:aplicaMarcas(s.h,m)}))])),
