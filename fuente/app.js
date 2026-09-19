@@ -4147,7 +4147,7 @@ async function pintaPanel(){
        los ofrecía, pero el panel no tenía cómo pedirlos. Con los grupos a la
        vista se ve de una a qué actividad pertenece cada material. */
     '<div class="ses-fila"><label class="pan-lb">Qué material'+
-    '<select id="pan-eval-al" onchange="pintaNotaAlcance()">'+
+    '<select id="pan-eval-al" onchange="cambiaMaterialPanel()">'+
       '<option value="todo">Todo el material de cada categoría</option>'+
       '<optgroup label="Conexión Bíblica">'+
         '<option value="biblia">Solo el libro de Daniel</option>'+
@@ -4161,17 +4161,27 @@ async function pintaPanel(){
         '<option value="creencias">Las 28 creencias</option>'+
       '</optgroup>'+
       opcionesCapPanel()+
+      /* UN TRAMO POR ACTIVIDAD, no uno solo.
+         Con una sola opción, los dos desplegables listaban los 77 capítulos de
+         las tres actividades revueltos, y se podía armar «de la Creencia 24 a
+         Daniel 1»: un tramo que no existe. La app lo aceptaba y después lo
+         regañaba con tres párrafos rojos.
+         Escogiendo la actividad de una vez, cada desplegable lista solo lo
+         suyo y el disparate no se puede ni construir. Es la misma regla que ya
+         usaba practicar, traída al panel. */
       '<optgroup label="Un tramo del material">'+
-        '<option value="rango">Escoger desde dónde hasta dónde</option>'+
+        Object.keys(ACTIVIDADES).map(function(a){
+          return '<option value="rango:'+a+'">'+esc(ACTIVIDADES[a].icono+' '+
+            ACTIVIDADES[a].nombre+' · un tramo')+'</option>';
+        }).join('')+
       '</optgroup>'+
     '</select></label></div>'+
-    /* Los dos extremos del rango solo aparecen con «rango» escogido: dos
-       desplegables mudos ocupando pantalla en el 90% de los casos es ruido. */
+    /* Los dos extremos solo aparecen con un tramo escogido: dos desplegables
+       mudos ocupando pantalla en el 90% de los casos es ruido. Se llenan en
+       pintaNotaAlcance(), que sabe de qué actividad es el tramo. */
     '<div class="ses-fila" id="pan-rango" hidden>'+
-      '<label class="pan-lb">Desde<select id="pan-r1" onchange="pintaNotaAlcance()">'+
-        opcionesRangoPanel()+'</select></label>'+
-      '<label class="pan-lb">Hasta<select id="pan-r2" onchange="pintaNotaAlcance()">'+
-        opcionesRangoPanel()+'</select></label>'+
+      '<label class="pan-lb">Desde<select id="pan-r1" onchange="cambiaDesdePanel()"></select></label>'+
+      '<label class="pan-lb">Hasta<select id="pan-r2" onchange="pintaNotaAlcance()"></select></label>'+
     '</div>'+
     '<p class="nota" id="pan-nota-al">'+NOTA_ALCANCE.todo+'</p>'+
     '<p class="nota" id="pan-aviso-cats"></p>'+
@@ -4251,27 +4261,52 @@ function textoAlcancePanel(alc){
     q1:'Del 1 al 15 de octubre',q2:'Del 16 de octubre en adelante'}[alc]||alc;
 }
 
-function opcionesRangoPanel(){
-  let h='';
-  for(const a of Object.keys(ACTIVIDADES)){
-    const cats=CATS_DE_ACT(a);
-    const caps=CAPS.filter(c=>c.cats.some(k=>cats.includes(k)));
-    if(!caps.length)continue;
-    /* El icono va en CADA opcion, no solo en la etiqueta del grupo: el
-       selector nativo de iOS no pinta las etiquetas, y sin el icono esto es
-       una lista plana de 77 capitulos de tres actividades revueltas. */
-    h+='<optgroup label="'+esc(ACTIVIDADES[a].nombre)+'">'+
-      caps.map(c=>'<option value="'+c.id+'">'+esc(ACTIVIDADES[a].icono+' '+c.label)+'</option>').join('')+
-      '</optgroup>';
-  }
-  return h;
+/* Los capitulos de UNA actividad, en orden. */
+function capsDeActividad(a){
+  const cats=CATS_DE_ACT(a);
+  return CAPS.filter(c=>c.cats.some(k=>cats.includes(k)));
+}
+
+/* Los dos extremos del tramo, llenados para la actividad escogida.
+   «Hasta» solo ofrece lo que SI forma tramo con «Desde»: mismo tipo de
+   capitulo y de ahi en adelante. Dentro de Conexion Biblica todavia hay dos
+   tipos, Daniel y Profetas y Reyes, y un tramo de uno al otro no existe; con
+   la lista filtrada no hay como escogerlo. */
+function llenaRangoPanel(act,mantener){
+  const s1=document.getElementById('pan-r1'),s2=document.getElementById('pan-r2');
+  if(!s1||!s2)return;
+  const caps=capsDeActividad(act);
+  if(!caps.length)return;
+  const prev1=mantener&&caps.some(c=>c.id===s1.value)?s1.value:caps[0].id;
+  s1.innerHTML=caps.map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('');
+  s1.value=prev1;
+  const fam=caps.filter(c=>familiaDe(c.id)===familiaDe(prev1)&&numDe(c.id)>=numDe(prev1));
+  const prev2=mantener&&fam.some(c=>c.id===s2.value)?s2.value:fam[fam.length-1].id;
+  s2.innerHTML=fam.map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('');
+  s2.value=prev2;
+}
+
+/* Cambiar de material reinicia el tramo: el que estuviera puesto era de otra
+   actividad y ahi no existe. */
+function cambiaMaterialPanel(){
+  const sel=(document.getElementById('pan-eval-al')||{}).value||'';
+  if(sel.slice(0,6)==='rango:')llenaRangoPanel(sel.slice(6),false);
+  pintaNotaAlcance();
+}
+
+/* Cambiar «Desde» puede dejar «Hasta» atras o en otro tipo: se vuelve a armar
+   la lista, que es lo que impide el estado invalido. */
+function cambiaDesdePanel(){
+  const sel=(document.getElementById('pan-eval-al')||{}).value||'';
+  if(sel.slice(0,6)==='rango:')llenaRangoPanel(sel.slice(6),true);
+  pintaNotaAlcance();
 }
 
 /* El alcance que de verdad se va a mandar: con «rango» escogido son los dos
    extremos pegados con «..», que es la forma que el servidor valida. */
 function alcancePanel(){
   const sel=(document.getElementById('pan-eval-al')||{}).value||'todo';
-  if(sel!=='rango')return sel;
+  if(sel.slice(0,6)!=='rango:')return sel;
   const a=(document.getElementById('pan-r1')||{}).value||'';
   const b=(document.getElementById('pan-r2')||{}).value||'';
   return a&&b?(a+'..'+b):'todo';
@@ -4391,20 +4426,20 @@ function pintaAvisoCats(){
    Devuelve el motivo y no un booleano porque el botón de abrir se apaga CON LA
    RAZÓN A LA VISTA: un botón gris sin explicación es el defecto que ya se
    arregló en el paso 3. */
+/* GUARDA DE ULTIMO RECURSO, no la forma de avisar.
+   Desde que «Hasta» se arma a partir de «Desde», un tramo invalido no se puede
+   escoger, asi que esto no deberia disparar nunca. Se queda porque apaga el
+   boton de abrir si alguien cambia los desplegables por otro camino: una
+   evaluacion abierta con un tramo que no existe no le da preguntas a nadie, y
+   el director se entera el dia del examen. */
 function motivoRangoMalo(){
-  const sel=(document.getElementById('pan-eval-al')||{}).value;
-  if(sel!=='rango')return '';
+  const sel=(document.getElementById('pan-eval-al')||{}).value||'';
+  if(sel.slice(0,6)!=='rango:')return '';
   const a=(document.getElementById('pan-r1')||{}).value||'';
   const b=(document.getElementById('pan-r2')||{}).value||'';
   if(!a||!b)return 'Falta escoger los dos extremos del tramo.';
-  const ca=CAPS.find(c=>c.id===a),cb=CAPS.find(c=>c.id===b);
-  if(!rangoDe(a+'..'+b)){
-    const ma=PARTE_ID.exec(a),mb=PARTE_ID.exec(b);
-    if(ma&&mb&&ma[1]!==mb[1])
-      return 'El tramo va de «'+(ca?ca.label:a)+'» a «'+(cb?cb.label:b)+'», y son de '+
-             'actividades distintas. Los dos extremos tienen que ser del mismo material.';
-    return 'El final del tramo va antes que el comienzo: cámbialos de orden.';
-  }
+  if(!rangoDe(a+'..'+b))return 'Ese tramo no existe: los dos extremos tienen que ser '+
+    'del mismo material y en orden.';
   return '';
 }
 
@@ -4412,8 +4447,17 @@ function pintaNotaAlcance(){
   const s=document.getElementById('pan-eval-al'),p=document.getElementById('pan-nota-al');
   if(!s||!p)return;
   const zr=document.getElementById('pan-rango');
-  if(zr)zr.hidden=s.value!=='rango';
-  if(s.value==='rango'){
+  const esRango=s.value.slice(0,6)==='rango:';
+  if(zr)zr.hidden=!esRango;
+  if(esRango){
+    /* Se llenan aqui y no al armar el panel: dependen de la actividad que se
+       acaba de escoger, y `mantener` en falso los reinicia al cambiar de
+       actividad, que es cuando lo que estaba puesto ya no aplica. */
+    /* `mantener` en verdadero: esta funcion se llama tambien al cambiar
+       «Desde», y reiniciar aqui borraria lo que el director acaba de escoger.
+       Quien reinicia es cambiaMaterialPanel(), que es el unico momento en que
+       lo puesto ya no aplica. */
+    llenaRangoPanel(s.value.slice(6),true);
     const mal=motivoRangoMalo();
     if(mal){
       p.innerHTML='<span style="color:var(--rojo)">'+esc(mal)+'</span>';

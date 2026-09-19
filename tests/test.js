@@ -694,6 +694,35 @@ ok(bancoCat('av').every(q=>!['pr40','pr42','pr43'].includes(q.cap)),
 ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
   'La lista de capítulos marca «Solo para estudiar» el que no entra al examen');
 
+/* ───────── UN TRAMO IMPOSIBLE NO SE PUEDE NI ESCOGER ─────────
+   MECANISMO DEL PROBLEMA
+   La primera version del tramo en el panel listaba los 77 capitulos de las
+   tres actividades en los dos desplegables. Se podia armar «de la Creencia 24
+   a Daniel 1», que no es un tramo de nada, y la app lo aceptaba y despues lo
+   regañaba con tres parrafos rojos. Validar y avisar es la solucion floja: la
+   buena es que el estado invalido no se pueda construir.
+
+   COMO QUEDA: se escoge la actividad al escoger el material, «Hasta» se arma a
+   partir de «Desde» (mismo tipo de capitulo y de ahi en adelante), y dentro de
+   Conexion Biblica eso separa ademas Daniel de Profetas y Reyes. */
+{
+  ok(/value="rango:'\+a\+'"/.test(APP),
+    'El material ofrece un tramo POR ACTIVIDAD, no uno solo para las tres');
+  ok(/function llenaRangoPanel\(act,mantener\)/.test(APP),
+    'Los dos extremos se llenan para la actividad escogida');
+  ok(/familiaDe\(c\.id\)===familiaDe\(prev1\)&&numDe\(c\.id\)>=numDe\(prev1\)/.test(APP),
+    '«Hasta» solo ofrece el mismo tipo de capitulo y de ahi en adelante');
+  ok(/id="pan-r1" onchange="cambiaDesdePanel\(\)"/.test(APP),
+    'Cambiar «Desde» vuelve a armar «Hasta»: ahi es donde se cierra el hueco');
+  ok(/onchange="cambiaMaterialPanel\(\)"/.test(APP),
+    'Y cambiar de actividad reinicia el tramo, que era de otra');
+  /* La guarda se queda, pero ya no es la forma de avisar. */
+  ok(/GUARDA DE ULTIMO RECURSO/.test(APP),
+    'La validacion sobrevive como guarda, no como mensaje');
+  ok(!/son de[\s\S]{0,40}actividades distintas\. Los dos extremos/.test(APP),
+    'Y el parrafo rojo que explicaba el disparate ya no hace falta');
+}
+
 /* ───────── DOS CATEGORIAS NO PUEDEN VERSE IGUAL ─────────
    MECANISMO DEL PROBLEMA
    «Menores · 4 a 6 años» es la etiqueta de DOS categorías: la de Conexión
