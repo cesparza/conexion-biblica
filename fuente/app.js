@@ -69,6 +69,15 @@ const ACT=()=>ACTIVIDADES[ACT_DE(S.cat)]||ACTIVIDADES.cb;
 /** Las categorias de una actividad, en el orden en que se ofrecen. */
 const CATS_DE_ACT=a=>(ACTIVIDADES[a]||ACTIVIDADES.cb).cats.filter(c=>CATS[c]);
 
+/* El nombre de una categoria NO la identifica: «Menores» y «Aventureros»
+   existen en Conexion Biblica y en Devocion Matutina, con la misma edad. En
+   cualquier lista donde puedan aparecer las dos hay que decir de que actividad
+   es, o son dos filas identicas que nombran cosas distintas. El icono va
+   delante porque la columna de una tabla en un celular no da para mas. */
+const catConActividad=k=>CATS[k]
+  ? ((ACTIVIDADES[CATS[k].act]||{}).icono||'')+' '+CATS[k].nombre
+  : String(k);
+
 
 const CAT=()=>CATS[S.cat]||CATS.av;
 
@@ -691,7 +700,9 @@ function pintaAlumnos(){
     const c=CATS[al.cat]||CATS.av;
     return '<button class="alu-btn'+(DB.activo===id?' on':'')+'" onclick="cambiaAlumno(\''+id+'\')">'+
       '<div class="an">'+esc(al.nombre||'Sin nombre')+'</div>'+
-      '<div class="ac">'+esc(c.nombre)+'</div></button>';
+      /* Con el icono de la actividad, no solo el nombre: en un aparato con
+         fichas de dos actividades salian dos «Aventureros» iguales. */
+      '<div class="ac">'+esc(catConActividad(al.cat))+'</div></button>';
   }).join('')+
   (alumnos().length<MAX_ALUMNOS
     ?'<button class="alu-btn nuevo" onclick="agregaAlumno()"><div class="an">+ Agregar</div>'+
@@ -4036,8 +4047,18 @@ async function pintaPanel(){
     '<p class="nota">Cada participante necesita un código de 6 caracteres. Se lo das y ella lo '+
     'escribe una sola vez en su celular. Sin participantes, abrir una evaluación no sirve de nada.</p>'+
     '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
-    '<select id="pan-cat">'+Object.keys(CATS).map(function(k){
-      return '<option value="'+k+'">'+esc(CATS[k].nombre)+' · '+esc(CATS[k].edad)+'</option>';
+    /* AGRUPADO POR ACTIVIDAD, y no es cosmético.
+       «Menores · 4 a 6 años» era la etiqueta EXACTA de dos categorías: la de
+       Conexión Bíblica y la de Devoción Matutina. En el desplegable salían dos
+       opciones idénticas y no había forma de saber cuál era cuál, así que
+       crear una participante en la actividad equivocada era cuestión de suerte,
+       y el error solo se notaba cuando la evaluación «no le llegaba». Lo mismo
+       con las dos «Aventureros · 7 a 9 años». */
+    '<select id="pan-cat">'+Object.keys(ACTIVIDADES).map(function(a){
+      return '<optgroup label="'+esc(ACTIVIDADES[a].nombre)+'">'+
+        CATS_DE_ACT(a).map(function(k){
+          return '<option value="'+k+'">'+esc(CATS[k].nombre)+' · '+esc(CATS[k].edad)+'</option>';
+        }).join('')+'</optgroup>';
     }).join('')+'</select>'+
     '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
     '<div id="pan-lista"><p class="nota">Cargando...</p></div></div>'+
@@ -4596,7 +4617,7 @@ async function cargaParticipantes(pre){
     if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
       '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
-        const cn=CATS[x.categoria]?CATS[x.categoria].nombre:x.categoria;
+        const cn=catConActividad(x.categoria);
         return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(cn)+'</td>'+
           '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
           '<td><button class="btn gho" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
@@ -4614,7 +4635,7 @@ function pintaPersonasEval(p){
   if(!z)return;
   if(!p||!p.length){z.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
   z.innerHTML=p.map(function(x){
-    const cn=CATS[x.categoria]?CATS[x.categoria].nombre:x.categoria;
+    const cn=catConActividad(x.categoria);
     return '<label class="pan-cat"><input type="checkbox" class="pan-per-ch" value="'+esc(x.id)+'" '+
       'onchange="pintaAvisoCats()"> <span><strong>'+esc(x.nombre)+'</strong><br>'+
       '<small>'+esc(cn)+'</small></span></label>';

@@ -682,6 +682,39 @@ ok(bancoCat('av').every(q=>!['pr40','pr42','pr43'].includes(q.cap)),
 ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
   'La lista de capítulos marca «Solo para estudiar» el que no entra al examen');
 
+/* ───────── DOS CATEGORIAS NO PUEDEN VERSE IGUAL ─────────
+   MECANISMO DEL PROBLEMA
+   «Menores · 4 a 6 años» es la etiqueta de DOS categorías: la de Conexión
+   Bíblica y la de Devoción Matutina. Igual con las dos «Aventureros · 7 a 9
+   años». En cualquier lista donde puedan aparecer las dos, el nombre solo no
+   identifica nada: salían dos opciones idénticas en el desplegable de crear
+   participantes, y escoger la equivocada era cuestión de suerte. El error no
+   se veía ahí: se veía días después, cuando «la evaluación no le llegaba».
+
+   Esta prueba no pide que los nombres sean únicos (no lo son, y está bien: son
+   los nombres reales de los clubes). Pide que las LISTAS que pueden mezclar
+   actividades digan de cuál es cada una. */
+{
+  const catsHtml = (() => {
+    const b = APP.slice(APP.indexOf('const CATS={'));
+    return b.slice(0, b.indexOf('\n};') + 2);
+  })();
+  const nombres = [...catsHtml.matchAll(/nombre:'([^']+)'/g)].map(m => m[1]);
+  const repetidos = nombres.filter((n, i) => nombres.indexOf(n) !== i);
+  ok(repetidos.length > 0,
+    'Hay nombres de categoría repetidos entre actividades (' + [...new Set(repetidos)].join(', ') +
+    '): por eso esta sección existe');
+  /* El desplegable de crear participantes va agrupado por actividad. */
+  ok(/'<select id="pan-cat">'\+Object\.keys\(ACTIVIDADES\)/.test(APP),
+    'El selector de categoría del paso 1 agrupa por actividad');
+  ok(/const catConActividad=/.test(APP),
+    'Existe una sola forma de nombrar una categoría con su actividad');
+  /* Y las tres listas que pueden mezclar actividades la usan. */
+  const usos = (APP.match(/catConActividad\(/g) || []).length;
+  ok(usos >= 3, 'Y la usan la tabla del panel, las casillas de personas y el selector de fichas ('
+    + usos + ' usos)');
+}
+
 /* ───────── CALIDAD DEL BANCO: patrones que se pueden explotar ─────────
    MECANISMO DEL PROBLEMA: en una pregunta de selección múltiple, la respuesta
    correcta se escribe con cuidado y los distractores se escriben rápido. La
