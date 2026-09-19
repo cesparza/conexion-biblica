@@ -78,6 +78,24 @@ const catConActividad=k=>CATS[k]
   ? ((ACTIVIDADES[CATS[k].act]||{}).icono||'')+' '+CATS[k].nombre
   : String(k);
 
+/* ───────── y en un desplegable, dentro del TEXTO de la opcion ─────────
+   MECANISMO
+   Agrupar con <optgroup> es lo correcto y en escritorio se ve bien, pero el
+   selector nativo de iOS pinta la lista de opciones SIN las etiquetas de
+   grupo. Visto en un iPhone: las ocho categorias seguidas, con «Menores · 4 a
+   6 años» dos veces, exactamente igual que antes de agrupar.
+
+   REGLA: lo que distingue dos opciones va en el TEXTO de la opcion, nunca solo
+   en la estructura que las rodea. La estructura la pinta cada navegador como
+   quiera; el texto se ve en todos.
+
+   Y va de PRIMERO, no al final: en una pantalla angosta el texto se corta o se
+   envuelve, y si la parte que distingue queda al final, las dos opciones
+   empiezan igual y se leen igual. */
+const catLarga=k=>CATS[k]
+  ? ((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+CATS[k].nombre+' '+CATS[k].edad
+  : String(k);
+
 
 const CAT=()=>CATS[S.cat]||CATS.av;
 
@@ -4057,7 +4075,7 @@ async function pintaPanel(){
     '<select id="pan-cat">'+Object.keys(ACTIVIDADES).map(function(a){
       return '<optgroup label="'+esc(ACTIVIDADES[a].nombre)+'">'+
         CATS_DE_ACT(a).map(function(k){
-          return '<option value="'+k+'">'+esc(CATS[k].nombre)+' · '+esc(CATS[k].edad)+'</option>';
+          return '<option value="'+k+'">'+esc(catLarga(k))+'</option>';
         }).join('')+'</optgroup>';
     }).join('')+'</select>'+
     '<button class="btn azul" onclick="creaParticipante()">Agregar</button></div>'+
@@ -4199,8 +4217,12 @@ function opcionesRangoPanel(){
     const cats=CATS_DE_ACT(a);
     const caps=CAPS.filter(c=>c.cats.some(k=>cats.includes(k)));
     if(!caps.length)continue;
+    /* El icono va en CADA opcion, no solo en la etiqueta del grupo: el
+       selector nativo de iOS no pinta las etiquetas, y sin el icono esto es
+       una lista plana de 77 capitulos de tres actividades revueltas. */
     h+='<optgroup label="'+esc(ACTIVIDADES[a].nombre)+'">'+
-      caps.map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('')+'</optgroup>';
+      caps.map(c=>'<option value="'+c.id+'">'+esc(ACTIVIDADES[a].icono+' '+c.label)+'</option>').join('')+
+      '</optgroup>';
   }
   return h;
 }
@@ -4223,7 +4245,8 @@ function opcionesCapPanel(){
     const ofrecibles=caps.filter(c=>cats.some(k=>c.cats.includes(k)&&!soloEstudio(c,k)));
     if(!ofrecibles.length)continue;
     h+='<optgroup label="'+esc(ACTIVIDADES[a].nombre)+' · un capítulo">'+
-      ofrecibles.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('')+
+      ofrecibles.map(c=>'<option value="'+c.id+'">'+
+        esc(ACTIVIDADES[a].icono+' '+c.label+' — '+c.sub)+'</option>').join('')+
       '</optgroup>';
   }
   return h;

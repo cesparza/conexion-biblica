@@ -704,9 +704,18 @@ ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
   ok(repetidos.length > 0,
     'Hay nombres de categoría repetidos entre actividades (' + [...new Set(repetidos)].join(', ') +
     '): por eso esta sección existe');
-  /* El desplegable de crear participantes va agrupado por actividad. */
+  /* AGRUPAR NO ALCANZA. El selector nativo de iOS pinta las opciones SIN las
+     etiquetas de <optgroup>: visto en un iPhone, las ocho categorías seguidas
+     con «Menores · 4 a 6 años» dos veces, igual que antes de agrupar. Lo que
+     distingue dos opciones tiene que ir en el TEXTO de la opción, que se ve en
+     todos los navegadores, y de primero, porque en pantalla angosta el texto
+     se corta por el final. */
   ok(/'<select id="pan-cat">'\+Object\.keys\(ACTIVIDADES\)/.test(APP),
     'El selector de categoría del paso 1 agrupa por actividad');
+  ok(/const catLarga=/.test(APP)&&/esc\(catLarga\(k\)\)/.test(APP),
+    'Y cada opción lleva la actividad en su propio texto, no solo en el grupo');
+  ok(/catLarga=k=>CATS\[k\]\s*\?\s*\(\(ACTIVIDADES\[CATS\[k\]\.act\]\|\|\{\}\)\.nombre\|\|''\)\+' · '/.test(APP),
+    'Con la actividad de PRIMERO: es la parte que distingue y el texto se corta por el final');
   ok(/const catConActividad=/.test(APP),
     'Existe una sola forma de nombrar una categoría con su actividad');
   /* Y las tres listas que pueden mezclar actividades la usan. */
