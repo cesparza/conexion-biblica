@@ -883,8 +883,8 @@ function abreYo(){
       'la app te lleva a tu ficha de esa actividad, o te la crea con tu mismo '+
       'nombre: así cada actividad guarda su progreso, su racha y sus insignias '+
       'aparte, y nada se revuelve.</p>'+
-      '<p class="nota">En Conexión Bíblica el reglamento del campamento pide '+
-      '<strong>Daniel 1, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y '+
+      '<p class="nota">En Conexión Bíblica el campamento va en '+
+      '<strong>Daniel 1, 2, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y '+
       'Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro '+
       'evento.</p>'+
     '</div></div>','yo');
