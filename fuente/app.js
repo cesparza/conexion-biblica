@@ -2388,7 +2388,46 @@ function poolDe(){
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
   if(alcance==='q1')return b.filter(q=>diaMat(q.cap)>0&&diaMat(q.cap)<=15);
   if(alcance==='q2')return b.filter(q=>diaMat(q.cap)>15);
+  const r=rangoDe(alcance);
+  if(r)return b.filter(q=>enRango(q.cap,r));
   return b.filter(q=>q.cap===alcance);
+}
+
+/* ───────── un rango de material: «del dia 5 al 12» ─────────
+   POR QUE EXISTE
+   A veces se reparten el material: una estudia del 1 al 10 y otra del 11 al
+   20, y cada una presenta lo suyo. Con «primera quincena» y «segunda
+   quincena», que eran los dos unicos tramos posibles, eso no se podia pedir.
+
+   UN SOLO MECANISMO PARA LAS TRES ACTIVIDADES
+   El rango no sabe que existe la matutina: se escribe `desde..hasta` con dos
+   ids del MISMO tipo, y compara el numero que ya traen los ids. Asi `m05..m12`
+   son los dias 5 al 12, `d1..d3` es Daniel 1 al 3 y `cr10..cr20` son las
+   creencias 10 a la 20, sin una linea por actividad. Un rango que mezcle tipos
+   (`m05..d3`) no es un rango y no filtra nada.
+
+   La forma tiene que caber en 20 caracteres, que es lo que el servidor guarda
+   en la columna `alcance`: `cr10..cr20` son 10. */
+const PARTE_ID=/^([a-z]+)(\d+)$/;
+function rangoDe(alc){
+  const p=String(alc||'').split('..');
+  if(p.length!==2)return null;
+  const a=PARTE_ID.exec(p[0]),b=PARTE_ID.exec(p[1]);
+  if(!a||!b||a[1]!==b[1])return null;
+  const n1=Number(a[2]),n2=Number(b[2]);
+  if(n1>n2)return null;
+  return {pre:a[1],a:n1,b:n2};
+}
+function enRango(cap,r){
+  const m=PARTE_ID.exec(String(cap||''));
+  return !!m&&m[1]===r.pre&&Number(m[2])>=r.a&&Number(m[2])<=r.b;
+}
+/* El rango en palabras, con los nombres que la persona ve en pantalla. */
+function textoRango(r){
+  const de=CAPS.find(c=>enRango(c.id,{pre:r.pre,a:r.a,b:r.a}));
+  const a=CAPS.find(c=>enRango(c.id,{pre:r.pre,a:r.b,b:r.b}));
+  if(!de||!a)return 'Un rango del material';
+  return de.id===a.id?('Solo '+de.label):('De '+de.label+' a '+a.label);
 }
 
 /* Día del mes de un capítulo de matutina (m01..m31), o 0 si no lo es. */
@@ -2451,15 +2490,27 @@ function pintaMenuEx(){
      en cero. Pasaba con Daniel 2 desde que salió del reglamento, y con el día
      31 de la matutina desde antes. */
   const capsEx=capsDe().filter(c=>!soloEstudio(c,S.cat));
+  /* UN TRAMO DEL MATERIAL, tambien aqui. Si el club se reparte el estudio («tu
+     del 1 al 10, yo del 11 al 20»), practicar todo el material es gastar
+     turnos en dias que no le tocan. Los extremos son los capitulos de SU
+     categoria: un rango que salga de ahi no existe para ella. */
+  const hayRango=capsEx.length>=3;
   sa.innerHTML='<option value="todo">Todo mi material</option>'+grupos+
-    capsEx.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('');
+    capsEx.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('')+
+    (hayRango?'<option value="rango">Un tramo: de un capítulo a otro</option>':'');
     /* El alcance vive en el aparato y sobrevive al cambio de categoría. «q1» de
      la matutina, o «creencias» de padres, no existen en Aventureros: si no se
      revalida, el examen queda en CERO preguntas y el desplegable muestra un
      valor que no está en la lista. Se valida contra los grupos que esta
      categoría tiene de verdad, no contra una lista fija. */
-  if(!capsEx.some(c=>c.id===prev)&&!['todo'].concat(disp.map(g=>g[0])).includes(prev))alcance='todo';
-  sa.value=alcance;
+  const rPrev=rangoDe(prev);
+  if(!rPrev&&!capsEx.some(c=>c.id===prev)&&!['todo'].concat(disp.map(g=>g[0])).includes(prev))alcance='todo';
+  /* Un rango guardado de OTRA categoría no sirve aquí: «del día 5 al 12» no
+     existe en Aventureros. Se valida contra los capítulos que esta categoría
+     tiene de verdad, igual que los grupos. */
+  if(rPrev&&!capsEx.some(c=>enRango(c.id,rPrev)))alcance='todo';
+  pintaRangoEx(capsEx,hayRango);
+  sa.value=rangoDe(alcance)?'rango':alcance;
 
   const ops=opcionesCuantas();
   if(!ops.includes(cuantas))cuantas=ops.includes(NPREG())?NPREG():ops[0];
@@ -2510,7 +2561,63 @@ function textoNivel(){
     (d>0?' Faltan '+d+' días para el campamento.':'');
 }
 
-function cambiaAlcance(){alcance=document.getElementById('ex-alcance').value;refrescaEx();}
+/* ───────── los dos extremos del tramo, en practicar ─────────
+   MECANISMO
+   Un rango solo existe entre capítulos del MISMO tipo: «de Daniel 1 a P&R 44»
+   no es un tramo de nada y dejaría el examen en cero. En vez de dejar armar el
+   disparate y después avisar, el desplegable «Hasta» solo ofrece lo que sí
+   forma un tramo con lo que diga «Desde»: mismo tipo y de ahí en adelante.
+   Así no hay estado inválido que validar, porque no se puede escoger. */
+const familiaDe=id=>((PARTE_ID.exec(String(id||''))||[])[1])||'';
+const numDe=id=>Number((PARTE_ID.exec(String(id||''))||[])[2]||0);
+
+function pintaRangoEx(capsEx,hayRango){
+  const l1=document.getElementById('ex-r1-lb'),l2=document.getElementById('ex-r2-lb');
+  const s1=document.getElementById('ex-r1'),s2=document.getElementById('ex-r2');
+  if(!s1||!s2||!l1||!l2)return;
+  const r=rangoDe(alcance);
+  const abierto=hayRango&&!!r;
+  l1.hidden=!abierto;l2.hidden=!abierto;
+  if(!abierto)return;
+  const de=capsEx.find(c=>enRango(c.id,{pre:r.pre,a:r.a,b:r.a}));
+  const a=capsEx.find(c=>enRango(c.id,{pre:r.pre,a:r.b,b:r.b}));
+  s1.innerHTML=capsEx.map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('');
+  s1.value=de?de.id:capsEx[0].id;
+  const desde=s1.value;
+  s2.innerHTML=capsEx.filter(c=>familiaDe(c.id)===familiaDe(desde)&&numDe(c.id)>=numDe(desde))
+    .map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('');
+  s2.value=a?a.id:s2.value;
+}
+
+/* Al escoger «Un tramo» todavía no hay extremos: se arranca con el material
+   completo de la PRIMERA familia (todo Daniel, o todos los días, o todas las
+   creencias), que siempre es un rango válido, y desde ahí se ajusta. Arrancar
+   con «del primero al último» a secas daba «d1..pr44», que no es un rango. */
+function cambiaAlcance(){
+  const v=document.getElementById('ex-alcance').value;
+  if(v==='rango'){
+    const cs=capsDe().filter(c=>!soloEstudio(c,S.cat));
+    const fam=cs.length?familiaDe(cs[0].id):'';
+    const mismos=cs.filter(c=>familiaDe(c.id)===fam);
+    alcance=mismos.length?(mismos[0].id+'..'+mismos[mismos.length-1].id):'todo';
+  } else alcance=v;
+  refrescaEx();
+}
+
+/* Cambiar «Desde» puede dejar «Hasta» atrás o en otra familia; se corrige
+   solo con el primero que sí sirve, y pintaRangoEx vuelve a armar la lista. */
+function cambiaRango(){
+  const cs=capsDe().filter(c=>!soloEstudio(c,S.cat));
+  const a=(document.getElementById('ex-r1')||{}).value||'';
+  let b=(document.getElementById('ex-r2')||{}).value||'';
+  if(!rangoDe(a+'..'+b)){
+    const ult=cs.filter(c=>familiaDe(c.id)===familiaDe(a)&&numDe(c.id)>=numDe(a));
+    b=ult.length?ult[ult.length-1].id:a;
+  }
+  if(rangoDe(a+'..'+b))alcance=a+'..'+b;
+  refrescaEx();
+}
+
 function cambiaCuantas(){cuantas=Number(document.getElementById('ex-cuantas').value)||NPREG();refrescaEx();}
 function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||0;refrescaEx();}
 
@@ -2740,7 +2847,10 @@ function pintaPreguntas(){
   document.getElementById('preguntas').innerHTML=h;
   const ET={normal:'',simulacro:' · 🎓 Simulacro',errores:' · 🔁 Repaso de errores'};
   const NA={todo:'todo el material',biblia:'solo Daniel',pr:'solo Profetas y Reyes'};
-  const alc=modo==='errores'?'mis errores':(NA[alcance]||(buscaItem(alcance)||{}).label||'');
+  const rangoAct=rangoDe(alcance);
+  const alc=modo==='errores'?'mis errores'
+    :rangoAct?textoRango(rangoAct)
+    :(NA[alcance]||(buscaItem(alcance)||{}).label||'');
   document.getElementById('ex-meta').textContent=prueba.length+' preguntas · '+alc+
     ' · '+(S.nombre||'Estudiante')+(ET[modo]||'');
   cuenta();
@@ -3147,6 +3257,8 @@ function textoAlcanceImpr(){
   if(alcance==='creencias')return 'En esto creemos — las 28 creencias';
   if(alcance==='q1')return 'Del 1 al 15 de octubre';
   if(alcance==='q2')return 'Del 16 en adelante';
+  const r=rangoDe(alcance);
+  if(r)return textoRango(r);
   const c=CAPS.find(x=>x.id===alcance);
   return c?c.label+' — '+c.sub:CAT().alcance;
 }
@@ -3970,7 +4082,18 @@ async function pintaPanel(){
         '<option value="creencias">Las 28 creencias</option>'+
       '</optgroup>'+
       opcionesCapPanel()+
+      '<optgroup label="Un tramo del material">'+
+        '<option value="rango">Escoger desde dónde hasta dónde</option>'+
+      '</optgroup>'+
     '</select></label></div>'+
+    /* Los dos extremos del rango solo aparecen con «rango» escogido: dos
+       desplegables mudos ocupando pantalla en el 90% de los casos es ruido. */
+    '<div class="ses-fila" id="pan-rango" hidden>'+
+      '<label class="pan-lb">Desde<select id="pan-r1" onchange="pintaNotaAlcance()">'+
+        opcionesRangoPanel()+'</select></label>'+
+      '<label class="pan-lb">Hasta<select id="pan-r2" onchange="pintaNotaAlcance()">'+
+        opcionesRangoPanel()+'</select></label>'+
+    '</div>'+
     '<p class="nota" id="pan-nota-al">'+NOTA_ALCANCE.todo+'</p>'+
     '<p class="nota" id="pan-aviso-cats"></p>'+
     '<div class="ses-fila"><label class="pan-lb">Dificultad'+
@@ -3989,7 +4112,20 @@ async function pintaPanel(){
       return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'" '+
         'onchange="pintaAvisoCats()"> '+
         '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+esc(CATS[k].edad)+'</small></span></label>';
-    }).join('')+'</div></div>'+
+    }).join('')+'</div>'+
+    /* POR PERSONA, que es el segundo nivel.
+       Existe por un caso real: se reparten el material y una estudia del 1 al
+       10 y otra del 11 al 20, las dos de la misma categoría y presentando el
+       mismo rato. Con solo categorías eso no se podía, porque el servidor no
+       deja dos abiertas que compartan categoría. Una dirigida a personas le
+       gana a la de su categoría, así que se pueden tener las dos. */
+    '<details class="pan-personas"><summary>O escoger personas, una por una</summary>'+
+    '<p class="nota">Para cuando se reparten el material y cada una presenta su tramo. '+
+    'Si marcas personas, <strong>mandan ellas</strong> y las categorías de arriba no cuentan. '+
+    'A cada una le gana esta evaluación sobre la de su categoría, así que la del grupo '+
+    'puede seguir abierta para las demás.</p>'+
+    '<div class="pan-cats" id="pan-personas"><p class="nota">Cargando...</p></div>'+
+    '</details></div>'+
 
     '<div class="pan-paso"><div class="pan-paso-t">Paso 3 · Abrir</div>'+
     '<div class="pan-sw"><button class="btn azul" id="pan-abrir" disabled '+
@@ -4019,6 +4155,45 @@ async function pintaPanel(){
    dimension de arriba, y se marca el que es solo material de estudio: abrirle
    una evaluacion a ese capitulo deja a las participantes sin preguntas.
    Los capitulos que NINGUNA categoria examina no se ofrecen. */
+/* Los extremos del rango: TODOS los capitulos, agrupados por actividad. Se
+   ofrecen completos, incluidos los que son solo material de estudio, porque un
+   rango es un tramo del material y cortarlo por la mitad seria mas raro que
+   incluirlo; lo que no tenga preguntas simplemente no aporta ninguna. */
+/* El alcance de una evaluación en palabras, para la tarjeta de «en curso». Sin
+   esto la tarjeta decía el título y a quién, pero no QUÉ material, que es justo
+   lo que cambia entre dos evaluaciones abiertas del mismo grupo. */
+function textoAlcancePanel(alc){
+  const r=rangoDe(alc);
+  if(r)return textoRango(r);
+  const c=CAPS.find(x=>x.id===alc);
+  if(c)return 'Solo '+c.label+' — '+c.sub;
+  return {todo:'Todo el material de cada categoría',creencias:'Las 28 creencias',
+    biblia:'Solo el libro de Daniel',pr:'Solo Profetas y Reyes',
+    q1:'Del 1 al 15 de octubre',q2:'Del 16 de octubre en adelante'}[alc]||alc;
+}
+
+function opcionesRangoPanel(){
+  let h='';
+  for(const a of Object.keys(ACTIVIDADES)){
+    const cats=CATS_DE_ACT(a);
+    const caps=CAPS.filter(c=>c.cats.some(k=>cats.includes(k)));
+    if(!caps.length)continue;
+    h+='<optgroup label="'+esc(ACTIVIDADES[a].nombre)+'">'+
+      caps.map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('')+'</optgroup>';
+  }
+  return h;
+}
+
+/* El alcance que de verdad se va a mandar: con «rango» escogido son los dos
+   extremos pegados con «..», que es la forma que el servidor valida. */
+function alcancePanel(){
+  const sel=(document.getElementById('pan-eval-al')||{}).value||'todo';
+  if(sel!=='rango')return sel;
+  const a=(document.getElementById('pan-r1')||{}).value||'';
+  const b=(document.getElementById('pan-r2')||{}).value||'';
+  return a&&b?(a+'..'+b):'todo';
+}
+
 function opcionesCapPanel(){
   let h='';
   for(const a of Object.keys(ACTIVIDADES)){
@@ -4075,9 +4250,19 @@ function cuantasPara(cat,alc){
 function pintaAvisoCats(){
   const p=document.getElementById('pan-aviso-cats');
   if(!p)return;
-  const al=(document.getElementById('pan-eval-al')||{}).value||'todo';
-  const marcadas=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
-    .filter(function(c){return c.checked;}).map(function(c){return c.value;});
+  const al=alcancePanel();
+  /* CON PERSONAS MARCADAS MANDAN ELLAS, y lo que hay que revisar es si el
+     material le sirve a SU categoría, no a las categorías marcadas arriba.
+     Calcularlo sobre las de arriba diría que todo está bien mientras la
+     persona escogida se queda sin una sola pregunta. */
+  const personas=personasEval();
+  const catsDePersonas=[...new Set(personas.map(function(id){
+    const x=panParts.find(function(y){return y.id===id;});
+    return x?x.categoria:'';
+  }).filter(Boolean))];
+  const marcadas=personas.length?catsDePersonas
+    :[].slice.call(document.querySelectorAll('.pan-cat-ch'))
+      .filter(function(c){return c.checked;}).map(function(c){return c.value;});
   /* Sin marcar ninguna les toca a todas, y ahí el dato útil es al revés: no
      la lista de las siete que se quedan sin nada, sino la de las que sí
      reciben. Nombrarlas todas era un párrafo que nadie lee. */
@@ -4101,19 +4286,60 @@ function pintaAvisoCats(){
      lo reemplaza. Se avisa ANTES de que el director le dé al botón, no
      después: sin esto, cerrar una evaluación en curso por accidente se veía
      igual que abrir una nueva sin más. */
+  /* El solape se mide EN EL MISMO NIVEL en que se va a abrir, igual que lo
+     hace el servidor: una dirigida a personas solo choca con otra dirigida a
+     personas que comparta alguna, y la del grupo se queda abierta. */
   const catsPend=todas?Object.keys(CATS):marcadas;
   const solapa=panAbiertas.filter(function(ev){
+    if(personas.length)return (ev.ids||[]).some(function(x){return personas.indexOf(x)>=0;});
+    if((ev.dirigida||[]).length)return false;
     const catsEv=(!ev.categorias||ev.categorias==='*')?Object.keys(CATS):ev.categorias.split(',');
     return catsPend.some(function(c){return catsEv.indexOf(c)>=0;});
   });
   if(solapa.length)t+=(t?'<br>':'')+'🔁 Si la abres, se cierra: '+
     solapa.map(function(ev){return '<strong>'+esc(ev.titulo)+'</strong>';}).join(', ')+'.';
+  if(personas.length)t+=(t?'<br>':'')+'👤 Va dirigida a '+personas.length+
+    (personas.length===1?' persona':' personas')+', no a las categorías de arriba.';
   p.innerHTML=t?'<span style="color:var(--rojo)">'+t+'</span>':'';
+}
+
+/* Por qué un rango escogido no sirve, en palabras, o cadena vacía si sirve.
+   Devuelve el motivo y no un booleano porque el botón de abrir se apaga CON LA
+   RAZÓN A LA VISTA: un botón gris sin explicación es el defecto que ya se
+   arregló en el paso 3. */
+function motivoRangoMalo(){
+  const sel=(document.getElementById('pan-eval-al')||{}).value;
+  if(sel!=='rango')return '';
+  const a=(document.getElementById('pan-r1')||{}).value||'';
+  const b=(document.getElementById('pan-r2')||{}).value||'';
+  if(!a||!b)return 'Falta escoger los dos extremos del tramo.';
+  const ca=CAPS.find(c=>c.id===a),cb=CAPS.find(c=>c.id===b);
+  if(!rangoDe(a+'..'+b)){
+    const ma=PARTE_ID.exec(a),mb=PARTE_ID.exec(b);
+    if(ma&&mb&&ma[1]!==mb[1])
+      return 'El tramo va de «'+(ca?ca.label:a)+'» a «'+(cb?cb.label:b)+'», y son de '+
+             'actividades distintas. Los dos extremos tienen que ser del mismo material.';
+    return 'El final del tramo va antes que el comienzo: cámbialos de orden.';
+  }
+  return '';
 }
 
 function pintaNotaAlcance(){
   const s=document.getElementById('pan-eval-al'),p=document.getElementById('pan-nota-al');
   if(!s||!p)return;
+  const zr=document.getElementById('pan-rango');
+  if(zr)zr.hidden=s.value!=='rango';
+  if(s.value==='rango'){
+    const mal=motivoRangoMalo();
+    if(mal){
+      p.innerHTML='<span style="color:var(--rojo)">'+esc(mal)+'</span>';
+      pintaAvisoCats();revisaAbrir();return;
+    }
+    const r=rangoDe(alcancePanel());
+    p.textContent=textoRango(r)+'. A una categoría que no tenga ese material no le '+
+      'sale ninguna pregunta.';
+    pintaAvisoCats();revisaAbrir();return;
+  }
   /* Con un capitulo suelto no hay texto escrito a mano: se arma con el dato,
      y se dice QUE CATEGORIAS lo examinan, que es lo que el director necesita
      saber antes de marcar a quien le toca. */
@@ -4125,7 +4351,7 @@ function pintaNotaAlcance(){
                   :'ninguna categoría')+
       '. A una categoría que no lo tenga no le sale ninguna pregunta.';
   } else p.textContent=NOTA_ALCANCE[s.value]||'';
-  pintaAvisoCats();
+  pintaAvisoCats();revisaAbrir();
 }
 
 const NOTA_NIVEL={
@@ -4160,9 +4386,14 @@ function revisaAbrir(cuantasP){
   const t=(document.getElementById('pan-eval-t')||{}).value||'';
   const faltaNom=!t.trim();
   const faltaPart=panHayPart===0;
-  b.disabled=faltaNom||faltaPart;
+  /* Un tramo mal armado no puede llegar al servidor: allá se cae al alcance
+     «todo» en silencio, y el director abriría una evaluación de todo el
+     material creyendo que abrió la del 1 al 10. */
+  const malRango=motivoRangoMalo();
+  b.disabled=faltaNom||faltaPart||!!malRango;
   if(r)r.textContent=faltaPart?'Falta crear participantes en el paso 1.'
     :faltaNom?'Falta ponerle nombre a la evaluación.'
+    :malRango?malRango
     :panHayPart===null?'No se pudo confirmar cuántas participantes hay: revisa la señal.':'';
 }
 
@@ -4174,9 +4405,9 @@ async function abreEvaluacion(){
     const titulo=t?t.value:'';
     const d=await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
       titulo,cuantas:n?Number(n.value):15,
-      alcance:(document.getElementById('pan-eval-al')||{}).value||'todo',
+      alcance:alcancePanel(),
       nivel:Number((document.getElementById('pan-eval-nv')||{}).value||0),
-      categorias:cats,huella:huellaBanco()})});
+      categorias:cats,participantes:personasEval(),huella:huellaBanco()})});
     /* pintaPanel() ya NO decide qué mostrar leyendo una caché local: la
        tarjeta de "en curso" sale de preguntarle a /panel/evaluacion cada vez
        (cargaResultados()), así que no hace falta adivinar aquí si el POST de
@@ -4186,7 +4417,7 @@ async function abreEvaluacion(){
       /* Avisar CUÁL se reemplazó: con varias evaluaciones corriendo a la vez,
          un clic sin darse cuenta del solape podría cerrar la de otro grupo
          sin que el director lo note hasta que alguien reclame. */
-      alert('Al abrir esta se cerró, por compartir categoría: '+
+      alert('Al abrir esta se cerró, por cruzarse con ella: '+
         d.cerradas.map(function(x){return x.titulo;}).join(', '));
     }
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
@@ -4240,8 +4471,15 @@ async function cargaResultados(){
     panAbiertas=r.evaluaciones||[];
     if(panAbiertas.length){
       d.innerHTML=panAbiertas.map(function(ev){
+        /* Dirigida a personas: se nombran ELLAS, no su categoría. Decir
+           «Aventureros» en una que solo le toca a Camila haría creer que el
+           grupo entero tiene que presentar. */
+        const para=(ev.dirigida&&ev.dirigida.length)
+          ? ev.dirigida.map(esc).join(', ')+' <small>(solo estas personas)</small>'
+          : esc(nombresCats(ev.categorias));
         return '<div class="pan-paso"><div class="pan-paso-t">Evaluación en curso: '+esc(ev.titulo)+'</div>'+
-          '<p class="nota">Para: <strong>'+esc(nombresCats(ev.categorias))+'</strong></p>'+
+          '<p class="nota">Para: <strong>'+para+'</strong></p>'+
+          '<p class="nota">Material: '+esc(textoAlcancePanel(ev.alcance))+'</p>'+
           cuerpoResultado(ev)+
           '<div class="pan-sw"><button class="btn nar" onclick="cierraEvaluacion(\''+esc(ev.id)+'\')">'+
           'Cerrar esta evaluación</button></div>'+
@@ -4354,6 +4592,7 @@ async function cargaParticipantes(pre){
   try{
     const p=pre||((await srvFetch('/panel/participantes')).participantes||[]);
     revisaAbrir(p.length);
+    pintaPersonasEval(p);
     if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
       '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
@@ -4364,6 +4603,25 @@ async function cargaParticipantes(pre){
       }).join('')+'</table></div>';
   }catch(e){d.innerHTML='<p class="nota">No se pudo cargar: '+esc(e.message||'')+'</p>';}
 }
+
+/* Las casillas de «escoger personas». Se pintan de la MISMA lista que la tabla
+   de arriba, no de un segundo viaje al servidor: dos listas de participantes
+   que se piden por aparte se desincronizan en cuanto se crea uno nuevo. */
+let panParts=[];
+function pintaPersonasEval(p){
+  const z=document.getElementById('pan-personas');
+  panParts=p||[];
+  if(!z)return;
+  if(!p||!p.length){z.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
+  z.innerHTML=p.map(function(x){
+    const cn=CATS[x.categoria]?CATS[x.categoria].nombre:x.categoria;
+    return '<label class="pan-cat"><input type="checkbox" class="pan-per-ch" value="'+esc(x.id)+'" '+
+      'onchange="pintaAvisoCats()"> <span><strong>'+esc(x.nombre)+'</strong><br>'+
+      '<small>'+esc(cn)+'</small></span></label>';
+  }).join('');
+}
+const personasEval=()=>[].slice.call(document.querySelectorAll('.pan-per-ch'))
+  .filter(function(c){return c.checked;}).map(function(c){return c.value;});
 
 async function creaParticipante(){
   const n=document.getElementById('pan-nom'),c=document.getElementById('pan-cat');

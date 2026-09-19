@@ -14,6 +14,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
         poolDe, opcionesCuantas, segundosPara, marcaVistas, nuevasDe, prng,
+  rangoDe, enRango, textoRango, cambiaRango, cambiaAlcance, textoAlcanceImpr, pintaMenuEx,
   ponSemilla:x=>{rndEx=prng(x)},
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
@@ -1428,6 +1429,42 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   D.adoptaFicha({nombre:'Alaia',categoria:'me'});
   ok(D.alumnos().length===conVacia&&D.S().nombre==='Alaia'&&D.S().cat==='me',
     'Una ficha vacia se reusa en vez de crear otra');
+}
+
+{
+  const R=montar(RET);
+
+  ok(!!R.rangoDe('m05..m12'),'m05..m12 es un rango');
+  ok(!!R.rangoDe('d1..d3'),'d1..d3 es un rango');
+  ok(!!R.rangoDe('cr10..cr20'),'cr10..cr20 es un rango');
+  ok(!R.rangoDe('m05..d3'),'m05..d3 NO es un rango: son de actividades distintas');
+  ok(!R.rangoDe('d3..d1'),'d3..d1 NO es un rango: el final va antes que el comienzo');
+  ok(!R.rangoDe('todo')&&!R.rangoDe('m05'),'Ni «todo» ni un capitulo suelto son rangos');
+  ok(R.enRango('m07',R.rangoDe('m05..m12'))&&!R.enRango('m13',R.rangoDe('m05..m12')),
+    'El dia 7 esta dentro del tramo 5 al 12, el 13 no');
+  ok(!R.enRango('d7',R.rangoDe('m05..m12')),'Y Daniel 7 no entra en un tramo de la matutina');
+
+  R.ponCat('dm2'); R.ponNivel(3);
+  R.ponAlcance('m05..m12');
+  const tramo=R.poolDe().length;
+  R.ponAlcance('todo');
+  const todo=R.poolDe().length;
+  ok(tramo>0&&tramo<todo,'El tramo del 5 al 12 da '+tramo+' preguntas, menos que las '+todo+' de todo');
+  R.ponAlcance('m05..m12');
+  ok(/5 de octubre/.test(R.textoAlcanceImpr())&&/12 de octubre/.test(R.textoAlcanceImpr()),
+    'Y el examen dice de que dia a que dia: '+R.textoAlcanceImpr());
+
+  /* En practicar: escoger «Un tramo» tiene que dejar un rango VALIDO de una
+     sola familia. Aventureros tiene Daniel y Profetas y Reyes, y arrancar con
+     «del primero al ultimo» daba `d1..pr44`, que no es un rango. */
+  R.ponCat('av'); R.ir('examen');
+  R.el('ex-alcance').value='rango'; R.cambiaAlcance();
+  ok(!!R.rangoDe(R.alcanceActual()),'En Aventureros «Un tramo» arranca con un rango valido: '+R.alcanceActual());
+  ok(R.poolDe().length>0,'Y con preguntas adentro ('+R.poolDe().length+')');
+  /* Un rango de otra categoria no puede sobrevivir al cambio. */
+  R.ponAlcance('m05..m12');
+  R.ir('examen');
+  ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

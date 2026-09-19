@@ -120,6 +120,22 @@ const catsDeFila = ev => {
   return c === '*' ? CATS_VALIDAS : c.split(',');
 };
 
+/* A quiénes va dirigida, cuando va dirigida a personas y no a una categoría
+   entera. Vacío = va por categoría, que es como funcionaba antes de la 007. */
+const partsDeFila = ev => {
+  const p = (ev && ev.participantes) ? String(ev.participantes) : '';
+  return p ? p.split(',').filter(Boolean) : [];
+};
+
+/* LA REGLA QUE QUITA LA AMBIGÜEDAD: una evaluación dirigida a personas le gana
+   a una dirigida a su categoría. Así el director puede tener «toda la matutina,
+   del 1 al 15» abierta y encima «Camila, del 16 al 20», sin cerrarle la primera
+   al resto del grupo. Sin precedencia habría dos aplicándole a Camila y no
+   habría forma de saber cuál. */
+const evalParaMi = (abiertas, participanteId, categoria) =>
+  abiertas.find(ev => partsDeFila(ev).includes(participanteId)) ||
+  abiertas.find(ev => !partsDeFila(ev).length && catsDeFila(ev).includes(categoria));
+
 /* Semilla del examen. La genera el SERVIDOR, nunca el aparato del director: así
    el examen es idéntico para todas y nadie puede adivinarlo antes de tiempo. */
 const semillaNueva = () => {
@@ -165,7 +181,8 @@ export async function onRequest(context) {
          las invitadas, /evaluacion (que sí sabe quién es) cierra la práctica
          en su aparato. Solo se cierra para todos cuando ALGUNA abierta es
          para todas las categorías. */
-      const algunaParaTodas = abiertas.some(ev => (ev.categorias || '*') === '*');
+      const algunaParaTodas = abiertas.some(ev =>
+        !partsDeFila(ev).length && (ev.categorias || '*') === '*');
       return json({
         practica: !algunaParaTodas,
         evaluaciones: abiertas.map(ev => ({
@@ -257,12 +274,11 @@ export async function onRequest(context) {
       const abiertas = await evaluacionesAbiertas(env);
       const yo = await env.DB.prepare('SELECT categoria FROM participante WHERE id = ?')
         .bind(sesion.persona_id).first();
-      /* Puede haber varias evaluaciones abiertas a la vez (una por cada
-         categoría o grupo de categorías), pero nunca dos que compartan
-         categoría — eso lo garantiza /panel/evaluacion al abrir. Así que a
-         lo sumo UNA de las abiertas incluye la categoría de esta
-         participante, y esa es la suya. */
-      const ev = abiertas.find(e => catsDeFila(e).includes(yo && yo.categoria));
+      /* Puede haber varias evaluaciones abiertas a la vez, pero nunca dos que
+         le apliquen a la MISMA persona: /panel/evaluacion lo garantiza al
+         abrir, y evalParaMi resuelve el único cruce permitido, que es una
+         dirigida a ella encima de una dirigida a su categoría. */
+      const ev = evalParaMi(abiertas, sesion.persona_id, yo && yo.categoria);
       if (!ev) {
         /* Si hay evaluaciones abiertas pero ninguna es para su categoría, para
            ella es como si no existiera: no la ve y su práctica sigue abierta. */
@@ -346,8 +362,15 @@ export async function onRequest(context) {
          otra forma, la prueba falla aquí y no en el campamento. */
       const ALCANCES = ['todo', 'creencias', 'biblia', 'pr', 'q1', 'q2'];
       const FORMA_CAP = /^(d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})$/;
+      /* Un RANGO: «desde..hasta» con dos ids del mismo tipo, y el de la
+         izquierda no mayor que el de la derecha. El backreference \1 es lo que
+         impide `m05..d3`, que no es un rango de nada y dejaría la evaluación
+         sin una sola pregunta. */
+      const FORMA_RANGO = /^([a-z]{1,2})([0-9]{1,2})\.\.\1([0-9]{1,2})$/;
       const pedido = limpiar(b.alcance, 20);
-      const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido)) ? pedido : 'todo';
+      const mr = FORMA_RANGO.exec(pedido);
+      const rangoOk = !!mr && Number(mr[2]) <= Number(mr[3]);
+      const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido) || rangoOk) ? pedido : 'todo';
       const cuantas = Math.min(60, Math.max(5, Math.round(+b.cuantas || 15)));
       const nivel = [0, 1, 2, 3].includes(+b.nivel) ? +b.nivel : 0;
       /* A quién le toca. Una lista de categorías, o '*' para todas. Sin esto el
@@ -356,16 +379,45 @@ export async function onRequest(context) {
         : String(b.categorias || '').split(',');
       const limpias = pedidas.map(x => String(x).trim()).filter(x => CATS_VALIDAS.includes(x));
       const categorias = (!limpias.length || limpias.length === CATS_VALIDAS.length) ? '*' : limpias.join(',');
-      /* Puede haber varias evaluaciones abiertas a la vez (una para Guías, otra
-         para Aventureros, otra para Devoción Matutina...), pero nunca dos que
-         compartan categoría: si eso pasara, una participante en esa categoría
-         no tendría forma de saber cuál de las dos le toca. Así que abrir esta
-         NO cierra todo lo que estaba abierto — antes sí lo hacía, y era lo que
-         impedía tener varias a la vez — sino solo lo que SE CRUZA en
-         categoría con la que se está abriendo ahora. */
+      /* A QUIÉNES, EN DOS NIVELES.
+         Si vienen participantes, la evaluación va dirigida a esas personas y las
+         categorías dejan de decidir. Es lo que permite «Camila del 1 al 10» y
+         «Daniel del 11 al 20» abiertas al mismo tiempo, siendo los dos de la
+         misma categoría: antes eso era imposible, porque el único nivel era la
+         categoría y dos abiertas no podían compartirla. */
+      const pedidosP = Array.isArray(b.participantes) ? b.participantes
+        : String(b.participantes || '').split(',');
+      const idsP = [...new Set(pedidosP.map(x => String(x).trim()).filter(Boolean))].slice(0, 60);
+      let participantes = '';
+      if (idsP.length) {
+        /* Solo ids que existen y no están borrados: una lista con basura dejaría
+           una evaluación abierta que no le toca a nadie, y el director la vería
+           abierta esperando notas que nunca llegan. */
+        const marcas = idsP.map(() => '?').join(',');
+        const { results } = await env.DB.prepare(
+          'SELECT id FROM participante WHERE borrado_en IS NULL AND id IN (' + marcas + ')'
+        ).bind(...idsP).all();
+        participantes = (results || []).map(r => r.id).join(',');
+        if (!participantes) return error('Ninguno de esos participantes existe.', 400);
+      }
+
+      /* QUÉ SE CIERRA AL ABRIR ESTA.
+         Nunca pueden quedar dos abiertas que le apliquen a la misma persona, y
+         la precedencia (persona le gana a categoría) resuelve el único cruce
+         entre niveles. Así que solo se cierra lo que choca EN SU MISMO NIVEL:
+         - dirigida a personas: las otras dirigidas a personas que compartan
+           alguna. La de la categoría se queda, y sigue valiendo para el resto.
+         - dirigida a categorías: las otras dirigidas a categorías que compartan
+           alguna, como venía siendo. Las dirigidas a personas no se tocan: esas
+           le ganan y ya estaban resueltas. */
       const catsNuevas = categorias === '*' ? CATS_VALIDAS : categorias.split(',');
+      const nuevaP = participantes ? participantes.split(',') : [];
       const abiertas = await evaluacionesAbiertas(env);
-      const solapadas = abiertas.filter(ev => catsDeFila(ev).some(c => catsNuevas.includes(c)));
+      const solapadas = abiertas.filter(ev => {
+        const suyos = partsDeFila(ev);
+        if (nuevaP.length) return suyos.some(x => nuevaP.includes(x));
+        return !suyos.length && catsDeFila(ev).some(c => catsNuevas.includes(c));
+      });
       for (const ev of solapadas) {
         await env.DB.prepare(
           "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE id = ?"
@@ -373,9 +425,9 @@ export async function onRequest(context) {
       }
       const eid = id();
       await env.DB.prepare(
-        'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, categorias, abierta) ' +
-        'VALUES (?,?,?,?,?,?,?,?,1)'
-      ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40), categorias).run();
+        'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, categorias, participantes, abierta) ' +
+        'VALUES (?,?,?,?,?,?,?,?,?,1)'
+      ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40), categorias, participantes).run();
       await auditar(env, sesion.cuenta_id, 'abrir_evaluacion', 'evaluacion', eid, ipHash);
       return json({
         ok: true, id: eid,
@@ -414,17 +466,40 @@ export async function onRequest(context) {
           'WHERE i.evaluacion_id = ? AND p.borrado_en IS NULL ORDER BY i.creado_en'
         ).bind(ev.id).all();
         const cats = ev.categorias || '*';
-        const filtro = cats === '*' ? '' :
-          " AND p.categoria IN (" + cats.split(',').map(() => '?').join(',') + ")";
-        const args = cats === '*' ? [ev.id] : [ev.id, ...cats.split(',')];
+        const suyos = partsDeFila(ev);
+        /* «Faltan» se acota a QUIÉNES CONVOCA esta evaluación. Si va dirigida a
+           personas, faltan solo esas: sin esta rama el panel mostraría a toda
+           la categoría como pendiente de una evaluación que no le tocaba, y el
+           director saldría a buscar gente que no debía presentar. */
+        let filtro, args;
+        if (suyos.length) {
+          filtro = ' AND p.id IN (' + suyos.map(() => '?').join(',') + ')';
+          args = [ev.id, ...suyos];
+        } else if (cats === '*') {
+          filtro = ''; args = [ev.id];
+        } else {
+          filtro = ' AND p.categoria IN (' + cats.split(',').map(() => '?').join(',') + ')';
+          args = [ev.id, ...cats.split(',')];
+        }
         const { results: faltan } = await env.DB.prepare(
           'SELECT p.nombre, p.categoria FROM participante p WHERE p.borrado_en IS NULL ' +
           'AND p.id NOT IN (SELECT participante_id FROM intento WHERE evaluacion_id = ?)' +
           filtro + ' ORDER BY p.categoria, p.nombre'
         ).bind(...args).all();
+        /* Los nombres de a quiénes va dirigida, para que la tarjeta del panel
+           pueda decir «Camila, Daniel» en vez de una lista de ids. */
+        let dirigida = [];
+        if (suyos.length) {
+          const { results: nn } = await env.DB.prepare(
+            'SELECT nombre FROM participante WHERE borrado_en IS NULL AND id IN (' +
+            suyos.map(() => '?').join(',') + ') ORDER BY nombre'
+          ).bind(...suyos).all();
+          dirigida = (nn || []).map(r => r.nombre);
+        }
         return {
           id: ev.id, titulo: ev.titulo, cuantas: ev.cuantas, alcance: ev.alcance,
-          nivel: ev.nivel, categorias: cats, hechas: hechas || [], faltan: faltan || [],
+          nivel: ev.nivel, categorias: cats, dirigida, ids: suyos,
+          hechas: hechas || [], faltan: faltan || [],
         };
       };
       const abiertas = await evaluacionesAbiertas(env);

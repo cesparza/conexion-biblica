@@ -1,0 +1,19 @@
+-- A QUIÉNES LES TOCA LA EVALUACIÓN, CUANDO NO ES UNA CATEGORÍA ENTERA.
+--
+-- POR QUÉ
+-- A veces el club se reparte el material: una estudia del 1 al 10 de octubre y
+-- otra del 11 al 20, y las dos presentan el mismo rato. Con la evaluación
+-- dirigida solo a categorías eso no se podía: el servidor no deja dos abiertas
+-- que compartan categoría, porque entonces una participante no sabría cuál le
+-- toca.
+--
+-- CÓMO QUEDA
+-- Lista de ids de participante separados por coma. Vacío = la evaluación va por
+-- categoría, que es como venía funcionando y como sigue quedando todo lo que ya
+-- estaba abierto.
+--
+-- REGLA DE PRECEDENCIA, que es lo que quita la ambigüedad:
+-- una evaluación dirigida a personas le gana a una dirigida a su categoría. Así
+-- se puede tener «toda la matutina, del 1 al 15» abierta y, encima, «Camila,
+-- del 16 al 20», sin cerrar la primera para el resto del grupo.
+ALTER TABLE evaluacion ADD COLUMN participantes TEXT NOT NULL DEFAULT '';

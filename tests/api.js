@@ -144,6 +144,40 @@ async function vivo() {
   }
 }
 
+/* ───────── el rango y la evaluacion dirigida a personas ─────────
+   Dos invariantes que solo se ven leyendo el archivo del servidor, y que si se
+   rompen no fallan: dejan una evaluacion abierta con el alcance equivocado, o
+   dos aplicandole a la misma persona. */
+{
+  const forma = (API.match(/const FORMA_RANGO = (\/.+?\/);/) || [])[1];
+  ok(!!forma, 'El servidor valida la forma del rango');
+  if (forma) {
+    const re = eval(forma);
+    ok(re.test('m05..m12') && re.test('d1..d3') && re.test('cr10..cr20'),
+      'Acepta los rangos bien formados');
+    ok(!re.test('m05..d3'), 'Y RECHAZA un rango que mezcla actividades');
+    ok(!re.test('m05..') && !re.test('..m12') && !re.test('m05'),
+      'Y rechaza lo que no es un rango');
+  }
+  ok(/Number\(mr\[2\]\) <= Number\(mr\[3\]\)/.test(API),
+    'Y exige que el comienzo no vaya despues del final');
+
+  ok(/ALTER TABLE evaluacion ADD COLUMN participantes/.test(MIGR),
+    'La migracion agrega la columna de participantes');
+  ok(/const evalParaMi/.test(API) && /partsDeFila\(ev\)\.includes\(participanteId\)/.test(API),
+    'Una evaluacion dirigida a la persona le gana a la de su categoria');
+  ok(/!partsDeFila\(ev\)\.length && catsDeFila\(ev\)\.includes\(categoria\)/.test(API),
+    'Y la de la categoria solo aplica si no va dirigida a nadie en particular');
+  ok(/if \(nuevaP\.length\) return suyos\.some/.test(API),
+    'Al abrir, una dirigida a personas solo cierra las que comparten persona');
+  ok(/INSERT INTO evaluacion[\s\S]{0,200}participantes/.test(API),
+    'Y la columna se guarda al abrir');
+  /* La lista de «faltan» tiene que acotarse a quienes convoca: sin esto el
+     panel mandaria al director a buscar a media categoria. */
+  ok(/if \(suyos\.length\) \{\s*filtro = ' AND p\.id IN/.test(API),
+    'Con personas, «faltan» son solo esas personas');
+}
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }
