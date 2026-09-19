@@ -420,13 +420,26 @@ async function enviaCola(){
 }
 
 /* ───────── el cierre de la práctica ─────────
-/* UNA SOLA PERILLA.
+   UNA SOLA PERILLA.
    La práctica está cerrada exactamente cuando hay una evaluación abierta. No
    hay interruptor por aparato ni segundo estado que sincronizar: el servidor
    dice «hay evaluación» y con eso ya está dicho todo.
    Sin señal manda lo último que se supo, y si eso era «cerrado», sigue cerrado:
-   se falla CERRADO, nunca abierto por accidente. El director se lo salta. */
+   se falla CERRADO, nunca abierto por accidente. El director se lo salta.
+
+   HOY LA PERILLA ESTA EN «NO CERRAR», por decisión de Camilo del 19 de
+   septiembre: el examen final no se presenta en esta app por ahora, así que
+   todo lo que se abre aquí es un ensayo, y un ensayo que le apaga la práctica
+   a las participantes hace más daño que bien. La evaluación se sigue viendo y
+   se sigue pudiendo hacer; lo único que ya no pasa es que se cierre lo demás.
+
+   ESTO ES UNA LINEA, A PROPOSITO. Cuando el examen de verdad se presente aquí,
+   se pone `CIERRA_PRACTICA=true` y vuelve el comportamiento completo, que
+   sigue escrito y probado abajo. Se deja como interruptor y no se borra el
+   mecanismo porque «por ahora» fueron las palabras de Camilo. */
+let CIERRA_PRACTICA=false;
 const examenesCerrados=()=>{
+  if(!CIERRA_PRACTICA)return false;
   if(director)return false;
   const c=srvLee();
   return !!(c&&c.practica===false);
@@ -3932,12 +3945,12 @@ async function pintaPanel(){
     'onclick="abreEvaluacion()">Abrir una evaluación</button>'+
     '<span class="nota pan-razon" id="pan-abrir-razon"></span></div>'+
     /* Ya no dice "todos los aparatos": con categorías marcadas, solo se les
-       cierra la práctica a esas — a las demás no les cambia nada. Si de
+       les llega a esas — a las demás no les cambia nada. Si de
        verdad se marcan todas (o ninguna), pintaAvisoCats() ya lo advierte
        con más detalle (incluida cuál evaluación en curso se reemplazaría). */
-    '<p class="nota">Al abrirla, la práctica se cierra sola en los aparatos de las categorías '+
-    'que le tocan, y cada participante que ya entró con su código ve la evaluación en su '+
-    'pantalla.</p></div>'+
+    '<p class="nota">Cada participante de esas categorías que ya entró con su código ve la '+
+    'evaluación en su pantalla. Los exámenes de práctica <strong>siguen abiertos</strong>: '+
+    'abrir una evaluación ya no los cierra.</p></div>'+
 
     '<div id="pan-eval-en-curso"></div></div>';
   cargaParticipantes(parts);
@@ -4181,8 +4194,8 @@ async function cargaResultados(){
           cuerpoResultado(ev)+
           '<div class="pan-sw"><button class="btn nar" onclick="cierraEvaluacion(\''+esc(ev.id)+'\')">'+
           'Cerrar esta evaluación</button></div>'+
-          '<p class="nota">Mientras está abierta, la práctica se cierra sola para esas categorías. '+
-          'Al cerrarla vuelve, y las notas quedan guardadas. Estudiar y las tarjetas nunca se cierran.</p></div>';
+          '<p class="nota">Se hace una sola vez por participante. Al cerrarla, las notas quedan '+
+          'guardadas. Practicar, estudiar y las tarjetas no se cierran en ningún momento.</p></div>';
       }).join('');
     }else{
       panAbiertas=[];

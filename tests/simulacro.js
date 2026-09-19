@@ -21,6 +21,7 @@ const A=montar(`S:()=>S, ponCat, normalizar, guardar, huellaBanco,
         prueba:()=>prueba, ultimoRes:()=>ultimoRes,
         entraDirector, pideClaveDir, pintaLogros,
         examenesCerrados, normalizarDB, tareasDeHoy, pintaCierre,
+        ponCierraPractica:v=>{CIERRA_PRACTICA=v}, cierraPractica:()=>CIERRA_PRACTICA,
         srvLee, srvGuarda, pintaEvaluacion,
         ponEval:e=>{evalPend=e;evalHecha=false}, evalPend:()=>evalPend,
         haceEvaluacion, evalActual:()=>evalActual,
@@ -29,12 +30,31 @@ const A=montar(`S:()=>S, ponCat, normalizar, guardar, huellaBanco,
 
 let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 
-/* ───────── UNA SOLA PERILLA ─────────
-   La práctica está cerrada exactamente cuando hay una evaluación abierta. Antes
-   había dos interruptores y un link; si vuelve a aparecer un segundo estado,
-   estas pruebas lo tienen que ver. */
+/* ───────── HOY LA PRACTICA NO SE CIERRA NUNCA ─────────
+   Decision de Camilo del 19 de septiembre: el examen final no se presenta en
+   esta app por ahora, asi que toda evaluacion que se abra aqui es un ensayo, y
+   un ensayo no le puede apagar la practica a nadie. Se prueba primero el estado
+   de HOY, que es el que viaja en el celular. */
 A.ponCat('av');
-ok(A.examenesCerrados()===false,'Sin nada en el servidor, la práctica está abierta');
+ok(A.cierraPractica()===false,'El interruptor viene apagado: la evaluación no cierra la práctica');
+A.srvGuarda(false,'ev1','Sábado de prueba');
+ok(A.examenesCerrados()===false,'Con una evaluación abierta, la práctica SIGUE abierta');
+A.reinicia();
+A.iniciar('normal');
+ok(A.prueba().length>0,'Y con la evaluación abierta el examen de práctica sí arranca');
+const hoyAbierto=A.tareasDeHoy();
+ok(hoyAbierto.some(t=>/arrancaExamen\(|examenDeCapitulo\(/.test(t.f)),
+  '«Qué estudiar hoy» sigue ofreciendo exámenes');
+ok(!hoyAbierto.some(t=>/cerrados/i.test(t.t)),'Y no dice que estén cerrados');
+
+/* ───────── UNA SOLA PERILLA ─────────
+   El mecanismo completo sigue escrito para el dia que el examen de verdad se
+   presente aqui: se prende `CIERRA_PRACTICA` y vuelve entero. Estas pruebas lo
+   mantienen vivo, porque codigo apagado y sin probar es codigo que ya no
+   funciona el dia que se necesita. */
+A.ponCierraPractica(true);
+A.srvGuarda(true,null,null);
+ok(A.examenesCerrados()===false,'Prendido el interruptor: sin nada en el servidor, la práctica está abierta');
 
 A.srvGuarda(false,'ev1','Sábado de prueba');
 ok(A.examenesCerrados()===true,'Con una evaluación abierta, la práctica se cierra');
@@ -61,6 +81,9 @@ ok(!hoyCerrado.some(t=>/arrancaExamen\(|examenDeCapitulo\(/.test(t.f)),
   'Cerrada, «Qué estudiar hoy» no ofrece ninguna tarea de examen');
 ok(hoyCerrado.some(t=>/cerrados/i.test(t.t)),'Y en su lugar dice que están cerrados');
 ok(hoyCerrado.some(t=>/tarjetas|Leer/i.test(t.t)),'Estudiar y las tarjetas siguen ofreciéndose');
+
+/* De aqui en adelante el interruptor se queda PRENDIDO a proposito: lo que
+   sigue prueba el comportamiento completo del dia del examen. */
 
 /* ───────── LA EVALUACIÓN SÍ CORRE CON LA PRÁCTICA CERRADA ─────────
    Esa es toda la gracia: lo que se cierra es la práctica, no la evaluación. */

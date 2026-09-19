@@ -356,13 +356,11 @@ const MANUAL = [
     es la mitad del ejercicio: léela, sobre todo las que fallaste.</p>
     <p>Las que falles quedan guardadas y puedes hacer un examen
     <strong>solo con tus errores</strong> desde «Qué estudiar hoy».</p>` },
-  { t:'Si dice que los exámenes están cerrados',
-    h:`<p>Tu director los puede cerrar hasta el día de la prueba. No es que la
-    app se dañó: mientras estén cerrados puedes <strong>estudiar los
-    capítulos</strong> y usar las <strong>tarjetas</strong>, que es donde de
-    verdad se aprende.</p>
-    <p>Se cierran cuando hay una <strong>evaluación abierta</strong>. Si tienes
-    tu código, esa sí la puedes hacer: te sale arriba en Examen.</p>` },
+  { t:'Si tu director abre una evaluación',
+    h:`<p>Te sale arriba en Examen, con su nombre y un botón. Se hace
+    <strong>una sola vez</strong> y al final ves la nota, no las respuestas.</p>
+    <p>Los exámenes de práctica, el estudio y las tarjetas <strong>siguen
+    abiertos</strong>: la evaluación no te quita nada.</p>` },
   { t:'El simulacro y la evaluación son distintos',
     h:`<div class="warn-box">En el simulacro y en la evaluación del día
     <strong>no sale la revisión</strong>: ves la nota, no las respuestas.</div>
@@ -463,10 +461,10 @@ const MANUAL = [
     campamento funciona igual.</p>
     <p>Si quieres ver qué falló, pídeselo a tu director: él entra su clave en
     ese mismo aparato y la revisión se abre.</p>` },
-  { t:'Mientras hay evaluación no puedes practicar',
-    h:`<p>El día de la evaluación los exámenes de práctica se cierran solos, para
-    que nadie se ponga a buscar las respuestas mientras contesta.
-    <strong>Estudiar y las tarjetas siguen abiertos</strong> siempre.</p>` },
+  { t:'La evaluación no te quita nada',
+    h:`<p>Con una evaluación abierta, los exámenes de práctica, el estudio y las
+    tarjetas <strong>siguen funcionando igual</strong>. La evaluación es un
+    botón aparte, se hace una sola vez, y lo demás no se cierra.</p>` },
   ]},
 
 { id:'a-compartir', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-compartir"/></svg>', t:'Mandarle a tu director cómo vas',
