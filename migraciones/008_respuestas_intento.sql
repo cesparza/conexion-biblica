@@ -1,0 +1,22 @@
+-- LO QUE RESPONDIÓ, NO SOLO CUÁNTO SACÓ.
+--
+-- POR QUÉ
+-- El examen corre entero en el navegador, así que el servidor solo recibía
+-- nota y total. El director veía «13/20» y para saber en qué se equivocó tenía
+-- que ir al celular de ella y abrir la revisión ahí mismo, apenas terminaba.
+-- Después del campamento eso ya no se puede.
+--
+-- QUÉ SE GUARDA
+-- Un JSON con una entrada por pregunta: la clave de la pregunta, el tipo, lo
+-- que respondió y si acertó. No se guarda el texto de la pregunta: eso vive en
+-- el HTML y se busca por la clave al pintar la revisión.
+--
+-- POR QUÉ LA CLAVE Y NO LA SEMILLA
+-- Con la semilla se puede reconstruir el examen, pero solo mientras el banco
+-- de preguntas no cambie: una pregunta nueva corre el sorteo y la
+-- reconstrucción deja de coincidir. La clave de cada pregunta no depende del
+-- banco, así que la revisión sigue siendo correcta el año entrante.
+--
+-- El servidor no interpreta este campo: lo guarda y lo devuelve. Es para
+-- mostrar, nunca para calificar.
+ALTER TABLE intento ADD COLUMN respuestas TEXT NOT NULL DEFAULT '';

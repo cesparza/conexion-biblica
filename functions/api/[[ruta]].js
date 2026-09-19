@@ -302,6 +302,13 @@ export async function onRequest(context) {
       const nota = Number.isFinite(+b.nota) ? Math.round(+b.nota) : null;
       const total = Number.isFinite(+b.total) ? Math.round(+b.total) : null;
       const idem = limpiar(b.idempotency_key, 60);
+      /* LO QUE RESPONDIÓ. El servidor no lo interpreta: lo guarda como texto y
+         lo devuelve tal cual al panel, que es quien sabe leerlo. Se acota el
+         tamaño porque es lo único de este endpoint que no tiene forma fija, y
+         un campo libre sin tope es una puerta abierta a llenar la base. */
+      const respuestas = typeof b.respuestas === 'string'
+        ? b.respuestas.slice(0, 8000)
+        : (b.respuestas ? JSON.stringify(b.respuestas).slice(0, 8000) : '');
       /* Idempotencia: un reintento de red no guarda la misma nota dos veces. */
       if (idem) {
         const ya = await env.DB.prepare('SELECT id FROM intento WHERE idempotency_key = ?').bind(idem).first();
@@ -334,9 +341,9 @@ export async function onRequest(context) {
         }
       }
       await env.DB.prepare(
-        'INSERT INTO intento (id, participante_id, modo, semilla, nota, total, idempotency_key, evaluacion_id) ' +
-        'VALUES (?,?,?,?,?,?,?,?)'
-      ).bind(id(), sesion.persona_id, modo, semilla, nota, total, idem, evalId).run();
+        'INSERT INTO intento (id, participante_id, modo, semilla, nota, total, idempotency_key, evaluacion_id, respuestas) ' +
+        'VALUES (?,?,?,?,?,?,?,?,?)'
+      ).bind(id(), sesion.persona_id, modo, semilla, nota, total, idem, evalId, respuestas).run();
       return json({ ok: true });
     }
 
@@ -461,7 +468,8 @@ export async function onRequest(context) {
          CADA UNA convoca (Aventureros no "falta" en la evaluación de Guías). */
       const detalle = async ev => {
         const { results: hechas } = await env.DB.prepare(
-          'SELECT p.nombre, p.categoria, i.nota, i.total, i.creado_en FROM intento i ' +
+          'SELECT i.id, p.nombre, p.categoria, i.nota, i.total, i.creado_en, ' +
+          "LENGTH(i.respuestas) > 0 AS hay_revision FROM intento i " +
           'JOIN participante p ON p.id = i.participante_id ' +
           'WHERE i.evaluacion_id = ? AND p.borrado_en IS NULL ORDER BY i.creado_en'
         ).bind(ev.id).all();
@@ -513,6 +521,21 @@ export async function onRequest(context) {
         if (u) ultima = await detalle(u);
       }
       return json({ evaluaciones, ultima });
+    }
+
+    /* La revisión de UN intento. Va aparte y no dentro de /panel/evaluacion a
+       propósito: con veinte participantes serían veinte revisiones viajando en
+       cada refresco del panel, y el director abre una a la vez. */
+    if (metodo === 'GET' && ruta === '/panel/intento') {
+      const iid = limpiar(new URL(request.url).searchParams.get('id') || '', 60);
+      if (!iid) return error('Falta el intento.', 400);
+      const r = await env.DB.prepare(
+        'SELECT i.id, i.nota, i.total, i.creado_en, i.respuestas, p.nombre, p.categoria ' +
+        'FROM intento i JOIN participante p ON p.id = i.participante_id WHERE i.id = ?'
+      ).bind(iid).first();
+      if (!r) return error('Ese intento no existe.', 404);
+      await auditar(env, sesion.cuenta_id, 'ver_revision', 'intento', iid, ipHash);
+      return json({ intento: r });
     }
 
     if (metodo === 'GET' && ruta === '/panel/participantes') {

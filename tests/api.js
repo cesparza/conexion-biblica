@@ -178,6 +178,34 @@ async function vivo() {
     'Con personas, «faltan» son solo esas personas');
 }
 
+/* ───────── la revision del director ─────────
+   El servidor guarda lo que respondio y lo devuelve, pero NO lo interpreta: no
+   recalifica con eso, porque viene del navegador de la participante. Si algun
+   dia se usa para calificar, es un agujero. */
+{
+  ok(/ALTER TABLE intento ADD COLUMN respuestas/.test(MIGR),
+    'La migracion agrega la columna de respuestas');
+  ok(/INSERT INTO intento[\s\S]{0,260}respuestas/.test(API),
+    'Y se guarda al recibir el intento');
+  ok(/b\.respuestas[\s\S]{0,160}slice\(0, 8000\)/.test(API),
+    'Con tope de tamaño: es el unico campo libre del endpoint');
+  ok(/ruta === '\/panel\/intento'/.test(API),
+    'Hay un endpoint para pedir la revision de UN intento');
+  /* Va aparte del listado a proposito: con veinte participantes serian veinte
+     revisiones viajando en cada refresco del panel. */
+  ok(!/SELECT[^;]*i\.respuestas[^;]*FROM intento i \+?\s*'JOIN participante p ON p\.id = i\.participante_id ' \+\s*'WHERE i\.evaluacion_id/.test(API),
+    'Y el listado de la evaluacion NO arrastra las respuestas de todas');
+  ok(/LENGTH\(i\.respuestas\) > 0 AS hay_revision/.test(API),
+    'El listado solo dice si hay revision, para no ofrecer un boton vacio');
+  /* La guarda de rol ya existe para todo /panel/, y esta ruta cuelga de ahi. */
+  const iPanel = API.indexOf("ruta.startsWith('/panel/')");
+  const iRev = API.indexOf("ruta === '/panel/intento'");
+  ok(iPanel > 0 && iRev > iPanel,
+    'La revision va DESPUES de la guarda de director: sin clave no se ve');
+  ok(/auditar\(env, sesion\.cuenta_id, 'ver_revision'/.test(API),
+    'Y queda en la auditoria quien la miro');
+}
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }

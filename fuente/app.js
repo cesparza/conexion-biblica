@@ -422,11 +422,38 @@ function colaLee(){
 }
 function colaGuarda(a){try{localStorage.setItem(COLA,JSON.stringify(a.slice(0,20)));}catch(e){}}
 
-function srvIntento(modo,evalId,nota,total){
+/* ───────── lo que respondio, no solo cuanto saco ─────────
+   MECANISMO
+   El examen corre entero en el navegador, asi que el servidor recibia nota y
+   total y nada mas. El director veia «13/20» y para saber EN QUE se equivoco
+   tenia que ir al celular de ella y abrir la revision ahi mismo, apenas
+   terminaba. Despues del campamento eso ya no se puede.
+
+   QUE SE MANDA: una entrada por pregunta con la CLAVE de la pregunta, el tipo,
+   lo que respondio y si acerto. No se manda el texto de la pregunta: ese vive
+   en el HTML y el panel lo busca por la clave al pintar.
+
+   POR QUE LA CLAVE Y NO LA SEMILLA
+   Con la semilla se puede reconstruir el examen, pero solo mientras el banco no
+   cambie: una pregunta nueva corre el sorteo y la reconstruccion deja de
+   coincidir. La clave no depende del banco, asi que la revision sigue siendo
+   correcta cuando el banco crezca. */
+function respuestasDe(sel){
+  return sel.map(q=>{
+    const e={k:claveQ(q),t:q.t,b:bien(q)?1:0};
+    if(q.t==='mc')e.r=(resp[q.id]===undefined?null:resp[q.id]);
+    else if(q.t==='tf')e.r=(resp[q.id]===undefined?null:!!resp[q.id]);
+    else e.r=q.p.map((x,i)=>x.b?String(resp[q.id+'_'+i]||''):null);
+    return e;
+  });
+}
+
+function srvIntento(modo,evalId,nota,total,respuestas){
   if(!srvYo||srvYo.rol!=='participante')return;
   let idem='';
   try{idem=crypto.randomUUID();}catch(e){idem=String(Date.now())+Math.random();}
-  const cuerpo={modo:modo,evaluacion_id:evalId||null,nota:nota,total:total,idempotency_key:idem};
+  const cuerpo={modo:modo,evaluacion_id:evalId||null,nota:nota,total:total,idempotency_key:idem,
+    respuestas:respuestas?JSON.stringify(respuestas):''};
   const cola=colaLee();cola.push(cuerpo);colaGuarda(cola);
   enviaCola();
 }
@@ -2991,7 +3018,7 @@ function entregar(){
   /* La nota al servidor. Con la evaluación va su id, y el índice único de la
      base garantiza que cada participante la haga una sola vez, en el aparato
      que sea. Eso es lo que la versión con links no podía cumplir. */
-  srvIntento(modo,modo==='evaluacion'&&evalActual?evalActual.id:null,pts,tot);
+  srvIntento(modo,modo==='evaluacion'&&evalActual?evalActual.id:null,pts,tot,respuestasDe(prueba));
   if(modo==='evaluacion'){evalHecha=true;evalNota={pts,total:tot};try{pintaEvaluacion();}catch(e){}}
   try{pintaSenales();}catch(e){}
 
@@ -4504,11 +4531,98 @@ function nombresCats(cats){
 function cuerpoResultado(ev){
   const h=ev.hechas||[],f=ev.faltan||[];
   return '<p class="nota"><strong>'+h.length+'</strong> la hicieron · <strong>'+f.length+'</strong> faltan</p>'+
-    (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th></tr>'+
-      h.map(function(x){return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc((CATS[x.categoria]||{}).nombre||x.categoria)+'</td><td><strong>'+
-        x.nota+'/'+x.total+'</strong></td></tr>';}).join('')+'</table></div>':'')+
+    (h.length?'<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Nota</th><th></th></tr>'+
+      h.map(function(x){
+        /* «Ver en qué falló» solo cuando el intento trae respuestas: los
+           entregados antes de esta versión no las tienen, y un botón que abre
+           una pantalla vacía parece que la app se trabó. */
+        const rev=x.hay_revision
+          ?'<button class="btn gho" onclick="verRevision(\''+esc(x.id)+'\')">Ver en qué falló</button>'
+          :'<small class="nota">sin revisión</small>';
+        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(catConActividad(x.categoria))+'</td><td><strong>'+
+        x.nota+'/'+x.total+'</strong></td><td>'+rev+'</td></tr>';}).join('')+'</table></div>':'')+
     (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'')+
     sumaClub(h);
+}
+
+/* ───────── la revision de un intento, desde el panel ─────────
+   El servidor guarda lo que respondio y la CLAVE de cada pregunta, no su
+   texto: el texto vive en el HTML y se busca aqui. Si una pregunta ya no esta
+   en el banco (porque el banco crecio o se corrigio), se dice asi en vez de
+   inventar: la respuesta de ella y si acerto siguen siendo ciertas, lo unico
+   que se perdio es el enunciado. */
+const PREG_POR_CLAVE=(()=>{
+  let mapa=null;
+  return k=>{
+    if(!mapa){mapa={};for(const q of BANCO)mapa[claveQ(q)]=q;}
+    return mapa[k];
+  };
+})();
+
+function htmlRevisionQ(e,n){
+  const q=PREG_POR_CLAVE(e.k);
+  const ok=!!e.b;
+  const cab='<div class="qt"><span class="qn">'+n+'.</span> '+
+    (q?esc(q.q||q.ins||''):'<em>Esta pregunta ya no está en el banco</em>')+'</div>';
+  let cuerpo='';
+  if(e.t==='mc'){
+    const suya=q&&q.o&&e.r!==null&&e.r!==undefined?q.o[e.r]:null;
+    const buena=q&&q.o?q.o[q.a]:null;
+    cuerpo='<div class="fb '+(ok?'ok':'ko')+'">Respondió: <strong>'+
+      (suya===null||suya===undefined?'nada':esc(suya))+'</strong>'+
+      (ok?'':'<br>Era: <strong>'+(buena==null?'?':esc(buena))+'</strong>')+'</div>';
+  } else if(e.t==='tf'){
+    const di=v=>v===null||v===undefined?'nada':(v?'Verdadero':'Falso');
+    cuerpo='<div class="fb '+(ok?'ok':'ko')+'">Respondió: <strong>'+di(e.r)+'</strong>'+
+      (ok?'':'<br>Era: <strong>'+(q?di(!!q.a):'?')+'</strong>')+'</div>';
+  } else {
+    const suyas=(e.r||[]).filter(x=>x!==null);
+    const buenas=q?q.p.filter(x=>x.b).map(x=>x.b):[];
+    cuerpo='<div class="fb '+(ok?'ok':'ko')+'">Escribió: <strong>'+
+      (suyas.length?esc(suyas.map(x=>x||'(vacío)').join(' · ')):'nada')+'</strong>'+
+      (ok?'':'<br>Era: <strong>'+esc(buenas.join(' · '))+'</strong>')+'</div>';
+  }
+  const cap=q?(buscaItem(q.cap)||{}).label:'';
+  return '<div class="q'+(ok?' hecha':' mal')+'">'+cab+cuerpo+
+    (cap?'<p class="nota">'+esc(cap)+'</p>':'')+'</div>';
+}
+
+/* El esqueleto de una hoja: fondo que cierra, asa, cabecera con la X y el
+   cuerpo. Estaba escrito a mano solo en abreYo(); una hoja sin ese esqueleto
+   se abre y NO SE PUEDE CERRAR, que es como me quedo la primera version de la
+   revision. */
+const hojaConCierre=(ref,sub,cuerpo)=>
+  '<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
+  '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="'+esc(ref)+'">'+
+  '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
+  '<div class="hoja-cab">'+
+    '<div><div class="hoja-ref">'+esc(ref)+'</div>'+
+    '<div class="hoja-sub">'+esc(sub)+'</div></div>'+
+    '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
+  '</div>'+
+  '<div class="hoja-txt">'+cuerpo+'</div></div>';
+
+async function verRevision(id){
+  if(!id)return;
+  const d=document.getElementById('pan-eval-en-curso');
+  abreHojaHtml(hojaConCierre('Revisión','Un momento...',
+    '<p class="nota">Cargando la revisión...</p>'),'yo');
+  try{
+    const r=await srvFetch('/panel/intento?id='+encodeURIComponent(id));
+    const it=r.intento||{};
+    let lista=[];
+    try{lista=JSON.parse(it.respuestas||'[]');}catch(e){lista=[];}
+    const mal=lista.filter(x=>!x.b).length;
+    abreHojaHtml(hojaConCierre('Revisión',(it.nombre||'')+' · '+it.nota+'/'+it.total,
+      '<p class="nota">'+(mal?'Falló <strong>'+mal+'</strong> de '+lista.length+'. Lo que falló va en rojo.'
+                             :'No falló ninguna.')+'</p>'+
+      (lista.length?lista.map((e,i)=>htmlRevisionQ(e,i+1)).join('')
+                   :'<p class="nota">Este intento no guardó las respuestas. Se entregó antes de que '+
+                    'la app empezara a mandarlas al servidor.</p>')),'yo');
+  }catch(e){
+    abreHojaHtml(hojaConCierre('Revisión','No se pudo',
+      '<p class="nota" style="color:var(--rojo)">'+esc(e.message||'No se pudo cargar')+'</p>'),'yo');
+  }
 }
 
 /* Lo que hay corriendo AHORA MISMO, según el último /panel/evaluacion. La usa

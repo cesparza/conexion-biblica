@@ -14,6 +14,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
         poolDe, opcionesCuantas, segundosPara, marcaVistas, nuevasDe, prng,
+  respuestasDe, htmlRevisionQ, marca, rellena, entregar, iniciar, prueba:()=>prueba,
   rangoDe, enRango, textoRango, cambiaRango, cambiaAlcance, textoAlcanceImpr, pintaMenuEx,
   ponSemilla:x=>{rndEx=prng(x)},
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
@@ -1465,6 +1466,52 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   R.ponAlcance('m05..m12');
   R.ir('examen');
   ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
+}
+
+/* ─── el director tiene que poder ver EN QUE se equivoco ───
+   El examen corre en el navegador, asi que al servidor solo le llegaba la
+   nota. Ahora viaja tambien lo que respondio: una entrada por pregunta con la
+   CLAVE de la pregunta, el tipo, la respuesta y si acerto. La clave y no la
+   semilla, porque la semilla solo reconstruye el examen mientras el banco no
+   cambie, y el banco crece. */
+{
+  const V=montar(RET);
+  V.ponCat('av'); V.ponNivel(3);
+  V.iniciar('normal');
+  const p=V.prueba();
+  p.forEach((q,i)=>{
+    if(i%3===0)return;                       // una de cada tres sin contestar
+    const acierta=i%3===1;
+    if(q.t==='mc')V.marca(q.id, acierta?q.a:(q.a+1)%q.o.length);
+    else if(q.t==='tf')V.marca(q.id, acierta?q.a:!q.a);
+    else q.p.forEach((x,j)=>{ if(x.b)V.rellena(q.id,j, acierta?x.b:'algo mal'); });
+  });
+  const r=V.respuestasDe(p);
+  ok(r.length===p.length,'Va una entrada por pregunta ('+r.length+')');
+  ok(r.every(x=>x.k&&x.t&&(x.b===0||x.b===1)),'Cada entrada trae clave, tipo y si acerto');
+  ok(r.filter(x=>x.b).length===p.filter(V.bien).length,
+    'Y lo que dice «acerto» cuadra con la calificacion ('+r.filter(x=>x.b).length+')');
+  const bytes=JSON.stringify(r).length;
+  ok(bytes<8000,'Cabe de sobra en el tope del servidor ('+bytes+' bytes para '+p.length+' preguntas)');
+  ok(!JSON.stringify(r).includes('"q":'),'No viaja el texto de la pregunta: eso vive en el HTML');
+
+  /* La revision se pinta buscando la pregunta por su clave. */
+  for(const t of ['mc','tf','fill']){
+    const e=r.find(x=>x.t===t&&!x.b);
+    if(!e)continue;
+    const html=V.htmlRevisionQ(e,1);
+    ok(/class="q mal"/.test(html),'La revision marca en rojo la '+t+' que fallo');
+    ok(/Respondió:|Escribió:/.test(html)&&/Era:/.test(html),
+      'Y dice lo que respondio Y lo que era, en '+t);
+  }
+  const buena=r.find(x=>x.b);
+  if(buena)ok(/class="q hecha"/.test(V.htmlRevisionQ(buena,1))&&!/Era:/.test(V.htmlRevisionQ(buena,1)),
+    'En la que acerto no repite la respuesta correcta');
+
+  /* Una pregunta que ya no esta en el banco no puede inventar enunciado. */
+  const huerfana={k:'d1.noexiste',t:'mc',r:0,b:0};
+  const h=V.htmlRevisionQ(huerfana,1);
+  ok(/ya no está en el banco/.test(h),'Una pregunta retirada del banco lo dice, no inventa');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
