@@ -43,11 +43,11 @@ const ACTIVIDADES={
 
 const CATS={
   me:{act:'cb', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
-      alcance:'Daniel 1, 3 y 6'},
+      alcance:'Daniel 1, 2, 3 y 6'},
   av:{act:'cb', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 3 y 6 · P&R 39, 41 y 44'},
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
   pa:{act:'cb', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 3 y 6 · P&R 39, 41 y 44'},
+      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
   gm:{act:'cb', nombre:'Guías Mayores', edad:'Guías Mayores', n:25, techo:3, sinCompletar:false,
       alcance:'Daniel 1 al 6 · P&R 39 al 44'},
   dm1:{act:'dm', nombre:'Menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
@@ -77,7 +77,10 @@ const CLAVE='conexion-biblica-v4';
    NUEVO: el día en que se acertó por última vez. Se agrega como mapa aparte, y
    no cambiando la forma de `ft`, para que el progreso que ya está guardado en
    los celulares siga valiendo sin migración. */
-const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},acc:{},act:{},links:{}};
+/* `qv` cuenta CUANTAS VECES le ha salido cada pregunta a esta ficha. Campo
+   nuevo, no renombrado: una ficha vieja llega sin el y `normalizar` lo deja
+   en cero, que es exactamente «nunca le ha salido nada». */
+const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -119,6 +122,11 @@ function normalizar(x){
     for(const k of Object.keys(x.fq).slice(0,600)){
       const m=Number(x.fq[k]&&x.fq[k].m);
       if(Number.isFinite(m)&&m>0)s.fq[k]={m:Math.min(99,Math.round(m))};
+    }
+  if(x.qv&&typeof x.qv==='object')
+    for(const k of Object.keys(x.qv).slice(0,3000)){
+      const v=Number(x.qv[k]);
+      if(Number.isFinite(v)&&v>0)s.qv[k]=Math.min(99,Math.round(v));
     }
   /* `act` es NUEVO: acierto por TIPO de pregunta (múltiple, V/F, completar).
      `acc` ya guardaba por capítulo, y eso dice DÓNDE falla pero no EN QUÉ. La
@@ -2460,9 +2468,16 @@ function pintaMenuEx(){
     const L={mc:'múltiple',tf:'V/F',fill:'completar'}[x];
     return pool.filter(q=>q.t===x).length+' de '+L;
   }).join(' · ');
+  /* Cuantas no ha visto nunca. Sin este renglon el «no se repiten» es una
+     promesa invisible: se ve igual que antes y toca creerlo. */
+  const nv2=nuevasDe();
+  const frescura=nv2>0
+    ? 'De esas, <strong>'+nv2+'</strong> nunca te han salido, y son las que entran primero.'
+    : 'Ya te salieron todas alguna vez: ahora entran primero las que fallaste.';
   document.getElementById('ex-disponible').innerHTML=
     'Disponibles con esta selección: <strong>'+t+'</strong> preguntas ('+porTipo+').'+
     (t<cuantas?' <span style="color:var(--rojo)">Se usarán todas.</span>':'')+
+    '<br>'+frescura+
     '<br>'+textoNivel();
 }
 
@@ -2499,9 +2514,16 @@ function pintaExInicio(){
   document.getElementById('ex-resumen').textContent=n+' preguntas · nivel '+nv+' '+ETIQ_NIVEL[nv];
   document.getElementById('ex-desc').innerHTML=esc(textoAlcanceImpr())+
     '<br>'+esc(CAT().nombre)+' · '+esc(ACT().nombre);
+  /* Este renglon decia «nunca sale el mismo dos veces», y era falso: el sorteo
+     no tenia memoria y repetia. Ahora si hay memoria, y el texto dice lo que
+     de verdad hace, con la cifra de esta ficha. */
+  const nuevas=nuevasDe();
   document.getElementById('ex-nota').textContent=
-    'Tu categoría tiene '+b+' preguntas en total. Cada examen saca unas cuantas al azar, así que nunca sale el mismo dos veces. '+
-    'Reparto: '+textoReparto()+'.';
+    'Tu categoría tiene '+b+' preguntas en total. '+
+    (nuevas>0
+      ? 'Te quedan '+nuevas+' que nunca te han salido, y el examen las escoge primero.'
+      : 'Ya te salieron todas alguna vez; ahora el examen escoge primero las que fallaste.')+
+    ' Reparto: '+textoReparto()+'.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
   pintaCierre();
@@ -2543,6 +2565,58 @@ function prng(semilla){let s=semilla>>>0;return()=>(s=(s*1664525+1013904223)>>>0
    reconstruyendo un examen compartido. */
 let rndEx=Math.random;
 
+/* ───────── que no salgan las mismas preguntas la proxima vez ─────────
+   MECANISMO
+   `armar` sorteaba con Math.random sobre todo el pool, sin memoria. Con 86
+   preguntas disponibles y examenes de 15, dos examenes seguidos repetian tres,
+   y para ver el banco entero habia que hacer unas 29 corridas, porque el
+   sorteo volvia a meter lo ya visto. MEDIDO, no estimado.
+
+   `qv` arregla eso: cuenta cuantas veces le salio cada pregunta a ESTA ficha.
+   El sorteo sigue siendo al azar, pero por tandas:
+     0. las que nunca le han salido
+     1. las vistas que ademas fallo (`fq`)
+     2. las vistas que acerto
+   Dentro de cada tanda se baraja, y entre vistas sale primero la que menos
+   veces ha salido. Se acaban las nuevas, empieza por lo fallado: el repaso
+   entra solo, sin que nadie escoja nada.
+
+   POR QUE NO APLICA EN LA EVALUACION
+   La evaluacion del director tiene que ser IDENTICA para todas: se arma con
+   una semilla del servidor. Si el orden dependiera del historial de cada
+   aparato, dos participantes de la misma categoria recibirian examenes
+   distintos con la misma semilla, y el director estaria comparando notas de
+   examenes que no son el mismo. Por eso esto se activa solo cuando el azar es
+   `Math.random`, que es justo el caso de practicar. */
+const vecesVista=q=>(S.qv||{})[claveQ(q)]||0;
+const tandaDe=q=>{
+  if(!vecesVista(q))return 0;
+  return ((S.fq[claveQ(q)]||{}).m>0)?1:2;
+};
+/* Baraja primero y despues ordena por tanda: asi el orden dentro de la tanda
+   sigue siendo azar, y no el orden en que estan escritas en el banco. */
+const porFrescura=lista=>mezclaR(lista,rndEx)
+  .map((q,i)=>({q,i}))
+  .sort((a,b)=>(tandaDe(a.q)-tandaDe(b.q))||(vecesVista(a.q)-vecesVista(b.q))||(a.i-b.i))
+  .map(x=>x.q);
+
+/* Cuantas preguntas de la seleccion actual no le han salido nunca. Es lo que
+   el menu del examen muestra, para que se vea que el banco no se esta
+   repitiendo solo. */
+const nuevasDe=()=>poolNivel().filter(q=>!vecesVista(q)).length;
+
+/* Se marca cuando el examen SE PONE EN PANTALLA, no cuando se arma: armar()
+   tambien corre para generar los impresos de todas las categorias, y eso no
+   es una pregunta que a nadie le haya salido. */
+function marcaVistas(sel){
+  if(!S.qv)S.qv={};
+  for(const q of sel){
+    const k=claveQ(q);
+    S.qv[k]=Math.min(99,(S.qv[k]||0)+1);
+  }
+  guardar();
+}
+
 function armar(m){
   if(m==='errores'){
     const sel=mezcla(falladasDe()).slice(0,NPREG());
@@ -2550,9 +2624,11 @@ function armar(m){
   }
   const b=poolNivel();
   const n=Math.min(cuantas||NPREG(),b.length);
-  const mc=mezclaR(b.filter(q=>q.t==='mc'),rndEx);
-  const tf=mezclaR(b.filter(q=>q.t==='tf'),rndEx);
-  const fl=mezclaR(b.filter(q=>q.t==='fill'),rndEx);
+  /* Practicar prefiere lo que no ha visto; la evaluacion con semilla, no. */
+  const orden=rndEx===Math.random?porFrescura:(l=>mezclaR(l,rndEx));
+  const mc=orden(b.filter(q=>q.t==='mc'));
+  const tf=orden(b.filter(q=>q.t==='tf'));
+  const fl=orden(b.filter(q=>q.t==='fill'));
   /* Proporción del examen real: 60% múltiple, 25% V/F, 15% completar.
      Si un tipo no alcanza en el alcance elegido, el faltante lo cubren
      los otros tipos para que siempre salgan n preguntas. */
@@ -2612,6 +2688,7 @@ function iniciar(m){
   ir('examen');
   prueba=armar(modo);resp={};entregado=false;
   if(!prueba.length){reinicia();return;}
+  marcaVistas(prueba);
   seg=segundosPara(prueba.length);
   document.getElementById('ex-inicio').style.display='none';
   document.getElementById('ex-curso').style.display='block';
@@ -3220,6 +3297,7 @@ function haceEvaluacion(){
   }
   evalActual=r;
   modo='evaluacion';prueba=sel;resp={};entregado=false;ultimoRes=null;
+  marcaVistas(prueba);
   seg=segundosPara(prueba.length);
   ir('examen');
   document.getElementById('ex-result').style.display='none';
@@ -3827,6 +3905,7 @@ async function pintaPanel(){
       '<optgroup label="En esto creemos">'+
         '<option value="creencias">Las 28 creencias</option>'+
       '</optgroup>'+
+      opcionesCapPanel()+
     '</select></label></div>'+
     '<p class="nota" id="pan-nota-al">'+NOTA_ALCANCE.todo+'</p>'+
     '<p class="nota" id="pan-aviso-cats"></p>'+
@@ -3866,6 +3945,28 @@ async function pintaPanel(){
   pintaAvisoCats();
   panLatido();
   await cargaResultados();
+}
+
+/* ───────── un capitulo suelto como alcance de la evaluacion ─────────
+   La columna `alcance` de la tabla siempre acepto un id de capitulo, y la
+   practica ya sabia armar «solo Daniel 1». Lo que faltaba era el desplegable:
+   el panel solo ofrecia grupos, asi que abrir la evaluacion de un capitulo
+   suelto no se podia pedir. Se listan agrupados por actividad, que es la
+   dimension de arriba, y se marca el que es solo material de estudio: abrirle
+   una evaluacion a ese capitulo deja a las participantes sin preguntas.
+   Los capitulos que NINGUNA categoria examina no se ofrecen. */
+function opcionesCapPanel(){
+  let h='';
+  for(const a of Object.keys(ACTIVIDADES)){
+    const cats=CATS_DE_ACT(a);
+    const caps=CAPS.filter(c=>c.cats.some(k=>cats.includes(k)));
+    const ofrecibles=caps.filter(c=>cats.some(k=>c.cats.includes(k)&&!soloEstudio(c,k)));
+    if(!ofrecibles.length)continue;
+    h+='<optgroup label="'+esc(ACTIVIDADES[a].nombre)+' · un capítulo">'+
+      ofrecibles.map(c=>'<option value="'+c.id+'">'+esc(c.label)+' — '+esc(c.sub)+'</option>').join('')+
+      '</optgroup>';
+  }
+  return h;
 }
 
 /* Un texto por opción de dificultad. Los niveles los calcula fuente/niveles.js:
@@ -3949,7 +4050,17 @@ function pintaAvisoCats(){
 function pintaNotaAlcance(){
   const s=document.getElementById('pan-eval-al'),p=document.getElementById('pan-nota-al');
   if(!s||!p)return;
-  p.textContent=NOTA_ALCANCE[s.value]||'';
+  /* Con un capitulo suelto no hay texto escrito a mano: se arma con el dato,
+     y se dice QUE CATEGORIAS lo examinan, que es lo que el director necesita
+     saber antes de marcar a quien le toca. */
+  const c=CAPS.find(x=>x.id===s.value);
+  if(c){
+    const cats=Object.keys(CATS).filter(k=>c.cats.includes(k)&&!soloEstudio(c,k));
+    p.textContent='Solo '+c.label+' — '+c.sub+'. Lo examinan: '+
+      (cats.length?cats.map(k=>CATS[k].nombre+' ('+(ACTIVIDADES[CATS[k].act]||{}).nombre+')').join(', ')
+                  :'ninguna categoría')+
+      '. A una categoría que no lo tenga no le sale ninguna pregunta.';
+  } else p.textContent=NOTA_ALCANCE[s.value]||'';
   pintaAvisoCats();
 }
 

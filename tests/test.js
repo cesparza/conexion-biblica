@@ -642,11 +642,14 @@ ok(/panAbiertas=r\.evaluaciones/.test(bloqueResultados),
   'La lista de "en curso" sale de preguntarle al servidor cada vez, no de una caché');
 
 /* ───────── el alcance del campamento ─────────
-   MECANISMO: `extra` marca un capítulo que se estudia y no se examina. Era un
-   booleano global, y con el reglamento nuevo eso ya no alcanza: el campamento
-   quedó en Daniel 1, 3 y 6, pero Guías Mayores es otro evento y ahí Daniel 2 sí
-   entra al examen. El mismo capítulo tiene que estar fuera del examen de unas
-   categorías y dentro del de otras, así que `extra` acepta una lista.
+   MECANISMO: `extra` marca un capítulo que se estudia y no se examina, y
+   acepta una lista de categorías porque el mismo capítulo puede estar fuera
+   del examen de unas y dentro del de otras.
+   Daniel 2 fue el caso que obligó a esa lista: el campamento se anunció con
+   Daniel 1, 3 y 6. El 19 de septiembre Camilo decidió que Daniel 2 SÍ entra en
+   las cuatro categorías, así que hoy no lo marca nadie. El mecanismo se queda
+   probado con los capítulos que sí lo usan (Daniel 7 a 12 en Guías Mayores, el
+   día 31 de la matutina).
    Estas pruebas existen porque el error se vería en un examen, no en la app. */
 const CAMPAMENTO=['me','av','pa'];
 const bancoCat=cat=>{
@@ -654,13 +657,18 @@ const bancoCat=cat=>{
   return BANCO_T.filter(q=>ids.includes(q.cap));
 };
 for(const cat of CAMPAMENTO){
-  ok(bancoCat(cat).every(q=>q.cap!=='d2'),
-    'Campamento ('+cat+'): ninguna pregunta de Daniel 2 entra al examen');
+  ok(bancoCat(cat).some(q=>q.cap==='d2'),
+    'Campamento ('+cat+'): Daniel 2 SÍ entra al examen');
   ok(CAPS_T.some(c=>c.id==='d2'&&c.cats.includes(cat)),
-    'Campamento ('+cat+'): Daniel 2 SIGUE disponible para estudiar');
+    'Campamento ('+cat+'): Daniel 2 está disponible para estudiar');
 }
 ok(bancoCat('gm').some(q=>q.cap==='d2'),
-  'Guías Mayores conserva Daniel 2 en su examen: es otro evento');
+  'Guías Mayores conserva Daniel 2 en su examen');
+/* El mecanismo `extra` sigue vivo y probado, aunque Daniel 2 ya no lo use. */
+ok(CAPS_T.some(c=>Array.isArray(c.extra)&&c.extra.length),
+  'La marca «solo para estudiar» sigue existiendo para los capítulos que la usan');
+ok(bancoCat('gm').every(q=>!['d7','d8','d9','d10','d11','d12'].includes(q.cap)),
+  'Guías Mayores estudia Daniel 7 a 12 pero no los examina');
 for(const c of ['d1','d3','d6']){
   ok(bancoCat('av').some(q=>q.cap===c),'Aventureros examina '+c);
 }

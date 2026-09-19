@@ -116,6 +116,34 @@ async function vivo() {
   }
 }
 
+/* ───────── el contrato de la forma del id de capitulo ─────────
+   El servidor acepta un capitulo suelto como alcance y no conoce el catalogo,
+   que vive en el HTML: valida la FORMA del id. Esa forma es un contrato entre
+   los dos lados, y sin esta prueba se rompe en silencio el dia que alguien
+   agregue un capitulo con otra forma: la evaluacion se abriria con alcance
+   'todo' sin avisarle a nadie. */
+{
+  const forma = (API.match(/const FORMA_CAP = (\/.+?\/);/) || [])[1];
+  ok(!!forma, 'El servidor valida la forma del id de capitulo');
+  if (forma) {
+    const re = eval(forma);
+    const HTML = fs.readFileSync(path.join(RAIZ, 'index.html'), 'utf8');
+    /* El build serializa CAPS como JSON dentro del HTML, asi que el id se lee
+       de ahi y no de la fuente: se prueba lo que se despliega. Se acota al
+       arreglo CAPS: los MODULOS de repaso tambien traen id y label, y esos
+       nunca son alcance de una evaluacion. */
+    const bloque = HTML.slice(HTML.indexOf('const CAPS = ['));
+    const capsJson = bloque.slice(bloque.indexOf('['), bloque.indexOf('\n];') + 2);
+    const ids = JSON.parse(capsJson).map(c => c.id);
+    ok(ids.length > 40, 'Se leyeron los capitulos del index.html (' + ids.length + ')');
+    const fuera = ids.filter(i => !re.test(i));
+    ok(fuera.length === 0, 'Todo id de capitulo pasa la validacion del servidor' +
+      (fuera.length ? ': NO pasan ' + fuera.join(', ') : ''));
+    ok(!re.test('todo') && !re.test('') && !re.test('../../etc'),
+      'Y la validacion no deja pasar cualquier cadena');
+  }
+}
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }

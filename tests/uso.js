@@ -13,7 +13,8 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         S:()=>S, ponCat, capsDe, modsDe, tarjetasDe, buscaItem, armar, bien, limpia,
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
-        poolDe, opcionesCuantas, segundosPara,
+        poolDe, opcionesCuantas, segundosPara, marcaVistas, nuevasDe, prng,
+  ponSemilla:x=>{rndEx=prng(x)},
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
         ponNivel:v=>{nivel=v},
@@ -788,9 +789,14 @@ A.S().act={};A.S().acc={};
 
 /* Examinar un capítulo desde el punto débil, con guarda: un capítulo que para
    esta categoría es solo material de estudio no se puede examinar. */
+A.ponCat('gm'); A.ponAlcance('todo');
+A.examenDelCapitulo('d7');
+ok(A.alcanceActual()==='todo','examenDelCapitulo ignora un capítulo de solo estudio (Daniel 7 en Guías Mayores)');
+/* Y Daniel 2, que dejo de ser solo estudio, si se puede examinar en Aventureros. */
 A.ponCat('av'); A.ponAlcance('todo');
 A.examenDelCapitulo('d2');
-ok(A.alcanceActual()==='todo','examenDelCapitulo ignora un capítulo de solo estudio (Daniel 2 en Aventureros)');
+ok(A.alcanceActual()==='d2','Daniel 2 ya se puede examinar suelto en Aventureros');
+A.ponAlcance('todo');
 A.examenDelCapitulo('d3');
 ok(A.alcanceActual()==='d3','examenDelCapitulo sí arma el examen de un capítulo examinable');
 A.ponAlcance('todo');
@@ -1339,6 +1345,56 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     JD.cambiaAlumno(fichas.find(i=>i!==JD.DB().activo));
     ok(JD.ronda()===null,'Cambiar de persona tambien vacia la ronda');
   }
+}
+
+/* ─── que no salgan las mismas preguntas la proxima vez ───
+   Antes el sorteo no tenia memoria: con 105 preguntas disponibles y examenes
+   de 15, hacian falta 29 corridas para ver el banco entero porque volvia a
+   meter lo ya visto. Se prueba lo que de verdad importa: que cubrir el pool
+   cueste lo minimo posible, y que la evaluacion con semilla NO dependa del
+   historial de cada aparato, porque tiene que ser identica para todas. */
+{
+  const B=montar(RET);
+  B.ponCat('av'); B.ponAlcance('todo'); B.ponNivel(0); B.ponCuantas(15);
+  B.S().qv={};
+  const pool=B.poolNivel().length;
+  ok(B.nuevasDe()===pool,'Al empezar, ninguna pregunta le ha salido nunca ('+pool+')');
+  const vistas=new Set(); let n=0, repetidas=0, prev=[];
+  while(vistas.size<pool&&n<200){
+    const e=B.armar('normal'); B.marcaVistas(e);
+    const ks=e.map(B.claveQ);
+    repetidas+=ks.filter(k=>prev.includes(k)).length;
+    ks.forEach(k=>vistas.add(k)); prev=ks; n++;
+  }
+  const minimo=Math.ceil(pool/15);
+  ok(n<=minimo+1,'Cubrir las '+pool+' preguntas cuesta '+n+' examenes (minimo posible '+minimo+')');
+  ok(repetidas<=2,'Y casi no repite con el examen anterior ('+repetidas+' en '+n+' corridas)');
+  ok(B.nuevasDe()===0,'Al final ya no quedan preguntas sin ver');
+  /* Agotado el banco, el repaso entra solo: lo fallado antes que lo acertado. */
+  const falladas=B.poolNivel().slice(0,20);
+  falladas.forEach(q=>B.ponFq(B.claveQ(q),1));
+  const sig=B.armar('normal').map(B.claveQ);
+  const kf=falladas.map(B.claveQ);
+  ok(sig.filter(k=>kf.includes(k)).length>=5,
+    'Con el banco agotado, el examen se llena con lo que fallo ('+sig.filter(k=>kf.includes(k)).length+' de 15)');
+}
+{
+  /* La evaluacion del director se arma con una semilla del servidor y tiene
+     que salir IDENTICA en todos los aparatos: si dependiera del historial, dos
+     participantes de la misma categoria harian examenes distintos y el
+     director compararia notas que no son comparables. */
+  const C=montar(RET);
+  C.ponCat('av'); C.ponAlcance('todo'); C.ponNivel(3); C.ponCuantas(15);
+  C.S().qv={};
+  C.ponSemilla(12345);
+  const sinHistorial=C.armar('normal').map(C.claveQ);
+  C.rndNormal();
+  sinHistorial.forEach(k=>{C.S().qv[k]=3;});
+  C.ponSemilla(12345);
+  const conHistorial=C.armar('normal').map(C.claveQ);
+  C.rndNormal();
+  ok(JSON.stringify(sinHistorial)===JSON.stringify(conHistorial),
+    'La evaluacion con semilla sale igual sin importar lo que cada una ya haya visto');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

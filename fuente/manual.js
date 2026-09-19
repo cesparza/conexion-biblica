@@ -336,8 +336,10 @@ const MANUAL = [
     <strong>Cambiar este examen</strong>.</p>` },
   { t:'Mientras lo haces',
     h:`<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>
-    <li>Las preguntas <strong>cambian cada vez</strong>: salen al azar de
-    {BANCO_CAT} preguntas, así que nunca te sale el mismo examen dos veces.</li>
+    <li>Las preguntas <strong>cambian cada vez</strong>: salen de
+    {BANCO_CAT} preguntas y el examen escoge primero las que <strong>nunca te
+    han salido</strong>. Cuando ya te salieron todas, vuelve a empezar por las
+    que fallaste.</li>
     <li>Las opciones también se barajan. No se puede aprobar marcando siempre
     la misma letra.</li>
     <li>Al terminar, toca <strong>Entregar</strong>.</li></ul>` },

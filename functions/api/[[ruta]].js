@@ -337,9 +337,17 @@ export async function onRequest(context) {
       /* El alcance decide QUÉ material se evalúa, así que tiene que ser uno de
          los que la app sabe armar. Con una cadena libre, una evaluación queda
          abierta y sin preguntas posibles: el director la ve abierta y las
-         participantes no reciben nada. */
+         participantes no reciben nada.
+         Además de los grupos, se acepta UN CAPÍTULO suelto (Daniel 2, la
+         creencia 14, el día 7 de la matutina). El servidor no conoce el
+         catálogo de capítulos, que vive en el HTML, así que valida la FORMA
+         del id. Esa forma es un contrato entre los dos lados y hay una prueba
+         que exige que todo id de CAPS la cumpla: si alguien inventa un id con
+         otra forma, la prueba falla aquí y no en el campamento. */
       const ALCANCES = ['todo', 'creencias', 'biblia', 'pr', 'q1', 'q2'];
-      const alcance = ALCANCES.includes(limpiar(b.alcance, 20)) ? limpiar(b.alcance, 20) : 'todo';
+      const FORMA_CAP = /^(d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})$/;
+      const pedido = limpiar(b.alcance, 20);
+      const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido)) ? pedido : 'todo';
       const cuantas = Math.min(60, Math.max(5, Math.round(+b.cuantas || 15)));
       const nivel = [0, 1, 2, 3].includes(+b.nivel) ? +b.nivel : 0;
       /* A quién le toca. Una lista de categorías, o '*' para todas. Sin esto el
