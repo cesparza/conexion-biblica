@@ -14,6 +14,12 @@ const { BANCO: BANCO_MANO } = require('../fuente/preguntas.js');
 const { BANCO_COBERTURA } = require('../fuente/preguntas-cobertura.js');
 const BANCO = [...BANCO_MANO, ...BANCO_COBERTURA];
 const { TARJETAS } = require('../fuente/tarjetas.js');
+/* El recorrido versiculo por versiculo se inyecta en el build, no vive en
+   contenido.js. Medir sin el daba un hueco que ya no existe: decia que el
+   material de Daniel 8 tocaba el 37% de sus versiculos cuando en realidad los
+   recorre todos. Una herramienta que existe para no creerle a una cuenta
+   incompleta no puede hacer una cuenta incompleta. */
+const { MAPA_VERSICULOS } = require('../fuente/mapa-versiculos.js');
 const { CONT_MODULOS } = require('../fuente/modulos.js');
 
 /* Versículos por capítulo en Daniel, para saber el denominador.
@@ -58,6 +64,10 @@ Object.values(CONTENIDO).forEach(v => v.forEach(s => trozos.push(s.t + ' ' + s.h
 Object.values(CONT_MODULOS).forEach(v => v.forEach(s => trozos.push(s.t + ' ' + s.h)));
 TARJETAS.forEach(t => trozos.push(t.f + ' ' + t.r));
 trozos.forEach(t => refsDe({ q: t }).forEach(r => enGuia.add(r)));
+/* El mapa cubre por numero, no por cita: el versiculo 5 de Daniel 8 esta
+   recorrido aunque su linea no diga «8:5». */
+for (const cap of Object.keys(MAPA_VERSICULOS))
+  for (const v of Object.keys(MAPA_VERSICULOS[cap])) enGuia.add(cap + ':' + v);
 
 console.log('ALCANCE OFICIAL DEL CAMPAMENTO — Daniel 1, 2, 3 y 6\n');
 let faltanOficial = [];

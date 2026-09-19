@@ -96,6 +96,20 @@ def primera_frase(txt):
     m = re.match(r'^(.{40,190}?[.»])\s', txt + ' ')
     return m.group(1) if m else txt[:170]
 
+def frases_para_completar(txt):
+    """Dos tramos distintos de la declaracion: el arranque y uno de mas
+    adelante. Sacar las dos de la misma frase seria preguntar dos veces lo
+    mismo con otro hueco."""
+    partes = [f.strip() for f in re.split(r'(?<=[.»])\s+', txt) if 45 < len(f.strip()) < 200]
+    if not partes:
+        return [('primera frase de la declaración', primera_frase(txt))]
+    out = [('primera frase de la declaración', partes[0])]
+    if len(partes) >= 2:
+        # la mas larga de las siguientes: la que mas datos trae
+        resto = max(partes[1:], key=len)
+        out.append(('otro tramo de la declaración', resto))
+    return out
+
 def preguntas(num):
     d, e = datos.CREENCIAS[num], editorial.ED[num]
     nom = d['nombre']
@@ -143,24 +157,49 @@ def preguntas(num):
         Q.append(dict(cap=cid, t='mc', nv=2,
                       q='¿A qué creencia corresponde esta declaración? «%s...»' % frag[:185].rstrip(' .,'),
                       o=[nom] + otras, a=0))
-        # completar, sacado de la primera frase de la declaracion
-        fr = primera_frase(d['decl'])
-        claves = palabras_clave(fr)
-        if len(claves) >= 2:
+        # ── completar: DOS por creencia, de dos tramos distintos ──
+        # Una sola por creencia dejaba el examen de texto literal con 27
+        # preguntas para 28 creencias, y es justo lo que «En esto creemos»
+        # pregunta palabra por palabra. La segunda sale de una frase mas
+        # adelante, no de la misma, o serian la misma pregunta dos veces.
+        for etiqueta, fr in frases_para_completar(d['decl']):
+            claves = palabras_clave(fr)
+            if len(claves) < 2:
+                continue
             p, resto = [], fr
             for w in sorted(claves, key=lambda w: resto.find(w))[:3]:
                 i = resto.find(w)
                 if i < 0: continue
                 p.append({'x': resto[:i]}); p.append({'b': w, 'h': '¿?'}); resto = resto[i+len(w):]
             p.append({'x': resto})
+            if sum(1 for x in p if 'b' in x) < 2:
+                continue
             Q.append(dict(cap=cid, t='fill',
-                          ins='Creencia %d, primera frase de la declaración — Completa:' % num, p=p))
-    # verdadero/falso desde lo editorial
-    for i, (preg, resp) in enumerate(e['clave'][:2]):
+                          ins='Creencia %d, %s — Completa:' % (num, etiqueta), p=p))
+    # ── verdadero/falso: UNA verdadera y UNA falsa ──
+    # Si todas fueran verdaderas, contestar siempre «Verdadero» daria el 100%
+    # y la pregunta dejaria de medir nada. Paso exactamente eso: las 56 de las
+    # creencias salieron todas verdaderas.
+    #
+    # La falsa NO se fabrica negando la frase (eso produce enunciados raros que
+    # se descartan solos): se le pone a esta creencia un dato que es de OTRA.
+    # Asi la pregunta mide lo que de verdad cuesta, que es distinguir entre dos
+    # creencias vecinas, y la explicacion puede decir de cual era.
+    if e['clave']:
+        preg, resp = e['clave'][0]
         limpio = re.sub(r'<[^>]+>', '', resp)
         Q.append(dict(cap=cid, t='tf',
                       q='Sobre «%s»: %s' % (nom, limpio[:150].rstrip(' .')) + '.',
                       a=True, e='Correcto. ' + limpio))
+    ajena = (num % 28) + 1
+    while ajena == num or not editorial.ED[ajena]['clave']:
+        ajena = (ajena % 28) + 1
+    respAjena = re.sub(r'<[^>]+>', '', editorial.ED[ajena]['clave'][0][1])
+    Q.append(dict(cap=cid, t='tf',
+                  q='Sobre «%s»: %s' % (nom, respAjena[:150].rstrip(' .')) + '.',
+                  a=False,
+                  e='Falso. Eso es de la creencia %d, «%s». Ojo con confundirlas.'
+                    % (ajena, datos.CREENCIAS[ajena]['nombre'])))
     return Q
 
 def main():
@@ -191,7 +230,11 @@ def main():
                 if q['t'] == 'mc':
                     c.append('\n   o:%s' % J(q['o'])); c.append('a:%d' % q['a'])
                 else:
-                    c.append('a:true'); c.append('\n   e:%s' % J(q['e']))
+                    # El valor REAL, no un true fijo. Estaba clavado en true y por
+                    # eso las 56 de verdadero/falso salian todas verdaderas: quien
+                    # contestara siempre «Verdadero» acertaba el 100%.
+                    c.append('a:%s' % ('true' if q['a'] else 'false'))
+                    c.append('\n   e:%s' % J(q['e']))
         	    
             banco.append('  {' + ','.join(c) + '},')
     # ── tarjetas ──

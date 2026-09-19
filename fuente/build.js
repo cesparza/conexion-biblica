@@ -7,6 +7,8 @@ const SALIDA = path.join(__dirname, '..', 'index.html');
 const { CAPS, CONTENIDO } = require('./contenido.js');
 const { BANCO } = require('./preguntas.js');
 const { BANCO_COBERTURA } = require('./preguntas-cobertura.js');
+const { MAPA_VERSICULOS } = require('./mapa-versiculos.js');
+const { BANCO_PR } = require('./preguntas-pr.js');
 const { MODULOS, CONT_MODULOS } = require('./modulos.js');
 const { TARJETAS } = require('./tarjetas.js');
 const { LOGO_TL } = require('./logo.js');
@@ -14,6 +16,7 @@ const { nivelDe } = require('./niveles.js');
 const { MANUAL } = require('./manual.js');
 const MAT = require('./matutina.js');
 const { MAT_COMPLETAR } = require('./matutina-completar.js');
+const { MAT_EXTRA } = require('./matutina-extra.js');
 const CR = require('./creencias.js');
 const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
@@ -31,10 +34,45 @@ const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
 /* Las de cobertura van con las demas: son del mismo banco, solo que las
    escribio un generador a partir de los versiculos que no tenian ninguna. */
-const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...CR.CR_BANCO];
+const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO];
 const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
 const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
+
+/* ─────────── EL RECORRIDO VERSICULO POR VERSICULO ───────────
+   El material de estudio esta organizado por TEMAS, que es como se entiende.
+   El problema es que asi nadie puede comprobar que no se salto nada: la
+   herramienta de cobertura medía que el material de Daniel 8 solo tocaba 10
+   de sus 27 versiculos, y de Daniel 10, ocho de veintiuno.
+
+   Este recorrido lo cierra por el otro lado. No reemplaza la explicacion
+   tematica: va despues de ella, y es lo que pide un examen de dato literal.
+
+   Se parte en tramos de ocho porque el hook del repositorio bloquea lineas de
+   mas de 2.000 caracteres, y con doce algunos tramos se pasaban (Daniel 9 y
+   11 traen versiculos largos). De paso se lee mejor: ocho son una pantalla. */
+const POR_TRAMO = 8;
+function seccionesMapa(capId) {
+  const m = MAPA_VERSICULOS[capId];
+  if (!m) return [];
+  const nums = Object.keys(m).map(Number).sort((a, b) => a - b);
+  const out = [];
+  for (let i = 0; i < nums.length; i += POR_TRAMO) {
+    const tramo = nums.slice(i, i + POR_TRAMO);
+    const filas = tramo.map(v =>
+      '<tr><td class="key">' + v + '</td><td>' + m[v] + '</td></tr>').join('');
+    out.push({
+      t: '📜 Versículos ' + tramo[0] + ' a ' + tramo[tramo.length - 1],
+      h: (i === 0
+          ? '<div class="highlight-box"><strong>El capítulo, versículo por versículo</strong><br>' +
+            'Para comprobar que no se quedó nada por fuera. Toca cualquier referencia ' +
+            'para leer el texto completo.</div>'
+          : '') +
+         '<table class="info-table vpv"><tbody>' + filas + '</tbody></table>'
+    });
+  }
+  return out;
+}
 
 /* ───────────── LA PESTANA «COMPRUEBALO», DERIVADA DE LAS TARJETAS ─────────────
    MECANISMO
@@ -92,8 +130,13 @@ function pestanaComprueba(capId) {
           { t: '✅ Y estas', h: trozo(2) }];
 }
 for (const c of CAPS_ALL) {
+  if (!CONTENIDO_ALL[c.id]) continue;
+  /* Orden: primero la explicacion tematica que ya estaba, despues el recorrido
+     versiculo por versiculo, y al final el repaso. Se estudia, se comprueba
+     que no falto nada, y se responde. */
+  CONTENIDO_ALL[c.id] = [...CONTENIDO_ALL[c.id], ...seccionesMapa(c.id)];
   const extra = pestanaComprueba(c.id);
-  if (extra && CONTENIDO_ALL[c.id]) CONTENIDO_ALL[c.id] = [...CONTENIDO_ALL[c.id], ...extra];
+  if (extra) CONTENIDO_ALL[c.id] = [...CONTENIDO_ALL[c.id], ...extra];
 }
 
 /* Cada pregunta sale al HTML con su nivel ya calculado (fuente/niveles.js).

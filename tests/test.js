@@ -724,12 +724,37 @@ const pctCamp=Math.round(CAMP_MC.filter(larga).length/CAMP_MC.length*100);
 ok(pctCamp<=5,'En el alcance del campamento el sesgo por tamaño es del '+pctCamp+
   '% de '+CAMP_MC.length+' múltiples (techo 5%)');
 
+/* El banco tal como queda en el index.html: siete archivos fuente mas lo que
+   inyecta el build. Cualquier cuenta sobre «el banco» tiene que salir de aqui. */
+const BANCO_HTML = (() => {
+  const m = js.match(/const BANCO = (\[[\s\S]*?\n\]);/);
+  return eval(m[1]);
+})();
+
 /* Lo mismo con verdadero o falso: si la mayoría son verdaderas, contestar
-   siempre «verdadero» saca nota. */
-const TODO_TF=[...BANCO,...MATU2.MAT_BANCO].filter(q=>q.t==='tf');
-const pctV=Math.round(TODO_TF.filter(q=>q.a).length/TODO_TF.length*100);
+   siempre «verdadero» saca nota.
+
+   SE MIDE EL BANCO DESPLEGADO, NO DOS ARCHIVOS.
+   Esta prueba sumaba solo `BANCO` y `MAT_BANCO`, y el banco ya son SIETE
+   archivos. Por eso no vio que las 56 de verdadero/falso de las creencias
+   salieron TODAS verdaderas: un generador tenia `a:true` clavado. La prueba
+   daba verde mientras un tercio del banco se contestaba solo.
+   Se mide sobre el index.html, que es lo que la gente usa, y ademas por
+   actividad: un promedio global sano puede tapar una actividad entera
+   desbalanceada, que es justo lo que paso. */
+const TF_TODO = BANCO_HTML.filter(q => q.t === 'tf');
+const pctDe = f => { const g = TF_TODO.filter(q => f(q.cap));
+  return g.length ? Math.round(g.filter(q => q.a).length / g.length * 100) : null; };
+const pctV = pctDe(() => true);
 ok(pctV>=35&&pctV<=65,
-  'Las de verdadero o falso están repartidas: '+pctV+'% verdaderas de '+TODO_TF.length+' (rango 35-65%)');
+  'Las de verdadero o falso están repartidas: '+pctV+'% verdaderas de '+TF_TODO.length+' (rango 35-65%)');
+for (const [et, f] of [['Daniel', c=>/^d\d+$|^pr/.test(c)],
+                       ['matutina', c=>/^m\d\d$/.test(c)],
+                       ['creencias', c=>/^cr\d\d$/.test(c)]]) {
+  const p = pctDe(f);
+  ok(p !== null && p >= 35 && p <= 65,
+    '  y también dentro de ' + et + ': ' + p + '% verdaderas');
+}
 
 /* Dos preguntas de completar con el MISMO rótulo dentro del mismo capítulo: en
    la revisión el estudiante ve dos veces el mismo encabezado y no sabe cuál

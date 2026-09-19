@@ -1654,3 +1654,10 @@ details.card summary::marker{content:''}
   border:1.5px solid var(--borde);background:#fff;color:var(--tinta);font:inherit;font-weight:700}
 .jg-w.ok{border-color:#1A7A1A;background:#EAF7EA;color:#1A7A1A}
 .jg-w.ko{border-color:#C0392B;background:#FDECEC;color:#C0392B}
+
+/* La tabla del recorrido versículo por versículo: el número angosto y fijo,
+   el texto ocupando el resto. Sin esto el número se estira y el renglón se
+   parte donde no debe. */
+.info-table.vpv td.key{width:2.4rem;text-align:right;vertical-align:top;
+  font-variant-numeric:tabular-nums;font-weight:700;color:var(--azul)}
+.info-table.vpv td{padding-top:.42rem;padding-bottom:.42rem;line-height:1.45}
