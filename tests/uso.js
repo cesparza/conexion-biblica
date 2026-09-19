@@ -30,7 +30,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
         puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
         abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
-        pasaAActividad, MAX_ALUMNOS, borraAlumno,
+        pasaAActividad, MAX_ALUMNOS, borraAlumno, adoptaFicha,
         pintaSenales, senal, abreLectura, cierraLectura, lectAvance,
         abrePaleta, cierraPaleta, pcFiltra, pcCatalogo,
         pcLimpia, pcAbre, pcItemsActuales:()=>pcItems, pcEstaAbierta:()=>pcAbierta,
@@ -1395,6 +1395,39 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   C.rndNormal();
   ok(JSON.stringify(sinHistorial)===JSON.stringify(conHistorial),
     'La evaluacion con semilla sale igual sin importar lo que cada una ya haya visto');
+}
+
+/* ─── entrar con un codigo NO le roba la ficha a quien estuviera ───
+   El celular de la casa tiene varias fichas. Entrar con el codigo de otra
+   persona alineaba la ficha ACTIVA con el nombre del servidor, asi que la de
+   Camila pasaba a llamarse Daniel con el progreso de Camila adentro, y Camila
+   desaparecia de la lista. Es el mismo defecto de «una ficha, una actividad»,
+   por otra puerta. */
+{
+  const D=montar(RET);
+  const nombres=()=>D.alumnos().map(([,a])=>a.nombre);
+  D.ponCat('av'); D.ponNombre('Camila');
+  D.S().prog['d1']=80;
+  D.adoptaFicha({nombre:'Daniel',categoria:'av'});
+  ok(nombres().includes('Camila'),'Camila sigue existiendo despues de que Daniel entra con su codigo');
+  ok(D.S().nombre==='Daniel','Y la ficha activa pasa a ser la de Daniel');
+  ok((D.S().prog['d1']||0)===0,'Daniel arranca en cero, no hereda el 80% de Camila');
+
+  D.S().prog['d1']=10;
+  D.adoptaFicha({nombre:'Camila',categoria:'av'});
+  ok(D.S().nombre==='Camila'&&D.S().prog['d1']===80,
+    'Camila vuelve a SU ficha, con su progreso intacto');
+  const antes=D.alumnos().length;
+  D.adoptaFicha({nombre:'Camila',categoria:'av'});
+  ok(D.alumnos().length===antes,'Entrar dos veces con el mismo codigo no duplica la ficha');
+
+  /* Una ficha recien agregada no tiene nada que proteger: esa si se reusa, o
+     «+ Agregar» dejaria una ficha vacia colgando por cada codigo. */
+  D.agregaAlumno();
+  const conVacia=D.alumnos().length;
+  D.adoptaFicha({nombre:'Alaia',categoria:'me'});
+  ok(D.alumnos().length===conVacia&&D.S().nombre==='Alaia'&&D.S().cat==='me',
+    'Una ficha vacia se reusa en vez de crear otra');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

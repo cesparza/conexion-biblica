@@ -2115,7 +2115,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '3d5dd95e8d58';
+const VERSION_APP = '5fe113e4b16f';
 
 const CAPS = [
  {
@@ -37016,14 +37016,65 @@ async function entraCodigo(){
   }
 }
 
-/* Alinea la ficha local con lo que dice el servidor. No borra el progreso: el
-   estudio hecho sigue siendo suyo; solo se corrigen el nombre y la categoría,
-   que son los datos que el director necesita que coincidan. */
+/* ───────── entrar con un código NO renombra a quien estuviera ─────────
+   MECANISMO DEL DEFECTO
+   Esta función alineaba la ficha ACTIVA con lo que decía el servidor: le
+   escribía encima el nombre y la categoría. Con una sola persona por aparato
+   eso está bien. Con varias no: el celular de la casa tiene la ficha de Camila
+   con su progreso, alguien entra con el código de Daniel, y la ficha de Camila
+   pasa a llamarse Daniel CON EL PROGRESO DE CAMILA ADENTRO. Camila desaparece
+   de la lista y Daniel arranca con 80% leído que no leyó.
+
+   MEDIDO, no supuesto: ficha «Camila» con Daniel 1 al 80%, se adopta la ficha
+   de Daniel, y queda una sola ficha, «Daniel», con d1=80.
+
+   Es el MISMO defecto que ya se arregló al cambiar de actividad, y se arregla
+   igual: el código identifica a una persona, así que se busca SU ficha y se
+   pasa a ella, o se crea. Escribirle encima a la que estuviera solo se hace
+   cuando esa no tiene nada que proteger, que es el caso de «+ Agregar». */
 function adoptaFicha(d){
   if(!d)return;
+  const nom=String(d.nombre||'').trim();
+  const cat=(d.categoria&&CATS[d.categoria])?d.categoria:null;
+  if(!nom&&!cat)return;
+
+  /* ¿Ya existe la ficha de esa persona en esta actividad? Se compara por
+     nombre y actividad, igual que pasaAActividad: dos fichas con el mismo
+     nombre en la misma actividad es justo lo que se quiere evitar. */
+  if(nom){
+    const act=ACT_DE(cat||S.cat);
+    const esMia=(S.nombre||'').trim().toLowerCase()===nom.toLowerCase()&&
+                ACT_DE(S.cat)===act;
+    if(!esMia){
+      const suya=alumnos().find(([,al])=>ACT_DE(al.cat)===act&&
+        (al.nombre||'').trim().toLowerCase()===nom.toLowerCase());
+      if(suya){
+        cambiaAlumno(suya[0]);
+        if(cat&&S.cat!==cat){S.cat=cat;guardar();marcaCat();pintaCaps();pintaInicio();}
+        return;
+      }
+      /* No existe y la de aquí tiene progreso: se crea la suya en vez de
+         robarle la ficha a la otra persona. */
+      if(!sinProgreso(S)){
+        if(alumnos().length>=MAX_ALUMNOS){
+          try{alert('Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una para poder '+
+            'entrar con otro código.');}catch(e){}
+          return;
+        }
+        const id=nuevoId();
+        DB.alumnos[id]=normalizar({nombre:nom,cat:cat||S.cat});
+        guardar();
+        cambiaAlumno(id);
+        return;
+      }
+    }
+  }
+
+  /* Queda el caso sano: es su propia ficha, o una ficha vacía que todavía no
+     es de nadie. Ahí sí se escribe encima. */
   let cambio=false;
-  if(d.nombre&&S.nombre!==d.nombre){S.nombre=d.nombre;cambio=true;}
-  if(d.categoria&&CATS[d.categoria]&&S.cat!==d.categoria){S.cat=d.categoria;cambio=true;}
+  if(nom&&S.nombre!==nom){S.nombre=nom;cambio=true;}
+  if(cat&&S.cat!==cat){S.cat=cat;cambio=true;}
   if(cambio){
     guardar();reiniciaPractica();
     marcaCat();pintaYo();pintaCaps();pintaInicio();refrescaPracticaSiVisible();
