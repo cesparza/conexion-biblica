@@ -2115,7 +2115,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'b2883dd6fa2a';
+const VERSION_APP = '4cb986bb1a94';
 
 const CAPS = [
  {
@@ -33661,7 +33661,7 @@ function cambiaAlumno(id){
   DB.activo=id;S=DB.alumnos[id];guardar();
   /* Al cambiar de persona se reinicia lo que está en pantalla: el mazo de
      tarjetas y el examen en curso son de quien estaba antes. */
-  mazo=[];tjI=0;tjFiltro='hoy';alcance='todo';cuantas=0;nivel=0;
+  reiniciaPractica();alcance='todo';cuantas=0;nivel=0;
   prueba=[];resp={};entregado=false;clearInterval(reloj);
   marcaCat();pintaInicio();pintaCaps();pintaYo();
   try{document.getElementById('detalle').style.display='none';}catch(e){}
@@ -33847,7 +33847,7 @@ function ponCat(c){
   try{document.getElementById('detalle').style.display='none';}catch(e){}
   /* Cambiar de categoría cambia el material entero, así que el mazo y el examen
      armado eran de la categoría anterior. Igual que al cambiar de persona. */
-  mazo=[];tjI=0;prueba=[];resp={};entregado=false;
+  reiniciaPractica();prueba=[];resp={};entregado=false;
   try{clearInterval(reloj);}catch(e){}
   cierraHoja();
   ir('inicio');
@@ -35189,6 +35189,40 @@ const JUEGOS = [
 
 let jgModo='tarjetas', jgR=null, jgSel=null, jgN=0, jgBien=0, jgMal=0;
 
+/* ───────── el estado de «Practicar» es de la CATEGORIA, no de la ficha ─────────
+   MECANISMO
+   El mazo, el filtro y la ronda del juego se arman con el material de la
+   categoria activa, pero viven en variables sueltas de pantalla. `pintaTarjetas`
+   repinta la ronda que YA existe (`if(!jgR)nuevaRonda(); else pintaJuego()`),
+   asi que si la categoria cambia y nadie borra `jgR`, al volver a Practicar
+   sale la ronda de la categoria anterior. Con el filtro pasa lo mismo y se ve
+   peor: queda apuntando a un capitulo que en la categoria nueva no existe
+   (`d1` en las creencias) y el mazo sale en cero, que parece la app dañada.
+
+   MEDIDO: entrar a Practicar en Aventureros, escoger Quiz, cambiar a
+   creencias y volver: la misma pregunta de Daniel. Y con el filtro en «Daniel
+   1», mazo de 27 antes y 0 despues.
+
+   DECISION
+   Un solo punto de reinicio, y lo llaman TODOS los caminos que cambian el
+   material: cambiar de categoria, cambiar de persona, terminar la bienvenida
+   y adoptar la ficha del servidor. Cuatro reinicios distintos, cada uno con
+   su propio subconjunto de variables, es como nacio el defecto. */
+function reiniciaPractica(){
+  mazo=[];tjI=0;tjVolteada=false;tjFiltro='hoy';tjSabidas=new Set();
+  jgR=null;jgSel=null;jgN=0;jgBien=0;jgMal=0;
+}
+
+/* Repinta Practicar solo si es la pantalla que esta a la vista. Los caminos
+   que aterrizan en Inicio no la necesitan; el que sincroniza contra el
+   servidor si, porque no navega. */
+function refrescaPracticaSiVisible(){
+  try{
+    const p=document.getElementById('p-tarjetas');
+    if(p&&p.classList.contains('on'))pintaTarjetas();
+  }catch(e){}
+}
+
 /* Los grupos disponibles en la actividad actual. Si ningun capitulo declara
    `doc`, no hay grupos y el juego de clasificar ni se ofrece. */
 function gruposDe(){
@@ -35247,7 +35281,11 @@ function ponJuego(id){
   jgModo=id;
   if(id!=='tarjetas')nuevaRonda();
   pintaModosJuego();
-  if(id==='tarjetas')muestraTj();
+  /* Volver a Tarjetas con el mazo vacio mostraba «No hay tarjetas para este
+     filtro», que es mentira: el mazo estaba vacio porque se reinicio al
+     cambiar de material, no porque no haya tarjetas. Se baraja, igual que
+     hace `pintaTarjetas`. */
+  if(id==='tarjetas'){ if(!mazo.length)tjBaraja(); else muestraTj(); }
 }
 
 /* Cada ronda es corta a proposito: seis pasos se terminan en un minuto y
@@ -36830,6 +36868,7 @@ function ponCatBV(c){S.cat=c;guardar();}
 
 function bvTermina(){
   marcaCat();
+  reiniciaPractica();
   /* Hay que repintar, no solo navegar: `ir()` prende la pantalla pero no vuelve
      a dibujar su contenido, y al terminar la bienvenida cambiaron el nombre Y la
      categoria, o sea todo. Antes esto no se veia porque el panel de identidad
@@ -36900,7 +36939,8 @@ function adoptaFicha(d){
   if(d.nombre&&S.nombre!==d.nombre){S.nombre=d.nombre;cambio=true;}
   if(d.categoria&&CATS[d.categoria]&&S.cat!==d.categoria){S.cat=d.categoria;cambio=true;}
   if(cambio){
-    guardar();marcaCat();pintaYo();pintaCaps();pintaInicio();
+    guardar();reiniciaPractica();
+    marcaCat();pintaYo();pintaCaps();pintaInicio();refrescaPracticaSiVisible();
   }
 }
 

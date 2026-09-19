@@ -1304,6 +1304,43 @@ JD.ponJuego('parear');
 ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   'Y emparejan capitulos de Daniel, no creencias');
 
+/* ─── Cambiar de material tiene que vaciar lo que hay en Practicar ───
+   El mazo, el filtro y la ronda se arman con el material de la categoria.
+   Si sobreviven al cambio, Practicar pinta la ronda de la categoria anterior
+   y el filtro apunta a un capitulo que ya no existe: mazo en cero y cara de
+   app dañada. Se prueba por los dos caminos que cambian el material. */
+{
+  JD.ponCat('av');
+  JD.ponJuego('quiz');
+  const rondaAv=JD.ronda();
+  ok(!!rondaAv,'Practicar arranca una ronda en Aventureros');
+  JD.ponCat('ec1');
+  ok(JD.ronda()===null,'Cambiar de categoria borra la ronda de la anterior');
+  JD.ir('tarjetas');
+  ok(JD.ronda()!==rondaAv,'Y al volver a Practicar la ronda es nueva, no la de Daniel');
+
+  JD.ponCat('av');
+  JD.ir('tarjetas');
+  JD.filtraTj('d1');
+  ok(JD.tjFiltroActual()==='d1'&&JD.mazoActual().length>0,'Filtro por capitulo: mazo de Daniel 1');
+  JD.ponCat('ec1');
+  ok(JD.tjFiltroActual()==='hoy',
+    'Cambiar de categoria devuelve el filtro a «hoy»: «d1» no existe en las creencias');
+  JD.ir('tarjetas');
+  JD.ponJuego('tarjetas');
+  ok(JD.mazoActual().length>0,
+    'Y volver a Tarjetas baraja el mazo de las creencias, no dice «no hay tarjetas»');
+
+  /* El mismo defecto entraba por cambiar de persona. */
+  JD.ponJuego('quiz');
+  ok(!!JD.ronda(),'Hay ronda antes de cambiar de persona');
+  const fichas=Object.keys(JD.DB().alumnos);
+  if(fichas.length>1){
+    JD.cambiaAlumno(fichas.find(i=>i!==JD.DB().activo));
+    ok(JD.ronda()===null,'Cambiar de persona tambien vacia la ronda');
+  }
+}
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 
