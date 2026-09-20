@@ -366,6 +366,37 @@ function srvGuarda(practica,evalId,evalTitulo,evaluaciones){
   }catch(e){}
 }
 
+/* ───────── LAS PREGUNTAS RETIRADAS ─────────
+   QUE ES UNA PREGUNTA RETIRADA
+   Una que el director leyo y decidio sacar: esta repetida, mal redactada, o
+   pregunta algo que el reglamento no pide. No se borra, se retira: sigue en el
+   HTML y se puede devolver.
+
+   POR QUE NO SE BORRA DEL BANCO
+   El banco son 1.378 preguntas dentro de index.html, que es un archivo
+   GENERADO: quitar una obliga a editar el generador, correr build.js y
+   desplegar. Eso no se hace desde un celular. Asi que el retiro vive en el
+   servidor, la app se lo trae y lo aplica al armar el examen. El artefacto no
+   se toca y el generador tampoco.
+
+   SE CACHEA IGUAL QUE LO DEMAS DEL SERVIDOR
+   Viaja dentro de /estado, que es lo que la app ya consulta al arrancar y
+   antes de cada examen. Sin señal se usa lo ultimo que se supo, que es lo
+   mismo que hace el interruptor de la practica. Si nunca contesto, el conjunto
+   esta vacio: el banco completo, que es lo que el artefacto trae escrito. */
+const RET_CACHE='cb-ret';
+let retiradas=new Set();
+function retLee(){
+  try{const x=JSON.parse(localStorage.getItem(RET_CACHE)||'[]');return Array.isArray(x)?x:[];}
+  catch(e){return [];}
+}
+function retGuarda(lista){
+  try{localStorage.setItem(RET_CACHE,JSON.stringify(lista.slice(0,3000)));}catch(e){}
+}
+function ponRetiradas(lista){retiradas=new Set(lista||[]);}
+ponRetiradas(retLee());
+const estaRetirada=q=>retiradas.has(claveQ(q));
+
 /* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
    la niña mirando un botón que no responde. */
 async function srvFetch(ruta,opciones){
@@ -396,6 +427,10 @@ async function srvRefresca(){
        quién es ella). */
     const paraTodas=evaluaciones.find(function(e){return e.paraTodas;});
     srvGuarda(d.practica, paraTodas&&paraTodas.id, paraTodas&&paraTodas.titulo, evaluaciones);
+    /* Solo si vino el campo. Un servidor viejo (o una respuesta recortada) no
+       puede DEVOLVER al banco preguntas que el director retiro: se queda con
+       lo ultimo que se supo, igual que el interruptor de la practica. */
+    if(Array.isArray(d.retiradas)){ponRetiradas(d.retiradas);retGuarda(d.retiradas);}
     return true;
   }catch(e){return false;}
 }
@@ -562,9 +597,18 @@ const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
    estudiando, y para Guias Mayores si cuenta. */
 const soloEstudio=(c,cat)=>Array.isArray(c.extra)?c.extra.includes(cat):!!c.extra;
 
+/* EL FILTRO DE RETIRADAS VA AQUI Y EN NINGUN OTRO LADO.
+   bancoDe() es el unico origen de preguntas de examen: de el salen el pool de
+   practicar, el de la evaluacion, los errores por repasar, los impresos y las
+   cuentas del manual. Filtrar aqui las retira de los seis a la vez, y no hay
+   forma de agregar un camino nuevo que se las salte.
+   Lo que NO pasa por aqui sigue intacto a proposito: las tarjetas, la pestaña
+   «Compruebalo» y la revision de un intento viejo, que busca el enunciado por
+   clave en BANCO. Una pregunta retirada hoy no puede borrar lo que una niña
+   respondio la semana pasada. */
 const bancoDe=()=>{
   const ids=capsDe().filter(c=>!soloEstudio(c,S.cat)).map(c=>c.id);
-  return BANCO.filter(q=>ids.includes(q.cap));
+  return BANCO.filter(q=>ids.includes(q.cap)&&!estaRetirada(q));
 };
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
@@ -646,6 +690,7 @@ function ir(id){
   if(id==='examen')pintaExInicio();
   if(id==='logros')pintaLogros();
   if(id==='ayuda')pintaAyuda();
+  if(id==='revisor')pintaRevisor();
   pintaSenales();
   window.scrollTo({top:0});
 }
@@ -3499,7 +3544,7 @@ function pintaEvaluacion(){
 function haceEvaluacion(){
   if(!evalPend||evalHecha)return;
   const r=evalPend;
-  const prev={a:alcance,n:nivel,q:cuantas,f:soloFuente};
+  const prev={a:alcance,n:nivel,q:cuantas,f:soloFuente,r:retiradas};
   let sel=[];
   try{
     /* EL NIVEL TIENE QUE SER DETERMINISTA.
@@ -3510,10 +3555,17 @@ function haceEvaluacion(){
        fija nivel, se usa el techo de la categoría, que es igual para todas. */
     alcance=r.alcance||'todo';nivel=r.nivel||CAT().techo;cuantas=r.cuantas;
     soloFuente=!!r.solo_fuente;
+    /* LAS RETIRADAS DE LA RECETA, NO LAS DE AHORA. La receta trae la lista tal
+       como estaba cuando el director abrio la evaluacion. Si se usara la de
+       ahora, retirar una pregunta a media mañana le cambiaria el examen a la
+       que todavia no lo ha hecho, y dos notas de la misma semilla dejarian de
+       ser comparables. */
+    if(Array.isArray(r.retiradas))retiradas=new Set(r.retiradas);
     rndEx=prng(Number(r.semilla)>>>0);
     sel=armar('normal');
   }finally{
     rndEx=Math.random;alcance=prev.a;nivel=prev.n;cuantas=prev.q;soloFuente=prev.f;
+    retiradas=prev.r;
   }
   /* Antes, si la receta no daba preguntas para esta participante, el botón no
      hacía nada y parecía que la app estuviera trabada. Pasa cuando el director
@@ -4175,105 +4227,149 @@ async function pintaPanel(){
        el paso 2 gris y con el letrero puesto hasta recargar. */
     '<div class="pan-paso" id="pan-paso2"><div class="pan-paso-t">Paso 2 · ¿Qué examen?</div>'+
     '<p class="nota pan-razon" id="pan-paso2-razon"></p>'+
-    /* LOS DOS CAMPOS LLEVAN ETIQUETA A LA VISTA.
-       «Cuántas preguntas» vivía en un `title`, que es el globo del navegador y
-       solo aparece al dejar el puntero encima. En un celular no hay puntero:
-       el campo se veía como un 15 suelto, sin decir de qué era. */
     '<div class="ses-fila"><label class="pan-lb">Nombre de la evaluación'+
     '<input id="pan-eval-t" placeholder="p. ej. Sábado 6 de septiembre" '+
-    'maxlength="60" oninput="revisaAbrir()"></label>'+
-    '<label class="pan-lb" style="flex:0 0 8rem">Cuántas preguntas'+
-    '<input id="pan-eval-n" type="number" min="5" max="60" value="15"></label></div>'+
-    /* Confusión real: al probar con «Comenzar» (practicar), este número no
-       cambiaba nada, porque practicar usa su PROPIO selector de cantidad en
-       la ficha del capítulo. Este campo solo rige la evaluación con código. */
-    '<p class="nota">Esta cantidad es solo para la evaluación con código (botón <strong>Hacer la evaluación</strong>). Practicar con «Comenzar» tiene su propio número, en la ficha del capítulo.</p>'+
-    /* El reglamento tiene tres actividades distintas y cada una es un examen
-       aparte. Sin este selector el panel solo podía abrir la de Daniel. */
-    /* AGRUPADO POR ACTIVIDAD, que es la dimensión de arriba del modelo.
-       Antes la lista mezclaba materiales de dos actividades y OMITÍA la
-       Devoción Matutina: el servidor ya aceptaba «q1» y «q2», y la práctica ya
-       los ofrecía, pero el panel no tenía cómo pedirlos. Con los grupos a la
-       vista se ve de una a qué actividad pertenece cada material. */
-    '<div class="ses-fila"><label class="pan-lb">Qué material'+
-    '<select id="pan-eval-al" onchange="cambiaMaterialPanel()">'+
-      '<option value="todo">Todo el material de cada categoría</option>'+
-      '<optgroup label="Conexión Bíblica">'+
-        '<option value="biblia">Solo el libro de Daniel</option>'+
-        '<option value="pr">Solo Profetas y Reyes</option>'+
-      '</optgroup>'+
-      '<optgroup label="Devoción Matutina">'+
-        '<option value="q1">Solo la primera quincena (1 al 15 de octubre)</option>'+
-        '<option value="q2">Solo la segunda quincena (16 en adelante)</option>'+
-      '</optgroup>'+
-      '<optgroup label="En esto creemos">'+
-        '<option value="creencias">Las 28 creencias</option>'+
-      '</optgroup>'+
-      opcionesCapPanel()+
-      /* UN TRAMO POR ACTIVIDAD, no uno solo.
-         Con una sola opción, los dos desplegables listaban los 77 capítulos de
-         las tres actividades revueltos, y se podía armar «de la Creencia 24 a
-         Daniel 1»: un tramo que no existe. La app lo aceptaba y después lo
-         regañaba con tres párrafos rojos.
-         Escogiendo la actividad de una vez, cada desplegable lista solo lo
-         suyo y el disparate no se puede ni construir. Es la misma regla que ya
-         usaba practicar, traída al panel. */
-      '<optgroup label="Un tramo del material">'+
-        Object.keys(ACTIVIDADES).map(function(a){
-          return '<option value="rango:'+a+'">'+esc(ACTIVIDADES[a].icono+' '+
-            ACTIVIDADES[a].nombre+' · un tramo')+'</option>';
-        }).join('')+
-      '</optgroup>'+
-    '</select></label></div>'+
-    /* Los dos extremos solo aparecen con un tramo escogido: dos desplegables
-       mudos ocupando pantalla en el 90% de los casos es ruido. Se llenan en
-       pintaNotaAlcance(), que sabe de qué actividad es el tramo. */
-    '<div class="ses-fila" id="pan-rango" hidden>'+
-      '<label class="pan-lb">Desde<select id="pan-r1" onchange="cambiaDesdePanel()"></select></label>'+
-      '<label class="pan-lb">Hasta<select id="pan-r2" onchange="pintaNotaAlcance()"></select></label>'+
+    'maxlength="60" oninput="revisaAbrir()"></label></div>'+
+
+    /* ───────── LAS RECETAS, Y POR QUE REEMPLAZAN AL DESPLEGABLE ─────────
+       El desplegable de «Qué material» llego a 85 opciones: los grupos de las
+       tres actividades, mas los 77 capitulos, mas los tramos. Se agrupo con
+       <optgroup>, que es lo correcto, y en el iPhone del director se siguen
+       viendo las 85 seguidas: el selector nativo de iOS no pinta las etiquetas
+       de grupo. Un desplegable de 85 opciones en un celular no se lee, se
+       recorre.
+
+       Lo que de verdad hace falta no son 85 opciones: son cuatro exámenes que
+       se abren siempre, y la posibilidad de armar cualquier otro. Eso es lo que
+       hay aqui: una lista corta de recetas, y «Armarlo yo» para el resto. La
+       receta no es un atajo a otro mecanismo: escribe en los MISMOS controles
+       que abren la evaluacion, asi que no hay dos caminos que mantener. */
+    '<p class="nota">Lo que más abres, de un toque. Después se puede ajustar.</p>'+
+    '<div class="pan-recetas" id="pan-recetas"></div>'+
+
+    /* LA FRASE. Es el estado completo dicho en una linea, y cada parte
+       subrayada abre el control que la cambia. Antes el estado estaba repartido
+       en seis campos y habia que leerlos todos para saber que se iba a abrir. */
+    /* «AJUSTAR LO ESCOGIDO», tal como el maquetado C.
+       Lo que de verdad se cambia despues de escoger una receta —el tramo o el
+       capitulo, y cuantas preguntas— esta A LA VISTA, sin un toque de por
+       medio. Lo demas (material, a quienes, dificultad y fuente) queda detras
+       de un boton que dice lo que hay puesto, que es lo que hoy falta: para
+       saber que dice una lista hay que abrirla.
+
+       Los dos desplegables del tramo y el del capitulo viven AQUI y no dentro
+       de un cajon que se repinta: llenaRangoPanel() les escribe las opciones,
+       y volver a armar el HTML del contenedor se las borraria junto con lo que
+       el director acaba de escoger. */
+    '<div class="pan-grupo" id="pan-ajuste">'+
+      '<div class="pan-grupo-t">Ajustar lo escogido</div>'+
+      '<div class="ses-fila" id="pan-zona-cap" hidden><label class="pan-lb">Cuál'+
+      '<select id="pan-cap" onchange="pintaNotaAlcance()"></select></label></div>'+
+      '<div class="ses-fila" id="pan-rango" hidden>'+
+        '<label class="pan-lb">Desde<select id="pan-r1" onchange="cambiaDesdePanel()"></select></label>'+
+        '<label class="pan-lb">Hasta<select id="pan-r2" onchange="pintaNotaAlcance()"></select></label>'+
+      '</div>'+
+      /* Los tres tamaños que las categorias usan de verdad (CATS[].n es 10, 15 o
+         25) y que caben en un renglon. Cualquier otro numero sigue estando, en
+         «Otro número» dentro de Preguntas. */
+      '<div class="pan-chips" id="pan-chips">'+[10,15,25].map(function(n){
+        return '<button type="button" class="pan-chip" data-n="'+n+'" '+
+          'onclick="ponCuantasPanel('+n+')">'+n+'</button>';
+      }).join('')+'</div>'+
+      '<div class="pan-acc" id="pan-acc"></div>'+
     '</div>'+
+    /* Los dos avisos viven FUERA de los grupos plegables: el de «ninguna
+       categoría recibe preguntas» es justo lo que impide abrir una evaluación
+       vacía, y esconderlo detrás de un pliegue lo volvería inútil. */
     '<p class="nota" id="pan-nota-al">'+NOTA_ALCANCE.todo+'</p>'+
     '<p class="nota" id="pan-aviso-cats"></p>'+
-    '<div class="ses-fila"><label class="pan-lb">Dificultad'+
-    '<select id="pan-eval-nv" onchange="pintaNotaNivel()">'+
-      '<option value="0">La de cada categoría (recomendado)</option>'+
-      '<option value="1">1 · básica</option>'+
-      '<option value="2">2 · intermedia</option>'+
-      '<option value="3">3 · avanzada</option>'+
-    '</select></label></div>'+
-    /* El texto describe LA OPCIÓN SELECCIONADA. Antes era fijo y describía
-       siempre la opción 0: con «1 · básica» escogido, el panel afirmaba algo
-       que no era cierto de lo que estaba puesto. */
-    '<p class="nota" id="pan-nota-nv">'+NOTA_NIVEL[0]+'</p>'+
-    /* El reglamento nombra UNA fuente por actividad. El material de estudio va
-       mas alla a proposito; el examen no tiene por que. */
-    '<label class="ex-sw" style="margin:.2rem 0 .1rem">'+
-      '<input type="checkbox" id="pan-fuente" onchange="pintaAvisoCats()">'+
-      '<span>Solo la fuente del reglamento<br>'+
-      '<small>Conexión Bíblica: solo Daniel, sin Profetas y Reyes. '+
-      'Creencias: solo la cartilla. La matutina no cambia.</small></span>'+
-    '</label>'+
-    '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
-    '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
-      return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'" '+
-        'onchange="pintaAvisoCats()"> '+
-        '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+esc(CATS[k].edad)+'</small></span></label>';
-    }).join('')+'</div>'+
-    /* POR PERSONA, que es el segundo nivel.
-       Existe por un caso real: se reparten el material y una estudia del 1 al
-       10 y otra del 11 al 20, las dos de la misma categoría y presentando el
-       mismo rato. Con solo categorías eso no se podía, porque el servidor no
-       deja dos abiertas que compartan categoría. Una dirigida a personas le
-       gana a la de su categoría, así que se pueden tener las dos. */
-    '<details class="pan-personas"><summary>O escoger personas, una por una</summary>'+
-    '<p class="nota">Para cuando se reparten el material y cada una presenta su tramo. '+
-    'Si marcas personas, <strong>mandan ellas</strong> y las categorías de arriba no cuentan. '+
-    'A cada una le gana esta evaluación sobre la de su categoría, así que la del grupo '+
-    'puede seguir abierta para las demás.</p>'+
-    '<div class="pan-cats" id="pan-personas"><p class="nota">Cargando...</p></div>'+
-    '</details></div>'+
+
+    /* ───────── QUE MATERIAL: DOS PASOS, NO 85 OPCIONES ─────────
+       Primero la actividad, que es la dimension de arriba del modelo, y
+       despues lo suyo. Ningun desplegable pasa de los 31 dias de octubre, y el
+       tramo imposible («de la Creencia 24 a Daniel 1») no se puede ni escoger,
+       porque los dos extremos se llenan con los capitulos de UNA actividad. */
+    '<div class="pan-grupo" id="g-material" hidden>'+
+      '<div class="pan-grupo-t">Qué material entra'+
+      '<button type="button" class="pan-listo" onclick="panAbre(\'\')">Listo</button></div>'+
+      '<div class="ses-fila"><label class="pan-lb">Actividad'+
+      '<select id="pan-act" onchange="cambiaActPanel()">'+
+        '<option value="">Todas · cada categoría recibe la suya</option>'+
+        Object.keys(ACTIVIDADES).map(function(a){
+          return '<option value="'+a+'">'+esc(ACTIVIDADES[a].icono+' '+ACTIVIDADES[a].nombre)+'</option>';
+        }).join('')+
+      '</select></label>'+
+      '<label class="pan-lb">Material'+
+      '<select id="pan-mat" onchange="cambiaMaterialPanel()"></select></label></div>'+
+    '</div>'+
+
+    /* ───────── CUANTAS, QUE TAN DIFICIL, Y DE QUE FUENTE ───────── */
+    '<div class="pan-grupo" id="g-cuantas" hidden>'+
+      '<div class="pan-grupo-t">Cuántas preguntas y qué tan difícil'+
+      '<button type="button" class="pan-listo" onclick="panAbre(\'\')">Listo</button></div>'+
+      /* Los tamaños de un toque estan arriba, en «Ajustar lo escogido». Aqui
+         queda el campo para cualquier otro numero, que el servidor acota entre
+         5 y 60. */
+      '<div class="ses-fila"><label class="pan-lb" style="flex:0 0 9rem">Otro número'+
+      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" '+
+      'oninput="pintaFrase()"></label></div>'+
+      /* Confusión real: al probar con «Comenzar» (practicar), este número no
+         cambiaba nada, porque practicar usa su PROPIO selector de cantidad en
+         la ficha del capítulo. Este campo solo rige la evaluación con código. */
+      '<p class="nota">Esta cantidad es solo para la evaluación con código (botón <strong>Hacer la evaluación</strong>). Practicar con «Comenzar» tiene su propio número, en la ficha del capítulo.</p>'+
+      '<div class="ses-fila"><label class="pan-lb">Dificultad'+
+      '<select id="pan-eval-nv" onchange="pintaNotaNivel()">'+
+        '<option value="0">La de cada categoría (recomendado)</option>'+
+        '<option value="1">1 · básica</option>'+
+        '<option value="2">2 · intermedia</option>'+
+        '<option value="3">3 · avanzada</option>'+
+      '</select></label></div>'+
+      /* El texto describe LA OPCIÓN SELECCIONADA. Antes era fijo y describía
+         siempre la opción 0: con «1 · básica» escogido, el panel afirmaba algo
+         que no era cierto de lo que estaba puesto. */
+      '<p class="nota" id="pan-nota-nv">'+NOTA_NIVEL[0]+'</p>'+
+      /* El reglamento nombra UNA fuente por actividad. El material de estudio va
+         mas alla a proposito; el examen no tiene por que. */
+      '<label class="ex-sw" style="margin:.2rem 0 .1rem">'+
+        '<input type="checkbox" id="pan-fuente" onchange="pintaAvisoCats();pintaFrase()">'+
+        '<span>Solo la fuente del reglamento<br>'+
+        '<small>Conexión Bíblica: solo Daniel, sin Profetas y Reyes. '+
+        'Creencias: solo la cartilla. La matutina no cambia.</small></span>'+
+      '</label>'+
+    '</div>'+
+
+    /* ───────── A QUIENES LES TOCA ───────── */
+    '<div class="pan-grupo" id="g-quienes" hidden>'+
+      '<div class="pan-grupo-t">A quiénes les toca'+
+      '<button type="button" class="pan-listo" onclick="panAbre(\'\')">Listo</button></div>'+
+      '<p class="nota">Si no marcas ninguna, les toca a todas.</p>'+
+      '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
+        return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'" '+
+          'onchange="pintaAvisoCats();pintaFrase()"> '+
+          '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+esc(CATS[k].edad)+'</small></span></label>';
+      }).join('')+'</div>'+
+      /* POR PERSONA, que es el segundo nivel.
+         Existe por un caso real: se reparten el material y una estudia del 1 al
+         10 y otra del 11 al 20, las dos de la misma categoría y presentando el
+         mismo rato. Con solo categorías eso no se podía, porque el servidor no
+         deja dos abiertas que compartan categoría. Una dirigida a personas le
+         gana a la de su categoría, así que se pueden tener las dos. */
+      '<details class="pan-personas"><summary>O escoger personas, una por una</summary>'+
+      '<p class="nota">Para cuando se reparten el material y cada una presenta su tramo. '+
+      'Si marcas personas, <strong>mandan ellas</strong> y las categorías de arriba no cuentan. '+
+      'A cada una le gana esta evaluación sobre la de su categoría, así que la del grupo '+
+      'puede seguir abierta para las demás.</p>'+
+      '<div class="pan-cats" id="pan-personas"><p class="nota">Cargando...</p></div>'+
+      '</details>'+
+    '</div></div>'+
 
     '<div class="pan-paso"><div class="pan-paso-t">Paso 3 · Abrir</div>'+
+    /* LA BARRA, pegada al boton como en el maquetado: es lo ultimo que se lee
+       antes de tocarlo. Dice lo escogido y CUANTAS PREGUNTAS RECIBE de verdad
+       quien lo va a presentar. Esa cifra faltaba: el panel avisaba cuando una
+       categoria recibia CERO, pero nunca cuantas recibe, asi que pedir 25 de un
+       tramo que solo tiene 10 se descubria el dia del examen. */
+    '<p class="pan-resumen" id="pan-resumen"></p>'+
     '<div class="pan-sw"><button class="btn azul" id="pan-abrir" disabled '+
     'onclick="abreEvaluacion()">Abrir una evaluación</button>'+
     '<span class="nota pan-razon" id="pan-abrir-razon"></span></div>'+
@@ -4285,10 +4381,25 @@ async function pintaPanel(){
     'evaluación en su pantalla. Los exámenes de práctica <strong>siguen abiertos</strong>: '+
     'abrir una evaluación ya no los cierra.</p></div>'+
 
+    /* LA ENTRADA AL REVISOR VA AQUI Y NO EN LOS PASOS.
+       Revisar el banco no es un paso de abrir una evaluacion: es el trabajo de
+       otro dia, el de decidir que preguntas se quedan. Ponerlo como «paso 4»
+       lo haria ver obligatorio antes de abrir. */
+    '<div class="pan-paso"><div class="pan-paso-t">El banco de preguntas</div>'+
+    '<p class="nota">Leer las preguntas una por una y retirar las que no deban '+
+    'salir. Retirar no borra nada: la pregunta se puede devolver, y lo retirado '+
+    'deja de entrar en cualquier examen.</p>'+
+    '<button class="btn azul" onclick="abreRevisor()">Revisar las preguntas</button></div>'+
+
     '<div id="pan-eval-en-curso"></div></div>';
   cargaParticipantes(parts);
+  /* El orden importa: primero las listas del material (que dependen de la
+     actividad), despues la frase, que las lee. */
+  pintaRecetas();
+  cambiaActPanel();
   revisaAbrir(cuantasP);
   pintaAvisoCats();
+  pintaFrase();
   panLatido();
   await cargaResultados();
 }
@@ -4332,7 +4443,7 @@ function capsDeActividad(a){
 function llenaRangoPanel(act,mantener){
   const s1=document.getElementById('pan-r1'),s2=document.getElementById('pan-r2');
   if(!s1||!s2)return;
-  const caps=capsDeActividad(act);
+  const caps=capsDeActividad(act||'cb');
   if(!caps.length)return;
   const prev1=mantener&&caps.some(c=>c.id===s1.value)?s1.value:caps[0].id;
   s1.innerHTML=caps.map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('');
@@ -4343,45 +4454,105 @@ function llenaRangoPanel(act,mantener){
   s2.value=prev2;
 }
 
-/* Cambiar de material reinicia el tramo: el que estuviera puesto era de otra
-   actividad y ahi no existe. */
+/* Un capitulo suelto como alcance. La columna `alcance` de la tabla siempre lo
+   acepto y la practica siempre supo armar «solo Daniel 1»; lo que faltaba era
+   poder pedirlo. Se listan los de LA ACTIVIDAD escogida, y solo los que alguna
+   categoria de verdad examina: abrirle una evaluacion a un capitulo que es solo
+   material de estudio deja a las participantes sin una sola pregunta. */
+/* Los capitulos que ALGUNA categoria de la actividad examina de verdad. Se
+   usa en dos sitios —el desplegable y la cifra de la receta— y por eso es una
+   funcion: con la cuenta escrita aparte, la receta diria «18 capitulos» y el
+   desplegable ofreceria otra cantidad. */
+const capsExaminables=act=>{
+  const cats=CATS_DE_ACT(act||'cb');
+  return capsDeActividad(act||'cb')
+    .filter(c=>cats.some(k=>c.cats.includes(k)&&!soloEstudio(c,k)));
+};
+
+function llenaCapPanel(act,mantener){
+  const s=document.getElementById('pan-cap');
+  if(!s)return;
+  const caps=capsExaminables(act);
+  if(!caps.length){s.innerHTML='';return;}
+  const prev=mantener&&caps.some(c=>c.id===s.value)?s.value:caps[0].id;
+  s.innerHTML=caps.map(c=>'<option value="'+c.id+'">'+
+    esc(c.label+' — '+c.sub)+'</option>').join('');
+  s.value=prev;
+}
+
+/* EL MATERIAL QUE OFRECE CADA ACTIVIDAD. Sale de la actividad y no de una
+   lista fija: la lista fija fue la que le ofrecia «Solo Profetas y Reyes» a
+   quien no lo tiene. Sin actividad escogida solo cabe «todo», porque cualquier
+   otro recorte pertenece a una actividad en particular. */
+/* Cada opcion trae dos etiquetas: la larga explica en el desplegable, donde
+   hay renglon entero, y la corta es la que cabe en el acceso de «Material»,
+   que vive en una tarjeta angosta. Dos textos para lo mismo se separarian, asi
+   que van juntos en la misma linea y salen de aqui los dos. */
+function opcionesMatPanel(act){
+  if(act==='cb')return [['todo','Todo el material de Conexión Bíblica','todo'],
+    ['biblia','Solo el libro de Daniel','solo Daniel'],
+    ['pr','Solo Profetas y Reyes','solo Profetas y Reyes'],
+    ['cap','Un capítulo, el que escojas','un capítulo'],
+    ['tramo','Un tramo: desde… hasta…','un tramo']];
+  if(act==='dm')return [['todo','Todo el cuadernillo de octubre','todo octubre'],
+    ['q1','Solo la primera quincena (1 al 15)','primera quincena'],
+    ['q2','Solo la segunda quincena (16 en adelante)','segunda quincena'],
+    ['cap','Un día, el que escojas','un día'],
+    ['tramo','Un tramo de días: desde… hasta…','un tramo']];
+  if(act==='ec')return [['creencias','Las 28 creencias','las 28'],
+    ['cap','Una creencia, la que escojas','una creencia'],
+    ['tramo','Un tramo de creencias: desde… hasta…','un tramo']];
+  return [['todo','Todo el material de cada categoría','todo']];
+}
+
+/* Cambiar de actividad rehace las tres listas de abajo y MARCA las categorías
+   de esa actividad. Eso ultimo no es cosmetico: abrir «la primera quincena»
+   sin marcar a nadie se la abre tambien a Conexion Biblica y a las creencias,
+   que no tienen ese material, y esas se quedan sin una sola pregunta. Queda
+   marcado, no fijo: el grupo «A quiénes les toca» sigue estando para cambiarlo. */
+function cambiaActPanel(){
+  const act=(document.getElementById('pan-act')||{}).value||'';
+  const m=document.getElementById('pan-mat');
+  if(m){
+    const ops=opcionesMatPanel(act);
+    m.innerHTML=ops.map(o=>'<option value="'+o[0]+'">'+esc(o[1])+'</option>').join('');
+    m.value=ops[0][0];
+  }
+  llenaRangoPanel(act,false);
+  llenaCapPanel(act,false);
+  const suyas=act?CATS_DE_ACT(act):[];
+  [].slice.call(document.querySelectorAll('.pan-cat-ch')).forEach(function(c){
+    c.checked=suyas.indexOf(c.value)>=0;
+  });
+  pintaNotaAlcance();
+}
+
+/* Cambiar de material solo cambia que sub-control se ve; el tramo y el
+   capitulo ya estan llenos con los de esta actividad. */
 function cambiaMaterialPanel(){
-  const sel=(document.getElementById('pan-eval-al')||{}).value||'';
-  if(sel.slice(0,6)==='rango:')llenaRangoPanel(sel.slice(6),false);
   pintaNotaAlcance();
 }
 
 /* Cambiar «Desde» puede dejar «Hasta» atras o en otro tipo: se vuelve a armar
    la lista, que es lo que impide el estado invalido. */
 function cambiaDesdePanel(){
-  const sel=(document.getElementById('pan-eval-al')||{}).value||'';
-  if(sel.slice(0,6)==='rango:')llenaRangoPanel(sel.slice(6),true);
+  llenaRangoPanel((document.getElementById('pan-act')||{}).value||'',true);
   pintaNotaAlcance();
 }
 
-/* El alcance que de verdad se va a mandar: con «rango» escogido son los dos
-   extremos pegados con «..», que es la forma que el servidor valida. */
+/* El alcance que de verdad se manda. Es la UNICA traduccion de lo que hay en
+   pantalla a lo que el servidor guarda, y por eso las recetas escriben en los
+   controles y no aqui: un segundo camino a `alcance` seria un segundo formato
+   que mantener. */
 function alcancePanel(){
-  const sel=(document.getElementById('pan-eval-al')||{}).value||'todo';
-  if(sel.slice(0,6)!=='rango:')return sel;
-  const a=(document.getElementById('pan-r1')||{}).value||'';
-  const b=(document.getElementById('pan-r2')||{}).value||'';
-  return a&&b?(a+'..'+b):'todo';
-}
-
-function opcionesCapPanel(){
-  let h='';
-  for(const a of Object.keys(ACTIVIDADES)){
-    const cats=CATS_DE_ACT(a);
-    const caps=CAPS.filter(c=>c.cats.some(k=>cats.includes(k)));
-    const ofrecibles=caps.filter(c=>cats.some(k=>c.cats.includes(k)&&!soloEstudio(c,k)));
-    if(!ofrecibles.length)continue;
-    h+='<optgroup label="'+esc(ACTIVIDADES[a].nombre)+' · un capítulo">'+
-      ofrecibles.map(c=>'<option value="'+c.id+'">'+
-        esc(ACTIVIDADES[a].icono+' '+c.label+' — '+c.sub)+'</option>').join('')+
-      '</optgroup>';
+  const m=(document.getElementById('pan-mat')||{}).value||'todo';
+  if(m==='cap')return (document.getElementById('pan-cap')||{}).value||'todo';
+  if(m==='tramo'){
+    const a=(document.getElementById('pan-r1')||{}).value||'';
+    const b=(document.getElementById('pan-r2')||{}).value||'';
+    return a&&b?(a+'..'+b):'todo';
   }
-  return h;
+  return m;
 }
 
 /* Un texto por opción de dificultad. Los niveles los calcula fuente/niveles.js:
@@ -4497,14 +4668,14 @@ const FUENTE_TXT={
    RAZÓN A LA VISTA: un botón gris sin explicación es el defecto que ya se
    arregló en el paso 3. */
 /* GUARDA DE ULTIMO RECURSO, no la forma de avisar.
-   Desde que «Hasta» se arma a partir de «Desde», un tramo invalido no se puede
-   escoger, asi que esto no deberia disparar nunca. Se queda porque apaga el
-   boton de abrir si alguien cambia los desplegables por otro camino: una
-   evaluacion abierta con un tramo que no existe no le da preguntas a nadie, y
-   el director se entera el dia del examen. */
+   Desde que «Hasta» se arma a partir de «Desde» y los dos salen de UNA
+   actividad, un tramo invalido no se puede escoger, asi que esto no deberia
+   disparar nunca. Se queda porque apaga el boton de abrir si alguien cambia
+   los desplegables por otro camino: una evaluacion abierta con un tramo que no
+   existe no le da preguntas a nadie, y el director se entera el dia del examen. */
 function motivoRangoMalo(){
-  const sel=(document.getElementById('pan-eval-al')||{}).value||'';
-  if(sel.slice(0,6)!=='rango:')return '';
+  const m=(document.getElementById('pan-mat')||{}).value||'';
+  if(m!=='tramo')return '';
   const a=(document.getElementById('pan-r1')||{}).value||'';
   const b=(document.getElementById('pan-r2')||{}).value||'';
   if(!a||!b)return 'Falta escoger los dos extremos del tramo.';
@@ -4514,42 +4685,244 @@ function motivoRangoMalo(){
 }
 
 function pintaNotaAlcance(){
-  const s=document.getElementById('pan-eval-al'),p=document.getElementById('pan-nota-al');
-  if(!s||!p)return;
-  const zr=document.getElementById('pan-rango');
-  const esRango=s.value.slice(0,6)==='rango:';
-  if(zr)zr.hidden=!esRango;
-  if(esRango){
-    /* Se llenan aqui y no al armar el panel: dependen de la actividad que se
-       acaba de escoger, y `mantener` en falso los reinicia al cambiar de
-       actividad, que es cuando lo que estaba puesto ya no aplica. */
-    /* `mantener` en verdadero: esta funcion se llama tambien al cambiar
-       «Desde», y reiniciar aqui borraria lo que el director acaba de escoger.
-       Quien reinicia es cambiaMaterialPanel(), que es el unico momento en que
-       lo puesto ya no aplica. */
-    llenaRangoPanel(s.value.slice(6),true);
+  const m=document.getElementById('pan-mat'),p=document.getElementById('pan-nota-al');
+  if(!m||!p)return;
+  const zc=document.getElementById('pan-zona-cap'),zr=document.getElementById('pan-rango');
+  if(zc)zc.hidden=m.value!=='cap';
+  if(zr)zr.hidden=m.value!=='tramo';
+
+  if(m.value==='tramo'){
     const mal=motivoRangoMalo();
     if(mal){
       p.innerHTML='<span style="color:var(--rojo)">'+esc(mal)+'</span>';
-      pintaAvisoCats();revisaAbrir();return;
+      pintaAvisoCats();revisaAbrir();pintaFrase();return;
     }
-    const r=rangoDe(alcancePanel());
-    p.textContent=textoRango(r)+'. A una categoría que no tenga ese material no le '+
-      'sale ninguna pregunta.';
-    pintaAvisoCats();revisaAbrir();return;
+    p.textContent=textoRango(rangoDe(alcancePanel()))+'. A una categoría que no tenga '+
+      'ese material no le sale ninguna pregunta.';
+    pintaAvisoCats();revisaAbrir();pintaFrase();return;
   }
   /* Con un capitulo suelto no hay texto escrito a mano: se arma con el dato,
      y se dice QUE CATEGORIAS lo examinan, que es lo que el director necesita
      saber antes de marcar a quien le toca. */
-  const c=CAPS.find(x=>x.id===s.value);
+  const c=m.value==='cap'?CAPS.find(x=>x.id===alcancePanel()):null;
   if(c){
     const cats=Object.keys(CATS).filter(k=>c.cats.includes(k)&&!soloEstudio(c,k));
     p.textContent='Solo '+c.label+' — '+c.sub+'. Lo examinan: '+
       (cats.length?cats.map(k=>CATS[k].nombre+' ('+(ACTIVIDADES[CATS[k].act]||{}).nombre+')').join(', ')
                   :'ninguna categoría')+
       '. A una categoría que no lo tenga no le sale ninguna pregunta.';
-  } else p.textContent=NOTA_ALCANCE[s.value]||'';
-  pintaAvisoCats();revisaAbrir();
+  } else p.textContent=NOTA_ALCANCE[m.value]||'';
+  pintaAvisoCats();revisaAbrir();pintaFrase();
+}
+
+/* ───────── LAS RECETAS Y LA FRASE ─────────
+   Una receta es un punto de partida, no un modo aparte: escribe en los mismos
+   controles y desde ahi se puede cambiar todo. Por eso no hay estado «estoy en
+   la receta X» que pueda quedar desincronizado del formulario; lo unico que se
+   guarda es cual quedo resaltada. */
+const RECETAS=[
+  {id:'campamento',i:'📘',t:'El examen del campamento',act:'',mat:'todo',
+   d:()=>'Todo el material de cada categoría · a las '+Object.keys(CATS).length+' categorías'},
+  {id:'daniel',i:'📖',t:'Un capítulo de Conexión Bíblica',act:'cb',mat:'cap',
+   d:()=>'Escoges cuál · '+capsExaminables('cb').length+' capítulos con examen'},
+  {id:'matutina',i:'🌅',t:'Un tramo de la matutina',act:'dm',mat:'tramo',
+   d:()=>'Desde y hasta, dentro de los '+capsDeActividad('dm').length+' días'},
+  {id:'creencias',i:'✝️',t:'Las 28 creencias',act:'ec',mat:'creencias',
+   d:()=>'A las '+CATS_DE_ACT('ec').length+' categorías de En esto creemos'},
+  {id:'yo',i:'⚙️',t:'Armarlo yo',act:null,mat:null,
+   d:()=>'Material, cantidad, dificultad y a quiénes'},
+];
+let panReceta='';
+/* Que grupo de controles esta abierto: '', 'material', 'cuantas', 'quienes' o
+   'todo'. Uno a la vez, salvo «Armarlo yo», que los abre los tres. */
+let panEdita='';
+
+function pintaRecetas(){
+  const d=document.getElementById('pan-recetas');
+  if(!d)return;
+  d.innerHTML=RECETAS.map(function(r){
+    /* LA ESCOGIDA DICE LO QUE HAY PUESTO, no su descripcion generica: es lo
+       que el maquetado marcaba en naranja. «Un tramo de la matutina» sin mas
+       no distingue el tramo del 2 al 18 del tramo de todo octubre, y esa es
+       justo la diferencia que hay que ver antes de abrir. */
+    const sub=(panReceta===r.id&&r.act!==null)
+      ? textoAlcancePanel(alcancePanel())+' · '+
+        ((document.getElementById('pan-eval-n')||{}).value||'15')+' preguntas'
+      : r.d();
+    return '<button type="button" class="pan-receta'+(panReceta===r.id?' on':'')+
+      (r.id==='yo'?' otra':'')+'" onclick="ponReceta(\''+r.id+'\')">'+
+      '<span class="pan-receta-i">'+r.i+'</span>'+
+      '<span class="pan-receta-x"><strong>'+esc(r.t)+'</strong>'+
+      '<small>'+esc(sub)+'</small></span></button>';
+  }).join('');
+}
+
+function ponReceta(id){
+  const r=RECETAS.find(x=>x.id===id);
+  if(!r)return;
+  panReceta=id;
+  if(r.act===null){pintaRecetas();panAbre('todo');return;}
+  const a=document.getElementById('pan-act');
+  if(a){a.value=r.act;cambiaActPanel();}
+  const m=document.getElementById('pan-mat');
+  if(m){m.value=r.mat;}
+  pintaNotaAlcance();
+  pintaRecetas();
+  /* NINGUNA receta abre un cajon: lo que cada una deja por escoger —el tramo o
+     el capitulo— ya esta a la vista en «Ajustar lo escogido». Abrir ademas el
+     cajon del material mostraba los mismos dos desplegables de actividad y
+     material que la receta acaba de poner, que es pedirle al director que
+     confirme algo que no tiene que decidir. */
+  panAbre('');
+}
+
+function panAbre(g){
+  panEdita=(panEdita===g&&g!=='todo')?'':g;
+  ['material','cuantas','quienes'].forEach(function(x){
+    const e=document.getElementById('g-'+x);
+    if(e)e.hidden=!(panEdita===x||panEdita==='todo');
+  });
+  pintaFrase();
+}
+
+function ponCuantasPanel(n){
+  const e=document.getElementById('pan-eval-n');
+  if(e)e.value=n;
+  pintaFrase();
+}
+
+/* A quiénes, en palabras. Las personas mandan sobre las categorías, igual que
+   en el servidor: decirlo al revés aquí haría que la frase mintiera. */
+function textoQuienes(){
+  const personas=personasEval();
+  if(personas.length){
+    const nn=personas.map(function(id){
+      const x=panParts.find(function(y){return y.id===id;});
+      return x?x.nombre:'';
+    }).filter(Boolean);
+    return nn.length<=3?nn.join(', '):(nn.length+' personas escogidas');
+  }
+  const cats=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
+    .filter(function(c){return c.checked;}).map(function(c){return c.value;});
+  if(!cats.length||cats.length===Object.keys(CATS).length)return 'todas las categorías';
+  /* La actividad se nombra UNA vez cuando todas las marcadas son de la misma.
+     La regla sigue siendo la de siempre —«Menores» solo no identifica nada,
+     porque existe en dos actividades—, pero repetir el icono en cada nombre
+     alargaba la frase hasta partirla en tres renglones en un celular. */
+  const acts=[...new Set(cats.map(function(c){return CATS[c].act;}))];
+  if(acts.length===1){
+    const nom=(ACTIVIDADES[acts[0]]||{}).nombre;
+    /* Si estan TODAS las de esa actividad, se dice asi y no se listan: «Padres
+       y consejeros» ya lleva una «y» adentro, y cuatro nombres pegados con
+       comas se vuelven un renglon que nadie lee. */
+    if(cats.length===CATS_DE_ACT(acts[0]).length)
+      return nom+': las '+cats.length+' categorías';
+    return nom+': '+cats.map(function(c){return CATS[c].nombre;}).join(', ');
+  }
+  return cats.map(catConActividad).join(', ');
+}
+
+/* ───────── LO ESCOGIDO, EN PALABRAS ─────────
+   POR QUE NO ES UN PARRAFO CON PALABRAS TOCABLES
+   El maquetado B lo dibujaba asi y asi se construyo primero. Medido en 390 px,
+   no funciona: un <button> no fluye como texto —aunque se le pida
+   `display:inline`, el navegador lo calcula `inline-block`—, asi que un valor
+   largo («De 2 de octubre a 18 de octubre», «Devoción Matutina: Menores y
+   Aventureros») no se parte por donde se parte la frase: se va entero al
+   renglon siguiente y deja colgando el separador y el punto final.
+
+   Queda un boton por parte, con la etiqueta encima y el valor debajo: dice lo
+   mismo —que hay puesto, y se toca para cambiarlo— y aguanta cualquier largo.
+
+   LOS VALORES SALEN DE LAS MISMAS FUNCIONES que usa el resto del panel
+   (textoAlcancePanel, el propio campo, textoQuienes): un segundo texto para lo
+   mismo se separa del primero en el primer cambio. */
+/* El acceso de material nombra la ACTIVIDAD y la opcion escogida, no el
+   alcance en palabras: eso ya lo dicen la receta y la barra de abajo, y
+   repetirlo tres veces no agrega nada. Lo que no se ve en ninguna otra parte
+   es de que actividad es. */
+const textoMaterialPanel=()=>{
+  const a=(document.getElementById('pan-act')||{}).value||'';
+  const m=(document.getElementById('pan-mat')||{}).value||'todo';
+  const op=opcionesMatPanel(a).find(x=>x[0]===m);
+  return (a?(ACTIVIDADES[a]||{}).nombre:'Todas las actividades')+
+    (op?' · '+(op[2]||op[1]):'');
+};
+
+const FILAS_EVAL=[
+  ['material','Material',textoMaterialPanel],
+  ['cuantas','Preguntas',()=>((document.getElementById('pan-eval-n')||{}).value||'15')],
+  ['quienes','A quiénes',()=>textoQuienes()],
+];
+
+function pintaFrase(){
+  const d=document.getElementById('pan-acc');
+  if(!d)return;
+  d.innerHTML=FILAS_EVAL.map(function(f){
+    return '<button type="button" class="pan-fila'+(panEdita===f[0]?' on':'')+
+      '" onclick="panAbre(\''+f[0]+'\')">'+
+      '<span class="pan-fila-k">'+esc(f[1])+'</span>'+
+      '<span class="pan-fila-v">'+esc(f[2]())+'</span>'+
+      '<span class="pan-fila-x" aria-hidden="true">✎</span></button>';
+  }).join('');
+  /* El tamaño puesto se marca en su propio chip. Si es uno que no esta entre
+     los cinco (lo escribio en «Otro número»), no se marca ninguno, que es la
+     verdad: ninguno de los cinco es el que esta. */
+  const n=(document.getElementById('pan-eval-n')||{}).value||'';
+  [].slice.call(document.querySelectorAll('#pan-chips .pan-chip')).forEach(function(c){
+    c.classList.toggle('on',c.getAttribute('data-n')===String(n));
+  });
+  pintaRecetas();
+  pintaResumen();
+}
+
+/* ───────── CUANTAS PREGUNTAS RECIBE DE VERDAD ─────────
+   MECANISMO
+   La cantidad que el director pide es un tope, no una promesa: el examen se
+   arma con lo que haya en el pool de ESA categoria con ESE material. Pedir 25
+   de un tramo que solo tiene 10 no falla en ninguna parte, simplemente salen
+   10, y eso se descubria el dia del examen.
+   Se cuenta con cuantasPara(), que es la misma funcion que ya usa el aviso de
+   combinacion vacia, asi que la cifra de la barra y la del aviso no se pueden
+   separar. */
+function catsDestino(){
+  const personas=personasEval();
+  if(personas.length)return [...new Set(personas.map(function(id){
+    const x=panParts.find(function(y){return y.id===id;});
+    return x?x.categoria:'';
+  }).filter(Boolean))];
+  const m=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
+    .filter(function(c){return c.checked;}).map(function(c){return c.value;});
+  return m.length?m:Object.keys(CATS);
+}
+
+const RESUMEN_EVAL='{QUIENES} · {MATERIAL} · {CUANTAS} preguntas. {DISPONIBLES}';
+
+function pintaResumen(){
+  const p=document.getElementById('pan-resumen');
+  if(!p)return;
+  const al=alcancePanel();
+  const cats=catsDestino();
+  const n=cats.map(function(c){return cuantasPara(c,al);}).filter(function(x){return x>0;});
+  const min=n.length?Math.min.apply(null,n):0;
+  const max=n.length?Math.max.apply(null,n):0;
+  const disp=!n.length?'Con este material no hay preguntas para nadie.'
+    :min===max?('Reciben <strong>'+min+'</strong> preguntas disponibles.')
+    :('Reciben entre <strong>'+min+'</strong> y <strong>'+max+'</strong> preguntas disponibles.');
+  const pide=Number((document.getElementById('pan-eval-n')||{}).value||15);
+  /* PEDIR MAS DE LO QUE HAY NO FALLA: salen las que haya. Por eso se avisa
+     aqui, con la cifra al lado de la que lo causa, y no se bloquea: un examen
+     de 10 cuando se pidieron 25 puede ser exactamente lo que el director
+     quiere. */
+  const corto=n.length&&min<pide
+    ? ' <span style="color:var(--rojo)">Pediste '+pide+
+      ', así que a quien menos tenga le saldrán '+min+'.</span>'
+    : '';
+  p.innerHTML=aplicaMarcas(RESUMEN_EVAL,{
+    QUIENES:esc(textoQuienes()),
+    MATERIAL:esc(textoAlcancePanel(al)),
+    CUANTAS:esc(String(pide)),
+    DISPONIBLES:disp+corto});
 }
 
 const NOTA_NIVEL={
@@ -4562,6 +4935,9 @@ const NOTA_NIVEL={
     'más exigente del banco; en las categorías de 4 a 6 años no aplica.'
 };
 
+/* El texto describe LA OPCION SELECCIONADA. Antes era fijo y describia siempre
+   la opcion 0: con «1 · basica» escogido, el panel afirmaba algo que no era
+   cierto de lo que estaba puesto. */
 function pintaNotaNivel(){
   const s=document.getElementById('pan-eval-nv'),p=document.getElementById('pan-nota-nv');
   if(!s||!p)return;
@@ -4925,6 +5301,247 @@ async function borraParticipante(id){
     await srvFetch('/panel/participantes/'+encodeURIComponent(id)+'/borrar',{method:'POST'});
     await cargaParticipantes();
   }catch(e){alert(e.message||'No se pudo conectar');}
+}
+
+
+/* ═══════════ EL REVISOR DEL BANCO ═══════════
+   QUE ES
+   La pantalla donde el director LEE las preguntas y decide cuales se quedan.
+   Hasta aqui el banco solo se podia ver de a quince y al azar, dentro de un
+   examen: ver las 1.378 completas costaba decenas de corridas y no habia forma
+   de sacar una mala.
+
+   QUE ES RETIRAR
+   Escribir en el servidor «esta no entra mas». No borra nada: la pregunta
+   sigue en el HTML, se puede devolver, y queda el registro de quien, cuando y
+   por que. El generador no se toca.
+
+   DE DONDE SALE CADA COLUMNA, para que ninguna cifra este escrita a mano:
+   el capitulo y su nombre de CAPS, el tipo de q.t, el nivel de q.nv (lo
+   calcula fuente/niveles.js al generar), y la fuente de esComplementaria(),
+   que es la misma regla que aplica el interruptor del reglamento. */
+
+/* El filtro es UN objeto y no seis variables sueltas: asi «limpiar» es una
+   linea y agregar un criterio no obliga a tocar tres funciones. */
+const REV_F0={cat:'',cap:'',t:'',nv:'',fu:'',est:'',q:''};
+let revF=Object.assign({},REV_F0);
+let revTope=40;
+let revRet=[];        // lo que dice el servidor: clave, quien, motivo, cuando
+let revMapa={};       // clave -> esa fila, para pintar el porque sin recorrer
+let revCaja='';       // la clave cuya caja de motivo esta abierta, o ''
+let revMotivo='';     // lo escrito en esa caja
+
+const REV_TIPO={mc:'Selección múltiple',tf:'Verdadero o falso',fill:'Completar'};
+const REV_NIVEL={1:'1 · básica',2:'2 · intermedia',3:'3 · avanzada'};
+/* Las razones de un toque salen de las que de verdad se usan al revisar. Que
+   sean fijas es el punto: escribir el motivo en el celular es lo que hace
+   abandonar la revision a la tercera pregunta. */
+const REV_RAZONES=['Repetida','Mal redactada','Fuera del reglamento','Respuesta dudosa'];
+
+/* La respuesta correcta, para poder juzgar la pregunta sin abrirla. Sin esto
+   el director leeria el enunciado y tendria que adivinar que se espera. */
+function revRespuesta(q){
+  if(q.t==='mc')return q.o?q.o[q.a]:'';
+  if(q.t==='tf')return (q.a?'Verdadero':'Falso')+(q.e?' — '+q.e:'');
+  return (q.p||[]).filter(x=>x.b).map(x=>x.b).join(' · ');
+}
+const revTexto=q=>q.q||q.ins||'';
+
+/* Los capitulos que examina una categoria. Es la MISMA regla de bancoDe()
+   —las suyas, sin las que son solo material de estudio—, pero sin el filtro de
+   retiradas: aqui hay que poder ver justamente las que ya se retiraron. */
+function revCapsDe(cat){
+  return CAPS.filter(c=>c.cats.includes(cat)&&!soloEstudio(c,cat));
+}
+
+/* Las preguntas que pasan el filtro. Se recorre BANCO entero, que es el banco
+   crudo del artefacto: el revisor tiene que ver lo retirado tanto como lo
+   vivo. */
+function revFilas(){
+  let b=BANCO;
+  if(revF.cat){
+    const ids=revCapsDe(revF.cat).map(c=>c.id);
+    b=b.filter(q=>ids.includes(q.cap));
+  }
+  if(revF.cap)b=b.filter(q=>q.cap===revF.cap);
+  if(revF.t)b=b.filter(q=>q.t===revF.t);
+  if(revF.nv)b=b.filter(q=>String(q.nv||1)===revF.nv);
+  if(revF.fu)b=b.filter(q=>(esComplementaria(q)?'c':'o')===revF.fu);
+  if(revF.est)b=b.filter(q=>(retiradas.has(claveQ(q))?'r':'v')===revF.est);
+  if(revF.q){
+    const t=revF.q.toLowerCase();
+    b=b.filter(q=>(revTexto(q)+' '+revRespuesta(q)).toLowerCase().indexOf(t)>=0);
+  }
+  return b;
+}
+
+/* LAS CIFRAS SALEN DEL DATO. El texto lleva marcas y se rellena con lo que se
+   acaba de contar, igual que el manual: una cifra escrita a mano en esta
+   pantalla mentiria en el primer retiro. */
+const REV_CUENTA='El banco tiene {TOTAL} preguntas y hay {RET} retiradas. '+
+  'Con este filtro se ven {VISTA}, de las cuales {VISTA_RET} están retiradas.';
+
+function pintaRevisor(){
+  const d=document.getElementById('cb-revisor');
+  if(!d)return;
+  if(!srvYo||srvYo.rol!=='director'){
+    d.innerHTML='<div class="card"><p class="nota">Esta pantalla es del director. '+
+      'Entra con la clave en <strong>Examen · La evaluación del día</strong>.</p>'+
+      '<button class="btn gho" onclick="ir(\'examen\')">Volver al examen</button></div>';
+    return;
+  }
+  const filas=revFilas();
+  const vistaRet=filas.filter(q=>retiradas.has(claveQ(q))).length;
+  const cuenta=aplicaMarcas(REV_CUENTA,{
+    TOTAL:String(BANCO.length),RET:String(retiradas.size),
+    VISTA:String(filas.length),VISTA_RET:String(vistaRet)});
+
+  /* Los capitulos que se ofrecen dependen de la categoria escogida: ofrecer
+     los 77 con una categoria puesta deja escoger un capitulo que esa categoria
+     no examina, y la lista sale vacia sin decir por que. Es la misma regla del
+     tramo en el panel: lo invalido no se ofrece. */
+  const caps=revF.cat?revCapsDe(revF.cat):CAPS;
+  const sel=(id,campo,opciones)=>'<select id="'+id+'" onchange="revPon(\''+campo+'\',this.value)">'+
+    opciones.map(o=>'<option value="'+esc(o[0])+'"'+(revF[campo]===o[0]?' selected':'')+'>'+
+      esc(o[1])+'</option>').join('')+'</select>';
+
+  const cats=[['','Todas las categorías']].concat(
+    Object.keys(CATS).map(k=>[k,catLarga(k)]));
+
+  d.innerHTML='<div class="card">'+
+    '<h2>Revisar las preguntas</h2>'+
+    '<p class="nota">'+cuenta+'</p>'+
+    '<div class="rb-filtros">'+
+      /* «El examen de» es la vista POR EXAMEN: pone en pantalla exactamente
+         las preguntas que esa categoria puede recibir, con la misma regla con
+         la que se arma su examen. */
+      '<label class="pan-lb">El examen de'+sel('rb-cat','cat',cats)+'</label>'+
+      '<label class="pan-lb">Capítulo'+sel('rb-cap','cap',
+        [['','Todos']].concat(caps.map(c=>[c.id,c.label+' — '+c.sub])))+'</label>'+
+      '<label class="pan-lb">Tipo'+sel('rb-t','t',
+        [['','Todos'],['mc',REV_TIPO.mc],['tf',REV_TIPO.tf],['fill',REV_TIPO.fill]])+'</label>'+
+      '<label class="pan-lb">Nivel'+sel('rb-nv','nv',
+        [['','Todos'],['1',REV_NIVEL[1]],['2',REV_NIVEL[2]],['3',REV_NIVEL[3]]])+'</label>'+
+      '<label class="pan-lb">Fuente'+sel('rb-fu','fu',
+        [['','Todas'],['o','Del reglamento'],['c','Complementaria']])+'</label>'+
+      '<label class="pan-lb">Estado'+sel('rb-est','est',
+        [['','Todas'],['v','A la vista'],['r','Retiradas']])+'</label>'+
+    '</div>'+
+    '<div class="ses-fila"><input id="rb-q" placeholder="Buscar en el enunciado" '+
+      'value="'+esc(revF.q)+'" oninput="revBusca(this.value)">'+
+      '<button class="btn gho" onclick="revLimpia()">Limpiar</button></div>'+
+    '</div>'+
+    '<div class="rb-lista">'+
+      (filas.length?filas.slice(0,revTope).map(revFila).join('')
+        :'<p class="nota">Ninguna pregunta cumple este filtro.</p>')+
+    '</div>'+
+    (filas.length>revTope
+      ?'<button class="btn gho rb-mas" onclick="revMas()">Ver '+
+        Math.min(40,filas.length-revTope)+' más — faltan '+(filas.length-revTope)+'</button>'
+      :'');
+}
+
+/* Una fila. Lo retirado NO se esconde: se ve tachado y con el motivo, porque
+   la decision de devolverlo se toma leyendo por que se saco. */
+function revFila(q){
+  const k=claveQ(q);
+  const ret=retiradas.has(k);
+  const r=revMapa[k];
+  const cap=(buscaItem(q.cap)||{}).label||q.cap;
+  const etq=[cap,REV_TIPO[q.t]||q.t,REV_NIVEL[q.nv||1]||'',
+    esComplementaria(q)?'Complementaria':'Del reglamento'];
+  return '<div class="rb-it'+(ret?' fuera':'')+'">'+
+    '<div class="rb-etq">'+etq.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>'+
+    '<div class="rb-q">'+esc(revTexto(q))+'</div>'+
+    '<div class="rb-a">'+esc(revRespuesta(q))+'</div>'+
+    (ret?'<div class="rb-porque">Retirada'+
+      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
+      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>':'')+
+    (revCaja===k?revCajaMotivo(k):
+      '<div class="rb-acc">'+(ret
+        ?'<button class="btn gho" onclick="revDevuelve(\''+k+'\')">Devolver al banco</button>'
+        :'<button class="btn gho" onclick="revAbreCaja(\''+k+'\')">Retirar</button>')+
+      '</div>')+
+    '</div>';
+}
+
+/* La caja del motivo se abre EN LA FILA, no en un cuadro del navegador: un
+   prompt() tapa la pregunta que se esta juzgando, que es justo lo que hay que
+   estar leyendo al escribir el motivo. */
+function revCajaMotivo(k){
+  return '<div class="rb-caja">'+
+    '<div class="rb-razones">'+REV_RAZONES.map(x=>
+      '<button type="button" class="rb-raz'+(revMotivo===x?' on':'')+'" '+
+      'onclick="revRazon(\''+esc(x)+'\')">'+esc(x)+'</button>').join('')+'</div>'+
+    '<input id="rb-motivo" maxlength="120" placeholder="Por qué (opcional)" '+
+      'value="'+esc(revMotivo)+'" oninput="revEscribe(this.value)">'+
+    '<div class="rb-acc">'+
+      '<button class="btn nar" onclick="revRetira(\''+k+'\')">Retirar</button>'+
+      '<button class="btn gho" onclick="revCierraCaja()">Cancelar</button>'+
+    '</div></div>';
+}
+
+function revPon(campo,valor){
+  revF[campo]=valor;
+  /* Cambiar de categoria puede dejar puesto un capitulo que esa categoria no
+     examina. Se limpia en vez de dejarlo: un filtro que no puede dar resultados
+     no es un filtro, es una pantalla vacia sin explicacion. */
+  if(campo==='cat'&&revF.cap&&!revCapsDe(valor||'').some(c=>c.id===revF.cap)&&valor)revF.cap='';
+  revTope=40;pintaRevisor();
+}
+function revBusca(v){revF.q=String(v||'');revTope=40;pintaRevisor();}
+function revLimpia(){revF=Object.assign({},REV_F0);revTope=40;pintaRevisor();}
+function revMas(){revTope+=40;pintaRevisor();}
+function revAbreCaja(k){revCaja=k;revMotivo='';pintaRevisor();}
+function revCierraCaja(){revCaja='';revMotivo='';pintaRevisor();}
+function revRazon(x){revMotivo=revMotivo===x?'':x;pintaRevisor();}
+/* Escribir NO repinta: repintar en cada tecla vuelve a armar el input y el
+   cursor salta al principio. Se guarda y ya; la pantalla se repinta al
+   retirar. */
+function revEscribe(v){revMotivo=String(v||'');}
+
+/* El servidor devuelve la lista completa ya actualizada, asi que la pantalla
+   no adivina como quedo: la copia. */
+function revAplica(lista){
+  revRet=lista||[];
+  revMapa={};for(const r of revRet)revMapa[r.clave]=r;
+  const claves=revRet.map(r=>r.clave);
+  ponRetiradas(claves);retGuarda(claves);
+}
+
+async function revCarga(){
+  try{revAplica((await srvFetch('/panel/retiradas')).retiradas);}catch(e){}
+}
+
+async function revRetira(k){
+  try{
+    const d=await srvFetch('/panel/retiradas',{method:'POST',
+      body:JSON.stringify({clave:k,motivo:revMotivo})});
+    revAplica(d.retiradas);
+  }catch(e){alert(e.message||'No se pudo conectar');}
+  revCaja='';revMotivo='';
+  pintaRevisor();
+  /* Las pantallas que muestran cuentas del banco se quedan con la cifra vieja
+     si no se les avisa: el menu del examen dice cuantas preguntas hay. */
+  if(typeof pintaExInicio==='function')pintaExInicio();
+}
+
+async function revDevuelve(k){
+  try{
+    const d=await srvFetch('/panel/retiradas',{method:'POST',
+      body:JSON.stringify({clave:k,accion:'restaurar'})});
+    revAplica(d.retiradas);
+  }catch(e){alert(e.message||'No se pudo conectar');}
+  pintaRevisor();
+  if(typeof pintaExInicio==='function')pintaExInicio();
+}
+
+/* La puerta del revisor. Se carga el detalle ANTES de pintar: sin el, las
+   retiradas se verian sin el motivo ni la fecha, que es la mitad del dato. */
+async function abreRevisor(){
+  ir('revisor');
+  await revCarga();
+  pintaRevisor();
 }
 
 /* Arranque: se le pregunta al servidor sin bloquear la pantalla. Si no hay

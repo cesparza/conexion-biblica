@@ -235,6 +235,18 @@
   </div>
 </div>
 
+<!-- EL REVISOR DEL BANCO. Pantalla propia y sin pestana, como la ayuda: son
+     1.378 filas con su propio filtro y su propio scroll, y dentro del
+     asistente de tres pasos del director enterrarian el paso 2. Se entra desde
+     el panel, que es donde el director ya esta, y la guarda de verdad la pone
+     pintaRevisor(): sin sesion de director no pinta nada. -->
+<div id="p-revisor" class="pantalla">
+  <div class="rb-cab">
+    <button class="btn gho" onclick="ir('examen')">← Volver al panel</button>
+  </div>
+  <div id="cb-revisor"></div>
+</div>
+
 <div id="p-estudio" class="pantalla">
   <h2 class="h2-suelto" style="color:var(--azul);margin-bottom:.9rem"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg><span>Material de estudio</span></h2>
   <div class="caps" id="lista-caps"></div>

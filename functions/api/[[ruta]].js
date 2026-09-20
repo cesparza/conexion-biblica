@@ -144,6 +144,43 @@ const semillaNueva = () => {
   return String(b[0]) + String(b[1] % 100000);
 };
 
+/* ───────── LAS PREGUNTAS RETIRADAS DEL BANCO ─────────
+   El banco vive en el HTML generado, así que el servidor no sabe qué
+   preguntas existen: guarda un REGISTRO DE HECHOS sobre claves. Cada retiro y
+   cada devolución es una fila; el estado de una pregunta es su última fila.
+
+   La forma de la clave es un contrato con la app, igual que el de `alcance`:
+   capítulo (d1, pr39, m05, cr10) + punto + el hash del enunciado en base 36.
+   Se valida la forma, nunca la existencia. */
+const FORMA_CLAVE = /^[a-z]{1,3}[0-9]{1,2}\.[0-9a-z]{1,10}$/;
+
+/* La última fila de cada clave, opcionalmente A UNA FECHA.
+   `corte` es lo que mantiene idéntica una evaluación ya abierta: se le
+   pregunta al registro cómo estaba el banco cuando esa evaluación se creó, así
+   que retirar una pregunta a mitad de mañana no le cambia el examen a la que
+   todavía no lo ha hecho. Sin corte, el estado de ahora mismo.
+
+   El desempate es `rowid` y no la hora: `cuando` tiene resolución de segundo y
+   dos acciones seguidas sobre la misma clave caben en el mismo segundo. El
+   rowid siempre crece. */
+async function retiradas(env, corte) {
+  const sql = corte
+    ? 'SELECT r.clave, r.quien, r.motivo, r.cuando FROM pregunta_retirada r ' +
+      "WHERE r.accion = 'retirar' AND r.cuando <= ? AND r.rowid = " +
+      '(SELECT MAX(r2.rowid) FROM pregunta_retirada r2 WHERE r2.clave = r.clave AND r2.cuando <= ?) ' +
+      'ORDER BY r.cuando DESC'
+    : 'SELECT r.clave, r.quien, r.motivo, r.cuando FROM pregunta_retirada r ' +
+      "WHERE r.accion = 'retirar' AND r.rowid = " +
+      '(SELECT MAX(r2.rowid) FROM pregunta_retirada r2 WHERE r2.clave = r.clave) ' +
+      'ORDER BY r.cuando DESC';
+  const st = env.DB.prepare(sql);
+  const { results } = await (corte ? st.bind(corte, corte) : st).all();
+  return results || [];
+}
+
+/** Solo las claves: es lo que necesita quien arma un examen. */
+const clavesRetiradas = async (env, corte) => (await retiradas(env, corte)).map(r => r.clave);
+
 /**
  * Límite de intentos de código por IP.
  * NO bajarlo: el día del evento todos están en el mismo wifi y salen por UNA
@@ -183,11 +220,18 @@ export async function onRequest(context) {
          para todas las categorías. */
       const algunaParaTodas = abiertas.some(ev =>
         !partsDeFila(ev).length && (ev.categorias || '*') === '*');
+      /* LAS RETIRADAS VIAJAN AQUÍ, y no por una ruta propia, porque este
+         endpoint ya es el que todos los aparatos consultan al arrancar y antes
+         de cada examen: la app las cachea igual que cachea qué hay abierto, y
+         sin señal sigue filtrando con lo último que supo. Son claves — el
+         mismo hash del enunciado que ya está en el HTML público —, así que no
+         revelan nada que no se pueda leer en el artefacto. */
       return json({
         practica: !algunaParaTodas,
         evaluaciones: abiertas.map(ev => ({
           id: ev.id, titulo: ev.titulo, paraTodas: (ev.categorias || '*') === '*',
         })),
+        retiradas: await clavesRetiradas(env),
         hora: new Date().toISOString(),
       });
     }
@@ -287,10 +331,17 @@ export async function onRequest(context) {
       const hecho = await env.DB.prepare(
         'SELECT nota, total FROM intento WHERE participante_id = ? AND evaluacion_id = ?'
       ).bind(sesion.persona_id, ev.id).first();
+      /* LAS RETIRADAS QUE VAN EN LA RECETA SON LAS DE CUANDO SE ABRIÓ, no las
+         de ahora. La evaluación tiene que salir IDÉNTICA para todas: el examen
+         se arma en el navegador con la semilla del servidor sobre el banco
+         menos las retiradas, así que si esa lista cambiara a mitad de mañana,
+         la que entra después armaría otro examen con la misma semilla y el
+         director estaría comparando notas de exámenes distintos. */
       return json({ evaluacion: {
         id: ev.id, titulo: ev.titulo, alcance: ev.alcance,
         cuantas: ev.cuantas, nivel: ev.nivel, semilla: ev.semilla,
         solo_fuente: ev.solo_fuente ? 1 : 0,
+        retiradas: await clavesRetiradas(env, ev.creada_en),
       }, hecha: !!hecho, nota: hecho ? hecho.nota : null, total: hecho ? hecho.total : null });
     }
 
@@ -542,6 +593,38 @@ export async function onRequest(context) {
       if (!r) return error('Ese intento no existe.', 404);
       await auditar(env, sesion.cuenta_id, 'ver_revision', 'intento', iid, ipHash);
       return json({ intento: r });
+    }
+
+    /* ───────── el revisor del banco ─────────
+       Retirar una pregunta no edita el artefacto: escribe una fila. Por eso
+       es reversible y por eso queda registro. La app se trae la lista y la
+       aplica al armar cualquier examen. */
+    if (metodo === 'GET' && ruta === '/panel/retiradas') {
+      return json({ retiradas: await retiradas(env) });
+    }
+
+    if (metodo === 'POST' && ruta === '/panel/retiradas') {
+      const b = await request.json().catch(() => ({}));
+      /* Devolver al banco es una acción de primera clase, no un borrado: el
+         registro de por qué se retiró en su momento se conserva. */
+      const accion = b.accion === 'restaurar' ? 'restaurar' : 'retirar';
+      /* Una o varias: revisar el banco se hace en tanda, y un viaje de red por
+         pregunta con señal de campamento es lo que hace abandonar la revisión. */
+      const crudas = Array.isArray(b.claves) ? b.claves : [b.clave];
+      const claves = [...new Set(crudas.map(x => String(x || '').trim())
+        .filter(x => FORMA_CLAVE.test(x)))].slice(0, 50);
+      if (!claves.length) return error('Ninguna clave de pregunta válida.', 400);
+      const motivo = accion === 'retirar' ? limpiar(b.motivo, 120) : null;
+      for (const c of claves) {
+        await env.DB.prepare(
+          'INSERT INTO pregunta_retirada (clave, accion, quien, motivo) VALUES (?,?,?,?)'
+        ).bind(c, accion, sesion.cuenta_id, motivo).run();
+      }
+      await auditar(env, sesion.cuenta_id, accion + '_pregunta', 'pregunta_retirada',
+        claves.join(',').slice(0, 200), ipHash);
+      /* Se devuelve la lista completa ya actualizada: la pantalla del director
+         no tiene que adivinar cómo quedó, ni pedir un segundo viaje. */
+      return json({ ok: true, n: claves.length, retiradas: await retiradas(env) });
     }
 
     if (metodo === 'GET' && ruta === '/panel/participantes') {

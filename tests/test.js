@@ -706,8 +706,13 @@ ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
    partir de «Desde» (mismo tipo de capitulo y de ahi en adelante), y dentro de
    Conexion Biblica eso separa ademas Daniel de Profetas y Reyes. */
 {
-  ok(/value="rango:'\+a\+'"/.test(APP),
-    'El material ofrece un tramo POR ACTIVIDAD, no uno solo para las tres');
+  /* v92: el desplegable de 85 opciones se partio en dos, actividad y material,
+     asi que ya no hay un valor «rango:<actividad>»: la actividad es su propio
+     control y el tramo sale de ella. La regla que se prueba es la misma. */
+  ok(/function opcionesMatPanel\(act\)/.test(APP)&&/'tramo','Un tramo/.test(APP),
+    'El tramo lo ofrece cada actividad, no una lista comun a las tres');
+  ok(/const caps=capsDeActividad\(act\|\|'cb'\);/.test(APP),
+    'Y los dos extremos salen de los capitulos de ESA actividad');
   ok(/function llenaRangoPanel\(act,mantener\)/.test(APP),
     'Los dos extremos se llenan para la actividad escogida');
   ok(/familiaDe\(c\.id\)===familiaDe\(prev1\)&&numDe\(c\.id\)>=numDe\(prev1\)/.test(APP),
@@ -1646,6 +1651,96 @@ ok(lecturas<=1,'fuente/app.js se lee una sola vez en toda la suite (hoy '+lectur
 const alias=(TXT=>[...TXT.matchAll(/const (APP[A-Z0-9_]*|CSS[A-Z0-9_]+)\s*=\s*(APP|CSS)\s*;/g)])(SUITES[0].t);
 ok(alias.length===0,'Sin alias de APP ni de CSS'+
   (alias.length?' — sobran: '+alias.map(m=>m[1]).join(', '):''));
+
+/* ── EL REVISOR DEL BANCO: LO ESTRUCTURAL ──
+   Lo que se comprueba aqui es que el mecanismo quede en un solo lugar. El
+   comportamiento (que retirar saque la pregunta del examen) lo prueba uso.js
+   contra el JS real; esto caza lo otro: que nadie agregue un segundo camino al
+   banco que se salte el filtro, y que la pantalla tenga su guarda. */
+ok(/<div id="p-revisor" class="pantalla">/.test(CUERPO),
+  'El revisor es una pantalla propia, como la ayuda');
+ok(/id="cb-revisor"/.test(CUERPO), 'Con su contenedor, que llena pintaRevisor()');
+ok(/if\(id==='revisor'\)pintaRevisor\(\);/.test(APP), 'Y ir() sabe llegar a ella');
+ok(/srvYo\.rol!=='director'/.test(APP.slice(APP.indexOf('function pintaRevisor'),
+  APP.indexOf('function revFila(q)'))),
+  'pintaRevisor() tiene su propia guarda: sin sesion de director no pinta el banco');
+ok(/onclick="abreRevisor\(\)"/.test(APP), 'Se entra desde el panel del director');
+
+/* EL FILTRO DE RETIRADAS EN UN SOLO SITIO. bancoDe() es el unico origen de
+   preguntas de examen; si apareciera una segunda ruta a BANCO para armar, se
+   podria colar una retirada sin que nadie lo note. */
+ok(/estaRetirada\(q\)/.test(APP.slice(APP.indexOf('const bancoDe='),
+  APP.indexOf('const modsDe='))),
+  'bancoDe() filtra las retiradas, que es el unico punto por donde pasan los examenes');
+ok((APP.match(/!estaRetirada\(/g)||[]).length===1,
+  'Y ese filtro existe una sola vez en toda la app');
+
+/* SIN SEÑAL NO SE DEVUELVEN SOLAS. Un servidor que no contesta (o una
+   respuesta sin el campo) no puede volver a meter al examen una pregunta que
+   el director retiro: es la misma regla de fallar cerrado que ya rige la
+   practica. */
+ok(/if\(Array\.isArray\(d\.retiradas\)\)/.test(APP),
+  'Las retiradas solo se reemplazan si el servidor las mando');
+
+/* La evaluacion usa las de SU receta y despues devuelve las del aparato. */
+const bloqueHace=APP.slice(APP.indexOf('function haceEvaluacion'),
+  APP.indexOf('/* ───────── manual dentro de la app'));
+ok(/if\(Array\.isArray\(r\.retiradas\)\)retiradas=new Set\(r\.retiradas\)/.test(bloqueHace),
+  'La evaluacion se arma con las retiradas de su receta');
+ok(/retiradas=prev\.r;/.test(bloqueHace),
+  'Y las devuelve como estaban, igual que el alcance y el nivel');
+
+/* Los toques del revisor llegan a 44 px, que es el minimo de un dedo. */
+ok(/\.rb-raz\{[^}]*min-height:44px/.test(CSS_SIN), 'Las razones rapidas miden 44 px de alto');
+ok(/#cb-revisor \.btn[^{]*\{[^}]*min-height:44px/.test(CSS_SIN),
+  'Y todo boton del revisor tambien');
+/* LAS CLASES DEL REVISOR NO PUEDEN LLAMARSE COMO LAS DE «COMPRUEBALO».
+   `.rev-q` y `.rev-a` ya existian para los bloques de respuesta tapada del
+   material, y reusarlas pintaba cada pregunta del revisor como una tarjeta
+   para revelar. Se vio en el navegador, no en las pruebas: por eso queda
+   escrito aqui. */
+ok(!/class="rev-(q|a)[" ]/.test(APP.slice(APP.indexOf('function revFila(q)'),
+  APP.indexOf('function revCajaMotivo'))),
+  'El revisor usa su propio prefijo de clases (rb-), no el de Compruebalo');
+
+/* ── PASO 2: LO QUE NO PUEDE VOLVER ──
+   El desplegable de 85 opciones se fue; lo que queda tiene que seguir
+   cumpliendo lo mismo que el cumplia. Estas pruebas son el recordatorio de por
+   que se cambio, para que nadie lo reponga «para tenerlo todo junto». */
+ok(!/id="pan-eval-al"/.test(APP),
+  'El desplegable unico de 85 opciones ya no existe');
+ok(/id="pan-act" onchange="cambiaActPanel\(\)"/.test(APP)&&
+   /id="pan-mat" onchange="cambiaMaterialPanel\(\)"/.test(APP),
+  'El material se escoge en dos pasos: actividad y despues material');
+/* Escoger actividad marca SUS categorias. Sin eso, «solo la primera quincena»
+   abierta sin marcar a nadie se la abre tambien a Conexion Biblica y a las
+   creencias, que no tienen ese material: se quedan sin una sola pregunta. */
+ok(/const suyas=act\?CATS_DE_ACT\(act\):\[\];/.test(APP),
+  'Escoger actividad marca las categorias de esa actividad');
+
+/* LA RECETA ESCRIBE EN LOS CONTROLES, no calcula el alcance por su cuenta: un
+   segundo camino a `alcance` seria un segundo formato que mantener, y el
+   servidor solo entiende uno. */
+const bloqueReceta=APP.slice(APP.indexOf('function ponReceta(id)'),APP.indexOf('function panAbre'));
+ok(/a\.value=r\.act;cambiaActPanel\(\)/.test(bloqueReceta)&&/m\.value=r\.mat/.test(bloqueReceta),
+  'Una receta escribe en los mismos controles que abren la evaluacion');
+ok(!/alcance:/.test(bloqueReceta),
+  'Y no arma un alcance propio: eso lo sigue haciendo alcancePanel()');
+ok(/alcance:alcancePanel\(\)/.test(APP),
+  'abreEvaluacion() sigue leyendo el alcance de un solo sitio');
+
+/* TODO LO QUE CONFIGURA UNA EVALUACION SIGUE LLEGANDO. Los cajones esconden
+   controles, no los quitan: si uno se perdiera, el servidor recibiria el valor
+   por omision y el director abriria otra cosa distinta de la que pidio. */
+for(const id of ['pan-eval-t','pan-eval-n','pan-eval-nv','pan-fuente','pan-r1','pan-r2','pan-cap','pan-personas'])
+  ok(APP.includes('id="'+id+'"'), 'Sigue existiendo el control '+id);
+ok(/class="pan-cat-ch"/.test(APP), 'Y las casillas de categoria');
+
+/* Los avisos que impiden abrir una evaluacion vacia NO pueden quedar dentro de
+   un cajon plegable: esconderlos los vuelve inutiles. */
+const bloqueP2=APP.slice(APP.indexOf("id=\"pan-paso2\""),APP.indexOf("id=\"g-material\""));
+ok(/id="pan-aviso-cats"/.test(bloqueP2)&&/id="pan-nota-al"/.test(bloqueP2),
+  'Los dos avisos del material viven fuera de los cajones, siempre a la vista');
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

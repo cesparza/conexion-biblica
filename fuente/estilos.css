@@ -1669,3 +1669,110 @@ details.card summary::marker{content:''}
 .info-table.vpv td.key{width:2.4rem;text-align:right;vertical-align:top;
   font-variant-numeric:tabular-nums;font-weight:700;color:var(--azul)}
 .info-table.vpv td{padding-top:.42rem;padding-bottom:.42rem;line-height:1.45}
+
+/* ── EL REVISOR DEL BANCO ──────────────────────────────────────────────
+   Una fila por pregunta, en tarjeta y no en tabla: en 390 px una tabla de
+   cinco columnas obliga a hacer scroll lateral por cada renglon, y aqui lo
+   que hay que leer es el enunciado completo, no comparar columnas.
+
+   Los filtros van en rejilla de dos: en el celular caben dos por renglon con
+   la etiqueta encima, y en pantalla ancha se reparten solos sin media query. */
+.rb-cab{display:flex;gap:.6rem;align-items:center;margin-bottom:.8rem}
+.rb-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:.5rem;margin:.6rem 0 .7rem}
+.rb-filtros select{width:100%;min-height:44px}
+
+.rb-lista{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.8rem}
+.rb-it{background:var(--v-sup);border:1.5px solid var(--v-linea);
+  border-radius:var(--v-r-md);padding:.75rem .85rem;box-shadow:var(--v-s1)}
+/* Lo retirado se ve, no se esconde: la decision de devolverlo se toma leyendo
+   por que se saco. Se apaga y se marca con una barra al costado, que es lo que
+   distingue de un vistazo sin tener que leer la etiqueta. */
+.rb-it.fuera{background:var(--v-sup2);border-left:4px solid var(--v-mal);opacity:.78}
+.rb-etq{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.4rem}
+.rb-etq span{font-size:var(--v-t-1);color:var(--v-tinta3);background:var(--v-linea2);
+  border-radius:999px;padding:.12rem .5rem;white-space:nowrap}
+.rb-q{font-size:var(--v-t0);font-weight:700;color:var(--v-tinta);line-height:1.4}
+.rb-a{font-size:var(--v-t-1);color:var(--v-tinta2);margin-top:.25rem;line-height:1.4}
+.rb-porque{font-size:var(--v-t-1);color:var(--v-mal);font-weight:700;margin-top:.35rem}
+.rb-acc{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
+.rb-acc .btn{flex:0 0 auto;min-height:44px}
+
+.rb-caja{margin-top:.55rem;padding-top:.55rem;border-top:1px dashed var(--v-linea)}
+.rb-razones{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem}
+/* Razon de un toque: el objetivo de 44 px se cumple con el alto, no con el
+   ancho, para que las cuatro quepan en dos renglones de un celular. */
+.rb-raz{min-height:44px;padding:0 .8rem;border-radius:999px;font:inherit;
+  font-size:var(--v-t-1);cursor:pointer;
+  border:1.5px solid var(--v-linea);background:var(--v-sup);color:var(--v-tinta2)}
+.rb-raz.on{border-color:var(--v-cat);background:var(--v-cat-suave);
+  color:var(--v-tinta);font-weight:700}
+.rb-caja input{width:100%;min-height:44px}
+.rb-mas{width:100%;margin-bottom:1rem}
+/* Todo lo que se toca en esta pantalla llega a 44 px, el «Limpiar» del buscador
+   incluido: el director revisa de pie y con el pulgar. */
+#cb-revisor .btn,.rb-cab .btn{min-height:44px}
+
+/* ── PASO 2: RECETAS, FRASE Y CAJONES ─────────────────────────────────
+   El desplegable de «Qué material» llego a 85 opciones y en iOS se pinta sin
+   las etiquetas de grupo, asi que se veian las 85 seguidas. Lo que reemplaza a
+   ese desplegable no es otro desplegable: es una lista corta de lo que de
+   verdad se abre, y un cajon por cada cosa que se puede cambiar. */
+.pan-recetas{display:flex;flex-direction:column;gap:.5rem;margin:.5rem 0 .8rem}
+.pan-receta{display:flex;gap:.7rem;align-items:center;text-align:left;width:100%;
+  min-height:56px;padding:.7rem .8rem;font:inherit;cursor:pointer;
+  border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
+  background:var(--v-sup);box-shadow:var(--v-s1);
+  transition:border-color var(--v-paso), background var(--v-paso)}
+.pan-receta.on{border-color:var(--v-cat);border-width:2px;background:var(--v-cat-suave)}
+/* «Armarlo yo» va con borde punteado: es la salida a todo lo demas, no una
+   receta mas, y la linea lo dice sin necesidad de un letrero. */
+.pan-receta.otra{border-style:dashed;background:var(--v-sup2)}
+.pan-receta-i{font-size:1.4rem;flex:0 0 auto;line-height:1}
+.pan-receta-x{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.pan-receta-x strong{font-size:var(--v-t0);color:var(--v-tinta);font-weight:800}
+.pan-receta-x small{font-size:var(--v-t-1);color:var(--v-tinta3);line-height:1.35}
+
+/* LA FRASE, EN FILAS. Se intento primero como parrafo con palabras tocables,
+   como el maquetado, y medido en 390 px no aguanta: un <button> se calcula
+   inline-block aunque se le pida inline, asi que un valor largo se va entero al
+   renglon siguiente y parte la frase. Una fila por parte dice lo mismo y
+   aguanta cualquier largo. */
+.pan-frase{margin:.2rem 0 .6rem;display:flex;flex-direction:column;gap:.35rem}
+.pan-fila{display:grid;grid-template-columns:1fr auto;align-items:center;
+  gap:.2rem .6rem;width:100%;text-align:left;
+  min-height:52px;padding:.55rem .75rem;font:inherit;cursor:pointer;
+  border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
+  background:var(--v-sup);transition:border-color var(--v-paso)}
+.pan-fila.on{border-color:var(--v-cat);border-width:2px;background:var(--v-cat-suave)}
+/* La etiqueta va ENCIMA y no al lado: con la etiqueta en una columna fija, «A
+   quiénes» dejaba al valor 170 px y «Devoción Matutina: Menores y Aventureros»
+   caia en cuatro renglones. Arriba, el valor se lleva el ancho completo. */
+.pan-fila-k{display:block;font-size:var(--v-t-1);color:var(--v-tinta3);font-weight:700;
+  margin-bottom:.1rem}
+.pan-fila-v{display:block;font-size:var(--v-t0);font-weight:800;
+  color:var(--v-marca);line-height:1.35}
+.pan-fila-x{grid-row:1/3;grid-column:2;font-size:1rem;color:var(--v-cat)}
+
+.pan-grupo{border:2px solid var(--v-cat);border-radius:var(--v-r-md);
+  background:var(--v-sup);padding:.75rem .8rem;margin:.1rem 0 .7rem}
+.pan-grupo-t{display:flex;align-items:center;gap:.5rem;font-weight:800;
+  font-size:var(--v-t-1);color:var(--v-cat);margin-bottom:.5rem}
+.pan-listo{margin-left:auto;min-height:44px;padding:0 .9rem;border-radius:999px;
+  font:inherit;font-size:var(--v-t-1);font-weight:700;cursor:pointer;
+  border:1.5px solid var(--v-linea);background:var(--v-sup2);color:var(--v-tinta2)}
+.pan-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem}
+.pan-chip{min-height:44px;padding:0 1rem;border-radius:999px;font:inherit;
+  font-size:var(--v-t0);font-weight:700;cursor:pointer;
+  border:1.5px solid var(--v-linea);background:var(--v-sup);color:var(--v-tinta2)}
+
+/* Los tres accesos de «Ajustar lo escogido» y la barra de abajo. */
+.pan-acc{display:flex;flex-direction:column;gap:.35rem;margin-top:.5rem}
+.pan-chip.on{border-color:var(--v-marca);background:var(--v-marca);color:#fff}
+/* LA BARRA: lo escogido y cuantas preguntas recibe de verdad quien presenta.
+   Va pegada al paso 3, que es el boton de abrir, porque es lo ultimo que se
+   lee antes de tocarlo. */
+.pan-resumen{font-size:var(--v-t0);line-height:1.5;color:var(--v-tinta2);
+  background:var(--v-sup2);border:1.5px solid var(--v-linea);
+  border-radius:var(--v-r-md);padding:.65rem .8rem;margin:.2rem 0 .8rem}
+.pan-resumen strong{color:var(--v-tinta)}

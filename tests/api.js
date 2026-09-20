@@ -220,6 +220,44 @@ async function vivo() {
     'Y la devuelve en la receta, o la participante armaria otro examen');
 }
 
+
+/* ── LAS PREGUNTAS RETIRADAS ──
+   El retiro vive en el servidor porque el banco vive en un HTML generado: sin
+   esto, sacar una pregunta mala obliga a correr el generador y desplegar, y
+   eso no se hace desde un celular. Lo que estas pruebas cazan es que el
+   mecanismo no se salte ninguna de sus tres garantias: registro (no borra),
+   reversible, y una evaluacion abierta no cambia de examen a mitad de mañana. */
+ok(/CREATE TABLE IF NOT EXISTS pregunta_retirada/.test(MIGR),
+  'La migracion crea la tabla de preguntas retiradas');
+ok(/accion IN \('retirar','restaurar'\)/.test(MIGR),
+  'Y es un registro de hechos: retirar y restaurar son filas, no un borrado');
+ok(/ix_retirada_clave/.test(MIGR), 'Con su indice por clave');
+ok(!/DELETE FROM pregunta_retirada/.test(API),
+  'El servidor nunca borra una fila del registro: devolver es otra fila');
+
+const posRet = API.indexOf("ruta === '/panel/retiradas'");
+ok(posRet > posGuarda, 'Las rutas del revisor van DESPUES de la guarda de director');
+ok(/FORMA_CLAVE\s*=\s*\//.test(API),
+  'La clave de la pregunta se valida por su FORMA: el servidor no conoce el banco');
+const bloqueRet = API.slice(API.indexOf('async function retiradas'),
+  API.indexOf('const clavesRetiradas'));
+ok(/MAX\(r2\.rowid\)/.test(bloqueRet),
+  'El estado de una pregunta es su ultima fila, desempatada por rowid y no por la hora');
+ok(/r2\.cuando <= \?/.test(bloqueRet),
+  'Y se puede preguntar como estaba el banco a una fecha');
+
+/* LA GARANTIA QUE MAS CUESTA VER: la receta de la evaluacion lleva las
+   retiradas DE CUANDO SE ABRIO (ev.creada_en). Con las de ahora, retirar una
+   pregunta a media mañana le cambia el examen a la que todavia no entra, y dos
+   notas de la misma semilla dejan de ser comparables. */
+const bloqueEvalRet = API.slice(API.indexOf("ruta === '/evaluacion'"), API.indexOf("ruta === '/intento'"));
+ok(/clavesRetiradas\(env, ev\.creada_en\)/.test(bloqueEvalRet),
+  'La receta lleva las retiradas de cuando se abrio la evaluacion, no las de ahora');
+const bloqueEstadoRet = API.slice(API.indexOf("ruta === '/estado'"), API.indexOf("ruta === '/entrar'"));
+ok(/retiradas: await clavesRetiradas\(env\)/.test(bloqueEstadoRet),
+  'Y /estado las reparte a todos los aparatos, que es donde la app ya cachea');
+ok(!/semilla/.test(bloqueEstadoRet), 'Sin que eso le meta la semilla a un endpoint publico');
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }
