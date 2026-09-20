@@ -46,6 +46,8 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         capsDeActividad,
         ponRetiradas, estaRetirada, retiradas:()=>retiradas, retLee,
         revFilas, revPon, revLimpia, revF:()=>revF, revRespuesta, revTexto,
+        revFilasT, revQuePon, revCapsT, tarjetasDe, TARJETAS, claveT,
+        limpiaRetiradasDe, textosRetirados,
         pintaRevisor, revCapsDe, aplicaMarcas, REV_CUENTA, haceEvaluacion,
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
         el:id=>document.getElementById(id)`;
@@ -1691,7 +1693,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
 
   /* Las cifras de la pantalla salen del dato. Una marca mal escrita se queda
      literal en pantalla, que es visible; una cifra a mano miente en silencio. */
-  const txt=V.aplicaMarcas(V.REV_CUENTA,{TOTAL:'7',RET:'2',VISTA:'5',VISTA_RET:'1'});
+  const txt=V.aplicaMarcas(V.REV_CUENTA,
+    {QUE:'preguntas',TOTAL:'7',RET:'2',VISTA:'5',VISTA_RET:'1'});
   ok(/\b7\b/.test(txt)&&/\b5\b/.test(txt)&&!/\{/.test(txt),
     'El resumen del revisor arma sus cifras con marcas, no escritas a mano');
 }
@@ -1883,6 +1886,46 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   H.ponDirector(null); H.pintaHistorial();
   ok(/Esta pantalla es del director/.test(H.el('cb-historial').innerHTML),
     'Sin clave de director, el historial no muestra ni una nota');
+}
+
+
+/* ─── RETIRAR TAMBIEN UNA TARJETA ───
+   EL CASO QUE LO PIDIO: en el mazo de Daniel 3 hay una tarjeta sobre Desmond
+   Doss, puesta como ejemplo moderno de los tres hebreos. Es material valido y
+   puede no querer estudiarse: hasta aqui no habia forma de sacarla.
+   La tarjeta usa la MISMA tabla de retiradas que las preguntas, porque su
+   clave tiene la misma forma: capitulo + hash del frente. */
+{
+  const T=montar(RET);
+  T.ponCat('av');
+  const antes=T.tarjetasDe().length;
+  const doss=T.TARJETAS.find(x=>/Maeda|Doss/i.test(x.f+' '+x.r));
+  ok(!!doss,'La tarjeta de Desmond Doss existe');
+  ok(doss.cap==='d3','Y esta en Daniel 3, no en la matutina: es un ejemplo del capitulo');
+
+  const k=T.claveT(doss);
+  T.ponRetiradas([k]);
+  ok(T.tarjetasDe().length===antes-1,'Retirarla saca exactamente una del mazo ('+
+    antes+' → '+T.tarjetasDe().length+')');
+  ok(!T.tarjetasDe().some(x=>T.claveT(x)===k),'Y es la que se retiro');
+  ok(T.TARJETAS.some(x=>T.claveT(x)===k),'Sigue en el artefacto: se retira, no se borra');
+
+  /* El revisor la ve y la ofrece para retirar, con sus propios filtros. */
+  T.revQuePon('tarjetas'); T.revLimpia(); T.revQuePon('tarjetas');
+  ok(T.revFilasT().length===T.TARJETAS.length,'El revisor de tarjetas las ve todas');
+  T.revPon('cap','d3');
+  ok(T.revFilasT().every(x=>x.cap==='d3'),'Y filtra por capitulo');
+  T.revPon('est','r');
+  ok(T.revFilasT().length===1,'Y por estado: la retirada es una');
+  T.revLimpia();
+
+  /* «Compruebalo» se escribe al generar el HTML, asi que hay que quitarlo al
+     pintar. Se enlaza por el texto del frente, que es exacto y ya esta en los
+     dos lados. */
+  ok(T.textosRetirados().has(doss.f),'El texto de la retirada entra a la lista de lo que no se pinta');
+  T.ponRetiradas([]);
+  ok(!T.textosRetirados().size,'Y sin retiradas, esa lista queda vacia');
+  ok(T.tarjetasDe().length===antes,'Devolverla la vuelve a poner en el mazo');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

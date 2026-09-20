@@ -1674,6 +1674,14 @@ ok(/estaRetirada\(q\)/.test(APP.slice(APP.indexOf('const bancoDe='),
   'bancoDe() filtra las retiradas, que es el unico punto por donde pasan los examenes');
 ok((APP.match(/!estaRetirada\(/g)||[]).length===1,
   'Y ese filtro existe una sola vez en toda la app');
+/* Las tarjetas tienen su propio embudo, tarjetasDe(), y su propio filtro. */
+ok(/!estaRetiradaT\(t\)/.test(APP.slice(APP.indexOf('const tarjetasDe='),
+  APP.indexOf('const buscaItem='))),
+  'tarjetasDe() filtra las retiradas: es el unico embudo del mazo');
+/* «Compruebalo» se escribe al generar el HTML, asi que lo retirado se quita al
+   pintar el capitulo. Se enlaza por el texto del frente y no por la clave, para
+   no escribir el mismo hash en build.js y en la app. */
+ok(/limpiaRetiradasDe\(d\)/.test(APP), 'Y al pintar un capitulo se quita lo retirado de «Compruebalo»');
 
 /* SIN SEÑAL NO SE DEVUELVEN SOLAS. Un servidor que no contesta (o una
    respuesta sin el campo) no puede volver a meter al examen una pregunta que

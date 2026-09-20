@@ -611,7 +611,14 @@ const bancoDe=()=>{
   return BANCO.filter(q=>ids.includes(q.cap)&&!estaRetirada(q));
 };
 const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
-const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);return TARJETAS.filter(t=>ids.includes(t.cap));};
+/* Las tarjetas pasan por el MISMO registro de retiradas que las preguntas: su
+   clave tiene la misma forma (capitulo + hash del frente), asi que la tabla y
+   el endpoint sirven igual. Y este es su unico embudo, como bancoDe() es el de
+   las preguntas: filtrar aqui las saca del mazo, de la sesion de hoy, de los
+   juegos, de los impresos y de las cuentas del manual, todo a la vez. */
+const estaRetiradaT=t=>retiradas.has(claveT(t));
+const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);
+  return TARJETAS.filter(t=>ids.includes(t.cap)&&!estaRetiradaT(t));};
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
 
 /* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
@@ -1546,8 +1553,39 @@ function verCap(id){
     '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button>'+
     '<button class="btn gho" onclick="imprimeCapitulo(\''+id+'\')">🖨️ Imprimir este capítulo</button></div>';
   d.style.display='block';
+  limpiaRetiradasDe(d);
   divideVista(d,id);
   avanza(id,60);
+}
+
+/* ───────── LO RETIRADO TAMPOCO SALE EN «COMPRUEBALO» ─────────
+   MECANISMO
+   Esa pestaña no se arma al pintar: la escribe fuente/build.js al generar el
+   HTML, a partir de las tarjetas y las preguntas del capitulo. Cuando el
+   director retira una, el HTML ya esta escrito y la seguiria mostrando.
+
+   POR QUE SE COMPARA EL TEXTO Y NO LA CLAVE
+   Marcar cada bloque con su clave obligaria a que build.js calculara el mismo
+   hash que la app, y seria la misma funcion escrita en dos archivos: el dia que
+   una cambie, la otra deja de coincidir sin avisar. El frente de la tarjeta ya
+   esta en los dos lados y es exacto, asi que sirve de enlace sin duplicar nada.
+
+   Si se retira algo que la pestaña no trae, no pasa nada: no hay bloque que
+   quitar. */
+function textosRetirados(){
+  const fuera=new Set();
+  for(const t of TARJETAS)if(retiradas.has(claveT(t)))fuera.add(t.f);
+  for(const q of BANCO)if(retiradas.has(claveQ(q)))fuera.add(q.q||q.ins||'');
+  return fuera;
+}
+
+function limpiaRetiradasDe(d){
+  if(!d||!retiradas.size||!d.querySelectorAll)return;
+  const fuera=textosRetirados();
+  [].slice.call(d.querySelectorAll('.rev')).forEach(function(b){
+    const t=b.querySelector&&b.querySelector('.rev-t');
+    if(t&&fuera.has(t.textContent))b.remove&&b.remove();
+  });
 }
 
 /* ───────── PALETA DE COMANDOS (⌘K) ─────────
@@ -5367,6 +5405,13 @@ let revF=Object.assign({},REV_F0);
 let revTope=40;
 let revRet=[];        // lo que dice el servidor: clave, quien, motivo, cuando
 let revMapa={};       // clave -> esa fila, para pintar el porque sin recorrer
+/* El revisor mira dos cosas con el mismo mecanismo: las preguntas del examen y
+   las tarjetas del mazo. Las dos se retiran con la misma tabla, porque su clave
+   tiene la misma forma. Se separan en la pantalla porque son dos trabajos
+   distintos: «esta pregunta esta mal» y «esta tarjeta no es de este capitulo».
+   El caso que lo pidio: una tarjeta de Desmond Doss en Daniel 3, puesta como
+   ejemplo moderno de los tres hebreos. */
+let revQue='preguntas';  // 'preguntas' | 'tarjetas'
 let revCaja='';       // la clave cuya caja de motivo esta abierta, o ''
 let revMotivo='';     // lo escrito en esa caja
 
@@ -5414,10 +5459,30 @@ function revFilas(){
   return b;
 }
 
+/* Los capitulos de una categoria PARA TARJETAS. No es revCapsDe(): un capitulo
+   que es solo material de estudio no entra al examen pero si tiene tarjetas, y
+   son justo las que hay que poder revisar. */
+const revCapsT=cat=>CAPS.filter(c=>c.cats.includes(cat));
+
+function revFilasT(){
+  let b=TARJETAS;
+  if(revF.cat){
+    const ids=revCapsT(revF.cat).map(c=>c.id);
+    b=b.filter(t=>ids.includes(t.cap));
+  }
+  if(revF.cap)b=b.filter(t=>t.cap===revF.cap);
+  if(revF.est)b=b.filter(t=>(retiradas.has(claveT(t))?'r':'v')===revF.est);
+  if(revF.q){
+    const x=revF.q.toLowerCase();
+    b=b.filter(t=>(t.f+' '+t.r).toLowerCase().indexOf(x)>=0);
+  }
+  return b;
+}
+
 /* LAS CIFRAS SALEN DEL DATO. El texto lleva marcas y se rellena con lo que se
    acaba de contar, igual que el manual: una cifra escrita a mano en esta
    pantalla mentiria en el primer retiro. */
-const REV_CUENTA='El banco tiene {TOTAL} preguntas y hay {RET} retiradas. '+
+const REV_CUENTA='El banco tiene {TOTAL} {QUE} y hay {RET} cosas retiradas en total. '+
   'Con este filtro se ven {VISTA}, de las cuales {VISTA_RET} están retiradas.';
 
 function pintaRevisor(){
@@ -5429,17 +5494,20 @@ function pintaRevisor(){
       '<button class="btn gho" onclick="ir(\'examen\')">Volver al examen</button></div>';
     return;
   }
-  const filas=revFilas();
-  const vistaRet=filas.filter(q=>retiradas.has(claveQ(q))).length;
+  const esT=revQue==='tarjetas';
+  const filas=esT?revFilasT():revFilas();
+  const clave=esT?claveT:claveQ;
+  const vistaRet=filas.filter(x=>retiradas.has(clave(x))).length;
   const cuenta=aplicaMarcas(REV_CUENTA,{
-    TOTAL:String(BANCO.length),RET:String(retiradas.size),
+    QUE:esT?'tarjetas':'preguntas',
+    TOTAL:String(esT?TARJETAS.length:BANCO.length),RET:String(retiradas.size),
     VISTA:String(filas.length),VISTA_RET:String(vistaRet)});
 
   /* Los capitulos que se ofrecen dependen de la categoria escogida: ofrecer
      los 77 con una categoria puesta deja escoger un capitulo que esa categoria
      no examina, y la lista sale vacia sin decir por que. Es la misma regla del
      tramo en el panel: lo invalido no se ofrece. */
-  const caps=revF.cat?revCapsDe(revF.cat):CAPS;
+  const caps=revF.cat?(esT?revCapsT(revF.cat):revCapsDe(revF.cat)):CAPS;
   const sel=(id,campo,opciones)=>'<select id="'+id+'" onchange="revPon(\''+campo+'\',this.value)">'+
     opciones.map(o=>'<option value="'+esc(o[0])+'"'+(revF[campo]===o[0]?' selected':'')+'>'+
       esc(o[1])+'</option>').join('')+'</select>';
@@ -5447,8 +5515,14 @@ function pintaRevisor(){
   const cats=[['','Todas las categorías']].concat(
     Object.keys(CATS).map(k=>[k,catLarga(k)]));
 
+  const tab=function(id,txt){
+    return '<button type="button" class="rb-raz'+(revQue===id?' on':'')+'" '+
+      'onclick="revQuePon(\''+id+'\')">'+esc(txt)+'</button>';
+  };
   d.innerHTML='<div class="card">'+
-    '<h2>Revisar las preguntas</h2>'+
+    '<h2>Revisar el material</h2>'+
+    '<div class="rb-razones">'+tab('preguntas','Preguntas del examen')+
+      tab('tarjetas','Tarjetas del mazo')+'</div>'+
     '<p class="nota">'+cuenta+'</p>'+
     '<div class="rb-filtros">'+
       /* «El examen de» es la vista POR EXAMEN: pone en pantalla exactamente
@@ -5457,12 +5531,14 @@ function pintaRevisor(){
       '<label class="pan-lb">El examen de'+sel('rb-cat','cat',cats)+'</label>'+
       '<label class="pan-lb">Capítulo'+sel('rb-cap','cap',
         [['','Todos']].concat(caps.map(c=>[c.id,c.label+' — '+c.sub])))+'</label>'+
-      '<label class="pan-lb">Tipo'+sel('rb-t','t',
+      /* Tipo, nivel y fuente son de una pregunta: una tarjeta no tiene
+         ninguno de los tres, y un filtro que no filtra nada es ruido. */
+      (esT?'':'<label class="pan-lb">Tipo'+sel('rb-t','t',
         [['','Todos'],['mc',REV_TIPO.mc],['tf',REV_TIPO.tf],['fill',REV_TIPO.fill]])+'</label>'+
       '<label class="pan-lb">Nivel'+sel('rb-nv','nv',
         [['','Todos'],['1',REV_NIVEL[1]],['2',REV_NIVEL[2]],['3',REV_NIVEL[3]]])+'</label>'+
       '<label class="pan-lb">Fuente'+sel('rb-fu','fu',
-        [['','Todas'],['o','Del reglamento'],['c','Complementaria']])+'</label>'+
+        [['','Todas'],['o','Del reglamento'],['c','Complementaria']])+'</label>')+
       '<label class="pan-lb">Estado'+sel('rb-est','est',
         [['','Todas'],['v','A la vista'],['r','Retiradas']])+'</label>'+
     '</div>'+
@@ -5471,8 +5547,8 @@ function pintaRevisor(){
       '<button class="btn gho" onclick="revLimpia()">Limpiar</button></div>'+
     '</div>'+
     '<div class="rb-lista">'+
-      (filas.length?filas.slice(0,revTope).map(revFila).join('')
-        :'<p class="nota">Ninguna pregunta cumple este filtro.</p>')+
+      (filas.length?filas.slice(0,revTope).map(esT?revFilaT:revFila).join('')
+        :'<p class="nota">Nada cumple este filtro.</p>')+
     '</div>'+
     (filas.length>revTope
       ?'<button class="btn gho rb-mas" onclick="revMas()">Ver '+
@@ -5504,6 +5580,28 @@ function revFila(q){
     '</div>';
 }
 
+/* Una tarjeta. Se muestra el frente y el reverso, que es todo lo que tiene:
+   la decision es si esa tarjeta pertenece a ese capitulo. */
+function revFilaT(t){
+  const k=claveT(t);
+  const ret=retiradas.has(k);
+  const r=revMapa[k];
+  const cap=(buscaItem(t.cap)||{}).label||t.cap;
+  return '<div class="rb-it'+(ret?' fuera':'')+'">'+
+    '<div class="rb-etq"><span>'+esc(cap)+'</span><span>Tarjeta</span></div>'+
+    '<div class="rb-q">'+esc(t.f)+'</div>'+
+    '<div class="rb-a">'+esc(t.r)+'</div>'+
+    (ret?'<div class="rb-porque">Retirada'+
+      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
+      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>':'')+
+    (revCaja===k?revCajaMotivo(k):
+      '<div class="rb-acc">'+(ret
+        ?'<button class="btn gho" onclick="revDevuelve(\''+k+'\')">Devolver al mazo</button>'
+        :'<button class="btn gho" onclick="revAbreCaja(\''+k+'\')">Retirar</button>')+
+      '</div>')+
+    '</div>';
+}
+
 /* La caja del motivo se abre EN LA FILA, no en un cuadro del navegador: un
    prompt() tapa la pregunta que se esta juzgando, que es justo lo que hay que
    estar leyendo al escribir el motivo. */
@@ -5518,6 +5616,16 @@ function revCajaMotivo(k){
       '<button class="btn nar" onclick="revRetira(\''+k+'\')">Retirar</button>'+
       '<button class="btn gho" onclick="revCierraCaja()">Cancelar</button>'+
     '</div></div>';
+}
+
+/* Al pasar a tarjetas se limpian los filtros que no existen ahi, o quedarian
+   puestos y sin control a la vista para quitarlos: el resultado seria una
+   pantalla vacia sin explicacion. */
+function revQuePon(v){
+  revQue=v;
+  if(v==='tarjetas'){revF.t='';revF.nv='';revF.fu='';}
+  revTope=40;revCaja='';
+  pintaRevisor();
 }
 
 function revPon(campo,valor){
@@ -5560,9 +5668,10 @@ async function revRetira(k){
   }catch(e){alert(e.message||'No se pudo conectar');}
   revCaja='';revMotivo='';
   pintaRevisor();
-  /* Las pantallas que muestran cuentas del banco se quedan con la cifra vieja
-     si no se les avisa: el menu del examen dice cuantas preguntas hay. */
-  if(typeof pintaExInicio==='function')pintaExInicio();
+  /* Las pantallas que muestran cuentas del material se quedan con la cifra
+     vieja si no se les avisa: el menu del examen dice cuantas preguntas hay y
+     el mazo cuantas tarjetas. */
+  refrescaCuentas();
 }
 
 async function revDevuelve(k){
@@ -5572,7 +5681,14 @@ async function revDevuelve(k){
     revAplica(d.retiradas);
   }catch(e){alert(e.message||'No se pudo conectar');}
   pintaRevisor();
+  refrescaCuentas();
+}
+
+/* Lo que hay que repintar cuando el material cambia de tamaño. */
+function refrescaCuentas(){
   if(typeof pintaExInicio==='function')pintaExInicio();
+  if(typeof pintaTarjetas==='function')pintaTarjetas();
+  if(typeof pintaInicio==='function')pintaInicio();
 }
 
 /* La puerta del revisor. Se carga el detalle ANTES de pintar: sin el, las
