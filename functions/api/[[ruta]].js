@@ -290,6 +290,7 @@ export async function onRequest(context) {
       return json({ evaluacion: {
         id: ev.id, titulo: ev.titulo, alcance: ev.alcance,
         cuantas: ev.cuantas, nivel: ev.nivel, semilla: ev.semilla,
+        solo_fuente: ev.solo_fuente ? 1 : 0,
       }, hecha: !!hecho, nota: hecho ? hecho.nota : null, total: hecho ? hecho.total : null });
     }
 
@@ -380,6 +381,10 @@ export async function onRequest(context) {
       const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido) || rangoOk) ? pedido : 'todo';
       const cuantas = Math.min(60, Math.max(5, Math.round(+b.cuantas || 15)));
       const nivel = [0, 1, 2, 3].includes(+b.nivel) ? +b.nivel : 0;
+      /* Solo la fuente que el reglamento nombra. Columna propia y no un
+         prefijo en `alcance`: son dos conceptos, qué parte del material y de
+         qué fuente. */
+      const soloFuente = b.solo_fuente ? 1 : 0;
       /* A quién le toca. Una lista de categorías, o '*' para todas. Sin esto el
          director no puede evaluar solo a matutina, o solo a las de 4 a 6. */
       const pedidas = Array.isArray(b.categorias) ? b.categorias
@@ -432,9 +437,9 @@ export async function onRequest(context) {
       }
       const eid = id();
       await env.DB.prepare(
-        'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, categorias, participantes, abierta) ' +
-        'VALUES (?,?,?,?,?,?,?,?,?,1)'
-      ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40), categorias, participantes).run();
+        'INSERT INTO evaluacion (id, titulo, alcance, cuantas, nivel, semilla, huella, categorias, participantes, solo_fuente, abierta) ' +
+        'VALUES (?,?,?,?,?,?,?,?,?,?,1)'
+      ).bind(eid, titulo, alcance, cuantas, nivel, semillaNueva(), limpiar(b.huella, 40), categorias, participantes, soloFuente).run();
       await auditar(env, sesion.cuenta_id, 'abrir_evaluacion', 'evaluacion', eid, ipHash);
       return json({
         ok: true, id: eid,
@@ -507,6 +512,7 @@ export async function onRequest(context) {
         return {
           id: ev.id, titulo: ev.titulo, cuantas: ev.cuantas, alcance: ev.alcance,
           nivel: ev.nivel, categorias: cats, dirigida, ids: suyos,
+          solo_fuente: ev.solo_fuente ? 1 : 0,
           hechas: hechas || [], faltan: faltan || [],
         };
       };

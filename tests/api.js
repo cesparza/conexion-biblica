@@ -206,6 +206,20 @@ async function vivo() {
     'Y queda en la auditoria quien la miro');
 }
 
+/* ───────── solo la fuente del reglamento ─────────
+   Viaja en su propia columna y no como un prefijo de `alcance`: son dos
+   conceptos, que parte del material entra y de que fuente sale. */
+{
+  ok(/ALTER TABLE evaluacion ADD COLUMN solo_fuente/.test(MIGR),
+    'La migracion agrega la columna solo_fuente');
+  ok(/const soloFuente = b\.solo_fuente \? 1 : 0;/.test(API),
+    'El servidor la lee al abrir la evaluacion');
+  ok(/INSERT INTO evaluacion[\s\S]{0,300}solo_fuente/.test(API),
+    'Y la guarda');
+  ok(/solo_fuente: ev\.solo_fuente \? 1 : 0/.test(API),
+    'Y la devuelve en la receta, o la participante armaria otro examen');
+}
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }

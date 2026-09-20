@@ -15,6 +15,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
         poolDe, opcionesCuantas, segundosPara, marcaVistas, nuevasDe, prng,
   respuestasDe, htmlRevisionQ, marca, rellena, entregar, iniciar, prueba:()=>prueba,
+  esComplementaria, ponFuente:v=>{soloFuente=v}, fuenteActual:()=>soloFuente, bancoDe,
   rangoDe, enRango, textoRango, cambiaRango, cambiaAlcance, textoAlcanceImpr, pintaMenuEx,
   ponSemilla:x=>{rndEx=prng(x)},
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
@@ -1512,6 +1513,42 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const huerfana={k:'d1.noexiste',t:'mc',r:0,b:0};
   const h=V.htmlRevisionQ(huerfana,1);
   ok(/ya no está en el banco/.test(h),'Una pregunta retirada del banco lo dice, no inventa');
+}
+
+/* ─── solo la fuente que el reglamento nombra ───
+   El reglamento le pone UNA fuente a cada actividad: Daniel, el cuadernillo de
+   octubre, la cartilla. El material de estudio va mas alla a proposito, pero
+   el examen tiene que medir lo que les pidieron.
+   El dato no se clasifico a mano: Profetas y Reyes se distingue por el id del
+   capitulo, y en las creencias el generador marca con `f:'c'` las que salen
+   del libro y no de la cartilla. */
+{
+  const F=montar(RET);
+  ok(F.esComplementaria({cap:'pr39'}),'Profetas y Reyes es complementario, por el id');
+  ok(!F.esComplementaria({cap:'d1'}),'Daniel no');
+  ok(F.esComplementaria({cap:'cr01',f:'c'}),'Una creencia marcada por el generador si');
+  ok(!F.esComplementaria({cap:'cr01'}),'Y una sin marca cuenta como de la cartilla');
+  /* SIN MARCA = OFICIAL es la falla segura: una pregunta nueva que nadie
+     marque aparece en el examen, en vez de desaparecer sin que nadie lo note. */
+
+  F.ponCat('av'); F.ponNivel(3); F.ponAlcance('todo');
+  F.ponFuente(false); const todoAv=F.poolNivel().length;
+  F.ponFuente(true);  const ofAv=F.poolNivel().length;
+  ok(ofAv<todoAv,'Aventureros: la fuente del reglamento deja '+ofAv+' de '+todoAv);
+  ok(F.poolNivel().every(q=>!F.esComplementaria(q)),'Y no se cuela ni una de Profetas y Reyes');
+
+  F.ponCat('ec1');
+  const ofEc=F.poolNivel().length;
+  ok(F.poolNivel().every(q=>q.f!=='c'),'Creencias: no entra ninguna del libro ('+ofEc+' de la cartilla)');
+
+  /* La matutina no tiene material complementario: el interruptor no puede
+     quitarle nada, y por eso no se le ofrece. */
+  F.ponCat('dm2');
+  const ofDm=F.poolNivel().length;
+  F.ponFuente(false);
+  ok(F.poolNivel().length===ofDm,'Matutina: prenderlo no cambia nada, todo sale del cuadernillo');
+  ok(!F.bancoDe().some(F.esComplementaria),'Y su banco no tiene ni una complementaria');
+  F.ponFuente(false);
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

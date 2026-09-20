@@ -185,17 +185,24 @@ def preguntas(num):
     # se descartan solos): se le pone a esta creencia un dato que es de OTRA.
     # Asi la pregunta mide lo que de verdad cuesta, que es distinguir entre dos
     # creencias vecinas, y la explicacion puede decir de cual era.
+    # `f='c'`: COMPLEMENTARIA, no sale de la cartilla.
+    # El reglamento nombra una fuente por actividad, y para las creencias esa
+    # fuente es la cartilla, que es lo que vive en datos.py. Estas dos salen de
+    # editorial.py, que son los puntos clave que se sacaron del libro de 434
+    # paginas. El generador es el unico que sabe de donde vino cada pregunta;
+    # si no lo escribe aqui, el dato se pierde y despues hay que adivinarlo
+    # leyendo 271 preguntas a mano.
     if e['clave']:
         preg, resp = e['clave'][0]
         limpio = re.sub(r'<[^>]+>', '', resp)
-        Q.append(dict(cap=cid, t='tf',
+        Q.append(dict(cap=cid, t='tf', f='c',
                       q='Sobre «%s»: %s' % (nom, limpio[:150].rstrip(' .')) + '.',
                       a=True, e='Correcto. ' + limpio))
     ajena = (num % 28) + 1
     while ajena == num or not editorial.ED[ajena]['clave']:
         ajena = (ajena % 28) + 1
     respAjena = re.sub(r'<[^>]+>', '', editorial.ED[ajena]['clave'][0][1])
-    Q.append(dict(cap=cid, t='tf',
+    Q.append(dict(cap=cid, t='tf', f='c',
                   q='Sobre «%s»: %s' % (nom, respAjena[:150].rstrip(' .')) + '.',
                   a=False,
                   e='Falso. Eso es de la creencia %d, «%s». Ojo con confundirlas.'
@@ -220,6 +227,7 @@ def main():
     for n in range(1, 29):
         for q in preguntas(n):
             c = ['cap:%s' % J(q['cap']), 't:%s' % J(q['t'])]
+            if 'f' in q: c.append('f:%s' % J(q['f']))
             if 'nv' in q: c.append('nv:%d' % q['nv'])
             if q['t'] == 'fill':
                 c.append('ins:%s' % J(q['ins']))

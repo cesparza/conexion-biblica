@@ -14,6 +14,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Conexión">
 <style>
+/* Ocupa las tres columnas del menu: es una frase, no un campo corto, y en una
+   sola columna del grid queda ilegible. */
+.ex-sw{grid-column:1/-1;display:flex;align-items:flex-start;gap:.55rem;padding:.6rem .7rem;
+  border:1px solid var(--linea,#d8e0ef);border-radius:.6rem;background:#fff;cursor:pointer}
+.ex-sw input{width:1.15rem;height:1.15rem;margin:.1rem 0 0;flex:0 0 auto}
+.ex-sw span{font-size:.86rem;line-height:1.3;min-width:0}
+.ex-sw small{color:var(--gris,#5c6884);font-size:.76rem}
+
 :root{
   --azul:#1F3864; --cielo:#2E8BC0; --naranja:#E8720C; --verde:#1A7A1A;
   --rojo:#C0392B; --oro:#B8860B; --bg:#F0F4F8; --card:#fff; --txt:#1a1a2e;
@@ -1994,6 +2002,10 @@ details.card summary::marker{content:''}
           <label>Cuántas preguntas
             <select id="ex-cuantas" onchange="cambiaCuantas()"></select>
           </label>
+          <label class="ex-sw" id="ex-fuente-lb" hidden>
+            <input type="checkbox" id="ex-fuente" onchange="cambiaFuente()">
+            <span>Solo la fuente del reglamento<br><small id="ex-fuente-t"></small></span>
+          </label>
           <label>Dificultad
             <select id="ex-nivel" onchange="cambiaNivel()"></select>
           </label>
@@ -2121,7 +2133,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '83207d176d21';
+const VERSION_APP = 'fd92d16f421a';
 
 const CAPS = [
  {
@@ -21754,6 +21766,7 @@ const BANCO = [
  {
   "cap": "cr01",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Palabra de Dios»: Norma del carácter · criterio para evaluar la experiencia · revelación autorizada de las doctrinas · registro fidedigno de los actos de Dios.",
   "a": true,
   "e": "Correcto. Norma del carácter · criterio para evaluar la experiencia · revelación autorizada de las doctrinas · registro fidedigno de los actos de Dios",
@@ -21762,6 +21775,7 @@ const BANCO = [
  {
   "cap": "cr01",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Palabra de Dios»: «Una unidad de tres personas coeternas». Un solo Dios, tres personas, y ninguna empezó después de otra.",
   "a": false,
   "e": "Falso. Eso es de la creencia 2, «La Deidad». Ojo con confundirlas.",
@@ -21886,6 +21900,7 @@ const BANCO = [
  {
   "cap": "cr02",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Deidad»: «Una unidad de tres personas coeternas». Un solo Dios, tres personas, y ninguna empezó después de otra.",
   "a": true,
   "e": "Correcto. «Una unidad de tres personas coeternas». Un solo Dios, tres personas, y ninguna empezó después de otra",
@@ -21894,6 +21909,7 @@ const BANCO = [
  {
   "cap": "cr02",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Deidad»: Creador · Originador · Sustentador · Soberano de toda la creación.",
   "a": false,
   "e": "Falso. Eso es de la creencia 3, «Dios el Padre». Ojo con confundirlas.",
@@ -22018,6 +22034,7 @@ const BANCO = [
  {
   "cap": "cr03",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Dios el Padre»: Creador · Originador · Sustentador · Soberano de toda la creación.",
   "a": true,
   "e": "Correcto. Creador · Originador · Sustentador · Soberano de toda la creación",
@@ -22026,6 +22043,7 @@ const BANCO = [
  {
   "cap": "cr03",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Dios el Padre»: Existía antes · creó todo · se encarnó · nació de María · vivió sin pecado · hizo milagros · murió · resucitó · ascendió · hoy ministra en el Santuari.",
   "a": false,
   "e": "Falso. Eso es de la creencia 4, «Dios el Hijo». Ojo con confundirlas.",
@@ -22150,6 +22168,7 @@ const BANCO = [
  {
   "cap": "cr04",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Dios el Hijo»: Existía antes · creó todo · se encarnó · nació de María · vivió sin pecado · hizo milagros · murió · resucitó · ascendió · hoy ministra en el Santuari.",
   "a": true,
   "e": "Correcto. Existía antes · creó todo · se encarnó · nació de María · vivió sin pecado · hizo milagros · murió · resucitó · ascendió · hoy ministra en el Santuario · pronto vuelve",
@@ -22158,6 +22177,7 @@ const BANCO = [
  {
   "cap": "cr04",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Dios el Hijo»: La creación · la encarnación · la redención.",
   "a": false,
   "e": "Falso. Eso es de la creencia 5, «Dios el Espíritu Santo». Ojo con confundirlas.",
@@ -22282,6 +22302,7 @@ const BANCO = [
  {
   "cap": "cr05",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Dios el Espíritu Santo»: La creación · la encarnación · la redención.",
   "a": true,
   "e": "Correcto. La creación · la encarnación · la redención",
@@ -22290,6 +22311,7 @@ const BANCO = [
  {
   "cap": "cr05",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Dios el Espíritu Santo»: Seis días, y «reposó en el séptimo día de esa primera semana».",
   "a": false,
   "e": "Falso. Eso es de la creencia 6, «La creación». Ojo con confundirlas.",
@@ -22414,6 +22436,7 @@ const BANCO = [
  {
   "cap": "cr06",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La creación»: Seis días, y «reposó en el séptimo día de esa primera semana».",
   "a": true,
   "e": "Correcto. Seis días, y «reposó en el séptimo día de esa primera semana»",
@@ -22422,6 +22445,7 @@ const BANCO = [
  {
   "cap": "cr06",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La creación»: Una unidad de cuerpo, mente y espíritu, dependiente de Él. No tres partes separables.",
   "a": false,
   "e": "Falso. Eso es de la creencia 7, «La naturaleza humana». Ojo con confundirlas.",
@@ -22546,6 +22570,7 @@ const BANCO = [
  {
   "cap": "cr07",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La naturaleza humana»: Una unidad de cuerpo, mente y espíritu, dependiente de Él. No tres partes separables.",
   "a": true,
   "e": "Correcto. Una unidad de cuerpo, mente y espíritu, dependiente de Él. No tres partes separables",
@@ -22554,6 +22579,7 @@ const BANCO = [
  {
   "cap": "cr07",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La naturaleza humana»: Sobre el carácter de Dios, su ley y su soberanía.",
   "a": false,
   "e": "Falso. Eso es de la creencia 8, «El gran conflicto». Ojo con confundirlas.",
@@ -22678,6 +22704,7 @@ const BANCO = [
  {
   "cap": "cr08",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El gran conflicto»: Sobre el carácter de Dios, su ley y su soberanía.",
   "a": true,
   "e": "Correcto. Sobre el carácter de Dios, su ley y su soberanía",
@@ -22686,6 +22713,7 @@ const BANCO = [
  {
   "cap": "cr08",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El gran conflicto»: Vicario · expiatorio · reconciliador · transformador.",
   "a": false,
   "e": "Falso. Eso es de la creencia 9, «La vida, muerte y resurrección de Cristo». Ojo con confundirlas.",
@@ -22810,6 +22838,7 @@ const BANCO = [
  {
   "cap": "cr09",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La vida, muerte y resurrección de Cristo»: Vicario · expiatorio · reconciliador · transformador.",
   "a": true,
   "e": "Correcto. Vicario · expiatorio · reconciliador · transformador",
@@ -22818,6 +22847,7 @@ const BANCO = [
  {
   "cap": "cr09",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La vida, muerte y resurrección de Cristo»: Es «don de la gracia divina» y «viene por la Palabra de Dios». No se produce por esfuerzo propio.",
   "a": false,
   "e": "Falso. Eso es de la creencia 10, «La experiencia de la salvación». Ojo con confundirlas.",
@@ -22942,6 +22972,7 @@ const BANCO = [
  {
   "cap": "cr10",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La experiencia de la salvación»: Es «don de la gracia divina» y «viene por la Palabra de Dios». No se produce por esfuerzo propio.",
   "a": true,
   "e": "Correcto. Es «don de la gracia divina» y «viene por la Palabra de Dios». No se produce por esfuerzo propio",
@@ -22950,6 +22981,7 @@ const BANCO = [
  {
   "cap": "cr10",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La experiencia de la salvación»: En la cruz, «asegurando su destrucción final».",
   "a": false,
   "e": "Falso. Eso es de la creencia 11, «Crecer en Cristo». Ojo con confundirlas.",
@@ -23074,6 +23106,7 @@ const BANCO = [
  {
   "cap": "cr11",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Crecer en Cristo»: En la cruz, «asegurando su destrucción final».",
   "a": true,
   "e": "Correcto. En la cruz, «asegurando su destrucción final»",
@@ -23082,6 +23115,7 @@ const BANCO = [
  {
   "cap": "cr11",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Crecer en Cristo»: La familia de Dios · el cuerpo de Cristo, cuya cabeza es Él · la esposa que Él santifica.",
   "a": false,
   "e": "Falso. Eso es de la creencia 12, «La iglesia». Ojo con confundirlas.",
@@ -23206,6 +23240,7 @@ const BANCO = [
  {
   "cap": "cr12",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La iglesia»: La familia de Dios · el cuerpo de Cristo, cuya cabeza es Él · la esposa que Él santifica.",
   "a": true,
   "e": "Correcto. La familia de Dios · el cuerpo de Cristo, cuya cabeza es Él · la esposa que Él santifica",
@@ -23214,6 +23249,7 @@ const BANCO = [
  {
   "cap": "cr12",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La iglesia»: «Los mandamientos de Dios y la fe de Jesús».",
   "a": false,
   "e": "Falso. Eso es de la creencia 13, «El remanente y su misión». Ojo con confundirlas.",
@@ -23338,6 +23374,7 @@ const BANCO = [
  {
   "cap": "cr13",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El remanente y su misión»: «Los mandamientos de Dios y la fe de Jesús».",
   "a": true,
   "e": "Correcto. «Los mandamientos de Dios y la fe de Jesús»",
@@ -23346,6 +23383,7 @@ const BANCO = [
  {
   "cap": "cr13",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El remanente y su misión»: Que la iglesia es un solo cuerpo con muchos miembros, llamados de toda nación, raza y lengua; que en Cristo somos una nueva creación y no debe haber d.",
   "a": false,
   "e": "Falso. Eso es de la creencia 14, «La unidad en el cuerpo de Cristo». Ojo con confundirlas.",
@@ -23393,6 +23431,7 @@ const BANCO = [
  {
   "cap": "cr14",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La unidad en el cuerpo de Cristo»: Que la iglesia es un solo cuerpo con muchos miembros, llamados de toda nación, raza y lengua; que en Cristo somos una nueva creación y no debe haber d.",
   "a": true,
   "e": "Correcto. Que la iglesia es un solo cuerpo con muchos miembros, llamados de toda nación, raza y lengua; que en Cristo somos una nueva creación y no debe haber diferencias de raza, cultura o condición",
@@ -23401,6 +23440,7 @@ const BANCO = [
  {
   "cap": "cr14",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La unidad en el cuerpo de Cristo»: De nuestra unión con Cristo, del perdón de nuestros pecados y de nuestro recibimiento del Espíritu Santo.",
   "a": false,
   "e": "Falso. Eso es de la creencia 15, «El bautismo». Ojo con confundirlas.",
@@ -23525,6 +23565,7 @@ const BANCO = [
  {
   "cap": "cr15",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El bautismo»: De nuestra unión con Cristo, del perdón de nuestros pecados y de nuestro recibimiento del Espíritu Santo.",
   "a": true,
   "e": "Correcto. De nuestra unión con Cristo, del perdón de nuestros pecados y de nuestro recibimiento del Espíritu Santo",
@@ -23533,6 +23574,7 @@ const BANCO = [
  {
   "cap": "cr15",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El bautismo»: «Gozosamente la muerte del Señor hasta que venga».",
   "a": false,
   "e": "Falso. Eso es de la creencia 16, «La Cena del Señor». Ojo con confundirlas.",
@@ -23657,6 +23699,7 @@ const BANCO = [
  {
   "cap": "cr16",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Cena del Señor»: «Gozosamente la muerte del Señor hasta que venga».",
   "a": true,
   "e": "Correcto. «Gozosamente la muerte del Señor hasta que venga»",
@@ -23665,6 +23708,7 @@ const BANCO = [
  {
   "cap": "cr16",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Cena del Señor»: Para servir con amor al prójimo y edificar la iglesia.",
   "a": false,
   "e": "Falso. Eso es de la creencia 17, «Los dones y ministerios espirituales». Ojo con confundirlas.",
@@ -23789,6 +23833,7 @@ const BANCO = [
  {
   "cap": "cr17",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Los dones y ministerios espirituales»: Para servir con amor al prójimo y edificar la iglesia.",
   "a": true,
   "e": "Correcto. Para servir con amor al prójimo y edificar la iglesia",
@@ -23797,6 +23842,7 @@ const BANCO = [
  {
   "cap": "cr17",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «Los dones y ministerios espirituales»: Es «una señal identificadora de la iglesia remanente».",
   "a": false,
   "e": "Falso. Eso es de la creencia 18, «El don de profecía». Ojo con confundirlas.",
@@ -23921,6 +23967,7 @@ const BANCO = [
  {
   "cap": "cr18",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El don de profecía»: Es «una señal identificadora de la iglesia remanente».",
   "a": true,
   "e": "Correcto. Es «una señal identificadora de la iglesia remanente»",
@@ -23929,6 +23976,7 @@ const BANCO = [
  {
   "cap": "cr18",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El don de profecía»: El amor, la voluntad y el propósito de Dios para la conducta humana.",
   "a": false,
   "e": "Falso. Eso es de la creencia 19, «La ley de Dios». Ojo con confundirlas.",
@@ -24053,6 +24101,7 @@ const BANCO = [
  {
   "cap": "cr19",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La ley de Dios»: El amor, la voluntad y el propósito de Dios para la conducta humana.",
   "a": true,
   "e": "Correcto. El amor, la voluntad y el propósito de Dios para la conducta humana",
@@ -24061,6 +24110,7 @@ const BANCO = [
  {
   "cap": "cr19",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La ley de Dios»: Reposo · adoración · servicio.",
   "a": false,
   "e": "Falso. Eso es de la creencia 20, «El sábado». Ojo con confundirlas.",
@@ -24185,6 +24235,7 @@ const BANCO = [
  {
   "cap": "cr20",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El sábado»: Reposo · adoración · servicio.",
   "a": true,
   "e": "Correcto. Reposo · adoración · servicio",
@@ -24193,6 +24244,7 @@ const BANCO = [
  {
   "cap": "cr20",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El sábado»: Tiempo y oportunidades, capacidades y posesiones, y las bendiciones de la tierra y sus recursos.",
   "a": false,
   "e": "Falso. Eso es de la creencia 21, «La mayordomía». Ojo con confundirlas.",
@@ -24317,6 +24369,7 @@ const BANCO = [
  {
   "cap": "cr21",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La mayordomía»: Tiempo y oportunidades, capacidades y posesiones, y las bendiciones de la tierra y sus recursos.",
   "a": true,
   "e": "Correcto. Tiempo y oportunidades, capacidades y posesiones, y las bendiciones de la tierra y sus recursos",
@@ -24325,6 +24378,7 @@ const BANCO = [
  {
   "cap": "cr21",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La mayordomía»: «Modesta y de buen gusto, mostrando una belleza interior».",
   "a": false,
   "e": "Falso. Eso es de la creencia 22, «La conducta cristiana». Ojo con confundirlas.",
@@ -24449,6 +24503,7 @@ const BANCO = [
  {
   "cap": "cr22",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La conducta cristiana»: «Modesta y de buen gusto, mostrando una belleza interior».",
   "a": true,
   "e": "Correcto. «Modesta y de buen gusto, mostrando una belleza interior»",
@@ -24457,6 +24512,7 @@ const BANCO = [
  {
   "cap": "cr22",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La conducta cristiana»: «Una unión para toda la vida entre un hombre y una mujer, basada en el amor y la fe compartida».",
   "a": false,
   "e": "Falso. Eso es de la creencia 23, «El matrimonio y la familia». Ojo con confundirlas.",
@@ -24581,6 +24637,7 @@ const BANCO = [
  {
   "cap": "cr23",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El matrimonio y la familia»: «Una unión para toda la vida entre un hombre y una mujer, basada en el amor y la fe compartida».",
   "a": true,
   "e": "Correcto. «Una unión para toda la vida entre un hombre y una mujer, basada en el amor y la fe compartida»",
@@ -24589,6 +24646,7 @@ const BANCO = [
  {
   "cap": "cr23",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El matrimonio y la familia»: 1844: «la fase final de su ministerio, el juicio investigador».",
   "a": false,
   "e": "Falso. Eso es de la creencia 24, «El ministerio de Cristo en el Santuario celestial». Ojo con confundirlas.",
@@ -24713,6 +24771,7 @@ const BANCO = [
  {
   "cap": "cr24",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El ministerio de Cristo en el Santuario celestial»: 1844: «la fase final de su ministerio, el juicio investigador».",
   "a": true,
   "e": "Correcto. 1844: «la fase final de su ministerio, el juicio investigador»",
@@ -24721,6 +24780,7 @@ const BANCO = [
  {
   "cap": "cr24",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El ministerio de Cristo en el Santuario celestial»: Literal · personal · visible · global.",
   "a": false,
   "e": "Falso. Eso es de la creencia 25, «La segunda venida de Cristo». Ojo con confundirlas.",
@@ -24845,6 +24905,7 @@ const BANCO = [
  {
   "cap": "cr25",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La segunda venida de Cristo»: Literal · personal · visible · global.",
   "a": true,
   "e": "Correcto. Literal · personal · visible · global",
@@ -24853,6 +24914,7 @@ const BANCO = [
  {
   "cap": "cr25",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La segunda venida de Cristo»: Dios. La inmortalidad no es algo que el ser humano tenga por naturaleza: es lo que Dios «dará a los redimidos».",
   "a": false,
   "e": "Falso. Eso es de la creencia 26, «La muerte y la resurrección». Ojo con confundirlas.",
@@ -24977,6 +25039,7 @@ const BANCO = [
  {
   "cap": "cr26",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La muerte y la resurrección»: Dios. La inmortalidad no es algo que el ser humano tenga por naturaleza: es lo que Dios «dará a los redimidos».",
   "a": true,
   "e": "Correcto. Dios. La inmortalidad no es algo que el ser humano tenga por naturaleza: es lo que Dios «dará a los redimidos»",
@@ -24985,6 +25048,7 @@ const BANCO = [
  {
   "cap": "cr26",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La muerte y la resurrección»: «Entre la primera y la segunda resurrección», y Cristo reina «con sus santos en el cielo».",
   "a": false,
   "e": "Falso. Eso es de la creencia 27, «El milenio y el fin del pecado». Ojo con confundirlas.",
@@ -25109,6 +25173,7 @@ const BANCO = [
  {
   "cap": "cr27",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El milenio y el fin del pecado»: «Entre la primera y la segunda resurrección», y Cristo reina «con sus santos en el cielo».",
   "a": true,
   "e": "Correcto. «Entre la primera y la segunda resurrección», y Cristo reina «con sus santos en el cielo»",
@@ -25117,6 +25182,7 @@ const BANCO = [
  {
   "cap": "cr27",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «El milenio y el fin del pecado»: La justicia.",
   "a": false,
   "e": "Falso. Eso es de la creencia 28, «La Tierra Nueva». Ojo con confundirlas.",
@@ -25241,6 +25307,7 @@ const BANCO = [
  {
   "cap": "cr28",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Tierra Nueva»: La justicia.",
   "a": true,
   "e": "Correcto. La justicia",
@@ -25249,6 +25316,7 @@ const BANCO = [
  {
   "cap": "cr28",
   "t": "tf",
+  "f": "c",
   "q": "Sobre «La Tierra Nueva»: Norma del carácter · criterio para evaluar la experiencia · revelación autorizada de las doctrinas · registro fidedigno de los actos de Dios.",
   "a": false,
   "e": "Falso. Eso es de la creencia 1, «La Palabra de Dios». Ojo con confundirlas.",
@@ -35669,6 +35737,32 @@ let alcance='todo',cuantas=0,nivel=0;
    asi que basta con mirar los fallados. */
 const falladasDe=()=>bancoDe().filter(q=>(S.fq[claveQ(q)]||{}).m>0);
 
+/* ───────── la fuente que el reglamento nombra ─────────
+   MECANISMO
+   El reglamento le pone a cada actividad UNA fuente: Conexion Biblica se
+   examina del libro de Daniel, la matutina del cuadernillo de octubre, y las
+   creencias de la cartilla «En esto creemos». El material de estudio va mas
+   alla de eso a proposito, porque es lo que hace entender: Profetas y Reyes
+   comenta el relato, y el libro de 434 paginas explica cada creencia. Pero el
+   examen tiene que medir lo que les pidieron aprender.
+
+   DE DONDE SALE EL DATO, sin clasificar 1.378 preguntas a mano
+   - Profetas y Reyes ya se distingue por el id del capitulo: `pr`. Es un
+     hecho de la estructura, no una etiqueta que alguien pueda olvidar poner.
+   - En las creencias solo el generador sabe de donde vino cada pregunta, asi
+     que las escribe con `f:'c'`: son las 56 de verdadero y falso, que salen
+     de editorial.py (el libro), contra las 215 que salen de datos.py (la
+     cartilla).
+   - La matutina no tiene material complementario: sus 269 preguntas salen de
+     las dos tablas del cuadernillo publicado.
+
+   SIN MARCA = OFICIAL, y es la falla segura. Una pregunta nueva de Daniel que
+   nadie marque cuenta como oficial, que es lo que es. Al reves, una pregunta
+   nueva desapareceria del examen sin que nadie lo note. */
+const esComplementaria=q=>q.f==='c'||String(q.cap).slice(0,2)==='pr';
+/* Lo escoge el usuario y vive en el aparato, como `alcance` y `nivel`. */
+let soloFuente=false;
+
 /* Preguntas disponibles según categoría + alcance elegido. */
 function poolDe(){
   const b=bancoDe();
@@ -35755,6 +35849,10 @@ const nivelEfectivo=()=>nivel||nivelRecomendado();
    para no dejarla sin examen. */
 function poolNivel(){
   let b=poolDe();
+  /* El filtro de fuente va ANTES del de nivel: si fuera al reves, el rescate
+     de «si el nivel deja muy pocas, usa todas» devolveria preguntas
+     complementarias en un examen que pidio solo la fuente oficial. */
+  if(soloFuente)b=b.filter(q=>!esComplementaria(q));
   /* A los 4 a 6 años no se les pide escribir la palabra exacta. */
   if(CAT().sinCompletar)b=b.filter(q=>q.t!=='fill');
   const n=nivelEfectivo();
@@ -35828,6 +35926,19 @@ function pintaMenuEx(){
   }).join(' · ');
   /* Cuantas no ha visto nunca. Sin este renglon el «no se repiten» es una
      promesa invisible: se ve igual que antes y toca creerlo. */
+  /* El interruptor de fuente solo se ofrece donde CAMBIA algo: en la matutina
+     todo el material es el cuadernillo, asi que prenderlo no quitaria ni una
+     pregunta y seria un control que no hace nada. */
+  const zf=document.getElementById('ex-fuente-lb');
+  const ch=document.getElementById('ex-fuente');
+  if(zf&&ch){
+    const hayComp=bancoDe().some(esComplementaria);
+    zf.hidden=!hayComp;
+    if(!hayComp&&soloFuente)soloFuente=false;
+    ch.checked=soloFuente;
+    const t=document.getElementById('ex-fuente-t');
+    if(t)t.textContent=FUENTE_TXT[ACT_DE(S.cat)]||'';
+  }
   const nv2=nuevasDe();
   const frescura=nv2>0
     ? 'De esas, <strong>'+nv2+'</strong> nunca te han salido, y son las que entran primero.'
@@ -35909,6 +36020,11 @@ function cambiaRango(){
     b=ult.length?ult[ult.length-1].id:a;
   }
   if(rangoDe(a+'..'+b))alcance=a+'..'+b;
+  refrescaEx();
+}
+
+function cambiaFuente(){
+  soloFuente=!!document.getElementById('ex-fuente').checked;
   refrescaEx();
 }
 
@@ -36689,7 +36805,7 @@ function pintaEvaluacion(){
 function haceEvaluacion(){
   if(!evalPend||evalHecha)return;
   const r=evalPend;
-  const prev={a:alcance,n:nivel,q:cuantas};
+  const prev={a:alcance,n:nivel,q:cuantas,f:soloFuente};
   let sel=[];
   try{
     /* EL NIVEL TIENE QUE SER DETERMINISTA.
@@ -36699,10 +36815,11 @@ function haceEvaluacion(){
        comparaba notas de exámenes que no eran el mismo. Cuando el director no
        fija nivel, se usa el techo de la categoría, que es igual para todas. */
     alcance=r.alcance||'todo';nivel=r.nivel||CAT().techo;cuantas=r.cuantas;
+    soloFuente=!!r.solo_fuente;
     rndEx=prng(Number(r.semilla)>>>0);
     sel=armar('normal');
   }finally{
-    rndEx=Math.random;alcance=prev.a;nivel=prev.n;cuantas=prev.q;
+    rndEx=Math.random;alcance=prev.a;nivel=prev.n;cuantas=prev.q;soloFuente=prev.f;
   }
   /* Antes, si la receta no daba preguntas para esta participante, el botón no
      hacía nada y parecía que la app estuviera trabada. Pasa cuando el director
@@ -37434,6 +37551,14 @@ async function pintaPanel(){
        siempre la opción 0: con «1 · básica» escogido, el panel afirmaba algo
        que no era cierto de lo que estaba puesto. */
     '<p class="nota" id="pan-nota-nv">'+NOTA_NIVEL[0]+'</p>'+
+    /* El reglamento nombra UNA fuente por actividad. El material de estudio va
+       mas alla a proposito; el examen no tiene por que. */
+    '<label class="ex-sw" style="margin:.2rem 0 .1rem">'+
+      '<input type="checkbox" id="pan-fuente" onchange="pintaAvisoCats()">'+
+      '<span>Solo la fuente del reglamento<br>'+
+      '<small>Conexión Bíblica: solo Daniel, sin Profetas y Reyes. '+
+      'Creencias: solo la cartilla. La matutina no cambia.</small></span>'+
+    '</label>'+
     '<p class="nota">¿A quiénes les toca? Si no marcas ninguna, les toca a todas.</p>'+
     '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
       return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'" '+
@@ -37593,9 +37718,14 @@ const NOTA_ALCANCE={
    preguntarlo sin pararse un momento en esa categoría y devolver las dos como
    estaban. Es el mismo truco de gruposEx(), que ya hace esto en la práctica. */
 function cuantasPara(cat,alc){
-  const pc=S.cat,pa=alcance;
-  try{S.cat=cat;alcance=alc;return poolDe().length;}
-  finally{S.cat=pc;alcance=pa;}
+  const pc=S.cat,pa=alcance,pf=soloFuente;
+  /* Con el interruptor puesto, el aviso tiene que contar lo que de verdad va a
+     recibir esa categoria. Sin esto decia «274 preguntas» y el examen salia
+     con otra cifra. */
+  try{S.cat=cat;alcance=alc;
+    soloFuente=!!(document.getElementById('pan-fuente')||{}).checked;
+    return poolDe().length;}
+  finally{S.cat=pc;alcance=pa;soloFuente=pf;}
 }
 
 /* AVISO DE COMBINACIÓN VACÍA.
@@ -37659,6 +37789,14 @@ function pintaAvisoCats(){
     (personas.length===1?' persona':' personas')+', no a las categorías de arriba.';
   p.innerHTML=t?'<span style="color:var(--rojo)">'+t+'</span>':'';
 }
+
+/* Que fuente nombra el reglamento para cada actividad, en palabras. Se dice
+   cual es, no «la oficial»: el punto del interruptor es saber que entra. */
+const FUENTE_TXT={
+  cb:'Solo el libro de Daniel. Deja fuera Profetas y Reyes.',
+  dm:'Solo el cuadernillo de octubre.',
+  ec:'Solo la cartilla «En esto creemos». Deja fuera lo que sale del libro de las 28 creencias.'
+};
 
 /* Por qué un rango escogido no sirve, en palabras, o cadena vacía si sirve.
    Devuelve el motivo y no un booleano porque el botón de abrir se apaga CON LA
@@ -37773,6 +37911,7 @@ async function abreEvaluacion(){
       titulo,cuantas:n?Number(n.value):15,
       alcance:alcancePanel(),
       nivel:Number((document.getElementById('pan-eval-nv')||{}).value||0),
+      solo_fuente:!!(document.getElementById('pan-fuente')||{}).checked,
       categorias:cats,participantes:personasEval(),huella:huellaBanco()})});
     /* pintaPanel() ya NO decide qué mostrar leyendo una caché local: la
        tarjeta de "en curso" sale de preguntarle a /panel/evaluacion cada vez

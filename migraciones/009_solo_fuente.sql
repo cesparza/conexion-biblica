@@ -1,0 +1,20 @@
+-- SOLO LA FUENTE QUE EL REGLAMENTO NOMBRA.
+--
+-- POR QUÉ
+-- El reglamento le pone a cada actividad UNA fuente: Conexión Bíblica se
+-- examina del libro de Daniel, la matutina del cuadernillo de octubre, y las
+-- creencias de la cartilla «En esto creemos». El material de estudio va más
+-- allá a propósito, porque es lo que hace entender, pero el examen tiene que
+-- medir lo que les pidieron aprender.
+--
+-- Con esto en 1, la evaluación deja fuera lo complementario: Profetas y Reyes
+-- en Conexión Bíblica, y en las creencias lo que sale del libro de 434 páginas
+-- en vez de la cartilla. La matutina no tiene material complementario, así que
+-- para ella no cambia nada.
+--
+-- POR QUÉ UNA COLUMNA Y NO UN PREFIJO EN `alcance`
+-- Son dos conceptos distintos: `alcance` dice QUÉ PARTE del material entra
+-- (todo, un capítulo, un tramo) y esto dice DE QUÉ FUENTE. Meterlos en la
+-- misma cadena obliga a partirla en cada lectura y a mantener dos formatos
+-- donde había uno.
+ALTER TABLE evaluacion ADD COLUMN solo_fuente INTEGER NOT NULL DEFAULT 0;
