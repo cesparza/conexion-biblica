@@ -1,30 +1,28 @@
--- PREGUNTAS RETIRADAS DEL BANCO, SIN TOCAR EL ARTEFACTO.
--- Ejecutar UNA vez, después de 009.
+-- Retired questions, without touching the artifact.
+-- Run ONCE, after 009.
 --
--- POR QUÉ
--- El banco son 1.378 preguntas que viven dentro de index.html, y ese archivo
--- se GENERA: sacar una pregunta mala obligaba a editar el generador, correr
--- build.js y desplegar. Eso no se puede hacer desde un celular el sábado por
--- la mañana, que es justo cuando el director la está leyendo y se da cuenta.
--- Aquí el retiro se mueve a donde sí se puede escribir desde el celular: una
--- fila en D1. El generador no se toca y el artefacto tampoco.
+-- WHY
+-- The bank is 1,378 questions living inside index.html, and that file is
+-- GENERATED: pulling one out means editing the generator, running build.js and
+-- deploying. That cannot be done from a phone on a Saturday morning, which is
+-- exactly when the director is reading them and spots a bad one. So the
+-- retirement moves to the one place writable from a phone: a row in D1.
 --
--- POR QUÉ UN REGISTRO DE HECHOS Y NO UNA MARCA
--- Cada retiro y cada devolución es una FILA. El estado actual de una pregunta
--- es su última fila. Eso da tres cosas de una sola forma:
---   · es reversible — devolver es otra fila, nunca un DELETE;
---   · queda el registro de quién, cuándo y por qué;
---   · se puede preguntar cómo estaba el banco EN UNA FECHA, que es lo que
---     mantiene idéntica una evaluación que ya estaba abierta cuando el
---     director retiró algo. Sin eso, dos participantes de la misma categoría
---     armarían exámenes distintos con la misma semilla.
+-- WHY A LOG OF FACTS AND NOT A FLAG
+-- Every retire and every restore is a ROW. A question's current state is its
+-- last row. One shape gives three things:
+--   . reversible, restoring is another row and never a DELETE;
+--   . who, when and why stay on record;
+--   . the bank can be asked how it stood ON A DATE, which is what keeps an
+--     already open evaluation identical. Without it, two participants in the
+--     same category would build different exams from the same seed.
 --
--- POR QUÉ LA CLAVE Y NO UN id
--- Es la misma clave de la migración 008: capítulo + hash del enunciado. No
--- depende del orden ni del tamaño del banco, así que sigue apuntando a la
--- misma pregunta el año entrante. El servidor NO conoce el banco (vive en el
--- HTML), así que valida la FORMA de la clave, nunca su existencia: es el mismo
--- contrato que ya rige `alcance`.
+-- WHY THE KEY AND NOT AN id
+-- Same key as migration 008: chapter + hash of the wording. It does not depend
+-- on the order or the size of the bank, so it still points at the same
+-- question next year. The server does NOT know the bank (it lives in the
+-- HTML), so it validates the SHAPE of the key, never its existence, which is
+-- the same contract already governing `alcance`.
 CREATE TABLE IF NOT EXISTS pregunta_retirada (
   clave  TEXT NOT NULL,
   accion TEXT NOT NULL CHECK (accion IN ('retirar','restaurar')),
@@ -33,6 +31,6 @@ CREATE TABLE IF NOT EXISTS pregunta_retirada (
   cuando TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
--- El índice sostiene las dos consultas que existen: el estado actual de todas
--- y el estado a una fecha. Las dos buscan la última fila POR CLAVE.
+-- The index backs the only two queries there are: current state of all, and
+-- state as of a date. Both look for the last row PER KEY.
 CREATE INDEX IF NOT EXISTS ix_retirada_clave ON pregunta_retirada(clave, cuando);
