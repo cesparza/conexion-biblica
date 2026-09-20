@@ -221,11 +221,12 @@ async function vivo() {
 }
 
 
-/* ── RETIRED QUESTIONS ──
-   Retiring lives on the server because the bank lives in generated HTML.
-   These tests catch the mechanism skipping any of its three guarantees: it is
-   a log (never deletes), it is reversible, and an open evaluation does not
-   change its exam mid morning. */
+/* ── LAS PREGUNTAS RETIRADAS ──
+   El retiro vive en el servidor porque el banco vive en un HTML generado: sin
+   esto, sacar una pregunta mala obliga a correr el generador y desplegar, y
+   eso no se hace desde un celular. Lo que estas pruebas cazan es que el
+   mecanismo no se salte ninguna de sus tres garantias: registro (no borra),
+   reversible, y una evaluacion abierta no cambia de examen a mitad de mañana. */
 ok(/CREATE TABLE IF NOT EXISTS pregunta_retirada/.test(MIGR),
   'La migracion crea la tabla de preguntas retiradas');
 ok(/accion IN \('retirar','restaurar'\)/.test(MIGR),
@@ -245,10 +246,10 @@ ok(/MAX\(r2\.rowid\)/.test(bloqueRet),
 ok(/r2\.cuando <= \?/.test(bloqueRet),
   'Y se puede preguntar como estaba el banco a una fecha');
 
-/* The guarantee that is hardest to see: the recipe carries the retired list
-   AS OF WHEN IT WAS OPENED (ev.creada_en). With today's, retiring mid morning
-   changes the exam for whoever has not started, and two scores from the same
-   seed stop being comparable. */
+/* LA GARANTIA QUE MAS CUESTA VER: la receta de la evaluacion lleva las
+   retiradas DE CUANDO SE ABRIO (ev.creada_en). Con las de ahora, retirar una
+   pregunta a media mañana le cambia el examen a la que todavia no entra, y dos
+   notas de la misma semilla dejan de ser comparables. */
 const bloqueEvalRet = API.slice(API.indexOf("ruta === '/evaluacion'"), API.indexOf("ruta === '/intento'"));
 ok(/clavesRetiradas\(env, ev\.creada_en\)/.test(bloqueEvalRet),
   'La receta lleva las retiradas de cuando se abrio la evaluacion, no las de ahora');

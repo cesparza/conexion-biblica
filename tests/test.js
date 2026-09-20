@@ -706,9 +706,9 @@ ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
    partir de «Desde» (mismo tipo de capitulo y de ahi en adelante), y dentro de
    Conexion Biblica eso separa ademas Daniel de Profetas y Reyes. */
 {
-  /* v92: the 85 option dropdown split in two, activity and material, so there
-     is no "rango:<activity>" value any more: the activity is its own control
-     and the range comes from it. The rule under test is the same. */
+  /* v92: el desplegable de 85 opciones se partio en dos, actividad y material,
+     asi que ya no hay un valor «rango:<actividad>»: la actividad es su propio
+     control y el tramo sale de ella. La regla que se prueba es la misma. */
   ok(/function opcionesMatPanel\(act\)/.test(APP)&&/'tramo','Un tramo/.test(APP),
     'El tramo lo ofrece cada actividad, no una lista comun a las tres');
   ok(/const caps=capsDeActividad\(act\|\|'cb'\);/.test(APP),
@@ -722,7 +722,7 @@ ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
   ok(/onchange="cambiaMaterialPanel\(\)"/.test(APP),
     'Y cambiar de actividad reinicia el tramo, que era de otra');
   /* La guarda se queda, pero ya no es la forma de avisar. */
-  ok(/Last resort guard/.test(APP),
+  ok(/GUARDA DE ULTIMO RECURSO/.test(APP),
     'La validacion sobrevive como guarda, no como mensaje');
   ok(!/son de[\s\S]{0,40}actividades distintas\. Los dos extremos/.test(APP),
     'Y el parrafo rojo que explicaba el disparate ya no hace falta');
@@ -1652,11 +1652,11 @@ const alias=(TXT=>[...TXT.matchAll(/const (APP[A-Z0-9_]*|CSS[A-Z0-9_]+)\s*=\s*(A
 ok(alias.length===0,'Sin alias de APP ni de CSS'+
   (alias.length?' — sobran: '+alias.map(m=>m[1]).join(', '):''));
 
-/* ── THE BANK REVIEWER: THE STRUCTURAL PART ──
-   What is checked here is that the mechanism stays in one place. The behaviour
-   (retiring pulls the question out of the exam) is proven by uso.js against
-   the real JS; this catches the other half: nobody adding a second path to the
-   bank that skips the filter, and the screen keeping its guard. */
+/* ── EL REVISOR DEL BANCO: LO ESTRUCTURAL ──
+   Lo que se comprueba aqui es que el mecanismo quede en un solo lugar. El
+   comportamiento (que retirar saque la pregunta del examen) lo prueba uso.js
+   contra el JS real; esto caza lo otro: que nadie agregue un segundo camino al
+   banco que se salte el filtro, y que la pantalla tenga su guarda. */
 ok(/<div id="p-revisor" class="pantalla">/.test(CUERPO),
   'El revisor es una pantalla propia, como la ayuda');
 ok(/id="cb-revisor"/.test(CUERPO), 'Con su contenedor, que llena pintaRevisor()');
@@ -1666,21 +1666,23 @@ ok(/srvYo\.rol!=='director'/.test(APP.slice(APP.indexOf('function pintaRevisor')
   'pintaRevisor() tiene su propia guarda: sin sesion de director no pinta el banco');
 ok(/onclick="abreRevisor\(\)"/.test(APP), 'Se entra desde el panel del director');
 
-/* The retired filter in a single place. bancoDe() is the only source of exam
-   questions; a second route to BANCO would let a retired one slip through. */
+/* EL FILTRO DE RETIRADAS EN UN SOLO SITIO. bancoDe() es el unico origen de
+   preguntas de examen; si apareciera una segunda ruta a BANCO para armar, se
+   podria colar una retirada sin que nadie lo note. */
 ok(/estaRetirada\(q\)/.test(APP.slice(APP.indexOf('const bancoDe='),
   APP.indexOf('const modsDe='))),
   'bancoDe() filtra las retiradas, que es el unico punto por donde pasan los examenes');
 ok((APP.match(/!estaRetirada\(/g)||[]).length===1,
   'Y ese filtro existe una sola vez en toda la app');
 
-/* With no signal they do not come back on their own. A server that does not
-   answer (or an answer without the field) cannot put a retired question back
-   into the exam: same fail closed rule the practice switch already follows. */
+/* SIN SEÑAL NO SE DEVUELVEN SOLAS. Un servidor que no contesta (o una
+   respuesta sin el campo) no puede volver a meter al examen una pregunta que
+   el director retiro: es la misma regla de fallar cerrado que ya rige la
+   practica. */
 ok(/if\(Array\.isArray\(d\.retiradas\)\)/.test(APP),
   'Las retiradas solo se reemplazan si el servidor las mando');
 
-/* The evaluation uses ITS recipe's list and then restores the device's. */
+/* La evaluacion usa las de SU receta y despues devuelve las del aparato. */
 const bloqueHace=APP.slice(APP.indexOf('function haceEvaluacion'),
   APP.indexOf('/* ───────── manual dentro de la app'));
 ok(/if\(Array\.isArray\(r\.retiradas\)\)retiradas=new Set\(r\.retiradas\)/.test(bloqueHace),
@@ -1688,36 +1690,37 @@ ok(/if\(Array\.isArray\(r\.retiradas\)\)retiradas=new Set\(r\.retiradas\)/.test(
 ok(/retiradas=prev\.r;/.test(bloqueHace),
   'Y las devuelve como estaban, igual que el alcance y el nivel');
 
-/* The reviewer's tap targets reach 44 px, the minimum for a finger. */
+/* Los toques del revisor llegan a 44 px, que es el minimo de un dedo. */
 ok(/\.rb-raz\{[^}]*min-height:44px/.test(CSS_SIN), 'Las razones rapidas miden 44 px de alto');
 ok(/#cb-revisor \.btn[^{]*\{[^}]*min-height:44px/.test(CSS_SIN),
   'Y todo boton del revisor tambien');
-/* The reviewer's classes cannot share names with the material's reveal
-   blocks. `.rev-q` and `.rev-a` already existed there, and reusing them
-   painted every reviewer row as a card to reveal. Caught in the browser, not
-   in the tests, which is why it is written down here. */
+/* LAS CLASES DEL REVISOR NO PUEDEN LLAMARSE COMO LAS DE «COMPRUEBALO».
+   `.rev-q` y `.rev-a` ya existian para los bloques de respuesta tapada del
+   material, y reusarlas pintaba cada pregunta del revisor como una tarjeta
+   para revelar. Se vio en el navegador, no en las pruebas: por eso queda
+   escrito aqui. */
 ok(!/class="rev-(q|a)[" ]/.test(APP.slice(APP.indexOf('function revFila(q)'),
   APP.indexOf('function revCajaMotivo'))),
   'El revisor usa su propio prefijo de clases (rb-), no el de Compruebalo');
 
-/* ── STEP 2: WHAT MUST NOT COME BACK ──
-   The 85 option dropdown is gone; what replaced it still has to do everything
-   it did. These tests are the reminder of why it changed, so nobody puts it
-   back "to have it all in one place". */
+/* ── PASO 2: LO QUE NO PUEDE VOLVER ──
+   El desplegable de 85 opciones se fue; lo que queda tiene que seguir
+   cumpliendo lo mismo que el cumplia. Estas pruebas son el recordatorio de por
+   que se cambio, para que nadie lo reponga «para tenerlo todo junto». */
 ok(!/id="pan-eval-al"/.test(APP),
   'El desplegable unico de 85 opciones ya no existe');
 ok(/id="pan-act" onchange="cambiaActPanel\(\)"/.test(APP)&&
    /id="pan-mat" onchange="cambiaMaterialPanel\(\)"/.test(APP),
   'El material se escoge en dos pasos: actividad y despues material');
-/* Picking an activity checks ITS categories. Without that, opening "first
-   half of October" with nobody checked also opens it to the activities that do
-   not have that material, and they get zero questions. */
+/* Escoger actividad marca SUS categorias. Sin eso, «solo la primera quincena»
+   abierta sin marcar a nadie se la abre tambien a Conexion Biblica y a las
+   creencias, que no tienen ese material: se quedan sin una sola pregunta. */
 ok(/const suyas=act\?CATS_DE_ACT\(act\):\[\];/.test(APP),
   'Escoger actividad marca las categorias de esa actividad');
 
-/* A recipe writes into the controls, it does not compute the scope itself: a
-   second path to `alcance` would be a second format to keep, and the server
-   understands only one. */
+/* LA RECETA ESCRIBE EN LOS CONTROLES, no calcula el alcance por su cuenta: un
+   segundo camino a `alcance` seria un segundo formato que mantener, y el
+   servidor solo entiende uno. */
 const bloqueReceta=APP.slice(APP.indexOf('function ponReceta(id)'),APP.indexOf('function panAbre'));
 ok(/a\.value=r\.act;cambiaActPanel\(\)/.test(bloqueReceta)&&/m\.value=r\.mat/.test(bloqueReceta),
   'Una receta escribe en los mismos controles que abren la evaluacion');
@@ -1726,15 +1729,15 @@ ok(!/alcance:/.test(bloqueReceta),
 ok(/alcance:alcancePanel\(\)/.test(APP),
   'abreEvaluacion() sigue leyendo el alcance de un solo sitio');
 
-/* Everything that configures an evaluation still gets through. The panels
-   hide controls, they do not remove them: if one went missing the server would
-   get the default and the director would open something else. */
+/* TODO LO QUE CONFIGURA UNA EVALUACION SIGUE LLEGANDO. Los cajones esconden
+   controles, no los quitan: si uno se perdiera, el servidor recibiria el valor
+   por omision y el director abriria otra cosa distinta de la que pidio. */
 for(const id of ['pan-eval-t','pan-eval-n','pan-eval-nv','pan-fuente','pan-r1','pan-r2','pan-cap','pan-personas'])
   ok(APP.includes('id="'+id+'"'), 'Sigue existiendo el control '+id);
 ok(/class="pan-cat-ch"/.test(APP), 'Y las casillas de categoria');
 
-/* The warnings that prevent opening an empty evaluation cannot sit inside a
-   collapsible panel: hiding them makes them useless. */
+/* Los avisos que impiden abrir una evaluacion vacia NO pueden quedar dentro de
+   un cajon plegable: esconderlos los vuelve inutiles. */
 const bloqueP2=APP.slice(APP.indexOf("id=\"pan-paso2\""),APP.indexOf("id=\"g-material\""));
 ok(/id="pan-aviso-cats"/.test(bloqueP2)&&/id="pan-nota-al"/.test(bloqueP2),
   'Los dos avisos del material viven fuera de los cajones, siempre a la vista');

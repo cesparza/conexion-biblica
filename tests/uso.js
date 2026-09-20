@@ -1559,11 +1559,12 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
 }
 
 
-/* ─── RETIRED QUESTIONS ───
-   That retiring one pulls it out of EVERYTHING that builds an exam, and that
-   it touches nothing else. Both halves matter the same: if retiring also wiped
-   the review of an old attempt, the director would stop being able to see what
-   a girl got wrong last week. */
+/* ─── LAS PREGUNTAS RETIRADAS ───
+   QUE SE PRUEBA AQUI
+   Que retirar una pregunta la saca de TODO lo que arma un examen, y que no
+   toca nada mas. Las dos mitades importan igual: si retirar tambien borrara la
+   revision de un intento viejo, el director dejaria de poder ver en que se
+   equivoco una niña la semana pasada. */
 {
   const R=montar(RET);
   R.ponCat('av');
@@ -1578,13 +1579,14 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(!R.poolDe().some(q=>R.claveQ(q)===k),'No esta en el pool del examen');
   ok(!R.poolNivel().some(q=>R.claveQ(q)===k),'Ni despues del filtro de nivel');
 
-  /* The draw too: armar() comes from poolNivel(), so a clean pool is enough,
-     but the result is what gets checked, not the path. */
+  /* El sorteo tambien: armar() sale de poolNivel(), asi que basta con que el
+     pool este limpio, pero se comprueba el resultado y no el camino. */
   R.ponAlcance('todo'); R.ponCuantas(60);
   ok(!R.armar('normal').some(q=>R.claveQ(q)===k),'Ni sale sorteada en un examen de 60');
 
-  /* What is not touched: the flashcard and the wording of an old attempt stay
-     where they were. */
+  /* LO QUE NO SE TOCA. La tarjeta y el enunciado de un intento viejo siguen
+     donde estaban: una pregunta retirada hoy no puede borrar lo que una niña
+     respondio la semana pasada. */
   ok(R.BANCO.some(q=>R.claveQ(q)===k),'La pregunta sigue en el banco crudo del HTML');
   ok(!/ya no está en el banco/.test(R.htmlRevisionQ({k:k,t:victima.t,r:0,b:1},1)),
     'Y la revision de un intento viejo sigue encontrando su enunciado');
@@ -1593,18 +1595,19 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(R.bancoDe().length===antes,'Devolverla al banco la vuelve a poner');
 }
 
-/* ─── THE EVALUATION USES ITS RECIPE'S RETIRED LIST, NOT TODAY'S ───
-   It is built in the browser from the server's seed. If every device filtered
-   with the list as of right now, retiring mid morning would change the exam
-   for whoever has not taken it yet, and two scores from the same seed would
-   stop being comparable. So the list rides INSIDE the recipe, frozen at open
-   time. */
+/* ─── LA EVALUACION USA LAS RETIRADAS DE SU RECETA, NO LAS DE AHORA ───
+   MECANISMO
+   La evaluacion se arma en el navegador con la semilla del servidor. Si cada
+   aparato filtrara con la lista de retiradas de ESTE momento, retirar una
+   pregunta a media mañana le cambiaria el examen a la que todavia no lo ha
+   hecho: dos notas de la misma semilla dejarian de ser comparables. Por eso la
+   lista viaja DENTRO de la receta, congelada al abrir. */
 {
   const E=montar(RET);
   E.ponCat('av');
   const q0=E.bancoDe()[0], k0=E.claveQ(q0);
-  /* The device thinks there is one more retired (just retired), but the
-     recipe says there were none when it was opened. */
+  /* El aparato cree que hay una retirada mas (la acaban de retirar), pero la
+     receta dice que cuando se abrio no habia ninguna. */
   E.ponRetiradas([k0]);
   E.ponEvalPend({id:'e1',titulo:'Prueba',alcance:'todo',cuantas:60,nivel:3,
     semilla:'12345',solo_fuente:0,retiradas:[]});
@@ -1613,8 +1616,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(conReceta>0,'La evaluacion se arma con la receta');
   ok(E.retiradas().has(k0),'Y al terminar el aparato queda con SU lista, no con la de la receta');
 
-  /* Same seed, same recipe, one retired inside: a different exam comes out,
-     which is exactly what is wanted when it was retired before opening. */
+  /* La misma semilla y la misma receta, con una retirada dentro: sale un
+     examen distinto, que es justo lo que se quiere cuando el director si la
+     retiro antes de abrir. */
   E.ponEvalPend({id:'e2',titulo:'Prueba 2',alcance:'todo',cuantas:60,nivel:3,
     semilla:'12345',solo_fuente:0,retiradas:[k0]});
   E.haceEvaluacion();
@@ -1622,9 +1626,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Una retirada en la receta no sale en esa evaluacion');
 }
 
-/* ─── THE REVIEWER: FILTERING AND COUNTING ───
-   It sees the RAW bank, retired ones included: bringing one back is decided by
-   reading it. Its figures come from data, through marks. */
+/* ─── EL REVISOR: FILTRAR Y CONTAR ───
+   El revisor ve el banco CRUDO, retiradas incluidas: la decision de devolver
+   una se toma leyendola. Y sus cifras salen del dato, con marcas. */
 {
   const V=montar(RET);
   V.revLimpia();
@@ -1635,8 +1639,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const idsMe=V.revCapsDe('me').map(c=>c.id);
   ok(deMenores.length>0&&deMenores.every(q=>idsMe.includes(q.cap)),
     'Ver «el examen de Menores» deja solo sus capitulos ('+deMenores.length+')');
-  /* The per exam view has to match the bank that category actually gets: if
-     they differed, the director would be reviewing a bank nobody answers. */
+  /* La vista POR EXAMEN tiene que coincidir con el banco que esa categoria de
+     verdad recibe: si difirieran, el director estaria revisando un banco que
+     nadie contesta. */
   V.ponCat('me'); V.ponRetiradas([]);
   ok(deMenores.length===V.bancoDe().length,
     'Y coincide con el banco real de esa categoria ('+V.bancoDe().length+')');
@@ -1647,13 +1652,13 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   V.revPon('fu','c');
   ok(V.revFilas().every(q=>V.esComplementaria(q)),'El de fuente deja solo las complementarias');
 
-  /* Changing category with a chapter the new one is not examined on: the
-     chapter is cleared instead of leaving an empty screen. */
+  /* Cambiar de categoria con un capitulo puesto que la nueva no examina: el
+     capitulo se limpia en vez de dejar la pantalla vacia sin explicacion. */
   V.revLimpia(); V.revPon('cat','me'); V.revPon('cap','d1');
   V.revPon('cat','dm2');
   ok(V.revF().cap==='','Cambiar de categoria limpia un capitulo que ya no aplica');
 
-  /* State: retired and visible are complementary over the same total. */
+  /* Estado: retiradas y a la vista son complementarios sobre el mismo total. */
   V.revLimpia();
   const k=V.claveQ(V.BANCO[0]);
   V.ponRetiradas([k]);
@@ -1663,23 +1668,27 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(V.revFilas().length===V.BANCO.length-1,'Y «a la vista» deja todas las demas');
   V.ponRetiradas([]);
 
-  /* Screen figures come from data. A mistyped mark stays literal on screen,
-     which is visible; a hand written figure lies silently. */
+  /* Las cifras de la pantalla salen del dato. Una marca mal escrita se queda
+     literal en pantalla, que es visible; una cifra a mano miente en silencio. */
   const txt=V.aplicaMarcas(V.REV_CUENTA,{TOTAL:'7',RET:'2',VISTA:'5',VISTA_RET:'1'});
   ok(/\b7\b/.test(txt)&&/\b5\b/.test(txt)&&!/\{/.test(txt),
     'El resumen del revisor arma sus cifras con marcas, no escritas a mano');
 }
 
 
-/* ─── STEP 2: THE RECIPES AND THE TWO STEP MATERIAL ───
-   Material was ONE dropdown with 85 options. Grouping it with <optgroup> was
-   correct and iOS still paints no group labels, so all 85 showed in a row.
-   Now: activity first, material after. No dropdown goes past the 31 days of
-   October, and the impossible range cannot even be picked. */
+/* ─── PASO 2: LAS RECETAS Y LOS DOS PASOS DEL MATERIAL ───
+   EL PROBLEMA QUE RESUELVEN
+   «Qué material» era UN desplegable con 85 opciones: los grupos de las tres
+   actividades, los 77 capitulos y los tramos. Se agrupo con <optgroup>, que es
+   lo correcto, y el selector nativo de iOS no pinta las etiquetas de grupo: en
+   el iPhone del director seguian saliendo las 85 seguidas.
+
+   COMO QUEDA: actividad primero, material despues. Ningun desplegable pasa de
+   los 31 dias de octubre, y el tramo imposible no se puede ni escoger. */
 {
   const P=montar(RET);
 
-  /* The material offered comes from the activity, not a shared list. */
+  /* El material que se ofrece sale de la actividad, no de una lista comun. */
   const mCb=P.opcionesMatPanel('cb').map(o=>o[0]);
   const mDm=P.opcionesMatPanel('dm').map(o=>o[0]);
   const mEc=P.opcionesMatPanel('ec').map(o=>o[0]);
@@ -1693,8 +1702,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(Math.max(mCb.length,mDm.length,mEc.length)<=5,
     'Ningun desplegable de material pasa de cinco opciones');
 
-  /* The translation to what the server stores. It is the only one, which is
-     why recipes write into the controls instead of computing scope apart. */
+  /* LA TRADUCCION A LO QUE EL SERVIDOR GUARDA. Es la unica, y por eso las
+     recetas escriben en los controles en vez de calcular el alcance aparte. */
   const el=P.el;
   el('pan-mat').value='todo';
   ok(P.alcancePanel()==='todo','Con «todo», el alcance es todo');
@@ -1708,8 +1717,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   el('pan-r1').value='m12'; el('pan-r2').value='m05';
   ok(P.motivoRangoMalo()!=='','Uno al reves lo caza la guarda de ultimo recurso');
 
-  /* The impossible range cannot even be picked: both ends are filled from the
-     chapters of ONE activity, so a cross activity range is in neither list. */
+  /* EL TRAMO IMPOSIBLE NO SE PUEDE NI ESCOGER: los dos extremos se llenan con
+     los capitulos de UNA actividad, asi que «de la Creencia 24 a Daniel 1» no
+     esta en ninguna de las dos listas. */
   P.llenaRangoPanel('dm',false);
   const r1=el('pan-r1').innerHTML, r2=el('pan-r2').innerHTML;
   ok(/value="m01"/.test(r1)&&!/value="d1"/.test(r1)&&!/value="cr/.test(r1),
@@ -1717,8 +1727,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(!/value="cr/.test(r2)&&!/value="d1"/.test(r2),
     'Y «Hasta» tampoco puede saltar de actividad');
 
-  /* A chapter NO category is examined on is not offered: opening an
-     evaluation on it would leave the participants with zero questions. */
+  /* Un capitulo que NINGUNA categoria examina no se ofrece: abrirle una
+     evaluacion dejaria a las participantes sin una sola pregunta. */
   P.llenaCapPanel('cb',false);
   const ofrecidos=[...el('pan-cap').innerHTML.matchAll(/value="([^"]+)"/g)].map(m=>m[1]);
   ok(ofrecidos.length===P.capsExaminables('cb').length,
@@ -1726,8 +1736,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(ofrecidos.length<P.capsDeActividad('cb').length,
     'Que son menos que todos los capitulos de la actividad ('+P.capsDeActividad('cb').length+')');
 
-  /* Recipes are not a second path. Each says which activity and material it
-     lands on; the scope is still computed by alcancePanel(). */
+  /* LAS RECETAS NO SON UN SEGUNDO CAMINO. Cada una dice en que actividad y en
+     que material se para; el alcance lo sigue calculando alcancePanel(). */
   ok(P.RECETAS.length>=4&&P.RECETAS.every(r=>typeof r.d==='function'),
     'Cada receta calcula su descripcion con el dato, no con una cifra escrita');
   const conMat=P.RECETAS.filter(r=>r.act!==null);
@@ -1735,26 +1745,27 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Y el material de cada receta existe de verdad en su actividad');
   ok(P.RECETAS.some(r=>r.act===null),'Queda «Armarlo yo» para todo lo demas');
 
-  /* The summary names the material with the SAME text the panel uses on the
-     "in progress" card: two texts for one thing drift on the first change. */
+  /* La frase dice el material con el MISMO texto que el panel usa en la
+     tarjeta de «en curso»: dos textos para lo mismo se separan al primer
+     cambio. */
   ok(P.textoAlcancePanel('m05..m12')===P.textoAlcancePanel('m05..m12'),
     'El material en palabras sale de textoAlcancePanel()');
-  /* Each row takes its value from the function that already says it elsewhere
-     in the panel. Its own text would drift on the first change. */
+  /* Cada fila saca su valor de la funcion que ya lo dice en el resto del
+     panel. Un texto propio aqui se separaria del otro en el primer cambio. */
   ok(P.FILAS_EVAL.length===3&&P.FILAS_EVAL.every(f=>typeof f[2]==='function'),
     'La frase tiene una fila por parte y cada una lee su valor, no lo guarda');
   el('pan-act').value='dm'; el('pan-mat').value='tramo';
   el('pan-r1').value='m05'; el('pan-r2').value='m12';
-  /* The material entry names the activity and the option, which is what
-     neither the recipe nor the bar below says. Both parts come from the same
-     lists that build the dropdowns. */
+  /* El acceso de material nombra la actividad y la opcion, que es lo que NO
+     dicen ni la receta ni la barra de abajo. Las dos partes salen de las
+     mismas listas que arman los desplegables. */
   const tm=P.FILAS_EVAL[0][2]();
   const opTramo=P.opcionesMatPanel('dm').find(o=>o[0]==='tramo');
   ok(tm.indexOf('Devoción Matutina')===0&&tm.indexOf(opTramo[2])>0,
     'El acceso de material nombra la actividad y la opcion escogida, en corto');
-  /* Two labels per option, both from the same line: the long one for the
-     dropdown, the short one for the narrow card. Written apart they would
-     drift on the first rename. */
+  /* Dos etiquetas por opcion y las dos salen de la misma linea: la larga para
+     el desplegable, la corta para la tarjeta angosta. Si una se escribiera
+     aparte, se separarian al primer cambio de nombre. */
   ok(P.opcionesMatPanel('dm').every(o=>o.length===3&&o[2].length<=o[1].length),
     'Cada opcion de material trae su etiqueta larga y su corta');
   el('pan-eval-n').value='40';

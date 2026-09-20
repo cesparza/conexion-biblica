@@ -144,21 +144,25 @@ const semillaNueva = () => {
   return String(b[0]) + String(b[1] % 100000);
 };
 
-/* Retired questions. The bank lives in the generated HTML, so the server does
-   not know which questions exist: it keeps a LOG OF FACTS about keys. Every
-   retire and every restore is a row; a question's state is its last row.
-   The key's shape is a contract with the app, like `alcance`: chapter
-   (d1, pr39, m05, cr10) + dot + the base 36 hash of the wording. The shape is
-   validated, never the existence. */
+/* ───────── LAS PREGUNTAS RETIRADAS DEL BANCO ─────────
+   El banco vive en el HTML generado, así que el servidor no sabe qué
+   preguntas existen: guarda un REGISTRO DE HECHOS sobre claves. Cada retiro y
+   cada devolución es una fila; el estado de una pregunta es su última fila.
+
+   La forma de la clave es un contrato con la app, igual que el de `alcance`:
+   capítulo (d1, pr39, m05, cr10) + punto + el hash del enunciado en base 36.
+   Se valida la forma, nunca la existencia. */
 const FORMA_CLAVE = /^[a-z]{1,3}[0-9]{1,2}\.[0-9a-z]{1,10}$/;
 
-/* The last row of each key, optionally AS OF A DATE.
-   `corte` is what keeps an already open evaluation identical: it asks the log
-   how the bank stood when that evaluation was created, so retiring a question
-   mid morning does not change the exam for whoever hasn't taken it yet.
-   Without it, the state right now.
-   Ties break on `rowid` and not on time: `cuando` has second resolution and
-   two actions on the same key fit in one second. rowid always grows. */
+/* La última fila de cada clave, opcionalmente A UNA FECHA.
+   `corte` es lo que mantiene idéntica una evaluación ya abierta: se le
+   pregunta al registro cómo estaba el banco cuando esa evaluación se creó, así
+   que retirar una pregunta a mitad de mañana no le cambia el examen a la que
+   todavía no lo ha hecho. Sin corte, el estado de ahora mismo.
+
+   El desempate es `rowid` y no la hora: `cuando` tiene resolución de segundo y
+   dos acciones seguidas sobre la misma clave caben en el mismo segundo. El
+   rowid siempre crece. */
 async function retiradas(env, corte) {
   const sql = corte
     ? 'SELECT r.clave, r.quien, r.motivo, r.cuando FROM pregunta_retirada r ' +
@@ -174,7 +178,7 @@ async function retiradas(env, corte) {
   return results || [];
 }
 
-/** Keys only: that is all an exam builder needs. */
+/** Solo las claves: es lo que necesita quien arma un examen. */
 const clavesRetiradas = async (env, corte) => (await retiradas(env, corte)).map(r => r.clave);
 
 /**
@@ -216,11 +220,12 @@ export async function onRequest(context) {
          para todas las categorías. */
       const algunaParaTodas = abiertas.some(ev =>
         !partsDeFila(ev).length && (ev.categorias || '*') === '*');
-      /* Retired keys ride here and not on their own route: every device
-         already hits this endpoint on start and before each exam, so the app
-         caches them like it caches what is open, and with no signal it keeps
-         filtering with the last it knew. They are keys, the same hash already
-         in the public HTML, so they reveal nothing new. */
+      /* LAS RETIRADAS VIAJAN AQUÍ, y no por una ruta propia, porque este
+         endpoint ya es el que todos los aparatos consultan al arrancar y antes
+         de cada examen: la app las cachea igual que cachea qué hay abierto, y
+         sin señal sigue filtrando con lo último que supo. Son claves — el
+         mismo hash del enunciado que ya está en el HTML público —, así que no
+         revelan nada que no se pueda leer en el artefacto. */
       return json({
         practica: !algunaParaTodas,
         evaluaciones: abiertas.map(ev => ({
@@ -326,11 +331,12 @@ export async function onRequest(context) {
       const hecho = await env.DB.prepare(
         'SELECT nota, total FROM intento WHERE participante_id = ? AND evaluacion_id = ?'
       ).bind(sesion.persona_id, ev.id).first();
-      /* The recipe carries the retired list AS OF WHEN IT WAS OPENED, not
-         today's. The evaluation has to come out IDENTICAL for everyone: it is
-         built in the browser from the server's seed over the bank minus the
-         retired ones, so if that list changed mid morning, whoever starts
-         later would build a different exam from the same seed. */
+      /* LAS RETIRADAS QUE VAN EN LA RECETA SON LAS DE CUANDO SE ABRIÓ, no las
+         de ahora. La evaluación tiene que salir IDÉNTICA para todas: el examen
+         se arma en el navegador con la semilla del servidor sobre el banco
+         menos las retiradas, así que si esa lista cambiara a mitad de mañana,
+         la que entra después armaría otro examen con la misma semilla y el
+         director estaría comparando notas de exámenes distintos. */
       return json({ evaluacion: {
         id: ev.id, titulo: ev.titulo, alcance: ev.alcance,
         cuantas: ev.cuantas, nivel: ev.nivel, semilla: ev.semilla,
@@ -589,20 +595,21 @@ export async function onRequest(context) {
       return json({ intento: r });
     }
 
-    /* The bank reviewer. Retiring does not edit the artifact, it writes a
-       row: that is why it is reversible and why there is a record. The app
-       fetches the list and applies it when building any exam. */
+    /* ───────── el revisor del banco ─────────
+       Retirar una pregunta no edita el artefacto: escribe una fila. Por eso
+       es reversible y por eso queda registro. La app se trae la lista y la
+       aplica al armar cualquier examen. */
     if (metodo === 'GET' && ruta === '/panel/retiradas') {
       return json({ retiradas: await retiradas(env) });
     }
 
     if (metodo === 'POST' && ruta === '/panel/retiradas') {
       const b = await request.json().catch(() => ({}));
-      /* Restoring is a first class action, not a delete: the record of why it
-         was retired at the time is kept. */
+      /* Devolver al banco es una acción de primera clase, no un borrado: el
+         registro de por qué se retiró en su momento se conserva. */
       const accion = b.accion === 'restaurar' ? 'restaurar' : 'retirar';
-      /* One or many: the bank is reviewed in batches, and one round trip per
-         question on campground signal is what makes you give up. */
+      /* Una o varias: revisar el banco se hace en tanda, y un viaje de red por
+         pregunta con señal de campamento es lo que hace abandonar la revisión. */
       const crudas = Array.isArray(b.claves) ? b.claves : [b.clave];
       const claves = [...new Set(crudas.map(x => String(x || '').trim())
         .filter(x => FORMA_CLAVE.test(x)))].slice(0, 50);
@@ -615,8 +622,8 @@ export async function onRequest(context) {
       }
       await auditar(env, sesion.cuenta_id, accion + '_pregunta', 'pregunta_retirada',
         claves.join(',').slice(0, 200), ipHash);
-      /* The full updated list comes back: the director's screen does not have
-         to guess the new state or make a second round trip. */
+      /* Se devuelve la lista completa ya actualizada: la pantalla del director
+         no tiene que adivinar cómo quedó, ni pedir un segundo viaje. */
       return json({ ok: true, n: claves.length, retiradas: await retiradas(env) });
     }
 

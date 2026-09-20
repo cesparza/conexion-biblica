@@ -366,13 +366,24 @@ function srvGuarda(practica,evalId,evalTitulo,evaluaciones){
   }catch(e){}
 }
 
-/* Retired questions: ones the director pulled out of the exams.
-   The bank lives inside the generated index.html, so removing a question would
-   mean editing the generator and deploying. That can't be done from a phone,
-   so the retirement lives on the server and the app applies it when building.
-   Ships inside /estado and is cached like the rest of the server state: with
-   no signal the last known set stands; if the server never answered, the set
-   is empty, which is the whole bank as shipped. */
+/* ───────── LAS PREGUNTAS RETIRADAS ─────────
+   QUE ES UNA PREGUNTA RETIRADA
+   Una que el director leyo y decidio sacar: esta repetida, mal redactada, o
+   pregunta algo que el reglamento no pide. No se borra, se retira: sigue en el
+   HTML y se puede devolver.
+
+   POR QUE NO SE BORRA DEL BANCO
+   El banco son 1.378 preguntas dentro de index.html, que es un archivo
+   GENERADO: quitar una obliga a editar el generador, correr build.js y
+   desplegar. Eso no se hace desde un celular. Asi que el retiro vive en el
+   servidor, la app se lo trae y lo aplica al armar el examen. El artefacto no
+   se toca y el generador tampoco.
+
+   SE CACHEA IGUAL QUE LO DEMAS DEL SERVIDOR
+   Viaja dentro de /estado, que es lo que la app ya consulta al arrancar y
+   antes de cada examen. Sin señal se usa lo ultimo que se supo, que es lo
+   mismo que hace el interruptor de la practica. Si nunca contesto, el conjunto
+   esta vacio: el banco completo, que es lo que el artefacto trae escrito. */
 const RET_CACHE='cb-ret';
 let retiradas=new Set();
 function retLee(){
@@ -416,9 +427,9 @@ async function srvRefresca(){
        quién es ella). */
     const paraTodas=evaluaciones.find(function(e){return e.paraTodas;});
     srvGuarda(d.practica, paraTodas&&paraTodas.id, paraTodas&&paraTodas.titulo, evaluaciones);
-    /* Only if the field came. An old server (or a trimmed answer) cannot put
-       retired questions back into the bank: the last known set stands, same as
-       the practice switch. */
+    /* Solo si vino el campo. Un servidor viejo (o una respuesta recortada) no
+       puede DEVOLVER al banco preguntas que el director retiro: se queda con
+       lo ultimo que se supo, igual que el interruptor de la practica. */
     if(Array.isArray(d.retiradas)){ponRetiradas(d.retiradas);retGuarda(d.retiradas);}
     return true;
   }catch(e){return false;}
@@ -586,11 +597,15 @@ const capsDe=()=>CAPS.filter(c=>c.cats.includes(S.cat));
    estudiando, y para Guias Mayores si cuenta. */
 const soloEstudio=(c,cat)=>Array.isArray(c.extra)?c.extra.includes(cat):!!c.extra;
 
-/* The retired filter lives here and nowhere else: bancoDe() is the only
-   source of exam questions (practice, evaluation, review of past mistakes,
-   printouts, manual counts), so filtering here covers all six at once.
-   What does not go through here stays untouched on purpose: flashcards and the
-   review of an old attempt, which looks the question up by key in BANCO. */
+/* EL FILTRO DE RETIRADAS VA AQUI Y EN NINGUN OTRO LADO.
+   bancoDe() es el unico origen de preguntas de examen: de el salen el pool de
+   practicar, el de la evaluacion, los errores por repasar, los impresos y las
+   cuentas del manual. Filtrar aqui las retira de los seis a la vez, y no hay
+   forma de agregar un camino nuevo que se las salte.
+   Lo que NO pasa por aqui sigue intacto a proposito: las tarjetas, la pestaña
+   «Compruebalo» y la revision de un intento viejo, que busca el enunciado por
+   clave en BANCO. Una pregunta retirada hoy no puede borrar lo que una niña
+   respondio la semana pasada. */
 const bancoDe=()=>{
   const ids=capsDe().filter(c=>!soloEstudio(c,S.cat)).map(c=>c.id);
   return BANCO.filter(q=>ids.includes(q.cap)&&!estaRetirada(q));
@@ -3540,10 +3555,11 @@ function haceEvaluacion(){
        fija nivel, se usa el techo de la categoría, que es igual para todas. */
     alcance=r.alcance||'todo';nivel=r.nivel||CAT().techo;cuantas=r.cuantas;
     soloFuente=!!r.solo_fuente;
-    /* The recipe's retired list, not today's: it is frozen at the moment the
-       evaluation was opened. Otherwise retiring a question mid morning would
-       change the exam for whoever hasn't taken it yet, and two scores from the
-       same seed would stop being comparable. */
+    /* LAS RETIRADAS DE LA RECETA, NO LAS DE AHORA. La receta trae la lista tal
+       como estaba cuando el director abrio la evaluacion. Si se usara la de
+       ahora, retirar una pregunta a media mañana le cambiaria el examen a la
+       que todavia no lo ha hecho, y dos notas de la misma semilla dejarian de
+       ser comparables. */
     if(Array.isArray(r.retiradas))retiradas=new Set(r.retiradas);
     rndEx=prng(Number(r.semilla)>>>0);
     sel=armar('normal');
@@ -4215,22 +4231,36 @@ async function pintaPanel(){
     '<input id="pan-eval-t" placeholder="p. ej. Sábado 6 de septiembre" '+
     'maxlength="60" oninput="revisaAbrir()"></label></div>'+
 
-    /* Recipes replace an 85 option dropdown. Grouping it with <optgroup> was
-       correct and still showed 85 flat options on iOS, which does not paint
-       group labels. What is actually needed is the four exams that get opened
-       every time, plus a way to build any other one.
-       A recipe is not a shortcut to another mechanism: it writes into the SAME
-       controls that open the evaluation, so there is only one path to keep. */
+    /* ───────── LAS RECETAS, Y POR QUE REEMPLAZAN AL DESPLEGABLE ─────────
+       El desplegable de «Qué material» llego a 85 opciones: los grupos de las
+       tres actividades, mas los 77 capitulos, mas los tramos. Se agrupo con
+       <optgroup>, que es lo correcto, y en el iPhone del director se siguen
+       viendo las 85 seguidas: el selector nativo de iOS no pinta las etiquetas
+       de grupo. Un desplegable de 85 opciones en un celular no se lee, se
+       recorre.
+
+       Lo que de verdad hace falta no son 85 opciones: son cuatro exámenes que
+       se abren siempre, y la posibilidad de armar cualquier otro. Eso es lo que
+       hay aqui: una lista corta de recetas, y «Armarlo yo» para el resto. La
+       receta no es un atajo a otro mecanismo: escribe en los MISMOS controles
+       que abren la evaluacion, asi que no hay dos caminos que mantener. */
     '<p class="nota">Lo que más abres, de un toque. Después se puede ajustar.</p>'+
     '<div class="pan-recetas" id="pan-recetas"></div>'+
 
-    /* What actually gets adjusted after picking a recipe (the range or the
-       chapter, and how many questions) is in plain sight. The rest sits behind
-       a button that shows what is currently set, so no list has to be opened
-       just to read it.
-       The range and chapter selects live HERE and not inside a panel that gets
-       repainted: llenaRangoPanel() writes their options, and rebuilding the
-       container's HTML would wipe them along with the current choice. */
+    /* LA FRASE. Es el estado completo dicho en una linea, y cada parte
+       subrayada abre el control que la cambia. Antes el estado estaba repartido
+       en seis campos y habia que leerlos todos para saber que se iba a abrir. */
+    /* «AJUSTAR LO ESCOGIDO», tal como el maquetado C.
+       Lo que de verdad se cambia despues de escoger una receta —el tramo o el
+       capitulo, y cuantas preguntas— esta A LA VISTA, sin un toque de por
+       medio. Lo demas (material, a quienes, dificultad y fuente) queda detras
+       de un boton que dice lo que hay puesto, que es lo que hoy falta: para
+       saber que dice una lista hay que abrirla.
+
+       Los dos desplegables del tramo y el del capitulo viven AQUI y no dentro
+       de un cajon que se repinta: llenaRangoPanel() les escribe las opciones,
+       y volver a armar el HTML del contenedor se las borraria junto con lo que
+       el director acaba de escoger. */
     '<div class="pan-grupo" id="pan-ajuste">'+
       '<div class="pan-grupo-t">Ajustar lo escogido</div>'+
       '<div class="ses-fila" id="pan-zona-cap" hidden><label class="pan-lb">Cuál'+
@@ -4239,24 +4269,26 @@ async function pintaPanel(){
         '<label class="pan-lb">Desde<select id="pan-r1" onchange="cambiaDesdePanel()"></select></label>'+
         '<label class="pan-lb">Hasta<select id="pan-r2" onchange="pintaNotaAlcance()"></select></label>'+
       '</div>'+
-      /* The three sizes categories actually use (CATS[].n is 10, 15 or 25),
-         which fit on one line. Any other number lives under Preguntas. */
+      /* Los tres tamaños que las categorias usan de verdad (CATS[].n es 10, 15 o
+         25) y que caben en un renglon. Cualquier otro numero sigue estando, en
+         «Otro número» dentro de Preguntas. */
       '<div class="pan-chips" id="pan-chips">'+[10,15,25].map(function(n){
         return '<button type="button" class="pan-chip" data-n="'+n+'" '+
           'onclick="ponCuantasPanel('+n+')">'+n+'</button>';
       }).join('')+'</div>'+
       '<div class="pan-acc" id="pan-acc"></div>'+
     '</div>'+
-    /* Both warnings live OUTSIDE the collapsible panels: the one saying no
-       category gets questions is what prevents opening an empty evaluation,
-       and hiding it behind a fold would make it useless. */
+    /* Los dos avisos viven FUERA de los grupos plegables: el de «ninguna
+       categoría recibe preguntas» es justo lo que impide abrir una evaluación
+       vacía, y esconderlo detrás de un pliegue lo volvería inútil. */
     '<p class="nota" id="pan-nota-al">'+NOTA_ALCANCE.todo+'</p>'+
     '<p class="nota" id="pan-aviso-cats"></p>'+
 
-    /* Material in two steps, not 85 options: activity first, then its own
-       material. No dropdown goes past the 31 days of October, and an
-       impossible range cannot even be picked, because both ends are filled
-       from the chapters of ONE activity. */
+    /* ───────── QUE MATERIAL: DOS PASOS, NO 85 OPCIONES ─────────
+       Primero la actividad, que es la dimension de arriba del modelo, y
+       despues lo suyo. Ningun desplegable pasa de los 31 dias de octubre, y el
+       tramo imposible («de la Creencia 24 a Daniel 1») no se puede ni escoger,
+       porque los dos extremos se llenan con los capitulos de UNA actividad. */
     '<div class="pan-grupo" id="g-material" hidden>'+
       '<div class="pan-grupo-t">Qué material entra'+
       '<button type="button" class="pan-listo" onclick="panAbre(\'\')">Listo</button></div>'+
@@ -4271,12 +4303,13 @@ async function pintaPanel(){
       '<select id="pan-mat" onchange="cambiaMaterialPanel()"></select></label></div>'+
     '</div>'+
 
-    /* ───────── HOW MANY, HOW HARD, AND FROM WHICH SOURCE ───────── */
+    /* ───────── CUANTAS, QUE TAN DIFICIL, Y DE QUE FUENTE ───────── */
     '<div class="pan-grupo" id="g-cuantas" hidden>'+
       '<div class="pan-grupo-t">Cuántas preguntas y qué tan difícil'+
       '<button type="button" class="pan-listo" onclick="panAbre(\'\')">Listo</button></div>'+
-      /* One tap sizes are above; this is the field for any other number,
-         which the server clamps between 5 and 60. */
+      /* Los tamaños de un toque estan arriba, en «Ajustar lo escogido». Aqui
+         queda el campo para cualquier otro numero, que el servidor acota entre
+         5 y 60. */
       '<div class="ses-fila"><label class="pan-lb" style="flex:0 0 9rem">Otro número'+
       '<input id="pan-eval-n" type="number" min="5" max="60" value="15" '+
       'oninput="pintaFrase()"></label></div>'+
@@ -4331,11 +4364,11 @@ async function pintaPanel(){
     '</div></div>'+
 
     '<div class="pan-paso"><div class="pan-paso-t">Paso 3 · Abrir</div>'+
-    /* The summary sits against the open button: it is the last thing read
-       before tapping it. It says what was picked and HOW MANY QUESTIONS the
-       participants actually get. That figure was missing: the panel warned
-       when a category got ZERO but never how many it gets, so asking for 25
-       out of a range that only has 10 surfaced on exam day. */
+    /* LA BARRA, pegada al boton como en el maquetado: es lo ultimo que se lee
+       antes de tocarlo. Dice lo escogido y CUANTAS PREGUNTAS RECIBE de verdad
+       quien lo va a presentar. Esa cifra faltaba: el panel avisaba cuando una
+       categoria recibia CERO, pero nunca cuantas recibe, asi que pedir 25 de un
+       tramo que solo tiene 10 se descubria el dia del examen. */
     '<p class="pan-resumen" id="pan-resumen"></p>'+
     '<div class="pan-sw"><button class="btn azul" id="pan-abrir" disabled '+
     'onclick="abreEvaluacion()">Abrir una evaluación</button>'+
@@ -4348,9 +4381,10 @@ async function pintaPanel(){
     'evaluación en su pantalla. Los exámenes de práctica <strong>siguen abiertos</strong>: '+
     'abrir una evaluación ya no los cierra.</p></div>'+
 
-    /* The reviewer entry goes here and not among the steps: reviewing the
-       bank is another day's work, not a step of opening an evaluation.
-       As a "step 4" it would look mandatory before opening. */
+    /* LA ENTRADA AL REVISOR VA AQUI Y NO EN LOS PASOS.
+       Revisar el banco no es un paso de abrir una evaluacion: es el trabajo de
+       otro dia, el de decidir que preguntas se quedan. Ponerlo como «paso 4»
+       lo haria ver obligatorio antes de abrir. */
     '<div class="pan-paso"><div class="pan-paso-t">El banco de preguntas</div>'+
     '<p class="nota">Leer las preguntas una por una y retirar las que no deban '+
     'salir. Retirar no borra nada: la pregunta se puede devolver, y lo retirado '+
@@ -4359,8 +4393,8 @@ async function pintaPanel(){
 
     '<div id="pan-eval-en-curso"></div></div>';
   cargaParticipantes(parts);
-  /* Order matters: the material lists first (they depend on the activity),
-     then the summary, which reads them. */
+  /* El orden importa: primero las listas del material (que dependen de la
+     actividad), despues la frase, que las lee. */
   pintaRecetas();
   cambiaActPanel();
   revisaAbrir(cuantasP);
@@ -4420,14 +4454,15 @@ function llenaRangoPanel(act,mantener){
   s2.value=prev2;
 }
 
-/* A single chapter as scope. The `alcance` column always accepted it and
-   practice always knew how to build "only Daniel 1"; what was missing was a
-   way to ask for it. Only the chosen ACTIVITY's chapters are listed, and only
-   those some category is really examined on: opening an evaluation on a study
-   only chapter leaves the participants with zero questions. */
-/* The chapters SOME category of the activity is really examined on. Used in
-   two places (the dropdown and the recipe's count), hence a function: with the
-   count written apart, the recipe would say 18 and the dropdown offer 12. */
+/* Un capitulo suelto como alcance. La columna `alcance` de la tabla siempre lo
+   acepto y la practica siempre supo armar «solo Daniel 1»; lo que faltaba era
+   poder pedirlo. Se listan los de LA ACTIVIDAD escogida, y solo los que alguna
+   categoria de verdad examina: abrirle una evaluacion a un capitulo que es solo
+   material de estudio deja a las participantes sin una sola pregunta. */
+/* Los capitulos que ALGUNA categoria de la actividad examina de verdad. Se
+   usa en dos sitios —el desplegable y la cifra de la receta— y por eso es una
+   funcion: con la cuenta escrita aparte, la receta diria «18 capitulos» y el
+   desplegable ofreceria otra cantidad. */
 const capsExaminables=act=>{
   const cats=CATS_DE_ACT(act||'cb');
   return capsDeActividad(act||'cb')
@@ -4445,14 +4480,14 @@ function llenaCapPanel(act,mantener){
   s.value=prev;
 }
 
-/* The material each activity offers. Derived from the activity and not from a
-   fixed list: the fixed list was what offered "Solo Profetas y Reyes" to those
-   who do not have it. With no activity picked only "todo" fits, because every
-   other slice belongs to one activity. */
-/* Each option carries two labels: the long one explains in the dropdown,
-   where there is a whole line, and the short one fits the Material entry,
-   which lives in a narrow card. Two texts for one thing would drift, so both
-   come from the same line here. */
+/* EL MATERIAL QUE OFRECE CADA ACTIVIDAD. Sale de la actividad y no de una
+   lista fija: la lista fija fue la que le ofrecia «Solo Profetas y Reyes» a
+   quien no lo tiene. Sin actividad escogida solo cabe «todo», porque cualquier
+   otro recorte pertenece a una actividad en particular. */
+/* Cada opcion trae dos etiquetas: la larga explica en el desplegable, donde
+   hay renglon entero, y la corta es la que cabe en el acceso de «Material»,
+   que vive en una tarjeta angosta. Dos textos para lo mismo se separarian, asi
+   que van juntos en la misma linea y salen de aqui los dos. */
 function opcionesMatPanel(act){
   if(act==='cb')return [['todo','Todo el material de Conexión Bíblica','todo'],
     ['biblia','Solo el libro de Daniel','solo Daniel'],
@@ -4470,11 +4505,11 @@ function opcionesMatPanel(act){
   return [['todo','Todo el material de cada categoría','todo']];
 }
 
-/* Changing activity rebuilds the three lists below and CHECKS that activity's
-   categories. The second part is not cosmetic: opening "first half of October"
-   with nobody checked also opens it to the activities that do not have that
-   material, and those get zero questions. Checked, not fixed: the "A quiénes"
-   group is still there to change it. */
+/* Cambiar de actividad rehace las tres listas de abajo y MARCA las categorías
+   de esa actividad. Eso ultimo no es cosmetico: abrir «la primera quincena»
+   sin marcar a nadie se la abre tambien a Conexion Biblica y a las creencias,
+   que no tienen ese material, y esas se quedan sin una sola pregunta. Queda
+   marcado, no fijo: el grupo «A quiénes les toca» sigue estando para cambiarlo. */
 function cambiaActPanel(){
   const act=(document.getElementById('pan-act')||{}).value||'';
   const m=document.getElementById('pan-mat');
@@ -4492,8 +4527,8 @@ function cambiaActPanel(){
   pintaNotaAlcance();
 }
 
-/* Changing material only changes which sub control shows; the range and the
-   chapter are already filled with this activity's. */
+/* Cambiar de material solo cambia que sub-control se ve; el tramo y el
+   capitulo ya estan llenos con los de esta actividad. */
 function cambiaMaterialPanel(){
   pintaNotaAlcance();
 }
@@ -4505,9 +4540,10 @@ function cambiaDesdePanel(){
   pintaNotaAlcance();
 }
 
-/* The scope actually sent. It is the ONLY translation from what is on screen
-   to what the server stores, which is why recipes write into the controls and
-   not here: a second path to `alcance` would be a second format to keep. */
+/* El alcance que de verdad se manda. Es la UNICA traduccion de lo que hay en
+   pantalla a lo que el servidor guarda, y por eso las recetas escriben en los
+   controles y no aqui: un segundo camino a `alcance` seria un segundo formato
+   que mantener. */
 function alcancePanel(){
   const m=(document.getElementById('pan-mat')||{}).value||'todo';
   if(m==='cap')return (document.getElementById('pan-cap')||{}).value||'todo';
@@ -4631,11 +4667,12 @@ const FUENTE_TXT={
    Devuelve el motivo y no un booleano porque el botón de abrir se apaga CON LA
    RAZÓN A LA VISTA: un botón gris sin explicación es el defecto que ya se
    arregló en el paso 3. */
-/* Last resort guard, not the way to warn. Since "Hasta" is built from "Desde"
-   and both come from ONE activity, an invalid range cannot be picked, so this
-   should never fire. It stays because it disables the open button if the
-   selects are changed by another route: an evaluation open on a range that
-   does not exist gives nobody any questions. */
+/* GUARDA DE ULTIMO RECURSO, no la forma de avisar.
+   Desde que «Hasta» se arma a partir de «Desde» y los dos salen de UNA
+   actividad, un tramo invalido no se puede escoger, asi que esto no deberia
+   disparar nunca. Se queda porque apaga el boton de abrir si alguien cambia
+   los desplegables por otro camino: una evaluacion abierta con un tramo que no
+   existe no le da preguntas a nadie, y el director se entera el dia del examen. */
 function motivoRangoMalo(){
   const m=(document.getElementById('pan-mat')||{}).value||'';
   if(m!=='tramo')return '';
@@ -4678,10 +4715,11 @@ function pintaNotaAlcance(){
   pintaAvisoCats();revisaAbrir();pintaFrase();
 }
 
-/* A recipe is a starting point, not a separate mode: it writes into the same
-   controls and everything stays editable from there. So there is no "I am in
-   recipe X" state that could drift from the form; all that is kept is which
-   one is highlighted. */
+/* ───────── LAS RECETAS Y LA FRASE ─────────
+   Una receta es un punto de partida, no un modo aparte: escribe en los mismos
+   controles y desde ahi se puede cambiar todo. Por eso no hay estado «estoy en
+   la receta X» que pueda quedar desincronizado del formulario; lo unico que se
+   guarda es cual quedo resaltada. */
 const RECETAS=[
   {id:'campamento',i:'📘',t:'El examen del campamento',act:'',mat:'todo',
    d:()=>'Todo el material de cada categoría · a las '+Object.keys(CATS).length+' categorías'},
@@ -4695,18 +4733,18 @@ const RECETAS=[
    d:()=>'Material, cantidad, dificultad y a quiénes'},
 ];
 let panReceta='';
-/* Which control group is open: '', 'material', 'cuantas', 'quienes' or
-   'todo'. One at a time, except "Armarlo yo", which opens all three. */
+/* Que grupo de controles esta abierto: '', 'material', 'cuantas', 'quienes' o
+   'todo'. Uno a la vez, salvo «Armarlo yo», que los abre los tres. */
 let panEdita='';
 
 function pintaRecetas(){
   const d=document.getElementById('pan-recetas');
   if(!d)return;
   d.innerHTML=RECETAS.map(function(r){
-    /* The picked one shows what is currently set, not its generic blurb:
-       "un tramo de la matutina" alone does not tell the 2nd-to-18th range
-       apart from the whole month, and that is the difference to see before
-       opening. */
+    /* LA ESCOGIDA DICE LO QUE HAY PUESTO, no su descripcion generica: es lo
+       que el maquetado marcaba en naranja. «Un tramo de la matutina» sin mas
+       no distingue el tramo del 2 al 18 del tramo de todo octubre, y esa es
+       justo la diferencia que hay que ver antes de abrir. */
     const sub=(panReceta===r.id&&r.act!==null)
       ? textoAlcancePanel(alcancePanel())+' · '+
         ((document.getElementById('pan-eval-n')||{}).value||'15')+' preguntas'
@@ -4730,9 +4768,11 @@ function ponReceta(id){
   if(m){m.value=r.mat;}
   pintaNotaAlcance();
   pintaRecetas();
-  /* No recipe opens a panel: whatever it leaves to pick (the range or the
-     chapter) is already visible. Opening the material panel as well would just
-     show the activity and material the recipe has already set. */
+  /* NINGUNA receta abre un cajon: lo que cada una deja por escoger —el tramo o
+     el capitulo— ya esta a la vista en «Ajustar lo escogido». Abrir ademas el
+     cajon del material mostraba los mismos dos desplegables de actividad y
+     material que la receta acaba de poner, que es pedirle al director que
+     confirme algo que no tiene que decidir. */
   panAbre('');
 }
 
@@ -4751,8 +4791,8 @@ function ponCuantasPanel(n){
   pintaFrase();
 }
 
-/* Who it is for, in words. People win over categories, same as on the
-   server: saying it the other way round here would make the summary lie. */
+/* A quiénes, en palabras. Las personas mandan sobre las categorías, igual que
+   en el servidor: decirlo al revés aquí haría que la frase mintiera. */
 function textoQuienes(){
   const personas=personasEval();
   if(personas.length){
@@ -4765,16 +4805,16 @@ function textoQuienes(){
   const cats=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
     .filter(function(c){return c.checked;}).map(function(c){return c.value;});
   if(!cats.length||cats.length===Object.keys(CATS).length)return 'todas las categorías';
-  /* The activity is named ONCE when every checked category belongs to it.
-     The rule still holds ("Menores" alone identifies nothing, it exists in two
-     activities), but repeating it per name broke the line into three on a
-     phone. */
+  /* La actividad se nombra UNA vez cuando todas las marcadas son de la misma.
+     La regla sigue siendo la de siempre —«Menores» solo no identifica nada,
+     porque existe en dos actividades—, pero repetir el icono en cada nombre
+     alargaba la frase hasta partirla en tres renglones en un celular. */
   const acts=[...new Set(cats.map(function(c){return CATS[c].act;}))];
   if(acts.length===1){
     const nom=(ACTIVIDADES[acts[0]]||{}).nombre;
-    /* If ALL of that activity's categories are in, say so instead of listing
-       them: "Padres y consejeros" already carries an "y" inside, and four
-       comma joined names turn into a line nobody reads. */
+    /* Si estan TODAS las de esa actividad, se dice asi y no se listan: «Padres
+       y consejeros» ya lleva una «y» adentro, y cuatro nombres pegados con
+       comas se vuelven un renglon que nadie lee. */
     if(cats.length===CATS_DE_ACT(acts[0]).length)
       return nom+': las '+cats.length+' categorías';
     return nom+': '+cats.map(function(c){return CATS[c].nombre;}).join(', ');
@@ -4782,19 +4822,25 @@ function textoQuienes(){
   return cats.map(catConActividad).join(', ');
 }
 
-/* Why this is not a paragraph with tappable words, which is how mockup B drew
-   it and how it was built first. Measured at 390 px it does not work: a
-   <button> does not flow as text (asked for `display:inline`, the browser
-   computes `inline-block`), so a long value does not break where the sentence
-   breaks: it jumps whole to the next line and leaves the separator hanging.
-   One button per part, label above and value below, says the same and takes
-   any length.
-   Values come from the same functions the rest of the panel uses
-   (textoAlcancePanel, the field itself, textoQuienes): a second text for the
-   same thing drifts from the first on the first change. */
-/* The material entry names the ACTIVITY and the chosen option, not the scope
-   in words: the recipe and the bar below already say that, and saying it three
-   times adds nothing. What is nowhere else is which activity it belongs to. */
+/* ───────── LO ESCOGIDO, EN PALABRAS ─────────
+   POR QUE NO ES UN PARRAFO CON PALABRAS TOCABLES
+   El maquetado B lo dibujaba asi y asi se construyo primero. Medido en 390 px,
+   no funciona: un <button> no fluye como texto —aunque se le pida
+   `display:inline`, el navegador lo calcula `inline-block`—, asi que un valor
+   largo («De 2 de octubre a 18 de octubre», «Devoción Matutina: Menores y
+   Aventureros») no se parte por donde se parte la frase: se va entero al
+   renglon siguiente y deja colgando el separador y el punto final.
+
+   Queda un boton por parte, con la etiqueta encima y el valor debajo: dice lo
+   mismo —que hay puesto, y se toca para cambiarlo— y aguanta cualquier largo.
+
+   LOS VALORES SALEN DE LAS MISMAS FUNCIONES que usa el resto del panel
+   (textoAlcancePanel, el propio campo, textoQuienes): un segundo texto para lo
+   mismo se separa del primero en el primer cambio. */
+/* El acceso de material nombra la ACTIVIDAD y la opcion escogida, no el
+   alcance en palabras: eso ya lo dicen la receta y la barra de abajo, y
+   repetirlo tres veces no agrega nada. Lo que no se ve en ninguna otra parte
+   es de que actividad es. */
 const textoMaterialPanel=()=>{
   const a=(document.getElementById('pan-act')||{}).value||'';
   const m=(document.getElementById('pan-mat')||{}).value||'todo';
@@ -4819,8 +4865,9 @@ function pintaFrase(){
       '<span class="pan-fila-v">'+esc(f[2]())+'</span>'+
       '<span class="pan-fila-x" aria-hidden="true">✎</span></button>';
   }).join('');
-  /* The current size marks its own chip. If it is not one of them (typed
-     under "Otro número"), none is marked, which is the truth. */
+  /* El tamaño puesto se marca en su propio chip. Si es uno que no esta entre
+     los cinco (lo escribio en «Otro número»), no se marca ninguno, que es la
+     verdad: ninguno de los cinco es el que esta. */
   const n=(document.getElementById('pan-eval-n')||{}).value||'';
   [].slice.call(document.querySelectorAll('#pan-chips .pan-chip')).forEach(function(c){
     c.classList.toggle('on',c.getAttribute('data-n')===String(n));
@@ -4829,12 +4876,15 @@ function pintaFrase(){
   pintaResumen();
 }
 
-/* How many questions they actually get. The amount asked for is a cap, not a
-   promise: the exam is built from whatever that category's pool holds for that
-   material. Asking for 25 out of a range that has 10 fails nowhere, 10 simply
-   come out, and that surfaced on exam day.
-   Counted with cuantasPara(), the same function the empty combination warning
-   uses, so the two figures cannot drift apart. */
+/* ───────── CUANTAS PREGUNTAS RECIBE DE VERDAD ─────────
+   MECANISMO
+   La cantidad que el director pide es un tope, no una promesa: el examen se
+   arma con lo que haya en el pool de ESA categoria con ESE material. Pedir 25
+   de un tramo que solo tiene 10 no falla en ninguna parte, simplemente salen
+   10, y eso se descubria el dia del examen.
+   Se cuenta con cuantasPara(), que es la misma funcion que ya usa el aviso de
+   combinacion vacia, asi que la cifra de la barra y la del aviso no se pueden
+   separar. */
 function catsDestino(){
   const personas=personasEval();
   if(personas.length)return [...new Set(personas.map(function(id){
@@ -4860,10 +4910,10 @@ function pintaResumen(){
     :min===max?('Reciben <strong>'+min+'</strong> preguntas disponibles.')
     :('Reciben entre <strong>'+min+'</strong> y <strong>'+max+'</strong> preguntas disponibles.');
   const pide=Number((document.getElementById('pan-eval-n')||{}).value||15);
-  /* Asking for more than there is does not fail: whatever there is comes out.
-     So it warns here, with the figure next to the one causing it, and does not
-     block: a 10 question exam when 25 were asked for may be exactly what the
-     director wants. */
+  /* PEDIR MAS DE LO QUE HAY NO FALLA: salen las que haya. Por eso se avisa
+     aqui, con la cifra al lado de la que lo causa, y no se bloquea: un examen
+     de 10 cuando se pidieron 25 puede ser exactamente lo que el director
+     quiere. */
   const corto=n.length&&min<pide
     ? ' <span style="color:var(--rojo)">Pediste '+pide+
       ', así que a quien menos tenga le saldrán '+min+'.</span>'
@@ -5254,20 +5304,25 @@ async function borraParticipante(id){
 }
 
 
-/* ═══════════ THE QUESTION BANK REVIEWER ═══════════
-   The screen where the director READS the questions and decides which stay.
-   Until now the bank could only be seen fifteen at a time and at random inside
-   an exam, and there was no way to pull a bad one out.
-   Retiring writes "this one is out" on the server. Nothing is deleted: the
-   question stays in the HTML, it can be brought back, and who, when and why is
-   on record.
-   Every column comes from data, so no figure is hand written: chapter from
-   CAPS, type from q.t, level from q.nv (computed by fuente/niveles.js at build
-   time) and source from esComplementaria(), the same rule the regulation
-   switch applies. */
+/* ═══════════ EL REVISOR DEL BANCO ═══════════
+   QUE ES
+   La pantalla donde el director LEE las preguntas y decide cuales se quedan.
+   Hasta aqui el banco solo se podia ver de a quince y al azar, dentro de un
+   examen: ver las 1.378 completas costaba decenas de corridas y no habia forma
+   de sacar una mala.
 
-/* The filter is ONE object and not six loose variables: clearing it is one
-   line and adding a criterion does not touch three functions. */
+   QUE ES RETIRAR
+   Escribir en el servidor «esta no entra mas». No borra nada: la pregunta
+   sigue en el HTML, se puede devolver, y queda el registro de quien, cuando y
+   por que. El generador no se toca.
+
+   DE DONDE SALE CADA COLUMNA, para que ninguna cifra este escrita a mano:
+   el capitulo y su nombre de CAPS, el tipo de q.t, el nivel de q.nv (lo
+   calcula fuente/niveles.js al generar), y la fuente de esComplementaria(),
+   que es la misma regla que aplica el interruptor del reglamento. */
+
+/* El filtro es UN objeto y no seis variables sueltas: asi «limpiar» es una
+   linea y agregar un criterio no obliga a tocar tres funciones. */
 const REV_F0={cat:'',cap:'',t:'',nv:'',fu:'',est:'',q:''};
 let revF=Object.assign({},REV_F0);
 let revTope=40;
@@ -5278,11 +5333,13 @@ let revMotivo='';     // lo escrito en esa caja
 
 const REV_TIPO={mc:'Selección múltiple',tf:'Verdadero o falso',fill:'Completar'};
 const REV_NIVEL={1:'1 · básica',2:'2 · intermedia',3:'3 · avanzada'};
-/* One tap reasons, fixed on purpose: typing the reason on a phone is what
-   makes you give up reviewing by the third question. */
+/* Las razones de un toque salen de las que de verdad se usan al revisar. Que
+   sean fijas es el punto: escribir el motivo en el celular es lo que hace
+   abandonar la revision a la tercera pregunta. */
 const REV_RAZONES=['Repetida','Mal redactada','Fuera del reglamento','Respuesta dudosa'];
 
-/* The correct answer, so the question can be judged without opening it. */
+/* La respuesta correcta, para poder juzgar la pregunta sin abrirla. Sin esto
+   el director leeria el enunciado y tendria que adivinar que se espera. */
 function revRespuesta(q){
   if(q.t==='mc')return q.o?q.o[q.a]:'';
   if(q.t==='tf')return (q.a?'Verdadero':'Falso')+(q.e?' — '+q.e:'');
@@ -5290,15 +5347,16 @@ function revRespuesta(q){
 }
 const revTexto=q=>q.q||q.ins||'';
 
-/* The chapters a category is examined on. Same rule as bancoDe() (its own,
-   minus study only material) but without the retired filter: this screen has
-   to show exactly the ones already retired. */
+/* Los capitulos que examina una categoria. Es la MISMA regla de bancoDe()
+   —las suyas, sin las que son solo material de estudio—, pero sin el filtro de
+   retiradas: aqui hay que poder ver justamente las que ya se retiraron. */
 function revCapsDe(cat){
   return CAPS.filter(c=>c.cats.includes(cat)&&!soloEstudio(c,cat));
 }
 
-/* Questions passing the filter. Walks the whole raw BANCO: the reviewer has
-   to see the retired ones as much as the live ones. */
+/* Las preguntas que pasan el filtro. Se recorre BANCO entero, que es el banco
+   crudo del artefacto: el revisor tiene que ver lo retirado tanto como lo
+   vivo. */
 function revFilas(){
   let b=BANCO;
   if(revF.cat){
@@ -5317,9 +5375,9 @@ function revFilas(){
   return b;
 }
 
-/* Figures come from data: the text carries marks and is filled with what was
-   just counted, like the manual. A hand written figure here would lie on the
-   first retirement. */
+/* LAS CIFRAS SALEN DEL DATO. El texto lleva marcas y se rellena con lo que se
+   acaba de contar, igual que el manual: una cifra escrita a mano en esta
+   pantalla mentiria en el primer retiro. */
 const REV_CUENTA='El banco tiene {TOTAL} preguntas y hay {RET} retiradas. '+
   'Con este filtro se ven {VISTA}, de las cuales {VISTA_RET} están retiradas.';
 
@@ -5338,9 +5396,10 @@ function pintaRevisor(){
     TOTAL:String(BANCO.length),RET:String(retiradas.size),
     VISTA:String(filas.length),VISTA_RET:String(vistaRet)});
 
-  /* The chapters offered depend on the chosen category: offering all 77 would
-     let you pick one that category is not examined on, and the list would come
-     out empty without saying why. Invalid is not offered. */
+  /* Los capitulos que se ofrecen dependen de la categoria escogida: ofrecer
+     los 77 con una categoria puesta deja escoger un capitulo que esa categoria
+     no examina, y la lista sale vacia sin decir por que. Es la misma regla del
+     tramo en el panel: lo invalido no se ofrece. */
   const caps=revF.cat?revCapsDe(revF.cat):CAPS;
   const sel=(id,campo,opciones)=>'<select id="'+id+'" onchange="revPon(\''+campo+'\',this.value)">'+
     opciones.map(o=>'<option value="'+esc(o[0])+'"'+(revF[campo]===o[0]?' selected':'')+'>'+
@@ -5382,8 +5441,8 @@ function pintaRevisor(){
       :'');
 }
 
-/* One row. Retired ones are NOT hidden: they show struck through with their
-   reason, because bringing one back is decided by reading why it went out. */
+/* Una fila. Lo retirado NO se esconde: se ve tachado y con el motivo, porque
+   la decision de devolverlo se toma leyendo por que se saco. */
 function revFila(q){
   const k=claveQ(q);
   const ret=retiradas.has(k);
@@ -5406,8 +5465,9 @@ function revFila(q){
     '</div>';
 }
 
-/* The reason box opens IN the row, not in a browser prompt(), which would
-   cover the very question being judged. */
+/* La caja del motivo se abre EN LA FILA, no en un cuadro del navegador: un
+   prompt() tapa la pregunta que se esta juzgando, que es justo lo que hay que
+   estar leyendo al escribir el motivo. */
 function revCajaMotivo(k){
   return '<div class="rb-caja">'+
     '<div class="rb-razones">'+REV_RAZONES.map(x=>
@@ -5423,9 +5483,9 @@ function revCajaMotivo(k){
 
 function revPon(campo,valor){
   revF[campo]=valor;
-  /* Changing category can leave a chapter that category is not examined on.
-     It gets cleared: a filter that cannot return anything is not a filter, it
-     is an empty screen with no explanation. */
+  /* Cambiar de categoria puede dejar puesto un capitulo que esa categoria no
+     examina. Se limpia en vez de dejarlo: un filtro que no puede dar resultados
+     no es un filtro, es una pantalla vacia sin explicacion. */
   if(campo==='cat'&&revF.cap&&!revCapsDe(valor||'').some(c=>c.id===revF.cap)&&valor)revF.cap='';
   revTope=40;pintaRevisor();
 }
@@ -5435,12 +5495,13 @@ function revMas(){revTope+=40;pintaRevisor();}
 function revAbreCaja(k){revCaja=k;revMotivo='';pintaRevisor();}
 function revCierraCaja(){revCaja='';revMotivo='';pintaRevisor();}
 function revRazon(x){revMotivo=revMotivo===x?'':x;pintaRevisor();}
-/* Typing does NOT repaint: rebuilding the input on every key would send the
-   caret back to the start. It is just stored; the screen repaints on retire. */
+/* Escribir NO repinta: repintar en cada tecla vuelve a armar el input y el
+   cursor salta al principio. Se guarda y ya; la pantalla se repinta al
+   retirar. */
 function revEscribe(v){revMotivo=String(v||'');}
 
-/* The server returns the full updated list, so the screen does not guess the
-   new state: it copies it. */
+/* El servidor devuelve la lista completa ya actualizada, asi que la pantalla
+   no adivina como quedo: la copia. */
 function revAplica(lista){
   revRet=lista||[];
   revMapa={};for(const r of revRet)revMapa[r.clave]=r;
@@ -5460,8 +5521,8 @@ async function revRetira(k){
   }catch(e){alert(e.message||'No se pudo conectar');}
   revCaja='';revMotivo='';
   pintaRevisor();
-  /* Screens showing bank counts keep the old figure unless told: the exam
-     menu says how many questions there are. */
+  /* Las pantallas que muestran cuentas del banco se quedan con la cifra vieja
+     si no se les avisa: el menu del examen dice cuantas preguntas hay. */
   if(typeof pintaExInicio==='function')pintaExInicio();
 }
 
@@ -5475,8 +5536,8 @@ async function revDevuelve(k){
   if(typeof pintaExInicio==='function')pintaExInicio();
 }
 
-/* The reviewer's door. Detail loads BEFORE painting: without it the retired
-   ones would show with no reason and no date, which is half the data. */
+/* La puerta del revisor. Se carga el detalle ANTES de pintar: sin el, las
+   retiradas se verian sin el motivo ni la fecha, que es la mitad del dato. */
 async function abreRevisor(){
   ir('revisor');
   await revCarga();
