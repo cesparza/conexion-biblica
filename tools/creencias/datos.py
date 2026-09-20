@@ -45,8 +45,17 @@ CREENCIAS = {
 13: dict(nombre='El remanente y su misión', fuente='cartilla',
   decl='La iglesia universal está compuesta de todos los que creen verdaderamente en Cristo; pero en los últimos días, una época de apostasía generalizada, se llamó a un remanente para que guarde los mandamientos de Dios y la fe de Jesús. Este remanente anuncia la llegada de la hora del juicio, proclama la salvación por medio de Cristo y pregona la proximidad de su segunda venida. Esta proclamación está simbolizada por los tres ángeles de Apocalipsis 14; coincide con la hora del juicio en los cielos y, como resultado, se produce una obra de arrepentimiento y reforma en la Tierra. Se invita a todos los creyentes a participar personalmente en este testimonio mundial',
   textos='Apocalipsis 12:17; 14:6-12; 18:1-4; 2 Corintios 5:10; Judas 3,14; 1 Pedro 1:16-19; 2 Pedro 3:10-14; Apocalipsis 21:1-14.'),
-14: dict(nombre='La unidad en el cuerpo de Cristo', fuente='errata',
-  decl=None,
+14: dict(nombre='La unidad en el cuerpo de Cristo', fuente='libro',
+  # LA CARTILLA IMPRIME AQUI EL TEXTO DE LA CREENCIA 13. Confirmado contra el
+  # libro (files/creencias-28.pdf, capitulo 14, pagina 200), que si trae la
+  # declaracion de la 14 y habla de la unidad, no del remanente. Asi que no es
+  # que a la 14 le falte declaracion: es que la cartilla puso la que no era.
+  # `fuente='libro'` NO es cosmetico: el generador marca con f='c' todo lo que
+  # sale de aqui, para que no entre al examen con «solo la fuente del
+  # reglamento», que examina de la cartilla. Y gen_cartilla.py no la escribe en
+  # cartilla.txt, que es la transcripcion literal de la cartilla y sigue sin
+  # tenerla.
+  decl='La iglesia es un cuerpo constituido por muchos miembros, llamados de entre todas las naciones, razas, lenguas y pueblos. En Cristo somos una nueva creación; las diferencias de raza, cultura, educación y nacionalidad, y las diferencias entre encumbrados y humildes, ricos y pobres, hombres y mujeres, no deben causar divisiones entre nosotros. Todos somos iguales en Cristo, quien por un mismo Espíritu nos unió en comunión con él y los unos con los otros; debemos servir y ser servidos sin parcialidad ni reservas. Por medio de la revelación de Jesucristo en las Escrituras, participamos de la misma fe y la misma esperanza, y damos a todos un mismo testimonio. Esta unidad tiene sus orígenes en la unicidad del Dios triuno, que nos adoptó como hijos suyos',
   textos='Romanos 12:4, 5; 1 Corintios 12:12-14; Mateo 28:19,20; Salmos 133:1; 2 Corintios 5:16,17; Hechos 17:26,27; Gálatas 3:27, 29; Colosenses 3:10-15; Efesios 4:14-16.'),
 15: dict(nombre='El bautismo', fuente='cartilla',
   decl='Por medio del bautismo confesamos nuestra fe en la muerte y resurrección de Jesucristo, y damos testimonio de nuestra muerte al pecado y de nuestro propósito de andar en novedad de vida. De este modo reconocemos a Cristo como nuestro Señor y Salvador, llegamos a ser su pueblo y somos recibidos como miembros de su iglesia. El bautismo es un símbolo de nuestra unión con Cristo, del perdón de nuestros pecados y de nuestro recibimiento del Espíritu Santo. Se realiza por inmersión en agua, y depende de una afirmación de fe en Jesús y de la evidencia de arrepentimiento del pecado. Sigue a la instrucción en las Sagradas Escrituras y a la aceptación de sus enseñanzas.',

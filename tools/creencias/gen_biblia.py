@@ -17,7 +17,13 @@ import os, re, sys, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import datos, refs
 
-FILES = os.path.expanduser('~/mnt/Iglesia/files')
+# La ruta sale del propio archivo. Estaba quemada a `~/mnt/Iglesia/...`, que
+# era donde el puente montaba la carpeta en su momento: el dia que el montaje
+# cambio, el generador dejo de escribir y fallo con un FileNotFoundError que
+# no dice nada de lo que de verdad pasa. Tampoco corria en el Mac, donde la
+# carpeta vive en otro sitio.
+RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+FILES = os.path.normpath(os.path.join(RAIZ, '..', 'files'))
 RAW = os.path.join(FILES, '_biblia-libre-raw.txt')
 
 def carga_biblia():

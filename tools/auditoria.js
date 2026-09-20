@@ -39,11 +39,7 @@ const PISO_TEXTO = 400;   // menos que esto no es material, es un rotulo
    herramienta: si un hueco documentado la deja en rojo para siempre, el rojo
    deja de significar algo y nadie la vuelve a correr. Lo que tiene que
    fallar es un hueco NUEVO. */
-const SABIDOS = {
-  'cr14|sin fill':
-    'la cartilla 2026 imprime ahí el texto de la creencia 13, así que no hay ' +
-    'declaración que completar. Pendiente de confirmar contra el impreso.',
-};
+const SABIDOS = {};
 const fallos = [];
 const filas = [];
 

@@ -6,8 +6,14 @@ import os, re, json, glob, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refs
 
-FILES = os.path.expanduser('~/mnt/Iglesia/files')
-SALIDA = os.path.expanduser('~/mnt/Iglesia/projects/conexion-biblica/fuente/biblia-otros.js')
+# La ruta sale del propio archivo. Estaba quemada a `~/mnt/Iglesia/...`, que
+# era donde el puente montaba la carpeta en su momento: el dia que el montaje
+# cambio, el generador dejo de escribir y fallo con un FileNotFoundError que
+# no dice nada de lo que de verdad pasa. Tampoco corria en el Mac, donde la
+# carpeta vive en otro sitio.
+RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+FILES = os.path.normpath(os.path.join(RAIZ, '..', 'files'))
+SALIDA = os.path.join(RAIZ, 'fuente', 'biblia-otros.js')
 
 vers, meta, nombres = {}, {}, {}
 for ruta in sorted(glob.glob(os.path.join(FILES, 'rv1909-*.txt'))):

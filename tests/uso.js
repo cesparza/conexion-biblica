@@ -1548,6 +1548,24 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const ofEc=F.poolNivel().length;
   ok(F.poolNivel().every(q=>q.f!=='c'),'Creencias: no entra ninguna del libro ('+ofEc+' de la cartilla)');
 
+  /* ─── LA CREENCIA 14 SALE DEL LIBRO, NO DE LA CARTILLA ───
+     La cartilla 2026 imprime en la 14 el texto de la 13, que es un error de
+     imprenta: el libro de las 28 (capitulo 14, pagina 200) si trae la suya. La
+     app la muestra desde el libro para que se pueda estudiar, y por eso TODO lo
+     que sale de esa declaracion va marcado `f:'c'`. Si algun dia alguien quita
+     esa marca, la 14 entraria al examen del reglamento y se estaria evaluando
+     una redaccion que la cartilla no trae. */
+  const deCr14=F.BANCO.filter(q=>q.cap==='cr14');
+  const deDecl=deCr14.filter(q=>q.t==='fill'||/corresponde esta declaración/.test(q.q||''));
+  ok(deDecl.length>=3,'La creencia 14 tiene preguntas de su declaracion ('+deDecl.length+')');
+  ok(deDecl.every(q=>q.f==='c'),'Y todas van marcadas como del libro, no de la cartilla');
+  ok(!F.poolNivel().some(q=>q.cap==='cr14'&&q.t==='fill'),
+    'Con «solo la fuente del reglamento», la 14 no aporta ninguna de completar');
+  F.ponFuente(false);
+  ok(F.poolNivel().some(q=>q.cap==='cr14'&&q.t==='fill'),
+    'Y sin el interruptor si se puede practicar con ella');
+  F.ponFuente(true);
+
   /* La matutina no tiene material complementario: el interruptor no puede
      quitarle nada, y por eso no se le ofrece. */
   F.ponCat('dm2');

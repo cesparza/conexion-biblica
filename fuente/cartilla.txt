@@ -17,8 +17,11 @@ evalua es la cartilla y no la version corregida:
   - creencia 16: «1 Corintios 10-16,17» donde el libro dice «10:16,17»
   - creencia 26: «Ecleciastes», y abrevia «Col. 3:4»
   - creencia 14: la cartilla imprime AQUI el texto de la creencia 13.
-    Es un error de imprenta, no una variante. Queda sin declaracion
-    hasta confirmarlo contra el impreso.
+    Es un error de imprenta, no una variante: el libro de las 28
+    (capitulo 14, pagina 200) si trae la declaracion de la 14, y habla
+    de la unidad y no del remanente. La app la muestra desde el libro,
+    marcada como tal; aqui no se escribe, porque la cartilla no la
+    trae.
 
 === PRIMERA DOCTRINA — LA DOCTRINA DE DIOS ===
 
@@ -116,7 +119,7 @@ TEXTOS: Apocalipsis 12:17; 14:6-12; 18:1-4; 2 Corintios 5:10; Judas 3,14; 1 Pedr
 
 --- Creencia 14 — LA UNIDAD EN EL CUERPO DE CRISTO ---
 
-(SIN DECLARACION: errata. Ver la nota de arriba.)
+(SIN DECLARACION EN LA CARTILLA: libro. Ver la nota de arriba.)
 
 TEXTOS: Romanos 12:4, 5; 1 Corintios 12:12-14; Mateo 28:19,20; Salmos 133:1; 2 Corintios 5:16,17; Hechos 17:26,27; Gálatas 3:27, 29; Colosenses 3:10-15; Efesios 4:14-16.
 

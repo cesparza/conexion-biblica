@@ -16,7 +16,12 @@ convierten en las preguntas que el examen de la matutina hace de verdad
 """
 import os, re, sys, json, subprocess, unicodedata
 
-RAIZ = os.path.expanduser('~/mnt/Iglesia/projects/conexion-biblica')
+# La ruta sale del propio archivo. Estaba quemada a `~/mnt/Iglesia/...`, que
+# era donde el puente montaba la carpeta en su momento: el dia que el montaje
+# cambio, el generador dejo de escribir y fallo con un FileNotFoundError que
+# no dice nada de lo que de verdad pasa. Tampoco corria en el Mac, donde la
+# carpeta vive en otro sitio.
+RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 SALIDA = os.path.join(RAIZ, 'fuente', 'matutina-extra.js')
 
 def nodo(expr):

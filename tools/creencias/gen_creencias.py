@@ -5,7 +5,12 @@ import os, re, sys, json, unicodedata, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import datos, editorial, refs
 
-RAIZ = os.path.expanduser('~/mnt/Iglesia/projects/conexion-biblica')
+# La ruta sale del propio archivo. Estaba quemada a `~/mnt/Iglesia/...`, que
+# era donde el puente montaba la carpeta en su momento: el dia que el montaje
+# cambio, el generador dejo de escribir y fallo con un FileNotFoundError que
+# no dice nada de lo que de verdad pasa. Tampoco corria en el Mac, donde la
+# carpeta vive en otro sitio.
+RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 SALIDA = os.path.join(RAIZ, 'fuente', 'creencias.js')
 
 COLORES = ['#1F3864','#2E8BC0','#1A7A1A','#B8860B','#C0392B','#7C3AED','#0E7490']
@@ -33,7 +38,19 @@ def pestanas(num):
     d, e = datos.CREENCIAS[num], editorial.ED[num]
     t = []
     # 1. la declaracion
-    if d['decl']:
+    # CADA DECLARACION DICE DE DONDE SALE, y no es un adorno: tools/cartilla.js
+    # verifica contra fuente/cartilla.txt solo las que citan la cartilla, que es
+    # lo que esa transcripcion contiene. Una que cita el libro se verifica
+    # contra el libro, y cartilla.js la cuenta aparte en vez de darla por rota.
+    if d['decl'] and d['fuente'] == 'libro':
+        h = hi('<strong>Creencia %d — %s</strong><br>«%s»<br>'
+               '<small>Libro <i>Creencias de los Adventistas del Séptimo Día</i>, '
+               'capítulo %d, página 200. La cartilla 2026 imprime aquí, por error de '
+               'imprenta, el texto de la creencia 13; esta es la declaración que de '
+               'verdad le corresponde. Por venir del libro y no de la cartilla, '
+               '<strong>no entra al examen del reglamento</strong>.</small>'
+               % (num, d['nombre'], d['decl'], num))
+    elif d['decl']:
         h = hi('<strong>Creencia %d — %s</strong><br>«%s»<br>'
                '<small>Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. '
                'Es la redacción que se evalúa: se transcribe tal cual.</small>' % (num, d['nombre'], d['decl']))
@@ -138,6 +155,11 @@ def preguntas(num):
                   q='¿Cuántas referencias bíblicas trae la cartilla para «%s»?' % nom,
                   o=[str(len(partes))] + [str(x) for x in (len(partes)+2, max(2,len(partes)-2), len(partes)+5)], a=0))
     if d['decl']:
+        # LAS PREGUNTAS HEREDAN LA FUENTE DE LA DECLARACION de la que salen. Si
+        # la declaracion es del libro, preguntarla en el examen del reglamento
+        # seria evaluar algo que la cartilla no trae. `mc_f` viaja hasta el
+        # dict de cada pregunta.
+        mc_f = {'f': 'c'} if d['fuente'] != 'cartilla' else {}
         # reconocer la redaccion, empezando DESPUES del titulo para no delatarla
         # La cita no puede llevar dentro el titulo de la creencia, o la pregunta
         # se contesta sola. Se corta el arranque hasta pasar la ultima aparicion
@@ -156,7 +178,7 @@ def preguntas(num):
             frag = '...' + frag[corte + 1:] if corte > 0 else frag
         Q.append(dict(cap=cid, t='mc', nv=2,
                       q='¿A qué creencia corresponde esta declaración? «%s...»' % frag[:185].rstrip(' .,'),
-                      o=[nom] + otras, a=0))
+                      o=[nom] + otras, a=0, **mc_f))
         # ── completar: DOS por creencia, de dos tramos distintos ──
         # Una sola por creencia dejaba el examen de texto literal con 27
         # preguntas para 28 creencias, y es justo lo que «En esto creemos»
@@ -175,7 +197,7 @@ def preguntas(num):
             if sum(1 for x in p if 'b' in x) < 2:
                 continue
             Q.append(dict(cap=cid, t='fill',
-                          ins='Creencia %d, %s — Completa:' % (num, etiqueta), p=p))
+                          ins='Creencia %d, %s — Completa:' % (num, etiqueta), p=p, **mc_f))
     # ── verdadero/falso: UNA verdadera y UNA falsa ──
     # Si todas fueran verdaderas, contestar siempre «Verdadero» daria el 100%
     # y la pregunta dejaria de medir nada. Paso exactamente eso: las 56 de las

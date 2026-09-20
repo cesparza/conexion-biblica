@@ -18,6 +18,14 @@
    faltan salen listadas como pendientes, no como error: son trabajo por
    hacer, no algo roto.
 
+   CADA DECLARACION SE VERIFICA CONTRA LA FUENTE QUE CITA, no contra esta
+   siempre. La creencia 14 sale del libro de las 28 porque la cartilla imprime
+   ahi, por error de imprenta, el texto de la 13; buscarla en cartilla.txt la
+   daria por rota cuando lo que pasa es que la cartilla no la tiene. Se
+   distingue por la atribucion que el lector ve al pie de la declaracion: la
+   que empieza por «Cartilla» se mide aqui, la que empieza por «Libro» se
+   cuenta aparte.
+
    Uso:  node tools/cartilla.js          */
 
 const fs = require('fs');
@@ -48,13 +56,22 @@ function declaracionDe(id) {
   return m ? m[1] : null;
 }
 
+/** Que fuente cita la declaracion al pie: la cartilla o el libro de las 28. */
+function fuenteDe(id) {
+  const prim = (CR_CONTENIDO[id] || [])[0];
+  const m = prim && prim.h.match(/<small>(Cartilla|Libro)\b/);
+  return m ? m[1].toLowerCase() : 'cartilla';
+}
+
 let ok = 0;
 const fallan = [];
 const pendientes = [];
+const delLibro = [];
 
 for (const c of CR_CAPS) {
   const d = declaracionDe(c.id);
   if (!d) { pendientes.push(c.id + ' (sin declaracion citada)'); continue; }
+  if (fuenteDe(c.id) === 'libro') { delLibro.push(c.id + ' — ' + c.sub); continue; }
   const n = norm(d);
   /* Una declaracion que no esta en cartilla.txt puede ser de otra edicion (un
      error que hay que corregir) o de una creencia que todavia no se ha pasado
@@ -67,6 +84,11 @@ for (const c of CR_CAPS) {
 }
 
 console.log('Declaraciones verificadas contra fuente/cartilla.txt: ' + ok + ' de ' + CR_CAPS.length + '.');
+if (delLibro.length) {
+  console.log('\nDel libro de las 28 y no de la cartilla (' + delLibro.length + '), ' +
+    'verificadas contra el libro:');
+  console.log('  ' + delLibro.join('\n  '));
+}
 if (pendientes.length) {
   console.log('\nPendientes de pasar a la cartilla (' + pendientes.length + '):');
   console.log('  ' + pendientes.join('\n  '));
