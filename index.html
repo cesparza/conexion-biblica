@@ -2252,7 +2252,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'f6df332f73e6';
+const VERSION_APP = '3cff39f4568c';
 
 const CAPS = [
  {
@@ -37774,13 +37774,9 @@ async function pintaPanel(){
         '<label class="pan-lb">Desde<select id="pan-r1" onchange="cambiaDesdePanel()"></select></label>'+
         '<label class="pan-lb">Hasta<select id="pan-r2" onchange="pintaNotaAlcance()"></select></label>'+
       '</div>'+
-      /* Los tres tamaños que las categorias usan de verdad (CATS[].n es 10, 15 o
-         25) y que caben en un renglon. Cualquier otro numero sigue estando, en
-         «Otro número» dentro de Preguntas. */
-      '<div class="pan-chips" id="pan-chips">'+[10,15,25].map(function(n){
-        return '<button type="button" class="pan-chip" data-n="'+n+'" '+
-          'onclick="ponCuantasPanel('+n+')">'+n+'</button>';
-      }).join('')+'</div>'+
+      /* Los tamaños los pinta pintaChips(), porque dependen de cuantas
+         preguntas hay de verdad con el material escogido. */
+      '<div class="pan-chips" id="pan-chips"></div>'+
       '<div class="pan-acc" id="pan-acc"></div>'+
     '</div>'+
     /* Los dos avisos viven FUERA de los grupos plegables: el de «ninguna
@@ -37816,7 +37812,7 @@ async function pintaPanel(){
          queda el campo para cualquier otro numero, que el servidor acota entre
          5 y 60. */
       '<div class="ses-fila"><label class="pan-lb" style="flex:0 0 9rem">Otro número'+
-      '<input id="pan-eval-n" type="number" min="5" max="60" value="15" '+
+      '<input id="pan-eval-n" type="number" min="5" value="15" '+
       'oninput="pintaFrase()"></label></div>'+
       /* Confusión real: al probar con «Comenzar» (practicar), este número no
          cambiaba nada, porque practicar usa su PROPIO selector de cantidad en
@@ -38370,13 +38366,7 @@ function pintaFrase(){
       '<span class="pan-fila-v">'+esc(f[2]())+'</span>'+
       '<span class="pan-fila-x" aria-hidden="true">✎</span></button>';
   }).join('');
-  /* El tamaño puesto se marca en su propio chip. Si es uno que no esta entre
-     los cinco (lo escribio en «Otro número»), no se marca ninguno, que es la
-     verdad: ninguno de los cinco es el que esta. */
-  const n=(document.getElementById('pan-eval-n')||{}).value||'';
-  [].slice.call(document.querySelectorAll('#pan-chips .pan-chip')).forEach(function(c){
-    c.classList.toggle('on',c.getAttribute('data-n')===String(n));
-  });
+  pintaChips();
   pintaRecetas();
   pintaResumen();
 }
@@ -38399,6 +38389,47 @@ function catsDestino(){
   const m=[].slice.call(document.querySelectorAll('.pan-cat-ch'))
     .filter(function(c){return c.checked;}).map(function(c){return c.value;});
   return m.length?m:Object.keys(CATS);
+}
+
+/* ───────── HASTA CUANTAS SE PUEDE PEDIR ─────────
+   El tope real es cuantas preguntas hay con el material escogido, y no un
+   numero escrito a mano. Se toma el MAYOR de las categorias a las que va
+   dirigida: asi la que mas tiene puede llevarselas todas, y a la que tiene
+   menos le salen las suyas, que es lo que armar() ya hace y lo que la barra de
+   abajo advierte.
+   Con 60 fijo, «Guias Mayores, todo el material» se recortaba a 60 de 523 sin
+   decir por que. */
+function topePanel(){
+  const al=alcancePanel();
+  const n=catsDestino().map(function(c){return cuantasPara(c,al);});
+  return n.length?Math.max.apply(null,n):0;
+}
+
+/* Los tamaños de un toque. NO son numeros escogidos de gusto: son los que cada
+   categoria usa de verdad (CATS[].n, hoy 10, 15 y 25), mas el maximo real al
+   final. Sin ese ultimo, «todas» solo se puede pedir escribiendo el numero, y
+   hay que saberlo de antemano.
+   Practicar ofrece ademas 40, 60 y 100, que ahi tienen sentido como sesion
+   larga; en una evaluacion del director no significan nada, y seis chips
+   arbitrarios encima del campo que igual los edita son ruido. */
+function pintaChips(){
+  const d=document.getElementById('pan-chips');
+  if(!d)return;
+  const e=document.getElementById('pan-eval-n');
+  const tope=topePanel();
+  if(e)e.max=tope||60;
+  /* Escondidos mientras «Preguntas» esta abierto: ahi debajo esta el campo, y
+     dos controles para lo mismo en la misma pantalla se leen como un error. */
+  if(!tope||panEdita==='cuantas'||panEdita==='todo'){d.innerHTML='';return;}
+  const puesto=String((e||{}).value||'');
+  const chip=function(n,txt){
+    return '<button type="button" class="pan-chip'+(puesto===String(n)?' on':'')+'" '+
+      'onclick="ponCuantasPanel('+n+')">'+esc(txt)+'</button>';
+  };
+  const suyos=[...new Set(Object.keys(CATS).map(function(k){return CATS[k].n;}))]
+    .sort(function(a,b){return a-b;}).filter(function(n){return n<tope;});
+  d.innerHTML=suyos.map(function(n){return chip(n,n);}).join('')+
+    chip(tope,'Todas ('+tope+')');
 }
 
 const RESUMEN_EVAL='{QUIENES} · {MATERIAL} · {CUANTAS} preguntas. {DISPONIBLES}';

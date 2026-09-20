@@ -84,9 +84,25 @@ ok(/env\.SAL_IP/.test(API) && !/SAL_IP\s*=\s*['"]/.test(API),
   'La sal de las IP se lee del entorno');
 ok(!/INSERT INTO auditoria[^)]*ip\b(?!_hash)/.test(API), 'La IP nunca se guarda en claro, solo su hash');
 
+/* ── EL TOPE DE PREGUNTAS NO LO PONE EL SERVIDOR ──
+   Cuantas preguntas hay depende del banco, que vive en el HTML. El servidor
+   solo rechaza lo absurdo. Con 60 fijo, «Guias Mayores, todo el material» se
+   recortaba a 60 de 523 y el recorte no se veia en ninguna parte. */
+ok(!/Math\.min\(60, Math\.max\(5/.test(API),
+  'El tope de preguntas ya no esta clavado en 60');
+ok(/Math\.max\(5, Math\.round\(\+b\.cuantas/.test(API),
+  'Pero sigue habiendo un piso y un techo, para no aceptar cualquier cosa');
+
 /* ── LA NOTA SE VALIDA ── */
 ok(/nota > total/.test(API), 'Una nota mayor que el total se rechaza');
-ok(/total !== ev\.cuantas/.test(API), 'Un examen con otro número de preguntas no cuenta como la evaluación');
+/* MENOS DE LAS PEDIDAS ES NORMAL: la cantidad de la evaluacion es un tope y el
+   examen se arma con lo que haya en el pool de esa categoria. «Menores, solo
+   Daniel 1, 60 preguntas» da 30, porque no hay mas. La igualdad estricta que
+   habia aqui rechazaba esa nota con un 409 y la perdia. Entregar MAS si es
+   imposible, y eso se sigue rechazando. */
+ok(/total > ev\.cuantas/.test(API), 'Entregar MAS preguntas que las pedidas se rechaza');
+ok(!/total !== ev\.cuantas/.test(API),
+  'Y entregar menos NO se rechaza: es lo que pasa cuando el material no da para tantas');
 
 /* ── EL MIDDLEWARE NO PUBLICA LO QUE NO DEBE ── */
 for (const ruta of ['migraciones', 'tools', 'tests', 'fuente', 'wrangler']) {

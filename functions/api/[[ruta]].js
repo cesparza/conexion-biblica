@@ -387,7 +387,14 @@ export async function onRequest(context) {
         const ev = await env.DB.prepare('SELECT cuantas, abierta FROM evaluacion WHERE id = ?')
           .bind(evalId).first();
         if (!ev) return error('Esa evaluación no existe.', 404);
-        if (total !== ev.cuantas) {
+        /* MENOS DE LAS PEDIDAS ES NORMAL, MAS NO.
+           La cantidad de la evaluacion es un tope, no una promesa: el examen se
+           arma con lo que haya en el pool de ESA categoria. «Menores, solo
+           Daniel 1, 60 preguntas» da un examen de 30, porque no hay mas.
+           Con la igualdad estricta que habia aqui, esa nota se rechazaba con un
+           409 y se perdia: la niña presentaba y el director no la veia nunca.
+           Entregar MAS de lo pedido si es imposible, y por eso se rechaza. */
+        if (total > ev.cuantas) {
           await auditar(env, sesion.cuenta_id, 'intento_raro', 'intento', evalId, ipHash);
           return error('El examen entregado no coincide con la evaluación.', 409);
         }
@@ -430,7 +437,14 @@ export async function onRequest(context) {
       const mr = FORMA_RANGO.exec(pedido);
       const rangoOk = !!mr && Number(mr[2]) <= Number(mr[3]);
       const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido) || rangoOk) ? pedido : 'todo';
-      const cuantas = Math.min(60, Math.max(5, Math.round(+b.cuantas || 15)));
+      /* EL TOPE REAL LO SABE LA APP, NO EL SERVIDOR: depende de cuantas
+         preguntas tiene el banco con ese material, y el banco vive en el HTML.
+         Aqui solo se rechaza lo absurdo. Estaba en 60, que es menos que el
+         material de cualquier categoria (Guias Mayores tiene 523 con todo el
+         material), asi que «todas» era imposible de pedir y el recorte no se
+         veia en ninguna parte.
+         Pedir de mas no rompe nada: armar() entrega lo que haya. */
+      const cuantas = Math.min(1500, Math.max(5, Math.round(+b.cuantas || 15)));
       const nivel = [0, 1, 2, 3].includes(+b.nivel) ? +b.nivel : 0;
       /* Solo la fuente que el reglamento nombra. Columna propia y no un
          prefijo en `alcance`: son dos conceptos, qué parte del material y de

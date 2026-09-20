@@ -39,6 +39,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         pcLimpia, pcAbre, pcItemsActuales:()=>pcItems, pcEstaAbierta:()=>pcAbierta,
         lectCidActual:()=>lectCid, listoDesdeLectura, modsDe, avanza,
         opcionesMatPanel, alcancePanel, llenaRangoPanel, llenaCapPanel,
+        topePanel, pintaChips, cuantasPara, catsDestino, panAbre,
         capsExaminables, motivoRangoMalo, RECETAS, textoAlcancePanel, FILAS_EVAL,
         capsDeActividad,
         ponRetiradas, estaRetirada, retiradas:()=>retiradas, retLee,
@@ -1768,6 +1769,33 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
      cambio. */
   ok(P.textoAlcancePanel('m05..m12')===P.textoAlcancePanel('m05..m12'),
     'El material en palabras sale de textoAlcancePanel()');
+  /* ─── EL TOPE DE PREGUNTAS SALE DEL BANCO, NO DE UN NUMERO ESCRITO ───
+     Estaba clavado en 60, que es menos que el material de cualquier categoria:
+     «Guias Mayores, todo» se recortaba a 60 de 523 y el recorte no se veia.
+     Ahora el tope es lo que de verdad hay, y el ultimo chip lo ofrece. */
+  el('pan-act').value=''; el('pan-mat').value='todo';
+  const topeTodo=P.topePanel();
+  ok(topeTodo>60,'Con todo el material el tope pasa de 60 ('+topeTodo+')');
+  ok(topeTodo===Math.max.apply(null,P.catsDestino().map(c=>P.cuantasPara(c,'todo'))),
+    'Y es el mayor de las categorias a las que va dirigida');
+  P.pintaChips();
+  const chips=[...el('pan-chips').innerHTML.matchAll(/ponCuantasPanel\((\d+)\)/g)].map(m=>Number(m[1]));
+  ok(chips[chips.length-1]===topeTodo,'El ultimo chip es «Todas», con el tope real');
+  ok(chips.every(n=>n<=topeTodo),'Y ninguno ofrece mas de lo que hay');
+  /* Los tamaños no son numeros escogidos de gusto: son los que cada categoria
+     usa. Si manana una categoria cambia su n, el chip cambia con ella. */
+  const suyos=[...new Set(Object.keys(P.CATS).map(k=>P.CATS[k].n))].sort((a,b)=>a-b);
+  ok(chips.slice(0,-1).every(n=>suyos.includes(n)),
+    'Los tamaños de un toque salen de CATS[].n ('+suyos.join(', ')+')');
+  ok(Number(el('pan-eval-n').max)===topeTodo,'El campo acepta hasta el tope, no hasta 60');
+
+  /* Con «Preguntas» abierto los chips se esconden: el campo esta ahi debajo, y
+     dos controles para lo mismo en la misma pantalla se leen como un error. */
+  P.panAbre('cuantas'); P.pintaChips();
+  ok(el('pan-chips').innerHTML==='','Con el cajon de Preguntas abierto, los chips no se pintan');
+  P.panAbre('cuantas'); P.pintaChips();
+  ok(el('pan-chips').innerHTML!=='','Y al cerrarlo vuelven');
+
   /* Cada fila saca su valor de la funcion que ya lo dice en el resto del
      panel. Un texto propio aqui se separaria del otro en el primer cambio. */
   ok(P.FILAS_EVAL.length===3&&P.FILAS_EVAL.every(f=>typeof f[2]==='function'),
