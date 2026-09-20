@@ -581,6 +581,15 @@ export async function onRequest(context) {
           hechas: hechas || [], faltan: faltan || [],
         };
       };
+      /* Con ?id= se pide UNA, este abierta o cerrada: es lo que abre el
+         historial al tocar una fila. El mismo detalle, sin duplicar la
+         consulta ni el formato. */
+      const pedida = limpiar(new URL(request.url).searchParams.get('id') || '', 60);
+      if (pedida) {
+        const ev = await env.DB.prepare('SELECT * FROM evaluacion WHERE id = ?').bind(pedida).first();
+        if (!ev) return error('Esa evaluación no existe.', 404);
+        return json({ evaluacion: await detalle(ev) });
+      }
       const abiertas = await evaluacionesAbiertas(env);
       const evaluaciones = [];
       for (const ev of abiertas) evaluaciones.push(await detalle(ev));
@@ -592,6 +601,26 @@ export async function onRequest(context) {
         if (u) ultima = await detalle(u);
       }
       return json({ evaluaciones, ultima });
+    }
+
+    /* ───────── EL HISTORIAL ─────────
+       /panel/evaluacion solo habla de lo que esta abierto, y de la ultima
+       cuando no hay ninguna: cerrar una evaluacion la sacaba de la vista para
+       siempre. Las notas seguian guardadas y no habia pantalla que las
+       mostrara.
+       Esto NO trae el detalle de cada una (quien la hizo, quien falto): son
+       veinte participantes por evaluacion viajando en una lista que el
+       director usa para escoger. El detalle se pide de a una, con ?id=. */
+    if (metodo === 'GET' && ruta === '/panel/evaluaciones') {
+      const { results } = await env.DB.prepare(
+        'SELECT e.id, e.titulo, e.alcance, e.cuantas, e.nivel, e.categorias, e.participantes, ' +
+        'e.solo_fuente, e.abierta, e.creada_en, e.cerrada_en, ' +
+        '(SELECT COUNT(*) FROM intento i JOIN participante p ON p.id = i.participante_id ' +
+        ' WHERE i.evaluacion_id = e.id AND p.borrado_en IS NULL) AS notas ' +
+        'FROM evaluacion e ORDER BY e.creada_en DESC LIMIT 200'
+      ).all();
+      await auditar(env, sesion.cuenta_id, 'ver_historial', 'evaluacion', null, ipHash);
+      return json({ evaluaciones: results || [] });
     }
 
     /* La revisión de UN intento. Va aparte y no dentro de /panel/evaluacion a
@@ -687,9 +716,16 @@ export async function onRequest(context) {
     }
 
     if (metodo === 'GET' && ruta === '/panel/intentos') {
+      /* Con el id y el titulo de la evaluacion: sin eso, una nota suelta no
+         dice de que examen era, y la vista por participante no puede armar la
+         linea de cada una. La columna existe desde la migracion 004; solo no
+         se estaba devolviendo. */
       const { results } = await env.DB.prepare(
-        'SELECT i.creado_en, i.modo, i.nota, i.total, p.nombre, p.categoria ' +
+        'SELECT i.id, i.creado_en, i.modo, i.nota, i.total, i.evaluacion_id, ' +
+        "LENGTH(i.respuestas) > 0 AS hay_revision, e.titulo AS evaluacion, " +
+        'p.nombre, p.categoria ' +
         'FROM intento i JOIN participante p ON p.id = i.participante_id ' +
+        'LEFT JOIN evaluacion e ON e.id = i.evaluacion_id ' +
         'WHERE p.borrado_en IS NULL ORDER BY i.creado_en DESC LIMIT 300'
       ).all();
       await auditar(env, sesion.cuenta_id, 'ver_intentos', 'intento', null, ipHash);

@@ -40,6 +40,8 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         lectCidActual:()=>lectCid, listoDesdeLectura, modsDe, avanza,
         opcionesMatPanel, alcancePanel, llenaRangoPanel, llenaCapPanel,
         topePanel, pintaChips, cuantasPara, catsDestino, panAbre,
+        pintaHistorial, hisPon, hisVerVacias, hisFiltradas, hisResumen,
+        ponDirector:r=>{srvYo=r;}, ponHis:(e,i)=>{hisEvals=e;hisIntentos=i;},
         capsExaminables, motivoRangoMalo, RECETAS, textoAlcancePanel, FILAS_EVAL,
         capsDeActividad,
         ponRetiradas, estaRetirada, retiradas:()=>retiradas, retLee,
@@ -1816,6 +1818,71 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Cada opcion de material trae su etiqueta larga y su corta');
   el('pan-eval-n').value='40';
   ok(P.FILAS_EVAL[1][2]()==='40','La cantidad sale del campo, no de una copia');
+}
+
+
+/* ─── EL HISTORIAL DE EVALUACIONES ───
+   El panel solo hablaba de lo abierto: cerrar una evaluacion la sacaba de la
+   vista para siempre, aunque sus notas siguieran guardadas. Esta pantalla es
+   la que las muestra, y lo que se prueba es que no mienta al contar ni entierre
+   lo util debajo de las pruebas viejas. */
+{
+  const H=montar(RET);
+  H.ponDirector({rol:'director'});
+  const EVALS=[
+    {id:'e1',titulo:'Sábado 19',alcance:'biblia',cuantas:15,categorias:'av',participantes:'',
+     solo_fuente:0,abierta:0,creada_en:'2026-09-19 18:15:43',notas:2},
+    {id:'e2',titulo:'Matutina 19',alcance:'q2',cuantas:15,categorias:'dm2',participantes:'',
+     solo_fuente:1,abierta:0,creada_en:'2026-09-19 22:39:18',notas:1},
+    {id:'e3',titulo:'Test',alcance:'todo',cuantas:15,categorias:'pa',participantes:'',
+     solo_fuente:0,abierta:0,creada_en:'2026-09-13 16:55:30',notas:0},
+  ];
+  const INTENTOS=[
+    {id:'i1',creado_en:'2026-09-19 19:00:00',nota:12,total:15,evaluacion_id:'e1',
+     evaluacion:'Sábado 19',hay_revision:1,nombre:'Camila',categoria:'av'},
+    {id:'i2',creado_en:'2026-09-19 23:00:00',nota:9,total:15,evaluacion_id:'e2',
+     evaluacion:'Matutina 19',hay_revision:0,nombre:'Camila',categoria:'av'},
+    {id:'i3',creado_en:'2026-09-19 19:05:00',nota:15,total:15,evaluacion_id:'e1',
+     evaluacion:'Sábado 19',hay_revision:1,nombre:'Ana',categoria:'av'},
+  ];
+  H.ponHis(EVALS,INTENTOS);
+
+  /* Las de cero notas se esconden por defecto: en la base real son siete
+     pruebas de septiembre, y abrir la pantalla con eso arriba entierra lo que
+     de verdad se quiere mirar. */
+  ok(H.hisFiltradas().length===2,'Por defecto solo se ven las que tienen notas (2 de 3)');
+  H.hisVerVacias(true);
+  ok(H.hisFiltradas().length===3,'Y se pueden mostrar todas');
+  H.hisVerVacias(false);
+
+  /* El resumen cuenta del dato, no de una cifra escrita. */
+  const r=H.hisResumen();
+  ok(/3 evaluaciones/.test(r)&&/2 con notas/.test(r)&&/3 notas/.test(r),
+    'El resumen cuenta las evaluaciones, las que tienen notas y las notas: '+r);
+  ok(!/\{/.test(r),'Y no deja ninguna marca sin reemplazar');
+
+  /* Por evaluacion: cada fila dice cuando, si esta cerrada y cuantas notas. */
+  H.hisPon('evals'); H.pintaHistorial();
+  const html=H.el('cb-historial').innerHTML;
+  ok(/Sábado 19/.test(html)&&/Matutina 19/.test(html),'La lista muestra las evaluaciones con notas');
+  ok(!/>Test</.test(html),'Y no la prueba sin notas');
+  ok(/Cerrada/.test(html),'Dice que estan cerradas, que es justo lo que antes no se podia ver');
+  ok(/Solo la fuente/.test(html),'Y marca la que se abrio solo con la fuente del reglamento');
+
+  /* Por participante: la linea de cada una, con su promedio. Camila hizo dos
+     (12/15 y 9/15 = 70%), Ana una (15/15 = 100%). */
+  H.hisPon('personas'); H.pintaHistorial();
+  const hp=H.el('cb-historial').innerHTML;
+  ok(/Camila/.test(hp)&&/Ana/.test(hp),'La vista por participante lista a las dos');
+  ok(/promedio 70%/.test(hp),'Con el promedio de Camila, 12\/15 y 9\/15');
+  ok(/promedio 100%/.test(hp),'Y el de Ana, 15\/15');
+  ok(/verRevision\('i1'\)/.test(hp),'Se puede abrir la revision del intento que la guardo');
+  ok(!/verRevision\('i2'\)/.test(hp),'Y no se ofrece para el que no la tiene');
+
+  /* Sin sesion de director no pinta nada del historial. */
+  H.ponDirector(null); H.pintaHistorial();
+  ok(/Esta pantalla es del director/.test(H.el('cb-historial').innerHTML),
+    'Sin clave de director, el historial no muestra ni una nota');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

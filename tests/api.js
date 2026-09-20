@@ -274,6 +274,35 @@ ok(/retiradas: await clavesRetiradas\(env\)/.test(bloqueEstadoRet),
   'Y /estado las reparte a todos los aparatos, que es donde la app ya cachea');
 ok(!/semilla/.test(bloqueEstadoRet), 'Sin que eso le meta la semilla a un endpoint publico');
 
+/* ── EL HISTORIAL ──
+   /panel/evaluacion solo hablaba de lo abierto, y de la ultima cuando no habia
+   ninguna: cerrar una evaluacion la sacaba de la vista para siempre aunque sus
+   notas siguieran guardadas. */
+const posHist = API.indexOf("ruta === '/panel/evaluaciones'");
+ok(posHist > posGuarda, 'El historial va DESPUES de la guarda de director');
+const bloqueHist = API.slice(posHist, API.indexOf("ruta === '/panel/intento'"));
+ok(/FROM evaluacion e ORDER BY e\.creada_en DESC/.test(bloqueHist),
+  'Trae todas las evaluaciones, no solo las abiertas');
+ok(/COUNT\(\*\) FROM intento/.test(bloqueHist),
+  'Con cuantas notas tiene cada una, que es como se escoge cual mirar');
+ok(!/i\.respuestas/.test(bloqueHist),
+  'Y sin arrastrar las respuestas de todas: el detalle se pide de a una');
+
+/* El detalle de UNA, abierta o cerrada, sale del mismo `detalle()` que ya usa
+   el panel. Dos formatos para lo mismo se separan al primer cambio. */
+const bloqueEvalGet = API.slice(API.indexOf("metodo === 'GET' && ruta === '/panel/evaluacion'"), posHist);
+ok(/searchParams\.get\('id'\)/.test(bloqueEvalGet),
+  'Se puede pedir UNA evaluacion por id, este abierta o cerrada');
+ok(/await detalle\(ev\)/.test(bloqueEvalGet),
+  'Y reusa el mismo detalle, no una consulta paralela');
+
+/* Una nota suelta tiene que decir de que evaluacion era, o la vista por
+   participante no puede armar la linea de cada una. */
+const bloqueIntentos = API.slice(API.indexOf("ruta === '/panel/intentos'"));
+ok(/i\.evaluacion_id/.test(bloqueIntentos) && /e\.titulo AS evaluacion/.test(bloqueIntentos),
+  'Cada nota del historial dice a que evaluacion pertenece');
+
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }

@@ -1742,5 +1742,22 @@ const bloqueP2=APP.slice(APP.indexOf("id=\"pan-paso2\""),APP.indexOf("id=\"g-mat
 ok(/id="pan-aviso-cats"/.test(bloqueP2)&&/id="pan-nota-al"/.test(bloqueP2),
   'Los dos avisos del material viven fuera de los cajones, siempre a la vista');
 
+/* ── EL HISTORIAL: LO ESTRUCTURAL ── */
+ok(/<div id="p-historial" class="pantalla">/.test(CUERPO),
+  'El historial es una pantalla propia, como el revisor');
+ok(/id="cb-historial"/.test(CUERPO), 'Con su contenedor, que llena pintaHistorial()');
+ok(/if\(id==='historial'\)pintaHistorial\(\);/.test(APP), 'Y ir() sabe llegar a el');
+ok(/onclick="abreHistorial\(\)"/.test(APP), 'Se entra desde el panel del director');
+ok(/srvYo\.rol!=='director'/.test(APP.slice(APP.indexOf('function pintaHistorial'),
+  APP.indexOf('function hisResumen'))),
+  'pintaHistorial() tiene su propia guarda: sin sesion de director no muestra notas');
+/* El detalle de una evaluacion se pinta con la MISMA funcion que el panel usa
+   para la que esta en curso. Dos formatos para la misma tabla se separan al
+   primer cambio. */
+ok(/cuerpoResultado\(hisDetalle\[ev\.id\]\)/.test(APP),
+  'El detalle del historial reusa cuerpoResultado(), el del panel');
+ok(/verRevision\(/.test(APP.slice(APP.indexOf('function hisListaPersonas'))),
+  'Y la revision pregunta por pregunta es la misma de siempre');
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

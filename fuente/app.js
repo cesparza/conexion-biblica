@@ -691,6 +691,7 @@ function ir(id){
   if(id==='logros')pintaLogros();
   if(id==='ayuda')pintaAyuda();
   if(id==='revisor')pintaRevisor();
+  if(id==='historial')pintaHistorial();
   pintaSenales();
   window.scrollTo({top:0});
 }
@@ -4387,6 +4388,13 @@ async function pintaPanel(){
     'deja de entrar en cualquier examen.</p>'+
     '<button class="btn azul" onclick="abreRevisor()">Revisar las preguntas</button></div>'+
 
+    /* EL HISTORIAL VA AQUI POR LA MISMA RAZON QUE EL REVISOR: no es un paso de
+       abrir una evaluacion, es lo que se mira despues. */
+    '<div class="pan-paso"><div class="pan-paso-t">Evaluaciones y notas</div>'+
+    '<p class="nota">Todas las evaluaciones, abiertas y cerradas, con quién la hizo y '+
+    'qué sacó. Cerrar una ya no la esconde.</p>'+
+    '<button class="btn azul" onclick="abreHistorial()">Ver el historial</button></div>'+
+
     '<div id="pan-eval-en-curso"></div></div>';
   cargaParticipantes(parts);
   /* El orden importa: primero las listas del material (que dependen de la
@@ -5573,6 +5581,159 @@ async function abreRevisor(){
   ir('revisor');
   await revCarga();
   pintaRevisor();
+}
+
+
+/* ═══════════ EL HISTORIAL DE EVALUACIONES ═══════════
+   QUE ES
+   La pantalla donde el director ve TODAS las evaluaciones, abiertas y
+   cerradas, y las notas de cada participante a lo largo del tiempo.
+
+   QUE PROBLEMA RESUELVE
+   El panel solo habla de lo que esta abierto, y de la ultima cuando no hay
+   ninguna: cerrar una evaluacion la sacaba de la vista para siempre. Las notas
+   seguian guardadas en el servidor y no habia pantalla que las mostrara. Con
+   nueve evaluaciones ya hechas, eso es justo lo que se mira despues del
+   campamento.
+
+   DOS VISTAS, PORQUE SON DOS PREGUNTAS DISTINTAS
+   «¿Como le fue a ese examen?» se responde por evaluacion; «¿como va esta
+   niña?» se responde por participante, y esa segunda no existia en ninguna
+   parte. Las dos salen del mismo dato. */
+let hisVista='evals';     // 'evals' | 'personas'
+let hisEvals=null;        // lo que devolvio /panel/evaluaciones, o null si no se pudo
+let hisIntentos=null;     // lo que devolvio /panel/intentos
+let hisAbierta='';        // la evaluacion desplegada, si hay alguna
+let hisDetalle={};        // id -> detalle ya pedido, para no volver a pedirlo
+let hisVacias=false;      // mostrar tambien las que no tienen ni una nota
+
+const HIS_CUENTA='{TOTAL} evaluaciones · {CON} con notas · {NOTAS} notas guardadas.';
+
+/* Las que se ven. Las de cero notas se esconden por defecto: en esta base son
+   siete pruebas de septiembre, y abrir la pantalla con eso arriba entierra lo
+   que de verdad se quiere mirar. */
+const hisFiltradas=()=>(hisEvals||[]).filter(e=>hisVacias||e.notas>0);
+
+function pintaHistorial(){
+  const d=document.getElementById('cb-historial');
+  if(!d)return;
+  if(!srvYo||srvYo.rol!=='director'){
+    d.innerHTML='<div class="card"><p class="nota">Esta pantalla es del director. '+
+      'Entra con la clave en <strong>Examen · La evaluación del día</strong>.</p>'+
+      '<button class="btn gho" onclick="ir(\'examen\')">Volver al examen</button></div>';
+    return;
+  }
+  if(hisEvals===null){
+    d.innerHTML='<div class="card"><p class="nota">Cargando el historial...</p></div>';
+    return;
+  }
+  const tab=(id,txt)=>'<button type="button" class="rb-raz'+(hisVista===id?' on':'')+
+    '" onclick="hisPon(\''+id+'\')">'+esc(txt)+'</button>';
+  d.innerHTML='<div class="card">'+
+    '<h2>Evaluaciones y notas</h2>'+
+    '<p class="nota">'+hisResumen()+'</p>'+
+    '<div class="rb-razones">'+tab('evals','Por evaluación')+tab('personas','Por participante')+'</div>'+
+    (hisVista==='evals'
+      ?'<label class="ex-sw" style="margin:.4rem 0 0"><input type="checkbox"'+
+       (hisVacias?' checked':'')+' onchange="hisVerVacias(this.checked)">'+
+       '<span>Mostrar también las que no tienen ni una nota</span></label>':'')+
+    '</div>'+
+    (hisVista==='evals'?hisListaEvals():hisListaPersonas());
+}
+
+/* Las cifras salen del dato, con marcas, igual que en el revisor. */
+function hisResumen(){
+  const e=hisEvals||[];
+  return aplicaMarcas(HIS_CUENTA,{
+    TOTAL:String(e.length),
+    CON:String(e.filter(x=>x.notas>0).length),
+    NOTAS:String(e.reduce((a,x)=>a+(x.notas||0),0))});
+}
+
+function hisListaEvals(){
+  const l=hisFiltradas();
+  if(!l.length)return '<p class="nota">Todavía no hay evaluaciones con notas.</p>';
+  return '<div class="rb-lista">'+l.map(function(ev){
+    const abierta=!!ev.abierta;
+    const cuando=String(ev.creada_en||'').slice(0,10);
+    /* A quienes: las personas mandan sobre las categorias, igual que en el
+       servidor. Aqui solo hay ids, asi que se dice cuantas son. */
+    const ids=(ev.participantes||'').split(',').filter(Boolean);
+    const para=ids.length
+      ? ids.length+(ids.length===1?' persona':' personas')
+      : nombresCats(ev.categorias);
+    return '<div class="rb-it'+(abierta?' his-viva':'')+'">'+
+      '<div class="rb-etq"><span>'+esc(cuando)+'</span>'+
+      '<span>'+(abierta?'Abierta':'Cerrada')+'</span>'+
+      '<span>'+ev.notas+(ev.notas===1?' nota':' notas')+'</span>'+
+      (ev.solo_fuente?'<span>Solo la fuente</span>':'')+'</div>'+
+      '<div class="rb-q">'+esc(ev.titulo)+'</div>'+
+      '<div class="rb-a">'+esc(textoAlcancePanel(ev.alcance))+' · '+esc(para)+
+      ' · '+ev.cuantas+' preguntas</div>'+
+      '<div class="rb-acc"><button class="btn gho" onclick="hisAbre(\''+esc(ev.id)+'\')">'+
+      (hisAbierta===ev.id?'Ocultar el detalle':'Ver quién la hizo')+'</button></div>'+
+      (hisAbierta===ev.id?'<div class="his-det">'+
+        (hisDetalle[ev.id]?cuerpoResultado(hisDetalle[ev.id])
+                          :'<p class="nota">Cargando...</p>')+'</div>':'')+
+    '</div>';
+  }).join('')+'</div>';
+}
+
+/* Por participante: la linea de cada una, de la mas reciente a la mas vieja.
+   Se arma desde /panel/intentos, que ya existia en el servidor y que ninguna
+   pantalla llamaba. */
+function hisListaPersonas(){
+  const it=(hisIntentos||[]).filter(x=>x.evaluacion_id);
+  if(!it.length)return '<p class="nota">Todavía no hay notas de ninguna evaluación.</p>';
+  const por={};
+  for(const x of it){(por[x.nombre]=por[x.nombre]||[]).push(x);}
+  return '<div class="rb-lista">'+Object.keys(por).sort().map(function(nom){
+    const suyos=por[nom];
+    const prom=Math.round(suyos.reduce((a,x)=>a+(x.total?x.nota/x.total:0),0)/suyos.length*100);
+    return '<div class="rb-it">'+
+      '<div class="rb-etq"><span>'+esc(catConActividad(suyos[0].categoria))+'</span>'+
+      '<span>'+suyos.length+(suyos.length===1?' evaluación':' evaluaciones')+'</span>'+
+      '<span>promedio '+prom+'%</span></div>'+
+      '<div class="rb-q">'+esc(nom)+'</div>'+
+      '<div class="tabla-scroll"><table class="info-table">'+
+      '<tr><th>Cuándo</th><th>Evaluación</th><th>Nota</th><th></th></tr>'+
+      suyos.map(function(x){
+        return '<tr><td>'+esc(String(x.creado_en||'').slice(0,10))+'</td>'+
+          '<td>'+esc(x.evaluacion||'—')+'</td>'+
+          '<td><strong>'+x.nota+'/'+x.total+'</strong></td><td>'+
+          (x.hay_revision?'<button class="btn gho" onclick="verRevision(\''+esc(x.id)+'\')">Ver en qué falló</button>'
+                         :'<small class="nota">sin revisión</small>')+'</td></tr>';
+      }).join('')+'</table></div></div>';
+  }).join('')+'</div>';
+}
+
+function hisPon(v){hisVista=v;pintaHistorial();}
+function hisVerVacias(v){hisVacias=!!v;pintaHistorial();}
+
+/* El detalle se pide de a UNA y se guarda: con veinte participantes por
+   evaluacion, traerlas todas de entrada serian cientos de filas para escoger
+   una. */
+async function hisAbre(id){
+  if(hisAbierta===id){hisAbierta='';pintaHistorial();return;}
+  hisAbierta=id;
+  pintaHistorial();
+  if(!hisDetalle[id]){
+    try{
+      const r=await srvFetch('/panel/evaluacion?id='+encodeURIComponent(id));
+      if(r&&r.evaluacion)hisDetalle[id]=r.evaluacion;
+    }catch(e){}
+  }
+  pintaHistorial();
+}
+
+async function abreHistorial(){
+  ir('historial');
+  hisEvals=null;pintaHistorial();
+  try{hisEvals=(await srvFetch('/panel/evaluaciones')).evaluaciones||[];}
+  catch(e){hisEvals=[];}
+  try{hisIntentos=(await srvFetch('/panel/intentos')).intentos||[];}
+  catch(e){hisIntentos=[];}
+  pintaHistorial();
 }
 
 /* Arranque: se le pregunta al servidor sin bloquear la pantalla. Si no hay

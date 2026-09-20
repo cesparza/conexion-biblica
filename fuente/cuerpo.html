@@ -240,6 +240,16 @@
      asistente de tres pasos del director enterrarian el paso 2. Se entra desde
      el panel, que es donde el director ya esta, y la guarda de verdad la pone
      pintaRevisor(): sin sesion de director no pinta nada. -->
+<!-- EL HISTORIAL. Pantalla propia, como el revisor: son todas las
+     evaluaciones con el detalle de cada una, y dentro del panel taparian el
+     asistente. Se entra desde el panel y pintaHistorial() pone la guarda. -->
+<div id="p-historial" class="pantalla">
+  <div class="rb-cab">
+    <button class="btn gho" onclick="ir('examen')">← Volver al panel</button>
+  </div>
+  <div id="cb-historial"></div>
+</div>
+
 <div id="p-revisor" class="pantalla">
   <div class="rb-cab">
     <button class="btn gho" onclick="ir('examen')">← Volver al panel</button>
