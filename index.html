@@ -255,7 +255,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 /* ═══ LEER EL CAPITULO COMPLETO ═══ */
 .lect{border:2px solid var(--v-linea,#e5e7eb);border-radius:12px;margin-bottom:1.3rem;background:var(--v-sup,#fff)}
 .lect>summary{cursor:pointer;padding:.85rem .9rem;font-weight:800;color:var(--azul);
-  font-size:.92rem;min-height:44px;display:flex;align-items:center;list-style:none}
+  font-size:.92rem;min-height:var(--v-toque,44px);display:flex;align-items:center;list-style:none}
 .lect>summary::-webkit-details-marker{display:none}
 .lect>summary::after{content:'▾';margin-left:auto;font-size:1.1rem;color:var(--gris)}
 .lect[open]>summary::after{content:'▴'}
@@ -397,7 +397,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .prog-lin div{height:100%;background:var(--verde);transition:width .3s}
 .menu-ex{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
 .menu-ex label{display:flex;flex-direction:column;gap:.3rem;font-size:.78rem;font-weight:700;color:var(--gris);min-width:0}
-.menu-ex select{width:100%;max-width:100%;padding:.5rem .6rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;font-family:inherit;font-size:.85rem;min-height:44px;background:var(--v-sup,#fff);color:var(--txt)}
+.menu-ex select{width:100%;max-width:100%;padding:.5rem .6rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;font-family:inherit;font-size:.85rem;min-height:var(--v-toque,44px);background:var(--v-sup,#fff);color:var(--txt)}
 .menu-ex select:focus{border-color:var(--cielo);outline:none}
 @media(max-width:900px){.menu-ex{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.menu-ex{grid-template-columns:1fr}}
@@ -461,7 +461,7 @@ body.av .tj .rev{font-size:1.08rem}
 /* Selector de participantes: fichas pequeñas, porque pueden ser hasta doce
    (dos por categoría en los dos eventos, más los padres). */
 .alu-sel{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
-.alu-btn{background:#f8f9ff;border:2px solid var(--v-linea,#e5e7eb);border-radius:10px;padding:.45rem .8rem;cursor:pointer;font-family:inherit;text-align:left;min-height:44px}
+.alu-btn{background:#f8f9ff;border:2px solid var(--v-linea,#e5e7eb);border-radius:10px;padding:.45rem .8rem;cursor:pointer;font-family:inherit;text-align:left;min-height:var(--v-toque,44px)}
 .alu-btn:hover{border-color:var(--cielo)}
 .alu-btn.on{border-color:var(--naranja);background:#fff8f0}
 .alu-btn.nuevo{border-style:dashed}
@@ -518,7 +518,7 @@ body.av .tj .rev{font-size:1.08rem}
 .bv-op b{display:block;font-size:1.02rem;font-weight:800;color:var(--azul)}
 .bv-op small{display:block;font-size:.79rem;color:var(--gris);margin-top:2px;line-height:1.4}
 .bv-link{background:none;border:none;color:var(--gris);font-family:inherit;font-size:.83rem;
-  text-decoration:underline;cursor:pointer;padding:.7rem;min-height:44px}
+  text-decoration:underline;cursor:pointer;padding:.7rem;min-height:var(--v-toque,44px)}
 
 /* ───────── barra de identidad ─────────
    Reemplaza al muro de seis categorías: una línea con quién estudia y qué
@@ -906,6 +906,14 @@ details.card.sec[open]>summary{color:var(--azul)}
   --v-t2:clamp(1.25rem, 1.10rem + .70vw, 1.60rem);
   --v-t3:clamp(1.70rem, 1.35rem + 1.60vw, 2.60rem);
 
+  /* INTERACCION, EN UN SOLO SITIO.
+     Medido antes de escribir esto: 26 reglas de :hover y 4 de :active. En un
+     celular no hay puntero, asi que el estado que la nina ve al tocar era el
+     que casi no estaba escrito, y los cuatro que habia respondian distinto
+     cada uno (translateY 1px, 1.5px, scale .995). Una sola respuesta al
+     toque, y un solo numero para el area minima que se puede tocar. */
+  --v-toque:44px;
+  --v-hundir:scale(.97);
   --v-paso:.18s cubic-bezier(.2,.7,.3,1);
 }
 
@@ -980,14 +988,14 @@ body{
 /* ── botones ── */
 .btn{
   border-radius:var(--v-r-md);
-  min-height:44px;
+  min-height:var(--v-toque,44px);
   font-weight:700;
   letter-spacing:-.01em;
   box-shadow:var(--v-s1);
   transition:transform var(--v-paso), box-shadow var(--v-paso), background var(--v-paso);
 }
 .btn:hover{box-shadow:var(--v-s2)}
-.btn:active{transform:translateY(1px)}
+.btn:active{transform:var(--v-hundir,scale(.97))}
 .btn:focus-visible{outline:3px solid var(--v-cat);outline-offset:2px}
 .ex-go{
   background:linear-gradient(180deg,var(--v-acento-alto,#F2860F),var(--v-acento-bajo,#D9620A));
@@ -1027,11 +1035,11 @@ body{
 .op{
   border:1.5px solid var(--v-linea);
   border-radius:var(--v-r-md);
-  min-height:44px;
+  min-height:var(--v-toque,44px);
   transition:border-color var(--v-paso), background var(--v-paso), transform var(--v-paso);
 }
 .op:hover:not(:disabled){border-color:var(--v-cat);background:var(--v-sup2)}
-.op:active:not(:disabled){transform:scale(.995)}
+.op:active:not(:disabled){transform:var(--v-hundir,scale(.97))}
 
 /* La marca de correcto entra con un pulso corto. Una respuesta acertada tiene
    que SENTIRSE distinta, no solo verse verde. */
@@ -1075,7 +1083,7 @@ body{
 
 /* ── detalles plegables ── */
 details.card summary{
-  font-weight:700;letter-spacing:-.01em;min-height:44px;
+  font-weight:700;letter-spacing:-.01em;min-height:var(--v-toque,44px);
   display:flex;align-items:center;gap:.5rem;cursor:pointer;
   border-radius:var(--v-r-md);
 }
@@ -1091,7 +1099,7 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
 .ses-h{font-size:var(--v-t1);letter-spacing:-.02em;color:var(--v-marca)}
 .ses-fila input,.ses-fila select{
   border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
-  min-height:44px;background:var(--v-sup);
+  min-height:var(--v-toque,44px);background:var(--v-sup);
   transition:border-color var(--v-paso), box-shadow var(--v-paso);
 }
 .ses-fila input:focus,.ses-fila select:focus{
@@ -1111,6 +1119,14 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
    Quien pidió menos movimiento en su sistema no ve ninguna animación. Esto no
    es opcional: hay niñas con sensibilidad al movimiento y el ajuste existe
    justo para eso. */
+/* TODO LO QUE SE TOCA RESPONDE, Y RESPONDE IGUAL.
+   El hundido dura lo que dura el dedo encima: es la unica senal de que el
+   toque llego, porque en un celular no hay puntero que cambie antes. Va por
+   selector de elemento para que una clase nueva no nazca muda. */
+button,select,[role=button],.cap,.anillo{transition:transform var(--v-paso,.18s)}
+button:active:not(:disabled),[role=button]:active,.cap:active,.anillo:active{
+  transform:var(--v-hundir,scale(.97))}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
     animation-duration:.001ms !important;
@@ -1538,7 +1554,7 @@ details.card summary::marker{content:''}
 .pan-cat{
   display:flex;gap:.6rem;align-items:flex-start;
   border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
-  padding:.6rem .7rem;background:var(--v-sup);cursor:pointer;min-height:44px;
+  padding:.6rem .7rem;background:var(--v-sup);cursor:pointer;min-height:var(--v-toque,44px);
   transition:border-color var(--v-paso), background var(--v-paso);
 }
 .pan-cat:hover{border-color:var(--v-cat)}
@@ -1547,7 +1563,7 @@ details.card summary::marker{content:''}
 .pan-cat:has(input:checked){border-color:var(--v-cat);background:var(--v-cat-suave)}
 
 
-.ay-tabs button{display:inline-flex;align-items:center;gap:.45rem;min-height:44px}
+.ay-tabs button{display:inline-flex;align-items:center;gap:.45rem;min-height:var(--v-toque,44px)}
 .ay-tabs button .ico{width:18px;height:18px;--ico-w:1.9}
 .menu-impr .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
 .menu-impr .btn .ico{width:18px;height:18px;--ico-w:1.9}
@@ -1615,7 +1631,7 @@ details.card summary::marker{content:''}
    Metido en .pan-lb, que es columna, ese 8rem pasa a ser el eje principal
    vertical: el select quedaba de 128 px de alto con el texto flotando en la
    mitad. Se reponen los dos ejes a mano. */
-.pan-lb input,.pan-lb select{flex:0 1 auto;width:100%;min-height:44px}
+.pan-lb input,.pan-lb select{flex:0 1 auto;width:100%;min-height:var(--v-toque,44px)}
 
 }  /* fin @media screen */
 
@@ -1645,7 +1661,7 @@ details.card summary::marker{content:''}
   border:1.5px solid var(--borde);background:var(--v-sup,#fff);color:var(--tinta);font-size:.86rem;
   font-weight:600;text-align:left;min-width:0;overflow:hidden;text-overflow:ellipsis;
   box-shadow:0 1.5px 0 var(--borde)}
-.jg-g:active{transform:translateY(1.5px);box-shadow:none}
+.jg-g:active{transform:var(--v-hundir,scale(.97));box-shadow:none}
 .jg-g.sel{border-color:var(--azul);background:#EEF3FB}
 .jg-g.ok{border-color:#1A7A1A;background:#EAF7EA;color:#1A7A1A}
 .jg-g[style*="--c"]{border-left:5px solid var(--c)}
@@ -1733,7 +1749,7 @@ details.card summary::marker{content:''}
 .rb-cab{display:flex;gap:.6rem;align-items:center;margin-bottom:.8rem}
 .rb-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:.5rem;margin:.6rem 0 .7rem}
-.rb-filtros select{width:100%;min-height:44px}
+.rb-filtros select{width:100%;min-height:var(--v-toque,44px)}
 
 .rb-lista{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.8rem}
 .rb-it{background:var(--v-sup);border:1.5px solid var(--v-linea);
@@ -1753,28 +1769,28 @@ details.card summary::marker{content:''}
 .rb-cuerpo{display:flex;gap:.6rem;align-items:flex-start}
 .rb-txt{flex:1 1 auto;min-width:0}
 /* 44 px de alto se cumplen igual, pero sin gastar un renglon propio. */
-.rb-x{flex:0 0 auto;min-height:44px;padding:0 .7rem;border-radius:999px;
+.rb-x{flex:0 0 auto;min-height:var(--v-toque,44px);padding:0 .7rem;border-radius:999px;
   font:inherit;font-size:var(--v-t-1);font-weight:700;cursor:pointer;
   border:1.5px solid var(--v-linea);background:var(--v-sup);color:var(--v-tinta2)}
 .rb-it.fuera .rb-x{border-color:var(--v-cat);color:var(--v-cat)}
 
 .rb-acc{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
-.rb-acc .btn{flex:0 0 auto;min-height:44px}
+.rb-acc .btn{flex:0 0 auto;min-height:var(--v-toque,44px)}
 
 .rb-caja{margin-top:.55rem;padding-top:.55rem;border-top:1px dashed var(--v-linea)}
 .rb-razones{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem}
 /* Razon de un toque: el objetivo de 44 px se cumple con el alto, no con el
    ancho, para que las cuatro quepan en dos renglones de un celular. */
-.rb-raz{min-height:44px;padding:0 .8rem;border-radius:999px;font:inherit;
+.rb-raz{min-height:var(--v-toque,44px);padding:0 .8rem;border-radius:999px;font:inherit;
   font-size:var(--v-t-1);cursor:pointer;
   border:1.5px solid var(--v-linea);background:var(--v-sup);color:var(--v-tinta2)}
 .rb-raz.on{border-color:var(--v-cat);background:var(--v-cat-suave);
   color:var(--v-tinta);font-weight:700}
-.rb-caja input{width:100%;min-height:44px}
+.rb-caja input{width:100%;min-height:var(--v-toque,44px)}
 .rb-mas{width:100%;margin-bottom:1rem}
 /* Todo lo que se toca en esta pantalla llega a 44 px, el «Limpiar» del buscador
    incluido: el director revisa de pie y con el pulgar. */
-#cb-revisor .btn,.rb-cab .btn{min-height:44px}
+#cb-revisor .btn,.rb-cab .btn{min-height:var(--v-toque,44px)}
 
 /* ── PASO 2: RECETAS, FRASE Y CAJONES ─────────────────────────────────
    El desplegable de «Qué material» llego a 85 opciones y en iOS se pinta sin
@@ -1821,11 +1837,11 @@ details.card summary::marker{content:''}
   background:var(--v-sup);padding:.75rem .8rem;margin:.1rem 0 .7rem}
 .pan-grupo-t{display:flex;align-items:center;gap:.5rem;font-weight:800;
   font-size:var(--v-t-1);color:var(--v-cat);margin-bottom:.5rem}
-.pan-listo{margin-left:auto;min-height:44px;padding:0 .9rem;border-radius:999px;
+.pan-listo{margin-left:auto;min-height:var(--v-toque,44px);padding:0 .9rem;border-radius:999px;
   font:inherit;font-size:var(--v-t-1);font-weight:700;cursor:pointer;
   border:1.5px solid var(--v-linea);background:var(--v-sup2);color:var(--v-tinta2)}
 .pan-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem}
-.pan-chip{min-height:44px;padding:0 1rem;border-radius:999px;font:inherit;
+.pan-chip{min-height:var(--v-toque,44px);padding:0 1rem;border-radius:999px;font:inherit;
   font-size:var(--v-t0);font-weight:700;cursor:pointer;
   border:1.5px solid var(--v-linea);background:var(--v-sup);color:var(--v-tinta2)}
 
@@ -2320,7 +2336,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'f50b1d963da3';
+const VERSION_APP = '178c34d68e29';
 
 const CAPS = [
  {

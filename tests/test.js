@@ -1699,8 +1699,8 @@ ok(/retiradas=prev\.r;/.test(bloqueHace),
   'Y las devuelve como estaban, igual que el alcance y el nivel');
 
 /* Los toques del revisor llegan a 44 px, que es el minimo de un dedo. */
-ok(/\.rb-raz\{[^}]*min-height:44px/.test(CSS_SIN), 'Las razones rapidas miden 44 px de alto');
-ok(/#cb-revisor \.btn[^{]*\{[^}]*min-height:44px/.test(CSS_SIN),
+ok(/\.rb-raz\{[^}]*min-height:var\(--v-toque/.test(CSS_SIN), 'Las razones rapidas miden 44 px de alto');
+ok(/#cb-revisor \.btn[^{]*\{[^}]*min-height:var\(--v-toque/.test(CSS_SIN),
   'Y todo boton del revisor tambien');
 /* LAS CLASES DEL REVISOR NO PUEDEN LLAMARSE COMO LAS DE «COMPRUEBALO».
    `.rev-q` y `.rev-a` ya existian para los bloques de respuesta tapada del
@@ -1728,7 +1728,17 @@ ok(CSS.indexOf('.pan-nueva')>=0,'Y la marca tiene estilo propio');
    pantallazos. La accion dejo de gastar un renglon entero por fila. */
 ok(APP.indexOf('function rbCuerpo')>=0,'Las dos vistas del revisor comparten el cuerpo de la fila');
 ok(CSS.indexOf('.rb-cuerpo')>=0&&CSS.indexOf('.rb-txt')>=0,'Con su estilo de texto y accion en linea');
-ok(/\.rb-x\{[^}]*min-height:44px/.test(CSS),'El boton compacto sigue midiendo 44 px de alto');
+ok(/\.rb-x\{[^}]*min-height:var\(--v-toque/.test(CSS),'El boton compacto sigue midiendo 44 px de alto');
+
+/* ── EL TOQUE, UNA SOLA RESPUESTA ──
+   Habia 26 reglas de :hover y 4 de :active, y las cuatro respondian distinto
+   (translateY 1px, 1.5px, scale .995). En un celular no hay puntero: el estado
+   que se ve al tocar era el que casi no estaba escrito. */
+ok(/--v-toque:\s*44px/.test(CSS),'El area minima que se puede tocar es un token, no un numero suelto');
+ok(/--v-hundir:/.test(CSS),'Y la respuesta al toque tambien');
+ok(!/:active\{transform:translateY/.test(CSS),'Ninguna regla se inventa su propio hundido');
+ok(/button:active:not\(:disabled\)/.test(CSS),'Todo boton responde al toque, no solo los que alguien recordo');
+ok(/prefers-reduced-motion/.test(CSS),'Y quien pide menos movimiento lo recibe');
 ok(/\.rb-txt\{[^}]*min-width:0/.test(CSS),'Y el texto puede encogerse, o un enunciado largo estira la fila');
 
 /* ── PASO 2: LO QUE NO PUEDE VOLVER ──
