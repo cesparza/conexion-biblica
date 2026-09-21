@@ -1532,6 +1532,66 @@ function listoDesdeLectura(){
 if(typeof document!=='undefined'&&document.addEventListener)
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lectCid)cierraLectura();});
 
+/* ───────── CAPA POR SECCIÓN (núcleo / apoyo / contexto) ─────────
+   MECANISMO
+   fuente/contenido.js le pone `capa` a cada sección que ya la tiene
+   clasificada (hoy solo Daniel 3) y build.js le agrega `preg` a las de capa
+   núcleo cuando encuentra una pregunta del banco que cae en su rango de
+   versículo. Aquí solo se pinta lo que ya llega armado: la franja de color
+   en `.sec h3` la pone el CSS con `data-capa`, y estas funciones agregan la
+   píldora, el filtro y la tarjeta de recordar.
+
+   El filtro es de VISTA, no de estado: no se guarda en ningún lado, así que
+   cambiar de capítulo o recargar la página siempre arranca en «Todo». */
+const CAPA_ETQ={nucleo:'Examen',apoyo:'Apoyo',contexto:'No entra'};
+
+function filtroCapas(){
+  return '<div class="capa-filtro" role="group" aria-label="Filtrar por capa">'+
+    '<button type="button" class="cf on" onclick="filtraCapa(this,\'\')">Todo</button>'+
+    '<button type="button" class="cf" onclick="filtraCapa(this,\'nucleo\')">Del examen</button></div>';
+}
+
+function filtraCapa(btn,modo){
+  const d=document.getElementById('detalle');
+  if(!d)return;
+  d.querySelectorAll('.capa-filtro .cf').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  d.querySelectorAll('.sec').forEach(function(s){
+    const c=s.getAttribute('data-capa')||'';
+    s.style.display=(!modo||c===modo)?'':'none';
+  });
+}
+
+/* La tarjeta de recordar no toca el examen ni las estadísticas: es su propio
+   botón con su propio comprobador, aislado de jgBien/jgMal y de S.hist. Sin
+   puntaje y sin castigo — el mismo criterio que ya usa «Compruébalo». */
+function recordarHTML(preg){
+  const rid='rec_'+Math.random().toString(36).slice(2,8);
+  const esTF=preg.t==='tf';
+  const ops=esTF
+    ?['Verdadero','Falso'].map((txt,i)=>
+      '<button type="button" class="btn peq" onclick="compruebaRec(\''+rid+'\','+(i===0)+','+preg.a+')">'+txt+'</button>').join('')
+    :(preg.o||[]).map((o,i)=>
+      '<button type="button" class="btn peq" onclick="compruebaRec(\''+rid+'\','+i+','+preg.a+')">'+esc(o)+'</button>').join('');
+  return '<div class="recordar" id="'+rid+'">'+
+    '<div class="rec-tit">Antes de pasar — recuerda</div>'+
+    '<div class="rec-preg">'+esc(preg.q)+'</div>'+
+    '<div class="rec-ops">'+ops+'</div>'+
+    '<div class="rec-comp" hidden></div></div>';
+}
+
+function compruebaRec(rid,elegido,correcta){
+  const c=document.getElementById(rid);
+  if(!c)return;
+  const bien=elegido===correcta;
+  c.querySelectorAll('.rec-ops button').forEach(b=>b.disabled=true);
+  const comp=c.querySelector('.rec-comp');
+  if(!comp)return;
+  comp.hidden=false;
+  comp.className='rec-comp '+(bien?'ok':'ko');
+  comp.textContent=bien?'✅ Correcto.':'❌ No era esa — sigue leyendo con calma.';
+}
+
 function verCap(id){
   paraVoz();
   ir('estudio');
@@ -1553,7 +1613,10 @@ function verCap(id){
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
-    secs.map(s=>'<div class="sec"><h3>'+s.t+'</h3>'+refsTocables(s.h,id)+'</div>').join('')+
+    (secs.some(s=>s.capa)?filtroCapas():'')+
+    secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'"><h3>'+s.t+
+      (s.capa?' <span class="pil '+{nucleo:'na',apoyo:'az',contexto:'ve'}[s.capa]+'">'+CAPA_ETQ[s.capa]+'</span>':'')+
+      '</h3>'+refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
     '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+

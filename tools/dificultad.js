@@ -10,6 +10,13 @@
 
 const { BANCO } = require('../fuente/preguntas.js');
 const { CAPS }  = require('../fuente/contenido.js');
+/* fuente/preguntas.js es la fuente CRUDA: nunca trae `nv`, porque ese campo
+   lo calcula build.js con nivelDe() al armar index.html (ver fuente/niveles.js).
+   Medir aquí con `q.nv || 1` reportaba el nivel de ANTES del build, no el que
+   de verdad recibe la niña — por eso esta herramienta llegó a decir "96.5% en
+   nivel 1" cuando fill y tf ya subían de nivel en el HTML servido. Se corrige
+   aplicando la misma regla que usa el build, para medir lo real. */
+const { nivelDe } = require('../fuente/niveles.js');
 
 const limpia = s => String(s || '')
   .normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -79,8 +86,8 @@ console.log('BANCO DE DANIEL Y PROFETAS Y REYES');
 console.log('  ' + BANCO.length + ' preguntas: ' + mc.length + ' de selección, ' + tf.length +
   ' de verdadero o falso, ' + BANCO.filter(q => q.t === 'fill').length + ' de completar\n');
 
-const nv = BANCO.reduce((a, q) => { a[q.nv || 1] = (a[q.nv || 1] || 0) + 1; return a; }, {});
-console.log('NIVEL DECLARADO  (sin `nv`, la pregunta cuenta como nivel 1)');
+const nv = BANCO.reduce((a, q) => { const n = nivelDe(q); a[n] = (a[n] || 0) + 1; return a; }, {});
+console.log('NIVEL SERVIDO  (el que build.js calcula con nivelDe() para cada pregunta)');
 for (const k of Object.keys(nv).sort()) console.log('  nivel ' + k + ': ' + nv[k] + '  (' + pct(nv[k], BANCO.length) + ')');
 console.log('');
 

@@ -453,7 +453,27 @@ body.av .tj .rev{font-size:1.08rem}
 .alu-btn .ac{font-size:.68rem;color:var(--gris);margin-top:2px}
 .pil.az{background:#dbeafe;color:var(--cielo)}
 .pil.na{background:#ffedd5;color:var(--naranja)}
+.pil.ve{background:#dcfce7;color:var(--verde)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
+
+/* CAPA POR SECCIÓN — filtro, franja e h3 en .sec, y la tarjeta de recordar.
+   Ver la nota de mecanismo en fuente/app.js junto a filtroCapas(). */
+.capa-filtro{display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap}
+.cf{padding:.35rem .9rem;border-radius:20px;border:1px solid #e2e5ea;background:#fff;
+  font-size:.78rem;font-weight:700;color:var(--gris);cursor:pointer;font-family:inherit}
+.cf.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.sec[data-capa=apoyo] h3{border-left-color:var(--cielo)}
+.sec[data-capa=contexto] h3{border-left-color:var(--verde)}
+.sec h3 .pil{margin-left:.4rem;vertical-align:middle;font-size:.66rem}
+.recordar{margin-top:.7rem;padding:.75rem .85rem;background:#f7f8fb;border-radius:10px;border:1px solid #e7e9ee}
+.rec-tit{font-size:.7rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.03em;margin-bottom:.4rem}
+.rec-preg{font-size:.86rem;font-weight:700;color:var(--azul);margin-bottom:.6rem;line-height:1.4}
+.rec-ops{display:flex;gap:.5rem;flex-wrap:wrap}
+.btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.8rem;border:1px solid #e2e5ea;background:#fff;color:var(--azul)}
+.btn.peq:disabled{opacity:.55;cursor:default}
+.rec-comp{margin-top:.6rem;font-size:.85rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
+.rec-comp.ok{background:#e8f5e9;color:var(--verde)}
+.rec-comp.ko{background:#fee2e2;color:var(--rojo)}
 
 @media(max-width:620px){
   .nav-b span{display:none}

@@ -469,7 +469,27 @@ body.av .tj .rev{font-size:1.08rem}
 .alu-btn .ac{font-size:.68rem;color:var(--gris);margin-top:2px}
 .pil.az{background:#dbeafe;color:var(--cielo)}
 .pil.na{background:#ffedd5;color:var(--naranja)}
+.pil.ve{background:#dcfce7;color:var(--verde)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
+
+/* CAPA POR SECCIÓN — filtro, franja e h3 en .sec, y la tarjeta de recordar.
+   Ver la nota de mecanismo en fuente/app.js junto a filtroCapas(). */
+.capa-filtro{display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap}
+.cf{padding:.35rem .9rem;border-radius:20px;border:1px solid #e2e5ea;background:#fff;
+  font-size:.78rem;font-weight:700;color:var(--gris);cursor:pointer;font-family:inherit}
+.cf.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.sec[data-capa=apoyo] h3{border-left-color:var(--cielo)}
+.sec[data-capa=contexto] h3{border-left-color:var(--verde)}
+.sec h3 .pil{margin-left:.4rem;vertical-align:middle;font-size:.66rem}
+.recordar{margin-top:.7rem;padding:.75rem .85rem;background:#f7f8fb;border-radius:10px;border:1px solid #e7e9ee}
+.rec-tit{font-size:.7rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.03em;margin-bottom:.4rem}
+.rec-preg{font-size:.86rem;font-weight:700;color:var(--azul);margin-bottom:.6rem;line-height:1.4}
+.rec-ops{display:flex;gap:.5rem;flex-wrap:wrap}
+.btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.8rem;border:1px solid #e2e5ea;background:#fff;color:var(--azul)}
+.btn.peq:disabled{opacity:.55;cursor:default}
+.rec-comp{margin-top:.6rem;font-size:.85rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
+.rec-comp.ok{background:#e8f5e9;color:var(--verde)}
+.rec-comp.ko{background:#fee2e2;color:var(--rojo)}
 
 @media(max-width:620px){
   .nav-b span{display:none}
@@ -2340,7 +2360,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'd6033fb8075c';
+const VERSION_APP = '4e277d653807';
 
 const CAPS = [
  {
@@ -3309,10 +3329,12 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
+   "capa": "nucleo",
    "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>1:8</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.»</p><p data-leer><span class=\"vc-cab\"><strong>1:12</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.»</p><p data-leer><span class=\"vc-cab\"><strong>1:15</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
+   "capa": "nucleo",
    "h": "<p data-leer><span class=\"vc-cab\"><strong>1:17</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.»</p><p data-leer><span class=\"vc-cab\"><strong>1:20</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.»</p><p data-leer><span class=\"vc-cab\"><strong>1:21</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Así continuó Daniel hasta el año primero del rey Ciro.»</p>"
   },
   {
@@ -3449,70 +3471,167 @@ const CONTENIDO = {
  "d3": [
   {
    "t": "📚 En pocas palabras",
+   "capa": "apoyo",
    "h": "<div class=\"highlight-box\">El rey manda hacer <strong>una estatua de oro enorme</strong> y ordena\n    que todos se arrodillen cuando suene la música. El que no lo haga va a un\n    horno de fuego.<br><br>\n    <strong>Sadrac, Mesac y Abed-nego</strong> no se arrodillan. El rey los\n    llama, les da otra oportunidad y les pregunta qué dios podrá salvarlos.\n    Ellos responden que su Dios puede salvarlos, <strong>y que si no lo hace,\n    igual no van a adorar la estatua</strong>.<br><br>\n    El rey manda calentar el horno siete veces más y los echa adentro. Y\n    entonces ve <strong>cuatro</strong> caminando en el fuego, no tres. Al\n    salir, ni el pelo se les había quemado.<br><br>\n    <em>La idea del capítulo: obedecer a Dios sin condiciones, aunque no se vea\n    el milagro de antemano.</em></div>"
   },
   {
    "t": "🗿 La estatua de oro",
+   "capa": "nucleo",
    "h": "<table class=\"info-table\"><thead><tr><th>Dato</th><th>Valor exacto</th></tr></thead><tbody><tr><td class=\"key\">Altura</td><td>SESENTA codos (3:1)</td></tr><tr><td class=\"key\">Anchura</td><td>SEIS codos (3:1)</td></tr><tr><td class=\"key\">Material</td><td>Oro</td></tr><tr><td class=\"key\">Lugar</td><td>Campo de DURA, en la provincia de Babilonia (3:1)</td></tr></tbody></table>"
   },
   {
    "t": "👔 Los ocho cargos que convocó el rey (3:2-3)",
-   "h": "<div class=\"highlight-box\"><strong>Sátrapas, magistrados, capitanes, oidores, tesoreros,\n    consejeros, jueces</strong> y todos los gobernadores de las\n    provincias.<br><br>\n    La lista aparece <strong>dos veces seguidas</strong>, en 3:2 (cuando el rey\n    ordena que vengan) y en 3:3 (cuando llegan), palabra por palabra. Ese es un\n    recurso del capítulo: repetir la lista completa para que se sienta el\n    tamaño del acto oficial.</div><div class=\"warn-box\">Ojo con no confundirla con los cuatro grupos de sabios de Daniel 2:2\n    (magos, astrólogos, encantadores, caldeos). Aquí son\n    <strong>funcionarios de gobierno</strong>, no adivinos.</div>"
+   "capa": "nucleo",
+   "h": "<div class=\"highlight-box\"><strong>Sátrapas, magistrados, capitanes, oidores, tesoreros,\n    consejeros, jueces</strong> y todos los gobernadores de las\n    provincias.<br><br>\n    La lista aparece <strong>dos veces seguidas</strong>, en 3:2 (cuando el rey\n    ordena que vengan) y en 3:3 (cuando llegan), palabra por palabra. Ese es un\n    recurso del capítulo: repetir la lista completa para que se sienta el\n    tamaño del acto oficial.</div><div class=\"warn-box\">Ojo con no confundirla con los cuatro grupos de sabios de Daniel 2:2\n    (magos, astrólogos, encantadores, caldeos). Aquí son\n    <strong>funcionarios de gobierno</strong>, no adivinos.</div>",
+   "preg": {
+    "cap": "d3",
+    "t": "mc",
+    "q": "¿A quiénes mandó reunir el rey para la dedicación de la estatua? (Daniel 3:2)",
+    "o": [
+     "A los sátrapas, magistrados, sacerdotes, magos, astrólogos y todos los caldeos del reino",
+     "A los sátrapas, magistrados, capitanes, oidores, tesoreros, consejeros, jueces y todos los gobernadores",
+     "A los sátrapas, capitanes, tesoreros y consejeros, pero no a los jueces ni a los gobernadores",
+     "A los príncipes, capitanes y gobernadores de las provincias, y a todo el pueblo de Babilonia"
+    ],
+    "a": 1
+   }
   },
   {
    "t": "📢 La orden y la amenaza (3:4-6)",
-   "h": "<ul class=\"tight\"><li>Quién lo anuncia: <strong>el pregonero</strong>, en alta voz (3:4).</li><li>A quiénes: <strong>«pueblos, naciones y lenguas»</strong> (3:4).</li><li>Qué hay que hacer: <strong>postrarse y adorar</strong> al oír la música (3:5).</li><li>El castigo: <strong>«inmediatamente será echado dentro de un horno de\n         fuego ardiente»</strong> (3:6).</li></ul><div class=\"highlight-box\">En 3:7 dice que <strong>«todos los pueblos, naciones y lenguas se\n    postraron»</strong>. Los tres jóvenes no se enfrentaron a una ley\n    impopular: se quedaron de pie cuando <strong>todo el mundo se\n    arrodilló</strong>.</div>"
+   "capa": "nucleo",
+   "h": "<ul class=\"tight\"><li>Quién lo anuncia: <strong>el pregonero</strong>, en alta voz (3:4).</li><li>A quiénes: <strong>«pueblos, naciones y lenguas»</strong> (3:4).</li><li>Qué hay que hacer: <strong>postrarse y adorar</strong> al oír la música (3:5).</li><li>El castigo: <strong>«inmediatamente será echado dentro de un horno de\n         fuego ardiente»</strong> (3:6).</li></ul><div class=\"highlight-box\">En 3:7 dice que <strong>«todos los pueblos, naciones y lenguas se\n    postraron»</strong>. Los tres jóvenes no se enfrentaron a una ley\n    impopular: se quedaron de pie cuando <strong>todo el mundo se\n    arrodilló</strong>.</div>",
+   "preg": {
+    "cap": "d3",
+    "t": "mc",
+    "q": "¿Cuál es el PRIMER instrumento de la lista de Daniel 3:5?",
+    "o": [
+     "La flauta",
+     "El arpa",
+     "La bocina",
+     "La cítara"
+    ],
+    "a": 2
+   }
   },
   {
    "t": "🕵️ Quién los acusó, y de qué (3:8-12)",
+   "capa": "apoyo",
    "h": "<ul class=\"tight\"><li>Fueron <strong>«algunos hombres caldeos»</strong> los que\n         «acusaron maliciosamente a los judíos» (3:8).</li><li>Primero le recordaron al rey su propia ley (3:10-11), para que no\n         pudiera echarse atrás.</li><li>Los identificaron por el cargo: <strong>«a los cuales pusiste sobre\n         los negocios de la provincia de Babilonia»</strong> (3:12), el puesto\n         que Daniel les consiguió en 2:49.</li><li>Tres acusaciones: <strong>no te han respetado</strong>, no adoran a\n         tus dioses, y no adoran la estatua (3:12).</li></ul><div class=\"highlight-box\">La acusación no salió de un desconocido: salió de gente que sabía\n    exactamente <strong>qué cargo tenían y quién los había puesto ahí</strong>.\n    El ascenso de Daniel 2 fue lo que los volvió un blanco.</div>"
   },
   {
    "t": "🗣️ El desafío del rey, y la respuesta corta (3:14-16)",
-   "h": "<ul class=\"tight\"><li>El rey pregunta si es verdad, y les <strong>ofrece una segunda\n         oportunidad</strong>: si adoran al oír la música, no pasa nada (3:15).</li><li>Cierra con un reto directo: <strong>«¿y qué dios será el que os libre\n         de mis manos?»</strong> (3:15).</li><li>Ellos contestan primero una sola frase: <strong>«No es necesario que\n         te respondamos sobre este asunto»</strong> (3:16).</li></ul><div class=\"highlight-box\">Esa frase es lo que hace fuerte lo que dicen después. <strong>No\n    estaban decidiendo en ese momento</strong>: la decisión ya estaba tomada,\n    y no había nada que deliberar.</div>"
+   "capa": "nucleo",
+   "h": "<ul class=\"tight\"><li>El rey pregunta si es verdad, y les <strong>ofrece una segunda\n         oportunidad</strong>: si adoran al oír la música, no pasa nada (3:15).</li><li>Cierra con un reto directo: <strong>«¿y qué dios será el que os libre\n         de mis manos?»</strong> (3:15).</li><li>Ellos contestan primero una sola frase: <strong>«No es necesario que\n         te respondamos sobre este asunto»</strong> (3:16).</li></ul><div class=\"highlight-box\">Esa frase es lo que hace fuerte lo que dicen después. <strong>No\n    estaban decidiendo en ese momento</strong>: la decisión ya estaba tomada,\n    y no había nada que deliberar.</div>",
+   "preg": {
+    "cap": "d3",
+    "t": "mc",
+    "q": "Según Daniel 3:15, ¿qué preguntó desafiante Nabucodonosor a los tres jóvenes?",
+    "o": [
+     "¿Quién os enseñó a desobedecer al rey?",
+     "¿Y qué dios será el que os libre de mis manos?",
+     "¿No sabéis que yo os puse en vuestros cargos?",
+     "¿Queréis morir hoy delante de todo el pueblo?"
+    ],
+    "a": 1
+   }
   },
   {
    "t": "🎵 Los seis instrumentos — orden exacto",
+   "capa": "nucleo",
    "h": "<div class=\"warn-box\"><strong>Daniel 3:5 en la RV1995</strong> (la lista se repite en 3:7, 3:10 y 3:15):<br><br>\n    1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;\n    4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>\n    Y después: «y todo instrumento de música».<br><br>\n    <strong>❌ NO aparece:</strong> la TROMPETA</div><div class=\"highlight-box\"><strong>⚠ Ojo con el tercero.</strong> La RV1995 dice\n    <strong>CÍTARA</strong>. La RV1960, que es la que más se oye, dice\n    <strong>tamboril</strong> en ese lugar.<br>\n    Si la pregunta dice <em>según la RV1995</em>, la respuesta es <u>cítara</u>.</div>"
   },
   {
    "t": "🔥 El horno de fuego",
+   "capa": "apoyo",
    "h": "<div class=\"highlight-box\">• El rostro de Nabucodonosor se demudó contra ellos (3:19)<br>\n    • Mandó calentar el horno <strong>SIETE veces más</strong> de lo acostumbrado (3:19)<br>\n    • Fueron atados con <strong>sus mantos, sus calzados, sus turbantes y sus vestidos</strong> (3:21)<br>\n    • A los <strong>varones vigorosos</strong> que los echaron, <strong>la llama del fuego los mató</strong> (3:22)<br>\n    • Nabucodonosor vio <strong>CUATRO varones sueltos</strong> paseándose en medio del fuego (3:25)<br>\n    • El aspecto del cuarto: <strong>«semejante a un hijo de los dioses»</strong> (3:25, RV1995)<br>\n    Así lo describió Nabucodonosor, que era pagano. <strong>P&amp;R cap. 41 aclara que era el Hijo de Dios mismo.</strong></div>"
   },
   {
    "t": "🔢 Lo que pasó dentro del horno (3:19-25)",
-   "h": "<table class=\"info-table\"><thead><tr><th>Dato</th><th>Texto RV1995</th></tr></thead><tbody><tr><td class=\"key\">Cuánto lo calentaron</td><td><strong>Siete veces más</strong> de lo acostumbrado (3:19)</td></tr><tr><td class=\"key\">Quién los ató</td><td>Hombres <strong>muy vigorosos</strong> del ejército (3:20)</td></tr><tr><td class=\"key\">Con qué ropa entraron</td><td>Sus <strong>mantos, calzados, turbantes y vestidos</strong> (3:21)</td></tr><tr><td class=\"key\">Quiénes murieron</td><td><strong>Los que los alzaron</strong>, por la llama (3:22)</td></tr><tr><td class=\"key\">Cómo cayeron</td><td><strong>Atados</strong>, dentro del horno (3:23)</td></tr><tr><td class=\"key\">Cuántos vio el rey</td><td><strong>Cuatro</strong> hombres <strong>sueltos</strong>, paseándose (3:25)</td></tr><tr><td class=\"key\">El cuarto</td><td>«El aspecto del cuarto es semejante a un hijo de los dioses» (3:25)</td></tr></tbody></table><div class=\"highlight-box\">El contraste que el capítulo arma es exacto: <strong>entraron atados y\n    vestidos, y adentro estaban sueltos y paseándose</strong>. Lo único que se\n    quemó fueron las cuerdas, y eso lo confirma 3:27 al decir que la ropa no se\n    dañó.</div><div class=\"warn-box\">Cuidado con una pregunta trampa: <strong>el rey no cambió el aspecto\n    del horno, cambió «el aspecto de su rostro»</strong> (3:19). Y el que se\n    espantó y se levantó apresuradamente fue él (3:24).</div>"
+   "capa": "nucleo",
+   "h": "<table class=\"info-table\"><thead><tr><th>Dato</th><th>Texto RV1995</th></tr></thead><tbody><tr><td class=\"key\">Cuánto lo calentaron</td><td><strong>Siete veces más</strong> de lo acostumbrado (3:19)</td></tr><tr><td class=\"key\">Quién los ató</td><td>Hombres <strong>muy vigorosos</strong> del ejército (3:20)</td></tr><tr><td class=\"key\">Con qué ropa entraron</td><td>Sus <strong>mantos, calzados, turbantes y vestidos</strong> (3:21)</td></tr><tr><td class=\"key\">Quiénes murieron</td><td><strong>Los que los alzaron</strong>, por la llama (3:22)</td></tr><tr><td class=\"key\">Cómo cayeron</td><td><strong>Atados</strong>, dentro del horno (3:23)</td></tr><tr><td class=\"key\">Cuántos vio el rey</td><td><strong>Cuatro</strong> hombres <strong>sueltos</strong>, paseándose (3:25)</td></tr><tr><td class=\"key\">El cuarto</td><td>«El aspecto del cuarto es semejante a un hijo de los dioses» (3:25)</td></tr></tbody></table><div class=\"highlight-box\">El contraste que el capítulo arma es exacto: <strong>entraron atados y\n    vestidos, y adentro estaban sueltos y paseándose</strong>. Lo único que se\n    quemó fueron las cuerdas, y eso lo confirma 3:27 al decir que la ropa no se\n    dañó.</div><div class=\"warn-box\">Cuidado con una pregunta trampa: <strong>el rey no cambió el aspecto\n    del horno, cambió «el aspecto de su rostro»</strong> (3:19). Y el que se\n    espantó y se levantó apresuradamente fue él (3:24).</div>",
+   "preg": {
+    "cap": "d3",
+    "t": "mc",
+    "q": "¿Cuántas veces más de lo acostumbrado mandó calentar el horno? (Daniel 3:19)",
+    "o": [
+     "Dos veces",
+     "Cuatro veces",
+     "Siete veces",
+     "Diez veces"
+    ],
+    "a": 2
+   }
   },
   {
    "t": "✨ El milagro verificado (3:27)",
-   "h": "<div class=\"verse-box\">«...cómo <strong>el fuego no había tenido poder alguno</strong> sobre sus cuerpos\n    y ni aun el cabello de sus cabezas se había quemado;\n    sus ropas, <strong>intactas</strong>,\n    <strong>ni siquiera olor de fuego tenían</strong>.» (RV1995)</div><div class=\"highlight-box\">Se juntaron los sátrapas, los gobernadores, los capitanes y los consejeros del rey\n    <u>para verificarlo con sus propios ojos</u> (3:27).</div>"
+   "capa": "nucleo",
+   "h": "<div class=\"verse-box\">«...cómo <strong>el fuego no había tenido poder alguno</strong> sobre sus cuerpos\n    y ni aun el cabello de sus cabezas se había quemado;\n    sus ropas, <strong>intactas</strong>,\n    <strong>ni siquiera olor de fuego tenían</strong>.» (RV1995)</div><div class=\"highlight-box\">Se juntaron los sátrapas, los gobernadores, los capitanes y los consejeros del rey\n    <u>para verificarlo con sus propios ojos</u> (3:27).</div>",
+   "preg": {
+    "cap": "d3",
+    "t": "tf",
+    "q": "Al salir del horno, sus ropas quedaron intactas y ni siquiera olor de fuego tenían. (Daniel 3:27)",
+    "a": true,
+    "e": "Verdadero. RV1995: «el fuego no había tenido poder alguno sobre sus cuerpos... sus ropas, intactas, ni siquiera olor de fuego tenían»."
+   }
   },
   {
    "t": "📜 La respuesta de los tres jóvenes (3:17-18)",
-   "h": "<div class=\"verse-box\">«Nuestro Dios, a quien servimos, <strong>puede librarnos</strong> del horno de fuego ardiente;\n    y de tus manos, rey, nos librará. <strong>Y si no</strong>, has de saber, oh rey, que no serviremos\n    a tus dioses ni tampoco adoraremos la estatua que has levantado.»</div>"
+   "capa": "nucleo",
+   "h": "<div class=\"verse-box\">«Nuestro Dios, a quien servimos, <strong>puede librarnos</strong> del horno de fuego ardiente;\n    y de tus manos, rey, nos librará. <strong>Y si no</strong>, has de saber, oh rey, que no serviremos\n    a tus dioses ni tampoco adoraremos la estatua que has levantado.»</div>",
+   "preg": {
+    "cap": "d3",
+    "t": "mc",
+    "nv": 2,
+    "q": "¿De qué dos cosas dijeron los tres jóvenes que su Dios podía librarlos? (Daniel 3:17)",
+    "o": [
+     "Del horno de fuego ardiente y de las manos del rey",
+     "Del horno de fuego y del foso de los leones",
+     "De la muerte y del destierro a las provincias",
+     "De las manos del rey y de los caldeos que los acusaron"
+    ],
+    "a": 0
+   }
   },
   {
    "t": "👑 El decreto de Nabucodonosor (3:28-30)",
-   "h": "<ul class=\"tight\"><li>Bendijo al Dios de Sadrac, Mesac y Abed-nego, que <strong>envió su ángel</strong> y los libró (3:28)</li><li>Decretó que quien hablara blasfemia contra ese Dios <strong>sea descuartizado y su casa convertida en estercolero</strong> (3:29)</li><li>Reconoció: <strong>«no hay dios que pueda librar como éste»</strong> (3:29)</li><li>Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)</li></ul>"
+   "capa": "nucleo",
+   "h": "<ul class=\"tight\"><li>Bendijo al Dios de Sadrac, Mesac y Abed-nego, que <strong>envió su ángel</strong> y los libró (3:28)</li><li>Decretó que quien hablara blasfemia contra ese Dios <strong>sea descuartizado y su casa convertida en estercolero</strong> (3:29)</li><li>Reconoció: <strong>«no hay dios que pueda librar como éste»</strong> (3:29)</li><li>Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)</li></ul>",
+   "preg": {
+    "cap": "d3",
+    "t": "mc",
+    "q": "¿Qué decretó Nabucodonosor sobre quien blasfemara contra el Dios de los tres jóvenes? (Daniel 3:29)",
+    "o": [
+     "Prisión perpetua y la pérdida de todos sus cargos",
+     "Destierro del reino, él y toda su casa",
+     "Que sea descuartizado y su casa convertida en estercolero",
+     "Pérdida de todos sus bienes y de su casa"
+    ],
+    "a": 2
+   }
   },
   {
    "t": "🎶 Los instrumentos griegos y la fecha del capítulo",
+   "capa": "contexto",
    "h": "<div class=\"warn-box\">Entre los instrumentos que suenan para ordenar la adoración de la estatua (Daniel 3:5) hay uno de origen griego: la <strong>\"zampoña\"</strong> (un tipo de gaita). Durante mucho tiempo los críticos usaron este detalle como prueba de que Daniel 3 fue escrito siglos después, cuando la cultura griega ya se había extendido por el Cercano Oriente.</div><div class=\"highlight-box\">Pero la arqueología muestra que, ya en el <strong>siglo VI a.C.</strong> —el propio siglo de Nabucodonosor—, comerciantes, soldados y obreros griegos estaban activos en Babilonia, algunos empleados en proyectos de construcción del imperio. No hace falta esperar a Alejandro Magno para explicar un instrumento griego sonando en la corte babilónica: es lo que cabría esperar de un rey que reunía en su capital a gente de todo el mundo conocido.</div>"
   },
   {
    "t": "🙏 Dios puede librar, pero no siempre lo hace igual",
+   "capa": "contexto",
    "h": "<div class=\"highlight-box\"><strong>La frase \"y si no\" de Sadrac, Mesac y Abed-nego (3:17-18) es el corazón teológico del capítulo: confiaban en Dios sin condicionar su fidelidad al resultado.</strong> La Biblia registra los dos desenlaces posibles:</div><ul class=\"tight\"><li>Poco antes del episodio del horno, el profeta <strong>Urías</strong> predicó contra los crímenes del rey Joacim y Dios no impidió que el rey lo mandara matar: no hubo milagro.</li>\n    <li>Siglos después, en <strong>Getsemaní</strong>, el propio Jesús oró pidiendo que se apartara de él una prueba —\"si es posible\"— y terminó aceptando la cruz.</li></ul>\n    <p class=\"nota\">Dios puede librar, pero a veces decide que su pueblo dé testimonio en una derrota visible y no en una victoria evidente; la fidelidad de los tres jóvenes no dependía de saber, de antemano, cuál de las dos iba a tocarles.</p>"
   },
   {
    "t": "🎖️ Desmond Doss: \"y si no lo hace\" en el siglo XX",
+   "capa": "contexto",
    "h": "<div class=\"highlight-box\"><strong>El único soldado no combatiente condecorado con la Medalla de Honor del Congreso, la máxima distinción militar de Estados Unidos, vivió su propia versión del horno de fuego.</strong> Desmond Doss se alistó en 1942 pidiendo servir como camillero: su conciencia cristiana le impedía portar armas y guardaba el sábado como día de reposo. El 5 de mayo de 1945, en las barrancas de Maeda (Okinawa), su pelotón sufrió cerca de cien bajas en minutos; mientras los demás se replegaban, Doss se quedó solo, bajo fuego cruzado, y durante horas fue bajando a 75 heridos por el acantilado hasta ponerlos a salvo. Nunca fue alcanzado ese día. Días después resultó gravemente herido por una granada, y aun así ayudó primero a otro soldado antes de atenderse. Doss atribuyó su protección a la misma confianza que llevó a Sadrac, Mesac y Abed-nego al horno: Dios puede librar, y a veces libra de un modo tan concreto como ese.</div>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
+   "capa": "nucleo",
    "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>3:1</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.»</p><p data-leer><span class=\"vc-cab\"><strong>3:17</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.»</p><p data-leer><span class=\"vc-cab\"><strong>3:18</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
+   "capa": "nucleo",
    "h": "<p data-leer><span class=\"vc-cab\"><strong>3:25</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.»</p><p data-leer><span class=\"vc-cab\"><strong>3:27</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.»</p><p data-leer><span class=\"vc-cab\"><strong>3:28</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...»</p>"
   },
   {
@@ -3727,10 +3846,12 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículos clave (RV1995) · 1",
+   "capa": "nucleo",
    "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>6:4</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.»</p><p data-leer><span class=\"vc-cab\"><strong>6:10</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»</p><p data-leer><span class=\"vc-cab\"><strong>6:16</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«El Dios tuyo, a quien tú continuamente sirves, él te libre.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
+   "capa": "nucleo",
    "h": "<p data-leer><span class=\"vc-cab\"><strong>6:22</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.»</p><p data-leer><span class=\"vc-cab\"><strong>6:26</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.»</p><p data-leer><span class=\"vc-cab\"><strong>6:27</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.»</p>"
   },
   {
@@ -35126,6 +35247,66 @@ function listoDesdeLectura(){
 if(typeof document!=='undefined'&&document.addEventListener)
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lectCid)cierraLectura();});
 
+/* ───────── CAPA POR SECCIÓN (núcleo / apoyo / contexto) ─────────
+   MECANISMO
+   fuente/contenido.js le pone `capa` a cada sección que ya la tiene
+   clasificada (hoy solo Daniel 3) y build.js le agrega `preg` a las de capa
+   núcleo cuando encuentra una pregunta del banco que cae en su rango de
+   versículo. Aquí solo se pinta lo que ya llega armado: la franja de color
+   en `.sec h3` la pone el CSS con `data-capa`, y estas funciones agregan la
+   píldora, el filtro y la tarjeta de recordar.
+
+   El filtro es de VISTA, no de estado: no se guarda en ningún lado, así que
+   cambiar de capítulo o recargar la página siempre arranca en «Todo». */
+const CAPA_ETQ={nucleo:'Examen',apoyo:'Apoyo',contexto:'No entra'};
+
+function filtroCapas(){
+  return '<div class="capa-filtro" role="group" aria-label="Filtrar por capa">'+
+    '<button type="button" class="cf on" onclick="filtraCapa(this,\'\')">Todo</button>'+
+    '<button type="button" class="cf" onclick="filtraCapa(this,\'nucleo\')">Del examen</button></div>';
+}
+
+function filtraCapa(btn,modo){
+  const d=document.getElementById('detalle');
+  if(!d)return;
+  d.querySelectorAll('.capa-filtro .cf').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  d.querySelectorAll('.sec').forEach(function(s){
+    const c=s.getAttribute('data-capa')||'';
+    s.style.display=(!modo||c===modo)?'':'none';
+  });
+}
+
+/* La tarjeta de recordar no toca el examen ni las estadísticas: es su propio
+   botón con su propio comprobador, aislado de jgBien/jgMal y de S.hist. Sin
+   puntaje y sin castigo — el mismo criterio que ya usa «Compruébalo». */
+function recordarHTML(preg){
+  const rid='rec_'+Math.random().toString(36).slice(2,8);
+  const esTF=preg.t==='tf';
+  const ops=esTF
+    ?['Verdadero','Falso'].map((txt,i)=>
+      '<button type="button" class="btn peq" onclick="compruebaRec(\''+rid+'\','+(i===0)+','+preg.a+')">'+txt+'</button>').join('')
+    :(preg.o||[]).map((o,i)=>
+      '<button type="button" class="btn peq" onclick="compruebaRec(\''+rid+'\','+i+','+preg.a+')">'+esc(o)+'</button>').join('');
+  return '<div class="recordar" id="'+rid+'">'+
+    '<div class="rec-tit">Antes de pasar — recuerda</div>'+
+    '<div class="rec-preg">'+esc(preg.q)+'</div>'+
+    '<div class="rec-ops">'+ops+'</div>'+
+    '<div class="rec-comp" hidden></div></div>';
+}
+
+function compruebaRec(rid,elegido,correcta){
+  const c=document.getElementById(rid);
+  if(!c)return;
+  const bien=elegido===correcta;
+  c.querySelectorAll('.rec-ops button').forEach(b=>b.disabled=true);
+  const comp=c.querySelector('.rec-comp');
+  if(!comp)return;
+  comp.hidden=false;
+  comp.className='rec-comp '+(bien?'ok':'ko');
+  comp.textContent=bien?'✅ Correcto.':'❌ No era esa — sigue leyendo con calma.';
+}
+
 function verCap(id){
   paraVoz();
   ir('estudio');
@@ -35147,7 +35328,10 @@ function verCap(id){
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
-    secs.map(s=>'<div class="sec"><h3>'+s.t+'</h3>'+refsTocables(s.h,id)+'</div>').join('')+
+    (secs.some(s=>s.capa)?filtroCapas():'')+
+    secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'"><h3>'+s.t+
+      (s.capa?' <span class="pil '+{nucleo:'na',apoyo:'az',contexto:'ve'}[s.capa]+'">'+CAPA_ETQ[s.capa]+'</span>':'')+
+      '</h3>'+refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
     '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+

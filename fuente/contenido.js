@@ -391,8 +391,14 @@ d2: [
 ],
 
 /* ═══════════════ DANIEL 3 ═══════════════ */
+/* CAPA POR SECCIÓN — núcleo entra al examen y se memoriza, apoyo ayuda a
+   entender el núcleo pero no se exige literal, contexto es historia o
+   aplicación y el examen no la toca. Clasificación de las 17 secciones de
+   Daniel 3 (15 de aquí + las 2 de "Versículos clave" que build.js agrega
+   solas): 11 núcleo, 3 apoyo, 3 contexto. Por ahora solo Daniel 3 la tiene;
+   un capítulo sin `capa` en sus secciones simplemente no muestra el filtro. */
 d3: [
-  { t:'📚 En pocas palabras', h:
+  { t:'📚 En pocas palabras', capa:'apoyo', h:
     hi(`El rey manda hacer <strong>una estatua de oro enorme</strong> y ordena
     que todos se arrodillen cuando suene la música. El que no lo haga va a un
     horno de fuego.<br><br>
@@ -406,7 +412,7 @@ d3: [
     <em>La idea del capítulo: obedecer a Dios sin condiciones, aunque no se vea
     el milagro de antemano.</em>`) },
 
-  { t:'🗿 La estatua de oro', h:
+  { t:'🗿 La estatua de oro', capa:'nucleo', h:
     tbl(['Dato','Valor exacto'],[
       ['Altura','SESENTA codos (3:1)'],
       ['Anchura','SEIS codos (3:1)'],
@@ -414,7 +420,7 @@ d3: [
       ['Lugar','Campo de DURA, en la provincia de Babilonia (3:1)'],
     ]) },
 
-  { t:'👔 Los ocho cargos que convocó el rey (3:2-3)', h:
+  { t:'👔 Los ocho cargos que convocó el rey (3:2-3)', capa:'nucleo', h:
     hi(`<strong>Sátrapas, magistrados, capitanes, oidores, tesoreros,
     consejeros, jueces</strong> y todos los gobernadores de las
     provincias.<br><br>
@@ -426,7 +432,7 @@ d3: [
     (magos, astrólogos, encantadores, caldeos). Aquí son
     <strong>funcionarios de gobierno</strong>, no adivinos.`) },
 
-  { t:'📢 La orden y la amenaza (3:4-6)', h:
+  { t:'📢 La orden y la amenaza (3:4-6)', capa:'nucleo', h:
     li([`Quién lo anuncia: <strong>el pregonero</strong>, en alta voz (3:4).`,
         `A quiénes: <strong>«pueblos, naciones y lenguas»</strong> (3:4).`,
         `Qué hay que hacer: <strong>postrarse y adorar</strong> al oír la música (3:5).`,
@@ -437,7 +443,7 @@ d3: [
     impopular: se quedaron de pie cuando <strong>todo el mundo se
     arrodilló</strong>.`) },
 
-  { t:'🕵️ Quién los acusó, y de qué (3:8-12)', h:
+  { t:'🕵️ Quién los acusó, y de qué (3:8-12)', capa:'apoyo', h:
     li([`Fueron <strong>«algunos hombres caldeos»</strong> los que
          «acusaron maliciosamente a los judíos» (3:8).`,
         `Primero le recordaron al rey su propia ley (3:10-11), para que no
@@ -451,7 +457,7 @@ d3: [
     exactamente <strong>qué cargo tenían y quién los había puesto ahí</strong>.
     El ascenso de Daniel 2 fue lo que los volvió un blanco.`) },
 
-  { t:'🗣️ El desafío del rey, y la respuesta corta (3:14-16)', h:
+  { t:'🗣️ El desafío del rey, y la respuesta corta (3:14-16)', capa:'nucleo', h:
     li([`El rey pregunta si es verdad, y les <strong>ofrece una segunda
          oportunidad</strong>: si adoran al oír la música, no pasa nada (3:15).`,
         `Cierra con un reto directo: <strong>«¿y qué dios será el que os libre
@@ -462,7 +468,7 @@ d3: [
     estaban decidiendo en ese momento</strong>: la decisión ya estaba tomada,
     y no había nada que deliberar.`) },
 
-  { t:'🎵 Los seis instrumentos — orden exacto', h:
+  { t:'🎵 Los seis instrumentos — orden exacto', capa:'nucleo', h:
     wa(`<strong>Daniel 3:5 en la RV1995</strong> (la lista se repite en 3:7, 3:10 y 3:15):<br><br>
     1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;
     4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>
@@ -473,7 +479,7 @@ d3: [
     <strong>tamboril</strong> en ese lugar.<br>
     Si la pregunta dice <em>según la RV1995</em>, la respuesta es <u>cítara</u>.`) },
 
-  { t:'🔥 El horno de fuego', h:
+  { t:'🔥 El horno de fuego', capa:'apoyo', h:
     hi(`• El rostro de Nabucodonosor se demudó contra ellos (3:19)<br>
     • Mandó calentar el horno <strong>SIETE veces más</strong> de lo acostumbrado (3:19)<br>
     • Fueron atados con <strong>sus mantos, sus calzados, sus turbantes y sus vestidos</strong> (3:21)<br>
@@ -482,7 +488,7 @@ d3: [
     • El aspecto del cuarto: <strong>«semejante a un hijo de los dioses»</strong> (3:25, RV1995)<br>
     Así lo describió Nabucodonosor, que era pagano. <strong>P&amp;R cap. 41 aclara que era el Hijo de Dios mismo.</strong>`) },
 
-  { t:'🔢 Lo que pasó dentro del horno (3:19-25)', h:
+  { t:'🔢 Lo que pasó dentro del horno (3:19-25)', capa:'nucleo', h:
     tbl(['Dato','Texto RV1995'],[
       ['Cuánto lo calentaron','<strong>Siete veces más</strong> de lo acostumbrado (3:19)'],
       ['Quién los ató','Hombres <strong>muy vigorosos</strong> del ejército (3:20)'],
@@ -500,7 +506,7 @@ d3: [
     del horno, cambió «el aspecto de su rostro»</strong> (3:19). Y el que se
     espantó y se levantó apresuradamente fue él (3:24).`) },
 
-  { t:'✨ El milagro verificado (3:27)', h:
+  { t:'✨ El milagro verificado (3:27)', capa:'nucleo', h:
     vs(`«...cómo <strong>el fuego no había tenido poder alguno</strong> sobre sus cuerpos
     y ni aun el cabello de sus cabezas se había quemado;
     sus ropas, <strong>intactas</strong>,
@@ -508,27 +514,27 @@ d3: [
     hi(`Se juntaron los sátrapas, los gobernadores, los capitanes y los consejeros del rey
     <u>para verificarlo con sus propios ojos</u> (3:27).`) },
 
-  { t:'📜 La respuesta de los tres jóvenes (3:17-18)', h:
+  { t:'📜 La respuesta de los tres jóvenes (3:17-18)', capa:'nucleo', h:
     vs(`«Nuestro Dios, a quien servimos, <strong>puede librarnos</strong> del horno de fuego ardiente;
     y de tus manos, rey, nos librará. <strong>Y si no</strong>, has de saber, oh rey, que no serviremos
     a tus dioses ni tampoco adoraremos la estatua que has levantado.»`) },
 
-  { t:'👑 El decreto de Nabucodonosor (3:28-30)', h:
+  { t:'👑 El decreto de Nabucodonosor (3:28-30)', capa:'nucleo', h:
     li(['Bendijo al Dios de Sadrac, Mesac y Abed-nego, que <strong>envió su ángel</strong> y los libró (3:28)',
         'Decretó que quien hablara blasfemia contra ese Dios <strong>sea descuartizado y su casa convertida en estercolero</strong> (3:29)',
         'Reconoció: <strong>«no hay dios que pueda librar como éste»</strong> (3:29)',
         'Los <strong>engrandeció</strong> en la provincia de Babilonia (3:30)']) },
 
-  { t: '🎶 Los instrumentos griegos y la fecha del capítulo',
+  { t: '🎶 Los instrumentos griegos y la fecha del capítulo', capa:'contexto',
     h: wa(`Entre los instrumentos que suenan para ordenar la adoración de la estatua (Daniel 3:5) hay uno de origen griego: la <strong>"zampoña"</strong> (un tipo de gaita). Durante mucho tiempo los críticos usaron este detalle como prueba de que Daniel 3 fue escrito siglos después, cuando la cultura griega ya se había extendido por el Cercano Oriente.`) +
     hi(`Pero la arqueología muestra que, ya en el <strong>siglo VI a.C.</strong> —el propio siglo de Nabucodonosor—, comerciantes, soldados y obreros griegos estaban activos en Babilonia, algunos empleados en proyectos de construcción del imperio. No hace falta esperar a Alejandro Magno para explicar un instrumento griego sonando en la corte babilónica: es lo que cabría esperar de un rey que reunía en su capital a gente de todo el mundo conocido.`) },
 
-  { t: '🙏 Dios puede librar, pero no siempre lo hace igual',
+  { t: '🙏 Dios puede librar, pero no siempre lo hace igual', capa:'contexto',
     h: hi(`<strong>La frase "y si no" de Sadrac, Mesac y Abed-nego (3:17-18) es el corazón teológico del capítulo: confiaban en Dios sin condicionar su fidelidad al resultado.</strong> La Biblia registra los dos desenlaces posibles:`) +
     `<ul class="tight"><li>Poco antes del episodio del horno, el profeta <strong>Urías</strong> predicó contra los crímenes del rey Joacim y Dios no impidió que el rey lo mandara matar: no hubo milagro.</li>
     <li>Siglos después, en <strong>Getsemaní</strong>, el propio Jesús oró pidiendo que se apartara de él una prueba —"si es posible"— y terminó aceptando la cruz.</li></ul>
     <p class="nota">Dios puede librar, pero a veces decide que su pueblo dé testimonio en una derrota visible y no en una victoria evidente; la fidelidad de los tres jóvenes no dependía de saber, de antemano, cuál de las dos iba a tocarles.</p>` },
-  { t: '🎖️ Desmond Doss: "y si no lo hace" en el siglo XX',
+  { t: '🎖️ Desmond Doss: "y si no lo hace" en el siglo XX', capa:'contexto',
     h: hi(`<strong>El único soldado no combatiente condecorado con la Medalla de Honor del Congreso, la máxima distinción militar de Estados Unidos, vivió su propia versión del horno de fuego.</strong> Desmond Doss se alistó en 1942 pidiendo servir como camillero: su conciencia cristiana le impedía portar armas y guardaba el sábado como día de reposo. El 5 de mayo de 1945, en las barrancas de Maeda (Okinawa), su pelotón sufrió cerca de cien bajas en minutos; mientras los demás se replegaban, Doss se quedó solo, bajo fuego cruzado, y durante horas fue bajando a 75 heridos por el acantilado hasta ponerlos a salvo. Nunca fue alcanzado ese día. Días después resultó gravemente herido por una granada, y aun así ayudó primero a otro soldado antes de atenderse. Doss atribuyó su protección a la misma confianza que llevó a Sadrac, Mesac y Abed-nego al horno: Dios puede librar, y a veces libra de un modo tan concreto como ese.`) },
 ],
 
@@ -1671,6 +1677,10 @@ for (const cap of Object.keys(VERS_CLAVE)) {
   bloques.forEach((b, i) => {
     CONTENIDO[cap].push({
       t: '📖 Versículos clave (RV1995)' + (bloques.length > 1 ? ' · ' + (i + 1) : ''),
+      /* Un versículo clave es, por definición, lo que el examen pide
+         literal — capa núcleo en cualquier capítulo que la use, no solo en
+         Daniel 3. */
+      capa: 'nucleo',
       h: (i === 0
           ? '<div class="highlight-box"><strong>Estos son los que el examen pide completar.</strong> ' +
             'Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.' +

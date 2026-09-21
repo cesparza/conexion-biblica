@@ -39,6 +39,45 @@ const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
 const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
 
+/* ─────────── LA PREGUNTA DE «RECORDAR», DERIVADA DEL VERSÍCULO ───────────
+   MECANISMO
+   Una sección de capa núcleo (fuente/contenido.js) cuyo título trae un rango
+   de versículo entre paréntesis, como "(3:19-25)", se empareja con la primera
+   pregunta de selección o de verdadero/falso del mismo capítulo que cite un
+   versículo dentro de ese rango. Misma idea que ya usa pestanaComprueba más
+   abajo: derivar del dato que ya existe, no escribir una copia que se
+   desincroniza el día que el banco cambie.
+
+   Las secciones sin rango en el título ("Los seis instrumentos — orden
+   exacto"), o sin ninguna pregunta que caiga en ese rango, se quedan sin
+   `preg`. Eso no es un hueco por llenar a mano: Estudiar simplemente no le
+   agrega la tarjeta de recordar a esa sección. */
+function rangoDeTitulo(t) {
+  const m = /\((\d+):(\d+)(?:-(\d+))?\)/.exec(t || '');
+  if (!m) return null;
+  return { cap: Number(m[1]), ini: Number(m[2]), fin: Number(m[3] || m[2]) };
+}
+function versiculoDePregunta(q) {
+  const m = /Daniel (\d+):(\d+)/.exec(q.q || q.ins || '');
+  return m ? { cap: Number(m[1]), v: Number(m[2]) } : null;
+}
+function preguntaParaSeccion(sec, capId) {
+  const r = rangoDeTitulo(sec.t);
+  if (!r) return null;
+  return BANCO_ALL.find(q => {
+    if (q.cap !== capId || (q.t !== 'mc' && q.t !== 'tf')) return false;
+    const v = versiculoDePregunta(q);
+    return v && v.cap === r.cap && v.v >= r.ini && v.v <= r.fin;
+  }) || null;
+}
+for (const capId of Object.keys(CONTENIDO_ALL)) {
+  CONTENIDO_ALL[capId] = CONTENIDO_ALL[capId].map(sec => {
+    if (sec.capa !== 'nucleo') return sec;
+    const preg = preguntaParaSeccion(sec, capId);
+    return preg ? { ...sec, preg } : sec;
+  });
+}
+
 /* ─────────── EL RECORRIDO VERSICULO POR VERSICULO ───────────
    El material de estudio esta organizado por TEMAS, que es como se entiende.
    El problema es que asi nadie puede comprobar que no se salto nada: la
