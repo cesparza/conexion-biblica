@@ -1563,6 +1563,12 @@ function verCap(id){
   limpiaRetiradasDe(d);
   divideVista(d,id);
   avanza(id,60);
+  /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
+     creencias en una rejilla de cuatro columnas, el detalle nace siete filas
+     más abajo, fuera de lo que se ve, y tocar una tarjeta parecía no hacer
+     nada. Mismo defecto que tuvo «abrir evaluación» (v99), mismo arreglo:
+     llevaA() hace scroll y marca dónde aterrizar. */
+  llevaA('detalle');
 }
 
 /* ───────── LO RETIRADO TAMPOCO SALE EN «COMPRUEBALO» ─────────

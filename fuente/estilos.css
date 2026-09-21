@@ -1409,13 +1409,17 @@ summary:focus:not(:focus-visible){outline:none}
   .nav-yo .yo-ini{display:flex;width:34px;height:34px;font-size:1rem;
     border:1px solid rgba(255,255,255,.18)}
 
-  /* El globo sale a la derecha del riel, centrado con la inicial. `nowrap` y
-     `width:max-content` para que no se parta en una columna de 92 px, y
-     `pointer-events:none` para que no se coma el clic del botón. */
+  /* El globo sale a la derecha del riel, centrado con la inicial.
+     `width:max-content` ya evita que se parta en la columna de 92 px del riel
+     (mide su propio contenido, no el ancho del padre). `nowrap` sobraba y
+     contradecía a `max-width:230px`: con un nombre largo, `nowrap` prohibía
+     el salto de línea que el máximo necesitaba para no desbordar, y el texto
+     se salía de los 230px en vez de envolver. `pointer-events:none` para que
+     no se coma el clic del botón. */
   .nav-yo .yo-tip{
     display:block;position:absolute;left:calc(100% + 10px);top:50%;
     transform:translateY(-50%);
-    width:max-content;max-width:230px;white-space:nowrap;
+    width:max-content;max-width:230px;
     background:#12213c;color:var(--v-sobre,#fff);border:1px solid rgba(255,255,255,.14);
     border-radius:10px;padding:.45rem .6rem;
     font-size:.72rem;font-weight:600;line-height:1.3;text-align:left;
