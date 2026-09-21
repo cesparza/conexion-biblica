@@ -1538,8 +1538,11 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
    del libro y no de la cartilla. */
 {
   const F=montar(RET);
-  ok(F.esComplementaria({cap:'pr39'}),'Profetas y Reyes es complementario, por el id');
-  ok(!F.esComplementaria({cap:'d1'}),'Daniel no');
+  /* P&R DEJO DE SER COMPLEMENTARIA (2026-09-21). El reglamento de la
+     Asociacion manda, para 7 a 9 y para padres: examen de Daniel 1-3 y 6, y
+     leer P&R 39, 41 y 44. Es material del reglamento, no un extra. */
+  ok(!F.esComplementaria({cap:'pr39'}),'Profetas y Reyes es del reglamento, no un complemento');
+  ok(!F.esComplementaria({cap:'d1'}),'Daniel tampoco, claro');
   ok(F.esComplementaria({cap:'cr01',f:'c'}),'Una creencia marcada por el generador si');
   ok(!F.esComplementaria({cap:'cr01'}),'Y una sin marca cuenta como de la cartilla');
   /* SIN MARCA = OFICIAL es la falla segura: una pregunta nueva que nadie
@@ -1548,8 +1551,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   F.ponCat('av'); F.ponNivel(3); F.ponAlcance('todo');
   F.ponFuente(false); const todoAv=F.poolNivel().length;
   F.ponFuente(true);  const ofAv=F.poolNivel().length;
-  ok(ofAv<todoAv,'Aventureros: la fuente del reglamento deja '+ofAv+' de '+todoAv);
-  ok(F.poolNivel().every(q=>!F.esComplementaria(q)),'Y no se cuela ni una de Profetas y Reyes');
+  ok(ofAv===todoAv,'Aventureros: el interruptor ya no le quita nada ('+ofAv+' de '+todoAv+')');
+  ok(F.bancoDe().some(q=>String(q.cap).slice(0,2)==='pr'),'Porque P&R sigue en su examen');
 
   F.ponCat('ec1');
   const ofEc=F.poolNivel().length;

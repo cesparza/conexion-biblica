@@ -2544,7 +2544,16 @@ const falladasDe=()=>bancoDe().filter(q=>(S.fq[claveQ(q)]||{}).m>0);
    SIN MARCA = OFICIAL, y es la falla segura. Una pregunta nueva de Daniel que
    nadie marque cuenta como oficial, que es lo que es. Al reves, una pregunta
    nueva desapareceria del examen sin que nadie lo note. */
-const esComplementaria=q=>q.f==='c'||String(q.cap).slice(0,2)==='pr';
+/* COMPLEMENTARIA = la que NO sale de la fuente que el reglamento nombra.
+   Profetas y Reyes estuvo aqui por el id del capitulo y estaba mal: el
+   reglamento de la Asociacion manda leer P&R 39, 41 y 44 junto con Daniel,
+   asi que es material del reglamento y entra al examen. Camilo lo confirmo
+   contra las reglas del campamento (2026-09-21). Queda solo la marca del
+   generador, `f:'c'`, que distingue la cartilla de las creencias del libro:
+   ahi la separacion si existe, y con ella el interruptor sigue teniendo
+   sentido en «En esto creemos» y desaparece solo en Conexion Biblica, porque
+   pintaMenuEx() ya solo lo ofrece donde cambia algo. */
+const esComplementaria=q=>q.f==='c';
 /* Lo escoge el usuario y vive en el aparato, como `alcance` y `nivel`. */
 let soloFuente=false;
 
@@ -4370,13 +4379,13 @@ async function pintaPanel(){
          siempre la opción 0: con «1 · básica» escogido, el panel afirmaba algo
          que no era cierto de lo que estaba puesto. */
       '<p class="nota" id="pan-nota-nv">'+NOTA_NIVEL[0]+'</p>'+
-      /* El reglamento nombra UNA fuente por actividad. El material de estudio va
-         mas alla a proposito; el examen no tiene por que. */
+      /* Solo «En esto creemos» tiene dos fuentes de verdad: la cartilla y el
+         libro de las 28. En Conexion Biblica, P&R es del reglamento. */
       '<label class="ex-sw" style="margin:.2rem 0 .1rem">'+
         '<input type="checkbox" id="pan-fuente" onchange="pintaAvisoCats();pintaFrase()">'+
         '<span>Solo la fuente del reglamento<br>'+
-        '<small>Conexión Bíblica: solo Daniel, sin Profetas y Reyes. '+
-        'Creencias: solo la cartilla. La matutina no cambia.</small></span>'+
+        '<small>Solo aplica a «En esto creemos»: deja fuera lo que sale del '+
+        'libro de las 28 y no de la cartilla.</small></span>'+
       '</label>'+
     '</div>'+
 
@@ -4707,7 +4716,7 @@ function pintaAvisoCats(){
 /* Que fuente nombra el reglamento para cada actividad, en palabras. Se dice
    cual es, no «la oficial»: el punto del interruptor es saber que entra. */
 const FUENTE_TXT={
-  cb:'Solo el libro de Daniel. Deja fuera Profetas y Reyes.',
+
   dm:'Solo el cuadernillo de octubre.',
   ec:'Solo la cartilla «En esto creemos». Deja fuera lo que sale del libro de las 28 creencias.'
 };
