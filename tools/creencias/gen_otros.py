@@ -12,7 +12,7 @@ import refs
 # no dice nada de lo que de verdad pasa. Tampoco corria en el Mac, donde la
 # carpeta vive en otro sitio.
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-FILES = os.path.normpath(os.path.join(RAIZ, '..', 'files'))
+FILES = os.path.normpath(os.path.join(RAIZ, '..', '..', 'files'))
 SALIDA = os.path.join(RAIZ, 'fuente', 'biblia-otros.js')
 
 vers, meta, nombres = {}, {}, {}
@@ -32,6 +32,12 @@ for ruta in sorted(glob.glob(os.path.join(FILES, 'rv1909-*.txt'))):
     vers[cid] = {str(k): d[k] for k in sorted(d)}
     meta[cid] = {'libro': refs.NOMBRE[slug], 'cap': cap, 'version': 'RV1909'}
     nombres[slug] = refs.NOMBRE[slug]
+
+# Sin insumos no se escribe nada. Sin esta guarda el generador dejaba un
+# biblia-otros.js vacio y salia con codigo 0: borraba 107 versiculos en
+# silencio, que es peor que reventar.
+if not vers:
+    sys.exit('No encontre ningun rv1909-*.txt en ' + FILES + '. No escribo nada.')
 
 def dump(o):
     # indentacion 1: ninguna linea del index.html puede pasar de 2.000 caracteres

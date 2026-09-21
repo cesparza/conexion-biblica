@@ -572,6 +572,13 @@ function borraAlumno(){
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+/* El frente y el reverso de una tarjeta traen negritas del generador. En el
+   mazo se pintan; en la lista del revisor no, porque esc() las mostraria como
+   texto ("Nombre babilonico de <b>Daniel</b>"). Se quitan antes de escapar,
+   y el buscador filtra sobre lo mismo que se ve, o "de Daniel" no encontraria
+   una tarjeta partida por una etiqueta en la mitad. */
+const sinEtiquetas=s=>String(s??'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
+
 /* Lleva el ojo adonde pasó algo. Abrir un examen o entrar con el código
    repinta la pantalla, pero un repintado silencioso en un punto que ya no
    coincide con el scroll de quien lo pidió SE VE como que no pasó nada: la
@@ -5474,7 +5481,7 @@ function revFilasT(){
   if(revF.est)b=b.filter(t=>(retiradas.has(claveT(t))?'r':'v')===revF.est);
   if(revF.q){
     const x=revF.q.toLowerCase();
-    b=b.filter(t=>(t.f+' '+t.r).toLowerCase().indexOf(x)>=0);
+    b=b.filter(t=>sinEtiquetas(t.f+' '+t.r).toLowerCase().indexOf(x)>=0);
   }
   return b;
 }
@@ -5589,8 +5596,8 @@ function revFilaT(t){
   const cap=(buscaItem(t.cap)||{}).label||t.cap;
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
     '<div class="rb-etq"><span>'+esc(cap)+'</span><span>Tarjeta</span></div>'+
-    '<div class="rb-q">'+esc(t.f)+'</div>'+
-    '<div class="rb-a">'+esc(t.r)+'</div>'+
+    '<div class="rb-q">'+esc(sinEtiquetas(t.f))+'</div>'+
+    '<div class="rb-a">'+esc(sinEtiquetas(t.r))+'</div>'+
     (ret?'<div class="rb-porque">Retirada'+
       (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
       (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>':'')+

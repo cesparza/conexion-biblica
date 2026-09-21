@@ -1115,6 +1115,7 @@ const OTRAS_VERS = {
   "21": "Entonces les dijo Jesús otra vez: Paz á vosotros: como me envió el Padre, así también yo os envío."
  },
  "juan-3": {
+  "4": "Dícele Nicodemo: ¿Cómo puede el hombre nacer siendo viejo? ¿puede entrar otra vez en el vientre de su madre, y nacer?",
   "16": "Porque de tal manera amó Dios al mundo, que ha dado á su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna."
  },
  "juan-5": {

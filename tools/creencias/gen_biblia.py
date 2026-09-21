@@ -23,7 +23,7 @@ import datos, refs
 # no dice nada de lo que de verdad pasa. Tampoco corria en el Mac, donde la
 # carpeta vive en otro sitio.
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-FILES = os.path.normpath(os.path.join(RAIZ, '..', 'files'))
+FILES = os.path.normpath(os.path.join(RAIZ, '..', '..', 'files'))
 RAW = os.path.join(FILES, '_biblia-libre-raw.txt')
 
 def carga_biblia():

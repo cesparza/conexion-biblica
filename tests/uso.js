@@ -47,6 +47,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         ponRetiradas, estaRetirada, retiradas:()=>retiradas, retLee,
         revFilas, revPon, revLimpia, revF:()=>revF, revRespuesta, revTexto,
         revFilasT, revQuePon, revCapsT, tarjetasDe, TARJETAS, claveT,
+        revFilaT, sinEtiquetas,
         limpiaRetiradasDe, textosRetirados,
         pintaRevisor, revCapsDe, aplicaMarcas, REV_CUENTA, haceEvaluacion,
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
@@ -1926,6 +1927,22 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   T.ponRetiradas([]);
   ok(!T.textosRetirados().size,'Y sin retiradas, esa lista queda vacia');
   ok(T.tarjetasDe().length===antes,'Devolverla la vuelve a poner en el mazo');
+
+  /* El frente de 27 tarjetas trae negritas del generador. El revisor las
+     escapaba, asi que en pantalla salia la etiqueta escrita. */
+  const conB=T.TARJETAS.find(x=>/<b>/i.test(x.f));
+  ok(!!conB,'Hay tarjetas con negrita en el frente, que es de donde nace esto');
+  ok(T.sinEtiquetas('Nombre babilonico de <b>Daniel</b>')==='Nombre babilonico de Daniel',
+    'sinEtiquetas deja el texto y bota la etiqueta');
+  const fila=T.revFilaT(conB);
+  ok(fila.indexOf('&lt;b&gt;')<0,'La fila del revisor no muestra la etiqueta escrita');
+  ok(fila.indexOf('<b>')<0,'Y tampoco la inyecta como HTML');
+  ok(fila.indexOf(T.sinEtiquetas(conB.f))>=0,'Pero si muestra el texto de la tarjeta');
+  /* Y el buscador tiene que ver lo mismo que se ve, no el crudo. */
+  T.revQuePon('tarjetas');
+  T.revPon('q', T.sinEtiquetas(conB.f).slice(0,24).toLowerCase());
+  ok(T.revFilasT().some(x=>x===conB),'El buscador la encuentra aunque la etiqueta parta la frase');
+  T.revLimpia();
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
