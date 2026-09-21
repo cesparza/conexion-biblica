@@ -48,6 +48,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         revFilas, revPon, revLimpia, revF:()=>revF, revRespuesta, revTexto,
         revFilasT, revQuePon, revCapsT, tarjetasDe, TARJETAS, claveT,
         revFilaT, sinEtiquetas,
+        revFila, revAbreCaja, revCierraCaja,
         limpiaRetiradasDe, textosRetirados,
         pintaRevisor, revCapsDe, aplicaMarcas, REV_CUENTA, haceEvaluacion,
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
@@ -1943,6 +1944,25 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   T.revPon('q', T.sinEtiquetas(conB.f).slice(0,24).toLowerCase());
   ok(T.revFilasT().some(x=>x===conB),'El buscador la encuentra aunque la etiqueta parta la frase');
   T.revLimpia();
+
+  /* LA FILA SE ESCANEA, no se lee de a una: la accion va AL LADO del texto.
+     Con el boton en su propio renglon, cada fila gastaba 44 px mas su margen,
+     y en un celular de 390 px solo cabian cuatro filas de 528. */
+  const f0=T.revFilaT(conB);
+  ok(f0.indexOf('rb-cuerpo')>=0,'La fila trae el cuerpo con el texto y la accion juntos');
+  ok(f0.indexOf('rb-acc')<0,'Y ya no gasta un renglon propio en el boton');
+  ok(f0.indexOf('rb-x')>=0,'El boton de retirar existe, con su propia clase');
+  ok(f0.indexOf('>Tarjeta<')<0,'En la vista de tarjetas sobra el chip «Tarjeta»: las 528 lo son');
+  /* La de preguntas conserva sus cuatro chips, que ahi si distinguen. */
+  const fq=T.revFila(T.bancoDe()[0]);
+  ok(fq.indexOf('rb-cuerpo')>=0,'La fila de preguntas usa el mismo cuerpo');
+  ok(fq.indexOf('rb-etq')>=0,'Y conserva sus etiquetas, que ahi si distinguen');
+  /* Con la caja del motivo abierta, la accion cede el sitio: ahi si se escribe. */
+  T.revAbreCaja(T.claveT(conB));
+  const f1=T.revFilaT(conB);
+  ok(f1.indexOf('rb-caja')>=0,'Con la caja abierta, la caja se pinta');
+  ok(f1.indexOf('rb-x')<0,'Y el boton de retirar no compite con ella');
+  T.revCierraCaja();
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

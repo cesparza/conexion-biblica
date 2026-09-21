@@ -1711,6 +1711,26 @@ ok(!/class="rev-(q|a)[" ]/.test(APP.slice(APP.indexOf('function revFila(q)'),
   APP.indexOf('function revCajaMotivo'))),
   'El revisor usa su propio prefijo de clases (rb-), no el de Compruebalo');
 
+/* ── ABRIR UNA EVALUACION TIENE QUE VERSE ──
+   Aterrizaba en `cb-panel`, el contenedor entero del panel, que empieza varias
+   pantallas arriba: el scroll se iba al principio y el pulso de .destaca
+   quedaba fuera de la vista. Desde el celular parecia que no habia pasado nada. */
+ok(APP.indexOf("llevaA(d&&d.id?'ev-'+d.id:'cb-panel')")>=0,
+  'Al abrir, el scroll aterriza en la evaluacion recien creada');
+ok(APP.indexOf('id="ev-')>=0&&APP.indexOf('esc(ev.id)')>=0,
+  'Y cada evaluacion en curso trae su id, o no habria a donde aterrizar');
+ok(APP.indexOf('panReciente')>=0&&APP.indexOf('Abierta ahora')>=0,
+  'La recien abierta se marca: el aterrizaje solo no dice que fue lo que paso');
+ok(CSS.indexOf('.pan-nueva')>=0,'Y la marca tiene estilo propio');
+
+/* ── LA LISTA DEL REVISOR SE ESCANEA ──
+   Cuatro filas por pantalla a 390 px para revisar 528 tarjetas son 132
+   pantallazos. La accion dejo de gastar un renglon entero por fila. */
+ok(APP.indexOf('function rbCuerpo')>=0,'Las dos vistas del revisor comparten el cuerpo de la fila');
+ok(CSS.indexOf('.rb-cuerpo')>=0&&CSS.indexOf('.rb-txt')>=0,'Con su estilo de texto y accion en linea');
+ok(/\.rb-x\{[^}]*min-height:44px/.test(CSS),'El boton compacto sigue midiendo 44 px de alto');
+ok(/\.rb-txt\{[^}]*min-width:0/.test(CSS),'Y el texto puede encogerse, o un enunciado largo estira la fila');
+
 /* ── PASO 2: LO QUE NO PUEDE VOLVER ──
    El desplegable de 85 opciones se fue; lo que queda tiene que seguir
    cumpliendo lo mismo que el cumplia. Estas pruebas son el recordatorio de por

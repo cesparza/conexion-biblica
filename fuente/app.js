@@ -5072,6 +5072,7 @@ async function abreEvaluacion(){
        (cargaResultados()), así que no hace falta adivinar aquí si el POST de
        arriba funcionó — el repintado de abajo lo confirma solo, sin depender
        de que un segundo viaje de red (srvRefresca()) llegue a tiempo. */
+    panReciente=(d&&d.id)||'';
     if(d&&d.cerradas&&d.cerradas.length){
       /* Avisar CUÁL se reemplazó: con varias evaluaciones corriendo a la vez,
          un clic sin darse cuenta del solape podría cerrar la de otro grupo
@@ -5080,12 +5081,16 @@ async function abreEvaluacion(){
         d.cerradas.map(function(x){return x.titulo;}).join(', '));
     }
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
-    llevaA('cb-panel');
+    /* En la evaluacion recien abierta, no en el contenedor: cb-panel empieza
+       varias pantallas arriba, asi que llevar ahi el scroll se siente como
+       volver al principio, y el pulso de .destaca queda fuera de la vista. */
+    llevaA(d&&d.id?'ev-'+d.id:'cb-panel');
   }catch(e){alert(e.message||'No se pudo conectar');}
 }
 
 async function cierraEvaluacion(id){
   if(!id)return;
+  if(panReciente===id)panReciente='';
   try{
     await srvFetch('/panel/evaluacion/cerrar',{method:'POST',body:JSON.stringify({id:id})});
     await srvRefresca();await cargaResultados();pintaExInicio();pintaInicio();
@@ -5204,6 +5209,10 @@ async function verRevision(id){
    pintaAvisoCats() para avisar, ANTES de que el director confirme abrir, cuál
    evaluación en curso se cerraría por compartir categoría con la nueva. */
 let panAbiertas=[];
+/* La que se acaba de abrir desde ESTE celular. Solo sirve para señalarla al
+   aterrizar: abrir una evaluacion repintaba el panel entero y subia al tope,
+   asi que la unica prueba de que habia funcionado era ponerse a buscarla. */
+let panReciente='';
 
 /* Lo que el director mira mientras corre cada evaluación. Quién FALTA es el
    dato que sirve: con eso va y la busca, en vez de adivinar si ya terminaron.
@@ -5223,7 +5232,10 @@ async function cargaResultados(){
         const para=(ev.dirigida&&ev.dirigida.length)
           ? ev.dirigida.map(esc).join(', ')+' <small>(solo estas personas)</small>'
           : esc(nombresCats(ev.categorias));
-        return '<div class="pan-paso"><div class="pan-paso-t">Evaluación en curso: '+esc(ev.titulo)+'</div>'+
+        const nueva=ev.id===panReciente;
+        return '<div class="pan-paso" id="ev-'+esc(ev.id)+'">'+
+          (nueva?'<div class="pan-nueva">Abierta ahora</div>':'')+
+          '<div class="pan-paso-t">Evaluación en curso: '+esc(ev.titulo)+'</div>'+
           '<p class="nota">Para: <strong>'+para+'</strong></p>'+
           '<p class="nota">Material: '+esc(textoAlcancePanel(ev.alcance))+'</p>'+
           cuerpoResultado(ev)+
@@ -5574,16 +5586,7 @@ function revFila(q){
     esComplementaria(q)?'Complementaria':'Del reglamento'];
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
     '<div class="rb-etq">'+etq.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>'+
-    '<div class="rb-q">'+esc(revTexto(q))+'</div>'+
-    '<div class="rb-a">'+esc(revRespuesta(q))+'</div>'+
-    (ret?'<div class="rb-porque">Retirada'+
-      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
-      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>':'')+
-    (revCaja===k?revCajaMotivo(k):
-      '<div class="rb-acc">'+(ret
-        ?'<button class="btn gho" onclick="revDevuelve(\''+k+'\')">Devolver al banco</button>'
-        :'<button class="btn gho" onclick="revAbreCaja(\''+k+'\')">Retirar</button>')+
-      '</div>')+
+    rbCuerpo(k,ret,revTexto(q),revRespuesta(q),r,'banco')+
     '</div>';
 }
 
@@ -5595,18 +5598,38 @@ function revFilaT(t){
   const r=revMapa[k];
   const cap=(buscaItem(t.cap)||{}).label||t.cap;
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
-    '<div class="rb-etq"><span>'+esc(cap)+'</span><span>Tarjeta</span></div>'+
-    '<div class="rb-q">'+esc(sinEtiquetas(t.f))+'</div>'+
-    '<div class="rb-a">'+esc(sinEtiquetas(t.r))+'</div>'+
-    (ret?'<div class="rb-porque">Retirada'+
-      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
-      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>':'')+
-    (revCaja===k?revCajaMotivo(k):
-      '<div class="rb-acc">'+(ret
-        ?'<button class="btn gho" onclick="revDevuelve(\''+k+'\')">Devolver al mazo</button>'
-        :'<button class="btn gho" onclick="revAbreCaja(\''+k+'\')">Retirar</button>')+
-      '</div>')+
+    '<div class="rb-etq"><span>'+esc(cap)+'</span></div>'+
+    rbCuerpo(k,ret,sinEtiquetas(t.f),sinEtiquetas(t.r),r,'mazo')+
     '</div>';
+}
+
+/* EL CUERPO DE UNA FILA, compartido por preguntas y tarjetas.
+   MECANISMO: antes la accion vivia en su propio renglon debajo del texto, asi
+   que cada fila gastaba 44 px mas su margen en un boton que se usa en una de
+   cada cien. Aqui va AL LADO del texto, que ya mide dos renglones o mas, y no
+   suma altura. Esta pantalla se usa para escanear cientos de filas, no para
+   leer una: lo que se gana en filas por pantalla es lo que se gana en revision.
+   La caja del motivo sigue yendo debajo y a lo ancho, porque ahi si se escribe. */
+function rbCuerpo(k,ret,txt,resp,r,donde){
+  const porque=ret
+    ?'<div class="rb-porque">Retirada'+
+      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
+      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>'
+    :'';
+  /* Retirada, el boton dice solo «Devolver»: al lado de la linea roja que ya
+     dice de donde se saco, repetirlo le roba ancho al texto. */
+  const acc=ret
+    ?'<button type="button" class="rb-x" onclick="revDevuelve(\''+k+'\')">Devolver</button>'
+    :'<button type="button" class="rb-x" onclick="revAbreCaja(\''+k+'\')">Retirar</button>';
+  return '<div class="rb-cuerpo">'+
+      '<div class="rb-txt">'+
+        '<div class="rb-q">'+esc(txt)+'</div>'+
+        '<div class="rb-a">'+esc(resp)+'</div>'+
+        porque+
+      '</div>'+
+      (revCaja===k?'':acc)+
+    '</div>'+
+    (revCaja===k?revCajaMotivo(k):'');
 }
 
 /* La caja del motivo se abre EN LA FILA, no en un cuadro del navegador: un

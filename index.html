@@ -1693,24 +1693,40 @@ details.card summary::marker{content:''}
 
    Los filtros van en rejilla de dos: en el celular caben dos por renglon con
    la etiqueta encima, y en pantalla ancha se reparten solos sin media query. */
+/* La confirmacion de que si paso algo. Va DENTRO de la tarjeta que se acaba
+   de crear, que es donde aterriza el scroll. */
+.pan-nueva{display:inline-block;font-size:var(--v-t-1);font-weight:700;
+  color:#fff;background:var(--v-ok);
+  border-radius:999px;padding:.15rem .6rem;margin-bottom:.4rem}
+
 .rb-cab{display:flex;gap:.6rem;align-items:center;margin-bottom:.8rem}
 .rb-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:.5rem;margin:.6rem 0 .7rem}
 .rb-filtros select{width:100%;min-height:44px}
 
-.rb-lista{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.8rem}
+.rb-lista{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.8rem}
 .rb-it{background:var(--v-sup);border:1.5px solid var(--v-linea);
-  border-radius:var(--v-r-md);padding:.75rem .85rem;box-shadow:var(--v-s1)}
+  border-radius:var(--v-r-md);padding:.55rem .7rem;box-shadow:var(--v-s1)}
 /* Lo retirado se ve, no se esconde: la decision de devolverlo se toma leyendo
    por que se saco. Se apaga y se marca con una barra al costado, que es lo que
    distingue de un vistazo sin tener que leer la etiqueta. */
 .rb-it.fuera{background:var(--v-sup2);border-left:4px solid var(--v-mal);opacity:.78}
-.rb-etq{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.4rem}
+.rb-etq{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.3rem}
 .rb-etq span{font-size:var(--v-t-1);color:var(--v-tinta3);background:var(--v-linea2);
   border-radius:999px;padding:.12rem .5rem;white-space:nowrap}
 .rb-q{font-size:var(--v-t0);font-weight:700;color:var(--v-tinta);line-height:1.4}
-.rb-a{font-size:var(--v-t-1);color:var(--v-tinta2);margin-top:.25rem;line-height:1.4}
+.rb-a{font-size:var(--v-t-1);color:var(--v-tinta2);margin-top:.15rem;line-height:1.35}
 .rb-porque{font-size:var(--v-t-1);color:var(--v-mal);font-weight:700;margin-top:.35rem}
+/* El texto manda y la accion se acomoda: min-width:0 en el texto es lo que
+   deja que un enunciado largo se parta en vez de estirar la fila. */
+.rb-cuerpo{display:flex;gap:.6rem;align-items:flex-start}
+.rb-txt{flex:1 1 auto;min-width:0}
+/* 44 px de alto se cumplen igual, pero sin gastar un renglon propio. */
+.rb-x{flex:0 0 auto;min-height:44px;padding:0 .7rem;border-radius:999px;
+  font:inherit;font-size:var(--v-t-1);font-weight:700;cursor:pointer;
+  border:1.5px solid var(--v-linea);background:var(--v-sup);color:var(--v-tinta2)}
+.rb-it.fuera .rb-x{border-color:var(--v-cat);color:var(--v-cat)}
+
 .rb-acc{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
 .rb-acc .btn{flex:0 0 auto;min-height:44px}
 
@@ -2273,7 +2289,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '146d10829654';
+const VERSION_APP = '82b6e9a20af7';
 
 const CAPS = [
  {
@@ -38599,6 +38615,7 @@ async function abreEvaluacion(){
        (cargaResultados()), así que no hace falta adivinar aquí si el POST de
        arriba funcionó — el repintado de abajo lo confirma solo, sin depender
        de que un segundo viaje de red (srvRefresca()) llegue a tiempo. */
+    panReciente=(d&&d.id)||'';
     if(d&&d.cerradas&&d.cerradas.length){
       /* Avisar CUÁL se reemplazó: con varias evaluaciones corriendo a la vez,
          un clic sin darse cuenta del solape podría cerrar la de otro grupo
@@ -38607,12 +38624,16 @@ async function abreEvaluacion(){
         d.cerradas.map(function(x){return x.titulo;}).join(', '));
     }
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
-    llevaA('cb-panel');
+    /* En la evaluacion recien abierta, no en el contenedor: cb-panel empieza
+       varias pantallas arriba, asi que llevar ahi el scroll se siente como
+       volver al principio, y el pulso de .destaca queda fuera de la vista. */
+    llevaA(d&&d.id?'ev-'+d.id:'cb-panel');
   }catch(e){alert(e.message||'No se pudo conectar');}
 }
 
 async function cierraEvaluacion(id){
   if(!id)return;
+  if(panReciente===id)panReciente='';
   try{
     await srvFetch('/panel/evaluacion/cerrar',{method:'POST',body:JSON.stringify({id:id})});
     await srvRefresca();await cargaResultados();pintaExInicio();pintaInicio();
@@ -38731,6 +38752,10 @@ async function verRevision(id){
    pintaAvisoCats() para avisar, ANTES de que el director confirme abrir, cuál
    evaluación en curso se cerraría por compartir categoría con la nueva. */
 let panAbiertas=[];
+/* La que se acaba de abrir desde ESTE celular. Solo sirve para señalarla al
+   aterrizar: abrir una evaluacion repintaba el panel entero y subia al tope,
+   asi que la unica prueba de que habia funcionado era ponerse a buscarla. */
+let panReciente='';
 
 /* Lo que el director mira mientras corre cada evaluación. Quién FALTA es el
    dato que sirve: con eso va y la busca, en vez de adivinar si ya terminaron.
@@ -38750,7 +38775,10 @@ async function cargaResultados(){
         const para=(ev.dirigida&&ev.dirigida.length)
           ? ev.dirigida.map(esc).join(', ')+' <small>(solo estas personas)</small>'
           : esc(nombresCats(ev.categorias));
-        return '<div class="pan-paso"><div class="pan-paso-t">Evaluación en curso: '+esc(ev.titulo)+'</div>'+
+        const nueva=ev.id===panReciente;
+        return '<div class="pan-paso" id="ev-'+esc(ev.id)+'">'+
+          (nueva?'<div class="pan-nueva">Abierta ahora</div>':'')+
+          '<div class="pan-paso-t">Evaluación en curso: '+esc(ev.titulo)+'</div>'+
           '<p class="nota">Para: <strong>'+para+'</strong></p>'+
           '<p class="nota">Material: '+esc(textoAlcancePanel(ev.alcance))+'</p>'+
           cuerpoResultado(ev)+
@@ -39101,16 +39129,7 @@ function revFila(q){
     esComplementaria(q)?'Complementaria':'Del reglamento'];
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
     '<div class="rb-etq">'+etq.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>'+
-    '<div class="rb-q">'+esc(revTexto(q))+'</div>'+
-    '<div class="rb-a">'+esc(revRespuesta(q))+'</div>'+
-    (ret?'<div class="rb-porque">Retirada'+
-      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
-      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>':'')+
-    (revCaja===k?revCajaMotivo(k):
-      '<div class="rb-acc">'+(ret
-        ?'<button class="btn gho" onclick="revDevuelve(\''+k+'\')">Devolver al banco</button>'
-        :'<button class="btn gho" onclick="revAbreCaja(\''+k+'\')">Retirar</button>')+
-      '</div>')+
+    rbCuerpo(k,ret,revTexto(q),revRespuesta(q),r,'banco')+
     '</div>';
 }
 
@@ -39122,18 +39141,38 @@ function revFilaT(t){
   const r=revMapa[k];
   const cap=(buscaItem(t.cap)||{}).label||t.cap;
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
-    '<div class="rb-etq"><span>'+esc(cap)+'</span><span>Tarjeta</span></div>'+
-    '<div class="rb-q">'+esc(sinEtiquetas(t.f))+'</div>'+
-    '<div class="rb-a">'+esc(sinEtiquetas(t.r))+'</div>'+
-    (ret?'<div class="rb-porque">Retirada'+
-      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
-      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>':'')+
-    (revCaja===k?revCajaMotivo(k):
-      '<div class="rb-acc">'+(ret
-        ?'<button class="btn gho" onclick="revDevuelve(\''+k+'\')">Devolver al mazo</button>'
-        :'<button class="btn gho" onclick="revAbreCaja(\''+k+'\')">Retirar</button>')+
-      '</div>')+
+    '<div class="rb-etq"><span>'+esc(cap)+'</span></div>'+
+    rbCuerpo(k,ret,sinEtiquetas(t.f),sinEtiquetas(t.r),r,'mazo')+
     '</div>';
+}
+
+/* EL CUERPO DE UNA FILA, compartido por preguntas y tarjetas.
+   MECANISMO: antes la accion vivia en su propio renglon debajo del texto, asi
+   que cada fila gastaba 44 px mas su margen en un boton que se usa en una de
+   cada cien. Aqui va AL LADO del texto, que ya mide dos renglones o mas, y no
+   suma altura. Esta pantalla se usa para escanear cientos de filas, no para
+   leer una: lo que se gana en filas por pantalla es lo que se gana en revision.
+   La caja del motivo sigue yendo debajo y a lo ancho, porque ahi si se escribe. */
+function rbCuerpo(k,ret,txt,resp,r,donde){
+  const porque=ret
+    ?'<div class="rb-porque">Retirada'+
+      (r&&r.cuando?' el '+esc(String(r.cuando).slice(0,10)):'')+
+      (r&&r.motivo?' — '+esc(r.motivo):'')+'</div>'
+    :'';
+  /* Retirada, el boton dice solo «Devolver»: al lado de la linea roja que ya
+     dice de donde se saco, repetirlo le roba ancho al texto. */
+  const acc=ret
+    ?'<button type="button" class="rb-x" onclick="revDevuelve(\''+k+'\')">Devolver</button>'
+    :'<button type="button" class="rb-x" onclick="revAbreCaja(\''+k+'\')">Retirar</button>';
+  return '<div class="rb-cuerpo">'+
+      '<div class="rb-txt">'+
+        '<div class="rb-q">'+esc(txt)+'</div>'+
+        '<div class="rb-a">'+esc(resp)+'</div>'+
+        porque+
+      '</div>'+
+      (revCaja===k?'':acc)+
+    '</div>'+
+    (revCaja===k?revCajaMotivo(k):'');
 }
 
 /* La caja del motivo se abre EN LA FILA, no en un cuadro del navegador: un

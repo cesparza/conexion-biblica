@@ -1677,24 +1677,40 @@ details.card summary::marker{content:''}
 
    Los filtros van en rejilla de dos: en el celular caben dos por renglon con
    la etiqueta encima, y en pantalla ancha se reparten solos sin media query. */
+/* La confirmacion de que si paso algo. Va DENTRO de la tarjeta que se acaba
+   de crear, que es donde aterriza el scroll. */
+.pan-nueva{display:inline-block;font-size:var(--v-t-1);font-weight:700;
+  color:#fff;background:var(--v-ok);
+  border-radius:999px;padding:.15rem .6rem;margin-bottom:.4rem}
+
 .rb-cab{display:flex;gap:.6rem;align-items:center;margin-bottom:.8rem}
 .rb-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:.5rem;margin:.6rem 0 .7rem}
 .rb-filtros select{width:100%;min-height:44px}
 
-.rb-lista{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.8rem}
+.rb-lista{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.8rem}
 .rb-it{background:var(--v-sup);border:1.5px solid var(--v-linea);
-  border-radius:var(--v-r-md);padding:.75rem .85rem;box-shadow:var(--v-s1)}
+  border-radius:var(--v-r-md);padding:.55rem .7rem;box-shadow:var(--v-s1)}
 /* Lo retirado se ve, no se esconde: la decision de devolverlo se toma leyendo
    por que se saco. Se apaga y se marca con una barra al costado, que es lo que
    distingue de un vistazo sin tener que leer la etiqueta. */
 .rb-it.fuera{background:var(--v-sup2);border-left:4px solid var(--v-mal);opacity:.78}
-.rb-etq{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.4rem}
+.rb-etq{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.3rem}
 .rb-etq span{font-size:var(--v-t-1);color:var(--v-tinta3);background:var(--v-linea2);
   border-radius:999px;padding:.12rem .5rem;white-space:nowrap}
 .rb-q{font-size:var(--v-t0);font-weight:700;color:var(--v-tinta);line-height:1.4}
-.rb-a{font-size:var(--v-t-1);color:var(--v-tinta2);margin-top:.25rem;line-height:1.4}
+.rb-a{font-size:var(--v-t-1);color:var(--v-tinta2);margin-top:.15rem;line-height:1.35}
 .rb-porque{font-size:var(--v-t-1);color:var(--v-mal);font-weight:700;margin-top:.35rem}
+/* El texto manda y la accion se acomoda: min-width:0 en el texto es lo que
+   deja que un enunciado largo se parta en vez de estirar la fila. */
+.rb-cuerpo{display:flex;gap:.6rem;align-items:flex-start}
+.rb-txt{flex:1 1 auto;min-width:0}
+/* 44 px de alto se cumplen igual, pero sin gastar un renglon propio. */
+.rb-x{flex:0 0 auto;min-height:44px;padding:0 .7rem;border-radius:999px;
+  font:inherit;font-size:var(--v-t-1);font-weight:700;cursor:pointer;
+  border:1.5px solid var(--v-linea);background:var(--v-sup);color:var(--v-tinta2)}
+.rb-it.fuera .rb-x{border-color:var(--v-cat);color:var(--v-cat)}
+
 .rb-acc{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
 .rb-acc .btn{flex:0 0 auto;min-height:44px}
 
