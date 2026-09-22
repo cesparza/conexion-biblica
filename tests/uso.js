@@ -2061,6 +2061,28 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Dos nombres que solo difieren en tildes o mayusculas cuentan como el mismo');
 }
 
+/* ── EL PROGRESO NO SE SUBE A LA FICHA EQUIVOCADA ─────────────────
+   Un aparato puede tener varias fichas: la misma persona en dos actividades,
+   o dos personas compartiendo celular. La app abre en la ULTIMA que se uso, no
+   en la de la sesion del servidor. Si se sincroniza sin alinear primero, el
+   progreso de una ficha se sube a la cuenta de otra y la fusion los mezcla
+   (toma el mayor campo por campo), sin que nada avise.
+
+   Se prueba la guarda, que es lo que sostiene la regla aunque alguien llame a
+   sincronizar desde otro sitio mañana. */
+{
+  const src=require('fs').readFileSync(
+    require('path').join(RAIZ,'fuente','app.js'),'utf8');
+  const bloque=src.slice(src.indexOf('async function sincronizaProgreso'),
+                         src.indexOf('async function sincronizaProgreso')+1400);
+  ok(/srvYo\.nombre[\s\S]{0,160}return false/.test(bloque),
+    'No se sube nada si la ficha activa no es de la persona de la sesion');
+  ok(/ACT_DE\(S\.cat\)!==ACT_DE\(srvYo\.categoria\)[\s\S]{0,40}return false/.test(bloque),
+    'Ni si es la misma persona pero en otra actividad: son progresos distintos');
+  ok(/if\(srvYo&&srvYo\.rol==='participante'\)adoptaFicha\(srvYo\);/.test(src),
+    'Y el arranque alinea la ficha con la sesion ANTES de sincronizar');
+}
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 

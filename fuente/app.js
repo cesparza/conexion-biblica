@@ -284,6 +284,14 @@ function programaSubida(){
 
 async function sincronizaProgreso(){
   if(!srvYo||srvYo.rol!=='participante'||!S)return false;
+  /* SEGUNDA GUARDA, a proposito. Quien llame a esto sin haber alineado la
+     ficha no sube nada, en vez de mezclar dos progresos. Se compara por
+     nombre y por ACTIVIDAD, no por categoria: la misma persona tiene una
+     ficha por actividad, y son progresos distintos que no se pueden fundir. */
+  if(srvYo.nombre&&(S.nombre||'').trim().toLowerCase()!==String(srvYo.nombre).trim().toLowerCase())
+    return false;
+  if(srvYo.categoria&&CATS[srvYo.categoria]&&ACT_DE(S.cat)!==ACT_DE(srvYo.categoria))
+    return false;
   let cuerpo;
   try{cuerpo=JSON.stringify(S);}catch(e){return false;}
   try{
@@ -6322,9 +6330,19 @@ async function abreHistorial(){
     await srvRefresca();
     await srvQuienSoy();
     pintaSesion();
-    /* Antes de pintar nada mas: si esta niña ya entro con su codigo alguna
-       vez, su progreso baja aqui, asi que abrir en otro celular muestra lo
-       que estudio y no una ficha en blanco. */
+    /* LA FICHA ACTIVA PUEDE NO SER LA DE LA SESION, y eso importa.
+       Un aparato puede tener varias fichas (la misma persona en dos
+       actividades, o dos personas compartiendo celular) y la app abre en la
+       ultima que se uso, no en la de la sesion del servidor. Sin alinear
+       primero, el arranque subiria el progreso de OTRA ficha a esta cuenta y
+       las fundiria: como la fusion toma el mayor campo por campo, lo de una
+       persona se le colaria a la otra sin que nada avise.
+       adoptaFicha() hace exactamente esa alineacion (busca la ficha de ese
+       nombre en esa actividad, o la crea) y ya se usa al entrar con codigo. */
+    if(srvYo&&srvYo.rol==='participante')adoptaFicha(srvYo);
+    /* Y con la ficha correcta activa: si esta niña ya entro con su codigo
+       alguna vez, su progreso baja aqui, asi que abrir en otro celular
+       muestra lo que estudio y no una ficha en blanco. */
     try{await sincronizaProgreso();}catch(e){}
     await cargaEvaluacion();
     try{await enviaCola();}catch(e){}
