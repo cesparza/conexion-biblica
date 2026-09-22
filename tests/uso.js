@@ -627,9 +627,24 @@ ok(Object.keys(CR.CR_CONTENIDO).length===28 &&
    Object.entries(CR.CR_CONTENIDO).every(([k,v])=>
      (SIN_DECL.includes(k)?/error/i.test(v[0].h):/«/.test(v[0].h)) && /[Tt]extos clave/.test(v[1].t)),
   'Cada creencia trae su declaración citada y sus textos clave (la 14 lleva el aviso de la errata)');
-/* Las cinco pestañas ya son de las 28, no solo de la doctrina de Dios. */
-ok(Object.values(CR.CR_CONTENIDO).every(v=>v.length===5),
-  'Las 28 creencias traen sus cinco pestañas');
+/* Las secciones ya son de las 28, no solo de la doctrina de Dios. Son SEIS
+   desde que cada creencia trae el capitulo del libro con sus subtitulos, que
+   se extraen del PDF y no se escriben a mano. */
+ok(Object.values(CR.CR_CONTENIDO).every(v=>v.length===6),
+  'Las 28 creencias traen sus seis secciones');
+/* Y cada seccion dice su capa, que es de donde salen la franja, la pildora,
+   el filtro de «solo lo del examen» y la tarjeta de recordar. Sin capa, la
+   pantalla de creencias volveria a pesar todo igual. */
+ok(Object.values(CR.CR_CONTENIDO).every(v=>v.every(s=>s.capa)),
+  'Cada seccion de creencias declara su capa');
+ok(Object.values(CR.CR_CONTENIDO).every(v=>v.some(s=>s.capa==='nucleo'&&s.preg)),
+  'Cada creencia tiene al menos una seccion de nucleo con su pregunta de recordar');
+/* El capitulo del libro NO entra al examen y la pantalla lo dice. */
+ok(Object.values(CR.CR_CONTENIDO).every(v=>{
+    const lb=v.find(s=>/En el libro/.test(s.t));
+    return lb && lb.capa==='contexto' && /no entra al examen/i.test(lb.h);
+  }),
+  'La seccion del libro va marcada «contexto» y lo dice en el texto');
 /* Y el material de estudio es interactivo: cada creencia trae bloques que
    tapan la respuesta hasta que la persona la intenta. */
 ok(Object.values(CR.CR_CONTENIDO).every(v=>v.some(x=>/rev-q/.test(x.h))),
@@ -1966,6 +1981,30 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(f1.indexOf('rb-caja')>=0,'Con la caja abierta, la caja se pinta');
   ok(f1.indexOf('rb-x')<0,'Y el boton de retirar no compite con ella');
   T.revCierraCaja();
+}
+
+/* ── CITAS CON LISTA DE VERSICULOS ──────────────────────────────
+   La cartilla cita listas, no siempre versiculos sueltos. Antes, de
+   «2 Pedro 1:20,21» solo la primera mitad se volvia boton y el «,21» quedaba
+   en texto plano al lado de un enlace subrayado: eso es lo que se veia roto
+   en la pantalla de creencias. Cada tramo tiene que quedar tocable, y el
+   rango que anuncia la hoja tiene que ser el que la cartilla cita. */
+{
+  const h=A.refsTocables('Ver 2 Pedro 1:20,21 y Proverbios 30:5, 6.','c1');
+  ok((h.match(/class="vref"/g)||[]).length===4,
+    'Una lista de versiculos deja un boton por tramo (4 aqui), no uno solo');
+  ok(h.indexOf('>21<')>=0&&h.indexOf('>6<')>=0,
+    'El segundo versiculo de la lista queda DENTRO de un boton, no suelto al lado');
+  ok(!/<\/button>,\s*\d/.test(h),
+    'Ya no queda un numero en texto plano pegado al boton anterior');
+
+  /* Un tramo con hueco NO se junta en un rango: «15:3,4,20-22» no es
+     «15:3-22», y la hoja anunciaria un rango que nadie cito. */
+  const g=A.refsTocables('1 Corintios 15:3,4,20-22','c1');
+  ok(/verVers\(this,'1corintios-15',3,3\)/.test(g),
+    'El primer tramo abre solo su versiculo, no hasta el final de la lista');
+  ok(/verVers\(this,'1corintios-15',20,22\)/.test(g),
+    'Y el tramo con guion abre su propio rango');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

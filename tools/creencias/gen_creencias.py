@@ -4,6 +4,7 @@ banco real, tarjetas y modulos. NO EDITAR creencias.js A MANO."""
 import os, re, sys, json, unicodedata, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import datos, editorial, refs
+from libro import LIBRO
 
 # La ruta sale del propio archivo. Estaba quemada a `~/mnt/Iglesia/...`, que
 # era donde el puente montaba la carpeta en su momento: el dia que el montaje
@@ -34,6 +35,38 @@ def rev(preg, resp):
             '<div class="rev-a" hidden>%s</div></div>' % (preg, resp))
 
 # ── pestañas ────────────────────────────────────────────────────────────────
+# LA CAPA NO SE DECIDE EN LA PANTALLA, SE DECIDE EN EL DATO. Es el mismo
+# mecanismo que Daniel 3 (fuente/contenido.js): cada sección dice si el
+# reglamento la examina («nucleo»), si está para entender («apoyo») o si no
+# entra al examen y lo dice («contexto»). De ahí salen la franja de color, la
+# píldora, el filtro de «solo lo del examen» y la tarjeta de recordar.
+#
+# POR QUE ESTAS CINCO QUEDAN ASI:
+#   declaración  núcleo   se transcribe tal cual y se pregunta palabra por
+#                         palabra; es lo único que el reglamento memoriza.
+#                         En la creencia 14 sale del libro y no de la
+#                         cartilla, así que ahí es «contexto» y lo dice.
+#   textos clave núcleo   la cartilla los imprime y el examen los pregunta.
+#   qué significa apoyo   sale del libro de 434 páginas (editorial.py), no de
+#                         la cartilla: ayuda a entender, no se exige literal.
+#   no confundir  apoyo   igual, y además es la que evita el error típico.
+#   dónde encaja  apoyo   la agrupación en 6 doctrinas ordena las 28; NO está
+#                         verificado que el examen la pregunte, así que no se
+#                         marca como núcleo. Si aparece en el reglamento, se
+#                         cambia esta línea y cambian pantalla, filtro e
+#                         impresión a la vez.
+def preg_de(num, cual):
+    """La tarjeta de «recordar» NO inventa preguntas: toma una del banco de esa
+       misma creencia, para que estudiar y examinarse pregunten lo mismo. Si no
+       hay ninguna que sirva, la sección se queda sin tarjeta y ya."""
+    qs = preguntas(num)
+    if cual == 'fill':
+        return next((q for q in qs if q['t'] == 'fill'), None)
+    if cual == 'texto1':
+        return next((q for q in qs if q['t'] == 'mc' and 'primer texto clave' in q['q']), None)
+    return None
+
+
 def pestanas(num):
     d, e = datos.CREENCIAS[num], editorial.ED[num]
     t = []
@@ -42,43 +75,76 @@ def pestanas(num):
     # verifica contra fuente/cartilla.txt solo las que citan la cartilla, que es
     # lo que esa transcripcion contiene. Una que cita el libro se verifica
     # contra el libro, y cartilla.js la cuenta aparte en vez de darla por rota.
+    #
+    # LA DECLARACION ES EL TITULAR DE LA PANTALLA, no un bloque de aviso mas.
+    # Antes salia en la misma caja verde que todo lo demas, con el mismo cuerpo
+    # de letra: lo que se memoriza palabra por palabra pesaba igual que una
+    # nota al pie.
+    capa_decl = 'nucleo'
     if d['decl'] and d['fuente'] == 'libro':
-        h = hi('<strong>Creencia %d — %s</strong><br>«%s»<br>'
-               '<small>Libro <i>Creencias de los Adventistas del Séptimo Día</i>, '
-               'capítulo %d, página 200. La cartilla 2026 imprime aquí, por error de '
-               'imprenta, el texto de la creencia 13; esta es la declaración que de '
-               'verdad le corresponde. Por venir del libro y no de la cartilla, '
-               '<strong>no entra al examen del reglamento</strong>.</small>'
-               % (num, d['nombre'], d['decl'], num))
+        capa_decl = 'contexto'
+        h = ('<blockquote class="decl"><b class="decl-n">Creencia %d</b>%s'
+             '<p class="decl-src" data-fuente="libro">Libro <i>Creencias de los Adventistas del Séptimo Día</i>, '
+             'capítulo %d, página 200. La cartilla 2026 imprime aquí, por error de '
+             'imprenta, el texto de la creencia 13; esta es la declaración que de '
+             'verdad le corresponde. Por venir del libro y no de la cartilla, '
+             '<strong>no entra al examen del reglamento</strong>.</p></blockquote>'
+             % (num, '«%s»' % d['decl'], num))
     elif d['decl']:
-        h = hi('<strong>Creencia %d — %s</strong><br>«%s»<br>'
-               '<small>Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. '
-               'Es la redacción que se evalúa: se transcribe tal cual.</small>' % (num, d['nombre'], d['decl']))
+        h = ('<blockquote class="decl"><b class="decl-n">Creencia %d</b>«%s»'
+             '<p class="decl-src" data-fuente="cartilla">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, '
+             '2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>'
+             % (num, d['decl']))
     else:
+        capa_decl = 'contexto'
         h = wa('<strong>Creencia %d — %s</strong><br>La cartilla 2026 imprime aquí, por error, '
                'el texto de la creencia 13. No se transcribe una declaración equivocada: '
                'quedaría memorizando lo que no es. Pendiente de confirmar contra el impreso.' % (num, d['nombre']))
-    t.append(('📜 La declaración', h))
-    # 2. textos clave — ahora con el versiculo detras de cada referencia
+    t.append(dict(t='📜 La declaración', h=h, capa=capa_decl,
+                  preg=preg_de(num, 'fill') if capa_decl == 'nucleo' else None))
+    # 2. textos clave — cada referencia es una ficha que se toca
+    # La lista numerada ponia «1.», «2.» delante de cada cita y una nota «← el
+    # primero» al lado de la primera: tres cosas compitiendo por el mismo
+    # renglon. Las fichas dicen lo mismo con el orden visual y dejan un blanco
+    # de 44px para el dedo, que es lo que hacia falta en el celular.
     tramos = refs.parsea(d['textos'])
     partes = [x.strip() for x in d['textos'].rstrip('.').split(';') if x.strip()]
-    h = vs('<strong>Los textos que trae la cartilla, en su orden</strong>'
-           + li(['<b>%d.</b> %s%s' % (i+1, p, ' &nbsp;<small>← el primero</small>' if i == 0 else '')
-                 for i, p in enumerate(partes)]))
-    h += hi('<strong>Están tocables</strong><br>Toca cualquier referencia de esta pantalla y sale '
-            'el versículo. Son %d capítulos de %d libros, en Reina Valera Antigua.'
-            % (len({(s,c) for s,c,_ in tramos}), len({s for s,_,_ in tramos})))
-    h += rev('¿Cuál es el PRIMER texto clave de esta creencia?', partes[0])
+    h = ('<div class="bloque-t">Los textos que trae la cartilla, en su orden</div>'
+         '<div class="refs">%s</div>'
+         '<p class="nota">Toca cualquier referencia y sale el versículo. '
+         'Son %d capítulos de %d libros, en Reina Valera Antigua.</p>'
+         % (''.join('<span class="ref">%s</span>' % x for x in partes),
+            len({(a, c) for a, c, _ in tramos}), len({a for a, _, _ in tramos})))
+    # La pregunta por el PRIMER texto ya no se revela: se responde. Era la
+    # misma pregunta del banco, ofrecida de dos maneras en la misma pantalla.
     h += rev('¿Cuántas referencias trae la cartilla aquí?', '<b>%d</b>' % len(partes))
-    t.append(('📖 Textos clave', h))
+    t.append(dict(t='📖 Textos clave', h=h, capa='nucleo', preg=preg_de(num, 'texto1')))
     # 3. que significa — todo en bloques que se revelan
-    h = hi('<strong>Cómo lo desarrolla el libro de las 28 creencias</strong>' + li(e['desarrollo']))
-    h += ''.join(rev(p, r) for p, r in e['clave'])
-    t.append(('🔍 Qué significa', h))
+    # Aqui ya NO va la lista de subtitulos: esa es del libro y ahora sale del
+    # libro mismo, en su propia seccion (abajo). Lo que queda es lo que la
+    # DECLARACION obliga a saber, que es lo que el examen pregunta.
+    h = ''.join(rev(p, r) for p, r in e['clave'])
+    t.append(dict(t='🔍 Qué significa', h=h, capa='apoyo'))
+    # 3b. el libro, con su capitulo y sus paginas
+    # ESTO ES EL LIBRO, NO UN RESUMEN. Los subtitulos se extraen del PDF
+    # (tools/creencias/gen_libro.py) y el capitulo se verifica contra el
+    # nombre de la creencia: los 28 titulos coinciden con la cartilla. Va
+    # como «contexto» porque el reglamento examina la cartilla, no el libro,
+    # y la pantalla lo dice en vez de dejarlo a la intuicion.
+    lb = LIBRO.get(str(num))
+    if lb and lb['subtitulos']:
+        h = hi('<strong>Capítulo %d, páginas %d a %d</strong><br>'
+               'Así desarrolla el libro esta creencia, con sus propios subtítulos:%s'
+               % (num, lb['pag'], lb['hasta'], li(lb['subtitulos'])))
+        h += ('<p class="nota">Libro <i>Creencias de los Adventistas del Séptimo Día — '
+              'Una exposición bíblica de las doctrinas fundamentales</i>. '
+              'Sirve para entender y para ampliar; <strong>no entra al examen del '
+              'reglamento</strong>, que examina la cartilla.</p>')
+        t.append(dict(t='📚 En el libro', h=h, capa='contexto'))
     # 4. no confundir
     h = ''.join(rev('¿En qué se diferencia de la creencia <b>%d</b>, «%s»?' % (o, datos.CREENCIAS[o]['nombre']), txt)
                 for o, txt in e['confunde'])
-    t.append(('⚠️ No confundir', h))
+    t.append(dict(t='⚠️ No confundir', h=h, capa='apoyo'))
     # 5. donde encaja
     dn = doc_de(num); nom = doc_nom(num)
     rango = [(a, b) for n2, _, a, b, _ in datos.DOCTRINAS if n2 == dn][0]
@@ -89,7 +155,7 @@ def pestanas(num):
     h += rev('¿Cuántas creencias tiene esa doctrina?', '<b>%d</b> (de la %d a la %d)' % (rango[1]-rango[0]+1, rango[0], rango[1]))
     h += wa('<strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: '
             '<b>5 · 2 · 3 · 8 · 5 · 5</b>.')
-    t.append(('🧭 Dónde encaja', h))
+    t.append(dict(t='🧭 Dónde encaja', h=h, capa='apoyo'))
     return t
 
 # ── banco ───────────────────────────────────────────────────────────────────
@@ -242,7 +308,11 @@ def main():
     # ── contenido ──
     cont = []
     for n in range(1, 29):
-        tabs = ',\n    '.join('{ t:%s, h:%s }' % (J(a), J(b)) for a, b in pestanas(n))
+        tabs = ',\n    '.join(
+            '{ t:%s, capa:%s, h:%s%s }'
+            % (J(sec['t']), J(sec['capa']), J(sec['h']),
+               ', preg:%s' % J(sec['preg']) if sec.get('preg') else '')
+            for sec in pestanas(n))
         cont.append('  cr%02d: [%s],' % (n, tabs))
     # ── banco ──
     banco = []
@@ -297,6 +367,13 @@ def main():
           + ' CR_TARJETAS, CR_MODULOS, CR_CONT_MODULOS };\n')
     open(SALIDA, 'w', encoding='utf-8').write(js)
     largas = [(i+1, len(l)) for i, l in enumerate(js.split('\n')) if len(l) > 2000]
+    # La lista de la guia 2017 (editorial.py «desarrollo») ya no se pinta, pero
+    # sigue sirviendo de contraste: si la extraccion del PDF trae MENOS
+    # subtitulos que la lista escrita a mano, algo se perdio y hay que mirarlo.
+    flojos = [n for n in range(1, 29)
+              if len(LIBRO[str(n)]['subtitulos']) < len(editorial.ED[n]['desarrollo'])]
+    if flojos:
+        print('AVISO: el libro trae menos subtitulos que la guia 2017 en', flojos)
     print('creencias.js escrito |', len(banco), 'preguntas fijas |', len(tarjetas), 'tarjetas')
     print('lineas >2000:', largas[:4] or 'ninguna')
 

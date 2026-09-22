@@ -1233,29 +1233,65 @@ const KEY_POR_NOMBRE=(typeof NOMBRES_OTROS!=='undefined')
    y ademas funciona con acentos. Sin lookbehind, que no esta en los iPhone
    viejos. */
 const LETRA_ANTES=/[0-9A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/;
+/* ── UNA CITA PUEDE TRAER UNA LISTA DE VERSICULOS ────────────────────
+   MECANISMO
+   La cartilla no cita siempre un versiculo suelto ni siempre un rango: cita
+   listas — «2 Pedro 1:20,21», «Proverbios 30:5, 6», «Juan 1:1-3,14». El
+   patron paraba en el primer tramo, asi que de «2 Pedro 1:20,21» solo
+   «2 Pedro 1:20» se volvia boton y el «,21» se quedaba afuera: texto plano
+   pegado a un enlace subrayado. Eso es lo que se veia roto en creencias.
+
+   CADA TRAMO ES SU PROPIO BOTON y los separadores se quedan como texto.
+   No se juntan todos en un solo rango a proposito: «1 Corintios 15:3,4,20-22»
+   NO es «15:3-22», y el encabezado de la hoja anunciaria un rango que la
+   cartilla nunca cito. Un boton por tramo dice la verdad y de paso deja
+   tocable cada versiculo que la cartilla si cita.
+
+   MEDIDO en tools/creencias/datos.py: de 261 referencias de las 28 creencias,
+   60 traen coma — 50 consecutivas y 10 mezcladas con guion. */
+const COLA_CITA='((?:\\s*,\\s*\\d{1,3}(?:\\s*[-–]\\s*\\d{1,3})?)*)';
+const COLA_TRAMO=/(\s*,\s*)(\d{1,3})(?:(\s*[-–]\s*)(\d{1,3}))?/g;
+
 const OTRO_LIBRO_CITA=(typeof NOMBRES_OTROS!=='undefined')
   ?new RegExp('('+Object.values(NOMBRES_OTROS).map(n=>n.replace(/\s+/g,'\\s+'))
-      .sort((a,b)=>b.length-a.length).join('|')+')\\s+(\\d{1,3}):(\\d{1,3})(?:[-–](\\d{1,3}))?','g')
+      .sort((a,b)=>b.length-a.length).join('|')+')\\s+(\\d{1,3}):(\\d{1,3})(?:\\s*[-–]\\s*(\\d{1,3}))?'+COLA_CITA,'g')
   :null;
 
-function botonRef(todo,c,v,v2){
-  const cid='d'+c;
+/** El unico sitio donde se arma un boton de versiculo. Si el capitulo no
+ *  esta sourced o el versiculo no existe, devuelve el texto tal cual: un
+ *  boton mudo es peor que texto sin boton. */
+function botonVers(cid,texto,de,hasta){
   const t=tablaDeCid(cid);
-  if(!t||!t.mapa[+v])return todo;
-  const hasta=(v2&&+v2>+v&&t.mapa[+v2])?+v2:+v;
+  if(!t||!t.mapa[de])return texto;
+  const h=(hasta&&hasta>de&&t.mapa[hasta])?hasta:de;
   return '<button type="button" class="vref" title="Ver el versículo"'+
-    ' onclick="verVers(this,\''+cid+'\','+(+v)+','+hasta+')">'+todo+'</button>';
+    ' onclick="verVers(this,\''+cid+'\','+de+','+h+')">'+texto+'</button>';
 }
 
-function botonRefOtro(todo,nombre,c,v,v2){
-  const key=KEY_POR_NOMBRE[nombre];
-  if(!key)return todo;
-  const cid=key+'-'+c;
+/** Los tramos que vienen detras de la primera cita («,21», «, 20-22»): uno
+ *  por boton, con su separador intacto entre ellos. */
+function colaVers(cid,cola){
+  if(!cola)return '';
+  return cola.replace(COLA_TRAMO,(t,sep,a,g,b)=>
+    sep+botonVers(cid,a+(b?g+b:''),+a,b?+b:0));
+}
+
+function botonRef(todo,c,v,v2,cola){
+  cola=cola||'';
+  const cid='d'+c, cabeza=cola?todo.slice(0,todo.length-cola.length):todo;
   const t=tablaDeCid(cid);
   if(!t||!t.mapa[+v])return todo;
-  const hasta=(v2&&+v2>+v&&t.mapa[+v2])?+v2:+v;
-  return '<button type="button" class="vref" title="Ver el versículo"'+
-    ' onclick="verVers(this,\''+cid+'\','+(+v)+','+hasta+')">'+todo+'</button>';
+  return botonVers(cid,cabeza,+v,v2?+v2:0)+colaVers(cid,cola);
+}
+
+function botonRefOtro(todo,nombre,c,v,v2,cola){
+  cola=cola||'';
+  const key=KEY_POR_NOMBRE[nombre];
+  if(!key)return todo;
+  const cid=key+'-'+c, cabeza=cola?todo.slice(0,todo.length-cola.length):todo;
+  const t=tablaDeCid(cid);
+  if(!t||!t.mapa[+v])return todo;
+  return botonVers(cid,cabeza,+v,v2?+v2:0)+colaVers(cid,cola);
 }
 
 /* ─────────────────── BLOQUES QUE SE REVELAN AL TOCAR ───────────────────
@@ -1288,18 +1324,18 @@ function refsTocables(html,capId){
        Se marca el trozo ya convertido con \u0000 para que las pasadas
        siguientes no vuelvan a entrar en el, que anidaria un boton dentro de
        otro. */
-    let out=tr.replace(/Daniel\s+(\d{1,2}):(\d{1,2})(?:[-–](\d{1,2}))?/g,
-      (todo,c,v,v2)=>'\u0000'+botonRef(todo,c,v,v2)+'\u0000');
+    let out=tr.replace(/Daniel\s+(\d{1,2}):(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?((?:\s*,\s*\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)/g,
+      (todo,c,v,v2,cola)=>'\u0000'+botonRef(todo,c,v,v2,cola)+'\u0000');
     /* Pasada 2: «Libro N:M» para un libro distinto de Daniel, en cualquier
        parte (fuera o dentro de parentesis). El nombre completo del libro ya
        distingue la cita: no hace falta el candado de la pasada 3. */
     if(OTRO_LIBRO_CITA){
-      out=out.replace(OTRO_LIBRO_CITA,(todo,nombre,c,v,v2,pos,cadena)=>{
+      out=out.replace(OTRO_LIBRO_CITA,(todo,nombre,c,v,v2,cola,pos,cadena)=>{
         if(todo.indexOf('\u0000')>=0)return todo;
         /* El borde izquierdo, que antes hacia el \b: que no venga pegado a otra
            letra o numero, o «1 Juan» se tomaria de dentro de «21 Juan». */
         if(pos>0&&LETRA_ANTES.test(cadena.charAt(pos-1)))return todo;
-        return '\u0000'+botonRefOtro(todo,nombre,c,v,v2)+'\u0000';
+        return '\u0000'+botonRefOtro(todo,nombre,c,v,v2,cola)+'\u0000';
       });
     }
     if(enDaniel){
@@ -1307,8 +1343,8 @@ function refsTocables(html,capId){
          Daniel, y solo si el parentesis no nombra ya otro libro. */
       out=out.replace(/\(([^)]*)\)/g,(todo,dentro)=>{
         if(dentro.indexOf('\u0000')>=0||OTRO_LIBRO.test(dentro))return todo;
-        return '('+dentro.replace(/(\d{1,2}):(\d{1,2})(?:[-–](\d{1,2}))?/g,
-          (t2,c,v,v2)=>botonRef(t2,c,v,v2))+')';
+        return '('+dentro.replace(/(\d{1,2}):(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?((?:\s*,\s*\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)/g,
+          (t2,c,v,v2,cola)=>botonRef(t2,c,v,v2,cola))+')';
       });
     }
     return out.split('\u0000').join('');
@@ -1567,6 +1603,12 @@ function filtraCapa(btn,modo){
    puntaje y sin castigo — el mismo criterio que ya usa «Compruébalo». */
 function recordarHTML(preg){
   const rid='rec_'+Math.random().toString(36).slice(2,8);
+  /* Un completar no se puede ofrecer con botones: la respuesta estaria en la
+     pantalla y elegir no es producir. Va con campos, y se comprueba con el
+     MISMO comparador del examen (`igual`), que ya ignora mayusculas, tildes y
+     espacios de sobra. Aqui tampoco hay puntaje ni registro: es el mismo
+     aislamiento que las de seleccion. */
+  if(preg.t==='fill')return recordarFillHTML(rid,preg);
   const esTF=preg.t==='tf';
   const ops=esTF
     ?['Verdadero','Falso'].map((txt,i)=>
@@ -1578,6 +1620,44 @@ function recordarHTML(preg){
     '<div class="rec-preg">'+esc(preg.q)+'</div>'+
     '<div class="rec-ops">'+ops+'</div>'+
     '<div class="rec-comp" hidden></div></div>';
+}
+
+function recordarFillHTML(rid,preg){
+  const campos=(preg.p||[]).map(p=>p.b
+    ?'<input class="rec-in" type="text" autocomplete="off" autocapitalize="off"'+
+      ' spellcheck="false" placeholder="'+esc(p.h||'\u00bf?')+'" data-b="'+esc(p.b)+'">'
+    :'<span>'+esc(p.x)+'</span>').join('');
+  return '<div class="recordar" id="'+rid+'">'+
+    '<div class="rec-tit">Antes de pasar \u2014 recuerda</div>'+
+    '<div class="rec-preg">'+esc(preg.ins||'Completa la declaraci\u00f3n')+'</div>'+
+    '<div class="rec-rell">'+campos+'</div>'+
+    '<div class="rec-ops"><button type="button" class="btn peq"'+
+      ' onclick="compruebaRecFill(\''+rid+'\')">Comprobar</button></div>'+
+    '<div class="rec-comp" hidden></div></div>';
+}
+
+function compruebaRecFill(rid){
+  const c=document.getElementById(rid);
+  if(!c)return;
+  const campos=[].slice.call(c.querySelectorAll('.rec-in'));
+  if(!campos.length)return;
+  let todas=true;
+  const faltaron=[];
+  campos.forEach(function(i){
+    const ok=igual(i.value,i.getAttribute('data-b'));
+    i.className='rec-in '+(ok?'ok':'ko');
+    /* Solo se dicen las que FALTARON. Listarlas todas devolvia tambien la que
+       ya estaba bien, y la nina tiene que volver a leer para saber cual
+       fallo. */
+    if(!ok){todas=false;faltaron.push(i.getAttribute('data-b'));}
+  });
+  const comp=c.querySelector('.rec-comp');
+  if(!comp)return;
+  comp.hidden=false;
+  comp.className='rec-comp '+(todas?'ok':'ko');
+  comp.textContent=todas
+    ?'\u2705 Correcto, palabra por palabra.'
+    :'\u274c Falt\u00f3: '+faltaron.join(' \u00b7 ');
 }
 
 function compruebaRec(rid,elegido,correcta){

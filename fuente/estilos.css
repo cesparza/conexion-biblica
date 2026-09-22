@@ -149,8 +149,12 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .tabla-scroll .info-table{margin:0}
 /* En papel no hay scroll: si queda envuelta, tiene que salir completa. */
 @media print{.tabla-scroll{overflow:visible}}
-.highlight-box{background:#e8f5e9;border-left:5px solid var(--verde);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
-.warn-box{background:#fff3e0;border-left:5px solid var(--naranja);border-radius:8px;padding:.75rem .9rem;font-size:.85rem;margin:.5rem 0;line-height:1.65}
+.highlight-box{background:var(--v-sup,#fff);border-left:5px solid var(--verde);
+  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
+  margin:.5rem 0;line-height:1.65;box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05))}
+.warn-box{background:var(--v-sup2,#fff4e0);border-left:5px solid var(--naranja);
+  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
+  margin:.5rem 0;line-height:1.65}
 /* ═══ EL TEXTO BIBLICO ═══
    El texto de la Biblia se ve DISTINTO del texto de la app, a proposito. Con
    la misma tipografia sans de la interfaz, la cita y la explicacion se leian
@@ -261,7 +265,9 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
    diez botones de un capitulo hay que tocar para parar. */
 .btn-voz.sonando{background:var(--cielo);border-color:var(--cielo);color:var(--v-sobre,#fff)}
 
-.verse-box{background:#e3f2fd;border-left:5px solid var(--cielo);border-radius:8px;padding:.75rem .9rem;font-size:.87rem;font-style:italic;margin:.5rem 0;line-height:1.7}
+.verse-box{background:var(--v-sup,#fff);border-left:5px solid var(--cielo);
+  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.87rem,.84rem + .12vw,.94rem);
+  margin:.5rem 0;line-height:1.7;box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05))}
 ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 
 .timer{font-size:1.35rem;font-weight:900;color:var(--naranja);font-variant-numeric:tabular-nums}
@@ -474,6 +480,64 @@ body.av .tj .rev{font-size:1.08rem}
 .rec-comp{margin-top:.6rem;font-size:.85rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
 .rec-comp.ok{background:#e8f5e9;color:var(--verde)}
 .rec-comp.ko{background:#fee2e2;color:var(--rojo)}
+
+/* ═══ LA PANTALLA DE ESTUDIO DE LAS CREENCIAS ═══
+   MECANISMO
+   Las 28 creencias se generan (tools/creencias/gen_creencias.py) y hasta hoy
+   salian con los mismos tres bloques de color que todo lo demas: la
+   declaracion, que es lo UNICO que se memoriza palabra por palabra, pesaba
+   visualmente igual que una nota al pie, y las referencias iban en una lista
+   numerada donde «2 Pedro 1:20» quedaba subrayado y el «,21» al lado en texto
+   plano.
+
+   Lo que cambia: la declaracion es el titular, las referencias son fichas que
+   se tocan, y el cuerpo crece con la pantalla en vez de quedarse en .85rem
+   fijos. Todo sale de los tokens --v-*, asi que cambiar la piel lo mueve
+   entero y no la mitad. */
+
+/* LA DECLARACION. Medida de linea: ~60 caracteres, la misma regla que ya usa
+   el modo lectura. La letra crece con la pantalla pero con tope, o en el
+   escritorio se vuelve un cartel. */
+.decl{background:var(--v-sup,#fff);border-left:5px solid var(--azul);
+  border-radius:var(--v-r-sm,12px);padding:1rem 1.1rem;margin:.2rem 0 .6rem;
+  box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05));
+  font-size:clamp(.94rem,.86rem + .45vw,1.1rem);line-height:1.62;max-width:62ch}
+.decl-n{display:block;font-size:.7rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--gris);margin-bottom:.35rem}
+.decl-src{margin-top:.7rem;padding-top:.55rem;border-top:1px solid var(--v-linea,#e5e7eb);
+  font-size:.75rem;line-height:1.5;color:var(--gris)}
+
+/* Rotulo de bloque: hace de sub-titulo dentro de una seccion sin gastar un
+   <h4> que competiria con el h3 de la seccion. */
+.bloque-t{font-size:.78rem;font-weight:800;letter-spacing:.03em;
+  text-transform:uppercase;color:var(--gris);margin:.2rem 0 .5rem}
+
+/* LAS REFERENCIAS, UNA FICHA CADA UNA.
+   auto-fill con minimo de 10rem: en un celular caben una o dos por fila y en
+   el escritorio cuatro, sin un solo media query. El area tocable es la ficha
+   entera (--v-toque), no las nueve letras de la cita. */
+.refs{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:.45rem}
+.ref{display:flex;align-items:center;min-height:var(--v-toque,44px);
+  padding:.45rem .7rem;background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
+  border-radius:var(--v-r-sm,12px);font-size:.87rem;font-weight:600;line-height:1.35;
+  /* La ficha entera va del color de la cita: si no, en «2 Pedro 1:20,21» la
+     coma se queda negra entre dos botones azules y se lee como un pegote.
+     Ese detalle es el que se veia mal. */
+  color:var(--cielo)}
+/* Dentro de una ficha la cita ya se anuncia tocable con la ficha misma: el
+   subrayado sobraba y era justo lo que hacia ver el «,21» como un pegote. */
+.ref .vref{text-decoration:none;font-weight:700;text-align:left}
+.ref:hover{border-color:var(--cielo)}
+
+/* EL COMPLETAR DENTRO DE «RECORDAR». Los campos van en linea con el texto:
+   partirlos en renglones propios rompe la frase, que es justo lo que hay que
+   recordar entera. */
+.rec-rell{font-size:.9rem;line-height:2.1;margin-bottom:.7rem}
+.rec-in{width:8.5rem;max-width:60%;padding:.2rem .45rem;border:0;border-bottom:2px solid var(--cielo);
+  background:var(--v-sup2,#fff8ec);border-radius:6px 6px 0 0;font-family:inherit;
+  font-size:.9rem;color:var(--txt)}
+.rec-in.ok{border-bottom-color:var(--verde);color:var(--verde);font-weight:700}
+.rec-in.ko{border-bottom-color:var(--rojo);color:var(--rojo);font-weight:700}
 
 @media(max-width:620px){
   .nav-b span{display:none}

@@ -59,7 +59,12 @@ function declaracionDe(id) {
 /** Que fuente cita la declaracion al pie: la cartilla o el libro de las 28. */
 function fuenteDe(id) {
   const prim = (CR_CONTENIDO[id] || [])[0];
-  const m = prim && prim.h.match(/<small>(Cartilla|Libro)\b/);
+  /* Se lee del ATRIBUTO, no del texto. Antes se buscaba «<small>Cartilla»:
+     el dia que la declaracion cambio de maquetado (dejo de ir en una caja con
+     <small> y paso a ser una cita con su pie), este verificador empezo a medir
+     la creencia 14 contra la cartilla y a darla por rota, cuando lo que pasa
+     es que la cartilla no la trae. La marca va en el dato. */
+  const m = prim && prim.h.match(/data-fuente="(cartilla|libro)"/i);
   return m ? m[1].toLowerCase() : 'cartilla';
 }
 
