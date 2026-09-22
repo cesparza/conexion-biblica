@@ -132,7 +132,28 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .cap .p{font-size:.7rem;color:var(--verde);font-weight:700;margin-top:5px}
 
 .sec{margin-bottom:1.3rem}
-.sec h3{font-size:.93rem;color:var(--azul);font-weight:700;margin-bottom:.6rem;border-left:4px solid var(--naranja);padding-left:.6rem}
+/* CABECERA DE SECCION. Ver el mecanismo en fuente/app.js, cabezaSec().
+   El rotulo NO va en azul ni en negrita grande: compite con el titulo de la
+   pantalla, que es lo que de verdad dice donde esta parada la nina. */
+/* CABECERA DEL CAPITULO O DE LA CREENCIA. Numero arriba y chico, nombre
+   grande: es lo unico que distingue esta pantalla de las otras 27. */
+.cap-cab{margin-bottom:1.1rem}
+.cap-ante{font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
+.cap-tit{margin:.3rem 0 0;font-size:clamp(1.35rem,1.15rem + .9vw,1.7rem);line-height:1.15;
+  font-weight:800;letter-spacing:-.02em;color:var(--txt)}
+.cap-meta{margin-top:.4rem;font-size:.78rem;color:var(--gris)}
+.sec-cab{display:flex;align-items:center;gap:.5rem;margin:0 0 .7rem;font-weight:400}
+.sec-rot{font-size:.7rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--gris);flex:0 0 auto}
+.sec-linea{flex:1 1 auto;height:1px;background:var(--v-linea,#e5e7eb);min-width:10px}
+.sec-capa{flex:0 0 auto;display:inline-flex;align-items:center;gap:.35rem;
+  font-size:.68rem;font-weight:800;letter-spacing:.02em;color:var(--azul)}
+.sec-capa i{width:6px;height:6px;border-radius:50%;background:var(--azul);display:block}
+/* Relleno, contorno y gris: una escala, no tres colores sin relacion. */
+.sec-capa.c-apoyo i{background:none;box-shadow:inset 0 0 0 1.5px var(--azul)}
+.sec-capa.c-contexto{color:var(--gris)}
+.sec-capa.c-contexto i{background:none;box-shadow:inset 0 0 0 1.5px var(--gris)}
+@media(max-width:420px){.sec-capa{font-size:.64rem}.sec-rot{font-size:.66rem}}
 .info-table{width:100%;border-collapse:collapse;font-size:.84rem;margin:.4rem 0}
 .info-table th{background:var(--azul);color:var(--v-sobre,#fff);padding:.5rem .7rem;text-align:left;font-size:.77rem}
 .info-table td{padding:.45rem .7rem;border-bottom:1px solid #eef0f4;vertical-align:top}
@@ -149,12 +170,12 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .tabla-scroll .info-table{margin:0}
 /* En papel no hay scroll: si queda envuelta, tiene que salir completa. */
 @media print{.tabla-scroll{overflow:visible}}
-.highlight-box{background:var(--v-sup,#fff);border-left:5px solid var(--verde);
-  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
-  margin:.5rem 0;line-height:1.65;box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05))}
-.warn-box{background:var(--v-sup2,#fff4e0);border-left:5px solid var(--naranja);
-  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
-  margin:.5rem 0;line-height:1.65}
+.highlight-box{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
+  border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
+  margin:.6rem 0;line-height:1.65}
+.warn-box{background:var(--v-sup2,#fff4e0);border:1px solid #F0DCBE;
+  border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
+  margin:.6rem 0;line-height:1.65}
 /* ═══ EL TEXTO BIBLICO ═══
    El texto de la Biblia se ve DISTINTO del texto de la app, a proposito. Con
    la misma tipografia sans de la interfaz, la cita y la explicacion se leian
@@ -265,9 +286,9 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
    diez botones de un capitulo hay que tocar para parar. */
 .btn-voz.sonando{background:var(--cielo);border-color:var(--cielo);color:var(--v-sobre,#fff)}
 
-.verse-box{background:var(--v-sup,#fff);border-left:5px solid var(--cielo);
-  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.87rem,.84rem + .12vw,.94rem);
-  margin:.5rem 0;line-height:1.7;box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05))}
+.verse-box{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
+  border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:clamp(.87rem,.84rem + .12vw,.94rem);
+  margin:.6rem 0;line-height:1.7;font-style:normal}
 ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 
 .timer{font-size:1.35rem;font-weight:900;color:var(--naranja);font-variant-numeric:tabular-nums}
@@ -468,13 +489,16 @@ body.av .tj .rev{font-size:1.08rem}
 .cf{padding:.35rem .9rem;border-radius:20px;border:1px solid #e2e5ea;background:#fff;
   font-size:.78rem;font-weight:700;color:var(--gris);cursor:pointer;font-family:inherit}
 .cf.on{background:var(--azul);color:#fff;border-color:var(--azul)}
-.sec[data-capa=apoyo] h3{border-left-color:var(--cielo)}
-.sec[data-capa=contexto] h3{border-left-color:var(--verde)}
-.sec h3 .pil{margin-left:.4rem;vertical-align:middle;font-size:.66rem}
-.recordar{margin-top:.7rem;padding:.75rem .85rem;background:#f7f8fb;border-radius:10px;border:1px solid #e7e9ee}
-.rec-tit{font-size:.7rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.03em;margin-bottom:.4rem}
+.recordar{margin-top:1rem;padding:.9rem 1rem;background:var(--v-sup,#fff);
+  border-radius:var(--v-r-sm,12px);border:1px solid var(--v-linea,#e5e7eb)}
+.rec-tit{font-size:.68rem;font-weight:800;color:var(--naranja);text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:.45rem}
 .rec-preg{font-size:.86rem;font-weight:700;color:var(--azul);margin-bottom:.6rem;line-height:1.4}
-.rec-ops{display:flex;gap:.5rem;flex-wrap:wrap}
+.rec-ops{display:flex;flex-direction:column;gap:.45rem;align-items:stretch}
+/* A lo ancho y en columna: tres opciones en fila se parten en un celular y
+   quedan de 80px, por debajo del area tocable. */
+.rec-ops .btn.peq{text-align:left;min-height:var(--v-toque,44px);font-size:.88rem;
+  border-radius:var(--v-r-sm,12px);padding:.5rem .9rem}
 .btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.8rem;border:1px solid #e2e5ea;background:#fff;color:var(--azul)}
 .btn.peq:disabled{opacity:.55;cursor:default}
 .rec-comp{margin-top:.6rem;font-size:.85rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
@@ -498,14 +522,23 @@ body.av .tj .rev{font-size:1.08rem}
 /* LA DECLARACION. Medida de linea: ~60 caracteres, la misma regla que ya usa
    el modo lectura. La letra crece con la pantalla pero con tope, o en el
    escritorio se vuelve un cartel. */
-.decl{background:var(--v-sup,#fff);border-left:5px solid var(--azul);
-  border-radius:var(--v-r-sm,12px);padding:1rem 1.1rem;margin:.2rem 0 .6rem;
-  box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05));
-  font-size:clamp(.94rem,.86rem + .45vw,1.1rem);line-height:1.62;max-width:62ch}
-.decl-n{display:block;font-size:.7rem;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--gris);margin-bottom:.35rem}
-.decl-src{margin-top:.7rem;padding-top:.55rem;border-top:1px solid var(--v-linea,#e5e7eb);
-  font-size:.75rem;line-height:1.5;color:var(--gris)}
+/* LA DECLARACION NO VA EN CAJA, y es deliberado.
+   Es lo unico que se memoriza palabra por palabra. Metida en una caja con
+   borde, sombra y barra de color pesaba igual que una nota al pie, y encima
+   sumaba una segunda raya vertical debajo de la de la seccion. Una caja es
+   para lo secundario. Lo principal va suelto, mas grande y con aire.
+   La medida de linea es 62 caracteres, la misma del modo lectura. */
+.decl{margin:.1rem 0 .2rem;padding:0;background:none;border:0;
+  font-size:clamp(1rem,.92rem + .5vw,1.16rem);line-height:1.62;
+  letter-spacing:-.005em;max-width:62ch}
+.decl-n{display:block;font-size:.7rem;font-weight:800;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--gris);margin-bottom:.45rem}
+/* La fuente se separa con una raya corta, no con un borde de lado a lado:
+   pertenece a la cita, no es otra seccion. */
+.decl-src{margin-top:.8rem;padding-top:0;border:0;font-size:.74rem;line-height:1.55;
+  color:var(--gris)}
+.decl-src::before{content:"";display:inline-block;width:18px;height:1px;
+  background:var(--v-linea,#e5e7eb);vertical-align:middle;margin-right:.5rem}
 
 /* Rotulo de bloque: hace de sub-titulo dentro de una seccion sin gastar un
    <h4> que competiria con el h3 de la seccion. */

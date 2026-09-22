@@ -1579,12 +1579,35 @@ if(typeof document!=='undefined'&&document.addEventListener)
 
    El filtro es de VISTA, no de estado: no se guarda en ningún lado, así que
    cambiar de capítulo o recargar la página siempre arranca en «Todo». */
-const CAPA_ETQ={nucleo:'Examen',apoyo:'Apoyo',contexto:'No entra'};
+const CAPA_ETQ={nucleo:'Entra al examen',apoyo:'Ayuda a entender',contexto:'No entra'};
+
+/* ── LA CABECERA DE UNA SECCION ─────────────────────────────────
+   ANTES: emoji + titulo azul en negrita + barra naranja a la izquierda +
+   pildora de color. Cuatro señales para decir dos cosas, y encima la caja de
+   adentro traía SU barra de color, así que quedaban dos rayas verticales
+   seguidas. Eso es lo que se veía cargado.
+
+   AHORA: el rótulo en versalitas, una línea que cruza hasta el borde, y la
+   capa al final con un punto. Los tres puntos son una escala que se lee sin
+   leer la palabra: relleno entra al examen, contorno ayuda a entender, gris
+   no entra. El emoji del título se quita aquí y no en los datos, porque los
+   mismos títulos los usan el buscador, la impresión y el revisor. */
+const SIN_EMOJI=/^[^\p{L}\p{N}]+/u;
+function tituloSec(t){
+  try{return String(t||'').replace(SIN_EMOJI,'').trim();}
+  catch(e){return String(t||'').replace(/^[^A-Za-z0-9\u00c0-\u024f]+/,'').trim();}
+}
+function cabezaSec(s){
+  const cap=s.capa||'';
+  return '<h3 class="sec-cab"><span class="sec-rot">'+tituloSec(s.t)+'</span>'+
+    '<span class="sec-linea"></span>'+
+    (cap?'<span class="sec-capa c-'+cap+'"><i></i>'+CAPA_ETQ[cap]+'</span>':'')+'</h3>';
+}
 
 function filtroCapas(){
   return '<div class="capa-filtro" role="group" aria-label="Filtrar por capa">'+
     '<button type="button" class="cf on" onclick="filtraCapa(this,\'\')">Todo</button>'+
-    '<button type="button" class="cf" onclick="filtraCapa(this,\'nucleo\')">Del examen</button></div>';
+    '<button type="button" class="cf" onclick="filtraCapa(this,\'nucleo\')">Solo lo del examen</button></div>';
 }
 
 function filtraCapa(btn,modo){
@@ -1682,21 +1705,18 @@ function verCap(id){
   const secs=CONTENIDO[id]||CONT_MODULOS[id]||[];
   const d=document.getElementById('detalle');
   d.innerHTML=
-    '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">'+
-    '<div><div style="font-size:1.15rem;font-weight:800;color:var(--azul)">'+esc(c.label)+'</div>'+
-    '<div style="font-size:.83rem;color:var(--gris)">'+esc(c.sub)+(c.src?' · '+esc(c.src):'')+
+    '<div class="cap-cab">'+
+    '<div class="cap-ante">'+esc(c.label)+'</div>'+
+    '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
+    '<div class="cap-meta">'+(c.src?esc(c.src)+' · ':'')+
+    (esCreencia(id)?'textos en RV1960':esMatutina()?'Devoción matutina':'texto RV1995')+
     (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
-    /* La píldora dice de qué fuente sale el texto del capítulo. En las 28
-       creencias no es la RV1995: la guía «En esto creemos» cita RV1960, y decir
-       lo contrario sería justo el error que este proyecto persigue. */
-    '<span class="pil az">'+(esCreencia(id)?'RV1960':esMatutina()?'Matutina':'RV1995')+'</span></div>'+
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
     (secs.some(s=>s.capa)?filtroCapas():'')+
-    secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'"><h3>'+s.t+
-      (s.capa?' <span class="pil '+{nucleo:'na',apoyo:'az',contexto:'ve'}[s.capa]+'">'+CAPA_ETQ[s.capa]+'</span>':'')+
-      '</h3>'+refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
+    secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
+      refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
     '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+

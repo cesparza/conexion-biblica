@@ -83,18 +83,18 @@ def pestanas(num):
     capa_decl = 'nucleo'
     if d['decl'] and d['fuente'] == 'libro':
         capa_decl = 'contexto'
-        h = ('<blockquote class="decl"><b class="decl-n">Creencia %d</b>%s'
+        h = ('<blockquote class="decl">%s'
              '<p class="decl-src" data-fuente="libro">Libro <i>Creencias de los Adventistas del Séptimo Día</i>, '
              'capítulo %d, página 200. La cartilla 2026 imprime aquí, por error de '
              'imprenta, el texto de la creencia 13; esta es la declaración que de '
              'verdad le corresponde. Por venir del libro y no de la cartilla, '
              '<strong>no entra al examen del reglamento</strong>.</p></blockquote>'
-             % (num, '«%s»' % d['decl'], num))
+             % ('«%s»' % d['decl'], num))
     elif d['decl']:
-        h = ('<blockquote class="decl"><b class="decl-n">Creencia %d</b>«%s»'
+        h = ('<blockquote class="decl">«%s»'
              '<p class="decl-src" data-fuente="cartilla">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, '
              '2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>'
-             % (num, d['decl']))
+             % (d['decl'],))
     else:
         capa_decl = 'contexto'
         h = wa('<strong>Creencia %d — %s</strong><br>La cartilla 2026 imprime aquí, por error, '

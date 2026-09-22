@@ -148,7 +148,28 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .cap .p{font-size:.7rem;color:var(--verde);font-weight:700;margin-top:5px}
 
 .sec{margin-bottom:1.3rem}
-.sec h3{font-size:.93rem;color:var(--azul);font-weight:700;margin-bottom:.6rem;border-left:4px solid var(--naranja);padding-left:.6rem}
+/* CABECERA DE SECCION. Ver el mecanismo en fuente/app.js, cabezaSec().
+   El rotulo NO va en azul ni en negrita grande: compite con el titulo de la
+   pantalla, que es lo que de verdad dice donde esta parada la nina. */
+/* CABECERA DEL CAPITULO O DE LA CREENCIA. Numero arriba y chico, nombre
+   grande: es lo unico que distingue esta pantalla de las otras 27. */
+.cap-cab{margin-bottom:1.1rem}
+.cap-ante{font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
+.cap-tit{margin:.3rem 0 0;font-size:clamp(1.35rem,1.15rem + .9vw,1.7rem);line-height:1.15;
+  font-weight:800;letter-spacing:-.02em;color:var(--txt)}
+.cap-meta{margin-top:.4rem;font-size:.78rem;color:var(--gris)}
+.sec-cab{display:flex;align-items:center;gap:.5rem;margin:0 0 .7rem;font-weight:400}
+.sec-rot{font-size:.7rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--gris);flex:0 0 auto}
+.sec-linea{flex:1 1 auto;height:1px;background:var(--v-linea,#e5e7eb);min-width:10px}
+.sec-capa{flex:0 0 auto;display:inline-flex;align-items:center;gap:.35rem;
+  font-size:.68rem;font-weight:800;letter-spacing:.02em;color:var(--azul)}
+.sec-capa i{width:6px;height:6px;border-radius:50%;background:var(--azul);display:block}
+/* Relleno, contorno y gris: una escala, no tres colores sin relacion. */
+.sec-capa.c-apoyo i{background:none;box-shadow:inset 0 0 0 1.5px var(--azul)}
+.sec-capa.c-contexto{color:var(--gris)}
+.sec-capa.c-contexto i{background:none;box-shadow:inset 0 0 0 1.5px var(--gris)}
+@media(max-width:420px){.sec-capa{font-size:.64rem}.sec-rot{font-size:.66rem}}
 .info-table{width:100%;border-collapse:collapse;font-size:.84rem;margin:.4rem 0}
 .info-table th{background:var(--azul);color:var(--v-sobre,#fff);padding:.5rem .7rem;text-align:left;font-size:.77rem}
 .info-table td{padding:.45rem .7rem;border-bottom:1px solid #eef0f4;vertical-align:top}
@@ -165,12 +186,12 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .tabla-scroll .info-table{margin:0}
 /* En papel no hay scroll: si queda envuelta, tiene que salir completa. */
 @media print{.tabla-scroll{overflow:visible}}
-.highlight-box{background:var(--v-sup,#fff);border-left:5px solid var(--verde);
-  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
-  margin:.5rem 0;line-height:1.65;box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05))}
-.warn-box{background:var(--v-sup2,#fff4e0);border-left:5px solid var(--naranja);
-  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
-  margin:.5rem 0;line-height:1.65}
+.highlight-box{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
+  border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
+  margin:.6rem 0;line-height:1.65}
+.warn-box{background:var(--v-sup2,#fff4e0);border:1px solid #F0DCBE;
+  border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:clamp(.85rem,.82rem + .12vw,.92rem);
+  margin:.6rem 0;line-height:1.65}
 /* ═══ EL TEXTO BIBLICO ═══
    El texto de la Biblia se ve DISTINTO del texto de la app, a proposito. Con
    la misma tipografia sans de la interfaz, la cita y la explicacion se leian
@@ -281,9 +302,9 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
    diez botones de un capitulo hay que tocar para parar. */
 .btn-voz.sonando{background:var(--cielo);border-color:var(--cielo);color:var(--v-sobre,#fff)}
 
-.verse-box{background:var(--v-sup,#fff);border-left:5px solid var(--cielo);
-  border-radius:var(--v-r-sm,12px);padding:.8rem .95rem;font-size:clamp(.87rem,.84rem + .12vw,.94rem);
-  margin:.5rem 0;line-height:1.7;box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05))}
+.verse-box{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
+  border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:clamp(.87rem,.84rem + .12vw,.94rem);
+  margin:.6rem 0;line-height:1.7;font-style:normal}
 ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 
 .timer{font-size:1.35rem;font-weight:900;color:var(--naranja);font-variant-numeric:tabular-nums}
@@ -484,13 +505,16 @@ body.av .tj .rev{font-size:1.08rem}
 .cf{padding:.35rem .9rem;border-radius:20px;border:1px solid #e2e5ea;background:#fff;
   font-size:.78rem;font-weight:700;color:var(--gris);cursor:pointer;font-family:inherit}
 .cf.on{background:var(--azul);color:#fff;border-color:var(--azul)}
-.sec[data-capa=apoyo] h3{border-left-color:var(--cielo)}
-.sec[data-capa=contexto] h3{border-left-color:var(--verde)}
-.sec h3 .pil{margin-left:.4rem;vertical-align:middle;font-size:.66rem}
-.recordar{margin-top:.7rem;padding:.75rem .85rem;background:#f7f8fb;border-radius:10px;border:1px solid #e7e9ee}
-.rec-tit{font-size:.7rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.03em;margin-bottom:.4rem}
+.recordar{margin-top:1rem;padding:.9rem 1rem;background:var(--v-sup,#fff);
+  border-radius:var(--v-r-sm,12px);border:1px solid var(--v-linea,#e5e7eb)}
+.rec-tit{font-size:.68rem;font-weight:800;color:var(--naranja);text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:.45rem}
 .rec-preg{font-size:.86rem;font-weight:700;color:var(--azul);margin-bottom:.6rem;line-height:1.4}
-.rec-ops{display:flex;gap:.5rem;flex-wrap:wrap}
+.rec-ops{display:flex;flex-direction:column;gap:.45rem;align-items:stretch}
+/* A lo ancho y en columna: tres opciones en fila se parten en un celular y
+   quedan de 80px, por debajo del area tocable. */
+.rec-ops .btn.peq{text-align:left;min-height:var(--v-toque,44px);font-size:.88rem;
+  border-radius:var(--v-r-sm,12px);padding:.5rem .9rem}
 .btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.8rem;border:1px solid #e2e5ea;background:#fff;color:var(--azul)}
 .btn.peq:disabled{opacity:.55;cursor:default}
 .rec-comp{margin-top:.6rem;font-size:.85rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
@@ -514,14 +538,23 @@ body.av .tj .rev{font-size:1.08rem}
 /* LA DECLARACION. Medida de linea: ~60 caracteres, la misma regla que ya usa
    el modo lectura. La letra crece con la pantalla pero con tope, o en el
    escritorio se vuelve un cartel. */
-.decl{background:var(--v-sup,#fff);border-left:5px solid var(--azul);
-  border-radius:var(--v-r-sm,12px);padding:1rem 1.1rem;margin:.2rem 0 .6rem;
-  box-shadow:var(--v-s1,0 1px 2px rgba(16,24,40,.05));
-  font-size:clamp(.94rem,.86rem + .45vw,1.1rem);line-height:1.62;max-width:62ch}
-.decl-n{display:block;font-size:.7rem;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--gris);margin-bottom:.35rem}
-.decl-src{margin-top:.7rem;padding-top:.55rem;border-top:1px solid var(--v-linea,#e5e7eb);
-  font-size:.75rem;line-height:1.5;color:var(--gris)}
+/* LA DECLARACION NO VA EN CAJA, y es deliberado.
+   Es lo unico que se memoriza palabra por palabra. Metida en una caja con
+   borde, sombra y barra de color pesaba igual que una nota al pie, y encima
+   sumaba una segunda raya vertical debajo de la de la seccion. Una caja es
+   para lo secundario. Lo principal va suelto, mas grande y con aire.
+   La medida de linea es 62 caracteres, la misma del modo lectura. */
+.decl{margin:.1rem 0 .2rem;padding:0;background:none;border:0;
+  font-size:clamp(1rem,.92rem + .5vw,1.16rem);line-height:1.62;
+  letter-spacing:-.005em;max-width:62ch}
+.decl-n{display:block;font-size:.7rem;font-weight:800;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--gris);margin-bottom:.45rem}
+/* La fuente se separa con una raya corta, no con un borde de lado a lado:
+   pertenece a la cita, no es otra seccion. */
+.decl-src{margin-top:.8rem;padding-top:0;border:0;font-size:.74rem;line-height:1.55;
+  color:var(--gris)}
+.decl-src::before{content:"";display:inline-block;width:18px;height:1px;
+  background:var(--v-linea,#e5e7eb);vertical-align:middle;margin-right:.5rem}
 
 /* Rotulo de bloque: hace de sub-titulo dentro de una seccion sin gastar un
    <h4> que competiria con el h3 de la seccion. */
@@ -2431,7 +2464,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '6666b8a36b1d';
+const VERSION_APP = '3f24e4efe3c6';
 
 const CAPS = [
  {
@@ -5424,7 +5457,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 1</b>«Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiración divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espíritu Santo. Por medio de esta Palabra, Dios comunica a los seres humanos el conocimiento necesario para alcanzar la salvación. Las Sagradas Escrituras son la infalible revelación de la voluntad divina. Son la norma del carácter, el criterio para evaluar la experiencia, la revelación autorizada de la doctrinas, y un registro fidedigno de los actos de Dios realizados en el curso de la historia»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiración divina mediante santos hombres de Dios que hablaron y escribieron impulsados por el Espíritu Santo. Por medio de esta Palabra, Dios comunica a los seres humanos el conocimiento necesario para alcanzar la salvación. Las Sagradas Escrituras son la infalible revelación de la voluntad divina. Son la norma del carácter, el criterio para evaluar la experiencia, la revelación autorizada de la doctrinas, y un registro fidedigno de los actos de Dios realizados en el curso de la historia»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr01",
     "t": "fill",
@@ -5504,7 +5537,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 2</b>«Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escapa a la comprensión humana, aunque se lo puede conocer por medio de su autorrevelación. Es digno para siempre de reverencia, adoración y servicio por parte de toda la creación.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escapa a la comprensión humana, aunque se lo puede conocer por medio de su autorrevelación. Es digno para siempre de reverencia, adoración y servicio por parte de toda la creación.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr02",
     "t": "fill",
@@ -5584,7 +5617,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 3</b>«Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad. Las cualidades y las facultades del Padre se manifiestan también en el Hijo y en el Espíritu Santo»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelidad. Las cualidades y las facultades del Padre se manifiestan también en el Hijo y en el Espíritu Santo»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr03",
     "t": "fill",
@@ -5664,7 +5697,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 4</b>«El Hijo Eterno se encarnó en Jesucristo. Por medio de Él fueron creadas todas las cosas, se reveló el carácter de Dios, se realizó la salvación y se juzga al mundo. Aunque era eternamente Dios, también se hizo verdaderamente hombre. Fue concebido por el Espíritu Santo, nació de María, vivió sin pecado y reveló el amor y la justicia divina. Sus milagros confirmaron que era el Mesías prometido. Murió en la cruz por nuestros pecados, resucitó, ascendió al cielo y hoy ministra en el Santuario celestial. Pronto volverá en gloria para liberar a su pueblo y restaurar todas las cosas.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«El Hijo Eterno se encarnó en Jesucristo. Por medio de Él fueron creadas todas las cosas, se reveló el carácter de Dios, se realizó la salvación y se juzga al mundo. Aunque era eternamente Dios, también se hizo verdaderamente hombre. Fue concebido por el Espíritu Santo, nació de María, vivió sin pecado y reveló el amor y la justicia divina. Sus milagros confirmaron que era el Mesías prometido. Murió en la cruz por nuestros pecados, resucitó, ascendió al cielo y hoy ministra en el Santuario celestial. Pronto volverá en gloria para liberar a su pueblo y restaurar todas las cosas.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr04",
     "t": "fill",
@@ -5744,7 +5777,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 5</b>«Dios el Espíritu Eterno desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención. Inspiró a los autores de las Escrituras. Infundió poder a la vida de Cristo. Atrae y convence a los seres humanos, y renueva a los que responden y los transforma a la imagen de Dios. Enviado por el Padre y el Hijo para estar siempre con sus hijos, concede dones espirituales a la iglesia, la capacita para dar testimonio en favor de Cristo y, en armonía con las Escrituras, la guía a toda la verdad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Dios el Espíritu Eterno desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención. Inspiró a los autores de las Escrituras. Infundió poder a la vida de Cristo. Atrae y convence a los seres humanos, y renueva a los que responden y los transforma a la imagen de Dios. Enviado por el Padre y el Hijo para estar siempre con sus hijos, concede dones espirituales a la iglesia, la capacita para dar testimonio en favor de Cristo y, en armonía con las Escrituras, la guía a toda la verdad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr05",
     "t": "fill",
@@ -5824,7 +5857,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 6</b>«Dios es el Creador de todas las cosas, y reveló en las Escrituras el relato auténtico de su actividad creadora. El Señor hizo en seis días «los cielos y la tierra» y todo ser viviente que la habita, y reposó en el séptimo día de esa primera semana. De ese modo estableció el sábado como un monumento perpetuo conmemorativo de la terminación de su obra creadora. Hizo al primer hombre y la primera mujer a su imagen como corona de la creación, y les dio dominio sobre el mundo y la responsabilidad de cuidar de él. Cuando el mundo quedó terminado era «bueno en gran manera», proclamando la gloria de Dios»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Dios es el Creador de todas las cosas, y reveló en las Escrituras el relato auténtico de su actividad creadora. El Señor hizo en seis días «los cielos y la tierra» y todo ser viviente que la habita, y reposó en el séptimo día de esa primera semana. De ese modo estableció el sábado como un monumento perpetuo conmemorativo de la terminación de su obra creadora. Hizo al primer hombre y la primera mujer a su imagen como corona de la creación, y les dio dominio sobre el mundo y la responsabilidad de cuidar de él. Cuando el mundo quedó terminado era «bueno en gran manera», proclamando la gloria de Dios»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr06",
     "t": "fill",
@@ -5904,7 +5937,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 7</b>«Dios creó al hombre y la mujer a su imagen, con libertad para pensar y actuar, siendo una unidad de cuerpo, mente y espíritu dependiente de Él. Al desobedecer, Adán y Eva cayeron, distorsionaron la imagen divina y quedaron sujetos a la muerte. Sus descendientes heredan una naturaleza caída, con tendencias al mal. Pero en Cristo, Dios reconcilió al mundo consigo mismo y, por medio del Espíritu Santo, restaura su imagen en los arrepentidos. Fuimos creados para su gloria, llamados a amar a Dios, al prójimo y a cuidar el entorno que nos rodea.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Dios creó al hombre y la mujer a su imagen, con libertad para pensar y actuar, siendo una unidad de cuerpo, mente y espíritu dependiente de Él. Al desobedecer, Adán y Eva cayeron, distorsionaron la imagen divina y quedaron sujetos a la muerte. Sus descendientes heredan una naturaleza caída, con tendencias al mal. Pero en Cristo, Dios reconcilió al mundo consigo mismo y, por medio del Espíritu Santo, restaura su imagen en los arrepentidos. Fuimos creados para su gloria, llamados a amar a Dios, al prójimo y a cuidar el entorno que nos rodea.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr07",
     "t": "fill",
@@ -5984,7 +6017,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 8</b>«La humanidad está inmersa en un conflicto entre Cristo y Satanás sobre el carácter de Dios, su ley y su soberanía. Este conflicto comenzó en el cielo cuando Lucifer, un ser creado, se rebeló y se convirtió en Satanás, arrastrando a otros ángeles. Introdujo el pecado en la Tierra al tentar a Adán y Eva, distorsionando la imagen de Dios en la humanidad y alterando la creación, culminando en el diluvio. El mundo es el escenario de este conflicto, observado por el universo. Cristo envía al Espíritu Santo y a sus ángeles para guiar, proteger y fortalecer a su pueblo.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«La humanidad está inmersa en un conflicto entre Cristo y Satanás sobre el carácter de Dios, su ley y su soberanía. Este conflicto comenzó en el cielo cuando Lucifer, un ser creado, se rebeló y se convirtió en Satanás, arrastrando a otros ángeles. Introdujo el pecado en la Tierra al tentar a Adán y Eva, distorsionando la imagen de Dios en la humanidad y alterando la creación, culminando en el diluvio. El mundo es el escenario de este conflicto, observado por el universo. Cristo envía al Espíritu Santo y a sus ángeles para guiar, proteger y fortalecer a su pueblo.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr08",
     "t": "fill",
@@ -6064,7 +6097,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 9</b>«La vida, muerte y resurrección de Cristo son el único medio provisto por Dios para expiar el pecado humano. Quienes aceptan esta expiación por fe reciben vida eterna y comprenden mejor el amor divino. La muerte de Jesús vindica la justicia de la ley de Dios y garantiza el perdón. Su sacrificio es vicario, expiatorio, reconciliador y transformador. Su resurrección proclama la victoria sobre el mal y asegura el triunfo final sobre el pecado y la muerte. Ella confirma el señorío de Cristo, ante quien toda rodilla se doblará en el cielo y en la tierra.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«La vida, muerte y resurrección de Cristo son el único medio provisto por Dios para expiar el pecado humano. Quienes aceptan esta expiación por fe reciben vida eterna y comprenden mejor el amor divino. La muerte de Jesús vindica la justicia de la ley de Dios y garantiza el perdón. Su sacrificio es vicario, expiatorio, reconciliador y transformador. Su resurrección proclama la victoria sobre el mal y asegura el triunfo final sobre el pecado y la muerte. Ella confirma el señorío de Cristo, ante quien toda rodilla se doblará en el cielo y en la tierra.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr09",
     "t": "fill",
@@ -6144,7 +6177,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 10</b>«Con amor infinito, Dios hizo que Cristo tomara nuestro lugar, para que fuéramos hechos justicia de Dios en Él. Guiados por el Espíritu Santo, reconocemos nuestro pecado, nos arrepentimos y creemos en Jesús como Salvador y ejemplo. Esta fe, don de la gracia divina, viene por la Palabra de Dios. A través de Cristo somos justificados, adoptados como hijos y liberados del pecado. El Espíritu nos hace nacer de nuevo, renueva nuestros corazones y nuestras mentes, graba su ley en nuestras mentes y nos capacita para una vida santa. Al permanecer en Cristo, participamos de su naturaleza y tenemos seguridad de salvación.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Con amor infinito, Dios hizo que Cristo tomara nuestro lugar, para que fuéramos hechos justicia de Dios en Él. Guiados por el Espíritu Santo, reconocemos nuestro pecado, nos arrepentimos y creemos en Jesús como Salvador y ejemplo. Esta fe, don de la gracia divina, viene por la Palabra de Dios. A través de Cristo somos justificados, adoptados como hijos y liberados del pecado. El Espíritu nos hace nacer de nuevo, renueva nuestros corazones y nuestras mentes, graba su ley en nuestras mentes y nos capacita para una vida santa. Al permanecer en Cristo, participamos de su naturaleza y tenemos seguridad de salvación.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr10",
     "t": "fill",
@@ -6224,7 +6257,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 11</b>«Jesús venció a las fuerzas del mal en la cruz, asegurando su destrucción final. Su victoria nos da poder sobre el mal, paz, gozo y la certeza de su amor. El Espíritu Santo habita en nosotros y nos libera de nuestro pasado. En Cristo, ya no vivimos en temor ni oscuridad. Somos llamados a crecer a su semejanza, mediante la oración, el estudio de su Palabra, la alabanza, la adoración y la misión. Al servir con amor y testificar de la salvación, cada momento se transforma en una experiencia espiritual guiada por su presencia.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Jesús venció a las fuerzas del mal en la cruz, asegurando su destrucción final. Su victoria nos da poder sobre el mal, paz, gozo y la certeza de su amor. El Espíritu Santo habita en nosotros y nos libera de nuestro pasado. En Cristo, ya no vivimos en temor ni oscuridad. Somos llamados a crecer a su semejanza, mediante la oración, el estudio de su Palabra, la alabanza, la adoración y la misión. Al servir con amor y testificar de la salvación, cada momento se transforma en una experiencia espiritual guiada por su presencia.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr11",
     "t": "fill",
@@ -6304,7 +6337,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 12</b>«La iglesia es la comunidad de creyentes que confiesan a Jesús como Señor y Salvador. Como pueblo de Dios, somos llamados a salir del mundo, reunirnos para adorar, estudiar la Palabra, compartir la Cena del Señor, servir y proclamar el evangelio. La iglesia recibe su autoridad de Cristo y las Escrituras. Es la familia de Dios, hijos adoptivos bajo el nuevo pacto; el cuerpo de Cristo, cuya cabeza es Él; y la esposa que Él santifica con su sacrificio. Al regresar, Cristo presentará una iglesia gloriosa, santa y sin mancha, formada por los fieles de todas las edades.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«La iglesia es la comunidad de creyentes que confiesan a Jesús como Señor y Salvador. Como pueblo de Dios, somos llamados a salir del mundo, reunirnos para adorar, estudiar la Palabra, compartir la Cena del Señor, servir y proclamar el evangelio. La iglesia recibe su autoridad de Cristo y las Escrituras. Es la familia de Dios, hijos adoptivos bajo el nuevo pacto; el cuerpo de Cristo, cuya cabeza es Él; y la esposa que Él santifica con su sacrificio. Al regresar, Cristo presentará una iglesia gloriosa, santa y sin mancha, formada por los fieles de todas las edades.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr12",
     "t": "fill",
@@ -6384,7 +6417,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 13</b>«La iglesia universal está compuesta de todos los que creen verdaderamente en Cristo; pero en los últimos días, una época de apostasía generalizada, se llamó a un remanente para que guarde los mandamientos de Dios y la fe de Jesús. Este remanente anuncia la llegada de la hora del juicio, proclama la salvación por medio de Cristo y pregona la proximidad de su segunda venida. Esta proclamación está simbolizada por los tres ángeles de Apocalipsis 14; coincide con la hora del juicio en los cielos y, como resultado, se produce una obra de arrepentimiento y reforma en la Tierra. Se invita a todos los creyentes a participar personalmente en este testimonio mundial»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«La iglesia universal está compuesta de todos los que creen verdaderamente en Cristo; pero en los últimos días, una época de apostasía generalizada, se llamó a un remanente para que guarde los mandamientos de Dios y la fe de Jesús. Este remanente anuncia la llegada de la hora del juicio, proclama la salvación por medio de Cristo y pregona la proximidad de su segunda venida. Esta proclamación está simbolizada por los tres ángeles de Apocalipsis 14; coincide con la hora del juicio en los cielos y, como resultado, se produce una obra de arrepentimiento y reforma en la Tierra. Se invita a todos los creyentes a participar personalmente en este testimonio mundial»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr13",
     "t": "fill",
@@ -6464,7 +6497,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "contexto",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 14</b>«La iglesia es un cuerpo constituido por muchos miembros, llamados de entre todas las naciones, razas, lenguas y pueblos. En Cristo somos una nueva creación; las diferencias de raza, cultura, educación y nacionalidad, y las diferencias entre encumbrados y humildes, ricos y pobres, hombres y mujeres, no deben causar divisiones entre nosotros. Todos somos iguales en Cristo, quien por un mismo Espíritu nos unió en comunión con él y los unos con los otros; debemos servir y ser servidos sin parcialidad ni reservas. Por medio de la revelación de Jesucristo en las Escrituras, participamos de la misma fe y la misma esperanza, y damos a todos un mismo testimonio. Esta unidad tiene sus orígenes en la unicidad del Dios triuno, que nos adoptó como hijos suyos»<p class=\"decl-src\" data-fuente=\"libro\">Libro <i>Creencias de los Adventistas del Séptimo Día</i>, capítulo 14, página 200. La cartilla 2026 imprime aquí, por error de imprenta, el texto de la creencia 13; esta es la declaración que de verdad le corresponde. Por venir del libro y no de la cartilla, <strong>no entra al examen del reglamento</strong>.</p></blockquote>"
+   "h": "<blockquote class=\"decl\">«La iglesia es un cuerpo constituido por muchos miembros, llamados de entre todas las naciones, razas, lenguas y pueblos. En Cristo somos una nueva creación; las diferencias de raza, cultura, educación y nacionalidad, y las diferencias entre encumbrados y humildes, ricos y pobres, hombres y mujeres, no deben causar divisiones entre nosotros. Todos somos iguales en Cristo, quien por un mismo Espíritu nos unió en comunión con él y los unos con los otros; debemos servir y ser servidos sin parcialidad ni reservas. Por medio de la revelación de Jesucristo en las Escrituras, participamos de la misma fe y la misma esperanza, y damos a todos un mismo testimonio. Esta unidad tiene sus orígenes en la unicidad del Dios triuno, que nos adoptó como hijos suyos»<p class=\"decl-src\" data-fuente=\"libro\">Libro <i>Creencias de los Adventistas del Séptimo Día</i>, capítulo 14, página 200. La cartilla 2026 imprime aquí, por error de imprenta, el texto de la creencia 13; esta es la declaración que de verdad le corresponde. Por venir del libro y no de la cartilla, <strong>no entra al examen del reglamento</strong>.</p></blockquote>"
   },
   {
    "t": "📖 Textos clave",
@@ -6513,7 +6546,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 15</b>«Por medio del bautismo confesamos nuestra fe en la muerte y resurrección de Jesucristo, y damos testimonio de nuestra muerte al pecado y de nuestro propósito de andar en novedad de vida. De este modo reconocemos a Cristo como nuestro Señor y Salvador, llegamos a ser su pueblo y somos recibidos como miembros de su iglesia. El bautismo es un símbolo de nuestra unión con Cristo, del perdón de nuestros pecados y de nuestro recibimiento del Espíritu Santo. Se realiza por inmersión en agua, y depende de una afirmación de fe en Jesús y de la evidencia de arrepentimiento del pecado. Sigue a la instrucción en las Sagradas Escrituras y a la aceptación de sus enseñanzas.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Por medio del bautismo confesamos nuestra fe en la muerte y resurrección de Jesucristo, y damos testimonio de nuestra muerte al pecado y de nuestro propósito de andar en novedad de vida. De este modo reconocemos a Cristo como nuestro Señor y Salvador, llegamos a ser su pueblo y somos recibidos como miembros de su iglesia. El bautismo es un símbolo de nuestra unión con Cristo, del perdón de nuestros pecados y de nuestro recibimiento del Espíritu Santo. Se realiza por inmersión en agua, y depende de una afirmación de fe en Jesús y de la evidencia de arrepentimiento del pecado. Sigue a la instrucción en las Sagradas Escrituras y a la aceptación de sus enseñanzas.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr15",
     "t": "fill",
@@ -6593,7 +6626,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 16</b>«La Cena del Señor es una participación en los emblemas del cuerpo y la sangre de Jesús como expresión de fe en él, nuestro Señor y Salvador. Cristo está presente en esta experiencia de comunión para encontrarse con su pueblo y fortalecerlo. Al participar de la Cena, proclamamos gozosamente la muerte del Señor hasta que venga. La preparación para la Cena incluye un examen de conciencia, el arrepentimiento y la confesión. El Maestro ordenó el servicio del lavamiento de los pies para denotar una renovada purificación, para expresar la disposición a servirnos mutuamente en humildad cristiana, y para unir nuestros corazones en amor. El servicio de comunión está abierto a todos los creyentes cristianos.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«La Cena del Señor es una participación en los emblemas del cuerpo y la sangre de Jesús como expresión de fe en él, nuestro Señor y Salvador. Cristo está presente en esta experiencia de comunión para encontrarse con su pueblo y fortalecerlo. Al participar de la Cena, proclamamos gozosamente la muerte del Señor hasta que venga. La preparación para la Cena incluye un examen de conciencia, el arrepentimiento y la confesión. El Maestro ordenó el servicio del lavamiento de los pies para denotar una renovada purificación, para expresar la disposición a servirnos mutuamente en humildad cristiana, y para unir nuestros corazones en amor. El servicio de comunión está abierto a todos los creyentes cristianos.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr16",
     "t": "fill",
@@ -6673,7 +6706,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 17</b>«Dios otorga dones espirituales a todos los miembros de su iglesia en todas las épocas, para servir con amor al prójimo y edificar la iglesia. Estos dones, distribuidos por el Espíritu Santo según su voluntad, incluyen fe, sanidad, profecía, enseñanza, administración, compasión, entre otros. Algunos son llamados a funciones específicas como pastores, evangelistas o maestros, para preparar a los creyentes, fortalecer la iglesia y promover la unidad en la fe. Cuando los miembros usan fielmente estos dones, la iglesia crece, se protege de errores, y se edifica en la fe y el amor.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Dios otorga dones espirituales a todos los miembros de su iglesia en todas las épocas, para servir con amor al prójimo y edificar la iglesia. Estos dones, distribuidos por el Espíritu Santo según su voluntad, incluyen fe, sanidad, profecía, enseñanza, administración, compasión, entre otros. Algunos son llamados a funciones específicas como pastores, evangelistas o maestros, para preparar a los creyentes, fortalecer la iglesia y promover la unidad en la fe. Cuando los miembros usan fielmente estos dones, la iglesia crece, se protege de errores, y se edifica en la fe y el amor.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr17",
     "t": "fill",
@@ -6753,7 +6786,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 18</b>«Uno de los dones del Espíritu Santo es el de profecía. Este don es una señal identificadora de la iglesia remanente y se manifestó en el ministerio de Elena G. de White. Como mensajera del Señor, sus escritos son una permanente y autorizada fuente de verdad que proporciona consuelo, dirección, instrucción y corrección a la iglesia. Ellos también establecen con claridad que la Biblia es la norma por la cual debe ser probada toda enseñanza y toda experiencia»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Uno de los dones del Espíritu Santo es el de profecía. Este don es una señal identificadora de la iglesia remanente y se manifestó en el ministerio de Elena G. de White. Como mensajera del Señor, sus escritos son una permanente y autorizada fuente de verdad que proporciona consuelo, dirección, instrucción y corrección a la iglesia. Ellos también establecen con claridad que la Biblia es la norma por la cual debe ser probada toda enseñanza y toda experiencia»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr18",
     "t": "fill",
@@ -6833,7 +6866,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 19</b>«Los Diez Mandamientos reflejan los principios de la ley de Dios y se cumplen en la vida de Cristo. Expresan su amor, voluntad y propósito para la conducta humana, y son válidos para todos en todo tiempo. Son la base del pacto divino y la norma en el juicio. El Espíritu Santo usa la ley para revelar el pecado y mostrar la necesidad de un Salvador. Aunque la salvación es por gracia, la obediencia es su fruto. Obedecer desarrolla el carácter cristiano, muestra amor a Dios y al prójimo, y evidencia el poder de Cristo para transformar vidas.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Los Diez Mandamientos reflejan los principios de la ley de Dios y se cumplen en la vida de Cristo. Expresan su amor, voluntad y propósito para la conducta humana, y son válidos para todos en todo tiempo. Son la base del pacto divino y la norma en el juicio. El Espíritu Santo usa la ley para revelar el pecado y mostrar la necesidad de un Salvador. Aunque la salvación es por gracia, la obediencia es su fruto. Obedecer desarrolla el carácter cristiano, muestra amor a Dios y al prójimo, y evidencia el poder de Cristo para transformar vidas.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr19",
     "t": "fill",
@@ -6913,7 +6946,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 20</b>«Después de crear el mundo en seis días, Dios descansó el séptimo e instituyó el sábado como recordatorio de la Creación para toda la humanidad. El cuarto mandamiento ordena su observancia como día de reposo, adoración y servicio, siguiendo el ejemplo de Jesús. El sábado representa nuestra redención en Cristo, es señal de santificación, lealtad y esperanza en la vida eterna. También es un pacto perpetuo entre Dios y su pueblo. Su observancia, de puesta de sol a puesta de sol, es una celebración gozosa de la obra creadora y redentora de Dios.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Después de crear el mundo en seis días, Dios descansó el séptimo e instituyó el sábado como recordatorio de la Creación para toda la humanidad. El cuarto mandamiento ordena su observancia como día de reposo, adoración y servicio, siguiendo el ejemplo de Jesús. El sábado representa nuestra redención en Cristo, es señal de santificación, lealtad y esperanza en la vida eterna. También es un pacto perpetuo entre Dios y su pueblo. Su observancia, de puesta de sol a puesta de sol, es una celebración gozosa de la obra creadora y redentora de Dios.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr20",
     "t": "fill",
@@ -6993,7 +7026,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 21</b>«Somos mayordomos de Dios, a quienes se nos ha confiado tiempo y oportunidades, capacidades y posesiones, y las bendiciones de la tierra y sus recursos. Y somos responsables ante él por el empleo adecuado de todas esas dádivas. Reconocemos el derecho de propiedad por parte de Dios mediante nuestro servicio fiel a él y a nuestros semejantes, y mediante la devolución de los diezmos y las ofrendas que damos para la proclamación de su evangelio y para el sostén y desarrollo de su iglesia. La mayordomía es un privilegio que Dios nos ha concedido para que crezcamos en amor y para que logremos la victoria sobre el egoísmo y la codicia. El mayordomo fiel se regocija por las bendiciones que reciben los demás como fruto de su fidelidad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Somos mayordomos de Dios, a quienes se nos ha confiado tiempo y oportunidades, capacidades y posesiones, y las bendiciones de la tierra y sus recursos. Y somos responsables ante él por el empleo adecuado de todas esas dádivas. Reconocemos el derecho de propiedad por parte de Dios mediante nuestro servicio fiel a él y a nuestros semejantes, y mediante la devolución de los diezmos y las ofrendas que damos para la proclamación de su evangelio y para el sostén y desarrollo de su iglesia. La mayordomía es un privilegio que Dios nos ha concedido para que crezcamos en amor y para que logremos la victoria sobre el egoísmo y la codicia. El mayordomo fiel se regocija por las bendiciones que reciben los demás como fruto de su fidelidad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr21",
     "t": "fill",
@@ -7073,7 +7106,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 22</b>«Somos llamados a reflejar los principios del cielo, dejando que el Espíritu Santo forme en nosotros el carácter de Cristo. Por eso, elegimos actividades que promuevan pureza, salud y gozo cristiano. Nuestra vestimenta debe ser modesta y de buen gusto, mostrando una belleza interior. Como templos del Espíritu Santo, cuidamos nuestro cuerpo con ejercicio, descanso y una alimentación saludable. Nos abstenemos del alcohol, tabaco, drogas y alimentos inmundos, según las Escrituras. Vivimos en armonía con la disciplina de Cristo, quien desea que tengamos salud, alegría y todo lo bueno.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Somos llamados a reflejar los principios del cielo, dejando que el Espíritu Santo forme en nosotros el carácter de Cristo. Por eso, elegimos actividades que promuevan pureza, salud y gozo cristiano. Nuestra vestimenta debe ser modesta y de buen gusto, mostrando una belleza interior. Como templos del Espíritu Santo, cuidamos nuestro cuerpo con ejercicio, descanso y una alimentación saludable. Nos abstenemos del alcohol, tabaco, drogas y alimentos inmundos, según las Escrituras. Vivimos en armonía con la disciplina de Cristo, quien desea que tengamos salud, alegría y todo lo bueno.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr22",
     "t": "fill",
@@ -7153,7 +7186,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 23</b>«El matrimonio fue establecido por Dios como una unión para toda la vida entre un hombre y una mujer, basada en el amor y la fe compartida. Es un compromiso sagrado que refleja la relación entre Cristo y su iglesia. Jesús enseñó que el divorcio solo es aceptable por inmoralidad sexual; fuera de eso, volver a casarse es adulterio. Aunque no todas las familias son ideales, en Cristo los esposos pueden alcanzar unidad. Dios desea que la familia crezca en amor y madurez, y que los padres eduquen a sus hijos con ejemplo y fidelidad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«El matrimonio fue establecido por Dios como una unión para toda la vida entre un hombre y una mujer, basada en el amor y la fe compartida. Es un compromiso sagrado que refleja la relación entre Cristo y su iglesia. Jesús enseñó que el divorcio solo es aceptable por inmoralidad sexual; fuera de eso, volver a casarse es adulterio. Aunque no todas las familias son ideales, en Cristo los esposos pueden alcanzar unidad. Dios desea que la familia crezca en amor y madurez, y que los padres eduquen a sus hijos con ejemplo y fidelidad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr23",
     "t": "fill",
@@ -7233,7 +7266,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 24</b>«Hay un santuario en el cielo donde Cristo ministra como nuestro Sumo Sacerdote desde su ascensión. Su sacrificio en la cruz fue suficiente, pero en 1844 comenzó la fase final de su ministerio: el juicio investigador. Este proceso, simbolizado en el Día de la Expiación, busca revelar quiénes, muertos o vivos, están en Cristo y preparados para la vida eterna. Esta obra celestial vindica la justicia de Dios y confirma que los fieles recibirán el reino. Cuando Cristo concluya este ministerio, terminará el tiempo de prueba antes de su regreso.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«Hay un santuario en el cielo donde Cristo ministra como nuestro Sumo Sacerdote desde su ascensión. Su sacrificio en la cruz fue suficiente, pero en 1844 comenzó la fase final de su ministerio: el juicio investigador. Este proceso, simbolizado en el Día de la Expiación, busca revelar quiénes, muertos o vivos, están en Cristo y preparados para la vida eterna. Esta obra celestial vindica la justicia de Dios y confirma que los fieles recibirán el reino. Cuando Cristo concluya este ministerio, terminará el tiempo de prueba antes de su regreso.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr24",
     "t": "fill",
@@ -7313,7 +7346,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 25</b>«La segunda venida de Cristo es la esperanza suprema de la iglesia y la culminación del evangelio. Será un evento literal, personal, visible y global. En su regreso, los justos muertos resucitarán y, junto con los vivos fieles, serán glorificados y llevados al cielo. Los impíos morirán. El cumplimiento de las profecías y las condiciones actuales del mundo indican que este evento es inminente. Aunque la fecha exacta no ha sido revelada, se nos llama a vivir preparados en todo momento para su regreso.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«La segunda venida de Cristo es la esperanza suprema de la iglesia y la culminación del evangelio. Será un evento literal, personal, visible y global. En su regreso, los justos muertos resucitarán y, junto con los vivos fieles, serán glorificados y llevados al cielo. Los impíos morirán. El cumplimiento de las profecías y las condiciones actuales del mundo indican que este evento es inminente. Aunque la fecha exacta no ha sido revelada, se nos llama a vivir preparados en todo momento para su regreso.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr25",
     "t": "fill",
@@ -7393,7 +7426,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 26</b>«La consecuencia del pecado es la muerte, pero Dios, el único inmortal, dará vida eterna a los redimidos. Hasta entonces, la muerte es un estado de inconsciencia. Cuando Cristo regrese, los justos muertos resucitarán y, junto con los vivos fieles, serán glorificados y llevados con Él. La resurrección de los impíos ocurrirá mil años después, como parte del juicio final.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«La consecuencia del pecado es la muerte, pero Dios, el único inmortal, dará vida eterna a los redimidos. Hasta entonces, la muerte es un estado de inconsciencia. Cuando Cristo regrese, los justos muertos resucitarán y, junto con los vivos fieles, serán glorificados y llevados con Él. La resurrección de los impíos ocurrirá mil años después, como parte del juicio final.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr26",
     "t": "fill",
@@ -7473,7 +7506,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 27</b>«El milenio es el período de mil años en que Cristo reinará con sus santos en el cielo, entre la primera y la segunda resurrección. Durante ese tiempo, los impíos serán juzgados, y la Tierra quedará desolada, habitada solo por Satanás y sus ángeles. Al final del milenio, Cristo, los redimidos y la Santa Ciudad descenderán del cielo. Los impíos resucitarán y, junto con Satanás, rodearán la ciudad, pero serán destruidos por el fuego de Dios. Así, el pecado y los pecadores serán eliminados para siempre.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«El milenio es el período de mil años en que Cristo reinará con sus santos en el cielo, entre la primera y la segunda resurrección. Durante ese tiempo, los impíos serán juzgados, y la Tierra quedará desolada, habitada solo por Satanás y sus ángeles. Al final del milenio, Cristo, los redimidos y la Santa Ciudad descenderán del cielo. Los impíos resucitarán y, junto con Satanás, rodearán la ciudad, pero serán destruidos por el fuego de Dios. Así, el pecado y los pecadores serán eliminados para siempre.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr27",
     "t": "fill",
@@ -7553,7 +7586,7 @@ const CONTENIDO = {
   {
    "t": "📜 La declaración",
    "capa": "nucleo",
-   "h": "<blockquote class=\"decl\"><b class=\"decl-n\">Creencia 28</b>«En la Tierra Nueva, donde habita la justicia, Dios dará un hogar eterno a los redimidos. Será un lugar perfecto de vida, amor, gozo y aprendizaje continuo en su presencia. Allí Dios vivirá con su pueblo, y ya no habrá más sufrimiento ni muerte. El gran conflicto habrá terminado, y el pecado no existirá jamás. Todo el universo proclamará que Dios es amor, y Él reinará por la eternidad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
+   "h": "<blockquote class=\"decl\">«En la Tierra Nueva, donde habita la justicia, Dios dará un hogar eterno a los redimidos. Será un lugar perfecto de vida, amor, gozo y aprendizaje continuo en su presencia. Allí Dios vivirá con su pueblo, y ya no habrá más sufrimiento ni muerte. El gran conflicto habrá terminado, y el pecado no existirá jamás. Todo el universo proclamará que Dios es amor, y Él reinará por la eternidad.»<p class=\"decl-src\" data-fuente=\"cartilla\">Cartilla <i>En esto creemos</i>, Unión Colombiana del Sur, 2026. Es la redacción que se evalúa: se transcribe tal cual.</p></blockquote>",
    "preg": {
     "cap": "cr28",
     "t": "fill",
@@ -36846,12 +36879,35 @@ if(typeof document!=='undefined'&&document.addEventListener)
 
    El filtro es de VISTA, no de estado: no se guarda en ningún lado, así que
    cambiar de capítulo o recargar la página siempre arranca en «Todo». */
-const CAPA_ETQ={nucleo:'Examen',apoyo:'Apoyo',contexto:'No entra'};
+const CAPA_ETQ={nucleo:'Entra al examen',apoyo:'Ayuda a entender',contexto:'No entra'};
+
+/* ── LA CABECERA DE UNA SECCION ─────────────────────────────────
+   ANTES: emoji + titulo azul en negrita + barra naranja a la izquierda +
+   pildora de color. Cuatro señales para decir dos cosas, y encima la caja de
+   adentro traía SU barra de color, así que quedaban dos rayas verticales
+   seguidas. Eso es lo que se veía cargado.
+
+   AHORA: el rótulo en versalitas, una línea que cruza hasta el borde, y la
+   capa al final con un punto. Los tres puntos son una escala que se lee sin
+   leer la palabra: relleno entra al examen, contorno ayuda a entender, gris
+   no entra. El emoji del título se quita aquí y no en los datos, porque los
+   mismos títulos los usan el buscador, la impresión y el revisor. */
+const SIN_EMOJI=/^[^\p{L}\p{N}]+/u;
+function tituloSec(t){
+  try{return String(t||'').replace(SIN_EMOJI,'').trim();}
+  catch(e){return String(t||'').replace(/^[^A-Za-z0-9\u00c0-\u024f]+/,'').trim();}
+}
+function cabezaSec(s){
+  const cap=s.capa||'';
+  return '<h3 class="sec-cab"><span class="sec-rot">'+tituloSec(s.t)+'</span>'+
+    '<span class="sec-linea"></span>'+
+    (cap?'<span class="sec-capa c-'+cap+'"><i></i>'+CAPA_ETQ[cap]+'</span>':'')+'</h3>';
+}
 
 function filtroCapas(){
   return '<div class="capa-filtro" role="group" aria-label="Filtrar por capa">'+
     '<button type="button" class="cf on" onclick="filtraCapa(this,\'\')">Todo</button>'+
-    '<button type="button" class="cf" onclick="filtraCapa(this,\'nucleo\')">Del examen</button></div>';
+    '<button type="button" class="cf" onclick="filtraCapa(this,\'nucleo\')">Solo lo del examen</button></div>';
 }
 
 function filtraCapa(btn,modo){
@@ -36949,21 +37005,18 @@ function verCap(id){
   const secs=CONTENIDO[id]||CONT_MODULOS[id]||[];
   const d=document.getElementById('detalle');
   d.innerHTML=
-    '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">'+
-    '<div><div style="font-size:1.15rem;font-weight:800;color:var(--azul)">'+esc(c.label)+'</div>'+
-    '<div style="font-size:.83rem;color:var(--gris)">'+esc(c.sub)+(c.src?' · '+esc(c.src):'')+
+    '<div class="cap-cab">'+
+    '<div class="cap-ante">'+esc(c.label)+'</div>'+
+    '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
+    '<div class="cap-meta">'+(c.src?esc(c.src)+' · ':'')+
+    (esCreencia(id)?'textos en RV1960':esMatutina()?'Devoción matutina':'texto RV1995')+
     (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
-    /* La píldora dice de qué fuente sale el texto del capítulo. En las 28
-       creencias no es la RV1995: la guía «En esto creemos» cita RV1960, y decir
-       lo contrario sería justo el error que este proyecto persigue. */
-    '<span class="pil az">'+(esCreencia(id)?'RV1960':esMatutina()?'Matutina':'RV1995')+'</span></div>'+
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
     (secs.some(s=>s.capa)?filtroCapas():'')+
-    secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'"><h3>'+s.t+
-      (s.capa?' <span class="pil '+{nucleo:'na',apoyo:'az',contexto:'ve'}[s.capa]+'">'+CAPA_ETQ[s.capa]+'</span>':'')+
-      '</h3>'+refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
+    secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
+      refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
     '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
     '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
     '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+
