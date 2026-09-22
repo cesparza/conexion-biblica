@@ -52,6 +52,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         limpiaRetiradasDe, textosRetirados,
         pintaRevisor, revCapsDe, aplicaMarcas, REV_CUENTA, haceEvaluacion,
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
+        filaParticipante, ponParts:v=>{partsCache=v},
         el:id=>document.getElementById(id)`;
 
 let store={};
@@ -2005,6 +2006,34 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'El primer tramo abre solo su versiculo, no hasta el final de la lista');
   ok(/verVers\(this,'1corintios-15',20,22\)/.test(g),
     'Y el tramo con guion abre su propio rango');
+}
+
+/* ── LA LISTA DE PARTICIPANTES DICE CUAL ES CUAL ────────────────────
+   Medido en produccion: 27 participantes para 15 nombres, o sea 12 filas son
+   un nombre repetido con otro codigo. En pantalla se veian identicas y no
+   habia forma de saber cual quitar. */
+{
+  const lista=[
+    {id:'a1',nombre:'Alaia',categoria:'av',codigo:'7DJWD6',intentos:1},
+    {id:'a2',nombre:'Alaia',categoria:'av',codigo:'S2PSYV',intentos:0},
+    {id:'j1',nombre:'Jaky',categoria:'ec2',codigo:'C9TJKS',intentos:1}
+  ];
+  A.ponParts(lista);
+  const f1=A.filaParticipante(lista[0]), f2=A.filaParticipante(lista[1]), f3=A.filaParticipante(lista[2]);
+  ok(f1.indexOf('otro c\u00f3digo')>=0 && f2.indexOf('otro c\u00f3digo')>=0,
+    'Las dos filas del mismo nombre se marcan como repetidas');
+  ok(f2.indexOf('sin usar')>=0 && f1.indexOf('sin usar')<0,
+    'Y la que se puede quitar sin pensarlo es la que nunca se uso');
+  ok(f3.indexOf('otro c\u00f3digo')<0,'Un nombre unico no lleva marca');
+  ok(f1.indexOf('editaParticipante')>=0,'Cada fila se puede editar sin quitar y volver a crear');
+  ok(f1.indexOf('class="pf-b pf-x"')>=0 && f1.indexOf('class="btn gho"')<0,
+    'Quitar deja de ser un boton lleno: es texto, y no compite con el nombre');
+  /* El acento no puede partir un nombre en dos personas distintas. */
+  A.ponParts([{id:'b1',nombre:'Ma\u00f1e',categoria:'av',codigo:'AAA111',intentos:0},
+              {id:'b2',nombre:'mane',categoria:'av',codigo:'BBB222',intentos:0}]);
+  ok(A.filaParticipante({id:'b1',nombre:'Ma\u00f1e',categoria:'av',codigo:'AAA111',intentos:0})
+       .indexOf('otro c\u00f3digo')>=0,
+    'Dos nombres que solo difieren en tildes o mayusculas cuentan como el mismo');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

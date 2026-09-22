@@ -713,14 +713,14 @@ const MANUAL = [
     h:`<p>Entra a <strong>Examen</strong>, abajo, en <strong>La evaluación del
     día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay
     que hacerlos en ese orden.</p>
-    <ol><li><strong>Paso 1, ¿quiénes participan?</strong> Crear a las
+    <ol><li><strong>Los del club, y su código.</strong> Crear a las
     participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle
     la evaluación.</li>
-    <li><strong>Paso 2, ¿qué examen?</strong> Nombre (por ejemplo «Sábado 6 de
+    <li><strong>Paso 1, ¿qué examen, y a quiénes?</strong> Nombre (por ejemplo «Sábado 6 de
     septiembre»), cuántas preguntas, qué material, dificultad y a quiénes les
     toca. El texto debajo de cada lista describe <strong>la opción que tengas
     puesta</strong>, así que cámbiala y vuelve a leerlo.</li>
-    <li><strong>Paso 3, abrir.</strong> El botón está al final y arranca
+    <li><strong>Paso 2, abrir.</strong> El botón está al final y arranca
     apagado. Se prende cuando la evaluación tiene nombre y hay por lo menos una
     participante creada; mientras esté apagado, al lado dice qué falta.</li></ol>
     <p>Desde ese momento, cada participante que ya entró con su código ve la

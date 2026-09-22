@@ -4470,16 +4470,22 @@ async function pintaPanel(){
      CASO REAL DE CAMILO: eso le impedía tener a Guías Mayores, Aventureros y
      Devoción Matutina cada uno con SU evaluación corriendo el mismo rato,
      porque abrir la segunda escondía el control de la primera. Ahora el
-     asistente (Paso 1/2/3) SIEMPRE está a la vista, y lo que esté en curso se
+     asistente (el registro y los dos pasos) SIEMPRE está a la vista, y lo que esté en curso se
      pinta aparte, en #pan-eval-en-curso (una tarjeta por evaluación abierta,
      cada una con su propio botón «Cerrar»). El servidor es quien de verdad
      evita la ambigüedad: nunca deja dos evaluaciones abiertas compartiendo
      categoría, así que abrir una nueva solo reemplaza la que se le cruce. */
   d.innerHTML='<div class="det-cuerpo">'+
 
-    '<div class="pan-paso"><div class="pan-paso-t">Paso 1 · ¿Quiénes participan?</div>'+
-    '<p class="nota">Cada participante necesita un código de 6 caracteres. Se lo das y ella lo '+
-    'escribe una sola vez en su celular. Sin participantes, abrir una evaluación no sirve de nada.</p>'+
+    /* ESTO NO ES UN PASO, Y LLAMARLO «Paso 1 · ¿Quiénes participan?» era el
+       origen de la confusión: prometía decidir quién participa en ESTA
+       evaluación, y no lo hace. Es el registro del club, permanente. A quién
+       le toca cada evaluación se decide abajo, en «A quiénes les toca». La
+       misma pregunta contestada en dos sitios, y la primera mentía. */
+    '<div class="pan-paso"><div class="pan-paso-t">Los del club, y su código</div>'+
+    '<p class="nota">La lista del club, no la de esta evaluación: a quién le toca se escoge '+
+    'más abajo. Cada una necesita su código de 6 caracteres, se lo das y ella lo escribe una '+
+    'sola vez en su celular. El código no cambia nunca, ni al corregir el nombre.</p>'+
     '<div class="ses-fila"><input id="pan-nom" placeholder="Nombre" maxlength="40">'+
     /* AGRUPADO POR ACTIVIDAD, y no es cosmético.
        «Menores · 4 a 6 años» era la etiqueta EXACTA de dos categorías: la de
@@ -4500,7 +4506,7 @@ async function pintaPanel(){
     /* El apagado del paso 2 lo maneja revisaAbrir(), no este armado: antes se
        calculaba UNA vez al pintar, así que crear la primera participante dejaba
        el paso 2 gris y con el letrero puesto hasta recargar. */
-    '<div class="pan-paso" id="pan-paso2"><div class="pan-paso-t">Paso 2 · ¿Qué examen?</div>'+
+    '<div class="pan-paso" id="pan-paso2"><div class="pan-paso-t">Paso 1 · ¿Qué examen, y a quiénes?</div>'+
     '<p class="nota pan-razon" id="pan-paso2-razon"></p>'+
     '<div class="ses-fila"><label class="pan-lb">Nombre de la evaluación'+
     '<input id="pan-eval-t" placeholder="p. ej. Sábado 6 de septiembre" '+
@@ -4634,7 +4640,7 @@ async function pintaPanel(){
       '</details>'+
     '</div></div>'+
 
-    '<div class="pan-paso"><div class="pan-paso-t">Paso 3 · Abrir</div>'+
+    '<div class="pan-paso"><div class="pan-paso-t">Paso 2 · Abrir</div>'+
     /* LA BARRA, pegada al boton como en el maquetado: es lo ultimo que se lee
        antes de tocarlo. Dice lo escogido y CUANTAS PREGUNTAS RECIBE de verdad
        quien lo va a presentar. Esa cifra faltaba: el panel avisaba cuando una
@@ -5581,14 +5587,83 @@ async function cargaParticipantes(pre){
     revisaAbrir(p.length);
     pintaPersonasEval(p);
     if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
+    partsCache=p;
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
-      '<th>Exámenes</th><th></th></tr>'+p.map(function(x){
-        const cn=catConActividad(x.categoria);
-        return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(cn)+'</td>'+
-          '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
-          '<td><button class="btn gho" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
-      }).join('')+'</table></div>';
+      '<th>Exámenes</th><th></th></tr>'+p.map(filaParticipante).join('')+'</table></div>';
   }catch(e){d.innerHTML='<p class="nota">No se pudo cargar: '+esc(e.message||'')+'</p>';}
+}
+
+/* ─────────── UNA FILA DE LA LISTA DE PARTICIPANTES ───────────
+   TRES COSAS QUE LA FILA TENÍA QUE DECIR Y NO DECÍA:
+
+   1. CUÁL DE LAS DOS «ALAIA» ES. Medido en producción: 27 participantes para
+      15 nombres distintos, o sea 12 filas son un nombre repetido con otro
+      código, y en pantalla se veían idénticas. Ahora la repetida se marca, y
+      se dice cuál es la que no se ha usado nunca: esa es la que se puede
+      quitar sin pensarlo.
+   2. QUE EL NOMBRE SE PUEDE CORREGIR. Antes, arreglar una tilde era quitar y
+      volver a crear, lo que le cambiaba el código a la niña y dejaba la fila
+      muerta en la lista. De ahí salen los duplicados.
+   3. QUE QUITAR BORRA. Era el botón más grande de cada fila, doce veces
+      seguidas: la acción destructiva era lo primero que veía el ojo. Ahora es
+      texto, y pregunta cuántos exámenes se lleva por delante.
+
+   El CÓDIGO nunca cambia al editar, y por eso no hay que avisarle a nadie: el
+   nombre corregido le llega sola a la niña en la próxima sincronización,
+   porque su ficha toma nombre y categoría del servidor. */
+let partsCache=[];
+
+const normNom=n=>String(n||'').trim().toLowerCase()
+  .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+function filaParticipante(x){
+  const cn=catConActividad(x.categoria);
+  const mismos=partsCache.filter(function(y){return normNom(y.nombre)===normNom(x.nombre);});
+  const repetido=mismos.length>1;
+  const sinUsar=!(x.intentos||0);
+  const etq=repetido&&sinUsar?'<span class="pil na">otro código, sin usar</span>'
+    :repetido?'<span class="pil az">otro código</span>':'';
+  return '<tr id="pf-'+esc(x.id)+'"><td>'+esc(x.nombre)+' '+etq+'</td><td>'+esc(cn)+'</td>'+
+    '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
+    '<td class="pf-acc"><button type="button" class="pf-b" onclick="editaParticipante(\''+esc(x.id)+'\')">Editar</button>'+
+    '<button type="button" class="pf-b pf-x" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
+}
+
+/* La fila se vuelve un formulario EN SU SITIO. Un modal para cambiar una
+   palabra saca de la lista, y volver cuesta otro gesto. */
+function editaParticipante(id){
+  const x=partsCache.find(function(y){return y.id===id;});
+  const fila=document.getElementById('pf-'+id);
+  if(!x||!fila)return;
+  fila.innerHTML='<td><input id="pe-n" class="txti" maxlength="40" value="'+esc(x.nombre)+'"></td>'+
+    '<td colspan="2"><select id="pe-c">'+opcionesCatPanel(x.categoria)+'</select></td>'+
+    '<td>'+(x.intentos||0)+'</td>'+
+    '<td class="pf-acc"><button type="button" class="pf-b pf-ok" onclick="guardaParticipante(\''+esc(id)+'\')">Guardar</button>'+
+    '<button type="button" class="pf-b" onclick="cargaParticipantes()">Cancelar</button></td>';
+  const n=document.getElementById('pe-n');
+  if(n&&n.focus)n.focus();
+}
+
+/* Las mismas opciones del desplegable de crear, agrupadas por actividad: dos
+   categorías se llaman «Menores · 4 a 6 años» y sin la actividad no se
+   distinguen. */
+function opcionesCatPanel(sel){
+  return Object.keys(CATS).map(function(k){
+    return '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+
+      esc(catConActividad(k))+'</option>';
+  }).join('');
+}
+
+async function guardaParticipante(id){
+  const n=document.getElementById('pe-n'),c=document.getElementById('pe-c');
+  if(!n||!c)return;
+  const nombre=n.value.trim();
+  if(!nombre){n.focus();return;}
+  try{
+    await srvFetch('/panel/participantes/'+encodeURIComponent(id)+'/editar',
+      {method:'POST',body:JSON.stringify({nombre:nombre,categoria:c.value})});
+    await cargaParticipantes();
+  }catch(e){alert(e.message||'No se pudo conectar');}
 }
 
 /* Las casillas de «escoger personas». Se pintan de la MISMA lista que la tabla
@@ -5622,6 +5697,18 @@ async function creaParticipante(){
 }
 
 async function borraParticipante(id){
+  /* Se pregunta con el nombre y con lo que se lleva por delante. Un «¿Seguro?»
+     pelado no dice si esta fila es la de la niña que ya presentó tres
+     exámenes o el código de sobra que nadie usó. */
+  const x=partsCache.find(function(y){return y.id===id;});
+  if(x&&typeof confirm==='function'){
+    const n=x.intentos||0;
+    const q='¿Quitar a '+x.nombre+' ('+x.codigo+')?'+
+      (n?'\n\nTiene '+n+' examen'+(n===1?'':'es')+' presentado'+(n===1?'':'s')+
+         '. Las notas NO se borran, pero deja de ver la app con ese código.'
+        :'\n\nNunca usó ese código.');
+    if(!confirm(q))return;
+  }
   try{
     await srvFetch('/panel/participantes/'+encodeURIComponent(id)+'/borrar',{method:'POST'});
     await cargaParticipantes();

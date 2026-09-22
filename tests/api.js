@@ -360,6 +360,27 @@ ok(/fundida\.nombre = p\.nombre/.test(API) && /fundida\.cat = p\.categoria/.test
 }
 
 
+/* ── EDITAR UN PARTICIPANTE NO PUEDE TOCAR SU CODIGO ─────────────────
+   El codigo es la identidad: con el estan hechas la cuenta, la sesion abierta
+   en el celular de la nina y su progreso. Si una correccion de tilde se lo
+   cambiara, la sacaria de la app y le esconderia lo que estudio. */
+{
+  const i = API.indexOf("ruta.endsWith('/editar')");
+  ok(i > 0, 'Existe la ruta de editar participante');
+  ok(i > API.indexOf("ruta.startsWith('/panel/')"),
+    'Y va DESPUES de la guarda de director');
+  const bloque = API.slice(i, i + 1400);
+  ok(/UPDATE participante SET nombre = \?, categoria = \?/.test(bloque),
+    'Editar cambia solo el nombre y la categoria');
+  ok(!/codigo/.test(bloque.slice(0, bloque.indexOf('auditar'))),
+    'El codigo no se menciona siquiera en el bloque de editar');
+  ok(/\.bind\(nombre, categoria, pid\)/.test(bloque),
+    'Y los tres valores viajan por bind()');
+  ok(/CATS_VALIDAS\.includes\(b\.categoria\)/.test(bloque),
+    'La categoria se valida contra la lista, no se acepta cualquiera');
+}
+
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }

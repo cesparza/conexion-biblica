@@ -483,6 +483,23 @@ body.av .tj .rev{font-size:1.08rem}
 .pil.ve{background:#dcfce7;color:var(--verde)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
 
+/* ACCIONES DE UNA FILA DE PARTICIPANTE.
+   Eran dos botones llenos, y el de borrar era el mas grande de la fila, doce
+   veces seguidas. Ahora son texto: la fila se escanea por el nombre y el
+   codigo, que es a lo que se viene, y la accion destructiva no compite. */
+.pf-acc{white-space:nowrap}
+.pf-b{background:none;border:0;padding:.45rem .6rem;min-height:var(--v-toque,44px);
+  font-family:inherit;font-size:.82rem;font-weight:700;color:var(--azul);cursor:pointer;
+  border-radius:8px}
+.pf-b:hover{background:var(--v-sup2,#fff4e0)}
+.pf-x{color:var(--gris)}
+.pf-x:hover{color:var(--rojo);background:#fdeceb}
+.pf-ok{color:var(--verde)}
+.info-table td .txti{max-width:190px;min-height:38px;padding:.35rem .5rem;font-size:.86rem}
+.info-table td select{max-width:230px;min-height:38px;padding:.35rem .5rem;font-family:inherit;
+  font-size:.86rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;background:var(--v-sup,#fff);color:var(--txt)}
+.info-table td .pil{margin-left:.3rem;vertical-align:middle}
+
 /* CAPA POR SECCIÓN — filtro, franja e h3 en .sec, y la tarjeta de recordar.
    Ver la nota de mecanismo en fuente/app.js junto a filtroCapas(). */
 .capa-filtro{display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap}

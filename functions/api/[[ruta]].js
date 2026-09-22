@@ -833,6 +833,40 @@ export async function onRequest(context) {
       return json({ id: pid, nombre, categoria, codigo });
     }
 
+    /* ─────────── CORREGIR UN NOMBRE SIN TOCAR EL CÓDIGO ───────────
+       POR QUÉ HACÍA FALTA
+       Hasta aquí un nombre mal escrito solo se podía arreglar quitando a la
+       participante y creando otra. Eso le cambia el código, así que la niña
+       tiene que volver a entrar, y de paso deja la lista llena de filas
+       muertas: medido en producción, 27 participantes para 15 nombres.
+
+       EL CÓDIGO NO SE TOCA, NUNCA. El código es la identidad: con él está
+       hecha la cuenta, la sesión abierta en su celular y, desde v109, su
+       progreso. Cambiarlo al corregir una tilde la sacaría de la app y le
+       escondería lo que estudió. El nombre es una etiqueta; el código es quién
+       es ella.
+
+       Y NO HAY QUE AVISARLE A NADIE: la ficha de la niña toma su nombre y su
+       categoría de esta tabla en cada sincronización, así que el nombre
+       corregido le llega solo la próxima vez que abra la app. */
+    if (metodo === 'POST' && ruta.startsWith('/panel/participantes/') && ruta.endsWith('/editar')) {
+      const pid = ruta.slice('/panel/participantes/'.length, -'/editar'.length);
+      const b = await request.json().catch(() => ({}));
+      const p = await env.DB.prepare(
+        'SELECT id, nombre, categoria FROM participante WHERE id = ? AND borrado_en IS NULL'
+      ).bind(pid).first();
+      if (!p) return error('Esa participante ya no está en el club.', 404);
+      const nombre = b.nombre === undefined ? p.nombre : limpiar(b.nombre, 40);
+      const categoria = b.categoria === undefined ? p.categoria
+        : (CATS_VALIDAS.includes(b.categoria) ? b.categoria : null);
+      if (!nombre) return error('Falta el nombre.');
+      if (!categoria) return error('Categoría inválida: ' + CATS_VALIDAS.join(', ') + '.');
+      await env.DB.prepare('UPDATE participante SET nombre = ?, categoria = ? WHERE id = ?')
+        .bind(nombre, categoria, pid).run();
+      await auditar(env, sesion.cuenta_id, 'editar_participante', 'participante', pid, ipHash);
+      return json({ id: pid, nombre, categoria });
+    }
+
     /* Borrado suave, nunca DELETE: una niña que se retira del club no borra las
        notas que ya se contaron. El DELETE físico es una purga aparte, a mano. */
     if (metodo === 'POST' && ruta.startsWith('/panel/participantes/') && ruta.endsWith('/borrar')) {
