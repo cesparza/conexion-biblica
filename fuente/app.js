@@ -250,7 +250,55 @@ try{
 }catch(e){DB=normalizarDB(null);}
 S=DB.alumnos[DB.activo];
 
-function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(DB));}catch(e){}}
+function guardar(){try{localStorage.setItem(CLAVE,JSON.stringify(DB));}catch(e){}programaSubida();}
+
+/* ── EL PROGRESO VIAJA CON LA PERSONA, NO CON EL NAVEGADOR ──────────────
+   MECANISMO
+   Una sola llamada sube y baja: el aparato manda SU ficha, el servidor la
+   funde con la guardada y devuelve el resultado, y el aparato adopta lo
+   devuelto. La fusión vive SOLO en el servidor (functions/api): escribirla
+   también aquí serían dos versiones de la misma regla, y el día que una
+   cambie la otra deja de coincidir sin avisar.
+
+   CUÁNDO SE DISPARA
+   Al arrancar con sesión, al entrar con el código, y 4 segundos después del
+   último guardado. Los 4 segundos no son un adorno: sin ellos, contestar un
+   examen de 15 preguntas mandaría quince fichas.
+
+   SI NO HAY SEÑAL NO PASA NADA, y no hace falta cola: como la fusión es
+   monótona (lo que crece nunca decrece), lo que no subió hoy sube en la
+   próxima llamada con el mismo resultado. Esto NO reemplaza la cola de las
+   notas de evaluación, que sí tienen que llegar una por una.
+
+   SIN SESIÓN, TODO SIGUE EXACTAMENTE IGUAL QUE ANTES: quien nunca entró con
+   un código estudia contra su localStorage y no habla con el servidor. */
+let progTimer=null, adoptandoProg=false;
+
+function programaSubida(){
+  if(adoptandoProg)return;
+  if(!srvYo||srvYo.rol!=='participante')return;
+  if(typeof setTimeout!=='function')return;
+  clearTimeout(progTimer);
+  progTimer=setTimeout(function(){sincronizaProgreso();},4000);
+}
+
+async function sincronizaProgreso(){
+  if(!srvYo||srvYo.rol!=='participante'||!S)return false;
+  let cuerpo;
+  try{cuerpo=JSON.stringify(S);}catch(e){return false;}
+  try{
+    const d=await srvFetch('/progreso',{method:'POST',body:cuerpo});
+    if(!d||!d.ficha)return false;
+    adoptandoProg=true;
+    DB.alumnos[DB.activo]=normalizar(d.ficha);
+    S=DB.alumnos[DB.activo];
+    guardar();
+    adoptandoProg=false;
+    if(typeof pintaInicio==='function')pintaInicio();
+    if(typeof pintaSesion==='function')pintaSesion();
+    return true;
+  }catch(e){adoptandoProg=false;return false;}
+}
 
 /* ───────── perfil director ─────────
    MECANISMO
@@ -4290,6 +4338,9 @@ async function entraCodigo(){
        servidor, y la ficha local se alinea con ellos. Antes había dos verdades
        sobre quién era la niña y cuál era su material; ahora hay una. */
     adoptaFicha(d);
+    /* El momento exacto en que el progreso deja de ser de este navegador: se
+       manda lo que haya en el aparato y baja lo que ella ya tenía. */
+    try{await sincronizaProgreso();}catch(e){}
     pintaSesion();await cargaEvaluacion();pintaExInicio();pintaInicio();
     if(document.getElementById('cb-panel'))await pintaPanel();
     llevaA(evalPend?'cb-eval':'cb-sesion');
@@ -6067,6 +6118,10 @@ async function abreHistorial(){
     await srvRefresca();
     await srvQuienSoy();
     pintaSesion();
+    /* Antes de pintar nada mas: si esta niña ya entro con su codigo alguna
+       vez, su progreso baja aqui, asi que abrir en otro celular muestra lo
+       que estudio y no una ficha en blanco. */
+    try{await sincronizaProgreso();}catch(e){}
     await cargaEvaluacion();
     try{await enviaCola();}catch(e){}
     await pintaPanel();

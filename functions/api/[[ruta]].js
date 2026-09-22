@@ -310,6 +310,136 @@ export async function onRequest(context) {
       return json({ rol: 'participante', nombre: p.nombre, categoria: p.categoria });
     }
 
+    /* ─────────────── EL PROGRESO, QUE YA NO ES DEL NAVEGADOR ───────────────
+       MECANISMO
+       El aparato manda SU ficha, el servidor la funde con la guardada y
+       devuelve el resultado; el aparato adopta lo devuelto. Una sola llamada
+       sube y baja, y la fusión existe en UN solo sitio: aquí. Si viviera
+       también en el cliente serían dos implementaciones de la misma regla, y
+       el día que una cambie la otra deja de coincidir sin avisar.
+
+       POR QUÉ NO HACE FALTA RESOLVER CONFLICTOS
+       Cada campo de la ficha o solo crece (porcentaje leído, veces que falló
+       una pregunta, aciertos por capítulo, racha) o es un conjunto (exámenes,
+       insignias). Dos celulares no se contradicen: se suman. La única pareja
+       que no es monótona es la caja de repaso `ft`, que BAJA cuando se falla;
+       esa viaja pegada a `fv`, el día en que se vio la tarjeta, así que gana
+       la del aparato que la vio más tarde, que es el que sabe la verdad.
+
+       PERDER UNA SUBIDA NO PIERDE DATOS: como la fusión es monótona, lo que
+       no subió hoy sube en la próxima llamada con el mismo resultado. Por eso
+       el cliente no necesita cola ni reintento.
+
+       EL NOMBRE Y LA CATEGORÍA NO SE FUNDEN: los manda `participante`, que es
+       la verdad del club. Si se fundieran, un aparato viejo podría revivir el
+       nombre que el director ya corrigió. */
+    const TOPE_FICHA = 128 * 1024;
+
+    const may = (a, b) => (Number(a) || 0) > (Number(b) || 0) ? (Number(a) || 0) : (Number(b) || 0);
+    const objMay = (a, b) => {
+      const o = Object.assign({}, a || {});
+      for (const k of Object.keys(b || {})) o[k] = may(o[k], b[k]);
+      return o;
+    };
+    const objContador = (a, b) => {
+      const o = Object.assign({}, a || {});
+      for (const k of Object.keys(b || {})) {
+        const x = o[k] || {}, y = b[k] || {};
+        o[k] = { b: may(x.b, y.b), m: may(x.m, y.m) };
+      }
+      return o;
+    };
+
+    function fusionaFicha(vieja, nueva) {
+      const A = vieja && typeof vieja === 'object' ? vieja : {};
+      const B = nueva && typeof nueva === 'object' ? nueva : {};
+      const out = Object.assign({}, A, B);
+
+      out.prog = objMay(A.prog, B.prog);
+      out.qv = objMay(A.qv, B.qv);
+      out.acc = objContador(A.acc, B.acc);
+      out.act = objContador(A.act, B.act);
+      out.racha = may(A.racha, B.racha);
+      out.ultimo = (String(A.ultimo || '') > String(B.ultimo || '')) ? A.ultimo : (B.ultimo || A.ultimo || null);
+
+      /* `fq` guarda {m: veces que la falló}: gana el conteo mayor. */
+      out.fq = {};
+      for (const k of new Set([...Object.keys(A.fq || {}), ...Object.keys(B.fq || {})])) {
+        out.fq[k] = { m: may((A.fq || {})[k] && A.fq[k].m, (B.fq || {})[k] && B.fq[k].m) };
+      }
+
+      /* La tarjeta: gana entera la del aparato que la vio más tarde, con su
+         caja. Separarlas dejaría una caja de un día y una fecha de otro. */
+      out.fv = {}; out.ft = {};
+      for (const k of new Set([...Object.keys(A.fv || {}), ...Object.keys(B.fv || {}),
+                               ...Object.keys(A.ft || {}), ...Object.keys(B.ft || {})])) {
+        const va = Number((A.fv || {})[k]) || 0, vb = Number((B.fv || {})[k]) || 0;
+        const gana = vb >= va ? B : A;
+        if ((gana.fv || {})[k] !== undefined) out.fv[k] = gana.fv[k];
+        else if (Math.max(va, vb) > 0) out.fv[k] = Math.max(va, vb);
+        if ((gana.ft || {})[k] !== undefined) out.ft[k] = gana.ft[k];
+      }
+
+      /* Los exámenes son un conjunto. La llave es lo que hace único a uno:
+         cuándo, de qué modo y con qué resultado. Se quedan los 40 últimos,
+         el mismo tope que guarda el aparato. */
+      const vistos = new Set(), todos = [];
+      for (const e of [].concat(A.examenes || [], B.examenes || [])) {
+        if (!e || typeof e !== 'object') continue;
+        const k = [e.fecha, e.modo, e.pts, e.total, e.cat].join('|');
+        if (vistos.has(k)) continue;
+        vistos.add(k); todos.push(e);
+      }
+      todos.sort((x, y) => String(x.fecha || '') < String(y.fecha || '') ? -1 : 1);
+      out.examenes = todos.slice(-40);
+
+      out.insignias = [...new Set([].concat(A.insignias || [], B.insignias || [])
+        .filter(i => typeof i === 'string'))].slice(0, 20);
+
+      /* Un examen compartido abierto y sin terminar trae pts null. Gana el que
+         SÍ tiene nota: null no es cero. */
+      out.links = Object.assign({}, A.links || {});
+      for (const k of Object.keys(B.links || {})) {
+        const x = out.links[k], y = B.links[k];
+        if (!x) { out.links[k] = y; continue; }
+        const xp = x.pts === null || x.pts === undefined, yp = y.pts === null || y.pts === undefined;
+        out.links[k] = xp && !yp ? y : (!xp && yp ? x : (may(x.pts, y.pts) === Number(y.pts) ? y : x));
+      }
+      return out;
+    }
+
+    if (metodo === 'POST' && ruta === '/progreso') {
+      if (!sesion || sesion.rol !== 'participante') return error('Entra con tu código primero.', 401);
+      const crudo = await request.text();
+      if (crudo.length > TOPE_FICHA) return error('Esa ficha es demasiado grande.', 413);
+      let ficha = null;
+      try { ficha = JSON.parse(crudo || 'null'); } catch (e) { return error('Ficha ilegible.', 400); }
+      if (!ficha || typeof ficha !== 'object') return error('Ficha ilegible.', 400);
+
+      const p = await env.DB.prepare(
+        'SELECT id, nombre, categoria FROM participante WHERE id = ? AND borrado_en IS NULL'
+      ).bind(sesion.persona_id).first();
+      if (!p) return error('Esa ficha ya no existe en el club.', 404);
+
+      const fila = await env.DB.prepare('SELECT ficha FROM progreso WHERE participante_id = ?')
+        .bind(p.id).first();
+      let guardada = null;
+      if (fila && fila.ficha) { try { guardada = JSON.parse(fila.ficha); } catch (e) { guardada = null; } }
+
+      const fundida = fusionaFicha(guardada, ficha);
+      fundida.nombre = p.nombre;
+      fundida.cat = p.categoria;
+
+      const texto = JSON.stringify(fundida);
+      if (texto.length > TOPE_FICHA) return error('Esa ficha es demasiado grande.', 413);
+      await env.DB.prepare(
+        'INSERT INTO progreso (participante_id, ficha) VALUES (?,?) ' +
+        "ON CONFLICT(participante_id) DO UPDATE SET ficha = excluded.ficha, actualizado_en = datetime('now')"
+      ).bind(p.id, texto).run();
+
+      return json({ ficha: fundida });
+    }
+
     /* La receta del examen SOLO se entrega a una participante con sesión. Si
        viajara en /estado, que es público, cualquiera podría precalcular las
        preguntas antes de que se abra. */

@@ -303,6 +303,63 @@ ok(/i\.evaluacion_id/.test(bloqueIntentos) && /e\.titulo AS evaluacion/.test(blo
   'Cada nota del historial dice a que evaluacion pertenece');
 
 
+/* ── EL PROGRESO: INVARIANTES Y LA FUSION DE VERDAD ────────────────────
+   Esta es la unica regla del servidor que no se ve mirando la forma del
+   archivo: si la fusion esta mal, nadie pierde una sesion ni ve lo que no
+   debe, pero una nina pierde lo que estudio. Y es una funcion pura, asi que se
+   saca del archivo y se corre. No hace falta simular D1. */
+ok(API.indexOf("ruta === '/progreso'") > API.indexOf('const sesion = await sesionActual'),
+  'El progreso se atiende DESPUES de la guarda de sesion');
+ok(/ruta === '\/progreso'[\s\S]{0,300}sesion\.rol !== 'participante'/.test(API),
+  'Y exige rol participante: la ficha de una nina no la toca el director');
+ok(/INSERT INTO progreso[\s\S]{0,260}\.bind\(/.test(API),
+  'La ficha viaja por bind(), nunca concatenada al SQL');
+ok(/CREATE TABLE IF NOT EXISTS progreso[\s\S]{0,500}participante_id TEXT PRIMARY KEY/.test(MIGR),
+  'La migracion crea progreso con una fila por participante');
+ok(/fundida\.nombre = p\.nombre/.test(API) && /fundida\.cat = p\.categoria/.test(API),
+  'El nombre y la categoria los manda participante, no la ficha del aparato');
+
+{
+  const desde = API.indexOf('const may = (a, b)');
+  const hasta = API.indexOf("if (metodo === 'POST' && ruta === '/progreso')");
+  ok(desde > 0 && hasta > desde, 'El bloque de fusion se puede aislar del archivo');
+  const fusiona = new Function(API.slice(desde, hasta) + '; return fusionaFicha;')();
+
+  const A = { prog:{d1:80,d2:10}, racha:5, ultimo:'2026-09-20', insignias:['a'],
+              fq:{q1:{m:3}}, fv:{t1:100}, ft:{t1:2}, acc:{d1:{b:10,m:2}},
+              examenes:[{fecha:'2026-09-01',modo:'normal',pts:9,total:15,cat:'av'}],
+              links:{L1:{pts:null,total:10}} };
+  const B = { prog:{d1:40,d3:60}, racha:2, ultimo:'2026-09-21', insignias:['b'],
+              fq:{q1:{m:1},q2:{m:4}}, fv:{t1:104}, ft:{t1:0}, acc:{d1:{b:3,m:9}},
+              examenes:[{fecha:'2026-09-05',modo:'evaluacion',pts:12,total:15,cat:'av'}],
+              links:{L1:{pts:7,total:10}} };
+  const F = fusiona(A, B);
+
+  ok(F.prog.d1 === 80 && F.prog.d3 === 60,
+    'Lo leido gana el porcentaje mayor y no se pierde lo que solo tenia un aparato');
+  ok(F.racha === 5, 'La racha gana la mayor');
+  ok(F.ultimo === '2026-09-21', 'El ultimo dia gana el mas reciente');
+  ok(F.fq.q1.m === 3 && F.fq.q2.m === 4, 'Las falladas ganan el conteo mayor');
+  ok(F.acc.d1.b === 10 && F.acc.d1.m === 9,
+    'Los aciertos por capitulo se toman al mayor, campo por campo');
+  ok(F.insignias.length === 2, 'Las insignias son union');
+  ok(F.examenes.length === 2, 'Los examenes son union');
+  ok(F.ft.t1 === 0 && F.fv.t1 === 104,
+    'La caja de repaso viaja con su fecha: gana la del aparato que la vio mas tarde');
+  ok(F.links.L1.pts === 7, 'Un examen con nota le gana a uno abierto: null no es cero');
+
+  const G = fusiona(B, A);
+  ok(G.prog.d1 === 80 && G.racha === 5 && G.fq.q2.m === 4,
+    'Fundir al reves da lo mismo: el orden de los celulares no cambia el resultado');
+  const H = fusiona(F, B);
+  ok(H.prog.d1 === 80 && H.racha === 5 && H.examenes.length === 2,
+    'Volver a fundir no cambia nada: subir dos veces no duplica ni degrada');
+  const P = fusiona(null, B);
+  ok(P.prog.d3 === 60 && P.examenes.length === 1,
+    'La primera sincronizacion, sin ficha guardada, conserva lo del aparato');
+}
+
+
 (async () => {
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }
