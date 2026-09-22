@@ -514,7 +514,7 @@ body.av .tj .rev{font-size:1.08rem}
 .info-table td .txti{max-width:190px;min-height:38px;padding:.35rem .5rem;font-size:.86rem}
 .info-table td select{max-width:230px;min-height:38px;padding:.35rem .5rem;font-family:inherit;
   font-size:.86rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;background:var(--v-sup,#fff);color:var(--txt)}
-.info-table td .pil{margin-left:.3rem;vertical-align:middle}
+.info-table td .pil{margin-left:.3rem;vertical-align:middle;white-space:nowrap;font-size:.66rem}
 
 /* CAPA POR SECCIÓN — filtro, franja e h3 en .sec, y la tarjeta de recordar.
    Ver la nota de mecanismo en fuente/app.js junto a filtroCapas(). */
@@ -2481,7 +2481,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'f64c21d4f584';
+const VERSION_APP = 'c6c57b523b8b';
 
 const CAPS = [
  {
@@ -40905,8 +40905,9 @@ async function cargaParticipantes(pre){
     pintaPersonasEval(p);
     if(!p.length){d.innerHTML='<p class="nota">Todavía no hay participantes.</p>';return;}
     partsCache=p;
+    const filas=p.map(filaParticipante);
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
-      '<th>Exámenes</th><th></th></tr>'+p.map(filaParticipante).join('')+'</table></div>';
+      '<th>Exámenes</th><th></th></tr>'+filas.join('')+'</table></div>'+leyendaParts(filas);
   }catch(e){d.innerHTML='<p class="nota">No se pudo cargar: '+esc(e.message||'')+'</p>';}
 }
 
@@ -40933,13 +40934,47 @@ let partsCache=[];
 const normNom=n=>String(n||'').trim().toLowerCase()
   .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
+/* La leyenda sale SOLO si hay algo marcado: una explicación permanente de
+   dos etiquetas que hoy no aparecen es ruido en todas las pantallas. */
+function leyendaParts(filas){
+  const hayS=filas.some(function(h){return h.indexOf('>sin usar<')>=0;});
+  const hayM=filas.some(function(h){return h.indexOf('>mismo nombre<')>=0;});
+  if(!hayS&&!hayM)return '';
+  return '<p class="nota">'+
+    (hayS?'<strong>sin usar</strong>: ese código nunca presentó un examen, '+
+          'quedó de cuando corregir un nombre era quitar y volver a crear. Se puede quitar. ':'')+
+    (hayM?'<strong>mismo nombre</strong>: dos fichas se llaman igual y las dos se usaron, '+
+          'así que la app no sabe si son dos niñas o una con dos códigos. Toca <em>Editar</em> '+
+          'y cámbiale el nombre a una.':'')+'</p>';
+}
+
+/* LA ETIQUETA TIENE QUE DECIR QUÉ HACER, NO DESCRIBIR EL DATO.
+   La primera versión decía «otro código» en las DOS filas del mismo nombre.
+   Eso describe la situación y no ayuda: marca también la fila buena, no dice
+   cuál quitar, y en un celular se parte en cuatro renglones encima de la
+   columna del nombre. Se probó con el autor de la app y no la entendió.
+
+   Ahora se marca UNA sola fila de cada par, y la marca es la acción:
+   · «sin usar»      el código nunca presentó un examen. Es el sobrante de
+                     cuando corregir un nombre era quitar y volver a crear:
+                     ese se quita sin pensarlo.
+   · «mismo nombre»  las dos fichas se usaron, así que la app NO puede saber
+                     si son dos niñas o una con dos códigos. Eso lo sabe el
+                     director, y ahora puede arreglarlo cambiándole el nombre
+                     a una para distinguirlas.
+   · sin marca       nombre único, o la fila viva de un par donde la otra ya
+                     quedó marcada como sobrante. */
 function filaParticipante(x){
   const cn=catConActividad(x.categoria);
   const mismos=partsCache.filter(function(y){return normNom(y.nombre)===normNom(x.nombre);});
   const repetido=mismos.length>1;
   const sinUsar=!(x.intentos||0);
-  const etq=repetido&&sinUsar?'<span class="pil na">otro código, sin usar</span>'
-    :repetido?'<span class="pil az">otro código</span>':'';
+  const todosUsados=repetido&&mismos.every(function(y){return (y.intentos||0)>0;});
+  const etq=repetido&&sinUsar
+    ?'<span class="pil na" title="Ese código nunca presentó un examen: se puede quitar">sin usar</span>'
+    :todosUsados
+      ?'<span class="pil az" title="Hay otra ficha con este mismo nombre y las dos se han usado: cámbiale el nombre a una para distinguirlas">mismo nombre</span>'
+      :'';
   return '<tr id="pf-'+esc(x.id)+'"><td>'+esc(x.nombre)+' '+etq+'</td><td>'+esc(cn)+'</td>'+
     '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
     '<td class="pf-acc"><button type="button" class="pf-b" onclick="editaParticipante(\''+esc(x.id)+'\')">Editar</button>'+

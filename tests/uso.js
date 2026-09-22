@@ -52,7 +52,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         limpiaRetiradasDe, textosRetirados,
         pintaRevisor, revCapsDe, aplicaMarcas, REV_CUENTA, haceEvaluacion,
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
-        filaParticipante, ponParts:v=>{partsCache=v},
+        filaParticipante, leyendaParts, ponParts:v=>{partsCache=v},
         el:id=>document.getElementById(id)`;
 
 let store={};
@@ -2008,31 +2008,45 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Y el tramo con guion abre su propio rango');
 }
 
-/* ── LA LISTA DE PARTICIPANTES DICE CUAL ES CUAL ────────────────────
+/* ── LA LISTA DICE QUE HACER, NO QUE PASA ───────────────────────
    Medido en produccion: 27 participantes para 15 nombres, o sea 12 filas son
-   un nombre repetido con otro codigo. En pantalla se veian identicas y no
-   habia forma de saber cual quitar. */
+   un nombre repetido con otro codigo. La primera version marcaba las DOS
+   filas con «otro codigo»: describia el dato y no decia cual quitar. Se probo
+   con el autor de la app y no la entendio. */
 {
   const lista=[
+    /* Un par donde solo una se uso: la otra es el sobrante. */
     {id:'a1',nombre:'Alaia',categoria:'av',codigo:'7DJWD6',intentos:1},
     {id:'a2',nombre:'Alaia',categoria:'av',codigo:'S2PSYV',intentos:0},
+    /* Un par donde las DOS se usaron: la app no puede saber si son dos ninas. */
+    {id:'c1',nombre:'Camila',categoria:'av',codigo:'7GYUQB',intentos:1},
+    {id:'c2',nombre:'Camila',categoria:'av',codigo:'DB9SE8',intentos:1},
     {id:'j1',nombre:'Jaky',categoria:'ec2',codigo:'C9TJKS',intentos:1}
   ];
   A.ponParts(lista);
-  const f1=A.filaParticipante(lista[0]), f2=A.filaParticipante(lista[1]), f3=A.filaParticipante(lista[2]);
-  ok(f1.indexOf('otro c\u00f3digo')>=0 && f2.indexOf('otro c\u00f3digo')>=0,
-    'Las dos filas del mismo nombre se marcan como repetidas');
-  ok(f2.indexOf('sin usar')>=0 && f1.indexOf('sin usar')<0,
-    'Y la que se puede quitar sin pensarlo es la que nunca se uso');
-  ok(f3.indexOf('otro c\u00f3digo')<0,'Un nombre unico no lleva marca');
-  ok(f1.indexOf('editaParticipante')>=0,'Cada fila se puede editar sin quitar y volver a crear');
-  ok(f1.indexOf('class="pf-b pf-x"')>=0 && f1.indexOf('class="btn gho"')<0,
+  const F=lista.map(A.filaParticipante);
+  ok(F[1].indexOf('>sin usar<')>=0,
+    'El codigo que nunca presento un examen se marca «sin usar»');
+  ok(F[0].indexOf('>sin usar<')<0 && F[0].indexOf('>mismo nombre<')<0,
+    'Y la fila viva del mismo par NO se marca: marcar las dos no dice cual quitar');
+  ok(F[2].indexOf('>mismo nombre<')>=0 && F[3].indexOf('>mismo nombre<')>=0,
+    'Cuando las dos se usaron, las dos se marcan «mismo nombre»: ahi decide el director');
+  ok(F[4].indexOf('class="pil')<0,'Un nombre unico no lleva marca');
+  ok(F[0].indexOf('editaParticipante')>=0,'Cada fila se puede editar sin quitar y volver a crear');
+  ok(F[0].indexOf('class="pf-b pf-x"')>=0 && F[0].indexOf('class="btn gho"')<0,
     'Quitar deja de ser un boton lleno: es texto, y no compite con el nombre');
+
+  const ley=A.leyendaParts(F);
+  ok(ley.indexOf('sin usar')>=0 && ley.indexOf('mismo nombre')>=0,
+    'La leyenda explica las dos marcas que si aparecen');
+  ok(A.leyendaParts([A.filaParticipante(lista[4])])==='',
+    'Y no sale cuando no hay nada marcado: explicar etiquetas que no estan es ruido');
+
   /* El acento no puede partir un nombre en dos personas distintas. */
-  A.ponParts([{id:'b1',nombre:'Ma\u00f1e',categoria:'av',codigo:'AAA111',intentos:0},
-              {id:'b2',nombre:'mane',categoria:'av',codigo:'BBB222',intentos:0}]);
-  ok(A.filaParticipante({id:'b1',nombre:'Ma\u00f1e',categoria:'av',codigo:'AAA111',intentos:0})
-       .indexOf('otro c\u00f3digo')>=0,
+  const dos=[{id:'b1',nombre:'Ma\u00f1e',categoria:'av',codigo:'AAA111',intentos:1},
+             {id:'b2',nombre:'mane',categoria:'av',codigo:'BBB222',intentos:0}];
+  A.ponParts(dos);
+  ok(A.filaParticipante(dos[1]).indexOf('>sin usar<')>=0,
     'Dos nombres que solo difieren en tildes o mayusculas cuentan como el mismo');
 }
 
