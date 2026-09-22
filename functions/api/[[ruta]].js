@@ -264,7 +264,7 @@ export async function onRequest(context) {
       }
       const token = await crearSesion(env, cuenta.id, DIAS_PARTICIPANTE, ipHash);
       await auditar(env, cuenta.id, 'entrar', 'participante', p.id, ipHash);
-      return json({ nombre: p.nombre, categoria: p.categoria, rol: 'participante' },
+      return json({ id: p.id, nombre: p.nombre, categoria: p.categoria, rol: 'participante' },
         200, { 'set-cookie': cookieSesion(token, DIAS_PARTICIPANTE) });
     }
 
@@ -304,10 +304,14 @@ export async function onRequest(context) {
       if (!sesion) return json({ rol: null });
       if (sesion.rol === 'director') return json({ rol: 'director' });
       const p = await env.DB.prepare(
-        'SELECT nombre, categoria FROM participante WHERE id = ? AND borrado_en IS NULL'
+        'SELECT id, nombre, categoria FROM participante WHERE id = ? AND borrado_en IS NULL'
       ).bind(sesion.persona_id).first();
       if (!p) return json({ rol: null });
-      return json({ rol: 'participante', nombre: p.nombre, categoria: p.categoria });
+      /* El `id` viaja a proposito: es lo que ata la ficha del aparato a esta
+         persona. Sin el, el aparato solo puede reconocerla por el nombre, y el
+         nombre cambia (el director lo corrige desde v110). Es un id opaco de
+         su propia cuenta, no un dato de nadie mas. */
+      return json({ rol: 'participante', id: p.id, nombre: p.nombre, categoria: p.categoria });
     }
 
     /* ─────────────── EL PROGRESO, QUE YA NO ES DEL NAVEGADOR ───────────────
@@ -427,6 +431,10 @@ export async function onRequest(context) {
       if (fila && fila.ficha) { try { guardada = JSON.parse(fila.ficha); } catch (e) { guardada = null; } }
 
       const fundida = fusionaFicha(guardada, ficha);
+      /* Estos tres los manda el servidor, no la ficha del aparato: son quien
+         es ella. El `pid` es el que ata la ficha a esta persona aunque le
+         cambien el nombre. */
+      fundida.pid = p.id;
       fundida.nombre = p.nombre;
       fundida.cat = p.categoria;
 

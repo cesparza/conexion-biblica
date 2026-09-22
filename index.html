@@ -2554,7 +2554,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '6520e08f350c';
+const VERSION_APP = '005e78cb7283';
 
 const CAPS = [
  {
@@ -35497,7 +35497,7 @@ const CLAVE='conexion-biblica-v4';
 /* `qv` cuenta CUANTAS VECES le ha salido cada pregunta a esta ficha. Campo
    nuevo, no renombrado: una ficha vieja llega sin el y `normalizar` lo deja
    en cero, que es exactamente «nunca le ha salido nada». */
-const BASE={v:4,nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{}};
+const BASE={v:4,pid:'',nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{}};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -35521,6 +35521,9 @@ function normalizar(x){
   const s=JSON.parse(JSON.stringify(BASE));
   CAPS.forEach(c=>s.prog[c.id]=0);
   if(!x||typeof x!=='object')return s;
+  /* `pid` ata esta ficha a una persona del servidor. Es lo unico que
+     sobrevive a que le cambien el nombre. */
+  if(typeof x.pid==='string')s.pid=x.pid.slice(0,64);
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
   if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
 
@@ -35672,16 +35675,27 @@ function programaSubida(){
   progTimer=setTimeout(function(){sincronizaProgreso();},4000);
 }
 
-async function sincronizaProgreso(){
-  if(!srvYo||srvYo.rol!=='participante'||!S)return false;
-  /* SEGUNDA GUARDA, a proposito. Quien llame a esto sin haber alineado la
-     ficha no sube nada, en vez de mezclar dos progresos. Se compara por
-     nombre y por ACTIVIDAD, no por categoria: la misma persona tiene una
-     ficha por actividad, y son progresos distintos que no se pueden fundir. */
+/** ¿La ficha que esta abierta en el aparato es la de la sesion del servidor?
+ *  Si la ficha ya sabe de quien es (`pid`), esa es la comparacion buena: no
+ *  depende del nombre, que el director puede cambiar desde v110. Una ficha
+ *  vieja todavia no tiene pid, y ahi se cae al nombre y a la ACTIVIDAD, que es
+ *  como se comparaba antes. Por actividad y no por categoria a proposito: una
+ *  nina puede pasar de Menores a Aventureros y sigue siendo su progreso. */
+function fichaEsDeLaSesion(){
+  if(!srvYo||!S)return false;
+  if(S.pid&&srvYo.id)return S.pid===srvYo.id;
   if(srvYo.nombre&&(S.nombre||'').trim().toLowerCase()!==String(srvYo.nombre).trim().toLowerCase())
     return false;
   if(srvYo.categoria&&CATS[srvYo.categoria]&&ACT_DE(S.cat)!==ACT_DE(srvYo.categoria))
     return false;
+  return true;
+}
+
+async function sincronizaProgreso(){
+  if(!srvYo||srvYo.rol!=='participante'||!S)return false;
+  /* LA GUARDA, a proposito. Quien llame a esto sin haber alineado la ficha no
+     sube nada, en vez de mezclar dos progresos. */
+  if(!fichaEsDeLaSesion())return false;
   let cuerpo;
   try{cuerpo=JSON.stringify(S);}catch(e){return false;}
   try{
@@ -39835,6 +39849,27 @@ function adoptaFicha(d){
   const cat=(d.categoria&&CATS[d.categoria])?d.categoria:null;
   if(!nom&&!cat)return;
 
+  /* PRIMERO POR `pid`, QUE ES LA IDENTIDAD DE VERDAD.
+     Buscar por nombre funciona hasta que el nombre cambia, y desde v110 el
+     director lo corrige cuando quiere. Sin esta pasada, corregir «Camila» a
+     «Camila R.» dejaba la ficha vieja huerfana en el aparato y creaba una
+     nueva en blanco: dos fichas de la misma nina, con caras casi iguales en
+     la hoja de «¿quien estudia?».
+     El `pid` no se adivina: lo manda el servidor en /yo y en /entrar, y lo
+     estampa la sincronizacion. Una ficha vieja no lo tiene todavia, y por eso
+     la busqueda por nombre sigue existiendo abajo como respaldo. */
+  if(d.id){
+    const porId=alumnos().find(([,al])=>al.pid===d.id);
+    if(porId){
+      if(porId[0]!==DB.activo)cambiaAlumno(porId[0]);
+      let toco=false;
+      if(nom&&S.nombre!==nom){S.nombre=nom;toco=true;}
+      if(cat&&S.cat!==cat){S.cat=cat;toco=true;marcaCat();pintaCaps();}
+      if(toco){guardar();pintaInicio();}
+      return;
+    }
+  }
+
   /* ¿Ya existe la ficha de esa persona en esta actividad? Se compara por
      nombre y actividad, igual que pasaAActividad: dos fichas con el mismo
      nombre en la misma actividad es justo lo que se quiere evitar. */
@@ -39847,6 +39882,9 @@ function adoptaFicha(d){
         (al.nombre||'').trim().toLowerCase()===nom.toLowerCase());
       if(suya){
         cambiaAlumno(suya[0]);
+        /* Se le estampa el pid: la proxima vez se encuentra por id y ya no
+           depende de que el nombre siga igual. */
+        if(d.id&&S.pid!==d.id){S.pid=d.id;guardar();}
         if(cat&&S.cat!==cat){S.cat=cat;guardar();marcaCat();pintaCaps();pintaInicio();}
         return;
       }
@@ -39859,7 +39897,7 @@ function adoptaFicha(d){
           return;
         }
         const id=nuevoId();
-        DB.alumnos[id]=normalizar({nombre:nom,cat:cat||S.cat});
+        DB.alumnos[id]=normalizar({pid:d.id||'',nombre:nom,cat:cat||S.cat});
         guardar();
         cambiaAlumno(id);
         return;
@@ -39870,6 +39908,7 @@ function adoptaFicha(d){
   /* Queda el caso sano: es su propia ficha, o una ficha vacía que todavía no
      es de nadie. Ahí sí se escribe encima. */
   let cambio=false;
+  if(d.id&&S.pid!==d.id){S.pid=d.id;cambio=true;}
   if(nom&&S.nombre!==nom){S.nombre=nom;cambio=true;}
   if(cat&&S.cat!==cat){S.cat=cat;cambio=true;}
   if(cambio){

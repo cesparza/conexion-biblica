@@ -52,7 +52,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         limpiaRetiradasDe, textosRetirados,
         pintaRevisor, revCapsDe, aplicaMarcas, REV_CUENTA, haceEvaluacion,
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
-        filaParticipante, leyendaParts, ponParts:v=>{partsCache=v},
+        filaParticipante, leyendaParts, ponParts:v=>{partsCache=v}, fichaEsDeLaSesion,
         el:id=>document.getElementById(id)`;
 
 let store={};
@@ -2062,23 +2062,43 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
 }
 
 /* ── EL PROGRESO NO SE SUBE A LA FICHA EQUIVOCADA ─────────────────
-   Un aparato puede tener varias fichas: la misma persona en dos actividades,
-   o dos personas compartiendo celular. La app abre en la ULTIMA que se uso, no
-   en la de la sesion del servidor. Si se sincroniza sin alinear primero, el
-   progreso de una ficha se sube a la cuenta de otra y la fusion los mezcla
-   (toma el mayor campo por campo), sin que nada avise.
+   Un aparato puede tener varias fichas: la misma persona en dos actividades, o
+   dos personas compartiendo celular. La app abre en la ULTIMA que se uso, no
+   en la de la sesion. Sin guarda, el arranque subiria el progreso de una ficha
+   a la cuenta de otra y la fusion los mezclaria (toma el mayor campo por
+   campo) sin que nada avise.
 
-   Se prueba la guarda, que es lo que sostiene la regla aunque alguien llame a
-   sincronizar desde otro sitio mañana. */
+   Se prueba la FUNCION, no el texto del archivo. */
 {
-  const src=require('fs').readFileSync(
-    require('path').join(RAIZ,'fuente','app.js'),'utf8');
-  const bloque=src.slice(src.indexOf('async function sincronizaProgreso'),
-                         src.indexOf('async function sincronizaProgreso')+1400);
-  ok(/srvYo\.nombre[\s\S]{0,160}return false/.test(bloque),
-    'No se sube nada si la ficha activa no es de la persona de la sesion');
-  ok(/ACT_DE\(S\.cat\)!==ACT_DE\(srvYo\.categoria\)[\s\S]{0,40}return false/.test(bloque),
-    'Ni si es la misma persona pero en otra actividad: son progresos distintos');
+  const yo={rol:'participante',id:'p1',nombre:'Camila',categoria:'av'};
+  A.ponDirector(yo);
+  const ficha=A.S();
+  const antes={pid:ficha.pid,nombre:ficha.nombre,cat:ficha.cat};
+
+  ficha.pid='p1';
+  ok(A.fichaEsDeLaSesion()===true,'Con el mismo pid, es su ficha');
+  ficha.pid='p2';
+  ok(A.fichaEsDeLaSesion()===false,'Con otro pid, NO se sube aunque el nombre coincida');
+
+  /* Una ficha vieja todavia no tiene pid: ahi manda el nombre y la actividad. */
+  ficha.pid='';ficha.nombre='Camila';ficha.cat='av';
+  ok(A.fichaEsDeLaSesion()===true,'Sin pid, el nombre y la actividad deciden');
+  ficha.nombre='Alaia';
+  ok(A.fichaEsDeLaSesion()===false,'Sin pid y con otro nombre, no se sube');
+  ficha.nombre='Camila';ficha.cat='ec2';
+  ok(A.fichaEsDeLaSesion()===false,
+    'Misma persona en OTRA actividad tampoco: son progresos distintos');
+
+  /* Y el pid manda sobre el nombre, que es todo el punto: el director puede
+     corregir el nombre sin que la ficha se pierda. */
+  ficha.pid='p1';ficha.nombre='Camila R.';ficha.cat='av';
+  ok(A.fichaEsDeLaSesion()===true,
+    'Si le cambian el nombre, la ficha sigue siendo suya por el pid');
+
+  ficha.pid=antes.pid;ficha.nombre=antes.nombre;ficha.cat=antes.cat;
+  A.ponDirector(null);
+
+  const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
   ok(/if\(srvYo&&srvYo\.rol==='participante'\)adoptaFicha\(srvYo\);/.test(src),
     'Y el arranque alinea la ficha con la sesion ANTES de sincronizar');
 }
