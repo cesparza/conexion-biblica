@@ -1211,6 +1211,19 @@ ok(/\.nav-yo \.yo-tip\{[^}]*white-space:normal/.test(CSS),
   'El globo de identidad declara white-space:normal (el nowrap le llega heredado de .nav-b)');
 ok(/\.nav-yo \.yo-tip\{[^}]*max-width:230px/.test(CSS),
   'Y conserva su maximo de 230px, que ahora si contiene en vez de recortar');
+
+/* UN BOTON PEGADO AL TEXTO.
+   `.nota` trae margin-top pero no margin-bottom, y `.btn` no trae ninguno: la
+   distancia entre el ultimo renglon de una frase y el boton que la sigue era
+   CERO, asi que el boton se leia como parte del parrafo. Medido despues del
+   arreglo: 14px a 390px de ancho. */
+ok(/\.nota \+ \.btn[^{]*\{[^}]*margin-top/.test(CSS),
+  'Un boton que sigue a un texto lleva su propio margen');
+/* Y una accion dentro de una tabla no puede ser una pildora: con el relleno
+   de 1.3rem por lado, «Ver en que fallo» no cabia en la columna de un celular
+   y salia cortada contra el borde. */
+ok(/\.info-table \.btn\.gho\{[^}]*padding:\.4rem/.test(CSS),
+  'La accion de una tabla va como texto, no como pildora');
 ok(/\.btn-voz\.sonando\{/.test(CSS),
   'El boton que esta sonando se distingue de los demas');
 /* El boton de voz en su propia fila: al lado del texto le quitaba unos 50px

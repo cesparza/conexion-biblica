@@ -1765,6 +1765,20 @@ details.card summary::marker{content:''}
   padding:.85rem .85rem .7rem;margin:.7rem 0;background:var(--v-sup);
 }
 .pan-paso-t{font-weight:800;font-size:.95rem;color:var(--v-tinta);margin-bottom:.35rem}
+/* AIRE ENTRE UN TEXTO Y EL BOTON QUE LO SIGUE.
+   Medido en las reglas: `.nota` trae `margin-top` pero NO `margin-bottom`, y
+   `.btn` no trae ninguno de los dos. O sea la distancia entre el ultimo
+   renglon de la frase y el borde del boton era CERO, y el boton se leia como
+   parte del parrafo. Se arregla con el selector de hermano adyacente, que
+   solo actua donde de verdad esta el problema: un boton pegado a un texto.
+   Un boton dentro de una fila flex no se toca, porque ahi manda el `gap`. */
+.nota + .btn,
+.pan-paso-t + .btn,
+.pan-paso p + .btn{margin-top:.9rem}
+/* Y un bloque de acciones despues del texto, lo mismo. */
+.nota + .pan-acc,
+.nota + .capa-filtro{margin-top:.9rem}
+
 .pan-off{opacity:.55}
 .pan-off input,.pan-off select,.pan-off .pan-cat{pointer-events:none}
 .pan-razon{color:var(--v-cat);font-weight:700}
@@ -2010,7 +2024,16 @@ details.card summary::marker{content:''}
 .his-viva{border-left:4px solid var(--v-cat)}
 /* El boton de la tabla no se parte en cuatro renglones: la tabla ya vive
    dentro de .tabla-scroll, asi que si no cabe, la tabla se desliza. */
+/* UN BOTON DENTRO DE UNA TABLA NO PUEDE SER UNA PILDORA.
+   Con el relleno de 1.3rem a cada lado, «Ver en que fallo» mide mas que la
+   columna que le queda en un celular: la tabla scrollea y el boton aparece
+   cortado contra el borde de la pantalla, que se lee como un defecto aunque
+   se pueda alcanzar deslizando. En una tabla la accion va como texto, igual
+   que en la lista de participantes. */
 .info-table .btn{white-space:nowrap}
+.info-table .btn.gho{padding:.4rem .55rem;min-height:var(--v-toque,44px);border:0;
+  background:none;border-radius:8px;font-size:.82rem;color:var(--azul)}
+.info-table .btn.gho:hover{background:var(--v-sup2,#fff4e0)}
 </style>
 </head>
 <body>
@@ -2481,7 +2504,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'c6c57b523b8b';
+const VERSION_APP = 'a80d72c081cd';
 
 const CAPS = [
  {
