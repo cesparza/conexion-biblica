@@ -1238,6 +1238,50 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
    linea 83, y de ahi en adelante la hoja entera quedo dentro de «solo al
    imprimir». La app se publico SIN estilos y ninguna prueba lo vio, porque
    todas miran el texto del CSS y no su estructura. Esta si la mira. */
+/* ── NINGUNA REGLA DE PANTALLA PUEDE QUEDAR DENTRO DE @media print ──
+   ESTO ES LO QUE DE VERDAD FALLO EN v114, y el balance de llaves solo lo caza
+   por casualidad: lo que rompio la app no fue que faltara un `}`, fue que la
+   mitad de la hoja quedo dentro de «solo al imprimir». El balance detecta ese
+   caso porque el archivo termina abierto, pero si el `}` hubiera aparecido mas
+   abajo, las llaves cuadrarian y la app seguiria sin estilos.
+
+   Asi que esta prueba recorre la hoja llevando la cuenta de en que @media esta
+   parada cada regla, y exige que las piezas que se ven en pantalla NO vivan
+   dentro de un bloque de impresion. Es la unica prueba del proyecto que mira
+   la ESTRUCTURA del CSS y no su texto. */
+{
+  const sinCom0 = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  const ESENCIALES = ['.nav{', '.pantalla{', '.btn{', '.cap{', '.hoja-caja{', 'body{'];
+  const pila = [];   // los @ abiertos ahora mismo
+  const fuera = new Set(); // los esenciales que SI viven fuera de impresion
+  let i = 0, profundidad = 0;
+  while (i < sinCom0.length) {
+    const a = sinCom0.indexOf('{', i), c = sinCom0.indexOf('}', i);
+    if (a < 0 && c < 0) break;
+    if (a >= 0 && (c < 0 || a < c)) {
+      const cabeza = sinCom0.slice(sinCom0.lastIndexOf('}', a - 1) + 1, a).trim();
+      const esAt = cabeza.charAt(0) === '@';
+      if (esAt) pila.push(cabeza);
+      else {
+        const enPrint = pila.some(x => /@media[^{]*\bprint\b/.test(x) && !/screen/.test(x));
+        for (const e of ESENCIALES)
+          if ((cabeza + '{').indexOf(e) >= 0 && !enPrint) fuera.add(e);
+      }
+      profundidad++; i = a + 1;
+    } else {
+      profundidad--; if (pila.length && profundidad < pila.length) pila.pop();
+      i = c + 1;
+    }
+  }
+  /* Un @media print que AJUSTA .pantalla al imprimir es legitimo y hay varios.
+     Lo que no puede pasar es que la definicion NORMAL de una pieza solo exista
+     dentro de impresion, que es lo que deja la app en blanco. */
+  const perdidas = ESENCIALES.filter(e => !fuera.has(e));
+  ok(perdidas.length === 0,
+    'Las piezas esenciales se definen fuera de @media print' +
+    (perdidas.length ? ' — se perdieron: ' + perdidas.join(', ') : ''));
+}
+
 {
   const sinCom = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
   const abre = (sinCom.match(/\{/g) || []).length;
