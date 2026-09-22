@@ -1159,15 +1159,23 @@ body{
   min-height:var(--v-toque,44px);
   font-weight:700;
   letter-spacing:-.01em;
-  box-shadow:var(--v-s1);
   transition:transform var(--v-paso), box-shadow var(--v-paso), background var(--v-paso);
 }
-.btn:hover{box-shadow:var(--v-s2)}
 .btn:active{transform:var(--v-hundir,scale(.97))}
 .btn:focus-visible{outline:3px solid var(--v-cat);outline-offset:2px}
+/* Sombra solida ("repisa"), no difusa: un boton de color entero se lee como
+   un bloque que se aprieta, no como texto con relieve. Por variante, porque
+   la repisa tiene que ser mas oscura que SU fondo, no un gris generico.
+   #cb-panel la pisa mas abajo y vuelve a la sombra difusa de --v-s1/--v-s2:
+   ahi el publico es un adulto revisando una tabla, no una nina tocando un
+   boton. */
+.btn.azul{box-shadow:0 4px 0 0 color-mix(in srgb, var(--azul) 78%, black)}
+.btn.nar{box-shadow:0 4px 0 0 color-mix(in srgb, var(--naranja) 78%, black)}
+.btn.ver{box-shadow:0 4px 0 0 color-mix(in srgb, var(--verde) 78%, black)}
+.btn.rojo{box-shadow:0 4px 0 0 color-mix(in srgb, var(--rojo) 78%, black)}
 .ex-go{
   background:linear-gradient(180deg,var(--v-acento-alto,#F2860F),var(--v-acento-bajo,#D9620A));
-  box-shadow:0 1px 2px rgba(16,24,40,.10), 0 10px 22px -10px rgba(217,98,10,.85);
+  box-shadow:0 4px 0 0 var(--v-acento-bajo,#D9620A);
   font-size:var(--v-t1);
   min-height:52px;
 }
@@ -1208,6 +1216,11 @@ body{
 }
 .op:hover:not(:disabled){border-color:var(--v-cat);background:var(--v-sup2)}
 .op:active:not(:disabled){transform:var(--v-hundir,scale(.97))}
+.op{box-shadow:0 2px 0 0 var(--v-linea)}
+.op:hover:not(:disabled){box-shadow:0 2px 0 0 var(--v-cat)}
+.op.sel{box-shadow:0 2px 0 0 var(--v-cat)}
+.op.ok{box-shadow:0 2px 0 0 var(--v-ok)}
+.op.ko{box-shadow:0 2px 0 0 var(--v-mal)}
 
 /* La marca de correcto entra con un pulso corto. Una respuesta acertada tiene
    que SENTIRSE distinta, no solo verse verde. */
@@ -1282,6 +1295,21 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
 /* ── tablas ── */
 .info-table{font-size:var(--v-t-1)}
 .info-table th{color:var(--v-tinta3);letter-spacing:.04em}
+
+/* ── el panel del director: el otro publico ──
+   MISMOS tokens, otra intensidad. Quien abre esto es un adulto revisando
+   participantes y notas, no una nina tocando un boton: la sombra difusa de
+   siempre (--v-s1/--v-s2) en vez de la repisa solida de mas arriba, y radios
+   un paso mas chicos. No es un lenguaje visual distinto, es el mismo con
+   menos color y mas dato por pantalla. */
+#cb-panel .btn.azul,#cb-panel .btn.nar,#cb-panel .btn.ver,#cb-panel .btn.rojo{
+  box-shadow:var(--v-s1)
+}
+#cb-panel .btn.azul:hover,#cb-panel .btn.nar:hover,#cb-panel .btn.ver:hover,#cb-panel .btn.rojo:hover{
+  box-shadow:var(--v-s2)
+}
+#cb-panel .ex-go{box-shadow:var(--v-s2)}
+#cb-panel .card,#cb-panel .stat{border-radius:var(--v-r-sm)}
 
 /* ── accesibilidad y respeto por el usuario ──
    Quien pidió menos movimiento en su sistema no ve ninguna animación. Esto no
