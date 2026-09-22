@@ -1232,6 +1232,22 @@ ok(/\.info-table \.btn\.gho\{[^}]*padding:\.4rem/.test(CSS),
    versiculo: cada vez que la nina tocaba uno, el examen se le ampliaba y se
    quedaba asi. La unica forma de evitarlo es que el campo mida 16px. */
 const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
+/* ── LA HOJA DE ESTILOS TIENE QUE CERRAR TODO LO QUE ABRE ──
+   Un `{` sin su `}` no rompe una regla: se traga TODO lo que viene despues.
+   Paso de verdad en v114: una insercion dejo un `@media print{` de mas en la
+   linea 83, y de ahi en adelante la hoja entera quedo dentro de «solo al
+   imprimir». La app se publico SIN estilos y ninguna prueba lo vio, porque
+   todas miran el texto del CSS y no su estructura. Esta si la mira. */
+{
+  const sinCom = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  const abre = (sinCom.match(/\{/g) || []).length;
+  const cierra = (sinCom.match(/\}/g) || []).length;
+  ok(abre === cierra,
+    'Cada llave que abre en el CSS tiene la suya que cierra (' + abre + ' y ' + cierra + ')');
+  ok(!/@media[^{]*\{\s*@media/.test(sinCom),
+    'No hay un @media abierto justo dentro de otro, que es como se colo el de v114');
+}
+
 ok(/font-size:16px/.test(coarse),
   'En pantallas que se tocan, los campos miden 16px');
 ok(/\.rell input/.test(coarse) && /\.rec-in/.test(coarse),

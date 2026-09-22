@@ -609,11 +609,12 @@ function agregaAlumno(){
   try{document.getElementById('nombre').focus();}catch(e){}
 }
 
-function borraAlumno(){
+async function borraAlumno(){
   if(alumnos().length<=1){
     borrarTodo();return;
   }
-  if(!confirm('¿Borrar a '+(S.nombre||'este participante')+' con todo su progreso?'))return;
+  if(!await preguntaApp('¿Borrar a '+(S.nombre||'este participante')+'?',
+    'Se borra su progreso en este aparato.','Borrar',true))return;
   delete DB.alumnos[DB.activo];
   cambiaAlumno(Object.keys(DB.alumnos)[0]);
 }
@@ -834,7 +835,7 @@ function pasaAActividad(c){
   }
   if(sinProgreso(S))return false;
   if(alumnos().length>=MAX_ALUMNOS){
-    try{alert('Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una antes de agregar otra.');}catch(e){}
+    avisaApp('Este aparato ya tiene '+MAX_ALUMNOS+' fichas','Borra una antes de agregar otra.');
     return true;
   }
   const id=nuevoId();
@@ -1445,8 +1446,71 @@ function abreHoja(cid,de,hasta){
   abreHojaHtml(htmlHoja(),'vers');
 }
 
+/* ─────────── PREGUNTAR Y AVISAR DENTRO DE LA APP ───────────
+   POR QUE NO `confirm()` NI `alert()`
+   No son de la app: en un iPhone instalado salen con el dominio encima, en la
+   letra del sistema y con los botones del sistema, así que en la mitad de un
+   examen la niña ve de golpe algo que parece del navegador y no de su app. Y
+   son BLOQUEANTES: congelan todo el hilo, incluido el reloj del examen.
+
+   NO ES UN MODAL NUEVO: es la MISMA hoja del versículo (`abreHojaHtml`), con
+   otro contenido. Un segundo sistema de ventanas con su propio abrir, cerrar,
+   fondo y Escape sería el error que v47 ya arregló una vez.
+
+   Devuelve una promesa para poder escribir `if(await preguntaApp(...))`, que
+   se lee igual que el `confirm()` de antes. Cerrar por el fondo o con Escape
+   resuelve `false`: descartar una pregunta es decir que no. */
+let hojaResuelve=null;
+
+function htmlPregunta(titulo,texto,okTxt,peligro,soloAviso){
+  return '<div class="hoja-fondo" onclick="cierraPregunta(false)"></div>'+
+    '<div class="hoja-caja preg" role="alertdialog" aria-modal="true" aria-label="'+esc(titulo)+'">'+
+    '<div class="hoja-asa" onclick="cierraPregunta(false)"></div>'+
+    '<div class="preg-cuerpo">'+
+      '<div class="preg-t">'+esc(titulo)+'</div>'+
+      (texto?'<p class="preg-p">'+esc(texto)+'</p>':'')+
+    '</div>'+
+    '<div class="preg-pie">'+
+      (soloAviso?'':'<button type="button" class="btn gho" onclick="cierraPregunta(false)">Cancelar</button>')+
+      '<button type="button" class="btn '+(peligro?'rojo':'azul')+'" onclick="cierraPregunta(true)">'+
+        esc(okTxt||'Entendido')+'</button>'+
+    '</div></div>';
+}
+
+function preguntaApp(titulo,texto,okTxt,peligro){
+  /* Sin la hoja en el HTML (las pruebas cargan el JS con un DOM de mentiras)
+     se cae al confirm de siempre en vez de quedarse esperando para siempre. */
+  if(typeof document==='undefined'||!document.getElementById('hoja'))
+    return Promise.resolve(typeof confirm==='function'?confirm(titulo+(texto?'\n\n'+texto:'')):true);
+  return new Promise(function(res){
+    hojaResuelve=res;
+    abreHojaHtml(htmlPregunta(titulo,texto,okTxt,peligro,false),'preg');
+  });
+}
+
+function avisaApp(titulo,texto){
+  if(typeof document==='undefined'||!document.getElementById('hoja')){
+    try{if(typeof alert==='function')alert(titulo+(texto?'\n\n'+texto:''));}catch(e){}
+    return Promise.resolve(true);
+  }
+  return new Promise(function(res){
+    hojaResuelve=res;
+    abreHojaHtml(htmlPregunta(titulo,texto,'Entendido',false,true),'preg');
+  });
+}
+
+function cierraPregunta(v){
+  const r=hojaResuelve;hojaResuelve=null;
+  cierraHoja();
+  if(r)r(!!v);
+}
+
 function cierraHoja(){
   paraVoz();
+  /* Si había una pregunta abierta y se cierra por el fondo, por el asa o con
+     Escape, eso es un «no». Sin esto, quien descarta la hoja deja la promesa
+     colgada y la acción nunca termina. */
+  if(hojaResuelve){const r=hojaResuelve;hojaResuelve=null;r(false);}
   const h=document.getElementById('hoja');
   if(!h)return;
   h.classList.remove('abierta');
@@ -3590,8 +3654,9 @@ function pintaLogros(){
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';
 }
 
-function borrarTodo(){
-  if(!confirm('¿Seguro? Se borra el progreso de TODOS los participantes de este navegador.'))return;
+async function borrarTodo(){
+  if(!await preguntaApp('¿Borrar todo lo de este navegador?',
+    'Se borra el progreso de TODOS los participantes de este aparato.','Borrar todo',true))return;
   try{localStorage.removeItem(CLAVE);localStorage.removeItem(CLAVE_VIEJA);}catch(e){}
   DB=normalizarDB(null);S=DB.alumnos[DB.activo];guardar();
   marcaCat();ir('inicio');
@@ -4160,7 +4225,7 @@ function importaCodigo(){
 
 let impPendiente=null;
 
-function aplicaImport(como){
+async function aplicaImport(como){
   if(!impPendiente)return;
   const al=normalizar(impPendiente.a);
   if(como==='nueva'){
@@ -4175,8 +4240,9 @@ function aplicaImport(como){
     cambiaAlumno(id);
     return;
   }
-  if(!confirm('¿Reemplazar el progreso de '+(S.nombre||'esta ficha')+' por el de '+
-    (al.nombre||'la ficha importada')+'? Lo actual se pierde.'))return;
+  if(!await preguntaApp('¿Reemplazar el progreso de '+(S.nombre||'esta ficha')+'?',
+    'Queda el de '+(al.nombre||'la ficha importada')+'. Lo que hay ahora se pierde.',
+    'Reemplazar',true))return;
   DB.alumnos[DB.activo]=al;S=al;guardar();
   impPendiente=null;
   marcaCat();pintaInicio();pintaCaps();ir('inicio');
@@ -4390,7 +4456,7 @@ function adoptaFicha(d){
          robarle la ficha a la otra persona. */
       if(!sinProgreso(S)){
         if(alumnos().length>=MAX_ALUMNOS){
-          try{alert('Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una para poder '+
+          try{avisaApp('Este aparato ya tiene '+MAX_ALUMNOS+' fichas','Borra una para poder '+
             'entrar con otro código.');}catch(e){}
           return;
         }
@@ -5312,7 +5378,7 @@ async function abreEvaluacion(){
       /* Avisar CUÁL se reemplazó: con varias evaluaciones corriendo a la vez,
          un clic sin darse cuenta del solape podría cerrar la de otro grupo
          sin que el director lo note hasta que alguien reclame. */
-      alert('Al abrir esta se cerró, por cruzarse con ella: '+
+      avisaApp('Se cerró otra evaluación','Se cruzaba con esta: '+
         d.cerradas.map(function(x){return x.titulo;}).join(', '));
     }
     await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
@@ -5320,7 +5386,7 @@ async function abreEvaluacion(){
        varias pantallas arriba, asi que llevar ahi el scroll se siente como
        volver al principio, y el pulso de .destaca queda fuera de la vista. */
     llevaA(d&&d.id?'ev-'+d.id:'cb-panel');
-  }catch(e){alert(e.message||'No se pudo conectar');}
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
 }
 
 async function cierraEvaluacion(id){
@@ -5329,7 +5395,7 @@ async function cierraEvaluacion(id){
   try{
     await srvFetch('/panel/evaluacion/cerrar',{method:'POST',body:JSON.stringify({id:id})});
     await srvRefresca();await cargaResultados();pintaExInicio();pintaInicio();
-  }catch(e){alert(e.message||'No se pudo conectar');}
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
 }
 
 /* Nombres legibles de un conjunto de categorías ('*' o 'gm,av'), para las
@@ -5714,7 +5780,7 @@ async function guardaParticipante(id){
     await srvFetch('/panel/participantes/'+encodeURIComponent(id)+'/editar',
       {method:'POST',body:JSON.stringify({nombre:nombre,categoria:c.value})});
     await cargaParticipantes();
-  }catch(e){alert(e.message||'No se pudo conectar');}
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
 }
 
 /* Las casillas de «escoger personas». Se pintan de la MISMA lista que la tabla
@@ -5744,7 +5810,7 @@ async function creaParticipante(){
       body:JSON.stringify({nombre:n.value,categoria:c.value})});
     n.value='';
     await cargaParticipantes();
-  }catch(e){alert(e.message||'No se pudo conectar');}
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
 }
 
 async function borraParticipante(id){
@@ -5752,18 +5818,18 @@ async function borraParticipante(id){
      pelado no dice si esta fila es la de la niña que ya presentó tres
      exámenes o el código de sobra que nadie usó. */
   const x=partsCache.find(function(y){return y.id===id;});
-  if(x&&typeof confirm==='function'){
+  if(x){
     const n=x.intentos||0;
-    const q='¿Quitar a '+x.nombre+' ('+x.codigo+')?'+
-      (n?'\n\nTiene '+n+' examen'+(n===1?'':'es')+' presentado'+(n===1?'':'s')+
-         '. Las notas NO se borran, pero deja de ver la app con ese código.'
-        :'\n\nNunca usó ese código.');
-    if(!confirm(q))return;
+    const detalle=n
+      ?'Envió '+n+' examen'+(n===1?'':'es')+'. Las notas NO se borran, pero deja de '+
+       'entrar a la app con ese código.'
+      :'Nunca usó ese código, así que no se pierde nada.';
+    if(!await preguntaApp('¿Quitar a '+x.nombre+'?',detalle+' · Código '+x.codigo,'Quitar',true))return;
   }
   try{
     await srvFetch('/panel/participantes/'+encodeURIComponent(id)+'/borrar',{method:'POST'});
     await cargaParticipantes();
-  }catch(e){alert(e.message||'No se pudo conectar');}
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
 }
 
 
@@ -6062,7 +6128,7 @@ async function revRetira(k){
     const d=await srvFetch('/panel/retiradas',{method:'POST',
       body:JSON.stringify({clave:k,motivo:revMotivo})});
     revAplica(d.retiradas);
-  }catch(e){alert(e.message||'No se pudo conectar');}
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
   revCaja='';revMotivo='';
   pintaRevisor();
   /* Las pantallas que muestran cuentas del material se quedan con la cifra
@@ -6076,7 +6142,7 @@ async function revDevuelve(k){
     const d=await srvFetch('/panel/retiradas',{method:'POST',
       body:JSON.stringify({clave:k,accion:'restaurar'})});
     revAplica(d.retiradas);
-  }catch(e){alert(e.message||'No se pudo conectar');}
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
   pintaRevisor();
   refrescaCuentas();
 }

@@ -80,7 +80,6 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
   .info-table td select,textarea.cod,.pan-lb input,.pan-lb select{font-size:16px}
 }
 
-@media print{
 @media print{.av-nuevo{display:none!important}}
 
 .nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15)}
@@ -262,6 +261,29 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 /* La hoja de identidad lleva dos selectores y tres notas, así que sube más que
    la del versículo. El scroll sigue estando en .hoja-txt. */
 .hoja-yo .hoja-caja{max-height:88vh}
+
+/* ═══ PREGUNTAR Y AVISAR, CON LA CARA DE LA APP ═══
+   Ver el mecanismo en fuente/app.js, junto a preguntaApp(). Esto NO es un
+   modal nuevo: es la misma hoja del versiculo con otro contenido, asi que
+   hereda el fondo, el asa, la animacion de subida y el Escape.
+   Sube poco, porque una pregunta son tres renglones: una hoja de 72vh para
+   preguntar «¿quitar a Alaia?» se ve como un error. */
+.hoja-preg .hoja-caja{max-height:none;border-radius:var(--v-r-lg,24px) var(--v-r-lg,24px) 0 0}
+.preg-cuerpo{padding:.4rem 1.25rem 1.1rem}
+.preg-t{font-size:1.08rem;font-weight:800;line-height:1.3;color:var(--txt);letter-spacing:-.01em}
+.preg-p{margin-top:.5rem;font-size:.9rem;line-height:1.55;color:var(--gris)}
+/* Los dos botones a lo ancho y el de confirmar a la derecha, que es donde
+   cae el pulgar. En una pantalla angosta se apilan, con el de confirmar
+   arriba: apilados, el de abajo queda mas cerca del pulgar y no puede ser el
+   que borra. */
+.preg-pie{display:flex;gap:.6rem;padding:0 1.25rem 1.25rem}
+.preg-pie .btn{flex:1 1 auto;min-height:48px}
+@media(max-width:380px){
+  .preg-pie{flex-direction:column-reverse}
+}
+/* El boton de una accion que borra NO puede ser el azul de siempre. */
+.btn.rojo{background:var(--rojo);color:var(--v-sobre,#fff)}
+.btn.rojo:hover{filter:brightness(.94)}
 /* El asa: dice «esto se cierra hacia abajo» sin ponerle texto. */
 .hoja-asa{width:42px;height:5px;border-radius:3px;background:#d3d9e2;
   margin:.55rem auto .2rem;flex:0 0 auto;cursor:pointer}
