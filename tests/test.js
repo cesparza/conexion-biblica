@@ -1197,6 +1197,20 @@ ok(/\.vref\{[^}]*text-decoration:underline/.test(CSS),
   'La referencia tocable se subraya con text-decoration, que sigue al texto');
 ok(!/\.vref\{[^}]*margin:-6px/.test(CSS),
   'La referencia no lleva margen negativo (caia sobre la linea siguiente)');
+/* EL GLOBO DE IDENTIDAD, QUE SE DESBORDO DOS VECES.
+   `white-space` se hereda. El globo vive dentro de `.nav-yo`, que vive dentro
+   de `.nav-b`, que declara `white-space:nowrap` para que el logo y las
+   pestanas no se partan. En v104 se QUITO el `nowrap` propio del globo y el
+   texto siguio saliendose: quitar la declaracion no devuelve el valor
+   inicial, deja que gane la del padre. Con nowrap heredado el texto no
+   envuelve, asi que `max-width:230px` recorta en vez de contener y la ultima
+   palabra queda cortada. Medido: caja 230px, contenido 324px.
+   Por eso la regla tiene que DECLARAR `white-space:normal`, y esta prueba
+   existe para que no se vuelva a borrar por parecer redundante. */
+ok(/\.nav-yo \.yo-tip\{[^}]*white-space:normal/.test(CSS),
+  'El globo de identidad declara white-space:normal (el nowrap le llega heredado de .nav-b)');
+ok(/\.nav-yo \.yo-tip\{[^}]*max-width:230px/.test(CSS),
+  'Y conserva su maximo de 230px, que ahora si contiene en vez de recortar');
 ok(/\.btn-voz\.sonando\{/.test(CSS),
   'El boton que esta sonando se distingue de los demas');
 /* El boton de voz en su propia fila: al lado del texto le quitaba unos 50px

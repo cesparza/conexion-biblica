@@ -1495,15 +1495,22 @@ summary:focus:not(:focus-visible){outline:none}
 
   /* El globo sale a la derecha del riel, centrado con la inicial.
      `width:max-content` ya evita que se parta en la columna de 92 px del riel
-     (mide su propio contenido, no el ancho del padre). `nowrap` sobraba y
-     contradecía a `max-width:230px`: con un nombre largo, `nowrap` prohibía
-     el salto de línea que el máximo necesitaba para no desbordar, y el texto
-     se salía de los 230px en vez de envolver. `pointer-events:none` para que
-     no se coma el clic del botón. */
+     (mide su propio contenido, no el ancho del padre).
+
+     `white-space:normal` NO ES REDUNDANTE, y esto ya costó dos vueltas.
+     En v104 se QUITÓ el `nowrap` que tenía esta regla y el globo siguió
+     desbordándose. El motivo: `white-space` se HEREDA, y el globo vive dentro
+     de `.nav-yo`, que vive dentro de `.nav-b`, que declara `white-space:nowrap`
+     para que el logo y las pestañas no se partan. Quitar la declaración propia
+     no devuelve el valor inicial: deja que gane el del padre. Con `nowrap`
+     heredado el texto no envuelve, así que `max-width:230px` recorta en vez de
+     contener, y la última palabra queda cortada.
+     Medido en el globo de Camilo: caja de 230px, contenido de 324px.
+     `pointer-events:none` para que no se coma el clic del botón. */
   .nav-yo .yo-tip{
     display:block;position:absolute;left:calc(100% + 10px);top:50%;
     transform:translateY(-50%);
-    width:max-content;max-width:230px;
+    width:max-content;max-width:230px;white-space:normal;
     background:#12213c;color:var(--v-sobre,#fff);border:1px solid rgba(255,255,255,.14);
     border-radius:10px;padding:.45rem .6rem;
     font-size:.72rem;font-weight:600;line-height:1.3;text-align:left;
