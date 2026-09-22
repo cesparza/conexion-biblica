@@ -107,7 +107,7 @@ const CLAVE='conexion-biblica-v4';
 /* `qv` cuenta CUANTAS VECES le ha salido cada pregunta a esta ficha. Campo
    nuevo, no renombrado: una ficha vieja llega sin el y `normalizar` lo deja
    en cero, que es exactamente «nunca le ha salido nada». */
-const BASE={v:4,pid:'',nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{}};
+const BASE={v:4,pid:'',nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -136,6 +136,11 @@ function normalizar(x){
   if(typeof x.pid==='string')s.pid=x.pid.slice(0,64);
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
   if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
+  /* DONDE SE QUEDO, para que un refresco no la mande siempre a Inicio (ver
+     el arranque, mas abajo). Son solo una pestaña y un id de material: nunca
+     HTML, nunca algo que se pinte tal cual. */
+  if(typeof x.ultPantalla==='string')s.ultPantalla=x.ultPantalla.slice(0,20);
+  if(typeof x.ultItem==='string')s.ultItem=x.ultItem.slice(0,20);
 
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
@@ -769,6 +774,22 @@ function ir(id){
   document.querySelector('.nav').style.display=id==='bienvenida'?'none':'flex';
   if(TABS[id]!==undefined)
     document.querySelectorAll('.nav-t button')[TABS[id]].classList.add('on');
+  /* RECORDAR DONDE ESTABA, PARA QUE UN REFRESCO NO LO MANDE A INICIO.
+     Solo las 5 pestanas: bienvenida/ayuda/revisor/historial son pantallas de
+     paso (piden una sesion, o son un paso de otra), no un sitio donde
+     "quedarse" al recargar. verCap() pisa ultItem justo despues de llamar
+     ir('estudio'), asi que un detalle abierto sobrevive; ir('estudio') solo
+     (la pestaña, sin abrir nada) lo limpia y el refresco vuelve a la rejilla. */
+  if(TABS[id]!==undefined){
+    S.ultPantalla=id;
+    /* Se limpia SIEMPRE, incluso yendo a 'estudio': verCap() lo vuelve a
+       poner justo despues, en la misma llamada sincronica. Si aqui se
+       dejaba en pie solo por ser 'estudio', ir('estudio') SOLO (la pestaña,
+       para ver la rejilla) no lo borraba, y un refresco reabria el ultimo
+       detalle en vez de mostrar la rejilla que la persona pidio ver. */
+    S.ultItem='';
+    guardar();
+  }
   if(id==='inicio')pintaInicio();
   if(id==='estudio')pintaCaps();
   if(id==='tarjetas')pintaTarjetas();
@@ -1832,6 +1853,7 @@ function compruebaRec(rid,elegido,correcta){
 function verCap(id){
   paraVoz();
   ir('estudio');
+  S.ultItem=id;guardar();
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
   document.querySelector('.c-'+id)?.classList.add('on');
   const c=buscaItem(id);
@@ -4387,6 +4409,10 @@ function bvTermina(){
 try{
   pintaLogo();marcaCat();pintaInicio();
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
+  else if(S.ultPantalla && S.ultPantalla!=='inicio' && TABS[S.ultPantalla]!==undefined){
+    if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem);
+    else ir(S.ultPantalla);
+  }
 }catch(e){console.error(e);}
 
 /* ───────── entrar con el código (v20) ─────────

@@ -595,7 +595,13 @@ body.av .tj .rev{font-size:1.08rem}
    sumaba una segunda raya vertical debajo de la de la seccion. Una caja es
    para lo secundario. Lo principal va suelto, mas grande y con aire.
    La medida de linea es 62 caracteres, la misma del modo lectura. */
-.decl{margin:.1rem 0 .2rem;padding:0;background:none;border:0;
+/* Sin margin:auto se quedaba pegada a la izquierda con toda la tarjeta en
+   blanco a su derecha en el escritorio: medido en cr02 a 1280px, 731px de
+   texto dentro de una tarjeta de 936px, 161px de vacio que se leia como un
+   error. La medida de 62 caracteres se queda -es la misma que el modo
+   lectura, no es capricho- pero ahora se centra en el espacio que sobra en
+   vez de dejarlo tirado a un lado. */
+.decl{margin:.1rem auto .2rem;padding:0;background:none;border:0;
   font-size:clamp(1rem,.92rem + .5vw,1.16rem);line-height:1.62;
   letter-spacing:-.005em;max-width:62ch}
 .decl-n{display:block;font-size:.7rem;font-weight:800;letter-spacing:.11em;
