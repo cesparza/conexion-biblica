@@ -5590,7 +5590,7 @@ async function cargaParticipantes(pre){
     partsCache=p;
     const filas=p.map(filaParticipante);
     d.innerHTML='<div class="tabla-scroll"><table class="info-table"><tr><th>Nombre</th><th>Cat.</th><th>Código</th>'+
-      '<th>Exámenes</th><th></th></tr>'+filas.join('')+'</table></div>'+leyendaParts(filas);
+      '<th>Enviados</th><th></th></tr>'+filas.join('')+'</table></div>'+leyendaParts(filas);
   }catch(e){d.innerHTML='<p class="nota">No se pudo cargar: '+esc(e.message||'')+'</p>';}
 }
 
@@ -5616,6 +5616,22 @@ let partsCache=[];
 
 const normNom=n=>String(n||'').trim().toLowerCase()
   .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+/* LA COLUMNA CONTABA UNA COSA Y SE LEIA COMO OTRA.
+   El numero son TODOS los examenes enviados con ese codigo: practica, «mis
+   errores» y evaluaciones. La app manda al servidor todo lo que se entrega
+   estando con sesion, no solo las evaluaciones del director. Medido en
+   produccion: de 15 intentos, 6 de evaluacion, 5 de errores y 4 de practica.
+   Un «3» pelado se leia como tres evaluaciones.
+
+   El desglose va DENTRO de la celda y no en un `title`: en un celular no hay
+   con que pasar el mouse por encima, y esta lista se mira desde el celular. */
+function cuentaEnviados(x){
+  const t=x.intentos||0, e=x.evaluaciones||0;
+  if(!t)return '<span class="pf-cero">0</span>';
+  return '<strong>'+t+'</strong>'+
+    '<span class="pf-sub">'+(e?e+' de evaluación':'ninguno de evaluación')+'</span>';
+}
 
 /* La leyenda sale SOLO si hay algo marcado: una explicación permanente de
    dos etiquetas que hoy no aparecen es ruido en todas las pantallas. */
@@ -5659,7 +5675,7 @@ function filaParticipante(x){
       ?'<span class="pil az" title="Hay otra ficha con este mismo nombre y las dos se han usado: cámbiale el nombre a una para distinguirlas">mismo nombre</span>'
       :'';
   return '<tr id="pf-'+esc(x.id)+'"><td>'+esc(x.nombre)+' '+etq+'</td><td>'+esc(cn)+'</td>'+
-    '<td><code>'+esc(x.codigo)+'</code></td><td>'+(x.intentos||0)+'</td>'+
+    '<td><code>'+esc(x.codigo)+'</code></td><td>'+cuentaEnviados(x)+'</td>'+
     '<td class="pf-acc"><button type="button" class="pf-b" onclick="editaParticipante(\''+esc(x.id)+'\')">Editar</button>'+
     '<button type="button" class="pf-b pf-x" onclick="borraParticipante(\''+esc(x.id)+'\')">Quitar</button></td></tr>';
 }

@@ -2016,7 +2016,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
 {
   const lista=[
     /* Un par donde solo una se uso: la otra es el sobrante. */
-    {id:'a1',nombre:'Alaia',categoria:'av',codigo:'7DJWD6',intentos:1},
+    {id:'a1',nombre:'Alaia',categoria:'av',codigo:'7DJWD6',intentos:1,evaluaciones:1},
     {id:'a2',nombre:'Alaia',categoria:'av',codigo:'S2PSYV',intentos:0},
     /* Un par donde las DOS se usaron: la app no puede saber si son dos ninas. */
     {id:'c1',nombre:'Camila',categoria:'av',codigo:'7GYUQB',intentos:1},
@@ -2035,6 +2035,17 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(F[0].indexOf('editaParticipante')>=0,'Cada fila se puede editar sin quitar y volver a crear');
   ok(F[0].indexOf('class="pf-b pf-x"')>=0 && F[0].indexOf('class="btn gho"')<0,
     'Quitar deja de ser un boton lleno: es texto, y no compite con el nombre');
+
+  /* La columna cuenta TODO lo enviado con ese codigo, no solo evaluaciones:
+     medido en produccion, de 15 intentos 6 son de evaluacion. Un numero
+     pelado se leia como «presento 3 evaluaciones». */
+  ok(F[0].indexOf('1 de evaluaci\u00f3n')>=0,
+    'La celda dice cuantos de los enviados son de evaluacion');
+  A.ponParts([{id:'p1',nombre:'Practicante',categoria:'av',codigo:'PPP111',intentos:4,evaluaciones:0}]);
+  ok(A.filaParticipante({id:'p1',nombre:'Practicante',categoria:'av',codigo:'PPP111',intentos:4,evaluaciones:0})
+       .indexOf('ninguno de evaluaci\u00f3n')>=0,
+    'Y lo dice tambien cuando todo fue practica: 4 enviados y ninguna evaluacion');
+  A.ponParts(lista);
 
   const ley=A.leyendaParts(F);
   ok(ley.indexOf('sin usar')>=0 && ley.indexOf('mismo nombre')>=0,

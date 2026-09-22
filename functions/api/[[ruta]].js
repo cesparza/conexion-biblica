@@ -802,8 +802,17 @@ export async function onRequest(context) {
 
     if (metodo === 'GET' && ruta === '/panel/participantes') {
       const { results } = await env.DB.prepare(
+        /* DOS CUENTAS, NO UNA. `intentos` son TODOS los examenes enviados con
+           ese codigo: practica, «mis errores» y evaluaciones, porque la app
+           manda al servidor todo lo que se entrega estando con sesion. Medido
+           en produccion: de 15 intentos, 6 son de evaluacion, 5 de errores y 4
+           de practica. Con un solo numero, un 3 no dice si la nina presento
+           tres evaluaciones o una y dos practicas, y la columna se leia como
+           lo primero. */
         'SELECT p.id, p.nombre, p.categoria, p.codigo, ' +
-        '(SELECT COUNT(*) FROM intento i WHERE i.participante_id = p.id) AS intentos ' +
+        '(SELECT COUNT(*) FROM intento i WHERE i.participante_id = p.id) AS intentos, ' +
+        '(SELECT COUNT(*) FROM intento i WHERE i.participante_id = p.id ' +
+        ' AND i.evaluacion_id IS NOT NULL) AS evaluaciones ' +
         'FROM participante p WHERE p.borrado_en IS NULL ORDER BY p.categoria, p.nombre'
       ).all();
       await auditar(env, sesion.cuenta_id, 'ver_participantes', 'participante', null, ipHash);

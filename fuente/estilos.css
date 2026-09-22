@@ -499,6 +499,8 @@ body.av .tj .rev{font-size:1.08rem}
 .info-table td select{max-width:230px;min-height:38px;padding:.35rem .5rem;font-family:inherit;
   font-size:.86rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;background:var(--v-sup,#fff);color:var(--txt)}
 .info-table td .pil{margin-left:.3rem;vertical-align:middle;white-space:nowrap;font-size:.66rem}
+.pf-sub{display:block;font-size:.68rem;color:var(--gris);line-height:1.3;margin-top:.1rem}
+.pf-cero{color:var(--gris)}
 
 /* CAPA POR SECCIÓN — filtro, franja e h3 en .sec, y la tarjeta de recordar.
    Ver la nota de mecanismo en fuente/app.js junto a filtroCapas(). */
