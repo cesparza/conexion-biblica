@@ -1224,6 +1224,23 @@ ok(/\.nota \+ \.btn[^{]*\{[^}]*margin-top/.test(CSS),
    y salia cortada contra el borde. */
 ok(/\.info-table \.btn\.gho\{[^}]*padding:\.4rem/.test(CSS),
   'La accion de una tabla va como texto, no como pildora');
+
+/* EL ZOOM QUE NADIE PIDIO.
+   Safari en iPhone amplia la pagina sola al tocar un campo cuya letra mide
+   menos de 16px, y al salir NO vuelve. Medidos antes del arreglo: siete
+   campos por debajo, entre ellos `.rell input`, los huecos de completar el
+   versiculo: cada vez que la nina tocaba uno, el examen se le ampliaba y se
+   quedaba asi. La unica forma de evitarlo es que el campo mida 16px. */
+const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
+ok(/font-size:16px/.test(coarse),
+  'En pantallas que se tocan, los campos miden 16px');
+ok(/\.rell input/.test(coarse) && /\.rec-in/.test(coarse),
+  'Y eso incluye los huecos de completar y la tarjeta de recordar, que es donde mas dolia');
+/* El viewport NO puede prohibir el zoom: ampliar es del usuario, y quien lee
+   esto por encima del hombro de la nina puede tener 60 anos. */
+ok(!/user-scalable\s*=\s*no|maximum-scale/.test(
+     require('fs').readFileSync(FUENTE('build.js'),'utf8')),
+  'El viewport no prohibe ampliar con los dedos');
 ok(/\.btn-voz\.sonando\{/.test(CSS),
   'El boton que esta sonando se distingue de los demas');
 /* El boton de voz en su propia fila: al lado del texto le quitaba unos 50px

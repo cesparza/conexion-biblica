@@ -55,6 +55,32 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .av-x{background:none;border:0;color:var(--v-sobre,#fff);font-size:1.05rem;cursor:pointer;
   padding:6px 8px;line-height:1;flex:0 0 auto;opacity:.85;font-family:inherit}
 .av-x:hover{opacity:1}
+/* ═══ EL ZOOM QUE NADIE PIDIO ═══════════════════════════════════════════
+   MECANISMO
+   Safari en iPhone AMPLIA la pagina sola cuando se toca un campo cuya letra
+   mide menos de 16px, para que se pueda leer lo que se escribe. Y al salir
+   del campo NO vuelve: la pantalla se queda corrida y toca cerrar el teclado
+   y pellizcar para devolverla. No es una preferencia del usuario ni se puede
+   apagar con el viewport; lo unico que lo evita es que el campo mida 16px.
+
+   DONDE DOLIA DE VERDAD: `.rell input`, los espacios en blanco de completar
+   el versiculo. Cada vez que la nina toca un hueco para escribir, el examen
+   se le amplia y se queda asi el resto de la prueba. Medidos: siete campos
+   por debajo de 16px, entre ellos ese y el de recordar.
+
+   POR QUE `pointer:coarse` Y NO PARA TODOS: en el escritorio no existe ese
+   zoom y 16px en cada campo agranda formularios que hoy se ven bien. La
+   consulta apunta a pantallas que se tocan, que es donde esta el problema.
+
+   YA HABIA DOS ARREGLOS SUELTOS de esto mismo (la clave del director y los
+   campos de la ficha, puestos en 16px a mano en su dia). Esta regla los
+   vuelve uno solo. */
+@media (pointer:coarse){
+  .txti,.rell input,.rec-in,.menu-ex select,.info-table td .txti,
+  .info-table td select,textarea.cod,.pan-lb input,.pan-lb select{font-size:16px}
+}
+
+@media print{
 @media print{.av-nuevo{display:none!important}}
 
 .nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15)}
