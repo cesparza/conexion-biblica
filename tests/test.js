@@ -1925,5 +1925,25 @@ ok(/cuerpoResultado\(hisDetalle\[ev\.id\]\)/.test(APP),
 ok(/verRevision\(/.test(APP.slice(APP.indexOf('function hisListaPersonas'))),
   'Y la revision pregunta por pregunta es la misma de siempre');
 
+/* ─── el contenido tambien es parte de la suite ───
+   Las pruebas de arriba comprueban que la maquinaria funciona; esta exige que
+   las preguntas digan la verdad. tools/preguntas-vs-biblia.js contrasta los
+   seis bancos y las tarjetas contra el texto biblico que la app ya trae, y
+   sale con 1 si encuentra algo duro. Se corre desde aqui para que no dependa
+   de que alguien se acuerde de correrlo a mano antes de publicar. */
+{
+  let salida = 0, texto = '';
+  try {
+    texto = execFileSync(process.execPath, [path.join(RAIZ, 'tools', 'preguntas-vs-biblia.js')],
+      { encoding: 'utf8' });
+  } catch (e) { salida = e.status || 1; texto = String(e.stdout || ''); }
+  const duro = (texto.match(/DURO[^(]*\((\d+)\)/) || [])[1];
+  const rev  = (texto.match(/REVISAR[^(]*\((\d+)\)/) || [])[1];
+  ok(salida === 0,
+    'El banco de preguntas no tiene ningun hallazgo duro contra la Biblia (' +
+    (duro === undefined ? 'no se pudo correr el verificador' : duro + ' duros, ' + rev + ' para revisar') + ')');
+  if (salida !== 0) console.log(texto.split('\n').filter(l => /^  ·|^      /.test(l)).slice(0, 12).join('\n'));
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);
