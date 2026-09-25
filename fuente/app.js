@@ -551,7 +551,16 @@ function colaGuarda(a){try{localStorage.setItem(COLA,JSON.stringify(a.slice(0,20
 function respuestasDe(sel){
   return sel.map(q=>{
     const e={k:claveQ(q),t:q.t,b:bien(q)?1:0};
-    if(q.t==='mc')e.r=(resp[q.id]===undefined?null:resp[q.id]);
+    /* En mc se guarda el TEXTO, no el indice. Las opciones se barajan por
+       examen, asi que el indice solo significa algo dentro de ESE sorteo, y el
+       sorteo no se guarda. El panel resuelve contra el banco sin barajar, asi
+       que con el indice mostraba otra opcion. Aqui `q` todavia es la copia
+       barajada: el indice vale y se cambia por su texto, que no depende del
+       orden. Un `r` numerico en la base es de antes de este cambio. */
+    if(q.t==='mc'){
+      const i=resp[q.id];
+      e.r=(i===undefined||i===null||!q.o?null:q.o[i]);
+    }
     else if(q.t==='tf')e.r=(resp[q.id]===undefined?null:!!resp[q.id]);
     else e.r=q.p.map((x,i)=>x.b?String(resp[q.id+'_'+i]||''):null);
     return e;
@@ -5520,10 +5529,18 @@ function htmlRevisionQ(e,n){
     (q?esc(q.q||q.ins||''):'<em>Esta pregunta ya no está en el banco</em>')+'</div>';
   let cuerpo='';
   if(e.t==='mc'){
-    const suya=q&&q.o&&e.r!==null&&e.r!==undefined?q.o[e.r]:null;
     const buena=q&&q.o?q.o[q.a]:null;
+    /* Un `r` numerico es un intento viejo: guardaba el indice del sorteo de
+       aquel examen, y el sorteo no se guardo, asi que ya no se puede resolver
+       a un texto. Si acerto, la que marco ES la buena y eso si es cierto; si
+       fallo, se dice que no quedo guardada. Pintar q.o[r] era mostrarle al
+       director una opcion que ella nunca toco. */
+    let suya;
+    if(typeof e.r==='number')suya=ok?(buena==null?null:esc(buena)):'<em>no quedó guardada</em>';
+    else if(e.r===null||e.r===undefined)suya='nada';
+    else suya=esc(e.r);
     cuerpo='<div class="fb '+(ok?'ok':'ko')+'">Respondió: <strong>'+
-      (suya===null||suya===undefined?'nada':esc(suya))+'</strong>'+
+      (suya==null?'?':suya)+'</strong>'+
       (ok?'':'<br>Era: <strong>'+(buena==null?'?':esc(buena))+'</strong>')+'</div>';
   } else if(e.t==='tf'){
     const di=v=>v===null||v===undefined?'nada':(v?'Verdadero':'Falso');

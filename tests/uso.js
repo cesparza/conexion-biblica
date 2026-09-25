@@ -14,7 +14,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         avanza, listo, sumaRacha, revisaInsignias, mezcla, CAPS, MODULOS, TARJETAS, CONT_MODULOS, CONTENIDO,
         claveQ, claveT, falladasDe, bancoDe, tjBaraja, filtraTj, mazoActual:()=>mazo, normalizar,
         poolDe, opcionesCuantas, segundosPara, marcaVistas, nuevasDe, prng,
-  respuestasDe, htmlRevisionQ, marca, rellena, entregar, iniciar, prueba:()=>prueba,
+  respuestasDe, htmlRevisionQ, marca, rellena, entregar, iniciar, prueba:()=>prueba, esc,
   esComplementaria, ponFuente:v=>{soloFuente=v}, fuenteActual:()=>soloFuente, bancoDe,
   rangoDe, enRango, textoRango, cambiaRango, cambiaAlcance, textoAlcanceImpr, pintaMenuEx,
   ponSemilla:x=>{rndEx=prng(x)},
@@ -1543,6 +1543,69 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const huerfana={k:'d1.noexiste',t:'mc',r:0,b:0};
   const h=V.htmlRevisionQ(huerfana,1);
   ok(/ya no está en el banco/.test(h),'Una pregunta retirada del banco lo dice, no inventa');
+}
+
+/* ─── la revision tiene que decir la opcion QUE ELLA TOCO ───
+   barajaOpciones() revuelve las opciones en CADA examen, asi que el indice de
+   la que toco solo significa algo dentro de ese sorteo, y el sorteo no se
+   guarda. Se guardaba el indice y la revision lo resolvia contra el banco sin
+   barajar: salia OTRA opcion, en verde, con la nota correcta, y con un texto
+   que ella nunca marco (reportado el 24-sep con la revision de Camila, 13/15).
+   Ahora viaja el texto.
+
+   Esta prueba existe porque ninguna otra cruzaba la frontera
+   examen -> payload -> revision: cada lado estaba probado por separado y el
+   defecto vivia justo en el medio. */
+{
+  const V=montar(RET);
+  V.ponCat('av'); V.ponNivel(3);
+  V.ponSemilla(7);                       // iniciar() no toca rndEx: el sorteo queda fijo
+  V.iniciar('normal');
+  const p=V.prueba();
+  const banco={}; for(const q of V.BANCO)banco[V.claveQ(q)]=q;
+  /* Solo sirven aquellas donde el sorteo SI movio el orden: donde quedo igual,
+     el defecto viejo tambien pasaba y la prueba no probaria nada. */
+  const movidas=p.filter(q=>q.t==='mc'&&banco[V.claveQ(q)]&&
+    JSON.stringify(q.o)!==JSON.stringify(banco[V.claveQ(q)].o));
+  const mcs=p.filter(q=>q.t==='mc').length;
+  ok(movidas.length>0,'El sorteo cambio el orden de al menos una multiple ('+
+    movidas.length+' de '+mcs+')');
+
+  let malas=0;
+  for(const q of movidas){
+    const i=(q.a+1)%q.o.length;          // una equivocada: es la que el director va a mirar
+    V.marca(q.id,i);
+    const e=V.respuestasDe([q])[0];
+    const html=V.htmlRevisionQ(e,1);
+    if(!html.includes('Respondió: <strong>'+V.esc(q.o[i])+'</strong>')){
+      malas++;
+      if(malas===1)console.log('   la primera que falla: toco «'+q.o[i]+'»');
+    }
+    const enEsaPosDelBanco=banco[V.claveQ(q)].o[i];
+    if(enEsaPosDelBanco!==q.o[i]&&
+       html.includes('Respondió: <strong>'+V.esc(enEsaPosDelBanco)+'</strong>')){
+      malas++;
+      console.log('   se colo la del banco en esa posicion: «'+enEsaPosDelBanco+'»');
+    }
+  }
+  ok(malas===0,'La revision pinta la opcion que toco, no la que quedo en esa '+
+    'posicion del banco ('+movidas.length+' preguntas barajadas)');
+
+  ok(typeof V.respuestasDe([movidas[0]])[0].r==='string',
+    'Al servidor viaja el texto de la opcion, no el ordinal del sorteo');
+
+  /* Intentos entregados ANTES de este arreglo: guardaron el ordinal, y el
+     sorteo no se guardo. Si acerto, la que marco ES la buena y eso si se
+     puede afirmar; si fallo, no se puede saber cual, y decirlo es mejor que
+     pintarle al director una opcion al azar. */
+  const k0=V.claveQ(movidas[0]), ob=banco[k0].o;
+  const viejoMal=V.htmlRevisionQ({k:k0,t:'mc',r:0,b:0},1);
+  ok(/no quedó guardada/.test(viejoMal)&&
+     !viejoMal.includes('Respondió: <strong>'+V.esc(ob[0])+'</strong>'),
+    'Un intento viejo que fallo dice que no quedo guardada, no inventa la opcion');
+  const viejoBien=V.htmlRevisionQ({k:k0,t:'mc',r:0,b:1},1);
+  ok(viejoBien.includes('Respondió: <strong>'+V.esc(ob[banco[k0].a])+'</strong>'),
+    'Un intento viejo que acerto si puede decir cual: la correcta');
 }
 
 /* ─── solo la fuente que el reglamento nombra ───
