@@ -1292,6 +1292,30 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
     'No hay un @media abierto justo dentro de otro, que es como se colo el de v114');
 }
 
+/* ─── el color de relleno no sirve de tinta ───
+   Medido en el render real (24-sep): el verde #2E9E6B sobre su propio fondo
+   claro daba 2,98 de contraste y el naranja #E8720C sobre la crema 2,93,
+   cuando un texto se empieza a leer en 4,5. La piel de esta app existe para
+   que una nina de siete anos lea al sol; ahi eso no se ve.
+   Por eso los tres colores tienen una version TINTA, mas oscura, y el relleno
+   y el borde siguen intactos. Esta prueba existe porque el error no se nota
+   leyendo el CSS: el color «se ve bien» en la pantalla del que lo escribe. */
+{
+  const sinCom = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  ok(/--naranja-txt:/.test(sinCom)&&/--verde-txt:/.test(sinCom)&&/--rojo-txt:/.test(sinCom),
+    'Los tres colores de marca tienen su version tinta declarada');
+  /* Tambien en el JS: los mensajes de error se pintan con style= en linea, y
+     ahi el CSS no alcanza. Doce de ellos estaban con el relleno como tinta. */
+  const comoTinta = (sinCom + APP).match(/(?<![-\w])color:var\(--(naranja|verde|rojo)\)/g) || [];
+  ok(comoTinta.length === 0,
+    'Ningun texto usa el color de relleno, ni en el CSS ni en un style= del JS' +
+    (comoTinta.length ? ' (' + comoTinta.length + ' usos)' : ''));
+  /* .divisor es un bloque azul con letra blanca. Una regla de mas abajo le
+     volvia a poner el gris del separador encima: gris sobre azul, 2,22. */
+  ok(!/\.divisor\b[^{}]*\{[^}]*color:var\(--v-tinta3\)/.test(sinCom),
+    'El bloque azul .divisor no recibe la tinta gris del separador');
+}
+
 ok(/font-size:16px/.test(coarse),
   'En pantallas que se tocan, los campos miden 16px');
 ok(/\.rell input/.test(coarse) && /\.rec-in/.test(coarse),

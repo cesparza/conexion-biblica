@@ -1502,7 +1502,7 @@ BANCO.push(
 
 {cap:'d9',t:'mc',q:'¿Quién emitió el decreto que en el 457 a.C. dio inicio a las setenta semanas?',
  o:['Ciro el Persa','Darío el Medo','Artajerjes I','Alejandro Magno'],a:2},
-{cap:'d9',t:'mc',q:'¿En qué libro bíblico se registra el decreto de Artajerjes I que autorizó a Esdras?',
+{cap:'d9',t:'mc',q:'¿En qué libro bíblico se registra el decreto de Artajerjes I del año 457 a.C.?',
  o:['Nehemías','Esdras','Hageo','Zacarías'],a:1},
 {cap:'d9',t:'mc',q:'¿Qué autoridad le dio a Esdras el decreto de Artajerjes I, en el séptimo año de su reinado?',
  o:['Autoridad militar para formar un ejército','Autoridad civil y judicial para reorganizar la nación judía','Autoridad exclusivamente religiosa, sin poder civil','Autoridad para acuñar moneda propia'],a:1},

@@ -34,6 +34,11 @@
   --rojo:var(--v-mal,#C0392B); --oro:#B8860B;
   --bg:var(--v-lienzo,#F0F4F8); --card:var(--v-sup,#fff); --txt:var(--v-tinta,#1a1a2e);
   --gris:var(--v-tinta3,#6b7280); --r:var(--v-r-lg,16px); --sh:var(--v-s2,0 4px 20px rgba(0,0,0,.10));
+  /* Los mismos tres colores, pero como TINTA. Medido sobre el render real:
+     el verde sobre su propio fondo claro daba 2,98 y el naranja sobre la crema
+     2,93, cuando lo legible arranca en 4,5. Relleno y borde no cambian. */
+  --naranja-txt:var(--v-acento-txt,#B65909); --verde-txt:var(--v-ok-txt,#247C54);
+  --rojo-txt:var(--v-mal-txt,#C82832);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 /* EL ATRIBUTO hidden GANA SIEMPRE.
@@ -140,7 +145,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:.9rem;margin-bottom:1.2rem}
 .stat{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:1rem .6rem;text-align:center}
-.stat .v{font-size:1.9rem;font-weight:900;color:var(--naranja);line-height:1}
+.stat .v{font-size:1.9rem;font-weight:900;color:var(--naranja-txt);line-height:1}
 .stat .l{font-size:.71rem;color:var(--gris);margin-top:5px;font-weight:600}
 
 .rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:.9rem}
@@ -170,7 +175,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .cap .n{font-size:1.5rem;font-weight:900;line-height:1}
 .cap .t{font-size:.8rem;font-weight:700;color:var(--azul);margin-top:3px;line-height:1.3}
 .cap .f{font-size:.7rem;color:var(--gris);margin-top:2px}
-.cap .p{font-size:.7rem;color:var(--verde);font-weight:700;margin-top:5px}
+.cap .p{font-size:.7rem;color:var(--verde-txt);font-weight:700;margin-top:5px}
 
 .sec{margin-bottom:1.3rem}
 /* CABECERA DE SECCION. Ver el mecanismo en fuente/app.js, cabezaSec().
@@ -355,8 +360,8 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
   margin:.6rem 0;line-height:1.7;font-style:normal}
 ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 
-.timer{font-size:1.35rem;font-weight:900;color:var(--naranja);font-variant-numeric:tabular-nums}
-.timer.urg{color:var(--rojo);animation:pp .6s infinite}
+.timer{font-size:1.35rem;font-weight:900;color:var(--naranja-txt);font-variant-numeric:tabular-nums}
+.timer.urg{color:var(--rojo-txt);animation:pp .6s infinite}
 @keyframes pp{0%,100%{opacity:1}50%{opacity:.45}}
 .divisor{background:var(--azul);color:var(--v-sobre,#fff);padding:.5rem .9rem;border-radius:8px;font-size:.84rem;font-weight:700;margin:1.1rem 0 .7rem}
 
@@ -364,34 +369,34 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .q.hecha{border-color:#d1fae5}
 .q.mal{border-color:#fee2e2}
 .q .qt{font-size:.89rem;font-weight:600;margin-bottom:.75rem;line-height:1.5}
-.q .qn{color:var(--naranja);font-weight:800;margin-right:4px}
+.q .qn{color:var(--naranja-txt);font-weight:800;margin-right:4px}
 
 .ops{display:flex;flex-direction:column;gap:.4rem}
 .op{display:flex;align-items:center;gap:.65rem;background:#f8f9ff;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;padding:.5rem .85rem;cursor:pointer;font-family:inherit;font-size:.85rem;text-align:left;min-height:46px}
 .op:hover:not(:disabled){border-color:var(--cielo);background:#eff6ff}
 .op.sel{border-color:var(--cielo);background:#eff6ff}
-.op.ok{border-color:var(--verde);background:#e8f5e9;color:var(--verde);font-weight:700}
-.op.ko{border-color:var(--rojo);background:#fee2e2;color:var(--rojo)}
+.op.ok{border-color:var(--verde);background:#e8f5e9;color:var(--verde-txt);font-weight:700}
+.op.ko{border-color:var(--rojo);background:#fee2e2;color:var(--rojo-txt)}
 .op:disabled{cursor:default}
 .ol{width:25px;height:25px;border-radius:50%;background:var(--azul);color:var(--v-sobre,#fff);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;flex-shrink:0}
-.op.ok .ol{background:var(--verde)} .op.ko .ol{background:var(--rojo)} .op.sel .ol{background:var(--cielo)}
+.op.ok .ol{background:var(--verde-txt)} .op.ko .ol{background:var(--rojo-txt)} .op.sel .ol{background:var(--cielo)}
 
 .vf{display:flex;gap:.6rem}
 .vf button{flex:1;padding:.6rem;border-radius:8px;border:2px solid var(--v-linea,#e5e7eb);cursor:pointer;font-family:inherit;font-size:.87rem;font-weight:700;background:#f8f9ff;min-height:46px}
 .vf button.sel{border-color:var(--cielo);background:#eff6ff}
-.vf button.ok{border-color:var(--verde);background:#e8f5e9;color:var(--verde)}
-.vf button.ko{border-color:var(--rojo);background:#fee2e2;color:var(--rojo)}
+.vf button.ok{border-color:var(--verde);background:#e8f5e9;color:var(--verde-txt)}
+.vf button.ko{border-color:var(--rojo);background:#fee2e2;color:var(--rojo-txt)}
 .vf button:disabled{cursor:default}
 
 .rell{display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;font-size:.87rem;line-height:2.1}
 .rell input{border:none;border-bottom:2px solid var(--cielo);background:#eff6ff;border-radius:4px 4px 0 0;padding:.2rem .45rem;font-family:inherit;font-size:.87rem;color:var(--azul);min-width:95px;max-width:190px;outline:none;min-height:34px}
 .rell input:focus{background:#dbeafe}
-.rell input.ok{background:#d1fae5;border-bottom-color:var(--verde);color:var(--verde);font-weight:700}
-.rell input.ko{background:#fee2e2;border-bottom-color:var(--rojo);color:var(--rojo)}
+.rell input.ok{background:#d1fae5;border-bottom-color:var(--verde);color:var(--verde-txt);font-weight:700}
+.rell input.ko{background:#fee2e2;border-bottom-color:var(--rojo);color:var(--rojo-txt)}
 
 .fb{font-size:.79rem;margin-top:.5rem;padding:.35rem .6rem;border-radius:6px;font-weight:600;line-height:1.5}
-.fb.ok{background:#d1fae5;color:var(--verde)}
-.fb.ko{background:#fee2e2;color:var(--rojo)}
+.fb.ok{background:#d1fae5;color:var(--verde-txt)}
+.fb.ko{background:#fee2e2;color:var(--rojo-txt)}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:.6rem 1.3rem;border-radius:50px;border:none;cursor:pointer;font-family:inherit;font-size:.87rem;font-weight:700;min-height:46px}
 .btn.azul{background:var(--azul);color:var(--v-sobre,#fff)}
@@ -408,7 +413,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 
 .ins{display:inline-flex;align-items:center;gap:5px;padding:.4rem .9rem;border-radius:50px;font-size:.79rem;font-weight:700;margin:.25rem}
 .ins.oro{background:#fef3c7;color:#92400e;border:2px solid #D4AC0D}
-.ins.gris{background:#f1f5f9;color:#64748b;border:2px solid #cbd5e1}
+.ins.gris{background:#f1f5f9;color:#627188;border:2px solid #cbd5e1}   /* 4,34 -> 4,52 */
 
 .txti{width:100%;max-width:330px;padding:.55rem .8rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;font-size:.9rem;font-family:inherit;min-height:46px}
 .pil{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.71rem;font-weight:700}
@@ -426,8 +431,8 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .tj{background:var(--card);border-radius:18px;box-shadow:0 6px 24px rgba(0,0,0,.13);padding:2rem 1.4rem;min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;border:3px solid var(--cielo);position:relative}
 .tj.volteada{border-color:var(--verde);background:#f4fcf5}
 .tj .cara{font-size:1.05rem;font-weight:700;color:var(--azul);line-height:1.6}
-.tj .cara b{color:var(--naranja)}
-.tj .rev{font-size:1rem;color:var(--verde);font-weight:600;line-height:1.65}
+.tj .cara b{color:var(--naranja-txt)}
+.tj .rev{font-size:1rem;color:var(--verde-txt);font-weight:600;line-height:1.65}
 .tj .pista{position:absolute;bottom:.7rem;font-size:.7rem;color:var(--gris);font-weight:600}
 .tj-barra{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:.9rem 0;font-size:.83rem;color:var(--gris);font-weight:600}
 /* MECANISMO DEL DESBORDE QUE SE VIO EN EL IPHONE
@@ -492,7 +497,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .card.hoy{border-left:5px solid var(--naranja)}
 .hoy-cab{display:flex;gap:1rem;align-items:center;background:#fff8f0;border-radius:12px;padding:.8rem 1rem;margin-bottom:.9rem;flex-wrap:wrap}
 .cuenta{text-align:center;min-width:78px}
-.cuenta .cd{font-size:2rem;font-weight:900;color:var(--naranja);line-height:1}
+.cuenta .cd{font-size:2rem;font-weight:900;color:var(--naranja-txt);line-height:1}
 .cuenta .cl{font-size:.68rem;color:var(--gris);font-weight:700;line-height:1.25;margin-top:3px}
 .sem{flex:1;min-width:190px}
 .sem .st{font-size:.86rem;font-weight:800;color:var(--azul)}
@@ -543,8 +548,8 @@ body.av .tj .rev{font-size:1.08rem}
 .alu-btn .an{font-size:.85rem;font-weight:800;color:var(--azul);line-height:1.2}
 .alu-btn .ac{font-size:.68rem;color:var(--gris);margin-top:2px}
 .pil.az{background:#dbeafe;color:var(--cielo)}
-.pil.na{background:#ffedd5;color:var(--naranja)}
-.pil.ve{background:#dcfce7;color:var(--verde)}
+.pil.na{background:#ffedd5;color:#AD5409}   /* un paso mas: sobre este crema, 4,14 -> 4,53 */
+.pil.ve{background:#dcfce7;color:var(--verde-txt)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
 
 /* ACCIONES DE UNA FILA DE PARTICIPANTE.
@@ -557,8 +562,8 @@ body.av .tj .rev{font-size:1.08rem}
   border-radius:8px}
 .pf-b:hover{background:var(--v-sup2,#fff4e0)}
 .pf-x{color:var(--gris)}
-.pf-x:hover{color:var(--rojo);background:#fdeceb}
-.pf-ok{color:var(--verde)}
+.pf-x:hover{color:var(--rojo-txt);background:#fdeceb}
+.pf-ok{color:var(--verde-txt)}
 .info-table td .txti{max-width:190px;min-height:38px;padding:.35rem .5rem;font-size:.86rem}
 .info-table td select{max-width:230px;min-height:38px;padding:.35rem .5rem;font-family:inherit;
   font-size:.86rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;background:var(--v-sup,#fff);color:var(--txt)}
@@ -574,7 +579,7 @@ body.av .tj .rev{font-size:1.08rem}
 .cf.on{background:var(--azul);color:#fff;border-color:var(--azul)}
 .recordar{margin-top:1rem;padding:.9rem 1rem;background:var(--v-sup,#fff);
   border-radius:var(--v-r-sm,12px);border:1px solid var(--v-linea,#e5e7eb)}
-.rec-tit{font-size:.68rem;font-weight:800;color:var(--naranja);text-transform:uppercase;
+.rec-tit{font-size:.68rem;font-weight:800;color:var(--naranja-txt);text-transform:uppercase;
   letter-spacing:.1em;margin-bottom:.45rem}
 .rec-preg{font-size:.86rem;font-weight:700;color:var(--azul);margin-bottom:.6rem;line-height:1.4}
 .rec-ops{display:flex;flex-direction:column;gap:.45rem;align-items:stretch}
@@ -585,8 +590,8 @@ body.av .tj .rev{font-size:1.08rem}
 .btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.8rem;border:1px solid #e2e5ea;background:#fff;color:var(--azul)}
 .btn.peq:disabled{opacity:.55;cursor:default}
 .rec-comp{margin-top:.6rem;font-size:.85rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
-.rec-comp.ok{background:#e8f5e9;color:var(--verde)}
-.rec-comp.ko{background:#fee2e2;color:var(--rojo)}
+.rec-comp.ok{background:#e8f5e9;color:var(--verde-txt)}
+.rec-comp.ko{background:#fee2e2;color:var(--rojo-txt)}
 
 /* ═══ LA PANTALLA DE ESTUDIO DE LAS CREENCIAS ═══
    MECANISMO
@@ -658,8 +663,8 @@ body.av .tj .rev{font-size:1.08rem}
 .rec-in{width:8.5rem;max-width:60%;padding:.2rem .45rem;border:0;border-bottom:2px solid var(--cielo);
   background:var(--v-sup2,#fff8ec);border-radius:6px 6px 0 0;font-family:inherit;
   font-size:.9rem;color:var(--txt)}
-.rec-in.ok{border-bottom-color:var(--verde);color:var(--verde);font-weight:700}
-.rec-in.ko{border-bottom-color:var(--rojo);color:var(--rojo);font-weight:700}
+.rec-in.ok{border-bottom-color:var(--verde);color:var(--verde-txt);font-weight:700}
+.rec-in.ko{border-bottom-color:var(--rojo);color:var(--rojo-txt);font-weight:700}
 
 @media(max-width:620px){
   .nav-b span{display:none}
@@ -700,7 +705,7 @@ body.av .tj .rev{font-size:1.08rem}
 .bv-lb{display:block;font-size:.9rem;font-weight:800;color:var(--azul);margin-bottom:.4rem;text-align:left}
 .bv-in{width:100%;padding:.9rem 1rem;border:3px solid var(--v-linea,#e5e7eb);border-radius:12px;font-size:1.05rem;font-family:inherit;min-height:54px}
 .bv-in:focus{outline:none;border-color:var(--cielo)}
-.bv-err{color:var(--rojo);font-size:.83rem;font-weight:700;min-height:1.1rem;margin:.35rem 0;text-align:left}
+.bv-err{color:var(--rojo-txt);font-size:.83rem;font-weight:700;min-height:1.1rem;margin:.35rem 0;text-align:left}
 .bv-btn{width:100%;justify-content:center;font-size:1rem;min-height:54px}
 .bv-op{display:block;width:100%;background:#f8f9ff;border:3px solid var(--v-linea,#e5e7eb);border-radius:14px;
   padding:.95rem 1rem;margin-bottom:.7rem;cursor:pointer;font-family:inherit;text-align:left;min-height:60px}
@@ -771,7 +776,7 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .bol h3{font-size:1.05rem;font-weight:900;color:var(--azul)}
 .bol-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:.6rem;margin:.8rem 0}
 .bol-g>div{background:var(--v-sup,#fff);border-radius:10px;padding:.6rem .4rem;text-align:center}
-.bol-g b{display:block;font-size:1.25rem;font-weight:900;color:var(--naranja);line-height:1.1}
+.bol-g b{display:block;font-size:1.25rem;font-weight:900;color:var(--naranja-txt);line-height:1.1}
 .bol-g span{display:block;font-size:.66rem;color:var(--gris);font-weight:600;margin-top:3px}
 .bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.78rem}
 .bol-t th{background:var(--azul);color:var(--v-sobre,#fff);padding:.35rem .5rem;text-align:left}
@@ -1055,7 +1060,7 @@ details.card.sec[open]>summary{color:var(--azul)}
      abre esto todos los dias es una nina de siete anos, en un celular, muchas
      veces al sol. Fondo calido, bloques de color plano y texto grande se leen
      afuera; el gris azulado de antes se apaga. */
-  --v-tinta:#22242B; --v-tinta2:#5B5F6B; --v-tinta3:#8A8F9C;
+  --v-tinta:#22242B; --v-tinta2:#5B5F6B; --v-tinta3:#6E7382;
   --v-lienzo:#FFF9EF; --v-sup:#FFFFFF; --v-sup2:#FFF4E0;
   --v-linea:#F0E6D2; --v-linea2:#F8F1E3;
   /* Texto SOBRE un bloque de color. No es una superficie: no se tine con la piel. */
@@ -1076,6 +1081,10 @@ details.card.sec[open]>summary{color:var(--azul)}
   --v-barra:rgba(17,86,168,.94); --v-barra-pie:rgba(255,252,246,.95);
   --v-acento-alto:#F2860F; --v-acento-bajo:#D9620A;
   --v-ok:#2E9E6B; --v-mal:#D6323C;
+  /* Version tinta de los tres: el mismo tono, bajado hasta que se lee.
+     Esta piel existe para que una nina de siete anos lea al sol; un texto
+     de 3,0 de contraste no cumple eso aunque el color sea el correcto. */
+  --v-acento-txt:#B65909; --v-ok-txt:#247C54; --v-mal-txt:#C82832;
 
   /* Acento por categoría. Lo pisa body.me / body.av / body.gm más abajo. */
   --v-cat:#E8720C; --v-cat-suave:#FFF3E8;
@@ -1281,7 +1290,12 @@ body{
 .tarea:hover{box-shadow:var(--v-s2);transform:translateY(-1px)}
 
 /* ── separadores y notas ── */
-.sep span,.divisor{color:var(--v-tinta3);letter-spacing:.08em;font-size:var(--v-t-1)}
+.sep span,.divisor{letter-spacing:.08em;font-size:var(--v-t-1)}
+/* El gris es para el separador sobre el lienzo. .divisor NO: es un bloque
+   azul (mas arriba) y esta regla le devolvia la tinta gris encima, o sea
+   gris sobre azul. Se leia a 2,22, y con el gris corregido habria caido a
+   1,52. Con el blanco que ya declara su propia regla, 7,19. */
+.sep span{color:var(--v-tinta3)}
 .nota{color:var(--v-tinta2);font-size:var(--v-t-1);line-height:1.6}
 
 /* ── detalles plegables ── */
@@ -2006,7 +2020,7 @@ details.card summary::marker{content:''}
   border-radius:999px;padding:.12rem .5rem;white-space:nowrap}
 .rb-q{font-size:var(--v-t0);font-weight:700;color:var(--v-tinta);line-height:1.4}
 .rb-a{font-size:var(--v-t-1);color:var(--v-tinta2);margin-top:.15rem;line-height:1.35}
-.rb-porque{font-size:var(--v-t-1);color:var(--v-mal);font-weight:700;margin-top:.35rem}
+.rb-porque{font-size:var(--v-t-1);color:var(--v-mal-txt,#C82832);font-weight:700;margin-top:.35rem}
 /* El texto manda y la accion se acomoda: min-width:0 en el texto es lo que
    deja que un enunciado largo se parta en vez de estirar la fila. */
 .rb-cuerpo{display:flex;gap:.6rem;align-items:flex-start}
@@ -2588,7 +2602,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'a69a95075ce2';
+const VERSION_APP = '803e520d03da';
 
 const CAPS = [
  {
@@ -16541,7 +16555,7 @@ const BANCO = [
  {
   "cap": "d9",
   "t": "mc",
-  "q": "¿En qué libro bíblico se registra el decreto de Artajerjes I que autorizó a Esdras?",
+  "q": "¿En qué libro bíblico se registra el decreto de Artajerjes I del año 457 a.C.?",
   "o": [
    "Nehemías",
    "Esdras",
@@ -36687,7 +36701,7 @@ function pintaCaps(){
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
     '<div class="ic">'+m.icono+'</div><div><div class="t">'+esc(m.label)+'</div>'+
     '<div class="s">'+esc(m.sub)+'</div>'+
-    '<div class="p" style="font-size:.7rem;color:var(--verde);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
+    '<div class="p" style="font-size:.7rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>').join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
@@ -38497,7 +38511,7 @@ function pintaMenuEx(){
     : 'Ya te salieron todas alguna vez: ahora entran primero las que fallaste.';
   document.getElementById('ex-disponible').innerHTML=
     'Disponibles con esta selección: <strong>'+t+'</strong> preguntas ('+porTipo+').'+
-    (t<cuantas?' <span style="color:var(--rojo)">Se usarán todas.</span>':'')+
+    (t<cuantas?' <span style="color:var(--rojo-txt)">Se usarán todas.</span>':'')+
     '<br>'+frescura+
     '<br>'+textoNivel();
 }
@@ -39010,7 +39024,7 @@ function entraDirector(){
   if(!i)return;
   activaDirector(i.value).then(err=>{
     const m=document.getElementById('dir-msg');
-    if(err){if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(err)+'</span>';return;}
+    if(err){if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(err)+'</span>';return;}
     if(trasDir==='evento'){
       /* La clave se usó para el interruptor, no para ver respuestas: se apaga el
          perfil director de una, para no dejar abierto el celular de la niña. El
@@ -39262,7 +39276,7 @@ function imprimeTodos(conR){
 
 function alertaImpr(msj){
   const c=document.getElementById('impr-alt');
-  if(c)c.innerHTML='<p class="nota" style="color:var(--rojo)">'+esc(msj)+'</p>';
+  if(c)c.innerHTML='<p class="nota" style="color:var(--rojo-txt)">'+esc(msj)+'</p>';
 }
 
 /* ───────── logo de la iglesia ───────── */
@@ -39687,7 +39701,7 @@ function importaCodigo(){
   const out=document.getElementById('imp-out');
   if(!t||!out)return;
   const o=leeCodigo(t.value);
-  if(!o){out.innerHTML='<p class="nota" style="color:var(--rojo)">Ese código no se '+
+  if(!o){out.innerHTML='<p class="nota" style="color:var(--rojo-txt)">Ese código no se '+
     'entiende. Tiene que empezar en <strong>CB1R</strong> o <strong>CB1F</strong> y '+
     'venir completo, sin cortar.</p>';return;}
   if(o.tipo==='R'){out.innerHTML=pintaBoletin(o);return;}
@@ -39707,7 +39721,7 @@ async function aplicaImport(como){
   const al=normalizar(impPendiente.a);
   if(como==='nueva'){
     if(alumnos().length>=MAX_ALUMNOS){
-      document.getElementById('imp-out').innerHTML='<p class="nota" style="color:var(--rojo)">'+
+      document.getElementById('imp-out').innerHTML='<p class="nota" style="color:var(--rojo-txt)">'+
         'Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una antes de agregar otra.</p>';
       return;
     }
@@ -39892,7 +39906,7 @@ async function entraCodigo(){
     if(document.getElementById('cb-panel'))await pintaPanel();
     llevaA(evalPend?'cb-eval':'cb-sesion');
   }catch(e){
-    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+    if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo conectar')+'</span>';
   }
 }
 
@@ -40006,7 +40020,7 @@ async function entraPanel(){
     srvYo={rol:'director'};
     await pintaPanel();
   }catch(e){
-    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+    if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo conectar')+'</span>';
   }
 }
 
@@ -40508,7 +40522,7 @@ function pintaAvisoCats(){
     solapa.map(function(ev){return '<strong>'+esc(ev.titulo)+'</strong>';}).join(', ')+'.';
   if(personas.length)t+=(t?'<br>':'')+'👤 Va dirigida a '+personas.length+
     (personas.length===1?' persona':' personas')+', no a las categorías de arriba.';
-  p.innerHTML=t?'<span style="color:var(--rojo)">'+t+'</span>':'';
+  p.innerHTML=t?'<span style="color:var(--rojo-txt)">'+t+'</span>':'';
 }
 
 /* Que fuente nombra el reglamento para cada actividad, en palabras. Se dice
@@ -40550,7 +40564,7 @@ function pintaNotaAlcance(){
   if(m.value==='tramo'){
     const mal=motivoRangoMalo();
     if(mal){
-      p.innerHTML='<span style="color:var(--rojo)">'+esc(mal)+'</span>';
+      p.innerHTML='<span style="color:var(--rojo-txt)">'+esc(mal)+'</span>';
       pintaAvisoCats();revisaAbrir();pintaFrase();return;
     }
     p.textContent=textoRango(rangoDe(alcancePanel()))+'. A una categoría que no tenga '+
@@ -40806,7 +40820,7 @@ function pintaResumen(){
      de 10 cuando se pidieron 25 puede ser exactamente lo que el director
      quiere. */
   const corto=n.length&&min<pide
-    ? ' <span style="color:var(--rojo)">Pediste '+pide+
+    ? ' <span style="color:var(--rojo-txt)">Pediste '+pide+
       ', así que a quien menos tenga le saldrán '+min+'.</span>'
     : '';
   p.innerHTML=aplicaMarcas(RESUMEN_EVAL,{
@@ -41016,7 +41030,7 @@ async function verRevision(id){
                     'la app empezara a mandarlas al servidor.</p>')),'yo');
   }catch(e){
     abreHojaHtml(hojaConCierre('Revisión','No se pudo',
-      '<p class="nota" style="color:var(--rojo)">'+esc(e.message||'No se pudo cargar')+'</p>'),'yo');
+      '<p class="nota" style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo cargar')+'</p>'),'yo');
   }
 }
 

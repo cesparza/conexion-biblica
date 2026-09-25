@@ -1263,7 +1263,7 @@ function pintaCaps(){
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
     '<div class="ic">'+m.icono+'</div><div><div class="t">'+esc(m.label)+'</div>'+
     '<div class="s">'+esc(m.sub)+'</div>'+
-    '<div class="p" style="font-size:.7rem;color:var(--verde);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
+    '<div class="p" style="font-size:.7rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>').join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
@@ -3073,7 +3073,7 @@ function pintaMenuEx(){
     : 'Ya te salieron todas alguna vez: ahora entran primero las que fallaste.';
   document.getElementById('ex-disponible').innerHTML=
     'Disponibles con esta selección: <strong>'+t+'</strong> preguntas ('+porTipo+').'+
-    (t<cuantas?' <span style="color:var(--rojo)">Se usarán todas.</span>':'')+
+    (t<cuantas?' <span style="color:var(--rojo-txt)">Se usarán todas.</span>':'')+
     '<br>'+frescura+
     '<br>'+textoNivel();
 }
@@ -3586,7 +3586,7 @@ function entraDirector(){
   if(!i)return;
   activaDirector(i.value).then(err=>{
     const m=document.getElementById('dir-msg');
-    if(err){if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(err)+'</span>';return;}
+    if(err){if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(err)+'</span>';return;}
     if(trasDir==='evento'){
       /* La clave se usó para el interruptor, no para ver respuestas: se apaga el
          perfil director de una, para no dejar abierto el celular de la niña. El
@@ -3838,7 +3838,7 @@ function imprimeTodos(conR){
 
 function alertaImpr(msj){
   const c=document.getElementById('impr-alt');
-  if(c)c.innerHTML='<p class="nota" style="color:var(--rojo)">'+esc(msj)+'</p>';
+  if(c)c.innerHTML='<p class="nota" style="color:var(--rojo-txt)">'+esc(msj)+'</p>';
 }
 
 /* ───────── logo de la iglesia ───────── */
@@ -4263,7 +4263,7 @@ function importaCodigo(){
   const out=document.getElementById('imp-out');
   if(!t||!out)return;
   const o=leeCodigo(t.value);
-  if(!o){out.innerHTML='<p class="nota" style="color:var(--rojo)">Ese código no se '+
+  if(!o){out.innerHTML='<p class="nota" style="color:var(--rojo-txt)">Ese código no se '+
     'entiende. Tiene que empezar en <strong>CB1R</strong> o <strong>CB1F</strong> y '+
     'venir completo, sin cortar.</p>';return;}
   if(o.tipo==='R'){out.innerHTML=pintaBoletin(o);return;}
@@ -4283,7 +4283,7 @@ async function aplicaImport(como){
   const al=normalizar(impPendiente.a);
   if(como==='nueva'){
     if(alumnos().length>=MAX_ALUMNOS){
-      document.getElementById('imp-out').innerHTML='<p class="nota" style="color:var(--rojo)">'+
+      document.getElementById('imp-out').innerHTML='<p class="nota" style="color:var(--rojo-txt)">'+
         'Ya hay '+MAX_ALUMNOS+' fichas en este aparato. Borra una antes de agregar otra.</p>';
       return;
     }
@@ -4468,7 +4468,7 @@ async function entraCodigo(){
     if(document.getElementById('cb-panel'))await pintaPanel();
     llevaA(evalPend?'cb-eval':'cb-sesion');
   }catch(e){
-    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+    if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo conectar')+'</span>';
   }
 }
 
@@ -4582,7 +4582,7 @@ async function entraPanel(){
     srvYo={rol:'director'};
     await pintaPanel();
   }catch(e){
-    if(m)m.innerHTML='<span style="color:var(--rojo)">'+esc(e.message||'No se pudo conectar')+'</span>';
+    if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo conectar')+'</span>';
   }
 }
 
@@ -5084,7 +5084,7 @@ function pintaAvisoCats(){
     solapa.map(function(ev){return '<strong>'+esc(ev.titulo)+'</strong>';}).join(', ')+'.';
   if(personas.length)t+=(t?'<br>':'')+'👤 Va dirigida a '+personas.length+
     (personas.length===1?' persona':' personas')+', no a las categorías de arriba.';
-  p.innerHTML=t?'<span style="color:var(--rojo)">'+t+'</span>':'';
+  p.innerHTML=t?'<span style="color:var(--rojo-txt)">'+t+'</span>':'';
 }
 
 /* Que fuente nombra el reglamento para cada actividad, en palabras. Se dice
@@ -5126,7 +5126,7 @@ function pintaNotaAlcance(){
   if(m.value==='tramo'){
     const mal=motivoRangoMalo();
     if(mal){
-      p.innerHTML='<span style="color:var(--rojo)">'+esc(mal)+'</span>';
+      p.innerHTML='<span style="color:var(--rojo-txt)">'+esc(mal)+'</span>';
       pintaAvisoCats();revisaAbrir();pintaFrase();return;
     }
     p.textContent=textoRango(rangoDe(alcancePanel()))+'. A una categoría que no tenga '+
@@ -5382,7 +5382,7 @@ function pintaResumen(){
      de 10 cuando se pidieron 25 puede ser exactamente lo que el director
      quiere. */
   const corto=n.length&&min<pide
-    ? ' <span style="color:var(--rojo)">Pediste '+pide+
+    ? ' <span style="color:var(--rojo-txt)">Pediste '+pide+
       ', así que a quien menos tenga le saldrán '+min+'.</span>'
     : '';
   p.innerHTML=aplicaMarcas(RESUMEN_EVAL,{
@@ -5592,7 +5592,7 @@ async function verRevision(id){
                     'la app empezara a mandarlas al servidor.</p>')),'yo');
   }catch(e){
     abreHojaHtml(hojaConCierre('Revisión','No se pudo',
-      '<p class="nota" style="color:var(--rojo)">'+esc(e.message||'No se pudo cargar')+'</p>'),'yo');
+      '<p class="nota" style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo cargar')+'</p>'),'yo');
   }
 }
 
