@@ -1,4 +1,5 @@
-/* Daniel 1-6 en Reina-Valera 1995, los 196 versiculos.
+/* Daniel 1-12 en Reina-Valera 1995, los 357 versiculos.
+ * (Nacio con 1-6 y 196; el comentario se quedo atras hasta el 24-sep.)
  *
  * DE DONDE SALE
  * Se genero de files/rv1995-daniel-1..6.txt, que es el texto que se bajo y se
