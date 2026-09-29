@@ -857,6 +857,7 @@ body.leyendo{overflow:hidden}
 .lec-rp-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
 .lec-rp-tx b{font-size:.82rem;color:#2b2418}
 .lec-rp-tx span{font-size:.7rem;color:#6b5f47;font-variant-numeric:tabular-nums}
+.lec-rp-tx .lec-ios{font-size:.64rem;color:#8a7a5f}
 .lec-vel{display:flex;gap:2px;background:#fff;border:1px solid #f0e2c4;border-radius:999px;padding:2px}
 .lec-vel button{border:0;background:none;cursor:pointer;font:700 .68rem/1 inherit;font-family:inherit;
   color:#6b5f47;padding:.45rem .5rem;border-radius:999px;min-height:32px}

@@ -1163,7 +1163,7 @@ for(const k of ['me','av','pa','gm','dm1','dm2','ec1','ec2'])
    botón en ▶ sin voz. Cancel() via paraVoz sigue siendo el corte total al
    navegar, porque una voz que sigue sonando en otra pantalla es una falla. */
 ok(/function paraVoz\(\)/.test(APP)&&/function pausaVoz\(\)/.test(APP),'Existen paraVoz() y pausaVoz()');
-ok(/if\(btn===vozBtn&&VZ\.partes\.length\)\{\s*if\(VZ\.sonando\)pausaVoz\(\);else desdeVoz\(VZ\.i\);/.test(APP),
+ok(/if\(btn===vozBtn&&VZ\.partes\.length\)\{\s*if\(VZ\.sonando\)pausaVoz\(\);else\{pideSonido\(\);desdeVoz\(VZ\.i\);\}/.test(APP),
   'Tocar el boton que ya esta leyendo pausa o sigue desde la misma parte');
 ok(!/speechSynthesis\.pause\(\)/.test(APP)&&!/speechSynthesis\.resume\(\)/.test(APP),
   'No se usan pause()/resume() del navegador');
@@ -1180,6 +1180,16 @@ ok(/u\.onend=\(\)=>\{if\(t===VZ\.turno&&VZ\.sonando\)siguePart\(\);\}/.test(APP)
    pegada en una parte. */
 ok(/vozReloj=setTimeout\(mira,/.test(APP)&&/speechSynthesis\.speaking/.test(APP),
   'Hay un reloj de seguridad por si onend no llega (pasa en iOS), y espera si aun habla');
+/* v128: el boton de silencio del iPhone. Cada toque que empieza a hablar pide
+   la sesion «playback» y arranca el audio mudo; pausar y parar lo sueltan. Y
+   en iOS cancelar y hablar en seguida sale mudo: se espera un respiro. */
+ok(/navigator\.audioSession\.type='playback'/.test(APP),'Se pide la sesion de audio playback');
+ok((APP.match(/pideSonido\(\);desdeVoz\(/g)||[]).length>=5,
+  'Todo toque que empieza a hablar pide sonido antes ('+(APP.match(/pideSonido\(\);desdeVoz\(/g)||[]).length+')');
+ok(/function pausaVoz\(\)\{[^}]*sueltaSonido\(\)/.test(APP)&&/function paraVoz\(\)\{[^}]*sueltaSonido\(\)/.test(APP),
+  'Pausar y parar sueltan el audio mudo');
+ok(/if\(sonaba\)speechSynthesis\.cancel\(\)/.test(APP)&&/setTimeout\(\(\)=>\{if\(t===VZ\.turno&&VZ\.sonando\)dice\(k\);\},VOZ_RESPIRO\)/.test(APP),
+  'Si algo sonaba, se cancela y se habla un respiro despues');
 /* vozBtn es un `let` y ir() lo usa antes de la seccion de voz: si se declara
    abajo, la app no arranca por TDZ. Ya paso con diaHoy. */
 const posVoz=APP.indexOf('let vozBtn'), posIr=APP.indexOf('function ir(id)');

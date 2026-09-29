@@ -2251,6 +2251,66 @@ function partesDe(base){
   return out;
 }
 
+/* ── EL BOTÓN DE SILENCIO DEL IPHONE (v128) ──────────────────────────────
+   MECANISMO
+   iOS le pone a cada app una sesión de audio, y con eso decide qué calla el
+   botón lateral de silencio. «ambient» es sonido de fondo y el botón lo calla;
+   «playback» es lo que el usuario pidió oír (música, video) y suena igual.
+   YouTube e Instagram son apps nativas y piden «playback». Una página de
+   Safari arranca en «ambient», y la voz del sintetizador quedaba muda con el
+   botón en silencio.
+
+   DOS PEDIDOS, PORQUE NINGUNO ESTÁ PROBADO PARA LA VOZ
+   1. navigator.audioSession.type='playback': la forma directa. Solo existe en
+      Safari y es un borrador, así que se revisa que exista.
+   2. Un <audio> mudo en bucle mientras la voz suena: un elemento <audio> sí
+      suena con el botón en silencio, y al sonar pasa la página a «playback».
+      Tiene que arrancar dentro del toque del usuario, por eso se llama desde
+      los manejadores de clic y no desde la cola.
+   Si ninguno funciona en un iPhone, la franja del modo lectura trae un aviso
+   para quitar el silencio (solo en iPhone y iPad). */
+const AUDIO_MUDO='data:audio/wav;base64,'+
+  'UklGRmQGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAGAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'+
+  'gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA';
+let audioMudo=null;
+const esIOS=()=>{
+  try{return /iPad|iPhone|iPod/.test(navigator.userAgent)||
+    (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);}catch(e){return false;}
+};
+/* Se llama dentro del toque del usuario, antes de hablar. */
+function pideSonido(){
+  try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}
+  try{
+    if(typeof Audio==='undefined')return;
+    if(!audioMudo){audioMudo=new Audio(AUDIO_MUDO);audioMudo.loop=true;audioMudo.setAttribute('playsinline','');}
+    const p=audioMudo.play();
+    if(p&&p.catch)p.catch(()=>{});
+  }catch(e){}
+}
+function sueltaSonido(){
+  try{if(audioMudo)audioMudo.pause();}catch(e){}
+}
+
 const msRestantes = txt => Math.max(4000, String(txt).length*95);
 
 function dice(i){
@@ -2285,6 +2345,7 @@ function armaReloj(t,txt){
 /* Corta y olvida: cambiar de pantalla o de capítulo. */
 function paraVoz(){
   VZ.turno++;VZ.sonando=false;
+  sueltaSonido();
   if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
   try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
   VZ.partes.forEach(p=>{try{p.el.classList.remove('suena','ya');}catch(e){}});
@@ -2299,6 +2360,7 @@ function paraVoz(){
 /* Calla pero recuerda la parte: tocar otra vez sigue desde ahí. */
 function pausaVoz(){
   VZ.turno++;VZ.sonando=false;
+  sueltaSonido();
   if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
   try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
   pintaVoz();
@@ -2315,13 +2377,22 @@ function terminaVoz(){
   }
   pintaVoz();
 }
+/* En iOS cancelar y hablar en seguida sale mudo: si algo sonaba, se cancela
+   y se habla un instante después. Si no sonaba nada, se habla ya, dentro del
+   toque, que es lo que iOS pide la primera vez. */
 function desdeVoz(i){
   if(!puedeHablar()||!VZ.partes.length)return;
-  VZ.turno++;
-  try{speechSynthesis.cancel();}catch(e){}
+  const k=Math.max(0,Math.min(i,VZ.partes.length-1));
+  const t=++VZ.turno;
+  let sonaba=false;
+  try{sonaba=speechSynthesis.speaking||speechSynthesis.pending;}catch(e){}
+  try{if(sonaba)speechSynthesis.cancel();}catch(e){}
   VZ.sonando=true;
-  dice(Math.max(0,Math.min(i,VZ.partes.length-1)));
+  if(!sonaba){dice(k);return;}
+  VZ.i=k;pintaVoz();
+  setTimeout(()=>{if(t===VZ.turno&&VZ.sonando)dice(k);},VOZ_RESPIRO);
 }
+const VOZ_RESPIRO=150;
 
 /* Pinta el estado en el botón suelto que suena, o en el modo lectura. */
 function pintaVoz(llevar){
@@ -2341,7 +2412,7 @@ function leeCerca(btn){
   if(!btn||!puedeHablar())return;
   /* Tocar el MISMO botón que ya está leyendo pausa o sigue, según toque. */
   if(btn===vozBtn&&VZ.partes.length){
-    if(VZ.sonando)pausaVoz();else desdeVoz(VZ.i);
+    if(VZ.sonando)pausaVoz();else{pideSonido();desdeVoz(VZ.i);}
     return;
   }
   /* De dónde se saca el texto. El botón puede estar DENTRO del bloque
@@ -2360,6 +2431,7 @@ function leeCerca(btn){
   paraVoz();
   if(!partes.length)return;
   VZ.partes=partes;VZ.modo='boton';VZ.rate=.85;vozBtn=btn;
+  pideSonido();
   desdeVoz(0);
 }
 
@@ -2369,7 +2441,7 @@ function reiniciaVoz(btn){
   const grupo=btn.closest?btn.closest('.grupo-voz'):null;
   const voz=grupo?grupo.querySelector('.btn-voz'):null;
   if(!voz)return;
-  if(voz===vozBtn&&VZ.partes.length)desdeVoz(0);else leeCerca(voz);
+  if(voz===vozBtn&&VZ.partes.length){pideSonido();desdeVoz(0);}else leeCerca(voz);
 }
 
 /* ── EL REPRODUCTOR DEL MODO LECTURA (v127) ──────────────────────────────
@@ -2386,16 +2458,16 @@ function lecVozCargar(){
 }
 function lecVozAlterna(){
   if(VZ.modo==='lectura'&&VZ.partes.length){
-    if(VZ.sonando)pausaVoz();else desdeVoz(VZ.i);
+    if(VZ.sonando)pausaVoz();else{pideSonido();desdeVoz(VZ.i);}
     return;
   }
-  if(lecVozCargar())desdeVoz(0);
+  if(lecVozCargar()){pideSonido();desdeVoz(0);}
 }
 function lecVozDesde(p){
   if(!puedeHablar()||!p)return;
   if(!(VZ.modo==='lectura'&&VZ.partes.length)&&!lecVozCargar())return;
   const k=VZ.partes.findIndex(x=>x.el===p);
-  if(k>=0)desdeVoz(k);
+  if(k>=0){pideSonido();desdeVoz(k);}
 }
 function lecVozVel(v){
   if(!VELS.includes(v))return;
@@ -2438,7 +2510,8 @@ function htmlLecVoz(total){
   if(!puedeHablar())return '';
   return '<div class="lec-rp">'+
     '<button type="button" class="lec-play" id="lec-play" onclick="lecVozAlterna()" aria-label="Escuchar">▶</button>'+
-    '<div class="lec-rp-tx"><b id="lec-est">Escuchar el capítulo</b><span id="lec-n">'+total+' versículos</span></div>'+
+    '<div class="lec-rp-tx"><b id="lec-est">Escuchar el capítulo</b><span id="lec-n">'+total+' versículos</span>'+
+      (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
     '<div class="lec-vel" id="lec-vel" role="group" aria-label="Velocidad">'+
     VELS.map(v=>'<button type="button" data-vel="'+v+'" aria-pressed="'+(v===lecVel)+'"'+
       ' onclick="lecVozVel('+v+')">'+String(v).replace('.',',')+(v===1?'×':'')+'</button>').join('')+
