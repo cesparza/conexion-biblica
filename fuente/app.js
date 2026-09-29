@@ -124,6 +124,13 @@ const claveT=t=>t.cap+'.'+hashTxt(t.f||'');
    por TDZ y la app no arranca, y el chequeo de sintaxis no lo detecta. Ya
    paso una vez en este archivo con diaHoy. */
 let vozBtn=null, vozReloj=null;
+/* El estado de la cola de voz y la velocidad del modo lectura: aquí arriba
+   por la misma razón (paraVoz los usa). VELS: 0,9 es la de siempre para
+   memorizar; los botones sueltos siguen en .85. */
+const VZ={partes:[],i:0,sonando:false,turno:0,modo:'',rate:.85};
+const VELS=[.9,1,1.25];
+let lecVel=.9;
+try{const v=Number(localStorage.getItem('cb-vel'));if(VELS.includes(v))lecVel=v;}catch(e){}
 
 const diaHoy=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
 
@@ -1680,12 +1687,13 @@ function abreLectura(cid){
     '<div class="lec-barra">'+
       '<div class="lec-prog"><i id="lec-i" style="width:0%"></i></div>'+
       '<span class="lec-pct" id="lec-pct">Daniel '+n+'</span>'+
-      (puedeHablar()?grupoVoz('lec-voz','Escuchar','Escuchar el capítulo'):'')+
       '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">✕</button>'+
     '</div>'+
+    /* v127: el 🔊 de la barra pasó a ser una franja de reproductor. */
+    htmlLecVoz(nums.length)+
     '<div class="lec-caja" id="lec-caja"><h1>'+esc(c?c.sub:'Daniel '+n)+'</h1>'+
     '<p class="lec-sub">Daniel '+n+' · Reina-Valera 1995 · '+nums.length+' versículos</p>'+
-    '<div class="lec-txt biblia" data-leer>'+
+    '<div class="lec-txt biblia'+(puedeHablar()?' lec-toca':'')+'" data-leer onclick="lecToca(event)">'+
     nums.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('')+
     '</div>'+
     '<div class="lec-fin">'+
@@ -1700,6 +1708,16 @@ function abreLectura(cid){
   const caja=document.getElementById('lec-caja');
   if(caja){caja.scrollTop=0;caja.onscroll=lectAvance;}
   lectAvance();
+  pintaLecVoz();
+}
+
+/* Tocar un versículo: escuchar desde ahí. Si estaba seleccionando texto para
+   copiarlo, no. */
+function lecToca(e){
+  if(!puedeHablar()||!e||!e.target||!e.target.closest)return;
+  try{if(window.getSelection&&String(window.getSelection()))return;}catch(x){}
+  const p=e.target.closest('.lec-txt p');
+  if(p)lecVozDesde(p);
 }
 
 /** La barra de arriba dice cuánto del capítulo se ha recorrido, no cuánto se ha
@@ -2135,105 +2153,202 @@ function sumaRacha(){
 
 /* ───────── leer en voz alta ─────────
    MECANISMO
-   El navegador trae un sintetizador de voz (speechSynthesis). Se le pasa el
-   texto y el idioma, y él usa una voz instalada en el aparato. No se descarga
-   nada, no hay archivos de audio en el repo y funciona sin señal.
+   El navegador trae un sintetizador de voz (speechSynthesis). Se le pasa un
+   texto y él lo dice con una voz instalada en el aparato: sin archivos de
+   audio, sin servidor y sin señal.
 
    PARA QUÉ, EN ESTE PROYECTO
    La sección III del examen es completar el versículo palabra por palabra, y
-   memorizar escuchando rinde distinto que memorizar leyendo: se puede repasar
-   caminando o con los ojos cerrados. Por eso el botón está en los versículos
-   clave y en el reverso de las tarjetas.
+   memorizar escuchando rinde distinto que leyendo: se repasa caminando o con
+   los ojos cerrados.
+
+   POR PARTES, NO EL TEXTO ENTERO (v127)
+   Antes se le pasaba un solo texto recortado a 600 caracteres, porque Chrome
+   corta los textos largos a los ~15 s. Con eso 62 de los 77 bloques de cinco
+   versículos, y casi todo «Escuchar el capítulo», se quedaban sin leer. Ahora
+   el texto se parte en una cola: un versículo por parte (cada <p>), y el que
+   pasa de TROZO caracteres se parte en sus frases. Se dice una parte, y su
+   onend dispara la siguiente. Es el mismo patrón de la lección en la app de
+   Jóvenes (assets/escuchar.js).
+
+   PAUSA SIN pause()
+   Pausar es cancelar y recordar en qué parte iba; reanudar vuelve a decir esa
+   parte desde su inicio. pause()/resume() del navegador no se usan: en
+   Android y en iOS viejos se portan distinto y dejaban el botón en ▶ sin voz.
+
+   CADA speak LLEVA SU TURNO
+   cancel() dispara el onend de lo que sonaba. Sin el turno, ese onend viejo
+   avanzaría la cola nueva. Un onend que llega con otro turno se ignora.
+
+   RELOJ DE SEGURIDAD
+   En iOS onend no siempre llega. Si pasa el tiempo estimado de una parte y
+   speechSynthesis ya no está hablando, se sigue con la próxima; si todavía
+   habla, se espera otro poco. Así una voz lenta no se corta.
 
    SI EL APARATO NO PUEDE, EL BOTÓN NO APARECE. Un botón de audio que no suena
    es peor que no tenerlo. */
 const puedeHablar=()=>typeof speechSynthesis!=='undefined'&&
   typeof SpeechSynthesisUtterance!=='undefined';
 
-/* Voz en español, un poco más lenta que el habla normal: se está memorizando,
-   no escuchando una noticia. */
-/* ── LEER EN VOZ ALTA, CON PAUSA Y REANUDAR DE VERDAD ───────────────────
-   MECANISMO
-   speechSynthesis es una cola global del navegador: speak() encola, cancel()
-   vacia la cola entera, y pause()/resume() congelan y sueltan la lectura
-   ACTUAL sin perder el lugar. La app recuerda que boton esta leyendo (y si
-   esta en pausa) para saber a quien devolverle su icono.
 
-   Version anterior: el boton solo alternaba 🔊 lee / ⏹ para-y-hay-que-
-   reiniciar. Ahora es un control de tres estados, como cualquier reproductor:
-   🔊 en reposo → toca y empieza (⏸, se puede pausar) → toca y pausa (▶, se
-   puede reanudar DESDE EL MISMO PUNTO) → toca y reanuda.
+/* La voz en español: una local primero (suena mejor y no pide red). Las voces
+   llegan tarde en Chrome: la primera lista puede venir vacía. */
+let vozEs=null;
+function eligeVoz(){
+  try{
+    const vs=speechSynthesis.getVoices().filter(v=>/^es\b/i.test(v.lang));
+    vozEs=vs.find(v=>v.localService&&/-(CO|MX|US|419)/i.test(v.lang))||
+      vs.find(v=>v.localService)||vs[0]||null;
+  }catch(e){vozEs=null;}
+}
+if(puedeHablar()){
+  eligeVoz();
+  try{speechSynthesis.addEventListener('voiceschanged',eligeVoz);}catch(e){}
+}
 
-   OJO CON iOS: onend no siempre dispara, sobre todo si se cancela, y el
-   soporte de pause()/resume() en Safari ha sido historicamente menos fiable
-   que en Chrome. Por eso el icono se restaura tambien con un reloj de
-   seguridad; si resume() no despertara la voz en un aparato viejo, el peor
-   caso es que quede en ▶ y haya que tocar 🔊 en otro boton para reiniciar,
-   nunca una voz que seorda para siempre en silencio. */
-let vozPausado=false;
+/* Parte un texto en trozos de hasta TROZO caracteres, cortando en finales de
+   frase y, si una frase sola no cabe, en comas y luego en espacios. Nunca
+   pierde palabras: unir los trozos devuelve el texto. */
+const TROZO=220;
+function trozos(t){
+  t=String(t||'').replace(/\s+/g,' ').trim();
+  if(!t)return [];
+  if(t.length<=TROZO)return [t];
+  const corta=(s,re)=>{const p=s.split(re),o=[];
+    for(let k=0;k<p.length;k+=2)o.push(p[k]+(p[k+1]||''));return o.filter(x=>x.trim());};
+  let piezas=corta(t,/([.;:!?»]+\s+)/);
+  piezas=[].concat(...piezas.map(p=>p.length<=TROZO?[p]:corta(p,/(,\s+)/)));
+  piezas=[].concat(...piezas.map(p=>{
+    if(p.length<=TROZO)return [p];
+    const o=[];let a='';
+    for(const w of p.split(/(\s+)/)){if((a+w).length>TROZO&&a.trim()){o.push(a);a='';}a+=w;}
+    if(a.trim())o.push(a);return o;
+  }));
+  const out=[];let a='';
+  for(const p of piezas){if(a&&(a+p).length>TROZO){out.push(a.trim());a='';}a+=p;}
+  if(a.trim())out.push(a.trim());
+  return out;
+}
 
+/* Las partes de un bloque: una por <p> (un versículo), sin el número del
+   versículo ni los botones, que el sintetizador pronunciaría. Si el bloque no
+   tiene <p>, es un solo texto y se le quita la referencia del principio
+   («1:8»): se memoriza el texto, no el número. */
+function partesDe(base){
+  const ps=base.querySelectorAll?[...base.querySelectorAll('p')]:[];
+  const out=[];
+  (ps.length?ps:[base]).forEach(el=>{
+    let t='';
+    try{
+      const c=el.cloneNode(true);
+      (c.querySelectorAll?[...c.querySelectorAll('.vn,.grupo-voz,.btn-voz,.btn-reinicia')]:[])
+        .forEach(b=>b.remove());
+      t=c.textContent||'';
+    }catch(e){t=(el.textContent||'').replace(/🔊|↺/g,'');}
+    if(!ps.length)t=t.replace(/^\s*[\d:]+\s*/,'');
+    trozos(t).forEach(x=>out.push({txt:x,el}));
+  });
+  return out;
+}
+
+const msRestantes = txt => Math.max(4000, String(txt).length*95);
+
+function dice(i){
+  const p=VZ.partes[i];
+  if(!p){terminaVoz();return;}
+  VZ.i=i;
+  const t=++VZ.turno;
+  try{
+    const u=new SpeechSynthesisUtterance(p.txt);
+    if(vozEs){u.voice=vozEs;u.lang=vozEs.lang;}else u.lang='es-ES';
+    u.rate=VZ.rate;u.pitch=1;
+    u.onend=()=>{if(t===VZ.turno&&VZ.sonando)siguePart();};
+    u.onerror=()=>{if(t===VZ.turno)pausaVoz();};
+    armaReloj(t,p.txt);
+    speechSynthesis.speak(u);
+  }catch(e){paraVoz();return;}
+  pintaVoz(true);
+}
+function siguePart(){
+  if(VZ.i<VZ.partes.length-1)dice(VZ.i+1);else terminaVoz();
+}
+function armaReloj(t,txt){
+  if(vozReloj)clearTimeout(vozReloj);
+  const mira=()=>{
+    if(t!==VZ.turno||!VZ.sonando)return;
+    let habla=false;try{habla=speechSynthesis.speaking;}catch(e){}
+    if(habla){vozReloj=setTimeout(mira,1500);return;}
+    siguePart();
+  };
+  vozReloj=setTimeout(mira,msRestantes(txt)/VZ.rate);
+}
+/* Corta y olvida: cambiar de pantalla o de capítulo. */
 function paraVoz(){
+  VZ.turno++;VZ.sonando=false;
   if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
+  try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
+  VZ.partes.forEach(p=>{try{p.el.classList.remove('suena','ya');}catch(e){}});
   if(vozBtn){
     try{vozBtn.textContent='🔊';vozBtn.setAttribute('title','Escuchar');
         vozBtn.classList.remove('sonando');}catch(e){}
     vozBtn=null;
   }
-  vozPausado=false;
+  VZ.partes=[];VZ.i=0;VZ.modo='';
+  pintaVoz();
+}
+/* Calla pero recuerda la parte: tocar otra vez sigue desde ahí. */
+function pausaVoz(){
+  VZ.turno++;VZ.sonando=false;
+  if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
   try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
+  pintaVoz();
+}
+/* Llegó al final: queda listo para empezar otra vez desde el principio. */
+function terminaVoz(){
+  pausaVoz();
+  VZ.partes.forEach(p=>{try{p.el.classList.remove('suena','ya');}catch(e){}});
+  VZ.i=0;
+  if(vozBtn){
+    try{vozBtn.textContent='🔊';vozBtn.setAttribute('title','Escuchar');
+        vozBtn.classList.remove('sonando');}catch(e){}
+    vozBtn=null;VZ.partes=[];VZ.modo='';
+  }
+  pintaVoz();
+}
+function desdeVoz(i){
+  if(!puedeHablar()||!VZ.partes.length)return;
+  VZ.turno++;
+  try{speechSynthesis.cancel();}catch(e){}
+  VZ.sonando=true;
+  dice(Math.max(0,Math.min(i,VZ.partes.length-1)));
 }
 
-/* Cuanto falta, en milisegundos, a un ritmo de unas 12 palabras por segundo a
-   rate .85 (con margen). Se recalcula al pausar y al reanudar porque el
-   reloj de seguridad no sabe cuanto se alcanzo a leer. */
-const msRestantes = txt => Math.max(4000, String(txt).length*95);
-
-function habla(txt,btn){
-  if(!puedeHablar()||!txt)return;
-  paraVoz();
-  try{
-    const limpio=String(txt).replace(/\s+/g,' ').trim().slice(0,600);
-    const u=new SpeechSynthesisUtterance(limpio);
-    u.lang='es-ES';u.rate=.85;u.pitch=1;
-    if(btn){
-      vozBtn=btn; vozPausado=false; btn.dataset.txt=limpio;
-      btn.textContent='⏸';btn.setAttribute('title','Pausar');
-      btn.classList.add('sonando');
-      u.onend=paraVoz; u.onerror=paraVoz;
-      vozReloj=setTimeout(paraVoz, msRestantes(limpio));
-    }
-    speechSynthesis.speak(u);
-  }catch(e){paraVoz();}
+/* Pinta el estado en el botón suelto que suena, o en el modo lectura. */
+function pintaVoz(llevar){
+  if(vozBtn){
+    try{
+      vozBtn.classList.add('sonando');
+      vozBtn.textContent=VZ.sonando?'⏸':'▶';
+      vozBtn.setAttribute('title',VZ.sonando?'Pausar':'Reanudar');
+    }catch(e){}
+  }
+  pintaLecVoz(llevar);
 }
 
 /* Lee el texto del bloque al que pertenece el botón. Así el HTML generado no
    tiene que repetir el versículo dentro de un atributo. */
 function leeCerca(btn){
-  if(!btn)return;
-  /* Tocar el MISMO boton que ya esta leyendo pausa o reanuda, segun toque. */
-  if(btn===vozBtn){
-    if(vozPausado){
-      try{speechSynthesis.resume();}catch(e){}
-      vozPausado=false;
-      btn.textContent='⏸';btn.setAttribute('title','Pausar');
-      if(vozReloj)clearTimeout(vozReloj);
-      vozReloj=setTimeout(paraVoz, msRestantes(btn.dataset.txt||''));
-    }else{
-      try{speechSynthesis.pause();}catch(e){}
-      vozPausado=true;
-      btn.textContent='▶';btn.setAttribute('title','Reanudar');
-      if(vozReloj){clearTimeout(vozReloj);vozReloj=null;}
-    }
+  if(!btn||!puedeHablar())return;
+  /* Tocar el MISMO botón que ya está leyendo pausa o sigue, según toque. */
+  if(btn===vozBtn&&VZ.partes.length){
+    if(VZ.sonando)pausaVoz();else desdeVoz(VZ.i);
     return;
   }
-  /* De donde se saca el texto. El boton puede estar DENTRO del bloque
-     [data-leer], como en las secciones de versiculos clave, o FUERA, en una
-     cabecera hermana, como en el panel de un versiculo y en los bloques de
-     lectura, donde se movio para que el texto use todo el ancho.
-     Cuando esta fuera, closest('[data-leer]') da null y antes se caia a
-     btn.parentNode: eso hacia que la voz leyera «Daniel 3:5 · RV1995», o sea
-     la referencia en vez del versiculo. Se detecto midiendo el texto que se
-     manda a hablar; en una captura no se ve. */
+  /* De dónde se saca el texto. El botón puede estar DENTRO del bloque
+     [data-leer], como en las secciones de versículos clave, o FUERA, en una
+     cabecera hermana, como en la hoja de un versículo y en los bloques de
+     lectura. Cuando está fuera, closest('[data-leer]') da null y antes se caía
+     a btn.parentNode, y la voz leía «Daniel 3:5 · RV1995» en vez del versículo. */
   let base=btn.closest?btn.closest('[data-leer]'):null;
   if(!base&&btn.closest){
     const caja=btn.closest('.hoja-caja,.lect-bl,.sec');
@@ -2241,29 +2356,99 @@ function leeCerca(btn){
   }
   if(!base)base=btn.parentNode;
   if(!base)return;
-  /* Se lee una COPIA sin el botón: si no, el sintetizador pronuncia el emoji
-     del altavoz al final de cada versículo. */
-  let t='';
-  try{
-    const c=base.cloneNode(true);
-    (c.querySelectorAll?[...c.querySelectorAll('.btn-voz')]:[]).forEach(b=>b.remove());
-    t=c.textContent||'';
-  }catch(e){ t=(base.textContent||'').replace(/🔊/g,''); }
-  /* Fuera la referencia del principio («1:8»): se está memorizando el texto,
-     no el número. */
-  habla(t.replace(/^\s*[\d:]+\s*/,''),btn);
+  const partes=partesDe(base);
+  paraVoz();
+  if(!partes.length)return;
+  VZ.partes=partes;VZ.modo='boton';VZ.rate=.85;vozBtn=btn;
+  desdeVoz(0);
 }
 
 /* Reinicia desde el principio, sin esperar a que termine ni a pausar primero.
-   El boton ↺ solo se ve mientras el de al lado esta activo (CSS, :has()), y
-   vive en el MISMO grupo — reusa el texto que habla() ya guardo en dataset.txt
-   del boton de audio, asi no hay que volver a buscar el bloque [data-leer]. */
+   El botón ↺ solo se ve mientras el de al lado está activo (CSS, :has()). */
 function reiniciaVoz(btn){
   const grupo=btn.closest?btn.closest('.grupo-voz'):null;
   const voz=grupo?grupo.querySelector('.btn-voz'):null;
-  if(!voz||!voz.dataset.txt)return;
-  habla(voz.dataset.txt,voz);
+  if(!voz)return;
+  if(voz===vozBtn&&VZ.partes.length)desdeVoz(0);else leeCerca(voz);
 }
+
+/* ── EL REPRODUCTOR DEL MODO LECTURA (v127) ──────────────────────────────
+   Una franja bajo la barra: play/pausa, en qué versículo va y la velocidad.
+   Tocar un versículo empieza desde ahí; el que suena se marca y la caja lo
+   trae a la vista solo si quedó fuera, para no quitarle el sitio a quien va
+   leyendo adelantado. */
+function lecVozCargar(){
+  const txt=document.querySelector('#lectura .lec-txt');
+  if(!txt)return false;
+  paraVoz();
+  VZ.partes=partesDe(txt);VZ.modo='lectura';VZ.rate=lecVel;
+  return VZ.partes.length>0;
+}
+function lecVozAlterna(){
+  if(VZ.modo==='lectura'&&VZ.partes.length){
+    if(VZ.sonando)pausaVoz();else desdeVoz(VZ.i);
+    return;
+  }
+  if(lecVozCargar())desdeVoz(0);
+}
+function lecVozDesde(p){
+  if(!puedeHablar()||!p)return;
+  if(!(VZ.modo==='lectura'&&VZ.partes.length)&&!lecVozCargar())return;
+  const k=VZ.partes.findIndex(x=>x.el===p);
+  if(k>=0)desdeVoz(k);
+}
+function lecVozVel(v){
+  if(!VELS.includes(v))return;
+  lecVel=v;
+  try{localStorage.setItem('cb-vel',String(v));}catch(e){}
+  if(VZ.modo==='lectura'){VZ.rate=v;if(VZ.sonando)desdeVoz(VZ.i);else pintaVoz();}
+  else pintaLecVoz();
+}
+/* El número del versículo de la parte actual, leído de su .vn. */
+function lecVersoDe(p){
+  try{const n=p.el.querySelector('.vn');return n?n.textContent.trim():'';}catch(e){return '';}
+}
+function pintaLecVoz(llevar){
+  const caja=document.getElementById('lec-caja');
+  if(!caja)return;
+  const mio=VZ.modo==='lectura'&&VZ.partes.length>0;
+  const i=VZ.i;
+  if(mio)VZ.partes.forEach((p,k)=>{
+    try{p.el.classList.toggle('suena',VZ.sonando&&k===i);
+        p.el.classList.toggle('ya',VZ.sonando&&k<i&&VZ.partes[i].el!==p.el);}catch(e){}
+  });
+  const play=document.getElementById('lec-play'),est=document.getElementById('lec-est'),
+        n=document.getElementById('lec-n');
+  if(play){play.textContent=VZ.sonando&&mio?'⏸':'▶';
+    play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');}
+  let total=0;try{total=caja.querySelectorAll('.lec-txt p').length;}catch(e){}
+  if(est)est.textContent=VZ.sonando&&mio?'Escuchando':(mio&&i>0?'En pausa':'Escuchar el capítulo');
+  if(n)n.textContent=mio&&(VZ.sonando||i>0)?'Versículo '+lecVersoDe(VZ.partes[i])+' de '+total:total+' versículos';
+  try{document.querySelectorAll('#lec-vel [data-vel]').forEach(b=>
+    b.setAttribute('aria-pressed',String(Number(b.dataset.vel)===lecVel)));}catch(e){}
+  if(llevar&&mio&&VZ.sonando){
+    try{
+      const r=VZ.partes[i].el.getBoundingClientRect(),rc=caja.getBoundingClientRect();
+      if(r.top<rc.top+10||r.bottom>rc.bottom-20)caja.scrollTop+=r.top-rc.top-rc.height/3;
+    }catch(e){}
+  }
+}
+/* La franja del reproductor. Si el aparato no tiene voz, no se pinta. */
+function htmlLecVoz(total){
+  if(!puedeHablar())return '';
+  return '<div class="lec-rp">'+
+    '<button type="button" class="lec-play" id="lec-play" onclick="lecVozAlterna()" aria-label="Escuchar">▶</button>'+
+    '<div class="lec-rp-tx"><b id="lec-est">Escuchar el capítulo</b><span id="lec-n">'+total+' versículos</span></div>'+
+    '<div class="lec-vel" id="lec-vel" role="group" aria-label="Velocidad">'+
+    VELS.map(v=>'<button type="button" data-vel="'+v+'" aria-pressed="'+(v===lecVel)+'"'+
+      ' onclick="lecVozVel('+v+')">'+String(v).replace('.',',')+(v===1?'×':'')+'</button>').join('')+
+    '</div></div>';
+}
+
+/* Al salir de la app o cambiar de pestaña, la voz se pausa: el teléfono lo
+   haría a medias y el botón quedaría diciendo que suena. */
+if(typeof document!=='undefined'&&document.addEventListener)
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&VZ.sonando)pausaVoz();});
 
 /* Envuelve un boton de audio con su compañero de reinicio, en un solo grupo
    para que el CSS (:has()) decida cuando mostrar el segundo. Un solo punto

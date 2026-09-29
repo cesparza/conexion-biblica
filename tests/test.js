@@ -1157,26 +1157,34 @@ for(const k of ['me','av','pa','gm','dm1','dm2','ec1','ec2'])
   ok(validas.includes("'"+k+"'"),'El servidor acepta la categoria `'+k+'`');
 
 /* ── PAUSAR Y REANUDAR LA LECTURA EN AUDIO ───────────────────────────────
-   v61: antes el boton solo alternaba leer/parar-y-reiniciar. Ahora es un
-   control de tres estados (🔊 → ⏸ → ▶ → ⏸...) usando pause()/resume() de
-   verdad, no cancel(). Cancel() (via paraVoz) sigue siendo el corte total al
+   v127: la voz es una cola de partes (un versículo, o una frase si el
+   versículo es largo). Pausar es cancelar y recordar la parte; no se usan
+   pause()/resume() del navegador, que en Android y en iOS viejos dejaban el
+   botón en ▶ sin voz. Cancel() via paraVoz sigue siendo el corte total al
    navegar, porque una voz que sigue sonando en otra pantalla es una falla. */
-ok(/function paraVoz\(\)/.test(APP),'Existe paraVoz()');
-ok(/if\(btn===vozBtn\)\{/.test(APP)&&/speechSynthesis\.pause\(\)/.test(APP)&&/speechSynthesis\.resume\(\)/.test(APP),
-  'Tocar el boton que ya esta leyendo pausa o reanuda, no solo para');
+ok(/function paraVoz\(\)/.test(APP)&&/function pausaVoz\(\)/.test(APP),'Existen paraVoz() y pausaVoz()');
+ok(/if\(btn===vozBtn&&VZ\.partes\.length\)\{\s*if\(VZ\.sonando\)pausaVoz\(\);else desdeVoz\(VZ\.i\);/.test(APP),
+  'Tocar el boton que ya esta leyendo pausa o sigue desde la misma parte');
+ok(!/speechSynthesis\.pause\(\)/.test(APP)&&!/speechSynthesis\.resume\(\)/.test(APP),
+  'No se usan pause()/resume() del navegador');
+ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slice(APP.indexOf('leer en voz alta'))),
+  'La voz ya no recorta el texto a 600 caracteres');
 ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de pantalla corta la lectura');
 ok(/function verCap\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de capitulo corta la lectura');
-/* En iOS onend no siempre dispara, sobre todo si se cancela. Sin el reloj de
-   seguridad el boton se quedaria pegado para siempre. */
-ok(/u\.onend=paraVoz/.test(APP)&&/u\.onerror=paraVoz/.test(APP),
-  'El icono se restaura con onend y con onerror');
-ok(/vozReloj=setTimeout\(paraVoz/.test(APP),
-  'Hay un reloj de seguridad por si onend no llega (pasa en iOS)');
+/* Cada speak lleva su turno: el onend de lo cancelado no avanza la cola nueva. */
+ok(/u\.onend=\(\)=>\{if\(t===VZ\.turno&&VZ\.sonando\)siguePart\(\);\}/.test(APP),
+  'El onend solo avanza si es del turno vigente');
+/* En iOS onend no siempre llega. Sin el reloj de seguridad la cola se queda
+   pegada en una parte. */
+ok(/vozReloj=setTimeout\(mira,/.test(APP)&&/speechSynthesis\.speaking/.test(APP),
+  'Hay un reloj de seguridad por si onend no llega (pasa en iOS), y espera si aun habla');
 /* vozBtn es un `let` y ir() lo usa antes de la seccion de voz: si se declara
    abajo, la app no arranca por TDZ. Ya paso con diaHoy. */
 const posVoz=APP.indexOf('let vozBtn'), posIr=APP.indexOf('function ir(id)');
+ok(APP.indexOf('const VZ=')>=0&&APP.indexOf('const VZ=')<posIr,
+  'VZ tambien se declara ANTES de ir() (paraVoz lo usa)');
 ok(posVoz>=0&&posVoz<posIr,
   'vozBtn se declara ANTES de ir(), que es quien llama paraVoz (si no, TDZ)');
 

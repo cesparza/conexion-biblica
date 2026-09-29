@@ -35,6 +35,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
         pasaAActividad, MAX_ALUMNOS, borraAlumno, adoptaFicha,
         pintaSenales, senal, abreLectura, cierraLectura, lectAvance,
+        trozos, TROZO, htmlLecVoz, VZ:()=>VZ, desdeVoz, pausaVoz, paraVoz, dichos:()=>DICHOS,
         abrePaleta, cierraPaleta, pcFiltra, pcCatalogo,
         pcLimpia, pcAbre, pcItemsActuales:()=>pcItems, pcEstaAbierta:()=>pcAbierta,
         lectCidActual:()=>lectCid, listoDesdeLectura, modsDe, avanza,
@@ -61,7 +62,9 @@ const A=montar(RET,{store});
 /* La app se monta OTRA VEZ con un sintetizador de mentiras, para probar la voz
    sin depender de que el entorno traiga speechSynthesis. */
 const VOZ=`
-let speechSynthesis={speak(){},cancel(){},speaking:false,pending:false};
+let DICHOS=[];
+let speechSynthesis={speak(u){DICHOS.push(u);},cancel(){},speaking:false,pending:false,
+  getVoices(){return [];},addEventListener(){}};
 let SpeechSynthesisUtterance=function(txt){this.text=txt;};
 `;
 const AV=montar(RET,{antes:VOZ});
@@ -890,6 +893,56 @@ ok(/class="hoja-cab"[\s\S]*?btn-voz/.test(hv),
   'El boton de voz esta en la cabecera de la hoja');
 ok((hv.match(/data-leer/g)||[]).length===1,
   'Hay exactamente un [data-leer] en la hoja, o leeCerca no sabria cual tomar');
+/* ── LA VOZ POR PARTES (v127) ───────────────────────────────────────────
+   Antes se decia un solo texto recortado a 600 caracteres, y 62 de los 77
+   bloques de cinco versiculos no se oian completos. Ahora el texto se parte:
+   estas pruebas fijan que ningun trozo pasa de TROZO y que al unirlos no se
+   pierde ni una palabra, en todos los versiculos y en el capitulo mas largo. */
+{
+  const norm=t=>String(t).replace(/\s+/g,' ').trim();
+  let malos=0,largos=0,total=0;
+  for(const cid of Object.keys(AV.VERS)){
+    const cap=Object.values(AV.VERS[cid]).join(' ');
+    for(const t of [...Object.values(AV.VERS[cid]),cap]){
+      const tz=AV.trozos(t);total++;
+      if(tz.some(x=>x.length>AV.TROZO))largos++;
+      if(norm(tz.join(' '))!==norm(t))malos++;
+    }
+  }
+  ok(largos===0,'Ningun trozo de voz pasa de '+AV.TROZO+' caracteres ('+total+' textos)');
+  ok(malos===0,'Unir los trozos devuelve el texto completo, sin perder palabras ('+total+' textos)');
+  ok(AV.trozos('').length===0&&AV.trozos('  ').length===0,'Un texto vacio no da trozos');
+}
+/* La cola: una parte a la vez, el onend dice la siguiente, un onend viejo no
+   avanza nada, y la pausa recuerda la parte. */
+{
+  const el={classList:{remove(){},toggle(){},add(){}}};
+  const V=AV.VZ();
+  AV.paraVoz();
+  const antes=AV.dichos().length;
+  V.partes=['uno','dos','tres'].map(txt=>({txt,el}));V.modo='boton';
+  AV.desdeVoz(0);
+  const d=AV.dichos();
+  ok(d.length===antes+1&&d[d.length-1].text==='uno','Empieza diciendo solo la primera parte');
+  const primero=d[d.length-1];
+  primero.onend();
+  ok(d.length===antes+2&&d[d.length-1].text==='dos','Al terminar una parte dice la siguiente');
+  primero.onend();
+  ok(d.length===antes+2,'Un onend viejo (de otro turno) no avanza la cola');
+  AV.pausaVoz();
+  ok(V.sonando===false&&V.i===1,'La pausa calla y recuerda la parte');
+  d[d.length-1].onend();
+  ok(d.length===antes+2,'Lo que termina despues de pausar no sigue hablando');
+  AV.desdeVoz(V.i);
+  ok(d[d.length-1].text==='dos','Reanudar vuelve a decir la parte donde iba');
+  d[d.length-1].onend(); d[d.length-1].onend();
+  ok(V.sonando===false&&V.i===0,'Al final queda en silencio y listo para empezar de nuevo');
+  AV.paraVoz();
+}
+ok(/id="lec-play"/.test(AV.htmlLecVoz(21))&&(AV.htmlLecVoz(21).match(/data-vel=/g)||[]).length===3,
+  'El modo lectura trae su reproductor, con tres velocidades');
+ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
+
 /* La hoja no empuja el contenido, pero por eso tiene que poder cerrarse de
    varias formas: el fondo, el asa y la X. Si solo tuviera una y fallara, la
    nina se queda atrapada en el versiculo. */

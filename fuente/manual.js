@@ -200,9 +200,17 @@ const MANUAL = [
     solo el texto, más grande y en letra de libro.</p>` },
   { t:'La barra de arriba',
     h:`<p>Dice qué parte del capítulo has recorrido, no cuánto entendiste: es
-    dónde vas con el dedo. Al lado está el <strong>🔊</strong> para escucharlo y
-    la <strong>✕</strong> para salir. La tecla <strong>Esc</strong> también
-    cierra.</p>` },
+    dónde vas con el dedo. La <strong>✕</strong> sale; la tecla
+    <strong>Esc</strong> también cierra.</p>` },
+  { t:'Escuchar el capítulo',
+    h:`<p>Debajo de la barra está el reproductor. Toca <strong>▶</strong> y la
+    app lee el capítulo entero, versículo por versículo. Dice en cuál va, y
+    ese versículo se marca en el texto.</p>
+    <p><strong>Toca cualquier versículo</strong> para escuchar desde ahí.
+    <strong>⏸</strong> pausa, y al volver a tocar sigue en el mismo versículo.</p>
+    <p>La velocidad se elige a la derecha: <strong>0,9</strong> (la de
+    memorizar), <strong>1×</strong> o <strong>1,25</strong>. La app la recuerda
+    en ese teléfono.</p>` },
   { t:'Al final del capítulo',
     h:`<p>Abajo aparece <strong>Ya lo estudié</strong>: es el mismo botón que
     llena el círculo del progreso, para no tener que ir a buscarlo. Si ya lo
@@ -276,9 +284,11 @@ const MANUAL = [
   { t:'Escucharlo, y pararlo',
     h:`<p>Cada bloque de versículos tiene un botón <strong>🔊</strong>. Tócalo
     y la app lee en voz alta.</p>
-    <p><strong>Para pararlo, toca el mismo botón otra vez.</strong> Mientras
-    está leyendo, el botón cambia a <strong>⏹</strong> y se pone azul, así
-    sabes cuál de todos hay que tocar.</p>
+    <p><strong>Para pausarlo, toca el mismo botón otra vez</strong>, y otra
+    vez para seguir. Mientras está leyendo cambia a <strong>⏸</strong> y se
+    pone de color, así sabes cuál de todos hay que tocar. El
+    <strong>↺</strong> de al lado vuelve a empezar.</p>
+    <p>Lee el bloque completo, versículo por versículo, por largo que sea.</p>
     <p>También se corta solo si <strong>cambias de pantalla o de
     capítulo</strong>, para que la voz no te siga hablando de Daniel 2 cuando
     ya estás en las tarjetas.</p>` },

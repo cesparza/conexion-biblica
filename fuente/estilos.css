@@ -846,6 +846,26 @@ body.leyendo{overflow:hidden}
 .lec-voz,.lec-x{background:none;border:0;font-size:1rem;color:#8a7a5f;cursor:pointer;
   padding:4px 6px;line-height:1;font-family:inherit;min-height:34px}
 .lec-voz:hover,.lec-x:hover{color:#5b4d33}
+/* El reproductor del modo lectura (v127): franja bajo la barra, con el mismo
+   papel crema de la lectura. Botón naranja de la app, velocidad en pastillas. */
+.lec-rp{flex:0 0 auto;display:flex;align-items:center;gap:.7rem;padding:.5rem .8rem .5rem 1rem;
+  background:#fff4e0;border-bottom:1px solid #f0e2c4;
+  /* En pantalla ancha los controles se alinean con la columna del texto. */
+  padding-left:max(1rem,calc(50% - 22rem));padding-right:max(.8rem,calc(50% - 22rem))}
+.lec-play{width:42px;height:42px;flex:0 0 auto;border-radius:50%;border:0;cursor:pointer;
+  background:var(--v-cat,#E8720C);color:#fff;font-size:1rem;line-height:1;font-family:inherit}
+.lec-rp-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
+.lec-rp-tx b{font-size:.82rem;color:#2b2418}
+.lec-rp-tx span{font-size:.7rem;color:#6b5f47;font-variant-numeric:tabular-nums}
+.lec-vel{display:flex;gap:2px;background:#fff;border:1px solid #f0e2c4;border-radius:999px;padding:2px}
+.lec-vel button{border:0;background:none;cursor:pointer;font:700 .68rem/1 inherit;font-family:inherit;
+  color:#6b5f47;padding:.45rem .5rem;border-radius:999px;min-height:32px}
+.lec-vel button[aria-pressed="true"]{background:var(--v-cat,#E8720C);color:#fff}
+/* Tocar un versículo empieza ahí; el que suena se marca y los ya dichos se apagan. */
+.lec-toca p{cursor:pointer;border-radius:6px;transition:background .2s,color .2s}
+.lec-txt p.suena{background:#fdecc8;box-shadow:-.45rem 0 0 #fdecc8,.45rem 0 0 #fdecc8,-.7rem 0 0 #c98a2b}
+.lec-txt p.ya{color:#8b8676}
+@media (prefers-reduced-motion:reduce){.lec-toca p{transition:none}}
 /* El scroll vive en la caja, no en el body: asi la barra de avance se queda
    arriba y la medimos contra un elemento con altura conocida. */
 .lec-caja{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;
