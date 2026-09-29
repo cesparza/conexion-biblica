@@ -1388,6 +1388,11 @@ button:active:not(:disabled),[role=button]:active,.cap:active,.anillo:active{
     box-shadow:0 -6px 20px -12px rgba(16,24,40,.35);
   }
   .nav-t button{color:var(--v-tinta3);min-height:64px;gap:3px}
+  /* La barra de abajo es clara, pero el :hover de la barra oscura (arriba, en
+     este archivo) pinta en blanco. En iPhone el :hover se queda pegado en el
+     ultimo boton tocado, y esa pestaña desaparecia. Aqui el hover no cambia el
+     color; la pestaña activa lo recupera por su regla `.on`, que va despues. */
+  .nav-t button:hover{color:var(--v-tinta3)}
   .nav-t button i{font-size:1.30rem}
   .nav-t button b{font-size:.63rem;font-weight:700}
   .nav-t button.on{color:var(--v-cat)}
