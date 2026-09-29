@@ -1894,6 +1894,8 @@ function verCap(id){
     '<div class="cap-meta">'+(c.src?esc(c.src)+' · ':'')+
     (esCreencia(id)?'textos en RV1960':esMatutina()?'Devoción matutina':'texto RV1995')+
     (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
+    /* v129: Profetas y Reyes se escucha por su estudio (ver htmlEstVoz). */
+    (conEstudioEnVoz(c)?htmlEstVoz(c):'')+
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
@@ -2403,7 +2405,9 @@ function pintaVoz(llevar){
       vozBtn.setAttribute('title',VZ.sonando?'Pausar':'Reanudar');
     }catch(e){}
   }
-  pintaLecVoz(llevar);
+  /* Pintar nunca debe tumbar a quien llama: paraVoz() corre en cada ir(). */
+  try{pintaLecVoz(llevar);}catch(e){}
+  try{pintaEstVoz(llevar);}catch(e){}
 }
 
 /* Lee el texto del bloque al que pertenece el botón. Así el HTML generado no
@@ -2473,8 +2477,8 @@ function lecVozVel(v){
   if(!VELS.includes(v))return;
   lecVel=v;
   try{localStorage.setItem('cb-vel',String(v));}catch(e){}
-  if(VZ.modo==='lectura'){VZ.rate=v;if(VZ.sonando)desdeVoz(VZ.i);else pintaVoz();}
-  else pintaLecVoz();
+  if(VZ.modo==='lectura'||VZ.modo==='estudio'){VZ.rate=v;if(VZ.sonando)desdeVoz(VZ.i);else pintaVoz();}
+  else{pintaLecVoz();pintaEstVoz();}
 }
 /* El número del versículo de la parte actual, leído de su .vn. */
 function lecVersoDe(p){
@@ -2516,6 +2520,143 @@ function htmlLecVoz(total){
     VELS.map(v=>'<button type="button" data-vel="'+v+'" aria-pressed="'+(v===lecVel)+'"'+
       ' onclick="lecVozVel('+v+')">'+String(v).replace('.',',')+(v===1?'×':'')+'</button>').join('')+
     '</div></div>';
+}
+
+/* ── ESCUCHAR EL ESTUDIO DE PROFETAS Y REYES (v129) ──────────────────────
+   POR QUÉ EL ESTUDIO Y NO EL LIBRO
+   La licencia del libro (Ellen G. White Estate) es «para su uso personal» y
+   «no permite la republicación, distribución…». La app es pública, así que el
+   texto completo no entra: se escucha el estudio que escribimos, y el libro se
+   abre en EGW Writings, el lector oficial y gratuito.
+
+   MECANISMO
+   Es el mismo reproductor del modo lectura, con otra forma de partir el texto.
+   Cada sección da su título y sus bloques: un <li>, una fila de tabla («A los
+   diez días: el resultado fue…») o una caja. «Compruébalo» no se lee: decir las
+   respuestas en voz alta le quitaría el sentido. Una sección escondida por el
+   filtro de capas tampoco.
+   Tocar un bloque empieza ahí, pero solo después de haber tocado ▶: en el
+   estudio un toque sobre el texto no hacía nada, y que de pronto hable
+   sorprendería a quien solo quería leer. */
+const conEstudioEnVoz=c=>!!c&&c.src==='Elena de White';
+const EGW_PYR='https://m.egwwritings.org/es/book/217/toc';
+
+function textoLimpio(el){
+  try{
+    const c=el.cloneNode(true);
+    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,script,style').forEach(x=>x.remove());
+    c.querySelectorAll('br').forEach(b=>b.replaceWith(' '));
+    c.querySelectorAll('td,th,li,p,div').forEach(x=>x.append(' '));
+    return (c.textContent||'').replace(/\p{Extended_Pictographic}|️/gu,'').replace(/\s+/g,' ').trim();
+  }catch(e){return '';}
+}
+const conPunto=t=>/[.!?:;»”)]$/.test(t)?t:t+'.';
+
+/* Los bloques de una sección, en orden de lectura. */
+function bloquesDeSec(sec){
+  const out=[];
+  [...sec.children].forEach(h=>{
+    if(h.matches('h3,.rev,.rec,.capa-filtro'))return;
+    if(h.matches('ul,ol')){[...h.children].forEach(li=>out.push({el:li,txt:textoLimpio(li)}));return;}
+    if(h.matches('table')){
+      h.querySelectorAll('tr').forEach(tr=>{
+        if(tr.querySelector('th'))return;
+        const cel=[...tr.children].map(textoLimpio).filter(Boolean);
+        if(cel.length)out.push({el:tr,txt:cel.join(': ')});
+      });
+      return;
+    }
+    const dentro=h.querySelectorAll(':scope>ul>li,:scope>ol>li,:scope>p');
+    if(dentro.length){dentro.forEach(x=>out.push({el:x,txt:textoLimpio(x)}));return;}
+    out.push({el:h,txt:textoLimpio(h)});
+  });
+  return out.filter(b=>b.txt);
+}
+
+function partesEstudio(d){
+  const out=[];let k=0;
+  [...d.querySelectorAll('.sec')].forEach(sec=>{
+    if(sec.querySelector('.rev'))return;
+    if(!sec.getClientRects().length)return;
+    k++;
+    const cab=sec.querySelector('h3'),rot=sec.querySelector('.sec-rot');
+    const tit=rot?textoLimpio(rot):'';
+    if(tit)trozos(conPunto(tit)).forEach(x=>out.push({txt:x,el:cab||sec,sec:k,tit}));
+    bloquesDeSec(sec).forEach(b=>trozos(conPunto(b.txt)).forEach(x=>out.push({txt:x,el:b.el,sec:k,tit})));
+  });
+  out.secs=k;
+  return out;
+}
+
+function estVozCargar(){
+  const d=document.getElementById('detalle');
+  if(!d)return false;
+  paraVoz();
+  const p=partesEstudio(d);
+  VZ.partes=p;VZ.secs=p.secs||0;VZ.modo='estudio';VZ.rate=lecVel;
+  return p.length>0;
+}
+function estVozAlterna(){
+  if(VZ.modo==='estudio'&&VZ.partes.length){
+    if(VZ.sonando)pausaVoz();else{pideSonido();desdeVoz(VZ.i);}
+    return;
+  }
+  if(estVozCargar()){pideSonido();desdeVoz(0);}
+}
+function estToca(e){
+  if(VZ.modo!=='estudio'||!VZ.partes.length||!e||!e.target||!e.target.closest)return;
+  if(e.target.closest('a,button,input,label,summary,select,.rev,.rec,.est-rp'))return;
+  try{if(window.getSelection&&String(window.getSelection()))return;}catch(x){}
+  const k=VZ.partes.findIndex(p=>p.el===e.target||(p.el.contains&&p.el.contains(e.target)));
+  if(k>=0){pideSonido();desdeVoz(k);}
+}
+if(typeof document!=='undefined'&&document.addEventListener)
+  document.addEventListener('click',e=>{
+    if(e.target&&e.target.closest&&e.target.closest('#detalle'))estToca(e);
+  });
+
+function pintaEstVoz(llevar){
+  const play=document.getElementById('est-play');
+  if(!play)return;
+  const mio=VZ.modo==='estudio'&&VZ.partes.length>0, i=VZ.i;
+  if(mio)VZ.partes.forEach((p,k)=>{try{p.el.classList.toggle('suena',VZ.sonando&&k===i);}catch(e){}});
+  play.textContent=VZ.sonando&&mio?'⏸':'▶';
+  play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');
+  const est=document.getElementById('est-est'),n=document.getElementById('est-n');
+  if(est)est.textContent=VZ.sonando&&mio?'Escuchando':(mio&&i>0?'En pausa':'Escuchar el estudio');
+  if(n){
+    const p=mio?VZ.partes[i]:null;
+    n.textContent=p&&(VZ.sonando||i>0)?'Sección '+p.sec+' de '+VZ.secs+' · '+p.tit:((n.dataset&&n.dataset.reposo)||'');
+  }
+  try{document.querySelectorAll('#est-vel [data-vel]').forEach(b=>
+    b.setAttribute('aria-pressed',String(Number(b.dataset.vel)===lecVel)));}catch(e){}
+  if(llevar&&mio&&VZ.sonando){
+    try{
+      const r=VZ.partes[i].el.getBoundingClientRect();
+      const franja=document.querySelector('.est-rp');
+      const tope=franja?franja.getBoundingClientRect().bottom+8:60;
+      const piso=window.innerHeight-100;
+      if(r.top<tope||r.bottom>piso)window.scrollBy(0,r.top-tope-window.innerHeight/4);
+    }catch(e){}
+  }
+}
+
+/* La franja del estudio, pegada arriba mientras se baja, y el enlace al libro. */
+function htmlEstVoz(c){
+  const n=String(c.id).replace(/^pr/,'');
+  const egw='<a class="est-egw" href="'+EGW_PYR+'" target="_blank" rel="noopener">'+
+    '<span>Leer el capítulo completo</span><small>Abre el índice del libro en EGW Writings, '+
+    'el sitio oficial. Ahí busca el capítulo '+esc(n)+'.</small></a>';
+  if(!puedeHablar())return egw;
+  const reposo='Todo el estudio, sin Compruébalo';
+  return '<div class="lec-rp est-rp">'+
+    '<button type="button" class="lec-play" id="est-play" onclick="estVozAlterna()" aria-label="Escuchar">▶</button>'+
+    '<div class="lec-rp-tx"><b id="est-est">Escuchar el estudio</b><span id="est-n" data-reposo="'+reposo+'">'+reposo+'</span>'+
+      (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
+    '<div class="lec-vel" id="est-vel" role="group" aria-label="Velocidad">'+
+    VELS.map(v=>'<button type="button" data-vel="'+v+'" aria-pressed="'+(v===lecVel)+'"'+
+      ' onclick="lecVozVel('+v+')">'+String(v).replace('.',',')+(v===1?'×':'')+'</button>').join('')+
+    '</div></div>'+egw;
 }
 
 /* Al salir de la app o cambiar de pestaña, la voz se pausa: el teléfono lo

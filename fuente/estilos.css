@@ -858,6 +858,19 @@ body.leyendo{overflow:hidden}
 .lec-rp-tx b{font-size:.82rem;color:#2b2418}
 .lec-rp-tx span{font-size:.7rem;color:#6b5f47;font-variant-numeric:tabular-nums}
 .lec-rp-tx .lec-ios{font-size:.64rem;color:#8a7a5f}
+/* La franja del estudio (v129): la misma del modo lectura, pegada arriba al
+   bajar para poder pausar desde cualquier sección. En celular queda debajo de
+   la barra de arriba (46px). */
+.est-rp{position:sticky;top:0;z-index:20;border:1px solid #f0e2c4;border-radius:14px;
+  margin:.2rem 0 .6rem;padding:.5rem .7rem}
+@media (max-width:899px){.est-rp{top:calc(46px + env(safe-area-inset-top,0px) + 6px)}}
+.est-egw{display:flex;flex-direction:column;gap:2px;margin:0 0 1.1rem;padding:.6rem .8rem;
+  border:1.5px solid var(--v-linea);border-radius:12px;background:var(--v-sup);
+  color:var(--v-marca);text-decoration:none;font-weight:800;font-size:.88rem}
+.est-egw small{font-weight:600;font-size:.72rem;color:var(--v-tinta2)}
+.est-egw:hover{border-color:var(--v-marca)}
+#detalle .suena{background:#fdecc8;border-radius:6px;box-shadow:0 0 0 4px #fdecc8}
+@media print{.est-rp,.est-egw{display:none!important}}
 .lec-vel{display:flex;gap:2px;background:#fff;border:1px solid #f0e2c4;border-radius:999px;padding:2px}
 .lec-vel button{border:0;background:none;cursor:pointer;font:700 .68rem/1 inherit;font-family:inherit;
   color:#6b5f47;padding:.45rem .5rem;border-radius:999px;min-height:32px}

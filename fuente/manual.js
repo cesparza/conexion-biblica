@@ -301,6 +301,17 @@ const MANUAL = [
     <p>Viene <strong>de a cinco versículos</strong>, cada grupo con su botón
     🔊 para escucharlos. Está cerrada al abrir el capítulo, así que si vienes
     a repasar un dato no te estorba.</p>` },
+  { t:'Escuchar Profetas y Reyes',
+    h:`<p>En los capítulos de <strong>Profetas y Reyes</strong> hay un
+    reproductor arriba: <strong>▶ Escuchar el estudio</strong>. Lee todas las
+    secciones en orden, con su título, y marca lo que va sonando. Se queda
+    pegado arriba mientras bajas, para pausar desde cualquier parte.</p>
+    <p>Después de tocar ▶ puedes <strong>tocar cualquier párrafo, punto o fila
+    de tabla</strong> para escuchar desde ahí. «Compruébalo» no se lee en voz
+    alta, para no decir las respuestas.</p>
+    <p>El libro completo no está en la app: su licencia no permite
+    publicarlo. <strong>Leer el capítulo completo</strong> abre el libro en
+    EGW Writings, el sitio oficial y gratuito.</p>` },
   { t:'Qué versión es y en qué capítulos está',
     h:`<p>El texto es la <strong>Reina-Valera 1995</strong>, la misma contra la
     que se revisó todo el material.</p>

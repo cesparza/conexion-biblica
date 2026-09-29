@@ -35,7 +35,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
         pasaAActividad, MAX_ALUMNOS, borraAlumno, adoptaFicha,
         pintaSenales, senal, abreLectura, cierraLectura, lectAvance,
-        trozos, TROZO, htmlLecVoz, VZ:()=>VZ, desdeVoz, pausaVoz, paraVoz, dichos:()=>DICHOS,
+        trozos, TROZO, htmlLecVoz, htmlEstVoz, conEstudioEnVoz, VZ:()=>VZ, desdeVoz, pausaVoz, paraVoz, dichos:()=>DICHOS,
         abrePaleta, cierraPaleta, pcFiltra, pcCatalogo,
         pcLimpia, pcAbre, pcItemsActuales:()=>pcItems, pcEstaAbierta:()=>pcAbierta,
         lectCidActual:()=>lectCid, listoDesdeLectura, modsDe, avanza,
@@ -942,6 +942,17 @@ ok((hv.match(/data-leer/g)||[]).length===1,
 ok(/id="lec-play"/.test(AV.htmlLecVoz(21))&&(AV.htmlLecVoz(21).match(/data-vel=/g)||[]).length===3,
   'El modo lectura trae su reproductor, con tres velocidades');
 ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
+/* v129: Profetas y Reyes se escucha por su estudio, y el libro se abre en el
+   sitio oficial. El texto del libro no entra a la app (licencia). */
+{
+  const pr=AV.CAPS.find(c=>c.id==='pr39'), d1=AV.CAPS.find(c=>c.id==='d1');
+  ok(AV.conEstudioEnVoz(pr)&&!AV.conEstudioEnVoz(d1),'El reproductor del estudio sale en Profetas y Reyes y no en Daniel');
+  const h=AV.htmlEstVoz(pr);
+  ok(/id="est-play"/.test(h)&&(h.match(/data-vel=/g)||[]).length===3,'Profetas y Reyes trae su reproductor, con tres velocidades');
+  ok(/href="https:\/\/m\.egwwritings\.org\/es\/book\/217\/toc"/.test(h),'Y el enlace al libro en EGW Writings');
+  const sinVoz=A.htmlEstVoz(pr);
+  ok(!/est-play/.test(sinVoz)&&/egwwritings/.test(sinVoz),'Sin voz en el aparato queda solo el enlace');
+}
 
 /* La hoja no empuja el contenido, pero por eso tiene que poder cerrarse de
    varias formas: el fondo, el asa y la X. Si solo tuviera una y fallara, la
