@@ -39,6 +39,8 @@
      2,93, cuando lo legible arranca en 4,5. Relleno y borde no cambian. */
   --naranja-txt:var(--v-acento-txt,#B65909); --verde-txt:var(--v-ok-txt,#247C54);
   --rojo-txt:var(--v-mal-txt,#C82832);
+  /* v138: el azul claro (--cielo) daba 3,66 a 3,98 como letra. */
+  --cielo-txt:var(--v-marca2-txt,#2866AA);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 /* EL ATRIBUTO hidden GANA SIEMPRE.
@@ -106,7 +108,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 .nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .nav-b{color:var(--v-sobre,#fff);font-size:1.05rem;font-weight:800;padding:.9rem 1rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .nav-t{display:flex;flex:1}
-.nav-t button{color:rgba(255,255,255,.7);font-weight:700;cursor:pointer;border:none;background:none;
+.nav-t button{color:rgba(255,255,255,.9);font-weight:700;cursor:pointer;border:none;background:none;
   border-bottom:3px solid transparent;min-height:52px;font-family:inherit;flex:1;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:.3rem .1rem}
 .nav-t button i{font-style:normal;font-size:1.15rem;line-height:1}
@@ -239,7 +241,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 /* El numero va volado y en la sans de la app, como en una Biblia impresa: si
    va del mismo tamano y en la misma familia, compite con la lectura. */
 .biblia .vn{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-  font-size:.63rem;font-weight:800;color:var(--cielo);vertical-align:.45em;
+  font-size:.63rem;font-weight:800;color:var(--cielo-txt);vertical-align:.45em;
   margin-right:3px;letter-spacing:.2px}
 
 /* ═══ LA REFERENCIA TOCABLE ═══
@@ -251,7 +253,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
    normal estuviera subrayado. Un enlace en linea no puede crecer en alto sin
    romper el renglon; lo que si se puede es agrandar la letra un poco. */
 .vref{background:none;border:0;padding:0;font:inherit;font-size:1.02em;
-  color:var(--cielo);font-weight:700;cursor:pointer;line-height:inherit;
+  color:var(--cielo-txt);font-weight:700;cursor:pointer;line-height:inherit;
   -webkit-tap-highlight-color:rgba(46,139,192,.25);
   /* display:inline y text-decoration, NO border-bottom. Un <button> es
      inline-block por defecto, asi que su caja crece con el line-height y el
@@ -355,7 +357,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 
 /* El boton que esta sonando se distingue: sin esto no se sabe cual de los
    diez botones de un capitulo hay que tocar para parar. */
-.btn-voz.sonando{background:var(--cielo);border-color:var(--cielo);color:var(--v-sobre,#fff)}
+.btn-voz.sonando{background:var(--cielo-txt);border-color:var(--cielo-txt);color:var(--v-sobre,#fff)}
 
 .verse-box{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
   border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:clamp(.87rem,.84rem + .12vw,.94rem);
@@ -374,14 +376,17 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .q .qn{color:var(--naranja-txt);font-weight:800;margin-right:4px}
 
 .ops{display:flex;flex-direction:column;gap:.4rem}
-.op{display:flex;align-items:center;gap:.65rem;background:#f8f9ff;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;padding:.5rem .85rem;cursor:pointer;font-family:inherit;font-size:.85rem;text-align:left;min-height:46px}
+.op{display:flex;align-items:center;gap:.65rem;background:#f8f9ff;color:var(--v-tinta,#1a1a2e);border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;padding:.5rem .85rem;cursor:pointer;font-family:inherit;font-size:.85rem;text-align:left;min-height:46px}
 .op:hover:not(:disabled){border-color:var(--cielo);background:#eff6ff}
 .op.sel{border-color:var(--cielo);background:#eff6ff}
+/* Deshabilitada (examen entregado) el navegador la pone al 30%: 1,99. Se
+   repasa despues de entregar, asi que tiene que leerse. */
+.op:disabled,.vf button:disabled{color:var(--v-tinta2,#5B5F6B)}
 .op.ok{border-color:var(--verde);background:#e8f5e9;color:var(--verde-txt);font-weight:700}
 .op.ko{border-color:var(--rojo);background:#fee2e2;color:var(--rojo-txt)}
 .op:disabled{cursor:default}
 .ol{width:25px;height:25px;border-radius:50%;background:var(--azul);color:var(--v-sobre,#fff);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;flex-shrink:0}
-.op.ok .ol{background:var(--verde-txt)} .op.ko .ol{background:var(--rojo-txt)} .op.sel .ol{background:var(--cielo)}
+.op.ok .ol{background:var(--verde-txt)} .op.ko .ol{background:var(--rojo-txt)} .op.sel .ol{background:var(--cielo-txt)}
 
 .vf{display:flex;gap:.6rem}
 .vf button{flex:1;padding:.6rem;border-radius:8px;border:2px solid var(--v-linea,#e5e7eb);cursor:pointer;font-family:inherit;font-size:.87rem;font-weight:700;background:#f8f9ff;min-height:46px}
@@ -404,15 +409,18 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 .btn.azul{background:var(--azul);color:var(--v-sobre,#fff)}
 /* Letra blanca va sobre el naranja oscuro: sobre el de marca daba 3,07. */
 .btn.nar{background:var(--naranja-txt);color:var(--v-sobre,#fff)}
-.btn.ver{background:var(--verde);color:var(--v-sobre,#fff)}
+/* Letra blanca sobre el verde oscuro: sobre el de marca daba 3,38. */
+.btn.ver{background:var(--verde-txt);color:var(--v-sobre,#fff)}
 .btn.gho{background:transparent;color:var(--azul);border:2px solid var(--azul)}
 
-.res{background:linear-gradient(135deg,var(--verde),var(--cielo));color:var(--v-sobre,#fff);border-radius:var(--r);padding:1.8rem 1.2rem;text-align:center;margin-bottom:1.1rem}
+/* Letra blanca: el degradado va en los tonos oscuros (daba 1,94 a 3,03). */
+.res{background:linear-gradient(135deg,var(--verde-txt),var(--azul));color:var(--v-sobre,#fff);border-radius:var(--r);padding:1.8rem 1.2rem;text-align:center;margin-bottom:1.1rem}
 .res .pt{font-size:3.2rem;font-weight:900;line-height:1}
 .res .sec3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1rem}
-.res .sec3 div{background:rgba(255,255,255,.2);border-radius:10px;padding:.7rem .3rem}
+/* >div: con «div» a secas el fondo caia tambien en .sv y .sl, doble capa. */
+.res .sec3>div{background:rgba(0,0,0,.16);border-radius:10px;padding:.7rem .3rem}
 .res .sec3 .sv{font-size:1.35rem;font-weight:800}
-.res .sec3 .sl{font-size:.69rem;opacity:.88;margin-top:2px}
+.res .sec3 .sl{font-size:.69rem;margin-top:2px}
 
 .ins{display:inline-flex;align-items:center;gap:5px;padding:.4rem .9rem;border-radius:50px;font-size:.79rem;font-weight:700;margin:.25rem}
 .ins.oro{background:#fef3c7;color:#92400e;border:2px solid #D4AC0D}
@@ -550,7 +558,7 @@ body.av .tj .rev{font-size:1.08rem}
 .alu-btn.nuevo{border-style:dashed}
 .alu-btn .an{font-size:.85rem;font-weight:800;color:var(--azul);line-height:1.2}
 .alu-btn .ac{font-size:.68rem;color:var(--gris);margin-top:2px}
-.pil.az{background:#dbeafe;color:var(--cielo)}
+.pil.az{background:#dbeafe;color:var(--cielo-txt)}
 .pil.na{background:#ffedd5;color:#AD5409}   /* un paso mas: sobre este crema, 4,14 -> 4,53 */
 .pil.ve{background:#dcfce7;color:var(--verde-txt)}
 .nota{font-size:.78rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
@@ -653,7 +661,7 @@ body.av .tj .rev{font-size:1.08rem}
   /* La ficha entera va del color de la cita: si no, en «2 Pedro 1:20,21» la
      coma se queda negra entre dos botones azules y se lee como un pegote.
      Ese detalle es el que se veia mal. */
-  color:var(--cielo)}
+  color:var(--cielo-txt)}
 /* Dentro de una ficha la cita ya se anuncia tocable con la ficha misma: el
    subrayado sobraba y era justo lo que hacia ver el «,21» como un pegote. */
 .ref .vref{text-decoration:none;font-weight:700;text-align:left}
@@ -734,7 +742,7 @@ details.card{padding:0}
 details.card>summary{padding:1.1rem 1.4rem;cursor:pointer;font-size:.93rem;font-weight:700;
   color:var(--azul);list-style:none;display:flex;align-items:center;min-height:50px}
 details.card>summary::-webkit-details-marker{display:none}
-details.card>summary::after{content:'▸';margin-left:auto;color:var(--cielo);font-size:1.1rem}
+details.card>summary::after{content:'▸';margin-left:auto;color:var(--cielo-txt);font-size:1.1rem}
 details.card[open]>summary::after{content:'▾'}
 details.card.dir>summary{color:var(--gris)}
 .det-cuerpo,.ayuda-cuerpo{padding:.2rem 1.4rem 1.3rem;border-top:1px solid #eef0f5}
@@ -801,7 +809,7 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .pc-in>span{font-size:.8rem;font-weight:800;color:#94a3b8;letter-spacing:.5px}
 .pc-in input{flex:1;min-width:0;border:0;outline:none;background:none;
   font-family:inherit;font-size:1.02rem;color:var(--azul)}
-.pc-in input::placeholder{color:#9aa7ba;font-weight:500}
+.pc-in input::placeholder{color:var(--v-tinta2,#5B5F6B);font-weight:500}
 .pc-l{flex:1 1 auto;overflow-y:auto;padding:.4rem 0 .6rem;-webkit-overflow-scrolling:touch}
 .pc-g{font-size:.63rem;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;
   color:#94a3b8;padding:.7rem 1.05rem .3rem}
@@ -869,9 +877,10 @@ body.leyendo{overflow:hidden}
 .lec-prog{flex:1;height:5px;border-radius:3px;background:#e7e1d5;overflow:hidden}
 .lec-prog i{display:block;height:100%;width:0;background:#c98a2b;border-radius:3px;
   transition:width .12s linear}
-.lec-pct{font-size:.7rem;font-weight:700;color:#8a7a5f;white-space:nowrap;
+/* v138: el café claro del modo lectura (#8a7a5f, #a3946f) daba 2,86 a 4. */
+.lec-pct{font-size:.7rem;font-weight:700;color:#76674c;white-space:nowrap;
   font-variant-numeric:tabular-nums}
-.lec-voz,.lec-x{background:none;border:0;font-size:1rem;color:#8a7a5f;cursor:pointer;
+.lec-voz,.lec-x{background:none;border:0;font-size:1rem;color:#76674c;cursor:pointer;
   padding:4px 6px;line-height:1;font-family:inherit;min-height:34px}
 .lec-voz:hover,.lec-x:hover{color:#5b4d33}
 /* El reproductor del modo lectura (v127): franja bajo la barra, con el mismo
@@ -885,7 +894,7 @@ body.leyendo{overflow:hidden}
 .lec-rp-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
 .lec-rp-tx b{font-size:.82rem;color:#2b2418}
 .lec-rp-tx span{font-size:.7rem;color:#6b5f47;font-variant-numeric:tabular-nums}
-.lec-rp-tx .lec-ios{font-size:.64rem;color:#8a7a5f}
+.lec-rp-tx .lec-ios{font-size:.64rem;color:#76674c}
 /* La franja del estudio (v129): la misma del modo lectura, pegada arriba al
    bajar para poder pausar desde cualquier sección. En celular queda debajo de
    la barra de arriba (46px). */
@@ -921,7 +930,7 @@ body.leyendo{overflow:hidden}
      pantalla ancha el titulo quedaba corrido a la izquierda del texto. */
   color:#2b2418;text-align:center;margin:0 auto .4rem;line-height:1.25;text-wrap:balance}
 .lec-sub{text-align:center;font-size:.7rem;letter-spacing:1.4px;text-transform:uppercase;
-  color:#a3946f;margin:0 auto 2.4rem;font-weight:600}
+  color:#76674c;margin:0 auto 2.4rem;font-weight:600}
 /* Se reescribe .biblia adentro: el cuerpo de la app es mas chico y va en azul. */
 /* Alineado a la IZQUIERDA por defecto. Justificar reparte el sobrante entre los
    espacios, y a 38 caracteres por linea (un iPhone de 390 px) eso deja huecos
@@ -930,7 +939,7 @@ body.leyendo{overflow:hidden}
 .lec-txt p{font-family:Georgia,'Times New Roman',serif;font-size:1.16rem;line-height:1.95;
   color:#2b2418;margin:0 0 1.25rem;text-align:left;hyphens:auto;-webkit-hyphens:auto}
 @media (min-width:640px){.lec-txt p{text-align:justify}}
-.lec-txt .vn{font-family:inherit;font-size:.64rem;font-weight:700;color:#c98a2b;
+.lec-txt .vn{font-family:inherit;font-size:.64rem;font-weight:700;color:#946312;
   vertical-align:super;margin-right:.35rem;top:auto}
 .lec-fin{margin-top:3rem;padding-top:1.6rem;border-top:1px solid #ece7dd;text-align:center}
 .lec-fin p{font-size:.92rem;color:#6b5f47;margin:0 0 1rem}
@@ -957,7 +966,7 @@ body.leyendo{overflow:hidden}
   display:flex;align-items:center;justify-content:center;line-height:1;
   font-family:inherit;letter-spacing:0;
   box-shadow:0 0 0 2px rgba(22,48,91,.92);pointer-events:none}
-.nv.gris{background:#7c8ba1}
+.nv.gris{background:#5B6B82}
 .nv-punto{position:absolute;width:9px;height:9px;border-radius:50%;background:#22c55e;
   box-shadow:0 0 0 2px rgba(22,48,91,.92),0 0 9px 2px rgba(34,197,94,.55);
   pointer-events:none}
@@ -1002,15 +1011,15 @@ body.leyendo{overflow:hidden}
 .nav-yo .yo-ini{
   flex:0 0 auto;width:26px;height:26px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  /* Blanco translúcido y NO el color de la categoría: `--v-cat` va de un azul
+  /* Oscuro translúcido (v138: el blanco daba 3,19) y NO el color de la categoría: `--v-cat` va de un azul
      casi negro a un morado, así que un texto fijo encima queda ilegible en
      alguna de las ocho categorías. Translúcido funciona sobre las ocho. */
-  background:rgba(255,255,255,.22);color:var(--v-sobre,#fff);
+  background:rgba(0,0,0,.2);color:var(--v-sobre,#fff);
   font-size:.82rem;font-weight:900;line-height:1}
 .nav-yo .yo-tx{display:flex;flex-direction:column;min-width:0;line-height:1.15}
 .nav-yo .yo-n{display:block;font-size:.82rem;font-weight:800;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nav-yo .yo-c{display:block;font-size:.66rem;font-weight:600;color:rgba(255,255,255,.72);
+.nav-yo .yo-c{display:block;font-size:.66rem;font-weight:600;color:var(--v-sobre,#fff);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* El globo solo existe en escritorio, donde la ficha se reduce a la inicial.
    En celular el nombre ya se lee, así que sobra. */
@@ -1031,7 +1040,7 @@ body.leyendo{overflow:hidden}
 .ir-ayuda .ia-tx{flex:1}
 .ir-ayuda .ia-tx b{display:block;font-size:.95rem;font-weight:800;color:var(--azul)}
 .ir-ayuda .ia-tx small{display:block;font-size:.78rem;color:var(--gris);margin-top:2px;line-height:1.4}
-.ir-ayuda .ia-fl{color:var(--cielo);font-size:1.2rem;font-weight:800;flex:none}
+.ir-ayuda .ia-fl{color:var(--cielo-txt);font-size:1.2rem;font-weight:800;flex:none}
 
 /* Pantalla del manual. */
 .ay-hero{padding:1.4rem 1.2rem}
@@ -1108,7 +1117,7 @@ details.card.sec[open]>summary{color:var(--azul)}
      abre esto todos los dias es una nina de siete anos, en un celular, muchas
      veces al sol. Fondo calido, bloques de color plano y texto grande se leen
      afuera; el gris azulado de antes se apaga. */
-  --v-tinta:#22242B; --v-tinta2:#5B5F6B; --v-tinta3:#6E7382;
+  --v-tinta:#22242B; --v-tinta2:#5B5F6B; --v-tinta3:#62677A;
   --v-lienzo:#FFF9EF; --v-sup:#FFFFFF; --v-sup2:#FFF4E0;
   --v-linea:#F0E6D2; --v-linea2:#F8F1E3;
   /* Texto SOBRE un bloque de color. No es una superficie: no se tine con la piel. */
@@ -1250,7 +1259,7 @@ body{
    boton. */
 .btn.azul{box-shadow:0 4px 0 0 color-mix(in srgb, var(--azul) 78%, black)}
 .btn.nar{box-shadow:0 4px 0 0 color-mix(in srgb, var(--naranja-txt) 78%, black)}
-.btn.ver{box-shadow:0 4px 0 0 color-mix(in srgb, var(--verde) 78%, black)}
+.btn.ver{box-shadow:0 4px 0 0 color-mix(in srgb, var(--verde-txt) 78%, black)}
 .btn.rojo{box-shadow:0 4px 0 0 color-mix(in srgb, var(--rojo) 78%, black)}
 .ex-go{
   background:linear-gradient(180deg,var(--v-acento-alto,#F2860F),var(--v-acento-bajo,#D9620A));
@@ -1541,13 +1550,15 @@ button:active:not(:disabled),[role=button]:active,.cap:active,.anillo:active{
     border:0;border-top:1px solid rgba(255,255,255,.12);border-radius:0;
     padding-top:.7rem;background:none;width:auto;height:auto}
   .nav-yo:hover{background:none}
-  .nav-yo:hover .yo-ini{background:rgba(255,255,255,.34)}
+  .nav-yo:hover .yo-ini{background:rgba(0,0,0,.3)}
   .nav-ayuda{margin:0 0 .3rem}
 
   .nav-t{flex-direction:column;flex:1;width:100%;gap:.25rem;padding-top:.6rem}
   .nav-t button{
     flex:0 0 auto;height:70px;width:100%;border-radius:0;
-    color:rgba(255,255,255,.62);gap:5px;
+    /* v138: al 62% daba 3,11 sobre el azul del riel; al 90%, 4,78. La pestaña
+       activa se distingue por la barra y el blanco pleno. */
+    color:rgba(255,255,255,.9);gap:5px;
   }
   .nav-t button i{font-size:1.45rem}
   .nav-t button b{font-size:.66rem;letter-spacing:.01em}
@@ -1695,7 +1706,7 @@ summary:focus:not(:focus-visible){outline:none}
   .nav-b .rail-marca .ico{width:23px;height:23px;--ico-w:1.9}
   .nav-b .rail-marca .ico .f{fill:currentColor;fill-opacity:.16}
   .nav-ayuda{
-    color:rgba(255,255,255,.62);
+    color:rgba(255,255,255,.9);
     /* Sin fondo en reposo: la regla de celular le pone uno translúcido, y al
        pie del riel, junto a la identidad que va desnuda, se leía como el único
        botón relleno del riel. El fondo aparece solo al pasar el mouse. */
@@ -1909,7 +1920,7 @@ details.card summary::marker{content:''}
 .grupo-voz:has(.btn-voz.sonando) .btn-reinicia{display:inline-flex}
 /* En la barra clara del modo lectura (.lec-voz) el boton de audio no lleva
    borde ni fondo: el de reiniciar hace juego, no el circulo azul de arriba. */
-.lec-barra .btn-reinicia{border:0;background:none;color:#8a7a5f;min-width:28px;min-height:28px}
+.lec-barra .btn-reinicia{border:0;background:none;color:#76674c;min-width:28px;min-height:28px}
 .lec-barra .btn-reinicia:hover{color:#5b4d33}
 
 .pan-paso{
@@ -2248,6 +2259,10 @@ details.card summary::marker{content:''}
 .txt-rp .lec-tira{order:4;flex:1 1 6rem;align-self:center}
 .txt-rp .lec-vel{order:5}
 .lec-rp-tx b,.lec-rp-tx span{overflow:hidden;text-overflow:ellipsis}
+
+/* v138: el gris por defecto del navegador (#757575) no llega a 4,5 sobre los
+   fondos de color de las respuestas. */
+::placeholder{color:var(--v-tinta2,#5B5F6B);opacity:1}
 </style>
 </head>
 <body>
@@ -2725,7 +2740,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '56dcf18026ef';
+const VERSION_APP = '1c976ad5ce16';
 
 const CAPS = [
  {

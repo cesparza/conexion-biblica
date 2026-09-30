@@ -1332,7 +1332,7 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
     'Los tres colores de marca tienen su version tinta declarada');
   /* Tambien en el JS: los mensajes de error se pintan con style= en linea, y
      ahi el CSS no alcanza. Doce de ellos estaban con el relleno como tinta. */
-  const comoTinta = (sinCom + APP).match(/(?<![-\w])color:var\(--(naranja|verde|rojo)\)/g) || [];
+  const comoTinta = (sinCom + APP).match(/(?<![-\w])color:var\(--(naranja|verde|rojo|cielo)\)/g) || [];
   ok(comoTinta.length === 0,
     'Ningun texto usa el color de relleno, ni en el CSS ni en un style= del JS' +
     (comoTinta.length ? ' (' + comoTinta.length + ' usos)' : ''));
@@ -1343,6 +1343,34 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
     .map(m => m[1].trim());
   ok(blancoSobreNar.length === 0,
     'Ninguna letra blanca va sobre el naranja de marca' + (blancoSobreNar.length ? ' (' + blancoSobreNar.join(', ') + ')' : ''));
+  /* v138: auditoria completa con Playwright (tools/contraste.js): 19 casos a
+     390 px y 1 mas a 1280. La suite no tiene navegador, asi que aqui se
+     calcula el contraste de los pares de colores que la app usa, leyendo los
+     valores del CSS. Si alguien cambia un color, esta prueba lo mide. */
+  const hexDe = n => { const m = sinCom.match(new RegExp('--' + n + ':\\s*(#[0-9a-fA-F]{6})')); return m && m[1]; };
+  const lum = h => { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255)
+    .map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+  const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+  const suaves = [...sinCom.matchAll(/--v-cat-suave:(#[0-9a-fA-F]{6})/g)].map(m => m[1]);
+  const pares = [
+    ['texto gris (tinta3) sobre blanco', hexDe('v-tinta3'), '#FFFFFF'],
+    ...suaves.map(f => ['texto gris (tinta3) sobre el fondo suave ' + f, hexDe('v-tinta3'), f]),
+    ['blanco sobre el azul de marca', '#FFFFFF', hexDe('v-marca')],
+    ['blanco sobre el naranja oscuro', '#FFFFFF', (sinCom.match(/--naranja-txt:var\(--v-acento-txt,(#[0-9a-fA-F]{6})/) || [])[1]],
+    ['blanco sobre el verde oscuro', '#FFFFFF', (sinCom.match(/--verde-txt:var\(--v-ok-txt,(#[0-9a-fA-F]{6})/) || [])[1]],
+    ['azul claro de texto sobre blanco', (sinCom.match(/--cielo-txt:var\(--v-marca2-txt,(#[0-9a-fA-F]{6})/) || [])[1], '#FFFFFF'],
+    ['azul claro de texto sobre la pildora #dbeafe', (sinCom.match(/--cielo-txt:var\(--v-marca2-txt,(#[0-9a-fA-F]{6})/) || [])[1], '#DBEAFE'],
+    ['cafe del modo lectura sobre su papel', '#76674C', '#FBFAF7'],
+  ];
+  pares.forEach(([que, fg, bg]) => {
+    const r = fg && bg ? ratio(fg, bg) : 0;
+    ok(r >= 4.5, 'Contraste ' + que + ': ' + r.toFixed(2) + ' (minimo 4,5)');
+  });
+  ok(!/#8a7a5f|#a3946f/i.test(sinCom), 'El modo lectura no vuelve al cafe claro (2,86 a 4)');
+  const blancoTenue = [...sinCom.matchAll(/(?<![-\w])color:rgba\(255,\s*255,\s*255,\s*(0?\.\d+)\)/g)].map(m => +m[1]).filter(a => a < .9);
+  ok(blancoTenue.length === 0, 'Ninguna letra en blanco translucido por debajo de 90%' + (blancoTenue.length ? ' (' + blancoTenue.join(', ') + ')' : ''));
+  ok(/(^|\})\s*::placeholder\{color:var\(--v-tinta2/.test(sinCom), 'Los placeholders no usan el gris del navegador (#757575)');
+  ok(/\.op:disabled,\.vf button:disabled\{color:var\(--v-tinta2/.test(sinCom), 'Las opciones del examen entregado se leen (el navegador las deja al 30%)');
   /* v136: lo mismo en el encabezado de las tablas: gris sobre azul, 1,52.
      Cuenta la ultima regla que le pone color, que es la que gana. */
   const colTh = [...sinCom.matchAll(/\.info-table th\{[^}]*?(?<![-\w])color:([^;}]+)/g)].map(m => m[1]);
