@@ -2077,5 +2077,13 @@ ok(/verRevision\(/.test(APP.slice(APP.indexOf('function hisListaPersonas'))),
   ok(ctrl.length===0,'Ningún botón usa emoji como icono'+(ctrl.length?' ('+ctrl.slice(0,6).join(' | ')+')':''));
 }
 
+/* v148: la celebración no suena (decisión de Camilo, 30-sep) y respeta
+   «reducir movimiento». */
+{
+  const f=APP.slice(APP.indexOf('function festeja('),APP.indexOf('function festPaso('));
+  ok(f.length>0&&!/new Audio|AudioContext|\.play\(/.test(f),'La celebración no usa sonido');
+  ok(/prefers-reduced-motion: reduce/.test(f),'La celebración respeta «reducir movimiento»');
+  ok(/if\(pct>=75\)festeja\(/.test(APP),'Aprobar el examen (75 % o más) se celebra');
+}
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

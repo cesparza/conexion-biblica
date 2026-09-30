@@ -2386,6 +2386,17 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   .nav-yo .yo-n{display:none}
   .nav-yo .yo-c{font-size:.875rem;font-weight:700}
 }
+
+/* ───────── v148: celebración ───────── */
+.fest-cv{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+.fest-msg{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 76px);z-index:10000;pointer-events:none;
+  display:flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border-radius:999px;
+  background:var(--v-sup,#fff);color:var(--azul);font-size:1rem;font-weight:800;box-shadow:var(--v-s2);white-space:nowrap;max-width:calc(100vw - 32px);
+  opacity:0;transform:translate(-50%,-12px) scale(.96);transition:opacity .25s,transform .35s cubic-bezier(.2,1.4,.4,1)}
+.fest-msg.on{opacity:1;transform:translate(-50%,0) scale(1)}
+.fest-msg .ico-t{width:1.25em;height:1.25em;color:var(--naranja-txt)}
+@media (prefers-reduced-motion:reduce){.fest-msg{transition:opacity .2s;transform:translate(-50%,0)}}
+@media print{.fest-cv,.fest-msg{display:none}}
 </style>
 </head>
 <body>
@@ -2917,7 +2928,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   </details>
 </div>
 <script>
-const VERSION_APP = '159ed30f15a2';
+const VERSION_APP = 'aad794b2ac7e';
 
 const CAPS = [
  {
@@ -39201,7 +39212,7 @@ function divideVista(d,id){
 function avanza(id,p){S.prog[id]=Math.max(S.prog[id]||0,p);guardar();pintaCaps();}
 
 function listo(id){
-  avanza(id,100);sumaRacha();
+  avanza(id,100);sumaRacha();festejaRacha(0);
   const lista=[...capsVista(),...modsDe()];
   const i=lista.findIndex(x=>x.id===id)+1;
   if(i>0&&i<lista.length){verCap(lista[i].id);window.scrollTo({top:0,behavior:'smooth'});}
@@ -39227,6 +39238,97 @@ function sumaRacha(){
   else S.racha=1;
   if(S.racha%7===0)S.protector=Math.min(PROTECTOR_MAX,(S.protector||0)+1);
   S.ultimo=hoy;guardar();
+  /* v148: la racha que sube se celebra al CERRAR lo que se estaba haciendo
+     (examen, sesión, capítulo, ronda), no a mitad de una tarjeta: sumaRacha()
+     corre con la primera respuesta del día. El día uno no: 1 no es racha. */
+  if(S.racha>=2)festRachaPend=S.racha;
+}
+let festRachaPend=0;
+function festejaRacha(espera){
+  if(!festRachaPend)return;
+  const n=festRachaPend;festRachaPend=0;
+  const f=()=>festeja('racha','Racha de '+n+' días');
+  if(espera&&typeof setTimeout==='function')setTimeout(f,espera);else f();
+}
+
+/* ───────── LA CELEBRACIÓN (v148) ─────────
+   MECANISMO
+   Un lienzo (canvas) fijo encima de todo, transparente y sin recibir toques,
+   dibuja partículas unos 1,8 segundos y se borra solo. Confeti: papelitos que
+   salen de abajo y caen girando. Fuegos: dos o tres estallidos en círculo que
+   se apagan. El teléfono vibra un instante si puede. Sin sonido (Camilo,
+   30-sep): se estudia en la iglesia y en clase.
+
+   POR QUÉ
+   El premio tiene que llegar cuando pasa la cosa, no después en una lista de
+   insignias: es lo que Kahoot y Duolingo hacen y lo que engancha a volver.
+
+   CUÁNDO NO
+   Con «reducir movimiento» del sistema no hay partículas: queda solo la
+   frase, quieta. Y si el navegador no tiene canvas (o es el entorno de
+   pruebas), no hace nada: la celebración nunca puede romper el flujo. */
+let festCv=null, festP=[], festRaf=0;
+function festeja(tipo,frase){
+  try{
+    if(typeof document==='undefined'||!document.body)return;
+    try{navigator.vibrate&&navigator.vibrate(tipo==='racha'?[25]:[30,50,30]);}catch(e){}
+    if(frase)festMsg(tipo,frase);
+    const quieto=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(quieto||typeof requestAnimationFrame!=='function')return;
+    if(!festCv){
+      festCv=document.createElement('canvas');
+      if(!festCv.getContext){festCv=null;return;}
+      festCv.className='fest-cv';festCv.setAttribute('aria-hidden','true');
+      document.body.appendChild(festCv);
+    }
+    const W=innerWidth,H=innerHeight,dpr=Math.min(2,window.devicePixelRatio||1);
+    festCv.width=W*dpr;festCv.height=H*dpr;
+    const cs=getComputedStyle(document.documentElement);
+    const col=['--azul','--naranja','--verde','--v-cat','--cielo'].map(v=>cs.getPropertyValue(v).trim()).filter(Boolean)
+      .concat(['#F2C230','#E4577B']);
+    const r=(a,b)=>a+Math.random()*(b-a);
+    if(tipo==='fuegos'||tipo==='racha'){
+      const n=tipo==='racha'?2:3;
+      for(let k=0;k<n;k++){
+        const cx=r(W*.2,W*.8),cy=r(H*.18,H*.42),c=col[k%col.length],t0=k*14;
+        for(let i=0;i<46;i++){const a=i/46*Math.PI*2,v=r(2.2,4.4);
+          festP.push({x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v,g:.05,c,s:r(2,3.2),vida:r(55,75),t:-t0,f:'p'});}
+      }
+    }
+    if(tipo!=='racha'){
+      for(let i=0;i<120;i++)festP.push({x:r(W*.1,W*.9),y:H+10,vx:r(-3,3),vy:r(-15,-9),g:.32,
+        c:col[i%col.length],s:r(5,9),rot:r(0,6),vr:r(-.25,.25),vida:r(90,120),t:-r(0,12),f:'c'});
+    }
+    if(!festRaf)festRaf=requestAnimationFrame(festPaso);
+  }catch(e){}
+}
+function festPaso(){
+  festRaf=0;
+  if(!festCv)return;
+  const x=festCv.getContext('2d'),dpr=festCv.width/innerWidth;
+  x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,innerWidth,innerHeight);
+  festP=festP.filter(p=>{
+    p.t++;if(p.t<0)return true;
+    p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.985;
+    const a=Math.max(0,1-p.t/p.vida);x.globalAlpha=a;x.fillStyle=p.c;
+    if(p.f==='c'){p.rot+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.rot);
+      x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2*Math.abs(Math.cos(p.rot*2))+1);x.restore();}
+    else{x.beginPath();x.arc(p.x,p.y,p.s,0,Math.PI*2);x.fill();}
+    return p.t<p.vida;
+  });
+  x.globalAlpha=1;
+  if(festP.length)festRaf=requestAnimationFrame(festPaso);
+  else{festCv.remove();festCv=null;}
+}
+/* La frase va en una región viva (role=status): el lector de pantalla la dice
+   y se va sola a los 2,6 s. */
+function festMsg(tipo,frase){
+  let m=document.getElementById('fest-msg');
+  if(!m){m=document.createElement('div');m.id='fest-msg';m.className='fest-msg';
+    m.setAttribute('role','status');document.body.appendChild(m);}
+  m.innerHTML=IC(tipo==='racha'?'fuego':tipo==='fuegos'?'trofeo':'check')+'<span>'+esc(frase)+'</span>';
+  m.classList.remove('on');void m.offsetWidth;m.classList.add('on');
+  clearTimeout(festMsg.t);festMsg.t=setTimeout(()=>m.classList.remove('on'),2600);
 }
 
 /* ───────── leer en voz alta ─────────
@@ -39992,6 +40094,10 @@ function muestraTj(){
        momento en que la niña decide si sigue o cierra. «Terminaste el mazo» con
        87 tarjetas pendientes detrás era una media verdad. */
     const quedan=tjFiltro==='hoy'?tocanHoy().length:0;
+    /* v148: terminar las del día se celebra UNA vez por mazo: muestraTj() se
+       vuelve a llamar al regresar a la pantalla. */
+    if(tjFiltro==='hoy'&&!quedan&&!mazo.festejado){mazo.festejado=true;festeja('confeti','Terminaste las tarjetas de hoy');festejaRacha(2800);}
+    else festejaRacha(0);
     c.innerHTML='<div class="cara">'+IC('check')+' '+(tjFiltro==='hoy'?'Terminaste la sesión':'Terminaste el mazo')+'</div>'+
       '<div class="rev" style="margin-top:.7rem">Sabías '+s+' de '+t+' ('+Math.round(s/t*100)+'%)'+
       (quedan?'<br>Todavía te toca repasar <strong>'+quedan+'</strong> hoy.'
@@ -40483,7 +40589,7 @@ function jgBanco(i){
 /* Terminar una ronda cuenta como haber estudiado hoy: es la misma racha de
    las tarjetas y del examen, no un contador nuevo. Un solo concepto, un solo
    mecanismo. */
-function cierraRonda(){ sumaRacha(); }
+function cierraRonda(){ sumaRacha(); festejaRacha(0); }
 
 function voltea(){if(mazo.length&&tjI<mazo.length){tjVolteada=!tjVolteada;muestraTj();}}
 function tjSig(){if(tjI<mazo.length){tjI++;tjVolteada=false;muestraTj();}}
@@ -41310,6 +41416,10 @@ function entregar(){
     S.act[q.t]=at;
   }
   revisaInsignias(pct);sumaRacha();guardar();
+  /* v148: aprobar (75 % o más, medalla de plata u oro) se celebra. Oro, con
+     fuegos; plata, con confeti. Por debajo no: 60 % es «buen intento». */
+  if(pct>=75)festeja(pct>=93?'fuegos':'confeti',pct>=93?'¡Excelente! '+pct+' %':'¡Aprobado! '+pct+' %');
+  festejaRacha(pct>=75?2800:0);
 
   const s3=['mc','tf','fill'].map(t=>{
     const qs=prueba.filter(q=>q.t===t);

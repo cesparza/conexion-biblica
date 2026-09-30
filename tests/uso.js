@@ -1652,6 +1652,23 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(Z.S().racha===16,'Estudiar dos veces el mismo día no suma dos');
 }
 
+/* ─── v148: la celebración ───
+   Se celebra al cerrar algo, sin sonido, y nunca rompe el flujo: en el
+   entorno de pruebas no hay canvas y tiene que pasar de largo. */
+{
+  const Z=montar(RET+', sumaRacha, festeja, festejaRacha, pend:()=>festRachaPend, ponHoy:v=>{__hoy=v}, S:()=>S',{antes:
+    `let __hoy='2026-09-01'; const _D=globalThis.Date; let Date=class extends _D{
+      constructor(...a){a.length?super(...a):super(__hoy+'T12:00:00')} static now(){return new _D(__hoy+'T12:00:00').getTime()}};`});
+  Z.ponCat('av');
+  Z.ponHoy('2026-09-01');Z.sumaRacha();
+  ok(Z.pend()===0,'Racha de 1: todavía no se celebra');
+  Z.ponHoy('2026-09-02');Z.sumaRacha();
+  ok(Z.pend()===2,'La racha sube a 2: queda pendiente para celebrarla al cerrar lo que se hace, no a mitad de una tarjeta');
+  let roto=null;
+  try{Z.festejaRacha(0);Z.festeja('confeti','x');Z.festeja('fuegos','y');}catch(e){roto=e;}
+  ok(!roto&&Z.pend()===0,'Celebrar sin canvas no rompe nada y limpia el pendiente'+(roto?' ('+roto.message+')':''));
+}
+
 /* ─── v139: qué preguntas costaron (como el reporte de Kahoot) ───
    Difícil: menos del 35% de acierto con al menos dos respuestas. Necesita
    ayuda: menos del 35% del examen. Y la práctica de las difíciles trae
