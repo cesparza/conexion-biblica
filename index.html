@@ -2757,7 +2757,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'c8ba1c51b831';
+const VERSION_APP = '5568b969e92e';
 
 const CAPS = [
  {
@@ -32806,7 +32806,7 @@ const MANUAL = [
    },
    {
     "t": "Cuándo queda dominada",
-    "h": "<p>Cuando la aciertas <strong>dos veces seguidas</strong>. Las que fallas\n    vuelven a salir primero, y las dominadas salen cada vez menos.</p>"
+    "h": "<p>Cuando la aciertas <strong>dos veces seguidas</strong>. Las que fallas\n    vuelven a salir primero, y las dominadas salen cada vez menos.</p>\n    <p><strong>Cerca del examen cambia:</strong> las dominadas vuelven más seguido\n    (cada dos días a una semana del examen, y cada día en los últimos cinco),\n    porque lo que se repasa poco antes de la prueba es lo que más se recuerda.\n    Los dos últimos días la sesión es el doble: es el repaso final.</p>"
    },
    {
     "t": "La trampa que se hace uno mismo",
@@ -32835,7 +32835,7 @@ const MANUAL = [
    },
    {
     "t": "Mientras lo haces",
-    "h": "<ul><li>Arriba queda fija una barra con el reloj y cuántas llevas\n    respondidas («5 de 15»). No se va al bajar. El reloj se pone rojo en los\n    últimos dos minutos.</li>\n    <li>Mientras dura el examen solo se ve el examen: el filtro de estudio y las\n    opciones del director se esconden, y vuelven al entregar o cancelar.</li>\n    <li>Las preguntas <strong>cambian cada vez</strong>: salen de\n    {BANCO_CAT} preguntas y el examen escoge primero las que <strong>nunca te\n    han salido</strong>. Cuando ya te salieron todas, vuelve a empezar por las\n    que fallaste.</li>\n    <li>Las opciones también se barajan. No se puede aprobar marcando siempre\n    la misma letra.</li>\n    <li>Al terminar, toca <strong>Entregar</strong>.</li></ul>"
+    "h": "<ul><li>Arriba queda fija una barra con el reloj y cuántas llevas\n    respondidas («5 de 15»). No se va al bajar. El reloj se pone rojo en los\n    últimos dos minutos.</li>\n    <li>Mientras dura el examen solo se ve el examen: el filtro de estudio y las\n    opciones del director se esconden, y vuelven al entregar o cancelar.</li>\n    <li>El 🔊 al lado de cada pregunta la lee en voz alta, con sus opciones.\n    Sirve a quien todavía no lee bien. En Practicar, para Menores (4 a 6 años),\n    la pregunta nueva se lee sola al tocar Siguiente.</li>\n    <li>Las preguntas <strong>cambian cada vez</strong>: salen de\n    {BANCO_CAT} preguntas y el examen escoge primero las que <strong>nunca te\n    han salido</strong>. Cuando ya te salieron todas, vuelve a empezar por las\n    que fallaste.</li>\n    <li>Las opciones también se barajan. No se puede aprobar marcando siempre\n    la misma letra.</li>\n    <li>Al terminar, toca <strong>Entregar</strong>.</li></ul>"
    },
    {
     "t": "Las tres secciones",
@@ -37704,7 +37704,10 @@ function tareasDeHoy(){
   const nHoy=Math.min(tocanHoy().length,topeSesion());
   const porDominar=tarjetasVista().filter(t=>cajaT(t)<2).length;
   if(nHoy)tareas.push({ic:'tarjetas',t:nHoy+' tarjetas para hoy',
-    d:'La sesión del día: primero lo que fallaste, y las dominadas vuelven a salir a los cuatro días. '+
+    d:(recta()?'Repaso final antes del examen: también vuelven las que ya dominas. ':
+      'La sesión del día: primero lo que fallaste, y las dominadas vuelven a salir '+
+      (plazoDominada()===1?'cada día':'a los '+plazoDominada()+' días')+
+      (diasParaMeta()>0&&plazoDominada()<PLAZO[2]?', más seguido porque se acerca el examen':'')+'. ')+
       'Quedan '+porDominar+' por dominar en total.',
     b:'Abrir la sesión',f:"irTarjetasHoy()"});
   else if(tarjetasVista().length)tareas.push({ic:'tarjetas',t:'Tarjetas al día',
@@ -39060,6 +39063,32 @@ function trozos(t){
    versículo ni los botones, que el sintetizador pronunciaría. Si el bloque no
    tiene <p>, es un solo texto y se le quita la referencia del principio
    («1:8»): se memoriza el texto, no el número. */
+/* v139: LEER LA PREGUNTA (Duolingo ABC y Bible App for Kids narran todo:
+   entre 4 y 6 años casi no se lee). Se lee el enunciado y después cada
+   opción con su letra, y la marca de voz va pasando por cada una, así la niña
+   sabe cuál está oyendo. Las opciones ya elegidas no cambian nada: leer no
+   responde. */
+function partesPregunta(base){
+  const out=[];
+  const sinBotones=el=>{try{const c=el.cloneNode(true);
+    (c.querySelectorAll?[...c.querySelectorAll('.qn,.ol,.grupo-voz,.btn-voz,.btn-reinicia')]:[]).forEach(b=>b.remove());
+    return (c.textContent||'').trim();}catch(e){return '';}};
+  const q=base.querySelector&&base.querySelector('.qt,.jg-preg');
+  if(q)trozos(sinBotones(q)).forEach(x=>out.push({txt:x,el:q}));
+  const ops=base.querySelectorAll?[...base.querySelectorAll('.ops .op,.jg-gr.col .jg-g')]:[];
+  /* La letra solo se dice donde se ve (el examen). En Practicar las opciones
+     no llevan letra, y oír «opción A» sin verla confunde. */
+  ops.forEach((o,i)=>{const t=sinBotones(o);if(!t)return;
+    const conLetra=!!(o.querySelector&&o.querySelector('.ol'));
+    out.push({txt:(conLetra?'Opción '+'ABCDEF'[i]+': ':'')+t+'.',el:o});});
+  if(!ops.length&&base.querySelector&&base.querySelector('.vf,.jg-gr'))
+    out.push({txt:'¿Verdadero o falso?',el:base.querySelector('.vf,.jg-gr')});
+  const r=base.querySelector&&base.querySelector('.rell');
+  if(r){try{const c=r.cloneNode(true);(c.querySelectorAll?[...c.querySelectorAll('input')]:[]).forEach(i=>i.replaceWith('espacio en blanco'));
+    trozos((c.textContent||'').trim()).forEach(x=>out.push({txt:x,el:r}));}catch(e){}}
+  return out;
+}
+
 function partesDe(base){
   const ps=base.querySelectorAll?[...base.querySelectorAll('p')]:[];
   const out=[];
@@ -39256,7 +39285,7 @@ function leeCerca(btn){
   }
   if(!base)base=btn.parentNode;
   if(!base)return;
-  const partes=partesDe(base);
+  const partes=base.getAttribute&&base.getAttribute('data-leer')==='preg'?partesPregunta(base):partesDe(base);
   paraVoz();
   if(!partes.length)return;
   VZ.partes=partes;VZ.modo='boton';VZ.rate=.85;vozBtn=btn;
@@ -39580,7 +39609,8 @@ const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');'<button class="btn-voz"
    Cada tarjeta vive en una caja: 0 recién vista o fallada, 1 en repaso, 2
    dominada. Al acertar sube de caja y se guarda EL DÍA. Al fallar vuelve a la
    caja 0. Una tarjeta solo vuelve a salir cuando se le cumple el plazo de su
-   caja: la 0 siempre, la 1 al día siguiente, la 2 a los cuatro días.
+   caja: la 0 siempre, la 1 al día siguiente, la 2 a los cuatro días (menos
+   cuando se acerca el examen: ver plazoDominada).
 
    DÓNDE NACÍA EL PROBLEMA
    Antes el mazo traía SIEMPRE las 126 tarjetas, ordenadas por caja. Las
@@ -39592,13 +39622,27 @@ const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');'<button class="btn-voz"
    volver a las 7 de la mañana cuenta como dos días distintos, que es lo que la
    niña espera. */
 const PLAZO={0:0,1:1,2:4};
+/* v139: EL PLAZO DE LA DOMINADA SE ACORTA AL ACERCARSE EL EXAMEN.
+   Con 4 días fijos y el examen a 9, una tarjeta dominada salía una o dos veces
+   más antes del evento. El estudio de Cepeda y otros (2008) midió que el
+   repaso rinde más cuando el espacio entre repasos es cerca del 20% del
+   tiempo que falta para la prueba. Así que: 20% de los días que faltan,
+   redondeado, entre 1 y 4. A 9 días da 2; a 5 o menos, 1 (todos los días).
+   Después del evento, o sin fecha, vuelven los 4. */
+function plazoDominada(){
+  const d=diasParaMeta();
+  return d>0?Math.max(1,Math.min(4,Math.round(d*.2))):PLAZO[2];
+}
+/* Los dos últimos días son de repaso final: la sesión admite el doble. */
+const recta=()=>{const d=diasParaMeta();return d>0&&d<=2;};
+const plazoDe=c=>c===2?plazoDominada():PLAZO[c];
 const cajaT=t=>S.ft[claveT(t)]||0;
 const vistoT=t=>S.fv[claveT(t)]||0;
-const vencidaT=t=>diaHoy()-vistoT(t)>=PLAZO[cajaT(t)];
+const vencidaT=t=>diaHoy()-vistoT(t)>=plazoDe(cajaT(t));
 const tocanHoy=()=>tarjetasVista().filter(vencidaT);
 /* Tope de la sesión: el tamaño del examen de la categoría, con un piso de 12.
    Sale de un dato que ya existe en vez de inventar otra tabla. */
-const topeSesion=()=>Math.max(12,CAT().n);
+const topeSesion=()=>Math.max(12,CAT().n)*(recta()?2:1);
 
 let mazo=[],tjI=0,tjVolteada=false,tjFiltro='hoy',tjSabidas=new Set();
 
@@ -39925,6 +39969,7 @@ function nuevaRonda(){
          total:frases.reduce((n,f)=>n+f.huecos.length,0)};
   }
   pintaJuego();
+  leeSolaSiMenor();
 }
 
 /* El orden natural de un capitulo. Se saca del id (cr07 -> 7, d12 -> 12): no
@@ -39957,7 +40002,7 @@ function pintaJuego(){
   if(jgR.tipo==='quiz'||jgR.tipo==='vf'){
     const q=jgR.qs[jgR.i];
     const resuelto=jgR.elegida!==null;
-    h+='<div class="jg-preg">'+esc(q.q)+'</div>';
+    h+='<div data-leer="preg"><div class="jg-preg">'+esc(q.q)+(puedeHablar()?' '+BTN_VOZ:'')+'</div>';
     if(jgR.tipo==='quiz'){
       h+='<div class="jg-gr col">'+q.o.map((o,i)=>{
         let c='jg-g';
@@ -39974,6 +40019,7 @@ function pintaJuego(){
       };
       h+='<div class="jg-gr">'+bt(true,'✅ Verdadero')+bt(false,'❌ Falso')+'</div>';
     }
+    h+='</div>';
     if(resuelto)h+=avisoPaso(jgR.tipo==='quiz'?jgR.elegida===q.a:jgR.elegida===q.a, q.e||'');
   } else if(jgR.tipo==='error'){
     const p=jgR.pasos[jgR.i], resuelto=jgR.elegida!==null;
@@ -40065,6 +40111,17 @@ function jgSigue(){
   jgR.i++;jgR.elegida=null;
   pintaJuego();
   if(jgR.i>=jgR.total)cierraRonda();
+  else leeSolaSiMenor();
+}
+
+/* Entre 4 y 6 años la pregunta nueva se lee sola, como en Duolingo ABC. Solo
+   después de un toque (Siguiente, Otra ronda): iOS no deja hablar sin un
+   gesto de la persona, y fuera de eso sonaría sin que nadie lo pidiera. */
+const esMenor=()=>(CAT().edad||'')==='4 a 6 años';
+function leeSolaSiMenor(){
+  if(!esMenor()||!puedeHablar()||!jgR||!['quiz','vf'].includes(jgR.tipo))return;
+  const b=document.querySelector('#jg-zona [data-leer="preg"] .btn-voz');
+  if(b)leeCerca(b);
 }
 
 function btnPar(lado,i,txt,c){
@@ -40132,7 +40189,7 @@ function tjSabia(si){
   const k=claveT(mazo[tjI]);
   S.ft[k]=si?Math.min(2,(S.ft[k]||0)+1):0;
   /* El día solo se guarda al acertar. Al fallar se borra, para que vuelva a
-     salir hoy mismo y no dentro de cuatro días. */
+     salir hoy mismo y no dentro de unos días. */
   if(si)S.fv[k]=diaHoy();else delete S.fv[k];
   sumaRacha();
   tjI++;tjVolteada=false;
@@ -40860,7 +40917,8 @@ function htmlQ(q,n,ver){
       (ver?'<div class="fb '+(bien(q)?'ok':'ko')+'">'+(bien(q)?'✅ ¡Correcto!':'❌ Respuesta: '+esc(q.p.filter(p=>p.b).map(p=>p.b).join(' / ')))+'</div>':'');
   }
   const cls=ver?(bien(q)?' hecha':' mal'):(hecha(q)?' hecha':'');
-  return '<div class="q'+cls+'" id="c-'+q.id+'"><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+'</div>'+cuerpo+'</div>';
+  const voz=!ver&&puedeHablar()?' '+BTN_VOZ:'';
+  return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+cuerpo+'</div>';
 }
 
 const limpia=s=>String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ');

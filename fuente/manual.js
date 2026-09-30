@@ -345,7 +345,11 @@ const MANUAL = [
     <p>Tú tienes {TJ_CAT} tarjetas.</p>` },
   { t:'Cuándo queda dominada',
     h:`<p>Cuando la aciertas <strong>dos veces seguidas</strong>. Las que fallas
-    vuelven a salir primero, y las dominadas salen cada vez menos.</p>` },
+    vuelven a salir primero, y las dominadas salen cada vez menos.</p>
+    <p><strong>Cerca del examen cambia:</strong> las dominadas vuelven más seguido
+    (cada dos días a una semana del examen, y cada día en los últimos cinco),
+    porque lo que se repasa poco antes de la prueba es lo que más se recuerda.
+    Los dos últimos días la sesión es el doble: es el repaso final.</p>` },
   { t:'La trampa que se hace uno mismo',
     h:`<p>Si tocas «La sabía» sin haberla sabido, la app deja de mostrártela. Ahí
     no engañaste a la app: te quedaste sin repasar justo lo que no sabes, y eso
@@ -389,6 +393,9 @@ const MANUAL = [
     últimos dos minutos.</li>
     <li>Mientras dura el examen solo se ve el examen: el filtro de estudio y las
     opciones del director se esconden, y vuelven al entregar o cancelar.</li>
+    <li>El 🔊 al lado de cada pregunta la lee en voz alta, con sus opciones.
+    Sirve a quien todavía no lee bien. En Practicar, para Menores (4 a 6 años),
+    la pregunta nueva se lee sola al tocar Siguiente.</li>
     <li>Las preguntas <strong>cambian cada vez</strong>: salen de
     {BANCO_CAT} preguntas y el examen escoge primero las que <strong>nunca te
     han salido</strong>. Cuando ya te salieron todas, vuelve a empezar por las

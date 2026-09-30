@@ -1378,6 +1378,12 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
     ok(/class="ex-barra"[\s\S]{0,600}id="reloj"[\s\S]{0,600}id="ex-resp"/.test(CUERPO),'El reloj y el avance van dentro de la barra');
     ok(!/getElementById\('ex-curso'\)\.style\.display='(block|none)'/.test(APP),
       'El examen se muestra y se esconde solo con exCurso(), que también pone el modo concentración'); }
+  /* v139: leer la pregunta en voz alta (4 a 6 años casi no leen). */
+  ok(/function partesPregunta\(/.test(APP)&&/data-leer'\)==='preg'\?partesPregunta\(base\)/.test(APP),
+    'El botón de voz de una pregunta lee enunciado y opciones con su propio armado');
+  ok(/data-leer="preg"/.test(APP)&&/const esMenor=\(\)=>\(CAT\(\)\.edad\|\|''\)==='4 a 6 años'/.test(APP),
+    'Examen y Practicar marcan la pregunta para leer; la lectura sola es solo para 4 a 6 años');
+  ok(/conLetra\?'Opción '/.test(APP),'La letra de la opción solo se dice donde se ve');
   /* v136: lo mismo en el encabezado de las tablas: gris sobre azul, 1,52.
      Cuenta la ultima regla que le pone color, que es la que gana. */
   const colTh = [...sinCom.matchAll(/\.info-table th\{[^}]*?(?<![-\w])color:([^;}]+)/g)].map(m => m[1]);

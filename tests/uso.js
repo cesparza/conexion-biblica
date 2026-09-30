@@ -29,7 +29,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         huellaBanco, prng, mezclaR, armar, techoDe:c=>CATS[c].techo,
         ponRnd:f=>{rndEx=f}, rndNormal:()=>{rndEx=Math.random},
         claveQ, BANCO, pintaMenuEx, gruposEx, soloEstudio, ponFq:(k,n)=>{S.fq[k]={m:n}},
-        diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
+        diaHoy, cajaT, vencidaT, tocanHoy, topeSesion, plazoDominada, recta, tjSabia, filtraTj, tjFiltroActual:()=>tjFiltro,
         ponVisto:(k,d)=>{S.fv[k]=d}, pintaTarjetas, muestraTj, tjSig, ponTjI:v=>{tjI=v},
         puedeHablar, examenDelCapitulo, pintaLogros, sumaClub, REPARTO, textoReparto, armar,
         abreYo, pintaYo, cierraHoja, hojaTipoActual:()=>hojaTipo, pintaInicio, bvTermina,
@@ -755,16 +755,21 @@ A.ponCat('av'); A.ponAlcance('todo'); A.ponNivel(0); A.ponCuantas(0);
 A.ponCat('av');
 const T=A.tarjetasDe();
 ok(A.tocanHoy().length===T.length,'Al empezar, todas las tarjetas tocan hoy ('+T.length+')');
-ok(A.topeSesion()===15,'Aventureros: la sesión del día se corta en 15 tarjetas');
+/* v139: en los dos últimos días antes del examen el tope se duplica; la
+   prueba no puede depender de la fecha en que se corre. */
+ok(A.topeSesion()===15*(A.recta()?2:1),'Aventureros: la sesión del día se corta en 15 tarjetas (30 en el repaso final)');
 
 /* Una tarjeta dominada HOY no vuelve a salir hoy. */
 const k0=A.claveT(T[0]);
 A.S().ft[k0]=2; A.ponVisto(k0,A.diaHoy());
 ok(!A.vencidaT(T[0]),'Una dominada hoy no vuelve a salir hoy');
-A.ponVisto(k0,A.diaHoy()-3);
-ok(!A.vencidaT(T[0]),'Ni a los tres días');
-A.ponVisto(k0,A.diaHoy()-4);
-ok(A.vencidaT(T[0]),'A los cuatro días sí vuelve a salir');
+/* v139: el plazo de la dominada depende de los días que faltan (4 lejos del
+   examen, menos cerca). Se prueba contra el plazo vigente, no contra un 4 fijo. */
+const pl=A.plazoDominada();
+A.ponVisto(k0,A.diaHoy()-(pl-1));
+ok(pl===1||!A.vencidaT(T[0]),'Ni un día antes de su plazo ('+pl+')');
+A.ponVisto(k0,A.diaHoy()-pl);
+ok(A.vencidaT(T[0]),'Al cumplirse el plazo sí vuelve a salir');
 
 /* La caja 1 es de un día, y la 0 siempre está vencida. */
 const k1=A.claveT(T[1]);
@@ -1581,6 +1586,26 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   R.ponAlcance('m05..m12');
   R.ir('examen');
   ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
+}
+
+/* ─── v139: el repaso se acorta al acercarse el examen ───
+   Cepeda y otros (2008): el espacio entre repasos rinde más cerca del 20% del
+   tiempo que falta para la prueba. Se simula la fecha para ver la regla en
+   cuatro momentos. */
+{
+  /* «let Date» y no «Date=»: sin let se reemplaza el Date GLOBAL y la fecha
+     simulada contamina a las demás instancias y al resto de la suite. */
+  const conFecha=iso=>montar(RET,{antes:
+    `const _D=globalThis.Date; let Date=class extends _D{constructor(...a){a.length?super(...a):super('${iso}T12:00:00')}
+      static now(){return new _D('${iso}T12:00:00').getTime()}};`});
+  const casos=[['2026-09-30',2,false],['2026-10-05',1,false],['2026-10-08',1,true],['2026-10-20',4,false]];
+  for(const [iso,esperado,final] of casos){
+    const Z=conFecha(iso); Z.ponCat('av');
+    ok(Z.plazoDominada()===esperado,'El '+iso+' la tarjeta dominada vuelve a los '+Z.plazoDominada()+' días (se esperaba '+esperado+')');
+    ok(Z.recta()===final,'  y '+(final?'sí':'no')+' es repaso final');
+  }
+  const A=conFecha('2026-10-05'),B=conFecha('2026-10-08'); A.ponCat('av'); B.ponCat('av');
+  ok(B.topeSesion()===2*A.topeSesion(),'En los dos últimos días la sesión admite el doble ('+B.topeSesion()+')');
 }
 
 /* ─── v139: las opciones no pueden delatar la respuesta ───
