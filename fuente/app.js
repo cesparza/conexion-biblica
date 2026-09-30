@@ -1564,6 +1564,34 @@ function botonRef(todo,c,v,v2,cola){
   return botonVers(cid,cabeza,+v,v2?+v2:0)+colaVers(cid,cola);
 }
 
+/* v153: «Génesis 1», «Salmos 104», «Mateo 24»: la cartilla cita capítulos
+   enteros sin versículo, y el patrón de arriba pide «N:M», así que esas
+   fichas no se podían tocar aunque la nota dice «toca cualquier referencia».
+   El texto de los once capítulos ya estaba en biblia-otros.js, completo.
+   Y en un libro de UN solo capítulo (3 Juan, Judas) el número es el
+   versículo: «Judas 3» es Judas 1:3. */
+const OTRO_LIBRO_CAP=(typeof NOMBRES_OTROS!=='undefined')
+  ?new RegExp('('+Object.values(NOMBRES_OTROS).map(n=>n.replace(/\s+/g,'\\s+'))
+      .sort((a,b)=>b.length-a.length).join('|')+')\\s+(\\d{1,3})(?![\\d:])','g')
+  :null;
+const UN_CAPITULO=new Set(['abdias','filemon','2juan','3juan','judas']);
+function botonCapOtro(todo,nombre,n){
+  const key=KEY_POR_NOMBRE[nombre];
+  if(!key)return todo;
+  if(UN_CAPITULO.has(key)){
+    const cid=key+'-1';
+    return tablaDeCid(cid)&&tablaDeCid(cid).mapa[n]?botonVers(cid,todo,n,0):todo;
+  }
+  const cid=key+'-'+n, t=tablaDeCid(cid);
+  if(!t)return todo;
+  const nums=Object.keys(t.mapa).map(Number), max=Math.max(...nums);
+  /* Solo si el capítulo está ENTERO: un botón que dice «Génesis 1» y abre
+     tres versículos sueltos diría algo que no es. */
+  if(nums.length!==max||!t.mapa[1])return todo;
+  return '<button type="button" class="vref" title="Ver el capítulo"'+
+    ' onclick="verVers(this,\''+cid+'\',1,'+max+')">'+todo+'</button>';
+}
+
 function botonRefOtro(todo,nombre,c,v,v2,cola){
   cola=cola||'';
   const key=KEY_POR_NOMBRE[nombre];
@@ -1616,6 +1644,15 @@ function refsTocables(html,capId){
            letra o numero, o «1 Juan» se tomaria de dentro de «21 Juan». */
         if(pos>0&&LETRA_ANTES.test(cadena.charAt(pos-1)))return todo;
         return '\u0000'+botonRefOtro(todo,nombre,c,v,v2,cola)+'\u0000';
+      });
+    }
+    /* Pasada 2b: «Libro N» sin versículo (ver botonCapOtro). Después de la 2,
+       y el (?![\d:]) deja fuera lo que ya era «N:M». */
+    if(OTRO_LIBRO_CAP){
+      out=out.replace(OTRO_LIBRO_CAP,(todo,nombre,n,pos,cadena)=>{
+        if(pos>0&&LETRA_ANTES.test(cadena.charAt(pos-1)))return todo;
+        const b=botonCapOtro(todo,nombre,+n);
+        return b===todo?todo:'\u0000'+b+'\u0000';
       });
     }
     if(enDaniel){
@@ -1778,7 +1815,9 @@ function htmlHoja(cid,de,hasta){
   const partes=[];
   for(let i=de;i<=hasta;i++)
     if(t.mapa[i])partes.push('<p><span class="vn">'+i+'</span>'+esc(t.mapa[i])+'</p>');
-  const ref=t.ref+':'+de+(hasta>de?'-'+hasta:'');
+  /* El capítulo entero se anuncia como capítulo: «Génesis 1», no «Génesis 1:1-31». */
+  const entero=de===min&&min===1&&hasta===max&&nums.length===max&&hasta>de;
+  const ref=entero?t.ref:t.ref+':'+de+(hasta>de?'-'+hasta:'');
   return '<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
     '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="'+ref+'">'+
     '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
@@ -1792,7 +1831,7 @@ function htmlHoja(cid,de,hasta){
     '<div class="hoja-pie">'+
       '<button type="button" class="hoja-nav" onclick="hojaMueve(-1)"'+
         (de<=min?' disabled':'')+' aria-label="Versículo anterior">‹ Anterior</button>'+
-      '<span class="hoja-cta">'+de+(hasta>de?'-'+hasta:'')+' de '+max+'</span>'+
+      '<span class="hoja-cta">'+(entero?max+' versículos':de+(hasta>de?'-'+hasta:'')+' de '+max)+'</span>'+
       '<button type="button" class="hoja-nav" onclick="hojaMueve(1)"'+
         (hasta>=max?' disabled':'')+' aria-label="Versículo siguiente">Siguiente ›</button>'+
     '</div></div>';
@@ -2088,7 +2127,7 @@ function verCap(id){
     (secs.some(s=>s.capa)?filtroCapas():'')+
     secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
       refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
-    (conEstudioEnVoz(c)?secFrasesLibro(id):'')+
+    (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
        enlace. Antes eran cuatro colores del mismo peso y ninguno mandaba. */
@@ -2955,7 +2994,12 @@ function htmlLecVoz(total,modo,cid){
    Tocar un bloque empieza ahí, pero solo después de haber tocado ▶: en el
    estudio un toque sobre el texto no hacía nada, y que de pronto hable
    sorprendería a quien solo quería leer. */
-const conEstudioEnVoz=c=>!!c&&c.src==='Elena de White';
+/* v153: el reproductor del estudio sirve en TODA página que no trae su propio
+   texto bíblico: creencias, repasos y matutina, además de P&R. Solo los
+   capítulos de Daniel quedan fuera, porque ya tienen el reproductor del texto.
+   Antes era solo P&R, y en las creencias no había forma de escuchar nada. */
+const esLibroPR=c=>!!c&&c.src==='Elena de White';
+const conEstudioEnVoz=c=>!!c&&(esLibroPR(c)||typeof VERS==='undefined'||!VERS[c.id]);
 /* ── FRASES DEL LIBRO QUE SE PREGUNTAN (v150) ──────────────────────────
    Regla de Camilo (30-sep): lo que se pregunta tiene que estar en lo que se
    muestra para estudiar. De P&R la app no trae el libro (licencia), y el
@@ -2987,7 +3031,7 @@ const EGW_PYR='https://m.egwwritings.org/es/book/217/toc';
 function textoLimpio(el){
   try{
     const c=el.cloneNode(true);
-    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,script,style').forEach(x=>x.remove());
+    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,.decl-src,script,style').forEach(x=>x.remove());
     c.querySelectorAll('br').forEach(b=>b.replaceWith(' '));
     c.querySelectorAll('td,th,li,p,div').forEach(x=>x.append(' '));
     /* v133: la referencia «(PR 379.1)» sirve para leer, no para oir: la voz
@@ -2999,11 +3043,24 @@ function textoLimpio(el){
 const conPunto=t=>/[.!?:;»”)]$/.test(t)?t:t+'.';
 
 /* Los bloques de una sección, en orden de lectura. */
+/* «1La Palabra de Dios» se oía pegado: en las 28, el número y el nombre son
+   dos piezas y van con pausa entre ellas. */
+function textoDeFila(li){
+  const hijos=li.children?[...li.children]:[];
+  if(hijos.length===2&&hijos[0].matches('b')&&hijos[1].matches('span'))
+    return textoLimpio(hijos[0])+'. '+textoLimpio(hijos[1]);
+  return textoLimpio(li);
+}
 function bloquesDeSec(sec){
   const out=[];
   [...sec.children].forEach(h=>{
-    if(h.matches('h3,.rev,.rec,.capa-filtro'))return;
-    if(h.matches('ul,ol')){[...h.children].forEach(li=>out.push({el:li,txt:textoLimpio(li)}));return;}
+    if(h.matches('h3,.rev,.rec,.recordar,.capa-filtro,.l28-bar,.sec-cab'))return;
+    /* La cita (declaración o frase del libro) es UN bloque: su hijo <p> es el
+       pie «Cartilla…», y leer solo eso era leer el pie y saltar la cita. */
+    if(h.matches('blockquote')){out.push({el:h,txt:textoLimpio(h)});return;}
+    /* Las fichas de textos clave, separadas: pegadas se oían «Génesis 1Génesis 2». */
+    if(h.matches('.refs')){const t=[...h.children].map(textoLimpio).filter(Boolean).join('; ');if(t)out.push({el:h,txt:t});return;}
+    if(h.matches('ul,ol')){[...h.children].forEach(li=>out.push({el:li,txt:textoDeFila(li)}));return;}
     /* La tabla puede venir envuelta en .tabla-scroll (v135): se lee igual, fila por fila. */
     if(h.matches('table,.tabla-scroll')){
       h.querySelectorAll('tr').forEach(tr=>{
@@ -3014,7 +3071,7 @@ function bloquesDeSec(sec){
       return;
     }
     const dentro=h.querySelectorAll(':scope>ul>li,:scope>ol>li,:scope>p');
-    if(dentro.length){dentro.forEach(x=>out.push({el:x,txt:textoLimpio(x)}));return;}
+    if(dentro.length){dentro.forEach(x=>out.push({el:x,txt:x.matches('li')?textoDeFila(x):textoLimpio(x)}));return;}
     out.push({el:h,txt:textoLimpio(h)});
   });
   return out.filter(b=>b.txt);
@@ -3023,7 +3080,10 @@ function bloquesDeSec(sec){
 function partesEstudio(d){
   const out=[];let k=0;
   [...d.querySelectorAll('.sec')].forEach(sec=>{
-    if(sec.querySelector('.rev'))return;
+    /* Una sección de preguntas para comprobar (dos o más tapas) no se lee.
+       Una sola tapa dentro de una sección de contenido («¿Cuántas referencias
+       trae?» en Textos clave) se salta ella sola, no la sección entera. */
+    if(sec.querySelectorAll('.rev').length>=2)return;
     if(!sec.getClientRects().length)return;
     k++;
     const cab=sec.querySelector('h3'),rot=sec.querySelector('.sec-rot');
@@ -3094,11 +3154,11 @@ function pintaEstVoz(llevar){
 /* La franja del estudio, pegada arriba mientras se baja, y el enlace al libro. */
 function htmlEstVoz(c){
   const n=String(c.id).replace(/^pr/,'');
-  const egw='<a class="est-egw" href="'+EGW_PYR+'" target="_blank" rel="noopener">'+
+  const egw=esLibroPR(c)?'<a class="est-egw" href="'+EGW_PYR+'" target="_blank" rel="noopener">'+
     '<span>Leer el capítulo completo</span><small>Abre el índice del libro en EGW Writings, '+
-    'el sitio oficial. Ahí busca el capítulo '+esc(n)+'.</small></a>';
+    'el sitio oficial. Ahí busca el capítulo '+esc(n)+'.</small></a>':'';
   if(!puedeHablar())return egw;
-  const reposo='Todo el estudio, sin Compruébalo';
+  const reposo='Todo el estudio, sin las preguntas';
   return '<div class="lec-rp est-rp">'+
     '<button type="button" class="lec-play" id="est-play" onclick="estVozAlterna()" aria-label="Escuchar">'+IC('play')+'</button>'+
     '<div class="lec-rp-tx"><b id="est-est">Escuchar el estudio</b><span id="est-n" data-reposo="'+reposo+'">'+reposo+'</span>'+

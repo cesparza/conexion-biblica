@@ -1710,6 +1710,24 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(malas.length===0,'Cada «N.ª frase de la declaración» es de verdad esa frase'+(malas.length?': '+malas.slice(0,5).join(', '):''));
 }
 
+/* ─── v153: toda ficha de texto clave se toca, y toda página se escucha ───
+   La nota dice «toca cualquier referencia»: una ficha de capítulo entero
+   («Génesis 1») o de libro de un solo capítulo («Judas 3») no se podía tocar.
+   Y el reproductor del estudio era solo de P&R: en las creencias no había
+   audio. */
+{
+  const Z=montar(`verCap, ponCat, capsDe, modsDe, conEstudioEnVoz, htmlEstVoz, el:id=>document.getElementById(id)`,{});
+  Z.ponCat('ec1');const mudas=[];let n=0;
+  for(const c of Z.capsDe()){Z.verCap(c.id);
+    const h=Z.el('detalle').innerHTML, refs=(h.match(/<div class="refs">([\s\S]*?)<\/div>/)||[])[1]||'';
+    for(const f of refs.split('<span class="ref">').slice(1)){n++;if(!/class="vref"/.test(f))mudas.push(c.id+' '+f.replace(/<[^>]+>/g,'').slice(0,25));}}
+  ok(n>200&&mudas.length===0,'Toda ficha de textos clave de las 28 creencias se puede tocar ('+n+')'+(mudas.length?': '+mudas.slice(0,6).join(' | '):''));
+  const sin=[];
+  for(const cat of ['ec1','av','dm1']){Z.ponCat(cat);
+    for(const c of [...Z.capsDe(),...Z.modsDe()]){if(/^d\d+$/.test(c.id))continue;if(!Z.conEstudioEnVoz(c))sin.push(cat+'/'+c.id);}}
+  ok(sin.length===0,'Toda página sin texto bíblico propio trae «Escuchar el estudio»'+(sin.length?': '+sin.slice(0,6).join(', '):''));
+}
+
 /* ─── v148: la celebración ───
    Se celebra al cerrar algo, sin sonido, y nunca rompe el flujo: en el
    entorno de pruebas no hay canvas y tiene que pasar de largo. */

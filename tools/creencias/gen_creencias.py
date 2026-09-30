@@ -112,8 +112,16 @@ def pestanas(num):
     # La cartilla escribe «Génesis 1; 2; Salmos 19:1-6; 33:6, 9; 104»: el libro
     # se sobreentiende. En una ficha suelta, «2» o «104» no dice nada; la ficha
     # lleva el libro que viene arrastrando. El conteo sigue sobre `partes`.
-    fichas, libro = [], ''
-    for x in partes:
+    fichas, libro, corr = [], '', []
+    # Erratas de la cartilla (documentadas en refs.py y en cartilla.txt): la
+    # ficha lleva la cita correcta para que se pueda tocar, y se dice abajo
+    # qué se corrigió. El conteo y las preguntas siguen sobre `partes`.
+    ALIAS = {'Ecleciastés ': 'Eclesiastés ', 'Col. ': 'Colosenses '}
+    for x0 in partes:
+        x = refs.ERRATAS.get(x0, x0)
+        for a, b in ALIAS.items():
+            if x.startswith(a): x = b + x[len(a):]
+        if x != x0: corr.append('«%s» es %s' % (x0, x))
         m = re.match(r'^((?:[123] )?[A-Za-zÁÉÍÓÚÑáéíóúñ]+(?: [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*) (\d.*)$', x)
         if m: libro = m.group(1); fichas.append(x)
         else: fichas.append((libro + ' ' + x) if libro and re.match(r'^\d', x) else x)
@@ -123,6 +131,8 @@ def pestanas(num):
          'Son %d capítulos de %d libros, en la Reina-Valera 1909 (la Antigua).</p>'
          % (''.join('<span class="ref">%s</span>' % x for x in fichas),
             len({(a, c) for a, c, _ in tramos}), len({a for a, _, _ in tramos})))
+    if corr:
+        h += '<p class="nota">Corregido de la cartilla: %s.</p>' % '; '.join(corr)
     # La pregunta por el PRIMER texto ya no se revela: se responde. Era la
     # misma pregunta del banco, ofrecida de dos maneras en la misma pantalla.
     h += rev('¿Cuántas referencias trae la cartilla aquí?', '<b>%d</b>' % len(partes))
