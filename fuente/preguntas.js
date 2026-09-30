@@ -199,8 +199,6 @@ const BANCO = [
  o:['La gran imagen','El sueño de Nabucodonosor','El misterio revelado','La piedra y el monte'],a:1},
 {cap:'pr40',t:'mc',q:'Según P&R cap. 40, ¿para qué pidió Daniel tiempo al rey ante la sentencia?',
  o:['Para huir de Babilonia con sus compañeros','Para rogar a su Dios que le revelase el sueño','Para consultar los libros de los sabios','Para reunir otra vez a los magos'],a:1},
-{cap:'pr40',f:'c',t:'mc',q:'¿Qué representa la piedra cortada sin manos?',
- o:['La caída del imperio babilónico','Cristo y el establecimiento de su reino eterno','La restauración de Israel','El fin definitivo del imperio griego'],a:1},
 {cap:'pr40',t:'tf',q:'Según P&R cap. 40, la sucesión de los imperios muestra que la historia es gobernada por Dios.',
  a:true,e:'Verdadero. La imagen revela que Dios gobierna el reino de los hombres y dirige el curso de la historia.'},
 
@@ -381,8 +379,6 @@ BANCO.push(
  p:[{x:'«su reino no será jamás '},{b:'destruido',h:'¿qué no será?'},{x:' y su dominio perdurará hasta el '},{b:'fin',h:'¿hasta cuándo?'},{x:'.»'}]},
 {cap:'pr39',t:'tf',q:'Según P&R cap. 39, los jóvenes hebreos sabían que el vino perjudicaría sus facultades físicas y mentales.',
  a:true,e:'Verdadero. Es una de las razones por las que rechazaron el vino del rey; conocían la historia de Nadab y Abihú.'},
-{cap:'pr40',f:'c',t:'tf',q:'La piedra cortada sin manos representa a Cristo y el establecimiento de su reino eterno.',
- a:true,e:'Verdadero, según la interpretación que une la piedra con Cristo en otros textos de la Biblia, como los evangelios. P&R 40 solo dice que el Dios del cielo levantará un reino que permanecerá para siempre.'},
 {cap:'pr41',t:'tf',q:'Según P&R cap. 41, los tres jóvenes condicionaron su obediencia a que Dios les garantizara el milagro.',
  a:false,e:'Falso. La frase «y si no» muestra que obedecieron sin condicionar su lealtad al resultado.'},
 {cap:'pr42',t:'tf',q:'Según P&R cap. 42, Dios le concedió a Nabucodonosor un año completo para arrepentirse antes del juicio.',
@@ -1470,8 +1466,6 @@ BANCO.push(
 {cap:'pr42',t:'mc',q:'Según P&R cap. 42, en su confesión final, ¿qué reconoció Nabucodonosor que Dios puede hacer con los que andan con soberbia?',
  o:['Humillarlos','Dejarlos reinar para siempre','Darles más riquezas','Ignorarlos por completo'],a:0},
 
-{cap:'pr43',f:'c',t:'mc',q:'¿Cómo se explica que Daniel 5 llame a Nabucodonosor "padre" de Belsasar, si en realidad era su abuelo?',
- o:['Es un error de traducción que P&R corrige','En el lenguaje bíblico "padre" incluye al antepasado','Belsasar en realidad no tenía relación familiar con él','Nabucodonosor lo adoptó legalmente antes de morir'],a:1},
 {cap:'pr43',t:'tf',q:'Según P&R cap. 43, Belsasar era hijo de Nabucodonosor.',
  a:false,e:'Falso. Según P&R, Belsasar era su nieto, no su hijo.'},
 {cap:'pr43',t:'mc',q:'Según P&R cap. 43, ¿cuánto tiempo había pasado desde que Daniel fue llevado cautivo hasta los sucesos de Daniel 5?',
