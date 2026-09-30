@@ -1389,10 +1389,10 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
   const colTh = [...sinCom.matchAll(/\.info-table th\{[^}]*?(?<![-\w])color:([^;}]+)/g)].map(m => m[1]);
   ok(colTh.length > 0 && /^var\(--v-sobre/.test(colTh[colTh.length - 1]),
     'El encabezado de las tablas va en blanco sobre el azul, no en gris (' + colTh.join(' / ') + ')');
-  /* .divisor es un bloque azul con letra blanca. Una regla de mas abajo le
-     volvia a poner el gris del separador encima: gris sobre azul, 2,22. */
-  ok(!/\.divisor\b[^{}]*\{[^}]*color:var\(--v-tinta3\)/.test(sinCom),
-    'El bloque azul .divisor no recibe la tinta gris del separador');
+  /* v147: .divisor es el segundo nivel de título (gris, sin fondo). Si
+     vuelve a tener fondo azul, vuelve el tercer nivel que gritaba. */
+  ok(!/\.divisor\{[^}]*background:var\(--azul\)/.test(sinCom),
+    'El título de sección .divisor no es un bloque azul');
 }
 
 ok(/font-size:16px/.test(coarse),

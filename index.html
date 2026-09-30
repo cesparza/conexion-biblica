@@ -368,7 +368,9 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .timer{font-size:1.375rem;font-weight:900;color:var(--naranja-txt);font-variant-numeric:tabular-nums}
 .timer.urg{color:var(--rojo-txt);animation:pp .6s infinite}
 @keyframes pp{0%,100%{opacity:1}50%{opacity:.45}}
-.divisor{background:var(--azul);color:var(--v-sobre,#fff);padding:.5rem .9rem;border-radius:8px;font-size:.875rem;font-weight:700;margin:1.1rem 0 .7rem}
+.divisor{display:flex;align-items:center;gap:.6rem;color:var(--gris);font-size:.75rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.11em;margin:1.3rem 0 .7rem}
+.divisor::after{content:"";flex:1 1 auto;height:1px;background:var(--v-linea,#e5e7eb);min-width:10px}
 
 .q{background:var(--card);border-radius:12px;box-shadow:var(--v-s1);padding:1.1rem;margin-bottom:.9rem;border:2px solid transparent}
 .q.hecha{border-color:#d1fae5}
@@ -1347,10 +1349,7 @@ body{
 
 /* ── separadores y notas ── */
 .sep span,.divisor{letter-spacing:.08em;font-size:var(--v-t-1)}
-/* El gris es para el separador sobre el lienzo. .divisor NO: es un bloque
-   azul (mas arriba) y esta regla le devolvia la tinta gris encima, o sea
-   gris sobre azul. Se leia a 2,22, y con el gris corregido habria caido a
-   1,52. Con el blanco que ya declara su propia regla, 7,19. */
+/* v147: .divisor ya no es un bloque azul; es el título de sección gris (ver abajo). */
 .sep span{color:var(--v-tinta3)}
 .nota{color:var(--v-tinta2);font-size:var(--v-t-1);line-height:1.6}
 
@@ -2337,6 +2336,56 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 /* Nada que se toque por debajo de 44 px (Apple pide 44, Material 48). */
 .nav-ayuda{min-width:44px;min-height:44px}
 .fe-b,.jg-m,.nav-yo{min-height:44px}
+
+/* ───────── v147: pantallas ───────── */
+/* La identidad ya está en la barra de arriba del celular; en escritorio la barra
+   es un riel sin logo, y ahí la tarjeta sí se queda. */
+@media (max-width:899px){#p-inicio .marca{display:none}}
+.tbt{min-height:44px!important;font-size:.875rem!important}
+.fe-fila{gap:.5rem}
+.fe-pill{font:inherit;font-size:.875rem;min-height:44px;display:inline-flex;align-items:center;gap:.4rem;
+  padding:0 .9rem 0 1rem;border-radius:999px;border:1px solid var(--v-linea,#d8e0ef);
+  background:var(--v-sup,#fff);color:var(--v-tinta,#1c2230);cursor:pointer}
+.fe-pill .fe-k{margin:0;font-size:.875rem;font-weight:600}
+.fe-pill b{color:var(--azul);font-weight:800}
+.fe-pill .fe-fl{width:1em;height:1em;color:var(--gris);transition:transform var(--v-paso,.18s)}
+.fe-pill[aria-expanded="true"] .fe-fl{transform:rotate(180deg)}
+.fe.on .fe-pill{border-color:#E7A35C;background:#FFF6EC}
+.fe.on .fe-pill b{color:#8F4506}
+.fe-menu{display:flex;flex-wrap:wrap;gap:.5rem;padding:.5rem;background:var(--v-sup,#fff);
+  border:1px solid var(--v-linea,#d8e0ef);border-radius:18px;box-shadow:var(--v-s1);width:max-content;max-width:100%}
+
+/* Dos niveles de título, en toda la app: el de la tarjeta (azul, con icono) y
+   el de sección (gris, versalitas, con línea). El bloque azul con letra blanca
+   era un tercer nivel que gritaba más que el título de su propia tarjeta. */
+.sep span,.divisor{font-size:.75rem}
+/* Segmentado: una sola pieza con dos mitades, no dos botones sueltos. */
+.vd-cab{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.9rem}
+.vd-cab .vd-rot{margin:0}
+.vd-cab:has(.capa-filtro) {min-height:0}
+.capa-filtro{display:inline-flex;gap:2px;padding:3px;margin:0 0 .9rem;flex-wrap:nowrap;max-width:100%;
+  background:color-mix(in srgb,var(--azul) 8%,var(--v-sup,#fff));border-radius:999px}
+.vd-cab .capa-filtro{margin:0}
+.cf{min-height:44px;padding:0 1rem;border:0;border-radius:999px;background:transparent;color:var(--gris);
+  font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.cf.on{background:var(--v-sup,#fff);color:var(--azul);box-shadow:var(--v-s1)}
+/* El número del capítulo, en el color de la categoría. */
+.cap .n{color:var(--v-cat)}
+/* «Tocar para ver» se vuelve un ojo: el texto sigue ahí para el lector de
+   pantalla, pero en pantalla no se repite cinco veces en mayúsculas. */
+.rev-q .rev-p{font-size:0;letter-spacing:0;width:24px;height:24px;display:inline-block;background:currentColor;
+  -webkit-mask:var(--m-ojo) center/22px no-repeat;mask:var(--m-ojo) center/22px no-repeat;color:var(--azul)}
+.rev-q.abierto .rev-p{-webkit-mask-image:var(--m-arriba);mask-image:var(--m-arriba)}
+:root{--m-ojo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.8 12s3.4-6.4 9.2-6.4 9.2 6.4 9.2 6.4-3.4 6.4-9.2 6.4S2.8 12 2.8 12z'/%3E%3Ccircle cx='12' cy='12' r='2.6'/%3E%3C/svg%3E");
+  --m-arriba:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.8 14.6 12 8.4l6.2 6.2'/%3E%3C/svg%3E")}
+/* La ficha de la cabecera, más liviana en celular: inicial y categoría. El
+   nombre completo sale al tocarla. Con la inicial basta para ver de reojo si
+   el teléfono está en la ficha de otra persona. */
+@media (max-width:899px){
+  .nav-yo{flex:0 1 auto;background:transparent;border-color:transparent}
+  .nav-yo .yo-n{display:none}
+  .nav-yo .yo-c{font-size:.875rem;font-weight:700}
+}
 </style>
 </head>
 <body>
@@ -2868,7 +2917,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   </details>
 </div>
 <script>
-const VERSION_APP = '99c566c3bd31';
+const VERSION_APP = '159ed30f15a2';
 
 const CAPS = [
  {
@@ -37476,7 +37525,7 @@ function cambiaAlumno(id){
      tarjetas y el examen en curso son de quien estaba antes. */
   /* El filtro de estudio es de quien lo puso: la siguiente persona en este
      celular no hereda la mitad del material escondida. */
-  filtroEst='todo';filtroAbierto=false;try{localStorage.setItem(FILTRO_K,'todo');}catch(e){}
+  filtroEst='todo';filtroAbierto=false;filtroMenu=false;try{localStorage.setItem(FILTRO_K,'todo');}catch(e){}
   reiniciaPractica();alcance='todo';cuantas=0;nivel=0;reiniciaFuente();
   prueba=[];resp={};entregado=false;clearInterval(reloj);
   marcaCat();pintaInicio();pintaCaps();pintaYo();
@@ -37583,7 +37632,7 @@ const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);
    «todo», asi que nunca deja una pantalla vacia. */
 const FILTRO_K='cb-filtro';
 let filtroEst=(()=>{try{return String(localStorage.getItem(FILTRO_K)||'todo').slice(0,200);}catch(e){return 'todo';}})();
-let filtroAbierto=false;
+let filtroAbierto=false, filtroMenu=false;
 const conFiltro=()=>ACT_DE(S.cat)==='cb';
 function idsFiltro(){
   if(!conFiltro()||filtroEst==='todo')return null;
@@ -37691,7 +37740,7 @@ function ir(id){
   if(id==='historial')pintaHistorial();
   /* Las fichas del filtro se cierran al cambiar de pantalla: abiertas ocupan
      media pantalla del celular, y lo escogido ya queda dicho en la franja. */
-  filtroAbierto=false;
+  filtroAbierto=false;filtroMenu=false;
   pintaFiltro(id);
   pintaSenales();
   window.scrollTo({top:0});
@@ -37899,10 +37948,12 @@ function pintaHoy(){
     '<div class="sem"><div class="st">Semana '+sem+' de '+SEMANAS_PLAN+' · '+esc(p.t)+'</div>'+
     '<div class="sd">'+esc(p.d)+'</div></div>';
 
-  const lista=tareasDeHoy().map(t=>
+  /* v147: solo la primera tarea lleva botón lleno. Tres botones naranjas
+     iguales no dicen por dónde empezar; uno lleno y los demás tonales sí. */
+  const lista=tareasDeHoy().map((t,i)=>
     '<div class="tarea"><div class="tic"><svg class="ico" aria-hidden="true"><use href="#i-'+t.ic+'"/></svg></div>'+
     '<div class="ttx"><div class="tt">'+t.t+'</div><div class="td">'+t.d+'</div></div>'+
-    '<button class="btn nar tbt" onclick="'+t.f+'">'+t.b+'</button></div>').join('');
+    '<button class="btn '+(i===0?'nar':'tono')+' tbt" onclick="'+t.f+'">'+t.b+'</button></div>').join('');
 
   document.getElementById('hoy').innerHTML='<div class="hoy-cab">'+cab+'</div>'+lista;
 }
@@ -38075,9 +38126,13 @@ function pintaSenales(){
     /* En 0 no se muestra: un cero ocupa lugar y no dice nada que la pantalla de
        Inicio no diga mejor. En 100 sí se muestra, porque «100%» es justo lo que
        uno quiere ver de reojo. */
-    if(est){est.hidden=pct<=0; if(!est.hidden)est.textContent=pct+'%';}
+    /* v147: la barra solo lleva números de «tienes algo pendiente», y en un
+       solo lugar. El % de Estudiar es progreso, no pendiente (ya lo dicen los
+       anillos del Inicio), y los errores de Logros ya entran primero en la
+       sesión de Practicar: con los dos se veía el mismo 15 en dos pestañas. */
+    if(est){est.hidden=true; est.textContent=pct+'%';}
     senal('nv-tj',Math.min(tocanHoy().length,topeSesion()));
-    senal('nv-lg',falladasDe().length);
+    const lg=document.getElementById('nv-lg'); if(lg)lg.hidden=true;
     /* El punto verde del examen es lo único que NO sale del progreso propio:
        sale del servidor, y solo si la evaluación está abierta y sin hacer. */
     const ex=document.getElementById('nv-ex');
@@ -38156,17 +38211,41 @@ function pintaFiltro(pant){
   const modo=!f?'todo':(dos&&(val==='biblia'||val==='pr'))?val:'mis';
   const b=(k,t)=>'<button type="button" class="fe-b" aria-pressed="'+(modo===k||(k==='mis'&&filtroAbierto))+'" '+
     'onclick="ponFiltro(\''+k+'\')">'+t+'</button>';
+  /* v147: una sola pastilla que dice el estado y abre las opciones. Cuatro
+     botones sueltos y pegados leían como pestañas, y en celular ocupaban dos
+     renglones para algo que se cambia poco. */
+  const abierto=filtroMenu||filtroAbierto;
+  const dice=modo==='todo'?'Todo':textoFiltro(val);
   z.className='fe'+(f?' on':'');
-  z.innerHTML='<div class="fe-fila"><span class="fe-k">Estoy estudiando</span>'+
-    b('todo','Todo')+(dos?b('biblia','Daniel')+b('pr','Profetas y Reyes'):'')+
-    b('mis','Escoger capítulos')+'</div>'+
+  z.innerHTML='<div class="fe-fila"><button type="button" class="fe-pill" aria-haspopup="true" '+
+    'aria-expanded="'+abierto+'" onclick="abreFiltroMenu()"><span class="fe-k">Estudiando:</span> '+
+    '<b>'+esc(dice)+'</b>'+IC('abajo','fe-fl')+'</button></div>'+
+    (abierto?'<div class="fe-menu" role="group" aria-label="Qué estudiar">'+
+      b('todo','Todo')+(dos?b('biblia','Daniel')+b('pr','Profetas y Reyes'):'')+
+      b('mis','Escoger capítulos')+'</div>':'')+
     (f?'<p class="fe-aviso">Viendo solo '+esc(textoFiltro(val))+'. Lo demás está escondido '+
       'hasta que toques «Todo».</p>':'')+
     (filtroAbierto?'<div class="ex-fichas fe-fichas">'+htmlFichas(caps,f||caps.map(c=>c.id),'fichaFiltro')+'</div>':'');
 }
+function abreFiltroMenu(){
+  const abierto=filtroMenu||filtroAbierto;
+  filtroMenu=!abierto;filtroAbierto=false;
+  pintaFiltro(S.ultPantalla||'inicio');
+}
+/* Tocar fuera o Escape cierra el menú, como cualquier menú. */
+try{
+  document.addEventListener('click',e=>{
+    if(!(filtroMenu||filtroAbierto))return;
+    const z=document.getElementById('filtro-est');
+    if(z&&e.target&&z.contains&&!z.contains(e.target)&&document.contains(e.target)){filtroMenu=false;filtroAbierto=false;pintaFiltro(S.ultPantalla||'inicio');}
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&(filtroMenu||filtroAbierto)){filtroMenu=false;filtroAbierto=false;pintaFiltro(S.ultPantalla||'inicio');}
+  });
+}catch(e){}
 function ponFiltro(v){
-  if(v==='mis'){filtroAbierto=!filtroAbierto;pintaFiltro(S.ultPantalla||'inicio');return;}
-  filtroAbierto=false;
+  if(v==='mis'){filtroAbierto=!filtroAbierto;filtroMenu=true;pintaFiltro(S.ultPantalla||'inicio');return;}
+  filtroAbierto=false;filtroMenu=false;
   guardaFiltro(v);
 }
 function fichaFiltro(tipo,v){
@@ -38219,7 +38298,9 @@ function htmlPorLibro(){
 function pintaCaps(){
   const caps=capsVista().map(c=>
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
-    '<div class="n" style="color:'+c.color+'">'+esc(c.label.replace(/^(Daniel |P&R )/,''))+'</div>'+
+    /* v147: el número va en el color de la categoría, igual en todos. Siete
+       colores sin significado competían con el título. */
+    '<div class="n">'+esc(c.label.replace(/^(Daniel |P&R )/,''))+'</div>'+
     '<div class="t">'+esc(c.sub)+'</div>'+
     /* Cuantos versiculos trae, para poder repartir la lectura antes de abrirlo:
        Daniel 2 son 49 y Daniel 1 son 21, y eso cambia como se planea la semana.
@@ -38760,16 +38841,16 @@ function cabezaSec(s){
 }
 
 function filtroCapas(){
-  return '<div class="capa-filtro" role="group" aria-label="Filtrar por capa">'+
-    '<button type="button" class="cf on" onclick="filtraCapa(this,\'\')">Todo</button>'+
-    '<button type="button" class="cf" onclick="filtraCapa(this,\'nucleo\')">Solo lo del examen</button></div>';
+  return '<div class="capa-filtro" role="group" aria-label="Qué secciones ver">'+
+    '<button type="button" class="cf on" aria-pressed="true" onclick="filtraCapa(this,\'\')">Todo</button>'+
+    '<button type="button" class="cf" aria-pressed="false" onclick="filtraCapa(this,\'nucleo\')">Solo lo del examen</button></div>';
 }
 
 function filtraCapa(btn,modo){
   const d=document.getElementById('detalle');
   if(!d)return;
-  d.querySelectorAll('.capa-filtro .cf').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
+  d.querySelectorAll('.capa-filtro .cf').forEach(b=>{b.classList.remove('on');b.setAttribute('aria-pressed','false');});
+  btn.classList.add('on');btn.setAttribute('aria-pressed','true');
   d.querySelectorAll('.sec').forEach(function(s){
     const c=s.getAttribute('data-capa')||'';
     s.style.display=(!modo||c===modo)?'':'none';
@@ -39103,7 +39184,13 @@ function divideVista(d,id){
     const iz=document.createElement('div');iz.className='vd-izq';
     const de=document.createElement('div');de.className='vd-der';
     iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
-    de.innerHTML='<p class="vd-rot">El estudio</p>';
+    /* v147: «Todo / Solo lo del examen» filtra las secciones de estudio, así
+       que va en la cabecera de SU columna. Se quedaba suelto en `d`, debajo de
+       las dos columnas, y en celular salía al final, después de todo lo que
+       filtra. */
+    de.innerHTML='<div class="vd-cab"><p class="vd-rot">El estudio</p></div>';
+    const cf=d.querySelector(':scope>.capa-filtro');
+    if(cf)de.firstChild.appendChild(cf);
     iz.appendChild(det);
     secs.forEach(x=>de.appendChild(x));
     fila.appendChild(iz);fila.appendChild(de);

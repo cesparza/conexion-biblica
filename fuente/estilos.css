@@ -351,7 +351,9 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .timer{font-size:1.375rem;font-weight:900;color:var(--naranja-txt);font-variant-numeric:tabular-nums}
 .timer.urg{color:var(--rojo-txt);animation:pp .6s infinite}
 @keyframes pp{0%,100%{opacity:1}50%{opacity:.45}}
-.divisor{background:var(--azul);color:var(--v-sobre,#fff);padding:.5rem .9rem;border-radius:8px;font-size:.875rem;font-weight:700;margin:1.1rem 0 .7rem}
+.divisor{display:flex;align-items:center;gap:.6rem;color:var(--gris);font-size:.75rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.11em;margin:1.3rem 0 .7rem}
+.divisor::after{content:"";flex:1 1 auto;height:1px;background:var(--v-linea,#e5e7eb);min-width:10px}
 
 .q{background:var(--card);border-radius:12px;box-shadow:var(--v-s1);padding:1.1rem;margin-bottom:.9rem;border:2px solid transparent}
 .q.hecha{border-color:#d1fae5}
@@ -1330,10 +1332,7 @@ body{
 
 /* ── separadores y notas ── */
 .sep span,.divisor{letter-spacing:.08em;font-size:var(--v-t-1)}
-/* El gris es para el separador sobre el lienzo. .divisor NO: es un bloque
-   azul (mas arriba) y esta regla le devolvia la tinta gris encima, o sea
-   gris sobre azul. Se leia a 2,22, y con el gris corregido habria caido a
-   1,52. Con el blanco que ya declara su propia regla, 7,19. */
+/* v147: .divisor ya no es un bloque azul; es el título de sección gris (ver abajo). */
 .sep span{color:var(--v-tinta3)}
 .nota{color:var(--v-tinta2);font-size:var(--v-t-1);line-height:1.6}
 
@@ -2320,3 +2319,53 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 /* Nada que se toque por debajo de 44 px (Apple pide 44, Material 48). */
 .nav-ayuda{min-width:44px;min-height:44px}
 .fe-b,.jg-m,.nav-yo{min-height:44px}
+
+/* ───────── v147: pantallas ───────── */
+/* La identidad ya está en la barra de arriba del celular; en escritorio la barra
+   es un riel sin logo, y ahí la tarjeta sí se queda. */
+@media (max-width:899px){#p-inicio .marca{display:none}}
+.tbt{min-height:44px!important;font-size:.875rem!important}
+.fe-fila{gap:.5rem}
+.fe-pill{font:inherit;font-size:.875rem;min-height:44px;display:inline-flex;align-items:center;gap:.4rem;
+  padding:0 .9rem 0 1rem;border-radius:999px;border:1px solid var(--v-linea,#d8e0ef);
+  background:var(--v-sup,#fff);color:var(--v-tinta,#1c2230);cursor:pointer}
+.fe-pill .fe-k{margin:0;font-size:.875rem;font-weight:600}
+.fe-pill b{color:var(--azul);font-weight:800}
+.fe-pill .fe-fl{width:1em;height:1em;color:var(--gris);transition:transform var(--v-paso,.18s)}
+.fe-pill[aria-expanded="true"] .fe-fl{transform:rotate(180deg)}
+.fe.on .fe-pill{border-color:#E7A35C;background:#FFF6EC}
+.fe.on .fe-pill b{color:#8F4506}
+.fe-menu{display:flex;flex-wrap:wrap;gap:.5rem;padding:.5rem;background:var(--v-sup,#fff);
+  border:1px solid var(--v-linea,#d8e0ef);border-radius:18px;box-shadow:var(--v-s1);width:max-content;max-width:100%}
+
+/* Dos niveles de título, en toda la app: el de la tarjeta (azul, con icono) y
+   el de sección (gris, versalitas, con línea). El bloque azul con letra blanca
+   era un tercer nivel que gritaba más que el título de su propia tarjeta. */
+.sep span,.divisor{font-size:.75rem}
+/* Segmentado: una sola pieza con dos mitades, no dos botones sueltos. */
+.vd-cab{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.9rem}
+.vd-cab .vd-rot{margin:0}
+.vd-cab:has(.capa-filtro) {min-height:0}
+.capa-filtro{display:inline-flex;gap:2px;padding:3px;margin:0 0 .9rem;flex-wrap:nowrap;max-width:100%;
+  background:color-mix(in srgb,var(--azul) 8%,var(--v-sup,#fff));border-radius:999px}
+.vd-cab .capa-filtro{margin:0}
+.cf{min-height:44px;padding:0 1rem;border:0;border-radius:999px;background:transparent;color:var(--gris);
+  font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.cf.on{background:var(--v-sup,#fff);color:var(--azul);box-shadow:var(--v-s1)}
+/* El número del capítulo, en el color de la categoría. */
+.cap .n{color:var(--v-cat)}
+/* «Tocar para ver» se vuelve un ojo: el texto sigue ahí para el lector de
+   pantalla, pero en pantalla no se repite cinco veces en mayúsculas. */
+.rev-q .rev-p{font-size:0;letter-spacing:0;width:24px;height:24px;display:inline-block;background:currentColor;
+  -webkit-mask:var(--m-ojo) center/22px no-repeat;mask:var(--m-ojo) center/22px no-repeat;color:var(--azul)}
+.rev-q.abierto .rev-p{-webkit-mask-image:var(--m-arriba);mask-image:var(--m-arriba)}
+:root{--m-ojo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.8 12s3.4-6.4 9.2-6.4 9.2 6.4 9.2 6.4-3.4 6.4-9.2 6.4S2.8 12 2.8 12z'/%3E%3Ccircle cx='12' cy='12' r='2.6'/%3E%3C/svg%3E");
+  --m-arriba:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.8 14.6 12 8.4l6.2 6.2'/%3E%3C/svg%3E")}
+/* La ficha de la cabecera, más liviana en celular: inicial y categoría. El
+   nombre completo sale al tocarla. Con la inicial basta para ver de reojo si
+   el teléfono está en la ficha de otra persona. */
+@media (max-width:899px){
+  .nav-yo{flex:0 1 auto;background:transparent;border-color:transparent}
+  .nav-yo .yo-n{display:none}
+  .nav-yo .yo-c{font-size:.875rem;font-weight:700}
+}

@@ -55,7 +55,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
         filaParticipante, leyendaParts, ponParts:v=>{partsCache=v}, fichaEsDeLaSesion,
         listaDe, idsDeAlcance, alcanceDeFichas, textoLista, tocaFicha, fichaEx, fichaPan,
-        ponFiltro, fichaFiltro, guardaFiltro, idsFiltro, capsVista, tarjetasVista, pasaFiltro,
+        ponFiltro, abreFiltroMenu, fichaFiltro, guardaFiltro, idsFiltro, capsVista, tarjetasVista, pasaFiltro,
         filtroActual:()=>filtroEst, htmlPorLibro, pintaFiltro, alcanceDeFiltro, cambiaActPanel,
         pintaNotaAlcance, pintaCaps,
         el:id=>document.getElementById(id)`;
@@ -1224,8 +1224,9 @@ ok(N.el('nv-ex').hidden,'Sin evaluacion abierta, el punto del Examen no aparece'
 const bk=N.bancoDe();
 for(let i=0;i<5;i++)N.ponFq(N.claveQ(bk[i]),2);
 N.pintaSenales();
-ok(N.el('nv-lg').textContent===String(N.falladasDe().length)&&!N.el('nv-lg').hidden,
-  'La senal de Logros dice los errores pendientes ('+N.el('nv-lg').textContent+')');
+/* v147: los errores ya entran primero en la sesion de Practicar; su numero
+   en Logros repetia el de Practicar. */
+ok(N.el('nv-lg').hidden,'Con errores, Logros sigue sin globito: el pendiente se dice una vez, en Practicar');
 
 /* Progreso: promedia capitulos Y repasos. Promediar solo capitulos daria 100%
    con los repasos sin leer, y la insignia «Lector completo» exige los dos. */
@@ -1233,8 +1234,8 @@ const items=[...N.capsDe(),...N.modsDe()];
 N.avanza(items[0].id,100);
 N.pintaSenales();
 const esperado=Math.round(items.reduce((a,c)=>a+Math.min(100,N.S().prog[c.id]||0),0)/items.length);
-ok(N.el('nv-est').textContent===esperado+'%',
-  'La senal de Estudiar promedia capitulos y repasos ('+N.el('nv-est').textContent+')');
+ok(N.el('nv-est').hidden&&N.el('nv-est').textContent===esperado+'%',
+  'Estudiar no muestra % en la barra (es progreso, no pendiente), aunque lo sigue calculando ('+N.el('nv-est').textContent+')');
 
 /* Tope de la sesion: la senal dice lo que se va a estudiar hoy, no el total
    pendiente. «102 por dominar» no es una tarea; «25 hoy» si. */
@@ -2533,6 +2534,11 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(V.falladasDe().some(q=>q.cap.startsWith('pr')),'Con «Todo» vuelve a salir el error de P&R');
   ok(!/Viendo solo/.test(el('filtro-est').innerHTML),'Y el aviso se va');
 
+  ok(/class="fe-pill"/.test(el('filtro-est').innerHTML)&&!/class="fe-menu"/.test(el('filtro-est').innerHTML),
+    'v147: el filtro es una sola pastilla cerrada');
+  V.abreFiltroMenu();
+  ok(/class="fe-menu"/.test(el('filtro-est').innerHTML)&&/aria-expanded="true"/.test(el('filtro-est').innerHTML),
+    'Tocar la pastilla abre las opciones');
   V.ponFiltro('mis');
   ok(/fch-b/.test(el('filtro-est').innerHTML),'«Escoger capítulos» abre las fichas');
   V.fichaFiltro('libro','d'); V.fichaFiltro('cap','d2');
