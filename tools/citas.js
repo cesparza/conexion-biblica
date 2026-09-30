@@ -23,12 +23,16 @@ const fs = require('fs');
 const path = require('path');
 const RAIZ = path.join(__dirname, '..');
 
+/* CB_FILES primero, y la carpeta real de hoy (Documents/Iglesia/files): la
+   ruta relativa era la de cuando el repo vivia en Documents/Iglesia/projects. */
 const CANDIDATOS = [
+  process.env.CB_FILES,
+  path.join(require('os').homedir(), 'Documents', 'Iglesia', 'files'),
   path.join(RAIZ, '..', '..', 'files'),
   path.join(RAIZ, '..', 'files'),
   path.join(RAIZ, 'files'),
 ];
-const CARPETA = CANDIDATOS.find(d => fs.existsSync(path.join(d, 'rv1995-daniel-1.txt')));
+const CARPETA = CANDIDATOS.filter(Boolean).find(d => fs.existsSync(path.join(d, 'rv1995-daniel-1.txt')));
 
 if (!CARPETA) {
   console.log('⚠️  No se encontro rv1995-daniel-1.txt en ninguna de estas rutas:');
