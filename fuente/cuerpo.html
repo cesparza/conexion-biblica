@@ -118,6 +118,10 @@
   </div>
 </nav>
 
+<!-- El filtro de estudio. Vive fuera de las pantallas porque decide lo que se
+     ve en las cinco; lo llena pintaFiltro() y solo sale en Conexión Bíblica. -->
+<div id="filtro-est" class="fe" hidden></div>
+
 <!-- La hoja del versiculo. Vive fuera de las pantallas porque es global: se
      abre desde cualquier referencia del material. La llena htmlHoja(). -->
 <div id="hoja" class="hoja" hidden></div>
@@ -322,9 +326,12 @@
       <summary><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg><span>Cambiar este examen</span></summary>
       <div class="det-cuerpo">
         <div class="menu-ex">
-          <label>Sobre qué
+          <label id="ex-alcance-lb">Sobre qué
             <select id="ex-alcance" onchange="cambiaAlcance()"></select>
           </label>
+          <!-- En Conexión Bíblica el material se escoge con fichas por libro;
+               las pinta pintaMenuEx() y reemplazan al desplegable. -->
+          <div class="ex-fichas" id="ex-fichas" hidden></div>
           <label id="ex-r1-lb" hidden>Desde
             <select id="ex-r1" onchange="cambiaRango()"></select>
           </label>

@@ -355,6 +355,19 @@ const MANUAL = [
     <strong>Comenzar</strong> arranca.</p>
     <p>Si quieres otro tamaño, otro capítulo u otra dificultad, está en
     <strong>Cambiar este examen</strong>.</p>` },
+  { t:'Solo Daniel, solo Profetas y Reyes, o los capítulos que escojas',
+    h:`<p>En Conexión Bíblica, arriba de las cinco pestañas dice
+    <strong>Estoy estudiando</strong>: Todo, Daniel, Profetas y Reyes o
+    Escoger capítulos. Lo que escojas ahí vale para toda la app: Estudiar,
+    Practicar, el repaso de errores, Inicio y el examen de práctica.</p>
+    <p>Con <strong>Escoger capítulos</strong> salen fichas por libro: tocas
+    las que quieras, por ejemplo Daniel 1, 3 y 6. <strong>todo Daniel</strong>
+    y <strong>todo P&amp;R</strong> las marcan de un toque.</p>
+    <p>Dentro de <strong>Cambiar este examen</strong> están las mismas fichas,
+    para un examen distinto sin cambiar lo de arriba.</p>
+    <div class="warn-box">Mientras no esté en Todo, la franja se pone naranja y
+    dice qué estás viendo. La evaluación del director no mira este filtro: trae
+    lo que él abrió.</div>` },
   { t:'Mientras lo haces',
     h:`<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>
     <li>Las preguntas <strong>cambian cada vez</strong>: salen de
@@ -747,11 +760,16 @@ const MANUAL = [
     <p>Desde ese momento, cada participante que ya entró con su código ve la
     tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar
     ningún link.</p>` },
-  { t:'Qué material: todo, un grupo, un capítulo o un tramo',
+  { t:'Qué material: todo, un grupo, unos capítulos o un tramo',
     h:`<p>La lista <strong>Qué material</strong> va de lo más amplio a lo más
     fino: todo el material de cada categoría, un grupo (solo Daniel, solo
     Profetas y Reyes, una quincena de la matutina, las 28 creencias), un
     capítulo suelto, o <strong>un tramo</strong>.</p>
+    <p>En Conexión Bíblica, en vez del capítulo y el tramo está
+    <strong>Los capítulos que escojas</strong>: fichas por libro donde marcas
+    uno o varios, seguidos o no, por ejemplo Daniel 1, 3 y 6. También se llega
+    con la receta <strong>Capítulos de Conexión Bíblica</strong>. Cada
+    categoría recibe solo los que tiene.</p>
     <p>El tramo es para cuando se reparten el material: escoges
     <strong>desde dónde y hasta dónde</strong>, por ejemplo del 2 al 18 de
     octubre, o de Daniel 1 a Daniel 3, o de la creencia 10 a la 20. Los dos

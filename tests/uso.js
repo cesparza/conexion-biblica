@@ -54,6 +54,10 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         pintaRevisor, revCapsDe, aplicaMarcas, REV_CUENTA, haceEvaluacion,
         ponEvalPend:e=>{evalPend=e;evalHecha=false;}, pruebaActual:()=>prueba,
         filaParticipante, leyendaParts, ponParts:v=>{partsCache=v}, fichaEsDeLaSesion,
+        listaDe, idsDeAlcance, alcanceDeFichas, textoLista, tocaFicha, fichaEx, fichaPan,
+        ponFiltro, fichaFiltro, guardaFiltro, idsFiltro, capsVista, tarjetasVista, pasaFiltro,
+        filtroActual:()=>filtroEst, htmlPorLibro, pintaFiltro, alcanceDeFiltro, cambiaActPanel,
+        pintaNotaAlcance, pintaCaps,
         el:id=>document.getElementById(id)`;
 
 let store={};
@@ -1553,9 +1557,12 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   /* En practicar: escoger «Un tramo» tiene que dejar un rango VALIDO de una
      sola familia. Aventureros tiene Daniel y Profetas y Reyes, y arrancar con
      «del primero al ultimo» daba `d1..pr44`, que no es un rango. */
+  /* Desde v130, en Conexion Biblica el tramo se escoge con fichas: un tramo
+     que llegue igual (de un enlace o de antes) se traduce a sus capitulos. La
+     invariante de fondo sigue: nunca `d1..pr44`, y nunca cero preguntas. */
   R.ponCat('av'); R.ir('examen');
   R.el('ex-alcance').value='rango'; R.cambiaAlcance();
-  ok(!!R.rangoDe(R.alcanceActual()),'En Aventureros «Un tramo» arranca con un rango valido: '+R.alcanceActual());
+  ok(R.alcanceActual()==='biblia','En Aventureros «Un tramo» se vuelve fichas: todo Daniel ('+R.alcanceActual()+')');
   ok(R.poolDe().length>0,'Y con preguntas adentro ('+R.poolDe().length+')');
   /* Un rango de otra categoria no puede sobrevivir al cambio. */
   R.ponAlcance('m05..m12');
@@ -2228,6 +2235,136 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
   ok(/if\(srvYo&&srvYo\.rol==='participante'\)adoptaFicha\(srvYo\);/.test(src),
     'Y el arranque alinea la ficha con la sesion ANTES de sincronizar');
+}
+
+/* ─── v130: VARIOS CAPITULOS SUELTOS Y EL FILTRO DE ESTUDIO ───
+   Camilo pidio examinar solo Daniel, solo Profetas y Reyes, o un grupo como
+   «Daniel 1, 3 y 6», y que el mismo recorte valga en toda la app. */
+{
+  const V=montar(RET);
+  const el=V.el;
+
+  /* La forma de la lista, y que no se confunde con lo de antes. */
+  ok(JSON.stringify(V.listaDe('d1,d3'))==='["d1","d3"]','«d1,d3» es una lista');
+  ok(V.listaDe('d1')===null&&V.listaDe('todo')===null&&V.listaDe('d1..d3')===null,
+    'Un capitulo, «todo» y un tramo NO son listas: los alcances viejos siguen igual');
+  ok(V.listaDe('d1,../x')===null,'Y una lista con basura no es lista');
+
+  /* El examen de practica arma solo con esos capitulos. */
+  V.ponCat('av'); V.ponAlcance('d1,d3,d6'); V.ponNivel(0); V.ponCuantas(0);
+  const caps=[...new Set(V.poolDe().map(q=>q.cap))].sort();
+  ok(V.poolDe().length>0&&caps.join()==='d1,d3,d6',
+    'Con «d1,d3,d6» el examen trae solo Daniel 1, 3 y 6 ('+V.poolDe().length+' preguntas)');
+  ok(V.armar('normal').length>0,'Y el examen se arma');
+  ok(V.textoAlcanceImpr()==='Daniel 1, 3 y 6','El impreso lo dice en palabras: '+V.textoAlcanceImpr());
+  ok(V.textoLista(['d1','d3','d6','pr41'])==='Daniel 1, 3 y 6 + Profetas y Reyes 41',
+    'Con los dos libros: '+V.textoLista(['d1','d3','d6','pr41']));
+
+  /* Lo escogido se escribe en la forma mas corta que ya existia. */
+  const ex=V.capsDe().filter(c=>!V.soloEstudio(c,'av'));
+  const ids=ex.map(c=>c.id);
+  ok(V.alcanceDeFichas(ids,ex)==='todo','Todas las fichas = todo');
+  ok(V.alcanceDeFichas(ids.filter(i=>i[0]==='d'&&i[1]!=='r'),ex)==='biblia','Todo Daniel = biblia');
+  ok(V.alcanceDeFichas(ids.filter(i=>i.startsWith('pr')),ex)==='pr','Todo P&R = pr');
+  ok(V.alcanceDeFichas(['d3'],ex)==='d3','Una sola = el id del capitulo');
+  ok(V.alcanceDeFichas(['d6','d1'],ex)==='d1,d6','Varias = lista, en el orden del material');
+  ok(JSON.stringify(V.tocaFicha(['d1'],ex,'cap','d1'))==='["d1"]','Nunca se puede quedar sin capitulos');
+
+  /* EN LA PANTALLA: en Conexion Biblica salen fichas y no el desplegable. */
+  V.ponAlcance('todo'); V.ir('examen');
+  ok(el('ex-fichas').hidden===false&&el('ex-alcance-lb').hidden===true,
+    'En Aventureros el examen se escoge con fichas, sin el desplegable');
+  ok(/todo Daniel/.test(el('ex-fichas').innerHTML)&&/todo P&amp;R/.test(el('ex-fichas').innerHTML),
+    'Con los atajos de libro');
+  V.fichaEx('libro','d');
+  ok(V.alcanceActual()==='biblia','«todo Daniel» deja solo el libro de Daniel');
+  V.fichaEx('cap','d2');
+  ok(V.alcanceActual()==='d1,d3,d6','Quitar Daniel 2 deja 1, 3 y 6');
+  ok(!V.poolDe().some(q=>q.cap==='d2'||q.cap.startsWith('pr')),'Y el examen no trae nada de Daniel 2 ni de P&R');
+  V.fichaEx('todo','');
+  ok(V.alcanceActual()==='todo','«Todo» vuelve a todo el material');
+  const dm=V.CATS_DE_ACT('dm')[0];
+  V.ponCat(dm); V.ir('examen');
+  ok(el('ex-fichas').hidden===true&&el('ex-alcance-lb').hidden===false,
+    'En la matutina sigue el desplegable con su tramo de dias');
+
+  /* NINGUNA COMBINACION DE FICHAS SE QUEDA EN CERO: cada par de capitulos, en
+     cada categoria de Conexion Biblica. */
+  const vacias=[];
+  for(const cat of V.CATS_DE_ACT('cb')){
+    V.ponCat(cat);
+    const cs=V.capsDe().filter(c=>!V.soloEstudio(c,cat)).map(c=>c.id);
+    for(let i=0;i<cs.length;i++)for(let j=i+1;j<cs.length;j++){
+      V.ponAlcance(cs[i]+','+cs[j]); V.ponNivel(0);
+      if(!V.poolNivel().length)vacias.push(cat+'/'+cs[i]+','+cs[j]);
+    }
+  }
+  ok(vacias.length===0,'Todo par de capitulos trae preguntas en las cuatro categorias'+
+    (vacias.length?': vacias '+vacias.slice(0,5).join(' '):''));
+
+  /* EL PANEL DEL DIRECTOR: las mismas fichas, y lo que viaja al servidor. */
+  V.ponDirector({rol:'director'});
+  el('pan-act').value='cb'; V.cambiaActPanel();
+  el('pan-mat').value='fichas'; V.pintaNotaAlcance();
+  ok(V.alcancePanel()==='todo','En el panel arranca con todo marcado');
+  ok(el('pan-zona-fichas').hidden===false,'Y las fichas se ven en «Ajustar lo escogido»');
+  V.fichaPan('libro','d'); V.fichaPan('cap','d2');
+  const al=V.alcancePanel();
+  ok(al==='d1,d3,d4,d5,d6','Todo Daniel menos el 2: '+al);
+  ok(V.textoAlcancePanel(al)==='Daniel 1, 3, 4, 5 y 6','El panel lo dice en palabras');
+  ok(V.cuantasPara('av',al)>0&&V.cuantasPara('gm',al)>V.cuantasPara('av',al),
+    'Aventureros recibe lo suyo (1, 3 y 6) y Guias Mayores mas (4 y 5)');
+  const API=require('fs').readFileSync(require('path').join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
+  const forma=(API.match(/const FORMA_LISTA = (\/.+?\/);/)||[])[1];
+  ok(!!forma&&eval(forma).test(al),'El servidor acepta esa lista');
+  const todas=V.capsExaminables('cb').map(c=>c.id).join(',');
+  ok(eval(forma).test(todas)&&todas.length<=200&&/limpiar\(b\.alcance, 200\)/.test(API),
+    'Y cabe la lista mas larga posible ('+todas.length+' caracteres, tope 200)');
+  ok(!eval(forma).test('d1')&&!eval(forma).test('d1,')&&!eval(forma).test('d1,todo'),
+    'Un capitulo solo lo valida FORMA_CAP; lo mal formado no pasa');
+  ok(V.RECETAS.some(r=>r.mat==='fichas'),'Hay una receta de un toque para escoger capitulos');
+  V.ponDirector(null);
+
+  /* EL FILTRO DE ESTUDIO: uno solo, para toda la app. */
+  V.ponCat('av'); V.ir('estudio');
+  V.guardaFiltro('biblia');
+  ok(V.capsVista().every(c=>c.id[0]==='d'&&!c.id.startsWith('pr'))&&V.capsVista().length<V.capsDe().length,
+    'Con «Daniel», Estudiar muestra solo Daniel');
+  ok(V.tarjetasVista().length>0&&V.tarjetasVista().every(t=>/^d\d/.test(t.cap)),'Y las tarjetas tambien');
+  ok(V.alcanceActual()==='biblia','Y el examen de practica arranca con el mismo recorte');
+  ok(V.bancoDe().some(q=>q.cap.startsWith('pr')),
+    'Pero el banco de la categoria no cambia: la evaluacion del director no lo usa');
+  const qpr=V.bancoDe().find(q=>q.cap.startsWith('pr'));
+  V.ponFq(V.claveQ(qpr),1);
+  ok(!V.falladasDe().some(q=>q.cap.startsWith('pr')),'El repaso de errores respeta el filtro');
+  ok(!el('filtro-est').hidden&&/Viendo solo Daniel/.test(el('filtro-est').innerHTML),
+    'Y la franja de arriba dice que hay algo escondido');
+  V.guardaFiltro('todo');
+  ok(V.falladasDe().some(q=>q.cap.startsWith('pr')),'Con «Todo» vuelve a salir el error de P&R');
+  ok(!/Viendo solo/.test(el('filtro-est').innerHTML),'Y el aviso se va');
+
+  V.ponFiltro('mis');
+  ok(/fch-b/.test(el('filtro-est').innerHTML),'«Escoger capítulos» abre las fichas');
+  V.fichaFiltro('libro','d'); V.fichaFiltro('cap','d2');
+  ok(V.filtroActual()==='d1,d3,d6','Y con ellas queda «Daniel 1, 3 y 6»');
+
+  /* Un filtro que no aplica no deja pantallas vacias. */
+  V.guardaFiltro('pr'); V.ponCat('me');
+  ok(V.idsFiltro()===null&&V.capsVista().length===V.capsDe().length,
+    'En Menores, que no tiene P&R, el filtro «P&R» cuenta como todo');
+  ok(V.alcanceActual()==='todo','Y el examen tambien');
+  V.ponCat(dm);
+  ok(V.capsVista().length===V.capsDe().length&&el('filtro-est').hidden,
+    'Fuera de Conexion Biblica el filtro no aplica ni se ve');
+  /* Volver a Conexion Biblica pasa a la ficha que ya habia (la de Menores);
+     el segundo ponCat la deja en Aventureros. */
+  V.ponCat('av'); V.ponCat('av'); V.guardaFiltro('todo');
+
+  /* Logros separa los dos libros. */
+  const S=V.S();
+  S.acc.d1={b:4,m:1}; S.acc.pr39={b:1,m:3};
+  ok(/Daniel/.test(V.htmlPorLibro())&&/Profetas y Reyes/.test(V.htmlPorLibro())&&/80%/.test(V.htmlPorLibro()),
+    'Logros muestra el acierto por libro ('+V.S().cat+'): '+V.htmlPorLibro().replace(/<[^>]+>/g,' ').slice(0,120));
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

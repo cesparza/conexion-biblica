@@ -2155,3 +2155,39 @@ details.card summary::marker{content:''}
 .info-table .btn.gho{padding:.4rem .55rem;min-height:var(--v-toque,44px);border:0;
   background:none;border-radius:8px;font-size:.82rem;color:var(--azul)}
 .info-table .btn.gho:hover{background:var(--v-sup2,#fff4e0)}
+
+/* ═════════ v130: fichas por libro y filtro de estudio ═════════
+   Una ficha por capitulo, agrupadas por libro. El color separa los libros:
+   naranja Daniel, morado Profetas y Reyes (el mismo morado de sus capitulos).
+   El relleno naranja es la TINTA (--naranja-txt) y no el naranja de marca:
+   blanco sobre el de marca da 3,07; sobre este 4,75, y sobre el morado 8,11.
+   El aviso va en #8F4506 sobre crema: 6,27 (con --naranja-txt daba 4,29). */
+.ex-fichas{grid-column:1/-1;display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.fch-cab{display:flex;flex-wrap:wrap;gap:.4rem}
+.fch-todo{font:inherit;font-size:.8rem;font-weight:800;color:var(--azul);background:var(--v-sup,#fff);
+  border:1.5px solid var(--v-linea,#d8e0ef);border-radius:999px;padding:.35rem .8rem;min-height:36px;cursor:pointer}
+.fch-g{display:flex;flex-direction:column;gap:.3rem}
+.fch-t{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+.fch{display:flex;flex-wrap:wrap;gap:.4rem}
+.fch-b{font:inherit;font-weight:800;font-size:.95rem;min-width:46px;min-height:44px;border-radius:999px;
+  border:2px solid var(--v-linea,#d8e0ef);background:var(--v-sup,#fff);color:var(--gris);cursor:pointer;padding:0 .7rem}
+.fch-b.da[aria-pressed="true"]{background:var(--naranja-txt);border-color:var(--naranja-txt);color:#fff}
+.fch-b.pr[aria-pressed="true"]{background:#7B2D8B;border-color:#7B2D8B;color:#fff}
+.fch-b:focus-visible,.fch-todo:focus-visible,.fe-b:focus-visible{outline:3px solid var(--cielo);outline-offset:2px}
+
+.fe{max-width:880px;margin:.9rem auto 0;padding:0 1rem;display:flex;flex-direction:column;gap:.5rem}
+.fe-fila{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.fe-k{font-size:.78rem;font-weight:800;color:var(--gris);margin-right:.2rem}
+.fe-b{font:inherit;font-size:.82rem;font-weight:800;min-height:38px;padding:0 .85rem;border-radius:999px;
+  border:1.5px solid var(--v-linea,#d8e0ef);background:var(--v-sup,#fff);color:var(--gris);cursor:pointer}
+.fe-b[aria-pressed="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
+.fe.on .fe-aviso{background:#FFF1E4;color:#8F4506;border-radius:10px;padding:.5rem .75rem;
+  font-size:.82rem;font-weight:700;margin:0}
+.fe-fichas{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#d8e0ef);border-radius:14px;padding:.75rem}
+.lg-libros{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.9rem}
+.lg-libro{display:flex;align-items:center;gap:.7rem;font-size:.82rem;font-weight:700}
+.lg-libro span{width:8.5rem;flex:0 0 auto}
+.lg-libro b{width:44px;text-align:right}
+@media (min-width:900px){.fe{max-width:1000px;padding:0 2rem;margin-top:1.4rem}}
+@media print{.fe{display:none!important}}
+.ex-fichas-t{font-size:.85rem;font-weight:700;color:var(--gris)}

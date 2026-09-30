@@ -571,10 +571,17 @@ export async function onRequest(context) {
          impide `m05..d3`, que no es un rango de nada y dejaría la evaluación
          sin una sola pregunta. */
       const FORMA_RANGO = /^([a-z]{1,2})([0-9]{1,2})\.\.\1([0-9]{1,2})$/;
-      const pedido = limpiar(b.alcance, 20);
+      /* VARIOS CAPITULOS SUELTOS: «d1,d3,d6». Dos o mas ids con la misma forma
+         de FORMA_CAP, separados por coma. El tope de 200 caracteres es el que
+         cabe: Conexion Biblica entera son 18 capitulos y 71 caracteres. La
+         columna es TEXT, asi que no hace falta migracion; antes se cortaba a
+         20 y una lista de cinco capitulos llegaba mutilada. */
+      const FORMA_LISTA = /^(?:d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})(?:,(?:d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})){1,49}$/;
+      const pedido = limpiar(b.alcance, 200);
       const mr = FORMA_RANGO.exec(pedido);
       const rangoOk = !!mr && Number(mr[2]) <= Number(mr[3]);
-      const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido) || rangoOk) ? pedido : 'todo';
+      const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido) || rangoOk ||
+        FORMA_LISTA.test(pedido)) ? pedido : 'todo';
       /* EL TOPE REAL LO SABE LA APP, NO EL SERVIDOR: depende de cuantas
          preguntas tiene el banco con ese material, y el banco vive en el HTML.
          Aqui solo se rechaza lo absurdo. Estaba en 60, que es menos que el

@@ -633,6 +633,9 @@ function cambiaAlumno(id){
   DB.activo=id;S=DB.alumnos[id];guardar();
   /* Al cambiar de persona se reinicia lo que está en pantalla: el mazo de
      tarjetas y el examen en curso son de quien estaba antes. */
+  /* El filtro de estudio es de quien lo puso: la siguiente persona en este
+     celular no hereda la mitad del material escondida. */
+  filtroEst='todo';filtroAbierto=false;try{localStorage.setItem(FILTRO_K,'todo');}catch(e){}
   reiniciaPractica();alcance='todo';cuantas=0;nivel=0;
   prueba=[];resp={};entregado=false;clearInterval(reloj);
   marcaCat();pintaInicio();pintaCaps();pintaYo();
@@ -718,6 +721,37 @@ const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
 const estaRetiradaT=t=>retiradas.has(claveT(t));
 const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);
   return TARJETAS.filter(t=>ids.includes(t.cap)&&!estaRetiradaT(t));};
+
+/* ───────── EL FILTRO DE ESTUDIO: «esta semana estudio Daniel» ─────────
+   MECANISMO
+   Un valor guardado en el aparato, con la MISMA forma que el alcance del
+   examen: 'todo', 'biblia', 'pr', un capitulo o una lista «d1,d3,d6». Se
+   escoge una vez, en la franja de arriba, y lo leen Estudiar, Practicar (las
+   tarjetas y los juegos), el repaso de errores, Inicio y Logros. El examen de
+   practica arranca con el mismo recorte y ahi se puede cambiar.
+
+   POR QUE NO VA EN capsDe() NI EN bancoDe()
+   Esos dos son los embudos de lo que la categoria TIENE: de ellos salen la
+   evaluacion del director, los impresos y las cuentas del manual. La
+   evaluacion manda lo que el director abrio, no lo que la niña tenga filtrado
+   en su celular. Por eso el filtro es una capa encima: capsVista(),
+   tarjetasVista() y falladasDe().
+
+   Solo aplica en Conexion Biblica, que es donde hay dos libros. Un valor que
+   no deja ningun capitulo en esta categoria (P&R en Menores) cuenta como
+   «todo», asi que nunca deja una pantalla vacia. */
+const FILTRO_K='cb-filtro';
+let filtroEst=(()=>{try{return String(localStorage.getItem(FILTRO_K)||'todo').slice(0,200);}catch(e){return 'todo';}})();
+let filtroAbierto=false;
+const conFiltro=()=>ACT_DE(S.cat)==='cb';
+function idsFiltro(){
+  if(!conFiltro()||filtroEst==='todo')return null;
+  const ids=idsDeAlcance(filtroEst,capsDe());
+  return ids.length&&ids.length<capsDe().length?ids:null;
+}
+const pasaFiltro=cap=>{const f=idsFiltro();return !f||f.includes(cap);};
+const capsVista=()=>capsDe().filter(c=>pasaFiltro(c.id));
+const tarjetasVista=()=>tarjetasDe().filter(t=>pasaFiltro(t.cap));
 const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
 
 /* CUÁNTAS PREGUNTAS TRAE EL EXAMEN REAL: NO SE SABE.
@@ -814,6 +848,10 @@ function ir(id){
   if(id==='ayuda')pintaAyuda();
   if(id==='revisor')pintaRevisor();
   if(id==='historial')pintaHistorial();
+  /* Las fichas del filtro se cierran al cambiar de pantalla: abiertas ocupan
+     media pantalla del celular, y lo escogido ya queda dicho en la franja. */
+  filtroAbierto=false;
+  pintaFiltro(id);
   pintaSenales();
   window.scrollTo({top:0});
 }
@@ -861,7 +899,7 @@ function ponCat(c){
   try{document.getElementById('detalle').style.display='none';}catch(e){}
   /* Cambiar de categoría cambia el material entero, así que el mazo y el examen
      armado eran de la categoría anterior. Igual que al cambiar de persona. */
-  reiniciaPractica();prueba=[];resp={};entregado=false;
+  reiniciaPractica();prueba=[];resp={};entregado=false;alcance=alcanceDeFiltro();
   try{clearInterval(reloj);}catch(e){}
   cierraHoja();
   ir('inicio');
@@ -964,22 +1002,22 @@ function tareasDeHoy(){
   /* La tarea del día es la SESIÓN, no el total pendiente. «102 tarjetas por
      dominar» no le dice a nadie qué hacer hoy; «15 tarjetas hoy» sí. */
   const nHoy=Math.min(tocanHoy().length,topeSesion());
-  const porDominar=tarjetasDe().filter(t=>cajaT(t)<2).length;
+  const porDominar=tarjetasVista().filter(t=>cajaT(t)<2).length;
   if(nHoy)tareas.push({ic:'tarjetas',t:nHoy+' tarjetas para hoy',
     d:'La sesión del día: primero lo que fallaste, y las dominadas vuelven a salir a los cuatro días. '+
       'Quedan '+porDominar+' por dominar en total.',
     b:'Abrir la sesión',f:"irTarjetasHoy()"});
-  else if(tarjetasDe().length)tareas.push({ic:'tarjetas',t:'Tarjetas al día',
+  else if(tarjetasVista().length)tareas.push({ic:'tarjetas',t:'Tarjetas al día',
     d:'Ya repasaste lo que tocaba hoy. Las dominadas vuelven a salir en unos días.',
     b:'Repasar igual',f:"irTarjetasTodas()"});
 
-  const sinLeer=[...capsDe(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
+  const sinLeer=[...capsVista(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
   if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
     d:'Te faltan '+sinLeer.length+' secciones por marcar como estudiadas.',
     b:'Estudiar',f:"verCap('"+sinLeer[0].id+"')"});
 
   /* Capítulo más flojo según los exámenes: dirige el estudio a donde duele. */
-  const flojo=capsDe().map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
+  const flojo=capsVista().map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
     .filter(x=>x.a.b+x.a.m>=3)
     .map(x=>({...x,pct:x.a.b/(x.a.b+x.a.m)}))
     .sort((p,q)=>p.pct-q.pct)[0];
@@ -1214,7 +1252,7 @@ function pintaInicio(){
   const ni=document.getElementById('nombre');
   if(ni&&ni.value!==S.nombre)ni.value=S.nombre;
 
-  const cs=capsDe();
+  const cs=capsVista();
   const listos=cs.filter(c=>S.prog[c.id]>=100).length;
   const mios=S.examenes.filter(e=>e.cat===S.cat);
   const mejor=mios.length?Math.max(...mios.map(e=>Math.round(e.pts/e.total*100))):0;
@@ -1252,9 +1290,88 @@ function pintaInicio(){
 
 }
 
+/* ───────── LA FRANJA DEL FILTRO DE ESTUDIO ─────────
+   Va arriba de las cinco pestañas porque es ESTADO: decide que se ve en todas.
+   Cuando esta puesto se pinta en naranja y dice que esta escondido. Sin eso,
+   un filtro olvidado deja a alguien estudiando la mitad del material sin
+   saberlo, que es el riesgo de tener un solo filtro para toda la app. */
+const textoFiltro=v=>v==='biblia'?'Daniel':v==='pr'?'Profetas y Reyes':
+  (listaDe(v)?textoLista(listaDe(v)):((CAPS.find(c=>c.id===v)||{}).label||v));
+function pintaFiltro(pant){
+  const z=document.getElementById('filtro-est');
+  if(!z)return;
+  const caps=capsDe();
+  const ver=conFiltro()&&TABS[pant]!==undefined&&caps.length>1;
+  z.hidden=!ver;
+  if(!ver)return;
+  const f=idsFiltro();
+  const dos=caps.some(c=>esDaniel(c.id))&&caps.some(c=>esPR(c.id));
+  const val=f?alcanceDeFichas(f,caps):'todo';
+  const modo=!f?'todo':(dos&&(val==='biblia'||val==='pr'))?val:'mis';
+  const b=(k,t)=>'<button type="button" class="fe-b" aria-pressed="'+(modo===k||(k==='mis'&&filtroAbierto))+'" '+
+    'onclick="ponFiltro(\''+k+'\')">'+t+'</button>';
+  z.className='fe'+(f?' on':'');
+  z.innerHTML='<div class="fe-fila"><span class="fe-k">Estoy estudiando</span>'+
+    b('todo','Todo')+(dos?b('biblia','Daniel')+b('pr','Profetas y Reyes'):'')+
+    b('mis','Escoger capítulos')+'</div>'+
+    (f?'<p class="fe-aviso">Viendo solo '+esc(textoFiltro(val))+'. Lo demás está escondido '+
+      'hasta que toques «Todo».</p>':'')+
+    (filtroAbierto?'<div class="ex-fichas fe-fichas">'+htmlFichas(caps,f||caps.map(c=>c.id),'fichaFiltro')+'</div>':'');
+}
+function ponFiltro(v){
+  if(v==='mis'){filtroAbierto=!filtroAbierto;pintaFiltro(S.ultPantalla||'inicio');return;}
+  filtroAbierto=false;
+  guardaFiltro(v);
+}
+function fichaFiltro(tipo,v){
+  const caps=capsDe();
+  const n=tocaFicha(idsFiltro()||caps.map(c=>c.id),caps,tipo,v);
+  guardaFiltro(alcanceDeFichas(n,caps)||'todo');
+}
+/* El examen de practica arranca con los capitulos del filtro que SI tienen
+   examen. Daniel 7 a 12 de Guias Mayores son solo para estudiar. */
+function alcanceDeFiltro(){
+  const f=idsFiltro();
+  if(!f)return 'todo';
+  const caps=capsDe().filter(c=>!soloEstudio(c,S.cat));
+  return alcanceDeFichas(f.filter(id=>caps.some(c=>c.id===id)),caps)||'todo';
+}
+/* Guardar y repintar lo que esta a la vista, sin navegar: ir() sube la
+   pantalla y cierra el capitulo abierto, y eso no se espera de tocar una ficha. */
+function guardaFiltro(v){
+  filtroEst=v||'todo';
+  try{localStorage.setItem(FILTRO_K,filtroEst);}catch(e){}
+  alcance=alcanceDeFiltro();
+  reiniciaPractica();
+  const p=S.ultPantalla||'inicio';
+  pintaFiltro(p);
+  if(p==='inicio')pintaInicio();
+  if(p==='estudio')pintaCaps();
+  if(p==='tarjetas')pintaTarjetas();
+  if(p==='examen')pintaExInicio();
+  if(p==='logros')pintaLogros();
+  pintaSenales();
+}
+/* Logros separa los dos libros SIEMPRE, con o sin filtro: es la cifra que
+   dice si conviene estudiar solo uno. Sale de S.acc, lo mismo que los
+   puntos debiles. */
+function htmlPorLibro(){
+  if(!conFiltro())return '';
+  const caps=capsDe();
+  const libros=[['Daniel',esDaniel,'var(--naranja)'],['Profetas y Reyes',esPR,'#7B2D8B']]
+    .map(l=>{const a=caps.filter(c=>l[1](c.id)).reduce((s,c)=>{const x=S.acc[c.id]||{b:0,m:0};
+      return {b:s.b+x.b,m:s.m+x.m};},{b:0,m:0});return {n:l[0],c:l[2],a};})
+    .filter(x=>x.a.b+x.a.m>0);
+  if(libros.length<2)return '';
+  return '<div class="lg-libros">'+libros.map(x=>{const p=Math.round(x.a.b/(x.a.b+x.a.m)*100);
+    return '<div class="lg-libro"><span>'+esc(x.n)+'</span><div class="prog-lin" style="flex:1;margin:0">'+
+      '<div style="width:'+p+'%;background:'+x.c+'"></div></div><b>'+p+'%</b></div>';}).join('')+
+    '<p class="nota">Acierto por libro, con todas tus respuestas de examen.</p></div>';
+}
+
 /* ───────── estudio ───────── */
 function pintaCaps(){
-  const caps=capsDe().map(c=>
+  const caps=capsVista().map(c=>
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     '<div class="n" style="color:'+c.color+'">'+esc(c.label.replace(/^(Daniel |P&R )/,''))+'</div>'+
     '<div class="t">'+esc(c.sub)+'</div>'+
@@ -2139,7 +2256,7 @@ function avanza(id,p){S.prog[id]=Math.max(S.prog[id]||0,p);guardar();pintaCaps()
 
 function listo(id){
   avanza(id,100);sumaRacha();
-  const lista=[...capsDe(),...modsDe()];
+  const lista=[...capsVista(),...modsDe()];
   const i=lista.findIndex(x=>x.id===id)+1;
   if(i>0&&i<lista.length){verCap(lista[i].id);window.scrollTo({top:0,behavior:'smooth'});}
   else ir('inicio');
@@ -2696,7 +2813,7 @@ const PLAZO={0:0,1:1,2:4};
 const cajaT=t=>S.ft[claveT(t)]||0;
 const vistoT=t=>S.fv[claveT(t)]||0;
 const vencidaT=t=>diaHoy()-vistoT(t)>=PLAZO[cajaT(t)];
-const tocanHoy=()=>tarjetasDe().filter(vencidaT);
+const tocanHoy=()=>tarjetasVista().filter(vencidaT);
 /* Tope de la sesión: el tamaño del examen de la categoría, con un piso de 12.
    Sale de un dato que ya existe en vez de inventar otra tabla. */
 const topeSesion=()=>Math.max(12,CAT().n);
@@ -2727,11 +2844,14 @@ const opTj=c=>{
 
 function pintaTarjetas(){
   const sel=document.getElementById('tj-filtro');
-  const cs=capsDe();
-  const nDif=tarjetasDe().filter(t=>(S.ft[claveT(t)]||0)<2).length;
+  const cs=capsVista();
+  /* Un capitulo escogido en el desplegable que el filtro de arriba ya no
+     muestra dejaria el mazo vacio: se vuelve a la sesion de hoy. */
+  if(!['hoy','todas','dificiles'].includes(tjFiltro)&&!cs.some(c=>c.id===tjFiltro))tjFiltro='hoy';
+  const nDif=tarjetasVista().filter(t=>(S.ft[claveT(t)]||0)<2).length;
   const nHoy=Math.min(tocanHoy().length,topeSesion());
   sel.innerHTML='<option value="hoy">🎯 La sesión de hoy ('+nHoy+')</option>'+
-    '<option value="todas">Todos los capítulos ('+tarjetasDe().length+')</option>'+
+    '<option value="todas">Todos los capítulos ('+tarjetasVista().length+')</option>'+
     '<option value="dificiles">🔁 Solo por dominar ('+nDif+')</option>'+
     cs.map(c=>'<option value="'+c.id+'">'+esc(opTj(c))+'</option>').join('');
   sel.value=tjFiltro;
@@ -2746,7 +2866,7 @@ function pintaTarjetas(){
 function filtraTj(v){tjFiltro=v;tjBaraja();}
 
 function tjBaraja(){
-  let base=tarjetasDe();
+  let base=tarjetasVista();
   if(tjFiltro==='hoy')base=base.filter(vencidaT);
   else if(tjFiltro==='dificiles')base=base.filter(t=>cajaT(t)<2);
   else if(tjFiltro!=='todas')base=base.filter(t=>t.cap===tjFiltro);
@@ -2930,7 +3050,7 @@ function juegosDisponibles(){
     if(j.id==='quiz')return mcsDe().length>=4;
     if(j.id==='vf')return tfsDe().length>=4;
     if(j.id==='cita')return citasDe().length>=4;
-    return capsDe().length>=4;   // parear y ordenar
+    return capsVista().length>=4;   // parear y ordenar
   });
 }
 
@@ -2966,7 +3086,7 @@ const PASOS_RONDA=6;
 
 function nuevaRonda(){
   jgSel=null;jgN=0;jgBien=0;jgMal=0;
-  const cs=mezcla(capsDe().slice());
+  const cs=mezcla(capsVista().slice());
   if(jgModo==='parear'){
     const sel=cs.slice(0,5);
     jgR={tipo:'parear',izq:sel,der:mezcla(sel.slice()),listos:[],total:sel.length};
@@ -3253,7 +3373,7 @@ let alcance='todo',cuantas=0,nivel=0;
    colgaba del alcance del examen; ahora cuelga del conmutador, que es donde
    de verdad se decide en que se esta trabajando. bancoDe() ya viene filtrado,
    asi que basta con mirar los fallados. */
-const falladasDe=()=>bancoDe().filter(q=>(S.fq[claveQ(q)]||{}).m>0);
+const falladasDe=()=>bancoDe().filter(q=>pasaFiltro(q.cap)&&(S.fq[claveQ(q)]||{}).m>0);
 
 /* ───────── la fuente que el reglamento nombra ─────────
    MECANISMO
@@ -3303,6 +3423,8 @@ function poolDe(){
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
   if(alcance==='q1')return b.filter(q=>diaMat(q.cap)>0&&diaMat(q.cap)<=15);
   if(alcance==='q2')return b.filter(q=>diaMat(q.cap)>15);
+  const L=listaDe(alcance);
+  if(L)return b.filter(q=>L.includes(q.cap));
   const r=rangoDe(alcance);
   if(r)return b.filter(q=>enRango(q.cap,r));
   return b.filter(q=>q.cap===alcance);
@@ -3343,6 +3465,88 @@ function textoRango(r){
   const a=CAPS.find(c=>enRango(c.id,{pre:r.pre,a:r.b,b:r.b}));
   if(!de||!a)return 'Un rango del material';
   return de.id===a.id?('Solo '+de.label):('De '+de.label+' a '+a.label);
+}
+
+/* ───────── VARIOS CAPITULOS SUELTOS: «d1,d3,d6» ─────────
+   POR QUE EXISTE
+   El tramo solo sirve para capitulos seguidos. «Daniel 1, 3 y 6», que es lo
+   que de verdad se reparte en el club, no se podia pedir.
+   La forma es ids separados por coma, en el orden del material. Dos o mas: uno
+   solo sigue siendo el id del capitulo, como siempre, para que un alcance
+   viejo guardado en un celular o en una evaluacion abierta siga abriendo. */
+function listaDe(alc){
+  const p=String(alc||'').split(',');
+  if(p.length<2)return null;
+  return p.every(x=>PARTE_ID.test(x))?p:null;
+}
+const esDaniel=id=>/^d\d/.test(id);
+const esPR=id=>/^pr\d/.test(id);
+/* Los ids que un alcance deja pasar dentro de un universo de capitulos. Es la
+   misma regla de poolDe(), pero sobre capitulos y no sobre preguntas: la usan
+   las fichas y el filtro de estudio. */
+function idsDeAlcance(alc,caps){
+  const L=listaDe(alc),r=rangoDe(alc);
+  return caps.filter(c=>{
+    const id=c.id;
+    if(alc==='todo')return true;
+    if(alc==='biblia')return id.charAt(0)==='d';
+    if(alc==='pr')return id.slice(0,2)==='pr';
+    if(alc==='creencias')return esCreencia(id);
+    if(alc==='q1')return diaMat(id)>0&&diaMat(id)<=15;
+    if(alc==='q2')return diaMat(id)>15;
+    if(L)return L.includes(id);
+    if(r)return enRango(id,r);
+    return id===alc;
+  }).map(c=>c.id);
+}
+/* Lo escogido en las fichas, escrito en la forma MAS CORTA que ya existia:
+   todo, biblia, pr o un capitulo. La lista solo aparece cuando hace falta, asi
+   que casi todo lo que viaja al servidor sigue siendo lo de antes. */
+function alcanceDeFichas(sel,caps){
+  const ids=caps.map(c=>c.id).filter(id=>sel.includes(id));
+  if(!ids.length)return '';
+  if(ids.length===caps.length)return 'todo';
+  const igual=(a,b)=>a.length===b.length&&a.every(x=>b.includes(x));
+  const d=caps.map(c=>c.id).filter(esDaniel),p=caps.map(c=>c.id).filter(esPR);
+  if(d.length&&igual(ids,d))return 'biblia';
+  if(p.length&&igual(ids,p))return 'pr';
+  return ids.length===1?ids[0]:ids.join(',');
+}
+/* La lista en palabras: «Daniel 1, 3 y 6 + Profetas y Reyes 41». */
+function textoLista(ids){
+  const y=a=>a.length>1?a.slice(0,-1).join(', ')+' y '+a[a.length-1]:a[0];
+  const d=ids.filter(esDaniel).map(i=>i.slice(1)),p=ids.filter(esPR).map(i=>i.slice(2));
+  const otros=ids.filter(i=>!esDaniel(i)&&!esPR(i)).map(i=>(CAPS.find(c=>c.id===i)||{label:i}).label);
+  const partes=[];
+  if(d.length)partes.push('Daniel '+y(d));
+  if(p.length)partes.push('Profetas y Reyes '+y(p));
+  return partes.concat(otros).join(' + ');
+}
+/* Tocar una ficha. Nunca deja la seleccion vacia: un examen o un filtro sin
+   capitulos es una pantalla en blanco. */
+function tocaFicha(sel,caps,tipo,v){
+  let s=sel.slice();
+  if(tipo==='todo')s=caps.map(c=>c.id);
+  else if(tipo==='libro')s=caps.map(c=>c.id).filter(v==='d'?esDaniel:esPR);
+  else s=s.includes(v)?s.filter(x=>x!==v):s.concat(v);
+  return s.length?s:sel;
+}
+/* LAS FICHAS POR LIBRO. Un solo dibujo para los tres lugares que escogen
+   capitulos: el examen de practica, el panel del director y el filtro de
+   estudio. `fn` es el nombre de la funcion que recibe (tipo, valor). */
+function htmlFichas(caps,sel,fn){
+  const libros=[['d','Daniel','todo Daniel','da',esDaniel],['pr','Profetas y Reyes','todo P&R','pr',esPR]];
+  const hay=libros.filter(l=>caps.some(c=>l[4](c.id)));
+  return '<div class="fch-cab"><button type="button" class="fch-todo" onclick="'+fn+'(\'todo\',\'\')">Todo</button>'+
+    (hay.length>1?hay.map(l=>'<button type="button" class="fch-todo" onclick="'+fn+'(\'libro\',\''+l[0]+'\')">'+esc(l[2])+'</button>').join(''):'')+
+    '</div>'+hay.map(l=>{
+      const cs=caps.filter(c=>l[4](c.id));
+      return '<div class="fch-g"><div class="fch-t">'+esc(l[1])+'</div><div class="fch">'+
+        cs.map(c=>'<button type="button" class="fch-b '+l[3]+'" aria-pressed="'+sel.includes(c.id)+'" '+
+          'aria-label="'+esc(c.label+' — '+c.sub)+'" title="'+esc(c.label+' — '+c.sub)+'" '+
+          'onclick="'+fn+'(\'cap\',\''+c.id+'\')">'+esc(c.id.replace(/^(d|pr)/,''))+'</button>').join('')+
+        '</div></div>';
+    }).join('');
 }
 
 /* Día del mes de un capítulo de matutina (m01..m31), o 0 si no lo es. */
@@ -3423,13 +3627,27 @@ function pintaMenuEx(){
      valor que no está en la lista. Se valida contra los grupos que esta
      categoría tiene de verdad, no contra una lista fija. */
   const rPrev=rangoDe(prev);
-  if(!rPrev&&!capsEx.some(c=>c.id===prev)&&!['todo'].concat(disp.map(g=>g[0])).includes(prev))alcance='todo';
+  if(!rPrev&&!listaDe(prev)&&!capsEx.some(c=>c.id===prev)&&!['todo'].concat(disp.map(g=>g[0])).includes(prev))alcance='todo';
   /* Un rango guardado de OTRA categoría no sirve aquí: «del día 5 al 12» no
      existe en Aventureros. Se valida contra los capítulos que esta categoría
      tiene de verdad, igual que los grupos. */
   if(rPrev&&!capsEx.some(c=>enRango(c.id,rPrev)))alcance='todo';
-  pintaRangoEx(capsEx,hayRango);
-  sa.value=rangoDe(alcance)?'rango':alcance;
+  /* Una lista sirve si al menos uno de sus capitulos se examina aqui; se
+     queda con esos. Si ninguno, vuelve a todo. */
+  if(listaDe(alcance))alcance=alcanceDeFichas(idsDeAlcance(alcance,capsEx),capsEx)||'todo';
+  /* EN CONEXION BIBLICA SE ESCOGE CON FICHAS. Reemplazan al desplegable, al
+     capitulo suelto y al tramo: todo eso es «que capitulos», y con las fichas
+     se dice de un toque, incluido lo que antes no se podia (1, 3 y 6). Un
+     tramo que venga de antes se traduce a sus capitulos. */
+  const conF=ACT_DE(S.cat)==='cb'&&capsEx.length>1;
+  if(conF&&rangoDe(alcance))alcance=alcanceDeFichas(idsDeAlcance(alcance,capsEx),capsEx)||'todo';
+  pintaRangoEx(capsEx,hayRango&&!conF);
+  sa.value=rangoDe(alcance)?'rango':(listaDe(alcance)?'todo':alcance);
+  const fz=document.getElementById('ex-fichas'),sl=document.getElementById('ex-alcance-lb');
+  if(sl)sl.hidden=conF;
+  if(fz){fz.hidden=!conF;
+    fz.innerHTML=conF?'<span class="ex-fichas-t">Sobre qué</span>'+
+      htmlFichas(capsEx,idsDeAlcance(alcance,capsEx),'fichaEx'):'';}
 
   const ops=opcionesCuantas();
   if(!ops.includes(cuantas))cuantas=ops.includes(NPREG())?NPREG():ops[0];
@@ -3547,6 +3765,15 @@ function cambiaRango(){
     b=ult.length?ult[ult.length-1].id:a;
   }
   if(rangoDe(a+'..'+b))alcance=a+'..'+b;
+  refrescaEx();
+}
+
+/* Tocar una ficha del examen de practica. Cambia solo ESTE examen: el filtro
+   de estudio de arriba sigue como estaba. */
+function fichaEx(tipo,v){
+  const capsEx=capsDe().filter(c=>!soloEstudio(c,S.cat));
+  const n=tocaFicha(idsDeAlcance(alcance,capsEx),capsEx,tipo,v);
+  alcance=alcanceDeFichas(n,capsEx)||'todo';
   refrescaEx();
 }
 
@@ -4045,12 +4272,12 @@ function pintaLogros(){
   /* Puntos débiles: % de acierto por capítulo con lo respondido en
      exámenes. Ordena del más flojo al más fuerte para dirigir el
      estudio a donde duele. */
-  const filas=capsDe()
+  const filas=capsVista()
     .map(c=>({c,a:S.acc[c.id]||{b:0,m:0}}))
     .filter(x=>x.a.b+x.a.m>0)
     .map(x=>({...x,pct:Math.round(x.a.b/(x.a.b+x.a.m)*100)}))
     .sort((p,q)=>p.pct-q.pct);
-  document.getElementById('debiles').innerHTML=filas.length
+  document.getElementById('debiles').innerHTML=htmlPorLibro()+(filas.length
     ?filas.map(x=>
       '<div style="display:flex;align-items:center;gap:.7rem;margin:.45rem 0">'+
       '<button class="btn gho" style="min-height:34px;padding:.2rem .7rem;font-size:.75rem" onclick="verCap(\''+x.c.id+'\')">'+esc(x.c.label)+'</button>'+
@@ -4059,7 +4286,7 @@ function pintaLogros(){
       '<p class="nota">Con base en '+filas.reduce((s,x)=>s+x.a.b+x.a.m,0)+' respuestas de examen. '+
       'Toca un capítulo para estudiarlo, o <button class="btn gho" style="min-height:30px;padding:.1rem .6rem;font-size:.72rem" '+
       'onclick="examenDelCapitulo(\''+filas[0].c.id+'\')">examina el más flojo</button>.</p>'
-    :'<p class="nota">Haz un examen y aquí verás en qué capítulos estás fallando.</p>';
+    :'<p class="nota">Haz un examen y aquí verás en qué capítulos estás fallando.</p>');
 
   /* Por TIPO de pregunta. Es el dato que dice qué hay que practicar, no solo
      qué hay que leer: si completar va en rojo, el problema es memorización
@@ -4195,6 +4422,8 @@ function textoAlcanceImpr(){
   if(alcance==='creencias')return 'En esto creemos — las 28 creencias';
   if(alcance==='q1')return 'Del 1 al 15 de octubre';
   if(alcance==='q2')return 'Del 16 en adelante';
+  const L=listaDe(alcance);
+  if(L)return textoLista(L);
   const r=rangoDe(alcance);
   if(r)return textoRango(r);
   const c=CAPS.find(x=>x.id===alcance);
@@ -4815,7 +5044,7 @@ function bvTermina(){
 
 /* ───────── arranque ───────── */
 try{
-  pintaLogo();marcaCat();pintaInicio();
+  pintaLogo();marcaCat();alcance=alcanceDeFiltro();pintaInicio();
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
   else if(S.ultPantalla && S.ultPantalla!=='inicio' && TABS[S.ultPantalla]!==undefined){
     if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem);
@@ -5091,6 +5320,7 @@ async function pintaPanel(){
        el director acaba de escoger. */
     '<div class="pan-grupo" id="pan-ajuste">'+
       '<div class="pan-grupo-t">Ajustar lo escogido</div>'+
+      '<div id="pan-zona-fichas" hidden><div class="ex-fichas" id="pan-fichas"></div></div>'+
       '<div class="ses-fila" id="pan-zona-cap" hidden><label class="pan-lb">Cuál'+
       '<select id="pan-cap" onchange="pintaNotaAlcance()"></select></label></div>'+
       '<div class="ses-fila" id="pan-rango" hidden>'+
@@ -5251,6 +5481,8 @@ async function pintaPanel(){
    esto la tarjeta decía el título y a quién, pero no QUÉ material, que es justo
    lo que cambia entre dos evaluaciones abiertas del mismo grupo. */
 function textoAlcancePanel(alc){
+  const L=listaDe(alc);
+  if(L)return textoLista(L);
   const r=rangoDe(alc);
   if(r)return textoRango(r);
   const c=CAPS.find(x=>x.id===alc);
@@ -5323,8 +5555,7 @@ function opcionesMatPanel(act){
   if(act==='cb')return [['todo','Todo el material de Conexión Bíblica','todo'],
     ['biblia','Solo el libro de Daniel','solo Daniel'],
     ['pr','Solo Profetas y Reyes','solo Profetas y Reyes'],
-    ['cap','Un capítulo, el que escojas','un capítulo'],
-    ['tramo','Un tramo: desde… hasta…','un tramo']];
+    ['fichas','Los capítulos que escojas','los que escojas']];
   if(act==='dm')return [['todo','Todo el cuadernillo de octubre','todo octubre'],
     ['q1','Solo la primera quincena (1 al 15)','primera quincena'],
     ['q2','Solo la segunda quincena (16 en adelante)','segunda quincena'],
@@ -5341,8 +5572,18 @@ function opcionesMatPanel(act){
    sin marcar a nadie se la abre tambien a Conexion Biblica y a las creencias,
    que no tienen ese material, y esas se quedan sin una sola pregunta. Queda
    marcado, no fijo: el grupo «A quiénes les toca» sigue estando para cambiarlo. */
+/* Lo escogido en las fichas del panel. Arranca con todo marcado: el director
+   quita o toca «todo Daniel», que es mas rapido que marcar uno por uno. */
+let panFichas=[];
+function fichaPan(tipo,v){
+  const caps=capsExaminables('cb');
+  panFichas=tocaFicha(panFichas.length?panFichas:caps.map(c=>c.id),caps,tipo,v);
+  pintaNotaAlcance();
+}
+
 function cambiaActPanel(){
   const act=(document.getElementById('pan-act')||{}).value||'';
+  panFichas=capsExaminables('cb').map(c=>c.id);
   const m=document.getElementById('pan-mat');
   if(m){
     const ops=opcionesMatPanel(act);
@@ -5378,6 +5619,7 @@ function cambiaDesdePanel(){
 function alcancePanel(){
   const m=(document.getElementById('pan-mat')||{}).value||'todo';
   if(m==='cap')return (document.getElementById('pan-cap')||{}).value||'todo';
+  if(m==='fichas')return alcanceDeFichas(panFichas,capsExaminables('cb'))||'todo';
   if(m==='tramo'){
     const a=(document.getElementById('pan-r1')||{}).value||'';
     const b=(document.getElementById('pan-r2')||{}).value||'';
@@ -5521,6 +5763,17 @@ function pintaNotaAlcance(){
   const zc=document.getElementById('pan-zona-cap'),zr=document.getElementById('pan-rango');
   if(zc)zc.hidden=m.value!=='cap';
   if(zr)zr.hidden=m.value!=='tramo';
+  const zf=document.getElementById('pan-zona-fichas');
+  if(zf)zf.hidden=m.value!=='fichas';
+  if(m.value==='fichas'){
+    const caps=capsExaminables('cb');
+    if(!panFichas.length)panFichas=caps.map(c=>c.id);
+    const pf=document.getElementById('pan-fichas');
+    if(pf)pf.innerHTML=htmlFichas(caps,panFichas,'fichaPan');
+    p.textContent='Entra: '+textoAlcancePanel(alcancePanel())+'. Cada categoría recibe solo '+
+      'los que tiene: Menores no tiene Profetas y Reyes, y Daniel 4 y 5 son solo de Guías Mayores.';
+    pintaAvisoCats();revisaAbrir();pintaFrase();return;
+  }
 
   if(m.value==='tramo'){
     const mal=motivoRangoMalo();
@@ -5554,8 +5807,8 @@ function pintaNotaAlcance(){
 const RECETAS=[
   {id:'campamento',i:'📘',t:'El examen del campamento',act:'',mat:'todo',
    d:()=>'Todo el material de cada categoría · a las '+Object.keys(CATS).length+' categorías'},
-  {id:'daniel',i:'📖',t:'Un capítulo de Conexión Bíblica',act:'cb',mat:'cap',
-   d:()=>'Escoges cuál · '+capsExaminables('cb').length+' capítulos con examen'},
+  {id:'daniel',i:'📖',t:'Capítulos de Conexión Bíblica',act:'cb',mat:'fichas',
+   d:()=>'Solo Daniel, solo P&R o los que escojas · '+capsExaminables('cb').length+' con examen'},
   {id:'matutina',i:'🌅',t:'Un tramo de la matutina',act:'dm',mat:'tramo',
    d:()=>'Desde y hasta, dentro de los '+capsDeActividad('dm').length+' días'},
   {id:'creencias',i:'✝️',t:'Las 28 creencias',act:'ec',mat:'creencias',
