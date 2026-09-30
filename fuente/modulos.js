@@ -2,9 +2,9 @@
    cruzan todo el material y son los que más rinden antes del examen. */
 
 const tbl = (head, rows) =>
-  `<table class="info-table"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>` +
+  `<div class="tabla-scroll"><table class="info-table"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>` +
   rows.map(r=>`<tr>${r.map((c,i)=>`<td${i===0?' class="key"':''}>${c}</td>`).join('')}</tr>`).join('') +
-  `</tbody></table>`;
+  `</tbody></table></div>`;
 const hi = t => `<div class="highlight-box">${t}</div>`;
 const wa = t => `<div class="warn-box">${t}</div>`;
 const vs = t => `<div class="verse-box">${t}</div>`;

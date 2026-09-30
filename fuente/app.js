@@ -2753,7 +2753,8 @@ function bloquesDeSec(sec){
   [...sec.children].forEach(h=>{
     if(h.matches('h3,.rev,.rec,.capa-filtro'))return;
     if(h.matches('ul,ol')){[...h.children].forEach(li=>out.push({el:li,txt:textoLimpio(li)}));return;}
-    if(h.matches('table')){
+    /* La tabla puede venir envuelta en .tabla-scroll (v135): se lee igual, fila por fila. */
+    if(h.matches('table,.tabla-scroll')){
       h.querySelectorAll('tr').forEach(tr=>{
         if(tr.querySelector('th'))return;
         const cel=[...tr.children].map(textoLimpio).filter(Boolean);

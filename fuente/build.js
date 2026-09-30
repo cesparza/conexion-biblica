@@ -107,7 +107,7 @@ function seccionesMapa(capId) {
             'Para comprobar que no se quedó nada por fuera. Toca cualquier referencia ' +
             'para leer el texto completo.</div>'
           : '') +
-         '<table class="info-table vpv"><tbody>' + filas + '</tbody></table>'
+         '<div class="tabla-scroll"><table class="info-table vpv"><tbody>' + filas + '</tbody></table></div>'
     });
   }
   return out;
@@ -284,7 +284,10 @@ fs.writeFileSync(RAIZ('manifest.webmanifest'), PWA.manifest());
 fs.writeFileSync(RAIZ('sw.js'), PWA.sw(huella));
 /* La misma huella que nombra la cache va en version.json y dentro del HTML.
    La app compara las dos: si difieren, lo que esta abierto es viejo. */
-fs.writeFileSync(RAIZ('version.json'), PWA.version(huella, new Date().toISOString().slice(0,10)));
+/* La fecha va en hora de Colombia: toISOString() es UTC, y un build después
+   de las 7 p. m. quedaba marcado con el día siguiente. */
+const FECHA_CO = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Bogota' }).format(new Date());
+fs.writeFileSync(RAIZ('version.json'), PWA.version(huella, FECHA_CO));
 
 console.log('✅ index.html regenerado —', htmlFinal.length, 'bytes');
 console.log('✅ manifest.webmanifest, sw.js y version.json — version ' + huella);

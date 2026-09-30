@@ -523,13 +523,21 @@ const CSS=fs.readFileSync(FUENTE('estilos.css'),'utf8');
    sobre una regla se cae con su propio comentario: `[^}]*` cruza el comentario
    que EXPLICA por que la propiedad no esta, y la encuentra ahi. */
 const CSS_SIN=CSS.replace(/\/\*[\s\S]*?\*\//g,'');
-const FUENTES_TABLA=['app.js','manual.js'].map(f=>fs.readFileSync(FUENTE(f),'utf8')).join('\n');
-const tablas=(FUENTES_TABLA.match(/<table class="info-table"/g)||[]).length;
+/* v135: contenido.js, modulos.js y build.js también arman tablas, y no se
+   contaban: la tabla de nombres de Daniel 1 medía 577px a 390px de ancho. */
+const FUENTES_TABLA=['app.js','manual.js','contenido.js','modulos.js','build.js']
+  .map(f=>fs.readFileSync(FUENTE(f),'utf8')).join('\n');
+const tablas=(FUENTES_TABLA.match(/<table class="info-table[ "]/g)||[]).length;
 ok(tablas>0,'Hay tablas info-table que revisar ('+tablas+')');
-const sinEnvolver=tablas-(FUENTES_TABLA.match(/tabla-scroll">\s*<table class="info-table"/g)||[]).length;
+const sinEnvolver=tablas-(FUENTES_TABLA.match(/tabla-scroll">\s*<table class="info-table[ "]/g)||[]).length;
 ok(sinEnvolver===0,'Toda tabla info-table va dentro de un .tabla-scroll'+
   (sinEnvolver?' — quedan '+sinEnvolver+' sueltas':''));
 ok(/\.tabla-scroll\{overflow-x:auto/.test(CSS),'El contenedor .tabla-scroll scrollea de lado');
+ok(/\.sec-rot\{[^}]*flex:0 1 auto;min-width:0/.test(CSS_SIN),
+  'El título de sección puede encogerse y partirse: con flex:0 0 auto uno largo sacaba la página de lado');
+{ const B=fs.readFileSync(FUENTE('build.js'),'utf8');
+  ok(/timeZone: 'America\/Bogota'/.test(B) && !/version\.json'\), PWA\.version\(huella, new Date\(\)\.toISOString/.test(B),
+    'version.json lleva la fecha en hora de Colombia, no en UTC'); }
 ok(/@media print\{\.tabla-scroll\{overflow:visible\}\}/.test(CSS),
   'En papel la tabla envuelta sale completa, sin recorte');
 
