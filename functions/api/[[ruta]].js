@@ -194,6 +194,19 @@ async function demasiadosIntentos(env, ipHash) {
   return !!r && r.n >= 40;
 }
 
+/**
+ * Compara la clave sin filtrar por tiempo: se comparan las huellas SHA-256
+ * (mismo largo siempre) recorriendo todos los bytes, acierte o no.
+ */
+async function igualSeguro(a, b) {
+  const enc = new TextEncoder();
+  const [x, y] = await Promise.all([a, b].map(t => crypto.subtle.digest('SHA-256', enc.encode(String(t)))));
+  const u = new Uint8Array(x), v = new Uint8Array(y);
+  let d = 0;
+  for (let i = 0; i < u.length; i++) d |= u[i] ^ v[i];
+  return d === 0;
+}
+
 export async function onRequest(context) {
   const { request, env, params } = context;
   const ruta = '/' + (Array.isArray(params.ruta) ? params.ruta.join('/') : params.ruta || '');
@@ -270,7 +283,11 @@ export async function onRequest(context) {
 
     if (metodo === 'POST' && ruta === '/panel/entrar') {
       const cuerpo = await request.json().catch(() => ({}));
-      if (!env.CLAVE_PANEL || String(cuerpo.clave || '').trim() !== env.CLAVE_PANEL) {
+      /* v139: el mismo límite que /entrar. Sin él, la clave se podía probar sin freno. */
+      if (await demasiadosIntentos(env, ipHash)) {
+        return error('Demasiados intentos desde esta conexión. Espera 15 minutos.', 429);
+      }
+      if (!env.CLAVE_PANEL || !(await igualSeguro(String(cuerpo.clave || '').trim(), env.CLAVE_PANEL))) {
         await new Promise(r => setTimeout(r, 400));
         await auditar(env, null, 'codigo_malo', 'cuenta', null, ipHash);
         return error('Esa clave no es la del director.', 401);

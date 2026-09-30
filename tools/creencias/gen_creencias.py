@@ -196,16 +196,20 @@ def frases_para_completar(txt):
 def preguntas(num):
     d, e = datos.CREENCIAS[num], editorial.ED[num]
     nom = d['nombre']
-    otras = [datos.CREENCIAS[k]['nombre'] for k in range(1, 29)
-             if k != num and doc_de(k) == doc_de(num)][:3]
-    while len(otras) < 3:
-        for k in range(1, 29):
-            if datos.CREENCIAS[k]['nombre'] not in otras + [nom]:
-                otras.append(datos.CREENCIAS[k]['nombre'])
-                if len(otras) == 3: break
+    # v139: las tres primeras de la lista salian siempre, y con largos que
+    # delataban la correcta («La unidad en el cuerpo de Cristo» contra «La
+    # iglesia»). Se sigue prefiriendo la misma doctrina, que es con la que se
+    # confunde, y dentro de eso el largo mas parecido.
+    cand = [datos.CREENCIAS[k]['nombre'] for k in range(1, 29) if k != num]
+    misma = {datos.CREENCIAS[k]['nombre'] for k in range(1, 29) if k != num and doc_de(k) == doc_de(num)}
+    cerca = sorted(cand, key=lambda v: (abs(len(v) - len(nom)) + (0 if v in misma else 6), v))[:5]
+    salta = {num % 5, (num + 2) % 5}   # rota, o las mas parecidas salen siempre
+    otras = [v for i, v in enumerate(cerca) if i not in salta]
     partes = [x.strip() for x in d['textos'].rstrip('.').split(';') if x.strip()]
     prim_otros = []
-    for k in range(1, 29):
+    # v139: de las creencias vecinas (num+1, num-1, num+2...), no de las tres
+    # primeras: «Deuteronomio 6:4» salia como opcion falsa en 27 de 28.
+    for k in sorted(range(1, 29), key=lambda k: (abs(k - num), k)):
         if k == num: continue
         p = [x.strip() for x in datos.CREENCIAS[k]['textos'].rstrip('.').split(';') if x.strip()]
         if p and p[0] not in prim_otros + [partes[0]]: prim_otros.append(p[0])

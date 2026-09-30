@@ -4083,7 +4083,7 @@ function iniciar(m){
   marcaVistas(prueba);
   seg=segundosPara(prueba.length);
   document.getElementById('ex-inicio').style.display='none';
-  document.getElementById('ex-curso').style.display='block';
+  exCurso(true);
   document.getElementById('ex-result').style.display='none';
   pintaPreguntas();corre();
 }
@@ -4194,9 +4194,23 @@ function posicion(q){
 }
 
 function cuenta(){
-  const a=prueba.filter(hecha).length;
+  const a=prueba.filter(hecha).length,n=prueba.length;
   const e=document.getElementById('contador');
-  if(e)e.textContent=a+' de '+prueba.length+' respondidas';
+  if(e)e.textContent=a+' de '+n+' respondidas';
+  /* La barra pegada arriba lleva el mismo avance: quien va en la 9 sabe
+     cuántas le faltan sin bajar hasta el botón de entregar. */
+  const r=document.getElementById('ex-resp'),pb=document.getElementById('ex-prog'),pi=document.getElementById('ex-prog-i');
+  if(r)r.textContent=a+' de '+n;
+  if(pb){pb.setAttribute('aria-valuemax',n);pb.setAttribute('aria-valuenow',a);}
+  if(pi)pi.style.width=(n?Math.round(a/n*100):0)+'%';
+}
+
+/* Modo concentración: mientras hay un examen en curso no se ve nada más que
+   el examen. Antes, el filtro de estudio y el bloque del director quedaban
+   arriba y la primera opción arrancaba en la mitad baja de la pantalla. */
+function exCurso(on){
+  document.getElementById('ex-curso').style.display=on?'block':'none';
+  document.body.classList.toggle('ex-activo',!!on);
 }
 
 function entregar(){
@@ -4239,7 +4253,7 @@ function entregar(){
   try{pintaSenales();}catch(e){}
 
   ultimoRes={pts,tot,pct,med,msg,s3};
-  document.getElementById('ex-curso').style.display='none';
+  exCurso(false);
   pintaResultado();
 }
 
@@ -4349,7 +4363,7 @@ function reinicia(){
   clearInterval(reloj);
   entregado=false;resp={};prueba=[];evalActual=null;
   document.getElementById('ex-inicio').style.display='block';
-  document.getElementById('ex-curso').style.display='none';
+  exCurso(false);
   document.getElementById('ex-result').style.display='none';
   pintaExInicio();
 }
@@ -4710,7 +4724,7 @@ function haceEvaluacion(){
   ir('examen');
   document.getElementById('ex-result').style.display='none';
   document.getElementById('ex-inicio').style.display='none';
-  document.getElementById('ex-curso').style.display='block';
+  exCurso(true);
   pintaPreguntas();corre();
   window.scrollTo({top:0});
 }

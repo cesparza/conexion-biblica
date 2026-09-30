@@ -77,7 +77,16 @@ def main():
         if d in vers:
             ref, txt = vers[d]
             pool = [vers[x][0] for x in dias if x in vers and vers[x][0] != ref]
-            o = otros(ref, pool)
+            # v139: antes eran siempre las tres primeras (Lucas 12:15, Salmo
+            # 113:7, 1 Juan 5:15) en los 31 dias: la nina aprendia que esas
+            # nunca son. Ahora, las de largo mas parecido a la correcta, que
+            # cambian con cada dia y llevan version entre parentesis cuando
+            # la correcta la lleva.
+            # Las cinco de largo mas parecido, y de esas se saltan dos que
+            # rotan con el dia: si no, las mas parecidas salian casi siempre.
+            cerca = sorted(pool, key=lambda v: (abs(len(v) - len(ref)), v))[:5]
+            salta = {d % 5, (d + 2) % 5}
+            o = otros(ref, [v for i, v in enumerate(cerca) if i not in salta])
             if len(o) == 3:
                 Q.append(dict(cap=cid, t='mc', nv=1,
                               q='¿Cuál es la referencia del versículo del día %d de octubre?' % d,

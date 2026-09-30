@@ -1477,14 +1477,24 @@ button:active:not(:disabled),[role=button]:active,.cap:active,.anillo:active{
 }
 
 /* La barra del examen se queda a la vista: saber cuánto falta no puede
-   depender de subir a buscarlo. */
-@media (max-width:620px){
-  #ex-curso .timer{
-    position:sticky;top:52px;z-index:40;
-    background:rgba(255,255,255,.92);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  }
-}
+   depender de subir a buscarlo. v139: sticky va en la barra entera, no en el
+   reloj. Un sticky solo se pega mientras su contenedor está en pantalla, y el
+   del reloj era una fila de 45px: se iba con ella. El de la barra es todo el
+   examen. El top es el alto de lo que ya está pegado arriba en cada ancho. */
+.ex-barra{position:sticky;top:0;z-index:40;margin:0 -.4rem 1rem;padding:.55rem .4rem .6rem;
+  background:color-mix(in srgb, var(--v-lienzo,#F0F4F8) 92%, transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:0 0 12px 12px}
+.ex-barra-fila{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem}
+.ex-avance{display:flex;align-items:center;gap:.6rem;margin-top:.45rem;font-size:.78rem;
+  font-weight:700;color:var(--v-tinta2,#5B5F6B);font-variant-numeric:tabular-nums}
+.ex-prog{flex:1;height:6px;border-radius:99px;background:var(--v-linea,#e5e7eb);overflow:hidden}
+.ex-prog i{display:block;height:100%;width:0;background:var(--azul);border-radius:inherit;transition:width .25s}
+@media (max-width:620px){.ex-barra{top:calc(53px + env(safe-area-inset-top, 0px))}}
+@media (min-width:621px) and (max-width:899px){.ex-barra{top:67px}}
+/* Solo con la pantalla de examen a la vista: si sale a Estudiar a mitad del
+   examen, el filtro sigue ahí. */
+body.ex-activo:has(#p-examen.on) #filtro-est,body.ex-activo #p-examen .sep,
+body.ex-activo #p-examen details.dir{display:none!important}
 
 
 /* ═════════ v21: el escritorio también cambia ═════════

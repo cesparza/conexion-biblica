@@ -29,6 +29,13 @@ const ok = (c, m) => { console.log((c ? '✅' : '❌') + ' ' + m); if (!c) f++; 
 /* ── LA GUARDA ANTES QUE LAS RUTAS QUE PROTEGE ──
    Es el error más fácil de cometer: agregar un endpoint /panel/ nuevo más
    arriba y dejarlo abierto sin darse cuenta. */
+/* v139: la clave del director tenía intentos ilimitados; el código de las niñas no. */
+{ const i = API.indexOf("ruta === '/panel/entrar'"), j = API.indexOf('env.CLAVE_PANEL', i);
+  const tramo = API.slice(i, j);
+  ok(i > 0 && /demasiadosIntentos\(env, ipHash\)/.test(tramo),
+    'Entrar como director tiene límite de intentos, antes de comparar la clave');
+  ok(!/!== env\.CLAVE_PANEL|=== env\.CLAVE_PANEL/.test(API),
+    'La clave del director no se compara con === (filtra por tiempo)'); }
 const posGuarda = API.indexOf("ruta.startsWith('/panel/')");
 ok(posGuarda > 0, 'Existe la guarda de /panel/');
 

@@ -409,12 +409,19 @@
     </details>
 
   <div id="ex-curso" style="display:none">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem;margin-bottom:1rem">
-      <div>
-        <div style="font-size:.98rem;font-weight:800;color:var(--azul)">✏️ Examen en curso</div>
-        <div id="ex-meta" style="font-size:.83rem;color:var(--gris)"></div>
+    <div class="ex-barra">
+      <div class="ex-barra-fila">
+        <div>
+          <div style="font-size:.98rem;font-weight:800;color:var(--azul)">✏️ Examen en curso</div>
+          <div id="ex-meta" style="font-size:.83rem;color:var(--gris)"></div>
+        </div>
+        <div class="timer" id="reloj">20:00</div>
       </div>
-      <div class="timer" id="reloj">20:00</div>
+      <div class="ex-avance">
+        <div class="ex-prog" id="ex-prog" role="progressbar" aria-label="Preguntas respondidas"
+          aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><i id="ex-prog-i"></i></div>
+        <span id="ex-resp">0 de 0</span>
+      </div>
     </div>
     <div id="preguntas"></div>
     <div style="display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-top:1.4rem">

@@ -1493,14 +1493,24 @@ button:active:not(:disabled),[role=button]:active,.cap:active,.anillo:active{
 }
 
 /* La barra del examen se queda a la vista: saber cuánto falta no puede
-   depender de subir a buscarlo. */
-@media (max-width:620px){
-  #ex-curso .timer{
-    position:sticky;top:52px;z-index:40;
-    background:rgba(255,255,255,.92);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  }
-}
+   depender de subir a buscarlo. v139: sticky va en la barra entera, no en el
+   reloj. Un sticky solo se pega mientras su contenedor está en pantalla, y el
+   del reloj era una fila de 45px: se iba con ella. El de la barra es todo el
+   examen. El top es el alto de lo que ya está pegado arriba en cada ancho. */
+.ex-barra{position:sticky;top:0;z-index:40;margin:0 -.4rem 1rem;padding:.55rem .4rem .6rem;
+  background:color-mix(in srgb, var(--v-lienzo,#F0F4F8) 92%, transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:0 0 12px 12px}
+.ex-barra-fila{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem}
+.ex-avance{display:flex;align-items:center;gap:.6rem;margin-top:.45rem;font-size:.78rem;
+  font-weight:700;color:var(--v-tinta2,#5B5F6B);font-variant-numeric:tabular-nums}
+.ex-prog{flex:1;height:6px;border-radius:99px;background:var(--v-linea,#e5e7eb);overflow:hidden}
+.ex-prog i{display:block;height:100%;width:0;background:var(--azul);border-radius:inherit;transition:width .25s}
+@media (max-width:620px){.ex-barra{top:calc(53px + env(safe-area-inset-top, 0px))}}
+@media (min-width:621px) and (max-width:899px){.ex-barra{top:67px}}
+/* Solo con la pantalla de examen a la vista: si sale a Estudiar a mitad del
+   examen, el filtro sigue ahí. */
+body.ex-activo:has(#p-examen.on) #filtro-est,body.ex-activo #p-examen .sep,
+body.ex-activo #p-examen details.dir{display:none!important}
 
 
 /* ═════════ v21: el escritorio también cambia ═════════
@@ -2677,12 +2687,19 @@ details.card summary::marker{content:''}
     </details>
 
   <div id="ex-curso" style="display:none">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem;margin-bottom:1rem">
-      <div>
-        <div style="font-size:.98rem;font-weight:800;color:var(--azul)">✏️ Examen en curso</div>
-        <div id="ex-meta" style="font-size:.83rem;color:var(--gris)"></div>
+    <div class="ex-barra">
+      <div class="ex-barra-fila">
+        <div>
+          <div style="font-size:.98rem;font-weight:800;color:var(--azul)">✏️ Examen en curso</div>
+          <div id="ex-meta" style="font-size:.83rem;color:var(--gris)"></div>
+        </div>
+        <div class="timer" id="reloj">20:00</div>
       </div>
-      <div class="timer" id="reloj">20:00</div>
+      <div class="ex-avance">
+        <div class="ex-prog" id="ex-prog" role="progressbar" aria-label="Preguntas respondidas"
+          aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><i id="ex-prog-i"></i></div>
+        <span id="ex-resp">0 de 0</span>
+      </div>
     </div>
     <div id="preguntas"></div>
     <div style="display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-top:1.4rem">
@@ -2740,7 +2757,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '1c976ad5ce16';
+const VERSION_APP = 'c8ba1c51b831';
 
 const CAPS = [
  {
@@ -6113,9 +6130,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «Dios el Padre»?",
     "o": [
      "Génesis 1:1",
-     "2 Pedro 1:20,21",
      "Deuteronomio 6:4",
-     "Juan 1:1-3,14"
+     "Juan 1:1-3,14",
+     "2 Pedro 1:20,21"
     ],
     "a": 0
    }
@@ -6193,9 +6210,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «Dios el Hijo»?",
     "o": [
      "Juan 1:1-3,14",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 1:1",
+     "Génesis 1:1,2",
+     "Deuteronomio 6:4"
     ],
     "a": 0
    }
@@ -6273,8 +6290,8 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «Dios el Espíritu Santo»?",
     "o": [
      "Génesis 1:1,2",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
+     "Juan 1:1-3,14",
+     "Génesis 1",
      "Génesis 1:1"
     ],
     "a": 0
@@ -6353,9 +6370,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La creación»?",
     "o": [
      "Génesis 1",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 1:1,2",
+     "Génesis 1:26-28",
+     "Juan 1:1-3,14"
     ],
     "a": 0
    }
@@ -6433,9 +6450,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La naturaleza humana»?",
     "o": [
      "Génesis 1:26-28",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 1",
+     "Apocalipsis 12:4-9",
+     "Génesis 1:1,2"
     ],
     "a": 0
    }
@@ -6513,9 +6530,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El gran conflicto»?",
     "o": [
      "Apocalipsis 12:4-9",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 1:26-28",
+     "Juan 3:16",
+     "Génesis 1"
     ],
     "a": 0
    }
@@ -6593,9 +6610,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La vida, muerte y resurrección de Cristo»?",
     "o": [
      "Juan 3:16",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Apocalipsis 12:4-9",
+     "2 Corintios 5:17-21",
+     "Génesis 1:26-28"
     ],
     "a": 0
    }
@@ -6673,9 +6690,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La experiencia de la salvación»?",
     "o": [
      "2 Corintios 5:17-21",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Juan 3:16",
+     "Salmos 1:1,2",
+     "Apocalipsis 12:4-9"
     ],
     "a": 0
    }
@@ -6753,9 +6770,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «Crecer en Cristo»?",
     "o": [
      "Salmos 1:1,2",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "2 Corintios 5:17-21",
+     "Génesis 12:3",
+     "Juan 3:16"
     ],
     "a": 0
    }
@@ -6833,9 +6850,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La iglesia»?",
     "o": [
      "Génesis 12:3",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Salmos 1:1,2",
+     "Apocalipsis 12:17",
+     "2 Corintios 5:17-21"
     ],
     "a": 0
    }
@@ -6913,9 +6930,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El remanente y su misión»?",
     "o": [
      "Apocalipsis 12:17",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 12:3",
+     "Romanos 12:4, 5",
+     "Salmos 1:1,2"
     ],
     "a": 0
    }
@@ -6962,9 +6979,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La unidad en el cuerpo de Cristo»?",
     "o": [
      "Romanos 12:4, 5",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Apocalipsis 12:17",
+     "Romanos 6:1-6",
+     "Génesis 12:3"
     ],
     "a": 0
    }
@@ -7042,9 +7059,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El bautismo»?",
     "o": [
      "Romanos 6:1-6",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Romanos 12:4, 5",
+     "1 Corintios 10-16,17",
+     "Apocalipsis 12:17"
     ],
     "a": 0
    }
@@ -7122,9 +7139,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La Cena del Señor»?",
     "o": [
      "1 Corintios 10-16,17",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Romanos 6:1-6",
+     "Romanos 12:4-8",
+     "Romanos 12:4, 5"
     ],
     "a": 0
    }
@@ -7202,9 +7219,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «Los dones y ministerios espirituales»?",
     "o": [
      "Romanos 12:4-8",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "1 Corintios 10-16,17",
+     "Joel 2:28,29",
+     "Romanos 6:1-6"
     ],
     "a": 0
    }
@@ -7282,9 +7299,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El don de profecía»?",
     "o": [
      "Joel 2:28,29",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Romanos 12:4-8",
+     "Éxodo 20:1-17",
+     "1 Corintios 10-16,17"
     ],
     "a": 0
    }
@@ -7362,9 +7379,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La ley de Dios»?",
     "o": [
      "Éxodo 20:1-17",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Joel 2:28,29",
+     "Génesis 2:1-3",
+     "Romanos 12:4-8"
     ],
     "a": 0
    }
@@ -7442,9 +7459,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El sábado»?",
     "o": [
      "Génesis 2:1-3",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Éxodo 20:1-17",
+     "Génesis 1:26-28",
+     "Joel 2:28,29"
     ],
     "a": 0
    }
@@ -7522,9 +7539,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La mayordomía»?",
     "o": [
      "Génesis 1:26-28",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 2:1-3",
+     "Romanos 12:1,2",
+     "Éxodo 20:1-17"
     ],
     "a": 0
    }
@@ -7602,9 +7619,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La conducta cristiana»?",
     "o": [
      "Romanos 12:1,2",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 1:26-28",
+     "Génesis 2:18-25",
+     "Génesis 2:1-3"
     ],
     "a": 0
    }
@@ -7682,9 +7699,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El matrimonio y la familia»?",
     "o": [
      "Génesis 2:18-25",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Romanos 12:1,2",
+     "Hebreos 8:1-5",
+     "Génesis 1:26-28"
     ],
     "a": 0
    }
@@ -7762,9 +7779,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El ministerio de Cristo en el Santuario celestial»?",
     "o": [
      "Hebreos 8:1-5",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Génesis 2:18-25",
+     "Tito 2:13",
+     "Romanos 12:1,2"
     ],
     "a": 0
    }
@@ -7842,9 +7859,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La segunda venida de Cristo»?",
     "o": [
      "Tito 2:13",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Hebreos 8:1-5",
+     "Romanos 6:23",
+     "Génesis 2:18-25"
     ],
     "a": 0
    }
@@ -7922,9 +7939,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La muerte y la resurrección»?",
     "o": [
      "Romanos 6:23",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Tito 2:13",
+     "Apocalipsis 20",
+     "Hebreos 8:1-5"
     ],
     "a": 0
    }
@@ -8002,9 +8019,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «El milenio y el fin del pecado»?",
     "o": [
      "Apocalipsis 20",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Romanos 6:23",
+     "2 Pedro 3:13",
+     "Tito 2:13"
     ],
     "a": 0
    }
@@ -8082,9 +8099,9 @@ const CONTENIDO = {
     "q": "¿Cuál de estos es el primer texto clave de la creencia «La Tierra Nueva»?",
     "o": [
      "2 Pedro 3:13",
-     "2 Pedro 1:20,21",
-     "Deuteronomio 6:4",
-     "Génesis 1:1"
+     "Apocalipsis 20",
+     "Romanos 6:23",
+     "Tito 2:13"
     ],
     "a": 0
    }
@@ -8685,10 +8702,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según Daniel 4:15, ¿con qué debía quedar atada la cepa de las raíces?",
   "o": [
-   "Con cuerdas de lino",
-   "Con cadenas de oro",
+   "Con cuerdas de lino fino y torcido",
+   "Con cadenas de oro y de plata",
    "Con atadura de hierro y de bronce",
-   "Con ataduras de plata"
+   "Con ataduras de cuero y de cobre"
   ],
   "a": 2,
   "nv": 2
@@ -8941,10 +8958,10 @@ const BANCO = [
   "t": "mc",
   "q": "En el sueño de Nabucodonosor, ¿dónde estaba el árbol y cómo era su altura? (Daniel 4:10)",
   "o": [
-   "En un valle, y era pequeño",
+   "En un valle profundo, y era pequeño y delgado",
    "En medio de la tierra, y su altura era grande",
-   "En la orilla del río, y era torcido",
-   "En el monte, y era seco"
+   "En la orilla del río, y era torcido y viejo",
+   "En lo alto de un monte, y estaba seco"
   ],
   "a": 1,
   "nv": 1
@@ -9218,10 +9235,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según P&R cap. 39, ¿a qué habría conducido el primer paso en la dirección equivocada?",
   "o": [
-   "A nada grave, porque solo era una vez",
+   "A nada grave, porque solo iba a ser una vez y nadie lo sabría",
    "A otros pasos iguales, hasta verse arrastrados por la tentación",
-   "A que el rey los castigara de inmediato",
-   "A que los devolvieran a la tierra de Judá"
+   "A que el rey los castigara de inmediato delante de toda la corte",
+   "A que los devolvieran a la tierra de Judá como prisioneros"
   ],
   "a": 1,
   "nv": 2
@@ -9455,10 +9472,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según P&R cap. 44, ¿qué caracterizaba la oración de Daniel?",
   "o": [
-   "Que oraba solo en las crisis",
+   "Que oraba solo en las crisis, cuando ya no le quedaba otra salida",
    "Que antes dejaría la vida que la esperanza de ayuda que hallaba en Dios",
-   "Que oraba para ser visto",
-   "Que era una formalidad religiosa"
+   "Que oraba en voz alta en la plaza para que todos lo vieran",
+   "Que era una formalidad religiosa que repetía sin pensar en ella"
   ],
   "a": 1,
   "nv": 2
@@ -9717,10 +9734,10 @@ const BANCO = [
   "t": "mc",
   "q": "¿Quiénes bebieron en los vasos del templo? (Daniel 5:3)",
   "o": [
-   "Solo el rey, sin nadie más en el banquete",
+   "Solo el rey y sus consejeros, sin nadie más en la mesa",
    "El rey, sus príncipes, sus mujeres y sus concubinas",
-   "Los sacerdotes de Babilonia",
-   "Los embajadores extranjeros"
+   "Los sacerdotes de Babilonia y los magos del palacio",
+   "Los embajadores extranjeros y los generales del ejército"
   ],
   "a": 1,
   "nv": 1
@@ -10735,10 +10752,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según Daniel 2:40, ¿con qué comparó Daniel la fuerza del cuarto reino?",
   "o": [
-   "Con el bronce que resiste los golpes",
+   "Con el bronce que resiste los golpes de cualquier arma",
    "Con el hierro que desmenuza y rompe todas las cosas",
-   "Con la piedra que no se mueve",
-   "Con el oro que no se corroe"
+   "Con la piedra que no se mueve aunque la golpee el viento",
+   "Con el oro que no se corroe ni pierde su brillo"
   ],
   "a": 1,
   "nv": 2
@@ -11700,10 +11717,10 @@ const BANCO = [
   "t": "mc",
   "q": "¿Qué le respondió Daniel al rey desde el foso? (Daniel 6:21)",
   "o": [
-   "“Sácame de aquí, oh rey”",
+   "«Sácame de aquí, oh rey»",
    "«¡Rey, vive para siempre!»",
-   "“¿Por qué me hiciste esto?”",
-   "“Los leones duermen”"
+   "«¿Por qué me hiciste esto?»",
+   "«Los leones duermen»"
   ],
   "a": 1,
   "nv": 1
@@ -11812,10 +11829,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según Daniel 2:42, ¿cómo sería el reino de los dedos de hierro y barro cocido?",
   "o": [
-   "Totalmente fuerte",
+   "Fuerte en todo, sin ninguna debilidad",
    "En parte fuerte y en parte frágil",
-   "Totalmente frágil",
-   "El más grande de todos"
+   "Frágil en todo, sin nada de fuerza",
+   "El más grande y fuerte de todos"
   ],
   "a": 1,
   "nv": 2
@@ -11983,10 +12000,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según P&R cap. 41, ¿por medio de quiénes llegó a muchos países la noticia de la liberación de los tres jóvenes?",
   "o": [
-   "Por medio de los sacerdotes de Babilonia",
+   "Por medio de los sacerdotes de Babilonia que servían en el templo",
    "Por medio de los representantes de las naciones invitadas a la dedicación",
-   "Por medio del pueblo de Judá",
-   "Por medio de los otros cautivos"
+   "Por medio del pueblo de Judá que regresó a Jerusalén a reconstruir",
+   "Por medio de los otros cautivos, en cartas enviadas a sus familias"
   ],
   "a": 1,
   "nv": 3
@@ -12025,10 +12042,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según P&R cap. 44, ¿cuándo oraba Daniel al Dios del cielo con las ventanas abiertas hacia Jerusalén?",
   "o": [
-   "Solo en la crisis del foso",
+   "Solo cuando el decreto lo puso en peligro",
    "A la hora de la oración, según su costumbre",
-   "Solo cuando llegó a Babilonia",
-   "Solo al final de su vida"
+   "Solo el día que llegó a Babilonia como cautivo",
+   "Solo al final de su vida, cuando ya era anciano"
   ],
   "a": 1,
   "nv": 2
@@ -16543,10 +16560,10 @@ const BANCO = [
   "t": "mc",
   "q": "¿Qué frase exacta resume el orgullo de Nabucodonosor, citada en P&R cap. 42?",
   "o": [
-   "Yo soy el más grande de los reyes de la tierra",
+   "Yo soy el más grande de los reyes de la tierra, y nadie me iguala",
    "¿No es ésta la gran Babilonia, que yo edifiqué para casa del reino?",
-   "Ningún dios puede compararse conmigo",
-   "Mi gloria durará para siempre jamás"
+   "Ningún dios del cielo ni de la tierra puede compararse conmigo",
+   "Mi gloria y mi reino durarán para siempre jamás sobre la tierra"
   ],
   "a": 1,
   "nv": 2
@@ -17023,10 +17040,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según la lección práctica de Daniel 10, ¿qué significa que la respuesta a la oración de Daniel tardara tres semanas en manifestarse?",
   "o": [
-   "Que Dios necesita tiempo para decidir cómo actuar",
+   "Que Dios necesita tiempo para decidir cómo actuar ante cada petición",
    "Que una oración sin respuesta inmediata no significa una oración no escuchada",
-   "Que Daniel no había orado con suficiente fe",
-   "Que el ayuno de tres semanas fue innecesario"
+   "Que Daniel no había orado con suficiente fe durante esas tres semanas",
+   "Que el ayuno de tres semanas fue innecesario y Dios no lo pedía"
   ],
   "a": 1,
   "nv": 2
@@ -17151,10 +17168,10 @@ const BANCO = [
   "t": "mc",
   "q": "¿Qué marca el \"surgir\" de Miguel al comienzo de Daniel 12:1, en relación con el juicio celestial?",
   "o": [
-   "Que el juicio celestial apenas está por comenzar",
+   "Que el juicio celestial apenas está por comenzar en el santuario del cielo",
    "Que el juicio investigador ya concluyó, y Jesús se levanta para venir a la tierra",
-   "Que Miguel reemplaza a Jesús como juez final",
-   "Que el juicio se pospone indefinidamente por ahora"
+   "Que Miguel reemplaza a Jesús como juez final de todos los habitantes",
+   "Que el juicio se pospone indefinidamente hasta que todos se arrepientan"
   ],
   "a": 1,
   "nv": 2
@@ -17211,10 +17228,10 @@ const BANCO = [
   "t": "mc",
   "q": "En el paralelismo poético de Daniel 12:3, ¿quiénes son \"los doctos\" que brillarán como el firmamento?",
   "o": [
-   "Una élite intelectual separada del resto del pueblo",
-   "Únicamente los ángeles que ministran en el santuario celestial",
+   "Una élite intelectual de sabios, separada del resto del pueblo por su estudio",
+   "Únicamente los ángeles que ministran día y noche en el santuario celestial",
    "Los que estudiaron las profecías, las compartieron con otros y se dejaron purificar por ellas",
-   "Los sacerdotes que oficiaban en el templo de Jerusalén"
+   "Los sacerdotes que oficiaban en el templo de Jerusalén antes del cautiverio"
   ],
   "a": 2,
   "nv": 2
@@ -17258,10 +17275,10 @@ const BANCO = [
   "t": "mc",
   "q": "¿Cuál fue el último acto registrado de Daniel en el libro, según el capítulo 10?",
   "o": [
-   "Un discurso final ante los príncipes de Persia",
+   "Un discurso final ante los príncipes de Persia, defendiendo a los judíos cautivos",
    "Un ayuno de tres semanas, seguido de la visión más larga y detallada de los doce capítulos",
-   "La escritura de una carta a los judíos que quedaban en Babilonia",
-   "Una segunda noche pasada en el foso de los leones"
+   "La escritura de una carta larga a los judíos que quedaban en Babilonia y en Judá",
+   "Una segunda noche pasada en el foso de los leones, ya siendo muy anciano"
   ],
   "a": 1,
   "nv": 2
@@ -17293,9 +17310,9 @@ const BANCO = [
   "q": "Según el segundo punto del resumen de Maxwell, ¿qué dirige Dios, y qué les espera a todos?",
   "o": [
    "El destino de los imperios y de cada persona; todos serán llevados a juicio",
-   "Solo el destino de los imperios, no el de las personas",
-   "El calendario religioso de cada nación",
-   "El resultado de las guerras entre reyes, sin más"
+   "Solo el destino de los imperios, no el de cada persona ni el de su familia",
+   "El calendario religioso de cada nación y las fiestas que debe celebrar",
+   "El resultado de las guerras entre reyes, sin ocuparse de nadie más"
   ],
   "a": 0,
   "nv": 2
@@ -17467,23 +17484,23 @@ const BANCO = [
   "t": "mc",
   "q": "En la lectura de Daniel 11:37, ¿a quién identifica más plausiblemente la enigmática frase \"el amado de las mujeres\"?",
   "o": [
-   "A un papa concreto de la Edad Media",
+   "A un papa concreto de la Edad Media, conocido por su poder",
    "Al Mesías, el Redentor esperado por las mujeres de Israel",
-   "A la Virgen María, madre de Jesús",
-   "A un emperador romano cualquiera"
+   "A la Virgen María, madre de Jesús, honrada por muchos creyentes",
+   "A un emperador romano cualquiera que persiguió a los judíos"
   ],
   "a": 1,
-  "nv": 1
+  "nv": 2
  },
  {
   "cap": "d11",
   "t": "mc",
   "q": "¿Con qué práctica religiosa se identifica más plausiblemente el \"dios de las fortalezas\" o \"dios ajeno\" de Daniel 11:38-39?",
   "o": [
-   "El bautismo cristiano de los creyentes",
+   "El bautismo cristiano de los creyentes, hecho por inmersión en agua",
    "El Santísimo Sacramento de la Eucaristía, con la transubstanciación",
-   "El sacramento del matrimonio cristiano",
-   "La confirmación de los jóvenes en la fe"
+   "El sacramento del matrimonio cristiano, celebrado en la iglesia",
+   "La confirmación de los jóvenes en la fe, con la imposición de manos"
   ],
   "a": 1,
   "nv": 2
@@ -17712,9 +17729,9 @@ const BANCO = [
   "q": "¿Qué general de Alejandro Magno se llevó a gran parte de la población de Babilonia y millones de ladrillos para fundar una ciudad rival, Seleucia?",
   "o": [
    "Seleuco Nicátor",
-   "Ptolomeo",
-   "Antígono",
-   "Casandro"
+   "Ptolomeo Sóter",
+   "Antígono el Tuerto",
+   "Casandro de Macedonia"
   ],
   "a": 0,
   "nv": 1
@@ -17752,10 +17769,10 @@ const BANCO = [
   "t": "mc",
   "q": "Según el contraste que hace Isaías, ¿qué tenían que hacer con los ídolos Bel y Nebo cada Año Nuevo en Babilonia, a diferencia del Dios verdadero?",
   "o": [
-   "Esconderlos de los enemigos que se acercaban",
+   "Esconderlos de los enemigos que se acercaban a la ciudad",
    "Cargarlos a lomo de animales, porque no podían moverse solos",
-   "Enterrarlos lejos, en el desierto",
-   "Pintarlos de oro para el Año Nuevo"
+   "Enterrarlos lejos, en el desierto, hasta el año siguiente",
+   "Pintarlos de oro y de colores nuevos para la fiesta del Año Nuevo"
   ],
   "a": 1,
   "nv": 2
@@ -17893,9 +17910,9 @@ const BANCO = [
   "q": "¿Por qué el significado literal de \"jathak\" (cortar/amputar) resuelve el enigma de los 2.300 días de Daniel 8:14?",
   "o": [
    "Porque no se pueden \"cortar\" 490 años de solo 2.300 días literales, así que esos días tienen que ser 2.300 años simbólicos",
-   "Porque confirma sin ninguna duda que los 2.300 días deben entenderse de forma literal",
-   "Porque cambia por completo la fecha tradicional del decreto de 457 a.C.",
-   "Porque elimina toda necesidad de aplicar el principio de día por año"
+   "Porque confirma sin ninguna duda que los 2.300 días deben entenderse de forma literal, como días de veinticuatro horas",
+   "Porque cambia por completo la fecha tradicional del decreto de 457 a.C. y la mueve a otro siglo",
+   "Porque elimina toda necesidad de aplicar el principio de día por año en las profecías de Daniel"
   ],
   "a": 0,
   "nv": 2
@@ -21170,9 +21187,9 @@ const BANCO = [
   "q": "Según P&R cap. 43, ¿qué respondió Daniel cuando el rey le ofreció púrpura, collar de oro y el tercer lugar en el reino?",
   "o": [
    "«Tus dones sean para ti, y tus presentes dalos a otro»",
-   "Aceptó los premios y pidió además la libertad de su pueblo",
-   "Pidió un día de plazo para orar antes de contestar",
-   "Dijo que solo leería si el rey devolvía los vasos"
+   "«Acepto tus dones, oh rey, si dejas libre a mi pueblo»",
+   "«Dame un día para orar y mañana te daré la respuesta»",
+   "«La leeré cuando devuelvas los vasos del templo»"
   ],
   "a": 0,
   "e": "Daniel no se interesó en las recompensas; vino a dar un mensaje de Dios.",
@@ -21956,9 +21973,9 @@ const BANCO = [
   "q": "¿Cómo logró Gibson que el hombre le respondiera?",
   "o": [
    "Le envió un mensaje de texto después de varios intentos de llamada",
-   "Fue a buscarlo personalmente a su casa",
-   "Le escribió una carta larga explicando todo",
-   "Le pidió al profesor que lo llamara"
+   "Fue a buscarlo personalmente a su casa después del trabajo",
+   "Le escribió una carta larga explicándole todo lo que pasó",
+   "Le pidió al profesor que lo llamara por teléfono en su lugar"
   ],
   "a": 0
  },
@@ -22216,8 +22233,8 @@ const BANCO = [
   "q": "¿Se arrepentía Gladys de haber ido a China?",
   "o": [
    "No: sentía que cada uno de sus niños era una bendición",
-   "Sí, por las pruebas que pasó",
-   "Sí, quería volver a Inglaterra",
+   "Sí, por todas las pruebas y peligros que pasó allá",
+   "Sí, siempre quiso volver pronto a Inglaterra",
    "No lo dijo nunca en ninguna de sus cartas"
   ],
   "a": 0
@@ -22333,9 +22350,9 @@ const BANCO = [
   "q": "¿Qué le salvó la vida al señor McMullen?",
   "o": [
    "Que su esposa sabía por escrito dónde estaría y cuándo volvería",
-   "Que tenía buena señal en su celular",
-   "Que alguien lo vio caer desde lejos",
-   "Que pudo caminar hasta el albergue"
+   "Que tenía buena señal en su celular y pudo pedir ayuda",
+   "Que otro excursionista lo vio caer desde lejos y avisó",
+   "Que pudo caminar solo hasta el albergue más cercano"
   ],
   "a": 0
  },
@@ -22437,9 +22454,9 @@ const BANCO = [
   "q": "¿Por qué eran héroes los mensajeros de la antigüedad?",
   "o": [
    "Porque salían de su comodidad y recorrían grandes distancias, sobre todo en tiempos de guerra",
-   "Porque sabían leer y escribir en varios idiomas del imperio",
-   "Porque tenían caballos y podían viajar más rápido que nadie",
-   "Porque conocían a los reyes y comían en sus palacios"
+   "Porque sabían leer y escribir en varios idiomas del imperio y traducían las cartas de los reyes",
+   "Porque tenían caballos y podían viajar más rápido que nadie, sin cansarse nunca en el camino",
+   "Porque conocían a los reyes en persona y comían con ellos en sus palacios"
   ],
   "a": 0
  },
@@ -22450,9 +22467,9 @@ const BANCO = [
   "q": "¿Qué propone hacer la lectura con los medios de hoy?",
   "o": [
    "Usarlos también para contarle a alguien que Jesús lo ama",
-   "Usarlos mucho menos que antes",
-   "Solo para cosas prácticas del día a día",
-   "Compartir solo con la familia"
+   "Usarlos mucho menos que antes, solo una hora al día",
+   "Usarlos solo para cosas prácticas del día a día",
+   "Compartir cosas solo con la familia y los amigos cercanos"
   ],
   "a": 0
  },
@@ -22476,9 +22493,9 @@ const BANCO = [
   "q": "¿Qué hizo Balaam cuando el asna no avanzó?",
   "o": [
    "Le pegó fuertemente con la vara",
-   "Se bajó y siguió a pie",
-   "La dejó descansar",
-   "Volvió a su casa"
+   "Se bajó de ella y siguió a pie",
+   "La dejó descansar un rato a la sombra",
+   "Dio la vuelta y volvió a su casa"
   ],
   "a": 0
  },
@@ -22568,8 +22585,8 @@ const BANCO = [
   "o": [
    "El primer europeo con síndrome de Down en terminar una carrera universitaria",
    "El primer actor español con síndrome de Down",
-   "El primer maestro conocido con síndrome de Down",
-   "El primer deportista con síndrome de Down"
+   "El primer político europeo con síndrome de Down en llegar a un parlamento",
+   "El primer deportista con síndrome de Down en ganar una medalla olímpica"
   ],
   "a": 0
  },
@@ -23589,9 +23606,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 1 de octubre?",
   "o": [
    "Lucas 12:15",
-   "Salmo 113:7",
    "1 Juan 5:15",
-   "2 Timoteo 2:21 (NTV)"
+   "Salmo 113:7",
+   "Salmo 71:17"
   ],
   "a": 0
  },
@@ -23636,9 +23653,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 2 de octubre?",
   "o": [
    "Salmo 113:7",
-   "Lucas 12:15",
    "1 Juan 5:15",
-   "2 Timoteo 2:21 (NTV)"
+   "Lucas 12:15",
+   "Salmo 120:2"
   ],
   "a": 0
  },
@@ -23675,9 +23692,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 3 de octubre?",
   "o": [
    "1 Juan 5:15",
-   "Lucas 12:15",
+   "Marcos 5:19",
    "Salmo 113:7",
-   "2 Timoteo 2:21 (NTV)"
+   "Salmo 71:17"
   ],
   "a": 0
  },
@@ -23722,9 +23739,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 4 de octubre?",
   "o": [
    "2 Timoteo 2:21 (NTV)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Tesalonicenses 5:18",
+   "Gálatas 5:16-17 (TLA)",
+   "Proverbios 15:1 (RVC)"
   ],
   "a": 0
  },
@@ -23769,9 +23786,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 5 de octubre?",
   "o": [
    "1 Timoteo 2:4",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Lucas 2:46-47",
+   "Filipenses 4:3",
+   "Filipenses 4:8"
   ],
   "a": 0
  },
@@ -23808,9 +23825,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 6 de octubre?",
   "o": [
    "Isaías 41:10",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Cantares 2:2",
+   "1 Juan 5:15",
+   "2 Timoteo 4:2"
   ],
   "a": 0
  },
@@ -23847,9 +23864,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 7 de octubre?",
   "o": [
    "1 Tesalonicenses 5:18",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Filipenses 3:14 (PDT)",
+   "Gálatas 5:16-17 (TLA)",
+   "2 Timoteo 2:21 (NTV)"
   ],
   "a": 0
  },
@@ -23894,9 +23911,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 8 de octubre?",
   "o": [
    "Hechos 1:8",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Josué 1:9",
+   "Juan 14:3",
+   "Marcos 5:19"
   ],
   "a": 0
  },
@@ -23941,9 +23958,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 9 de octubre?",
   "o": [
    "2 Timoteo 4:2",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Timoteo 2:4",
+   "Cantares 2:2",
+   "Filipenses 4:3"
   ],
   "a": 0
  },
@@ -23988,9 +24005,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 10 de octubre?",
   "o": [
    "Cantares 2:2",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Isaías 41:10",
+   "1 Timoteo 2:4",
+   "2 Timoteo 4:2"
   ],
   "a": 0
  },
@@ -24027,9 +24044,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 11 de octubre?",
   "o": [
    "Proverbios 16:9",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Filipenses 4:3",
+   "1 Timoteo 2:4",
+   "Isaías 52:7 (TLA)"
   ],
   "a": 0
  },
@@ -24066,9 +24083,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 12 de octubre?",
   "o": [
    "Filipenses 3:14 (PDT)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Tesalonicenses 5:18",
+   "Gálatas 5:16-17 (TLA)",
+   "2 Timoteo 2:21 (NTV)"
   ],
   "a": 0
  },
@@ -24113,9 +24130,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 13 de octubre?",
   "o": [
    "Proverbios 31:10 (RV95)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Proverbios 12:25 (NBV)",
+   "Proverbios 14:29 (NBV)",
+   "1 Tesalonicenses 5:18"
   ],
   "a": 0
  },
@@ -24160,9 +24177,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 14 de octubre?",
   "o": [
    "Gálatas 1:10",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Cantares 2:2",
+   "1 Juan 5:15",
+   "1 Timoteo 2:4"
   ],
   "a": 0
  },
@@ -24208,8 +24225,8 @@ const BANCO = [
   "o": [
    "Marcos 5:19",
    "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Salmo 120:2",
+   "Salmo 71:17"
   ],
   "a": 0
  },
@@ -24246,9 +24263,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 16 de octubre?",
   "o": [
    "Filipenses 4:3",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Filipenses 4:8",
+   "2 Timoteo 4:2",
+   "Proverbios 16:9"
   ],
   "a": 0
  },
@@ -24285,9 +24302,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 17 de octubre?",
   "o": [
    "Salmo 120:2",
+   "1 Juan 5:15",
    "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Salmo 113:7"
   ],
   "a": 0
  },
@@ -24332,9 +24349,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 18 de octubre?",
   "o": [
    "Josué 1:9",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Hechos 1:8",
+   "1 Juan 5:15",
+   "Marcos 5:19"
   ],
   "a": 0
  },
@@ -24371,9 +24388,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 19 de octubre?",
   "o": [
    "Juan 14:3",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Josué 1:9",
+   "1 Juan 5:15",
+   "Lucas 12:15"
   ],
   "a": 0
  },
@@ -24410,9 +24427,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 20 de octubre?",
   "o": [
    "Filipenses 4:8",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Timoteo 2:4",
+   "Lucas 2:46-47",
+   "Proverbios 16:9"
   ],
   "a": 0
  },
@@ -24457,9 +24474,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 21 de octubre?",
   "o": [
    "Salmo 71:17",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Juan 5:15",
+   "Marcos 5:19",
+   "Salmo 120:2"
   ],
   "a": 0
  },
@@ -24496,9 +24513,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 22 de octubre?",
   "o": [
    "Lucas 2:46-47",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Timoteo 2:4",
+   "2 Timoteo 4:2",
+   "Filipenses 4:3"
   ],
   "a": 0
  },
@@ -24535,9 +24552,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 23 de octubre?",
   "o": [
    "Isaías 52:7 (TLA)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Proverbios 16:9",
+   "Santiago 3:15 (NTV)",
+   "Filipenses 4:3"
   ],
   "a": 0
  },
@@ -24574,9 +24591,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 24 de octubre?",
   "o": [
    "Gálatas 5:16-17 (TLA)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Tesalonicenses 5:18",
+   "Proverbios 15:1 (RVC)",
+   "2 Timoteo 2:21 (NTV)"
   ],
   "a": 0
  },
@@ -24621,9 +24638,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 25 de octubre?",
   "o": [
    "Proverbios 14:29 (NBV)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Proverbios 12:25 (NBV)",
+   "1 Tesalonicenses 5:18",
+   "Filipenses 3:14 (PDT)"
   ],
   "a": 0
  },
@@ -24660,9 +24677,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 26 de octubre?",
   "o": [
    "Proverbios 12:25 (NBV)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Filipenses 4:19 (LBLA)",
+   "Proverbios 29:11 (NVI)",
+   "Filipenses 3:14 (PDT)"
   ],
   "a": 0
  },
@@ -24707,9 +24724,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 27 de octubre?",
   "o": [
    "Santiago 3:15 (NTV)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "2 Timoteo 2:21 (NTV)",
+   "Hechos 10:34 (NTV)",
+   "Filipenses 3:14 (PDT)"
   ],
   "a": 0
  },
@@ -24746,9 +24763,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 28 de octubre?",
   "o": [
    "Hechos 10:34 (NTV)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Santiago 3:15 (NTV)",
+   "2 Timoteo 2:21 (NTV)",
+   "Filipenses 3:14 (PDT)"
   ],
   "a": 0
  },
@@ -24793,9 +24810,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 29 de octubre?",
   "o": [
    "Filipenses 4:19 (LBLA)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Proverbios 12:25 (NBV)",
+   "Proverbios 29:11 (NVI)",
+   "1 Tesalonicenses 5:18"
   ],
   "a": 0
  },
@@ -24840,9 +24857,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 30 de octubre?",
   "o": [
    "Proverbios 29:11 (NVI)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "Proverbios 12:25 (NBV)",
+   "1 Tesalonicenses 5:18",
+   "Filipenses 3:14 (PDT)"
   ],
   "a": 0
  },
@@ -24887,9 +24904,9 @@ const BANCO = [
   "q": "¿Cuál es la referencia del versículo del día 31 de octubre?",
   "o": [
    "Proverbios 15:1 (RVC)",
-   "Lucas 12:15",
-   "Salmo 113:7",
-   "1 Juan 5:15"
+   "1 Tesalonicenses 5:18",
+   "Gálatas 5:16-17 (TLA)",
+   "Filipenses 4:19 (LBLA)"
   ],
   "a": 0
  },
@@ -24934,9 +24951,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 1?",
   "o": [
    "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre",
-   "Dios el Hijo"
+   "Dios el Espíritu Santo",
+   "Dios el Hijo",
+   "El gran conflicto"
   ],
   "a": 0
  },
@@ -24973,9 +24990,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Las Sagradas Escrituras, que abarcan el Antiguo y el Nuevo Testamento, constituyen la Palabra de Dios escrita, transmitida por inspiración divina mediante santos hombres de Dios que hab...»",
   "o": [
    "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre",
-   "Dios el Hijo"
+   "Dios el Espíritu Santo",
+   "Dios el Hijo",
+   "El gran conflicto"
   ],
   "a": 0
  },
@@ -25068,9 +25085,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 2?",
   "o": [
    "La Deidad",
-   "La Palabra de Dios",
+   "Dios el Hijo",
    "Dios el Padre",
-   "Dios el Hijo"
+   "La iglesia"
   ],
   "a": 0
  },
@@ -25107,9 +25124,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Hay un solo Dios: Padre, Hijo y Espíritu Santo, una unidad de tres personas coeternas. Dios es inmortal, todopoderoso, omnisapiente, superior a todos y omnipresente. Es infinito y escap...»",
   "o": [
    "La Deidad",
-   "La Palabra de Dios",
+   "Dios el Hijo",
    "Dios el Padre",
-   "Dios el Hijo"
+   "La iglesia"
   ],
   "a": 0
  },
@@ -25202,9 +25219,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 3?",
   "o": [
    "Dios el Padre",
-   "La Palabra de Dios",
    "La Deidad",
-   "Dios el Hijo"
+   "La Palabra de Dios",
+   "La ley de Dios"
   ],
   "a": 0
  },
@@ -25215,9 +25232,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «Dios el Padre»?",
   "o": [
    "Génesis 1:1",
-   "2 Pedro 1:20,21",
    "Deuteronomio 6:4",
-   "Juan 1:1-3,14"
+   "Juan 1:1-3,14",
+   "2 Pedro 1:20,21"
   ],
   "a": 0
  },
@@ -25241,9 +25258,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Dios, el Padre Eterno es el Creador, Originador, Sustentador y Soberano de toda la creación. Es justo y santo, misericordioso y clemente, tardo en airarse y abundante en amor y fidelida...»",
   "o": [
    "Dios el Padre",
-   "La Palabra de Dios",
    "La Deidad",
-   "Dios el Hijo"
+   "La Palabra de Dios",
+   "La ley de Dios"
   ],
   "a": 0
  },
@@ -25336,9 +25353,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 4?",
   "o": [
    "Dios el Hijo",
+   "Dios el Padre",
    "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre"
+   "El bautismo"
   ],
   "a": 0
  },
@@ -25349,9 +25366,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «Dios el Hijo»?",
   "o": [
    "Juan 1:1-3,14",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 1:1",
+   "Génesis 1:1,2",
+   "Deuteronomio 6:4"
   ],
   "a": 0
  },
@@ -25375,9 +25392,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «El Hijo Eterno se encarnó en Jesucristo. Por medio de Él fueron creadas todas las cosas, se reveló el carácter de Dios, se realizó la salvación y se juzga al mundo. Aunque era eternamen...»",
   "o": [
    "Dios el Hijo",
+   "Dios el Padre",
    "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre"
+   "El bautismo"
   ],
   "a": 0
  },
@@ -25470,8 +25487,8 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 5?",
   "o": [
    "Dios el Espíritu Santo",
-   "La Palabra de Dios",
-   "La Deidad",
+   "La conducta cristiana",
+   "La naturaleza humana",
    "Dios el Padre"
   ],
   "a": 0
@@ -25483,8 +25500,8 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «Dios el Espíritu Santo»?",
   "o": [
    "Génesis 1:1,2",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
+   "Juan 1:1-3,14",
+   "Génesis 1",
    "Génesis 1:1"
   ],
   "a": 0
@@ -25509,8 +25526,8 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «...Eterno desempeñó una parte activa con el Padre y el Hijo en la creación, la encarnación y la redención. Inspiró a los autores de las Escrituras. Infundió poder a la vida de Cristo. A...»",
   "o": [
    "Dios el Espíritu Santo",
-   "La Palabra de Dios",
-   "La Deidad",
+   "La conducta cristiana",
+   "La naturaleza humana",
    "Dios el Padre"
   ],
   "a": 0
@@ -25604,9 +25621,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 6?",
   "o": [
    "La creación",
-   "La naturaleza humana",
-   "La Palabra de Dios",
-   "La Deidad"
+   "El bautismo",
+   "La iglesia",
+   "El sábado"
   ],
   "a": 0
  },
@@ -25617,9 +25634,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La creación»?",
   "o": [
    "Génesis 1",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 1:1,2",
+   "Génesis 1:26-28",
+   "Juan 1:1-3,14"
   ],
   "a": 0
  },
@@ -25643,9 +25660,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Dios es el Creador de todas las cosas, y reveló en las Escrituras el relato auténtico de su actividad creadora. El Señor hizo en seis días «los cielos y la tierra» y todo ser viviente q...»",
   "o": [
    "La creación",
-   "La naturaleza humana",
-   "La Palabra de Dios",
-   "La Deidad"
+   "El bautismo",
+   "La iglesia",
+   "El sábado"
   ],
   "a": 0
  },
@@ -25738,9 +25755,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 7?",
   "o": [
    "La naturaleza humana",
-   "La creación",
-   "La Palabra de Dios",
-   "La Deidad"
+   "La conducta cristiana",
+   "Dios el Espíritu Santo",
+   "La Palabra de Dios"
   ],
   "a": 0
  },
@@ -25751,9 +25768,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La naturaleza humana»?",
   "o": [
    "Génesis 1:26-28",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 1",
+   "Apocalipsis 12:4-9",
+   "Génesis 1:1,2"
   ],
   "a": 0
  },
@@ -25777,9 +25794,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Dios creó al hombre y la mujer a su imagen, con libertad para pensar y actuar, siendo una unidad de cuerpo, mente y espíritu dependiente de Él. Al desobedecer, Adán y Eva cayeron, disto...»",
   "o": [
    "La naturaleza humana",
-   "La creación",
-   "La Palabra de Dios",
-   "La Deidad"
+   "La conducta cristiana",
+   "Dios el Espíritu Santo",
+   "La Palabra de Dios"
   ],
   "a": 0
  },
@@ -25872,9 +25889,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 8?",
   "o": [
    "El gran conflicto",
-   "La vida, muerte y resurrección de Cristo",
-   "La experiencia de la salvación",
-   "La Palabra de Dios"
+   "Crecer en Cristo",
+   "El don de profecía",
+   "La Tierra Nueva"
   ],
   "a": 0
  },
@@ -25885,9 +25902,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El gran conflicto»?",
   "o": [
    "Apocalipsis 12:4-9",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 1:26-28",
+   "Juan 3:16",
+   "Génesis 1"
   ],
   "a": 0
  },
@@ -25911,9 +25928,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «La humanidad está inmersa en un conflicto entre Cristo y Satanás sobre el carácter de Dios, su ley y su soberanía. Este conflicto comenzó en el cielo cuando Lucifer, un ser creado, se r...»",
   "o": [
    "El gran conflicto",
-   "La vida, muerte y resurrección de Cristo",
-   "La experiencia de la salvación",
-   "La Palabra de Dios"
+   "Crecer en Cristo",
+   "El don de profecía",
+   "La Tierra Nueva"
   ],
   "a": 0
  },
@@ -26006,9 +26023,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 9?",
   "o": [
    "La vida, muerte y resurrección de Cristo",
-   "El gran conflicto",
    "La experiencia de la salvación",
-   "La Palabra de Dios"
+   "La unidad en el cuerpo de Cristo",
+   "El ministerio de Cristo en el Santuario celestial"
   ],
   "a": 0
  },
@@ -26019,9 +26036,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La vida, muerte y resurrección de Cristo»?",
   "o": [
    "Juan 3:16",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Apocalipsis 12:4-9",
+   "2 Corintios 5:17-21",
+   "Génesis 1:26-28"
   ],
   "a": 0
  },
@@ -26045,9 +26062,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «...y resurrección de Cristo son el único medio provisto por Dios para expiar el pecado humano. Quienes aceptan esta expiación por fe reciben vida eterna y comprenden mejor el amor divin...»",
   "o": [
    "La vida, muerte y resurrección de Cristo",
-   "El gran conflicto",
    "La experiencia de la salvación",
-   "La Palabra de Dios"
+   "La unidad en el cuerpo de Cristo",
+   "El ministerio de Cristo en el Santuario celestial"
   ],
   "a": 0
  },
@@ -26140,9 +26157,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 10?",
   "o": [
    "La experiencia de la salvación",
-   "El gran conflicto",
-   "La vida, muerte y resurrección de Cristo",
-   "La Palabra de Dios"
+   "La unidad en el cuerpo de Cristo",
+   "La segunda venida de Cristo",
+   "El matrimonio y la familia"
   ],
   "a": 0
  },
@@ -26153,9 +26170,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La experiencia de la salvación»?",
   "o": [
    "2 Corintios 5:17-21",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Juan 3:16",
+   "Salmos 1:1,2",
+   "Apocalipsis 12:4-9"
   ],
   "a": 0
  },
@@ -26179,9 +26196,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Con amor infinito, Dios hizo que Cristo tomara nuestro lugar, para que fuéramos hechos justicia de Dios en Él. Guiados por el Espíritu Santo, reconocemos nuestro pecado, nos arrepentimo...»",
   "o": [
    "La experiencia de la salvación",
-   "El gran conflicto",
-   "La vida, muerte y resurrección de Cristo",
-   "La Palabra de Dios"
+   "La unidad en el cuerpo de Cristo",
+   "La segunda venida de Cristo",
+   "El matrimonio y la familia"
   ],
   "a": 0
  },
@@ -26274,9 +26291,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 11?",
   "o": [
    "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión",
-   "La unidad en el cuerpo de Cristo"
+   "La Cena del Señor",
+   "El bautismo",
+   "El gran conflicto"
   ],
   "a": 0
  },
@@ -26287,9 +26304,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «Crecer en Cristo»?",
   "o": [
    "Salmos 1:1,2",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "2 Corintios 5:17-21",
+   "Génesis 12:3",
+   "Juan 3:16"
   ],
   "a": 0
  },
@@ -26313,9 +26330,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Jesús venció a las fuerzas del mal en la cruz, asegurando su destrucción final. Su victoria nos da poder sobre el mal, paz, gozo y la certeza de su amor. El Espíritu Santo habita en nos...»",
   "o": [
    "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión",
-   "La unidad en el cuerpo de Cristo"
+   "La Cena del Señor",
+   "El bautismo",
+   "El gran conflicto"
   ],
   "a": 0
  },
@@ -26408,9 +26425,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 12?",
   "o": [
    "La iglesia",
+   "El bautismo",
    "Crecer en Cristo",
-   "El remanente y su misión",
-   "La unidad en el cuerpo de Cristo"
+   "La Cena del Señor"
   ],
   "a": 0
  },
@@ -26421,9 +26438,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La iglesia»?",
   "o": [
    "Génesis 12:3",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Salmos 1:1,2",
+   "Apocalipsis 12:17",
+   "2 Corintios 5:17-21"
   ],
   "a": 0
  },
@@ -26447,9 +26464,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «...es la comunidad de creyentes que confiesan a Jesús como Señor y Salvador. Como pueblo de Dios, somos llamados a salir del mundo, reunirnos para adorar, estudiar la Palabra, compartir...»",
   "o": [
    "La iglesia",
+   "El bautismo",
    "Crecer en Cristo",
-   "El remanente y su misión",
-   "La unidad en el cuerpo de Cristo"
+   "La Cena del Señor"
   ],
   "a": 0
  },
@@ -26542,9 +26559,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 13?",
   "o": [
    "El remanente y su misión",
+   "La Cena del Señor",
    "Crecer en Cristo",
-   "La iglesia",
-   "La unidad en el cuerpo de Cristo"
+   "El matrimonio y la familia"
   ],
   "a": 0
  },
@@ -26555,9 +26572,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El remanente y su misión»?",
   "o": [
    "Apocalipsis 12:17",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 12:3",
+   "Romanos 12:4, 5",
+   "Salmos 1:1,2"
   ],
   "a": 0
  },
@@ -26581,9 +26598,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «La iglesia universal está compuesta de todos los que creen verdaderamente en Cristo; pero en los últimos días, una época de apostasía generalizada, se llamó a un remanente para que guar...»",
   "o": [
    "El remanente y su misión",
+   "La Cena del Señor",
    "Crecer en Cristo",
-   "La iglesia",
-   "La unidad en el cuerpo de Cristo"
+   "El matrimonio y la familia"
   ],
   "a": 0
  },
@@ -26676,9 +26693,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 14?",
   "o": [
    "La unidad en el cuerpo de Cristo",
-   "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión"
+   "Los dones y ministerios espirituales",
+   "El remanente y su misión",
+   "La experiencia de la salvación"
   ],
   "a": 0
  },
@@ -26689,9 +26706,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La unidad en el cuerpo de Cristo»?",
   "o": [
    "Romanos 12:4, 5",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Apocalipsis 12:17",
+   "Romanos 6:1-6",
+   "Génesis 12:3"
   ],
   "a": 0
  },
@@ -26716,9 +26733,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «La iglesia es un cuerpo constituido por muchos miembros, llamados de entre todas las naciones, razas, lenguas y pueblos. En Cristo somos una nueva creación; las diferencias de raza, cul...»",
   "o": [
    "La unidad en el cuerpo de Cristo",
-   "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión"
+   "Los dones y ministerios espirituales",
+   "El remanente y su misión",
+   "La experiencia de la salvación"
   ],
   "a": 0
  },
@@ -26814,8 +26831,8 @@ const BANCO = [
   "o": [
    "El bautismo",
    "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión"
+   "La creación",
+   "Dios el Hijo"
   ],
   "a": 0
  },
@@ -26826,9 +26843,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El bautismo»?",
   "o": [
    "Romanos 6:1-6",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Romanos 12:4, 5",
+   "1 Corintios 10-16,17",
+   "Apocalipsis 12:17"
   ],
   "a": 0
  },
@@ -26853,8 +26870,8 @@ const BANCO = [
   "o": [
    "El bautismo",
    "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión"
+   "La creación",
+   "Dios el Hijo"
   ],
   "a": 0
  },
@@ -26948,7 +26965,7 @@ const BANCO = [
   "o": [
    "La Cena del Señor",
    "Crecer en Cristo",
-   "La iglesia",
+   "El bautismo",
    "El remanente y su misión"
   ],
   "a": 0
@@ -26960,9 +26977,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La Cena del Señor»?",
   "o": [
    "1 Corintios 10-16,17",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Romanos 6:1-6",
+   "Romanos 12:4-8",
+   "Romanos 12:4, 5"
   ],
   "a": 0
  },
@@ -26987,7 +27004,7 @@ const BANCO = [
   "o": [
    "La Cena del Señor",
    "Crecer en Cristo",
-   "La iglesia",
+   "El bautismo",
    "El remanente y su misión"
   ],
   "a": 0
@@ -27081,8 +27098,8 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 17?",
   "o": [
    "Los dones y ministerios espirituales",
-   "Crecer en Cristo",
-   "La iglesia",
+   "La unidad en el cuerpo de Cristo",
+   "La vida, muerte y resurrección de Cristo",
    "El remanente y su misión"
   ],
   "a": 0
@@ -27094,9 +27111,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «Los dones y ministerios espirituales»?",
   "o": [
    "Romanos 12:4-8",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "1 Corintios 10-16,17",
+   "Joel 2:28,29",
+   "Romanos 6:1-6"
   ],
   "a": 0
  },
@@ -27120,8 +27137,8 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Dios otorga dones espirituales a todos los miembros de su iglesia en todas las épocas, para servir con amor al prójimo y edificar la iglesia. Estos dones, distribuidos por el Espíritu S...»",
   "o": [
    "Los dones y ministerios espirituales",
-   "Crecer en Cristo",
-   "La iglesia",
+   "La unidad en el cuerpo de Cristo",
+   "La vida, muerte y resurrección de Cristo",
    "El remanente y su misión"
   ],
   "a": 0
@@ -27216,8 +27233,8 @@ const BANCO = [
   "o": [
    "El don de profecía",
    "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión"
+   "El remanente y su misión",
+   "El bautismo"
   ],
   "a": 0
  },
@@ -27228,9 +27245,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El don de profecía»?",
   "o": [
    "Joel 2:28,29",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Romanos 12:4-8",
+   "Éxodo 20:1-17",
+   "1 Corintios 10-16,17"
   ],
   "a": 0
  },
@@ -27255,8 +27272,8 @@ const BANCO = [
   "o": [
    "El don de profecía",
    "Crecer en Cristo",
-   "La iglesia",
-   "El remanente y su misión"
+   "El remanente y su misión",
+   "El bautismo"
   ],
   "a": 0
  },
@@ -27349,9 +27366,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 19?",
   "o": [
    "La ley de Dios",
-   "El sábado",
    "La mayordomía",
-   "La conducta cristiana"
+   "Dios el Padre",
+   "La Tierra Nueva"
   ],
   "a": 0
  },
@@ -27362,9 +27379,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La ley de Dios»?",
   "o": [
    "Éxodo 20:1-17",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Joel 2:28,29",
+   "Génesis 2:1-3",
+   "Romanos 12:4-8"
   ],
   "a": 0
  },
@@ -27388,9 +27405,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Los Diez Mandamientos reflejan los principios de la ley de Dios y se cumplen en la vida de Cristo. Expresan su amor, voluntad y propósito para la conducta humana, y son válidos para tod...»",
   "o": [
    "La ley de Dios",
-   "El sábado",
    "La mayordomía",
-   "La conducta cristiana"
+   "Dios el Padre",
+   "La Tierra Nueva"
   ],
   "a": 0
  },
@@ -27484,8 +27501,8 @@ const BANCO = [
   "o": [
    "El sábado",
    "La ley de Dios",
-   "La mayordomía",
-   "La conducta cristiana"
+   "La iglesia",
+   "El bautismo"
   ],
   "a": 0
  },
@@ -27496,9 +27513,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El sábado»?",
   "o": [
    "Génesis 2:1-3",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Éxodo 20:1-17",
+   "Génesis 1:26-28",
+   "Joel 2:28,29"
   ],
   "a": 0
  },
@@ -27523,8 +27540,8 @@ const BANCO = [
   "o": [
    "El sábado",
    "La ley de Dios",
-   "La mayordomía",
-   "La conducta cristiana"
+   "La iglesia",
+   "El bautismo"
   ],
   "a": 0
  },
@@ -27618,8 +27635,8 @@ const BANCO = [
   "o": [
    "La mayordomía",
    "La ley de Dios",
-   "El sábado",
-   "La conducta cristiana"
+   "Dios el Padre",
+   "El bautismo"
   ],
   "a": 0
  },
@@ -27630,9 +27647,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La mayordomía»?",
   "o": [
    "Génesis 1:26-28",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 2:1-3",
+   "Romanos 12:1,2",
+   "Éxodo 20:1-17"
   ],
   "a": 0
  },
@@ -27657,8 +27674,8 @@ const BANCO = [
   "o": [
    "La mayordomía",
    "La ley de Dios",
-   "El sábado",
-   "La conducta cristiana"
+   "Dios el Padre",
+   "El bautismo"
   ],
   "a": 0
  },
@@ -27751,9 +27768,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 22?",
   "o": [
    "La conducta cristiana",
-   "La ley de Dios",
-   "El sábado",
-   "La mayordomía"
+   "El matrimonio y la familia",
+   "Dios el Espíritu Santo",
+   "La naturaleza humana"
   ],
   "a": 0
  },
@@ -27764,9 +27781,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La conducta cristiana»?",
   "o": [
    "Romanos 12:1,2",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 1:26-28",
+   "Génesis 2:18-25",
+   "Génesis 2:1-3"
   ],
   "a": 0
  },
@@ -27790,9 +27807,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Somos llamados a reflejar los principios del cielo, dejando que el Espíritu Santo forme en nosotros el carácter de Cristo. Por eso, elegimos actividades que promuevan pureza, salud y go...»",
   "o": [
    "La conducta cristiana",
-   "La ley de Dios",
-   "El sábado",
-   "La mayordomía"
+   "El matrimonio y la familia",
+   "Dios el Espíritu Santo",
+   "La naturaleza humana"
   ],
   "a": 0
  },
@@ -27885,9 +27902,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 23?",
   "o": [
    "El matrimonio y la familia",
-   "La ley de Dios",
-   "El sábado",
-   "La mayordomía"
+   "La muerte y la resurrección",
+   "La segunda venida de Cristo",
+   "Dios el Espíritu Santo"
   ],
   "a": 0
  },
@@ -27898,9 +27915,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El matrimonio y la familia»?",
   "o": [
    "Génesis 2:18-25",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Romanos 12:1,2",
+   "Hebreos 8:1-5",
+   "Génesis 1:26-28"
   ],
   "a": 0
  },
@@ -27924,9 +27941,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «...establecido por Dios como una unión para toda la vida entre un hombre y una mujer, basada en el amor y la fe compartida. Es un compromiso sagrado que refleja la relación entre Cristo...»",
   "o": [
    "El matrimonio y la familia",
-   "La ley de Dios",
-   "El sábado",
-   "La mayordomía"
+   "La muerte y la resurrección",
+   "La segunda venida de Cristo",
+   "Dios el Espíritu Santo"
   ],
   "a": 0
  },
@@ -28019,9 +28036,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 24?",
   "o": [
    "El ministerio de Cristo en el Santuario celestial",
-   "La segunda venida de Cristo",
-   "La muerte y la resurrección",
-   "El milenio y el fin del pecado"
+   "La vida, muerte y resurrección de Cristo",
+   "Los dones y ministerios espirituales",
+   "La muerte y la resurrección"
   ],
   "a": 0
  },
@@ -28032,9 +28049,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El ministerio de Cristo en el Santuario celestial»?",
   "o": [
    "Hebreos 8:1-5",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Génesis 2:18-25",
+   "Tito 2:13",
+   "Romanos 12:1,2"
   ],
   "a": 0
  },
@@ -28058,9 +28075,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «Hay un santuario en el cielo donde Cristo ministra como nuestro Sumo Sacerdote desde su ascensión. Su sacrificio en la cruz fue suficiente, pero en 1844 comenzó la fase final de su mini...»",
   "o": [
    "El ministerio de Cristo en el Santuario celestial",
-   "La segunda venida de Cristo",
-   "La muerte y la resurrección",
-   "El milenio y el fin del pecado"
+   "La vida, muerte y resurrección de Cristo",
+   "Los dones y ministerios espirituales",
+   "La muerte y la resurrección"
   ],
   "a": 0
  },
@@ -28153,9 +28170,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 25?",
   "o": [
    "La segunda venida de Cristo",
-   "El ministerio de Cristo en el Santuario celestial",
-   "La muerte y la resurrección",
-   "El milenio y el fin del pecado"
+   "El milenio y el fin del pecado",
+   "El remanente y su misión",
+   "La experiencia de la salvación"
   ],
   "a": 0
  },
@@ -28166,9 +28183,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La segunda venida de Cristo»?",
   "o": [
    "Tito 2:13",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Hebreos 8:1-5",
+   "Romanos 6:23",
+   "Génesis 2:18-25"
   ],
   "a": 0
  },
@@ -28192,9 +28209,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «...de Cristo es la esperanza suprema de la iglesia y la culminación del evangelio. Será un evento literal, personal, visible y global. En su regreso, los justos muertos resucitarán y, j...»",
   "o": [
    "La segunda venida de Cristo",
-   "El ministerio de Cristo en el Santuario celestial",
-   "La muerte y la resurrección",
-   "El milenio y el fin del pecado"
+   "El milenio y el fin del pecado",
+   "El remanente y su misión",
+   "La experiencia de la salvación"
   ],
   "a": 0
  },
@@ -28287,9 +28304,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 26?",
   "o": [
    "La muerte y la resurrección",
-   "El ministerio de Cristo en el Santuario celestial",
    "La segunda venida de Cristo",
-   "El milenio y el fin del pecado"
+   "El matrimonio y la familia",
+   "La experiencia de la salvación"
   ],
   "a": 0
  },
@@ -28300,9 +28317,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La muerte y la resurrección»?",
   "o": [
    "Romanos 6:23",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Tito 2:13",
+   "Apocalipsis 20",
+   "Hebreos 8:1-5"
   ],
   "a": 0
  },
@@ -28326,9 +28343,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «La consecuencia del pecado es la muerte, pero Dios, el único inmortal, dará vida eterna a los redimidos. Hasta entonces, la muerte es un estado de inconsciencia. Cuando Cristo regrese...»",
   "o": [
    "La muerte y la resurrección",
-   "El ministerio de Cristo en el Santuario celestial",
    "La segunda venida de Cristo",
-   "El milenio y el fin del pecado"
+   "El matrimonio y la familia",
+   "La experiencia de la salvación"
   ],
   "a": 0
  },
@@ -28421,9 +28438,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 27?",
   "o": [
    "El milenio y el fin del pecado",
-   "El ministerio de Cristo en el Santuario celestial",
+   "La muerte y la resurrección",
    "La segunda venida de Cristo",
-   "La muerte y la resurrección"
+   "La unidad en el cuerpo de Cristo"
   ],
   "a": 0
  },
@@ -28434,9 +28451,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «El milenio y el fin del pecado»?",
   "o": [
    "Apocalipsis 20",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Romanos 6:23",
+   "2 Pedro 3:13",
+   "Tito 2:13"
   ],
   "a": 0
  },
@@ -28460,9 +28477,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «El milenio es el período de mil años en que Cristo reinará con sus santos en el cielo, entre la primera y la segunda resurrección. Durante ese tiempo, los impíos serán juzgados, y la Ti...»",
   "o": [
    "El milenio y el fin del pecado",
-   "El ministerio de Cristo en el Santuario celestial",
+   "La muerte y la resurrección",
    "La segunda venida de Cristo",
-   "La muerte y la resurrección"
+   "La unidad en el cuerpo de Cristo"
   ],
   "a": 0
  },
@@ -28555,9 +28572,9 @@ const BANCO = [
   "q": "¿Cuál es la creencia número 28?",
   "o": [
    "La Tierra Nueva",
-   "El ministerio de Cristo en el Santuario celestial",
-   "La segunda venida de Cristo",
-   "La muerte y la resurrección"
+   "La ley de Dios",
+   "Dios el Padre",
+   "La Cena del Señor"
   ],
   "a": 0
  },
@@ -28568,9 +28585,9 @@ const BANCO = [
   "q": "¿Cuál de estos es el primer texto clave de la creencia «La Tierra Nueva»?",
   "o": [
    "2 Pedro 3:13",
-   "2 Pedro 1:20,21",
-   "Deuteronomio 6:4",
-   "Génesis 1:1"
+   "Apocalipsis 20",
+   "Romanos 6:23",
+   "Tito 2:13"
   ],
   "a": 0
  },
@@ -28594,9 +28611,9 @@ const BANCO = [
   "q": "¿A qué creencia corresponde esta declaración? «...donde habita la justicia, Dios dará un hogar eterno a los redimidos. Será un lugar perfecto de vida, amor, gozo y aprendizaje continuo en su presencia. Allí Dios vivirá con su pueblo...»",
   "o": [
    "La Tierra Nueva",
-   "El ministerio de Cristo en el Santuario celestial",
-   "La segunda venida de Cristo",
-   "La muerte y la resurrección"
+   "La ley de Dios",
+   "Dios el Padre",
+   "La Cena del Señor"
   ],
   "a": 0
  },
@@ -28691,7 +28708,7 @@ const BANCO = [
    "La doctrina de Dios",
    "La doctrina del hombre",
    "La doctrina de la salvación",
-   "La doctrina de la iglesia"
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28703,8 +28720,8 @@ const BANCO = [
   "o": [
    "La doctrina de Dios",
    "La doctrina del hombre",
-   "La doctrina de la salvación",
-   "La doctrina de la iglesia"
+   "La doctrina de la iglesia",
+   "La doctrina de la vida cristiana"
   ],
   "a": 0
  },
@@ -28715,9 +28732,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 3, «Dios el Padre»?",
   "o": [
    "La doctrina de Dios",
-   "La doctrina del hombre",
+   "La doctrina de la iglesia",
    "La doctrina de la salvación",
-   "La doctrina de la iglesia"
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28730,7 +28747,7 @@ const BANCO = [
    "La doctrina de Dios",
    "La doctrina del hombre",
    "La doctrina de la salvación",
-   "La doctrina de la iglesia"
+   "La doctrina de la vida cristiana"
   ],
   "a": 0
  },
@@ -28741,9 +28758,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 5, «Dios el Espíritu Santo»?",
   "o": [
    "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación",
-   "La doctrina de la iglesia"
+   "La doctrina de la iglesia",
+   "La doctrina de la vida cristiana",
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28756,7 +28773,7 @@ const BANCO = [
    "La doctrina del hombre",
    "La doctrina de Dios",
    "La doctrina de la salvación",
-   "La doctrina de la iglesia"
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28768,8 +28785,8 @@ const BANCO = [
   "o": [
    "La doctrina del hombre",
    "La doctrina de Dios",
-   "La doctrina de la salvación",
-   "La doctrina de la iglesia"
+   "La doctrina de la iglesia",
+   "La doctrina de la vida cristiana"
   ],
   "a": 0
  },
@@ -28780,9 +28797,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 8, «El gran conflicto»?",
   "o": [
    "La doctrina de la salvación",
-   "La doctrina de Dios",
+   "La doctrina de la vida cristiana",
    "La doctrina del hombre",
-   "La doctrina de la iglesia"
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28793,9 +28810,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 9, «La vida, muerte y resurrección de Cristo»?",
   "o": [
    "La doctrina de la salvación",
-   "La doctrina de Dios",
+   "La doctrina de la iglesia",
    "La doctrina del hombre",
-   "La doctrina de la iglesia"
+   "La doctrina de Dios"
   ],
   "a": 0
  },
@@ -28806,9 +28823,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 10, «La experiencia de la salvación»?",
   "o": [
    "La doctrina de la salvación",
+   "La doctrina de la vida cristiana",
    "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la iglesia"
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28819,9 +28836,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 11, «Crecer en Cristo»?",
   "o": [
    "La doctrina de la iglesia",
+   "La doctrina de la salvación",
    "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28832,9 +28849,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 12, «La iglesia»?",
   "o": [
    "La doctrina de la iglesia",
-   "La doctrina de Dios",
+   "La doctrina de la salvación",
    "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la vida cristiana"
   ],
   "a": 0
  },
@@ -28845,9 +28862,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 13, «El remanente y su misión»?",
   "o": [
    "La doctrina de la iglesia",
-   "La doctrina de Dios",
    "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de Dios",
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28858,9 +28875,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 14, «La unidad en el cuerpo de Cristo»?",
   "o": [
    "La doctrina de la iglesia",
+   "La doctrina de la salvación",
    "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la vida cristiana"
   ],
   "a": 0
  },
@@ -28871,9 +28888,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 15, «El bautismo»?",
   "o": [
    "La doctrina de la iglesia",
-   "La doctrina de Dios",
    "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la vida cristiana",
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28884,9 +28901,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 16, «La Cena del Señor»?",
   "o": [
    "La doctrina de la iglesia",
+   "La doctrina de la salvación",
    "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28897,9 +28914,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 17, «Los dones y ministerios espirituales»?",
   "o": [
    "La doctrina de la iglesia",
-   "La doctrina de Dios",
+   "La doctrina de la salvación",
    "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la vida cristiana"
   ],
   "a": 0
  },
@@ -28910,9 +28927,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 18, «El don de profecía»?",
   "o": [
    "La doctrina de la iglesia",
-   "La doctrina de Dios",
    "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de Dios",
+   "La doctrina de los acontecimientos finales"
   ],
   "a": 0
  },
@@ -28923,9 +28940,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 19, «La ley de Dios»?",
   "o": [
    "La doctrina de la vida cristiana",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la salvación",
+   "La doctrina de los acontecimientos finales",
+   "La doctrina del hombre"
   ],
   "a": 0
  },
@@ -28936,9 +28953,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 20, «El sábado»?",
   "o": [
    "La doctrina de la vida cristiana",
-   "La doctrina de Dios",
+   "La doctrina de la iglesia",
    "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de Dios"
   ],
   "a": 0
  },
@@ -28949,9 +28966,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 21, «La mayordomía»?",
   "o": [
    "La doctrina de la vida cristiana",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la salvación",
+   "La doctrina de los acontecimientos finales",
+   "La doctrina de Dios"
   ],
   "a": 0
  },
@@ -28962,9 +28979,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 22, «La conducta cristiana»?",
   "o": [
    "La doctrina de la vida cristiana",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la salvación",
+   "La doctrina de la iglesia",
+   "La doctrina del hombre"
   ],
   "a": 0
  },
@@ -28975,9 +28992,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 23, «El matrimonio y la familia»?",
   "o": [
    "La doctrina de la vida cristiana",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la iglesia",
+   "La doctrina de los acontecimientos finales",
+   "La doctrina de Dios"
   ],
   "a": 0
  },
@@ -28988,9 +29005,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 24, «El ministerio de Cristo en el Santuario celestial»?",
   "o": [
    "La doctrina de los acontecimientos finales",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la vida cristiana",
+   "La doctrina de la iglesia",
+   "La doctrina del hombre"
   ],
   "a": 0
  },
@@ -29001,9 +29018,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 25, «La segunda venida de Cristo»?",
   "o": [
    "La doctrina de los acontecimientos finales",
-   "La doctrina de Dios",
+   "La doctrina de la salvación",
    "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de Dios"
   ],
   "a": 0
  },
@@ -29014,9 +29031,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 26, «La muerte y la resurrección»?",
   "o": [
    "La doctrina de los acontecimientos finales",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la vida cristiana",
+   "La doctrina de la iglesia",
+   "La doctrina de Dios"
   ],
   "a": 0
  },
@@ -29027,9 +29044,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 27, «El milenio y el fin del pecado»?",
   "o": [
    "La doctrina de los acontecimientos finales",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la vida cristiana",
+   "La doctrina de la salvación",
+   "La doctrina del hombre"
   ],
   "a": 0
  },
@@ -29040,9 +29057,9 @@ const BANCO = [
   "q": "¿A qué doctrina pertenece la creencia 28, «La Tierra Nueva»?",
   "o": [
    "La doctrina de los acontecimientos finales",
-   "La doctrina de Dios",
-   "La doctrina del hombre",
-   "La doctrina de la salvación"
+   "La doctrina de la salvación",
+   "La doctrina de la iglesia",
+   "La doctrina de Dios"
   ],
   "a": 0
  },
@@ -29079,9 +29096,9 @@ const BANCO = [
   "q": "¿Con cuál creencia ABRE «La doctrina de Dios»?",
   "o": [
    "La Palabra de Dios",
-   "La creación",
-   "La naturaleza humana",
-   "El gran conflicto"
+   "El don de profecía",
+   "El gran conflicto",
+   "La Cena del Señor"
   ],
   "a": 0
  },
@@ -29118,9 +29135,9 @@ const BANCO = [
   "q": "¿Con cuál creencia ABRE «La doctrina del hombre»?",
   "o": [
    "La creación",
-   "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre"
+   "El bautismo",
+   "Dios el Hijo",
+   "La iglesia"
   ],
   "a": 0
  },
@@ -29157,9 +29174,9 @@ const BANCO = [
   "q": "¿Con cuál creencia ABRE «La doctrina de la salvación»?",
   "o": [
    "El gran conflicto",
-   "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre"
+   "La Cena del Señor",
+   "Crecer en Cristo",
+   "El don de profecía"
   ],
   "a": 0
  },
@@ -29196,9 +29213,9 @@ const BANCO = [
   "q": "¿Con cuál creencia ABRE «La doctrina de la iglesia»?",
   "o": [
    "Crecer en Cristo",
-   "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre"
+   "El gran conflicto",
+   "La Tierra Nueva",
+   "La ley de Dios"
   ],
   "a": 0
  },
@@ -29235,9 +29252,9 @@ const BANCO = [
   "q": "¿Con cuál creencia ABRE «La doctrina de la vida cristiana»?",
   "o": [
    "La ley de Dios",
-   "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre"
+   "Dios el Padre",
+   "La Tierra Nueva",
+   "Crecer en Cristo"
   ],
   "a": 0
  },
@@ -29274,9 +29291,9 @@ const BANCO = [
   "q": "¿Con cuál creencia ABRE «La doctrina de los acontecimientos finales»?",
   "o": [
    "El ministerio de Cristo en el Santuario celestial",
-   "La Palabra de Dios",
-   "La Deidad",
-   "Dios el Padre"
+   "La vida, muerte y resurrección de Cristo",
+   "Los dones y ministerios espirituales",
+   "La unidad en el cuerpo de Cristo"
   ],
   "a": 0
  },
@@ -32818,7 +32835,7 @@ const MANUAL = [
    },
    {
     "t": "Mientras lo haces",
-    "h": "<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>\n    <li>Las preguntas <strong>cambian cada vez</strong>: salen de\n    {BANCO_CAT} preguntas y el examen escoge primero las que <strong>nunca te\n    han salido</strong>. Cuando ya te salieron todas, vuelve a empezar por las\n    que fallaste.</li>\n    <li>Las opciones también se barajan. No se puede aprobar marcando siempre\n    la misma letra.</li>\n    <li>Al terminar, toca <strong>Entregar</strong>.</li></ul>"
+    "h": "<ul><li>Arriba queda fija una barra con el reloj y cuántas llevas\n    respondidas («5 de 15»). No se va al bajar. El reloj se pone rojo en los\n    últimos dos minutos.</li>\n    <li>Mientras dura el examen solo se ve el examen: el filtro de estudio y las\n    opciones del director se esconden, y vuelven al entregar o cancelar.</li>\n    <li>Las preguntas <strong>cambian cada vez</strong>: salen de\n    {BANCO_CAT} preguntas y el examen escoge primero las que <strong>nunca te\n    han salido</strong>. Cuando ya te salieron todas, vuelve a empezar por las\n    que fallaste.</li>\n    <li>Las opciones también se barajan. No se puede aprobar marcando siempre\n    la misma letra.</li>\n    <li>Al terminar, toca <strong>Entregar</strong>.</li></ul>"
    },
    {
     "t": "Las tres secciones",
@@ -40766,7 +40783,7 @@ function iniciar(m){
   marcaVistas(prueba);
   seg=segundosPara(prueba.length);
   document.getElementById('ex-inicio').style.display='none';
-  document.getElementById('ex-curso').style.display='block';
+  exCurso(true);
   document.getElementById('ex-result').style.display='none';
   pintaPreguntas();corre();
 }
@@ -40877,9 +40894,23 @@ function posicion(q){
 }
 
 function cuenta(){
-  const a=prueba.filter(hecha).length;
+  const a=prueba.filter(hecha).length,n=prueba.length;
   const e=document.getElementById('contador');
-  if(e)e.textContent=a+' de '+prueba.length+' respondidas';
+  if(e)e.textContent=a+' de '+n+' respondidas';
+  /* La barra pegada arriba lleva el mismo avance: quien va en la 9 sabe
+     cuántas le faltan sin bajar hasta el botón de entregar. */
+  const r=document.getElementById('ex-resp'),pb=document.getElementById('ex-prog'),pi=document.getElementById('ex-prog-i');
+  if(r)r.textContent=a+' de '+n;
+  if(pb){pb.setAttribute('aria-valuemax',n);pb.setAttribute('aria-valuenow',a);}
+  if(pi)pi.style.width=(n?Math.round(a/n*100):0)+'%';
+}
+
+/* Modo concentración: mientras hay un examen en curso no se ve nada más que
+   el examen. Antes, el filtro de estudio y el bloque del director quedaban
+   arriba y la primera opción arrancaba en la mitad baja de la pantalla. */
+function exCurso(on){
+  document.getElementById('ex-curso').style.display=on?'block':'none';
+  document.body.classList.toggle('ex-activo',!!on);
 }
 
 function entregar(){
@@ -40922,7 +40953,7 @@ function entregar(){
   try{pintaSenales();}catch(e){}
 
   ultimoRes={pts,tot,pct,med,msg,s3};
-  document.getElementById('ex-curso').style.display='none';
+  exCurso(false);
   pintaResultado();
 }
 
@@ -41032,7 +41063,7 @@ function reinicia(){
   clearInterval(reloj);
   entregado=false;resp={};prueba=[];evalActual=null;
   document.getElementById('ex-inicio').style.display='block';
-  document.getElementById('ex-curso').style.display='none';
+  exCurso(false);
   document.getElementById('ex-result').style.display='none';
   pintaExInicio();
 }
@@ -41393,7 +41424,7 @@ function haceEvaluacion(){
   ir('examen');
   document.getElementById('ex-result').style.display='none';
   document.getElementById('ex-inicio').style.display='none';
-  document.getElementById('ex-curso').style.display='block';
+  exCurso(true);
   pintaPreguntas();corre();
   window.scrollTo({top:0});
 }

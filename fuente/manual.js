@@ -384,7 +384,11 @@ const MANUAL = [
     apágalo en <strong>Cambiar este examen</strong>. El director tiene el mismo
     interruptor al abrir una evaluación, y viene prendido.</p>` },
   { t:'Mientras lo haces',
-    h:`<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>
+    h:`<ul><li>Arriba queda fija una barra con el reloj y cuántas llevas
+    respondidas («5 de 15»). No se va al bajar. El reloj se pone rojo en los
+    últimos dos minutos.</li>
+    <li>Mientras dura el examen solo se ve el examen: el filtro de estudio y las
+    opciones del director se esconden, y vuelven al entregar o cancelar.</li>
     <li>Las preguntas <strong>cambian cada vez</strong>: salen de
     {BANCO_CAT} preguntas y el examen escoge primero las que <strong>nunca te
     han salido</strong>. Cuando ya te salieron todas, vuelve a empezar por las

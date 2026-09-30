@@ -17,7 +17,13 @@ const CR_BANCO_DOC = (() => {
 
   for (const c of CR_CAPS) {
     const mia = DOCTRINAS.find(d => d.id === c.doc);
-    const otras = DOCTRINAS.filter(d => d.id !== mia.id).slice(0, 3).map(d => d.nombre);
+    /* v139: las de largo mas parecido, no las tres primeras de la lista:
+       «La doctrina de los acontecimientos finales» contra «La doctrina de
+       Dios» se contestaba por el largo. */
+    const n = num(c.id), salta = [n % 5, (n + 2) % 5];   // rota, o sale siempre la misma
+    const otras = DOCTRINAS.filter(d => d.id !== mia.id).map(d => d.nombre)
+      .sort((x, y) => Math.abs(x.length - mia.nombre.length) - Math.abs(y.length - mia.nombre.length) || x.localeCompare(y))
+      .filter((_, i) => !salta.includes(i)).slice(0, 3);
     qs.push({ cap:c.id, t:'mc', nv:2,
       q:'¿A qué doctrina pertenece la creencia ' + num(c.id) + ', «' + c.sub + '»?',
       o:[mia.nombre, ...otras], a:0 });
@@ -36,7 +42,9 @@ const CR_BANCO_DOC = (() => {
       o:[String(d.n), ...DOCTRINAS.filter(x => x.n !== d.n).slice(0, 3).map(x => String(x.n))], a:0 });
     qs.push({ cap:capD, t:'mc', nv:2,
       q:'¿Con cuál creencia ABRE «' + d.nombre + '»?',
-      o:[nom(capD), ...CR_CAPS.filter(c => c.doc !== d.id).slice(0, 3).map(c => c.sub)], a:0 });
+      o:[nom(capD), ...CR_CAPS.filter(c => c.doc !== d.id).map(c => c.sub)
+        .sort((x, y) => Math.abs(x.length - nom(capD).length) - Math.abs(y.length - nom(capD).length) || x.localeCompare(y))
+        .slice(0, 3)], a:0 });
   }
 
   qs.push({ cap:'cr01', t:'mc', nv:1,

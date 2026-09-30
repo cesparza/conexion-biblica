@@ -1583,6 +1583,60 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
 }
 
+/* ─── v139: las opciones no pueden delatar la respuesta ───
+   Guías de redacción de preguntas (Haladyna y otros): ninguna opción debe
+   destacar por su forma. Medido en v138: 2 preguntas donde solo la correcta
+   iba entre «», 59 donde la correcta era mucho más larga que las demás, y
+   opciones falsas que los generadores repetían en casi todas las preguntas
+   de su tipo («Deuteronomio 6:4» en 27 de 28; Lucas 12:15, Salmo 113:7 y
+   1 Juan 5:15 en los 31 días). Una niña aprende a descartar esas sin leer. */
+{
+  const Z=montar(RET+', BANCO');
+  const mc=Z.BANCO.filter(q=>q.t==='mc'&&Array.isArray(q.o)&&q.o.length>=3&&typeof q.a==='number');
+  const tipo=x=>/^\s*«/.test(x)?'«':/^\s*[“"]/.test(x)?'“':'-';
+  const comillas=mc.filter(q=>{const t=q.o.map(tipo);return new Set(t).size>1&&t.filter(x=>x===t[q.a]).length===1;});
+  ok(comillas.length===0,'Ninguna pregunta donde solo la correcta lleva su tipo de comillas'+
+    (comillas.length?' ('+comillas.map(q=>q.q.slice(0,40)).join(' / ')+')':''));
+  const larga=mc.filter(q=>{const L=q.o.map(x=>String(x).length),mx=Math.max(...L);
+    if(L.indexOf(mx)!==q.a||L.filter(x=>x===mx).length>1)return false;
+    return mx>1.6*((L.reduce((a,b)=>a+b,0)-mx)/(L.length-1));});
+  ok(larga.length<=6,'La correcta casi nunca es la más larga por mucho ('+larga.length+' de '+mc.length+
+    '; eran 59. Las que quedan son nombres que no se pueden alargar)');
+  const repite=(filtro,etq,max)=>{const qs=mc.filter(q=>filtro.test(q.q)),c={};
+    qs.forEach(q=>q.o.forEach((o,i)=>{if(i!==q.a)c[o]=(c[o]||0)+1;}));
+    const [o,n]=Object.entries(c).sort((a,b)=>b[1]-a[1])[0]||['',0];
+    ok(qs.length>5&&n/qs.length<=max,etq+': la opción falsa más repetida sale en '+n+' de '+qs.length+' («'+o+'»)');};
+  repite(/referencia del versículo del día/,'Referencia del versículo de la matutina',.4);
+  repite(/primer texto clave de la creencia/,'Primer texto clave de cada creencia',.4);
+  repite(/¿Cuál es la creencia número/,'Nombre de cada creencia',.4);
+}
+
+/* ─── v139: el examen en modo concentración ───
+   El reloj tenía sticky pero vivía en una fila de 45px y se iba al bajar; y con
+   el examen corriendo, el filtro de estudio y el bloque del director quedaban
+   arriba de la primera pregunta. Aquí: la clase del modo se pone al empezar y
+   se quita al entregar o cancelar, y el avance de la barra cuadra con lo
+   respondido. */
+{
+  const clases=`document.body.classList={_s:new Set(),add(c){this._s.add(c)},remove(c){this._s.delete(c)},
+    toggle(c,f){(f===undefined?!this._s.has(c):f)?this._s.add(c):this._s.delete(c)},contains(c){return this._s.has(c)}};`;
+  const Z=montar(RET+', cuerpo:()=>document.body, el:id=>document.getElementById(id), reinicia',{antes:clases});
+  Z.ponCat('av'); Z.iniciar('normal');
+  ok(Z.cuerpo().classList.contains('ex-activo'),'Al empezar el examen se entra en modo concentración');
+  ok(Z.el('ex-curso').style.display==='block','Y el examen se ve');
+  const p=Z.prueba(), mc=p.filter(q=>q.t==='mc').slice(0,3);
+  mc.forEach(q=>Z.marca(q.id,q.a));
+  ok(Z.el('ex-resp').textContent===mc.length+' de '+p.length,
+    'La barra dice cuántas van ('+Z.el('ex-resp').textContent+')');
+  ok(Z.el('ex-prog').getAttribute('aria-valuenow')===String(mc.length)&&
+     Z.el('ex-prog').getAttribute('aria-valuemax')===String(p.length),
+    'Y la barra de progreso lo anuncia a un lector de pantalla');
+  Z.entregar();
+  ok(!Z.cuerpo().classList.contains('ex-activo'),'Al entregar se sale del modo concentración');
+  Z.iniciar('normal'); Z.reinicia();
+  ok(!Z.cuerpo().classList.contains('ex-activo'),'Y al cancelar también');
+}
+
 /* ─── el director tiene que poder ver EN QUE se equivoco ───
    El examen corre en el navegador, asi que al servidor solo le llegaba la
    nota. Ahora viaja tambien lo que respondio: una entrada por pregunta con la

@@ -1371,6 +1371,13 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
   ok(blancoTenue.length === 0, 'Ninguna letra en blanco translucido por debajo de 90%' + (blancoTenue.length ? ' (' + blancoTenue.join(', ') + ')' : ''));
   ok(/(^|\})\s*::placeholder\{color:var\(--v-tinta2/.test(sinCom), 'Los placeholders no usan el gris del navegador (#757575)');
   ok(/\.op:disabled,\.vf button:disabled\{color:var\(--v-tinta2/.test(sinCom), 'Las opciones del examen entregado se leen (el navegador las deja al 30%)');
+  /* v139: sticky en la barra del examen, no en el reloj (su fila media 45px). */
+  { const CUERPO=fs.readFileSync(FUENTE('cuerpo.html'),'utf8');
+    ok(/\.ex-barra\{position:sticky/.test(sinCom),'La barra del examen es la que se pega arriba');
+    ok(!/#ex-curso \.timer\{[^}]*position:sticky/.test(sinCom),'El reloj no lleva sticky propio (dentro de su fila no se pega)');
+    ok(/class="ex-barra"[\s\S]{0,600}id="reloj"[\s\S]{0,600}id="ex-resp"/.test(CUERPO),'El reloj y el avance van dentro de la barra');
+    ok(!/getElementById\('ex-curso'\)\.style\.display='(block|none)'/.test(APP),
+      'El examen se muestra y se esconde solo con exCurso(), que también pone el modo concentración'); }
   /* v136: lo mismo en el encabezado de las tablas: gris sobre azul, 1,52.
      Cuenta la ultima regla que le pone color, que es la que gana. */
   const colTh = [...sinCom.matchAll(/\.info-table th\{[^}]*?(?<![-\w])color:([^;}]+)/g)].map(m => m[1]);
