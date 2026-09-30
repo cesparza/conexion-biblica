@@ -2414,3 +2414,24 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   .txt-rp .lect-full .ico-t{width:1.35em;height:1.35em}
   .txt-rp:not(:has(.lect-full)){grid-template-areas:"pl tx tx tx" "ti ti vel vel"}
 }
+
+/* ───────── v150: las 28 para recitar ───────── */
+.l28-bar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.9rem}
+.l28-bar .nota{margin:0;flex:1 1 16rem}
+.l28-g{margin-bottom:1rem}
+.l28-h{display:flex;align-items:baseline;gap:.5rem;margin:0 0 .4rem;font-size:.875rem;font-weight:800;color:var(--azul)}
+.l28-h b{display:inline-grid;place-items:center;min-width:1.6rem;height:1.6rem;border-radius:999px;
+  background:color-mix(in srgb,var(--azul) 10%,var(--v-sup,#fff));font-size:.75rem}
+.l28-h small{font-size:.75rem;font-weight:600;color:var(--gris)}
+.l28{list-style:none;margin:0;padding:0;border:1px solid var(--v-linea,#e5e7eb);border-radius:12px;overflow:hidden;background:var(--v-sup,#fff)}
+.l28 li{display:flex;align-items:center;gap:.75rem;min-height:44px;padding:.4rem .85rem;font-size:1rem}
+.l28 li+li{border-top:1px solid var(--v-linea,#e5e7eb)}
+.l28 li b{flex:0 0 2rem;font-size:.875rem;font-weight:800;color:var(--azul);font-variant-numeric:tabular-nums;text-align:right}
+#detalle.l28-tapado .l28 li{cursor:pointer}
+#detalle.l28-tapado .l28 li:not(.ver) span{color:transparent;background:color-mix(in srgb,var(--azul) 9%,var(--v-sup,#fff));
+  border-radius:8px;user-select:none}
+#detalle.l28-tapado .l28 li.ver span{color:var(--verde-txt);font-weight:700}
+@media print{.l28-tapa{display:none}}
+/* Varias frases cortas seguidas: más chicas que la declaración de una creencia. */
+.decl.frase-libro{font-size:1rem;line-height:1.6;margin:0 0 1rem;padding-left:.9rem;border-left:3px solid color-mix(in srgb,var(--v-cat) 35%,transparent)}
+.decl.frase-libro .decl-src{margin-top:.3rem}

@@ -2074,7 +2074,11 @@ function verCap(id){
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
     '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(c.src?esc(c.src)+' · ':'')+
-    (esCreencia(id)?'textos en RV1960':esMatutina()?'Devoción matutina':'texto RV1995')+
+    /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
+       creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
+       fuente/biblia-otros.js), no de la RV1960; y los repasos de creencias
+       (mc-*) no traen texto bíblico, así que no dicen versión. */
+    (esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
     (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
     /* v129: Profetas y Reyes se escucha por su estudio (ver htmlEstVoz). */
     (conEstudioEnVoz(c)?htmlEstVoz(c):'')+
@@ -2084,6 +2088,7 @@ function verCap(id){
     (secs.some(s=>s.capa)?filtroCapas():'')+
     secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
       refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
+    (conEstudioEnVoz(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
        enlace. Antes eran cuatro colores del mismo peso y ninguno mandaba. */
@@ -2093,6 +2098,7 @@ function verCap(id){
     '<button class="btn tono" onclick="ir(\'examen\')">'+IC('examen')+' Examen</button>'+
     '<button class="btn txt" onclick="imprimeCapitulo(\''+id+'\')">'+IC('imprimir')+' Imprimir</button></div>';
   d.style.display='block';
+  d.classList.remove('l28-tapado');
   limpiaRetiradasDe(d);
   hidrataVoz(d);
   divideVista(d,id);
@@ -2368,6 +2374,22 @@ function festejaRacha(espera){
   const f=()=>festeja('racha','Racha de '+n+' días');
   if(espera&&typeof setTimeout==='function')setTimeout(f,espera);else f();
 }
+
+/* ───────── LAS 28 PARA RECITAR (v150) ─────────
+   «Las 28 de corrido» no es para leerla: es para decirla en orden. El botón
+   tapa los nombres en las dos secciones a la vez (la clase va en #detalle) y
+   cada fila se destapa con un toque. Es lo mismo que «Compruébalo», en lista. */
+function l28Tapa(b){
+  const d=document.getElementById('detalle');if(!d)return;
+  const on=d.classList.toggle('l28-tapado');
+  d.querySelectorAll('.l28 li.ver').forEach(li=>li.classList.remove('ver'));
+  d.querySelectorAll('.l28-tapa').forEach(x=>{x.setAttribute('aria-pressed',String(on));
+    const s=x.querySelector('span');if(s)s.textContent=on?'Mostrar los nombres':'Tapar los nombres';});
+}
+try{document.addEventListener('click',e=>{
+  const li=e.target&&e.target.closest&&e.target.closest('#detalle.l28-tapado .l28 li');
+  if(li)li.classList.toggle('ver');
+});}catch(e){}
 
 /* ───────── LA CELEBRACIÓN (v148) ─────────
    MECANISMO
@@ -2933,6 +2955,32 @@ function htmlLecVoz(total,modo,cid){
    estudio un toque sobre el texto no hacía nada, y que de pronto hable
    sorprendería a quien solo quería leer. */
 const conEstudioEnVoz=c=>!!c&&c.src==='Elena de White';
+/* ── FRASES DEL LIBRO QUE SE PREGUNTAN (v150) ──────────────────────────
+   Regla de Camilo (30-sep): lo que se pregunta tiene que estar en lo que se
+   muestra para estudiar. De P&R la app no trae el libro (licencia), y el
+   examen pide completar frases de él palabra por palabra. Esta sección las
+   muestra, y sale del MISMO banco de preguntas de la categoría: no entra
+   ninguna frase del libro que no estuviera ya en una pregunta, y si mañana se
+   agrega una pregunta, aparece aquí sola. */
+function secFrasesLibro(id){
+  let qs=[];
+  try{qs=bancoDe().filter(q=>q.cap===id&&q.t==='fill');}catch(e){return '';}
+  const vistas=new Set(), fr=[];
+  qs.forEach(q=>{
+    const t=(q.p||[]).map(x=>x.b!=null?x.b:(x.x||'')).join('').trim();
+    if(!t||vistas.has(t))return;vistas.add(t);
+    /* El pie dice de dónde es: «Profetas y Reyes, cap. 41». Si la frase es un
+       versículo que el capítulo cita (Isaías 43:2), el pie lo dice primero. */
+    const ins=String(q.ins||''), cita=(ins.match(/\(([^()]*\d+:\d+)\)/)||[])[1];
+    const base=ins.replace(/\s*(—|\.)\s*Completa[\s\S]*$/,'').replace(/[.:]\s*$/,'');
+    const de=cita?cita+', citado en '+base:base;
+    fr.push('<blockquote class="decl frase-libro">'+esc(t)+(de?'<p class="decl-src">'+esc(de)+'</p>':'')+'</blockquote>');
+  });
+  if(!fr.length)return '';
+  return '<div class="sec" data-capa="nucleo">'+cabezaSec({t:'Frases del libro que se preguntan',capa:'nucleo'})+
+    '<p class="nota">El examen pide completarlas palabra por palabra. Son frases cortas del libro; '+
+    'el capítulo entero se lee en EGW Writings.</p>'+fr.join('')+'</div>';
+}
 const EGW_PYR='https://m.egwwritings.org/es/book/217/toc';
 
 function textoLimpio(el){

@@ -112,7 +112,7 @@ def pestanas(num):
     h = ('<div class="bloque-t">Los textos que trae la cartilla, en su orden</div>'
          '<div class="refs">%s</div>'
          '<p class="nota">Toca cualquier referencia y sale el versículo. '
-         'Son %d capítulos de %d libros, en Reina Valera Antigua.</p>'
+         'Son %d capítulos de %d libros, en la Reina-Valera 1909 (la Antigua).</p>'
          % (''.join('<span class="ref">%s</span>' % x for x in partes),
             len({(a, c) for a, c, _ in tramos}), len({a for a, _, _ in tramos})))
     # La pregunta por el PRIMER texto ya no se revela: se responde. Era la
@@ -179,18 +179,30 @@ def primera_frase(txt):
     m = re.match(r'^(.{40,190}?[.»])\s', txt + ' ')
     return m.group(1) if m else txt[:170]
 
+ORDINAL = ['primera', 'segunda', 'tercera', 'cuarta', 'quinta', 'sexta', 'séptima', 'octava']
+
 def frases_para_completar(txt):
     """Dos tramos distintos de la declaracion: el arranque y uno de mas
     adelante. Sacar las dos de la misma frase seria preguntar dos veces lo
-    mismo con otro hueco."""
-    partes = [f.strip() for f in re.split(r'(?<=[.»])\s+', txt) if 45 < len(f.strip()) < 200]
+    mismo con otro hueco.
+
+    La etiqueta dice QUE NUMERO de frase es, contado sobre la declaracion
+    entera. Antes decia «primera frase» siempre, y en la creencia 1 la primera
+    mide 230 caracteres, se saltaba por larga, y la pregunta decia «primera»
+    sobre la segunda: quien iba a buscarla a la declaracion no la encontraba
+    donde le decian (Camilo, 30-sep-2026)."""
+    todas = [f.strip() for f in re.split(r'(?<=[.»])\s+', txt) if f.strip()]
+    def et(f):
+        i = todas.index(f) if f in todas else -1
+        return ('%s frase de la declaración' % ORDINAL[i]) if 0 <= i < len(ORDINAL) else 'frase de la declaración'
+    partes = [f for f in todas if 45 < len(f) < 200]
     if not partes:
         return [('primera frase de la declaración', primera_frase(txt))]
-    out = [('primera frase de la declaración', partes[0])]
+    out = [(et(partes[0]), partes[0])]
     if len(partes) >= 2:
         # la mas larga de las siguientes: la que mas datos trae
         resto = max(partes[1:], key=len)
-        out.append(('otro tramo de la declaración', resto))
+        out.append((et(resto), resto))
     return out
 
 def preguntas(num):

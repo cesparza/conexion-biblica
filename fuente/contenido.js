@@ -961,6 +961,13 @@ pr39: [
     El rey no los obligó a dejar su fe: esperaba lograrlo
     <strong>poco a poco</strong>. Y el capítulo advierte que <strong>el primer
     paso</strong> en la dirección equivocada habría llevado a otros.`) },
+  /* v150: lo que el examen pregunta de este capítulo y el estudio no
+     decía. Cada línea sale de la pregunta y su respuesta del banco, nada más. */
+  { t:'Otros datos que se preguntan', capa:'nucleo', h:
+    li([
+      `Melsar aceptó hacer la prueba de los diez días, aunque temía que esa concesión pudiera desagradar al rey.`,
+      `Los padres de Daniel y sus amigos les habían inculcado hábitos de estricta templanza.`
+    ]) },
 ],
 
 /* ═══════════════ P&R 40 ═══════════════ */
@@ -1132,6 +1139,14 @@ pr41: [
     <strong>lecciones importantes para nuestra época</strong>: en el tiempo del
     fin los fieles serán presionados a dar un culto falso, y deberán poner la
     Palabra de Dios por encima de los mandatos de los hombres (PR 376.1-2).`) },
+  /* v150: lo que el examen pregunta de este capítulo y el estudio no
+     decía. Cada línea sale de la pregunta y su respuesta del banco, nada más. */
+  { t:'Otros datos que se preguntan', capa:'nucleo', h:
+    li([
+      `Nabucodonosor supo cómo se vería el Hijo de Dios porque los cautivos hebreos le habían hablado de Cristo, el Redentor que iba a venir.`,
+      `En la hora de su prueba, los tres jóvenes recordaron la promesa de Isaías 43:2: al pasar por el fuego, no se quemarían.`,
+      `En el tiempo del fin, la ira del hombre se despertará en forma especial contra los que santifican el sábado del cuarto mandamiento.`
+    ]) },
 ],
 
 /* ═══════════════ P&R 42 ═══════════════ */
@@ -1399,6 +1414,12 @@ pr44: [
 
   { t: '👴 Daniel, de unos 84 años, y el Dios que carga a los suyos hasta la vejez',
     h: hi(`<em>Esto no lo dice el capítulo: la edad se calcula con las fechas del libro de Daniel, lo de Bel y Nebo viene del libro de Isaías y la fiesta de Año Nuevo, de la historia de Babilonia. Es contexto de apoyo, no materia del examen.</em><br><br><strong>Daniel tenía cerca de 84 años cuando lo arrojaron al foso: Dios seguía interesado en él en la ancianidad tanto como en su juventud.</strong> El profeta Isaías había contrastado esto mismo con los ídolos de Babilonia: cada primavera, en la fiesta de Año Nuevo, las estatuas de los dioses Bel y Nebo tenían que ser cargadas a lomo de animales por las calles, porque no podían moverse por sí solas. El Dios verdadero, en cambio, promete lo contrario: "hasta la vejez seré el mismo, hasta las canas los llevaré" — es Dios quien carga a su pueblo, no al revés. Daniel vivió esa promesa en carne propia esa noche en el foso.`) },
+  /* v150: lo que el examen pregunta de este capítulo y el estudio no
+     decía. Cada línea sale de la pregunta y su respuesta del banco, nada más. */
+  { t:'Otros datos que se preguntan', capa:'nucleo', h:
+    li([
+      `La vida de Daniel muestra que un hombre de negocios puede ser un hombre instruido por Dios a cada paso.`
+    ]) },
 ],
 /* ═══════════════ DANIEL 7 ═══════════════ */
 d7: [

@@ -1675,6 +1675,41 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(enManual.length===0,'El manual no usa emoji'+(enManual.length?': '+enManual.join(' '):''));
 }
 
+/* ─── v150: lo que se pregunta está en lo que se muestra ───
+   Regla de Camilo (30-sep): si se pregunta algo, tiene que estar en el
+   material de estudio de ESE capítulo. Toda pregunta de completar de las ocho
+   categorías se busca en el HTML ya pintado de su capítulo, pedazo por pedazo
+   (las que juntan partes con «…» se buscan por partes). Las de opción múltiple
+   no se pueden medir por texto: se revisaron a mano (73 de 79 de P&R estaban,
+   las 6 que no se agregaron al estudio). */
+{
+  const Z=montar(`verCap, ponCat, capsDe, modsDe, bancoDe, CATS, el:id=>document.getElementById(id)`,{});
+  const norm=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ')
+    .replace(/&[a-z]+;/g,' ').replace(/[«»"“”.,;:¡!¿?()—–\-]/g,' ').replace(/\b\d+\b/g,' ').replace(/\s+/g,' ').toLowerCase().trim();
+  const faltan=[];let n=0;
+  for(const cat of Object.keys(Z.CATS)){Z.ponCat(cat);const st={};
+    for(const c of [...Z.capsDe(),...Z.modsDe()]){Z.verCap(c.id);st[c.id]=norm(Z.el('detalle').innerHTML);}
+    for(const q of Z.bancoDe()){if(q.t!=='fill'||!st[q.cap])continue;n++;
+      const raw=(q.p||[]).map(x=>x.b!=null?x.b:(x.x||'')).join('');
+      const frs=raw.split(/\.\.\.|…/).map(norm).filter(f=>f.length>8);
+      if(!frs.every(f=>st[q.cap].includes(f)))faltan.push(cat+'/'+q.cap+' «'+raw.slice(0,50)+'»');}}
+  ok(n>300&&faltan.length===0,'Toda pregunta de completar está en el estudio de su capítulo ('+n+' revisadas)'+
+    (faltan.length?': '+[...new Set(faltan)].slice(0,6).join(' | '):''));
+  /* Y la etiqueta dice la frase que es: «segunda frase» tiene que ser la segunda. */
+  const {CR_CONTENIDO,CR_BANCO}=require(path.join(RAIZ,'fuente','creencias.js'));
+  const ORD=['primera','segunda','tercera','cuarta','quinta','sexta','séptima','octava'];
+  const malas=[];
+  for(const q of CR_BANCO.filter(q=>q.t==='fill'&&/frase de la declaración/.test(q.ins||''))){
+    const m=(q.ins.match(/(\S+) frase de la declaración/)||[])[1];const i=ORD.indexOf(m);
+    /* Hasta el pie de la cita, no hasta el primer «»»: la 6 trae una cita adentro. */
+    const dec=(CR_CONTENIDO[q.cap]||[]).map(s=>s.h).join(' ').match(/<blockquote class="decl">«([\s\S]*?)»?<p class="decl-src"/);
+    if(!dec||i<0)continue;
+    const todas=dec[1].split(/(?<=[.»])\s+/).map(x=>x.trim()).filter(Boolean);
+    const frase=(q.p||[]).map(x=>x.b!=null?x.b:(x.x||'')).join('').trim();
+    if(norm(todas[i]||'')!==norm(frase))malas.push(q.cap+' dice «'+m+'»');}
+  ok(malas.length===0,'Cada «N.ª frase de la declaración» es de verdad esa frase'+(malas.length?': '+malas.slice(0,5).join(', '):''));
+}
+
 /* ─── v148: la celebración ───
    Se celebra al cerrar algo, sin sonido, y nunca rompe el flujo: en el
    entorno de pruebas no hay canvas y tiene que pasar de largo. */
