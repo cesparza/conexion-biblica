@@ -1588,6 +1588,28 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
 }
 
+/* ─── v139: qué preguntas costaron (como el reporte de Kahoot) ───
+   Difícil: menos del 35% de acierto con al menos dos respuestas. Necesita
+   ayuda: menos del 35% del examen. Y la práctica de las difíciles trae
+   exactamente esas preguntas. */
+{
+  const Z=montar(RET+', analisisDe, clavesDe, poolDe, bancoDe');
+  Z.ponCat('av');
+  const K=Z.bancoDe().filter(q=>q.t==='mc').slice(0,4).map(Z.claveQ);
+  const it=(nom,b)=>({nombre:nom,nota:b.filter(Boolean).length,total:4,
+    respuestas:JSON.stringify(K.map((k,i)=>({k,t:'mc',b:b[i]})))});
+  const r=Z.analisisDe([it('A',[0,1,1,1]),it('B',[0,1,1,0]),it('C',[1,0,1,0]),it('D',[0,0,0,1])]);
+  ok(r.dificiles.length===1&&r.dificiles[0].k===K[0],'Difícil es la que acertó menos del 35% (1 de 4): '+r.dificiles.map(x=>x.k).join(','));
+  ok(r.ayuda.map(x=>x.nombre).join()==='D','Necesita ayuda quien acertó menos del 35% del examen');
+  const solo=Z.analisisDe([it('A',[0,0,0,0])]);
+  ok(solo.dificiles.length===0,'Con una sola respuesta ninguna pregunta cuenta como difícil del grupo');
+  Z.ponAlcance('q:'+K.slice(0,2).join(','));
+  const pool=Z.poolDe();
+  ok(pool.length===2&&pool.every(q=>K.slice(0,2).includes(Z.claveQ(q))),'La práctica de las difíciles trae exactamente esas preguntas');
+  ok(Z.clavesDe('d1,d3')===null&&Z.clavesDe('q:<x>')===null,'Una lista de capítulos o basura no se toman por lista de preguntas');
+  Z.ponAlcance('todo');
+}
+
 /* ─── v139: el repaso se acorta al acercarse el examen ───
    Cepeda y otros (2008): el espacio entre repasos rinde más cerca del 20% del
    tiempo que falta para la prueba. Se simula la fecha para ver la regla en

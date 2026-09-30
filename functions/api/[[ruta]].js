@@ -594,11 +594,16 @@ export async function onRequest(context) {
          columna es TEXT, asi que no hace falta migracion; antes se cortaba a
          20 y una lista de cinco capitulos llegaba mutilada. */
       const FORMA_LISTA = /^(?:d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})(?:,(?:d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})){1,49}$/;
+      /* v139: UNA LISTA DE PREGUNTAS: «q:d1.abc12,pr41.x9y». Es la práctica de
+         las más difíciles que arma el análisis de una evaluación (como el
+         «kahoot de las difíciles»). Cada clave es capitulo.huella, la misma
+         claveQ() de la app; hasta 14 caben en los 200 caracteres. */
+      const FORMA_CLAVES = /^q:[a-z0-9-]{1,20}\.[0-9a-z]{1,7}(?:,[a-z0-9-]{1,20}\.[0-9a-z]{1,7}){0,19}$/;
       const pedido = limpiar(b.alcance, 200);
       const mr = FORMA_RANGO.exec(pedido);
       const rangoOk = !!mr && Number(mr[2]) <= Number(mr[3]);
       const alcance = (ALCANCES.includes(pedido) || FORMA_CAP.test(pedido) || rangoOk ||
-        FORMA_LISTA.test(pedido)) ? pedido : 'todo';
+        FORMA_LISTA.test(pedido) || FORMA_CLAVES.test(pedido)) ? pedido : 'todo';
       /* EL TOPE REAL LO SABE LA APP, NO EL SERVIDOR: depende de cuantas
          preguntas tiene el banco con ese material, y el banco vive en el HTML.
          Aqui solo se rechaza lo absurdo. Estaba en 60, que es menos que el
@@ -798,6 +803,24 @@ export async function onRequest(context) {
       if (!r) return error('Ese intento no existe.', 404);
       await auditar(env, sesion.cuenta_id, 'ver_revision', 'intento', iid, ipHash);
       return json({ intento: r });
+    }
+
+    /* ───────── QUÉ PREGUNTAS COSTARON (v139) ─────────
+       Kahoot marca «difícil» la pregunta que acertó menos del 35% y lista
+       quién necesita ayuda. Aquí se devuelven las respuestas de todas las que
+       hicieron UNA evaluación, y la app hace la cuenta: el texto de cada
+       pregunta vive en el HTML, no aquí. Es una evaluación, no el historial:
+       con 60 participantes son unos 300 KB como mucho. */
+    if (metodo === 'GET' && ruta === '/panel/evaluacion/analisis') {
+      const eid = limpiar(new URL(request.url).searchParams.get('id') || '', 60);
+      if (!eid) return error('Falta la evaluación.', 400);
+      const { results } = await env.DB.prepare(
+        'SELECT p.nombre, p.categoria, i.nota, i.total, i.respuestas ' +
+        'FROM intento i JOIN participante p ON p.id = i.participante_id ' +
+        'WHERE i.evaluacion_id = ? AND p.borrado_en IS NULL ORDER BY p.nombre'
+      ).bind(eid).all();
+      await auditar(env, sesion.cuenta_id, 'ver_analisis', 'evaluacion', eid, ipHash);
+      return json({ intentos: results || [] });
     }
 
     /* ───────── el revisor del banco ─────────

@@ -3574,6 +3574,8 @@ function poolDe(){
      de las 28 creencias. La garantia sigue en pie por otro camino: con la
      actividad en Daniel, el banco no tiene ni una creencia. */
   if(alcance==='todo')return b;
+  const K=clavesDe(alcance);
+  if(K)return b.filter(q=>K.has(claveQ(q)));
   if(alcance==='creencias')return b.filter(q=>esCreencia(q.cap));
   if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
@@ -3630,6 +3632,14 @@ function textoRango(r){
    La forma es ids separados por coma, en el orden del material. Dos o mas: uno
    solo sigue siendo el id del capitulo, como siempre, para que un alcance
    viejo guardado en un celular o en una evaluacion abierta siga abriendo. */
+/* v139: una evaluación puede ser una LISTA DE PREGUNTAS («q:d1.abc,pr41.x9»):
+   la práctica de las más difíciles que arma el análisis del director. */
+function clavesDe(alc){
+  const m=/^q:(.+)$/.exec(String(alc||''));
+  if(!m)return null;
+  const k=m[1].split(',').filter(x=>/^[a-z0-9-]{1,20}\.[0-9a-z]{1,7}$/.test(x));
+  return k.length?new Set(k):null;
+}
 function listaDe(alc){
   const p=String(alc||'').split(',');
   if(p.length<2)return null;
@@ -4602,6 +4612,7 @@ function textoAlcanceImpr(){
   if(alcance==='creencias')return 'En esto creemos — las 28 creencias';
   if(alcance==='q1')return 'Del 1 al 15 de octubre';
   if(alcance==='q2')return 'Del 16 en adelante';
+  if(clavesDe(alcance))return 'Las preguntas que más costaron en la evaluación';
   const L=listaDe(alcance);
   if(L)return textoLista(L);
   const r=rangoDe(alcance);
@@ -5661,6 +5672,8 @@ async function pintaPanel(){
    esto la tarjeta decía el título y a quién, pero no QUÉ material, que es justo
    lo que cambia entre dos evaluaciones abiertas del mismo grupo. */
 function textoAlcancePanel(alc){
+  const K=clavesDe(alc);
+  if(K)return 'Las '+K.size+' preguntas que más costaron';
   const L=listaDe(alc);
   if(L)return textoLista(L);
   const r=rangoDe(alc);
@@ -6338,7 +6351,89 @@ function cuerpoResultado(ev){
         return '<tr><td>'+esc(x.nombre)+'</td><td>'+esc(catConActividad(x.categoria))+'</td><td><strong>'+
         x.nota+'/'+x.total+'</strong></td><td>'+rev+'</td></tr>';}).join('')+'</table></div>':'')+
     (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'')+
+    (h.filter(function(x){return x.hay_revision;}).length>=2
+      ?'<div class="pan-sw"><button class="btn azul" onclick="verAnalisis(\''+esc(ev.id)+'\')">📊 Qué preguntas costaron</button></div>':'')+
     sumaClub(h);
+}
+
+/* ───────── QUÉ PREGUNTAS COSTARON (v139, como el reporte de Kahoot) ─────────
+   MECANISMO
+   Cada intento guarda, por pregunta, su clave y si acertó. Se juntan los de
+   UNA evaluación y se cuenta el acierto de cada pregunta. Kahoot llama
+   «difícil» a la que acertó menos del 35%, y «necesita ayuda» a quien acertó
+   menos del 35% del examen; se usa el mismo corte. Una pregunta que respondió
+   una sola persona no dice nada del grupo, así que se piden al menos dos.
+   Con eso el director puede abrir una práctica solo con las difíciles. */
+const DIFICIL=.35, MAX_DIFICILES=14;
+function analisisDe(intentos){
+  const porQ={},ayuda=[];
+  (intentos||[]).forEach(function(it){
+    let l=[];try{l=JSON.parse(it.respuestas||'[]');}catch(e){l=[];}
+    l.forEach(function(e){if(!e||!e.k)return;const x=porQ[e.k]=porQ[e.k]||{k:e.k,n:0,b:0};x.n++;if(e.b)x.b++;});
+    if(it.total&&it.nota/it.total<DIFICIL)ayuda.push(it);
+  });
+  const dificiles=Object.values(porQ).filter(function(x){return x.n>=2&&x.b/x.n<DIFICIL;})
+    .sort(function(a,b){return a.b/a.n-b.b/b.n||b.n-a.n;});
+  return {dificiles:dificiles,ayuda:ayuda,total:(intentos||[]).length};
+}
+let panAnalisis=null;
+async function verAnalisis(id){
+  if(!id)return;
+  abreHojaHtml(hojaConCierre('Qué preguntas costaron','Un momento...','<p class="nota">Juntando las respuestas...</p>'),'yo');
+  try{
+    const [a,d]=await Promise.all([srvFetch('/panel/evaluacion/analisis?id='+encodeURIComponent(id)),
+      srvFetch('/panel/evaluacion?id='+encodeURIComponent(id))]);
+    const r=analisisDe(a.intentos),ev=(d&&d.evaluacion)||{};
+    const conTexto=r.dificiles.filter(function(x){return PREG_POR_CLAVE(x.k);}).slice(0,MAX_DIFICILES);
+    panAnalisis={ev:ev,claves:conTexto.map(function(x){return x.k;})};
+    const filas=conTexto.map(function(x){
+      const q=PREG_POR_CLAVE(x.k),cap=(buscaItem(q.cap)||{}).label||'';
+      return '<div class="q mal"><div class="qt">'+esc(q.q||q.ins||'')+'</div>'+
+        '<p class="nota"><strong>'+Math.round(100*x.b/x.n)+'%</strong> acertó ('+x.b+' de '+x.n+')'+
+        (cap?' · '+esc(cap):'')+'</p></div>';}).join('');
+    abreHojaHtml(hojaConCierre('Qué preguntas costaron',(ev.titulo||'')+' · '+r.total+' la hicieron',
+      '<p class="nota">Difícil es la que acertó menos del 35% del grupo. Solo cuentan las que '+
+      'respondieron al menos dos.</p>'+
+      (r.ayuda.length?'<div class="warn-box"><strong>Necesitan ayuda</strong> (acertaron menos del 35%): '+
+        r.ayuda.map(function(x){return esc(x.nombre)+' ('+x.nota+'/'+x.total+')';}).join(', ')+'</div>'
+        :'<p class="nota">Nadie quedó por debajo del 35%.</p>')+
+      (conTexto.length?'<h3 class="sec-cab"><span class="sec-rot">Las '+conTexto.length+' más difíciles</span><span class="sec-linea"></span></h3>'+filas+
+        '<div id="pan-dif-abrir"><button class="btn nar" onclick="pideAbrirDificiles()">Practicar estas '+conTexto.length+' con el grupo</button></div>'
+        :'<p class="nota">Ninguna pregunta quedó por debajo del 35%. 👏</p>')),'yo');
+  }catch(e){
+    abreHojaHtml(hojaConCierre('Qué preguntas costaron','No se pudo',
+      '<p class="nota" style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo cargar')+'</p>'),'yo');
+  }
+}
+/* Abrir cierra las evaluaciones abiertas del mismo grupo (así funciona el
+   servidor: nunca dos abiertas para la misma persona). Por eso pide un
+   segundo toque que lo diga, en vez de cerrar la original sin avisar. */
+function pideAbrirDificiles(){
+  const z=document.getElementById('pan-dif-abrir');
+  if(!z||!panAnalisis)return;
+  z.innerHTML='<p class="nota">Se abre una evaluación nueva, para el mismo grupo, con solo estas '+
+    panAnalisis.claves.length+' preguntas. <strong>Si la original sigue abierta, se cierra</strong>: '+
+    'quien no la haya hecho ya no podrá hacerla.</p>'+
+    '<div class="pan-sw"><button class="btn nar" onclick="abreDificiles()">Sí, abrirla</button>'+
+    '<button class="btn gho" onclick="cierraHoja()">No, dejarlo</button></div>';
+}
+async function abreDificiles(){
+  if(!panAnalisis||!panAnalisis.claves.length)return;
+  const ev=panAnalisis.ev;
+  try{
+    const d=await srvFetch('/panel/evaluacion',{method:'POST',body:JSON.stringify({
+      titulo:('Repaso: '+(ev.titulo||'las difíciles')).slice(0,60),
+      cuantas:Math.max(5,panAnalisis.claves.length),
+      alcance:'q:'+panAnalisis.claves.join(','),nivel:0,solo_fuente:!!ev.solo_fuente,
+      categorias:ev.categorias&&ev.categorias!=='*'?ev.categorias.split(','):[],
+      participantes:ev.ids||[],huella:huellaBanco()})});
+    cierraHoja();
+    panReciente=(d&&d.id)||'';
+    if(d&&d.cerradas&&d.cerradas.length)avisaApp('Se cerró otra evaluación','Se cruzaba con esta: '+
+      d.cerradas.map(function(x){return x.titulo;}).join(', '));
+    await srvRefresca();await pintaPanel();pintaExInicio();pintaInicio();
+    llevaA(d&&d.id?'ev-'+d.id:'cb-panel');
+  }catch(e){avisaApp('No se pudo',e.message||'Revisa la señal e intenta otra vez.');}
 }
 
 /* ───────── la revision de un intento, desde el panel ─────────

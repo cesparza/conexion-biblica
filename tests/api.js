@@ -29,6 +29,13 @@ const ok = (c, m) => { console.log((c ? '✅' : '❌') + ' ' + m); if (!c) f++; 
 /* ── LA GUARDA ANTES QUE LAS RUTAS QUE PROTEGE ──
    Es el error más fácil de cometer: agregar un endpoint /panel/ nuevo más
    arriba y dejarlo abierto sin darse cuenta. */
+/* v139: el análisis de una evaluación (qué preguntas costaron) es solo del director. */
+{ const pa=API.indexOf("ruta === '/panel/evaluacion/analisis'"), pg=API.indexOf("ruta.startsWith('/panel/')");
+  ok(pa>pg&&pg>0,'El análisis de una evaluación va DESPUÉS de la guarda de director');
+  const m=API.match(/const FORMA_CLAVES = (\/.*\/);/);
+  const re=m&&eval(m[1]);
+  ok(re&&re.test('q:d1.abc12,pr41.x9y')&&!re.test('q:d1.abc12,<b>')&&!re.test('q:')&&!re.test('todo'),
+    'Una evaluación por lista de preguntas acepta claves bien formadas y nada más'); }
 /* v139: la clave del director tenía intentos ilimitados; el código de las niñas no. */
 { const i = API.indexOf("ruta === '/panel/entrar'"), j = API.indexOf('env.CLAVE_PANEL', i);
   const tramo = API.slice(i, j);

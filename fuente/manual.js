@@ -824,6 +824,18 @@ const MANUAL = [
     tarjeta dice a quiénes les toca y qué material es.</p>
     <p>Los exámenes de práctica <strong>no se cierran</strong>. Abrir una
     evaluación no le quita nada a nadie.</p>` },
+  { t:'Qué preguntas costaron',
+    h:`<p>Cuando al menos dos la hicieron, la tarjeta trae el botón
+    <strong>📊 Qué preguntas costaron</strong>. Muestra las preguntas que acertó
+    <strong>menos del 35%</strong> del grupo, de la más difícil a la menos, y
+    quiénes acertaron menos del 35% del examen: esas son las que
+    <strong>necesitan ayuda</strong>.</p>
+    <p>Abajo está <strong>Practicar estas con el grupo</strong>: abre una
+    evaluación nueva, para el mismo grupo, con solo esas preguntas (hasta 14).
+    Antes de abrirla te avisa que, si la original sigue abierta, se cierra.
+    Conviene usarlo cuando ya todas hicieron la original.</p>
+    <p>También sale en el historial, al abrir el detalle de una evaluación
+    cerrada.</p>` },
   { t:'Cómo se cierra',
     h:`<p>El botón <strong>Cerrar esta evaluación</strong>, en su propia tarjeta.
     Con varias abiertas, cada una se cierra por aparte: el botón dice cuál.</p>
