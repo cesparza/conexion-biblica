@@ -69,7 +69,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 /* ═══ AVISO DE MATERIAL NUEVO ═══
    Arriba de la barra de navegacion, para que se vea entre en la pantalla que
    sea y sin tapar las pestanas. Naranja de marca: es un aviso, no un error. */
-.av-nuevo{background:var(--naranja);color:var(--v-sobre,#fff);display:flex;align-items:center;
+.av-nuevo{background:var(--naranja-txt);color:var(--v-sobre,#fff);display:flex;align-items:center;
   gap:.6rem;padding:.5rem .8rem;font-size:.86rem;font-weight:700}
 .av-nuevo>span{flex:1;min-width:0}
 .av-nuevo .av-ok{padding:.35rem .8rem;font-size:.82rem;min-height:36px;flex:0 0 auto}
@@ -402,7 +402,8 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.85rem;line-height:1.75}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:.6rem 1.3rem;border-radius:50px;border:none;cursor:pointer;font-family:inherit;font-size:.87rem;font-weight:700;min-height:46px}
 .btn.azul{background:var(--azul);color:var(--v-sobre,#fff)}
-.btn.nar{background:var(--naranja);color:var(--v-sobre,#fff)}
+/* Letra blanca va sobre el naranja oscuro: sobre el de marca daba 3,07. */
+.btn.nar{background:var(--naranja-txt);color:var(--v-sobre,#fff)}
 .btn.ver{background:var(--verde);color:var(--v-sobre,#fff)}
 .btn.gho{background:transparent;color:var(--azul);border:2px solid var(--azul)}
 
@@ -952,7 +953,7 @@ body.leyendo{overflow:hidden}
    un numero encima del icono se lee como parte del dibujo. */
 .nav-t button{position:relative}
 .nv{position:absolute;min-width:18px;height:18px;padding:0 5px;border-radius:9px;
-  background:var(--naranja);color:var(--v-sobre,#fff);font-size:.62rem;font-weight:900;
+  background:var(--naranja-txt);color:var(--v-sobre,#fff);font-size:.62rem;font-weight:900;
   display:flex;align-items:center;justify-content:center;line-height:1;
   font-family:inherit;letter-spacing:0;
   box-shadow:0 0 0 2px rgba(22,48,91,.92);pointer-events:none}
@@ -1248,7 +1249,7 @@ body{
    ahi el publico es un adulto revisando una tabla, no una nina tocando un
    boton. */
 .btn.azul{box-shadow:0 4px 0 0 color-mix(in srgb, var(--azul) 78%, black)}
-.btn.nar{box-shadow:0 4px 0 0 color-mix(in srgb, var(--naranja) 78%, black)}
+.btn.nar{box-shadow:0 4px 0 0 color-mix(in srgb, var(--naranja-txt) 78%, black)}
 .btn.ver{box-shadow:0 4px 0 0 color-mix(in srgb, var(--verde) 78%, black)}
 .btn.rojo{box-shadow:0 4px 0 0 color-mix(in srgb, var(--rojo) 78%, black)}
 .ex-go{
@@ -2724,7 +2725,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = 'c1399931992e';
+const VERSION_APP = '56dcf18026ef';
 
 const CAPS = [
  {

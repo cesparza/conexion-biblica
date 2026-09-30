@@ -1336,6 +1336,13 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
   ok(comoTinta.length === 0,
     'Ningun texto usa el color de relleno, ni en el CSS ni en un style= del JS' +
     (comoTinta.length ? ' (' + comoTinta.length + ' usos)' : ''));
+  /* v137: letra blanca sobre el naranja de marca da 3,07. Donde el fondo
+     naranja lleva letra blanca, va el naranja oscuro (--naranja-txt, 4,75). */
+  const blancoSobreNar = [...sinCom.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .filter(m => /background:var\(--(naranja|v-acento)\)/.test(m[2]) && /(?<![-\w])color:(var\(--v-sobre|#fff)/i.test(m[2]))
+    .map(m => m[1].trim());
+  ok(blancoSobreNar.length === 0,
+    'Ninguna letra blanca va sobre el naranja de marca' + (blancoSobreNar.length ? ' (' + blancoSobreNar.join(', ') + ')' : ''));
   /* v136: lo mismo en el encabezado de las tablas: gris sobre azul, 1,52.
      Cuenta la ultima regla que le pone color, que es la que gana. */
   const colTh = [...sinCom.matchAll(/\.info-table th\{[^}]*?(?<![-\w])color:([^;}]+)/g)].map(m => m[1]);
