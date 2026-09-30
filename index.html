@@ -2468,6 +2468,27 @@ blockquote.decl:not(.frase-libro){max-width:none;margin:.2rem 0 .4rem;
 blockquote.decl:not(.frase-libro) .decl-src{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
   margin-top:.9rem;padding-top:.7rem;border-top:1px solid #f0e2c4}
 blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
+
+/* ───────── v154: el versículo en escritorio sale a la derecha ─────────
+   En el celular sigue la hoja de abajo. En pantalla ancha esa hoja ocupaba los
+   1280 px: renglones de 150 caracteres, la página oscurecida y lo que se
+   estaba estudiando tapado. Es la misma pieza con otra posición (como la hoja
+   de «¿Quién estudia?», que en escritorio ya es un panel): un panel lateral
+   de lectura, con la página visible y apenas atenuada. Tocar afuera, la X o
+   Escape la cierran, igual que antes. */
+@media (min-width:900px){
+  .hoja-vers .hoja-fondo{background:rgba(20,28,40,.1)}
+  .hoja-vers .hoja-caja{top:0;bottom:0;left:auto;right:0;width:min(460px,38vw);
+    max-height:none;border-radius:0;box-shadow:-12px 0 40px rgba(16,24,40,.18);
+    border-left:1px solid var(--v-linea,#e5e7eb);
+    transform:translateX(100%);padding-top:env(safe-area-inset-top,0)}
+  .hoja-vers.abierta .hoja-caja{transform:translateX(0)}
+  .hoja-vers .hoja-asa{display:none}
+  .hoja-vers .hoja-cab{padding:1rem 1.1rem .75rem}
+  .hoja-vers .hoja-txt{padding:1rem 1.1rem;font-size:1.125rem;line-height:1.75}
+  .hoja-vers .hoja-pie{padding:.75rem 1.1rem 1rem}
+}
+@media (min-width:900px) and (prefers-reduced-motion:reduce){.hoja-vers .hoja-caja{transition:none}}
 </style>
 </head>
 <body>
@@ -2999,7 +3020,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = '6927f167fc50';
+const VERSION_APP = '9f932cb05b28';
 
 const CAPS = [
  {
