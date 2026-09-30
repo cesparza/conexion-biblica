@@ -870,10 +870,11 @@ pr39: [
   { t:'📚 En pocas palabras', h:
     hi(`Este capítulo del libro de Elena de White explica <strong>por qué</strong>
     Daniel no quiso la comida del rey.<br><br>
-    No fue capricho ni mala educación. Esa comida se le ofrecía primero a los
+    Esa comida se le ofrecía primero a los
     ídolos, y comerla era como aceptar a esos dioses. Además el vino del rey
     <strong>ponía la mente torpe</strong>.<br><br>
-    Daniel pidió el cambio <strong>con respeto</strong>, no peleando. Y Dios le
+    Daniel pidió el cambio y propuso una prueba, y su petición
+    <strong>fue recibida con respeto</strong>. Y Dios le
     dio salud y una cabeza más despierta que la de todos.<br><br>
     <em>La idea: lo que comemos y cómo cuidamos el cuerpo también afecta la
     mente y la vida con Dios.</em>`) },
@@ -903,6 +904,29 @@ pr39: [
     <strong>por medio de los que le eran leales</strong>, y de la única manera
     en que podía darse.`) },
 
+  { t:'🏷️ Cuatro nombres nuevos', h:
+    hi(`En Babilonia les cambiaron el nombre a los cuatro jóvenes. Daniel pasó a llamarse Beltsasar, Ananías se llamó Sadrach, Misael se llamó Mesach y Azarías se llamó Abednego. Los nombres nuevos recordaban a los dioses de los caldeos. El rey no los obligó a adorar ídolos de golpe: quería que poco a poco se olvidaran de Dios (PR 352.3-352.4).`) },
+  { t:'🍽️ Por qué rechazaron la comida del rey', h:
+    hi(`• <strong>Una porción</strong> de esa comida y ese vino <strong>se ofrecía a los ídolos</strong><br>
+    • Por eso el alimento de la mesa del rey estaba <strong>consagrado a la idolatría</strong><br>
+    • Participar de ella se interpretaba como <strong>homenaje a los dioses de Babilonia</strong><br>
+    • Sabían que el vino <strong>perjudicaría sus facultades físicas y mentales</strong>
+    (conocían la historia de Nadab y Abihú)`) },
+
+  { t:'❤️ Lo que Daniel valoraba más', h:
+    hi(`Daniel pudo haber dicho: «No tengo otra opción, soy prisionero del rey». Pero para él la aprobación de Dios valía más que el favor del rey, y hasta más que su vida. Sus tres amigos lo apoyaron. Si hubieran cedido una vez, habría sido más fácil ceder otra vez, y otra (PR 353.3-354.2).`) },
+  { t:'🚫 Lo que NO fue', h:
+    wa(`Dos cosas que el capítulo descarta expresamente, y que son
+    respuestas equivocadas típicas:<br><br>
+    • <strong>No fue orgullo ni ambición</strong> lo que los llevó a la corte:
+    eran cautivos que Dios había puesto en un país extraño.<br>
+    • <strong>No obraron con presunción</strong> ni decidieron
+    <strong>singularizarse</strong>: actuaron confiando firmemente en Dios.<br><br>
+    Lo que sí cuenta el capítulo: Daniel <strong>solicitó</strong> que se les
+    excusara de la comida del rey y propuso una prueba de diez días.`) },
+
+  { t:'🔟 La prueba de los diez días', h:
+    hi(`Aspenaz tenía miedo: si los jóvenes se veían flacos, el rey podía castigarlo. Entonces Daniel habló con Melsar, el encargado de ellos, y le pidió probar diez días con comida sencilla. Al terminar, los cuatro se veían más sanos que los que comían la comida del rey, y les dejaron seguir así todo el tiempo de estudio (PR 354.3-355.1).`) },
   { t:'📈 Cómo les fue en los tres años', h:
     tbl(['Momento','Lo que dice el capítulo'],[
       ['A los diez días','El resultado fue <strong>lo opuesto</strong> de lo que temía el príncipe'],
@@ -916,37 +940,31 @@ pr39: [
     <strong>“Yo honraré a los que me honran”</strong> (1 Samuel 2:30). Vale
     saberla, porque es una cita que no está en Daniel.`) },
 
-  { t:'🚫 Lo que NO fue', h:
-    wa(`Tres cosas que el capítulo descarta expresamente, y que son las
-    respuestas equivocadas típicas:<br><br>
-    • <strong>No fue capricho ni moda</strong>: la comida iba contra la ley de Dios.<br>
-    • <strong>No fue orgullo ni ambición</strong> lo que los llevó a la corte.<br>
-    • <strong>No fue rebeldía</strong>: Daniel propuso una prueba y pidió permiso.`) },
-
-  { t:'🍽️ Por qué rechazaron la comida del rey', h:
-    hi(`• La comida <strong>había sido ofrecida a los ídolos</strong> antes de servirse<br>
-    • Incluía carnes que la ley de Dios declaraba <strong>inmundas</strong><br>
-    • Participar de ella se interpretaba como <strong>homenaje a los dioses de Babilonia</strong><br>
-    • El vino embotaba las facultades mentales y debilitaba el dominio propio`) },
-
+  { t:'🏆 Diez veces mejores', h:
+    hi(`Después de tres años, el rey examinó a todos los estudiantes. Nadie fue como Daniel, Ananías, Misael y Azarías: el rey los halló diez veces mejores que todos sus magos y astrólogos. Dios les dio conocimiento a los cuatro, y a Daniel además le dio entendimiento de visiones y sueños (PR 355.3-356.1).`) },
   { t:'🧠 Cuerpo y mente: la enseñanza central', h:
     hi(`• Los <strong>hábitos físicos temperantes</strong> favorecen directamente la claridad mental y espiritual<br>
-    • La alimentación sencilla mantiene la mente despejada para discernir la voluntad de Dios<br>
+    • <strong>Evitaron lo que habría debilitado sus facultades</strong> y siguieron reglas de vida que les daban fuerza intelectual<br>
     • Dios recompensó su fidelidad con <strong>salud, vigor y sabiduría superiores</strong><br>
     • El desarrollo intelectual de los cuatro fue resultado de la obediencia, no solo del estudio`) },
 
+  { t:'🤝 Dios y yo trabajamos juntos', h:
+    hi(`Los cuatro jóvenes no fueron sabios por suerte. Oraban, estudiaban con cuidado y se alejaban de lo que los debilitaba, y Dios era su Maestro. El libro lo resume así: «Dios da las oportunidades; el éxito depende del uso que se haga de ellas» (PR 357.1). Dios nos ayuda, pero no hace nuestra parte por nosotros (PR 357.2).`) },
   { t:'💪 El carácter de Daniel', h:
     li(['Fue <strong>firme y cortés a la vez</strong> — no rebelde, no grosero, no agresivo',
         'Propuso una <strong>prueba razonable</strong> en lugar de solo negarse',
         'Se ganó el <strong>respeto</strong> de quienes tenían autoridad sobre él',
-        'La fidelidad <strong>en cosas pequeñas</strong> lo preparó para pruebas mayores',
-        'Su decisión fue tomada <strong>de antemano</strong>, no improvisada bajo presión']) },
+        'La fidelidad <strong>en cosas pequeñas</strong> lo hizo apto para un puesto de confianza y honor',
+        'Pudo buscar excusas, pero <strong>no vaciló</strong>: resolvió mantenerse firme, fueran cuales fueran los resultados']) },
 
+  { t:'🌟 Dios también quiere usarte a ti', h:
+    hi(`Daniel y sus amigos no se imaginaban lo que Dios haría con ellos cuando salieron de su casa. Lo que Dios hizo por medio de ellos quiere hacerlo hoy por medio de los jóvenes y de los niños que se entregan a él de todo corazón (PR 360.2-360.3).`) },
   { t:'🎯 Aplicación para los jóvenes de hoy', h:
     hi(`Mantenerse fiel a los principios de Dios en un ambiente contrario es un
     <strong>acto de fe y un testimonio</strong> ante quienes no creen.
-    El mayor peligro no era la persecución abierta, sino la
-    <strong>tentación de ceder poco a poco</strong> en los principios.`) },
+    El rey no los obligó a dejar su fe: esperaba lograrlo
+    <strong>poco a poco</strong>. Y el capítulo advierte que <strong>el primer
+    paso</strong> en la dirección equivocada habría llevado a otros.`) },
 ],
 
 /* ═══════════════ P&R 40 ═══════════════ */
@@ -972,17 +990,27 @@ pr40: [
         `Y ellos <strong>repitieron exactamente lo mismo</strong>.`]) +
     hi(`Ese es el punto que P&amp;R agrega a Daniel 2: el rey no estaba siendo
     caprichoso. <strong>Estaba probando si sus sabios podían lo que
-    decían</strong> que podían, y la segunda respuesta idéntica fue lo que lo
-    hizo estallar.`) },
+    decían</strong> que podían. Tras la segunda respuesta los acusó de preparar
+    <strong>respuestas mentirosas</strong>; y cuando dijeron que ningún hombre
+    podía hacerlo, mandó matar a todos los sabios de Babilonia.`) },
 
 
+  { t:'😨 «Ningún hombre puede hacerlo»', h:
+    hi(`La tercera vez, los magos tuvieron miedo y dijeron que ningún hombre en la tierra podía decirle al rey su sueño, que solo los dioses podían. Eso enojó muchísimo al rey, y mandó matar a todos los sabios de Babilonia. Daniel y sus amigos también estaban en esa lista (PR 362.1-362.3).`) },
+  { t:'🛡️ Daniel habla con Arioc y con el rey', h:
+    hi(`Cuando vinieron a buscarlo, Daniel le preguntó con calma a Arioc, el capitán de la guardia, por qué había tanta prisa. Luego, arriesgando su vida, fue ante el rey y le pidió tiempo para orar a su Dios. Después se reunió con Ananías, Misael y Azarías, y juntos pidieron sabiduría a Dios. Esa noche Dios le mostró a Daniel el sueño y su significado (PR 362.3-362.4).`) },
   { t:'🙏 La oración antes de la revelación', h:
-    hi(`• Ante la sentencia de muerte, Daniel y sus compañeros
-    <strong>recurrieron primero a la oración</strong>, no a la estrategia humana<br>
-    • Pidieron misericordia del Dios del cielo sobre este misterio<br>
+    hi(`• Ante la sentencia de muerte, Daniel preguntó a Arioc la causa y se
+    presentó ante el rey a pedir tiempo <strong>para rogar a su Dios</strong><br>
+    • Luego, junto con sus compañeros, <strong>pidieron sabiduría</strong> a Dios y
+    le rogaron que los librara. En el peligro <strong>siempre se habían dirigido al Señor</strong><br>
     • La respuesta llegó en visión de noche<br>
     • Daniel <strong>dio la gloria a Dios</strong> antes de presentarse ante el rey`) },
 
+  { t:'🗿 La imagen, de la cabeza a los pies', h:
+    hi(`Cabeza: oro fino. Pecho y brazos: plata. Vientre y muslos: metal. Piernas: hierro. Pies: parte hierro y parte barro cocido. Una piedra cortada sin que nadie la tocara con las manos golpeó los pies y deshizo toda la imagen, y el viento se llevó los pedazos como polvo. La piedra creció hasta ser un gran monte que llenó toda la tierra (PR 364.2-364.3).`) },
+  { t:'👑 Qué quería decir el sueño', h:
+    hi(`Daniel le dijo al rey: «tú eres aquella cabeza de oro» (PR 365.1). Después vendrían otros reinos, uno fuerte como el hierro y luego uno dividido, parte fuerte y parte frágil. Al final, el Dios del cielo levantaría un reino que nunca será destruido y que durará para siempre (PR 365.2-365.5).`) },
   { t:'🌍 El significado profético', h:
     hi(`• La imagen revela el <strong>plan de Dios para el curso de los imperios mundiales</strong><br>
     • Cada metal representa un imperio sucesivo en la historia<br>
@@ -990,14 +1018,22 @@ pr40: [
     • Los reinos se levantan y caen conforme al propósito divino`) },
 
   { t:'🪨 La piedra', h:
-    hi(`La piedra cortada sin manos representa a <strong>Cristo y el establecimiento
-    de su reino eterno</strong>, que destruirá todos los reinos terrenales
-    y permanecerá para siempre.`) },
+    hi(`La piedra cortada sin manos desmenuzó toda la imagen y se hizo un gran
+    monte que llenó la tierra. Daniel lo explica así: <strong>el Dios del cielo
+    levantará un reino que nunca será destruido</strong>, que acabará con todos
+    esos reinos y permanecerá para siempre.<br><br>
+    <em>Esto no lo dice el capítulo: que la piedra represente a Cristo viene de
+    la interpretación que la une con otros textos de la Biblia sobre Cristo como
+    la piedra (por ejemplo, en los evangelios y en la primera carta de Pedro).</em>`) },
 
+  { t:'🙇 El rey se inclina ante Dios', h:
+    hi(`El rey supo que la explicación era verdad. Se postró con el rostro en el suelo y dijo que el Dios de Daniel es «Dios de dioses» (PR 365.6). Anuló la orden de matar a los sabios, hizo a Daniel gobernador de toda la provincia de Babilonia y, porque Daniel se lo pidió, puso a sus tres amigos a cargo de los asuntos de la provincia (PR 365.7).`) },
+  { t:'🏛️ Por qué cayó Babilonia', h:
+    hi(`Los reyes de Babilonia solo buscaban a Dios cuando estaban en problemas. Cuando les iba bien, creían que no lo necesitaban y se daban la gloria a sí mismos, y por eso su reino cayó (PR 367.2-367.3). El capítulo termina enseñando que la fuerza de un país o de una persona no está en lo que tiene, sino en lo fiel que es a Dios (PR 368.3).`) },
   { t:'🎯 Aplicación', h:
     li(['Las profecías dan <strong>certeza de que Dios controla la historia</strong>',
         'Daniel nunca se atribuyó la gloria: apuntó siempre a Dios como la fuente',
-        'El estudio de la profecía fortalece la fe en tiempos de incertidumbre']) },
+        'Quien estudia la Palabra de Dios puede ver en la historia <strong>el cumplimiento literal de la profecía</strong>']) },
 ],
 
 /* ═══════════════ P&R 41 ═══════════════ */
@@ -1024,6 +1060,20 @@ pr41: [
     <strong>P&amp;R 41 → Daniel 3</strong> · P&amp;R 42 → Daniel 4 ·
     P&amp;R 43 → Daniel 5 · P&amp;R 44 → Daniel 6.`) },
 
+  { t:'⏳ Qué pasó entre Daniel 2 y Daniel 3', h:
+    li([`Después de reconocer a Dios, Nabucodonosor <strong>sintió el temor de
+         Dios por un tiempo</strong>.`,
+        `Pero su corazón <strong>no quedó limpio de ambición</strong> ni del
+         deseo de ensalzarse a sí mismo.`,
+        `<strong>La prosperidad lo llenó de orgullo</strong>.`,
+        `Con el tiempo dejó de honrar a Dios y volvió a los ídolos
+         <strong>con más celo y fanatismo que antes</strong>.`]) +
+    hi(`Eso contesta la pregunta que a los niños se les hace sola: <em>¿cómo el
+    mismo rey que se postró ante Daniel manda quemar a tres muchachos?</em>
+    Según P&amp;R, <strong>reconocer a Dios una vez no le cambió el
+    carácter</strong>, y fue la prosperidad, no la desgracia, la que lo
+    tumbó.`) },
+
   { t:'🗿 Por qué la estatua era TODA de oro', h:
     hi(`Este dato <strong>solo está en P&amp;R</strong>, no en Daniel 3, y por
     eso es de los que más se preguntan.<br><br>
@@ -1041,25 +1091,12 @@ pr41: [
     wa(`O sea que la estatua de Daniel 3 fue <strong>una respuesta al sueño de
     Daniel 2</strong>: el rey estaba contradiciendo la profecía a propósito.`) },
 
-  { t:'⏳ Qué pasó entre Daniel 2 y Daniel 3', h:
-    li([`Después de reconocer a Dios, Nabucodonosor <strong>sintió el temor de
-         Dios por un tiempo</strong>.`,
-        `Pero su corazón <strong>no quedó limpio de ambición</strong> ni del
-         deseo de ensalzarse a sí mismo.`,
-        `<strong>La prosperidad lo llenó de orgullo</strong>.`,
-        `Con el tiempo dejó de honrar a Dios y volvió a los ídolos
-         <strong>con más celo y fanatismo que antes</strong>.`]) +
-    hi(`Eso contesta la pregunta que a los niños se les hace sola: <em>¿cómo el
-    mismo rey que se postró ante Daniel manda quemar a tres muchachos?</em>
-    Según P&amp;R, <strong>reconocer a Dios una vez no le cambió el
-    carácter</strong>, y fue la prosperidad, no la desgracia, la que lo
-    tumbó.`) },
-
-  { t:'🔥 El cuarto personaje', h:
-    hi(`El cuarto que apareció en el horno era <strong>el Hijo de Dios mismo</strong>,
-    quien acompañó a sus fieles en el momento de la prueba.<br><br>
-    No los libró <em>de</em> la prueba, sino que <strong>estuvo con ellos dentro de ella</strong>.`) },
-
+  { t:'😈 El plan escondido detrás de la estatua', h:
+    hi(`Dios había usado la imagen del sueño para enseñar lo que iba a pasar en el futuro. Pero ahora esa misma imagen se iba a usar para aplaudir al hombre y hacer olvidar lo que Daniel explicó. Detrás de los hombres orgullosos estaba Satanás. Él sabe que la verdad sin mezcla de error tiene gran poder para salvar, pero que, si se usa para presumir, se convierte en algo malo (PR 370.3).`) },
+  { t:'🏛️ El gran día en la llanura de Dura', h:
+    hi(`La estatua medía «sesenta codos de altura y seis codos de anchura» (PR 371.1) y se levantó en la llanura de Dura. Llegó gente de todos los pueblos y lenguas. Cuando sonó la música, todos se inclinaron. Satanás quería que ese culto a la estatua durara para siempre y así impedir que el pueblo de Israel, preso en Babilonia, fuera una bendición para las demás naciones (PR 371.2).`) },
+  { t:'👀 Los acusaron por celos, y el rey les dio otra oportunidad', h:
+    hi(`Unos sabios que tenían celos de los honores dados a los amigos de Daniel fueron a acusarlos ante el rey (PR 372.1). El rey los amenazó con el horno, pero notó que eran distintos: habían cumplido bien todos sus deberes. Por eso les dio otra oportunidad. Luego, levantando la mano, los desafió: «¿Qué dios será aquel que os libre de mis manos?» (PR 372.3). Ser fiel en el trabajo de cada día también habla de Dios.`) },
   { t:'⚖️ La decisión de los tres jóvenes', h:
     vs(`«Nuestro Dios puede librarnos… <strong>y si no</strong>,
     no serviremos a tus dioses ni adoraremos tu estatua.»`) +
@@ -1067,17 +1104,38 @@ pr41: [
     la fe verdadera obedece <u>aunque no vea de antemano el resultado</u>.
     No negociaron con Dios ni condicionaron su lealtad al milagro.`) },
 
+  { t:'📖 Lo que aprendieron de la historia de su pueblo', h:
+    hi(`¿Por qué no tuvieron miedo? Porque conocían la historia de sus padres. Habían aprendido que desobedecer a Dios trae deshonra, desastre y muerte, y que respetar a Dios es el comienzo de la sabiduría (PR 372.4). Conocer lo que Dios hizo antes nos ayuda a ser fieles hoy.`) },
+  { t:'🔥 Un horno siete veces más caliente', h:
+    hi(`El rey se enojó tanto que mandó calentar el horno siete veces más de lo normal. El fuego estaba tan fuerte que mató a los soldados que llevaron a los tres jóvenes (PR 373.1-373.2). Pero adentro, el Salvador estaba con ellos, y las llamas no los pudieron quemar (PR 373.3).`) },
+  { t:'🔥 El cuarto personaje', h:
+    hi(`El cuarto que apareció en el horno era <strong>el Hijo de Dios mismo</strong>,
+    quien acompañó a sus fieles en el momento de la prueba.<br><br>
+    No los libró <em>de</em> la prueba, sino que <strong>estuvo con ellos dentro de ella</strong>.`) },
+
+  { t:'🙌 Salieron sin olor a humo', h:
+    hi(`El rey se olvidó de su grandeza, bajó de su trono y los llamó a salir (PR 374.2). Salieron sanos delante de todos: solo se quemaron las cuerdas que los ataban (PR 374.3). Nadie volvió a pensar en la gran estatua de oro (PR 374.4). El rey tuvo que reconocer que el Dios de ellos sí podía librar.`) },
+  { t:'⚖️ Lo que el rey hizo bien y lo que hizo mal', h:
+    hi(`Estuvo BIEN que el rey reconociera a Dios delante de todos y lo pusiera por encima de los otros dioses (PR 375.3). Estuvo MAL que obligara a los demás a creer lo mismo que él, amenazándolos de muerte. Dios nunca obliga a nadie: deja que cada uno elija a quién quiere servir.`) },
+  { t:'🌍 La noticia viajó por el mundo', h:
+    hi(`En la fiesta de Dura había representantes de muchas naciones que el rey había invitado. Ellos vieron el milagro y llevaron la noticia a muchos países. Así, gracias a la fidelidad de tres jóvenes, Dios fue conocido y honrado en toda la tierra (PR 375.4).`) },
   { t:'🕰️ Modelo para la crisis final', h:
     hi(`• Este evento es un <strong>modelo para el tiempo del fin</strong>,
     cuando se exigirá adoración contraria a la voluntad de Dios<br>
     • La fidelidad puede costar la vida, pero <strong>Dios libera a los suyos</strong><br>
-    • Ningún poder humano puede vencer a quienes permanecen fieles<br>
-    • El milagro fue testimonio ante el rey más poderoso de la tierra`) },
+    • «Satanás, con toda la hueste del mal, no puede destruir al más débil
+    de los santos de Dios» (PR 376.3), aunque obedecer pueda costar cárcel,
+    destierro o muerte (PR 376.2)<br>
+    • La noticia de la liberación llegó a <strong>muchos países</strong> por medio de
+    los representantes de las naciones invitadas a la dedicación, y así
+    <strong>Dios fue glorificado en toda la tierra</strong> (PR 375.4)`) },
 
   { t:'🎯 Aplicación', h:
     hi(`No aplica solo a la idolatría literal con estatuas.
-    Es un <strong>modelo de fidelidad ante cualquier presión</strong>
-    para desobedecer a Dios, en cualquier época y circunstancia.`) },
+    El capítulo dice que lo vivido en la llanura de Dura deja
+    <strong>lecciones importantes para nuestra época</strong>: en el tiempo del
+    fin los fieles serán presionados a dar un culto falso, y deberán poner la
+    Palabra de Dios por encima de los mandatos de los hombres (PR 376.1-2).`) },
 ],
 
 /* ═══════════════ P&R 42 ═══════════════ */
@@ -1093,18 +1151,39 @@ pr42: [
   { t:'👑 Lo que Dios pudo usar en un rey idólatra', h:
     li([`La Inspiración misma lo llama <strong>“rey de reyes”</strong>
          (Ezequiel 26:7).`,
-        `Varias veces <strong>había atribuido la gloria de su reino al favor de
+        `A veces <strong>había atribuido la gloria de su reino al favor de
          Jehová</strong>, sobre todo después del sueño de la gran imagen.`,
         `Después <strong>perdió de vista</strong> el propósito de Dios con las
          naciones.`,
         `Aun siendo <strong>idólatra por nacimiento y educación</strong>, tenía
          <strong>un sentido innato de la justicia y de lo recto</strong>, y por
          eso Dios pudo usarlo.`]) +
-    hi(`El título del capítulo es <strong>“La verdadera grandeza”</strong> y
-    ahí está la tesis: la grandeza del rey no estaba en el imperio sino en lo
-    que reconocía. El capítulo no lo pinta como un monstruo, lo pinta como
-    alguien que <strong>subía y bajaba</strong>.`) },
+    hi(`El título del capítulo es <strong>“La verdadera grandeza”</strong>, y el
+    mismo capítulo la define: <strong>«la verdadera grandeza consiste en ser
+    verdaderamente buenos»</strong> (PR 382.3). También dice que la humildad es
+    la única senda que lleva a ella (PR 377.3).<br><br>
+    Y muestra el cambio del rey: el que había sido un «gobernante tiránico e
+    intolerante» llegó a ser «un rey sabio y compasivo» (PR 382.3).`) },
 
+
+  { t:'🏗️ Babilonia, la ciudad que lo llenó de orgullo', h:
+    hi(`Nabucodonosor ganó muchas guerras: conquistó Tiro después de años de esfuerzo, y también Egipto (PR 377.2). Entre una guerra y otra se dedicó a construir y a embellecer Babilonia hasta volverla una de las maravillas del mundo. Pero eso lo hizo muy orgulloso. El libro dice que la humildad es el único camino que lleva a la verdadera grandeza (PR 377.3).`) },
+  { t:'🌳 El sueño del árbol gigante', h:
+    hi(`Dios quería al rey, y por eso le mandó otro sueño para avisarle del peligro. Vio un árbol enorme que llegaba hasta el cielo; los animales descansaban a su sombra, los pájaros hacían nidos en sus ramas y todos comían de su fruto. Entonces un «vigilante y santo» bajó y mandó cortarlo, pero dejar en la tierra la cepa de sus raíces, atada con hierro y metal. Todo iba a pasar para que se supiera que el Altísimo manda sobre los reinos de los hombres (PR 378.1-378.3).`) },
+  { t:'🙊 Nadie pudo, pero Daniel dijo la verdad', h:
+    hi(`Los magos y sabios no pudieron explicar el sueño. Solo los que aman y temen a Dios entienden sus misterios (PR 379.1). El rey llamó a Daniel. Daniel entendió el sueño y se asustó tanto que se quedó callado casi una hora (PR 379.3). Aun así, sabía que tenía que decirle la verdad al rey, aunque eso le trajera problemas (PR 379.4). Decir la verdad con respeto es valentía.`) },
+  { t:'🔍 Qué significaba el árbol', h:
+    hi(`Daniel le explicó: «tú mismo eres, oh rey» (PR 380.1). Como el árbol, el rey había crecido y su poder llegaba lejos. Iba a ser sacado de entre la gente y viviría con los animales, comiendo hierba como los bueyes, durante siete tiempos, hasta reconocer que Dios manda. La cepa que quedaba en la tierra quería decir que su reino lo esperaría y volvería a él cuando entendiera que el que gobierna está en los cielos (PR 380.2).`) },
+  { t:'💡 El consejo de Daniel', h:
+    hi(`Daniel no solo dio la mala noticia. Le rogó al rey que se arrepintiera y se volviera a Dios: que hiciera lo justo y que tuviera misericordia de los pobres. Tal vez así seguiría viviendo en paz (PR 380.3).`) },
+  { t:'📉 Cuando el aviso se olvida', h:
+    hi(`Por un tiempo el rey se tomó en serio el consejo. Pero su corazón no había cambiado por dentro, así que el orgullo volvió. Su gobierno, que había sido bastante justo, se volvió duro con la gente (PR 380.4). Dios esperó meses, pero en vez de arrepentirse, el rey terminó burlándose de sus propios temores (PR 381.1).`) },
+  { t:'⏳ La paciencia de Dios', h:
+    hi(`• En su misericordia, Dios le dio <strong>otro sueño para advertirle</strong>
+    del peligro que corría (PR 378.1)<br>
+    • Daniel le dio el mensaje y un consejo claro para evitar el juicio<br>
+    • Le fue concedido <strong>un año completo</strong> para arrepentirse<br>
+    • El juicio solo cayó cuando la jactancia salió de su boca`) },
 
   { t:'👑 El pecado de Nabucodonosor', h:
     hi(`• Su pecado principal fue el <strong>orgullo y la arrogancia</strong><br>
@@ -1112,23 +1191,25 @@ pr42: [
     • «¿No es ésta la gran Babilonia que <u>yo</u> edifiqué?»<br>
     • Olvidó que su poder y su reino eran un don, no un logro propio`) },
 
-  { t:'⏳ La paciencia de Dios', h:
-    hi(`• Dios <strong>siempre advierte antes de castigar</strong><br>
-    • Daniel le dio el mensaje y un consejo claro para evitar el juicio<br>
-    • Le fue concedido <strong>un año completo</strong> para arrepentirse<br>
-    • El juicio solo cayó cuando la jactancia salió de su boca`) },
-
+  { t:'🐂 Siete años como los bueyes', h:
+    hi(`Mientras el rey todavía hablaba con orgullo, una voz del cielo anunció el castigo (PR 381.3). En un momento perdió la razón: ya no podía gobernar, comía hierba como los bueyes y su pelo y sus uñas crecieron como de ave (PR 381.4). Así estuvo siete años, y todo el mundo lo vio (PR 382.1).`) },
   { t:'🙌 La restauración', h:
     hi(`• La humillación fue el <strong>camino de la restauración</strong><br>
     • Al reconocer la soberanía de Dios, su razón y su reino le fueron devueltos<br>
-    • Su testimonio final es uno de los más poderosos de un rey gentil en toda la Biblia<br>
+    • Con su proclamación pública se cumplió el propósito de Dios de que
+    <strong>el mayor reino del mundo</strong> lo alabara, y fue <strong>el último
+    acto de su vida</strong> que registra la historia sagrada (PR 383.1)<br>
     • Terminó siendo <strong>un adorador del Dios verdadero</strong>`) },
 
+  { t:'⭐ La verdadera grandeza, según el libro', h:
+    hi(`Al final, el rey orgulloso se volvió humilde hijo de Dios, un rey sabio y compasivo que quería que su pueblo respetara a Dios y fuera feliz. Aprendió la lección que todo gobernante necesita: «la verdadera grandeza consiste en ser verdaderamente buenos» (PR 382.3). Su anuncio público alabando a Dios es lo último que la historia sagrada cuenta de su vida (PR 383.1).`) },
   { t:'🎯 La lección central', h:
-    wa(`<strong>La verdadera grandeza no está en el poder ni en las obras,
-    sino en reconocer a Dios como soberano.</strong><br><br>
-    Dios resiste a los soberbios y da gracia a los humildes.
-    El caso de Nabucodonosor es la advertencia más solemne de la Biblia contra el orgullo.`) },
+    wa(`<strong>La verdadera grandeza consiste en ser verdaderamente buenos</strong>
+    (PR 382.3), y la humildad es la única senda que lleva a ella (PR 377.3).<br><br>
+    El rey lo aprendió y lo confesó: Dios «humillar puede a los que andan con
+    soberbia» (PR 382.3).<br><br>
+    <em>Esto no lo dice el capítulo: la frase «Dios resiste a los soberbios y da
+    gracia a los humildes» viene de Santiago 4:6.</em>`) },
 ],
 
 /* ═══════════════ P&R 43 ═══════════════ */
@@ -1142,11 +1223,12 @@ pr43: [
     P&amp;R 39 → Daniel 1 · P&amp;R 40 → Daniel 2 · P&amp;R 41 → Daniel 3 · P&amp;R 42 → Daniel 4 · <strong>P&amp;R 43 → Daniel 5</strong> · P&amp;R 44 → Daniel 6`) },
 
   { t:'👨‍👦 ¿Padre o abuelo? El dato que aclara P&R', h:
-    wa(`<strong>Daniel 5 llama a Nabucodonosor “su padre”</strong> (5:2, 11,
-    13, 18). <strong>P&amp;R dice que Belsasar era su nieto.</strong><br><br>
-    No es una contradicción: en el lenguaje de la Biblia
-    <strong>“padre” incluye al antepasado</strong>, como «hijo de David» se le
-    dice a alguien de generaciones después. Si en el examen preguntan por el
+    wa(`<strong>P&amp;R dice que Belsasar era nieto de Nabucodonosor</strong>
+    (PR 384.2). <strong>Daniel 5 llama a Nabucodonosor “su padre”</strong>
+    (5:2, 11, 13, 18).<br><br>
+    <em>Esto no lo dice el capítulo: viene del uso de la Biblia</em>, donde
+    <strong>“padre” puede referirse a un antepasado</strong>, como «hijo de
+    David» se le dice a alguien de generaciones después. Si en el examen preguntan por el
     parentesco, hay que fijarse en <strong>cuál de los dos libros</strong>
     están preguntando.`) },
 
@@ -1176,26 +1258,44 @@ pr43: [
 
   { t:'⚖️ Por qué Belsasar no tenía excusa', h:
     hi(`• <strong>Conocía la experiencia de Nabucodonosor</strong>: su orgullo, su humillación y su restauración<br>
-    • Tenía <u>más luz</u> que su predecesor y aun así eligió el camino del mal<br>
-    • <strong>Mayor conocimiento significa mayor responsabilidad</strong> delante de Dios<br>
+    • Tuvo <u>muchas oportunidades</u> de conocer la voluntad de Dios y las desperdició<br>
+    • Esa noche comprendió que <strong>debía dar cuenta</strong> de lo que Dios le había confiado, y que no tenía excusa (PR 386.2)<br>
     • No pecó por ignorancia sino con pleno conocimiento de lo que hacía`) },
 
+  { t:'🏰 Una ciudad que se creía segura', h:
+    hi(`Ciro, sobrino de Darío el Medo y general de los ejércitos de medos y persas, rodeó Babilonia. Pero Belsasar no tuvo miedo: la ciudad tenía murallas enormes, puertas de bronce, el río Éufrates alrededor y mucha comida guardada. Por eso se dedicó a hacer fiestas. Hizo un gran banquete para mil de sus príncipes y, bajo el efecto del vino, mandó traer los vasos de oro y plata del templo de Jerusalén para beber en ellos y alabar a dioses de oro, plata, madera y piedra. Quería mostrar que para él nada era demasiado sagrado (PR 384.3–385.2).`) },
   { t:'🏺 La profanación de los vasos sagrados', h:
     hi(`Usar los vasos del templo de Jerusalén para beber vino y alabar a los ídolos
     no fue un descuido ni una costumbre normal:<br><br>
     fue un <strong>desafío deliberado a Dios</strong> y la <strong>cima de su impiedad</strong>.
-    Fue el acto que colmó la medida.`) },
+    Fue parte de <strong>aquella última noche</strong> en la que Belsasar y sus señores
+    colmaron la medida de su culpa (PR 389.2).`) },
 
+  { t:'👁️ El Vigía que nadie invitó', h:
+    hi(`Belsasar no se imaginaba que un Testigo del cielo estaba mirando su fiesta. Ese «Vigía divino» es el que da nombre al capítulo. Cuando la fiesta estaba en su peor momento, apareció una mano sin sangre que escribió en la pared letras que brillaban como fuego. Las risas se apagaron y todos se pusieron pálidos. Belsasar fue el más asustado: «sus rodillas se batían la una con la otra» (PR 386.2). Su conciencia despertó y entendió que tenía que rendir cuentas a Dios por todo lo que se le había confiado.`) },
+  { t:'📜 Nadie pudo leer, pero Daniel sí', h:
+    hi(`El rey llamó a los astrólogos, caldeos y adivinos. Prometió ropa de púrpura, un collar de oro y el tercer lugar en el reino a quien leyera la escritura. Ninguno pudo, porque «la sabiduría celestial no puede comprarse ni venderse» (PR 386.3). Entonces la reina madre se acordó de Daniel, que más de cincuenta años antes había explicado el sueño de Nabucodonosor. Daniel llegó tranquilo y no se interesó en los premios: «Tus dones sean para ti» (PR 387.3). Venía a dar un mensaje de Dios, no a quedar bien con el rey.`) },
+  { t:'⚖️ MENE, MENE, TEKEL, UPHARSIN', h:
+    hi(`Antes de leer, Daniel le recordó al rey lo que le pasó a Nabucodonosor por su orgullo y cómo después reconoció a Dios. Luego lo reprendió con valentía: Belsasar sabía todo eso y no humilló su corazón, usó los vasos de la casa de Dios, alabó a dioses que «ni ven, ni oyen, ni saben» y no honró al Dios que tenía su vida en su mano (PR 388.2). Después explicó las palabras. MENE: Dios contó los días de tu reino y le puso fin. TEKEL: fuiste pesado en la balanza y te faltó peso. PERES: tu reino es partido y dado a medos y persas (PR 389.1).`) },
+  { t:'🌊 Babilonia cae en una sola noche', h:
+    hi(`Aunque el mensaje era terrible, el rey cumplió su palabra: vistió a Daniel de púrpura y lo nombró tercer señor del reino (PR 389.3). Más de cien años antes, la profecía ya había anunciado que esa noche de fiesta terminaría en miedo y destrucción. Mientras el rey y sus nobles bebían en los vasos sagrados, los medos y persas desviaron el río Éufrates y entraron a la ciudad desprevenida. Esa misma noche murió Belsasar, y un rey extranjero se sentó en su trono (PR 389.4–390.1).`) },
   { t:'⚡ El juicio inmediato', h:
-    hi(`• La mano apareció <strong>en el momento mismo</strong> de la profanación<br>
+    hi(`• La mano apareció <strong>cuando el desenfreno llegó a su apogeo</strong>, después de beber en los vasos y alabar a los ídolos<br>
     • El juicio se ejecutó <strong>esa misma noche</strong> (Daniel 5:30)<br>
-    • Cuando se colma la medida del pecado, <strong>no hay demora</strong><br>
+    • Dios dictó una <strong>sentencia irrevocable</strong>: su mano ya no detendría el mal que venía sobre ellos (PR 389.2)<br>
     • Babilonia cayó en una sola noche, en medio de su fiesta`) },
 
+  { t:'📖 Los profetas ya lo habían dicho', h:
+    hi(`Jeremías e Isaías habían escrito, mucho antes, que Babilonia caería de repente, que sus muros serían derribados y que quedaría vacía, sin nadie que viviera allí, solo con animales salvajes. La ciudad orgullosa que decía «Para siempre seré señora» (PR 391.5) terminó sentada en el polvo, sin trono (PR 390.2–392.4).`) },
+  { t:'☸️ Las ruedas de Ezequiel: Dios guía la historia', h:
+    hi(`Cada gran imperio (Babilonia, Medo-Persia, Grecia y Roma) tuvo su tiempo de prueba, y todos fracasaron (PR 392.5). El profeta Ezequiel, junto al río Chebar, vio unas ruedas muy complicadas que se movían en armonía perfecta. Las guiaba una mano que estaba debajo de las alas de los querubines. Más arriba, Dios estaba sentado en un trono como de zafiro, rodeado de un arco iris, señal de su misericordia. La lección: aunque las naciones se peleen, Dios sigue guiando lo que pasa en la tierra. Y cada persona, con sus propias elecciones, decide su destino (PR 393.1–393.3).`) },
+  { t:'🕊️ Dios no abandona a su iglesia', h:
+    hi(`Jesús anunció guerras, hambres y terremotos antes de su venida, y el capítulo dice que esas señales se están cumpliendo. Solo la Biblia muestra correctamente lo que viene. Hay una promesa segura: «Dios no desamparará a su iglesia en la hora de su mayor peligro» (PR 395.5). Al final, el propósito de Dios se cumplirá (PR 394.1–395.6).`) },
   { t:'🎯 Aplicación', h:
-    wa(`Las naciones y las personas son pesadas en la balanza de Dios.
-    La luz rechazada se convierte en tinieblas, y el tiempo de gracia
-    <strong>tiene un límite</strong>.`) },
+    wa(`«Hoy los hombres y las naciones son probados por <strong>la plomada</strong>
+    que está en la mano de Aquel que no comete error» (PR 393.3). Cada uno decide
+    su destino por su propia elección; y así como cada imperio tuvo su plazo de
+    prueba (PR 392.5), el tiempo de gracia <strong>tiene un límite</strong>.`) },
 ],
 
 /* ═══════════════ P&R 44 ═══════════════ */
@@ -1203,13 +1303,14 @@ pr44: [
   { t:'📚 En pocas palabras', h:
     hi(`Este capítulo explica <strong>por qué</strong> los enemigos de Daniel no
     le encontraron ninguna falta.<br><br>
-    Daniel era el mismo en el trabajo y en su casa. Cumplía bien su cargo con
+    Daniel era el mismo en la prueba y en la prosperidad: en el foso fue el
+    mismo que delante del rey (PR 400.2). Cumplía bien su cargo con
     reyes que no creían en Dios, y nunca dejó de ser fiel.<br><br>
     Su fuerza no apareció el día del foso: venía de <strong>orar todos los
     días</strong>, mucho antes de que hubiera peligro. Cuando salió el decreto,
     no cambió nada.<br><br>
     <em>La idea: se puede servir a Dios en cualquier trabajo y en cualquier
-    lugar, y eso se construye día por día.</em>`) },
+    lugar, y ser el mismo en la prueba que en la prosperidad.</em>`) },
 
   { t:'📗 Título exacto del capítulo', h:
     wa(`<strong>Capítulo 44: «En el foso de los leones»</strong>`) },
@@ -1236,6 +1337,12 @@ pr44: [
     O sea que <strong>tuvieron que inventar una ley</strong> que lo obligara a
     escoger. No lo acusaron de robar ni de mentir: no había de qué.`) },
 
+  { t:'💎 La integridad de Daniel', h:
+    hi(`• Sus enemigos lo investigaron a fondo buscando corrupción y <strong>no hallaron nada</strong><br>
+    • No se halló en él <strong>ningún vicio ni falta</strong>, y sus negocios, examinados con severidad, resultaron <strong>intachables</strong> (PR 396.2; 400.4)<br>
+    • Fue <strong>fiel en su trabajo</strong> como funcionario del gobierno, no solo en lo religioso<br>
+    • Oraba <strong>según su costumbre</strong>, y cuando llegó el decreto no cambió su conducta en nada (PR 397.2)`) },
+
   { t:'🪤 Cómo lograron que el rey firmara', h:
     li([`El decreto lo redactaron <strong>los presidentes y príncipes</strong>,
          no el rey.`,
@@ -1247,42 +1354,55 @@ pr44: [
         `<strong>El rey no vio la trampa</strong>: no conocía el propósito de
          los príncipes y cedió a sus adulaciones.`]) +
     wa(`Dato de examen: <strong>Darío no quería perjudicar a Daniel</strong>.
-    Firmó por vanidad y por no darse cuenta, y por eso después pasó la noche
-    sin comer tratando de salvarlo. La trampa fue de los príncipes.`) },
+    Firmó por vanidad y por no darse cuenta. Cuando vio la trampa,
+    <strong>trabajó hasta la puesta del sol para librarlo</strong> (PR 398.4); y
+    después de echarlo al foso pasó la noche sin comer y sin dormir (PR 398.5).
+    La trampa fue de los príncipes.`) },
 
-  { t:'💎 La integridad de Daniel', h:
-    hi(`• Sus enemigos lo investigaron a fondo buscando corrupción y <strong>no hallaron nada</strong><br>
-    • Su vida pública y privada eran <strong>igual de intachables</strong><br>
-    • Fue <strong>fiel en su trabajo</strong> como funcionario del gobierno, no solo en lo religioso<br>
-    • Su carácter fue construido <strong>día a día</strong>, no improvisado en la crisis`) },
-
+  { t:'👿 Quién estaba detrás del plan', h:
+    hi(`El plan no salió solo de los príncipes. Satanás tuvo un papel importante. Los malos ángeles tenían miedo de que la influencia de Daniel les quitara el control que tenían sobre los gobernantes. Por eso movieron a los príncipes a sentir envidia y les dieron la idea de destruirlo, y los príncipes aceptaron ser instrumentos del mal (PR 397.1).`) },
   { t:'🙏 La oración como hábito diario', h:
-    hi(`• La oración era la <strong>fuente diaria de su fortaleza</strong>, no una emergencia<br>
+    hi(`• Oraba <strong>«según su costumbre»</strong>, no solo en la emergencia: antes dejaría la vida que <strong>la esperanza de ayuda que hallaba en Dios</strong> (PR 397.2)<br>
     • Cuando llegó el decreto, <strong>no cambió nada</strong>: siguió como solía hacerlo antes<br>
     • No oró más para desafiar, ni menos para esconderse<br>
     • Esa constancia previa fue lo que hizo posible su firmeza en el momento crítico`) },
 
-  { t:'🏛️ Fidelidad en un cargo secular', h:
-    hi(`Daniel sirvió a <strong>reyes paganos</strong> durante toda su vida
-    y nunca comprometió su lealtad a Dios.<br><br>
-    Es un modelo de que se puede ser <strong>testigo fiel de Dios en cualquier posición</strong>,
-    incluyendo puestos de gobierno y responsabilidad pública.`) },
-
+  { t:'🪟 Ventanas abiertas hacia Jerusalén', h:
+    hi(`Daniel se dio cuenta enseguida de la trampa, pero no cambió nada. Seguía haciendo su trabajo con calma y, a la hora de orar, iba a su cuarto con las ventanas abiertas hacia Jerusalén, como siempre. No se escondía. Daniel obedecía al rey en todo lo que al rey le tocaba mandar, pero ni el rey ni su decreto podían apartarlo de su lealtad al «Rey de reyes» (PR 397.2).`) },
+  { t:'📜 Una ley que no se podía cambiar', h:
+    hi(`Los príncipes vigilaron a Daniel todo un día y lo vieron ir a orar tres veces. Al día siguiente lo acusaron ante el rey. Darío entendió que todo era una trampa por envidia. Le dolió mucho lo que había hecho y trabajó hasta la puesta del sol para salvarlo. Pero los príncipes le recordaron que, según la ley de Media y de Persia, un decreto firmado por el rey no se podía cambiar (PR 398.1–398.4).`) },
+  { t:'🤔 ¿Por qué Dios dejó que lo echaran al foso?', h:
+    hi(`Daniel fue echado al foso. Pusieron una piedra en la entrada y el rey la selló con su anillo y con el de sus príncipes. Esa noche Darío no comió, no quiso música y no pudo dormir. Dios no impidió que echaran a Daniel al foso. Lo permitió para que su liberación se viera todavía más grande y la derrota de sus enemigos fuera completa. Gracias al valor de un solo hombre, Satanás fue derrotado y el nombre de Dios fue honrado (PR 398.5–399.1).`) },
+  { t:'🦁 El ángel cerró la boca de los leones', h:
+    hi(`Muy temprano, el rey fue corriendo al foso y llamó a Daniel con voz triste. Daniel le contestó que Dios había enviado a su ángel, que cerró la boca de los leones para que no le hicieran daño. Lo sacaron del foso sin una sola herida, «porque creyó en su Dios» (PR 399.4). Después, los hombres que lo habían acusado fueron echados al foso (PR 399.2–399.5).`) },
+  { t: '🙏 Por qué Daniel dio gracias frente a los leones',
+    h: hi(`<strong>Al enterarse del decreto que le prohibía orar, Daniel "se ponía de rodillas tres veces al día, orando y dando gracias... así como lo había hecho siempre" (6:10).</strong> P&amp;R 44 no menciona que diera gracias: dice que no cambió su conducta en nada y que oraba «según su costumbre», porque antes renunciaría a la vida que a la esperanza de ayuda que hallaba en Dios (PR 397.2).<br><br><em>Esto no lo dice el capítulo: viene de la Biblia.</em> Daniel 7:1 fecha la visión de las cuatro bestias en el primer año de Belsasar, años antes del foso; allí vio a Dios derrotar a "bestias" mucho más temibles que cualquier león. La promesa de levantarse «al fin de los días» (Daniel 12:13) la menciona P&amp;R 44 como recibida antes de terminar su vida (PR 401.2), sin decir si fue antes o después del foso.`) },
   { t:'🌍 El alcance del testimonio', h:
     hi(`Su liberación no fue solo un rescate personal:<br><br>
     • Convirtió a <strong>Darío en proclamador</strong> del Dios verdadero<br>
     • El decreto llegó a <strong>todos los pueblos, naciones y lenguas</strong> del imperio<br>
     • La fidelidad de un hombre alcanzó a un imperio entero`) },
 
+  { t:'💙 El cielo está cerca de los que sufren', h:
+    hi(`El cielo está muy cerca de los que sufren por hacer lo correcto. Cristo siente como propio lo que sufre su pueblo fiel: «cualquiera que toque a sus escogidos le toca a él» (PR 400.3). El mismo poder que puede librar del peligro también ayuda al siervo de Dios a mantenerse fiel en todo momento.`) },
+  { t:'🏛️ Fidelidad en un cargo secular', h:
+    hi(`Daniel sirvió a <strong>reyes paganos</strong> durante toda su vida
+    y nunca comprometió su lealtad a Dios.<br><br>
+    Es un modelo de que se puede ser <strong>testigo fiel de Dios en cualquier posición</strong>,
+    incluyendo puestos de gobierno y responsabilidad pública.`) },
+
+  { t:'📖 Las profecías de Daniel son para nuestro tiempo', h:
+    hi(`Dios le dio a Daniel muchas profecías (capítulos 7 al 12 de su libro) que ni él mismo entendió del todo. El ángel le dijo que sellara el libro «hasta el tiempo del fin» (PR 401.2). Hoy esas profecías, junto con el libro de Apocalipsis, merecen atención especial. Satanás ha hecho creer a muchos que no se pueden entender, pero Dios promete una bendición especial a quien las estudia (PR 402.1).`) },
+  { t:'🌸 Lo único que dura para siempre', h:
+    hi(`Babilonia parecía que iba a durar para siempre, pero desapareció «como la flor de la hierba» (PR 402.2). Lo mismo les pasó a Medo-Persia, Grecia y Roma. Todo lo que no está fundado en Dios se acaba. Solo dura lo que va con el propósito de Dios. Si miramos las cosas como Dios las mira, podemos vivir, como Daniel y sus compañeros, para lo que es verdadero, noble y perdurable (PR 402.2–403.1).`) },
   { t:'🎯 Aplicación para los jóvenes', h:
     wa(`Lo que Daniel decidió <strong>de joven</strong> (Daniel 1) fue lo que lo sostuvo
-    <strong>de anciano</strong> (Daniel 6). Tenía más de ochenta años en el foso.<br><br>
+    <strong>de anciano</strong> (Daniel 6). <em>La edad no la dice el capítulo:</em>
+    se calcula con las fechas del libro de Daniel, y da más de ochenta años en el foso.<br><br>
     Las decisiones de hoy construyen el carácter que responderá mañana.`) },
 
   { t: '👴 Daniel, de unos 84 años, y el Dios que carga a los suyos hasta la vejez',
-    h: hi(`<strong>Daniel tenía cerca de 84 años cuando lo arrojaron al foso: Dios seguía interesado en él en la ancianidad tanto como en su juventud.</strong> El profeta Isaías había contrastado esto mismo con los ídolos de Babilonia: cada primavera, en la fiesta de Año Nuevo, las estatuas de los dioses Bel y Nebo tenían que ser cargadas a lomo de animales por las calles, porque no podían moverse por sí solas. El Dios verdadero, en cambio, promete lo contrario: "hasta la vejez seré el mismo, hasta las canas los llevaré" — es Dios quien carga a su pueblo, no al revés. Daniel vivió esa promesa en carne propia esa noche en el foso.`) },
-  { t: '🙏 Por qué Daniel dio gracias frente a los leones',
-    h: hi(`<strong>Al enterarse del decreto que le prohibía orar, Daniel "se ponía de rodillas tres veces al día, orando y dando gracias... así como lo había hecho siempre" (6:10).</strong> No pidió primero, agradeció primero: una vida entera de oraciones respondidas le daba con qué. Y tenía una razón adicional para no temer: varios años antes de esa noche ya había recibido la visión de Daniel 7, donde vio a Dios derrotar a "bestias" mucho más temibles que cualquier león, y conocía la promesa de la resurrección. Si los leones lo hubieran devorado esa noche, no habría sido una derrota definitiva para él.`) },
+    h: hi(`<em>Esto no lo dice el capítulo: la edad se calcula con las fechas del libro de Daniel, lo de Bel y Nebo viene del libro de Isaías y la fiesta de Año Nuevo, de la historia de Babilonia. Es contexto de apoyo, no materia del examen.</em><br><br><strong>Daniel tenía cerca de 84 años cuando lo arrojaron al foso: Dios seguía interesado en él en la ancianidad tanto como en su juventud.</strong> El profeta Isaías había contrastado esto mismo con los ídolos de Babilonia: cada primavera, en la fiesta de Año Nuevo, las estatuas de los dioses Bel y Nebo tenían que ser cargadas a lomo de animales por las calles, porque no podían moverse por sí solas. El Dios verdadero, en cambio, promete lo contrario: "hasta la vejez seré el mismo, hasta las canas los llevaré" — es Dios quien carga a su pueblo, no al revés. Daniel vivió esa promesa en carne propia esa noche en el foso.`) },
 ],
 /* ═══════════════ DANIEL 7 ═══════════════ */
 d7: [

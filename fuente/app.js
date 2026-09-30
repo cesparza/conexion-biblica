@@ -2739,7 +2739,10 @@ function textoLimpio(el){
     c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,script,style').forEach(x=>x.remove());
     c.querySelectorAll('br').forEach(b=>b.replaceWith(' '));
     c.querySelectorAll('td,th,li,p,div').forEach(x=>x.append(' '));
-    return (c.textContent||'').replace(/\p{Extended_Pictographic}|️/gu,'').replace(/\s+/g,' ').trim();
+    /* v133: la referencia «(PR 379.1)» sirve para leer, no para oir: la voz
+       la decia numero por numero en medio de la frase. */
+    return (c.textContent||'').replace(/\p{Extended_Pictographic}|️/gu,'')
+      .replace(/\(PR [\d.,;\s\-–]+\)/g,'').replace(/\s+/g,' ').replace(/\s+([.,;:])/g,'$1').trim();
   }catch(e){return '';}
 }
 const conPunto=t=>/[.!?:;»”)]$/.test(t)?t:t+'.';

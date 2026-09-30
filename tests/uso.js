@@ -1721,8 +1721,10 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const quitadas=poolTodo.filter(q=>!poolOf.includes(q));
   ok(ofAv<todoAv&&quitadas.every(q=>q.f==='c'),
     'Aventureros: el interruptor quita solo las de otros materiales ('+quitadas.length+' de '+todoAv+')');
-  ok(!quitadas.some(q=>String(q.cap).slice(0,2)==='pr')&&F.poolNivel().some(q=>String(q.cap).slice(0,2)==='pr'),
-    'Y Profetas y Reyes sigue en su examen');
+  /* v133: en P&R tambien hay complementarias (lo que el capitulo no dice,
+     como los 84 años de Daniel): el interruptor las quita, pero P&R sigue. */
+  ok(F.poolNivel().filter(q=>String(q.cap).slice(0,2)==='pr').length>=60,
+    'Y Profetas y Reyes sigue en su examen ('+F.poolNivel().filter(q=>String(q.cap).slice(0,2)==='pr').length+' preguntas)');
   ok(!F.poolDe().some(q=>/Ireneo|deportación|Bel y Nebo/.test(q.q||'')),
     'Ya no salen Ireneo, las deportaciones ni Bel y Nebo');
 
@@ -2389,6 +2391,24 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   S.acc.d1={b:4,m:1}; S.acc.pr39={b:1,m:3};
   ok(/Daniel/.test(V.htmlPorLibro())&&/Profetas y Reyes/.test(V.htmlPorLibro())&&/80%/.test(V.htmlPorLibro()),
     'Logros muestra el acierto por libro ('+V.S().cat+'): '+V.htmlPorLibro().replace(/<[^>]+>/g,' ').slice(0,120));
+}
+
+/* ─── v133: Profetas y Reyes, parte por parte ───
+   Las partes de cada capitulo que no tenian ninguna pregunta ya la tienen.
+   Se vigila con una pregunta de cada hueco grande: si alguien la borra, el
+   examen vuelve a quedar sin esa parte de la historia. */
+{
+  const P=montar(RET);
+  const de=cap=>P.BANCO.filter(q=>q.cap===cap).map(q=>[q.q,q.ins,(q.p||[]).map(x=>x.x||x.b).join(''),(q.o||[]).join(' ')].join(' ')).join(' \n ');
+  const huecos=[['pr39',/Beltsasar/],['pr39',/diez días/],['pr40',/Arioc/],['pr40',/gran monte/],
+    ['pr41',/sesenta codos/i],['pr41',/siete veces/],['pr42',/árbol gigantesco/],['pr42',/verdaderamente/],
+    ['pr43',/TEKEL/],['pr43',/Vigía/],['pr43',/Ezequiel/],['pr44',/ventanas abiertas hacia Jerusalén/i],['pr44',/cerró la boca de los leones/]];
+  const faltan=huecos.filter(([c,re])=>!re.test(de(c))).map(([c,re])=>c+' '+re);
+  ok(faltan.length===0,'Cada parte grande de P&R 39 a 44 tiene su pregunta'+(faltan.length?': faltan '+faltan.join(', '):''));
+  const secs=c=>(P.CONTENIDO[c]||[]).map(s=>s.t);
+  ok(secs('pr44').indexOf('🦁 El ángel cerró la boca de los leones')>secs('pr44').indexOf('🤔 ¿Por qué Dios dejó que lo echaran al foso?')&&
+     secs('pr42').indexOf('🌳 El sueño del árbol gigante')<secs('pr42').indexOf('🔍 Qué significaba el árbol'),
+    'Y el estudio va en el orden de la historia');
 }
 
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));

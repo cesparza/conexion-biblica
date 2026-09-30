@@ -85,7 +85,7 @@ const TARJETAS = [
   {cap:'pr39', f:'Por qué rechazaron la comida del rey', r:'Había sido ofrecida a los ídolos y violaba las leyes de Dios'},
   {cap:'pr39', f:'Qué relación hay entre cuerpo y mente', r:'Los hábitos físicos temperantes favorecen la claridad mental y espiritual'},
   {cap:'pr40', f:'Título del capítulo <b>40</b> de P&R', r:'«El sueño de Nabucodonosor»'},
-  {cap:'pr40', f:'A qué recurrieron ante la sentencia de muerte', r:'A la oración, antes que a cualquier estrategia humana'},
+  {cap:'pr40', f:'Qué hizo Daniel ante la sentencia de muerte', r:'Pidió tiempo al rey para <b>rogar a su Dios</b>, y oró con sus compañeros pidiendo sabiduría'},
   {cap:'pr41', f:'Título del capítulo <b>41</b> de P&R', r:'«El horno de fuego»'},
   {cap:'pr41', f:'Quién era el cuarto del horno según E. de White', r:'El Hijo de Dios mismo'},
   {cap:'pr41', f:'Qué muestra la frase «y si no»', r:'Que la obediencia no dependía de recibir el milagro'},
@@ -94,8 +94,8 @@ const TARJETAS = [
   {cap:'pr43', f:'Título del capítulo <b>43</b> de P&R', r:'«El vigía invisible»'},
   {cap:'pr43', f:'Por qué Belsasar no tenía excusa', r:'Conocía la experiencia de Nabucodonosor y aun así se rebeló'},
   {cap:'pr44', f:'Título del capítulo <b>44</b> de P&R', r:'«En el foso de los leones»'},
-  {cap:'pr44', f:'Qué caracterizaba la oración de Daniel', r:'Era la fuente diaria de su fortaleza, no una emergencia'},
-  {cap:'pr44', f:'Qué edad tenía Daniel en el foso', r:'Más de ochenta años'},
+  {cap:'pr44', f:'Qué caracterizaba la oración de Daniel', r:'Antes dejaría la vida que la esperanza de ayuda que hallaba en Dios (PR 397.2)'},
+  {cap:'pr44', f:'Qué edad tenía Daniel en el foso', r:'Más de ochenta años. P&R 44 no lo dice: se calcula con las fechas del libro de Daniel'},
 ];
 
 
@@ -144,7 +144,7 @@ TARJETAS.push(
    reglamento. Pasan de 3 a 8 por capítulo, con FRASE CLAVE del libro. ─── */
 TARJETAS.push(
   {cap:'pr39', f:'A quién ordenó el rey traer a los jóvenes', r:'A <b>Aspenaz</b>, príncipe de sus eunucos'},
-  {cap:'pr39', f:'Por qué les cambiaron los nombres', r:'Por otros que <b>conmemoraban divinidades caldeas</b>: era el primer paso para que renunciaran a su fe'},
+  {cap:'pr39', f:'Por qué les cambiaron los nombres', r:'Con nombres que <b>conmemoraban divinidades caldeas</b>, el rey esperaba llevarlos poco a poco a dejar su religión'},
   {cap:'pr39', f:'Qué historia sobre la intemperancia conocían', r:'La de <b>Nadab y Abihú</b>, descrita en el Pentateuco'},
   {cap:'pr39', f:'Quién les inculcó la templanza', r:'Sus <b>padres</b>, desde temprano en la vida'},
   {cap:'pr39', f:'Frase clave de P&R 39', r:'«Fué la fidelidad en las <b>cosas pequeñas</b> lo que dió carácter a toda su vida»'},
@@ -260,24 +260,24 @@ TARJETAS.push(
 
   {cap:'pr40', f:'Por qué el rey no les contó el sueño a sus sabios de entrada', r:'Al despertar no pudo recordar los detalles, así que primero les pidió que lo adivinaran'},
   {cap:'pr40', f:'Qué probaba el rey al ofrecer riquezas y amenazar de muerte a la vez', r:'Si sus sabios de verdad podían hacer lo que decían que podían'},
-  {cap:'pr40', f:'Qué representa cada metal de la imagen', r:'Un imperio sucesivo en la historia, en orden descendente de valor'},
+  {cap:'pr40', f:'Qué representa cada metal de la imagen', r:'Un imperio sucesivo en la historia; el segundo sería un reino <b>menor</b> que Babilonia'},
   {cap:'pr40', f:'Qué muestra la sucesión de imperios de la imagen', r:'Que los reinos se levantan y caen conforme al propósito divino: Dios gobierna la historia'},
-  {cap:'pr40', f:'Qué representa la piedra cortada sin manos', r:'A Cristo y el establecimiento de su reino eterno, que destruye los reinos terrenales'},
+  {cap:'pr40', f:'Qué representa la piedra cortada sin manos', r:'Según P&R 40, el <b>reino que levantará el Dios del cielo</b>, que nunca será destruido y acabará con los demás reinos'},
   {cap:'pr40', f:'A quién apuntó siempre Daniel al interpretar el sueño', r:'A Dios, como la fuente de toda sabiduría, nunca a sí mismo'},
 
   {cap:'pr42', f:'Qué título le da la Inspiración a Nabucodonosor pese a ser idólatra (Ezequiel 26:7)', r:'"Rey de reyes"'},
-  {cap:'pr42', f:'Tesis detrás del título «La verdadera grandeza»', r:'La grandeza del rey no estaba en su imperio, sino en lo que reconocía'},
+  {cap:'pr42', f:'En qué consiste la verdadera grandeza, según P&R 42', r:'En <b>ser verdaderamente buenos</b> (PR 382.3). La humildad es la única senda que lleva a ella (PR 377.3)'},
   {cap:'pr42', f:'Qué olvidó Nabucodonosor sobre su poder y su reino', r:'Que eran un don de Dios, no un logro propio'},
   {cap:'pr42', f:'Cuánto tiempo de gracia recibió antes del juicio', r:'Un año completo para arrepentirse'},
   {cap:'pr42', f:'Qué le fue devuelto al reconocer la soberanía de Dios', r:'Su razón y su reino'},
-  {cap:'pr42', f:'Cómo terminó Nabucodonosor, según su testimonio final', r:'Como adorador del Dios verdadero: uno de los testimonios más poderosos de un rey gentil en la Biblia'},
+  {cap:'pr42', f:'Cómo terminó Nabucodonosor, según su testimonio final', r:'Como adorador del Dios verdadero. Su proclamación pública fue <b>el último acto de su vida</b> que registra la historia sagrada (PR 383.1)'},
 
-  {cap:'pr43', f:'Cómo resuelve P&R que Daniel 5 llame "padre" a Nabucodonosor si era abuelo de Belsasar', r:'En el lenguaje bíblico "padre" incluye al antepasado, como "hijo de David" a alguien de generaciones después'},
+  {cap:'pr43', f:'Qué parentesco tenía Belsasar con Nabucodonosor, según P&R 43', r:'Era su <b>nieto</b> (PR 384.2). Que Daniel 5 lo llame "padre" se explica porque en la Biblia "padre" puede ser un antepasado, pero eso no lo dice el capítulo'},
   {cap:'pr43', f:'Cuánto tiempo había pasado entre el cautiverio de Daniel y los sucesos de Daniel 5', r:'Más de sesenta años'},
   {cap:'pr43', f:'Cómo describe P&R a los sucesores de Nabucodonosor', r:'Sucesores imprudentes: una disolución gradual pero segura del imperio'},
   {cap:'pr43', f:'Qué sabía Belsasar sobre su abuelo y aun así no aprendió', r:'Que Dios lo había desterrado de la sociedad de los hombres, y que después se había convertido y sanado'},
   {cap:'pr43', f:'Qué dejó que le borrara a Belsasar las lecciones que ya conocía', r:'El amor por los placeres y la glorificación propia'},
-  {cap:'pr43', f:'Qué enseña el capítulo sobre el pecado que llega a su colmo', r:'Que cuando se colma la medida del pecado, no hay demora en el juicio'},
+  {cap:'pr43', f:'Qué pasó cuando Belsasar y sus señores colmaron la medida de su culpa', r:'Dios dictó una <b>sentencia irrevocable</b>: su mano ya no detendría el mal que venía sobre ellos (PR 389.2)'},
 
   {cap:'d9', f:'¿Quién emitió el decreto de 457 a.C., y en qué libro bíblico se registra?', r:'Artajerjes I, en su séptimo año de reinado, registrado en Esdras 7'},
   {cap:'d9', f:'¿Qué autoridad le dio ese decreto a Esdras?', r:'Autoridad civil y judicial para reorganizar la nación judía'},
