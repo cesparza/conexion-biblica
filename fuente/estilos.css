@@ -1361,7 +1361,8 @@ details.card summary:focus-visible{outline:3px solid var(--v-cat);outline-offset
 
 /* ── tablas ── */
 .info-table{font-size:var(--v-t-1)}
-.info-table th{color:var(--v-tinta3);letter-spacing:.04em}
+/* El encabezado va sobre el azul de marca: el gris de tinta3 daba 1,52 de contraste. */
+.info-table th{color:var(--v-sobre,#fff);letter-spacing:.04em}
 
 /* ── el panel del director: el otro publico ──
    MISMOS tokens, otra intensidad. Quien abre esto es un adulto revisando

@@ -1336,6 +1336,11 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
   ok(comoTinta.length === 0,
     'Ningun texto usa el color de relleno, ni en el CSS ni en un style= del JS' +
     (comoTinta.length ? ' (' + comoTinta.length + ' usos)' : ''));
+  /* v136: lo mismo en el encabezado de las tablas: gris sobre azul, 1,52.
+     Cuenta la ultima regla que le pone color, que es la que gana. */
+  const colTh = [...sinCom.matchAll(/\.info-table th\{[^}]*?(?<![-\w])color:([^;}]+)/g)].map(m => m[1]);
+  ok(colTh.length > 0 && /^var\(--v-sobre/.test(colTh[colTh.length - 1]),
+    'El encabezado de las tablas va en blanco sobre el azul, no en gris (' + colTh.join(' / ') + ')');
   /* .divisor es un bloque azul con letra blanca. Una regla de mas abajo le
      volvia a poner el gris del separador encima: gris sobre azul, 2,22. */
   ok(!/\.divisor\b[^{}]*\{[^}]*color:var\(--v-tinta3\)/.test(sinCom),
