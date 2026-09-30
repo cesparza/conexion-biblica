@@ -374,6 +374,15 @@ const MANUAL = [
     <div class="warn-box">Mientras no esté en Todo, la franja se pone naranja y
     dice qué estás viendo. La evaluación del director no mira este filtro: trae
     lo que él abrió.</div>` },
+  { t:'Solo el material del reglamento',
+    h:`<p>Algunas preguntas no salen del libro de Daniel ni de Profetas y Reyes:
+    fechas de la historia, otros profetas como Jeremías o Ezequiel, o lo que
+    dijeron intérpretes antiguos. Ayudan a entender, pero el examen del
+    campamento no las pregunta.</p>
+    <p>Por eso en Conexión Bíblica el examen viene con <strong>Solo el material
+    del reglamento</strong> prendido. Si quieres practicar también con esas,
+    apágalo en <strong>Cambiar este examen</strong>. El director tiene el mismo
+    interruptor al abrir una evaluación, y viene prendido.</p>` },
   { t:'Mientras lo haces',
     h:`<ul><li>Arriba corre un reloj. Se pone rojo en los últimos dos minutos.</li>
     <li>Las preguntas <strong>cambian cada vez</strong>: salen de

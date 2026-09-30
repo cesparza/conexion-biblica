@@ -1711,13 +1711,24 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   /* SIN MARCA = OFICIAL es la falla segura: una pregunta nueva que nadie
      marque aparece en el examen, en vez de desaparecer sin que nadie lo note. */
 
+  /* v132: en Conexion Biblica SI hay complementarias (historia, otros
+     profetas, interpretes), marcadas `f:'c'`, y el interruptor arranca
+     prendido. Lo que quita son solo esas: nunca P&R ni una de Daniel sin marca. */
   F.ponCat('av'); F.ponNivel(3); F.ponAlcance('todo');
-  F.ponFuente(false); const todoAv=F.poolNivel().length;
-  F.ponFuente(true);  const ofAv=F.poolNivel().length;
-  ok(ofAv===todoAv,'Aventureros: el interruptor ya no le quita nada ('+ofAv+' de '+todoAv+')');
-  ok(F.bancoDe().some(q=>String(q.cap).slice(0,2)==='pr'),'Porque P&R sigue en su examen');
+  ok(F.fuenteActual()===true,'En Conexion Biblica el examen arranca con solo el material del reglamento');
+  F.ponFuente(false); const poolTodo=F.poolNivel(); const todoAv=poolTodo.length;
+  F.ponFuente(true);  const poolOf=F.poolNivel(); const ofAv=poolOf.length;
+  const quitadas=poolTodo.filter(q=>!poolOf.includes(q));
+  ok(ofAv<todoAv&&quitadas.every(q=>q.f==='c'),
+    'Aventureros: el interruptor quita solo las de otros materiales ('+quitadas.length+' de '+todoAv+')');
+  ok(!quitadas.some(q=>String(q.cap).slice(0,2)==='pr')&&F.poolNivel().some(q=>String(q.cap).slice(0,2)==='pr'),
+    'Y Profetas y Reyes sigue en su examen');
+  ok(!F.poolDe().some(q=>/Ireneo|deportación|Bel y Nebo/.test(q.q||'')),
+    'Ya no salen Ireneo, las deportaciones ni Bel y Nebo');
 
   F.ponCat('ec1');
+  ok(F.fuenteActual()===false,'Cada actividad trae su valor: En esto creemos arranca con todo, como antes');
+  F.ponFuente(true);
   const ofEc=F.poolNivel().length;
   ok(F.poolNivel().every(q=>q.f!=='c'),'Creencias: no entra ninguna del libro ('+ofEc+' de la cartilla)');
 
@@ -2038,7 +2049,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(/Sábado 19/.test(html)&&/Matutina 19/.test(html),'La lista muestra las evaluaciones con notas');
   ok(!/>Test</.test(html),'Y no la prueba sin notas');
   ok(/Cerrada/.test(html),'Dice que estan cerradas, que es justo lo que antes no se podia ver');
-  ok(/Solo la fuente/.test(html),'Y marca la que se abrio solo con la fuente del reglamento');
+  ok(/Solo el reglamento/.test(html),'Y marca la que se abrio solo con la fuente del reglamento');
 
   /* Por participante: la linea de cada una, con su promedio. Camila hizo dos
      (12/15 y 9/15 = 70%), Ana una (15/15 = 100%). */

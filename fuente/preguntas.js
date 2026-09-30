@@ -1,4 +1,8 @@
 /* Banco de preguntas. cap = capítulo al que pertenece.
+   f:'c' = COMPLEMENTARIA: no sale del libro de Daniel ni de Profetas y Reyes
+   (historia, otros profetas, intérpretes). Con «Solo el material del
+   reglamento», que en Conexión Bíblica viene prendido, no entra al examen.
+   Sin marca = oficial.
    El examen se arma filtrando por los capítulos de la categoría. */
 
 const BANCO = [
@@ -1294,11 +1298,11 @@ BANCO.push(
 {cap:'d12',t:'tf',q:'Todo el libro de Daniel, sin excepción, quedó sellado hasta el tiempo del fin.',
  a:false,e:'Falso: la identidad de Babilonia, Media-Persia y Grecia ya estaba clara sin misterio; lo sellado eran específicamente los acontecimientos del tiempo del fin.'}
 ,
-{cap:'d1',t:'mc',q:'¿En qué año ocurrió la deportación en la que Nabucodonosor se llevó a Daniel, Ananías, Misael y Azarías?',
+{cap:'d1',f:'c',t:'mc',q:'¿En qué año ocurrió la deportación en la que Nabucodonosor se llevó a Daniel, Ananías, Misael y Azarías?',
  o:['605 a.C., la primera de las tres deportaciones','597 a.C., la segunda de las tres deportaciones','586 a.C., la tercera y más grave de las tres','539 a.C., cuando Babilonia cayó ante los persas'],a:0},
-{cap:'d1',t:'mc',q:'¿Qué profeta fue llevado cautivo a Babilonia en la segunda deportación (597 a.C.), junto con el rey Joaquín?',
+{cap:'d1',f:'c',t:'mc',q:'¿Qué profeta fue llevado cautivo a Babilonia en la segunda deportación (597 a.C.), junto con el rey Joaquín?',
  o:['El profeta Ezequiel','El profeta Jeremías','El profeta Isaías','El profeta Oseas'],a:0},
-{cap:'d1',t:'tf',q:'La caída final de Jerusalén y la destrucción del templo, en la tercera deportación, ocurrió en el 586 a.C., casi veinte años después de que Daniel fuera llevado a Babilonia.',
+{cap:'d1',f:'c',t:'tf',q:'La caída final de Jerusalén y la destrucción del templo, en la tercera deportación, ocurrió en el 586 a.C., casi veinte años después de que Daniel fuera llevado a Babilonia.',
  a:true,e:'Verdadero: Daniel fue deportado en 605 a.C. y el templo cayó en 586 a.C., diecinueve años después.'},
 {cap:'d1',t:'mc',q:'¿A quién le pidió Daniel la prueba de los diez días con legumbres y agua (1:11-12)?',
  o:['A Melsar, encargado directo de los cuatro jóvenes','A Aspenaz, el jefe de todos los eunucos del rey','A Arioc, capitán de la guardia real de Babilonia','A Nabucodonosor mismo, el rey de Babilonia'],a:0},
@@ -1625,64 +1629,64 @@ BANCO.push(
 );
 
 BANCO.push(
-  {cap:'d1',t:'mc',q:'¿Cuántos utensilios del templo de Jerusalén terminó reuniendo Nabucodonosor, en tres viajes distintos?',
+  {cap:'d1',f:'c',t:'mc',q:'¿Cuántos utensilios del templo de Jerusalén terminó reuniendo Nabucodonosor, en tres viajes distintos?',
    o:['490','1.260','2.300','5.469'],a:3},
   {cap:'d1',t:'tf',q:'Según el texto de Daniel 1:2, fue el dios Marduc quien venció al Dios de Israel, y por eso Nabucodonosor pudo llevarse los utensilios del templo.',
    a:false,e:'El texto dice que fue Dios mismo quien "entregó" a Judá y sus utensilios, como consecuencia de la infidelidad del pueblo, no como una derrota divina.'},
-  {cap:'d1',t:'mc',q:'¿Qué significa el nombre "Daniel"?',
+  {cap:'d1',f:'c',t:'mc',q:'¿Qué significa el nombre "Daniel"?',
    o:['"Dios es mi juez"','"Fortaleza de Dios"','"Amado del Señor"','"Siervo fiel"'],a:0},
-  {cap:'d1',t:'mc',q:'¿Qué profeta, activo en Jerusalén mientras Daniel era niño, pudo razonablemente haber sido su maestro?',
+  {cap:'d1',f:'c',t:'mc',q:'¿Qué profeta, activo en Jerusalén mientras Daniel era niño, pudo razonablemente haber sido su maestro?',
    o:['Isaías','Ezequiel','Jeremías','Oseas'],a:2},
-  {cap:'d1',t:'mc',q:'¿Cuál de estos NO aparece entre los pecados que los profetas denunciaron en Judá antes del exilio?',
+  {cap:'d1',f:'c',t:'mc',q:'¿Cuál de estos NO aparece entre los pecados que los profetas denunciaron en Judá antes del exilio?',
    o:['La deshonestidad y la injusticia con los pobres','La profanación del día de reposo','La adoración a Baal y a otros ídolos','El exceso de estudio de la Palabra de Dios'],a:3},
 );
 
 BANCO.push(
-  {cap:'d2',t:'mc',q:'¿En qué venida de Cristo cae la Piedra de Daniel 2 sobre la estatua y establece el reino eterno?',
+  {cap:'d2',f:'c',t:'mc',q:'¿En qué venida de Cristo cae la Piedra de Daniel 2 sobre la estatua y establece el reino eterno?',
    o:['En la primera venida, cuando Jesús nació en Belén','En la segunda venida, todavía futura','En el bautismo de Jesús','En la resurrección de Jesús'],a:1},
-  {cap:'d2',t:'tf',q:'El "reino de la gracia" que Jesús estableció en su primera venida es el mismo "reino de gloria" que describe Daniel 2:44.',
+  {cap:'d2',f:'c',t:'tf',q:'El "reino de la gracia" que Jesús estableció en su primera venida es el mismo "reino de gloria" que describe Daniel 2:44.',
    a:false,e:'Son dos etapas distintas: el reino de la gracia crece despacio en los corazones desde la primera venida; el reino de gloria, el que destruye a las naciones, llega solo con la segunda venida.'},
-  {cap:'d2',t:'mc',q:'¿Cuál de estos gobernantes NO intentó reunificar Europa bajo un solo poder, contradiciendo (sin éxito) la profecía de Daniel 2:43?',
+  {cap:'d2',f:'c',t:'mc',q:'¿Cuál de estos gobernantes NO intentó reunificar Europa bajo un solo poder, contradiciendo (sin éxito) la profecía de Daniel 2:43?',
    o:['Carlomagno','Napoleón','Hitler, en el siglo XX','Ciro el Grande'],a:3},
 );
 
 BANCO.push(
   {cap:'d3',t:'tf',q:'Sadrac, Mesac y Abed-nego condicionaron su fidelidad a Dios a que él los librara del horno.',
    a:false,e:'Al contrario: dijeron "y si no", es decir, obedecerían a Dios sin importar si los libraba o no.'},
-  {cap:'d3',t:'mc',q:'¿Qué profeta, poco antes del episodio del horno, predicó contra los crímenes del rey Joacim y no fue librado por Dios de morir?',
+  {cap:'d3',f:'c',t:'mc',q:'¿Qué profeta, poco antes del episodio del horno, predicó contra los crímenes del rey Joacim y no fue librado por Dios de morir?',
    o:['Urías','Ezequiel','Daniel','Jeremías'],a:0},
 );
 
 BANCO.push(
   {cap:'d4',t:'tf',q:'Daniel obedeció al rey en inscribirse en la escuela pagana de Babilonia, pero rehusó comer los alimentos que la ley de Dios prohibía.',
    a:true,e:'Obedeció al Estado hasta el punto donde chocaba con un mandamiento explícito de Dios; ahí se detuvo.'},
-  {cap:'d4',t:'mc',q:'¿Qué otros dos profetas de Dios estaban activos al mismo tiempo que Daniel servía en el palacio de Babilonia?',
+  {cap:'d4',f:'c',t:'mc',q:'¿Qué otros dos profetas de Dios estaban activos al mismo tiempo que Daniel servía en el palacio de Babilonia?',
    o:['Isaías y Miqueas','Jeremías y Ezequiel','Elías y Eliseo','Amós y Oseas'],a:1},
-  {cap:'d4',t:'mc',q:'¿A qué distancia de Babilonia vivía Ezequiel, junto al canal de Kebar?',
+  {cap:'d4',f:'c',t:'mc',q:'¿A qué distancia de Babilonia vivía Ezequiel, junto al canal de Kebar?',
    o:['A unos 80 km','A unos 800 km','A unos 8 km','A unos 8.000 km'],a:0},
-  {cap:'d4',t:'tf',q:'Unos 19 años antes de que Nabucodonosor soñara con el gran árbol derribado, Ezequiel ya había recibido una advertencia paralela, comparando a otro gobernante con un árbol destinado a ser talado.',
+  {cap:'d4',f:'c',t:'tf',q:'Unos 19 años antes de que Nabucodonosor soñara con el gran árbol derribado, Ezequiel ya había recibido una advertencia paralela, comparando a otro gobernante con un árbol destinado a ser talado.',
    a:true,e:'Fue una advertencia dirigida al faraón de Egipto, y es razonable pensar que Daniel se la haya mostrado a Nabucodonosor.'},
 );
 
 BANCO.push(
-  {cap:'d5',t:'mc',q:'¿Qué oficial arrojó al Éufrates un pergamino de Jeremías atado a una piedra, décadas antes de la caída de Babilonia, como señal de que la ciudad se hundiría para no levantarse más?',
+  {cap:'d5',f:'c',t:'mc',q:'¿Qué oficial arrojó al Éufrates un pergamino de Jeremías atado a una piedra, décadas antes de la caída de Babilonia, como señal de que la ciudad se hundiría para no levantarse más?',
    o:['Seraías','Aspenaz','Arioc','Melsar'],a:0},
-  {cap:'d5',t:'mc',q:'¿Qué emperador, ya dueño del mundo conocido, puso a 10.000 hombres a reconstruir Babilonia como su capital y murió en esa misma ciudad sin lograrlo?',
+  {cap:'d5',f:'c',t:'mc',q:'¿Qué emperador, ya dueño del mundo conocido, puso a 10.000 hombres a reconstruir Babilonia como su capital y murió en esa misma ciudad sin lograrlo?',
    o:['Ciro el Grande','Jerjes, rey de Persia','Alejandro Magno','Darío I de Persia'],a:2},
-  {cap:'d5',t:'mc',q:'¿Qué general de Alejandro Magno se llevó a gran parte de la población de Babilonia y millones de ladrillos para fundar una ciudad rival, Seleucia?',
+  {cap:'d5',f:'c',t:'mc',q:'¿Qué general de Alejandro Magno se llevó a gran parte de la población de Babilonia y millones de ladrillos para fundar una ciudad rival, Seleucia?',
    o:['Seleuco Nicátor','Ptolomeo','Antígono','Casandro'],a:0},
   {cap:'d5',t:'mc',q:'Según Daniel 5:22, ¿por qué era Baltasar más culpable que Nabucodonosor?',
    o:['Porque era mucho más joven e inexperto que su predecesor','Porque sabía todo lo que le había pasado a Nabucodonosor y aun así no humilló su corazón','Porque no era de sangre real ni descendiente directo del rey','Porque gobernaba un imperio mucho más grande y poderoso'],a:1},
 );
 
 BANCO.push(
-  {cap:'d6',t:'mc',q:'¿Aproximadamente cuántos años tenía Daniel cuando fue arrojado al foso de los leones?',
+  {cap:'d6',f:'c',t:'mc',q:'¿Aproximadamente cuántos años tenía Daniel cuando fue arrojado al foso de los leones?',
    o:['Unos 40 años','Unos 60 años','Unos 84 años','Unos 100 años'],a:2},
-  {cap:'d6',t:'mc',q:'Según el contraste que hace Isaías, ¿qué tenían que hacer con los ídolos Bel y Nebo cada Año Nuevo en Babilonia, a diferencia del Dios verdadero?',
+  {cap:'d6',f:'c',t:'mc',q:'Según el contraste que hace Isaías, ¿qué tenían que hacer con los ídolos Bel y Nebo cada Año Nuevo en Babilonia, a diferencia del Dios verdadero?',
    o:['Esconderlos de los enemigos que se acercaban','Cargarlos a lomo de animales, porque no podían moverse solos','Enterrarlos lejos, en el desierto','Pintarlos de oro para el Año Nuevo'],a:1},
   {cap:'d6',t:'tf',q:'Cuando Daniel se enteró del decreto que prohibía orar, comenzó a orar pidiendo ayuda antes que nada.',
    a:false,e:'El texto dice que oraba "dando gracias... así como lo había hecho siempre" (6:10): agradecía primero.'},
-  {cap:'d6',t:'tf',q:'Daniel ya había recibido la visión de Daniel 7, con la promesa de la resurrección, varios años antes de ser arrojado al foso de los leones.',
+  {cap:'d6',f:'c',t:'tf',q:'Daniel ya había recibido la visión de Daniel 7, con la promesa de la resurrección, varios años antes de ser arrojado al foso de los leones.',
    a:true,e:'Eso explica en parte su confianza esa noche: ya sabía que Dios vence a poderes mucho más temibles que un león.'},
 );
 
@@ -1758,9 +1762,9 @@ BANCO.push(
 
 
 BANCO.push(
-  {cap:'d2',t:'mc',q:'¿Qué obispo cristiano del siglo II ya sostenía que la piedra de Daniel 2 era Cristo destruyendo los reinos del mundo en su Segunda Venida?',
+  {cap:'d2',f:'c',t:'mc',q:'¿Qué obispo cristiano del siglo II ya sostenía que la piedra de Daniel 2 era Cristo destruyendo los reinos del mundo en su Segunda Venida?',
    o:['Ireneo de Lyon','Agustín de Hipona','Jerónimo','Orígenes'],a:0},
-  {cap:'d2',t:'tf',q:'Según el capítulo de Douglas Bennett en Simposio sobre Daniel, la lectura de que el reino de la piedra llega en la Segunda Venida (y no antes) es un invento del siglo XIX.',
+  {cap:'d2',f:'c',t:'tf',q:'Según el capítulo de Douglas Bennett en Simposio sobre Daniel, la lectura de que el reino de la piedra llega en la Segunda Venida (y no antes) es un invento del siglo XIX.',
    a:false,e:'Es la lectura más antigua que se conserva de la iglesia cristiana, documentada ya en el siglo II con Ireneo de Lyon.'},
   {cap:'d7',t:'mc',q:'¿Qué filósofo pagano, en su obra "Contra los cristianos" (h. 270-280 d.C.), fue el primero en identificar el cuerno pequeño de Daniel 7 con Antíoco Epífanes?',
    o:['Porfirio','Hipólito','Jerónimo','Policronio'],a:0},

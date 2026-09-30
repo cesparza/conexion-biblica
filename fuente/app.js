@@ -636,7 +636,7 @@ function cambiaAlumno(id){
   /* El filtro de estudio es de quien lo puso: la siguiente persona en este
      celular no hereda la mitad del material escondida. */
   filtroEst='todo';filtroAbierto=false;try{localStorage.setItem(FILTRO_K,'todo');}catch(e){}
-  reiniciaPractica();alcance='todo';cuantas=0;nivel=0;
+  reiniciaPractica();alcance='todo';cuantas=0;nivel=0;reiniciaFuente();
   prueba=[];resp={};entregado=false;clearInterval(reloj);
   marcaCat();pintaInicio();pintaCaps();pintaYo();
   try{document.getElementById('detalle').style.display='none';}catch(e){}
@@ -899,7 +899,7 @@ function ponCat(c){
   try{document.getElementById('detalle').style.display='none';}catch(e){}
   /* Cambiar de categoría cambia el material entero, así que el mazo y el examen
      armado eran de la categoría anterior. Igual que al cambiar de persona. */
-  reiniciaPractica();prueba=[];resp={};entregado=false;alcance=alcanceDeFiltro();
+  reiniciaPractica();prueba=[];resp={};entregado=false;alcance=alcanceDeFiltro();reiniciaFuente();
   try{clearInterval(reloj);}catch(e){}
   cierraHoja();
   ir('inicio');
@@ -3485,12 +3485,29 @@ const falladasDe=()=>bancoDe().filter(q=>pasaFiltro(q.cap)&&(S.fq[claveQ(q)]||{}
    sentido en «En esto creemos» y desaparece solo en Conexion Biblica, porque
    pintaMenuEx() ya solo lo ofrece donde cambia algo. */
 const esComplementaria=q=>q.f==='c';
-/* Lo escoge el usuario y vive en el aparato, como `alcance` y `nivel`. */
+/* Lo escoge el usuario y vive en el aparato, como `alcance` y `nivel`.
+   v132: en Conexion Biblica arranca PRENDIDO. Camilo abrio un examen de
+   capitulos para el campamento y le salieron preguntas de historia y de otros
+   profetas: el examen del campamento es del libro de Daniel y de Profetas y
+   Reyes. Se apaga a mano para practicar con todo. Cambiar de categoria lo
+   vuelve al valor de su actividad. */
+const fuenteInicial=()=>ACT_DE(S.cat)==='cb';
 let soloFuente=false;
+/* De que actividad es el valor de arriba. La categoria cambia por varios
+   caminos (la bienvenida, cambiar de persona, pasar de actividad) y no todos
+   pasan por ponCat(): poolDe() compara y, si el valor es de otra actividad,
+   vuelve al de esta. Asi ningun camino hereda el interruptor de otra. */
+let soloFuenteAct='';
+function reiniciaFuente(){soloFuente=fuenteInicial();soloFuenteAct=ACT_DE(S.cat);}
+function sincFuente(){if(soloFuenteAct!==ACT_DE(S.cat))reiniciaFuente();}
 
 /* Preguntas disponibles según categoría + alcance elegido. */
 function poolDe(){
-  const b=bancoDe();
+  /* El filtro de fuente va AQUI y no en poolNivel(): los juegos y la cuenta
+     del panel (cuantasPara) leen poolDe(), y con el filtro abajo contaban y
+     jugaban con preguntas que el examen luego no traia. */
+  sincFuente();
+  const b=soloFuente?bancoDe().filter(q=>!esComplementaria(q)):bancoDe();
   /* «todo» es todo lo de la ACTIVIDAD activa, no todo lo cargado. El filtro
      de creencias ya lo hizo capsDe(); dejarlo aqui tambien vaciaria el examen
      de las 28 creencias. La garantia sigue en pie por otro camino: con la
@@ -3661,7 +3678,7 @@ function poolNivel(){
   /* El filtro de fuente va ANTES del de nivel: si fuera al reves, el rescate
      de «si el nivel deja muy pocas, usa todas» devolveria preguntas
      complementarias en un examen que pidio solo la fuente oficial. */
-  if(soloFuente)b=b.filter(q=>!esComplementaria(q));
+  /* El de fuente ya viene aplicado desde poolDe(). */
   /* A los 4 a 6 años no se les pide escribir la palabra exacta. */
   if(CAT().sinCompletar)b=b.filter(q=>q.t!=='fill');
   const n=nivelEfectivo();
@@ -3856,7 +3873,7 @@ function fichaEx(tipo,v){
 }
 
 function cambiaFuente(){
-  soloFuente=!!document.getElementById('ex-fuente').checked;
+  soloFuente=!!document.getElementById('ex-fuente').checked;soloFuenteAct=ACT_DE(S.cat);
   refrescaEx();
 }
 
@@ -3959,8 +3976,16 @@ const tandaDe=q=>{
    sigue siendo azar, y no el orden en que estan escritas en el banco. */
 const porFrescura=lista=>mezclaR(lista,rndEx)
   .map((q,i)=>({q,i}))
-  .sort((a,b)=>(tandaDe(a.q)-tandaDe(b.q))||(vecesVista(a.q)-vecesVista(b.q))||(a.i-b.i))
+  .sort((a,b)=>(tandaDe(a.q)-tandaDe(b.q))||(vecesVista(a.q)-vecesVista(b.q))||
+    (enUltimo(a.q)-enUltimo(b.q))||(a.i-b.i))
   .map(x=>x.q);
+/* LO DEL EXAMEN ANTERIOR VA AL FINAL DE SU TANDA. Cuando ya salieron todas
+   las de un tipo, el relleno sale de las vistas, y entre dos vistas una vez no
+   habia como preferir la que NO acaba de salir: repetia del examen anterior.
+   Se noto en v132, al sacar las complementarias el pool de Aventureros cambio
+   de tamaño. Vive en memoria: es «el examen de hace un rato», no un historial. */
+let ultimoExamen=new Set();
+const enUltimo=q=>ultimoExamen.has(claveQ(q))?1:0;
 
 /* Cuantas preguntas de la seleccion actual no le han salido nunca. Es lo que
    el menu del examen muestra, para que se vea que el banco no se esta
@@ -3972,6 +3997,7 @@ const nuevasDe=()=>poolNivel().filter(q=>!vecesVista(q)).length;
    es una pregunta que a nadie le haya salido. */
 function marcaVistas(sel){
   if(!S.qv)S.qv={};
+  ultimoExamen=new Set(sel.map(claveQ));
   for(const q of sel){
     const k=claveQ(q);
     S.qv[k]=Math.min(99,(S.qv[k]||0)+1);
@@ -4640,7 +4666,7 @@ function pintaEvaluacion(){
 function haceEvaluacion(){
   if(!evalPend||evalHecha)return;
   const r=evalPend;
-  const prev={a:alcance,n:nivel,q:cuantas,f:soloFuente,r:retiradas};
+  const prev={a:alcance,n:nivel,q:cuantas,f:soloFuente,fa:soloFuenteAct,r:retiradas};
   let sel=[];
   try{
     /* EL NIVEL TIENE QUE SER DETERMINISTA.
@@ -4650,7 +4676,7 @@ function haceEvaluacion(){
        comparaba notas de exámenes que no eran el mismo. Cuando el director no
        fija nivel, se usa el techo de la categoría, que es igual para todas. */
     alcance=r.alcance||'todo';nivel=r.nivel||CAT().techo;cuantas=r.cuantas;
-    soloFuente=!!r.solo_fuente;
+    soloFuente=!!r.solo_fuente;soloFuenteAct=ACT_DE(S.cat);
     /* LAS RETIRADAS DE LA RECETA, NO LAS DE AHORA. La receta trae la lista tal
        como estaba cuando el director abrio la evaluacion. Si se usara la de
        ahora, retirar una pregunta a media mañana le cambiaria el examen a la
@@ -4660,7 +4686,7 @@ function haceEvaluacion(){
     rndEx=prng(Number(r.semilla)>>>0);
     sel=armar('normal');
   }finally{
-    rndEx=Math.random;alcance=prev.a;nivel=prev.n;cuantas=prev.q;soloFuente=prev.f;
+    rndEx=Math.random;alcance=prev.a;nivel=prev.n;cuantas=prev.q;soloFuente=prev.f;soloFuenteAct=prev.fa;
     retiradas=prev.r;
   }
   /* Antes, si la receta no daba preguntas para esta participante, el botón no
@@ -5122,7 +5148,7 @@ function bvTermina(){
 
 /* ───────── arranque ───────── */
 try{
-  pintaLogo();marcaCat();alcance=alcanceDeFiltro();pintaInicio();
+  pintaLogo();marcaCat();alcance=alcanceDeFiltro();reiniciaFuente();pintaInicio();
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
   else if(S.ultPantalla && S.ultPantalla!=='inicio' && TABS[S.ultPantalla]!==undefined){
     if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem);
@@ -5463,10 +5489,10 @@ async function pintaPanel(){
       /* Solo «En esto creemos» tiene dos fuentes de verdad: la cartilla y el
          libro de las 28. En Conexion Biblica, P&R es del reglamento. */
       '<label class="ex-sw" style="margin:.2rem 0 .1rem">'+
-        '<input type="checkbox" id="pan-fuente" onchange="pintaAvisoCats();pintaFrase()">'+
-        '<span>Solo la fuente del reglamento<br>'+
-        '<small>Solo aplica a «En esto creemos»: deja fuera lo que sale del '+
-        'libro de las 28 y no de la cartilla.</small></span>'+
+        '<input type="checkbox" id="pan-fuente" checked onchange="pintaAvisoCats();pintaFrase()">'+
+        '<span>Solo el material del reglamento<br>'+
+        '<small>Conexión Bíblica: solo Daniel y Profetas y Reyes, sin historia, otros '+
+        'profetas ni intérpretes. En esto creemos: solo la cartilla, sin el libro de las 28.</small></span>'+
       '</label>'+
     '</div>'+
 
@@ -5734,14 +5760,14 @@ const NOTA_ALCANCE={
    preguntarlo sin pararse un momento en esa categoría y devolver las dos como
    estaban. Es el mismo truco de gruposEx(), que ya hace esto en la práctica. */
 function cuantasPara(cat,alc){
-  const pc=S.cat,pa=alcance,pf=soloFuente;
+  const pc=S.cat,pa=alcance,pf=soloFuente,pfa=soloFuenteAct;
   /* Con el interruptor puesto, el aviso tiene que contar lo que de verdad va a
      recibir esa categoria. Sin esto decia «274 preguntas» y el examen salia
      con otra cifra. */
   try{S.cat=cat;alcance=alc;
-    soloFuente=!!(document.getElementById('pan-fuente')||{}).checked;
+    soloFuente=!!(document.getElementById('pan-fuente')||{}).checked;soloFuenteAct=ACT_DE(cat);
     return poolDe().length;}
-  finally{S.cat=pc;alcance=pa;soloFuente=pf;}
+  finally{S.cat=pc;alcance=pa;soloFuente=pf;soloFuenteAct=pfa;}
 }
 
 /* AVISO DE COMBINACIÓN VACÍA.
@@ -5809,6 +5835,7 @@ function pintaAvisoCats(){
 /* Que fuente nombra el reglamento para cada actividad, en palabras. Se dice
    cual es, no «la oficial»: el punto del interruptor es saber que entra. */
 const FUENTE_TXT={
+  cb:'Solo el libro de Daniel y Profetas y Reyes. Deja fuera historia, otros profetas e intérpretes.',
 
   dm:'Solo el cuadernillo de octubre.',
   ec:'Solo la cartilla «En esto creemos». Deja fuera lo que sale del libro de las 28 creencias.'
@@ -7065,7 +7092,7 @@ function hisListaEvals(){
       '<div class="rb-etq"><span>'+esc(cuando)+'</span>'+
       '<span>'+(abierta?'Abierta':'Cerrada')+'</span>'+
       '<span>'+ev.notas+(ev.notas===1?' nota':' notas')+'</span>'+
-      (ev.solo_fuente?'<span>Solo la fuente</span>':'')+'</div>'+
+      (ev.solo_fuente?'<span>Solo el reglamento</span>':'')+'</div>'+
       '<div class="rb-q">'+esc(ev.titulo)+'</div>'+
       '<div class="rb-a">'+esc(textoAlcancePanel(ev.alcance))+' · '+esc(para)+
       ' · '+ev.cuantas+' preguntas</div>'+
