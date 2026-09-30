@@ -251,6 +251,7 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Conexión Bíblica — Daniel</title>
+<meta name="description" content="Preparación para el concurso bíblico del club de Aventureros: estudio, tarjetas, práctica y exámenes.">
 <!-- Favicon en linea: sin archivo aparte, el HTML sigue siendo autonomo y
      abre con doble clic. El azul y el naranja son los de la marca. -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231F3864'/><path d='M11 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff'/><path d='M33.5 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff' opacity='.85'/><path d='M32 17.5v31' stroke='%23E8720C' stroke-width='3.4' stroke-linecap='round'/></svg>">
@@ -261,6 +262,11 @@ ${CSS}
 </style>
 </head>
 <body>
+<!-- v139: PANTALLA DE ARRANQUE. Todo lo demás lo pinta el JavaScript, que son
+     2 MB al final del archivo: sin esto la pantalla quedaba en blanco hasta que
+     terminaba de bajar y correr (3,5 s medidos en 4G lento). Esto llega en los
+     primeros KB y se ve de una; app.js lo quita al arrancar. -->
+<div id="arranque" aria-hidden="true"><svg viewBox="0 0 64 64" width="72" height="72"><rect width="64" height="64" rx="14" fill="#1F3864"/><path d="M11 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z" fill="#fff"/><path d="M33.5 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z" fill="#fff" opacity=".85"/><path d="M32 17.5v31" stroke="#E8720C" stroke-width="3.4" stroke-linecap="round"/></svg><b>Conexión Bíblica</b><span>Cargando…</span></div>
 ${CUERPO}
 <script>
 ${DATA}

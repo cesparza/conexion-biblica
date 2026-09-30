@@ -28,7 +28,10 @@ node tools/hash-clave.js --escribir # cambiar la clave del director
 ```
 
 `index.html` se genera: **no se edita a mano**. El hook de `tools/pre-commit`
-bloquea líneas de más de 2.000 caracteres (`git config core.hooksPath tools`).
+bloquea líneas de más de 2.000 caracteres, y `tools/pre-push` no deja publicar
+si el `index.html` no corresponde a las fuentes o si falla una prueba
+(los dos con `git config core.hooksPath tools`). GitHub Actions corre las
+mismas pruebas en cada push (`.github/workflows/pruebas.yml`).
 
 ## Las dos mitades
 

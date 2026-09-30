@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Conexión Bíblica — Daniel</title>
+<meta name="description" content="Preparación para el concurso bíblico del club de Aventureros: estudio, tarjetas, práctica y exámenes.">
 <!-- Favicon en linea: sin archivo aparte, el HTML sigue siendo autonomo y
      abre con doble clic. El azul y el naranja son los de la marca. -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231F3864'/><path d='M11 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff'/><path d='M33.5 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z' fill='%23fff' opacity='.85'/><path d='M32 17.5v31' stroke='%23E8720C' stroke-width='3.4' stroke-linecap='round'/></svg>">
@@ -2276,9 +2277,22 @@ details.card summary::marker{content:''}
 
 /* v139: qué hacer en cada paso de la práctica de hoy. */
 .jg-que{font-size:.8rem;font-weight:700;color:var(--v-tinta2,#5B5F6B);margin:0 0 .45rem}
+
+/* v139: pantalla de arranque (ver build.js). Colores fijos y no variables:
+   se pinta antes de que el JavaScript ponga la categoría. */
+#arranque{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:.6rem;background:#FFFBF2;color:#1F3864;font-family:system-ui,-apple-system,sans-serif}
+#arranque b{font-size:1.25rem;font-weight:800}
+#arranque span{font-size:.9rem;color:#5B5F6B}
+@media print{#arranque{display:none}}
 </style>
 </head>
 <body>
+<!-- v139: PANTALLA DE ARRANQUE. Todo lo demás lo pinta el JavaScript, que son
+     2 MB al final del archivo: sin esto la pantalla quedaba en blanco hasta que
+     terminaba de bajar y correr (3,5 s medidos en 4G lento). Esto llega en los
+     primeros KB y se ve de una; app.js lo quita al arrancar. -->
+<div id="arranque" aria-hidden="true"><svg viewBox="0 0 64 64" width="72" height="72"><rect width="64" height="64" rx="14" fill="#1F3864"/><path d="M11 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z" fill="#fff"/><path d="M33.5 19c6.5-3.2 13-3.2 19.5 0v27c-6.5-3.2-13-3.2-19.5 0z" fill="#fff" opacity=".85"/><path d="M32 17.5v31" stroke="#E8720C" stroke-width="3.4" stroke-linecap="round"/></svg><b>Conexión Bíblica</b><span>Cargando…</span></div>
 <!-- Iconos. Van EN LÍNEA, no como fuente ni como archivo aparte: la app es un
      solo index.html sin dependencias y sin red, y un icono que no carga deja la
      barra de navegación muda.
@@ -2760,7 +2774,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '779adecb534d';
+const VERSION_APP = '2ab5fb259f9d';
 
 const CAPS = [
  {
@@ -44273,6 +44287,13 @@ if(typeof navigator!=='undefined'&&navigator.serviceWorker&&
    typeof location!=='undefined'&&location.protocol.indexOf('http')===0&&
    typeof addEventListener==='function'){
   addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+}
+
+/* La pantalla de arranque se quita cuando todo lo de arriba ya corrió: en ese
+   punto la app ya pintó su primera pantalla. */
+if(typeof document!=='undefined'&&document.getElementById){
+  const arr=document.getElementById('arranque');
+  if(arr&&arr.remove)arr.remove();
 }
 </script>
 </body>

@@ -143,9 +143,19 @@ async function vivo() {
   ok((await pide('/api/panel/participantes')).status === 401, '/api/panel/participantes sin sesión: 401');
   const mal = await pide('/api/entrar', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{"codigo":"ZZZ999"}' });
   ok(mal.status === 401, 'Un código inventado: 401');
-  for (const ruta of ['/migraciones/001_base.sql', '/wrangler.toml', '/fuente/app.js', '/tests/api.js']) {
+  for (const ruta of ['/migraciones/001_base.sql', '/wrangler.toml', '/fuente/app.js', '/tests/api.js',
+                      '/README.md', '/CLAUDE.md', '/supabase-setup.sql']) {
     const r = await fetch(base + ruta);
     ok(r.status === 404, 'No se sirve ' + ruta);
+  }
+  /* v139: la segunda apertura sin cambios no baja el HTML otra vez. */
+  const h1 = await fetch(base + '/');
+  const et = h1.headers.get('etag');
+  const ver = await (await fetch(base + '/version.json')).json();
+  ok(et === '"' + ver.v + '"', 'El HTML publicado trae la huella de version.json como ETag (' + et + ')');
+  if (et) {
+    const h2 = await fetch(base + '/', { headers: { 'if-none-match': et } });
+    ok(h2.status === 304, 'Con ese ETag, el sitio responde 304 (' + h2.status + ')');
   }
 }
 
@@ -398,7 +408,34 @@ ok(/fundida\.nombre = p\.nombre/.test(API) && /fundida\.cat = p\.categoria/.test
 }
 
 
+/* ── v139: EL HTML CON ETAG, Y LOS ARCHIVOS DEL REPO FUERA ──────────
+   Pages no le pone ETag al HTML: cada apertura bajaba el index entero. El
+   middleware usa la huella de version.json (SHA-1 del HTML) como ETag y
+   responde 304 si el celular ya tiene esa versión. Se prueba el módulo de
+   verdad, con un contexto simulado. */
+async function pruebaMiddleware() {
+  const M = await import('file://' + path.join(RAIZ, 'functions/_middleware.js'));
+  const ctx = (inm, ruta = '/', ver = 'abcdef123456') => ({
+    request: new Request('https://x.dev' + ruta, { headers: inm ? { 'if-none-match': inm } : {} }),
+    next: async () => new Response('<!doctype html><p>x', { status: 200, headers: { 'content-type': 'text/html; charset=utf-8' } }),
+    env: { ASSETS: { fetch: async () => { if (!ver) throw new Error('sin'); return new Response(JSON.stringify({ v: ver })); } } },
+  });
+  let r = await M.onRequest(ctx());
+  ok(r.status === 200 && r.headers.get('etag') === '"abcdef123456"', 'El HTML sale con la huella como ETag');
+  r = await M.onRequest(ctx('"abcdef123456"'));
+  ok(r.status === 304 && !(await r.text()), 'Si el celular ya tiene esa versión: 304, sin cuerpo');
+  r = await M.onRequest(ctx('"000000000000"'));
+  ok(r.status === 200, 'Si la versión cambió: el HTML nuevo completo');
+  r = await M.onRequest(ctx(null, '/', ''));
+  ok(r.status === 200 && !r.headers.get('etag'), 'Sin version.json se sirve igual, sin ETag: nunca un 304 a ciegas');
+  for (const u of ['/README.md', '/CLAUDE.md', '/supabase-setup.sql']) {
+    r = await M.onRequest(ctx(null, u));
+    ok(r.status === 404, 'El sitio no sirve ' + u);
+  }
+}
+
 (async () => {
+  try { await pruebaMiddleware(); } catch (e) { ok(false, 'La prueba del middleware no corrió: ' + e.message); }
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }
   }

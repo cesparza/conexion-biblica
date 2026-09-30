@@ -1,0 +1,31 @@
+#!/bin/sh
+# Antes de publicar: el index.html corresponde a las fuentes y las pruebas pasan.
+# Cloudflare Pages publica cada push a main; esto es lo único que se interpone
+# entre un error y las niñas. Lo activa `git config core.hooksPath tools`, el
+# mismo ajuste del pre-commit.
+# Saltarlo (solo sabiendo por qué): git push --no-verify
+cd "$(git rev-parse --show-toplevel)" || exit 1
+# Desde osascript o una app gráfica el PATH no trae a node (Homebrew).
+PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"; export PATH
+
+# El index.html es el ARTEFACTO: si las fuentes cambiaron y no se reconstruyó,
+# se publicaría una versión que no es la del repo. version.json no se compara:
+# lleva la fecha del build, que cambia sola al día siguiente.
+node fuente/build.js > /dev/null || { echo "✗ Push bloqueado: fuente/build.js falló."; exit 1; }
+if ! git diff --quiet HEAD -- index.html sw.js; then
+  echo "✗ Push bloqueado: index.html no corresponde a las fuentes."
+  echo "  Corre node fuente/build.js y haz commit del resultado."
+  exit 1
+fi
+
+for t in test uso api; do
+  LOG="${TMPDIR:-/tmp}/cb-prepush-$t.log"
+  if ! node "tests/$t.js" > "$LOG" 2>&1; then
+    echo "✗ Push bloqueado: tests/$t.js falló."
+    grep -E "❌|Error" "$LOG" | head -8
+    echo "  Detalle completo: $LOG"
+    exit 1
+  fi
+done
+echo "✓ Pruebas en verde: se publica."
+exit 0

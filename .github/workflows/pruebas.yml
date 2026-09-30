@@ -1,0 +1,20 @@
+# Segunda red, además de tools/pre-push: corre las pruebas en cada push, aunque
+# el push no venga del Mac que tiene el hook. Sin los textos de files/ (están
+# fuera del repo) el verificador de P&R solo avisa; lo demás corre completo.
+name: Pruebas
+on:
+  push:
+  pull_request:
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: El index.html corresponde a las fuentes
+        run: node fuente/build.js && git diff --exit-code -- index.html sw.js
+      - run: node tests/test.js
+      - run: node tests/uso.js
+      - run: node tests/api.js

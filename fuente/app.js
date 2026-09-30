@@ -7559,3 +7559,10 @@ if(typeof navigator!=='undefined'&&navigator.serviceWorker&&
    typeof addEventListener==='function'){
   addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 }
+
+/* La pantalla de arranque se quita cuando todo lo de arriba ya corrió: en ese
+   punto la app ya pintó su primera pantalla. */
+if(typeof document!=='undefined'&&document.getElementById){
+  const arr=document.getElementById('arranque');
+  if(arr&&arr.remove)arr.remove();
+}

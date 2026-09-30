@@ -2260,3 +2260,11 @@ details.card summary::marker{content:''}
 
 /* v139: qué hacer en cada paso de la práctica de hoy. */
 .jg-que{font-size:.8rem;font-weight:700;color:var(--v-tinta2,#5B5F6B);margin:0 0 .45rem}
+
+/* v139: pantalla de arranque (ver build.js). Colores fijos y no variables:
+   se pinta antes de que el JavaScript ponga la categoría. */
+#arranque{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:.6rem;background:#FFFBF2;color:#1F3864;font-family:system-ui,-apple-system,sans-serif}
+#arranque b{font-size:1.25rem;font-weight:800}
+#arranque span{font-size:.9rem;color:#5B5F6B}
+@media print{#arranque{display:none}}
