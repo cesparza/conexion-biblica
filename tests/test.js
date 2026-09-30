@@ -1732,7 +1732,7 @@ ok(/\.vd-izq\{[^}]*max-height:calc\(100vh/.test(CSS_SIN),
 {
   const sinPrint=CSS_SIN.replace(/@media print\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g,'');
   const tapan=[...sinPrint.matchAll(/([^{}]*\.(?:lect-full|lect-top|txt-rp|lec-rp|lec-play|lec-tira))\s*\{[^}]*display:\s*none/g)].map(m=>m[1].trim());
-  ok(tapan.length===0,'Ningun ancho esconde el reproductor ni «Leer sin distracciones»'+
+  ok(tapan.length===0,'Ningun ancho esconde el reproductor ni «Pantalla completa»'+
     (tapan.length?': '+tapan.join(' | '):''));
 }
 /* v131: la marca del que suena se decide por ELEMENTO. Un versiculo largo se
@@ -2055,6 +2055,26 @@ ok(/verRevision\(/.test(APP.slice(APP.indexOf('function hisListaPersonas'))),
   if(n===0) console.log('⚠️  AVISO: 0 preguntas de Profetas y Reyes se contrastaron contra el libro'+
     (porque?' — '+porque:'')+'. Corre con CB_PR_TEXTO=<texto del libro> para verificarlas.');
   else ok(true,'Profetas y Reyes contrastado contra el libro ('+n+' preguntas)');
+}
+
+
+/* v146: sistema de diseño. Cada tamaño de letra y cada redondeo sale de la
+   escala; ningún control usa emoji como icono. Si alguien mete un valor suelto,
+   falla aquí en vez de verse raro en un teléfono. */
+{
+  const css=fs.readFileSync(FUENTE('estilos.css'),'utf8').replace(/\/\*[\s\S]*?\*\//g,'');
+  const ESC=new Set(['.75rem','.875rem','1rem','1.125rem','1.375rem','1.75rem','2.25rem','3rem','16px','inherit','1em','100%','0']);
+  const fsSuelto=[...css.matchAll(/font-size:\s*([^;}!]+)/g)].map(m=>m[1].trim())
+    .filter(v=>!ESC.has(v)&&!/^var\(--v-t/.test(v)&&!/^[\d.]+em$/.test(v)&&!/^calc\(.*var\(--/.test(v));
+  ok(fsSuelto.length===0,'Letra: todo tamaño sale de la escala'+(fsSuelto.length?' (sueltos: '+[...new Set(fsSuelto)].slice(0,8).join(', ')+')':''));
+  const RAD=/^(0|8px|12px|18px|999px|50%|var\(--[\w-]+(,[^)]*)?\))$/;
+  const radSuelto=[...css.matchAll(/border-radius:\s*([^;}!]+)/g)].map(m=>m[1].trim())
+    .filter(v=>!v.replace(/,\s+/g,',').split(/\s+/).every(x=>RAD.test(x)||/^[\d.]+em$/.test(x)||x==='3px'||x==='inherit'));
+  ok(radSuelto.length===0,'Redondeo: solo 8, 12, 18 px y pastilla'+(radSuelto.length?' (sueltos: '+[...new Set(radSuelto)].slice(0,8).join(', ')+')':''));
+  const app=APP, cuerpo=fs.readFileSync(FUENTE('cuerpo.html'),'utf8');
+  const EMO=/[\u{1F300}-\u{1FAFF}☀-➿⏸-⏺↺]/u;
+  const ctrl=[...(app+cuerpo).matchAll(/<button\b[^>]*>([^<]*)/g)].map(m=>m[1]).filter(t=>EMO.test(t));
+  ok(ctrl.length===0,'Ningún botón usa emoji como icono'+(ctrl.length?' ('+ctrl.slice(0,6).join(' | ')+')':''));
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

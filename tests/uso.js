@@ -961,8 +961,13 @@ ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
     'Los dos traen la tira: un segmento por versiculo');
   const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
   const sec=src.slice(src.indexOf('function seccionLectura'),src.indexOf('function seccionLectura')+2600);
-  ok(/htmlLecVoz\(nums\.length,'texto'\)/.test(sec)&&/lect-full/.test(sec),
-    'Y el capitulo lo pinta arriba del texto, junto a «Leer sin distracciones»');
+  ok(/htmlLecVoz\(nums\.length,'texto',cid\)/.test(sec)&&/lect-full/.test(sec),
+    'Y el capitulo lo pinta arriba del texto, con «Pantalla completa» (y solo si no hay voz, suelto)');
+  /* v146: «Pantalla completa» va DENTRO del reproductor del texto; en el del
+     modo lectura no, porque ahí ya se está en pantalla completa. */
+  const conCid=AV.htmlLecVoz(21,'texto','d1');
+  ok(/class="lect-full" onclick="abreLectura\('d1'\)"/.test(conCid)&&!/lect-full/.test(AV.htmlLecVoz(21)),
+    '«Pantalla completa» vive en el reproductor del texto y no en el del modo lectura');
 }
 /* v129: Profetas y Reyes se escucha por su estudio, y el libro se abre en el
    sitio oficial. El texto del libro no entra a la app (licencia). */
@@ -1586,6 +1591,13 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   R.ponAlcance('m05..m12');
   R.ir('examen');
   ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
+}
+
+/* ─── v146: entregar sin examen armado no guarda nada ─── */
+{
+  const Z=montar(RET+', S:()=>S'); Z.ponCat('av');
+  const n=Z.S().examenes.length; Z.entregar();
+  ok(Z.S().examenes.length===n,'Entregar sin preguntas no guarda un examen de 0/0 (salía «NaN%» en el historial)');
 }
 
 /* ─── v139: la práctica de hoy (como «Aprender» de Quizlet) ───

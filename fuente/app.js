@@ -107,6 +107,19 @@ const CLAVE='conexion-biblica-v4';
 /* `qv` cuenta CUANTAS VECES le ha salido cada pregunta a esta ficha. Campo
    nuevo, no renombrado: una ficha vieja llega sin el y `normalizar` lo deja
    en cero, que es exactamente «nunca le ha salido nada». */
+/* ── ÍCONOS (v146) ──
+   IC('check') pinta un ícono del sprite de cuerpo.html en línea con el texto.
+   icoDe('📖') traduce el emoji que guardan los datos (actividades, fichas de
+   repaso, doctrinas) al ícono de la app. Los datos no cambian: la hoja impresa
+   y la marca de «es una ficha» (c.icono) siguen leyendo el emoji. Un emoji sin
+   traducción no se pinta: mejor sin ícono que con uno de otro idioma. */
+const IC=(n,c)=>'<svg class="ico-t'+(c?' '+c:'')+'" aria-hidden="true"><use href="#i-'+n+'"/></svg>';
+const ICO_DE={'📘':'libro','📖':'libro','📕':'comparar','📗':'libro','🌅':'sol','✝️':'cruz','🕰️':'reloj','👥':'grupo',
+  '🔢':'numeros','⚠️':'alerta','👑':'corona','🗿':'estatua','🗺️':'mapa','🎯':'diana','💬':'bocadillo',
+  '🧍':'persona','⛪':'iglesia','🕊️':'paloma','🦸':'escudo','⚙️':'ajustes','✳️':'lista','🔎':'lupa','🃏':'tarjetas',
+  '✏️':'lapiz','❓':'ayuda'};
+const icoDe=(e,c)=>ICO_DE[e]?IC(ICO_DE[e],c):'';
+
 /* Protectores de racha que se pueden guardar (ver sumaRacha). Va aquí arriba,
    junto a BASE, porque normalizar() la usa al cargar: más abajo daría TDZ. */
 const PROTECTOR_MAX=2;
@@ -974,7 +987,7 @@ function pintaSelectorCat(){
      una a otra, asi que tiene que leerse como «Conexion Biblica», no «cb». */
   const eventos=Object.keys(ACTIVIDADES);
   cont.innerHTML=eventos.map(ev=>
-    '<div class="cat-grupo">'+ACTIVIDADES[ev].icono+' '+esc(ACTIVIDADES[ev].nombre)+
+    '<div class="cat-grupo">'+icoDe(ACTIVIDADES[ev].icono)+' '+esc(ACTIVIDADES[ev].nombre)+
     ' <small>· '+esc(ACTIVIDADES[ev].cuando)+'</small></div>'+
     '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.act===ev).map(([k,c])=>
       '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
@@ -1113,13 +1126,13 @@ function pintaYo(){
   const nom=S.nombre||'Sin nombre';
   b.innerHTML='<span class="yo-ini" aria-hidden="true">'+esc(nom.trim().charAt(0).toUpperCase()||'?')+'</span>'+
     '<span class="yo-tx"><span class="yo-n">'+esc(nom)+'</span>'+
-    '<span class="yo-c">'+esc(ACT().icono+' '+CAT().nombre)+'</span></span>'+
+    '<span class="yo-c">'+icoDe(ACT().icono)+' '+esc(CAT().nombre)+'</span></span>'+
     /* El globo es un nodo propio, no el `title` del navegador, por dos razones:
        el title tarda un segundo largo en salir y no admite dos renglones. En
        escritorio la ficha se reduce a la inicial, así que sin esto queda un
        botón mudo y hay que abrir el panel para saber quién estudia. */
     '<span class="yo-tip" aria-hidden="true"><b>'+esc(nom)+'</b>'+
-    esc(ACT().icono+' '+ACT().nombre+' · '+CAT().nombre)+'</span>';
+    icoDe(ACT().icono)+' '+esc(ACT().nombre+' · '+CAT().nombre)+'</span>';
   b.setAttribute('aria-label','Estudia '+nom+', '+CAT().nombre+' de '+ACT().nombre+'. Toca para cambiar.');
 }
 
@@ -1136,16 +1149,16 @@ function abreYo(){
          dos centímetros más abajo, y repetirlos aquí solo lograba que se
          cortaran con puntos suspensivos. */
       '<div><div class="hoja-ref">Quién estudia</div>'+
-      '<div class="hoja-sub">'+esc(ACT().icono+' '+ACT().nombre)+'</div></div>'+
-      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
+      '<div class="hoja-sub">'+icoDe(ACT().icono)+' '+esc(ACT().nombre)+'</div></div>'+
+      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">'+IC('x')+'</button>'+
     '</div>'+
     '<div class="hoja-txt ident-cuerpo">'+
-      '<h3>👥 ¿Quién estudia?</h3>'+
+      '<h3>'+IC('grupo')+' ¿Quién estudia?</h3>'+
       '<div class="alu-sel" id="alu-sel"></div>'+
       '<input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">'+
       '<p class="nota">Cada participante guarda su <strong>propio progreso</strong>. '+
       'Toca un nombre para cambiar de persona.</p>'+
-      '<h3>🎯 Actividad y categoría</h3>'+
+      '<h3>'+IC('diana')+' Actividad y categoría</h3>'+
       '<div class="cat-sel" id="cat-sel"></div>'+
       '<p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y '+
       'define qué capítulos ves, de dónde salen las preguntas y hasta qué '+
@@ -1278,12 +1291,12 @@ function pintaInicio(){
     :'Al terminar de leer un capítulo toca «Ya lo estudié» y el círculo se llena. Vas '+listos+' de '+cs.length+'.';
 
   document.getElementById('stats').innerHTML=
-    '<div class="stat"><div class="v">'+listos+'<small style="font-size:.9rem">/'+cs.length+'</small></div><div class="l">Capítulos<br>estudiados</div></div>'+
-    '<div class="stat"><div class="v">'+mejor+'<small style="font-size:.9rem">%</small></div><div class="l">Mejor<br>puntaje</div></div>'+
+    '<div class="stat"><div class="v">'+listos+'<small style="font-size:.875rem">/'+cs.length+'</small></div><div class="l">Capítulos<br>estudiados</div></div>'+
+    '<div class="stat"><div class="v">'+mejor+'<small style="font-size:.875rem">%</small></div><div class="l">Mejor<br>puntaje</div></div>'+
     '<div class="stat"><div class="v">'+mios.length+'</div><div class="l">Exámenes<br>hechos</div></div>'+
-    '<div class="stat"><div class="v">'+S.racha+'🔥</div><div class="l">Días de<br>racha'+
-      (S.protegio===new Date().toDateString()?'<br><strong>🛡️ Un protector la cuidó</strong>'
-        :S.protector?'<br>🛡️ '+S.protector+(S.protector===1?' protector':' protectores'):'')+'</div></div>'+
+    '<div class="stat"><div class="v">'+S.racha+IC('fuego','racha')+'</div><div class="l">Días de<br>racha'+
+      (S.protegio===new Date().toDateString()?'<br><strong>'+IC('escudo')+' Un protector la cuidó</strong>'
+        :S.protector?'<br>'+IC('escudo')+' '+S.protector+(S.protector===1?' protector':' protectores'):'')+'</div></div>'+
     '<div class="stat" style="cursor:pointer" onclick="ir(\'examen\')" title="Preguntas que has fallado y aún no dominas">'+
     '<div class="v" style="color:'+(falladasDe().length?'var(--rojo)':'var(--verde)')+'">'+falladasDe().length+'</div>'+
     '<div class="l">Errores por<br>repasar</div></div>';
@@ -1395,17 +1408,17 @@ function pintaCaps(){
     '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>').join('');
   const mods=modsDe().map(m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
-    '<div class="ic">'+m.icono+'</div><div><div class="t">'+esc(m.label)+'</div>'+
+    '<div class="ic-f" style="color:'+(m.color||'var(--azul)')+'">'+icoDe(m.icono,'ico-f')+'</div><div><div class="t">'+esc(m.label)+'</div>'+
     '<div class="s">'+esc(m.sub)+'</div>'+
-    '<div class="p" style="font-size:.7rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
+    '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>').join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
-    ACT().icono+' '+(ACT_DE(S.cat)==='ec'?'Las 28 creencias':'Capítulos')+
+    icoDe(ACT().icono)+' '+(ACT_DE(S.cat)==='ec'?'Las 28 creencias':'Capítulos')+
     '</div>'+caps+
-    '<div class="grupo" style="grid-column:1/-1">🔎 Repaso general</div>'+mods;
+    '<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods;
 }
 
 /* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
@@ -1741,7 +1754,7 @@ function htmlHoja(cid,de,hasta){
       '<div><div class="hoja-ref">'+ref+' · '+t.version+'</div>'+
       '<div class="hoja-sub">'+esc(cap?cap.sub:'')+'</div></div>'+
       (puedeHablar()?grupoVoz('btn-voz','Escuchar','Escuchar el versículo'):'')+
-      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
+      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">'+IC('x')+'</button>'+
     '</div>'+
     '<div class="hoja-txt biblia" data-leer>'+partes.join('')+'</div>'+
     '<div class="hoja-pie">'+
@@ -1780,12 +1793,15 @@ function seccionLectura(cid){
      lleva ahi estaba escondido: en el computador no habia como escuchar el
      capitulo seguido. Es el mismo componente del modo lectura (htmlLecVoz), en
      modo 'texto', y va pegado arriba de la columna. */
-  return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
+  return '<details class="lect"><summary>'+IC('libro')+' Leer el capítulo completo ('+
     nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo'+(puedeHablar()?' lec-toca':'')+
     '" onclick="txtToca(event)">'+
-    '<div class="lect-top">'+htmlLecVoz(nums.length,'texto')+
-    '<button type="button" class="btn gho lect-full" onclick="abreLectura(\''+cid+'\')">'+
-    '📖 <span class="lf-a">Leer </span><span>sin distracciones</span></button></div>'+
+    /* v146: «Pantalla completa» va DENTRO del reproductor, como en Apple
+       Books: es una forma de leer y escuchar, no una caja aparte (tenía casi
+       el peso del reproductor y el texto se partía en tres renglones). Sin voz
+       en el aparato no hay reproductor, y el botón va solo. */
+    '<div class="lect-top">'+(puedeHablar()?htmlLecVoz(nums.length,'texto',cid)
+      :'<button type="button" class="btn tono lect-full" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+' Pantalla completa</button>')+'</div>'+
     bloques.join('')+'</div></details>';
 }
 
@@ -1821,7 +1837,7 @@ function abreLectura(cid){
     '<div class="lec-barra">'+
       '<div class="lec-prog"><i id="lec-i" style="width:0%"></i></div>'+
       '<span class="lec-pct" id="lec-pct">Daniel '+n+'</span>'+
-      '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">✕</button>'+
+      '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">'+IC('x')+'</button>'+
     '</div>'+
     /* v127: el 🔊 de la barra pasó a ser una franja de reproductor. */
     htmlLecVoz(nums.length)+
@@ -2008,7 +2024,7 @@ function compruebaRec(rid,elegido,correcta){
   if(!comp)return;
   comp.hidden=false;
   comp.className='rec-comp '+(bien?'ok':'ko');
-  comp.textContent=bien?'✅ Correcto.':'❌ No era esa — sigue leyendo con calma.';
+  comp.innerHTML=bien?IC('check')+' Correcto.':IC('x')+' No era esa — sigue leyendo con calma.';
 }
 
 function verCap(id){
@@ -2036,11 +2052,14 @@ function verCap(id){
     (secs.some(s=>s.capa)?filtroCapas():'')+
     secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
       refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
-    '<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #eef0f4;display:flex;gap:.7rem;flex-wrap:wrap">'+
-    '<button class="btn ver" onclick="listo(\''+id+'\')">✅ Ya lo estudié</button>'+
-    '<button class="btn nar" onclick="ir(\'tarjetas\')">🃏 Tarjetas</button>'+
-    '<button class="btn azul" onclick="ir(\'examen\')">✏️ Examen</button>'+
-    '<button class="btn gho" onclick="imprimeCapitulo(\''+id+'\')">🖨️ Imprimir este capítulo</button></div>';
+    /* v146: UN botón principal. Al terminar de leer lo que se espera es
+       marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
+       enlace. Antes eran cuatro colores del mismo peso y ninguno mandaba. */
+    '<div class="acc-fin">'+
+    '<button class="btn ver" onclick="listo(\''+id+'\')">'+IC('check')+' Ya lo estudié</button>'+
+    '<button class="btn tono" onclick="ir(\'tarjetas\')">'+IC('tarjetas')+' Tarjetas</button>'+
+    '<button class="btn tono" onclick="ir(\'examen\')">'+IC('examen')+' Examen</button>'+
+    '<button class="btn txt" onclick="imprimeCapitulo(\''+id+'\')">'+IC('imprimir')+' Imprimir</button></div>';
   d.style.display='block';
   limpiaRetiradasDe(d);
   divideVista(d,id);
@@ -2116,7 +2135,7 @@ function pcCatalogo(){
     s:'Lo que más puntos recupera',f:()=>arrancaExamen('errores')});
   it.push({g:'Acciones',ic:'✏️',t:'Examen de práctica',
     s:CAT().n+' preguntas',f:()=>ir('examen')});
-  it.push({g:'Acciones',ic:'📘',t:'Leer sin distracciones',
+  it.push({g:'Acciones',ic:'📘',t:'Leer en pantalla completa',
     s:'El capítulo completo, sin nada alrededor',f:()=>{
       const c=capsDe().find(x=>typeof VERS!=='undefined'&&VERS[x.id]);
       if(c)abreLectura(c.id);else ir('estudio');}});
@@ -2187,7 +2206,7 @@ function pcPinta(){
   pcItems.forEach((i,n)=>{
     if(i.g!==g){g=i.g;h+='<div class="pc-g">'+esc(g)+'</div>';}
     h+='<button type="button" class="pc-r'+(n===pcSel?' on':'')+'" onclick="pcAbre('+n+')">'+
-      '<span class="ic" aria-hidden="true">'+i.ic+'</span>'+
+      '<span class="ic" aria-hidden="true">'+(icoDe(i.ic)||esc(i.ic))+'</span>'+
       '<b>'+esc(i.t)+'</b><small>'+esc(i.s||'')+'</small></button>';
   });
   l.innerHTML=h;
@@ -2419,7 +2438,7 @@ function partesDe(base){
       (c.querySelectorAll?[...c.querySelectorAll('.vn,.grupo-voz,.btn-voz,.btn-reinicia')]:[])
         .forEach(b=>b.remove());
       t=c.textContent||'';
-    }catch(e){t=(el.textContent||'').replace(/🔊|↺/g,'');}
+    }catch(e){t=(el.textContent||'').replace(/🔊|↺|Escuchar|Pausar|Seguir/g,'');}
     if(!ps.length)t=t.replace(/^\s*[\d:]+\s*/,'');
     trozos(t).forEach(x=>out.push({txt:x,el}));
   });
@@ -2525,7 +2544,7 @@ function paraVoz(){
   try{if(puedeHablar())speechSynthesis.cancel();}catch(e){}
   VZ.partes.forEach(p=>{try{p.el.classList.remove('suena','ya');}catch(e){}});
   if(vozBtn){
-    try{vozBtn.textContent='🔊';vozBtn.setAttribute('title','Escuchar');
+    try{vozBtn.innerHTML=IC('voz')+'<span>Escuchar</span>';vozBtn.setAttribute('title','Escuchar');
         vozBtn.classList.remove('sonando');}catch(e){}
     vozBtn=null;
   }
@@ -2546,7 +2565,7 @@ function terminaVoz(){
   VZ.partes.forEach(p=>{try{p.el.classList.remove('suena','ya');}catch(e){}});
   VZ.i=0;
   if(vozBtn){
-    try{vozBtn.textContent='🔊';vozBtn.setAttribute('title','Escuchar');
+    try{vozBtn.innerHTML=IC('voz')+'<span>Escuchar</span>';vozBtn.setAttribute('title','Escuchar');
         vozBtn.classList.remove('sonando');}catch(e){}
     vozBtn=null;VZ.partes=[];VZ.modo='';
   }
@@ -2574,7 +2593,7 @@ function pintaVoz(llevar){
   if(vozBtn){
     try{
       vozBtn.classList.add('sonando');
-      vozBtn.textContent=VZ.sonando?'⏸':'▶';
+      vozBtn.innerHTML=VZ.sonando?IC('pausa')+'<span>Pausar</span>':IC('play')+'<span>Seguir</span>';
       vozBtn.setAttribute('title',VZ.sonando?'Pausar':'Reanudar');
     }catch(e){}
   }
@@ -2705,7 +2724,7 @@ function pintaRpVoz(modo,llevar){
         p.el.classList.toggle('ya',VZ.sonando&&k<i&&p.el!==cur);}catch(e){}
   });
   const est=document.getElementById(pf+'-est'),n=document.getElementById(pf+'-n');
-  play.textContent=VZ.sonando&&mio?'⏸':'▶';
+  play.innerHTML=IC(VZ.sonando&&mio?'pausa':'play');
   play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');
   const total=versos.length;
   const activo=mio&&(VZ.sonando||i>0);
@@ -2743,7 +2762,7 @@ const pintaTxtVoz=llevar=>pintaRpVoz('texto',llevar);
    `modo` dice en cual de los dos lugares va; los ids llevan su prefijo para
    que los dos puedan existir a la vez (el modo lectura tapa el capitulo, pero
    no lo borra). */
-function htmlLecVoz(total,modo){
+function htmlLecVoz(total,modo,cid){
   if(!puedeHablar())return '';
   modo=modo==='texto'?'texto':'lectura';
   const pf=RP[modo].pref;
@@ -2751,7 +2770,7 @@ function htmlLecVoz(total,modo){
   for(let k=0;k<total;k++)tira+='<button type="button" data-k="'+k+'" aria-label="Versículo '+(k+1)+'"'+
     ' onclick="vozTira(\''+modo+'\','+k+')"><i></i></button>';
   return '<div class="lec-rp'+(modo==='texto'?' txt-rp':'')+'">'+
-    '<button type="button" class="lec-play" id="'+pf+'-play" onclick="vozAlterna(\''+modo+'\')" aria-label="Escuchar">▶</button>'+
+    '<button type="button" class="lec-play" id="'+pf+'-play" onclick="vozAlterna(\''+modo+'\')" aria-label="Escuchar">'+IC('play')+'</button>'+
     '<div class="lec-rp-tx"><b id="'+pf+'-est">Escuchar el capítulo</b><span id="'+pf+'-n">'+total+' versículos</span>'+
       (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
     '<div class="lec-vel" id="'+pf+'-vel" role="group" aria-label="Velocidad">'+
@@ -2760,7 +2779,9 @@ function htmlLecVoz(total,modo){
     '</div>'+
     /* La tira va en su propio renglon, a todo el ancho: metida junto al texto
        quedaba de 70 px en el celular y no se podia tocar un versiculo. */
-    '<div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="Ir a un versículo">'+tira+'</div></div>';
+    '<div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="Ir a un versículo">'+tira+'</div>'+
+    (cid?'<button type="button" class="lect-full" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+' Pantalla completa</button>':'')+
+    '</div>';
 }
 
 /* ── ESCUCHAR EL ESTUDIO DE PROFETAS Y REYES (v129) ──────────────────────
@@ -2868,7 +2889,7 @@ function pintaEstVoz(llevar){
      desmarcaba solo (mismo defecto que en pintaRpVoz). */
   const cur=mio&&VZ.partes[i]?VZ.partes[i].el:null;
   if(mio)VZ.partes.forEach(p=>{try{p.el.classList.toggle('suena',VZ.sonando&&p.el===cur);}catch(e){}});
-  play.textContent=VZ.sonando&&mio?'⏸':'▶';
+  play.innerHTML=IC(VZ.sonando&&mio?'pausa':'play');
   play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');
   const est=document.getElementById('est-est'),n=document.getElementById('est-n');
   if(est)est.textContent=VZ.sonando&&mio?'Escuchando':(mio&&i>0?'En pausa':'Escuchar el estudio');
@@ -2918,11 +2939,11 @@ if(typeof document!=='undefined'&&document.addEventListener)
    desincronicen entre si. */
 const grupoVoz=(claseVoz,title,aria)=>
   '<span class="grupo-voz"><button type="button" class="btn-reinicia" title="Reiniciar"'+
-  ' aria-label="Reiniciar" onclick="reiniciaVoz(this)">↺</button>'+
+  ' aria-label="Reiniciar" onclick="reiniciaVoz(this)">'+IC('repetir')+'</button>'+
   '<button type="button" class="'+claseVoz+'" title="'+title+'" aria-label="'+aria+'"'+
-  ' onclick="leeCerca(this)">🔊</button></span>';
+  ' onclick="leeCerca(this)">'+IC('voz')+'<span>Escuchar</span></button></span>';
 
-const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');'<button class="btn-voz" title="Escuchar" aria-label="Escuchar" onclick="leeCerca(this)">🔊</button>';
+const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');
 
 /* ───────── tarjetas ─────────
    REPETICIÓN ESPACIADA, EL MECANISMO
@@ -2996,9 +3017,9 @@ function pintaTarjetas(){
   if(!['hoy','todas','dificiles'].includes(tjFiltro)&&!cs.some(c=>c.id===tjFiltro))tjFiltro='hoy';
   const nDif=tarjetasVista().filter(t=>(S.ft[claveT(t)]||0)<2).length;
   const nHoy=Math.min(tocanHoy().length,topeSesion());
-  sel.innerHTML='<option value="hoy">🎯 La sesión de hoy ('+nHoy+')</option>'+
+  sel.innerHTML='<option value="hoy">La sesión de hoy ('+nHoy+')</option>'+
     '<option value="todas">Todos los capítulos ('+tarjetasVista().length+')</option>'+
-    '<option value="dificiles">🔁 Solo por dominar ('+nDif+')</option>'+
+    '<option value="dificiles">Solo por dominar ('+nDif+')</option>'+
     cs.map(c=>'<option value="'+c.id+'">'+esc(opTj(c))+'</option>').join('');
   sel.value=tjFiltro;
   /* Los modos se repintan en cada entrada porque dependen de la categoria:
@@ -3044,7 +3065,7 @@ function muestraTj(){
        que tocaba. Decirlo así, y ofrecer el mazo completo, evita que parezca
        que la app se dañó. */
     c.innerHTML=tjFiltro==='hoy'
-      ?'<div class="cara">✅ Ya repasaste lo de hoy</div>'+
+      ?'<div class="cara">'+IC('check')+' Ya repasaste lo de hoy</div>'+
        '<div class="rev" style="margin-top:.7rem">Las que dominaste vuelven a salir en unos días. '+
        'Si quieres seguir, escoge <strong>Todos los capítulos</strong> arriba.</div>'
       :'<div class="cara">No hay tarjetas para este filtro.</div>';
@@ -3061,7 +3082,7 @@ function muestraTj(){
        momento en que la niña decide si sigue o cierra. «Terminaste el mazo» con
        87 tarjetas pendientes detrás era una media verdad. */
     const quedan=tjFiltro==='hoy'?tocanHoy().length:0;
-    c.innerHTML='<div class="cara">🎉 '+(tjFiltro==='hoy'?'Terminaste la sesión':'Terminaste el mazo')+'</div>'+
+    c.innerHTML='<div class="cara">'+IC('check')+' '+(tjFiltro==='hoy'?'Terminaste la sesión':'Terminaste el mazo')+'</div>'+
       '<div class="rev" style="margin-top:.7rem">Sabías '+s+' de '+t+' ('+Math.round(s/t*100)+'%)'+
       (quedan?'<br>Todavía te toca repasar <strong>'+quedan+'</strong> hoy.'
              :(tjFiltro==='hoy'?'<br>Ya no te toca nada más hoy.':''))+'</div>';
@@ -3075,7 +3096,7 @@ function muestraTj(){
   }
   const t=mazo[tjI];
   const cj=S.ft[claveT(t)]||0;
-  const est=cj===2?'<span class="pil az">✅ dominada</span>':cj===1?'<span class="pil na">🔁 en repaso</span>':'<span class="pil na">🆕 por aprender</span>';
+  const est=cj===2?'<span class="pil az">'+IC('check')+' dominada</span>':cj===1?'<span class="pil na">'+IC('repetir')+' en repaso</span>':'<span class="pil na">'+IC('mas')+' por aprender</span>';
   c.className='tj'+(tjVolteada?' volteada':'');
   c.innerHTML=(tjVolteada
     ? '<div class="rev" data-leer>'+t.r+(puedeHablar()?' '+BTN_VOZ:'')+'</div>'+
@@ -3114,16 +3135,16 @@ function muestraTj(){
    refuerza es la racha, que ya existe, y el error manda la ficha al repaso. */
 
 const JUEGOS = [
-  { id:'tarjetas', et:'🃏 Tarjetas',   ayuda:'Lee el frente y comprueba.' },
-  { id:'hoy',      et:'🎯 Práctica de hoy', ayuda:'Un poco de todo: primero reconocer, después recordar. Lo que fallaste en un examen sale primero.' },
-  { id:'quiz',     et:'⚡ Quiz',        ayuda:'Una pregunta a la vez, y te dice al instante si acertaste.' },
-  { id:'vf',       et:'✅ ¿V o F?',     ayuda:'Decide si la frase es verdadera o falsa.' },
-  { id:'parear',   et:'🔗 Emparejar',  ayuda:'Toca a la izquierda y después su pareja a la derecha.' },
-  { id:'clasif',   et:'🗂️ Clasificar', ayuda:'¿A qué grupo pertenece?' },
-  { id:'ordenar',  et:'🔢 Ordenar',    ayuda:'Tócalos en el orden correcto.' },
-  { id:'banco',    et:'✍️ Completar',  ayuda:'Toca las palabras en orden para llenar los espacios.' },
-  { id:'error',    et:'🔍 Caza el error', ayuda:'Una palabra fue cambiada. Tócala.' },
-  { id:'cita',     et:'📖 ¿De dónde es?', ayuda:'Lee el texto y di de dónde sale.' },
+  { id:'tarjetas', ic:'tarjetas', et:'Tarjetas',   ayuda:'Lee el frente y comprueba.' },
+  { id:'hoy',      ic:'diana', et:'Práctica de hoy', ayuda:'Un poco de todo: primero reconocer, después recordar. Lo que fallaste en un examen sale primero.' },
+  { id:'quiz',     ic:'rayo', et:'Quiz',        ayuda:'Una pregunta a la vez, y te dice al instante si acertaste.' },
+  { id:'vf',       ic:'vf', et:'¿V o F?',     ayuda:'Decide si la frase es verdadera o falsa.' },
+  { id:'parear',   ic:'unir', et:'Emparejar',  ayuda:'Toca a la izquierda y después su pareja a la derecha.' },
+  { id:'clasif',   ic:'clasif', et:'Clasificar', ayuda:'¿A qué grupo pertenece?' },
+  { id:'ordenar',  ic:'ordenar', et:'Ordenar',    ayuda:'Tócalos en el orden correcto.' },
+  { id:'banco',    ic:'lapiz', et:'Completar',  ayuda:'Toca las palabras en orden para llenar los espacios.' },
+  { id:'error',    ic:'lupa', et:'Caza el error', ayuda:'Una palabra fue cambiada. Tócala.' },
+  { id:'cita',     ic:'bocadillo', et:'¿De dónde es?', ayuda:'Lee el texto y di de dónde sale.' },
 ];
 
 let jgModo='tarjetas', jgR=null, jgSel=null, jgN=0, jgBien=0, jgMal=0;
@@ -3207,7 +3228,7 @@ function pintaModosJuego(){
   const disp=juegosDisponibles();
   if(!disp.some(j=>j.id===jgModo))jgModo='tarjetas';
   z.innerHTML=disp.map(j=>'<button class="jg-m'+(j.id===jgModo?' on':'')+
-    '" onclick="ponJuego(\''+j.id+'\')">'+j.et+'</button>').join('');
+    '" onclick="ponJuego(\''+j.id+'\')">'+IC(j.ic)+' '+esc(j.et)+'</button>').join('');
   const esTj=jgModo==='tarjetas';
   document.querySelector('.tj-zona').hidden=!esTj;
   const jz=document.getElementById('jg-zona');
@@ -3362,10 +3383,10 @@ function pintaJuego(){
   let h='<div class="prog-lin"><div style="width:'+pct+'%"></div></div>';
 
   if(hechos>=jgR.total){
-    const nota=jgMal===0?'🎉 Perfecto':jgBien>=jgMal?'👍 Bien':'🔁 A repasar';
+    const nota=jgMal===0?IC('check')+' Perfecto':jgBien>=jgMal?IC('check')+' Bien':IC('repetir')+' A repasar';
     h+='<div class="jg-fin"><div class="jg-fin-t">'+nota+'</div>'+
        '<div class="jg-fin-s">'+jgBien+' a la primera · '+jgMal+' con error</div>'+
-       '<button class="btn azul" onclick="nuevaRonda()">🔀 Otra ronda</button></div>';
+       '<button class="btn azul" onclick="nuevaRonda()">'+IC('barajar')+' Otra ronda</button></div>';
     z.innerHTML=h;return;
   }
 
@@ -3391,7 +3412,7 @@ function pintaJuego(){
         return '<button class="'+c+'"'+(resuelto?' disabled':'')+
           ' onclick="jgPaso('+v+')">'+et+'</button>';
       };
-      h+='<div class="jg-gr">'+bt(true,'✅ Verdadero')+bt(false,'❌ Falso')+'</div>';
+      h+='<div class="jg-gr">'+bt(true,IC('check')+' Verdadero')+bt(false,IC('x')+' Falso')+'</div>';
     }
     h+='</div>';
     if(resuelto)h+=avisoPaso(jgR.elegida===q.a, q.e||'');
@@ -3427,7 +3448,7 @@ function pintaJuego(){
     h+='<div class="jg-carta">'+esc(c.label)+'<b>'+esc(c.sub)+'</b></div>'+
        '<div class="jg-gr col">'+jgR.grupos.map(g=>
          '<button class="jg-g" style="--c:'+g.color+'" onclick="jgClasif(\''+g.id+'\')">'+
-         (g.icono||'')+' '+esc(g.nombre)+'</button>').join('')+'</div>';
+         icoDe(g.icono||'')+' '+esc(g.nombre)+'</button>').join('')+'</div>';
   } else if(jgR.tipo==='ordenar'){
     h+='<div class="jg-fila">'+jgR.puestos.map((c,i)=>
         '<span class="jg-p ok">'+(i+1)+'. '+esc(c.sub)+'</span>').join('')+'</div>'+
@@ -3460,7 +3481,7 @@ function pintaJuego(){
    va aqui abajo, donde quedo el dedo. */
 function avisoPaso(bien,texto){
   return '<div class="jg-fb '+(bien?'ok':'ko')+'">'+
-    '<b>'+(bien?'✅ Correcto':'❌ No era')+'</b>'+(texto?'<br>'+esc(texto):'')+'</div>'+
+    '<b>'+(bien?IC('check')+' Correcto':IC('x')+' No era')+'</b>'+(texto?'<br>'+esc(texto):'')+'</div>'+
     '<div class="jg-gr"><button class="btn azul" onclick="jgSigue()">Siguiente →</button></div>';
 }
 
@@ -4049,7 +4070,7 @@ function pintaExInicio(){
       : 'Ya te salieron todas alguna vez; ahora el examen escoge primero las que fallaste.')+
     ' Reparto: '+textoReparto()+'.';
   document.getElementById('ex-err').innerHTML=f>=3
-    ?'<button class="btn gho" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis '+f+' errores</button>':'';
+    ?'<button class="btn gho" onclick="arrancaExamen(\'errores\')">'+IC('repetir')+' Repasar mis '+f+' errores</button>':'';
   pintaCierre();
 }
 
@@ -4247,7 +4268,7 @@ function corre(){
   },1000);
 }
 
-const ETQ={mc:'📋 Sección I — Selección Múltiple',tf:'✔ Sección II — Verdadero o Falso',fill:'✏️ Sección III — Completar el Versículo'};
+const ETQ={mc:'Sección I — Selección Múltiple',tf:'Sección II — Verdadero o Falso',fill:'Sección III — Completar el Versículo'};
 
 function pintaPreguntas(){
   let h='',n=1;
@@ -4258,7 +4279,7 @@ function pintaPreguntas(){
     qs.forEach(q=>{h+=htmlQ(q,n++,false);});
   }
   document.getElementById('preguntas').innerHTML=h;
-  const ET={normal:'',simulacro:' · 🎓 Simulacro',errores:' · 🔁 Repaso de errores'};
+  const ET={normal:'',simulacro:' · Simulacro',errores:' · Repaso de errores'};
   const NA={todo:'todo el material',biblia:'solo Daniel',pr:'solo Profetas y Reyes'};
   const rangoAct=rangoDe(alcance);
   const alc=modo==='errores'?'mis errores'
@@ -4284,8 +4305,8 @@ function htmlQ(q,n,ver){
     if(ver){cv=q.a?'ok':(r===true?'ko':'');cf=!q.a?'ok':(r===false?'ko':'');}
     else{cv=r===true?'sel':'';cf=r===false?'sel':'';}
     cuerpo='<div class="vf">'+
-      '<button class="'+cv+'"'+(ver?' disabled':'')+' onclick="marca(\''+q.id+'\',true)">✅ Verdadero</button>'+
-      '<button class="'+cf+'"'+(ver?' disabled':'')+' onclick="marca(\''+q.id+'\',false)">❌ Falso</button></div>'+
+      '<button class="'+cv+'"'+(ver?' disabled':'')+' onclick="marca(\''+q.id+'\',true)">'+IC('check')+' Verdadero</button>'+
+      '<button class="'+cf+'"'+(ver?' disabled':'')+' onclick="marca(\''+q.id+'\',false)">'+IC('x')+' Falso</button></div>'+
       (ver?'<div class="fb '+(bien(q)?'ok':'ko')+'">'+esc(q.e)+'</div>':'');
   } else {
     const partes=q.p.map((p,i)=>{
@@ -4296,9 +4317,9 @@ function htmlQ(q,n,ver){
       return '<input class="'+c+'" type="text" placeholder="'+pista+'" value="'+esc(v)+'"'+
         (ver?' disabled':'')+' oninput="rellena(\''+q.id+'\','+i+',this.value)">';
     }).join('');
-    cuerpo='<div style="font-size:.79rem;color:var(--gris);font-style:italic;margin-bottom:.5rem">'+esc(q.ins)+'</div>'+
+    cuerpo='<div style="font-size:.75rem;color:var(--gris);font-style:italic;margin-bottom:.5rem">'+esc(q.ins)+'</div>'+
       '<div class="rell">'+partes+'</div>'+
-      (ver?'<div class="fb '+(bien(q)?'ok':'ko')+'">'+(bien(q)?'✅ ¡Correcto!':'❌ Respuesta: '+esc(q.p.filter(p=>p.b).map(p=>p.b).join(' / ')))+'</div>':'');
+      (ver?'<div class="fb '+(bien(q)?'ok':'ko')+'">'+(bien(q)?IC('check')+' ¡Correcto!':IC('x')+' Respuesta: '+esc(q.p.filter(p=>p.b).map(p=>p.b).join(' / ')))+'</div>':'');
   }
   const cls=ver?(bien(q)?' hecha':' mal'):(hecha(q)?' hecha':'');
   const voz=!ver&&puedeHablar()?' '+BTN_VOZ:'';
@@ -4356,7 +4377,10 @@ function exCurso(on){
 }
 
 function entregar(){
-  if(entregado)return;
+  /* v146: sin preguntas no hay examen que guardar. Se guardaba un 0/0 que el
+     historial mostraba como «NaN%» si algo llamaba entregar() antes de que el
+     examen terminara de armarse (arrancaExamen espera al servidor). */
+  if(entregado||!prueba.length)return;
   entregado=true;clearInterval(reloj);
   const pts=prueba.filter(bien).length,tot=prueba.length,pct=Math.round(pts/tot*100);
   const catReg=S.cat;
@@ -4384,7 +4408,7 @@ function entregar(){
     return '<div><div class="sv">'+qs.filter(bien).length+'/'+qs.length+'</div><div class="sl">'+L+'</div></div>';
   }).join('');
 
-  const med=pct>=93?'🥇':pct>=75?'🥈':pct>=60?'🥉':'📖';
+  const med=pct>=60?IC('medalla','med '+(pct>=93?'oro':pct>=75?'plata':'bronce')):IC('libro','med');
   const msg=pct>=93?'¡Excelente! Dominas el material.':pct>=75?'¡Muy bien! Repasa lo que falló.':pct>=60?'Buen intento. Vuelve al material.':'Estudia la guía y vuelve a intentarlo.';
 
   /* La nota al servidor. Con la evaluación va su id, y el índice único de la
@@ -4408,7 +4432,7 @@ function htmlRevision(){
   for(const t of ['mc','tf','fill']){
     const qs=prueba.filter(q=>q.t===t);
     if(!qs.length)continue;
-    rev+='<div class="divisor" style="font-size:.79rem;margin:.8rem 0 .5rem">'+ETQ[t]+'</div>';
+    rev+='<div class="divisor" style="font-size:.75rem;margin:.8rem 0 .5rem">'+ETQ[t]+'</div>';
     qs.forEach(q=>{rev+=htmlQ(q,n++,true);});
   }
   return rev;
@@ -4421,27 +4445,27 @@ function pintaResultado(){
   const r=document.getElementById('ex-result');
   r.style.display='block';
   r.innerHTML=
-    '<div class="res"><div style="font-size:2.6rem">'+med+'</div>'+
-    '<div class="pt">'+pts+'<span style="font-size:1.7rem;opacity:.7">/'+tot+'</span></div>'+
+    '<div class="res"><div style="font-size:2.25rem">'+med+'</div>'+
+    '<div class="pt">'+pts+'<span style="font-size:1.75rem;opacity:.7">/'+tot+'</span></div>'+
     '<div style="opacity:.9;margin-top:.3rem">'+pct+'% · '+msg+'</div>'+
     '<div class="sec3">'+s3+'</div></div>'+
     (ver
-      ?'<div class="card"><h2>📋 Revisión</h2>'+htmlRevision()+
+      ?'<div class="card"><h2>'+IC('lista')+' Revisión</h2>'+htmlRevision()+
        (director?'<p class="nota">Estás viendo esto como <strong>director</strong>. '+
         '<button class="btn gho" onclick="salirDirector()">Salir del modo director</button></p>':'')+
        '</div>'
-      :'<div class="card"><h2>🔒 La revisión está cerrada</h2>'+
+      :'<div class="card"><h2>'+IC('candado')+' La revisión está cerrada</h2>'+
        '<p class="nota">Esto fue un <strong>simulacro</strong>: queda la nota, no '+
        'las respuestas. El examen del campamento funciona igual. Para ver qué '+
        'falló, el director entra su clave en este mismo aparato.</p>'+
        '<div id="dir-caja"></div>'+
-       '<button class="btn gho" style="margin-top:.7rem" onclick="pideClaveDir(\'res\')">🔑 Soy el director</button>'+
+       '<button class="btn gho" style="margin-top:.7rem" onclick="pideClaveDir(\'res\')">'+IC('llave')+' Soy el director</button>'+
        '</div>')+
     '<div style="display:flex;gap:.7rem;flex-wrap:wrap">'+
-    (ver&&falladasDe().length>=3?'<button class="btn azul" onclick="arrancaExamen(\'errores\')">🔁 Repasar mis errores ('+falladasDe().length+')</button>':'')+
-    '<button class="btn nar" onclick="reinicia()">🔄 Otro examen</button>'+
-    '<button class="btn azul" onclick="ir(\'estudio\')">📖 Estudiar</button>'+
-    '<button class="btn gho" onclick="ir(\'logros\')">🏆 Logros</button></div>';
+    (ver&&falladasDe().length>=3?'<button class="btn azul" onclick="arrancaExamen(\'errores\')">'+IC('repetir')+' Repasar mis errores ('+falladasDe().length+')</button>':'')+
+    '<button class="btn nar" onclick="reinicia()">'+IC('repetir')+' Otro examen</button>'+
+    '<button class="btn tono" onclick="ir(\'estudio\')">'+IC('libro')+' Estudiar</button>'+
+    '<button class="btn txt" onclick="ir(\'logros\')">'+IC('trofeo')+' Logros</button></div>';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -4511,13 +4535,13 @@ function reinicia(){
 }
 
 const TODAS=[
-  {k:'Perfecto',i:'🌟',d:'100% en un examen'},
-  {k:'Casi perfecto',i:'🥇',d:'93% o más'},
-  {k:'Estudioso',i:'📚',d:'75% o más'},
-  {k:'Persistente',i:'🔄',d:'3 exámenes hechos'},
-  {k:'Racha de fuego',i:'🔥',d:'3 días seguidos'},
-  {k:'Lector completo',i:'📖',d:'Todos los capítulos y repasos estudiados'},
-  {k:'Memoria de acero',i:'🃏',d:'Un mazo de tarjetas completo'},
+  {k:'Perfecto',i:'trofeo',d:'100% en un examen'},
+  {k:'Casi perfecto',i:'medalla',d:'93% o más'},
+  {k:'Estudioso',i:'birrete',d:'75% o más'},
+  {k:'Persistente',i:'repetir',d:'3 exámenes hechos'},
+  {k:'Racha de fuego',i:'fuego',d:'3 días seguidos'},
+  {k:'Lector completo',i:'libro',d:'Todos los capítulos y repasos estudiados'},
+  {k:'Memoria de acero',i:'tarjetas',d:'Un mazo de tarjetas completo'},
 ];
 function revisaInsignias(pct){
   const a=k=>{if(!S.insignias.includes(k))S.insignias.push(k);};
@@ -4546,9 +4570,9 @@ function pintaLogros(){
       '<div style="display:flex;align-items:center;gap:.7rem;margin:.45rem 0">'+
       '<button class="btn gho" style="min-height:34px;padding:.2rem .7rem;font-size:.75rem" onclick="verCap(\''+x.c.id+'\')">'+esc(x.c.label)+'</button>'+
       '<div class="prog-lin" style="flex:1;margin:0"><div style="width:'+x.pct+'%;background:'+(x.pct<60?'var(--rojo)':x.pct<85?'var(--naranja)':'var(--verde)')+'"></div></div>'+
-      '<span style="font-size:.8rem;font-weight:700;width:44px;text-align:right;color:'+(x.pct<60?'var(--rojo)':'var(--azul)')+'">'+x.pct+'%</span></div>').join('')+
+      '<span style="font-size:.75rem;font-weight:700;width:44px;text-align:right;color:'+(x.pct<60?'var(--rojo)':'var(--azul)')+'">'+x.pct+'%</span></div>').join('')+
       '<p class="nota">Con base en '+filas.reduce((s,x)=>s+x.a.b+x.a.m,0)+' respuestas de examen. '+
-      'Toca un capítulo para estudiarlo, o <button class="btn gho" style="min-height:30px;padding:.1rem .6rem;font-size:.72rem" '+
+      'Toca un capítulo para estudiarlo, o <button class="btn gho" style="min-height:30px;padding:.1rem .6rem;font-size:.75rem" '+
       'onclick="examenDelCapitulo(\''+filas[0].c.id+'\')">examina el más flojo</button>.</p>'
     :'<p class="nota">Haz un examen y aquí verás en qué capítulos estás fallando.</p>');
 
@@ -4564,10 +4588,10 @@ function pintaLogros(){
   if(dt)dt.innerHTML=porTipo.length
     ?porTipo.map(x=>
       '<div style="display:flex;align-items:center;gap:.7rem;margin:.45rem 0">'+
-      '<span style="font-size:.78rem;font-weight:700;width:96px;color:var(--azul)">'+esc(x.sec)+'</span>'+
+      '<span style="font-size:.75rem;font-weight:700;width:96px;color:var(--azul)">'+esc(x.sec)+'</span>'+
       '<div class="prog-lin" style="flex:1;margin:0"><div style="width:'+x.pct+'%;background:'+
         (x.pct<60?'var(--rojo)':x.pct<85?'var(--naranja)':'var(--verde)')+'"></div></div>'+
-      '<span style="font-size:.8rem;font-weight:700;width:44px;text-align:right;color:'+
+      '<span style="font-size:.75rem;font-weight:700;width:44px;text-align:right;color:'+
         (x.pct<60?'var(--rojo)':'var(--azul)')+'">'+x.pct+'%</span></div>'+
       '<p class="nota" style="margin:0 0 .5rem">'+esc(x.nom)+' · '+(x.a.b+x.a.m)+' respondidas</p>').join('')+
       (porTipo.some(x=>x.t==='fill'&&x.pct<70)
@@ -4577,7 +4601,7 @@ function pintaLogros(){
 
   document.getElementById('insignias').innerHTML=TODAS.map(b=>{
     const t=S.insignias.includes(b.k);
-    return '<span class="ins '+(t?'oro':'gris')+'" title="'+esc(b.d)+'">'+b.i+' '+esc(b.k)+'</span>';
+    return '<span class="ins '+(t?'oro':'gris')+'" title="'+esc(b.d)+'">'+IC(b.i)+' '+esc(b.k)+'</span>';
   }).join('')+'<p class="nota">'+S.insignias.length+' de '+TODAS.length+' conseguidas.</p>';
 
   const h=S.examenes.slice().reverse();
@@ -5141,7 +5165,7 @@ function pintaBoletin(o){
     '<div><b>'+listos+'/'+caps.length+'</b><span>capítulos leídos</span></div>'+
     '<div><b>'+mejor+'%</b><span>mejor puntaje</span></div>'+
     '<div><b>'+ex.length+'</b><span>exámenes</span></div>'+
-    '<div><b>'+o.r+'🔥</b><span>días de racha</span></div>'+
+    '<div><b>'+o.r+IC('fuego','racha')+'</b><span>días de racha</span></div>'+
     '<div><b>'+o.d+'/'+(o.tt||'?')+'</b><span>tarjetas dominadas</span></div>'+
     '<div><b>'+o.f+'</b><span>errores por repasar</span></div>'+
     '</div>'+
@@ -5164,8 +5188,8 @@ function importaCodigo(){
   out.innerHTML='<p class="nota"><strong>Ficha completa de '+esc(o.n||'sin nombre')+
     '.</strong> ¿Qué quieres hacer?</p>'+
     '<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">'+
-    '<button class="btn azul" onclick="aplicaImport(\'nueva\')">➕ Agregarla como ficha nueva</button>'+
-    '<button class="btn gho" onclick="aplicaImport(\'reemplaza\')">♻️ Reemplazar la ficha actual</button>'+
+    '<button class="btn azul" onclick="aplicaImport(\'nueva\')">'+IC('mas')+' Agregarla como ficha nueva</button>'+
+    '<button class="btn gho" onclick="aplicaImport(\'reemplaza\')">'+IC('repetir')+' Reemplazar la ficha actual</button>'+
     '</div>';
 }
 
@@ -5966,12 +5990,12 @@ function pintaAvisoCats(){
   const con=cats.filter(function(c){return cuantasPara(c,al)>0;});
   const sin=cats.filter(function(c){return cuantasPara(c,al)===0;});
   let t='';
-  if(!con.length)t='⚠️ Con este material <strong>ninguna categoría recibe preguntas</strong>. '+
+  if(!con.length)t=IC('alerta')+' Con este material <strong>ninguna categoría recibe preguntas</strong>. '+
     'Escoge otro material.';
   else if(!sin.length)t='';
-  else if(todas)t='⚠️ Con este material solo reciben preguntas '+con.map(nom).join(' y ')+
+  else if(todas)t=IC('alerta')+' Con este material solo reciben preguntas '+con.map(nom).join(' y ')+
     '. A las demás no les sale nada, así que marca abajo a quiénes les toca.';
-  else t='⚠️ '+sin.map(nom).join(', ')+(sin.length===1?' no recibe':' no reciben')+
+  else t=IC('alerta')+' '+sin.map(nom).join(', ')+(sin.length===1?' no recibe':' no reciben')+
     ' ninguna pregunta con este material.';
   /* Aviso de solape: si lo que se va a abrir se cruza en categoría con algo
      que YA está en curso (panAbiertas, cargado por cargaResultados()), abrir
@@ -5988,9 +6012,9 @@ function pintaAvisoCats(){
     const catsEv=(!ev.categorias||ev.categorias==='*')?Object.keys(CATS):ev.categorias.split(',');
     return catsPend.some(function(c){return catsEv.indexOf(c)>=0;});
   });
-  if(solapa.length)t+=(t?'<br>':'')+'🔁 Si la abres, se cierra: '+
+  if(solapa.length)t+=(t?'<br>':'')+IC('repetir')+' Si la abres, se cierra: '+
     solapa.map(function(ev){return '<strong>'+esc(ev.titulo)+'</strong>';}).join(', ')+'.';
-  if(personas.length)t+=(t?'<br>':'')+'👤 Va dirigida a '+personas.length+
+  if(personas.length)t+=(t?'<br>':'')+IC('persona')+' Va dirigida a '+personas.length+
     (personas.length===1?' persona':' personas')+', no a las categorías de arriba.';
   p.innerHTML=t?'<span style="color:var(--rojo-txt)">'+t+'</span>':'';
 }
@@ -6103,7 +6127,7 @@ function pintaRecetas(){
       : r.d();
     return '<button type="button" class="pan-receta'+(panReceta===r.id?' on':'')+
       (r.id==='yo'?' otra':'')+'" onclick="ponReceta(\''+r.id+'\')">'+
-      '<span class="pan-receta-i">'+r.i+'</span>'+
+      '<span class="pan-receta-i">'+(icoDe(r.i)||esc(r.i))+'</span>'+
       '<span class="pan-receta-x"><strong>'+esc(r.t)+'</strong>'+
       '<small>'+esc(sub)+'</small></span></button>';
   }).join('');
@@ -6215,7 +6239,7 @@ function pintaFrase(){
       '" onclick="panAbre(\''+f[0]+'\')">'+
       '<span class="pan-fila-k">'+esc(f[1])+'</span>'+
       '<span class="pan-fila-v">'+esc(f[2]())+'</span>'+
-      '<span class="pan-fila-x" aria-hidden="true">✎</span></button>';
+      '<span class="pan-fila-x" aria-hidden="true">'+IC('lapiz')+'</span></button>';
   }).join('');
   pintaChips();
   pintaRecetas();
@@ -6426,7 +6450,7 @@ function cuerpoResultado(ev){
         x.nota+'/'+x.total+'</strong></td><td>'+rev+'</td></tr>';}).join('')+'</table></div>':'')+
     (f.length?'<p class="nota">Faltan: '+f.map(function(x){return esc(x.nombre);}).join(', ')+'</p>':'')+
     (h.filter(function(x){return x.hay_revision;}).length>=2
-      ?'<div class="pan-sw"><button class="btn azul" onclick="verAnalisis(\''+esc(ev.id)+'\')">📊 Qué preguntas costaron</button></div>':'')+
+      ?'<div class="pan-sw"><button class="btn azul" onclick="verAnalisis(\''+esc(ev.id)+'\')">'+IC('grafico')+' Qué preguntas costaron</button></div>':'')+
     sumaClub(h);
 }
 
@@ -6473,7 +6497,7 @@ async function verAnalisis(id){
         :'<p class="nota">Nadie quedó por debajo del 35%.</p>')+
       (conTexto.length?'<h3 class="sec-cab"><span class="sec-rot">Las '+conTexto.length+' más difíciles</span><span class="sec-linea"></span></h3>'+filas+
         '<div id="pan-dif-abrir"><button class="btn nar" onclick="pideAbrirDificiles()">Practicar estas '+conTexto.length+' con el grupo</button></div>'
-        :'<p class="nota">Ninguna pregunta quedó por debajo del 35%. 👏</p>')),'yo');
+        :'<p class="nota">Ninguna pregunta quedó por debajo del 35%.</p>')),'yo');
   }catch(e){
     abreHojaHtml(hojaConCierre('Qué preguntas costaron','No se pudo',
       '<p class="nota" style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo cargar')+'</p>'),'yo');
@@ -6571,7 +6595,7 @@ const hojaConCierre=(ref,sub,cuerpo)=>
   '<div class="hoja-cab">'+
     '<div><div class="hoja-ref">'+esc(ref)+'</div>'+
     '<div class="hoja-sub">'+esc(sub)+'</div></div>'+
-    '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">✕</button>'+
+    '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">'+IC('x')+'</button>'+
   '</div>'+
   '<div class="hoja-txt">'+cuerpo+'</div></div>';
 
@@ -7493,8 +7517,8 @@ function cierraAvisoVer(){
 async function aplicaVersion(){
   if(examenEnCurso()){
     const el=document.getElementById('aviso-nuevo');
-    if(el)el.innerHTML='<span>⚠️ Primero entrega el examen y vuelve a tocar Actualizar.</span>'+
-      '<button type="button" class="av-x" onclick="cierraAvisoVer()" title="Cerrar">✕</button>';
+    if(el)el.innerHTML='<span>'+IC('alerta')+' Primero entrega el examen y vuelve a tocar Actualizar.</span>'+
+      '<button type="button" class="av-x" onclick="cierraAvisoVer()" title="Cerrar">'+IC('x')+'</button>';
     return;
   }
   /* Se borran las caches y se le pide al service worker que se revise. Sin
@@ -7524,11 +7548,11 @@ async function revisaAhora(btn){
   const nueva=await buscaVersion(true);
   if(btn)btn.disabled=false;
   if(!res)return;
-  if(nueva)res.innerHTML='📘 <strong>Hay material nuevo.</strong> Toca '+
+  if(nueva)res.innerHTML=IC('libro')+' <strong>Hay material nuevo.</strong> Toca '+
     '<strong>Actualizar</strong> en la franja naranja de arriba.';
   else if(typeof VERSION_APP==='undefined')res.textContent=
     'Esta copia se abrió como archivo, no desde internet, así que no hay nada que revisar.';
-  else res.textContent='✅ Ya tienes la versión más reciente.';
+  else res.innerHTML=IC('check')+' Ya tienes la versión más reciente.';
 }
 
 if(typeof document!=='undefined'&&document.addEventListener){

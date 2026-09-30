@@ -189,13 +189,13 @@ const MANUAL = [
     puestos donde se ven siempre.</p>` },
   ]},
 
-{ id:'a-lectura', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Leer sin distracciones',
+{ id:'a-lectura', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Leer en pantalla completa',
   d:'El capítulo completo, sin nada alrededor',
   secs:[
   { t:'Cómo se abre',
     h:`<p>Abre un capítulo de la Biblia en <strong>Estudiar</strong>, toca
-    <strong>Leer el capítulo completo</strong> y arriba te sale el botón
-    <strong>📖 Leer sin distracciones</strong>.</p>
+    <strong>Leer el capítulo completo</strong> y en el reproductor de arriba
+    toca <strong>Pantalla completa</strong>.</p>
     <p>Se esconde todo: la barra, las pestañas, las secciones de estudio. Queda
     solo el texto, más grande y en letra de libro.</p>` },
   { t:'La barra de arriba',
@@ -240,7 +240,7 @@ const MANUAL = [
   { t:'En el celular no cambia nada',
     h:`<p>En un teléfono no hay ancho para dos columnas, así que sigue igual que
     siempre: primero el texto, después el estudio, uno debajo del otro. Y ahí es
-    donde sirve el <strong>📖 Leer sin distracciones</strong>.</p>` },
+    donde sirve la <strong>Pantalla completa</strong>.</p>` },
   { t:'Solo en los capítulos de la Biblia',
     h:`<p>Profetas y Reyes y las creencias no se parten en dos, porque de esos la
     app no tiene el capítulo palabra por palabra: no habría nada que poner en la
@@ -288,12 +288,12 @@ const MANUAL = [
     cuando pasas la hoja de una Biblia. En el primero y en el último el botón
     que no aplica se ve apagado.</p>` },
   { t:'Escucharlo, y pararlo',
-    h:`<p>Cada bloque de versículos tiene un botón <strong>🔊</strong>. Tócalo
+    h:`<p>Cada bloque de versículos tiene un botón <strong>Escuchar</strong>. Tócalo
     y la app lee en voz alta.</p>
     <p><strong>Para pausarlo, toca el mismo botón otra vez</strong>, y otra
-    vez para seguir. Mientras está leyendo cambia a <strong>⏸</strong> y se
-    pone de color, así sabes cuál de todos hay que tocar. El
-    <strong>↺</strong> de al lado vuelve a empezar.</p>
+    vez para seguir. Mientras está leyendo dice <strong>Pausar</strong> y se
+    pone de color, así sabes cuál de todos hay que tocar. La flecha
+    circular de al lado vuelve a empezar.</p>
     <p>Lee el bloque completo, versículo por versículo, por largo que sea.</p>
     <p>También se corta solo si <strong>cambias de pantalla o de
     capítulo</strong>, para que la voz no te siga hablando de Daniel 2 cuando
@@ -305,7 +305,7 @@ const MANUAL = [
     Tócala y se abre el capítulo entero, numerado, en la
     <strong>Reina-Valera 1995</strong>, que es la del campamento.</p>
     <p>Viene <strong>de a cinco versículos</strong>, cada grupo con su botón
-    🔊 para escucharlos. Está cerrada al abrir el capítulo, así que si vienes
+    <strong>Escuchar</strong>. Está cerrada al abrir el capítulo, así que si vienes
     a repasar un dato no te estorba.</p>` },
   { t:'Escuchar Profetas y Reyes',
     h:`<p>En los capítulos de <strong>Profetas y Reyes</strong> hay un
@@ -402,7 +402,7 @@ const MANUAL = [
     últimos dos minutos.</li>
     <li>Mientras dura el examen solo se ve el examen: el filtro de estudio y las
     opciones del director se esconden, y vuelven al entregar o cancelar.</li>
-    <li>El 🔊 al lado de cada pregunta la lee en voz alta, con sus opciones.
+    <li>El botón de la bocina al lado de cada pregunta la lee en voz alta, con sus opciones.
     Sirve a quien todavía no lee bien. En Practicar, para Menores (4 a 6 años),
     la pregunta nueva se lee sola al tocar Siguiente.</li>
     <li>Las preguntas <strong>cambian cada vez</strong>: salen de
