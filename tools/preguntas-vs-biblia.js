@@ -65,9 +65,36 @@ const LIBROS=['Genesis','Exodo','Levitico','Numeros','Deuteronomio','Josue','Jue
 const ALIAS={'salmo':'Salmos','cantar de los cantares':'Cantares','apocalipsis de juan':'Apocalipsis'};
 const NUM={}; LIBROS.forEach((l,i)=>{NUM[norm(l)]=i+1;});
 for(const [a,l] of Object.entries(ALIAS)) NUM[norm(a)]=NUM[norm(l)];
-let BIBLIA=null, RUTA_BIBLIA=path.join(__dirname,'..','..','..','files','_biblia-libre-raw.txt');
+/* DONDE ESTAN LAS FUENTES. La ruta fija '../../../files' era la de cuando el
+   repo vivia en Documents/Iglesia/projects; al pasar a code/personal dejo de
+   encontrarlas y el verificador contrasto CERO preguntas de P&R sin fallar,
+   solo con un aviso que nadie leia. Ahora se prueban varias carpetas (CB_FILES
+   manda) y se dice POR QUE no se pudo leer: iCloud deja el archivo «sin
+   descargar» y leerlo da EDEADLK. */
+const CARPETAS_FILES=[process.env.CB_FILES,
+  path.join(__dirname,'..','..','..','files'),path.join(__dirname,'..','..','files'),
+  path.join(require('os').homedir(),'Documents','Iglesia','files')].filter(Boolean);
+function leeFuente(nombre,env){
+  const directo=env&&process.env[env];
+  const rutas=directo?[directo]:CARPETAS_FILES.map(d=>path.join(d,nombre));
+  let problema='no existe en '+CARPETAS_FILES.join(' ni en ');
+  for(const p of rutas){
+    if(!fs.existsSync(p))continue;
+    /* Un archivo que iCloud dejo sin descargar ocupa 0 bloques en disco. Leerlo
+       en el Mac dispara la descarga y la lectura se queda colgada: se detecta
+       antes y no se lee. */
+    try{const st=fs.statSync(p);
+      if(st.size>0&&st.blocks===0){problema='esta en iCloud sin descargar ('+p+')';continue;}}catch(e){}
+    try{return {texto:fs.readFileSync(p,'utf8'),ruta:p};}
+    catch(e){problema=(e.code==='EDEADLK'?'esta en iCloud sin descargar':e.code)+' ('+p+')';}
+  }
+  return {texto:null,problema};
+}
+const FUENTE_BIBLIA=leeFuente('_biblia-libre-raw.txt','CB_BIBLIA');
+let BIBLIA=null, RUTA_BIBLIA=FUENTE_BIBLIA.ruta;
 try{
-  const bruto=fs.readFileSync(RUTA_BIBLIA,'utf8');
+  if(!FUENTE_BIBLIA.texto)throw new Error(FUENTE_BIBLIA.problema);
+  const bruto=FUENTE_BIBLIA.texto;
   BIBLIA={};
   for(const linea of bruto.split('\n')){
     const m=/^(\d+)\+(\d+)\+(\d+)\+([\s\S]*?)\+?$/.exec(linea.trim());
@@ -81,13 +108,18 @@ try{
    (o esta en el libro o no esta), y para una opcion es una red ancha, asi que
    solo se senala cuando NO aparece en ninguna parte. El .txt se genera con
    pdftotext -layout y vive fuera del repo, como todas las fuentes. */
-let PYR=null;
+let PYR=null, FUENTE_PR={problema:'no se intento'};
 try{
   /* Dos cosas del PDF antes de comparar, y las dos costaron un falso positivo:
      el libro corta palabras al final de renglon con guion («pa-\nnoramica»), y
      mete el numero de pagina entre corchetes en medio del parrafo. Sin quitar
      eso, una frase que SI esta en el libro se reporta como que no. */
-  PYR=norm(fs.readFileSync(path.join(__dirname,'..','..','..','files','_pr-texto.txt'),'utf8')
+  /* CB_PR_TEXTO permite contrastar contra otro texto del libro (por ejemplo
+     los capitulos bajados de EGW Writings) cuando el .txt no esta. */
+  const f=leeFuente('_pr-texto.txt','CB_PR_TEXTO');
+  FUENTE_PR=f;
+  if(!f.texto)throw new Error(f.problema);
+  PYR=norm(f.texto
     .replace(/-\s*\r?\n\s*/g,'').replace(/\[\d+\]/g,' '));
 }catch(e){ PYR=null; }
 
@@ -297,7 +329,7 @@ const pinta=(t,l)=>{
 };
 console.log('REVISADO');
 console.log(BIBLIA?('  Referencia: la RV1909 completa, '+Object.keys(BIBLIA).length+' capitulos, ademas de lo que trae la app.')
-                 :'  AVISO: no encontre files/_biblia-libre-raw.txt; solo se uso lo que trae la app.');
+                 :'  AVISO: la Biblia completa no se pudo leer: '+FUENTE_BIBLIA.problema+'. Solo se uso lo que trae la app.');
 for(const [b,l] of BANCOS) console.log('  '+String((l||[]).length).padStart(4)+'  '+b);
 console.log('  '+String((TARJETAS||[]).length).padStart(4)+'  Tarjetas');
 console.log('  ————');
@@ -321,7 +353,7 @@ console.log('  '+contrastadas+' se contrastaron contra el VERSO que cita el enun
 console.log('  '+porCapitulo+' no citan verso, pero su capitulo de Daniel si esta: se');
 console.log('       contrastaron contra el capitulo entero, que es una red mas ancha.');
 console.log('  '+enPyR+' de Profetas y Reyes se contrastaron contra el libro entero,');
-console.log('       sacado de files/profetas-y-reyes.pdf con pdftotext.');
+console.log(PYR?'       texto: '+FUENTE_PR.ruta:'       NO SE VERIFICO P&R: '+FUENTE_PR.problema+'.');
 console.log('  '+sinCita+' quedan sin nada contra que compararlas: las 28 creencias');
 console.log('       (que se generan, no se escriben a mano) y la matutina. Ver abajo.');
 console.log('  '+citaFloja+' de la matutina comparten menos del 25% de sus palabras con la RV1909,');

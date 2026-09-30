@@ -914,7 +914,7 @@ pr39: [
     (conocían la historia de Nadab y Abihú)`) },
 
   { t:'❤️ Lo que Daniel valoraba más', h:
-    hi(`Daniel pudo haber dicho: «No tengo otra opción, soy prisionero del rey». Pero para él la aprobación de Dios valía más que el favor del rey, y hasta más que su vida. Sus tres amigos lo apoyaron. Si hubieran cedido una vez, habría sido más fácil ceder otra vez, y otra (PR 353.3-354.2).`) },
+    hi(`El libro dice que, si hubiera querido, Daniel podía haber hallado en sus circunstancias «una excusa plausible» para ceder: era un cautivo en la corte del rey (PR 353.3). Pero para él la aprobación de Dios valía más que el favor del rey, y hasta más que su vida. Sus tres amigos lo apoyaron. Si hubieran cedido una vez, habría sido más fácil ceder otra vez, y otra (PR 353.3-354.2).`) },
   { t:'🚫 Lo que NO fue', h:
     wa(`Dos cosas que el capítulo descarta expresamente, y que son
     respuestas equivocadas típicas:<br><br>

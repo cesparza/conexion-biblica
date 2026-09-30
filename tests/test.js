@@ -1981,6 +1981,20 @@ ok(/verRevision\(/.test(APP.slice(APP.indexOf('function hisListaPersonas'))),
     (duro === undefined ? 'no se pudo correr el verificador' : duro + ' duros, ' + rev + ' para revisar') + ')');
   if (salida !== 0) console.log(texto.split('\n').filter(l => /^  ·|^      /.test(l)).slice(0, 12).join('\n'));
 }
+/* Que el verificador corra no quiere decir que haya verificado. Desde que el
+   repo se movio, contrasto CERO preguntas de Profetas y Reyes y la suite
+   seguia en verde. No se falla (sin el libro en el aparato no hay como), pero
+   se dice en voz alta, con la razon, para que no pase otra vez sin verse. */
+{
+  let t2='';
+  try{ t2=execFileSync(process.execPath,[path.join(RAIZ,'tools','preguntas-vs-biblia.js')],{encoding:'utf8'}); }
+  catch(e){ t2=String(e.stdout||''); }
+  const n=Number((t2.match(/(\d+) de Profetas y Reyes se contrastaron/)||[])[1]||0);
+  const porque=(t2.match(/NO SE VERIFICO P&R: ([^\n]*)/)||[])[1];
+  if(n===0) console.log('⚠️  AVISO: 0 preguntas de Profetas y Reyes se contrastaron contra el libro'+
+    (porque?' — '+porque:'')+'. Corre con CB_PR_TEXTO=<texto del libro> para verificarlas.');
+  else ok(true,'Profetas y Reyes contrastado contra el libro ('+n+' preguntas)');
+}
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);
