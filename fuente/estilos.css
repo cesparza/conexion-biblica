@@ -2435,3 +2435,19 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 /* Varias frases cortas seguidas: más chicas que la declaración de una creencia. */
 .decl.frase-libro{font-size:1rem;line-height:1.6;margin:0 0 1rem;padding-left:.9rem;border-left:3px solid color-mix(in srgb,var(--v-cat) 35%,transparent)}
 .decl.frase-libro .decl-src{margin-top:.3rem}
+
+/* ───────── v152: la declaración, como página de la cartilla ─────────
+   Antes: una columna de 62 caracteres centrada, que flotaba metida hacia
+   adentro mientras los títulos de sección arrancan en el borde. Ahora va a
+   todo lo ancho, en papel (el mismo del lector) y en letra de libro, como el
+   texto bíblico: es el texto oficial que se memoriza, y se ve distinto del
+   resto de la app. Las frases van numeradas como versículos. */
+blockquote.decl:not(.frase-libro){max-width:none;margin:.2rem 0 .4rem;
+  padding:1.1rem 1.25rem 1rem;background:#fffaf0;border:1px solid #f0e2c4;border-radius:12px;
+  font-family:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+  font-size:1.125rem;line-height:1.8;letter-spacing:0;color:#2b2418}
+.decl-txt .fn{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.62em;font-weight:800;
+  color:var(--v-cat);margin-right:.2em;vertical-align:.5em;line-height:0}
+blockquote.decl:not(.frase-libro) .decl-src{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  margin-top:.9rem;padding-top:.7rem;border-top:1px solid #f0e2c4}
+blockquote.decl:not(.frase-libro) .decl-src::before{display:none}

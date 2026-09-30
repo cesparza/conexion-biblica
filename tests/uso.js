@@ -1704,7 +1704,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     /* Hasta el pie de la cita, no hasta el primer «»»: la 6 trae una cita adentro. */
     const dec=(CR_CONTENIDO[q.cap]||[]).map(s=>s.h).join(' ').match(/<blockquote class="decl">«([\s\S]*?)»?<p class="decl-src"/);
     if(!dec||i<0)continue;
-    const todas=dec[1].split(/(?<=[.»])\s+/).map(x=>x.trim()).filter(Boolean);
+    const todas=dec[1].split(/(?<=\.)»?\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])|(?<=\.»)\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])/).map(x=>x.trim()).filter(Boolean);
     const frase=(q.p||[]).map(x=>x.b!=null?x.b:(x.x||'')).join('').trim();
     if(norm(todas[i]||'')!==norm(frase))malas.push(q.cap+' dice «'+m+'»');}
   ok(malas.length===0,'Cada «N.ª frase de la declaración» es de verdad esa frase'+(malas.length?': '+malas.slice(0,5).join(', '):''));

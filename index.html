@@ -2452,6 +2452,22 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 /* Varias frases cortas seguidas: más chicas que la declaración de una creencia. */
 .decl.frase-libro{font-size:1rem;line-height:1.6;margin:0 0 1rem;padding-left:.9rem;border-left:3px solid color-mix(in srgb,var(--v-cat) 35%,transparent)}
 .decl.frase-libro .decl-src{margin-top:.3rem}
+
+/* ───────── v152: la declaración, como página de la cartilla ─────────
+   Antes: una columna de 62 caracteres centrada, que flotaba metida hacia
+   adentro mientras los títulos de sección arrancan en el borde. Ahora va a
+   todo lo ancho, en papel (el mismo del lector) y en letra de libro, como el
+   texto bíblico: es el texto oficial que se memoriza, y se ve distinto del
+   resto de la app. Las frases van numeradas como versículos. */
+blockquote.decl:not(.frase-libro){max-width:none;margin:.2rem 0 .4rem;
+  padding:1.1rem 1.25rem 1rem;background:#fffaf0;border:1px solid #f0e2c4;border-radius:12px;
+  font-family:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+  font-size:1.125rem;line-height:1.8;letter-spacing:0;color:#2b2418}
+.decl-txt .fn{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.62em;font-weight:800;
+  color:var(--v-cat);margin-right:.2em;vertical-align:.5em;line-height:0}
+blockquote.decl:not(.frase-libro) .decl-src{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  margin-top:.9rem;padding-top:.7rem;border-top:1px solid #f0e2c4}
+blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 </style>
 </head>
 <body>
@@ -2983,7 +2999,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   </details>
 </div>
 <script>
-const VERSION_APP = 'b283c7f4f980';
+const VERSION_APP = 'fdaf8f7a5266';
 
 const CAPS = [
  {
@@ -6443,7 +6459,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Juan 1:1-3,14</span><span class=\"ref\">Colosenses 1:15-19</span><span class=\"ref\">Juan 10:30</span><span class=\"ref\">14:9</span><span class=\"ref\">Romanos 6:23</span><span class=\"ref\">2 Corintios 5:17-19</span><span class=\"ref\">Juan 5:22</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 7 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>7</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Juan 1:1-3,14</span><span class=\"ref\">Colosenses 1:15-19</span><span class=\"ref\">Juan 10:30</span><span class=\"ref\">Juan 14:9</span><span class=\"ref\">Romanos 6:23</span><span class=\"ref\">2 Corintios 5:17-19</span><span class=\"ref\">Juan 5:22</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 7 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>7</b></div></div>",
    "preg": {
     "cap": "cr04",
     "t": "mc",
@@ -6523,7 +6539,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1:1,2</span><span class=\"ref\">Lucas 1:35</span><span class=\"ref\">4:18</span><span class=\"ref\">Hechos 10:38</span><span class=\"ref\">2 Pedro 1:21</span><span class=\"ref\">2 Corintios 3:18</span><span class=\"ref\">Efesios 4:11, 12</span><span class=\"ref\">Hechos 1:8</span><span class=\"ref\">Juan 14:16-18, 26</span><span class=\"ref\">15:26, 27</span><span class=\"ref\">16:7-13</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 7 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1:1,2</span><span class=\"ref\">Lucas 1:35</span><span class=\"ref\">Lucas 4:18</span><span class=\"ref\">Hechos 10:38</span><span class=\"ref\">2 Pedro 1:21</span><span class=\"ref\">2 Corintios 3:18</span><span class=\"ref\">Efesios 4:11, 12</span><span class=\"ref\">Hechos 1:8</span><span class=\"ref\">Juan 14:16-18, 26</span><span class=\"ref\">Juan 15:26, 27</span><span class=\"ref\">Juan 16:7-13</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 7 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
    "preg": {
     "cap": "cr05",
     "t": "mc",
@@ -6603,7 +6619,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1</span><span class=\"ref\">2</span><span class=\"ref\">Éxodo 20:8-11</span><span class=\"ref\">Salmos 19:1-6</span><span class=\"ref\">33:6, 9</span><span class=\"ref\">104</span><span class=\"ref\">Hebreos 11:3</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 7 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>7</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1</span><span class=\"ref\">Génesis 2</span><span class=\"ref\">Éxodo 20:8-11</span><span class=\"ref\">Salmos 19:1-6</span><span class=\"ref\">Salmos 33:6, 9</span><span class=\"ref\">Salmos 104</span><span class=\"ref\">Hebreos 11:3</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 7 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>7</b></div></div>",
    "preg": {
     "cap": "cr06",
     "t": "mc",
@@ -6683,7 +6699,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1:26-28</span><span class=\"ref\">2:7</span><span class=\"ref\">Salmos 8:4-8</span><span class=\"ref\">Hechos 17:24-28</span><span class=\"ref\">Génesis 3</span><span class=\"ref\">Salmos 51:5</span><span class=\"ref\">Romanos 5:12-17</span><span class=\"ref\">2 Corintios 5:19,20</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 8 capítulos de 5 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1:26-28</span><span class=\"ref\">Génesis 2:7</span><span class=\"ref\">Salmos 8:4-8</span><span class=\"ref\">Hechos 17:24-28</span><span class=\"ref\">Génesis 3</span><span class=\"ref\">Salmos 51:5</span><span class=\"ref\">Romanos 5:12-17</span><span class=\"ref\">2 Corintios 5:19,20</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 8 capítulos de 5 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b></div></div>",
    "preg": {
     "cap": "cr07",
     "t": "mc",
@@ -6763,7 +6779,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Apocalipsis 12:4-9</span><span class=\"ref\">Isaías 14:12-14</span><span class=\"ref\">Ezequiel 28:12-18</span><span class=\"ref\">Génesis 3</span><span class=\"ref\">Romanos 1:19-32</span><span class=\"ref\">5:12-21</span><span class=\"ref\">8:19-22</span><span class=\"ref\">Génesis 6:8</span><span class=\"ref\">2 Pedro 3:6</span><span class=\"ref\">1 Corintios 4:9</span><span class=\"ref\">Hebreos 1:14</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 8 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Apocalipsis 12:4-9</span><span class=\"ref\">Isaías 14:12-14</span><span class=\"ref\">Ezequiel 28:12-18</span><span class=\"ref\">Génesis 3</span><span class=\"ref\">Romanos 1:19-32</span><span class=\"ref\">Romanos 5:12-21</span><span class=\"ref\">Romanos 8:19-22</span><span class=\"ref\">Génesis 6:8</span><span class=\"ref\">2 Pedro 3:6</span><span class=\"ref\">1 Corintios 4:9</span><span class=\"ref\">Hebreos 1:14</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 8 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
    "preg": {
     "cap": "cr08",
     "t": "mc",
@@ -6843,7 +6859,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Juan 3:16</span><span class=\"ref\">Isaías 53</span><span class=\"ref\">1 Pedro 2:21,22</span><span class=\"ref\">1 Corintios 15:3,4,20-22</span><span class=\"ref\">2 Corintios 5:14,15,19-21</span><span class=\"ref\">Romanos 1:4</span><span class=\"ref\">3:25</span><span class=\"ref\">4:25</span><span class=\"ref\">8:3,4</span><span class=\"ref\">1 Juan 2:2</span><span class=\"ref\">4:10</span><span class=\"ref\">Colosenses 2:15</span><span class=\"ref\">Filipenses 2:6-11</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 13 capítulos de 9 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>13</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Juan 3:16</span><span class=\"ref\">Isaías 53</span><span class=\"ref\">1 Pedro 2:21,22</span><span class=\"ref\">1 Corintios 15:3,4,20-22</span><span class=\"ref\">2 Corintios 5:14,15,19-21</span><span class=\"ref\">Romanos 1:4</span><span class=\"ref\">Romanos 3:25</span><span class=\"ref\">Romanos 4:25</span><span class=\"ref\">Romanos 8:3,4</span><span class=\"ref\">1 Juan 2:2</span><span class=\"ref\">1 Juan 4:10</span><span class=\"ref\">Colosenses 2:15</span><span class=\"ref\">Filipenses 2:6-11</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 13 capítulos de 9 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>13</b></div></div>",
    "preg": {
     "cap": "cr09",
     "t": "mc",
@@ -6923,7 +6939,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">2 Corintios 5:17-21</span><span class=\"ref\">Juan 3:16</span><span class=\"ref\">Gálatas 1:4</span><span class=\"ref\">4:4-7</span><span class=\"ref\">Tito 3:3-7</span><span class=\"ref\">Juan 16:8</span><span class=\"ref\">Gálatas 3:13,14</span><span class=\"ref\">1 Pedro 2:21,22</span><span class=\"ref\">Romanos 10:17</span><span class=\"ref\">Lucas 17:5</span><span class=\"ref\">Marcos 9:23,24</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 8 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">2 Corintios 5:17-21</span><span class=\"ref\">Juan 3:16</span><span class=\"ref\">Gálatas 1:4</span><span class=\"ref\">Gálatas 4:4-7</span><span class=\"ref\">Tito 3:3-7</span><span class=\"ref\">Juan 16:8</span><span class=\"ref\">Gálatas 3:13,14</span><span class=\"ref\">1 Pedro 2:21,22</span><span class=\"ref\">Romanos 10:17</span><span class=\"ref\">Lucas 17:5</span><span class=\"ref\">Marcos 9:23,24</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 8 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
    "preg": {
     "cap": "cr10",
     "t": "mc",
@@ -7003,7 +7019,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Salmos 1:1,2</span><span class=\"ref\">23:4</span><span class=\"ref\">77:11,12</span><span class=\"ref\">Colosenses 1:13,14</span><span class=\"ref\">2:6,14,15</span><span class=\"ref\">Lucas 10:17-20</span><span class=\"ref\">Efesios 5:19,20</span><span class=\"ref\">6:12-18</span><span class=\"ref\">1 Tesalonicenses 5:23</span><span class=\"ref\">2 Pedro 2:9</span><span class=\"ref\">3:18</span><span class=\"ref\">2 Corintios 3:17,18</span><span class=\"ref\">Filipenses 3:7-14</span><span class=\"ref\">1 Tesalonicenses 5:16-18</span><span class=\"ref\">Mateo 20:25-28</span><span class=\"ref\">Juan 20:21</span><span class=\"ref\">Gálatas 5:22-25</span><span class=\"ref\">Romanos 8:38,39</span><span class=\"ref\">1 Juan 4:4</span><span class=\"ref\">Hebreos 10:25</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 19 capítulos de 14 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>20</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Salmos 1:1,2</span><span class=\"ref\">Salmos 23:4</span><span class=\"ref\">Salmos 77:11,12</span><span class=\"ref\">Colosenses 1:13,14</span><span class=\"ref\">Colosenses 2:6,14,15</span><span class=\"ref\">Lucas 10:17-20</span><span class=\"ref\">Efesios 5:19,20</span><span class=\"ref\">Efesios 6:12-18</span><span class=\"ref\">1 Tesalonicenses 5:23</span><span class=\"ref\">2 Pedro 2:9</span><span class=\"ref\">2 Pedro 3:18</span><span class=\"ref\">2 Corintios 3:17,18</span><span class=\"ref\">Filipenses 3:7-14</span><span class=\"ref\">1 Tesalonicenses 5:16-18</span><span class=\"ref\">Mateo 20:25-28</span><span class=\"ref\">Juan 20:21</span><span class=\"ref\">Gálatas 5:22-25</span><span class=\"ref\">Romanos 8:38,39</span><span class=\"ref\">1 Juan 4:4</span><span class=\"ref\">Hebreos 10:25</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 19 capítulos de 14 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>20</b></div></div>",
    "preg": {
     "cap": "cr11",
     "t": "mc",
@@ -7083,7 +7099,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 12:3</span><span class=\"ref\">Hechos 7:38</span><span class=\"ref\">Efesios 4:11-15</span><span class=\"ref\">3:8-11</span><span class=\"ref\">Mateo 28:19,20</span><span class=\"ref\">16:13-20</span><span class=\"ref\">18:18</span><span class=\"ref\">Efesios 2:19-22</span><span class=\"ref\">1:22,23</span><span class=\"ref\">5:23-27</span><span class=\"ref\">Colosenses 1:17,18</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 5 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 12:3</span><span class=\"ref\">Hechos 7:38</span><span class=\"ref\">Efesios 4:11-15</span><span class=\"ref\">Efesios 3:8-11</span><span class=\"ref\">Mateo 28:19,20</span><span class=\"ref\">Mateo 16:13-20</span><span class=\"ref\">Mateo 18:18</span><span class=\"ref\">Efesios 2:19-22</span><span class=\"ref\">Efesios 1:22,23</span><span class=\"ref\">Efesios 5:23-27</span><span class=\"ref\">Colosenses 1:17,18</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 11 capítulos de 5 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
    "preg": {
     "cap": "cr12",
     "t": "mc",
@@ -7163,7 +7179,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Apocalipsis 12:17</span><span class=\"ref\">14:6-12</span><span class=\"ref\">18:1-4</span><span class=\"ref\">2 Corintios 5:10</span><span class=\"ref\">Judas 3,14</span><span class=\"ref\">1 Pedro 1:16-19</span><span class=\"ref\">2 Pedro 3:10-14</span><span class=\"ref\">Apocalipsis 21:1-14</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 8 capítulos de 5 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Apocalipsis 12:17</span><span class=\"ref\">Apocalipsis 14:6-12</span><span class=\"ref\">Apocalipsis 18:1-4</span><span class=\"ref\">2 Corintios 5:10</span><span class=\"ref\">Judas 3,14</span><span class=\"ref\">1 Pedro 1:16-19</span><span class=\"ref\">2 Pedro 3:10-14</span><span class=\"ref\">Apocalipsis 21:1-14</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 8 capítulos de 5 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b></div></div>",
    "preg": {
     "cap": "cr13",
     "t": "mc",
@@ -7292,7 +7308,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Romanos 6:1-6</span><span class=\"ref\">Colosenses 2:12, 13</span><span class=\"ref\">Hechos 16:30-33</span><span class=\"ref\">22:16</span><span class=\"ref\">2:38</span><span class=\"ref\">Mateo 28:19-20</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 6 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>6</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Romanos 6:1-6</span><span class=\"ref\">Colosenses 2:12, 13</span><span class=\"ref\">Hechos 16:30-33</span><span class=\"ref\">Hechos 22:16</span><span class=\"ref\">Hechos 2:38</span><span class=\"ref\">Mateo 28:19-20</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 6 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>6</b></div></div>",
    "preg": {
     "cap": "cr15",
     "t": "mc",
@@ -7372,7 +7388,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">1 Corintios 10-16,17</span><span class=\"ref\">11:23-30</span><span class=\"ref\">Mateo 26:17-30</span><span class=\"ref\">Apocalipsis 3:20</span><span class=\"ref\">Juan 6:48-63</span><span class=\"ref\">13:1-17</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 6 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>6</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">1 Corintios 10-16,17</span><span class=\"ref\">1 Corintios 11:23-30</span><span class=\"ref\">Mateo 26:17-30</span><span class=\"ref\">Apocalipsis 3:20</span><span class=\"ref\">Juan 6:48-63</span><span class=\"ref\">Juan 13:1-17</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 6 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>6</b></div></div>",
    "preg": {
     "cap": "cr16",
     "t": "mc",
@@ -7532,7 +7548,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Joel 2:28,29</span><span class=\"ref\">Hechos 2:14-21</span><span class=\"ref\">Hebreos 1:1-3</span><span class=\"ref\">Apocalipsis 12:17</span><span class=\"ref\">19:10</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 5 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Joel 2:28,29</span><span class=\"ref\">Hechos 2:14-21</span><span class=\"ref\">Hebreos 1:1-3</span><span class=\"ref\">Apocalipsis 12:17</span><span class=\"ref\">Apocalipsis 19:10</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 5 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b></div></div>",
    "preg": {
     "cap": "cr18",
     "t": "mc",
@@ -7692,7 +7708,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 2:1-3</span><span class=\"ref\">Éxodo 20:8-11</span><span class=\"ref\">Lucas 4:16</span><span class=\"ref\">Isaías 56:5,6</span><span class=\"ref\">58:13,14</span><span class=\"ref\">Mateo 12:1-12</span><span class=\"ref\">Éxodo 31:13-17</span><span class=\"ref\">Ezequiel 20:12,20</span><span class=\"ref\">Deuteronomio 5:12-15</span><span class=\"ref\">Hebreos 4:1-11</span><span class=\"ref\">Levítico 23:32</span><span class=\"ref\">Marcos 1:32</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 12 capítulos de 10 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>12</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 2:1-3</span><span class=\"ref\">Éxodo 20:8-11</span><span class=\"ref\">Lucas 4:16</span><span class=\"ref\">Isaías 56:5,6</span><span class=\"ref\">Isaías 58:13,14</span><span class=\"ref\">Mateo 12:1-12</span><span class=\"ref\">Éxodo 31:13-17</span><span class=\"ref\">Ezequiel 20:12,20</span><span class=\"ref\">Deuteronomio 5:12-15</span><span class=\"ref\">Hebreos 4:1-11</span><span class=\"ref\">Levítico 23:32</span><span class=\"ref\">Marcos 1:32</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 12 capítulos de 10 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>12</b></div></div>",
    "preg": {
     "cap": "cr20",
     "t": "mc",
@@ -7772,7 +7788,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1:26-28</span><span class=\"ref\">2:15</span><span class=\"ref\">1 Crónicas 29:14</span><span class=\"ref\">Hageo 1:3-11</span><span class=\"ref\">Malaquías 3:8-12</span><span class=\"ref\">1 Corintios 9:9-14</span><span class=\"ref\">Mateo 23:23</span><span class=\"ref\">2 Corintios 8:1-15</span><span class=\"ref\">Romanos 15:26,27</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 9 capítulos de 8 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>9</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Génesis 1:26-28</span><span class=\"ref\">Génesis 2:15</span><span class=\"ref\">1 Crónicas 29:14</span><span class=\"ref\">Hageo 1:3-11</span><span class=\"ref\">Malaquías 3:8-12</span><span class=\"ref\">1 Corintios 9:9-14</span><span class=\"ref\">Mateo 23:23</span><span class=\"ref\">2 Corintios 8:1-15</span><span class=\"ref\">Romanos 15:26,27</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 9 capítulos de 8 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>9</b></div></div>",
    "preg": {
     "cap": "cr21",
     "t": "mc",
@@ -7852,7 +7868,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Romanos 12:1,2</span><span class=\"ref\">1 Juan 2:6</span><span class=\"ref\">Efesios 5:1-21</span><span class=\"ref\">Filipenses 4:8</span><span class=\"ref\">2 Corintios 10:5</span><span class=\"ref\">6:14-7:1</span><span class=\"ref\">1 Pedro 3:1-4</span><span class=\"ref\">1 Corintios 6:19,20</span><span class=\"ref\">10:31</span><span class=\"ref\">Levítico 11:1-47</span><span class=\"ref\">3 Juan 2</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 12 capítulos de 9 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Romanos 12:1,2</span><span class=\"ref\">1 Juan 2:6</span><span class=\"ref\">Efesios 5:1-21</span><span class=\"ref\">Filipenses 4:8</span><span class=\"ref\">2 Corintios 10:5</span><span class=\"ref\">2 Corintios 6:14-7:1</span><span class=\"ref\">1 Pedro 3:1-4</span><span class=\"ref\">1 Corintios 6:19,20</span><span class=\"ref\">1 Corintios 10:31</span><span class=\"ref\">Levítico 11:1-47</span><span class=\"ref\">3 Juan 2</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 12 capítulos de 9 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>11</b></div></div>",
    "preg": {
     "cap": "cr22",
     "t": "mc",
@@ -8012,7 +8028,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Hebreos 8:1-5</span><span class=\"ref\">4:14-16</span><span class=\"ref\">9:11-28</span><span class=\"ref\">10:19-22</span><span class=\"ref\">1:3</span><span class=\"ref\">2:16,17</span><span class=\"ref\">Daniel 7:9-27</span><span class=\"ref\">8:13,14</span><span class=\"ref\">9:24-27</span><span class=\"ref\">Números 14:34</span><span class=\"ref\">Ezequiel 4:6</span><span class=\"ref\">Levítico 16</span><span class=\"ref\">Apocalipsis 14:6,7</span><span class=\"ref\">20:12</span><span class=\"ref\">14:12</span><span class=\"ref\">22:12</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 15 capítulos de 6 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>16</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Hebreos 8:1-5</span><span class=\"ref\">Hebreos 4:14-16</span><span class=\"ref\">Hebreos 9:11-28</span><span class=\"ref\">Hebreos 10:19-22</span><span class=\"ref\">Hebreos 1:3</span><span class=\"ref\">Hebreos 2:16,17</span><span class=\"ref\">Daniel 7:9-27</span><span class=\"ref\">Daniel 8:13,14</span><span class=\"ref\">Daniel 9:24-27</span><span class=\"ref\">Números 14:34</span><span class=\"ref\">Ezequiel 4:6</span><span class=\"ref\">Levítico 16</span><span class=\"ref\">Apocalipsis 14:6,7</span><span class=\"ref\">Apocalipsis 20:12</span><span class=\"ref\">Apocalipsis 14:12</span><span class=\"ref\">Apocalipsis 22:12</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 15 capítulos de 6 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>16</b></div></div>",
    "preg": {
     "cap": "cr24",
     "t": "mc",
@@ -8092,7 +8108,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Tito 2:13</span><span class=\"ref\">Hebreos 9:28</span><span class=\"ref\">Juan 14:1-3</span><span class=\"ref\">Hechos 1:9-11</span><span class=\"ref\">Mateo 24:14</span><span class=\"ref\">Apocalipsis 1:7</span><span class=\"ref\">Mateo 24:43,44</span><span class=\"ref\">1 Tesalonicenses 4:13-18</span><span class=\"ref\">1 Corintios 15:51-54</span><span class=\"ref\">2 Tesalonicenses 1:7-10</span><span class=\"ref\">2:8</span><span class=\"ref\">Apocalipsis 14:14-20</span><span class=\"ref\">19:11-21</span><span class=\"ref\">Mateo 24</span><span class=\"ref\">Marcos 13</span><span class=\"ref\">Lucas 21</span><span class=\"ref\">2 Timoteo 3:1-5</span><span class=\"ref\">1 Tesalonicenses 5:1-6</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 16 capítulos de 12 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>18</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">Tito 2:13</span><span class=\"ref\">Hebreos 9:28</span><span class=\"ref\">Juan 14:1-3</span><span class=\"ref\">Hechos 1:9-11</span><span class=\"ref\">Mateo 24:14</span><span class=\"ref\">Apocalipsis 1:7</span><span class=\"ref\">Mateo 24:43,44</span><span class=\"ref\">1 Tesalonicenses 4:13-18</span><span class=\"ref\">1 Corintios 15:51-54</span><span class=\"ref\">2 Tesalonicenses 1:7-10</span><span class=\"ref\">2 Tesalonicenses 2:8</span><span class=\"ref\">Apocalipsis 14:14-20</span><span class=\"ref\">Apocalipsis 19:11-21</span><span class=\"ref\">Mateo 24</span><span class=\"ref\">Marcos 13</span><span class=\"ref\">Lucas 21</span><span class=\"ref\">2 Timoteo 3:1-5</span><span class=\"ref\">1 Tesalonicenses 5:1-6</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 16 capítulos de 12 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>18</b></div></div>",
    "preg": {
     "cap": "cr25",
     "t": "mc",
@@ -8332,7 +8348,7 @@ const CONTENIDO = {
   {
    "t": "📖 Textos clave",
    "capa": "nucleo",
-   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">2 Pedro 3:13</span><span class=\"ref\">Isaías 35</span><span class=\"ref\">65:17-25</span><span class=\"ref\">Mateo 5:5</span><span class=\"ref\">Apocalipsis 21:1-7</span><span class=\"ref\">22:1-5</span><span class=\"ref\">11:5</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 7 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>7</b></div></div>",
+   "h": "<div class=\"bloque-t\">Los textos que trae la cartilla, en su orden</div><div class=\"refs\"><span class=\"ref\">2 Pedro 3:13</span><span class=\"ref\">Isaías 35</span><span class=\"ref\">Isaías 65:17-25</span><span class=\"ref\">Mateo 5:5</span><span class=\"ref\">Apocalipsis 21:1-7</span><span class=\"ref\">Apocalipsis 22:1-5</span><span class=\"ref\">Apocalipsis 11:5</span></div><p class=\"nota\">Toca cualquier referencia y sale el versículo. Son 7 capítulos de 4 libros, en la Reina-Valera 1909 (la Antigua).</p><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas referencias trae la cartilla aquí?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>7</b></div></div>",
    "preg": {
     "cap": "cr28",
     "t": "mc",
@@ -25905,7 +25921,7 @@ const BANCO = [
  {
   "cap": "cr06",
   "t": "fill",
-  "ins": "Creencia 6, quinta frase de la declaración — Completa:",
+  "ins": "Creencia 6, cuarta frase de la declaración — Completa:",
   "p": [
    {
     "x": "Hizo al primer hombre y la "
@@ -27516,7 +27532,7 @@ const BANCO = [
  {
   "cap": "cr18",
   "t": "fill",
-  "ins": "Creencia 18, cuarta frase de la declaración — Completa:",
+  "ins": "Creencia 18, tercera frase de la declaración — Completa:",
   "p": [
    {
     "x": "Como mensajera del Señor, sus escritos son una "
@@ -39017,6 +39033,7 @@ function verCap(id){
   d.classList.remove('l28-tapado');
   limpiaRetiradasDe(d);
   hidrataVoz(d);
+  numeraDecl(d);
   divideVista(d,id);
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
@@ -39902,7 +39919,7 @@ const EGW_PYR='https://m.egwwritings.org/es/book/217/toc';
 function textoLimpio(el){
   try{
     const c=el.cloneNode(true);
-    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,script,style').forEach(x=>x.remove());
+    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,script,style').forEach(x=>x.remove());
     c.querySelectorAll('br').forEach(b=>b.replaceWith(' '));
     c.querySelectorAll('td,th,li,p,div').forEach(x=>x.append(' '));
     /* v133: la referencia «(PR 379.1)» sirve para leer, no para oir: la voz
@@ -40040,6 +40057,24 @@ const grupoVoz=(claseVoz,title,aria)=>
   ' onclick="leeCerca(this)">'+IC('voz')+'<span>Escuchar</span></button></span>';
 
 const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');
+/* v152: la declaración de cada creencia numera sus frases, como los
+   versículos. La pregunta dice «segunda frase de la declaración»; con el
+   número a la vista se encuentra de un vistazo. Se parte igual que en el
+   generador (tools/creencias/gen_creencias.py): después de «.» o «»». El
+   texto no cambia; solo se envuelve cada frase. */
+function numeraDecl(d){
+  try{
+    (d&&d.querySelectorAll?[...d.querySelectorAll('blockquote.decl:not(.frase-libro)')]:[]).forEach(bq=>{
+      const t=bq.firstChild;
+      if(!t||t.nodeType!==3)return;
+      const frs=t.textContent.trim().split(/(?<=\.)»?\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])|(?<=\.»)\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])/).filter(Boolean);
+      if(frs.length<2)return;
+      const h=frs.map((f,i)=>'<span class="dfr"><sup class="fn" aria-hidden="true">'+(i+1)+'</sup>'+esc(f)+'</span>').join(' ');
+      const w=document.createElement('div');w.className='decl-txt';w.innerHTML=h;
+      bq.replaceChild(w,t);
+    });
+  }catch(e){}
+}
 /* Las marcas de voz que deja el contenido (vozPar en contenido.js) se vuelven
    el botón de siempre. Sin voz en el aparato se quitan. */
 function hidrataVoz(d){

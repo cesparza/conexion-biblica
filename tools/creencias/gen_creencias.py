@@ -109,11 +109,19 @@ def pestanas(num):
     # de 44px para el dedo, que es lo que hacia falta en el celular.
     tramos = refs.parsea(d['textos'])
     partes = [x.strip() for x in d['textos'].rstrip('.').split(';') if x.strip()]
+    # La cartilla escribe «Génesis 1; 2; Salmos 19:1-6; 33:6, 9; 104»: el libro
+    # se sobreentiende. En una ficha suelta, «2» o «104» no dice nada; la ficha
+    # lleva el libro que viene arrastrando. El conteo sigue sobre `partes`.
+    fichas, libro = [], ''
+    for x in partes:
+        m = re.match(r'^((?:[123] )?[A-Za-zÁÉÍÓÚÑáéíóúñ]+(?: [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*) (\d.*)$', x)
+        if m: libro = m.group(1); fichas.append(x)
+        else: fichas.append((libro + ' ' + x) if libro and re.match(r'^\d', x) else x)
     h = ('<div class="bloque-t">Los textos que trae la cartilla, en su orden</div>'
          '<div class="refs">%s</div>'
          '<p class="nota">Toca cualquier referencia y sale el versículo. '
          'Son %d capítulos de %d libros, en la Reina-Valera 1909 (la Antigua).</p>'
-         % (''.join('<span class="ref">%s</span>' % x for x in partes),
+         % (''.join('<span class="ref">%s</span>' % x for x in fichas),
             len({(a, c) for a, c, _ in tramos}), len({a for a, _, _ in tramos})))
     # La pregunta por el PRIMER texto ya no se revela: se responde. Era la
     # misma pregunta del banco, ofrecida de dos maneras en la misma pantalla.
@@ -179,6 +187,14 @@ def primera_frase(txt):
     m = re.match(r'^(.{40,190}?[.»])\s', txt + ' ')
     return m.group(1) if m else txt[:170]
 
+def partir_frases(txt):
+    """Frases de una declaracion. Termina frase un punto (con o sin «»»
+    detras) seguido de espacio y mayuscula. Un «»» solo NO termina frase: la
+    creencia 6 dice «los cielos y la tierra» y todo ser viviente…, y cortar
+    ahi contaba una frase de mas (decia «quinta» sobre la cuarta). La misma
+    regla usa fuente/app.js (numeraDecl) y la prueba de tests/uso.js."""
+    return [f.strip() for f in re.split(r'(?<=\.)»?\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])|(?<=\.»)\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])', txt) if f and f.strip()]
+
 ORDINAL = ['primera', 'segunda', 'tercera', 'cuarta', 'quinta', 'sexta', 'séptima', 'octava']
 
 def frases_para_completar(txt):
@@ -191,7 +207,7 @@ def frases_para_completar(txt):
     mide 230 caracteres, se saltaba por larga, y la pregunta decia «primera»
     sobre la segunda: quien iba a buscarla a la declaracion no la encontraba
     donde le decian (Camilo, 30-sep-2026)."""
-    todas = [f.strip() for f in re.split(r'(?<=[.»])\s+', txt) if f.strip()]
+    todas = partir_frases(txt)
     def et(f):
         i = todas.index(f) if f in todas else -1
         return ('%s frase de la declaración' % ORDINAL[i]) if 0 <= i < len(ORDINAL) else 'frase de la declaración'

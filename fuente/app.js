@@ -2101,6 +2101,7 @@ function verCap(id){
   d.classList.remove('l28-tapado');
   limpiaRetiradasDe(d);
   hidrataVoz(d);
+  numeraDecl(d);
   divideVista(d,id);
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
@@ -2986,7 +2987,7 @@ const EGW_PYR='https://m.egwwritings.org/es/book/217/toc';
 function textoLimpio(el){
   try{
     const c=el.cloneNode(true);
-    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,script,style').forEach(x=>x.remove());
+    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,script,style').forEach(x=>x.remove());
     c.querySelectorAll('br').forEach(b=>b.replaceWith(' '));
     c.querySelectorAll('td,th,li,p,div').forEach(x=>x.append(' '));
     /* v133: la referencia «(PR 379.1)» sirve para leer, no para oir: la voz
@@ -3124,6 +3125,24 @@ const grupoVoz=(claseVoz,title,aria)=>
   ' onclick="leeCerca(this)">'+IC('voz')+'<span>Escuchar</span></button></span>';
 
 const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');
+/* v152: la declaración de cada creencia numera sus frases, como los
+   versículos. La pregunta dice «segunda frase de la declaración»; con el
+   número a la vista se encuentra de un vistazo. Se parte igual que en el
+   generador (tools/creencias/gen_creencias.py): después de «.» o «»». El
+   texto no cambia; solo se envuelve cada frase. */
+function numeraDecl(d){
+  try{
+    (d&&d.querySelectorAll?[...d.querySelectorAll('blockquote.decl:not(.frase-libro)')]:[]).forEach(bq=>{
+      const t=bq.firstChild;
+      if(!t||t.nodeType!==3)return;
+      const frs=t.textContent.trim().split(/(?<=\.)»?\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])|(?<=\.»)\s+(?=[«A-ZÁÉÍÓÚÑ¿¡])/).filter(Boolean);
+      if(frs.length<2)return;
+      const h=frs.map((f,i)=>'<span class="dfr"><sup class="fn" aria-hidden="true">'+(i+1)+'</sup>'+esc(f)+'</span>').join(' ');
+      const w=document.createElement('div');w.className='decl-txt';w.innerHTML=h;
+      bq.replaceChild(w,t);
+    });
+  }catch(e){}
+}
 /* Las marcas de voz que deja el contenido (vozPar en contenido.js) se vuelven
    el botón de siempre. Sin voz en el aparato se quitan. */
 function hidrataVoz(d){
