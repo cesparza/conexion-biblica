@@ -2472,3 +2472,5 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   .hoja-vers .hoja-pie{padding:.75rem 1.1rem 1rem}
 }
 @media (min-width:900px) and (prefers-reduced-motion:reduce){.hoja-vers .hoja-caja{transition:none}}
+/* v155: el versículo al que lleva una cita del estudio, resaltado un momento. */
+.biblia p.salto{background:#fdecc8;box-shadow:0 0 0 4px #fdecc8;border-radius:8px;outline:0;transition:background .6s,box-shadow .6s}

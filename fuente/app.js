@@ -1689,7 +1689,38 @@ let hojaCid=null, hojaDe=0, hojaHasta=0;
 let hojaTipo=null;
 
 function verVers(btn,cid,de,hasta){
+  if(saltaAlTexto(btn,cid,de,hasta))return;
   abreHoja(cid,de,hasta);
+}
+
+/* v155: en escritorio, con el capítulo de Daniel en dos columnas, el
+   versículo que cita el estudio YA está en pantalla, en la columna del texto.
+   Abrir el panel repetía lo mismo encima. Si la cita es de ese capítulo y la
+   columna se ve, se va al versículo en la columna, se resalta un momento y no
+   se abre nada. En cualquier otro caso (celular, otro capítulo, otro libro)
+   sigue el panel. */
+function saltaAlTexto(btn,cid,de,hasta){
+  try{
+    if(!btn||!btn.closest||!btn.closest('#detalle')||btn.closest('.vd-izq'))return false;
+    const vd=document.querySelector('#detalle .vd'), iz=document.querySelector('#detalle .vd-izq');
+    if(!vd||!iz||getComputedStyle(vd).display!=='flex'||!iz.getClientRects().length)return false;
+    const lect=iz.querySelector('details.lect[data-cid="'+cid+'"]');
+    if(!lect)return false;
+    const h=hasta&&hasta>de?hasta:de;
+    const ps=[...lect.querySelectorAll('.biblia p')].filter(p=>{
+      const n=+((p.querySelector('.vn')||{}).textContent||0);return n>=de&&n<=h;});
+    if(!ps.length)return false;
+    lect.open=true;
+    const quieto=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const top=ps[0].getBoundingClientRect().top-iz.getBoundingClientRect().top+iz.scrollTop-iz.clientHeight/3;
+    iz.scrollTo({top:Math.max(0,top),behavior:quieto?'auto':'smooth'});
+    lect.querySelectorAll('.biblia p.salto').forEach(p=>p.classList.remove('salto'));
+    ps.forEach(p=>p.classList.add('salto'));
+    ps[0].setAttribute('tabindex','-1');ps[0].focus({preventScroll:true});
+    clearTimeout(saltaAlTexto.t);
+    saltaAlTexto.t=setTimeout(()=>ps.forEach(p=>p.classList.remove('salto')),2600);
+    return true;
+  }catch(e){return false;}
 }
 
 /** Sube la hoja con el HTML que se le pase. `tipo` solo sirve para saber qué
@@ -1864,7 +1895,7 @@ function seccionLectura(cid){
      lleva ahi estaba escondido: en el computador no habia como escuchar el
      capitulo seguido. Es el mismo componente del modo lectura (htmlLecVoz), en
      modo 'texto', y va pegado arriba de la columna. */
-  return '<details class="lect"><summary>'+IC('libro')+' Leer el capítulo completo ('+
+  return '<details class="lect" data-cid="'+cid+'"><summary>'+IC('libro')+' Leer el capítulo completo ('+
     nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo'+(puedeHablar()?' lec-toca':'')+
     '" onclick="txtToca(event)">'+
     /* v146: «Pantalla completa» va DENTRO del reproductor, como en Apple

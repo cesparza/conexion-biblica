@@ -2085,5 +2085,9 @@ ok(/verRevision\(/.test(APP.slice(APP.indexOf('function hisListaPersonas'))),
   ok(/prefers-reduced-motion: reduce/.test(f),'La celebración respeta «reducir movimiento»');
   ok(/if\(pct>=75\)festeja\(/.test(APP),'Aprobar el examen (75 % o más) se celebra');
 }
+/* v155: con Daniel en dos columnas, la cita del estudio va al versículo en la
+   columna del texto en vez de repetirlo en el panel. */
+ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+cid\+'"/.test(APP),
+  'verVers intenta primero ir al versículo que ya está en pantalla');
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);
