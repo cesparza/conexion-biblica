@@ -3115,6 +3115,7 @@ function muestraTj(){
 
 const JUEGOS = [
   { id:'tarjetas', et:'🃏 Tarjetas',   ayuda:'Lee el frente y comprueba.' },
+  { id:'hoy',      et:'🎯 Práctica de hoy', ayuda:'Un poco de todo: primero reconocer, después recordar. Lo que fallaste en un examen sale primero.' },
   { id:'quiz',     et:'⚡ Quiz',        ayuda:'Una pregunta a la vez, y te dice al instante si acertaste.' },
   { id:'vf',       et:'✅ ¿V o F?',     ayuda:'Decide si la frase es verdadera o falsa.' },
   { id:'parear',   et:'🔗 Emparejar',  ayuda:'Toca a la izquierda y después su pareja a la derecha.' },
@@ -3193,7 +3194,7 @@ function juegosDisponibles(){
     if(j.id==='clasif')return gruposDe().length>1;
     if(j.id==='banco')return fillsDe().length>0;
     if(j.id==='error')return fillsDe().filter(q=>q.p.filter(x=>x.b).length>=2).length>0;
-    if(j.id==='quiz')return mcsDe().length>=4;
+    if(j.id==='quiz'||j.id==='hoy')return mcsDe().length>=4;
     if(j.id==='vf')return tfsDe().length>=4;
     if(j.id==='cita')return citasDe().length>=4;
     return capsVista().length>=4;   // parear y ordenar
@@ -3230,6 +3231,63 @@ function ponJuego(id){
    medio, que es el tiempo que alguien de verdad le dedica en el bus. */
 const PASOS_RONDA=6;
 
+/* Un paso de «Caza el error» y uno de «¿De dónde es?». Salieron de
+   nuevaRonda() a funciones propias porque la práctica de hoy los mezcla: si
+   se copiaran, serían dos versiones de la misma regla. */
+const fillsError=()=>fillsDe().filter(q=>q.p.filter(x=>x.b).length>=2);
+function pasoError(q){
+  const huecos=q.p.map((x,i)=>({i:i,b:x.b})).filter(x=>x.b);
+  const cual=huecos[Math.floor(Math.random()*huecos.length)];
+  const otras=mezcla(fillsDe().flatMap(f=>f.p).filter(x=>x.b&&x.b!==cual.b).map(x=>x.b));
+  return {q:q,malo:cual.i,puesto:otras[0]||cual.b,correcta:cual.b};
+}
+function pasoCita(q){
+  const otras=mezcla(citasDe().filter(x=>refDe(x)!==refDe(q)).map(refDe))
+    .filter((v,i,a)=>a.indexOf(v)===i).slice(0,3);
+  return {texto:fraseDe(q),ops:mezcla([refDe(q)].concat(otras)),bien:refDe(q)};
+}
+
+/* ───────── LA PRÁCTICA DE HOY (v139, como «Aprender» de Quizlet) ─────────
+   MECANISMO
+   Nueve modos en una tira le dejan a una niña de 7 años una decisión que no
+   sabe tomar. Quizlet y Duolingo la toman por ella: arman la sesión. Aquí la
+   ronda mezcla los modos en un orden que va de RECONOCER a RECORDAR: primero
+   verdadero o falso, luego selección múltiple, después cazar la palabra
+   cambiada y decir de dónde es un texto. Y lo que falló en un examen sale
+   primero, porque eso es lo que Quizlet repite hasta dominarlo. Mezclar tipos
+   y capítulos en una misma ronda es además práctica intercalada, que en un
+   ensayo con 787 alumnos rindió más que practicar por bloques. */
+const RONDA_HOY={vf:2,quiz:3,error:2,cita:1};
+function rondaDeHoy(){
+  const fall=new Set(falladasDe().map(claveQ));
+  const primero=l=>mezcla(l.filter(q=>fall.has(claveQ(q)))).concat(mezcla(l.filter(q=>!fall.has(claveQ(q)))));
+  const qz=primero(mcsDe());
+  /* Entre 4 y 6 años solo reconocer: cazar una palabra o decir de dónde es un
+     texto pide leer una frase entera, y a esa edad casi no se lee. */
+  const leer=!esMenor();
+  const pasos=[
+    ...primero(tfsDe()).slice(0,RONDA_HOY.vf).map(q=>({t:'vf',q:q})),
+    ...qz.slice(0,RONDA_HOY.quiz).map(q=>({t:'quiz',q:barajaOpciones({...q})})),
+    ...(leer?mezcla(fillsError().slice()).slice(0,RONDA_HOY.error):[]).map(pasoError)
+      .filter(x=>x.puesto!==x.correcta).map(p=>({t:'error',p:p})),
+    ...(leer?mezcla(citasDe().slice()).slice(0,RONDA_HOY.cita):[]).map(pasoCita)
+      .filter(p=>p.ops.length>=2).map(p=>({t:'cita',p:p})),
+  ];
+  /* Si la categoría no tiene de algún tipo (Menores no completa), el hueco lo
+     llena la selección múltiple, para que la ronda no se acorte. */
+  const meta=Object.values(RONDA_HOY).reduce((a,b)=>a+b,0);
+  const usadas=new Set(pasos.filter(x=>x.t==='quiz').map(x=>claveQ(x.q)));
+  const extra=qz.filter(q=>!usadas.has(claveQ(q))).slice(0,Math.max(0,meta-pasos.length))
+    .map(q=>({t:'quiz',q:barajaOpciones({...q})}));
+  const i=pasos.findIndex(x=>x.t==='error'||x.t==='cita');
+  if(i<0)pasos.push(...extra);else pasos.splice(i,0,...extra);
+  return {tipo:'hoy',pasos:pasos,i:0,elegida:null,total:pasos.length};
+}
+/* El tipo y el contenido del paso que toca, en cualquier ronda paso a paso. */
+const tipoPaso=()=>jgR&&jgR.tipo==='hoy'?((jgR.pasos[jgR.i]||{}).t):jgR&&jgR.tipo;
+const qPaso=()=>jgR.tipo==='hoy'?jgR.pasos[jgR.i].q:jgR.qs[jgR.i];
+const pPaso=()=>jgR.tipo==='hoy'?jgR.pasos[jgR.i].p:jgR.pasos[jgR.i];
+
 function nuevaRonda(){
   jgSel=null;jgN=0;jgBien=0;jgMal=0;
   const cs=mezcla(capsVista().slice());
@@ -3257,22 +3315,14 @@ function nuevaRonda(){
        cambiada es la unica que se puede tocar: no hay nada que cazar, y
        acertar no prueba nada. Medido en la matutina, donde varios versiculos
        son de una linea. */
-    const pasos=mezcla(fillsDe().filter(q=>q.p.filter(x=>x.b).length>=2).slice())
-      .slice(0,PASOS_RONDA).map(q=>{
-      const huecos=q.p.map((x,i)=>({i:i,b:x.b})).filter(x=>x.b);
-      const cual=huecos[Math.floor(Math.random()*huecos.length)];
-      const otras=mezcla(fillsDe().flatMap(f=>f.p).filter(x=>x.b&&x.b!==cual.b).map(x=>x.b));
-      return {q:q,malo:cual.i,puesto:otras[0]||cual.b,correcta:cual.b};
-    }).filter(x=>x.puesto!==x.correcta);
+    const pasos=mezcla(fillsError().slice()).slice(0,PASOS_RONDA).map(pasoError)
+      .filter(x=>x.puesto!==x.correcta);
     jgR={tipo:'error',pasos:pasos,i:0,elegida:null,total:pasos.length};
   } else if(jgModo==='cita'){
-    const base=mezcla(citasDe().slice()).slice(0,PASOS_RONDA);
-    const pasos=base.map(q=>{
-      const otras=mezcla(citasDe().filter(x=>refDe(x)!==refDe(q)).map(refDe))
-        .filter((v,i,a)=>a.indexOf(v)===i).slice(0,3);
-      return {texto:fraseDe(q),ops:mezcla([refDe(q)].concat(otras)),bien:refDe(q)};
-    }).filter(p=>p.ops.length>=2);
+    const pasos=mezcla(citasDe().slice()).slice(0,PASOS_RONDA).map(pasoCita).filter(p=>p.ops.length>=2);
     jgR={tipo:'cita',pasos:pasos,i:0,elegida:null,total:pasos.length};
+  } else if(jgModo==='hoy'){
+    jgR=rondaDeHoy();
   } else if(jgModo==='banco'){
     /* Varias frases por ronda, no una. Con una sola la ronda se acababa en
        tres toques y no alcanzaba a ser practica: era una pregunta suelta.
@@ -3302,7 +3352,7 @@ function ordenCap(c){
 function pintaJuego(){
   const z=document.getElementById('jg-zona');
   if(!z||!jgR)return;
-  const PASO_A_PASO=['quiz','vf','error','cita'];
+  const PASO_A_PASO=['quiz','vf','error','cita','hoy'];
   const hechos=jgR.tipo==='parear'?jgR.listos.length
     :jgR.tipo==='clasif'?jgR.i
     :jgR.tipo==='ordenar'?jgR.puestos.length
@@ -3319,11 +3369,15 @@ function pintaJuego(){
     z.innerHTML=h;return;
   }
 
-  if(jgR.tipo==='quiz'||jgR.tipo==='vf'){
-    const q=jgR.qs[jgR.i];
+  const T=tipoPaso();
+  /* En la ronda mezclada la ayuda de arriba es la del modo «hoy», que no dice
+     qué hacer en ESTE paso. Cada paso trae la suya, la misma de su modo. */
+  if(jgR.tipo==='hoy')h+='<div class="jg-que">'+esc((JUEGOS.find(j=>j.id===T)||{}).ayuda||'')+'</div>';
+  if(T==='quiz'||T==='vf'){
+    const q=qPaso();
     const resuelto=jgR.elegida!==null;
     h+='<div data-leer="preg"><div class="jg-preg">'+esc(q.q)+(puedeHablar()?' '+BTN_VOZ:'')+'</div>';
-    if(jgR.tipo==='quiz'){
+    if(T==='quiz'){
       h+='<div class="jg-gr col">'+q.o.map((o,i)=>{
         let c='jg-g';
         if(resuelto){ if(i===q.a)c+=' ok'; else if(i===jgR.elegida)c+=' ko'; }
@@ -3340,9 +3394,9 @@ function pintaJuego(){
       h+='<div class="jg-gr">'+bt(true,'✅ Verdadero')+bt(false,'❌ Falso')+'</div>';
     }
     h+='</div>';
-    if(resuelto)h+=avisoPaso(jgR.tipo==='quiz'?jgR.elegida===q.a:jgR.elegida===q.a, q.e||'');
-  } else if(jgR.tipo==='error'){
-    const p=jgR.pasos[jgR.i], resuelto=jgR.elegida!==null;
+    if(resuelto)h+=avisoPaso(jgR.elegida===q.a, q.e||'');
+  } else if(T==='error'){
+    const p=pPaso(), resuelto=jgR.elegida!==null;
     h+='<div class="jg-ins">'+esc(p.q.ins||'')+'</div><div class="jg-frase">'+
       p.q.p.map((x,i)=>{
         if(!x.b)return '<span>'+esc(x.x)+'</span>';
@@ -3354,8 +3408,8 @@ function pintaJuego(){
       }).join('')+'</div>';
     if(resuelto)h+=avisoPaso(jgR.elegida===p.malo,
       'La palabra cambiada era «'+p.puesto+'». Va «'+p.correcta+'».');
-  } else if(jgR.tipo==='cita'){
-    const p=jgR.pasos[jgR.i], resuelto=jgR.elegida!==null;
+  } else if(T==='cita'){
+    const p=pPaso(), resuelto=jgR.elegida!==null;
     h+='<div class="jg-frase">'+esc(p.texto)+'</div>'+
       '<div class="jg-gr col">'+p.ops.map((o,i)=>{
         let c='jg-g';
@@ -3418,10 +3472,10 @@ function jgPaso(v){
   if(!jgR||jgR.elegida!==null)return;
   jgR.elegida=v;
   let bien=false;
-  if(jgR.tipo==='quiz')      bien=(v===jgR.qs[jgR.i].a);
-  else if(jgR.tipo==='vf')   bien=(v===jgR.qs[jgR.i].a);
-  else if(jgR.tipo==='error')bien=(v===jgR.pasos[jgR.i].malo);
-  else if(jgR.tipo==='cita') bien=(jgR.pasos[jgR.i].ops[v]===jgR.pasos[jgR.i].bien);
+  const T=tipoPaso();
+  if(T==='quiz'||T==='vf')bien=(v===qPaso().a);
+  else if(T==='error')    bien=(v===pPaso().malo);
+  else if(T==='cita')     bien=(pPaso().ops[v]===pPaso().bien);
   if(bien)jgBien++;else jgMal++;
   pintaJuego();
 }
@@ -3439,7 +3493,7 @@ function jgSigue(){
    gesto de la persona, y fuera de eso sonaría sin que nadie lo pidiera. */
 const esMenor=()=>(CAT().edad||'')==='4 a 6 años';
 function leeSolaSiMenor(){
-  if(!esMenor()||!puedeHablar()||!jgR||!['quiz','vf'].includes(jgR.tipo))return;
+  if(!esMenor()||!puedeHablar()||!jgR||!['quiz','vf'].includes(tipoPaso()))return;
   const b=document.querySelector('#jg-zona [data-leer="preg"] .btn-voz');
   if(b)leeCerca(b);
 }

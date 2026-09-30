@@ -354,6 +354,15 @@ const MANUAL = [
     h:`<p>Si tocas «La sabía» sin haberla sabido, la app deja de mostrártela. Ahí
     no engañaste a la app: te quedaste sin repasar justo lo que no sabes, y eso
     se paga el día del examen. Nadie te está calificando en las tarjetas.</p>` },
+  { t:'🎯 La práctica de hoy',
+    h:`<p>Si no sabes cuál de los ejercicios escoger, toca <strong>Práctica de
+    hoy</strong>. Arma una ronda de 8 que mezcla varios: primero verdadero o
+    falso y selección múltiple, que son de reconocer, y después cazar la palabra
+    cambiada y decir de dónde es un texto, que piden recordar. Cada paso dice
+    arriba qué hay que hacer.</p>
+    <p>Las preguntas que <strong>fallaste en un examen salen primero</strong>.
+    En Menores (4 a 6 años) la ronda es solo de verdadero o falso y selección
+    múltiple, y la pregunta se lee sola.</p>` },
   ]},
 
 { id:'a-examen', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg>', t:'Examen: practicar',

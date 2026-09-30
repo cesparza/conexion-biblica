@@ -2257,3 +2257,6 @@ details.card summary::marker{content:''}
 /* v138: el gris por defecto del navegador (#757575) no llega a 4,5 sobre los
    fondos de color de las respuestas. */
 ::placeholder{color:var(--v-tinta2,#5B5F6B);opacity:1}
+
+/* v139: qué hacer en cada paso de la práctica de hoy. */
+.jg-que{font-size:.8rem;font-weight:700;color:var(--v-tinta2,#5B5F6B);margin:0 0 .45rem}

@@ -1588,6 +1588,33 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
 }
 
+/* ─── v139: la práctica de hoy (como «Aprender» de Quizlet) ───
+   Una ronda que mezcla modos de reconocer a recordar, con lo fallado primero,
+   y que se juega igual que las otras. */
+{
+  const Z=montar(RET+', claveQ, tfsDe, tipoPaso, qPaso, pPaso');
+  Z.ponCat('av');
+  ok(Z.juegosDisponibles().some(j=>j.id==='hoy'),'Practicar ofrece la práctica de hoy');
+  const f=Z.tfsDe()[5]; Z.S().fq[Z.claveQ(f)]={m:2};
+  Z.ponJuego('hoy'); const r=Z.ronda();
+  const tipos=r.pasos.map(x=>x.t), rango={vf:0,quiz:1,error:2,cita:3};
+  ok(r.tipo==='hoy'&&r.total===8,'La ronda de hoy trae 8 pasos ('+tipos.join(' ')+')');
+  ok(tipos.every((t,i)=>!i||rango[t]>=rango[tipos[i-1]]),'Va de reconocer a recordar: V o F, múltiple, cazar el error, de dónde es');
+  ok(new Set(tipos).size>=3,'Mezcla al menos tres tipos de ejercicio');
+  ok(r.pasos[0].t==='vf'&&Z.claveQ(r.pasos[0].q)===Z.claveQ(f),'Lo que falló en un examen sale primero');
+  for(let k=0;k<r.total;k++){
+    const T=Z.tipoPaso();
+    const v=T==='quiz'||T==='vf'?Z.qPaso().a:T==='error'?Z.pPaso().malo:Z.pPaso().ops.indexOf(Z.pPaso().bien);
+    Z.jgPaso(v); Z.jgSigue();
+  }
+  ok(Z.bien_()===8&&Z.mal_()===0,'Se juega completa y cuenta los aciertos ('+Z.bien_()+')');
+  ok(/jgR\.tipo==='hoy'\)h\+='<div class="jg-que">/.test(require('fs').readFileSync(require('path').join(__dirname,'..','fuente','app.js'),'utf8')),
+    'Cada paso de la ronda mezclada dice qué hacer');
+  const M=montar(RET); M.ponCat('me'); M.ponJuego('hoy');
+  ok(M.ronda().total===8&&M.ronda().pasos.every(x=>x.t==='vf'||x.t==='quiz'),
+    'Menores (4 a 6) tiene su ronda de 8, solo de reconocer ('+M.ronda().pasos.map(x=>x.t).join(' ')+')');
+}
+
 /* ─── v139: la racha tiene protector (como Duolingo) ───
    Se gana uno cada 7 días seguidos, se guardan hasta 2, y cubren días sin
    estudiar. Se simula el calendario día por día. */
