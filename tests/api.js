@@ -148,15 +148,6 @@ async function vivo() {
     const r = await fetch(base + ruta);
     ok(r.status === 404, 'No se sirve ' + ruta);
   }
-  /* v139: la segunda apertura sin cambios no baja el HTML otra vez. */
-  const h1 = await fetch(base + '/');
-  const et = h1.headers.get('etag');
-  const ver = await (await fetch(base + '/version.json')).json();
-  ok(et === '"' + ver.v + '"', 'El HTML publicado trae la huella de version.json como ETag (' + et + ')');
-  if (et) {
-    const h2 = await fetch(base + '/', { headers: { 'if-none-match': et } });
-    ok(h2.status === 304, 'Con ese ETag, el sitio responde 304 (' + h2.status + ')');
-  }
 }
 
 /* ───────── el contrato de la forma del id de capitulo ─────────
@@ -408,30 +399,42 @@ ok(/fundida\.nombre = p\.nombre/.test(API) && /fundida\.cat = p\.categoria/.test
 }
 
 
-/* ── v139: EL HTML CON ETAG, Y LOS ARCHIVOS DEL REPO FUERA ──────────
-   Pages no le pone ETag al HTML: cada apertura bajaba el index entero. El
-   middleware usa la huella de version.json (SHA-1 del HTML) como ETag y
-   responde 304 si el celular ya tiene esa versión. Se prueba el módulo de
-   verdad, con un contexto simulado. */
+/* ── v139: LOS ARCHIVOS DEL REPO FUERA, Y ABRIR SIN BAJAR LO QUE YA ESTÁ ──
+   Se prueba el middleware de verdad, y el service worker de verdad (el que
+   genera pwa.js) con una cache y una red simuladas. El SW pide version.json
+   (50 bytes); si la huella es la suya, sirve lo guardado sin bajar el HTML. */
 async function pruebaMiddleware() {
   const M = await import('file://' + path.join(RAIZ, 'functions/_middleware.js'));
-  const ctx = (inm, ruta = '/', ver = 'abcdef123456') => ({
-    request: new Request('https://x.dev' + ruta, { headers: inm ? { 'if-none-match': inm } : {} }),
-    next: async () => new Response('<!doctype html><p>x', { status: 200, headers: { 'content-type': 'text/html; charset=utf-8' } }),
-    env: { ASSETS: { fetch: async () => { if (!ver) throw new Error('sin'); return new Response(JSON.stringify({ v: ver })); } } },
-  });
-  let r = await M.onRequest(ctx());
-  ok(r.status === 200 && r.headers.get('etag') === '"abcdef123456"', 'El HTML sale con la huella como ETag');
-  r = await M.onRequest(ctx('"abcdef123456"'));
-  ok(r.status === 304 && !(await r.text()), 'Si el celular ya tiene esa versión: 304, sin cuerpo');
-  r = await M.onRequest(ctx('"000000000000"'));
-  ok(r.status === 200, 'Si la versión cambió: el HTML nuevo completo');
-  r = await M.onRequest(ctx(null, '/', ''));
-  ok(r.status === 200 && !r.headers.get('etag'), 'Sin version.json se sirve igual, sin ETag: nunca un 304 a ciegas');
+  const ctx = ruta => ({ request: new Request('https://x.dev' + ruta), next: async () => new Response('ok'), env: {} });
   for (const u of ['/README.md', '/CLAUDE.md', '/supabase-setup.sql']) {
-    r = await M.onRequest(ctx(null, u));
+    const r = await M.onRequest(ctx(u));
     ok(r.status === 404, 'El sitio no sirve ' + u);
   }
+  ok((await M.onRequest(ctx('/'))).status === 200, 'Y la app sigue abriendo');
+
+  const PWA = require(path.join(RAIZ, 'fuente', 'pwa.js'));
+  const correSW = async ({ ver, red }) => {
+    let manejador = null; const bajados = [];
+    const self = { addEventListener: (t, f) => { if (t === 'fetch') manejador = f; }, skipWaiting() {}, clients: { claim() {} } };
+    const caches = { match: async k => new Response('GUARDADO'), open: async () => ({ put: async () => {}, addAll: async () => {} }), keys: async () => [] };
+    const fetchF = async (u) => {
+      const s = String(u && u.url || u);
+      if (s.endsWith('/version.json')) { if (!red) throw new Error('sin red'); return new Response(JSON.stringify({ v: ver })); }
+      bajados.push(s); if (!red) throw new Error('sin red'); return new Response('NUEVO');
+    };
+    new Function('self', 'caches', 'fetch', 'location', PWA.sw('abcdef123456'))(self, caches, fetchF, { origin: 'https://x.dev' });
+    let resp = null;
+    const req = new Request('https://x.dev/', { mode: 'same-origin' });
+    Object.defineProperty(req, 'mode', { value: 'navigate' });
+    manejador({ request: req, respondWith: p => { resp = p; } });
+    return { texto: await (await resp).text(), bajados };
+  };
+  let r = await correSW({ ver: 'abcdef123456', red: true });
+  ok(r.texto === 'GUARDADO' && r.bajados.length === 0, 'Misma versión publicada: abre lo guardado y no baja el HTML');
+  r = await correSW({ ver: '000000000000', red: true });
+  ok(r.texto === 'NUEVO', 'Versión nueva publicada: baja el HTML nuevo');
+  r = await correSW({ ver: 'abcdef123456', red: false });
+  ok(r.texto === 'GUARDADO', 'Sin señal: abre lo guardado');
 }
 
 (async () => {

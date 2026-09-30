@@ -1,5 +1,6 @@
 /* Generado por fuente/build.js. No editar a mano: se sobrescribe. */
 const CACHE='cb-2ab5fb259f9d';
+const HUELLA='2ab5fb259f9d';
 const ACTIVOS=["/","/manifest.webmanifest","/icono-512.png","/icono-mask-512.png","/icono-180.png"];
 const RED_MS=4000;
 
@@ -35,6 +36,28 @@ function redPrimero(req){
   });
 }
 
+/* v139: ABRIR SIN BAJAR LO QUE YA ESTÁ.
+   Red primero bajaba el HTML completo (unos 519 KB) en cada apertura con
+   señal, aunque no hubiera cambiado: el HTML no trae ETag en pages.dev, así
+   que el navegador no puede preguntar «¿cambió?». Aquí se pregunta de otra
+   forma: version.json (unos 50 bytes) dice la huella publicada, y esta cache
+   se llama con la huella de SU versión. Si coinciden, lo guardado ES lo
+   publicado y se sirve sin bajar nada. Si no, red primero como siempre; y sin
+   señal o con red lenta, la cache, igual que antes. Nunca se sirve una
+   versión vieja sabiendo que hay una nueva: eso es lo que protegía red
+   primero el día del examen. */
+function htmlVigente(req){
+  return new Promise(resolve=>{
+    let listo=false;
+    const fin=r=>{if(!listo){listo=true;resolve(r);}};
+    const reloj=setTimeout(()=>fin(redPrimero(req)),RED_MS);
+    fetch('/version.json',{cache:'no-store'}).then(r=>r.json()).then(j=>{
+      if(j&&j.v===HUELLA)return caches.match('/').then(c=>{clearTimeout(reloj);fin(c||redPrimero(req));});
+      clearTimeout(reloj);fin(redPrimero(req));
+    }).catch(()=>{clearTimeout(reloj);fin(redPrimero(req));});
+  });
+}
+
 self.addEventListener('fetch',e=>{
   const req=e.request;
   if(req.method!=='GET')return;
@@ -47,5 +70,8 @@ self.addEventListener('fetch',e=>{
      algo nuevo, y servirlo de la cache haria que la respuesta fuera siempre
      «no hay nada nuevo». */
   if(url.pathname==='/version.json')return;
+  if(req.mode==='navigate'||url.pathname==='/'||url.pathname==='/index.html'){
+    e.respondWith(htmlVigente(req));return;
+  }
   e.respondWith(redPrimero(req));
 });
