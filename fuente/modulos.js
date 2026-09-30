@@ -411,7 +411,7 @@ const CONT_MODULOS = {
     sección. Por eso conviene practicar con exámenes de distintos tamaños en
     vez de acostumbrarse a uno solo.`) },
 
-  { t:'1️⃣ al 5️⃣ — Los de mayor peso', h:
+  { t:'Del 1 al 5 — Los de mayor peso', h:
     li([
       '<strong>Los números exactos.</strong> 3 años de instrucción · 10 días de prueba · 10 veces mejores · 2.º año de Nabucodonosor · 60 y 6 codos · 7 veces el horno · 4 varones · 7 tiempos · 12 meses · 1.000 convidados · 62 años Darío · 120 sátrapas · 30 días el decreto · 3 veces al día',
       '<strong>Nombres hebreos → babilónicos.</strong> Daniel→Beltsasar · Ananías→Sadrac · Misael→Mesac · Azarías→Abed-nego',
@@ -420,7 +420,7 @@ const CONT_MODULOS = {
       '<strong>MENE, MENE, TEKEL, UPARSIN</strong> (5:25) y el significado de cada palabra: contó · pesado y hallado falto · roto y dado a medos y persas',
     ]) },
 
-  { t:'6️⃣ al 🔟 — Los que deciden el desempate', h:
+  { t:'Del 6 al 10 — Los que deciden el desempate', h:
     li([
       '<strong>El cuarto del horno.</strong> Daniel 3:25 (RV1995): «semejante a un hijo de los dioses», así lo dijo el rey pagano. P&amp;R 41: era el Hijo de Dios mismo. Fíjate qué te preguntan',
       '<strong>Títulos de P&amp;R 39 al 44 en orden:</strong> En la corte de Babilonia · El sueño de Nabucodonosor · El horno de fuego · La verdadera grandeza · El vigía invisible · En el foso de los leones',

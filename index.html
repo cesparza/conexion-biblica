@@ -2397,6 +2397,40 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .fest-msg .ico-t{width:1.25em;height:1.25em;color:var(--naranja-txt)}
 @media (prefers-reduced-motion:reduce){.fest-msg{transition:opacity .2s;transform:translate(-50%,0)}}
 @media print{.fest-cv,.fest-msg{display:none}}
+
+/* ───────── v149: el reproductor del capítulo, como se propuso ─────────
+   Dos renglones y nada suelto: arriba play, título y velocidad; abajo la tira
+   de versículos a todo lo ancho que queda y «Pantalla completa» al final de
+   ella. El renglón de abajo es su propia caja (.lec-rp-bot) para que la tira
+   no dependa del ancho de la velocidad. */
+.txt-rp{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"pl tx vel" "bot bot bot";align-items:center;column-gap:.7rem;row-gap:.5rem}
+.txt-rp .lec-play{grid-area:pl}
+.txt-rp .lec-rp-tx{grid-area:tx}
+.txt-rp .lec-vel{grid-area:vel;order:0;justify-self:end}
+.lec-rp-bot{display:flex;align-items:center;gap:.6rem;min-width:0}
+.txt-rp .lec-rp-bot{grid-area:bot}
+.lec-rp .lec-rp-bot .lec-tira{flex:1 1 0;min-width:0;order:0;align-self:center}
+.lec-rp .lec-rp-bot .lect-full{flex:0 0 auto;order:0;margin:0}
+/* En la columna angosta el título baja de renglón en vez de cortarse. */
+.txt-rp .lec-rp-tx b{white-space:normal}
+/* En pantalla completa el reproductor sigue en flex: la caja de abajo ocupa su
+   renglón entero, como ocupaba la tira sola. */
+.lec-rp:not(.txt-rp) .lec-rp-bot{flex:1 0 100%;order:4}
+/* En el celular la columna del texto mide unos 290 px: con la velocidad arriba
+   el título se partía en tres renglones y la tira quedaba de 80 px. Ahí
+   «Pantalla completa» pasa a ícono en la esquina (como el de YouTube) y la
+   velocidad baja junto a la tira, que así conserva el ancho. */
+@media (max-width:560px){
+  .txt-rp{grid-template-columns:auto minmax(0,1fr) auto 44px;grid-template-areas:"pl tx tx fu" "ti ti vel vel"}
+  .txt-rp .lec-rp-bot{display:contents}
+  .txt-rp .lec-rp-bot .lec-tira{grid-area:ti}
+  .txt-rp .lec-vel{grid-area:vel}
+  .txt-rp .lec-rp-bot .lect-full{grid-area:fu;width:44px;height:44px;padding:0;justify-content:center;border-radius:12px}
+  .txt-rp .lect-full span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .txt-rp .lect-full .ico-t{width:1.35em;height:1.35em}
+  .txt-rp:not(:has(.lect-full)){grid-template-areas:"pl tx tx tx" "ti ti vel vel"}
+}
 </style>
 </head>
 <body>
@@ -2928,7 +2962,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   </details>
 </div>
 <script>
-const VERSION_APP = 'aad794b2ac7e';
+const VERSION_APP = '2f770f78e825';
 
 const CAPS = [
  {
@@ -3853,7 +3887,7 @@ const CONTENIDO = {
   },
   {
    "t": "👤 Personajes clave",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Persona</th><th>Quién es y referencia</th></tr></thead><tbody><tr><td class=\"key\">Joacim</td><td>Rey de Judá — la invasión ocurre en su tercer año (1:1)</td></tr><tr><td class=\"key\">Nabucodonosor</td><td>Rey de Babilonia que sitia Jerusalén (1:1)</td></tr><tr><td class=\"key\">Aspenaz</td><td>Jefe de los eunucos — recibió del rey la orden de traer a los jóvenes (1:3)</td></tr><tr><td class=\"key\">Melsar</td><td>Sirviente puesto <u>directamente</u> sobre Daniel y sus tres compañeros (1:11, 16)</td></tr><tr><td class=\"key\">Daniel → Beltsasar</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr><tr><td class=\"key\">Ananías → Sadrac</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr><tr><td class=\"key\">Misael → Mesac</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr><tr><td class=\"key\">Azarías → Abed-nego</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr></tbody></table></div><div class=\"warn-box\"><strong>⚠ Aspenaz no es Melsar.</strong> Aspenaz era el jefe de los eunucos, quien recibió\n    la orden del rey. Melsar era el sirviente que Aspenaz puso al cuidado de los cuatro jóvenes.\n    <strong>Fue Daniel quien habló con Melsar</strong> para proponer la prueba de los diez días (1:11).</div>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Persona</th><th>Quién es y referencia</th></tr></thead><tbody><tr><td class=\"key\">Joacim</td><td>Rey de Judá — la invasión ocurre en su tercer año (1:1)</td></tr><tr><td class=\"key\">Nabucodonosor</td><td>Rey de Babilonia que sitia Jerusalén (1:1)</td></tr><tr><td class=\"key\">Aspenaz</td><td>Jefe de los eunucos — recibió del rey la orden de traer a los jóvenes (1:3)</td></tr><tr><td class=\"key\">Melsar</td><td>Sirviente puesto <u>directamente</u> sobre Daniel y sus tres compañeros (1:11, 16)</td></tr><tr><td class=\"key\">Daniel → Beltsasar</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr><tr><td class=\"key\">Ananías → Sadrac</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr><tr><td class=\"key\">Misael → Mesac</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr><tr><td class=\"key\">Azarías → Abed-nego</td><td>Nombre hebreo → nombre babilónico asignado (1:6-7)</td></tr></tbody></table></div><div class=\"warn-box\"><strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-alerta\"/></svg> Aspenaz no es Melsar.</strong> Aspenaz era el jefe de los eunucos, quien recibió\n    la orden del rey. Melsar era el sirviente que Aspenaz puso al cuidado de los cuatro jóvenes.\n    <strong>Fue Daniel quien habló con Melsar</strong> para proponer la prueba de los diez días (1:11).</div>"
   },
   {
    "t": "🏷️ Por qué les cambiaron el nombre (1:7)",
@@ -3898,12 +3932,12 @@ const CONTENIDO = {
   {
    "t": "📖 Versículos clave (RV1995) · 1",
    "capa": "nucleo",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>1:8</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.»</p><p data-leer><span class=\"vc-cab\"><strong>1:12</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.»</p><p data-leer><span class=\"vc-cab\"><strong>1:15</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.»</p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón <strong>Escuchar</strong> lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>1:8</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Daniel propuso en su corazón no contaminarse con la porción de la comida del rey ni con el vino que él bebía; pidió, por tanto, al jefe de los eunucos que no se le obligara a contaminarse.»</p><p data-leer><span class=\"vc-cab\"><strong>1:12</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Te ruego que hagas la prueba con tus siervos durante diez días: que nos den legumbres para comer y agua para beber.»</p><p data-leer><span class=\"vc-cab\"><strong>1:15</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Y al cabo de los diez días pareció el rostro de ellos mejor y más robusto que el de los otros muchachos que comían de la porción de la comida del rey.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
    "capa": "nucleo",
-   "h": "<p data-leer><span class=\"vc-cab\"><strong>1:17</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.»</p><p data-leer><span class=\"vc-cab\"><strong>1:20</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.»</p><p data-leer><span class=\"vc-cab\"><strong>1:21</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Así continuó Daniel hasta el año primero del rey Ciro.»</p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>1:17</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«A estos cuatro muchachos, Dios les dio conocimiento e inteligencia en todas las letras y ciencias; y Daniel tuvo entendimiento en toda visión y sueños.»</p><p data-leer><span class=\"vc-cab\"><strong>1:20</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«En todo asunto de sabiduría e inteligencia que el rey los consultó, los halló diez veces mejores que todos los magos y astrólogos que había en todo su reino.»</p><p data-leer><span class=\"vc-cab\"><strong>1:21</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Así continuó Daniel hasta el año primero del rey Ciro.»</p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -4106,7 +4140,7 @@ const CONTENIDO = {
   {
    "t": "🎵 Los seis instrumentos — orden exacto",
    "capa": "nucleo",
-   "h": "<div class=\"warn-box\"><strong>Daniel 3:5 en la RV1995</strong> (la lista se repite en 3:7, 3:10 y 3:15):<br><br>\n    1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;\n    4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>\n    Y después: «y todo instrumento de música».<br><br>\n    <strong>❌ NO aparece:</strong> la TROMPETA</div><div class=\"highlight-box\"><strong>⚠ Ojo con el tercero.</strong> La RV1995 dice\n    <strong>CÍTARA</strong>. La RV1960, que es la que más se oye, dice\n    <strong>tamboril</strong> en ese lugar.<br>\n    Si la pregunta dice <em>según la RV1995</em>, la respuesta es <u>cítara</u>.</div>"
+   "h": "<div class=\"warn-box\"><strong>Daniel 3:5 en la RV1995</strong> (la lista se repite en 3:7, 3:10 y 3:15):<br><br>\n    1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;\n    4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>\n    Y después: «y todo instrumento de música».<br><br>\n    <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-x\"/></svg> NO aparece:</strong> la TROMPETA</div><div class=\"highlight-box\"><strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-alerta\"/></svg> Ojo con el tercero.</strong> La RV1995 dice\n    <strong>CÍTARA</strong>. La RV1960, que es la que más se oye, dice\n    <strong>tamboril</strong> en ese lugar.<br>\n    Si la pregunta dice <em>según la RV1995</em>, la respuesta es <u>cítara</u>.</div>"
   },
   {
    "t": "🔥 El horno de fuego",
@@ -4195,12 +4229,12 @@ const CONTENIDO = {
   {
    "t": "📖 Versículos clave (RV1995) · 1",
    "capa": "nucleo",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>3:1</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.»</p><p data-leer><span class=\"vc-cab\"><strong>3:17</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.»</p><p data-leer><span class=\"vc-cab\"><strong>3:18</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.»</p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón <strong>Escuchar</strong> lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>3:1</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«El rey Nabucodonosor hizo una estatua de oro, cuya altura era de sesenta codos y la anchura de seis codos; la levantó en el campo de Dura, en la provincia de Babilonia.»</p><p data-leer><span class=\"vc-cab\"><strong>3:17</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Nuestro Dios, a quien servimos, puede librarnos del horno de fuego ardiente; y de tus manos, rey, nos librará.»</p><p data-leer><span class=\"vc-cab\"><strong>3:18</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
    "capa": "nucleo",
-   "h": "<p data-leer><span class=\"vc-cab\"><strong>3:25</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.»</p><p data-leer><span class=\"vc-cab\"><strong>3:27</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.»</p><p data-leer><span class=\"vc-cab\"><strong>3:28</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...»</p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>3:25</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Sin embargo, yo veo cuatro hombres sueltos, que se pasean en medio del fuego sin sufrir ningún daño; y el aspecto del cuarto es semejante a un hijo de los dioses.»</p><p data-leer><span class=\"vc-cab\"><strong>3:27</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«...cómo el fuego no había tenido poder alguno sobre sus cuerpos y ni aun el cabello de sus cabezas se había quemado; sus ropas, intactas, ni siquiera olor de fuego tenían.»</p><p data-leer><span class=\"vc-cab\"><strong>3:28</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Bendito sea el Dios de Sadrac, Mesac y Abed-nego, que envió su ángel y libró a sus siervos que confiaron en él...»</p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -4415,12 +4449,12 @@ const CONTENIDO = {
   {
    "t": "📖 Versículos clave (RV1995) · 1",
    "capa": "nucleo",
-   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>6:4</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.»</p><p data-leer><span class=\"vc-cab\"><strong>6:10</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»</p><p data-leer><span class=\"vc-cab\"><strong>6:16</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«El Dios tuyo, a quien tú continuamente sirves, él te libre.»</p>"
+   "h": "<div class=\"highlight-box\"><strong>Estos son los que el examen pide completar.</strong> Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.<br>El botón <strong>Escuchar</strong> lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div><p data-leer><span class=\"vc-cab\"><strong>6:4</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Los gobernadores y sátrapas buscaron ocasión para acusar a Daniel en lo relacionado con el reino; pero no podían hallar motivo alguno o falta, porque él era fiel, y ningún error ni falta hallaron en él.»</p><p data-leer><span class=\"vc-cab\"><strong>6:10</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Cuando Daniel supo que el edicto había sido firmado, entró en su casa; abiertas las ventanas de su habitación que daban a Jerusalén, se arrodillaba tres veces al día, oraba y daba gracias delante de su Dios como solía hacerlo antes.»</p><p data-leer><span class=\"vc-cab\"><strong>6:16</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«El Dios tuyo, a quien tú continuamente sirves, él te libre.»</p>"
   },
   {
    "t": "📖 Versículos clave (RV1995) · 2",
    "capa": "nucleo",
-   "h": "<p data-leer><span class=\"vc-cab\"><strong>6:22</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.»</p><p data-leer><span class=\"vc-cab\"><strong>6:26</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.»</p><p data-leer><span class=\"vc-cab\"><strong>6:27</strong><span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></span>«Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.»</p>"
+   "h": "<p data-leer><span class=\"vc-cab\"><strong>6:22</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Mi Dios envió su ángel, el cual cerró la boca de los leones para que no me hicieran daño, porque ante él fui hallado inocente; y aun delante de ti, oh rey, yo no he hecho nada malo.»</p><p data-leer><span class=\"vc-cab\"><strong>6:26</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«...Porque él es el Dios viviente y permanece por todos los siglos, su reino no será jamás destruido y su dominio perdurará hasta el fin.»</p><p data-leer><span class=\"vc-cab\"><strong>6:27</strong><span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></span>«Él salva y libra, y hace señales y maravillas en el cielo y en la tierra; él ha librado a Daniel del poder de los leones.»</p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -5020,7 +5054,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
+   "h": "<p data-leer><strong>Daniel 8:14</strong><br>«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» <span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -5106,7 +5140,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende que desde la salida de la orden para restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
+   "h": "<p data-leer><strong>Daniel 9:25</strong><br>«Sabe, pues, y entiende que desde la salida de la orden para restaurar y edificar a Jerusalén hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas» <span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -5184,7 +5218,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 10:12</strong><br>«Daniel, no temas, porque desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron oídas tus palabras» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
+   "h": "<p data-leer><strong>Daniel 10:12</strong><br>«Daniel, no temas, porque desde el primer día que dispusiste tu corazón a entender y a humillarte en la presencia de tu Dios, fueron oídas tus palabras» <span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -5290,7 +5324,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 11:45</strong><br>«Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo; pero llegará a su fin, y no tendrá quien lo ayude» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
+   "h": "<p data-leer><strong>Daniel 11:45</strong><br>«Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo; pero llegará a su fin, y no tendrá quien lo ayude» <span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -5380,7 +5414,7 @@ const CONTENIDO = {
   },
   {
    "t": "📖 Versículo clave",
-   "h": "<p data-leer><strong>Daniel 12:3</strong><br>«Los entendidos resplandecerán como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad» <span class=\"grupo-voz\"><button type=\"button\" class=\"btn-reinicia\" title=\"Reiniciar\" aria-label=\"Reiniciar\" onclick=\"reiniciaVoz(this)\">↺</button><button type=\"button\" class=\"btn-voz\" aria-label=\"Escuchar el versículo\" onclick=\"leeCerca(this)\">🔊</button></span></p>"
+   "h": "<p data-leer><strong>Daniel 12:3</strong><br>«Los entendidos resplandecerán como el resplandor del firmamento; y los que enseñan la justicia a la multitud, como las estrellas, a perpetua eternidad» <span class=\"grupo-voz\" data-voz=\"Escuchar el versículo\"></span></p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -29973,11 +30007,11 @@ const CONT_MODULOS = {
    "h": "<div class=\"warn-box\">Estos diez temas son los que más aparecen en los concursos de Daniel.\n    Están ordenados por rendimiento: el primero da más puntos que el último.</div><div class=\"highlight-box\"><strong>Lo que sí sabemos del examen del campamento:</strong> tiene tres\n    secciones — selección múltiple, verdadero o falso, y completar el\n    versículo — y se califica sobre la <strong>RV1995</strong>.<br>\n    <strong>Lo que no sabemos:</strong> cuántas preguntas trae ni cuántas por\n    sección. Por eso conviene practicar con exámenes de distintos tamaños en\n    vez de acostumbrarse a uno solo.</div>"
   },
   {
-   "t": "1️⃣ al 5️⃣ — Los de mayor peso",
+   "t": "Del 1 al 5 — Los de mayor peso",
    "h": "<ul class=\"tight\"><li><strong>Los números exactos.</strong> 3 años de instrucción · 10 días de prueba · 10 veces mejores · 2.º año de Nabucodonosor · 60 y 6 codos · 7 veces el horno · 4 varones · 7 tiempos · 12 meses · 1.000 convidados · 62 años Darío · 120 sátrapas · 30 días el decreto · 3 veces al día</li><li><strong>Nombres hebreos → babilónicos.</strong> Daniel→Beltsasar · Ananías→Sadrac · Misael→Mesac · Azarías→Abed-nego</li><li><strong>Aspenaz no es Melsar.</strong> Aspenaz = jefe de los eunucos (1:3). Melsar = el sirviente puesto sobre los cuatro (1:11). Daniel habló con <u>Melsar</u></li><li><strong>Los 6 instrumentos en orden</strong> (3:5, RV1995): bocina, flauta, <u>cítara</u>, arpa, salterio, zampoña. <u>La trompeta no aparece</u>. Cuidado: la RV1960 dice «tamboril» en el tercer lugar</li><li><strong>MENE, MENE, TEKEL, UPARSIN</strong> (5:25) y el significado de cada palabra: contó · pesado y hallado falto · roto y dado a medos y persas</li></ul>"
   },
   {
-   "t": "6️⃣ al 🔟 — Los que deciden el desempate",
+   "t": "Del 6 al 10 — Los que deciden el desempate",
    "h": "<ul class=\"tight\"><li><strong>El cuarto del horno.</strong> Daniel 3:25 (RV1995): «semejante a un hijo de los dioses», así lo dijo el rey pagano. P&amp;R 41: era el Hijo de Dios mismo. Fíjate qué te preguntan</li><li><strong>Títulos de P&amp;R 39 al 44 en orden:</strong> En la corte de Babilonia · El sueño de Nabucodonosor · El horno de fuego · La verdadera grandeza · El vigía invisible · En el foso de los leones</li><li><strong>Los materiales de la estatua y sus imperios</strong> (2:32-45): oro, plata, bronce, hierro, hierro con barro, y la piedra</li><li><strong>El año de cada evento:</strong> 3.er año de Joacim (cap. 1) · 2.º año de Nabucodonosor (cap. 2) · año 1.º de Ciro (1:21)</li><li><strong>Los versículos de completar:</strong> 1:15 · 2:20 · 3:18 · 4:37 · 6:10 · 6:22 · 6:26-27</li></ul>"
   },
   {
@@ -32869,11 +32903,11 @@ const MANUAL = [
    },
    {
     "t": "La barra de arriba",
-    "h": "<p>Dice qué parte del capítulo has recorrido, no cuánto entendiste: es\n    dónde vas con el dedo. La <strong>✕</strong> sale; la tecla\n    <strong>Esc</strong> también cierra.</p>"
+    "h": "<p>Dice qué parte del capítulo has recorrido, no cuánto entendiste: es\n    dónde vas con el dedo. La <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-x\"/></svg></strong> sale; la tecla\n    <strong>Esc</strong> también cierra.</p>"
    },
    {
     "t": "Escuchar el capítulo",
-    "h": "<p>Debajo de la barra está el reproductor. Toca <strong>▶</strong> y la\n    app lee el capítulo entero, versículo por versículo. Dice en cuál va, y\n    ese versículo se marca en el texto.</p>\n    <p><strong>Toca cualquier versículo</strong> para escuchar desde ahí.\n    <strong>⏸</strong> pausa, y al volver a tocar sigue en el mismo versículo.</p>\n    <p>La velocidad se elige a la derecha: <strong>0,9</strong> (la de\n    memorizar), <strong>1×</strong> o <strong>1,25</strong>. La app la recuerda\n    en ese teléfono.</p>\n    <p>Debajo va una <strong>tira con una rayita por versículo</strong>: dice\n    dónde vas y, si tocas una, empieza desde ese versículo.</p>\n    <p>El mismo reproductor está también arriba del texto, dentro de\n    <strong>Leer el capítulo completo</strong>. En el computador, donde el\n    texto y el estudio van lado a lado, queda pegado arriba de la columna del\n    texto: se escucha sin salir de la vista doble.</p>"
+    "h": "<p>Debajo de la barra está el reproductor. Toca <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-play\"/></svg></strong> y la\n    app lee el capítulo entero, versículo por versículo. Dice en cuál va, y\n    ese versículo se marca en el texto.</p>\n    <p><strong>Toca cualquier versículo</strong> para escuchar desde ahí.\n    <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-pausa\"/></svg></strong> pausa, y al volver a tocar sigue en el mismo versículo.</p>\n    <p>La velocidad se elige a la derecha: <strong>0,9</strong> (la de\n    memorizar), <strong>1×</strong> o <strong>1,25</strong>. La app la recuerda\n    en ese teléfono.</p>\n    <p>Debajo va una <strong>tira con una rayita por versículo</strong>: dice\n    dónde vas y, si tocas una, empieza desde ese versículo.</p>\n    <p>El mismo reproductor está también arriba del texto, dentro de\n    <strong>Leer el capítulo completo</strong>. En el computador, donde el\n    texto y el estudio van lado a lado, queda pegado arriba de la columna del\n    texto: se escucha sin salir de la vista doble.</p>"
    },
    {
     "t": "Al final del capítulo",
@@ -32936,7 +32970,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Los números azules se tocan",
-    "h": "<p>En el estudio, cada vez que dice de dónde sale un dato aparece algo\n    como <strong>(2:41)</strong> en azul y subrayado. Eso <strong>se\n    toca</strong>, y el versículo <strong>sube desde abajo</strong> en una hoja\n    que cubre la mitad de la pantalla.</p>\n    <p>Lo que estabas leyendo <strong>no se mueve</strong> y sigue a la vista\n    arriba, así que puedes comparar el dato con el versículo. Se cierra\n    tocando afuera, con la <strong>✕</strong> o con la rayita de arriba.</p>"
+    "h": "<p>En el estudio, cada vez que dice de dónde sale un dato aparece algo\n    como <strong>(2:41)</strong> en azul y subrayado. Eso <strong>se\n    toca</strong>, y el versículo <strong>sube desde abajo</strong> en una hoja\n    que cubre la mitad de la pantalla.</p>\n    <p>Lo que estabas leyendo <strong>no se mueve</strong> y sigue a la vista\n    arriba, así que puedes comparar el dato con el versículo. Se cierra\n    tocando afuera, con la <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-x\"/></svg></strong> o con la rayita de arriba.</p>"
    },
    {
     "t": "Pasar al versículo de al lado",
@@ -32952,7 +32986,7 @@ const MANUAL = [
    },
    {
     "t": "Escuchar Profetas y Reyes",
-    "h": "<p>En los capítulos de <strong>Profetas y Reyes</strong> hay un\n    reproductor arriba: <strong>▶ Escuchar el estudio</strong>. Lee todas las\n    secciones en orden, con su título, y marca lo que va sonando. Se queda\n    pegado arriba mientras bajas, para pausar desde cualquier parte.</p>\n    <p>Después de tocar ▶ puedes <strong>tocar cualquier párrafo, punto o fila\n    de tabla</strong> para escuchar desde ahí. «Compruébalo» no se lee en voz\n    alta, para no decir las respuestas.</p>\n    <p>El libro completo no está en la app: su licencia no permite\n    publicarlo. <strong>Leer el capítulo completo</strong> abre el libro en\n    EGW Writings, el sitio oficial y gratuito.</p>"
+    "h": "<p>En los capítulos de <strong>Profetas y Reyes</strong> hay un\n    reproductor arriba: <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-play\"/></svg> Escuchar el estudio</strong>. Lee todas las\n    secciones en orden, con su título, y marca lo que va sonando. Se queda\n    pegado arriba mientras bajas, para pausar desde cualquier parte.</p>\n    <p>Después de tocar <svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-play\"/></svg> puedes <strong>tocar cualquier párrafo, punto o fila\n    de tabla</strong> para escuchar desde ahí. «Compruébalo» no se lee en voz\n    alta, para no decir las respuestas.</p>\n    <p>El libro completo no está en la app: su licencia no permite\n    publicarlo. <strong>Leer el capítulo completo</strong> abre el libro en\n    EGW Writings, el sitio oficial y gratuito.</p>"
    },
    {
     "t": "Qué versión es y en qué capítulos está",
@@ -32984,7 +33018,7 @@ const MANUAL = [
     "h": "<p>Si tocas «La sabía» sin haberla sabido, la app deja de mostrártela. Ahí\n    no engañaste a la app: te quedaste sin repasar justo lo que no sabes, y eso\n    se paga el día del examen. Nadie te está calificando en las tarjetas.</p>"
    },
    {
-    "t": "🎯 La práctica de hoy",
+    "t": "La práctica de hoy",
     "h": "<p>Si no sabes cuál de los ejercicios escoger, toca <strong>Práctica de\n    hoy</strong>. Arma una ronda de 8 que mezcla varios: primero verdadero o\n    falso y selección múltiple, que son de reconocer, y después cazar la palabra\n    cambiada y decir de dónde es un texto, que piden recordar. Cada paso dice\n    arriba qué hay que hacer.</p>\n    <p>Las preguntas que <strong>fallaste en un examen salen primero</strong>.\n    En Menores (4 a 6 años) la ronda es solo de verdadero o falso y selección\n    múltiple, y la pregunta se lee sola.</p>"
    }
   ]
@@ -33042,8 +33076,8 @@ const MANUAL = [
     "h": "<p>Dice en qué capítulo vas más flojo, según tus exámenes. Es la pantalla\n    que hay que mirar cuando no sabes qué repasar.</p>"
    },
    {
-    "t": "La racha y el protector 🛡️",
-    "h": "<p>La racha 🔥 cuenta los días seguidos en que estudiaste algo. Cada\n    <strong>7 días seguidos</strong> ganas un <strong>protector</strong> 🛡️, y\n    puedes guardar hasta dos. Si un día no estudias, un protector cuida la\n    racha: al volver sigue donde iba. Si faltas más días de los protectores que\n    tienes, la racha vuelve a empezar.</p>\n    <p>En Inicio, debajo de la racha, dice cuántos protectores tienes, y el día\n    que uno la cuidó te lo avisa.</p>"
+    "t": "La racha y el protector",
+    "h": "<p>La racha <svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-fuego\"/></svg> cuenta los días seguidos en que estudiaste algo. Cada\n    <strong>7 días seguidos</strong> ganas un <strong>protector</strong> <svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-escudo\"/></svg>, y\n    puedes guardar hasta dos. Si un día no estudias, un protector cuida la\n    racha: al volver sigue donde iba. Si faltas más días de los protectores que\n    tienes, la racha vuelve a empezar.</p>\n    <p>En Inicio, debajo de la racha, dice cuántos protectores tienes, y el día\n    que uno la cuidó te lo avisa.</p>"
    },
    {
     "t": "Insignias e historial",
@@ -33160,7 +33194,7 @@ const MANUAL = [
    },
    {
     "t": "Tú decides cuándo",
-    "h": "<p><strong>La app nunca se recarga sola.</strong> Si estás\n    <strong>a mitad de un examen</strong>, recargar borraría tus respuestas sin\n    entregarlas, así que si tocas Actualizar en ese momento te dice que\n    entregues primero.</p>\n    <p>Si tocas la <strong>✕</strong> el aviso se va, pero vuelve la próxima\n    vez que abras la app. No se descarta para siempre a propósito: el material\n    del campamento sí importa que esté al día.</p>"
+    "h": "<p><strong>La app nunca se recarga sola.</strong> Si estás\n    <strong>a mitad de un examen</strong>, recargar borraría tus respuestas sin\n    entregarlas, así que si tocas Actualizar en ese momento te dice que\n    entregues primero.</p>\n    <p>Si tocas la <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-x\"/></svg></strong> el aviso se va, pero vuelve la próxima\n    vez que abras la app. No se descarta para siempre a propósito: el material\n    del campamento sí importa que esté al día.</p>"
    },
    {
     "t": "Revisarlo tú mismo",
@@ -33356,7 +33390,7 @@ const MANUAL = [
    },
    {
     "t": "Qué preguntas costaron",
-    "h": "<p>Cuando al menos dos la hicieron, la tarjeta trae el botón\n    <strong>📊 Qué preguntas costaron</strong>. Muestra las preguntas que acertó\n    <strong>menos del 35%</strong> del grupo, de la más difícil a la menos, y\n    quiénes acertaron menos del 35% del examen: esas son las que\n    <strong>necesitan ayuda</strong>.</p>\n    <p>Abajo está <strong>Practicar estas con el grupo</strong>: abre una\n    evaluación nueva, para el mismo grupo, con solo esas preguntas (hasta 14).\n    Antes de abrirla te avisa que, si la original sigue abierta, se cierra.\n    Conviene usarlo cuando ya todas hicieron la original.</p>\n    <p>También sale en el historial, al abrir el detalle de una evaluación\n    cerrada.</p>"
+    "h": "<p>Cuando al menos dos la hicieron, la tarjeta trae el botón\n    <strong><svg class=\"ico-t\" aria-hidden=\"true\"><use href=\"#i-grafico\"/></svg> Qué preguntas costaron</strong>. Muestra las preguntas que acertó\n    <strong>menos del 35%</strong> del grupo, de la más difícil a la menos, y\n    quiénes acertaron menos del 35% del examen: esas son las que\n    <strong>necesitan ayuda</strong>.</p>\n    <p>Abajo está <strong>Practicar estas con el grupo</strong>: abre una\n    evaluación nueva, para el mismo grupo, con solo esas preguntas (hasta 14).\n    Antes de abrirla te avisa que, si la original sigue abierta, se cierra.\n    Conviene usarlo cuando ya todas hicieron la original.</p>\n    <p>También sale en el historial, al abrir el detalle de una evaluación\n    cerrada.</p>"
    },
    {
     "t": "Cómo se cierra",
@@ -38977,6 +39011,7 @@ function verCap(id){
     '<button class="btn txt" onclick="imprimeCapitulo(\''+id+'\')">'+IC('imprimir')+' Imprimir</button></div>';
   d.style.display='block';
   limpiaRetiradasDe(d);
+  hidrataVoz(d);
   divideVista(d,id);
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
@@ -39791,9 +39826,11 @@ function htmlLecVoz(total,modo,cid){
     '</div>'+
     /* La tira va en su propio renglon, a todo el ancho: metida junto al texto
        quedaba de 70 px en el celular y no se podia tocar un versiculo. */
-    '<div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="Ir a un versículo">'+tira+'</div>'+
-    (cid?'<button type="button" class="lect-full" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+' Pantalla completa</button>':'')+
-    '</div>';
+    /* v149: la tira y «Pantalla completa» van en su propia caja: en la grilla
+       compartían columna con la velocidad y la tira quedaba de 80 px. */
+    '<div class="lec-rp-bot"><div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="Ir a un versículo">'+tira+'</div>'+
+    (cid?'<button type="button" class="lect-full" aria-label="Pantalla completa" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+'<span>Pantalla completa</span></button>':'')+
+    '</div></div>';
 }
 
 /* ── ESCUCHAR EL ESTUDIO DE PROFETAS Y REYES (v129) ──────────────────────
@@ -39931,7 +39968,7 @@ function htmlEstVoz(c){
   if(!puedeHablar())return egw;
   const reposo='Todo el estudio, sin Compruébalo';
   return '<div class="lec-rp est-rp">'+
-    '<button type="button" class="lec-play" id="est-play" onclick="estVozAlterna()" aria-label="Escuchar">▶</button>'+
+    '<button type="button" class="lec-play" id="est-play" onclick="estVozAlterna()" aria-label="Escuchar">'+IC('play')+'</button>'+
     '<div class="lec-rp-tx"><b id="est-est">Escuchar el estudio</b><span id="est-n" data-reposo="'+reposo+'">'+reposo+'</span>'+
       (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
     '<div class="lec-vel" id="est-vel" role="group" aria-label="Velocidad">'+
@@ -39956,6 +39993,19 @@ const grupoVoz=(claseVoz,title,aria)=>
   ' onclick="leeCerca(this)">'+IC('voz')+'<span>Escuchar</span></button></span>';
 
 const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');
+/* Las marcas de voz que deja el contenido (vozPar en contenido.js) se vuelven
+   el botón de siempre. Sin voz en el aparato se quitan. */
+function hidrataVoz(d){
+  try{
+    const ms=d&&d.querySelectorAll?[...d.querySelectorAll('.grupo-voz[data-voz]')]:[];
+    const hay=puedeHablar();
+    ms.forEach(m=>{
+      if(!hay){m.remove();return;}
+      const a=m.getAttribute('data-voz')||'Escuchar';
+      m.outerHTML=grupoVoz('btn-voz','Escuchar',a.replace(/"/g,'&quot;'));
+    });
+  }catch(e){}
+}
 
 /* ───────── tarjetas ─────────
    REPETICIÓN ESPACIADA, EL MECANISMO

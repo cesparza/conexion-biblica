@@ -58,16 +58,12 @@ const hi = t => `<div class="highlight-box">${t}</div>`;
 const wa = t => `<div class="warn-box">${t}</div>`;
 const vs = t => `<div class="verse-box">${t}</div>`;
 const li = arr => `<ul class="tight">${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`;
-/* Mismo boton de audio que fuente/app.js arma en runtime (grupoVoz), pero
-   escrito aqui a mano porque este archivo se ejecuta en el build, sin DOM:
-   no hay puedeHablar() que consultar. reiniciaVoz() y leeCerca() ya saben
-   leer este marcado — un solo mecanismo compartido, dos lugares que lo
-   generan. */
-const vozPar = aria =>
-  '<span class="grupo-voz"><button type="button" class="btn-reinicia" title="Reiniciar"' +
-  ' aria-label="Reiniciar" onclick="reiniciaVoz(this)">↺</button>' +
-  '<button type="button" class="btn-voz" aria-label="' + aria + '"' +
-  ' onclick="leeCerca(this)">🔊</button></span>';
+/* El botón de audio NO se escribe aquí: se deja una marca corta con su
+   etiqueta y fuente/app.js la convierte en el botón con grupoVoz(), el mismo
+   de los demás bloques (hidrataVoz). Un solo lugar arma el botón, y sin voz en
+   el aparato no aparece. Escribirlo entero aquí repetía ~300 caracteres por
+   versículo y pasaba el límite de 2000 por sección. */
+const vozPar = aria => '<span class="grupo-voz" data-voz="' + aria + '"></span>';
 
 const CONTENIDO = {
 
@@ -101,7 +97,7 @@ d1: [
       ['Misael → Mesac','Nombre hebreo → nombre babilónico asignado (1:6-7)'],
       ['Azarías → Abed-nego','Nombre hebreo → nombre babilónico asignado (1:6-7)'],
     ]) +
-    wa(`<strong>⚠ Aspenaz no es Melsar.</strong> Aspenaz era el jefe de los eunucos, quien recibió
+    wa(`<strong><svg class="ico-t" aria-hidden="true"><use href="#i-alerta"/></svg> Aspenaz no es Melsar.</strong> Aspenaz era el jefe de los eunucos, quien recibió
     la orden del rey. Melsar era el sirviente que Aspenaz puso al cuidado de los cuatro jóvenes.
     <strong>Fue Daniel quien habló con Melsar</strong> para proponer la prueba de los diez días (1:11).`) },
 
@@ -473,8 +469,8 @@ d3: [
     1. BOCINA &nbsp;→&nbsp; 2. FLAUTA &nbsp;→&nbsp; 3. CÍTARA &nbsp;→&nbsp;
     4. ARPA &nbsp;→&nbsp; 5. SALTERIO &nbsp;→&nbsp; 6. ZAMPOÑA<br><br>
     Y después: «y todo instrumento de música».<br><br>
-    <strong>❌ NO aparece:</strong> la TROMPETA`) +
-    hi(`<strong>⚠ Ojo con el tercero.</strong> La RV1995 dice
+    <strong><svg class="ico-t" aria-hidden="true"><use href="#i-x"/></svg> NO aparece:</strong> la TROMPETA`) +
+    hi(`<strong><svg class="ico-t" aria-hidden="true"><use href="#i-alerta"/></svg> Ojo con el tercero.</strong> La RV1995 dice
     <strong>CÍTARA</strong>. La RV1960, que es la que más se oye, dice
     <strong>tamboril</strong> en ese lugar.<br>
     Si la pregunta dice <em>según la RV1995</em>, la respuesta es <u>cítara</u>.`) },
@@ -1804,7 +1800,7 @@ for (const cap of Object.keys(VERS_CLAVE)) {
       h: (i === 0
           ? '<div class="highlight-box"><strong>Estos son los que el examen pide completar.</strong> ' +
             'Palabra por palabra, en la Reina-Valera 1995. Si una palabra cambia, la respuesta no cuenta.' +
-            '<br>El botón 🔊 lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div>'
+            '<br>El botón <strong>Escuchar</strong> lo lee en voz alta: memorizar escuchando rinde distinto que leyendo.</div>'
           : '') + b.map(versHTML).join(''),
     });
   });

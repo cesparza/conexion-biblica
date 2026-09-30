@@ -2380,3 +2380,37 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .fest-msg .ico-t{width:1.25em;height:1.25em;color:var(--naranja-txt)}
 @media (prefers-reduced-motion:reduce){.fest-msg{transition:opacity .2s;transform:translate(-50%,0)}}
 @media print{.fest-cv,.fest-msg{display:none}}
+
+/* ───────── v149: el reproductor del capítulo, como se propuso ─────────
+   Dos renglones y nada suelto: arriba play, título y velocidad; abajo la tira
+   de versículos a todo lo ancho que queda y «Pantalla completa» al final de
+   ella. El renglón de abajo es su propia caja (.lec-rp-bot) para que la tira
+   no dependa del ancho de la velocidad. */
+.txt-rp{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"pl tx vel" "bot bot bot";align-items:center;column-gap:.7rem;row-gap:.5rem}
+.txt-rp .lec-play{grid-area:pl}
+.txt-rp .lec-rp-tx{grid-area:tx}
+.txt-rp .lec-vel{grid-area:vel;order:0;justify-self:end}
+.lec-rp-bot{display:flex;align-items:center;gap:.6rem;min-width:0}
+.txt-rp .lec-rp-bot{grid-area:bot}
+.lec-rp .lec-rp-bot .lec-tira{flex:1 1 0;min-width:0;order:0;align-self:center}
+.lec-rp .lec-rp-bot .lect-full{flex:0 0 auto;order:0;margin:0}
+/* En la columna angosta el título baja de renglón en vez de cortarse. */
+.txt-rp .lec-rp-tx b{white-space:normal}
+/* En pantalla completa el reproductor sigue en flex: la caja de abajo ocupa su
+   renglón entero, como ocupaba la tira sola. */
+.lec-rp:not(.txt-rp) .lec-rp-bot{flex:1 0 100%;order:4}
+/* En el celular la columna del texto mide unos 290 px: con la velocidad arriba
+   el título se partía en tres renglones y la tira quedaba de 80 px. Ahí
+   «Pantalla completa» pasa a ícono en la esquina (como el de YouTube) y la
+   velocidad baja junto a la tira, que así conserva el ancho. */
+@media (max-width:560px){
+  .txt-rp{grid-template-columns:auto minmax(0,1fr) auto 44px;grid-template-areas:"pl tx tx fu" "ti ti vel vel"}
+  .txt-rp .lec-rp-bot{display:contents}
+  .txt-rp .lec-rp-bot .lec-tira{grid-area:ti}
+  .txt-rp .lec-vel{grid-area:vel}
+  .txt-rp .lec-rp-bot .lect-full{grid-area:fu;width:44px;height:44px;padding:0;justify-content:center;border-radius:12px}
+  .txt-rp .lect-full span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .txt-rp .lect-full .ico-t{width:1.35em;height:1.35em}
+  .txt-rp:not(:has(.lect-full)){grid-template-areas:"pl tx tx tx" "ti ti vel vel"}
+}

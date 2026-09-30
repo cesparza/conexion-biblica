@@ -966,8 +966,12 @@ ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
   /* v146: «Pantalla completa» va DENTRO del reproductor del texto; en el del
      modo lectura no, porque ahí ya se está en pantalla completa. */
   const conCid=AV.htmlLecVoz(21,'texto','d1');
-  ok(/class="lect-full" onclick="abreLectura\('d1'\)"/.test(conCid)&&!/lect-full/.test(AV.htmlLecVoz(21)),
+  ok(/class="lect-full"[^>]*onclick="abreLectura\('d1'\)"/.test(conCid)&&!/lect-full/.test(AV.htmlLecVoz(21)),
     '«Pantalla completa» vive en el reproductor del texto y no en el del modo lectura');
+  /* v149: en el celular el botón queda como ícono; el nombre sigue para el
+     lector de pantalla, y la tira va en la misma caja que el botón. */
+  ok(/class="lect-full" aria-label="Pantalla completa"/.test(conCid)&&/class="lec-rp-bot"><div class="lec-tira"/.test(conCid),
+    'El botón tiene nombre aunque se vea como ícono, y comparte renglón con la tira');
 }
 /* v129: Profetas y Reyes se escucha por su estudio, y el libro se abre en el
    sitio oficial. El texto del libro no entra a la app (licencia). */
@@ -1650,6 +1654,25 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(Z.S().racha===16&&Z.S().protector===0,'Dos días sin estudiar gastan los dos protectores y la racha sigue');
   estudia(29);
   ok(Z.S().racha===16,'Estudiar dos veces el mismo día no suma dos');
+}
+
+/* ─── v149: ningún emoji como icono en lo que se PINTA ───
+   La prueba de v146 leía el código de app.js y cuerpo.html, y los 🔊 de
+   «Versículos clave» venían del contenido (contenido.js): pasaron. Esta abre
+   cada capítulo y repaso de las ocho categorías, y el manual, y revisa el HTML
+   ya armado, que es lo que ve la persona. */
+{
+  const Z=montar(`verCap, ponCat, capsDe, modsDe, CATS, MANUAL, el:id=>document.getElementById(id)`,{});
+  const E=/\p{Extended_Pictographic}\uFE0F?|[0-9]\uFE0F?\u20E3/gu;const halla=[];let vistos=0;
+  for(const c of Object.keys(Z.CATS)){Z.ponCat(c);
+    for(const x of [...Z.capsDe(),...Z.modsDe()]){Z.verCap(x.id);vistos++;
+      const h=Z.el('detalle').innerHTML.replace(/<[^>]+>/g,' ');
+      for(const m of h.matchAll(E))halla.push(c+'/'+x.id+' '+m[0]);}}
+  ok(vistos>100&&halla.length===0,'Ningún capítulo ni repaso pintado usa emoji ('+vistos+' revisados)'+
+    (halla.length?': '+[...new Set(halla)].slice(0,8).join(', '):''));
+  const mt=JSON.stringify(Z.MANUAL).replace(/<[^>]+>/g,' ');
+  const enManual=mt.match(E)||[];
+  ok(enManual.length===0,'El manual no usa emoji'+(enManual.length?': '+enManual.join(' '):''));
 }
 
 /* ─── v148: la celebración ───

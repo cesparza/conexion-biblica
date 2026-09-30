@@ -2094,6 +2094,7 @@ function verCap(id){
     '<button class="btn txt" onclick="imprimeCapitulo(\''+id+'\')">'+IC('imprimir')+' Imprimir</button></div>';
   d.style.display='block';
   limpiaRetiradasDe(d);
+  hidrataVoz(d);
   divideVista(d,id);
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
@@ -2908,9 +2909,11 @@ function htmlLecVoz(total,modo,cid){
     '</div>'+
     /* La tira va en su propio renglon, a todo el ancho: metida junto al texto
        quedaba de 70 px en el celular y no se podia tocar un versiculo. */
-    '<div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="Ir a un versículo">'+tira+'</div>'+
-    (cid?'<button type="button" class="lect-full" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+' Pantalla completa</button>':'')+
-    '</div>';
+    /* v149: la tira y «Pantalla completa» van en su propia caja: en la grilla
+       compartían columna con la velocidad y la tira quedaba de 80 px. */
+    '<div class="lec-rp-bot"><div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="Ir a un versículo">'+tira+'</div>'+
+    (cid?'<button type="button" class="lect-full" aria-label="Pantalla completa" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+'<span>Pantalla completa</span></button>':'')+
+    '</div></div>';
 }
 
 /* ── ESCUCHAR EL ESTUDIO DE PROFETAS Y REYES (v129) ──────────────────────
@@ -3048,7 +3051,7 @@ function htmlEstVoz(c){
   if(!puedeHablar())return egw;
   const reposo='Todo el estudio, sin Compruébalo';
   return '<div class="lec-rp est-rp">'+
-    '<button type="button" class="lec-play" id="est-play" onclick="estVozAlterna()" aria-label="Escuchar">▶</button>'+
+    '<button type="button" class="lec-play" id="est-play" onclick="estVozAlterna()" aria-label="Escuchar">'+IC('play')+'</button>'+
     '<div class="lec-rp-tx"><b id="est-est">Escuchar el estudio</b><span id="est-n" data-reposo="'+reposo+'">'+reposo+'</span>'+
       (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
     '<div class="lec-vel" id="est-vel" role="group" aria-label="Velocidad">'+
@@ -3073,6 +3076,19 @@ const grupoVoz=(claseVoz,title,aria)=>
   ' onclick="leeCerca(this)">'+IC('voz')+'<span>Escuchar</span></button></span>';
 
 const BTN_VOZ=grupoVoz('btn-voz','Escuchar','Escuchar');
+/* Las marcas de voz que deja el contenido (vozPar en contenido.js) se vuelven
+   el botón de siempre. Sin voz en el aparato se quitan. */
+function hidrataVoz(d){
+  try{
+    const ms=d&&d.querySelectorAll?[...d.querySelectorAll('.grupo-voz[data-voz]')]:[];
+    const hay=puedeHablar();
+    ms.forEach(m=>{
+      if(!hay){m.remove();return;}
+      const a=m.getAttribute('data-voz')||'Escuchar';
+      m.outerHTML=grupoVoz('btn-voz','Escuchar',a.replace(/"/g,'&quot;'));
+    });
+  }catch(e){}
+}
 
 /* ───────── tarjetas ─────────
    REPETICIÓN ESPACIADA, EL MECANISMO

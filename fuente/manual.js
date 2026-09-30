@@ -200,14 +200,14 @@ const MANUAL = [
     solo el texto, más grande y en letra de libro.</p>` },
   { t:'La barra de arriba',
     h:`<p>Dice qué parte del capítulo has recorrido, no cuánto entendiste: es
-    dónde vas con el dedo. La <strong>✕</strong> sale; la tecla
+    dónde vas con el dedo. La <strong><svg class="ico-t" aria-hidden="true"><use href="#i-x"/></svg></strong> sale; la tecla
     <strong>Esc</strong> también cierra.</p>` },
   { t:'Escuchar el capítulo',
-    h:`<p>Debajo de la barra está el reproductor. Toca <strong>▶</strong> y la
+    h:`<p>Debajo de la barra está el reproductor. Toca <strong><svg class="ico-t" aria-hidden="true"><use href="#i-play"/></svg></strong> y la
     app lee el capítulo entero, versículo por versículo. Dice en cuál va, y
     ese versículo se marca en el texto.</p>
     <p><strong>Toca cualquier versículo</strong> para escuchar desde ahí.
-    <strong>⏸</strong> pausa, y al volver a tocar sigue en el mismo versículo.</p>
+    <strong><svg class="ico-t" aria-hidden="true"><use href="#i-pausa"/></svg></strong> pausa, y al volver a tocar sigue en el mismo versículo.</p>
     <p>La velocidad se elige a la derecha: <strong>0,9</strong> (la de
     memorizar), <strong>1×</strong> o <strong>1,25</strong>. La app la recuerda
     en ese teléfono.</p>
@@ -278,7 +278,7 @@ const MANUAL = [
     que cubre la mitad de la pantalla.</p>
     <p>Lo que estabas leyendo <strong>no se mueve</strong> y sigue a la vista
     arriba, así que puedes comparar el dato con el versículo. Se cierra
-    tocando afuera, con la <strong>✕</strong> o con la rayita de arriba.</p>` },
+    tocando afuera, con la <strong><svg class="ico-t" aria-hidden="true"><use href="#i-x"/></svg></strong> o con la rayita de arriba.</p>` },
 
   { t:'Pasar al versículo de al lado',
     h:`<p>Abajo de la hoja hay <strong>‹ Anterior</strong> y <strong>Siguiente
@@ -309,10 +309,10 @@ const MANUAL = [
     a repasar un dato no te estorba.</p>` },
   { t:'Escuchar Profetas y Reyes',
     h:`<p>En los capítulos de <strong>Profetas y Reyes</strong> hay un
-    reproductor arriba: <strong>▶ Escuchar el estudio</strong>. Lee todas las
+    reproductor arriba: <strong><svg class="ico-t" aria-hidden="true"><use href="#i-play"/></svg> Escuchar el estudio</strong>. Lee todas las
     secciones en orden, con su título, y marca lo que va sonando. Se queda
     pegado arriba mientras bajas, para pausar desde cualquier parte.</p>
-    <p>Después de tocar ▶ puedes <strong>tocar cualquier párrafo, punto o fila
+    <p>Después de tocar <svg class="ico-t" aria-hidden="true"><use href="#i-play"/></svg> puedes <strong>tocar cualquier párrafo, punto o fila
     de tabla</strong> para escuchar desde ahí. «Compruébalo» no se lee en voz
     alta, para no decir las respuestas.</p>
     <p>El libro completo no está en la app: su licencia no permite
@@ -354,7 +354,7 @@ const MANUAL = [
     h:`<p>Si tocas «La sabía» sin haberla sabido, la app deja de mostrártela. Ahí
     no engañaste a la app: te quedaste sin repasar justo lo que no sabes, y eso
     se paga el día del examen. Nadie te está calificando en las tarjetas.</p>` },
-  { t:'🎯 La práctica de hoy',
+  { t:'La práctica de hoy',
     h:`<p>Si no sabes cuál de los ejercicios escoger, toca <strong>Práctica de
     hoy</strong>. Arma una ronda de 8 que mezcla varios: primero verdadero o
     falso y selección múltiple, que son de reconocer, y después cazar la palabra
@@ -446,9 +446,9 @@ const MANUAL = [
   { t:'Puntos débiles',
     h:`<p>Dice en qué capítulo vas más flojo, según tus exámenes. Es la pantalla
     que hay que mirar cuando no sabes qué repasar.</p>` },
-  { t:'La racha y el protector 🛡️',
-    h:`<p>La racha 🔥 cuenta los días seguidos en que estudiaste algo. Cada
-    <strong>7 días seguidos</strong> ganas un <strong>protector</strong> 🛡️, y
+  { t:'La racha y el protector',
+    h:`<p>La racha <svg class="ico-t" aria-hidden="true"><use href="#i-fuego"/></svg> cuenta los días seguidos en que estudiaste algo. Cada
+    <strong>7 días seguidos</strong> ganas un <strong>protector</strong> <svg class="ico-t" aria-hidden="true"><use href="#i-escudo"/></svg>, y
     puedes guardar hasta dos. Si un día no estudias, un protector cuida la
     racha: al volver sigue donde iba. Si faltas más días de los protectores que
     tienes, la racha vuelve a empezar.</p>
@@ -584,7 +584,7 @@ const MANUAL = [
     <strong>a mitad de un examen</strong>, recargar borraría tus respuestas sin
     entregarlas, así que si tocas Actualizar en ese momento te dice que
     entregues primero.</p>
-    <p>Si tocas la <strong>✕</strong> el aviso se va, pero vuelve la próxima
+    <p>Si tocas la <strong><svg class="ico-t" aria-hidden="true"><use href="#i-x"/></svg></strong> el aviso se va, pero vuelve la próxima
     vez que abras la app. No se descarta para siempre a propósito: el material
     del campamento sí importa que esté al día.</p>` },
   { t:'Revisarlo tú mismo',
@@ -843,7 +843,7 @@ const MANUAL = [
     evaluación no le quita nada a nadie.</p>` },
   { t:'Qué preguntas costaron',
     h:`<p>Cuando al menos dos la hicieron, la tarjeta trae el botón
-    <strong>📊 Qué preguntas costaron</strong>. Muestra las preguntas que acertó
+    <strong><svg class="ico-t" aria-hidden="true"><use href="#i-grafico"/></svg> Qué preguntas costaron</strong>. Muestra las preguntas que acertó
     <strong>menos del 35%</strong> del grupo, de la más difícil a la menos, y
     quiénes acertaron menos del 35% del examen: esas son las que
     <strong>necesitan ayuda</strong>.</p>
