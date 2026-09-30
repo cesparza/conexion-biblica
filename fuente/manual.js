@@ -210,7 +210,13 @@ const MANUAL = [
     <strong>⏸</strong> pausa, y al volver a tocar sigue en el mismo versículo.</p>
     <p>La velocidad se elige a la derecha: <strong>0,9</strong> (la de
     memorizar), <strong>1×</strong> o <strong>1,25</strong>. La app la recuerda
-    en ese teléfono.</p>` },
+    en ese teléfono.</p>
+    <p>Debajo va una <strong>tira con una rayita por versículo</strong>: dice
+    dónde vas y, si tocas una, empieza desde ese versículo.</p>
+    <p>El mismo reproductor está también arriba del texto, dentro de
+    <strong>Leer el capítulo completo</strong>. En el computador, donde el
+    texto y el estudio van lado a lado, queda pegado arriba de la columna del
+    texto: se escucha sin salir de la vista doble.</p>` },
   { t:'Al final del capítulo',
     h:`<p>Abajo aparece <strong>Ya lo estudié</strong>: es el mismo botón que
     llena el círculo del progreso, para no tener que ir a buscarlo. Si ya lo

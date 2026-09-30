@@ -823,9 +823,18 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
   /* El resumen sobra: en dos columnas el texto ya esta abierto y titulado. */
   .vd-izq details.lect>summary{display:none}
   .vd-der .sec{margin-bottom:1.1rem}
-  /* El boton de lectura sin cromo no va en dos columnas: la vista dividida ya
-     resuelve lo que ese boton resuelve, y ocuparia el sitio del versiculo 1. */
-  .vd-izq .lect-full{display:none}
+  /* v131: el boton de lectura sin cromo VUELVE en dos columnas. Estaba
+     escondido porque la vista dividida «ya resolvia lo mismo», y desde v127 el
+     modo lectura trae el reproductor: esconderlo dejo el computador sin forma
+     de escuchar el capitulo. Ahora va compacto, al lado del reproductor, y
+     los dos quedan pegados arriba de la columna del texto. */
+  .vd-izq .lect-top{position:sticky;top:0;z-index:3;background:#fff;padding-bottom:.6rem;
+    display:flex;align-items:stretch;gap:.5rem}
+  .vd-izq .lect-top .txt-rp{flex:1;min-width:0;margin:0}
+  .vd-izq .lect-full{width:6.2rem;margin:0;flex:0 0 auto;padding:.4rem .5rem;font-size:.72rem;
+    line-height:1.25;min-height:0;border-radius:14px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:.2rem;text-align:center;white-space:normal}
+  .vd-izq .lect-full .lf-a{display:none}
 }
 
 /* ───────── MODO LECTURA ─────────
@@ -889,9 +898,11 @@ body.leyendo{overflow:hidden}
   padding:2.6rem 1.3rem 5rem}
 .lec-caja>*{max-width:62ch;margin-left:auto;margin-right:auto}
 .lec-caja h1{font-family:Georgia,'Times New Roman',serif;font-size:1.5rem;font-weight:600;
-  color:#2b2418;text-align:center;margin:0 0 .4rem;line-height:1.25;text-wrap:balance}
+  /* `margin:0 auto`, no `0 0`: el shorthand pisaba el auto de .lec-caja>* y en
+     pantalla ancha el titulo quedaba corrido a la izquierda del texto. */
+  color:#2b2418;text-align:center;margin:0 auto .4rem;line-height:1.25;text-wrap:balance}
 .lec-sub{text-align:center;font-size:.7rem;letter-spacing:1.4px;text-transform:uppercase;
-  color:#a3946f;margin:0 0 2.4rem;font-weight:600}
+  color:#a3946f;margin:0 auto 2.4rem;font-weight:600}
 /* Se reescribe .biblia adentro: el cuerpo de la app es mas chico y va en azul. */
 /* Alineado a la IZQUIERDA por defecto. Justificar reparte el sobrante entre los
    espacios, y a 38 caracteres por linea (un iPhone de 390 px) eso deja huecos
@@ -2191,3 +2202,29 @@ details.card summary::marker{content:''}
 @media (min-width:900px){.fe{max-width:1000px;padding:0 2rem;margin-top:1.4rem}}
 @media print{.fe{display:none!important}}
 .ex-fichas-t{font-size:.85rem;font-weight:700;color:var(--gris)}
+
+/* ═════════ v131: el reproductor en la columna del texto, y la tira ═════════
+   La franja del modo lectura, ahora tambien arriba del texto del capitulo. En
+   una columna (celular) va arriba del texto abierto y no se pega: arriba ya
+   esta la barra de la app. La tira tiene un segmento por versiculo; el boton
+   es alto para el dedo aunque la raya se vea delgada. */
+.txt-rp{border:1px solid #f0e2c4;border-radius:14px;margin:0 0 .8rem;padding:.5rem .7rem}
+.lec-rp{flex-wrap:wrap;row-gap:.2rem}
+.lec-rp-tx span{white-space:nowrap}
+.lec-tira{display:flex;gap:2px;flex:1 0 100%;min-width:0}
+.lec-tira button{flex:1 1 0;min-width:0;border:0;background:none;padding:6px 0;cursor:pointer}
+.lec-tira i{display:block;height:5px;border-radius:3px;background:#ead9bc}
+.lec-tira button.ya i{background:#e8a24a}
+.lec-tira button.ahora i{background:#c96a0e;height:7px;margin-top:-1px}
+.lec-tira button:focus-visible{outline:2px solid var(--cielo);outline-offset:1px}
+.lect-top .lect-full{margin-bottom:.9rem}
+#detalle .biblia p.suena{background:#fdecc8;border-radius:6px;box-shadow:0 0 0 4px #fdecc8}
+#detalle .biblia p.ya{color:#8b8676}
+@media print{.lect-top{display:none!important}}
+/* En la columna del texto la franja es angosta (unos 290 px en el celular):
+   con la velocidad al lado, «Escuchando · Versículo 4 de 21» quedaba tapado.
+   Primer renglón: botón y estado. Segundo: la tira y la velocidad. */
+.txt-rp .lec-rp-tx{flex:1 1 60%}
+.txt-rp .lec-tira{order:4;flex:1 1 6rem;align-self:center}
+.txt-rp .lec-vel{order:5}
+.lec-rp-tx b,.lec-rp-tx span{overflow:hidden;text-overflow:ellipsis}

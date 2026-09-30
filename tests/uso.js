@@ -946,6 +946,19 @@ ok((hv.match(/data-leer/g)||[]).length===1,
 ok(/id="lec-play"/.test(AV.htmlLecVoz(21))&&(AV.htmlLecVoz(21).match(/data-vel=/g)||[]).length===3,
   'El modo lectura trae su reproductor, con tres velocidades');
 ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
+/* v131: el mismo reproductor, arriba del texto del capitulo. En el computador
+   (dos columnas) era la unica forma que faltaba de escuchar el capitulo. */
+{
+  const h=AV.htmlLecVoz(21,'texto');
+  ok(/id="txt-play"/.test(h)&&/vozAlterna\('texto'\)/.test(h)&&!/id="lec-play"/.test(h),
+    'En la columna del texto va el mismo reproductor, con sus propios ids');
+  ok((h.match(/data-k=/g)||[]).length===21&&(AV.htmlLecVoz(21).match(/data-k=/g)||[]).length===21,
+    'Los dos traen la tira: un segmento por versiculo');
+  const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
+  const sec=src.slice(src.indexOf('function seccionLectura'),src.indexOf('function seccionLectura')+2600);
+  ok(/htmlLecVoz\(nums\.length,'texto'\)/.test(sec)&&/lect-full/.test(sec),
+    'Y el capitulo lo pinta arriba del texto, junto a «Leer sin distracciones»');
+}
 /* v129: Profetas y Reyes se escucha por su estudio, y el libro se abre en el
    sitio oficial. El texto del libro no entra a la app (licencia). */
 {

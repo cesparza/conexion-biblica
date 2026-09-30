@@ -1765,10 +1765,17 @@ function seccionLectura(cid){
       (puedeHablar()?grupoVoz('btn-voz','Escuchar estos versículos','Escuchar '+rot):'')+
       '</div><div class="biblia" data-leer>'+txt+'</div></div>');
   }
+  /* v131: EL REPRODUCTOR TAMBIEN VIVE AQUI, arriba del texto. Antes solo
+     estaba en el modo lectura, y en dos columnas (1200 px o mas) el boton que
+     lleva ahi estaba escondido: en el computador no habia como escuchar el
+     capitulo seguido. Es el mismo componente del modo lectura (htmlLecVoz), en
+     modo 'texto', y va pegado arriba de la columna. */
   return '<details class="lect"><summary>📖 Leer el capítulo completo ('+
-    nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo">'+
+    nums.length+' versículos, RV1995)</summary><div class="lect-cuerpo'+(puedeHablar()?' lec-toca':'')+
+    '" onclick="txtToca(event)">'+
+    '<div class="lect-top">'+htmlLecVoz(nums.length,'texto')+
     '<button type="button" class="btn gho lect-full" onclick="abreLectura(\''+cid+'\')">'+
-    '📖 Leer sin distracciones</button>'+
+    '📖 <span class="lf-a">Leer </span><span>sin distracciones</span></button></div>'+
     bloques.join('')+'</div></details>';
 }
 
@@ -2524,6 +2531,7 @@ function pintaVoz(llevar){
   }
   /* Pintar nunca debe tumbar a quien llama: paraVoz() corre en cada ir(). */
   try{pintaLecVoz(llevar);}catch(e){}
+  try{pintaTxtVoz(llevar);}catch(e){}
   try{pintaEstVoz(llevar);}catch(e){}
 }
 
@@ -2570,73 +2578,140 @@ function reiniciaVoz(btn){
    Tocar un versículo empieza desde ahí; el que suena se marca y la caja lo
    trae a la vista solo si quedó fuera, para no quitarle el sitio a quien va
    leyendo adelantado. */
-function lecVozCargar(){
-  const txt=document.querySelector('#lectura .lec-txt');
+/* DOS LUGARES, UN REPRODUCTOR (v131).
+   'lectura' es el modo lectura; 'texto' es la columna del texto dentro del
+   capitulo, que en el computador va al lado del estudio. Cambia de donde se
+   sacan los versiculos y que caja se desplaza; los botones, la velocidad, la
+   tira y el pintado son los mismos. */
+const RP={
+  lectura:{pref:'lec',txt:()=>document.querySelector('#lectura .lec-txt'),
+    caja:()=>document.getElementById('lec-caja')},
+  texto:{pref:'txt',txt:()=>document.querySelector('#detalle .lect-cuerpo'),
+    caja:()=>document.querySelector('#detalle .vd-izq')}
+};
+/* Los versiculos de un lugar, en orden. La tira tiene uno por cada uno. */
+const versosDe=modo=>{
+  try{const t=RP[modo].txt();return t?Array.from(t.querySelectorAll('.lec-txt p,.biblia p')||[]):[];}
+  catch(e){return [];}
+};
+function vozCargar(modo){
+  const txt=RP[modo]&&RP[modo].txt();
   if(!txt)return false;
   paraVoz();
-  VZ.partes=partesDe(txt);VZ.modo='lectura';VZ.rate=lecVel;
+  VZ.partes=partesDe({querySelectorAll:()=>versosDe(modo)});VZ.modo=modo;VZ.rate=lecVel;
   return VZ.partes.length>0;
 }
-function lecVozAlterna(){
-  if(VZ.modo==='lectura'&&VZ.partes.length){
+function vozAlterna(modo){
+  if(VZ.modo===modo&&VZ.partes.length){
     if(VZ.sonando)pausaVoz();else{pideSonido();desdeVoz(VZ.i);}
     return;
   }
-  if(lecVozCargar()){pideSonido();desdeVoz(0);}
+  if(vozCargar(modo)){pideSonido();desdeVoz(0);}
 }
-function lecVozDesde(p){
+function vozDesde(modo,p){
   if(!puedeHablar()||!p)return;
-  if(!(VZ.modo==='lectura'&&VZ.partes.length)&&!lecVozCargar())return;
+  if(!(VZ.modo===modo&&VZ.partes.length)&&!vozCargar(modo))return;
   const k=VZ.partes.findIndex(x=>x.el===p);
   if(k>=0){pideSonido();desdeVoz(k);}
+}
+/* Tocar un segmento de la tira: escuchar desde ese versiculo. */
+function vozTira(modo,k){vozDesde(modo,versosDe(modo)[k]);}
+const lecVozCargar=()=>vozCargar('lectura');
+const lecVozAlterna=()=>vozAlterna('lectura');
+const lecVozDesde=p=>vozDesde('lectura',p);
+/* En la columna del texto, tocar un versiculo empieza ahi, igual que en el
+   modo lectura. Los botones de cada bloque siguen haciendo lo suyo. */
+function txtToca(e){
+  if(!puedeHablar()||!e||!e.target||!e.target.closest)return;
+  if(e.target.closest('button,a,summary,.lect-top'))return;
+  try{if(window.getSelection&&String(window.getSelection()))return;}catch(x){}
+  const p=e.target.closest('.biblia p');
+  if(p)vozDesde('texto',p);
 }
 function lecVozVel(v){
   if(!VELS.includes(v))return;
   lecVel=v;
   try{localStorage.setItem('cb-vel',String(v));}catch(e){}
-  if(VZ.modo==='lectura'||VZ.modo==='estudio'){VZ.rate=v;if(VZ.sonando)desdeVoz(VZ.i);else pintaVoz();}
+  if(VZ.modo==='lectura'||VZ.modo==='texto'||VZ.modo==='estudio'){VZ.rate=v;if(VZ.sonando)desdeVoz(VZ.i);else pintaVoz();}
   else{pintaLecVoz();pintaEstVoz();}
 }
 /* El número del versículo de la parte actual, leído de su .vn. */
 function lecVersoDe(p){
   try{const n=p.el.querySelector('.vn');return n?n.textContent.trim():'';}catch(e){return '';}
 }
-function pintaLecVoz(llevar){
-  const caja=document.getElementById('lec-caja');
-  if(!caja)return;
-  const mio=VZ.modo==='lectura'&&VZ.partes.length>0;
+function pintaRpVoz(modo,llevar){
+  const cfg=RP[modo],pf=cfg.pref;
+  const play=document.getElementById(pf+'-play');
+  if(!play)return;
+  const mio=VZ.modo===modo&&VZ.partes.length>0;
   const i=VZ.i;
+  const versos=versosDe(modo);
+  /* Se compara el ELEMENTO, no el numero de parte. Un versiculo largo se parte
+     en dos trozos que comparten el mismo <p>: comparando k===i, el segundo
+     trozo le quitaba la marca al primero y el versiculo 4 de Daniel 1 sonaba
+     sin marcarse. Estaba asi desde v127 en el modo lectura. */
+  const cur=mio&&VZ.partes[i]?VZ.partes[i].el:null;
   if(mio)VZ.partes.forEach((p,k)=>{
-    try{p.el.classList.toggle('suena',VZ.sonando&&k===i);
-        p.el.classList.toggle('ya',VZ.sonando&&k<i&&VZ.partes[i].el!==p.el);}catch(e){}
+    try{p.el.classList.toggle('suena',VZ.sonando&&p.el===cur);
+        p.el.classList.toggle('ya',VZ.sonando&&k<i&&p.el!==cur);}catch(e){}
   });
-  const play=document.getElementById('lec-play'),est=document.getElementById('lec-est'),
-        n=document.getElementById('lec-n');
-  if(play){play.textContent=VZ.sonando&&mio?'⏸':'▶';
-    play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');}
-  let total=0;try{total=caja.querySelectorAll('.lec-txt p').length;}catch(e){}
+  const est=document.getElementById(pf+'-est'),n=document.getElementById(pf+'-n');
+  play.textContent=VZ.sonando&&mio?'⏸':'▶';
+  play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');
+  const total=versos.length;
+  const activo=mio&&(VZ.sonando||i>0);
   if(est)est.textContent=VZ.sonando&&mio?'Escuchando':(mio&&i>0?'En pausa':'Escuchar el capítulo');
-  if(n)n.textContent=mio&&(VZ.sonando||i>0)?'Versículo '+lecVersoDe(VZ.partes[i])+' de '+total:total+' versículos';
-  try{document.querySelectorAll('#lec-vel [data-vel]').forEach(b=>
+  if(n)n.textContent=activo?'Versículo '+lecVersoDe(VZ.partes[i])+' de '+total:total+' versículos';
+  /* La tira: los ya dichos, el que suena, y los que faltan. */
+  const vk=activo?versos.indexOf(cur):-1;
+  try{document.querySelectorAll('#'+pf+'-tira [data-k]').forEach(b=>{
+    const k=Number(b.dataset.k);
+    b.classList.toggle('ya',vk>=0&&k<vk);b.classList.toggle('ahora',k===vk);
+  });}catch(e){}
+  try{document.querySelectorAll('#'+pf+'-vel [data-vel]').forEach(b=>
     b.setAttribute('aria-pressed',String(Number(b.dataset.vel)===lecVel)));}catch(e){}
   if(llevar&&mio&&VZ.sonando){
     try{
-      const r=VZ.partes[i].el.getBoundingClientRect(),rc=caja.getBoundingClientRect();
-      if(r.top<rc.top+10||r.bottom>rc.bottom-20)caja.scrollTop+=r.top-rc.top-rc.height/3;
+      const el=VZ.partes[i].el,r=el.getBoundingClientRect();
+      const caja=cfg.caja();
+      /* Si la caja tiene su propio scroll (modo lectura, o la columna pegada
+         del computador), se mueve la caja; si no, la ventana. */
+      if(caja&&caja.scrollHeight>caja.clientHeight+4){
+        const rc=caja.getBoundingClientRect(),top=document.querySelector('#'+pf+'-play');
+        const tope=modo==='texto'&&top?top.getBoundingClientRect().bottom+30:rc.top+10;
+        if(r.top<tope||r.bottom>rc.bottom-20)caja.scrollTop+=r.top-tope-rc.height/4;
+      } else {
+        const franja=document.querySelector('#'+pf+'-play');
+        const tope=franja?Math.max(60,franja.getBoundingClientRect().bottom+8):60;
+        if(r.top<tope||r.bottom>window.innerHeight-100)window.scrollBy(0,r.top-tope-window.innerHeight/4);
+      }
     }catch(e){}
   }
 }
-/* La franja del reproductor. Si el aparato no tiene voz, no se pinta. */
-function htmlLecVoz(total){
+const pintaLecVoz=llevar=>pintaRpVoz('lectura',llevar);
+const pintaTxtVoz=llevar=>pintaRpVoz('texto',llevar);
+/* La franja del reproductor. Si el aparato no tiene voz, no se pinta.
+   `modo` dice en cual de los dos lugares va; los ids llevan su prefijo para
+   que los dos puedan existir a la vez (el modo lectura tapa el capitulo, pero
+   no lo borra). */
+function htmlLecVoz(total,modo){
   if(!puedeHablar())return '';
-  return '<div class="lec-rp">'+
-    '<button type="button" class="lec-play" id="lec-play" onclick="lecVozAlterna()" aria-label="Escuchar">▶</button>'+
-    '<div class="lec-rp-tx"><b id="lec-est">Escuchar el capítulo</b><span id="lec-n">'+total+' versículos</span>'+
+  modo=modo==='texto'?'texto':'lectura';
+  const pf=RP[modo].pref;
+  let tira='';
+  for(let k=0;k<total;k++)tira+='<button type="button" data-k="'+k+'" aria-label="Versículo '+(k+1)+'"'+
+    ' onclick="vozTira(\''+modo+'\','+k+')"><i></i></button>';
+  return '<div class="lec-rp'+(modo==='texto'?' txt-rp':'')+'">'+
+    '<button type="button" class="lec-play" id="'+pf+'-play" onclick="vozAlterna(\''+modo+'\')" aria-label="Escuchar">▶</button>'+
+    '<div class="lec-rp-tx"><b id="'+pf+'-est">Escuchar el capítulo</b><span id="'+pf+'-n">'+total+' versículos</span>'+
       (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
-    '<div class="lec-vel" id="lec-vel" role="group" aria-label="Velocidad">'+
+    '<div class="lec-vel" id="'+pf+'-vel" role="group" aria-label="Velocidad">'+
     VELS.map(v=>'<button type="button" data-vel="'+v+'" aria-pressed="'+(v===lecVel)+'"'+
       ' onclick="lecVozVel('+v+')">'+String(v).replace('.',',')+(v===1?'×':'')+'</button>').join('')+
-    '</div></div>';
+    '</div>'+
+    /* La tira va en su propio renglon, a todo el ancho: metida junto al texto
+       quedaba de 70 px en el celular y no se podia tocar un versiculo. */
+    '<div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="Ir a un versículo">'+tira+'</div></div>';
 }
 
 /* ── ESCUCHAR EL ESTUDIO DE PROFETAS Y REYES (v129) ──────────────────────
@@ -2736,7 +2811,10 @@ function pintaEstVoz(llevar){
   const play=document.getElementById('est-play');
   if(!play)return;
   const mio=VZ.modo==='estudio'&&VZ.partes.length>0, i=VZ.i;
-  if(mio)VZ.partes.forEach((p,k)=>{try{p.el.classList.toggle('suena',VZ.sonando&&k===i);}catch(e){}});
+  /* El elemento, no el numero de parte: un bloque partido en trozos se
+     desmarcaba solo (mismo defecto que en pintaRpVoz). */
+  const cur=mio&&VZ.partes[i]?VZ.partes[i].el:null;
+  if(mio)VZ.partes.forEach(p=>{try{p.el.classList.toggle('suena',VZ.sonando&&p.el===cur);}catch(e){}});
   play.textContent=VZ.sonando&&mio?'⏸':'▶';
   play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');
   const est=document.getElementById('est-est'),n=document.getElementById('est-n');

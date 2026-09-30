@@ -1660,6 +1660,25 @@ ok(/\.vd-izq\{position:sticky/.test(CSS_SIN),
   'La columna del texto se queda pegada mientras el estudio se desplaza');
 ok(/\.vd-izq\{[^}]*max-height:calc\(100vh/.test(CSS_SIN),
   'con max-height, o la columna crece y deja de estar pegada');
+/* v131, REGLA PARA QUE NO VUELVA A PASAR: ningun ancho de pantalla puede
+   esconder la forma de escuchar el capitulo. En v127 el reproductor quedo solo
+   en el modo lectura, y una regla de v43 escondia el boton que lleva ahi desde
+   1200 px: en el computador no habia audio del capitulo y ninguna prueba lo
+   vio. Se revisa el CSS sin los bloques de impresion: si una regla pone
+   display:none sobre el reproductor, su boton o «Leer sin distracciones», falla.
+   Es una revision del CSS, no un render: el render se mira a 390, 1000, 1280
+   y 1920 antes de publicar. */
+{
+  const sinPrint=CSS_SIN.replace(/@media print\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g,'');
+  const tapan=[...sinPrint.matchAll(/([^{}]*\.(?:lect-full|lect-top|txt-rp|lec-rp|lec-play|lec-tira))\s*\{[^}]*display:\s*none/g)].map(m=>m[1].trim());
+  ok(tapan.length===0,'Ningun ancho esconde el reproductor ni «Leer sin distracciones»'+
+    (tapan.length?': '+tapan.join(' | '):''));
+}
+/* v131: la marca del que suena se decide por ELEMENTO. Un versiculo largo se
+   parte en trozos que comparten el mismo <p>; con `k===i` el trozo siguiente
+   le quitaba la marca y el versiculo sonaba sin marcarse. */
+ok(!/classList\.toggle\('suena',VZ\.sonando&&k===i\)/.test(APP),
+  'Ningun reproductor marca el que suena por numero de parte');
 /* El unico sitio donde el JS mira el ancho es el `open` inicial del acordeon:
    sin la guarda quedaba abierto tambien a 390px, contra la decision de v43. */
 ok(/det\.open=!!\(window\.matchMedia&&window\.matchMedia\('\(min-width:1200px\)'\)\.matches\);/.test(js),
