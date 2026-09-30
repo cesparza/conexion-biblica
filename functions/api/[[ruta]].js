@@ -381,7 +381,15 @@ export async function onRequest(context) {
       out.acc = objContador(A.acc, B.acc);
       out.act = objContador(A.act, B.act);
       out.racha = may(A.racha, B.racha);
-      out.ultimo = (String(A.ultimo || '') > String(B.ultimo || '')) ? A.ultimo : (B.ultimo || A.ultimo || null);
+      /* v139: `ultimo` es un toDateString («Wed Sep 30 2026»). Compararlo como
+         texto ordena por el nombre del día: «Wed» le gana a «Thu» y se quedaba
+         la fecha VIEJA. Se compara como fecha. Y el protector viaja con ella:
+         lo sabe el aparato que estudió más tarde. */
+      const fA = Date.parse(A.ultimo || '') || 0, fB = Date.parse(B.ultimo || '') || 0;
+      const tarde = fA > fB ? A : B;
+      out.ultimo = tarde.ultimo || A.ultimo || B.ultimo || null;
+      out.protector = Number(tarde.protector) || 0;
+      out.protegio = tarde.protegio || '';
 
       /* `fq` guarda {m: veces que la falló}: gana el conteo mayor. */
       out.fq = {};

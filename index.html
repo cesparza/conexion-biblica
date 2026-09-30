@@ -2757,7 +2757,7 @@ details.card summary::marker{content:''}
   </details>
 </div>
 <script>
-const VERSION_APP = '46767a6da93c';
+const VERSION_APP = '501c17135d5d';
 
 const CAPS = [
  {
@@ -32867,6 +32867,10 @@ const MANUAL = [
     "h": "<p>Dice en qué capítulo vas más flojo, según tus exámenes. Es la pantalla\n    que hay que mirar cuando no sabes qué repasar.</p>"
    },
    {
+    "t": "La racha y el protector 🛡️",
+    "h": "<p>La racha 🔥 cuenta los días seguidos en que estudiaste algo. Cada\n    <strong>7 días seguidos</strong> ganas un <strong>protector</strong> 🛡️, y\n    puedes guardar hasta dos. Si un día no estudias, un protector cuida la\n    racha: al volver sigue donde iba. Si faltas más días de los protectores que\n    tienes, la racha vuelve a empezar.</p>\n    <p>En Inicio, debajo de la racha, dice cuántos protectores tienes, y el día\n    que uno la cuidó te lo avisa.</p>"
+   },
+   {
     "t": "Insignias e historial",
     "h": "<p>Las insignias son metas cumplidas. El historial muestra cada examen con\n    su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>\n    <p>Al lado de la categoría puede salir una palabra: <strong>· simulacro</strong>\n    si fue un simulacro, <strong>· evaluación</strong> si fue la evaluación del día\n    y <strong>· repaso</strong> si fue un repaso de tus errores. Sin palabra, fue un\n    examen normal.</p>"
    }
@@ -36811,7 +36815,10 @@ const CLAVE='conexion-biblica-v4';
 /* `qv` cuenta CUANTAS VECES le ha salido cada pregunta a esta ficha. Campo
    nuevo, no renombrado: una ficha vieja llega sin el y `normalizar` lo deja
    en cero, que es exactamente «nunca le ha salido nada». */
-const BASE={v:4,pid:'',nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
+/* Protectores de racha que se pueden guardar (ver sumaRacha). Va aquí arriba,
+   junto a BASE, porque normalizar() la usa al cargar: más abajo daría TDZ. */
+const PROTECTOR_MAX=2;
+const BASE={v:4,pid:'',nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,protector:0,protegio:'',insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -36863,6 +36870,8 @@ function normalizar(x){
         nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
   if(typeof x.ultimo==='string')s.ultimo=x.ultimo;
+  const pr=Number(x.protector);s.protector=Number.isFinite(pr)?Math.max(0,Math.min(PROTECTOR_MAX,Math.round(pr))):0;
+  if(typeof x.protegio==='string')s.protegio=x.protegio.slice(0,20);
   if(Array.isArray(x.insignias))s.insignias=x.insignias.filter(i=>typeof i==='string').slice(0,20);
   if(x.fq&&typeof x.fq==='object')
     for(const k of Object.keys(x.fq).slice(0,600)){
@@ -37980,7 +37989,9 @@ function pintaInicio(){
     '<div class="stat"><div class="v">'+listos+'<small style="font-size:.9rem">/'+cs.length+'</small></div><div class="l">Capítulos<br>estudiados</div></div>'+
     '<div class="stat"><div class="v">'+mejor+'<small style="font-size:.9rem">%</small></div><div class="l">Mejor<br>puntaje</div></div>'+
     '<div class="stat"><div class="v">'+mios.length+'</div><div class="l">Exámenes<br>hechos</div></div>'+
-    '<div class="stat"><div class="v">'+S.racha+'🔥</div><div class="l">Días de<br>racha</div></div>'+
+    '<div class="stat"><div class="v">'+S.racha+'🔥</div><div class="l">Días de<br>racha'+
+      (S.protegio===new Date().toDateString()?'<br><strong>🛡️ Un protector la cuidó</strong>'
+        :S.protector?'<br>🛡️ '+S.protector+(S.protector===1?' protector':' protectores'):'')+'</div></div>'+
     '<div class="stat" style="cursor:pointer" onclick="ir(\'examen\')" title="Preguntas que has fallado y aún no dominas">'+
     '<div class="v" style="color:'+(falladasDe().length?'var(--rojo)':'var(--verde)')+'">'+falladasDe().length+'</div>'+
     '<div class="l">Errores por<br>repasar</div></div>';
@@ -38976,12 +38987,25 @@ function listo(id){
   else ir('inicio');
 }
 
+/* ───────── LA RACHA Y SU PROTECTOR (v139, como el de Duolingo) ─────────
+   MECANISMO
+   La racha cuenta días seguidos con estudio. Un día sin estudiar la devolvía a
+   1, y para una niña de 7 años perder una racha de 12 días por un domingo de
+   paseo es razón para dejar la app. Duolingo resolvió eso con el protector:
+   cubre un día sin práctica. Aquí se GANA uno cada 7 días de racha, y se
+   guardan hasta 2 (el tope que Duolingo midió que funciona mejor). Si faltan
+   días y hay protectores para cubrirlos, se gastan y la racha sigue; los días
+   cubiertos no suman, solo no la rompen. */
 function sumaRacha(){
   const hoy=new Date().toDateString();
-  if(S.ultimo!==hoy){
-    const ayer=new Date(Date.now()-864e5).toDateString();
-    S.racha=S.ultimo===ayer?S.racha+1:1;S.ultimo=hoy;guardar();
-  }
+  if(S.ultimo===hoy)return;
+  const dias=S.ultimo?Math.round((new Date(hoy)-new Date(S.ultimo))/864e5):0;
+  const faltaron=dias-1;
+  if(dias===1)S.racha++;
+  else if(dias>1&&S.racha>0&&faltaron<=(S.protector||0)){S.protector-=faltaron;S.racha++;S.protegio=hoy;}
+  else S.racha=1;
+  if(S.racha%7===0)S.protector=Math.min(PROTECTOR_MAX,(S.protector||0)+1);
+  S.ultimo=hoy;guardar();
 }
 
 /* ───────── leer en voz alta ─────────

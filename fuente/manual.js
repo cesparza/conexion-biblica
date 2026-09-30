@@ -437,6 +437,14 @@ const MANUAL = [
   { t:'Puntos débiles',
     h:`<p>Dice en qué capítulo vas más flojo, según tus exámenes. Es la pantalla
     que hay que mirar cuando no sabes qué repasar.</p>` },
+  { t:'La racha y el protector 🛡️',
+    h:`<p>La racha 🔥 cuenta los días seguidos en que estudiaste algo. Cada
+    <strong>7 días seguidos</strong> ganas un <strong>protector</strong> 🛡️, y
+    puedes guardar hasta dos. Si un día no estudias, un protector cuida la
+    racha: al volver sigue donde iba. Si faltas más días de los protectores que
+    tienes, la racha vuelve a empezar.</p>
+    <p>En Inicio, debajo de la racha, dice cuántos protectores tienes, y el día
+    que uno la cuidó te lo avisa.</p>` },
   { t:'Insignias e historial',
     h:`<p>Las insignias son metas cumplidas. El historial muestra cada examen con
     su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>

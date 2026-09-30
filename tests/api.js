@@ -29,6 +29,9 @@ const ok = (c, m) => { console.log((c ? '✅' : '❌') + ' ' + m); if (!c) f++; 
 /* ── LA GUARDA ANTES QUE LAS RUTAS QUE PROTEGE ──
    Es el error más fácil de cometer: agregar un endpoint /panel/ nuevo más
    arriba y dejarlo abierto sin darse cuenta. */
+/* v139: `ultimo` es un toDateString; como texto «Wed» le gana a «Thu». */
+ok(/Date\.parse\(A\.ultimo/.test(API)&&!/String\(A\.ultimo \|\| ''\) > String\(B\.ultimo/.test(API),
+  'Al juntar dos aparatos, el último día de estudio se compara como fecha, no como texto');
 /* v139: el análisis de una evaluación (qué preguntas costaron) es solo del director. */
 { const pa=API.indexOf("ruta === '/panel/evaluacion/analisis'"), pg=API.indexOf("ruta.startsWith('/panel/')");
   ok(pa>pg&&pg>0,'El análisis de una evaluación va DESPUÉS de la guarda de director');

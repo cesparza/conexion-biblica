@@ -1588,6 +1588,30 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(R.alcanceActual()==='todo','Un tramo de la matutina no sobrevive en Aventureros');
 }
 
+/* ─── v139: la racha tiene protector (como Duolingo) ───
+   Se gana uno cada 7 días seguidos, se guardan hasta 2, y cubren días sin
+   estudiar. Se simula el calendario día por día. */
+{
+  const Z=montar(RET+', sumaRacha, ponHoy:v=>{__hoy=v}, S:()=>S',{antes:
+    `let __hoy='2026-09-01'; const _D=globalThis.Date; let Date=class extends _D{
+      constructor(...a){a.length?super(...a):super(__hoy+'T12:00:00')} static now(){return new _D(__hoy+'T12:00:00').getTime()}};`});
+  Z.ponCat('av');
+  const dia=n=>'2026-09-'+String(n).padStart(2,'0');
+  const estudia=n=>{Z.ponHoy(dia(n));Z.sumaRacha();};
+  for(let n=1;n<=7;n++)estudia(n);
+  ok(Z.S().racha===7&&Z.S().protector===1,'Siete días seguidos: racha 7 y se gana un protector ('+Z.S().racha+', '+Z.S().protector+')');
+  estudia(9);
+  ok(Z.S().racha===8&&Z.S().protector===0&&!!Z.S().protegio,'Un día sin estudiar: el protector lo cubre y la racha sigue (8)');
+  estudia(12);
+  ok(Z.S().racha===1,'Dos días sin estudiar y sin protector: la racha vuelve a 1');
+  for(let n=13;n<=26;n++)estudia(n);
+  ok(Z.S().racha===15&&Z.S().protector===2,'Catorce días más: dos protectores guardados ('+Z.S().protector+')');
+  estudia(29);
+  ok(Z.S().racha===16&&Z.S().protector===0,'Dos días sin estudiar gastan los dos protectores y la racha sigue');
+  estudia(29);
+  ok(Z.S().racha===16,'Estudiar dos veces el mismo día no suma dos');
+}
+
 /* ─── v139: qué preguntas costaron (como el reporte de Kahoot) ───
    Difícil: menos del 35% de acierto con al menos dos respuestas. Necesita
    ayuda: menos del 35% del examen. Y la práctica de las difíciles trae
