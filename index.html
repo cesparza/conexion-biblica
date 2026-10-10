@@ -103,6 +103,22 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
   .txti,.rell input,.rec-in,.menu-ex select,.info-table td .txti,
   .info-table td select,textarea.cod,.pan-lb input,.pan-lb select{font-size:16px}
 }
+/* v159 (Camilo: «no debería poder modificar el zoom de la app»).
+   LA REGLA DE ARRIBA HABÍA DEJADO DE GANAR. Medido en un teléfono simulado:
+   los espacios de «Completa» (.rec-in) y el nombre (.txti) salían de 14 px,
+   porque reglas escritas más abajo, del mismo peso, los devolvían a .875rem.
+   Así que al tocar un espacio el iPhone ampliaba la página y la dejaba así.
+   Ahora vale para CUALQUIER campo de escribir, presente o futuro, y con
+   !important a propósito: es la única regla que no puede perder con otra.
+
+   Y EL DOBLE TOQUE: dos toques seguidos en el mismo sitio (Siguiente,
+   Siguiente) también amplían. `touch-action:manipulation` lo quita y deja el
+   pellizco, que es como agranda la letra quien no ve bien: por eso el zoom no
+   se bloquea del todo. */
+@media (pointer:coarse){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:16px!important}
+}
+html{touch-action:manipulation}
 
 @media print{.av-nuevo{display:none!important}}
 
@@ -3078,7 +3094,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = '28fa04b27ebe';
+const VERSION_APP = 'aa21ef80f637';
 
 const CAPS = [
  {

@@ -1210,6 +1210,17 @@ ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slic
   ok(/return htmlRp\(modo==='texto'\?'texto':'lectura',/.test(app)&&/return htmlRp\('estudio',/.test(app),
     'Lectura, texto y estudio llaman al mismo htmlRp()');
 }
+/* v159: la app no se amplía sola. Todo campo de escribir mide 16 px en una
+   pantalla que se toca (si no, el iPhone amplía al tocarlo y no vuelve), y el
+   doble toque no amplía. El pellizco se deja: es la lupa de quien no ve bien. */
+{
+  const css=fs.readFileSync(path.join(__dirname,'..','fuente','estilos.css'),'utf8');
+  ok(/@media \(pointer:coarse\)\{\s*input:not\(\[type=checkbox\]\):not\(\[type=radio\]\):not\(\[type=range\]\),select,textarea\{font-size:16px!important\}/.test(css),
+    'En pantallas que se tocan, cualquier campo de escribir mide 16 px, sin que otra regla le gane');
+  ok(/html\{touch-action:manipulation\}/.test(css),'El doble toque no amplía la página');
+  const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+  ok(!/user-scalable\s*=\s*no|maximum-scale\s*=\s*1(\D|$)/.test(html),'Y el pellizco no se bloquea: quien no ve bien puede agrandar');
+}
 /* v158: el pie de las hojas no va pegado al borde del telefono. */
 {
   const css=fs.readFileSync(path.join(__dirname,'..','fuente','estilos.css'),'utf8');

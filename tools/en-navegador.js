@@ -269,6 +269,24 @@ for (const W of ANCHOS) {
   ok(errores.length === 0, W + ' · cero errores de JavaScript' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
+/* ── 5. en un teléfono, ningún campo hace que la página se amplíe sola (v159) ── */
+{
+  const ctx = await nav.newContext({ viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+  const p = await ctx.newPage();
+  await p.goto(base); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camila'; S.cat = 'ec1'; guardar(); ponCat('ec1'); });
+  const campos = () => p.evaluate(() => [...document.querySelectorAll('input:not([type=checkbox]):not([type=radio]),select,textarea')]
+    .filter(x => x.getClientRects().length).map(x => Math.round(parseFloat(getComputedStyle(x).fontSize))));
+  let chicos = [], vistos = 0;
+  for (const paso of [() => verCap('cr03'), () => abreYo(), () => { cierraHoja(); ponCat('av'); verCap('d1'); }, () => { ir('examen'); arrancaExamen('normal'); }]) {
+    await p.evaluate(paso); await p.waitForTimeout(400);
+    const c = await campos(); vistos += c.length; chicos = chicos.concat(c.filter(x => x < 16));
+  }
+  const tocar = await p.evaluate(() => matchMedia('(pointer:coarse)').matches + ' ' + getComputedStyle(document.documentElement).touchAction);
+  ok(vistos >= 4 && chicos.length === 0 && tocar === 'true manipulation',
+    'teléfono · los ' + vistos + ' campos de escribir que se ven miden 16 px o más, y el doble toque no amplía (' + tocar + ')' + (chicos.length ? ' — chicos: ' + chicos.join(',') : ''));
+  await ctx.close();
+}
 await nav.close(); srv.close();
 console.log('\n' + (fallas ? fallas + ' FALLOS' : 'EN EL NAVEGADOR: TODO BIEN'));
 process.exit(fallas ? 1 : 0);
