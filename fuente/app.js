@@ -1436,8 +1436,36 @@ function htmlPorLibro(){
 }
 
 /* ───────── estudio ───────── */
+/* De dónde es un capítulo, en una línea: su grupo si la actividad los tiene
+   (la doctrina de una creencia), o su fuente. La usan la tarjeta de la
+   rejilla y la cabecera del capítulo, para que digan lo mismo. */
+/* LA LÍNEA DICE LO QUE DISTINGUE A LA TARJETA. Si todo el material de la
+   actividad viene de la misma fuente («En esto creemos» en las 28) y está
+   repartido en varios grupos, lo que distingue es el grupo: la doctrina. Si
+   las fuentes cambian (Biblia y Elena de White en Conexión Bíblica), sigue
+   diciendo la fuente, que ahí es el dato. */
+function origenDe(c){
+  const cs=capsDe(), g=grupoDe(c);
+  const unaFuente=new Set(cs.map(x=>x.src)).size<=1;
+  const variosGrupos=new Set(cs.map(x=>x.doc).filter(Boolean)).size>1;
+  return g&&unaFuente&&variosGrupos?g.nombre.replace(/^La doctrina /,'Doctrina '):(c.src||'');
+}
 function pintaCaps(){
-  const caps=capsVista().map(c=>
+  /* v160 (Camilo): «remarcar a qué doctrina pertenece cada creencia». Las 28
+     tarjetas decían todas «En esto creemos», que no distingue nada. Ahora la
+     rejilla va por grupos: un rótulo por doctrina, con su tramo, antes de su
+     primera creencia, y cada tarjeta dice su doctrina. Sale de GRUPOS, así
+     que otra actividad que declare grupos lo hereda sin tocar esto. */
+  let grupoAbierto=null;
+  const vista=capsVista();
+  /* Con un solo grupo a la vista el rótulo repetiría el título de arriba. */
+  const conRotulos=new Set(vista.map(c=>c.doc).filter(Boolean)).size>1;
+  const caps=vista.map(c=>{
+    const g=conRotulos?grupoDe(c):null;
+    const rotulo=g&&g.id!==grupoAbierto?'<div class="grupo grupo-de" style="grid-column:1/-1">'+
+      icoDe(g.icono)+' '+esc(g.nombre)+(g.desde?' <small>'+g.desde+' a '+g.hasta+'</small>':'')+'</div>':'';
+    if(g)grupoAbierto=g.id;
+    return rotulo+
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     /* v147: el número va en el color de la categoría, igual en todos. Siete
        colores sin significado competían con el título. */
@@ -1446,11 +1474,11 @@ function pintaCaps(){
     /* Cuantos versiculos trae, para poder repartir la lectura antes de abrirlo:
        Daniel 2 son 49 y Daniel 1 son 21, y eso cambia como se planea la semana.
        Solo los capitulos de la Biblia lo tienen; los de P&R no son versiculos. */
-    '<div class="f">'+esc(c.src)+(c.vs?' · '+c.vs+' vers.':'')+'</div>'+
+    '<div class="f">'+esc(origenDe(c))+(c.vs?' · '+c.vs+' vers.':'')+'</div>'+
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
     (soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
-    '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>').join('');
+    '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
   const mods=modsDe().map(m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
     '<div class="ic-f" style="color:'+(m.color||'var(--azul)')+'">'+icoDe(m.icono,'ico-f')+'</div><div><div class="t">'+esc(m.label)+'</div>'+
@@ -2203,7 +2231,7 @@ function verCap(id,quieto){
     navCap(id)+
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
     '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
-    '<div class="cap-meta">'+(c.src?esc(c.src)+' · ':'')+
+    '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
        fuente/biblia-otros.js), no de la RV1960; y los repasos de creencias

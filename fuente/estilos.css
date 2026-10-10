@@ -2375,6 +2375,9 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .cf.on{background:var(--v-sup,#fff);color:var(--azul);box-shadow:var(--v-s1)}
 /* El número del capítulo, en el color de la categoría. */
 .cap .n{color:var(--v-cat)}
+/* v160: el rótulo de cada grupo dentro de la rejilla (una doctrina y su tramo). */
+.grupo-de{margin:.9rem 0 .1rem;color:var(--azul);text-transform:none;letter-spacing:0;font-size:.875rem}
+.grupo-de small{font-size:.75rem;font-weight:600;color:var(--gris);margin-left:.25rem}
 /* «Tocar para ver» se vuelve un ojo: el texto sigue ahí para el lector de
    pantalla, pero en pantalla no se repite cinco veces en mayúsculas. */
 .rev-q .rev-p{font-size:0;letter-spacing:0;width:24px;height:24px;display:inline-block;background:currentColor;

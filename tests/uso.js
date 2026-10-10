@@ -2820,6 +2820,34 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Y el estudio va en el orden de la historia');
 }
 
+/* ─── v160: LA REJILLA DICE A QUÉ DOCTRINA PERTENECE CADA CREENCIA ───
+   Camilo (10-oct): «remarcar a qué doctrina pertenece cada creencia». Las 28
+   tarjetas decían «En esto creemos». Ahora hay un rótulo por doctrina antes
+   de su primera creencia, y cada tarjeta dice la suya. */
+{
+  const G=montar(RET+',pintaCaps,origenDe,el:id=>document.getElementById(id)');
+  G.ponCat('ec1');G.pintaCaps();
+  const h=G.el('lista-caps').innerHTML;
+  const rot=[...h.matchAll(/class="grupo grupo-de"[^>]*>(?:<svg[\s\S]*?<\/svg>)? ?([^<]+) <small>(\d+) a (\d+)<\/small><\/div><button class="cap c-(cr\d\d)"/g)].map(m=>m[1].trim()+'|'+m[2]+'-'+m[3]+'|'+m[4]);
+  ok(JSON.stringify(rot)===JSON.stringify(CR.DOCTRINAS.map(d=>d.nombre+'|'+d.desde+'-'+d.hasta+'|cr'+String(d.desde).padStart(2,'0'))),
+    'Seis rótulos, uno por doctrina, cada uno justo antes de su primera creencia: '+rot.map(x=>x.split('|')[1]).join(', '));
+  const tarjetas=[...h.matchAll(/class="cap c-(cr\d\d)"[\s\S]*?<div class="f">([^<]*)<\/div>/g)].map(m=>[m[1],m[2]]);
+  const malas=tarjetas.filter(([id,f])=>{const n=+id.slice(2),d=CR.DOCTRINAS.find(x=>n>=x.desde&&n<=x.hasta);return f!==d.nombre.replace(/^La doctrina /,'Doctrina ');});
+  ok(tarjetas.length===28&&malas.length===0,'Las 28 tarjetas dicen su doctrina (la 4: «'+(tarjetas[3]||[])[1]+'», la 20: «'+(tarjetas[19]||[])[1]+'»)');
+  ok(!/<div class="f">En esto creemos/.test(h),'Ninguna tarjeta repite «En esto creemos»');
+  G.ponCat('av');G.pintaCaps();
+  const hd=G.el('lista-caps').innerHTML;
+  const rd=[...hd.matchAll(/class="grupo grupo-de"[^>]*>\s*([^<]+?)\s*<\/div>/g)].map(m=>m[1]);
+  ok(JSON.stringify(rd)===JSON.stringify(['Relatos (Daniel 1 a 6)','Profetas y Reyes'])&&!/null/.test(hd),
+    'La misma rejilla en Conexión Bíblica: un rótulo por libro, sin tramo: '+rd.join(' · '));
+  ok(/<div class="f">Biblia · 21 vers\.<\/div>/.test(hd)&&/<div class="f">Elena de White<\/div>/.test(hd),
+    'Y ahí la tarjeta sigue diciendo la fuente, que es lo que la distingue');
+  G.ponCat('me');G.pintaCaps();
+  ok(!/grupo-de/.test(G.el('lista-caps').innerHTML),'Con un solo grupo a la vista (Menores) no se repite el rótulo');
+  G.ponCat('ec1');
+  ok(G.origenDe(G.CAPS.find(c=>c.id==='cr24'))==='Doctrina de los acontecimientos finales','La cabecera del capítulo usa la misma función que la tarjeta');
+}
+
 /* ─── v158: ANTERIOR Y SIGUIENTE EN EL ORDEN DE ESTUDIO ───
    Camilo (10-oct): «¿cual es la manera facil para ir a la siguiente en
    orden?». Cada capitulo trae la fila Anterior / por cual va / Siguiente, y
