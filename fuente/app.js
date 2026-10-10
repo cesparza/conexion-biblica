@@ -707,9 +707,12 @@ const sinEtiquetas=s=>String(s??'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').t
    coincide con el scroll de quien lo pidió SE VE como que no pasó nada: la
    confirmación queda arriba o abajo del marco visible. Se usa después de esas
    acciones para que la persona vea de una el resultado, no para navegar. */
-function llevaA(id){
+/* `deUna`: se pone ahí sin animar y sin el destello. Es para cuando la persona
+   ya estaba mirando ese sitio y solo cambió su contenido (Siguiente). */
+function llevaA(id,deUna){
   const el=document.getElementById(id);
   if(!el)return;
+  if(deUna){el.scrollIntoView({behavior:'auto',block:'start'});return;}
   el.scrollIntoView({behavior:'smooth',block:'start'});
   el.classList.remove('destaca');
   void el.offsetWidth;             // reinicia la animación si ya se usó antes
@@ -844,7 +847,10 @@ function nivelRecomendado(){
 const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
 /* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
-function ir(id){
+/* `quedarse`: no sube la página al principio. Lo pide verCap(), que después
+   pone la página donde va el capítulo: subir primero y bajar después era el
+   «sube y baja» que se veía al tocar Siguiente (v161). */
+function ir(id,quedarse){
   paraVoz();
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-t button').forEach(b=>b.classList.remove('on'));
@@ -881,7 +887,7 @@ function ir(id){
   filtroAbierto=false;filtroMenu=false;
   pintaFiltro(id);
   pintaSenales();
-  window.scrollTo({top:0});
+  if(!quedarse)window.scrollTo({top:0});
 }
 
 function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();pintaYo();}
@@ -2213,7 +2219,18 @@ function navCap(id){
 
 function verCap(id,quieto){
   paraVoz();
-  ir('estudio');
+  /* v161: ¿desde dónde se llega? Si ya había un capítulo abierto en esta
+     pantalla (Siguiente, Anterior, «Ya lo estudié», otra tarjeta), la página
+     se pone de una en el capítulo nuevo. Si se viene de la rejilla sin nada
+     abierto, baja suave desde donde está, para que se vea a dónde fue. Nunca
+     sube primero al principio. */
+  let enEstudio=false, abierto=false;
+  try{
+    const pe=document.getElementById('p-estudio'), d0=document.getElementById('detalle');
+    enEstudio=!!(pe&&pe.classList&&pe.classList.contains&&pe.classList.contains('on'));
+    abierto=enEstudio&&!!(d0&&d0.style&&d0.style.display==='block');
+  }catch(e){}
+  ir('estudio',true);
   S.ultItem=id;guardar();
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
   document.querySelector('.c-'+id)?.classList.add('on');
@@ -2271,7 +2288,14 @@ function verCap(id,quieto){
      llevaA() hace scroll y marca dónde aterrizar. */
   /* v156: al reabrir tras un refresco no se lleva al inicio del detalle: el
      arranque pone la página donde iba leyendo (vuelveADonde). */
-  if(!quieto)llevaA('detalle');
+  if(!quieto){
+    /* v161: mientras la página va bajando sola hacia el capítulo no se anota
+       dónde va: un refresco en ese medio segundo dejaba guardada una altura a
+       mitad de camino. Sin anotación, el arranque muestra el capítulo desde
+       su título, que es lo que se acababa de pedir. */
+    if(abierto||!enEstudio)llevaA('detalle',true);
+    else{dondeEspera(1200);llevaA('detalle');}
+  }
 }
 
 /* ───────── DÓNDE IBA LEYENDO (v156) ─────────
@@ -2298,8 +2322,10 @@ function secsDeDonde(){
   if(!d||!S.ultItem||S.ultPantalla!=='estudio'||!d.getClientRects().length)return [];
   return [...d.querySelectorAll('.sec')].filter(x=>x.getClientRects().length);
 }
+let dondeHasta=0;
+function dondeEspera(ms){dondeHasta=Date.now()+ms;try{localStorage.removeItem(DONDE_K);}catch(e){}}
 function anotaDonde(){
-  if(dondeQuieto)return;
+  if(dondeQuieto||Date.now()<dondeHasta)return;
   try{
     const o={k:dondeLlave(),y:Math.round(window.scrollY||0)};
     const secs=secsDeDonde();
@@ -2562,7 +2588,10 @@ function listo(id){
   avanza(id,100);sumaRacha();festejaRacha(0);
   const lista=[...capsVista(),...modsDe()];
   const i=lista.findIndex(x=>x.id===id)+1;
-  if(i>0&&i<lista.length){verCap(lista[i].id);window.scrollTo({top:0,behavior:'smooth'});}
+  /* v161: verCap ya deja la página en el capítulo que sigue. Antes, encima,
+     se mandaba al principio de la pantalla: quedaba en la rejilla y tocaba
+     bajar otra vez hasta el capítulo. */
+  if(i>0&&i<lista.length)verCap(lista[i].id);
   else ir('inicio');
 }
 

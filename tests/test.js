@@ -1210,6 +1210,16 @@ ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slic
   ok(/return htmlRp\(modo==='texto'\?'texto':'lectura',/.test(app)&&/return htmlRp\('estudio',/.test(app),
     'Lectura, texto y estudio llaman al mismo htmlRp()');
 }
+/* v161: al pasar de un capítulo a otro la página no sube y baja. Camilo
+   (10-oct): «cuando le doy siguiente, el scroll sube y baja». verCap() llamaba
+   a ir(), que subía al principio, y después bajaba animado hasta el capítulo.
+   El recorrido con navegador está en tools/en-navegador.js. */
+ok(/ir\('estudio',true\);/.test(APP)&&/if\(!quedarse\)window\.scrollTo\(\{top:0\}\);/.test(APP),
+  'Abrir un capítulo no manda primero la página al principio');
+ok(/if\(abierto\|\|!enEstudio\)llevaA\('detalle',true\);/.test(APP)&&/if\(deUna\)\{el\.scrollIntoView\(\{behavior:'auto',block:'start'\}\);return;\}/.test(APP),
+  'Con un capítulo ya abierto, el siguiente se pone en su sitio de una, sin animar');
+ok(/if\(i>0&&i<lista\.length\)verCap\(lista\[i\]\.id\);\s*else ir\('inicio'\);/.test(APP),
+  '«Ya lo estudié» deja en el capítulo que sigue, no arriba en la rejilla');
 /* v159: la app no se amplía sola. Todo campo de escribir mide 16 px en una
    pantalla que se toca (si no, el iPhone amplía al tocarlo y no vuelve), y el
    doble toque no amplía. El pellizco se deja: es la lupa de quien no ve bien. */
@@ -1228,7 +1238,7 @@ ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slic
     'La hoja deja un colchon fijo abajo, ademas del margen del sistema (que es 0 en un iPhone SE)');
   ok(/\.hoja-nav\{[^}]*min-height:(4[4-9]|[5-9]\d)px/.test(css),'«Anterior» y «Siguiente» miden 44 px o mas');
 }
-ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP),
+ok(/function ir\(id,quedarse\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de pantalla corta la lectura');
 ok(/function verCap\(id,quieto\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de capitulo corta la lectura');
@@ -1251,7 +1261,7 @@ ok(/if\(sonaba\)speechSynthesis\.cancel\(\)/.test(APP)&&/setTimeout\(\(\)=>\{if\
   'Si algo sonaba, se cancela y se habla un respiro despues');
 /* vozBtn es un `let` y ir() lo usa antes de la seccion de voz: si se declara
    abajo, la app no arranca por TDZ. Ya paso con diaHoy. */
-const posVoz=APP.indexOf('let vozBtn'), posIr=APP.indexOf('function ir(id)');
+const posVoz=APP.indexOf('let vozBtn'), posIr=APP.indexOf('function ir(id,quedarse)');
 ok(APP.indexOf('const VZ=')>=0&&APP.indexOf('const VZ=')<posIr,
   'VZ tambien se declara ANTES de ir() (paraVoz lo usa)');
 ok(posVoz>=0&&posVoz<posIr,
@@ -1828,7 +1838,7 @@ for(const id of ['nv-est','nv-tj','nv-ex','nv-lg'])
   ok(new RegExp('id="'+id+'"').test(CUERPO),'El nodo '+id+' vive en el HTML, no lo crea el JS');
 ok(!/nv-anillo/.test(CUERPO)&&!/\.nv-ring\{/.test(CSS),
   'No quedo el anillo de progreso, que se descarto por ilegible y por el mask en Safari');
-ok(/function pintaSenales\(\)/.test(js)&&/pintaSenales\(\);\s*window\.scrollTo/.test(js),
+ok(/function pintaSenales\(\)/.test(js)&&/pintaSenales\(\);\s*if\(!quedarse\)window\.scrollTo/.test(js),
   'pintaSenales() se llama en cada navegacion, dentro de ir()');
 
 /* ───────── modo lectura ─────────

@@ -2497,6 +2497,11 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .cap-vuelve{margin:0 0 .5rem -.7rem;min-height:44px}
 /* v158: Anterior / por cuál va / Siguiente. Los botones son los de la hoja
    del versículo (.hoja-nav, .hoja-cta); aquí solo se acomoda la fila. */
+/* v161: al llevar la página al capítulo, su borde queda DEBAJO de la barra de
+   arriba, no detrás. En el celular la barra es fija y mide 58 px: sin este
+   margen tapaba la fila Anterior/Siguiente, que es lo primero del capítulo. */
+#detalle{scroll-margin-top:16px}
+@media (max-width:899px){#detalle{scroll-margin-top:calc(66px + env(safe-area-inset-top,0px))}}
 .cap-nav{display:flex;align-items:center;gap:.5rem;margin:0 0 .9rem}
 .sec~.cap-nav{margin:1.4rem 0 0}
 .cap-nav+.acc-fin{margin-top:1rem}

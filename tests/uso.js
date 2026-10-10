@@ -2615,7 +2615,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
   ok(/function haceEvaluacion\(\)\{[\s\S]{0,420}!fichaEsDeLaSesion\(\)\)adoptaFicha\(srvYo\);/.test(src),
     'La evaluacion pasa primero a la ficha de la sesion: se arma con SU categoria');
-  ok(/verCap\(S\.ultItem,true\);[\s\S]{0,260}vuelveADonde\(\)/.test(src)&&/if\(!quieto\)llevaA\('detalle'\);/.test(src),
+  ok(/verCap\(S\.ultItem,true\);[\s\S]{0,260}vuelveADonde\(\)/.test(src)&&/if\(!quieto\)\{[\s\S]{0,460}llevaA\('detalle'/.test(src),
     'Al reabrir tras un refresco se vuelve a la altura anotada, no al titulo');
   ok(!/ultY|cb-donde/.test(JSON.stringify(R.normalizar({ultPantalla:'estudio'}))),
     'La altura de la pagina no viaja en la ficha: es de esta pantalla');

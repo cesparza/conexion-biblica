@@ -74,7 +74,8 @@ for (const W of ANCHOS) {
     scrollTo(0, s.getBoundingClientRect().top + scrollY - T + dy);
   }, [id, sec, dy, TOPE]);
   const refresca = async (nombre, prepara) => {
-    await prepara(); await p.waitForTimeout(700);
+    /* 1,5 s: lo que tarda en asentarse la bajada suave y en anotarse la altura. */
+    await prepara(); await p.waitForTimeout(1500);
     const a = await donde();
     await p.reload(); await p.waitForTimeout(2200);
     const d = await donde();
@@ -92,6 +93,12 @@ for (const W of ANCHOS) {
   await refresca('Las 28 de corrido, tercera sección', () => bajar('mc-lista', 2, 60));
   await refresca('una creencia, tercera sección', () => bajar('cr04', 2, 40));
   await refresca('una creencia recién abierta', () => p.evaluate(() => verCap('cr04')));
+  /* Refrescar ANTES de que la página termine de bajar sola: tiene que abrir el
+     capítulo desde su título, no a mitad de camino (v161). */
+  await p.evaluate(() => verCap('cr09')); await p.waitForTimeout(120);
+  await p.reload(); await p.waitForTimeout(2200);
+  const pronto = await p.evaluate(() => ({ item: S.ultItem, top: Math.round(document.getElementById('detalle').getBoundingClientRect().top), vh: innerHeight }));
+  ok(pronto.item === 'cr09' && pronto.top >= -4 && pronto.top < pronto.vh * 0.5, W + ' · refresco · refrescar mientras la página aún baja abre el capítulo desde su título (a ' + pronto.top + ' px)');
   await refresca('Logros con la página bajada', () => p.evaluate(() => { ir('logros'); scrollTo(0, 160); }));
   await refresca('la rejilla de Estudiar con la página bajada', () => p.evaluate(() => { ir('estudio'); scrollTo(0, 300); }));
   /* Con sesión de Conexión Bíblica y dos fichas, como queda al usar la app. */
@@ -231,6 +238,11 @@ for (const W of ANCHOS) {
 
   /* ── 3a. anterior y siguiente en el capítulo (v158) ── */
   await p.evaluate(() => verCap('cr01')); await p.waitForTimeout(900);
+  /* ¿Se puede tocar de verdad? Lo que hay en el centro del botón tiene que ser el botón, no la barra de arriba. */
+  const tapado = () => p.evaluate(() => { const b = document.querySelectorAll('#detalle .cap-nav .hoja-nav')[1], r = b.getBoundingClientRect();
+    const e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return e === b || b.contains(e) ? '' : (e ? e.tagName + '.' + String(e.className).split(' ')[0] : 'nada'); });
+  const tap1 = await tapado();
+  ok(tap1 === '', W + ' · siguiente · al abrir el capítulo, «Siguiente» queda a la vista y no detrás de la barra de arriba' + (tap1 ? ' — lo tapa ' + tap1 : ''));
   const nav1 = await p.evaluate(() => ({ filas: document.querySelectorAll('#detalle .cap-nav').length,
     alto: Math.min(...[...document.querySelectorAll('#detalle .cap-nav .hoja-nav')].map(x => Math.round(x.getBoundingClientRect().height))),
     arriba: Math.round(document.querySelector('#detalle .cap-nav').getBoundingClientRect().top), vh: innerHeight }));
@@ -244,6 +256,33 @@ for (const W of ANCHOS) {
   await p.locator('#detalle .cap-nav').last().locator('.hoja-nav').first().click(); await p.waitForTimeout(700);
   it = await p.evaluate(() => S.ultItem);
   ok(it === 'cr02', W + ' · siguiente · dos adelante y uno atrás (con la fila del final) deja en la creencia 2');
+
+  /* ── 3a2. al tocar Siguiente la página no sube y baja (v161) ──
+     Se anotan TODAS las alturas por las que pasa la página durante un segundo. */
+  const recorre = async (nombre, toca, destino) => {
+    await p.evaluate(() => { window.__ys = []; window.__on = () => window.__ys.push(Math.round(scrollY)); addEventListener('scroll', window.__on, { passive: true }); });
+    const y0 = await p.evaluate(() => Math.round(scrollY));
+    await toca(); await p.waitForTimeout(1000);
+    const r = await p.evaluate(() => { removeEventListener('scroll', window.__on);
+      const d = document.getElementById('detalle'); return { ys: window.__ys, y: Math.round(scrollY), item: S.ultItem, top: Math.round(d.getBoundingClientRect().top), vh: innerHeight }; });
+    const min = Math.min(y0, r.y), max = Math.max(y0, r.y);
+    const fuera = r.ys.filter(y => y < min - 4 || y > max + 4);
+    const tap = await tapado();
+    ok(tap === '', W + ' · siguiente · ' + nombre + ': al llegar, «Siguiente» se puede tocar' + (tap ? ' — lo tapa ' + tap : ''));
+    ok(r.item === destino && fuera.length === 0 && r.top >= -4 && r.top < r.vh * 0.5,
+      W + ' · siguiente · ' + nombre + ': la página va de ' + y0 + ' a ' + r.y + ' sin pasar por otro lado (' + r.ys.length + ' movimientos' + (fuera.length ? ', se salió a ' + [...new Set(fuera)].slice(0, 4).join(', ') : '') + ') y el capítulo queda arriba (a ' + r.top + ' px)');
+    return r;
+  };
+  await p.evaluate(() => verCap('cr05')); await p.waitForTimeout(1200);
+  let rr = await recorre('Siguiente de arriba', () => p.locator('#detalle .cap-nav .hoja-nav').nth(1).click(), 'cr06');
+  ok(rr.ys.length <= 2, W + ' · siguiente · y lo hace de una, sin animación (' + rr.ys.length + ' movimientos)');
+  await p.evaluate(() => { const n = document.querySelectorAll('#detalle .cap-nav'); n[n.length - 1].scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(300);
+  await recorre('Siguiente del final', () => p.locator('#detalle .cap-nav').last().locator('.hoja-nav').nth(1).click(), 'cr07');
+  await p.evaluate(() => { document.querySelector('#detalle .acc-fin .btn.ver').scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(300);
+  await recorre('«Ya lo estudié»', () => p.locator('#detalle .acc-fin .btn.ver').click(), 'cr08');
+  /* Desde la rejilla, sin nada abierto: baja suave, pero nunca sube primero. */
+  await p.evaluate(() => { ir('estudio'); document.getElementById('detalle').style.display = 'none'; document.querySelector('.cap.c-cr03').scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(400);
+  await recorre('una tarjeta de la rejilla', () => p.locator('.cap.c-cr03').click(), 'cr03');
 
   /* ── 3b. la hoja del versículo: el pie no va pegado al borde (v158) ── */
   await p.evaluate(() => {
