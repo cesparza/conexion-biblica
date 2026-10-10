@@ -1177,6 +1177,46 @@ ok(!/speechSynthesis\.pause\(\)/.test(APP)&&!/speechSynthesis\.resume\(\)/.test(
   'No se usan pause()/resume() del navegador');
 ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slice(APP.indexOf('leer en voz alta'))),
   'La voz ya no recorta el texto a 600 caracteres');
+/* ── v158: UNA PIEZA, UN SOLO ARMADO ──────────────────────────────────
+   Regla de Camilo (10-oct-2026): «un mismo componente se utiliza con su misma
+   implantación en todos los lugares donde aparezca». Se cuenta en las fuentes:
+   el HTML de cada pieza se escribe en UN sitio (su función) y los demás la
+   llaman. Si alguien vuelve a escribir el botón a mano en otra pantalla, o lo
+   deja escrito dentro del contenido, esto falla. */
+{
+  const leeF=f=>fs.readFileSync(path.join(__dirname,'..','fuente',f),'utf8');
+  const app=leeF('app.js');
+  const veces=(txt,re)=>(txt.match(re)||[]).length;
+  const piezas=[
+    ['el reproductor (htmlRp)',/class="lec-play"/g],
+    ['la tira del reproductor (htmlTira)',/data-k="'\+k\+'"/g],
+    ['Anterior y Siguiente (filaNav)',/class="hoja-nav"/g],
+    ['el control segmentado (segmentado)',/class="capa-filtro/g],
+    ['los botones del segmentado (segmentado)',/class="cf['" ]/g],
+    ['el botón de escuchar de un bloque (grupoVoz)',/class="grupo-voz"><button/g],
+  ];
+  piezas.forEach(([nombre,re])=>{
+    const n=veces(app,re);
+    ok(n===1,'Una pieza, un armado: '+nombre+' se escribe en un solo sitio de app.js ('+n+')');
+  });
+  /* Y el contenido no trae la pieza escrita: deja una marca y la app la arma. */
+  const contenido=['creencias.js','contenido.js','modulos.js','matutina.js','matutina-extra.js','manual.js'].map(leeF).join('\n');
+  const escritas=[/class=\\?"cf[\\" ]/,/class=\\?"hoja-nav/,/class=\\?"lec-play/,/class=\\?"capa-filtro/].filter(re=>re.test(contenido)).map(String);
+  ok(escritas.length===0,'El contenido no escribe a mano ninguna pieza de la app'+(escritas.length?': '+escritas.join(', '):''));
+  ok(/function filtroCapas\(\)\{\s*return segmentado\(/.test(app)&&/outerHTML=segmentado\('Cómo practicar'/.test(app),
+    'Los dos controles de opciones (capas y niveles de las 28) salen de segmentado()');
+  ok(/'<div class="hoja-pie">'\+\s*filaNav\(/.test(app)&&/'<div class="cap-nav">'\+filaNav\(/.test(app),
+    'La hoja del versículo y el capítulo llaman a la misma filaNav()');
+  ok(/return htmlRp\(modo==='texto'\?'texto':'lectura',/.test(app)&&/return htmlRp\('estudio',/.test(app),
+    'Lectura, texto y estudio llaman al mismo htmlRp()');
+}
+/* v158: el pie de las hojas no va pegado al borde del telefono. */
+{
+  const css=fs.readFileSync(path.join(__dirname,'..','fuente','estilos.css'),'utf8');
+  ok(/\.hoja-caja\{[^}]*padding-bottom:calc\(env\(safe-area-inset-bottom,0px\) \+ (1[2-9]|[2-9]\d)px\)/.test(css),
+    'La hoja deja un colchon fijo abajo, ademas del margen del sistema (que es 0 en un iPhone SE)');
+  ok(/\.hoja-nav\{[^}]*min-height:(4[4-9]|[5-9]\d)px/.test(css),'«Anterior» y «Siguiente» miden 44 px o mas');
+}
 ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de pantalla corta la lectura');
 ok(/function verCap\(id,quieto\)\{\s*paraVoz\(\);/.test(APP),

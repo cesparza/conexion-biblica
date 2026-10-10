@@ -41,8 +41,10 @@ for (const W of ANCHOS) {
   await p.addInitScript(() => {
     const voz = { speaking: false, pending: false, paused: false,
       getVoices: () => [{ lang: 'es-ES', name: 'x', default: true, localService: true }],
-      speak() {}, cancel() {}, pause() {}, resume() {}, addEventListener() {}, removeEventListener() {} };
+      speak(u) { window.__u = u; }, cancel() {}, pause() {}, resume() {}, addEventListener() {}, removeEventListener() {} };
     try { Object.defineProperty(window, 'speechSynthesis', { value: voz, configurable: true }); } catch (e) {}
+    /* Y la frase también de mentiras: la de verdad no acepta una voz que no sea del sistema. */
+    window.SpeechSynthesisUtterance = function (t) { this.text = t; };
   });
   let sesion = null;
   await p.route('**/api/**', route => {
@@ -153,7 +155,11 @@ for (const W of ANCHOS) {
       const c = buscaItem(id), bq = document.querySelector('#detalle blockquote.decl');
       const decl = bq.cloneNode(true); decl.querySelectorAll('.fn,.decl-src').forEach(x => x.remove());
       const limpia = t => t.replace(/\s+/g, ' ').trim();
-      out.push({ n, primera: VZ.partes[0].txt, espera: c.label + '. ' + c.sub + '.',
+      const frases = bq.querySelectorAll('.dfr').length;
+      out.push({ n, primera: VZ.partes[0].txt, espera: c.label + '. ' + c.sub + '.', frases,
+        enFrase: VZ.partes.slice(1).every(x => x.el.classList.contains('dfr')),
+        conLugar: VZ.partes.slice(1).filter(x => x.nodo && x.off >= 0 && x.nodo.textContent.substr(x.off, x.txt.length) === x.txt).length,
+        partes: VZ.partes.length - 1,
         resto: limpia(VZ.partes.slice(1).map(x => x.txt).join(' ')), decl: limpia(decl.textContent),
         rot: document.getElementById('est-est').textContent + ' | ' + document.getElementById('est-n').textContent });
     }
@@ -164,8 +170,94 @@ for (const W of ANCHOS) {
   ok(malas.length === 0, W + ' · voz · las 28: «' + voz.out[3].primera + '» y después solo la declaración' +
     (malas.length ? ' — fallan ' + malas.map(x => x.n).join(', ') : ''));
   ok(voz.out[0].rot === 'Escuchar la creencia | Solo la declaración', W + ' · voz · el reproductor lo dice: ' + voz.out[0].rot);
+  /* v158: cada parte es una frase de la página, y se sabe dónde está su texto. */
+  const sinFrase = voz.out.filter(x => x.frases && (!x.enFrase || x.conLugar !== x.partes));
+  ok(sinFrase.length === 0, W + ' · voz · en las 28, cada trozo que suena es una frase de la página y se sabe dónde está su texto' +
+    (sinFrase.length ? ' — fallan ' + sinFrase.map(x => x.n + ' (' + x.conLugar + '/' + x.partes + ')').join(', ') : ''));
+  /* Se hace sonar la creencia 4 y se simula lo que avisa el aparato. */
+  await p.evaluate(() => { verCap('cr04'); estVozAlterna(); });
+  const marca = () => p.evaluate(() => {
+    const m = [...document.querySelectorAll('#detalle .suena')];
+    const h = CSS.highlights.get('voz-palabra');
+    return { frase: m.length === 1 && m[0].classList.contains('dfr') ? [...m[0].parentNode.children].indexOf(m[0]) + 1 : (m.length === 1 ? 'cabecera' : m.length + ' marcas'),
+      palabra: h ? [...h].map(r => r.toString()).join('|') : '' };
+  });
+  let m = await marca();
+  ok(m.frase === 'cabecera' && !m.palabra, W + ' · voz · primero suena «Creencia 4. Dios el Hijo.» y se marca el encabezado');
+  await p.evaluate(() => window.__u.onend()); m = await marca();
+  ok(m.frase === 1, W + ' · voz · después se marca solo la frase 1 de la declaración (marcada: ' + m.frase + ')');
+  /* «boundary» de la palabra que empieza en la letra 13, como lo manda Safari (sin largo). */
+  const dicha = await p.evaluate(() => { const t = window.__u.text, i = t.indexOf('Eterno'); window.__u.onboundary({ name: 'word', charIndex: i }); return t; });
+  m = await marca();
+  ok(m.palabra === 'Eterno', W + ' · voz · y dentro de la frase, la palabra que suena: «' + m.palabra + '» (frase dicha: ' + dicha.slice(0, 30) + '…)');
+  await p.evaluate(() => window.__u.onend()); m = await marca();
+  ok(m.frase === 2 && !m.palabra, W + ' · voz · al pasar a la frase 2 la marca se mueve y la palabra anterior se suelta');
+  await p.evaluate(() => { const t = window.__u.text, i = t.indexOf('creadas'); window.__u.onboundary({ name: 'word', charIndex: i, charLength: 7 }); });
+  m = await marca();
+  ok(m.palabra === 'creadas', W + ' · voz · con largo de palabra (Chrome) también: «' + m.palabra + '»');
+  await p.evaluate(() => estVozAlterna()); m = await marca();
+  ok(!m.palabra, W + ' · voz · al pausar no queda ninguna palabra marcada');
+  /* Tocar una frase empieza ahí. */
+  await p.locator('#detalle .decl-txt .dfr').nth(4).click(); await p.waitForTimeout(400); m = await marca();
+  ok(m.frase === 5, W + ' · voz · tocar la frase 5 empieza a leer desde ahí (marcada: ' + m.frase + ')');
+  /* ── el reproductor general (v158): pausar, empezar de nuevo y la tira ── */
+  const rp = () => p.evaluate(() => {
+    const c = document.querySelector('#detalle .est-rp'), bot = c.querySelector('.lec-rp-bot');
+    const ahora = c.querySelector('.lec-tira .ahora');
+    return { activo: c.classList.contains('activo'), bot: getComputedStyle(bot).display !== 'none', seg: c.querySelectorAll('.lec-tira [data-k]').length,
+      ahora: ahora ? Number(ahora.dataset.k) : -1, est: document.getElementById('est-est').textContent, n: document.getElementById('est-n').textContent,
+      otra: Math.round(c.querySelector('.lec-otra').getBoundingClientRect().height), sonando: VZ.sonando, i: VZ.i,
+      alto: Math.round(c.getBoundingClientRect().height), ancho: Math.round(c.scrollWidth - c.clientWidth) };
+  });
+  let r = await rp();
+  ok(r.activo && r.bot && r.seg === 8 && r.ahora === 5 && r.n === 'Frase 5 de 7' && r.otra >= 44 && r.ancho <= 0,
+    W + ' · reproductor · sonando muestra «' + r.n + '», la tira de ' + r.seg + ' partes en la quinta frase y «empezar de nuevo» de ' + r.otra + ' px');
+  await p.locator('#est-play').click(); r = await rp();
+  ok(!r.sonando && r.est === 'En pausa' && r.bot, W + ' · reproductor · el botón pausa («' + r.est + '») y los controles siguen ahí');
+  await p.locator('#est-otra').click(); await p.waitForTimeout(350); r = await rp();
+  ok(r.sonando && r.i === 0 && r.ahora === 0 && r.n === 'Creencia 4', W + ' · reproductor · «empezar de nuevo» desde la pausa vuelve al principio («' + r.n + '»)');
+  await p.locator('#est-tira [data-k]').nth(3).click(); await p.waitForTimeout(350); r = await rp(); m = await marca();
+  ok(r.ahora === 3 && m.frase === 3 && r.n === 'Frase 3 de 7', W + ' · reproductor · tocar la tira salta a esa parte («' + r.n + '») y la marca en la página');
+  await p.evaluate(() => paraVoz()); r = await rp();
+  /* Antes de escuchar, el reproductor pegado arriba mide un solo renglón. */
+  await p.evaluate(() => verCap('cr05')); await p.waitForTimeout(300); r = await rp();
+  ok(!r.activo && !r.bot && r.alto <= 96, W + ' · reproductor · sin empezar a escuchar ocupa un renglón (' + r.alto + ' px) y no le quita pantalla a la lectura');
+  /* Un repaso: la unidad es la sección. */
+  await p.evaluate(() => { verCap('mc-lista'); vozAlterna('estudio'); }); await p.waitForTimeout(200); r = await rp();
+  ok(r.activo && r.seg === 5 && /^Sección 1 de 5 · /.test(r.n), W + ' · reproductor · en un repaso es el mismo, por secciones: ' + r.seg + ' partes, «' + r.n + '»');
+  await p.evaluate(() => paraVoz());
   ok(voz.mod.includes('1. La Palabra de Dios.') && voz.mod.some(t => /^Para recordarlas\. Uno, uno y tres/.test(t)) && !voz.mod.some(t => /…/.test(t)),
     W + ' · voz · en los repasos se sigue oyendo todo: fila «1. La Palabra de Dios.», la ayuda, y ninguna pista');
+
+  /* ── 3a. anterior y siguiente en el capítulo (v158) ── */
+  await p.evaluate(() => verCap('cr01')); await p.waitForTimeout(900);
+  const nav1 = await p.evaluate(() => ({ filas: document.querySelectorAll('#detalle .cap-nav').length,
+    alto: Math.min(...[...document.querySelectorAll('#detalle .cap-nav .hoja-nav')].map(x => Math.round(x.getBoundingClientRect().height))),
+    arriba: Math.round(document.querySelector('#detalle .cap-nav').getBoundingClientRect().top), vh: innerHeight }));
+  ok(nav1.filas === 2 && nav1.alto >= 44 && nav1.arriba > 0 && nav1.arriba < nav1.vh * 0.6,
+    W + ' · siguiente · la fila está arriba y al final, a la vista al abrir (a ' + nav1.arriba + ' px) y con botones de ' + nav1.alto + ' px');
+  await p.locator('#detalle .cap-nav .hoja-nav').nth(1).click(); await p.waitForTimeout(900);
+  let it = await p.evaluate(() => ({ item: S.ultItem, t: document.querySelector('#detalle .cap-tit').textContent, cta: document.querySelector('#detalle .cap-nav .hoja-cta').textContent,
+    arriba: Math.round(document.querySelector('#detalle .cap-nav').getBoundingClientRect().top), vh: innerHeight }));
+  ok(it.item === 'cr02' && it.cta === '2 de 28' && it.arriba > 0 && it.arriba < it.vh * 0.6, W + ' · siguiente · un toque lleva a «' + it.t + '» (' + it.cta + ') y la fila queda a la mano para seguir');
+  await p.locator('#detalle .cap-nav .hoja-nav').nth(1).click(); await p.waitForTimeout(700);
+  await p.locator('#detalle .cap-nav').last().locator('.hoja-nav').first().click(); await p.waitForTimeout(700);
+  it = await p.evaluate(() => S.ultItem);
+  ok(it === 'cr02', W + ' · siguiente · dos adelante y uno atrás (con la fila del final) deja en la creencia 2');
+
+  /* ── 3b. la hoja del versículo: el pie no va pegado al borde (v158) ── */
+  await p.evaluate(() => {
+    verCap('cr01');
+    const b = [...document.querySelectorAll('#detalle .vref, #detalle .refs button')].find(x => /Tesalonicenses/.test(x.textContent));
+    b.scrollIntoView({ block: 'center' }); b.click();
+  });
+  await p.waitForTimeout(500);
+  const pie = await p.evaluate(() => {
+    const ns = [...document.querySelectorAll('.hoja .hoja-nav')].map(x => x.getBoundingClientRect());
+    return { aire: Math.round(innerHeight - Math.max(...ns.map(r => r.bottom))), alto: Math.round(Math.min(...ns.map(r => r.height))), n: ns.length };
+  });
+  ok(pie.n === 2 && pie.aire >= 24 && pie.alto >= 44, W + ' · hoja del versículo · Anterior y Siguiente a ' + pie.aire + ' px del borde y de ' + pie.alto + ' px de alto');
+  await p.evaluate(() => cierraHoja());
 
   /* ── 4. errores y desborde ── */
   const ancho = await p.evaluate(() => {

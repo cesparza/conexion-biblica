@@ -36,6 +36,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
         pasaAActividad, MAX_ALUMNOS, borraAlumno, adoptaFicha,
         pintaSenales, senal, abreLectura, cierraLectura, lectAvance,
         trozos, TROZO, htmlLecVoz, htmlEstVoz, conEstudioEnVoz, VZ:()=>VZ, desdeVoz, pausaVoz, paraVoz, dichos:()=>DICHOS,
+        vozReinicia, vozAlterna,
         abrePaleta, cierraPaleta, pcFiltra, pcCatalogo,
         pcLimpia, pcAbre, pcItemsActuales:()=>pcItems, pcEstaAbierta:()=>pcAbierta,
         lectCidActual:()=>lectCid, listoDesdeLectura, modsDe, avanza,
@@ -970,8 +971,51 @@ ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
     '«Pantalla completa» vive en el reproductor del texto y no en el del modo lectura');
   /* v149: en el celular el botón queda como ícono; el nombre sigue para el
      lector de pantalla, y la tira va en la misma caja que el botón. */
-  ok(/class="lect-full" aria-label="Pantalla completa"/.test(conCid)&&/class="lec-rp-bot"><div class="lec-tira"/.test(conCid),
+  ok(/class="lect-full" aria-label="Pantalla completa"/.test(conCid)&&/class="lec-rp-bot">(?:(?!<\/div><\/div>)[\s\S])*<div class="lec-tira"(?:(?!<\/div><\/div>)[\s\S])*class="lect-full"/.test(conCid),
     'El botón tiene nombre aunque se vea como ícono, y comparte renglón con la tira');
+}
+/* v158: UN SOLO REPRODUCTOR EN LOS TRES LUGARES. Camilo: «pensé que había un
+   reproductor bien establecido ya, ¿que sea general?». El del estudio
+   (creencias, repasos, matutina, P&R) tenía su propio armado y su propio
+   pintado, sin tira y sin «empezar de nuevo». Se prueba que los tres salen
+   del mismo molde y que el control nuevo está en todos. */
+{
+  const pr=AV.CAPS.find(c=>c.id==='pr39');
+  const tres={lectura:AV.htmlLecVoz(21),texto:AV.htmlLecVoz(21,'texto'),estudio:AV.htmlEstVoz(pr).split('<a class="est-egw"')[0]};
+  /* El molde: las etiquetas y clases, sin los ids, los textos ni cuántos segmentos trae la tira. */
+  const molde=h=>h.replace(/<button type="button" data-k=[\s\S]*?<\/button>/g,'').replace(/ (id|onclick|aria-label|title|aria-pressed|data-vel)="[^"]*"/g,'')
+    .replace(/>[^<]+</g,'><').replace(/ (txt-rp|est-rp)/,'');
+  ok(molde(tres.lectura)===molde(tres.texto)&&molde(tres.texto)===molde(tres.estudio),
+    'Lectura, texto y estudio salen del mismo molde: play, título, velocidad, empezar de nuevo y tira');
+  ['lectura','texto','estudio'].forEach(m=>{
+    ok(new RegExp('class="lec-otra" id="[a-z]+-otra" onclick="vozReinicia\\(\''+m+'\'\\)" aria-label="Empezar de nuevo"').test(tres[m])&&
+       new RegExp('onclick="vozAlterna\\(\''+m+'\'\\)"').test(tres[m]),
+      'El reproductor de '+m+' trae escuchar/pausar y «Empezar de nuevo»');
+  });
+  ok(/id="est-tira"/.test(tres.estudio)&&!/data-k=/.test(tres.estudio),
+    'La tira del estudio nace vacía: se arma al cargar, con las secciones que estén a la vista');
+  const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
+  ok(!/function pintaEstVoz\(/.test(src)&&/const pintaEstVoz=llevar=>pintaRpVoz\('estudio',llevar\);/.test(src)&&
+     /const estVozAlterna=\(\)=>vozAlterna\('estudio'\);/.test(src)&&(src.match(/class="lec-play"/g)||[]).length===1,
+    'Hay un solo armado y un solo pintado: el del estudio ya no tiene los suyos');
+  /* Empezar de nuevo, con voz de mentiras: vuelve a la primera parte sonando o en pausa. */
+  const el={classList:{remove(){},toggle(){},add(){}}};
+  const V=AV.VZ();
+  AV.paraVoz();
+  V.partes=['uno','dos','tres'].map(txt=>({txt,el}));V.modo='estudio';
+  AV.desdeVoz(0);
+  const d=AV.dichos();
+  d[d.length-1].onend();
+  ok(d[d.length-1].text==='dos','(va por la segunda parte)');
+  AV.vozReinicia('estudio');
+  ok(V.i===0&&V.sonando===true&&d[d.length-1].text==='uno','«Empezar de nuevo» mientras suena vuelve a la primera parte');
+  d[d.length-1].onend();AV.pausaVoz();
+  ok(V.sonando===false&&V.i===1,'(en pausa en la segunda)');
+  AV.vozReinicia('estudio');
+  ok(V.i===0&&V.sonando===true&&d[d.length-1].text==='uno','Y en pausa también: no hay que esperar a que termine');
+  AV.vozAlterna('estudio');
+  ok(V.sonando===false,'El mismo botón de escuchar pausa');
+  AV.paraVoz();
 }
 /* v129: Profetas y Reyes se escucha por su estudio, y el libro se abre en el
    sitio oficial. El texto del libro no entra a la app (licencia). */
@@ -995,8 +1039,11 @@ ok(/aria-modal="true"/.test(hv),'La hoja se anuncia como dialogo');
 /* Anterior y siguiente para recorrer sin cerrar, y desactivados en los
    topes: Daniel 3 va del 1 al 30. */
 const h1=AV.htmlHoja('d3',1,1), h30=AV.htmlHoja('d3',30,30);
-ok(/hojaMueve\(-1\)"\s*disabled/.test(h1),'En el versiculo 1, «Anterior» esta desactivado');
-ok(/hojaMueve\(1\)"\s*disabled/.test(h30),'En el ultimo versiculo, «Siguiente» esta desactivado');
+/* v158: la fila la arma filaNav(); el boton apagado ya no lleva onclick. */
+ok(/class="hoja-nav" disabled aria-label="Anterior">‹ Anterior</.test(h1)&&/onclick="hojaMueve\(1\)" aria-label="Versículo siguiente">Siguiente ›</.test(h1),
+  'En el versiculo 1, «Anterior» esta desactivado');
+ok(/class="hoja-nav" disabled aria-label="Siguiente">Siguiente ›</.test(h30)&&/onclick="hojaMueve\(-1\)" aria-label="Versículo anterior">‹ Anterior</.test(h30),
+  'En el ultimo versiculo, «Siguiente» esta desactivado');
 ok(/hoja-cta">1 de 30</.test(h1),'La hoja dice en que versiculo va y cuantos hay');
 ok(!/disabled/.test(hv.match(/hojaMueve\(-1\)[^>]*/)[0]),
   'En un versiculo del medio, «Anterior» esta activo');
@@ -2609,6 +2656,15 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(/numeraDecl\(d\);\s*enlazaCreencias\(d\);/.test(src),'Al pintar, cada fila recibe su enlace a la creencia');
   ok(/function partesEstudio\(d\)\{[\s\S]{0,200}partesCreencia\(d,cr\)/.test(src),
     'En una creencia la voz dice el numero, el nombre y la declaracion');
+  /* v158: se ve por donde va. Cada frase de la declaracion es una parte, y la
+     palabra se marca solo donde el aparato lo avisa. El recorrido con
+     navegador esta en tools/en-navegador.js. */
+  ok(/bq\.querySelectorAll\('\.decl-txt \.dfr'\)/.test(src)&&/el:fr,sec:1,tit,nodo:/.test(src),
+    'La voz de una creencia va frase por frase, no la declaracion entera de una vez');
+  ok(/if\(p\.nodo\)u\.onboundary=/.test(src)&&/function marcaPalabra\(p,ev\)\{\s*if\(!p\|\|!p\.nodo\|\|!\(p\.off>=0\)\|\|!puedeResaltar\(\)\)return;/.test(src),
+    'La palabra que suena se marca si el aparato lo avisa, y si no, no pasa nada');
+  ok((src.match(/sueltaSonido\(\);sueltaPalabra\(\);/g)||[]).length===2,
+    'Al pausar o cortar la voz no queda una palabra marcada');
 }
 
 /* ─── v130: VARIOS CAPITULOS SUELTOS Y EL FILTRO DE ESTUDIO ───
@@ -2762,6 +2818,29 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(secs('pr44').indexOf('🦁 El ángel cerró la boca de los leones')>secs('pr44').indexOf('🤔 ¿Por qué Dios dejó que lo echaran al foso?')&&
      secs('pr42').indexOf('🌳 El sueño del árbol gigante')<secs('pr42').indexOf('🔍 Qué significaba el árbol'),
     'Y el estudio va en el orden de la historia');
+}
+
+/* ─── v158: ANTERIOR Y SIGUIENTE EN EL ORDEN DE ESTUDIO ───
+   Camilo (10-oct): «¿cual es la manera facil para ir a la siguiente en
+   orden?». Cada capitulo trae la fila Anterior / por cual va / Siguiente, y
+   el orden es el mismo de «Ya lo estudie»: capitulos y despues repasos. */
+{
+  const N=montar(RET+',navCap');
+  N.ponCat('ec1');
+  const h1=N.navCap('cr01'), h2=N.navCap('cr02'), h28=N.navCap('cr28'), hm=N.navCap('mc-lista');
+  ok(/class="hoja-nav" disabled[^>]*>‹ Anterior</.test(h1)&&/>1 de 28</.test(h1)&&/onclick="verCap\('cr02'\)"[^>]*>Siguiente ›</.test(h1),
+    'Creencia 1: sin anterior, «1 de 28», y Siguiente lleva a la 2');
+  ok(/onclick="verCap\('cr01'\)"[^>]*>‹ Anterior</.test(h2)&&/>2 de 28</.test(h2)&&/onclick="verCap\('cr03'\)"/.test(h2),
+    'Creencia 2: Anterior a la 1 y Siguiente a la 3');
+  ok(/aria-label="Siguiente: Creencia 2, La Deidad"/.test(h1),'El boton dice a donde lleva para quien usa lector de pantalla');
+  ok(/onclick="verCap\('mc-doctrinas'\)"[^>]*>Siguiente ›</.test(h28),'Despues de la 28 siguen los repasos, como en «Ya lo estudie»');
+  ok(/>Repaso 2 de 2</.test(hm)&&/class="hoja-nav" disabled[^>]*>Siguiente ›</.test(hm),'El ultimo repaso no tiene siguiente');
+  ok(N.navCap('no-existe')==='','Un capitulo que no esta en la lista no pinta la fila');
+  N.ponCat('av');
+  const hd=N.navCap('d1');
+  ok(/>1 de \d+</.test(hd)&&/onclick="verCap\('/.test(hd),'Vale igual para Daniel y los demas materiales: '+(hd.match(/>(\d+ de \d+)</)||[])[1]);
+  const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
+  ok((src.match(/\n    navCap\(id\)\+/g)||[]).length===2,'La fila va arriba y al final del capitulo');
 }
 
 /* ─── v157: «En el libro» no publica palabras rotas por la OCR ───

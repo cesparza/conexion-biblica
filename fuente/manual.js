@@ -312,6 +312,11 @@ const MANUAL = [
     reproductor arriba: <strong><svg class="ico-t" aria-hidden="true"><use href="#i-play"/></svg> Escuchar el estudio</strong>. Lee todas las
     secciones en orden, con su título, y marca lo que va sonando. Se queda
     pegado arriba mientras bajas, para pausar desde cualquier parte.</p>
+    <p>Es el mismo reproductor en toda la app. Cuando empieza a sonar aparece
+    debajo un segundo renglón: <strong><svg class="ico-t" aria-hidden="true"><use href="#i-repetir"/></svg> empezar de nuevo</strong>
+    y una <strong>tira</strong> con una rayita por cada parte; tocar una rayita
+    salta ahí. En las creencias lee el número, el nombre y la declaración, y va
+    marcando la frase que suena.</p>
     <p>Después de tocar <svg class="ico-t" aria-hidden="true"><use href="#i-play"/></svg> puedes <strong>tocar cualquier párrafo, punto o fila
     de tabla</strong> para escuchar desde ahí. «Compruébalo» no se lee en voz
     alta, para no decir las respuestas.</p>
