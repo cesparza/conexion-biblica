@@ -2252,7 +2252,6 @@ details.card summary::marker{content:''}
    esta la barra de la app. La tira tiene un segmento por versiculo; el boton
    es alto para el dedo aunque la raya se vea delgada. */
 .txt-rp{border:1px solid #f0e2c4;border-radius:18px;margin:0 0 .8rem;padding:.5rem .7rem}
-.lec-rp{flex-wrap:wrap;row-gap:.2rem}
 .lec-rp-tx span{white-space:nowrap}
 .lec-tira{display:flex;gap:2px;flex:1 0 100%;min-width:0}
 .lec-tira button{flex:1 1 0;min-width:0;border:0;background:none;padding:6px 0;cursor:pointer}
@@ -2266,9 +2265,6 @@ details.card summary::marker{content:''}
 /* En la columna del texto la franja es angosta (unos 290 px en el celular):
    con la velocidad al lado, «Escuchando · Versículo 4 de 21» quedaba tapado.
    Primer renglón: botón y estado. Segundo: la tira y la velocidad. */
-.txt-rp .lec-rp-tx{flex:1 1 60%}
-.txt-rp .lec-tira{order:4;flex:1 1 6rem;align-self:center}
-.txt-rp .lec-vel{order:5}
 .lec-rp-tx b,.lec-rp-tx span{overflow:hidden;text-overflow:ellipsis}
 
 /* v138: el gris por defecto del navegador (#757575) no llega a 4,5 sobre los
@@ -2410,45 +2406,46 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
    de versículos a todo lo ancho que queda y «Pantalla completa» al final de
    ella. El renglón de abajo es su propia caja (.lec-rp-bot) para que la tira
    no dependa del ancho de la velocidad. */
-.txt-rp{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
-  grid-template-areas:"pl tx vel" "bot bot bot";align-items:center;column-gap:.7rem;row-gap:.5rem}
-.txt-rp .lec-play{grid-area:pl}
-.txt-rp .lec-rp-tx{grid-area:tx}
-.txt-rp .lec-vel{grid-area:vel;order:0;justify-self:end}
-.lec-rp-bot{display:flex;align-items:center;gap:.6rem;min-width:0}
-.txt-rp .lec-rp-bot{grid-area:bot}
-/* v158: «empezar de nuevo», en todos los reproductores, antes de la tira. */
+/* ───────── v162: el reproductor en tarjeta ─────────
+   Camilo eligió la B entre tres propuestas. Tres pisos, iguales en los tres
+   lugares: estado y velocidad; la tira a todo el ancho; el transporte con el
+   botón grande al centro. No cambia de tamaño al empezar a sonar. */
+.lec-rp{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"tx vel" "ios ios" "ti ti" "bot bot";align-items:center;gap:0 .6rem}
+.lec-rp-tx{grid-area:tx;min-height:3.2rem;justify-content:center}
+.lec-rp-tx b{font-size:.75rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;white-space:normal;
+  color:color-mix(in srgb,var(--v-cat,#E8720C) 70%,#000)}
+.lec-rp-tx span{font-size:1rem;font-weight:700;color:#2b2418;white-space:normal}
+.lec-rp .lec-ios{grid-area:ios;font-size:.75rem;color:#76674c}
+/* El aviso del modo silencio es para antes de empezar: sonando ya no hace falta. */
+.lec-rp.activo .lec-ios{display:none}
+.lec-vel{grid-area:vel;justify-self:end}
+.lec-tira{grid-area:ti;min-height:34px}
+.lec-tira button{padding:14px 0}
+.lec-tira i{height:6px}
+.lec-tira button.ahora i{height:8px}
+/* Antes de cargar, la tira del estudio no tiene partes: queda su riel. */
+.lec-tira:empty::before{content:"";flex:1;align-self:center;height:6px;border-radius:8px;background:#ead9bc}
+.lec-rp-bot{grid-area:bot;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;min-width:0}
+.lec-trans{grid-column:2;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.lec-play{width:56px;height:56px;display:grid;place-items:center}
+.lec-play .ico-t{width:1.6rem;height:1.6rem}
 .lec-otra{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:12px;
-  cursor:pointer;color:var(--v-cat);background:color-mix(in srgb,var(--v-cat) 12%,#fff)}
-.lec-otra:hover{background:color-mix(in srgb,var(--v-cat) 18%,#fff)}
+  cursor:pointer;color:var(--v-cat);background:none}
+.lec-otra:hover,.lec-paso:hover:not(:disabled){background:color-mix(in srgb,var(--v-cat) 12%,#fff)}
 .lec-otra .ico-t{width:1.25rem;height:1.25rem}
-/* El del estudio va pegado arriba mientras se baja: su segundo renglón sale
-   cuando ya se está escuchando (.activo), para no quitarle pantalla a quien
-   solo lee. La tira del estudio tiene pocas partes: cada una se toca bien. */
-.est-rp:not(.activo) .lec-rp-bot{display:none}
-.est-rp .lec-tira button{padding:14px 0}
-.lec-rp .lec-rp-bot .lec-tira{flex:1 1 0;min-width:0;order:0;align-self:center}
-.lec-rp .lec-rp-bot .lect-full{flex:0 0 auto;order:0;margin:0}
-/* En la columna angosta el título baja de renglón en vez de cortarse. */
-.txt-rp .lec-rp-tx b{white-space:normal}
-/* En pantalla completa el reproductor sigue en flex: la caja de abajo ocupa su
-   renglón entero, como ocupaba la tira sola. */
-.lec-rp:not(.txt-rp) .lec-rp-bot{flex:1 0 100%;order:4}
-/* En el celular la columna del texto mide unos 290 px: con la velocidad arriba
-   el título se partía en tres renglones y la tira quedaba de 80 px. Ahí
-   «Pantalla completa» pasa a ícono en la esquina (como el de YouTube) y la
-   velocidad baja junto a la tira, que así conserva el ancho. */
-@media (max-width:560px){
-  .txt-rp{grid-template-columns:auto minmax(0,1fr) auto 44px;grid-template-areas:"pl tx tx fu" "re ti vel vel"}
-  .txt-rp .lec-rp-bot{display:contents}
-  .txt-rp .lec-rp-bot .lec-otra{grid-area:re}
-  .txt-rp .lec-rp-bot .lec-tira{grid-area:ti}
-  .txt-rp .lec-vel{grid-area:vel}
-  .txt-rp .lec-rp-bot .lect-full{grid-area:fu;width:44px;height:44px;padding:0;justify-content:center;border-radius:12px}
-  .txt-rp .lect-full span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .txt-rp .lect-full .ico-t{width:1.35em;height:1.35em}
-  .txt-rp:not(:has(.lect-full)){grid-template-areas:"pl tx tx tx" "re ti vel vel"}
-}
+.lec-paso{width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:12px;cursor:pointer;
+  color:var(--v-cat);background:none}
+.lec-paso .ico-t{width:1.5rem;height:1.5rem}
+.lec-paso:disabled{opacity:.35;cursor:default}
+/* «Pantalla completa» es un ícono en la esquina del transporte; el nombre
+   sigue para el lector de pantalla. */
+.lec-rp .lec-rp-bot .lect-full{grid-column:3;order:0;margin:0;width:44px;height:44px;padding:0;justify-content:center;
+  border-radius:12px;background:none}
+.lec-rp .lect-full span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lec-rp .lect-full .ico-t{width:1.35em;height:1.35em}
+/* El del estudio solo se pega arriba cuando ya se está escuchando. */
+.est-rp:not(.activo){position:static}
 
 /* ───────── v150, v156: las 28 para recitar y para ir a cada una ─────────
    Una sola lista (.l28) para «Las 6 doctrinas» y «Las 28 de corrido»: fila de

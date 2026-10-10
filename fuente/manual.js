@@ -211,8 +211,10 @@ const MANUAL = [
     <p>La velocidad se elige a la derecha: <strong>0,9</strong> (la de
     memorizar), <strong>1×</strong> o <strong>1,25</strong>. La app la recuerda
     en ese teléfono.</p>
-    <p>Debajo va una <strong>tira con una rayita por versículo</strong>: dice
-    dónde vas y, si tocas una, empieza desde ese versículo.</p>
+    <p>En medio va una <strong>tira con una rayita por versículo</strong>: dice
+    dónde vas y, si tocas una, empieza desde ese versículo. A los lados del
+    botón grande, <strong><svg class="ico-t" aria-hidden="true"><use href="#i-pista-ant"/></svg></strong> y
+    <strong><svg class="ico-t" aria-hidden="true"><use href="#i-pista-sig"/></svg></strong> pasan al versículo anterior o al siguiente.</p>
     <p>El mismo reproductor está también arriba del texto, dentro de
     <strong>Leer el capítulo completo</strong>. En el computador, donde el
     texto y el estudio van lado a lado, queda pegado arriba de la columna del
@@ -310,11 +312,13 @@ const MANUAL = [
   { t:'Escuchar Profetas y Reyes',
     h:`<p>En los capítulos de <strong>Profetas y Reyes</strong> hay un
     reproductor arriba: <strong><svg class="ico-t" aria-hidden="true"><use href="#i-play"/></svg> Escuchar el estudio</strong>. Lee todas las
-    secciones en orden, con su título, y marca lo que va sonando. Se queda
-    pegado arriba mientras bajas, para pausar desde cualquier parte.</p>
-    <p>Es el mismo reproductor en toda la app. Cuando empieza a sonar aparece
-    debajo un segundo renglón: <strong><svg class="ico-t" aria-hidden="true"><use href="#i-repetir"/></svg> empezar de nuevo</strong>
-    y una <strong>tira</strong> con una rayita por cada parte; tocar una rayita
+    secciones en orden, con su título, y marca lo que va sonando. Mientras
+    suena se queda pegado arriba al bajar, para pausar desde cualquier parte.</p>
+    <p>Es el mismo reproductor en toda la app: el botón grande escucha o pausa,
+    <strong><svg class="ico-t" aria-hidden="true"><use href="#i-pista-ant"/></svg></strong> y <strong><svg class="ico-t" aria-hidden="true"><use href="#i-pista-sig"/></svg></strong>
+    pasan a la parte anterior o a la siguiente,
+    <strong><svg class="ico-t" aria-hidden="true"><use href="#i-repetir"/></svg> empieza de nuevo</strong>,
+    y la <strong>tira</strong> tiene una rayita por cada parte; tocar una rayita
     salta ahí. En las creencias lee el número, el nombre y la declaración, y va
     marcando la frase que suena.</p>
     <p>Después de tocar <svg class="ico-t" aria-hidden="true"><use href="#i-play"/></svg> puedes <strong>tocar cualquier párrafo, punto o fila

@@ -971,8 +971,8 @@ ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
     '«Pantalla completa» vive en el reproductor del texto y no en el del modo lectura');
   /* v149: en el celular el botón queda como ícono; el nombre sigue para el
      lector de pantalla, y la tira va en la misma caja que el botón. */
-  ok(/class="lect-full" aria-label="Pantalla completa"/.test(conCid)&&/class="lec-rp-bot">(?:(?!<\/div><\/div>)[\s\S])*<div class="lec-tira"(?:(?!<\/div><\/div>)[\s\S])*class="lect-full"/.test(conCid),
-    'El botón tiene nombre aunque se vea como ícono, y comparte renglón con la tira');
+  ok(/class="lect-full" aria-label="Pantalla completa"/.test(conCid)&&/class="lec-rp-bot">[\s\S]*class="lec-play"[\s\S]*class="lect-full"/.test(conCid),
+    'El botón tiene nombre aunque se vea como ícono, y comparte renglón con el transporte');
 }
 /* v158: UN SOLO REPRODUCTOR EN LOS TRES LUGARES. Camilo: «pensé que había un
    reproductor bien establecido ya, ¿que sea general?». El del estudio
@@ -987,6 +987,12 @@ ok(A.htmlLecVoz(21)==='','Sin voz en el aparato, el reproductor no se pinta');
     .replace(/>[^<]+</g,'><').replace(/ (txt-rp|est-rp)/,'');
   ok(molde(tres.lectura)===molde(tres.texto)&&molde(tres.texto)===molde(tres.estudio),
     'Lectura, texto y estudio salen del mismo molde: play, título, velocidad, empezar de nuevo y tira');
+  /* v162, la tarjeta: anterior y siguiente en los tres, a los lados del botón. */
+  ['lectura','texto','estudio'].forEach(m=>{
+    ok(new RegExp('class="lec-trans"><button type="button" class="lec-paso" id="[a-z]+-ant" onclick="vozPaso\\(\''+m+'\',-1\\)" aria-label="[^"]+ anterior" disabled>').test(tres[m])&&
+       new RegExp('class="lec-paso" id="[a-z]+-sig" onclick="vozPaso\\(\''+m+'\',1\\)" aria-label="[^"]+ siguiente" disabled>').test(tres[m]),
+      'El reproductor de '+m+' trae anterior y siguiente, apagados hasta que suena');
+  });
   ['lectura','texto','estudio'].forEach(m=>{
     ok(new RegExp('class="lec-otra" id="[a-z]+-otra" onclick="vozReinicia\\(\''+m+'\'\\)" aria-label="Empezar de nuevo"').test(tres[m])&&
        new RegExp('onclick="vozAlterna\\(\''+m+'\'\\)"').test(tres[m]),

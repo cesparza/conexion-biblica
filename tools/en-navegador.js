@@ -214,9 +214,14 @@ for (const W of ANCHOS) {
     return { activo: c.classList.contains('activo'), bot: getComputedStyle(bot).display !== 'none', seg: c.querySelectorAll('.lec-tira [data-k]').length,
       ahora: ahora ? Number(ahora.dataset.k) : -1, est: document.getElementById('est-est').textContent, n: document.getElementById('est-n').textContent,
       otra: Math.round(c.querySelector('.lec-otra').getBoundingClientRect().height), sonando: VZ.sonando, i: VZ.i,
-      alto: Math.round(c.getBoundingClientRect().height), ancho: Math.round(c.scrollWidth - c.clientWidth) };
+      alto: Math.round(c.getBoundingClientRect().height), ancho: Math.round(c.scrollWidth - c.clientWidth),
+      pos: getComputedStyle(c).position, ant: document.getElementById('est-ant').disabled, sig: document.getElementById('est-sig').disabled,
+      play: Math.round(document.getElementById('est-play').getBoundingClientRect().width),
+      paso: Math.round(document.getElementById('est-sig').getBoundingClientRect().width),
+      ios: (() => { const x = c.querySelector('.lec-ios'); return x ? getComputedStyle(x).display : ''; })() };
   });
   let r = await rp();
+  const altoSonando = r.alto;
   ok(r.activo && r.bot && r.seg === 8 && r.ahora === 5 && r.n === 'Frase 5 de 7' && r.otra >= 44 && r.ancho <= 0,
     W + ' · reproductor · sonando muestra «' + r.n + '», la tira de ' + r.seg + ' partes en la quinta frase y «empezar de nuevo» de ' + r.otra + ' px');
   await p.locator('#est-play').click(); r = await rp();
@@ -225,10 +230,22 @@ for (const W of ANCHOS) {
   ok(r.sonando && r.i === 0 && r.ahora === 0 && r.n === 'Creencia 4', W + ' · reproductor · «empezar de nuevo» desde la pausa vuelve al principio («' + r.n + '»)');
   await p.locator('#est-tira [data-k]').nth(3).click(); await p.waitForTimeout(350); r = await rp(); m = await marca();
   ok(r.ahora === 3 && m.frase === 3 && r.n === 'Frase 3 de 7', W + ' · reproductor · tocar la tira salta a esa parte («' + r.n + '») y la marca en la página');
+  /* v162, la tarjeta: anterior y siguiente pasan de parte en parte. */
+  ok(r.play >= 56 && r.paso >= 44 && !r.ant && !r.sig && r.pos === 'sticky', W + ' · tarjeta · botón grande de ' + r.play + ' px, pasos de ' + r.paso + ' px encendidos y pegada arriba mientras suena');
+  await p.locator('#est-sig').click(); await p.waitForTimeout(350); r = await rp(); m = await marca();
+  ok(r.ahora === 4 && m.frase === 4 && r.n === 'Frase 4 de 7', W + ' · tarjeta · «siguiente» pasa a la frase que sigue («' + r.n + '»)');
+  await p.locator('#est-ant').click(); await p.waitForTimeout(350); await p.locator('#est-ant').click(); await p.waitForTimeout(350); r = await rp();
+  ok(r.ahora === 2 && r.n === 'Frase 2 de 7', W + ' · tarjeta · «anterior» dos veces vuelve dos frases («' + r.n + '»)');
+  await p.locator('#est-tira [data-k]').nth(7).click(); await p.waitForTimeout(350); r = await rp();
+  ok(r.ahora === 7 && r.sig && !r.ant, W + ' · tarjeta · en la última parte «siguiente» se apaga');
+  await p.locator('#est-otra').click(); await p.waitForTimeout(350); r = await rp();
+  ok(r.ahora === 0 && r.ant && !r.sig, W + ' · tarjeta · en la primera parte «anterior» se apaga');
   await p.evaluate(() => paraVoz()); r = await rp();
-  /* Antes de escuchar, el reproductor pegado arriba mide un solo renglón. */
+  /* Antes de escuchar la tarjeta mide lo mismo (no salta al empezar), tiene
+     los pasos apagados y no va pegada: no le quita pantalla a quien solo lee. */
   await p.evaluate(() => verCap('cr05')); await p.waitForTimeout(300); r = await rp();
-  ok(!r.activo && !r.bot && r.alto <= 96, W + ' · reproductor · sin empezar a escuchar ocupa un renglón (' + r.alto + ' px) y no le quita pantalla a la lectura');
+  ok(!r.activo && r.bot && Math.abs(r.alto - altoSonando) <= 2 && r.pos === 'static' && r.ant && r.sig,
+    W + ' · tarjeta · en reposo mide ' + r.alto + ' px (sonando ' + altoSonando + '), con los pasos apagados y sin pegarse arriba');
   /* Un repaso: la unidad es la sección. */
   await p.evaluate(() => { verCap('mc-lista'); vozAlterna('estudio'); }); await p.waitForTimeout(200); r = await rp();
   ok(r.activo && r.seg === 5 && /^Sección 1 de 5 · /.test(r.n), W + ' · reproductor · en un repaso es el mismo, por secciones: ' + r.seg + ' partes, «' + r.n + '»');

@@ -3163,9 +3163,9 @@ const RP={
 };
 /* Lo que dice el reproductor en cada lugar. */
 function rpTextos(modo,id){
-  if(modo!=='estudio')return {rot:'Escuchar el capítulo',ir:'Ir a un versículo'};
-  return esCreencia(id)?{rot:'Escuchar la creencia',reposo:'Solo la declaración',ir:'Ir a una frase'}
-    :{rot:'Escuchar el estudio',reposo:'Todo el estudio, sin las preguntas',ir:'Ir a una sección'};
+  if(modo!=='estudio')return {rot:'Escuchar el capítulo',ir:'Ir a un versículo',uni:'Versículo'};
+  return esCreencia(id)?{rot:'Escuchar la creencia',reposo:'Solo la declaración',ir:'Ir a una frase',uni:'Frase'}
+    :{rot:'Escuchar el estudio',reposo:'Todo el estudio, sin las preguntas',ir:'Ir a una sección',uni:'Sección'};
 }
 /* Las unidades de lo que está cargado, en orden: el elemento que cada parte
    marca, o el que ella diga (`ue`: la sección entera en un estudio). */
@@ -3233,6 +3233,15 @@ function vozTira(modo,k){
   const u=unisDe(VZ.partes)[k], i=VZ.partes.findIndex(p=>uniDe(p)===u);
   if(i>=0){pideSonido();desdeVoz(i);}
 }
+/* Anterior y siguiente (v162): una unidad atrás o adelante de la que suena,
+   la misma unidad que cuenta la tira. Sirve para repetir la frase que no
+   quedó sin tener que apuntarle a una rayita. */
+function vozPaso(modo,d){
+  if(!(VZ.modo===modo&&VZ.partes.length))return;
+  const unis=modo==='estudio'?unisDe(VZ.partes):versosDe(modo);
+  const k=unis.indexOf(uniDe(VZ.partes[VZ.i]))+d;
+  if(k>=0&&k<unis.length)vozTira(modo,k);
+}
 const lecVozCargar=()=>vozCargar('lectura');
 const lecVozAlterna=()=>vozAlterna('lectura');
 const lecVozDesde=p=>vozDesde('lectura',p);
@@ -3294,9 +3303,13 @@ function pintaRpVoz(modo,llevar){
     const k=Number(b.dataset.k);
     b.classList.toggle('ya',vk>=0&&k<vk);b.classList.toggle('ahora',k===vk);
   });}catch(e){}
-  /* El reproductor del estudio va pegado arriba: su segundo renglón (empezar
-     de nuevo y la tira) sale cuando ya se está escuchando, para no quitarle
-     pantalla a quien solo lee. */
+  try{
+    const ant=document.getElementById(pf+'-ant'),sig=document.getElementById(pf+'-sig');
+    if(ant)ant.disabled=!(vk>0);
+    if(sig)sig.disabled=!(vk>=0&&vk<total-1);
+  }catch(e){}
+  /* .activo: ya se está escuchando (o va en pausa). El del estudio solo se
+     pega arriba en ese estado, para no quitarle pantalla a quien solo lee. */
   try{const caja=play.closest?play.closest('.lec-rp'):null;if(caja&&caja.classList)caja.classList.toggle('activo',activo);}catch(e){}
   try{document.querySelectorAll('#'+pf+'-vel [data-vel]').forEach(b=>
     b.setAttribute('aria-pressed',String(Number(b.dataset.vel)===lecVel)));}catch(e){}
@@ -3331,21 +3344,27 @@ function htmlRp(modo,o){
   o=o||{};
   const pf=RP[modo].pref, T=rpTextos(modo,o.id);
   const sub=modo==='estudio'?T.reposo:(o.total||0)+' versículos';
+  /* v162, la tarjeta que eligió Camilo: arriba el estado y la velocidad, en
+     medio la tira a todo el ancho, abajo el transporte con el botón grande al
+     centro. «Empezar de nuevo» a la izquierda y, donde la hay, «Pantalla
+     completa» a la derecha: nada queda suelto. */
+  const paso=(d,ic)=>'<button type="button" class="lec-paso" id="'+pf+(d<0?'-ant':'-sig')+'" onclick="vozPaso(\''+modo+'\','+d+')"'+
+    ' aria-label="'+T.uni+(d<0?' anterior':' siguiente')+'" disabled>'+IC(ic)+'</button>';
   return '<div class="lec-rp'+(modo==='texto'?' txt-rp':modo==='estudio'?' est-rp':'')+'">'+
-    '<button type="button" class="lec-play" id="'+pf+'-play" onclick="vozAlterna(\''+modo+'\')" aria-label="Escuchar">'+IC('play')+'</button>'+
-    '<div class="lec-rp-tx"><b id="'+pf+'-est">'+T.rot+'</b><span id="'+pf+'-n">'+sub+'</span>'+
-      (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
+    '<div class="lec-rp-tx"><b id="'+pf+'-est">'+T.rot+'</b><span id="'+pf+'-n">'+sub+'</span></div>'+
     '<div class="lec-vel" id="'+pf+'-vel" role="group" aria-label="Velocidad">'+
     VELS.map(v=>'<button type="button" data-vel="'+v+'" aria-pressed="'+(v===lecVel)+'"'+
       ' onclick="lecVozVel('+v+')">'+String(v).replace('.',',')+(v===1?'×':'')+'</button>').join('')+
     '</div>'+
-    /* La tira va en su propio renglon, a todo el ancho: metida junto al texto
-       quedaba de 70 px en el celular y no se podia tocar un versiculo. */
-    /* v149: la tira y «Pantalla completa» van en su propia caja: en la grilla
-       compartían columna con la velocidad y la tira quedaba de 80 px. */
+    /* El aviso del iPhone va en su propio renglón, a todo el ancho: junto a
+       la velocidad se partía en dos en un iPhone SE. */
+    (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+
+    '<div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="'+T.ir+'">'+htmlTira(modo,modo==='estudio'?0:(o.total||0))+'</div>'+
     '<div class="lec-rp-bot">'+
     '<button type="button" class="lec-otra" id="'+pf+'-otra" onclick="vozReinicia(\''+modo+'\')" aria-label="Empezar de nuevo" title="Empezar de nuevo">'+IC('repetir')+'</button>'+
-    '<div class="lec-tira" id="'+pf+'-tira" role="group" aria-label="'+T.ir+'">'+htmlTira(modo,modo==='estudio'?0:(o.total||0))+'</div>'+
+    '<div class="lec-trans">'+paso(-1,'pista-ant')+
+    '<button type="button" class="lec-play" id="'+pf+'-play" onclick="vozAlterna(\''+modo+'\')" aria-label="Escuchar">'+IC('play')+'</button>'+
+    paso(1,'pista-sig')+'</div>'+
     (o.cid?'<button type="button" class="lect-full" aria-label="Pantalla completa" onclick="abreLectura(\''+o.cid+'\')">'+IC('expandir')+'<span>Pantalla completa</span></button>':'')+
     '</div></div>';
 }
