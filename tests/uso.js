@@ -2517,8 +2517,98 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   A.ponDirector(null);
 
   const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
-  ok(/if\(srvYo&&srvYo\.rol==='participante'\)adoptaFicha\(srvYo\);/.test(src),
-    'Y el arranque alinea la ficha con la sesion ANTES de sincronizar');
+  ok(/if\(srvYo&&srvYo\.rol==='participante'&&!esMiOtraActividad\(\)\)adoptaFicha\(srvYo\);/.test(src),
+    'Y el arranque alinea la ficha con la sesion ANTES de sincronizar, salvo en su otra actividad');
+}
+
+/* ── v156: UN REFRESCO NO SACA A NADIE DE DONDE ESTABA ────────────────
+   Camilo (10-oct): «cuando refresco la app me lleva a otro lugar». Quien
+   entro con su codigo de Conexion Biblica y estudia las 28 creencias tiene
+   dos fichas con su nombre; el arranque lo devolvia a la de la sesion, y a
+   Inicio, en cada refresco. Se prueba la FUNCION que decide.
+   El recorrido completo, con navegador, esta en tools/en-navegador.js. */
+{
+  const R=montar(RET+',esMiOtraActividad,pistaDe,haceEvaluacion');
+  const yo={rol:'participante',id:'p1',nombre:'Camila',categoria:'av'};
+  R.ponCat('av');R.ponNombre('Camila');R.S().pid='p1';R.S().prog['d1']=80;
+  R.ponDirector(yo);
+  ok(R.esMiOtraActividad()===false,'En su ficha de la sesion no hay nada que saltarse');
+  const idSesion=R.DB().activo;
+
+  R.ponCat('ec1');
+  ok(R.DB().activo!==idSesion&&R.S().cat==='ec1'&&R.S().nombre==='Camila'&&!R.S().pid,
+    'Pasar a En esto creemos abre SU otra ficha, sin pid');
+  ok(R.esMiOtraActividad()===true,
+    'Con sesion de Conexion Biblica y estudiando creencias, el arranque NO la devuelve');
+  ok(R.fichaEsDeLaSesion()===false,'Y esa ficha tampoco se sube a la cuenta de la sesion');
+
+  R.ponNombre('Alaia');
+  ok(R.esMiOtraActividad()===false,'Otra persona en el mismo celular SI se alinea, como antes');
+  R.ponNombre('Camila');
+
+  R.ponDirector({rol:'participante',id:'p1',nombre:'Camila',categoria:'ec2'});
+  ok(R.esMiOtraActividad()===false,'Misma actividad (otra categoria): manda el servidor, como antes');
+  R.ponDirector(null);
+  ok(R.esMiOtraActividad()===false,'Sin sesion no aplica');
+
+  /* Una ficha atada a una persona del servidor no cambia de actividad aunque
+     este vacia: la siguiente sincronizacion le devolvia la categoria. */
+  const N=montar(RET);
+  N.ponCat('av');N.ponNombre('Daniel');N.S().pid='p9';
+  const antes=N.alumnos().length, idAv=N.DB().activo;
+  N.ponCat('ec1');
+  ok(N.alumnos().length===antes+1&&N.DB().alumnos[idAv].cat==='av'&&N.S().cat==='ec1',
+    'Con pid y sin progreso, cambiar de actividad crea la otra ficha y no toca la de la sesion');
+  const V2=montar(RET);
+  V2.ponCat('av');V2.agregaAlumno();
+  const conVacia=V2.alumnos().length;
+  V2.ponCat('ec1');
+  ok(V2.alumnos().length===conVacia&&V2.S().cat==='ec1','Sin pid, la ficha vacia se sigue reusando');
+
+  const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
+  ok(/function haceEvaluacion\(\)\{[\s\S]{0,420}!fichaEsDeLaSesion\(\)\)adoptaFicha\(srvYo\);/.test(src),
+    'La evaluacion pasa primero a la ficha de la sesion: se arma con SU categoria');
+  ok(/verCap\(S\.ultItem,true\);[\s\S]{0,260}vuelveADonde\(\)/.test(src)&&/if\(!quieto\)llevaA\('detalle'\);/.test(src),
+    'Al reabrir tras un refresco se vuelve a la altura anotada, no al titulo');
+  ok(!/ultY|cb-donde/.test(JSON.stringify(R.normalizar({ultPantalla:'estudio'}))),
+    'La altura de la pagina no viaja en la ficha: es de esta pantalla');
+
+  /* ── v156: las pistas que se van quitando ── */
+  ok(R.pistaDe('La Palabra de Dios')==='La P… de D…','Pista: «La P… de D…»');
+  ok(R.pistaDe('La vida, muerte y resurrección de Cristo')==='La v…, m… y r… de C…',
+    'La pista respeta comas y palabras cortas: '+R.pistaDe('La vida, muerte y resurrección de Cristo'));
+  ok(R.pistaDe('El ministerio de Cristo en el Santuario celestial')==='El m… de C… en el S… c…',
+    'Y los nombres largos: '+R.pistaDe('El ministerio de Cristo en el Santuario celestial'));
+}
+
+/* ── v156: LAS LISTAS DE CREENCIAS SON UNA SOLA, Y DICEN LO MISMO ──────
+   «Las 6 doctrinas» y «Las 28 de corrido» traen las 28 en la misma pieza
+   (.l28), con el nombre exacto de cada creencia y la misma ayuda para
+   recordar. Si una se edita y la otra no, esto falla. */
+{
+  const filas=h=>[...h.matchAll(/<li><b>(\d+)<\/b><span>([^<]+)<\/span><\/li>/g)].map(m=>m[1]+'|'+m[2]);
+  const hilos=h=>[...h.matchAll(/<p class="l28-hilo">([\s\S]*?)<\/p>/g)].map(m=>m[1]);
+  const junta=id=>CR.CR_CONT_MODULOS[id].map(s=>s.h).join('');
+  const bien=CR.CR_CAPS.map((c,i)=>(i+1)+'|'+c.sub);
+  ['mc-doctrinas','mc-lista'].forEach(id=>{
+    ok(JSON.stringify(filas(junta(id)))===JSON.stringify(bien),
+      id+': las 28 filas, en orden y con el nombre exacto de cada creencia');
+    ok(!/<ul class="tight"><li><b>\d+\.<\/b>/.test(junta(id)),id+': ya no trae la lista vieja sin enlace');
+  });
+  const hd=hilos(junta('mc-doctrinas')), hl=hilos(junta('mc-lista'));
+  ok(hd.length===6&&JSON.stringify(hd)===JSON.stringify(hl),'Las seis ayudas para recordar son las mismas en las dos paginas');
+  const malas=CR.DOCTRINAS.filter((d,i)=>{
+    const ns=[...(hd[i]||'').matchAll(/<b>(\d+)<\/b>/g)].map(m=>+m[1]);
+    const esperado=[];for(let n=d.desde;n<=d.hasta;n++)esperado.push(n);
+    return JSON.stringify(ns)!==JSON.stringify(esperado);
+  }).map(d=>d.n);
+  ok(malas.length===0,'Cada ayuda nombra todas las creencias de su doctrina, en orden'+(malas.length?': falla la '+malas.join(', '):''));
+  ok(/no vienen en la cartilla y no se preguntan/.test(junta('mc-doctrinas')),
+    'Y se dice que la ayuda es de estudio, no texto de la cartilla');
+  const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
+  ok(/numeraDecl\(d\);\s*enlazaCreencias\(d\);/.test(src),'Al pintar, cada fila recibe su enlace a la creencia');
+  ok(/function partesEstudio\(d\)\{[\s\S]{0,200}partesCreencia\(d,cr\)/.test(src),
+    'En una creencia la voz dice el numero, el nombre y la declaracion');
 }
 
 /* ─── v130: VARIOS CAPITULOS SUELTOS Y EL FILTRO DE ESTUDIO ───

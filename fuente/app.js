@@ -321,6 +321,16 @@ function programaSubida(){
  *  vieja todavia no tiene pid, y ahi se cae al nombre y a la ACTIVIDAD, que es
  *  como se comparaba antes. Por actividad y no por categoria a proposito: una
  *  nina puede pasar de Menores a Aventureros y sigue siendo su progreso. */
+/** ¿La ficha abierta es de la persona de la sesion, pero de su OTRA actividad?
+ *  Mismo nombre y actividad distinta, que es como pasaAActividad() empareja
+ *  las fichas de una persona. Otra persona en el mismo celular no entra aqui:
+ *  ahi el arranque si debe pasar a la ficha de quien tiene la sesion. */
+function esMiOtraActividad(){
+  if(!srvYo||!S||!srvYo.nombre||!CATS[srvYo.categoria])return false;
+  if(S.pid&&srvYo.id&&S.pid===srvYo.id)return false;
+  return (S.nombre||'').trim().toLowerCase()===String(srvYo.nombre).trim().toLowerCase()&&
+    ACT_DE(S.cat)!==ACT_DE(srvYo.categoria);
+}
 function fichaEsDeLaSesion(){
   if(!srvYo||!S)return false;
   if(S.pid&&srvYo.id)return S.pid===srvYo.id;
@@ -948,7 +958,10 @@ function pasaAActividad(c){
     cambiaAlumno(mia[0]);
     return true;
   }
-  if(sinProgreso(S))return false;
+  /* v156: una ficha con `pid` es de una persona del servidor y su categoria
+     la manda el servidor: escribirle encima otra actividad duraba hasta la
+     siguiente sincronizacion, que la devolvia. Esa nunca se reusa. */
+  if(sinProgreso(S)&&!S.pid)return false;
   if(alumnos().length>=MAX_ALUMNOS){
     avisaApp('Este aparato ya tiene '+MAX_ALUMNOS+' fichas','Borra una antes de agregar otra.');
     return true;
@@ -2129,7 +2142,7 @@ function compruebaRec(rid,elegido,correcta){
   comp.innerHTML=bien?IC('check')+' Correcto.':IC('x')+' No era esa — sigue leyendo con calma.';
 }
 
-function verCap(id){
+function verCap(id,quieto){
   paraVoz();
   ir('estudio');
   S.ultItem=id;guardar();
@@ -2139,8 +2152,13 @@ function verCap(id){
   if(!c)return;
   const secs=CONTENIDO[id]||CONT_MODULOS[id]||[];
   const d=document.getElementById('detalle');
+  /* v156: «Volver a …» solo si se llegó desde una lista (ver verCreencia). */
+  if(crVuelve&&crVuelve.a!==id)crVuelve=null;
+  const deDonde=crVuelve?buscaItem(crVuelve.de):null;
   d.innerHTML=
     '<div class="cap-cab">'+
+    (deDonde?'<button type="button" class="btn txt cap-vuelve" onclick="crRegresa()">'+IC('izq')+
+      ' Volver a '+esc(deDonde.label)+'</button>':'')+
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
     '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(c.src?esc(c.src)+' · ':'')+
@@ -2168,10 +2186,11 @@ function verCap(id){
     '<button class="btn tono" onclick="ir(\'examen\')">'+IC('examen')+' Examen</button>'+
     '<button class="btn txt" onclick="imprimeCapitulo(\''+id+'\')">'+IC('imprimir')+' Imprimir</button></div>';
   d.style.display='block';
-  d.classList.remove('l28-tapado');
+  d.classList.remove('l28-tapado','l28-pistas');
   limpiaRetiradasDe(d);
   hidrataVoz(d);
   numeraDecl(d);
+  enlazaCreencias(d);
   divideVista(d,id);
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
@@ -2179,7 +2198,69 @@ function verCap(id){
      más abajo, fuera de lo que se ve, y tocar una tarjeta parecía no hacer
      nada. Mismo defecto que tuvo «abrir evaluación» (v99), mismo arreglo:
      llevaA() hace scroll y marca dónde aterrizar. */
-  llevaA('detalle');
+  /* v156: al reabrir tras un refresco no se lleva al inicio del detalle: el
+     arranque pone la página donde iba leyendo (vuelveADonde). */
+  if(!quieto)llevaA('detalle');
+}
+
+/* ───────── DÓNDE IBA LEYENDO (v156) ─────────
+   MECANISMO
+   Un refresco ya reabría la pantalla y el capítulo (ultPantalla, ultItem),
+   pero siempre arriba: quien iba por la mitad de «Las 6 doctrinas» volvía al
+   título. Mientras se baja por la página se anota en el aparato en qué
+   sección va y cuánto ha bajado dentro de ella; el arranque vuelve ahí.
+
+   POR QUÉ LA SECCIÓN Y NO SOLO LOS PÍXELES
+   La altura de lo que hay encima cambia entre una visita y otra (la rejilla
+   de capítulos, el reproductor, un bloque abierto), y los mismos píxeles
+   caerían en otro párrafo. La sección es la misma siempre.
+
+   POR QUÉ NO VA EN LA FICHA
+   La ficha sube al servidor y baja a otros celulares; la altura de una página
+   solo vale en esta pantalla. Va aparte, como el filtro y la velocidad. */
+const DONDE_K='cb-donde';
+const DONDE_TOPE=84;
+let dondeT=0, dondeQuieto=false;
+const dondeLlave=()=>[DB.activo,S.ultPantalla||'inicio',S.ultItem||''].join('|');
+function secsDeDonde(){
+  const d=document.getElementById('detalle');
+  if(!d||!S.ultItem||S.ultPantalla!=='estudio'||!d.getClientRects().length)return [];
+  return [...d.querySelectorAll('.sec')].filter(x=>x.getClientRects().length);
+}
+function anotaDonde(){
+  if(dondeQuieto)return;
+  try{
+    const o={k:dondeLlave(),y:Math.round(window.scrollY||0)};
+    const secs=secsDeDonde();
+    const i=secs.findIndex(x=>x.getBoundingClientRect().bottom>DONDE_TOPE);
+    if(i>=0){const r=secs[i].getBoundingClientRect();
+      /* Solo si ya entró en la sección: arriba de la primera mandan los píxeles. */
+      if(r.top<=DONDE_TOPE){o.s=i;o.dy=Math.round(DONDE_TOPE-r.top);}}
+    localStorage.setItem(DONDE_K,JSON.stringify(o));
+  }catch(e){}
+}
+function vuelveADonde(){
+  let o=null;
+  try{o=JSON.parse(localStorage.getItem(DONDE_K)||'null');}catch(e){}
+  if(!o||o.k!==dondeLlave())return false;
+  const pon=()=>{
+    let y=Number(o.y)||0;
+    const sec=Number.isInteger(o.s)?secsDeDonde()[o.s]:null;
+    if(sec)y=sec.getBoundingClientRect().top+(window.scrollY||0)-DONDE_TOPE+(Number(o.dy)||0);
+    window.scrollTo(0,Math.max(0,Math.round(y)));
+  };
+  dondeQuieto=true;
+  try{pon();}catch(e){}
+  /* Otra vez cuando el navegador termina de acomodar la página (letra,
+     imágenes): la primera medida puede haber sido con la altura a medias. */
+  const fin=()=>{try{pon();}catch(e){}dondeQuieto=false;};
+  if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(fin));
+  else fin();
+  return true;
+}
+if(typeof window!=='undefined'&&window.addEventListener){
+  window.addEventListener('scroll',()=>{clearTimeout(dondeT);dondeT=setTimeout(anotaDonde,200);},{passive:true});
+  window.addEventListener('pagehide',anotaDonde);
 }
 
 /* ───────── LO RETIRADO TAMPOCO SALE EN «COMPRUEBALO» ─────────
@@ -2446,21 +2527,98 @@ function festejaRacha(espera){
   if(espera&&typeof setTimeout==='function')setTimeout(f,espera);else f();
 }
 
-/* ───────── LAS 28 PARA RECITAR (v150) ─────────
-   «Las 28 de corrido» no es para leerla: es para decirla en orden. El botón
-   tapa los nombres en las dos secciones a la vez (la clase va en #detalle) y
-   cada fila se destapa con un toque. Es lo mismo que «Compruébalo», en lista. */
-function l28Tapa(b){
+/* ───────── LAS 28 PARA RECITAR (v150, v156) ─────────
+   «Las 28 de corrido» no es para leerla: es para decirla en orden.
+
+   MECANISMO (v156)
+   Recordar algo sin verlo lo fija más que releerlo, pero tapar todo de una
+   es pedir lo que todavía no se sabe. Por eso son tres niveles y la ayuda se
+   va quitando: «Ver» muestra el nombre y la ayuda de la doctrina; «Con
+   pistas» deja solo las iniciales («La P… de D…»); «Tapadas» deja solo el
+   número y esconde también la ayuda. El nivel va como clase en #detalle, así
+   que vale para todas las secciones a la vez, y cada fila se destapa con un
+   toque. La pista se calcula del nombre al pintar (enlazaCreencias). */
+const L28_MODOS=['pistas','tapado'];
+function l28Modo(b,modo){
   const d=document.getElementById('detalle');if(!d)return;
-  const on=d.classList.toggle('l28-tapado');
+  L28_MODOS.forEach(m=>d.classList.toggle('l28-'+m,m===modo));
   d.querySelectorAll('.l28 li.ver').forEach(li=>li.classList.remove('ver'));
-  d.querySelectorAll('.l28-tapa').forEach(x=>{x.setAttribute('aria-pressed',String(on));
-    const s=x.querySelector('span');if(s)s.textContent=on?'Mostrar los nombres':'Tapar los nombres';});
+  d.querySelectorAll('.l28-modo .cf').forEach(x=>{const on=x===b;
+    x.classList.toggle('on',on);x.setAttribute('aria-pressed',String(on));});
 }
 try{document.addEventListener('click',e=>{
-  const li=e.target&&e.target.closest&&e.target.closest('#detalle.l28-tapado .l28 li');
+  if(!e.target||!e.target.closest||e.target.closest('.cr-ir'))return;
+  const li=e.target.closest('#detalle.l28-pistas .l28 li,#detalle.l28-tapado .l28 li');
   if(li)li.classList.toggle('ver');
 });}catch(e){}
+
+/* ───────── DE LA LISTA A LA CREENCIA, Y DE VUELTA (v156) ─────────
+   MECANISMO
+   Las listas de creencias de los repasos son contenido ya escrito
+   (CR_CONT_MODULOS): número y nombre. Al pintar, cada fila recibe un botón
+   que abre el estudio de esa creencia y la pista de sus iniciales. Es UNA
+   función para todas las listas, así que «Las 6 doctrinas» y «Las 28 de
+   corrido» se comportan igual sin repetir el enlace 56 veces en el contenido,
+   y lo impreso sigue saliendo limpio.
+
+   Viendo los nombres, toda la fila lleva a la creencia. Recitando (pistas o
+   tapadas) el toque en la fila destapa, y a la creencia lleva la flecha.
+
+   LA VUELTA
+   Quien salta de la lista a una creencia quiere volver a la fila donde iba,
+   no al principio: la creencia abierta desde una lista trae arriba «Volver a
+   …», que reabre el repaso a la misma altura. */
+const PISTA_ENTERA=/^(el|la|los|las|de|del|en|y|su|a|al)$/i;
+function pistaDe(nombre){
+  return String(nombre||'').split(' ').map(w=>{
+    const m=w.match(/^([^\p{L}]*)(\p{L})(\p{L}*)([^\p{L}]*)$/u);
+    if(!m||PISTA_ENTERA.test(m[2]+m[3]))return w;
+    return m[1]+m[2]+'…'+m[4];
+  }).join(' ');
+}
+function enlazaCreencias(d){
+  try{
+    (d&&d.querySelectorAll?[...d.querySelectorAll('.l28 li')]:[]).forEach(li=>{
+      const b=li.children[0],sp=li.children[1];
+      if(!b||!sp||li.querySelector('.cr-ir'))return;
+      const n=parseInt(b.textContent,10),id='cr'+String(n).padStart(2,'0');
+      const nom=sp.textContent.trim();
+      const p=document.createElement('span');
+      p.className='l28-p';p.setAttribute('aria-hidden','true');p.textContent=pistaDe(nom);
+      li.appendChild(p);
+      if(!buscaItem(id))return;
+      const a=document.createElement('button');
+      a.type='button';a.className='cr-ir';
+      a.setAttribute('aria-label','Estudiar la creencia '+n+': '+nom);
+      a.setAttribute('onclick',"verCreencia('"+id+"')");
+      a.innerHTML=IC('der');
+      li.appendChild(a);
+    });
+  }catch(e){}
+}
+let crVuelve=null;
+const filaDeCreencia=id=>{
+  const a=document.querySelector('#detalle .cr-ir[onclick*="'+id+'"]');
+  return a&&a.closest?a.closest('li'):null;
+};
+function verCreencia(id){
+  /* Se anota a qué altura de la pantalla estaba la fila, no los píxeles de la
+     página: lo de arriba cambia de alto al volver (el avance de la rejilla). */
+  let top=null;
+  try{top=filaDeCreencia(id).getBoundingClientRect().top;}catch(e){}
+  crVuelve={de:S.ultItem,a:id,top};
+  verCap(id);
+}
+function crRegresa(){
+  const v=crVuelve;crVuelve=null;
+  if(!v||!buscaItem(v.de)){ir('estudio');return;}
+  verCap(v.de,true);
+  try{
+    const li=filaDeCreencia(v.a);
+    if(li&&v.top!==null)window.scrollTo(0,(window.scrollY||0)+li.getBoundingClientRect().top-v.top);
+    else llevaA('detalle');
+  }catch(e){}
+}
 
 /* ───────── LA CELEBRACIÓN (v148) ─────────
    MECANISMO
@@ -3062,7 +3220,7 @@ const EGW_PYR='https://m.egwwritings.org/es/book/217/toc';
 function textoLimpio(el){
   try{
     const c=el.cloneNode(true);
-    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,.decl-src,script,style').forEach(x=>x.remove());
+    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,.decl-src,.l28-p,.cr-ir,script,style').forEach(x=>x.remove());
     c.querySelectorAll('br').forEach(b=>b.replaceWith(' '));
     c.querySelectorAll('td,th,li,p,div').forEach(x=>x.append(' '));
     /* v133: la referencia «(PR 379.1)» sirve para leer, no para oir: la voz
@@ -3078,7 +3236,7 @@ const conPunto=t=>/[.!?:;»”)]$/.test(t)?t:t+'.';
    dos piezas y van con pausa entre ellas. */
 function textoDeFila(li){
   const hijos=li.children?[...li.children]:[];
-  if(hijos.length===2&&hijos[0].matches('b')&&hijos[1].matches('span'))
+  if(hijos.length>=2&&hijos[0].matches('b')&&hijos[1].matches('span'))
     return textoLimpio(hijos[0])+'. '+textoLimpio(hijos[1]);
   return textoLimpio(li);
 }
@@ -3108,8 +3266,25 @@ function bloquesDeSec(sec){
   return out.filter(b=>b.txt);
 }
 
+/* v156 (Camilo): en una creencia la voz dice el número, el nombre y la
+   declaración, que es lo que el examen pide palabra por palabra. Lo demás de
+   la página se lee con los ojos: los textos clave son listas de citas y «En el
+   libro» son subtítulos que no entran al examen; oídos de corrido tapaban la
+   declaración (era el 45 % de lo que sonaba). */
+function partesCreencia(d,c){
+  const out=[];
+  const bq=d.querySelector('.sec blockquote.decl:not(.frase-libro)');
+  if(!bq)return out;
+  const tit='La declaración';
+  out.push({txt:conPunto(c.label)+' '+conPunto(c.sub),el:d.querySelector('.cap-cab')||bq,sec:1,tit});
+  trozos(conPunto(textoLimpio(bq))).forEach(x=>out.push({txt:x,el:bq,sec:1,tit}));
+  out.secs=1;
+  return out;
+}
 function partesEstudio(d){
   const out=[];let k=0;
+  const cr=esCreencia(S.ultItem)?buscaItem(S.ultItem):null;
+  if(cr){const p=partesCreencia(d,cr);if(p.length)return p;}
   [...d.querySelectorAll('.sec')].forEach(sec=>{
     /* Una sección de preguntas para comprobar (dos o más tapas) no se lee.
        Una sola tapa dentro de una sección de contenido («¿Cuántas referencias
@@ -3164,10 +3339,10 @@ function pintaEstVoz(llevar){
   play.innerHTML=IC(VZ.sonando&&mio?'pausa':'play');
   play.setAttribute('aria-label',VZ.sonando&&mio?'Pausa':'Escuchar');
   const est=document.getElementById('est-est'),n=document.getElementById('est-n');
-  if(est)est.textContent=VZ.sonando&&mio?'Escuchando':(mio&&i>0?'En pausa':'Escuchar el estudio');
+  if(est)est.textContent=VZ.sonando&&mio?'Escuchando':(mio&&i>0?'En pausa':((est.dataset&&est.dataset.reposo)||'Escuchar el estudio'));
   if(n){
     const p=mio?VZ.partes[i]:null;
-    n.textContent=p&&(VZ.sonando||i>0)?'Sección '+p.sec+' de '+VZ.secs+' · '+p.tit:((n.dataset&&n.dataset.reposo)||'');
+    n.textContent=p&&(VZ.sonando||i>0)?(VZ.secs>1?'Sección '+p.sec+' de '+VZ.secs+' · ':'')+p.tit:((n.dataset&&n.dataset.reposo)||'');
   }
   try{document.querySelectorAll('#est-vel [data-vel]').forEach(b=>
     b.setAttribute('aria-pressed',String(Number(b.dataset.vel)===lecVel)));}catch(e){}
@@ -3189,10 +3364,12 @@ function htmlEstVoz(c){
     '<span>Leer el capítulo completo</span><small>Abre el índice del libro en EGW Writings, '+
     'el sitio oficial. Ahí busca el capítulo '+esc(n)+'.</small></a>':'';
   if(!puedeHablar())return egw;
-  const reposo='Todo el estudio, sin las preguntas';
+  const cr=esCreencia(c.id);
+  const reposo=cr?'Solo la declaración':'Todo el estudio, sin las preguntas';
+  const rot=cr?'Escuchar la creencia':'Escuchar el estudio';
   return '<div class="lec-rp est-rp">'+
     '<button type="button" class="lec-play" id="est-play" onclick="estVozAlterna()" aria-label="Escuchar">'+IC('play')+'</button>'+
-    '<div class="lec-rp-tx"><b id="est-est">Escuchar el estudio</b><span id="est-n" data-reposo="'+reposo+'">'+reposo+'</span>'+
+    '<div class="lec-rp-tx"><b id="est-est" data-reposo="'+rot+'">'+rot+'</b><span id="est-n" data-reposo="'+reposo+'">'+reposo+'</span>'+
       (esIOS()?'<span class="lec-ios">¿No oyes nada? Quita el modo silencio.</span>':'')+'</div>'+
     '<div class="lec-vel" id="est-vel" role="group" aria-label="Velocidad">'+
     VELS.map(v=>'<button type="button" data-vel="'+v+'" aria-pressed="'+(v===lecVel)+'"'+
@@ -5161,6 +5338,10 @@ function pintaEvaluacion(){
    evaluación no toca la configuración del participante. */
 function haceEvaluacion(){
   if(!evalPend||evalHecha)return;
+  /* v156: la evaluacion es de la persona de la sesion y se arma con SU
+     categoria. Si esta en su otra actividad (ver esMiOtraActividad), primero
+     se pasa a su ficha; el arranque ya no lo hace por ella. */
+  if(srvYo&&srvYo.rol==='participante'&&!fichaEsDeLaSesion())adoptaFicha(srvYo);
   const r=evalPend;
   const prev={a:alcance,n:nivel,q:cuantas,f:soloFuente,fa:soloFuenteAct,r:retiradas};
   let sel=[];
@@ -5647,9 +5828,12 @@ try{
   pintaLogo();marcaCat();alcance=alcanceDeFiltro();reiniciaFuente();pintaInicio();
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
   else if(S.ultPantalla && S.ultPantalla!=='inicio' && TABS[S.ultPantalla]!==undefined){
-    if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem);
+    if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem,true);
     else ir(S.ultPantalla);
-  }
+    /* v156: y a la altura en que iba (ver «DÓNDE IBA LEYENDO»). Si no hay
+       nada anotado, un capítulo reabierto se muestra desde su título. */
+    if(!vuelveADonde()&&S.ultItem)llevaA('detalle');
+  }else vuelveADonde();
 }catch(e){console.error(e);}
 
 /* ───────── entrar con el código (v20) ─────────
@@ -7758,7 +7942,13 @@ async function abreHistorial(){
        persona se le colaria a la otra sin que nada avise.
        adoptaFicha() hace exactamente esa alineacion (busca la ficha de ese
        nombre en esa actividad, o la crea) y ya se usa al entrar con codigo. */
-    if(srvYo&&srvYo.rol==='participante')adoptaFicha(srvYo);
+    /* v156: SALVO QUE SEA LA MISMA PERSONA EN SU OTRA ACTIVIDAD. Quien entro
+       con su codigo de Conexion Biblica y esta estudiando las 28 creencias
+       tiene dos fichas con su nombre; alinear aqui la devolvia a la de la
+       sesion y a Inicio en CADA refresco. No hace falta: sincronizaProgreso()
+       ya se niega a subir una ficha que no es la de la sesion, y la
+       evaluacion alinea ella misma antes de armarse (haceEvaluacion). */
+    if(srvYo&&srvYo.rol==='participante'&&!esMiOtraActividad())adoptaFicha(srvYo);
     /* Y con la ficha correcta activa: si esta niña ya entro con su codigo
        alguna vez, su progreso baja aqui, asi que abrir en otro celular
        muestra lo que estudio y no una ficha en blanco. */

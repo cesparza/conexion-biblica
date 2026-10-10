@@ -1179,7 +1179,7 @@ ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slic
   'La voz ya no recorta el texto a 600 caracteres');
 ok(/function ir\(id\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de pantalla corta la lectura');
-ok(/function verCap\(id\)\{\s*paraVoz\(\);/.test(APP),
+ok(/function verCap\(id,quieto\)\{\s*paraVoz\(\);/.test(APP),
   'Cambiar de capitulo corta la lectura');
 /* Cada speak lleva su turno: el onend de lo cancelado no avanza la cola nueva. */
 ok(/u\.onend=\(\)=>\{if\(t===VZ\.turno&&VZ\.sonando\)siguePart\(\);\}/.test(APP),

@@ -61,6 +61,17 @@ table { border-collapse: collapse; width: 100%; margin: 4pt 0; }
   padding: 5pt 8pt; margin: 4pt 0; font-style: italic; font-size: 9.8pt; }
 ul.tight { margin: 3pt 0 3pt 14pt; padding: 0; }
 ul.tight li { margin: 1.5pt 0; font-size: 9.8pt; }
+ol.tight { margin: 3pt 0 3pt 16pt; padding: 0; }
+ol.tight li { margin: 1.5pt 0; font-size: 9.8pt; }
+.l28-g { page-break-inside: avoid; margin: 0 0 7pt; }
+.l28-h { font-weight: bold; color: #1F3864; font-size: 10.5pt; margin: 6pt 0 2pt; }
+.l28-h small { font-weight: normal; color: #555; }
+.l28-hilo { background: #fff3e0; border-left: 4px solid #E8720C;
+  padding: 4pt 8pt; margin: 3pt 0; font-size: 9.5pt; }
+.l28 { list-style: none; margin: 3pt 0 0 6pt; padding: 0; }
+.l28 li { margin: 1.5pt 0; font-size: 9.8pt; }
+.l28 li b { display: inline-block; min-width: 18pt; color: #1F3864; }
+.l28-modo, button { display: none; }
 .pie { text-align: center; color: #888; font-size: 8pt; margin-top: 14pt; }
 .logo { display: block; margin: 0 auto 6pt; height: 34pt; }
 .igl { text-align: center; color: #555; font-size: 8.5pt; margin: 0 0 8pt;

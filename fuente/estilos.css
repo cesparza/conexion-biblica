@@ -2415,23 +2415,52 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   .txt-rp:not(:has(.lect-full)){grid-template-areas:"pl tx tx tx" "ti ti vel vel"}
 }
 
-/* ───────── v150: las 28 para recitar ───────── */
-.l28-bar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.9rem}
-.l28-bar .nota{margin:0;flex:1 1 16rem}
-.l28-g{margin-bottom:1rem}
+/* ───────── v150, v156: las 28 para recitar y para ir a cada una ─────────
+   Una sola lista (.l28) para «Las 6 doctrinas» y «Las 28 de corrido»: fila de
+   44 px con número, nombre y flecha. Viendo los nombres la fila entera es el
+   enlace (el ::after de la flecha la cubre); recitando, el toque en la fila
+   destapa y la flecha sigue llevando a la creencia. */
+.l28-bar{display:flex;flex-direction:column;align-items:flex-start;gap:.75rem;margin-bottom:.25rem}
+.l28-bar .l28-met{margin:0;align-self:stretch}
+.l28-bar .capa-filtro{margin:0}
+.l28-met ol.tight{margin:.4rem 0 0;padding-left:1.3rem}
+.sec>.nota+.l28-g{margin-top:.9rem}
+.l28-g{margin-bottom:1.25rem}
 .l28-h{display:flex;align-items:baseline;gap:.5rem;margin:0 0 .4rem;font-size:.875rem;font-weight:800;color:var(--azul)}
 .l28-h b{display:inline-grid;place-items:center;min-width:1.6rem;height:1.6rem;border-radius:999px;
   background:color-mix(in srgb,var(--azul) 10%,var(--v-sup,#fff));font-size:.75rem}
 .l28-h small{font-size:.75rem;font-weight:600;color:var(--gris)}
+.l28-hilo{margin:0 0 .6rem;padding:.6rem .8rem;border-left:3px solid var(--naranja-txt);border-radius:0 8px 8px 0;
+  background:var(--v-sup2,#fff4e0);font-size:.875rem;line-height:1.55;color:var(--v-tinta,#1f2937)}
+.l28-hilo b{font-weight:800}
 .l28{list-style:none;margin:0;padding:0;border:1px solid var(--v-linea,#e5e7eb);border-radius:12px;overflow:hidden;background:var(--v-sup,#fff)}
-.l28 li{display:flex;align-items:center;gap:.75rem;min-height:44px;padding:.4rem .85rem;font-size:1rem}
+.l28 li{position:relative;display:flex;align-items:center;gap:.75rem;min-height:44px;padding:.4rem .35rem .4rem .85rem;font-size:1rem}
 .l28 li+li{border-top:1px solid var(--v-linea,#e5e7eb)}
-.l28 li b{flex:0 0 2rem;font-size:.875rem;font-weight:800;color:var(--azul);font-variant-numeric:tabular-nums;text-align:right}
-#detalle.l28-tapado .l28 li{cursor:pointer}
-#detalle.l28-tapado .l28 li:not(.ver) span{color:transparent;background:color-mix(in srgb,var(--azul) 9%,var(--v-sup,#fff));
+.l28 li>b{flex:0 0 2rem;font-size:.875rem;font-weight:800;color:var(--azul);font-variant-numeric:tabular-nums;text-align:right}
+.l28 li>span{flex:1 1 auto;min-width:0}
+.l28 li>.l28-p{display:none;color:var(--gris);letter-spacing:.02em}
+.cr-ir{flex:0 0 44px;width:44px;height:44px;margin:-.4rem 0;display:grid;place-items:center;border:0;border-radius:12px;
+  background:transparent;color:var(--gris);cursor:pointer}
+.cr-ir .ico-t{width:1.25rem;height:1.25rem}
+.cr-ir::after{content:"";position:absolute;inset:0}
+/* Sin el «hundir» de todo botón: un transform vuelve al botón la caja de su
+   ::after, la fila deja de estar cubierta a mitad del toque y el toque se pierde. */
+.l28 .cr-ir:active:not(:disabled){transform:none}
+.cr-ir:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
+@media (hover:hover){.l28 li:has(.cr-ir:hover){background:color-mix(in srgb,var(--azul) 5%,var(--v-sup,#fff))}
+  .l28 li:has(.cr-ir:hover) .cr-ir{color:var(--azul)}}
+.l28 li:has(.cr-ir:active){background:color-mix(in srgb,var(--azul) 9%,var(--v-sup,#fff))}
+/* Recitando: la fila destapa, la flecha lleva. */
+#detalle:is(.l28-pistas,.l28-tapado) .l28 li{cursor:pointer}
+#detalle:is(.l28-pistas,.l28-tapado) .cr-ir::after{content:none}
+#detalle.l28-pistas .l28 li:not(.ver)>span:not(.l28-p){display:none}
+#detalle.l28-pistas .l28 li:not(.ver)>.l28-p{display:block;flex:1 1 auto;min-width:0}
+#detalle.l28-tapado .l28 li:not(.ver)>span:not(.l28-p){color:transparent;background:color-mix(in srgb,var(--azul) 9%,var(--v-sup,#fff));
   border-radius:8px;user-select:none}
-#detalle.l28-tapado .l28 li.ver span{color:var(--verde-txt);font-weight:700}
-@media print{.l28-tapa{display:none}}
+#detalle:is(.l28-pistas,.l28-tapado) .l28 li.ver>span:not(.l28-p){color:var(--verde-txt);font-weight:700}
+#detalle.l28-tapado .l28-hilo{display:none}
+.cap-vuelve{margin:0 0 .5rem -.7rem;min-height:44px}
+@media print{.l28-modo,.cr-ir,.l28-p,.cap-vuelve{display:none}}
 /* Varias frases cortas seguidas: más chicas que la declaración de una creencia. */
 .decl.frase-libro{font-size:1rem;line-height:1.6;margin:0 0 1rem;padding-left:.9rem;border-left:3px solid color-mix(in srgb,var(--v-cat) 35%,transparent)}
 .decl.frase-libro .decl-src{margin-top:.3rem}
