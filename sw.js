@@ -1,6 +1,6 @@
 /* Generado por fuente/build.js. No editar a mano: se sobrescribe. */
-const CACHE='cb-7552b95b2cc2';
-const HUELLA='7552b95b2cc2';
+const CACHE='cb-6034b0c9cb9b';
+const HUELLA='6034b0c9cb9b';
 const ACTIVOS=["/","/manifest.webmanifest","/icono-512.png","/icono-mask-512.png","/icono-180.png"];
 const RED_MS=4000;
 

@@ -8,8 +8,8 @@ El material de las creencias sale de la cartilla (datos.py) y de la guia de
 estudio (editorial.py). El libro de 434 paginas nunca entro: se citaba de
 oidas. Un resumen escrito a mano seria una lectura mia, no el libro. Los
 subtitulos SI son el libro: son lo que el autor escribio para ordenar el
-capitulo, se extraen mecanicamente y tools/libro.js los vuelve a comprobar
-contra el PDF. Por eso la seccion que salga de aqui va marcada «contexto»:
+capitulo, se extraen mecanicamente y despues pasan por la revision contra
+las paginas del PDF (ver «LA REVISION», abajo). Por eso la seccion que salga de aqui va marcada «contexto»:
 ayuda a ubicar, y no entra al examen del reglamento.
 
 COMO SE UBICA CADA CAPITULO
@@ -25,7 +25,18 @@ import os, re, io, subprocess, sys, json
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.normpath(os.path.join(AQUI, '..', '..'))
-FILES = os.path.normpath(os.path.join(RAIZ, '..', '..', 'files'))
+# El PDF vive fuera del repositorio. Se busca donde ya lo buscan tools/citas.js
+# y el verificador: CB_FILES, la carpeta de documentos, y la ruta de antes.
+def carpeta_files():
+    cand = [os.environ.get('CB_FILES'),
+            os.path.expanduser('~/Documents/Iglesia/files'),
+            os.path.normpath(os.path.join(RAIZ, '..', '..', 'files'))]
+    for c in cand:
+        if c and (os.path.exists(os.path.join(c, 'creencias-28.pdf'))
+                  or os.path.exists(os.path.join(c, '_creencias-28-layout.txt'))):
+            return c
+    sys.exit('No encuentro creencias-28.pdf. Corre con CB_FILES=<carpeta files>.')
+FILES = carpeta_files()
 PDF = os.path.join(FILES, 'creencias-28.pdf')
 CACHE = os.path.join(FILES, '_creencias-28-layout.txt')
 SALIDA = os.path.join(AQUI, 'libro.py')
@@ -117,6 +128,106 @@ def subtitulos(bloque):
         out.append(s)
     return out
 
+# ───────────── LA REVISION CONTRA LAS PAGINAS (10-oct-2026) ─────────────
+# MECANISMO
+# La regla de arriba adivina que es un subtitulo por la forma de la linea, y
+# el texto que lee viene de una OCR. Las dos cosas fallan: 22 de los 133
+# subtitulos salian mal (palabras partidas, «I as» por «Las», renglones de
+# texto corrido, el rotulo de un grafico). Aqui queda escrito, uno por uno,
+# lo que se corrigio despues de MIRAR cada subtitulo en la pagina del PDF:
+# en el libro un subtitulo es un renglon suelto en negrita.
+#
+# POR QUE TRES TABLAS Y NO LA LISTA FINAL ESCRITA A MANO
+# La lista final a mano dejaria de salir del libro. Asi la regla sigue
+# extrayendo y cada excepcion se ve: que se quito, que se corrigio, que se
+# agrego. Y si un dia la regla o el PDF cambian, una entrada que ya no
+# encuentra su renglon DETIENE el generador en vez de quedar de adorno.
+#
+# Donde el PDF trae la pagina reescrita por la OCR (no la foto), el error
+# esta en el propio PDF («I a autoridad»): ahi se corrigio la palabra, que es
+# evidente, y no hay imagen contra la cual comprobarla.
+
+# Renglones que la regla toma por subtitulo y no lo son.
+NO_SON = {
+    3: ['Yrehusar reconocerle como nuestro Padre?'],          # fin de un parrafo
+    4: ['Daniel 9 49 años 62 semanas-434 años 7 años'],        # rotulos del grafico de las 70 semanas
+    5: ['I)ios el Padre?'],                                    # fin de un parrafo
+    7: ['R eferencias'],                                       # las notas del capitulo
+    8: ['¿Cómo pudo el pecado originarse en un ambiente perfecto?',  # pregunta dentro del texto
+        '“Y vosotros, ¿quién decís que soy yo?”'],             # cita dentro del texto
+    18: ['JOSAFAT, REY DE JUDÁ, SE HALLABA MUY PREOCUPADO. Las tropas'],  # primer renglon del capitulo
+    25: ['Jesús. ¿Cuándo va a volver?”'],                      # primer parrafo del capitulo
+    26: ['¿con qué o quién se comunican los médiums espiritistas?'],     # pregunta dentro del texto
+}
+# Lo que la OCR escribio mal, subtitulo entero por subtitulo entero.
+CORRIGE = {
+    'El conocim iento de Dios': 'El conocimiento de Dios',
+    'La dinám ica de la Deidad': 'La dinámica de la Deidad',
+    'Dios el Padre en el Nuevo Testam ento': 'Dios el Padre en el Nuevo Testamento',
+    'La encarnación: predicciones y cum plim iento': 'La encarnación: predicciones y cumplimiento',
+    'I as dos naturalezas de Jesucristo': 'Las dos naturalezas de Jesucristo',
+    'La base de nu estra aceptación an te Dios': 'La base de nuestra aceptación ante Dios',
+    'La vida com ienza con la m uerte': 'La vida comienza con la muerte',
+    'Señales del crecim ien to en Cristo': 'Señales del crecimiento en Cristo',
+    'Signiñcad o b íb lico del térm in o “iglesia”': 'Significado bíblico del término “iglesia”',
+    'La natu raleza de la iglesia': 'La naturaleza de la iglesia',
+    'El rem anente': 'El remanente',
+    'La misión del rem anente': 'La misión del remanente',
+    'El don profètico en los tiempos bíblicos': 'El don profético en los tiempos bíblicos',
+    'El don profètico en los últimos días': 'El don profético en los últimos días',
+    'EI Santuario celestial en la profecía': 'El Santuario celestial en la profecía',
+}
+# Subtitulos del libro que la regla no ve: la linea no arranca en la primera
+# columna, pasa del tope de largo o de espacios (la OCR parte las palabras),
+# o termina en punto. (despues de cual va, o None si es el primero; el texto)
+FALTAN = {
+    14: [('La unidad de la Biblia y la iglesia', '¿Cuán importante es la unidad de la iglesia?'),
+         ('¿Cuán importante es la unidad de la iglesia?', 'El logro de la unidad')],
+    15: [(None, '¿Cuán importante es el bautismo?')],
+    18: [('Los profetas postbíblicos y la Biblia',
+          'El Espíritu de Profecía en la Iglesia Adventista del Séptimo Día')],
+    23: [('Los hijos', 'La familia extendida')],
+    28: [('Vida intelectual en la Tierra Nueva', 'No habrá más...')],
+}
+
+# Lo que delata una palabra rota por la OCR. Es una primera red y no lo ve
+# todo: «cum plim iento» son tres trozos largos y pasa. Por eso la lista
+# revisada queda ademas fija por su huella en tests/uso.js: si cambia un solo
+# subtitulo, la suite falla hasta que alguien lo mire en el libro.
+CORTAS = set('a al de del el en es la las lo los no o por que se su un una y ya e'.split())
+def sospechoso(s):
+    pal = re.findall(r'[A-Za-zÁÉÍÓÚÜÑáéíóúüñàèìòù]+', s)
+    if any(len(w) <= 2 and w.lower() not in CORTAS for w in pal): return 'palabra suelta'
+    if re.search(r'[àèìòù]', s): return 'tilde al reves'
+    if re.search(r'ñ[bcdfghjklmnpqrstvwxyz]', s): return 'ñ donde va fi'
+    if re.search(r'\d', s): return 'trae numeros'
+    if not re.match(r'^[A-ZÁÉÍÓÚÑ¿¡“«]', s): return 'no empieza en mayuscula'
+    if re.search(r'[a-záéíóúñ][A-ZÁÉÍÓÚÑ]|\)', s): return 'mayuscula o parentesis adentro'
+    return ''
+
+def revisa(cap):
+    """Aplica las tres tablas. Devuelve la lista de problemas: vacia si todo cuadro."""
+    mal = []
+    usadas = set()
+    for n, c in cap.items():
+        subs = c['subtitulos']
+        for x in NO_SON.get(n, []):
+            if x in subs: subs.remove(x)
+            else: mal.append('cap %d: NO_SON ya no encuentra «%s»' % (n, x))
+        for i, x in enumerate(subs):
+            if x in CORRIGE: subs[i] = CORRIGE[x]; usadas.add(x)
+        for tras, nuevo in FALTAN.get(n, []):
+            if nuevo in subs: mal.append('cap %d: FALTAN repite «%s», la regla ya lo trae' % (n, nuevo)); continue
+            if tras is None: subs.insert(0, nuevo)
+            elif tras in subs: subs.insert(subs.index(tras) + 1, nuevo)
+            else: mal.append('cap %d: FALTAN no encuentra «%s» para poner despues «%s»' % (n, tras, nuevo))
+        for x in subs:
+            por = sospechoso(x)
+            if por: mal.append('cap %d: «%s» (%s)' % (n, x, por))
+    for x in CORRIGE:
+        if x not in usadas: mal.append('CORRIGE ya no encuentra «%s»' % x)
+    return mal
+
 def main():
     t = texto()
     ind = indice(t)
@@ -133,6 +244,11 @@ def main():
         i0, i1 = p0 + d, min(len(pags), p1 + d)
         bloque = '\n'.join(pags[i0:i1])
         cap[n] = dict(titulo=titulo, pag=p0, hasta=p1 - 1, subtitulos=subtitulos(bloque))
+    mal = revisa(cap)
+    if mal:
+        print('NO SE ESCRIBE libro.py. Hay que mirar la pagina del PDF y ajustar las tablas:')
+        for m in mal: print('  -', m)
+        sys.exit(1)
     with io.open(SALIDA, 'w', encoding='utf-8') as f:
         f.write('# -*- coding: utf-8 -*-\n')
         f.write('"""GENERADO por tools/creencias/gen_libro.py desde files/creencias-28.pdf.\n'

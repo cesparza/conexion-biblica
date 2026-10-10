@@ -2764,6 +2764,61 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Y el estudio va en el orden de la historia');
 }
 
+/* ─── v157: «En el libro» no publica palabras rotas por la OCR ───
+   Camilo (10-oct): «arregla». 22 de los 133 subtitulos del libro salian mal
+   («cum plim iento», «I as dos naturalezas», renglones de texto corrido). Se
+   revisaron contra las paginas del PDF (tools/creencias/gen_libro.py) y aqui
+   queda la misma regla sobre lo que se PUBLICA: si un subtitulo vuelve a
+   salir roto, esto falla antes de que alguien lo lea. */
+{
+  const CORTAS=new Set('a al de del el en es la las lo los no o por que se su un una y ya e'.split(' '));
+  const sospechoso=s=>{
+    const pal=s.match(/[A-Za-zÁÉÍÓÚÜÑáéíóúüñàèìòù]+/g)||[];
+    if(pal.some(w=>w.length<=2&&!CORTAS.has(w.toLowerCase())))return 'palabra suelta';
+    if(/[àèìòù]/.test(s))return 'tilde al reves';
+    if(/ñ[bcdfghjklmnpqrstvwxyz]/.test(s))return 'ñ donde va fi';
+    if(/\d/.test(s))return 'trae numeros';
+    if(!/^[A-ZÁÉÍÓÚÑ¿¡“«]/.test(s))return 'no empieza en mayuscula';
+    if(/[a-záéíóúñ][A-ZÁÉÍÓÚÑ]|\)/.test(s))return 'mayuscula o parentesis adentro';
+    return '';
+  };
+  ok(sospechoso('I as dos naturalezas de Jesucristo')&&sospechoso('El don profètico en los tiempos bíblicos')&&
+     sospechoso('Signiñcad o b íb lico')&&sospechoso('Daniel 9 49 años 62 semanas-434 años 7 años')&&
+     sospechoso('I)ios el Padre?')&&sospechoso('La vida com ienza con la m uerte')&&
+     !sospechoso('“Un bautismo”')&&!sospechoso('No habrá más...')&&!sospechoso('¿Qué es la mayordomía?'),
+    'La regla reconoce varias formas en que la OCR rompia un subtitulo, y deja pasar los buenos');
+  /* La regla NO lo ve todo: «cum plim iento» son tres trozos de tres letras o
+     mas y pasa. Por eso ademas se fija la lista revisada (la huella, abajo). */
+  ok(sospechoso('La encarnación: predicciones y cum plim iento')==='',
+    'Y se sabe lo que la regla no alcanza: un corte en trozos largos pasa');
+  const malos=[];let total=0,sin=[];
+  CR.CR_CAPS.forEach(c=>{
+    const sec=(CR.CR_CONTENIDO[c.id]||[]).find(x=>/En el libro/.test(x.t));
+    if(!sec){sin.push(c.id);return;}
+    const lista=(sec.h.match(/<ul class="tight">([\s\S]*?)<\/ul>/)||[])[1]||'';
+    [...lista.matchAll(/<li>([\s\S]*?)<\/li>/g)].forEach(m=>{total++;const por=sospechoso(m[1]);if(por)malos.push(c.id+' «'+m[1]+'» ('+por+')');});
+  });
+  ok(sin.length===0,'Las 28 creencias traen «En el libro»'+(sin.length?': faltan '+sin.join(', '):''));
+  ok(malos.length===0,'Los '+total+' subtitulos del libro salen sin palabras rotas'+(malos.length?': '+malos.slice(0,5).join(' | '):''));
+  ok(total===130,'Son 130 subtitulos, los que quedaron al revisar cada uno en su pagina ('+total+')');
+  /* LA LISTA REVISADA, FIJA. Cada subtitulo se miro en la pagina del PDF el
+     10-oct-2026. Si la lista cambia (otro PDF, otra regla, una tabla tocada),
+     esta huella deja de coincidir: hay que volver a mirar lo que cambio en el
+     libro y solo entonces poner la huella nueva, que sale en el mensaje. */
+  const todos=CR.CR_CAPS.map(c=>{
+    const sec=CR.CR_CONTENIDO[c.id].find(x=>/En el libro/.test(x.t));
+    const lista=(sec.h.match(/<ul class="tight">([\s\S]*?)<\/ul>/)||[])[1]||'';
+    return [...lista.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m=>m[1]);
+  });
+  const huella=require('crypto').createHash('sha256').update(JSON.stringify(todos)).digest('hex').slice(0,16);
+  ok(huella==='6af1af2db0e02eb7','La lista de subtitulos es la revisada contra el libro (huella '+huella+')');
+  const de=id=>CR.CR_CONTENIDO[id].find(x=>/En el libro/.test(x.t)).h;
+  ok(/<li>La encarnación: predicciones y cumplimiento<\/li><li>Las dos naturalezas de Jesucristo<\/li>/.test(de('cr04'))&&!/Daniel 9/.test(de('cr04')),
+    'Creencia 4: los cuatro subtitulos del capitulo, sin el rotulo del grafico');
+  ok(/<li>¿Cuán importante es la unidad de la iglesia\?<\/li><li>El logro de la unidad<\/li>/.test(de('cr14')),
+    'Creencia 14: los dos subtitulos que la regla no veia');
+}
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 

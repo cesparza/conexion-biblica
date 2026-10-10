@@ -20,11 +20,11 @@ LIBRO = {
   "pag": 23,
   "hasta": 33,
   "subtitulos": [
-   "El conocim iento de Dios",
+   "El conocimiento de Dios",
    "La existencia de Dios",
    "El Dios de las Escrituras",
    "La soberanía de Dios",
-   "La dinám ica de la Deidad",
+   "La dinámica de la Deidad",
    "Enfoque de la salvación"
   ]
  },
@@ -35,8 +35,7 @@ LIBRO = {
   "subtitulos": [
    "Conceptos acerca del Padre",
    "Dios el Padre en el Antiguo Testamento",
-   "Dios el Padre en el Nuevo Testam ento",
-   "Yrehusar reconocerle como nuestro Padre?"
+   "Dios el Padre en el Nuevo Testamento"
   ]
  },
  "4": {
@@ -44,9 +43,8 @@ LIBRO = {
   "pag": 41,
   "hasta": 66,
   "subtitulos": [
-   "La encarnación: predicciones y cum plim iento",
-   "Daniel 9 49 años 62 semanas-434 años 7 años",
-   "I as dos naturalezas de Jesucristo",
+   "La encarnación: predicciones y cumplimiento",
+   "Las dos naturalezas de Jesucristo",
    "La unión de las dos naturalezas",
    "Los oficios de Cristo Jesús"
   ]
@@ -60,8 +58,7 @@ LIBRO = {
    "El Espíritu Santo es verdaderamente Dios",
    "El Espíritu Santo y la Deidad",
    "El Espíritu prometido",
-   "La misión del Espíritu Santo",
-   "I)ios el Padre?"
+   "La misión del Espíritu Santo"
   ]
  },
  "6": {
@@ -87,8 +84,7 @@ LIBRO = {
    "La unidad de la naturaleza humana",
    "El hombre a imagen de Dios",
    "La caída",
-   "El pacto de la gracia",
-   "R eferencias"
+   "El pacto de la gracia"
   ]
  },
  "8": {
@@ -97,10 +93,8 @@ LIBRO = {
   "hasta": 117,
   "subtitulos": [
    "Una visión cósmica del conflicto",
-   "¿Cómo pudo el pecado originarse en un ambiente perfecto?",
    "El tema central",
    "Controversia acerca de la verdad como es en Jesús",
-   "“Y vosotros, ¿quién decís que soy yo?”",
    "El significado de la doctrina"
   ]
  },
@@ -127,7 +121,7 @@ LIBRO = {
    "La experiencia de la salvación y el pasado",
    "La experiencia de la salvación y el presente",
    "La experiencia de la salvación y el futuro",
-   "La base de nu estra aceptación an te Dios"
+   "La base de nuestra aceptación ante Dios"
   ]
  },
  "11": {
@@ -135,8 +129,8 @@ LIBRO = {
   "pag": 147,
   "hasta": 160,
   "subtitulos": [
-   "La vida com ienza con la m uerte",
-   "Señales del crecim ien to en Cristo"
+   "La vida comienza con la muerte",
+   "Señales del crecimiento en Cristo"
   ]
  },
  "12": {
@@ -144,8 +138,8 @@ LIBRO = {
   "pag": 161,
   "hasta": 179,
   "subtitulos": [
-   "Signiñcad o b íb lico del térm in o “iglesia”",
-   "La natu raleza de la iglesia",
+   "Significado bíblico del término “iglesia”",
+   "La naturaleza de la iglesia",
    "La organización de la iglesia",
    "El gobierno de la iglesia",
    "Principios bíblicos de gobierno eclesiástico"
@@ -159,8 +153,8 @@ LIBRO = {
    "La gran apostasía",
    "La Reforma",
    "La Reforma se estanca",
-   "El rem anente",
-   "La misión del rem anente"
+   "El remanente",
+   "La misión del remanente"
   ]
  },
  "14": {
@@ -168,7 +162,9 @@ LIBRO = {
   "pag": 200,
   "hasta": 210,
   "subtitulos": [
-   "La unidad de la Biblia y la iglesia"
+   "La unidad de la Biblia y la iglesia",
+   "¿Cuán importante es la unidad de la iglesia?",
+   "El logro de la unidad"
   ]
  },
  "15": {
@@ -176,6 +172,7 @@ LIBRO = {
   "pag": 211,
   "hasta": 224,
   "subtitulos": [
+   "¿Cuán importante es el bautismo?",
    "“Un bautismo”",
    "El significado del bautismo",
    "Requisitos para el bautismo",
@@ -207,10 +204,10 @@ LIBRO = {
   "pag": 246,
   "hasta": 261,
   "subtitulos": [
-   "JOSAFAT, REY DE JUDÁ, SE HALLABA MUY PREOCUPADO. Las tropas",
-   "El don profètico en los tiempos bíblicos",
-   "El don profètico en los últimos días",
-   "Los profetas postbíblicos y la Biblia"
+   "El don profético en los tiempos bíblicos",
+   "El don profético en los últimos días",
+   "Los profetas postbíblicos y la Biblia",
+   "El Espíritu de Profecía en la Iglesia Adventista del Séptimo Día"
   ]
  },
  "19": {
@@ -269,6 +266,7 @@ LIBRO = {
    "La familia",
    "Los padres",
    "Los hijos",
+   "La familia extendida",
    "Promesa de reforma"
   ]
  },
@@ -279,7 +277,7 @@ LIBRO = {
   "subtitulos": [
    "El Santuario del cielo",
    "El ministerio del Santuario celestial",
-   "EI Santuario celestial en la profecía",
+   "El Santuario celestial en la profecía",
    "Significado en el contexto de la gran controversia"
   ]
  },
@@ -288,7 +286,6 @@ LIBRO = {
   "pag": 372,
   "hasta": 388,
   "subtitulos": [
-   "Jesús. ¿Cuándo va a volver?”",
    "La certeza del retorno de Jesús",
    "La manera en que Cristo volverá",
    "El segundo advenimiento y la raza humana",
@@ -303,7 +300,6 @@ LIBRO = {
   "subtitulos": [
    "La inmortalidad y la muerte",
    "La naturaleza de la muerte",
-   "¿con qué o quién se comunican los médiums espiritistas?",
    "La resurrección"
   ]
  },
@@ -327,6 +323,7 @@ LIBRO = {
    "Nuestro hogar eterno",
    "La vida en la Tierra Nueva",
    "Vida intelectual en la Tierra Nueva",
+   "No habrá más...",
    "El valor de creer en una nueva creación",
    "Nueva para siempre"
   ]
