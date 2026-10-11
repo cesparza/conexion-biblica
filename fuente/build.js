@@ -22,21 +22,48 @@ const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
 const { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META } = require('./biblia-otros.js');
 const PWA = require('./pwa.js');
+const { CAMPAMENTOS, deriva, revisa, sinUsar } = require('./campamentos.js');
 
-/* Dos eventos, un solo archivo: al material de Daniel se le suma el de la
-   Devoción Matutina. Cada capítulo lleva sus categorías, así que el filtrado
-   por categoría separa solo lo que corresponde. */
+/* Varios temas, un solo archivo. Para quién es cada capítulo y cada repaso lo
+   dicen las fichas de campamentos.js; aquí se les pone la marca `cats` que la
+   app filtra. TEMAS dice qué ids aporta cada tema, para que una ficha no pueda
+   nombrar algo que su tema no tiene. */
+const TEMAS = {
+  daniel: [...CAPS, ...MODULOS].map(x => x.id),
+  matutina: [...MAT.MAT_CAPS, ...MAT.MAT_MODULOS].map(x => x.id),
+  creencias: [...CR.CR_CAPS, ...CR.CR_MODULOS].map(x => x.id),
+};
+{
+  const mal = [...revisa(CAMPAMENTOS, TEMAS),
+    ...sinUsar(CAMPAMENTOS, TEMAS).map(id => '«' + id + '» no entra en ningún campamento')];
+  if (mal.length) {
+    console.error('❌ campamentos.js no cuadra con el contenido:\n  ' + mal.join('\n  '));
+    process.exit(1);
+  }
+}
+{
+  /* Una sola fuente: si un capítulo o un repaso trae su propia marca, habría
+     dos sitios diciendo para quién es, y el día que no coincidan gana uno sin
+     avisar. */
+  const conMarca = [...CAPS, ...MODULOS, ...MAT.MAT_CAPS, ...MAT.MAT_MODULOS, ...CR.CR_CAPS, ...CR.CR_MODULOS]
+    .filter(x => 'cats' in x || 'extra' in x).map(x => x.id);
+  if (conMarca.length) {
+    console.error('❌ Estos traen `cats` o `extra` propios; eso va en campamentos.js: ' + conMarca.join(', '));
+    process.exit(1);
+  }
+}
+const REGLAMENTO = deriva(CAMPAMENTOS);
 /* Los capitulos de Daniel declaran su grupo aqui y no en contenido.js: el
    grupo se deduce del id (fuente/grupos.js), asi que escribirlo a mano en 18
    lineas seria copiar el dato a un segundo lugar. */
 const CAPS_DANIEL = CAPS.map(c => ({ ...c, doc: grupoDaniel(c.id) || undefined }));
-const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
+const CAPS_ALL = REGLAMENTO.conCats([...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS]);
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
 /* Las de cobertura van con las demas: son del mismo banco, solo que las
    escribio un generador a partir de los versiculos que no tenian ninguna. */
 const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO];
 const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
-const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
+const MODULOS_ALL = REGLAMENTO.conCats([...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS]);
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
 
 /* ─────────── LA PREGUNTA DE «RECORDAR», DERIVADA DEL VERSÍCULO ───────────
@@ -201,6 +228,11 @@ const APP    = leer('app.js');
 const MARCA_V = 'HUELLAxxxxxx';
 
 const DATA = `const VERSION_APP = '${MARCA_V}';
+
+/* El reglamento: sale de las fichas de fuente/campamentos.js. */
+const ACTIVIDADES = ${JSON.stringify(REGLAMENTO.ACTIVIDADES, null, 1)};
+
+const CATS = ${JSON.stringify(REGLAMENTO.CATS, null, 1)};
 
 const CAPS = ${JSON.stringify(CAPS_ALL, null, 1)};
 

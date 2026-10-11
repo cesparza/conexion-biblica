@@ -32,36 +32,9 @@
    aplica a las tres: cada ficha tiene su prog, su racha y sus insignias, asi
    que el progreso queda separado POR CONSTRUCCION y no hace falta ninguna
    funcion que lo desmezcle. */
-const ACTIVIDADES={
-  cb:{nombre:'Conexión Bíblica', icono:'📘', cuando:'9 de octubre',
-      que:'El libro de Daniel y Profetas y Reyes', cats:['me','av','pa','gm']},
-  dm:{nombre:'Devoción Matutina', icono:'🌅', cuando:'Todo octubre',
-      que:'Héroes y villanos, un día a la vez', cats:['dm1','dm2']},
-  ec:{nombre:'En esto creemos', icono:'✝️', cuando:'Por confirmar',
-      que:'Las 28 creencias', cats:['ec1','ec2']},
-};
-
-const CATS={
-  me:{act:'cb', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
-      alcance:'Daniel 1, 2, 3 y 6'},
-  av:{act:'cb', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  pa:{act:'cb', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  gm:{act:'cb', nombre:'Guías Mayores', edad:'Guías Mayores', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
-  dm1:{act:'dm', nombre:'Menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 15 de octubre'},
-  dm2:{act:'dm', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 30 de octubre'},
-  /* El reglamento de «En esto creemos» reparte el club en dos: dos adultos
-     presentan un examen escrito y el resto contesta otro cuestionario, y las
-     dos notas SE SUMAN. Por eso son dos categorias y no una. */
-  ec1:{act:'ec', nombre:'Los dos del examen escrito', edad:'Adultos', n:25, techo:3, sinCompletar:false,
-      alcance:'Las 28 creencias'},
-  ec2:{act:'ec', nombre:'El resto del club', edad:'Cuestionario', n:15, techo:2, sinCompletar:true,
-      alcance:'Las 28 creencias'},
-};
+/* v163: ACTIVIDADES y CATS ya no se escriben aquí. Salen de las fichas de
+   fuente/campamentos.js, que es el reglamento como datos; build.js las pone
+   antes de este archivo. */
 
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;

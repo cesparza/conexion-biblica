@@ -183,13 +183,8 @@ const DIAS = [
   l:'El héroe es sensible, prudente, sabio y humilde. No porque él sea así, sino porque Dios le ayuda a serlo.' },
 ];
 
-/* ── Categorías del reglamento ──
-   dm1: 4 a 6 años, del 1 al 15.   dm2: 7 a 9 años, del 1 al 30.
-   El 31 va marcado como extra en las dos, porque cierra la historia del 30. */
-const catsDe = d => {
-  if (d <= 15) return ['dm1', 'dm2'];
-  return ['dm2'];                 // del 16 en adelante, solo la categoría 7 a 9
-};
+/* Para quién es cada día (dm1 del 1 al 15, dm2 del 1 al 30, y el 31 de solo
+   estudio) lo dice la ficha del campamento, en campamentos.js. */
 
 const MES = ['', '1.º', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13',
   '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27',
@@ -204,10 +199,6 @@ const MAT_CAPS = DIAS.map(x => ({
   sub: x.t,
   src: x.d === 31 ? 'Matutina · complemento del día 30' : 'Matutina Héroes y villanos',
   color: COLOR(x.d),
-  cats: catsDe(x.d),
-  /* El 31 no lo pide el reglamento (llega hasta el 30). Se puede leer, pero
-     sus preguntas no entran en los exámenes: `extra` lo saca del sorteo. */
-  extra: x.d === 31 || undefined,
 }));
 
 const hi = t => `<div class="highlight-box">${t}</div>`;
@@ -402,11 +393,11 @@ const tbl = (head, rows) =>
 
 const MAT_MODULOS = [
   { id:'mm-quien', label:'Héroes y villanos', sub:'Quién es quién, día por día',
-    icono:'🦸', color:'#B91C1C', cats:['dm1','dm2'] },
+    icono:'🦸', color:'#B91C1C' },
   { id:'mm-versiculos', label:'Versículos de octubre', sub:'Los 31 versículos con su referencia',
-    icono:'📖', color:'#1D4ED8', cats:['dm1','dm2'] },
+    icono:'📖', color:'#1D4ED8' },
   { id:'mm-plan', label:'Cómo estudiar la matutina', sub:'Qué se pregunta y cómo repasarlo',
-    icono:'🎯', color:'#0F766E', cats:['dm1','dm2'] },
+    icono:'🎯', color:'#0F766E' },
 ];
 
 /* Cada tabla se corta en dos para no pasar de 2.000 caracteres por sección. */

@@ -345,7 +345,7 @@ def main():
     for n in range(1, 29):
         d = datos.CREENCIAS[n]
         caps.append("  { id:'cr%02d', label:'Creencia %d', sub:%s, src:'En esto creemos', "
-                    "color:'%s', doc:'%s', cats:['ec1','ec2'] }"
+                    "color:'%s', doc:'%s' }"
                     % (n, n, J(d['nombre']), COLORES[(n-1) % len(COLORES)], D_ID[doc_de(n)]))
     # ── contenido ──
     cont = []

@@ -4,9 +4,9 @@
    creencias le faltaba por completo. */
 const CR_MODULOS = [
   { id:'mc-doctrinas', label:'Las 6 doctrinas', sub:'Cómo se reparten las 28 creencias',
-    icono:'🗺️', color:'#1F3864', cats:['ec1','ec2'] },
+    icono:'🗺️', color:'#1F3864' },
   { id:'mc-lista', label:'Las 28 de corrido', sub:'Para recitarlas en orden',
-    icono:'🔢', color:'#B45309', cats:['ec1','ec2'] },
+    icono:'🔢', color:'#B45309' },
 ];
 
 const CR_CONT_MODULOS = {

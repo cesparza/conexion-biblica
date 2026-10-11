@@ -3101,7 +3101,118 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = '3aaf3e4c563a';
+const VERSION_APP = '64e1ef8d71a3';
+
+/* El reglamento: sale de las fichas de fuente/campamentos.js. */
+const ACTIVIDADES = {
+ "cb": {
+  "nombre": "Conexión Bíblica",
+  "icono": "📘",
+  "cuando": "9 de octubre",
+  "que": "El libro de Daniel y Profetas y Reyes",
+  "cats": [
+   "me",
+   "av",
+   "pa",
+   "gm"
+  ]
+ },
+ "dm": {
+  "nombre": "Devoción Matutina",
+  "icono": "🌅",
+  "cuando": "Todo octubre",
+  "que": "Héroes y villanos, un día a la vez",
+  "cats": [
+   "dm1",
+   "dm2"
+  ]
+ },
+ "ec": {
+  "nombre": "En esto creemos",
+  "icono": "✝️",
+  "cuando": "Por confirmar",
+  "que": "Las 28 creencias",
+  "cats": [
+   "ec1",
+   "ec2"
+  ]
+ }
+};
+
+const CATS = {
+ "me": {
+  "act": "cb",
+  "nombre": "Menores",
+  "edad": "4 a 6 años",
+  "n": 10,
+  "techo": 1,
+  "sinCompletar": true,
+  "alcance": "Daniel 1, 2, 3 y 6"
+ },
+ "av": {
+  "act": "cb",
+  "nombre": "Aventureros",
+  "edad": "7 a 9 años",
+  "n": 15,
+  "techo": 3,
+  "sinCompletar": false,
+  "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44"
+ },
+ "pa": {
+  "act": "cb",
+  "nombre": "Padres y consejeros",
+  "edad": "Adultos",
+  "n": 25,
+  "techo": 3,
+  "sinCompletar": false,
+  "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44"
+ },
+ "gm": {
+  "act": "cb",
+  "nombre": "Guías Mayores",
+  "edad": "Guías Mayores",
+  "n": 25,
+  "techo": 3,
+  "sinCompletar": false,
+  "alcance": "Daniel 1 al 6 · P&R 39 al 44"
+ },
+ "dm1": {
+  "act": "dm",
+  "nombre": "Menores",
+  "edad": "4 a 6 años",
+  "n": 10,
+  "techo": 1,
+  "sinCompletar": true,
+  "alcance": "Héroes y villanos · 1 al 15 de octubre"
+ },
+ "dm2": {
+  "act": "dm",
+  "nombre": "Aventureros",
+  "edad": "7 a 9 años",
+  "n": 15,
+  "techo": 2,
+  "sinCompletar": true,
+  "alcance": "Héroes y villanos · 1 al 30 de octubre"
+ },
+ "ec1": {
+  "act": "ec",
+  "nombre": "Los dos del examen escrito",
+  "edad": "Adultos",
+  "n": 25,
+  "techo": 3,
+  "sinCompletar": false,
+  "alcance": "Las 28 creencias"
+ },
+ "ec2": {
+  "act": "ec",
+  "nombre": "El resto del club",
+  "edad": "Cuestionario",
+  "n": 15,
+  "techo": 2,
+  "sinCompletar": true,
+  "alcance": "Las 28 creencias"
+ }
+};
 
 const CAPS = [
  {
@@ -3111,13 +3222,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#E8720C",
   "vs": 21,
+  "doc": "dn1",
   "cats": [
    "me",
    "av",
    "pa",
    "gm"
-  ],
-  "doc": "dn1"
+  ]
  },
  {
   "id": "d2",
@@ -3126,13 +3237,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#2E8BC0",
   "vs": 49,
+  "doc": "dn1",
   "cats": [
    "me",
    "av",
    "pa",
    "gm"
-  ],
-  "doc": "dn1"
+  ]
  },
  {
   "id": "d3",
@@ -3141,13 +3252,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#C0392B",
   "vs": 30,
+  "doc": "dn1",
   "cats": [
    "me",
    "av",
    "pa",
    "gm"
-  ],
-  "doc": "dn1"
+  ]
  },
  {
   "id": "d4",
@@ -3156,10 +3267,10 @@ const CAPS = [
   "src": "Biblia",
   "color": "#7B5E00",
   "vs": 37,
+  "doc": "dn1",
   "cats": [
    "gm"
-  ],
-  "doc": "dn1"
+  ]
  },
  {
   "id": "d5",
@@ -3168,10 +3279,10 @@ const CAPS = [
   "src": "Biblia",
   "color": "#8B1A5E",
   "vs": 31,
+  "doc": "dn1",
   "cats": [
    "gm"
-  ],
-  "doc": "dn1"
+  ]
  },
  {
   "id": "d6",
@@ -3180,13 +3291,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#1A7A1A",
   "vs": 28,
+  "doc": "dn1",
   "cats": [
    "me",
    "av",
    "pa",
    "gm"
-  ],
-  "doc": "dn1"
+  ]
  },
  {
   "id": "d7",
@@ -3195,13 +3306,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#4A5568",
   "vs": 28,
+  "doc": "dn2",
   "cats": [
    "gm"
   ],
   "extra": [
    "gm"
-  ],
-  "doc": "dn2"
+  ]
  },
  {
   "id": "d8",
@@ -3210,13 +3321,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#5B3A29",
   "vs": 27,
+  "doc": "dn2",
   "cats": [
    "gm"
   ],
   "extra": [
    "gm"
-  ],
-  "doc": "dn2"
+  ]
  },
  {
   "id": "d9",
@@ -3225,13 +3336,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#2F4858",
   "vs": 27,
+  "doc": "dn2",
   "cats": [
    "gm"
   ],
   "extra": [
    "gm"
-  ],
-  "doc": "dn2"
+  ]
  },
  {
   "id": "d10",
@@ -3240,13 +3351,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#6A4C93",
   "vs": 21,
+  "doc": "dn2",
   "cats": [
    "gm"
   ],
   "extra": [
    "gm"
-  ],
-  "doc": "dn2"
+  ]
  },
  {
   "id": "d11",
@@ -3255,13 +3366,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#A44A3F",
   "vs": 45,
+  "doc": "dn2",
   "cats": [
    "gm"
   ],
   "extra": [
    "gm"
-  ],
-  "doc": "dn2"
+  ]
  },
  {
   "id": "d12",
@@ -3270,13 +3381,13 @@ const CAPS = [
   "src": "Biblia",
   "color": "#264653",
   "vs": 13,
+  "doc": "dn2",
   "cats": [
    "gm"
   ],
   "extra": [
    "gm"
-  ],
-  "doc": "dn2"
+  ]
  },
  {
   "id": "pr39",
@@ -3284,12 +3395,12 @@ const CAPS = [
   "sub": "En la corte de Babilonia",
   "src": "Elena de White",
   "color": "#7B2D8B",
+  "doc": "dn3",
   "cats": [
    "av",
    "pa",
    "gm"
-  ],
-  "doc": "dn3"
+  ]
  },
  {
   "id": "pr40",
@@ -3297,10 +3408,10 @@ const CAPS = [
   "sub": "El sueño de Nabucodonosor",
   "src": "Elena de White",
   "color": "#7B2D8B",
+  "doc": "dn3",
   "cats": [
    "gm"
-  ],
-  "doc": "dn3"
+  ]
  },
  {
   "id": "pr41",
@@ -3308,12 +3419,12 @@ const CAPS = [
   "sub": "El horno de fuego",
   "src": "Elena de White",
   "color": "#7B2D8B",
+  "doc": "dn3",
   "cats": [
    "av",
    "pa",
    "gm"
-  ],
-  "doc": "dn3"
+  ]
  },
  {
   "id": "pr42",
@@ -3321,10 +3432,10 @@ const CAPS = [
   "sub": "La verdadera grandeza",
   "src": "Elena de White",
   "color": "#7B2D8B",
+  "doc": "dn3",
   "cats": [
    "gm"
-  ],
-  "doc": "dn3"
+  ]
  },
  {
   "id": "pr43",
@@ -3332,10 +3443,10 @@ const CAPS = [
   "sub": "El vigía invisible",
   "src": "Elena de White",
   "color": "#7B2D8B",
+  "doc": "dn3",
   "cats": [
    "gm"
-  ],
-  "doc": "dn3"
+  ]
  },
  {
   "id": "pr44",
@@ -3343,12 +3454,12 @@ const CAPS = [
   "sub": "En el foso de los leones",
   "src": "Elena de White",
   "color": "#7B2D8B",
+  "doc": "dn3",
   "cats": [
    "av",
    "pa",
    "gm"
-  ],
-  "doc": "dn3"
+  ]
  },
  {
   "id": "m01",
@@ -3674,7 +3785,9 @@ const CAPS = [
   "cats": [
    "dm2"
   ],
-  "extra": true
+  "extra": [
+   "dm2"
+  ]
  },
  {
   "id": "cr01",
@@ -37089,36 +37202,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {
    aplica a las tres: cada ficha tiene su prog, su racha y sus insignias, asi
    que el progreso queda separado POR CONSTRUCCION y no hace falta ninguna
    funcion que lo desmezcle. */
-const ACTIVIDADES={
-  cb:{nombre:'Conexión Bíblica', icono:'📘', cuando:'9 de octubre',
-      que:'El libro de Daniel y Profetas y Reyes', cats:['me','av','pa','gm']},
-  dm:{nombre:'Devoción Matutina', icono:'🌅', cuando:'Todo octubre',
-      que:'Héroes y villanos, un día a la vez', cats:['dm1','dm2']},
-  ec:{nombre:'En esto creemos', icono:'✝️', cuando:'Por confirmar',
-      que:'Las 28 creencias', cats:['ec1','ec2']},
-};
-
-const CATS={
-  me:{act:'cb', nombre:'Menores',  edad:'4 a 6 años',  n:10, techo:1, sinCompletar:true,
-      alcance:'Daniel 1, 2, 3 y 6'},
-  av:{act:'cb', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  pa:{act:'cb', nombre:'Padres y consejeros', edad:'Adultos', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44'},
-  gm:{act:'cb', nombre:'Guías Mayores', edad:'Guías Mayores', n:25, techo:3, sinCompletar:false,
-      alcance:'Daniel 1 al 6 · P&R 39 al 44'},
-  dm1:{act:'dm', nombre:'Menores', edad:'4 a 6 años', n:10, techo:1, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 15 de octubre'},
-  dm2:{act:'dm', nombre:'Aventureros', edad:'7 a 9 años', n:15, techo:2, sinCompletar:true,
-      alcance:'Héroes y villanos · 1 al 30 de octubre'},
-  /* El reglamento de «En esto creemos» reparte el club en dos: dos adultos
-     presentan un examen escrito y el resto contesta otro cuestionario, y las
-     dos notas SE SUMAN. Por eso son dos categorias y no una. */
-  ec1:{act:'ec', nombre:'Los dos del examen escrito', edad:'Adultos', n:25, techo:3, sinCompletar:false,
-      alcance:'Las 28 creencias'},
-  ec2:{act:'ec', nombre:'El resto del club', edad:'Cuestionario', n:15, techo:2, sinCompletar:true,
-      alcance:'Las 28 creencias'},
-};
+/* v163: ACTIVIDADES y CATS ya no se escriben aquí. Salen de las fichas de
+   fuente/campamentos.js, que es el reglamento como datos; build.js las pone
+   antes de este archivo. */
 
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;

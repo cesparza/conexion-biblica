@@ -78,4 +78,12 @@ function montar(ret, op){
   return fn(store,sesion,nodo,Buffer);
 }
 
-module.exports={RAIZ,FUENTE,HTML,JS,nodo,STUB,montar};
+/* v163: el contenido ya no dice para quién es; lo dicen las fichas de
+   fuente/campamentos.js. Quien lea un archivo de contenido directo y necesite
+   `cats` lo pide por aquí, y recibe lo mismo que arma build.js. */
+const REGLAMENTO=(()=>{const {CAMPAMENTOS,deriva}=require(require('path').join(__dirname,'..','fuente','campamentos.js'));
+  return deriva(CAMPAMENTOS);})();
+const conReglas=m=>{const o={...m};
+  for(const k of ['CAPS','MODULOS','MAT_CAPS','MAT_MODULOS','CR_CAPS','CR_MODULOS'])if(o[k])o[k]=REGLAMENTO.conCats(o[k]);
+  return o;};
+module.exports={REGLAMENTO,conReglas,RAIZ,FUENTE,HTML,JS,nodo,STUB,montar};

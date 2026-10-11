@@ -12,41 +12,41 @@
    va ahi. Otras ediciones lo mueven a 6:1, y con esa cuenta darian 30 y 29. */
 
 const CAPS = [
-  { id:'d1', label:'Daniel 1', sub:'Cautivos en Babilonia', src:'Biblia', color:'#E8720C', vs:21, cats:['me','av','pa','gm'] },
+  { id:'d1', label:'Daniel 1', sub:'Cautivos en Babilonia', src:'Biblia', color:'#E8720C', vs:21 },
   /* Daniel 2 ENTRA al examen en las cuatro categorias, por decision de Camilo
      del 19 de septiembre. Estuvo marcado `extra` (solo material de estudio)
      mientras el reglamento hablaba de Daniel 1, 3 y 6; el mecanismo `extra`
      se queda para otros capitulos, y aqui ya no aplica. */
-  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', vs:49, cats:['me','av','pa','gm'] },
-  { id:'d3', label:'Daniel 3', sub:'La imagen de oro y el horno', src:'Biblia', color:'#C0392B', vs:30, cats:['me','av','pa','gm'] },
-  { id:'d4', label:'Daniel 4', sub:'Nabucodonosor humillado', src:'Biblia', color:'#7B5E00', vs:37, cats:['gm'] },
-  { id:'d5', label:'Daniel 5', sub:'La escritura en la pared', src:'Biblia', color:'#8B1A5E', vs:31, cats:['gm'] },
-  { id:'d6', label:'Daniel 6', sub:'En el foso de los leones', src:'Biblia', color:'#1A7A1A', vs:28, cats:['me','av','pa','gm'] },
+  { id:'d2', label:'Daniel 2', sub:'El sueño de la gran imagen', src:'Biblia', color:'#2E8BC0', vs:49 },
+  { id:'d3', label:'Daniel 3', sub:'La imagen de oro y el horno', src:'Biblia', color:'#C0392B', vs:30 },
+  { id:'d4', label:'Daniel 4', sub:'Nabucodonosor humillado', src:'Biblia', color:'#7B5E00', vs:37 },
+  { id:'d5', label:'Daniel 5', sub:'La escritura en la pared', src:'Biblia', color:'#8B1A5E', vs:31 },
+  { id:'d6', label:'Daniel 6', sub:'En el foso de los leones', src:'Biblia', color:'#1A7A1A', vs:28 },
   /* Ampliacion Daniel 7-12 (v54): material de estudio con dos libros que
      prohiben reproduccion literal (Maxwell y Holbrook), asi que preguntas y
-     estudio se redactan propios. cats:['gm'], extra:['gm'] => aparece como
-     material para Guias Mayores pero NO entra al examen de ninguna
-     categoria (soloEstudio() en app.js). Sin texto en fuente/biblia.js: no
+     estudio se redactan propios. La ficha del campamento (campamentos.js) lo
+     da a Guias Mayores como material de solo estudio: NO entra al examen de
+     ninguna categoria (soloEstudio() en app.js). Sin texto en fuente/biblia.js: no
      tiene referencia tocable, capitulo completo ni modo lectura, igual que
      Profetas y Reyes. vs:28 sale de Maxwell, no de un .txt RV1995 propio. */
   { id:'d7', label:'Daniel 7', sub:'Las cuatro bestias y el juicio', src:'Biblia',
-    color:'#4A5568', vs:28, cats:['gm'], extra:['gm'] },
+    color:'#4A5568', vs:28 },
   { id:'d8', label:'Daniel 8', sub:'El carnero, el macho cabrío y las 2.300 tardes', src:'Biblia',
-    color:'#5B3A29', vs:27, cats:['gm'], extra:['gm'] },
+    color:'#5B3A29', vs:27 },
   { id:'d9', label:'Daniel 9', sub:'Las setenta semanas y el Mesías', src:'Biblia',
-    color:'#2F4858', vs:27, cats:['gm'], extra:['gm'] },
+    color:'#2F4858', vs:27 },
   { id:'d10', label:'Daniel 10', sub:'La visión junto al Tigris', src:'Biblia',
-    color:'#6A4C93', vs:21, cats:['gm'], extra:['gm'] },
+    color:'#6A4C93', vs:21 },
   { id:'d11', label:'Daniel 11', sub:'Los reyes del norte y del sur', src:'Biblia',
-    color:'#A44A3F', vs:45, cats:['gm'], extra:['gm'] },
+    color:'#A44A3F', vs:45 },
   { id:'d12', label:'Daniel 12', sub:'El tiempo del fin', src:'Biblia',
-    color:'#264653', vs:13, cats:['gm'], extra:['gm'] },
-  { id:'pr39', label:'P&R 39', sub:'En la corte de Babilonia', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
-  { id:'pr40', label:'P&R 40', sub:'El sueño de Nabucodonosor', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
-  { id:'pr41', label:'P&R 41', sub:'El horno de fuego', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
-  { id:'pr42', label:'P&R 42', sub:'La verdadera grandeza', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
-  { id:'pr43', label:'P&R 43', sub:'El vigía invisible', src:'Elena de White', color:'#7B2D8B', cats:['gm'] },
-  { id:'pr44', label:'P&R 44', sub:'En el foso de los leones', src:'Elena de White', color:'#7B2D8B', cats:['av','pa','gm'] },
+    color:'#264653', vs:13 },
+  { id:'pr39', label:'P&R 39', sub:'En la corte de Babilonia', src:'Elena de White', color:'#7B2D8B' },
+  { id:'pr40', label:'P&R 40', sub:'El sueño de Nabucodonosor', src:'Elena de White', color:'#7B2D8B' },
+  { id:'pr41', label:'P&R 41', sub:'El horno de fuego', src:'Elena de White', color:'#7B2D8B' },
+  { id:'pr42', label:'P&R 42', sub:'La verdadera grandeza', src:'Elena de White', color:'#7B2D8B' },
+  { id:'pr43', label:'P&R 43', sub:'El vigía invisible', src:'Elena de White', color:'#7B2D8B' },
+  { id:'pr44', label:'P&R 44', sub:'En el foso de los leones', src:'Elena de White', color:'#7B2D8B' },
 ];
 
 // helpers para armar HTML compacto

@@ -1,9 +1,9 @@
 const fs=require('fs');
 const path=require('path');
-const {montar,RAIZ,FUENTE,HTML:html,JS:js}=require('./entorno.js');
-const {CAPS,CONTENIDO}=require(path.join(RAIZ,'fuente','contenido.js'));
+const {montar,RAIZ,FUENTE,HTML:html,JS:js,REGLAMENTO,conReglas}=require('./entorno.js');
+const {CAPS,CONTENIDO}=conReglas(require(path.join(RAIZ,'fuente','contenido.js')));
 const {BANCO}=require(path.join(RAIZ,'fuente','preguntas.js'));
-const {MODULOS,CONT_MODULOS}=require(path.join(RAIZ,'fuente','modulos.js'));
+const {MODULOS,CONT_MODULOS}=conReglas(require(path.join(RAIZ,'fuente','modulos.js')));
 const {TARJETAS}=require(path.join(RAIZ,'fuente','tarjetas.js'));
 let fallos=0;
 const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)fallos++;};
@@ -200,7 +200,7 @@ for(const cat of ['av','gm']){
 function NPREG_TEST(c){return c==='av'?15:25;}
 
 // 15. Devoción Matutina: cobertura completa del alcance del reglamento
-const MATU = require(path.join(RAIZ,'fuente','matutina.js'));
+const MATU = conReglas(require(path.join(RAIZ,'fuente','matutina.js')));
 const B_ALL = [...BANCO, ...MATU.MAT_BANCO];
 
 ok(MATU.DIAS.length===31, `La matutina tiene los 31 días de octubre (${MATU.DIAS.length})`);
@@ -230,7 +230,8 @@ ok(d2.length===31 && d2[0]===1 && d2[30]===31,
 
 /* El día 31 está fuera del examen porque el reglamento llega al 30. */
 const d31 = MATU.MAT_CAPS.find(x=>x.id==='m31');
-ok(d31 && d31.extra===true, 'El día 31 está marcado como extra: se estudia pero no entra al examen');
+ok(d31 && Array.isArray(d31.extra) && d31.extra.includes('dm2') && d31.cats.join()==='dm2',
+  'El día 31 es de solo estudio para 7 a 9 años: se lee pero no entra al examen');
 
 /* Las referencias de los versículos no se repiten al azar entre distractores:
    cada pregunta de «qué versículo va con qué día» debe tener 4 opciones distintas. */
@@ -249,7 +250,7 @@ ok(MATU.MAT_BANCO.every(q=>idsMat.has(q.cap)),
    Eso es todo el punto de haberlo sacado de tools/imprimir.js: antes solo se
    podía revisar abriendo el HTML generado a ojo. */
 const IMPR=require(path.join(RAIZ,'fuente','imprimible.js'));
-const MATU2=require(path.join(RAIZ,'fuente','matutina.js'));
+const MATU2=conReglas(require(path.join(RAIZ,'fuente','matutina.js')));
 const CAPS_T=[...CAPS,...MATU2.MAT_CAPS];
 const BANCO_T=[...BANCO,...MATU2.MAT_BANCO];
 const CATS_T={me:10,av:15,pa:25,gm:25,dm1:10,dm2:15};
@@ -749,11 +750,7 @@ ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
    los nombres reales de los clubes). Pide que las LISTAS que pueden mezclar
    actividades digan de cuál es cada una. */
 {
-  const catsHtml = (() => {
-    const b = APP.slice(APP.indexOf('const CATS={'));
-    return b.slice(0, b.indexOf('\n};') + 2);
-  })();
-  const nombres = [...catsHtml.matchAll(/nombre:'([^']+)'/g)].map(m => m[1]);
+  const nombres = Object.values(REGLAMENTO.CATS).map(c => c.nombre);
   const repetidos = nombres.filter((n, i) => nombres.indexOf(n) !== i);
   ok(repetidos.length > 0,
     'Hay nombres de categoría repetidos entre actividades (' + [...new Set(repetidos)].join(', ') +
@@ -893,7 +890,7 @@ ok(rotDup.length===0,'Ningún rótulo de completar se repite dentro del mismo ca
 
 /* La pregunta «¿a qué creencia corresponde esta declaración?» no puede llevar
    el título de la creencia dentro de la cita: se contestaría sola. */
-const CRE=require(path.join(RAIZ,'fuente','creencias.js'));
+const CRE=conReglas(require(path.join(RAIZ,'fuente','creencias.js')));
 const titCre={};CRE.CR_CAPS.forEach(c=>{titCre[c.id]=c.sub;});
 const delatan=CRE.CR_BANCO.filter(q=>/corresponde esta declaración/.test(q.q||''))
   .filter(q=>{
@@ -1097,13 +1094,8 @@ for(const id of ['aviso-nuevo','hoja'])
    ev:'Conexion Biblica' y edad:'Otro evento': el dato se contradecia solo.
    Ahora ACTIVIDADES es el dato de primer nivel y cada categoria declara a
    cual pertenece. */
-const { CATS: CATS_APP, ACTIVIDADES: ACTS_APP } = (() => {
-  /* Se leen del fuente evaluando solo esos dos bloques: son datos, no logica,
-     y asi la prueba no depende de montar la app entera. */
-  const bloque=APP.slice(APP.indexOf('const ACTIVIDADES={'),
-                             APP.indexOf('const ACT_DE='));
-  return new Function(bloque+'\nreturn {CATS,ACTIVIDADES};')();
-})();
+/* v163: salen de las fichas de campamentos.js, que es de donde las saca la app. */
+const { CATS: CATS_APP, ACTIVIDADES: ACTS_APP } = REGLAMENTO;
 
 ok(Object.keys(ACTS_APP).length===3,'Hay tres actividades declaradas');
 ok(['cb','dm','ec'].every(a=>ACTS_APP[a]),'Las tres son cb, dm y ec');
@@ -1489,8 +1481,8 @@ ok(/\.lect-cab\{[^}]*justify-content:flex-end/.test(CSS),
    desde aca son las tres capas del arreglo. */
 /* Los tres eventos, porque el select de tarjetas ofrece los capitulos de la
    categoria activa y las opciones mas largas son las de la matutina. */
-const MATC=require(path.join(RAIZ,'fuente','matutina.js'));
-const CREC=require(path.join(RAIZ,'fuente','creencias.js'));
+const MATC=conReglas(require(path.join(RAIZ,'fuente','matutina.js')));
+const CREC=conReglas(require(path.join(RAIZ,'fuente','creencias.js')));
 const CAPS_TODOS=[...CAPS,...MATC.MAT_CAPS,...CREC.CR_CAPS];
 
 ok(/#tj-filtro\{[^}]*min-width:0/.test(CSS),
@@ -2150,5 +2142,88 @@ ok(/verRevision\(/.test(APP.slice(APP.indexOf('function hisListaPersonas'))),
    columna del texto en vez de repetirlo en el panel. */
 ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+cid\+'"/.test(APP),
   'verVers intenta primero ir al versículo que ya está en pantalla');
+/* ───────── v163: LA FICHA DEL CAMPAMENTO ─────────
+   El reglamento vivía en tres sitios (categorías, actividades y una marca en
+   cada capítulo). Ahora sale de fuente/campamentos.js. Estas pruebas fijan
+   tres cosas: que el reglamento vigente es el mismo de antes, que una ficha
+   mal escrita no pasa, y que agregar un campamento o un tema es agregar
+   datos y no tocar la app. */
+{
+  const F=require(path.join(RAIZ,'fuente','campamentos.js'));
+  const lee=f=>fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8');
+  const sinComentarios=t=>t.replace(/\/\*[\s\S]*?\*\//g,'');
+  ok(!/const (CATS|ACTIVIDADES)=\{/.test(lee('app.js'))&&
+     ['contenido.js','modulos.js','matutina.js','creencias.js'].every(f=>!/\bcats\s*:/.test(sinComentarios(lee(f)))),
+    'El reglamento tiene una sola fuente: ni app.js ni el contenido lo repiten');
+  ok(/'cats' in x \|\| 'extra' in x/.test(lee('build.js')),
+    'El build se niega a armar si el contenido vuelve a traer su propia marca');
+
+  /* El reglamento vigente, categoría por categoría. Cambiar una ficha a
+     propósito obliga a cambiar esta tabla: es el contrato con los clubes. */
+  const CAPS_V=[...CAPS,...MATU.MAT_CAPS,...CREC.CR_CAPS], MODS_V=[...MODULOS,...MATU.MAT_MODULOS,...CREC.CR_MODULOS];
+  const ve=k=>[CAPS_V,MODS_V].map(l=>l.filter(c=>c.cats.includes(k)).map(c=>c.id).join(' ')).join(' | ');
+  const solo=k=>CAPS_V.filter(c=>(c.extra||[]).includes(k)).map(c=>c.id).join(' ');
+  const R=(a,b,p)=>Array.from({length:b-a+1},(_,i)=>p+String(a+i).padStart(2,'0')).join(' ');
+  const RAV='m-linea m-personajes m-numeros m-trampas m-versiculos m-lugares m-version m-prioridades m-palabras';
+  const VIGENTE={
+    me:['d1 d2 d3 d6 | m-personajes m-numeros m-versiculos m-lugares m-palabras','',10,1],
+    av:['d1 d2 d3 d6 pr39 pr41 pr44 | '+RAV,'',15,3],
+    pa:['d1 d2 d3 d6 pr39 pr41 pr44 | '+RAV,'',25,3],
+    gm:['d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 d12 pr39 pr40 pr41 pr42 pr43 pr44 | m-linea m-personajes m-numeros m-trampas m-versiculos m-reyes m-profetico m-lugares m-version m-prioridades m-palabras',
+        'd7 d8 d9 d10 d11 d12',25,3],
+    dm1:[R(1,15,'m')+' | mm-quien mm-versiculos mm-plan','',10,1],
+    dm2:[R(1,31,'m')+' | mm-quien mm-versiculos mm-plan','m31',15,2],
+    ec1:[R(1,28,'cr')+' | mc-doctrinas mc-lista','',25,3],
+    ec2:[R(1,28,'cr')+' | mc-doctrinas mc-lista','',15,2],
+  };
+  const C=REGLAMENTO.CATS;
+  const distintas=Object.keys(VIGENTE).filter(k=>!C[k]||ve(k)!==VIGENTE[k][0]||solo(k)!==VIGENTE[k][1]||C[k].n!==VIGENTE[k][2]||C[k].techo!==VIGENTE[k][3]);
+  ok(Object.keys(C).join()===Object.keys(VIGENTE).join()&&!distintas.length,
+    'El reglamento vigente no cambió: las 8 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
+  ok(Object.keys(REGLAMENTO.ACTIVIDADES).join()==='cb,dm,ec'&&REGLAMENTO.ACTIVIDADES.cb.cats.join()==='me,av,pa,gm',
+    'Las tres actividades siguen siendo cb, dm y ec, con sus categorías en el orden de siempre');
+
+  /* El servidor todavía tiene su propia lista de categorías: mientras exista,
+     tiene que ser la misma. */
+  const SRV=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
+  const validas=(/const CATS_VALIDAS = \[([^\]]*)\]/.exec(SRV)||[])[1]||'';
+  ok(validas.replace(/['\s]/g,'')===Object.keys(C).join(','),
+    'Las categorías que acepta el servidor son las de las fichas, en el mismo orden');
+
+  /* Una ficha mal escrita no pasa. */
+  const TEMAS_P={daniel:[...CAPS,...MODULOS].map(x=>x.id),matutina:[...MATU.MAT_CAPS,...MATU.MAT_MODULOS].map(x=>x.id),
+    creencias:[...CREC.CR_CAPS,...CREC.CR_MODULOS].map(x=>x.id)};
+  ok(F.revisa(F.CAMPAMENTOS,TEMAS_P).length===0&&F.sinUsar(F.CAMPAMENTOS,TEMAS_P).length===0,
+    'Las fichas vigentes cuadran con el contenido y no dejan ningún capítulo sin dueño');
+  const cat=(o)=>Object.assign({id:'cq1',nombre:'Conquistadores',edad:'10 a 15 años',n:20,techo:2,sinCompletar:false,
+    alcance:'Daniel 1 al 6',estudia:['d1','d2','d3','d4','d5','d6']},o);
+  const ficha=(c,o)=>Object.assign({id:'cq',tema:'daniel',nombre:'Campamento de Conquistadores',icono:'🏕️',cuando:'Por confirmar',
+    que:'El libro de Daniel',categorias:[c]},o);
+  const falla=(f,re)=>F.revisa([...F.CAMPAMENTOS,f],TEMAS_P).some(m=>re.test(m));
+  ok(falla(ficha(cat({estudia:['d1','d99']})),/d99/)&&falla(ficha(cat({estudia:['d1','cr01']})),/cr01/)&&
+     falla(ficha(cat({id:'av'})),/av/)&&falla(ficha(cat({soloEstudio:['d7']})),/d7/)&&
+     falla(ficha(cat({techo:4})),/techo/)&&falla(ficha(cat(),{tema:'apocalipsis'}),/apocalipsis/)&&
+     falla(ficha(cat(),{id:'cb'}),/cb/),
+    'revisa() rechaza un capítulo que no existe, uno de otro tema, una categoría repetida, un solo-estudio que no se estudia, un techo imposible, un tema que no existe y una ficha repetida');
+
+  /* Otro club con el mismo tema: una ficha más y nada de contenido nuevo. */
+  const con=F.deriva([...F.CAMPAMENTOS,ficha(cat())]);
+  const idsCq=cat().estudia;
+  const BANCO_D=[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA];
+  const {nivelDe}=require(path.join(RAIZ,'fuente','niveles.js'));
+  const pool=BANCO_D.filter(q=>idsCq.includes(q.cap)&&nivelDe(q)<=2).length;
+  ok(F.revisa([...F.CAMPAMENTOS,ficha(cat())],TEMAS_P).length===0&&con.ACTIVIDADES.cq.cats.join()==='cq1'&&
+     con.CATS.cq1.act==='cq'&&con.catsDe('d4').join()==='gm,cq1'&&con.catsDe('d1').join()==='me,av,pa,gm,cq1'&&
+     JSON.stringify(con.CATS.av)===JSON.stringify(C.av)&&pool>cat().n*5,
+    'Un campamento de Conquistadores con Daniel es una ficha más: sin escribir contenido ya tiene '+pool+' preguntas hasta nivel 2, y no mueve a las demás categorías');
+
+  /* Un tema nuevo: su contenido, su entrada en TEMAS y su ficha. */
+  const TEMAS_AP=Object.assign({},TEMAS_P,{apocalipsis:Array.from({length:22},(_,i)=>'ap'+(i+1))});
+  const fAp=ficha(cat({id:'ap1c',alcance:'Apocalipsis 1 al 3',estudia:['ap1','ap2','ap3']}),{id:'ap27',tema:'apocalipsis',que:'El libro de Apocalipsis'});
+  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP).length===0&&F.deriva([...F.CAMPAMENTOS,fAp]).catsDe('ap2').join()==='ap1c'&&
+     F.revisa([...F.CAMPAMENTOS,ficha(cat({estudia:['ap1']}))],TEMAS_AP).some(m=>/ap1/.test(m)),
+    'Un tema nuevo entra con su ficha, y una ficha de Daniel no puede nombrar capítulos de Apocalipsis');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

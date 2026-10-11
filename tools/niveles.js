@@ -2,7 +2,9 @@
    clasificado el banco y decidir si alguna pregunta necesita `nv:`.
    Uso:  node tools/niveles.js            (resumen)
          node tools/niveles.js 1          (lista las de nivel 1)  */
-const { CAPS } = require('../fuente/contenido.js');
+const { CAPS: CAPS_F } = require('../fuente/contenido.js');
+/* Para quién es cada capítulo lo dicen las fichas (fuente/campamentos.js). */
+const CAPS = (() => { const { CAMPAMENTOS, deriva } = require('../fuente/campamentos.js'); return deriva(CAMPAMENTOS).conCats(CAPS_F); })();
 const { BANCO } = require('../fuente/preguntas.js');
 const { nivelDe, ETIQUETA } = require('../fuente/niveles.js');
 

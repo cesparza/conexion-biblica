@@ -5,7 +5,7 @@ const path=require('path');
 /* Arriba del todo: se usa desde la mitad del archivo en adelante, y un
    `const` usado antes de su declaracion lanza TDZ. Es el mismo tropiezo que
    ya costo tres veces en fuente/app.js. */
-const CR=require(path.join(RAIZ,'fuente','creencias.js'));
+const CR=require('./entorno.js').conReglas(require(path.join(RAIZ,'fuente','creencias.js')));
 
 /* Lo que esta suite necesita de la app. Es su superficie, no duplicacion. */
 const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jgBanco, jgPaso, jgSigue,

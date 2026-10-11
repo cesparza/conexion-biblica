@@ -5,7 +5,9 @@
    Sirve para ver dónde se pierden puntos, no para adivinar.
    Uso:  node tools/cobertura.js            (resumen)
          node tools/cobertura.js --detalle  (lista versículo por versículo) */
-const { CAPS, CONTENIDO } = require('../fuente/contenido.js');
+const { CAPS: CAPS_F, CONTENIDO } = require('../fuente/contenido.js');
+/* Para quién es cada capítulo lo dicen las fichas (fuente/campamentos.js). */
+const CAPS = (() => { const { CAMPAMENTOS, deriva } = require('../fuente/campamentos.js'); return deriva(CAMPAMENTOS).conCats(CAPS_F); })();
 /* El banco de Daniel son DOS archivos: el escrito a mano y el que cierra los
    huecos de cobertura (preguntas-cobertura.js, generado). Medir solo el
    primero daria un hueco que ya no existe, y esta herramienta existe
