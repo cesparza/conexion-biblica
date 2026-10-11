@@ -3026,6 +3026,23 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     ok(!otra.nuevas()&&otra.CATS.av.n===20,'Si llega lo mismo que ya está corriendo, no hay aviso'); }
 }
 
+/* ── v168: EL EXAMEN DE PRÁCTICA ABRE CON EL NÚMERO DEL REGLAMENTO ── */
+{
+  const RETN="ponCat, pintaMenuEx, armar, c:()=>cuantas, ops:()=>opcionesCuantas()";
+  const A=montar(RETN,{store:{}});
+  A.ponCat('me');A.pintaMenuEx();const me=A.c(), opsMe=A.ops().slice(0,3).join();
+  A.ponCat('av');A.pintaMenuEx();const av=A.c(), opsAv=A.ops().slice(0,5).join();
+  A.ponCat('pa');A.pintaMenuEx();const pa=A.c();
+  ok(me===10&&av===15&&pa===25,'Al pasar de Menores a Aventureros y a Padres, el examen ofrece 10, 15 y 25: el número de cada categoría ('+me+', '+av+', '+pa+')');
+  ok(opsAv==='10,15,25,40,60','Las opciones de siempre no cambian para las categorías de siempre ('+opsAv+')');
+  const cq={id:'cq27',tema:'daniel',nombre:'Conexión Bíblica de Conquistadores',icono:'🏕️',cuando:'Por confirmar',fecha:'',que:'Daniel 1 al 6',
+    categorias:[{id:'cq1',nombre:'Conquistadores',edad:'10 a 15 años',n:20,techo:2,sinCompletar:false,alcance:'Daniel 1 al 6',estudia:['d1','d2','d3','d4','d5','d6']}]};
+  const B=montar(RETN,{store:{'cb-fichas':JSON.stringify({fichas:[cq]})}});
+  B.ponCat('cq1');B.pintaMenuEx();
+  ok(B.c()===20&&B.ops().includes(20)&&B.armar('normal').length===20,
+    'Una categoría guardada con 20 preguntas abre su examen en 20, y el examen sale de 20 ('+B.c()+')');
+}
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 

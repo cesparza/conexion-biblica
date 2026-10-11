@@ -976,7 +976,9 @@ function ponCat(c){
   try{document.getElementById('detalle').style.display='none';}catch(e){}
   /* Cambiar de categoría cambia el material entero, así que el mazo y el examen
      armado eran de la categoría anterior. Igual que al cambiar de persona. */
-  reiniciaPractica();prueba=[];resp={};entregado=false;alcance=alcanceDeFiltro();reiniciaFuente();
+  /* v168: y el número de preguntas escogido era el de la otra categoría: de
+     Menores (10) a Aventureros el examen seguía ofreciendo 10 en vez de 15. */
+  reiniciaPractica();prueba=[];resp={};entregado=false;alcance=alcanceDeFiltro();cuantas=0;reiniciaFuente();
   try{clearInterval(reloj);}catch(e){}
   cierraHoja();
   ir('inicio');
@@ -4593,7 +4595,9 @@ function poolNivel(){
 /* Opciones de cantidad que caben en el pool, más el máximo real. */
 function opcionesCuantas(){
   const t=poolNivel().length;
-  const base=[10,15,25,40,60,100].filter(n=>n<=t);
+  /* v168: el número del reglamento siempre está entre las opciones. Antes la
+     lista era fija, y una categoría de 20 preguntas abría su examen en 10. */
+  const base=[...new Set([10,15,25,40,60,100,NPREG()])].filter(n=>n<=t).sort((x,y)=>x-y);
   if(!base.length||base[base.length-1]!==t)base.push(t);
   return base;
 }
