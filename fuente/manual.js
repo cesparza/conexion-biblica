@@ -48,12 +48,13 @@ const MANUAL = [
     progreso sea tuyo: en un mismo teléfono pueden estudiar varias personas sin
     mezclarse.</p>` },
   { t:'Paso 2 — tu actividad',
-    h:`<p>Tres tarjetas, y cada una dice <strong>cuándo es</strong> y
+    h:`<p>Una tarjeta por actividad, y cada una dice <strong>cuándo es</strong> y
     <strong>qué se estudia</strong>:</p>
     <p><strong>Conexión Bíblica</strong> es el libro de Daniel y Profetas y
-    Reyes, el 9 de octubre. <strong>Devoción Matutina</strong> es «Héroes y
-    villanos», la lectura de todo octubre. <strong>En esto creemos</strong> son
-    las 28 creencias.</p>
+    Reyes. <strong>Conexión Bíblica de Guías Mayores</strong> es el mismo
+    libro con más capítulos, para su propio evento. <strong>Devoción
+    Matutina</strong> es «Héroes y villanos», la lectura de todo octubre.
+    <strong>En esto creemos</strong> son las 28 creencias.</p>
     <p>Escoge <strong>una</strong>, la que vas a estudiar ahora. Si estás en
     dos, la otra se agrega después y no se pierde nada: mira «Las actividades,
     separadas» más abajo.</p>` },

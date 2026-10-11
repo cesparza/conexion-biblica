@@ -73,7 +73,10 @@ const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:
      estudia       capítulos y repasos que ve
      soloEstudio   de esos, los que se leen pero no entran al examen */
 const CAMPAMENTOS = [
-  { id: 'cb', tema: 'daniel', nombre: 'Conexión Bíblica', icono: '📘', cuando: '9 de octubre', fecha: '2026-10-09',
+  /* Los tres concursos de Aventureros (este, la matutina y las creencias)
+     fueron el mismo día, el 10 de octubre de 2026. Lo confirmó Camilo el 11 de
+     octubre; el código traía el 9. */
+  { id: 'cb', tema: 'daniel', nombre: 'Conexión Bíblica', icono: '📘', cuando: '10 de octubre', fecha: '2026-10-10',
     que: 'El libro de Daniel y Profetas y Reyes',
     /* El reglamento del campamento pide dos integrantes de 4 a 6 años (solo
        Daniel), dos de 7 a 9 (Daniel y Profetas y Reyes) y dos padres o
@@ -103,9 +106,8 @@ const CAMPAMENTOS = [
         /* Daniel 7 al 12 es material de estudio: no entra al examen. */
         soloEstudio: ['d7', 'd8', 'd9', 'd10', 'd11', 'd12'] },
     ] },
-  /* Sin fecha a propósito: el código contaba hacia el 9 de octubre, pero el
-     material va hasta el 30. Hasta que Camilo diga la fecha no se afirma. */
-  { id: 'dm', tema: 'matutina', nombre: 'Devoción Matutina', icono: '🌅', cuando: 'Todo octubre', fecha: '',
+  /* El concurso fue el 10 de octubre; la lectura sigue todo el mes. */
+  { id: 'dm', tema: 'matutina', nombre: 'Devoción Matutina', icono: '🌅', cuando: '10 de octubre', fecha: '2026-10-10',
     que: 'Héroes y villanos, un día a la vez',
     categorias: [
       { id: 'dm1', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true,
@@ -117,7 +119,6 @@ const CAMPAMENTOS = [
         /* El 31 cierra la historia del 30; el reglamento llega hasta el 30. */
         soloEstudio: ['m31'] },
     ] },
-  /* El examen escrito fue el 10 de octubre de 2026 (lo presentó Camilo). */
   { id: 'ec', tema: 'creencias', nombre: 'En esto creemos', icono: '✝️', cuando: '10 de octubre', fecha: '2026-10-10',
     que: 'Las 28 creencias',
     /* El reglamento reparte el club en dos: dos adultos presentan un examen

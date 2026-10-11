@@ -2958,20 +2958,20 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     `const _D=globalThis.Date; let Date=class extends _D{constructor(...a){a.length?super(...a):super('${iso}T12:00:00')}
       static now(){return new _D('${iso}T12:00:00').getTime()}};`});
   const cab=(Z,cat)=>{Z.ponCat(cat);Z.pintaHoy();return Z.el('hoy').innerHTML;};
-  const antes=conFecha('2026-10-05'),elDia=conFecha('2026-10-09'),despues=conFecha('2026-10-12');
-  ok(/class="cd">4</.test(cab(antes,'av'))&&/para el campamento/.test(cab(antes,'av'))&&/Semana 7 de 7/.test(cab(antes,'av')),
-    'Cuatro días antes, Aventureros ve la cuenta y la semana del plan');
+  const antes=conFecha('2026-10-05'),elDia=conFecha('2026-10-10'),despues=conFecha('2026-10-12');
+  ok(/class="cd">5</.test(cab(antes,'av'))&&/para el campamento/.test(cab(antes,'av'))&&/Semana 7 de 7/.test(cab(antes,'av')),
+    'Cinco días antes, Aventureros ve la cuenta y la semana del plan');
   ok(/¡Hoy!/.test(cab(elDia,'av')),'El día del campamento dice «¡Hoy!»');
   const h=cab(despues,'av');
-  ok(/Fue el 9 de octubre/.test(h)&&!/¡Hoy!/.test(h)&&!/Semana \d de 7/.test(h)&&/puedes repasar/.test(h),
+  ok(/Fue el 10 de octubre/.test(h)&&!/¡Hoy!/.test(h)&&!/Semana \d de 7/.test(h)&&/puedes repasar/.test(h),
     'Pasado el campamento dice cuándo fue, y que el material sigue disponible');
-  ok(/Fue el 10 de octubre/.test(cab(despues,'ec1')),'En esto creemos dice su propia fecha, el 10 de octubre');
+  ok(/Fue el 10 de octubre/.test(cab(despues,'ec1'))&&/Fue el 10 de octubre/.test(cab(despues,'dm2'))&&/¡Hoy!/.test(cab(elDia,'dm1'))&&/¡Hoy!/.test(cab(elDia,'ec2')),
+    'Los tres concursos de Aventureros comparten el día: el 10 de octubre');
   for(const Z of [antes,elDia,despues]){
     const g=cab(Z,'gm');
     ok(/Fecha por confirmar/.test(g)&&!/¡Hoy!/.test(g)&&!/class="cd"/.test(g)&&!/Semana \d de 7/.test(g)&&Z.diasParaMeta()===null,
       'Guías Mayores, sin fecha: ni cuenta de días ni «¡Hoy!», en cualquier día');
   }
-  ok(/Todo octubre/.test(cab(antes,'dm2'))&&!/class="cd"/.test(cab(antes,'dm2')),'La matutina, sin fecha, dice «Todo octubre» y no cuenta días');
   /* Sin fecha no hay freno por calendario ni recta final: el nivel lo pone el
      desempeño, y la tarjeta dominada vuelve a su plazo largo. */
   antes.ponCat('gm');

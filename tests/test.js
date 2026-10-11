@@ -2215,8 +2215,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
 
   /* v165: la fecha, el tiempo por pregunta y la rampa de los adultos salen de
      la ficha. Eran tres tablas más en app.js, escritas por categoría. */
-  ok(AC.cb.fecha==='2026-10-09'&&AC.cbg.fecha===''&&AC.dm.fecha===''&&AC.ec.fecha==='2026-10-10',
-    'Cada ficha trae su fecha: Conexión Bíblica el 9 de octubre, En esto creemos el 10, y Guías y la matutina sin fecha');
+  ok(['cb','dm','ec'].every(a=>AC[a].fecha==='2026-10-10'&&AC[a].cuando==='10 de octubre')&&AC.cbg.fecha==='',
+    'Cada ficha trae su fecha: los tres concursos de Aventureros el 10 de octubre de 2026, y Guías Mayores sin fecha');
+  ok(!/Tres tarjetas|el 9 de octubre/.test(lee('manual.js')),
+    'El manual no cuenta las actividades ni afirma una fecha: las dos cosas salen de las fichas');
   ok(C.me.seg===100&&C.av.seg===80&&['pa','gm','dm1','dm2','ec1','ec2'].every(k=>C[k].seg===72)&&
      C.pa.rampa===false&&Object.keys(C).filter(k=>k!=='pa').every(k=>C[k].rampa===true),
     'El tiempo por pregunta y la rampa son los de antes: 100 s Menores, 80 s Aventureros, 72 s los demás, y solo Padres entra sin rampa');
