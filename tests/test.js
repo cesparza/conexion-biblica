@@ -2296,9 +2296,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
       'La app junta las de fábrica con las guardadas, guarda las que llegan con /estado y avisa si cambiaron'); }
   { const SRV2=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
     const M=fs.readFileSync(path.join(RAIZ,'migraciones','012_fichas.sql'),'utf8').replace(/^--.*$/gm,'');
-    ok(/fichas: \(await reglamentoVigente\(env\)\)\.guardadas/.test(SRV2)&&/guardadas: leidas && leidas\.filter/.test(SRV2)&&/catch \(e\) \{ return undefined; \}/.test(SRV2)&&
-       !/(UPDATE|DELETE FROM) ficha\b/i.test(SRV2)&&SRV2.split('INSERT INTO ficha ').length===2,
-      'El servidor entrega las fichas guardadas con /estado, calla el campo si la base falla, y la tabla solo crece: un único INSERT y ningún UPDATE ni DELETE');
+    ok(/fichas: \(await reglamentoVigente\(env\)\)\.guardadas/.test(SRV2)&&/guardadas: leidas && vivas\.filter/.test(SRV2)&&/catch \(e\) \{ return undefined; \}/.test(SRV2)&&
+       !/(UPDATE|DELETE FROM) ficha\b/i.test(SRV2)&&SRV2.split('INSERT INTO ficha ').length===3,
+      'El servidor entrega las fichas guardadas con /estado, calla el campo si la base falla, y la tabla solo crece: dos INSERT (guardar, y retirar o restaurar) y ningún UPDATE ni DELETE');
     ok(/CREATE TABLE IF NOT EXISTS ficha/.test(M)&&/AUTOINCREMENT/.test(M)&&/json_valid\(datos\)/.test(M)&&
        !/\b(DROP|ALTER|UPDATE|DELETE)\b/i.test(M),
       'La migración 012 solo agrega la tabla de fichas: no toca ninguna de las que existen'); }
@@ -2312,7 +2312,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
        GEN.includes('export const IDS_DE_TEMA = '+JSON.stringify(TEMAS_P,null,1)+';')&&/export \{ REGLAS \};\n$/.test(GEN)&&!/module\.exports/.test(GEN),
       'El reglamento del servidor es el mismo reglamento.js con las fichas de fábrica de hoy: no hay copia a mano');
     const pC=SRV3.indexOf("ruta === '/concursos'"), pG=SRV3.indexOf("ruta.startsWith('/panel/')");
-    const tramo=SRV3.slice(pC,SRV3.indexOf("ruta === '/entrar'"));
+    /* v172: el tramo es SOLO la ruta de la lista; antes llegaba hasta /entrar y medía también rutas que no son públicas. */
+    const tramo=SRV3.slice(pC,SRV3.indexOf("ruta === '/reglamento'"));
     ok(pC>0&&pC<pG&&/reglamentoVigente\(env\)/.test(tramo)&&/completo/.test(tramo)&&!/estudia|soloEstudio|techo|participante|sesion/.test(tramo.replace(/\/\*[\s\S]*?\*\//g,'')),
       'La lista de concursos es pública, sale ya junta y revisada, y no entrega nada de personas');
     ok(/'access-control-allow-origin': '\*'/.test(tramo)&&SRV3.split("'access-control-allow-origin'").length===2&&!/sesionActual|leerCookie/.test(tramo),
@@ -2354,6 +2355,24 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
        d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA].filter(q=>q.cap==='d1').length&&
        cat4.daniel.repasos.some(r=>r.id==='m-linea'),
       'El catálogo trae los tres temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
+
+  /* ── v172: RETIRAR UN CONCURSO ── */
+  { const S5=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
+    const pS=S5.indexOf("ruta.startsWith('/servicio/')"), pR=S5.indexOf("ruta === '/servicio/retirar'");
+    const ruta=S5.slice(pR,S5.indexOf("return error('No existe.', 404)",pR));
+    const vig=S5.slice(S5.indexOf('async function reglamentoVigente'),S5.indexOf('const clavesRetiradas'));
+    ok(pR>pS&&pS>0&&/const vivas = \(leidas \|\| \[\]\)\.filter\(f => f\.retirado !== true\);/.test(vig)&&/REGLAS\.junta\(FICHAS_BASE, vivas, IDS_DE_TEMA\)/.test(vig)&&
+       /guardadas: leidas && vivas\.filter/.test(vig),
+      'Un concurso retirado se aparta antes de juntar: no llega a la app, a la lista pública ni a las categorías válidas, y la ruta va detrás del secreto');
+    ok(/if \(!completo\) return error/.test(ruta)&&/FICHAS_BASE\.some\(f => f\.id === fid\)\) return error\([^)]*422/.test(ruta)&&
+       /FROM participante WHERE borrado_en IS NULL AND categoria IN/.test(ruta)&&/if \(n > 0\) return error\([^;]*409/.test(ruta)&&
+       ruta.indexOf('FROM participante')<ruta.indexOf('INSERT INTO ficha')&&/\.bind\(fid, datos, quien\)/.test(ruta)&&/\.bind\(\.\.\.cats\)/.test(ruta),
+      'No se retira uno que viene con la app ni uno con personas inscritas, y se mira antes de guardar');
+    ok(/const ficha = REGLAS\.forma\(quitada\);/.test(ruta)&&/REGLAS\.junta\(fichas, \[ficha\], IDS_DE_TEMA\)/.test(ruta)&&/return json\(\{ ok: true, id: fid, retirado: retirar, ya: true \}\)/.test(ruta),
+      'Restaurar revisa la ficha contra el reglamento de ese momento, y pedir lo que ya está hecho no guarda otra fila');
+    /* La marca no entra por la puerta de editar: forma() no la deja pasar. */
+    const conMarca=F.forma(Object.assign(ficha(cat()),{retirado:true}));
+    ok(conMarca&&!('retirado' in conMarca),'Editar un concurso no lo puede retirar: la forma de una ficha no lleva esa marca'); }
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

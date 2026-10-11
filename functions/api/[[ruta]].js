@@ -229,11 +229,20 @@ async function fichasGuardadas(env) {
 
 /* El reglamento vigente: las de fábrica más las guardadas que pasan la
    revisión (v169). `guardadas` trae solo las que entraron, que es lo que se
-   le manda a la app; `completo` dice si la base contestó. */
+   le manda a la app; `completo` dice si la base contestó.
+
+   UNA FICHA RETIRADA (v172) sigue guardada, porque la tabla solo crece: su
+   última versión lleva `retirado: true`. Se aparta AQUÍ, antes de juntar, y
+   por eso no entra a ninguna lista: ni a la app, ni a /concursos, ni a las
+   categorías que acepta el servidor. Los aparatos nunca la reciben, así que
+   una versión vieja de la app tampoco la muestra. `fichasRetiradas` es solo
+   para quien las administra. */
 async function reglamentoVigente(env) {
   const leidas = await fichasGuardadas(env);
-  const { fichas } = REGLAS.junta(FICHAS_BASE, leidas || [], IDS_DE_TEMA);
-  return { fichas, guardadas: leidas && leidas.filter(g => fichas.includes(g)), completo: leidas !== undefined };
+  const vivas = (leidas || []).filter(f => f.retirado !== true);
+  const { fichas } = REGLAS.junta(FICHAS_BASE, vivas, IDS_DE_TEMA);
+  return { fichas, guardadas: leidas && vivas.filter(g => fichas.includes(g)),
+    fichasRetiradas: (leidas || []).filter(f => f.retirado === true), completo: leidas !== undefined };
 }
 
 /** Solo las claves: es lo que necesita quien arma un examen. */
@@ -348,10 +357,16 @@ export async function onRequest(context) {
        iglesia, de servidor a servidor. Es público porque es lo mismo que ya va
        dentro del HTML de esta app; no trae nada de personas. */
     if (metodo === 'GET' && ruta === '/reglamento') {
-      const { fichas, guardadas, completo } = await reglamentoVigente(env);
+      const { fichas, guardadas, fichasRetiradas, completo } = await reglamentoVigente(env);
       const temas = {};
       for (const t of Object.keys(CATALOGO)) temas[t] = { nombre: (REGLAS.TEMAS[t] || {}).nombre || t, tipo: (REGLAS.TEMAS[t] || {}).tipo || '', ...CATALOGO[t] };
-      return json({ fichas, guardadas: (guardadas || []).map(f => f.id), temas, completo, hora: new Date().toISOString() });
+      /* v172: `fabrica` dice cuáles vienen con la app (no se retiran) y
+         `retirados`, cuáles se quitaron de las listas y se pueden volver a
+         poner. De un retirado va lo justo para nombrarlo. */
+      return json({ fichas, guardadas: (guardadas || []).map(f => f.id), fabrica: FICHAS_BASE.map(f => f.id),
+        retirados: fichasRetiradas.map(f => ({ id: f.id, nombre: limpiar(f.nombre, 60) || '', tema: limpiar(f.tema, 20) || '',
+          fecha: limpiar(f.fecha, 10) || '', categorias: Array.isArray(f.categorias) ? f.categorias.length : 0 })),
+        temas, completo, hora: new Date().toISOString() });
     }
 
     // ─────────────────────────────────────── servicio: guardar una ficha
@@ -392,6 +407,57 @@ export async function onRequest(context) {
       const r = await env.DB.prepare('INSERT INTO ficha (ficha_id, datos, quien) VALUES (?, ?, ?)')
         .bind(ficha.id, datos, quien).run();
       return json({ ok: true, id: ficha.id, n: r.meta && r.meta.last_row_id, nueva: !fichas.some(f => f.id === ficha.id) });
+    }
+    /* RETIRAR UN CONCURSO, Y VOLVERLO A PONER (v172)
+
+       POR QUÉ EXISTE. Un concurso creado por error le salía a todo el que
+       abre la app, y no había cómo quitarlo: la tabla solo crece.
+
+       QUÉ ES RETIRAR. No borra nada. Guarda una versión más de la ficha con
+       `retirado: true`, y `reglamentoVigente` la aparta de todas las listas.
+       Restaurar es guardar otra versión sin la marca, revisada como cualquier
+       ficha contra el reglamento de ese momento.
+
+       LO QUE NO SE PUEDE RETIRAR
+       · Los concursos que vienen con la app: están en el código, no en la
+         tabla, y son los que la gente ya estudió.
+       · Uno con personas inscritas en alguna de sus categorías: quedarían con
+         una categoría que ya no existe. Primero se resuelve con ellas.
+
+       Va por su propia ruta y no como un campo de /servicio/ficha, para que
+       editar un concurso nunca lo pueda retirar por accidente: `forma()` no
+       deja pasar `retirado`. */
+    if (metodo === 'POST' && ruta === '/servicio/retirar') {
+      const b = await request.json().catch(() => null);
+      const quien = limpiar(b && b.quien, 120);
+      if (!quien) return error('Falta decir quién lo hace.');
+      const fid = b && typeof b.id === 'string' && /^[a-z][a-z0-9]{1,11}$/.test(b.id) ? b.id : '';
+      if (!fid) return error('Falta decir cuál concurso.');
+      const retirar = b.retirar !== false;
+      const { fichas, guardadas, fichasRetiradas, completo } = await reglamentoVigente(env);
+      if (!completo) return error('No se pudo leer el reglamento vigente. Intenta de nuevo.', 503);
+      if (FICHAS_BASE.some(f => f.id === fid)) return error('Ese concurso viene con la app y no se puede retirar.', 422, { por: 'de fábrica' });
+      const viva = guardadas.find(f => f.id === fid), quitada = fichasRetiradas.find(f => f.id === fid);
+      if (!viva && !quitada) return error('Ese concurso no existe.', 404);
+      /* Pedir lo que ya está hecho no es un error ni guarda otra fila. */
+      if (retirar ? !viva : !quitada) return json({ ok: true, id: fid, retirado: retirar, ya: true });
+      let datos;
+      if (retirar) {
+        const cats = viva.categorias.map(c => c.id);
+        const r = await env.DB.prepare(
+          'SELECT COUNT(*) AS n FROM participante WHERE borrado_en IS NULL AND categoria IN (' + cats.map(() => '?').join(', ') + ')'
+        ).bind(...cats).first();
+        const n = (r && r.n) || 0;
+        if (n > 0) return error('Ese concurso tiene ' + n + (n === 1 ? ' persona inscrita' : ' personas inscritas') + ' y no se puede retirar.', 409, { por: 'inscritos', inscritos: n });
+        datos = JSON.stringify({ ...viva, retirado: true });
+      } else {
+        const ficha = REGLAS.forma(quitada);
+        const { fuera } = REGLAS.junta(fichas, [ficha], IDS_DE_TEMA);
+        if (!ficha || fuera.length) return error('Ese concurso ya no se puede restaurar: ' + ((fuera[0] || {}).por || 'está dañado') + '.', 422, { por: (fuera[0] || {}).por || 'dañado' });
+        datos = JSON.stringify(ficha);
+      }
+      const r = await env.DB.prepare('INSERT INTO ficha (ficha_id, datos, quien) VALUES (?, ?, ?)').bind(fid, datos, quien).run();
+      return json({ ok: true, id: fid, retirado: retirar, n: r.meta && r.meta.last_row_id });
     }
     if (ruta.startsWith('/servicio/')) return error('No existe.', 404);
 
