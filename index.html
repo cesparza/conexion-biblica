@@ -3101,7 +3101,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = '64e1ef8d71a3';
+const VERSION_APP = '92e6504a9c6e';
 
 /* El reglamento: sale de las fichas de fuente/campamentos.js. */
 const ACTIVIDADES = {
@@ -3113,9 +3113,21 @@ const ACTIVIDADES = {
   "cats": [
    "me",
    "av",
-   "pa",
+   "pa"
+  ],
+  "tema": "daniel",
+  "tipo": "libro"
+ },
+ "cbg": {
+  "nombre": "Conexión Bíblica de Guías Mayores",
+  "icono": "📘",
+  "cuando": "Por confirmar",
+  "que": "Daniel 1 al 6 y Profetas y Reyes 39 al 44",
+  "cats": [
    "gm"
-  ]
+  ],
+  "tema": "daniel",
+  "tipo": "libro"
  },
  "dm": {
   "nombre": "Devoción Matutina",
@@ -3125,7 +3137,9 @@ const ACTIVIDADES = {
   "cats": [
    "dm1",
    "dm2"
-  ]
+  ],
+  "tema": "matutina",
+  "tipo": "dias"
  },
  "ec": {
   "nombre": "En esto creemos",
@@ -3135,7 +3149,9 @@ const ACTIVIDADES = {
   "cats": [
    "ec1",
    "ec2"
-  ]
+  ],
+  "tema": "creencias",
+  "tipo": "creencias"
  }
 };
 
@@ -3168,9 +3184,9 @@ const CATS = {
   "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44"
  },
  "gm": {
-  "act": "cb",
+  "act": "cbg",
   "nombre": "Guías Mayores",
-  "edad": "Guías Mayores",
+  "edad": "Desde 16 años",
   "n": 25,
   "techo": 3,
   "sinCompletar": false,
@@ -33036,7 +33052,7 @@ const MANUAL = [
    },
    {
     "t": "Paso 3 — tu categoría",
-    "h": "<p>Aquí solo aparecen las categorías de la actividad que escogiste, con\n    el material de cada una escrito debajo.</p>\n    <p>En Conexión Bíblica y en la matutina van por edad: <strong>4 a 6</strong>,\n    <strong>7 a 9</strong>, <strong>adultos</strong> y, en Conexión Bíblica,\n    <strong>Guías Mayores</strong>. En las 28 creencias no van por edad:\n    <strong>Adultos</strong> son los dos del examen escrito y\n    <strong>Cuestionario</strong> es el resto del club.</p>\n    <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de\n    empezar a estudiar.</p>"
+    "h": "<p>Aquí solo aparecen las categorías de la actividad que escogiste, con\n    el material de cada una escrito debajo.</p>\n    <p>En Conexión Bíblica y en la matutina van por edad: <strong>4 a 6</strong>,\n    <strong>7 a 9</strong> y, en Conexión Bíblica, <strong>adultos</strong>.\n    <strong>Guías Mayores</strong> tiene su propia actividad, Conexión Bíblica\n    de Guías Mayores, con una sola categoría. En las 28 creencias no van por edad:\n    <strong>Adultos</strong> son los dos del examen escrito y\n    <strong>Cuestionario</strong> es el resto del club.</p>\n    <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de\n    empezar a estudiar.</p>"
    },
    {
     "t": "Si escogiste mal",
@@ -33507,7 +33523,7 @@ const MANUAL = [
    },
    {
     "t": "Guías Mayores",
-    "h": "<div class=\"warn-box\">No está en el reglamento del campamento: es el\n    alcance ampliado, Daniel 1 al 6 y P&R 39 al 44, para el otro evento.</div>"
+    "h": "<div class=\"warn-box\">No está en el reglamento del campamento: es otro\n    evento, con el alcance ampliado, Daniel 1 al 6 y P&R 39 al 44.</div>\n    <p>Por eso tiene su propia actividad, <strong>Conexión Bíblica de Guías\n    Mayores</strong>, y su progreso va aparte del de Conexión Bíblica. Quien ya\n    estudiaba como Guía Mayor conserva lo que llevaba.</p>"
    },
    {
     "t": "Daniel 2 también entra",
@@ -33620,7 +33636,7 @@ const MANUAL = [
    },
    {
     "t": "Qué material: todo, un grupo, unos capítulos o un tramo",
-    "h": "<p>La lista <strong>Qué material</strong> va de lo más amplio a lo más\n    fino: todo el material de cada categoría, un grupo (solo Daniel, solo\n    Profetas y Reyes, una quincena de la matutina, las 28 creencias), un\n    capítulo suelto, o <strong>un tramo</strong>.</p>\n    <p>En Conexión Bíblica, en vez del capítulo y el tramo está\n    <strong>Los capítulos que escojas</strong>: fichas por libro donde marcas\n    uno o varios, seguidos o no, por ejemplo Daniel 1, 3 y 6. También se llega\n    con la receta <strong>Capítulos de Conexión Bíblica</strong>. Cada\n    categoría recibe solo los que tiene.</p>\n    <p>El tramo es para cuando se reparten el material: escoges\n    <strong>desde dónde y hasta dónde</strong>, por ejemplo del 2 al 18 de\n    octubre, o de Daniel 1 a Daniel 3, o de la creencia 10 a la 20. Los dos\n    extremos tienen que ser del mismo material; si no, el botón de abrir se\n    queda apagado y dice por qué.</p>\n    <div class=\"warn-box\">A una categoría que no tenga ese material no le sale\n    ninguna pregunta. El aviso debajo de la lista te dice cuáles reciben y\n    cuáles no, antes de abrir.</div>"
+    "h": "<p>La lista <strong>Qué material</strong> va de lo más amplio a lo más\n    fino: todo el material de cada categoría, un grupo (solo Daniel, solo\n    Profetas y Reyes, una quincena de la matutina, las 28 creencias), un\n    capítulo suelto, o <strong>un tramo</strong>.</p>\n    <p>En Conexión Bíblica, en vez del capítulo y el tramo está\n    <strong>Los capítulos que escojas</strong>: fichas por libro donde marcas\n    uno o varios, seguidos o no, por ejemplo Daniel 1, 3 y 6. También se llega\n    con la receta <strong>Capítulos de Conexión Bíblica</strong>; la de Guías\n    Mayores tiene la suya, con sus capítulos. Cada categoría recibe solo los\n    que tiene.</p>\n    <p>El tramo es para cuando se reparten el material: escoges\n    <strong>desde dónde y hasta dónde</strong>, por ejemplo del 2 al 18 de\n    octubre, o de Daniel 1 a Daniel 3, o de la creencia 10 a la 20. Los dos\n    extremos tienen que ser del mismo material; si no, el botón de abrir se\n    queda apagado y dice por qué.</p>\n    <div class=\"warn-box\">A una categoría que no tenga ese material no le sale\n    ninguna pregunta. El aviso debajo de la lista te dice cuáles reciben y\n    cuáles no, antes de abrir.</div>"
    },
    {
     "t": "A quiénes: por categoría o por persona",
@@ -37209,6 +37225,15 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;
 const ACT=()=>ACTIVIDADES[ACT_DE(S.cat)]||ACTIVIDADES.cb;
+/* v164: EL TIPO DE MATERIAL MANDA, no la actividad. Lo que antes preguntaba
+   «¿es Conexión Bíblica?» preguntaba en realidad «¿es un libro por
+   capítulos?». Con el tipo, un segundo campamento del mismo libro (o un libro
+   nuevo) se porta igual sin tocar nada aquí. */
+const TIPO_ACT=a=>(ACTIVIDADES[a]||{}).tipo||'';
+const TIPO=()=>TIPO_ACT(ACT_DE(S.cat));
+const PRIMERA_ACT=Object.keys(ACTIVIDADES)[0];
+/** La primera actividad de un tipo, o '' si no hay ninguna. */
+const actDeTipo=t=>Object.keys(ACTIVIDADES).find(k=>TIPO_ACT(k)===t)||'';
 /** Las categorias de una actividad, en el orden en que se ofrecen. */
 const CATS_DE_ACT=a=>(ACTIVIDADES[a]||ACTIVIDADES.cb).cats.filter(c=>CATS[c]);
 
@@ -37235,8 +37260,20 @@ const catConActividad=k=>CATS[k]
    Y va de PRIMERO, no al final: en una pantalla angosta el texto se corta o se
    envuelve, y si la parte que distingue queda al final, las dos opciones
    empiezan igual y se leen igual. */
+/* v164: ACTIVIDAD Y CATEGORIA JUNTAS, sin repetir. Cuando el nombre de la
+   actividad ya nombra a la categoria («Conexion Biblica de Guias Mayores»),
+   se dice una sola vez. `modo` es el orden: actividad primero (por defecto),
+   'cat' la categoria primero, 'de' en frase y 'par' entre parentesis. */
+const actYCat=(k,modo)=>{
+  const c=CATS[k];
+  if(!c)return String(k);
+  const a=(ACTIVIDADES[c.act]||{}).nombre||'';
+  if(a.indexOf(c.nombre)>=0)return a;
+  return modo==='de'?c.nombre+' de '+a:modo==='cat'?c.nombre+' · '+a:
+    modo==='par'?c.nombre+' ('+a+')':a+' · '+c.nombre;
+};
 const catLarga=k=>CATS[k]
-  ? ((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+CATS[k].nombre+' '+CATS[k].edad
+  ? actYCat(k)+' '+CATS[k].edad
   : String(k);
 
 
@@ -37917,7 +37954,7 @@ const tarjetasDe=()=>{const ids=capsDe().map(c=>c.id);
 const FILTRO_K='cb-filtro';
 let filtroEst=(()=>{try{return String(localStorage.getItem(FILTRO_K)||'todo').slice(0,200);}catch(e){return 'todo';}})();
 let filtroAbierto=false, filtroMenu=false;
-const conFiltro=()=>ACT_DE(S.cat)==='cb';
+const conFiltro=()=>TIPO()==='libro';
 function idsFiltro(){
   if(!conFiltro()||filtroEst==='todo')return null;
   const ids=idsDeAlcance(filtroEst,capsDe());
@@ -38296,8 +38333,8 @@ function pintaYo(){
        escritorio la ficha se reduce a la inicial, así que sin esto queda un
        botón mudo y hay que abrir el panel para saber quién estudia. */
     '<span class="yo-tip" aria-hidden="true"><b>'+esc(nom)+'</b>'+
-    icoDe(ACT().icono)+' '+esc(ACT().nombre+' · '+CAT().nombre)+'</span>';
-  b.setAttribute('aria-label','Estudia '+nom+', '+CAT().nombre+' de '+ACT().nombre+'. Toca para cambiar.');
+    icoDe(ACT().icono)+' '+esc(actYCat(S.cat))+'</span>';
+  b.setAttribute('aria-label','Estudia '+nom+', '+actYCat(S.cat,'de')+'. Toca para cambiar.');
 }
 
 /** Sube la hoja de identidad. El esqueleto trae los mismos ids que ya usan
@@ -38638,7 +38675,7 @@ function pintaCaps(){
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
-    icoDe(ACT().icono)+' '+(ACT_DE(S.cat)==='ec'?'Las 28 creencias':'Capítulos')+
+    icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos')+
     '</div>'+caps+
     '<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods;
 }
@@ -41480,7 +41517,7 @@ const esComplementaria=q=>q.f==='c';
    profetas: el examen del campamento es del libro de Daniel y de Profetas y
    Reyes. Se apaga a mano para practicar con todo. Cambiar de categoria lo
    vuelve al valor de su actividad. */
-const fuenteInicial=()=>ACT_DE(S.cat)==='cb';
+const fuenteInicial=()=>TIPO()==='libro';
 let soloFuente=false;
 /* De que actividad es el valor de arriba. La categoria cambia por varios
    caminos (la bienvenida, cambiar de persona, pasar de actividad) y no todos
@@ -41645,7 +41682,7 @@ function htmlFichas(caps,sel,fn){
 
 /* Día del mes de un capítulo de matutina (m01..m31), o 0 si no lo es. */
 const diaMat=id=>/^m\d\d$/.test(id)?Number(id.slice(1)):0;
-const esMatutina=()=>ACT_DE(S.cat)==='dm';
+const esMatutina=()=>TIPO()==='dias';
 /* Un id de creencia. Ya no se usa para filtrar (la actividad lo hace), pero
    sigue sirviendo para reconocerlas en el material impreso y en las cuentas
    del reglamento, que reparte el club en dos. */
@@ -41733,7 +41770,7 @@ function pintaMenuEx(){
      capitulo suelto y al tramo: todo eso es «que capitulos», y con las fichas
      se dice de un toque, incluido lo que antes no se podia (1, 3 y 6). Un
      tramo que venga de antes se traduce a sus capitulos. */
-  const conF=ACT_DE(S.cat)==='cb'&&capsEx.length>1;
+  const conF=TIPO()==='libro'&&capsEx.length>1;
   if(conF&&rangoDe(alcance))alcance=alcanceDeFichas(idsDeAlcance(alcance,capsEx),capsEx)||'todo';
   pintaRangoEx(capsEx,hayRango&&!conF);
   sa.value=rangoDe(alcance)?'rango':(listaDe(alcance)?'todo':alcance);
@@ -41776,7 +41813,7 @@ function pintaMenuEx(){
     if(!hayComp&&soloFuente)soloFuente=false;
     ch.checked=soloFuente;
     const t=document.getElementById('ex-fuente-t');
-    if(t)t.textContent=FUENTE_TXT[ACT_DE(S.cat)]||'';
+    if(t)t.textContent=FUENTE_TXT[TIPO()]||'';
   }
   const nv2=nuevasDe();
   const frescura=nv2>0
@@ -41891,7 +41928,7 @@ function pintaExInicio(){
   const n=Math.min(cuantas||NPREG(),poolNivel().length);
   document.getElementById('ex-resumen').textContent=n+' preguntas · nivel '+nv+' '+ETIQ_NIVEL[nv];
   document.getElementById('ex-desc').innerHTML=esc(textoAlcanceImpr())+
-    '<br>'+esc(CAT().nombre)+' · '+esc(ACT().nombre);
+    '<br>'+esc(actYCat(S.cat,'cat'));
   /* Este renglon decia «nunca sale el mismo dos veces», y era falso: el sorteo
      no tenia memoria y repetia. Ahora si hay memoria, y el texto dice lo que
      de verdad hace, con la cifra de esta ficha. */
@@ -42871,7 +42908,7 @@ function imprimeCapitulo(id){
     logo:LOGO_TL,
     titulo:esc(c.label).toUpperCase(),
     sub:esc(c.sub),
-    meta:ACT().nombre+' · '+esc(CAT().nombre),
+    meta:esc(actYCat(S.cat)),
   })],esc(c.label),'Un solo capítulo para imprimir.');
   imprimeDoc(html,c.label);
 }
@@ -42882,7 +42919,7 @@ function imprimeTarjetas(){
   const html=docExamen([hojaTarjetas({
     tarjetas:t, caps:CAPS, logo:LOGO_TL,
     titulo:'TARJETAS DE MEMORIA',
-    sub:esc(CAT().nombre)+' · '+esc(ACT().nombre),
+    sub:esc(actYCat(S.cat,'cat')),
   })],'Tarjetas — '+CAT().nombre,
   'Tarjetas para recortar. Tapa la respuesta con la mano antes de leerla.');
   imprimeDoc(html,'Tarjetas');
@@ -43641,7 +43678,7 @@ function capsDeActividad(a){
 function llenaRangoPanel(act,mantener){
   const s1=document.getElementById('pan-r1'),s2=document.getElementById('pan-r2');
   if(!s1||!s2)return;
-  const caps=capsDeActividad(act||'cb');
+  const caps=capsDeActividad(act||PRIMERA_ACT);
   if(!caps.length)return;
   const prev1=mantener&&caps.some(c=>c.id===s1.value)?s1.value:caps[0].id;
   s1.innerHTML=caps.map(c=>'<option value="'+c.id+'">'+esc(c.label)+'</option>').join('');
@@ -43662,8 +43699,8 @@ function llenaRangoPanel(act,mantener){
    funcion: con la cuenta escrita aparte, la receta diria «18 capitulos» y el
    desplegable ofreceria otra cantidad. */
 const capsExaminables=act=>{
-  const cats=CATS_DE_ACT(act||'cb');
-  return capsDeActividad(act||'cb')
+  const cats=CATS_DE_ACT(act||PRIMERA_ACT);
+  return capsDeActividad(act||PRIMERA_ACT)
     .filter(c=>cats.some(k=>c.cats.includes(k)&&!soloEstudio(c,k)));
 };
 
@@ -43687,16 +43724,17 @@ function llenaCapPanel(act,mantener){
    que vive en una tarjeta angosta. Dos textos para lo mismo se separarian, asi
    que van juntos en la misma linea y salen de aqui los dos. */
 function opcionesMatPanel(act){
-  if(act==='cb')return [['todo','Todo el material de Conexión Bíblica','todo'],
+  const tipo=TIPO_ACT(act);
+  if(tipo==='libro')return [['todo','Todo el material de '+ACTIVIDADES[act].nombre,'todo'],
     ['biblia','Solo el libro de Daniel','solo Daniel'],
     ['pr','Solo Profetas y Reyes','solo Profetas y Reyes'],
     ['fichas','Los capítulos que escojas','los que escojas']];
-  if(act==='dm')return [['todo','Todo el cuadernillo de octubre','todo octubre'],
+  if(tipo==='dias')return [['todo','Todo el cuadernillo de octubre','todo octubre'],
     ['q1','Solo la primera quincena (1 al 15)','primera quincena'],
     ['q2','Solo la segunda quincena (16 en adelante)','segunda quincena'],
     ['cap','Un día, el que escojas','un día'],
     ['tramo','Un tramo de días: desde… hasta…','un tramo']];
-  if(act==='ec')return [['creencias','Las 28 creencias','las 28'],
+  if(tipo==='creencias')return [['creencias','Las 28 creencias','las 28'],
     ['cap','Una creencia, la que escojas','una creencia'],
     ['tramo','Un tramo de creencias: desde… hasta…','un tramo']];
   return [['todo','Todo el material de cada categoría','todo']];
@@ -43710,15 +43748,30 @@ function opcionesMatPanel(act){
 /* Lo escogido en las fichas del panel. Arranca con todo marcado: el director
    quita o toca «todo Daniel», que es mas rapido que marcar uno por uno. */
 let panFichas=[];
+/* Quien no examina alguno de los capitulos ofrecidos, dicho con el dato y no
+   a mano: la frase escrita nombraba a Guias Mayores cuando ya era otra ficha. */
+function loQueNoTienen(act,caps){
+  const frases=CATS_DE_ACT(act).map(k=>{
+    const falta=caps.filter(c=>!c.cats.includes(k)||soloEstudio(c,k)).map(c=>c.label);
+    return falta.length?CATS[k].nombre+' no tiene '+falta.join(', '):'';
+  }).filter(Boolean);
+  return frases.length?' Cada categoría recibe solo los que tiene: '+frases.join('; ')+'.':'';
+}
+/* Las fichas son de un libro. Si la actividad escogida lo es, son las suyas;
+   si no hay ninguna escogida (o es de otro tipo), las del primer libro. */
+const actLibroPanel=()=>{
+  const a=(document.getElementById('pan-act')||{}).value||'';
+  return TIPO_ACT(a)==='libro'?a:(actDeTipo('libro')||PRIMERA_ACT);
+};
 function fichaPan(tipo,v){
-  const caps=capsExaminables('cb');
+  const caps=capsExaminables(actLibroPanel());
   panFichas=tocaFicha(panFichas.length?panFichas:caps.map(c=>c.id),caps,tipo,v);
   pintaNotaAlcance();
 }
 
 function cambiaActPanel(){
   const act=(document.getElementById('pan-act')||{}).value||'';
-  panFichas=capsExaminables('cb').map(c=>c.id);
+  panFichas=capsExaminables(actLibroPanel()).map(c=>c.id);
   const m=document.getElementById('pan-mat');
   if(m){
     const ops=opcionesMatPanel(act);
@@ -43754,7 +43807,7 @@ function cambiaDesdePanel(){
 function alcancePanel(){
   const m=(document.getElementById('pan-mat')||{}).value||'todo';
   if(m==='cap')return (document.getElementById('pan-cap')||{}).value||'todo';
-  if(m==='fichas')return alcanceDeFichas(panFichas,capsExaminables('cb'))||'todo';
+  if(m==='fichas')return alcanceDeFichas(panFichas,capsExaminables(actLibroPanel()))||'todo';
   if(m==='tramo'){
     const a=(document.getElementById('pan-r1')||{}).value||'';
     const b=(document.getElementById('pan-r2')||{}).value||'';
@@ -43829,7 +43882,7 @@ function pintaAvisoCats(){
   const todas=!marcadas.length;
   const cats=todas?Object.keys(CATS):marcadas;
   const nom=function(c){
-    return '<strong>'+esc(((ACTIVIDADES[CATS[c].act]||{}).nombre||'')+' · '+CATS[c].nombre)+'</strong>';
+    return '<strong>'+esc(actYCat(c))+'</strong>';
   };
   const con=cats.filter(function(c){return cuantasPara(c,al)>0;});
   const sin=cats.filter(function(c){return cuantasPara(c,al)===0;});
@@ -43866,10 +43919,10 @@ function pintaAvisoCats(){
 /* Que fuente nombra el reglamento para cada actividad, en palabras. Se dice
    cual es, no «la oficial»: el punto del interruptor es saber que entra. */
 const FUENTE_TXT={
-  cb:'Solo el libro de Daniel y Profetas y Reyes. Deja fuera historia, otros profetas e intérpretes.',
+  libro:'Solo el libro de Daniel y Profetas y Reyes. Deja fuera historia, otros profetas e intérpretes.',
 
-  dm:'Solo el cuadernillo de octubre.',
-  ec:'Solo la cartilla «En esto creemos». Deja fuera lo que sale del libro de las 28 creencias.'
+  dias:'Solo el cuadernillo de octubre.',
+  creencias:'Solo la cartilla «En esto creemos». Deja fuera lo que sale del libro de las 28 creencias.'
 };
 
 /* Por qué un rango escogido no sirve, en palabras, o cadena vacía si sirve.
@@ -43902,12 +43955,11 @@ function pintaNotaAlcance(){
   const zf=document.getElementById('pan-zona-fichas');
   if(zf)zf.hidden=m.value!=='fichas';
   if(m.value==='fichas'){
-    const caps=capsExaminables('cb');
+    const caps=capsExaminables(actLibroPanel());
     if(!panFichas.length)panFichas=caps.map(c=>c.id);
     const pf=document.getElementById('pan-fichas');
     if(pf)pf.innerHTML=htmlFichas(caps,panFichas,'fichaPan');
-    p.textContent='Entra: '+textoAlcancePanel(alcancePanel())+'. Cada categoría recibe solo '+
-      'los que tiene: Menores no tiene Profetas y Reyes, y Daniel 4 y 5 son solo de Guías Mayores.';
+    p.textContent='Entra: '+textoAlcancePanel(alcancePanel())+'.'+loQueNoTienen(actLibroPanel(),caps);
     pintaAvisoCats();revisaAbrir();pintaFrase();return;
   }
 
@@ -43928,7 +43980,7 @@ function pintaNotaAlcance(){
   if(c){
     const cats=Object.keys(CATS).filter(k=>c.cats.includes(k)&&!soloEstudio(c,k));
     p.textContent='Solo '+c.label+' — '+c.sub+'. Lo examinan: '+
-      (cats.length?cats.map(k=>CATS[k].nombre+' ('+(ACTIVIDADES[CATS[k].act]||{}).nombre+')').join(', ')
+      (cats.length?cats.map(k=>actYCat(k,'par')).join(', ')
                   :'ninguna categoría')+
       '. A una categoría que no lo tenga no le sale ninguna pregunta.';
   } else p.textContent=NOTA_ALCANCE[m.value]||'';
@@ -43943,12 +43995,15 @@ function pintaNotaAlcance(){
 const RECETAS=[
   {id:'campamento',i:'📘',t:'El examen del campamento',act:'',mat:'todo',
    d:()=>'Todo el material de cada categoría · a las '+Object.keys(CATS).length+' categorías'},
-  {id:'daniel',i:'📖',t:'Capítulos de Conexión Bíblica',act:'cb',mat:'fichas',
-   d:()=>'Solo Daniel, solo P&R o los que escojas · '+capsExaminables('cb').length+' con examen'},
-  {id:'matutina',i:'🌅',t:'Un tramo de la matutina',act:'dm',mat:'tramo',
-   d:()=>'Desde y hasta, dentro de los '+capsDeActividad('dm').length+' días'},
-  {id:'creencias',i:'✝️',t:'Las 28 creencias',act:'ec',mat:'creencias',
-   d:()=>'A las '+CATS_DE_ACT('ec').length+' categorías de En esto creemos'},
+  /* Una por cada actividad que sea un libro: la de Guias Mayores tiene sus
+     propios capitulos y no cabia en la de Conexion Biblica. */
+  ...Object.keys(ACTIVIDADES).filter(a=>TIPO_ACT(a)==='libro').map(a=>(
+    {id:'libro-'+a,i:'📖',t:'Capítulos de '+ACTIVIDADES[a].nombre,act:a,mat:'fichas',
+     d:()=>'Solo Daniel, solo P&R o los que escojas · '+capsExaminables(a).length+' con examen'})),
+  {id:'matutina',i:'🌅',t:'Un tramo de la matutina',act:actDeTipo('dias'),mat:'tramo',
+   d:()=>'Desde y hasta, dentro de los '+capsDeActividad(actDeTipo('dias')).length+' días'},
+  {id:'creencias',i:'✝️',t:'Las 28 creencias',act:actDeTipo('creencias'),mat:'creencias',
+   d:()=>'A las '+CATS_DE_ACT(actDeTipo('creencias')).length+' categorías de En esto creemos'},
   {id:'yo',i:'⚙️',t:'Armarlo yo',act:null,mat:null,
    d:()=>'Material, cantidad, dificultad y a quiénes'},
 ];
@@ -44036,7 +44091,7 @@ function textoQuienes(){
        y consejeros» ya lleva una «y» adentro, y cuatro nombres pegados con
        comas se vuelven un renglon que nadie lee. */
     if(cats.length===CATS_DE_ACT(acts[0]).length)
-      return nom+': las '+cats.length+' categorías';
+      return cats.length===1?nom:nom+': las '+cats.length+' categorías';
     return nom+': '+cats.map(function(c){return CATS[c].nombre;}).join(', ');
   }
   return cats.map(catConActividad).join(', ');
@@ -44273,7 +44328,7 @@ async function cierraEvaluacion(id){
 function nombresCats(cats){
   const claves=(!cats||cats==='*')?Object.keys(CATS):cats.split(',');
   return claves.map(function(c){
-    return (CATS[c]?((ACTIVIDADES[CATS[c].act]||{}).nombre||'')+' · '+CATS[c].nombre:c);
+    return (CATS[c]?actYCat(c):c);
   }).join(', ');
 }
 

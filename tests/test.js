@@ -720,7 +720,7 @@ ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
      control y el tramo sale de ella. La regla que se prueba es la misma. */
   ok(/function opcionesMatPanel\(act\)/.test(APP)&&/'tramo','Un tramo/.test(APP),
     'El tramo lo ofrece cada actividad, no una lista comun a las tres');
-  ok(/const caps=capsDeActividad\(act\|\|'cb'\);/.test(APP),
+  ok(/const caps=capsDeActividad\(act\|\|PRIMERA_ACT\);/.test(APP),
     'Y los dos extremos salen de los capitulos de ESA actividad');
   ok(/function llenaRangoPanel\(act,mantener\)/.test(APP),
     'Los dos extremos se llenan para la actividad escogida');
@@ -765,7 +765,7 @@ ok(/soloEstudio\(c,S\.cat\)\?'<div class="solo-est">/.test(APP),
     'El selector de categoría del paso 1 agrupa por actividad');
   ok(/const catLarga=/.test(APP)&&/esc\(catLarga\(k\)\)/.test(APP),
     'Y cada opción lleva la actividad en su propio texto, no solo en el grupo');
-  ok(/catLarga=k=>CATS\[k\]\s*\?\s*\(\(ACTIVIDADES\[CATS\[k\]\.act\]\|\|\{\}\)\.nombre\|\|''\)\+' · '/.test(APP),
+  ok(/catLarga=k=>CATS\[k\]\s*\?\s*actYCat\(k\)\+' '/.test(APP)&&/modo==='par'\?c\.nombre\+' \('\+a\+'\)':a\+' · '\+c\.nombre/.test(APP),
     'Con la actividad de PRIMERO: es la parte que distingue y el texto se corta por el final');
   ok(/const catConActividad=/.test(APP),
     'Existe una sola forma de nombrar una categoría con su actividad');
@@ -1097,8 +1097,8 @@ for(const id of ['aviso-nuevo','hoja'])
 /* v163: salen de las fichas de campamentos.js, que es de donde las saca la app. */
 const { CATS: CATS_APP, ACTIVIDADES: ACTS_APP } = REGLAMENTO;
 
-ok(Object.keys(ACTS_APP).length===3,'Hay tres actividades declaradas');
-ok(['cb','dm','ec'].every(a=>ACTS_APP[a]),'Las tres son cb, dm y ec');
+ok(Object.keys(ACTS_APP).length===4,'Hay cuatro actividades declaradas');
+ok(['cb','cbg','dm','ec'].every(a=>ACTS_APP[a]),'Son cb, cbg, dm y ec');
 ok(Object.values(ACTS_APP).every(a=>a.nombre&&a.icono&&a.cuando&&a.que&&Array.isArray(a.cats)),
   'Cada actividad dice su nombre, su icono, cuando es, que se estudia y sus categorias');
 
@@ -2180,8 +2180,15 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const distintas=Object.keys(VIGENTE).filter(k=>!C[k]||ve(k)!==VIGENTE[k][0]||solo(k)!==VIGENTE[k][1]||C[k].n!==VIGENTE[k][2]||C[k].techo!==VIGENTE[k][3]);
   ok(Object.keys(C).join()===Object.keys(VIGENTE).join()&&!distintas.length,
     'El reglamento vigente no cambió: las 8 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
-  ok(Object.keys(REGLAMENTO.ACTIVIDADES).join()==='cb,dm,ec'&&REGLAMENTO.ACTIVIDADES.cb.cats.join()==='me,av,pa,gm',
-    'Las tres actividades siguen siendo cb, dm y ec, con sus categorías en el orden de siempre');
+  /* v164: Guías Mayores tiene su ficha (cbg). Su categoría conserva el id. */
+  const AC=REGLAMENTO.ACTIVIDADES;
+  ok(Object.keys(AC).join()==='cb,cbg,dm,ec'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
+    'Las actividades son cb, cbg, dm y ec; Guías Mayores va en la suya y conserva su categoría gm');
+  ok(AC.cb.tipo==='libro'&&AC.cbg.tipo==='libro'&&AC.dm.tipo==='dias'&&AC.ec.tipo==='creencias'&&AC.cbg.tema===AC.cb.tema,
+    'Cada actividad sabe de qué tipo es su material: dos campamentos del mismo libro, un devocional por días y las creencias');
+  const APP_F=lee('app.js');
+  ok(!/ACT_DE\(S\.cat\)==='|act==='(cb|dm|ec)'/.test(APP_F)&&!/(capsExaminables|capsDeActividad|CATS_DE_ACT)\('(cb|dm|ec)'\)/.test(APP_F),
+    'La app no se porta distinto por actividad ni por club: pregunta por el tipo de material');
 
   /* El servidor todavía tiene su propia lista de categorías: mientras exista,
      tiene que ser la misma. */
@@ -2213,16 +2220,20 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const {nivelDe}=require(path.join(RAIZ,'fuente','niveles.js'));
   const pool=BANCO_D.filter(q=>idsCq.includes(q.cap)&&nivelDe(q)<=2).length;
   ok(F.revisa([...F.CAMPAMENTOS,ficha(cat())],TEMAS_P).length===0&&con.ACTIVIDADES.cq.cats.join()==='cq1'&&
-     con.CATS.cq1.act==='cq'&&con.catsDe('d4').join()==='gm,cq1'&&con.catsDe('d1').join()==='me,av,pa,gm,cq1'&&
+     con.CATS.cq1.act==='cq'&&con.ACTIVIDADES.cq.tipo==='libro'&&con.catsDe('d4').join()==='gm,cq1'&&con.catsDe('d1').join()==='me,av,pa,gm,cq1'&&
      JSON.stringify(con.CATS.av)===JSON.stringify(C.av)&&pool>cat().n*5,
     'Un campamento de Conquistadores con Daniel es una ficha más: sin escribir contenido ya tiene '+pool+' preguntas hasta nivel 2, y no mueve a las demás categorías');
 
   /* Un tema nuevo: su contenido, su entrada en TEMAS y su ficha. */
   const TEMAS_AP=Object.assign({},TEMAS_P,{apocalipsis:Array.from({length:22},(_,i)=>'ap'+(i+1))});
   const fAp=ficha(cat({id:'ap1c',alcance:'Apocalipsis 1 al 3',estudia:['ap1','ap2','ap3']}),{id:'ap27',tema:'apocalipsis',que:'El libro de Apocalipsis'});
-  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP).length===0&&F.deriva([...F.CAMPAMENTOS,fAp]).catsDe('ap2').join()==='ap1c'&&
-     F.revisa([...F.CAMPAMENTOS,ficha(cat({estudia:['ap1']}))],TEMAS_AP).some(m=>/ap1/.test(m)),
-    'Un tema nuevo entra con su ficha, y una ficha de Daniel no puede nombrar capítulos de Apocalipsis');
+  const TIPOS_AP=Object.assign({},F.TEMAS,{apocalipsis:{tipo:'libro'}});
+  const conAp=F.deriva([...F.CAMPAMENTOS,fAp],TIPOS_AP);
+  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP,TIPOS_AP).length===0&&conAp.catsDe('ap2').join()==='ap1c'&&
+     conAp.ACTIVIDADES.ap27.tipo==='libro'&&JSON.stringify(conAp.CATS.gm)===JSON.stringify(C.gm)&&
+     F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP).some(m=>/sin tipo/.test(m))&&
+     F.revisa([...F.CAMPAMENTOS,ficha(cat({estudia:['ap1']}))],TEMAS_AP,TIPOS_AP).some(m=>/ap1/.test(m)),
+    'Un tema nuevo entra con su tipo y su ficha, se porta como libro, deja a Daniel disponible, y una ficha de Daniel no puede nombrar capítulos de Apocalipsis');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

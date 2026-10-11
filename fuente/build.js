@@ -26,16 +26,16 @@ const { CAMPAMENTOS, deriva, revisa, sinUsar } = require('./campamentos.js');
 
 /* Varios temas, un solo archivo. Para quién es cada capítulo y cada repaso lo
    dicen las fichas de campamentos.js; aquí se les pone la marca `cats` que la
-   app filtra. TEMAS dice qué ids aporta cada tema, para que una ficha no pueda
+   app filtra. IDS_DE_TEMA dice qué ids aporta cada tema, para que una ficha no pueda
    nombrar algo que su tema no tiene. */
-const TEMAS = {
+const IDS_DE_TEMA = {
   daniel: [...CAPS, ...MODULOS].map(x => x.id),
   matutina: [...MAT.MAT_CAPS, ...MAT.MAT_MODULOS].map(x => x.id),
   creencias: [...CR.CR_CAPS, ...CR.CR_MODULOS].map(x => x.id),
 };
 {
-  const mal = [...revisa(CAMPAMENTOS, TEMAS),
-    ...sinUsar(CAMPAMENTOS, TEMAS).map(id => '«' + id + '» no entra en ningún campamento')];
+  const mal = [...revisa(CAMPAMENTOS, IDS_DE_TEMA),
+    ...sinUsar(CAMPAMENTOS, IDS_DE_TEMA).map(id => '«' + id + '» no entra en ningún campamento')];
   if (mal.length) {
     console.error('❌ campamentos.js no cuadra con el contenido:\n  ' + mal.join('\n  '));
     process.exit(1);

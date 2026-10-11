@@ -61,8 +61,9 @@ const MANUAL = [
     h:`<p>Aquí solo aparecen las categorías de la actividad que escogiste, con
     el material de cada una escrito debajo.</p>
     <p>En Conexión Bíblica y en la matutina van por edad: <strong>4 a 6</strong>,
-    <strong>7 a 9</strong>, <strong>adultos</strong> y, en Conexión Bíblica,
-    <strong>Guías Mayores</strong>. En las 28 creencias no van por edad:
+    <strong>7 a 9</strong> y, en Conexión Bíblica, <strong>adultos</strong>.
+    <strong>Guías Mayores</strong> tiene su propia actividad, Conexión Bíblica
+    de Guías Mayores, con una sola categoría. En las 28 creencias no van por edad:
     <strong>Adultos</strong> son los dos del examen escrito y
     <strong>Cuestionario</strong> es el resto del club.</p>
     <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de
@@ -662,8 +663,11 @@ const MANUAL = [
   { t:'La tabla',
     h:`{TABLA_CATS}` },
   { t:'Guías Mayores',
-    h:`<div class="warn-box">No está en el reglamento del campamento: es el
-    alcance ampliado, Daniel 1 al 6 y P&R 39 al 44, para el otro evento.</div>` },
+    h:`<div class="warn-box">No está en el reglamento del campamento: es otro
+    evento, con el alcance ampliado, Daniel 1 al 6 y P&R 39 al 44.</div>
+    <p>Por eso tiene su propia actividad, <strong>Conexión Bíblica de Guías
+    Mayores</strong>, y su progreso va aparte del de Conexión Bíblica. Quien ya
+    estudiaba como Guía Mayor conserva lo que llevaba.</p>` },
   { t:'Daniel 2 también entra',
     h:`<p>El campamento se anunció con <strong>Daniel 1, 3 y 6</strong> y los
     capítulos <strong>39, 41 y 44</strong> de Profetas y Reyes. Daniel 2 estuvo un
@@ -820,8 +824,9 @@ const MANUAL = [
     <p>En Conexión Bíblica, en vez del capítulo y el tramo está
     <strong>Los capítulos que escojas</strong>: fichas por libro donde marcas
     uno o varios, seguidos o no, por ejemplo Daniel 1, 3 y 6. También se llega
-    con la receta <strong>Capítulos de Conexión Bíblica</strong>. Cada
-    categoría recibe solo los que tiene.</p>
+    con la receta <strong>Capítulos de Conexión Bíblica</strong>; la de Guías
+    Mayores tiene la suya, con sus capítulos. Cada categoría recibe solo los
+    que tiene.</p>
     <p>El tramo es para cuando se reparten el material: escoges
     <strong>desde dónde y hasta dónde</strong>, por ejemplo del 2 al 18 de
     octubre, o de Daniel 1 a Daniel 3, o de la creencia 10 a la 20. Los dos

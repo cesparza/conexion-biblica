@@ -21,7 +21,8 @@
    CÓMO SE AGREGA UN TEMA
    1. Su contenido en fuente/ (capítulos, estudio, preguntas, tarjetas), como
       matutina.js o creencias.js.
-   2. Una entrada en TEMAS de build.js con los ids que aporta.
+   2. Su tipo en TEMAS, aquí abajo, y los ids que aporta en IDS_DE_TEMA de
+      build.js.
    3. Su ficha aquí. revisa() no deja pasar una ficha que nombre un id que su
       tema no tiene.
 
@@ -41,6 +42,21 @@ const AV_ESTUDIA = [...DANIEL_RELATOS, 'pr39', 'pr41', 'pr44', ...REPASOS_AV];
 const REPASOS_MATUTINA = ['mm-quien', 'mm-versiculos', 'mm-plan'];
 const CREENCIAS = [...sec('cr', 1, 28), 'mc-doctrinas', 'mc-lista'];
 
+/* LOS TEMAS Y SU TIPO
+   La app no se porta distinto según el club ni según el campamento: se porta
+   según el TIPO de material. Un libro por capítulos se escoge con fichas y se
+   puede filtrar por fuente; un devocional va por días y por tramos; las
+   creencias son las 28. Un tema nuevo declara su tipo y hereda ese
+   comportamiento entero; un campamento nuevo no agrega lógica, solo su ficha.
+   Si un día un reglamento pide algo que ningún tipo sabe hacer, se agrega la
+   capacidad al tipo (o un tipo nuevo), nunca un «si es tal club». */
+const TEMAS = {
+  daniel: { tipo: 'libro' },
+  matutina: { tipo: 'dias' },
+  creencias: { tipo: 'creencias' },
+};
+const TIPOS = ['libro', 'dias', 'creencias'];
+
 /* Cada categoría:
      n             preguntas del examen de práctica
      techo         nivel máximo de dificultad que se le ofrece (1 a 3)
@@ -53,8 +69,7 @@ const CAMPAMENTOS = [
     que: 'El libro de Daniel y Profetas y Reyes',
     /* El reglamento del campamento pide dos integrantes de 4 a 6 años (solo
        Daniel), dos de 7 a 9 (Daniel y Profetas y Reyes) y dos padres o
-       consejeros con el alcance de 7 a 9. Guías Mayores es otro evento, con
-       el alcance ampliado; hoy comparte esta ficha. */
+       consejeros con el alcance de 7 a 9. */
     categorias: [
       { id: 'me', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true,
         alcance: 'Daniel 1, 2, 3 y 6',
@@ -65,7 +80,15 @@ const CAMPAMENTOS = [
       { id: 'pa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 25, techo: 3, sinCompletar: false,
         alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44',
         estudia: AV_ESTUDIA },
-      { id: 'gm', nombre: 'Guías Mayores', edad: 'Guías Mayores', n: 25, techo: 3, sinCompletar: false,
+    ] },
+  /* v164: Guías Mayores es otro evento, con el mismo tema y el alcance
+     ampliado. Compartía la ficha de arriba; Camilo pidió separarla el 10 de
+     octubre de 2026. La categoría conserva su id, así que el progreso y los
+     participantes guardados siguen siendo de ella. */
+  { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica de Guías Mayores', icono: '📘', cuando: 'Por confirmar',
+    que: 'Daniel 1 al 6 y Profetas y Reyes 39 al 44',
+    categorias: [
+      { id: 'gm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 25, techo: 3, sinCompletar: false,
         alcance: 'Daniel 1 al 6 · P&R 39 al 44',
         estudia: [...Array.from({ length: 12 }, (_, i) => 'd' + (i + 1)), ...sec('pr', 39, 44),
           ...REPASOS_AV, 'm-reyes', 'm-profetico'],
@@ -99,12 +122,13 @@ const CAMPAMENTOS = [
 
 /* De las fichas salen las tres cosas que la app usa. El orden de las fichas y
    el de sus categorías es el orden en que se ofrecen. */
-function deriva(fichas) {
+function deriva(fichas, tipos) {
+  tipos = tipos || TEMAS;
   const ACTIVIDADES = {}, CATS = {};
   const orden = [];
   for (const f of fichas) {
     ACTIVIDADES[f.id] = { nombre: f.nombre, icono: f.icono, cuando: f.cuando, que: f.que,
-      cats: f.categorias.map(c => c.id) };
+      cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '' };
     for (const c of f.categorias) {
       CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
         sinCompletar: c.sinCompletar, alcance: c.alcance };
@@ -125,7 +149,8 @@ function deriva(fichas) {
 
 /* Lo que una ficha no puede traer. `temas` dice qué ids aporta cada tema:
    { daniel: ['d1', ...], ... }. Devuelve la lista de problemas; vacía es bien. */
-function revisa(fichas, temas) {
+function revisa(fichas, temas, tipos) {
+  tipos = tipos || TEMAS;
   const mal = [], vistas = new Set(), fichasVistas = new Set();
   for (const f of fichas) {
     const de = 'La ficha «' + f.id + '»';
@@ -135,6 +160,7 @@ function revisa(fichas, temas) {
     for (const k of ['nombre', 'icono', 'cuando', 'que']) if (!f[k]) mal.push(de + ' no tiene «' + k + '»');
     const suyos = temas[f.tema];
     if (!suyos) mal.push(de + ' nombra un tema que no existe: «' + f.tema + '»');
+    else if (!tipos[f.tema] || !TIPOS.includes(tipos[f.tema].tipo)) mal.push(de + ' es de un tema sin tipo: «' + f.tema + '»');
     if (!Array.isArray(f.categorias) || !f.categorias.length) { mal.push(de + ' no tiene categorías'); continue; }
     for (const c of f.categorias) {
       const dc = 'La categoría «' + c.id + '»';
@@ -165,4 +191,4 @@ function sinUsar(fichas, temas) {
   return Object.values(temas).flat().filter(id => !usados.has(id));
 }
 
-module.exports = { CAMPAMENTOS, deriva, revisa, sinUsar };
+module.exports = { CAMPAMENTOS, TEMAS, TIPOS, deriva, revisa, sinUsar };

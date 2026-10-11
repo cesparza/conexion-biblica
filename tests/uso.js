@@ -246,7 +246,10 @@ const ESPERADO={
   pa:{caps:['Daniel 1','Daniel 2','Daniel 3','Daniel 6','P&R 39','P&R 41','P&R 44'], pr:true},
 };
 for(const [k,e] of Object.entries(ESPERADO)){
-  A.ponCat(k);
+  /* v164: se llega desde la ficha de Guías, que es otra actividad. El primer
+     toque lleva a la ficha propia de Conexión Bíblica con SU categoría; el
+     segundo, ya adentro, la cambia. */
+  A.ponCat(k); if(A.S().cat!==k)A.ponCat(k);
   const labels=A.capsDe().filter(c=>c.ev!=='creencias').map(c=>c.label);
   ok(labels.length===e.caps.length && e.caps.every(l=>labels.includes(l)),
     `Categoría ${k}: alcance exacto del reglamento (${labels.join(', ')})`);
@@ -283,8 +286,9 @@ A.ponCat('gm');A.ponAlcance('todo');A.ponCuantas(25);A.ponNivel(0);
 
 // ── Varios participantes: cada uno con su progreso ──
 A.ponCat('av'); A.ponNombre('Uno'); A.avanza('d1',100);
+const fichasAntes=A.alumnos().length;
 A.agregaAlumno(); A.ponNombre('Dos'); A.ponCat('dm2');
-ok(A.alumnos().length===2,'Se pueden crear varios participantes');
+ok(A.alumnos().length===fichasAntes+1,'Se pueden crear varios participantes');
 ok(A.S().nombre==='Dos' && A.S().cat==='dm2','Al agregar, queda activo el nuevo con su propia categoría');
 ok((A.S().prog.d1||0)===0,'El participante nuevo NO hereda el progreso del anterior');
 
@@ -346,8 +350,8 @@ ok(!B.esNuevo(),'Después de la bienvenida ya no se considera usuario nuevo');
 
 /* Cada actividad ofrece SOLO sus categorías. Es lo que hace que no haya
    mapeos que mantener. */
-ok(B.CATS_DE_ACT('cb').join(',')==='me,av,pa,gm',
-  'Conexión Bíblica ofrece sus cuatro categorías');
+ok(B.CATS_DE_ACT('cb').join(',')==='me,av,pa'&&B.CATS_DE_ACT('cbg').join(',')==='gm',
+  'Conexión Bíblica ofrece sus tres categorías, y la de Guías Mayores la suya');
 ok(B.CATS_DE_ACT('dm').join(',')==='dm1,dm2',
   'Devoción Matutina ofrece sus dos');
 ok(B.CATS_DE_ACT('ec').join(',')==='ec1,ec2',
@@ -396,7 +400,7 @@ ok(F2.poolDe().length===CR.CR_BANCO.length&&F2.poolDe().every(q=>/^cr\d\d$/.test
 store={};
 const G=montar(RET,{store});
 G.el('bv-nombre').value='Guía';
-G.bvSigue(); G.bvActividad('cb'); G.bvCategoria('gm');
+G.bvSigue(); G.bvActividad('cbg'); G.bvCategoria('gm');
 ok(G.S().cat==='gm','Guía Mayor queda en su categoría');
 ok(G.capsDe().every(c=>!/^cr\d\d$/.test(c.id)),
   'Guías Mayores no ve ni un capítulo de creencias en Conexión Bíblica');
@@ -1094,7 +1098,7 @@ const POR_CAT={
   me:{act:'cb', caps:4,  suyo:esDanAct},
   av:{act:'cb', caps:7,  suyo:esDanAct},
   pa:{act:'cb', caps:7,  suyo:esDanAct},
-  gm:{act:'cb', caps:12, suyo:esDanAct},
+  gm:{act:'cbg', caps:12, suyo:esDanAct},
   dm1:{act:'dm', caps:15, suyo:esMatAct},
   dm2:{act:'dm', caps:31, suyo:esMatAct},
   ec1:{act:'ec', caps:28, suyo:esCrAct},
@@ -1163,7 +1167,7 @@ ok(/alu-sel/.test(A.el('hoja').innerHTML),'La hoja trae el selector de participa
 ok(A.el('alu-sel').innerHTML.length>0,'  y viene pintado, no vacio');
 ok(A.el('cat-sel').innerHTML.length>0,'La hoja trae el selector de actividad y categoria pintado');
 ok(/Conexi.n B.blica/.test(A.el('cat-sel').innerHTML)&&/En esto creemos/.test(A.el('cat-sel').innerHTML),
-  '  con las tres actividades agrupadas');
+  '  con las actividades agrupadas');
 A.cierraHoja();
 ok(A.hojaTipoActual()===null,'La hoja de identidad se cierra');
 
@@ -2249,8 +2253,12 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const ofrecidos=[...el('pan-cap').innerHTML.matchAll(/value="([^"]+)"/g)].map(m=>m[1]);
   ok(ofrecidos.length===P.capsExaminables('cb').length,
     'El desplegable de capitulos ofrece los '+ofrecidos.length+' que alguna categoria examina');
-  ok(ofrecidos.length<P.capsDeActividad('cb').length,
-    'Que son menos que todos los capitulos de la actividad ('+P.capsDeActividad('cb').length+')');
+  /* v164: en Conexión Bíblica todos se examinan; en la de Guías Mayores hay
+     seis de solo estudio (Daniel 7 al 12) y esos no se ofrecen. */
+  P.llenaCapPanel('cbg',false);
+  const ofrecidosG=[...el('pan-cap').innerHTML.matchAll(/value="([^"]+)"/g)].map(m=>m[1]);
+  ok(ofrecidosG.length===P.capsExaminables('cbg').length&&ofrecidosG.length<P.capsDeActividad('cbg').length&&!ofrecidosG.includes('d7'),
+    'En la de Guías se ofrecen '+ofrecidosG.length+', menos que todos sus capitulos ('+P.capsDeActividad('cbg').length+')');
 
   /* LAS RECETAS NO SON UN SEGUNDO CAMINO. Cada una dice en que actividad y en
      que material se para; el alcance lo sigue calculando alcancePanel(). */
@@ -2740,7 +2748,15 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
 
   /* EL PANEL DEL DIRECTOR: las mismas fichas, y lo que viaja al servidor. */
   V.ponDirector({rol:'director'});
+  /* v164: cada libro trae SUS fichas. Conexión Bíblica no ofrece Daniel 4 ni 5,
+     que son de Guías Mayores, y la nota lo dice con el dato. */
   el('pan-act').value='cb'; V.cambiaActPanel();
+  el('pan-mat').value='fichas'; V.pintaNotaAlcance();
+  V.fichaPan('libro','d'); V.fichaPan('cap','d2');
+  ok(V.alcancePanel()==='d1,d3,d6','En Conexión Bíblica, todo Daniel menos el 2 es 1, 3 y 6: '+V.alcancePanel());
+  ok(/Menores no tiene P&R 39, P&R 41, P&R 44/.test(el('pan-nota-al').textContent||'')&&!/Guías/.test(el('pan-nota-al').textContent||''),
+    'La nota dice qué categoría no tiene qué, sin nombrar a quien ya no está en esa ficha');
+  el('pan-act').value='cbg'; V.cambiaActPanel();
   el('pan-mat').value='fichas'; V.pintaNotaAlcance();
   ok(V.alcancePanel()==='todo','En el panel arranca con todo marcado');
   ok(el('pan-zona-fichas').hidden===false,'Y las fichas se ven en «Ajustar lo escogido»');
