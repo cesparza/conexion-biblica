@@ -2297,8 +2297,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   { const SRV2=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
     const M=fs.readFileSync(path.join(RAIZ,'migraciones','012_fichas.sql'),'utf8').replace(/^--.*$/gm,'');
     ok(/fichas: \(await reglamentoVigente\(env\)\)\.guardadas/.test(SRV2)&&/guardadas: leidas && leidas\.filter/.test(SRV2)&&/catch \(e\) \{ return undefined; \}/.test(SRV2)&&
-       !/(INSERT INTO|UPDATE|DELETE FROM) ficha\b/i.test(SRV2),
-      'El servidor entrega las fichas guardadas con /estado, calla el campo si la base falla, y en esta versión no las escribe');
+       !/(UPDATE|DELETE FROM) ficha\b/i.test(SRV2)&&SRV2.split('INSERT INTO ficha ').length===2,
+      'El servidor entrega las fichas guardadas con /estado, calla el campo si la base falla, y la tabla solo crece: un único INSERT y ningún UPDATE ni DELETE');
     ok(/CREATE TABLE IF NOT EXISTS ficha/.test(M)&&/AUTOINCREMENT/.test(M)&&/json_valid\(datos\)/.test(M)&&
        !/\b(DROP|ALTER|UPDATE|DELETE)\b/i.test(M),
       'La migración 012 solo agrega la tabla de fichas: no toca ninguna de las que existen'); }
@@ -2323,6 +2323,37 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
       'El enlace a un concurso se lee una vez, se quita de la dirección y solo acepta un id bien formado');
     ok(!/\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/.test(HT.slice(HT.indexOf('id="p-bienvenida"'),HT.indexOf('id="bv-2"'))),
       'La bienvenida no promete una fecha: las fechas salen de cada ficha'); }
+
+  /* ── v171: GUARDAR UNA FICHA ── */
+  { const S4=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
+    const pS=S4.indexOf("ruta.startsWith('/servicio/')"), pF=S4.indexOf("ruta === '/servicio/ficha'"), pP=S4.indexOf("ruta.startsWith('/panel/')");
+    const guarda=S4.slice(pS,pF), ruta=S4.slice(pF,S4.indexOf("return error('No existe.', 404)",pF));
+    ok(pS>0&&pS<pF&&pF<pP&&/if \(!env\.CLAVE_SERVICIO\) return error\([^)]*503\)/.test(guarda)&&/igualSeguro\(dada, env\.CLAVE_SERVICIO\)/.test(guarda)&&
+       /return error\('No autorizado\.', 401\)/.test(guarda)&&!/===\s*env\.CLAVE_SERVICIO|env\.CLAVE_SERVICIO\s*===/.test(S4),
+      'Guardar una ficha pide el secreto del servicio antes de todo, lo compara sin filtrar por tiempo, y sin secreto configurado la puerta no existe');
+    ok(/REGLAS\.forma\(b && b\.ficha\)/.test(ruta)&&/if \(!completo\) return error/.test(ruta)&&/REGLAS\.junta\(fichas, \[ficha\], IDS_DE_TEMA\)/.test(ruta)&&
+       ruta.indexOf('REGLAS.junta')<ruta.indexOf('INSERT INTO ficha')&&/\.bind\(ficha\.id, datos, quien\)/.test(ruta),
+      'Antes de guardar: solo los campos conocidos, contra el reglamento vigente completo, y los valores viajan por bind()');
+    /* Las reglas, corridas de verdad contra la versión vigente y no la de fábrica. */
+    const cq=F.forma(Object.assign(ficha(cat()),{basura:'x'})), cq2=JSON.parse(JSON.stringify(cq));
+    const vig=F.junta(B,[cq],TEMAS_P).fichas;
+    cq2.categorias=[Object.assign({},cq.categorias[0],{id:'cq9'})];
+    ok(!('basura' in cq)&&F.forma(null)===null&&F.forma({id:'x'})===null&&F.junta(vig,[cq2],TEMAS_P).fuera.length===1&&
+       F.junta(vig,[Object.assign({},cq,{nombre:'Otro nombre'})],TEMAS_P).fuera.length===0,
+      'A un concurso guardado tampoco se le puede quitar una categoría después, y sí cambiarle el nombre');
+    ok(/async function catsValidas\(env\)/.test(S4)&&/\[\.\.\.new Set\(\[\.\.\.CATS_VALIDAS, \.\.\.fichas\.flatMap/.test(S4),
+      'Las categorías que acepta el servidor son las ocho de siempre más las de las fichas guardadas');
+    const M13=fs.readFileSync(path.join(RAIZ,'migraciones','013_categorias_por_forma.sql'),'utf8').replace(/^--.*$/gm,'');
+    ok(/PRAGMA defer_foreign_keys = true;/.test(M13)&&/INSERT INTO participante_013 \(id, nombre, categoria, codigo, creado_en, borrado_en\)\s+SELECT id, nombre, categoria, codigo, creado_en, borrado_en FROM participante;/.test(M13)&&
+       /CREATE UNIQUE INDEX IF NOT EXISTS ix_part_codigo ON participante\(codigo\)/.test(M13)&&!/IN \('me'/.test(M13)&&!/foreign_keys = OFF/.test(M13),
+      'La migración 013 copia las seis columnas tal cual, conserva el índice del código y ya no enumera categorías');
+    const GEN4=fs.readFileSync(path.join(RAIZ,'fuente','servidor-reglamento.js'),'utf8');
+    const cat4=JSON.parse((/export const CATALOGO = (\{[\s\S]*?\n\});/.exec(GEN4)||[])[1]||'{}');
+    const d1=((cat4.daniel||{}).caps||[]).find(c=>c.id==='d1')||{n:[]};
+    ok(Object.keys(cat4).join()==='daniel,matutina,creencias'&&cat4.daniel.caps.length===18&&cat4.matutina.caps.length===31&&cat4.creencias.caps.length===28&&
+       d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA].filter(q=>q.cap==='d1').length&&
+       cat4.daniel.repasos.some(r=>r.id==='m-linea'),
+      'El catálogo trae los tres temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

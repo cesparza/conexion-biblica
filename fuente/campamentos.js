@@ -133,6 +133,6 @@ const CAMPAMENTOS = [
     ] },
 ];
 
-const { TEMAS, TIPOS, deriva, revisa, sinUsar, junta } = require('./reglamento.js');
+const { TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma } = require('./reglamento.js');
 
-module.exports = { CAMPAMENTOS, TEMAS, TIPOS, deriva, revisa, sinUsar, junta };
+module.exports = { CAMPAMENTOS, TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma };

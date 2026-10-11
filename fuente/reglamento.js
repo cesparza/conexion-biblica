@@ -15,10 +15,11 @@
    No nombra ningún campamento ni ningún capítulo. Los datos están en
    campamentos.js (las fichas de fábrica) y en la tabla `ficha` de la base. */
 const REGLAS = (function () {
+  /* `nombre` es como se le dice el tema a quien arma un concurso. */
   const TEMAS = {
-    daniel: { tipo: 'libro' },
-    matutina: { tipo: 'dias' },
-    creencias: { tipo: 'creencias' },
+    daniel: { tipo: 'libro', nombre: 'Daniel y Profetas y Reyes' },
+    matutina: { tipo: 'dias', nombre: 'Devoción Matutina · Héroes y villanos' },
+    creencias: { tipo: 'creencias', nombre: 'Las 28 creencias' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
   const SEG_POR_PREGUNTA = 72;
@@ -165,6 +166,26 @@ const REGLAS = (function () {
     return { fichas, fuera };
   }
 
-  return { TEMAS, TIPOS, deriva, revisa, sinUsar, junta };
+  /* LA FORMA DE UNA FICHA, y nada más (v171). Antes de guardar una ficha que
+     escribió una persona se le dejan solo los campos que la app conoce, en su
+     orden: lo que venga de más no se guarda. No revisa nada; eso es de
+     revisa(). Devuelve null si no es una ficha. */
+  function forma(f) {
+    if (!esObjeto(f) || !Array.isArray(f.categorias)) return null;
+    const cat = c => {
+      if (!esObjeto(c)) return c;
+      const o = { id: c.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo, sinCompletar: c.sinCompletar };
+      if (c.segundos !== undefined) o.segundos = c.segundos;
+      if (c.sinRampa !== undefined) o.sinRampa = c.sinRampa;
+      o.alcance = c.alcance;
+      o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
+      if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
+      return o;
+    };
+    return { id: f.id, tema: f.tema, nombre: f.nombre, icono: f.icono, cuando: f.cuando,
+      fecha: f.fecha === undefined ? '' : f.fecha, que: f.que, categorias: f.categorias.map(cat) };
+  }
+
+  return { TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma };
 })();
 if (typeof module !== 'undefined' && module.exports) module.exports = REGLAS;

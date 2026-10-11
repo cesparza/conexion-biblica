@@ -200,7 +200,7 @@ async function vivo() {
     'La migracion agrega la columna de participantes');
   ok(/const evalParaMi/.test(API) && /partsDeFila\(ev\)\.includes\(participanteId\)/.test(API),
     'Una evaluacion dirigida a la persona le gana a la de su categoria');
-  ok(/!partsDeFila\(ev\)\.length && catsDeFila\(ev\)\.includes\(categoria\)/.test(API),
+  ok(/!partsDeFila\(ev\)\.length && \(\(ev\.categorias \|\| '\*'\) === '\*' \|\| catsDeFila\(ev\)\.includes\(categoria\)\)/.test(API),
     'Y la de la categoria solo aplica si no va dirigida a nadie en particular');
   ok(/if \(nuevaP\.length\) return suyos\.some/.test(API),
     'Al abrir, una dirigida a personas solo cierra las que comparten persona');
@@ -394,8 +394,13 @@ ok(/fundida\.nombre = p\.nombre/.test(API) && /fundida\.cat = p\.categoria/.test
     'El codigo no se menciona siquiera en el bloque de editar');
   ok(/\.bind\(nombre, categoria, pid\)/.test(bloque),
     'Y los tres valores viajan por bind()');
-  ok(/CATS_VALIDAS\.includes\(b\.categoria\)/.test(bloque),
-    'La categoria se valida contra la lista, no se acepta cualquiera');
+  ok(/const validas = await catsValidas\(env\);/.test(bloque) && /validas\.includes\(b\.categoria\)/.test(bloque),
+    'La categoria se valida contra las que existen hoy, no se acepta cualquiera');
+  /* v171: `validas` se declara en CADA ruta que la usa. Es JavaScript válido
+     usarla sin declarar, y revienta solo al llamar la ruta. */
+  { const rutas = API.split(/\n    if \(metodo === /).slice(1);
+    const sinDeclarar = rutas.filter(r => /\bvalidas\b/.test(r) && !/const validas = await catsValidas\(env\);/.test(r)).map(r => r.slice(0, 50));
+    ok(sinDeclarar.length === 0, 'Toda ruta que usa la lista de categorías vigentes la pide antes' + (sinDeclarar.length ? ': ' + sinDeclarar.join(' | ') : '')); }
 }
 
 

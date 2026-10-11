@@ -15,7 +15,7 @@
 
 /* Las fichas de fábrica y las reglas del reglamento (derivar, revisar, juntar).
    Es el mismo reglamento.js que corre en la app; lo genera fuente/build.js. */
-import { REGLAS, FICHAS_BASE, IDS_DE_TEMA } from '../../fuente/servidor-reglamento.js';
+import { REGLAS, FICHAS_BASE, IDS_DE_TEMA, CATALOGO } from '../../fuente/servidor-reglamento.js';
 
 const COOKIE = 'cb-sesion';
 const DIAS_PARTICIPANTE = 60;  // el estudio son siete semanas: no puede vencerse en medio
@@ -119,10 +119,21 @@ const evaluacionesAbiertas = async env => {
 
 /* El conjunto real de categorías de una fila: '*' se expande a las ocho, para
    poder comparar por intersección sin tratar '*' como un caso aparte. */
-const catsDeFila = ev => {
+const catsDeFila = (ev, validas = CATS_VALIDAS) => {
   const c = ev && ev.categorias ? ev.categorias : '*';
-  return c === '*' ? CATS_VALIDAS : c.split(',');
+  return c === '*' ? validas : c.split(',');
 };
+
+/* LAS CATEGORÍAS QUE EXISTEN HOY (v171). Hasta la v170 eran las ocho de
+   CATS_VALIDAS y nada más. Desde que un concurso se puede guardar en la base,
+   son esas ocho MÁS las de las fichas guardadas que pasan la revisión. Las
+   ocho nunca salen de la lista aunque la base no conteste: hay participantes
+   creadas con ellas. La tabla `participante` ya no las enumera (migración 013):
+   revisa la forma del id y quien decide es esta función. */
+async function catsValidas(env) {
+  const { fichas } = await reglamentoVigente(env);
+  return [...new Set([...CATS_VALIDAS, ...fichas.flatMap(f => f.categorias.map(c => c.id))])];
+}
 
 /* A quiénes va dirigida, cuando va dirigida a personas y no a una categoría
    entera. Vacío = va por categoría, que es como funcionaba antes de la 007. */
@@ -138,7 +149,7 @@ const partsDeFila = ev => {
    habría forma de saber cuál. */
 const evalParaMi = (abiertas, participanteId, categoria) =>
   abiertas.find(ev => partsDeFila(ev).includes(participanteId)) ||
-  abiertas.find(ev => !partsDeFila(ev).length && catsDeFila(ev).includes(categoria));
+  abiertas.find(ev => !partsDeFila(ev).length && ((ev.categorias || '*') === '*' || catsDeFila(ev).includes(categoria)));
 
 /* Semilla del examen. La genera el SERVIDOR, nunca el aparato del director: así
    el examen es idéntico para todas y nadie puede adivinarlo antes de tiempo. */
@@ -329,6 +340,60 @@ export async function onRequest(context) {
          navegador le esconde la respuesta a la otra página. */
       }, 200, { 'access-control-allow-origin': '*' });
     }
+
+    // ─────────────────────────────────────── público: el reglamento completo
+    /* LO QUE NECESITA QUIEN ARMA UN CONCURSO (v171): las fichas enteras (con
+       qué estudia cada categoría) y el catálogo de cada tema, con cuántas
+       preguntas hay por capítulo y nivel. Lo lee el panel de la app de la
+       iglesia, de servidor a servidor. Es público porque es lo mismo que ya va
+       dentro del HTML de esta app; no trae nada de personas. */
+    if (metodo === 'GET' && ruta === '/reglamento') {
+      const { fichas, guardadas, completo } = await reglamentoVigente(env);
+      const temas = {};
+      for (const t of Object.keys(CATALOGO)) temas[t] = { nombre: (REGLAS.TEMAS[t] || {}).nombre || t, tipo: (REGLAS.TEMAS[t] || {}).tipo || '', ...CATALOGO[t] };
+      return json({ fichas, guardadas: (guardadas || []).map(f => f.id), temas, completo, hora: new Date().toISOString() });
+    }
+
+    // ─────────────────────────────────────── servicio: guardar una ficha
+    /* LA ÚNICA PUERTA POR DONDE SE ESCRIBE UNA FICHA (v171)
+
+       QUIÉN LLAMA. No una persona: el servidor de la app de la iglesia, que ya
+       comprobó quién es y si dirige ese club. Aquí no hay sesión que mirar; se
+       presenta con un secreto que solo conocen los dos servidores
+       (CLAVE_SERVICIO), en la cabecera `x-cb-servicio`. Sin el secreto
+       configurado la puerta no existe: responde 503 y no guarda nada.
+
+       QUÉ REVISA ESTA APP, AUNQUE LA OTRA YA HAYA REVISADO. Todo lo que es del
+       reglamento: que la ficha pase revisa() junto con las demás, que no le
+       quite una categoría ni le cambie el tema a la que reemplaza (contra la
+       versión VIGENTE, no contra la de fábrica), y que no traiga campos de
+       más. La otra app decide quién puede; esta, qué se puede.
+
+       Si la base no deja leer el reglamento vigente, no guarda: revisar contra
+       una vista incompleta dejaría pasar una ficha que le quita categorías a
+       otra guardada. */
+    if (ruta.startsWith('/servicio/')) {
+      if (!env.CLAVE_SERVICIO) return error('El servicio no está configurado.', 503);
+      const dada = request.headers.get('x-cb-servicio') || '';
+      if (!dada || !(await igualSeguro(dada, env.CLAVE_SERVICIO))) return error('No autorizado.', 401);
+    }
+    if (metodo === 'POST' && ruta === '/servicio/ficha') {
+      const b = await request.json().catch(() => null);
+      const quien = limpiar(b && b.quien, 120);
+      if (!quien) return error('Falta decir quién la guarda.');
+      const ficha = REGLAS.forma(b && b.ficha);
+      if (!ficha) return error('Eso no es una ficha.');
+      const datos = JSON.stringify(ficha);
+      if (datos.length > 20000) return error('La ficha es demasiado grande.', 413);
+      const { fichas, completo } = await reglamentoVigente(env);
+      if (!completo) return error('No se pudo leer el reglamento vigente. Intenta de nuevo.', 503);
+      const { fuera } = REGLAS.junta(fichas, [ficha], IDS_DE_TEMA);
+      if (fuera.length) return error('Esa ficha no se puede guardar: ' + fuera[0].por + '.', 422, { por: fuera[0].por });
+      const r = await env.DB.prepare('INSERT INTO ficha (ficha_id, datos, quien) VALUES (?, ?, ?)')
+        .bind(ficha.id, datos, quien).run();
+      return json({ ok: true, id: ficha.id, n: r.meta && r.meta.last_row_id, nueva: !fichas.some(f => f.id === ficha.id) });
+    }
+    if (ruta.startsWith('/servicio/')) return error('No existe.', 404);
 
     // ─────────────────────────────────────── entrar con el código
     if (metodo === 'POST' && ruta === '/entrar') {
@@ -710,8 +775,9 @@ export async function onRequest(context) {
          director no puede evaluar solo a matutina, o solo a las de 4 a 6. */
       const pedidas = Array.isArray(b.categorias) ? b.categorias
         : String(b.categorias || '').split(',');
-      const limpias = pedidas.map(x => String(x).trim()).filter(x => CATS_VALIDAS.includes(x));
-      const categorias = (!limpias.length || limpias.length === CATS_VALIDAS.length) ? '*' : limpias.join(',');
+      const validas = await catsValidas(env);
+      const limpias = pedidas.map(x => String(x).trim()).filter(x => validas.includes(x));
+      const categorias = (!limpias.length || limpias.length === validas.length) ? '*' : limpias.join(',');
       /* A QUIÉNES, EN DOS NIVELES.
          Si vienen participantes, la evaluación va dirigida a esas personas y las
          categorías dejan de decidir. Es lo que permite «Camila del 1 al 10» y
@@ -743,13 +809,13 @@ export async function onRequest(context) {
          - dirigida a categorías: las otras dirigidas a categorías que compartan
            alguna, como venía siendo. Las dirigidas a personas no se tocan: esas
            le ganan y ya estaban resueltas. */
-      const catsNuevas = categorias === '*' ? CATS_VALIDAS : categorias.split(',');
+      const catsNuevas = categorias === '*' ? validas : categorias.split(',');
       const nuevaP = participantes ? participantes.split(',') : [];
       const abiertas = await evaluacionesAbiertas(env);
       const solapadas = abiertas.filter(ev => {
         const suyos = partsDeFila(ev);
         if (nuevaP.length) return suyos.some(x => nuevaP.includes(x));
-        return !suyos.length && catsDeFila(ev).some(c => catsNuevas.includes(c));
+        return !suyos.length && catsDeFila(ev, validas).some(c => catsNuevas.includes(c));
       });
       for (const ev of solapadas) {
         await env.DB.prepare(
@@ -966,9 +1032,10 @@ export async function onRequest(context) {
     if (metodo === 'POST' && ruta === '/panel/participantes') {
       const b = await request.json().catch(() => ({}));
       const nombre = limpiar(b.nombre, 40);
-      const categoria = CATS_VALIDAS.includes(b.categoria) ? b.categoria : null;
+      const validas = await catsValidas(env);
+      const categoria = validas.includes(b.categoria) ? b.categoria : null;
       if (!nombre) return error('Falta el nombre.');
-      if (!categoria) return error('Categoría inválida: ' + CATS_VALIDAS.join(', ') + '.');
+      if (!categoria) return error('Categoría inválida: ' + validas.join(', ') + '.');
       /* Reintentar si el código ya existía: con 31^6 combinaciones el choque es
          improbable, pero improbable no es imposible y el índice es único. */
       let codigo = null;
@@ -1010,10 +1077,11 @@ export async function onRequest(context) {
       ).bind(pid).first();
       if (!p) return error('Esa participante ya no está en el club.', 404);
       const nombre = b.nombre === undefined ? p.nombre : limpiar(b.nombre, 40);
+      const validas = await catsValidas(env);
       const categoria = b.categoria === undefined ? p.categoria
-        : (CATS_VALIDAS.includes(b.categoria) ? b.categoria : null);
+        : (validas.includes(b.categoria) ? b.categoria : null);
       if (!nombre) return error('Falta el nombre.');
-      if (!categoria) return error('Categoría inválida: ' + CATS_VALIDAS.join(', ') + '.');
+      if (!categoria) return error('Categoría inválida: ' + validas.join(', ') + '.');
       await env.DB.prepare('UPDATE participante SET nombre = ?, categoria = ? WHERE id = ?')
         .bind(nombre, categoria, pid).run();
       await auditar(env, sesion.cuenta_id, 'editar_participante', 'participante', pid, ipHash);

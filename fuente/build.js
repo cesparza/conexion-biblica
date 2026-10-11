@@ -333,6 +333,19 @@ const huella = huellaHtml;
    fuente con `export`, que es como la carga functions/api. Se genera aquí para
    que no haya una copia a mano que se quede atrás; una prueba comprueba que
    lo que está en el repositorio es lo que este build produce. */
+/* EL CATÁLOGO (v171): lo que necesita quien arma un concurso sin tener la app
+   cargada. Por tema, sus capítulos (con cuántas preguntas hay en cada nivel) y
+   sus repasos. Sale de lo mismo que va al index.html: si el banco crece, el
+   catálogo cuenta lo nuevo solo. */
+const CATALOGO = {};
+for (const [tema, ids] of Object.entries(IDS_DE_TEMA)) {
+  const pon = x => ids.includes(x.id);
+  CATALOGO[tema] = {
+    caps: CAPS_ALL.filter(pon).map(c => ({ id: c.id, label: c.label, sub: c.sub || '', grupo: c.src || '',
+      n: [1, 2, 3].map(nv => BANCO_NV.filter(q => q.cap === c.id && q.nv === nv).length) })),
+    repasos: MODULOS_ALL.filter(pon).map(m => ({ id: m.id, label: m.label })),
+  };
+}
 {
   const CIERRE = "if (typeof module !== 'undefined' && module.exports) module.exports = REGLAS;";
   if (!REGLAS.endsWith(CIERRE)) {
@@ -344,6 +357,7 @@ const huella = huellaHtml;
     REGLAS.slice(0, -CIERRE.length) +
     'export const FICHAS_BASE = ' + JSON.stringify(CAMPAMENTOS, null, 1) + ';\n\n' +
     'export const IDS_DE_TEMA = ' + JSON.stringify(IDS_DE_TEMA, null, 1) + ';\n\n' +
+    'export const CATALOGO = ' + JSON.stringify(CATALOGO, null, 1) + ';\n\n' +
     'export { REGLAS };\n');
 }
 fs.writeFileSync(RAIZ('manifest.webmanifest'), PWA.manifest());

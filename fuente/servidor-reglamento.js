@@ -16,10 +16,11 @@
    No nombra ningún campamento ni ningún capítulo. Los datos están en
    campamentos.js (las fichas de fábrica) y en la tabla `ficha` de la base. */
 const REGLAS = (function () {
+  /* `nombre` es como se le dice el tema a quien arma un concurso. */
   const TEMAS = {
-    daniel: { tipo: 'libro' },
-    matutina: { tipo: 'dias' },
-    creencias: { tipo: 'creencias' },
+    daniel: { tipo: 'libro', nombre: 'Daniel y Profetas y Reyes' },
+    matutina: { tipo: 'dias', nombre: 'Devoción Matutina · Héroes y villanos' },
+    creencias: { tipo: 'creencias', nombre: 'Las 28 creencias' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
   const SEG_POR_PREGUNTA = 72;
@@ -166,7 +167,27 @@ const REGLAS = (function () {
     return { fichas, fuera };
   }
 
-  return { TEMAS, TIPOS, deriva, revisa, sinUsar, junta };
+  /* LA FORMA DE UNA FICHA, y nada más (v171). Antes de guardar una ficha que
+     escribió una persona se le dejan solo los campos que la app conoce, en su
+     orden: lo que venga de más no se guarda. No revisa nada; eso es de
+     revisa(). Devuelve null si no es una ficha. */
+  function forma(f) {
+    if (!esObjeto(f) || !Array.isArray(f.categorias)) return null;
+    const cat = c => {
+      if (!esObjeto(c)) return c;
+      const o = { id: c.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo, sinCompletar: c.sinCompletar };
+      if (c.segundos !== undefined) o.segundos = c.segundos;
+      if (c.sinRampa !== undefined) o.sinRampa = c.sinRampa;
+      o.alcance = c.alcance;
+      o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
+      if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
+      return o;
+    };
+    return { id: f.id, tema: f.tema, nombre: f.nombre, icono: f.icono, cuando: f.cuando,
+      fecha: f.fecha === undefined ? '' : f.fecha, que: f.que, categorias: f.categorias.map(cat) };
+  }
+
+  return { TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma };
 })();
 export const FICHAS_BASE = [
  {
@@ -599,6 +620,938 @@ export const IDS_DE_TEMA = {
   "mc-doctrinas",
   "mc-lista"
  ]
+};
+
+export const CATALOGO = {
+ "daniel": {
+  "caps": [
+   {
+    "id": "d1",
+    "label": "Daniel 1",
+    "sub": "Cautivos en Babilonia",
+    "grupo": "Biblia",
+    "n": [
+     30,
+     23,
+     14
+    ]
+   },
+   {
+    "id": "d2",
+    "label": "Daniel 2",
+    "sub": "El sueño de la gran imagen",
+    "grupo": "Biblia",
+    "n": [
+     19,
+     41,
+     9
+    ]
+   },
+   {
+    "id": "d3",
+    "label": "Daniel 3",
+    "sub": "La imagen de oro y el horno",
+    "grupo": "Biblia",
+    "n": [
+     27,
+     28,
+     13
+    ]
+   },
+   {
+    "id": "d4",
+    "label": "Daniel 4",
+    "sub": "Nabucodonosor humillado",
+    "grupo": "Biblia",
+    "n": [
+     16,
+     27,
+     13
+    ]
+   },
+   {
+    "id": "d5",
+    "label": "Daniel 5",
+    "sub": "La escritura en la pared",
+    "grupo": "Biblia",
+    "n": [
+     17,
+     19,
+     8
+    ]
+   },
+   {
+    "id": "d6",
+    "label": "Daniel 6",
+    "sub": "En el foso de los leones",
+    "grupo": "Biblia",
+    "n": [
+     26,
+     24,
+     20
+    ]
+   },
+   {
+    "id": "d7",
+    "label": "Daniel 7",
+    "sub": "Las cuatro bestias y el juicio",
+    "grupo": "Biblia",
+    "n": [
+     24,
+     10,
+     20
+    ]
+   },
+   {
+    "id": "d8",
+    "label": "Daniel 8",
+    "sub": "El carnero, el macho cabrío y las 2.300 tardes",
+    "grupo": "Biblia",
+    "n": [
+     21,
+     10,
+     22
+    ]
+   },
+   {
+    "id": "d9",
+    "label": "Daniel 9",
+    "sub": "Las setenta semanas y el Mesías",
+    "grupo": "Biblia",
+    "n": [
+     23,
+     9,
+     20
+    ]
+   },
+   {
+    "id": "d10",
+    "label": "Daniel 10",
+    "sub": "La visión junto al Tigris",
+    "grupo": "Biblia",
+    "n": [
+     16,
+     12,
+     17
+    ]
+   },
+   {
+    "id": "d11",
+    "label": "Daniel 11",
+    "sub": "Los reyes del norte y del sur",
+    "grupo": "Biblia",
+    "n": [
+     24,
+     20,
+     30
+    ]
+   },
+   {
+    "id": "d12",
+    "label": "Daniel 12",
+    "sub": "El tiempo del fin",
+    "grupo": "Biblia",
+    "n": [
+     11,
+     17,
+     9
+    ]
+   },
+   {
+    "id": "pr39",
+    "label": "P&R 39",
+    "sub": "En la corte de Babilonia",
+    "grupo": "Elena de White",
+    "n": [
+     1,
+     28,
+     7
+    ]
+   },
+   {
+    "id": "pr40",
+    "label": "P&R 40",
+    "sub": "El sueño de Nabucodonosor",
+    "grupo": "Elena de White",
+    "n": [
+     2,
+     20,
+     8
+    ]
+   },
+   {
+    "id": "pr41",
+    "label": "P&R 41",
+    "sub": "El horno de fuego",
+    "grupo": "Elena de White",
+    "n": [
+     1,
+     23,
+     11
+    ]
+   },
+   {
+    "id": "pr42",
+    "label": "P&R 42",
+    "sub": "La verdadera grandeza",
+    "grupo": "Elena de White",
+    "n": [
+     2,
+     24,
+     9
+    ]
+   },
+   {
+    "id": "pr43",
+    "label": "P&R 43",
+    "sub": "El vigía invisible",
+    "grupo": "Elena de White",
+    "n": [
+     2,
+     22,
+     10
+    ]
+   },
+   {
+    "id": "pr44",
+    "label": "P&R 44",
+    "sub": "En el foso de los leones",
+    "grupo": "Elena de White",
+    "n": [
+     1,
+     27,
+     8
+    ]
+   }
+  ],
+  "repasos": [
+   {
+    "id": "m-linea",
+    "label": "Línea de tiempo"
+   },
+   {
+    "id": "m-personajes",
+    "label": "Personajes"
+   },
+   {
+    "id": "m-numeros",
+    "label": "Números"
+   },
+   {
+    "id": "m-trampas",
+    "label": "Trampas"
+   },
+   {
+    "id": "m-versiculos",
+    "label": "Versículos"
+   },
+   {
+    "id": "m-reyes",
+    "label": "Los reyes"
+   },
+   {
+    "id": "m-profetico",
+    "label": "Paralelos"
+   },
+   {
+    "id": "m-lugares",
+    "label": "Lugares"
+   },
+   {
+    "id": "m-version",
+    "label": "RV1995 vs RV1960"
+   },
+   {
+    "id": "m-prioridades",
+    "label": "Lo que más preguntan"
+   },
+   {
+    "id": "m-palabras",
+    "label": "Palabras difíciles"
+   }
+  ]
+ },
+ "matutina": {
+  "caps": [
+   {
+    "id": "m01",
+    "label": "1.º de octubre",
+    "sub": "El villano pirata Dienterroto",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m02",
+    "label": "2 de octubre",
+    "sub": "El héroe sabe que Dios lo levanta",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m03",
+    "label": "3 de octubre",
+    "sub": "El héroe que dio 5 kinas",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m04",
+    "label": "4 de octubre",
+    "sub": "El héroe que ayudaba a jóvenes estudiantes",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m05",
+    "label": "5 de octubre",
+    "sub": "Estás invitado a la boda",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m06",
+    "label": "6 de octubre",
+    "sub": "Nunca estás solo",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m07",
+    "label": "7 de octubre",
+    "sub": "Una joven heroína alienta a los tripulantes",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m08",
+    "label": "8 de octubre",
+    "sub": "El poder del héroe",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     5,
+     1
+    ]
+   },
+   {
+    "id": "m09",
+    "label": "9 de octubre",
+    "sub": "El héroe narrador de historias",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     5,
+     1
+    ]
+   },
+   {
+    "id": "m10",
+    "label": "10 de octubre",
+    "sub": "El héroe se enamora — 1.ª parte",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m11",
+    "label": "11 de octubre",
+    "sub": "El héroe se enamora — 2.ª parte",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m12",
+    "label": "12 de octubre",
+    "sub": "La pequeña gran mujer",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     5,
+     1
+    ]
+   },
+   {
+    "id": "m13",
+    "label": "13 de octubre",
+    "sub": "Mujer virtuosa",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m14",
+    "label": "14 de octubre",
+    "sub": "No me arrepiento",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m15",
+    "label": "15 de octubre",
+    "sub": "Testigos de Jesús",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m16",
+    "label": "16 de octubre",
+    "sub": "Héroes anónimos",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m17",
+    "label": "17 de octubre",
+    "sub": "El amigo villano",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m18",
+    "label": "18 de octubre",
+    "sub": "¿Héroes o no?",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m19",
+    "label": "19 de octubre",
+    "sub": "Di siempre dónde estás",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m20",
+    "label": "20 de octubre",
+    "sub": "El villano del baloncesto",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m21",
+    "label": "21 de octubre",
+    "sub": "Tus maestros son héroes",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m22",
+    "label": "22 de octubre",
+    "sub": "Jesús: el Maestro de los maestros",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m23",
+    "label": "23 de octubre",
+    "sub": "Héroes de ayer y de hoy",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m24",
+    "label": "24 de octubre",
+    "sub": "El villano que maltrató a un animal",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m25",
+    "label": "25 de octubre",
+    "sub": "Fernando, el niño enojado",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m26",
+    "label": "26 de octubre",
+    "sub": "La heroína que ayudó a un niño con sus palabras",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m27",
+    "label": "27 de octubre",
+    "sub": "El niño que se quedó sentado en el banquillo",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     3,
+     1
+    ]
+   },
+   {
+    "id": "m28",
+    "label": "28 de octubre",
+    "sub": "Un héroe diferente",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m29",
+    "label": "29 de octubre",
+    "sub": "Dios provee",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   },
+   {
+    "id": "m30",
+    "label": "30 de octubre",
+    "sub": "Nabal, el villano necio",
+    "grupo": "Matutina Héroes y villanos",
+    "n": [
+     4,
+     5,
+     1
+    ]
+   },
+   {
+    "id": "m31",
+    "label": "31 de octubre",
+    "sub": "La sabia Abigail",
+    "grupo": "Matutina · complemento del día 30",
+    "n": [
+     4,
+     4,
+     1
+    ]
+   }
+  ],
+  "repasos": [
+   {
+    "id": "mm-quien",
+    "label": "Héroes y villanos"
+   },
+   {
+    "id": "mm-versiculos",
+    "label": "Versículos de octubre"
+   },
+   {
+    "id": "mm-plan",
+    "label": "Cómo estudiar la matutina"
+   }
+  ]
+ },
+ "creencias": {
+  "caps": [
+   {
+    "id": "cr01",
+    "label": "Creencia 1",
+    "sub": "La Palabra de Dios",
+    "grupo": "En esto creemos",
+    "n": [
+     6,
+     8,
+     2
+    ]
+   },
+   {
+    "id": "cr02",
+    "label": "Creencia 2",
+    "sub": "La Deidad",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr03",
+    "label": "Creencia 3",
+    "sub": "Dios el Padre",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr04",
+    "label": "Creencia 4",
+    "sub": "Dios el Hijo",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr05",
+    "label": "Creencia 5",
+    "sub": "Dios el Espíritu Santo",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr06",
+    "label": "Creencia 6",
+    "sub": "La creación",
+    "grupo": "En esto creemos",
+    "n": [
+     4,
+     6,
+     2
+    ]
+   },
+   {
+    "id": "cr07",
+    "label": "Creencia 7",
+    "sub": "La naturaleza humana",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr08",
+    "label": "Creencia 8",
+    "sub": "El gran conflicto",
+    "grupo": "En esto creemos",
+    "n": [
+     4,
+     6,
+     2
+    ]
+   },
+   {
+    "id": "cr09",
+    "label": "Creencia 9",
+    "sub": "La vida, muerte y resurrección de Cristo",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr10",
+    "label": "Creencia 10",
+    "sub": "La experiencia de la salvación",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr11",
+    "label": "Creencia 11",
+    "sub": "Crecer en Cristo",
+    "grupo": "En esto creemos",
+    "n": [
+     4,
+     6,
+     2
+    ]
+   },
+   {
+    "id": "cr12",
+    "label": "Creencia 12",
+    "sub": "La iglesia",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr13",
+    "label": "Creencia 13",
+    "sub": "El remanente y su misión",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr14",
+    "label": "Creencia 14",
+    "sub": "La unidad en el cuerpo de Cristo",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr15",
+    "label": "Creencia 15",
+    "sub": "El bautismo",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr16",
+    "label": "Creencia 16",
+    "sub": "La Cena del Señor",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr17",
+    "label": "Creencia 17",
+    "sub": "Los dones y ministerios espirituales",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr18",
+    "label": "Creencia 18",
+    "sub": "El don de profecía",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr19",
+    "label": "Creencia 19",
+    "sub": "La ley de Dios",
+    "grupo": "En esto creemos",
+    "n": [
+     4,
+     6,
+     2
+    ]
+   },
+   {
+    "id": "cr20",
+    "label": "Creencia 20",
+    "sub": "El sábado",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr21",
+    "label": "Creencia 21",
+    "sub": "La mayordomía",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr22",
+    "label": "Creencia 22",
+    "sub": "La conducta cristiana",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr23",
+    "label": "Creencia 23",
+    "sub": "El matrimonio y la familia",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr24",
+    "label": "Creencia 24",
+    "sub": "El ministerio de Cristo en el Santuario celestial",
+    "grupo": "En esto creemos",
+    "n": [
+     4,
+     6,
+     2
+    ]
+   },
+   {
+    "id": "cr25",
+    "label": "Creencia 25",
+    "sub": "La segunda venida de Cristo",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr26",
+    "label": "Creencia 26",
+    "sub": "La muerte y la resurrección",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr27",
+    "label": "Creencia 27",
+    "sub": "El milenio y el fin del pecado",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   },
+   {
+    "id": "cr28",
+    "label": "Creencia 28",
+    "sub": "La Tierra Nueva",
+    "grupo": "En esto creemos",
+    "n": [
+     2,
+     5,
+     2
+    ]
+   }
+  ],
+  "repasos": [
+   {
+    "id": "mc-doctrinas",
+    "label": "Las 6 doctrinas"
+   },
+   {
+    "id": "mc-lista",
+    "label": "Las 28 de corrido"
+   }
+  ]
+ }
 };
 
 export { REGLAS };
