@@ -2296,12 +2296,31 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
       'La app junta las de fábrica con las guardadas, guarda las que llegan con /estado y avisa si cambiaron'); }
   { const SRV2=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
     const M=fs.readFileSync(path.join(RAIZ,'migraciones','012_fichas.sql'),'utf8').replace(/^--.*$/gm,'');
-    ok(/fichas: await fichasGuardadas\(env\)/.test(SRV2)&&/catch \(e\) \{ return undefined; \}/.test(SRV2)&&
+    ok(/fichas: \(await reglamentoVigente\(env\)\)\.guardadas/.test(SRV2)&&/guardadas: leidas && leidas\.filter/.test(SRV2)&&/catch \(e\) \{ return undefined; \}/.test(SRV2)&&
        !/(INSERT INTO|UPDATE|DELETE FROM) ficha\b/i.test(SRV2),
       'El servidor entrega las fichas guardadas con /estado, calla el campo si la base falla, y en esta versión no las escribe');
     ok(/CREATE TABLE IF NOT EXISTS ficha/.test(M)&&/AUTOINCREMENT/.test(M)&&/json_valid\(datos\)/.test(M)&&
        !/\b(DROP|ALTER|UPDATE|DELETE)\b/i.test(M),
       'La migración 012 solo agrega la tabla de fichas: no toca ninguna de las que existen'); }
+
+  /* ── v169: LA LISTA DE CONCURSOS Y EL ENLACE A UN CONCURSO ── */
+  { const SRV3=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
+    const GEN=fs.readFileSync(path.join(RAIZ,'fuente','servidor-reglamento.js'),'utf8');
+    const reglas=fs.readFileSync(path.join(RAIZ,'fuente','reglamento.js'),'utf8');
+    const cuerpoReglas=reglas.slice(0,reglas.lastIndexOf('if (typeof module'));
+    ok(GEN.includes(cuerpoReglas)&&GEN.includes('export const FICHAS_BASE = '+JSON.stringify(F.CAMPAMENTOS,null,1)+';')&&
+       GEN.includes('export const IDS_DE_TEMA = '+JSON.stringify(TEMAS_P,null,1)+';')&&/export \{ REGLAS \};\n$/.test(GEN)&&!/module\.exports/.test(GEN),
+      'El reglamento del servidor es el mismo reglamento.js con las fichas de fábrica de hoy: no hay copia a mano');
+    const pC=SRV3.indexOf("ruta === '/concursos'"), pG=SRV3.indexOf("ruta.startsWith('/panel/')");
+    const tramo=SRV3.slice(pC,SRV3.indexOf("ruta === '/entrar'"));
+    ok(pC>0&&pC<pG&&/reglamentoVigente\(env\)/.test(tramo)&&/completo/.test(tramo)&&!/estudia|soloEstudio|techo|participante|sesion/.test(tramo.replace(/\/\*[\s\S]*?\*\//g,'')),
+      'La lista de concursos es pública, sale ya junta y revisada, y no entrega nada de personas');
+    const A=lee('app.js'), HT=fs.readFileSync(path.join(RAIZ,'fuente','cuerpo.html'),'utf8');
+    ok(/searchParams\.get\('concurso'\)/.test(A)&&/history\.replaceState/.test(A.slice(A.indexOf('function leeConcursoPedido'),A.indexOf('function hojaCategorias')))&&
+       /\^\[a-z\]\[a-z0-9\]\{1,11\}\$/.test(A.slice(A.indexOf('function leeConcursoPedido'),A.indexOf('function hojaCategorias'))),
+      'El enlace a un concurso se lee una vez, se quita de la dirección y solo acepta un id bien formado');
+    ok(!/\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/.test(HT.slice(HT.indexOf('id="p-bienvenida"'),HT.indexOf('id="bv-2"'))),
+      'La bienvenida no promete una fecha: las fechas salen de cada ficha'); }
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

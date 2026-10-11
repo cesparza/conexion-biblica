@@ -13,6 +13,10 @@
  * Secretos: CLAVE_PANEL (clave del director), SAL_IP (sal para hashear IP).
  */
 
+/* Las fichas de fábrica y las reglas del reglamento (derivar, revisar, juntar).
+   Es el mismo reglamento.js que corre en la app; lo genera fuente/build.js. */
+import { REGLAS, FICHAS_BASE, IDS_DE_TEMA } from '../../fuente/servidor-reglamento.js';
+
 const COOKIE = 'cb-sesion';
 const DIAS_PARTICIPANTE = 60;  // el estudio son siete semanas: no puede vencerse en medio
 const DIAS_DIRECTOR = 30;
@@ -212,6 +216,15 @@ async function fichasGuardadas(env) {
   } catch (e) { return undefined; }
 }
 
+/* El reglamento vigente: las de fábrica más las guardadas que pasan la
+   revisión (v169). `guardadas` trae solo las que entraron, que es lo que se
+   le manda a la app; `completo` dice si la base contestó. */
+async function reglamentoVigente(env) {
+  const leidas = await fichasGuardadas(env);
+  const { fichas } = REGLAS.junta(FICHAS_BASE, leidas || [], IDS_DE_TEMA);
+  return { fichas, guardadas: leidas && leidas.filter(g => fichas.includes(g)), completo: leidas !== undefined };
+}
+
 /** Solo las claves: es lo que necesita quien arma un examen. */
 const clavesRetiradas = async (env, corte) => (await retiradas(env, corte)).map(r => r.clave);
 
@@ -282,7 +295,33 @@ export async function onRequest(context) {
         /* Las fichas guardadas viajan aquí por lo mismo que las retiradas:
            es lo que todo aparato ya consulta. Sin el campo (undefined), el
            aparato se queda con las que tenía. */
-        fichas: await fichasGuardadas(env),
+        fichas: (await reglamentoVigente(env)).guardadas,
+        hora: new Date().toISOString(),
+      });
+    }
+
+    // ─────────────────────────────────────── público: los concursos
+    /* LA LISTA DE CONCURSOS, YA JUNTA Y REVISADA (v169)
+       Es lo que consulta quien quiere mostrar qué se puede estudiar sin cargar
+       la app entera: la app de la iglesia arma con esto su página «Conexión
+       Bíblica». Trae las fichas de fábrica más las guardadas, pasadas por las
+       mismas reglas que usa la app al abrir.
+
+       Si la base no contesta, responde igual con las de fábrica y avisa con
+       `completo: false`, para que quien guarde una copia no borre de ella los
+       concursos guardados que ya conocía.
+
+       Es reglamento, no datos de personas: nombres de concurso y de categoría,
+       fecha y número de preguntas. Lo mismo que ya va en el HTML público. */
+    if (metodo === 'GET' && ruta === '/concursos') {
+      const { fichas, completo } = await reglamentoVigente(env);
+      return json({
+        concursos: fichas.map(f => ({
+          id: f.id, nombre: f.nombre, icono: f.icono, que: f.que, tema: f.tema,
+          tipo: (REGLAS.TEMAS[f.tema] || {}).tipo || '', fecha: f.fecha || '', cuando: f.cuando,
+          categorias: f.categorias.map(c => ({ id: c.id, nombre: c.nombre, edad: c.edad, n: c.n, alcance: c.alcance })),
+        })),
+        completo,
         hora: new Date().toISOString(),
       });
     }

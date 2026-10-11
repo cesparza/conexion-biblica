@@ -325,6 +325,27 @@ fs.writeFileSync(SALIDA, htmlFinal);
    sigue abriendo con doble clic: en file:// el registro no se intenta. */
 const RAIZ = f => path.join(__dirname, '..', f);
 const huella = huellaHtml;
+
+/* EL REGLAMENTO PARA EL SERVIDOR (v169)
+   El servidor también necesita las fichas de fábrica y las reglas: para
+   entregar la lista de concursos ya junta y revisada (/api/concursos). Las
+   reglas se escriben una vez, en reglamento.js; este archivo es esa misma
+   fuente con `export`, que es como la carga functions/api. Se genera aquí para
+   que no haya una copia a mano que se quede atrás; una prueba comprueba que
+   lo que está en el repositorio es lo que este build produce. */
+{
+  const CIERRE = "if (typeof module !== 'undefined' && module.exports) module.exports = REGLAS;";
+  if (!REGLAS.endsWith(CIERRE)) {
+    console.error('❌ reglamento.js ya no termina como build.js espera; el módulo del servidor no se puede generar.');
+    process.exit(1);
+  }
+  fs.writeFileSync(path.join(__dirname, 'servidor-reglamento.js'),
+    '/* GENERADO por fuente/build.js con reglamento.js y campamentos.js. No se edita a mano. */\n' +
+    REGLAS.slice(0, -CIERRE.length) +
+    'export const FICHAS_BASE = ' + JSON.stringify(CAMPAMENTOS, null, 1) + ';\n\n' +
+    'export const IDS_DE_TEMA = ' + JSON.stringify(IDS_DE_TEMA, null, 1) + ';\n\n' +
+    'export { REGLAS };\n');
+}
 fs.writeFileSync(RAIZ('manifest.webmanifest'), PWA.manifest());
 fs.writeFileSync(RAIZ('sw.js'), PWA.sw(huella));
 /* La misma huella que nombra la cache va en version.json y dentro del HTML.

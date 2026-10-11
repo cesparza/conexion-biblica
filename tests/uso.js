@@ -3043,6 +3043,32 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Una categoría guardada con 20 preguntas abre su examen en 20, y el examen sale de 20 ('+B.c()+')');
 }
 
+/* ── v169: ABRIR EN UN CONCURSO ── */
+{
+  const RETC="abreConcurso, ponCat, bvSigue, esNuevo, alumnos, cat:()=>S.cat, nom:()=>S.nombre, act:()=>ACT_DE(S.cat), pedido:()=>concursoPedido, "+
+    "marca:()=>{S.prog.d1=1;guardar();}, pon:n=>{S.nombre=n;guardar();}, el:id=>document.getElementById(id)";
+  /* Aparato con alguien que ya estudió algo de Conexión Bíblica. */
+  const A=montar(RETC,{store:{}});
+  A.pon('Prueba');A.ponCat('av');A.marca();
+  ok(A.abreConcurso('zz9')===false&&A.cat()==='av','Un concurso que no existe no mueve nada');
+  ok(A.abreConcurso('cb')===true&&A.cat()==='av'&&A.alumnos().length===1,'Si ya está en ese concurso, se queda donde está');
+  A.abreConcurso('dm');
+  ok(A.cat()==='av'&&/ponCat\('dm1'\)/.test(A.el('hoja').innerHTML)&&/ponCat\('dm2'\)/.test(A.el('hoja').innerHTML)&&!/ponCat\('av'\)/.test(A.el('hoja').innerHTML),
+    'Un concurso con varias categorías pregunta cuál, y solo ofrece las de ese concurso');
+  A.ponCat('dm2');
+  ok(A.cat()==='dm2'&&A.alumnos().length===2&&A.nom()==='Prueba','Al escoger, se crea su ficha de ese concurso y la de Conexión Bíblica queda intacta');
+  A.abreConcurso('cb');
+  ok(A.cat()==='av'&&A.alumnos().length===2,'Volver a un concurso donde ya tenía ficha lo devuelve a esa ficha, con su categoría');
+  A.abreConcurso('cbg');
+  ok(A.cat()==='gm'&&A.act()==='cbg'&&A.alumnos().length===3,'Un concurso de una sola categoría entra directo');
+  /* Aparato nuevo: la bienvenida pregunta el nombre y pasa a las categorías del concurso pedido. */
+  const N=montar(RETC,{store:{}});
+  ok(N.esNuevo()&&N.abreConcurso('ec')===true&&N.pedido()==='ec'&&N.cat()!=='ec1','En un aparato nuevo el concurso pedido se guarda para la bienvenida');
+  N.el('bv-nombre').value='Otra prueba';N.bvSigue();
+  ok(/bvCategoria\('ec1'\)/.test(N.el('bv-cats').innerHTML)&&/bvCategoria\('ec2'\)/.test(N.el('bv-cats').innerHTML)&&N.el('bv-n3').textContent==='Paso 2 de 2'&&N.pedido()==='',
+    'La bienvenida, con un concurso pedido, salta la pregunta de la actividad y ofrece sus categorías');
+}
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 

@@ -2762,7 +2762,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
     <div class="bv-paso on" id="bv-1">
       <div class="bv-num">Paso 1 de 3</div>
       <h1>¡Hola!</h1>
-      <p class="bv-p">Esta app te prepara para el campamento del 9 de octubre.
+      <p class="bv-p" id="bv-p1">Aquí estudias y practicas para los concursos bíblicos.
       Antes de empezar, dos preguntas.</p>
       <label class="bv-lb" for="bv-nombre">¿Cómo te llamas?</label>
       <input id="bv-nombre" class="bv-in" type="text" placeholder="Tu nombre"
@@ -2784,7 +2784,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
     </div>
 
     <div class="bv-paso" id="bv-3">
-      <div class="bv-num">Paso 3 de 3</div>
+      <div class="bv-num" id="bv-n3">Paso 3 de 3</div>
       <h1 id="bv-t3">¿Cuál es tu categoría?</h1>
       <p class="bv-p" id="bv-p3">Esto decide qué vas a estudiar. Si te
       equivocas, se puede cambiar después.</p>
@@ -3101,7 +3101,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = 'ceaad7ac9e77';
+const VERSION_APP = '55fba949fef0';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -37817,6 +37817,16 @@ function fichasLlegan(lista){
   }catch(e){}
   fichasNuevas=llegan!==corren;
   if(typeof pintaAvisoVer==='function')pintaAvisoVer();
+  /* v169: el enlace pedía un concurso que este aparato no conocía y acaba de
+     llegar. Se vuelve a abrir en él, una sola vez. */
+  if(concursoEspera&&lista.some(f=>f&&f.id===concursoEspera)){
+    const a=concursoEspera;concursoEspera='';
+    let ya='';try{ya=sessionStorage.getItem(CONCURSO_REC)||'';}catch(e){}
+    if(ya!==a&&!(typeof examenEnCurso==='function'&&examenEnCurso())){
+      try{sessionStorage.setItem(CONCURSO_REC,a);}catch(e){}
+      try{location.replace(location.pathname+'?concurso='+a);}catch(e){}
+    }
+  }
 }
 
 /* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
@@ -43283,6 +43293,58 @@ const esNuevo=()=>alumnos().length===1&&!S.nombre&&!S.examenes.length&&
    una minoria, es mal negocio. */
 let bvActSel='cb';
 
+/* ── ABRIR EN UN CONCURSO: /?concurso=<id> (v169) ────────────────────────
+   MECANISMO
+   La app de la iglesia lista los concursos y cada uno lleva a esta app con su
+   id en la dirección. Aquí se lee una vez, al arrancar, y se quita de la
+   dirección para que recargar no lo repita.
+
+   QUÉ HACE SEGÚN EL APARATO
+   · Aparato nuevo: la bienvenida pregunta el nombre y pasa directo a las
+     categorías de ese concurso.
+   · Ya está en ese concurso: nada.
+   · Tiene una ficha de ese concurso: pasa a ella (primero la del mismo nombre).
+   · No tiene ninguna: si el concurso tiene una sola categoría, entra; si tiene
+     varias, pregunta cuál. ponCat() ya sabe crear la ficha sin tocar el
+     progreso de la que estaba.
+
+   UN CONCURSO QUE ESTE APARATO TODAVÍA NO CONOCE
+   Uno guardado en la base llega con /estado y se aplica en la siguiente
+   apertura. Si el enlace pide uno así, se espera a que llegue y se recarga
+   UNA vez (sessionStorage lo recuerda); si tampoco aparece, la app queda
+   donde estaba. */
+const CONCURSO_REC='cb-concurso-rec';
+let concursoPedido='', concursoEspera='';
+function leeConcursoPedido(){
+  try{
+    const u=new URL(location.href), c=(u.searchParams.get('concurso')||'').trim();
+    if(!c)return '';
+    u.searchParams.delete('concurso');
+    history.replaceState(null,'',u.pathname+(u.search||'')+(u.hash||''));
+    return /^[a-z][a-z0-9]{1,11}$/.test(c)?c:'';
+  }catch(e){return '';}
+}
+function hojaCategorias(a){
+  const A=ACTIVIDADES[a];
+  abreHojaHtml(hojaConCierre(A.nombre,'¿En qué categoría vas a estudiar?',
+    '<div class="cat-sel"><div class="cat-fila">'+CATS_DE_ACT(a).map(k=>
+      '<button type="button" class="cat-btn" onclick="cierraHoja();ponCat(\''+k+'\')">'+
+      '<div class="cn">'+esc(CATS[k].nombre)+'</div><div class="cd">'+esc(CATS[k].edad)+'<br>'+esc(CATS[k].alcance)+'</div></button>').join('')+
+    '</div></div><p class="nota">Esto decide qué vas a estudiar. Se puede cambiar después.</p>'),'yo');
+}
+function abreConcurso(a){
+  if(!ACTIVIDADES[a])return false;
+  if(esNuevo()){concursoPedido=a;return true;}
+  if(ACT_DE(S.cat)===a)return true;
+  const nom=(S.nombre||'').trim().toLowerCase();
+  const suyas=alumnos().filter(([,al])=>ACT_DE(al.cat)===a);
+  const mia=suyas.find(([,al])=>(al.nombre||'').trim().toLowerCase()===nom)||suyas[0];
+  if(mia){cambiaAlumno(mia[0]);return true;}
+  const cats=CATS_DE_ACT(a);
+  if(cats.length===1)ponCat(cats[0]);else hojaCategorias(a);
+  return true;
+}
+
 function bvPaso(n){
   ['bv-1','bv-2','bv-3'].forEach((id,i)=>{
     const e=document.getElementById(id);
@@ -43297,6 +43359,12 @@ function bvSigue(){
   if(v.length<2){err.textContent='Escribe tu nombre para seguir.';return;}
   err.textContent='';
   S.nombre=v.slice(0,60);guardar();
+  /* v169: quien llegó por un enlace a un concurso ya dijo cuál; preguntárselo
+     otra vez sería un toque de más. Pasa directo a la categoría. */
+  if(concursoPedido&&ACTIVIDADES[concursoPedido]){
+    const n3=document.getElementById('bv-n3');if(n3)n3.textContent='Paso 2 de 2';
+    const a=concursoPedido;concursoPedido='';bvActividad(a);return;
+  }
   const el=document.getElementById('bv-saludo');
   if(el)el.textContent='Hola, '+v.split(' ')[0]+'. ¿En qué actividad participas?';
   pintaBvActs();
@@ -43360,6 +43428,12 @@ function bvTermina(){
 /* ───────── arranque ───────── */
 try{
   pintaLogo();marcaCat();alcance=alcanceDeFiltro();reiniciaFuente();pintaInicio();
+  { const pedido=leeConcursoPedido();
+    if(pedido&&!ACTIVIDADES[pedido])concursoEspera=pedido;
+    else if(pedido){try{sessionStorage.removeItem(CONCURSO_REC);}catch(e){}
+      /* Se deja para cuando el archivo termine de cargar: cambiar de ficha
+         usa piezas que se declaran más abajo. */
+      if(!esNuevo()){S.ultPantalla='inicio';setTimeout(()=>abreConcurso(pedido),0);}else concursoPedido=pedido;} }
   if(esNuevo()){ir('bienvenida');bvPaso(1);}
   else if(S.ultPantalla && S.ultPantalla!=='inicio' && TABS[S.ultPantalla]!==undefined){
     if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem,true);
