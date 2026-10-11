@@ -2568,6 +2568,57 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 @media (min-width:900px) and (prefers-reduced-motion:reduce){.hoja-vers .hoja-caja{transition:none}}
 /* v155: el versículo al que lleva una cita del estudio, resaltado un momento. */
 .biblia p.salto{background:#fdecc8;box-shadow:0 0 0 4px #fdecc8;border-radius:8px;outline:0;transition:background .6s,box-shadow .6s}
+
+/* ───────── v173 (PRUEBA): ADENTRO DE LA APP DE LA IGLESIA ─────────
+   Cuando esta app se muestra dentro de otra (un marco), `html.dentro` le pone
+   la cara de la anfitriona: su papel, su letra y sus colores, sin la barra
+   azul ni el menú de abajo, que allá ya existen. Las cinco secciones pasan a
+   pestañas de texto arriba. El morado es la marca de Conexión Bíblica dentro
+   de esa app; el naranja sigue siendo lo que se toca. Sola, nada de esto corre. */
+@font-face{font-family:"Geist";src:url("/fuentes/geist.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Anton";src:url("/fuentes/anton.woff2") format("woff2");font-weight:400;font-display:swap}
+html.dentro{
+  --v-lienzo:#efeeec; --v-sup:#ffffff; --v-sup2:#f8f6f2; --v-tinta:#17161c; --v-tinta2:#5c5a63; --v-tinta3:#5c5a63;
+  --v-linea:#dcdad5; --v-linea2:#e3e2df;
+  --v-marca:#5a2d96; --v-marca2:#7a4fb8; --v-marca-alto:#6a3aa8; --v-marca-bajo:#47207a; --v-marca2-txt:#5a2d96;
+  --v-acento:#cf4410; --v-acento-alto:#e8571f; --v-acento-bajo:#b8390b; --v-acento-txt:#b8390b;
+  --v-ok:#2f7d5b; --v-ok-txt:#27704f; --v-cat:#5a2d96; --v-cat-suave:#efe9f7;
+  --v-r-lg:12px; --v-r-md:12px; --v-r-sm:8px;
+  --v-s2:0 1px 2px rgba(22,19,31,.05), 0 1px 1px rgba(22,19,31,.04); --v-s3:0 12px 40px rgba(20,12,40,.18);
+}
+html.dentro body{font-family:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--v-lienzo);padding:0}
+html.dentro body.me,html.dentro body.av,html.dentro body.pa,html.dentro body.gm{--v-cat:#5a2d96;--v-cat-suave:#efe9f7}
+html.dentro .nav{position:sticky;top:0;left:auto;bottom:auto;width:auto;height:auto;z-index:60;display:block;
+  background:var(--v-lienzo);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:1px solid var(--v-linea);padding:0}
+html.dentro .nav-b{display:flex;position:static;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+  padding:.5rem 16px 0;justify-content:space-between;color:var(--v-tinta)}
+html.dentro .logo-nav,html.dentro .rail-marca{display:none}
+html.dentro .nav-yo{order:0;flex:0 1 auto;margin:0;padding:.3rem .7rem .3rem .35rem;background:var(--v-sup);border:1px solid var(--v-linea);border-radius:999px;color:var(--v-tinta)}
+html.dentro .nav-yo:hover{background:var(--v-sup2)}
+html.dentro .nav-yo .yo-ini{background:var(--v-marca);color:#fff}
+html.dentro .nav-yo .yo-tx{display:flex;flex-direction:row;align-items:baseline;gap:.4rem}
+html.dentro .nav-yo .yo-n{display:block;font-weight:700;color:var(--v-tinta)}
+html.dentro .nav-yo .yo-c{display:block;color:var(--v-tinta2);font-weight:500}
+html.dentro .nav-yo .yo-tip{display:none}
+html.dentro .nav-ayuda{order:1;margin:0;background:none;color:var(--v-tinta2)}
+html.dentro .nav-ayuda:hover{background:var(--v-linea2);color:var(--v-tinta)}
+html.dentro .nav-t{position:static;order:0;display:flex;flex-direction:row;flex:none;width:auto;gap:1.3rem;padding:0 16px;margin:0;
+  background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;overflow-x:auto;scrollbar-width:none}
+html.dentro .nav-t button{flex:0 0 auto;flex-direction:row;align-items:center;gap:.35rem;width:auto;min-height:44px;padding:.55rem 0 .7rem;color:var(--v-tinta2);border:0}
+html.dentro .nav-t button:hover{color:var(--v-tinta)}
+html.dentro .nav-t button i{display:none}
+html.dentro .nav-t button b{font:600 .95rem/1.2 "Geist",system-ui,sans-serif;letter-spacing:0}
+html.dentro .nav-t button.on{color:var(--v-tinta)}
+html.dentro .nav-t button::after{content:"";left:0;right:0;top:auto;bottom:-1px;width:auto;height:3px;transform:none;border-radius:3px 3px 0 0;background:transparent;z-index:auto}
+html.dentro .nav-t button.on::after{width:auto;height:3px;background:var(--v-marca)}
+html.dentro .nv,html.dentro .nv-punto{position:static;box-shadow:none}
+html.dentro .nv{background:var(--v-marca)}
+html.dentro .pantalla{max-width:46rem;margin:0 auto;padding:1.1rem 16px 3rem}
+html.dentro h1,html.dentro .tt-display{font-family:"Anton","Arial Narrow",Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.01em}
+html.dentro .nav-b,html.dentro .nav-t{max-width:46rem;margin-left:auto;margin-right:auto;box-sizing:border-box}
+html.dentro .nav-b{justify-content:flex-start;gap:.4rem}
+html.dentro .nav-t{justify-content:flex-start}
+html.dentro .nav-t button{min-width:0}
 </style>
 </head>
 <body>
@@ -3101,7 +3152,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = 'd064b2961d5c';
+const VERSION_APP = 'bfbc924eff0f';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -37295,6 +37346,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {
   CSS_IMPR, paginaImpr, EVENTO_IMPR, NOTA_IMPR, ordenaYNumera, htmlExamenImpr,
   hojaExamen, docExamen, hojaGuia, hojaTarjetas, bloquesGuia,
 };
+/* v173 (PRUEBA): dentro de otra app, la cara es la de la anfitriona (ver estilos, `html.dentro`). */
+try{if(window.self!==window.top)document.documentElement.classList.add('dentro');}catch(e){document.documentElement.classList.add('dentro');}
 /* ───────── estado ───────── */
 /* ───────── categorías ─────────
    Salen del reglamento del campamento: cada club presenta dos integrantes de

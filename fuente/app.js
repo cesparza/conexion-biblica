@@ -1,3 +1,5 @@
+/* v173 (PRUEBA): dentro de otra app, la cara es la de la anfitriona (ver estilos, `html.dentro`). */
+try{if(window.self!==window.top)document.documentElement.classList.add('dentro');}catch(e){document.documentElement.classList.add('dentro');}
 /* ───────── estado ───────── */
 /* ───────── categorías ─────────
    Salen del reglamento del campamento: cada club presenta dos integrantes de
