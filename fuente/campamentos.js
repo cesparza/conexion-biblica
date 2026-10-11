@@ -56,28 +56,36 @@ const TEMAS = {
   creencias: { tipo: 'creencias' },
 };
 const TIPOS = ['libro', 'dias', 'creencias'];
+const SEG_POR_PREGUNTA = 72;
+const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
+
+/* Cada ficha dice su fecha en `fecha` (AAAA-MM-DD), o '' si todavía no se
+   sabe. De ahí salen la cuenta de días, la semana del plan y el freno de
+   dificultad por calendario. `cuando` es el texto que se muestra. */
 
 /* Cada categoría:
      n             preguntas del examen de práctica
      techo         nivel máximo de dificultad que se le ofrece (1 a 3)
      sinCompletar  el examen no trae sección de completar
+     segundos      tiempo por pregunta en el examen (si no se dice, 72)
+     sinRampa      entra directo a su techo, sin subir de nivel por semanas
      alcance       cómo se le dice a la persona lo que entra
      estudia       capítulos y repasos que ve
      soloEstudio   de esos, los que se leen pero no entran al examen */
 const CAMPAMENTOS = [
-  { id: 'cb', tema: 'daniel', nombre: 'Conexión Bíblica', icono: '📘', cuando: '9 de octubre',
+  { id: 'cb', tema: 'daniel', nombre: 'Conexión Bíblica', icono: '📘', cuando: '9 de octubre', fecha: '2026-10-09',
     que: 'El libro de Daniel y Profetas y Reyes',
     /* El reglamento del campamento pide dos integrantes de 4 a 6 años (solo
        Daniel), dos de 7 a 9 (Daniel y Profetas y Reyes) y dos padres o
        consejeros con el alcance de 7 a 9. */
     categorias: [
-      { id: 'me', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true,
+      { id: 'me', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100,
         alcance: 'Daniel 1, 2, 3 y 6',
         estudia: [...DANIEL_RELATOS, ...REPASOS_MENORES] },
-      { id: 'av', nombre: 'Aventureros', edad: '7 a 9 años', n: 15, techo: 3, sinCompletar: false,
+      { id: 'av', nombre: 'Aventureros', edad: '7 a 9 años', n: 15, techo: 3, sinCompletar: false, segundos: 80,
         alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44',
         estudia: AV_ESTUDIA },
-      { id: 'pa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 25, techo: 3, sinCompletar: false,
+      { id: 'pa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 25, techo: 3, sinCompletar: false, sinRampa: true,
         alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44',
         estudia: AV_ESTUDIA },
     ] },
@@ -85,7 +93,7 @@ const CAMPAMENTOS = [
      ampliado. Compartía la ficha de arriba; Camilo pidió separarla el 10 de
      octubre de 2026. La categoría conserva su id, así que el progreso y los
      participantes guardados siguen siendo de ella. */
-  { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica de Guías Mayores', icono: '📘', cuando: 'Por confirmar',
+  { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica de Guías Mayores', icono: '📘', cuando: 'Fecha por confirmar', fecha: '',
     que: 'Daniel 1 al 6 y Profetas y Reyes 39 al 44',
     categorias: [
       { id: 'gm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 25, techo: 3, sinCompletar: false,
@@ -95,7 +103,9 @@ const CAMPAMENTOS = [
         /* Daniel 7 al 12 es material de estudio: no entra al examen. */
         soloEstudio: ['d7', 'd8', 'd9', 'd10', 'd11', 'd12'] },
     ] },
-  { id: 'dm', tema: 'matutina', nombre: 'Devoción Matutina', icono: '🌅', cuando: 'Todo octubre',
+  /* Sin fecha a propósito: el código contaba hacia el 9 de octubre, pero el
+     material va hasta el 30. Hasta que Camilo diga la fecha no se afirma. */
+  { id: 'dm', tema: 'matutina', nombre: 'Devoción Matutina', icono: '🌅', cuando: 'Todo octubre', fecha: '',
     que: 'Héroes y villanos, un día a la vez',
     categorias: [
       { id: 'dm1', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true,
@@ -107,7 +117,8 @@ const CAMPAMENTOS = [
         /* El 31 cierra la historia del 30; el reglamento llega hasta el 30. */
         soloEstudio: ['m31'] },
     ] },
-  { id: 'ec', tema: 'creencias', nombre: 'En esto creemos', icono: '✝️', cuando: 'Por confirmar',
+  /* El examen escrito fue el 10 de octubre de 2026 (lo presentó Camilo). */
+  { id: 'ec', tema: 'creencias', nombre: 'En esto creemos', icono: '✝️', cuando: '10 de octubre', fecha: '2026-10-10',
     que: 'Las 28 creencias',
     /* El reglamento reparte el club en dos: dos adultos presentan un examen
        escrito y el resto contesta otro cuestionario, y las dos notas se
@@ -128,10 +139,12 @@ function deriva(fichas, tipos) {
   const orden = [];
   for (const f of fichas) {
     ACTIVIDADES[f.id] = { nombre: f.nombre, icono: f.icono, cuando: f.cuando, que: f.que,
-      cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '' };
+      cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '',
+      fecha: f.fecha || '' };
     for (const c of f.categorias) {
       CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
-        sinCompletar: c.sinCompletar, alcance: c.alcance };
+        sinCompletar: c.sinCompletar, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
+        rampa: !c.sinRampa };
       orden.push(c);
     }
   }
@@ -158,6 +171,7 @@ function revisa(fichas, temas, tipos) {
     if (fichasVistas.has(f.id)) mal.push(de + ' está repetida');
     fichasVistas.add(f.id);
     for (const k of ['nombre', 'icono', 'cuando', 'que']) if (!f[k]) mal.push(de + ' no tiene «' + k + '»');
+    if (typeof f.fecha !== 'string' || (f.fecha && !esFecha(f.fecha))) mal.push(de + ' tiene una fecha que no es AAAA-MM-DD ni vacía');
     const suyos = temas[f.tema];
     if (!suyos) mal.push(de + ' nombra un tema que no existe: «' + f.tema + '»');
     else if (!tipos[f.tema] || !TIPOS.includes(tipos[f.tema].tipo)) mal.push(de + ' es de un tema sin tipo: «' + f.tema + '»');
@@ -171,6 +185,7 @@ function revisa(fichas, temas, tipos) {
       if (!Number.isInteger(c.n) || c.n < 1) mal.push(dc + ' no dice cuántas preguntas');
       if (![1, 2, 3].includes(c.techo)) mal.push(dc + ' tiene un techo que no es 1, 2 ni 3');
       if (typeof c.sinCompletar !== 'boolean') mal.push(dc + ' no dice si lleva completar');
+      if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
       if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
       if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
       if (suyos) for (const id of c.estudia) {

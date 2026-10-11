@@ -788,19 +788,22 @@ const buscaItem=id=>CAPS.find(c=>c.id===id)||MODULOS.find(m=>m.id===id);
 const NPREG=()=>CAT().n;
 
 /* ───────── cuenta hacia el campamento ───────── */
-/* Fecha del evento de cada categoría. El campamento de Aventureros es el
-   9 de octubre de 2026; si el de Guías Mayores queda en otra fecha, se
-   cambia solo esta línea y la cuenta de días, la semana del plan y el techo
-   de dificultad se recalculan solos para esa categoría. */
-const FECHA_META={me:'2026-10-09',av:'2026-10-09',pa:'2026-10-09',gm:'2026-10-09',
-  dm1:'2026-10-09',dm2:'2026-10-09'};
+/* v165: LA FECHA SALE DE LA FICHA del campamento. Antes había aquí una tabla
+   con una fecha por categoría, todas el 9 de octubre: Guías Mayores, que es
+   otro evento y no tiene fecha, veía «¡Hoy es el día!». Una ficha sin fecha
+   no tiene cuenta de días, ni semana del plan, ni freno por calendario. */
 const SEMANAS_PLAN=7;
-
+const fechaMeta=()=>ACT().fecha||'';
+/** Días que faltan (0 hoy, negativo si ya pasó), o null si no hay fecha. */
 function diasParaMeta(){
+  const f=fechaMeta();
+  if(!f)return null;
   const hoy=new Date(); hoy.setHours(0,0,0,0);
-  const meta=new Date((FECHA_META[S.cat]||FECHA_META.av)+'T00:00:00');
+  const meta=new Date(f+'T00:00:00');
   return Math.round((meta-hoy)/864e5);
 }
+const MES_LARGO=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const fechaLarga=iso=>{const m=/^\d{4}-(\d\d)-(\d\d)$/.exec(iso||'');return m?Number(m[2])+' de '+MES_LARGO[Number(m[1])-1]:'';};
 /* Semana del plan en la que vamos: 1 la más lejana, SEMANAS_PLAN la última. */
 function semanaPlan(){
   const d=diasParaMeta();
@@ -825,8 +828,9 @@ function promedioReciente(){
    Así la dificultad crece de verdad y no de golpe. */
 function nivelRecomendado(){
   const techoCat=CAT().techo;
-  /* Los adultos no necesitan la rampa: entran directo a lo exigente. */
-  if(S.cat==='pa')return techoCat;
+  /* Quien no lleva rampa (los adultos) entra directo a lo exigente. Lo dice
+     la ficha del campamento, no el nombre de la categoria. */
+  if(!CAT().rampa)return techoCat;
   const sem=semanaPlan();
   const techoSemana=sem<=2?1:sem<=4?2:3;
   const prom=promedioReciente();
@@ -1080,12 +1084,17 @@ function tareasDeHoy(){
 
 function pintaHoy(){
   const d=diasParaMeta(), sem=semanaPlan(), p=PLAN_SEMANAS[sem-1];
-  const cuenta=d>0
+  /* Cuatro momentos, y cada uno dice lo que es. Sin fecha no se inventa una
+     cuenta; pasado el evento el material sigue ahi para repasar. */
+  let cab;
+  if(d===null)cab='<div class="sem"><div class="st">'+esc(ACT().cuando)+'</div>'+
+    '<div class="sd">Todavía no hay cuenta de días. Estudia a tu ritmo: lo de abajo sale de tu avance.</div></div>';
+  else if(d<0)cab='<div class="sem"><div class="st">Fue el '+esc(fechaLarga(fechaMeta()))+'</div>'+
+    '<div class="sd">El material sigue aquí: puedes repasar y practicar cuando quieras.</div></div>';
+  else cab=(d>0
     ?'<div class="cuenta"><div class="cd">'+d+'</div><div class="cl">día'+(d===1?'':'s')+
      '<br>para el campamento</div></div>'
-    :'<div class="cuenta"><div class="cd">¡Hoy!</div><div class="cl">es el día</div></div>';
-
-  const cab=cuenta+
+    :'<div class="cuenta"><div class="cd">¡Hoy!</div><div class="cl">es el día</div></div>')+
     '<div class="sem"><div class="st">Semana '+sem+' de '+SEMANAS_PLAN+' · '+esc(p.t)+'</div>'+
     '<div class="sd">'+esc(p.d)+'</div></div>';
 
@@ -4907,7 +4916,7 @@ function barajaOpciones(q){
 /* Tiempo proporcional a la cantidad. El ritmo del examen real tampoco está
    confirmado; se usa algo más de un minuto por pregunta, que es lo cómodo
    para practicar sin acostumbrarse a ir lento. */
-const segundosPara=n=>Math.max(300,Math.round(n*(S.cat==='me'?100:S.cat==='av'?80:72)));
+const segundosPara=n=>Math.max(300,Math.round(n*(CAT().seg||72)));
 
 /* iniciar() sigue siendo la GUARDA y sigue siendo síncrona: decide con lo que
    ya sabe. Quien le da frescura es arrancaExamen(), que es lo que llaman los

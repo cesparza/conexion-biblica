@@ -2204,7 +2204,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Las fichas vigentes cuadran con el contenido y no dejan ningún capítulo sin dueño');
   const cat=(o)=>Object.assign({id:'cq1',nombre:'Conquistadores',edad:'10 a 15 años',n:20,techo:2,sinCompletar:false,
     alcance:'Daniel 1 al 6',estudia:['d1','d2','d3','d4','d5','d6']},o);
-  const ficha=(c,o)=>Object.assign({id:'cq',tema:'daniel',nombre:'Campamento de Conquistadores',icono:'🏕️',cuando:'Por confirmar',
+  const ficha=(c,o)=>Object.assign({id:'cq',tema:'daniel',nombre:'Campamento de Conquistadores',icono:'🏕️',cuando:'Por confirmar',fecha:'',
     que:'El libro de Daniel',categorias:[c]},o);
   const falla=(f,re)=>F.revisa([...F.CAMPAMENTOS,f],TEMAS_P).some(m=>re.test(m));
   ok(falla(ficha(cat({estudia:['d1','d99']})),/d99/)&&falla(ficha(cat({estudia:['d1','cr01']})),/cr01/)&&
@@ -2213,6 +2213,18 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      falla(ficha(cat(),{id:'cb'}),/cb/),
     'revisa() rechaza un capítulo que no existe, uno de otro tema, una categoría repetida, un solo-estudio que no se estudia, un techo imposible, un tema que no existe y una ficha repetida');
 
+  /* v165: la fecha, el tiempo por pregunta y la rampa de los adultos salen de
+     la ficha. Eran tres tablas más en app.js, escritas por categoría. */
+  ok(AC.cb.fecha==='2026-10-09'&&AC.cbg.fecha===''&&AC.dm.fecha===''&&AC.ec.fecha==='2026-10-10',
+    'Cada ficha trae su fecha: Conexión Bíblica el 9 de octubre, En esto creemos el 10, y Guías y la matutina sin fecha');
+  ok(C.me.seg===100&&C.av.seg===80&&['pa','gm','dm1','dm2','ec1','ec2'].every(k=>C[k].seg===72)&&
+     C.pa.rampa===false&&Object.keys(C).filter(k=>k!=='pa').every(k=>C[k].rampa===true),
+    'El tiempo por pregunta y la rampa son los de antes: 100 s Menores, 80 s Aventureros, 72 s los demás, y solo Padres entra sin rampa');
+  ok(!/FECHA_META/.test(lee('app.js'))&&!/S\.cat==='(me|av|pa|gm|dm1|dm2|ec1|ec2)'/.test(lee('app.js')),
+    'app.js no tiene fechas ni reglas escritas por categoría');
+  ok(falla(ficha(cat(),{fecha:'9 de octubre'}),/fecha/)&&falla(ficha(cat(),{fecha:'2026-13-40'}),/fecha/)&&falla(ficha(cat({segundos:5})),/tiempo/)&&
+     F.revisa([...F.CAMPAMENTOS,ficha(cat(),{fecha:'2027-03-27'})],TEMAS_P).length===0,
+    'revisa() rechaza una fecha mal escrita y un tiempo imposible, y acepta una fecha buena');
   /* Otro club con el mismo tema: una ficha más y nada de contenido nuevo. */
   const con=F.deriva([...F.CAMPAMENTOS,ficha(cat())]);
   const idsCq=cat().estudia;

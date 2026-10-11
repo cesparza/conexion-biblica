@@ -2948,6 +2948,41 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Creencia 14: los dos subtitulos que la regla no veia');
 }
 
+/* ─── v165: LA FECHA SALE DE LA FICHA, Y INICIO DICE LO QUE ES ───
+   Había una tabla con una fecha por categoría, todas el 9 de octubre: Guías
+   Mayores, que es otro evento sin fecha, veía «¡Hoy es el día!», y pasado el
+   campamento todos lo seguían viendo. Cuatro momentos: falta, es hoy, ya fue
+   y sin fecha. */
+{
+  const conFecha=iso=>montar("ponCat, pintaHoy, diasParaMeta, semanaPlan, nivelRecomendado, segundosPara, plazoDominada, recta, el:id=>document.getElementById(id)",{antes:
+    `const _D=globalThis.Date; let Date=class extends _D{constructor(...a){a.length?super(...a):super('${iso}T12:00:00')}
+      static now(){return new _D('${iso}T12:00:00').getTime()}};`});
+  const cab=(Z,cat)=>{Z.ponCat(cat);Z.pintaHoy();return Z.el('hoy').innerHTML;};
+  const antes=conFecha('2026-10-05'),elDia=conFecha('2026-10-09'),despues=conFecha('2026-10-12');
+  ok(/class="cd">4</.test(cab(antes,'av'))&&/para el campamento/.test(cab(antes,'av'))&&/Semana 7 de 7/.test(cab(antes,'av')),
+    'Cuatro días antes, Aventureros ve la cuenta y la semana del plan');
+  ok(/¡Hoy!/.test(cab(elDia,'av')),'El día del campamento dice «¡Hoy!»');
+  const h=cab(despues,'av');
+  ok(/Fue el 9 de octubre/.test(h)&&!/¡Hoy!/.test(h)&&!/Semana \d de 7/.test(h)&&/puedes repasar/.test(h),
+    'Pasado el campamento dice cuándo fue, y que el material sigue disponible');
+  ok(/Fue el 10 de octubre/.test(cab(despues,'ec1')),'En esto creemos dice su propia fecha, el 10 de octubre');
+  for(const Z of [antes,elDia,despues]){
+    const g=cab(Z,'gm');
+    ok(/Fecha por confirmar/.test(g)&&!/¡Hoy!/.test(g)&&!/class="cd"/.test(g)&&!/Semana \d de 7/.test(g)&&Z.diasParaMeta()===null,
+      'Guías Mayores, sin fecha: ni cuenta de días ni «¡Hoy!», en cualquier día');
+  }
+  ok(/Todo octubre/.test(cab(antes,'dm2'))&&!/class="cd"/.test(cab(antes,'dm2')),'La matutina, sin fecha, dice «Todo octubre» y no cuenta días');
+  /* Sin fecha no hay freno por calendario ni recta final: el nivel lo pone el
+     desempeño, y la tarjeta dominada vuelve a su plazo largo. */
+  antes.ponCat('gm');
+  ok(antes.semanaPlan()===7&&antes.recta()===false&&antes.plazoDominada()===4,
+    'Sin fecha: sin freno de calendario, sin recta final y con el plazo largo de las tarjetas');
+  /* Las reglas por edad salen de la ficha y son las de antes. */
+  antes.ponCat('me');const tMe=antes.segundosPara(10);antes.ponCat('av');const tAv=antes.segundosPara(10);antes.ponCat('pa');
+  ok(tMe===1000&&tAv===800&&antes.segundosPara(10)===720&&antes.nivelRecomendado()===3,
+    'Menores tiene 100 s por pregunta, Aventureros 80, los adultos 72 y entran directo al nivel 3');
+}
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 

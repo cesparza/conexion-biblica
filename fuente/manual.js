@@ -88,7 +88,10 @@ const MANUAL = [
     h:`<p>Es la tarjeta naranja del <strong>Inicio</strong>. Trae tres o cuatro
     cosas, en orden, escogidas según cómo vas tú: no es un plan general.</p>
     <p>Arriba te dice cuántos días faltan para el campamento y en qué semana
-    del plan estás.</p>` },
+    del plan estás.</p>
+    <p>Si tu actividad todavía no tiene fecha, lo dice ahí y no hay cuenta de
+    días. Si ya pasó, dice cuándo fue. En los dos casos el material sigue
+    disponible y las tareas de abajo salen de tu avance.</p>` },
   { t:'Por qué salen en ese orden',
     h:`<p>De arriba abajo va lo que más puntos recupera:</p>
     <ul><li><strong>Repasar errores</strong> primero, si ya fallaste
