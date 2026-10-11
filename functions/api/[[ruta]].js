@@ -323,7 +323,11 @@ export async function onRequest(context) {
         })),
         completo,
         hora: new Date().toISOString(),
-      });
+      /* v170: la app de la iglesia la pide desde el navegador, que es otro
+         origen. Es la única ruta que lo permite, y se puede abrir a cualquiera
+         porque no usa la sesión ni entrega nada de nadie: sin esta cabecera el
+         navegador le esconde la respuesta a la otra página. */
+      }, 200, { 'access-control-allow-origin': '*' });
     }
 
     // ─────────────────────────────────────── entrar con el código

@@ -2315,6 +2315,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const tramo=SRV3.slice(pC,SRV3.indexOf("ruta === '/entrar'"));
     ok(pC>0&&pC<pG&&/reglamentoVigente\(env\)/.test(tramo)&&/completo/.test(tramo)&&!/estudia|soloEstudio|techo|participante|sesion/.test(tramo.replace(/\/\*[\s\S]*?\*\//g,'')),
       'La lista de concursos es pública, sale ya junta y revisada, y no entrega nada de personas');
+    ok(/'access-control-allow-origin': '\*'/.test(tramo)&&SRV3.split("'access-control-allow-origin'").length===2&&!/sesionActual|leerCookie/.test(tramo),
+      'Solo la lista de concursos se deja leer desde otra página, y esa ruta no mira la sesión');
     const A=lee('app.js'), HT=fs.readFileSync(path.join(RAIZ,'fuente','cuerpo.html'),'utf8');
     ok(/searchParams\.get\('concurso'\)/.test(A)&&/history\.replaceState/.test(A.slice(A.indexOf('function leeConcursoPedido'),A.indexOf('function hojaCategorias')))&&
        /\^\[a-z\]\[a-z0-9\]\{1,11\}\$/.test(A.slice(A.indexOf('function leeConcursoPedido'),A.indexOf('function hojaCategorias'))),
