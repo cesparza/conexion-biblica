@@ -2983,6 +2983,49 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Menores tiene 100 s por pregunta, Aventureros 80, los adultos 72 y entran directo al nivel 3');
 }
 
+/* ── v167: EL REGLAMENTO SE ARMA AL ABRIR, CON LO QUE HAYA GUARDADO ── */
+{
+  const {CAMPAMENTOS}=require(require('path').join(__dirname,'..','fuente','campamentos.js'));
+  const RETF="CATS, ACTIVIDADES, CAPS, MODULOS, FICHAS_JUNTAS, fichasLlegan, nuevas:()=>fichasNuevas, ponCat, pintaHoy, pintaAvisoVer, capsDeCat:()=>CAPS.filter(c=>c.cats.includes(S.cat)).map(c=>c.id), el:id=>document.getElementById(id)";
+  const copia=x=>JSON.parse(JSON.stringify(x));
+  const abre=fichas=>{const store={};if(fichas!==undefined)store['cb-fichas']=typeof fichas==='string'?fichas:JSON.stringify({fichas});
+    return {app:montar(RETF,{store}),store};};
+  const limpia=abre().app;
+  /* Un cambio de reglamento guardado: Aventureros pasa a 20 preguntas, entra Daniel 4 y cambia la fecha. */
+  const cb=copia(CAMPAMENTOS.find(x=>x.id==='cb'));
+  cb.categorias[1].n=20; cb.categorias[1].estudia=[...cb.categorias[1].estudia,'d4']; cb.fecha='2027-10-09'; cb.cuando='9 de octubre de 2027';
+  const nuevo={id:'cq27',tema:'daniel',nombre:'Conexión Bíblica de Conquistadores',icono:'🏕️',cuando:'Por confirmar',fecha:'',que:'Daniel 1 al 6',
+    categorias:[{id:'cq1',nombre:'Conquistadores',edad:'10 a 15 años',n:20,techo:2,sinCompletar:false,alcance:'Daniel 1 al 6',estudia:['d1','d2','d3','d4','d5','d6']}]};
+  const {app:con}=abre([cb,nuevo]);
+  con.ponCat('av');
+  ok(con.CATS.av.n===20&&con.ACTIVIDADES.cb.fecha==='2027-10-09'&&con.capsDeCat().includes('d4')&&!limpia.CAPS.find(c=>c.id==='d4').cats.includes('av')&&
+     JSON.stringify(con.CATS.me)===JSON.stringify(limpia.CATS.me)&&JSON.stringify(con.CATS.gm)===JSON.stringify(limpia.CATS.gm),
+    'Con una ficha guardada, la app abre con ese reglamento: Aventureros con 20 preguntas y Daniel 4, y las demás categorías igual');
+  con.ponCat('cq1');
+  ok(con.CATS.cq1&&con.ACTIVIDADES.cq27.tipo==='libro'&&con.capsDeCat().join()==='d1,d2,d3,d4,d5,d6'&&Object.keys(con.ACTIVIDADES).join()==='cb,cbg,dm,ec,cq27',
+    'Un concurso guardado con id nuevo aparece al final, con su categoría y sus capítulos, y se porta como libro');
+  /* Lo dañado no deja la app en blanco. */
+  for(const [malo,que] of [['{no es json','texto que no es JSON'],[JSON.stringify({fichas:'x'}),'una forma que no es lista'],
+      [JSON.stringify({fichas:[null,{id:'cb'},{id:'zz',tema:'daniel',nombre:'<b>x</b>',categorias:[]}]}),'fichas que no pasan la revisión']]){
+    let z=null,err='';try{z=abre(malo).app;}catch(e){err=e.message;}
+    ok(z&&JSON.stringify(z.CATS)===JSON.stringify(limpia.CATS)&&JSON.stringify(z.ACTIVIDADES)===JSON.stringify(limpia.ACTIVIDADES),
+      'Con '+que+' en el aparato, la app abre con las fichas de fábrica'+(err?' ('+err+')':''));
+  }
+  /* Lo que llega con /estado: se guarda, avisa si es distinto de lo que corre, y no avisa si es igual. */
+  { const {app,store}=abre();
+    app.fichasLlegan([]);
+    const quieto=!app.nuevas()&&!store['cb-fichas'];
+    app.fichasLlegan([cb]); app.pintaAvisoVer();
+    const aviso=app.nuevas()&&JSON.parse(store['cb-fichas']).fichas[0].categorias[1].n===20&&app.el('aviso-nuevo').hidden===false;
+    const sigue=app.CATS.av.n===15;
+    app.fichasLlegan([]);
+    ok(quieto&&aviso&&sigue&&!app.nuevas()&&!store['cb-fichas'],
+      'Una ficha que llega se guarda para la próxima apertura y sale el aviso de material nuevo; la que está corriendo no cambia a mitad de uso; si la devuelven, el aviso se quita');
+    const {app:otra,store:st2}=abre([cb]);
+    otra.fichasLlegan([cb]);
+    ok(!otra.nuevas()&&otra.CATS.av.n===20,'Si llega lo mismo que ya está corriendo, no hay aviso'); }
+}
+
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 

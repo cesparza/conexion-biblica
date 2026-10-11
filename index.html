@@ -3101,156 +3101,445 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = '87a404a84e60';
+const VERSION_APP = '9247290de8d9';
 
-/* El reglamento: sale de las fichas de fuente/campamentos.js. */
-const ACTIVIDADES = {
- "cb": {
+/* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
+   tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
+   principio de app.js. */
+const FICHAS_BASE = [
+ {
+  "id": "cb",
+  "tema": "daniel",
   "nombre": "Conexión Bíblica",
   "icono": "📘",
   "cuando": "10 de octubre",
+  "fecha": "2026-10-10",
   "que": "El libro de Daniel y Profetas y Reyes",
-  "cats": [
-   "me",
-   "av",
-   "pa"
-  ],
-  "tema": "daniel",
-  "tipo": "libro",
-  "fecha": "2026-10-10"
+  "categorias": [
+   {
+    "id": "me",
+    "nombre": "Menores",
+    "edad": "4 a 6 años",
+    "n": 10,
+    "techo": 1,
+    "sinCompletar": true,
+    "segundos": 100,
+    "alcance": "Daniel 1, 2, 3 y 6",
+    "estudia": [
+     "d1",
+     "d2",
+     "d3",
+     "d6",
+     "m-personajes",
+     "m-numeros",
+     "m-versiculos",
+     "m-lugares",
+     "m-palabras"
+    ]
+   },
+   {
+    "id": "av",
+    "nombre": "Aventureros",
+    "edad": "7 a 9 años",
+    "n": 15,
+    "techo": 3,
+    "sinCompletar": false,
+    "segundos": 80,
+    "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
+    "estudia": [
+     "d1",
+     "d2",
+     "d3",
+     "d6",
+     "pr39",
+     "pr41",
+     "pr44",
+     "m-linea",
+     "m-personajes",
+     "m-numeros",
+     "m-trampas",
+     "m-versiculos",
+     "m-lugares",
+     "m-version",
+     "m-prioridades",
+     "m-palabras"
+    ]
+   },
+   {
+    "id": "pa",
+    "nombre": "Padres y consejeros",
+    "edad": "Adultos",
+    "n": 25,
+    "techo": 3,
+    "sinCompletar": false,
+    "sinRampa": true,
+    "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
+    "estudia": [
+     "d1",
+     "d2",
+     "d3",
+     "d6",
+     "pr39",
+     "pr41",
+     "pr44",
+     "m-linea",
+     "m-personajes",
+     "m-numeros",
+     "m-trampas",
+     "m-versiculos",
+     "m-lugares",
+     "m-version",
+     "m-prioridades",
+     "m-palabras"
+    ]
+   }
+  ]
  },
- "cbg": {
+ {
+  "id": "cbg",
+  "tema": "daniel",
   "nombre": "Conexión Bíblica de Guías Mayores",
   "icono": "📘",
   "cuando": "Fecha por confirmar",
+  "fecha": "",
   "que": "Daniel 1 al 6 y Profetas y Reyes 39 al 44",
-  "cats": [
-   "gm"
-  ],
-  "tema": "daniel",
-  "tipo": "libro",
-  "fecha": ""
+  "categorias": [
+   {
+    "id": "gm",
+    "nombre": "Guías Mayores",
+    "edad": "Desde 16 años",
+    "n": 25,
+    "techo": 3,
+    "sinCompletar": false,
+    "alcance": "Daniel 1 al 6 · P&R 39 al 44",
+    "estudia": [
+     "d1",
+     "d2",
+     "d3",
+     "d4",
+     "d5",
+     "d6",
+     "d7",
+     "d8",
+     "d9",
+     "d10",
+     "d11",
+     "d12",
+     "pr39",
+     "pr40",
+     "pr41",
+     "pr42",
+     "pr43",
+     "pr44",
+     "m-linea",
+     "m-personajes",
+     "m-numeros",
+     "m-trampas",
+     "m-versiculos",
+     "m-lugares",
+     "m-version",
+     "m-prioridades",
+     "m-palabras",
+     "m-reyes",
+     "m-profetico"
+    ],
+    "soloEstudio": [
+     "d7",
+     "d8",
+     "d9",
+     "d10",
+     "d11",
+     "d12"
+    ]
+   }
+  ]
  },
- "dm": {
+ {
+  "id": "dm",
+  "tema": "matutina",
   "nombre": "Devoción Matutina",
   "icono": "🌅",
   "cuando": "10 de octubre",
+  "fecha": "2026-10-10",
   "que": "Héroes y villanos, un día a la vez",
-  "cats": [
-   "dm1",
-   "dm2"
-  ],
-  "tema": "matutina",
-  "tipo": "dias",
-  "fecha": "2026-10-10"
+  "categorias": [
+   {
+    "id": "dm1",
+    "nombre": "Menores",
+    "edad": "4 a 6 años",
+    "n": 10,
+    "techo": 1,
+    "sinCompletar": true,
+    "alcance": "Héroes y villanos · 1 al 15 de octubre",
+    "estudia": [
+     "m01",
+     "m02",
+     "m03",
+     "m04",
+     "m05",
+     "m06",
+     "m07",
+     "m08",
+     "m09",
+     "m10",
+     "m11",
+     "m12",
+     "m13",
+     "m14",
+     "m15",
+     "mm-quien",
+     "mm-versiculos",
+     "mm-plan"
+    ]
+   },
+   {
+    "id": "dm2",
+    "nombre": "Aventureros",
+    "edad": "7 a 9 años",
+    "n": 15,
+    "techo": 2,
+    "sinCompletar": true,
+    "alcance": "Héroes y villanos · 1 al 30 de octubre",
+    "estudia": [
+     "m01",
+     "m02",
+     "m03",
+     "m04",
+     "m05",
+     "m06",
+     "m07",
+     "m08",
+     "m09",
+     "m10",
+     "m11",
+     "m12",
+     "m13",
+     "m14",
+     "m15",
+     "m16",
+     "m17",
+     "m18",
+     "m19",
+     "m20",
+     "m21",
+     "m22",
+     "m23",
+     "m24",
+     "m25",
+     "m26",
+     "m27",
+     "m28",
+     "m29",
+     "m30",
+     "m31",
+     "mm-quien",
+     "mm-versiculos",
+     "mm-plan"
+    ],
+    "soloEstudio": [
+     "m31"
+    ]
+   }
+  ]
  },
- "ec": {
+ {
+  "id": "ec",
+  "tema": "creencias",
   "nombre": "En esto creemos",
   "icono": "✝️",
   "cuando": "10 de octubre",
+  "fecha": "2026-10-10",
   "que": "Las 28 creencias",
-  "cats": [
-   "ec1",
-   "ec2"
-  ],
-  "tema": "creencias",
-  "tipo": "creencias",
-  "fecha": "2026-10-10"
+  "categorias": [
+   {
+    "id": "ec1",
+    "nombre": "Los dos del examen escrito",
+    "edad": "Adultos",
+    "n": 25,
+    "techo": 3,
+    "sinCompletar": false,
+    "alcance": "Las 28 creencias",
+    "estudia": [
+     "cr01",
+     "cr02",
+     "cr03",
+     "cr04",
+     "cr05",
+     "cr06",
+     "cr07",
+     "cr08",
+     "cr09",
+     "cr10",
+     "cr11",
+     "cr12",
+     "cr13",
+     "cr14",
+     "cr15",
+     "cr16",
+     "cr17",
+     "cr18",
+     "cr19",
+     "cr20",
+     "cr21",
+     "cr22",
+     "cr23",
+     "cr24",
+     "cr25",
+     "cr26",
+     "cr27",
+     "cr28",
+     "mc-doctrinas",
+     "mc-lista"
+    ]
+   },
+   {
+    "id": "ec2",
+    "nombre": "El resto del club",
+    "edad": "Cuestionario",
+    "n": 15,
+    "techo": 2,
+    "sinCompletar": true,
+    "alcance": "Las 28 creencias",
+    "estudia": [
+     "cr01",
+     "cr02",
+     "cr03",
+     "cr04",
+     "cr05",
+     "cr06",
+     "cr07",
+     "cr08",
+     "cr09",
+     "cr10",
+     "cr11",
+     "cr12",
+     "cr13",
+     "cr14",
+     "cr15",
+     "cr16",
+     "cr17",
+     "cr18",
+     "cr19",
+     "cr20",
+     "cr21",
+     "cr22",
+     "cr23",
+     "cr24",
+     "cr25",
+     "cr26",
+     "cr27",
+     "cr28",
+     "mc-doctrinas",
+     "mc-lista"
+    ]
+   }
+  ]
  }
+];
+
+const IDS_DE_TEMA = {
+ "daniel": [
+  "d1",
+  "d2",
+  "d3",
+  "d4",
+  "d5",
+  "d6",
+  "d7",
+  "d8",
+  "d9",
+  "d10",
+  "d11",
+  "d12",
+  "pr39",
+  "pr40",
+  "pr41",
+  "pr42",
+  "pr43",
+  "pr44",
+  "m-linea",
+  "m-personajes",
+  "m-numeros",
+  "m-trampas",
+  "m-versiculos",
+  "m-reyes",
+  "m-profetico",
+  "m-lugares",
+  "m-version",
+  "m-prioridades",
+  "m-palabras"
+ ],
+ "matutina": [
+  "m01",
+  "m02",
+  "m03",
+  "m04",
+  "m05",
+  "m06",
+  "m07",
+  "m08",
+  "m09",
+  "m10",
+  "m11",
+  "m12",
+  "m13",
+  "m14",
+  "m15",
+  "m16",
+  "m17",
+  "m18",
+  "m19",
+  "m20",
+  "m21",
+  "m22",
+  "m23",
+  "m24",
+  "m25",
+  "m26",
+  "m27",
+  "m28",
+  "m29",
+  "m30",
+  "m31",
+  "mm-quien",
+  "mm-versiculos",
+  "mm-plan"
+ ],
+ "creencias": [
+  "cr01",
+  "cr02",
+  "cr03",
+  "cr04",
+  "cr05",
+  "cr06",
+  "cr07",
+  "cr08",
+  "cr09",
+  "cr10",
+  "cr11",
+  "cr12",
+  "cr13",
+  "cr14",
+  "cr15",
+  "cr16",
+  "cr17",
+  "cr18",
+  "cr19",
+  "cr20",
+  "cr21",
+  "cr22",
+  "cr23",
+  "cr24",
+  "cr25",
+  "cr26",
+  "cr27",
+  "cr28",
+  "mc-doctrinas",
+  "mc-lista"
+ ]
 };
 
-const CATS = {
- "me": {
-  "act": "cb",
-  "nombre": "Menores",
-  "edad": "4 a 6 años",
-  "n": 10,
-  "techo": 1,
-  "sinCompletar": true,
-  "alcance": "Daniel 1, 2, 3 y 6",
-  "seg": 100,
-  "rampa": true
- },
- "av": {
-  "act": "cb",
-  "nombre": "Aventureros",
-  "edad": "7 a 9 años",
-  "n": 15,
-  "techo": 3,
-  "sinCompletar": false,
-  "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
-  "seg": 80,
-  "rampa": true
- },
- "pa": {
-  "act": "cb",
-  "nombre": "Padres y consejeros",
-  "edad": "Adultos",
-  "n": 25,
-  "techo": 3,
-  "sinCompletar": false,
-  "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
-  "seg": 72,
-  "rampa": false
- },
- "gm": {
-  "act": "cbg",
-  "nombre": "Guías Mayores",
-  "edad": "Desde 16 años",
-  "n": 25,
-  "techo": 3,
-  "sinCompletar": false,
-  "alcance": "Daniel 1 al 6 · P&R 39 al 44",
-  "seg": 72,
-  "rampa": true
- },
- "dm1": {
-  "act": "dm",
-  "nombre": "Menores",
-  "edad": "4 a 6 años",
-  "n": 10,
-  "techo": 1,
-  "sinCompletar": true,
-  "alcance": "Héroes y villanos · 1 al 15 de octubre",
-  "seg": 72,
-  "rampa": true
- },
- "dm2": {
-  "act": "dm",
-  "nombre": "Aventureros",
-  "edad": "7 a 9 años",
-  "n": 15,
-  "techo": 2,
-  "sinCompletar": true,
-  "alcance": "Héroes y villanos · 1 al 30 de octubre",
-  "seg": 72,
-  "rampa": true
- },
- "ec1": {
-  "act": "ec",
-  "nombre": "Los dos del examen escrito",
-  "edad": "Adultos",
-  "n": 25,
-  "techo": 3,
-  "sinCompletar": false,
-  "alcance": "Las 28 creencias",
-  "seg": 72,
-  "rampa": true
- },
- "ec2": {
-  "act": "ec",
-  "nombre": "El resto del club",
-  "edad": "Cuestionario",
-  "n": 15,
-  "techo": 2,
-  "sinCompletar": true,
-  "alcance": "Las 28 creencias",
-  "seg": 72,
-  "rampa": true
- }
-};
-
-const CAPS = [
+const CAPS_BASE = [
  {
   "id": "d1",
   "label": "Daniel 1",
@@ -3258,13 +3547,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#E8720C",
   "vs": 21,
-  "doc": "dn1",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "doc": "dn1"
  },
  {
   "id": "d2",
@@ -3273,13 +3556,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#2E8BC0",
   "vs": 49,
-  "doc": "dn1",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "doc": "dn1"
  },
  {
   "id": "d3",
@@ -3288,13 +3565,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#C0392B",
   "vs": 30,
-  "doc": "dn1",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "doc": "dn1"
  },
  {
   "id": "d4",
@@ -3303,10 +3574,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#7B5E00",
   "vs": 37,
-  "doc": "dn1",
-  "cats": [
-   "gm"
-  ]
+  "doc": "dn1"
  },
  {
   "id": "d5",
@@ -3315,10 +3583,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#8B1A5E",
   "vs": 31,
-  "doc": "dn1",
-  "cats": [
-   "gm"
-  ]
+  "doc": "dn1"
  },
  {
   "id": "d6",
@@ -3327,13 +3592,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#1A7A1A",
   "vs": 28,
-  "doc": "dn1",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "doc": "dn1"
  },
  {
   "id": "d7",
@@ -3342,13 +3601,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#4A5568",
   "vs": 28,
-  "doc": "dn2",
-  "cats": [
-   "gm"
-  ],
-  "extra": [
-   "gm"
-  ]
+  "doc": "dn2"
  },
  {
   "id": "d8",
@@ -3357,13 +3610,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#5B3A29",
   "vs": 27,
-  "doc": "dn2",
-  "cats": [
-   "gm"
-  ],
-  "extra": [
-   "gm"
-  ]
+  "doc": "dn2"
  },
  {
   "id": "d9",
@@ -3372,13 +3619,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#2F4858",
   "vs": 27,
-  "doc": "dn2",
-  "cats": [
-   "gm"
-  ],
-  "extra": [
-   "gm"
-  ]
+  "doc": "dn2"
  },
  {
   "id": "d10",
@@ -3387,13 +3628,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#6A4C93",
   "vs": 21,
-  "doc": "dn2",
-  "cats": [
-   "gm"
-  ],
-  "extra": [
-   "gm"
-  ]
+  "doc": "dn2"
  },
  {
   "id": "d11",
@@ -3402,13 +3637,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#A44A3F",
   "vs": 45,
-  "doc": "dn2",
-  "cats": [
-   "gm"
-  ],
-  "extra": [
-   "gm"
-  ]
+  "doc": "dn2"
  },
  {
   "id": "d12",
@@ -3417,13 +3646,7 @@ const CAPS = [
   "src": "Biblia",
   "color": "#264653",
   "vs": 13,
-  "doc": "dn2",
-  "cats": [
-   "gm"
-  ],
-  "extra": [
-   "gm"
-  ]
+  "doc": "dn2"
  },
  {
   "id": "pr39",
@@ -3431,12 +3654,7 @@ const CAPS = [
   "sub": "En la corte de Babilonia",
   "src": "Elena de White",
   "color": "#7B2D8B",
-  "doc": "dn3",
-  "cats": [
-   "av",
-   "pa",
-   "gm"
-  ]
+  "doc": "dn3"
  },
  {
   "id": "pr40",
@@ -3444,10 +3662,7 @@ const CAPS = [
   "sub": "El sueño de Nabucodonosor",
   "src": "Elena de White",
   "color": "#7B2D8B",
-  "doc": "dn3",
-  "cats": [
-   "gm"
-  ]
+  "doc": "dn3"
  },
  {
   "id": "pr41",
@@ -3455,12 +3670,7 @@ const CAPS = [
   "sub": "El horno de fuego",
   "src": "Elena de White",
   "color": "#7B2D8B",
-  "doc": "dn3",
-  "cats": [
-   "av",
-   "pa",
-   "gm"
-  ]
+  "doc": "dn3"
  },
  {
   "id": "pr42",
@@ -3468,10 +3678,7 @@ const CAPS = [
   "sub": "La verdadera grandeza",
   "src": "Elena de White",
   "color": "#7B2D8B",
-  "doc": "dn3",
-  "cats": [
-   "gm"
-  ]
+  "doc": "dn3"
  },
  {
   "id": "pr43",
@@ -3479,10 +3686,7 @@ const CAPS = [
   "sub": "El vigía invisible",
   "src": "Elena de White",
   "color": "#7B2D8B",
-  "doc": "dn3",
-  "cats": [
-   "gm"
-  ]
+  "doc": "dn3"
  },
  {
   "id": "pr44",
@@ -3490,340 +3694,224 @@ const CAPS = [
   "sub": "En el foso de los leones",
   "src": "Elena de White",
   "color": "#7B2D8B",
-  "doc": "dn3",
-  "cats": [
-   "av",
-   "pa",
-   "gm"
-  ]
+  "doc": "dn3"
  },
  {
   "id": "m01",
   "label": "1.º de octubre",
   "sub": "El villano pirata Dienterroto",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m02",
   "label": "2 de octubre",
   "sub": "El héroe sabe que Dios lo levanta",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m03",
   "label": "3 de octubre",
   "sub": "El héroe que dio 5 kinas",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m04",
   "label": "4 de octubre",
   "sub": "El héroe que ayudaba a jóvenes estudiantes",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m05",
   "label": "5 de octubre",
   "sub": "Estás invitado a la boda",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m06",
   "label": "6 de octubre",
   "sub": "Nunca estás solo",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m07",
   "label": "7 de octubre",
   "sub": "Una joven heroína alienta a los tripulantes",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m08",
   "label": "8 de octubre",
   "sub": "El poder del héroe",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m09",
   "label": "9 de octubre",
   "sub": "El héroe narrador de historias",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m10",
   "label": "10 de octubre",
   "sub": "El héroe se enamora — 1.ª parte",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m11",
   "label": "11 de octubre",
   "sub": "El héroe se enamora — 2.ª parte",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m12",
   "label": "12 de octubre",
   "sub": "La pequeña gran mujer",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m13",
   "label": "13 de octubre",
   "sub": "Mujer virtuosa",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m14",
   "label": "14 de octubre",
   "sub": "No me arrepiento",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m15",
   "label": "15 de octubre",
   "sub": "Testigos de Jesús",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m16",
   "label": "16 de octubre",
   "sub": "Héroes anónimos",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m17",
   "label": "17 de octubre",
   "sub": "El amigo villano",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m18",
   "label": "18 de octubre",
   "sub": "¿Héroes o no?",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m19",
   "label": "19 de octubre",
   "sub": "Di siempre dónde estás",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m20",
   "label": "20 de octubre",
   "sub": "El villano del baloncesto",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m21",
   "label": "21 de octubre",
   "sub": "Tus maestros son héroes",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m22",
   "label": "22 de octubre",
   "sub": "Jesús: el Maestro de los maestros",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m23",
   "label": "23 de octubre",
   "sub": "Héroes de ayer y de hoy",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m24",
   "label": "24 de octubre",
   "sub": "El villano que maltrató a un animal",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m25",
   "label": "25 de octubre",
   "sub": "Fernando, el niño enojado",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m26",
   "label": "26 de octubre",
   "sub": "La heroína que ayudó a un niño con sus palabras",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m27",
   "label": "27 de octubre",
   "sub": "El niño que se quedó sentado en el banquillo",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m28",
   "label": "28 de octubre",
   "sub": "Un héroe diferente",
   "src": "Matutina Héroes y villanos",
-  "color": "#0F766E",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m29",
   "label": "29 de octubre",
   "sub": "Dios provee",
   "src": "Matutina Héroes y villanos",
-  "color": "#7C3AED",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m30",
   "label": "30 de octubre",
   "sub": "Nabal, el villano necio",
   "src": "Matutina Héroes y villanos",
-  "color": "#B45309",
-  "cats": [
-   "dm2"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m31",
   "label": "31 de octubre",
   "sub": "La sabia Abigail",
   "src": "Matutina · complemento del día 30",
-  "color": "#0F766E",
-  "cats": [
-   "dm2"
-  ],
-  "extra": [
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "cr01",
@@ -3831,11 +3919,7 @@ const CAPS = [
   "sub": "La Palabra de Dios",
   "src": "En esto creemos",
   "color": "#1F3864",
-  "doc": "dt1",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt1"
  },
  {
   "id": "cr02",
@@ -3843,11 +3927,7 @@ const CAPS = [
   "sub": "La Deidad",
   "src": "En esto creemos",
   "color": "#2E8BC0",
-  "doc": "dt1",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt1"
  },
  {
   "id": "cr03",
@@ -3855,11 +3935,7 @@ const CAPS = [
   "sub": "Dios el Padre",
   "src": "En esto creemos",
   "color": "#1A7A1A",
-  "doc": "dt1",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt1"
  },
  {
   "id": "cr04",
@@ -3867,11 +3943,7 @@ const CAPS = [
   "sub": "Dios el Hijo",
   "src": "En esto creemos",
   "color": "#B8860B",
-  "doc": "dt1",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt1"
  },
  {
   "id": "cr05",
@@ -3879,11 +3951,7 @@ const CAPS = [
   "sub": "Dios el Espíritu Santo",
   "src": "En esto creemos",
   "color": "#C0392B",
-  "doc": "dt1",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt1"
  },
  {
   "id": "cr06",
@@ -3891,11 +3959,7 @@ const CAPS = [
   "sub": "La creación",
   "src": "En esto creemos",
   "color": "#7C3AED",
-  "doc": "dt2",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt2"
  },
  {
   "id": "cr07",
@@ -3903,11 +3967,7 @@ const CAPS = [
   "sub": "La naturaleza humana",
   "src": "En esto creemos",
   "color": "#0E7490",
-  "doc": "dt2",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt2"
  },
  {
   "id": "cr08",
@@ -3915,11 +3975,7 @@ const CAPS = [
   "sub": "El gran conflicto",
   "src": "En esto creemos",
   "color": "#1F3864",
-  "doc": "dt3",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt3"
  },
  {
   "id": "cr09",
@@ -3927,11 +3983,7 @@ const CAPS = [
   "sub": "La vida, muerte y resurrección de Cristo",
   "src": "En esto creemos",
   "color": "#2E8BC0",
-  "doc": "dt3",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt3"
  },
  {
   "id": "cr10",
@@ -3939,11 +3991,7 @@ const CAPS = [
   "sub": "La experiencia de la salvación",
   "src": "En esto creemos",
   "color": "#1A7A1A",
-  "doc": "dt3",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt3"
  },
  {
   "id": "cr11",
@@ -3951,11 +3999,7 @@ const CAPS = [
   "sub": "Crecer en Cristo",
   "src": "En esto creemos",
   "color": "#B8860B",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr12",
@@ -3963,11 +4007,7 @@ const CAPS = [
   "sub": "La iglesia",
   "src": "En esto creemos",
   "color": "#C0392B",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr13",
@@ -3975,11 +4015,7 @@ const CAPS = [
   "sub": "El remanente y su misión",
   "src": "En esto creemos",
   "color": "#7C3AED",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr14",
@@ -3987,11 +4023,7 @@ const CAPS = [
   "sub": "La unidad en el cuerpo de Cristo",
   "src": "En esto creemos",
   "color": "#0E7490",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr15",
@@ -3999,11 +4031,7 @@ const CAPS = [
   "sub": "El bautismo",
   "src": "En esto creemos",
   "color": "#1F3864",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr16",
@@ -4011,11 +4039,7 @@ const CAPS = [
   "sub": "La Cena del Señor",
   "src": "En esto creemos",
   "color": "#2E8BC0",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr17",
@@ -4023,11 +4047,7 @@ const CAPS = [
   "sub": "Los dones y ministerios espirituales",
   "src": "En esto creemos",
   "color": "#1A7A1A",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr18",
@@ -4035,11 +4055,7 @@ const CAPS = [
   "sub": "El don de profecía",
   "src": "En esto creemos",
   "color": "#B8860B",
-  "doc": "dt4",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt4"
  },
  {
   "id": "cr19",
@@ -4047,11 +4063,7 @@ const CAPS = [
   "sub": "La ley de Dios",
   "src": "En esto creemos",
   "color": "#C0392B",
-  "doc": "dt5",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt5"
  },
  {
   "id": "cr20",
@@ -4059,11 +4071,7 @@ const CAPS = [
   "sub": "El sábado",
   "src": "En esto creemos",
   "color": "#7C3AED",
-  "doc": "dt5",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt5"
  },
  {
   "id": "cr21",
@@ -4071,11 +4079,7 @@ const CAPS = [
   "sub": "La mayordomía",
   "src": "En esto creemos",
   "color": "#0E7490",
-  "doc": "dt5",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt5"
  },
  {
   "id": "cr22",
@@ -4083,11 +4087,7 @@ const CAPS = [
   "sub": "La conducta cristiana",
   "src": "En esto creemos",
   "color": "#1F3864",
-  "doc": "dt5",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt5"
  },
  {
   "id": "cr23",
@@ -4095,11 +4095,7 @@ const CAPS = [
   "sub": "El matrimonio y la familia",
   "src": "En esto creemos",
   "color": "#2E8BC0",
-  "doc": "dt5",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt5"
  },
  {
   "id": "cr24",
@@ -4107,11 +4103,7 @@ const CAPS = [
   "sub": "El ministerio de Cristo en el Santuario celestial",
   "src": "En esto creemos",
   "color": "#1A7A1A",
-  "doc": "dt6",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt6"
  },
  {
   "id": "cr25",
@@ -4119,11 +4111,7 @@ const CAPS = [
   "sub": "La segunda venida de Cristo",
   "src": "En esto creemos",
   "color": "#B8860B",
-  "doc": "dt6",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt6"
  },
  {
   "id": "cr26",
@@ -4131,11 +4119,7 @@ const CAPS = [
   "sub": "La muerte y la resurrección",
   "src": "En esto creemos",
   "color": "#C0392B",
-  "doc": "dt6",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt6"
  },
  {
   "id": "cr27",
@@ -4143,11 +4127,7 @@ const CAPS = [
   "sub": "El milenio y el fin del pecado",
   "src": "En esto creemos",
   "color": "#7C3AED",
-  "doc": "dt6",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt6"
  },
  {
   "id": "cr28",
@@ -4155,11 +4135,7 @@ const CAPS = [
   "sub": "La Tierra Nueva",
   "src": "En esto creemos",
   "color": "#0E7490",
-  "doc": "dt6",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "doc": "dt6"
  }
 ];
 
@@ -29822,194 +29798,118 @@ const BANCO = [
  }
 ];
 
-const MODULOS = [
+const MODULOS_BASE = [
  {
   "id": "m-linea",
   "label": "Línea de tiempo",
   "sub": "Del sitio de Jerusalén a Ciro",
   "icono": "🕰️",
-  "color": "#0F766E",
-  "cats": [
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "m-personajes",
   "label": "Personajes",
   "sub": "Tabla maestra de todos",
   "icono": "👥",
-  "color": "#7C3AED",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#7C3AED"
  },
  {
   "id": "m-numeros",
   "label": "Números",
   "sub": "Todas las cifras del libro",
   "icono": "🔢",
-  "color": "#B45309",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#B45309"
  },
  {
   "id": "m-trampas",
   "label": "Trampas",
   "sub": "Los errores más comunes",
   "icono": "⚠️",
-  "color": "#BE123C",
-  "cats": [
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#BE123C"
  },
  {
   "id": "m-versiculos",
   "label": "Versículos",
   "sub": "Para memorizar palabra por palabra",
   "icono": "📖",
-  "color": "#1D4ED8",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#1D4ED8"
  },
  {
   "id": "m-reyes",
   "label": "Los reyes",
   "sub": "Cómo reacciona cada uno ante Dios",
   "icono": "👑",
-  "color": "#A16207",
-  "cats": [
-   "gm"
-  ]
+  "color": "#A16207"
  },
  {
   "id": "m-profetico",
   "label": "Paralelos",
   "sub": "Daniel 2 y los imperios",
   "icono": "🗿",
-  "color": "#0369A1",
-  "cats": [
-   "gm"
-  ]
+  "color": "#0369A1"
  },
  {
   "id": "m-lugares",
   "label": "Lugares",
   "sub": "Geografía del libro",
   "icono": "🗺️",
-  "color": "#15803D",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#15803D"
  },
  {
   "id": "m-version",
   "label": "RV1995 vs RV1960",
   "sub": "Palabras que cambian entre versiones",
   "icono": "📕",
-  "color": "#9D174D",
-  "cats": [
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#9D174D"
  },
  {
   "id": "m-prioridades",
   "label": "Lo que más preguntan",
   "sub": "Los diez temas de mayor rendimiento",
   "icono": "🎯",
-  "color": "#B91C1C",
-  "cats": [
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#B91C1C"
  },
  {
   "id": "m-palabras",
   "label": "Palabras difíciles",
   "sub": "Qué significan en palabras sencillas",
   "icono": "💬",
-  "color": "#0E7490",
-  "cats": [
-   "me",
-   "av",
-   "pa",
-   "gm"
-  ]
+  "color": "#0E7490"
  },
  {
   "id": "mm-quien",
   "label": "Héroes y villanos",
   "sub": "Quién es quién, día por día",
   "icono": "🦸",
-  "color": "#B91C1C",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#B91C1C"
  },
  {
   "id": "mm-versiculos",
   "label": "Versículos de octubre",
   "sub": "Los 31 versículos con su referencia",
   "icono": "📖",
-  "color": "#1D4ED8",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#1D4ED8"
  },
  {
   "id": "mm-plan",
   "label": "Cómo estudiar la matutina",
   "sub": "Qué se pregunta y cómo repasarlo",
   "icono": "🎯",
-  "color": "#0F766E",
-  "cats": [
-   "dm1",
-   "dm2"
-  ]
+  "color": "#0F766E"
  },
  {
   "id": "mc-doctrinas",
   "label": "Las 6 doctrinas",
   "sub": "Cómo se reparten las 28 creencias",
   "icono": "🗺️",
-  "color": "#1F3864",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "color": "#1F3864"
  },
  {
   "id": "mc-lista",
   "label": "Las 28 de corrido",
   "sub": "Para recitarlas en orden",
   "icono": "🔢",
-  "color": "#B45309",
-  "cats": [
-   "ec1",
-   "ec2"
-  ]
+  "color": "#B45309"
  }
 ];
 
@@ -36907,6 +36807,176 @@ const LOGO_TL = [
  "RFirvxBSgCX5HeWaSaKaGWmyjt9LFCFIzzAHVCV0O1fIB7WVg0U7lStAIPy6tYGT+L5EVWNcs2svuHbCAwvwmPZIMuBpKImQWrgWUgshjOWqD4iVPOzXmspM6QKug1WWSCQQ6steKOBYiKB/ewAsKBI1hPvGJeWei9wBvgLTDlhbVNAuuEMcCx9TLb0BGqg81TyFJyggc7gYcVgSAWqLRL3DkK/QehWzevmfZN+Af8zfJdiGuQnpL2BZ5UkdHQTbmVr+xvU3MFNx4j4i5i1tjmGWNmgflsTeA2mJm1t5nwYGD4JFV6nsUmZCPwAi6iDlA55Gr2HHom0HKDEMmA5VtkAwN40H/KpVvv2eD2WU6AART+Ef1IoiAAAY/mGZAdedpkWOs5g3Sgkrjd7MFljhwfqgx2g6zP5OTJJ3SCpAl8F1Bl+M/S883vIzDPyq1hxJrqAeJn1QtEE7RBMV+YIppg0VltehfrCeGQaBf2N9MkZyoQjSnot0hd4zLJTgnwLGtMZ3YcsrJykwXNMXdz8ZE0Y5THRVyupfjMEydqDo9MLskZuiFUnI9JiJBOUkWLxeCWNxKPzMqdxBfRx8jfnA9fFYD9OjxVgjpJagxCyn5mV2EyDVVfvbsiR32wnNGJXp7sX9UCrDKlvbaLuTZoIhXUO/l2khcaRHpHszhRmXuPcYA7APHcXNSDLPudyu6MQqmsL/LdRPdRi7voNnJvaAQ9elLfIls1Ju5z46PkvEK3kL2ep9a3h/b34NE8tM0whJwheugwytyTmWQvJz9RlB1cM3KAYZkN2IZbYytvEgcLhgiTXD4x6cYiQzAvpJ/Xpkpu4QE4IoPEsxjJB7hQtP54NC/Ksl0YrYp7qReeGrXQns42piZV9GFKluQMnwKLyz3ZLPhidZoBz/GeyVS8OLuWOonPXNlzvweP1CzUxukPYdAC6vYna7hZy2y/YwErIkaOpUP8gQGebbnrw3J7NfwSa7ZN0LIoIj/rIaUhVssjuOUiwPw47jRhdTd/6cCYoDfm97Lz3vGXQYxuNJHfzODvliRu4WaVDv6XR4QkUZKxrz9FgvMD7H/i3nndvG6GgVUth0Pwh6Ft/xfwHJxDcGoP4Bp40G1FEFy0HApCZm4ICqxz99wLzi1oLFTw8ksZrE/HO/mZDwq6jSbJDionP++A+7A8goNwjJ/g9PqKw8XZgWBb/qoEfBcQLHfBcusRexX46xE2RNmAyQJakSJWvSfuYEJo67ST/NJqIl1+c8LJj5zwhzqcbduL8xffxshk5e/DA/Gp0XcWxHhIZOulaMrJ8BjRO2+4t0721TnZjGekVlrqP4L8UgZ/tgHjC0zgCAAVE78cP7fBBVlwC46XyQ1Y1wesuEnReP5ygZMfBuHJeMtaLj5WhUTKcF",
  "i7jsOyvctJRQHrSbUKTn5yhT9vwH2olR4BOzgmH1kNhRGd499Kz/8ApMzzwSOXOfcAAAAASUVORK5CYII="
 ].join('');
+/* LAS REGLAS DEL REGLAMENTO (v167)
+
+   QUÉ ES
+   Lo que se hace con una ficha de campamento: derivar de ella lo que la app
+   usa, revisar que no traiga nada imposible y juntar las fichas que vienen
+   escritas en el código con las que alguien guardó en la base.
+
+   POR QUÉ ES UN ARCHIVO APARTE
+   Hasta la v166 estas funciones vivían en campamentos.js y solo corrían al
+   armar el index.html. Desde que una ficha se puede guardar en la base, la
+   app tiene que derivar y revisar al abrir, en el aparato. Este archivo va
+   tal cual dentro del index.html y también lo carga el build: la regla está
+   escrita una vez y corre en los dos lados.
+
+   No nombra ningún campamento ni ningún capítulo. Los datos están en
+   campamentos.js (las fichas de fábrica) y en la tabla `ficha` de la base. */
+const REGLAS = (function () {
+  const TEMAS = {
+    daniel: { tipo: 'libro' },
+    matutina: { tipo: 'dias' },
+    creencias: { tipo: 'creencias' },
+  };
+  const TIPOS = ['libro', 'dias', 'creencias'];
+  const SEG_POR_PREGUNTA = 72;
+  const ID = /^[a-z][a-z0-9]{1,11}$/;
+  const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
+  const esObjeto = x => !!x && typeof x === 'object' && !Array.isArray(x);
+
+  /* Los textos de una ficha se pintan dentro del HTML y a veces dentro de un
+     atributo. Mientras venían del código eran de confianza; ahora los puede
+     escribir una persona. Lo que abre una etiqueta o cierra un atributo no
+     entra, y cada texto tiene un largo máximo. */
+  const PROHIBIDO = new RegExp('[<>"\'`\\\\\\u0000-\\u001F\\u007F]');
+  const LARGO = { nombre: 60, icono: 8, cuando: 40, que: 90, edad: 30, alcance: 90 };
+  const textoMalo = (o, k) => {
+    const v = o[k];
+    if (typeof v !== 'string' || !v.trim()) return 'no tiene «' + k + '»';
+    if (v.length > LARGO[k]) return 'tiene «' + k + '» de más de ' + LARGO[k] + ' caracteres';
+    if (PROHIBIDO.test(v)) return 'tiene en «' + k + '» un signo que no se admite';
+    return '';
+  };
+
+  /* De las fichas salen las tres cosas que la app usa. El orden de las fichas
+     y el de sus categorías es el orden en que se ofrecen. */
+  function deriva(fichas, tipos) {
+    tipos = tipos || TEMAS;
+    const ACTIVIDADES = {}, CATS = {};
+    const orden = [];
+    for (const f of fichas) {
+      ACTIVIDADES[f.id] = { nombre: f.nombre, icono: f.icono, cuando: f.cuando, que: f.que,
+        cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '',
+        fecha: f.fecha || '' };
+      for (const c of f.categorias) {
+        CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
+          sinCompletar: c.sinCompletar, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
+          rampa: !c.sinRampa };
+        orden.push(c);
+      }
+    }
+    const catsDe = id => orden.filter(c => c.estudia.includes(id)).map(c => c.id);
+    const extraDe = id => orden.filter(c => (c.soloEstudio || []).includes(id)).map(c => c.id);
+    /* Le pone a cada capítulo o repaso para quién es. `extra` solo aparece
+       cuando hay alguien para quien es de solo estudio. */
+    const conCats = lista => lista.map(x => {
+      const { cats, extra, ...resto } = x;
+      const e = extraDe(x.id);
+      return e.length ? { ...resto, cats: catsDe(x.id), extra: e } : { ...resto, cats: catsDe(x.id) };
+    });
+    return { ACTIVIDADES, CATS, catsDe, extraDe, conCats };
+  }
+
+  /* Lo que una ficha no puede traer. `temas` dice qué ids aporta cada tema:
+     { daniel: ['d1', ...], ... }. Devuelve la lista de problemas; vacía es bien. */
+  function revisa(fichas, temas, tipos) {
+    tipos = tipos || TEMAS;
+    const mal = [], vistas = new Set(), fichasVistas = new Set();
+    for (const f of fichas) {
+      if (!esObjeto(f)) { mal.push('Hay una ficha que no es una ficha'); continue; }
+      const de = 'La ficha «' + f.id + '»';
+      if (typeof f.id !== 'string' || !ID.test(f.id)) mal.push(de + ' tiene un id que no sirve');
+      if (fichasVistas.has(f.id)) mal.push(de + ' está repetida');
+      fichasVistas.add(f.id);
+      for (const k of ['nombre', 'icono', 'cuando', 'que']) { const m = textoMalo(f, k); if (m) mal.push(de + ' ' + m); }
+      if (typeof f.fecha !== 'string' || (f.fecha && !esFecha(f.fecha))) mal.push(de + ' tiene una fecha que no es AAAA-MM-DD ni vacía');
+      const suyos = Object.prototype.hasOwnProperty.call(temas, f.tema) ? temas[f.tema] : null;
+      const tipo = Object.prototype.hasOwnProperty.call(tipos, f.tema) ? tipos[f.tema] : null;
+      if (!suyos) mal.push(de + ' nombra un tema que no existe: «' + f.tema + '»');
+      else if (!tipo || !TIPOS.includes(tipo.tipo)) mal.push(de + ' es de un tema sin tipo: «' + f.tema + '»');
+      if (!Array.isArray(f.categorias) || !f.categorias.length) { mal.push(de + ' no tiene categorías'); continue; }
+      if (f.categorias.length > 12) mal.push(de + ' tiene más de 12 categorías');
+      for (const c of f.categorias) {
+        if (!esObjeto(c)) { mal.push(de + ' tiene una categoría que no es una categoría'); continue; }
+        const dc = 'La categoría «' + c.id + '»';
+        if (typeof c.id !== 'string' || !ID.test(c.id)) mal.push(dc + ' tiene un id que no sirve');
+        if (vistas.has(c.id)) mal.push(dc + ' está en dos fichas o repetida');
+        vistas.add(c.id);
+        if (['nombre', 'edad', 'alcance'].some(k => !c[k] || typeof c[k] !== 'string')) mal.push(dc + ' no tiene nombre, edad o alcance');
+        else for (const k of ['nombre', 'edad', 'alcance']) { const m = textoMalo(c, k); if (m) mal.push(dc + ' ' + m); }
+        if (!Number.isInteger(c.n) || c.n < 1 || c.n > 100) mal.push(dc + ' no dice cuántas preguntas (de 1 a 100)');
+        if (![1, 2, 3].includes(c.techo)) mal.push(dc + ' tiene un techo que no es 1, 2 ni 3');
+        if (typeof c.sinCompletar !== 'boolean') mal.push(dc + ' no dice si lleva completar');
+        if (c.sinRampa !== undefined && typeof c.sinRampa !== 'boolean') mal.push(dc + ' no dice bien si entra directo a su nivel');
+        if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
+        if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
+        if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
+        if (suyos) for (const id of c.estudia) {
+          if (!suyos.includes(id)) mal.push(dc + ' estudia «' + id + '», que no es del tema «' + f.tema + '»');
+        }
+        if (c.soloEstudio !== undefined && !Array.isArray(c.soloEstudio)) { mal.push(dc + ' trae un «soloEstudio» que no es una lista'); continue; }
+        for (const id of c.soloEstudio || []) {
+          if (!c.estudia.includes(id)) mal.push(dc + ' marca de solo estudio «' + id + '», que no estudia');
+        }
+      }
+    }
+    return mal;
+  }
+
+  /* Lo que ningún campamento usa. No es un error de la ficha, pero un capítulo
+     escrito que nadie ve casi siempre es un olvido. */
+  function sinUsar(fichas, temas) {
+    const usados = new Set(fichas.flatMap(f => f.categorias.flatMap(c => c.estudia)));
+    return Object.values(temas).flat().filter(id => !usados.has(id));
+  }
+
+  /* JUNTAR LAS DE FÁBRICA CON LAS GUARDADAS
+
+     MECANISMO
+     `base` son las fichas escritas en el código y `guardadas` las que llegaron
+     de la base. Una guardada con el id de una de fábrica la reemplaza entera,
+     en su mismo puesto; una con id nuevo se agrega al final. Se prueban una
+     por una: la que deja el conjunto sin pasar revisa() no entra, y las demás
+     sí. Nunca lanza un error: con datos dañados devuelve las de fábrica, y la
+     app abre igual.
+
+     LO QUE UNA GUARDADA NO PUEDE HACER
+     Cambiarle el tema a una ficha que ya existe, ni quitarle una categoría.
+     Los ids de categoría están guardados en la base y en el progreso de cada
+     aparato: una categoría que desaparece deja a esas personas sin la suya.
+
+     Devuelve { fichas, fuera }, donde `fuera` dice cuáles no entraron y por
+     qué, para poder mostrarlo. */
+  const TOPE_GUARDADAS = 60;
+  function junta(base, guardadas, temas, tipos) {
+    let fichas = base.slice();
+    const fuera = [];
+    const lista = Array.isArray(guardadas) ? guardadas.slice(0, TOPE_GUARDADAS) : [];
+    for (const g of lista) {
+      const id = esObjeto(g) && typeof g.id === 'string' ? g.id : '';
+      try {
+        if (!id) { fuera.push({ id: '', por: 'no es una ficha' }); continue; }
+        const i = fichas.findIndex(f => f.id === id);
+        if (i >= 0) {
+          const antes = fichas[i];
+          if (g.tema !== antes.tema) { fuera.push({ id, por: 'le cambia el tema a una ficha que ya existe' }); continue; }
+          const suyas = Array.isArray(g.categorias) ? g.categorias.map(c => esObjeto(c) ? c.id : '') : [];
+          const falta = antes.categorias.map(c => c.id).filter(c => !suyas.includes(c));
+          if (falta.length) { fuera.push({ id, por: 'le quita la categoría «' + falta.join('», «') + '»' }); continue; }
+        }
+        const prueba = i >= 0 ? fichas.map((f, k) => k === i ? g : f) : fichas.concat([g]);
+        const mal = revisa(prueba, temas, tipos);
+        if (mal.length) { fuera.push({ id, por: mal[0] }); continue; }
+        fichas = prueba;
+      } catch (e) { fuera.push({ id, por: 'está dañada' }); }
+    }
+    return { fichas, fuera };
+  }
+
+  return { TEMAS, TIPOS, deriva, revisa, sinUsar, junta };
+})();
+if (typeof module !== 'undefined' && module.exports) module.exports = REGLAS;
 /* Render del examen imprimible: una sola implementación para los dos
    consumidores.
 
@@ -37238,9 +37308,36 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {
    aplica a las tres: cada ficha tiene su prog, su racha y sus insignias, asi
    que el progreso queda separado POR CONSTRUCCION y no hace falta ninguna
    funcion que lo desmezcle. */
-/* v163: ACTIVIDADES y CATS ya no se escriben aquí. Salen de las fichas de
-   fuente/campamentos.js, que es el reglamento como datos; build.js las pone
-   antes de este archivo. */
+/* v163: ACTIVIDADES y CATS ya no se escriben aquí. Salen de las fichas del
+   campamento, que son el reglamento como datos.
+
+   v167: EL REGLAMENTO SE ARMA AL ABRIR
+   MECANISMO
+   Una ficha puede venir de dos sitios: escrita en el código (FICHAS_BASE, las
+   de fábrica) o guardada en la base por quien dirige. Las guardadas llegan con
+   /estado, que es lo que todo aparato ya consulta, y se dejan en el aparato
+   (FICHAS_CACHE). Aquí, antes de que corra nada más, se juntan las dos y de
+   ahí salen ACTIVIDADES, CATS y para quién es cada capítulo y cada repaso.
+
+   POR QUÉ AL ABRIR Y NO CUANDO LLEGAN
+   Todo lo que sigue da por hecho que el reglamento no cambia mientras la app
+   está abierta: hay exámenes a medias, fichas escogidas y listas ya pintadas.
+   Una ficha que llega nueva se guarda y se aplica en la próxima apertura; si
+   es distinta de la que está corriendo, sale el mismo aviso de «Hay material
+   nuevo» (fichasLlegan, más abajo).
+
+   SIN BASE, SIN SEÑAL O CON DATOS DAÑADOS abre con las de fábrica: junta()
+   deja por fuera la ficha que no pasa la revisión y nunca lanza un error. */
+const FICHAS_CACHE='cb-fichas';
+function fichasLee(){
+  try{const x=JSON.parse(localStorage.getItem(FICHAS_CACHE)||'null');return x&&Array.isArray(x.fichas)?x.fichas:[];}
+  catch(e){return [];}
+}
+const FICHAS_GUARDADAS=fichasLee();
+const FICHAS_JUNTAS=REGLAS.junta(FICHAS_BASE,FICHAS_GUARDADAS,IDS_DE_TEMA);
+const REGLAMENTO=REGLAS.deriva(FICHAS_JUNTAS.fichas);
+const ACTIVIDADES=REGLAMENTO.ACTIVIDADES, CATS=REGLAMENTO.CATS;
+const CAPS=REGLAMENTO.conCats(CAPS_BASE), MODULOS=REGLAMENTO.conCats(MODULOS_BASE);
 
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;
@@ -37707,6 +37804,21 @@ function ponRetiradas(lista){retiradas=new Set(lista||[]);}
 ponRetiradas(retLee());
 const estaRetirada=q=>retiradas.has(claveQ(q));
 
+/* LAS FICHAS QUE LLEGAN DE LA BASE. Se guardan para la próxima apertura (ver
+   «el reglamento se arma al abrir», al principio). Si son distintas de las que
+   se usaron para abrir, hay reglamento nuevo y se avisa con el mismo aviso de
+   material nuevo; si alguien las devuelve a como estaban, el aviso se quita. */
+let fichasNuevas=false;
+function fichasLlegan(lista){
+  const llegan=JSON.stringify(lista), corren=JSON.stringify(FICHAS_GUARDADAS);
+  try{
+    if(lista.length)localStorage.setItem(FICHAS_CACHE,JSON.stringify({fichas:lista}));
+    else localStorage.removeItem(FICHAS_CACHE);
+  }catch(e){}
+  fichasNuevas=llegan!==corren;
+  if(typeof pintaAvisoVer==='function')pintaAvisoVer();
+}
+
 /* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
    la niña mirando un botón que no responde. */
 async function srvFetch(ruta,opciones){
@@ -37741,6 +37853,9 @@ async function srvRefresca(){
        puede DEVOLVER al banco preguntas que el director retiro: se queda con
        lo ultimo que se supo, igual que el interruptor de la practica. */
     if(Array.isArray(d.retiradas)){ponRetiradas(d.retiradas);retGuarda(d.retiradas);}
+    /* Igual con las fichas guardadas: solo si vino el campo. Si la base no
+       contesta por ellas, el aparato se queda con las que ya tenía. */
+    if(Array.isArray(d.fichas))fichasLlegan(d.fichas);
     return true;
   }catch(e){return false;}
 }
@@ -45437,7 +45552,7 @@ async function buscaVersion(manual){
 function pintaAvisoVer(){
   const el=document.getElementById('aviso-nuevo');
   if(!el)return;
-  el.hidden=!verNueva;
+  el.hidden=!(verNueva||fichasNuevas);
 }
 
 /** «Después»: se esconde hasta la proxima apertura, no se descarta para
@@ -45455,6 +45570,10 @@ async function aplicaVersion(){
       '<button type="button" class="av-x" onclick="cierraAvisoVer()" title="Cerrar">'+IC('x')+'</button>';
     return;
   }
+  /* Si lo nuevo es solo el reglamento, las fichas ya están guardadas en el
+     aparato: basta volver a abrir. Borrar las caches seria bajar otra vez los
+     2 MB de la app sin que haya cambiado. */
+  if(!verNueva&&fichasNuevas){location.reload();return;}
   /* Se borran las caches y se le pide al service worker que se revise. Sin
      borrar la cache, la app podria volver a abrir con el mismo HTML: el
      nombre de la cache lleva la huella, asi que la vieja quedaria huerfana

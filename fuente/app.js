@@ -32,9 +32,36 @@
    aplica a las tres: cada ficha tiene su prog, su racha y sus insignias, asi
    que el progreso queda separado POR CONSTRUCCION y no hace falta ninguna
    funcion que lo desmezcle. */
-/* v163: ACTIVIDADES y CATS ya no se escriben aquí. Salen de las fichas de
-   fuente/campamentos.js, que es el reglamento como datos; build.js las pone
-   antes de este archivo. */
+/* v163: ACTIVIDADES y CATS ya no se escriben aquí. Salen de las fichas del
+   campamento, que son el reglamento como datos.
+
+   v167: EL REGLAMENTO SE ARMA AL ABRIR
+   MECANISMO
+   Una ficha puede venir de dos sitios: escrita en el código (FICHAS_BASE, las
+   de fábrica) o guardada en la base por quien dirige. Las guardadas llegan con
+   /estado, que es lo que todo aparato ya consulta, y se dejan en el aparato
+   (FICHAS_CACHE). Aquí, antes de que corra nada más, se juntan las dos y de
+   ahí salen ACTIVIDADES, CATS y para quién es cada capítulo y cada repaso.
+
+   POR QUÉ AL ABRIR Y NO CUANDO LLEGAN
+   Todo lo que sigue da por hecho que el reglamento no cambia mientras la app
+   está abierta: hay exámenes a medias, fichas escogidas y listas ya pintadas.
+   Una ficha que llega nueva se guarda y se aplica en la próxima apertura; si
+   es distinta de la que está corriendo, sale el mismo aviso de «Hay material
+   nuevo» (fichasLlegan, más abajo).
+
+   SIN BASE, SIN SEÑAL O CON DATOS DAÑADOS abre con las de fábrica: junta()
+   deja por fuera la ficha que no pasa la revisión y nunca lanza un error. */
+const FICHAS_CACHE='cb-fichas';
+function fichasLee(){
+  try{const x=JSON.parse(localStorage.getItem(FICHAS_CACHE)||'null');return x&&Array.isArray(x.fichas)?x.fichas:[];}
+  catch(e){return [];}
+}
+const FICHAS_GUARDADAS=fichasLee();
+const FICHAS_JUNTAS=REGLAS.junta(FICHAS_BASE,FICHAS_GUARDADAS,IDS_DE_TEMA);
+const REGLAMENTO=REGLAS.deriva(FICHAS_JUNTAS.fichas);
+const ACTIVIDADES=REGLAMENTO.ACTIVIDADES, CATS=REGLAMENTO.CATS;
+const CAPS=REGLAMENTO.conCats(CAPS_BASE), MODULOS=REGLAMENTO.conCats(MODULOS_BASE);
 
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;
@@ -501,6 +528,21 @@ function ponRetiradas(lista){retiradas=new Set(lista||[]);}
 ponRetiradas(retLee());
 const estaRetirada=q=>retiradas.has(claveQ(q));
 
+/* LAS FICHAS QUE LLEGAN DE LA BASE. Se guardan para la próxima apertura (ver
+   «el reglamento se arma al abrir», al principio). Si son distintas de las que
+   se usaron para abrir, hay reglamento nuevo y se avisa con el mismo aviso de
+   material nuevo; si alguien las devuelve a como estaban, el aviso se quita. */
+let fichasNuevas=false;
+function fichasLlegan(lista){
+  const llegan=JSON.stringify(lista), corren=JSON.stringify(FICHAS_GUARDADAS);
+  try{
+    if(lista.length)localStorage.setItem(FICHAS_CACHE,JSON.stringify({fichas:lista}));
+    else localStorage.removeItem(FICHAS_CACHE);
+  }catch(e){}
+  fichasNuevas=llegan!==corren;
+  if(typeof pintaAvisoVer==='function')pintaAvisoVer();
+}
+
 /* fetch con límite de tiempo: sin esto, un celular con una barra de señal deja
    la niña mirando un botón que no responde. */
 async function srvFetch(ruta,opciones){
@@ -535,6 +577,9 @@ async function srvRefresca(){
        puede DEVOLVER al banco preguntas que el director retiro: se queda con
        lo ultimo que se supo, igual que el interruptor de la practica. */
     if(Array.isArray(d.retiradas)){ponRetiradas(d.retiradas);retGuarda(d.retiradas);}
+    /* Igual con las fichas guardadas: solo si vino el campo. Si la base no
+       contesta por ellas, el aparato se queda con las que ya tenía. */
+    if(Array.isArray(d.fichas))fichasLlegan(d.fichas);
     return true;
   }catch(e){return false;}
 }
@@ -8231,7 +8276,7 @@ async function buscaVersion(manual){
 function pintaAvisoVer(){
   const el=document.getElementById('aviso-nuevo');
   if(!el)return;
-  el.hidden=!verNueva;
+  el.hidden=!(verNueva||fichasNuevas);
 }
 
 /** «Después»: se esconde hasta la proxima apertura, no se descarta para
@@ -8249,6 +8294,10 @@ async function aplicaVersion(){
       '<button type="button" class="av-x" onclick="cierraAvisoVer()" title="Cerrar">'+IC('x')+'</button>';
     return;
   }
+  /* Si lo nuevo es solo el reglamento, las fichas ya están guardadas en el
+     aparato: basta volver a abrir. Borrar las caches seria bajar otra vez los
+     2 MB de la app sin que haya cambiado. */
+  if(!verNueva&&fichasNuevas){location.reload();return;}
   /* Se borran las caches y se le pide al service worker que se revise. Sin
      borrar la cache, la app podria volver a abrir con el mismo HTML: el
      nombre de la cache lleva la huella, asi que la vieja quedaria huerfana

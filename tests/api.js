@@ -166,7 +166,7 @@ async function vivo() {
        de ahi y no de la fuente: se prueba lo que se despliega. Se acota al
        arreglo CAPS: los MODULOS de repaso tambien traen id y label, y esos
        nunca son alcance de una evaluacion. */
-    const bloque = HTML.slice(HTML.indexOf('const CAPS = ['));
+    const bloque = HTML.slice(HTML.indexOf('const CAPS_BASE = ['));
     const capsJson = bloque.slice(bloque.indexOf('['), bloque.indexOf('\n];') + 2);
     const ids = JSON.parse(capsJson).map(c => c.id);
     ok(ids.length > 40, 'Se leyeron los capitulos del index.html (' + ids.length + ')');

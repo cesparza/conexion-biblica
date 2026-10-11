@@ -22,7 +22,7 @@ const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
 const { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META } = require('./biblia-otros.js');
 const PWA = require('./pwa.js');
-const { CAMPAMENTOS, deriva, revisa, sinUsar } = require('./campamentos.js');
+const { CAMPAMENTOS, revisa, sinUsar } = require('./campamentos.js');
 
 /* Varios temas, un solo archivo. Para quién es cada capítulo y cada repaso lo
    dicen las fichas de campamentos.js; aquí se les pone la marca `cats` que la
@@ -52,18 +52,21 @@ const IDS_DE_TEMA = {
     process.exit(1);
   }
 }
-const REGLAMENTO = deriva(CAMPAMENTOS);
+/* v167: el reglamento ya no se deriva aquí. Al index.html van las fichas de
+   fábrica, los capítulos y repasos SIN la marca de para quién son, y las
+   reglas (reglamento.js); la app deriva al abrir, con las fichas de fábrica
+   más las que haya guardadas en la base. */
 /* Los capitulos de Daniel declaran su grupo aqui y no en contenido.js: el
    grupo se deduce del id (fuente/grupos.js), asi que escribirlo a mano en 18
    lineas seria copiar el dato a un segundo lugar. */
 const CAPS_DANIEL = CAPS.map(c => ({ ...c, doc: grupoDaniel(c.id) || undefined }));
-const CAPS_ALL = REGLAMENTO.conCats([...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS]);
+const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
 /* Las de cobertura van con las demas: son del mismo banco, solo que las
    escribio un generador a partir de los versiculos que no tenian ninguna. */
 const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO];
 const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
-const MODULOS_ALL = REGLAMENTO.conCats([...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS]);
+const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
 
 /* ─────────── LA PREGUNTA DE «RECORDAR», DERIVADA DEL VERSÍCULO ───────────
@@ -216,6 +219,7 @@ const BANCO_NV = BANCO_ALL.map(q => ({ ...q, nv: nivelDe(q) }));
 const leer = f => fs.readFileSync(path.join(__dirname, f), 'utf8').replace(/\n+$/, '');
 const CSS    = leer('estilos.css');
 const CUERPO = leer('cuerpo.html');
+const REGLAS = leer('reglamento.js');
 const IMPR   = leer('imprimible.js');
 const APP    = leer('app.js');
 
@@ -229,18 +233,20 @@ const MARCA_V = 'HUELLAxxxxxx';
 
 const DATA = `const VERSION_APP = '${MARCA_V}';
 
-/* El reglamento: sale de las fichas de fuente/campamentos.js. */
-const ACTIVIDADES = ${JSON.stringify(REGLAMENTO.ACTIVIDADES, null, 1)};
+/* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
+   tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
+   principio de app.js. */
+const FICHAS_BASE = ${JSON.stringify(CAMPAMENTOS, null, 1)};
 
-const CATS = ${JSON.stringify(REGLAMENTO.CATS, null, 1)};
+const IDS_DE_TEMA = ${JSON.stringify(IDS_DE_TEMA, null, 1)};
 
-const CAPS = ${JSON.stringify(CAPS_ALL, null, 1)};
+const CAPS_BASE = ${JSON.stringify(CAPS_ALL, null, 1)};
 
 const CONTENIDO = ${JSON.stringify(CONTENIDO_ALL, null, 1)};
 
 const BANCO = ${JSON.stringify(BANCO_NV, null, 1)};
 
-const MODULOS = ${JSON.stringify(MODULOS_ALL, null, 1)};
+const MODULOS_BASE = ${JSON.stringify(MODULOS_ALL, null, 1)};
 
 /* GRUPOS: la dimension de arriba de cada actividad. Hoy la unica que la
    declara es «En esto creemos», con sus seis doctrinas, y por eso el
@@ -302,6 +308,7 @@ ${CSS}
 ${CUERPO}
 <script>
 ${DATA}
+${REGLAS}
 ${IMPR}
 ${APP}
 </script>

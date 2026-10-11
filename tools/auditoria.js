@@ -28,7 +28,7 @@ const saca = nombre => {
   const m = js.match(new RegExp('const ' + nombre + ' = ([\\s\\S]*?);\\n'));
   return eval('(' + m[1] + ')');
 };
-const CAPS = saca('CAPS'), CONTENIDO = saca('CONTENIDO');
+const CAPS = saca('CAPS_BASE'), CONTENIDO = saca('CONTENIDO');
 const BANCO = saca('BANCO'), TARJETAS = saca('TARJETAS');
 const ACT = { cb: 'Conexión Bíblica', dm: 'Devoción Matutina', ec: 'En esto creemos' };
 const actDe = id => /^cr\d\d$/.test(id) ? 'ec' : /^m\d\d$/.test(id) ? 'dm' : 'cb';

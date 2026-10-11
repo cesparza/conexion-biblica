@@ -178,6 +178,40 @@ async function retiradas(env, corte) {
   return results || [];
 }
 
+/* LAS FICHAS GUARDADAS (v167, migración 012)
+   La tabla `ficha` solo crece: cada vez que alguien guarda una ficha se
+   agrega una fila, y la vigente de cada id es la última. Así queda la
+   historia de cada reglamento sin una tabla aparte, igual que con las
+   preguntas retiradas. Aquí solo se LEE. Lo que sale va a un endpoint
+   público: una ficha es reglamento (nombres de categoría, capítulos, número
+   de preguntas), no trae datos de nadie.
+
+   El orden es el de creación de cada ficha, para que una nueva no mueva a
+   las que ya estaban.
+
+   Si la tabla no existe o la consulta falla devuelve undefined, NO una lista
+   vacía: vacía le diría a cada aparato «no hay ninguna guardada» y soltaría
+   las que tiene. Con undefined el campo no viaja y el aparato conserva las
+   suyas. La app revisa cada ficha antes de usarla; aquí solo se descarta la
+   fila que no es JSON o cuyo id no es el de su columna. */
+async function fichasGuardadas(env) {
+  try {
+    const { results } = await env.DB.prepare(
+      'SELECT f.ficha_id, f.datos FROM ficha f ' +
+      'WHERE f.n = (SELECT MAX(f2.n) FROM ficha f2 WHERE f2.ficha_id = f.ficha_id) ' +
+      'ORDER BY (SELECT MIN(f3.n) FROM ficha f3 WHERE f3.ficha_id = f.ficha_id)'
+    ).all();
+    const fichas = [];
+    for (const r of results || []) {
+      try {
+        const d = JSON.parse(r.datos);
+        if (d && typeof d === 'object' && !Array.isArray(d) && d.id === r.ficha_id) fichas.push(d);
+      } catch (e) { /* una fila dañada no tumba a las demás */ }
+    }
+    return fichas;
+  } catch (e) { return undefined; }
+}
+
 /** Solo las claves: es lo que necesita quien arma un examen. */
 const clavesRetiradas = async (env, corte) => (await retiradas(env, corte)).map(r => r.clave);
 
@@ -245,6 +279,10 @@ export async function onRequest(context) {
           id: ev.id, titulo: ev.titulo, paraTodas: (ev.categorias || '*') === '*',
         })),
         retiradas: await clavesRetiradas(env),
+        /* Las fichas guardadas viajan aquí por lo mismo que las retiradas:
+           es lo que todo aparato ya consulta. Sin el campo (undefined), el
+           aparato se queda con las que tenía. */
+        fichas: await fichasGuardadas(env),
         hora: new Date().toISOString(),
       });
     }

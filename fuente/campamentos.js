@@ -9,9 +9,17 @@
    Antes el reglamento estaba repartido en tres sitios: la lista de categorías
    y la de actividades en app.js, y una marca `cats` en cada capítulo y en cada
    repaso. Cambiar un reglamento era tocar los tres y acordarse de los tres.
-   Ahora esta es la única fuente: de aquí salen ACTIVIDADES, CATS y la marca
-   `cats` de cada capítulo (deriva(), más abajo). El contenido ya no sabe para
-   quién es; solo existe.
+   Desde la v163 sale de las fichas: de ellas se derivan ACTIVIDADES, CATS y la
+   marca `cats` de cada capítulo. El contenido ya no sabe para quién es; solo
+   existe.
+
+   DOS SITIOS, UNA REGLA DE QUIÉN GANA (v167)
+   Estas son las fichas DE FÁBRICA: las que la app trae escritas y con las que
+   abre sin señal y sin base. Una ficha también se puede guardar en la base
+   (tabla `ficha`, migración 012). La guardada con el mismo id reemplaza entera
+   a la de aquí; una con id nuevo es un concurso nuevo. Las reglas (derivar,
+   revisar, juntar) están en reglamento.js y corren al armar y al abrir.
+   Si una ficha de aquí ya tiene una guardada encima, cambiarla aquí no se ve.
 
    CÓMO SE AGREGA UN CAMPAMENTO
    Una ficha más en CAMPAMENTOS, con categorías de ids nuevos. Si es de un tema
@@ -21,8 +29,8 @@
    CÓMO SE AGREGA UN TEMA
    1. Su contenido en fuente/ (capítulos, estudio, preguntas, tarjetas), como
       matutina.js o creencias.js.
-   2. Su tipo en TEMAS, aquí abajo, y los ids que aporta en IDS_DE_TEMA de
-      build.js.
+   2. Su tipo en TEMAS, en reglamento.js, y los ids que aporta en IDS_DE_TEMA
+      de build.js.
    3. Su ficha aquí. revisa() no deja pasar una ficha que nombre un id que su
       tema no tiene.
 
@@ -49,15 +57,8 @@ const CREENCIAS = [...sec('cr', 1, 28), 'mc-doctrinas', 'mc-lista'];
    creencias son las 28. Un tema nuevo declara su tipo y hereda ese
    comportamiento entero; un campamento nuevo no agrega lógica, solo su ficha.
    Si un día un reglamento pide algo que ningún tipo sabe hacer, se agrega la
-   capacidad al tipo (o un tipo nuevo), nunca un «si es tal club». */
-const TEMAS = {
-  daniel: { tipo: 'libro' },
-  matutina: { tipo: 'dias' },
-  creencias: { tipo: 'creencias' },
-};
-const TIPOS = ['libro', 'dias', 'creencias'];
-const SEG_POR_PREGUNTA = 72;
-const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
+   capacidad al tipo (o un tipo nuevo), nunca un «si es tal club».
+   Los tipos están en reglamento.js (TEMAS). */
 
 /* Cada ficha dice su fecha en `fecha` (AAAA-MM-DD), o '' si todavía no se
    sabe. De ahí salen la cuenta de días, la semana del plan y el freno de
@@ -132,79 +133,6 @@ const CAMPAMENTOS = [
     ] },
 ];
 
-/* De las fichas salen las tres cosas que la app usa. El orden de las fichas y
-   el de sus categorías es el orden en que se ofrecen. */
-function deriva(fichas, tipos) {
-  tipos = tipos || TEMAS;
-  const ACTIVIDADES = {}, CATS = {};
-  const orden = [];
-  for (const f of fichas) {
-    ACTIVIDADES[f.id] = { nombre: f.nombre, icono: f.icono, cuando: f.cuando, que: f.que,
-      cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '',
-      fecha: f.fecha || '' };
-    for (const c of f.categorias) {
-      CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
-        sinCompletar: c.sinCompletar, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
-        rampa: !c.sinRampa };
-      orden.push(c);
-    }
-  }
-  const catsDe = id => orden.filter(c => c.estudia.includes(id)).map(c => c.id);
-  const extraDe = id => orden.filter(c => (c.soloEstudio || []).includes(id)).map(c => c.id);
-  /* Le pone a cada capítulo o repaso para quién es. `extra` solo aparece
-     cuando hay alguien para quien es de solo estudio. */
-  const conCats = lista => lista.map(x => {
-    const { cats, extra, ...resto } = x;
-    const e = extraDe(x.id);
-    return e.length ? { ...resto, cats: catsDe(x.id), extra: e } : { ...resto, cats: catsDe(x.id) };
-  });
-  return { ACTIVIDADES, CATS, catsDe, extraDe, conCats };
-}
+const { TEMAS, TIPOS, deriva, revisa, sinUsar, junta } = require('./reglamento.js');
 
-/* Lo que una ficha no puede traer. `temas` dice qué ids aporta cada tema:
-   { daniel: ['d1', ...], ... }. Devuelve la lista de problemas; vacía es bien. */
-function revisa(fichas, temas, tipos) {
-  tipos = tipos || TEMAS;
-  const mal = [], vistas = new Set(), fichasVistas = new Set();
-  for (const f of fichas) {
-    const de = 'La ficha «' + f.id + '»';
-    if (!/^[a-z][a-z0-9]{1,11}$/.test(f.id || '')) mal.push(de + ' tiene un id que no sirve');
-    if (fichasVistas.has(f.id)) mal.push(de + ' está repetida');
-    fichasVistas.add(f.id);
-    for (const k of ['nombre', 'icono', 'cuando', 'que']) if (!f[k]) mal.push(de + ' no tiene «' + k + '»');
-    if (typeof f.fecha !== 'string' || (f.fecha && !esFecha(f.fecha))) mal.push(de + ' tiene una fecha que no es AAAA-MM-DD ni vacía');
-    const suyos = temas[f.tema];
-    if (!suyos) mal.push(de + ' nombra un tema que no existe: «' + f.tema + '»');
-    else if (!tipos[f.tema] || !TIPOS.includes(tipos[f.tema].tipo)) mal.push(de + ' es de un tema sin tipo: «' + f.tema + '»');
-    if (!Array.isArray(f.categorias) || !f.categorias.length) { mal.push(de + ' no tiene categorías'); continue; }
-    for (const c of f.categorias) {
-      const dc = 'La categoría «' + c.id + '»';
-      if (!/^[a-z][a-z0-9]{1,11}$/.test(c.id || '')) mal.push(dc + ' tiene un id que no sirve');
-      if (vistas.has(c.id)) mal.push(dc + ' está en dos fichas o repetida');
-      vistas.add(c.id);
-      if (!c.nombre || !c.edad || !c.alcance) mal.push(dc + ' no tiene nombre, edad o alcance');
-      if (!Number.isInteger(c.n) || c.n < 1) mal.push(dc + ' no dice cuántas preguntas');
-      if (![1, 2, 3].includes(c.techo)) mal.push(dc + ' tiene un techo que no es 1, 2 ni 3');
-      if (typeof c.sinCompletar !== 'boolean') mal.push(dc + ' no dice si lleva completar');
-      if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
-      if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
-      if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
-      if (suyos) for (const id of c.estudia) {
-        if (!suyos.includes(id)) mal.push(dc + ' estudia «' + id + '», que no es del tema «' + f.tema + '»');
-      }
-      for (const id of c.soloEstudio || []) {
-        if (!c.estudia.includes(id)) mal.push(dc + ' marca de solo estudio «' + id + '», que no estudia');
-      }
-    }
-  }
-  return mal;
-}
-
-/* Lo que ningún campamento usa. No es un error de la ficha, pero un capítulo
-   escrito que nadie ve casi siempre es un olvido. */
-function sinUsar(fichas, temas) {
-  const usados = new Set(fichas.flatMap(f => f.categorias.flatMap(c => c.estudia)));
-  return Object.values(temas).flat().filter(id => !usados.has(id));
-}
-
-module.exports = { CAMPAMENTOS, TEMAS, TIPOS, deriva, revisa, sinUsar };
+module.exports = { CAMPAMENTOS, TEMAS, TIPOS, deriva, revisa, sinUsar, junta };

@@ -2248,6 +2248,60 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP).some(m=>/sin tipo/.test(m))&&
      F.revisa([...F.CAMPAMENTOS,ficha(cat({estudia:['ap1']}))],TEMAS_AP,TIPOS_AP).some(m=>/ap1/.test(m)),
     'Un tema nuevo entra con su tipo y su ficha, se porta como libro, deja a Daniel disponible, y una ficha de Daniel no puede nombrar capítulos de Apocalipsis');
+
+  /* ── v167: LAS FICHAS TAMBIÉN SE GUARDAN EN LA BASE ── */
+  const B=F.CAMPAMENTOS, J=g=>F.junta(B,g,TEMAS_P);
+  const copia=x=>JSON.parse(JSON.stringify(x));
+  const cbMod=o=>{const f=copia(B.find(x=>x.id==='cb'));o(f);return f;};
+  ok(JSON.stringify(J([]).fichas)===JSON.stringify(B)&&J([]).fuera.length===0&&
+     JSON.stringify(J(undefined).fichas)===JSON.stringify(B)&&JSON.stringify(J('x').fichas)===JSON.stringify(B),
+    'Sin fichas guardadas, juntar devuelve las de fábrica tal cual');
+  { const g=cbMod(f=>{f.categorias[1].n=20;f.fecha='2027-10-09';f.cuando='9 de octubre';});
+    const r=J([g]), d=F.deriva(r.fichas);
+    ok(r.fuera.length===0&&r.fichas.length===B.length&&r.fichas[0].id==='cb'&&d.CATS.av.n===20&&d.ACTIVIDADES.cb.fecha==='2027-10-09'&&
+       JSON.stringify(d.CATS.gm)===JSON.stringify(C.gm)&&JSON.stringify(d.CATS.me)===JSON.stringify(C.me),
+      'Una guardada con el id de una de fábrica la reemplaza en su puesto y no mueve a las demás'); }
+  { const r=J([ficha(cat())]), d=F.deriva(r.fichas);
+    ok(r.fuera.length===0&&r.fichas.length===B.length+1&&r.fichas[B.length].id==='cq'&&d.catsDe('d4').join()==='gm,cq1'&&
+       Object.keys(d.ACTIVIDADES).slice(0,B.length).join()===B.map(f=>f.id).join(),
+      'Una guardada con id nuevo es un concurso más, al final, y las de fábrica conservan su orden'); }
+  { const sinAv=cbMod(f=>{f.categorias=f.categorias.filter(c=>c.id!=='av');});
+    const otroTema=cbMod(f=>{f.tema='creencias';});
+    const r1=J([sinAv]), r2=J([otroTema]);
+    ok(JSON.stringify(r1.fichas)===JSON.stringify(B)&&/av/.test(r1.fuera[0].por)&&
+       JSON.stringify(r2.fichas)===JSON.stringify(B)&&/tema/.test(r2.fuera[0].por),
+      'Una guardada no puede quitarle una categoría ni cambiarle el tema a una ficha que ya existe'); }
+  { const malas=[null,7,'cb',[],{},{id:'cb'},{id:'x y'},ficha(cat({id:'av'})),ficha(cat({estudia:['d99']})),
+      ficha(cat(),{nombre:'<img src=x onerror=alert(1)>'}),ficha(cat({nombre:'A" onclick="x'})),ficha(cat({alcance:"it's"})),
+      ficha(cat({n:5000})),ficha(cat({soloEstudio:'d1'})),ficha(cat(),{nombre:'x'.repeat(61)}),ficha(cat(),{categorias:[null]}),
+      ficha(cat(),{tema:'constructor'}),ficha(cat(),{tema:'__proto__'}),ficha(cat({sinRampa:'si'}))];
+    let lanza=false, r; try{r=J(malas);}catch(e){lanza=true;}
+    ok(!lanza&&JSON.stringify(r.fichas)===JSON.stringify(B)&&r.fuera.length===malas.length,
+      'Datos dañados, un id repetido, un capítulo que no existe o un texto con signos de HTML: ninguna entra y juntar no lanza error ('+(r?r.fuera.length:'?')+' de '+malas.length+' fuera)');
+    const mezcla=J([malas[9],ficha(cat()),malas[7]]);
+    ok(mezcla.fichas.length===B.length+1&&mezcla.fuera.length===2,
+      'Una ficha mala no tumba a las buenas que vienen con ella'); }
+  ok(J(Array.from({length:80},(_,i)=>ficha(cat({id:'q'+i}),{id:'f'+i}))).fichas.length===B.length+60,
+    'A lo sumo entran 60 fichas guardadas');
+  { /* Lo que se sirve trae las de fábrica y las reglas, y deriva al abrir. */
+    const enHtml=/const FICHAS_BASE = \[/.test(js)&&/const IDS_DE_TEMA = \{/.test(js)&&/const CAPS_BASE = \[/.test(js)&&/const MODULOS_BASE = \[/.test(js);
+    const reglas=fs.readFileSync(path.join(RAIZ,'fuente','reglamento.js'),'utf8').replace(/\n+$/,'');
+    ok(enHtml&&js.includes(reglas)&&!/^const (ACTIVIDADES|CATS|CAPS|MODULOS) = /m.test(js),
+      'El index.html lleva las fichas de fábrica, los capítulos sin marca y reglamento.js tal cual; ya no trae el reglamento derivado');
+    ok(!/\bcats\b/.test(JSON.stringify(JSON.parse((/const CAPS_BASE = (\[[\s\S]*?\n\]);/.exec(js)||[])[1]||'[]').map(c=>Object.keys(c)))),
+      'Los capítulos que se sirven no dicen para quién son: eso sale de las fichas al abrir');
+    const A=lee('app.js');
+    ok(/REGLAS\.junta\(FICHAS_BASE,FICHAS_GUARDADAS,IDS_DE_TEMA\)/.test(A)&&/if\(Array\.isArray\(d\.fichas\)\)fichasLlegan\(d\.fichas\)/.test(A)&&
+       /el\.hidden=!\(verNueva\|\|fichasNuevas\)/.test(A),
+      'La app junta las de fábrica con las guardadas, guarda las que llegan con /estado y avisa si cambiaron'); }
+  { const SRV2=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
+    const M=fs.readFileSync(path.join(RAIZ,'migraciones','012_fichas.sql'),'utf8').replace(/^--.*$/gm,'');
+    ok(/fichas: await fichasGuardadas\(env\)/.test(SRV2)&&/catch \(e\) \{ return undefined; \}/.test(SRV2)&&
+       !/(INSERT INTO|UPDATE|DELETE FROM) ficha\b/i.test(SRV2),
+      'El servidor entrega las fichas guardadas con /estado, calla el campo si la base falla, y en esta versión no las escribe');
+    ok(/CREATE TABLE IF NOT EXISTS ficha/.test(M)&&/AUTOINCREMENT/.test(M)&&/json_valid\(datos\)/.test(M)&&
+       !/\b(DROP|ALTER|UPDATE|DELETE)\b/i.test(M),
+      'La migración 012 solo agrega la tabla de fichas: no toca ninguna de las que existen'); }
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
