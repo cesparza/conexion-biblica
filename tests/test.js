@@ -1197,7 +1197,7 @@ ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slic
   const contenido=['creencias.js','contenido.js','modulos.js','matutina.js','matutina-extra.js','manual.js'].map(leeF).join('\n');
   const escritas=[/class=\\?"cf[\\" ]/,/class=\\?"hoja-nav/,/class=\\?"lec-play/,/class=\\?"capa-filtro/].filter(re=>re.test(contenido)).map(String);
   ok(escritas.length===0,'El contenido no escribe a mano ninguna pieza de la app'+(escritas.length?': '+escritas.join(', '):''));
-  ok(/function filtroCapas\(\)\{\s*return segmentado\(/.test(app)&&/outerHTML=segmentado\('Cómo practicar'/.test(app),
+  ok(/function filtroCapas\(\w*\)\{\s*return segmentado\(/.test(app)&&/outerHTML=segmentado\('Cómo practicar'/.test(app),
     'Los dos controles de opciones (capas y niveles de las 28) salen de segmentado()');
   ok(/'<div class="hoja-pie">'\+\s*filaNav\(/.test(app)&&/'<div class="cap-nav">'\+filaNav\(/.test(app),
     'La hoja del versículo y el capítulo llaman a la misma filaNav()');

@@ -2366,6 +2366,8 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .capa-filtro{display:inline-flex;gap:2px;padding:3px;margin:0 0 .9rem;flex-wrap:nowrap;max-width:100%;
   background:color-mix(in srgb,var(--azul) 8%,var(--v-sup,#fff));border-radius:999px}
 .vd-cab .capa-filtro{margin:0}
+/* v180: con tres opciones (Todo, examen, interpretación), menos aire para que quepan a 390 px. */
+.capa-filtro.tres .cf{padding:0 .7rem}
 .cf{min-height:44px;padding:0 1rem;border:0;border-radius:999px;background:transparent;color:var(--gris);
   font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap}
 .cf.on{background:var(--v-sup,#fff);color:var(--azul);box-shadow:var(--v-s1)}

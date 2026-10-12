@@ -64,6 +64,33 @@ const REGLAMENTO=REGLAS.deriva(FICHAS_JUNTAS.fichas);
 const ACTIVIDADES=REGLAMENTO.ACTIVIDADES, CATS=REGLAMENTO.CATS;
 const CAPS=REGLAMENTO.conCats(CAPS_BASE), MODULOS=REGLAMENTO.conCats(MODULOS_BASE);
 
+/* v180: LA INTERPRETACIÓN, TODA EN UN SOLO LUGAR. Camilo, 12-oct: «una
+   sección de solo interpretación con todo el material». Cada capítulo ya trae
+   sus secciones 🧭 (capa 'contexto', con su fuente) mezcladas con las del
+   examen; aquí se juntan, en orden, en un repaso por libro: «Daniel: la
+   interpretación» y «Apocalipsis: la interpretación».
+   Se arma al cargar, de CONTENIDO, y no en build.js: así no se repiten en el
+   archivo los ~280 KB de texto, y lo que se corrija en un capítulo sale igual
+   aquí. Lo ve quien estudia al menos un capítulo de ese libro. Cada sección
+   lleva `cap`, para que sus citas sueltas (8:7) se toquen en su capítulo. */
+const INTERP={d:{id:'m-interp-d',libro:'Daniel',color:'#0E7490'},ap:{id:'m-interp-ap',libro:'Apocalipsis',color:'#6D28D9'}};
+const esInterp=id=>/^m-interp-/.test(String(id||''));
+for(const pre of Object.keys(INTERP)){
+  const I=INTERP[pre], re=new RegExp('^'+pre+'\\d{1,2}$');
+  const caps=CAPS.filter(c=>re.test(c.id));
+  const secs=caps.flatMap(c=>(CONTENIDO[c.id]||[]).filter(x=>x.capa==='contexto')
+    .map(x=>({...x,cap:c.id,t:'🧭 '+c.label+' · '+String(x.t||'').replace(/^[^\p{L}\p{N}]+/u,'')})));
+  if(!secs.length)continue;
+  const cats=[...new Set(caps.flatMap(c=>c.cats||[]))];
+  MODULOS.unshift({id:I.id,label:I.libro+': la interpretación',sub:'Solo la interpretación, capítulo por capítulo, con sus fuentes',
+    icono:'🧭',color:I.color,cats});
+  CONT_MODULOS[I.id]=[{t:'🧭 Cómo usar esta parte',capa:'apoyo',h:
+    '<p>Aquí está <strong>toda la interpretación</strong> de '+I.libro+' en un solo lugar: '+secs.length+' secciones, en el orden de los capítulos. '+
+    'Es lo que el texto quiere decir según Stephen Bohr, Elena de White y otros autores adventistas, y cada sección dice de qué obra y página sale.</p>'+
+    '<p>Nada de esto entra al examen del concurso. Para practicarlo: en <strong>Examen</strong>, marca «Solo la interpretación». '+
+    'Dentro de cada capítulo, el filtro «Interpretación» muestra solo estas secciones.</p>'},...secs];
+}
+
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;
 const ACT=()=>ACTIVIDADES[ACT_DE(S.cat)]||ACTIVIDADES.cb;
@@ -139,7 +166,7 @@ const IC=(n,c)=>'<svg class="ico-t'+(c?' '+c:'')+'" aria-hidden="true"><use href
 const ICO_DE={'📘':'libro','📖':'libro','📕':'comparar','📗':'libro','🌅':'sol','✝️':'cruz','🕰️':'reloj','👥':'grupo',
   '🔢':'numeros','⚠️':'alerta','👑':'corona','🗿':'estatua','🗺️':'mapa','🎯':'diana','💬':'bocadillo',
   '🧍':'persona','⛪':'iglesia','🕊️':'paloma','🦸':'escudo','⚙️':'ajustes','✳️':'lista','🔎':'lupa','🃏':'tarjetas',
-  '✏️':'lapiz','❓':'ayuda'};
+  '✏️':'lapiz','❓':'ayuda','🧭':'brujula'};
 const icoDe=(e,c)=>ICO_DE[e]?IC(ICO_DE[e],c):'';
 
 /* Protectores de racha que se pueden guardar (ver sumaRacha). Va aquí arriba,
@@ -1549,19 +1576,23 @@ function pintaCaps(){
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
     (soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
     '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
-  const mods=modsDe().map(m=>
+  const botonMod=m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
     '<div class="ic-f" style="color:'+(m.color||'var(--azul)')+'">'+icoDe(m.icono,'ico-f')+'</div><div><div class="t">'+esc(m.label)+'</div>'+
     '<div class="s">'+esc(m.sub)+'</div>'+
     '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
-    '</div></button>').join('');
+    '</div></button>';
+  /* v180: la interpretación va en su propio grupo, antes de los repasos. */
+  const interp=modsDe().filter(m=>esInterp(m.id)).map(botonMod).join('');
+  const mods=modsDe().filter(m=>!esInterp(m.id)).map(botonMod).join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
     icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos')+
     '</div>'+caps+
-    '<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods;
+    (interp?'<div class="grupo" style="grid-column:1/-1">'+IC('brujula')+' La interpretación</div>'+interp:'')+
+    (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'');
 }
 
 /* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
@@ -2178,10 +2209,13 @@ function filaNav(ant,centro,sig){
     (x?' onclick="'+x.clic+'" aria-label="'+esc(x.aria||lado)+'"':' disabled aria-label="'+lado+'"')+'>'+txt+'</button>';
   return b(ant,'‹ Anterior','Anterior')+'<span class="hoja-cta">'+esc(centro)+'</span>'+b(sig,'Siguiente ›','Siguiente');
 }
-function filtroCapas(){
+function filtroCapas(conInterp){
   return segmentado('Qué secciones ver',[
     {t:'Todo',on:true,clic:"filtraCapa(this,'')"},
-    {t:'Solo lo del examen',clic:"filtraCapa(this,'nucleo')"}]);
+    {t:'Solo lo del examen',clic:"filtraCapa(this,'nucleo')"}].concat(
+    /* v180: y al revés, solo la interpretación (capa 'contexto'), donde la
+       hay. Corto, para que los tres quepan a 390 px. */
+    conInterp?[{t:'Interpretación',clic:"filtraCapa(this,'contexto')"}]:[]),conInterp?'tres':'');
 }
 
 function filtraCapa(btn,modo){
@@ -2332,9 +2366,9 @@ function verCap(id,quieto){
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
-    (secs.some(s=>s.capa)?filtroCapas():'')+
+    (secs.some(s=>s.capa)&&!esInterp(id)?filtroCapas(secs.some(s=>s.capa==='contexto')):'')+
     secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
-      refsTocables(s.h,id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
+      refsTocables(s.h,s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
@@ -4416,7 +4450,8 @@ let soloFuente=false;
    pasan por ponCat(): poolDe() compara y, si el valor es de otra actividad,
    vuelve al de esta. Asi ningun camino hereda el interruptor de otra. */
 let soloFuenteAct='';
-function reiniciaFuente(){soloFuente=fuenteInicial();soloFuenteAct=ACT_DE(S.cat);}
+let soloInterp=false;
+function reiniciaFuente(){soloFuente=fuenteInicial();soloInterp=false;soloFuenteAct=ACT_DE(S.cat);}
 function sincFuente(){if(soloFuenteAct!==ACT_DE(S.cat))reiniciaFuente();}
 
 /* Preguntas disponibles según categoría + alcance elegido. */
@@ -4425,7 +4460,9 @@ function poolDe(){
      del panel (cuantasPara) leen poolDe(), y con el filtro abajo contaban y
      jugaban con preguntas que el examen luego no traia. */
   sincFuente();
-  const b=soloFuente?bancoDe().filter(q=>!esComplementaria(q)):bancoDe();
+  /* v180: «Solo la interpretación» es lo contrario del interruptor de fuente:
+     deja solo las complementarias. Los dos no van prendidos a la vez. */
+  const b=soloInterp?bancoDe().filter(esComplementaria):soloFuente?bancoDe().filter(q=>!esComplementaria(q)):bancoDe();
   /* «todo» es todo lo de la ACTIVIDAD activa, no todo lo cargado. El filtro
      de creencias ya lo hizo capsDe(); dejarlo aqui tambien vaciaria el examen
      de las 28 creencias. La garantia sigue en pie por otro camino: con la
@@ -4718,7 +4755,9 @@ function pintaMenuEx(){
     if(!hayComp&&soloFuente)soloFuente=false;
     ch.checked=soloFuente;
     const t=document.getElementById('ex-fuente-t');
-    if(t)t.textContent=FUENTE_TXT[TIPO()]||'';
+    if(t)t.textContent=(TIPO()==='libro'&&nombreBiblia()!=='Daniel'?'Solo el libro de '+nombreBiblia()+'. Deja fuera la interpretación.':FUENTE_TXT[TIPO()])||'';
+    const zi=document.getElementById('ex-interp-lb'), ci=document.getElementById('ex-interp');
+    if(zi&&ci){zi.hidden=!hayComp||TIPO()!=='libro';if(zi.hidden)soloInterp=false;ci.checked=soloInterp;}
   }
   const nv2=nuevasDe();
   const frescura=nv2>0
@@ -4815,6 +4854,13 @@ function fichaEx(tipo,v){
 
 function cambiaFuente(){
   soloFuente=!!document.getElementById('ex-fuente').checked;soloFuenteAct=ACT_DE(S.cat);
+  if(soloFuente)soloInterp=false;
+  refrescaEx();
+}
+function cambiaInterp(){
+  sincFuente();
+  soloInterp=!!document.getElementById('ex-interp').checked;
+  if(soloInterp)soloFuente=false;
   refrescaEx();
 }
 

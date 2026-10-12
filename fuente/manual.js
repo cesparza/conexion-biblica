@@ -412,6 +412,17 @@ const MANUAL = [
     del reglamento</strong> prendido. Si quieres practicar también con esas,
     apágalo en <strong>Cambiar este examen</strong>. El director tiene el mismo
     interruptor al abrir una evaluación, y viene prendido.</p>` },
+  { t:'Estudiar la interpretación',
+    h:`<p>Además del examen, la app sirve para aprender qué significa cada
+    pasaje. Esa parte se llama <strong>interpretación</strong>: lo que dicen
+    Stephen Bohr, Elena de White y otros autores adventistas, y cada sección
+    dice de qué libro y página sale. No entra al concurso.</p>
+    <ul><li>En <strong>Estudiar</strong>, el grupo <strong>La
+    interpretación</strong> la junta toda, capítulo por capítulo.</li>
+    <li>Dentro de un capítulo, el filtro <strong>Interpretación</strong>
+    deja ver solo esas secciones.</li>
+    <li>En el examen, <strong>Solo la interpretación</strong> trae solo sus
+    preguntas.</li></ul>` },
   { t:'Mientras lo haces',
     h:`<ul><li>Arriba queda fija una barra con el reloj y cuántas llevas
     respondidas («5 de 15»). No se va al bajar. El reloj se pone rojo en los
