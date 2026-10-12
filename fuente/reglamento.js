@@ -20,6 +20,7 @@ const REGLAS = (function () {
     daniel: { tipo: 'libro', nombre: 'Daniel y Profetas y Reyes' },
     matutina: { tipo: 'dias', nombre: 'Devoción Matutina · Héroes y villanos' },
     creencias: { tipo: 'creencias', nombre: 'Las 28 creencias' },
+    apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
   const SEG_POR_PREGUNTA = 72;

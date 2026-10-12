@@ -1379,8 +1379,11 @@ ok(nCaps===N.capsDe().length,
   'Trae exactamente los capitulos de la categoria activa ('+nCaps+' de '+N.capsDe().length+')');
 ok(!cat.some(i=>i.g==='Cambiar de material'&&/^\s*$/.test(i.t)),'Ninguna fila queda sin nombre');
 /* La categoria activa NO se ofrece para cambiar a ella misma. */
-ok(!cat.some(i=>i.g==='Cambiar de material'&&i.t.indexOf(N.CATS[N.S().cat].nombre)>=0
-   &&i.t.indexOf(N.ACTIVIDADES[N.CATS[N.S().cat].act].nombre)>=0),
+/* v178: se compara el rótulo entero. «Conexión Bíblica: Apocalipsis · Padres y
+   consejeros» contiene «Conexión Bíblica» y «Padres y consejeros» sin ser la
+   categoría activa. */
+ok(!cat.some(i=>i.g==='Cambiar de material'&&i.t===N.ACTIVIDADES[N.CATS[N.S().cat].act].nombre+' · '+N.CATS[N.S().cat].nombre)&&
+   cat.some(i=>i.g==='Cambiar de material'&&i.t==='Conexión Bíblica: Apocalipsis · Padres y consejeros'),
   'No ofrece cambiar a la categoria en la que ya estas');
 
 /* Sin escribir nada, las ACCIONES van primero: con el orden natural el tope de
@@ -1946,6 +1949,33 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const N=Z.normalizar(JSON.parse(JSON.stringify(Z.S())));
   const n2=N.examenes.slice(-1)[0];
   ok(n2.dur===ult.dur&&n2.ex==='av26'&&n2.modo==='real','Los segundos y la hoja sobreviven a releer lo guardado');
+}
+
+/* ─── v178: Apocalipsis se porta como Daniel ───
+   Mismo tipo de material («libro»): fichas por capítulo, referencias tocables
+   con su RV1995, lectura del capítulo con su nombre, y el formato de examen
+   de su categoría. */
+{
+  const Z=montar(RET+', el:id=>document.getElementById(id), refsTocables, tablaDeCid, textoFiltro, textoLista, nombreBiblia, opcionesMatPanel, abreLectura, poolNivel, NPREG, ACTIVIDADES');
+  Z.ponCat('apav');
+  const caps=Z.capsDe().map(c=>c.id);
+  ok(caps.length===22&&caps.every(id=>/^ap\d+$/.test(id)),'En Apocalipsis se estudian sus 22 capítulos y nada de Daniel');
+  const pool=Z.poolNivel();
+  ok(pool.length>100&&pool.every(q=>q.t==='mc'&&q.cap.startsWith('ap'))&&Z.NPREG()===30,
+    'Aventureros de Apocalipsis practica 30 de selección, solo del libro ('+pool.length+' en su nivel)');
+  const h=Z.refsTocables('Dice (1:3) y también Apocalipsis 13:18 y Daniel 2:44.','ap1');
+  ok((h.match(/class="vref"/g)||[]).length===3&&/verVers\(this,'ap1',3,3\)/.test(h)&&/'ap13',18/.test(h)&&/'d2',44/.test(h),
+    'Las referencias se vuelven tocables: (1:3) dentro de Apocalipsis 1, Apocalipsis 13:18 y Daniel 2:44');
+  ok(Z.tablaDeCid('ap13').ref==='Apocalipsis 13'&&Z.tablaDeCid('ap13').version==='RV1995'&&/seiscientos sesenta y seis/.test(Z.tablaDeCid('ap13').mapa[18]),
+    'La hoja del versículo dice «Apocalipsis 13 · RV1995» y trae el texto');
+  ok(Z.nombreBiblia()==='Apocalipsis'&&Z.textoFiltro('biblia')==='Apocalipsis'&&Z.textoLista(['ap1','ap3'])==='Apocalipsis 1 y 3',
+    'Los filtros dicen Apocalipsis, no Daniel');
+  const op=Z.opcionesMatPanel('ap').map(o=>o[0]).join();
+  ok(op==='todo,fichas','El panel del director no ofrece «Solo Profetas y Reyes» en Apocalipsis ('+op+')');
+  Z.abreLectura('ap22');
+  ok(/Apocalipsis 22 · Reina-Valera 1995 · 21 versículos/.test(Z.el('lectura').innerHTML),'La lectura del capítulo se rotula Apocalipsis 22');
+  Z.ponCat('pa');
+  ok(Z.nombreBiblia()==='Daniel'&&Z.textoFiltro('biblia')==='Daniel','Y en Conexión Bíblica de Daniel sigue diciendo Daniel');
 }
 
 /* ─── el director tiene que poder ver EN QUE se equivoco ───
@@ -3052,7 +3082,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
      JSON.stringify(con.CATS.me)===JSON.stringify(limpia.CATS.me)&&JSON.stringify(con.CATS.gm)===JSON.stringify(limpia.CATS.gm),
     'Con una ficha guardada, la app abre con ese reglamento: Aventureros con 20 preguntas y Daniel 4, y las demás categorías igual');
   con.ponCat('cq1');
-  ok(con.CATS.cq1&&con.ACTIVIDADES.cq27.tipo==='libro'&&con.capsDeCat().join()==='d1,d2,d3,d4,d5,d6'&&Object.keys(con.ACTIVIDADES).join()==='cb,cbg,dm,ec,cq27',
+  ok(con.CATS.cq1&&con.ACTIVIDADES.cq27.tipo==='libro'&&con.capsDeCat().join()==='d1,d2,d3,d4,d5,d6'&&Object.keys(con.ACTIVIDADES).join()==='cb,cbg,dm,ec,ap,cq27',
     'Un concurso guardado con id nuevo aparece al final, con su categoría y sus capítulos, y se porta como libro');
   /* Lo dañado no deja la app en blanco. */
   for(const [malo,que] of [['{no es json','texto que no es JSON'],[JSON.stringify({fichas:'x'}),'una forma que no es lista'],

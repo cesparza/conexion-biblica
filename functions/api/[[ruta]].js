@@ -101,7 +101,7 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
    que NINGUNA se quita nunca de esta lista o esas filas quedarian
    invalidas. `ec1` y `ec2` son las de «En esto creemos», que paso a ser una
    actividad con sus propias categorias en vez de colgarse de `pa` y `gm`. */
-const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2'];
+const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2','apme','apav','appa'];
 
 /* Antes esto traía UNA sola fila (LIMIT 1): solo podía existir una
    evaluación abierta a la vez en toda la app. Camilo necesita un caso real:
@@ -802,7 +802,7 @@ export async function onRequest(context) {
          que exige que todo id de CAPS la cumpla: si alguien inventa un id con
          otra forma, la prueba falla aquí y no en el campamento. */
       const ALCANCES = ['todo', 'creencias', 'biblia', 'pr', 'q1', 'q2'];
-      const FORMA_CAP = /^(d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})$/;
+      const FORMA_CAP = /^(d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})$/;
       /* Un RANGO: «desde..hasta» con dos ids del mismo tipo, y el de la
          izquierda no mayor que el de la derecha. El backreference \1 es lo que
          impide `m05..d3`, que no es un rango de nada y dejaría la evaluación
@@ -813,7 +813,7 @@ export async function onRequest(context) {
          cabe: Conexion Biblica entera son 18 capitulos y 71 caracteres. La
          columna es TEXT, asi que no hace falta migracion; antes se cortaba a
          20 y una lista de cinco capitulos llegaba mutilada. */
-      const FORMA_LISTA = /^(?:d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})(?:,(?:d[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})){1,49}$/;
+      const FORMA_LISTA = /^(?:d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})(?:,(?:d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})){1,49}$/;
       /* v139: UNA LISTA DE PREGUNTAS: «q:d1.abc12,pr41.x9y». Es la práctica de
          las más difíciles que arma el análisis de una evaluación (como el
          «kahoot de las difíciles»). Cada clave es capitulo.huella, la misma

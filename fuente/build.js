@@ -19,6 +19,8 @@ const MAT = require('./matutina.js');
 const { MAT_COMPLETAR } = require('./matutina-completar.js');
 const { MAT_EXTRA } = require('./matutina-extra.js');
 const CR = require('./creencias.js');
+const AP = require('./apocalipsis.js');
+const { VERS_AP } = require('./biblia-apocalipsis.js');
 const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
 const { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META } = require('./biblia-otros.js');
@@ -33,6 +35,7 @@ const IDS_DE_TEMA = {
   daniel: [...CAPS, ...MODULOS].map(x => x.id),
   matutina: [...MAT.MAT_CAPS, ...MAT.MAT_MODULOS].map(x => x.id),
   creencias: [...CR.CR_CAPS, ...CR.CR_MODULOS].map(x => x.id),
+  apocalipsis: [...AP.AP_CAPS, ...AP.AP_MODULOS].map(x => x.id),
 };
 {
   const mal = [...revisa(CAMPAMENTOS, IDS_DE_TEMA),
@@ -46,7 +49,7 @@ const IDS_DE_TEMA = {
   /* Una sola fuente: si un capítulo o un repaso trae su propia marca, habría
      dos sitios diciendo para quién es, y el día que no coincidan gana uno sin
      avisar. */
-  const conMarca = [...CAPS, ...MODULOS, ...MAT.MAT_CAPS, ...MAT.MAT_MODULOS, ...CR.CR_CAPS, ...CR.CR_MODULOS]
+  const conMarca = [...CAPS, ...MODULOS, ...MAT.MAT_CAPS, ...MAT.MAT_MODULOS, ...CR.CR_CAPS, ...CR.CR_MODULOS, ...AP.AP_CAPS, ...AP.AP_MODULOS]
     .filter(x => 'cats' in x || 'extra' in x).map(x => x.id);
   if (conMarca.length) {
     console.error('❌ Estos traen `cats` o `extra` propios; eso va en campamentos.js: ' + conMarca.join(', '));
@@ -61,14 +64,14 @@ const IDS_DE_TEMA = {
    grupo se deduce del id (fuente/grupos.js), asi que escribirlo a mano en 18
    lineas seria copiar el dato a un segundo lugar. */
 const CAPS_DANIEL = CAPS.map(c => ({ ...c, doc: grupoDaniel(c.id) || undefined }));
-const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
-const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
+const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS, ...AP.AP_CAPS];
+const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO, ...AP.AP_CONTENIDO };
 /* Las de cobertura van con las demas: son del mismo banco, solo que las
    escribio un generador a partir de los versiculos que no tenian ninguna. */
-const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...BANCO_REAL, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO];
-const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
-const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
-const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
+const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...BANCO_REAL, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO, ...AP.AP_BANCO];
+const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS, ...AP.AP_TARJETAS];
+const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS, ...AP.AP_MODULOS];
+const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS, ...AP.AP_CONT_MODULOS };
 
 /* ─────────── LA PREGUNTA DE «RECORDAR», DERIVADA DEL VERSÍCULO ───────────
    MECANISMO
@@ -281,7 +284,7 @@ const MANUAL = ${JSON.stringify(MANUAL, null, 1)};
    tocables. Va con indentacion 1 para que ninguna linea del index.html pase
    de 2.000 caracteres: en una sola linea, ningun visor de diff abre el
    archivo y el hook del repo bloquea el commit. */
-const VERS = ${JSON.stringify(VERS, null, 1)};
+const VERS = ${JSON.stringify({ ...VERS, ...VERS_AP }, null, 1)};
 
 /* Citas a libros distintos de Daniel (RV1909, dominio publico), para las
    mismas referencias tocables. Ver fuente/biblia-otros.js. */

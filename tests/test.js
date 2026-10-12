@@ -1030,10 +1030,10 @@ ok(citasMal.length===0,
    28 creencias hay doce citas con formato N:M de Juan, Tito, Joel, Amos,
    Romanos, Filipenses y 1 Samuel: «Jn 3:16» abriria Daniel 3:16, y un
    versiculo equivocado con la etiqueta RV1995 es peor que no ofrecerlo. */
-ok(/Daniel\\\\s\+\(\\\\d\{1,2\}\)/.test(APP.replace(/\s/g,''))||
-   /Daniel\\s\+/.test(APP),
+/* v178: «Daniel» o «Apocalipsis», los dos libros con texto RV1995 en VERS. */
+ok(/\(Daniel\|Apocalipsis\)\\s\+/.test(APP),
   'La primera pasada de refsTocables exige el nombre «Daniel» explicito');
-ok(/OTRO_LIBRO/.test(APP)&&/BIBLIA_CAPS\.indexOf\(capId\)>=0/.test(APP),
+ok(/OTRO_LIBRO/.test(APP)&&/const lib=libroCid\(capId\), enDaniel=!!lib&&!!VERS\[capId\]/.test(APP),
   'La segunda pasada solo actua dentro de un capitulo de Daniel y descarta otros libros');
 
 /* ── CITAS A OTROS LIBROS: TODAS TIENEN QUE ABRIR UN VERSICULO REAL ──────
@@ -1099,8 +1099,8 @@ for(const id of ['aviso-nuevo','hoja'])
 /* v163: salen de las fichas de campamentos.js, que es de donde las saca la app. */
 const { CATS: CATS_APP, ACTIVIDADES: ACTS_APP } = REGLAMENTO;
 
-ok(Object.keys(ACTS_APP).length===4,'Hay cuatro actividades declaradas');
-ok(['cb','cbg','dm','ec'].every(a=>ACTS_APP[a]),'Son cb, cbg, dm y ec');
+ok(Object.keys(ACTS_APP).length===5,'Hay cinco actividades declaradas');
+ok(['cb','cbg','dm','ec','ap'].every(a=>ACTS_APP[a]),'Son cb, cbg, dm, ec y ap (Apocalipsis, v178)');
 ok(Object.values(ACTS_APP).every(a=>a.nombre&&a.icono&&a.cuando&&a.que&&Array.isArray(a.cats)),
   'Cada actividad dice su nombre, su icono, cuando es, que se estudia y sus categorias');
 
@@ -2162,7 +2162,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
 
   /* El reglamento vigente, categoría por categoría. Cambiar una ficha a
      propósito obliga a cambiar esta tabla: es el contrato con los clubes. */
-  const CAPS_V=[...CAPS,...MATU.MAT_CAPS,...CREC.CR_CAPS], MODS_V=[...MODULOS,...MATU.MAT_MODULOS,...CREC.CR_MODULOS];
+  const APOC=conReglas(require(path.join(RAIZ,'fuente','apocalipsis.js')));
+  const CAPS_V=[...CAPS,...MATU.MAT_CAPS,...CREC.CR_CAPS,...APOC.AP_CAPS], MODS_V=[...MODULOS,...MATU.MAT_MODULOS,...CREC.CR_MODULOS];
   const ve=k=>[CAPS_V,MODS_V].map(l=>l.filter(c=>c.cats.includes(k)).map(c=>c.id).join(' ')).join(' | ');
   const solo=k=>CAPS_V.filter(c=>(c.extra||[]).includes(k)).map(c=>c.id).join(' ');
   const R=(a,b,p)=>Array.from({length:b-a+1},(_,i)=>p+String(a+i).padStart(2,'0')).join(' ');
@@ -2177,15 +2178,19 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     dm2:[R(1,31,'m')+' | mm-quien mm-versiculos mm-plan','m31',15,2],
     ec1:[R(1,28,'cr')+' | mc-doctrinas mc-lista','',25,3],
     ec2:[R(1,28,'cr')+' | mc-doctrinas mc-lista','',15,2],
+    /* v178: Apocalipsis entero, con el formato real de Daniel 2026. */
+    apme:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',10,1],
+    apav:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',30,3],
+    appa:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',35,3],
   };
   const C=REGLAMENTO.CATS;
   const distintas=Object.keys(VIGENTE).filter(k=>!C[k]||ve(k)!==VIGENTE[k][0]||solo(k)!==VIGENTE[k][1]||C[k].n!==VIGENTE[k][2]||C[k].techo!==VIGENTE[k][3]);
   ok(Object.keys(C).join()===Object.keys(VIGENTE).join()&&!distintas.length,
-    'El reglamento vigente no cambió: las 8 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
+    'El reglamento vigente no cambió: las 11 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
   /* v164: Guías Mayores tiene su ficha (cbg). Su categoría conserva el id. */
   const AC=REGLAMENTO.ACTIVIDADES;
-  ok(Object.keys(AC).join()==='cb,cbg,dm,ec'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
-    'Las actividades son cb, cbg, dm y ec; Guías Mayores va en la suya y conserva su categoría gm');
+  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apme,apav,appa'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
+    'Las actividades son cb, cbg, dm, ec y ap; Guías Mayores va en la suya y conserva su categoría gm');
   ok(AC.cb.tipo==='libro'&&AC.cbg.tipo==='libro'&&AC.dm.tipo==='dias'&&AC.ec.tipo==='creencias'&&AC.cbg.tema===AC.cb.tema,
     'Cada actividad sabe de qué tipo es su material: dos campamentos del mismo libro, un devocional por días y las creencias');
   const APP_F=lee('app.js');
@@ -2201,7 +2206,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
 
   /* Una ficha mal escrita no pasa. */
   const TEMAS_P={daniel:[...CAPS,...MODULOS].map(x=>x.id),matutina:[...MATU.MAT_CAPS,...MATU.MAT_MODULOS].map(x=>x.id),
-    creencias:[...CREC.CR_CAPS,...CREC.CR_MODULOS].map(x=>x.id)};
+    creencias:[...CREC.CR_CAPS,...CREC.CR_MODULOS].map(x=>x.id),
+    apocalipsis:require(path.join(RAIZ,'fuente','apocalipsis.js')).AP_CAPS.map(x=>x.id)};
   ok(F.revisa(F.CAMPAMENTOS,TEMAS_P).length===0&&F.sinUsar(F.CAMPAMENTOS,TEMAS_P).length===0,
     'Las fichas vigentes cuadran con el contenido y no dejan ningún capítulo sin dueño');
   const cat=(o)=>Object.assign({id:'cq1',nombre:'Conquistadores',edad:'10 a 15 años',n:20,techo:2,sinCompletar:false,
@@ -2221,8 +2227,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Cada ficha trae su fecha: los tres concursos de Aventureros el 10 de octubre de 2026, y Guías Mayores sin fecha');
   ok(!/Tres tarjetas|el 9 de octubre/.test(lee('manual.js')),
     'El manual no cuenta las actividades ni afirma una fecha: las dos cosas salen de las fichas');
-  ok(C.me.seg===100&&C.av.seg===80&&['pa','gm','dm1','dm2','ec1','ec2'].every(k=>C[k].seg===72)&&
-     C.pa.rampa===false&&Object.keys(C).filter(k=>k!=='pa').every(k=>C[k].rampa===true),
+  ok(C.me.seg===100&&C.av.seg===80&&C.apme.seg===100&&C.apav.seg===80&&['pa','gm','dm1','dm2','ec1','ec2','appa'].every(k=>C[k].seg===72)&&
+     C.pa.rampa===false&&C.appa.rampa===false&&Object.keys(C).filter(k=>k!=='pa'&&k!=='appa').every(k=>C[k].rampa===true),
     'El tiempo por pregunta y la rampa son los de antes: 100 s Menores, 80 s Aventureros, 72 s los demás, y solo Padres entra sin rampa');
   ok(!/FECHA_META/.test(lee('app.js'))&&!/S\.cat==='(me|av|pa|gm|dm1|dm2|ec1|ec2)'/.test(lee('app.js')),
     'app.js no tiene fechas ni reglas escritas por categoría');
@@ -2244,10 +2250,13 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const TEMAS_AP=Object.assign({},TEMAS_P,{apocalipsis:Array.from({length:22},(_,i)=>'ap'+(i+1))});
   const fAp=ficha(cat({id:'ap1c',alcance:'Apocalipsis 1 al 3',estudia:['ap1','ap2','ap3']}),{id:'ap27',tema:'apocalipsis',que:'El libro de Apocalipsis'});
   const TIPOS_AP=Object.assign({},F.TEMAS,{apocalipsis:{tipo:'libro'}});
+  /* v178: Apocalipsis ya es un tema de verdad (ficha «ap»); el de prueba no
+     puede quedar «sin tipo», así que se le quita el suyo para probar eso. */
+  const SIN_AP=Object.assign({},F.TEMAS); delete SIN_AP.apocalipsis;
   const conAp=F.deriva([...F.CAMPAMENTOS,fAp],TIPOS_AP);
-  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP,TIPOS_AP).length===0&&conAp.catsDe('ap2').join()==='ap1c'&&
+  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP,TIPOS_AP).length===0&&conAp.catsDe('ap2').join()==='apme,apav,appa,ap1c'&&
      conAp.ACTIVIDADES.ap27.tipo==='libro'&&JSON.stringify(conAp.CATS.gm)===JSON.stringify(C.gm)&&
-     F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP).some(m=>/sin tipo/.test(m))&&
+     F.revisa([...F.CAMPAMENTOS.filter(f=>f.id!=='ap'),fAp],TEMAS_AP,SIN_AP).some(m=>/sin tipo/.test(m))&&
      F.revisa([...F.CAMPAMENTOS,ficha(cat({estudia:['ap1']}))],TEMAS_AP,TIPOS_AP).some(m=>/ap1/.test(m)),
     'Un tema nuevo entra con su tipo y su ficha, se porta como libro, deja a Daniel disponible, y una ficha de Daniel no puede nombrar capítulos de Apocalipsis');
 
@@ -2353,10 +2362,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const GEN4=fs.readFileSync(path.join(RAIZ,'fuente','servidor-reglamento.js'),'utf8');
     const cat4=JSON.parse((/export const CATALOGO = (\{[\s\S]*?\n\});/.exec(GEN4)||[])[1]||'{}');
     const d1=((cat4.daniel||{}).caps||[]).find(c=>c.id==='d1')||{n:[]};
-    ok(Object.keys(cat4).join()==='daniel,matutina,creencias'&&cat4.daniel.caps.length===18&&cat4.matutina.caps.length===31&&cat4.creencias.caps.length===28&&
+    ok(Object.keys(cat4).join()==='daniel,matutina,creencias,apocalipsis'&&cat4.apocalipsis.caps.length===22&&cat4.daniel.caps.length===18&&cat4.matutina.caps.length===31&&cat4.creencias.caps.length===28&&
        d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA,...require(path.join(RAIZ,'fuente','examenes-reales.js')).BANCO_REAL].filter(q=>q.cap==='d1').length&&
        cat4.daniel.repasos.some(r=>r.id==='m-linea'),
-      'El catálogo trae los tres temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
+      'El catálogo trae los cuatro temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
 
   /* ── v172: RETIRAR UN CONCURSO ── */
   { const S5=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
@@ -2430,6 +2439,23 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok([...pa,...av].every(q=>banco.has(q.q)),'Todas las preguntas reales entran al banco de la app');
   ok(/PR 351/.test(CONT)&&/grandes ciudades/.test(CONT)&&/de parte de los oprimidos/.test(CONT)&&/santifican el sábado/.test(CONT),
     'Lo que el examen preguntó de Profetas y Reyes está en el estudio (PR 351, 360, 375 y 376)');
+}
+
+/* v178: Apocalipsis. El texto RV1995 completo y cada capítulo revisado contra
+   él por tools/apocalipsis-revisa.js (literalidad, cobertura de versículos,
+   forma de cada pregunta). */
+{
+  const {VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const cuenta=Object.values(VERS_AP).reduce((s,c)=>s+Object.keys(c).length,0);
+  ok(Object.keys(VERS_AP).length===22&&cuenta===404&&Object.keys(VERS_AP.ap12).length===17&&Object.keys(VERS_AP.ap13).length===18,
+    'Apocalipsis trae sus 22 capítulos y 404 versículos en RV1995 ('+cuenta+')');
+  const r=require('child_process').spawnSync(process.execPath,[path.join(RAIZ,'tools','apocalipsis-revisa.js')],{encoding:'utf8'});
+  ok(r.status===0,'Los 22 capítulos de Apocalipsis pasan el revisor contra RV1995'+(r.status?' — '+r.stdout.split('\n').filter(l=>/❌/.test(l)).slice(0,3).join(' / '):''));
+  const AP=require(path.join(RAIZ,'fuente','apocalipsis.js'));
+  ok(AP.AP_CAPS.length===22&&AP.AP_BANCO.length>=600&&AP.AP_TARJETAS.length>=200,
+    'Apocalipsis tiene estudio, '+AP.AP_BANCO.length+' preguntas y '+AP.AP_TARJETAS.length+' tarjetas');
+  const inter=AP.AP_BANCO.filter(q=>/adventista/i.test(q.q||''));
+  ok(inter.length>0&&inter.every(q=>q.f==='c'),'Toda pregunta de interpretación adventista va marcada complementaria ('+inter.length+')');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

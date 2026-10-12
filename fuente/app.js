@@ -1407,7 +1407,7 @@ function pintaInicio(){
    Cuando esta puesto se pinta en naranja y dice que esta escondido. Sin eso,
    un filtro olvidado deja a alguien estudiando la mitad del material sin
    saberlo, que es el riesgo de tener un solo filtro para toda la app. */
-const textoFiltro=v=>v==='biblia'?'Daniel':v==='pr'?'Profetas y Reyes':
+const textoFiltro=v=>v==='biblia'?nombreBiblia():v==='pr'?'Profetas y Reyes':
   (listaDe(v)?textoLista(listaDe(v)):((CAPS.find(c=>c.id===v)||{}).label||v));
 function pintaFiltro(pant){
   const z=document.getElementById('filtro-est');
@@ -1432,7 +1432,7 @@ function pintaFiltro(pant){
     'aria-expanded="'+abierto+'" onclick="abreFiltroMenu()"><span class="fe-k">Estudiando:</span> '+
     '<b>'+esc(dice)+'</b>'+IC('abajo','fe-fl')+'</button></div>'+
     (abierto?'<div class="fe-menu" role="group" aria-label="Qué estudiar">'+
-      b('todo','Todo')+(dos?b('biblia','Daniel')+b('pr','Profetas y Reyes'):'')+
+      b('todo','Todo')+(dos?b('biblia',nombreBiblia())+b('pr','Profetas y Reyes'):'')+
       b('mis','Escoger capítulos')+'</div>':'')+
     (f?'<p class="fe-aviso">Viendo solo '+esc(textoFiltro(val))+'. Lo demás está escondido '+
       'hasta que toques «Todo».</p>':'')+
@@ -1494,7 +1494,7 @@ function guardaFiltro(v){
 function htmlPorLibro(){
   if(!conFiltro())return '';
   const caps=capsDe();
-  const libros=[['Daniel',esDaniel,'var(--naranja)'],['Profetas y Reyes',esPR,'#7B2D8B']]
+  const libros=[[nombreBiblia(),esDaniel,'var(--naranja)'],['Profetas y Reyes',esPR,'#7B2D8B']]
     .map(l=>{const a=caps.filter(c=>l[1](c.id)).reduce((s,c)=>{const x=S.acc[c.id]||{b:0,m:0};
       return {b:s.b+x.b,m:s.m+x.m};},{b:0,m:0});return {n:l[0],c:l[2],a};})
     .filter(x=>x.a.b+x.a.m>0);
@@ -1590,6 +1590,12 @@ function pintaCaps(){
    el regex entrara en un atributo (un onclick, una clase) romperia el HTML
    sin avisar. */
 const BIBLIA_CAPS=['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12'];
+/* v178: DOS LIBROS DE LA BIBLIA EN RV1995. Daniel es 'd'+N y Apocalipsis es
+   'ap'+N; de ahí sale el nombre que se rotula en referencias, lectura y
+   filtros. Un libro nuevo es una línea aquí, su texto en VERS y su tema. */
+const LIBRO_PRE={d:'Daniel',ap:'Apocalipsis'};
+const PRE_LIBRO={Daniel:'d',Apocalipsis:'ap'};
+const libroCid=cid=>{const m=/^(ap|d)(\d{1,2})$/.exec(String(cid||''));return m?{pre:m[1],n:m[2],nombre:LIBRO_PRE[m[1]]}:null;};
 const OTRO_LIBRO=/\b(?!Daniel\b|RV1995\b)(?:[123]\s?)?[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{1,}\b/;
 
 /* CITAS A OTROS LIBROS (fuente/biblia-otros.js, RV1909, dominio publico).
@@ -1599,7 +1605,8 @@ const OTRO_LIBRO=/\b(?!Daniel\b|RV1995\b)(?:[123]\s?)?[A-ZÁÉÍÓÚÑ][a-záé�
    confunden porque Daniel no lleva guion. */
 function tablaDeCid(cid){
   if(typeof VERS!=='undefined'&&VERS[cid]){
-    return {mapa:VERS[cid], ref:'Daniel '+cid.replace('d',''), version:'RV1995'};
+    const l=libroCid(cid)||{nombre:'Daniel',n:String(cid).replace('d','')};
+    return {mapa:VERS[cid], ref:l.nombre+' '+l.n, version:'RV1995'};
   }
   if(typeof OTRAS_VERS!=='undefined'&&OTRAS_VERS[cid]){
     const meta=(typeof OTRAS_META!=='undefined'&&OTRAS_META[cid])||{};
@@ -1667,9 +1674,9 @@ function colaVers(cid,cola){
     sep+botonVers(cid,a+(b?g+b:''),+a,b?+b:0));
 }
 
-function botonRef(todo,c,v,v2,cola){
+function botonRef(todo,c,v,v2,cola,pre){
   cola=cola||'';
-  const cid='d'+c, cabeza=cola?todo.slice(0,todo.length-cola.length):todo;
+  const cid=(pre||'d')+c, cabeza=cola?todo.slice(0,todo.length-cola.length):todo;
   const t=tablaDeCid(cid);
   if(!t||!t.mapa[+v])return todo;
   return botonVers(cid,cabeza,+v,v2?+v2:0)+colaVers(cid,cola);
@@ -1736,15 +1743,15 @@ function revela(b){
 
 function refsTocables(html,capId){
   if(typeof VERS==='undefined')return html;
-  const enDaniel=BIBLIA_CAPS.indexOf(capId)>=0;
+  const lib=libroCid(capId), enDaniel=!!lib&&!!VERS[capId];
   return html.split(/(<[^>]+>)/).map(tr=>{
     if(tr.charAt(0)==='<')return tr;
     /* Pasada 1: «Daniel N:M» dice el libro, asi que vale en cualquier lado.
        Se marca el trozo ya convertido con \u0000 para que las pasadas
        siguientes no vuelvan a entrar en el, que anidaria un boton dentro de
        otro. */
-    let out=tr.replace(/Daniel\s+(\d{1,2}):(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?((?:\s*,\s*\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)/g,
-      (todo,c,v,v2,cola)=>'\u0000'+botonRef(todo,c,v,v2,cola)+'\u0000');
+    let out=tr.replace(/(Daniel|Apocalipsis)\s+(\d{1,2}):(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?((?:\s*,\s*\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)/g,
+      (todo,lb,c,v,v2,cola)=>{const b=botonRef(todo,c,v,v2,cola,PRE_LIBRO[lb]);return b===todo?todo:'\u0000'+b+'\u0000';});
     /* Pasada 2: «Libro N:M» para un libro distinto de Daniel, en cualquier
        parte (fuera o dentro de parentesis). El nombre completo del libro ya
        distingue la cita: no hace falta el candado de la pasada 3. */
@@ -1772,7 +1779,7 @@ function refsTocables(html,capId){
       out=out.replace(/\(([^)]*)\)/g,(todo,dentro)=>{
         if(dentro.indexOf('\u0000')>=0||OTRO_LIBRO.test(dentro))return todo;
         return '('+dentro.replace(/(\d{1,2}):(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?((?:\s*,\s*\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)/g,
-          (t2,c,v,v2,cola)=>botonRef(t2,c,v,v2,cola))+')';
+          (t2,c,v,v2,cola)=>botonRef(t2,c,v,v2,cola,lib.pre))+')';
       });
     }
     return out.split('\u0000').join('');
@@ -2040,20 +2047,20 @@ function abreLectura(cid){
   if(typeof VERS==='undefined'||!VERS[cid])return;
   paraVoz();
   const c=buscaItem(cid), nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
-  const n=String(cid).replace('d','');
+  const lb=libroCid(cid)||{nombre:'Daniel',n:String(cid).replace('d','')}, n=lb.n, LB=lb.nombre;
   const cap=document.getElementById('lectura');
   if(!cap)return;
   lectCid=cid;
   cap.innerHTML=
     '<div class="lec-barra">'+
       '<div class="lec-prog"><i id="lec-i" style="width:0%"></i></div>'+
-      '<span class="lec-pct" id="lec-pct">Daniel '+n+'</span>'+
+      '<span class="lec-pct" id="lec-pct">'+LB+' '+n+'</span>'+
       '<button type="button" class="lec-x" onclick="cierraLectura()" aria-label="Cerrar">'+IC('x')+'</button>'+
     '</div>'+
     /* v127: el 🔊 de la barra pasó a ser una franja de reproductor. */
     htmlLecVoz(nums.length)+
-    '<div class="lec-caja" id="lec-caja"><h1>'+esc(c?c.sub:'Daniel '+n)+'</h1>'+
-    '<p class="lec-sub">Daniel '+n+' · Reina-Valera 1995 · '+nums.length+' versículos</p>'+
+    '<div class="lec-caja" id="lec-caja"><h1>'+esc(c?c.sub:LB+' '+n)+'</h1>'+
+    '<p class="lec-sub">'+LB+' '+n+' · Reina-Valera 1995 · '+nums.length+' versículos</p>'+
     '<div class="lec-txt biblia'+(puedeHablar()?' lec-toca':'')+'" data-leer onclick="lecToca(event)">'+
     nums.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('')+
     '</div>'+
@@ -2090,7 +2097,8 @@ function lectAvance(){
   const max=caja.scrollHeight-caja.clientHeight;
   const pct=max>8?Math.min(100,Math.round(caja.scrollTop/max*100)):100;
   i.style.width=pct+'%';
-  if(t&&lectCid)t.textContent='Daniel '+String(lectCid).replace('d','')+' · '+pct+'%';
+  const lb=libroCid(lectCid);
+  if(t&&lectCid)t.textContent=(lb?lb.nombre+' '+lb.n:'Daniel '+String(lectCid).replace('d',''))+' · '+pct+'%';
 }
 
 function cierraLectura(){
@@ -4426,7 +4434,7 @@ function poolDe(){
   const K=clavesDe(alcance);
   if(K)return b.filter(q=>K.has(claveQ(q)));
   if(alcance==='creencias')return b.filter(q=>esCreencia(q.cap));
-  if(alcance==='biblia')return b.filter(q=>q.cap.charAt(0)==='d');
+  if(alcance==='biblia')return b.filter(q=>esDaniel(q.cap));
   if(alcance==='pr')return b.filter(q=>q.cap.slice(0,2)==='pr');
   if(alcance==='q1')return b.filter(q=>diaMat(q.cap)>0&&diaMat(q.cap)<=15);
   if(alcance==='q2')return b.filter(q=>diaMat(q.cap)>15);
@@ -4494,7 +4502,14 @@ function listaDe(alc){
   if(p.length<2)return null;
   return p.every(x=>PARTE_ID.test(x))?p:null;
 }
-const esDaniel=id=>/^d\d/.test(id);
+/* «El libro de la Biblia» de la actividad: Daniel en Conexión Bíblica 2026,
+   Apocalipsis en la de Apocalipsis. El nombre se conserva: lo usan muchas
+   partes y en cada actividad hay un solo libro bíblico. */
+const esDaniel=id=>/^(d|ap)\d/.test(id);
+function nombreBiblia(){
+  const c=(typeof capsDe==='function'?capsDe():CAPS).find(x=>esDaniel(x.id));
+  return c?libroCid(c.id).nombre:'Daniel';
+}
 const esPR=id=>/^pr\d/.test(id);
 /* Los ids que un alcance deja pasar dentro de un universo de capitulos. Es la
    misma regla de poolDe(), pero sobre capitulos y no sobre preguntas: la usan
@@ -4504,7 +4519,7 @@ function idsDeAlcance(alc,caps){
   return caps.filter(c=>{
     const id=c.id;
     if(alc==='todo')return true;
-    if(alc==='biblia')return id.charAt(0)==='d';
+    if(alc==='biblia')return esDaniel(id);
     if(alc==='pr')return id.slice(0,2)==='pr';
     if(alc==='creencias')return esCreencia(id);
     if(alc==='q1')return diaMat(id)>0&&diaMat(id)<=15;
@@ -4530,10 +4545,11 @@ function alcanceDeFichas(sel,caps){
 /* La lista en palabras: «Daniel 1, 3 y 6 + Profetas y Reyes 41». */
 function textoLista(ids){
   const y=a=>a.length>1?a.slice(0,-1).join(', ')+' y '+a[a.length-1]:a[0];
-  const d=ids.filter(esDaniel).map(i=>i.slice(1)),p=ids.filter(esPR).map(i=>i.slice(2));
+  const d=ids.filter(esDaniel).map(i=>i.replace(/^\D+/,'')),p=ids.filter(esPR).map(i=>i.slice(2));
+  const nb=ids.filter(esDaniel).map(i=>libroCid(i)).filter(Boolean)[0];
   const otros=ids.filter(i=>!esDaniel(i)&&!esPR(i)).map(i=>(CAPS.find(c=>c.id===i)||{label:i}).label);
   const partes=[];
-  if(d.length)partes.push('Daniel '+y(d));
+  if(d.length)partes.push((nb?nb.nombre:'Daniel')+' '+y(d));
   if(p.length)partes.push('Profetas y Reyes '+y(p));
   return partes.concat(otros).join(' + ');
 }
@@ -4550,7 +4566,8 @@ function tocaFicha(sel,caps,tipo,v){
    capitulos: el examen de practica, el panel del director y el filtro de
    estudio. `fn` es el nombre de la funcion que recibe (tipo, valor). */
 function htmlFichas(caps,sel,fn){
-  const libros=[['d','Daniel','todo Daniel','da',esDaniel],['pr','Profetas y Reyes','todo P&R','pr',esPR]];
+  const nb=(caps.map(c=>libroCid(c.id)).find(Boolean)||{nombre:'Daniel'}).nombre;
+  const libros=[['d',nb,'todo '+nb,'da',esDaniel],['pr','Profetas y Reyes','todo P&R','pr',esPR]];
   const hay=libros.filter(l=>caps.some(c=>l[4](c.id)));
   return '<div class="fch-cab"><button type="button" class="fch-todo" onclick="'+fn+'(\'todo\',\'\')">Todo</button>'+
     (hay.length>1?hay.map(l=>'<button type="button" class="fch-todo" onclick="'+fn+'(\'libro\',\''+l[0]+'\')">'+esc(l[2])+'</button>').join(''):'')+
@@ -4578,7 +4595,7 @@ const esCreencia=id=>/^cr\d\d$/.test(id);
 function gruposEx(){
   const cand=esMatutina()
     ?[['q1','Solo la primera quincena (1 al 15)'],['q2','Solo la segunda quincena (16 en adelante)']]
-    :[['biblia','Solo el libro de Daniel'],['pr','Solo Profetas y Reyes']];
+    :[['biblia','Solo el libro de '+nombreBiblia()],['pr','Solo Profetas y Reyes']];
   const prev=alcance,out=[];
   try{
     for(const g of cand){alcance=g[0];if(poolDe().length)out.push(g);}
@@ -5536,7 +5553,7 @@ function hojaActual(conR){
 /* Alcance en palabras, para el encabezado del impreso. */
 function textoAlcanceImpr(){
   if(alcance==='todo')return CAT().alcance;
-  if(alcance==='biblia')return 'Solo el libro de Daniel';
+  if(alcance==='biblia')return 'Solo el libro de '+nombreBiblia();
   if(alcance==='pr')return 'Solo Profetas y Reyes';
   if(alcance==='creencias')return 'En esto creemos — las 28 creencias';
   if(alcance==='q1')return 'Del 1 al 15 de octubre';
@@ -6796,10 +6813,15 @@ function llenaCapPanel(act,mantener){
    que van juntos en la misma linea y salen de aqui los dos. */
 function opcionesMatPanel(act){
   const tipo=TIPO_ACT(act);
-  if(tipo==='libro')return [['todo','Todo el material de '+ACTIVIDADES[act].nombre,'todo'],
-    ['biblia','Solo el libro de Daniel','solo Daniel'],
-    ['pr','Solo Profetas y Reyes','solo Profetas y Reyes'],
-    ['fichas','Los capítulos que escojas','los que escojas']];
+  if(tipo==='libro'){
+    /* v178: Apocalipsis es un solo libro: sin «solo el libro» ni P&R. */
+    const suyos=CAPS.filter(c=>(c.cats||[]).some(k=>CATS[k]&&CATS[k].act===act));
+    const lb=(suyos.map(c=>libroCid(c.id)).find(Boolean)||{nombre:'Daniel'}).nombre;
+    const conPR=suyos.some(c=>esPR(c.id));
+    return [['todo','Todo el material de '+ACTIVIDADES[act].nombre,'todo'],
+      ...(conPR?[['biblia','Solo el libro de '+lb,'solo '+lb],['pr','Solo Profetas y Reyes','solo Profetas y Reyes']]:[]),
+      ['fichas','Los capítulos que escojas','los que escojas']];
+  }
   if(tipo==='dias')return [['todo','Todo el cuadernillo de octubre','todo octubre'],
     ['q1','Solo la primera quincena (1 al 15)','primera quincena'],
     ['q2','Solo la segunda quincena (16 en adelante)','segunda quincena'],

@@ -21,6 +21,7 @@ const REGLAS = (function () {
     daniel: { tipo: 'libro', nombre: 'Daniel y Profetas y Reyes' },
     matutina: { tipo: 'dias', nombre: 'Devoción Matutina · Héroes y villanos' },
     creencias: { tipo: 'creencias', nombre: 'Las 28 creencias' },
+    apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
   const SEG_POR_PREGUNTA = 72;
@@ -529,6 +530,122 @@ export const FICHAS_BASE = [
     ]
    }
   ]
+ },
+ {
+  "id": "ap",
+  "tema": "apocalipsis",
+  "nombre": "Conexión Bíblica: Apocalipsis",
+  "icono": "📖",
+  "cuando": "Fecha por confirmar",
+  "fecha": "",
+  "que": "El libro de Apocalipsis completo, en RV1995",
+  "categorias": [
+   {
+    "id": "apme",
+    "nombre": "Menores",
+    "edad": "4 a 6 años",
+    "n": 10,
+    "techo": 1,
+    "sinCompletar": true,
+    "segundos": 100,
+    "alcance": "Apocalipsis",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap6",
+     "ap7",
+     "ap8",
+     "ap9",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap15",
+     "ap16",
+     "ap17",
+     "ap18",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ]
+   },
+   {
+    "id": "apav",
+    "nombre": "Aventureros",
+    "edad": "7 a 9 años",
+    "n": 30,
+    "techo": 3,
+    "sinCompletar": true,
+    "sinVF": true,
+    "segundos": 80,
+    "tarjetas": 15,
+    "alcance": "Apocalipsis",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap6",
+     "ap7",
+     "ap8",
+     "ap9",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap15",
+     "ap16",
+     "ap17",
+     "ap18",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ]
+   },
+   {
+    "id": "appa",
+    "nombre": "Padres y consejeros",
+    "edad": "Adultos",
+    "n": 35,
+    "techo": 3,
+    "sinCompletar": true,
+    "sinRampa": true,
+    "tarjetas": 25,
+    "alcance": "Apocalipsis",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap6",
+     "ap7",
+     "ap8",
+     "ap9",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap15",
+     "ap16",
+     "ap17",
+     "ap18",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ]
+   }
+  ]
  }
 ];
 
@@ -631,6 +748,30 @@ export const IDS_DE_TEMA = {
   "cr28",
   "mc-doctrinas",
   "mc-lista"
+ ],
+ "apocalipsis": [
+  "ap1",
+  "ap2",
+  "ap3",
+  "ap4",
+  "ap5",
+  "ap6",
+  "ap7",
+  "ap8",
+  "ap9",
+  "ap10",
+  "ap11",
+  "ap12",
+  "ap13",
+  "ap14",
+  "ap15",
+  "ap16",
+  "ap17",
+  "ap18",
+  "ap19",
+  "ap20",
+  "ap21",
+  "ap22"
  ]
 };
 
@@ -1563,6 +1704,253 @@ export const CATALOGO = {
     "label": "Las 28 de corrido"
    }
   ]
+ },
+ "apocalipsis": {
+  "caps": [
+   {
+    "id": "ap1",
+    "label": "Apocalipsis 1",
+    "sub": "Cristo entre los candelabros",
+    "grupo": "Biblia",
+    "n": [
+     19,
+     18,
+     4
+    ]
+   },
+   {
+    "id": "ap2",
+    "label": "Apocalipsis 2",
+    "sub": "Cartas a Éfeso, Esmirna, Pérgamo y Tiatira",
+    "grupo": "Biblia",
+    "n": [
+     25,
+     16,
+     5
+    ]
+   },
+   {
+    "id": "ap3",
+    "label": "Apocalipsis 3",
+    "sub": "Cartas a Sardis, Filadelfia y Laodicea",
+    "grupo": "Biblia",
+    "n": [
+     22,
+     15,
+     4
+    ]
+   },
+   {
+    "id": "ap4",
+    "label": "Apocalipsis 4",
+    "sub": "El trono en el cielo",
+    "grupo": "Biblia",
+    "n": [
+     15,
+     11,
+     3
+    ]
+   },
+   {
+    "id": "ap5",
+    "label": "Apocalipsis 5",
+    "sub": "El libro sellado y el Cordero",
+    "grupo": "Biblia",
+    "n": [
+     16,
+     13,
+     3
+    ]
+   },
+   {
+    "id": "ap6",
+    "label": "Apocalipsis 6",
+    "sub": "Los seis primeros sellos",
+    "grupo": "Biblia",
+    "n": [
+     17,
+     15,
+     3
+    ]
+   },
+   {
+    "id": "ap7",
+    "label": "Apocalipsis 7",
+    "sub": "Los 144.000 y la gran multitud",
+    "grupo": "Biblia",
+    "n": [
+     25,
+     11,
+     4
+    ]
+   },
+   {
+    "id": "ap8",
+    "label": "Apocalipsis 8",
+    "sub": "El séptimo sello y las primeras trompetas",
+    "grupo": "Biblia",
+    "n": [
+     21,
+     7,
+     4
+    ]
+   },
+   {
+    "id": "ap9",
+    "label": "Apocalipsis 9",
+    "sub": "La quinta y la sexta trompetas",
+    "grupo": "Biblia",
+    "n": [
+     28,
+     12,
+     5
+    ]
+   },
+   {
+    "id": "ap10",
+    "label": "Apocalipsis 10",
+    "sub": "El ángel con el librito",
+    "grupo": "Biblia",
+    "n": [
+     17,
+     7,
+     3
+    ]
+   },
+   {
+    "id": "ap11",
+    "label": "Apocalipsis 11",
+    "sub": "Los dos testigos y la séptima trompeta",
+    "grupo": "Biblia",
+    "n": [
+     23,
+     12,
+     4
+    ]
+   },
+   {
+    "id": "ap12",
+    "label": "Apocalipsis 12",
+    "sub": "La mujer, el dragón y el niño",
+    "grupo": "Biblia",
+    "n": [
+     22,
+     14,
+     4
+    ]
+   },
+   {
+    "id": "ap13",
+    "label": "Apocalipsis 13",
+    "sub": "Las dos bestias, la marca y el número",
+    "grupo": "Biblia",
+    "n": [
+     17,
+     19,
+     4
+    ]
+   },
+   {
+    "id": "ap14",
+    "label": "Apocalipsis 14",
+    "sub": "Los 144.000 y los tres ángeles",
+    "grupo": "Biblia",
+    "n": [
+     22,
+     22,
+     5
+    ]
+   },
+   {
+    "id": "ap15",
+    "label": "Apocalipsis 15",
+    "sub": "El cántico de Moisés y del Cordero",
+    "grupo": "Biblia",
+    "n": [
+     11,
+     13,
+     3
+    ]
+   },
+   {
+    "id": "ap16",
+    "label": "Apocalipsis 16",
+    "sub": "Las siete copas y Armagedón",
+    "grupo": "Biblia",
+    "n": [
+     22,
+     20,
+     4
+    ]
+   },
+   {
+    "id": "ap17",
+    "label": "Apocalipsis 17",
+    "sub": "La mujer sobre la bestia escarlata",
+    "grupo": "Biblia",
+    "n": [
+     15,
+     26,
+     4
+    ]
+   },
+   {
+    "id": "ap18",
+    "label": "Apocalipsis 18",
+    "sub": "La caída de Babilonia",
+    "grupo": "Biblia",
+    "n": [
+     13,
+     27,
+     4
+    ]
+   },
+   {
+    "id": "ap19",
+    "label": "Apocalipsis 19",
+    "sub": "Las bodas del Cordero y el jinete fiel",
+    "grupo": "Biblia",
+    "n": [
+     13,
+     28,
+     4
+    ]
+   },
+   {
+    "id": "ap20",
+    "label": "Apocalipsis 20",
+    "sub": "Los mil años y el gran trono blanco",
+    "grupo": "Biblia",
+    "n": [
+     13,
+     15,
+     3
+    ]
+   },
+   {
+    "id": "ap21",
+    "label": "Apocalipsis 21",
+    "sub": "Cielo nuevo, tierra nueva y la Nueva Jerusalén",
+    "grupo": "Biblia",
+    "n": [
+     27,
+     16,
+     4
+    ]
+   },
+   {
+    "id": "ap22",
+    "label": "Apocalipsis 22",
+    "sub": "El río y el árbol de la vida",
+    "grupo": "Biblia",
+    "n": [
+     14,
+     20,
+     3
+    ]
+   }
+  ],
+  "repasos": []
  }
 };
 

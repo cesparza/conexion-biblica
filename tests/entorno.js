@@ -84,6 +84,6 @@ function montar(ret, op){
 const REGLAMENTO=(()=>{const {CAMPAMENTOS,deriva}=require(require('path').join(__dirname,'..','fuente','campamentos.js'));
   return deriva(CAMPAMENTOS);})();
 const conReglas=m=>{const o={...m};
-  for(const k of ['CAPS','MODULOS','MAT_CAPS','MAT_MODULOS','CR_CAPS','CR_MODULOS'])if(o[k])o[k]=REGLAMENTO.conCats(o[k]);
+  for(const k of ['CAPS','MODULOS','MAT_CAPS','MAT_MODULOS','CR_CAPS','CR_MODULOS','AP_CAPS','AP_MODULOS'])if(o[k])o[k]=REGLAMENTO.conCats(o[k]);
   return o;};
 module.exports={REGLAMENTO,conReglas,RAIZ,FUENTE,HTML,JS,nodo,STUB,montar};

@@ -49,6 +49,9 @@ const REPASOS_AV = ['m-linea', 'm-personajes', 'm-numeros', 'm-trampas', 'm-vers
 const AV_ESTUDIA = [...DANIEL_RELATOS, 'pr39', 'pr41', 'pr44', ...REPASOS_AV];
 const REPASOS_MATUTINA = ['mm-quien', 'mm-versiculos', 'mm-plan'];
 const CREENCIAS = [...sec('cr', 1, 28), 'mc-doctrinas', 'mc-lista'];
+/* Los capítulos de Apocalipsis que ya están escritos (fuente/apocalipsis/). Se
+   leen de ahí para que la ficha no nombre uno que todavía no existe. */
+const APOCALIPSIS = require('./apocalipsis.js').AP_CAPS.map(c => c.id);
 
 /* LOS TEMAS Y SU TIPO
    La app no se porta distinto según el club ni según el campamento: se porta
@@ -139,6 +142,20 @@ const CAMPAMENTOS = [
         alcance: 'Las 28 creencias', estudia: CREENCIAS },
       { id: 'ec2', nombre: 'El resto del club', edad: 'Cuestionario', n: 15, techo: 2, sinCompletar: true,
         alcance: 'Las 28 creencias', estudia: CREENCIAS },
+    ] },
+  /* v178: Apocalipsis, el libro entero en RV1995 (Camilo, 12-oct: «todo el
+     libro, misma versión»). Todavía sin reglamento ni fecha: las categorías
+     copian el formato real de Daniel 2026 (examenes-reales.js) hasta que
+     llegue el de verdad. Ids nuevos, así que el progreso de Daniel no se toca. */
+  { id: 'ap', tema: 'apocalipsis', nombre: 'Conexión Bíblica: Apocalipsis', icono: '📖', cuando: 'Fecha por confirmar', fecha: '',
+    que: 'El libro de Apocalipsis completo, en RV1995',
+    categorias: [
+      { id: 'apme', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100,
+        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
+      { id: 'apav', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15,
+        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
+      { id: 'appa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25,
+        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
     ] },
 ];
 
