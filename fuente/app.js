@@ -73,22 +73,24 @@ const CAPS=REGLAMENTO.conCats(CAPS_BASE), MODULOS=REGLAMENTO.conCats(MODULOS_BAS
    archivo los ~280 KB de texto, y lo que se corrija en un capítulo sale igual
    aquí. Lo ve quien estudia al menos un capítulo de ese libro. Cada sección
    lleva `cap`, para que sus citas sueltas (8:7) se toquen en su capítulo. */
-const INTERP={d:{id:'m-interp-d',libro:'Daniel',color:'#0E7490'},ap:{id:'m-interp-ap',libro:'Apocalipsis',color:'#6D28D9'}};
+/* v181: una tarjeta por capítulo (Camilo, 16:13: «mejor que la
+   interpretación salga capítulo a capítulo»). El repaso único de v180 era una
+   página de 150 secciones y una tarjeta sola en la rejilla. Ahora cada
+   capítulo con secciones 'contexto' tiene su repaso «m-interp-<cap>», en el
+   grupo «La interpretación», y lo ve quien estudia ese capítulo. */
 const esInterp=id=>/^m-interp-/.test(String(id||''));
-for(const pre of Object.keys(INTERP)){
-  const I=INTERP[pre], re=new RegExp('^'+pre+'\\d{1,2}$');
-  const caps=CAPS.filter(c=>re.test(c.id));
-  const secs=caps.flatMap(c=>(CONTENIDO[c.id]||[]).filter(x=>x.capa==='contexto')
-    .map(x=>({...x,cap:c.id,t:'🧭 '+c.label+' · '+String(x.t||'').replace(/^[^\p{L}\p{N}]+/u,'')})));
-  if(!secs.length)continue;
-  const cats=[...new Set(caps.flatMap(c=>c.cats||[]))];
-  MODULOS.unshift({id:I.id,label:I.libro+': la interpretación',sub:'Solo la interpretación, capítulo por capítulo, con sus fuentes',
-    icono:'🧭',color:I.color,cats});
-  CONT_MODULOS[I.id]=[{t:'🧭 Cómo usar esta parte',capa:'apoyo',h:
-    '<p>Aquí está <strong>toda la interpretación</strong> de '+I.libro+' en un solo lugar: '+secs.length+' secciones, en el orden de los capítulos. '+
-    'Es lo que el texto quiere decir según Stephen Bohr, Elena de White y otros autores adventistas, y cada sección dice de qué obra y página sale.</p>'+
-    '<p>Nada de esto entra al examen del concurso. Para practicarlo: en <strong>Examen</strong>, marca «Solo la interpretación». '+
-    'Dentro de cada capítulo, el filtro «Interpretación» muestra solo estas secciones.</p>'},...secs];
+const capDeInterp=id=>String(id||'').replace(/^m-interp-/,'');
+{
+  const nuevos=[];
+  for(const c of CAPS){
+    if(!/^(d|ap)\d{1,2}$/.test(c.id))continue;
+    const secs=(CONTENIDO[c.id]||[]).filter(x=>x.capa==='contexto').map(x=>({...x,cap:c.id}));
+    if(!secs.length)continue;
+    const id='m-interp-'+c.id;
+    nuevos.push({id,label:c.label,sub:c.sub,icono:'🧭',color:c.color,cats:c.cats||[],interp:c.id});
+    CONT_MODULOS[id]=secs;
+  }
+  MODULOS.unshift(...nuevos);
 }
 
 /** La actividad de una categoria, y su ficha completa. */
@@ -2315,7 +2317,9 @@ function navCap(id){
   const i=lista.findIndex(x=>x.id===id);
   if(i<0||lista.length<2)return '';
   const a=lista[i-1], b=lista[i+1], k=caps.findIndex(x=>x.id===id);
-  const donde=k>=0?(k+1)+' de '+caps.length:'Repaso '+(mods.findIndex(x=>x.id===id)+1)+' de '+mods.length;
+  const mi=mods.filter(x=>esInterp(x.id)), mr=mods.filter(x=>!esInterp(x.id));
+  const donde=k>=0?(k+1)+' de '+caps.length:esInterp(id)?'Interpretación '+(mi.findIndex(x=>x.id===id)+1)+' de '+mi.length
+    :'Repaso '+(mr.findIndex(x=>x.id===id)+1)+' de '+mr.length;
   const a_=x=>x?{clic:"verCap('"+x.id+"')",aria:null}:null;
   const ant=a_(a), sig=a_(b);
   if(ant)ant.aria='Anterior: '+a.label+', '+a.sub;
@@ -2352,14 +2356,14 @@ function verCap(id,quieto){
     (deDonde?'<button type="button" class="btn txt cap-vuelve" onclick="crRegresa()">'+IC('izq')+
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
     navCap(id)+
-    '<div class="cap-ante">'+esc(c.label)+'</div>'+
+    '<div class="cap-ante">'+esc(c.label)+(esInterp(id)?' · la interpretación':'')+'</div>'+
     '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
        fuente/biblia-otros.js), no de la RV1960; y los repasos de creencias
        (mc-*) no traen texto bíblico, así que no dicen versión. */
-    (esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
+    (esInterp(id)?'Interpretación · '+(CONT_MODULOS[id]||[]).length+' secciones, con sus fuentes':esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
     (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
     /* v129: Profetas y Reyes se escucha por su estudio (ver htmlEstVoz). */
     (conEstudioEnVoz(c)?htmlEstVoz(c):'')+

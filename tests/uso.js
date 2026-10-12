@@ -79,7 +79,7 @@ let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 // Aventureros
 A.ponCat('av');
 ok(A.capsDe().length===7,'Aventureros ve 7 capítulos');
-ok(A.modsDe().filter(m=>!/^m-interp-/.test(m.id)).length===9&&A.modsDe().some(m=>m.id==='m-interp-d'),'Aventureros ve 9 módulos de repaso y la interpretación de Daniel ('+A.modsDe().length+')');
+ok(A.modsDe().filter(m=>!/^m-interp-/.test(m.id)).length===9&&A.modsDe().some(m=>/^m-interp-d/.test(m.id)),'Aventureros ve 9 módulos de repaso y la interpretación de Daniel ('+A.modsDe().length+')');
 /* PISO, no cifra exacta: la cuenta sube cada vez que se agregan tarjetas y
    una igualdad obliga a editar la prueba en cada tanda de contenido. Lo que
    de verdad hay que cazar es que se PIERDAN tarjetas. */
@@ -3150,21 +3150,24 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'La bienvenida, con un concurso pedido, salta la pregunta de la actividad y ofrece sus categorías');
 }
 
-/* v180: la interpretación en un solo lugar (Camilo, 12-oct). Un repaso por
-   libro con todas las secciones 🧭, el filtro «Solo la interpretación» en cada
-   capítulo y el examen de solo interpretación. */
+/* v180-v181: la interpretación aparte (Camilo, 12-oct). Un repaso por
+   capítulo con sus secciones 🧭, el filtro «Interpretación» en cada capítulo y
+   el examen de solo interpretación. */
 {
   const Z=montar(`verCap, ponCat, modsDe, CONT_MODULOS, poolDe, refrescaEx, cambiaInterp, cambiaFuente, el:id=>document.getElementById(id), get soloInterp(){return soloInterp}, set alc(v){alcance=v}`,{});
   Z.ponCat('apme');
-  const m=Z.modsDe().find(x=>x.id==='m-interp-ap');
-  const secs=(Z.CONT_MODULOS['m-interp-ap']||[]).slice(1);
-  ok(!!m&&secs.length>=100&&secs.every(s=>s.capa==='contexto'&&/Fuentes?:/.test(s.h)&&/^ap\d/.test(s.cap)),
-    'Apocalipsis trae «la interpretación» en un solo repaso: '+secs.length+' secciones, todas con su fuente');
-  ok(secs[0].cap==='ap1'&&secs[secs.length-1].cap==='ap22'&&/^🧭 Apocalipsis 1 · /.test(secs[0].t),'Va en el orden de los capítulos y cada sección dice de cuál es');
-  Z.verCap('m-interp-ap');
+  const mi=Z.modsDe().filter(x=>/^m-interp-/.test(x.id));
+  const secs=mi.flatMap(m=>Z.CONT_MODULOS[m.id]);
+  ok(mi.length===22&&mi[0].id==='m-interp-ap1'&&mi[21].id==='m-interp-ap22'&&secs.length>=100&&secs.every(s=>s.capa==='contexto'&&/Fuentes?:/.test(s.h)),
+    'Apocalipsis trae la interpretación capítulo por capítulo: 22 repasos, '+secs.length+' secciones, todas con su fuente');
+  Z.verCap('m-interp-ap8');
   const h=Z.el('detalle').innerHTML;
-  ok(/Cómo usar esta parte/.test(h)&&/Las siete trompetas según Bohr/.test(h)&&!/capa-filtro/.test(h),'El repaso de interpretación se abre, sin el filtro de capas');
-  ok(/verVers\(this,'ap8',7,/.test(h)&&/verVers\(this,'ap22',/.test(h),'Las citas sueltas se tocan en su capítulo (8:7 abre Apocalipsis 8)');
+  ok(/Apocalipsis 8 · la interpretación/.test(h)&&/Las siete trompetas según Bohr/.test(h)&&!/capa-filtro/.test(h)&&!/texto RV1995/.test(h)&&/Interpretación 8 de 22/.test(h),
+    'El repaso de un capítulo dice qué es, por cuál va y no trae el filtro de capas');
+  ok(/verVers\(this,'ap8',7,/.test(h),'Las citas sueltas se tocan en su capítulo (8:7 abre Apocalipsis 8)');
+  Z.ponCat('pa');
+  ok(Z.modsDe().filter(x=>/^m-interp-d/.test(x.id)).length>=4,'Padres y consejeros ve la interpretación de sus capítulos de Daniel');
+  Z.ponCat('apme');
   Z.verCap('ap8');
   ok(/filtraCapa\(this,'contexto'\)/.test(Z.el('detalle').innerHTML),'Cada capítulo con interpretación ofrece verla sola en el filtro');
   Z.alc='todo';Z.refrescaEx();
@@ -3176,7 +3179,6 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   Z.el('ex-fuente').checked=true;Z.cambiaFuente();
   ok(!Z.soloInterp&&Z.poolDe().every(q=>q.f!=='c'),'Prender «Solo el material del reglamento» apaga «Solo la interpretación»');
 }
-
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 
