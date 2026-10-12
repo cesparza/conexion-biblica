@@ -199,7 +199,7 @@ function lamAbre(cid,modo){
     '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">De 605 a.C. hasta hoy, a escala</div></div></div>'+
     '<input type="range" id="lamRango" min="-620" max="2026" step="1" value="-620" aria-label="Año" style="--pista:'+lamPista()+'">'+
     '<div class="lam-marcas">'+[[-605,'605 a.C.'],[-331,'331',1],[-168,'168',1],[476,'476'],[1798,'1798'],[2026,'hoy',1]].map(([y,t,ch])=>'<span'+(ch?' class="chico"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
-    (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" onclick="lamPres(lamPaso-1)">‹ Anterior</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="pri" onclick="lamPres(lamPaso+1)">Siguiente ›</button></div>':
+    (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" onclick="lamAtras()">‹ Anterior</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="pri" onclick="lamAdelante()">Siguiente ›</button></div>':
      '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr><th>Daniel 2</th><th>Daniel 7</th><th>Reino</th></tr>'+
      L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
      '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
@@ -353,6 +353,8 @@ function lamPres(k){
   document.getElementById('lamCuenta').textContent=(k+1)+' / '+pasos.length;
   document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
 }
+function lamAtras(){lamPres(lamPaso-1);}
+function lamAdelante(){lamPres(lamPaso+1);}
 function lamCae(piedra){
   const [gx,gy]=LAM().golpe;
   if(lamQuieto()){piedra.setAttribute('transform','translate('+gx+' '+gy+') rotate(40)');return;}
