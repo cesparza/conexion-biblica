@@ -2389,6 +2389,17 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const examen=['Teología propia.','Para su gloria.','Justificación, santificación y glorificación.','Nehemías 9:6.',
     'Efesios 6:12-18.','Apocalipsis 19:10.','Un estado de inconsciencia.','La fase final de su ministerio: el juicio investigador.'];
   ok(examen.every(r=>CRx.CR_BANCO.some(x=>x.t==='mc'&&x.o[x.a]===r)),'Las preguntas del examen real están en el banco con la respuesta del jurado');
+  /* Con la cartilla impresa en la mano (12-oct): la creencia 10 estaba mal
+     transcrita y las introducciones iban incompletas. */
+  const d10=CRx.CR_CONTENIDO.cr10[0].h;
+  ok(/renueva nuestras mentes, graba su ley en nuestros corazones/.test(d10)&&!/graba su ley en nuestras mentes/.test(d10),
+    'La creencia 10 dice lo que dice la cartilla impresa: «renueva nuestras mentes, graba su ley en nuestros corazones»');
+  const intro2=CRx.CR_CONTENIDO.cr06.find(s=>/La doctrina/.test(s.t)).h;
+  ok(/mayordomo de la creación/.test(intro2)&&/compuesta por dos creencias/.test(intro2),'Las introducciones van completas (la 2 trae «mayordomo de la creación»)');
+  ok(CRx.CR_TARJETAS.some(x=>/Teología propia/i.test(x.r))&&CRx.CR_TARJETAS.some(x=>/mayordomo de la creación/.test(x.r)),
+    'Lo de las introducciones también se practica en tarjetas');
+  const md=(CRx.CR_CONT_MODULOS['mc-doctrinas']||[]).filter(s=>/Cómo abre la doctrina/.test(s.t));
+  ok(md.length===6&&md.every((s,i)=>s.h.includes('Doctrina '+(i+1)+' de 6')),'El repaso de las 6 doctrinas trae las seis introducciones');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

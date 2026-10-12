@@ -67,6 +67,23 @@ def preg_de(num, cual):
     return None
 
 
+def intro_html(n_doc, nom_doc, intro):
+    """La introducción de una doctrina, en sus párrafos, literal de la cartilla."""
+    return hi('<strong>Doctrina %d de 6: %s</strong>%s' % (n_doc, nom_doc,
+              ''.join('<p>%s</p>' % p for p in intro.split('\n\n'))))
+
+
+def presentacion_html():
+    """Las dos páginas con que abre la cartilla, cada una con quien la firma."""
+    h = ''
+    for quien, cargo, parrafos in datos.PRESENTACION:
+        h += hi(''.join('<p>%s</p>' % p for p in parrafos) +
+                '<p class="nota"><b>%s</b> · %s</p>' % (quien, cargo))
+    # Sin nota al pie: la sección ya sale marcada «Entra al examen», y con la
+    # nota el texto pasaba de 2000 caracteres en un solo renglón del HTML.
+    return h
+
+
 def pestanas(num):
     d, e = datos.CREENCIAS[num], editorial.ED[num]
     t = []
@@ -80,10 +97,10 @@ def pestanas(num):
     # Camilo: todo lo que se pide estudiar es susceptible de ser preguntado.
     for n_doc, nom_doc, desde, _, intro in datos.DOCTRINAS:
         if desde == num:
-            h = hi('<strong>Doctrina %d de 6: %s</strong><br>%s' % (n_doc, nom_doc, intro))
+            h = intro_html(n_doc, nom_doc, intro)
             h += ('<p class="nota">Cartilla <i>En esto creemos</i>: así abre esta doctrina, antes de su '
                   'primera creencia. <strong>También se pregunta</strong>: en el examen del campamento '
-                  '2026 salió de aquí «teología propia».</p>')
+                  '2026 salieron de aquí «teología propia» y «mayordomo de la creación».</p>')
             intro_doc = dict(t='🏛️ La doctrina', h=h, capa='nucleo')
     # 1. la declaracion
     # CADA DECLARACION DICE DE DONDE SALE, y no es un adorno: tools/cartilla.js
@@ -154,6 +171,10 @@ def pestanas(num):
     t.append(dict(t='📖 Textos clave', h=h, capa='nucleo', preg=preg_de(num, 'texto1')))
     if intro_doc:
         t.append(intro_doc)
+    # Y antes de la primera doctrina, las dos páginas de presentación: también
+    # son de la cartilla, y también se pueden preguntar (examen2026.PRESENTACION).
+    if num == 1:
+        t.append(dict(t='📘 La cartilla', h=presentacion_html(), capa='nucleo'))
     # 3. que significa — todo en bloques que se revelan
     # Aqui ya NO va la lista de subtitulos: esa es del libro y ahora sale del
     # libro mismo, en su propia seccion (abajo). Lo que queda es lo que la
@@ -404,7 +425,7 @@ def main():
         return re.sub(r'\s+', ' ', ''.join(c for c in s if unicodedata.category(c) != 'Mn'))
     cartilla = _n(open(os.path.join(os.path.dirname(SALIDA), 'cartilla.txt'), encoding='utf-8').read())
     extra = 0
-    for num, nv, q, o, resp in examen2026.EXAMEN_2026 + examen2026.INTRODUCCIONES:
+    for num, nv, q, o, resp in examen2026.EXAMEN_2026 + examen2026.INTRODUCCIONES + examen2026.PRESENTACION:
         if resp not in ('LIBRO', 'DOCTRINAS') and _n(resp) not in cartilla:
             sys.exit('examen2026: el respaldo no esta en la cartilla: %r' % resp)
         if len(o) != 4 or len(set(o)) != 4:
@@ -424,6 +445,8 @@ def main():
         tj.append((  'cr%02d'%n, '<b>%s</b> — primer texto clave' % nom, partes[0]))
         for preg, resp in e['clave'][:2]:
             tj.append(('cr%02d'%n, '<b>%d.</b> %s' % (n, preg), resp))
+    for cap, f, r in examen2026.TARJETAS:
+        tj.append((cap, f, r))
     tarjetas = ['  {cap:%s, f:%s, r:%s},' % (J(c), J(f), J(r)) for c, f, r in tj]
 
     cab = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cabecera.txt'),
@@ -437,6 +460,12 @@ def main():
           + '\nconst CR_TARJETAS = [\n' + '\n'.join(tarjetas) + '\n];\n\n'
           + open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modulos.txt'),
                  encoding='utf-8').read()
+          # Las seis introducciones en el repaso de las doctrinas (12-oct), una
+          # sección por doctrina: juntas no caben en un renglón de 2000.
+          + "\n/* Lo que la cartilla dice al abrir cada doctrina. Lo escribe gen_creencias.py\n   desde datos.DOCTRINAS: no se edita aquí. */\n"
+          + ''.join("CR_CONT_MODULOS['mc-doctrinas'].push({ t:%s, h:%s });\n"
+                    % (J('🏛️ Cómo abre la doctrina %d' % n), J(intro_html(n, nom, intro)))
+                    for n, nom, a, b, intro in datos.DOCTRINAS)
           + '\nmodule.exports = { DOCTRINAS, doctrinaDe, CR_CAPS, CR_CONTENIDO, CR_BANCO,'
           + ' CR_TARJETAS, CR_MODULOS, CR_CONT_MODULOS };\n')
     open(SALIDA, 'w', encoding='utf-8').write(js)

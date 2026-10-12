@@ -15,6 +15,8 @@ evalua es la cartilla y no la version corregida:
   - creencia 1: «de la doctrinas», y cierra sin punto final
   - creencia 3, 6 y 13: cierran sin punto final
   - creencia 16: «1 Corintios 10-16,17» donde el libro dice «10:16,17»
+  - doctrina 1: «Palabra de Dios , la Deidad ,» y sin punto final; doctrina 3:
+    «glorificacion En resumen»; doctrina 2: un parrafo sin punto final
   - creencia 26: «Ecleciastes», y abrevia «Col. 3:4»
   - creencia 14: la cartilla imprime AQUI el texto de la creencia 13.
     Es un error de imprenta, no una variante: el libro de las 28
@@ -23,9 +25,29 @@ evalua es la cartilla y no la version corregida:
     marcada como tal; aqui no se escribe, porque la cartilla no la
     trae.
 
+=== PRESENTACION ===
+
+--- Pr. Henry Beltrán, Presidente, Iglesia Adventista del Séptimo Día, Unión Colombiana del Sur ---
+
+Viviendo la Misión 7 -70, es el lema que nos inspira a proclamar el mensaje de salvación a quienes lo necesitan. La palabra de Dios es el mapa que nos guía en el camino de la vida. A través de sus páginas, podemos descubrir su amor, su propósito y su plan de salvación para la humanidad.
+
+Este material te invita a explorar la profundidad de la fe que nos ha sido legada. Que la palabra de Dios te inspire a vivir con pasión, a amar con compasión y a servir con humildad. Que su enseñanza te transforme y te haga una fuente de bendición para los demás.
+
+¡Que la palabra de Dios sea tu guía y tu fortaleza en todo momento!
+
+--- Pr. Moisés Prieto, Coordinador de Evangelismo, Iglesia Adventista del Séptimo Día, Unión Colombiana del Sur ---
+
+La Biblia es una biblioteca inigualable compuesta por 66 libros que contienen la revelación de Dios como guía para el ser humano. En todas sus páginas encontramos las orientaciones divinas, las doctrinas y creencias fundamentales que nos preparan para entender el plan de salvación para la humanidad.
+
+Este hermoso material, preparado por el pastor Ludwing Morales, sirve para guiar a cualquier persona en su experiencia de crecimiento y fortalecimiento espiritual. En cada doctrina presentada encontrarás un código QR, que te conducirá a un video explicativo de cada una de las diversas creencias, además de otros recursos adicionales.
+
+Oramos para que el Espíritu Santo te guíe, mientras estudias la Biblia y te conectas con Dios a través de cada creencia presentada en este material.
+
 === PRIMERA DOCTRINA — LA DOCTRINA DE DIOS ===
 
 La doctrina de Dios, es la primera de nuestras doctrinas y es también conocida como teología propia, es una rama fundamental de la teología que estudia la naturaleza, atributos y obras de Dios. Esta doctrina se centra en aspectos esenciales como la existencia de Dios, su unidad y trinidad, su infinitud, su omnisciencia, omnipotencia, omnipresencia, santidad, justicia, amor, misericordia y soberanía.
+
+La comprensión de estas características divinas ofrece a los creyentes una base sólida para su fe y práctica religiosa, proporcionando un marco a través del cual interpretan la relación de Dios con el mundo y la humanidad. Es la primera de nuestras seis doctrinas y está compuesta por la Palabra de Dios , la Deidad , Dios el Padre, Dios el Hijo, Dios el Espíritu Santo
 
 --- Creencia 01 — LA PALABRA DE DIOS ---
 
@@ -59,7 +81,11 @@ TEXTOS: Génesis 1:1,2; Lucas 1:35; 4:18; Hechos 10:38; 2 Pedro 1:21; 2 Corintio
 
 === SEGUNDA DOCTRINA — LA DOCTRINA DEL HOMBRE ===
 
-La doctrina del hombre, según la Biblia, se centra en la creación del ser humano a imagen y semejanza de Dios (Génesis 1:26-27). Este acto de creación confiere a cada individuo un valor intrínseco y una dignidad inigualable, dado que refleja el carácter divino. La naturaleza humana, aunque creada perfecta, fue afectada por el pecado cometido por Adán y Eva en el Jardín del Edén.
+La doctrina del hombre, según la Biblia, se centra en la creación del ser humano a imagen y semejanza de Dios (Génesis 1:26-27). Este acto de creación confiere a cada individuo un valor intrínseco y una dignidad inigualable, dado que refleja el carácter divino.
+
+La naturaleza humana, aunque creada perfecta, fue afectada por el pecado cometido por Adán y Eva en el Jardín del Edén, lo que condujo a una separación de Dios y a la entrada del pecado y la muerte en el mundo (Génesis 3:1-24)
+
+El hombre fue constituido mayordomo de la creación y a pesar del pecado sigue conservando esa tarea en el mundo actual. Su nivel de responsabilidad sigue orientando su amor a Dios y a sus semejantes y está compuesta por dos creencias, la creación y la naturaleza del hombre.
 
 --- Creencia 06 — LA CREACIÓN ---
 
@@ -75,7 +101,9 @@ TEXTOS: Génesis 1:26-28; 2:7; Salmos 8:4-8; Hechos 17:24-28; Génesis 3; Salmos
 
 === TERCERA DOCTRINA — LA DOCTRINA DE LA SALVACION ===
 
-La doctrina de la salvación, según la Biblia, se centra en el plan divino para rescatar a la humanidad del pecado y sus consecuencias. La salvación no es algo que los seres humanos puedan ganar por sus propios méritos; es un regalo inmerecido que se recibe por medio de la fe (Efesios 2:8-9). La salvación implica varias etapas, comenzando con la justificación, continuando con la santificación y culminando con la glorificación.
+La doctrina de la salvación, según la Biblia, se centra en el plan divino para rescatar a la humanidad del pecado y sus consecuencias. Este plan es una manifestación del amor y la gracia de Dios, quien, a través del sacrificio de Jesucristo, ofrece redención y vida eterna a todos los que creen en Él. La salvación no es algo que los seres humanos puedan ganar por sus propios méritos; es un regalo inmerecido que se recibe por medio de la fe (Efesios 2:8-9).
+
+La salvación implica varias etapas, comenzando con la justificación, continuando con la santificación y culminando con la glorificación En resumen, la doctrina de la salvación revela el profundo amor y la misericordia de Dios hacia la humanidad, y su deseo de restaurar la relación rota entre Él y sus criaturas. A través de la fe en Jesucristo, los pecadores pueden ser reconciliados con Dios y recibir el don de la vida eterna.
 
 --- Creencia 08 — EL GRAN CONFLICTO ---
 
@@ -91,13 +119,15 @@ TEXTOS: Juan 3:16; Isaías 53; 1 Pedro 2:21,22; 1 Corintios 15:3,4,20-22; 2 Cori
 
 --- Creencia 10 — LA EXPERIENCIA DE LA SALVACIÓN ---
 
-Con amor infinito, Dios hizo que Cristo tomara nuestro lugar, para que fuéramos hechos justicia de Dios en Él. Guiados por el Espíritu Santo, reconocemos nuestro pecado, nos arrepentimos y creemos en Jesús como Salvador y ejemplo. Esta fe, don de la gracia divina, viene por la Palabra de Dios. A través de Cristo somos justificados, adoptados como hijos y liberados del pecado. El Espíritu nos hace nacer de nuevo, renueva nuestros corazones y nuestras mentes, graba su ley en nuestras mentes y nos capacita para una vida santa. Al permanecer en Cristo, participamos de su naturaleza y tenemos seguridad de salvación.
+Con amor infinito, Dios hizo que Cristo tomara nuestro lugar, para que fuéramos hechos justicia de Dios en Él. Guiados por el Espíritu Santo, reconocemos nuestro pecado, nos arrepentimos y creemos en Jesús como Salvador y ejemplo. Esta fe, don de la gracia divina, viene por la Palabra de Dios. A través de Cristo somos justificados, adoptados como hijos y liberados del pecado. El Espíritu nos hace nacer de nuevo, renueva nuestras mentes, graba su ley en nuestros corazones y nos capacita para una vida santa. Al permanecer en Cristo, participamos de su naturaleza y tenemos seguridad de salvación.
 
 TEXTOS: 2 Corintios 5:17-21; Juan 3:16; Gálatas 1:4; 4:4-7; Tito 3:3-7; Juan 16:8; Gálatas 3:13,14; 1 Pedro 2:21,22; Romanos 10:17; Lucas 17:5; Marcos 9:23,24.
 
 === CUARTA DOCTRINA — LA DOCTRINA DE LA IGLESIA ===
 
-La iglesia, según la Biblia, es el cuerpo de Cristo, compuesto por todos los creyentes llamados por el Espíritu Santo. Cristo es la cabeza de esta comunidad espiritual, que se reúne para adorar, edificarse en el amor y vivir la verdad del evangelio. A través del bautismo, los creyentes se incorporan a esta familia, y la Cena del Señor celebra su gracia y unidad.
+La iglesia, según la Biblia, es el cuerpo de Cristo, compuesto por todos los creyentes llamados por el Espíritu Santo. Cristo es la cabeza de esta comunidad espiritual, que se reúne para adorar, edificarse en el amor y vivir la verdad del evangelio.
+
+A través del bautismo, los creyentes se incorporan a esta familia, y la Cena del Señor celebra su gracia y unidad. La iglesia tiene la misión de llevar el evangelio al mundo mediante la predicación, el testimonio y el servicio. Sus pilares doctrinales incluyen veintiocho creencias fundamentales que fortalecen su identidad y propósito en Cristo.
 
 --- Creencia 11 — CRECER EN CRISTO ---
 
@@ -149,7 +179,7 @@ TEXTOS: Joel 2:28,29; Hechos 2:14-21; Hebreos 1:1-3; Apocalipsis 12:17; 19:10.
 
 === QUINTA DOCTRINA — LA DOCTRINA DE LA VIDA CRISTIANA ===
 
-Reconocemos como adventistas que fuimos creados a la imagen y semejanza de Dios y por su gracia vivimos en el camino de la obediencia a sus mandamientos y principios de vida, establecidos en los diez mandamientos, siendo mayordomos de lo que nos ha sido confiado y reconociendo el matrimonio como una institución sagrada establecida por Dios entre un hombre y una mujer.
+Reconocemos como adventistas que fuimos creados a la imagen y semejanza de Dios y por su gracia vivimos en el camino de la obediencia a sus mandamientos y principios de vida, establecidos en los diez mandamientos, siendo mayordomos de lo que nos ha sido confiado y reconociendo el matrimonio como una institución sagrada establecida por Dios entre un hombre y una mujer que conforman una familia para bendición de la sociedad y como escenario de preparación para el reino de Dios.
 
 --- Creencia 19 — LA LEY DE DIOS ---
 
@@ -183,7 +213,9 @@ TEXTOS: Génesis 2:18-25; Mateo 19:3-9; Juan 2:1-11; 2 Corintios 6:14; Efesios 5
 
 === SEXTA DOCTRINA — LA DOCTRINA DE LOS ACONTECIMIENTOS FINALES ===
 
-La doctrina de los acontecimientos finales se centra en los eventos que precederán el regreso de Cristo y la conclusión de la historia humana en esta tierra. Esta doctrina se basa en las profecías bíblicas, principalmente los libros de Daniel y Apocalipsis. Los adventistas creemos que estamos viviendo en los últimos días y que es esencial estar preparados para la segunda venida de Cristo.
+La doctrina de los acontecimientos finales se centra en los eventos que precederán el regreso de Cristo y la conclusión de la historia humana en esta tierra. Esta doctrina se basa en las profecías bíblicas, principalmente los libros de Daniel y Apocalipsis, que describen una serie de eventos apocalípticos y el juicio final de la humanidad. Los adventistas creemos que estamos viviendo en los últimos días y que es esencial estar preparados para la segunda venida de Cristo.
+
+Los adventistas del séptimo día destacamos la importancia de vivir una vida en armonía con los mandamientos de Dios, mantener una relación íntima con Cristo y compartir el mensaje de salvación con otros, en anticipación de los eventos finales y el glorioso retorno de Jesús.
 
 --- Creencia 24 — EL MINISTERIO DE CRISTO EN EL SANTUARIO CELESTIAL ---
 

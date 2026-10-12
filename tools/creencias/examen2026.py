@@ -17,17 +17,12 @@ EL RESPALDO de cada una (el último campo) es el trozo literal de cartilla.txt
 que la contesta, y el generador exige que esté ahí. Dos excepciones, dichas:
   · 'DOCTRINAS': la 23 se contesta con el reparto de las seis doctrinas
     (creencias 19 a 23), que es dato de datos.DOCTRINAS.
-  · 'LIBRO': dos que el examen preguntó con palabras que NO son las de la
-    cartilla transcrita, sino las del libro de las 28 (declaración completa).
-      - La 7 («ser mayordomo de la creación»): la cartilla dice «llamados a
-        amar a Dios, al prójimo y a cuidar el entorno»; el libro, «creados
-        para ser mayordomos del ambiente».
-      - La 13 («renueva nuestras mentes, graba su ley en nuestros
-        corazones»): el libro dice eso mismo; cartilla.txt dice «renueva
-        nuestros corazones y nuestras mentes, graba su ley en nuestras
-        mentes». O la cartilla impresa trae una errata, o la transcripción
-        tiene un error. HAY QUE MIRARLO EN EL IMPRESO (12-oct, sin hacer).
-    Entran igual, porque el examen las hizo. La respuesta va
+  Hasta el 12-oct había dos marcadas 'LIBRO' (la 7 y la 13) porque no
+  estaban en cartilla.txt. Con la cartilla impresa en la mano resultó que sí
+  son de la cartilla: la 7 sale del tercer párrafo de la introducción de la
+  doctrina 2, que no se había transcrito, y la 13 es la creencia 10, que
+  estaba mal transcrita («graba su ley en nuestras mentes»). Las dos se
+  corrigieron en datos.py. La respuesta va
 primera (`a=0`); la app baraja al armar cada examen.
 """
 
@@ -66,12 +61,12 @@ EXAMEN_2026 = [
      ['Para dar testimonio en favor de Cristo.', 'Para interpretar independientemente las Escrituras.',
       'Para realizar milagros y señales.', 'Para gobernar sobre todas las naciones.'],
      'testimonio en favor de Cristo'),
-    (7, 2, 'Según la cartilla, a pesar del pecado, ¿qué tarea sigue conservando el hombre en el mundo actual?',
+    (6, 2, 'Según la cartilla, a pesar del pecado, ¿qué tarea sigue conservando el hombre en el mundo actual?',
      ['Ser mayordomo de la creación, orientando su responsabilidad hacia su amor a Dios y a sus semejantes.',
       'Reflejar perfectamente el carácter divino como imagen y semejanza de Dios.',
       'Recuperar mediante su obediencia la dignidad que perdió en el Jardín del Edén.',
       'Ejercer dominio sobre la creación para restaurar la condición original del mundo.'],
-     'LIBRO'),
+     'El hombre fue constituido mayordomo de la creación y a pesar del pecado sigue conservando esa tarea en el mundo actual'),
     (6, 2, '¿Cuál de los siguientes textos bíblicos NO es utilizado por el autor para fundamentar la creencia de la Creación?',
      ['Nehemías 9:6.', 'Génesis 1:1.', 'Éxodo 20:8-11.', 'Salmos 33:6, 9.'],
      'Génesis 1; 2; Éxodo 20:8-11; Salmos 19:1-6; 33:6, 9; 104; Hebreos 11:3'),
@@ -95,7 +90,7 @@ EXAMEN_2026 = [
       'Nos hace nacer de nuevo, transforma nuestras mentes, escribe su Palabra en nuestros corazones y nos capacita para una vida santa.',
       'Nos hace nacer de nuevo, renueva nuestros corazones, graba su ley en nuestras mentes y nos capacita para una vida de obediencia.',
       'Nos hace nacer de nuevo, renueva nuestras mentes, coloca su voluntad en nuestros corazones y nos capacita para vencer el pecado.'],
-     'LIBRO'),
+     'renueva nuestras mentes, graba su ley en nuestros corazones y nos capacita para una vida santa'),
     (15, 1, '¿Cómo se incorporan los creyentes a la familia de la iglesia?',
      ['Por el bautismo.', 'Por la fe.', 'Por el servicio.', 'Por la Cena del Señor.'],
      'A través del bautismo, los creyentes se incorporan a esta familia'),
@@ -205,4 +200,110 @@ INTRODUCCIONES = [
       'En la obra de Cristo en el santuario terrenal y en el día de la expiación.',
       'En la vida de los redimidos en el cielo durante los mil años del milenio.'],
      'se centra en los eventos que precederán el regreso de Cristo y la conclusión de la historia humana en esta tierra'),
+]
+
+# Lo que las introducciones dicen en los párrafos que faltaban hasta el 12-oct.
+INTRODUCCIONES += [
+    (1, 2, '¿Por cuáles creencias está compuesta la doctrina de Dios, según la cartilla?',
+     ['La Palabra de Dios, la Deidad, Dios el Padre, Dios el Hijo y Dios el Espíritu Santo.',
+      'La Deidad, Dios el Padre, Dios el Hijo, Dios el Espíritu Santo y la creación.',
+      'La Palabra de Dios, la Deidad, la creación, la naturaleza humana y el gran conflicto.',
+      'Dios el Padre, Dios el Hijo, Dios el Espíritu Santo, la ley de Dios y el sábado.'],
+     'está compuesta por la Palabra de Dios , la Deidad , Dios el Padre, Dios el Hijo, Dios el Espíritu Santo'),
+    (1, 2, 'Según la cartilla, ¿qué ofrece a los creyentes la comprensión de las características divinas?',
+     ['Una base sólida para su fe y práctica religiosa.', 'Una explicación completa de la naturaleza de Dios.',
+      'La seguridad de la salvación y la vida eterna.', 'Un camino para obedecer los diez mandamientos.'],
+     'ofrece a los creyentes una base sólida para su fe y práctica religiosa'),
+    (6, 2, 'Según la introducción de la doctrina del hombre, ¿a qué condujo el pecado de Adán y Eva?',
+     ['A una separación de Dios y a la entrada del pecado y la muerte en el mundo.',
+      'A la pérdida total de la imagen de Dios en todo ser humano.',
+      'Al diluvio y a la dispersión de la humanidad por la tierra.',
+      'A la expulsión del hombre y la mujer del Jardín del Edén.'],
+     'lo que condujo a una separación de Dios y a la entrada del pecado y la muerte en el mundo'),
+    (6, 1, 'Según la cartilla, ¿por cuántas creencias está compuesta la doctrina del hombre, y cuáles son?',
+     ['Por dos: la creación y la naturaleza del hombre.', 'Por tres: la creación, la naturaleza humana y el gran conflicto.',
+      'Por dos: la naturaleza humana y el gran conflicto.', 'Por una sola: la naturaleza del hombre.'],
+     'está compuesta por dos creencias, la creación y la naturaleza del hombre'),
+    (8, 2, 'Según la cartilla, el plan de salvación es:',
+     ['Una manifestación del amor y la gracia de Dios.', 'Una recompensa para quienes obedecen la ley.',
+      'Un acuerdo entre Dios y el pueblo de Israel.', 'Una respuesta de Dios después del diluvio.'],
+     'Este plan es una manifestación del amor y la gracia de Dios'),
+    (8, 2, 'Según la cartilla, a través de la fe en Jesucristo, los pecadores pueden:',
+     ['Ser reconciliados con Dios y recibir el don de la vida eterna.', 'Ganar la salvación por sus propios méritos ante Dios.',
+      'Recibir los dones espirituales y el don de profecía.', 'Conocer la fecha exacta de la segunda venida de Cristo.'],
+     'los pecadores pueden ser reconciliados con Dios y recibir el don de la vida eterna'),
+    (11, 2, 'Según la cartilla, ¿mediante qué tiene la iglesia la misión de llevar el evangelio al mundo?',
+     ['La predicación, el testimonio y el servicio.', 'La oración, el ayuno y la alabanza.',
+      'El bautismo, la Cena del Señor y el lavamiento.', 'La enseñanza, la música y la mayordomía.'],
+     'mediante la predicación, el testimonio y el servicio'),
+    (11, 1, 'Según la introducción de la doctrina de la iglesia, ¿cuántas creencias fundamentales incluyen sus pilares doctrinales?',
+     ['Veintiocho.', 'Veintisiete.', 'Seis.', 'Doce.'],
+     'incluyen veintiocho creencias fundamentales'),
+    (19, 2, 'Según la cartilla, la familia que conforman un hombre y una mujer es:',
+     ['Para bendición de la sociedad y escenario de preparación para el reino de Dios.',
+      'La base de la iglesia y el lugar donde se aprende a obedecer la ley.',
+      'Una institución civil que la iglesia reconoce y bendice en el culto.',
+      'El primer lugar donde se predica el evangelio a los que no creen.'],
+     'conforman una familia para bendición de la sociedad y como escenario de preparación para el reino de Dios'),
+    (24, 2, 'Según la cartilla, ¿qué describen los libros de Daniel y Apocalipsis?',
+     ['Una serie de eventos apocalípticos y el juicio final de la humanidad.',
+      'La historia del pueblo de Israel desde Abraham hasta el exilio.',
+      'La vida, muerte y resurrección de Jesucristo en la tierra.',
+      'La creación del mundo y la caída del ser humano en el Edén.'],
+     'que describen una serie de eventos apocalípticos y el juicio final de la humanidad'),
+    (24, 2, 'Según la introducción de la doctrina de los acontecimientos finales, ¿qué destacamos los adventistas?',
+     ['Vivir en armonía con los mandamientos, mantener una relación íntima con Cristo y compartir el mensaje de salvación.',
+      'Estudiar las profecías, calcular las fechas y anunciar el día exacto del regreso de Cristo.',
+      'Guardar el sábado, devolver el diezmo y asistir a la iglesia todas las semanas del año.',
+      'Prepararnos solos y en silencio, apartados del mundo, mientras llegan los eventos finales.'],
+     'mantener una relación íntima con Cristo y compartir el mensaje de salvación con otros'),
+]
+
+# Las dos páginas de presentación (antes de la primera doctrina). Van con la creencia 1,
+# que es donde la app las muestra.
+PRESENTACION = [
+    (1, 1, '¿Cuál es el lema que presenta la cartilla «En esto creemos»?',
+     ['Viviendo la Misión 7-70.', 'Viviendo la esperanza.', 'Misión Global 2026.', 'Creciendo en Cristo 7-70.'],
+     'Viviendo la Misión 7 -70, es el lema'),
+    (1, 1, 'Según la presentación de la cartilla, la palabra de Dios es:',
+     ['El mapa que nos guía en el camino de la vida.', 'La lámpara que alumbra nuestro camino diario.',
+      'El fundamento de todas nuestras creencias.', 'La espada del Espíritu para vencer al mal.'],
+     'La palabra de Dios es el mapa que nos guía en el camino de la vida'),
+    (1, 1, 'Según la cartilla, ¿por cuántos libros está compuesta la Biblia?',
+     ['66.', '39.', '27.', '73.'],
+     'compuesta por 66 libros'),
+    (1, 2, 'Según la cartilla, la Biblia es una biblioteca inigualable que contiene:',
+     ['La revelación de Dios como guía para el ser humano.', 'La historia completa de la iglesia hasta hoy.',
+      'Las leyes civiles del antiguo pueblo de Israel.', 'Los escritos de los profetas y de nadie más.'],
+     'contienen la revelación de Dios como guía para el ser humano'),
+    (1, 1, '¿Quién preparó el material de la cartilla «En esto creemos»?',
+     ['El pastor Ludwing Morales.', 'El pastor Henry Beltrán.', 'El pastor Moisés Prieto.', 'La Asociación del Alto Magdalena.'],
+     'preparado por el pastor Ludwing Morales'),
+    (1, 2, 'Según la cartilla, ¿a qué te conduce el código QR de cada doctrina?',
+     ['A un video explicativo de cada una de las creencias.', 'A la página para inscribirte en el concurso.',
+      'A un examen de práctica de toda la doctrina.', 'Al texto completo del libro de las 28 creencias.'],
+     'te conducirá a un video explicativo de cada una de las diversas creencias'),
+    (1, 2, '¿Quién firma la presentación que habla del lema «Viviendo la Misión 7-70»?',
+     ['El pastor Henry Beltrán, presidente de la Unión Colombiana del Sur.',
+      'El pastor Moisés Prieto, coordinador de evangelismo de la Unión.',
+      'El pastor Ludwing Morales, autor del material de la cartilla.',
+      'El director de jóvenes de la Asociación del Alto Magdalena.'],
+     'Pr. Henry Beltrán, Presidente'),
+]
+
+# Tarjetas de Practicar: (creencia donde se estudia, frente, respuesta).
+TARJETAS = [
+    ('cr01', 'La cartilla: el lema', 'Viviendo la Misión <b>7-70</b>'),
+    ('cr01', 'La cartilla: ¿quién preparó el material?', 'El pastor <b>Ludwing Morales</b>'),
+    ('cr01', 'La cartilla: la Biblia es…', 'Una biblioteca inigualable de <b>66 libros</b>'),
+    ('cr01', 'La doctrina de Dios también es conocida como…', '<b>Teología propia</b>'),
+    ('cr01', 'La doctrina de Dios está compuesta por…', 'La Palabra de Dios, la Deidad, Dios el Padre, Dios el Hijo y Dios el Espíritu Santo'),
+    ('cr06', 'La doctrina del hombre se centra en…', 'La creación del ser humano a imagen y semejanza de Dios (Génesis 1:26-27)'),
+    ('cr06', 'A pesar del pecado, el hombre sigue conservando la tarea de…', 'Ser <b>mayordomo de la creación</b>'),
+    ('cr08', 'Las etapas de la salvación, en orden', 'Justificación, santificación y glorificación'),
+    ('cr08', 'La salvación se recibe por medio de…', 'La fe (Efesios 2:8-9): es un regalo inmerecido'),
+    ('cr11', 'La iglesia: ¿quién es la cabeza, y cómo se entra a esta familia?', 'Cristo es la cabeza; se entra por el bautismo'),
+    ('cr11', 'La misión de la iglesia se cumple mediante…', 'La predicación, el testimonio y el servicio'),
+    ('cr19', 'Vida cristiana: los mandamientos y principios de vida están establecidos en…', 'Los diez mandamientos'),
+    ('cr24', 'Los acontecimientos finales se basan principalmente en…', 'Los libros de <b>Daniel</b> y <b>Apocalipsis</b>'),
 ]

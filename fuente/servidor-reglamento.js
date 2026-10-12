@@ -1238,8 +1238,8 @@ export const CATALOGO = {
     "sub": "La Palabra de Dios",
     "grupo": "En esto creemos",
     "n": [
-     7,
-     10,
+     11,
+     15,
      2
     ]
    },
@@ -1293,8 +1293,8 @@ export const CATALOGO = {
     "sub": "La creación",
     "grupo": "En esto creemos",
     "n": [
-     5,
-     8,
+     6,
+     10,
      2
     ]
    },
@@ -1305,7 +1305,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      3,
-     6,
+     5,
      2
     ]
    },
@@ -1316,7 +1316,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      5,
-     8,
+     10,
      2
     ]
    },
@@ -1348,8 +1348,8 @@ export const CATALOGO = {
     "sub": "Crecer en Cristo",
     "grupo": "En esto creemos",
     "n": [
-     5,
-     8,
+     6,
+     9,
      2
     ]
    },
@@ -1437,7 +1437,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      4,
-     9,
+     10,
      2
     ]
    },
@@ -1492,7 +1492,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      5,
-     8,
+     10,
      2
     ]
    },

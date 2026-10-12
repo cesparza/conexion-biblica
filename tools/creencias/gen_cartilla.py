@@ -35,6 +35,8 @@ L.append('evalua es la cartilla y no la version corregida:')
 L.append('  - creencia 1: «de la doctrinas», y cierra sin punto final')
 L.append('  - creencia 3, 6 y 13: cierran sin punto final')
 L.append('  - creencia 16: «1 Corintios 10-16,17» donde el libro dice «10:16,17»')
+L.append('  - doctrina 1: «Palabra de Dios , la Deidad ,» y sin punto final; doctrina 3:')
+L.append('    «glorificacion En resumen»; doctrina 2: un parrafo sin punto final')
 L.append('  - creencia 26: «Ecleciastes», y abrevia «Col. 3:4»')
 L.append('  - creencia 14: la cartilla imprime AQUI el texto de la creencia 13.')
 L.append('    Es un error de imprenta, no una variante: el libro de las 28')
@@ -43,6 +45,15 @@ L.append('    de la unidad y no del remanente. La app la muestra desde el libro,
 L.append('    marcada como tal; aqui no se escribe, porque la cartilla no la')
 L.append('    trae.')
 L.append('')
+
+L.append('=== PRESENTACION ===')
+L.append('')
+for quien, cargo, parrafos in datos.PRESENTACION:
+    L.append('--- %s, %s ---' % (quien, cargo))
+    L.append('')
+    for p in parrafos:
+        L.append(p)
+        L.append('')
 
 for n, nom, a, b, intro in datos.DOCTRINAS:
     ORD = {1:'PRIMERA',2:'SEGUNDA',3:'TERCERA',4:'CUARTA',5:'QUINTA',6:'SEXTA'}[n]
