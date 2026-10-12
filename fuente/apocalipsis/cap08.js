@@ -1,6 +1,8 @@
 /* Apocalipsis 8 — El séptimo sello y las cuatro primeras trompetas.
    Sigue el modelo de cap01.js. */
 const { tbl, hi, wa, li } = require('./ayudas.js');
+/* Línea de fuente al pie de cada sección de interpretación. */
+const fu = t => `<p class="fuente"><small>${t}</small></p>`;
 
 module.exports = {
   cap: 'ap8', label: 'Apocalipsis 8', sub: 'El séptimo sello y las primeras trompetas', vs: 13,
@@ -98,22 +100,124 @@ module.exports = {
       wa(`Son <strong>tres</strong> ayes porque faltan <strong>tres</strong>
       trompetas: la quinta, la sexta y la séptima.`) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias. Otras iglesias leen estas
-      visiones de otra manera; aquí va la lectura adventista.<br><br>
-      · El <strong>silencio</strong> del séptimo sello se relaciona con la
-      segunda venida de Jesús: el cielo queda en silencio porque los ángeles
-      vienen con él (Mateo 25:31).<br>
-      · El ángel con el <strong>incensario</strong> recuerda la obra de Cristo
-      como sumo sacerdote en el santuario del cielo, que intercede por su pueblo
-      y presenta sus oraciones ante Dios (Hebreos 8:1-2).<br>
-      · En la lectura clásica adventista, las <strong>cuatro primeras
-      trompetas</strong> son las invasiones que derribaron al Imperio romano de
-      Occidente.<br>
-      · Como en la Biblia la trompeta avisaba de guerra o peligro, las
-      trompetas se leen como <strong>advertencias</strong>: golpean un tercio,
-      no todo.`) },
+    { t: '🧭 Cómo estudia Bohr las trompetas', capa: 'contexto', h:
+      hi(`Esto es interpretación, no texto del capítulo. Es la lectura del
+      pastor adventista <strong>Stephen (Esteban) Bohr</strong>.<br><br>
+      Bohr describe cuatro maneras de leer las trompetas:
+      <strong>preterista</strong> (todo se cumplió en el primer siglo),
+      <strong>futurista</strong> (todo pasará al final),
+      <strong>doble cumplimiento</strong> (una vez en el pasado y otra en el
+      futuro) e <strong>historicista</strong> (se cumplen en orden a lo largo
+      de la historia de la iglesia, una sola vez). Él sigue la
+      historicista.`) +
+      li([`<strong>La escena de entrada marca el comienzo y el final.</strong>
+           El ángel que ofrece incienso (8:3-4) muestra el comienzo: desde
+           <strong>Pentecostés</strong> Jesús intercede en el santuario del
+           cielo. El incensario arrojado (8:5) muestra el final: termina la
+           intercesión.`,
+          `<strong>El libro sigue el orden del santuario.</strong> Las iglesias,
+           junto a los candeleros; los sellos, junto a la mesa de los panes;
+           las trompetas, junto al <strong>altar del incienso</strong>; en
+           11:19 se abre el lugar santísimo.`,
+          `<strong>Siete períodos.</strong> Las trompetas recorren la historia
+           cristiana, desde el primer siglo hasta que Cristo recibe el reino
+           (11:15).`]) +
+      fu(`Fuentes: Stephen Bohr, «Introducción a las siete trompetas», pág. 3-4,
+      8 y 20; Bohr, «La Razón de Nuestro Existir», pág. 44.`) },
+
+    { t: '🧭 El incensario: oraciones que Dios responde (8:3-5)', capa: 'contexto', h:
+      hi(`<strong>El incienso</strong> son las oraciones de los santos mezcladas
+      con los méritos de Jesús, y <strong>el fuego</strong> es símbolo del
+      Espíritu Santo. Elena de White lo dice así: Cristo
+      «mezcla con ellas los méritos de su propia vida de perfecta
+      obediencia».<br><br>
+      <strong>Dos altares.</strong> En el quinto sello las almas claman bajo
+      el altar del sacrificio (6:9-10). Dios oye ese clamor en el altar del
+      incienso y responde con las trompetas. Así fue en Egipto: Israel gimió,
+      Dios «se acordó de su pacto» (Éxodo 2:24) y envió juicios. Y en Números
+      10:9 la trompeta sonaba en la guerra contra el enemigo opresor, para que
+      Dios se acordara de su pueblo y lo librara.<br><br>
+      <strong>El incensario arrojado (8:5)</strong> no es Pentecostés: es el
+      momento en que termina la intercesión y se cierra el tiempo de gracia
+      (compara 15:5-8). Entre 8:4 y 8:5 hay un largo intervalo: toda la
+      historia de las trompetas.`) +
+      fu(`Fuentes: Stephen Bohr, «Introducción a las siete trompetas», pág. 16-18
+      y 21-24; Bohr, «La Razón de Nuestro Existir», pág. 79 (cita a Elena de
+      White, «Hijos e hijas de Dios», pág. 24).`) },
+
+    { t: '🧭 Las siete trompetas según Bohr', capa: 'contexto', h:
+      tbl(['Trompeta', 'Juicio sobre…', 'Fechas'], [
+        ['1ª (8:7)', 'Jerusalén, que cae', '34-70 d.C.'],
+        ['2ª (8:8-9)', 'Roma imperial, que cae', '300-476'],
+        ['3ª (8:10-11)', 'La iglesia profanada', '313-538'],
+        ['4ª (8:12; 11:2-6)', 'Dominio del papado', '538-1798'],
+        ['5ª (9:1-11; 11:7-12)', 'Revolución Francesa · 1.er ay', '1789-1798'],
+        ['6ª (9:13-21; 10:1-11:13)', 'Se reúnen impíos y justos · 2.º ay', '1844 al fin de la gracia'],
+        ['7ª (11:15-17)', 'Cristo recibe el reino · 3.er ay', 'Tras el fin de la gracia'],
+      ]) +
+      wa(`<strong>Por qué así:</strong> las trompetas son juicios
+      <strong>parciales</strong> (una tercera parte) contra los poderes que
+      oprimieron al pueblo de Dios, mientras todavía hay tiempo de gracia.
+      Los tres ayes (8:13) se anuncian al terminar la cuarta.<br>
+      <strong>Otras lecturas adventistas:</strong> la clásica de Urías Smith y
+      Josías Litch, que defiende Alberto Treiyer, ve en las trompetas 1-4 las
+      invasiones bárbaras contra Roma, y en la 5ª y 6ª a sarracenos y
+      turcos; Ekkehardt Mueller propone otra.`) +
+      fu(`Fuentes: Bohr, «Introducción a las siete trompetas», pág. 16 y 19; Bohr,
+      «15 principios de interpretación profética», vol. 2, pág. 89-90;
+      Treiyer, «Las siete trompetas, reseña de Ekkehardt Mueller», pág. 1-3.`) },
+
+    { t: '🧭 Las cuatro primeras, una por una (8:7-12)', capa: 'contexto', h:
+      li([`<strong>1ª · Jerusalén (34-70).</strong> Para Bohr los juicios
+           empiezan con la destrucción de Jerusalén. En las notas de Camilo:
+           el juicio empieza por la casa de Dios (1 Pedro 4:17); los árboles
+           son el pueblo de Dios (Salmo 1:3; Jeremías 11:16); granizo y fuego
+           son imágenes de guerra.`,
+          `<strong>2ª · Roma imperial (300-476).</strong> El monte ardiendo
+           recuerda a Babilonia, el «monte destruidor» que Dios reduce a monte
+           quemado (Jeremías 51:25).`,
+          `<strong>3ª · La iglesia profanada (313-538).</strong> La estrella
+           que cae recuerda al «Lucero» caído de Isaías 14:12-15. Notas de
+           Camilo: castigo sobre el pueblo de Dios que permitió la mezcla.`,
+          `<strong>4ª · El dominio papal (538-1798).</strong> Los 1.260 años
+           que amplían 11:2-6, 12 y 13:1-8; en las notas de Camilo, la
+           oscuridad de la Edad Media.`]) +
+      wa(`En el material de Bohr que tenemos están el poder y las fechas de
+      cada trompeta, pero no la explicación de cada símbolo. Los trasfondos de
+      la 2ª y la 3ª salen de su lista de símbolos del Antiguo Testamento.`) +
+      fu(`Fuentes: Bohr, «Introducción a las siete trompetas», pág. 16 y 19; Bohr,
+      «15 principios de interpretación profética», vol. 2, pág. 89-90 y 216;
+      notas de Camilo en Evernote, "Las trompetas".`) },
+
+    { t: '🧭 Trompetas y plagas: aviso antes del final', capa: 'contexto', h:
+      tbl(['', 'Trompetas', 'Plagas (copas)'], [
+        ['1-4', 'Tierra, mar, ríos y fuentes, astros', 'Las mismas cosas, en el mismo orden'],
+        ['5-6', 'Oscuridad · río Éufrates', 'Oscuridad · río Éufrates'],
+        ['Alcance', 'Una tercera parte: parcial', 'Toda la ira de Dios: total'],
+        ['Cuándo', 'Con tiempo de gracia', 'Después del tiempo de gracia'],
+      ]) +
+      hi(`Para Bohr las trompetas son el <strong>tipo</strong> (la figura) y las
+      plagas el <strong>antitipo</strong> (el cumplimiento mayor). Durante las
+      trompetas todavía es posible arrepentirse; en las plagas ya no.<br><br>
+      También compara las series: los cuatro primeros sellos con las cuatro
+      primeras trompetas; el sexto sello y la sexta trompeta, cada uno con su
+      paréntesis (capítulo 7; capítulos 10 y 11); el séptimo sello trae
+      silencio y la séptima trompeta trae el reino.`) +
+      fu(`Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 14-16.`) },
+
+    { t: '🧭 El silencio del séptimo sello (8:1)', capa: 'contexto', h:
+      hi(`Bohr repasa dos ideas que circulan: que la media hora son unos siete
+      días y medio proféticos con el cielo vacío, o que son los siete días del
+      viaje de los redimidos al cielo. Las descarta: después del tiempo de
+      gracia ya no hay tiempo profético, y el viaje al cielo será todo menos
+      silencioso.<br><br>
+      Su lectura: es un silencio <strong>literal y breve</strong> cuando Jesús
+      desciende. El sexto sello termina con la pregunta «¿quién podrá
+      sostenerse en pie?» (6:17). Elena de White describe que, tras esa
+      pregunta, «sigue un periodo de silencio aterrador», y luego Jesús dice
+      «Bástaos mi gracia».`) +
+      fu(`Fuente: Stephen Bohr, «Los siete sellos de Apocalipsis», tomo 2,
+      pág. 201-203 (cita «El conflicto de los siglos», pág. 624).`) },
   ],
 
   preguntas: [
@@ -134,10 +238,6 @@ module.exports = {
       e: 'Apocalipsis 8:1, cuando se abre el séptimo sello.' },
     { t: 'fill', v: '8:1', ins: 'Apocalipsis 8:1 (RV1995) — Completa:',
       p: [{ x: 'Cuando abrió el ' }, { b: 'séptimo', h: '¿cuál sello?' }, { x: ' sello, se hizo silencio en el cielo como por media ' }, { b: 'hora', h: '¿media qué?' }, { x: '.' }] },
-    { t: 'mc', v: '8:1', f: 'c',
-      q: 'En la lectura adventista, ¿con qué se relaciona el silencio del séptimo sello?',
-      o: ['Con la segunda venida de Jesús', 'Con el sábado de la creación', 'Con la prisión de Juan en Patmos', 'Con la oración callada de la iglesia'], a: 0,
-      e: 'Interpretación: el cielo queda en silencio porque los ángeles vienen con Jesús en su segunda venida (Mateo 25:31). El texto solo dice que hubo silencio como por media hora (8:1).' },
     { t: 'mc', v: '8:2', lit: 'se les dieron siete trompetas',
       q: '¿Qué se les dio a los siete ángeles que estaban de pie ante Dios? (Apocalipsis 8:2)',
       o: ['Siete trompetas', 'Siete copas', 'Siete sellos', 'Siete coronas'], a: 0,
@@ -152,10 +252,6 @@ module.exports = {
       e: '«…se le dio mucho incienso para añadirlo a las oraciones de todos los santos» (8:3).' },
     { t: 'fill', v: '8:3', ins: 'Apocalipsis 8:3 (RV1995) — Completa:',
       p: [{ x: 'sobre el altar de ' }, { b: 'oro', h: '¿de qué era el altar?' }, { x: ' que estaba delante del ' }, { b: 'trono', h: '¿delante de qué?' }, { x: '.' }] },
-    { t: 'mc', v: '8:3', f: 'c',
-      q: 'En la lectura adventista, ¿qué obra recuerda el ángel con el incensario ante el altar?',
-      o: ['La de Cristo, que intercede por su pueblo', 'La de los ancianos que tocan arpas', 'La de Moisés guiando a Israel', 'La de los sacerdotes de Jerusalén'], a: 0,
-      e: 'Interpretación: recuerda a Cristo como sumo sacerdote en el santuario del cielo (Hebreos 8:1-2). El texto dice que el ángel ofrecía incienso con las oraciones de los santos (8:3-4).' },
     { t: 'tf', v: '8:4',
       q: 'El humo del incienso, con las oraciones de los santos, subió a la presencia de Dios. (Apocalipsis 8:4)', a: true,
       e: 'Verdadero (Apocalipsis 8:4).' },
@@ -181,10 +277,6 @@ module.exports = {
     { t: 'tf', v: '8:7',
       q: 'Con la primera trompeta se quemó la tercera parte de la hierba verde. (Apocalipsis 8:7)', a: false,
       e: 'Falso: «TODA la hierba verde fue quemada» (8:7). La tercera parte fue de los árboles.' },
-    { t: 'mc', v: '8:7-12', f: 'c',
-      q: 'En la lectura adventista clásica, ¿qué representan las cuatro primeras trompetas?',
-      o: ['Las invasiones que derribaron al Imperio romano de Occidente', 'Las plagas que cayeron sobre Egipto en tiempos de Moisés', 'Los cuatro reinos de la estatua de Daniel 2', 'Cuatro guerras mundiales que todavía no han empezado'], a: 0,
-      e: 'Interpretación: las invasiones de los pueblos que derribaron a Roma de Occidente. El texto solo describe granizo, un monte ardiendo, una estrella y el cielo herido (8:7-12).' },
     { t: 'mc', v: '8:8', lit: 'algo como un gran monte ardiendo en fuego',
       q: '¿Qué fue precipitado en el mar con la segunda trompeta? (Apocalipsis 8:8)',
       o: ['Algo como un gran monte ardiendo en fuego', 'Una gran estrella ardiendo como una antorcha', 'Granizo y fuego mezclados con sangre', 'Una gran piedra como de molino'], a: 0,
@@ -230,6 +322,59 @@ module.exports = {
     { t: 'tf', v: '8:13',
       q: 'El ángel anunció los ayes por los toques de trompeta que estaban para tocar los cuatro ángeles. (Apocalipsis 8:13)', a: false,
       e: 'Falso: eran los TRES ángeles que faltaban por tocar (8:13): la quinta, la sexta y la séptima trompeta.' },
+    { t: 'mc', v: '8:1', f: 'c',
+      q: 'Según Bohr, ¿qué es la media hora de silencio del séptimo sello?',
+      o: ['Un silencio breve cuando Jesús desciende', 'Los siete días del viaje de los salvos al cielo', 'Siete días y medio con el cielo vacío', 'Una pausa del cielo antes del juicio de 1844'], a: 0,
+      e: 'Bohr la toma como un silencio literal y breve en la venida de Jesús: tras la pregunta «¿quién podrá sostenerse en pie?» (6:17) «sigue un periodo de silencio aterrador» (El conflicto de los siglos, 624). Descarta las otras dos lecturas de días. Fuente: Stephen Bohr, «Los siete sellos de Apocalipsis», tomo 2, pág. 201-203.' },
+    { t: 'tf', v: '8:1', f: 'c',
+      q: 'Según Bohr, la media hora de 8:1 es tiempo profético: unos siete días y medio.', a: false,
+      e: 'Falso: Bohr dice que es tiempo literal, porque después del cierre del tiempo de gracia ya no hay períodos proféticos. Fuente: Stephen Bohr, «Los siete sellos de Apocalipsis», tomo 2, pág. 201-202.' },
+    { t: 'mc', v: '8:3-4', f: 'c',
+      q: 'Según Bohr, ¿cuándo empezó la obra del ángel que ofrece el incienso con las oraciones?',
+      o: ['En Pentecostés, cuando Jesús empezó a interceder', 'En 1844, cuando se abrió el lugar santísimo', 'En el año 70, cuando cayó Jerusalén', 'En 1798, al terminar los 1.260 años'], a: 0,
+      e: 'La escena de 8:3-4 marca el punto de partida de las trompetas: desde Pentecostés Jesús intercede en el altar de oro del lugar santo. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 4 y 20.' },
+    { t: 'mc', v: '8:3', f: 'c',
+      q: 'Según Bohr, ¿qué representa el incienso que se añade a las oraciones de los santos?',
+      o: ['Los méritos de Jesús', 'Las buenas obras de los santos', 'Las ofrendas de los ancianos', 'La sangre de los mártires'], a: 0,
+      e: 'El incienso son las oraciones mezcladas con los méritos de Jesús, y el fuego es símbolo del Espíritu Santo. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 24.' },
+    { t: 'mc', v: '8:5', f: 'c',
+      q: 'Según Bohr, ¿qué representa que el ángel arroje el incensario a la tierra?',
+      o: ['El fin de la intercesión y del tiempo de gracia', 'El Espíritu Santo que bajó en Pentecostés', 'La caída de Jerusalén en el año 70', 'El comienzo del juicio celestial en 1844'], a: 0,
+      e: 'Arrojar el incensario marca el final de la serie: termina la intercesión y se cierra el tiempo de gracia (compara 15:5-8). Bohr rechaza que sea Pentecostés, porque allí Jesús empezó a interceder. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 20-21.' },
+    { t: 'mc', v: '8:2', f: 'c',
+      q: 'Según Bohr, ¿junto a qué mueble del santuario ministra Jesús en la serie de las trompetas?',
+      o: ['El altar del incienso', 'El candelero de oro', 'La mesa de los panes', 'El arca del pacto'], a: 0,
+      e: 'El Apocalipsis sigue el orden del santuario: iglesias y candeleros, sellos y mesa de los panes, trompetas y altar del incienso; en 11:19 se ve el arca. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 8.' },
+    { t: 'tf', v: '8:2', f: 'c',
+      q: 'Según Bohr, las trompetas son la respuesta de Dios al clamor de su pueblo contra los que lo oprimen, como en Números 10:9.', a: true,
+      e: 'Verdadero: el clamor de las almas bajo el altar (6:9-10) sube al altar del incienso, y Dios responde con juicios sobre los opresores, como en Egipto (Éxodo 2:23-25). Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 16-17.' },
+    { t: 'mc', v: '8:7', f: 'c',
+      q: 'Según Bohr, ¿sobre quién cae el juicio de la primera trompeta?',
+      o: ['Sobre Jerusalén, del 34 al 70 d.C.', 'Sobre Roma, saqueada en el 410', 'Sobre el papado, del 538 al 1798', 'Sobre Francia, del 1789 al 1798'], a: 0,
+      e: 'Para Bohr los juicios de las trompetas empiezan con la destrucción de Jerusalén (34-70 d.C.). El saqueo de Roma en el 410 es de la lectura clásica. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 16 y 19.' },
+    { t: 'mc', v: '8:8-9', f: 'c',
+      q: 'Según Bohr, ¿a qué corresponde la segunda trompeta?',
+      o: ['La caída de Roma imperial (300-476)', 'La caída de Jerusalén (34-70)', 'La iglesia profanada (313-538)', 'El dominio papal (538-1798)'], a: 0,
+      e: 'La segunda trompeta es la caída de Roma, entre el 300 y el 476. Bohr relaciona el monte ardiendo con Jeremías 51:25. Fuentes: Bohr, «Introducción a las siete trompetas», pág. 19; Bohr, «15 principios de interpretación profética», vol. 2, pág. 216.' },
+    { t: 'mc', v: '8:10-11', f: 'c',
+      q: 'Según Bohr, ¿a qué corresponde la tercera trompeta, la de la estrella Ajenjo?',
+      o: ['La iglesia profanada (313-538)', 'La caída de Roma imperial (300-476)', 'La Revolución Francesa (1789-1798)', 'La invasión de los hunos (siglo V)'], a: 0,
+      e: 'La tercera trompeta es la iglesia profanada, del 313 al 538. Bohr relaciona la estrella con el «Lucero» caído de Isaías 14:12-15. La de los hunos es la lectura clásica. Fuentes: Bohr, «Introducción a las siete trompetas», pág. 19; Bohr, «15 principios de interpretación profética», vol. 2, pág. 216.' },
+    { t: 'mc', v: '8:12', f: 'c',
+      q: 'Según Bohr, ¿a qué período corresponde la cuarta trompeta, cuando se oscurecen los astros?',
+      o: ['Al dominio papal, del 538 al 1798', 'A la Revolución Francesa, 1789-1798', 'A la caída de Roma, del 300 al 476', 'Al tiempo del fin, desde 1844'], a: 0,
+      e: 'La cuarta trompeta son los 1.260 años de dominio papal (538-1798); 11:2-6 vuelve a ese período. Fuentes: Bohr, «Introducción a las siete trompetas», pág. 19; Bohr, «15 principios de interpretación profética», vol. 2, pág. 89.' },
+    { t: 'tf', v: '8:7-12', f: 'c',
+      q: 'Según Bohr, las cuatro primeras trompetas son las invasiones bárbaras que derribaron a Roma.', a: false,
+      e: 'Falso: esa es la lectura clásica de Urías Smith. Bohr pregunta por qué esas invasiones merecerían cuatro trompetas y las aplica a Jerusalén, Roma, la iglesia profanada y el dominio papal. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 6 y 19.' },
+    { t: 'mc', v: '8:7-12', f: 'c',
+      q: 'Según Bohr, ¿por qué las trompetas dañan solo «la tercera parte»?',
+      o: ['Son juicios parciales con tiempo de gracia', 'Porque solo un tercio del mundo era pagano', 'Porque cada una dura un tercio de la historia', 'Porque son las plagas finales sin misericordia'], a: 0,
+      e: 'Que caigan en tercios muestra que son juicios preliminares y parciales, y que todavía hay arrepentimiento. Las plagas, en cambio, son totales y vienen tras el cierre de la gracia. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 16.' },
+    { t: 'mc', v: '8:13', f: 'c',
+      q: 'Según Bohr, ¿qué hecho histórico es el primer ay, la quinta trompeta?',
+      o: ['La Revolución Francesa', 'La caída de Jerusalén', 'La Reforma protestante', 'La caída de Constantinopla'], a: 0,
+      e: 'Los tres ayes se anuncian al terminar la cuarta trompeta (8:13); el primero, la quinta trompeta, es la Revolución Francesa (1789-1798). Fuente: Stephen Bohr, «15 principios de interpretación profética», vol. 2, pág. 89.' },
   ],
 
   tarjetas: [

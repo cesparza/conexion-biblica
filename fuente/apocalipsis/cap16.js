@@ -124,26 +124,142 @@ module.exports = {
         ['7', 'Grandes voces: «Los reinos del mundo…» (11:15)', '«¡Ya está hecho!» (16:17)'],
       ]) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
+    { t: '🧭 Cuándo caen las plagas y sobre quién', capa: 'contexto', h:
       hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
       de aquí van marcadas como complementarias.<br><br>
-      · Las <strong>siete plagas postreras</strong> caen después de que se
-      cierra el tiempo de gracia (15:8) y solo sobre los que recibieron la
-      marca de la bestia (la primera, dice el texto, cae sobre ellos: 16:2).
-      Dios protege a su pueblo durante ellas, como
-      promete el Salmo 91 («El conflicto de los siglos», cap. «El tiempo de
-      angustia»).<br>
-      · Los <strong>espíritus semejantes a ranas</strong> que hacen señales se
-      leen como el engaño de los milagros falsos y del espiritismo en el
-      tiempo del fin. El dragón, la bestia y el falso profeta se entienden
-      como <strong>poderes y sistemas</strong> que se unen contra Dios, no
-      como las personas sinceras que hay en todas las iglesias.<br>
-      · <strong>Armagedón</strong> (16:16) se entiende como el conflicto
-      final entre Cristo y las fuerzas del mal, más que como una guerra
-      entre naciones por un territorio.<br>
-      · <strong>«Yo vengo como ladrón»</strong> (16:15) es un llamado a estar
-      preparados hoy: velar y guardar las vestiduras es vivir vestidos de la
-      justicia de Cristo.`) },
+      Las siete copas se derraman cuando Cristo ya dejó de interceder
+      (15:5-8). Elena de White dice que entonces cae, sin mezcla, la ira que
+      el tercer ángel anunció contra los que adoran a la bestia y reciben su
+      marca (14:9-10).`) +
+      li([`Son <strong>parecidas a las plagas de Egipto</strong>, que cayeron
+           justo antes de que Dios librara a Israel.`,
+          `<strong>No son universales</strong>: si cayeran sobre todos, nadie
+           quedaría vivo. Pero serán los peores azotes de la historia.`,
+          `El <strong>pueblo de Dios</strong> pasa escasez y persecución, pero
+           no es abandonado: Dios lo cuida como cuidó a Elías, y se cumple el
+           Salmo 91: «ni plaga tocará tu morada».`,
+          `Bohr: los que reciben las plagas <strong>no se arrepienten</strong>
+           (16:9, 11) porque la gracia ya se cerró y el Espíritu Santo ya no
+           los convence de pecado.`,
+          `Bohr: las plagas devuelven la tierra a como estaba antes de la
+           creación: desordenada, vacía y oscura (Jeremías 4:23-27).`]) +
+      hi(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 685-688;
+      Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 221-223.`) },
+
+    { t: '🧭 Las primeras cuatro copas (16:2-9)', capa: 'contexto', h:
+      tbl(['Copa', 'Lo que destaca la interpretación'], [
+        ['1.ª Tierra', 'La úlcera cae solo sobre los que tienen la marca y adoran la imagen: la plaga separa a los dos grupos que formó el mensaje del tercer ángel.'],
+        ['2.ª Mar', 'El mar se vuelve sangre y muere todo ser vivo del mar.'],
+        ['3.ª Ríos y fuentes', 'Elena de White: los que condenaron a muerte al pueblo de Dios son tan culpables de su sangre como si la hubieran derramado; por eso el ángel declara que Dios es justo (16:5-6).'],
+        ['4.ª Sol', 'Calor que quema. Elena de White usa Joel 1 para describir la tierra: cosechas perdidas, árboles secos, ganado sin pastos.'],
+      ]) +
+      wa(`Bohr nota que Elena de White cita versículos de las cuatro primeras
+      plagas y de la séptima, pero no de la quinta ni de la sexta. Aun así,
+      dice Bohr, las describe con sus propias palabras (lo verás en las
+      secciones siguientes).`) +
+      hi(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 686-687;
+      Bohr, «¿Cuán cerca al fin?», pág. 327-328.`) },
+
+    { t: '🧭 Quinta copa: tinieblas sobre el trono de la bestia (16:10-11)', capa: 'contexto', h:
+      hi(`Para Bohr, esta bestia es la misma de Apocalipsis 13:1-10 y el
+      <strong>cuerno pequeño</strong> de Daniel 7: el poder que habló contra el
+      Altísimo, persiguió a los santos y gobernó 1260 años. La identifica con
+      el <strong>papado como sistema religioso y político</strong>. El
+      «trono» es su sede de gobierno y su reino es mundial (13:3, 7).`) +
+      li([`Las tinieblas son sobrenaturales y cubren todo su reino.`,
+          `Los que se muerden la lengua de dolor entran en pánico y se vuelven
+           unos contra otros, como dice Zacarías 14:12-13.`,
+          `No se arrepienten, porque la gracia ya se cerró.`]) +
+      hi(`¿Dónde lo ve Bohr en Elena de White? Cuando multitudes armadas están
+      por atacar de noche al pueblo de Dios para cumplir el decreto de muerte,
+      caen «densas tinieblas, más sombrías que la obscuridad de la noche», y
+      un arco iris de la gloria de Dios rodea a los que oran.<br><br>
+      Se habla de un sistema de poder, no de las personas sinceras que hay en
+      él.`) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 222-223 y 228; Elena de White, «El conflicto de los siglos»,
+      pág. 692-694.`) },
+
+    { t: '🧭 Sexta copa: el Éufrates se seca (16:12)', capa: 'contexto', h:
+      hi(`Bohr lo explica con la caída de la Babilonia antigua (Daniel 5;
+      Jeremías 50 y 51): el río Éufrates era su gran defensa. Ciro desvió el
+      río, entró con su ejército por el cauce seco la noche en que Babilonia
+      bebía vino en sus fiestas, y la ciudad cayó. Así el pueblo de Dios quedó
+      libre para volver a Jerusalén. Al final eso se repite, pero en forma
+      simbólica y mundial:`) +
+      tbl(['Símbolo', 'Significado, según Bohr'], [
+        ['El gran río Éufrates', 'Pueblos y naciones que sostienen a Babilonia (Isaías 8:7-8; 17:12-13; Apocalipsis 17:15)'],
+        ['Las aguas se secan', 'Esas multitudes le quitan su apoyo y se vuelven contra ella (17:16)'],
+        ['Los reyes del oriente', 'Cristo y sus ángeles, que vienen a librar a su pueblo'],
+      ]) +
+      hi(`Elena de White lo describe sin citar el versículo: «Las multitudes
+      encolerizadas se sienten contenidas en el acto», y poco después aparece
+      en el este la pequeña nube que trae a Cristo.`) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 223; Bohr, «¿Cuán cerca al fin?», pág. 328-330; Elena de White,
+      «El conflicto de los siglos», pág. 694 y 698.`) },
+
+    { t: '🧭 Las ranas: la gran alianza del engaño (16:13-14)', capa: 'contexto', h:
+      hi(`Salen tres espíritus de tres bocas. Así identifica Bohr a los tres
+      poderes:`) +
+      tbl(['Boca', 'Qué representa, según Bohr'], [
+        ['El dragón', 'Los poderes civiles del mundo: reyes y gobernantes'],
+        ['La bestia', 'El papado (la bestia del mar de Apocalipsis 13)'],
+        ['El falso profeta', 'Estados Unidos, la bestia de la tierra, que hará una imagen de la bestia uniendo la iglesia y el estado'],
+      ]) +
+      hi(`Elena de White cita 16:13-14 al hablar del <strong>espiritismo</strong>
+      (la creencia de que se puede hablar con los muertos): por medio de él se
+      harán milagros que muchos tomarán como obra de Dios. Y explica la
+      alianza: con dos errores, la inmortalidad del alma y la santidad del
+      domingo, Satanás unirá al espiritismo, al poder romano y a los
+      protestantes de los Estados Unidos.<br><br>
+      Son sistemas y poderes. La misma autora dice que en las iglesias hay
+      muchos verdaderos hijos de Dios.`) +
+      hi(`Fuentes: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 216;
+      Elena de White, «El conflicto de los siglos», pág. 618-619, 645-646 y
+      441.`) },
+
+    { t: '🧭 Armagedón y «Yo vengo como ladrón» (16:15-16)', capa: 'contexto', h:
+      hi(`Bohr da a <strong>Armagedón</strong> el significado de «monte de la
+      congregación». La palabra «lugar» no apunta solo al valle de Meguido en
+      Israel: la batalla es mundial. Es la reunión de los reyes del mundo
+      contra Dios en la persona de su pueblo, porque perseguir a los hijos de
+      Dios es perseguir a Cristo (Mateo 25:40; Hechos 9:4).`) +
+      li([`Para Bohr el centro de la batalla es la <strong>adoración</strong>:
+           obedecer a Dios o no, como en la historia de Caín y Abel.`,
+          `Otra lectura, de muchos comentarios evangélicos: una guerra
+           literal en el valle de Meguido. Bohr la rechaza, igual que la idea
+           de una guerra por el petróleo o entre árabes y judíos.`]) +
+      hi(`El versículo 15 decide de qué lado estará cada uno. Bohr nota que son
+      las únicas palabras de Jesús entre los capítulos 3 y 21, y que las
+      vestiduras, la desnudez y la vergüenza nos llevan a Génesis 2 y 3 y al
+      consejo a Laodicea (3:18): estar vestidos de la justicia de Cristo.`) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 104, 226 y 230; Bohr, «Los 144.000 y los 24 ancianos», pág. 118-119;
+      Bohr, «Gemas de la verdad presente», pág. 136-137 y 148-149.`) },
+
+    { t: '🧭 Séptima copa: «Hecho es» (16:17-21)', capa: 'contexto', h:
+      hi(`Elena de White describe esta copa: es a <strong>medianoche</strong>
+      cuando Dios manifiesta su poder. La voz de Dios dice «Hecho es» (la RV1995
+      traduce «¡Ya está hecho!»).`) +
+      li([`Un terremoto como nunca hubo: se hunden cordilleras y desaparecen
+           islas.`,
+          `Los puertos que se volvieron como Sodoma son tragados por el mar.`,
+          `Cae granizo «como del peso de un talento» y se derrumban los
+           palacios.`,
+          `Se parten los muros de las cárceles y quedan libres los hijos de
+           Dios presos por su fe; los sepulcros se abren.`]) +
+      hi(`Bohr ve aquí el final del modelo del éxodo: como en el Salmo 77, la
+      liberación viene con truenos, relámpagos y terremoto. Cita 16:19 junto
+      con 16:13-14: la gran ciudad se rompe en tres partes, los mismos tres
+      poderes que se habían unido. Y explica que «vino en memoria» no quiere
+      decir que Dios se había olvidado: espera hasta que la copa de maldad
+      está llena, y entonces ejecuta la sentencia.`) +
+      hi(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 694-695;
+      Bohr, «15 principios de interpretación profética», tomo 2, pág. 224-226;
+      Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 202-203 y
+      224-225.`) },
   ],
 
   preguntas: [
@@ -301,18 +417,79 @@ module.exports = {
     { t: 'tf', v: '16:21',
       q: 'Por la plaga del granizo, los hombres blasfemaron contra Dios. (Apocalipsis 16:21)', a: true,
       e: 'Verdadero: «…los hombres blasfemaron contra Dios por la plaga del granizo, porque su plaga fue sumamente grande» (16:21).' },
+    { t: 'mc', v: '16:1', f: 'c',
+      q: 'Según Elena de White, ¿en qué se diferencian las siete plagas de los juicios de Dios anteriores?',
+      o: ['Caen sin mezcla de misericordia', 'Caen solo sobre el mar y los ríos', 'Caen antes del fuerte pregón', 'Caen durante los mil años'], a: 0,
+      e: 'Elena de White: los juicios anteriores al cierre de la gracia fueron mitigados con misericordia; en las plagas la ira de Dios se derrama sin esa mezcla. Fuente: Elena de White, «El conflicto de los siglos», pág. 687.' },
+    { t: 'tf', v: '16:2', f: 'c',
+      q: 'Según Elena de White, las siete plagas postreras serán universales y caerán sobre todos los habitantes de la tierra.', a: false,
+      e: 'Falso: «Estas plagas no serán universales, pues de lo contrario los habitantes de la tierra serían enteramente destruídos». Fuente: Elena de White, «El conflicto de los siglos», pág. 687.' },
     { t: 'mc', v: '16:2', f: 'c',
-      q: 'En la lectura adventista, ¿cuándo caen las siete plagas postreras de Apocalipsis 16?',
-      o: ['Después de que se cierra el tiempo de gracia', 'Al principio de la historia de la iglesia', 'Mientras se predica el evangelio eterno', 'Durante los mil años después de la venida'], a: 0,
-      e: 'Interpretación: caen cuando ya se cerró el tiempo de gracia (15:8) y Dios protege a su pueblo («El conflicto de los siglos»). El texto dice que la primera cae «sobre los hombres que tenían la marca de la bestia» (16:2).' },
-    { t: 'mc', v: '16:13-14', f: 'c',
-      q: 'En la interpretación adventista, ¿qué representan los espíritus semejantes a ranas que hacen señales (Apocalipsis 16:13-14)?',
-      o: ['El engaño de los milagros falsos y el espiritismo', 'Las plagas de Egipto que volverán tal cual', 'Los ejércitos de los reyes del oriente', 'Los ángeles que derraman las siete copas'], a: 0,
-      e: 'Interpretación: el engaño final por medio de señales y del espiritismo. El texto dice que «son espíritus de demonios, que hacen señales» (16:14).' },
+      q: 'Según Elena de White, ¿a qué plagas del Antiguo Testamento se parecen las siete plagas postreras?',
+      o: ['A las de Egipto antes del éxodo', 'A las de los filisteos con el arca', 'A la peste en los días de David', 'A la sequía en los días de Elías'], a: 0,
+      e: 'Elena de White: las plagas que cayeron sobre Egipto cuando Dios iba a librar a Israel fueron parecidas a los juicios que caerán justo antes de la liberación final. Fuente: Elena de White, «El conflicto de los siglos», pág. 686.' },
+    { t: 'tf', v: '16:6', f: 'c',
+      q: 'Según Elena de White, los que condenan a muerte al pueblo de Dios son tan culpables de su sangre como si la hubieran derramado con sus propias manos.', a: true,
+      e: 'Verdadero: así explica por qué el ángel declara justo a Dios en la tercera plaga (16:5-6). Fuente: Elena de White, «El conflicto de los siglos», pág. 686.' },
+    { t: 'mc', v: '16:9', f: 'c',
+      q: 'Según Bohr, ¿por qué los hombres no se arrepienten durante las plagas (Apocalipsis 16:9, 11)?',
+      o: ['Porque la gracia ya se cerró', 'Porque nadie les predicó antes', 'Porque las plagas duran muy poco', 'Porque Dios les prohíbe arrepentirse'], a: 0,
+      e: 'Bohr: no se arrepienten porque la puerta de la gracia se cerró y el Espíritu Santo ya no los convence de pecado. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 223.' },
+    { t: 'mc', v: '16:10', f: 'c',
+      q: 'Según Bohr, ¿qué representa «el trono de la bestia» de la quinta plaga (Apocalipsis 16:10)?',
+      o: ['La sede de gobierno del papado', 'La ciudad de Jerusalén reconstruida', 'El trono de Satanás en Pérgamo', 'La capital de la antigua Babilonia'], a: 0,
+      e: 'Bohr: la bestia es la de Apocalipsis 13 y el cuerno pequeño de Daniel 7; el trono es su sede de gobierno, y la plaga golpea esa autoridad. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 222.' },
+    { t: 'mc', v: '16:10', f: 'c',
+      q: 'Según Bohr, ¿qué escena de «El conflicto de los siglos» corresponde a la quinta plaga?',
+      o: ['Caen tinieblas cuando atacan a los fieles', 'Cae fuego del cielo ante los hombres', 'Un ángel alumbra toda la tierra', 'Se ve la pequeña nube en el oriente'], a: 0,
+      e: 'Bohr: cuando las multitudes van a atacar de noche al pueblo de Dios, caen «densas tinieblas, más sombrías que la obscuridad de la noche»: es la quinta plaga. Fuentes: Bohr, «15 principios de interpretación profética», tomo 2, pág. 228; Elena de White, «El conflicto de los siglos», pág. 693-694.' },
+    { t: 'mc', v: '16:12', f: 'c',
+      q: 'Según Bohr, ¿qué representa el gran río Éufrates en la sexta plaga?',
+      o: ['Pueblos y naciones que apoyan a Babilonia', 'El río literal que hoy cruza Irak y Siria', 'Los ejércitos que vienen del Asia oriental', 'Un gran ejército de doscientos millones'], a: 0,
+      e: 'Bohr: el río es simbólico y mundial; las aguas son multitudes (Isaías 8:7-8; 17:12-13; Apocalipsis 17:15). Que se seque significa que dejan de sostener a Babilonia. Fuente: Bohr, «Los 144.000 y los 24 ancianos», pág. 100.' },
+    { t: 'tf', v: '16:12', f: 'c',
+      q: 'Según Bohr, el secamiento del Éufrates se entiende con la caída de la Babilonia antigua, cuando Ciro desvió el río y entró por el cauce seco.', a: true,
+      e: 'Verdadero: esa historia (Daniel 5; Jeremías 50 y 51) se aplica en forma simbólica y mundial al final. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 223.' },
+    { t: 'mc', v: '16:12', f: 'c',
+      q: 'Según Bohr, ¿quiénes son «los reyes del oriente» de Apocalipsis 16:12?',
+      o: ['Cristo y sus ángeles, que vienen a librar', 'Los reyes de China, Japón y la India', 'Los ejércitos de Ciro el persa', 'Los reyes de la tierra y de todo el mundo'], a: 0,
+      e: 'Bohr: después de las tinieblas y del secamiento de las aguas, vienen Jesús y sus ángeles como reyes del oriente para rescatar al remanente. Ciro solo es el modelo antiguo. Fuente: Bohr, «¿Cuán cerca al fin?», pág. 329-330.' },
+    { t: 'mc', v: '16:13', f: 'c',
+      q: 'Según Bohr, ¿qué representa el falso profeta de Apocalipsis 16:13?',
+      o: ['EE. UU., que unirá la iglesia y el estado', 'Los poderes civiles de todo el mundo', 'El papado como sistema religioso-político', 'El espiritismo con sus falsos milagros'], a: 0,
+      e: 'Bohr: el dragón son los poderes civiles del mundo, la bestia es el papado y el falso profeta es Estados Unidos (la bestia de la tierra), que hará una imagen de la bestia. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 216.' },
+    { t: 'mc', v: '16:14', f: 'c',
+      q: 'Según Elena de White, ¿cuáles son los dos grandes errores con que Satanás unirá a los hombres al final?',
+      o: ['El alma inmortal y la santidad del domingo', 'La evolución y la negación de la creación', 'El ateísmo y el amor al dinero', 'La idolatría y el culto a los ángeles'], a: 0,
+      e: 'Elena de White: la inmortalidad del alma es la base del espiritismo y la santidad del domingo crea un lazo con Roma; así se forma una triple alianza. Fuente: Elena de White, «El conflicto de los siglos», pág. 645.' },
+    { t: 'tf', v: '16:14', f: 'c',
+      q: 'Según Elena de White, por medio del espiritismo se harán milagros y sanidades que muchos aceptarán como obra de Dios.', a: true,
+      e: 'Verdadero: «Por medio del espiritismo han de cumplirse milagros, los enfermos sanarán»; y los espíritus de demonios de 16:14 «hacen señales». Fuente: Elena de White, «El conflicto de los siglos», pág. 645-646.' },
+    { t: 'mc', v: '16:15', f: 'c',
+      q: 'Según Bohr, ¿qué tiene de especial Apocalipsis 16:15 («Yo vengo como ladrón»)?',
+      o: ['Son las únicas palabras de Jesús entre 3 y 21', 'Es la última frase que Juan escribió en Patmos', 'Es la única bienaventuranza del Apocalipsis', 'Es una cita directa del profeta Isaías'], a: 0,
+      e: 'Bohr: es el único lugar entre los capítulos 3 y 21 donde habla Jesús, señal de que es algo de suma importancia. (El Apocalipsis tiene siete bienaventuranzas.) Fuente: Bohr, «Gemas de la verdad presente», pág. 137.' },
+    { t: 'tf', v: '16:15', f: 'c',
+      q: 'Según Bohr, las vestiduras, la desnudez y la vergüenza de Apocalipsis 16:15 nos llevan de vuelta a Génesis 2 y 3.', a: true,
+      e: 'Verdadero: allí aparecen por primera vez esas ideas; estar vestido es estar cubierto por la justicia de Cristo. Fuente: Bohr, «Gemas de la verdad presente», pág. 137.' },
     { t: 'mc', v: '16:16', f: 'c',
-      q: 'En la lectura adventista, ¿qué es Armagedón (Apocalipsis 16:16)?',
-      o: ['El conflicto final entre Cristo y las fuerzas del mal', 'Una guerra entre dos naciones por un territorio', 'El lugar donde Juan escribió el Apocalipsis', 'El nombre del ángel de la séptima copa'], a: 0,
-      e: 'Interpretación: la batalla final del gran conflicto, más que una guerra entre naciones. El texto solo dice: «Y los reunió en el lugar que en hebreo se llama Armagedón» (16:16).' },
+      q: 'Según Bohr, ¿qué significa el nombre «Armagedón»?',
+      o: ['Monte de la congregación', 'Valle de la matanza final', 'Llanura de los reyes', 'Ciudad de la confusión'], a: 0,
+      e: 'Bohr lo pone en su lista de nombres bíblicos con sentido simbólico: Armagedón, «monte de la congregación». Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 104.' },
+    { t: 'mc', v: '16:16', f: 'c',
+      q: 'Según Bohr, ¿dónde se pelea la batalla de Armagedón?',
+      o: ['En todo el mundo: es una batalla global', 'Solo en el valle de Meguido, en Israel', 'En el cielo, entre Miguel y el dragón', 'En el Medio Oriente, por el petróleo'], a: 0,
+      e: 'Bohr: el «lugar» de la batalla es mundial, aunque muchos eruditos evangélicos lo ponen en el valle de Meguido; y no tiene que ver con el petróleo, sino con la adoración. Fuentes: Bohr, «Los 144.000 y los 24 ancianos», pág. 118-119; Bohr, «Gemas de la verdad presente», pág. 149.' },
+    { t: 'mc', v: '16:17', f: 'c',
+      q: 'Según Elena de White, ¿a qué hora manifiesta Dios su poder para librar a su pueblo, cuando se oye la voz de 16:17?',
+      o: ['A medianoche', 'Al amanecer', 'Al mediodía', 'Al ponerse el sol'], a: 0,
+      e: '«Es a medianoche cuando Dios manifiesta su poder para librar a su pueblo»; luego la voz de Dios dice «Hecho es». Fuente: Elena de White, «El conflicto de los siglos», pág. 694.' },
+    { t: 'tf', v: '16:18', f: 'c',
+      q: 'Según Elena de White, en el gran terremoto de la séptima plaga se parten los muros de las cárceles y quedan libres los hijos de Dios.', a: true,
+      e: 'Verdadero: «Los muros de las cárceles se parten de arriba abajo, y son libertados los hijos de Dios que habían sido apresados por su fe». Fuente: Elena de White, «El conflicto de los siglos», pág. 695.' },
+    { t: 'tf', v: '16:19', f: 'c',
+      q: 'Según Bohr, que Babilonia «vino en memoria» significa que Dios se había olvidado de ella hasta ese momento.', a: false,
+      e: 'Falso: Dios conoce sus pecados; espera hasta que la copa de maldad está llena y entonces «se acuerda», es decir, ejecuta la sentencia. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 224-225.' },
   ],
 
   tarjetas: [

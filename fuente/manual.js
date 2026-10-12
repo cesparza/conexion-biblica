@@ -51,8 +51,10 @@ const MANUAL = [
     h:`<p>Una tarjeta por actividad, y cada una dice <strong>cuándo es</strong> y
     <strong>qué se estudia</strong>:</p>
     <p><strong>Conexión Bíblica</strong> es el libro de Daniel y Profetas y
-    Reyes. <strong>Conexión Bíblica de Guías Mayores</strong> es el mismo
-    libro con más capítulos, para su propio evento. <strong>Devoción
+    Reyes. <strong>Conexión Bíblica: Daniel</strong> es el mismo
+    libro con más capítulos, para el evento de Guías Mayores.
+    <strong>Conexión Bíblica: Apocalipsis</strong> es el libro entero.
+    <strong>Devoción
     Matutina</strong> es «Héroes y villanos», la lectura de todo octubre.
     <strong>En esto creemos</strong> son las 28 creencias.</p>
     <p>Escoge <strong>una</strong>, la que vas a estudiar ahora. Si estás en

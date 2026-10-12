@@ -119,24 +119,131 @@ module.exports = {
       tierra en 13:13-16. Al dragón lo lanzan al lago de fuego después,
       en 20:10.`) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias.<br><br>
-      · El <strong>jinete del caballo blanco</strong> es Jesús en su
-      <strong>segunda venida</strong>, como Rey de reyes. Viene visible, con
-      los ángeles del cielo.<br>
-      · La <strong>esposa</strong> se relaciona con la santa ciudad, la nueva
-      Jerusalén (21:2, 21:9-10), y con el pueblo de Dios; los redimidos son
-      los invitados a la cena (19:9).<br>
-      · El <strong>lino fino</strong> es la justicia de Cristo, que él regala
-      a su pueblo («se le ha concedido», 19:8) y que se ve en una vida de
-      acciones justas.<br>
-      · <strong>«El espíritu de la profecía»</strong> (19:10) se une con
-      12:17: el pueblo de Dios del tiempo del fin «tiene el testimonio de
-      Jesucristo». La iglesia adventista ve ese don de profecía en el
-      ministerio de Elena G. de White.<br>
-      · La batalla de 19:19-21 ocurre en la venida de Jesús; con ella empiezan
-      los mil años de Apocalipsis 20.`) },
+    { t: '🧭 Las bodas del Cordero: qué son y quién es la esposa (19:7-9)', capa: 'contexto', h:
+      hi(`Esto es interpretación, no texto del capítulo. En la lectura adventista,
+      <strong>las bodas</strong> son el momento en que Cristo <strong>recibe su
+      reino</strong> de manos del Padre, en el cielo (Daniel 7:13-14). Elena de
+      White lo dice así: la boda representa «el acto de ser investido Cristo de la
+      dignidad de Rey».<br><br>
+      · <strong>La esposa</strong> es la santa ciudad, la nueva Jerusalén, capital
+      del reino (21:9-10).<br>
+      · <strong>El pueblo de Dios</strong> son los invitados a la cena (19:9):
+      «Si son los invitados, no pueden representar también a la esposa».<br>
+      · Antes de la boda, el rey revisa que cada invitado lleve el vestido de
+      bodas (Mateo 22:11). Eso es el <strong>juicio investigador</strong>: la
+      revisión de los casos en el cielo, que empezó en 1844 y termina antes de la
+      venida.`) +
+      wa(`Bohr lo une así: Jesús recibe el reino (y en ese sentido «se casa» con su
+      iglesia completa) en el cielo; después vuelve a la tierra a buscar a los
+      suyos y los lleva a la <strong>gran recepción de bodas</strong>. Los fieles
+      «entran a las bodas» por la fe, con su nombre en el libro, sin estar allí en
+      persona.`) +
+      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 350-351; Stephen Bohr, Mateo 24 y las señales del fin, págs. 168 y 170; Stephen Bohr, Lo que Jesús dijo, pág. 233.</p>` },
+
+    { t: '🧭 El lino fino: un regalo que se ve en la vida (19:8)', capa: 'contexto', h:
+      hi(`El texto dice que a la esposa <strong>«se le ha concedido»</strong>
+      vestirse de lino fino (19:8): es un <strong>regalo</strong>, no algo que se
+      gana. Elena de White lo explica: es «la justicia de Cristo, su propio carácter
+      sin mancha», que se da por la fe a quien lo recibe como Salvador.<br><br>
+      Pero el regalo se nota: el mismo versículo dice que representa «las acciones
+      justas de los santos» (19:8).`) +
+      li([`<strong>Justificación</strong> (Dios nos declara justos por Cristo) y
+           <strong>santificación</strong> (Dios nos cambia la vida) van juntas:
+           quien recibe el vestido lo guarda (3:4; 16:15).`,
+          `Bohr: cuando termina el juicio y Dios <strong>vindica</strong> a su
+           pueblo (lo defiende ante todos), lo viste de lino fino.`,
+          `Escuela Sabática 2019: los invitados no reclaman mérito; las acciones
+           justas nacen de su unión con Cristo.`]) +
+      `<p>Fuentes: notas de Camilo en Evernote, "La segunda venida y el rapto secreto" (cita Palabras de vida del gran Maestro, pág. 252); Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, pág. 249; Escuela Sabática 2019-1T, lección 13, pág. 91.</p>` },
+
+    { t: '🧭 Los «¡Aleluya!»: Dios responde a los mártires (19:1-6)', capa: 'contexto', h:
+      hi(`Para Bohr, 19:1-2 es la <strong>respuesta</strong> al clamor de las almas
+      debajo del altar en el quinto sello: «¿Hasta cuándo… vas a tardar en juzgar y
+      vengar nuestra sangre…?» (6:10). Aquí el cielo canta que Dios «ha vengado la
+      sangre de sus siervos» (19:2).<br><br>
+      Bohr compara las escenas del trono en el libro:`) +
+      tbl(['Capítulo', 'De qué tratan los cantos'], [
+        ['Apocalipsis 4', 'Dios como <strong>Creador</strong>'],
+        ['Apocalipsis 5', 'Cristo como <strong>Redentor</strong>'],
+        ['Apocalipsis 7 y 19', 'La <strong>liberación</strong> del pueblo de Dios en la crisis final; ya está la gran multitud de redimidos'],
+      ]) +
+      wa(`Elena de White usa el canto de 19:6 («¡Aleluya!, porque el Señor… reina»)
+      para el grito de victoria de todo el universo cuando termina el gran
+      conflicto.`) +
+      `<p>Fuentes: Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, págs. 89-90, 253 y 296; Elena de White, El conflicto de los siglos, pág. 539.</p>` },
+
+    { t: '🧭 «El testimonio de Jesús es el espíritu de la profecía» (19:10)', capa: 'contexto', h:
+      hi(`Bohr lee 19:10 junto con 22:9. En 19:10 el ángel es consiervo de Juan «y de
+      tus hermanos que mantienen el testimonio de Jesús» (19:10); en 22:9 dice «de
+      tus hermanos los profetas». Los que tienen el testimonio de Jesús son los
+      <strong>profetas</strong>: el testimonio de Jesús es el <strong>don de
+      profecía</strong>.<br><br>
+      · En 12:17, el pueblo de Dios del tiempo del fin «tiene el testimonio de
+      Jesucristo»: según Bohr, tendrá «el verdadero don profético». La iglesia
+      adventista lo ve en el ministerio de Elena G. de White, que se llamó a sí
+      misma «mensajera del Señor».<br>
+      · Bohr: la Biblia y los escritos de Elena de White son
+      <strong>luz menor</strong> que lleva a la luz mayor, que es Jesús.<br>
+      · El <strong>falso profeta</strong> de 19:20 imita ese don: habla como si
+      viniera de Dios.<br>
+      · La prueba de un profeta es la Palabra: «¡A la ley y al testimonio!»
+      (Isaías 8:20).`) +
+      wa(`El ángel no acepta adoración (19:10; 22:9). Ni el ángel ni el profeta toman
+      el lugar de Dios.`) +
+      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 179 y 186-188; Stephen Bohr, ¿Cuán cerca al fin?, pág. 158; notas de Camilo en Evernote, "LUZ MAYOR Y LUZ MENOR" y "El verdadero profeta".</p>` },
+
+    { t: '🧭 El jinete del caballo blanco: Jesús viene como Rey (19:11-16)', capa: 'contexto', h:
+      hi(`En la lectura adventista, el jinete es <strong>Cristo en su segunda
+      venida</strong>. Elena de White describe esa venida con estos mismos
+      versículos (19:11, 14 y 16): primero se ve una nube pequeña y oscura que crece
+      hasta ser una gran nube blanca; Jesús viene «como un gran conquistador»,
+      rodeado de una multitud de ángeles.`) +
+      tbl(['', 'Primer sello (6:2)', 'Apocalipsis 19:11-12'], [
+        ['Caballo', 'Blanco', 'Blanco'],
+        ['Corona', '«una corona»: en griego <em>stéfanos</em>, la corona del <strong>vencedor</strong>', '«muchas diademas»: <em>diadémata</em>, coronas de <strong>rey</strong>'],
+        ['Qué hace', 'Sale venciendo: el evangelio avanza', 'Juzga y pelea: la batalla final'],
+      ]) +
+      hi(`Bohr: «La corona del vencedor ha llegado a ser la corona del rey». Es una
+      guerra <strong>literal</strong> al final de la historia: cuando los poderes de
+      la tierra decreten la muerte del pueblo de Dios, Jesús mismo saldrá a
+      defenderlo.`) +
+      `<p>Fuentes: Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, págs. 173-174; Elena de White, El conflicto de los siglos, pág. 515; Escuela Sabática 2019-1T, lección 13, pág. 92.</p>` },
+
+    { t: '🧭 Una venida visible, no un rapto secreto', capa: 'contexto', h:
+      hi(`Muchos expositores evangélicos enseñan un <strong>rapto secreto</strong>
+      (la iglesia sube al cielo sin que el mundo vea a Jesús) y, siete años
+      después, un regreso de Jesús para reinar mil años en la tierra. La lectura
+      adventista es otra:`) +
+      li([`Jesús viene una sola vez más, <strong>visible</strong> para todos
+           (1:7; Mateo 24:30).`,
+          `Los escogidos <strong>pasan por la tribulación</strong> y son reunidos
+           en la venida «de los cuatro vientos» (Mateo 24:31). Bohr: si ya
+           estuvieran en el cielo, no habría que reunirlos.`,
+          `En la venida, los santos suben a recibir a Jesús «en el aire»
+           (1 Tesalonicenses 4:17). Bohr: sus pies no tocan la tierra.`,
+          `Bohr advierte: quien espera a un Cristo que reine en la tierra queda
+           expuesto a la imitación de la venida que hará Satanás.`]) +
+      wa(`Se habla de enseñanzas, no de personas: muchos creyentes sinceros esperan
+      el rapto secreto.`) +
+      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 81; Stephen Bohr, Mateo 24 y las señales del fin, pág. 107; notas de Camilo en Evernote, "CRONOLOGÍA ESCATOLÓGICA ADVENTISTA — CONSOLIDADO FINAL".</p>` },
+
+    { t: '🧭 La espada de su boca y las dos cenas (19:15-21)', capa: 'contexto', h:
+      hi(`La única arma del jinete es la <strong>espada que sale de su boca</strong>.
+      Elena de White: en la venida, los impíos son «consumidos por el espíritu de su
+      boca y destruídos por el resplandor de su gloria» (2 Tesalonicenses 2:8). Y en
+      otro lugar: «La luz de la gloria de Dios, que imparte vida a los justos, matará
+      a los impíos».`) +
+      li([`<strong>Las dos cenas</strong> (19:9 y 19:17): la Escuela Sabática lo
+           resume así: «En una cena tú comes, en la otra te comen a ti».`,
+          `Bohr: los grupos de 19:18 (reyes, capitanes, libres y esclavos) son los
+           mismos que se esconden en el sexto sello (6:15-16).`,
+          `Isaías 24:21-22 anuncia que Dios castigará «al ejército de los cielos» y
+           «a los reyes de la tierra». Bohr: los reyes caen en 19:19-21, y el
+           ejército de los cielos (Satanás y sus ángeles) queda preso en 20:1-3,
+           para ser castigado «después de muchos días»: los mil años.`]) +
+      wa(`Con la batalla de 19:19-21 empiezan los <strong>mil años</strong> de
+      Apocalipsis 20. Qué es el lago de fuego de 19:20 se explica allí.`) +
+      `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. 527; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 95 (cita El Deseado de todas las gentes, págs. 82-83); Escuela Sabática 2019-1T, lección 13, pág. 92; Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, págs. 96-97 y 296.</p>` },
   ],
 
   preguntas: [
@@ -191,10 +298,6 @@ module.exports = {
       q: 'Según Apocalipsis 19:8, ¿qué representa el lino fino?',
       o: ['Las acciones justas de los santos', 'Las oraciones de los santos', 'La sangre de los mártires', 'Las palabras de los profetas'], a: 0,
       e: '«El lino fino representa las acciones justas de los santos» (19:8). Las oraciones de los santos son el incienso de 5:8.' },
-    { t: 'mc', v: '19:8', f: 'c',
-      q: 'En la lectura adventista, ¿de dónde viene el lino fino de la esposa (Apocalipsis 19:8)?',
-      o: ['Es la justicia de Cristo, que él regala', 'Es la ropa que cada uno gana con su esfuerzo', 'Es un vestido que la esposa hizo sola', 'Es el manto de los reyes de la tierra'], a: 0,
-      e: 'Interpretación: es la justicia de Cristo dada a su pueblo, que se ve en sus acciones. El texto dice que «se le ha concedido» y que representa «las acciones justas de los santos» (19:8).' },
     { t: 'mc', v: '19:9', lit: 'Bienaventurados los que son llamados a la cena de las bodas del Cordero',
       q: 'Según Apocalipsis 19:9, ¿quiénes son bienaventurados?',
       o: ['Los llamados a la cena de las bodas del Cordero', 'Los muertos que mueren en el Señor', 'Los que lavan sus ropas en la ciudad', 'Los que velan y guardan sus vestiduras'], a: 0,
@@ -212,10 +315,6 @@ module.exports = {
     { t: 'tf', v: '19:10',
       q: 'En Apocalipsis 19:10, el ángel dejó que Juan lo adorara.', a: false,
       e: 'Falso: le dijo «¡Mira, no lo hagas!… ¡Adora a Dios!» (19:10).' },
-    { t: 'mc', v: '19:10', f: 'c',
-      q: 'En la interpretación adventista, ¿cómo se entiende «el espíritu de la profecía» de Apocalipsis 19:10?',
-      o: ['El don de profecía en la iglesia del tiempo del fin', 'La capacidad de adivinar el futuro de cada uno', 'El espíritu de los profetas muertos que habla', 'La sabiduría de los filósofos y los sabios'], a: 0,
-      e: 'Interpretación: se une con 12:17; la iglesia adventista ve ese don en el ministerio de Elena G. de White. El texto solo dice «El testimonio de Jesús es el espíritu de la profecía» (19:10).' },
     { t: 'mc', v: '19:11', lit: 'se llamaba Fiel y Verdadero',
       q: '¿Cómo se llamaba el que montaba el caballo blanco, según Apocalipsis 19:11?',
       o: ['Fiel y Verdadero', 'Santo y Justo', 'Admirable y Consejero', 'Príncipe de paz'], a: 0,
@@ -227,10 +326,6 @@ module.exports = {
     { t: 'tf', v: '19:11',
       q: 'En Apocalipsis 19:11, Juan vio el cielo abierto y un caballo rojo.', a: false,
       e: 'Falso: «vi el cielo abierto, y había un caballo BLANCO» (19:11). El caballo rojizo es el del segundo sello (6:4).' },
-    { t: 'mc', v: '19:11', f: 'c',
-      q: 'En la lectura adventista, ¿quién es el jinete del caballo blanco de Apocalipsis 19?',
-      o: ['Jesús en su segunda venida', 'Un emperador romano conquistador', 'El jinete del primer sello', 'El falso profeta con sus señales'], a: 0,
-      e: 'Interpretación: es Cristo que viene como Rey. El texto lo identifica por sus nombres, «La Palabra de Dios» (19:13) y «Rey de reyes y Señor de señores» (19:16).' },
     { t: 'mc', v: '19:12', lit: 'en su cabeza tenía muchas diademas',
       q: '¿Qué tenía en su cabeza el jinete del caballo blanco? (Apocalipsis 19:12)',
       o: ['Muchas diademas', 'Siete diademas', 'Una corona de oro', 'Diez cuernos'], a: 0,
@@ -302,6 +397,83 @@ module.exports = {
       q: 'Según Apocalipsis 19:21, ¿cómo murieron los demás que pelearon contra el jinete?',
       o: ['Con la espada que salía de su boca', 'Con fuego que descendió del cielo', 'Con un enorme granizo del cielo', 'Con la hoz aguda de un ángel'], a: 0,
       e: '«Los demás fueron muertos con la espada que salía de la boca del que montaba el caballo» (19:21). El fuego del cielo es de 20:9.' },
+    // ── Interpretación (f:'c'): no es texto del capítulo; cada una dice su fuente ──
+    { t: 'mc', v: '19:7', f: 'c',
+      q: 'Según Elena de White, ¿qué representan «las bodas» del Cordero?',
+      o: ['Que Cristo recibe su reino como Rey', 'Que Jesús baja visible a la tierra', 'Que el alma se une a Dios al morir', 'Que la iglesia sube en un rapto secreto'], a: 0,
+      e: 'La boda representa «el acto de ser investido Cristo de la dignidad de Rey»: recibe el reino del Padre (Daniel 7:13-14). El texto solo dice que «han llegado las bodas del Cordero» (19:7). Fuente: Elena de White, El conflicto de los siglos, pág. 350.' },
+    { t: 'mc', v: '19:7', f: 'c',
+      q: 'Según Elena de White, ¿quién es la esposa del Cordero?',
+      o: ['La nueva Jerusalén, capital del reino', 'Los veinticuatro ancianos del trono', 'Los ángeles que no cayeron', 'La gran multitud de Apocalipsis 7'], a: 0,
+      e: 'La esposa es la santa ciudad, que representa el reino; lo confirma 21:9-10, donde el ángel le muestra a Juan «la esposa del Cordero» y le enseña la ciudad. Fuente: Elena de White, El conflicto de los siglos, págs. 350-351.' },
+    { t: 'tf', v: '19:9', f: 'c',
+      q: 'Según Elena de White, los llamados a la cena de las bodas (19:9) son el pueblo de Dios, y por eso no pueden ser también la esposa.', a: true,
+      e: 'Verdadero: «Si son los invitados, no pueden representar también a la esposa». Fuente: Elena de White, El conflicto de los siglos, pág. 351.' },
+    { t: 'mc', v: '19:7', f: 'c',
+      q: 'Según Bohr, ¿dónde y cuándo se celebran las bodas del Cordero?',
+      o: ['En el cielo, antes de que Jesús vuelva', 'En la tierra, al comenzar los mil años', 'En Jerusalén, en un templo reconstruido', 'En la tierra nueva, al final de todo'], a: 0,
+      e: 'Jesús recibe el reino ante el Padre en el cielo y luego vuelve a buscar a los suyos para la «gran recepción de bodas». Fuentes: Stephen Bohr, Mateo 24 y las señales del fin, pág. 170; Stephen Bohr, Lo que Jesús dijo, pág. 233.' },
+    { t: 'mc', v: '19:8', f: 'c',
+      q: 'Según Elena de White, ¿qué es el lino fino que se le concede a la esposa (Apocalipsis 19:8)?',
+      o: ['La justicia de Cristo, dada por la fe', 'El premio por las obras de cada uno', 'Un vestido que la esposa tejió sola', 'El manto de los reyes de la tierra'], a: 0,
+      e: 'Es «la justicia de Cristo, su propio carácter sin mancha», que se da por la fe y se ve en «las acciones justas de los santos» (19:8). Fuente: notas de Camilo en Evernote, "La segunda venida y el rapto secreto" (cita Palabras de vida del gran Maestro, pág. 252).' },
+    { t: 'tf', v: '19:8', f: 'c',
+      q: 'Según Bohr, Dios viste a su iglesia de lino fino cuando termina el juicio y él la vindica ante todos.', a: true,
+      e: 'Verdadero: «Cuando concluya el proceso del juicio y Dios haya vindicado a su pueblo», la vestirá de lino fino (19:6-8). Fuente: Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, pág. 249.' },
+    { t: 'mc', v: '19:2', f: 'c',
+      q: 'Según Bohr, ¿a qué clamor responden los «¡Aleluya!» de Apocalipsis 19:1-2?',
+      o: ['Al de las almas debajo del altar', 'Al de los reyes que lloran a Babilonia', 'Al de los cuatro seres vivientes', 'Al de los siete ángeles con trompetas'], a: 0,
+      e: 'Las almas del quinto sello preguntan «¿Hasta cuándo…?» (6:10); en 19:2 Dios ya «ha vengado la sangre de sus siervos». Fuente: Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, pág. 253.' },
+    { t: 'mc', v: '19:6', f: 'c',
+      q: 'Según Bohr, ¿qué celebran los cantos de Apocalipsis 7 y 19, a diferencia de los de los capítulos 4 y 5?',
+      o: ['La liberación del pueblo en la crisis final', 'A Dios como Creador de todas las cosas', 'A Cristo como Redentor en la cruz', 'La caída de Lucifer y sus ángeles'], a: 0,
+      e: 'En el capítulo 4 se alaba al Creador, en el 5 al Redentor, y en 7 y 19 la liberación del pueblo de Dios; en 19 ya canta la multitud de redimidos. Fuente: Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, págs. 89-90.' },
+    { t: 'mc', v: '19:10', f: 'c',
+      q: 'Según Bohr, ¿qué es «el testimonio de Jesús» que tendrá el pueblo de Dios del tiempo del fin (12:17; 19:10)?',
+      o: ['El verdadero don profético', 'El poder de hacer milagros', 'El relato de su propia conversión', 'La sabiduría de los filósofos'], a: 0,
+      e: 'El testimonio de Jesús es «el verdadero don profético» del remanente; la iglesia adventista lo ve en el ministerio de Elena G. de White. Fuentes: Stephen Bohr, ¿Cuán cerca al fin?, pág. 158; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 188.' },
+    { t: 'mc', v: '19:10', f: 'c',
+      q: 'Según Bohr, ¿qué versículo muestra que los hermanos que «mantienen el testimonio de Jesús» (19:10) son los profetas?',
+      o: ['Apocalipsis 22:9', 'Apocalipsis 12:17', 'Apocalipsis 1:2', 'Apocalipsis 6:9'], a: 0,
+      e: 'En 22:9 el mismo ángel dice «de tus hermanos los profetas». Por eso el testimonio de Jesús es el don de profecía. Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 179.' },
+    { t: 'mc', v: '19:10', f: 'c',
+      q: 'Según Bohr, ¿quién es la «luz mayor» a la que llevan la Biblia y los escritos de Elena de White?',
+      o: ['Jesucristo', 'La ley de Dios', 'La iglesia', 'El Espíritu de profecía'], a: 0,
+      e: 'Para Bohr, tanto la Biblia como los escritos de Elena de White son luz menor que apunta a Jesús. Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 188; notas de Camilo en Evernote, "LUZ MAYOR Y LUZ MENOR".' },
+    { t: 'mc', v: '19:11', f: 'c',
+      q: 'En la interpretación adventista, ¿quién es el jinete del caballo blanco de Apocalipsis 19?',
+      o: ['Jesús en su segunda venida', 'Un emperador romano conquistador', 'El jinete del primer sello', 'El falso profeta con sus señales'], a: 0,
+      e: 'Elena de White describe la segunda venida con 19:11, 14 y 16. El texto lo llama «La Palabra de Dios» (19:13) y «Rey de reyes y Señor de señores» (19:16). Fuentes: Elena de White, El conflicto de los siglos, pág. 515; Escuela Sabática 2019-1T, lección 13, pág. 92.' },
+    { t: 'mc', v: '19:12', f: 'c',
+      q: 'Según Bohr, ¿qué cambio muestra la corona del jinete de 19:12 frente a la del primer sello (6:2)?',
+      o: ['De corona de vencedor a corona de rey', 'De corona de rey a corona de vencedor', 'De corona de espinas a corona de oro', 'De corona de sacerdote a una de juez'], a: 0,
+      e: 'En 6:2 recibe un stéfanos (corona del vencedor); en 19:12 lleva diadémata (coronas de rey): «La corona del vencedor ha llegado a ser la corona del rey». Fuente: Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, pág. 174.' },
+    { t: 'mc', v: '19:14', f: 'c',
+      q: 'Según Elena de White, ¿quiénes acompañan a Jesús en el descenso de su segunda venida?',
+      o: ['Una multitud innumerable de ángeles', 'Los redimidos que ya estaban en el cielo', 'Los ciento cuarenta y cuatro mil', 'Los veinticuatro ancianos del trono'], a: 0,
+      e: 'Los santos ángeles, «en inmensa e innumerable muchedumbre», lo acompañan; el texto habla de «los ejércitos celestiales» (19:14). Fuente: Elena de White, El conflicto de los siglos, pág. 515.' },
+    { t: 'tf', v: '19:11', f: 'c',
+      q: 'Según Bohr, los escogidos son llevados al cielo en un rapto secreto antes de la tribulación.', a: false,
+      e: 'Falso: para Bohr los escogidos pasan por la tribulación y son reunidos en la venida visible «de los cuatro vientos» (Mateo 24:31). Fuente: Stephen Bohr, Mateo 24 y las señales del fin, pág. 107.' },
+    { t: 'mc', v: '19:15', f: 'c',
+      q: 'Según Elena de White, ¿cómo son destruidos los impíos que viven cuando Jesús viene?',
+      o: ['Por el resplandor de su gloria', 'Por un ejército de santos armados', 'Por un diluvio de agua, como en Noé', 'Por el fuego que cae tras los mil años'], a: 0,
+      e: 'Son «consumidos por el espíritu de su boca y destruídos por el resplandor de su gloria». El fuego del cielo de 20:9 es el de después de los mil años. Fuente: Elena de White, El conflicto de los siglos, pág. 527.' },
+    { t: 'tf', v: '19:17', f: 'c',
+      q: 'En la interpretación adventista, la cena de las bodas (19:9) y la gran cena de Dios (19:17) son la misma fiesta vista desde dos lados.', a: false,
+      e: 'Falso: son dos cenas opuestas. La Escuela Sabática lo resume: «En una cena tú comes, en la otra te comen a ti». Fuente: Escuela Sabática 2019-1T, lección 13, pág. 92.' },
+    { t: 'mc', v: '19:19', f: 'c',
+      q: 'Según Bohr, ¿quiénes son «el ejército de los cielos» que Dios castiga junto con los reyes de la tierra (Isaías 24:21)?',
+      o: ['Satanás y sus ángeles', 'Los ángeles fieles a Dios', 'El sol, la luna y las estrellas', 'Los veinticuatro ancianos'], a: 0,
+      e: 'Son los ángeles caídos (Efesios 6:12). Los reyes caen en 19:19-21 y Satanás queda preso en 20:1-3. Fuente: Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, págs. 96-97.' },
+    { t: 'mc', v: '19:20', f: 'c',
+      q: 'Según Bohr, ¿qué imita el falso profeta de Apocalipsis 19:20?',
+      o: ['El verdadero don profético', 'El sello de Dios en la frente', 'El sacrificio del Cordero', 'El canto de los redimidos'], a: 0,
+      e: 'La bestia que sube de la tierra quiere contrarrestar el don profético «haciéndose pasar por un verdadero profeta» (16:13; 19:20). Fuente: Stephen Bohr, ¿Cuán cerca al fin?, pág. 158.' },
+    { t: 'mc', v: '19:21', f: 'c',
+      q: 'En la interpretación adventista, ¿qué comienza después de la batalla de Apocalipsis 19:19-21?',
+      o: ['Los mil años de Apocalipsis 20', 'La gran tribulación final', 'El tiempo de gracia para los impíos', 'La semana setenta de Daniel 9'], a: 0,
+      e: 'Con la venida mueren los impíos que viven y empiezan los mil años, con Satanás atado en la tierra vacía (20:1-3). Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 73-74; Elena de White, El conflicto de los siglos, págs. 527-528.' },
   ],
 
   tarjetas: [

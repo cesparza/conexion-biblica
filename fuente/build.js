@@ -20,6 +20,7 @@ const { MAT_COMPLETAR } = require('./matutina-completar.js');
 const { MAT_EXTRA } = require('./matutina-extra.js');
 const CR = require('./creencias.js');
 const AP = require('./apocalipsis.js');
+const COMP_DANIEL = require('./complementos/daniel.js');
 const { VERS_AP } = require('./biblia-apocalipsis.js');
 const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
@@ -66,9 +67,13 @@ const IDS_DE_TEMA = {
 const CAPS_DANIEL = CAPS.map(c => ({ ...c, doc: grupoDaniel(c.id) || undefined }));
 const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS, ...AP.AP_CAPS];
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO, ...AP.AP_CONTENIDO };
+/* v179: la interpretación de Daniel (fuente/complementos/daniel.js) va al
+   final de cada capítulo, como capa 'contexto'. */
+for (const [cap, secs] of Object.entries(COMP_DANIEL.secciones))
+  if (CONTENIDO_ALL[cap]) CONTENIDO_ALL[cap] = [...CONTENIDO_ALL[cap], ...secs];
 /* Las de cobertura van con las demas: son del mismo banco, solo que las
    escribio un generador a partir de los versiculos que no tenian ninguna. */
-const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...BANCO_REAL, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO, ...AP.AP_BANCO];
+const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...BANCO_REAL, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO, ...AP.AP_BANCO, ...COMP_DANIEL.preguntas];
 const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS, ...AP.AP_TARJETAS];
 const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS, ...AP.AP_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS, ...AP.AP_CONT_MODULOS };

@@ -2363,7 +2363,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const cat4=JSON.parse((/export const CATALOGO = (\{[\s\S]*?\n\});/.exec(GEN4)||[])[1]||'{}');
     const d1=((cat4.daniel||{}).caps||[]).find(c=>c.id==='d1')||{n:[]};
     ok(Object.keys(cat4).join()==='daniel,matutina,creencias,apocalipsis'&&cat4.apocalipsis.caps.length===22&&cat4.daniel.caps.length===18&&cat4.matutina.caps.length===31&&cat4.creencias.caps.length===28&&
-       d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA,...require(path.join(RAIZ,'fuente','examenes-reales.js')).BANCO_REAL].filter(q=>q.cap==='d1').length&&
+       d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA,...require(path.join(RAIZ,'fuente','examenes-reales.js')).BANCO_REAL,...require(path.join(RAIZ,'fuente','complementos','daniel.js')).preguntas].filter(q=>q.cap==='d1').length&&
        cat4.daniel.repasos.some(r=>r.id==='m-linea'),
       'El catálogo trae los cuatro temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
 
@@ -2456,6 +2456,26 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Apocalipsis tiene estudio, '+AP.AP_BANCO.length+' preguntas y '+AP.AP_TARJETAS.length+' tarjetas');
   const inter=AP.AP_BANCO.filter(q=>/adventista/i.test(q.q||''));
   ok(inter.length>0&&inter.every(q=>q.f==='c'),'Toda pregunta de interpretación adventista va marcada complementaria ('+inter.length+')');
+}
+
+/* v179: la interpretación con fuentes (Bohr, Elena de White, las notas de
+   Camilo) va en su propia capa: secciones 'contexto' y preguntas f:'c', cada
+   una con «Fuente:». En Apocalipsis y, aparte del examen, en Daniel. */
+{
+  const AP=require(path.join(RAIZ,'fuente','apocalipsis.js'));
+  const secsAp=Object.values(AP.AP_CONTENIDO).flat().filter(s=>s.capa==='contexto');
+  ok(secsAp.length>=100&&secsAp.every(s=>/Fuentes?:/.test(s.h)),'Apocalipsis: '+secsAp.length+' secciones de interpretación, todas con su fuente');
+  const pcAp=AP.AP_BANCO.filter(q=>q.f==='c');
+  ok(pcAp.length>=300&&pcAp.every(q=>/Fuentes?:/.test(q.e||'')),'Apocalipsis: '+pcAp.length+' preguntas de interpretación, todas con su fuente');
+  ok(Object.values(AP.AP_CONTENIDO).flat().filter(s=>/^🧭/.test(s.t||'')).every(s=>s.capa==='contexto'),'Las secciones 🧭 son todas de interpretación');
+  const tr=(AP.AP_CONTENIDO.ap8||[]).concat(AP.AP_CONTENIDO.ap9||[]).map(s=>s.h).join(' ');
+  ok(/Bohr/.test(tr)&&/Revoluci[oó]n Francesa/.test(tr),'Las trompetas se explican según Bohr (la quinta, Revolución Francesa)');
+  const r=require('child_process').spawnSync(process.execPath,[path.join(RAIZ,'tools','complementos-revisa.js')],{encoding:'utf8'});
+  ok(r.status===0,'La interpretación de Daniel pasa su revisor'+(r.status?' — '+r.stdout.split('\n').filter(l=>/❌/.test(l)).slice(0,3).join(' / '):''));
+  const CD=require(path.join(RAIZ,'fuente','complementos','daniel.js'));
+  ok(Object.keys(CD.secciones).length===12&&CD.preguntas.length>=100&&CD.preguntas.every(q=>q.f==='c'&&/^d\d/.test(q.cap)),
+    'Daniel 1-12 tiene interpretación aparte del examen ('+CD.preguntas.length+' preguntas, todas complementarias)');
+  ok(html.includes(CD.secciones.d8[0].t.slice(2,30).trim()),'La interpretación de Daniel llega a la app');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

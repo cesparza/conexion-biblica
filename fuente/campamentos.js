@@ -109,7 +109,9 @@ const CAMPAMENTOS = [
      ampliado. Compartía la ficha de arriba; Camilo pidió separarla el 10 de
      octubre de 2026. La categoría conserva su id, así que el progreso y los
      participantes guardados siguen siendo de ella. */
-  { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica de Guías Mayores', icono: '📘', cuando: 'Fecha por confirmar', fecha: '',
+  /* v179: se llama «Conexión Bíblica: Daniel», como la de Apocalipsis (Camilo,
+     12-oct). La categoría Guías Mayores sigue adentro, con su mismo id. */
+  { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica: Daniel', icono: '📘', cuando: 'Fecha por confirmar', fecha: '',
     que: 'Daniel 1 al 6 y Profetas y Reyes 39 al 44',
     categorias: [
       { id: 'gm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 25, techo: 3, sinCompletar: false,

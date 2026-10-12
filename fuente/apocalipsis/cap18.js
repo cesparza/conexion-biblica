@@ -124,20 +124,126 @@ module.exports = {
           `En ella se halló <strong>«la sangre de los profetas y de los
            santos»</strong> (18:24).`]) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
+    { t: '🧭 Otro ángel con gran poder: el fuerte pregón (18:1)', capa: 'contexto', h:
       hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias.<br><br>
-      · <strong>Babilonia</strong> (de Babel, «confusión») representa la
-      religión que se ha apartado de la verdad de Dios y se une con los poderes
-      de la tierra (los reyes de 18:3). No señala a personas: en todas las
-      iglesias hay hijos sinceros de Dios.<br>
-      · El <strong>ángel que alumbra la tierra</strong> (18:1) se une al
-      mensaje de los tres ángeles de Apocalipsis 14 y repite con más fuerza el
-      del segundo (14:8). Es el último llamado al mundo antes del fin, el
-      «fuerte pregón».<br>
-      · <strong>«Salid de ella, pueblo mío»</strong>: Dios todavía tiene
-      pueblo allí y lo llama con amor antes de que caigan las plagas (las siete
-      postreras de Apocalipsis 16).`) },
+      de aquí van marcadas como complementarias. Babilonia es un
+      <strong>sistema</strong>, no las personas que están en él.<br><br>
+      Bohr llama a este ángel el del <strong>fuerte clamor</strong> (también
+      «fuerte pregón»): amplía e intensifica los tres mensajes de Apocalipsis
+      14:6-12. Así como el «clamor de medianoche» de 1844 dio fuerza al mensaje
+      del segundo ángel, este dará fuerza al del tercero, con más poder y en
+      todo el mundo. Elena de White: su obra «comienza a tiempo para unirse a
+      la última magna obra del mensaje del tercer ángel».`) +
+      li([`Será como <strong>Pentecostés</strong>: la «lluvia temprana» del
+           Espíritu marcó el comienzo del evangelio, y la «lluvia tardía»
+           marcará su final, con milagros y sanidades.`,
+          `Lo darán <strong>instrumentos humildes</strong>, preparados más por
+           el Espíritu que por los estudios.`,
+          `Al mismo tiempo Satanás hará falsos milagros, hasta hacer caer fuego
+           del cielo (13:13).`,
+          `Bohr: la <strong>gloria</strong> que alumbra la tierra es el carácter
+           de Dios que su pueblo refleja.`]) +
+      hi(`Fuentes: Bohr, «Culto en el trono de Satanás», pág. 105 y 111 (cita
+      «Primeros escritos», pág. 277); Elena de White, «El conflicto de los
+      siglos», pág. 664 y 669-670; Bohr, «El Mensaje de los Tres Ángeles»,
+      tomo 2, pág. 220-221.`) },
+
+    { t: '🧭 Apocalipsis 14:8 y 18:1-5, lado a lado', capa: 'contexto', h:
+      hi(`Bohr compara el mensaje del segundo ángel con el de este capítulo.
+      El mensaje es el mismo («ha caído Babilonia»), pero ahora más completo y
+      urgente:`) +
+      tbl(['14:8', '18:1-5'], [
+        ['Un ángel proclama', 'Un ángel desciende con gran poder'],
+        ['No se menciona voz potente', 'Clama con voz potente'],
+        ['No hay llamado a salir', 'Llamado a salir antes de las plagas'],
+        ['No se mencionan demonios', 'Babilonia es habitación de demonios'],
+        ['No se nombran reyes ni mercaderes', 'Se nombran reyes y mercaderes'],
+        ['No se habla de su castigo', 'Sus pecados llegaron al cielo; viene el castigo'],
+      ]) +
+      hi(`Elena de White explica por qué: el anuncio de 1844 se repite «con la
+      mención adicional de las corrupciones» que entraron en las
+      organizaciones religiosas desde entonces. Cada vez que se rechaza la
+      verdad hay más confusión, y al aceptar el espiritismo se abre la puerta a
+      la influencia de los ángeles malos.`) +
+      hi(`Fuentes: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág.
+      215-216; Elena de White, «El conflicto de los siglos», pág.
+      661-662.`) },
+
+    { t: '🧭 Habitación de demonios, vino y mercaderes (18:2-3)', capa: 'contexto', h:
+      li([`<strong>Tres frases paralelas</strong> (habitación de demonios,
+           guarida de espíritus inmundos, albergue de aves inmundas): para Bohr
+           muestran que la apostasía de Babilonia creció desde 1844 hasta no
+           tener remedio. Confirma lo de 16:13-14: los espíritus de demonios
+           mueven la alianza final.`,
+          `<strong>Las aves aborrecibles</strong> no son gorriones: son aves
+           de rapiña que comen carroña, como las de 19:17.`,
+          `<strong>El vino</strong>: falsas doctrinas que emborrachan y
+           enfurecen a las naciones (ver la sección sobre 17:4).`,
+          `<strong>Los reyes</strong>: la unión de la iglesia con el estado.`,
+          `<strong>Los mercaderes</strong>: el trasfondo es Tiro (Ezequiel 27).
+           Bohr los une con 13:17, donde nadie podía comprar ni vender sin la
+           marca; en el capítulo 18 se da vuelta la mesa y la que prohibía
+           comerciar queda en la ruina.`]) +
+      hi(`Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág.
+      221-223.`) },
+
+    { t: '🧭 «Salid de ella, pueblo mío» (18:4)', capa: 'contexto', h:
+      hi(`Para Bohr, esta «otra voz del cielo» no es la del ángel que alumbra
+      la tierra: es <strong>la voz de Dios mismo</strong> llamando a los
+      suyos. El modelo está en el Antiguo Testamento: Dios llamó a Israel a
+      salir de la Babilonia literal (Isaías 48:20; Jeremías 50:8; 51:6, 45),
+      no para andar sin rumbo, sino para volver a Jerusalén. Al final llama a
+      su Israel espiritual a salir de la Babilonia espiritual.`) +
+      li([`Elena de White: la mayoría de los verdaderos discípulos de Cristo
+           todavía están en esas iglesias; muchos nunca oyeron las verdades
+           para este tiempo y tienen sed de más luz.`,
+          `Es el <strong>último mensaje</strong> que se dará al mundo, y llega
+           antes de las plagas: por eso dice «ni recibáis parte de sus
+           plagas».`,
+          `Es un llamado de amor a personas sinceras, no una condena a
+           ellas.`]) +
+      hi(`Fuentes: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág.
+      218-219 y 223-224; Elena de White, «El conflicto de los siglos», pág.
+      441-442.`) },
+
+    { t: '🧭 Por qué cae Babilonia (18:5-8)', capa: 'contexto', h:
+      hi(`Bohr resume los pecados de Babilonia en Apocalipsis 17 y 18:`) +
+      tbl(['Pecado', 'Dónde se ve'], [
+        ['Orgullo y arrogancia', '18:7'],
+        ['Materialismo', '18:11-14'],
+        ['Dar al mundo el vino de la falsa doctrina', '14:8; 17:2; 18:3'],
+        ['Unir la iglesia con el estado', '17:2; 18:3'],
+        ['Perseguir al pueblo de Dios', '17:6; 18:20, 24'],
+        ['Engañar con hechicerías', '16:13-14; 18:23'],
+      ]) +
+      hi(`<strong>«Dios se ha acordado»</strong> no quiere decir que se le había
+      olvidado: Dios espera hasta que la copa de maldad está llena, como con
+      Sodoma o los amorreos (Génesis 15:16), y entonces ejecuta la sentencia.
+      Para Bohr, el castigo llega a su punto final en las últimas dos plagas,
+      cuando las multitudes le retiran su apoyo y se vuelven contra ella
+      (16:19; 17:16).`) +
+      hi(`Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág.
+      224-225.`) },
+
+    { t: '🧭 Los lamentos y la piedra de molino (18:9-24)', capa: 'contexto', h:
+      tbl(['Versículos', 'Qué pasa, según Bohr'], [
+        ['18:9-10', 'Lloran los poderes civiles de la tierra'],
+        ['18:11-16', 'Lloran los grandes capitalistas, «los grandes de la tierra» (18:23)'],
+        ['18:17-19', 'Lloran los empleados y los viajeros del mar'],
+        ['18:20', 'El cielo se alegra por la caída de Babilonia'],
+        ['18:21-24', 'La ciudad se hunde y cesan todas sus actividades'],
+      ]) +
+      li([`<strong>La piedra de molino</strong>: el ángel repite lo que hizo
+           Jeremías cuando arrojó una piedra al Éufrates y dijo «así se hundirá
+           Babilonia» (Jeremías 51:63-64). Doukhan nota que el molino servía
+           para vivir (Deuteronomio 24:6): ya nadie lo usa, porque Babilonia
+           quedó vacía.`,
+          `<strong>Las hechicerías</strong> (18:23): los engaños con que
+           Babilonia se ganó a las naciones, como los espíritus que hacen
+           señales de 16:14.`]) +
+      hi(`Fuentes: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 217 y
+      224; Doukhan, «Secretos del Apocalipsis», pág. 182-183; Vicuña,
+      «Interpretación histórica del Apocalipsis», pág. 145.`) },
   ],
 
   preguntas: [
@@ -173,10 +279,6 @@ module.exports = {
       e: '«…para que no seáis partícipes de sus pecados ni recibáis parte de sus plagas» (18:4).' },
     { t: 'fill', v: '18:4', ins: 'Apocalipsis 18:4 (RV1995) — Completa:',
       p: [{ x: '«¡Salid de ella, ' }, { b: 'pueblo', h: '¿a quién llama?' }, { x: ' mío, para que no seáis partícipes de sus ' }, { b: 'pecados', h: '¿de qué?' }, { x: ' ni recibáis parte de sus ' }, { b: 'plagas', h: '¿de qué?' }, { x: '!»' }] },
-    { t: 'mc', v: '18:4', f: 'c',
-      q: 'En la lectura adventista, ¿quiénes son «pueblo mío» en el llamado de Apocalipsis 18:4?',
-      o: ['Hijos sinceros de Dios que todavía están en Babilonia', 'Solamente los ángeles que viven en el cielo', 'Los reyes de la tierra que lloran por ella', 'Los mercaderes que se enriquecieron con ella'], a: 0,
-      e: 'Interpretación: Dios tiene hijos fieles en todas las iglesias y los llama a salir antes de las plagas. El texto solo dice «pueblo mío» (18:4).' },
     { t: 'mc', v: '18:5', lit: 'sus pecados han llegado hasta el cielo',
       q: 'Según Apocalipsis 18:5, ¿hasta dónde han llegado los pecados de Babilonia?',
       o: ['Hasta el cielo', 'Hasta el abismo', 'Hasta el gran río', 'Hasta el trono'], a: 0,
@@ -292,13 +394,74 @@ module.exports = {
       o: ['La sangre de los profetas y de los santos', 'El arca del pacto y el candelabro de oro', 'El libro sellado con siete sellos', 'Los tesoros del templo de Jerusalén'], a: 0,
       e: '«En ella se halló la sangre de los profetas y de los santos y de todos los que han sido muertos en la tierra» (18:24).' },
     { t: 'mc', v: '18:1', f: 'c',
-      q: 'En la interpretación adventista, ¿con qué mensaje se une el ángel de Apocalipsis 18:1 que alumbra la tierra?',
-      o: ['Con el mensaje de los tres ángeles de Apocalipsis 14', 'Con el mensaje de las siete trompetas', 'Con las cartas a las siete iglesias', 'Con el canto de los veinticuatro ancianos'], a: 0,
-      e: 'Interpretación: repite con más fuerza el mensaje del segundo ángel (14:8), el último llamado antes del fin. El texto solo dice que la tierra fue alumbrada con su gloria (18:1).' },
+      q: 'Según Bohr, ¿cómo se llama el mensaje del ángel que alumbra la tierra con su gloria (Apocalipsis 18:1)?',
+      o: ['El fuerte pregón', 'El clamor de medianoche', 'El evangelio eterno', 'El mensaje a Laodicea'], a: 0,
+      e: 'Bohr lo llama el «fuerte clamor» (fuerte pregón). El «clamor de medianoche» fue el movimiento de 1844, que este mensaje superará en poder. Fuente: Bohr, «Culto en el trono de Satanás», pág. 105 y 111.' },
+    { t: 'mc', v: '18:1', f: 'c',
+      q: 'Según Bohr, ¿qué hace el ángel de Apocalipsis 18:1 con los mensajes de los tres ángeles de Apocalipsis 14?',
+      o: ['Los amplía e intensifica', 'Los reemplaza por otro distinto', 'Los anula porque ya pasaron', 'Los repite solo en el cielo'], a: 0,
+      e: 'Bohr: el fuerte clamor «es una ampliación e intensificación de los tres mensajes angélicos de Apocalipsis 14:6-12». Fuente: Bohr, «Culto en el trono de Satanás», pág. 105.' },
+    { t: 'mc', v: '18:1', f: 'c',
+      q: 'Según Elena de White, ¿a qué suceso se parecerá la obra del último mensaje con poder?',
+      o: ['Al día de Pentecostés', 'Al bautismo de Jesús', 'A la zarza que ardía', 'A la nube del Sinaí'], a: 0,
+      e: 'Elena de White: como la «lluvia temprana» del Espíritu en Pentecostés abrió la predicación del evangelio, la «lluvia tardía» la cerrará con milagros y sanidades. Fuente: Elena de White, «El conflicto de los siglos», pág. 669-670.' },
+    { t: 'mc', v: '18:1', f: 'c',
+      q: 'Según Elena de White, ¿cómo serán los obreros que den el último mensaje con mayor poder?',
+      o: ['Humildes, guiados por el Espíritu de Dios', 'Graduados en las mejores universidades', 'Reyes y gobernantes de las naciones', 'Ángeles visibles que predican en las plazas'], a: 0,
+      e: 'Elena de White: «el Señor obrará por conducto de humildes instrumentos»; serán calificados más por la unción de su Espíritu que por los estudios. Fuente: Elena de White, «El conflicto de los siglos», pág. 664.' },
+    { t: 'tf', v: '18:2', f: 'c',
+      q: 'Según Elena de White, Apocalipsis 18:1-2 repite el anuncio del segundo ángel (14:8) y añade las corrupciones que entraron en las iglesias desde 1844.', a: true,
+      e: 'Verdadero: el anuncio de la caída de Babilonia se repite «con la mención adicional de las corrupciones» introducidas desde 1844. Fuente: Elena de White, «El conflicto de los siglos», pág. 661.' },
     { t: 'mc', v: '18:2', f: 'c',
-      q: 'En la lectura adventista, ¿qué representa Babilonia en Apocalipsis 18?',
-      o: ['La religión que se apartó de la verdad de Dios', 'La antigua ciudad de Nabucodonosor, reconstruida', 'Una sola nación poderosa de hoy en día', 'El imperio de Grecia de Alejandro Magno'], a: 0,
-      e: 'Interpretación: Babilonia (de Babel, confusión) es la religión que se aparta de Dios y se une con los reyes de la tierra; no señala a personas. El texto la llama «la gran ciudad» (18:10).' },
+      q: 'Según Bohr, ¿qué muestran las tres frases de 18:2: habitación de demonios, guarida de espíritus y albergue de aves inmundas?',
+      o: ['Que la apostasía de Babilonia ya no tiene remedio', 'Que Babilonia se convirtió en un desierto literal', 'Que los demonios huyen de la ciudad caída', 'Que Dios manda aves para limpiar la ciudad'], a: 0,
+      e: 'Bohr: son un paralelismo (tres frases que dicen lo mismo); muestran que la apostasía creció desde 1844 y la condición de Babilonia es irreparable. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 221.' },
+    { t: 'mc', v: '18:2', f: 'c',
+      q: 'Según Bohr, ¿qué clase de aves son las «aves inmundas y aborrecibles» de Babilonia?',
+      o: ['Aves de rapiña que comen carroña', 'Gorriones que anidan en las ruinas', 'Palomas como las del templo', 'Aves que cantan en la ciudad'], a: 0,
+      e: 'Bohr: «¡Las aves aborrecibles no son gorriones! Son aves de rapiña», como las aves de 19:17. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 222.' },
+    { t: 'mc', v: '18:3', f: 'c',
+      q: 'Según Bohr, ¿con qué texto se relacionan los mercaderes que se enriquecieron con Babilonia (Apocalipsis 18:3)?',
+      o: ['Con la prohibición de comprar y vender', 'Con los cambistas que Jesús echó del templo', 'Con el joven rico que se fue triste', 'Con la parábola de los talentos'], a: 0,
+      e: 'Bohr: se unen con 13:17, donde nadie podía comprar ni vender sin la marca; en el capítulo 18 se invierte: Babilonia queda en bancarrota. El trasfondo es el comercio de Tiro (Ezequiel 27). Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 223.' },
+    { t: 'mc', v: '18:4', f: 'c',
+      q: 'Según Bohr, ¿de quién es la voz que dice «Salid de ella, pueblo mío» (Apocalipsis 18:4)?',
+      o: ['De Dios mismo', 'Del ángel que alumbra la tierra', 'Del segundo ángel de Apocalipsis 14', 'De los mártires bajo el altar'], a: 0,
+      e: 'Bohr: la voz que anuncia la caída no es la misma que llama a salir; esta es «la voz de Dios mismo que llama a su pueblo». Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 223.' },
+    { t: 'mc', v: '18:4', f: 'c',
+      q: 'Según Bohr, ¿qué historia del Antiguo Testamento está detrás del llamado «Salid de ella»?',
+      o: ['El llamado a Israel a salir de Babilonia', 'La salida de Abraham de Ur de los caldeos', 'La huida de Jacob de la casa de Labán', 'La salida de Israel de Egipto con Moisés'], a: 0,
+      e: 'Bohr: Dios llamó al Israel literal a salir de la Babilonia literal para volver a Jerusalén (Jeremías 51:6, 45); al final llama a su Israel espiritual a salir de la Babilonia espiritual. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 224.' },
+    { t: 'mc', v: '18:4', f: 'c',
+      q: 'En la interpretación adventista, ¿a quiénes llama Dios cuando dice «pueblo mío» en Apocalipsis 18:4?',
+      o: ['A sus hijos sinceros que aún están en Babilonia', 'A los ángeles que todavía están en el cielo', 'A los reyes que lloran por la gran ciudad', 'A los mercaderes que se arrepienten tarde'], a: 0,
+      e: 'Elena de White: la mayoría de los verdaderos discípulos de Cristo todavía están en esas iglesias; muchos tienen sed de más luz y oirán el llamado. Fuente: Elena de White, «El conflicto de los siglos», pág. 441-442.' },
+    { t: 'tf', v: '18:4', f: 'c',
+      q: 'Según Elena de White, el llamado «Salid de ella, pueblo mío» será el último mensaje que se dé al mundo.', a: true,
+      e: 'Verdadero: «Este mensaje será el último que se dé al mundo y cumplirá su obra». Fuente: Elena de White, «El conflicto de los siglos», pág. 441.' },
+    { t: 'mc', v: '18:5', f: 'c',
+      q: 'Según Bohr, ¿qué significa que «Dios se ha acordado» de las maldades de Babilonia (Apocalipsis 18:5)?',
+      o: ['Que su copa se llenó y llega la sentencia', 'Que Dios se había olvidado de sus pecados', 'Que Dios perdona a Babilonia por fin', 'Que Dios recuerda a los santos que ella mató'], a: 0,
+      e: 'Bohr: Dios conoce los pecados que se acumulan; demora su ira hasta que la copa de maldad está llena (como con los amorreos, Génesis 15:16) y entonces «se acuerda», es decir, ejecuta la sentencia. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 224-225.' },
+    { t: 'tf', v: '18:7', f: 'c',
+      q: 'Según Bohr, entre los pecados de Babilonia están el orgullo, el materialismo y la unión de la iglesia con el estado.', a: true,
+      e: 'Verdadero: Bohr nombra orgullo (18:7), materialismo (18:11-14), el vino de la falsa doctrina, la unión iglesia-estado, la persecución y el engaño por hechicería. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 224.' },
+    { t: 'mc', v: '18:9', f: 'c',
+      q: 'Según Bohr, ¿a quiénes representan los reyes que lloran en Apocalipsis 18:9-10?',
+      o: ['A los poderes civiles de la tierra', 'A los ángeles que vieron su caída', 'A los profetas que la anunciaron', 'A los mártires que ella persiguió'], a: 0,
+      e: 'Bohr divide el capítulo así: 18:9-10, lamento de los poderes civiles; 18:11-16, de los capitalistas; 18:17-19, de los empleados y viajeros. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 217.' },
+    { t: 'mc', v: '18:11', f: 'c',
+      q: 'Según Bohr, ¿quiénes son los mercaderes que lloran en Apocalipsis 18:11-16?',
+      o: ['Los grandes capitalistas de la tierra', 'Los pequeños vendedores de los mercados', 'Los sacerdotes que vendían indulgencias', 'Los marineros y los viajeros del mar'], a: 0,
+      e: 'Bohr: son los capitalistas, «los grandes de la tierra» (18:23); los marineros y viajeros lloran después, en 18:17-19. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 217.' },
+    { t: 'mc', v: '18:21', f: 'c',
+      q: 'En la interpretación adventista, ¿qué gesto de un profeta repite el ángel que arroja la piedra de molino (Apocalipsis 18:21)?',
+      o: ['El de Jeremías, que hundió una piedra en el Éufrates', 'El de Ezequiel, que cavó en la pared del templo', 'El de Isaías, que anduvo descalzo tres años', 'El de Elías, que levantó un altar en el Carmelo'], a: 0,
+      e: 'Jeremías arrojó una piedra al Éufrates y dijo: «Así se hundirá Babilonia» (Jeremías 51:63-64). Doukhan nota que esta vez es una piedra de molino, lo que servía para vivir: Babilonia queda vacía. Fuentes: Doukhan, «Secretos del Apocalipsis», pág. 182-183; Vicuña, «Interpretación histórica del Apocalipsis», pág. 145.' },
+    { t: 'mc', v: '18:23', f: 'c',
+      q: 'Según Bohr, ¿qué representan las hechicerías con que Babilonia engañó a las naciones (Apocalipsis 18:23)?',
+      o: ['El engaño de los espíritus de demonios', 'La magia de los astrólogos de Nabucodonosor', 'Las medicinas falsas que vendían sus mercaderes', 'Los ídolos de oro de la antigua Babilonia'], a: 0,
+      e: 'Bohr: es «el arte del engaño por medio de la hechicería», el mismo de los espíritus de demonios que hacen señales (16:13-14). Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 224.' },
   ],
 
   tarjetas: [

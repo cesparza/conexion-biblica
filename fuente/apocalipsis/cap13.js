@@ -1,6 +1,8 @@
 /* Apocalipsis 13 — La bestia del mar y la bestia de la tierra.
    Sigue el modelo de cap01.js; se revisa con tools/apocalipsis-revisa.js. */
 const { tbl, hi, wa, li } = require('./ayudas.js');
+/* Línea de fuente al pie de cada sección de interpretación. */
+const fu = t => `<p class="fuente"><small>${t}</small></p>`;
 
 module.exports = {
   cap: 'ap13', label: 'Apocalipsis 13', sub: 'Las dos bestias, la marca y el número', vs: 18,
@@ -120,26 +122,210 @@ module.exports = {
       el Cordero (14:1); <strong>42 meses</strong> es el tiempo de la bestia
       (13:5).`) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias. La iglesia adventista lee
-      estas bestias como <strong>sistemas y poderes</strong>, nunca como un
-      juicio contra personas: Dios tiene hijos sinceros en todas las iglesias.<br><br>
-      · La <strong>bestia del mar</strong> junta los animales de Daniel 7 y se
-      entiende como el poder que siguió a Roma: el <strong>papado</strong> como
-      sistema religioso y político.<br>
-      · Los <strong>42 meses</strong> (13:5), con la regla de un día por un año
-      (Ezequiel 4:6), son <strong>1.260 años</strong>: del 538 al 1798 d.C.<br>
-      · La <strong>herida de muerte</strong> (13:3) se ve en 1798, cuando el papa
-      fue llevado preso; la herida sanada, en que recuperó su influencia.<br>
-      · La <strong>bestia de la tierra</strong> (13:11) no sube del mar de pueblos
-      (17:15) sino de un lugar poco poblado, con cuernos de cordero (libertad
-      civil y religiosa): los <strong>Estados Unidos</strong>. Que hable como
-      dragón anuncia que al final usará la ley en asuntos de conciencia.<br>
-      · La <strong>marca</strong> (13:16) es lo contrario del sello de Dios: la
-      obediencia impuesta por ley a un día de culto en lugar del
-      <strong>sábado</strong> del cuarto mandamiento. Nadie la tiene hoy: se
-      recibe cuando esa ley se imponga y cada uno escoja a sabiendas.`) },
+    { t: '🧭 La bestia del mar es el cuerno pequeño de Daniel 7 (13:1-2)', capa: 'contexto', h:
+      hi(`Desde aquí empieza la <strong>interpretación</strong>, sobre todo
+      según el pastor <strong>Esteban (Stephen) Bohr</strong>. Se habla de
+      <strong>sistemas y poderes</strong>, nunca contra personas: hay hijos
+      sinceros de Dios en todas las iglesias.<br><br>
+      Para Bohr, la bestia del mar es el mismo poder que el
+      <strong>cuerno pequeño</strong> de Daniel 7, por tres razones: está en el
+      mismo lugar de la «cadena profética» (la lista de imperios que se
+      siguen), hace lo mismo (blasfemias, guerra contra los santos) y dura el
+      mismo tiempo (42 meses = tiempo, tiempos y medio tiempo).`) +
+      tbl(['Daniel 7', 'Poder', 'Años'], [
+        ['León', 'Babilonia', '605-539 a.C.'],
+        ['Oso', 'Medo-Persia', '539-331 a.C.'],
+        ['Leopardo', 'Grecia', '331-168 a.C.'],
+        ['Cuarta bestia (el dragón)', 'Roma', '168 a.C.-476 d.C.'],
+        ['Diez cuernos', 'Roma dividida', '476-538 d.C.'],
+        ['Cuerno pequeño = bestia del mar', 'Roma papal', '538-1798 d.C.'],
+      ]) +
+      wa(`Fíjate: la bestia del mar junta las fieras de Daniel 7 en orden
+      inverso (leopardo, oso, león) y recibe del dragón su trono. Elena G. de
+      White dice que este símbolo, «como lo han creído la mayoría de los
+      protestantes, representa al papado», que heredó el poder del antiguo
+      Imperio Romano.`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 163-164;
+      Elena G. de White, El conflicto de los siglos, pág. 359.`) },
+
+    { t: '🧭 El trono del dragón y los 42 meses (13:2, 5-7)', capa: 'contexto', h:
+      li([`<strong>«El dragón le dio su poder, su trono»:</strong> cuando el
+           emperador se fue a Constantinopla y las tribus bárbaras deshicieron
+           el imperio de Occidente, el obispo de Roma quedó como única autoridad
+           en la ciudad. Elena G. de White lo resume: en el siglo VI «el
+           paganismo había dejado el lugar al papado».`,
+          `<strong>Los tres cuernos arrancados</strong> (Daniel 7:8): los
+           hérulos (493), los vándalos (534) y los ostrogodos (538).`,
+          `<strong>Cuarenta y dos meses:</strong> 42 × 30 = 1.260 días; un día
+           por un año (Ezequiel 4:6) da <strong>1.260 años, del 538 al 1798</strong>.`,
+          `<strong>Blasfemias:</strong> en la Biblia blasfema el hombre que
+           ocupa el lugar de Dios (Juan 10:33) o dice perdonar pecados por su
+           propia autoridad (Marcos 2:7). Bohr aplica esto a las pretensiones
+           del sistema papal, no a los fieles católicos.`,
+          `<strong>Guerra contra los santos:</strong> la iglesia usaba la
+           espada del Estado para castigar a los que no aceptaban sus
+           doctrinas, como en la Inquisición.`]) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 63,
+      166-168 y 211-214; Bohr, ¿Cuán cerca al fin?, pág. 75-76; Elena G. de
+      White, El conflicto de los siglos, pág. 43 y 359.`) },
+
+    { t: '🧭 La espada, el cautiverio y la herida (13:3, 10)', capa: 'contexto', h:
+      hi(`El versículo 13:10 dice qué le pasa a la bestia al terminar los 42
+      meses: va <strong>en cautividad</strong> y es herida <strong>a
+      espada</strong>. ¿Qué espada? Bohr explica que la Biblia habla de dos:
+      la del Espíritu, que es la Palabra (Efesios 6:17), y la del
+      <strong>gobierno civil</strong>, que castiga al que hace lo malo
+      (Romanos 13:4). Durante 1.260 años el papado usó la espada de los reyes
+      de Europa; en 1798 esa misma espada se volvió contra él.`) +
+      li([`<strong>Febrero de 1798:</strong> el general francés Berthier entró
+           en Roma, quitó del trono al papa Pío VI y se lo llevó preso; murió en
+           el destierro en 1799.`,
+          `<strong>La herida no cerró la iglesia:</strong> los fieles siguieron
+           bautizando, yendo a misa y confesándose. Lo que perdió el papado fue
+           el poder civil para obligar y castigar.`,
+          `<strong>Un sistema, no un papa:</strong> lo que cayó en cautiverio
+           fue el sistema que unía iglesia y Estado, no solo un hombre.`]) +
+      wa(`Otra lectura: algunos predicadores adventistas dijeron que la espada
+      era la Biblia y que la herida la dio la Reforma de 1517. Bohr la
+      descarta: el papado no mató a nadie con la Biblia, y la herida debía
+      llegar al final de los 1.260 años, no en 1517.`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 165-170;
+      Elena G. de White, El conflicto de los siglos, pág. 359.`) },
+
+    { t: '🧭 La herida sanada (13:3-4, 12)', capa: 'contexto', h:
+      hi(`Para Bohr, la curación de la herida es la <strong>cuarta
+      etapa</strong> del dragón: el papado volverá a contar con el poder civil
+      de las naciones, y el mundo entero se maravillará en pos de él. Hoy
+      estamos en el tiempo de la herida que <strong>se va sanando</strong>.`) +
+      li([`<strong>Qué la sanará:</strong> que los gobiernos quiten los
+           frenos que hoy limitan a Roma. Elena G. de White escribió:
+           «Deróguense las medidas restrictivas impuestas en la actualidad por
+           los gobiernos civiles» y Roma volverá a perseguir.`,
+          `<strong>Quién la sanará:</strong> la bestia de la tierra, que hace
+           que el mundo adore «a la primera bestia, cuya herida mortal fue
+           sanada» (13:12). Ella le devuelve la espada que perdió.`,
+          `<strong>Señales que cita Bohr:</strong> el llamado papal a una
+           «verdadera Autoridad política mundial» (encíclica Caritas in
+           Veritate) y la creciente cercanía entre los gobiernos y el Vaticano.`,
+          `<strong>«Adoraron al dragón»</strong> (13:4): al seguir a la bestia,
+           el mundo en el fondo honra a Satanás, que le dio su autoridad.`]) +
+      wa(`Otra lectura, en las notas de Camilo: algunos ven un paso de la
+      curación en 1929, cuando Italia y el Vaticano firmaron el Tratado de
+      Letrán. Bohr enseña que la herida quedará plenamente sanada cuando los
+      Estados Unidos ayuden al papado a recuperar el poder político que
+      perdió.`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 170-175;
+      Elena G. de White, El conflicto de los siglos, pág. 455; notas de Camilo
+      en Evernote, "Herida Sanada".`) },
+
+    { t: '🧭 La bestia que sube de la tierra (13:11)', capa: 'contexto', h:
+      tbl(['Rasgo del texto', 'Qué indica, según Bohr y Elena G. de White'], [
+        ['Es una bestia', 'Una nación, no una persona.'],
+        ['Sube cuando la primera es herida', 'Alrededor de <strong>1798</strong>.'],
+        ['Sube de la tierra, no del mar', 'El mar son pueblos y guerras (17:15). La tierra es un territorio <strong>poco poblado</strong>: crece en paz, sin derribar a otras naciones, «como una planta». Al occidente de Europa.'],
+        ['Es la tierra que ayudó a la mujer', 'El territorio que dio refugio a los perseguidos (12:16).'],
+        ['Dos cuernos de cordero', '<strong>Dos reinos en una nación:</strong> la iglesia y el Estado separados, como enseñó Jesús (Mateo 22:21). De ahí salen la <strong>libertad civil</strong> y la <strong>libertad religiosa</strong>: republicanismo y protestantismo.'],
+        ['Crece hasta mandar a toda la tierra', 'Llega a ser una potencia política, económica y militar mundial.'],
+      ]) +
+      hi(`Conclusión de Elena G. de White: «Una nación, y sólo una, responde a
+      los datos» de esta profecía: los <strong>Estados Unidos de
+      Norteamérica</strong>. Su Constitución y la Primera Enmienda prohíben
+      que el Congreso establezca una religión o impida practicarla.`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 177-186;
+      Elena G. de White, El conflicto de los siglos, pág. 359-361.`) },
+
+    { t: '🧭 «Hablaba como un dragón» (13:11-14)', capa: 'contexto', h:
+      hi(`Bohr subraya que la bestia habla como dragón <strong>mientras todavía
+      tiene</strong> los cuernos de cordero: dice defender la libertad, pero
+      la niega en la práctica. Elena G. de White lo llama «una extraña
+      contradicción entre lo que profesa ser y lo que practica».`) +
+      li([`<strong>Cómo habla una nación:</strong> «El "hablar" de la nación
+           son los actos de sus autoridades legislativas y judiciales». Bohr
+           espera que no se borre la Primera Enmienda, sino que se la contradiga
+           declarando válidas leyes religiosas.`,
+          `<strong>Habla como dragón:</strong> como Satanás obrando por medio
+           de Roma, con el espíritu de intolerancia de los poderes anteriores.`,
+          `<strong>Todo «en presencia» de la primera bestia:</strong> Bohr
+           explica que la expresión significa actuar por encargo de ella.`,
+          `<strong>Fuego del cielo</strong> (13:13): Elena G. de White dice que
+           no serán simples trucos; los agentes de Satanás tendrán poder para
+           hacer milagros. Bohr lo ve como un falso avivamiento que imita a
+           Elías y a Pentecostés, para engañar al mundo.`]) +
+      fu(`Fuentes: Elena G. de White, El conflicto de los siglos, pág. 361-362
+      y 448; Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 177-178 y
+      190-193; Bohr, ¿Cuán cerca al fin?, pág. 135; Bohr, La sexta trompeta,
+      pág. 1.`) },
+
+    { t: '🧭 La imagen de la bestia (13:14-15)', capa: 'contexto', h:
+      hi(`Una imagen es una copia. Para saber cómo es, hay que ver el rasgo
+      principal de la primera bestia: <strong>una iglesia que domina al
+      Estado</strong> y usa su poder para imponer su religión y castigar a
+      los que no la aceptan.`) +
+      li([`Elena G. de White: para que haya imagen, «el poder religioso debe
+           dominar de tal manera al gobierno civil» que la iglesia use la
+           autoridad del Estado para cumplir sus fines.`,
+          `<strong>Quién la forma:</strong> el «protestantismo apóstata», es
+           decir, iglesias que se apartaron de los principios de la Reforma,
+           cuando «uniéndose en puntos comunes de doctrina» pidan al Estado que
+           imponga sus decretos.`,
+          `<strong>La imagen habla y manda matar</strong> (13:15): leyes
+           religiosas con castigo civil, que llegan hasta un decreto de muerte.
+           Bohr lo ilustra con Daniel 3: una imagen, una orden de adorar y un
+           horno para el que no obedezca.`]) +
+      wa(`Igual que con la primera bestia, se habla de sistemas y no de los
+      creyentes sinceros de esas iglesias.`) +
+      fu(`Fuentes: Elena G. de White, El conflicto de los siglos, pág. 362-364;
+      Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 195-203.`) },
+
+    { t: '🧭 La marca de la bestia (13:16-17)', capa: 'contexto', h:
+      hi(`El sello de Dios y la marca de la bestia son <strong>señales de
+      autoridad</strong>. El cuarto mandamiento es el único que trae el nombre,
+      el título y el dominio del Legislador: es el sello de Dios en su ley. Y
+      Roma señala como prueba de su autoridad el haber cambiado el día de
+      reposo del sábado al domingo. Elena G. de White pregunta: ¿qué es ese
+      cambio «sino el signo o marca de la autoridad de la iglesia romana»?`) +
+      li([`<strong>Frente o mano:</strong> Dios pidió llevar su ley en la mano
+           y en la frente (Deuteronomio 6:8). Bohr: la bestia acepta que se le
+           sirva con la mente (frente) o solo con las obras (mano); Dios pide
+           las dos.`,
+          `<strong>Comprar y vender:</strong> presión económica sobre los que no
+           la reciban, y al final un decreto de muerte.`,
+          `<strong>Nadie la tiene hoy:</strong> hay «verdaderos cristianos en
+           todas las iglesias, sin exceptuar la católica romana», que guardan
+           el domingo con sinceridad, y Dios los acepta. La marca se recibe
+           cuando el domingo sea impuesto por ley y la persona, ya informada,
+           elija la orden humana en lugar de la de Dios.`]) +
+      wa(`Bohr no la entiende como un tatuaje literal con el número: la gran
+      prueba final no es tanto de días como de <strong>autoridad</strong>, a
+      quién se obedece y se adora.`) +
+      fu(`Fuentes: Elena G. de White, El conflicto de los siglos, pág. 364-367;
+      Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 25 y 46-50; Bohr,
+      Juan Pablo II, el papa Francisco y la gran prueba final, pág. 3.`) },
+
+    { t: '🧭 El 666, tal como lo presenta Bohr (13:18)', capa: 'contexto', h:
+      li([`<strong>Es el número de un nombre</strong> (13:17), y ese nombre es
+           <strong>de blasfemia</strong> (13:1): un hombre que dice ocupar el
+           lugar de Dios en la tierra.`,
+          `<strong>Se cuenta con letras:</strong> en hebreo, griego y latín las
+           letras servían de números (gematría).`,
+          `<strong>En latín:</strong> el dragón que dio el trono era Roma, y el
+           latín es la lengua oficial de Roma y del papado.`,
+          `<strong>«Número de hombre»:</strong> sin artículo en griego; Bohr lo
+           entiende como un sistema centrado en el hombre, no un individuo.`]) +
+      tbl(['Vicarius Filii Dei («Vicario del Hijo de Dios»)', 'Suma'], [
+        ['V(5) I(1) C(100) A R I(1) V(5) S', '112'],
+        ['F I(1) L(50) I(1) I(1)', '53'],
+        ['D(500) E I(1)', '501'],
+        ['<strong>Total</strong>', '<strong>666</strong>'],
+      ]) +
+      wa(`Bohr reconoce que el título aparece en la Donación de Constantino,
+      un documento falso que varios papas usaron, y en el Decreto de Graciano,
+      y que no hay forma de probar que estuviera en la tiara. Cita al
+      Comentario Bíblico Adventista: lo que importa es que el título se le ha
+      aplicado al papa. Otros nombres propuestos (Lateinos, Dux Cleri,
+      Ludovicus) los descarta porque no son blasfemos. Se trata de un título
+      del sistema, no de un ataque a personas.`) +
+      fu(`Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 211-224.`) },
   ],
 
   preguntas: [
@@ -271,21 +457,80 @@ module.exports = {
       q: 'Según Apocalipsis 13:18, el número de la bestia es número de ángel.', a: false,
       e: 'Falso: «es número de HOMBRE» (13:18).' },
     { t: 'mc', v: '13:1-2', f: 'c',
-      q: 'En la lectura adventista, ¿qué representa la bestia que sube del mar?',
-      o: ['El papado como sistema religioso y político', 'El imperio de Babilonia de Nabucodonosor', 'Un monstruo marino que saldrá al final', 'Los cuatro vientos de la tierra'], a: 0,
-      e: 'Interpretación: el poder que siguió a Roma, leído como sistema, no contra personas. El texto solo describe una bestia que sube del mar (13:1-2).' },
+      q: 'Según Bohr, ¿qué poder representa la bestia que sube del mar?',
+      o: ['El papado, el mismo cuerno pequeño', 'Un anticristo de los últimos 7 años', 'El imperio romano de los césares', 'Antíoco Epífanes, rey de Siria'], a: 0,
+      e: 'Bohr: es el mismo poder que el cuerno pequeño de Daniel 7, leído como sistema religioso y político, no contra personas. Elena de White coincide. Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 163-164; Elena G. de White, El conflicto de los siglos, pág. 359.' },
+    { t: 'tf', v: '13:1-2', f: 'c',
+      q: 'Según Bohr, la bestia del mar y el cuerno pequeño son el mismo poder porque están en el mismo lugar de la cadena profética, hacen lo mismo y duran el mismo tiempo.', a: true,
+      e: 'Verdadero: esas son las tres razones de Bohr. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 164.' },
+    { t: 'mc', v: '13:2', f: 'c',
+      q: 'Según Elena de White, ¿cuándo le dio el dragón a la bestia «su poder y su trono»?',
+      o: ['En el siglo VI, al afirmarse el papado', 'En el año 31, cuando murió Jesús', 'En 313, con el edicto de Milán', 'En 1798, con la Revolución Francesa'], a: 0,
+      e: 'En el siglo VI «el paganismo había dejado el lugar al papado», y empezaron los 1.260 años. Fuente: Elena G. de White, El conflicto de los siglos, pág. 43.' },
     { t: 'mc', v: '13:5', f: 'c',
       q: 'En la interpretación adventista, ¿a qué equivalen los cuarenta y dos meses de Apocalipsis 13:5?',
       o: ['A 1.260 años, del 538 al 1798', 'A 42 años al final del mundo', 'A siete años de gran tribulación', 'A las setenta semanas de Daniel'], a: 0,
-      e: 'Interpretación: 42 meses de 30 días son 1.260 días, y con la regla de un día por un año (Ezequiel 4:6) son 1.260 años. El texto solo dice «cuarenta y dos meses» (13:5).' },
+      e: '42 × 30 = 1.260 días; un día por un año (Ezequiel 4:6). Es el mismo tiempo que «un tiempo, tiempos y la mitad de un tiempo». Fuentes: Elena G. de White, El conflicto de los siglos, pág. 359; Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 164.' },
+    { t: 'mc', v: '13:10', f: 'c',
+      q: 'Según Bohr, ¿qué representa la espada que hirió a la bestia?',
+      o: ['El poder civil del Estado', 'La Biblia predicada en la Reforma', 'Los ejércitos del islam', 'Una guerra mundial futura'], a: 0,
+      e: 'Bohr: la espada del gobierno (Romanos 13:4). El papado la usó 1.260 años y en 1798 se volvió contra él. Rechaza la idea de que fuera la Biblia de la Reforma. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 165-166.' },
+    { t: 'mc', v: '13:3', f: 'c',
+      q: 'Según Bohr, ¿qué pasó en febrero de 1798?',
+      o: ['Un general francés depuso al papa y se lo llevó', 'El papa renunció a su cargo por su voluntad', 'Napoleón fue coronado emperador por el papa', 'Italia confiscó todos los estados papales'], a: 0,
+      e: 'El general Berthier quitó del trono a Pío VI y lo llevó preso; murió en el destierro en 1799. La coronación de Napoleón fue en 1804 y la toma de los estados papales en 1870. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 169-170.' },
+    { t: 'tf', v: '13:3', f: 'c',
+      q: 'Según Bohr, la herida mortal de 1798 significa que la Iglesia católica cerró sus puertas y dejó de funcionar.', a: false,
+      e: 'Falso: los fieles siguieron con su vida religiosa; lo que perdió el papado fue el poder civil para imponer y castigar. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 170.' },
+    { t: 'mc', v: '13:3', f: 'c',
+      q: 'Según Bohr, ¿cuándo quedará plenamente sanada la herida mortal?',
+      o: ['Cuando EE.UU. ayude a Roma a recobrar el poder', 'Ya se sanó en 1929 con el Tratado de Letrán', 'Se sanó en 1870 con el concilio Vaticano', 'Cuando se elija al último papa de la lista'], a: 0,
+      e: 'Bohr: la herida se va sanando y quedará plenamente sanada cuando la bestia de la tierra le ayude a recuperar el poder político que perdió. Algunas notas ven un paso en 1929. Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 174-175; notas de Camilo en Evernote, "Herida Sanada".' },
     { t: 'mc', v: '13:11', f: 'c',
-      q: 'En la lectura adventista, ¿qué nación representa la bestia que sube de la tierra?',
-      o: ['Los Estados Unidos de América', 'El antiguo imperio romano', 'El reino de Media y Persia', 'La Grecia de Alejandro Magno'], a: 0,
-      e: 'Interpretación: una nación que nace en un lugar poco poblado, con cuernos de cordero (libertad civil y religiosa), que al final hablará «como un dragón». El texto solo dice que subía de la tierra (13:11).' },
+      q: 'Según Elena de White, ¿qué nación representa la bestia que sube de la tierra?',
+      o: ['Los Estados Unidos de América', 'El antiguo imperio romano', 'El reino de Media y Persia', 'La Francia de la Revolución'], a: 0,
+      e: '«Una nación, y sólo una, responde a los datos»: los Estados Unidos, que crecían en 1798 en un territorio poco poblado. Fuente: Elena G. de White, El conflicto de los siglos, pág. 360.' },
+    { t: 'mc', v: '13:11', f: 'c',
+      q: 'Según Elena de White, ¿por qué esta bestia sube «de la tierra» y no del mar?',
+      o: ['Creció en un territorio poco poblado y en paz', 'Nació de una revolución sangrienta en Europa', 'Salió de una isla en medio del océano', 'Subió del abismo, como la bestia de 11:7'], a: 0,
+      e: 'El mar son «pueblos y naciones y lenguas» (17:15) y los vientos, guerras; esta nación crece «gradual y pacíficamente» en territorio desocupado. Fuente: Elena G. de White, El conflicto de los siglos, pág. 360.' },
+    { t: 'mc', v: '13:11', f: 'c',
+      q: 'Según Bohr, ¿qué representan los dos cuernos semejantes a los de un cordero?',
+      o: ['La libertad civil y la libertad religiosa', 'Dos papas que gobernaron a la vez', 'El Antiguo y el Nuevo Testamento', 'Inglaterra y Francia, aliadas'], a: 0,
+      e: 'Bohr: dos reinos en una nación, la iglesia y el Estado separados, como enseñó Jesús (Mateo 22:21): republicanismo y protestantismo. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 182-186.' },
+    { t: 'mc', v: '13:11', f: 'c',
+      q: 'Según Elena de White, ¿cómo «habla» una nación?',
+      o: ['Por sus actos legislativos y judiciales', 'Por las protestas del pueblo en la calle', 'Por la voz de sus predicadores', 'Por la fuerza de sus ejércitos'], a: 0,
+      e: '«El "hablar" de la nación son los actos de sus autoridades legislativas y judiciales». Fuente: Elena G. de White, El conflicto de los siglos, pág. 361.' },
+    { t: 'tf', v: '13:13', f: 'c',
+      q: 'Según Elena de White, los milagros de Apocalipsis 13:13 serán solo trucos sin poder real.', a: false,
+      e: 'Falso: «Lo que se predice aquí no es una simple impostura»; los agentes de Satanás tendrán poder para hacerlos. Fuente: Elena G. de White, El conflicto de los siglos, pág. 448.' },
+    { t: 'mc', v: '13:14-15', f: 'c',
+      q: 'Según Elena de White, ¿qué es la imagen de la bestia?',
+      o: ['Iglesias que usan al Estado para imponer su fe', 'Una estatua literal levantada en una plaza', 'Un gobierno ateo que prohíbe toda religión', 'Una copia del templo de Jerusalén'], a: 0,
+      e: 'Es el «protestantismo apóstata» cuando las iglesias busquen el poder civil para imponer sus dogmas, copiando a la primera bestia. Fuente: Elena G. de White, El conflicto de los siglos, pág. 362-364.' },
     { t: 'mc', v: '13:16-17', f: 'c',
       q: 'En la interpretación adventista, ¿qué es la marca de la bestia?',
-      o: ['Un culto impuesto por ley en lugar del sábado, al final', 'Un chip o un tatuaje que se pone en el cuerpo', 'Una moneda especial que hará algún gobierno', 'Un nombre secreto escrito en una piedrecita'], a: 0,
-      e: 'Interpretación: lo contrario del sello de Dios; se recibe cuando se imponga esa ley y cada uno escoja a sabiendas. Nadie la tiene hoy. El texto solo habla de una marca en la mano derecha o en la frente (13:16).' },
+      o: ['El domingo impuesto por ley, en lugar del sábado', 'Un chip o un tatuaje que se pone en el cuerpo', 'Una moneda especial que hará algún gobierno', 'Un nombre secreto escrito en una piedrecita'], a: 0,
+      e: 'Roma presenta el cambio del sábado al domingo como signo de su autoridad; la marca se recibe cuando ese día se imponga por ley y se elija a sabiendas. Fuente: Elena G. de White, El conflicto de los siglos, pág. 366-367.' },
+    { t: 'tf', v: '13:16', f: 'c',
+      q: 'Según Elena de White, ya hoy tienen la marca todos los que guardan el domingo.', a: false,
+      e: 'Falso: hay «verdaderos cristianos en todas las iglesias, sin exceptuar la católica romana», y Dios acepta su sinceridad; la marca se recibe cuando se imponga por ley y se elija contra la luz. Fuente: Elena G. de White, El conflicto de los siglos, pág. 367.' },
+    { t: 'mc', v: '13:16', f: 'c',
+      q: 'Según Bohr, ¿qué indica que la marca pueda ir en la frente o en la mano?',
+      o: ['Servir con la mente o solo con las obras', 'Que unos son ricos y otros son pobres', 'Que unos son judíos y otros gentiles', 'Que unos son clérigos y otros laicos'], a: 0,
+      e: 'Bohr: la bestia acepta el servicio de la mente o de la mano; Dios pide los dos, como cuando mandó atar su ley en la mano y en la frente (Deuteronomio 6:8). Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 25 y 50.' },
+    { t: 'mc', v: '13:18', f: 'c',
+      q: 'Según Bohr, ¿en qué idioma hay que buscar el nombre cuyo número es 666?',
+      o: ['En latín', 'En hebreo', 'En griego', 'En arameo'], a: 0,
+      e: 'Bohr: el dragón que dio el trono fue Roma, y el latín es la lengua oficial de Roma y del papado (Juan 19:20 muestra que se usaba). Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 217.' },
+    { t: 'mc', v: '13:18', f: 'c',
+      q: 'Según Bohr, ¿qué título da 666 y además es blasfemo?',
+      o: ['Vicarius Filii Dei', 'Lateinos, hombre latino', 'Dux Cleri, jefe del clero', 'Ludovicus, de la corte'], a: 0,
+      e: 'Bohr descarta Lateinos, Dux Cleri y Ludovicus porque no son blasfemos. Vicarius Filii Dei, «Vicario del Hijo de Dios», suma 666 en números romanos. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 218 y 223.' },
+    { t: 'tf', v: '13:18', f: 'c',
+      q: 'Según Bohr, «número de hombre» quiere decir que el 666 señala a un individuo en particular.', a: false,
+      e: 'Falso: «hombre» va sin artículo en griego; Bohr lo entiende como un sistema centrado en el hombre, no una persona. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 216-217.' },
   ],
 
   tarjetas: [

@@ -103,7 +103,7 @@ const catConActividad=k=>CATS[k]
    envuelve, y si la parte que distingue queda al final, las dos opciones
    empiezan igual y se leen igual. */
 /* v164: ACTIVIDAD Y CATEGORIA JUNTAS, sin repetir. Cuando el nombre de la
-   actividad ya nombra a la categoria («Conexion Biblica de Guias Mayores»),
+   actividad ya nombra a la categoria (antes «Conexion Biblica de Guias Mayores»),
    se dice una sola vez. `modo` es el orden: actividad primero (por defecto),
    'cat' la categoria primero, 'de' en frase y 'par' entre parentesis. */
 const actYCat=(k,modo)=>{

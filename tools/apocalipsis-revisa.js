@@ -12,7 +12,7 @@
      correcta mucho más larga que las demás o como la única entre comillas;
    - V/F sin explicación; preguntas repetidas; secciones de más de 1.900
      caracteres (el hook del repo corta líneas de 2.000).
-   Avisa (sin fallar) si el reparto se aleja de 60/25/15. */
+   Avisa (sin fallar) si el reparto del examen (sin f:'c') se aleja de 60/25/15. */
 const fs = require('fs');
 const path = require('path');
 const { VERS_AP } = require('../fuente/biblia-apocalipsis.js');
@@ -58,6 +58,8 @@ for (const f of lista) {
     if (!s.t || !s.h) mal(n, 'sección sin título o sin contenido');
     if (!['nucleo', 'apoyo', 'contexto'].includes(s.capa)) mal(n, 'sección «' + s.t + '» sin capa válida');
     if ((s.h || '').length > 1900) mal(n, 'sección «' + s.t + '» de ' + s.h.length + ' caracteres');
+    /* v179: la interpretación dice de dónde sale (autor, obra, página). */
+    if (s.capa === 'contexto' && !/Fuentes?:/.test(s.h || '')) mal(n, 'sección de interpretación «' + s.t + '» sin «Fuente:»');
     const plano = String(s.h || '').replace(/<[^>]+>/g, '');
     for (const m of plano.matchAll(/«([^«»]{12,})»\s*\((\d{1,2}):(\d{1,2})(?:-(\d{1,2}))?\)/g)) {
       if (Number(m[2]) !== n) continue;
@@ -87,6 +89,7 @@ for (const f of lista) {
     vistas.add(llave);
     const txt = norm(textoDe(n, r));
     if (q.f !== undefined && q.f !== 'c') mal(n, 'f solo puede ser «c»: ' + id);
+    if (q.f === 'c' && !/Fuentes?:/.test(q.e || '')) mal(n, 'interpretación sin «Fuente:» en la explicación: ' + id);
     if (q.t === 'mc') {
       const o = q.o || [];
       if (o.length !== 4 || new Set(o).size !== 4) mal(n, 'no trae 4 opciones distintas: ' + id);
@@ -116,8 +119,12 @@ for (const f of lista) {
   if (sin.length) mal(n, 'versículos sin pregunta: ' + sin.join(', '));
   const tot = P.length;
   if (tot < nv + 4) mal(n, 'pocas preguntas: ' + tot + ' para ' + nv + ' versículos');
-  if (tot && (cuenta.mc / tot < 0.5 || cuenta.tf / tot < 0.15 || cuenta.fill / tot > 0.2 || cuenta.fill / tot < 0.08))
-    ojo(n, 'reparto ' + JSON.stringify(cuenta));
+  /* El reparto 60/25/15 es del examen: la interpretación (f:'c') no cuenta. */
+  const ex = { mc: 0, tf: 0, fill: 0 }, PE = P.filter(q => q.f !== 'c');
+  PE.forEach(q => { ex[q.t] = (ex[q.t] || 0) + 1; });
+  const te = PE.length;
+  if (te && (ex.mc / te < 0.5 || ex.tf / te < 0.15 || ex.fill / te > 0.2 || ex.fill / te < 0.08))
+    ojo(n, 'reparto del examen ' + JSON.stringify(ex));
   if (!P.some(q => /qué (texto|versículo)/i.test(q.q || ''))) ojo(n, 'ninguna de «¿qué texto dice…?»');
 
   /* ── tarjetas ── */

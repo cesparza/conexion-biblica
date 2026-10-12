@@ -1,6 +1,8 @@
 /* Apocalipsis 9 — La quinta y la sexta trompetas (primer y segundo ay).
    Sigue el modelo de cap01.js. */
 const { tbl, hi, wa, li } = require('./ayudas.js');
+/* Línea de fuente al pie de cada sección de interpretación. */
+const fu = t => `<p class="fuente"><small>${t}</small></p>`;
 
 module.exports = {
   cap: 'ap9', label: 'Apocalipsis 9', sub: 'La quinta y la sexta trompetas', vs: 21,
@@ -121,21 +123,106 @@ module.exports = {
       wa(`La 5ª es el <strong>primer ay</strong> y la 6ª el <strong>segundo
       ay</strong> (9:12). La 7ª se toca en el capítulo 11.`) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias. Otras iglesias leen estas
-      visiones de otra manera; aquí va la lectura adventista.<br><br>
-      · En la lectura clásica adventista, la <strong>quinta</strong> y la
-      <strong>sexta</strong> trompetas se aplican a dos poderes de la historia:
-      primero el poder sarraceno y después el Imperio otomano. Es una lectura
-      de imperios del pasado, no un juicio sobre ningún pueblo ni sobre las
-      personas de hoy.<br>
-      · Los tiempos proféticos, como los <strong>cinco meses</strong> (9:5),
-      se leen con el principio de <strong>un día por un año</strong> (Números
-      14:34; Ezequiel 4:6).<br>
-      · Los versículos 20 y 21 muestran el propósito de las trompetas: son
-      <strong>advertencias</strong> que llaman al arrepentimiento, antes de
-      las siete plagas finales (las copas del capítulo 16).`) },
+    { t: '🧭 La quinta trompeta según Bohr (9:1-12)', capa: 'contexto', h:
+      hi(`Esto es interpretación, no texto del capítulo. Para el pastor
+      <strong>Stephen Bohr</strong> la quinta trompeta, el
+      <strong>primer ay</strong>, es la <strong>Revolución Francesa
+      (1789-1798)</strong>: el juicio que cayó sobre el poder que había
+      dominado 1.260 años (la cuarta trompeta).`) +
+      li([`<strong>El abismo.</strong> Sobre las langostas reina el «ángel del
+           abismo» (9:11): para Bohr, Satanás. En 11:7 «la bestia que sube del
+           abismo» es Francia, y 11:7-10 describe el mismo momento
+           (1793-1797).`,
+          `<strong>La herida.</strong> En esos años el papado recibe la herida
+           mortal de 13:3: en 1798 un ejército francés toma preso al papa.`,
+          `<strong>Las aguas que se secan.</strong> El río que el dragón echaba
+           contra la mujer (12:15) se seca: los gobiernos civiles dejan de
+           prestar su espada para perseguir.`,
+          `<strong>Cuándo termina.</strong> El primer ay pasa (9:12) en 1798.
+           Ahí empieza el tiempo del fin y se abre el librito (capítulo 10).`]) +
+      wa(`En el material de Bohr que tenemos no se explica cada detalle de las
+      langostas ni los cinco meses. <strong>Otra lectura adventista</strong>,
+      la clásica de Josías Litch que defiende Treiyer, aplica la 5ª y la 6ª a
+      los turcos otomanos: 1299-1449 y hasta el 11 de agosto de 1840; Elena
+      de White menciona ese cumplimiento de 1840.`) +
+      fu(`Fuentes: Bohr, «15 principios de interpretación profética», vol. 2,
+      pág. 89-91 y 105; Bohr, «La sexta trompeta», pág. 5; Bohr, «El mensaje de
+      los tres ángeles», tomo 1, pág. 5; Treiyer, «Fechas trompetas», pág. 3-4;
+      Elena de White, «El conflicto de los siglos», pág. 279.`) },
+
+    { t: '🧭 La sexta trompeta: desde 1844 (9:13-14)', capa: 'contexto', h:
+      hi(`Para Bohr la sexta trompeta va <strong>desde 1844 hasta el cierre del
+      tiempo de gracia</strong>. Describe cómo se reúnen los impíos para la
+      batalla final contra el pueblo de Dios.`) +
+      li([`<strong>La voz del altar de oro (9:13).</strong> Habla quien ministra
+           ante Dios en el altar del incienso: Jesucristo, el Mediador. Los
+           cuernos de ese altar se untaban con sangre una vez al año, en el
+           <strong>día de la expiación</strong> (Éxodo 30:10): la sexta
+           trompeta suena en el tiempo del juicio.`,
+          `<strong>Los cuatro ángeles atados (9:14)</strong> no son los ángeles
+           buenos que retienen los vientos (7:1). Son ángeles malos que Dios
+           tenía contenidos. El número cuatro indica todo el mundo.`,
+          `<strong>El Éufrates.</strong> Solo aparece aquí y en la sexta plaga
+           (16:12); por eso Bohr lo lee como símbolo, igual en los dos
+           lugares, y no como un río del Medio Oriente.`,
+          `<strong>¿Qué los retenía?</strong> Los gobiernos civiles que desde
+           1798 no dejan que el papado recupere su antiguo poder. Cuando ese
+           freno se quite, el poder de persecución volverá a correr.`]) +
+      fu(`Fuente: Stephen Bohr, «La sexta trompeta», pág. 1 y 11-14.`) },
+
+    { t: '🧭 Hora, día, mes y año; doscientos millones (9:15-16)', capa: 'contexto', h:
+      li([`<strong>«La hora, día, mes y año» (9:15).</strong> Bohr lo lee así:
+           la hora es «la hora de su juicio» (14:7); el día es el
+           <strong>décimo</strong>, el mes es el <strong>séptimo</strong>
+           (el día de la expiación, Levítico 23:27) y el año es
+           <strong>1844</strong> (Daniel 8:14).`,
+          `<strong>Una tercera parte (9:15).</strong> No es la destrucción
+           final de los impíos: solo cae un tercio, y todavía hay tiempo de
+           gracia.`,
+          `<strong>«Yo oí su número» (9:16).</strong> Solo aquí y en 7:4 dice
+           Juan que oyó un número. En 7:4 se cuenta a los 144.000 sellados; en
+           9:16, a los doscientos millones del otro bando. Es un número
+           simbólico: la gran multitud de los impíos frente a un remanente
+           pequeño.`]) +
+      wa(`El sexto sello tiene su paréntesis con los sellados (capítulo 7); la
+      sexta trompeta, el suyo con el librito y la medición del templo
+      (capítulos 10 y 11). Los dos sextos llevan a 1844 y al juicio.`) +
+      fu(`Fuentes: Stephen Bohr, «La sexta trompeta», pág. 14-15; Bohr, «Los
+      144.000 y los 24 ancianos», pág. 118; Bohr, «Introducción a las siete
+      trompetas», pág. 15.`) },
+
+    { t: '🧭 Fuego, humo, azufre y colas (9:17-21)', capa: 'contexto', h:
+      li([`<strong>De sus bocas (9:17-18).</strong> El fuego, el humo y el
+           azufre recuerdan el lago de fuego, y al Leviatán de Job 41, que
+           echa fuego y humo por la boca. Bohr lo une con 16:13, donde salen
+           espíritus inmundos de la boca del dragón, de la bestia y del falso
+           profeta: lo que sale de la boca son los engaños que reúnen al mundo.`,
+          `<strong>Las colas (9:19).</strong> En la Biblia la cola es símbolo de
+           la mentira: el profeta que enseña mentira es la cola (Isaías 9:15).`,
+          `<strong>Los ídolos (9:20).</strong> La lista «de oro, plata, bronce,
+           piedra y madera, las cuales no pueden ver ni oír» viene de Daniel
+           5:23, la noche en que cayó Babilonia. Así se unen Daniel 5, la
+           sexta trompeta y la sexta plaga.`,
+          `<strong>No se arrepintieron (9:21).</strong> Homicidios, hechicerías,
+           fornicación y robos son los mismos pecados que Apocalipsis 17 y 18
+           señalan en Babilonia (17:2, 6; 18:23).`]) +
+      fu(`Fuente: Stephen Bohr, «La sexta trompeta», pág. 15-17.`) },
+
+    { t: '🧭 Dos reuniones: capítulo 9 y capítulo 10', capa: 'contexto', h:
+      tbl(['Pasaje', 'Qué describe, según Bohr'], [
+        ['9:13-21', 'Se reúnen los impíos, desde 1844 hasta el cierre de la gracia'],
+        ['10:1-11:1', 'Se reúnen los justos con el mensaje del librito, en el mismo período'],
+        ['12:17; 13:11-18', 'Los impíos contra el remanente, antes del cierre de la gracia'],
+        ['14:6-12', 'Los justos, con los mensajes de los tres ángeles'],
+        ['14:14-20', 'La cosecha: los dos grupos ya están reunidos'],
+      ]) +
+      hi(`La sexta trompeta muestra el lado de los enemigos; Apocalipsis 10, el
+      del remanente fiel, en el mismo tiempo. Por eso, cuando termina el
+      capítulo 9, no se dice que el segundo ay pasó: eso llega hasta 11:14.
+      Bohr nota que Dios tiene tres ángeles que reúnen a los suyos (capítulo
+      14) y Satanás tres espíritus que reúnen a los impíos (16:13-14).`) +
+      fu(`Fuentes: Stephen Bohr, «La sexta trompeta», pág. 1-2 y 12; Bohr, «15
+      principios de interpretación profética», vol. 2, pág. 89-90.`) },
   ],
 
   preguntas: [
@@ -179,10 +266,6 @@ module.exports = {
     { t: 'tf', v: '9:5',
       q: 'A las langostas se les permitió matar a los hombres. (Apocalipsis 9:5)', a: false,
       e: 'Falso: «no se les permitió que los mataran, sino que los atormentaran» (9:5).' },
-    { t: 'mc', v: '9:5', f: 'c',
-      q: 'En la lectura adventista, ¿con qué principio se leen tiempos proféticos como los «cinco meses»?',
-      o: ['Un día profético equivale a un año', 'Un mes profético equivale a mil años', 'Cada número es un día literal', 'Los tiempos se cuentan en semanas'], a: 0,
-      e: 'Interpretación: el principio de un día por un año (Números 14:34; Ezequiel 4:6). El texto solo dice «cinco meses» (9:5).' },
     { t: 'fill', v: '9:6', ins: 'Apocalipsis 9:6 (RV1995) — Completa:',
       p: [{ x: 'En aquellos días los hombres buscarán la ' }, { b: 'muerte', h: '¿qué buscarán?' }, { x: ', pero no la ' }, { b: 'hallarán', h: '¿qué pasará?' }, { x: ';' }] },
     { t: 'mc', v: '9:6', lit: 'la muerte huirá de ellos',
@@ -291,14 +374,64 @@ module.exports = {
       q: '¿Qué texto dice «No se arrepintieron de sus homicidios, ni de sus hechicerías»?',
       o: ['Apocalipsis 9:21', 'Apocalipsis 9:20', 'Apocalipsis 16:11', 'Apocalipsis 9:18'], a: 0,
       e: 'Apocalipsis 9:21, el último versículo del capítulo.' },
-    { t: 'mc', v: '9:1-19', f: 'c',
-      q: 'En la lectura adventista clásica, ¿a qué se aplican la quinta y la sexta trompetas?',
-      o: ['Al poder sarraceno y al Imperio otomano', 'A las invasiones bárbaras contra Roma', 'A las guerras de Napoleón en Europa', 'A plagas de insectos del tiempo del fin'], a: 0,
-      e: 'Interpretación: a dos poderes de la historia, primero el sarraceno y después el Imperio otomano. El texto habla de langostas (9:3) y de jinetes (9:16). Las invasiones contra Roma se aplican a las trompetas 1 a 4.' },
-    { t: 'mc', v: '9:20-21', f: 'c',
-      q: 'En la interpretación adventista, ¿qué muestran 9:20-21 sobre el propósito de las trompetas?',
-      o: ['Que son advertencias que llaman al arrepentimiento', 'Que son las plagas finales, sin más tiempo de gracia', 'Que son castigos solo para la iglesia infiel', 'Que son señales de que el mundo ya terminó'], a: 0,
-      e: 'Interpretación: las trompetas son advertencias antes de las siete plagas finales (capítulo 16). El texto dice que «ni aun así se arrepintieron» (9:20).' },
+    { t: 'mc', v: '9:1-11', f: 'c',
+      q: 'Según Bohr, ¿qué representa la quinta trompeta, el primer ay?',
+      o: ['La Revolución Francesa (1789-1798)', 'El poder sarraceno del siglo VII', 'La caída de Roma imperial (476)', 'El Imperio otomano (1299-1449)'], a: 0,
+      e: 'Para Bohr, 9:1-11 es la Revolución Francesa, el primer ay; 11:7-10 describe el mismo momento. Sarracenos y otomanos son de la lectura clásica de Josías Litch. Fuente: Stephen Bohr, «15 principios de interpretación profética», vol. 2, pág. 89.' },
+    { t: 'tf', v: '9:5', f: 'c',
+      q: 'Según Bohr, los cinco meses de la quinta trompeta son los 150 años del 1299 al 1449.', a: false,
+      e: 'Falso: esas fechas son de la lectura clásica de Josías Litch, que defiende Treiyer. Bohr ubica la quinta trompeta en la Revolución Francesa (1789-1798). Fuentes: Bohr, «Introducción a las siete trompetas», pág. 19; Treiyer, «Fechas trompetas», pág. 3-4.' },
+    { t: 'mc', v: '9:11', f: 'c',
+      q: 'Según Bohr, ¿quién es el rey del abismo que gobierna a las langostas?',
+      o: ['Satanás', 'Napoleón Bonaparte', 'Osmán, el fundador otomano', 'El último emperador romano'], a: 0,
+      e: 'Bohr escribe que «Satanás es el rey del abismo (Apocalipsis 9:11)». Fuente: Stephen Bohr, «El mensaje de los tres ángeles», tomo 1, pág. 5.' },
+    { t: 'mc', v: '9:12', f: 'c',
+      q: 'Según Bohr, ¿en qué año pasa el primer ay?',
+      o: ['En 1798', 'En 1844', 'En 1449', 'En 1840'], a: 0,
+      e: 'El primer ay (la Revolución Francesa) termina en 1798; ese año empieza el tiempo del fin y el mensaje del primer ángel. Fuente: Stephen Bohr, «15 principios de interpretación profética», vol. 2, pág. 91.' },
+    { t: 'mc', v: '9:13-21', f: 'c',
+      q: 'Según Bohr, ¿qué período abarca la sexta trompeta?',
+      o: ['De 1844 al cierre del tiempo de gracia', 'De 1449 al 11 de agosto de 1840', 'De 1789 a 1798, con la Revolución', 'De 538 a 1798, con el papado'], a: 0,
+      e: 'La sexta trompeta describe la reunión de los impíos que empezó en 1844 y se intensifica hasta el cierre de la gracia. Las fechas 1449-1840 son de la lectura clásica. Fuente: Stephen Bohr, «La sexta trompeta», pág. 1.' },
+    { t: 'mc', v: '9:13', f: 'c',
+      q: 'Según Bohr, ¿quién habla desde los cuatro cuernos del altar de oro?',
+      o: ['Jesucristo, el Mediador', 'Dios el Padre, desde el trono', 'El ángel que tenía la llave', 'Uno de los cuatro seres vivientes'], a: 0,
+      e: 'No es el Padre, porque el altar está «delante de Dios». Habla quien ministra en el altar del incienso: Jesucristo, el Mediador (1 Timoteo 2:5). Fuente: Stephen Bohr, «La sexta trompeta», pág. 11.' },
+    { t: 'mc', v: '9:13', f: 'c',
+      q: 'Según Bohr, ¿qué fiesta recuerdan los cuernos del altar del incienso en la sexta trompeta?',
+      o: ['El día de la expiación', 'La fiesta de la Pascua', 'La fiesta de Pentecostés', 'La fiesta de los tabernáculos'], a: 0,
+      e: 'La sangre se ponía en los cuernos del altar del incienso una vez al año, en el día de la expiación (Éxodo 30:10): la sexta trompeta suena en el tiempo del juicio, desde 1844. Fuente: Stephen Bohr, «La sexta trompeta», pág. 12.' },
+    { t: 'mc', v: '9:14', f: 'c',
+      q: 'Según Bohr, ¿quiénes son los cuatro ángeles atados junto al gran río Éufrates?',
+      o: ['Ángeles malos que Dios tenía contenidos', 'Los ángeles que retienen los cuatro vientos', 'Cuatro ejércitos literales del Medio Oriente', 'Cuatro arcángeles que protegen a los santos'], a: 0,
+      e: 'No son los ángeles buenos de 7:1, que retienen los vientos, sino ángeles malos que esperaban ser soltados; el número cuatro indica todo el mundo. Fuente: Stephen Bohr, «La sexta trompeta», pág. 12.' },
+    { t: 'tf', v: '9:14', f: 'c',
+      q: 'Según Bohr, el Éufrates de 9:14 es simbólico, igual que el de la sexta plaga (16:12).', a: true,
+      e: 'Verdadero: «el gran río Éufrates» solo aparece en 9:14 y 16:12; Bohr pregunta con qué principio uno se leería literal y el otro simbólico. Fuente: Stephen Bohr, «La sexta trompeta», pág. 12-13.' },
+    { t: 'mc', v: '9:15', f: 'c',
+      q: 'Según Bohr, ¿qué señala «la hora, día, mes y año» de 9:15?',
+      o: ['El juicio: día 10 del mes 7 de 1844', '391 años y 15 días hasta 1840', 'Una fecha literal que aún es futura', 'Los 150 años de la quinta trompeta'], a: 0,
+      e: 'La hora es «la hora de su juicio» (14:7); el día, el décimo; el mes, el séptimo (Levítico 23:27); y el año, 1844 (Daniel 8:14). Los 391 años son de la lectura clásica. Fuente: Stephen Bohr, «La sexta trompeta», pág. 14.' },
+    { t: 'mc', v: '9:16', f: 'c',
+      q: 'Según Bohr, ¿con qué grupo contrastan los doscientos millones de jinetes?',
+      o: ['Con los 144.000 sellados (7:4)', 'Con los veinticuatro ancianos', 'Con los siete mil muertos (11:13)', 'Con los reyes del oriente (16:12)'], a: 0,
+      e: '«Yo oí su número» solo aparece en 7:4 y 9:16: son el remanente fiel y la gran multitud de los impíos. Fuentes: Stephen Bohr, «La sexta trompeta», pág. 15; Bohr, «Los 144.000 y los 24 ancianos», pág. 118.' },
+    { t: 'mc', v: '9:17-18', f: 'c',
+      q: 'Según Bohr, ¿con qué pasaje se une el fuego, el humo y el azufre que salen de la boca de los caballos?',
+      o: ['Los espíritus que salen de la boca del dragón (16:13)', 'El fuego que bajó del cielo en Pentecostés', 'El fuego del altar arrojado a la tierra (8:5)', 'El humo del pozo de donde salen las langostas'], a: 0,
+      e: 'Lo que sale de la boca es lo que destruye: en 16:13 salen espíritus inmundos de la boca del dragón, de la bestia y del falso profeta. Fuente: Stephen Bohr, «La sexta trompeta», pág. 16.' },
+    { t: 'mc', v: '9:19', f: 'c',
+      q: 'Según Bohr, ¿de qué es símbolo la cola en la Biblia?',
+      o: ['De la mentira', 'De la fuerza militar', 'De la riqueza', 'Del paso del tiempo'], a: 0,
+      e: 'La cola es símbolo de la mentira (Isaías 9:15; Juan 8:44; Apocalipsis 12:3-4). Fuente: Stephen Bohr, «La sexta trompeta», pág. 16.' },
+    { t: 'mc', v: '9:20', f: 'c',
+      q: 'Según Bohr, ¿de qué pasaje viene la lista de imágenes «de oro, plata, bronce, piedra y madera»?',
+      o: ['Daniel 5, la caída de Babilonia', 'Éxodo 32, el becerro de oro', 'Daniel 3, la estatua de oro', 'Jueces 17, los ídolos de Micaía'], a: 0,
+      e: 'La frase viene casi literal de Daniel 5:23, la noche en que cayó Babilonia; así se unen Daniel 5, la sexta trompeta y la sexta plaga. Fuente: Stephen Bohr, «La sexta trompeta», pág. 16.' },
+    { t: 'mc', v: '9:21', f: 'c',
+      q: 'Según Bohr, si la sexta trompeta describe la reunión de los impíos, ¿qué describe el capítulo 10?',
+      o: ['La reunión de los justos', 'La caída del Imperio otomano', 'La Revolución Francesa', 'Las siete últimas plagas'], a: 0,
+      e: 'Terminada la reunión de los impíos (9:21), el capítulo 10 vuelve atrás en el tiempo para mostrar la reunión de los justos por el mensaje del librito. Fuente: Stephen Bohr, «La sexta trompeta», pág. 1.' },
   ],
 
   tarjetas: [

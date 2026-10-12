@@ -111,20 +111,113 @@ module.exports = {
       <strong>22:14</strong> (los que lavan sus ropas). La primera era
       1:3.`) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias.<br><br>
-      · El árbol de la vida que se perdió en el Edén (Génesis 3:22-24) vuelve
-      en la tierra nueva: <strong>Dios recupera lo que el pecado
-      quitó</strong>.<br>
-      · 22:11 se lee como el <strong>cierre de la gracia</strong>: antes de que
-      Jesús vuelva, cada uno ya habrá decidido de qué lado está, y ya no hay
-      cambio de bando.<br>
-      · Lavar las ropas (22:14) es ser limpiado por la sangre del Cordero
-      (como en 7:14) y vivir en obediencia a Dios.<br>
-      · Las promesas «Vengo pronto» sostienen la esperanza de la
-      <strong>segunda venida</strong>, que da su nombre a la iglesia
-      adventista.`) },
+    { t: '🧭 El Edén recuperado: el río y el árbol de la vida (22:1-3)', capa: 'contexto', h:
+      hi(`Esto es interpretación, no texto del capítulo. Bohr muestra que el
+      Apocalipsis <strong>termina donde empezó el Génesis</strong>: lo que se perdió
+      en el Edén vuelve en la ciudad de Dios.`) +
+      tbl(['En el Génesis', 'En Apocalipsis 21-22'], [
+        ['El hombre pierde el acceso al <strong>árbol de la vida</strong> (Génesis 3:22-24)', 'El árbol está en medio de la calle y a los lados del río (22:2)'],
+        ['Es echado por la <strong>puerta</strong>, y hay ángeles que la guardan', 'Entran por las puertas (22:14), donde hay ángeles (21:12)'],
+        ['Llega la <strong>maldición</strong> (Génesis 3:14, 17)', '«no habrá más maldición» (22:3)'],
+        ['Llega la <strong>muerte</strong> (Génesis 3:19)', 'Ya no habrá más muerte (21:4)'],
+      ]) +
+      hi(`Elena de White pinta la escena: Jesús lleva a <strong>Adán</strong> al árbol
+      de la vida y le da de su fruto; Adán reconoce que es el Edén restaurado, «mucho
+      más hermoso ahora que cuando él fue expulsado».<br><br>
+      Bohr: si se compara 2:7 con 22:2, el árbol de la vida está en el paraíso, en la
+      presencia misma de Dios.`) +
+      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 52; Elena de White, El conflicto de los siglos, pág. 520.</p>` },
+
+    { t: '🧭 Vida que se recibe de Dios, mes a mes (22:2)', capa: 'contexto', h:
+      hi(`El árbol da fruto <strong>«cada mes»</strong>. Bohr saca de aquí una
+      lección: en la tierra nueva la vida no será nuestra por naturaleza, sino
+      <strong>recibida de Dios</strong>. Con su humor dice que habrá que ir «al
+      cargador de baterías»: comer del árbol cada mes, y de sábado en sábado ir a
+      adorar (Isaías 66:22-23).`) +
+      li([`Elena de White: los redimidos, «reintegrados en su derecho al árbol de la
+           vida», crecerán hasta la estatura perfecta que tenía el ser humano al
+           principio.`,
+          `Las hojas son «para la sanidad de las naciones» (22:2). Escuela Sabática
+           2019: allí no habrá enfermedad; se sanan las heridas y barreras que
+           separaron a los pueblos, que ahora son una sola familia.`]) +
+      `<p>Fuentes: Stephen Bohr, Gemas de la verdad presente, págs. 110-111; Elena de White, El conflicto de los siglos, pág. 518; Escuela Sabática 2019-1T, lección 13, pág. 95.</p>` },
+
+    { t: '🧭 «Verán su rostro» (22:3-5)', capa: 'contexto', h:
+      hi(`Bohr: los que lleguen a la ciudad verán el rostro de un Dios santo, que es
+      «fuego consumidor» (Hebreos 12:29), sin ser consumidos. Para eso hace falta un
+      <strong>carácter santo</strong>, y Dios mismo da el poder para formarlo:`) +
+      li([`«Bienaventurados los de limpio corazón, porque ellos verán a Dios»
+           (Mateo 5:8).`,
+          `«Seguid… la santidad, sin la cual nadie verá al Señor» (Hebreos 12:14).`,
+          `El que tiene esta esperanza «se purifica a sí mismo» (1 Juan 3:3).`]) +
+      hi(`Elena de White: «Estaremos en su presencia y contemplaremos la gloria de su
+      rostro».<br><br>
+      En el texto, los siervos tienen su nombre «en sus frentes» (22:4), como los
+      144.000, que tienen el nombre del Cordero y el de su Padre escrito en la
+      frente (14:1).`) +
+      `<p>Fuentes: Stephen Bohr, Gemas de la verdad presente, págs. 131-132; Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 80-81; Elena de White, El conflicto de los siglos, pág. 542.</p>` },
+
+    { t: '🧭 22:11: el cierre de la gracia', capa: 'contexto', h:
+      hi(`En la lectura adventista, 22:11 marca el <strong>cierre del tiempo de
+      gracia</strong> (el momento en que ya no hay cambio de bando). Bohr: Dios
+      pronunciará estas palabras cuando termine el <strong>juicio
+      investigador</strong> en el cielo; en el lenguaje del santuario, terminan el
+      servicio diario y el anual: Jesús deja de interceder.`) +
+      li([`Bohr: los verbos de 22:11 son mandatos (imperativos): «siga actuando
+           injustamente», «practique la justicia todavía». Cada uno sigue en el
+           camino que ya escogió.`,
+          `Bohr: la separación se hace <strong>antes</strong> de la venida; por eso
+           enseguida dice «¡Vengo pronto!» (22:12).`,
+          `En la cronología adventista coincide con Daniel 12:1: «se levantará
+           Miguel». Después vienen las siete plagas y la venida.`,
+          `22:12: Jesús trae su galardón. Bohr: «Él no viene a juzgar; Él viene a dar
+           recompensas basadas en el juicio».`]) +
+      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 1, pág. 84, y tomo 2, pág. 176; Stephen Bohr, El calendario religioso hebreo, pág. 221; Stephen Bohr, Gemas de la verdad presente, pág. 131; Stephen Bohr, Lo que Jesús dijo, pág. 234; notas de Camilo en Evernote, "CRONOLOGÍA ESCATOLÓGICA ADVENTISTA — CONSOLIDADO FINAL".</p>` },
+
+    { t: '🧭 «Lavan sus ropas» o «guardan sus mandamientos» (22:14)', capa: 'contexto', h:
+      hi(`Bohr señala una diferencia entre Biblias. La Reina-Valera de 1909 dice
+      «Bienaventurados los que guardan sus mandamientos»; la de 1960 y la de 1995
+      dicen «los que lavan sus ropas». Se basan en manuscritos griegos distintos, y
+      en griego las dos frases se parecen mucho:`) +
+      tbl(['Griego', 'Quiere decir'], [
+        ['<em>tas entolás autón</em>', 'sus mandamientos'],
+        ['<em>tas stolás autón</em>', 'sus ropas'],
+      ]) +
+      li([`Las dos ideas están en el Apocalipsis: ropas lavadas «en la sangre del
+           Cordero» (7:14) y un pueblo que guarda «los mandamientos de Dios»
+           (12:17; 14:12).`,
+          `Bohr: los que quedan afuera (22:15) son los que quebrantan los
+           mandamientos.`,
+          `En las notas de Camilo: el manto es la justicia de Cristo, y esa
+           justicia se ve en la obediencia; quien la recibe, la guarda.`]) +
+      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 119-121; notas de Camilo en Evernote, "La segunda venida y el rapto secreto".</p>` },
+
+    { t: '🧭 La estrella de la mañana y el agua de la vida (22:16-17)', capa: 'contexto', h:
+      hi(`Jesús dice: «Yo soy la raíz y el linaje de David, la estrella resplandeciente
+      de la mañana» (22:16). Bohr: así se ve que la estrella de la mañana prometida al
+      vencedor (2:28) es, ante todo, <strong>Jesús mismo</strong>. Elena de White:
+      «Él es la Estrella resplandeciente de la mañana quien brilla en medio de las
+      tinieblas morales de este mundo».<br><br>
+      La invitación a tomar gratis «del agua de la vida» (22:17; también 21:6 y
+      22:1) recuerda, según Bohr, la ceremonia del agua de la <strong>Fiesta de los
+      Tabernáculos</strong>. En esa fiesta Jesús gritó: «Si alguno tiene sed, venga a mí y
+      beba» (Juan 7:37).`) +
+      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 105 (cita a Elena de White, Carta 115, 1905); Stephen Bohr, El calendario religioso hebreo, pág. 254.</p>` },
+
+    { t: '🧭 Un libro para estar listos: «¡Vengo pronto!» (22:7-20)', capa: 'contexto', h:
+      hi(`Bohr resume para qué es el Apocalipsis:`) +
+      li([`Es «la revelación de Jesucristo»: el centro no son dragones ni números
+           misteriosos, sino <strong>conocer a Jesús y estar listos para su
+           venida</strong>.`,
+          `Tiene una bendición para quien lo lee, lo oye y lo guarda (1:3; 22:7).`,
+          `No está sellado: a Daniel se le dijo que sellara su libro (Daniel 12:4);
+           a Juan, «No selles las palabras de la profecía de este libro» (22:10).
+           El Apocalipsis le quita el sello a Daniel.`,
+          `La advertencia de 22:18-19 (no añadir ni quitar) pide estudiarlo
+           <strong>con mucho cuidado</strong>.`]) +
+      wa(`El libro termina con una promesa y una oración: «Ciertamente vengo en
+      breve» y «¡Ven, Señor Jesús!» (22:20).`) +
+      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 100.</p>` },
   ],
 
   preguntas: [
@@ -251,18 +344,75 @@ module.exports = {
       q: '¿Con qué palabras termina el libro del Apocalipsis? (Apocalipsis 22:21)',
       o: ['«La gracia de nuestro Señor Jesucristo sea con todos vosotros. Amén»', '«Bienaventurado el que lee y los que oyen las palabras de esta profecía»', '«He aquí que viene con las nubes, y todo ojo lo verá»', '«El que tiene oído, oiga lo que el Espíritu dice a las iglesias»'], a: 0,
       e: 'Apocalipsis 22:21. El libro empieza con «La revelación de Jesucristo» (1:1) y termina con «la gracia de nuestro Señor Jesucristo».' },
-    { t: 'mc', v: '22:11', f: 'c',
-      q: 'En la lectura adventista, ¿qué anuncia Apocalipsis 22:11 («el que es injusto, sea injusto todavía…»)?',
-      o: ['El cierre de la gracia antes de la venida de Jesús', 'El comienzo de los mil años en la tierra', 'Que nadie puede cambiar nunca en la vida', 'El día en que Juan salió de Patmos'], a: 0,
-      e: 'Interpretación: antes de que Jesús vuelva, cada uno ya habrá decidido, y ya no hay cambio de bando. El texto dice que el injusto sea injusto todavía y el santo se santifique más todavía (22:11).' },
-    { t: 'mc', v: '22:14', f: 'c',
-      q: 'En la interpretación adventista, ¿qué significa «lavar las ropas» en Apocalipsis 22:14?',
-      o: ['Ser limpiado por la sangre del Cordero y obedecer a Dios', 'Bautizarse varias veces durante la vida', 'Usar ropa blanca para ir a la iglesia', 'Cumplir los lavamientos de la ley de Moisés'], a: 0,
-      e: 'Interpretación: como en 7:14, las ropas se lavan en la sangre del Cordero, y eso se ve en una vida obediente. El texto dice «Bienaventurados los que lavan sus ropas» (22:14).' },
+    // ── Interpretación (f:'c'): no es texto del capítulo; cada una dice su fuente ──
     { t: 'mc', v: '22:2', f: 'c',
       q: 'En la lectura adventista, ¿qué muestra que el árbol de la vida aparezca en la ciudad de Dios?',
       o: ['Que Dios devuelve lo que se perdió en el Edén', 'Que en el cielo hay que trabajar la tierra', 'Que los ángeles comen de sus frutos', 'Que el árbol nunca existió en la tierra'], a: 0,
-      e: 'Interpretación: el árbol de la vida del Edén (Génesis 3:22-24) vuelve en la tierra nueva. El texto dice que está a uno y otro lado del río y da doce frutos (22:2).' },
+      e: 'El acceso al árbol se perdió en el Edén (Génesis 3:22-24) y vuelve en la ciudad. El texto dice que está a uno y otro lado del río y da doce frutos (22:2). Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120; Elena de White, El conflicto de los siglos, pág. 520.' },
+    { t: 'tf', v: '22:3', f: 'c',
+      q: 'Según Bohr, el Apocalipsis vuelve al Génesis: el árbol, la entrada por la puerta y la vida que se perdieron en el Edén se recuperan en la ciudad.', a: true,
+      e: 'Verdadero: los fieles entran por las puertas, comen del árbol de la vida y ya no hay maldición (22:3) ni muerte (21:4). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120.' },
+    { t: 'tf', v: '22:2', f: 'c',
+      q: 'Según Elena de White, al llegar a la ciudad Jesús lleva a Adán al árbol de la vida y le da de su fruto.', a: true,
+      e: 'Verdadero: «El Salvador le lleva al árbol de la vida, toma su fruto glorioso y se lo ofrece para comer». Fuente: Elena de White, El conflicto de los siglos, pág. 520.' },
+    { t: 'mc', v: '22:2', f: 'c',
+      q: 'Según Bohr, ¿qué enseña que el árbol dé su fruto «cada mes» y haya que volver a comer de él?',
+      o: ['Que la vida eterna se recibe de Dios', 'Que en el cielo habrá hambre y escasez', 'Que los frutos se acaban muy pronto', 'Que solo los ángeles comen de él'], a: 0,
+      e: 'Nuestra vida será «derivada» de Dios: habrá que comer del árbol cada mes, y de sábado en sábado ir a adorar (Isaías 66:22-23). Fuente: Stephen Bohr, Gemas de la verdad presente, pág. 110.' },
+    { t: 'mc', v: '22:2', f: 'c',
+      q: 'En la interpretación adventista (Escuela Sabática 2019), ¿qué sanan las hojas del árbol de la vida?',
+      o: ['Las heridas entre pueblos y naciones', 'Las enfermedades del cuerpo', 'Las heridas de los ángeles caídos', 'Las llagas de las siete plagas'], a: 0,
+      e: 'En la tierra nueva no habrá enfermedad; se sanan las barreras que dividieron a los pueblos, que ahora son una sola familia. Fuente: Escuela Sabática 2019-1T, lección 13, pág. 95.' },
+    { t: 'mc', v: '22:4', f: 'c',
+      q: 'Según Bohr, ¿qué hace falta para ver el rostro de Dios (22:4) sin ser consumido?',
+      o: ['Un carácter santo que Dios ayuda a formar', 'Un cuerpo de ángel desde que se nace', 'Haber nacido dentro de la iglesia', 'Nada: todos lo verán de la misma forma'], a: 0,
+      e: 'Dios es fuego consumidor; para estar en su presencia hace falta santidad (Hebreos 12:14), y él da el poder para formar ese carácter. Fuente: Stephen Bohr, Gemas de la verdad presente, págs. 131-132.' },
+    { t: 'mc', v: '22:11', f: 'c',
+      q: 'En la lectura adventista, ¿qué anuncia Apocalipsis 22:11 («el que es injusto, sea injusto todavía…»)?',
+      o: ['El cierre de la gracia antes de la venida de Jesús', 'El comienzo de los mil años en la tierra', 'Que nadie puede cambiar nunca en la vida', 'El día en que Juan salió de Patmos'], a: 0,
+      e: 'Antes de que Jesús vuelva, cada uno ya habrá decidido y no hay cambio de bando; «la puerta de la gracia se cierra antes». Fuentes: Stephen Bohr, Gemas de la verdad presente, pág. 131; notas de Camilo en Evernote, "La segunda venida y el rapto secreto".' },
+    { t: 'mc', v: '22:11', f: 'c',
+      q: 'Según Bohr, ¿cuándo pronuncia Dios las palabras de Apocalipsis 22:11?',
+      o: ['Cuando termina el juicio investigador', 'Cuando empieza el juicio, en 1844', 'Cuando se acaban los mil años', 'Cada vez que una persona muere'], a: 0,
+      e: 'Dios pronunciará estas palabras «cuando termine el juicio investigador en el cielo»; terminan el servicio diario y el anual del santuario. Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 1, pág. 84; Stephen Bohr, El calendario religioso hebreo, pág. 221.' },
+    { t: 'tf', v: '22:11', f: 'c',
+      q: 'Según Bohr, los verbos de 22:11 son mandatos: cada uno sigue actuando en el camino que ya escogió.', a: true,
+      e: 'Verdadero: «sea injusto todavía» equivale a «siga actuando injustamente»; el justo «practique la justicia todavía». Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 176.' },
+    { t: 'mc', v: '22:11', f: 'c',
+      q: 'En la interpretación adventista, ¿qué anuncio de Daniel coincide con el cierre de la gracia de 22:11?',
+      o: ['Se levantará Miguel (Daniel 12:1)', 'La piedra que hiere la imagen (Daniel 2)', 'El Anciano de días se sienta (Daniel 7)', 'El santuario será purificado (Daniel 8)'], a: 0,
+      e: 'Cuando Miguel se levanta termina el juicio investigador y se cierra la gracia; después vienen el tiempo de angustia y las plagas. Fuente: notas de Camilo en Evernote, "CRONOLOGÍA ESCATOLÓGICA ADVENTISTA — CONSOLIDADO FINAL".' },
+    { t: 'mc', v: '22:12', f: 'c',
+      q: 'Según Bohr, ¿a qué viene Jesús en su segunda venida, según Apocalipsis 22:12?',
+      o: ['A dar la recompensa ya decidida', 'A comenzar el juicio de los vivos', 'A abrir otro tiempo de gracia', 'A revisar los libros por primera vez'], a: 0,
+      e: '«Él no viene a juzgar; Él viene a dar recompensas basadas en el juicio»: por eso el juicio se hace antes, en el cielo. Fuente: Stephen Bohr, Lo que Jesús dijo, pág. 234.' },
+    { t: 'mc', v: '22:14', f: 'c',
+      q: 'En la interpretación adventista, ¿qué significa «lavar las ropas» en Apocalipsis 22:14?',
+      o: ['Ser limpiado por Cristo y vivir obedeciendo', 'Bautizarse varias veces durante la vida', 'Usar ropa blanca para ir a la iglesia', 'Cumplir los lavamientos de la ley de Moisés'], a: 0,
+      e: 'Como en 7:14, las ropas se lavan en la sangre del Cordero, y esa justicia se ve en la obediencia: quien recibe el manto lo guarda. Fuentes: notas de Camilo en Evernote, "La segunda venida y el rapto secreto"; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 119-121.' },
+    { t: 'mc', v: '22:14', f: 'c',
+      q: 'Según Bohr, ¿qué dice la Reina-Valera de 1909 donde la de 1995 dice «los que lavan sus ropas» (22:14)?',
+      o: ['Los que guardan sus mandamientos', 'Los que vencen al dragón', 'Los que mueren en el Señor', 'Los que tienen sed del agua'], a: 0,
+      e: 'La de 1909 sigue otros manuscritos griegos: «Bienaventurados los que guardan sus mandamientos». Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 119.' },
+    { t: 'tf', v: '22:14', f: 'c',
+      q: 'Según Bohr, en griego «sus mandamientos» y «sus ropas» se escriben de forma muy parecida.', a: true,
+      e: 'Verdadero: «tas entolás autón» (sus mandamientos) y «tas stolás autón» (sus ropas). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120.' },
+    { t: 'mc', v: '22:16', f: 'c',
+      q: 'Según Bohr, ¿quién es, ante todo, la «estrella de la mañana» que se promete al vencedor en 2:28?',
+      o: ['Jesús mismo', 'El planeta Venus', 'Lucero, el ángel caído', 'Un ángel del trono'], a: 0,
+      e: 'En 22:16 Jesús dice: «Yo soy… la estrella resplandeciente de la mañana». Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 105.' },
+    { t: 'mc', v: '22:17', f: 'c',
+      q: 'Según Bohr, ¿qué fiesta de Israel recuerda la invitación a tomar gratis «del agua de la vida» (22:17)?',
+      o: ['La Fiesta de los Tabernáculos', 'La fiesta de la Pascua', 'La fiesta de Pentecostés', 'La Fiesta de las Trompetas'], a: 0,
+      e: 'La ceremonia del agua era parte de la Fiesta de los Tabernáculos; Bohr la une con 21:6, 22:1 y 22:17. Fuente: Stephen Bohr, El calendario religioso hebreo, pág. 254.' },
+    { t: 'mc', v: '22:10', f: 'c',
+      q: 'Según Bohr, ¿qué relación hay entre «No selles las palabras de la profecía de este libro» (22:10) y el libro de Daniel?',
+      o: ['El Apocalipsis le quita el sello a Daniel', 'El Apocalipsis reemplaza a Daniel', 'El Apocalipsis contradice a Daniel', 'No hay ninguna relación entre ellos'], a: 0,
+      e: 'A Daniel se le dijo que sellara su libro hasta el tiempo del fin (Daniel 12:4); a Juan, que no sellara el suyo. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 100.' },
+    { t: 'mc', v: '22:18', f: 'c',
+      q: 'Según Bohr, ¿qué le pide a quien estudia el Apocalipsis la advertencia de 22:18-19?',
+      o: ['Estudiarlo con mucho cuidado', 'No leerlo porque es un secreto', 'Dejar que solo los pastores lo lean', 'Leerlo como cada uno quiera'], a: 0,
+      e: 'Dios pronuncia una solemne advertencia contra quien añade o quita; por eso hay que estudiarlo correctamente. Su centro es conocer a Jesús y estar listos para su venida. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 100.' },
   ],
 
   tarjetas: [

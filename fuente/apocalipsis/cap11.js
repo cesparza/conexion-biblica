@@ -1,5 +1,7 @@
 /* Apocalipsis 11 — Los dos testigos y la séptima trompeta. */
 const { tbl, hi, wa, li } = require('./ayudas.js');
+/* Línea de fuente al pie de cada sección de interpretación. */
+const fu = t => `<p class="fuente"><small>${t}</small></p>`;
 
 module.exports = {
   cap: 'ap11', label: 'Apocalipsis 11', sub: 'Los dos testigos y la séptima trompeta', vs: 19,
@@ -102,25 +104,126 @@ module.exports = {
       Pero <strong>tres días y medio</strong> (11:9) es otra cifra: no la
       cruces con los tres tiempos y medio.`) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias.<br><br>
-      · Los <strong>dos testigos</strong> se entienden como el
-      <strong>Antiguo y el Nuevo Testamento</strong>, que dan testimonio de
-      Jesús (Juan 5:39).<br>
-      · Con la regla de <strong>un día por un año</strong> (Ezequiel 4:6), los
-      1.260 días y los 42 meses son <strong>1.260 años, del 538 al 1798
-      d.C.</strong>: el tiempo en que la Biblia estuvo poco al alcance del
-      pueblo, como profetizando «con ropas ásperas».<br>
-      · «El conflicto de los siglos» aplica la guerra de la bestia del abismo
-      (11:7) al ataque contra la Biblia en la Revolución Francesa, y su
-      «resurrección» a la gran difusión de la Biblia que vino después.<br>
-      · El <strong>Arca</strong> vista en el templo del cielo (11:19) muestra
-      el lugar santísimo abierto: el <strong>juicio</strong> que empieza en
-      1844 (11:18) y la <strong>ley de Dios</strong>, que estaba dentro del
-      arca.<br>
-      Otras iglesias lo leen de otra manera; aquí se presenta la lectura del
-      Comentario Bíblico Adventista y de «El conflicto de los siglos».`) },
+    { t: '🧭 Medir el templo (11:1)', capa: 'contexto', h:
+      hi(`Esto es interpretación, no texto del capítulo. Para el pastor
+      <strong>Stephen Bohr</strong>, 11:1 continúa el capítulo 10: el mismo
+      ángel que mandó profetizar otra vez manda ahora medir. Para él, este
+      capítulo es un paréntesis dentro de la sexta trompeta.`) +
+      li([`<strong>Qué templo.</strong> El del cielo: el de Jerusalén ya no
+           existía. La palabra griega <em>naos</em> se usa 16 veces en el
+           Apocalipsis para el santuario celestial; en 11:19 deja ver el arca,
+           que estaba en el <strong>lugar santísimo</strong>.`,
+          `<strong>Medir es juzgar</strong>: «con la medida con que medís, os
+           será medido» (Mateo 7:2). Elena de White: «Mide el templo y los que
+           adoran en él»; Dios mide nuestras palabras y acciones.`,
+          `<strong>El altar</strong> es el del incienso, donde suben las
+           oraciones; se examina cuáles fueron sinceras.`,
+          `<strong>Los que adoran</strong> son los que dicen ser pueblo de Dios:
+           el juicio comienza por la casa de Dios (1 Pedro 4:17). Hay trigo y
+           cizaña, vírgenes prudentes e insensatas.`]) +
+      fu(`Fuentes: Stephen Bohr, «La Razón de Nuestro Existir», pág. 72-81; Bohr,
+      «Introducción a las siete trompetas», pág. 13-14 (cita el Comentario
+      bíblico adventista, tomo 7, pág. 972).`) },
+
+    { t: '🧭 Los 1.260 años y los dos testigos (11:2-4)', capa: 'contexto', h:
+      li([`<strong>42 meses y 1.260 días (11:2-3).</strong> Con un día por un
+           año son <strong>1.260 años, del 538 al 1798</strong>: el tiempo en
+           que la iglesia sufrió bajo la opresión de Roma. En 1798 un ejército
+           francés tomó preso al papa. Para Bohr es el período de la
+           <strong>cuarta trompeta</strong>, que aquí se amplía.`,
+          `<strong>Los dos testigos</strong> son el Antiguo y el Nuevo
+           Testamento: los dos dan testimonio de Jesús (Juan 5:39). «Lámpara
+           es a mis pies tu palabra» (Salmo 119:105).`,
+          `<strong>Olivos y candelabros (11:4).</strong> El aceite es el
+           Espíritu Santo, que inspiró los dos Testamentos (Zacarías 4); los
+           candelabros, la luz que dan por medio de la iglesia.`,
+          `<strong>Ropas ásperas.</strong> En la Biblia son señal de
+           sufrimiento y luto: la Escritura estuvo oculta y prohibida, y sus
+           fieles perseguidos. Aun así, el testimonio no calló.`]) +
+      fu(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 226-227;
+      Stephen Bohr, «Studies on Daniel 11», pág. 101-102; Bohr, «15 principios
+      de interpretación profética», vol. 2, pág. 89 y 216.`) },
+
+    { t: '🧭 Fuego y sequía: el poder de la Palabra (11:5-6)', capa: 'contexto', h:
+      li([`<strong>Fuego de su boca (11:5).</strong> Nadie desprecia la
+           Palabra de Dios sin consecuencias. Elena de White lo une con la
+           advertencia final del libro: no añadir ni quitar a la profecía
+           (22:18-19).`,
+          `<strong>Cerrar el cielo (11:6).</strong> Como Elías cerró el cielo
+           en tiempos de Acab (1 Reyes 17:1). La lluvia es figura de la
+           enseñanza de Dios (Deuteronomio 32:2); donde no llueve hay
+           «hambre de oír la palabra» (Amós 8:11).`,
+          `<strong>Tres años y medio.</strong> La sequía de Elías duró tres
+           años y seis meses (Santiago 5:17): son los 1.260 días. Como esos
+           días son años, Elías aquí no es una persona sola, sino un grupo que
+           vivió y predicó como él.`,
+          `<strong>Aguas en sangre y plagas</strong> recuerdan a Moisés en
+           Egipto. En las notas de Camilo: Moisés y Elías, la ley y los
+           profetas; el pueblo fiel guarda los mandamientos y tiene el
+           testimonio de Jesucristo (12:17).`]) +
+      fu(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 227; Stephen
+      Bohr, «Las siete iglesias», pág. 95-96; notas de Camilo en Evernote,
+      "Las trompetas".`) },
+
+    { t: '🧭 La bestia del abismo: Francia (11:7-10)', capa: 'contexto', h:
+      hi(`Al final de los 1.260 años sube del abismo otro poder que hace guerra
+      abierta a la Biblia. Elena de White y Bohr lo aplican a la
+      <strong>Francia de la Revolución</strong>. Bohr lo une con la
+      <strong>quinta trompeta</strong> y el primer ay.`) +
+      li([`<strong>«Egipto» (11:8)</strong>: el ateísmo. El faraón dijo
+           «¿Quién es Jehová…? Yo no conozco a Jehová» (Éxodo 5:2). En 1793 la
+           asamblea francesa negó a Dios y quiso abolir la Biblia.`,
+          `<strong>«Sodoma» (11:8)</strong>: la corrupción moral que acompañó
+           a la Revolución.`,
+          `<strong>«Donde nuestro Señor fue crucificado»</strong>: los nombres
+           son simbólicos, no lugares del mapa; Sodoma ya no existía.`,
+          `<strong>La fiesta (11:10)</strong>: la gente celebró verse libre de
+           la iglesia y de la Biblia.`]) +
+      wa(`Elena de White: «Esta profecía se cumplió de un modo muy preciso y
+      sorprendente en la historia de Francia». Se habla de un régimen y sus
+      decretos, no de los franceses de hoy.`) +
+      fu(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 227-228;
+      Stephen Bohr, «Studies on Daniel 11», pág. 102-104; Bohr, «15 principios
+      de interpretación profética», vol. 2, pág. 89 y 105.`) },
+
+    { t: '🧭 Los testigos se levantan (11:11-14)', capa: 'contexto', h:
+      li([`<strong>Tres días y medio (11:9, 11)</strong> son tres años y
+           medio. Elena de White: en 1793 la Asamblea francesa abolió la
+           religión y desechó la Biblia; tres años y medio después revocó esos
+           decretos y dio tolerancia a las Escrituras.`,
+          `<strong>Suben al cielo en una nube (11:12)</strong>: la Biblia
+           recibió más honra que nunca. En 1804 nació la Sociedad Bíblica
+           Británica y Extranjera, y en 1816 la Sociedad Bíblica Americana.
+           Bohr añade el gran despertar en el estudio de Daniel y el
+           Apocalipsis.`,
+          `<strong>Dos grupos (11:13).</strong> Los enemigos de los testigos y
+           un remanente que «dieron gloria al Dios del cielo». Bohr lo une con
+           el primer ángel: «Temed a Dios y dadle gloria» (14:7).`,
+          `<strong>El segundo ay (11:14)</strong> pasa recién aquí, porque los
+           capítulos 10 y 11 amplían la sexta trompeta.`]) +
+      fu(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 241;
+      Stephen Bohr, «15 principios de interpretación profética», vol. 2,
+      pág. 89-90.`) },
+
+    { t: '🧭 La séptima trompeta y el templo abierto (11:15-19)', capa: 'contexto', h:
+      li([`<strong>11:15-17, la séptima trompeta.</strong> Cristo toma
+           posesión de los reinos del mundo en su segunda venida. Antes, cuando
+           está a punto de sonar, se cierra la gracia (10:7).`,
+          `<strong>11:18 resume el resto del libro</strong>, con Elena de White
+           («Primeros escritos», pág. 36): las naciones se airan (capítulos
+           12-14), viene la ira de Dios (15-19), el juicio de los muertos
+           (20), el galardón (19 y 22:12) y la destrucción de los que destruyen
+           la tierra (20:14-15).`,
+          `<strong>11:19 abre la sección siguiente.</strong> Se abre el lugar
+           santísimo en <strong>1844</strong> y se ve el arca, con la ley y el
+           sábado en su centro. Relámpagos, voces y truenos recuerdan el Sinaí,
+           cuando Dios dio los Diez Mandamientos (Éxodo 19:16).`]) +
+      wa(`Otra lectura adventista, la que sigue Treiyer, ve sonar la séptima
+      trompeta ya desde 1844, con el mensaje del juicio.`) +
+      fu(`Fuentes: Stephen Bohr, «Introducción a las siete trompetas», pág. 5-6 y
+      19-21; Bohr, «La Razón de Nuestro Existir», pág. 74; Bohr, «15 principios
+      de interpretación profética», vol. 2, pág. 91-92 y 97; Treiyer, «Las siete
+      trompetas, reseña de Ekkehardt Mueller», pág. 3.`) },
   ],
 
   preguntas: [
@@ -251,18 +354,80 @@ module.exports = {
       e: '«El templo de Dios fue abierto en el cielo, y el Arca de su pacto se dejó ver en el templo» (11:19).' },
     { t: 'fill', v: '11:19', ins: 'Apocalipsis 11:19 (RV1995) — Completa:',
       p: [{ x: '«El templo de Dios fue abierto en el ' }, { b: 'cielo', h: '¿dónde?' }, { x: ', y el ' }, { b: 'Arca', h: '¿qué se dejó ver?' }, { x: ' de su pacto se dejó ver en el templo.»' }] },
+    { t: 'mc', v: '11:1', f: 'c',
+      q: 'Según Bohr, ¿qué templo se manda medir en Apocalipsis 11:1?',
+      o: ['El lugar santísimo del santuario del cielo', 'El templo de Jerusalén, que se reconstruirá', 'El templo de Herodes antes del año 70', 'Las siete iglesias de la provincia de Asia'], a: 0,
+      e: 'El templo terrenal ya no existía; la palabra naos en el Apocalipsis se refiere al santuario celestial, y en 11:19 deja ver el arca del lugar santísimo. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 73-74.' },
+    { t: 'mc', v: '11:1', f: 'c',
+      q: 'Según Bohr, ¿qué significa «medir» en Apocalipsis 11:1?',
+      o: ['Juzgar', 'Construir', 'Proteger', 'Contar los años'], a: 0,
+      e: 'Medir es juzgar: «con la medida con que medís, os será medido» (Mateo 7:2). Es el juicio que comenzó en 1844. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 77-78.' },
+    { t: 'mc', v: '11:1', f: 'c',
+      q: 'Según Bohr, ¿qué altar se mide y por qué?',
+      o: ['El del incienso: se examinan las oraciones', 'El del sacrificio: se cuentan las víctimas', 'El del atrio: se calcula su tamaño', 'El de Jerusalén: se prepara su reconstrucción'], a: 0,
+      e: 'Es el altar del incienso, porque el atrio con el altar del sacrificio no se mide (11:2); se mide para ver qué oraciones fueron sinceras. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 78-80.' },
+    { t: 'tf', v: '11:1', f: 'c',
+      q: 'Según Bohr, los que adoran en el templo son los que dicen ser pueblo de Dios, porque el juicio comienza por la casa de Dios (1 Pedro 4:17).', a: true,
+      e: 'Verdadero: en la iglesia hay trigo y cizaña; por eso hay que medir a los que adoran. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 80-81.' },
+    { t: 'mc', v: '11:2', f: 'c',
+      q: 'Según Elena de White, ¿a qué años corresponden los 42 meses de Apocalipsis 11:2?',
+      o: ['Del 538 al 1798', 'Del 457 a.C. al 34 d.C.', 'Del 1793 al 1797', 'Del 1798 al 1844'], a: 0,
+      e: 'Los 42 meses y los 1.260 días son el mismo período: 1.260 años de dominio papal, del 538 al 1798. Fuente: Elena de White, «El conflicto de los siglos», pág. 226.' },
+    { t: 'mc', v: '11:2-6', f: 'c',
+      q: 'Según Bohr, ¿qué trompeta amplía Apocalipsis 11:2-6?',
+      o: ['La cuarta', 'La quinta', 'La sexta', 'La séptima'], a: 0,
+      e: 'Apocalipsis 11:2-6 vuelve a los 1.260 años de dominio papal (538-1798), que para Bohr son la cuarta trompeta. Fuente: Stephen Bohr, «15 principios de interpretación profética», vol. 2, pág. 89.' },
     { t: 'mc', v: '11:3', f: 'c',
-      q: 'En la interpretación adventista, ¿qué representan los dos testigos de Apocalipsis 11:3?',
-      o: ['El Antiguo y el Nuevo Testamento', 'Dos ángeles que están ante el trono', 'Los profetas Daniel y Juan', 'Las iglesias de Esmirna y Filadelfia'], a: 0,
-      e: 'Interpretación: las Escrituras de los dos Testamentos, que dan testimonio de Jesús. El texto los llama «los dos olivos y los dos candelabros» (11:4).' },
+      q: 'Según Elena de White y Bohr, ¿quiénes son los dos testigos?',
+      o: ['El Antiguo y el Nuevo Testamento', 'Enoc y Elías, que volverán al final', 'Los apóstoles Pedro y Pablo', 'Dos ángeles que están ante el trono'], a: 0,
+      e: 'Los dos testigos son las Escrituras del Antiguo y del Nuevo Testamento, que dan testimonio de Jesús. Fuentes: Elena de White, «El conflicto de los siglos», pág. 226; Stephen Bohr, «Studies on Daniel 11», pág. 101.' },
     { t: 'mc', v: '11:3', f: 'c',
-      q: 'En la lectura adventista, ¿a qué años se aplican los 1.260 días de Apocalipsis 11:3?',
-      o: ['Del 538 al 1798 d.C.', 'Del 457 a.C. al 1844', 'Del 31 al 70 d.C.', 'Del 1798 al 1844 d.C.'], a: 0,
-      e: 'Interpretación: con la regla de un día por un año (Ezequiel 4:6), 1.260 años, del 538 al 1798. El texto solo dice «mil doscientos sesenta días» (11:3).' },
+      q: 'Según Bohr, ¿qué indica que los testigos profeticen «vestidos con ropas ásperas»?',
+      o: ['Sufrimiento: la Biblia oculta y prohibida', 'Pobreza: los profetas no tenían dinero', 'Humildad: rechazaban los títulos', 'Fiesta: celebraban su victoria'], a: 0,
+      e: 'Las ropas ásperas (cilicio) son señal de sufrimiento y luto: durante los 1.260 años la Biblia dio su testimonio en oscuridad. Fuentes: Stephen Bohr, «Studies on Daniel 11», pág. 101-102; Elena de White, «El conflicto de los siglos», pág. 226-227.' },
+    { t: 'mc', v: '11:4', f: 'c',
+      q: 'Según Bohr, ¿qué representa el aceite de los dos olivos?',
+      o: ['El Espíritu Santo, que inspiró la Biblia', 'La riqueza de la iglesia medieval', 'La sangre de los mártires', 'La paz entre dos naciones'], a: 0,
+      e: 'El aceite es el Espíritu Santo, que inspiró los dos Testamentos (2 Pedro 1:21); los candelabros, la luz que dan por medio de la iglesia. Fuente: Stephen Bohr, «Studies on Daniel 11», pág. 101.' },
+    { t: 'mc', v: '11:6', f: 'c',
+      q: 'Según Bohr, ¿qué representa que no llueva en los días de la profecía de los testigos?',
+      o: ['La escasez de la Palabra de Dios', 'Una sequía literal en la Europa medieval', 'El cierre del tiempo de gracia', 'Las plagas de Egipto repetidas'], a: 0,
+      e: 'La lluvia es figura de la enseñanza de Dios (Deuteronomio 32:2); donde no llueve hay «hambre de oír la palabra» (Amós 8:11). Fuente: Stephen Bohr, «Las siete iglesias», pág. 96.' },
+    { t: 'mc', v: '11:7', f: 'c',
+      q: 'Según Elena de White y Bohr, ¿qué poder es «la bestia que sube del abismo»?',
+      o: ['La Francia de la Revolución', 'El papado de la Edad Media', 'El Imperio otomano', 'La Roma de los césares'], a: 0,
+      e: 'Al final de los 1.260 años un poder hizo guerra abierta a la Biblia: Francia, en la Revolución. Fuentes: Elena de White, «El conflicto de los siglos», pág. 227-228; Stephen Bohr, «15 principios de interpretación profética», vol. 2, pág. 105.' },
+    { t: 'mc', v: '11:8', f: 'c',
+      q: 'Según Elena de White, ¿qué rasgo representa el nombre simbólico «Egipto» en 11:8?',
+      o: ['El ateísmo: negar al Dios vivo', 'La esclavitud del pueblo de Dios', 'La riqueza de sus gobernantes', 'El culto a los animales'], a: 0,
+      e: 'Egipto fue la nación que con más osadía negó al Dios vivo: el faraón dijo «Yo no conozco a Jehová» (Éxodo 5:2). Sodoma representa la corrupción moral. Fuente: Elena de White, «El conflicto de los siglos», pág. 228.' },
+    { t: 'tf', v: '11:8', f: 'c',
+      q: 'Según Bohr, «Sodoma y Egipto» en 11:8 son lugares literales del mapa.', a: false,
+      e: 'Falso: el texto dice «en sentido espiritual»; Sodoma ya no existía y Jesús no fue crucificado en Egipto. Son símbolos. Fuente: Stephen Bohr, «Studies on Daniel 11», pág. 102.' },
+    { t: 'mc', v: '11:9-11', f: 'c',
+      q: 'Según Elena de White, ¿cómo se cumplieron los tres días y medio de los testigos muertos?',
+      o: ['Tres años y medio tras los decretos de 1793', 'Tres días literales en una plaza de París', 'Los 1.260 años de dominio del papado', 'Del 1798 al 1844, hasta el juicio'], a: 0,
+      e: 'En 1793 la Asamblea francesa abolió la religión y desechó la Biblia; tres años y medio después revocó esos decretos. Fuente: Elena de White, «El conflicto de los siglos», pág. 241.' },
+    { t: 'mc', v: '11:12', f: 'c',
+      q: 'Según Elena de White, ¿qué cumplimiento tuvo que los testigos subieran al cielo en una nube?',
+      o: ['La Biblia honrada como nunca: sociedades bíblicas', 'La resurrección literal de dos profetas', 'El arrebatamiento secreto de la iglesia', 'La caída del Imperio otomano en 1840'], a: 0,
+      e: 'Desde entonces la Biblia recibió más honra que nunca: en 1804 la Sociedad Bíblica Británica y Extranjera, en 1816 la Americana. Fuente: Elena de White, «El conflicto de los siglos», pág. 241.' },
+    { t: 'mc', v: '11:13', f: 'c',
+      q: 'Según Bohr, ¿con qué mensaje se une que los demás «dieron gloria al Dios del cielo» (11:13)?',
+      o: ['El del primer ángel (14:7)', 'El de la caída de Babilonia (14:8)', 'El del sexto sello (6:12)', 'El de la séptima plaga (16:17)'], a: 0,
+      e: 'El remanente que «teme a Dios y le da gloria» adelanta el mensaje del primer ángel: «Temed a Dios y dadle gloria» (14:7). Fuente: Stephen Bohr, «15 principios de interpretación profética», vol. 2, pág. 90.' },
+    { t: 'mc', v: '11:15', f: 'c',
+      q: 'Según Bohr, ¿qué ocurre cuando suena la séptima trompeta?',
+      o: ['Cristo toma los reinos del mundo en su venida', 'Empieza el juicio celestial en 1844', 'Termina la Revolución Francesa', 'Se abre el librito de Daniel'], a: 0,
+      e: 'La séptima trompeta es la segunda venida, cuando Cristo toma posesión de los reinos; antes, al estar por sonar, se cierra la gracia (10:7). Otra lectura adventista, la de Treiyer, la hace empezar en 1844. Fuentes: Bohr, «15 principios de interpretación profética», vol. 2, pág. 97; Treiyer, «Las siete trompetas, reseña de Ekkehardt Mueller», pág. 3.' },
+    { t: 'mc', v: '11:18', f: 'c',
+      q: 'Según Bohr, ¿qué es Apocalipsis 11:18 dentro del libro?',
+      o: ['Un resumen de los capítulos 12 al 22', 'La conclusión de los capítulos 8 al 11', 'Una descripción de la Revolución', 'Una lista de las siete plagas'], a: 0,
+      e: 'Con Elena de White (Primeros escritos, pág. 36), Bohr ve en 11:18 cinco etapas: las naciones se airan (12-14), la ira de Dios (15-19), el juicio de los muertos (20), el galardón y la destrucción de los que destruyen la tierra. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 5-6.' },
     { t: 'mc', v: '11:19', f: 'c',
-      q: 'En la interpretación adventista, ¿qué muestra el Arca vista en el templo del cielo (11:19)?',
-      o: ['El lugar santísimo abierto para el juicio', 'Que el templo de Jerusalén se reconstruirá', 'Que el santuario del cielo fue destruido', 'Que el arca de Noé será encontrada'], a: 0,
-      e: 'Interpretación: el lugar santísimo del santuario celestial, con la ley de Dios, y el juicio que empieza en 1844. El texto solo dice que «el Arca de su pacto se dejó ver en el templo» (11:19).' },
+      q: 'Según Bohr, ¿qué muestra el arca vista en el templo abierto (11:19)?',
+      o: ['El lugar santísimo abierto en 1844', 'Que el templo de Jerusalén volverá', 'El fin del santuario del cielo', 'Que el arca de Noé será hallada'], a: 0,
+      e: 'Es la apertura del lugar santísimo en 1844: se ve el arca con la ley y el sábado; el versículo abre la sección de los capítulos 12 al 14. Fuentes: Stephen Bohr, «La Razón de Nuestro Existir», pág. 74; Bohr, «15 principios de interpretación profética», vol. 2, pág. 91-92.' },
   ],
 
   tarjetas: [

@@ -1,6 +1,8 @@
 /* Apocalipsis 14 — El Cordero con los 144.000, los tres ángeles y las dos siegas.
    Sigue el modelo de cap01.js; se revisa con tools/apocalipsis-revisa.js. */
 const { tbl, hi, wa, li } = require('./ayudas.js');
+/* Línea de fuente al pie de cada sección de interpretación. */
+const fu = t => `<p class="fuente"><small>${t}</small></p>`;
 
 module.exports = {
   cap: 'ap14', label: 'Apocalipsis 14', sub: 'Los 144.000 y los tres ángeles', vs: 20,
@@ -112,28 +114,226 @@ module.exports = {
       <strong>«hasta los frenos de los caballos»</strong> (14:20), en
       <strong>mil seiscientos estadios</strong> (14:20).`) },
 
-    { t: '🧭 Cómo se lee en la iglesia adventista', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
-      de aquí van marcadas como complementarias. Igual que en el capítulo 13,
-      se habla de <strong>sistemas y poderes</strong>, no de personas: el
-      mensaje es una invitación para todos, en todas las iglesias.<br><br>
-      · Los <strong>144.000</strong> se entienden como los fieles que viven
-      cuando Jesús vuelve. La iglesia no ha definido si el número es literal o
-      simbólico, y Elena de White aconsejó no discutir sobre eso.<br>
-      · Los <strong>tres ángeles</strong> son el último mensaje de Dios al mundo
-      antes de la venida de Jesús, y la iglesia adventista entiende que su
-      misión es predicarlo.<br>
-      · <strong>«La hora de su juicio ha llegado»</strong> se lee como el juicio
-      que empezó en el cielo en <strong>1844</strong> (Daniel 8:14).<br>
-      · <strong>«Adorad a aquel que hizo el cielo y la tierra, el mar»</strong>
-      recuerda las palabras del <strong>cuarto mandamiento</strong> (Éxodo
-      20:11): un llamado a adorar al Creador y a guardar su sábado.<br>
-      · <strong>Babilonia</strong> significa confusión: los sistemas religiosos
-      que mezclan la verdad con el error. Dios tiene hijos allí y los llama a
-      salir (18:4).<br>
-      · La <strong>siega de la mies</strong> es la segunda venida, cuando Jesús
-      recoge a los suyos; la <strong>vendimia</strong>, el juicio sobre los que
-      rechazaron a Dios.`) },
+    { t: '🧭 Los 144.000: los vencedores del capítulo 13 (14:1-5)', capa: 'contexto', h:
+      hi(`Desde aquí empieza la <strong>interpretación</strong>, sobre todo
+      según el pastor <strong>Esteban (Stephen) Bohr</strong>. Como en el
+      capítulo 13, se habla de sistemas y no de personas: el mensaje es una
+      invitación para todos.<br><br>
+      Para Bohr, 14:1-5 es la <strong>conclusión del capítulo 13</strong>:
+      responde si alguien se mantuvo fiel. Llevan el nombre del Padre en la
+      frente, en contraste con la marca. Apocalipsis los muestra tres veces:`) +
+      tbl(['Texto', 'Qué muestra'], [
+        ['7:1-8', 'Su <strong>sello</strong>: protegidos antes de los vientos'],
+        ['14:1-5', 'Su <strong>carácter</strong>'],
+        ['15:2-4', 'Su <strong>victoria</strong> sobre la bestia, su imagen y su marca'],
+      ]) +
+      li([`<strong>Cuándo viven:</strong> están vivos en la crisis final y
+           cuando Jesús vuelve.`,
+          `<strong>Vírgenes:</strong> Bohr lo enlaza con la ramera y sus hijas de
+           17:1-5: no se mezclaron con la religión falsa.`,
+          `<strong>Primicias:</strong> en calidad, no en tiempo; los maduró el
+           mensaje de los tres ángeles con la lluvia tardía.`,
+          `<strong>El número:</strong> es un tema discutido (¿literal o
+           simbólico?). Bohr lo toma como simbólico, igual que las tribus:
+           Israel hoy es el pueblo espiritual de Dios. Elena G. de White
+           aconsejó no entrar en controversia sobre quiénes serán, sino luchar
+           por estar entre ellos.`]) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 165-167 y
+      208; Bohr, Los 144.000 y los 24 ancianos, pág. 88, 94 y 116-117.`) },
+
+    { t: '🧭 Los tres ángeles: quiénes predican y en qué orden (14:6-12)', capa: 'contexto', h:
+      li([`<strong>Ángel significa mensajero.</strong> No hay que esperar
+           ángeles volando: Dios encargó la predicación a personas, y los
+           ángeles las ayudan (Mateo 28:19-20).`,
+          `<strong>Vuelan en medio del cielo:</strong> el mensaje viene de
+           arriba y corre rápido. <strong>A gran voz:</strong> se anuncia con
+           poder y claridad.`,
+          `<strong>A toda nación, tribu, lengua y pueblo:</strong> un mensaje
+           mundial necesita un pueblo esparcido por todo el mundo.`,
+          `<strong>Van en orden y se suman:</strong> el primero llama a temer,
+           dar gloria y adorar; el segundo dice que Babilonia cayó por rechazar
+           al primero; el tercero advierte qué les pasará a los que se queden
+           en ella.`,
+          `<strong>Son el último llamado:</strong> justo después viene la
+           cosecha (14:14-20). Desde ahí solo hay dos grupos.`,
+          `<strong>Unidos al santuario:</strong> 11:19 abre el lugar santísimo
+           (el arca con la ley) y 15:5-8 lo cierra; los mensajes se dan
+           mientras está abierto.`]) +
+      wa(`Elena G. de White vio los tres mensajes como tres escalones y dijo
+      que a los adventistas se les confió proclamarlos: «No hay otra obra que
+      tenga tanta importancia».`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 4-9; Bohr,
+      El Mensaje de los Tres Ángeles, tomo 2, pág. 210 y 213.`) },
+
+    { t: '🧭 Primer ángel: el evangelio eterno, temed y dad gloria (14:6-7)', capa: 'contexto', h:
+      li([`<strong>El evangelio eterno:</strong> es la única vez que Juan usa
+           la palabra «evangelio». Es eterno porque el plan de salvación se
+           pensó en la eternidad, se anunció a Adán y Eva, se ilustró con los
+           sacrificios y se cumplió en Cristo. Somos salvos por gracia, por
+           medio de la fe; y Jesús es nuestro único intercesor.`,
+          `<strong>Temed a Dios:</strong> no es tenerle miedo. Es respeto y
+           <strong>obediencia reverente</strong> a sus mandamientos: «Teme a
+           Dios y guarda sus mandamientos» (Eclesiastés 12:13).`,
+          `<strong>Dadle gloria:</strong> la gloria de Dios es su
+           <strong>carácter</strong>. Cuando Moisés pidió ver su gloria, Dios
+           le mostró su bondad y su misericordia (Éxodo 33:18-19; 34:6-7). Dar
+           gloria es <strong>reflejar ese carácter</strong>, como la luna
+           refleja la luz del sol.`]) +
+      wa(`Los tres verbos del primer ángel (temed, dad gloria, adorad) son
+      órdenes; Bohr los llama los tres imperativos del evangelio eterno: el que
+      recibe el regalo de la salvación responde con una vida nueva.`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 11-12,
+      25-28 y 37-38; Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 210-211.`) },
+
+    { t: '🧭 Primer ángel: «la hora de su juicio ha llegado» (14:7)', capa: 'contexto', h:
+      hi(`Para Bohr el juicio no es un solo momento sino un proceso en
+      <strong>tres etapas</strong>: antes de la segunda venida (14:7), durante
+      los mil años (20:4) y después de los mil años (20:13). El primer ángel
+      anuncia la primera.`) +
+      li([`<strong>Cuándo empieza:</strong> en <strong>1844</strong>, al
+           terminar los 2.300 días de Daniel 8:14. Contados como años desde el
+           decreto para restaurar Jerusalén en el otoño del <strong>457
+           a.C.</strong>, llegan al otoño de 1844.`,
+          `<strong>Por qué antes de la venida:</strong> Jesús viene «y mi
+           galardón conmigo» (22:12); para traer la recompensa, el juicio tiene
+           que haberse hecho antes.`,
+          `<strong>Cómo es:</strong> se abren los libros del cielo (Daniel
+           7:10) y se revisan los casos de los que profesaron creer en Jesús,
+           empezando por Adán y terminando con los vivos.`,
+          `<strong>Tres pasos:</strong> investigación, veredicto y
+           recompensa, como en un tribunal.`]) +
+      wa(`Es el antitipo (el cumplimiento real) del Día de la Expiación, el
+      gran día de juicio de Israel en el lugar santísimo. Elena G. de White:
+      la obra del juicio que empezó en 1844 sigue hasta que se decidan los
+      casos de todos, y por eso el mensaje se predica hasta el fin del tiempo
+      de gracia.`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 8-9,
+      49-50, 55-56 y 63-64; Elena G. de White, El conflicto de los siglos,
+      pág. 273, 328 y 357.`) },
+
+    { t: '🧭 Primer ángel: «Adorad a aquel que hizo el cielo y la tierra» (14:7)', capa: 'contexto', h:
+      hi(`Las palabras del ángel repiten las del <strong>cuarto
+      mandamiento</strong>: «en seis días hizo Jehová los cielos y la tierra,
+      el mar» (Éxodo 20:11). El ángel llama a adorar a Dios
+      <strong>como Creador</strong>, y el sábado es la señal de que Él lo es.`) +
+      li([`Elena G. de White: el mensaje que manda adorar a Dios y guardar sus
+           mandamientos «los ha de invitar especialmente a observar el cuarto
+           mandamiento».`,
+          `Si el sábado se hubiera guardado siempre, dice ella, nunca habría
+           habido un idólatra, un ateo o un incrédulo: recuerda cada semana
+           quién nos hizo.`,
+          `Bohr: el sábado nació en la creación, cuando no había pecado, ni
+           judíos, ni antiguo pacto; Dios trabajó seis días, reposó el séptimo
+           y después lo bendijo. Es un regalo para toda la humanidad.`,
+          `Bohr: la prueba final será de <strong>autoridad</strong>: guardar el
+           sábado reconoce la autoridad del Creador. Por eso la idea de que el
+           mundo salió de la evolución ataca también el sábado, memorial de la
+           creación.`]) +
+      fu(`Fuentes: Elena G. de White, El conflicto de los siglos, pág. 357-358;
+      Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 71-73; Bohr, Juan
+      Pablo II, el papa Francisco y la gran prueba final, pág. 2-3.`) },
+
+    { t: '🧭 Segundo ángel: ¿qué es Babilonia? (14:8)', capa: 'contexto', h:
+      hi(`<strong>Babel</strong> significa <strong>confusión</strong>. La
+      primera Babilonia nació en Génesis 11 como un proyecto humano de
+      rebelión contra Dios, fundado por Nimrod. En Apocalipsis, Babilonia es
+      la religión que se aparta de Dios y se une al poder político. Bohr
+      muestra que el capítulo 17 describe a los mismos tres actores del 13:`) +
+      tbl(['Apocalipsis 13', 'Apocalipsis 17', 'Qué representa, según Bohr'], [
+        ['El dragón', 'Los reyes de la tierra', 'Los gobiernos civiles'],
+        ['La bestia del mar', 'La gran ramera', 'El papado'],
+        ['La bestia de la tierra', 'Las hijas de la ramera', 'El protestantismo apóstata'],
+      ]) +
+      wa(`Babilonia es un <strong>sistema</strong>, no las personas que están
+      en esas iglesias. Elena G. de White afirma que «la mayoría de los
+      verdaderos discípulos de Cristo» todavía están en ellas, y por eso Dios
+      los llama: «Salid de ella, pueblo mío» (18:4).`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 82-83 y
+      96-99; Elena G. de White, El conflicto de los siglos, pág. 321.`) },
+
+    { t: '🧭 Segundo ángel: el vino, la fornicación y la caída (14:8)', capa: 'contexto', h:
+      li([`<strong>El vino:</strong> las falsas doctrinas que confunden. Elena
+           G. de White nombra, entre otras, la inmortalidad natural del alma,
+           el tormento eterno de los malos y poner el domingo en lugar del día
+           santo de Dios. Un pueblo así embriagado «no sabe qué creer».`,
+          `<strong>La fornicación:</strong> la unión ilegítima de la iglesia con
+           los reyes de la tierra (17:1-2): una iglesia que deja a Cristo, su
+           esposo, para buscar el apoyo del poder civil.`,
+          `<strong>¿Por qué «ha caído»?</strong> Por rechazar el mensaje del
+           primer ángel. La repetición («ha caído, ha caído») muestra que es
+           seguro.`,
+          `<strong>Cuándo:</strong> Elena G. de White dice que el segundo
+           mensaje se predicó por primera vez en el <strong>verano de
+           1844</strong>, sobre todo a las iglesias de los Estados Unidos que
+           rechazaron el aviso del juicio. Pero la caída es progresiva: su
+           cumplimiento completo todavía es futuro, cuando la unión de la
+           iglesia con el mundo sea total.`]) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 7-8, 99,
+      101 y 111-112; Elena G. de White, El conflicto de los siglos, pág.
+      320-321.`) },
+
+    { t: '🧭 Tercer ángel: la advertencia más solemne (14:9-11)', capa: 'contexto', h:
+      tbl(['En el mensaje', 'Qué es, según Elena G. de White y Bohr'], [
+        ['La bestia', 'El papado (13:1-10)'],
+        ['Su imagen', 'El protestantismo apóstata usando el poder civil'],
+        ['La marca', 'El signo de la autoridad de Roma, el domingo impuesto por ley'],
+        ['El vino de la ira de Dios', 'Las <strong>siete plagas postreras</strong> (15:1), «sin mezcla» de misericordia'],
+        ['Fuego y azufre', 'Como en Sodoma: «fuego eterno» que la dejó en cenizas (Judas 7; 2 Pedro 2:6)'],
+      ]) +
+      hi(`<strong>«Por los siglos de los siglos»:</strong> Bohr explica que la
+      palabra griega <em>aión</em> (y la hebrea <em>olam</em>) no siempre
+      significa «sin fin», sino un tiempo que dura lo que dura su objeto. Dios
+      es «fuego consumidor» (Hebreos 12:29); los malos quedarán sin «raíz ni
+      rama» y serán cenizas (Malaquías 4:1-3). Para Bohr el castigo es real y
+      terrible, pero termina cuando el fuego consume: no es un tormento sin
+      fin.`) +
+      wa(`Elena G. de White la llama «la más terrible amenaza» de la Biblia, y
+      por eso el aviso debe darse a todo el mundo antes de los juicios, para
+      que nadie quede sin saber y todos puedan librarse.`) +
+      fu(`Fuentes: Elena G. de White, El conflicto de los siglos, pág. 364-367;
+      Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 73-74, 86-87 y 98-99.`) },
+
+    { t: '🧭 La perseverancia de los santos (14:12-13)', capa: 'contexto', h:
+      li([`<strong>Perseverancia</strong> (en griego <em>hupomoné</em>):
+           aguantar firmes en la prueba. Los santos del final son continuación
+           de los perseguidos de los 1.260 años: la mujer de Apocalipsis 12.`,
+          `<strong>Los mandamientos de Dios:</strong> los diez, incluido el
+           cuarto, en contraste con los que adoran a la bestia.`,
+          `<strong>La fe de Jesús:</strong> el griego permite «la fe de Jesús»
+           y «la fe en Jesús». Bohr ve un equilibrio: guardar los mandamientos
+           sin caer en el legalismo, y confiar en Jesús sin caer en una gracia
+           que desprecia la ley. Elena G. de White: «Esto abarca la ley y el
+           Evangelio».`,
+          `<strong>Dos grupos:</strong> al final, toda la cristiandad quedará
+           dividida entre los que guardan los mandamientos y la fe de Jesús, y
+           los que adoran a la bestia y reciben su marca.`]) +
+      wa(`Sobre los que mueren en el Señor (14:13): Elena G. de White describe
+      que, poco antes de la venida, «todos los que murieron en la fe del
+      mensaje del tercer ángel» resucitan (Daniel 12:2) para ver cumplida la
+      promesa.`) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 26,
+      101-102 y 125-126; Elena G. de White, El conflicto de los siglos, pág.
+      367 y 512.`) },
+
+    { t: '🧭 Las dos siegas (14:14-20)', capa: 'contexto', h:
+      hi(`Cuando los tres ángeles terminan, el mundo queda en
+      <strong>dos grupos</strong> y se cierra la puerta de la gracia: ya nadie
+      cambia de lado. Entonces viene la cosecha.`) +
+      tbl(['', 'La mies (14:14-16)', 'Las uvas (14:17-20)'], [
+        ['Quiénes', 'Los que aceptaron los tres mensajes', 'Los que los rechazaron'],
+        ['Señal', 'El sello de Dios', 'La marca de la bestia'],
+        ['Dónde', 'Dentro de la ciudad, en sentido espiritual', 'Fuera de la ciudad, en el lagar'],
+        ['Qué reciben', 'Jesús, sobre la nube, los recoge primero', 'El gran lagar de la ira de Dios'],
+      ]) +
+      li([`El que está sobre la nube, «semejante al Hijo del hombre», es
+           <strong>Jesús</strong> en su venida.`,
+          `La <strong>lluvia tardía</strong>, que acompaña a los tres mensajes,
+           es la que madura la mies y también las uvas.`,
+          `<strong>El lagar fuera de la ciudad:</strong> los impíos rodean al
+           remanente para destruirlo, y Jesús viene con los ejércitos del cielo
+           a pisar el lagar (19:11-16) y librar a los suyos.`]) +
+      fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 8; Bohr,
+      El Mensaje de los Tres Ángeles, tomo 2, pág. 167-168 y 211-212.`) },
   ],
 
   preguntas: [
@@ -296,22 +496,82 @@ module.exports = {
     { t: 'tf', v: '14:20',
       q: 'Según Apocalipsis 14:20, el lagar fue pisado dentro de la ciudad.', a: false,
       e: 'Falso: «El lagar fue pisado FUERA de la ciudad» (14:20).' },
+    { t: 'mc', v: '14:1', f: 'c',
+      q: 'Según Bohr, ¿cuándo viven los 144.000 de Apocalipsis 14?',
+      o: ['En la crisis final, vivos cuando Jesús vuelve', 'Son los que resucitaron con Cristo en el año 31', 'Son judíos que se convertirán tras un rapto', 'Son los mártires de los 1.260 años'], a: 0,
+      e: 'Bohr: vencen a la bestia, su imagen y su marca (15:2-4), así que tienen que estar vivos en la crisis final. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 166-167.' },
+    { t: 'mc', v: '14:4', f: 'c',
+      q: 'Según Bohr, ¿en qué sentido los 144.000 son «primicias»?',
+      o: ['En calidad: maduros por la lluvia tardía', 'En tiempo: los primeros en ser salvados', 'En número: los primeros 144.000 conversos', 'En edad: los más jóvenes del pueblo'], a: 0,
+      e: 'Bohr: primicias en términos de calidad; el mensaje de los tres ángeles con el poder de la lluvia tardía los maduró para la cosecha. Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 208; Bohr, Los 144.000 y los 24 ancianos, pág. 94.' },
+    { t: 'tf', v: '14:1', f: 'c',
+      q: 'Según Bohr, el número 144.000 se debe entender como simbólico, igual que las tribus de Israel.', a: true,
+      e: 'Verdadero: Bohr señala que el libro está lleno de símbolos y que las doce tribus literales se perdieron en el 722 a.C.; es un tema discutido. Fuente: Bohr, Los 144.000 y los 24 ancianos, pág. 116-117.' },
+    { t: 'mc', v: '14:6', f: 'c',
+      q: 'Según Bohr, ¿quiénes predican en realidad los mensajes de los tres ángeles?',
+      o: ['Personas, ayudadas por los ángeles', 'Ángeles literales volando por el cielo', 'Los veinticuatro ancianos del trono', 'Los dos testigos del capítulo 11'], a: 0,
+      e: 'Bohr: «ángel» significa mensajero; Dios encargó el evangelio a las personas (Mateo 28:19-20) y los ángeles las ayudan. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 4-5.' },
+    { t: 'mc', v: '14:6', f: 'c',
+      q: 'Según Bohr, ¿por qué el evangelio que lleva el primer ángel es «eterno»?',
+      o: ['Se planeó en la eternidad, antes del pecado', 'Solo se predicará en la eternidad futura', 'Lo escribió un ángel en el cielo', 'Reemplaza a la ley, que ya no rige'], a: 0,
+      e: 'Bohr: el plan se trazó en la eternidad, se reveló a Adán y Eva, se ilustró en los sacrificios y se cumplió en Cristo. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 11-12.' },
+    { t: 'mc', v: '14:7', f: 'c',
+      q: 'Según Bohr, ¿qué significa «Temed a Dios» en el mensaje del primer ángel?',
+      o: ['Obedecer con reverencia sus mandamientos', 'Tener miedo de su castigo eterno', 'Alejarse de Dios por respeto', 'Ayunar antes de entrar al templo'], a: 0,
+      e: 'Bohr: temer a Dios no es tenerle miedo, sino rendir una obediencia reverente a sus mandamientos (Eclesiastés 12:13). Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 210-211.' },
+    { t: 'mc', v: '14:7', f: 'c',
+      q: 'Según Bohr, ¿qué es «dar gloria» a Dios?',
+      o: ['Reflejar su carácter en la vida', 'Cantarle himnos en voz alta', 'Darle ofrendas generosas', 'Construirle templos grandes'], a: 0,
+      e: 'Bohr: la gloria de Dios es su carácter, como se lo mostró a Moisés (Éxodo 33:18-19; 34:6-7); darle gloria es reflejarlo, como la luna refleja al sol. Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 37-38; tomo 2, pág. 211.' },
     { t: 'mc', v: '14:7', f: 'c',
       q: 'En la lectura adventista, ¿qué es «la hora de su juicio» que anuncia el primer ángel?',
       o: ['El juicio que empezó en el cielo en 1844', 'La destrucción de Jerusalén en el año 70', 'El juicio de los mil años después', 'El diluvio en los tiempos de Noé'], a: 0,
-      e: 'Interpretación: el juicio que empieza al final de los 2.300 días de Daniel 8:14, en 1844. El texto solo dice «la hora de su juicio ha llegado» (14:7).' },
+      e: 'Es la primera etapa del juicio, antes de la segunda venida, que empezó al terminar los 2.300 días de Daniel 8:14. Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 49-50; Elena G. de White, El conflicto de los siglos, pág. 357.' },
     { t: 'mc', v: '14:7', f: 'c',
-      q: 'En la interpretación adventista, ¿a qué mandamiento recuerda «Adorad a aquel que hizo el cielo y la tierra, el mar»?',
+      q: 'Según Elena de White, ¿desde qué año se cuentan los 2.300 días que llegan a 1844?',
+      o: ['Desde el 457 a.C.', 'Desde el 538 d.C.', 'Desde el 605 a.C.', 'Desde el 31 d.C.'], a: 0,
+      e: 'Desde el decreto para restaurar Jerusalén, en el otoño del 457 a.C., hasta el otoño de 1844. Fuente: Elena G. de White, El conflicto de los siglos, pág. 273 y 328.' },
+    { t: 'mc', v: '14:7', f: 'c',
+      q: 'Según Bohr, ¿por qué el juicio debe hacerse antes de la segunda venida?',
+      o: ['Porque Jesús trae la recompensa al venir', 'Porque los muertos van al cielo al morir', 'Porque el juicio es en el momento de morir', 'Porque así lo decidió un concilio'], a: 0,
+      e: 'Bohr: Jesús dice «mi galardón conmigo» (22:12; Mateo 16:27); para traer la recompensa, el caso ya tiene que estar decidido. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 55.' },
+    { t: 'mc', v: '14:7', f: 'c',
+      q: 'Según Elena de White, ¿a qué mandamiento invita especialmente «Adorad a aquel que hizo el cielo y la tierra»?',
       o: ['Al cuarto, el del sábado', 'Al quinto, el de los padres', 'Al octavo, el de no hurtar', 'Al décimo, el de no codiciar'], a: 0,
-      e: 'Interpretación: usa las palabras de Éxodo 20:11, el cuarto mandamiento, y llama a adorar al Creador. El texto de 14:7 no nombra el sábado.' },
+      e: 'Usa las palabras de Éxodo 20:11; el mensaje que manda adorar a Dios y guardar sus mandamientos «los ha de invitar especialmente a observar el cuarto mandamiento». Fuente: Elena G. de White, El conflicto de los siglos, pág. 358.' },
     { t: 'mc', v: '14:8', f: 'c',
-      q: 'En la lectura adventista, ¿qué representa Babilonia en el mensaje del segundo ángel?',
-      o: ['La confusión de sistemas que mezclan verdad y error', 'La ciudad que hoy está en el territorio de Irak', 'La iglesia de Laodicea, que era tibia', 'El imperio de Nabucodonosor que volverá'], a: 0,
-      e: 'Interpretación: Babilonia significa confusión; son sistemas, no personas, y Dios llama a sus hijos a salir de ella (18:4). El texto solo dice que cayó (14:8).' },
+      q: 'Según Bohr, ¿qué forma Babilonia en el tiempo del fin?',
+      o: ['La ramera, sus hijas y los reyes de la tierra', 'La ciudad que hoy está en Irak', 'La iglesia de Laodicea, que era tibia', 'El imperio de Nabucodonosor que volverá'], a: 0,
+      e: 'Bohr: el papado (la ramera), el protestantismo apóstata (las hijas) y los gobiernos (los reyes); son sistemas, no las personas sinceras que están en ellos. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 96-99.' },
+    { t: 'mc', v: '14:8', f: 'c',
+      q: 'Según Bohr y Elena de White, ¿qué es el vino de Babilonia?',
+      o: ['Las falsas doctrinas que confunden', 'Las riquezas de los comerciantes', 'La sangre de los mártires', 'El vino de la santa cena'], a: 0,
+      e: 'Por ejemplo, la inmortalidad natural del alma, el tormento eterno y el domingo en lugar del sábado. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 101.' },
+    { t: 'mc', v: '14:8', f: 'c',
+      q: 'Según Elena de White, ¿cuándo se predicó por primera vez el mensaje del segundo ángel?',
+      o: ['En el verano de 1844', 'En la Reforma de 1517', 'En 1798, al caer el papa', 'En el Pentecostés del año 31'], a: 0,
+      e: 'Sobre todo a las iglesias de los Estados Unidos que rechazaron el aviso del juicio; pero su cumplimiento completo todavía es futuro. Fuente: Elena G. de White, El conflicto de los siglos, pág. 320-321.' },
+    { t: 'tf', v: '14:8', f: 'c',
+      q: 'Según Elena de White, la mayoría de los verdaderos discípulos de Cristo todavía están en las iglesias que forman Babilonia.', a: true,
+      e: 'Verdadero: por eso Dios los llama a salir (18:4). Babilonia es un sistema, no sus miembros sinceros. Fuente: Elena G. de White, El conflicto de los siglos, pág. 321.' },
+    { t: 'mc', v: '14:10', f: 'c',
+      q: 'Según Bohr, ¿qué es «el vino de la ira de Dios» del tercer ángel?',
+      o: ['Las siete plagas postreras', 'La destrucción de Jerusalén', 'El diluvio del tiempo de Noé', 'La guerra de los dos testigos'], a: 0,
+      e: 'Bohr: la ira se guarda en las siete copas (15:1; 16:1) y se termina de beber en el lago de fuego. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 73-74.' },
+    { t: 'tf', v: '14:11', f: 'c',
+      q: 'Según Bohr, «por los siglos de los siglos» prueba que los malos sufrirán un tormento sin fin.', a: false,
+      e: 'Falso: Bohr explica que aión (y olam) no siempre significa sin fin; los malos serán cenizas, sin raíz ni rama (Malaquías 4:1-3), como Sodoma (Judas 7). Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 86-87 y 98-99.' },
+    { t: 'mc', v: '14:12', f: 'c',
+      q: 'Según Bohr, ¿qué equilibrio enseña «los mandamientos de Dios y la fe de Jesús»?',
+      o: ['Obediencia sin legalismo y fe sin desprecio de la ley', 'Que la fe reemplaza a los mandamientos', 'Que basta guardar la ley para salvarse', 'Que los mandamientos eran solo para Israel'], a: 0,
+      e: 'Bohr: ni la zanja del legalismo ni la de la gracia barata. Elena de White: «Esto abarca la ley y el Evangelio». Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 26 y 125-126.' },
     { t: 'mc', v: '14:14-16', f: 'c',
-      q: 'En la interpretación adventista, ¿qué representa la siega que hace el que está sobre la nube blanca?',
-      o: ['La segunda venida de Jesús por los suyos', 'La cosecha de trigo en la tierra de Israel', 'La caída de Babilonia la gran ciudad', 'El sellamiento de los 144.000'], a: 0,
-      e: 'Interpretación: Jesús viene en las nubes (1:7) a recoger a los suyos. El texto solo dice que metió su hoz y la tierra fue segada (14:16).' },
+      q: 'Según Bohr, ¿quiénes son la mies que siega el que está sobre la nube?',
+      o: ['Los que aceptaron los tres mensajes', 'Los que adoraron a la bestia', 'Los ángeles que salen del templo', 'Las naciones del mundo antiguo'], a: 0,
+      e: 'Bohr: la mies tiene el sello de Dios y es cosechada primero, cuando Jesús viene; las uvas tienen la marca de la bestia. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 211.' },
+    { t: 'tf', v: '14:19-20', f: 'c',
+      q: 'Según Bohr, el lagar pisado fuera de la ciudad se relaciona con Apocalipsis 19, cuando Jesús viene con los ejércitos del cielo a librar a su pueblo.', a: true,
+      e: 'Verdadero: los impíos rodean al remanente y Jesús pisa «el lagar del vino del furor» (19:15). Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 212.' },
   ],
 
   tarjetas: [
