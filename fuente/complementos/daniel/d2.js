@@ -32,9 +32,12 @@ module.exports = {
           ['Oro', 'Babilonia', '605-539 a.C.'],
           ['Plata', 'Medo-Persia', '539-331 a.C.'],
           ['Bronce', 'Grecia', '331-168 a.C.'],
-          ['Hierro', 'Roma; el historiador Gibbon la llamó «la monarquía de hierro»', '168 a.C.-476 d.C.'],
-          ['Pies de hierro y barro', 'Roma dividida', 'Desde 476 d.C.'],
+          ['Piernas de hierro', 'Roma imperial; el historiador Gibbon la llamó «la monarquía de hierro»', '168 a.C.-476 d.C.'],
+          ['Diez dedos', 'Roma dividida en los reinos bárbaros', 'Desde 476 d.C.'],
+          ['Hierro mezclado con barro', 'Roma papal: el poder político unido al religioso', 'Desde 538 d.C.'],
+          ['La piedra que se hace monte', 'La segunda venida de Cristo y su reino eterno', 'Futuro'],
         ]) +
+        `<p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial, dividida y papal. Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p>` +
         `<p>Una lectura que Bohr subraya: los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. Elena de White, citada por él, dice que la imagen muestra también el deterioro de la religión y la moral: a medida que las naciones olvidan a Dios se debilitan moralmente, y tienden a imponer por la fuerza lo que ya no tienen por convicción.</p>` +
         `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 57-58 (cita de Comentario bíblico adventista, tomo 4, pág. 1168); Bohr, La Gran Cadena Profética, pág. 39.</p>`,
     },
