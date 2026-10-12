@@ -3101,7 +3101,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = '6171cd3c43ad';
+const VERSION_APP = 'e0f0684edb0f';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -44284,6 +44284,56 @@ function bvTermina(){
   ir('inicio');
   try{cargaEvaluacion();}catch(e){}
 }
+
+/* MUDANZA:INICIO ─ LA APP SE MUDÓ A LA DE JÓVENES (v175, 12-oct) ──────────
+   QUÉ PASA. Conexión Bíblica ahora vive dentro de la app de Jóvenes Tierralinda
+   (https://jovenestierralinda.org/estudiar/, y /app/ para quien tiene cuenta),
+   con la misma base. Esta dirección queda para el panel del director y la API
+   que usa esa app; quien la abre para estudiar se va para allá.
+
+   EL AVANCE VIAJA CON ÉL. Lo estudiado está en el localStorage de ESTE sitio, y
+   el otro sitio no lo puede leer. Así que aquí se empaca (las llaves de la app,
+   no las cachés del servidor), se comprime y va en la dirección, después del
+   `#`: esa parte no se le manda a ningún servidor, va de este teléfono al mismo
+   teléfono. Allá se desempaca sin pisar lo que ya hubiera (assets/cb-mudanza.js
+   en el repo de Jóvenes).
+
+   QUIÉN NO SE MUDA, y sigue aquí como siempre:
+   · sin señal (no se puede preguntar nada ni llegar allá: la app sigue abriendo);
+   · el director (su panel sigue aquí; se pregunta a /api/yo);
+   · quien está en medio de un examen;
+   · quien abre con ?quedarse=1 (por si hace falta, esa pestaña no se muda).
+
+   ESTA PARTE NO VIAJA AL MÓDULO: tools/cb-traer (en el repo de Jóvenes) quita
+   todo lo que hay entre MUDANZA:INICIO y MUDANZA:FIN. */
+const CASA_NUEVA='https://jovenestierralinda.org/estudiar/';
+const PEDIDO_AL_ABRIR=(()=>{try{return new URL(location.href).searchParams.get('concurso')||'';}catch(e){return '';}})();
+const LLAVES_MUDANZA=['conexion-biblica-v4','conexion-biblica-v3','cb-vel','cb-filtro','cb-donde','cb-cola'];
+async function mudanza(){
+  try{
+    if(typeof location==='undefined'||location.hostname!=='conexion-biblica.pages.dev')return;
+    if(new URL(location.href).searchParams.get('quedarse')==='1')sessionStorage.setItem('cb-quedarse','1');
+    if(sessionStorage.getItem('cb-quedarse')==='1'||sessionStorage.getItem('cb-dir')==='1')return;
+    if(typeof examenEnCurso==='function'&&examenEnCurso())return;
+    const r=await fetch('/api/yo',{credentials:'same-origin',cache:'no-store'});
+    if(!r.ok)return;
+    const y=await r.json();
+    if(y&&y.rol==='director')return;
+    const k={};
+    for(const n of LLAVES_MUDANZA){const v=localStorage.getItem(n);if(v!=null)k[n]=v;}
+    let bytes=new TextEncoder().encode(JSON.stringify({k})),tipo='j';
+    if(typeof CompressionStream==='function'){
+      bytes=new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer());
+      tipo='g';
+    }
+    let b='';for(let i=0;i<bytes.length;i+=0x8000)b+=String.fromCharCode.apply(null,bytes.subarray(i,i+0x8000));
+    const p=btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    location.replace(CASA_NUEVA+(PEDIDO_AL_ABRIR?'?concurso='+encodeURIComponent(PEDIDO_AL_ABRIR):'')+
+      (Object.keys(k).length?'#traer='+tipo+'.'+p:''));
+  }catch(e){ /* sin red o sin permiso: se queda aquí, que sigue funcionando */ }
+}
+if(typeof setTimeout==='function')setTimeout(mudanza,0);
+/* MUDANZA:FIN */
 
 /* ───────── arranque ───────── */
 try{
