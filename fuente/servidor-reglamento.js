@@ -54,7 +54,7 @@ const REGLAS = (function () {
         fecha: f.fecha || '' };
       for (const c of f.categorias) {
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
-          sinCompletar: c.sinCompletar, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
+          sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
           rampa: !c.sinRampa };
         orden.push(c);
       }
@@ -101,6 +101,8 @@ const REGLAS = (function () {
         if (!Number.isInteger(c.n) || c.n < 1 || c.n > 100) mal.push(dc + ' no dice cuántas preguntas (de 1 a 100)');
         if (![1, 2, 3].includes(c.techo)) mal.push(dc + ' tiene un techo que no es 1, 2 ni 3');
         if (typeof c.sinCompletar !== 'boolean') mal.push(dc + ' no dice si lleva completar');
+        if (c.sinVF !== undefined && typeof c.sinVF !== 'boolean') mal.push(dc + ' no dice bien si lleva verdadero o falso');
+        if (c.tarjetas !== undefined && !(Number.isInteger(c.tarjetas) && c.tarjetas >= 5 && c.tarjetas <= 100)) mal.push(dc + ' tiene tarjetas por sesión fuera de 5 a 100');
         if (c.sinRampa !== undefined && typeof c.sinRampa !== 'boolean') mal.push(dc + ' no dice bien si entra directo a su nivel');
         if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
         if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
@@ -178,6 +180,8 @@ const REGLAS = (function () {
       const o = { id: c.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo, sinCompletar: c.sinCompletar };
       if (c.segundos !== undefined) o.segundos = c.segundos;
       if (c.sinRampa !== undefined) o.sinRampa = c.sinRampa;
+      if (c.sinVF !== undefined) o.sinVF = c.sinVF;
+      if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
@@ -224,11 +228,13 @@ export const FICHAS_BASE = [
     "id": "av",
     "nombre": "Aventureros",
     "edad": "7 a 9 años",
-    "n": 15,
+    "n": 30,
     "techo": 3,
-    "sinCompletar": false,
+    "sinCompletar": true,
+    "sinVF": true,
     "segundos": 80,
-    "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
+    "tarjetas": 15,
+    "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44 para estudiar",
     "estudia": [
      "d1",
      "d2",
@@ -246,16 +252,22 @@ export const FICHAS_BASE = [
      "m-version",
      "m-prioridades",
      "m-palabras"
+    ],
+    "soloEstudio": [
+     "pr39",
+     "pr41",
+     "pr44"
     ]
    },
    {
     "id": "pa",
     "nombre": "Padres y consejeros",
     "edad": "Adultos",
-    "n": 25,
+    "n": 35,
     "techo": 3,
-    "sinCompletar": false,
+    "sinCompletar": true,
     "sinRampa": true,
+    "tarjetas": 25,
     "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
     "estudia": [
      "d1",

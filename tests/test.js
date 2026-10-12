@@ -693,8 +693,10 @@ ok(bancoCat('gm').every(q=>!['d7','d8','d9','d10','d11','d12'].includes(q.cap)),
 for(const c of ['d1','d3','d6']){
   ok(bancoCat('av').some(q=>q.cap===c),'Aventureros examina '+c);
 }
+/* v177: desde el examen real del 10-oct, 7 a 9 años solo examina Daniel;
+   Profetas y Reyes 39, 41 y 44 le queda para estudiar. Padres sí lo examina. */
 for(const c of ['pr39','pr41','pr44']){
-  ok(bancoCat('av').some(q=>q.cap===c),'Aventureros examina '+c);
+  ok(!bancoCat('av').some(q=>q.cap===c)&&bancoCat('pa').some(q=>q.cap===c),'Aventureros estudia '+c+' sin examinarlo; Padres lo examina');
 }
 ok(bancoCat('av').every(q=>!['pr40','pr42','pr43'].includes(q.cap)),
   'Aventureros no examina los capítulos de P&R que no le tocan');
@@ -2167,8 +2169,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const RAV='m-linea m-personajes m-numeros m-trampas m-versiculos m-lugares m-version m-prioridades m-palabras';
   const VIGENTE={
     me:['d1 d2 d3 d6 | m-personajes m-numeros m-versiculos m-lugares m-palabras','',10,1],
-    av:['d1 d2 d3 d6 pr39 pr41 pr44 | '+RAV,'',15,3],
-    pa:['d1 d2 d3 d6 pr39 pr41 pr44 | '+RAV,'',25,3],
+    av:['d1 d2 d3 d6 pr39 pr41 pr44 | '+RAV,'pr39 pr41 pr44',30,3],
+    pa:['d1 d2 d3 d6 pr39 pr41 pr44 | '+RAV,'',35,3],
     gm:['d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 d12 pr39 pr40 pr41 pr42 pr43 pr44 | m-linea m-personajes m-numeros m-trampas m-versiculos m-reyes m-profetico m-lugares m-version m-prioridades m-palabras',
         'd7 d8 d9 d10 d11 d12',25,3],
     dm1:[R(1,15,'m')+' | mm-quien mm-versiculos mm-plan','',10,1],

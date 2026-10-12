@@ -126,7 +126,8 @@ for(const cat of ['av','gm']){
   let malo=0;
   for(let i=0;i<200;i++){
     const p=A.armar();
-    if(p.length!==(cat==='av'?15:25))malo++;
+    if(p.length!==(cat==='av'?30:25))malo++;
+    if(cat==='av'&&p.some(q=>q.t!=='mc'||q.cap.startsWith('pr')))malo++;
     if(new Set(p).size!==p.length)malo++;
   }
   ok(malo===0,`Categoría ${cat}: 200 exámenes correctos con el banco de 144`);
@@ -267,8 +268,10 @@ ok(A.NPREG()===10,'Menores: examen de práctica de 10 preguntas');
 // Padres: arrancan en avanzado sin necesidad de rampa
 A.ponCat('pa');
 ok(A.nivelRecomendado()===3,'Padres y consejeros: arrancan en nivel avanzado');
-ok(A.NPREG()===25,'Padres y consejeros: examen de práctica de 25 preguntas');
-ok(A.poolNivel().some(q=>q.t==='fill'),'Padres: sí incluye completar el versículo');
+/* v177: el formato del examen real del 10-oct: 35 preguntas, con V/F y P&R, sin completar. */
+ok(A.NPREG()===35,'Padres y consejeros: examen de práctica de 35 preguntas, como el real');
+ok(A.poolNivel().every(q=>q.t!=='fill')&&A.poolNivel().some(q=>q.t==='tf')&&A.poolNivel().some(q=>q.cap.startsWith('pr')),
+  'Padres: sin completar, con verdadero o falso y con Profetas y Reyes');
 
 // Guías Mayores conserva el alcance ampliado
 A.ponCat('gm');
@@ -1653,9 +1656,10 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   /* Desde v130, en Conexion Biblica el tramo se escoge con fichas: un tramo
      que llegue igual (de un enlace o de antes) se traduce a sus capitulos. La
      invariante de fondo sigue: nunca `d1..pr44`, y nunca cero preguntas. */
-  R.ponCat('av'); R.ir('examen');
+  /* v177: Aventureros ya no examina P&R (formato real del 10-oct); el ejemplo de dos libros es Padres. */
+  R.ponCat('pa'); R.ir('examen');
   R.el('ex-alcance').value='rango'; R.cambiaAlcance();
-  ok(R.alcanceActual()==='biblia','En Aventureros «Un tramo» se vuelve fichas: todo Daniel ('+R.alcanceActual()+')');
+  ok(R.alcanceActual()==='biblia','En Padres «Un tramo» se vuelve fichas: todo Daniel ('+R.alcanceActual()+')');
   ok(R.poolDe().length>0,'Y con preguntas adentro ('+R.poolDe().length+')');
   /* Un rango de otra categoria no puede sobrevivir al cambio. */
   R.ponAlcance('m05..m12');
@@ -2075,13 +2079,13 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   /* v132: en Conexion Biblica SI hay complementarias (historia, otros
      profetas, interpretes), marcadas `f:'c'`, y el interruptor arranca
      prendido. Lo que quita son solo esas: nunca P&R ni una de Daniel sin marca. */
-  F.ponCat('av'); F.ponNivel(3); F.ponAlcance('todo');
+  F.ponCat('pa'); F.ponNivel(3); F.ponAlcance('todo');
   ok(F.fuenteActual()===true,'En Conexion Biblica el examen arranca con solo el material del reglamento');
   F.ponFuente(false); const poolTodo=F.poolNivel(); const todoAv=poolTodo.length;
   F.ponFuente(true);  const poolOf=F.poolNivel(); const ofAv=poolOf.length;
   const quitadas=poolTodo.filter(q=>!poolOf.includes(q));
   ok(ofAv<todoAv&&quitadas.every(q=>q.f==='c'),
-    'Aventureros: el interruptor quita solo las de otros materiales ('+quitadas.length+' de '+todoAv+')');
+    'Padres: el interruptor quita solo las de otros materiales ('+quitadas.length+' de '+todoAv+')');
   /* v133: en P&R tambien hay complementarias (lo que el capitulo no dice,
      como los 84 años de Daniel): el interruptor las quita, pero P&R sigue. */
   ok(F.poolNivel().filter(q=>String(q.cap).slice(0,2)==='pr').length>=60,
@@ -2741,7 +2745,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(V.listaDe('d1,../x')===null,'Y una lista con basura no es lista');
 
   /* El examen de practica arma solo con esos capitulos. */
-  V.ponCat('av'); V.ponAlcance('d1,d3,d6'); V.ponNivel(0); V.ponCuantas(0);
+  V.ponCat('pa'); V.ponAlcance('d1,d3,d6'); V.ponNivel(0); V.ponCuantas(0);
   const caps=[...new Set(V.poolDe().map(q=>q.cap))].sort();
   ok(V.poolDe().length>0&&caps.join()==='d1,d3,d6',
     'Con «d1,d3,d6» el examen trae solo Daniel 1, 3 y 6 ('+V.poolDe().length+' preguntas)');
@@ -2751,7 +2755,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'Con los dos libros: '+V.textoLista(['d1','d3','d6','pr41']));
 
   /* Lo escogido se escribe en la forma mas corta que ya existia. */
-  const ex=V.capsDe().filter(c=>!V.soloEstudio(c,'av'));
+  const ex=V.capsDe().filter(c=>!V.soloEstudio(c,'pa'));
   const ids=ex.map(c=>c.id);
   ok(V.alcanceDeFichas(ids,ex)==='todo','Todas las fichas = todo');
   ok(V.alcanceDeFichas(ids.filter(i=>i[0]==='d'&&i[1]!=='r'),ex)==='biblia','Todo Daniel = biblia');
@@ -2763,7 +2767,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   /* EN LA PANTALLA: en Conexion Biblica salen fichas y no el desplegable. */
   V.ponAlcance('todo'); V.ir('examen');
   ok(el('ex-fichas').hidden===false&&el('ex-alcance-lb').hidden===true,
-    'En Aventureros el examen se escoge con fichas, sin el desplegable');
+    'En Padres el examen se escoge con fichas, sin el desplegable');
   ok(/todo Daniel/.test(el('ex-fichas').innerHTML)&&/todo P&amp;R/.test(el('ex-fichas').innerHTML),
     'Con los atajos de libro');
   V.fichaEx('libro','d');
@@ -2824,7 +2828,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   V.ponDirector(null);
 
   /* EL FILTRO DE ESTUDIO: uno solo, para toda la app. */
-  V.ponCat('av'); V.ir('estudio');
+  V.ponCat('pa'); V.ir('estudio');
   V.guardaFiltro('biblia');
   ok(V.capsVista().every(c=>c.id[0]==='d'&&!c.id.startsWith('pr'))&&V.capsVista().length<V.capsDe().length,
     'Con «Daniel», Estudiar muestra solo Daniel');
@@ -3063,7 +3067,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     const quieto=!app.nuevas()&&!store['cb-fichas'];
     app.fichasLlegan([cb]); app.pintaAvisoVer();
     const aviso=app.nuevas()&&JSON.parse(store['cb-fichas']).fichas[0].categorias[1].n===20&&app.el('aviso-nuevo').hidden===false;
-    const sigue=app.CATS.av.n===15;
+    const sigue=app.CATS.av.n===30;
     app.fichasLlegan([]);
     ok(quieto&&aviso&&sigue&&!app.nuevas()&&!store['cb-fichas'],
       'Una ficha que llega se guarda para la próxima apertura y sale el aviso de material nuevo; la que está corriendo no cambia a mitad de uso; si la devuelven, el aviso se quita');
@@ -3079,8 +3083,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   A.ponCat('me');A.pintaMenuEx();const me=A.c(), opsMe=A.ops().slice(0,3).join();
   A.ponCat('av');A.pintaMenuEx();const av=A.c(), opsAv=A.ops().slice(0,5).join();
   A.ponCat('pa');A.pintaMenuEx();const pa=A.c();
-  ok(me===10&&av===15&&pa===25,'Al pasar de Menores a Aventureros y a Padres, el examen ofrece 10, 15 y 25: el número de cada categoría ('+me+', '+av+', '+pa+')');
-  ok(opsAv==='10,15,25,40,60','Las opciones de siempre no cambian para las categorías de siempre ('+opsAv+')');
+  /* v177: 30 y 35, el tamaño del examen real del 10-oct; las opciones suman el suyo. */
+  ok(me===10&&av===30&&pa===35,'Al pasar de Menores a Aventureros y a Padres, el examen ofrece 10, 30 y 35: el número de cada categoría ('+me+', '+av+', '+pa+')');
+  ok(opsAv==='10,15,25,30,40','Las opciones de siempre siguen y se suma la de la categoría ('+opsAv+')');
   const cq={id:'cq27',tema:'daniel',nombre:'Conexión Bíblica de Conquistadores',icono:'🏕️',cuando:'Por confirmar',fecha:'',que:'Daniel 1 al 6',
     categorias:[{id:'cq1',nombre:'Conquistadores',edad:'10 a 15 años',n:20,techo:2,sinCompletar:false,alcance:'Daniel 1 al 6',estudia:['d1','d2','d3','d4','d5','d6']}]};
   const B=montar(RETN,{store:{'cb-fichas':JSON.stringify({fichas:[cq]})}});

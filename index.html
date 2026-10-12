@@ -3107,7 +3107,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   </details>
 </div>
 <script>
-const VERSION_APP = 'cce080748532';
+const VERSION_APP = 'f8c0ccb9996a';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -3147,11 +3147,13 @@ const FICHAS_BASE = [
     "id": "av",
     "nombre": "Aventureros",
     "edad": "7 a 9 años",
-    "n": 15,
+    "n": 30,
     "techo": 3,
-    "sinCompletar": false,
+    "sinCompletar": true,
+    "sinVF": true,
     "segundos": 80,
-    "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
+    "tarjetas": 15,
+    "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44 para estudiar",
     "estudia": [
      "d1",
      "d2",
@@ -3169,16 +3171,22 @@ const FICHAS_BASE = [
      "m-version",
      "m-prioridades",
      "m-palabras"
+    ],
+    "soloEstudio": [
+     "pr39",
+     "pr41",
+     "pr44"
     ]
    },
    {
     "id": "pa",
     "nombre": "Padres y consejeros",
     "edad": "Adultos",
-    "n": 25,
+    "n": 35,
     "techo": 3,
-    "sinCompletar": false,
+    "sinCompletar": true,
     "sinRampa": true,
+    "tarjetas": 25,
     "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
     "estudia": [
      "d1",
@@ -35927,7 +35935,7 @@ const MANUAL = [
    },
    {
     "t": "Las tres secciones",
-    "h": "<p><strong>Sección I</strong> — Selección múltiple.<br>\n    <strong>Sección II</strong> — Verdadero o Falso.<br>\n    <strong>Sección III</strong> — Completar el versículo.</p>\n    <p>Esas son las tres del examen del campamento.\n    <strong>Cuántas preguntas trae el real no lo sabemos todavía</strong>, y por\n    eso aquí puedes practicar con varios tamaños.</p>"
+    "h": "<p><strong>Sección I</strong> — Selección múltiple.<br>\n    <strong>Sección II</strong> — Verdadero o Falso.<br>\n    <strong>Sección III</strong> — Completar el versículo.</p>\n    <p>No todas las categorías las tienen. En Conexión Bíblica (Daniel), el\n    examen real del 10 de octubre de 2026 trajo para <strong>Adultos</strong>\n    35 preguntas (selección, verdadero o falso y Profetas y Reyes, sin\n    completar) y para <strong>7 a 9 años</strong> 30, todas de selección y solo\n    de Daniel. El examen de práctica de esas categorías ya viene así.</p>"
    },
    {
     "t": "Al terminar, la parte que sirve",
@@ -36106,7 +36114,7 @@ const MANUAL = [
    },
    {
     "t": "¿Cuántas preguntas trae el examen del campamento?",
-    "h": "<p>No lo sabemos. Sí sabemos que trae las tres secciones. Por eso aquí\n    puedes practicar con varios tamaños.</p>"
+    "h": "<p>En Conexión Bíblica (Daniel), el de 2026 trajo 35 en Adultos y 30 en\n    7 a 9 años, y con la misma nota ganó quien entregó primero. La app practica\n    con esos tamaños y tiene la hoja real en Examen. De los otros concursos no\n    se sabe.</p>"
    }
   ]
  },
@@ -36327,7 +36335,7 @@ const MANUAL = [
    },
    {
     "t": "No es el examen oficial",
-    "h": "<p>No sabemos cuántas preguntas trae el real ni cómo reparte las\n    secciones. Sabemos el formato de tres secciones y el alcance.</p>"
+    "h": "<p>Se parece cada vez más: en Daniel ya sigue el formato del examen real\n    de 2026 (35 en Adultos, 30 en 7 a 9 años) y trae esas dos hojas para\n    presentar con reloj. Pero el examen del próximo campamento lo arma el\n    jurado, no la app.</p>"
    },
    {
     "t": "Dos vueltas que sí quedan abiertas",
@@ -39563,7 +39571,7 @@ const REGLAS = (function () {
         fecha: f.fecha || '' };
       for (const c of f.categorias) {
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
-          sinCompletar: c.sinCompletar, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
+          sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
           rampa: !c.sinRampa };
         orden.push(c);
       }
@@ -39610,6 +39618,8 @@ const REGLAS = (function () {
         if (!Number.isInteger(c.n) || c.n < 1 || c.n > 100) mal.push(dc + ' no dice cuántas preguntas (de 1 a 100)');
         if (![1, 2, 3].includes(c.techo)) mal.push(dc + ' tiene un techo que no es 1, 2 ni 3');
         if (typeof c.sinCompletar !== 'boolean') mal.push(dc + ' no dice si lleva completar');
+        if (c.sinVF !== undefined && typeof c.sinVF !== 'boolean') mal.push(dc + ' no dice bien si lleva verdadero o falso');
+        if (c.tarjetas !== undefined && !(Number.isInteger(c.tarjetas) && c.tarjetas >= 5 && c.tarjetas <= 100)) mal.push(dc + ' tiene tarjetas por sesión fuera de 5 a 100');
         if (c.sinRampa !== undefined && typeof c.sinRampa !== 'boolean') mal.push(dc + ' no dice bien si entra directo a su nivel');
         if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
         if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
@@ -39687,6 +39697,8 @@ const REGLAS = (function () {
       const o = { id: c.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo, sinCompletar: c.sinCompletar };
       if (c.segundos !== undefined) o.segundos = c.segundos;
       if (c.sinRampa !== undefined) o.sinRampa = c.sinRampa;
+      if (c.sinVF !== undefined) o.sinVF = c.sinVF;
+      if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
@@ -40005,7 +40017,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {
    que es otro evento.
      n      preguntas del examen de práctica
      techo  nivel máximo de dificultad que se le ofrece
-     sinCompletar  el examen no trae sección de completar */
+     sinCompletar  el examen no trae sección de completar
+     sinVF         el examen no trae verdadero o falso */
 /* ── EL MODELO: ACTIVIDAD × CATEGORIA ───────────────────────────────────
    Hay TRES actividades distintas, con fechas, jurados y reglamentos propios,
    y categorias por edad o rol DENTRO de cada una. Son dos dimensiones, no
@@ -41123,7 +41136,7 @@ function tareasDeHoy(){
 
   const n=nivelEfectivo();
   tareas.push({ic:'examen',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
-    d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
+    d:'Un examen de práctica de '+NPREG()+' preguntas, con el formato del concurso.',
     b:'Comenzar',f:"arrancaExamen('normal')"});
 
   /* Con los exámenes cerrados, las tareas que arrancan uno no se ofrecen: leer y
@@ -43730,7 +43743,7 @@ const vencidaT=t=>diaHoy()-vistoT(t)>=plazoDe(cajaT(t));
 const tocanHoy=()=>tarjetasVista().filter(vencidaT);
 /* Tope de la sesión: el tamaño del examen de la categoría, con un piso de 12.
    Sale de un dato que ya existe en vez de inventar otra tabla. */
-const topeSesion=()=>Math.max(12,CAT().n)*(recta()?2:1);
+const topeSesion=()=>Math.max(12,CAT().tarjetas||CAT().n)*(recta()?2:1);
 
 let mazo=[],tjI=0,tjVolteada=false,tjFiltro='hoy',tjSabidas=new Set();
 
@@ -44598,6 +44611,8 @@ function poolNivel(){
   /* El de fuente ya viene aplicado desde poolDe(). */
   /* A los 4 a 6 años no se les pide escribir la palabra exacta. */
   if(CAT().sinCompletar)b=b.filter(q=>q.t!=='fill');
+  /* v177: el examen real de 7 a 9 años no trajo verdadero o falso. */
+  if(CAT().sinVF)b=b.filter(q=>q.t!=='tf');
   const n=nivelEfectivo();
   const f=b.filter(q=>(q.nv||1)<=n);
   return f.length>=Math.min(8,b.length)?f:b;

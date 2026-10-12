@@ -7,7 +7,8 @@
    que es otro evento.
      n      preguntas del examen de práctica
      techo  nivel máximo de dificultad que se le ofrece
-     sinCompletar  el examen no trae sección de completar */
+     sinCompletar  el examen no trae sección de completar
+     sinVF         el examen no trae verdadero o falso */
 /* ── EL MODELO: ACTIVIDAD × CATEGORIA ───────────────────────────────────
    Hay TRES actividades distintas, con fechas, jurados y reglamentos propios,
    y categorias por edad o rol DENTRO de cada una. Son dos dimensiones, no
@@ -1125,7 +1126,7 @@ function tareasDeHoy(){
 
   const n=nivelEfectivo();
   tareas.push({ic:'examen',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
-    d:'Un examen de práctica de '+NPREG()+' preguntas, con las tres secciones.',
+    d:'Un examen de práctica de '+NPREG()+' preguntas, con el formato del concurso.',
     b:'Comenzar',f:"arrancaExamen('normal')"});
 
   /* Con los exámenes cerrados, las tareas que arrancan uno no se ofrecen: leer y
@@ -3732,7 +3733,7 @@ const vencidaT=t=>diaHoy()-vistoT(t)>=plazoDe(cajaT(t));
 const tocanHoy=()=>tarjetasVista().filter(vencidaT);
 /* Tope de la sesión: el tamaño del examen de la categoría, con un piso de 12.
    Sale de un dato que ya existe en vez de inventar otra tabla. */
-const topeSesion=()=>Math.max(12,CAT().n)*(recta()?2:1);
+const topeSesion=()=>Math.max(12,CAT().tarjetas||CAT().n)*(recta()?2:1);
 
 let mazo=[],tjI=0,tjVolteada=false,tjFiltro='hoy',tjSabidas=new Set();
 
@@ -4600,6 +4601,8 @@ function poolNivel(){
   /* El de fuente ya viene aplicado desde poolDe(). */
   /* A los 4 a 6 años no se les pide escribir la palabra exacta. */
   if(CAT().sinCompletar)b=b.filter(q=>q.t!=='fill');
+  /* v177: el examen real de 7 a 9 años no trajo verdadero o falso. */
+  if(CAT().sinVF)b=b.filter(q=>q.t!=='tf');
   const n=nivelEfectivo();
   const f=b.filter(q=>(q.nv||1)<=n);
   return f.length>=Math.min(8,b.length)?f:b;

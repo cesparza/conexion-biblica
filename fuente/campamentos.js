@@ -68,6 +68,8 @@ const CREENCIAS = [...sec('cr', 1, 28), 'mc-doctrinas', 'mc-lista'];
      n             preguntas del examen de práctica
      techo         nivel máximo de dificultad que se le ofrece (1 a 3)
      sinCompletar  el examen no trae sección de completar
+     sinVF         el examen no trae verdadero o falso
+     tarjetas      tarjetas por sesión del día (si no se dice, las del examen)
      segundos      tiempo por pregunta en el examen (si no se dice, 72)
      sinRampa      entra directo a su techo, sin subir de nivel por semanas
      alcance       cómo se le dice a la persona lo que entra
@@ -86,10 +88,17 @@ const CAMPAMENTOS = [
       { id: 'me', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100,
         alcance: 'Daniel 1, 2, 3 y 6',
         estudia: [...DANIEL_RELATOS, ...REPASOS_MENORES] },
-      { id: 'av', nombre: 'Aventureros', edad: '7 a 9 años', n: 15, techo: 3, sinCompletar: false, segundos: 80,
-        alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44',
-        estudia: AV_ESTUDIA },
-      { id: 'pa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 25, techo: 3, sinCompletar: false, sinRampa: true,
+      /* v177: el formato del examen real del 10-oct (fuente/examenes-reales.js),
+         por decisión de Camilo del 12-oct («Ajústalo»). 7 a 9 años: 30
+         preguntas, todas de selección y solo de Daniel; Profetas y Reyes queda
+         para estudiar. Adultos: 35, con verdadero o falso y P&R, sin completar.
+         Antes: 15 con las tres secciones, y 25 con completar. La sesión de
+         tarjetas del día seguía al tamaño del examen; se deja donde estaba
+         (15 y 25) con `tarjetas`, para no doblarle el estudio diario a nadie. */
+      { id: 'av', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15,
+        alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44 para estudiar',
+        estudia: AV_ESTUDIA, soloEstudio: ['pr39', 'pr41', 'pr44'] },
+      { id: 'pa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25,
         alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44',
         estudia: AV_ESTUDIA },
     ] },

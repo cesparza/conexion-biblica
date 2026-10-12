@@ -430,9 +430,11 @@ const MANUAL = [
     h:`<p><strong>Sección I</strong> — Selección múltiple.<br>
     <strong>Sección II</strong> — Verdadero o Falso.<br>
     <strong>Sección III</strong> — Completar el versículo.</p>
-    <p>Esas son las tres del examen del campamento.
-    <strong>Cuántas preguntas trae el real no lo sabemos todavía</strong>, y por
-    eso aquí puedes practicar con varios tamaños.</p>` },
+    <p>No todas las categorías las tienen. En Conexión Bíblica (Daniel), el
+    examen real del 10 de octubre de 2026 trajo para <strong>Adultos</strong>
+    35 preguntas (selección, verdadero o falso y Profetas y Reyes, sin
+    completar) y para <strong>7 a 9 años</strong> 30, todas de selección y solo
+    de Daniel. El examen de práctica de esas categorías ya viene así.</p>` },
   { t:'Al terminar, la parte que sirve',
     h:`<p>En un examen normal ves tu puntaje y, más abajo,
     <strong>todas las preguntas con la respuesta correcta</strong>. Esa revisión
@@ -637,8 +639,10 @@ const MANUAL = [
   { t:'¿Necesito internet?',
     h:`<p>Solo para abrirla la primera vez. Después funciona sin internet.</p>` },
   { t:'¿Cuántas preguntas trae el examen del campamento?',
-    h:`<p>No lo sabemos. Sí sabemos que trae las tres secciones. Por eso aquí
-    puedes practicar con varios tamaños.</p>` },
+    h:`<p>En Conexión Bíblica (Daniel), el de 2026 trajo 35 en Adultos y 30 en
+    7 a 9 años, y con la misma nota ganó quien entregó primero. La app practica
+    con esos tamaños y tiene la hoja real en Examen. De los otros concursos no
+    se sabe.</p>` },
   ]},
 
 /* ═══════════ PARA EL DIRECTOR ═══════════ */
@@ -954,8 +958,10 @@ const MANUAL = [
     navegador el progreso se va. <strong>El modo incógnito no sirve</strong> para
     esto: borra todo al cerrar.</p>` },
   { t:'No es el examen oficial',
-    h:`<p>No sabemos cuántas preguntas trae el real ni cómo reparte las
-    secciones. Sabemos el formato de tres secciones y el alcance.</p>` },
+    h:`<p>Se parece cada vez más: en Daniel ya sigue el formato del examen real
+    de 2026 (35 en Adultos, 30 en 7 a 9 años) y trae esas dos hojas para
+    presentar con reloj. Pero el examen del próximo campamento lo arma el
+    jurado, no la app.</p>` },
   { t:'Dos vueltas que sí quedan abiertas',
     h:`<div class="warn-box">Esto no rompe la nota de un simulacro, que ya quedó
     registrada. Pero conviene que lo sepas.</div>
