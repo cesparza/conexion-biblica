@@ -417,7 +417,7 @@ const MANUAL = [
     <ul><li><strong>Explorar:</strong> cada parte de la estatua tiene su etiqueta con el
     reino y sus fechas. Al tocarla, la explicación se abre dentro de la misma imagen:
     primero lo que dice el texto y después lo que significa, con su fuente.</li>
-    <li><strong>La línea de tiempo:</strong> arrastra el año o toca ▶ y se enciende la
+    <li><strong>La línea de tiempo:</strong> arrastra el año o toca el botón de reproducir y se enciende la
     parte que gobernaba en ese momento.</li>
     <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o
     con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el
