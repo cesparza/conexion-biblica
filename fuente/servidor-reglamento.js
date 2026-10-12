@@ -1238,8 +1238,8 @@ export const CATALOGO = {
     "sub": "La Palabra de Dios",
     "grupo": "En esto creemos",
     "n": [
-     6,
-     8,
+     7,
+     10,
      2
     ]
    },
@@ -1249,7 +1249,7 @@ export const CATALOGO = {
     "sub": "La Deidad",
     "grupo": "En esto creemos",
     "n": [
-     2,
+     3,
      5,
      2
     ]
@@ -1261,7 +1261,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      2,
-     5,
+     6,
      2
     ]
    },
@@ -1273,7 +1273,7 @@ export const CATALOGO = {
     "n": [
      2,
      5,
-     2
+     3
     ]
    },
    {
@@ -1283,7 +1283,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      2,
-     5,
+     6,
      2
     ]
    },
@@ -1293,8 +1293,8 @@ export const CATALOGO = {
     "sub": "La creación",
     "grupo": "En esto creemos",
     "n": [
-     4,
-     6,
+     5,
+     8,
      2
     ]
    },
@@ -1304,8 +1304,8 @@ export const CATALOGO = {
     "sub": "La naturaleza humana",
     "grupo": "En esto creemos",
     "n": [
-     2,
-     5,
+     3,
+     6,
      2
     ]
    },
@@ -1315,8 +1315,8 @@ export const CATALOGO = {
     "sub": "El gran conflicto",
     "grupo": "En esto creemos",
     "n": [
-     4,
-     6,
+     5,
+     8,
      2
     ]
    },
@@ -1327,7 +1327,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      2,
-     5,
+     6,
      2
     ]
    },
@@ -1337,9 +1337,9 @@ export const CATALOGO = {
     "sub": "La experiencia de la salvación",
     "grupo": "En esto creemos",
     "n": [
-     2,
+     3,
      5,
-     2
+     3
     ]
    },
    {
@@ -1348,8 +1348,8 @@ export const CATALOGO = {
     "sub": "Crecer en Cristo",
     "grupo": "En esto creemos",
     "n": [
-     4,
-     6,
+     5,
+     8,
      2
     ]
    },
@@ -1359,7 +1359,7 @@ export const CATALOGO = {
     "sub": "La iglesia",
     "grupo": "En esto creemos",
     "n": [
-     2,
+     3,
      5,
      2
     ]
@@ -1370,8 +1370,8 @@ export const CATALOGO = {
     "sub": "El remanente y su misión",
     "grupo": "En esto creemos",
     "n": [
-     2,
-     5,
+     3,
+     6,
      2
     ]
    },
@@ -1392,8 +1392,8 @@ export const CATALOGO = {
     "sub": "El bautismo",
     "grupo": "En esto creemos",
     "n": [
-     2,
-     5,
+     3,
+     6,
      2
     ]
    },
@@ -1404,7 +1404,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      2,
-     5,
+     6,
      2
     ]
    },
@@ -1414,7 +1414,7 @@ export const CATALOGO = {
     "sub": "Los dones y ministerios espirituales",
     "grupo": "En esto creemos",
     "n": [
-     2,
+     3,
      5,
      2
     ]
@@ -1426,7 +1426,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      2,
-     5,
+     6,
      2
     ]
    },
@@ -1437,7 +1437,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      4,
-     6,
+     9,
      2
     ]
    },
@@ -1491,8 +1491,8 @@ export const CATALOGO = {
     "sub": "El ministerio de Cristo en el Santuario celestial",
     "grupo": "En esto creemos",
     "n": [
-     4,
-     6,
+     5,
+     8,
      2
     ]
    },
@@ -1513,7 +1513,7 @@ export const CATALOGO = {
     "sub": "La muerte y la resurrección",
     "grupo": "En esto creemos",
     "n": [
-     2,
+     3,
      5,
      2
     ]
@@ -1525,7 +1525,7 @@ export const CATALOGO = {
     "grupo": "En esto creemos",
     "n": [
      2,
-     5,
+     6,
      2
     ]
    },

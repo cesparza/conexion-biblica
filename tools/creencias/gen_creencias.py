@@ -3,7 +3,7 @@
 banco real, tarjetas y modulos. NO EDITAR creencias.js A MANO."""
 import os, re, sys, json, unicodedata, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import datos, editorial, refs
+import datos, editorial, refs, examen2026
 from libro import LIBRO
 
 # La ruta sale del propio archivo. Estaba quemada a `~/mnt/Iglesia/...`, que
@@ -70,6 +70,21 @@ def preg_de(num, cual):
 def pestanas(num):
     d, e = datos.CREENCIAS[num], editorial.ED[num]
     t = []
+    intro_doc = None
+    # 0. LA INTRODUCCION DE LA DOCTRINA, en la creencia con que abre (12-oct).
+    # Va DESPUES de la declaracion y los textos, que son el titular de la
+    # pantalla; antes de lo que se revela.
+    # La cartilla abre cada doctrina con un parrafo propio, y el examen real
+    # del 10-oct pregunto de ahi la que se fallo («teologia propia»). Va como
+    # nucleo: se estudia y se pregunta (examen2026.INTRODUCCIONES). Regla de
+    # Camilo: todo lo que se pide estudiar es susceptible de ser preguntado.
+    for n_doc, nom_doc, desde, _, intro in datos.DOCTRINAS:
+        if desde == num:
+            h = hi('<strong>Doctrina %d de 6: %s</strong><br>%s' % (n_doc, nom_doc, intro))
+            h += ('<p class="nota">Cartilla <i>En esto creemos</i>: así abre esta doctrina, antes de su '
+                  'primera creencia. <strong>También se pregunta</strong>: en el examen del campamento '
+                  '2026 salió de aquí «teología propia».</p>')
+            intro_doc = dict(t='🏛️ La doctrina', h=h, capa='nucleo')
     # 1. la declaracion
     # CADA DECLARACION DICE DE DONDE SALE, y no es un adorno: tools/cartilla.js
     # verifica contra fuente/cartilla.txt solo las que citan la cartilla, que es
@@ -137,6 +152,8 @@ def pestanas(num):
     # misma pregunta del banco, ofrecida de dos maneras en la misma pantalla.
     h += rev('¿Cuántas referencias trae la cartilla aquí?', '<b>%d</b>' % len(partes))
     t.append(dict(t='📖 Textos clave', h=h, capa='nucleo', preg=preg_de(num, 'texto1')))
+    if intro_doc:
+        t.append(intro_doc)
     # 3. que significa — todo en bloques que se revelan
     # Aqui ya NO va la lista de subtitulos: esa es del libro y ahora sale del
     # libro mismo, en su propia seccion (abajo). Lo que queda es lo que la
@@ -379,6 +396,21 @@ def main():
                     c.append('\n   e:%s' % J(q['e']))
         	    
             banco.append('  {' + ','.join(c) + '},')
+    # ── el examen real de 2026 y las introducciones (examen2026.py) ──
+    # Cada una se revisa contra la cartilla antes de escribirse: si su respaldo
+    # no esta literal en cartilla.txt, no se genera nada.
+    def _n(s):
+        s = unicodedata.normalize('NFD', s.lower())
+        return re.sub(r'\s+', ' ', ''.join(c for c in s if unicodedata.category(c) != 'Mn'))
+    cartilla = _n(open(os.path.join(os.path.dirname(SALIDA), 'cartilla.txt'), encoding='utf-8').read())
+    extra = 0
+    for num, nv, q, o, resp in examen2026.EXAMEN_2026 + examen2026.INTRODUCCIONES:
+        if resp not in ('LIBRO', 'DOCTRINAS') and _n(resp) not in cartilla:
+            sys.exit('examen2026: el respaldo no esta en la cartilla: %r' % resp)
+        if len(o) != 4 or len(set(o)) != 4:
+            sys.exit('examen2026: hacen falta 4 opciones distintas: %r' % q)
+        banco.append('  {cap:%s,t:"mc",nv:%d,q:%s,\n   o:%s,a:0},' % (J('cr%02d' % num), nv, J(q), J(o)))
+        extra += 1
     # ── tarjetas ──
     tj = []
     for n in range(1, 29):
@@ -416,7 +448,7 @@ def main():
               if len(LIBRO[str(n)]['subtitulos']) < len(editorial.ED[n]['desarrollo'])]
     if flojos:
         print('AVISO: el libro trae menos subtitulos que la guia 2017 en', flojos)
-    print('creencias.js escrito |', len(banco), 'preguntas fijas |', len(tarjetas), 'tarjetas')
+    print('creencias.js escrito |', len(banco), 'preguntas fijas (%d del examen real y las introducciones) |' % extra, len(tarjetas), 'tarjetas')
     print('lineas >2000:', largas[:4] or 'ninguna')
 
 if __name__ == '__main__':

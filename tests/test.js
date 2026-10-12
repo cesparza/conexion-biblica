@@ -2375,5 +2375,21 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     ok(conMarca&&!('retirado' in conMarca),'Editar un concurso no lo puede retirar: la forma de una ficha no lleva esa marca'); }
 }
 
+/* v173 (12-oct): EL EXAMEN REAL DE «EN ESTO CREEMOS» Y LAS INTRODUCCIONES.
+   El 10-oct el club ganó con 25 de 26; la que se falló («la doctrina de Dios
+   también es conocida como… teología propia») salía de la introducción de la
+   doctrina, que la app no mostraba ni preguntaba. Regla de Camilo: todo lo que
+   se pide estudiar es susceptible de ser preguntado. */
+{ const CRx=require(path.join(RAIZ,'fuente','creencias.js'));
+  const q=CRx.CR_BANCO.find(x=>/doctrina de Dios también es conocida como/.test(x.q||''));
+  ok(q&&q.cap==='cr01'&&q.o[q.a]==='Teología propia.'&&!q.f,'La pregunta que se falló en el examen real está, con su respuesta, y entra al examen');
+  const abre=CRx.DOCTRINAS.map(d=>'cr'+String(d.desde).padStart(2,'0'));
+  ok(abre.every(k=>CRx.CR_CONTENIDO[k].some(s=>/La doctrina/.test(s.t)&&s.capa==='nucleo'&&s.h.length>200)),
+    'Cada doctrina muestra su introducción en la creencia con que abre, como material de estudio');
+  const examen=['Teología propia.','Para su gloria.','Justificación, santificación y glorificación.','Nehemías 9:6.',
+    'Efesios 6:12-18.','Apocalipsis 19:10.','Un estado de inconsciencia.','La fase final de su ministerio: el juicio investigador.'];
+  ok(examen.every(r=>CRx.CR_BANCO.some(x=>x.t==='mc'&&x.o[x.a]===r)),'Las preguntas del examen real están en el banco con la respuesta del jurado');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

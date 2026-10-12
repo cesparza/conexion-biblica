@@ -643,8 +643,13 @@ ok(Object.keys(CR.CR_CONTENIDO).length===28 &&
 /* Las secciones ya son de las 28, no solo de la doctrina de Dios. Son SEIS
    desde que cada creencia trae el capitulo del libro con sus subtitulos, que
    se extraen del PDF y no se escriben a mano. */
-ok(Object.values(CR.CR_CONTENIDO).every(v=>v.length===6),
-  'Las 28 creencias traen sus seis secciones');
+/* Y SIETE la que abre cada doctrina (12-oct): trae la introducción de la
+   doctrina, que la cartilla imprime antes de su primera creencia y el examen
+   del campamento 2026 preguntó («teología propia»). */
+const ABRE_DOC=CR.DOCTRINAS.map(d=>'cr'+String(d.desde).padStart(2,'0'));
+ok(Object.entries(CR.CR_CONTENIDO).every(([k,v])=>v.length===(ABRE_DOC.includes(k)?7:6)) &&
+   ABRE_DOC.every(k=>CR.CR_CONTENIDO[k].some(s=>/La doctrina/.test(s.t)&&s.capa==='nucleo')),
+  'Las 28 creencias traen sus seis secciones, y la que abre cada doctrina, su introducción');
 /* Y cada seccion dice su capa, que es de donde salen la franja, la pildora,
    el filtro de «solo lo del examen» y la tarjeta de recordar. Sin capa, la
    pantalla de creencias volveria a pesar todo igual. */
