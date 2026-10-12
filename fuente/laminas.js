@@ -16,8 +16,19 @@ const LAMINAS = {
   dir: 'd2/',
   ox: 166, w: 1100, h: 1152,
   capas: ['plata', 'oro', 'bronce', 'hierro', 'barro', 'dedos'],
-  cajas: { oro: [403, 0, 292, 256], plata: [359, 240, 379, 468], bronce: [423, 416, 252, 291], hierro: [430, 708, 237, 273], barro: [431, 982, 235, 104], dedos: [417, 1087, 264, 51], piedra: [850, 80, 220, 220], monte: [0, 0, 1100, 1152] },
+  cajas: { oro: [403, 0, 292, 256], plata: [359, 240, 379, 468], bronce: [423, 416, 252, 291], hierro: [430, 708, 237, 273], barro: [431, 982, 235, 104], dedos: [417, 1087, 264, 51], piedra: [850, 220, 220, 220], monte: [0, 0, 1100, 1152] },
   golpe: [550, 1085],
+  /* Etiqueta de cada parte, sobre la imagen: de qué lado va, el punto de la
+     estatua al que apunta (ax, ay) y la altura de la etiqueta (ly), en las
+     unidades de la escena (1100 × 1152). */
+  etiquetas: {
+    oro: { lado: 'd', ax: 640, ay: 140, ly: 110, f: '605 – 539 a.C.' },
+    plata: { lado: 'i', ax: 400, ay: 330, ly: 300, f: '539 – 331 a.C.' },
+    bronce: { lado: 'd', ax: 655, ay: 600, ly: 520, f: '331 – 168 a.C.' },
+    hierro: { lado: 'i', ax: 470, ay: 850, ly: 760, f: '168 a.C. – 476' },
+    barro: { lado: 'i', ax: 470, ay: 1035, ly: 975, f: '538 – 1798 · vuelve' },
+    dedos: { lado: 'd', ax: 640, ay: 1110, ly: 1010, f: 'desde 476' },
+  },
   tiempo: ['oro', 'plata', 'bronce', 'hierro', 'dedos', 'barro'],
   inicio: { ref: 'Daniel 2:31', texto: 'Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.',
     nota: 'Los metales bajan de valor (del oro al hierro) pero suben en dureza: la historia no camina hacia una edad de oro hecha por el hombre. Y Roma aparece en tres fases: imperial, dividida y papal.' },

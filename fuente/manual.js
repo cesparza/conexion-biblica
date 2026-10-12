@@ -412,6 +412,16 @@ const MANUAL = [
     del reglamento</strong> prendido. Si quieres practicar también con esas,
     apágalo en <strong>Cambiar este examen</strong>. El director tiene el mismo
     interruptor al abrir una evaluación, y viene prendido.</p>` },
+  { t:'El estudio interactivo de Daniel 2',
+    h:`<p>Al abrir Daniel 2 aparece la tarjeta <strong>Estudio interactivo</strong>.</p>
+    <ul><li><strong>Explorar:</strong> cada parte de la estatua tiene su etiqueta con el
+    reino y sus fechas. Al tocarla, la explicación se abre dentro de la misma imagen:
+    primero lo que dice el texto y después lo que significa, con su fuente.</li>
+    <li><strong>La línea de tiempo:</strong> arrastra el año o toca ▶ y se enciende la
+    parte que gobernaba en ese momento.</li>
+    <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o
+    con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el
+    polvo que se lleva el viento y el monte que llena la tierra.</li></ul>` },
   { t:'Estudiar la interpretación',
     h:`<p>Además del examen, la app sirve para aprender qué significa cada
     pasaje. Esa parte se llama <strong>interpretación</strong>: lo que dicen

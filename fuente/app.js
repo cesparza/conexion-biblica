@@ -82,6 +82,309 @@ const CAPS=REGLAMENTO.conCats(CAPS_BASE), MODULOS=REGLAMENTO.conCats(MODULOS_BAS
    aparte; eso se quitó. */
 const esSecInterp=s=>s&&s.capa==='contexto'&&/^🧭/.test(String(s.t||''));
 
+/* ═══════════ LÁMINAS: ESTUDIO INTERACTIVO CON IMAGEN (v185) ═══════════
+   MECANISMO
+   Una lámina (fuente/laminas.js) es una imagen partida en capas del mismo
+   tamaño, una por símbolo, más los textos de cada parte. Se pinta como un SVG
+   con una <image> por capa y un rectángulo invisible encima para tocarla (una
+   imagen recibe el toque en toda su caja, también donde es transparente).
+   Sobre el SVG van, en HTML, las etiquetas de cada parte (para que la letra no
+   se encoja con la escena) y la tarjeta que se abre DENTRO de la imagen: la
+   explicación se lee sin quitar los ojos de la estatua (Camilo, 18:22).
+   Abajo, una línea de tiempo que se arrastra: el año enciende la parte que
+   gobernaba. Acercar es mover el viewBox; romper, partículas.
+   Dos modos sobre la misma escena: Explorar y Presentar (oscuro, un paso por
+   toque o por flecha, letra grande, para una clase).
+   Las imágenes son archivos aparte (laminas/), no van dentro de index.html:
+   se piden solo al abrir la lámina. En Jóvenes, traer.mjs cambia LAMINAS_DIR. */
+const LAMINAS_DIR='/laminas/';
+let lamId='', lamModo='', lamSel='', lamPaso=0, lamReto=0, lamBien=0, lamListo=false, lamAnio=null, lamCorre=0;
+const lamQuieto=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}};
+const LAM=()=>LAMINAS[lamId];
+const lamParte=id=>LAM().partes.find(p=>p.id===id);
+const lamSrc=f=>LAMINAS_DIR+LAM().dir+f+'.webp';
+const lamAnioTx=y=>y<0?(-y)+' a.C.':y+' d.C.';
+const PIEDRA0=[960,330];
+
+/* La tarjeta que invita, dentro del estudio del capítulo. */
+function lamTarjeta(cid){
+  const L=LAMINAS[cid];
+  if(!L)return '';
+  const src=f=>LAMINAS_DIR+L.dir+f+'.webp';
+  return '<div class="lam-invita"><div class="lam-mini"><img src="'+src('babilonia')+'" alt="" loading="lazy">'+
+    L.capas.map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('')+'</div>'+
+    '<div class="lam-itx"><div class="lam-ant">Estudio interactivo</div><div class="lam-itit">'+esc(L.titulo)+'</div>'+
+    '<p>Toca cada parte de la estatua: lo que dice el texto, lo que significa, sus fechas y su fuente.</p>'+
+    '<div class="lam-bots"><button type="button" class="btn ver" onclick="lamAbre(\''+cid+'\',\'explorar\')">'+IC('lupa')+' Explorar</button>'+
+    '<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button></div></div></div>';
+}
+
+/* ── La escena: SVG + etiquetas + tarjeta ── */
+function lamEscena(){
+  const L=LAM(),C=L.cajas,E=L.etiquetas;
+  const capa=id=>'<g class="lam-parte" data-p="'+id+'"><image href="'+lamSrc(id)+'" x="'+L.ox+'" y="0" width="768" height="1152"/>'+
+    '<rect class="lam-hit" x="'+C[id][0]+'" y="'+C[id][1]+'" width="'+C[id][2]+'" height="'+C[id][3]+'" fill="transparent" onclick="lamToca(\''+id+'\')"/></g>';
+  /* La línea va del punto de la estatua al borde de su etiqueta. */
+  const lineas=Object.keys(E).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
+    return '<g class="lam-guia" data-p="'+id+'"><circle cx="'+e.ax+'" cy="'+e.ay+'" r="7"/><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+30:x2-30)+' '+(e.ly+32)+' L'+x2+' '+(e.ly+32)+'"/></g>';}).join('');
+  const etiquetas=Object.keys(E).map(id=>{const e=E[id],p=lamParte(id);
+    return '<button type="button" class="lam-et '+e.lado+'" data-p="'+id+'" style="--c:'+p.c+';top:'+(e.ly/L.h*100)+'%" onclick="lamToca(\''+id+'\')">'+
+      '<b>'+esc(p.reino)+'</b><span>'+esc(e.f||p.fechas)+'</span></button>';}).join('');
+  return '<div class="lam-esc" id="lamEsc">'+
+    '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
+    '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'+
+    '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="url(#lamSombra)"/>'+
+    '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
+    '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
+    '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" onclick="lamToca(\'piedra\')"/></g></svg>'+
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div>'+
+    '<div class="lam-anio" id="lamAnioEsc" hidden></div>'+
+    '<div class="lam-hoja" id="lamHoja" hidden aria-live="polite"></div></div>';
+}
+/* Mueve el viewBox con suavidad. */
+function lamAcerca(dest,ms){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const ini=svg.getAttribute('viewBox').split(/\s+/).map(Number);
+  if(lamQuieto()||!ms){svg.setAttribute('viewBox',dest.join(' '));return;}
+  const t0=performance.now();
+  const paso=t=>{const k=Math.min(1,(t-t0)/ms),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    svg.setAttribute('viewBox',ini.map((v,i)=>v+(dest[i]-v)*e).join(' '));if(k<1)requestAnimationFrame(paso);};
+  requestAnimationFrame(paso);
+}
+/* En Presentar, con pantalla ancha, la escena es apaisada: la estatua a la izquierda y
+   la explicación a la derecha, sin taparla. */
+const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900;
+const lamTodo=()=>lamAncho()?[-150,0,2050,LAM().h]:[0,0,LAM().w,LAM().h];
+/* Acercarse a una parte dejándola en la mitad de arriba: la de abajo es de la tarjeta. */
+function lamCaja(id){
+  const L=LAM(),[x,y,w,h]=L.cajas[id];
+  if(lamAncho()){const H=Math.min(L.h,Math.max(h*2,440)),W=H*2050/L.h,cx=x+w/2,cy=y+h/2;
+    return [Math.max(-150,Math.min(1900-W,cx-W*0.3)),Math.max(0,Math.min(L.h-H,cy-H/2)),W,H];}
+  const R=L.w/L.h;
+  let W=Math.min(L.w,Math.max(w*1.6,h*R*1.9,380)),H=W/R;if(H>L.h){H=L.h;W=H*R;}
+  return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H*0.3)),W,H];
+}
+/* Encender: las partes de `ids` se ven, las demás se apagan (vacío: todas normales). */
+function lamEnciende(ids,suaves){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const hay=ids&&ids.length;
+  svg.querySelectorAll('.lam-estatua .lam-parte').forEach(x=>{const id=x.getAttribute('data-p');
+    x.classList.toggle('on',!!hay&&ids.includes(id));
+    x.classList.toggle('apagada',!!hay&&!ids.includes(id)&&!(suaves||[]).includes(id));
+    x.classList.toggle('tenue',!!hay&&(suaves||[]).includes(id));});
+  document.querySelectorAll('#lamEts .lam-et').forEach(b=>b.classList.toggle('on',!!hay&&ids.includes(b.getAttribute('data-p'))));
+}
+function lamEtiquetas(ver){const e=document.getElementById('lamEts');if(e)e.classList.toggle('fuera',!ver);
+  const g=document.querySelector('#lamSvg .lam-guias');if(g)g.style.opacity=ver?'1':'0';}
+
+/* ── Abrir y cerrar ── */
+function lamAbre(cid,modo){
+  if(!LAMINAS[cid])return;
+  lamId=cid;lamModo=modo;lamSel='';lamPaso=0;lamReto=0;lamBien=0;lamListo=false;lamAnio=null;lamPara();
+  const el=document.getElementById('lam'),L=LAM();
+  el.hidden=false;el.className='lam'+(modo==='presentar'?' pres':'')+(lamAncho()?' ancho':'');
+  document.body.classList.add('leyendo');
+  const hist=[...L.historia.map((h,i)=>'<button type="button" class="lam-paso" data-h="'+i+'" onclick="lamHistoria('+i+')"><i>'+(i+1)+'</i>'+esc(h.titulo)+'</button>'),
+    '<button type="button" class="lam-paso" data-h="est" onclick="lamInicio()"><i>5</i>La estatua</button>',
+    '<button type="button" class="lam-paso" data-h="desp" onclick="lamHistoria(\'desp\')"><i>6</i>'+esc(L.despues.titulo)+'</button>'].join('');
+  el.innerHTML='<div class="lam-cab"><div class="lam-cabtx"><div class="lam-ant">Daniel 2 · '+(modo==='presentar'?'presentación':'estudio interactivo')+'</div>'+
+    '<div class="lam-tit">'+esc(L.titulo)+'</div></div><div class="lam-bots">'+
+    (modo==='presentar'?'':'<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button>')+
+    '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
+    (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
+    lamEscena()+
+    '<div class="lam-tiempo"><div class="lam-tcab"><button type="button" class="lam-play" id="lamPlay" onclick="lamRecorre()" aria-label="Recorrer la historia">'+IC('play')+'</button>'+
+    '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">De 605 a.C. hasta hoy, a escala</div></div></div>'+
+    '<input type="range" id="lamRango" min="-620" max="2026" step="1" value="-620" aria-label="Año" style="--pista:'+lamPista()+'">'+
+    '<div class="lam-marcas">'+[[-605,'605 a.C.'],[-331,'331',1],[-168,'168',1],[476,'476'],[1798,'1798'],[2026,'hoy',1]].map(([y,t,ch])=>'<span'+(ch?' class="chico"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
+    (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" onclick="lamPres(lamPaso-1)">‹ Anterior</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="pri" onclick="lamPres(lamPaso+1)">Siguiente ›</button></div>':
+     '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr><th>Daniel 2</th><th>Daniel 7</th><th>Reino</th></tr>'+
+     L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
+     '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
+  document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
+  if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();}
+  const f=el.querySelector('.lam-cerrar');if(f)f.focus();
+}
+function lamCierra(){
+  const el=document.getElementById('lam');
+  if(!el||el.hidden)return;
+  lamPara();el.hidden=true;el.innerHTML='';lamModo='';
+  document.body.classList.remove('leyendo');
+}
+
+/* ── La tarjeta dentro de la imagen ── */
+function lamHoja(html){
+  const h=document.getElementById('lamHoja');if(!h)return;
+  if(!html){h.hidden=true;h.innerHTML='';return;}
+  h.innerHTML=html;h.hidden=false;h.scrollTop=0;
+}
+function lamHojaParte(p,i,n){
+  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
+    '<div class="lam-p2">'+esc(p.reino)+'</div><div class="lam-fechas">'+esc(p.fechas)+'</div></div>'+
+    (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
+    '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
+    '<div class="lam-capa i"><div class="lam-rot">Lo que significa · interpretación</div>'+(lamModo==='presentar'?'<p>'+esc(p.corto)+'</p>':p.interp.map(x=>'<p>'+x+'</p>').join(''))+'<div class="lam-fu">Fuente: '+p.fuente+'</div></div>'+
+    (lamModo==='presentar'?'':'<div class="lam-nav"><button type="button" class="btn tono" '+(i>0?'':'disabled ')+'onclick="lamElige('+(i-1)+')">‹ Anterior</button><span>'+(i+1)+' de '+n+'</span>'+
+    '<button type="button" class="btn ver" '+(i<n-1?'':'disabled ')+'onclick="lamElige('+(i+1)+')">Siguiente ›</button></div>');
+}
+function lamHojaTexto(t){
+  return '<div class="lam-hcab"><div><div class="lam-p1">'+esc(t.ref)+'</div><div class="lam-p2">'+esc(t.titulo)+'</div></div>'+
+    (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
+    '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(t.texto)+'</q></p></div><p class="lam-nota">'+t.nota+'</p>';
+}
+function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEach(b=>b.classList.toggle('on',b.getAttribute('data-h')===String(k)));}
+
+/* ── Explorar ── */
+function lamInicio(){
+  lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
+  const svg=document.getElementById('lamSvg');
+  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
+    const pi=svg.querySelector('.lam-piedra');pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
+  lamAcerca(lamTodo(),650);
+}
+function lamToca(id){
+  if(lamModo==='presentar'){lamPres(lamPaso+1);return;}
+  if(lamSel===id){lamInicio();return;}
+  lamElige(LAM().partes.findIndex(p=>p.id===id));
+}
+function lamElige(i){
+  const L=LAM(),p=L.partes[i];if(!p)return;
+  lamPara();lamSel=p.id;lamMarcaPaso('est');
+  const svg=document.getElementById('lamSvg');
+  const esMonte=p.id==='monte';
+  svg.querySelector('.lam-monte').style.opacity=esMonte?'1':'0';
+  svg.querySelector('.lam-estatua').style.opacity=esMonte?'0':'1';
+  lamEnciende(esMonte?[]:[p.id]);lamEtiquetas(false);
+  lamAcerca(esMonte||p.id==='piedra'?lamTodo():lamCaja(p.id),650);
+  lamHoja(lamHojaParte(p,i,L.partes.length));
+}
+function lamHistoria(k){
+  const L=LAM(),t=k==='desp'?L.despues:L.historia[k];if(!t)return;
+  lamPara();lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
+  lamHoja(lamHojaTexto(t));
+}
+
+/* ── La línea de tiempo ── */
+const lamPos=y=>(y+620)/(2026+620)*100;
+function lamPista(){
+  const L=LAM();
+  const seg=L.tiempo.filter(id=>id!=='barro').map(id=>{const p=lamParte(id);return p.c+' '+lamPos(p.de)+'% '+lamPos(Math.min(p.a,2026))+'%';});
+  return 'linear-gradient(90deg,#4a4032 0% '+lamPos(-605)+'%,'+seg.join(',')+')';
+}
+/* Qué gobernaba en el año y: las partes encendidas y la frase. */
+function lamQuien(y){
+  const on=[],suave=[];
+  for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&y<p.a)on.push(id);}
+  if(y>=1798&&on.includes('dedos'))suave.push('barro');
+  const n=on.map(id=>lamParte(id).reino);
+  let tx=!on.length?'Antes de Nabucodonosor':n.join(' y ');
+  if(suave.length)tx+='; el papado, herido en 1798, se va sanando (Ap 13:3)';
+  return {on,suave,tx};
+}
+function lamVeAnio(y){
+  lamAnio=y;lamSel='';lamHoja('');lamEtiquetas(false);lamMarcaPaso('est');
+  const svg=document.getElementById('lamSvg');
+  svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
+  const q=lamQuien(y);lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
+  lamAcerca(lamTodo(),0);
+  document.getElementById('lamTano').textContent=lamAnioTx(y);
+  document.getElementById('lamTq').textContent=q.tx;
+  const a=document.getElementById('lamAnioEsc');a.hidden=false;a.innerHTML='<b>'+lamAnioTx(y)+'</b><span>'+esc(q.tx)+'</span>';
+  const r=document.getElementById('lamRango');if(r&&Number(r.value)!==y)r.value=y;
+}
+/* El botón recorre la historia sola, de 605 a.C. a hoy, en unos 14 segundos. */
+function lamRecorre(){
+  if(lamCorre){lamPara();return;}
+  const r=document.getElementById('lamRango');let y=Number(r.value);if(y>=2026)y=-620;
+  const b=document.getElementById('lamPlay');if(b)b.classList.add('on');
+  lamCorre=setInterval(()=>{y+=Math.max(4,Math.round((2026+620)/280));if(y>=2026){y=2026;lamVeAnio(y);lamPara();return;}lamVeAnio(y);},50);
+}
+function lamPara(){if(lamCorre){clearInterval(lamCorre);lamCorre=0;}const b=document.getElementById('lamPlay');if(b)b.classList.remove('on');}
+
+/* ── Pruébate ── */
+function lamPintaReto(){
+  const L=LAM(),el=document.getElementById('lamReto');if(!el)return;
+  if(lamReto>=L.reto.length){el.innerHTML='<div class="lam-q">Terminaste: '+lamBien+' de '+L.reto.length+'.</div><button type="button" class="btn tono" onclick="lamOtraVez()">Otra vez</button>';return;}
+  const x=L.reto[lamReto];lamListo=false;
+  el.innerHTML='<div class="lam-nota">Pregunta '+(lamReto+1)+' de '+L.reto.length+'</div><div class="lam-q">'+esc(x.q)+'</div><div class="lam-ops">'+
+    L.partes.filter(p=>p.id!=='monte').map(p=>'<button type="button" data-id="'+p.id+'" onclick="lamResponde(\''+p.id+'\')"><span class="lam-sw" style="--c:'+p.c+'"></span>'+esc(p.nombre)+'</button>').join('')+
+    '</div><div class="lam-fb" id="lamFb" aria-live="polite"></div>';
+}
+function lamOtraVez(){lamReto=0;lamBien=0;lamPintaReto();}
+function lamResponde(id){
+  if(lamListo)return;lamListo=true;
+  const x=LAM().reto[lamReto],ok=id===x.ok,el=document.getElementById('lamReto');if(ok)lamBien++;
+  el.querySelectorAll('.lam-ops button').forEach(b=>{const k=b.getAttribute('data-id');if(k===x.ok)b.classList.add('ok');else if(k===id)b.classList.add('mal');});
+  document.getElementById('lamFb').innerHTML=(ok?'<strong>Bien.</strong> ':'<strong>Era otra.</strong> ')+esc(x.e);
+  setTimeout(()=>{lamReto++;lamPintaReto();},2200);
+}
+
+/* ── Presentar ── */
+const lamPasos=()=>{const L=LAM();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
+  {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'}];};
+function lamPres(k){
+  const pasos=lamPasos();if(k<0||k>=pasos.length)return;
+  const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
+  const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
+  const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos?'0':'1';
+  if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
+  else if(s.tipo==='portada'||s.tipo==='hist')lamEnciende(['__ninguna']);
+  else lamEnciende([]);
+  lamEtiquetas(false);
+  const piedra=svg.querySelector('.lam-piedra');
+  piedra.style.opacity=(s.id==='piedra')?'1':'0';
+  svg.querySelector('.lam-monte').style.opacity=(rotos||s.tipo==='desp'||s.tipo==='cierre')?'1':'0';
+  piedra.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');
+  if(s.anim==='cae'&&dir>0)lamCae(piedra);
+  else if(s.id==='piedra')piedra.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');
+  if(s.anim==='monte'&&dir>0)lamPolvo(svg);
+  lamAcerca(s.tipo==='parte'&&L.tiempo.includes(s.id)?lamCaja(s.id):lamTodo(),900);
+  const ult=vistos.filter(id=>L.tiempo.includes(id)).pop();
+  if(ult){const p=lamParte(ult);const r=document.getElementById('lamRango');r.value=Math.min(p.a,2026);
+    document.getElementById('lamTano').textContent=lamAnioTx(p.de)+' – '+(p.a>=2026?'hoy':lamAnioTx(p.a));document.getElementById('lamTq').textContent=p.reino;}
+  if(s.tipo==='portada')lamHoja('<div class="lam-hcab"><div><div class="lam-p1">Daniel 2</div><div class="lam-p2">'+esc(L.titulo)+'</div></div></div>'+
+    '<div class="lam-capa t"><div class="lam-rot">'+L.inicio.ref+' · RV1995</div><p><q>'+esc(L.inicio.texto)+'</q></p></div><p class="lam-nota">Cuatro reinos, Roma en tres fases y un reino que no será jamás destruido.</p>');
+  else if(s.tipo==='hist')lamHoja(lamHojaTexto(L.historia[s.i]));
+  else if(s.tipo==='desp')lamHoja(lamHojaTexto(L.despues));
+  else if(s.tipo==='cierre')lamHoja(lamHojaTexto({ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}));
+  else lamHoja(lamHojaParte(lamParte(s.id),0,1));
+  document.getElementById('lamCuenta').textContent=(k+1)+' / '+pasos.length;
+  document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
+}
+function lamCae(piedra){
+  const [gx,gy]=LAM().golpe;
+  if(lamQuieto()){piedra.setAttribute('transform','translate('+gx+' '+gy+') rotate(40)');return;}
+  const t0=performance.now(),ms=1100,[x0,y0]=PIEDRA0;
+  const f=t=>{const k=Math.min(1,(t-t0)/ms),e=k*k;
+    piedra.setAttribute('transform','translate('+(x0+(gx-x0)*e)+' '+(y0+(gy-y0)*e)+') rotate('+(k*300)+')');
+    if(k<1)requestAnimationFrame(f);else{const est=piedra.parentNode.querySelector('.lam-estatua');
+      if(est&&est.animate)est.animate([{transform:'translate(0,0)'},{transform:'translate(-12px,4px)'},{transform:'translate(12px,-2px)'},{transform:'translate(0,0)'}],{duration:380});}};
+  requestAnimationFrame(f);
+}
+/* La estatua se hace «tamo» y se lo lleva el viento (2:35). */
+function lamPolvo(svg){
+  const capa=svg.querySelector('.lam-polvo');
+  if(lamQuieto()){capa.innerHTML='';return;}
+  const L=LAM(),col={oro:'#E9C255',plata:'#C9D1DA',bronce:'#C27A42',hierro:'#56606C',barro:'#B9805E',dedos:'#B9805E'};let h='';
+  L.capas.forEach(id=>{const [x,y,w,hh]=L.cajas[id],n=id==='dedos'?20:70;
+    for(let i=0;i<n;i++){const px=x+Math.random()*w,py=y+Math.random()*hh,r=5+Math.random()*13;
+      h+='<path d="M'+px.toFixed(1)+' '+(py-r).toFixed(1)+'l'+r.toFixed(1)+' '+(r*1.6).toFixed(1)+'h'+(-r*2).toFixed(1)+'z" fill="'+col[id]+'"/>';}});
+  capa.innerHTML=h;
+  capa.querySelectorAll('path').forEach(el=>{if(el.animate)el.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:'translate('+(450+Math.random()*900)+'px,'+(-160+Math.random()*220)+'px) rotate('+(Math.random()*540)+'deg)',opacity:0}],
+    {duration:1400+Math.random()*900,delay:Math.random()*350,easing:'cubic-bezier(.3,.1,.3,1)',fill:'forwards'});});
+  setTimeout(()=>{capa.innerHTML='';},2800);
+}
+document.addEventListener('keydown',e=>{
+  if(!lamModo)return;
+  if(e.key==='Escape'){lamCierra();return;}
+  if(lamModo!=='presentar')return;
+  if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();lamPres(lamPaso+1);}
+  else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();lamPres(lamPaso-1);}
+});
+
+
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;
 const ACT=()=>ACTIVIDADES[ACT_DE(S.cat)]||ACTIVIDADES.cb;
@@ -2356,6 +2659,8 @@ function verCap(id,quieto){
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
+    /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
+    lamTarjeta(id)+
     (secs.some(s=>s.capa)?filtroCapas():'')+
     (secs.some(esSecInterp)?'<button type="button" class="btn txt ir-interp" onclick="irInterp()">'+IC('brujula')+' Ir a la interpretación</button>':'')+
     secs.filter(s=>!esSecInterp(s)).map(htmlSec(id)).join('')+

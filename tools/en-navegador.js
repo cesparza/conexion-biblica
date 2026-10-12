@@ -23,7 +23,7 @@ const srv = http.createServer((q, r) => {
   const u = q.url.split('?')[0], f = path.join(RAIZ, u === '/' ? 'index.html' : u);
   fs.readFile(f, (e, b) => {
     if (e) { r.writeHead(404); r.end(); return; }
-    r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html; charset=utf-8' : 'application/json' });
+    r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html; charset=utf-8' : f.endsWith('.webp') ? 'image/webp' : 'application/json' });
     r.end(b);
   });
 });
@@ -314,6 +314,39 @@ for (const W of ANCHOS) {
   });
   ok(pie.n === 2 && pie.aire >= 24 && pie.alto >= 44, W + ' · hoja del versículo · Anterior y Siguiente a ' + pie.aire + ' px del borde y de ' + pie.alto + ' px de alto');
   await p.evaluate(() => cierraHoja());
+
+  /* ── 3c. la lámina de Daniel 2 (v185): se abre desde el capítulo, cada
+     etiqueta abre su explicación dentro de la imagen, la línea de tiempo
+     enciende lo que gobernaba, y Presentar recorre los 15 pasos. ── */
+  {
+    await p.evaluate(() => { ponCat('pa'); verCap('d2', true); });
+    await p.waitForTimeout(300);
+    ok(await p.locator('#detalle .lam-invita').count() === 1, W + ' · Daniel 2 ofrece el estudio interactivo');
+    await p.locator('#detalle .lam-invita .btn.ver').click();
+    await p.waitForTimeout(700);
+    const capas = await p.evaluate(() => document.querySelectorAll('#lamSvg .lam-estatua image').length);
+    const imgs = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamSvg image')].map(i => i.getAttribute('href'));
+      const r = await Promise.all(hs.map(h => fetch(h).then(x => x.ok && x.headers.get('content-type') === 'image/webp').catch(() => false))); return r.every(Boolean) && r.length; });
+    ok(capas === 6 && imgs === 9, W + ' · la lámina trae las 6 capas de la estatua y sus 9 imágenes (' + capas + ', ' + imgs + ')');
+    await p.locator('#lamEts .lam-et[data-p="plata"]').click();
+    await p.waitForTimeout(800);
+    const hoja = await p.evaluate(() => { const h = document.getElementById('lamHoja'); const r = h.getBoundingClientRect(), e = document.getElementById('lamEsc').getBoundingClientRect();
+      return { ver: !h.hidden, tx: h.textContent, dentro: r.left >= e.left - 1 && r.right <= e.right + 1 && r.bottom <= e.bottom + 1 }; });
+    ok(hoja.ver && /Medo-Persia/.test(hoja.tx) && /5:28/.test(hoja.tx) && hoja.dentro, W + ' · tocar la etiqueta abre la explicación dentro de la imagen');
+    await p.evaluate(() => { const r = document.getElementById('lamRango'); r.value = 1520; r.dispatchEvent(new Event('input')); });
+    const anio = await p.evaluate(() => [document.getElementById('lamTq').textContent, [...document.querySelectorAll('#lamSvg .lam-parte.on')].map(x => x.getAttribute('data-p')).sort().join()]);
+    ok(/Roma dividida y Roma papal/.test(anio[0]) && anio[1] === 'barro,dedos', W + ' · en 1520 se encienden los dedos y el barro: ' + anio.join(' / '));
+    const ancho = await p.evaluate(() => { const l = document.getElementById('lam'); return l.scrollWidth - l.clientWidth; });
+    ok(ancho <= 0, W + ' · la lámina no se desborda a lo ancho (' + ancho + ')');
+    await p.keyboard.press('Escape');
+    ok(await p.evaluate(() => document.getElementById('lam').hidden), W + ' · Escape cierra la lámina');
+    await p.evaluate(() => lamAbre('d2', 'presentar'));
+    for (let i = 0; i < 16; i++) await p.keyboard.press('ArrowRight');
+    await p.waitForTimeout(300);
+    const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent]);
+    ok(fin[0] === '15 / 15' && /fiel su interpretación/.test(fin[1]), W + ' · Presentar recorre los 15 pasos y termina en 2:45 (' + fin[0] + ')');
+    await p.evaluate(() => lamCierra());
+  }
 
   /* ── 4. errores y desborde ── */
   const ancho = await p.evaluate(() => {

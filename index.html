@@ -2576,6 +2576,122 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
   background:color-mix(in srgb,#0E7490 10%,var(--card,#fff));border:1px solid color-mix(in srgb,#0E7490 30%,transparent)}
 .interp-tit{margin:0;font-size:1.125rem;color:#0E6A82;display:flex;align-items:center;gap:.45rem}
 .interp-nota{margin:.35rem 0 0;font-size:.875rem;color:var(--gris)}
+
+/* ── LÁMINAS (v185): estudio interactivo con imagen ── */
+.lam-invita{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin:0 0 1.2rem;padding:.9rem;border-radius:var(--r);background:var(--card,#fff);box-shadow:var(--sh)}
+.lam-mini{position:relative;width:132px;aspect-ratio:1100/1152;border-radius:12px;overflow:hidden;flex:0 0 auto;background:#2A2117}
+.lam-mini img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lam-mini img+img{object-fit:contain;transform:scale(1.02)}
+.lam-itx{flex:1 1 220px;min-width:0}
+.lam-itx p{margin:.3rem 0 .6rem;color:var(--gris);font-size:.875rem}
+.lam-ant{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--naranja-txt,#B65909)}
+.lam-itit,.lam-tit{font-size:1.125rem;font-weight:800;color:var(--azul);line-height:1.2;text-wrap:balance}
+.lam-bots{display:flex;gap:.5rem;flex-wrap:wrap}
+.lam{position:fixed;inset:0;z-index:3000;overflow:auto;background:var(--bg);color:var(--txt);padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 24px);display:flex;flex-direction:column;gap:12px;align-items:center}
+.lam>*{width:100%;max-width:1000px;flex:0 0 auto}
+.lam-cab{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.lam-cabtx{min-width:0}
+.lam-pasos{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.lam-paso{flex:0 0 auto;display:flex;align-items:center;gap:6px;min-height:40px;padding:0 12px 0 6px;border-radius:999px;border:2px solid var(--v-linea,#F0E6D2);background:var(--card,#fff);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.lam-paso i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--v-sup2,#FFF4E0);color:var(--azul);font-size:.75rem}
+.lam-paso.on{border-color:var(--azul)}
+.lam-esc{position:relative;aspect-ratio:1100/1152;width:min(100%,calc(80vh * 1100 / 1152));border-radius:18px;overflow:hidden;background:#2A2117;box-shadow:var(--sh)}
+.lam-svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+.lam-monte{opacity:0;transition:opacity 1.6s ease}
+.lam-estatua{transition:opacity .8s}
+.lam-parte{transition:opacity .45s,filter .45s}
+.lam-parte.apagada{opacity:.16}
+.lam-parte.tenue{opacity:.55}
+.lam-parte.on{filter:drop-shadow(0 0 16px rgba(255,226,140,.95))}
+.lam-hit{cursor:pointer}
+.lam-guias{transition:opacity .35s}
+.lam-guia path{fill:none;stroke:rgba(255,244,220,.9);stroke-width:3}
+.lam-guia circle{fill:#fff;stroke:rgba(0,0,0,.4);stroke-width:2}
+.lam-ets{position:absolute;inset:0;pointer-events:none}
+.lam-et{position:absolute;pointer-events:auto;max-width:29%;display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:5px 9px;border:0;border-left:4px solid var(--c);border-radius:12px;background:rgba(18,13,6,.74);color:#fff;font:inherit;text-align:left;cursor:pointer;transition:opacity .3s,transform .3s;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.lam-et.i{right:70%}
+.lam-et.d{left:70%}
+.lam-et b{font-size:1rem;line-height:1.15}
+.lam-et span{font-size:.875rem;color:#F2C46B;font-variant-numeric:tabular-nums;line-height:1.2}
+.lam-et.on{outline:2px solid #F2C46B}
+.lam-ets.fuera .lam-et{opacity:0;pointer-events:none;transform:scale(.96)}
+.lam-anio[hidden],.lam-hoja[hidden]{display:none}
+.lam-anio{position:absolute;left:12px;top:12px;max-width:60%;padding:8px 12px;border-radius:12px;background:rgba(18,13,6,.78);color:#fff;display:flex;flex-direction:column}
+.lam-anio b{font-size:1.375rem;font-variant-numeric:tabular-nums;color:#F2C46B}
+.lam-anio span{font-size:.875rem;line-height:1.3}
+.lam-hoja{position:absolute;left:10px;right:10px;bottom:10px;max-height:54%;overflow:auto;padding:12px 14px;border-radius:18px;background:rgba(20,15,8,.88);color:#F4EEE2;box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:1rem;line-height:1.45}
+.lam-hcab{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.lam-hcab>div{flex:1;min-width:0}
+.lam-metal{width:38px;height:38px;border-radius:12px;flex:0 0 auto;background:var(--c);box-shadow:inset 0 -6px 12px rgba(0,0,0,.3),inset 0 4px 10px rgba(255,255,255,.35)}
+.lam-p1{font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#C9BFA9}
+.lam-p2{font-size:1.125rem;font-weight:800;line-height:1.2}
+.lam-fechas{font-weight:800;color:#F2C46B;font-variant-numeric:tabular-nums}
+.lam-x{width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;display:grid;place-items:center;flex:0 0 auto}
+.lam-capa{border-radius:12px;padding:8px 11px;margin-top:8px}
+.lam-capa p{margin:.2rem 0}
+.lam-capa.t{background:rgba(255,236,200,.09)}
+.lam-capa.i{background:rgba(92,198,219,.13)}
+.lam-rot{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#F2C46B}
+.lam-capa.i .lam-rot{color:#86D7E6}
+.lam-capa q{font-family:Georgia,'Times New Roman',serif;quotes:"«" "»"}
+.lam-ref{font-weight:700;color:#C9BFA9;font-size:.75rem;white-space:nowrap}
+.lam-fu{font-size:.75rem;color:#B9AF9C;margin-top:6px}
+.lam-hoja .lam-nota{color:#E6DCC8;margin:.5rem 0 0}
+.lam-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+.lam-nav span{font-size:.75rem;color:#C9BFA9;font-variant-numeric:tabular-nums}
+.lam-tiempo{background:var(--card,#fff);border-radius:18px;box-shadow:var(--sh);padding:12px 14px 6px}
+.lam-tcab{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.lam-play{width:44px;height:44px;border-radius:50%;border:0;background:var(--azul);color:#fff;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+.lam-play.on{background:var(--naranja,#E8720C)}
+.lam-tano{font-weight:800;color:var(--azul);font-variant-numeric:tabular-nums}
+.lam-tq{font-size:.875rem;color:var(--gris)}
+.lam-tiempo input[type=range]{width:100%;height:28px;margin:0;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
+.lam-tiempo input[type=range]::-webkit-slider-runnable-track{height:14px;border-radius:999px;background:var(--pista)}
+.lam-tiempo input[type=range]::-moz-range-track{height:14px;border-radius:999px;background:var(--pista)}
+.lam-tiempo input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-6px;border-radius:50%;background:#fff;border:3px solid var(--azul);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.lam-tiempo input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--azul)}
+.lam-marcas{position:relative;height:20px;font-size:.75rem;color:var(--gris);font-variant-numeric:tabular-nums}
+.lam-marcas span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.lam-marcas span:first-child{transform:none}
+.lam-marcas span:last-child{transform:translateX(-100%)}
+@media (max-width:560px){.lam-et{padding:3px 6px;border-left-width:3px}.lam-et b,.lam-et span{font-size:.75rem}}
+@media (max-width:560px){.lam-marcas span.chico{display:none}}
+.lam-carta{background:var(--card,#fff);border-radius:18px;box-shadow:var(--sh);padding:14px 16px}
+.lam-carta h3{margin:0 0 .5rem;font-size:1.125rem;color:var(--azul)}
+.lam-desliza{overflow-x:auto}
+.lam-par{width:100%;border-collapse:collapse;font-size:.875rem;min-width:480px}
+.lam-par th,.lam-par td{padding:8px;border-bottom:1px solid var(--v-linea,#F0E6D2);text-align:left;vertical-align:top}
+.lam-par th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gris)}
+.lam-sw{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--c);margin-right:6px;vertical-align:-1px}
+.lam-carta .lam-fu{color:var(--gris)}
+.lam-q{font-weight:800;margin:.2rem 0 .7rem}
+.lam-carta .lam-nota{color:var(--gris);font-size:.875rem;margin:0}
+.lam-ops{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.lam-ops button{font:inherit;font-weight:700;min-height:48px;border-radius:12px;border:2px solid var(--v-linea,#F0E6D2);background:var(--card,#fff);color:var(--txt);cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 10px;text-align:left}
+.lam-ops button.ok{border-color:var(--verde,#1A7A1A)}
+.lam-ops button.mal{border-color:var(--rojo,#C0392B)}
+.lam-fb{min-height:1.5em;margin-top:8px;font-size:.875rem;color:var(--gris)}
+.lam.pres{background:#0E0D0B;color:#F4EEE2}
+.lam.pres .lam-tit{color:#F4EEE2}
+.lam.pres .lam-esc{width:min(100%,calc((100vh - 270px) * 1100 / 1152))}
+.lam.pres.ancho>*{max-width:1400px}
+.lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:min(100%,calc((100vh - 250px) * 2050 / 1152))}
+.lam.pres.ancho .lam-hoja{left:auto;right:18px;top:18px;bottom:18px;width:44%;max-height:none;display:flex;flex-direction:column;justify-content:center}
+.lam.pres.ancho .lam-anio{display:none}
+.lam.pres .lam-hoja{font-size:1.125rem;max-height:48%}
+.lam.pres .lam-p2{font-size:1.75rem}
+.lam.pres .lam-tiempo{background:#17150F;box-shadow:none}
+.lam.pres .lam-tano{color:#F2C46B}
+.lam.pres .lam-tq{color:#B9AF9C}
+.lam.pres .lam-marcas{color:#9C9484}
+.lam-ctl{display:flex;justify-content:center;align-items:center;gap:12px}
+.lam-ctl button{min-height:48px;padding:0 20px;border-radius:999px;border:0;background:#2B271F;color:#F4EEE2;font:inherit;font-weight:800;cursor:pointer}
+.lam-ctl button.pri{background:var(--naranja,#E8720C);color:#fff}
+.lam-ctl button:disabled{opacity:.4}
+.lam-ctl span{color:#9C9484;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.lam-parte,.lam-monte,.lam-estatua,.lam-et,.lam-guias{transition:none}}
+.lam-hoja .btn.tono{background:rgba(255,255,255,.12);color:#fff}
+.lam-hoja .btn:disabled{opacity:.35}
 </style>
 </head>
 <body>
@@ -3119,8 +3235,11 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
     </div>
   </details>
 </div>
+
+<!-- v185: el estudio interactivo con imagen (lamAbre). -->
+<div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = '784abd7c2fdd';
+const VERSION_APP = 'e655ce03b033';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -55787,6 +55906,399 @@ const MODULOS_BASE = [
  }
 ];
 
+/* Los estudios interactivos con imagen (fuente/laminas.js); las imágenes van
+   aparte, en laminas/, y se piden al abrir. */
+const LAMINAS = {
+ "d2": {
+  "titulo": "La imagen del sueño de Nabucodonosor",
+  "dir": "d2/",
+  "ox": 166,
+  "w": 1100,
+  "h": 1152,
+  "capas": [
+   "plata",
+   "oro",
+   "bronce",
+   "hierro",
+   "barro",
+   "dedos"
+  ],
+  "cajas": {
+   "oro": [
+    403,
+    0,
+    292,
+    256
+   ],
+   "plata": [
+    359,
+    240,
+    379,
+    468
+   ],
+   "bronce": [
+    423,
+    416,
+    252,
+    291
+   ],
+   "hierro": [
+    430,
+    708,
+    237,
+    273
+   ],
+   "barro": [
+    431,
+    982,
+    235,
+    104
+   ],
+   "dedos": [
+    417,
+    1087,
+    264,
+    51
+   ],
+   "piedra": [
+    850,
+    220,
+    220,
+    220
+   ],
+   "monte": [
+    0,
+    0,
+    1100,
+    1152
+   ]
+  },
+  "golpe": [
+   550,
+   1085
+  ],
+  "etiquetas": {
+   "oro": {
+    "lado": "d",
+    "ax": 640,
+    "ay": 140,
+    "ly": 110,
+    "f": "605 – 539 a.C."
+   },
+   "plata": {
+    "lado": "i",
+    "ax": 400,
+    "ay": 330,
+    "ly": 300,
+    "f": "539 – 331 a.C."
+   },
+   "bronce": {
+    "lado": "d",
+    "ax": 655,
+    "ay": 600,
+    "ly": 520,
+    "f": "331 – 168 a.C."
+   },
+   "hierro": {
+    "lado": "i",
+    "ax": 470,
+    "ay": 850,
+    "ly": 760,
+    "f": "168 a.C. – 476"
+   },
+   "barro": {
+    "lado": "i",
+    "ax": 470,
+    "ay": 1035,
+    "ly": 975,
+    "f": "538 – 1798 · vuelve"
+   },
+   "dedos": {
+    "lado": "d",
+    "ax": 640,
+    "ay": 1110,
+    "ly": 1010,
+    "f": "desde 476"
+   }
+  },
+  "tiempo": [
+   "oro",
+   "plata",
+   "bronce",
+   "hierro",
+   "dedos",
+   "barro"
+  ],
+  "inicio": {
+   "ref": "Daniel 2:31",
+   "texto": "Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.",
+   "nota": "Los metales bajan de valor (del oro al hierro) pero suben en dureza: la historia no camina hacia una edad de oro hecha por el hombre. Y Roma aparece en tres fases: imperial, dividida y papal."
+  },
+  "cierre": {
+   "ref": "Daniel 2:45",
+   "texto": "El gran Dios ha mostrado al rey lo que ha de acontecer en lo por venir; y el sueño es verdadero, y fiel su interpretación.",
+   "titulo": "Un reino que no será jamás destruido",
+   "nota": "Hoy estamos en los pies. Lo que sigue es la piedra."
+  },
+  "historia": [
+   {
+    "titulo": "Un sueño que nadie puede decir",
+    "ref": "Daniel 2:1, 11",
+    "texto": "tuvo Nabucodonosor sueños, y se turbó su espíritu y se le fue el sueño.",
+    "nota": "El rey exige que le digan el sueño y su significado. Los sabios responden que solo podrían «los dioses cuya morada no está entre los hombres» (2:11), y el rey manda matarlos a todos (2:12)."
+   },
+   {
+    "titulo": "Daniel pide tiempo y ora",
+    "ref": "Daniel 2:18-19",
+    "texto": "para que pidieran misericordias del Dios del cielo sobre este misterio",
+    "nota": "Daniel pide tiempo al rey (2:16) y ora con Ananías, Misael y Azarías. Esa noche Dios le revela el secreto (2:19)."
+   },
+   {
+    "titulo": "Él quita reyes y pone reyes",
+    "ref": "Daniel 2:21",
+    "texto": "Él muda los tiempos y las edades, quita reyes y pone reyes; da la sabiduría a los sabios y la ciencia a los entendidos.",
+    "nota": "Es la clave del capítulo: la historia no la mueven los imperios, la mueve Dios. Daniel lo alaba antes de ir al rey (2:20-23)."
+   },
+   {
+    "titulo": "Hay un Dios en los cielos",
+    "ref": "Daniel 2:28",
+    "texto": "Pero hay un Dios en los cielos que revela los misterios, y él ha hecho saber al rey Nabucodonosor lo que ha de acontecer en los últimos días.",
+    "nota": "Daniel no se lleva el mérito (2:30), y dice hasta dónde llega el sueño: hasta los últimos días."
+   }
+  ],
+  "despues": {
+   "titulo": "El rey reconoce al Dios de Daniel",
+   "ref": "Daniel 2:47",
+   "texto": "Ciertamente el Dios vuestro es Dios de dioses, Señor de los reyes y el que revela los misterios",
+   "nota": "El rey se postra (2:46), engrandece a Daniel y, a pedido suyo, pone a Sadrac, Mesac y Abed-nego sobre la provincia (2:48-49)."
+  },
+  "paralelo": [
+   [
+    "oro",
+    "León con alas de águila",
+    "Babilonia"
+   ],
+   [
+    "plata",
+    "Oso",
+    "Medo-Persia"
+   ],
+   [
+    "bronce",
+    "Leopardo de cuatro cabezas",
+    "Grecia"
+   ],
+   [
+    "hierro",
+    "Bestia con dientes de hierro",
+    "Roma imperial"
+   ],
+   [
+    "dedos",
+    "Diez cuernos",
+    "Roma dividida"
+   ],
+   [
+    "barro",
+    "El cuerno pequeño",
+    "Roma papal"
+   ],
+   [
+    "piedra",
+    "El reino se da a los santos (7:27)",
+    "La segunda venida y el reino eterno"
+   ]
+  ],
+  "paraleloFuente": "Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 20, 83 y 119-120.",
+  "reto": [
+   {
+    "q": "¿Qué parte es «otro reino, inferior al tuyo»?",
+    "ok": "plata",
+    "e": "2:39 · Medo-Persia, que el mismo libro nombra en 5:28."
+   },
+   {
+    "q": "¿Dónde golpeó la piedra?",
+    "ok": "barro",
+    "e": "2:34 · «hirió a la imagen en sus pies de hierro y de barro cocido»."
+   },
+   {
+    "q": "¿Qué reino «dominará sobre toda la tierra»?",
+    "ok": "bronce",
+    "e": "2:39 · el de bronce, Grecia."
+   },
+   {
+    "q": "¿Qué parte representa la unión del poder político y el religioso?",
+    "ok": "barro",
+    "e": "El hierro mezclado con barro: Roma papal, desde 538 d.C. (Bohr)."
+   },
+   {
+    "q": "¿Qué representan los diez dedos?",
+    "ok": "dedos",
+    "e": "Roma dividida en diez reinos bárbaros; la división se completó en 476."
+   },
+   {
+    "q": "«Tú eres aquella…»",
+    "ok": "oro",
+    "e": "2:38 · «Tú eres aquella cabeza de oro»."
+   }
+  ],
+  "partes": [
+   {
+    "id": "oro",
+    "nombre": "Cabeza de oro",
+    "reino": "Babilonia",
+    "fechas": "605 – 539 a.C.",
+    "de": -605,
+    "a": -539,
+    "c": "#C9971C",
+    "texto": "La cabeza de esta imagen era de oro fino",
+    "ref": "2:32",
+    "texto2": "Tú eres aquella cabeza de oro.",
+    "ref2": "2:38",
+    "corto": "El único reino que Daniel 2 nombra: el de Nabucodonosor.",
+    "interp": [
+     "«El Dios del cielo te ha dado reino, poder, fuerza y majestad» (2:37): el rey tiene su reino porque Dios se lo dio. Es el único reino que nombra este capítulo. 605 a.C. es el primer año de Nabucodonosor, cuando sitia Jerusalén por primera vez (1:1); cae en 539, la noche del banquete de Belsasar (Daniel 5).",
+     "Jeremías llama a Babilonia «copa de oro» (Jeremías 51:7)."
+    ],
+    "fuente": "Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 57-58; <em>La Gran Cadena Profética</em>, pág. 39."
+   },
+   {
+    "id": "plata",
+    "nombre": "Pecho y brazos de plata",
+    "reino": "Medo-Persia",
+    "fechas": "539 – 331 a.C.",
+    "de": -539,
+    "a": -331,
+    "c": "#8C98A6",
+    "texto": "su pecho y sus brazos, de plata",
+    "ref": "2:32",
+    "texto2": "Después de ti se levantará otro reino, inferior al tuyo",
+    "ref2": "2:39",
+    "corto": "Dos brazos, dos pueblos: medos y persas. Daniel 5:28 lo nombra.",
+    "interp": [
+     "El mismo libro lo identifica: «Tu reino ha sido roto y dado a los medos y a los persas» (Daniel 5:28).",
+     "Dos brazos, dos pueblos unidos. Ciro toma Babilonia en 539 a.C."
+    ],
+    "fuente": "Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 57; Wadsworth, <em>La estatua de Nabucodonosor</em>, pág. 21."
+   },
+   {
+    "id": "bronce",
+    "nombre": "Vientre y muslos de bronce",
+    "reino": "Grecia",
+    "fechas": "331 – 168 a.C.",
+    "de": -331,
+    "a": -168,
+    "c": "#A85A2A",
+    "texto": "su vientre y sus muslos, de bronce",
+    "ref": "2:32",
+    "texto2": "un tercer reino de bronce, el cual dominará sobre toda la tierra",
+    "ref2": "2:39",
+    "corto": "Alejandro Magno. Daniel 8:21 lo llama «el rey de Grecia».",
+    "interp": [
+     "Daniel 8:20-21 lo nombra: el carnero es Media y Persia; el macho cabrío, «el rey de Grecia».",
+     "De Arbela (331 a.C.), cuando Alejandro vence a Darío III, a Pidna (168 a.C.), cuando Roma acaba con la monarquía macedónica."
+    ],
+    "fuente": "Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 57; Urías Smith, <em>Las profecías de Daniel</em>, pág. 21."
+   },
+   {
+    "id": "hierro",
+    "nombre": "Piernas de hierro",
+    "reino": "Roma imperial",
+    "fechas": "168 a.C. – 476 d.C.",
+    "de": -168,
+    "a": 476,
+    "c": "#3E4651",
+    "texto": "sus piernas, de hierro",
+    "ref": "2:33",
+    "texto2": "el cuarto reino será fuerte como el hierro",
+    "ref2": "2:40",
+    "corto": "Primera fase de Roma: el reino que «desmenuza y rompe».",
+    "interp": [
+     "La primera de las tres fases de Roma. «Desmenuza y rompe» (2:40): el reino más fuerte y el que más duró. Gibbon la llamó «la monarquía de hierro».",
+     "Daniel no habla de división en las piernas: la división aparece en los pies (2:41)."
+    ],
+    "fuente": "Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 57; Urías Smith, <em>Las profecías de Daniel</em>, pág. 22-25."
+   },
+   {
+    "id": "dedos",
+    "nombre": "Los diez dedos",
+    "reino": "Roma dividida",
+    "fechas": "desde 476 d.C.",
+    "de": 476,
+    "a": 2026,
+    "c": "#4E6A8F",
+    "texto": "Lo que viste de los pies y los dedos… será un reino dividido",
+    "ref": "2:41",
+    "texto2": "este reino será en parte fuerte y en parte frágil",
+    "ref2": "2:42",
+    "corto": "Segunda fase: las tribus bárbaras se reparten el imperio.",
+    "interp": [
+     "La segunda fase: el imperio de occidente se lo repartieron las tribus bárbaras entre 351 y 476. Diez, como los diez cuernos de Daniel 7 (7:24).",
+     "Anglosajones, francos, alamanes, lombardos, suevos, visigodos, burgundios, ostrogodos, hérulos y vándalos. Los tres últimos fueron «arrancados» (7:8): hérulos en 493, vándalos en 534 y ostrogodos en 538. Urías Smith pone a los hunos en lugar de los alamanes.",
+     "Llegan hasta la segunda venida: la piedra cae «en los días de estos reyes» (2:44). Elena de White: nuestra posición en la imagen está en los dedos, «en un estado dividido»."
+    ],
+    "fuente": "Urías Smith, <em>Las profecías de Daniel</em>, pág. 23-25; Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 58 y 62 (cita de <em>Testimonios</em>, t. 1, pág. 361); notas de Camilo, «Tribús Barbaras»."
+   },
+   {
+    "id": "barro",
+    "nombre": "Hierro mezclado con barro",
+    "reino": "Roma papal",
+    "fechas": "desde 538 d.C. · supremacía 538 – 1798",
+    "de": 538,
+    "a": 1798,
+    "c": "#A0694A",
+    "texto": "sus pies, en parte de hierro y en parte de barro cocido",
+    "ref": "2:33",
+    "texto2": "se mezclarán por medio de alianzas humanas; pero no se unirán el uno con el otro",
+    "ref2": "2:43",
+    "corto": "Tercera fase: el poder político unido al religioso.",
+    "interp": [
+     "La tercera fase: el poder político unido al religioso. El hierro es el poder civil de Roma; el barro «de alfarero» representa en la Biblia al pueblo de Dios (Jeremías 18:6). Mezclados, es la iglesia que dejó a Cristo para unirse al Estado, la ramera de Apocalipsis 17:2. Por eso la piedra destruye también el barro (2:35).",
+     "Domina 1.260 años, de 538 a 1798 (Daniel 7:25): es el cuerno pequeño. En 1798 recibe la herida; la herida sana y, al final, la mezcla vuelve en todo el mundo (Apocalipsis 13:3; 17:12-14). Por eso la piedra todavía la encuentra en los pies.",
+     "Elena de White: «La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro»."
+    ],
+    "fuente": "Bohr, <em>¿Cuán cerca al fin?</em>, pág. 42-46; Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 58-62; Elena de White, Manuscrito 63, 1899 (CBA t. 4, pág. 1190)."
+   },
+   {
+    "id": "piedra",
+    "nombre": "La piedra",
+    "reino": "La segunda venida de Cristo",
+    "fechas": "futuro",
+    "de": null,
+    "c": "#6B7B5A",
+    "texto": "una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies",
+    "ref": "2:34",
+    "texto2": "el Dios del cielo levantará un reino que no será jamás destruido",
+    "ref2": "2:44",
+    "corto": "Cristo en su segunda venida. «Sin mano»: no lo hace el hombre.",
+    "interp": [
+     "La piedra es Cristo en su segunda venida. Golpea los pies, no la cabeza: llega «en los días de estos reyes» (2:44), con Europa ya dividida.",
+     "«Sin mano»: es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco."
+    ],
+    "fuente": "Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 63-64."
+   },
+   {
+    "id": "monte",
+    "nombre": "El gran monte",
+    "reino": "El reino eterno",
+    "fechas": "para siempre",
+    "de": null,
+    "c": "#0E7490",
+    "texto": "la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra",
+    "ref": "2:35",
+    "texto2": "él permanecerá para siempre",
+    "ref2": "2:44",
+    "corto": "Todo lo demás se lo lleva el viento. Solo queda el reino de Dios.",
+    "interp": [
+     "La piedra sale del monte Sion (2:45; 1 Pedro 2:6) y se convierte en el gran monte: el reino eterno. En la Biblia un monte es un reino (Isaías 2:2). Todo lo demás se lo lleva el viento «como tamo» (2:35).",
+     "Daniel 7 termina igual: el reino se da «al pueblo de los santos del Altísimo, cuyo reino es reino eterno» (7:27)."
+    ],
+    "fuente": "Stephen Bohr, <em>Studies in Daniel 1-10</em>, pág. 63-64."
+   }
+  ]
+ }
+};
+
 /* Los examenes reales de Daniel (fuente/examenes-reales.js) y que hoja ve
    cada categoria. */
 const EXAMENES_REALES = {
@@ -61461,6 +61973,10 @@ const MANUAL = [
     "h": "<p>Algunas preguntas no salen del libro de Daniel ni de Profetas y Reyes:\n    fechas de la historia, otros profetas como Jeremías o Ezequiel, o lo que\n    dijeron intérpretes antiguos. Ayudan a entender, pero el examen del\n    campamento no las pregunta.</p>\n    <p>Por eso en Conexión Bíblica el examen viene con <strong>Solo el material\n    del reglamento</strong> prendido. Si quieres practicar también con esas,\n    apágalo en <strong>Cambiar este examen</strong>. El director tiene el mismo\n    interruptor al abrir una evaluación, y viene prendido.</p>"
    },
    {
+    "t": "El estudio interactivo de Daniel 2",
+    "h": "<p>Al abrir Daniel 2 aparece la tarjeta <strong>Estudio interactivo</strong>.</p>\n    <ul><li><strong>Explorar:</strong> cada parte de la estatua tiene su etiqueta con el\n    reino y sus fechas. Al tocarla, la explicación se abre dentro de la misma imagen:\n    primero lo que dice el texto y después lo que significa, con su fuente.</li>\n    <li><strong>La línea de tiempo:</strong> arrastra el año o toca ▶ y se enciende la\n    parte que gobernaba en ese momento.</li>\n    <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o\n    con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el\n    polvo que se lleva el viento y el monte que llena la tierra.</li></ul>"
+   },
+   {
     "t": "Estudiar la interpretación",
     "h": "<p>Además del examen, la app sirve para aprender qué significa cada\n    pasaje. Esa parte se llama <strong>interpretación</strong>: lo que dicen\n    Stephen Bohr, Elena de White y otros autores adventistas, y cada sección\n    dice de qué libro y página sale. No entra al concurso.</p>\n    <ul><li>En cada capítulo, debajo del estudio, el bloque <strong>La\n    interpretación</strong> la junta toda. El botón <strong>Ir a la\n    interpretación</strong> baja hasta ahí.</li>\n    <li>En el examen, <strong>Solo la interpretación</strong> trae solo sus\n    preguntas.</li></ul>"
    },
@@ -66076,6 +66592,309 @@ const CAPS=REGLAMENTO.conCats(CAPS_BASE), MODULOS=REGLAMENTO.conCats(MODULOS_BAS
    aparte; eso se quitó. */
 const esSecInterp=s=>s&&s.capa==='contexto'&&/^🧭/.test(String(s.t||''));
 
+/* ═══════════ LÁMINAS: ESTUDIO INTERACTIVO CON IMAGEN (v185) ═══════════
+   MECANISMO
+   Una lámina (fuente/laminas.js) es una imagen partida en capas del mismo
+   tamaño, una por símbolo, más los textos de cada parte. Se pinta como un SVG
+   con una <image> por capa y un rectángulo invisible encima para tocarla (una
+   imagen recibe el toque en toda su caja, también donde es transparente).
+   Sobre el SVG van, en HTML, las etiquetas de cada parte (para que la letra no
+   se encoja con la escena) y la tarjeta que se abre DENTRO de la imagen: la
+   explicación se lee sin quitar los ojos de la estatua (Camilo, 18:22).
+   Abajo, una línea de tiempo que se arrastra: el año enciende la parte que
+   gobernaba. Acercar es mover el viewBox; romper, partículas.
+   Dos modos sobre la misma escena: Explorar y Presentar (oscuro, un paso por
+   toque o por flecha, letra grande, para una clase).
+   Las imágenes son archivos aparte (laminas/), no van dentro de index.html:
+   se piden solo al abrir la lámina. En Jóvenes, traer.mjs cambia LAMINAS_DIR. */
+const LAMINAS_DIR='/laminas/';
+let lamId='', lamModo='', lamSel='', lamPaso=0, lamReto=0, lamBien=0, lamListo=false, lamAnio=null, lamCorre=0;
+const lamQuieto=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}};
+const LAM=()=>LAMINAS[lamId];
+const lamParte=id=>LAM().partes.find(p=>p.id===id);
+const lamSrc=f=>LAMINAS_DIR+LAM().dir+f+'.webp';
+const lamAnioTx=y=>y<0?(-y)+' a.C.':y+' d.C.';
+const PIEDRA0=[960,330];
+
+/* La tarjeta que invita, dentro del estudio del capítulo. */
+function lamTarjeta(cid){
+  const L=LAMINAS[cid];
+  if(!L)return '';
+  const src=f=>LAMINAS_DIR+L.dir+f+'.webp';
+  return '<div class="lam-invita"><div class="lam-mini"><img src="'+src('babilonia')+'" alt="" loading="lazy">'+
+    L.capas.map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('')+'</div>'+
+    '<div class="lam-itx"><div class="lam-ant">Estudio interactivo</div><div class="lam-itit">'+esc(L.titulo)+'</div>'+
+    '<p>Toca cada parte de la estatua: lo que dice el texto, lo que significa, sus fechas y su fuente.</p>'+
+    '<div class="lam-bots"><button type="button" class="btn ver" onclick="lamAbre(\''+cid+'\',\'explorar\')">'+IC('lupa')+' Explorar</button>'+
+    '<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button></div></div></div>';
+}
+
+/* ── La escena: SVG + etiquetas + tarjeta ── */
+function lamEscena(){
+  const L=LAM(),C=L.cajas,E=L.etiquetas;
+  const capa=id=>'<g class="lam-parte" data-p="'+id+'"><image href="'+lamSrc(id)+'" x="'+L.ox+'" y="0" width="768" height="1152"/>'+
+    '<rect class="lam-hit" x="'+C[id][0]+'" y="'+C[id][1]+'" width="'+C[id][2]+'" height="'+C[id][3]+'" fill="transparent" onclick="lamToca(\''+id+'\')"/></g>';
+  /* La línea va del punto de la estatua al borde de su etiqueta. */
+  const lineas=Object.keys(E).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
+    return '<g class="lam-guia" data-p="'+id+'"><circle cx="'+e.ax+'" cy="'+e.ay+'" r="7"/><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+30:x2-30)+' '+(e.ly+32)+' L'+x2+' '+(e.ly+32)+'"/></g>';}).join('');
+  const etiquetas=Object.keys(E).map(id=>{const e=E[id],p=lamParte(id);
+    return '<button type="button" class="lam-et '+e.lado+'" data-p="'+id+'" style="--c:'+p.c+';top:'+(e.ly/L.h*100)+'%" onclick="lamToca(\''+id+'\')">'+
+      '<b>'+esc(p.reino)+'</b><span>'+esc(e.f||p.fechas)+'</span></button>';}).join('');
+  return '<div class="lam-esc" id="lamEsc">'+
+    '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
+    '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'+
+    '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="url(#lamSombra)"/>'+
+    '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
+    '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
+    '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" onclick="lamToca(\'piedra\')"/></g></svg>'+
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div>'+
+    '<div class="lam-anio" id="lamAnioEsc" hidden></div>'+
+    '<div class="lam-hoja" id="lamHoja" hidden aria-live="polite"></div></div>';
+}
+/* Mueve el viewBox con suavidad. */
+function lamAcerca(dest,ms){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const ini=svg.getAttribute('viewBox').split(/\s+/).map(Number);
+  if(lamQuieto()||!ms){svg.setAttribute('viewBox',dest.join(' '));return;}
+  const t0=performance.now();
+  const paso=t=>{const k=Math.min(1,(t-t0)/ms),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    svg.setAttribute('viewBox',ini.map((v,i)=>v+(dest[i]-v)*e).join(' '));if(k<1)requestAnimationFrame(paso);};
+  requestAnimationFrame(paso);
+}
+/* En Presentar, con pantalla ancha, la escena es apaisada: la estatua a la izquierda y
+   la explicación a la derecha, sin taparla. */
+const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900;
+const lamTodo=()=>lamAncho()?[-150,0,2050,LAM().h]:[0,0,LAM().w,LAM().h];
+/* Acercarse a una parte dejándola en la mitad de arriba: la de abajo es de la tarjeta. */
+function lamCaja(id){
+  const L=LAM(),[x,y,w,h]=L.cajas[id];
+  if(lamAncho()){const H=Math.min(L.h,Math.max(h*2,440)),W=H*2050/L.h,cx=x+w/2,cy=y+h/2;
+    return [Math.max(-150,Math.min(1900-W,cx-W*0.3)),Math.max(0,Math.min(L.h-H,cy-H/2)),W,H];}
+  const R=L.w/L.h;
+  let W=Math.min(L.w,Math.max(w*1.6,h*R*1.9,380)),H=W/R;if(H>L.h){H=L.h;W=H*R;}
+  return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H*0.3)),W,H];
+}
+/* Encender: las partes de `ids` se ven, las demás se apagan (vacío: todas normales). */
+function lamEnciende(ids,suaves){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const hay=ids&&ids.length;
+  svg.querySelectorAll('.lam-estatua .lam-parte').forEach(x=>{const id=x.getAttribute('data-p');
+    x.classList.toggle('on',!!hay&&ids.includes(id));
+    x.classList.toggle('apagada',!!hay&&!ids.includes(id)&&!(suaves||[]).includes(id));
+    x.classList.toggle('tenue',!!hay&&(suaves||[]).includes(id));});
+  document.querySelectorAll('#lamEts .lam-et').forEach(b=>b.classList.toggle('on',!!hay&&ids.includes(b.getAttribute('data-p'))));
+}
+function lamEtiquetas(ver){const e=document.getElementById('lamEts');if(e)e.classList.toggle('fuera',!ver);
+  const g=document.querySelector('#lamSvg .lam-guias');if(g)g.style.opacity=ver?'1':'0';}
+
+/* ── Abrir y cerrar ── */
+function lamAbre(cid,modo){
+  if(!LAMINAS[cid])return;
+  lamId=cid;lamModo=modo;lamSel='';lamPaso=0;lamReto=0;lamBien=0;lamListo=false;lamAnio=null;lamPara();
+  const el=document.getElementById('lam'),L=LAM();
+  el.hidden=false;el.className='lam'+(modo==='presentar'?' pres':'')+(lamAncho()?' ancho':'');
+  document.body.classList.add('leyendo');
+  const hist=[...L.historia.map((h,i)=>'<button type="button" class="lam-paso" data-h="'+i+'" onclick="lamHistoria('+i+')"><i>'+(i+1)+'</i>'+esc(h.titulo)+'</button>'),
+    '<button type="button" class="lam-paso" data-h="est" onclick="lamInicio()"><i>5</i>La estatua</button>',
+    '<button type="button" class="lam-paso" data-h="desp" onclick="lamHistoria(\'desp\')"><i>6</i>'+esc(L.despues.titulo)+'</button>'].join('');
+  el.innerHTML='<div class="lam-cab"><div class="lam-cabtx"><div class="lam-ant">Daniel 2 · '+(modo==='presentar'?'presentación':'estudio interactivo')+'</div>'+
+    '<div class="lam-tit">'+esc(L.titulo)+'</div></div><div class="lam-bots">'+
+    (modo==='presentar'?'':'<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button>')+
+    '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
+    (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
+    lamEscena()+
+    '<div class="lam-tiempo"><div class="lam-tcab"><button type="button" class="lam-play" id="lamPlay" onclick="lamRecorre()" aria-label="Recorrer la historia">'+IC('play')+'</button>'+
+    '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">De 605 a.C. hasta hoy, a escala</div></div></div>'+
+    '<input type="range" id="lamRango" min="-620" max="2026" step="1" value="-620" aria-label="Año" style="--pista:'+lamPista()+'">'+
+    '<div class="lam-marcas">'+[[-605,'605 a.C.'],[-331,'331',1],[-168,'168',1],[476,'476'],[1798,'1798'],[2026,'hoy',1]].map(([y,t,ch])=>'<span'+(ch?' class="chico"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
+    (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" onclick="lamPres(lamPaso-1)">‹ Anterior</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="pri" onclick="lamPres(lamPaso+1)">Siguiente ›</button></div>':
+     '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr><th>Daniel 2</th><th>Daniel 7</th><th>Reino</th></tr>'+
+     L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
+     '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
+  document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
+  if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();}
+  const f=el.querySelector('.lam-cerrar');if(f)f.focus();
+}
+function lamCierra(){
+  const el=document.getElementById('lam');
+  if(!el||el.hidden)return;
+  lamPara();el.hidden=true;el.innerHTML='';lamModo='';
+  document.body.classList.remove('leyendo');
+}
+
+/* ── La tarjeta dentro de la imagen ── */
+function lamHoja(html){
+  const h=document.getElementById('lamHoja');if(!h)return;
+  if(!html){h.hidden=true;h.innerHTML='';return;}
+  h.innerHTML=html;h.hidden=false;h.scrollTop=0;
+}
+function lamHojaParte(p,i,n){
+  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
+    '<div class="lam-p2">'+esc(p.reino)+'</div><div class="lam-fechas">'+esc(p.fechas)+'</div></div>'+
+    (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
+    '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
+    '<div class="lam-capa i"><div class="lam-rot">Lo que significa · interpretación</div>'+(lamModo==='presentar'?'<p>'+esc(p.corto)+'</p>':p.interp.map(x=>'<p>'+x+'</p>').join(''))+'<div class="lam-fu">Fuente: '+p.fuente+'</div></div>'+
+    (lamModo==='presentar'?'':'<div class="lam-nav"><button type="button" class="btn tono" '+(i>0?'':'disabled ')+'onclick="lamElige('+(i-1)+')">‹ Anterior</button><span>'+(i+1)+' de '+n+'</span>'+
+    '<button type="button" class="btn ver" '+(i<n-1?'':'disabled ')+'onclick="lamElige('+(i+1)+')">Siguiente ›</button></div>');
+}
+function lamHojaTexto(t){
+  return '<div class="lam-hcab"><div><div class="lam-p1">'+esc(t.ref)+'</div><div class="lam-p2">'+esc(t.titulo)+'</div></div>'+
+    (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
+    '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(t.texto)+'</q></p></div><p class="lam-nota">'+t.nota+'</p>';
+}
+function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEach(b=>b.classList.toggle('on',b.getAttribute('data-h')===String(k)));}
+
+/* ── Explorar ── */
+function lamInicio(){
+  lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
+  const svg=document.getElementById('lamSvg');
+  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
+    const pi=svg.querySelector('.lam-piedra');pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
+  lamAcerca(lamTodo(),650);
+}
+function lamToca(id){
+  if(lamModo==='presentar'){lamPres(lamPaso+1);return;}
+  if(lamSel===id){lamInicio();return;}
+  lamElige(LAM().partes.findIndex(p=>p.id===id));
+}
+function lamElige(i){
+  const L=LAM(),p=L.partes[i];if(!p)return;
+  lamPara();lamSel=p.id;lamMarcaPaso('est');
+  const svg=document.getElementById('lamSvg');
+  const esMonte=p.id==='monte';
+  svg.querySelector('.lam-monte').style.opacity=esMonte?'1':'0';
+  svg.querySelector('.lam-estatua').style.opacity=esMonte?'0':'1';
+  lamEnciende(esMonte?[]:[p.id]);lamEtiquetas(false);
+  lamAcerca(esMonte||p.id==='piedra'?lamTodo():lamCaja(p.id),650);
+  lamHoja(lamHojaParte(p,i,L.partes.length));
+}
+function lamHistoria(k){
+  const L=LAM(),t=k==='desp'?L.despues:L.historia[k];if(!t)return;
+  lamPara();lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
+  lamHoja(lamHojaTexto(t));
+}
+
+/* ── La línea de tiempo ── */
+const lamPos=y=>(y+620)/(2026+620)*100;
+function lamPista(){
+  const L=LAM();
+  const seg=L.tiempo.filter(id=>id!=='barro').map(id=>{const p=lamParte(id);return p.c+' '+lamPos(p.de)+'% '+lamPos(Math.min(p.a,2026))+'%';});
+  return 'linear-gradient(90deg,#4a4032 0% '+lamPos(-605)+'%,'+seg.join(',')+')';
+}
+/* Qué gobernaba en el año y: las partes encendidas y la frase. */
+function lamQuien(y){
+  const on=[],suave=[];
+  for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&y<p.a)on.push(id);}
+  if(y>=1798&&on.includes('dedos'))suave.push('barro');
+  const n=on.map(id=>lamParte(id).reino);
+  let tx=!on.length?'Antes de Nabucodonosor':n.join(' y ');
+  if(suave.length)tx+='; el papado, herido en 1798, se va sanando (Ap 13:3)';
+  return {on,suave,tx};
+}
+function lamVeAnio(y){
+  lamAnio=y;lamSel='';lamHoja('');lamEtiquetas(false);lamMarcaPaso('est');
+  const svg=document.getElementById('lamSvg');
+  svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
+  const q=lamQuien(y);lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
+  lamAcerca(lamTodo(),0);
+  document.getElementById('lamTano').textContent=lamAnioTx(y);
+  document.getElementById('lamTq').textContent=q.tx;
+  const a=document.getElementById('lamAnioEsc');a.hidden=false;a.innerHTML='<b>'+lamAnioTx(y)+'</b><span>'+esc(q.tx)+'</span>';
+  const r=document.getElementById('lamRango');if(r&&Number(r.value)!==y)r.value=y;
+}
+/* El botón recorre la historia sola, de 605 a.C. a hoy, en unos 14 segundos. */
+function lamRecorre(){
+  if(lamCorre){lamPara();return;}
+  const r=document.getElementById('lamRango');let y=Number(r.value);if(y>=2026)y=-620;
+  const b=document.getElementById('lamPlay');if(b)b.classList.add('on');
+  lamCorre=setInterval(()=>{y+=Math.max(4,Math.round((2026+620)/280));if(y>=2026){y=2026;lamVeAnio(y);lamPara();return;}lamVeAnio(y);},50);
+}
+function lamPara(){if(lamCorre){clearInterval(lamCorre);lamCorre=0;}const b=document.getElementById('lamPlay');if(b)b.classList.remove('on');}
+
+/* ── Pruébate ── */
+function lamPintaReto(){
+  const L=LAM(),el=document.getElementById('lamReto');if(!el)return;
+  if(lamReto>=L.reto.length){el.innerHTML='<div class="lam-q">Terminaste: '+lamBien+' de '+L.reto.length+'.</div><button type="button" class="btn tono" onclick="lamOtraVez()">Otra vez</button>';return;}
+  const x=L.reto[lamReto];lamListo=false;
+  el.innerHTML='<div class="lam-nota">Pregunta '+(lamReto+1)+' de '+L.reto.length+'</div><div class="lam-q">'+esc(x.q)+'</div><div class="lam-ops">'+
+    L.partes.filter(p=>p.id!=='monte').map(p=>'<button type="button" data-id="'+p.id+'" onclick="lamResponde(\''+p.id+'\')"><span class="lam-sw" style="--c:'+p.c+'"></span>'+esc(p.nombre)+'</button>').join('')+
+    '</div><div class="lam-fb" id="lamFb" aria-live="polite"></div>';
+}
+function lamOtraVez(){lamReto=0;lamBien=0;lamPintaReto();}
+function lamResponde(id){
+  if(lamListo)return;lamListo=true;
+  const x=LAM().reto[lamReto],ok=id===x.ok,el=document.getElementById('lamReto');if(ok)lamBien++;
+  el.querySelectorAll('.lam-ops button').forEach(b=>{const k=b.getAttribute('data-id');if(k===x.ok)b.classList.add('ok');else if(k===id)b.classList.add('mal');});
+  document.getElementById('lamFb').innerHTML=(ok?'<strong>Bien.</strong> ':'<strong>Era otra.</strong> ')+esc(x.e);
+  setTimeout(()=>{lamReto++;lamPintaReto();},2200);
+}
+
+/* ── Presentar ── */
+const lamPasos=()=>{const L=LAM();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
+  {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'}];};
+function lamPres(k){
+  const pasos=lamPasos();if(k<0||k>=pasos.length)return;
+  const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
+  const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
+  const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos?'0':'1';
+  if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
+  else if(s.tipo==='portada'||s.tipo==='hist')lamEnciende(['__ninguna']);
+  else lamEnciende([]);
+  lamEtiquetas(false);
+  const piedra=svg.querySelector('.lam-piedra');
+  piedra.style.opacity=(s.id==='piedra')?'1':'0';
+  svg.querySelector('.lam-monte').style.opacity=(rotos||s.tipo==='desp'||s.tipo==='cierre')?'1':'0';
+  piedra.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');
+  if(s.anim==='cae'&&dir>0)lamCae(piedra);
+  else if(s.id==='piedra')piedra.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');
+  if(s.anim==='monte'&&dir>0)lamPolvo(svg);
+  lamAcerca(s.tipo==='parte'&&L.tiempo.includes(s.id)?lamCaja(s.id):lamTodo(),900);
+  const ult=vistos.filter(id=>L.tiempo.includes(id)).pop();
+  if(ult){const p=lamParte(ult);const r=document.getElementById('lamRango');r.value=Math.min(p.a,2026);
+    document.getElementById('lamTano').textContent=lamAnioTx(p.de)+' – '+(p.a>=2026?'hoy':lamAnioTx(p.a));document.getElementById('lamTq').textContent=p.reino;}
+  if(s.tipo==='portada')lamHoja('<div class="lam-hcab"><div><div class="lam-p1">Daniel 2</div><div class="lam-p2">'+esc(L.titulo)+'</div></div></div>'+
+    '<div class="lam-capa t"><div class="lam-rot">'+L.inicio.ref+' · RV1995</div><p><q>'+esc(L.inicio.texto)+'</q></p></div><p class="lam-nota">Cuatro reinos, Roma en tres fases y un reino que no será jamás destruido.</p>');
+  else if(s.tipo==='hist')lamHoja(lamHojaTexto(L.historia[s.i]));
+  else if(s.tipo==='desp')lamHoja(lamHojaTexto(L.despues));
+  else if(s.tipo==='cierre')lamHoja(lamHojaTexto({ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}));
+  else lamHoja(lamHojaParte(lamParte(s.id),0,1));
+  document.getElementById('lamCuenta').textContent=(k+1)+' / '+pasos.length;
+  document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
+}
+function lamCae(piedra){
+  const [gx,gy]=LAM().golpe;
+  if(lamQuieto()){piedra.setAttribute('transform','translate('+gx+' '+gy+') rotate(40)');return;}
+  const t0=performance.now(),ms=1100,[x0,y0]=PIEDRA0;
+  const f=t=>{const k=Math.min(1,(t-t0)/ms),e=k*k;
+    piedra.setAttribute('transform','translate('+(x0+(gx-x0)*e)+' '+(y0+(gy-y0)*e)+') rotate('+(k*300)+')');
+    if(k<1)requestAnimationFrame(f);else{const est=piedra.parentNode.querySelector('.lam-estatua');
+      if(est&&est.animate)est.animate([{transform:'translate(0,0)'},{transform:'translate(-12px,4px)'},{transform:'translate(12px,-2px)'},{transform:'translate(0,0)'}],{duration:380});}};
+  requestAnimationFrame(f);
+}
+/* La estatua se hace «tamo» y se lo lleva el viento (2:35). */
+function lamPolvo(svg){
+  const capa=svg.querySelector('.lam-polvo');
+  if(lamQuieto()){capa.innerHTML='';return;}
+  const L=LAM(),col={oro:'#E9C255',plata:'#C9D1DA',bronce:'#C27A42',hierro:'#56606C',barro:'#B9805E',dedos:'#B9805E'};let h='';
+  L.capas.forEach(id=>{const [x,y,w,hh]=L.cajas[id],n=id==='dedos'?20:70;
+    for(let i=0;i<n;i++){const px=x+Math.random()*w,py=y+Math.random()*hh,r=5+Math.random()*13;
+      h+='<path d="M'+px.toFixed(1)+' '+(py-r).toFixed(1)+'l'+r.toFixed(1)+' '+(r*1.6).toFixed(1)+'h'+(-r*2).toFixed(1)+'z" fill="'+col[id]+'"/>';}});
+  capa.innerHTML=h;
+  capa.querySelectorAll('path').forEach(el=>{if(el.animate)el.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:'translate('+(450+Math.random()*900)+'px,'+(-160+Math.random()*220)+'px) rotate('+(Math.random()*540)+'deg)',opacity:0}],
+    {duration:1400+Math.random()*900,delay:Math.random()*350,easing:'cubic-bezier(.3,.1,.3,1)',fill:'forwards'});});
+  setTimeout(()=>{capa.innerHTML='';},2800);
+}
+document.addEventListener('keydown',e=>{
+  if(!lamModo)return;
+  if(e.key==='Escape'){lamCierra();return;}
+  if(lamModo!=='presentar')return;
+  if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();lamPres(lamPaso+1);}
+  else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();lamPres(lamPaso-1);}
+});
+
+
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;
 const ACT=()=>ACTIVIDADES[ACT_DE(S.cat)]||ACTIVIDADES.cb;
@@ -68350,6 +69169,8 @@ function verCap(id,quieto){
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
+    /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
+    lamTarjeta(id)+
     (secs.some(s=>s.capa)?filtroCapas():'')+
     (secs.some(esSecInterp)?'<button type="button" class="btn txt ir-interp" onclick="irInterp()">'+IC('brujula')+' Ir a la interpretación</button>':'')+
     secs.filter(s=>!esSecInterp(s)).map(htmlSec(id)).join('')+

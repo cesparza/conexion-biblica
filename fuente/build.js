@@ -21,6 +21,7 @@ const { MAT_EXTRA } = require('./matutina-extra.js');
 const CR = require('./creencias.js');
 const AP = require('./apocalipsis.js');
 const COMP_DANIEL = require('./complementos/daniel.js');
+const { LAMINAS } = require('./laminas.js');
 const { VERS_AP } = require('./biblia-apocalipsis.js');
 const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
@@ -262,6 +263,10 @@ const CONTENIDO = ${JSON.stringify(CONTENIDO_ALL, null, 1)};
 const BANCO = ${JSON.stringify(BANCO_NV, null, 1)};
 
 const MODULOS_BASE = ${JSON.stringify(MODULOS_ALL, null, 1)};
+
+/* Los estudios interactivos con imagen (fuente/laminas.js); las imágenes van
+   aparte, en laminas/, y se piden al abrir. */
+const LAMINAS = ${JSON.stringify(LAMINAS, null, 1)};
 
 /* Los examenes reales de Daniel (fuente/examenes-reales.js) y que hoja ve
    cada categoria. */
