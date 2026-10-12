@@ -473,8 +473,12 @@ const MANUAL = [
     su puntaje y su fecha: ahí se ve si estás subiendo o estancado.</p>
     <p>Al lado de la categoría puede salir una palabra: <strong>· simulacro</strong>
     si fue un simulacro, <strong>· evaluación</strong> si fue la evaluación del día
-    y <strong>· repaso</strong> si fue un repaso de tus errores. Sin palabra, fue un
-    examen normal.</p>` },
+    y <strong>· repaso</strong> si fue un repaso de tus errores,
+    <strong>· examen real</strong> si fue la hoja del campamento de 2026. Sin
+    palabra, fue un examen normal. Al final sale cuánto tardaste.</p>
+    <p><strong>El tiempo cuenta.</strong> En el campamento, con la misma nota
+    gana quien entrega primero. Cuando aciertas todas, la app guarda tu mejor
+    tiempo y te avisa si lo bajaste.</p>` },
   ]},
 
 { id:'a-instalar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-compartir"/></svg>', t:'Ponerla como app en el celular',
@@ -725,8 +729,10 @@ const MANUAL = [
     más flojo. <strong>Historial</strong> muestra cada examen con su fecha, así
     que se ve si mejora o se estancó.</p>
     <p>En el historial, cada examen viene marcado: <strong>· simulacro</strong>,
-    <strong>· evaluación</strong>, <strong>· repaso</strong> de errores, y
-    sin marca los normales. Para comparar dos niños entre sí solo sirven los
+    <strong>· evaluación</strong>, <strong>· repaso</strong> de errores,
+    <strong>· examen real</strong> (la hoja del campamento de 2026), y sin marca
+    los normales. Cada uno dice cuánto tardó: con nota igual, el campamento
+    desempata por tiempo. Para comparar dos niños entre sí solo sirven los
     <strong>· evaluación</strong>: son el mismo examen. Los demás salen al azar.</p>` },
   ]},
 

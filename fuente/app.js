@@ -192,8 +192,11 @@ function normalizar(x){
     s.examenes=x.examenes.filter(e=>e&&Number.isFinite(Number(e.pts)))
       .map(e=>({pts:Number(e.pts),total:Number(e.total)||0,
         cat:Object.keys(CATS).includes(e.cat)?e.cat:'av',fecha:String(e.fecha||''),
-        modo:['simulacro','errores','evaluacion','compartido'].includes(e.modo)?e.modo:'normal',
-        nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1})).slice(-40);
+        modo:['simulacro','errores','evaluacion','compartido','real'].includes(e.modo)?e.modo:'normal',
+        nv:[1,2,3].includes(Number(e.nv))?Number(e.nv):1,
+        /* v176: segundos que tardó, y de qué hoja era si fue un examen real. */
+        ...(Number.isInteger(e.dur)&&e.dur>0&&e.dur<36000?{dur:e.dur}:{}),
+        ...(typeof e.ex==='string'&&EXAMENES_REALES[e.ex]?{ex:e.ex}:{})})).slice(-40);
   const r=Number(x.racha);s.racha=Number.isFinite(r)?Math.max(0,Math.min(999,r)):0;
   if(typeof x.ultimo==='string')s.ultimo=x.ultimo;
   const pr=Number(x.protector);s.protector=Number.isFinite(pr)?Math.max(0,Math.min(PROTECTOR_MAX,Math.round(pr))):0;
@@ -4823,6 +4826,7 @@ function pintaExInicio(){
     ' Reparto: '+textoReparto()+'.';
   document.getElementById('ex-err').innerHTML=f>=3
     ?'<button class="btn gho" onclick="arrancaExamen(\'errores\')">'+IC('repetir')+' Repasar mis '+f+' errores</button>':'';
+  pintaReal();
   pintaCierre();
 }
 
@@ -4968,7 +4972,11 @@ const textoReparto=()=>'Sección I '+Math.round((1-REPARTO.fill-REPARTO.tf)*100)
    aprobar por patrón en vez de por contenido. */
 function barajaOpciones(q){
   if(q.t!=='mc'||!q.o)return q;
-  const idx=mezclaR(q.o.map((_,i)=>i),rndEx);
+  /* «Todas las anteriores» solo tiene sentido de última: se queda ahí y se
+     barajan las demás. Llegó con los exámenes reales de Daniel (v176). */
+  const fija=q.o.findIndex(o=>/^(todas|ninguna) las anteriores\.?$/i.test(o));
+  const sueltas=q.o.map((_,i)=>i).filter(i=>i!==fija);
+  const idx=fija<0?mezclaR(sueltas,rndEx):[...mezclaR(sueltas,rndEx),fija];
   return {...q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a)};
 }
 
@@ -4976,6 +4984,60 @@ function barajaOpciones(q){
    confirmado; se usa algo más de un minuto por pregunta, que es lo cómodo
    para practicar sin acostumbrarse a ir lento. */
 const segundosPara=n=>Math.max(300,Math.round(n*(CAT().seg||72)));
+
+/* ───────── el examen real y el tiempo (v176) ─────────
+   POR QUÉ
+   En el campamento del 10-oct-2026 el club de 7 a 9 años sacó 30 de 30 y quedó
+   de tercero: con nota igual, desempata quien entrega primero. Hasta aquí la
+   app medía aciertos y nunca cuánto se tardaba.
+
+   QUÉ HACE
+   · Cada examen guarda `dur`, los segundos entre el arranque y la entrega,
+     medidos con el reloj del aparato y no con el contador de pantalla (ese se
+     frena si el teléfono suspende la pestaña).
+   · Con todo bien, la app recuerda el mejor tiempo: por hoja en el examen
+     real, y por cantidad de preguntas en los demás, porque 15 y 30 preguntas
+     no se comparan.
+   · La categoría que tiene hoja real (EXAMEN_DE) la presenta igual que en el
+     campamento: las mismas preguntas en el mismo orden. Las opciones sí se
+     barajan, para que se aprenda la respuesta y no la letra. */
+let t0Ex=0;
+const hojaReal=()=>EXAMEN_DE[S.cat]&&EXAMENES_REALES[EXAMEN_DE[S.cat]]?EXAMEN_DE[S.cat]:'';
+function armarReal(){
+  const ex=EXAMENES_REALES[hojaReal()];
+  return ex?ex.preguntas.map((q,i)=>barajaOpciones({...q,id:'q'+i})):[];
+}
+const reloj2=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+/* El mejor tiempo con todo bien, sin contar el examen que se está guardando. */
+function mejorTiempo(cat,ex,total){
+  const ts=S.examenes.filter(e=>e.cat===cat&&e.dur&&e.pts===e.total&&
+    (ex?e.ex===ex:(e.modo!=='real'&&e.modo!=='errores'&&e.total===total))).map(e=>e.dur);
+  return ts.length?Math.min(...ts):0;
+}
+function htmlTiempo(perfecto,dur,antes,real){
+  if(!dur)return '';
+  const marca=!perfecto?'Cuando las aciertes todas, la app guarda tu mejor tiempo.'
+    :!antes?'Es tu primera vez con todo bien: esa es tu marca.'
+    :dur<antes?'<strong>¡Nueva marca!</strong> La anterior era '+reloj2(antes)+'.'
+    :'Tu mejor tiempo con todo bien es '+reloj2(antes)+'.';
+  return '<div class="card"><h2>'+IC('reloj')+' Terminaste en '+reloj2(dur)+'</h2>'+
+    '<p class="nota">'+marca+'</p>'+
+    (real?'<p class="nota">En el concurso, con la misma nota gana quien entrega primero. '+
+      'Contesta de una vez lo que sabes, vuelve solo a las dudosas y entrega.</p>':'')+'</div>';
+}
+function pintaReal(){
+  const caja=document.getElementById('ex-real');
+  if(!caja)return;
+  const id=hojaReal(),ex=EXAMENES_REALES[id];
+  if(!ex||examenesCerrados()){caja.innerHTML='';return;}
+  const m=mejorTiempo(S.cat,id);
+  caja.innerHTML='<div class="card"><h2>'+IC('trofeo')+' El examen real de 2026</h2>'+
+    '<p>Las '+ex.preguntas.length+' preguntas del examen de Daniel de '+esc(ex.nombre)+' del 10 de octubre, en el mismo orden. '+
+    'El club sacó '+esc(ex.club)+'.</p>'+
+    '<p class="nota">Con la misma nota gana quien entrega primero, así que aquí cuenta el reloj.'+
+    (m?' Tu mejor tiempo con todo bien: <strong>'+reloj2(m)+'</strong>.':'')+'</p>'+
+    '<button class="btn azul" onclick="arrancaExamen(\'real\')">'+IC('reloj')+' Hacer el examen real</button></div>';
+}
 
 /* iniciar() sigue siendo la GUARDA y sigue siendo síncrona: decide con lo que
    ya sabe. Quien le da frescura es arrancaExamen(), que es lo que llaman los
@@ -4992,10 +5054,11 @@ function iniciar(m){
      examen pasado, y la evaluación en curso porque este examen no es ella. */
   evalActual=null;ultimoRes=null;
   ir('examen');
-  prueba=armar(modo);resp={};entregado=false;
+  prueba=modo==='real'?armarReal():armar(modo);resp={};entregado=false;
   if(!prueba.length){reinicia();return;}
   marcaVistas(prueba);
   seg=segundosPara(prueba.length);
+  t0Ex=Date.now();
   document.getElementById('ex-inicio').style.display='none';
   exCurso(true);
   document.getElementById('ex-result').style.display='none';
@@ -5031,10 +5094,11 @@ function pintaPreguntas(){
     qs.forEach(q=>{h+=htmlQ(q,n++,false);});
   }
   document.getElementById('preguntas').innerHTML=h;
-  const ET={normal:'',simulacro:' · Simulacro',errores:' · Repaso de errores'};
+  const ET={normal:'',simulacro:' · Simulacro',errores:' · Repaso de errores',real:' · Examen real'};
   const NA={todo:'todo el material',biblia:'solo Daniel',pr:'solo Profetas y Reyes'};
   const rangoAct=rangoDe(alcance);
   const alc=modo==='errores'?'mis errores'
+    :modo==='real'?'examen de '+((EXAMENES_REALES[hojaReal()]||{}).nombre||'')
     :rangoAct?textoRango(rangoAct)
     :(NA[alcance]||(buscaItem(alcance)||{}).label||'');
   document.getElementById('ex-meta').textContent=prueba.length+' preguntas · '+alc+
@@ -5137,7 +5201,12 @@ function entregar(){
   const pts=prueba.filter(bien).length,tot=prueba.length,pct=Math.round(pts/tot*100);
   const catReg=S.cat;
   const nvReg=modo==='evaluacion'&&evalActual&&evalActual.nivel?evalActual.nivel:nivelEfectivo();
-  S.examenes.push({pts,total:tot,cat:catReg,fecha:new Date().toISOString(),modo,nv:nvReg});
+  const dur=Math.max(1,Math.round((Date.now()-(t0Ex||Date.now()))/1000));
+  const exReg=modo==='real'?hojaReal():'';
+  /* La marca se calcula ANTES de guardar este examen: si es el mejor, se
+     compara contra los anteriores, no contra sí mismo. */
+  const antes=mejorTiempo(catReg,exReg,tot);
+  S.examenes.push({pts,total:tot,cat:catReg,fecha:new Date().toISOString(),modo,nv:nvReg,dur,...(exReg?{ex:exReg}:{})});
   /* Registro por pregunta y por capítulo: alimenta «mis errores»,
      el panel de puntos débiles y la repetición espaciada. */
   for(const q of prueba){
@@ -5174,7 +5243,7 @@ function entregar(){
   if(modo==='evaluacion'){evalHecha=true;evalNota={pts,total:tot};try{pintaEvaluacion();}catch(e){}}
   try{pintaSenales();}catch(e){}
 
-  ultimoRes={pts,tot,pct,med,msg,s3};
+  ultimoRes={pts,tot,pct,med,msg,s3,dur,antes,real:!!exReg};
   exCurso(false);
   pintaResultado();
 }
@@ -5196,7 +5265,7 @@ function htmlRevision(){
 
 function pintaResultado(){
   if(!ultimoRes)return;
-  const {pts,tot,pct,med,msg,s3}=ultimoRes;
+  const {pts,tot,pct,med,msg,s3,dur,antes,real}=ultimoRes;
   const ver=revelaRespuestas();
   const r=document.getElementById('ex-result');
   r.style.display='block';
@@ -5205,6 +5274,7 @@ function pintaResultado(){
     '<div class="pt">'+pts+'<span style="font-size:1.75rem;opacity:.7">/'+tot+'</span></div>'+
     '<div style="opacity:.9;margin-top:.3rem">'+pct+'% · '+msg+'</div>'+
     '<div class="sec3">'+s3+'</div></div>'+
+    htmlTiempo(pts===tot,dur,antes,real)+
     (ver
       ?'<div class="card"><h2>'+IC('lista')+' Revisión</h2>'+htmlRevision()+
        (director?'<p class="nota">Estás viendo esto como <strong>director</strong>. '+
@@ -5371,8 +5441,10 @@ function pintaLogros(){
           comparable entre dos niñas: es el mismo examen el mismo día.
           Van como texto y no como emoji: un emoji lo dibuja el sistema y se ve
           distinto en cada aparato. */
-       const mt={simulacro:' · simulacro',errores:' · repaso',evaluacion:' · evaluación',compartido:' · evaluación'}[e.modo]||'';
-       return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
+       const mt={simulacro:' · simulacro',errores:' · repaso',evaluacion:' · evaluación',compartido:' · evaluación',real:' · examen real'}[e.modo]||'';
+       /* v176: cuánto tardó, que con nota igual es lo que desempata. */
+       const dt=e.dur?' · '+reloj2(e.dur):'';
+       return '<tr><td class="key">'+fs+'</td><td>'+((CATS[e.cat]||CATS.av).nombre)+mt+dt+'</td><td><strong>'+e.pts+'/'+e.total+'</strong> ('+Math.round(e.pts/e.total*100)+'%)</td></tr>';
      }).join('')+'</tbody></table></div>'
     :'<p class="nota">Todavía no has hecho ningún examen.</p>';
 }

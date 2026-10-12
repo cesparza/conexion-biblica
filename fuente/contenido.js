@@ -426,7 +426,10 @@ d3: [
     tamaño del acto oficial.`) +
     wa(`Ojo con no confundirla con los cuatro grupos de sabios de Daniel 2:2
     (magos, astrólogos, encantadores, caldeos). Aquí son
-    <strong>funcionarios de gobierno</strong>, no adivinos.`) },
+    <strong>funcionarios de gobierno</strong>, no adivinos.<br><br>
+    En el examen real de Adultos del 10 de octubre de 2026 esta fue
+    <strong>la única que el club perdió</strong> (34 de 35): marcó los magos y
+    astrólogos. A la dedicación de la estatua van los funcionarios.`) },
 
   { t:'📢 La orden y la amenaza (3:4-6)', capa:'nucleo', h:
     li([`Quién lo anuncia: <strong>el pregonero</strong>, en alta voz (3:4).`,
@@ -900,6 +903,18 @@ pr39: [
     <strong>por medio de los que le eran leales</strong>, y de la única manera
     en que podía darse.`) },
 
+  /* v176: el examen real de Adultos preguntó este párrafo (PR 351) y el
+     estudio no lo traía. Texto literal del libro. */
+  { t:'🪨 Fieles como el acero (PR 351)', h:
+    hi(`Así abre el capítulo: entre los llevados a Babilonia al principio de
+    los setenta años de cautiverio había <strong>«hombres que eran tan fieles
+    a los buenos principios como el acero, que no serían corrompidos por el
+    egoísmo, sino que honrarían a Dios aun cuando lo perdiesen todo»</strong>
+    (PR 351).<br><br>
+    Son tres cosas, y el examen de 2026 dio la respuesta «Todas las
+    anteriores»: <strong>fieles como el acero</strong>, <strong>no
+    corrompidos por el egoísmo</strong>, <strong>honrar a Dios aunque lo
+    perdieran todo</strong>.`) },
   { t:'🏷️ Cuatro nombres nuevos', h:
     hi(`En Babilonia les cambiaron el nombre a los cuatro jóvenes. Daniel pasó a llamarse Beltsasar, Ananías se llamó Sadrach, Misael se llamó Mesach y Azarías se llamó Abednego. Los nombres nuevos recordaban a los dioses de los caldeos. El rey no los obligó a adorar ídolos de golpe: quería que poco a poco se olvidaran de Dios (PR 352.3-352.4).`) },
   { t:'🍽️ Por qué rechazaron la comida del rey', h:
@@ -955,6 +970,16 @@ pr39: [
 
   { t:'🌟 Dios también quiere usarte a ti', h:
     hi(`Daniel y sus amigos no se imaginaban lo que Dios haría con ellos cuando salieron de su casa. Lo que Dios hizo por medio de ellos quiere hacerlo hoy por medio de los jóvenes y de los niños que se entregan a él de todo corazón (PR 360.2-360.3).`) },
+  /* v176: preguntado en el examen real de Adultos como frase para completar. */
+  { t:'🏙️ En nuestras grandes ciudades (PR 360)', h:
+    hi(`Para los jóvenes de hoy, el libro dice: <strong>«Aunque rodeados por
+    tentaciones a satisfacer sus apetitos, especialmente en nuestras grandes
+    ciudades, donde resulta fácil y atrayente toda complacencia sensual,
+    pueden permanecer por la gracia de Dios firmes en su propósito de honrar a
+    Dios»</strong> (PR 360).<br><br>
+    Las dos palabras que preguntaron: <strong>grandes ciudades</strong> y
+    <strong>honrar</strong>. Y sigue: «Pero sólo podrá alcanzar la victoria el
+    que resuelva hacer el bien por el bien mismo».`) },
   { t:'🎯 Aplicación para los jóvenes de hoy', h:
     hi(`Mantenerse fiel a los principios de Dios en un ambiente contrario es un
     <strong>acto de fe y un testimonio</strong> ante quienes no creen.
@@ -1122,9 +1147,23 @@ pr41: [
     hi(`Estuvo BIEN que el rey reconociera a Dios delante de todos y lo pusiera por encima de los otros dioses (PR 375.3). Estuvo MAL que obligara a los demás a creer lo mismo que él, amenazándolos de muerte. Dios nunca obliga a nadie: deja que cada uno elija a quién quiere servir.`) },
   { t:'🌍 La noticia viajó por el mundo', h:
     hi(`En la fiesta de Dura había representantes de muchas naciones que el rey había invitado. Ellos vieron el milagro y llevaron la noticia a muchos países. Así, gracias a la fidelidad de tres jóvenes, Dios fue conocido y honrado en toda la tierra (PR 375.4).`) },
+  /* v176: lo que el examen real de Adultos preguntó de PR 375 y 376. */
+  { t:'🤝 De parte de los oprimidos (PR 375)', h:
+    hi(`<strong>«Mediante la liberación de sus fieles siervos, el Señor declaró
+    que está de parte de los oprimidos, y reprende a todos los poderes
+    terrenales que se rebelan contra la autoridad del Cielo»</strong>
+    (PR 375).<br><br>
+    En la hora de su prueba, los tres <strong>recordaron la promesa de Isaías
+    43:2</strong>: «Cuando pasares por las aguas, yo seré contigo… Cuando
+    pasares por el fuego, no te quemarás».`) },
   { t:'🕰️ Modelo para la crisis final', h:
     hi(`• Este evento es un <strong>modelo para el tiempo del fin</strong>,
     cuando se exigirá adoración contraria a la voluntad de Dios<br>
+    • «La ira del hombre se despertará en forma especial contra aquellos que
+    <strong>santifican el sábado</strong> del cuarto mandamiento» (PR 376), y
+    en el <strong>tiempo de angustia</strong> el que anduvo con ellos en el
+    horno acompañará a los suyos. Esas son las lecciones que preguntó el
+    examen de 2026<br>
     • La fidelidad puede costar la vida, pero <strong>Dios libera a los suyos</strong><br>
     • «Satanás, con toda la hueste del mal, no puede destruir al más débil
     de los santos de Dios» (PR 376.3), aunque obedecer pueda costar cárcel,

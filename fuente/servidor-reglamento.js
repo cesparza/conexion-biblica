@@ -631,7 +631,7 @@ export const CATALOGO = {
     "sub": "Cautivos en Babilonia",
     "grupo": "Biblia",
     "n": [
-     30,
+     40,
      23,
      14
     ]
@@ -642,8 +642,8 @@ export const CATALOGO = {
     "sub": "El sueño de la gran imagen",
     "grupo": "Biblia",
     "n": [
-     19,
-     41,
+     35,
+     44,
      9
     ]
    },
@@ -653,8 +653,8 @@ export const CATALOGO = {
     "sub": "La imagen de oro y el horno",
     "grupo": "Biblia",
     "n": [
-     27,
-     28,
+     35,
+     33,
      13
     ]
    },
@@ -686,8 +686,8 @@ export const CATALOGO = {
     "sub": "En el foso de los leones",
     "grupo": "Biblia",
     "n": [
-     26,
-     24,
+     31,
+     33,
      20
     ]
    },
@@ -763,9 +763,9 @@ export const CATALOGO = {
     "sub": "En la corte de Babilonia",
     "grupo": "Elena de White",
     "n": [
-     1,
-     28,
-     7
+     2,
+     29,
+     8
     ]
    },
    {
@@ -786,8 +786,8 @@ export const CATALOGO = {
     "grupo": "Elena de White",
     "n": [
      1,
-     23,
-     11
+     25,
+     12
     ]
    },
    {
@@ -819,7 +819,7 @@ export const CATALOGO = {
     "grupo": "Elena de White",
     "n": [
      1,
-     27,
+     28,
      8
     ]
    }

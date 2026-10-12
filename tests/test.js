@@ -2352,7 +2352,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const cat4=JSON.parse((/export const CATALOGO = (\{[\s\S]*?\n\});/.exec(GEN4)||[])[1]||'{}');
     const d1=((cat4.daniel||{}).caps||[]).find(c=>c.id==='d1')||{n:[]};
     ok(Object.keys(cat4).join()==='daniel,matutina,creencias'&&cat4.daniel.caps.length===18&&cat4.matutina.caps.length===31&&cat4.creencias.caps.length===28&&
-       d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA].filter(q=>q.cap==='d1').length&&
+       d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA,...require(path.join(RAIZ,'fuente','examenes-reales.js')).BANCO_REAL].filter(q=>q.cap==='d1').length&&
        cat4.daniel.repasos.some(r=>r.id==='m-linea'),
       'El catálogo trae los tres temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
 
@@ -2400,6 +2400,34 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Lo de las introducciones también se practica en tarjetas');
   const md=(CRx.CR_CONT_MODULOS['mc-doctrinas']||[]).filter(s=>/Cómo abre la doctrina/.test(s.t));
   ok(md.length===6&&md.every((s,i)=>s.h.includes('Doctrina '+(i+1)+' de 6')),'El repaso de las 6 doctrinas trae las seis introducciones');
+}
+
+/* v176: los exámenes reales de Daniel. Cada pregunta de Daniel trae el
+   versículo y un trozo literal que tiene que estar en RV1995; la clave es la
+   del jurado. Las de Profetas y Reyes se cotejaron con el libro en el Mac. */
+{
+  const R=require(path.join(RAIZ,'fuente','examenes-reales.js'));
+  const {VERS:VV}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const CONT=JSON.stringify(CONTENIDO);
+  const pa=R.EXAMENES_REALES.pa26.preguntas, av=R.EXAMENES_REALES.av26.preguntas;
+  ok(pa.length===35&&av.length===30&&pa.every((q,i)=>q.n===i+1)&&av.every((q,i)=>q.n===i+1),
+    'Los exámenes reales de Daniel están completos y en orden (35 de Adultos, 30 de 7 a 9)');
+  const malas=[...pa,...av].filter(q=>{
+    if(q.pr)return !/^pr\d\d$/.test(q.cap);
+    const [c,v]=(q.ref||'').split(':');
+    return !(q.cap==='d'+c&&VV[q.cap]&&String(VV[q.cap][v]||'').includes(q.lit));
+  });
+  ok(!malas.length,'Cada respuesta de Daniel está literal en el versículo que cita'+(malas.length?' — '+malas.map(q=>q.n+' '+q.q.slice(0,30)).join(' / '):''));
+  ok([...pa,...av].every(q=>q.t==='tf'?typeof q.a==='boolean':(Number.isInteger(q.a)&&q.a>=0&&q.a<q.o.length)),
+    'Cada pregunta real tiene su respuesta dentro de sus opciones');
+  ok(pa[16].a===3&&/sátrapas/.test(pa[16].o[3])&&/la única que el club perdió/.test(CONT),
+    'La 17 de Adultos, la que se perdió, tiene la respuesta de Daniel 3:2 y el estudio lo advierte');
+  ok(pa.filter(q=>q.t==='tf').length===8&&pa.filter(q=>q.cap.startsWith('pr')).length===7&&av.every(q=>q.t==='mc'&&q.cap[0]==='d'),
+    'El formato es el del campamento: Adultos con 8 V/F y 7 de P&R, 7 a 9 solo selección de Daniel');
+  const banco=new Set(BANCO_HTML.map(q=>q.q));
+  ok([...pa,...av].every(q=>banco.has(q.q)),'Todas las preguntas reales entran al banco de la app');
+  ok(/PR 351/.test(CONT)&&/grandes ciudades/.test(CONT)&&/de parte de los oprimidos/.test(CONT)&&/santifican el sábado/.test(CONT),
+    'Lo que el examen preguntó de Profetas y Reyes está en el estudio (PR 351, 360, 375 y 376)');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

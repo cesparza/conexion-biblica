@@ -1866,7 +1866,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const comillas=mc.filter(q=>{const t=q.o.map(tipo);return new Set(t).size>1&&t.filter(x=>x===t[q.a]).length===1;});
   ok(comillas.length===0,'Ninguna pregunta donde solo la correcta lleva su tipo de comillas'+
     (comillas.length?' ('+comillas.map(q=>q.q.slice(0,40)).join(' / ')+')':''));
-  const larga=mc.filter(q=>{const L=q.o.map(x=>String(x).length),mx=Math.max(...L);
+  /* v176: las de un examen real (q.real) van con las opciones del jurado, que
+     no se reescriben; esta regla es para las que redacta la app. */
+  const larga=mc.filter(q=>!q.real).filter(q=>{const L=q.o.map(x=>String(x).length),mx=Math.max(...L);
     if(L.indexOf(mx)!==q.a||L.filter(x=>x===mx).length>1)return false;
     return mx>1.6*((L.reduce((a,b)=>a+b,0)-mx)/(L.length-1));});
   ok(larga.length<=6,'La correcta casi nunca es la más larga por mucho ('+larga.length+' de '+mc.length+
@@ -1904,6 +1906,42 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(!Z.cuerpo().classList.contains('ex-activo'),'Al entregar se sale del modo concentración');
   Z.iniciar('normal'); Z.reinicia();
   ok(!Z.cuerpo().classList.contains('ex-activo'),'Y al cancelar también');
+}
+
+/* ─── v176: el examen real de 2026 y el tiempo ───
+   La hoja de cada categoría sale entera y en orden, «Todas las anteriores» se
+   queda de última, y la entrega guarda los segundos y de qué hoja fue. Con
+   todo bien, el siguiente intento se compara contra esa marca. */
+{
+  const Z=montar(RET+', el:id=>document.getElementById(id), reinicia, armarReal, hojaReal, mejorTiempo, EXAMENES_REALES, pintaReal, barajaOpciones');
+  for(const [cat,hoja,n] of [['pa','pa26',35],['av','av26',30],['gm','pa26',35]]){
+    Z.ponCat(cat);
+    const p=Z.armarReal();
+    ok(Z.hojaReal()===hoja&&p.length===n&&p.every((q,i)=>q.q===Z.EXAMENES_REALES[hoja].preguntas[i].q),
+      'En '+cat+' el examen real es la hoja '+hoja+', con sus '+n+' preguntas en el orden del campamento');
+  }
+  Z.ponCat('me');
+  ok(Z.hojaReal()===''&&Z.armarReal().length===0,'Una categoría sin hoja real no ofrece examen real');
+  let fija=true;
+  for(let i=0;i<30;i++){const q=Z.barajaOpciones({t:'mc',q:'x',o:['a','b','c','Todas las anteriores'],a:3});
+    if(q.o[3]!=='Todas las anteriores'||q.a!==3)fija=false;}
+  ok(fija,'«Todas las anteriores» se queda de última al barajar');
+
+  Z.ponCat('av'); Z.iniciar('real');
+  const p=Z.prueba();
+  ok(p.length===30,'«Hacer el examen real» arranca con las 30 preguntas de 7 a 9 años');
+  p.forEach(q=>Z.marca(q.id,q.a));
+  Z.entregar();
+  const ult=Z.S().examenes.slice(-1)[0];
+  ok(ult.modo==='real'&&ult.ex==='av26'&&ult.pts===30&&Number.isInteger(ult.dur)&&ult.dur>=1,
+    'Al entregar se guarda que fue la hoja real, la nota y los segundos ('+JSON.stringify(ult)+')');
+  ok(/Terminaste en \d+:\d\d/.test(Z.el('ex-result').innerHTML)&&/primera vez con todo bien/.test(Z.el('ex-result').innerHTML),
+    'El resultado dice cuánto tardó y que esa es su primera marca');
+  ok(/gana quien entrega primero/.test(Z.el('ex-result').innerHTML),'Y le recuerda que con nota igual desempata el tiempo');
+  ok(Z.mejorTiempo('av','av26')===ult.dur,'La marca queda guardada para la próxima');
+  const N=Z.normalizar(JSON.parse(JSON.stringify(Z.S())));
+  const n2=N.examenes.slice(-1)[0];
+  ok(n2.dur===ult.dur&&n2.ex==='av26'&&n2.modo==='real','Los segundos y la hoja sobreviven a releer lo guardado');
 }
 
 /* ─── el director tiene que poder ver EN QUE se equivoco ───

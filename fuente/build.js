@@ -9,6 +9,7 @@ const { BANCO } = require('./preguntas.js');
 const { BANCO_COBERTURA } = require('./preguntas-cobertura.js');
 const { MAPA_VERSICULOS } = require('./mapa-versiculos.js');
 const { BANCO_PR } = require('./preguntas-pr.js');
+const { EXAMENES_REALES, EXAMEN_DE, BANCO_REAL } = require('./examenes-reales.js');
 const { MODULOS, CONT_MODULOS } = require('./modulos.js');
 const { TARJETAS } = require('./tarjetas.js');
 const { LOGO_TL } = require('./logo.js');
@@ -64,7 +65,7 @@ const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS];
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO };
 /* Las de cobertura van con las demas: son del mismo banco, solo que las
    escribio un generador a partir de los versiculos que no tenian ninguna. */
-const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO];
+const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...BANCO_REAL, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO];
 const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS];
 const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS };
@@ -212,6 +213,12 @@ for (const c of CAPS_ALL) {
    La app solo lee q.nv: la regla vive en un archivo y no se duplica. */
 const BANCO_NV = BANCO_ALL.map(q => ({ ...q, nv: nivelDe(q) }));
 
+/* Los examenes reales van con sus preguntas tal cual (fuente/examenes-reales.js),
+   sin lo que solo sirve para verificarlas. Cada una tiene la misma clave que
+   su copia del banco, porque la clave sale del capitulo y del texto. */
+const REALES = Object.fromEntries(Object.entries(EXAMENES_REALES).map(([id, ex]) =>
+  [id, { ...ex, preguntas: ex.preguntas.map(({ ref, lit, pr, ...q }) => ({ ...q, nv: nivelDe(q) })) }]));
+
 /* La app se escribe en archivos reales (estilos.css, cuerpo.html, app.js) y
    este script solo los ensambla con los datos. Antes todo vivía dentro de un
    template string: no había chequeo de sintaxis y cada comilla de un onclick
@@ -247,6 +254,11 @@ const CONTENIDO = ${JSON.stringify(CONTENIDO_ALL, null, 1)};
 const BANCO = ${JSON.stringify(BANCO_NV, null, 1)};
 
 const MODULOS_BASE = ${JSON.stringify(MODULOS_ALL, null, 1)};
+
+/* Los examenes reales de Daniel (fuente/examenes-reales.js) y que hoja ve
+   cada categoria. */
+const EXAMENES_REALES = ${JSON.stringify(REALES, null, 1)};
+const EXAMEN_DE = ${JSON.stringify(EXAMEN_DE)};
 
 /* GRUPOS: la dimension de arriba de cada actividad. Hoy la unica que la
    declara es «En esto creemos», con sus seis doctrinas, y por eso el
