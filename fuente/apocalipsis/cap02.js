@@ -134,7 +134,7 @@ module.exports = {
       tbl(['Símbolo', 'Significado'], [
         ['Nicolaítas', 'Según Ireneo e Hipólito, seguidores de Nicolás (Hechos 6:5). Enseñaban que lo que se hace con el cuerpo no mancha el alma y que el creyente está libre de la ley.'],
         ['Quitar el candelabro', 'Perder su lugar como luz del mundo (Mateo 5:14-16).'],
-        ['Árbol de la vida en el paraíso', 'El paraíso está en la presencia de Dios, en el tercer cielo (2 Corintios 12:2-4; 22:2).'],
+        ['Árbol de la vida en el paraíso', 'El paraíso está en la presencia de Dios, en el tercer cielo (2 Corintios 12:2-4; Apocalipsis 22:2).'],
       ]) +
       `<p>Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 13 y 45-53.</p>` },
 
@@ -198,8 +198,9 @@ module.exports = {
       se casó con el rey Acab, usó su poder para imponer el culto a Baal y
       persiguió a los profetas. Así, en la Edad Media, un sistema religioso usó
       el poder de los reyes para imponer sus doctrinas y perseguir a los que
-      disentían. Es el mismo período del cuerno pequeño de Daniel 7:25 y de los
-      1.260 días de 12:6 y de los 42 meses de 13:5.`) +
+      disentían. En este período empiezan los 1.260 años del cuerno pequeño
+      (Daniel 7:25; Apocalipsis 12:6; 13:5), que van de 538 a 1798: la carta
+      llega hasta su fin en 2:21-22.`) +
       wa(`Otras fechas: Urías Smith extiende Tiatira hasta 1798 (los 1.260 años
       completos) y Maxwell hasta 1565.`) +
       `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 85-91; Urías Smith, Las profecías del Apocalipsis, pág. 26; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, pág. 121.</p>` },
@@ -218,6 +219,32 @@ module.exports = {
       wa(`Bohr ve una segunda Jezabel al final (capítulo 17): por eso espera
       también un Elías final, un movimiento mundial.`) +
       `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 97-106; Elena de White, El conflicto de los siglos, pág. 63.</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos (1): Éfeso, Esmirna y Pérgamo', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Ángel de la iglesia', 'Su mensajero o ministro', 'Apocalipsis 1:20: «las siete estrellas son los ángeles de las siete iglesias»'],
+        ['Candelabro', 'La iglesia como luz del mundo', 'Apocalipsis 1:20; Mateo 5:14-16'],
+        ['Árbol de la vida', 'La vida eterna en la presencia de Dios', 'Génesis 3:22; Apocalipsis 22:2'],
+        ['Diez días', 'Diez años: un día profético es un año', 'Números 14:34; Ezequiel 4:6'],
+        ['Corona de la vida', 'El premio del vencedor, en la venida de Cristo', '2 Timoteo 4:8'],
+        ['Espada de la boca', 'La palabra de Dios', 'Hebreos 4:12; Efesios 6:17'],
+        ['Balaam', 'La apostasía desde adentro: idolatría y fornicación espiritual', 'Números 25:1-3; 31:16'],
+        ['Maná escondido', 'La palabra de Dios y Cristo, el pan del cielo', 'Deuteronomio 8:3; Juan 6:63'],
+        ['Nombre nuevo', 'Un carácter nuevo', 'Génesis 32:28: Jacob pasa a llamarse Israel'],
+      ]) +
+      `<p>Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 103-105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 21, 51-52, 60-61, 69 y 78-83; notas de Camilo en Evernote, "El Jesús del Apocalipsis".</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos (2): Tiatira', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Mujer', 'Una iglesia. Pura, si es fiel; ramera, si se une al mundo', 'Jeremías 6:2; 2 Corintios 11:2; Efesios 5:25-27; Ezequiel 16'],
+        ['Jezabel', 'Una iglesia apóstata que usa el poder civil para perseguir', '1 Reyes 16:31; 18:4; 2 Reyes 9'],
+        ['Fornicación', 'La unión de la iglesia con los poderes del mundo', 'Santiago 4:4; Ezequiel 16:15, 26; Apocalipsis 17:1-2'],
+        ['Ojos como llama de fuego', 'Lo conoce todo', 'Apocalipsis 2:23: «yo soy el que escudriña la mente y el corazón»'],
+        ['Tiempo para arrepentirse', '1.260 años, de 538 a 1798', 'Daniel 7:25 con Apocalipsis 12:6 y 14; Números 14:34'],
+        ['Vara de hierro', 'Autoridad para gobernar y juzgar', 'Salmo 2:8-9; Apocalipsis 19:15'],
+        ['Estrella de la mañana', 'Cristo', 'Apocalipsis 22:16: «la estrella resplandeciente de la mañana»'],
+      ]) +
+      `<p>Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 103 y 105-106; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 86, 93-100 y 104-105; notas de Camilo en Evernote, "Los 3 Elías" y "6. Pérgamo: La Iglesia filtrada".</p>` },
   ],
 
   preguntas: [
@@ -449,6 +476,17 @@ module.exports = {
     { t: 'tf', v: '2:28', f: 'c',
       q: 'Elena de White llamó a Juan Wiclef «el lucero de la Reforma».', a: true,
       e: 'Verdadero. Bohr explica que Cristo es la estrella de la mañana y los fieles, como Wiclef, reflejan su luz. Fuentes: Elena de White, El conflicto de los siglos, pág. 63; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 106.' },
+    { t: 'mc', v: '2:20', f: 'c',
+      q: 'En las profecías, ¿qué representa una mujer como Jezabel?',
+      o: ['Una iglesia, en este caso infiel', 'Un reino político de Asia', 'Una reina literal de Tiatira', 'Una ciudad pagana del imperio'], a: 0,
+      e: 'Una mujer pura es una iglesia fiel (Jeremías 6:2; Efesios 5:25-27); una ramera, una iglesia que se prostituyó con el mundo (Ezequiel 16; Apocalipsis 17:1-2). Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 103.' },
+    { t: 'tf', v: '2:10', f: 'c',
+      q: 'El principio de día por año, que convierte los «diez días» de Esmirna en diez años, se apoya en Números 14:34 y Ezequiel 4:6.', a: true,
+      e: 'Verdadero: en esos textos Dios cuenta un día por cada año. Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 60.' },
+    { t: 'mc', v: '2:17', f: 'c',
+      q: 'Según Bohr, ¿qué representa el «nombre nuevo» escrito en la piedrecita?',
+      o: ['Un carácter nuevo, como Jacob al ser Israel', 'Un título de honor dentro de la iglesia', 'Una contraseña para entrar al cielo', 'El nombre antiguo de la ciudad'], a: 0,
+      e: 'En la Biblia el nombre expresa el carácter: Jacob, el suplantador, venció y pasó a llamarse Israel (Génesis 32:28). Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 83; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104.' },
   ],
 
   tarjetas: [

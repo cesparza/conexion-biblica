@@ -191,6 +191,23 @@ module.exports = {
       «nos» para decir que sí lo son.<br><br>
       Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 35, 39-40
       y 81-83; Urías Smith, «Las profecías del Apocalipsis», pág. 45.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      hi(`Un mismo símbolo puede tener otro sentido en otro pasaje (un león
+      puede ser Cristo o Satanás). Por eso se busca el texto que lo explica en
+      su contexto.`) +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['León de la tribu de Judá', 'Cristo, el Rey que vence', 'Génesis 49:9-10; Apocalipsis 5:5'],
+        ['Raíz de David', 'Cristo, origen y descendiente de David', 'Apocalipsis 22:16: «Yo soy la raíz y el linaje de David»; Mateo 1:1'],
+        ['Cordero inmolado', 'Cristo, el sacrificio que paga el rescate', 'Éxodo 12:5-6; 1 Pedro 1:18-20'],
+        ['Cuernos', 'Poder de rey; en Daniel, un cuerno es un rey', 'Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»; Habacuc 3:4'],
+        ['Siete ojos', 'El Espíritu Santo enviado a la tierra', 'Apocalipsis 5:6: «los siete espíritus de Dios enviados por toda la tierra»; Zacarías 4:10'],
+        ['Copas de incienso', 'Las oraciones de los santos', 'Apocalipsis 5:8: «que son las oraciones de los santos»; Salmo 141:2'],
+        ['Libro sellado', 'Lo que no se entiende hasta que se rompen los sellos; aquí, la herencia perdida que rescata el pariente cercano', 'Daniel 12:4; Levítico 25:25'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      págs. 102-105; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs.
+      38-41 y 129; notas de Camilo en Evernote, "Los siete sellos".`) },
   ],
 
   preguntas: [
@@ -360,6 +377,17 @@ module.exports = {
       q: 'Según Bohr, ¿cuál es el tema de los cantos del capítulo 5, distinto del capítulo 4?',
       o: ['La redención', 'La creación', 'El juicio', 'La ley'], a: 0,
       e: 'En el capítulo 4 se alaba a Dios como Creador; en el 5, al Cordero como Redentor. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 33-34 y 40.' },
+    { t: 'mc', v: '5:6', f: 'c',
+      q: '¿Qué texto de Daniel explica que, en la profecía, un cuerno representa a un rey?',
+      o: ['Daniel 7:24', 'Daniel 2:44', 'Daniel 9:25', 'Daniel 12:4'], a: 0,
+      e: 'Daniel 7:24 dice: «Los diez cuernos significan que de aquel reino se levantarán diez reyes». Por eso los siete cuernos del Cordero hablan de su poder como rey. Fuentes: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105; Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 38.' },
+    { t: 'mc', v: '5:8', f: 'c',
+      q: 'Según Bohr, ¿qué salmo une el incienso con la oración, como lo hace Apocalipsis 5:8?',
+      o: ['Salmo 141:2', 'Salmo 23:1', 'Salmo 8:6', 'Salmo 110:1'], a: 0,
+      e: 'El salmista pide que su oración suba delante de Dios como el incienso. Bohr añade que en 8:3-4 el incienso son los méritos de Cristo que se suman a las oraciones. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 129.' },
+    { t: 'tf', v: '5:5', f: 'c',
+      q: 'Según Bohr, en la Biblia el león siempre representa a Cristo.', a: false,
+      e: 'Falso: los símbolos dependen del contexto. El león puede ser Cristo (5:5), Judá (Génesis 49), Babilonia (Jeremías 50:44) o Satanás (1 Pedro 5:8). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 102.' },
   ],
 
   tarjetas: [

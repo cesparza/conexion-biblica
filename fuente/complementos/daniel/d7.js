@@ -16,9 +16,9 @@ module.exports = {
         '<b>«Diferente de los primeros» (7:24)</b>: los diez cuernos eran reinos políticos; el cuerno pequeño es una <b>mezcla de iglesia y estado</b>.',
         '<b>«Ojos como de hombre» (7:8)</b>: en la profecía los ojos son sabiduría (Efesios 1:18). Este poder se apoyaría en la <b>sabiduría y la tradición humanas</b>.',
       ]) +
-      `<p>Las demás coinciden con las ocho marcas: romano, entre los diez, después del 476, arranca tres, habla contra el Altísimo, persigue, quiere cambiar la ley y dura 1.260 años.</p>` +
+      `<p>Las otras ocho son: es romano (sale de la cuarta bestia), sube entre los diez, después del 476, arranca a tres, habla contra el Altísimo, persigue a los santos, piensa cambiar la ley y domina 1.260 años. Las notas de Camilo llegan a <b>dieciocho</b> señas al sumar Apocalipsis 13 y 17 y 2 Tesalonicenses 2, y leen igual los «tiempos» y los «ojos de hombre».</p>` +
       wa('Bohr insiste en que se habla de un <b>sistema</b>, no de personas: «dentro de esta organización se hallan muchas personas sinceras que aman de corazón a Dios».') +
-      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 124-125; Esteban Bohr, La Gran Cadena Profética, pág. PDF 7.</p>` },
+      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 124-125; Esteban Bohr, La Gran Cadena Profética, pág. PDF 7; notas de Camilo en Evernote, "Daniel 7 y Apocalipsis 13:1-10 - El Cuerno Pequeño" y "Daniel 7".</p>` },
 
     { t: '🧭 De febrero a febrero: 538 y 1798 al mes', capa: 'contexto', h:
       `<p>Bohr arma las fechas así:</p>` +
@@ -28,7 +28,7 @@ module.exports = {
       ]) +
       `<p>Para Bohr la coincidencia «al mes» es la prueba de que los 1.260 días son años. Elena de White da el mismo período: empezó «con la supremacía del papado, en el año 538» y terminó en 1798, cuando el papa fue hecho prisionero.</p>` +
       hi('<b>«Anti» también es «en lugar de».</b> Bohr, citando a J. A. Wylie, recuerda que en griego <i>anti</i> no solo es «contra»: Herodes <i>Antipas</i> gobernó «en lugar de» su padre. Por eso un poder que se presenta como representante de Cristo en la tierra encaja con «anticristo».') +
-      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 133-134, 198-199 y 201; Elena de White, El conflicto de los siglos, pág. PDF 359.</p>` },
+      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 133-134, 198-199 y 201; Elena de White, El conflicto de los siglos, pág. PDF 359; notas de Camilo en Evernote, "Tribús Barbaras" (decreto de 533, efectivo en 538).</p>` },
 
     { t: '🧭 Dónde y cuándo empieza el juicio', capa: 'contexto', h:
       `<p><b>Dónde: en el cielo.</b> Bohr nota que en Daniel 7 lo que pasa en la tierra va en prosa y lo que pasa en el cielo va en poesía:</p>` +
@@ -38,7 +38,7 @@ module.exports = {
       ]) +
       `<p><b>Cuándo: después de 1798 y antes de la segunda venida.</b> Tres veces el juicio llega como respuesta a la obra del cuerno (7:8 y 9; 7:21 y 22; 7:25 y 26), así que empieza cuando terminan sus 1.260 años. Y en 7:13 el Hijo del hombre va <i>al Padre</i> para juzgar, y solo después vuelve a dar el reino. Elena de White lo dice así: vino «no a la tierra, sino» al Anciano de días. La fecha exacta, 1844, la da Daniel 8:14.</p>` +
       hi('<b>Tres etapas</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia a favor de los santos (7:22) y ejecución, cuando los santos reciben el reino.') +
-      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 120-121 y 275-276; Esteban Bohr, La hora del juicio divino, pág. PDF 1; Elena de White, El conflicto de los siglos, pág. PDF 349.</p>` },
+      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 120-121 y 275-276; Esteban Bohr, La hora del juicio divino, pág. PDF 1 y 6; Elena de White, El conflicto de los siglos, pág. PDF 349; notas de Camilo en Evernote, "Daniel 7" (el juicio empieza después de 1798).</p>` },
 
     { t: '🧭 Cómo se juzga a los que ya murieron', capa: 'contexto', h:
       `<p>Si Adán murió y su cuerpo volvió al polvo, ¿cómo pudo comparecer en el juicio de 1844? Bohr responde con los <b>libros</b> de 7:10:</p>` +
@@ -61,6 +61,29 @@ module.exports = {
       `<p>En la carta <i>Dies Domini</i> (1998), Juan Pablo II explica el cambio por la <b>tradición</b>: los cristianos «sintieron que tenían la autoridad» para pasar el sentido del sábado al día de la resurrección.</p>` +
       wa('Bohr saca otra conclusión: si en 1844 se juzga con la ley, entonces la ley seguía vigente en 1844 y no fue clavada en la cruz.') +
       `<p>Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 162, 265 y 273-274.</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos (1): la visión', capa: 'contexto', h:
+      `<p>Daniel 7 no deja los símbolos a la imaginación: la misma Biblia dice qué son.</p>` +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Vientos', 'Guerras y luchas entre naciones', 'Jeremías 25:32-33'],
+        ['Mar, aguas', 'Pueblos y naciones', 'Apocalipsis 17:15: las aguas «son pueblos, muchedumbres, naciones y lenguas»; Isaías 17:12'],
+        ['Bestia', 'Rey o reino', 'Daniel 7:17 y 23: las bestias «son cuatro reyes»; «la cuarta bestia será un cuarto reino»'],
+        ['León', 'Babilonia', 'Jeremías 50:17, 43-44'],
+        ['Alas', 'Rapidez para conquistar', 'Habacuc 1:6-8; Deuteronomio 28:49'],
+        ['Cuerno', 'Rey o reino', 'Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»'],
+      ]) +
+      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 121; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105; Esteban Bohr, La Gran Cadena Profética, pág. PDF 4-5; Urías Smith, Las profecías de Daniel, pág. PDF 55; Elena de White, El conflicto de los siglos, pág. PDF 360.</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos (2): el cuerno y el juicio', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Ojos', 'Sabiduría, inteligencia', 'Efesios 1:18'],
+        ['Tiempo, tiempos y medio tiempo', 'Tres años y medio: 1.260 días', 'Apocalipsis 12:6 y 14 (1.260 días = «un tiempo, tiempos y la mitad de un tiempo»); Daniel 4:16 («siete tiempos»: años)'],
+        ['Día', 'Año', 'Números 14:34; Ezequiel 4:6'],
+        ['Nubes', 'Los ángeles que acompañan a Cristo', 'Salmo 68:17; Deuteronomio 33:2'],
+        ['Libros', 'El registro de cada vida', 'Apocalipsis 20:12: juzgados «por las cosas que estaban escritas en los libros»; Malaquías 3:16; Eclesiastés 12:14'],
+      ]) +
+      hi('Con esta clave, 7:13 no es la segunda venida: las nubes de ángeles llevan al Hijo del hombre <b>hasta el Anciano de días</b>, al juicio.') +
+      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 125; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105; Esteban Bohr, La hora del juicio divino, pág. PDF 3-4; notas de Camilo en Evernote, "2300 tardes y mañanas", "Daniel 7" y "El Jesús del Apocalipsis (Parte 2)".</p>` },
   ],
   preguntas: [
     { t: 'mc', v: '7:8', f: 'c', q: 'Según Bohr, ¿qué representan los «ojos como de hombre» del cuerno pequeño?', o: ['Dependencia de la sabiduría humana', 'Vigilancia constante sobre los santos', 'Un conocimiento profético verdadero', 'La fuerza de sus ejércitos'], a: 0, e: 'En la profecía los ojos simbolizan sabiduría (Efesios 1:18). El cuerno se apoyaría en la sabiduría y la tradición de los hombres. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 125.' },
@@ -74,6 +97,10 @@ module.exports = {
     { t: 'mc', v: '7:22', f: 'c', q: 'Según Bohr, ¿cuáles son las tres etapas del juicio que muestra Daniel 7?', o: ['Investigación, sentencia y ejecución', 'Acusación, defensa y apelación', 'Arresto, proceso y perdón', 'Registro, sellamiento y castigo'], a: 0, e: 'Se abren los libros (7:10), se da la sentencia a favor de los santos (7:22) y los santos reciben el reino. Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 121; Esteban Bohr, La hora del juicio divino, pág. PDF 1.' },
     { t: 'mc', v: '7:10', f: 'c', q: 'Según Elena de White, citada por Bohr, ¿con quiénes comenzó el juicio en 1844?', o: ['Con los que vivieron primero en la tierra', 'Con los creyentes que vivían en 1844', 'Con los mártires de la Edad Media', 'Con los doce apóstoles de Jesús'], a: 0, e: 'El juicio empieza con los primeros que vivieron, sigue generación por generación y termina con los vivos. Por eso Bohr dice que Adán fue el primero en comparecer. Fuente: Esteban Bohr, La hora del juicio divino, pág. PDF 7 (cita El conflicto de los siglos, p. 537).' },
     { t: 'tf', v: '7:25', f: 'c', q: 'Según Bohr, el cuerno pequeño es acusado sobre todo de quebrantar mandamientos de la primera tabla de la ley.', a: true, e: 'Verdadero: se hace Dios (1.º), blasfema (3.º) y piensa cambiar la ley (4.º); además mata a los santos (6.º). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 162.' },
+    { t: 'mc', v: '7:2', f: 'c', q: 'Según Bohr y la misma Biblia, ¿qué representan los vientos que agitan el mar en Daniel 7:2?', o: ['Guerras y luchas entre naciones', 'El Espíritu Santo obrando', 'Los ángeles de Dios', 'El paso del tiempo'], a: 0, e: 'Jeremías 25:32-33 usa la tempestad para la calamidad que pasa de nación en nación, y Elena de White dice que los vientos simbolizan luchas. Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 121; Elena de White, El conflicto de los siglos, pág. PDF 360.' },
+    { t: 'mc', v: '7:17', f: 'c', q: '¿Qué versículo del mismo capítulo explica que las bestias de Daniel 7 son reyes o reinos?', o: ['Daniel 7:17', 'Daniel 7:2', 'Daniel 7:9', 'Daniel 7:28'], a: 0, e: '«Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra» (7:17), y 7:23 lo repite: la cuarta bestia será «un cuarto reino». Fuente: Esteban Bohr, La Gran Cadena Profética, pág. PDF 4.' },
+    { t: 'tf', v: '7:25', f: 'c', q: 'Apocalipsis 12:6 y 14 muestran que «un tiempo, tiempos y la mitad de un tiempo» es lo mismo que 1.260 días.', a: true, e: 'Verdadero: el tiempo de la mujer en el desierto se da de las dos formas. Con la regla de día por año (Números 14:34; Ezequiel 4:6) son 1.260 años. Fuentes: notas de Camilo en Evernote, "2300 tardes y mañanas"; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105.' },
+    { t: 'mc', v: '7:13', f: 'c', q: 'Según las notas de Camilo, ¿qué representan las nubes con las que el Hijo del hombre llega al Anciano de días?', o: ['Una multitud de ángeles', 'Las oraciones de los santos', 'Las naciones de la tierra', 'El humo del incienso'], a: 0, e: 'Salmo 68:17 y Deuteronomio 33:2 muestran a Dios rodeado de miles de ángeles. En 7:13 esas nubes llevan a Cristo al Padre para comenzar el juicio, no a la tierra. Fuente: notas de Camilo en Evernote, "El Jesús del Apocalipsis (Parte 2)".' },
     { t: 'mc', v: '7:8', f: 'c', q: 'Según Bohr, que cita a J. A. Wylie, ¿qué otro sentido tiene el prefijo griego «anti» de «anticristo»?', o: ['En lugar de', 'Antes de', 'Después de', 'Junto a'], a: 0, e: '«Anti» puede ser «contra», pero también «en lugar de», como en Herodes Antipas, que gobernó en lugar de su padre. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 201.' },
   ],
 };

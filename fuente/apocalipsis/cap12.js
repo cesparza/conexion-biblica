@@ -151,10 +151,11 @@ module.exports = {
     { t: '🧭 El dragón: Satanás obrando por medio de poderes (12:3-4, 9)', capa: 'contexto', h:
       hi(`El texto mismo dice que el dragón es <strong>Satanás</strong> (12:9).
       Pero Satanás casi nunca ataca solo: usa gobiernos. Elena G. de White lo
-      explica así: el dragón «representa primero a Satanás», pero «en sentido
-      derivado es un símbolo de la Roma pagana», porque fue Roma, por medio
-      del rey <strong>Herodes</strong>, la que quiso matar a Jesús al nacer
-      (Mateo 2:16).`) +
+      explica así: fue Satanás quien movió al rey <strong>Herodes</strong> a
+      buscar la muerte de Jesús (Mateo 2:16), y su agente principal contra
+      Cristo y su pueblo en los primeros siglos fue el Imperio Romano pagano.
+      Por eso el dragón «representa primero a Satanás», pero «en sentido
+      derivado es un símbolo de la Roma pagana».`) +
       li([`<strong>Rojo (escarlata):</strong> color de sangre y persecución;
            el dragón tiene sed de la sangre del niño y de sus hijos.`,
           `<strong>Siete cabezas:</strong> siete reinos que gobiernan uno
@@ -193,7 +194,7 @@ module.exports = {
 
     { t: '🧭 La mujer en el desierto: 1.260 años (12:6, 14)', capa: 'contexto', h:
       hi(`Después de perder contra el niño, el dragón se lanza contra la mujer,
-      la iglesia. Las dos cifras del capítulo son el mismo período:`) +
+      la iglesia. Las dos cifras del capítulo y la de 13:5 son el mismo período:`) +
       tbl(['Cifra', 'Cuenta'], [
         ['1.260 días (12:6)', 'En profecía, <strong>un día representa un año</strong> (Ezequiel 4:6): 1.260 años.'],
         ['Un tiempo, tiempos y la mitad de un tiempo (12:14)', '1 + 2 + ½ = 3½ «tiempos» (años). 3½ × 360 días = <strong>1.260</strong>.'],
@@ -255,6 +256,39 @@ module.exports = {
       fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 47 y
       179-189; Bohr, Gemas de la verdad presente, pág. 89-91; Bohr, ¿Cuán cerca
       al fin?, pág. 90.`) },
+    { t: '🧭 La Biblia explica sus símbolos (1): la mujer y el dragón', capa: 'contexto', h:
+      `<p>Apocalipsis no deja los símbolos a la imaginación: la misma Biblia dice qué son.</p>` +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Mujer pura', 'La iglesia fiel de Dios', 'Jeremías 6:2; 2 Corintios 11:2; Efesios 5:25-27'],
+        ['Sol', 'Cristo, que tiene luz propia', 'Malaquías 4:2; Salmo 84:11'],
+        ['Luna', 'Las Escrituras, que reflejan la luz de Cristo', 'Juan 5:39; Salmo 119:105'],
+        ['Doce estrellas', 'Las doce tribus y los doce apóstoles', 'Génesis 37:9; Apocalipsis 21:12 y 14'],
+        ['Hijo varón', 'Cristo, el que va a regir «con vara de hierro»', 'Miqueas 5:2; Salmo 2:9; Apocalipsis 19:15'],
+        ['Dragón', 'Satanás', 'Apocalipsis 12:9: «el gran dragón, la serpiente antigua, que se llama Diablo y Satanás»'],
+        ['Cola', 'El profeta que enseña mentira', 'Isaías 9:15'],
+        ['Estrellas que arrastró', 'Ángeles', 'Apocalipsis 1:20: «las siete estrellas son los ángeles»; 12:9: «sus ángeles fueron arrojados con él»'],
+      ]) +
+      fu(`Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág.
+      PDF 103, 105 y 215-216; Bohr, Gemas de la verdad presente, pág. PDF 81;
+      Bohr, ¿Cuán cerca al fin?, pág. PDF 77-78; Bohr, El Mensaje de los Tres
+      Ángeles, tomo 2, pág. PDF 114-115; notas de Camilo en Evernote,
+      "Apocalipsis 12".`) },
+
+    { t: '🧭 La Biblia explica sus símbolos (2): el desierto y el remanente', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Cabezas', 'Reinos que gobiernan uno tras otro', 'Apocalipsis 17:9-10: las siete cabezas «son siete montes» y «son siete reyes»'],
+        ['Cuernos', 'Reyes o reinos', 'Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»'],
+        ['Miguel', 'Cristo, el jefe de los ángeles', 'Judas 9; 1 Tesalonicenses 4:16; Daniel 12:1'],
+        ['Día', 'Año', 'Números 14:34; Ezequiel 4:6'],
+        ['Tiempo, tiempos y la mitad de un tiempo', '1.260 días proféticos: 1.260 años', 'Apocalipsis 12:6 y 14 (el mismo desierto y el mismo cuidado); Daniel 7:25'],
+        ['Alas de águila', 'La protección y la liberación de Dios', 'Éxodo 19:4; Deuteronomio 32:11; Salmo 91:4'],
+        ['Agua como un río', 'Pueblos que persiguen', 'Apocalipsis 17:15: las aguas «son pueblos, muchedumbres, naciones y lenguas»; Isaías 17:12-13'],
+        ['Testimonio de Jesús', 'El don de profecía', 'Apocalipsis 19:10: «El testimonio de Jesús es el espíritu de la profecía»'],
+      ]) +
+      fu(`Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág.
+      PDF 105 y 215-216; Bohr, ¿Cuán cerca al fin?, pág. PDF 82-86; Bohr,
+      Gemas de la verdad presente, pág. PDF 77-78; notas de Camilo en
+      Evernote, "Apocalipsis 12".`) },
   ],
 
   preguntas: [
@@ -400,7 +434,7 @@ module.exports = {
     { t: 'mc', v: '12:3', f: 'c',
       q: 'Según Elena de White, ¿qué simboliza el dragón «en sentido derivado»?',
       o: ['La Roma pagana', 'El papado medieval', 'La Babilonia antigua', 'El imperio griego'], a: 0,
-      e: 'El dragón «representa primero a Satanás», pero «en sentido derivado es un símbolo de la Roma pagana», que por medio de Herodes quiso matar a Jesús. Fuente: Elena G. de White, El conflicto de los siglos, pág. 359.' },
+      e: 'El dragón «representa primero a Satanás», pero «en sentido derivado es un símbolo de la Roma pagana»: Satanás movió a Herodes contra Jesús, y el Imperio Romano pagano fue su agente principal en los primeros siglos. Fuente: Elena G. de White, El conflicto de los siglos, pág. 359.' },
     { t: 'tf', v: '12:3', f: 'c',
       q: 'Según Bohr, las siete cabezas del dragón son siete reinos que gobiernan todos al mismo tiempo.', a: false,
       e: 'Falso: Bohr, siguiendo a J. N. Andrews, enseña que las cabezas reinan una después de otra; por eso el agua contra la mujer sale de una sola boca (12:15). Fuente: Bohr, ¿Cuán cerca al fin?, pág. 84.' },
@@ -453,6 +487,17 @@ module.exports = {
     { t: 'tf', v: '12:17', f: 'c',
       q: 'Según Bohr, la guerra final del dragón contra el remanente (12:17) se explica en detalle en Apocalipsis 13:11-18.', a: true,
       e: 'Verdadero: para Bohr, 13:11-18 es la gran ampliación de un solo versículo, 12:17. Fuente: Bohr, ¿Cuán cerca al fin?, pág. 73 y 93.' },
+    { t: 'mc', v: '12:1', f: 'c',
+      q: '¿Qué texto muestra que en la Biblia una mujer pura representa al pueblo de Dios?',
+      o: ['Jeremías 6:2', 'Génesis 3:6', 'Proverbios 31:10', 'Rut 1:16'], a: 0,
+      e: 'Dios compara a Sion, su pueblo, con una hija bella y delicada (Jeremías 6:2), y Pablo presenta a la iglesia como una virgen pura desposada con Cristo (2 Corintios 11:2). Fuente: Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 103.' },
+    { t: 'tf', v: '12:15', f: 'c',
+      q: 'En la profecía, las aguas representan pueblos y naciones, como explica Apocalipsis 17:15.', a: true,
+      e: 'Verdadero: las aguas «son pueblos, muchedumbres, naciones y lenguas» (17:15; ver Isaías 17:12-13). Por eso el río de 12:15 son pueblos que persiguen a la iglesia. Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105; Bohr, ¿Cuán cerca al fin?, pág. PDF 85.' },
+    { t: 'mc', v: '12:14', f: 'c',
+      q: '¿Con qué textos explica Bohr las «dos alas de la gran águila»?',
+      o: ['Éxodo 19:4 y Deuteronomio 32:11', 'Daniel 7:4 y Ezequiel 17:3', 'Isaías 40:31 y Abdías 4', 'Mateo 24:28 y Job 39:27'], a: 0,
+      e: 'Dios dice que sacó a Israel de Egipto como sobre alas de águila (Éxodo 19:4) y que lo cuida como el águila a sus polluelos (Deuteronomio 32:11): son su protección y su liberación. Fuente: Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 216.' },
   ],
 
   tarjetas: [

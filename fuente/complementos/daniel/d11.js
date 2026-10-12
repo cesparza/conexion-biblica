@@ -41,10 +41,10 @@ module.exports = {
       `<p>Bohr sigue un principio de Louis Were: hasta el año 34 d.C. (el fin de las setenta semanas), Israel, Jerusalén, Egipto y Babilonia son lugares literales. Después, el pueblo de Dios es la iglesia en todo el mundo, y sus enemigos también son sistemas mundiales. Por eso en 11:5-15 el norte es Siria y el sur es Egipto, pero en 11:40 ya no.</p>` +
       li([
         '<b>El norte es religión falsa.</b> El verdadero Rey del norte es Dios, en el monte de Sion, «a los lados del norte» (Salmo 48:2; Isaías 14:13). Babilonia siempre invadía a Israel desde el norte. El norte no niega a Dios: lo imita.',
-        '<b>El sur es negar a Dios.</b> El faraón dijo: «¿Quién es Jehová...? Yo no conozco a Jehová» (Éxodo 5:2). Elena de White: de todas las naciones, Egipto fue la que con más osadía negó al Dios vivo, y eso es ateísmo.',
+        '<b>El sur es negar a Dios.</b> El faraón dijo: «¿Quién es Jehová...? Yo no conozco a Jehová» (Éxodo 5:2). Elena de White: de todas las naciones de la historia bíblica, Egipto fue la que con más osadía negó al Dios vivo, y eso es ateísmo.',
       ]) +
       wa('Edom, Moab y Amón ya no existen como naciones. Bohr lo usa como prueba de que en 11:40-45 no se puede leer un mapa literal.') +
-      `<p>Fuentes: Stephen Bohr, Studies on Daniel 11, pág. PDF 19-24 y 98-99; Elena de White, El conflicto de los siglos, citada allí (p. 269 en inglés).</p>` },
+      `<p>Fuentes: Stephen Bohr, Studies on Daniel 11, pág. PDF 19-24 y 98-99; Elena de White, El conflicto de los siglos, pág. PDF 228 (p. 269 en inglés).</p>` },
 
     { t: '🧭 Daniel 11:31: las tropas de 508', capa: 'contexto', h:
       `<p>«Se levantarán sus tropas, que profanarán el santuario... quitarán el sacrificio continuo y pondrán la abominación desoladora» (11:31). Según Bohr, «tropas» en plural son fuerzas militares o políticas: el rey del norte ya existía, pero ahora recibe el apoyo del estado.</p>` +
@@ -56,23 +56,45 @@ module.exports = {
       `<p><b>Esta es la postura de Bohr; hay otras</b> (ver la sección siguiente y la de arriba).</p>` +
       tbl(['Versículo', 'Lectura de Bohr'], [
         ['40a', 'En 1798 el rey del sur (la Francia revolucionaria y atea) hiere al rey del norte (el papado). Después, el comunismo hereda ese ateísmo.'],
-        ['40b', 'El norte se recupera y vence al sur «como una tempestad», como el Éufrates desbordado: la caída del comunismo.'],
+        ['40b', 'El norte se recupera y vence al sur «como una tempestad», como el Éufrates desbordado: la caída del comunismo, con ayuda de Estados Unidos.'],
         ['41', 'Entra en la tierra gloriosa: Estados Unidos como baluarte de los principios protestantes. «Muchos caerán». Edom, Moab y Amón, parientes de Israel, escapan: el pueblo de Dios que estaba disperso, también en otras iglesias, y se reúne con el remanente.'],
         ['42-43', 'Egipto, Libia y Etiopía: el resto del mundo y sus riquezas quedan bajo su influencia.'],
         ['44', 'Las «noticias del oriente y del norte» son el fuerte pregón y el mensaje del sellamiento, que lo enfurecen.'],
         ['45', 'Pone sus tiendas para dar el golpe final contra el pueblo de Dios, y ahí «llegará a su fin, y no tendrá quien lo ayude».'],
       ]) +
       `<p>Para Bohr, Daniel 3 y 6 son la base: la crisis final será por la adoración y la obediencia a Dios.</p>` +
-      `<p>Fuentes: Stephen Bohr, Studies on Daniel 11, pág. PDF 17-19, 98-114, 126, 134-136, 157-158 y 175; Stephen Bohr, Studies in Daniel 1-10, pág. PDF 43.</p>` },
+      `<p>Fuentes: Stephen Bohr, Studies on Daniel 11, pág. PDF 17-19, 98-117, 126, 134-136, 157-158 y 175; Stephen Bohr, Studies in Daniel 1-10, pág. PDF 43.</p>` },
 
     { t: '🧭 Otras lecturas de 11:40-45', capa: 'contexto', h:
       li([
-        '<b>Jeff Pippenger</b> coincide con Bohr en lo general, pero es más preciso: el rey del sur es la <b>Unión Soviética</b>, que cayó por una alianza del Vaticano con Estados Unidos. Ese es el primer paso; el segundo, que Estados Unidos (la tierra gloriosa) quede bajo la influencia de Roma; el tercero, el mundo (Egipto) y su economía.',
+        '<b>Jeff Pippenger</b> lo lee igual que Bohr y lo ordena en tres pasos: primero cae el rey del sur del siglo XX, la <b>Unión Soviética</b>, por una alianza del Vaticano con Estados Unidos (Bohr dice lo mismo); segundo, Estados Unidos (la tierra gloriosa) queda bajo la influencia de Roma; tercero, el mundo (Egipto) y su economía.',
         '<b>Urías Smith</b> (desde 1871) leía al rey del norte como Turquía. Por años se predicó así, con una batalla final en el Medio Oriente.',
         '<b>Maxwell</b> y otros comentaristas prefieren no cerrar el cumplimiento de cada detalle (ver arriba).',
       ]) +
       wa('Bohr insiste en que la profecía habla de sistemas, no de personas: en ese sistema «se hallan muchas personas sinceras que aman de corazón a Dios».') +
-      `<p>Fuentes: Jeff Pippenger, El tiempo del fin: estudio profético de Daniel 11:40-45, pág. PDF 21; Stephen Bohr, Studies on Daniel 11, pág. PDF 6-12; Esteban Bohr, La Gran Cadena Profética, pág. PDF 7.</p>` },
+      `<p>Fuentes: Jeff Pippenger, El tiempo del fin: estudio profético de Daniel 11:40-45, pág. PDF 21; Stephen Bohr, Studies on Daniel 11, pág. PDF 6-12 y 114-117; Esteban Bohr, La Gran Cadena Profética, pág. PDF 7.</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos (1): norte, sur y ejércitos', capa: 'contexto', h:
+      `<p>Hasta el año 34 el norte y el sur son Siria y Egipto. Después, la Biblia misma da su sentido:</p>` +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['El norte', 'El trono de Dios; el rey del norte falso es Babilonia: religión falsa que imita a Dios', 'Salmo 48:2; Isaías 14:13; Jeremías 1:14 (el mal venía del norte: Babilonia)'],
+        ['El sur, Egipto', 'Negar a Dios: el ateísmo', 'Éxodo 5:2; Apocalipsis 11:8: la ciudad que «en sentido espiritual se llama Sodoma y Egipto»'],
+        ['Inundación, tempestad (11:22, 40)', 'Ejércitos que invaden', 'Daniel 11:22: «barridas delante de él como por inundación de aguas»; Isaías 8:7-8'],
+        ['Tropas (11:31)', 'El poder del Estado al servicio del rey del norte', 'Daniel 8:24: «su poder se fortalecerá, mas no con fuerza propia»; Apocalipsis 17:2'],
+        ['Mares, aguas (11:45)', 'Pueblos y naciones', 'Apocalipsis 17:15: las aguas «son pueblos, muchedumbres, naciones y lenguas»'],
+      ]) +
+      `<p>Fuentes: Stephen Bohr, Studies on Daniel 11, pág. PDF 18-25 y 98-99; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 102 y 105-106; Stephen Bohr, Studies in Daniel 1-10, pág. PDF 345; notas de Camilo en Evernote, "8. Daniel 11 - El Rey del Norte y el Rey del Sur (clave)".</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos (2): el tiempo del fin', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Tierra gloriosa (11:41)', 'La tierra del pueblo de Dios. Antes, Israel; después de la cruz, el Israel espiritual. Para Bohr, hoy Estados Unidos como baluarte protestante', 'Daniel 8:9; Gálatas 3:29; Romanos 2:28-29; Apocalipsis 13:11'],
+        ['Edom, Moab y Amón', 'Parientes de Israel: el pueblo de Dios disperso que escapa', 'Génesis 19:36-38; 36:1; «escaparán» es la palabra de «será libertado» (12:1)'],
+        ['Egipto, Libia y Etiopía (11:42-43)', 'El resto del mundo y sus riquezas', 'Apocalipsis 11:8 (Egipto en sentido espiritual)'],
+        ['Noticias del oriente (11:44)', 'El mensaje del sellamiento', 'Apocalipsis 7:2: un ángel «que subía desde donde sale el sol y que tenía el sello del Dios vivo»'],
+        ['Noticias del norte (11:44)', 'El fuerte pregón, que viene de Dios', 'Apocalipsis 18:1: «la tierra fue alumbrada con su gloria»; Salmo 48:2'],
+        ['Monte glorioso y santo (11:45)', 'Sion: el pueblo de Dios reunido', 'Hebreos 12:22; Joel 2:32'],
+      ]) +
+      `<p>Fuentes: Stephen Bohr, Studies on Daniel 11, pág. PDF 18-21, 126, 134-136 y 175; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 106; notas de Camilo en Evernote, "8. Daniel 11 - El Rey del Norte y el Rey del Sur (clave)".</p>` },
   ],
   preguntas: [
     { t: 'mc', v: '11:2', f: 'c', q: 'Según Bohr, que sigue a Jacques Doukhan, ¿quién es el cuarto rey persa de Daniel 11:2?', o: ['Artajerjes I', 'Jerjes I', 'Darío I', 'Cambises II'], a: 0, e: 'Bohr une 11:2 con Daniel 9: el cuarto rey es el que dio el decreto de 457 a.C. Otros autores, como el estudio de este capítulo, lo identifican con Jerjes. Fuente: Stephen Bohr, Studies on Daniel 11, pág. PDF 16.' },
@@ -87,5 +109,10 @@ module.exports = {
     { t: 'mc', v: '11:31', f: 'c', q: 'Según Bohr, ¿qué rey dio en 508 poder civil al papado, cumpliendo «se levantarán sus tropas»?', o: ['Clodoveo, rey de los francos', 'Justiniano, emperador de Oriente', 'Carlomagno, emperador de Occidente', 'Teodorico, rey de los ostrogodos'], a: 0, e: 'Clodoveo fue el primero en dar poder temporal al papado. Desde 508 Bohr cuenta los 1.290 y 1.335 días. Fuente: Stephen Bohr, Studies on Daniel 11, pág. PDF 26.' },
     { t: 'mc', v: '11:44', f: 'c', q: 'Según Bohr, ¿qué son las «noticias del oriente y del norte» que atemorizan al rey del norte?', o: ['El fuerte pregón y el sellamiento', 'Guerras de Rusia y de China', 'Rebeliones en el Imperio turco', 'Nuevas cruzadas en Oriente'], a: 0, e: 'El remanente, con la lluvia tardía, proclama el fuerte pregón y el mensaje del sellamiento; eso lo enfurece y lo lleva a perseguirlo. Fuente: Stephen Bohr, Studies on Daniel 11, pág. PDF 175.' },
     { t: 'mc', v: '11:40', f: 'c', q: 'Según Jeff Pippenger, ¿qué potencia del siglo XX fue el rey del sur vencido por el rey del norte?', o: ['La Unión Soviética', 'La Francia de Napoleón', 'El Imperio otomano', 'La Alemania nazi'], a: 0, e: 'Para Pippenger cayó por una alianza del Vaticano con Estados Unidos. Bohr también ve en el comunismo al heredero del ateísmo de 1798. Fuentes: Jeff Pippenger, El tiempo del fin, pág. PDF 21; Stephen Bohr, Studies on Daniel 11, pág. PDF 107-108.' },
+
+    { t: 'mc', v: '11:40', f: 'c', q: 'Según Bohr, ¿qué texto muestra que en la profecía un río que inunda representa la invasión de un ejército?', o: ['Isaías 8:7-8', 'Génesis 7:11-12', 'Salmo 23:1-2', 'Juan 7:37-38'], a: 0, e: 'Isaías compara la invasión asiria con el Éufrates desbordado; así avanza el rey del norte en 11:40. Fuente: Stephen Bohr, Studies on Daniel 11, pág. PDF 18.' },
+    { t: 'mc', v: '11:40', f: 'c', q: 'Según Bohr, ¿por qué el «norte» de Daniel 11 representa una religión que imita a Dios?', o: ['El trono de Dios está a los lados del norte', 'Roma queda al norte de Jerusalén', 'Los papas vinieron del norte de Europa', 'En el norte se adoraba al sol'], a: 0, e: 'Sion está a los lados del norte (Salmo 48:2) y Lucifer quiso sentarse allí (Isaías 14:13). El rey del norte falso no niega a Dios: usurpa su lugar. Fuente: Stephen Bohr, Studies on Daniel 11, pág. PDF 23.' },
+    { t: 'tf', v: '11:41', f: 'c', q: 'Según Bohr, como Edom, Moab y Amón ya no existen como naciones, Daniel 11:40-45 no se puede leer como un mapa literal.', a: true, e: 'Verdadero. Después de la cruz, Israel es espiritual y mundial, y sus enemigos también. Fuente: Stephen Bohr, Studies on Daniel 11, pág. PDF 19-21.' },
+    { t: 'mc', v: '11:44', f: 'c', q: 'Según las notas de Camilo, ¿con qué texto se explican las «noticias del oriente» de 11:44?', o: ['Apocalipsis 7:2, el ángel con el sello', 'Apocalipsis 13:11, la bestia de la tierra', 'Apocalipsis 12:3, el dragón escarlata', 'Apocalipsis 9:14, los cuatro ángeles'], a: 0, e: 'El ángel sube «desde donde sale el sol» con el sello del Dios vivo: es el mensaje del sellamiento. Fuentes: notas de Camilo en Evernote, "8. Daniel 11 - El Rey del Norte y el Rey del Sur (clave)"; Stephen Bohr, Studies on Daniel 11, pág. PDF 175.' },
   ],
 };

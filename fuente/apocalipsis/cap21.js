@@ -133,10 +133,11 @@ module.exports = {
       redimidos y los ángeles. Elena de White: se asienta en el lugar purificado y
       preparado, donde estaba el monte de los Olivos (Zacarías 14:4).`) +
       tbl(['Orden', 'Qué pasa', 'Dónde se lee'], [
-        ['1', 'La ciudad baja del cielo', '21:2; 21:10'],
-        ['2', 'Los impíos resucitan y la rodean', '20:5; 20:7-9'],
-        ['3', 'Fuego de Dios los consume', '20:9'],
-        ['4', 'Cielo nuevo y tierra nueva', '21:1'],
+        ['1', 'Cristo vuelve y los impíos resucitan', '20:5'],
+        ['2', 'La ciudad baja del cielo', '21:2; 21:10'],
+        ['3', 'Satanás reúne a los impíos y rodean la ciudad', '20:7-9'],
+        ['4', 'Fuego de Dios los consume', '20:9'],
+        ['5', 'Cielo nuevo y tierra nueva', '21:1'],
       ]) +
       wa(`Bohr: por eso 21:2 pasa <strong>antes</strong> que 21:1. El versículo 21:1
       en realidad cierra el capítulo 20 (la división de capítulos la pusieron
@@ -161,7 +162,7 @@ module.exports = {
           `Bohr: así se cumplen las dos promesas, ir con Jesús a la casa del Padre
            (Juan 14:3) y heredar la tierra (Mateo 5:5): mil años en el cielo y
            después la tierra nueva como hogar para siempre.`]) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 539-540; Escuela Sabática 2019-1T, lección 13, pág. 94; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 81; Stephen Bohr, El calendario religioso hebreo, pág. 254.</p>` },
+      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 539-540; Escuela Sabática 2019-1T, lección 13, pág. 94; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 81; Stephen Bohr, El calendario religioso hebreo, pág. 253.</p>` },
 
     { t: '🧭 «El tabernáculo de Dios está ahora con los hombres» (21:3-4)', capa: 'contexto', h:
       hi(`Bohr ve aquí el <strong>último paso del santuario</strong>: Jesús vuelve al
@@ -179,7 +180,7 @@ module.exports = {
           `Escuela Sabática 2019: la <strong>presencia de Dios</strong> es la que
            quita el dolor y la muerte. Marta lo sabía: «Señor, si hubieses estado
            aquí, mi hermano no habría muerto» (Juan 11:21).`]) +
-      `<p>Fuentes: Stephen Bohr, El Santuario en Apocalipsis, págs. 2 y 8; Stephen Bohr, El calendario religioso hebreo, pág. 254; Escuela Sabática 2019-1T, lección 13, pág. 94.</p>` },
+      `<p>Fuentes: Stephen Bohr, El Santuario en Apocalipsis, págs. 2 y 8; Stephen Bohr, El calendario religioso hebreo, pág. 255; Escuela Sabática 2019-1T, lección 13, pág. 94.</p>` },
 
     { t: '🧭 La esposa: una ciudad para los fieles de todos los tiempos (21:9-14)', capa: 'contexto', h:
       hi(`El ángel dice «te mostraré la desposada, la esposa del Cordero» (21:9), y lo
@@ -196,7 +197,7 @@ module.exports = {
            las puertas, pero para dejar entrar a los fieles (21:12).`,
           `Escuela Sabática 2019: tres puertas a cada lado permiten entrar desde
            cualquier dirección; la ciudad es para gente de todo el mundo.`]) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. 350; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 120 y 159; Escuela Sabática 2019-1T, lección 13, pág. 95.</p>` },
+      `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. 350; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 121 y 159; Escuela Sabática 2019-1T, lección 13, pág. 95.</p>` },
 
     { t: '🧭 Un cubo como el lugar santísimo, y sin templo (21:16, 21:22)', capa: 'contexto', h:
       hi(`«La longitud, la altura y la anchura de ella son iguales» (21:16): la ciudad
@@ -260,6 +261,17 @@ module.exports = {
       wa(`Así termina el libro: «El gran conflicto ha terminado. Ya no hay más
       pecado ni pecadores», y toda la creación declara «que Dios es amor».`) +
       `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 540-543.</p>` },
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Esposa del Cordero', 'La santa ciudad', '«te mostraré la desposada, la esposa del Cordero» (21:9) y le muestra «la santa Jerusalén» (21:10)'],
+        ['Jerusalén', 'La ciudad y el pueblo de Dios, no la de Palestina', 'Gálatas 4:26; Hebreos 12:22-24; Hebreos 11:10'],
+        ['Tabernáculo', 'Dios que vive con su pueblo', 'Éxodo 25:8; Juan 1:14; «Él morará con ellos» (21:3)'],
+        ['Doce tribus y doce apóstoles', 'El pueblo de Dios de los dos Testamentos', 'Apocalipsis 21:12, 14; Efesios 2:19-20'],
+        ['Cubo', 'El lugar santísimo', '1 Reyes 6:20'],
+        ['Cordero', 'Jesucristo', 'Juan 1:29; Apocalipsis 5:6, 9'],
+        ['Agua de la vida', 'La vida que Dios da gratis', 'Juan 4:13-14; Isaías 55:1. En la ciudad será un río real (22:1)'],
+      ]) +
+      `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. PDF 350; Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. PDF 80 y 106; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. PDF 159; Stephen Bohr, El calendario religioso hebreo, pág. PDF 255; Escuela Sabática 2019-1T, lección 13, pág. PDF 95.</p>` },
   ],
 
   preguntas: [
@@ -470,7 +482,7 @@ module.exports = {
       e: 'Dios tiene una sola ciudad, compuesta por los santos de las dos épocas (Antiguo y Nuevo Testamento). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 159.' },
     { t: 'tf', v: '21:12', f: 'c',
       q: 'Según Bohr, los ángeles de las puertas recuerdan al Edén, donde había ángeles guardando la entrada; pero en la ciudad dejan entrar a los fieles.', a: true,
-      e: 'Verdadero: es la vuelta al Génesis: los que guardan los mandamientos entran por las puertas y comen del árbol de la vida (21:12; 22:14). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120.' },
+      e: 'Verdadero: es la vuelta al Génesis: los que guardan los mandamientos entran por las puertas y comen del árbol de la vida (21:12; 22:14). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 121.' },
     { t: 'mc', v: '21:16', f: 'c',
       q: 'En la interpretación adventista (Escuela Sabática 2019), ¿qué recuerda la ciudad con largo, ancho y alto iguales?',
       o: ['El lugar santísimo del templo', 'La torre de Babel en Sinar', 'El arca de Noé sobre las aguas', 'El altar de bronce del atrio'], a: 0,
@@ -494,6 +506,17 @@ module.exports = {
       q: 'Según Bohr, ¿qué describe el verbo griego «vencer» (nikao) en promesas como «El vencedor heredará todas las cosas» (21:7)?',
       o: ['Una lucha continua que acaba en victoria', 'Un solo triunfo que basta para siempre', 'Derrotar a otros pueblos en la guerra', 'Haber nacido en una familia fiel'], a: 0,
       e: 'Es un participio presente: «el que continúa ganando la victoria». Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 52.' },
+    { t: 'mc', v: '21:6', f: 'c',
+      q: 'Según Bohr, ¿cómo se relaciona el agua de vida que se bebe hoy (Juan 4:13-14) con la de la ciudad (21:6)?',
+      o: ['Hoy se bebe por la fe; allí será un río real', 'Las dos son solo un símbolo', 'Hoy es real; allí será un símbolo', 'No tienen ninguna relación'], a: 0,
+      e: '«Aun ahora podemos beber espiritualmente… Pero en la ciudad beberemos agua literal de un río literal». Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 80.' },
+    { t: 'mc', v: '21:2', f: 'c',
+      q: 'Según Bohr, ¿qué textos muestran que «Jerusalén» en la profecía es el pueblo y la ciudad de Dios, no un lugar de Palestina?',
+      o: ['Gálatas 4 y Hebreos 12:22-24', 'Génesis 11 y Daniel 4', 'Jonás 3 y Nahúm 1', 'Ester 1 y Nehemías 2'], a: 0,
+      e: 'Bohr pone a Israel y Jerusalén entre los lugares simbólicos de la profecía (Gálatas 3:29; 4; Romanos 9:6-8; Hebreos 12:22-24). Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 106.' },
+    { t: 'tf', v: '21:3', f: 'c',
+      q: 'Según Bohr, la palabra «tabernáculo» de 21:3 recuerda que Jesús ya habitó entre nosotros (Juan 1:14) y que ahora Dios vivirá con su pueblo para siempre.', a: true,
+      e: 'Verdadero: en su primera venida Jesús «tabernaculó» entre nosotros; en la tierra nueva Dios será el tabernáculo con su pueblo. Fuente: Stephen Bohr, El calendario religioso hebreo, pág. PDF 255.' },
   ],
 
   tarjetas: [

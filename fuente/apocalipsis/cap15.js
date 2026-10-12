@@ -112,7 +112,7 @@ module.exports = {
       lleva a Éxodo 14 y 15: la liberación final del pueblo de Dios seguirá el
       mismo patrón que la salida de Egipto, pero en todo el mundo. Los que
       cantan son el remanente (el pueblo fiel del final) que venció a la bestia
-      en la última crisis.`) +
+      en la última crisis; Bohr los llama los 144.000.`) +
       tbl(['En Egipto', 'Al final, según Bohr'], [
         ['Faraón, llamado «el gran dragón» (Ezequiel 29:3)', 'El dragón que hace guerra al remanente (12:17)'],
         ['Plagas que endurecen a Faraón', 'Plagas que no traen arrepentimiento (16:9, 11)'],
@@ -123,7 +123,7 @@ module.exports = {
         ['Cantan a orillas del mar (Éxodo 15)', 'Cantan sobre el mar de vidrio'],
       ]) +
       hi(`Fuente: Bohr, «15 principios de interpretación profética», tomo 2,
-      pág. 225-227 y 236-238.`) },
+      pág. 221, 225-227, 230 y 236-238.`) },
 
     { t: '🧭 El templo cerrado: termina la intercesión (15:5-8)', capa: 'contexto', h:
       hi(`Para Bohr, «el templo del tabernáculo del testimonio» es el lugar
@@ -163,6 +163,21 @@ module.exports = {
       mientras la puerta sigue abierta.`) +
       hi(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 685-687;
       Bohr, «15 principios de interpretación profética», tomo 2, pág. 28.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      hi(`Bohr enseña a buscar primero si el mismo pasaje explica el símbolo, y
+      después dónde aparece antes en la Biblia.`) +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Siete (ángeles, plagas, copas)', 'Plenitud: algo completo', 'Génesis 2:2; Josué 6:15-16; 2 Reyes 5:14'],
+        ['Copa que Dios da a beber', 'Su ira, su juicio', 'Jeremías 25:15; Apocalipsis 14:10 («el cáliz de su ira»)'],
+        ['Tabernáculo del testimonio', 'El santuario del cielo; el «testimonio» son las tablas de la ley que guarda el arca', 'Éxodo 25:16, 21; 31:18; Apocalipsis 11:19'],
+        ['Humo que llena el templo', 'La gloria y la presencia de Dios', 'Éxodo 40:34-35, donde Moisés no podía entrar; el mismo 15:8 dice «por causa de la gloria de Dios»'],
+        ['Lino limpio y resplandeciente', 'Pureza y justicia', 'Apocalipsis 19:8: el lino fino «representa las acciones justas de los santos»'],
+        ['Cántico de Moisés', 'El canto de los que Dios acaba de librar', 'Éxodo 15:1-2, junto al mar Rojo'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 102-105, 157 y 230; Doukhan, «Secretos del Apocalipsis», pág.
+      156-158.`) },
   ],
 
   preguntas: [
@@ -291,6 +306,21 @@ module.exports = {
     { t: 'tf', v: '15:7', f: 'c',
       q: 'Según Elena de White, los juicios de Dios antes del cierre de la gracia venían mezclados con misericordia, pero las siete plagas no.', a: true,
       e: 'Verdadero: «Todos los juicios que cayeron sobre los hombres antes del fin del tiempo de gracia fueron mitigados con misericordia»; en las plagas la ira cae sin esa mezcla. Fuente: Elena de White, «El conflicto de los siglos», pág. 687.' },
+    { t: 'mc', v: '15:6', f: 'c',
+      q: '¿Qué texto del Apocalipsis explica qué representa el lino fino, como el de los siete ángeles (15:6)?',
+      o: ['Apocalipsis 19:8', 'Apocalipsis 7:14', 'Apocalipsis 3:5', 'Apocalipsis 1:13'], a: 0,
+      e: 'Apocalipsis 19:8 dice que el lino fino «representa las acciones justas de los santos»: es pureza y justicia. Bohr pone la vestimenta como símbolo de justicia. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105.' },
+    { t: 'mc', v: '15:7', f: 'c',
+      q: 'En la Biblia, ¿qué representa una copa que Dios da a beber, como las copas de oro de 15:7?',
+      o: ['Su ira y su juicio', 'Su perdón y su paz', 'La cena del Señor', 'Las oraciones de los santos'], a: 0,
+      e: 'Dios le dice a Jeremías: toma la copa del vino de este furor y dala a beber a las naciones (Jeremías 25:15); Apocalipsis 14:10 habla del «cáliz de su ira». Las copas con las oraciones son las de 5:8, llenas de incienso. Fuente: Doukhan, «Secretos del Apocalipsis», pág. 158.' },
+    { t: 'tf', v: '15:5', f: 'c',
+      q: 'El «testimonio» del tabernáculo del testimonio (15:5) son las tablas de la ley que se guardaban en el arca.', a: true,
+      e: 'Verdadero: Dios mandó poner el testimonio dentro del arca (Éxodo 25:16, 21), y las tablas de piedra se llaman tablas del testimonio (Éxodo 31:18). Por eso en 11:19 se ve el arca cuando se abre el templo. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 157.' },
+    { t: 'mc', v: '15:8', f: 'c',
+      q: 'Según Doukhan, ¿qué escena del Antiguo Testamento se parece al templo lleno de humo donde nadie podía entrar (15:8)?',
+      o: ['La nube que llenó el tabernáculo', 'El fuego que cayó en el Carmelo', 'La zarza que ardía sin quemarse', 'La columna de nube en el mar'], a: 0,
+      e: 'Cuando se terminó el tabernáculo, la nube de la gloria de Dios lo llenó y Moisés no podía entrar (Éxodo 40:34-35). Fuente: Doukhan, «Secretos del Apocalipsis», pág. 156-157.' },
   ],
 
   tarjetas: [

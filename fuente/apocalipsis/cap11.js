@@ -176,13 +176,15 @@ module.exports = {
           `<strong>«Sodoma» (11:8)</strong>: la corrupción moral que acompañó
            a la Revolución.`,
           `<strong>«Donde nuestro Señor fue crucificado»</strong>: los nombres
-           son simbólicos, no lugares del mapa; Sodoma ya no existía.`,
+           son simbólicos, no lugares del mapa; Sodoma ya no existía. Elena de
+           White: al perseguir a los creyentes, Francia crucificó a Cristo en la
+           persona de sus discípulos.`,
           `<strong>La fiesta (11:10)</strong>: la gente celebró verse libre de
            la iglesia y de la Biblia.`]) +
       wa(`Elena de White: «Esta profecía se cumplió de un modo muy preciso y
       sorprendente en la historia de Francia». Se habla de un régimen y sus
       decretos, no de los franceses de hoy.`) +
-      fu(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 227-228;
+      fu(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 227-229;
       Stephen Bohr, «Studies on Daniel 11», pág. 102-104; Bohr, «15 principios
       de interpretación profética», vol. 2, pág. 89 y 105.`) },
 
@@ -224,6 +226,36 @@ module.exports = {
       19-21; Bohr, «La Razón de Nuestro Existir», pág. 74; Bohr, «15 principios
       de interpretación profética», vol. 2, pág. 91-92 y 97; Treiyer, «Las siete
       trompetas, reseña de Ekkehardt Mueller», pág. 3.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos (1)', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Medir (11:1)', 'Juzgar', 'Mateo 7:2; Ezequiel 40:3; Zacarías 2:1'],
+        ['Templo (11:1)', 'El santuario del cielo', 'Hebreos 8:1-2; Apocalipsis 11:19: «El templo de Dios fue abierto en el cielo»'],
+        ['Dos testigos (11:3)', 'El Antiguo y el Nuevo Testamento', 'Juan 5:39; Salmo 119:105'],
+        ['Ropas ásperas (11:3)', 'Luto y sufrimiento', 'Ester 4:1; Salmo 30:11'],
+        ['Día (11:3, 9)', 'Un año', 'Números 14:34; Ezequiel 4:6'],
+        ['Olivos y su aceite (11:4)', 'El Espíritu Santo', 'Zacarías 4:1-6'],
+        ['Candelabros (11:4)', 'La iglesia que da la luz', 'Apocalipsis 1:20: «los siete candelabros que has visto son las siete iglesias»'],
+      ]) +
+      fu(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 226; Bohr,
+      «Studies on Daniel 11», pág. 101; Bohr, «La Razón de Nuestro Existir»,
+      pág. 73-78; Bohr, «15 principios de interpretación profética», vol. 1,
+      pág. 237-238, y vol. 2, pág. 105 y 215-216; notas de Camilo en Evernote,
+      "Daniel 11 Coronado" y "12. … El caballo Negro".`) },
+
+    { t: '🧭 La Biblia explica sus símbolos (2)', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Lluvia (11:6)', 'La enseñanza de Dios; sin ella hay hambre de su palabra', 'Deuteronomio 32:2; Amós 8:11'],
+        ['Bestia (11:7)', 'Un reino o una nación', 'Daniel 7:17, 23: «La cuarta bestia será un cuarto reino en la tierra»'],
+        ['Egipto (11:8)', 'El ateísmo: negar al Dios vivo', 'Éxodo 5:2'],
+        ['Sodoma (11:8)', 'La corrupción moral', 'Génesis 13:13; 19:1-13'],
+        ['Arca del pacto (11:19)', 'La ley de Dios: los Diez Mandamientos', 'Deuteronomio 4:13; 10:5'],
+        ['Relámpagos, voces y truenos (11:19)', 'Dios que habla y da su ley, como en el Sinaí', 'Éxodo 19:16-19'],
+      ]) +
+      fu(`Fuentes: Bohr, «Las siete iglesias», pág. 96; Bohr, «15 principios de
+      interpretación profética», vol. 2, pág. 105-106 y 216; Elena de White,
+      «El conflicto de los siglos», pág. 228; Bohr, «La Razón de Nuestro
+      Existir», pág. 74.`) },
   ],
 
   preguntas: [
@@ -428,6 +460,21 @@ module.exports = {
       q: 'Según Bohr, ¿qué muestra el arca vista en el templo abierto (11:19)?',
       o: ['El lugar santísimo abierto en 1844', 'Que el templo de Jerusalén volverá', 'El fin del santuario del cielo', 'Que el arca de Noé será hallada'], a: 0,
       e: 'Es la apertura del lugar santísimo en 1844: se ve el arca con la ley y el sábado; el versículo abre la sección de los capítulos 12 al 14. Fuentes: Stephen Bohr, «La Razón de Nuestro Existir», pág. 74; Bohr, «15 principios de interpretación profética», vol. 2, pág. 91-92.' },
+    { t: 'mc', v: '11:4', f: 'c',
+      q: '¿Qué texto del mismo Apocalipsis explica que los candelabros representan iglesias?',
+      o: ['Apocalipsis 1:20', 'Apocalipsis 11:4', 'Apocalipsis 4:5', 'Apocalipsis 2:5'], a: 0,
+      e: '«…los siete candelabros que has visto son las siete iglesias» (Apocalipsis 1:20). Por eso los candelabros de 11:4 son la luz que la Biblia da por medio de la iglesia. Fuentes: Bohr, «Studies on Daniel 11», pág. 101; Bohr, «15 principios de interpretación profética», vol. 2, pág. 216.' },
+    { t: 'tf', v: '11:7', f: 'c',
+      q: 'En la lista de símbolos de Bohr, una bestia representa en la profecía un reino o una nación (Daniel 7:17, 23).', a: true,
+      e: 'Verdadero: «La cuarta bestia será un cuarto reino en la tierra» (Daniel 7:23). Por eso la bestia del abismo de 11:7 es una nación: Francia. Fuente: Bohr, «15 principios de interpretación profética», vol. 2, pág. 105.' },
+    { t: 'mc', v: '11:3', f: 'c',
+      q: '¿Qué textos dan la regla de un día por un año, con la que los 1.260 días son 1.260 años?',
+      o: ['Números 14:34 y Ezequiel 4:6', 'Daniel 9:24 y Daniel 9:25', 'Génesis 7:4 y Génesis 7:12', 'Levítico 25:8 y Levítico 25:10'], a: 0,
+      e: 'En Números 14:34 y Ezequiel 4:6 Dios cuenta cada día por un año. Fuente: Bohr, «15 principios de interpretación profética», vol. 1, pág. 237-238.' },
+    { t: 'mc', v: '11:19', f: 'c',
+      q: 'Según Bohr, ¿por qué se llama «arca del pacto» el arca que se ve en 11:19?',
+      o: ['Guardaba los Diez Mandamientos, el pacto', 'La hizo Moisés al salir de Egipto', 'Contenía el maná que comió Israel', 'Se perdió cuando cayó Jerusalén'], a: 0,
+      e: 'Los Diez Mandamientos son el pacto que Dios dio en el Sinaí (Deuteronomio 4:13), y estaban dentro del arca. En 1844 se ve el arca con la ley y el sábado. Fuente: Bohr, «La Razón de Nuestro Existir», pág. 74.' },
   ],
 
   tarjetas: [

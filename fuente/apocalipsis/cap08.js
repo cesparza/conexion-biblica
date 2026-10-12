@@ -162,10 +162,12 @@ module.exports = {
       <strong>Otras lecturas adventistas:</strong> la clásica de Urías Smith y
       Josías Litch, que defiende Alberto Treiyer, ve en las trompetas 1-4 las
       invasiones bárbaras contra Roma, y en la 5ª y 6ª a sarracenos y
-      turcos; Ekkehardt Mueller propone otra.`) +
+      turcos; Ekkehardt Mueller propone otra. Una nota antigua de Camilo
+      (2022) trae la lectura clásica; sus notas de 2025 siguen a Bohr.`) +
       fu(`Fuentes: Bohr, «Introducción a las siete trompetas», pág. 16 y 19; Bohr,
       «15 principios de interpretación profética», vol. 2, pág. 89-90;
-      Treiyer, «Las siete trompetas, reseña de Ekkehardt Mueller», pág. 1-3.`) },
+      Treiyer, reseña de Mueller, pág. 1-3; Treiyer, «Fechas trompetas»,
+      pág. 3-4; notas de Camilo, "Las trompetas" y "1 - Las 7 Trompetas".`) },
 
     { t: '🧭 Las cuatro primeras, una por una (8:7-12)', capa: 'contexto', h:
       li([`<strong>1ª · Jerusalén (34-70).</strong> Para Bohr los juicios
@@ -183,10 +185,12 @@ module.exports = {
            que amplían 11:2-6, 12 y 13:1-8; en las notas de Camilo, la
            oscuridad de la Edad Media.`]) +
       wa(`En el material de Bohr que tenemos están el poder y las fechas de
-      cada trompeta, pero no la explicación de cada símbolo. Los trasfondos de
-      la 2ª y la 3ª salen de su lista de símbolos del Antiguo Testamento.`) +
+      cada trompeta, pero no la explicación de cada símbolo. Los árboles como
+      pueblo de Dios y los trasfondos de la 2ª y la 3ª salen de sus listas de
+      símbolos.`) +
       fu(`Fuentes: Bohr, «Introducción a las siete trompetas», pág. 16 y 19; Bohr,
-      «15 principios de interpretación profética», vol. 2, pág. 89-90 y 216;
+      «15 principios de interpretación profética», vol. 2, pág. 89-90, 105 y
+      215-216;
       notas de Camilo en Evernote, "Las trompetas".`) },
 
     { t: '🧭 Trompetas y plagas: aviso antes del final', capa: 'contexto', h:
@@ -218,6 +222,22 @@ module.exports = {
       «Bástaos mi gracia».`) +
       fu(`Fuente: Stephen Bohr, «Los siete sellos de Apocalipsis», tomo 2,
       pág. 201-203 (cita «El conflicto de los siglos», pág. 624).`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Incienso (8:3-4)', 'Las oraciones de los santos, con los méritos de Cristo', 'Apocalipsis 5:8: «copas de oro llenas de incienso, que son las oraciones de los santos»; Salmo 141:2'],
+        ['Fuego arrojado (8:5)', 'El juicio de Dios al terminar la intercesión', 'Ezequiel 10:2'],
+        ['Trompeta (8:2)', 'Alarma de guerra y aviso del juicio de Dios', 'Números 10:9; Josué 6'],
+        ['Granizo y fuego (8:7)', 'Guerra', 'Salmo 18:12-14'],
+        ['Árboles (8:7)', 'El pueblo de Dios', 'Salmo 1:3; 92:12; Jeremías 17:8'],
+        ['Monte (8:8)', 'Un reino', 'Jeremías 51:25; Daniel 2:35, 44'],
+        ['Mar y aguas (8:8-11)', 'Pueblos y naciones', 'Apocalipsis 17:15: «Las aguas que has visto… son pueblos, muchedumbres, naciones y lenguas»'],
+        ['Estrella (8:10)', 'Un ángel; la que cae, Lucifer', 'Apocalipsis 1:20; Isaías 14:12-15'],
+        ['Sol (8:12)', 'Cristo, el Sol de justicia', 'Malaquías 4:2'],
+      ]) +
+      fu(`Fuentes: Bohr, «Introducción a las siete trompetas», pág. 16-17 y 21-24;
+      Bohr, «15 principios de interpretación profética», vol. 2, pág. 105-106 y
+      215-216; notas de Camilo en Evernote, "Las trompetas".`) },
   ],
 
   preguntas: [
@@ -340,7 +360,7 @@ module.exports = {
     { t: 'mc', v: '8:5', f: 'c',
       q: 'Según Bohr, ¿qué representa que el ángel arroje el incensario a la tierra?',
       o: ['El fin de la intercesión y del tiempo de gracia', 'El Espíritu Santo que bajó en Pentecostés', 'La caída de Jerusalén en el año 70', 'El comienzo del juicio celestial en 1844'], a: 0,
-      e: 'Arrojar el incensario marca el final de la serie: termina la intercesión y se cierra el tiempo de gracia (compara 15:5-8). Bohr rechaza que sea Pentecostés, porque allí Jesús empezó a interceder. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 20-21.' },
+      e: 'Arrojar el incensario marca el final de la serie: termina la intercesión y se cierra el tiempo de gracia (compara 15:5-8). Bohr rechaza que sea Pentecostés, porque allí Jesús empezó a interceder. Fuente: Stephen Bohr, «Introducción a las siete trompetas», pág. 20-22.' },
     { t: 'mc', v: '8:2', f: 'c',
       q: 'Según Bohr, ¿junto a qué mueble del santuario ministra Jesús en la serie de las trompetas?',
       o: ['El altar del incienso', 'El candelero de oro', 'La mesa de los panes', 'El arca del pacto'], a: 0,
@@ -375,6 +395,21 @@ module.exports = {
       q: 'Según Bohr, ¿qué hecho histórico es el primer ay, la quinta trompeta?',
       o: ['La Revolución Francesa', 'La caída de Jerusalén', 'La Reforma protestante', 'La caída de Constantinopla'], a: 0,
       e: 'Los tres ayes se anuncian al terminar la cuarta trompeta (8:13); el primero, la quinta trompeta, es la Revolución Francesa (1789-1798). Fuente: Stephen Bohr, «15 principios de interpretación profética», vol. 2, pág. 89.' },
+    { t: 'mc', v: '8:7', f: 'c',
+      q: 'En la lista de símbolos de Bohr, ¿qué representan los árboles, como los de la primera trompeta?',
+      o: ['El pueblo de Dios', 'Los reyes de la tierra', 'Las riquezas del mundo', 'Los ejércitos paganos'], a: 0,
+      e: 'Los árboles son el pueblo de Dios: el justo es como un árbol plantado junto al agua (Salmo 1:3; 92:12; Jeremías 17:8). Las notas de Camilo dicen lo mismo. Fuentes: Bohr, «15 principios de interpretación profética», vol. 2, pág. 105 y 215; notas de Camilo en Evernote, "Las trompetas".' },
+    { t: 'mc', v: '8:8', f: 'c',
+      q: 'Según Bohr, ¿qué representa un monte en la profecía bíblica?',
+      o: ['Un reino', 'Un templo', 'Un profeta', 'Un ejército'], a: 0,
+      e: 'Un monte es un reino: Dios llama a Babilonia monte destructor (Jeremías 51:25), y en Daniel 2 la piedra se hace un gran monte, el reino de Dios (Daniel 2:35, 44). Fuente: Bohr, «15 principios de interpretación profética», vol. 2, pág. 106 y 216.' },
+    { t: 'mc', v: '8:10-11', f: 'c',
+      q: '¿Qué texto del mismo Apocalipsis explica que las aguas representan pueblos?',
+      o: ['Apocalipsis 17:15', 'Apocalipsis 8:11', 'Apocalipsis 12:15', 'Apocalipsis 16:4'], a: 0,
+      e: '«Las aguas que has visto… son pueblos, muchedumbres, naciones y lenguas» (Apocalipsis 17:15). Fuente: Bohr, «15 principios de interpretación profética», vol. 2, pág. 105.' },
+    { t: 'tf', v: '8:5', f: 'c',
+      q: 'Según Bohr, el trasfondo del fuego arrojado a la tierra (8:5) es Ezequiel 10:2, donde se esparcen carbones encendidos sobre la ciudad como señal de juicio.', a: true,
+      e: 'Verdadero: el hombre vestido de lino toma carbones de entre los querubines y los esparce sobre la ciudad (Ezequiel 10:2). En 8:5 el fuego arrojado marca el fin de la intercesión. Fuente: Bohr, «Introducción a las siete trompetas», pág. 21-22.' },
   ],
 
   tarjetas: [

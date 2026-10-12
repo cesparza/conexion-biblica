@@ -334,6 +334,34 @@ module.exports = {
            a pisar el lagar (19:11-16) y librar a los suyos.`]) +
       fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 8; Bohr,
       El Mensaje de los Tres Ángeles, tomo 2, pág. 167-168 y 211-212.`) },
+    { t: '🧭 La Biblia explica sus símbolos (1): los 144.000 y los ángeles', capa: 'contexto', h:
+      `<p>Como en los capítulos 12 y 13, la misma Biblia explica estos símbolos.</p>` +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Monte de Sion', 'La morada de Dios con su pueblo fiel', 'Hebreos 12:22-24; Gálatas 4:26'],
+        ['Cordero', 'Cristo, el sacrificio', 'Isaías 53:7; Apocalipsis 5:6'],
+        ['Nombre en la frente', 'El carácter de Dios grabado en la mente', 'Hebreos 10:16; Deuteronomio 6:6-8'],
+        ['Mujer', 'Iglesia: pura o apóstata', '2 Corintios 11:2; Apocalipsis 17:5: «la madre de las rameras»'],
+        ['Vírgenes', 'Fieles que no se unieron a la religión falsa', '2 Corintios 11:2; Apocalipsis 17:1-5'],
+        ['Tribus de Israel', 'El pueblo espiritual de Dios', 'Gálatas 3:29; Romanos 2:28-29'],
+        ['Ángel', 'Mensajero', 'Lucas 7:24 (la misma palabra para los mensajeros de Juan); Apocalipsis 1:20'],
+      ]) +
+      fu(`Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág.
+      PDF 103, 105-106 y 216; Bohr, El Mensaje de los Tres Ángeles, tomo 1,
+      pág. PDF 4; tomo 2, pág. PDF 42, 122 y 192; Bohr, Los 144.000 y los 24
+      ancianos, pág. PDF 116-117.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos (2): Babilonia y la cosecha', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Babilonia', 'Confusión: la religión que se aparta de Dios', 'Génesis 11:9; Apocalipsis 17:5'],
+        ['Vino de Babilonia', 'Doctrinas falsas', 'Jeremías 51:7; Apocalipsis 17:2'],
+        ['Fornicación', 'La unión ilícita de la iglesia con los poderes civiles', 'Apocalipsis 17:1-2; Santiago 4:4; Ezequiel 16:15 y 26'],
+        ['Fuego y azufre; humo que sube', 'Destrucción total, como la de Edom y Sodoma', 'Isaías 34:9-10; Judas 7'],
+        ['Siega', 'El fin del mundo, cuando Cristo recoge a los suyos', 'Mateo 13:39; Mateo 3:12'],
+        ['Lagar', 'La ira de Dios sobre los impíos', 'Isaías 63:1-6; Apocalipsis 19:15: «Él pisa el lagar del vino del furor y de la ira del Dios Todopoderoso»'],
+      ]) +
+      fu(`Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág.
+      PDF 102, 104, 106 y 215; Bohr, El calendario religioso hebreo, pág.
+      PDF 42; Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. PDF 82.`) },
   ],
 
   preguntas: [
@@ -572,6 +600,17 @@ module.exports = {
     { t: 'tf', v: '14:19-20', f: 'c',
       q: 'Según Bohr, el lagar pisado fuera de la ciudad se relaciona con Apocalipsis 19, cuando Jesús viene con los ejércitos del cielo a librar a su pueblo.', a: true,
       e: 'Verdadero: los impíos rodean al remanente y Jesús pisa «el lagar del vino del furor» (19:15). Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 212.' },
+    { t: 'mc', v: '14:8', f: 'c',
+      q: '¿Qué significa el nombre «Babel», de donde viene Babilonia?',
+      o: ['Confusión', 'Fortaleza', 'Ciudad grande', 'Río caudaloso'], a: 0,
+      e: 'En Babel Dios confundió la lengua de los hombres (Génesis 11:9). Por eso Babilonia representa la confusión de la religión que se aparta de Dios. Fuente: Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104.' },
+    { t: 'tf', v: '14:8', f: 'c',
+      q: 'En la profecía, una mujer que actúa como ramera representa una iglesia unida ilícitamente a los poderes civiles.', a: true,
+      e: 'Verdadero: con la gran ramera «han fornicado los reyes de la tierra» (17:2); ver Santiago 4:4 y Ezequiel 16. Fuente: Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 106.' },
+    { t: 'mc', v: '14:15', f: 'c',
+      q: '¿Qué texto de Jesús explica que la siega representa el fin del mundo?',
+      o: ['Mateo 13:39', 'Juan 4:35', 'Lucas 10:2', 'Gálatas 6:7'], a: 0,
+      e: 'En la parábola del trigo y la cizaña, Jesús explica que la siega es el fin del siglo (Mateo 13:39). Bohr lo une con la cosecha de 14:14-16. Fuente: Bohr, El calendario religioso hebreo, pág. PDF 42.' },
   ],
 
   tarjetas: [

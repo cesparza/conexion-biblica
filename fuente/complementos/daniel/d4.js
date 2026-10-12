@@ -21,7 +21,7 @@ module.exports = {
           ['4', 'Su propia humillación', 'Por fin, convertido'],
         ]) +
         `<p>Y todavía en 4:7 vuelve a llamar a los mismos magos. Bohr nota que el rey, como los caldeos de 2:11, pensaba en un dios lejano al que no le importan los hombres. Poco a poco aprendió que el Dios de los hebreos quería <strong>salvarlo a él</strong>.</p>` +
-        hi(`Para Bohr, el milagro más grande del libro no es el horno ni los leones: es que un tirano soberbio se volviera un hijo humilde de Dios.`) +
+        hi(`Para Bohr, el milagro más grande no es revelar sueños ni librar del horno: es que un tirano soberbio se volviera un hijo humilde de Dios.`) +
         `<p>Fuente: Stephen Bohr, Studies in Daniel 1-10, págs. 85-86 y 88.</p>`,
     },
     {
@@ -82,6 +82,21 @@ module.exports = {
         hi(`El giro del capítulo está en 4:34: cuando el rey <strong>alzó los ojos al cielo</strong>, le volvió la razón.`) +
         `<p>Fuente: Stephen Bohr, Studies in Daniel 1-10, págs. 87-88 y 90-91.</p>`,
     },
+    {
+      t: '🧭 La Biblia explica sus símbolos',
+      capa: 'contexto',
+      h: `<p>Este sueño no hay que adivinarlo: Daniel mismo lo interpreta, y el resto de la Biblia confirma la clave.</p>` +
+        tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+          ['El árbol grande', 'El rey y su reino', 'Daniel 4:20-22: «tú mismo eres, oh rey»'],
+          ['La copa que llega al cielo', 'Su grandeza y su dominio', 'Daniel 4:22: «creció tu grandeza y ha llegado hasta el cielo»'],
+          ['Las bestias y las aves bajo el árbol', 'Los pueblos que Dios puso bajo su mano', 'Daniel 2:38: hijos de hombres, «bestias del campo y aves del cielo, él los ha entregado en tus manos»; Génesis 1:26, 28'],
+          ['El vigilante y santo', 'Un mensajero de Dios, un ángel', 'Daniel 4:13 y 17: desciende del cielo y ejecuta la sentencia'],
+          ['La cepa con atadura de hierro y de bronce', 'El reino que Dios le guardó', 'Daniel 4:26: «tu reino te quedará firme»'],
+          ['Siete tiempos', 'Siete años', 'Daniel 4:16 y 25; en 7:25 «tiempo» es un año (Apocalipsis 12:6 y 14)'],
+          ['Corazón de bestia', 'Perder la razón', 'Daniel 4:16 y 34: «mi razón me fue devuelta»'],
+        ]) +
+        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 88-89; Bohr, 15 principios de interpretación profética, vol. 1, pág. PDF 19-20; Urías Smith, Las profecías de Daniel, pág. PDF 40.</p>`,
+    },
   ],
   preguntas: [
     { t: 'mc', v: '4:27', f: 'c', q: 'Según Bohr, ¿por qué el juicio anunciado en el sueño del árbol se podía evitar?',
@@ -111,5 +126,14 @@ module.exports = {
     { t: 'tf', v: '4:3', f: 'c', q: 'Según Bohr, la Septuaginta coloca el himno de Daniel 4:1-3 como cierre del capítulo 3.',
       a: true,
       e: 'Verdadero: después del horno el rey alababa a un Dios de señales y maravillas; al final del capítulo 4 lo conoce como el que humilla al soberbio y cambia el corazón. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. 84.' },
+    { t: 'mc', v: '4:17', f: 'c', q: 'Según Bohr, ¿quiénes son los «vigilantes» que dan la sentencia contra el rey?',
+      o: ['Mensajeros de Dios, sus ángeles', 'Los sabios caldeos del rey', 'Los gobernadores de provincia', 'Los profetas de Judá cautivos'], a: 0,
+      e: 'Dios controla la vida del rey «por medio de los vigilantes, quienes son sus mensajeros»; Urías Smith también los ve como ángeles que ejecutan los decretos de Dios. Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 1, pág. PDF 19; Urías Smith, Las profecías de Daniel, pág. PDF 40.' },
+    { t: 'mc', v: '4:12', f: 'c', q: 'Según Bohr, el árbol que da sombra a las bestias y a las aves recuerda el dominio que Dios dio…',
+      o: ['a Moisés en Egipto', 'al hombre en la creación', 'a David en Jerusalén', 'a Israel en el Sinaí'], a: 1,
+      e: 'Es el dominio de Génesis 1:26 y 28, que debía ser bondadoso y justo; después del pecado los gobernantes lo convirtieron en tiranía. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 88.' },
+    { t: 'tf', v: '4:16', f: 'c', q: 'Según Elena de White, citada por Bohr, el rey recibió «corazón de bestia» porque, como las bestias, no reconocía la soberanía de Dios.',
+      a: true,
+      e: 'Verdadero: la prosperidad lo hizo sentirse independiente de Dios y usar para su gloria la razón que Dios le había dado (Youth’s Instructor, 28-mar-1905). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 88.' },
   ],
 };

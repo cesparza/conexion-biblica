@@ -142,7 +142,8 @@ module.exports = {
            algunas: la inmortalidad natural del alma, el tormento eterno de los
            impíos y exaltar el primer día de la semana por encima del sábado.
            Quien bebe ese vino se enfurece contra los que no lo aceptan.`,
-          `<strong>Nombres de blasfemia</strong>: para Bohr, blasfemia es que
+          `<strong>Nombres de blasfemia</strong> (los lleva la bestia, que está
+           «llena de nombres de blasfemia», 17:3): para Bohr, blasfemia es que
            un hombre pretenda el lugar de Dios en la tierra o el poder de
            perdonar pecados (Juan 10:33; Marcos 2:7).`,
           `<strong>Ebria de la sangre de los santos</strong>: Elena de White
@@ -208,12 +209,13 @@ module.exports = {
       Bohr empieza por Babilonia porque Daniel 2 y 7 y Apocalipsis 13 siempre
       empiezan ahí, y rechaza leer las cabezas como siete papas desde 1929,
       porque eso termina fijando fechas.<br><br>
-      Otra lectura adventista (Ranko Stefanovic): Egipto, Asiria, Babilonia,
-      Persia y Grecia son los cinco caídos; la sexta, la que «es», es Roma en
-      tiempos de Juan; la séptima, el papado medieval; y el octavo, ese mismo
-      poder restaurado al final.`) +
-      hi(`Fuentes: Bohr, «Apocalipsis 17», pág. 14-20; Stefanovic, «Las siete
-      cabezas de la bestia de Apocalipsis 17», pág. 4.`) },
+      Otra lectura, de Treiyer, que también está en las notas de estudio:
+      la quinta cabeza es Roma papal; la sexta, el poder secular y ateo que
+      nació con la Revolución francesa y la hirió en 1798; la séptima, el
+      protestantismo de Estados Unidos que le devuelve su poder; y el octavo,
+      el papado restaurado.`) +
+      hi(`Fuentes: Bohr, «Apocalipsis 17», pág. 14-20; Treiyer, «Identificando
+      a Babilonia», pág. 7.`) },
 
     { t: '🧭 Diez cuernos, «una hora» y el Cordero que vence (17:12-14)', capa: 'contexto', h:
       li([`Las cabezas reinan una tras otra; los <strong>diez cuernos</strong>
@@ -254,11 +256,34 @@ module.exports = {
       «El conflicto de los siglos», pág. 713-714; Bohr, «El Mensaje de los
       Tres Ángeles», tomo 2, pág. 217.`) },
 
+    { t: '🧭 La Biblia explica sus símbolos (1): la mujer', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Mujer', 'Una iglesia, el pueblo de Dios', 'Jeremías 6:2; 2 Corintios 11:2; Efesios 5:25-27'],
+        ['Ramera', 'Una iglesia que se apartó de Dios', 'Ezequiel 16:15; Jeremías 3:1-3'],
+        ['Fornicar con los reyes', 'Unir la iglesia con el poder civil', 'Ezequiel 16:26; Santiago 4:4; Apocalipsis 18:3'],
+        ['Muchas aguas', 'Pueblos y naciones', 'El mismo capítulo: «Las aguas que has visto, donde se sienta la ramera, son pueblos, muchedumbres, naciones y lenguas» (17:15)'],
+        ['Sentarse sobre algo', 'Gobernarlo', '«la gran ciudad que reina sobre los reyes de la tierra» (17:18)'],
+        ['Vino y copa de oro', 'Falsas doctrinas que emborrachan', 'Jeremías 51:7 (Babilonia, copa de oro que embriagó a la tierra); Apocalipsis 14:8'],
+        ['Púrpura y escarlata', 'Realeza', 'Juan 19:2, 5; Mateo 27:28'],
+        ['Babilonia', 'Confusión', 'Génesis 11:9'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 102-106; Bohr, «Apocalipsis 17», pág. 4-5 y 11; Elena de White,
+      «El conflicto de los siglos», pág. 431 y 434.`) },
 
-
-
-
-
+    { t: '🧭 La Biblia explica sus símbolos (2): la bestia', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Bestia', 'Un reino o poder político', 'Daniel 7:17, 23: «La cuarta bestia será un cuarto reino»'],
+        ['Cabezas y montes', 'Reinos que gobiernan uno tras otro', 'Apocalipsis 17:9-10; Daniel 2:35, 44 (la piedra se hace un gran monte: el reino de Dios); Jeremías 51:25'],
+        ['Cuernos', 'Reyes', '«Los diez cuernos que has visto son diez reyes» (17:12); Daniel 7:24'],
+        ['Diez', 'Todos, el conjunto completo', 'Los diez mandamientos expresan todo el deber (Eclesiastés 12:13; Mateo 22:40)'],
+        ['Abismo', 'El lugar de los muertos', 'Romanos 10:7'],
+        ['El octavo', 'No es otra cabeza: es una de las siete que revive', '«es uno de los siete» (17:11)'],
+        ['Perdición', 'La destrucción final', '2 Tesalonicenses 2:3; Juan 17:12'],
+        ['El Cordero', 'Cristo', 'Apocalipsis 17:14 con 19:13, 16: «La Palabra de Dios» lleva el nombre «Rey de reyes y Señor de señores»'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 105-106; Bohr, «Apocalipsis 17», pág. 14-16, 20-21 y 23-24.`) },
   ],
 
   preguntas: [
@@ -461,15 +486,15 @@ module.exports = {
     { t: 'mc', v: '17:10', f: 'c',
       q: 'Según Bohr, ¿cuál es la sexta cabeza de la bestia escarlata?',
       o: ['Estados Unidos bajo el protestantismo', 'El Imperio romano de los días de Juan', 'Medo-Persia, después de Babilonia', 'El papado ya sanado de su herida'], a: 0,
-      e: 'Bohr: 1 Babilonia, 2 Medo-Persia, 3 Grecia, 4 Roma imperial, 5 Europa bajo el papado, 6 Estados Unidos bajo un protestantismo que se apartó de sus principios, 7 Roma papal sanada. (Stefanovic, en otra lectura, pone a Roma imperial como la sexta.) Fuente: Bohr, «Apocalipsis 17», pág. 18.' },
+      e: 'Bohr: 1 Babilonia, 2 Medo-Persia, 3 Grecia, 4 Roma imperial, 5 Europa bajo el papado, 6 Estados Unidos bajo un protestantismo que se apartó de sus principios, 7 Roma papal sanada. (Treiyer, en otra lectura, pone como sexta al poder secular nacido en la Revolución francesa.) Fuente: Bohr, «Apocalipsis 17», pág. 18.' },
     { t: 'mc', v: '17:10', f: 'c',
       q: 'Según Bohr, ¿por qué no empieza las siete cabezas con Egipto y Asiria?',
       o: ['En Daniel la serie siempre empieza con Babilonia', 'Egipto y Asiria nunca oprimieron a Israel', 'Juan no conocía la historia de esos dos reinos', 'Esos reinos ya no existían cuando escribió Daniel'], a: 0,
       e: 'Bohr: Egipto y Asiria no aparecen en la secuencia de Daniel 2, Daniel 7 ni Apocalipsis 13, que siempre comienza con Babilonia. Fuente: Bohr, «Apocalipsis 17», pág. 16.' },
     { t: 'mc', v: '17:10', f: 'c',
-      q: 'En otra lectura adventista (Ranko Stefanovic), ¿cuál es la sexta cabeza, la que «es» en tiempos de Juan?',
-      o: ['El Imperio romano', 'El papado medieval', 'El Imperio griego', 'Los Estados Unidos'], a: 0,
-      e: 'Stefanovic: cinco caídos (Egipto, Asiria, Babilonia, Persia y Grecia), la sexta es Roma en tiempos de Juan, la séptima el papado medieval y el octavo ese poder restaurado al final. Bohr, en cambio, pone a Estados Unidos como sexta. Fuente: Stefanovic, «Las siete cabezas de la bestia de Apocalipsis 17», pág. 4.' },
+      q: 'En la otra lectura que recogen las notas de estudio (Treiyer), ¿cuál es la sexta cabeza de la bestia?',
+      o: ['El poder secular de la Revolución francesa', 'El Imperio romano de los días de Juan', 'El papado sanado de su herida mortal', 'El Imperio griego después de Alejandro'], a: 0,
+      e: 'Treiyer: la quinta es Roma papal, la sexta la Francia atea que la hirió en 1798, la séptima el protestantismo de Estados Unidos que le devuelve el poder, y el octavo el papado restaurado. Bohr, en cambio, pone a Estados Unidos como sexta. Fuente: Treiyer, «Identificando a Babilonia», pág. 7.' },
     { t: 'tf', v: '17:11', f: 'c',
       q: 'Según Bohr, la bestia escarlata tiene una octava cabeza distinta de las siete.', a: false,
       e: 'Falso: para Bohr solo tiene siete cabezas; la séptima cuenta como «octava» porque revive de su herida, y el 8 es el número de la resurrección. Fuente: Bohr, «Apocalipsis 17», pág. 20.' },
@@ -488,6 +513,21 @@ module.exports = {
     { t: 'tf', v: '17:16', f: 'c',
       q: 'Según Elena de White, al final las multitudes engañadas se vuelven contra quienes las guiaron a perseguir al pueblo de Dios.', a: true,
       e: 'Verdadero: «Las espadas que debían servir para destruir al pueblo de Dios se emplean ahora para matar a sus enemigos». Bohr lo une con 17:16. Fuentes: Elena de White, «El conflicto de los siglos», pág. 713-714; Bohr, «Apocalipsis 17», pág. 23-24.' },
+    { t: 'mc', v: '17:15', f: 'c',
+      q: '¿Qué versículo del mismo capítulo explica qué son las aguas donde se sienta la ramera?',
+      o: ['Apocalipsis 17:15', 'Apocalipsis 17:1', 'Apocalipsis 17:9', 'Apocalipsis 17:18'], a: 0,
+      e: '«Las aguas que has visto, donde se sienta la ramera, son pueblos, muchedumbres, naciones y lenguas» (17:15). El ángel intérprete explica la visión en los versículos 9-18. Fuente: Bohr, «Apocalipsis 17», pág. 3 y 5.' },
+    { t: 'mc', v: '17:1', f: 'c',
+      q: 'Según Bohr, ¿qué texto del Antiguo Testamento compara al pueblo de Dios con una mujer?',
+      o: ['Jeremías 6:2, la hija de Sión', 'Génesis 3:20, Eva, madre de todos', 'Rut 1:16, la moabita fiel', 'Proverbios 31:10, la mujer virtuosa'], a: 0,
+      e: 'Bohr: una mujer pura representa una iglesia pura (Jeremías 6:2; Efesios 5:25-27), y una ramera, una iglesia que se prostituyó (Ezequiel 16). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 103.' },
+    { t: 'mc', v: '17:2', f: 'c',
+      q: 'Según Bohr, ¿qué texto llama adulterio a la amistad con el mundo, como la fornicación de la ramera con los reyes?',
+      o: ['Santiago 4:4', 'Romanos 12:2', '1 Juan 2:15', 'Mateo 6:24'], a: 0,
+      e: 'Bohr: la mujer que se comporta como ramera es una iglesia que tiene relaciones ilícitas con los poderes civiles (Apocalipsis 17:1; Santiago 4:4; Ezequiel 16:15, 26). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 106.' },
+    { t: 'tf', v: '17:12', f: 'c',
+      q: 'Tanto Daniel 7:24 como Apocalipsis 17:12 explican que los cuernos representan reyes.', a: true,
+      e: 'Verdadero: «Los diez cuernos significan que de aquel reino se levantarán diez reyes» (Daniel 7:24); «Los diez cuernos que has visto son diez reyes» (17:12). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105.' },
   ],
 
   tarjetas: [

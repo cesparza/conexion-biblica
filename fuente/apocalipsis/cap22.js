@@ -126,7 +126,7 @@ module.exports = {
       más hermoso ahora que cuando él fue expulsado».<br><br>
       Bohr: si se compara 2:7 con 22:2, el árbol de la vida está en el paraíso, en la
       presencia misma de Dios.`) +
-      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 52; Elena de White, El conflicto de los siglos, pág. 520.</p>` },
+      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 121; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 52; Elena de White, El conflicto de los siglos, pág. 520.</p>` },
 
     { t: '🧭 Vida que se recibe de Dios, mes a mes (22:2)', capa: 'contexto', h:
       hi(`El árbol da fruto <strong>«cada mes»</strong>. Bohr saca de aquí una
@@ -202,7 +202,7 @@ module.exports = {
       22:1) recuerda, según Bohr, la ceremonia del agua de la <strong>Fiesta de los
       Tabernáculos</strong>. En esa fiesta Jesús gritó: «Si alguno tiene sed, venga a mí y
       beba» (Juan 7:37).`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 105 (cita a Elena de White, Carta 115, 1905); Stephen Bohr, El calendario religioso hebreo, pág. 254.</p>` },
+      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 105 (cita a Elena de White, Carta 115, 1905); Stephen Bohr, El calendario religioso hebreo, pág. 255.</p>` },
 
     { t: '🧭 Un libro para estar listos: «¡Vengo pronto!» (22:7-20)', capa: 'contexto', h:
       hi(`Bohr resume para qué es el Apocalipsis:`) +
@@ -218,6 +218,17 @@ module.exports = {
       wa(`El libro termina con una promesa y una oración: «Ciertamente vengo en
       breve» y «¡Ven, Señor Jesús!» (22:20).`) +
       `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 100.</p>` },
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Árbol de la vida', 'La vida eterna que Dios da', 'Génesis 2:9; 3:22-24; Apocalipsis 2:7'],
+        ['Nombre', 'El carácter, y a quién pertenece uno', 'Éxodo 34:5-7; Deuteronomio 28:10; Apocalipsis 14:1'],
+        ['Frente', 'La mente', 'Deuteronomio 6:6-8; Hebreos 10:16'],
+        ['Ropas lavadas', 'La justicia de Cristo recibida', 'Apocalipsis 7:14 y 19:8; Isaías 61:10'],
+        ['Estrella de la mañana', 'Jesucristo', '«Yo soy la raíz y el linaje de David, la estrella resplandeciente de la mañana» (22:16)'],
+        ['Raíz de David', 'El Mesías, hijo de David', 'Isaías 11:1, 10; Apocalipsis 5:5'],
+        ['Alfa y Omega', 'El Dios eterno', '«el principio y el fin, el primero y el último» (22:13)'],
+      ]) +
+      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. PDF 102 y 104-105; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. PDF 121; notas de Camilo en Evernote, "1. Las 12 Tribus de Israel - Los 144000 sellados" (el nombre es el carácter).</p>` },
   ],
 
   preguntas: [
@@ -348,10 +359,10 @@ module.exports = {
     { t: 'mc', v: '22:2', f: 'c',
       q: 'En la lectura adventista, ¿qué muestra que el árbol de la vida aparezca en la ciudad de Dios?',
       o: ['Que Dios devuelve lo que se perdió en el Edén', 'Que en el cielo hay que trabajar la tierra', 'Que los ángeles comen de sus frutos', 'Que el árbol nunca existió en la tierra'], a: 0,
-      e: 'El acceso al árbol se perdió en el Edén (Génesis 3:22-24) y vuelve en la ciudad. El texto dice que está a uno y otro lado del río y da doce frutos (22:2). Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120; Elena de White, El conflicto de los siglos, pág. 520.' },
+      e: 'El acceso al árbol se perdió en el Edén (Génesis 3:22-24) y vuelve en la ciudad. El texto dice que está a uno y otro lado del río y da doce frutos (22:2). Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 121; Elena de White, El conflicto de los siglos, pág. 520.' },
     { t: 'tf', v: '22:3', f: 'c',
       q: 'Según Bohr, el Apocalipsis vuelve al Génesis: el árbol, la entrada por la puerta y la vida que se perdieron en el Edén se recuperan en la ciudad.', a: true,
-      e: 'Verdadero: los fieles entran por las puertas, comen del árbol de la vida y ya no hay maldición (22:3) ni muerte (21:4). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 120.' },
+      e: 'Verdadero: los fieles entran por las puertas, comen del árbol de la vida y ya no hay maldición (22:3) ni muerte (21:4). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 121.' },
     { t: 'tf', v: '22:2', f: 'c',
       q: 'Según Elena de White, al llegar a la ciudad Jesús lleva a Adán al árbol de la vida y le da de su fruto.', a: true,
       e: 'Verdadero: «El Salvador le lleva al árbol de la vida, toma su fruto glorioso y se lo ofrece para comer». Fuente: Elena de White, El conflicto de los siglos, pág. 520.' },
@@ -404,7 +415,7 @@ module.exports = {
     { t: 'mc', v: '22:17', f: 'c',
       q: 'Según Bohr, ¿qué fiesta de Israel recuerda la invitación a tomar gratis «del agua de la vida» (22:17)?',
       o: ['La Fiesta de los Tabernáculos', 'La fiesta de la Pascua', 'La fiesta de Pentecostés', 'La Fiesta de las Trompetas'], a: 0,
-      e: 'La ceremonia del agua era parte de la Fiesta de los Tabernáculos; Bohr la une con 21:6, 22:1 y 22:17. Fuente: Stephen Bohr, El calendario religioso hebreo, pág. 254.' },
+      e: 'La ceremonia del agua era parte de la Fiesta de los Tabernáculos; Bohr la une con 21:6, 22:1 y 22:17. Fuente: Stephen Bohr, El calendario religioso hebreo, pág. 255.' },
     { t: 'mc', v: '22:10', f: 'c',
       q: 'Según Bohr, ¿qué relación hay entre «No selles las palabras de la profecía de este libro» (22:10) y el libro de Daniel?',
       o: ['El Apocalipsis le quita el sello a Daniel', 'El Apocalipsis reemplaza a Daniel', 'El Apocalipsis contradice a Daniel', 'No hay ninguna relación entre ellos'], a: 0,
@@ -413,6 +424,17 @@ module.exports = {
       q: 'Según Bohr, ¿qué le pide a quien estudia el Apocalipsis la advertencia de 22:18-19?',
       o: ['Estudiarlo con mucho cuidado', 'No leerlo porque es un secreto', 'Dejar que solo los pastores lo lean', 'Leerlo como cada uno quiera'], a: 0,
       e: 'Dios pronuncia una solemne advertencia contra quien añade o quita; por eso hay que estudiarlo correctamente. Su centro es conocer a Jesús y estar listos para su venida. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 100.' },
+    { t: 'mc', v: '22:4', f: 'c',
+      q: 'Según Bohr, ¿qué representa en la profecía la frente, donde los siervos llevan el nombre de Dios (22:4)?',
+      o: ['La mente', 'La fuerza del cuerpo', 'La riqueza', 'La edad'], a: 0,
+      e: 'La frente es la mente (Deuteronomio 6:6-8; Hebreos 10:16; Apocalipsis 14:1): Dios escribe su ley y su carácter en ella. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105.' },
+    { t: 'mc', v: '22:4', f: 'c',
+      q: 'Según Bohr, ¿qué expresa en la Biblia llevar el nombre de alguien, como el nombre de Dios en 22:4?',
+      o: ['Su carácter, y que le pertenecemos', 'Un tatuaje visible en la piel', 'Un título que se puede comprar', 'Solo la tribu donde se nació'], a: 0,
+      e: 'El nombre expresa el carácter; quien lleva el nombre de Jehová es su posesión y está bajo su protección (Deuteronomio 28:10). Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104.' },
+    { t: 'tf', v: '22:16', f: 'c',
+      q: 'Según Bohr, en la profecía una estrella representa siempre a Jesús.', a: false,
+      e: 'Falso: el símbolo depende del contexto. Una estrella puede ser Cristo (22:16), Satanás (Isaías 14:12-14), los ministros de la iglesia (1:20) o el pueblo fiel (Daniel 12:3). Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 102.' },
   ],
 
   tarjetas: [

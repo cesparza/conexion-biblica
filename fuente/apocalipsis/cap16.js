@@ -228,6 +228,10 @@ module.exports = {
       Dios es perseguir a Cristo (Mateo 25:40; Hechos 9:4).`) +
       li([`Para Bohr el centro de la batalla es la <strong>adoración</strong>:
            obedecer a Dios o no, como en la historia de Caín y Abel.`,
+          `Otra traducción del nombre: «monte de Meguido» (Escuela Sabática
+           2019; Doukhan). Meguido está al pie del monte Carmelo, donde Elías
+           enfrentó a los profetas de Baal; la batalla final es como el
+           Carmelo, pero en todo el mundo.`,
           `Otra lectura, de muchos comentarios evangélicos: una guerra
            literal en el valle de Meguido. Bohr la rechaza, igual que la idea
            de una guerra por el petróleo o entre árabes y judíos.`]) +
@@ -237,7 +241,9 @@ module.exports = {
       consejo a Laodicea (3:18): estar vestidos de la justicia de Cristo.`) +
       hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
       pág. 104, 226 y 230; Bohr, «Los 144.000 y los 24 ancianos», pág. 118-119;
-      Bohr, «Gemas de la verdad presente», pág. 136-137 y 148-149.`) },
+      Bohr, «Gemas de la verdad presente», pág. 136-137 y 148-149; Escuela
+      Sabática 2019-1T, pág. 81; Doukhan, «Secretos del Apocalipsis», pág.
+      168.`) },
 
     { t: '🧭 Séptima copa: «Hecho es» (16:17-21)', capa: 'contexto', h:
       hi(`Elena de White describe esta copa: es a <strong>medianoche</strong>
@@ -258,8 +264,25 @@ module.exports = {
       está llena, y entonces ejecuta la sentencia.`) +
       hi(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 694-695;
       Bohr, «15 principios de interpretación profética», tomo 2, pág. 224-226;
-      Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 202-203 y
-      224-225.`) },
+      Bohr, «El Mensaje de los Tres Ángeles», tomo 1, pág. 96, y tomo 2,
+      pág. 202-203 y 224-225; Bohr, «15 principios de interpretación
+      profética», tomo 2, pág. 145.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Bestia', 'Un reino o poder político', 'Daniel 7:17, 23: «La cuarta bestia será un cuarto reino»'],
+        ['Trono de la bestia', 'Su sede de gobierno, su autoridad', 'Apocalipsis 13:2: el dragón le dio «su poder, su trono y gran autoridad»'],
+        ['El gran río Éufrates', 'Pueblos y naciones que sostienen a Babilonia', 'Isaías 8:7-8 (el río es el rey de Asiria y su ejército); Isaías 17:12-13; Apocalipsis 17:15'],
+        ['Reyes del oriente', 'Cristo y sus ángeles, que vienen a librar', 'Mateo 24:27 (viene como el relámpago que sale del oriente); Isaías 41:25 (Ciro, del oriente)'],
+        ['Ranas', 'Espíritus de demonios que engañan', 'El mismo capítulo: «Son espíritus de demonios, que hacen señales» (16:14)'],
+        ['Dragón', 'Satanás, que obra por los poderes civiles', 'Apocalipsis 12:9; Ezequiel 29:3 (a Faraón se le llama gran dragón)'],
+        ['Falso profeta', 'La bestia de la tierra, que engaña con señales', 'Apocalipsis 19:20 con 13:13-14'],
+        ['Vestiduras y desnudez', 'Estar o no cubierto por la justicia de Cristo', 'Apocalipsis 3:18; 19:8; Isaías 61:10'],
+        ['La gran ciudad en tres partes', 'Se rompe la alianza de los tres poderes', 'Apocalipsis 16:13 con 16:19'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 104-105, 145, 222-223 y 231; Bohr, «¿Cuán cerca al fin?», pág.
+      329; Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 202 y 216.`) },
   ],
 
   preguntas: [
@@ -490,6 +513,21 @@ module.exports = {
     { t: 'tf', v: '16:19', f: 'c',
       q: 'Según Bohr, que Babilonia «vino en memoria» significa que Dios se había olvidado de ella hasta ese momento.', a: false,
       e: 'Falso: Dios conoce sus pecados; espera hasta que la copa de maldad está llena y entonces «se acuerda», es decir, ejecuta la sentencia. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 224-225.' },
+    { t: 'mc', v: '16:13', f: 'c',
+      q: '¿Qué versículo del mismo capítulo explica qué son los tres espíritus semejantes a ranas?',
+      o: ['Apocalipsis 16:14', 'Apocalipsis 16:16', 'Apocalipsis 16:12', 'Apocalipsis 16:10'], a: 0,
+      e: '«Son espíritus de demonios, que hacen señales» (16:14). Bohr enseña que a veces el significado del símbolo está en el contexto inmediato del pasaje. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 102.' },
+    { t: 'mc', v: '16:10', f: 'c',
+      q: 'Según Daniel 7:17 y 23, ¿qué representa una bestia en la profecía, como la de la quinta copa?',
+      o: ['Un reino o poder político', 'Un ángel caído del cielo', 'Un falso maestro religioso', 'Una plaga sobre la tierra'], a: 0,
+      e: 'Daniel 7:17 dice que las cuatro bestias «son cuatro reyes», y 7:23, que la cuarta «será un cuarto reino». Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105.' },
+    { t: 'mc', v: '16:12', f: 'c',
+      q: 'Según Bohr, ¿qué texto muestra que Cristo viene desde el oriente, como los reyes de 16:12?',
+      o: ['Mateo 24:27, el relámpago', 'Mateo 2:1, los magos', 'Génesis 2:8, el huerto', 'Jonás 4:8, el viento solano'], a: 0,
+      e: 'Bohr: después de la quinta y la sexta plaga vienen los reyes del oriente, Cristo con sus ángeles (Mateo 24:27: como el relámpago que sale del oriente). Fuente: Bohr, «¿Cuán cerca al fin?», pág. 329.' },
+    { t: 'tf', v: '16:15', f: 'c',
+      q: 'En el Apocalipsis las vestiduras limpias representan la justicia; por eso 16:15 llama a guardar las vestiduras para no andar desnudo.', a: true,
+      e: 'Verdadero: Apocalipsis 3:18 aconseja comprar vestiduras blancas para que no se descubra la vergüenza de la desnudez, y 19:8 dice que el lino fino representa las acciones justas de los santos. Fuentes: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105; Bohr, «Gemas de la verdad presente», pág. 137.' },
   ],
 
   tarjetas: [

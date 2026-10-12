@@ -205,6 +205,18 @@ module.exports = {
       wa(`El versículo 7 está escrito antes, pero se cumple al final: es una
       nota que mira hacia adelante.`) +
       fu(`Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 45, 54 y 65.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Ángel fuerte (10:1)', 'Cristo', 'Apocalipsis 1:16: «su rostro era como el sol»; 5:5: «el León de la tribu de Judá»'],
+        ['Arco iris (10:1)', 'El pacto y la misericordia de Dios', 'Génesis 9:13-16; Ezequiel 1:28'],
+        ['Librito abierto (10:2)', 'La parte de Daniel sellada para el fin', 'Daniel 12:4: «sella el libro hasta el tiempo del fin»; 12:9'],
+        ['Pies sobre el mar y la tierra (10:2)', 'Cristo reclama todo el mundo; el mensaje irá a todas partes', 'Deuteronomio 11:24'],
+        ['Trueno (10:3)', 'Una voz de Dios que se entiende', 'Juan 12:28-29'],
+        ['Comer el libro (10:9)', 'Recibir el mensaje y hacerlo propio para predicarlo', 'Ezequiel 3:1-4'],
+      ]) +
+      fu(`Fuentes: Bohr, «La Razón de Nuestro Existir», pág. 46-51; Bohr, «15
+      principios de interpretación profética», vol. 2, pág. 106 y 216.`) },
   ],
 
   preguntas: [
@@ -353,6 +365,21 @@ module.exports = {
     { t: 'tf', v: '10:11', f: 'c',
       q: 'Según Bohr, en Apocalipsis 10 Juan representa a un movimiento del tiempo del fin.', a: true,
       e: 'Verdadero: un hombre solo no podía profetizar a muchos pueblos, naciones, lenguas y reyes; un mensaje mundial pide un pueblo mundial (William Shea, citado por Bohr). Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 70.' },
+    { t: 'mc', v: '10:9', f: 'c',
+      q: 'Según Bohr, ¿qué pasaje del Antiguo Testamento explica el acto de comer el librito?',
+      o: ['Ezequiel 3:1-4', 'Jeremías 1:9-10', 'Isaías 6:6-7', 'Zacarías 5:1-4'], a: 0,
+      e: 'A Ezequiel le mandan comer un rollo y luego hablar a Israel (Ezequiel 3:1-4): comer el libro es recibir el mensaje para predicarlo. Fuentes: Bohr, «15 principios de interpretación profética», vol. 2, pág. 106 y 216; Bohr, «La Razón de Nuestro Existir», pág. 66.' },
+    { t: 'mc', v: '10:1', f: 'c',
+      q: 'En la lista de Bohr, ¿qué trasfondo bíblico tiene el arco iris sobre la cabeza del ángel?',
+      o: ['El pacto con Noé y la visión de Ezequiel', 'La columna de nube del desierto', 'La gloria que llenó el templo de Salomón', 'La transfiguración de Jesús en el monte'], a: 0,
+      e: 'El arco iris remite al pacto de Dios con Noé (Génesis 9:13-16) y al trono de Dios en Ezequiel 1:28. Fuente: Bohr, «15 principios de interpretación profética», vol. 2, pág. 216.' },
+    { t: 'tf', v: '10:3', f: 'c',
+      q: 'Según Bohr, en Juan 12:28-29 la voz del Padre sonó como un trueno; por eso un trueno puede ser un mensaje que se entiende.', a: true,
+      e: 'Verdadero: la multitud dijo que había sido un trueno, pero era la voz del Padre. Así, Juan entendió lo que dijeron los siete truenos. Fuente: Bohr, «La Razón de Nuestro Existir», pág. 51-52.' },
+    { t: 'mc', v: '10:2', f: 'c',
+      q: '¿Qué texto de Daniel manda sellar el libro «hasta el tiempo del fin»?',
+      o: ['Daniel 12:4', 'Daniel 8:14', 'Daniel 7:10', 'Daniel 9:24'], a: 0,
+      e: '«Pero tú, Daniel, cierra las palabras y sella el libro hasta el tiempo del fin» (Daniel 12:4). Ese libro sellado es el librito que el ángel trae abierto. Fuente: Bohr, «La Razón de Nuestro Existir», pág. 46-47.' },
   ],
 
   tarjetas: [

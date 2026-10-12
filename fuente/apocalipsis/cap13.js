@@ -137,8 +137,8 @@ module.exports = {
         ['Oso', 'Medo-Persia', '539-331 a.C.'],
         ['Leopardo', 'Grecia', '331-168 a.C.'],
         ['Cuarta bestia (el dragón)', 'Roma', '168 a.C.-476 d.C.'],
-        ['Diez cuernos', 'Roma dividida', '476-538 d.C.'],
-        ['Cuerno pequeño = bestia del mar', 'Roma papal', '538-1798 d.C.'],
+        ['Diez cuernos', 'Roma dividida', 'Desde 476 d.C.'],
+        ['Cuerno pequeño = bestia del mar', 'Roma papal', 'Supremacía 538-1798; herida en 1798; sana y vuelve al final (13:3)'],
       ]) +
       wa(`Fíjate: la bestia del mar junta las fieras de Daniel 7 en orden
       inverso (leopardo, oso, león) y recibe del dragón su trono. Elena G. de
@@ -166,7 +166,7 @@ module.exports = {
            espada del Estado para castigar a los que no aceptaban sus
            doctrinas, como en la Inquisición.`]) +
       fu(`Fuentes: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 63,
-      166-168 y 211-214; Bohr, ¿Cuán cerca al fin?, pág. 75-76; Elena G. de
+      148-154, 166-168 y 211-214; Bohr, ¿Cuán cerca al fin?, pág. 75-76; Elena G. de
       White, El conflicto de los siglos, pág. 43 y 359.`) },
 
     { t: '🧭 La espada, el cautiverio y la herida (13:3, 10)', capa: 'contexto', h:
@@ -285,9 +285,9 @@ module.exports = {
       reposo del sábado al domingo. Elena G. de White pregunta: ¿qué es ese
       cambio «sino el signo o marca de la autoridad de la iglesia romana»?`) +
       li([`<strong>Frente o mano:</strong> Dios pidió llevar su ley en la mano
-           y en la frente (Deuteronomio 6:8). Bohr: la bestia acepta que se le
-           sirva con la mente (frente) o solo con las obras (mano); Dios pide
-           las dos.`,
+           y en la frente (Deuteronomio 6:8). La frente es la mente: ahí la
+           reciben los que creen el engaño; en la mano derecha, símbolo de
+           fuerza, los que ceden obligados.`,
           `<strong>Comprar y vender:</strong> presión económica sobre los que no
            la reciban, y al final un decreto de muerte.`,
           `<strong>Nadie la tiene hoy:</strong> hay «verdaderos cristianos en
@@ -300,7 +300,9 @@ module.exports = {
       quién se obedece y se adora.`) +
       fu(`Fuentes: Elena G. de White, El conflicto de los siglos, pág. 364-367;
       Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 25 y 46-50; Bohr,
-      Juan Pablo II, el papa Francisco y la gran prueba final, pág. 3.`) },
+      Juan Pablo II, el papa Francisco y la gran prueba final, pág. 3; Bohr,
+      15 principios, vol. 2, pág. 105; notas de Camilo, "La imagen de la
+      bestia y el sello de Dios".`) },
 
     { t: '🧭 El 666, tal como lo presenta Bohr (13:18)', capa: 'contexto', h:
       li([`<strong>Es el número de un nombre</strong> (13:17), y ese nombre es
@@ -326,6 +328,38 @@ module.exports = {
       Ludovicus) los descarta porque no son blasfemos. Se trata de un título
       del sistema, no de un ataque a personas.`) +
       fu(`Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 211-224.`) },
+    { t: '🧭 La Biblia explica sus símbolos (1): la bestia del mar', capa: 'contexto', h:
+      `<p>Los símbolos de este capítulo ya los explicó Daniel 7, y el mismo Apocalipsis completa el resto.</p>` +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Mar', 'Pueblos y naciones en lucha', 'Apocalipsis 17:15; Daniel 7:2-3'],
+        ['Bestia', 'Rey o reino', 'Daniel 7:17 y 23: las bestias «son cuatro reyes»; «la cuarta bestia será un cuarto reino»'],
+        ['León, oso, leopardo', 'Babilonia, Medo-Persia y Grecia', 'Daniel 7:4-6 y 17; Jeremías 50:17; Daniel 8:20-21'],
+        ['Cabezas', 'Reinos que se suceden', 'Apocalipsis 17:9-10'],
+        ['Cuernos', 'Reyes o reinos', 'Daniel 7:24; Apocalipsis 17:12: «Los diez cuernos que has visto son diez reyes»'],
+        ['Dragón', 'Satanás, que obra por medio de Roma', 'Apocalipsis 12:9'],
+        ['Cuarenta y dos meses', '1.260 años', 'Números 14:34; Ezequiel 4:6 (un día por año); Apocalipsis 12:6 y 14'],
+        ['Espada', 'Aquí, el poder civil que castiga; en otros textos, la Palabra', 'Romanos 13:4; Efesios 6:17'],
+      ]) +
+      fu(`Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág.
+      PDF 102-103, 105 y 216; Bohr, El Mensaje de los Tres Ángeles, tomo 1,
+      pág. PDF 164-166; Elena G. de White, El conflicto de los siglos, pág.
+      PDF 359-360.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos (2): la bestia de la tierra y la marca', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Tierra (frente al mar)', 'Un territorio poco poblado', 'Apocalipsis 17:15 (el mar son pueblos); 12:16 (la tierra que ayudó a la mujer)'],
+        ['Dos cuernos', 'Dos reinos en una sola nación', 'Daniel 8:20: el carnero de dos cuernos son «los reyes de Media y de Persia»'],
+        ['Cordero', 'Cristo', 'Isaías 53:7; Apocalipsis 5:6'],
+        ['Fuego del cielo', 'Una imitación del poder de Dios', '1 Reyes 18:38 (Elías); Hechos 2:3 (Pentecostés)'],
+        ['Imagen', 'Una copia que se impone por ley, con pena de muerte', 'Daniel 3:1-6'],
+        ['Frente', 'La mente', 'Deuteronomio 6:6-8; Hebreos 10:16'],
+        ['Nombre', 'El carácter y la autoridad del dueño', 'Deuteronomio 28:10; Isaías 43:7'],
+        ['Número seis', 'Apostasía contra Dios', '1 Reyes 10:14 (los 666 talentos de Salomón); Daniel 3:1 (estatua de sesenta codos por seis)'],
+      ]) +
+      fu(`Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág.
+      PDF 104-105 y 216; Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág.
+      PDF 182 y 197; Bohr, La sexta trompeta, pág. PDF 1; Elena G. de White,
+      El conflicto de los siglos, pág. PDF 360.`) },
   ],
 
   preguntas: [
@@ -517,9 +551,9 @@ module.exports = {
       q: 'Según Elena de White, ya hoy tienen la marca todos los que guardan el domingo.', a: false,
       e: 'Falso: hay «verdaderos cristianos en todas las iglesias, sin exceptuar la católica romana», y Dios acepta su sinceridad; la marca se recibe cuando se imponga por ley y se elija contra la luz. Fuente: Elena G. de White, El conflicto de los siglos, pág. 367.' },
     { t: 'mc', v: '13:16', f: 'c',
-      q: 'Según Bohr, ¿qué indica que la marca pueda ir en la frente o en la mano?',
-      o: ['Servir con la mente o solo con las obras', 'Que unos son ricos y otros son pobres', 'Que unos son judíos y otros gentiles', 'Que unos son clérigos y otros laicos'], a: 0,
-      e: 'Bohr: la bestia acepta el servicio de la mente o de la mano; Dios pide los dos, como cuando mandó atar su ley en la mano y en la frente (Deuteronomio 6:8). Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 2, pág. 25 y 50.' },
+      q: 'En las notas de Camilo, ¿qué indica que la marca pueda ir en la frente o en la mano?',
+      o: ['Aceptarla por convicción o por la fuerza', 'Que unos son ricos y otros son pobres', 'Que unos son judíos y otros gentiles', 'Que unos son clérigos y otros laicos'], a: 0,
+      e: 'La frente es la mente (Deuteronomio 6:6-8; Hebreos 10:16): la reciben ahí los que creen el engaño. La mano derecha es símbolo de fuerza: la reciben ahí los que ceden obligados. Fuentes: notas de Camilo en Evernote, "La imagen de la bestia y el sello de Dios"; Bohr, 15 principios de interpretación profética, vol. 2, pág. 105.' },
     { t: 'mc', v: '13:18', f: 'c',
       q: 'Según Bohr, ¿en qué idioma hay que buscar el nombre cuyo número es 666?',
       o: ['En latín', 'En hebreo', 'En griego', 'En arameo'], a: 0,
@@ -531,6 +565,17 @@ module.exports = {
     { t: 'tf', v: '13:18', f: 'c',
       q: 'Según Bohr, «número de hombre» quiere decir que el 666 señala a un individuo en particular.', a: false,
       e: 'Falso: «hombre» va sin artículo en griego; Bohr lo entiende como un sistema centrado en el hombre, no una persona. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. 216-217.' },
+    { t: 'mc', v: '13:1', f: 'c',
+      q: '¿Qué texto de la misma Biblia explica que una bestia representa un reino?',
+      o: ['Daniel 7:17 y 23', 'Génesis 1:24', 'Job 40:15', 'Isaías 11:6'], a: 0,
+      e: 'Daniel 7:17 dice que las bestias «son cuatro reyes», y 7:23 que «la cuarta bestia será un cuarto reino». Fuente: Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105.' },
+    { t: 'tf', v: '13:11', f: 'c',
+      q: 'Bohr explica los dos cuernos de la bestia de la tierra con el carnero de Daniel 8, cuyos dos cuernos eran dos reinos en una sola nación.', a: true,
+      e: 'Verdadero: los dos cuernos del carnero son «los reyes de Media y de Persia» (Daniel 8:20). Así, dos cuernos son dos reinos en una nación: la iglesia y el Estado separados. Fuente: Bohr, El Mensaje de los Tres Ángeles, tomo 1, pág. PDF 182.' },
+    { t: 'mc', v: '13:13', f: 'c',
+      q: 'Según Bohr, ¿qué historias imita el «fuego del cielo» de Apocalipsis 13:13?',
+      o: ['Elías en el Carmelo y Pentecostés', 'Sodoma y la zarza de Moisés', 'Nadab y Abiú y el diluvio', 'Babel y la caída de Jericó'], a: 0,
+      e: 'Bohr: es un falso avivamiento que imita el fuego que cayó en los días de Elías (1 Reyes 18:38) y las lenguas de fuego de Pentecostés (Hechos 2:3). Fuentes: Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 216; Bohr, La sexta trompeta, pág. PDF 1.' },
   ],
 
   tarjetas: [

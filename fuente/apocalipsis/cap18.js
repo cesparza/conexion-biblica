@@ -244,6 +244,22 @@ module.exports = {
       hi(`Fuentes: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 217 y
       224; Doukhan, «Secretos del Apocalipsis», pág. 182-183; Vicuña,
       «Interpretación histórica del Apocalipsis», pág. 145.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Babilonia, la gran ciudad', 'Confusión; el sistema religioso que se apartó de Dios', 'Génesis 11:9; Apocalipsis 17:5, 18'],
+        ['La gloria que alumbra la tierra', 'El carácter de Dios, reflejado en su pueblo', 'Éxodo 33:18-19 y 34:6-7: Moisés pide ver la gloria y Dios le muestra su bondad y su nombre'],
+        ['El vino de su fornicación', 'Falsas doctrinas', 'Jeremías 51:7; Apocalipsis 14:8; 17:2'],
+        ['Aves inmundas y aborrecibles', 'Aves de rapiña que comen carroña', 'Levítico 11:13 (el águila y el azor son abominación); Apocalipsis 19:17-18'],
+        ['Los mercaderes', 'El comercio que se enriqueció con ella', 'Ezequiel 27 (los mercaderes de Tiro); Apocalipsis 13:17'],
+        ['«Salid de ella»', 'Dios llama a su pueblo a dejar el sistema antes del castigo', 'Jeremías 50:8; 51:6, 45; Isaías 48:20'],
+        ['La piedra de molino', 'Una caída total y sin regreso', 'Jeremías 51:63-64: Jeremías hundió una piedra en el Éufrates'],
+        ['Las hechicerías', 'El engaño del espiritismo', 'Deuteronomio 18:10-12; Apocalipsis 16:14'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      pág. 102-104; Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág.
+      220-224; Bohr, «Apocalipsis 17», pág. 11; Doukhan, «Secretos del
+      Apocalipsis», pág. 182.`) },
   ],
 
   preguntas: [
@@ -462,6 +478,21 @@ module.exports = {
       q: 'Según Bohr, ¿qué representan las hechicerías con que Babilonia engañó a las naciones (Apocalipsis 18:23)?',
       o: ['El engaño de los espíritus de demonios', 'La magia de los astrólogos de Nabucodonosor', 'Las medicinas falsas que vendían sus mercaderes', 'Los ídolos de oro de la antigua Babilonia'], a: 0,
       e: 'Bohr: es «el arte del engaño por medio de la hechicería», el mismo de los espíritus de demonios que hacen señales (16:13-14). Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 224.' },
+    { t: 'mc', v: '18:1', f: 'c',
+      q: 'Según Bohr, ¿qué pasaje muestra que la «gloria» de Dios es su carácter, como la gloria que alumbra la tierra en 18:1?',
+      o: ['Éxodo 33:18-19 y 34:6-7', 'Génesis 1:3-5 y 1:14-16', 'Salmo 19:1-2 y 19:7-8', 'Ezequiel 1:26-28 y 3:12'], a: 0,
+      e: 'Moisés pide ver la gloria de Dios, y Dios le muestra su bondad y proclama su nombre: misericordioso, clemente, lento para la ira (Éxodo 33:18-19; 34:6-7). Bohr: la gloria de 18:1 es el carácter de Dios que su pueblo refleja. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 220-221.' },
+    { t: 'mc', v: '18:2', f: 'c',
+      q: '¿Qué texto explica el sentido del nombre Babel o Babilonia?',
+      o: ['Génesis 11:9, allí confundió Jehová', 'Génesis 10:10, el comienzo del reino', 'Daniel 4:30, la gran Babilonia', 'Isaías 13:19, hermosura de reinos'], a: 0,
+      e: 'Génesis 11:9: la ciudad se llamó Babel porque allí Dios confundió el lenguaje. Babilonia quiere decir «confusión». Fuentes: Bohr, «15 principios de interpretación profética», tomo 2, pág. 104; Elena de White, «El conflicto de los siglos», pág. 434.' },
+    { t: 'tf', v: '18:2', f: 'c',
+      q: 'La ley de Levítico 11 declara inmundas a las aves de rapiña, como el águila y el azor; así se entienden las aves inmundas de 18:2.', a: true,
+      e: 'Verdadero: Levítico 11:13 llama abominación al águila, al quebrantahuesos y al azor. Bohr: las aves de 18:2 no son gorriones sino aves de rapiña, como las de 19:17. Fuente: Bohr, «El Mensaje de los Tres Ángeles», tomo 2, pág. 222.' },
+    { t: 'mc', v: '18:23', f: 'c',
+      q: '¿Qué ley del Antiguo Testamento prohíbe la hechicería y consultar a los muertos, prácticas que 18:23 atribuye a Babilonia?',
+      o: ['Deuteronomio 18:10-12', 'Levítico 23:3', 'Éxodo 20:8-11', 'Números 6:24-26'], a: 0,
+      e: 'Deuteronomio 18:10-12 prohíbe al hechicero, al adivino y a quien consulte a los muertos. Bohr cuenta el intento de hablar con los muertos entre el vino de Babilonia. Fuente: Bohr, «Apocalipsis 17», pág. 11.' },
   ],
 
   tarjetas: [

@@ -148,12 +148,14 @@ module.exports = {
         ['7.º (8:1)', 'Silencio en el cielo', 'La segunda venida', '—'],
       ]) +
       hi(`<strong>Otras lecturas:</strong> Urías Smith ve en el caballo rojizo
-      el comienzo de la corrupción de la iglesia, más que la persecución. En las
-      notas de Camilo ("Los 144000") el caballo amarillo va de 538 a 1517 y el
-      quinto sello de 1517 a 1755.<br><br>
+      el comienzo de la corrupción, y cierra el caballo amarillo con la Reforma.
+      Varias notas de Camilo siguen ese esquema: amarillo de 538 a 1517 y
+      quinto sello desde 1517 (hasta 1755 o 1798). Sus notas de la serie de Bohr
+      usan 538-1798.<br><br>
       Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 117-119,
       165, 177, 208, 219 y 244; Urías Smith, «Las profecías del Apocalipsis»,
-      pág. 55; notas de Camilo en Evernote, "Los 144000".`) },
+      págs. 55 y 58-59; notas de Camilo en Evernote, "Los 144000", "Resumen
+      Apocalipsis" y "13. Los 7 sellos".`) },
 
     { t: '🧭 El caballo blanco y el rojizo (6:1-4)', capa: 'contexto', h:
       hi(`<strong>Caballo blanco</strong> (según Bohr):<br>
@@ -213,7 +215,8 @@ module.exports = {
       debajo del altar son la vida derramada de los mártires que pide justicia;
       el texto <strong>no enseña</strong> que los muertos estén conscientes.<br><br>
       <strong>Dos grupos de mártires:</strong><br>
-      · Los que murieron durante los <strong>1.260 años</strong> (538-1798).<br>
+      · Los que murieron durante los <strong>1.260 años</strong> (538-1798),
+      sin olvidar a los que mataron los emperadores.<br>
       · Los que morirán <strong>al final</strong>, antes del cierre de la
       gracia: son los «consiervos» que faltan.<br><br>
       <strong>Las vestiduras blancas:</strong> los mártires ya tenían el manto de
@@ -223,8 +226,8 @@ module.exports = {
       manto de luz.<br><br>
       Bohr distingue <strong>«juzgar»</strong> (examinar los casos, desde 1844)
       de <strong>«vengar»</strong> (ejecutar la sentencia, en la venida).<br><br>
-      Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 234-237,
-      243-247 y 254-256.`) },
+      Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 118,
+      234-237, 243-247 y 254-256.`) },
 
     { t: '🧭 Sexto sello: señales del juicio (6:12-17)', capa: 'contexto', h:
       hi(`<strong>¿Literales o simbólicas?</strong> Los adventistas las leen
@@ -244,6 +247,36 @@ module.exports = {
       Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 262,
       266-268 y 299; tomo 2, págs. 4-5; Elena de White, «El conflicto de los
       siglos», págs. 255-258, 278 y 516.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos (1)', capa: 'contexto', h:
+      hi(`Los colores y los objetos de los sellos no se adivinan: la misma Biblia
+      los usa con un sentido. Estos son los de los primeros sellos.`) +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Caballo', 'El pueblo de Dios que sale a la batalla; Cristo es el jinete que lo guía', 'Zacarías 10:3'],
+        ['Blanco', 'Pureza, justicia, victoria', 'Isaías 1:18; Apocalipsis 19:8'],
+        ['Arco y flechas', 'La Palabra que da la victoria', '2 Reyes 13:17'],
+        ['Rojo', 'Sangre derramada', 'Isaías 63:2-3; Nahúm 2:3'],
+        ['Espada', 'La Palabra de Dios; en otro contexto, el poder del Estado', 'Hebreos 4:12; Efesios 6:17; Romanos 13:4'],
+        ['Negro', 'Tinieblas, error, pecado', '1 Juan 1:5-6'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      págs. 103-106; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs.
+      166-169 y 178-180.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos (2)', capa: 'contexto', h:
+      hi(`Estos son los símbolos del tercer al quinto sello.`) +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Pan (trigo y cebada)', 'La Palabra de Dios; su escasez es hambre de la Palabra', 'Deuteronomio 8:3; Mateo 4:4; Amós 8:11'],
+        ['Aceite', 'El Espíritu Santo', 'Zacarías 4:6'],
+        ['Vino', 'La sangre de Cristo', 'Mateo 26:27-28'],
+        ['Espada, hambre, mortandad y fieras', 'Los castigos por romper el pacto', 'Levítico 26:21-26; Ezequiel 14:21'],
+        ['Fieras', 'Reyes y naciones que actúan como bestias contra el pueblo de Dios', 'Daniel 7:17: «Estas cuatro grandes bestias son cuatro reyes»'],
+        ['Almas debajo del altar', 'La vida derramada de los mártires, que pide justicia', 'Levítico 17:11; Levítico 4:7; Génesis 4:10'],
+        ['Vestiduras blancas', 'La justicia de Cristo', 'Isaías 61:10; Apocalipsis 19:8'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      págs. 102-105 y 155; Bohr, «Los siete sellos de Apocalipsis», tomo 1,
+      págs. 212-213, 220 y 235-237.`) },
   ],
 
   preguntas: [
@@ -400,7 +433,7 @@ module.exports = {
     { t: 'mc', v: '6:7-8', f: 'c',
       q: 'Según Bohr, ¿qué período representa el caballo amarillo?',
       o: ['Los 1.260 años de dominio papal (538-1798)', 'Las invasiones bárbaras contra Roma', 'La Revolución francesa de 1789', 'El tiempo de angustia después de 1844'], a: 0,
-      e: 'Es la Edad Media, cuando faltó la Palabra y hubo mártires. En las notas de Camilo ("Los 144000") este caballo va de 538 a 1517. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 118, 219 y 244; notas de Camilo en Evernote, "Los 144000".' },
+      e: 'Es la Edad Media, cuando faltó la Palabra y hubo mártires. Varias notas de Camilo ("Los 144000", "Resumen Apocalipsis") lo cierran en 1517, con la Reforma, como Urías Smith. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 118, 219 y 244; Urías Smith, «Las profecías del Apocalipsis», pág. 58; notas de Camilo en Evernote, "Los 144000".' },
     { t: 'mc', v: '6:9', f: 'c',
       q: 'Según Bohr, ¿debajo de qué altar estaban las almas del quinto sello?',
       o: ['El del sacrificio, en el atrio', 'El del incienso, en el lugar santo', 'El de Baal, en el monte Carmelo', 'El de Noé, después del diluvio'], a: 0,
@@ -439,6 +472,17 @@ module.exports = {
     { t: 'tf', v: '6:17', f: 'c',
       q: 'Según Bohr, la pregunta «¿quién podrá sostenerse en pie?» recibe su respuesta en el capítulo 7, con los sellados.', a: true,
       e: 'Verdadero: «sostenerse en pie» es lo contrario de caer, y los sellados de 7:1-8 son los que estarán firmes. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 4-5.' },
+    { t: 'mc', v: '6:2', f: 'c',
+      q: 'Según Bohr, ¿qué texto del Antiguo Testamento compara al pueblo de Dios con un caballo que va a la guerra?',
+      o: ['Zacarías 10:3', 'Jeremías 6:2', 'Amós 8:11', 'Levítico 17:11'], a: 0,
+      e: 'Dios dice que pondrá a la casa de Judá como su caballo de honor en la guerra. Por eso el caballo blanco es la iglesia y el jinete, Cristo. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 165-166.' },
+    { t: 'mc', v: '6:8', f: 'c',
+      q: 'Según Daniel 7:17, ¿qué representan las bestias o fieras en la profecía?',
+      o: ['Reyes o reinos', 'Ángeles caídos', 'Plagas de la naturaleza', 'Falsos profetas'], a: 0,
+      e: 'Daniel 7:17: «Estas cuatro grandes bestias son cuatro reyes». Bohr explica que las fieras del cuarto sello son líderes y naciones que actuaron como bestias contra el pueblo de Dios. Fuentes: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105; Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 220.' },
+    { t: 'tf', v: '6:4', f: 'c',
+      q: 'Según Bohr, en la Biblia el color rojo del segundo caballo representa la sangre derramada, como en Isaías 63 y Nahúm 2.', a: true,
+      e: 'Verdadero: cuando la espada quita la paz, el resultado es la persecución y la sangre de los fieles. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 178.' },
   ],
 
   tarjetas: [

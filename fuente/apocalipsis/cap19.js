@@ -133,11 +133,12 @@ module.exports = {
       bodas (Mateo 22:11). Eso es el <strong>juicio investigador</strong>: la
       revisión de los casos en el cielo, que empezó en 1844 y termina antes de la
       venida.`) +
-      wa(`Bohr lo une así: Jesús recibe el reino (y en ese sentido «se casa» con su
-      iglesia completa) en el cielo; después vuelve a la tierra a buscar a los
-      suyos y los lleva a la <strong>gran recepción de bodas</strong>. Los fieles
-      «entran a las bodas» por la fe, con su nombre en el libro, sin estar allí en
-      persona.`) +
+      wa(`Bohr lo une así: Jesús recibe el reino en el cielo; después vuelve a la
+      tierra a buscar a los suyos y los lleva a la <strong>gran recepción de
+      bodas</strong>. Los fieles «entran a las bodas» por la fe, con su nombre en
+      el libro, sin estar allí en persona. (Bohr llama también «novia» a la
+      iglesia; aquí se sigue a Elena de White: la esposa es la ciudad, y el pueblo
+      de Dios son los invitados.)`) +
       `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 350-351; Stephen Bohr, Mateo 24 y las señales del fin, págs. 168 y 170; Stephen Bohr, Lo que Jesús dijo, pág. 233.</p>` },
 
     { t: '🧭 El lino fino: un regalo que se ve en la vida (19:8)', capa: 'contexto', h:
@@ -190,7 +191,7 @@ module.exports = {
       (Isaías 8:20).`) +
       wa(`El ángel no acepta adoración (19:10; 22:9). Ni el ángel ni el profeta toman
       el lugar de Dios.`) +
-      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 179 y 186-188; Stephen Bohr, ¿Cuán cerca al fin?, pág. 158; notas de Camilo en Evernote, "LUZ MAYOR Y LUZ MENOR" y "El verdadero profeta".</p>` },
+      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 179 y 186-189; Stephen Bohr, ¿Cuán cerca al fin?, pág. 158; notas de Camilo en Evernote, "LUZ MAYOR Y LUZ MENOR" y "El verdadero profeta".</p>` },
 
     { t: '🧭 El jinete del caballo blanco: Jesús viene como Rey (19:11-16)', capa: 'contexto', h:
       hi(`En la lectura adventista, el jinete es <strong>Cristo en su segunda
@@ -244,6 +245,19 @@ module.exports = {
       wa(`Con la batalla de 19:19-21 empiezan los <strong>mil años</strong> de
       Apocalipsis 20. Qué es el lago de fuego de 19:20 se explica allí.`) +
       `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. 527; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 95 (cita El Deseado de todas las gentes, págs. 82-83); Escuela Sabática 2019-1T, lección 13, pág. 92; Stephen Bohr, Los siete sellos de Apocalipsis, tomo 1, págs. 96-97 y 296.</p>` },
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      `<p>Apocalipsis 19 no deja sus símbolos a la imaginación: la misma Biblia dice qué son.</p>` +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Lino fino, blanco', 'La justicia que Dios da a su pueblo', '«El lino fino representa las acciones justas de los santos» (19:8); Isaías 61:10; Apocalipsis 7:13-14'],
+        ['Mujer pura, esposa', 'El pueblo fiel de Dios', 'Jeremías 6:2; Efesios 5:25-27. En 21:9-10 la esposa del Cordero es la ciudad'],
+        ['Ramera', 'Una iglesia unida a los poderes del mundo', 'Ezequiel 16; Jeremías 3:1-3; Apocalipsis 17:1-2'],
+        ['Espada de la boca', 'La Palabra de Dios', 'Efesios 6:17; Hebreos 4:12'],
+        ['Ojos', 'Sabiduría, conocimiento', 'Efesios 1:18; Apocalipsis 2:18'],
+        ['Lagar, sangre', 'El castigo de los impíos', 'Isaías 63:1-3; Apocalipsis 14:19-20'],
+        ['Bestia', 'Un reino o poder', 'Daniel 7:17 y 23: «La cuarta bestia será un cuarto reino»'],
+        ['Falso profeta', 'La bestia que sube de la tierra', 'Apocalipsis 19:20 con 13:13-14: hizo «las señales» delante de la bestia'],
+      ]) +
+      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. PDF 103 y 105-106; Stephen Bohr, ¿Cuán cerca al fin?, pág. PDF 158; notas de Camilo en Evernote, "Pergamo: La Iglesia filtrada" (la espada).</p>` },
   ],
 
   preguntas: [
@@ -431,7 +445,7 @@ module.exports = {
     { t: 'mc', v: '19:10', f: 'c',
       q: 'Según Bohr, ¿qué es «el testimonio de Jesús» que tendrá el pueblo de Dios del tiempo del fin (12:17; 19:10)?',
       o: ['El verdadero don profético', 'El poder de hacer milagros', 'El relato de su propia conversión', 'La sabiduría de los filósofos'], a: 0,
-      e: 'El testimonio de Jesús es «el verdadero don profético» del remanente; la iglesia adventista lo ve en el ministerio de Elena G. de White. Fuentes: Stephen Bohr, ¿Cuán cerca al fin?, pág. 158; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 188.' },
+      e: 'El testimonio de Jesús es «el verdadero don profético» del remanente; la iglesia adventista lo ve en el ministerio de Elena G. de White. Fuentes: Stephen Bohr, ¿Cuán cerca al fin?, pág. 158; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 188-189.' },
     { t: 'mc', v: '19:10', f: 'c',
       q: 'Según Bohr, ¿qué versículo muestra que los hermanos que «mantienen el testimonio de Jesús» (19:10) son los profetas?',
       o: ['Apocalipsis 22:9', 'Apocalipsis 12:17', 'Apocalipsis 1:2', 'Apocalipsis 6:9'], a: 0,
@@ -474,6 +488,18 @@ module.exports = {
       q: 'En la interpretación adventista, ¿qué comienza después de la batalla de Apocalipsis 19:19-21?',
       o: ['Los mil años de Apocalipsis 20', 'La gran tribulación final', 'El tiempo de gracia para los impíos', 'La semana setenta de Daniel 9'], a: 0,
       e: 'Con la venida mueren los impíos que viven y empiezan los mil años, con Satanás atado en la tierra vacía (20:1-3). Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 73-74; Elena de White, El conflicto de los siglos, págs. 527-528.' },
+    { t: 'mc', v: '19:7', f: 'c',
+      q: 'Según Bohr, ¿qué representa una mujer pura en la profecía bíblica?',
+      o: ['Una iglesia fiel a Dios', 'Una reina de la tierra', 'Una ciudad de la antigüedad', 'Un ángel del cielo'], a: 0,
+      e: 'Una mujer pura es una iglesia pura (Jeremías 6:2; Efesios 5:25-27; Apocalipsis 19:7-8); una ramera es una iglesia que se prostituyó (Ezequiel 16; Apocalipsis 17:1-2). Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 103.' },
+    { t: 'mc', v: '19:15', f: 'c',
+      q: 'Según Bohr, ¿qué representa la espada que sale de la boca del jinete (19:15)?',
+      o: ['La Palabra de Dios', 'El poder del Estado', 'Un arma de metal', 'La ira de los ángeles'], a: 0,
+      e: 'La espada es la Palabra de Dios (Efesios 6:17; Hebreos 4:12). En otros pasajes puede ser el poder civil (Romanos 13), pero aquí sale de la boca de Cristo. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. PDF 103 y 105.' },
+    { t: 'mc', v: '19:14', f: 'c',
+      q: 'Según Bohr, ¿qué representa el color blanco en la profecía, como el lino de 19:8 y 19:14?',
+      o: ['Pureza y justicia', 'Paz entre las naciones', 'Luto y tristeza', 'Poder político'], a: 0,
+      e: 'El blanco es pureza, luz y justicia (Isaías 1:18; Apocalipsis 7:13-14; 19:8). Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 106.' },
   ],
 
   tarjetas: [

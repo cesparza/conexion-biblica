@@ -17,8 +17,8 @@ module.exports = {
         li([
           'La idea no salió del rey sino de los sabios del reino, que le propusieron hacer una imagen como la del sueño (Elena de White, Profetas y reyes, pág. 504).',
           'Pero <strong>toda de oro</strong>: sin bajar de valor de la cabeza a los pies, como símbolo de una Babilonia eterna e invencible que nunca daría paso a otro reino (Profetas y reyes, pág. 504).',
-          'Dos palabras unen los capítulos: «oro» e «imagen».',
-          'Y un verbo: Dios «levantará» un reino que no será destruido (2:44); el rey repite «la estatua que he levantado» (3:1, 2, 3, 5, 7, 12, 14, 15, 18).',
+          'Dos palabras unen los capítulos: «oro» e «imagen». En arameo «imagen» es la misma palabra en los dos; la RV1995 traduce «imagen» en 2:31 y «estatua» en 3:1.',
+          'Y un verbo: Dios «levantará» un reino que no será destruido (2:44); el capítulo 3 repite que el rey «levantó» la estatua (3:1, 2, 3, 5, 7, 12, 14, 18).',
         ]) +
         hi(`La imagen no era solo un monumento político, como saludar una bandera. Era un símbolo religioso: el rey los acusa de no servir a «mis dioses» y de no adorar la estatua (3:14).`) +
         `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 65-66; Bohr, 15 principios de interpretación profética, vol. 1, pág. 18.</p>`,
@@ -68,7 +68,7 @@ module.exports = {
     {
       t: '🧭 El cuarto en el horno y la palabra «librar»',
       capa: 'contexto',
-      h: `<p>Para Bohr, el héroe de Daniel 3 no son los jóvenes sino <strong>Cristo</strong>, que en el momento crítico entra al horno. ¿Cómo supo el rey a quién se parecía el cuarto? Elena de White responde: los cautivos hebreos le habían hablado de Cristo, el Redentor que vendría, y por esa descripción lo reconoció (citada por Bohr).</p>` +
+      h: `<p>Para Bohr, el héroe de Daniel 3 no son los jóvenes sino <strong>Cristo</strong>, que en el momento crítico entra al horno. ¿Cómo supo el rey a quién se parecía el cuarto? Elena de White responde: los cautivos hebreos le habían hablado de Cristo, el Redentor que vendría, y por esa descripción lo reconoció (El Cristo triunfante, pág. 178, citada por Bohr).</p>` +
         li([
           'La palabra clave del capítulo es <strong>«librar»</strong> (3:15, 17, 28, 29). Vuelve en Daniel 6 y en Daniel 12:1, donde el pueblo de Dios «será librado» en el tiempo de angustia. Por eso Bohr lee los tres pasajes juntos.',
           'El horno calentado «siete veces» indica el máximo: el siete es número de totalidad.',
@@ -76,6 +76,20 @@ module.exports = {
           'Los que los echaron murieron por la llama (3:22). Al final, dice Bohr, las armas preparadas contra el pueblo de Dios se volverán contra sus enemigos (El conflicto de los siglos, pág. 655).',
         ]) +
         `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 40, 71-72 y 81; Bohr, La Gran Cadena Profética, págs. 48-49.</p>`,
+    },
+    {
+      t: '🧭 La Biblia explica sus símbolos',
+      capa: 'contexto',
+      h: `<p>Lo que en Dura fue literal, en Apocalipsis 13 es símbolo. La Biblia misma da la clave:</p>` +
+        tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+          ['Un rey que vive «como bestia» (4:16)', 'Un rey o un reino', 'Daniel 7:17 y 23: las bestias «son cuatro reyes»; «la cuarta bestia será un cuarto reino»'],
+          ['El oro', 'Babilonia', 'Daniel 2:38: «Tú eres aquella cabeza de oro»; Isaías 14:4'],
+          ['La imagen que todos deben adorar', 'La imagen de la bestia', 'Apocalipsis 13:14-15: «que le hagan una imagen a la bestia»'],
+          ['El seis (60 × 6)', 'La apostasía contra Dios', 'Apocalipsis 13:18: el número de la bestia «es número de hombre»; 1 Reyes 10:14'],
+          ['Siete veces más (3:19)', 'El máximo, la totalidad', 'Génesis 2:2; Levítico 16:14'],
+          ['El horno de fuego', 'La prueba que purifica al pueblo de Dios', 'Isaías 48:10; Malaquías 3:2-3; Apocalipsis 3:18'],
+        ]) +
+        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 66-67, 71 y 74; Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104-105.</p>`,
     },
   ],
   preguntas: [
@@ -85,9 +99,9 @@ module.exports = {
     { t: 'mc', v: '3:1', f: 'c', q: 'Según Elena de White, ¿de quién salió la idea de hacer una imagen parecida a la del sueño?',
       o: ['Del propio Daniel', 'De los sabios del reino', 'De la reina de Babilonia', 'De los sátrapas del rey'], a: 1,
       e: 'Los sabios aprovecharon que el rey había vuelto a la idolatría y le propusieron la imagen. Fuente: Elena de White, Profetas y reyes, pág. 504, citada por Stephen Bohr, Studies in Daniel 1-10, pág. 65.' },
-    { t: 'tf', v: '3:3', f: 'c', q: 'Según Bohr, la frase «la estatua que he levantado», repetida en Daniel 3, responde a Daniel 2:44, donde Dios «levantará» un reino que no será destruido.',
+    { t: 'tf', v: '3:3', f: 'c', q: 'Según Bohr, el verbo «levantar», que Daniel 3 repite al hablar de la estatua del rey, responde a Daniel 2:44, donde Dios «levantará» un reino que no será destruido.',
       a: true,
-      e: 'Verdadero. El rey quiso contradecir el plan de Dios levantando su propia imagen toda de oro. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 1, pág. 18.' },
+      e: 'Verdadero. El rey quiso contradecir el plan de Dios levantando su propia imagen toda de oro. Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 1, pág. 18; Bohr, Studies in Daniel 1-10, pág. 65.' },
     { t: 'mc', v: '3:1', f: 'c', q: 'Según Bohr, ¿qué número sagrado de Babilonia resulta de multiplicar las medidas de la estatua (60 × 6)?',
       o: ['666', '600', '360', '66'], a: 2,
       e: '60 × 6 = 360, el ciclo completo del tiempo y del espacio en el sistema de base 60 de Babilonia. Fuente: Stephen Bohr, Studies in Daniel 1-10, págs. 66-67.' },
@@ -109,5 +123,14 @@ module.exports = {
     { t: 'tf', v: '3:22', f: 'c', q: 'Según Bohr, que la llama matara a los que echaron a los jóvenes al horno anuncia que, al final, las armas preparadas contra el pueblo de Dios se volverán contra sus enemigos.',
       a: true,
       e: 'Verdadero (El conflicto de los siglos, pág. 655). Lo mismo pasó con los acusadores de Daniel en el foso. Fuente: Stephen Bohr, Studies in Daniel 1-10, págs. 52 y 81.' },
+    { t: 'mc', v: '3:1', f: 'c', q: 'Nabucodonosor llegó a vivir como bestia (4:16). Según Daniel 7:17 y 23, ¿qué representa una bestia en la profecía?',
+      o: ['Un rey o un reino', 'Un ángel caído', 'Un falso profeta', 'Una iglesia apóstata'], a: 0,
+      e: 'Daniel 7 lo explica: las bestias «son cuatro reyes» y «la cuarta bestia será un cuarto reino». Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 66; Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105.' },
+    { t: 'tf', v: '3:19', f: 'c', q: 'Según Bohr, el horno calentado «siete veces» más indica el máximo, porque en la profecía el siete representa la totalidad.',
+      a: true,
+      e: 'Verdadero: fue la plenitud de la ira del rey. Bohr pone Daniel 3:19 en su lista de textos donde el siete es totalidad. Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 71; Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104.' },
+    { t: 'mc', v: '3:20', f: 'c', q: 'Según Bohr, ¿qué texto muestra que el horno es figura de la prueba con que Dios purifica a su pueblo?',
+      o: ['Levítico 10:2', 'Génesis 19:24', 'Isaías 48:10', 'Hechos 2:3'], a: 2,
+      e: 'En Isaías 48:10 Dios dice que escoge a su pueblo en el horno de la aflicción; los tres jóvenes salieron como oro probado. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 71.' },
   ],
 };

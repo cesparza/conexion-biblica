@@ -140,13 +140,13 @@ module.exports = {
            prestar su espada para perseguir.`,
           `<strong>Cuándo termina.</strong> El primer ay pasa (9:12) en 1798.
            Ahí empieza el tiempo del fin y se abre el librito (capítulo 10).`]) +
-      wa(`En el material de Bohr que tenemos no se explica cada detalle de las
-      langostas ni los cinco meses. <strong>Otra lectura adventista</strong>,
+      wa(`El material de Bohr que tenemos no explica cada detalle de las
+      langostas; de los cinco meses solo dice que son simbólicos. <strong>Otra lectura adventista</strong>,
       la clásica de Josías Litch que defiende Treiyer, aplica la 5ª y la 6ª a
       los turcos otomanos: 1299-1449 y hasta el 11 de agosto de 1840; Elena
       de White menciona ese cumplimiento de 1840.`) +
-      fu(`Fuentes: Bohr, «15 principios de interpretación profética», vol. 2,
-      pág. 89-91 y 105; Bohr, «La sexta trompeta», pág. 5; Bohr, «El mensaje de
+      fu(`Fuentes: Bohr, «15 principios de interpretación profética», vol. 1,
+      pág. 239, y vol. 2, pág. 89-91 y 105; Bohr, «La sexta trompeta», pág. 5; Bohr, «El mensaje de
       los tres ángeles», tomo 1, pág. 5; Treiyer, «Fechas trompetas», pág. 3-4;
       Elena de White, «El conflicto de los siglos», pág. 279.`) },
 
@@ -223,6 +223,21 @@ module.exports = {
       14) y Satanás tres espíritus que reúnen a los impíos (16:13-14).`) +
       fu(`Fuentes: Stephen Bohr, «La sexta trompeta», pág. 1-2 y 12; Bohr, «15
       principios de interpretación profética», vol. 2, pág. 89-90.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Estrella que cae (9:1)', 'Un ángel caído: Satanás', 'Isaías 14:12-14; Lucas 10:18; Apocalipsis 12:9'],
+        ['Ángel del abismo (9:11)', 'Satanás. Abadón quiere decir «destructor»', 'Apocalipsis 20:1-3'],
+        ['Langostas (9:3)', 'Un ejército que invade', 'Joel 1:4-6; 2:4-11'],
+        ['Cuatro (9:14)', 'Todo el mundo', 'Apocalipsis 7:1: «los cuatro ángulos de la tierra»; Ezequiel 7:2'],
+        ['Río Éufrates (9:14)', 'Los pueblos que sostienen a Babilonia', 'Isaías 8:7; Apocalipsis 17:15'],
+        ['La hora (9:15)', 'La hora del juicio', 'Apocalipsis 14:7: «la hora de su juicio ha llegado»'],
+        ['Lo que sale de la boca (9:17)', 'Los engaños que reúnen al mundo', 'Apocalipsis 16:13-14: «espíritus de demonios, que hacen señales»'],
+        ['Cola (9:19)', 'La mentira', 'Isaías 9:15'],
+      ]) +
+      fu(`Fuentes: Bohr, «La sexta trompeta», pág. 3, 12-16; Bohr, «15 principios
+      de interpretación profética», vol. 2, pág. 104-105; Bohr, «El mensaje de
+      los tres ángeles», tomo 1, pág. 5; notas de Camilo en Evernote, "Abismo".`) },
   ],
 
   preguntas: [
@@ -432,6 +447,21 @@ module.exports = {
       q: 'Según Bohr, si la sexta trompeta describe la reunión de los impíos, ¿qué describe el capítulo 10?',
       o: ['La reunión de los justos', 'La caída del Imperio otomano', 'La Revolución Francesa', 'Las siete últimas plagas'], a: 0,
       e: 'Terminada la reunión de los impíos (9:21), el capítulo 10 vuelve atrás en el tiempo para mostrar la reunión de los justos por el mensaje del librito. Fuente: Stephen Bohr, «La sexta trompeta», pág. 1.' },
+    { t: 'mc', v: '9:3', f: 'c',
+      q: '¿Qué libro del Antiguo Testamento describe una plaga de langostas como un ejército que invade?',
+      o: ['Joel', 'Amós', 'Nahúm', 'Habacuc'], a: 0,
+      e: 'Joel compara las langostas con un pueblo fuerte que sube contra la tierra, con aspecto de caballos y dientes de león (Joel 1:4-6; 2:4-11), como las de 9:7-8. Fuente: notas de Camilo en Evernote, "Abismo" («Langostas salen del abismo… Joel 1 y 2»).' },
+    { t: 'mc', v: '9:14', f: 'c',
+      q: 'Según Bohr, ¿qué indica en la Biblia el número cuatro, como en los cuatro ángeles de 9:14?',
+      o: ['Que abarca todo el mundo', 'Que son cuatro naciones', 'Que dura cuatro siglos', 'Que viene de Dios'], a: 0,
+      e: 'El cuatro indica universalidad: los cuatro ángulos de la tierra (Apocalipsis 7:1; Ezequiel 7:2). Satanás y sus ángeles obran en todo el mundo. Fuentes: Bohr, «La sexta trompeta», pág. 12; Bohr, «15 principios de interpretación profética», vol. 2, pág. 104.' },
+    { t: 'mc', v: '9:5', f: 'c',
+      q: 'Según Bohr, ¿por qué los cinco meses de 9:5 se leen como tiempo simbólico?',
+      o: ['Porque el pasaje está lleno de símbolos', 'Porque una langosta vive cinco meses', 'Porque Daniel los explica en 12:7', 'Porque ocurren después de la gracia'], a: 0,
+      e: 'Los cinco meses están entre símbolos: humo, langostas, escorpiones, una estrella, una llave y el abismo; por eso el tiempo también es simbólico. Fuente: Bohr, «15 principios de interpretación profética», vol. 1, pág. 239.' },
+    { t: 'tf', v: '9:11', f: 'c',
+      q: 'En la lista de nombres simbólicos de Bohr, Abadón, el nombre del ángel del abismo, quiere decir «destructor».', a: true,
+      e: 'Verdadero: Abadón significa «destructor»; para Bohr ese rey del abismo es Satanás. Fuentes: Bohr, «15 principios de interpretación profética», vol. 2, pág. 104; Bohr, «El mensaje de los tres ángeles», tomo 1, pág. 5.' },
   ],
 
   tarjetas: [

@@ -118,11 +118,13 @@ module.exports = {
       hay lenguaje de tribunal (de juicio) en estos dos capítulos.<br><br>
       <strong>Otras lecturas:</strong> Alberto Treiyer entiende que Apocalipsis
       4-5 es una escena del <strong>juicio investigador</strong> que comenzó en
-      1844. La lectura <strong>futurista</strong> ve en 4:1 el rapto de la
-      iglesia; Bohr la rechaza.<br><br>
+      1844; dos notas de Camilo siguen esa lectura. La lectura
+      <strong>futurista</strong> ve en 4:1 el rapto de la iglesia; Bohr la
+      rechaza.<br><br>
       Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 3-4,
       21-22, 33-34 y 108-109; Treiyer, «La crisis final en Apocalipsis 4 y 5»,
-      pág. 108.`) },
+      pág. 108; notas de Camilo en Evernote, "Apocalipsis 4 (Digno es el
+      cordero)" y "Resumen Apocalipsis".`) },
 
     { t: '🧭 El trono en el lugar santo del santuario (4:5-6)', capa: 'contexto', h:
       hi(`El santuario de Moisés tenía <strong>dos salas</strong>: el
@@ -218,6 +220,23 @@ module.exports = {
       Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 27-28;
       notas de Camilo en Evernote, "LOS CUATRO SERES VIVIENTES"; Elena de White,
       «El conflicto de los siglos», págs. 357-358.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      hi(`La Biblia misma dice qué significan sus símbolos. Antes de dar una
+      interpretación, busca el texto que los explica.`) +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Siete lámparas de fuego', 'El Espíritu Santo en su plenitud (siete es plenitud)', 'Apocalipsis 4:5: son «los siete espíritus de Dios»; el siete: Génesis 2:2'],
+        ['Ojos', 'Sabiduría, inteligencia', 'Efesios 1:18; Apocalipsis 2:18'],
+        ['Ropas blancas', 'La justicia, la pureza', 'Apocalipsis 19:8: «El lino fino representa las acciones justas de los santos»; Isaías 61:10'],
+        ['Corona (stéfanos)', 'La victoria del que vence', 'Santiago 1:12'],
+        ['Relámpagos', 'La rapidez de los ángeles', 'Ezequiel 1:13-14'],
+        ['Seres de seis alas', 'Serafines (Bohr); querubines (notas de Camilo)', 'Isaías 6:2-3; Ezequiel 10:20'],
+        ['Arco iris', 'La fidelidad de Dios a sus promesas', 'Génesis 9:13-16'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      págs. 104-106; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs.
+      24-28 y 171; Escuela Sabática 2019-1T, págs. 28-29; notas de Camilo en
+      Evernote, "LOS CUATRO SERES VIVIENTES".`) },
   ],
 
   preguntas: [
@@ -369,6 +388,17 @@ module.exports = {
     { t: 'tf', v: '4:11', f: 'c',
       q: 'Según Elena de White, el canto de 4:11 muestra que Dios merece adoración porque es el Creador, y el sábado recuerda esa razón.', a: true,
       e: 'Verdadero: en «El conflicto de los siglos» cita 4:11 y lo une con el llamado de Apocalipsis 14 a adorar al Creador y con el cuarto mandamiento. Fuente: Elena de White, «El conflicto de los siglos», págs. 357-358.' },
+    { t: 'mc', v: '4:4', f: 'c',
+      q: '¿Qué texto del mismo Apocalipsis explica que el vestido blanco representa la justicia?',
+      o: ['Apocalipsis 19:8', 'Apocalipsis 17:15', 'Apocalipsis 1:20', 'Apocalipsis 12:17'], a: 0,
+      e: 'Dice: «El lino fino representa las acciones justas de los santos». Bohr pone la vestimenta como símbolo de justicia (Apocalipsis 19:8; Isaías 61:10). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105.' },
+    { t: 'mc', v: '4:6-7', f: 'c',
+      q: 'Según las notas de Camilo, ¿qué texto llama «querubines» a los seres vivientes que vio Ezequiel junto al trono?',
+      o: ['Ezequiel 10:20', 'Isaías 6:2', 'Daniel 7:10', 'Salmo 103:20'], a: 0,
+      e: 'Ezequiel vio seres con cara de hombre, león, buey y águila, y dice que eran querubines. Bohr, en cambio, los llama serafines por Isaías 6. Fuentes: notas de Camilo en Evernote, "LOS CUATRO SERES VIVIENTES"; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 27-28.' },
+    { t: 'tf', v: '4:3', f: 'c',
+      q: 'Según la Escuela Sabática de 2019, el arco iris alrededor del trono señala la fidelidad de Dios a sus promesas, como en Génesis 9.', a: true,
+      e: 'Verdadero: la guía cita Génesis 9:13-16 e Isaías 54:9-10. Fuente: Escuela Sabática 2019-1T, pág. 28.' },
   ],
 
   tarjetas: [

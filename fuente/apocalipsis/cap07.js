@@ -181,7 +181,8 @@ module.exports = {
       Las notas de Camilo añaden que no basta guardar el día por fuera: el sello
       es la aprobación de Dios sobre un corazón purificado.<br><br>
       Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 12,
-      119-121, 145 y 153-154; Elena de White, «El conflicto de los siglos»,
+      119-123 (cita «Patriarcas y profetas», pág. 315), 145 y 153-154; Elena
+      de White, «El conflicto de los siglos»,
       pág. 488; notas de Camilo en Evernote, "El sello de Dios".`) },
 
     { t: '🧭 ¿Quiénes son los 144.000? (7:4-8)', capa: 'contexto', h:
@@ -192,16 +193,16 @@ module.exports = {
       <strong>vivo cuando Jesús venga</strong>. Pasarán por la gran tribulación
       sin intercesor y no adorarán a la bestia.<br>
       · <strong>De dónde:</strong> son el <strong>Israel espiritual</strong>,
-      de todas las naciones. Las tribus de Israel se perdieron con el cautiverio
-      asirio (722 a. C.).<br>
+      de todas las naciones. Las diez tribus del norte se perdieron con el
+      cautiverio asirio (722 a. C.).<br>
       · <strong>El número es simbólico:</strong> el capítulo está lleno de
       símbolos; si Israel es simbólico, el número también. 12 (el número de
       Israel) × 12 × 1.000 indica el verdadero pueblo de Dios en todo el mundo.
       En griego dice «ciento cuarenta y cuatro miles», y en hebreo «mil» puede
       significar un clan. Compáralo con los «siete mil» fieles de Elías.<br>
-      · <strong>La lista de tribus:</strong> Judá va primero (Cristo es el León
-      de Judá). Las notas de Camilo explican que faltan Dan y Efraín porque
-      ambas se inclinaron a la apostasía.<br><br>
+      · <strong>La lista de tribus</strong> (notas de Camilo): Judá va primero
+      (Cristo es el León de Judá), y faltan Dan y Efraín porque ambas se
+      inclinaron a la apostasía.<br><br>
       La Escuela Sabática de 2019 también lee el número como simbólico. Hay
       quienes lo toman literal; Bohr responde que entonces Dios tendría que
       predeterminar exactamente 12.000 por tribu.<br><br>
@@ -224,7 +225,7 @@ module.exports = {
       hi(`· El griego dice «la tribulación, <strong>la grande</strong>»: es el
       tiempo de angustia final (Daniel 12:1), no las pruebas de toda época.<br>
       · Elena de White mezcla las descripciones de los dos grupos, dice que solo
-      los 144.000 entran al templo, y 7:15 dice que la multitud sirve en el
+      los 144.000 entran al templo («Primeros escritos», pág. 19), y 7:15 dice que la multitud sirve en el
       templo.<br>
       · «Ya no tendrán hambre ni sed»: pasaron vivos por las plagas.<br>
       · Las <strong>palmas</strong> recuerdan la fiesta de los
@@ -253,6 +254,25 @@ module.exports = {
       Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 55-56;
       tomo 2, pág. 3; Elena de White, «El conflicto de los siglos»,
       págs. 351-352.`) },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      hi(`Cada símbolo del capítulo tiene un texto bíblico que lo explica.`) +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Vientos', 'Luchas y guerras entre naciones', 'Jeremías 49:36-37; Daniel 7:2: «los cuatro vientos del cielo combatían en el gran mar»'],
+        ['Cuatro ángulos de la tierra', 'Todo el mundo (cuatro es universalidad)', 'Apocalipsis 20:8: «las naciones que están en los cuatro ángulos de la tierra»'],
+        ['Sello', 'Propiedad y protección de Dios', 'Ezequiel 9:4-6; 2 Timoteo 2:19; Efesios 1:13'],
+        ['Frente', 'La mente, donde Dios escribe su ley', 'Hebreos 10:16; Deuteronomio 6:6-8'],
+        ['Árboles', 'El pueblo de Dios', 'Salmo 1:3; Jeremías 17:8'],
+        ['Israel y sus tribus', 'El pueblo de Dios de todas las naciones', 'Gálatas 3:29; Romanos 2:28-29'],
+        ['Doce', 'El número del pueblo de Dios', 'Apocalipsis 21:12, 14: las doce tribus y los doce apóstoles'],
+        ['Ropas blanqueadas en la sangre', 'El carácter limpio por la justicia de Cristo', 'Isaías 1:18; Apocalipsis 19:8'],
+        ['Palmas', 'La fiesta de los tabernáculos, fiesta de alegría', 'Levítico 23:40'],
+      ]) +
+      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
+      págs. 104-106; Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 4,
+      12, 69-71 y 120; Bohr, «Los 144.000 y los 24 ancianos», págs. 94 y 117; Elena
+      de White, «El conflicto de los siglos», pág. 360; notas de Camilo en
+      Evernote, "Vientos".`) },
   ],
 
   preguntas: [
@@ -463,6 +483,17 @@ module.exports = {
       q: 'Según Bohr, ¿por qué se dice que la multitud ya no tendrá hambre ni sed?',
       o: ['Pasaron vivos por las plagas del fin', 'Ayunaron durante toda su vida', 'Vivieron en el desierto con Moisés', 'Murieron de hambre en la Edad Media'], a: 0,
       e: 'Las plagas convierten el agua en sangre y el sol quema la vegetación; el pueblo de Dios sufre hambre y sed, pero es librado. Fuentes: Bohr, «Los 144.000 y los 24 ancianos», pág. 125; Elena de White, «El conflicto de los siglos», pág. 521.' },
+    { t: 'mc', v: '7:1', f: 'c',
+      q: 'Según una nota de Camilo, ¿qué texto de los profetas usa «los cuatro vientos» para la guerra que dispersa a una nación?',
+      o: ['Jeremías 49:36', 'Génesis 8:1', 'Éxodo 14:21', 'Números 11:31'], a: 0,
+      e: 'En los profetas el viento es la acción destructora de las naciones; Génesis 8:1, Éxodo 14:21 y Números 11:31 hablan de vientos literales que Dios usa. Fuentes: notas de Camilo en Evernote, "Vientos"; Elena de White, «El conflicto de los siglos», pág. 360.' },
+    { t: 'mc', v: '7:4', f: 'c',
+      q: 'Según Bohr, ¿qué texto enseña que los que son de Cristo son linaje de Abraham, es decir, el Israel de Dios?',
+      o: ['Gálatas 3:29', 'Génesis 49:10', '2 Reyes 17:6', 'Zacarías 10:3'], a: 0,
+      e: 'Por eso las tribus de 7:4-8 no son judíos literales sino el pueblo de Dios de todas las naciones (Romanos 2:28-29). Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 59 y 69-71; Bohr, «15 principios de interpretación profética», tomo 2, pág. 106.' },
+    { t: 'tf', v: '7:2-3', f: 'c',
+      q: 'Según Bohr, 2 Timoteo 2:19 une el sello de Dios con la propiedad: el Señor conoce a los que son suyos.', a: true,
+      e: 'Verdadero: el sello dice a quién pertenece alguien y lo protege. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 4 y 12.' },
   ],
 
   tarjetas: [

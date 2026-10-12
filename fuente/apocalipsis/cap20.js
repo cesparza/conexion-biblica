@@ -199,16 +199,19 @@ module.exports = {
           `Bohr: 21:1 en realidad cierra el capítulo 20, y 21:2 (la ciudad que baja)
            pasa antes del ataque de 20:9, porque los impíos rodean una ciudad que ya
            está en la tierra.`,
-          `Bohr ubica 20:11 en la venida (como 6:14-17) y 20:12 durante los mil años:
-           los muertos están «de pie» ante Dios por medio del registro de sus vidas.
-           Elena de White describe la escena del gran trono blanco al final de los
-           mil años, con los impíos alrededor de la ciudad.`]) +
-      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 74 y 77-79; Elena de White, El conflicto de los siglos, págs. 533-534.</p>` },
+          `<strong>El gran trono blanco</strong> (20:11-12): Elena de White lo ubica
+           <strong>al final de los mil años</strong>, con los impíos resucitados
+           alrededor de la ciudad. Allí Cristo es coronado, se abren los libros y
+           todos reconocen que Dios fue justo. Así lo ordenan también las notas de
+           Camilo. Bohr lo lee de otra forma: 20:11 en la venida (como 6:14-17) y
+           20:12 durante los mil años.`]) +
+      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 74 y 77-79; Elena de White, El conflicto de los siglos, págs. 533-534; notas de Camilo en Evernote, "CRONOLOGÍA ESCATOLÓGICA ADVENTISTA — CONSOLIDADO FINAL" (punto 40) y "El estado de los muertos - El rico y Lázaro".</p>` },
 
     { t: '🧭 La segunda resurrección y el último ataque (20:5, 20:7-9)', capa: 'contexto', h:
       hi(`Según Elena de White, al terminar los mil años Cristo vuelve a la tierra con
-      los redimidos y los ángeles; se posa sobre el monte de los Olivos (Zacarías
-      14:4) y la nueva Jerusalén baja y se asienta allí.`) +
+      los redimidos y los ángeles. Al descender, manda que resuciten los impíos.
+      Luego se posa sobre el monte de los Olivos (Zacarías 14:4), y la nueva
+      Jerusalén baja y se asienta allí.`) +
       li([`Los impíos de todos los tiempos resucitan: es la <strong>segunda
            resurrección</strong>. Salen con el mismo carácter rebelde; no hay un
            segundo tiempo de gracia.`,
@@ -262,7 +265,20 @@ module.exports = {
       wa(`Elena de White: después de que mueren los que él engañó, Satanás «tiene
       que seguir viviendo y sufriendo» un tiempo; luego queda destruido, «raíz y
       rama».`) +
-      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 92, 94 y 97-99; notas de Camilo en Evernote, "El infierno y el mensaje del tercer ángel"; Elena de White, El conflicto de los siglos, pág. 539.</p>` },
+      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 86, 92, 94-95 y 97-99; notas de Camilo en Evernote, "El infierno y el mensaje del tercer ángel"; Elena de White, El conflicto de los siglos, pág. 539.</p>` },
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Dragón, serpiente antigua', 'Satanás', '«que es el Diablo y Satanás» (20:2); Apocalipsis 12:9'],
+        ['Abismo', 'La tierra vacía y oscura, sin vida', 'Génesis 1:2; Jeremías 4:23-26'],
+        ['Cadena, cárcel', 'Satanás preso en una tierra sin nadie a quien engañar', 'Isaías 24:21-22; «para que no engañara más a las naciones» (20:3)'],
+        ['Macho cabrío de Azazel', 'Satanás, que carga con la culpa', 'Levítico 16:8, 21-22'],
+        ['Libros', 'El registro de las obras de cada uno', 'Daniel 7:10; Malaquías 3:16'],
+        ['Libro de la vida', 'Los nombres de los salvados', 'Éxodo 32:32-33; Filipenses 4:3; Daniel 12:1'],
+        ['Hades', 'El sepulcro', 'Salmo 16:10 (Seol) con Hechos 2:27; Job 14:13'],
+        ['Lago de fuego', 'La destrucción final: la muerte segunda', '«Ésta es la muerte segunda» (20:14); Malaquías 4:1-3'],
+        ['Fuego eterno', 'Un fuego que consume del todo', 'Judas 7 con 2 Pedro 2:6: Sodoma quedó en ceniza'],
+      ]) +
+      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. PDF 74-78 y 103; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. PDF 86; Elena de White, El conflicto de los siglos, pág. PDF 528; notas de Camilo en Evernote, "El estado de los muertos - El rico y Lázaro" y "La verdad sobre el Infierno" (el Hades) y "Los Libros de Registro del Cielo".</p>` },
   ],
 
   preguntas: [
@@ -438,10 +454,25 @@ module.exports = {
     { t: 'mc', v: '20:10', f: 'c',
       q: 'Según Bohr, ¿qué quiere decir «por los siglos de los siglos» en Apocalipsis 20:10?',
       o: ['Un tiempo largo cuyo fin no se ve', 'Un tiempo que nunca termina', 'Exactamente otros mil años', 'Un solo instante, sin dolor'], a: 0,
-      e: 'Traduce aion (en hebreo olam): un período largo e indefinido; «lo que el fuego consume se apaga finalmente». Como Sodoma: «fuego eterno» (Judas 7), pero quedó en ceniza (2 Pedro 2:6). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 92 y 97-99.' },
+      e: 'Traduce aion (en hebreo olam): un período largo e indefinido; «lo que el fuego consume se apaga finalmente». Como Sodoma: «fuego eterno» (Judas 7), pero quedó en ceniza (2 Pedro 2:6). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 86, 92 y 97-99.' },
     { t: 'tf', v: '20:10', f: 'c',
       q: 'Según Elena de White, Satanás sufre más tiempo que los que engañó, porque carga también con los pecados que les hizo cometer.', a: true,
       e: 'Verdadero: «Después de haber perecido todos los que cayeron por sus seducciones, el diablo tiene que seguir viviendo y sufriendo». Al final queda destruido, «raíz y rama». Fuente: Elena de White, El conflicto de los siglos, pág. 539.' },
+    { t: 'mc', v: '20:12', f: 'c',
+      q: 'Según Bohr, ¿qué contiene el libro de la vida que se abre en 20:12?',
+      o: ['Los nombres de los que se salvarán', 'Las obras de todos los impíos', 'La historia de las naciones', 'Las leyes del reino de Dios'], a: 0,
+      e: 'Contiene los nombres de los salvos (Apocalipsis 3:5; Filipenses 4:3; Éxodo 32:32; Daniel 12:1). Se abre para mostrar a los impíos que su nombre no está. Los otros libros registran las obras. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 78.' },
+    { t: 'tf', v: '20:13', f: 'c',
+      q: 'Según las notas de Camilo, el Hades de 20:13-14 es el sepulcro y no un lugar donde los muertos sufren.', a: true,
+      e: 'Verdadero: Hades es el sepulcro, el Seol del Antiguo Testamento. Por eso «entrega los muertos» que había en él (20:13). Fuente: notas de Camilo en Evernote, "El estado de los muertos - El rico y Lázaro".' },
+    { t: 'mc', v: '20:10', f: 'c',
+      q: 'Según Bohr, ¿qué ejemplo bíblico muestra que un «fuego eterno» consume del todo?',
+      o: ['Sodoma y Gomorra, hechas ceniza', 'El horno de Nabucodonosor', 'La zarza que no se consumía', 'El fuego del altar del templo'], a: 0,
+      e: 'Sodoma sufrió «el castigo del fuego eterno» (Judas 7), pero quedó reducida a ceniza (2 Pedro 2:6). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. PDF 86.' },
+    { t: 'mc', v: '20:11', f: 'c',
+      q: 'Según Elena de White, ¿cuándo ocurre la escena del gran trono blanco (20:11-12)?',
+      o: ['Al final de los mil años', 'Cuando muere cada persona', 'Al comenzar los mil años', 'En 1844, al empezar el juicio'], a: 0,
+      e: 'Con los impíos resucitados alrededor de la ciudad, Cristo es coronado y se abren los libros. Bohr ubica 20:11 en la segunda venida; aquí se sigue a Elena de White, como las notas de Camilo. Fuente: Elena de White, El conflicto de los siglos, págs. PDF 533-534.' },
   ],
 
   tarjetas: [

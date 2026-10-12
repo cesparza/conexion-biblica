@@ -41,6 +41,17 @@ module.exports = {
       `<p>Bohr agrega un detalle: en el Antiguo Testamento la palabra «príncipe» aparece unas 420 veces y nunca se usa para un rey; casi siempre es un jefe militar. Por eso el «príncipe» de Persia es distinto de «los reyes de Persia» del mismo versículo.</p>` +
       wa('Hay quienes creen que el que tocó a Daniel es el mismo varón de la visión. Bohr no lo cree, por el corte del versículo 10.') +
       `<p>Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 361-364.</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Varón vestido de lino (10:5-6)', 'Cristo glorificado, como Sumo Sacerdote', 'Apocalipsis 1:13-15: «uno semejante al Hijo del hombre»; sus pies, «semejantes al bronce pulido», como en Daniel 10:6'],
+        ['Lino', 'Justicia, pureza', 'Apocalipsis 19:8: «El lino fino representa las acciones justas de los santos»'],
+        ['Príncipe del reino de Persia (10:13)', 'Satanás, que obraba sobre los reyes persas', 'Juan 12:31; 14:30 (el príncipe de este mundo); Apocalipsis 12:9'],
+        ['Miguel (10:13, 21)', 'Cristo, que defiende y resucita a su pueblo', 'Daniel 12:1: «el gran príncipe que está de parte de los hijos de tu pueblo»; Judas 9 con 1 Tesalonicenses 4:16 y Juan 5:28-29'],
+        ['Príncipe', 'Un jefe de ejército, no un rey', 'Josué 5:14; Daniel 10:13 distingue al «príncipe» de «los reyes de Persia»'],
+        ['Veintiún días (10:13)', 'Días literales: no todo número es símbolo', 'Daniel 10:2-3: las «tres semanas» de ayuno'],
+      ]) +
+      `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 361-364; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105; notas de Camilo en Evernote, "4. El remanente - Daniel 10, quién es el príncipe de Persia".</p>` },
   ],
   preguntas: [
     { t: 'mc', v: '10:5', f: 'c', q: 'Según Bohr, ¿cómo vio Daniel a Cristo en 10:5-6?', o: ['Como Sumo Sacerdote tras la ascensión', 'Como un niño recién nacido en Belén', 'Como un soldado del ejército persa', 'Como el Anciano de días en su trono'], a: 0, e: 'Daniel no lo vio como estaba en ese momento, sino como estaría vestido al inaugurar su sacerdocio en el cielo; por eso la descripción coincide con Apocalipsis 1. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 361-362.' },
@@ -51,5 +62,9 @@ module.exports = {
     { t: 'mc', v: '10:14', f: 'c', q: 'Según Bohr, ¿qué palabra clave une los capítulos 8 a 12 de Daniel?', o: ['Entender', 'Reino', 'Bestia', 'Sueño'], a: 0, e: 'Gabriel debe hacer entender (8:16), Daniel no entiende (8:27), Gabriel vuelve para que entienda (9:23), Daniel entiende (10:1) y pide entender más (10:12). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 25 y 359.' },
     { t: 'tf', v: '10:1', f: 'c', q: 'Según Bohr, el cambio de idioma del libro (arameo en 2 a 7, hebreo en 8 a 12) muestra que Daniel tiene dos mitades.', a: true, e: 'Verdadero, y la segunda mitad (8 a 12) es el libro que quedó sellado hasta el tiempo del fin. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 20.' },
     { t: 'mc', v: '10:2', f: 'c', q: 'Según Elena de White, citada por Bohr, ¿por qué volvió Daniel a buscar a Dios en el capítulo 10?', o: ['Quería entender lo que aún no se le explicaba', 'Había caído en desgracia ante el rey Ciro', 'Lo amenazaban otra vez con los leones', 'Quería volver a Jerusalén con los exiliados'], a: 0, e: 'Gabriel le había dado en el capítulo 9 todo lo que podía recibir; años después Daniel deseó aprender más de lo que faltaba explicar. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 359 (cita La santificación, p. 49).' },
+
+    { t: 'mc', v: '10:5', f: 'c', q: '¿Qué pasaje del Apocalipsis describe al mismo personaje que el varón vestido de lino de Daniel 10:5-6?', o: ['Apocalipsis 1:13-16', 'Apocalipsis 13:1-2', 'Apocalipsis 17:3-4', 'Apocalipsis 9:1-3'], a: 0, e: 'Los dos tienen pies como bronce bruñido y ojos o rostro de fuego: es Cristo glorificado. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 361.' },
+    { t: 'mc', v: '10:5', f: 'c', q: 'Según Apocalipsis 19:8, que Bohr usa para explicar las vestiduras, ¿qué representa el lino fino?', o: ['Las acciones justas de los santos', 'La riqueza de los reyes de la tierra', 'El luto por los muertos', 'El poder de los sacerdotes'], a: 0, e: 'En la profecía la vestimenta representa justicia (Isaías 61:10; Apocalipsis 19:8). Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105.' },
+    { t: 'mc', v: '10:13', f: 'c', q: 'Según Bohr, ¿con qué título llama Jesús a Satanás, que ayuda a identificar al «príncipe del reino de Persia»?', o: ['El príncipe de este mundo', 'El rey de los reyes', 'El ángel del abismo', 'El señor de los ejércitos'], a: 0, e: 'Jesús lo llama así en Juan 12:31 y 14:30. Si Miguel, el Príncipe, es Cristo, el príncipe de Persia es Satanás. Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 364.' },
   ],
 };

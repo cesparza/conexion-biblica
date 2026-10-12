@@ -22,7 +22,7 @@ module.exports = {
         ]) +
         `<p>Bohr lo compara con las dos partes de la garantía de libertad religiosa de la Constitución de Estados Unidos: el Estado no debe <strong>establecer</strong> una religión (Daniel 3) ni <strong>prohibir su libre ejercicio</strong> (Daniel 6).</p>` +
         hi(`Daniel no aparece en Daniel 3, y no sabemos dónde estaba. Pero, dice Bohr, Daniel 6 deja claro qué habría hecho si hubiera estado en Dura.`) +
-        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 113-114; Bohr, La Gran Cadena Profética, págs. 49-50.</p>`,
+        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 113 y 116; Bohr, La Gran Cadena Profética, págs. 47-49.</p>`,
     },
     {
       t: '🧭 Fiel en el trabajo, acusado por su fe',
@@ -51,8 +51,8 @@ module.exports = {
           ['Los acusadores caen en el foso', 'Los enemigos sufren lo que planearon'],
         ]) +
         `<p>Elena de White describe que las leyes sobre el domingo terminarán castigando a quienes guarden el sábado (El conflicto de los siglos, pág. 615, citada por Bohr). Bohr lo dice así: una ley que impone un día termina prohibiendo el otro.</p>` +
-        hi(`El hilo es la palabra <strong>«librar»</strong>: cinco veces en Daniel 6 (6:14, 16, 20, 27), varias en Daniel 3, y en 12:1. Daniel 3 y 6 son la base para entender el final de Daniel 11 y 12.`) +
-        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 42-43 y 115-117.</p>`,
+        hi(`El hilo es la palabra <strong>«librar»</strong>: varias veces en Daniel 6 (6:14, 16, 20, 27), en Daniel 3 y en 12:1. Daniel 3 y 6 son la base para entender el final de Daniel 11 y 12.`) +
+        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 40, 42-43 y 115-117.</p>`,
     },
     {
       t: '🧭 ¿Por qué Dios dejó que lo echaran al foso?',
@@ -75,6 +75,19 @@ module.exports = {
         ]) +
         hi(`Para Bohr, Daniel prefigura al remanente final en cuatro cosas: el testimonio de Jesús (el don profético), la obediencia a los mandamientos, la adoración al Creador y la fe de Jesús (Apocalipsis 12:17; 14:7, 12).`) +
         `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. 115; Bohr, La Gran Cadena Profética, págs. 49-50.</p>`,
+    },
+    {
+      t: '🧭 La Biblia explica sus símbolos',
+      capa: 'contexto',
+      h: `<p>Daniel 6 no trae visiones: es historia. Pero para Bohr cada parte es figura del final, y la Biblia misma muestra su cumplimiento:</p>` +
+        tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+          ['Daniel, en quien no hallaron falta (6:4)', 'El remanente fiel del fin', 'Apocalipsis 14:5: «son sin mancha delante del trono de Dios»; 14:12'],
+          ['La ley firmada que no se puede revocar (6:8)', 'El decreto final contra los que no adoran como se manda', 'Apocalipsis 13:15: hacer «matar a todo el que no la adorara»; Ester 3:8-9'],
+          ['Orar tres veces al día ante el peligro (6:10)', 'El pueblo de Dios que clama en la angustia final', 'Lucas 18:7: los escogidos que claman a Dios día y noche'],
+          ['El foso y la liberación (6:22, 27)', 'El tiempo de angustia y la liberación final', 'Daniel 12:1: «en aquel tiempo será libertado tu pueblo»'],
+          ['Los acusadores echados al foso (6:24)', 'Los enemigos del pueblo de Dios caen en su propia trampa', 'Apocalipsis 17:16; Ester 7:10'],
+        ]) +
+        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 42-43 y 115-117; Bohr, La Gran Cadena Profética, pág. PDF 47-50; Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 111-112.</p>`,
     },
   ],
   preguntas: [
@@ -108,5 +121,14 @@ module.exports = {
     { t: 'tf', v: '6:14', f: 'c', q: 'Según Bohr, la palabra «librar», que aparece varias veces en Daniel 6, une este capítulo con Daniel 3 y con Daniel 12:1.',
       a: true,
       e: 'Verdadero: por eso Daniel 3 y 6 son la base para entender la liberación final del pueblo de Dios en Daniel 11:44-12:1. Fuentes: Stephen Bohr, Studies in Daniel 1-10, págs. 42-43 y 115; Bohr, La Gran Cadena Profética, pág. 50.' },
+    { t: 'mc', v: '6:4', f: 'c', q: 'Según Bohr, Daniel, en quien no hallaron falta, prefigura al remanente del fin. ¿Qué texto de Apocalipsis dice que ese remanente es «sin mancha»?',
+      o: ['Apocalipsis 3:17', 'Apocalipsis 14:5', 'Apocalipsis 9:20', 'Apocalipsis 20:8'], a: 1,
+      e: '«En sus bocas no fue hallada mentira, pues son sin mancha delante del trono de Dios» (Apocalipsis 14:5). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 51 y 115.' },
+    { t: 'tf', v: '6:24', f: 'c', q: 'Según Bohr, que los acusadores de Daniel murieran en el foso anuncia que, al final, los reyes de la tierra se volverán contra la ramera.',
+      a: true,
+      e: 'Verdadero: los malvados sufrirán lo que planearon contra los justos (Apocalipsis 17:16-17; El conflicto de los siglos, págs. 655-656). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 117.' },
+    { t: 'mc', v: '6:10', f: 'c', q: 'Según Bohr, ¿a qué corresponde en el tiempo de angustia la oración constante de Daniel?',
+      o: ['A los cultos públicos en los templos', 'Al pueblo de Dios que clama día y noche', 'A la oración de los ángeles por la tierra', 'A los rezos repetidos de memoria'], a: 1,
+      e: 'Elena de White describe al pueblo de Dios clamando día y noche por liberación; como Jacob, no suelta a Dios hasta tener la seguridad de ser aceptado (El conflicto de los siglos, pág. 630). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 116.' },
   ],
 };

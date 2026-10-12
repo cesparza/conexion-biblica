@@ -115,8 +115,10 @@ module.exports = {
       sábado.`) +
       wa(`Elena de White ubica la frase «tienes nombre de que vives y estás
       muerto» (3:1) en el tiempo de las señales de 1755 a 1780. Otras fechas:
-      Urías Smith empieza Sardis en 1798; Maxwell la pone en 1565-1740.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 107-113; Elena de White, El conflicto de los siglos, pág. 259; Urías Smith, Las profecías del Apocalipsis, pág. 30; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, pág. 127.</p>` },
+      Urías Smith empieza Sardis en 1798; Maxwell la pone en 1565-1740. Un
+      sermón de las notas de Camilo usa 1517-1780 para Sardis y 1780-1844 para
+      Filadelfia.`) +
+      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 107-113; Elena de White, El conflicto de los siglos, pág. 259; Urías Smith, Las profecías del Apocalipsis, pág. 30; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, pág. 127; notas de Camilo en Evernote, "Sermón - Laodicea: El mensaje del Testigo Fiel".</p>` },
 
     { t: '🧭 Sardis: velar, el libro de la vida y las vestiduras (3:3-5)', capa: 'contexto', h:
       hi(`<strong>Velar.</strong> Sardis estaba sobre un cerro tan empinado que se
@@ -230,6 +232,20 @@ module.exports = {
       sentado ahora con el Padre en su trono como sacerdote: el vencedor
       compartirá ese trono con él.`) +
       `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 15, 124 y 152 (cita a Elena de White, Primeros escritos, pág. 270); Elena de White, El conflicto de los siglos, pág. 342.</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Vestiduras blancas', 'La justicia de Cristo', 'Isaías 61:10; Apocalipsis 19:8: «El lino fino representa las acciones justas de los santos»'],
+        ['Libro de la vida', 'El registro de los que pertenecen a Dios', 'Daniel 12:1; Apocalipsis 20:12 y 15'],
+        ['Venir como ladrón', 'Llegar sin aviso', 'Apocalipsis 3:3: «no sabrás a qué hora vendré sobre ti»'],
+        ['Llave de David', 'Autoridad para abrir y cerrar', 'Isaías 22:20-22'],
+        ['Puerta abierta (1844)', 'La entrada al lugar santísimo del santuario celestial', 'Apocalipsis 11:19: «el Arca de su pacto se dejó ver en el templo»; Hebreos 9:3-4'],
+        ['Nombre de Dios escrito', 'Pertenecer a Dios y tener su carácter', 'Deuteronomio 28:10; Apocalipsis 14:1'],
+        ['Frente', 'La mente', 'Deuteronomio 6:6-8; Hebreos 10:16'],
+        ['Oro refinado en fuego', 'La fe probada', '1 Pedro 1:7'],
+        ['Colirio y ojos', 'Discernimiento espiritual que da Dios', 'Efesios 1:18; Juan 9:39'],
+      ]) +
+      `<p>Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104-105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 23, 35, 82, 116-121, 124-125, 134 y 170-172; notas de Camilo en Evernote, "10. Filadelfia: La Iglesia reavivada - Parte 1" y "Sermón - Laodicea: El mensaje del Testigo Fiel".</p>` },
   ],
 
   preguntas: [
@@ -443,6 +459,17 @@ module.exports = {
     { t: 'tf', v: '3:18', f: 'c',
       q: 'Según Elena de White, el colirio es la sabiduría y la gracia que permiten distinguir el bien del mal y descubrir el pecado.', a: true,
       e: 'Verdadero: con ese colirio Dios da claridad al entendimiento. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 172 (cita Testimonios para la iglesia, tomo 4, pág. 91).' },
+    { t: 'mc', v: '3:7', f: 'c',
+      q: 'Según las notas de Camilo, ¿qué texto del Antiguo Testamento explica «la llave de David»?',
+      o: ['Isaías 22:20-22', 'Daniel 7:13-14', 'Génesis 32:28', 'Salmo 2:8-9'], a: 0,
+      e: 'Allí Dios pone la llave de la casa de David sobre Eliaquim: abre y nadie cierra. Es autoridad para abrir y cerrar. Fuente: notas de Camilo en Evernote, "10. Apocalipsis - Las 7 iglesias - Filadelfia: La Iglesia reavivada - Parte 1".' },
+    { t: 'tf', v: '3:5', f: 'c',
+      q: 'La Biblia explica la ropa blanca en Apocalipsis 19:8: el lino fino representa las acciones justas de los santos.', a: true,
+      e: 'Verdadero. Por eso las vestiduras blancas de 3:5 y 3:18 son la justicia (Isaías 61:10). Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 170.' },
+    { t: 'mc', v: '3:12', f: 'c',
+      q: 'En la profecía, ¿qué significa llevar escrito el nombre de Dios?',
+      o: ['Pertenecer a Dios y tener su carácter', 'Saber de memoria los nombres de Dios', 'Tener un cargo de pastor en la iglesia', 'Haber nacido en la ciudad de Jerusalén'], a: 0,
+      e: 'El nombre expresa el carácter, y llevar el nombre de alguien indica que se le pertenece (Deuteronomio 28:10). Los 144.000 lo llevan en la frente, que representa la mente (14:1). Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104-105.' },
   ],
 
   tarjetas: [

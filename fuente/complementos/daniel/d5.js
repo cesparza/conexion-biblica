@@ -15,7 +15,7 @@ module.exports = {
       capa: 'contexto',
       h: `<p>Los profetas anunciaron que Babilonia nunca sería reedificada (Isaías 13:19-22; Jeremías 50:39-40). Sin embargo, en Apocalipsis Babilonia tiene un papel central en los últimos eventos. ¿Contradicción? Bohr responde que no: <strong>la Babilonia de Apocalipsis es el cumplimiento espiritual</strong> de lo que la ciudad literal representaba.</p>` +
         li([
-          'En el Antiguo Testamento, Dios tenía una nación con su capital en Jerusalén, y su adversario tenía otra con capital en Babilonia.',
+          'Bohr cita a Louis F. Were: en el Antiguo Testamento, Dios tenía una nación con su capital en Jerusalén, y su adversario tenía otra con capital en Babilonia.',
           'En el Nuevo Testamento el pueblo de Dios ya no es una nación sino una iglesia de todos los pueblos; y su contraparte también es un sistema religioso. Elena de White llama a la Babilonia final una iglesia caída por sus errores (El conflicto de los siglos, págs. 606-607).',
           'Por eso lo que en Daniel 5 es literal —el vino, las copas, los ídolos, el río Éufrates— en Apocalipsis se lee como símbolo.',
         ]) +
@@ -84,6 +84,21 @@ module.exports = {
         wa(`Elena de White no aplica esto solo a otros: «En la balanza del santuario ha de ser pesada la iglesia adventista del séptimo día», según los privilegios y la luz que ha recibido (Testimonios, tomo 8, pág. 247, citada por Bohr).`) +
         `<p>Fuente: Stephen Bohr, Studies in Daniel 1-10, págs. 96 y 101-102.</p>`,
     },
+    {
+      t: '🧭 La Biblia explica sus símbolos',
+      capa: 'contexto',
+      h: `<p>Bohr: lo que en Daniel 5 es literal se lee como símbolo en Apocalipsis 16-18. La misma Biblia da la clave:</p>` +
+        tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+          ['Babilonia', 'Una iglesia caída: el sistema religioso falso del fin', 'Apocalipsis 14:8; 17:5; 18:2-4: «Salid de ella, pueblo mío»'],
+          ['El vino', 'Doctrinas falsas', 'Apocalipsis 17:2: se embriagan «con el vino de su fornicación»; Jeremías 51:7'],
+          ['El río Éufrates, las aguas', 'Pueblos y naciones que sostienen a Babilonia', 'Apocalipsis 17:15: las aguas «son pueblos, muchedumbres, naciones y lenguas»; Isaías 8:7'],
+          ['El río que se seca', 'Esos pueblos le quitan su apoyo', 'Apocalipsis 16:12; 17:16'],
+          ['Ciro, el rey que viene del oriente', 'Cristo, que libra a su pueblo', 'Isaías 44:28 y 45:1 (pastor y ungido); Apocalipsis 16:12'],
+          ['La balanza', 'El juicio de Dios sobre las obras', 'Job 31:6; Proverbios 16:2; 1 Samuel 2:3'],
+          ['Los vasos santos usados como comunes', 'Lo santo tratado como profano', 'Levítico 10:10; Ezequiel 22:26'],
+        ]) +
+        `<p>Fuentes: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 41, 93, 96, 98-99, 106 y 109; Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 102 y 105.</p>`,
+    },
   ],
   preguntas: [
     { t: 'tf', v: '5:30', f: 'c', q: 'Según Bohr, las profecías de que Babilonia nunca sería reedificada contradicen el papel que Babilonia tiene en Apocalipsis.',
@@ -116,5 +131,14 @@ module.exports = {
     { t: 'tf', v: '5:27', f: 'c', q: 'Según Elena de White, también la iglesia adventista será pesada en la balanza del santuario, según la luz y los privilegios que ha recibido.',
       a: true,
       e: 'Verdadero: si su experiencia no corresponde a lo recibido, sobre ella caerá la sentencia «hallado falto». Fuente: Elena de White, Testimonios, tomo 8, pág. 247, citada por Stephen Bohr, Studies in Daniel 1-10, pág. 102.' },
+    { t: 'mc', v: '5:31', f: 'c', q: 'Según Apocalipsis 17:15, texto que Bohr usa para leer la caída de Babilonia, ¿qué representan las aguas del río?',
+      o: ['Pueblos, muchedumbres, naciones y lenguas', 'Las lágrimas de los mártires del pasado', 'El bautismo de los creyentes fieles', 'Los ejércitos de los reyes de la tierra'], a: 0,
+      e: 'La ramera se sienta sobre esas aguas: los pueblos que la sostienen. Cuando se secan, le quitan su apoyo (Apocalipsis 16:12; 17:16). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 104, 106 y 109.' },
+    { t: 'mc', v: '5:27', f: 'c', q: 'Según Bohr, ¿qué representaba la balanza para los antiguos, y por qué Dios usó esa imagen con Belsasar?',
+      o: ['El juicio de las obras; era un lenguaje que el rey entendía', 'El comercio; Babilonia era una ciudad de mercaderes', 'La justicia del rey; Belsasar era juez supremo', 'El peso del oro; los vasos eran de oro puro'], a: 0,
+      e: 'Creían que los dioses pesaban las obras buenas y malas; la Biblia también habla de Dios que pesa las acciones (Job 31:6; Proverbios 16:2). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 98.' },
+    { t: 'mc', v: '5:30', f: 'c', q: 'Según Elena de White, citada por Bohr, ¿qué es la Babilonia de Apocalipsis 18?',
+      o: ['La iglesia caída por sus errores y pecados', 'La ciudad de Bagdad reconstruida', 'El gobierno de las Naciones Unidas', 'El conjunto de las religiones paganas'], a: 0,
+      e: 'Babilonia es «la iglesia, caída por sus errores y pecados», por rechazar la verdad enviada del cielo (El conflicto de los siglos, págs. 606-607). Fuente: Stephen Bohr, Studies in Daniel 1-10, pág. PDF 93.' },
   ],
 };

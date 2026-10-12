@@ -152,8 +152,9 @@ module.exports = {
       ]) +
       wa(`Otras fechas adventistas: Urías Smith pone Pérgamo en 323-538, Tiatira
       en 538-1798 y Sardis desde 1798; Maxwell, Tiatira en 538-1565 y Sardis en
-      1565-1740. Todos ponen el comienzo de Laodicea en 1844.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 6, 13-15 (cita a Elena de White, Hechos de los apóstoles, pág. 585); Urías Smith, Las profecías del Apocalipsis, págs. 26 y 30; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, págs. 121 y 127.</p>` },
+      1565-1740. Un sermón de las notas de Camilo usa Sardis 1517-1780 y
+      Filadelfia 1780-1844. Todos ponen el comienzo de Laodicea en 1844.`) +
+      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 6, 13-15 (cita a Elena de White, Hechos de los apóstoles, pág. 585); Urías Smith, Las profecías del Apocalipsis, págs. 26 y 30; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, págs. 121 y 127; notas de Camilo en Evernote, "Sermón - Laodicea: El mensaje del Testigo Fiel".</p>` },
 
     { t: '🧭 Patmos y el «día del Señor» (1:9-10)', capa: 'contexto', h:
       hi(`<strong>Patmos</strong> es una isla rocosa del mar Egeo, a unos 80 km de
@@ -232,6 +233,22 @@ module.exports = {
       «un muerto no puede mantener las lámparas encendidas». Jesús vive para
       interceder (Hebreos 7:25).`) +
       `<p>Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 17-18 y 31-36.</p>` },
+
+    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
+      `<p>Dos símbolos se explican en el mismo capítulo (1:20); los demás, en otros textos.</p>` +
+      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
+        ['Candelabros de oro', 'Las iglesias', 'Apocalipsis 1:20: «los siete candelabros que has visto son las siete iglesias»'],
+        ['Estrellas', 'Los ángeles o mensajeros de las iglesias: sus ministros', 'Apocalipsis 1:20: «las siete estrellas son los ángeles de las siete iglesias»'],
+        ['Siete espíritus', 'El Espíritu Santo, en su plenitud', 'Apocalipsis 4:5: siete lámparas «que son los siete espíritus de Dios»; Isaías 11:2'],
+        ['Número siete', 'Plenitud, algo completo', 'Génesis 2:2; Apocalipsis 15:1'],
+        ['Nubes', 'Ángeles', 'Hechos 1:9-11 con Mateo 25:31; Salmo 68:17'],
+        ['Ropa hasta los pies y cinto de oro', 'El vestido del sumo sacerdote', 'Levítico 8:7; Hebreos 8:1'],
+        ['Ojos', 'Sabiduría; lo conoce todo', 'Efesios 1:18; Apocalipsis 2:23: «el que escudriña la mente y el corazón»'],
+        ['Espada de dos filos', 'La palabra de Dios', 'Hebreos 4:12; Efesios 6:17'],
+        ['Sol', 'Cristo, el Sol de justicia', 'Malaquías 4:2'],
+        ['Hades', 'El sepulcro', 'Hechos 2:27 con Salmo 16:10'],
+      ]) +
+      `<p>Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104-105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 19, 23-24, 32-33 y 37; notas de Camilo en Evernote, "Las 7 iglesias" y "El Jesús del Apocalipsis".</p>` },
   ],
 
   preguntas: [
@@ -452,6 +469,17 @@ module.exports = {
       q: 'Según Bohr, ¿por qué se llama a Jesús «el primogénito de los muertos» si otros resucitaron antes?',
       o: ['Por su rango: su resurrección hace posibles las demás', 'Porque fue el primero que resucitó en la historia', 'Porque resucitó el primer día de la semana', 'Porque fue el hijo mayor de María y José'], a: 0,
       e: 'Primogénito habla de preeminencia, no de orden (Colosenses 1:15-18). Moisés, Lázaro y otros resucitaron antes. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 17-18.' },
+    { t: 'mc', v: '1:20', f: 'c',
+      q: '¿Dónde explica la Biblia qué son los candelabros de Apocalipsis 1?',
+      o: ['En el mismo capítulo, en 1:20', 'En Daniel 7:17, con las bestias', 'En Apocalipsis 17:15, con las aguas', 'En Hebreos 4:12, con la espada'], a: 0,
+      e: 'Apocalipsis 1:20 dice que «los siete candelabros que has visto son las siete iglesias». Bohr enseña que a veces el símbolo se explica en el contexto inmediato. Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 102.' },
+    { t: 'mc', v: '1:4', f: 'c',
+      q: 'Según Apocalipsis 4:5 y las notas de Camilo, ¿qué representan «los siete espíritus» de Apocalipsis 1:4?',
+      o: ['El Espíritu Santo en su plenitud', 'Siete ángeles que gobiernan', 'Siete profetas del pasado', 'Siete virtudes del creyente'], a: 0,
+      e: 'Las siete lámparas del trono son «los siete espíritus de Dios» (Apocalipsis 4:5), y el siete indica plenitud (Isaías 11:2). Fuentes: notas de Camilo en Evernote, "Las 7 iglesias"; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104.' },
+    { t: 'tf', v: '1:16', f: 'c',
+      q: 'En la lista de símbolos de Bohr, el sol representa a Cristo, a quien Malaquías 4:2 llama Sol de justicia.', a: true,
+      e: 'Verdadero. Por eso el rostro de Jesús brilla «como el sol» en 1:16. Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105.' },
   ],
 
   tarjetas: [
