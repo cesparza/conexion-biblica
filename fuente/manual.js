@@ -417,11 +417,9 @@ const MANUAL = [
     pasaje. Esa parte se llama <strong>interpretación</strong>: lo que dicen
     Stephen Bohr, Elena de White y otros autores adventistas, y cada sección
     dice de qué libro y página sale. No entra al concurso.</p>
-    <ul><li>En <strong>Estudiar</strong>, el grupo <strong>La
-    interpretación</strong> tiene una tarjeta por capítulo, solo con esas
-    secciones.</li>
-    <li>Dentro de un capítulo, el filtro <strong>Interpretación</strong>
-    deja ver solo esas secciones.</li>
+    <ul><li>En cada capítulo, debajo del estudio, el bloque <strong>La
+    interpretación</strong> la junta toda. El botón <strong>Ir a la
+    interpretación</strong> baja hasta ahí.</li>
     <li>En el examen, <strong>Solo la interpretación</strong> trae solo sus
     preguntas.</li></ul>` },
   { t:'Mientras lo haces',

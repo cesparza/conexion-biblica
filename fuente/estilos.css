@@ -2366,8 +2366,6 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .capa-filtro{display:inline-flex;gap:2px;padding:3px;margin:0 0 .9rem;flex-wrap:nowrap;max-width:100%;
   background:color-mix(in srgb,var(--azul) 8%,var(--v-sup,#fff));border-radius:999px}
 .vd-cab .capa-filtro{margin:0}
-/* v180: con tres opciones (Todo, examen, interpretación), menos aire para que quepan a 390 px. */
-.capa-filtro.tres .cf{padding:0 .7rem}
 .cf{min-height:44px;padding:0 1rem;border:0;border-radius:999px;background:transparent;color:var(--gris);
   font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap}
 .cf.on{background:var(--v-sup,#fff);color:var(--azul);box-shadow:var(--v-s1)}
@@ -2553,3 +2551,11 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 @media (min-width:900px) and (prefers-reduced-motion:reduce){.hoja-vers .hoja-caja{transition:none}}
 /* v155: el versículo al que lleva una cita del estudio, resaltado un momento. */
 .biblia p.salto{background:#fdecc8;box-shadow:0 0 0 4px #fdecc8;border-radius:8px;outline:0;transition:background .6s,box-shadow .6s}
+
+/* v182: el bloque de interpretación al final de cada capítulo. */
+.ir-interp{margin:0 0 .9rem;min-height:40px;font-size:.875rem;color:var(--cielo-txt,#2866AA)}
+.vd-cab .ir-interp{margin:.5rem 0 0}
+.sec.interp-cab{margin-top:1.6rem;padding:1rem 1.1rem;border-radius:var(--r,16px);
+  background:color-mix(in srgb,#0E7490 10%,var(--card,#fff));border:1px solid color-mix(in srgb,#0E7490 30%,transparent)}
+.interp-tit{margin:0;font-size:1.125rem;color:#0E6A82;display:flex;align-items:center;gap:.45rem}
+.interp-nota{margin:.35rem 0 0;font-size:.875rem;color:var(--gris)}

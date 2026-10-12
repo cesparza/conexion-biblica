@@ -79,7 +79,7 @@ let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 // Aventureros
 A.ponCat('av');
 ok(A.capsDe().length===7,'Aventureros ve 7 capítulos');
-ok(A.modsDe().filter(m=>!/^m-interp-/.test(m.id)).length===9&&A.modsDe().some(m=>/^m-interp-d/.test(m.id)),'Aventureros ve 9 módulos de repaso y la interpretación de Daniel ('+A.modsDe().length+')');
+ok(A.modsDe().length===9,'Aventureros ve 9 módulos de repaso ('+A.modsDe().length+')');
 /* PISO, no cifra exacta: la cuenta sube cada vez que se agregan tarjetas y
    una igualdad obliga a editar la prueba en cada tanda de contenido. Lo que
    de verdad hay que cazar es que se PIERDAN tarjetas. */
@@ -98,7 +98,7 @@ A.ponCat('gm');
    (cats:['gm'], extra:['gm']), asi que el conteo de capitulos sube a 13
    aunque Daniel 7 no entre al examen de nadie (extra lo saca del pool). */
 ok(capsCampamento().length===18,'Guías Mayores ve 18 capítulos del campamento (12 del alcance original + Daniel 7 a 12)');
-ok(A.modsDe().filter(m=>!/^m-interp-/.test(m.id)).length===11,'Guías Mayores ve 11 módulos de repaso, más la interpretación');
+ok(A.modsDe().length===11,'Guías Mayores ve 11 módulos');
 ok(A.tarjetasDe().length>=126,'Guías Mayores: '+A.tarjetasDe().length+' tarjetas (piso 126)');
 
 // buscaItem resuelve ambos tipos
@@ -3150,26 +3150,23 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'La bienvenida, con un concurso pedido, salta la pregunta de la actividad y ofrece sus categorías');
 }
 
-/* v180-v181: la interpretación aparte (Camilo, 12-oct). Un repaso por
-   capítulo con sus secciones 🧭, el filtro «Interpretación» en cada capítulo y
-   el examen de solo interpretación. */
+/* v182: la interpretación va al final de cada capítulo, en un bloque propio
+   (Camilo, 16:44), y el examen puede traer solo sus preguntas. */
 {
-  const Z=montar(`verCap, ponCat, modsDe, CONT_MODULOS, poolDe, refrescaEx, cambiaInterp, cambiaFuente, el:id=>document.getElementById(id), get soloInterp(){return soloInterp}, set alc(v){alcance=v}`,{});
+  const Z=montar(`verCap, ponCat, modsDe, poolDe, refrescaEx, cambiaInterp, cambiaFuente, el:id=>document.getElementById(id), get soloInterp(){return soloInterp}, set alc(v){alcance=v}`,{});
   Z.ponCat('apme');
-  const mi=Z.modsDe().filter(x=>/^m-interp-/.test(x.id));
-  const secs=mi.flatMap(m=>Z.CONT_MODULOS[m.id]);
-  ok(mi.length===22&&mi[0].id==='m-interp-ap1'&&mi[21].id==='m-interp-ap22'&&secs.length>=100&&secs.every(s=>s.capa==='contexto'&&/Fuentes?:/.test(s.h)),
-    'Apocalipsis trae la interpretación capítulo por capítulo: 22 repasos, '+secs.length+' secciones, todas con su fuente');
-  Z.verCap('m-interp-ap8');
-  const h=Z.el('detalle').innerHTML;
-  ok(/Apocalipsis 8 · la interpretación/.test(h)&&/Las siete trompetas según Bohr/.test(h)&&!/capa-filtro/.test(h)&&!/texto RV1995/.test(h)&&/Interpretación 8 de 22/.test(h),
-    'El repaso de un capítulo dice qué es, por cuál va y no trae el filtro de capas');
-  ok(/verVers\(this,'ap8',7,/.test(h),'Las citas sueltas se tocan en su capítulo (8:7 abre Apocalipsis 8)');
-  Z.ponCat('pa');
-  ok(Z.modsDe().filter(x=>/^m-interp-d/.test(x.id)).length>=4,'Padres y consejeros ve la interpretación de sus capítulos de Daniel');
-  Z.ponCat('apme');
+  ok(!Z.modsDe().some(m=>/^m-interp-/.test(m.id)),'La interpretación ya no va en repasos aparte');
   Z.verCap('ap8');
-  ok(/filtraCapa\(this,'contexto'\)/.test(Z.el('detalle').innerHTML),'Cada capítulo con interpretación ofrece verla sola en el filtro');
+  const H=Z.el('detalle').innerHTML, secs=H.split('<div class="sec').slice(1);
+  const k=secs.findIndex(x=>/^ interp-cab/.test(x));
+  const tras=secs.slice(k+1), antes=secs.slice(0,k);
+  ok(k>0&&tras.length>=3&&tras.every(x=>/^" data-capa="contexto"/.test(x))&&!antes.some(x=>/Las siete trompetas según Bohr/.test(x)),
+    'En Apocalipsis 8 la interpretación va junta al final, bajo su título ('+tras.length+' secciones)');
+  ok(/Las siete trompetas según Bohr/.test(tras.join(' '))&&/verVers\(this,'ap8',7,/.test(H),'Trae las trompetas según Bohr y sus citas se tocan');
+  ok(/irInterp\(\)/.test(H)&&!/filtraCapa\(this,'contexto'\)/.test(H),'Un botón baja a la interpretación; el filtro vuelve a tener dos opciones');
+  Z.verCap('d3');
+  const d3=Z.el('detalle').innerHTML.split('<div class="sec').slice(1), k3=d3.findIndex(x=>/^ interp-cab/.test(x));
+  ok(k3>0&&d3.slice(0,k3).some(x=>/Desmond Doss/.test(x)),'Lo de contexto que no es interpretación (Desmond Doss) se queda en su lugar');
   Z.alc='todo';Z.refrescaEx();
   const lb=Z.el('ex-interp-lb');
   ok(!!lb&&!lb.hidden,'El examen de Apocalipsis ofrece «Solo la interpretación»');

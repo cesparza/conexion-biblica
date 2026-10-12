@@ -73,25 +73,14 @@ const CAPS=REGLAMENTO.conCats(CAPS_BASE), MODULOS=REGLAMENTO.conCats(MODULOS_BAS
    archivo los ~280 KB de texto, y lo que se corrija en un capítulo sale igual
    aquí. Lo ve quien estudia al menos un capítulo de ese libro. Cada sección
    lleva `cap`, para que sus citas sueltas (8:7) se toquen en su capítulo. */
-/* v181: una tarjeta por capítulo (Camilo, 16:13: «mejor que la
-   interpretación salga capítulo a capítulo»). El repaso único de v180 era una
-   página de 150 secciones y una tarjeta sola en la rejilla. Ahora cada
-   capítulo con secciones 'contexto' tiene su repaso «m-interp-<cap>», en el
-   grupo «La interpretación», y lo ve quien estudia ese capítulo. */
-const esInterp=id=>/^m-interp-/.test(String(id||''));
-const capDeInterp=id=>String(id||'').replace(/^m-interp-/,'');
-{
-  const nuevos=[];
-  for(const c of CAPS){
-    if(!/^(d|ap)\d{1,2}$/.test(c.id))continue;
-    const secs=(CONTENIDO[c.id]||[]).filter(x=>x.capa==='contexto').map(x=>({...x,cap:c.id}));
-    if(!secs.length)continue;
-    const id='m-interp-'+c.id;
-    nuevos.push({id,label:c.label,sub:c.sub,icono:'🧭',color:c.color,cats:c.cats||[],interp:c.id});
-    CONT_MODULOS[id]=secs;
-  }
-  MODULOS.unshift(...nuevos);
-}
+/* v182: LA INTERPRETACIÓN VA DENTRO DE CADA CAPÍTULO, AL FINAL (Camilo,
+   16:44: «por capítulo la interpretación no por aparte sino todo en uno, una
+   sección abajo del estudio de cada capítulo»). Las secciones 🧭 (capa
+   'contexto') se sacan de su lugar y se pintan juntas bajo el título «La
+   interpretación», después del estudio. Las de contexto sin 🧭 (historia,
+   curiosidades) se quedan donde estaban. v180 y v181 las ponían en repasos
+   aparte; eso se quitó. */
+const esSecInterp=s=>s&&s.capa==='contexto'&&/^🧭/.test(String(s.t||''));
 
 /** La actividad de una categoria, y su ficha completa. */
 const ACT_DE=c=>(CATS[c]||CATS.av).act;
@@ -1584,16 +1573,13 @@ function pintaCaps(){
     '<div class="s">'+esc(m.sub)+'</div>'+
     '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>';
-  /* v180: la interpretación va en su propio grupo, antes de los repasos. */
-  const interp=modsDe().filter(m=>esInterp(m.id)).map(botonMod).join('');
-  const mods=modsDe().filter(m=>!esInterp(m.id)).map(botonMod).join('');
+  const mods=modsDe().map(botonMod).join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
     icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos')+
     '</div>'+caps+
-    (interp?'<div class="grupo" style="grid-column:1/-1">'+IC('brujula')+' La interpretación</div>'+interp:'')+
     (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'');
 }
 
@@ -2211,14 +2197,16 @@ function filaNav(ant,centro,sig){
     (x?' onclick="'+x.clic+'" aria-label="'+esc(x.aria||lado)+'"':' disabled aria-label="'+lado+'"')+'>'+txt+'</button>';
   return b(ant,'‹ Anterior','Anterior')+'<span class="hoja-cta">'+esc(centro)+'</span>'+b(sig,'Siguiente ›','Siguiente');
 }
-function filtroCapas(conInterp){
+function filtroCapas(){
   return segmentado('Qué secciones ver',[
     {t:'Todo',on:true,clic:"filtraCapa(this,'')"},
-    {t:'Solo lo del examen',clic:"filtraCapa(this,'nucleo')"}].concat(
-    /* v180: y al revés, solo la interpretación (capa 'contexto'), donde la
-       hay. Corto, para que los tres quepan a 390 px. */
-    conInterp?[{t:'Interpretación',clic:"filtraCapa(this,'contexto')"}]:[]),conInterp?'tres':'');
+    {t:'Solo lo del examen',clic:"filtraCapa(this,'nucleo')"}]);
 }
+/* Una sección del estudio, igual arriba que en el bloque de interpretación. */
+const htmlSec=id=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
+  refsTocables(s.h,s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>';
+/* Baja al bloque de interpretación del capítulo abierto. */
+function irInterp(){const el=document.getElementById('interp-de-cap');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 
 function filtraCapa(btn,modo){
   const d=document.getElementById('detalle');
@@ -2317,9 +2305,7 @@ function navCap(id){
   const i=lista.findIndex(x=>x.id===id);
   if(i<0||lista.length<2)return '';
   const a=lista[i-1], b=lista[i+1], k=caps.findIndex(x=>x.id===id);
-  const mi=mods.filter(x=>esInterp(x.id)), mr=mods.filter(x=>!esInterp(x.id));
-  const donde=k>=0?(k+1)+' de '+caps.length:esInterp(id)?'Interpretación '+(mi.findIndex(x=>x.id===id)+1)+' de '+mi.length
-    :'Repaso '+(mr.findIndex(x=>x.id===id)+1)+' de '+mr.length;
+  const donde=k>=0?(k+1)+' de '+caps.length:'Repaso '+(mods.findIndex(x=>x.id===id)+1)+' de '+mods.length;
   const a_=x=>x?{clic:"verCap('"+x.id+"')",aria:null}:null;
   const ant=a_(a), sig=a_(b);
   if(ant)ant.aria='Anterior: '+a.label+', '+a.sub;
@@ -2356,23 +2342,27 @@ function verCap(id,quieto){
     (deDonde?'<button type="button" class="btn txt cap-vuelve" onclick="crRegresa()">'+IC('izq')+
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
     navCap(id)+
-    '<div class="cap-ante">'+esc(c.label)+(esInterp(id)?' · la interpretación':'')+'</div>'+
+    '<div class="cap-ante">'+esc(c.label)+'</div>'+
     '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
        fuente/biblia-otros.js), no de la RV1960; y los repasos de creencias
        (mc-*) no traen texto bíblico, así que no dicen versión. */
-    (esInterp(id)?'Interpretación · '+(CONT_MODULOS[id]||[]).length+' secciones, con sus fuentes':esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
+    (esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
     (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
     /* v129: Profetas y Reyes se escucha por su estudio (ver htmlEstVoz). */
     (conEstudioEnVoz(c)?htmlEstVoz(c):'')+
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
-    (secs.some(s=>s.capa)&&!esInterp(id)?filtroCapas(secs.some(s=>s.capa==='contexto')):'')+
-    secs.map(s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
-      refsTocables(s.h,s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>').join('')+
+    (secs.some(s=>s.capa)?filtroCapas():'')+
+    (secs.some(esSecInterp)?'<button type="button" class="btn txt ir-interp" onclick="irInterp()">'+IC('brujula')+' Ir a la interpretación</button>':'')+
+    secs.filter(s=>!esSecInterp(s)).map(htmlSec(id)).join('')+
+    (secs.some(esSecInterp)?
+      '<div class="sec interp-cab" data-capa="contexto" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' La interpretación</h3>'+
+      '<p class="interp-nota">Lo que significa este capítulo según Stephen Bohr, Elena de White y otros autores adventistas. Cada sección dice de qué obra y página sale. No entra al examen.</p></div>'+
+      secs.filter(esSecInterp).map(htmlSec(id)).join(''):'')+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
@@ -2685,6 +2675,8 @@ function divideVista(d,id){
     de.innerHTML='<div class="vd-cab"><p class="vd-rot">El estudio</p></div>';
     const cf=d.querySelector(':scope>.capa-filtro');
     if(cf)de.firstChild.appendChild(cf);
+    const ii=d.querySelector(':scope>.ir-interp');
+    if(ii)de.firstChild.appendChild(ii);
     iz.appendChild(det);
     secs.forEach(x=>de.appendChild(x));
     fila.appendChild(iz);fila.appendChild(de);
