@@ -48,11 +48,11 @@ const CONT_MODULOS = {
       ['Al final de su reinado','El sueño del árbol; siete tiempos de locura','4'],
       ['Última noche de Babilonia','El banquete de Belsasar y la escritura en la pared','5'],
       ['Bajo el reino de Darío','El decreto de treinta días y el foso de los leones','6'],
-      ['Año 1 de Ciro','Hasta aquí continuó Daniel (mencionado en 1:21)','1'],
+      ['Año 1 de Ciro el Grande','Hasta aquí continuó Daniel (mencionado en 1:21)','1'],
     ]) },
 
   { t:'⏳ Detalle importante del orden', h:
-    wa(`El capítulo 1 <strong>termina mencionando el año primero de Ciro</strong> (1:21),
+    wa(`El capítulo 1 <strong>termina mencionando el año primero de Ciro el Grande</strong> (1:21),
     que es <u>posterior</u> a todo lo que se narra en los capítulos 2 al 6.<br><br>
     Es un resumen anticipado, no un error de orden. Daniel sirvió bajo
     <strong>Nabucodonosor, Belsasar, Darío y Ciro</strong> — cuatro reinados.`) },
@@ -81,7 +81,7 @@ const CONT_MODULOS = {
       ['Belsasar','Rey de Babilonia en la última noche','5'],
       ['La reina','Entra al banquete y recuerda a Daniel','5:10-12'],
       ['Darío de Media','Recibe el reino; tenía 62 años','5:31; 6'],
-      ['Ciro','Rey persa; hasta su año primero sirvió Daniel','1:21'],
+      ['Ciro el Grande','Rey persa; hasta su año primero sirvió Daniel','1:21'],
     ]) },
 
   { t:'🔀 Los pares que se confunden', h:
@@ -93,7 +93,7 @@ const CONT_MODULOS = {
     Beltsasar = el nombre babilónico de <u>Daniel</u> (1:7).<br>
     Belsasar = el <u>rey</u> del banquete y la escritura en la pared (cap. 5).<br>
     Son dos personas distintas, y los nombres se parecen a propósito en el examen.`) +
-    wa(`<strong>Darío y Ciro</strong><br>
+    wa(`<strong>Darío y Ciro el Grande</strong><br>
     Darío de Media recibió el reino a los 62 años (5:31) y firmó el decreto del cap. 6.<br>
     Ciro es el rey persa mencionado solo en 1:21.`) },
 ],
@@ -107,7 +107,7 @@ const CONT_MODULOS = {
       ['4','Jóvenes hebreos escogidos','1:6'],
       ['10','Días de la prueba de las legumbres','1:12'],
       ['10','Veces mejores que los magos y astrólogos','1:20'],
-      ['1','Año de Ciro, hasta donde sirvió Daniel','1:21'],
+      ['1','Año de Ciro el Grande, hasta donde sirvió Daniel','1:21'],
       ['2','Año del reinado de Nabucodonosor: el sueño','2:1'],
       ['60','Codos de altura de la estatua de oro','3:1'],
       ['6','Codos de anchura de la estatua de oro','3:1'],
@@ -427,7 +427,7 @@ const CONT_MODULOS = {
       '<strong>El cuarto del horno.</strong> Daniel 3:25 (RV1995): «semejante a un hijo de los dioses», así lo dijo el rey pagano. P&amp;R 41: era el Hijo de Dios mismo. Fíjate qué te preguntan',
       '<strong>Títulos de P&amp;R 39 al 44 en orden:</strong> En la corte de Babilonia · El sueño de Nabucodonosor · El horno de fuego · La verdadera grandeza · El vigía invisible · En el foso de los leones',
       '<strong>Los materiales de la estatua y sus imperios</strong> (2:32-45): oro, plata, bronce, hierro, hierro con barro, y la piedra',
-      '<strong>El año de cada evento:</strong> 3.er año de Joacim (cap. 1) · 2.º año de Nabucodonosor (cap. 2) · año 1.º de Ciro (1:21)',
+      '<strong>El año de cada evento:</strong> 3.er año de Joacim (cap. 1) · 2.º año de Nabucodonosor (cap. 2) · año 1.º de Ciro el Grande (1:21)',
       '<strong>Los versículos de completar:</strong> 1:15 · 2:20 · 3:18 · 4:37 · 6:10 · 6:22 · 6:26-27',
     ]) },
 

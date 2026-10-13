@@ -89,7 +89,7 @@ const PERSONAJES = [
       'Daniel sirvió hasta su primer año (Daniel 1:21) y tuvo la visión de Daniel 10 en su tercer año.'
     ],
     textos: 'Daniel 1:21; 10:1; Isaías 45:1; Apocalipsis 16:12',
-    alias: ['Ciro', 'Ciro de Persia', 'Ciro el Persa'],
+    alias: ['Ciro el Grande', 'Ciro', 'Ciro de Persia', 'Ciro el Persa'],
     fuente: 'Isaías 45:1; Esdras 1; PR 384; Bohr, <i>Daniel 1-10</i>, p. 4' },
   { id: 'aspenaz', nombre: 'Aspenaz', tipo: 'biblico',
     fechas: '',
@@ -1128,7 +1128,7 @@ const PERSONAJES = [
       'Tomó la ciudad de Sardis, que se creía invencible, porque nadie vigilaba de noche (ver Apocalipsis 3:3).'
     ],
     textos: 'Daniel 11:10-19; Apocalipsis 3:2-3',
-    alias: ['Antíoco III', { t: 'Antíoco', caps: ['ap3'] }],
+    alias: ['Antíoco III el Grande', 'Antíoco III', { t: 'Antíoco', caps: ['ap3'] }],
     fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12; Bohr, <i>Las siete iglesias</i>, p. 115' },
   { id: 'antioco-iv', nombre: 'Antíoco IV Epífanes', tipo: 'historico',
     fechas: 'reinó 175-164 a.C.',
@@ -1331,7 +1331,7 @@ const PERSONAJES = [
       'Desde 508 se cuentan los 1.290 y los 1.335 días (Daniel 12:11-12).'
     ],
     textos: 'Daniel 11:31; 12:11-12',
-    alias: ['Clodoveo'],
+    alias: ['Clodoveo I', 'Clodoveo'],
     fuente: 'Bohr, <i>Daniel 11</i>, p. 26; Bohr, <i>Daniel 1-10</i>, p. 5' },
   { id: 'justiniano', nombre: 'Justiniano I', tipo: 'historico',
     fechas: 'emperador 527-565 d.C.',
@@ -1342,7 +1342,7 @@ const PERSONAJES = [
       'Así empiezan los 1.260 años del cuerno pequeño (Daniel 7:25).'
     ],
     textos: 'Daniel 7:25; Apocalipsis 12:6; 13:5',
-    alias: ['Justiniano'],
+    alias: ['Justiniano I', 'Justiniano'],
     fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134, 198' },
   { id: 'juan-ii', nombre: 'Juan II, papa', tipo: 'historico',
     fechas: 'papa 533-535 d.C.',
@@ -1352,7 +1352,7 @@ const PERSONAJES = [
       'Desde 538, cuando ese decreto se pudo cumplir, se cuentan los 1.260 años (Daniel 7:25).'
     ],
     textos: 'Daniel 7:25',
-    alias: ['papa Juan'],
+    alias: ['papa Juan II', 'papa Juan'],
     fuente: 'Bohr, <i>Daniel 1-10</i>, p. 198' },
   { id: 'belisario', nombre: 'Belisario', tipo: 'historico',
     fechas: 'hacia 505-565 d.C.',
@@ -1363,7 +1363,7 @@ const PERSONAJES = [
       'Así quedó libre el camino para la supremacía del papa: empiezan los 1.260 años (Daniel 7:25).'
     ],
     textos: 'Daniel 7:8, 25',
-    alias: ['Belisario'],
+    alias: ['Flavio Belisario', 'Belisario'],
     fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134; Britannica, «Belisarius»' },
   { id: 'leon-iii', nombre: 'León III', tipo: 'historico',
     fechas: 'papa 795-816 d.C.',
@@ -1464,7 +1464,7 @@ const PERSONAJES = [
       'La imprenta llegó pocas décadas antes de la Reforma de 1517.'
     ],
     textos: '',
-    alias: ['Gutenberg'],
+    alias: ['Johannes Gutenberg', 'Gutenberg'],
     fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
   { id: 'lutero', nombre: 'Martín Lutero', tipo: 'historico',
     fechas: '1483-1546',
@@ -1576,7 +1576,7 @@ const PERSONAJES = [
       'Fue un paso en la curación de la herida mortal (Apocalipsis 13:3).'
     ],
     textos: 'Apocalipsis 13:3',
-    alias: ['Mussolini'],
+    alias: ['Benito Mussolini', 'Mussolini'],
     fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
   { id: 'hitler', nombre: 'Adolf Hitler', tipo: 'historico',
     fechas: '1889-1945',
@@ -1586,7 +1586,7 @@ const PERSONAJES = [
       'Su régimen causó la Segunda Guerra Mundial y el Holocausto.'
     ],
     textos: 'Daniel 2:43',
-    alias: ['Hitler'],
+    alias: ['Adolf Hitler', 'Hitler'],
     fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57' },
   { id: 'juan-pablo-ii', nombre: 'Juan Pablo II', tipo: 'historico',
     fechas: '1920-2005; papa 1978-2005',

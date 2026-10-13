@@ -25,7 +25,7 @@ module.exports = {
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 293-295 y 305-306.</p>` },
 
     { t: '🧭 ¿De un viento o de un cuerno?', capa: 'contexto', h:
-      `<p>El estudio de arriba dice que el cuerno sale de uno de los cuatro <i>vientos</i>, por el género de las palabras hebreas. Otra lectura del hebreo ve que sale de uno de los cuernos, <b>que están hacia</b> los cuatro vientos; así leen también la Septuaginta, Josefo y 1 Macabeos. Las dos llegan a Roma.</p>` +
+      `<p>El estudio de arriba dice que el cuerno sale de uno de los cuatro <i>vientos</i>, por el género de las palabras hebreas. Otra lectura del hebreo ve que sale de uno de los cuernos, <b>que están hacia</b> los cuatro vientos; así leen también la Septuaginta, Flavio Josefo y 1 Macabeos. Las dos llegan a Roma.</p>` +
       `<p>En esta lectura los cuatro cuernos son reinos, no generales:</p>` +
       tbl(['Punto cardinal', 'Reino'], [
         ['Oeste', 'Antigónidas (Macedonia y Grecia)'], ['Este', 'Seléucidas (Siria y Mesopotamia)'],
@@ -73,7 +73,7 @@ module.exports = {
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Carnero de dos cuernos', 'Media y Persia', 'Daniel 8:20: «éstos son los reyes de Media y de Persia»'],
         ['Macho cabrío', 'Grecia', 'Daniel 8:21: «El macho cabrío es el rey de Grecia»'],
-        ['Cuerno grande', 'Su primer rey, Alejandro', 'Daniel 8:21: el cuerno grande «es el rey primero»'],
+        ['Cuerno grande', 'Su primer rey, Alejandro Magno', 'Daniel 8:21: el cuerno grande «es el rey primero»'],
         ['Cuatro cuernos', 'Cuatro reinos', 'Daniel 8:22: «cuatro reinos se levantarán de esa nación»'],
         ['Cuatro vientos del cielo', 'Los cuatro puntos cardinales', 'Daniel 11:4: el reino de Alejandro, «repartido hacia los cuatro vientos del cielo»'],
         ['Cuerno pequeño', 'Un rey o poder: Roma, pagana y luego papal', 'Daniel 8:23-25; 7:24 (cuerno = rey)'],
@@ -103,7 +103,7 @@ module.exports = {
     { t: 'mc', v: '8:11', f: 'c', q: '¿En qué partes del santuario se hacía el ministerio llamado «el continuo»?', o: ['En el atrio y el lugar santo', 'Solo en el lugar santísimo', 'Solo en el altar del atrio', 'En el santísimo y el atrio'], a: 0, e: 'La palabra describe el servicio diario del sacerdote en el atrio y el lugar santo; nunca se usa para el santísimo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 308.' },
     { t: 'mc', v: '8:11', f: 'c', q: '¿Qué puso el papado en lugar del altar del incienso, que representa la oración e intercesión?', o: ['El confesionario', 'El rosario', 'La misa en latín', 'Las procesiones'], a: 0, e: 'En vez de llevar la oración a Dios por medio de Cristo, el único mediador (1 Timoteo 2:5), se pidió hacerlo ante un sacerdote. Fuente: apuntes «Cómo quitó el continuo el papado».' },
     { t: 'mc', v: '8:13', f: 'c', q: '¿Qué abarca la «visión» (jazón) por la que pregunta el ángel en 8:13?', o: ['Toda la visión, desde Persia', 'Solo la obra del cuerno pequeño', 'Solo la profanación de Antíoco', 'Solo los 1.260 años papales'], a: 0, e: 'Es la misma palabra de 8:1-2. Si la visión va de Persia hasta la purificación del santuario, 2.300 días literales no alcanzan: tienen que ser años. Fuente: Bohr, <i>Daniel 1-10</i>, p. 314.' },
-    { t: 'tf', v: '8:14', f: 'c', q: 'Las «tardes y mañanas» de 8:14 son 1.150 sacrificios de la tarde y 1.150 de la mañana.', a: false, e: 'Falso: el hebreo dice «tarde-mañana» en singular, como en la creación, y los sacrificios siempre se nombran «mañana y tarde». Es una lectura para hacer encajar a Antíoco. Fuente: Bohr, <i>Daniel 1-10</i>, p. 315.' },
+    { t: 'tf', v: '8:14', f: 'c', q: 'Las «tardes y mañanas» de 8:14 son 1.150 sacrificios de la tarde y 1.150 de la mañana.', a: false, e: 'Falso: el hebreo dice «tarde-mañana» en singular, como en la creación, y los sacrificios siempre se nombran «mañana y tarde». Es una lectura para hacer encajar a Antíoco IV Epífanes. Fuente: Bohr, <i>Daniel 1-10</i>, p. 315.' },
     { t: 'mc', v: '8:14', f: 'c', q: '¿Qué pasaje da el mes y el día en que terminaron los 2.300 años?', o: ['Levítico 23:27', 'Éxodo 12:6', 'Números 29:1', 'Ezequiel 4:6'], a: 0, e: 'Daniel 8:14 da el año (1844) y Levítico 23:27 el día diez del mes séptimo, el Día de la Expiación, que en 1844 cayó el 22 de octubre. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8.' },
     { t: 'mc', v: '8:14', f: 'c', q: '¿Cuándo creyeron primero Miller y sus colaboradores que terminarían los 2.300 días?', o: ['En la primavera de 1844', 'En el otoño de 1843', 'En el invierno de 1844', 'En el verano de 1845'], a: 0, e: 'Primero pensaron en la primavera de 1844, pero la profecía señalaba el otoño de ese año. Fuente: CS 376.' },
     { t: 'tf', v: '8:14', f: 'c', q: 'El 22 de octubre de 1844 es la última fecha del calendario profético que Dios ha revelado.', a: true, e: 'Verdadero. Dios tiene fecha para el cierre de la gracia y la segunda venida, pero no la ha revelado; por eso no se deben fijar fechas. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8; PE 75.' },

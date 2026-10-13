@@ -120,7 +120,7 @@ module.exports = {
 
     { t: '🧭 Sardis: velar, el libro de la vida y las vestiduras (3:3-5)', capa: 'contexto', h:
       hi(`<strong>Velar.</strong> Sardis estaba sobre un cerro tan empinado que se
-      creía invencible. Cayó dos veces (ante Ciro, en 549 a.C., y ante Antíoco,
+      creía invencible. Cayó dos veces (ante Ciro el Grande, en 549 a.C., y ante Antíoco III el Grande,
       en 218 a.C.) porque nadie vigilaba de noche. Por eso Jesús le dice
       «vela».<br><br>
       El llamado a velar apunta sobre todo al <strong>cierre de la
@@ -404,7 +404,7 @@ module.exports = {
       e: 'La palabra griega habla de algo incompleto: las iglesias se quedaron en lo que enseñaron los reformadores. Fuente: Bohr, <i>Las siete iglesias</i>, p. 114-115.' },
     { t: 'tf', v: '3:3', f: 'c',
       q: 'La ciudad de Sardis cayó dos veces porque nadie vigilaba de noche, y por eso Jesús le dice que vele.', a: true,
-      e: 'Verdadero: cayó ante Ciro (549 a.C.) y ante Antíoco (218 a.C.) por exceso de confianza. Fuente: Bohr, <i>Las siete iglesias</i>, p. 115.' },
+      e: 'Verdadero: cayó ante Ciro el Grande (549 a.C.) y ante Antíoco III el Grande (218 a.C.) por exceso de confianza. Fuente: Bohr, <i>Las siete iglesias</i>, p. 115.' },
     { t: 'mc', v: '3:3', f: 'c',
       q: '¿A qué momento apunta sobre todo el llamado a velar?',
       o: ['Al cierre de la gracia en el santuario', 'A la destrucción de Jerusalén', 'Al regreso de Juan de Patmos', 'Al comienzo de la Reforma'], a: 0,

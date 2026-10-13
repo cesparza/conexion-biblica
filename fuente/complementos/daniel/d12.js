@@ -12,7 +12,7 @@ module.exports = {
   cap: 'd12',
   secciones: [
     { t: '🧭 «Se levantará Miguel» y «será libertado tu pueblo»', capa: 'contexto', h:
-      `<p><b>Cuándo:</b> es el final de la visión de Daniel 10 y 11, el tercer año de Ciro, hacia el 535 a.C.</p>` +
+      `<p><b>Cuándo:</b> es el final de la visión de Daniel 10 y 11, el tercer año de Ciro el Grande, hacia el 535 a.C.</p>` +
       `<p>Dos palabras de 12:1:</p>` +
       li([
         '<b>«Se levantará»</b>: en Daniel, un rey «se levanta» cuando empieza a reinar (11:2-3; 8:22). Miguel se levanta cuando termina el juicio y recibe el reino: «todos los casos habían sido fallados para vida o para muerte» (PE 280).',
@@ -26,14 +26,14 @@ module.exports = {
       `<p>Lo que quedó «cerrado y sellado hasta el tiempo del fin» (12:4, 9) no es todo Daniel, sino los capítulos <b>8 a 12</b>: la parte de los 2.300 días y del mensaje del juicio. Las razones:</p>` +
       li([
         'La segunda mitad está en hebreo y la primera (2 a 7) en arameo.',
-        'Daniel 1 a 7 ya se entendía mucho antes: en el siglo III, Hipólito explicaba que el león era Babilonia y el oso Persia.',
+        'Daniel 1 a 7 ya se entendía mucho antes: en el siglo III, Hipólito de Roma explicaba que el león era Babilonia y el oso Persia.',
         'Es el único libro del Antiguo Testamento que se mandó sellar hasta el tiempo del fin, y en Apocalipsis 10:2 aparece «abierto».',
       ]) +
       hi('<b>«Muchos correrán de aquí para allá».</b> Son ojos que recorren el libro: muchos lo estudiarían y aumentaría el conocimiento de su contenido. Se cumplió en el despertar adventista de los años 1830 y 1840.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 28-29 y 360.</p>` },
 
     { t: '🧭 1.260, 1.290 y 1.335: tres períodos, un mismo poder', capa: 'contexto', h:
-      `<p>El punto de partida de 12:11 es «desde el tiempo en que sea quitado el sacrificio continuo» y puesta «la abominación desoladora»: el año <b>508</b>, cuando Clodoveo, rey de los francos, dio por primera vez poder civil al papado (ver Daniel 11:31). Los 1.290 y los 1.335 empiezan juntos.</p>` +
+      `<p>El punto de partida de 12:11 es «desde el tiempo en que sea quitado el sacrificio continuo» y puesta «la abominación desoladora»: el año <b>508</b>, cuando Clodoveo I, rey de los francos, dio por primera vez poder civil al papado (ver Daniel 11:31). Los 1.290 y los 1.335 empiezan juntos.</p>` +
       tbl(['Período', 'Desde', 'Hasta', 'Qué marca'], [
         ['1.290 días (12:11)', '508', '1798', 'De la unión con el poder civil a la herida de 1798'],
         ['1.260 días (7:25; 12:7)', '538', '1798', 'La supremacía papal'],
@@ -78,9 +78,9 @@ module.exports = {
     { t: 'mc', v: '12:1', f: 'c', q: '¿En qué otros capítulos de Daniel aparece la palabra clave «librar», que los une con Daniel 12:1?', o: ['Daniel 3 y 6', 'Daniel 2 y 5', 'Daniel 4 y 9', 'Daniel 1 y 10'], a: 0, e: 'Dios libró del horno a los tres jóvenes y de los leones a Daniel; en 12:1 librará a su pueblo del tiempo de angustia. Fuente: Bohr, <i>La gran cadena</i>, p. 44.' },
     { t: 'tf', v: '12:1', f: 'c', q: 'Daniel 12:1 es la continuación directa de 11:45, y la división entre los capítulos corta el relato.', a: true, e: 'Verdadero: «en aquel tiempo» une a Miguel que se levanta con el rey del norte que llega a su fin. Fuente: Bohr, <i>Daniel 11</i>, p. 11.' },
     { t: 'mc', v: '12:4', f: 'c', q: '¿Qué capítulos de Daniel son el libro sellado hasta el tiempo del fin?', o: ['Los capítulos 8 a 12', 'Los capítulos 1 a 7', 'Solo el capítulo 12', 'Todo el libro de Daniel'], a: 0, e: 'Es la parte de los 2.300 días y del juicio, escrita en hebreo; la primera mitad ya se entendía mucho antes. Fuente: Bohr, <i>Daniel 1-10</i>, p. 20.' },
-    { t: 'mc', v: '12:4', f: 'c', q: '¿Qué escritor cristiano del siglo III muestra que Daniel 1 a 7 ya se entendía mucho antes del tiempo del fin?', o: ['Hipólito', 'Jerónimo', 'Porfirio', 'Agustín'], a: 0, e: 'Hipólito ya explicaba que el león era Babilonia y el oso Persia. Fuente: Bohr, <i>Daniel 1-10</i>, p. 20.' },
+    { t: 'mc', v: '12:4', f: 'c', q: '¿Qué escritor cristiano del siglo III muestra que Daniel 1 a 7 ya se entendía mucho antes del tiempo del fin?', o: ['Hipólito', 'Jerónimo', 'Porfirio', 'Agustín'], a: 0, e: 'Hipólito de Roma ya explicaba que el león era Babilonia y el oso Persia. Fuente: Bohr, <i>Daniel 1-10</i>, p. 20.' },
     { t: 'mc', v: '12:11', f: 'c', q: '¿En qué año comienzan los 1.290 y los 1.335 días?', o: ['508 d.C.', '538 d.C.', '476 d.C.', '533 d.C.'], a: 0, e: 'Los dos empiezan juntos en 508, cuando el poder civil se puso por primera vez al servicio del papado. Fuente: Bohr, <i>Daniel 1-10</i>, p. 5.' },
-    { t: 'mc', v: '12:11', f: 'c', q: '¿Qué ocurrió en el año 508?', o: ['Clodoveo dio poder civil al papado', 'Justiniano escribió al papa Juan', 'Cayó el último emperador de Roma', 'Los ostrogodos tomaron Roma'], a: 0, e: 'Clodoveo, rey de los francos, fue el primero en prestar el poder del estado al papado. Fuente: Bohr, <i>Daniel 11</i>, p. 26.' },
+    { t: 'mc', v: '12:11', f: 'c', q: '¿Qué ocurrió en el año 508?', o: ['Clodoveo dio poder civil al papado', 'Justiniano escribió al papa Juan', 'Cayó el último emperador de Roma', 'Los ostrogodos tomaron Roma'], a: 0, e: 'Clodoveo I, rey de los francos, fue el primero en prestar el poder del estado al papado. Fuente: Bohr, <i>Daniel 11</i>, p. 26.' },
     { t: 'mc', v: '12:12', f: 'c', q: '¿En qué año terminaron los 1.335 días?', o: ['1843', '1798', '1844', '1863'], a: 0, e: 'De 508 a 1843, en pleno movimiento millerita, que anunciaba el juicio. Fuente: Bohr, <i>Daniel 1-10</i>, p. 5.' },
     { t: 'mc', v: '12:12', f: 'c', q: '¿Con qué versículo se enlaza la bienaventuranza de Daniel 12:12?', o: ['Apocalipsis 14:13', 'Apocalipsis 1:3', 'Mateo 5:3', 'Apocalipsis 22:14'], a: 0, e: '«Bienaventurados de aquí en adelante los muertos que mueren en el Señor»: los que mueren en el mensaje del tercer ángel. Fuente: Bohr, <i>Daniel 11</i>, p. 217.' },
     { t: 'tf', v: '12:12', f: 'c', q: 'Los 1.335 días deben proyectarse al futuro como días literales antes de la segunda venida.', a: false, e: 'Falso: terminaron en 1843, y el tiempo profético acabó en 1844 (Apocalipsis 10:6). No se deben fijar fechas. Fuente: Bohr, <i>Daniel 11</i>, p. 217-218.' },

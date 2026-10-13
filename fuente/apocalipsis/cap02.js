@@ -145,7 +145,7 @@ module.exports = {
       Como período, es la iglesia de los <strong>mártires</strong> bajo el
       Imperio romano: pobre en bienes, pero rica ante Dios (Santiago 2:5).`) +
       tbl(['Símbolo', 'Significado'], [
-        ['Diez días de tribulación', 'Con el principio de día por año, diez años: la persecución de Diocleciano, 303-313 d.C. Terminó con el Edicto de Milán de Constantino (313).'],
+        ['Diez días de tribulación', 'Con el principio de día por año, diez años: la persecución de Diocleciano, 303-313 d.C. Terminó con el Edicto de Milán de Constantino I (313).'],
         ['Corona de la vida', 'La corona (<em>stephanos</em>) del ganador de los juegos. Se recibe cuando Cristo venga (2 Timoteo 4:8).'],
         ['Segunda muerte', 'La muerte final del lago de fuego (20:14). Los mártires solo sufrieron la primera, de la que hay resurrección.'],
         ['«Sinagoga de Satanás»', 'Los que decían servir a Dios pero se unían a Roma para acusar a los cristianos.'],
@@ -157,7 +157,7 @@ module.exports = {
     { t: '🧭 Pérgamo, la iglesia que se unió al mundo (313-538 d.C.)', capa: 'contexto', h:
       hi(`<strong>Pérgamo</strong> significa «altura» o «elevación». De la
       persecución, la iglesia subió a la popularidad. Con la conversión de
-      Constantino cesó la persecución, y Satanás cambió de método: lo que no
+      Constantino I cesó la persecución, y Satanás cambió de método: lo que no
       logró desde afuera lo buscó <strong>desde adentro</strong>.<br><br>
       Las costumbres del paganismo entraron casi sin notarse en la iglesia:
       «el paganismo que parecía haber sido vencido, vino a ser el vencedor»
@@ -174,7 +174,7 @@ module.exports = {
 
     { t: '🧭 Pérgamo: Balaam, el maná y la piedrecita (2:14-17)', capa: 'contexto', h:
       tbl(['Símbolo', 'Significado'], [
-        ['Doctrina de Balaam', 'Balaam no pudo maldecir a Israel desde afuera; entonces aconsejó a Balac que lo hiciera pecar con idolatría y fornicación (Números 25; 31:16). Así entró el mundo a la iglesia en tiempos de Constantino.'],
+        ['Doctrina de Balaam', 'Balaam no pudo maldecir a Israel desde afuera; entonces aconsejó a Balac que lo hiciera pecar con idolatría y fornicación (Números 25; 31:16). Así entró el mundo a la iglesia en tiempos de Constantino I.'],
         ['Espada de su boca', 'La palabra de Dios: hoy corrige; en la venida juzgará (19:15).'],
         ['Maná escondido', 'La palabra de Dios y Cristo mismo, pan del cielo (Juan 6). El maná se guardaba en el arca, en el lugar santísimo.'],
         ['Piedrecita blanca', 'En Roma era señal de victoria en los juegos, de libertad para el esclavo o de absolución en un juicio.'],
@@ -211,7 +211,7 @@ module.exports = {
         ['«Los demás que están en Tiatira»', 'El remanente fiel: valdenses, albigenses y otros que no se doblaron, como los 7.000 de Elías.'],
         ['«Las profundidades de Satanás»', 'El «misterio de iniquidad» (2 Tesalonicenses 2:7).'],
         ['Vara de hierro', 'Del Salmo 2: en el juicio, el reino se quita al perseguidor y se da a los santos (Daniel 7:22, 27).'],
-        ['La estrella de la mañana', 'Jesús mismo (22:16). Wiclef fue «el lucero de la Reforma» (CS 85-86): los fieles reflejan su luz.'],
+        ['La estrella de la mañana', 'Jesús mismo (22:16). Juan Wiclef fue «el lucero de la Reforma» (CS 85-86): los fieles reflejan su luz.'],
       ]) +
       wa(`Al final aparece una segunda Jezabel (capítulo 17): por eso se espera
       también un Elías final, un movimiento mundial.`) +
@@ -434,7 +434,7 @@ module.exports = {
     { t: 'mc', v: '2:12', f: 'c',
       q: '¿Qué período de la historia de la iglesia representa Pérgamo?',
       o: ['313-538 d.C., la iglesia unida al Estado', '100-313 d.C., la iglesia de los mártires', '538-1517 d.C., la iglesia de la Edad Media', '1517-1833 d.C., la iglesia de la Reforma'], a: 0,
-      e: 'Pérgamo («elevación») va de Constantino (313) al 538: la iglesia sube a la popularidad y se une al poder del Estado. Fuente: Bohr, <i>Las siete iglesias</i>, p. 13-14.' },
+      e: 'Pérgamo («elevación») va de Constantino I (313) al 538: la iglesia sube a la popularidad y se une al poder del Estado. Fuente: Bohr, <i>Las siete iglesias</i>, p. 13-14.' },
     { t: 'mc', v: '2:13', f: 'c',
       q: '¿Por qué se dice que en Pérgamo estaba «el trono de Satanás»?',
       o: ['Por ser sede del culto pagano que pasó de Babilonia a Roma', 'Porque allí vivía el emperador romano', 'Porque allí mataban a todos los cristianos', 'Porque allí se escribió el Apocalipsis'], a: 0,
@@ -442,7 +442,7 @@ module.exports = {
     { t: 'mc', v: '2:14', f: 'c',
       q: '¿Qué estrategia muestra «la doctrina de Balaam» en el período de Pérgamo?',
       o: ['Vencer a la iglesia desde adentro, mezclándola con el mundo', 'Vencer a la iglesia desde afuera, con la persecución', 'Separar la iglesia del Estado para debilitarla', 'Prohibir la lectura de la Biblia al pueblo'], a: 0,
-      e: 'Balaam no pudo maldecir a Israel desde afuera y lo hizo caer desde adentro (Números 25; 31:16). Así entró el mundo a la iglesia con Constantino. Fuente: Bohr, <i>Las siete iglesias</i>, p. 74-79.' },
+      e: 'Balaam no pudo maldecir a Israel desde afuera y lo hizo caer desde adentro (Números 25; 31:16). Así entró el mundo a la iglesia con Constantino I. Fuente: Bohr, <i>Las siete iglesias</i>, p. 74-79.' },
     { t: 'mc', v: '2:17', f: 'c',
       q: '¿Qué representa el «maná escondido» de Apocalipsis 2:17?',
       o: ['La palabra de Dios, que alimenta el alma', 'El pan de la Cena del Señor', 'Las riquezas guardadas en el templo', 'Un secreto que solo conocen los ancianos'], a: 0,
@@ -472,7 +472,7 @@ module.exports = {
       e: 'Como los 7.000 que no se doblaron ante Baal (1 Reyes 19:18), hubo un remanente que no aceptó esa doctrina. Fuente: Bohr, <i>Las siete iglesias</i>, p. 97-98.' },
     { t: 'tf', v: '2:28', f: 'c',
       q: 'A Juan Wiclef se le llama «el lucero de la Reforma».', a: true,
-      e: 'Verdadero. Cristo es la estrella de la mañana y los fieles, como Wiclef, reflejan su luz. Fuente: CS 85-86; Bohr, <i>Las siete iglesias</i>, p. 106.' },
+      e: 'Verdadero. Cristo es la estrella de la mañana y los fieles, como Juan Wiclef, reflejan su luz. Fuente: CS 85-86; Bohr, <i>Las siete iglesias</i>, p. 106.' },
     { t: 'mc', v: '2:20', f: 'c',
       q: 'En las profecías, ¿qué representa una mujer como Jezabel?',
       o: ['Una iglesia, en este caso infiel', 'Un reino político de Asia', 'Una reina literal de Tiatira', 'Una ciudad pagana del imperio'], a: 0,

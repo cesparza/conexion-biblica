@@ -427,7 +427,7 @@ module.exports = {
     { t: 'mc', v: '1:9', f: 'c',
       q: '¿Bajo qué emperador romano fue desterrado Juan a Patmos?',
       o: ['Domiciano', 'Nerón', 'Constantino', 'Diocleciano'], a: 0,
-      e: 'Domiciano gobernó del 81 al 96 d.C. Nerón persiguió antes; Diocleciano, en los «diez días» de Esmirna; Constantino detuvo la persecución. Fuente: Bohr, <i>Las siete iglesias</i>, p. 8.' },
+      e: 'Domiciano gobernó del 81 al 96 d.C. Nerón persiguió antes; Diocleciano, en los «diez días» de Esmirna; Constantino I detuvo la persecución. Fuente: Bohr, <i>Las siete iglesias</i>, p. 8.' },
     { t: 'mc', v: '1:12', f: 'c',
       q: '¿En qué parte del santuario celestial ve Juan a Jesús en Apocalipsis 1?',
       o: ['En el lugar santo, entre los candelabros', 'En el lugar santísimo, junto al arca', 'En el atrio, junto al altar del sacrificio', 'A la entrada del santuario, por fuera'], a: 0,

@@ -37,7 +37,7 @@ module.exports = {
       capa: 'contexto',
       h: tbl(G, [
           ['Caldeos', 'El pueblo que gobernó Babilonia. También, la clase de sabios y sacerdotes de la corte; su nombre llegó a significar «mago» o «adivino».', 'Daniel 1:4; 2:2, 4; 5:30'],
-          ['Ciro', 'Rey de Persia. Tomó Babilonia en 539 a.C. y dejó volver a los judíos. Dios lo llamó por nombre mucho antes.', 'Isaías 44:28; 45:1; Daniel 1:21; 6:28'],
+          ['Ciro el Grande', 'Rey de Persia. Tomó Babilonia en 539 a.C. y dejó volver a los judíos. Dios lo llamó por nombre mucho antes.', 'Isaías 44:28; 45:1; Daniel 1:21; 6:28'],
           ['Continuo, el', 'En hebreo <i>hatamid</i>: lo diario. Es el ministerio diario de Cristo como sacerdote, que el cuerno pequeño quiso quitar. La palabra «sacrificio» la agregaron los traductores.', 'Daniel 8:11-13; 11:31; 12:11; Hebreos 8:1-2'],
           ['Cuerno', 'Un rey o un reino.', 'Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»'],
           ['Cuerno pequeño', 'En Daniel 7, Roma papal: sale de la cuarta bestia y domina 1.260 años. En Daniel 8, Roma en sus dos fases, pagana y papal.', 'Daniel 7:8, 24-25; 8:9-12'],
@@ -54,7 +54,7 @@ module.exports = {
       capa: 'contexto',
       h: tbl(G, [
           ['Gabriel', 'El ángel que explica a Daniel las visiones de los capítulos 8 y 9. Está en la presencia de Dios.', 'Daniel 8:16; 9:21; Lucas 1:19'],
-          ['Grecia', 'El imperio de Alejandro (331-168 a.C.): el bronce, el leopardo y el macho cabrío.', 'Daniel 8:21: «El macho cabrío es el rey de Grecia»'],
+          ['Grecia', 'El imperio de Alejandro Magno (331-168 a.C.): el bronce, el leopardo y el macho cabrío.', 'Daniel 8:21: «El macho cabrío es el rey de Grecia»'],
           ['Herida de muerte', 'El golpe que recibió el papado en 1798, cuando el papa fue llevado prisionero. La profecía anuncia que la herida sana.', 'Apocalipsis 13:3: «su herida mortal fue sanada»'],
           ['Hijo del hombre', 'Cristo. En Daniel 7:13 va hasta el Anciano de días, al juicio en el cielo; no es su venida a la tierra.', 'Daniel 7:13; Mateo 26:64'],
           ['Historicismo', 'Leer la profecía como historia que se cumple en orden, desde el tiempo del profeta hasta el fin.', 'Daniel 2:38-44'],
@@ -86,7 +86,7 @@ module.exports = {
       h: tbl(G, [
           ['Nabucodonosor', 'Rey de Babilonia desde 605 a.C. Llevó cautivos a Daniel y sus amigos.', 'Daniel 1:1-2; 2:37-38'],
           ['Papado', 'El sistema de gobierno de la iglesia de Roma, con el papa a la cabeza. La profecía habla del sistema, no de las personas: dentro de él hay muchas personas sinceras.', 'Daniel 7:8, 24-25'],
-          ['Persia', 'El pueblo de Ciro. Desde 539 a.C. dominó, junto con Media, todo el antiguo imperio de Babilonia.', 'Daniel 6:28; 8:20'],
+          ['Persia', 'El pueblo de Ciro el Grande. Desde 539 a.C. dominó, junto con Media, todo el antiguo imperio de Babilonia.', 'Daniel 6:28; 8:20'],
           ['Príncipe del ejército', 'Cristo, el que recibe adoración como jefe del ejército del Señor.', 'Daniel 8:11, 25; Josué 5:14-15'],
           ['Purificación del santuario', 'La obra final de Cristo en el santuario del cielo, que el Día de la Expiación anunciaba. Empieza al terminar los 2.300 años, en 1844.', 'Daniel 8:14; Levítico 16:16, 30'],
           ['Ramera', 'Una iglesia que se apartó de Dios y se unió a los poderes del mundo.', 'Apocalipsis 17:1-2, 5; Ezequiel 16:15'],
@@ -237,7 +237,7 @@ module.exports = {
         tbl(['Poder o época', 'Daniel 2', 'Daniel 7', 'Daniel 8'], [
           ['Babilonia (605-539 a.C.)', 'Cabeza de oro (2:32, 38)', 'León con alas de águila (7:4)', '—'],
           ['Medo-Persia (539-331 a.C.)', 'Pecho y brazos de plata (2:32, 39)', 'Oso alzado de un costado, con tres costillas (7:5)', 'Carnero de dos cuernos; el más alto creció después (8:3-4, 20)'],
-          ['Grecia (331-168 a.C.)', 'Vientre y muslos de bronce (2:32, 39)', 'Leopardo con cuatro alas (7:6)', 'Macho cabrío; su cuerno notable es «el rey primero», Alejandro (8:5, 21)'],
+          ['Grecia (331-168 a.C.)', 'Vientre y muslos de bronce (2:32, 39)', 'Leopardo con cuatro alas (7:6)', 'Macho cabrío; su cuerno notable es «el rey primero», Alejandro Magno (8:5, 21)'],
           ['Los cuatro reinos de Grecia', '—', 'Cuatro cabezas del leopardo (7:6)', 'Cuatro cuernos hacia los cuatro vientos (8:8, 22)'],
           ['Roma imperial (168 a.C.-476 d.C.)', 'Piernas de hierro (2:33, 40)', 'Cuarta bestia, con dientes de hierro (7:7, 23)', 'Cuerno pequeño que crece hacia el sur, el oriente y la tierra gloriosa (8:9-10)'],
           ['Roma dividida (desde 476)', 'Diez dedos: «será un reino dividido» (2:41-42)', 'Diez cuernos: «diez reyes» (7:7, 24)', '—'],

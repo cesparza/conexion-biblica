@@ -138,7 +138,7 @@ module.exports = {
     { t: '🧭 Los sellos y sus períodos', capa: 'contexto', h:
       tbl(['Sello', 'Qué representa', 'Período', 'Iglesia'], [
         ['1.º Blanco', 'La iglesia apostólica vence con el evangelio', 'Era apostólica', 'Éfeso'],
-        ['2.º Rojizo', 'Los emperadores romanos persiguen a la iglesia', 'Hasta el edicto de Constantino (313)', 'Esmirna'],
+        ['2.º Rojizo', 'Los emperadores romanos persiguen a la iglesia', 'Hasta el edicto de Constantino I (313)', 'Esmirna'],
         ['3.º Negro', 'El mundo entra en la iglesia; falta la Palabra', '313 a 538', 'Pérgamo'],
         ['4.º Amarillo', 'Dominio papal: hambre de la Palabra y mártires', '538 a 1798 (1.260 años)', 'Tiatira'],
         ['5.º Altar', 'Los mártires piden justicia; el juicio empieza en 1844', 'Mártires de 538-1798 y los del fin', '—'],
@@ -169,13 +169,13 @@ module.exports = {
       paz al que lo recibe, pero despierta el odio del que lo rechaza. Por eso
       el evangelio se llama una espada.<br>
       · Los emperadores usaron mal la espada del Estado (Romanos 13:4) para
-      perseguir a los cristianos, hasta el edicto de Constantino en 313.`) +
+      perseguir a los cristianos, hasta el edicto de Constantino I en 313.`) +
       `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:108, 165-172 y 177-181; CS 58-59.</p>` },
 
     { t: '🧭 El caballo negro y el amarillo (6:5-8)', capa: 'contexto', h:
       hi(`<strong>Caballo negro:</strong><br>
       · Cuando la persecución no detuvo a la iglesia, Satanás cambió de plan:
-      en los días de <strong>Constantino</strong> el Estado la favoreció, y
+      en los días de <strong>Constantino I</strong> el Estado la favoreció, y
       entraron costumbres y enseñanzas paganas. El <strong>negro</strong> es la
       oscuridad donde falta la luz de la Palabra.<br>
       · La <strong>balanza</strong> pesa granos. El trigo y la cebada, con los
@@ -396,7 +396,7 @@ module.exports = {
     { t: 'mc', v: '6:3-4', f: 'c',
       q: '¿Qué período representa el caballo rojizo?',
       o: ['La persecución de los emperadores hasta el año 313', 'La conquista de Jerusalén por los babilonios', 'Las dos guerras mundiales del siglo XX', 'La Reforma protestante del siglo XVI'], a: 0,
-      e: 'Es la iglesia perseguida, paralela a Esmirna, hasta el edicto de Constantino en 313. Otra lectura lo ve como el comienzo de la corrupción. Fuente: Bohr, <i>Los siete sellos</i> 1:177; Smith, <i>Las profecías del Apocalipsis</i>, p. 55.' },
+      e: 'Es la iglesia perseguida, paralela a Esmirna, hasta el edicto de Constantino I en 313. Otra lectura lo ve como el comienzo de la corrupción. Fuente: Bohr, <i>Los siete sellos</i> 1:177; Smith, <i>Las profecías del Apocalipsis</i>, p. 55.' },
     { t: 'mc', v: '6:4', f: 'c',
       q: '¿Por qué el evangelio, que es mensaje de paz, se relaciona con la espada que quita la paz?',
       o: ['Despierta el odio de los que lo rechazan', 'Los apóstoles tomaron armas para predicar', 'Dios mandó guerras contra los paganos', 'Los cristianos pelearon entre ellos mismos'], a: 0,

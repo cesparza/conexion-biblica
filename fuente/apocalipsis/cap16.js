@@ -176,7 +176,7 @@ module.exports = {
 
     { t: '🧭 Sexta copa: el Éufrates se seca (16:12)', capa: 'contexto', h:
       hi(`La clave es la caída de la Babilonia antigua (Daniel 5; Jeremías 50 y
-      51): el río Éufrates era su gran defensa. Ciro desvió el río, entró con
+      51): el río Éufrates era su gran defensa. Ciro el Grande desvió el río, entró con
       su ejército por el cauce seco la noche en que Babilonia bebía vino en sus
       fiestas, y la ciudad cayó. Así el pueblo de Dios quedó libre para volver
       a Jerusalén. Al final eso se repite, pero en forma simbólica y
@@ -251,7 +251,7 @@ module.exports = {
         ['Bestia', 'Un reino o poder político', 'Daniel 7:17, 23: «La cuarta bestia será un cuarto reino»'],
         ['Trono de la bestia', 'Su sede de gobierno, su autoridad', 'Apocalipsis 13:2: el dragón le dio «su poder, su trono y gran autoridad»'],
         ['El gran río Éufrates', 'Pueblos y naciones que sostienen a Babilonia', 'Isaías 8:7-8 (el río es el rey de Asiria y su ejército); Isaías 17:12-13; Apocalipsis 17:15'],
-        ['Reyes del oriente', 'Cristo y sus ángeles, que vienen a librar', 'Mateo 24:27 (viene como el relámpago que sale del oriente); Isaías 41:25 (Ciro, del oriente)'],
+        ['Reyes del oriente', 'Cristo y sus ángeles, que vienen a librar', 'Mateo 24:27 (viene como el relámpago que sale del oriente); Isaías 41:25 (Ciro el Grande, del oriente)'],
         ['Ranas', 'Espíritus de demonios que engañan', 'El mismo capítulo: «Son espíritus de demonios, que hacen señales» (16:14)'],
         ['Dragón', 'Satanás, que obra por los poderes civiles', 'Apocalipsis 12:9; Ezequiel 29:3 (a Faraón se le llama gran dragón)'],
         ['Falso profeta', 'La bestia de la tierra, que engaña con señales', 'Apocalipsis 19:20 con 13:13-14'],
@@ -452,7 +452,7 @@ module.exports = {
     { t: 'mc', v: '16:12', f: 'c',
       q: '¿Quiénes son «los reyes del oriente» de Apocalipsis 16:12?',
       o: ['Cristo y sus ángeles, que vienen a librar', 'Los reyes de China, Japón y la India', 'Los ejércitos de Ciro el persa', 'Los reyes de la tierra y de todo el mundo'], a: 0,
-      e: 'Después de las tinieblas y del secamiento de las aguas, vienen Jesús y sus ángeles como reyes del oriente para rescatar al remanente. Ciro solo es el modelo antiguo. Fuente: Bohr, ¿Cuán cerca al fin?, p. 329-330.' },
+      e: 'Después de las tinieblas y del secamiento de las aguas, vienen Jesús y sus ángeles como reyes del oriente para rescatar al remanente. Ciro el Grande solo es el modelo antiguo. Fuente: Bohr, ¿Cuán cerca al fin?, p. 329-330.' },
     { t: 'mc', v: '16:13', f: 'c',
       q: '¿Qué representa el falso profeta de Apocalipsis 16:13?',
       o: ['EE. UU., que unirá la iglesia y el estado', 'Los poderes civiles de todo el mundo', 'El papado como sistema religioso-político', 'El espiritismo con sus falsos milagros'], a: 0,

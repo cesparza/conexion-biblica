@@ -49,7 +49,7 @@ module.exports = {
       h: `<p><strong>En la estatua:</strong> «La cabeza de esta imagen era de oro fino» (2:32). No hay que adivinar qué reino es: Daniel se lo dice al rey, «Tú eres aquella cabeza de oro» (2:38). Y el rey representa a su reino, porque enseguida dice «Después de ti se levantará otro reino» (2:39).</p>` +
         tbl(['Año', 'Lo que pasó'], [
           ['605 a.C.', 'Nabucodonosor vence a Egipto en Carquemis (Jeremías 46:2), pone el primer sitio a Jerusalén (1:1) y ese mismo año sube al trono.'],
-          ['539 a.C.', 'Ciro toma Babilonia la noche del banquete de Belsasar (Daniel 5). «La misma noche fue muerto Belsasar, rey de los caldeos» (5:30).'],
+          ['539 a.C.', 'Ciro el Grande toma Babilonia la noche del banquete de Belsasar (Daniel 5). «La misma noche fue muerto Belsasar, rey de los caldeos» (5:30).'],
         ]) +
         li([
           '<strong>Por qué oro.</strong> La misma Biblia une a Babilonia con el oro: Jeremías la llama copa de oro en la mano de Jehová (Jeremías 51:7). Sus templos estaban llenos de oro, y ningún reino después igualó su riqueza y su esplendor.',
@@ -64,8 +64,8 @@ module.exports = {
       capa: 'contexto',
       h: `<p><strong>En la estatua:</strong> «su pecho y sus brazos, de plata» (2:32), «otro reino, inferior al tuyo» (2:39). El mismo libro dice cuál es. La noche en que cayó Babilonia, Daniel le leyó a Belsasar: «Tu reino ha sido roto y dado a los medos y a los persas» (5:28). Y en 8:20 el ángel explica que los dos cuernos del carnero «son los reyes de Media y de Persia».</p>` +
         tbl(['Año', 'Lo que pasó'], [
-          ['539 a.C.', 'Ciro desvía el Éufrates, su ejército entra por el cauce seco y toma Babilonia casi sin pelear.'],
-          ['331 a.C.', 'En Arbela (Gaugamela) Alejandro vence a Darío III, el último rey persa, con un ejército mucho menor.'],
+          ['539 a.C.', 'Ciro el Grande desvía el Éufrates, su ejército entra por el cauce seco y toma Babilonia casi sin pelear.'],
+          ['331 a.C.', 'En Arbela (Gaugamela) Alejandro Magno vence a Darío III, el último rey persa, con un ejército mucho menor.'],
         ]) +
         li([
           '<strong>Por qué plata.</strong> Fue inferior a Babilonia, pero no en poder ni en territorio: la venció y fue más extenso. Fue inferior en riqueza, lujo y cultura. Y la plata era su moneda: las provincias pagaban su tributo en plata.',
@@ -98,12 +98,12 @@ module.exports = {
         tbl(['General', 'Lo que le tocó'], [
           ['Casandro', 'Macedonia y Grecia, al occidente'],
           ['Lisímaco', 'Tracia y Asia Menor, al norte'],
-          ['Seleuco', 'Siria y el oriente'],
-          ['Tolomeo', 'Egipto, al sur'],
+          ['Seleuco I Nicátor', 'Siria y el oriente'],
+          ['Tolomeo I Sóter', 'Egipto, al sur'],
         ]) +
         li([
           'Son las cuatro cabezas del leopardo (7:6) y los cuatro cuernos del macho cabrío (8:8): dos visiones distintas, el mismo reparto.',
-          'Alejandro no dejó heredero ni un plan de gobierno. Sus generales pelearon entre sí y, después de la batalla de Ipso (301 a.C.), quedaron cuatro partes. ¿Por qué no en muchos pedazos? Porque así lo había dicho la profecía.',
+          'Alejandro Magno no dejó heredero ni un plan de gobierno. Sus generales pelearon entre sí y, después de la batalla de Ipso (301 a.C.), quedaron cuatro partes. ¿Por qué no en muchos pedazos? Porque así lo había dicho la profecía.',
           'Ninguno tuvo la fuerza de Alejandro, como dice 8:22. Las fronteras siguieron cambiando; por eso el texto habla de <strong>reinos</strong>, y la interpretación de Daniel 8 los sigue como reinos hasta Roma.',
         ]) +
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 295-297; Smith, <i>Las profecías de Daniel</i>, p. 57, 88.</p>`,
@@ -111,7 +111,7 @@ module.exports = {
     {
       t: '🧭 Los diez dedos: Roma dividida',
       capa: 'contexto',
-      h: `<p>Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino mudó la capital a Constantinopla, el occidente declinó. Las tribus del norte dividieron el imperio y en <strong>476</strong> depusieron a Rómulo Augústulo, el último emperador de occidente.</p>` +
+      h: `<p>Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino I mudó la capital a Constantinopla, el occidente declinó. Las tribus del norte dividieron el imperio y en <strong>476</strong> depusieron a Rómulo Augústulo, el último emperador de occidente.</p>` +
         `<p>Los dedos son diez, y Daniel 7 tiene diez cuernos que el mismo capítulo explica como «diez reyes» (7:24). Los dedos son <strong>los reinos en que se dividió el Imperio Romano de Occidente</strong>, entre <strong>351 y 476</strong>:</p>` +
         li([
           'Anglosajones, francos, alamanes, lombardos, suevos, visigodos, burgundios, ostrogodos, hérulos y vándalos. Los tres últimos fueron «arrancados» (7:8): hérulos en 493, vándalos en 534 y ostrogodos en 538. Otra lista pone a los hunos en lugar de los alamanes.',
@@ -134,8 +134,8 @@ module.exports = {
         tbl(['En la imagen', 'Fecha'], [
           ['Piernas de hierro: Imperio Romano', '168 a.C.-476 d.C.'],
           ['Diez dedos: Roma dividida', '476 d.C.'],
-          ['Se añade el barro: Belisario expulsa de Roma a los ostrogodos y empieza la Roma papal', '538 d.C.'],
-          ['El general Berthier entra en Roma y toma prisionero al papa', '1798 d.C.'],
+          ['Se añade el barro: Flavio Belisario expulsa de Roma a los ostrogodos y empieza la Roma papal', '538 d.C.'],
+          ['El general Louis-Alexandre Berthier entra en Roma y toma prisionero al papa', '1798 d.C.'],
         ]) +
         hi(`«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).`) +
         `<p>El cumplimiento final es Apocalipsis 17: la ramera que se une a los reyes de la tierra.</p>` +

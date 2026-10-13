@@ -33,14 +33,14 @@ module.exports = {
           ['El rey da vino y profana los vasos santos', 'Las naciones se embriagan con el vino de Babilonia (17:2)'],
           ['El vino borra la diferencia entre lo santo y lo profano', 'La confusión lleva a la adoración falsa'],
           ['La sentencia llega antes de la caída (5:26-28)', 'Se cierra la gracia antes del fin (22:11)'],
-          ['Ciro seca el río y entra a la ciudad', 'Se seca el Éufrates para los reyes del oriente (16:12)'],
+          ['Ciro el Grande seca el río y entra a la ciudad', 'Se seca el Éufrates para los reyes del oriente (16:12)'],
           ['El pueblo de Dios vuelve a Jerusalén', 'El pueblo de Dios es librado'],
         ]) +
         hi(`El principio: en Daniel 5 todo es literal —un rey literal, vino literal, una mano literal, un río literal—, y en Apocalipsis se cumple en forma mundial y espiritual.`) +
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 41-42, 105-106.</p>`,
     },
     {
-      t: '🧭 Ciro, figura de Cristo, y una ciudad que se creía invencible',
+      t: '🧭 Ciro el Grande, figura de Cristo, y una ciudad que se creía invencible',
       capa: 'contexto',
       h: `<p>¿Por qué un banquete con el enemigo a las puertas? Porque Belsasar creía la ciudad imposible de tomar. Tenía murallas dobles de más de 25 metros de espesor en total, puertas de bronce, el Éufrates como defensa y provisiones para veinte años de sitio.</p>` +
         li([
@@ -95,7 +95,7 @@ module.exports = {
           ['El vino', 'Doctrinas falsas', 'Apocalipsis 17:2: se embriagan «con el vino de su fornicación»; Jeremías 51:7'],
           ['El río Éufrates, las aguas', 'Pueblos y naciones que sostienen a Babilonia', 'Apocalipsis 17:15: las aguas «son pueblos, muchedumbres, naciones y lenguas»; Isaías 8:7'],
           ['El río que se seca', 'Esos pueblos le quitan su apoyo', 'Apocalipsis 16:12; 17:16'],
-          ['Ciro, el rey que viene del oriente', 'Cristo, que libra a su pueblo', 'Isaías 44:28 y 45:1 (pastor y ungido); Apocalipsis 16:12'],
+          ['Ciro el Grande, el rey que viene del oriente', 'Cristo, que libra a su pueblo', 'Isaías 44:28 y 45:1 (pastor y ungido); Apocalipsis 16:12'],
           ['La balanza', 'El juicio de Dios sobre las obras', 'Job 31:6; Proverbios 16:2; 1 Samuel 2:3'],
           ['Los vasos santos usados como comunes', 'Lo santo tratado como profano', 'Levítico 10:10; Ezequiel 22:26'],
         ]) +
@@ -111,7 +111,7 @@ module.exports = {
       e: 'El vino borró la diferencia entre lo santo y lo común, como pasó con Nadab y Abiú (Levítico 10), y lo llevó a la idolatría. Fuente: Bohr, Daniel 1-10, p. 96.' },
     { t: 'mc', v: '5:30', f: 'c', q: '¿Qué hecho de la caída de Babilonia anticipa la sexta plaga de Apocalipsis 16:12?',
       o: ['El incendio del palacio real', 'La muerte de la reina madre', 'El secamiento del río Éufrates', 'El terremoto que derribó las murallas'], a: 2,
-      e: 'Ciro desvió el Éufrates y entró por el cauce seco; en Apocalipsis se seca el Éufrates para los reyes del oriente. Fuente: Bohr, Daniel 1-10, p. 41, 105.' },
+      e: 'Ciro el Grande desvió el Éufrates y entró por el cauce seco; en Apocalipsis se seca el Éufrates para los reyes del oriente. Fuente: Bohr, Daniel 1-10, p. 41, 105.' },
     { t: 'mc', v: '5:31', f: 'c', q: '¿De quién es figura Ciro, el que tomó Babilonia y liberó al pueblo cautivo?',
       o: ['De Cristo', 'De Elías', 'Del rey del norte', 'De Moisés'], a: 0,
       e: 'Isaías lo llama «ungido» y «pastor»; viene del oriente y libera a los cautivos para volver a Jerusalén. Fuente: Bohr, Daniel 1-10, p. 99.' },

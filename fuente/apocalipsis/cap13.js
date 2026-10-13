@@ -170,7 +170,7 @@ module.exports = {
       civil</strong>, que castiga al que hace lo malo (Romanos 13:4). Durante
       1.260 años el papado usó la espada de los reyes de Europa; en 1798 esa
       misma espada se volvió contra él.`) +
-      li([`<strong>Febrero de 1798:</strong> el general francés Berthier entró
+      li([`<strong>Febrero de 1798:</strong> el general francés Louis-Alexandre Berthier entró
            en Roma, quitó del trono al papa Pío VI y se lo llevó preso; murió en
            el destierro en 1799.`,
           `<strong>La herida no cerró la iglesia:</strong> los fieles siguieron
@@ -484,7 +484,7 @@ module.exports = {
     { t: 'mc', v: '13:3', f: 'c',
       q: '¿Qué pasó en febrero de 1798?',
       o: ['Un general francés depuso al papa y se lo llevó', 'El papa renunció a su cargo por su voluntad', 'Napoleón fue coronado emperador por el papa', 'Italia confiscó todos los estados papales'], a: 0,
-      e: 'El general Berthier quitó del trono a Pío VI y lo llevó preso; murió en el destierro en 1799. La coronación de Napoleón fue en 1804 y la toma de los estados papales en 1870. Fuente: Bohr, Tres ángeles 1:169-170.' },
+      e: 'El general Louis-Alexandre Berthier quitó del trono a Pío VI y lo llevó preso; murió en el destierro en 1799. La coronación de Napoleón Bonaparte fue en 1804 y la toma de los estados papales en 1870. Fuente: Bohr, Tres ángeles 1:169-170.' },
     { t: 'tf', v: '13:3', f: 'c',
       q: 'La herida mortal de 1798 significa que la Iglesia católica cerró sus puertas y dejó de funcionar.', a: false,
       e: 'Falso: los fieles siguieron con su vida religiosa; lo que perdió el papado fue el poder civil para imponer y castigar. Fuente: Bohr, Tres ángeles 1:170.' },

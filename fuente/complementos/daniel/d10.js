@@ -11,7 +11,7 @@ module.exports = {
   cap: 'd10',
   secciones: [
     { t: '🧭 Daniel 8 a 12: una sola visión que se explica por partes', capa: 'contexto', h:
-      `<p><b>Cuándo:</b> el tercer año de Ciro (10:1), hacia el 535 a.C. Daniel seguía en Babilonia, junto al Tigris (10:4), y tenía unos 88 años: llegó cautivo a los 18, en 605 a.C.</p>` +
+      `<p><b>Cuándo:</b> el tercer año de Ciro el Grande (10:1), hacia el 535 a.C. Daniel seguía en Babilonia, junto al Tigris (10:4), y tenía unos 88 años: llegó cautivo a los 18, en 605 a.C.</p>` +
       `<p>El libro tiene dos mitades: los capítulos 2 a 7 están escritos en arameo y los 8 a 12 en hebreo. La segunda mitad es una sola profecía, y la palabra que la une es <b>«entender»</b>:</p>` +
       tbl(['Texto', 'Qué pasa'], [
         ['8:16-17', 'Gabriel recibe la orden de hacer entender la visión a Daniel.'],
@@ -30,7 +30,7 @@ module.exports = {
         '<b>Entender lo que faltaba.</b> En el capítulo 9 Gabriel le había dado todo lo que entonces podía recibir, pero Daniel «deseó aprender más de los temas que todavía no se le habían explicado» (SL 49).',
         '<b>El templo detenido.</b> Daniel sabía que el templo y la ciudad tenían que reconstruirse para que se cumplieran las setenta semanas y los 2.300 años. Y la oposición de los samaritanos parecía atrasarlo todo (Esdras 4:4-5).',
       ]) +
-      hi('<b>¿21 días o 21 años?</b> Los 21 días de 10:13 son días literales. Pero el decreto de Ciro para el templo fue en 536 a.C. y el templo se terminó en 515 a.C.: 21 años de lucha, en los que el ángel trabajaba en la mente de «los reyes de Persia», en plural.') +
+      hi('<b>¿21 días o 21 años?</b> Los 21 días de 10:13 son días literales. Pero el decreto de Ciro el Grande para el templo fue en 536 a.C. y el templo se terminó en 515 a.C.: 21 años de lucha, en los que el ángel trabajaba en la mente de «los reyes de Persia», en plural.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 359 y 361-364; SL 49.</p>` },
 
     { t: '🧭 Quién es quién en Daniel 10', capa: 'contexto', h:
@@ -59,7 +59,7 @@ module.exports = {
     { t: 'mc', v: '10:5', f: 'c', q: '¿Cómo vio Daniel a Cristo en 10:5-6?', o: ['Como Sumo Sacerdote tras la ascensión', 'Como un niño recién nacido en Belén', 'Como un soldado del ejército persa', 'Como el Anciano de días en su trono'], a: 0, e: 'Daniel no lo vio como estaba en ese momento, sino como estaría vestido al inaugurar su sacerdocio en el cielo; por eso la descripción coincide con Apocalipsis 1. Fuente: Bohr, <i>Daniel 1-10</i>, p. 361-362.' },
     { t: 'mc', v: '10:10', f: 'c', q: '¿Quién es la mano que tocó a Daniel y lo puso sobre sus rodillas en 10:10?', o: ['Gabriel', 'Miguel', 'El príncipe de Persia', 'Un ángel sin nombre'], a: 0, e: 'El versículo 10 marca un corte entre el personaje de la visión (Cristo) y el que levanta a Daniel (Gabriel). Fuente: Bohr, <i>Daniel 1-10</i>, p. 362.' },
     { t: 'mc', v: '10:13', f: 'c', q: '¿Qué dato sobre la palabra «príncipe» muestra que el príncipe de Persia no es un rey humano?', o: ['En unos 420 usos nunca designa a un rey', 'Solo se usa para los sacerdotes del templo', 'Siempre se refiere a un hijo del rey', 'En hebreo es la palabra para «ángel»'], a: 0, e: 'La palabra se usa casi siempre para jefes militares, nunca para reyes; y 10:13 distingue al príncipe de Persia de «los reyes de Persia». Es Satanás. Fuente: Bohr, <i>Daniel 1-10</i>, p. 362-364.' },
-    { t: 'mc', v: '10:13', f: 'c', q: '¿Qué período de la reconstrucción del templo coincide, en años, con los 21 días de resistencia?', o: ['Del 536 al 515 a.C.', 'Del 457 al 408 a.C.', 'Del 605 al 586 a.C.', 'Del 539 al 518 a.C.'], a: 0, e: 'Del decreto de Ciro (536) al templo terminado (515) pasaron 21 años. Es un sentido más amplio, sin dejar de leer 21 días literales. Fuente: Bohr, <i>Daniel 1-10</i>, p. 364.' },
+    { t: 'mc', v: '10:13', f: 'c', q: '¿Qué período de la reconstrucción del templo coincide, en años, con los 21 días de resistencia?', o: ['Del 536 al 515 a.C.', 'Del 457 al 408 a.C.', 'Del 605 al 586 a.C.', 'Del 539 al 518 a.C.'], a: 0, e: 'Del decreto de Ciro el Grande (536) al templo terminado (515) pasaron 21 años. Es un sentido más amplio, sin dejar de leer 21 días literales. Fuente: Bohr, <i>Daniel 1-10</i>, p. 364.' },
     { t: 'tf', v: '10:13', f: 'c', q: 'Los 21 días de Daniel 10 deben entenderse solo como 21 años y no como días literales.', a: false, e: 'Falso: son días literales, los del ayuno de Daniel. La relación con los 21 años de 536 a 515 a.C. es solo un sentido más amplio. Fuente: Bohr, <i>Daniel 1-10</i>, p. 364.' },
     { t: 'mc', v: '10:14', f: 'c', q: '¿Qué palabra clave une los capítulos 8 a 12 de Daniel?', o: ['Entender', 'Reino', 'Bestia', 'Sueño'], a: 0, e: 'Gabriel debe hacer entender (8:16), Daniel no entiende (8:27), Gabriel vuelve para que entienda (9:23), Daniel entiende (10:1) y pide entender más (10:12). Fuente: Bohr, <i>Daniel 1-10</i>, p. 25 y 359.' },
     { t: 'tf', v: '10:1', f: 'c', q: 'El cambio de idioma del libro (arameo en 2 a 7, hebreo en 8 a 12) muestra que Daniel tiene dos mitades.', a: true, e: 'Verdadero, y la segunda mitad (8 a 12) es el libro que quedó sellado hasta el tiempo del fin. Fuente: Bohr, <i>Daniel 1-10</i>, p. 20.' },

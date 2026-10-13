@@ -69,12 +69,12 @@ const LAMINAS = {
   /* v190: escenas de la historia (imágenes de Camilo hechas con ChatGPT). Salen
      en la explicación de su parte y en la línea de tiempo desde su año. */
   escenas: [
-    { y: -539, f: 'e539', parte: 'plata', t: '539 a.C. · Ciro toma Babilonia la noche del banquete de Belsasar (5:30-31)' },
-    { y: -331, f: 'e331', parte: 'bronce', t: '331 a.C. · Alejandro vence a Darío III en Arbela' },
+    { y: -539, f: 'e539', parte: 'plata', t: '539 a.C. · Ciro el Grande toma Babilonia la noche del banquete de Belsasar (5:30-31)' },
+    { y: -331, f: 'e331', parte: 'bronce', t: '331 a.C. · Alejandro Magno vence a Darío III en Arbela' },
     { y: -168, f: 'e168', parte: 'hierro', t: '168 a.C. · Roma vence a Macedonia en Pidna' },
     { y: 476, f: 'e476', parte: 'dedos', t: '476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente' },
     { y: 538, f: 'e538', parte: 'barro', t: '538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal' },
-    { y: 1798, f: 'e1798', t: '1798 d.C. · El general Berthier entra en Roma y se lleva preso a Pío VI' },
+    { y: 1798, f: 'e1798', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
   ],
   partes: [
  {id:'oro',nombre:'Cabeza de oro',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
@@ -85,7 +85,7 @@ const LAMINAS = {
  {id:'plata',nombre:'Pecho y brazos de plata',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,a:-331,c:'#8C98A6',
   texto:'su pecho y sus brazos, de plata',ref:'2:32',texto2:'Después de ti se levantará otro reino, inferior al tuyo',ref2:'2:39',
   corto:'Dos brazos, dos pueblos: medos y persas. Daniel 5:28 lo nombra.',
-  interp:['El mismo libro lo identifica: «Tu reino ha sido roto y dado a los medos y a los persas» (Daniel 5:28).','Dos brazos, dos pueblos unidos. Ciro toma Babilonia en 539 a.C., la noche del banquete de Belsasar (5:30-31).'],
+  interp:['El mismo libro lo identifica: «Tu reino ha sido roto y dado a los medos y a los persas» (Daniel 5:28).','Dos brazos, dos pueblos unidos. Ciro el Grande toma Babilonia en 539 a.C., la noche del banquete de Belsasar (5:30-31).'],
   fuente:BOHR+', p. 57; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 21.'},
  {id:'bronce',nombre:'Vientre y muslos de bronce',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,a:-168,c:'#A85A2A',
   texto:'su vientre y sus muslos, de bronce',ref:'2:32',texto2:'un tercer reino de bronce, el cual dominará sobre toda la tierra',ref2:'2:39',
@@ -95,7 +95,7 @@ const LAMINAS = {
  {id:'hierro',nombre:'Piernas de hierro',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',
   texto:'sus piernas, de hierro',ref:'2:33',texto2:'el cuarto reino será fuerte como el hierro',ref2:'2:40',
   corto:'Primera fase de Roma: el reino que «desmenuza y rompe».',
-  interp:['La primera de las tres fases de Roma. «Desmenuza y rompe» (2:40): el reino más fuerte y el que más duró. La historia la recuerda como la monarquía de hierro.','Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino muda la capital a Constantinopla, el occidente declina. En 476 d.C. es depuesto Rómulo Augústulo, el último emperador de occidente.','Daniel no habla de división en las piernas: la división aparece en los pies (2:41).'],
+  interp:['La primera de las tres fases de Roma. «Desmenuza y rompe» (2:40): el reino más fuerte y el que más duró. La historia la recuerda como la monarquía de hierro.','Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino I muda la capital a Constantinopla, el occidente declina. En 476 d.C. es depuesto Rómulo Augústulo, el último emperador de occidente.','Daniel no habla de división en las piernas: la división aparece en los pies (2:41).'],
   fuente:BOHR+', p. 57-58, 133; Smith, <i>Las profecías de Daniel</i>, p. 22-25.'},
  {id:'dedos',nombre:'Los diez dedos',reino:'Roma dividida',fechas:'desde 476 d.C.',de:476,a:2026,c:'#4E6A8F',
   texto:'Lo que viste de los pies y los dedos… será un reino dividido',ref:'2:41',texto2:'este reino será en parte fuerte y en parte frágil',ref2:'2:42',
@@ -105,7 +105,7 @@ const LAMINAS = {
  {id:'barro',nombre:'Hierro mezclado con barro',reino:'Roma papal',fechas:'desde 538 d.C. · supremacía 538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',
   texto:'sus pies, en parte de hierro y en parte de barro cocido',ref:'2:33',texto2:'se mezclarán por medio de alianzas humanas; pero no se unirán el uno con el otro',ref2:'2:43',
   corto:'Tercera fase: el poder político unido al religioso.',
-  interp:['La tercera fase: el poder político unido al religioso. El hierro es el poder civil de Roma; el barro «de alfarero» representa en la Biblia al pueblo de Dios (Jeremías 18:6). Mezclados, es la iglesia que dejó a Cristo para unirse al Estado, la ramera de Apocalipsis 17:2. Por eso la piedra destruye también el barro (2:35).','Domina 1.260 años, de 538 a 1798 d.C. (Daniel 7:25): es el cuerno pequeño. En 538 los ostrogodos son expulsados de Roma; en 1798 el general Berthier entra en Roma y toma prisionero al papa. En 1798 recibe la herida; la herida sana y, al final, la mezcla vuelve en todo el mundo (Apocalipsis 13:3; 17:12-14). Por eso la piedra todavía la encuentra en los pies.','«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).'],
+  interp:['La tercera fase: el poder político unido al religioso. El hierro es el poder civil de Roma; el barro «de alfarero» representa en la Biblia al pueblo de Dios (Jeremías 18:6). Mezclados, es la iglesia que dejó a Cristo para unirse al Estado, la ramera de Apocalipsis 17:2. Por eso la piedra destruye también el barro (2:35).','Domina 1.260 años, de 538 a 1798 d.C. (Daniel 7:25): es el cuerno pequeño. En 538 los ostrogodos son expulsados de Roma; en 1798 el general Louis-Alexandre Berthier entra en Roma y toma prisionero al papa. En 1798 recibe la herida; la herida sana y, al final, la mezcla vuelve en todo el mundo (Apocalipsis 13:3; 17:12-14). Por eso la piedra todavía la encuentra en los pies.','«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).'],
   fuente:'Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46; '+BOHR+', p. 58-62; CBA 4:1168.'},
  {id:'piedra',nombre:'La piedra',reino:'La segunda venida de Cristo',fechas:'futuro',de:null,c:'#6B7B5A',
   texto:'una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies',ref:'2:34',texto2:'el Dios del cielo levantará un reino que no será jamás destruido',ref2:'2:44',
