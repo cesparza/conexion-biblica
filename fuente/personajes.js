@@ -929,49 +929,52 @@ const PERSONAJES = [
     hizo: [
       'Conquistó Egipto.',
       'Suspendió la reconstrucción del templo que Ciro había autorizado.',
-      'Es el primero de los reyes persas que siguen a Ciro en Daniel 11:2.'
+      'Es el primero de los cuatro reyes persas que siguen a Ciro en Daniel 11:2.'
     ],
     textos: 'Daniel 11:2; Esdras 4:4-5',
     alias: ['Cambises II', 'Cambises'],
-    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
-  { id: 'gaumata', nombre: 'Gaumata (Pseudo-Esmerdis)', tipo: 'historico',
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2' },
+  { id: 'gaumata', nombre: 'Gaumata o Bardiya (falso Esmerdis)', tipo: 'historico',
     fechas: '522 a.C.',
     quien: 'Usurpador del trono persa.',
     hizo: [
-      'Reinó unos meses haciéndose pasar por Esmerdis, el hermano de Cambises (Daniel 11:2).',
+      'Al morir Cambises tomó el trono haciéndose pasar por Esmerdis (Bardiya), hijo de Ciro, y reinó unos meses.',
+      'Es el segundo de los cuatro reyes persas de Daniel 11:2: ocupó el trono, y por eso entra en la cuenta.',
       'Darío I lo quitó del trono y reinó en su lugar.'
     ],
     textos: 'Daniel 11:2',
-    alias: ['Pseudo-Esmerdis', 'Gaumata'],
-    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+    alias: ['Pseudo-Esmerdis', 'Gaumata', 'Bardiya', 'falso Esmerdis'],
+    fuente: 'Treiyer, <i>Daniel 11</i> (notas de clase), v. 2; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 127-128' },
   { id: 'dario-i', nombre: 'Darío I el Grande', tipo: 'historico',
-    fechas: 'reinó 522-486 a.C.',
+    fechas: 'reinó 522-485 a.C.',
     quien: 'Rey de Persia.',
     hizo: [
       'Reorganizó el imperio en veinte satrapías.',
-      'En 520 a.C. confirmó el decreto de Ciro para terminar el templo (Esdras 6).'
+      'En 520 a.C. confirmó el decreto de Ciro para terminar el templo (Esdras 6).',
+      'Es el tercero de los reyes persas de Daniel 11:2. Comenzó las guerras contra Grecia y fue derrotado en Maratón (490 a.C.).'
     ],
     textos: 'Esdras 6; Daniel 11:2',
     alias: ['Darío I', { t: 'Darío', caps: ['d9'] }],
-    fuente: 'Esdras 6; Bohr, <i>Daniel 11</i>, p. 5-12' },
+    fuente: 'Esdras 6; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2' },
   { id: 'jerjes', nombre: 'Jerjes I', tipo: 'historico',
-    fechas: 'reinó 486-465 a.C.',
-    quien: 'Rey de Persia, hijo de Darío I.',
+    fechas: 'reinó 485-465 a.C.',
+    quien: 'Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.',
     hizo: [
-      'Una lectura lo ve como el cuarto rey de Daniel 11:2, el más rico, que levantó a todos contra Grecia; otra ve allí a Artajerjes I.',
-      'Peleó contra Grecia en las Termópilas y Salamina (480 a.C.).',
-      'Arrasó las murallas y templos de Babilonia tras una revuelta.'
+      'Es el cuarto rey de Daniel 11:2: el más rico de todos, que levantó a todos contra Grecia.',
+      'Peleó contra Grecia en las Termópilas y Salamina (480 a.C.) y fue expulsado en Platea (479 a.C.).',
+      'Arrasó las murallas y templos de Babilonia tras una revuelta.',
+      'Murió asesinado en 465 a.C.'
     ],
-    textos: 'Daniel 11:2',
+    textos: 'Daniel 11:2; Ester 1:1',
     alias: ['Jerjes I', { t: 'Jerjes', caps: ['d5', 'd11'] }],
-    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+    fuente: 'Treiyer, <i>Daniel 11</i> (notas de clase), v. 2; Bohr, <i>Daniel 11</i>, p. 5-12' },
   { id: 'artajerjes', nombre: 'Artajerjes I', tipo: 'historico',
     fechas: 'reinó 465-424 a.C.',
     quien: 'Rey de Persia.',
     hizo: [
       'En su séptimo año, 457 a.C., dio el decreto para restaurar y edificar Jerusalén (Esdras 7).',
       'Ese decreto es el punto de partida de las setenta semanas y de los 2.300 días (Daniel 9:25; 8:14).',
-      'Por eso una lectura lo ve como el cuarto rey de Daniel 11:2.'
+      'Era hijo de Jerjes I, el cuarto rey de Daniel 11:2.'
     ],
     textos: 'Esdras 7; Daniel 8:14; 9:25',
     alias: ['Artajerjes I', 'Artajerjes'],

@@ -254,7 +254,7 @@ module.exports = {
       h: `<p>Daniel 8 va en las dos tablas: es el puente. Daniel 11 sigue su mismo orden y Daniel 12 lo termina.</p>` +
         tbl(['Poder o época', 'Daniel 8', 'Daniel 11', 'Daniel 12'], [
           ['Babilonia (605-539 a.C.)', '—', '—', '—'],
-          ['Medo-Persia (539-331 a.C.)', 'Carnero de dos cuernos (8:3-4, 20)', '«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2): el cuarto es Artajerjes, el del decreto de 457 a.C.', '—'],
+          ['Medo-Persia (539-331 a.C.)', 'Carnero de dos cuernos (8:3-4, 20)', '«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2): Cambises II, Bardiya y Darío I; el cuarto es Jerjes I (Asuero), que levantó a todos contra Grecia', '—'],
           ['Grecia (331-168 a.C.)', 'Macho cabrío y su cuerno grande (8:5, 21)', 'Un rey valiente que domina con gran poder (11:3)', '—'],
           ['Los cuatro reinos de Grecia', 'Cuatro cuernos (8:8, 22)', 'El reino, «repartido hacia los cuatro vientos del cielo» (11:4); después, el rey del norte (Siria) contra el rey del sur (Egipto) (11:5-15)', '—'],
           ['Roma imperial (168 a.C.-476 d.C.)', 'Cuerno pequeño que crece hasta el ejército del cielo (8:9-10)', 'Se queda en la tierra gloriosa (11:16); el príncipe del pacto es quebrantado (11:22). Abarca 11:16-28', '—'],
@@ -264,7 +264,7 @@ module.exports = {
           ['El tiempo del fin (desde 1798)', '«La visión es para el tiempo del fin» (8:17, 19)', '«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)', 'El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)'],
           ['La segunda venida y el reino eterno', 'El cuerno, quebrantado «no por mano humana» (8:25)', '«Llegará a su fin, y no tendrá quien lo ayude» (11:45)', 'Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)'],
         ]) +
-        `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44.</p>`,
+        `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>`,
     },
     {
       t: '🧭 Lo que muestra la comparación',

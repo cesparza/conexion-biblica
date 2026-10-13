@@ -2770,3 +2770,28 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .per-quien{margin:.2rem 0 .6rem;font-size:1rem;font-weight:600}
 .per-hizo{margin:0 0 .6rem;padding-left:1.1rem;display:grid;gap:.35rem}
 .per-textos{margin:.4rem 0 0;font-size:.875rem}
+/* v190: el candelabro de Daniel 1-7 (quiasmo). Placa oscura a propósito,
+   igual en claro y oscuro, como la lámina. */
+.qm{margin:.8rem 0;border-radius:18px;overflow:hidden;background:#15110B;color:#F4EEE2;box-shadow:var(--sh)}
+.qm-esc{position:relative;width:min(100%,520px);margin:0 auto;aspect-ratio:900/990;padding-top:0}
+.qm-img{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;transition:filter .4s}
+.qm[data-sel]:not([data-sel=""]) .qm-img{filter:brightness(.55) saturate(.8)}
+.qm-l{position:absolute;top:0;width:13%;height:27%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  gap:2px;padding:0;border:0;background:none;color:var(--c);font:inherit;cursor:pointer;transition:opacity .35s}
+.qm-l b{font-size:.75rem;font-weight:800;letter-spacing:.02em;white-space:nowrap;text-shadow:0 1px 3px #000}
+.qm-g{position:absolute;top:18%;left:50%;width:120%;aspect-ratio:1;transform:translate(-50%,0) scale(.6);border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--c) 85%,#fff) 0%,color-mix(in srgb,var(--c) 45%,transparent) 35%,transparent 70%);
+  opacity:0;mix-blend-mode:screen;transition:opacity .4s,transform .4s;pointer-events:none}
+.qm-l.on .qm-g{opacity:1;transform:translate(-50%,0) scale(1.05)}
+.qm-l.par .qm-g{opacity:.5;transform:translate(-50%,0) scale(.85)}
+.qm-l.par{opacity:.75}
+.qm-l.off{opacity:.35}
+.qm-l:focus-visible{outline:2px solid var(--c);outline-offset:2px;border-radius:8px}
+.qm-txt{padding:12px 16px 14px;border-top:1px solid rgba(255,255,255,.08);min-height:3.2rem}
+.qm-txt p{margin:.2rem 0 0;font-size:1rem;line-height:1.45;color:#E6DCC8}
+.qm-pista{color:#C9BFA9!important}
+.qm-t{font-weight:800;color:var(--c);font-size:1rem}
+.qm .vref{color:#F2C46B}
+@media (prefers-reduced-motion:reduce){.qm-g,.qm-l,.qm-img{transition:none}}
+.qm-l b{padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid color-mix(in srgb,var(--c) 60%,transparent)}
+.qm-l.on b{background:var(--c);color:#15110B;text-shadow:none}

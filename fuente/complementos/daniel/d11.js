@@ -1,5 +1,6 @@
 /* Daniel 11: interpretación con fuentes (capa 'contexto', preguntas f:'c').
-   Ya están en fuente/contenido.js: reyes persas (con Artajerjes como cuarto, v189),
+   Ya están en fuente/contenido.js: reyes persas (v190: el cuarto de 11:2 es Jerjes, con
+   Treiyer; decisión de Camilo, 13-oct),
    reyes tolomeos y seléucidas, Berenice, guerras sirias, Roma, el pacto de
    Constantino a Justiniano, Canossa, Carlomagno, 1798, el «pequeño socorro»,
    36-39 y 40-45 según Treiyer y Maxwell. Aquí va la lectura de Bohr: cómo se
@@ -26,9 +27,9 @@ module.exports = {
 
     { t: '🧭 El esquema de Daniel 11', capa: 'contexto', h:
       `<p><b>Cuándo:</b> la visión sigue la de Daniel 10, el tercer año de Ciro, hacia el 535 a.C. El versículo 1 es un paréntesis: recuerda lo que el ángel hizo en el primer año de Darío (538 a.C.).</p>` +
-      `<p>Esa mención une el capítulo 11 con las setenta semanas de Daniel 9. Por eso el <b>cuarto rey</b> de 11:2 es <b>Artajerjes</b>, el del decreto de 457 a.C.; Gabriel nombra a los tres anteriores (Cambises, Darío I y Asuero, o Jerjes) solo para ubicarlo.</p>` +
+      `<p>El <b>cuarto rey</b> de 11:2 es <b>Jerjes I</b>, o Asuero (485-465 a.C.), el rey de Ester: el más rico, y el que levantó a todo su imperio contra Grecia (Salamina, 480 a.C.). Los tres anteriores son los que siguieron a Ciro: Cambises II, Bardiya (el falso Esmerdis, unos meses de 522 a.C.) y Darío I. Así el versículo 2 va del tercer año de Ciro a la muerte de Jerjes, unos setenta años.</p>` +
       tbl(['Versículos', 'Qué describe', 'En Daniel 8'], [
-        ['11:2', 'Persia hasta Artajerjes', '8:3-4'],
+        ['11:2', 'Persia hasta Jerjes', '8:3-4'],
         ['11:3-4', 'Alejandro y su reino partido en cuatro', '8:5-8'],
         ['11:5-15', 'Siria (norte) contra Egipto (sur)', '—'],
         ['11:16-28', 'Roma imperial', '8:9-10'],
@@ -36,7 +37,7 @@ module.exports = {
         ['11:40-45', 'El tiempo del fin, desde 1798', '8:17, 19, 25'],
         ['12:1-3', 'Se levanta Miguel, angustia, liberación', '—'],
       ]) +
-      `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-18; Bohr, <i>Daniel 1-10</i>, p. 357.</p>` },
+      `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-18; Bohr, <i>Daniel 1-10</i>, p. 357; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>` },
 
     { t: '🧭 Norte y sur: de lo literal a lo espiritual', capa: 'contexto', h:
       `<p>Un principio: hasta el año 34 d.C. (el fin de las setenta semanas), Israel, Jerusalén, Egipto y Babilonia son lugares literales. Después, el pueblo de Dios es la iglesia en todo el mundo, y sus enemigos también son sistemas mundiales. Por eso en 11:5-15 el norte es Siria y el sur es Egipto, pero en 11:40 ya no.</p>` +
@@ -98,7 +99,7 @@ module.exports = {
       `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 18-21, 126, 134-136, 175 y 235; Bohr, <i>15 principios</i> 2:106.</p>` },
   ],
   preguntas: [
-    { t: 'mc', v: '11:2', f: 'c', q: 'Si se une Daniel 11:2 con las setenta semanas, ¿quién es el cuarto rey persa?', o: ['Artajerjes I', 'Jerjes I', 'Darío I', 'Cambises II'], a: 0, e: 'El cuarto rey es el que dio el decreto de 457 a.C.; los tres anteriores son Cambises, Darío I y Asuero (Jerjes). Fuente: Bohr, <i>Daniel 11</i>, p. 16.' },
+    { t: 'mc', v: '11:2', f: 'c', q: '¿Quién es el cuarto rey persa de Daniel 11:2, el más rico, que levantó a todos contra Grecia?', o: ['Jerjes I', 'Artajerjes I', 'Darío I', 'Cambises II'], a: 0, e: 'Los tres que siguieron a Ciro fueron Cambises II, Bardiya (el falso Esmerdis) y Darío I; el cuarto, Jerjes I, invadió Grecia en 480 a.C. Artajerjes I es el del decreto de 457 a.C., no el cuarto rey. Fuente: Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.' },
     { t: 'mc', v: '11:40', f: 'c', q: '¿Qué representa el «rey del sur» en el tiempo del fin?', o: ['El ateísmo y el secularismo', 'El mundo islámico', 'El Imperio otomano', 'El protestantismo'], a: 0, e: 'Egipto fue la nación que negó al Dios vivo (Éxodo 5:2). En el tiempo del fin representa todo sistema que deja a Dios fuera. Fuente: Bohr, <i>Daniel 11</i>, p. 98-99.' },
     { t: 'mc', v: '11:40', f: 'c', q: '¿Qué hecho de 1798 cumple que «el rey del sur contenderá con él»?', o: ['Francia tomó preso al papa', 'Napoleón invadió Egipto', 'Rusia derrotó a Turquía', 'Inglaterra rompió con Roma'], a: 0, e: 'La Francia revolucionaria y atea hirió al papado: llevó cautivo a Pío VI. Así comenzó el tiempo del fin. Fuente: Bohr, <i>Daniel 11</i>, p. 105.' },
     { t: 'mc', v: '11:41', f: 'c', q: '¿Qué representa la «tierra gloriosa» de 11:41?', o: ['Estados Unidos como baluarte protestante', 'El actual Estado de Israel', 'La ciudad de Roma y el Vaticano', 'Palestina bajo los turcos'], a: 0, e: 'No es Estados Unidos solo como país, sino como el lugar fuerte de los principios protestantes, que los llevó al mundo. Fuente: Bohr, <i>Daniel 11</i>, p. 126.' },

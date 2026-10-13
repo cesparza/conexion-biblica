@@ -1238,7 +1238,7 @@ BANCO.push(
 );
 BANCO.push(
 {cap:'d11',t:'mc',q:'¿Quién es el cuarto rey persa de Daniel 11:2, que incita a todos contra Grecia?',
- o:['El rey Ciro el Grande','Darío el Medo, primer rey','Jerjes I (Asuero)','Artajerjes I Longimano'],a:3},
+ o:['El rey Ciro el Grande','Darío el Medo, primer rey','Jerjes I (Asuero)','Artajerjes I Longimano'],a:2},
 {cap:'d11',t:'mc',q:'¿En cuántas partes se reparte el reino de Alejandro Magno tras su muerte, según Daniel 11:4?',
  o:['En solo dos partes','En apenas tres partes','En cuatro partes iguales','En siete partes distintas'],a:2},
 {cap:'d11',t:'mc',q:'¿A qué dos dinastías corresponden "rey del sur" y "rey del norte" en Daniel 11?',

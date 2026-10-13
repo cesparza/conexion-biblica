@@ -381,6 +381,15 @@ for (const W of ANCHOS) {
     ok(f[0] && /Louis-Alexandre Berthier/.test(f[1]) && /1798/.test(f[1]), W + ' · v189: tocar «Berthier» abre su ficha');
     await p.evaluate(() => cierraHoja()); await p.waitForTimeout(300);
   }
+  /* v190: el candelabro de Daniel 1-7: tocar una lámpara enciende su pareja. */
+  {
+    await p.evaluate(() => { ponCat('pa'); ponPest('prof'); verCap('d2', true); });
+    await p.waitForTimeout(400);
+    await p.locator('#detalle .qm-l[data-n="4"]').click();
+    await p.waitForTimeout(300);
+    const q = await p.evaluate(() => { const q = document.querySelector('#detalle .qm'); return [q.querySelector('.qm-l.on').dataset.n, q.querySelector('.qm-l.par').dataset.n, q.querySelector('.qm-txt').textContent, q.querySelector('.qm-img').complete && q.querySelector('.qm-img').naturalWidth]; });
+    ok(q[0] === '4' && q[1] === '5' && /Daniel 4 y Daniel 5/.test(q[2]) && q[3] === 900, W + ' · v190: el candelabro enciende Daniel 4 y su pareja, Daniel 5');
+  }
   /* v188: volver a una pestaña regresa a donde se iba; otra pestaña empieza arriba. */
   {
     await p.evaluate(() => { ponCat('pa'); verCap('d2'); });

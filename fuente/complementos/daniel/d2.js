@@ -90,7 +90,7 @@ module.exports = {
     {
       t: '🧭 Daniel 1-7: un libro en espejo',
       capa: 'contexto',
-      h: `<p>Daniel 2 a 7 tiene forma de <strong>quiasmo</strong>: una estructura en espejo donde el primer capítulo se corresponde con el último, el segundo con el penúltimo, y así hacia el centro. Esos capítulos, además, están escritos en arameo, no en hebreo.</p>` +
+      h: `<p>Daniel 2 a 7 tiene forma de <strong>quiasmo</strong>: una estructura en espejo donde el primer capítulo se corresponde con el último, el segundo con el penúltimo, y así hacia el centro. Esos capítulos, además, están escritos en arameo, no en hebreo (2:4 a 7:28). Se puede ver como un candelabro: el capítulo 1 en el centro y cada brazo con su pareja. Toca una lámpara.</p><div class="qm-aqui"></div>` +
         tbl(['Capítulos', 'Lo que tienen en común'], [
           ['2 y 7', 'Cuatro reinos (cuatro metales, cuatro bestias) y después el reino eterno de Dios'],
           ['3 y 6', 'Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar»'],

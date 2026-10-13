@@ -2787,6 +2787,31 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .per-quien{margin:.2rem 0 .6rem;font-size:1rem;font-weight:600}
 .per-hizo{margin:0 0 .6rem;padding-left:1.1rem;display:grid;gap:.35rem}
 .per-textos{margin:.4rem 0 0;font-size:.875rem}
+/* v190: el candelabro de Daniel 1-7 (quiasmo). Placa oscura a propósito,
+   igual en claro y oscuro, como la lámina. */
+.qm{margin:.8rem 0;border-radius:18px;overflow:hidden;background:#15110B;color:#F4EEE2;box-shadow:var(--sh)}
+.qm-esc{position:relative;width:min(100%,520px);margin:0 auto;aspect-ratio:900/990;padding-top:0}
+.qm-img{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;transition:filter .4s}
+.qm[data-sel]:not([data-sel=""]) .qm-img{filter:brightness(.55) saturate(.8)}
+.qm-l{position:absolute;top:0;width:13%;height:27%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  gap:2px;padding:0;border:0;background:none;color:var(--c);font:inherit;cursor:pointer;transition:opacity .35s}
+.qm-l b{font-size:.75rem;font-weight:800;letter-spacing:.02em;white-space:nowrap;text-shadow:0 1px 3px #000}
+.qm-g{position:absolute;top:18%;left:50%;width:120%;aspect-ratio:1;transform:translate(-50%,0) scale(.6);border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--c) 85%,#fff) 0%,color-mix(in srgb,var(--c) 45%,transparent) 35%,transparent 70%);
+  opacity:0;mix-blend-mode:screen;transition:opacity .4s,transform .4s;pointer-events:none}
+.qm-l.on .qm-g{opacity:1;transform:translate(-50%,0) scale(1.05)}
+.qm-l.par .qm-g{opacity:.5;transform:translate(-50%,0) scale(.85)}
+.qm-l.par{opacity:.75}
+.qm-l.off{opacity:.35}
+.qm-l:focus-visible{outline:2px solid var(--c);outline-offset:2px;border-radius:8px}
+.qm-txt{padding:12px 16px 14px;border-top:1px solid rgba(255,255,255,.08);min-height:3.2rem}
+.qm-txt p{margin:.2rem 0 0;font-size:1rem;line-height:1.45;color:#E6DCC8}
+.qm-pista{color:#C9BFA9!important}
+.qm-t{font-weight:800;color:var(--c);font-size:1rem}
+.qm .vref{color:#F2C46B}
+@media (prefers-reduced-motion:reduce){.qm-g,.qm-l,.qm-img{transition:none}}
+.qm-l b{padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid color-mix(in srgb,var(--c) 60%,transparent)}
+.qm-l.on b{background:var(--c);color:#15110B;text-shadow:none}
 </style>
 </head>
 <body>
@@ -3334,7 +3359,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <!-- v185: el estudio interactivo con imagen (lamAbre). -->
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = '7556814294a9';
+const VERSION_APP = 'fb242e72c077';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -4916,7 +4941,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Daniel 1-7: un libro en espejo",
    "capa": "contexto",
-   "h": "<p>Daniel 2 a 7 tiene forma de <strong>quiasmo</strong>: una estructura en espejo donde el primer capítulo se corresponde con el último, el segundo con el penúltimo, y así hacia el centro. Esos capítulos, además, están escritos en arameo, no en hebreo.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Capítulos</th><th>Lo que tienen en común</th></tr></thead><tbody><tr><td class=\"key\">2 y 7</td><td>Cuatro reinos (cuatro metales, cuatro bestias) y después el reino eterno de Dios</td></tr><tr><td class=\"key\">3 y 6</td><td>Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar»</td></tr><tr><td class=\"key\">4 y 5</td><td>Dos reyes de Babilonia soberbios: uno es humillado y restaurado; el otro, juzgado para siempre</td></tr></tbody></table></div><p>Por eso Daniel 2 y 7 se estudian juntos: el mismo orden («tú eres la cabeza de oro», «otro», «tercer», «cuarto»), el hierro en el cuarto reino en los dos, y el reino eterno descrito casi con las mismas palabras (2:44; 7:27).</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-120.</p>"
+   "h": "<p>Daniel 2 a 7 tiene forma de <strong>quiasmo</strong>: una estructura en espejo donde el primer capítulo se corresponde con el último, el segundo con el penúltimo, y así hacia el centro. Esos capítulos, además, están escritos en arameo, no en hebreo (2:4 a 7:28). Se puede ver como un candelabro: el capítulo 1 en el centro y cada brazo con su pareja. Toca una lámpara.</p><div class=\"qm-aqui\"></div><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Capítulos</th><th>Lo que tienen en común</th></tr></thead><tbody><tr><td class=\"key\">2 y 7</td><td>Cuatro reinos (cuatro metales, cuatro bestias) y después el reino eterno de Dios</td></tr><tr><td class=\"key\">3 y 6</td><td>Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar»</td></tr><tr><td class=\"key\">4 y 5</td><td>Dos reyes de Babilonia soberbios: uno es humillado y restaurado; el otro, juzgado para siempre</td></tr></tbody></table></div><p>Por eso Daniel 2 y 7 se estudian juntos: el mismo orden («tú eres la cabeza de oro», «otro», «tercer», «cuarto»), el hierro en el cuarto reino en los dos, y el reino eterno descrito casi con las mismas palabras (2:44; 7:27).</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-120.</p>"
   },
   {
    "t": "🧭 La Biblia explica sus símbolos",
@@ -6401,7 +6426,7 @@ const CONTENIDO = {
   },
   {
    "t": "👑 Los cuatro reyes persas",
-   "h": "<div class=\"highlight-box\"><strong>«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas, más que todos ellos» (Daniel 11:2): son cuatro reyes concretos, contados después de Ciro.</strong><ul style=\"margin:.4rem 0 .2rem 1.1rem;padding:0\"><li><strong>Cambises II</strong> (530-522 a.C.) — hijo de Ciro, conquistó Egipto.</li><li><strong>Darío I</strong> (522-486 a.C.) — reorganizó el imperio en veinte satrapías y reconstruyó la administración persa.</li><li><strong>Asuero, o Jerjes I</strong> (486-465 a.C.) — el rey del libro de Ester; lanzó la invasión persa de Grecia de 480 a.C. (las guerras médicas, con las batallas de las Termópilas y Salamina).</li><li><strong>Artajerjes I</strong> (465-424 a.C.) — el <strong>cuarto</strong>: el rey que dio el decreto de 457 a.C. para restaurar y edificar Jerusalén (Esdras 7), el punto de partida de las setenta semanas y de las 2.300 tardes y mañanas.</li></ul>Daniel 11:1 repite la fecha de Daniel 9:1, «el primer año de Darío», y el capítulo arranca con el mismo rey del decreto de Daniel 9: el ángel nombra a los tres anteriores solo para ubicar al cuarto.</div>"
+   "h": "<div class=\"highlight-box\"><strong>«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas, más que todos ellos. Éste, al hacerse fuerte con sus riquezas, levantará a todos contra el reino de Grecia» (Daniel 11:2): son los cuatro reyes que siguieron a Ciro.</strong><ul style=\"margin:.4rem 0 .2rem 1.1rem;padding:0\"><li><strong>Cambises II</strong> (530-522 a.C.) — hijo de Ciro, conquistó Egipto en 525 a.C.</li><li><strong>Bardiya o Gaumata</strong> (522 a.C.) — el impostor que tomó el trono al morir Cambises haciéndose pasar por Esmerdis, hijo de Ciro: el falso Esmerdis. Reinó unos meses, pero ocupó el trono, y por eso entra en la cuenta.</li><li><strong>Darío I el Grande</strong> (522-485 a.C.) — reorganizó el imperio y comenzó las guerras médicas contra Grecia (Maratón, 490 a.C.).</li><li><strong>Jerjes I, o Asuero</strong> (485-465 a.C.) — el <strong>cuarto</strong>: el rey del libro de Ester, el más rico de todos, que levantó a todo su imperio contra Grecia (Salamina, 480 a.C.; Platea, 479 a.C.).</li></ul>Así 11:2 abarca unos setenta años de Persia: desde el tercer año de Ciro (536-535 a.C.) hasta la muerte de Jerjes (465 a.C.). Artajerjes I, su hijo, es el del decreto de 457 a.C. (Esdras 7), pero no está entre estos cuatro.</div>"
   },
   {
    "t": "⚔️ El reino de Grecia se divide",
@@ -6487,7 +6512,7 @@ const CONTENIDO = {
   {
    "t": "🧭 El esquema de Daniel 11",
    "capa": "contexto",
-   "h": "<p><b>Cuándo:</b> la visión sigue la de Daniel 10, el tercer año de Ciro, hacia el 535 a.C. El versículo 1 es un paréntesis: recuerda lo que el ángel hizo en el primer año de Darío (538 a.C.).</p><p>Esa mención une el capítulo 11 con las setenta semanas de Daniel 9. Por eso el <b>cuarto rey</b> de 11:2 es <b>Artajerjes</b>, el del decreto de 457 a.C.; Gabriel nombra a los tres anteriores (Cambises, Darío I y Asuero, o Jerjes) solo para ubicarlo.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Versículos</th><th>Qué describe</th><th>En Daniel 8</th></tr></thead><tbody><tr><td class=\"key\">11:2</td><td>Persia hasta Artajerjes</td><td>8:3-4</td></tr><tr><td class=\"key\">11:3-4</td><td>Alejandro y su reino partido en cuatro</td><td>8:5-8</td></tr><tr><td class=\"key\">11:5-15</td><td>Siria (norte) contra Egipto (sur)</td><td>—</td></tr><tr><td class=\"key\">11:16-28</td><td>Roma imperial</td><td>8:9-10</td></tr><tr><td class=\"key\">11:29-39</td><td>Roma papal, los 1.260 años</td><td>8:11-12</td></tr><tr><td class=\"key\">11:40-45</td><td>El tiempo del fin, desde 1798</td><td>8:17, 19, 25</td></tr><tr><td class=\"key\">12:1-3</td><td>Se levanta Miguel, angustia, liberación</td><td>—</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-18; Bohr, <i>Daniel 1-10</i>, p. 357.</p>"
+   "h": "<p><b>Cuándo:</b> la visión sigue la de Daniel 10, el tercer año de Ciro, hacia el 535 a.C. El versículo 1 es un paréntesis: recuerda lo que el ángel hizo en el primer año de Darío (538 a.C.).</p><p>El <b>cuarto rey</b> de 11:2 es <b>Jerjes I</b>, o Asuero (485-465 a.C.), el rey de Ester: el más rico, y el que levantó a todo su imperio contra Grecia (Salamina, 480 a.C.). Los tres anteriores son los que siguieron a Ciro: Cambises II, Bardiya (el falso Esmerdis, unos meses de 522 a.C.) y Darío I. Así el versículo 2 va del tercer año de Ciro a la muerte de Jerjes, unos setenta años.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Versículos</th><th>Qué describe</th><th>En Daniel 8</th></tr></thead><tbody><tr><td class=\"key\">11:2</td><td>Persia hasta Jerjes</td><td>8:3-4</td></tr><tr><td class=\"key\">11:3-4</td><td>Alejandro y su reino partido en cuatro</td><td>8:5-8</td></tr><tr><td class=\"key\">11:5-15</td><td>Siria (norte) contra Egipto (sur)</td><td>—</td></tr><tr><td class=\"key\">11:16-28</td><td>Roma imperial</td><td>8:9-10</td></tr><tr><td class=\"key\">11:29-39</td><td>Roma papal, los 1.260 años</td><td>8:11-12</td></tr><tr><td class=\"key\">11:40-45</td><td>El tiempo del fin, desde 1798</td><td>8:17, 19, 25</td></tr><tr><td class=\"key\">12:1-3</td><td>Se levanta Miguel, angustia, liberación</td><td>—</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-18; Bohr, <i>Daniel 1-10</i>, p. 357; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>"
   },
   {
    "t": "🧭 Norte y sur: de lo literal a lo espiritual",
@@ -6545,7 +6570,7 @@ const CONTENIDO = {
   },
   {
    "t": "✅ Compruébalo",
-   "h": "<div class=\"highlight-box\"><strong>Antes de pasar al siguiente</strong><br>Responde en voz alta y después comprueba. Si fallas una, está en <strong>Practicar</strong> para repetirla.</div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Quién es el cuarto rey persa que \"se hará de grandes riquezas, más que todos ellos\"? (Daniel 11:2)</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Artajerjes I (465-424 a.C.), el del decreto de 457 a.C. (Esdras 7). Los tres anteriores: Cambises, Darío I y Asuero (Jerjes I).</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Qué potencia nueva aparece en Daniel 11:30 como \"naves de Quitim\" que detienen a Antíoco III?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Roma.</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Con qué otro pasaje de Daniel es paralelo el final del \"rey del norte\" en Daniel 11:45?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Con el fin del cuerno pequeño de Daniel 7:11, 26, que también \"llega a su fin\" sin ayuda en el juicio celestial.</div></div>"
+   "h": "<div class=\"highlight-box\"><strong>Antes de pasar al siguiente</strong><br>Responde en voz alta y después comprueba. Si fallas una, está en <strong>Practicar</strong> para repetirla.</div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Quién es el cuarto rey persa que \"se hará de grandes riquezas, más que todos ellos\"? (Daniel 11:2)</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Jerjes I, o Asuero (485-465 a.C.), el rey de Ester, que invadió Grecia en 480 a.C. Los tres anteriores, después de Ciro: Cambises II, Bardiya (el falso Esmerdis) y Darío I.</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Qué potencia nueva aparece en Daniel 11:30 como \"naves de Quitim\" que detienen a Antíoco III?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Roma.</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Con qué otro pasaje de Daniel es paralelo el final del \"rey del norte\" en Daniel 11:45?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Con el fin del cuerno pequeño de Daniel 7:11, 26, que también \"llega a su fin\" sin ayuda en el juicio celestial.</div></div>"
   },
   {
    "t": "✅ Y estas",
@@ -18449,7 +18474,7 @@ const BANCO = [
    "Jerjes I (Asuero)",
    "Artajerjes I Longimano"
   ],
-  "a": 3,
+  "a": 2,
   "nv": 1
  },
  {
@@ -55425,15 +55450,15 @@ const BANCO = [
   "t": "mc",
   "v": "11:2",
   "f": "c",
-  "q": "Si se une Daniel 11:2 con las setenta semanas, ¿quién es el cuarto rey persa?",
+  "q": "¿Quién es el cuarto rey persa de Daniel 11:2, el más rico, que levantó a todos contra Grecia?",
   "o": [
-   "Artajerjes I",
    "Jerjes I",
+   "Artajerjes I",
    "Darío I",
    "Cambises II"
   ],
   "a": 0,
-  "e": "El cuarto rey es el que dio el decreto de 457 a.C.; los tres anteriores son Cambises, Darío I y Asuero (Jerjes). Fuente: Bohr, <i>Daniel 11</i>, p. 16.",
+  "e": "Los tres que siguieron a Ciro fueron Cambises II, Bardiya (el falso Esmerdis) y Darío I; el cuarto, Jerjes I, invadió Grecia en 480 a.C. Artajerjes I es el del decreto de 457 a.C., no el cuarto rey. Fuente: Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.",
   "nv": 1
  },
  {
@@ -58170,41 +58195,45 @@ const PERSONAJES = [
   "hizo": [
    "Conquistó Egipto.",
    "Suspendió la reconstrucción del templo que Ciro había autorizado.",
-   "Es el primero de los reyes persas que siguen a Ciro en Daniel 11:2."
+   "Es el primero de los cuatro reyes persas que siguen a Ciro en Daniel 11:2."
   ],
   "textos": "Daniel 11:2; Esdras 4:4-5",
   "alias": [
    "Cambises II",
    "Cambises"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2"
  },
  {
   "id": "gaumata",
-  "nombre": "Gaumata (Pseudo-Esmerdis)",
+  "nombre": "Gaumata o Bardiya (falso Esmerdis)",
   "tipo": "historico",
   "fechas": "522 a.C.",
   "quien": "Usurpador del trono persa.",
   "hizo": [
-   "Reinó unos meses haciéndose pasar por Esmerdis, el hermano de Cambises (Daniel 11:2).",
+   "Al morir Cambises tomó el trono haciéndose pasar por Esmerdis (Bardiya), hijo de Ciro, y reinó unos meses.",
+   "Es el segundo de los cuatro reyes persas de Daniel 11:2: ocupó el trono, y por eso entra en la cuenta.",
    "Darío I lo quitó del trono y reinó en su lugar."
   ],
   "textos": "Daniel 11:2",
   "alias": [
    "Pseudo-Esmerdis",
-   "Gaumata"
+   "Gaumata",
+   "Bardiya",
+   "falso Esmerdis"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Daniel 11</i> (notas de clase), v. 2; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 127-128"
  },
  {
   "id": "dario-i",
   "nombre": "Darío I el Grande",
   "tipo": "historico",
-  "fechas": "reinó 522-486 a.C.",
+  "fechas": "reinó 522-485 a.C.",
   "quien": "Rey de Persia.",
   "hizo": [
    "Reorganizó el imperio en veinte satrapías.",
-   "En 520 a.C. confirmó el decreto de Ciro para terminar el templo (Esdras 6)."
+   "En 520 a.C. confirmó el decreto de Ciro para terminar el templo (Esdras 6).",
+   "Es el tercero de los reyes persas de Daniel 11:2. Comenzó las guerras contra Grecia y fue derrotado en Maratón (490 a.C.)."
   ],
   "textos": "Esdras 6; Daniel 11:2",
   "alias": [
@@ -58216,20 +58245,21 @@ const PERSONAJES = [
     ]
    }
   ],
-  "fuente": "Esdras 6; Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Esdras 6; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2"
  },
  {
   "id": "jerjes",
   "nombre": "Jerjes I",
   "tipo": "historico",
-  "fechas": "reinó 486-465 a.C.",
-  "quien": "Rey de Persia, hijo de Darío I.",
+  "fechas": "reinó 485-465 a.C.",
+  "quien": "Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.",
   "hizo": [
-   "Una lectura lo ve como el cuarto rey de Daniel 11:2, el más rico, que levantó a todos contra Grecia; otra ve allí a Artajerjes I.",
-   "Peleó contra Grecia en las Termópilas y Salamina (480 a.C.).",
-   "Arrasó las murallas y templos de Babilonia tras una revuelta."
+   "Es el cuarto rey de Daniel 11:2: el más rico de todos, que levantó a todos contra Grecia.",
+   "Peleó contra Grecia en las Termópilas y Salamina (480 a.C.) y fue expulsado en Platea (479 a.C.).",
+   "Arrasó las murallas y templos de Babilonia tras una revuelta.",
+   "Murió asesinado en 465 a.C."
   ],
-  "textos": "Daniel 11:2",
+  "textos": "Daniel 11:2; Ester 1:1",
   "alias": [
    "Jerjes I",
    {
@@ -58240,7 +58270,7 @@ const PERSONAJES = [
     ]
    }
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Daniel 11</i> (notas de clase), v. 2; Bohr, <i>Daniel 11</i>, p. 5-12"
  },
  {
   "id": "artajerjes",
@@ -58251,7 +58281,7 @@ const PERSONAJES = [
   "hizo": [
    "En su séptimo año, 457 a.C., dio el decreto para restaurar y edificar Jerusalén (Esdras 7).",
    "Ese decreto es el punto de partida de las setenta semanas y de los 2.300 días (Daniel 9:25; 8:14).",
-   "Por eso una lectura lo ve como el cuarto rey de Daniel 11:2."
+   "Era hijo de Jerjes I, el cuarto rey de Daniel 11:2."
   ],
   "textos": "Esdras 7; Daniel 8:14; 9:25",
   "alias": [
@@ -61074,12 +61104,12 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (1)",
    "capa": "contexto",
-   "h": "<p>Daniel 8 va en las dos tablas: es el puente. Daniel 11 sigue su mismo orden y Daniel 12 lo termina.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Babilonia (605-539 a.C.)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Medo-Persia (539-331 a.C.)</td><td>Carnero de dos cuernos (8:3-4, 20)</td><td>«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2): el cuarto es Artajerjes, el del decreto de 457 a.C.</td><td>—</td></tr><tr><td class=\"key\">Grecia (331-168 a.C.)</td><td>Macho cabrío y su cuerno grande (8:5, 21)</td><td>Un rey valiente que domina con gran poder (11:3)</td><td>—</td></tr><tr><td class=\"key\">Los cuatro reinos de Grecia</td><td>Cuatro cuernos (8:8, 22)</td><td>El reino, «repartido hacia los cuatro vientos del cielo» (11:4); después, el rey del norte (Siria) contra el rey del sur (Egipto) (11:5-15)</td><td>—</td></tr><tr><td class=\"key\">Roma imperial (168 a.C.-476 d.C.)</td><td>Cuerno pequeño que crece hasta el ejército del cielo (8:9-10)</td><td>Se queda en la tierra gloriosa (11:16); el príncipe del pacto es quebrantado (11:22). Abarca 11:16-28</td><td>—</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44.</p>"
+   "h": "<p>Daniel 8 va en las dos tablas: es el puente. Daniel 11 sigue su mismo orden y Daniel 12 lo termina.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Babilonia (605-539 a.C.)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Medo-Persia (539-331 a.C.)</td><td>Carnero de dos cuernos (8:3-4, 20)</td><td>«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2): Cambises II, Bardiya y Darío I; el cuarto es Jerjes I (Asuero), que levantó a todos contra Grecia</td><td>—</td></tr><tr><td class=\"key\">Grecia (331-168 a.C.)</td><td>Macho cabrío y su cuerno grande (8:5, 21)</td><td>Un rey valiente que domina con gran poder (11:3)</td><td>—</td></tr><tr><td class=\"key\">Los cuatro reinos de Grecia</td><td>Cuatro cuernos (8:8, 22)</td><td>El reino, «repartido hacia los cuatro vientos del cielo» (11:4); después, el rey del norte (Siria) contra el rey del sur (Egipto) (11:5-15)</td><td>—</td></tr><tr><td class=\"key\">Roma imperial (168 a.C.-476 d.C.)</td><td>Cuerno pequeño que crece hasta el ejército del cielo (8:9-10)</td><td>Se queda en la tierra gloriosa (11:16); el príncipe del pacto es quebrantado (11:22). Abarca 11:16-28</td><td>—</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>"
   },
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel»: son librados los «inscritos en el libro» (12:1). Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel»: son librados los «inscritos en el libro» (12:1). Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>"
   },
   {
    "t": "🧭 Lo que muestra la comparación",
@@ -61131,17 +61161,17 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Personajes de la historia (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-486 a.C.</td></tr><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-485 a.C.</td></tr><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata (Pseudo-Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata o Bardiya (falso Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (4)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I.</td><td>reinó 486-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.</td><td>reinó 485-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (5)",
@@ -61400,12 +61430,12 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (1)",
    "capa": "contexto",
-   "h": "<p>Daniel 8 va en las dos tablas: es el puente. Daniel 11 sigue su mismo orden y Daniel 12 lo termina.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Babilonia (605-539 a.C.)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Medo-Persia (539-331 a.C.)</td><td>Carnero de dos cuernos (8:3-4, 20)</td><td>«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2): el cuarto es Artajerjes, el del decreto de 457 a.C.</td><td>—</td></tr><tr><td class=\"key\">Grecia (331-168 a.C.)</td><td>Macho cabrío y su cuerno grande (8:5, 21)</td><td>Un rey valiente que domina con gran poder (11:3)</td><td>—</td></tr><tr><td class=\"key\">Los cuatro reinos de Grecia</td><td>Cuatro cuernos (8:8, 22)</td><td>El reino, «repartido hacia los cuatro vientos del cielo» (11:4); después, el rey del norte (Siria) contra el rey del sur (Egipto) (11:5-15)</td><td>—</td></tr><tr><td class=\"key\">Roma imperial (168 a.C.-476 d.C.)</td><td>Cuerno pequeño que crece hasta el ejército del cielo (8:9-10)</td><td>Se queda en la tierra gloriosa (11:16); el príncipe del pacto es quebrantado (11:22). Abarca 11:16-28</td><td>—</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44.</p>"
+   "h": "<p>Daniel 8 va en las dos tablas: es el puente. Daniel 11 sigue su mismo orden y Daniel 12 lo termina.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Babilonia (605-539 a.C.)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Medo-Persia (539-331 a.C.)</td><td>Carnero de dos cuernos (8:3-4, 20)</td><td>«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2): Cambises II, Bardiya y Darío I; el cuarto es Jerjes I (Asuero), que levantó a todos contra Grecia</td><td>—</td></tr><tr><td class=\"key\">Grecia (331-168 a.C.)</td><td>Macho cabrío y su cuerno grande (8:5, 21)</td><td>Un rey valiente que domina con gran poder (11:3)</td><td>—</td></tr><tr><td class=\"key\">Los cuatro reinos de Grecia</td><td>Cuatro cuernos (8:8, 22)</td><td>El reino, «repartido hacia los cuatro vientos del cielo» (11:4); después, el rey del norte (Siria) contra el rey del sur (Egipto) (11:5-15)</td><td>—</td></tr><tr><td class=\"key\">Roma imperial (168 a.C.-476 d.C.)</td><td>Cuerno pequeño que crece hasta el ejército del cielo (8:9-10)</td><td>Se queda en la tierra gloriosa (11:16); el príncipe del pacto es quebrantado (11:22). Abarca 11:16-28</td><td>—</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>"
   },
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel»: son librados los «inscritos en el libro» (12:1). Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel»: son librados los «inscritos en el libro» (12:1). Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>"
   },
   {
    "t": "🧭 Lo que muestra la comparación",
@@ -61457,17 +61487,17 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Personajes de la historia (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-486 a.C.</td></tr><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-485 a.C.</td></tr><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata (Pseudo-Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata o Bardiya (falso Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (4)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I.</td><td>reinó 486-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.</td><td>reinó 485-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (5)",
@@ -62431,7 +62461,7 @@ const TARJETAS = [
  {
   "cap": "d11",
   "f": "¿Quién es el cuarto rey persa que \"se hará de grandes riquezas, más que todos ellos\"? (Daniel 11:2)",
-  "r": "Artajerjes I (465-424 a.C.), el del decreto de 457 a.C. (Esdras 7). Los tres anteriores: Cambises, Darío I y Asuero (Jerjes I)."
+  "r": "Jerjes I, o Asuero (485-465 a.C.), el rey de Ester, que invadió Grecia en 480 a.C. Los tres anteriores, después de Ciro: Cambises II, Bardiya (el falso Esmerdis) y Darío I."
  },
  {
   "cap": "d11",
@@ -72960,8 +72990,8 @@ function filtroCapas(){
    entra en botones (las citas bíblicas ya son botones), ni en títulos, ni en
    la línea de la fuente. Un alias con `caps` solo vale en esos capítulos
    (p. ej. «Darío» es Darío de Media en Daniel 6 y Darío III en Daniel 8).
-   En cada sección se marca solo la PRIMERA vez que sale cada persona: marcar
-   las veinte veces que dice «Daniel» volvería el texto un campo de botones. */
+   v190 (Camilo, 13-oct: «personajes todas las veces»): se marca cada vez que
+   sale el nombre, no solo la primera. */
 let perRe=null, perDe=null;
 function perPrepara(){
   if(perRe||typeof PERSONAJES==='undefined')return;
@@ -72978,7 +73008,6 @@ const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id=
 function personasTocables(html,capId){
   perPrepara();
   if(!perRe)return html;
-  const vistos=new Set();
   /* La línea de la fuente no se toca: ahí van autores, no personajes. */
   return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>)/).map(parte=>{
     if(/^<p class="sec-fuente">/.test(parte))return parte;
@@ -72992,8 +73021,7 @@ function personasTocables(html,capId){
       if(dentro>0||!tr.trim())return tr;
       return tr.replace(perRe,t=>{
         const c=(perDe[t]||[]).find(x=>!x.caps||x.caps.includes(capId));
-        if(!c||vistos.has(c.id))return t;
-        vistos.add(c.id);
+        if(!c)return t;
         return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+t+'</button>';
       });
     }).join('');
@@ -73017,10 +73045,46 @@ function verPersona(id){
       '<p class="sec-fuente">Fuente: '+p.fuente+'</p></div></div>','per');
 }
 
+/* ───────── EL CANDELABRO DE DANIEL 1-7 (v190) ─────────
+   Camilo (13-oct) quiere explicar el quiasmo con un candelabro, como en su
+   presentación: Daniel 1 en el centro y las parejas 2-7, 3-6 y 4-5 en los
+   brazos, cada pareja de su color. Tocar una lámpara la enciende y su pareja
+   se ve a media luz, en el mismo color; las demás se apagan. La explicación va
+   debajo de la imagen, nunca encima. Las x salen de las llamas de la imagen
+   (laminas/quiasmo/candelabro.webp, 900 x 900). */
+const QM={
+  orden:[2,3,4,1,5,6,7], x:[66,190,316,443,575,702,827],
+  color:{1:'#F4EEE2',2:'#F08A4B',7:'#F08A4B',3:'#F2C94C',6:'#F2C94C',4:'#A78BFA',5:'#A78BFA'},
+  par:{2:7,7:2,3:6,6:3,4:5,5:4},
+  txt:{
+    1:['Daniel 1: el centro','Escrito en hebreo, abre el libro y lo sostiene: «el Señor entregó» a Joacim en manos de Nabucodonosor (1:2) y cuatro jóvenes fieles se mantienen firmes en Babilonia (1:8). Lo que viene después muestra lo mismo en grande: Dios gobierna la historia y cuida a los suyos.'],
+    2:['Daniel 2 y Daniel 7','Cuatro reinos (cuatro metales, cuatro bestias) y después el reino eterno de Dios (2:44; 7:27).'],
+    3:['Daniel 3 y Daniel 6','Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar» (3:17; 6:16).'],
+    4:['Daniel 4 y Daniel 5','Dos reyes de Babilonia soberbios: uno es humillado y restaurado (4:34); el otro, juzgado para siempre (5:30).']}
+};
+function quiasmoHTML(){
+  const src=LAMINAS_DIR+'quiasmo/candelabro.webp';
+  return '<div class="qm" data-sel=""><div class="qm-esc"><img class="qm-img" src="'+src+'" alt="Candelabro de siete brazos: Daniel 1 en el centro y sus parejas" loading="lazy">'+
+    QM.orden.map((n,i)=>'<button type="button" class="qm-l" data-n="'+n+'" style="--c:'+QM.color[n]+';left:'+(QM.x[i]/9)+'%" onclick="qmToca('+n+')" aria-label="Daniel '+n+'">'+
+      '<span class="qm-g" aria-hidden="true"></span><b>'+(n===1?'Cap. 1':'Cap. '+n)+'</b></button>').join('')+
+    '</div><div class="qm-txt" aria-live="polite"><p class="qm-pista">Toca una lámpara para ver su pareja.</p></div></div>';
+}
+function qmToca(n){
+  const q=document.querySelector('#detalle .qm');if(!q)return;
+  const par=QM.par[n]||0, misma=q.getAttribute('data-sel')===String(n);
+  q.setAttribute('data-sel',misma?'':String(n));
+  q.querySelectorAll('.qm-l').forEach(b=>{const k=+b.getAttribute('data-n');
+    b.classList.toggle('on',!misma&&k===n);b.classList.toggle('par',!misma&&k===par);
+    b.classList.toggle('off',!misma&&k!==n&&k!==par);b.setAttribute('aria-pressed',String(!misma&&k===n));});
+  const t=QM.txt[Math.min(n,par||n)]||QM.txt[n];
+  q.querySelector('.qm-txt').innerHTML=misma?'<p class="qm-pista">Toca una lámpara para ver su pareja.</p>':
+    '<div class="qm-t" style="--c:'+QM.color[n]+'">'+esc(t[0])+'</div><p>'+refsTocables(esc(t[1]),'d2')+'</p>';
+}
+
 /* v188: la fuente de cada sección va en una sola línea corta y discreta. */
 const conFuente=h=>h.replace(/<p class="fuente"><small>(Fuentes?:[\s\S]*?)<\/small><\/p>/g,'<p>$1</p>').replace(/<p>(Fuentes?:)/g,'<p class="sec-fuente">$1');
 const htmlSec=(id,p)=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+'>'+cabezaSec(s)+
-  personasTocables(conFuente(refsTocables(s.h,s.cap||id)),s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>';
+  personasTocables(conFuente(refsTocables(s.h,s.cap||id)),s.cap||id).replace('<div class="qm-aqui"></div>',()=>quiasmoHTML())+(s.preg?recordarHTML(s.preg):'')+'</div>';
 
 /* v187: «Para el examen» y «Para profundizar». Antes la interpretación iba al
    final del mismo estudio y solo un filtro la separaba: se leía todo seguido y

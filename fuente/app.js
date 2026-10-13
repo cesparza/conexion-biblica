@@ -2618,8 +2618,8 @@ function filtroCapas(){
    entra en botones (las citas bíblicas ya son botones), ni en títulos, ni en
    la línea de la fuente. Un alias con `caps` solo vale en esos capítulos
    (p. ej. «Darío» es Darío de Media en Daniel 6 y Darío III en Daniel 8).
-   En cada sección se marca solo la PRIMERA vez que sale cada persona: marcar
-   las veinte veces que dice «Daniel» volvería el texto un campo de botones. */
+   v190 (Camilo, 13-oct: «personajes todas las veces»): se marca cada vez que
+   sale el nombre, no solo la primera. */
 let perRe=null, perDe=null;
 function perPrepara(){
   if(perRe||typeof PERSONAJES==='undefined')return;
@@ -2636,7 +2636,6 @@ const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id=
 function personasTocables(html,capId){
   perPrepara();
   if(!perRe)return html;
-  const vistos=new Set();
   /* La línea de la fuente no se toca: ahí van autores, no personajes. */
   return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>)/).map(parte=>{
     if(/^<p class="sec-fuente">/.test(parte))return parte;
@@ -2650,8 +2649,7 @@ function personasTocables(html,capId){
       if(dentro>0||!tr.trim())return tr;
       return tr.replace(perRe,t=>{
         const c=(perDe[t]||[]).find(x=>!x.caps||x.caps.includes(capId));
-        if(!c||vistos.has(c.id))return t;
-        vistos.add(c.id);
+        if(!c)return t;
         return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+t+'</button>';
       });
     }).join('');
@@ -2675,10 +2673,46 @@ function verPersona(id){
       '<p class="sec-fuente">Fuente: '+p.fuente+'</p></div></div>','per');
 }
 
+/* ───────── EL CANDELABRO DE DANIEL 1-7 (v190) ─────────
+   Camilo (13-oct) quiere explicar el quiasmo con un candelabro, como en su
+   presentación: Daniel 1 en el centro y las parejas 2-7, 3-6 y 4-5 en los
+   brazos, cada pareja de su color. Tocar una lámpara la enciende y su pareja
+   se ve a media luz, en el mismo color; las demás se apagan. La explicación va
+   debajo de la imagen, nunca encima. Las x salen de las llamas de la imagen
+   (laminas/quiasmo/candelabro.webp, 900 x 900). */
+const QM={
+  orden:[2,3,4,1,5,6,7], x:[66,190,316,443,575,702,827],
+  color:{1:'#F4EEE2',2:'#F08A4B',7:'#F08A4B',3:'#F2C94C',6:'#F2C94C',4:'#A78BFA',5:'#A78BFA'},
+  par:{2:7,7:2,3:6,6:3,4:5,5:4},
+  txt:{
+    1:['Daniel 1: el centro','Escrito en hebreo, abre el libro y lo sostiene: «el Señor entregó» a Joacim en manos de Nabucodonosor (1:2) y cuatro jóvenes fieles se mantienen firmes en Babilonia (1:8). Lo que viene después muestra lo mismo en grande: Dios gobierna la historia y cuida a los suyos.'],
+    2:['Daniel 2 y Daniel 7','Cuatro reinos (cuatro metales, cuatro bestias) y después el reino eterno de Dios (2:44; 7:27).'],
+    3:['Daniel 3 y Daniel 6','Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar» (3:17; 6:16).'],
+    4:['Daniel 4 y Daniel 5','Dos reyes de Babilonia soberbios: uno es humillado y restaurado (4:34); el otro, juzgado para siempre (5:30).']}
+};
+function quiasmoHTML(){
+  const src=LAMINAS_DIR+'quiasmo/candelabro.webp';
+  return '<div class="qm" data-sel=""><div class="qm-esc"><img class="qm-img" src="'+src+'" alt="Candelabro de siete brazos: Daniel 1 en el centro y sus parejas" loading="lazy">'+
+    QM.orden.map((n,i)=>'<button type="button" class="qm-l" data-n="'+n+'" style="--c:'+QM.color[n]+';left:'+(QM.x[i]/9)+'%" onclick="qmToca('+n+')" aria-label="Daniel '+n+'">'+
+      '<span class="qm-g" aria-hidden="true"></span><b>'+(n===1?'Cap. 1':'Cap. '+n)+'</b></button>').join('')+
+    '</div><div class="qm-txt" aria-live="polite"><p class="qm-pista">Toca una lámpara para ver su pareja.</p></div></div>';
+}
+function qmToca(n){
+  const q=document.querySelector('#detalle .qm');if(!q)return;
+  const par=QM.par[n]||0, misma=q.getAttribute('data-sel')===String(n);
+  q.setAttribute('data-sel',misma?'':String(n));
+  q.querySelectorAll('.qm-l').forEach(b=>{const k=+b.getAttribute('data-n');
+    b.classList.toggle('on',!misma&&k===n);b.classList.toggle('par',!misma&&k===par);
+    b.classList.toggle('off',!misma&&k!==n&&k!==par);b.setAttribute('aria-pressed',String(!misma&&k===n));});
+  const t=QM.txt[Math.min(n,par||n)]||QM.txt[n];
+  q.querySelector('.qm-txt').innerHTML=misma?'<p class="qm-pista">Toca una lámpara para ver su pareja.</p>':
+    '<div class="qm-t" style="--c:'+QM.color[n]+'">'+esc(t[0])+'</div><p>'+refsTocables(esc(t[1]),'d2')+'</p>';
+}
+
 /* v188: la fuente de cada sección va en una sola línea corta y discreta. */
 const conFuente=h=>h.replace(/<p class="fuente"><small>(Fuentes?:[\s\S]*?)<\/small><\/p>/g,'<p>$1</p>').replace(/<p>(Fuentes?:)/g,'<p class="sec-fuente">$1');
 const htmlSec=(id,p)=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+'>'+cabezaSec(s)+
-  personasTocables(conFuente(refsTocables(s.h,s.cap||id)),s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>';
+  personasTocables(conFuente(refsTocables(s.h,s.cap||id)),s.cap||id).replace('<div class="qm-aqui"></div>',()=>quiasmoHTML())+(s.preg?recordarHTML(s.preg):'')+'</div>';
 
 /* v187: «Para el examen» y «Para profundizar». Antes la interpretación iba al
    final del mismo estudio y solo un filtro la separaba: se leía todo seguido y

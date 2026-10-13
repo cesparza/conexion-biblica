@@ -234,7 +234,7 @@ TARJETAS.push(
 {cap:'d10', f:'¿Cuándo empezó a ser oída la oración de Daniel, según el ángel?', r:'Desde el primer día en que oró y se humilló, aunque la respuesta visible tardó tres semanas por la resistencia angélica invisible (Daniel 10:12-13).'},
 );
 TARJETAS.push(
-{cap:'d11', f:'¿Quién es el cuarto rey persa que "se hará de grandes riquezas, más que todos ellos"? (Daniel 11:2)', r:'Artajerjes I (465-424 a.C.), el del decreto de 457 a.C. (Esdras 7). Los tres anteriores: Cambises, Darío I y Asuero (Jerjes I).'},
+{cap:'d11', f:'¿Quién es el cuarto rey persa que "se hará de grandes riquezas, más que todos ellos"? (Daniel 11:2)', r:'Jerjes I, o Asuero (485-465 a.C.), el rey de Ester, que invadió Grecia en 480 a.C. Los tres anteriores, después de Ciro: Cambises II, Bardiya (el falso Esmerdis) y Darío I.'},
 {cap:'d11', f:'¿En qué se divide el reino de Alejandro tras su muerte, según Daniel 11:4?', r:'Se reparte "a los cuatro vientos del cielo": el mismo reparto entre cuatro generales que describe Daniel 8.'},
 {cap:'d11', f:'¿A qué dos reinos se refieren "rey del sur" y "rey del norte" en Daniel 11?', r:'Egipto (dinastía ptolemaica) y Siria (dinastía seléucida), los dos reinos entre los que quedó Palestina.'},
 {cap:'d11', f:'¿Qué matrimonio anuncia Daniel 11:6 y cómo termina?', r:'El matrimonio de Berenice (hija de Tolomeo II) con Antíoco II; termina en tragedia cuando Laodicea, la primera esposa repudiada, hace asesinar a Antíoco, a Berenice y a su hijo.'},
