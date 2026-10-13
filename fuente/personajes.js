@@ -1156,11 +1156,11 @@ const PERSONAJES = [
     quien: 'Sumo sacerdote judío en tiempos de los seléucidas.',
     hizo: [
       'Algunos lo ven como el «príncipe del pacto» de Daniel 11:22.',
-      'Pero ese príncipe es Jesucristo, cuya muerte anuncia la profecía.'
+      'Pero ese príncipe es Jesucristo: la profecía anuncia su muerte en la cruz, y después cómo se oculta su obra de intercesión en el santuario del cielo (Daniel 8:11; 11:31).'
     ],
     textos: 'Daniel 11:22; 9:26',
     alias: ['Onías III'],
-    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12; Treiyer, <i>Enigmas descifrados</i>, p. 85-86' },
   { id: 'atalo-iii', nombre: 'Atalo III', tipo: 'historico',
     fechas: 'reinó 138-133 a.C.',
     quien: 'Último rey de Pérgamo.',

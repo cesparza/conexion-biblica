@@ -1189,7 +1189,7 @@ BANCO.push(
  o:['El humilde nacimiento de Jesús','La crucifixión, que cesó el sacrificio','La destrucción final del templo','El bautismo de Juan el Bautista'],a:1},
 {cap:'d9',t:'mc',q:'¿En qué año fue crucificado Jesús, tres años y medio después de su bautismo?',
  o:['El año veintisiete después de Cristo','El año treinta y uno después de Cristo','El año treinta y cuatro después de Cristo','El año setenta después de Cristo'],a:1},
-{cap:'d9',t:'mc',q:'¿Qué significa "se quitará la vida al Mesías, mas no por sí" (Daniel 9:26)?',
+{cap:'d9',t:'mc',q:'¿Por qué murió el Mesías, de quien Daniel 9:26 dice «se quitará la vida al Mesías»?',
  o:['Que Jesús murió por sus propios pecados','Que Jesús murió por los pecados ajenos','Que en realidad Jesús no murió','Que el Mesías se quitó la vida'],a:1},
 {cap:'d9',t:'mc',q:'¿En qué año terminan las setenta semanas (490 años) contadas desde el 457 a.C.?',
  o:['El año veintisiete después de Cristo','El año treinta y uno después de Cristo','El año treinta y cuatro después de Cristo','El año setenta después de Cristo'],a:2},
@@ -1226,7 +1226,7 @@ BANCO.push(
 {cap:'d10',t:'mc',q:'¿Qué dos textos del Nuevo Testamento atribuyen la resurrección de los muertos tanto a "la voz del arcángel" como a "la voz del Hijo de Dios"?',
  o:['Mateo 24 y Marcos 13','1 Tesalonicenses 4 y Juan 5','Romanos 8 y Gálatas 3','Efesios 6 y Colosenses 1'],a:1},
 {cap:'d10',t:'mc',q:'¿Qué título le da Daniel 12:1 a Miguel?',
- o:['"El siervo que sufre"','"El gran Príncipe que defiende"','"El cordero inmolado"','"El ángel de la guarda"'],a:1},
+ o:['«El siervo que sufre»','«El gran príncipe»','«El cordero inmolado»','«El ángel de la guarda»'],a:1},
 {cap:'d10',t:'mc',q:'¿Qué patrón de vida de Daniel corona el capítulo 10?',
  o:['Su fama como intérprete de sueños','Su vida constante de oración','Su fortuna reunida en Babilonia','Su alto cargo en la corte'],a:1},
 {cap:'d10',t:'mc',q:'Según el ángel, ¿desde cuándo empezó a ser oída la oración de Daniel? (Daniel 10:12)',
@@ -1251,21 +1251,21 @@ BANCO.push(
  o:['En un reino próspero y estable','En el asesinato de ambos y su hijo','En el exilio de la pareja a Roma','En la conversión de él al judaísmo'],a:1},
 {cap:'d11',t:'mc',q:'¿Qué batalla gana Antíoco III "el Grande" en 198 a.C., tomando el control de Palestina?',
  o:['La batalla de Panias, en el norte','La batalla naval de Actium','La antigua batalla de Maratón','La batalla de Issos, contra Darío'],a:0},
-{cap:'d11',t:'mc',q:'¿A qué potencia se refieren las "naves de Quitim" que detienen a Antíoco III en Daniel 11:30?',
- o:['Se refieren a Egipto y sus barcos','Se refieren al Imperio Romano','Se refieren a los partos de oriente','Se refieren a los griegos macedonios'],a:1},
-{cap:'d11',t:'mc',q:'Algunos identifican al "Príncipe de la alianza" del versículo 22 con el sumo sacerdote Onías III. ¿Quién es en realidad, según esta lectura?',
+{cap:'d11',t:'mc',q:'Las "naves de Quitim" de Daniel 11:30 vienen contra el rey del norte. ¿Qué poder es ese rey en este versículo?',
+ o:['Antíoco III el Grande','Roma papal (538-1798)','El Imperio persa','Los Tolomeos de Egipto'],a:1},
+{cap:'d11',t:'mc',q:'Algunos identifican al «príncipe del pacto» del versículo 22 con el sumo sacerdote Onías III. ¿Quién es en realidad, según esta lectura?',
  o:['Es Jesucristo mismo','Es el arcángel Miguel','Es el propio profeta Daniel','Es el rey persa Darío'],a:0},
-{cap:'d11',t:'mc',q:'¿A qué período de persecución corresponde "los doctos... bajo la espada y la llama" de Daniel 11:33?',
+{cap:'d11',t:'mc',q:'¿A qué período de persecución corresponde «los sabios del pueblo» que «caerán a espada y a fuego» (Daniel 11:33)?',
  o:['A la antigua conquista babilónica','A los 1.260 años de la Edad Media','A la persecución de Antíoco solamente','A la persecución romana del siglo I'],a:1},
-{cap:'d11',t:'mc',q:'¿A qué poder identifica la lectura adventista con "el rey que se engreirá por encima de todo dios" (Daniel 11:36-38)?',
+{cap:'d11',t:'mc',q:'¿A qué poder identifica la lectura adventista con el rey que «se engrandecerá sobre todo dios» (Daniel 11:36-38)?',
  o:['A la Roma pagana original','Al papado medieval','Solo a Antíoco Epífanes','Al Imperio Otomano'],a:1},
-{cap:'d11',t:'mc',q:'¿Qué actitud tomó Elena de White frente a los versículos 40-45 de Daniel 11, según los comentaristas?',
- o:['Los citó palabra por palabra','Evitó parafrasearlos con precisión','Los declaró ya cumplidos','Los descartó como no inspirados'],a:1},
+{cap:'d11',t:'mc',q:'¿Qué hace El conflicto de los siglos con los versículos 40-45 de Daniel 11?',
+ o:['Los cita palabra por palabra','No los cita: cita Daniel 12:1','Los declara ya cumplidos','Los descarta como no inspirados'],a:1},
 {cap:'d11',t:'mc',q:'¿Con qué pasaje es paralelo el fin del "rey del norte" en Daniel 11:45?',
  o:['Con la caída de la torre de Babel','Con el fin del cuerno pequeño','Con el sueño de Nabucodonosor','Con la visión del carnero'],a:1},
 {cap:'d11',t:'tf',q:'Los "rey del sur" y "rey del norte" de Daniel 11 son siempre la misma persona a lo largo de todo el capítulo.',
  a:false,e:'Falso: son títulos que corresponden a distintos reyes de las dinastías ptolemaica y seléucida a lo largo del tiempo, y desde el versículo 30 el "rey del norte" pasa a describir a Roma.'},
-{cap:'d11',t:'tf',q:'Antíoco Epífanes cumple por completo, según Maxwell, la profecía de la "abominación desoladora" del versículo 31.',
+{cap:'d11',t:'tf',q:'Antíoco Epífanes cumple por completo la profecía de la "abominación desoladora" del versículo 31.',
  a:false,e:'Falso: Jesús mismo, en Mateo 24:15, habló de la "abominación desoladora" como algo todavía futuro casi dos siglos después de Antíoco Epífanes.'}
 );
 BANCO.push(
@@ -1275,20 +1275,20 @@ BANCO.push(
  o:['En realidad no hay diferencia','Ahora los santos son librados de morir','En que esta dura mil años','En que solo afecta a los gentiles'],a:1},
 {cap:'d12',t:'mc',q:'¿Qué tipo de resurrección describe Daniel 12:2?',
  o:['La resurrección general de todos','Una resurrección especial y limitada','La resurrección de solo profetas','No es una resurrección real'],a:1},
-{cap:'d12',t:'mc',q:'¿Quiénes son "los doctos" que brillarán como el firmamento, según Daniel 12:3?',
+{cap:'d12',t:'mc',q:'¿Quiénes son «los entendidos» que «resplandecerán como el resplandor del firmamento» (Daniel 12:3)?',
  o:['Los que acumularon riquezas','Los que comprendieron y enseñaron','Los reyes de toda la tierra','Solo los sacerdotes del templo'],a:1},
-{cap:'d12',t:'mc',q:'¿Qué partes del libro de Daniel quedaban "selladas hasta el tiempo del Fin" (Daniel 12:4)?',
+{cap:'d12',t:'mc',q:'¿Qué partes del libro de Daniel quedaban selladas «hasta el tiempo del fin» (Daniel 12:4)?',
  o:['Todo el libro por completo','Solo lo referido al tiempo del fin','Solo las genealogías del libro','Ninguna parte quedó sellada'],a:1},
-{cap:'d12',t:'mc',q:'¿A qué período corresponde "un tiempo, tiempos y medio tiempo" de Daniel 12:7?',
+{cap:'d12',t:'mc',q:'¿A qué período corresponde «tiempo, tiempos y la mitad de un tiempo» de Daniel 12:7?',
  o:['A los 1.260 años, como en Daniel 7','A los 2.300 años completos','A las setenta semanas','A los 40 años del desierto'],a:0},
-{cap:'d12',t:'mc',q:'¿Qué pregunta de Daniel decidió Miguel NO responder?',
- o:['"¿Quién eres tú en verdad?"','"¿Cuál será el fin de todo esto?"','"¿Por qué hay guerra en Persia?"','"¿Cuándo murió Alejandro?"'],a:1},
+{cap:'d12',t:'mc',q:'¿Qué pregunta de Daniel recibió como respuesta «Anda, Daniel, pues estas palabras están cerradas y selladas hasta el tiempo del fin» (12:9)?',
+ o:['«¿Quién eres tú en verdad?»','«¿Cuál será el fin de estas cosas?»','«¿Por qué hay guerra en Persia?»','«¿Cuándo murió Alejandro?»'],a:1},
 {cap:'d12',t:'mc',q:'¿Qué diferencia hay entre el libro sellado de Daniel 12 y el libro que aparece en Apocalipsis 10?',
  o:['Son libros distintos, sin relación','En Apocalipsis 10 aparece ya abierto','El de Daniel nunca se vuelve a nombrar','Ambos siguen sellados para siempre'],a:1},
 {cap:'d12',t:'mc',q:'¿Qué dos plazos de días menciona Daniel 12:11-12?',
  o:['Cuatrocientos noventa y 1.260','Mil doscientos noventa y 1.335','Dos mil trescientos y 1.844','Setenta y cuatrocientos ochenta y tres'],a:1},
-{cap:'d12',t:'mc',q:'¿Qué reconoce honestamente Maxwell sobre los 1.290 y 1.335 días?',
- o:['Que ya se cumplieron en 1844','Que aún no se sabe con certeza cómo','Que solo hablan de la vida de Daniel','Que el Nuevo Testamento los abolió'],a:1},
+{cap:'d12',t:'mc',q:'¿Desde qué momento cuenta Daniel 12:11 los 1.290 días?',
+ o:['Desde el decreto de Artajerjes','Desde que se quita el continuo','Desde la muerte de Cristo','Desde la caída de Babilonia'],a:1},
 {cap:'d12',t:'mc',q:'¿Cuál es la promesa personal de despedida que recibe Daniel en el versículo 13?',
  o:['Que sería rey de Babilonia','Que descansaría y luego resucitaría','Que jamás llegaría a morir','Que vería caer otro imperio'],a:1},
 {cap:'d12',t:'tf',q:'La resurrección de Daniel 12:2 es la misma resurrección general de todos los justos e injustos que describe Apocalipsis 20.',
@@ -1509,7 +1509,7 @@ BANCO.push(
 {cap:'d9',t:'mc',q:'Mientras Daniel oraba confesando el pecado de su pueblo, ¿qué hizo el ángel Gabriel, según Daniel 9:21?',
  o:['Esperó tres semanas antes de acercarse','Le habló en un sueño esa misma noche','Voló velozmente hacia él','Envió primero a Miguel en su lugar'],a:2},
 {cap:'d9',t:'tf',q:'En su oración de Daniel 9, Daniel reconoce el pecado colectivo de su pueblo sin excusarlo ni atribuirlo solo a otros.',
- a:true,e:'Verdadero. "Hemos pecado, hemos hecho iniquidad" (v. 5): Daniel se incluye en la confesión.'},
+ a:true,e:'Verdadero. «Hemos pecado, hemos cometido iniquidad» (v. 5): Daniel se incluye en la confesión.'},
 {cap:'d9',t:'mc',q:'¿En qué basa Daniel su pedido a Dios en Daniel 9:18, y no en los méritos de su pueblo?',
  o:['En la fidelidad de los sacerdotes','En las grandes misericordias de Dios','En el número de años ya cumplidos','En las promesas hechas a Ciro'],a:1},
 {cap:'d9',t:'tf',q:'Según Daniel 9:1-2, Daniel entendió por los libros de Jeremías que los 70 años de desolación de Jerusalén estaban por cumplirse.',
@@ -1546,7 +1546,7 @@ BANCO.push(
  o:['Deja de aparecer en la profecía','Empieza a referirse exclusivamente a Egipto','Deja de referirse solo a Siria y pasa a describir a Roma','Se convierte en un título honorífico sin poder real'],a:2},
 {cap:'d11',t:'mc',q:'Según Mateo 24:15, ¿qué dijo Jesús sobre "la abominación desoladora" de Daniel, casi dos siglos después de Antíoco Epífanes?',
  o:['Que ya se había cumplido por completo','Que todavía era futura en su tiempo','Que se refería únicamente al pasado de Israel','Que no tenía relación con su propio ministerio'],a:1},
-{cap:'d11',t:'mc',q:'¿Qué reclamó el poder identificado con "el rey que se engreirá por encima de todo dios" (Daniel 11:36-38), según la lectura adventista?',
+{cap:'d11',t:'mc',q:'¿Qué reclamó el poder identificado con el rey que «se engrandecerá sobre todo dios» (Daniel 11:36-38), según la lectura adventista?',
  o:['El derecho exclusivo de acuñar moneda en todo el imperio','Autoridad para perdonar pecados, condenar disidentes y modificar los Diez Mandamientos','El control militar directo de todos los ejércitos europeos','La propiedad de todas las tierras conquistadas a Roma'],a:1},
 {cap:'d11',t:'tf',q:'Los versículos 40 a 45 de Daniel 11 son tratados con especial cautela por los comentaristas adventistas, incluida Elena de White.',
  a:true,e:'Verdadero. Elena de White evitó deliberadamente parafrasear con precisión estos versículos en El conflicto de los siglos.'},
@@ -1555,18 +1555,18 @@ BANCO.push(
  o:['Que el juicio celestial apenas está por comenzar en el santuario del cielo','Que el juicio investigador ya concluyó, y Jesús se levanta para venir a la tierra','Que Miguel reemplaza a Jesús como juez final de todos los habitantes','Que el juicio se pospone indefinidamente hasta que todos se arrepientan'],a:1},
 {cap:'d12',t:'tf',q:'A diferencia de la tribulación de Mateo 24:9, en la tribulación final de Daniel 12:1 los santos son librados de la muerte, no entregados a ella.',
  a:true,e:'Verdadero. Compárese Apocalipsis 2:10 con Apocalipsis 3:10.'},
-{cap:'d12',t:'mc',q:'Según Daniel 12:4, ¿qué otra cosa ocurriría además de que "muchos andarán errantes acá y allá"?',
+{cap:'d12',t:'mc',q:'Según Daniel 12:4, ¿qué otra cosa ocurriría además de que «muchos correrán de aquí para allá»?',
  o:['Los sellos del libro nunca se romperían','La ciencia (el conocimiento) se aumentaría','El libro de Daniel se perdería por completo','El pueblo judío recuperaría el templo'],a:1},
 {cap:'d12',t:'mc',q:'¿Qué diferencia hay entre el juramento de Daniel 12:7 y el de Apocalipsis 10:6?',
- o:['Ambos juramentos dicen exactamente lo mismo','El de Apocalipsis 10 anula el de Daniel 12','El ángel de Apocalipsis 10 jura que "ya no habrá más dilación"','El de Daniel 12 lo hace un ángel distinto a Miguel'],a:2},
+ o:['Ambos juramentos dicen exactamente lo mismo','El de Apocalipsis 10 anula el de Daniel 12','El ángel de Apocalipsis 10 jura que el tiempo no sería más','El de Daniel 12 lo hace un ángel distinto a Miguel'],a:2},
 {cap:'d12',t:'mc',q:'Según Daniel 12:2, ¿a quiénes además de algunos justos incluye la resurrección especial?',
  o:['A todos los reyes paganos mencionados en el libro','A quienes participaron directamente en la crucifixión de Jesús','Solo a los profetas del Antiguo Testamento','A los ángeles caídos, para su juicio final'],a:1},
 {cap:'d12',t:'mc',q:'En el paralelismo poético de Daniel 12:3, ¿quiénes son "los doctos" que brillarán como el firmamento?',
  o:['Una élite intelectual de sabios, separada del resto del pueblo por su estudio','Únicamente los ángeles que ministran día y noche en el santuario celestial','Los que estudiaron las profecías, las compartieron con otros y se dejaron purificar por ellas','Los sacerdotes que oficiaban en el templo de Jerusalén antes del cautiverio'],a:2},
-{cap:'d12',t:'tf',q:'Maxwell resume el mensaje final del libro de Daniel diciendo que la primera fase del juicio final ya está en sesión.',
- a:true,e:'Verdadero. Es el tercero de los seis puntos con que Maxwell cierra el libro.'},
-{cap:'d12',t:'mc',q:'Según el resumen de Maxwell al cierre de Daniel 12, ¿qué anhela Cristo, a un costo infinito para sí mismo?',
- o:['Que todos los imperios humanos desaparezcan de inmediato','Que su alianza con su pueblo prevalezca','Que el conocimiento humano deje de aumentar','Que el juicio investigador termine antes de tiempo'],a:1},
+{cap:'d12',t:'tf',q:'Una de las buenas noticias del libro de Daniel es que la primera fase del juicio final ya está en sesión.',
+ a:true,e:'Verdadero. Es la tercera de las seis buenas noticias con que se resume el mensaje del libro. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 309.'},
+{cap:'d12',t:'mc',q:'Al resumir el mensaje de Daniel, ¿qué anhela Cristo, a un costo infinito para sí mismo?',
+ o:['Que todos los imperios humanos desaparezcan de inmediato','Que su alianza con su pueblo prevalezca','Que el conocimiento humano deje de aumentar','Que el juicio investigador termine antes de tiempo'],a:1,e:'Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 309.'},
 
 );
 BANCO.push(
@@ -1577,14 +1577,14 @@ BANCO.push(
 {cap:'d10',t:'tf',q:'Según el capítulo, la vejez fue para Daniel el final de su utilidad espiritual.',
  a:false,e:'Falso. Fue la continuación natural de una vida entera de fidelidad: a los noventa años ayunó y recibió la visión más larga del libro.'},
 
-{cap:'d12',t:'mc',q:'Según el primero de los seis puntos con que Maxwell cierra el libro de Daniel, ¿qué sabe Dios?',
- o:['Solo el pasado y el presente, no el futuro','El pasado, el presente y el futuro; nada lo sorprende','Únicamente lo que los profetas le revelan','El futuro de las naciones, pero no el de cada persona'],a:1},
-{cap:'d12',t:'mc',q:'Según el segundo punto del resumen de Maxwell, ¿qué dirige Dios, y qué les espera a todos?',
- o:['El destino de los imperios y de cada persona; todos serán llevados a juicio','Solo el destino de los imperios, no el de cada persona ni el de su familia','El calendario religioso de cada nación y las fiestas que debe celebrar','El resultado de las guerras entre reyes, sin ocuparse de nadie más'],a:0},
-{cap:'d12',t:'mc',q:'Según el cuarto punto del resumen de Maxwell, ¿de qué puede librarnos Dios ahora, y de qué nos librará pronto?',
- o:['De leones, hornos de fuego y toda dificultad presente; pronto, de la muerte misma','Solo de dificultades pasadas, ya superadas','De los imperios humanos, pero no de la muerte','De la muerte únicamente, sin relación con las dificultades presentes'],a:0},
-{cap:'d12',t:'tf',q:'Según el sexto punto del resumen de Maxwell, Dios no concibe la eternidad sin nosotros a su lado.',
- a:true,e:'Verdadero. Es el cierre del resumen de seis puntos con que Maxwell termina el libro.'},
+{cap:'d12',t:'mc',q:'Según la primera buena noticia del libro de Daniel, ¿qué sabe Dios?',
+ o:['Solo el pasado y el presente, no el futuro','El pasado, el presente y el futuro; nada lo sorprende','Únicamente lo que los profetas le revelan','El futuro de las naciones, pero no el de cada persona'],a:1,e:'Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 309.'},
+{cap:'d12',t:'mc',q:'Según la segunda buena noticia del libro de Daniel, ¿qué dirige Dios, y qué les espera a todos?',
+ o:['El destino de los imperios y de cada persona; todos serán llevados a juicio','Solo el destino de los imperios, no el de cada persona ni el de su familia','El calendario religioso de cada nación y las fiestas que debe celebrar','El resultado de las guerras entre reyes, sin ocuparse de nadie más'],a:0,e:'Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 309.'},
+{cap:'d12',t:'mc',q:'Según la cuarta buena noticia del libro de Daniel, ¿de qué puede librarnos Dios ahora, y de qué nos librará pronto?',
+ o:['De leones, hornos de fuego y toda dificultad presente; pronto, de la muerte misma','Solo de dificultades pasadas, ya superadas','De los imperios humanos, pero no de la muerte','De la muerte únicamente, sin relación con las dificultades presentes'],a:0,e:'Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 309.'},
+{cap:'d12',t:'tf',q:'La sexta buena noticia del libro de Daniel es que Dios no concibe la eternidad sin nosotros a su lado.',
+ a:true,e:'Verdadero. Es la última de las seis buenas noticias con que se resume el mensaje del libro. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 309.'},
 );
 BANCO.push(
   {cap:'d11',t:'mc',q:'¿Qué batalla de las guerras sirias (217 a.C.) es recordada por el uso de elefantes de guerra en ambos bandos?',
@@ -1603,7 +1603,7 @@ BANCO.push(
    a:false,e:'Fue exactamente lo contrario: sus propios príncipes lo abandonaron, y por eso tuvo que humillarse ante el papa para recuperar su trono.'},
   {cap:'d11',t:'mc',q:'¿Qué papa coronó a Carlomagno como emperador la Navidad del año 800?',
    o:['Gregorio I','León III','Esteban II','Juan XII'],a:1},
-  {cap:'d11',t:'mc',q:'¿Qué hecho de 1798 se identifica con el giro anunciado en Daniel 11:29 ("no será la postrera venida como la primera")?',
+  {cap:'d11',t:'mc',q:'¿Qué hecho de 1798 se identifica con el giro anunciado en Daniel 11:29 («la última venida no será como la primera»)?',
    o:['La coronación imperial de Carlomagno','La toma prisionero del papa Pío VI por tropas francesas','El Concilio de Trento, un siglo antes','La Reforma protestante de Lutero'],a:1},
 );
 
@@ -1614,7 +1614,7 @@ BANCO.push(
    a:false,e:'Es un socorro "pequeño" o parcial: distrae y debilita al perseguidor en varios momentos, pero la persecución solo termina con el fin de los 1.260 años en 1798.'},
   {cap:'d11',t:'mc',q:'¿Qué hecho de 1789-1798 le dio al papado la "herida de muerte" con la que se cierran los 1.260 años?',
    o:['El Concilio Vaticano I','La Revolución Francesa','La Reforma protestante','Las Cruzadas'],a:1},
-  {cap:'d11',t:'mc',q:'En la lectura de Daniel 11:37, ¿a quién identifica más plausiblemente la enigmática frase "el amado de las mujeres"?',
+  {cap:'d11',t:'mc',q:'En la lectura de Daniel 11:37, ¿a quién identifica más plausiblemente la enigmática frase «el amor de las mujeres»?',
    o:['A un papa concreto de la Edad Media, conocido por su poder','Al Mesías, el Redentor esperado por las mujeres de Israel','A la Virgen María, madre de Jesús, honrada por muchos creyentes','A un emperador romano cualquiera que persiguió a los judíos'],a:1},
   {cap:'d11',t:'mc',q:'¿Con qué práctica religiosa se identifica más plausiblemente el "dios de las fortalezas" o "dios ajeno" de Daniel 11:38-39?',
    o:['El bautismo cristiano de los creyentes, hecho por inmersión en agua','El Santísimo Sacramento de la Eucaristía, con la transubstanciación','El sacramento del matrimonio cristiano, celebrado en la iglesia','La confirmación de los jóvenes en la fe, con la imposición de manos'],a:1},
@@ -1681,7 +1681,7 @@ BANCO.push(
   {cap:'d6',f:'c',t:'mc',q:'Según el contraste que hace Isaías, ¿qué tenían que hacer con los ídolos Bel y Nebo cada Año Nuevo en Babilonia, a diferencia del Dios verdadero?',
    o:['Esconderlos de los enemigos que se acercaban a la ciudad','Cargarlos a lomo de animales, porque no podían moverse solos','Enterrarlos lejos, en el desierto, hasta el año siguiente','Pintarlos de oro y de colores nuevos para la fiesta del Año Nuevo'],a:1},
   {cap:'d6',t:'tf',q:'Cuando Daniel se enteró del decreto que prohibía orar, comenzó a orar pidiendo ayuda antes que nada.',
-   a:false,e:'El texto dice que oraba "dando gracias... así como lo había hecho siempre" (6:10): agradecía primero.'},
+   a:false,e:'El texto dice que «oraba y daba gracias delante de su Dios como solía hacerlo antes» (6:10).'},
   {cap:'d6',f:'c',t:'tf',q:'Daniel ya había recibido la visión de Daniel 7, con la promesa de la resurrección, varios años antes de ser arrojado al foso de los leones.',
    a:true,e:'Eso explica en parte su confianza esa noche: ya sabía que Dios vence a poderes mucho más temibles que un león.'},
 );
@@ -1700,16 +1700,16 @@ BANCO.push(
 );
 
 BANCO.push(
-  {cap:'d8',t:'tf',q:'Según Proverbios 21:1, citado por Maxwell, Dios no tiene ninguna influencia sobre las decisiones de los reyes paganos.',
-   a:false,e:'El texto dice justo lo contrario: "el corazón del rey es como el agua del canal en mano de Yahvéh, que él dirige donde quiere".'},
-  {cap:'d8',t:'mc',q:'¿Con qué gesto simbólico cumplió Alejandro la "prolongación de vida durante un tiempo" de Daniel 7:12 para las civilizaciones que conquistó?',
+  {cap:'d8',t:'tf',q:'Según Proverbios 21:1, Dios no tiene ninguna influencia sobre las decisiones de los reyes paganos.',
+   a:false,e:'Falso. El texto dice lo contrario: \"Como los repartimientos de las aguas, así está el corazón del rey en la mano de Jehová; a todo lo que quiere lo inclina\".'},
+  {cap:'d8',t:'mc',q:'¿Con qué gesto simbólico cumplió Alejandro lo de que «les había sido prolongada la vida hasta cierto tiempo» (Daniel 7:12) para las civilizaciones que conquistó?',
    o:['Se casó con una princesa persa y promovió miles de matrimonios mixtos entre sus soldados y mujeres persas','Prohibió por completo el uso del idioma griego en todos los territorios que había conquistado','Destruyó sistemáticamente todos los templos paganos de los pueblos vencidos','Se retiró de inmediato a Grecia apenas terminó de vencer a sus enemigos'],a:0},
 );
 
 BANCO.push(
   {cap:'d9',t:'mc',q:'¿Cuáles son los tres pasajes del Antiguo Testamento que Daniel había estado leyendo antes de su oración de Daniel 9?',
    o:['Levítico 26, 1 Reyes 8 (oración de Salomón) y Jeremías 29','Génesis, Éxodo y Levítico, el Pentateuco inicial','Los Salmos de David, el rey poeta','Isaías y Ezequiel, los otros profetas mayores'],a:0},
-  {cap:'d9',t:'tf',q:'Daniel oró "hemos pecado, hemos hecho iniquidad" (9:5) a pesar de que ni sus propios enemigos podían encontrar falla en su conducta.',
+  {cap:'d9',t:'tf',q:'Daniel oró «hemos pecado, hemos cometido iniquidad» (9:5) a pesar de que ni sus propios enemigos podían encontrar falla en su conducta.',
    a:true,e:'Daniel 6:4 dice que no hallaron ninguna falta en él, pero en su oración se identificó con el pecado colectivo de su pueblo.'},
   {cap:'d9',t:'mc',q:'¿Qué significa literalmente la palabra hebrea "jathak", traducida como "fijadas" o "determinadas" en Daniel 9:24?',
    o:['Cortar o amputar','Multiplicar','Iluminar con luz propia','Sellar para siempre'],a:0},
@@ -1718,9 +1718,9 @@ BANCO.push(
 );
 
 BANCO.push(
-  {cap:'d10',t:'mc',q:'¿Qué le respondió el "jefe del ejército de Yahvéh" a Josué cuando este le preguntó de qué bando era, antes del ataque a Jericó?',
+  {cap:'d10',t:'mc',q:'¿Qué le respondió el \"Príncipe del ejército de Jehová\" a Josué cuando este le preguntó de qué bando era, antes del ataque a Jericó?',
    o:['Que se quitara las sandalias porque el lugar era sagrado','Que huyera de inmediato del lugar','Que reuniera más soldados de inmediato','Que esperara tres días más antes de atacar'],a:0},
-  {cap:'d10',t:'tf',q:'En Éxodo 3, el mismo Ser que se identifica como "YO SOY EL QUE SOY" (Yahvéh) es llamado, en ese mismo relato, "el Ángel de Yahvéh".',
+  {cap:'d10',t:'tf',q:'En Éxodo 3, el mismo Ser que se identifica como \"Yo soy el que soy\" es llamado, en ese mismo relato, \"el ángel de Jehová\".',
    a:true,e:'Eso muestra que "ángel" (mensajero) puede referirse al propio Dios revelándose, y ayuda a entender por qué Miguel puede ser tanto "un príncipe" como el Señor mismo en Daniel 10.'},
   {cap:'d10',t:'mc',q:'¿Qué vio el joven siervo de Eliseo cuando Dios le abrió los ojos, en la ciudad sitiada de Dotán?',
    o:['El monte lleno de caballos y carros de fuego alrededor de Eliseo','Una fuerte tormenta de arena que cubrió toda la ciudad','Un solo ángel con una espada de fuego en la mano','Un ejército de la ciudad vecina viniendo a ayudar'],a:0},
@@ -1729,15 +1729,15 @@ BANCO.push(
 );
 
 BANCO.push(
-  {cap:'d11',t:'mc',q:'¿Qué objeto hoy exhibido en el Museo Británico confirma el cumplimiento de Daniel 11:14 ("se levantarán muchos contra el rey del Mediodía")?',
+  {cap:'d11',t:'mc',q:'¿Qué objeto hoy exhibido en el Museo Británico confirma el cumplimiento de Daniel 11:14 («se levantarán muchos contra el rey del sur»)?',
    o:['La Piedra Rosetta','El Cilindro de Ciro','El Prisma de Senaquerib','La Estela de Merneptah'],a:0},
   {cap:'d11',t:'tf',q:'La Piedra Rosetta registra concesiones que los regentes de un rey egipcio adulto hicieron a Roma.',
    a:false,e:'Registra concesiones hechas al pueblo egipcio, rebelado contra sus gobernantes griegos, durante el reinado del niño-rey Ptolomeo V, de apenas seis años.'},
 );
 
 BANCO.push(
-  {cap:'d12',t:'tf',q:'Según Maxwell, los "doctos" que "brillarán como el fulgor del firmamento" (Daniel 12:3) son necesariamente una élite de eruditos y teólogos.',
-   a:false,e:'Son quienes estudiaron las profecías hasta comprenderlas, las compartieron con otros y se dejaron purificar por ellas, sin importar su nivel académico.'},
+  {cap:'d12',t:'tf',q:'Los entendidos que «resplandecerán como el resplandor del firmamento» (Daniel 12:3) son necesariamente una élite de eruditos y teólogos.',
+   a:false,e:'Falso. Son quienes estudiaron las profecías hasta comprenderlas, las compartieron con otros y se dejaron purificar por ellas, sin importar su nivel académico. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 306.'},
 );
 
 BANCO.push(

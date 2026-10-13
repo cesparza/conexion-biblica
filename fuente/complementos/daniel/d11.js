@@ -11,8 +11,10 @@
    Camilo (13-oct 13:04: «complementar con el libro de Daniel 11 de
    Treiyer»): Humberto R. Treiyer, «Enigmas descifrados» (2006; no confundir
    con Alberto Treiyer). Se suman los saltos del relato, 11:3-20 verso por
-   verso, 21-30, palabras clave de 31-39 y detalles de 40-45. Donde choca
-   con Bohr (división 16-28/29-39; 11:22) queda como «otra lectura». */
+   verso, 21-30, palabras clave de 31-39 y detalles de 40-45. Camilo (13-oct
+   14:55): 11:22 se combina (cruz y luego el ocultamiento de la intercesión);
+   11:30 sigue a Bohr (Roma papal en los 1.260 años) con el golpe de 1798;
+   la división de 16-39 se compara en una tabla. */
 const { tbl, hi, wa, li } = require('../../apocalipsis/ayudas.js');
 
 module.exports = {
@@ -52,17 +54,26 @@ module.exports = {
         ['11:5-13 y 15', 'Los Tolomeos (sur) contra los seléucidas (norte)', '301-198 a.C.'],
         ['11:14', 'Un paréntesis: Roma entra en escena, y cae', '198 a.C.-476 d.C.'],
         ['11:16-20', 'Roma vence a los dos reyes, hasta César Augusto', '198 a.C.-14 d.C.'],
-        ['11:21-30', 'Roma papal frente al poder civil', '538-1798'],
-        ['11:31-39', 'La misma época, vista por su enseñanza', '538-1798'],
+        ['11:21-39', 'Roma pasa de imperial a papal y domina 1.260 años (ver la tabla siguiente)', 'hasta 1798'],
         ['11:40-45', 'El tiempo del fin', 'desde 1798'],
       ]) +
       li([
         '<b>Entre 2 y 3</b> faltan unos 130 años: de Jerjes I (465 a.C.) a Alejandro (336 a.C.).',
-        '<b>Entre 20 y 21</b> faltan siglos: de la muerte de Augusto (14 d.C.) a los obispos de Roma.',
-        '<b>En 31 y en 40</b> el relato vuelve atrás: 31 regresa al comienzo de Roma papal, y 40 regresa a 1798, el golpe de 11:29-30.',
+        '<b>En 40</b> el relato vuelve atrás, a 1798: el mismo golpe de 11:29-30.',
       ]) +
-      `<p>Otra lectura pone el paso de Roma imperial a Roma papal en 11:29 (ver la tabla anterior).</p>` +
       `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 30-36.</p>` },
+
+    { t: '🧭 Dónde termina Roma imperial y empieza Roma papal', capa: 'contexto', h:
+      `<p>Hay dos maneras de dividir 11:16-39. Las dos ven el mismo orden: Roma imperial, Roma papal por 1.260 años y el tiempo del fin. Solo cambia dónde cae la línea.</p>` +
+      tbl(['Versículos', 'División 16-28 / 29-39', 'División 16-20 / 21-39'], [
+        ['16-20', 'Roma imperial', 'Roma imperial, hasta César Augusto'],
+        ['21-28', 'Roma imperial', 'El papado crece y se impone al poder civil'],
+        ['29-30', 'Roma papal', 'Roma papal, hasta el golpe de 1798'],
+        ['31-39', 'Roma papal, 538-1798', 'La misma época, vista por su enseñanza; 31 vuelve al comienzo'],
+      ]) +
+      hi('Entre 21 y 28 la historia misma es un paso de una Roma a la otra: el emperador Constantino I se hace cristiano (312) y el poder pasa poco a poco al obispo de Roma, hasta Justiniano I (538). Por eso las dos divisiones caben en esos versos.') +
+      `<p>En la división 16-20 / 21-39, entre 20 y 21 faltan siglos: de la muerte de Augusto (14 d.C.) a los obispos de Roma.</p>` +
+      `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 17; Treiyer, <i>Enigmas descifrados</i>, p. 31-36 y 90-92.</p>` },
 
     { t: '🧭 Daniel 11:3-13: los reyes, uno por uno', capa: 'contexto', h:
       tbl(['Verso', 'Cómo se cumplió'], [
@@ -91,15 +102,15 @@ module.exports = {
       `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 64-73.</p>` },
 
     { t: '🧭 Daniel 11:21-30: el papado frente al poder civil', capa: 'contexto', h:
-      `<p>Desde el v. 21 el norte y el sur ya no son lugares. El rey del norte es el poder religioso, el papado: como Babilonia, una religión falsa. El rey del sur es el poder civil, el Estado: como Egipto, que dijo «no conozco a Jehová» (Éxodo 5:2).</p>` +
+      `<p>Así se leen estos versos en la división 16-20 / 21-39 (ver arriba). Desde el v. 21 el norte y el sur ya no son lugares. El rey del norte es el poder religioso, el papado: como Babilonia, una religión falsa. El rey del sur es el poder civil, el Estado: como Egipto, que dijo «no conozco a Jehová» (Éxodo 5:2).</p>` +
       tbl(['Verso', 'Qué significa'], [
         ['21', 'El «hombre despreciable» no es el emperador Tiberio, sino el papado. Empieza pequeño, «sin aviso», y toma el reino «con halagos»: salvación sin arrepentimiento, por indulgencias y sacramentos.'],
-        ['22', 'El «príncipe del pacto» es Cristo (8:25). Lo que se destruye es el conocimiento de su obra en el santuario del cielo, que se cambia por una falsificación. Otra lectura ve aquí su muerte en la cruz.'],
+        ['22', 'El «príncipe del pacto» es Cristo (8:25; 9:26). Primero muere en la cruz, bajo Roma. Después este poder quebranta el conocimiento de su obra en el santuario del cielo, y la cambia por una falsificación.'],
         ['24', '«Esto durará un tiempo»: los 1.260 años. En 756 Pepino el Breve le da al papa las tierras de los Estados Pontificios, que pierde en 1870.'],
         ['29', '«Al tiempo señalado», en 1798, la venida al sur ya no es como la primera: esta vez el poder civil le gana.'],
-        ['30', 'Las «naves de Quitim» son la Francia de la Revolución. Sus tropas entran en Roma el 10 de febrero de 1798; el 15 toman preso a Pío VI, que muere cautivo en Valence el 29 de agosto de 1799. «Volverá»: el papado se recupera con ayuda de «los que abandonen el santo pacto». Otra lectura ve aquí a Roma.'],
+        ['30', 'El rey del norte es Roma papal, en sus 1.260 años. Durante ese tiempo «se entenderá con los que abandonen el santo pacto»: los que dejan los Diez Mandamientos (Deuteronomio 4:13). Las «naves de Quitim» son el golpe que la hiere al final: la Francia de la Revolución, el mismo golpe de 11:40. Sus tropas entran en Roma el 10 de febrero de 1798; el 15 toman preso a Pío VI, que muere cautivo en Valence el 29 de agosto de 1799. Pero «volverá».'],
       ]) +
-      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 76-115.</p>` },
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 76-115; Bohr, <i>Daniel 1-10</i>, p. 203; Bohr, <i>Daniel 11</i>, p. 17 y 226-229.</p>` },
 
     { t: '🧭 Daniel 11:31-39: palabras clave', capa: 'contexto', h:
       li([
