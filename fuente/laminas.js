@@ -76,6 +76,9 @@ const LAMINAS = {
     { y: 476, f: 'e476', parte: 'dedos', t: '476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente' },
     { y: 538, f: 'e538', parte: 'barro', t: '538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal' },
     { y: 1798, f: 'e1798', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
+    /* v195: lo que viene. Año futuro: salen en su parte, nunca en la línea de tiempo. */
+    { y: 9998, f: 'e-piedra', parte: 'piedra', t: 'Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 44; Mateo 25:31)' },
+    { y: 9999, f: 'e-monte', parte: 'monte', t: 'Para siempre · El reino de Dios llena toda la tierra (2:35, 44)' },
   ],
   partes: [
  {id:'oro',nombre:'Cabeza de oro',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
