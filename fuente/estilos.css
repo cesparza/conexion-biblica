@@ -2643,9 +2643,9 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-parte{transition:opacity .45s,filter .45s}
 .lam-parte.apagada{opacity:.16}
 .lam-parte.tenue{opacity:.55}
-/* v189: el reino de antes y el de después de la parte elegida: a media luz y en
-   otro tono (frío), para que se vean sin competir con la elegida. */
-.lam-parte.apagada.vecina,.lam-parte.vecina{opacity:.5;filter:saturate(.25) brightness(1.25) drop-shadow(0 0 10px rgba(140,200,255,.55))}
+/* v193: el reino de antes y el de después se ven enteros pero en sombra, como
+   una estatua con un solo foco: con transparencia se perdían contra el cielo. */
+.lam-parte.apagada.vecina,.lam-parte.vecina{opacity:1;filter:saturate(.6) brightness(.72) contrast(1.05)}
 .lam-luz{pointer-events:none;mix-blend-mode:screen}
 .lam-parte.on{filter:drop-shadow(0 0 16px rgba(255,226,140,.95))}
 .lam-hit{cursor:pointer}
@@ -2718,7 +2718,10 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-marcas span:first-child{transform:none}
 .lam-marcas span:last-child{transform:translateX(-100%)}
 @media (max-width:560px){.lam-et{display:flex;flex-direction:column;align-items:flex-start;padding:4px 7px;border-radius:8px;border-left:3px solid var(--c)}.lam-et::before{display:none}.lam-et b{font-size:.75rem;white-space:nowrap}.lam-et span{font-size:.75rem}}
-@media (max-width:560px){.lam-marcas span.chico{display:none}}
+/* v193: las marcas cercanas (331, 168, 1) llevan su era solo si caben. */
+.lam-marcas i{font-style:normal}
+@media (max-width:1000px){.lam-marcas span.chico i{display:none}}
+@media (max-width:700px){.lam-marcas span.chico{display:none}}
 .lam-carta{background:var(--card,#fff);border-radius:18px;box-shadow:var(--sh);padding:14px 16px}
 .lam-carta h3{margin:0 0 .5rem;font-size:1.125rem;color:var(--azul)}
 .lam-desliza{overflow-x:auto}
