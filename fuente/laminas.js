@@ -64,6 +64,16 @@ const LAMINAS = {
     {q:'¿Qué parte representa la unión del poder político y el religioso?',ok:'barro',e:'El hierro mezclado con barro: Roma papal, desde 538 d.C.'},
     {q:'¿Qué representan los diez dedos?',ok:'dedos',e:'Roma dividida en diez reinos bárbaros; la división se completó en 476 d.C.'},
     {q:'«Tú eres aquella…»',ok:'oro',e:'2:38 · «Tú eres aquella cabeza de oro».'}],
+  /* v190: escenas de la historia (imágenes de Camilo hechas con ChatGPT). Salen
+     en la explicación de su parte y en la línea de tiempo desde su año. */
+  escenas: [
+    { y: -539, f: 'e539', parte: 'plata', t: '539 a.C. · Ciro toma Babilonia la noche del banquete de Belsasar (5:30-31)' },
+    { y: -331, f: 'e331', parte: 'bronce', t: '331 a.C. · Alejandro vence a Darío III en Arbela' },
+    { y: -168, f: 'e168', parte: 'hierro', t: '168 a.C. · Roma vence a Macedonia en Pidna' },
+    { y: 476, f: 'e476', parte: 'dedos', t: '476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente' },
+    { y: 538, f: 'e538', parte: 'barro', t: '538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal' },
+    { y: 1798, f: 'e1798', t: '1798 d.C. · El general Berthier entra en Roma y se lleva preso a Pío VI' },
+  ],
   partes: [
  {id:'oro',nombre:'Cabeza de oro',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La cabeza de esta imagen era de oro fino',ref:'2:32',texto2:'Tú eres aquella cabeza de oro.',ref2:'2:38',

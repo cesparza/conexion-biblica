@@ -44,6 +44,71 @@ module.exports = {
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; CBA 4:1168.</p>`,
     },
     {
+      t: '🧭 La cabeza de oro: Babilonia (605-539 a.C.)',
+      capa: 'contexto',
+      h: `<p><strong>En la estatua:</strong> «La cabeza de esta imagen era de oro fino» (2:32). No hay que adivinar qué reino es: Daniel se lo dice al rey, «Tú eres aquella cabeza de oro» (2:38). Y el rey representa a su reino, porque enseguida dice «Después de ti se levantará otro reino» (2:39).</p>` +
+        tbl(['Año', 'Lo que pasó'], [
+          ['605 a.C.', 'Nabucodonosor vence a Egipto en Carquemis (Jeremías 46:2), pone el primer sitio a Jerusalén (1:1) y ese mismo año sube al trono.'],
+          ['539 a.C.', 'Ciro toma Babilonia la noche del banquete de Belsasar (Daniel 5). «La misma noche fue muerto Belsasar, rey de los caldeos» (5:30).'],
+        ]) +
+        li([
+          '<strong>Por qué oro.</strong> La misma Biblia une a Babilonia con el oro: Jeremías la llama copa de oro en la mano de Jehová (Jeremías 51:7). Sus templos estaban llenos de oro, y ningún reino después igualó su riqueza y su esplendor.',
+          '<strong>En Daniel 7</strong> es un león con alas de águila (7:4): Nabucodonosor puso figuras de leones en las entradas de la ciudad, y las alas muestran la rapidez de sus conquistas.',
+          '<strong>Se cumplió al pie de la letra.</strong> Jeremías anunció que las naciones servirían a Nabucodonosor, a su hijo y al hijo de su hijo, hasta que le llegara su tiempo (Jeremías 27:7). Lo siguió su hijo, y el último rey, Belsasar, era su nieto.',
+        ]) +
+        `<p>Dios le mostró al rey más poderoso de la tierra que su reino de oro también tendría fin.</p>` +
+        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57; Bohr, <i>La gran cadena</i>, p. 4-5; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 8, 18-19; Smith, <i>Las profecías de Daniel</i>, p. 15-17.</p>`,
+    },
+    {
+      t: '🧭 El pecho y los brazos de plata: Medo-Persia (539-331 a.C.)',
+      capa: 'contexto',
+      h: `<p><strong>En la estatua:</strong> «su pecho y sus brazos, de plata» (2:32), «otro reino, inferior al tuyo» (2:39). El mismo libro dice cuál es. La noche en que cayó Babilonia, Daniel le leyó a Belsasar: «Tu reino ha sido roto y dado a los medos y a los persas» (5:28). Y en 8:20 el ángel explica que los dos cuernos del carnero «son los reyes de Media y de Persia».</p>` +
+        tbl(['Año', 'Lo que pasó'], [
+          ['539 a.C.', 'Ciro desvía el Éufrates, su ejército entra por el cauce seco y toma Babilonia casi sin pelear.'],
+          ['331 a.C.', 'En Arbela (Gaugamela) Alejandro vence a Darío III, el último rey persa, con un ejército mucho menor.'],
+        ]) +
+        li([
+          '<strong>Por qué plata.</strong> Fue inferior a Babilonia, pero no en poder ni en territorio: la venció y fue más extenso. Fue inferior en riqueza, lujo y cultura. Y la plata era su moneda: las provincias pagaban su tributo en plata.',
+          '<strong>Dos brazos, dos pueblos.</strong> En Daniel 7 es un oso alzado de un costado (7:5); en Daniel 8, un carnero con un cuerno más alto que salió después (8:3). Los persas llegaron después que los medos, pero dominaron.',
+          '<strong>Se cumplió al pie de la letra.</strong> Isaías llamó a Ciro por su nombre unos cien años antes de que naciera, y anunció que le abrirían las puertas (Isaías 44:28-45:1). La noche del banquete, las puertas del río quedaron abiertas.',
+        ]) +
+        hi(`«El reino medo-persa fue objeto de la ira del Cielo porque en él se pisoteaba la ley de Dios» (PR 367).`) +
+        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57, 99-100, 299; Bohr, <i>La gran cadena</i>, p. 5; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 20-22; Smith, <i>Las profecías de Daniel</i>, p. 19-21, 56.</p>`,
+    },
+    {
+      t: '🧭 El vientre de bronce: Grecia (331-168 a.C.)',
+      capa: 'contexto',
+      h: `<p><strong>En la estatua:</strong> «su vientre y sus muslos, de bronce» (2:32), «un tercer reino de bronce, el cual dominará sobre toda la tierra» (2:39). Daniel 8 le pone nombre: «El macho cabrío es el rey de Grecia, y el cuerno grande que tenía entre sus ojos es el rey primero» (8:21). Ese primer rey es Alejandro Magno.</p>` +
+        tbl(['Año', 'Lo que pasó'], [
+          ['331 a.C.', 'En Arbela (Gaugamela) Alejandro vence a Darío III y el Imperio persa queda en sus manos.'],
+          ['323 a.C.', 'Alejandro muere joven, en lo más alto de su poder, sin dejar heredero.'],
+          ['168 a.C.', 'En Pidna Roma vence a Macedonia y acaba con su monarquía. Empieza el hierro.'],
+        ]) +
+        li([
+          '<strong>Por qué bronce.</strong> Los soldados griegos se distinguían por su armadura de bronce: yelmo, escudo y armas. Los persas, en cambio, peleaban con ropa tejida. Ezequiel ya mostraba a Grecia (Javán) comerciando con objetos de bronce (Ezequiel 27:13).',
+          '<strong>En Daniel 7 y 8</strong> es un leopardo con cuatro alas (7:6) y un macho cabrío que corre «sin tocar tierra» (8:5): Alejandro conquistó desde Grecia hasta la India en muy pocos años.',
+          '<strong>«Dominará sobre toda la tierra».</strong> No fue solo conquista militar: la lengua y la cultura griegas se extendieron por todo el mundo conocido, y todavía hoy se notan.',
+        ]) +
+        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57, 295-296; Bohr, <i>La gran cadena</i>, p. 5; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 22-23; Smith, <i>Las profecías de Daniel</i>, p. 21-22.</p>`,
+    },
+    {
+      t: '🧭 Grecia en cuatro: las cabezas del leopardo',
+      capa: 'contexto',
+      h: `<p>El bronce no se quedó entero. Daniel 8 lo había dicho: el macho cabrío creció, «pero cuando estaba en su mayor fuerza, aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos» (8:8). El ángel lo explica: «cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él» (8:22).</p>` +
+        tbl(['General', 'Lo que le tocó'], [
+          ['Casandro', 'Macedonia y Grecia, al occidente'],
+          ['Lisímaco', 'Tracia y Asia Menor, al norte'],
+          ['Seleuco', 'Siria y el oriente'],
+          ['Tolomeo', 'Egipto, al sur'],
+        ]) +
+        li([
+          'Son las cuatro cabezas del leopardo (7:6) y los cuatro cuernos del macho cabrío (8:8): dos visiones distintas, el mismo reparto.',
+          'Alejandro no dejó heredero ni un plan de gobierno. Sus generales pelearon entre sí y, después de la batalla de Ipso (301 a.C.), quedaron cuatro partes. ¿Por qué no en muchos pedazos? Porque así lo había dicho la profecía.',
+          'Ninguno tuvo la fuerza de Alejandro, como dice 8:22. Las fronteras siguieron cambiando; por eso el texto habla de <strong>reinos</strong>, y la interpretación de Daniel 8 los sigue como reinos hasta Roma.',
+        ]) +
+        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 295-297; Smith, <i>Las profecías de Daniel</i>, p. 57, 88.</p>`,
+    },
+    {
       t: '🧭 Los diez dedos: Roma dividida',
       capa: 'contexto',
       h: `<p>Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino mudó la capital a Constantinopla, el occidente declinó. Las tribus del norte dividieron el imperio y en <strong>476</strong> depusieron a Rómulo Augústulo, el último emperador de occidente.</p>` +
@@ -162,5 +227,23 @@ module.exports = {
     { t: 'mc', v: '2:35', f: 'c', q: 'En la profecía, ¿qué representa un monte?',
       o: ['Un templo', 'Un reino', 'Un ejército', 'Un juicio'], a: 1,
       e: 'Se ve en Jeremías 51:24-25 y en el mismo Daniel 2: la piedra se hace «un gran monte» (2:35) y es el reino que Dios «levantará» (2:44). Fuente: Bohr, 15 principios 2:106.' },
+    { t: 'mc', v: '2:38', f: 'c', q: '¿Qué profeta llamó a Babilonia copa de oro en la mano de Jehová, en armonía con la cabeza de oro?',
+      o: ['Jeremías', 'Isaías', 'Ezequiel', 'Amós'], a: 0,
+      e: 'Jeremías 51:7. Babilonia tenía sus templos llenos de oro, y ningún reino posterior igualó su esplendor. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 18; Smith, Las profecías de Daniel, p. 16.' },
+    { t: 'tf', v: '2:38', f: 'c', q: 'Jeremías anunció que las naciones servirían a Nabucodonosor, a su hijo y al hijo de su hijo; y Belsasar, el último rey de Babilonia, era su nieto.',
+      a: true,
+      e: 'Verdadero (Jeremías 27:7). La cabeza de oro duró justo lo anunciado. Fuente: Smith, Las profecías de Daniel, p. 15-17.' },
+    { t: 'mc', v: '2:39', f: 'c', q: '¿En qué metal pagaban su tributo las provincias del Imperio persa?',
+      o: ['En oro', 'En plata', 'En bronce', 'En hierro'], a: 1,
+      e: 'La plata era el valor monetario habitual de los persas; por eso les queda bien el pecho de plata. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 21.' },
+    { t: 'tf', v: '2:39', f: 'c', q: 'Medo-Persia fue «inferior» a Babilonia porque tuvo menos territorio y menos poder militar.',
+      a: false,
+      e: 'Falso. Venció a Babilonia y fue más extenso; fue inferior en riqueza, lujo y cultura. Fuente: Smith, Las profecías de Daniel, p. 20; Wadsworth, La estatua de Nabucodonosor, p. 21.' },
+    { t: 'mc', v: '2:39', f: 'c', q: '¿Qué batalla de 168 a.C. acabó con la monarquía de Macedonia y cerró el tiempo del bronce?',
+      o: ['Arbela', 'Pidna', 'Ipso', 'Carquemis'], a: 1,
+      e: 'En Pidna Roma venció a Macedonia; ahí empiezan las piernas de hierro. Arbela (331) abrió el tiempo de Grecia. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 23; Bohr, Daniel 1-10, p. 295.' },
+    { t: 'mc', v: '2:32', f: 'c', q: '¿Qué distinguía a los soldados griegos, y explica el vientre de bronce de la estatua?',
+      o: ['Sus carros con ruedas de hierro', 'Su armadura, yelmo y escudo de bronce', 'Sus monedas de bronce puro', 'Sus barcos forrados de bronce'], a: 1,
+      e: 'Su armadura de bronce contrastaba con la ropa tejida de los soldados persas. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 22-23.' },
   ],
 };

@@ -144,14 +144,14 @@ function lamEscena(){
       '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</span></button>';}).join('');
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
-    '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>'+
-    '<radialGradient id="lamLuz"><stop offset="0" stop-color="#FFF6D8" stop-opacity="1"/><stop offset=".35" stop-color="#F7D774" stop-opacity=".75"/><stop offset="1" stop-color="#F2C46B" stop-opacity="0"/></radialGradient>'+
-    '<clipPath id="lamClip"><circle id="lamClipC" cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0"/></clipPath></defs>'+
+    /* v190: sin url(#…) (degradados ni clipPath por id): dentro del árbol aparte
+       de Jóvenes, Safari en el iPhone no siempre los encuentra y el monte no
+       aparecía. El monte se recorta con clip-path de CSS y la luz son círculos. */
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
-    '<image class="lam-monte" clip-path="url(#lamClip)" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
-    '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="url(#lamSombra)"/>'+
+    '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="#000" fill-opacity=".28"/>'+
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
-    '<circle class="lam-luz" cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" fill="url(#lamLuz)"/>'+
+    '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
     '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
@@ -257,8 +257,15 @@ function lamPiedraArriba(){
   const pi=document.querySelector('#lamSvg .lam-piedra');
   if(pi){pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
 }
+/* v190: la escena de la historia, si la parte o el año tienen una. */
+function lamEscenaHTML(e){
+  if(!e)return '';
+  return '<figure class="lam-fig" data-f="'+e.f+'"><img src="'+lamSrc(e.f)+'" alt="'+esc(e.t)+'" loading="lazy"><figcaption>'+esc(e.t)+'</figcaption></figure>';
+}
+const lamEscenaDe=id=>(LAM().escenas||[]).find(e=>e.parte===id);
+const lamEscenaAnio=y=>(LAM().escenas||[]).filter(e=>e.y<=y).pop();
 function lamHojaParte(p,i,n){
-  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
+  return lamEscenaHTML(lamEscenaDe(p.id))+'<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
     '<div class="lam-p2">'+esc(p.reino)+'</div><div class="lam-fechas">'+esc(p.fechas)+'</div></div>'+
     (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
@@ -340,7 +347,12 @@ function lamVeAnio(y){
   document.getElementById('lamTano').textContent=lamAnioTx(y);
   document.getElementById('lamTq').textContent=q.tx;
   /* El año va en la explicación, no sobre la imagen. */
-  lamHoja('<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>');
+  /* Al recorrer solo, el año cambia veinte veces por segundo: la escena se
+     vuelve a pintar solo cuando cambia, si no parpadea. */
+  const esA=lamEscenaAnio(y),hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>';
+  const fig=hj&&hj.querySelector('.lam-fig'),igual=fig?(esA&&fig.getAttribute('data-f')===esA.f):!esA;
+  if(hj&&igual&&hj.querySelector('.lam-anio-tx')){hj.querySelector('.lam-anio-tx').innerHTML=txt;hj.classList.remove('vacia');}
+  else lamHoja(lamEscenaHTML(esA)+'<div class="lam-anio-tx">'+txt+'</div>');
   const r=document.getElementById('lamRango');if(r&&Number(r.value)!==y)r.value=y;
 }
 /* El botón recorre la historia sola, de 605 a.C. a hoy, en unos 14 segundos. */
@@ -412,7 +424,9 @@ function lamCae(piedra){
   const f=t=>{if(yo!==lamVuelo)return;const k=Math.min(1,(t-t0)/ms),e=k*k;
     piedra.setAttribute('transform','translate('+(x0+(gx-x0)*e)+' '+(y0+(gy-y0)*e)+') rotate('+(k*300)+')');
     if(k<1)requestAnimationFrame(f);else{const est=piedra.parentNode.querySelector('.lam-estatua');
-      if(est&&est.animate)est.animate([{transform:'translate(0,0)'},{transform:'translate(-12px,4px)'},{transform:'translate(12px,-2px)'},{transform:'translate(0,0)'}],{duration:380});}};
+      /* La estatua tiembla al golpe (atributo transform, ver lamPolvo). */
+      if(est){const s0=performance.now(),sh=tt=>{const k=Math.min(1,(tt-s0)/380),a=Math.sin(k*Math.PI*4)*12*(1-k);
+        est.setAttribute('transform','translate('+a.toFixed(1)+' '+(a/4).toFixed(1)+')');if(k<1)requestAnimationFrame(sh);else est.removeAttribute('transform');};requestAnimationFrame(sh);}}};
   requestAnimationFrame(f);
 }
 /* v189: EL MONTE (Camilo, 13-oct: «es el reino de Dios establecido, la
@@ -423,19 +437,22 @@ function lamCae(piedra){
    animar) o 'crece'. */
 function lamMonte(modo){
   const svg=document.getElementById('lamSvg');if(!svg)return;
-  const m=svg.querySelector('.lam-monte'),c=svg.querySelector('#lamClipC'),luz=svg.querySelector('.lam-luz');
-  const R=1900,yo=++lamCrece;
+  const L=LAM(),m=svg.querySelector('.lam-monte'),luz=svg.querySelector('.lam-luz'),yo=++lamCrece;
+  /* El centro del círculo, en % de la imagen del monte (x -150..1900, y 0..1152). */
+  const cx=((L.golpe[0]+150)/2050*100).toFixed(1)+'%',cy=(L.golpe[1]/1152*100).toFixed(1)+'%';
+  const recorta=r=>{const v='circle('+r.toFixed(1)+'% at '+cx+' '+cy+')';m.style.clipPath=v;m.style.webkitClipPath=v;};
+  const pinta=r=>luz.querySelectorAll('circle').forEach(c=>c.setAttribute('r',(r*+c.getAttribute('data-f')).toFixed(1)));
   if(modo==='no'||modo==='ya'||lamQuieto()){
-    m.style.opacity=modo==='no'?'0':'1';c.setAttribute('r',modo==='no'?0:R);luz.setAttribute('r',0);luz.style.opacity='0';return;}
-  m.style.opacity='1';c.setAttribute('r',0);
+    m.style.opacity=modo==='no'?'0':'1';recorta(modo==='no'?0:150);pinta(0);luz.style.opacity='0';return;}
+  m.style.opacity='1';recorta(0);
   const t0=performance.now(),ms=4200,pi=svg.querySelector('.lam-piedra');
   const f=t=>{if(yo!==lamCrece)return;
     /* Primero la piedra brilla (un sexto del tiempo); después el monte crece
        despacio al principio, rápido en medio y se asienta al final. */
     const k=Math.min(1,(t-t0)/ms),q=Math.max(0,(k-.16)/.84),e=(1-Math.cos(Math.PI*q))/2;
-    c.setAttribute('r',(R*e).toFixed(1));
+    recorta(150*e);
     /* La luz va delante del monte y se apaga al final. */
-    luz.setAttribute('r',(k<.16?60+k/.16*200:260+R*0.5*e).toFixed(1));luz.style.opacity=String(k<.75?Math.min(1,k*5):Math.max(0,(1-k)/.25));
+    pinta(k<.16?60+k/.16*200:260+950*e);luz.style.opacity=String(k<.75?Math.min(1,k*5):Math.max(0,(1-k)/.25));
     if(pi)pi.style.opacity=String(Math.max(0,1-q*2.5));
     if(k<1)requestAnimationFrame(f);};
   requestAnimationFrame(f);
@@ -450,9 +467,17 @@ function lamPolvo(svg){
     for(let i=0;i<n;i++){const px=x+Math.random()*w,py=y+Math.random()*hh,r=5+Math.random()*13;
       h+='<path d="M'+px.toFixed(1)+' '+(py-r).toFixed(1)+'l'+r.toFixed(1)+' '+(r*1.6).toFixed(1)+'h'+(-r*2).toFixed(1)+'z" fill="'+col[id]+'"/>';}});
   capa.innerHTML=h;
-  capa.querySelectorAll('path').forEach(el=>{if(el.animate)el.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:'translate('+(450+Math.random()*900)+'px,'+(-160+Math.random()*220)+'px) rotate('+(Math.random()*540)+'deg)',opacity:0}],
-    {duration:1400+Math.random()*900,delay:Math.random()*350,easing:'cubic-bezier(.3,.1,.3,1)',fill:'forwards'});});
-  setTimeout(()=>{capa.innerHTML='';},2800);
+  /* v190: se mueve con el atributo transform en cada cuadro, no con
+     el.animate(): en Safari las animaciones de transform sobre SVG no siempre
+     corren y el polvo se quedaba quieto. */
+  const ps=[...capa.querySelectorAll('path')].map(el=>({el,dx:450+Math.random()*900,dy:-160+Math.random()*220,gi:Math.random()*540,
+    d:1400+Math.random()*900,t:Math.random()*350}));
+  const t0=performance.now();
+  const f=t=>{let vivos=0;
+    ps.forEach(p=>{const k=Math.max(0,Math.min(1,(t-t0-p.t)/p.d)),e=1-Math.pow(1-k,2.2);if(k<1)vivos++;
+      p.el.setAttribute('transform','translate('+(p.dx*e).toFixed(1)+' '+(p.dy*e).toFixed(1)+')');p.el.setAttribute('fill-opacity',(1-k).toFixed(2));});
+    if(vivos)requestAnimationFrame(f);else capa.innerHTML='';};
+  requestAnimationFrame(f);
 }
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
@@ -2636,22 +2661,32 @@ const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id=
 function personasTocables(html,capId){
   perPrepara();
   if(!perRe)return html;
-  /* La línea de la fuente no se toca: ahí van autores, no personajes. */
-  return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>)/).map(parte=>{
-    if(/^<p class="sec-fuente">/.test(parte))return parte;
-    let dentro=0;
+  /* La línea de la fuente no se toca: ahí van autores, no personajes. Y la
+     Biblia citada tampoco (Camilo, 13-oct: «cuando es una cita bíblica, ahí no
+     hay links»): nada dentro de «…», <q>, citas en bloque ni recuadros de
+     versículo. */
+  return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>|<div class="verse-box">[\s\S]*?<\/div>)/).map(parte=>{
+    if(/^<p class="sec-fuente">|^<div class="verse-box">/.test(parte))return parte;
+    let dentro=0,cita=0;
     return parte.split(/(<[^>]+>)/).map(tr=>{
       if(tr.charAt(0)==='<'){
         if(/^<(button|a|h\d|q|blockquote)[\s>]/.test(tr))dentro++;
         else if(/^<\/(button|a|h\d|q|blockquote)>/.test(tr)&&dentro>0)dentro--;
         return tr;
       }
-      if(dentro>0||!tr.trim())return tr;
-      return tr.replace(perRe,t=>{
-        const c=(perDe[t]||[]).find(x=>!x.caps||x.caps.includes(capId));
-        if(!c)return t;
-        return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+t+'</button>';
-      });
+      if(!tr.trim())return tr;
+      /* Se parte el texto en lo que está dentro y fuera de «…»; la comilla puede
+         abrir en un trozo y cerrar en otro (con <strong> en medio). */
+      return tr.split(/([«»])/).map(t=>{
+        if(t==='«'){cita++;return t;}
+        if(t==='»'){cita=Math.max(0,cita-1);return t;}
+        if(dentro>0||cita>0)return t;
+        return t.replace(perRe,n=>{
+          const c=(perDe[n]||[]).find(x=>!x.caps||x.caps.includes(capId));
+          if(!c)return n;
+          return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+n+'</button>';
+        });
+      }).join('');
     }).join('');
   }).join('');
 }

@@ -2812,6 +2812,13 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 @media (prefers-reduced-motion:reduce){.qm-g,.qm-l,.qm-img{transition:none}}
 .qm-l b{padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid color-mix(in srgb,var(--c) 60%,transparent)}
 .qm-l.on b{background:var(--c);color:#15110B;text-shadow:none}
+/* v190: la escena de la historia dentro de la explicación. */
+.lam-fig{margin:-12px -14px 10px;position:relative}
+.lam-fig img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px 18px 0 0}
+.lam-fig figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 12px 8px;font-size:.75rem;font-weight:700;color:#F4EEE2;
+  background:linear-gradient(transparent,rgba(10,8,5,.85))}
+.lam.pres.ancho .lam-fig{margin:0 0 10px}
+.lam.pres.ancho .lam-fig img{border-radius:12px}
 </style>
 </head>
 <body>
@@ -3359,7 +3366,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <!-- v185: el estudio interactivo con imagen (lamAbre). -->
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = 'fb242e72c077';
+const VERSION_APP = 'bcf6f7714bc2';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -4922,6 +4929,26 @@ const CONTENIDO = {
    "t": "🧭 Los cuatro imperios, con sus fechas",
    "capa": "contexto",
    "h": "<p>Daniel solo nombra a Babilonia, pero el mismo libro identifica a los siguientes (la plata en 5:28, el bronce en 8:20-21):</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Metal</th><th>Imperio</th><th>Fechas</th></tr></thead><tbody><tr><td class=\"key\">Oro</td><td>Babilonia</td><td>605-539 a.C.</td></tr><tr><td class=\"key\">Plata</td><td>Medo-Persia</td><td>539-331 a.C.</td></tr><tr><td class=\"key\">Bronce</td><td>Grecia</td><td>331-168 a.C.</td></tr><tr><td class=\"key\">Piernas de hierro</td><td>Roma imperial, una monarquía de hierro</td><td>168 a.C.-476 d.C.</td></tr><tr><td class=\"key\">Diez dedos</td><td>Roma dividida en los reinos bárbaros</td><td>Desde 476 d.C.</td></tr><tr><td class=\"key\">Hierro mezclado con barro</td><td>Roma papal: el poder político unido al religioso</td><td>Supremacía 538-1798 d.C.; herida en 1798, sana y vuelve al final</td></tr><tr><td class=\"key\">La piedra que se hace monte</td><td>La segunda venida de Cristo y su reino eterno</td><td>Futuro</td></tr></tbody></table></div><p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial, dividida y papal. Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p><p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. La imagen muestra también el deterioro de la religión y la moral: a medida que las naciones olvidan a Dios se debilitan moralmente. Y, sin valores morales, tienden a imponer la moral por la fuerza.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; CBA 4:1168.</p>"
+  },
+  {
+   "t": "🧭 La cabeza de oro: Babilonia (605-539 a.C.)",
+   "capa": "contexto",
+   "h": "<p><strong>En la estatua:</strong> «La cabeza de esta imagen era de oro fino» (2:32). No hay que adivinar qué reino es: Daniel se lo dice al rey, «Tú eres aquella cabeza de oro» (2:38). Y el rey representa a su reino, porque enseguida dice «Después de ti se levantará otro reino» (2:39).</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Año</th><th>Lo que pasó</th></tr></thead><tbody><tr><td class=\"key\">605 a.C.</td><td>Nabucodonosor vence a Egipto en Carquemis (Jeremías 46:2), pone el primer sitio a Jerusalén (1:1) y ese mismo año sube al trono.</td></tr><tr><td class=\"key\">539 a.C.</td><td>Ciro toma Babilonia la noche del banquete de Belsasar (Daniel 5). «La misma noche fue muerto Belsasar, rey de los caldeos» (5:30).</td></tr></tbody></table></div><ul class=\"tight\"><li><strong>Por qué oro.</strong> La misma Biblia une a Babilonia con el oro: Jeremías la llama copa de oro en la mano de Jehová (Jeremías 51:7). Sus templos estaban llenos de oro, y ningún reino después igualó su riqueza y su esplendor.</li><li><strong>En Daniel 7</strong> es un león con alas de águila (7:4): Nabucodonosor puso figuras de leones en las entradas de la ciudad, y las alas muestran la rapidez de sus conquistas.</li><li><strong>Se cumplió al pie de la letra.</strong> Jeremías anunció que las naciones servirían a Nabucodonosor, a su hijo y al hijo de su hijo, hasta que le llegara su tiempo (Jeremías 27:7). Lo siguió su hijo, y el último rey, Belsasar, era su nieto.</li></ul><p>Dios le mostró al rey más poderoso de la tierra que su reino de oro también tendría fin.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57; Bohr, <i>La gran cadena</i>, p. 4-5; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 8, 18-19; Smith, <i>Las profecías de Daniel</i>, p. 15-17.</p>"
+  },
+  {
+   "t": "🧭 El pecho y los brazos de plata: Medo-Persia (539-331 a.C.)",
+   "capa": "contexto",
+   "h": "<p><strong>En la estatua:</strong> «su pecho y sus brazos, de plata» (2:32), «otro reino, inferior al tuyo» (2:39). El mismo libro dice cuál es. La noche en que cayó Babilonia, Daniel le leyó a Belsasar: «Tu reino ha sido roto y dado a los medos y a los persas» (5:28). Y en 8:20 el ángel explica que los dos cuernos del carnero «son los reyes de Media y de Persia».</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Año</th><th>Lo que pasó</th></tr></thead><tbody><tr><td class=\"key\">539 a.C.</td><td>Ciro desvía el Éufrates, su ejército entra por el cauce seco y toma Babilonia casi sin pelear.</td></tr><tr><td class=\"key\">331 a.C.</td><td>En Arbela (Gaugamela) Alejandro vence a Darío III, el último rey persa, con un ejército mucho menor.</td></tr></tbody></table></div><ul class=\"tight\"><li><strong>Por qué plata.</strong> Fue inferior a Babilonia, pero no en poder ni en territorio: la venció y fue más extenso. Fue inferior en riqueza, lujo y cultura. Y la plata era su moneda: las provincias pagaban su tributo en plata.</li><li><strong>Dos brazos, dos pueblos.</strong> En Daniel 7 es un oso alzado de un costado (7:5); en Daniel 8, un carnero con un cuerno más alto que salió después (8:3). Los persas llegaron después que los medos, pero dominaron.</li><li><strong>Se cumplió al pie de la letra.</strong> Isaías llamó a Ciro por su nombre unos cien años antes de que naciera, y anunció que le abrirían las puertas (Isaías 44:28-45:1). La noche del banquete, las puertas del río quedaron abiertas.</li></ul><div class=\"highlight-box\">«El reino medo-persa fue objeto de la ira del Cielo porque en él se pisoteaba la ley de Dios» (PR 367).</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57, 99-100, 299; Bohr, <i>La gran cadena</i>, p. 5; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 20-22; Smith, <i>Las profecías de Daniel</i>, p. 19-21, 56.</p>"
+  },
+  {
+   "t": "🧭 El vientre de bronce: Grecia (331-168 a.C.)",
+   "capa": "contexto",
+   "h": "<p><strong>En la estatua:</strong> «su vientre y sus muslos, de bronce» (2:32), «un tercer reino de bronce, el cual dominará sobre toda la tierra» (2:39). Daniel 8 le pone nombre: «El macho cabrío es el rey de Grecia, y el cuerno grande que tenía entre sus ojos es el rey primero» (8:21). Ese primer rey es Alejandro Magno.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Año</th><th>Lo que pasó</th></tr></thead><tbody><tr><td class=\"key\">331 a.C.</td><td>En Arbela (Gaugamela) Alejandro vence a Darío III y el Imperio persa queda en sus manos.</td></tr><tr><td class=\"key\">323 a.C.</td><td>Alejandro muere joven, en lo más alto de su poder, sin dejar heredero.</td></tr><tr><td class=\"key\">168 a.C.</td><td>En Pidna Roma vence a Macedonia y acaba con su monarquía. Empieza el hierro.</td></tr></tbody></table></div><ul class=\"tight\"><li><strong>Por qué bronce.</strong> Los soldados griegos se distinguían por su armadura de bronce: yelmo, escudo y armas. Los persas, en cambio, peleaban con ropa tejida. Ezequiel ya mostraba a Grecia (Javán) comerciando con objetos de bronce (Ezequiel 27:13).</li><li><strong>En Daniel 7 y 8</strong> es un leopardo con cuatro alas (7:6) y un macho cabrío que corre «sin tocar tierra» (8:5): Alejandro conquistó desde Grecia hasta la India en muy pocos años.</li><li><strong>«Dominará sobre toda la tierra».</strong> No fue solo conquista militar: la lengua y la cultura griegas se extendieron por todo el mundo conocido, y todavía hoy se notan.</li></ul><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57, 295-296; Bohr, <i>La gran cadena</i>, p. 5; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 22-23; Smith, <i>Las profecías de Daniel</i>, p. 21-22.</p>"
+  },
+  {
+   "t": "🧭 Grecia en cuatro: las cabezas del leopardo",
+   "capa": "contexto",
+   "h": "<p>El bronce no se quedó entero. Daniel 8 lo había dicho: el macho cabrío creció, «pero cuando estaba en su mayor fuerza, aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos» (8:8). El ángel lo explica: «cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él» (8:22).</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>General</th><th>Lo que le tocó</th></tr></thead><tbody><tr><td class=\"key\">Casandro</td><td>Macedonia y Grecia, al occidente</td></tr><tr><td class=\"key\">Lisímaco</td><td>Tracia y Asia Menor, al norte</td></tr><tr><td class=\"key\">Seleuco</td><td>Siria y el oriente</td></tr><tr><td class=\"key\">Tolomeo</td><td>Egipto, al sur</td></tr></tbody></table></div><ul class=\"tight\"><li>Son las cuatro cabezas del leopardo (7:6) y los cuatro cuernos del macho cabrío (8:8): dos visiones distintas, el mismo reparto.</li><li>Alejandro no dejó heredero ni un plan de gobierno. Sus generales pelearon entre sí y, después de la batalla de Ipso (301 a.C.), quedaron cuatro partes. ¿Por qué no en muchos pedazos? Porque así lo había dicho la profecía.</li><li>Ninguno tuvo la fuerza de Alejandro, como dice 8:22. Las fronteras siguieron cambiando; por eso el texto habla de <strong>reinos</strong>, y la interpretación de Daniel 8 los sigue como reinos hasta Roma.</li></ul><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 295-297; Smith, <i>Las profecías de Daniel</i>, p. 57, 88.</p>"
   },
   {
    "t": "🧭 Los diez dedos: Roma dividida",
@@ -53910,6 +53937,90 @@ const BANCO = [
   "nv": 1
  },
  {
+  "cap": "d2",
+  "t": "mc",
+  "v": "2:38",
+  "f": "c",
+  "q": "¿Qué profeta llamó a Babilonia copa de oro en la mano de Jehová, en armonía con la cabeza de oro?",
+  "o": [
+   "Jeremías",
+   "Isaías",
+   "Ezequiel",
+   "Amós"
+  ],
+  "a": 0,
+  "e": "Jeremías 51:7. Babilonia tenía sus templos llenos de oro, y ningún reino posterior igualó su esplendor. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 18; Smith, Las profecías de Daniel, p. 16.",
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "tf",
+  "v": "2:38",
+  "f": "c",
+  "q": "Jeremías anunció que las naciones servirían a Nabucodonosor, a su hijo y al hijo de su hijo; y Belsasar, el último rey de Babilonia, era su nieto.",
+  "a": true,
+  "e": "Verdadero (Jeremías 27:7). La cabeza de oro duró justo lo anunciado. Fuente: Smith, Las profecías de Daniel, p. 15-17.",
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "v": "2:39",
+  "f": "c",
+  "q": "¿En qué metal pagaban su tributo las provincias del Imperio persa?",
+  "o": [
+   "En oro",
+   "En plata",
+   "En bronce",
+   "En hierro"
+  ],
+  "a": 1,
+  "e": "La plata era el valor monetario habitual de los persas; por eso les queda bien el pecho de plata. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 21.",
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "tf",
+  "v": "2:39",
+  "f": "c",
+  "q": "Medo-Persia fue «inferior» a Babilonia porque tuvo menos territorio y menos poder militar.",
+  "a": false,
+  "e": "Falso. Venció a Babilonia y fue más extenso; fue inferior en riqueza, lujo y cultura. Fuente: Smith, Las profecías de Daniel, p. 20; Wadsworth, La estatua de Nabucodonosor, p. 21.",
+  "nv": 2
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "v": "2:39",
+  "f": "c",
+  "q": "¿Qué batalla de 168 a.C. acabó con la monarquía de Macedonia y cerró el tiempo del bronce?",
+  "o": [
+   "Arbela",
+   "Pidna",
+   "Ipso",
+   "Carquemis"
+  ],
+  "a": 1,
+  "e": "En Pidna Roma venció a Macedonia; ahí empiezan las piernas de hierro. Arbela (331) abrió el tiempo de Grecia. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 23; Bohr, Daniel 1-10, p. 295.",
+  "nv": 1
+ },
+ {
+  "cap": "d2",
+  "t": "mc",
+  "v": "2:32",
+  "f": "c",
+  "q": "¿Qué distinguía a los soldados griegos, y explica el vientre de bronce de la estatua?",
+  "o": [
+   "Sus carros con ruedas de hierro",
+   "Su armadura, yelmo y escudo de bronce",
+   "Sus monedas de bronce puro",
+   "Sus barcos forrados de bronce"
+  ],
+  "a": 1,
+  "e": "Su armadura de bronce contrastaba con la ropa tejida de los soldados persas. Fuente: Wadsworth, La estatua de Nabucodonosor, p. 22-23.",
+  "nv": 1
+ },
+ {
   "cap": "d3",
   "t": "mc",
   "v": "3:1",
@@ -56344,6 +56455,43 @@ const LAMINAS = {
     "q": "«Tú eres aquella…»",
     "ok": "oro",
     "e": "2:38 · «Tú eres aquella cabeza de oro»."
+   }
+  ],
+  "escenas": [
+   {
+    "y": -539,
+    "f": "e539",
+    "parte": "plata",
+    "t": "539 a.C. · Ciro toma Babilonia la noche del banquete de Belsasar (5:30-31)"
+   },
+   {
+    "y": -331,
+    "f": "e331",
+    "parte": "bronce",
+    "t": "331 a.C. · Alejandro vence a Darío III en Arbela"
+   },
+   {
+    "y": -168,
+    "f": "e168",
+    "parte": "hierro",
+    "t": "168 a.C. · Roma vence a Macedonia en Pidna"
+   },
+   {
+    "y": 476,
+    "f": "e476",
+    "parte": "dedos",
+    "t": "476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente"
+   },
+   {
+    "y": 538,
+    "f": "e538",
+    "parte": "barro",
+    "t": "538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal"
+   },
+   {
+    "y": 1798,
+    "f": "e1798",
+    "t": "1798 d.C. · El general Berthier entra en Roma y se lleva preso a Pío VI"
    }
   ],
   "partes": [
@@ -70516,14 +70664,14 @@ function lamEscena(){
       '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</span></button>';}).join('');
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
-    '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>'+
-    '<radialGradient id="lamLuz"><stop offset="0" stop-color="#FFF6D8" stop-opacity="1"/><stop offset=".35" stop-color="#F7D774" stop-opacity=".75"/><stop offset="1" stop-color="#F2C46B" stop-opacity="0"/></radialGradient>'+
-    '<clipPath id="lamClip"><circle id="lamClipC" cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0"/></clipPath></defs>'+
+    /* v190: sin url(#…) (degradados ni clipPath por id): dentro del árbol aparte
+       de Jóvenes, Safari en el iPhone no siempre los encuentra y el monte no
+       aparecía. El monte se recorta con clip-path de CSS y la luz son círculos. */
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
-    '<image class="lam-monte" clip-path="url(#lamClip)" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
-    '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="url(#lamSombra)"/>'+
+    '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="#000" fill-opacity=".28"/>'+
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
-    '<circle class="lam-luz" cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" fill="url(#lamLuz)"/>'+
+    '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
     '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
@@ -70629,8 +70777,15 @@ function lamPiedraArriba(){
   const pi=document.querySelector('#lamSvg .lam-piedra');
   if(pi){pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
 }
+/* v190: la escena de la historia, si la parte o el año tienen una. */
+function lamEscenaHTML(e){
+  if(!e)return '';
+  return '<figure class="lam-fig" data-f="'+e.f+'"><img src="'+lamSrc(e.f)+'" alt="'+esc(e.t)+'" loading="lazy"><figcaption>'+esc(e.t)+'</figcaption></figure>';
+}
+const lamEscenaDe=id=>(LAM().escenas||[]).find(e=>e.parte===id);
+const lamEscenaAnio=y=>(LAM().escenas||[]).filter(e=>e.y<=y).pop();
 function lamHojaParte(p,i,n){
-  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
+  return lamEscenaHTML(lamEscenaDe(p.id))+'<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
     '<div class="lam-p2">'+esc(p.reino)+'</div><div class="lam-fechas">'+esc(p.fechas)+'</div></div>'+
     (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
@@ -70712,7 +70867,12 @@ function lamVeAnio(y){
   document.getElementById('lamTano').textContent=lamAnioTx(y);
   document.getElementById('lamTq').textContent=q.tx;
   /* El año va en la explicación, no sobre la imagen. */
-  lamHoja('<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>');
+  /* Al recorrer solo, el año cambia veinte veces por segundo: la escena se
+     vuelve a pintar solo cuando cambia, si no parpadea. */
+  const esA=lamEscenaAnio(y),hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>';
+  const fig=hj&&hj.querySelector('.lam-fig'),igual=fig?(esA&&fig.getAttribute('data-f')===esA.f):!esA;
+  if(hj&&igual&&hj.querySelector('.lam-anio-tx')){hj.querySelector('.lam-anio-tx').innerHTML=txt;hj.classList.remove('vacia');}
+  else lamHoja(lamEscenaHTML(esA)+'<div class="lam-anio-tx">'+txt+'</div>');
   const r=document.getElementById('lamRango');if(r&&Number(r.value)!==y)r.value=y;
 }
 /* El botón recorre la historia sola, de 605 a.C. a hoy, en unos 14 segundos. */
@@ -70784,7 +70944,9 @@ function lamCae(piedra){
   const f=t=>{if(yo!==lamVuelo)return;const k=Math.min(1,(t-t0)/ms),e=k*k;
     piedra.setAttribute('transform','translate('+(x0+(gx-x0)*e)+' '+(y0+(gy-y0)*e)+') rotate('+(k*300)+')');
     if(k<1)requestAnimationFrame(f);else{const est=piedra.parentNode.querySelector('.lam-estatua');
-      if(est&&est.animate)est.animate([{transform:'translate(0,0)'},{transform:'translate(-12px,4px)'},{transform:'translate(12px,-2px)'},{transform:'translate(0,0)'}],{duration:380});}};
+      /* La estatua tiembla al golpe (atributo transform, ver lamPolvo). */
+      if(est){const s0=performance.now(),sh=tt=>{const k=Math.min(1,(tt-s0)/380),a=Math.sin(k*Math.PI*4)*12*(1-k);
+        est.setAttribute('transform','translate('+a.toFixed(1)+' '+(a/4).toFixed(1)+')');if(k<1)requestAnimationFrame(sh);else est.removeAttribute('transform');};requestAnimationFrame(sh);}}};
   requestAnimationFrame(f);
 }
 /* v189: EL MONTE (Camilo, 13-oct: «es el reino de Dios establecido, la
@@ -70795,19 +70957,22 @@ function lamCae(piedra){
    animar) o 'crece'. */
 function lamMonte(modo){
   const svg=document.getElementById('lamSvg');if(!svg)return;
-  const m=svg.querySelector('.lam-monte'),c=svg.querySelector('#lamClipC'),luz=svg.querySelector('.lam-luz');
-  const R=1900,yo=++lamCrece;
+  const L=LAM(),m=svg.querySelector('.lam-monte'),luz=svg.querySelector('.lam-luz'),yo=++lamCrece;
+  /* El centro del círculo, en % de la imagen del monte (x -150..1900, y 0..1152). */
+  const cx=((L.golpe[0]+150)/2050*100).toFixed(1)+'%',cy=(L.golpe[1]/1152*100).toFixed(1)+'%';
+  const recorta=r=>{const v='circle('+r.toFixed(1)+'% at '+cx+' '+cy+')';m.style.clipPath=v;m.style.webkitClipPath=v;};
+  const pinta=r=>luz.querySelectorAll('circle').forEach(c=>c.setAttribute('r',(r*+c.getAttribute('data-f')).toFixed(1)));
   if(modo==='no'||modo==='ya'||lamQuieto()){
-    m.style.opacity=modo==='no'?'0':'1';c.setAttribute('r',modo==='no'?0:R);luz.setAttribute('r',0);luz.style.opacity='0';return;}
-  m.style.opacity='1';c.setAttribute('r',0);
+    m.style.opacity=modo==='no'?'0':'1';recorta(modo==='no'?0:150);pinta(0);luz.style.opacity='0';return;}
+  m.style.opacity='1';recorta(0);
   const t0=performance.now(),ms=4200,pi=svg.querySelector('.lam-piedra');
   const f=t=>{if(yo!==lamCrece)return;
     /* Primero la piedra brilla (un sexto del tiempo); después el monte crece
        despacio al principio, rápido en medio y se asienta al final. */
     const k=Math.min(1,(t-t0)/ms),q=Math.max(0,(k-.16)/.84),e=(1-Math.cos(Math.PI*q))/2;
-    c.setAttribute('r',(R*e).toFixed(1));
+    recorta(150*e);
     /* La luz va delante del monte y se apaga al final. */
-    luz.setAttribute('r',(k<.16?60+k/.16*200:260+R*0.5*e).toFixed(1));luz.style.opacity=String(k<.75?Math.min(1,k*5):Math.max(0,(1-k)/.25));
+    pinta(k<.16?60+k/.16*200:260+950*e);luz.style.opacity=String(k<.75?Math.min(1,k*5):Math.max(0,(1-k)/.25));
     if(pi)pi.style.opacity=String(Math.max(0,1-q*2.5));
     if(k<1)requestAnimationFrame(f);};
   requestAnimationFrame(f);
@@ -70822,9 +70987,17 @@ function lamPolvo(svg){
     for(let i=0;i<n;i++){const px=x+Math.random()*w,py=y+Math.random()*hh,r=5+Math.random()*13;
       h+='<path d="M'+px.toFixed(1)+' '+(py-r).toFixed(1)+'l'+r.toFixed(1)+' '+(r*1.6).toFixed(1)+'h'+(-r*2).toFixed(1)+'z" fill="'+col[id]+'"/>';}});
   capa.innerHTML=h;
-  capa.querySelectorAll('path').forEach(el=>{if(el.animate)el.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:'translate('+(450+Math.random()*900)+'px,'+(-160+Math.random()*220)+'px) rotate('+(Math.random()*540)+'deg)',opacity:0}],
-    {duration:1400+Math.random()*900,delay:Math.random()*350,easing:'cubic-bezier(.3,.1,.3,1)',fill:'forwards'});});
-  setTimeout(()=>{capa.innerHTML='';},2800);
+  /* v190: se mueve con el atributo transform en cada cuadro, no con
+     el.animate(): en Safari las animaciones de transform sobre SVG no siempre
+     corren y el polvo se quedaba quieto. */
+  const ps=[...capa.querySelectorAll('path')].map(el=>({el,dx:450+Math.random()*900,dy:-160+Math.random()*220,gi:Math.random()*540,
+    d:1400+Math.random()*900,t:Math.random()*350}));
+  const t0=performance.now();
+  const f=t=>{let vivos=0;
+    ps.forEach(p=>{const k=Math.max(0,Math.min(1,(t-t0-p.t)/p.d)),e=1-Math.pow(1-k,2.2);if(k<1)vivos++;
+      p.el.setAttribute('transform','translate('+(p.dx*e).toFixed(1)+' '+(p.dy*e).toFixed(1)+')');p.el.setAttribute('fill-opacity',(1-k).toFixed(2));});
+    if(vivos)requestAnimationFrame(f);else capa.innerHTML='';};
+  requestAnimationFrame(f);
 }
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
@@ -73008,22 +73181,32 @@ const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id=
 function personasTocables(html,capId){
   perPrepara();
   if(!perRe)return html;
-  /* La línea de la fuente no se toca: ahí van autores, no personajes. */
-  return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>)/).map(parte=>{
-    if(/^<p class="sec-fuente">/.test(parte))return parte;
-    let dentro=0;
+  /* La línea de la fuente no se toca: ahí van autores, no personajes. Y la
+     Biblia citada tampoco (Camilo, 13-oct: «cuando es una cita bíblica, ahí no
+     hay links»): nada dentro de «…», <q>, citas en bloque ni recuadros de
+     versículo. */
+  return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>|<div class="verse-box">[\s\S]*?<\/div>)/).map(parte=>{
+    if(/^<p class="sec-fuente">|^<div class="verse-box">/.test(parte))return parte;
+    let dentro=0,cita=0;
     return parte.split(/(<[^>]+>)/).map(tr=>{
       if(tr.charAt(0)==='<'){
         if(/^<(button|a|h\d|q|blockquote)[\s>]/.test(tr))dentro++;
         else if(/^<\/(button|a|h\d|q|blockquote)>/.test(tr)&&dentro>0)dentro--;
         return tr;
       }
-      if(dentro>0||!tr.trim())return tr;
-      return tr.replace(perRe,t=>{
-        const c=(perDe[t]||[]).find(x=>!x.caps||x.caps.includes(capId));
-        if(!c)return t;
-        return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+t+'</button>';
-      });
+      if(!tr.trim())return tr;
+      /* Se parte el texto en lo que está dentro y fuera de «…»; la comilla puede
+         abrir en un trozo y cerrar en otro (con <strong> en medio). */
+      return tr.split(/([«»])/).map(t=>{
+        if(t==='«'){cita++;return t;}
+        if(t==='»'){cita=Math.max(0,cita-1);return t;}
+        if(dentro>0||cita>0)return t;
+        return t.replace(perRe,n=>{
+          const c=(perDe[n]||[]).find(x=>!x.caps||x.caps.includes(capId));
+          if(!c)return n;
+          return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+n+'</button>';
+        });
+      }).join('');
     }).join('');
   }).join('');
 }

@@ -795,8 +795,8 @@ export const CATALOGO = {
     "sub": "El sueño de la gran imagen",
     "grupo": "Biblia",
     "n": [
-     46,
-     48,
+     50,
+     50,
      9
     ]
    },
