@@ -33,11 +33,14 @@ const { CAMPAMENTOS, revisa, sinUsar } = require('./campamentos.js');
    dicen las fichas de campamentos.js; aquí se les pone la marca `cats` que la
    app filtra. IDS_DE_TEMA dice qué ids aporta cada tema, para que una ficha no pueda
    nombrar algo que su tema no tiene. */
+/* v188: los repasos de «Para profundizar» (`prof`) no son de ninguna ficha:
+   los ve toda categoría de su tema. */
+const sinProf = l => l.filter(x => !x.prof);
 const IDS_DE_TEMA = {
-  daniel: [...CAPS, ...MODULOS].map(x => x.id),
+  daniel: [...CAPS, ...sinProf(MODULOS)].map(x => x.id),
   matutina: [...MAT.MAT_CAPS, ...MAT.MAT_MODULOS].map(x => x.id),
   creencias: [...CR.CR_CAPS, ...CR.CR_MODULOS].map(x => x.id),
-  apocalipsis: [...AP.AP_CAPS, ...AP.AP_MODULOS].map(x => x.id),
+  apocalipsis: [...AP.AP_CAPS, ...sinProf(AP.AP_MODULOS)].map(x => x.id),
 };
 {
   const mal = [...revisa(CAMPAMENTOS, IDS_DE_TEMA),

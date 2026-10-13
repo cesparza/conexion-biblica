@@ -85,84 +85,79 @@ module.exports = {
       mundo.`) },
 
     { t: '🧭 El ángel fuerte es Cristo (10:1-3)', capa: 'contexto', h:
-      hi(`Esto es interpretación, no texto del capítulo. Para el pastor
-      <strong>Stephen Bohr</strong>, ningún pasaje describe mejor el origen,
-      el mensaje y la misión de la Iglesia Adventista que Apocalipsis 10. El
-      capítulo es un paréntesis dentro de la <strong>sexta trompeta</strong>,
-      en «el tiempo del fin».<br><br>
-      Elena de White escribe que el ángel poderoso que instruyó a Juan «no es
-      ni más ni menos que Jesucristo». Bohr lo compara con otras escenas:`) +
+      hi(`Esto es interpretación, no texto del capítulo. Ningún pasaje describe
+      mejor el origen, el mensaje y la misión de la Iglesia Adventista que
+      Apocalipsis 10. El capítulo es un paréntesis dentro de la <strong>sexta
+      trompeta</strong>, en «el tiempo del fin».<br><br>
+      El ángel poderoso que instruyó a Juan «no es ni más ni menos que
+      Jesucristo» (CBA 7:971). Las otras escenas lo confirman:`) +
       li([`Rostro como el sol y pies como columnas de fuego: como Jesús en
            1:15-16.`,
           `Ruge como un león: Jesús es el León de la tribu de Judá (5:5).`,
           `El arco iris sobre su cabeza: une la misericordia y la justicia de
-           Dios (Elena de White, «La educación», pág. 102-103).`]) +
-      fu(`Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 42, 44 y 46
-      (cita el Comentario bíblico adventista, tomo 7, pág. 971).`) },
+           Dios.`]) +
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 42, 44 y 46; CBA 7:971; Ed 102-103.`) },
 
     { t: '🧭 El librito abierto: Daniel (10:2)', capa: 'contexto', h:
       li([`<strong>Qué libro es.</strong> En la Biblia solo un libro se cerró y
            se selló «hasta el tiempo del fin»: la parte de Daniel que habla de
-           los últimos días (Daniel 12:4). Bohr la ubica en Daniel 8 a 12,
-           sobre todo los <strong>2.300 días</strong> y el comienzo del juicio
-           (Daniel 8:14).`,
+           los últimos días (Daniel 12:4). Es Daniel 8 a 12, sobre todo los
+           <strong>2.300 días</strong> y el comienzo del juicio (Daniel
+           8:14).`,
           `<strong>Desde cuándo está abierto.</strong> En griego, «abierto» indica
            algo que se abrió antes y sigue abierto: el libro se abrió al
            comenzar el tiempo del fin, en <strong>1798</strong>, y entre 1798
            y 1844 hubo un gran despertar en el estudio de Daniel y el
            Apocalipsis.`,
-          `<strong>Un pie en el mar y otro en la tierra.</strong> Elena de White:
-           el mensaje cruzará el océano y llegará a todo el mundo. Además, el
-           ángel reclama el planeta como suyo (Deuteronomio 11:24), y lo
-           recibe en la séptima trompeta (11:15).`]) +
-      fu(`Fuentes: Stephen Bohr, «La Razón de Nuestro Existir», pág. 46-49; Bohr,
-      «Apocalipsis 10», pág. 1-2.`) },
+          `<strong>Un pie en el mar y otro en la tierra.</strong> El mensaje
+           cruzará el océano y llegará a todo el mundo. Además, el ángel
+           reclama el planeta como suyo (Deuteronomio 11:24), y lo recibe en la
+           séptima trompeta (11:15).`]) +
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 46-49; Bohr, <i>Apocalipsis 10</i>, p. 1-2; 2MS 123.`) },
 
     { t: '🧭 Los siete truenos (10:3-4)', capa: 'contexto', h:
       hi(`El trueno puede ser una voz que se entiende: en Juan 12:28-29 la voz
       del Padre sonó como trueno. Juan sí entendió los siete truenos, pero
       recibió la orden de no escribirlos.<br><br>
-      Elena de White explica que los truenos eran «una delineación de los
-      eventos» que pasarían bajo los mensajes del primer y segundo ángel, y
-      que no convenía que la gente los conociera, porque su fe debía ser
-      probada.`) +
+      Los truenos eran «una delineación de los eventos» que pasarían bajo los
+      mensajes del primer y segundo ángel (CBA 7:971). No convenía que la gente
+      los conociera, porque su fe debía ser probada.`) +
       li([`Guillermo Miller esperó a Jesús primero en la primavera de 1843 y
            luego en el otoño de 1843: hubo chascos.`,
           `El 12 de agosto de 1844 Samuel Snow mostró que el día de la
            expiación de ese año caía el <strong>22 de octubre</strong>.`,
-          `Bohr ubica los truenos entre 1842 y la primavera de 1844, después de
+          `Los truenos van entre 1842 y la primavera de 1844, después de
            abrirse el libro (1798) y antes del juramento (otoño de 1844).`]) +
-      wa(`Algunos creen que los truenos aún no se cumplen. Bohr responde que
-      eran futuros para Daniel y Juan, no para Elena de White.`) +
-      fu(`Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 51-54.`) },
+      wa(`Algunos creen que los truenos aún no se cumplen. Pero eran futuros
+      para Daniel y Juan, no para los que vivieron en 1844.`) +
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 51-54; CBA 7:971.`) },
 
     { t: '🧭 «El tiempo no sería más» (10:5-7)', capa: 'contexto', h:
-      li([`<strong>Qué tiempo.</strong> Elena de White: no es el fin de la
-           historia ni del tiempo de gracia, sino el fin del <strong>tiempo
-           profético</strong>. El cálculo más largo llega al otoño de 1844, y
-           después no habrá otro mensaje basado en una fecha.`,
+      li([`<strong>Qué tiempo.</strong> No es el fin de la historia ni del
+           tiempo de gracia, sino el fin del <strong>tiempo profético</strong>.
+           El cálculo más largo llega al otoño de 1844, y después no habrá otro
+           mensaje basado en una fecha.`,
           `<strong>Por qué no es el fin del mundo.</strong> Después del juramento
            Juan debe profetizar otra vez (10:11) y medir el templo (11:1).`,
           `<strong>No es «demora».</strong> La palabra griega es
-           <em>chronos</em>, «tiempo»; Bohr muestra que nunca se traduce
-           «demora» en el Nuevo Testamento.`,
+           <em>chronos</em>, «tiempo», y nunca se traduce «demora» en el Nuevo
+           Testamento.`,
           `<strong>Jura por el Creador</strong> «que creó el cielo y las cosas
            que están en él» (10:6), como el primer ángel llama a adorar al que
            hizo el cielo y la tierra (14:7): eso apunta al sábado.`,
           `<strong>El misterio de Dios (10:7)</strong> es el evangelio
            (Romanos 16:25-26). Se consuma cuando la séptima trompeta está «a
            punto» de sonar: se cierra la gracia y termina la predicación.`]) +
-      wa(`Por eso Bohr insiste, con Elena de White, en <strong>no fijar
-      fechas</strong> para la venida de Jesús ni para otros sucesos.`) +
-      fu(`Fuentes: Stephen Bohr, «La Razón de Nuestro Existir», pág. 54-61;
-      Bohr, «Apocalipsis 10», pág. 3-5.`) },
+      wa(`Por eso <strong>no se fijan fechas</strong> para la venida de Jesús
+      ni para otros sucesos.`) +
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 54-61; Bohr, <i>Apocalipsis 10</i>, p. 3-5.`) },
 
     { t: '🧭 Dulce y amargo: el chasco de 1844 (10:8-10)', capa: 'contexto', h:
-      hi(`Comer el libro es entender el mensaje y recibirlo con gozo (Elena de
-      White; compara Ezequiel 3:1-4). <strong>Dulce</strong> fue el mensaje de
-      la hora del juicio: los milleritas creían que Jesús vendría el 22 de
-      octubre de 1844. <strong>Amargo</strong> fue el gran chasco, cuando no
-      vino. Hiram Edson escribió que lloraron hasta el amanecer.<br><br>
+      hi(`Comer el libro es entender el mensaje y recibirlo con gozo (compara
+      Ezequiel 3:1-4). <strong>Dulce</strong> fue el mensaje de la hora del
+      juicio: los milleritas creían que Jesús vendría el 22 de octubre de
+      1844. <strong>Amargo</strong> fue el gran chasco, cuando no vino. Hiram
+      Edson escribió que lloraron hasta el amanecer.<br><br>
       Acertaron en la fecha y se equivocaron en el evento: ese día Jesús
       entró al <strong>lugar santísimo</strong> del santuario celestial
       para comenzar el juicio.`) +
@@ -173,7 +168,7 @@ module.exports = {
         ['Jesús entró al lugar santo', 'Jesús entró al lugar santísimo'],
         ['Un remanente formó la iglesia', 'Un remanente formó la Iglesia Adventista'],
       ]) +
-      fu(`Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 65-69.`) },
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 65-69.`) },
 
     { t: '🧭 Profetizar otra vez (10:11)', capa: 'contexto', h:
       li([`<strong>Un quiasmo</strong> (estructura en espejo): «toma y cómelo»
@@ -185,15 +180,15 @@ module.exports = {
            que ahora incluye medir el templo (11:1).`,
           `<strong>Juan representa a un pueblo.</strong> Un hombre solo no
            podía predicar a «muchos pueblos, naciones, lenguas y reyes»
-           (10:11): lo cumple un movimiento (William Shea, citado por Bohr).`,
+           (10:11): lo cumple un movimiento.`,
           `<strong>Ante reyes</strong>, porque los reyes de la tierra se unen a
            la ramera (17:2; 18:3) y deben ser advertidos.`]) +
-      wa(`Para Bohr esta es «la razón de nuestro existir»: Dios levantó a la
-      Iglesia Adventista poco después de 1844 para profetizar otra vez.`) +
-      fu(`Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 70-72 y 82.`) },
+      wa(`Esta es «la razón de nuestro existir»: Dios levantó a la Iglesia
+      Adventista poco después de 1844 para profetizar otra vez.`) +
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 70-72 y 82.`) },
 
     { t: '🧭 Apocalipsis 10 en orden de tiempo', capa: 'contexto', h:
-      tbl(['Versículos', 'Qué pasa', 'Cuándo, según Bohr'], [
+      tbl(['Versículos', 'Qué pasa', 'Cuándo'], [
         ['10:1-2', 'Baja el ángel con el librito abierto', '1798 en adelante'],
         ['10:3-4', 'Suenan los siete truenos', '1842 a primavera de 1844'],
         ['10:5-6', 'Jura que el tiempo no sería más', '22 de octubre de 1844'],
@@ -204,7 +199,7 @@ module.exports = {
       ]) +
       wa(`El versículo 7 está escrito antes, pero se cumple al final: es una
       nota que mira hacia adelante.`) +
-      fu(`Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 45, 54 y 65.`) },
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 45, 54 y 65.`) },
 
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
@@ -215,8 +210,7 @@ module.exports = {
         ['Trueno (10:3)', 'Una voz de Dios que se entiende', 'Juan 12:28-29'],
         ['Comer el libro (10:9)', 'Recibir el mensaje y hacerlo propio para predicarlo', 'Ezequiel 3:1-4'],
       ]) +
-      fu(`Fuentes: Bohr, «La Razón de Nuestro Existir», pág. 46-51; Bohr, «15
-      principios de interpretación profética», vol. 2, pág. 106 y 216.`) },
+      fu(`Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 46-51; Bohr, <i>15 principios</i> 2:106 y 216.`) },
   ],
 
   preguntas: [
@@ -305,81 +299,81 @@ module.exports = {
     { t: 'fill', v: '10:11', ins: 'Apocalipsis 10:11 (RV1995) — Completa:',
       p: [{ x: '«Es necesario que ' }, { b: 'profetices', h: '¿qué debía hacer?' }, { x: ' otra vez sobre muchos pueblos, naciones, lenguas y ' }, { b: 'reyes', h: 'la cuarta palabra de la lista' }, { x: '.»' }] },
     { t: 'mc', v: '10:1', f: 'c',
-      q: 'Según Elena de White, citada por Bohr, ¿quién es el ángel fuerte de Apocalipsis 10?',
+      q: '¿Quién es el ángel fuerte de Apocalipsis 10?',
       o: ['Jesucristo', 'El ángel Gabriel', 'Guillermo Miller', 'El primer ángel de Apocalipsis 14'], a: 0,
-      e: '«El ángel poderoso que instruyó a Juan no es ni más ni menos que Jesucristo» (Comentario bíblico adventista, tomo 7, pág. 971). Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 46.' },
+      e: '«El ángel poderoso que instruyó a Juan no es ni más ni menos que Jesucristo» (CBA 7:971). Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 46; CBA 7:971.' },
     { t: 'mc', v: '10:1', f: 'c',
-      q: 'Según Bohr, ¿qué representa el arco iris sobre la cabeza del ángel?',
+      q: '¿Qué representa el arco iris sobre la cabeza del ángel?',
       o: ['La unión de la misericordia y la justicia de Dios', 'La paz entre las naciones de la tierra', 'Las siete iglesias de Asia', 'La gloria de los ángeles del cielo'], a: 0,
-      e: 'Bohr cita a Elena de White: el arco sobre el trono representa la unión de la misericordia y la justicia de Dios («La educación», pág. 102-103). Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 46.' },
+      e: 'El arco sobre el trono representa la unión de la misericordia y la justicia de Dios. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 46; Ed 102-103.' },
     { t: 'mc', v: '10:2', f: 'c',
-      q: 'Según Bohr, ¿qué es el librito abierto en la mano del ángel?',
+      q: '¿Qué es el librito abierto en la mano del ángel?',
       o: ['La parte de Daniel sellada hasta el fin', 'El libro de la vida del Cordero', 'El libro de los siete sellos', 'El rollo que comió Ezequiel'], a: 0,
-      e: 'Es la parte de Daniel que se cerró y selló «hasta el tiempo del fin» (Daniel 12:4): Daniel 8 a 12, sobre todo los 2.300 días. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 46-47.' },
+      e: 'Es la parte de Daniel que se cerró y selló «hasta el tiempo del fin» (Daniel 12:4): Daniel 8 a 12, sobre todo los 2.300 días. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 46-47.' },
     { t: 'mc', v: '10:2', f: 'c',
-      q: 'Según Bohr, ¿desde cuándo estaba abierto el librito?',
+      q: '¿Desde cuándo estaba abierto el librito?',
       o: ['Desde 1798, al comenzar el tiempo del fin', 'Desde 1844, después del gran chasco', 'Desde el año 538, con el papado', 'Desde que Juan escribió en Patmos'], a: 0,
-      e: 'El verbo griego indica algo abierto antes y que sigue abierto: el libro se abrió en 1798 y luego el ángel bajó con él en la mano. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 46-47.' },
+      e: 'El verbo griego indica algo abierto antes y que sigue abierto: el libro se abrió en 1798 y luego el ángel bajó con él en la mano. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 46-47.' },
     { t: 'mc', v: '10:2', f: 'c',
-      q: 'Según Elena de White, citada por Bohr, ¿qué significa que el ángel ponga un pie en el mar y otro en la tierra?',
+      q: '¿Qué significa que el ángel ponga un pie en el mar y otro en la tierra?',
       o: ['Que el mensaje irá a todo el mundo', 'Que el ángel viene a destruir la tierra', 'Que el juicio es solo para Europa', 'Que el mar y la tierra serán renovados'], a: 0,
-      e: 'La posición del ángel indica la extensión mundial del mensaje: cruzará el océano y llegará a otros países (Manuscrito 59, 1900). Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 48.' },
+      e: 'La posición del ángel indica la extensión mundial del mensaje: cruzará el océano y llegará a otros países. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 48; 2MS 123.' },
     { t: 'mc', v: '10:3-4', f: 'c',
-      q: 'Según Elena de White, citada por Bohr, ¿qué eran los siete truenos?',
+      q: '¿Qué eran los siete truenos?',
       o: ['Sucesos bajo los mensajes del 1.º y 2.º ángel', 'Las siete plagas del capítulo 16', 'Siete juicios sobre el Imperio otomano', 'Las siete iglesias del capítulo 2 y 3'], a: 0,
-      e: 'Eran «una delineación de los eventos» que ocurrirían bajo los mensajes del primer y segundo ángel; Bohr los ubica entre 1842 y la primavera de 1844. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 52.' },
+      e: 'Eran «una delineación de los eventos» que ocurrirían bajo los mensajes del primer y segundo ángel (CBA 7:971). Van entre 1842 y la primavera de 1844. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 52; CBA 7:971.' },
     { t: 'tf', v: '10:4', f: 'c',
-      q: 'Según Bohr, los siete truenos son sucesos que todavía no se han cumplido.', a: false,
-      e: 'Falso: eran futuros para Daniel y Juan, no para Elena de White; se cumplieron entre 1842 y 1844 con los chascos del movimiento millerita. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 52-54.' },
+      q: 'Los siete truenos son sucesos que todavía no se han cumplido.', a: false,
+      e: 'Falso: eran futuros para Daniel y Juan, no para los que vivieron en 1844; se cumplieron entre 1842 y 1844 con los chascos del movimiento millerita. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 52-54.' },
     { t: 'mc', v: '10:6', f: 'c',
-      q: 'Según Elena de White, citada por Bohr, ¿qué quiere decir que «el tiempo no sería más»?',
+      q: '¿Qué quiere decir que «el tiempo no sería más»?',
       o: ['Que terminó el tiempo profético en 1844', 'Que terminó el tiempo de gracia', 'Que ya no habría más demora', 'Que la historia del mundo terminó'], a: 0,
-      e: 'No es el fin de la historia ni del tiempo de gracia, sino de los tiempos proféticos: el cálculo más largo llega al otoño de 1844. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 54-55.' },
+      e: 'No es el fin de la historia ni del tiempo de gracia, sino de los tiempos proféticos: el cálculo más largo llega al otoño de 1844. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 54-55.' },
     { t: 'tf', v: '10:6', f: 'c',
-      q: 'Según Bohr, «el tiempo no sería más» se traduce bien como «ya no habrá más demora».', a: false,
-      e: 'Falso: la palabra griega es chronos, «tiempo», y en el Nuevo Testamento nunca se traduce «demora». Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 55.' },
+      q: '«el tiempo no sería más» se traduce bien como «ya no habrá más demora».', a: false,
+      e: 'Falso: la palabra griega es chronos, «tiempo», y en el Nuevo Testamento nunca se traduce «demora». Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 55.' },
     { t: 'mc', v: '10:5-6', f: 'c',
-      q: 'Según Bohr, ¿cuándo se cumple el juramento del ángel?',
+      q: '¿Cuándo se cumple el juramento del ángel?',
       o: ['El 22 de octubre de 1844', 'El 11 de agosto de 1840', 'En la primavera de 1843', 'En el año 1798'], a: 0,
-      e: 'Primero se abre el libro (1798), luego suenan los truenos (1842-1844) y el juramento llega el 22 de octubre de 1844. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 54.' },
+      e: 'Primero se abre el libro (1798), luego suenan los truenos (1842-1844) y el juramento llega el 22 de octubre de 1844. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 54.' },
     { t: 'mc', v: '10:6', f: 'c',
-      q: 'Según Bohr, ¿con qué mensaje une el juramento «por el que creó el cielo», la tierra y el mar?',
+      q: '¿Con qué mensaje une el juramento «por el que creó el cielo», la tierra y el mar?',
       o: ['El del primer ángel y el sábado (14:7)', 'El de la caída de Babilonia (14:8)', 'El de la marca de la bestia (14:9)', 'El de la siega de la tierra (14:15)'], a: 0,
-      e: 'El ángel jura por el Creador, y el primer ángel llama a adorar al que hizo el cielo, la tierra y el mar (14:7): los dos llevan al cuarto mandamiento y al sábado. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 56-57.' },
+      e: 'El ángel jura por el Creador, y el primer ángel llama a adorar al que hizo el cielo, la tierra y el mar (14:7): los dos llevan al cuarto mandamiento y al sábado. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 56-57.' },
     { t: 'mc', v: '10:7', f: 'c',
-      q: 'Según Bohr, ¿qué es «el misterio de Dios» que se consumará?',
+      q: '¿Qué es «el misterio de Dios» que se consumará?',
       o: ['El evangelio de la salvación', 'La fecha de la segunda venida', 'Lo que dijeron los siete truenos', 'El nombre secreto del ángel'], a: 0,
-      e: 'Es el evangelio, oculto desde la eternidad y revelado desde Génesis 3:15 (Romanos 16:25-26). Se consuma cuando la séptima trompeta está a punto de sonar y se cierra la gracia. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 59-61.' },
+      e: 'Es el evangelio, oculto desde la eternidad y revelado desde Génesis 3:15 (Romanos 16:25-26). Se consuma cuando la séptima trompeta está a punto de sonar y se cierra la gracia. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 59-61.' },
     { t: 'mc', v: '10:9-10', f: 'c',
-      q: 'Según Bohr, ¿qué experiencia muestra el librito dulce en la boca y amargo en el vientre?',
+      q: '¿Qué experiencia muestra el librito dulce en la boca y amargo en el vientre?',
       o: ['El mensaje de 1844 y el gran chasco', 'La caída de Jerusalén en el año 70', 'La persecución de los 1.260 años', 'La Reforma protestante del siglo XVI'], a: 0,
-      e: 'Dulce fue el mensaje de que Jesús vendría el 22 de octubre de 1844; amargo, el chasco cuando no vino. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 65-67.' },
+      e: 'Dulce fue el mensaje de que Jesús vendría el 22 de octubre de 1844; amargo, el chasco cuando no vino. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 65-67.' },
     { t: 'mc', v: '10:10', f: 'c',
-      q: 'Según Bohr, ¿con qué experiencia bíblica se parece el chasco de 1844?',
+      q: '¿Con qué experiencia bíblica se parece el chasco de 1844?',
       o: ['El chasco de los discípulos tras la entrada triunfal', 'El de Israel ante los muros de Jericó', 'El de Elías en el monte Carmelo', 'El de Noé mientras construía el arca'], a: 0,
-      e: 'Los discípulos esperaban un reino en la tierra, se cumplió la profecía de las 70 semanas y quedaron chasqueados; un remanente formó la iglesia. Lo mismo pasó en 1844 con los 2.300 días. Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 68-69.' },
+      e: 'Los discípulos esperaban un reino en la tierra, se cumplió la profecía de las 70 semanas y quedaron chasqueados; un remanente formó la iglesia. Lo mismo pasó en 1844 con los 2.300 días. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 68-69.' },
     { t: 'mc', v: '10:11', f: 'c',
-      q: 'Según Bohr, ¿qué mensaje cumple el mandato de «profetizar otra vez»?',
+      q: '¿Qué mensaje cumple el mandato de «profetizar otra vez»?',
       o: ['Los mensajes de los tres ángeles (14:6-12)', 'La predicación de la Reforma protestante', 'La fundación de las sociedades bíblicas', 'El mensaje de Juan a las siete iglesias'], a: 0,
-      e: 'Después del chasco había que predicar de nuevo, con mejor comprensión: el mensaje del primer ángel y los otros dos (14:6-12). Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 69 y 72.' },
+      e: 'Después del chasco había que predicar de nuevo, con mejor comprensión: el mensaje del primer ángel y los otros dos (14:6-12). Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 69 y 72.' },
     { t: 'tf', v: '10:11', f: 'c',
-      q: 'Según Bohr, en Apocalipsis 10 Juan representa a un movimiento del tiempo del fin.', a: true,
-      e: 'Verdadero: un hombre solo no podía profetizar a muchos pueblos, naciones, lenguas y reyes; un mensaje mundial pide un pueblo mundial (William Shea, citado por Bohr). Fuente: Stephen Bohr, «La Razón de Nuestro Existir», pág. 70.' },
+      q: 'En Apocalipsis 10 Juan representa a un movimiento del tiempo del fin.', a: true,
+      e: 'Verdadero: un hombre solo no podía profetizar a muchos pueblos, naciones, lenguas y reyes; un mensaje mundial pide un pueblo mundial. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 70.' },
     { t: 'mc', v: '10:9', f: 'c',
-      q: 'Según Bohr, ¿qué pasaje del Antiguo Testamento explica el acto de comer el librito?',
+      q: '¿Qué pasaje del Antiguo Testamento explica el acto de comer el librito?',
       o: ['Ezequiel 3:1-4', 'Jeremías 1:9-10', 'Isaías 6:6-7', 'Zacarías 5:1-4'], a: 0,
-      e: 'A Ezequiel le mandan comer un rollo y luego hablar a Israel (Ezequiel 3:1-4): comer el libro es recibir el mensaje para predicarlo. Fuentes: Bohr, «15 principios de interpretación profética», vol. 2, pág. 106 y 216; Bohr, «La Razón de Nuestro Existir», pág. 66.' },
+      e: 'A Ezequiel le mandan comer un rollo y luego hablar a Israel (Ezequiel 3:1-4): comer el libro es recibir el mensaje para predicarlo. Fuente: Bohr, <i>15 principios</i> 2:106 y 216; Bohr, <i>La razón de nuestro existir</i>, p. 66.' },
     { t: 'mc', v: '10:1', f: 'c',
-      q: 'En la lista de Bohr, ¿qué trasfondo bíblico tiene el arco iris sobre la cabeza del ángel?',
+      q: '¿Qué trasfondo bíblico tiene el arco iris sobre la cabeza del ángel?',
       o: ['El pacto con Noé y la visión de Ezequiel', 'La columna de nube del desierto', 'La gloria que llenó el templo de Salomón', 'La transfiguración de Jesús en el monte'], a: 0,
-      e: 'El arco iris remite al pacto de Dios con Noé (Génesis 9:13-16) y al trono de Dios en Ezequiel 1:28. Fuente: Bohr, «15 principios de interpretación profética», vol. 2, pág. 216.' },
+      e: 'El arco iris remite al pacto de Dios con Noé (Génesis 9:13-16) y al trono de Dios en Ezequiel 1:28. Fuente: Bohr, <i>15 principios</i> 2:216.' },
     { t: 'tf', v: '10:3', f: 'c',
-      q: 'Según Bohr, en Juan 12:28-29 la voz del Padre sonó como un trueno; por eso un trueno puede ser un mensaje que se entiende.', a: true,
-      e: 'Verdadero: la multitud dijo que había sido un trueno, pero era la voz del Padre. Así, Juan entendió lo que dijeron los siete truenos. Fuente: Bohr, «La Razón de Nuestro Existir», pág. 51-52.' },
+      q: 'En Juan 12:28-29 la voz del Padre sonó como un trueno; por eso un trueno puede ser un mensaje que se entiende.', a: true,
+      e: 'Verdadero: la multitud dijo que había sido un trueno, pero era la voz del Padre. Así, Juan entendió lo que dijeron los siete truenos. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 51-52.' },
     { t: 'mc', v: '10:2', f: 'c',
       q: '¿Qué texto de Daniel manda sellar el libro «hasta el tiempo del fin»?',
       o: ['Daniel 12:4', 'Daniel 8:14', 'Daniel 7:10', 'Daniel 9:24'], a: 0,
-      e: '«Pero tú, Daniel, cierra las palabras y sella el libro hasta el tiempo del fin» (Daniel 12:4). Ese libro sellado es el librito que el ángel trae abierto. Fuente: Bohr, «La Razón de Nuestro Existir», pág. 46-47.' },
+      e: '«Pero tú, Daniel, cierra las palabras y sella el libro hasta el tiempo del fin» (Daniel 12:4). Ese libro sellado es el librito que el ángel trae abierto. Fuente: Bohr, <i>La razón de nuestro existir</i>, p. 46-47.' },
   ],
 
   tarjetas: [

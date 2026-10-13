@@ -114,34 +114,31 @@ module.exports = {
       «el Cordero que está en medio del trono los pastoreará» (7:17).`) },
 
     { t: '🧭 Un paréntesis que responde a 6:17', capa: 'contexto', h:
-      hi(`Desde aquí, lo que sigue es <strong>interpretación</strong>. La guía
-      principal es el pastor Stephen (Esteban) Bohr.<br><br>
+      hi(`Desde aquí, lo que sigue es <strong>interpretación</strong>.<br><br>
       El capítulo 7 es un <strong>paréntesis</strong> entre el sexto y el
       séptimo sello. El sexto terminó con una pregunta: ¿quién podrá
       <strong>sostenerse en pie</strong> en el día de la ira? En el Nuevo
       Testamento, «estar en pie» es lo contrario de <strong>caer</strong>. La
       respuesta son los <strong>sellados</strong>.<br><br>
-      Bohr ve <strong>tres retratos</strong> de los 144.000:<br>
+      Hay <strong>tres retratos</strong> de los 144.000:<br>
       · 7:1-8: el <strong>sello</strong> que los protege en el tiempo de
       angustia.<br>
       · 14:1-5: su <strong>carácter</strong>.<br>
       · 15:2-4: su <strong>victoria</strong> sobre la bestia y su imagen.<br><br>
-      <strong>El orden de los hechos, según Bohr:</strong> se predican los
-      mensajes de los tres ángeles → el mundo queda dividido en dos grupos →
-      termina el sellamiento → Jesús deja de interceder (se cierra la puerta de
-      la gracia) → los ángeles sueltan los vientos → vienen las siete plagas y
-      la gran tribulación → Jesús viene y libra a su pueblo.<br><br>
+      <strong>El orden de los hechos:</strong> se predican los mensajes de los
+      tres ángeles → el mundo queda dividido en dos grupos → termina el
+      sellamiento → Jesús deja de interceder (se cierra la puerta de la gracia)
+      → los ángeles sueltan los vientos → vienen las siete plagas y la gran
+      tribulación → Jesús viene y libra a su pueblo.<br><br>
       En todos los pasajes de los 144.000 se repite el esquema <strong>ira →
-      sello → liberación</strong>.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 3-9;
-      Bohr, «Los 144.000 y los 24 ancianos», pág. 129.`) },
+      sello → liberación</strong>.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 2:3-9; Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 129.</p>` },
 
     { t: '🧭 Los cuatro vientos (7:1-3)', capa: 'contexto', h:
       hi(`· <strong>Qué son:</strong> en la profecía, los vientos representan
-      <strong>luchas</strong>. Elena de White lo explica con Daniel 7:2, donde
-      los cuatro vientos agitan el mar y surgen los imperios. Sobre Apocalipsis
-      7 dice que Juan vio «terremotos, tempestades y lucha política» retenidos
-      por cuatro ángeles.<br>
+      <strong>luchas</strong>. En Daniel 7:2 los cuatro vientos agitan el mar y
+      surgen los imperios. En Apocalipsis 7, Juan ve «terremotos, tempestades y
+      lucha política» retenidos por cuatro ángeles (TM 444).<br>
       · <strong>Quién los detiene:</strong> mientras Jesús intercede en el
       santuario, el Espíritu Santo, por medio de los ángeles, retiene los
       vientos. Ahí está la seguridad de la iglesia.<br>
@@ -149,14 +146,11 @@ module.exports = {
       Jesús dejará de interceder, el Espíritu se retirará de los que lo
       rechazaron y vendrá un tiempo de angustia como nunca hubo (Daniel
       12:1).<br><br>
-      <strong>Aplicación:</strong> Elena de White dice que el Espíritu que
-      refrena ya se está retirando: los desastres que se siguen uno tras otro
-      son señales de que la venida de Jesús está cerca, y llaman a prepararse
-      ahora, mientras los vientos están detenidos.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 7-8 y
-      12-14 (cita «Testimonios para los ministros», pág. 444, y «Testimonios
-      para la iglesia», tomo 6, pág. 407); Elena de White, «El conflicto de los
-      siglos», pág. 360.`) },
+      <strong>Aplicación:</strong> el Espíritu que refrena ya se está
+      retirando. Los desastres que se siguen uno tras otro son señales de que la
+      venida de Jesús está cerca, y llaman a prepararse ahora, mientras los
+      vientos están detenidos.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 2:7-8 y 12-14; TM 444; 6TI 407; CS 492-493.</p>` },
 
     { t: '🧭 El sello del Dios vivo (7:2-3)', capa: 'contexto', h:
       hi(`<strong>El trasfondo es Ezequiel 9.</strong> Antes de que Babilonia
@@ -166,29 +160,24 @@ module.exports = {
       · <strong>Para qué sirve un sello:</strong> dice de quién es algo
       (<strong>propiedad</strong>) y lo cuida (<strong>protección</strong>).
       La marca de la bestia es lo contrario.<br>
-      · <strong>El sábado:</strong> Elena de White enseña que el cuarto
-      mandamiento es el sello de la ley, porque es el único que tiene el nombre
-      y el título del Legislador. Como los sellos de los antiguos pactos, dice
-      quién es el Rey (el Creador) y cuál es su territorio (los cielos y la
-      tierra).<br>
+      · <strong>El sábado:</strong> el cuarto mandamiento es el sello de la
+      ley, porque es el único que tiene el nombre y el título del Legislador.
+      Como los sellos de los antiguos pactos, dice quién es el Rey (el Creador)
+      y cuál es su territorio (los cielos y la tierra).<br>
       · <strong>¿Y el Espíritu Santo?</strong> La Biblia dice que somos sellados
-      con el Espíritu (Efesios 1:13). Para Bohr no hay contradicción: el
-      Espíritu hace la obra <strong>por dentro</strong> y el sábado es la señal
-      <strong>por fuera</strong>, como la circuncisión era sello de la fe de
-      Abraham (Romanos 4:11).<br>
+      con el Espíritu (Efesios 1:13). No hay contradicción: el Espíritu hace la
+      obra <strong>por dentro</strong> y el sábado es la señal <strong>por
+      fuera</strong>, como la circuncisión era sello de la fe de Abraham
+      (Romanos 4:11).<br>
       · <strong>En la frente:</strong> la frente es la mente, donde Dios promete
       escribir su ley (Hebreos 8:10; Deuteronomio 6:8).<br><br>
-      Las notas de Camilo añaden que no basta guardar el día por fuera: el sello
-      es la aprobación de Dios sobre un corazón purificado.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 12,
-      119-123 (cita «Patriarcas y profetas», pág. 315), 145 y 153-154; Elena
-      de White, «El conflicto de los siglos»,
-      pág. 488; notas de Camilo en Evernote, "El sello de Dios".`) },
+      No basta guardar el día por fuera: el sello es la aprobación de Dios
+      sobre un corazón purificado.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 2:12, 119-123; PP 315, 145 y 153-154; CS 662-663.</p>` },
 
     { t: '🧭 ¿Quiénes son los 144.000? (7:4-8)', capa: 'contexto', h:
-      hi(`<strong>Esta es la postura de Bohr.</strong> Elena de White pidió no
-      entrar «en controversias» sobre quiénes serán, pero sí luchar para estar
-      entre ellos.<br><br>
+      hi(`No conviene entrar «en controversias» sobre quiénes serán (1MS 205),
+      pero sí luchar para estar entre ellos.<br><br>
       · <strong>Quiénes:</strong> el pueblo fiel de Dios que estará
       <strong>vivo cuando Jesús venga</strong>. Pasarán por la gran tribulación
       sin intercesor y no adorarán a la bestia.<br>
@@ -200,22 +189,18 @@ module.exports = {
       Israel) × 12 × 1.000 indica el verdadero pueblo de Dios en todo el mundo.
       En griego dice «ciento cuarenta y cuatro miles», y en hebreo «mil» puede
       significar un clan. Compáralo con los «siete mil» fieles de Elías.<br>
-      · <strong>La lista de tribus</strong> (notas de Camilo): Judá va primero
-      (Cristo es el León de Judá), y faltan Dan y Efraín porque ambas se
-      inclinaron a la apostasía.<br><br>
-      La Escuela Sabática de 2019 también lee el número como simbólico. Hay
-      quienes lo toman literal; Bohr responde que entonces Dios tendría que
-      predeterminar exactamente 12.000 por tribu.<br><br>
-      Fuentes: Bohr, «Los 144.000 y los 24 ancianos», págs. 88, 94-95 y
-      116-118; Bohr, «Los siete sellos de Apocalipsis», tomo 2, pág. 3;
-      Escuela Sabática 2019-1T, pág. 43; notas de Camilo en Evernote, "Tribús de
-      Israel".`) },
+      · <strong>La lista de tribus:</strong> Judá va primero (Cristo es el León
+      de Judá), y faltan Dan y Efraín porque ambas se inclinaron a la
+      apostasía (Jueces 18:30; Oseas 4:17).<br><br>
+      Hay quienes toman el número literal; pero entonces Dios tendría que
+      predeterminar exactamente 12.000 por tribu.`) +
+      `<p>Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 88, 94-95 y 116-118; Bohr, <i>Los siete sellos</i> 2:3; 1MS 205; Escuela Sabática 2019-1T, p. 43.</p>` },
 
     { t: '🧭 La gran multitud: los mismos, vistos de otra manera (7:9-17)', capa: 'contexto', h:
-      hi(`<strong>Postura de Bohr:</strong> los 144.000 y la gran multitud son
-      <strong>el mismo grupo</strong> en dos momentos. Juan a menudo
-      <strong>oye</strong> una cosa y luego la <strong>ve</strong> con otra
-      figura: oye «León» y ve un Cordero (capítulo 5).`) +
+      hi(`Los 144.000 y la gran multitud son <strong>el mismo grupo</strong> en
+      dos momentos. Juan a menudo <strong>oye</strong> una cosa y luego la
+      <strong>ve</strong> con otra figura: oye «León» y ve un Cordero (capítulo
+      5).`) +
       tbl(['Juan oye (7:4)', 'Juan ve (7:9)'], [
         ['El número', 'Nadie podía contarla'],
         ['144.000', 'Una gran multitud'],
@@ -224,36 +209,29 @@ module.exports = {
       ]) +
       hi(`· El griego dice «la tribulación, <strong>la grande</strong>»: es el
       tiempo de angustia final (Daniel 12:1), no las pruebas de toda época.<br>
-      · Elena de White mezcla las descripciones de los dos grupos, dice que solo
-      los 144.000 entran al templo («Primeros escritos», pág. 19), y 7:15 dice que la multitud sirve en el
-      templo.<br>
+      · Solo los 144.000 entran al templo celestial (PE 19), y 7:15 dice que la
+      multitud sirve en el templo.<br>
       · «Ya no tendrán hambre ni sed»: pasaron vivos por las plagas.<br>
       · Las <strong>palmas</strong> recuerdan la fiesta de los
       tabernáculos.<br><br>
-      <strong>Otras lecturas:</strong> unos ven dos grupos (la multitud sería
-      el fruto de la predicación de los 144.000); la Escuela Sabática de 2019
-      sugiere que la multitud son los redimidos de todas las épocas.<br><br>
-      Fuentes: Bohr, «Los 144.000 y los 24 ancianos», págs. 94 y 120-125; Bohr,
-      «Los siete sellos de Apocalipsis», tomo 2, págs. 81-86; Elena de White,
-      «El conflicto de los siglos», pág. 521; Escuela Sabática 2019-1T,
-      pág. 44.`) },
+      <strong>Otras lecturas:</strong> una ve dos grupos (la multitud sería el
+      fruto de la predicación de los 144.000); otra, que la multitud son los
+      redimidos de todas las épocas.`) +
+      `<p>Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 94 y 120-125; Bohr, <i>Los siete sellos</i> 2:81-86; PE 19; CS 707; Escuela Sabática 2019-1T, p. 44.</p>` },
 
     { t: '🧭 Ropas lavadas en la sangre (7:13-14)', capa: 'contexto', h:
       hi(`· <strong>¿Quién pregunta?</strong> El texto dice «uno de los
-      ancianos». Elena de White, al contar la escena, dice que fue
-      <strong>un ángel</strong>. Bohr usa esto para apoyar su idea de que los
-      ancianos son ángeles de alto rango.<br>
-      · <strong>Las ropas:</strong> Elena de White las une con el traje de bodas
-      de la parábola (Mateo 22:11): es el <strong>carácter</strong> lavado y
-      emblanquecido en la sangre del Cordero. En el juicio, Dios examina si cada
-      uno tiene ese manto.<br><br>
+      ancianos», y al contar la escena se le llama <strong>un ángel</strong>.
+      Esto apoya la idea de que los ancianos son ángeles de alto rango.<br>
+      · <strong>Las ropas</strong> se unen con el traje de bodas de la parábola
+      (Mateo 22:11): es el <strong>carácter</strong> lavado y emblanquecido en
+      la sangre del Cordero. En el juicio, Dios examina si cada uno tiene ese
+      manto.<br><br>
       <strong>Aplicación:</strong> nadie se limpia solo; la limpieza viene de la
       sangre de Jesús. Pero cada uno decide acercarse a él mientras la puerta de
-      la gracia está abierta. Elena de White animó: «Luchemos con todas las
-      fuerzas que Dios nos ha dado para estar entre los 144,000».<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 55-56;
-      tomo 2, pág. 3; Elena de White, «El conflicto de los siglos»,
-      págs. 351-352.`) },
+      la gracia está abierta. «Luchemos con todas las fuerzas que Dios nos ha
+      dado para estar entre los 144,000» (RH 9-3-1905).`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:55-56; Bohr, <i>Los siete sellos</i> 2:3; CS 480-481; RH 9-3-1905.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       hi(`Cada símbolo del capítulo tiene un texto bíblico que lo explica.`) +
@@ -268,11 +246,7 @@ module.exports = {
         ['Ropas blanqueadas en la sangre', 'El carácter limpio por la justicia de Cristo', 'Isaías 1:18; Apocalipsis 19:8'],
         ['Palmas', 'La fiesta de los tabernáculos, fiesta de alegría', 'Levítico 23:40'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      págs. 104-106; Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 4,
-      12, 69-71 y 120; Bohr, «Los 144.000 y los 24 ancianos», págs. 94 y 117; Elena
-      de White, «El conflicto de los siglos», pág. 360; notas de Camilo en
-      Evernote, "Vientos".`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:104-106; Bohr, <i>Los siete sellos</i> 2:4, 12, 69-71 y 120; Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 94 y 117; CS 492-493.</p>` },
   ],
 
   preguntas: [
@@ -408,92 +382,92 @@ module.exports = {
       o: ['Apocalipsis 7:17', 'Apocalipsis 7:16', 'Apocalipsis 7:15', 'Apocalipsis 7:10'], a: 0,
       e: 'Apocalipsis 7:17, el último versículo del capítulo.' },
     { t: 'mc', v: '7:1', f: 'c',
-      q: 'Según Bohr, ¿qué lugar ocupa Apocalipsis 7 en la serie de los sellos?',
+      q: '¿Qué lugar ocupa Apocalipsis 7 en la serie de los sellos?',
       o: ['Un paréntesis entre el sexto y el séptimo sello', 'La apertura misma del séptimo sello', 'El primero de los siete sellos', 'Una visión aparte, sin relación con los sellos'], a: 0,
-      e: 'Es un interludio que responde la pregunta de 6:17, «¿quién podrá sostenerse en pie?». Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 4-5.' },
+      e: 'Es un interludio que responde la pregunta de 6:17, «¿quién podrá sostenerse en pie?». Fuente: Bohr, <i>Los siete sellos</i> 2:4-5.' },
     { t: 'mc', v: '7:1', f: 'c',
-      q: 'Según Elena de White, ¿qué representan los cuatro vientos que detienen los ángeles?',
+      q: '¿Qué representan los cuatro vientos que detienen los ángeles?',
       o: ['Terremotos, tempestades y lucha política', 'Los cuatro evangelios del Nuevo Testamento', 'Las cuatro estaciones del año', 'Los cuatro imperios de Daniel 2'], a: 0,
-      e: 'Juan ve «terremotos, tempestades y lucha política» retenidos por cuatro ángeles hasta que Dios ordene soltarlos. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 2, pág. 7 (cita «Testimonios para los ministros», pág. 444); Elena de White, «El conflicto de los siglos», pág. 360.' },
+      e: 'Juan ve «terremotos, tempestades y lucha política» retenidos por cuatro ángeles hasta que Dios ordene soltarlos (TM 444). Fuente: Bohr, <i>Los siete sellos</i> 2:7; TM 444; CS 492-493.' },
     { t: 'tf', v: '7:1', f: 'c',
-      q: 'Según Bohr, cuando Jesús termine su intercesión en el santuario, los ángeles dejarán de detener los vientos y vendrá la gran tribulación.', a: true,
-      e: 'Verdadero: mientras Jesús intercede, el Espíritu retiene los vientos por medio de los ángeles; al cerrarse la gracia, se sueltan. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 7-8 y 12.' },
+      q: 'Cuando Jesús termine su intercesión en el santuario, los ángeles dejarán de detener los vientos y vendrá la gran tribulación.', a: true,
+      e: 'Verdadero: mientras Jesús intercede, el Espíritu retiene los vientos por medio de los ángeles; al cerrarse la gracia, se sueltan. Fuente: Bohr, <i>Los siete sellos</i> 2:7-8 y 12.' },
     { t: 'mc', v: '7:2', f: 'c',
-      q: 'Según Bohr, ¿qué pasaje del Antiguo Testamento es el trasfondo del sellamiento?',
+      q: '¿Qué pasaje del Antiguo Testamento es el trasfondo del sellamiento?',
       o: ['Ezequiel 9', 'Génesis 6', 'Éxodo 12', 'Daniel 3'], a: 0,
-      e: 'En Ezequiel 9 Dios manda poner una señal en la frente de los que gemían por las abominaciones, antes de la destrucción de Jerusalén. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 112-113, y tomo 2, pág. 12.' },
+      e: 'En Ezequiel 9 Dios manda poner una señal en la frente de los que gemían por las abominaciones, antes de la destrucción de Jerusalén. Fuente: Bohr, <i>Los siete sellos</i> 1:112-113; Bohr, <i>Los siete sellos</i> 2:12.' },
     { t: 'mc', v: '7:2', f: 'c',
-      q: 'Según Bohr, ¿qué dos cosas indica el sello de Dios, igual que la marca de la bestia en el bando contrario?',
+      q: '¿Qué dos cosas indica el sello de Dios, igual que la marca de la bestia en el bando contrario?',
       o: ['Propiedad y protección', 'Riqueza y poder', 'Edad y nacionalidad', 'Fama y autoridad'], a: 0,
-      e: 'El que tiene el sello pertenece a Dios y tiene su protección; el que tiene la marca pertenece a la bestia. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, pág. 12.' },
+      e: 'El que tiene el sello pertenece a Dios y tiene su protección; el que tiene la marca pertenece a la bestia. Fuente: Bohr, <i>Los siete sellos</i> 2:12.' },
     { t: 'mc', v: '7:2', f: 'c',
-      q: 'Según Elena de White, ¿por qué el cuarto mandamiento es el sello de la ley de Dios?',
+      q: '¿Por qué el cuarto mandamiento es el sello de la ley de Dios?',
       o: ['Es el único con el nombre y el título del Legislador', 'Es el más largo de los diez mandamientos', 'Fue el primero que Dios escribió en piedra', 'Es el único que trae una promesa'], a: 0,
-      e: 'En «Patriarcas y profetas» dice que es el único que dice por autoridad de quién se dio la ley. Bohr lo compara con los sellos de los pactos antiguos: nombre, cargo y territorio del rey. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 119 y 145.' },
+      e: 'Es el único que dice por autoridad de quién se dio la ley. Se puede comparar con los sellos de los pactos antiguos: nombre, cargo y territorio del rey. Fuente: Bohr, <i>Los siete sellos</i> 2:119 y 145.' },
     { t: 'tf', v: '7:2', f: 'c',
-      q: 'Según Bohr, decir que el sábado es el sello de Dios contradice la Biblia, que dice que somos sellados con el Espíritu Santo.', a: false,
-      e: 'Falso: para Bohr son dos caras de la misma moneda: la obra interna del Espíritu y su señal externa, como la circuncisión fue sello de la fe de Abraham (Romanos 4:11). Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 120-121.' },
+      q: 'Decir que el sábado es el sello de Dios contradice la Biblia, que dice que somos sellados con el Espíritu Santo.', a: false,
+      e: 'Falso: son dos caras de la misma moneda: la obra interna del Espíritu y su señal externa, como la circuncisión fue sello de la fe de Abraham (Romanos 4:11). Fuente: Bohr, <i>Los siete sellos</i> 2:120-121.' },
     { t: 'mc', v: '7:3', f: 'c',
-      q: 'Según Bohr, ¿por qué el sello se pone «en sus frentes»?',
+      q: '¿Por qué el sello se pone «en sus frentes»?',
       o: ['La frente representa la mente, donde Dios escribe su ley', 'Para que todos vean una marca en la piel', 'Porque allí llevaban la corona los reyes', 'Porque así se marcaba a los esclavos romanos'], a: 0,
-      e: 'Dios pidió llevar su ley «como frontales entre tus ojos» (Deuteronomio 6:8) y prometió escribirla en la mente (Hebreos 8:10). Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 153-154.' },
+      e: 'Dios pidió llevar su ley «como frontales entre tus ojos» (Deuteronomio 6:8) y prometió escribirla en la mente (Hebreos 8:10). Fuente: Bohr, <i>Los siete sellos</i> 2:153-154.' },
     { t: 'mc', v: '7:3', f: 'c',
-      q: 'Según Elena de White en «El conflicto de los siglos», ¿cuál será la gran prueba de lealtad que separe a los que reciben el sello de Dios?',
+      q: '¿Cuál será la gran prueba de lealtad que separe a los que reciben el sello de Dios?',
       o: ['El sábado del cuarto mandamiento', 'La forma de bautizar a los creyentes', 'El pago fiel de los diezmos', 'La manera de celebrar la Santa Cena'], a: 0,
-      e: 'El sábado será «la gran piedra de toque de la lealtad». Las notas de Camilo añaden que no basta la observancia externa: el sello es la aprobación de Dios sobre un corazón limpio. Fuentes: Elena de White, «El conflicto de los siglos», pág. 488; notas de Camilo en Evernote, "El sello de Dios".' },
+      e: 'El sábado será «la gran piedra de toque de la lealtad» (CS 663). No basta la observancia externa: el sello es la aprobación de Dios sobre un corazón limpio. Fuente: CS 663.' },
     { t: 'mc', v: '7:4', f: 'c',
-      q: 'Según Bohr, ¿quiénes son los 144.000?',
+      q: '¿Quiénes son los 144.000?',
       o: ['El pueblo fiel que estará vivo cuando Jesús venga', 'Los judíos que se conviertan en el tiempo del fin', 'Los mártires de todas las épocas de la historia', 'Los pioneros adventistas del siglo XIX'], a: 0,
-      e: 'Es la postura de Bohr: son el Israel espiritual que pasa por la gran tribulación y no adora a la bestia. Fuentes: Bohr, «Los 144.000 y los 24 ancianos», págs. 94-95; «Los siete sellos de Apocalipsis», tomo 2, págs. 6 y 11.' },
+      e: 'Son el Israel espiritual que pasa por la gran tribulación y no adora a la bestia. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 94-95; Bohr, <i>Los siete sellos</i> 2:6 y 11.' },
     { t: 'tf', v: '7:4', f: 'c',
-      q: 'Según Bohr, el número 144.000 debe entenderse literal: ni uno más ni uno menos.', a: false,
-      e: 'Falso: para Bohr es simbólico, como casi todo en el capítulo; si Israel es simbólico, el número también. La Escuela Sabática de 2019 opina lo mismo. Fuentes: Bohr, «Los 144.000 y los 24 ancianos», págs. 116-117; Escuela Sabática 2019-1T, pág. 43.' },
+      q: 'El número 144.000 debe entenderse literal: ni uno más ni uno menos.', a: false,
+      e: 'Falso: es simbólico, como casi todo en el capítulo; si Israel es simbólico, el número también. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 116-117; Escuela Sabática 2019-1T, p. 43.' },
     { t: 'mc', v: '7:4', f: 'c',
-      q: 'Según Bohr, ¿qué indica el número 144.000, que resulta de 12 × 12 × 1.000?',
+      q: '¿Qué indica el número 144.000, que resulta de 12 × 12 × 1.000?',
       o: ['El verdadero Israel de Dios en todo el mundo al final', 'La cantidad exacta de judíos fieles en el fin', 'El número de ángeles que rodean el trono', 'Los años que faltan para la segunda venida'], a: 0,
-      e: 'El 12 es el número de Israel (doce patriarcas, doce apóstoles); su intensificación señala al pueblo de Dios completo en todo el mundo. Fuente: Bohr, «Los 144.000 y los 24 ancianos», pág. 117.' },
+      e: 'El 12 es el número de Israel (doce patriarcas, doce apóstoles); su intensificación señala al pueblo de Dios completo en todo el mundo. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 117.' },
     { t: 'mc', v: '7:4', f: 'c',
-      q: 'Según Elena de White, citada por Bohr, ¿qué actitud se debe tener ante la pregunta de quiénes formarán los 144.000?',
+      q: '¿Qué actitud se debe tener ante la pregunta de quiénes formarán los 144.000?',
       o: ['No discutirlo, y luchar por estar entre ellos', 'Hacer una lista de nombres en cada iglesia', 'Esperar una señal visible en la frente', 'Calcular cuántos habrá en cada país'], a: 0,
-      e: 'Pidió no entrar «en controversias» sobre quiénes serán, y también: «Luchemos con todas las fuerzas que Dios nos ha dado para estar entre los 144,000». Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, pág. 3.' },
+      e: 'No entrar «en controversias» sobre quiénes serán (1MS 205), y: «Luchemos con todas las fuerzas que Dios nos ha dado para estar entre los 144,000» (RH 9-3-1905). Fuente: Bohr, <i>Los siete sellos</i> 2:3; 1MS 205; RH 9-3-1905.' },
     { t: 'mc', v: '7:5-8', f: 'c',
-      q: 'Según las notas de Camilo, ¿por qué no aparecen Dan ni Efraín en la lista de las tribus?',
+      q: '¿Por qué no aparecen Dan ni Efraín en la lista de las tribus?',
       o: ['Ambas se inclinaron fuertemente a la apostasía', 'Ambas desaparecieron en tiempo de los jueces', 'Ambas eran tribus de sacerdotes', 'Ambas vivían fuera de la tierra de Canaán'], a: 0,
-      e: 'Las notas explican que ambas tenían «mala prensa» en el Antiguo Testamento por su tendencia a la apostasía, y que Judá va primero porque Cristo es la cabeza del nuevo Israel. Fuente: notas de Camilo en Evernote, "Tribús de Israel".' },
+      e: 'Ambas tenían mala fama en el Antiguo Testamento por su tendencia a la apostasía (Jueces 18:30; Oseas 4:17), y Judá va primero porque Cristo es la cabeza del nuevo Israel. Fuente: apuntes «Tribús de Israel».' },
     { t: 'mc', v: '7:9', f: 'c',
-      q: 'Según Bohr, ¿qué relación hay entre los 144.000 y la gran multitud?',
+      q: '¿Qué relación hay entre los 144.000 y la gran multitud?',
       o: ['Son el mismo grupo: Juan lo oye y luego lo ve', 'La multitud es el fruto de la predicación de ellos', 'La multitud son los redimidos de todas las épocas', 'Los 144.000 son judíos y la multitud, gentiles'], a: 0,
-      e: 'Como en 5:5-6 (oye «León», ve un Cordero), Juan oye el número y luego ve la multitud. La Escuela Sabática de 2019 sugiere que la multitud son los redimidos de todas las épocas. Fuentes: Bohr, «Los 144.000 y los 24 ancianos», págs. 120-121; Escuela Sabática 2019-1T, pág. 44.' },
+      e: 'Como en 5:5-6 (oye «León», ve un Cordero), Juan oye el número y luego ve la multitud. Otra lectura ve en la multitud a los redimidos de todas las épocas. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 120-121; Escuela Sabática 2019-1T, p. 44.' },
     { t: 'mc', v: '7:9', f: 'c',
-      q: 'Según Bohr, ¿qué fiesta judía recuerdan las palmas en las manos de la multitud?',
+      q: '¿Qué fiesta judía recuerdan las palmas en las manos de la multitud?',
       o: ['La fiesta de los tabernáculos', 'La fiesta de la Pascua', 'El día de la expiación', 'La fiesta de Pentecostés'], a: 0,
-      e: 'Bohr relaciona las palmas con la fiesta de los tabernáculos (Levítico 23:34-36). Fuente: Bohr, «Los 144.000 y los 24 ancianos», pág. 94.' },
+      e: 'Las palmas recuerdan la fiesta de los tabernáculos (Levítico 23:34-36). Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 94.' },
     { t: 'mc', v: '7:13', f: 'c',
-      q: 'Según Bohr, ¿cómo llama Elena de White al «anciano» que le pregunta a Juan quiénes son los de ropas blancas?',
+      q: 'Al contar la escena, ¿cómo se llama al «anciano» que le pregunta a Juan quiénes son los de ropas blancas?',
       o: ['Un ángel', 'Un profeta', 'Un apóstol', 'Un mártir'], a: 0,
-      e: 'En varios escritos dice que fue «el ángel» quien preguntó; Bohr lo usa para apoyar que los ancianos son ángeles de alto rango. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 55-56.' },
+      e: 'En varios escritos se dice que fue «el ángel» quien preguntó; esto apoya que los ancianos son ángeles de alto rango. Fuente: Bohr, <i>Los siete sellos</i> 1:55-56.' },
     { t: 'mc', v: '7:14', f: 'c',
-      q: 'Según Bohr, ¿qué es «la gran tribulación» de la que salió la multitud?',
+      q: '¿Qué es «la gran tribulación» de la que salió la multitud?',
       o: ['El tiempo de angustia final de Daniel 12:1', 'Las pruebas de los cristianos de toda época', 'La persecución de Nerón contra la iglesia', 'La destrucción de Jerusalén por Roma'], a: 0,
-      e: 'El griego dice «la tribulación, la grande», la misma de Daniel 12:1 y Mateo 24:21. La Escuela Sabática de 2019 la ve más amplia. Fuentes: Bohr, «Los 144.000 y los 24 ancianos», pág. 122; Escuela Sabática 2019-1T, pág. 44.' },
+      e: 'El griego dice «la tribulación, la grande», la misma de Daniel 12:1 y Mateo 24:21. Otra lectura la ve más amplia. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 122; Escuela Sabática 2019-1T, p. 44.' },
     { t: 'tf', v: '7:15', f: 'c',
-      q: 'Según Bohr, Elena de White dice que solo los 144.000 entran al templo celestial, y la gran multitud sirve a Dios en su templo; por eso son el mismo grupo.', a: true,
-      e: 'Verdadero: es uno de los argumentos de Bohr. Fuente: Bohr, «Los 144.000 y los 24 ancianos», pág. 125.' },
+      q: 'Solo los 144.000 entran al templo celestial, y la gran multitud sirve a Dios en su templo; por eso son el mismo grupo.', a: true,
+      e: 'Verdadero: es uno de los argumentos para verlos como un solo grupo (PE 19). Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 125; PE 19.' },
     { t: 'mc', v: '7:16', f: 'c',
-      q: 'Según Bohr, ¿por qué se dice que la multitud ya no tendrá hambre ni sed?',
+      q: '¿Por qué se dice que la multitud ya no tendrá hambre ni sed?',
       o: ['Pasaron vivos por las plagas del fin', 'Ayunaron durante toda su vida', 'Vivieron en el desierto con Moisés', 'Murieron de hambre en la Edad Media'], a: 0,
-      e: 'Las plagas convierten el agua en sangre y el sol quema la vegetación; el pueblo de Dios sufre hambre y sed, pero es librado. Fuentes: Bohr, «Los 144.000 y los 24 ancianos», pág. 125; Elena de White, «El conflicto de los siglos», pág. 521.' },
+      e: 'Las plagas convierten el agua en sangre y el sol quema la vegetación; el pueblo de Dios sufre hambre y sed, pero es librado. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 125; CS 707.' },
     { t: 'mc', v: '7:1', f: 'c',
-      q: 'Según una nota de Camilo, ¿qué texto de los profetas usa «los cuatro vientos» para la guerra que dispersa a una nación?',
+      q: '¿Qué texto de los profetas usa «los cuatro vientos» para la guerra que dispersa a una nación?',
       o: ['Jeremías 49:36', 'Génesis 8:1', 'Éxodo 14:21', 'Números 11:31'], a: 0,
-      e: 'En los profetas el viento es la acción destructora de las naciones; Génesis 8:1, Éxodo 14:21 y Números 11:31 hablan de vientos literales que Dios usa. Fuentes: notas de Camilo en Evernote, "Vientos"; Elena de White, «El conflicto de los siglos», pág. 360.' },
+      e: 'En los profetas el viento es la acción destructora de las naciones; Génesis 8:1, Éxodo 14:21 y Números 11:31 hablan de vientos literales que Dios usa. Fuente: CS 492-493.' },
     { t: 'mc', v: '7:4', f: 'c',
-      q: 'Según Bohr, ¿qué texto enseña que los que son de Cristo son linaje de Abraham, es decir, el Israel de Dios?',
+      q: '¿Qué texto enseña que los que son de Cristo son linaje de Abraham, es decir, el Israel de Dios?',
       o: ['Gálatas 3:29', 'Génesis 49:10', '2 Reyes 17:6', 'Zacarías 10:3'], a: 0,
-      e: 'Por eso las tribus de 7:4-8 no son judíos literales sino el pueblo de Dios de todas las naciones (Romanos 2:28-29). Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 59 y 69-71; Bohr, «15 principios de interpretación profética», tomo 2, pág. 106.' },
+      e: 'Por eso las tribus de 7:4-8 no son judíos literales sino el pueblo de Dios de todas las naciones (Romanos 2:28-29). Fuente: Bohr, <i>Los siete sellos</i> 2:59 y 69-71; Bohr, <i>15 principios</i> 2:106.' },
     { t: 'tf', v: '7:2-3', f: 'c',
-      q: 'Según Bohr, 2 Timoteo 2:19 une el sello de Dios con la propiedad: el Señor conoce a los que son suyos.', a: true,
-      e: 'Verdadero: el sello dice a quién pertenece alguien y lo protege. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 4 y 12.' },
+      q: '2 Timoteo 2:19 une el sello de Dios con la propiedad: el Señor conoce a los que son suyos.', a: true,
+      e: 'Verdadero: el sello dice a quién pertenece alguien y lo protege. Fuente: Bohr, <i>Los siete sellos</i> 2:4 y 12.' },
   ],
 
   tarjetas: [

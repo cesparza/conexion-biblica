@@ -101,12 +101,12 @@ module.exports = {
 
     { t: '🧭 ¿Cuándo ocurre esta escena? (4:1-2)', capa: 'contexto', h:
       hi(`Desde aquí, lo que sigue es <strong>interpretación</strong>, no texto
-      del capítulo. La guía principal es el pastor Stephen (Esteban) Bohr.<br><br>
-      Bohr usa el método <strong>historicista</strong>: las profecías se
-      cumplen en orden a lo largo de la historia, desde los días del profeta
-      hasta el fin. Con ese método, los capítulos 4 y 5 muestran lo que pasó en
-      el cielo cuando <strong>Jesús ascendió</strong>, y los siete
-      sellos van desde ese momento hasta la segunda venida.<br><br>
+      del capítulo.<br><br>
+      El método es el <strong>historicista</strong>: las profecías se cumplen
+      en orden a lo largo de la historia, desde los días del profeta hasta el
+      fin. Con ese método, los capítulos 4 y 5 muestran lo que pasó en el cielo
+      cuando <strong>Jesús ascendió</strong>, y los siete sellos van desde ese
+      momento hasta la segunda venida.<br><br>
       · <strong>Apocalipsis 3:21 es la clave:</strong> Jesús ya venció y se
       sentó con su Padre en su trono; los que venzan se sentarán después con
       Jesús en el trono de él.<br>
@@ -114,47 +114,41 @@ module.exports = {
       aparece</strong>: el cielo se prepara para recibir al «héroe de guerra»
       que vuelve victorioso. Llega en el capítulo 5.<br>
       · El canto del capítulo 4 alaba a Dios como <strong>Creador</strong>, y
-      el del capítulo 5 al Cordero como <strong>Redentor</strong>. Para Bohr no
-      hay lenguaje de tribunal (de juicio) en estos dos capítulos.<br><br>
-      <strong>Otras lecturas:</strong> Alberto Treiyer entiende que Apocalipsis
-      4-5 es una escena del <strong>juicio investigador</strong> que comenzó en
-      1844; dos notas de Camilo siguen esa lectura. La lectura
-      <strong>futurista</strong> ve en 4:1 el rapto de la iglesia; Bohr la
-      rechaza.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 3-4,
-      21-22, 33-34 y 108-109; Treiyer, «La crisis final en Apocalipsis 4 y 5»,
-      pág. 108; notas de Camilo en Evernote, "Apocalipsis 4 (Digno es el
-      cordero)" y "Resumen Apocalipsis".`) },
+      el del capítulo 5 al Cordero como <strong>Redentor</strong>. No hay
+      lenguaje de tribunal (de juicio) en estos dos capítulos.<br><br>
+      <strong>Otras lecturas:</strong> una ve en Apocalipsis 4-5 una escena del
+      <strong>juicio investigador</strong> que comenzó en 1844. La lectura
+      <strong>futurista</strong> ve en 4:1 el rapto de la iglesia; la
+      historicista la rechaza.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:3-4, 21-22, 33-34 y 108-109; Treiyer, <i>La crisis final en Apocalipsis 4 y 5</i>, p. 108.</p>` },
 
     { t: '🧭 El trono en el lugar santo del santuario (4:5-6)', capa: 'contexto', h:
       hi(`El santuario de Moisés tenía <strong>dos salas</strong>: el
       <strong>lugar santo</strong> (con el candelabro, la mesa de los panes y
       el altar del incienso) y el <strong>lugar santísimo</strong> (con el arca
       del pacto). Era una copia del santuario del cielo.<br><br>
-      Según Bohr, la puerta abierta de 4:1 lleva al <strong>lugar
-      santo</strong> del santuario celestial:<br>
+      La puerta abierta de 4:1 lleva al <strong>lugar santo</strong> del
+      santuario celestial:<br>
       · Las <strong>siete lámparas de fuego</strong> son el candelabro. En
       griego dice <em>lampades</em>, la misma palabra que usa la Septuaginta (la
       traducción griega del Antiguo Testamento) para el candelabro.<br>
-      · Elena de White dice que Juan vio allí las siete lámparas y el altar de
-      oro, y que se le permitió contemplar «el primer departamento del santuario
-      en el cielo».<br>
-      · Bohr relaciona el trono con la <strong>mesa de los panes</strong>: tenía
+      · Juan vio allí las siete lámparas y el altar de oro: se le permitió
+      contemplar «el primer departamento del santuario en el cielo» (CS
+      467).<br>
+      · El trono se relaciona con la <strong>mesa de los panes</strong>: tenía
       dos coronas y dos hileras de pan, como dos personas (el Padre y el Hijo)
       que comparten un trono y alimentan al pueblo con la Palabra.<br>
       · Las siete lámparas son <strong>el Espíritu Santo en su
       plenitud</strong> (siete = plenitud).<br>
       · Los <strong>relámpagos</strong> muestran la rapidez de los ángeles, que
-      van y vuelven «a semejanza de relámpagos» (Ezequiel 1:14).<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 22-26;
-      Bohr, «El Santuario en Apocalipsis», pág. 4; Elena de White, «El conflicto
-      de los siglos», pág. 341.`) },
+      van y vuelven «a semejanza de relámpagos» (Ezequiel 1:14).`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:22-26; Bohr, <i>El santuario en Apocalipsis</i>, p. 4; CS 467.</p>` },
 
     { t: '🧭 Apocalipsis 4-5 y Daniel 7', capa: 'contexto', h:
       hi(`Daniel 7:9-14 también muestra el trono de Dios, tronos, millones de
       seres celestiales y al Hijo de Dios que llega. ¿Es la misma escena?<br><br>
-      <strong>Para Bohr, no:</strong> son <strong>los mismos personajes en dos
-      momentos distintos</strong>.`) +
+      <strong>No:</strong> son <strong>los mismos personajes en dos momentos
+      distintos</strong>.`) +
       tbl(['', 'Apocalipsis 4-5', 'Daniel 7'], [
         ['Cuándo', 'Cuando Jesús ascendió', '1844, al final de los 2.300 días'],
         ['Dónde', 'Lugar santo', 'Lugar santísimo'],
@@ -167,59 +161,50 @@ module.exports = {
       lugar santo se movieron con el Padre y el Hijo al lugar santísimo en 1844.
       Apocalipsis añade lo que Daniel no dice: que los tronos eran
       <strong>24</strong> y que en ellos se sentaban <strong>los
-      ancianos</strong>.<br><br>
-      Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 33-34 y
-      110-116.`) },
+      ancianos</strong>.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:33-34 y 110-116.</p>` },
 
     { t: '🧭 ¿Quiénes son los 24 ancianos? (4:4)', capa: 'contexto', h:
-      hi(`<strong>Esta es la postura de Bohr</strong>; no todos los adventistas
-      la comparten.<br><br>
-      Bohr piensa que los ancianos son <strong>ángeles de alto rango</strong>:
-      los «hijos de Dios» que, según Job 1 y 2, se reúnen en concilio delante
-      de Dios. Cada uno representaría a un <strong>mundo que nunca
-      pecó</strong>. Adán era el representante de la tierra, pero Satanás le
-      quitó ese puesto; por eso llegaba a esas reuniones «entre» los hijos de
-      Dios.<br><br>
-      Sus razones principales:<br>
+      hi(`No todos los adventistas leen igual este punto.<br><br>
+      Los ancianos serían <strong>ángeles de alto rango</strong>: los «hijos de
+      Dios» que, según Job 1 y 2, se reúnen en concilio delante de Dios. Cada
+      uno representaría a un <strong>mundo que nunca pecó</strong>. Adán era el
+      representante de la tierra, pero Satanás le quitó ese puesto; por eso
+      llegaba a esas reuniones «entre» los hijos de Dios.<br><br>
+      Las razones principales:<br>
       · Ya estaban en el cielo <strong>antes</strong> de que Jesús llegara con
       los ángeles.<br>
       · Un anciano le pregunta a Juan quiénes son los de la gran multitud
-      (7:13): no es parte de ella. Elena de White llama «ángel» al que habla con
-      Juan allí.<br>
+      (7:13): no es parte de ella. Al que habla con Juan allí se le llama
+      «ángel».<br>
       · Son distintos de los 144.000, que cantan delante de los ancianos
       (14:3).<br>
-      · Elena de White dice que los ángeles más excelsos se ocupan de las
-      oraciones, y los ancianos llevan las oraciones de los santos (5:8).<br>
-      · Bohr ve un problema de traducción en 5:9-10 (lo verás en el capítulo
+      · Los ángeles más excelsos se ocupan de las oraciones, y los ancianos
+      llevan las oraciones de los santos (5:8).<br>
+      · Hay un problema de traducción en 5:9-10 (lo verás en el capítulo
       5).<br><br>
-      Treiyer llega a la misma conclusión. <strong>La lectura
-      tradicional</strong> (Urías Smith) los ve como santos que
-      <strong>resucitaron con Jesús</strong> (Mateo 27:52-53) y subieron con él;
-      la Escuela Sabática de 2019 los presenta como santos glorificados.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 47-57 y
-      79-81; Treiyer, «La crisis final en Apocalipsis 4 y 5», pág. 103; Urías
-      Smith, «Las profecías del Apocalipsis», pág. 45.`) },
+      <strong>Otra lectura</strong>, la tradicional, los ve como santos que
+      <strong>resucitaron con Jesús</strong> (Mateo 27:52-53) y subieron con
+      él: santos glorificados.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:47-57 y 79-81; Treiyer, <i>La crisis final en Apocalipsis 4 y 5</i>, p. 103; Smith, <i>Las profecías del Apocalipsis</i>, p. 45; Escuela Sabática 2019-1T, p. 29.</p>` },
 
     { t: '🧭 Los seres vivientes y el canto al Creador (4:6-11)', capa: 'contexto', h:
-      hi(`· <strong>Quiénes son:</strong> para Bohr son <strong>serafines</strong>,
+      hi(`· <strong>Quiénes son:</strong> son <strong>serafines</strong>,
       porque como en Isaías 6 tienen seis alas y dicen «Santo, santo, santo».
       Ezequiel 1 y 10 describen a los <strong>querubines</strong> de forma
-      parecida; las notas de Camilo los identifican como querubines, los que
-      cubrían el arca y dirigen la adoración.<br>
+      parecida; otra lectura los ve como querubines, los que cubrían el arca y
+      dirigen la adoración.<br>
       · <strong>Los ojos</strong> simbolizan <strong>sabiduría</strong>: cumplen
       su tarea con inteligencia.<br>
-      · <strong>El canto de 4:11</strong> honra a Dios como Creador. Bohr
-      explica que la creación fue obra del Padre y del Hijo: el Padre hizo el
-      plan y el Hijo lo realizó. Lo dice así: «Padre fue el arquitecto y Jesús
-      fue el albañil».<br><br>
-      <strong>Aplicación:</strong> Elena de White cita este canto para mostrar
-      que Dios merece adoración <strong>porque es el Creador</strong>, y lo une
-      con Apocalipsis 14, que llama a adorar «a aquel que hizo el cielo y la
-      tierra», y con el <strong>sábado</strong> del cuarto mandamiento, que
-      recuerda la creación.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 27-28;
-      notas de Camilo en Evernote, "LOS CUATRO SERES VIVIENTES"; Elena de White,
-      «El conflicto de los siglos», págs. 357-358.`) },
+      · <strong>El canto de 4:11</strong> honra a Dios como Creador. La
+      creación fue obra del Padre y del Hijo: el Padre fue el arquitecto, y
+      Jesús, el albañil.<br><br>
+      <strong>Aplicación:</strong> este canto muestra que Dios merece adoración
+      <strong>porque es el Creador</strong>. Se une con Apocalipsis 14, que
+      llama a adorar «a aquel que hizo el cielo y la tierra», y con el
+      <strong>sábado</strong> del cuarto mandamiento, que recuerda la
+      creación.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:27-28; CS 488-491.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       hi(`La Biblia misma dice qué significan sus símbolos. Antes de dar una
@@ -230,13 +215,10 @@ module.exports = {
         ['Ropas blancas', 'La justicia, la pureza', 'Apocalipsis 19:8: «El lino fino representa las acciones justas de los santos»; Isaías 61:10'],
         ['Corona (stéfanos)', 'La victoria del que vence', 'Santiago 1:12'],
         ['Relámpagos', 'La rapidez de los ángeles', 'Ezequiel 1:13-14'],
-        ['Seres de seis alas', 'Serafines (Bohr); querubines (notas de Camilo)', 'Isaías 6:2-3; Ezequiel 10:20'],
+        ['Seres de seis alas', 'Serafines (otra lectura: querubines)', 'Isaías 6:2-3; Ezequiel 10:20'],
         ['Arco iris', 'La fidelidad de Dios a sus promesas', 'Génesis 9:13-16'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      págs. 104-106; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs.
-      24-28 y 171; Escuela Sabática 2019-1T, págs. 28-29; notas de Camilo en
-      Evernote, "LOS CUATRO SERES VIVIENTES".`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:104-106; Bohr, <i>Los siete sellos</i> 1:24-28 y 171; Escuela Sabática 2019-1T, p. 28-29.</p>` },
   ],
 
   preguntas: [
@@ -333,72 +315,72 @@ module.exports = {
       q: 'En Apocalipsis 4:11 los ancianos dicen que el Señor es digno de recibir la gloria, la honra y las riquezas.', a: false,
       e: 'Falso: dicen «la gloria, la honra y el PODER» (4:11). Las riquezas aparecen en la lista de 5:12.' },
     { t: 'mc', v: '4:1', f: 'c',
-      q: 'Según Bohr, ¿qué momento muestra la escena de Apocalipsis 4 y 5?',
+      q: '¿Qué momento muestra la escena de Apocalipsis 4 y 5?',
       o: ['La llegada de Jesús al cielo tras su ascensión', 'El comienzo del juicio investigador en 1844', 'El rapto secreto de la iglesia antes del fin', 'La coronación de Cristo después del milenio'], a: 0,
-      e: 'Bohr, que lee con el método historicista, ve aquí la llegada de Jesús al Padre cuando ascendió; desde allí empiezan los sellos. Treiyer ve el juicio de 1844, y los futuristas, un rapto. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 4 y 108-109.' },
+      e: 'Con el método historicista, es la llegada de Jesús al Padre cuando ascendió; desde allí empiezan los sellos. Otra lectura ve el juicio de 1844, y la futurista, un rapto. Fuente: Bohr, <i>Los siete sellos</i> 1:4 y 108-109.' },
     { t: 'tf', v: '4:1', f: 'c',
-      q: 'Según Bohr, Apocalipsis 4:1 describe el rapto de la iglesia antes de la gran tribulación.', a: false,
-      e: 'Falso: esa es la lectura futurista, que Bohr rechaza. Para él, la escena es la llegada de Jesús al cielo después de su ascensión. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 3-4.' },
+      q: 'Apocalipsis 4:1 describe el rapto de la iglesia antes de la gran tribulación.', a: false,
+      e: 'Falso: esa es la lectura futurista. La escena es la llegada de Jesús al cielo después de su ascensión. Fuente: Bohr, <i>Los siete sellos</i> 1:3-4.' },
     { t: 'tf', v: '4:2', f: 'c',
-      q: 'Según Bohr, en el capítulo 4 Jesús todavía no aparece en la escena, porque viene en camino desde la tierra con los ángeles.', a: true,
-      e: 'Verdadero: en el capítulo 4 el Padre está en el trono y Jesús llega con la hueste de ángeles en el capítulo 5. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 28-29 y 116.' },
+      q: 'En el capítulo 4 Jesús todavía no aparece en la escena, porque viene en camino desde la tierra con los ángeles.', a: true,
+      e: 'Verdadero: en el capítulo 4 el Padre está en el trono y Jesús llega con la hueste de ángeles en el capítulo 5. Fuente: Bohr, <i>Los siete sellos</i> 1:28-29 y 116.' },
     { t: 'mc', v: '4:5', f: 'c',
-      q: 'Según Bohr y Elena de White, ¿en qué parte del santuario celestial ocurre la escena de Apocalipsis 4?',
+      q: '¿En qué parte del santuario celestial ocurre la escena de Apocalipsis 4?',
       o: ['En el lugar santo', 'En el lugar santísimo', 'En el atrio de afuera', 'Junto al altar de bronce'], a: 0,
-      e: 'Las siete lámparas son el candelabro, que estaba en el lugar santo; Elena de White dice que Juan vio «el primer departamento» del santuario celestial. Treiyer, en cambio, la ubica en el santísimo. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 23-25; Elena de White, «El conflicto de los siglos», pág. 341.' },
+      e: 'Las siete lámparas son el candelabro, que estaba en el lugar santo: Juan vio «el primer departamento del santuario en el cielo» (CS 467). Otra lectura la ubica en el santísimo. Fuente: Bohr, <i>Los siete sellos</i> 1:23-25; CS 467.' },
     { t: 'mc', v: '4:5', f: 'c',
-      q: 'Según Bohr, ¿qué palabra griega une las siete lámparas de 4:5 con el candelabro del santuario?',
+      q: '¿Qué palabra griega une las siete lámparas de 4:5 con el candelabro del santuario?',
       o: ['Lampades', 'Menorá', 'Stéfanos', 'Biblíon'], a: 0,
-      e: '«Lámparas» traduce lampades, la palabra que usa la Septuaginta (la traducción griega del Antiguo Testamento) para el candelabro de siete brazos. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 24.' },
+      e: '«Lámparas» traduce lampades, la palabra que usa la Septuaginta (la traducción griega del Antiguo Testamento) para el candelabro de siete brazos. Fuente: Bohr, <i>Los siete sellos</i> 1:24.' },
     { t: 'mc', v: '4:5', f: 'c',
-      q: 'Según Bohr, ¿qué representan los relámpagos que salían del trono?',
+      q: '¿Qué representan los relámpagos que salían del trono?',
       o: ['La rapidez con que los ángeles hacen su obra', 'La ira de Dios que cae sobre los impíos', 'El anuncio de las siete trompetas futuras', 'Las voces de los mártires que piden justicia'], a: 0,
-      e: 'Bohr cita Ezequiel 1:14 y a Elena de White: los ángeles van y vuelven «a semejanza de relámpagos». Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 26.' },
+      e: 'Los ángeles van y vuelven «a semejanza de relámpagos» (Ezequiel 1:14). Fuente: Bohr, <i>Los siete sellos</i> 1:26.' },
     { t: 'mc', v: '4:2-6', f: 'c',
-      q: 'Según Bohr, ¿en qué se diferencia la escena de Apocalipsis 4-5 de la de Daniel 7?',
+      q: '¿En qué se diferencia la escena de Apocalipsis 4-5 de la de Daniel 7?',
       o: ['Son los mismos personajes en dos momentos distintos', 'Son la misma escena del juicio contada dos veces', 'Daniel ve la tierra nueva y Juan ve el milenio', 'Daniel ve a Babilonia y Juan ve a la iglesia'], a: 0,
-      e: 'Para Bohr, Apocalipsis 4-5 es la llegada de Jesús al lugar santo; Daniel 7, el paso del Padre y del Hijo al lugar santísimo en 1844 para el juicio. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 114-116.' },
+      e: 'Apocalipsis 4-5 es la llegada de Jesús al lugar santo; Daniel 7, el paso del Padre y del Hijo al lugar santísimo en 1844 para el juicio. Fuente: Bohr, <i>Los siete sellos</i> 1:114-116.' },
     { t: 'mc', v: '4:4', f: 'c',
-      q: 'Según Bohr, ¿quiénes son los veinticuatro ancianos?',
+      q: '¿Quiénes son los veinticuatro ancianos?',
       o: ['Ángeles de alto rango que representan mundos sin pecado', 'Santos que resucitaron con Jesús y subieron con él', 'Los doce patriarcas y los doce apóstoles juntos', 'Los jefes de los turnos de sacerdotes del templo'], a: 0,
-      e: 'Es la postura de Bohr: son los «hijos de Dios» de Job 1 y 2, representantes de mundos que no pecaron. La lectura tradicional (Urías Smith) los ve como los santos que resucitaron con Jesús (Mateo 27:52-53). Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 47-57 y 79-81; Urías Smith, «Las profecías del Apocalipsis», pág. 45.' },
+      e: 'Son los «hijos de Dios» de Job 1 y 2, representantes de mundos que no pecaron. Otra lectura, la tradicional, los ve como los santos que resucitaron con Jesús (Mateo 27:52-53). Fuente: Bohr, <i>Los siete sellos</i> 1:47-57 y 79-81; Smith, <i>Las profecías del Apocalipsis</i>, p. 45.' },
     { t: 'tf', v: '4:4', f: 'c',
-      q: 'Según Bohr, los veinticuatro ancianos forman parte de la gran multitud de redimidos de Apocalipsis 7.', a: false,
-      e: 'Falso: para Bohr no lo son, porque uno de los ancianos le pregunta a Juan quiénes son los de la gran multitud (7:13). Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 80.' },
+      q: 'Los veinticuatro ancianos forman parte de la gran multitud de redimidos de Apocalipsis 7.', a: false,
+      e: 'Falso: no lo son, porque uno de los ancianos le pregunta a Juan quiénes son los de la gran multitud (7:13). Fuente: Bohr, <i>Los siete sellos</i> 1:80.' },
     { t: 'mc', v: '4:4', f: 'c',
-      q: 'Según Bohr, ¿qué pasaje muestra a los «hijos de Dios» reunidos delante de Dios, con Satanás entre ellos?',
+      q: '¿Qué pasaje muestra a los «hijos de Dios» reunidos delante de Dios, con Satanás entre ellos?',
       o: ['Job 1 y 2', 'Génesis 6', 'Isaías 6', 'Ezequiel 1'], a: 0,
-      e: 'Bohr ve en Job 1:6 y 2:1 reuniones del concilio del cielo; Satanás llegaba como si representara a la tierra, porque le había quitado ese lugar a Adán. En Génesis 6, en cambio, los «hijos de Dios» son los descendientes de Set. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 48-51.' },
+      e: 'Job 1:6 y 2:1 muestran reuniones del concilio del cielo; Satanás llegaba como si representara a la tierra, porque le había quitado ese lugar a Adán. En Génesis 6, en cambio, los «hijos de Dios» son los descendientes de Set. Fuente: Bohr, <i>Los siete sellos</i> 1:48-51.' },
     { t: 'mc', v: '4:4', f: 'c',
-      q: 'En la interpretación adventista de la Escuela Sabática de 2019, ¿qué podría representar el número 24 de los ancianos?',
+      q: 'En otra lectura adventista, ¿qué podría representar el número 24 de los ancianos?',
       o: ['Todo el pueblo de Dios: dos grupos de doce', 'Las veinticuatro horas del día y la noche', 'Los veinticuatro libros de la Biblia hebrea', 'Los veinticuatro reyes de Israel y de Judá'], a: 0,
-      e: 'Esa guía dice que el 12 es número del pueblo de Dios, y que los ancianos serían santos glorificados, quizá los que resucitaron con Jesús. Bohr, en cambio, los ve como ángeles de alto rango. Fuente: Escuela Sabática 2019-1T, pág. 29.' },
+      e: 'En esa lectura, el 12 es número del pueblo de Dios y los ancianos serían santos glorificados, quizá los que resucitaron con Jesús. Aquí se los ve, en cambio, como ángeles de alto rango. Fuente: Escuela Sabática 2019-1T, p. 29.' },
     { t: 'mc', v: '4:6-8', f: 'c',
-      q: 'Según Bohr, ¿con qué seres de Isaías 6 se identifican los cuatro seres vivientes?',
+      q: '¿Con qué seres de Isaías 6 se identifican los cuatro seres vivientes?',
       o: ['Con los serafines', 'Con los ancianos de Israel', 'Con los ángeles destructores', 'Con los profetas del templo'], a: 0,
-      e: 'Como los serafines de Isaías 6, tienen seis alas y dicen «Santo, santo, santo». Ezequiel describe a los querubines de forma parecida, y las notas de Camilo los identifican como querubines. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 27-28; notas de Camilo en Evernote, "LOS CUATRO SERES VIVIENTES".' },
+      e: 'Como los serafines de Isaías 6, tienen seis alas y dicen «Santo, santo, santo». Ezequiel describe a los querubines de forma parecida; otra lectura los ve como querubines. Fuente: Bohr, <i>Los siete sellos</i> 1:27-28.' },
     { t: 'mc', v: '4:6', f: 'c',
-      q: 'Según Bohr, ¿qué simbolizan los muchos ojos de los seres vivientes?',
+      q: '¿Qué simbolizan los muchos ojos de los seres vivientes?',
       o: ['La sabiduría con que cumplen su tarea', 'Las estrellas que adornan todo el cielo', 'Los pecados que Dios ve en la tierra', 'Las siete iglesias que vigilan el mundo'], a: 0,
-      e: 'Los ojos son símbolo de sabiduría o inteligencia: los seres vivientes cumplen su tarea con máxima sabiduría. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 27.' },
+      e: 'Los ojos son símbolo de sabiduría o inteligencia: los seres vivientes cumplen su tarea con máxima sabiduría. Fuente: Bohr, <i>Los siete sellos</i> 1:27.' },
     { t: 'mc', v: '4:11', f: 'c',
-      q: 'Según Bohr, ¿cómo participaron el Padre y el Hijo en la creación que se alaba en 4:11?',
+      q: '¿Cómo participaron el Padre y el Hijo en la creación que se alaba en 4:11?',
       o: ['El Padre hizo el plan y el Hijo lo realizó', 'El Padre creó todo solo, sin el Hijo', 'El Hijo creó todo solo, sin el Padre', 'Ninguno: la obra fue de los ángeles'], a: 0,
-      e: 'Bohr lo resume así: «Padre fue el arquitecto y Jesús fue el albañil». Cita Juan 1:3 y Patriarcas y Profetas. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 28.' },
+      e: 'El Padre fue el arquitecto, y Jesús, el albañil (Juan 1:3). Fuente: Bohr, <i>Los siete sellos</i> 1:28.' },
     { t: 'tf', v: '4:11', f: 'c',
-      q: 'Según Elena de White, el canto de 4:11 muestra que Dios merece adoración porque es el Creador, y el sábado recuerda esa razón.', a: true,
-      e: 'Verdadero: en «El conflicto de los siglos» cita 4:11 y lo une con el llamado de Apocalipsis 14 a adorar al Creador y con el cuarto mandamiento. Fuente: Elena de White, «El conflicto de los siglos», págs. 357-358.' },
+      q: 'El canto de 4:11 muestra que Dios merece adoración porque es el Creador, y el sábado recuerda esa razón.', a: true,
+      e: 'Verdadero: 4:11 se une con el llamado de Apocalipsis 14 a adorar al Creador y con el cuarto mandamiento. Fuente: CS 488-491.' },
     { t: 'mc', v: '4:4', f: 'c',
       q: '¿Qué texto del mismo Apocalipsis explica que el vestido blanco representa la justicia?',
       o: ['Apocalipsis 19:8', 'Apocalipsis 17:15', 'Apocalipsis 1:20', 'Apocalipsis 12:17'], a: 0,
-      e: 'Dice: «El lino fino representa las acciones justas de los santos». Bohr pone la vestimenta como símbolo de justicia (Apocalipsis 19:8; Isaías 61:10). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105.' },
+      e: 'Dice: «El lino fino representa las acciones justas de los santos». La vestimenta es símbolo de justicia (Isaías 61:10). Fuente: Bohr, <i>15 principios</i> 2:105.' },
     { t: 'mc', v: '4:6-7', f: 'c',
-      q: 'Según las notas de Camilo, ¿qué texto llama «querubines» a los seres vivientes que vio Ezequiel junto al trono?',
+      q: '¿Qué texto llama «querubines» a los seres vivientes que vio Ezequiel junto al trono?',
       o: ['Ezequiel 10:20', 'Isaías 6:2', 'Daniel 7:10', 'Salmo 103:20'], a: 0,
-      e: 'Ezequiel vio seres con cara de hombre, león, buey y águila, y dice que eran querubines. Bohr, en cambio, los llama serafines por Isaías 6. Fuentes: notas de Camilo en Evernote, "LOS CUATRO SERES VIVIENTES"; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 27-28.' },
+      e: 'Ezequiel vio seres con cara de hombre, león, buey y águila, y dice que eran querubines. Aquí se los llama serafines, por Isaías 6. Fuente: Bohr, <i>Los siete sellos</i> 1:27-28.' },
     { t: 'tf', v: '4:3', f: 'c',
-      q: 'Según la Escuela Sabática de 2019, el arco iris alrededor del trono señala la fidelidad de Dios a sus promesas, como en Génesis 9.', a: true,
-      e: 'Verdadero: la guía cita Génesis 9:13-16 e Isaías 54:9-10. Fuente: Escuela Sabática 2019-1T, pág. 28.' },
+      q: 'El arco iris alrededor del trono señala la fidelidad de Dios a sus promesas, como en Génesis 9.', a: true,
+      e: 'Verdadero: Génesis 9:13-16 e Isaías 54:9-10. Fuente: Escuela Sabática 2019-1T, p. 28.' },
   ],
 
   tarjetas: [

@@ -30,7 +30,9 @@ const AP_CAPS = caps.map(c => ({ id: c.cap, label: c.label, sub: c.sub, src: 'Bi
 const AP_CONTENIDO = Object.fromEntries(caps.map(c => [c.cap, c.estudio]));
 const AP_BANCO = caps.flatMap(c => c.preguntas.map(q => ({ cap: c.cap, ...q })));
 const AP_TARJETAS = caps.flatMap(c => c.tarjetas.map(t => ({ cap: c.cap, ...t })));
-const AP_MODULOS = [];
-const AP_CONT_MODULOS = {};
+/* v188: los repasos de «Para profundizar», los mismos de Daniel con su id. */
+const PROF = require('./complementos/profundizar.js');
+const AP_MODULOS = PROF.modulos('ma', 'apocalipsis');
+const AP_CONT_MODULOS = PROF.contenido('ma');
 
 module.exports = { AP_CAPS, AP_CONTENIDO, AP_BANCO, AP_TARJETAS, AP_MODULOS, AP_CONT_MODULOS };

@@ -106,6 +106,18 @@ const lamSrc=f=>LAMINAS_DIR+LAM().dir+f+'.webp';
 const lamAnioTx=y=>y<0?(-y)+' a.C.':y+' d.C.';
 const PIEDRA0=[960,330];
 
+/* v188: las imágenes se piden todas y se decodifican antes de mostrar la
+   escena: mientras llegaban, la estatua se armaba a pedazos sobre un fondo
+   vacío. lamPrecarga() sin escena solo las deja en caché (se llama al abrir
+   el capítulo); con escena, quita el velo cuando están listas. */
+const lamPrecargadas={};
+function lamPrecarga(cid,esc){
+  const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
+  const fs=[...L.capas,'babilonia','monte','piedra'].map(f=>LAMINAS_DIR+L.dir+f+'.webp');
+  const p=lamPrecargadas[cid]||(lamPrecargadas[cid]=Promise.all(fs.map(src=>new Promise(ok=>{
+    const im=new Image();im.onload=()=>{(im.decode?im.decode():Promise.resolve()).then(ok,ok);};im.onerror=ok;im.src=src;}))));
+  if(esc){const listo=()=>esc.classList.remove('cargando');p.then(listo);setTimeout(listo,8000);}
+}
 /* La tarjeta que invita, dentro del estudio del capítulo. */
 function lamTarjeta(cid){
   const L=LAMINAS[cid];
@@ -123,14 +135,14 @@ function lamTarjeta(cid){
 function lamEscena(){
   const L=LAM(),C=L.cajas,E=L.etiquetas;
   const capa=id=>'<g class="lam-parte" data-p="'+id+'"><image href="'+lamSrc(id)+'" x="'+L.ox+'" y="0" width="768" height="1152"/>'+
-    '<rect class="lam-hit" x="'+C[id][0]+'" y="'+C[id][1]+'" width="'+C[id][2]+'" height="'+C[id][3]+'" fill="transparent" onclick="lamToca(\''+id+'\')"/></g>';
+    '<rect class="lam-hit" x="'+C[id][0]+'" y="'+C[id][1]+'" width="'+C[id][2]+'" height="'+C[id][3]+'" fill="transparent" pointer-events="all" onclick="lamToca(\''+id+'\')"/></g>';
   /* La línea va del punto de la estatua al borde de su etiqueta. */
   const lineas=Object.keys(E).filter(id=>E[id].ax).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
     return '<g class="lam-guia" data-p="'+id+'"><circle cx="'+e.ax+'" cy="'+e.ay+'" r="7"/><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+30:x2-30)+' '+(e.ly+32)+' L'+x2+' '+(e.ly+32)+'"/></g>';}).join('');
   const etiquetas=Object.keys(E).map(id=>{const e=E[id],p=lamParte(id);
     return '<button type="button" class="lam-et '+e.lado+'" data-p="'+id+'" style="--c:'+p.c+';top:'+(e.ly/L.h*100)+'%" onclick="lamToca(\''+id+'\')">'+
-      '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas)+'</span></button>';}).join('');
-  return '<div class="lam-marco"><div class="lam-esc" id="lamEsc">'+
+      '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</span></button>';}).join('');
+  return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
     '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'+
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
@@ -138,7 +150,7 @@ function lamEscena(){
     '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="url(#lamSombra)"/>'+
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
-    '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" onclick="lamToca(\'piedra\')"/></g></svg>'+
+    '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
     '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
     /* v187: la explicación va DEBAJO de la imagen (al lado en pantalla ancha),
        nunca encima: en el celular tapaba la animación. Solo en Presentar con
@@ -200,12 +212,13 @@ function lamAbre(cid,modo){
     '<div class="lam-tiempo"><div class="lam-tcab"><button type="button" class="lam-play" id="lamPlay" onclick="lamRecorre()" aria-label="Recorrer la historia">'+IC('play')+'</button>'+
     '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">De 605 a.C. hasta hoy, a escala</div></div></div>'+
     '<input type="range" id="lamRango" min="-620" max="2026" step="1" value="-620" aria-label="Año" style="--pista:'+lamPista()+'">'+
-    '<div class="lam-marcas">'+[[-605,'605 a.C.'],[-331,'331',1],[-168,'168',1],[476,'476'],[1798,'1798'],[2026,'hoy',1]].map(([y,t,ch])=>'<span'+(ch?' class="chico"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
+    '<div class="lam-marcas">'+[[-605,'605 a.C.'],[-331,'331',1],[-168,'168',1],[476,'476 d.C.'],[1798,'1798 d.C.'],[2026,'hoy',1]].map(([y,t,ch])=>'<span'+(ch?' class="chico"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" onclick="lamAtras()">‹ Anterior</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="pri" onclick="lamAdelante()">Siguiente ›</button></div>':
      '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr><th>Daniel 2</th><th>Daniel 7</th><th>Reino</th></tr>'+
      L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
      '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
   document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
+  lamPrecarga(cid,document.getElementById('lamEsc'));
   if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();}
   const f=el.querySelector('.lam-cerrar');if(f)f.focus();
 }
@@ -1148,7 +1161,10 @@ const bancoDe=()=>{
   const ids=capsDe().filter(c=>!soloEstudio(c,S.cat)).map(c=>c.id);
   return BANCO.filter(q=>ids.includes(q.cap)&&!estaRetirada(q));
 };
-const modsDe=()=>MODULOS.filter(m=>m.cats.includes(S.cat));
+const modsDe=()=>MODULOS.filter(m=>(m.cats||[]).includes(S.cat)||(m.prof&&m.tema===ACT().tema));
+/* v188: los repasos de «Para profundizar» no cuentan para el avance ni para
+   las insignias: no son material del examen. */
+const modsAvance=()=>modsDe().filter(m=>!m.prof);
 /* Las tarjetas pasan por el MISMO registro de retiradas que las preguntas: su
    clave tiene la misma forma (capitulo + hash del frente), asi que la tabla y
    el endpoint sirven igual. Y este es su unico embudo, como bancoDe() es el de
@@ -1259,8 +1275,18 @@ const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
 /* `quedarse`: no sube la página al principio. Lo pide verCap(), que después
    pone la página donde va el capítulo: subir primero y bajar después era el
    «sube y baja» que se veía al tocar Siguiente (v161). */
+/* v188 (Camilo, 13-oct): «cuando cambio de menú y estaba estudiando y vuelvo
+   no me lleva a donde estaba antes». Cada pestaña recuerda su altura al
+   salir; al volver a ella se regresa ahí (y a Estudiar con el capítulo que
+   estaba abierto). Ir a otra pestaña empieza arriba; tocar la pestaña en la
+   que ya se está, también sube. */
+const lugarDe={};
+let pantallaAct='', capAbierto='';
 function ir(id,quedarse){
   paraVoz();
+  const antes=pantallaAct;
+  if(antes&&antes!==id&&TABS[antes]!==undefined)lugarDe[antes]=Math.round(window.scrollY||0);
+  pantallaAct=id;
   document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-t button').forEach(b=>b.classList.remove('on'));
   document.getElementById('p-'+id).classList.add('on');
@@ -1296,7 +1322,16 @@ function ir(id,quedarse){
   filtroAbierto=false;filtroMenu=false;
   pintaFiltro(id);
   pintaSenales();
-  if(!quedarse)window.scrollTo({top:0});
+  if(!quedarse){
+    const det=document.getElementById('detalle');
+    const vuelve=antes!==id&&TABS[id]!==undefined&&lugarDe[id]>0;
+    if(vuelve&&id==='estudio'&&capAbierto&&det&&det.style.display==='block'){S.ultItem=capAbierto;guardar();}
+    const y=vuelve?lugarDe[id]:0;
+    window.scrollTo(0,y);
+    /* Otra vez cuando la pantalla terminó de pintarse: la primera medida
+       puede llegar con la altura a medias. */
+    if(y&&typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(()=>{if(pantallaAct===id)window.scrollTo(0,y);}));
+  }
 }
 
 function ponNombre(v){S.nombre=String(v).slice(0,60);guardar();pintaAlumnos();pintaYo();}
@@ -1462,7 +1497,7 @@ function tareasDeHoy(){
     d:'Ya repasaste lo que tocaba hoy. Las dominadas vuelven a salir en unos días.',
     b:'Repasar igual',f:"irTarjetasTodas()"});
 
-  const sinLeer=[...capsVista(),...modsDe()].filter(x=>(S.prog[x.id]||0)<100);
+  const sinLeer=[...capsVista(),...modsAvance()].filter(x=>(S.prog[x.id]||0)<100);
   if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
     d:'Te faltan '+sinLeer.length+' secciones por marcar como estudiadas.',
     b:'Estudiar',f:"verCap('"+sinLeer[0].id+"')"});
@@ -1682,7 +1717,7 @@ function pintaSenales(){
     /* El anillo de Estudiar promedia capítulos Y repasos, que es lo que la
        insignia «Lector completo» exige: promediar solo capítulos daría 100%
        con los repasos sin leer. */
-    const items=[...capsDe(),...modsDe()];
+    const items=[...capsDe(),...modsAvance()];
     const pct=items.length
       ?Math.round(items.reduce((a,c)=>a+Math.min(100,S.prog[c.id]||0),0)/items.length):0;
     const est=document.getElementById('nv-est');
@@ -1907,14 +1942,16 @@ function pintaCaps(){
     '<div class="s">'+esc(m.sub)+'</div>'+
     '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>';
-  const mods=modsDe().map(botonMod).join('');
+  const mods=modsDe().filter(m=>!m.prof).map(botonMod).join('');
+  const prof=modsDe().filter(m=>m.prof).map(botonMod).join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
     icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos')+
     '</div>'+caps+
-    (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'');
+    (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'')+
+    (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'');
 }
 
 /* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
@@ -2537,8 +2574,10 @@ function filtroCapas(){
     {t:'Solo lo central',clic:"filtraCapa(this,'nucleo')"}]);
 }
 /* Una sección del estudio, igual en las dos pestañas. `p` dice en cuál vive. */
+/* v188: la fuente de cada sección va en una sola línea corta y discreta. */
+const conFuente=h=>h.replace(/<p class="fuente"><small>(Fuentes?:[\s\S]*?)<\/small><\/p>/g,'<p>$1</p>').replace(/<p>(Fuentes?:)/g,'<p class="sec-fuente">$1');
 const htmlSec=(id,p)=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+'>'+cabezaSec(s)+
-  refsTocables(s.h,s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>';
+  conFuente(refsTocables(s.h,s.cap||id))+(s.preg?recordarHTML(s.preg):'')+'</div>';
 
 /* v187: «Para el examen» y «Para profundizar». Antes la interpretación iba al
    final del mismo estudio y solo un filtro la separaba: se leía todo seguido y
@@ -2689,15 +2728,18 @@ function verCap(id,quieto){
     abierto=enEstudio&&!!(d0&&d0.style&&d0.style.display==='block');
   }catch(e){}
   ir('estudio',true);
-  S.ultItem=id;guardar();
+  S.ultItem=id;capAbierto=id;guardar();
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
   document.querySelector('.c-'+id)?.classList.add('on');
   const c=buscaItem(id);
   if(!c)return;
   const secs=CONTENIDO[id]||CONT_MODULOS[id]||[];
   const d=document.getElementById('detalle');
-  const hayI=secs.some(esSecInterp);
-  if(hayI)d.setAttribute?.('data-pest',capPest);else d.removeAttribute?.('data-pest');
+  /* Un repaso de «Para profundizar» es todo interpretación: sin pestañas. */
+  const soloI=secs.length>0&&secs.every(esSecInterp);
+  const hayI=!soloI&&secs.some(esSecInterp);
+  if(hayI)d.setAttribute?.('data-pest',capPest);else if(soloI)d.setAttribute?.('data-pest','prof');else d.removeAttribute?.('data-pest');
+  if(typeof LAMINAS!=='undefined'&&LAMINAS[id])setTimeout(()=>lamPrecarga(id),1200);
   /* v156: «Volver a …» solo si se llegó desde una lista (ver verCreencia). */
   if(crVuelve&&crVuelve.a!==id)crVuelve=null;
   const deDonde=crVuelve?buscaItem(crVuelve.de):null;
@@ -2730,10 +2772,13 @@ function verCap(id,quieto){
       '<span><b>¿Quieres ir más hondo?</b> Para profundizar: '+(LAMINAS[id]?'el estudio interactivo, ':'')+
       'qué significa el capítulo y cómo la Biblia explica sus símbolos.</span></button></div>'+
       '<div class="sec interp-cab" data-capa="contexto" data-pest="prof" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
-      '<p class="interp-nota"><b>Esto no entra al examen.</b> Es lo que significa el capítulo según Stephen Bohr, Elena de White y otros autores adventistas. Cada sección dice de qué obra y página sale.</p>'+
+      '<p class="interp-nota"><b>Esto no entra al examen.</b> Es lo que significa el capítulo y cómo la Biblia explica sus símbolos. Cada sección cierra con su fuente.</p>'+
       /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
       lamTarjeta(id)+'</div>'+
-      secs.filter(esSecInterp).map(htmlSec(id,'prof')).join(''):lamTarjeta(id))+
+      secs.filter(esSecInterp).map(htmlSec(id,'prof')).join(''):
+      soloI?'<div class="sec interp-cab" data-capa="contexto" data-pest="prof"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
+        '<p class="interp-nota"><b>Esto no entra al examen.</b> Cada sección cierra con su fuente.</p></div>'+secs.map(htmlSec(id,'prof')).join(''):
+      lamTarjeta(id))+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
@@ -5812,7 +5857,7 @@ function revisaInsignias(pct){
      insignia con exámenes de la otra. */
   if(S.examenes.filter(e=>e.cat===S.cat).length>=3)a('Persistente');
   if(S.racha>=3)a('Racha de fuego');
-  if([...capsDe(),...modsDe()].every(x=>S.prog[x.id]>=100))a('Lector completo');
+  if([...capsDe(),...modsAvance()].every(x=>S.prog[x.id]>=100))a('Lector completo');
 }
 
 function pintaLogros(){

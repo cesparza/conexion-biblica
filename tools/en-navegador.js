@@ -336,6 +336,13 @@ for (const W of ANCHOS) {
     const imgs = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamSvg image')].map(i => i.getAttribute('href'));
       const r = await Promise.all(hs.map(h => fetch(h).then(x => x.ok && x.headers.get('content-type') === 'image/webp').catch(() => false))); return r.every(Boolean) && r.length; });
     ok(capas === 6 && imgs === 9, W + ' · la lámina trae las 6 capas de la estatua y sus 9 imágenes (' + capas + ', ' + imgs + ')');
+    ok(await p.evaluate(() => !document.getElementById('lamEsc').classList.contains('cargando')), W + ' · v188: las imágenes cargan antes de mostrar la escena');
+    /* v188: tocar la parte en la imagen hace lo mismo que su etiqueta. */
+    const bronce = await p.evaluate(() => { const r = document.querySelector('#lamSvg .lam-parte[data-p="bronce"] .lam-hit').getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height * 0.6]; });
+    await p.mouse.click(bronce[0], bronce[1]);
+    await p.waitForTimeout(700);
+    ok(/Grecia/.test(await p.evaluate(() => document.getElementById('lamHoja').textContent)), W + ' · v188: tocar el bronce en la imagen abre Grecia');
+    await p.evaluate(() => lamInicio()); await p.waitForTimeout(500);
     await p.locator('#lamEts .lam-et[data-p="plata"]').click();
     await p.waitForTimeout(800);
     const hoja = await p.evaluate(() => { const h = document.getElementById('lamHoja'); const r = h.getBoundingClientRect(), e = document.getElementById('lamEsc').getBoundingClientRect();
@@ -363,6 +370,18 @@ for (const W of ANCHOS) {
     const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent]);
     ok(fin[0] === '15 / 15' && /fiel su interpretación/.test(fin[1]), W + ' · Presentar recorre los 15 pasos y termina en 2:45 (' + fin[0] + ')');
     await p.evaluate(() => lamCierra());
+  }
+  /* v188: volver a una pestaña regresa a donde se iba; otra pestaña empieza arriba. */
+  {
+    await p.evaluate(() => { ponCat('pa'); verCap('d2'); });
+    await p.waitForTimeout(900);
+    await p.evaluate(() => scrollTo(0, 2500)); await p.waitForTimeout(300);
+    const antes = await p.evaluate(() => Math.round(scrollY));
+    await p.evaluate(() => ir('tarjetas')); await p.waitForTimeout(300);
+    const otra = await p.evaluate(() => Math.round(scrollY));
+    await p.evaluate(() => ir('estudio')); await p.waitForTimeout(400);
+    const vuelta = await p.evaluate(() => [Math.round(scrollY), document.getElementById('detalle').style.display]);
+    ok(otra === 0 && Math.abs(vuelta[0] - antes) < 5 && vuelta[1] === 'block', W + ' · v188: otra pestaña arriba (' + otra + '), y Estudiar vuelve al capítulo donde iba (' + vuelta[0] + ' de ' + antes + ')');
   }
 
   /* ── 4. errores y desborde ── */

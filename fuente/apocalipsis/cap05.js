@@ -102,12 +102,10 @@ module.exports = {
       ]) },
 
     { t: '🧭 El héroe vuelve de la batalla (5:5-7)', capa: 'contexto', h:
-      hi(`Desde aquí, lo que sigue es <strong>interpretación</strong>. La guía
-      principal es el pastor Stephen (Esteban) Bohr.<br><br>
-      Para Bohr, el capítulo 5 muestra a Jesús <strong>llegando al cielo después
-      de su ascensión</strong>, como un héroe que vuelve victorioso de la guerra
-      contra Satanás. Elena de White lo describe en «El Deseado de todas las
-      gentes»: Jesús muestra al Padre sus heridas, presenta a los que
+      hi(`Desde aquí, lo que sigue es <strong>interpretación</strong>.<br><br>
+      El capítulo 5 muestra a Jesús <strong>llegando al cielo después de su
+      ascensión</strong>, como un héroe que vuelve victorioso de la guerra
+      contra Satanás. Jesús muestra al Padre sus heridas, presenta a los que
       resucitaron con él y le dice que la obra de la redención está completa.
       El Padre acepta su sacrificio y los ángeles lo adoran.<br><br>
       · <strong>«Como inmolado»:</strong> las heridas estaban frescas; venía del
@@ -118,63 +116,55 @@ module.exports = {
       · <strong>Siete ojos:</strong> los siete espíritus, el Espíritu Santo en su
       plenitud. En el capítulo 4 estaba delante del trono; aquí es
       <strong>enviado a la tierra</strong>: es el Pentecostés.<br><br>
-      Elena de White lo confirma: «El derramamiento pentecostal era la
-      comunicación del Cielo de que el Redentor había iniciado su ministerio
-      celestial».<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 29-31,
-      33-34 y 37-38 (cita «El Deseado de todas las gentes», págs. 772-773, y
-      «Los hechos de los apóstoles», págs. 31-32).`) },
+      «El derramamiento pentecostal era la comunicación del Cielo de que el
+      Redentor había iniciado su ministerio celestial» (HAp 31-32).`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:29-31, 33-34 y 37-38; DTG 772-773; HAp 31-32.</p>` },
 
     { t: '🧭 ¿Qué es el libro sellado? (5:1-4)', capa: 'contexto', h:
-      hi(`<strong>La historia de fondo, según Bohr:</strong> Dios hizo a Adán rey
-      de la tierra (Salmo 8). Al pecar, Adán perdió su trono y su territorio, y
+      hi(`<strong>La historia de fondo:</strong> Dios hizo a Adán rey de la
+      tierra (Salmo 8). Al pecar, Adán perdió su trono y su territorio, y
       Satanás se quedó con ellos (Lucas 4:5-6).<br><br>
       En Israel, cuando alguien perdía su herencia o se vendía como esclavo,
       solo un <strong>pariente cercano</strong> podía rescatarlo pagando el
       precio (Levítico 25:25, 47-49). Ese rescatador se llamaba en hebreo
       <em>go'el</em>. Ningún ser humano podía hacerlo, porque todos pecaron. Por
       eso Jesús <strong>se hizo nuestro hermano</strong> (Hebreos 2:14).<br><br>
-      <strong>El libro:</strong> los autores que cita Bohr explican que en la
-      ley romana un <strong>testamento</strong> llevaba siete sellos de siete
-      testigos, y no se podía abrir hasta romperlos todos. El libro sería como
-      la <strong>escritura de propiedad</strong> del mundo, que Adán perdió y
+      <strong>El libro:</strong> en la ley romana un
+      <strong>testamento</strong> llevaba siete sellos de siete testigos, y no
+      se podía abrir hasta romperlos todos. El libro sería como la
+      <strong>escritura de propiedad</strong> del mundo, que Adán perdió y
       Cristo recupera.<br><br>
-      Elena de White dice que contiene la historia de los actos de Dios, la
-      historia profética de las naciones y de la iglesia.<br><br>
+      Contiene la historia de los actos de Dios, la historia profética de las
+      naciones y de la iglesia.<br><br>
       <strong>Por qué lloraba Juan:</strong> la palabra griega es muy fuerte.
-      Si nadie abría el libro, la herencia quedaba perdida para siempre.<br><br>
-      Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 7-9, 35-36
-      y 41-42.`) },
+      Si nadie abría el libro, la herencia quedaba perdida para siempre.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:7-9, 35-36 y 41-42.</p>` },
 
     { t: '🧭 El León y el Cordero: ¿cuándo se abre el libro? (5:5-7)', capa: 'contexto', h:
       hi(`Juan <strong>oye</strong> «León» y <strong>ve</strong> un Cordero.
-      Para Bohr son <strong>dos etapas</strong> de la obra de Jesús:<br>
+      Son <strong>dos etapas</strong> de la obra de Jesús:<br>
       · <strong>Cordero:</strong> ahora, mientras es sacerdote y rey del reino
       de la gracia, salva al que se arrepiente.<br>
       · <strong>León:</strong> al final, cuando termina su obra en el santuario,
       juzga y toma su reino. Por eso en 6:16 se habla de «la ira del
       Cordero».<br><br>
-      Elena de White lo dice así: el León de Judá es terrible para los que
-      rechazan su gracia, y es el Cordero de Dios para el obediente.<br><br>
-      <strong>¿Cuándo se abre el libro?</strong> Bohr separa dos cosas: los
+      El León de Judá es terrible para los que rechazan su gracia, y es el
+      Cordero de Dios para el obediente.<br><br>
+      <strong>¿Cuándo se abre el libro?</strong> Hay que separar dos cosas: los
       sellos se <strong>rompen</strong> a lo largo de la historia (capítulos 6 y
       8:1), pero el libro se <strong>abre</strong> después del milenio, ante los
-      impíos resucitados. Se apoya en Elena de White: la decisión de los
-      dirigentes que eligieron a Barrabás quedó escrita en ese libro, y la verán
-      cuando el León le quite el sello.<br><br>
-      <strong>Otra lectura:</strong> Treiyer entiende que tomar y abrir el libro
-      ocurre en el juicio investigador.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 36-37,
-      43-45 y 117 (cita «Los hechos de los apóstoles», págs. 470-471, y «Palabras
-      de vida del gran Maestro», pág. 236); Treiyer, «La crisis final en
-      Apocalipsis 4 y 5», pág. 108.`) },
+      impíos resucitados. La decisión de los dirigentes que eligieron a
+      Barrabás quedó escrita en ese libro, y la verán cuando el León le quite el
+      sello.<br><br>
+      <strong>Otra lectura</strong> ve el tomar y abrir el libro en el juicio
+      investigador.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:36-37, 43-45 y 117; HAp 470-471; PVGM 236; Treiyer, <i>La crisis final en Apocalipsis 4 y 5</i>, p. 108.</p>` },
 
     { t: '🧭 Incienso, oraciones y el cántico nuevo (5:8-14)', capa: 'contexto', h:
-      hi(`· <strong>Las copas de incienso:</strong> según Bohr, los seres
-      vivientes y los ancianos cumplen una tarea de
-      <strong>intercesión</strong>: llevan las oraciones de los santos a Jesús, y
-      por medio de Jesús, a Dios. Recuerda la escalera de Jacob, con ángeles que
-      suben y bajan.<br>
+      hi(`· <strong>Las copas de incienso:</strong> los seres vivientes y los
+      ancianos cumplen una tarea de <strong>intercesión</strong>: llevan las
+      oraciones de los santos a Jesús, y por medio de Jesús, a Dios. Recuerda la
+      escalera de Jacob, con ángeles que suben y bajan.<br>
       · <strong>«Digno»</strong> quiere decir <strong>calificado</strong>: el que
       cumple los requisitos para abrir el libro.<br>
       · <strong>«Redimir»</strong> (en griego <em>agorazo</em>) es comprar algo
@@ -183,14 +173,12 @@ module.exports = {
       creación; en el 5, la redención.<br>
       · <strong>Los ángeles</strong> no aparecían en el capítulo 4 porque habían
       ido a la tierra a buscar a Jesús (Hechos 1:9-11), y vuelven con él.<br><br>
-      <strong>¿«Nos» o «los»? (postura de Bohr):</strong> la Reina-Valera dice
-      que el Cordero «nos» redimió y que «reinaremos». Bohr explica que las
-      versiones modernas en inglés traducen «los», es decir, que los ancianos
-      cantan sobre los redimidos y no sobre sí mismos. Por eso no ve aquí una
-      prueba de que los ancianos sean humanos. Urías Smith, en cambio, usa el
-      «nos» para decir que sí lo son.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 35, 39-40
-      y 81-83; Urías Smith, «Las profecías del Apocalipsis», pág. 45.`) },
+      <strong>¿«Nos» o «los»?</strong> La Reina-Valera dice que el Cordero
+      «nos» redimió y que «reinaremos». Las versiones modernas en inglés
+      traducen «los»: los ancianos cantan sobre los redimidos y no sobre sí
+      mismos. Por eso este texto no prueba que los ancianos sean humanos. Otra
+      lectura usa el «nos» para decir que sí lo son.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:35, 39-40 y 81-83; Smith, <i>Las profecías del Apocalipsis</i>, p. 45.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       hi(`Un mismo símbolo puede tener otro sentido en otro pasaje (un león
@@ -205,9 +193,7 @@ module.exports = {
         ['Copas de incienso', 'Las oraciones de los santos', 'Apocalipsis 5:8: «que son las oraciones de los santos»; Salmo 141:2'],
         ['Libro sellado', 'Lo que no se entiende hasta que se rompen los sellos; aquí, la herencia perdida que rescata el pariente cercano', 'Daniel 12:4; Levítico 25:25'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      págs. 102-105; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs.
-      38-41 y 129; notas de Camilo en Evernote, "Los siete sellos".`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:102-105; Bohr, <i>Los siete sellos</i> 1:38-41 y 129.</p>` },
   ],
 
   preguntas: [
@@ -316,78 +302,78 @@ module.exports = {
       o: ['«¡Amén!»', '«¡Aleluya!»', '«¡Ven!»', '«¡Hosanna!»'], a: 0,
       e: '«Los cuatro seres vivientes decían: ¡Amén!» (5:14). «¡Ven!» lo dicen al abrirse los sellos (6:1).' },
     { t: 'mc', v: '5:6', f: 'c',
-      q: 'Según Bohr, ¿por qué el Cordero aparece «como inmolado» en la escena del trono?',
+      q: '¿Por qué el Cordero aparece «como inmolado» en la escena del trono?',
       o: ['Acababa de llegar del campo de batalla', 'Iba a ser sacrificado en ese momento', 'Era una figura del pueblo de Israel', 'Representaba los sacrificios del templo'], a: 0,
-      e: 'Para Bohr, Jesús llega al cielo después de su victoria, con las heridas de la cruz todavía frescas. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 34 y 38.' },
+      e: 'Jesús llega al cielo después de su victoria, con las heridas de la cruz todavía frescas. Fuente: Bohr, <i>Los siete sellos</i> 1:34 y 38.' },
     { t: 'mc', v: '5:6', f: 'c',
-      q: 'Según Bohr y Elena de White, ¿qué hecho en la tierra anunció que Jesús había comenzado su ministerio en el cielo?',
+      q: '¿Qué hecho en la tierra anunció que Jesús había comenzado su ministerio en el cielo?',
       o: ['El derramamiento del Espíritu en Pentecostés', 'La destrucción de Jerusalén por Roma', 'La conversión de Pablo camino a Damasco', 'El concilio de los apóstoles en Jerusalén'], a: 0,
-      e: 'Elena de White: «El derramamiento pentecostal era la comunicación del Cielo de que el Redentor había iniciado su ministerio celestial». Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 38 (cita «Los hechos de los apóstoles», págs. 31-32).' },
+      e: '«El derramamiento pentecostal era la comunicación del Cielo de que el Redentor había iniciado su ministerio celestial» (HAp 31-32). Fuente: Bohr, <i>Los siete sellos</i> 1:38; HAp 31-32.' },
     { t: 'mc', v: '5:6', f: 'c',
-      q: 'Según Bohr, ¿qué representan los siete ojos del Cordero, «enviados por toda la tierra»?',
+      q: '¿Qué representan los siete ojos del Cordero, «enviados por toda la tierra»?',
       o: ['El Espíritu Santo enviado en Pentecostés', 'Los siete ángeles de las trompetas', 'Los siete pastores de las iglesias', 'Las siete edades de la historia'], a: 0,
-      e: 'En el capítulo 4 los siete espíritus estaban delante del trono; en el 5 son enviados a la tierra, en el Pentecostés. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 24 y 38.' },
+      e: 'En el capítulo 4 los siete espíritus estaban delante del trono; en el 5 son enviados a la tierra, en el Pentecostés. Fuente: Bohr, <i>Los siete sellos</i> 1:24 y 38.' },
     { t: 'mc', v: '5:6', f: 'c',
-      q: 'Según Bohr, ¿qué representan los siete cuernos del Cordero?',
+      q: '¿Qué representan los siete cuernos del Cordero?',
       o: ['Rayos de gloria: su poder como rey', 'Siete reyes que gobernarán la tierra', 'Las siete iglesias de la provincia de Asia', 'Los siete días de la creación'], a: 0,
-      e: 'Bohr cita Habacuc 3:4 y a Elena de White: los «cuernos» son rayos de gloria que salen de Jesús, y muestran su poder como rey del reino de la gracia. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 38.' },
+      e: 'Los «cuernos» son rayos de gloria (Habacuc 3:4) que salen de Jesús, y muestran su poder como rey del reino de la gracia. Fuente: Bohr, <i>Los siete sellos</i> 1:38.' },
     { t: 'mc', v: '5:1', f: 'c',
-      q: 'Según los autores que cita Bohr, ¿qué documento de la ley romana llevaba siete sellos de siete testigos?',
+      q: '¿Qué documento de la ley romana llevaba siete sellos de siete testigos?',
       o: ['Un testamento', 'Un decreto de guerra', 'Una carta de un rey', 'Un libro de cuentas'], a: 0,
-      e: 'Stefanovic, Charles y Strand explican que un testamento romano no se podía ejecutar hasta romper sus siete sellos; aquí sería como la escritura de propiedad del mundo. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 41-42.' },
+      e: 'Un testamento romano no se podía ejecutar hasta romper sus siete sellos; aquí sería como la escritura de propiedad del mundo. Fuente: Bohr, <i>Los siete sellos</i> 1:41-42.' },
     { t: 'mc', v: '5:1', f: 'c',
-      q: 'Según Bohr, ¿qué perdió Adán que Cristo recupera, y que tiene que ver con el libro sellado?',
+      q: '¿Qué perdió Adán que Cristo recupera, y que tiene que ver con el libro sellado?',
       o: ['Su trono y su dominio sobre la tierra', 'Su lugar entre los doce patriarcas', 'El templo que construyó en el Edén', 'La lista con los nombres de sus hijos'], a: 0,
-      e: 'Adán era rey de la tierra (Salmo 8) y Satanás le quitó el trono y el territorio (Lucas 4:5-6). El libro sería la escritura de propiedad que Cristo rescata. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 7-8 y 41.' },
+      e: 'Adán era rey de la tierra (Salmo 8) y Satanás le quitó el trono y el territorio (Lucas 4:5-6). El libro sería la escritura de propiedad que Cristo rescata. Fuente: Bohr, <i>Los siete sellos</i> 1:7-8 y 41.' },
     { t: 'mc', v: '5:2', f: 'c',
-      q: 'Según Bohr, ¿qué quiere decir «digno» en la pregunta del ángel poderoso?',
+      q: '¿Qué quiere decir «digno» en la pregunta del ángel poderoso?',
       o: ['Calificado, que cumple los requisitos', 'Famoso, que todos conocen y respetan', 'Rico, que puede pagar con oro y plata', 'Anciano, que tiene muchos años de edad'], a: 0,
-      e: 'Bohr lo explica con otros textos: «el obrero es digno de su salario» (Mateo 10:10). Es tener las condiciones para romper los sellos. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 35.' },
+      e: 'Otros textos lo muestran: «el obrero es digno de su salario» (Mateo 10:10). Es tener las condiciones para romper los sellos. Fuente: Bohr, <i>Los siete sellos</i> 1:35.' },
     { t: 'tf', v: '5:3', f: 'c',
-      q: 'Según Bohr, antes de que llegara el Cordero, ni los ángeles, ni los querubines, ni siquiera el Padre estaban calificados para abrir el libro.', a: true,
-      e: 'Verdadero: solo un pariente cercano de la familia humana que pagara el precio podía hacerlo. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 35-36.' },
+      q: 'Antes de que llegara el Cordero, ni los ángeles, ni los querubines, ni siquiera el Padre estaban calificados para abrir el libro.', a: true,
+      e: 'Verdadero: solo un pariente cercano de la familia humana que pagara el precio podía hacerlo. Fuente: Bohr, <i>Los siete sellos</i> 1:35-36.' },
     { t: 'mc', v: '5:9', f: 'c',
-      q: 'Según Bohr, ¿por qué Jesús tuvo que hacerse hombre para poder abrir el libro?',
+      q: '¿Por qué Jesús tuvo que hacerse hombre para poder abrir el libro?',
       o: ['El rescatador debía ser un pariente cercano', 'Los ángeles no sabían leer ese libro', 'El Padre no podía bajar a la tierra', 'Así lo pedían las leyes de Roma'], a: 0,
-      e: 'En Israel solo un pariente cercano (el go\'el) podía rescatar la herencia perdida (Levítico 25:25, 47-49). Jesús se hizo nuestro hermano (Hebreos 2:14). Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 8-9.' },
+      e: 'En Israel solo un pariente cercano (el go\'el) podía rescatar la herencia perdida (Levítico 25:25, 47-49). Jesús se hizo nuestro hermano (Hebreos 2:14). Fuente: Bohr, <i>Los siete sellos</i> 1:8-9.' },
     { t: 'tf', v: '5:9', f: 'c',
-      q: 'Según Bohr, la palabra griega que se traduce «redimido» en el cántico significa comprar algo pagando un precio de rescate.', a: true,
-      e: 'Verdadero: Bohr la compara con una casa de empeño, donde se paga para recuperar lo que se perdió. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 40.' },
+      q: 'La palabra griega que se traduce «redimido» en el cántico significa comprar algo pagando un precio de rescate.', a: true,
+      e: 'Verdadero: se puede comparar con una casa de empeño, donde se paga para recuperar lo que se perdió. Fuente: Bohr, <i>Los siete sellos</i> 1:40.' },
     { t: 'mc', v: '5:5', f: 'c',
-      q: 'Según Bohr, ¿cuándo actúa Jesús como el León de la tribu de Judá?',
+      q: '¿Cuándo actúa Jesús como el León de la tribu de Judá?',
       o: ['Al final, cuando juzga y toma su reino', 'Cuando nace en el pesebre de Belén', 'Cuando lo bautizan en el río Jordán', 'Cuando predica el sermón del monte'], a: 0,
-      e: 'Como Cordero salva ahora; como León juzga al final (por eso 6:16 habla de «la ira del Cordero»). Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 36-37 (cita «Los hechos de los apóstoles», págs. 470-471).' },
+      e: 'Como Cordero salva ahora; como León juzga al final (por eso 6:16 habla de «la ira del Cordero»). Fuente: Bohr, <i>Los siete sellos</i> 1:36-37; HAp 470-471.' },
     { t: 'mc', v: '5:7', f: 'c',
-      q: 'Según Bohr, ¿cuándo se abrirá por fin el libro de los siete sellos?',
+      q: '¿Cuándo se abrirá por fin el libro de los siete sellos?',
       o: ['Después del milenio, ante los impíos', 'En 1844, cuando comenzó el juicio', 'En el día de Pentecostés', 'Cuando cayó Roma en el siglo V'], a: 0,
-      e: 'Los sellos se rompen en la historia, pero el libro se abre después del milenio. Treiyer, en cambio, pone la toma y apertura del libro en el juicio investigador. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 43-45 y 117; Treiyer, «La crisis final en Apocalipsis 4 y 5», pág. 108.' },
+      e: 'Los sellos se rompen en la historia, pero el libro se abre después del milenio. Otra lectura pone la toma y apertura del libro en el juicio investigador. Fuente: Bohr, <i>Los siete sellos</i> 1:43-45 y 117; Treiyer, <i>La crisis final en Apocalipsis 4 y 5</i>, p. 108.' },
     { t: 'mc', v: '5:8', f: 'c',
-      q: 'Según Bohr, ¿qué tarea cumplen los ancianos y los seres vivientes con las copas de incienso?',
+      q: '¿Qué tarea cumplen los ancianos y los seres vivientes con las copas de incienso?',
       o: ['Llevan las oraciones de los santos a Dios', 'Derraman la ira de Dios sobre la tierra', 'Ofrecen sacrificios por los pecados', 'Escriben los nombres en el libro de la vida'], a: 0,
-      e: 'Tienen una tarea de intercesión: llevan las oraciones a Jesús, y por medio de él a Dios, como los ángeles de la escalera de Jacob. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 39.' },
+      e: 'Tienen una tarea de intercesión: llevan las oraciones a Jesús, y por medio de él a Dios, como los ángeles de la escalera de Jacob. Fuente: Bohr, <i>Los siete sellos</i> 1:39.' },
     { t: 'mc', v: '5:9-10', f: 'c',
-      q: 'Según Bohr, ¿qué problema de traducción hay en 5:9-10 en la Reina-Valera?',
+      q: '¿Qué problema de traducción hay en 5:9-10 en la Reina-Valera?',
       o: ['Dice «nos» donde debería decir «los»', 'Dice «sangre» donde debería decir «agua»', 'Dice «reino» donde debería decir «templo»', 'Dice «Dios» donde debería decir «Señor»'], a: 0,
-      e: 'Bohr dice que las versiones modernas en inglés traducen «los»: los ancianos cantan sobre los redimidos, no sobre sí mismos. Urías Smith usa el «nos» para decir que los ancianos son humanos. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 81-83; Urías Smith, «Las profecías del Apocalipsis», pág. 45.' },
+      e: 'Las versiones modernas en inglés traducen «los»: los ancianos cantan sobre los redimidos, no sobre sí mismos. Otra lectura usa el «nos» para decir que los ancianos son humanos. Fuente: Bohr, <i>Los siete sellos</i> 1:81-83; Smith, <i>Las profecías del Apocalipsis</i>, p. 45.' },
     { t: 'mc', v: '5:11', f: 'c',
-      q: 'Según Bohr, ¿por qué los millones de ángeles aparecen en el capítulo 5 y no en el 4?',
+      q: '¿Por qué los millones de ángeles aparecen en el capítulo 5 y no en el 4?',
       o: ['Habían ido a la tierra a buscar a Jesús', 'Estaban castigando a los ángeles caídos', 'Estaban en otra parte lejana del cielo', 'No tenían permiso para ver el trono'], a: 0,
-      e: 'Una nube de ángeles llevó a Jesús al cielo (Hechos 1:9-11); por eso llegan con él en el capítulo 5. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 40 y 114.' },
+      e: 'Una nube de ángeles llevó a Jesús al cielo (Hechos 1:9-11); por eso llegan con él en el capítulo 5. Fuente: Bohr, <i>Los siete sellos</i> 1:40 y 114.' },
     { t: 'mc', v: '5:12', f: 'c',
-      q: 'Según Bohr, ¿cuál es el tema de los cantos del capítulo 5, distinto del capítulo 4?',
+      q: '¿Cuál es el tema de los cantos del capítulo 5, distinto del capítulo 4?',
       o: ['La redención', 'La creación', 'El juicio', 'La ley'], a: 0,
-      e: 'En el capítulo 4 se alaba a Dios como Creador; en el 5, al Cordero como Redentor. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 33-34 y 40.' },
+      e: 'En el capítulo 4 se alaba a Dios como Creador; en el 5, al Cordero como Redentor. Fuente: Bohr, <i>Los siete sellos</i> 1:33-34 y 40.' },
     { t: 'mc', v: '5:6', f: 'c',
       q: '¿Qué texto de Daniel explica que, en la profecía, un cuerno representa a un rey?',
       o: ['Daniel 7:24', 'Daniel 2:44', 'Daniel 9:25', 'Daniel 12:4'], a: 0,
-      e: 'Daniel 7:24 dice: «Los diez cuernos significan que de aquel reino se levantarán diez reyes». Por eso los siete cuernos del Cordero hablan de su poder como rey. Fuentes: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105; Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 38.' },
+      e: 'Daniel 7:24 dice: «Los diez cuernos significan que de aquel reino se levantarán diez reyes». Por eso los siete cuernos del Cordero hablan de su poder como rey. Fuente: Bohr, <i>15 principios</i> 2:105; Bohr, <i>Los siete sellos</i> 1:38.' },
     { t: 'mc', v: '5:8', f: 'c',
-      q: 'Según Bohr, ¿qué salmo une el incienso con la oración, como lo hace Apocalipsis 5:8?',
+      q: '¿Qué salmo une el incienso con la oración, como lo hace Apocalipsis 5:8?',
       o: ['Salmo 141:2', 'Salmo 23:1', 'Salmo 8:6', 'Salmo 110:1'], a: 0,
-      e: 'El salmista pide que su oración suba delante de Dios como el incienso. Bohr añade que en 8:3-4 el incienso son los méritos de Cristo que se suman a las oraciones. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 129.' },
+      e: 'El salmista pide que su oración suba delante de Dios como el incienso. En 8:3-4 el incienso son los méritos de Cristo que se suman a las oraciones. Fuente: Bohr, <i>Los siete sellos</i> 1:129.' },
     { t: 'tf', v: '5:5', f: 'c',
-      q: 'Según Bohr, en la Biblia el león siempre representa a Cristo.', a: false,
-      e: 'Falso: los símbolos dependen del contexto. El león puede ser Cristo (5:5), Judá (Génesis 49), Babilonia (Jeremías 50:44) o Satanás (1 Pedro 5:8). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 102.' },
+      q: 'En la Biblia el león siempre representa a Cristo.', a: false,
+      e: 'Falso: los símbolos dependen del contexto. El león puede ser Cristo (5:5), Judá (Génesis 49), Babilonia (Jeremías 50:44) o Satanás (1 Pedro 5:8). Fuente: Bohr, <i>15 principios</i> 2:102.' },
   ],
 
   tarjetas: [

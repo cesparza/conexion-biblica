@@ -105,25 +105,23 @@ module.exports = {
            <strong>en el cielo</strong>.`,
           `Los impíos vivos mueren en la venida (19:21), y todos los impíos muertos
            siguen en la tumba hasta el final de los mil años.`]) +
-      wa(`Bohr reconoce que 20:4-10 no dice «cielo», pero lo muestra el resto: la
-      ciudad baja del cielo al terminar los mil años con los santos dentro (20:9;
-      21:2). Sus tres razones: 1 Tesalonicenses 4:16-17; los justos están en la
-      ciudad cuando los impíos la rodean; y en la tierra desolada nadie podría
-      vivir.<br><br>
+      wa(`20:4-10 no dice «cielo», pero lo muestra el resto: la ciudad baja del
+      cielo al terminar los mil años con los santos dentro (20:9; 21:2). Hay tres
+      razones: 1 Tesalonicenses 4:16-17; los justos están en la ciudad cuando los
+      impíos la rodean; y en la tierra desolada nadie podría vivir.<br><br>
       Además, la primera frase de 20:5 («Pero los otros muertos…») es un
       <strong>paréntesis</strong> sobre los impíos; «la primera resurrección» se
       refiere a los fieles de 20:4.`) +
-      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 75-76 y 79; Elena de White, El conflicto de los siglos, págs. 517-518; notas de Camilo en Evernote, "Los mil años".</p>` },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:75-76 y 79; CS 702-703.</p>` },
 
     { t: '🧭 El «abismo»: la tierra vacía, como antes de la creación (20:1-3)', capa: 'contexto', h:
       hi(`La palabra <strong>abismo</strong> de 20:1 es la misma que usa la
       Septuaginta (la traducción griega del Antiguo Testamento) en Génesis 1:2: «las
-      tinieblas estaban sobre la faz del abismo». Bohr: describe un planeta en
+      tinieblas estaban sobre la faz del abismo». Describe un planeta en
       <strong>caos</strong>, sin vida. Jeremías lo vio así: la tierra «asolada y
       vacía», sin luz, sin hombres, sin aves (Jeremías 4:23-26), aunque Dios dice
       «no la destruiré del todo» (4:27).<br><br>
-      Bohr muestra que las plagas y la venida deshacen la creación, día por
-      día:`) +
+      Las plagas y la venida deshacen la creación, día por día:`) +
       tbl(['Día de la creación', 'Al final'], [
         ['1 · la luz', 'Tinieblas (Jeremías 4:23)'],
         ['3 · las plantas', 'Quemadas por el sol de la cuarta plaga (16:8-9)'],
@@ -131,23 +129,23 @@ module.exports = {
         ['5 · peces y aves', 'Muere todo en el mar (16:3); las aves se van (Jeremías 4:25)'],
         ['6 · el ser humano', 'No queda nadie vivo (Jeremías 4:25)'],
       ]) +
-      wa(`Bohr compara el milenio con el diluvio: la tierra vuelve a quedar
-      desordenada, vacía y sin habitantes.`) +
-      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 74; Stephen Bohr, ¿Cuán cerca al fin?, págs. 208-209; Stephen Bohr, Mateo 24 y las señales del fin, pág. 135; Elena de White, El conflicto de los siglos, pág. 528.</p>` },
+      wa(`El milenio se parece al diluvio: la tierra vuelve a quedar desordenada,
+      vacía y sin habitantes.`) +
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:74; Bohr, <i>¿Cuán cerca al fin?</i>, p. 208-209; Bohr, <i>Mateo 24 y las señales del fin</i>, p. 135; CS 717.</p>` },
 
     { t: '🧭 ¿En qué sentido está «atado» Satanás? (20:1-3, 20:7)', capa: 'contexto', h:
       hi(`Un espíritu no se amarra con una cadena de metal. La cadena es la
       <strong>situación</strong>: Satanás queda en una tierra sin nadie a quien
-      engañar. Elena de White: «En este sentido es cómo está atado: no queda nadie
-      en quien pueda ejercer su poder». Tampoco puede ir a otros mundos.<br><br>
-      Bohr lo dice en una frase: «Cuando los impíos están muertos, Satanás está
-      atado; ¡cuando los impíos resucitan, Satanás está desatado!».`) +
+      engañar. «En este sentido es cómo está atado: no queda nadie en quien pueda
+      ejercer su poder» (CS 717). Tampoco puede ir a otros mundos.<br><br>
+      En una frase: cuando los impíos están muertos, Satanás está atado; cuando
+      los impíos resucitan, Satanás está desatado.`) +
       li([`Durante los mil años anda errante por la tierra desolada y ve los
            resultados de su rebelión.`,
           `Al resucitar los impíos (20:5, 20:7), vuelve a tener a quién engañar:
            por eso «debe ser desatado por un poco de tiempo» (20:3).`,
-          `Escuela Sabática 2019: «Satanás está atado a las circunstancias».`]) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 528-529; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 76; Escuela Sabática 2019-1T, lección 13, pág. 93.</p>` },
+          `Satanás está atado por las circunstancias.`]) +
+      `<p>Fuente: CS 716-718; Bohr, <i>15 principios</i> 2:76; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 93.</p>` },
 
     { t: '🧭 El macho cabrío Azazel: el santuario explica 20:1-3', capa: 'contexto', h:
       hi(`En el <strong>Día de la Expiación</strong> (Levítico 16), cuando el santuario
@@ -155,39 +153,37 @@ module.exports = {
       sacerdote confesaba los pecados sobre el otro macho cabrío, el de
       <strong>Azazel</strong>, y lo mandaba vivo al desierto, a una tierra sin
       habitantes (Levítico 16:21-22).<br><br>
-      Elena de White: cuando termine la obra de Cristo en el santuario celestial,
-      los pecados del pueblo de Dios serán puestos sobre Satanás, «se le declarará
-      culpable de todo el mal que les ha hecho cometer», y será desterrado en la
+      Así, cuando termine la obra de Cristo en el santuario celestial, los pecados
+      del pueblo de Dios serán puestos sobre Satanás, «se le declarará culpable de
+      todo el mal que les ha hecho cometer» (CS 716), y será desterrado en la
       tierra desolada por mil años.`) +
       wa(`<strong>Azazel no salva a nadie.</strong> Lo que limpia es la sangre del
-      macho cabrío de Jehová, que representa a Cristo. Bohr: sobre Azazel solo
-      iban los pecados ya <strong>perdonados</strong>; el que no se arrepentía
-      cargaba con los suyos (Levítico 23:29-30). Satanás carga la culpa de haber
-      hecho pecar.`) +
+      macho cabrío de Jehová, que representa a Cristo. Sobre Azazel solo iban los
+      pecados ya <strong>perdonados</strong>; el que no se arrepentía cargaba con
+      los suyos (Levítico 23:29-30). Satanás carga la culpa de haber hecho
+      pecar.`) +
       hi(`Isaías 24:22 dice que esos presos serán castigados «después de muchos días».
-      Bohr: Apocalipsis 20 aclara que esos muchos días son <strong>mil años</strong>.`) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 527-528; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 93-94; Stephen Bohr, El Santuario en Apocalipsis, pág. 8; Stephen Bohr, El calendario religioso hebreo, pág. 224.</p>` },
+      Apocalipsis 20 aclara que esos muchos días son <strong>mil años</strong>.`) +
+      `<p>Fuente: CS 716; Bohr, <i>Tres ángeles</i> 2:93-94; Bohr, <i>El Santuario en Apocalipsis</i>, p. 8; Bohr, <i>El calendario religioso hebreo</i>, p. 224.</p>` },
 
     { t: '🧭 El juicio de los mil años (20:4, 20:12)', capa: 'contexto', h:
       hi(`«Vi tronos, y se sentaron sobre ellos los que recibieron facultad de
-      juzgar» (20:4). Bohr explica que el juicio de Dios tiene <strong>tres
-      etapas</strong>:`) +
+      juzgar» (20:4). El juicio de Dios tiene <strong>tres etapas</strong>:`) +
       tbl(['Etapa', 'Cuándo', 'Qué se hace'], [
         ['1 · Investigación', 'Antes de la venida, en el cielo (Daniel 7:9-10; Apocalipsis 14:7)', 'Se decide quiénes son de Cristo'],
         ['2 · Sentencia', 'Durante los mil años (20:4; 1 Corintios 6:2-3)', 'Los santos, con Cristo, revisan los casos de los perdidos y de los ángeles caídos'],
         ['3 · Ejecución', 'Después de los mil años (20:9, 20:14-15)', 'Se cumple la sentencia'],
       ]) +
-      hi(`Elena de White: los santos comparan los actos de cada uno con «el libro de
-      la ley», y queda anotado lo que cada impío ha de sufrir «según sus obras».<br><br>
-      ¿Para qué un juicio, si Dios lo sabe todo? Bohr: no es para informar a Dios,
-      sino para que los seres que <strong>no</strong> lo saben todo vean que Dios
-      fue justo y amoroso con cada persona.`) +
-      `<p>Fuentes: Stephen Bohr, Lo que Jesús dijo, págs. 231-232; Elena de White, El conflicto de los siglos, págs. 529-530; Escuela Sabática 2019-1T, lección 13, pág. 93.</p>` },
+      hi(`Los santos comparan los actos de cada uno con el libro de la ley, y queda
+      anotado lo que cada impío ha de sufrir «según sus obras».<br><br>
+      ¿Para qué un juicio, si Dios lo sabe todo? No es para informar a Dios, sino
+      para que los seres que <strong>no</strong> lo saben todo vean que Dios fue
+      justo y amoroso con cada persona.`) +
+      `<p>Fuente: Bohr, <i>Lo que Jesús dijo</i>, p. 231-232; CS 719; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 93.</p>` },
 
     { t: '🧭 Cómo está ordenado 20:1 a 21:8: cuatro ciclos', capa: 'contexto', h:
-      hi(`Bohr muestra que esta parte <strong>no va en orden de reloj</strong>: cuenta
-      los mismos hechos varias veces, cada vez desde otro ángulo, y llega al mismo
-      final.`) +
+      hi(`Esta parte <strong>no va en orden de reloj</strong>: cuenta los mismos
+      hechos varias veces, cada vez desde otro ángulo, y llega al mismo final.`) +
       tbl(['Ciclo', 'Textos', 'En qué se fija'], [
         ['1', '20:1-3', 'Satanás y la tierra desolada'],
         ['2', '20:4-10', 'Los santos que reinan con Cristo'],
@@ -196,76 +192,71 @@ module.exports = {
       ]) +
       li([`Por eso el lago de fuego aparece tres veces (20:10; 20:14-15; 21:8): es
            <strong>un solo lago</strong>, no tres.`,
-          `Bohr: 21:1 en realidad cierra el capítulo 20, y 21:2 (la ciudad que baja)
+          `21:1 en realidad cierra el capítulo 20, y 21:2 (la ciudad que baja)
            pasa antes del ataque de 20:9, porque los impíos rodean una ciudad que ya
            está en la tierra.`,
-          `<strong>El gran trono blanco</strong> (20:11-12): Elena de White lo ubica
-           <strong>al final de los mil años</strong>, con los impíos resucitados
-           alrededor de la ciudad. Allí Cristo es coronado, se abren los libros y
-           todos reconocen que Dios fue justo. Así lo ordenan también las notas de
-           Camilo. Bohr lo lee de otra forma: 20:11 en la venida (como 6:14-17) y
-           20:12 durante los mil años.`]) +
-      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 74 y 77-79; Elena de White, El conflicto de los siglos, págs. 533-534; notas de Camilo en Evernote, "CRONOLOGÍA ESCATOLÓGICA ADVENTISTA — CONSOLIDADO FINAL" (punto 40) y "El estado de los muertos - El rico y Lázaro".</p>` },
+          `<strong>El gran trono blanco</strong> (20:11-12) se ubica <strong>al
+           final de los mil años</strong>, con los impíos resucitados alrededor de
+           la ciudad. Allí Cristo es coronado, se abren los libros y todos
+           reconocen que Dios fue justo. Otra lectura pone 20:11 en la venida
+           (como 6:14-17) y 20:12 durante los mil años.`]) +
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:74 y 77-79; CS 722-724.</p>` },
 
     { t: '🧭 La segunda resurrección y el último ataque (20:5, 20:7-9)', capa: 'contexto', h:
-      hi(`Según Elena de White, al terminar los mil años Cristo vuelve a la tierra con
-      los redimidos y los ángeles. Al descender, manda que resuciten los impíos.
-      Luego se posa sobre el monte de los Olivos (Zacarías 14:4), y la nueva
-      Jerusalén baja y se asienta allí.`) +
+      hi(`Al terminar los mil años, Cristo vuelve a la tierra con los redimidos y
+      los ángeles. Al descender, manda que resuciten los impíos. Luego se posa
+      sobre el monte de los Olivos (Zacarías 14:4), y la nueva Jerusalén baja y se
+      asienta allí.`) +
       li([`Los impíos de todos los tiempos resucitan: es la <strong>segunda
            resurrección</strong>. Salen con el mismo carácter rebelde; no hay un
            segundo tiempo de gracia.`,
           `Satanás se presenta como un príncipe al que le robaron su herencia, y los
            organiza para tomar la ciudad.`,
-          `Bohr: antes del milenio Satanás actuaba escondido detrás de los reyes;
+          `Antes del milenio Satanás actuaba escondido detrás de los reyes;
            después se deja ver y los dirige en persona.`,
-          `<strong>Gog y Magog</strong> son nombres de Ezequiel 38-39. Bohr: Juan los
+          `<strong>Gog y Magog</strong> son nombres de Ezequiel 38-39. Juan los
            vuelve <strong>universales</strong>: vienen de los cuatro ángulos de la
            tierra. Antes del milenio el pueblo de Dios está esparcido por el mundo;
            después está reunido en una ciudad literal.`,
           `Antes del fuego, todos ven la historia de la cruz; los impíos y el mismo
            Satanás reconocen que la sentencia es justa.`]) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 531-537; Stephen Bohr, ¿Cuán cerca al fin?, págs. 21-22; Stephen Bohr, Studies on Daniel 11, pág. 184; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 77.</p>` },
+      `<p>Fuente: CS 720-729; Bohr, <i>¿Cuán cerca al fin?</i>, p. 21-22; Bohr, <i>Studies on Daniel 11</i>, p. 184; Bohr, <i>15 principios</i> 2:77.</p>` },
 
     { t: '🧭 El lago de fuego: destrucción final, no tormento sin fin (20:9, 20:14-15)', capa: 'contexto', h:
       hi(`<strong>Dónde:</strong> «de Dios descendió fuego del cielo y los consumió»
-      (20:9). El lago de fuego es esta tierra ardiendo: Elena de White describe la
-      superficie de la tierra como «un inmenso lago de fuego hirviente» (ver
-      2 Pedro 3:10).<br><br>
+      (20:9). El lago de fuego es esta tierra ardiendo: su superficie será «un
+      inmenso lago de fuego hirviente» (CS 731; ver 2 Pedro 3:10).<br><br>
       <strong>Qué hace:</strong> consume. Malaquías 4:1 y 3: el fuego no les dejará
-      «ni raíz ni rama» y serán ceniza. Elena de White: «Satanás la raíz, sus
-      secuaces las ramas».`) +
+      «ni raíz ni rama» y serán ceniza: «Satanás la raíz, sus secuaces las ramas»
+      (CS 731).`) +
       li([`<strong>La muerte segunda</strong> (20:14) es una muerte de la que no se
-           resucita. De los impíos dice Elena de White: «Serán como si no hubieran
-           sido» (Abdías 16).`,
+           resucita. Los impíos «serán como si no hubieran sido» (Abdías 16).`,
           `También la muerte y el Hades (la tumba) van al fuego: la muerte misma se
            acaba (21:4).`,
           `Es justo: cada uno sufre según sus obras; unos mueren pronto y otros
            tardan más. Satanás sufre más tiempo, porque carga también los pecados
            que hizo cometer.`]) +
-      wa(`Muchos credos enseñan un tormento consciente sin fin. Elena de White
-      responde que esa idea no cuadra con un Dios que dice «no quiero la muerte del
-      impío» (Ezequiel 33:11).`) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 434, 441 y 539; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 87 y 94; notas de Camilo en Evernote, "El infierno y el mensaje del tercer ángel" y "La verdad sobre el Infierno".</p>` },
+      wa(`Muchos credos enseñan un tormento consciente sin fin. Esa idea no cuadra
+      con un Dios que dice «no quiero la muerte del impío» (Ezequiel 33:11).`) +
+      `<p>Fuente: CS 590-591, 600 y 731; Bohr, <i>Tres ángeles</i> 2:87 y 94.</p>` },
 
     { t: '🧭 «Por los siglos de los siglos» (20:10)', capa: 'contexto', h:
-      hi(`Es el texto más difícil sobre el tema, y Bohr lo enfrenta así:`) +
+      hi(`Es el texto más difícil sobre el tema. Se entiende así:`) +
       li([`«Atormentados» (en griego <em>basanizo</em>) habla de un dolor real.`,
           `Pero «por los siglos de los siglos» traduce <em>aion</em> (en hebreo
            <em>olam</em>): un tiempo <strong>largo, cuyo fin no se ve</strong>, no
            necesariamente sin fin.`,
           `El lenguaje viene de Isaías 34:9-10, sobre Edom: «perpetuamente subirá su
-           humo». Bohr: «lo que el fuego consume se apaga
-           finalmente».`,
+           humo». Pero lo que el fuego consume, al final se apaga.`,
           `Sodoma y Gomorra sufrieron «el castigo del fuego eterno» (Judas 7), pero
            quedaron reducidas «a ceniza» (2 Pedro 2:6).`,
           `20:10 no puede contradecir a Malaquías 4:1-3 ni a Ezequiel 28:18-19, donde
            Satanás queda en ceniza. Y si Dios hace «nuevas todas las cosas» (21:5),
            el fuego tiene que haberse apagado.`]) +
-      wa(`Elena de White: después de que mueren los que él engañó, Satanás «tiene
-      que seguir viviendo y sufriendo» un tiempo; luego queda destruido, «raíz y
-      rama».`) +
-      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 86, 92, 94-95 y 97-99; notas de Camilo en Evernote, "El infierno y el mensaje del tercer ángel"; Elena de White, El conflicto de los siglos, pág. 539.</p>` },
+      wa(`Después de que mueren los que él engañó, Satanás «tiene que seguir
+      viviendo y sufriendo» un tiempo; luego queda destruido, raíz y rama
+      (CS 731).`) +
+      `<p>Fuente: Bohr, <i>Tres ángeles</i> 2:86, 92, 94-95 y 97-99; CS 731.</p>` },
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Dragón, serpiente antigua', 'Satanás', '«que es el Diablo y Satanás» (20:2); Apocalipsis 12:9'],
@@ -278,7 +269,7 @@ module.exports = {
         ['Lago de fuego', 'La destrucción final: la muerte segunda', '«Ésta es la muerte segunda» (20:14); Malaquías 4:1-3'],
         ['Fuego eterno', 'Un fuego que consume del todo', 'Judas 7 con 2 Pedro 2:6: Sodoma quedó en ceniza'],
       ]) +
-      `<p>Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. PDF 74-78 y 103; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. PDF 86; Elena de White, El conflicto de los siglos, pág. PDF 528; notas de Camilo en Evernote, "El estado de los muertos - El rico y Lázaro" y "La verdad sobre el Infierno" (el Hades) y "Los Libros de Registro del Cielo".</p>` },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:74-78 y 103; Bohr, <i>Tres ángeles</i> 2:86; CS 716.</p>` },
   ],
 
   preguntas: [
@@ -384,95 +375,95 @@ module.exports = {
       p: [{ x: '«El que no se halló inscrito en el libro de la ' }, { b: 'vida', h: '¿el libro de qué?' }, { x: ', fue lanzado al lago de ' }, { b: 'fuego', h: '¿lago de qué?' }, { x: '.»' }] },
     // ── Interpretación (f:'c'): no es texto del capítulo; cada una dice su fuente ──
     { t: 'mc', v: '20:4', f: 'c',
-      q: 'Según Bohr, ¿dónde están los santos durante los mil años?',
+      q: '¿Dónde están los santos durante los mil años?',
       o: ['En la ciudad de Dios, en el cielo', 'En la tierra desolada con Satanás', 'En la Jerusalén terrenal de hoy', 'Dormidos en la tumba hasta el final'], a: 0,
-      e: 'Están en la ciudad en el cielo: Jesús los lleva al venir (1 Tesalonicenses 4:16-17), están dentro de la ciudad cuando los impíos la rodean (20:9) y la tierra desolada no permite vivir. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 79.' },
+      e: 'Están en la ciudad en el cielo: Jesús los lleva al venir (1 Tesalonicenses 4:16-17), están dentro de la ciudad cuando los impíos la rodean (20:9) y la tierra desolada no permite vivir. Fuente: Bohr, 15 principios 2:79.' },
     { t: 'tf', v: '20:4', f: 'c',
-      q: 'Según Bohr, Apocalipsis 20:4-10 dice con todas sus letras que los santos pasan los mil años en el cielo.', a: false,
-      e: 'Falso: Bohr reconoce que 20:4-10 no lo dice explícitamente; lo muestra 21:2, cuando la ciudad baja del cielo. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 76.' },
+      q: 'Apocalipsis 20:4-10 dice con todas sus letras que los santos pasan los mil años en el cielo.', a: false,
+      e: 'Falso: 20:4-10 no lo dice explícitamente; lo muestra 21:2, cuando la ciudad baja del cielo. Fuente: Bohr, 15 principios 2:76.' },
     { t: 'mc', v: '20:5', f: 'c',
       q: 'En la lectura adventista, ¿cuándo ocurre la primera resurrección?',
       o: ['En la segunda venida de Jesús', 'Al final de los mil años', 'En el momento de morir', 'Cuando Juan escribió el libro'], a: 0,
-      e: 'Los justos resucitan cuando Jesús vuelve (1 Tesalonicenses 4:16); los impíos, al terminar los mil años. El texto solo dice que los otros muertos no vivieron hasta que se cumplieron mil años (20:5). Fuentes: Elena de White, El conflicto de los siglos, págs. 517-518; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 75.' },
+      e: 'Los justos resucitan cuando Jesús vuelve (1 Tesalonicenses 4:16); los impíos, al terminar los mil años. El texto solo dice que los otros muertos no vivieron hasta que se cumplieron mil años (20:5). Fuente: CS 702-703; Bohr, 15 principios 2:75.' },
     { t: 'mc', v: '20:5', f: 'c',
-      q: 'Según Bohr, ¿cómo se debe leer la frase «Pero los otros muertos no volvieron a vivir hasta que se cumplieron mil años»?',
+      q: '¿Cómo se debe leer la frase «Pero los otros muertos no volvieron a vivir hasta que se cumplieron mil años»?',
       o: ['Como un paréntesis sobre los impíos', 'Como la resurrección de los impíos', 'Como un nuevo nacimiento espiritual', 'Como la resurrección de los mártires'], a: 0,
-      e: 'Es una frase entre paréntesis que explica qué pasa con los impíos; «la primera resurrección» se refiere a los fieles de 20:4. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 76.' },
+      e: 'Es una frase entre paréntesis que explica qué pasa con los impíos; «la primera resurrección» se refiere a los fieles de 20:4. Fuente: Bohr, 15 principios 2:76.' },
     { t: 'mc', v: '20:1', f: 'c',
-      q: 'Según Bohr, ¿qué describe la palabra «abismo» de 20:1, la misma que usa Génesis 1:2 en griego?',
+      q: '¿Qué describe la palabra «abismo» de 20:1, la misma que usa Génesis 1:2 en griego?',
       o: ['Un planeta en caos, sin vida', 'Una cárcel debajo del mar', 'Un fuego en el centro de la tierra', 'Un lugar de tormento bajo tierra'], a: 0,
-      e: 'En la Septuaginta, «abismo» describe la tierra antes de la creación: desordenada, vacía y en tinieblas. Así queda la tierra durante los mil años (Jeremías 4:23-26). Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 74.' },
+      e: 'En la Septuaginta, «abismo» describe la tierra antes de la creación: desordenada, vacía y en tinieblas. Así queda la tierra durante los mil años (Jeremías 4:23-26). Fuente: Bohr, 15 principios 2:74.' },
     { t: 'mc', v: '20:3', f: 'c',
-      q: 'Según Elena de White, ¿en qué sentido está «atado» Satanás durante los mil años?',
+      q: '¿En qué sentido está «atado» Satanás durante los mil años?',
       o: ['No queda nadie en quien ejercer su poder', 'Está encerrado en una cárcel bajo el mar', 'Los ángeles lo vigilan dentro del templo', 'Se arrepiente y deja de hacer el mal'], a: 0,
-      e: '«En este sentido es cómo está atado: no queda nadie en quien pueda ejercer su poder». El texto dice que un ángel lo ató con una gran cadena y lo encerró (20:1-3). Fuente: Elena de White, El conflicto de los siglos, pág. 528.' },
+      e: '«En este sentido es cómo está atado: no queda nadie en quien pueda ejercer su poder». El texto dice que un ángel lo ató con una gran cadena y lo encerró (20:1-3). Fuente: CS 717.' },
     { t: 'tf', v: '20:7', f: 'c',
-      q: 'Según Bohr, Satanás queda «desatado» cuando los impíos resucitan, porque otra vez tiene a quién engañar.', a: true,
-      e: 'Verdadero: «Cuando los impíos están muertos, Satanás está atado; ¡cuando los impíos resucitan, Satanás está desatado!». Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 76.' },
+      q: 'Satanás queda «desatado» cuando los impíos resucitan, porque otra vez tiene a quién engañar.', a: true,
+      e: 'Verdadero: cuando los impíos están muertos, Satanás está atado; cuando resucitan, está desatado. Fuente: Bohr, 15 principios 2:76.' },
     { t: 'mc', v: '20:2', f: 'c',
-      q: 'Según Elena de White, ¿qué parte del Día de la Expiación ilustra el destierro de Satanás en la tierra desolada?',
+      q: '¿Qué parte del Día de la Expiación ilustra el destierro de Satanás en la tierra desolada?',
       o: ['El macho cabrío de Azazel', 'El cordero de la Pascua', 'La ofrenda de las primicias', 'El incienso del altar de oro'], a: 0,
-      e: 'Como el macho cabrío de Azazel era enviado vivo a un desierto sin habitantes (Levítico 16:21-22), Satanás queda en la tierra desolada mil años. Fuente: Elena de White, El conflicto de los siglos, págs. 527-528.' },
+      e: 'Como el macho cabrío de Azazel era enviado vivo a un desierto sin habitantes (Levítico 16:21-22), Satanás queda en la tierra desolada mil años. Fuente: CS 716-717.' },
     { t: 'tf', v: '20:2', f: 'c',
-      q: 'Según Bohr, en el Día de la Expiación se ponían sobre Azazel también los pecados de los que nunca se arrepintieron.', a: false,
-      e: 'Falso: sobre Azazel solo iban los pecados ya perdonados; el que no se afligía ni se arrepentía era cortado del pueblo (Levítico 23:29-30). Azazel no salva: limpia la sangre del macho cabrío de Jehová. Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 94.' },
+      q: 'En el Día de la Expiación se ponían sobre Azazel también los pecados de los que nunca se arrepintieron.', a: false,
+      e: 'Falso: sobre Azazel solo iban los pecados ya perdonados; el que no se afligía ni se arrepentía era cortado del pueblo (Levítico 23:29-30). Azazel no salva: limpia la sangre del macho cabrío de Jehová. Fuente: Bohr, Tres ángeles 2:94.' },
     { t: 'mc', v: '20:3', f: 'c',
-      q: 'Según Bohr, ¿a qué equivalen los «muchos días» de Isaías 24:22, después de los cuales son castigados los presos?',
+      q: '¿A qué equivalen los «muchos días» de Isaías 24:22, después de los cuales son castigados los presos?',
       o: ['A los mil años de Apocalipsis 20', 'A los 1260 días de la profecía', 'A los siete años de la tribulación', 'A las 2300 tardes y mañanas'], a: 0,
-      e: 'Los presos de Isaías 24:21-22 (Satanás, sus ángeles y los reyes) son castigados después de «muchos días», que Apocalipsis 20 aclara como mil años. Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 65; Stephen Bohr, El calendario religioso hebreo, pág. 224.' },
+      e: 'Los presos de Isaías 24:21-22 (Satanás, sus ángeles y los reyes) son castigados después de «muchos días», que Apocalipsis 20 aclara como mil años. Fuente: Bohr, 15 principios 2:65; Bohr, El calendario religioso hebreo, p. 224.' },
     { t: 'mc', v: '20:4', f: 'c',
-      q: 'Según Elena de White, ¿a quiénes juzgan los santos durante los mil años?',
+      q: '¿A quiénes juzgan los santos durante los mil años?',
       o: ['A los impíos y a los ángeles caídos', 'A los justos que resucitaron', 'A los ángeles que no cayeron', 'A los vivos que quedaron en la tierra'], a: 0,
-      e: 'Junto con Cristo juzgan a los impíos y también a Satanás y sus ángeles (1 Corintios 6:2-3). El texto dice que recibieron «facultad de juzgar» (20:4). Fuente: Elena de White, El conflicto de los siglos, págs. 529-530.' },
+      e: 'Junto con Cristo juzgan a los impíos y también a Satanás y sus ángeles (1 Corintios 6:2-3). El texto dice que recibieron «facultad de juzgar» (20:4). Fuente: CS 717-719.' },
     { t: 'mc', v: '20:12', f: 'c',
-      q: 'Según Bohr, ¿cuáles son las tres etapas del juicio de Dios, en su orden?',
+      q: '¿Cuáles son las tres etapas del juicio de Dios, en su orden?',
       o: ['Investigación, sentencia y ejecución', 'Sentencia, investigación y ejecución', 'Ejecución, investigación y sentencia', 'Investigación, ejecución y sentencia'], a: 0,
-      e: 'Primero se investiga (antes de la venida), luego se dicta sentencia (durante los mil años) y al final se ejecuta (después). Fuente: Stephen Bohr, Lo que Jesús dijo, pág. 232.' },
+      e: 'Primero se investiga (antes de la venida), luego se dicta sentencia (durante los mil años) y al final se ejecuta (después). Fuente: Bohr, Lo que Jesús dijo, p. 232.' },
     { t: 'mc', v: '20:12', f: 'c',
-      q: 'Según Bohr, si Dios ya lo sabe todo, ¿para quién es necesario el juicio?',
+      q: 'Si Dios ya lo sabe todo, ¿para quién es necesario el juicio?',
       o: ['Para los seres que no lo saben todo', 'Para que Dios conozca cada caso', 'Para darles otra oportunidad a los impíos', 'Para salvar a los ángeles caídos'], a: 0,
-      e: 'El juicio no es para informar a Dios, sino para que el universo vea que Dios fue amoroso y justo con cada persona. Fuente: Stephen Bohr, Lo que Jesús dijo, pág. 231.' },
+      e: 'El juicio no es para informar a Dios, sino para que el universo vea que Dios fue amoroso y justo con cada persona. Fuente: Bohr, Lo que Jesús dijo, p. 231.' },
     { t: 'mc', v: '20:14', f: 'c',
-      q: 'Según Bohr, ¿cuántos lagos de fuego hay, si se nombra en 20:10, en 20:14-15 y en 21:8?',
+      q: '¿Cuántos lagos de fuego hay, si se nombra en 20:10, en 20:14-15 y en 21:8?',
       o: ['Uno solo', 'Tres distintos', 'Dos: antes y después', 'Ninguno real'], a: 0,
-      e: 'Apocalipsis 20:1-21:8 cuenta los mismos hechos en ciclos que llegan al mismo final; por eso el lago se nombra varias veces, pero es uno solo. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 74 y 78.' },
+      e: 'Apocalipsis 20:1-21:8 cuenta los mismos hechos en ciclos que llegan al mismo final; por eso el lago se nombra varias veces, pero es uno solo. Fuente: Bohr, 15 principios 2:74 y 78.' },
     { t: 'mc', v: '20:8', f: 'c',
-      q: 'Según Bohr, ¿qué hace Apocalipsis 20:8 con Gog y Magog, los nombres de Ezequiel 38-39?',
+      q: '¿Qué hace Apocalipsis 20:8 con Gog y Magog, los nombres de Ezequiel 38-39?',
       o: ['Los vuelve enemigos de toda la tierra', 'Los ubica solo al norte de Israel', 'Los presenta como dos ángeles caídos', 'Los identifica con la antigua Babilonia'], a: 0,
-      e: 'Gog y Magog ya no vienen solo del norte, sino «de los cuatro ángulos de la tierra»: son todos los impíos resucitados contra la ciudad. Fuente: Stephen Bohr, Studies on Daniel 11, pág. 184.' },
+      e: 'Gog y Magog ya no vienen solo del norte, sino «de los cuatro ángulos de la tierra»: son todos los impíos resucitados contra la ciudad. Fuente: Bohr, Studies on Daniel 11, p. 184.' },
     { t: 'tf', v: '20:9', f: 'c',
-      q: 'Según Elena de White, al terminar los mil años los impíos resucitados reciben un segundo tiempo de gracia.', a: false,
-      e: 'Falso: salen de la tumba con la misma rebeldía y no tienen un nuevo tiempo de gracia, porque lo usarían igual que el primero. Fuente: Elena de White, El conflicto de los siglos, pág. 531.' },
+      q: 'Al terminar los mil años, los impíos resucitados reciben un segundo tiempo de gracia.', a: false,
+      e: 'Falso: salen de la tumba con la misma rebeldía y no tienen un nuevo tiempo de gracia, porque lo usarían igual que el primero. Fuente: CS 720.' },
     { t: 'mc', v: '20:9', f: 'c',
-      q: 'Según Elena de White, ¿qué es el lago de fuego donde terminan los impíos?',
+      q: '¿Qué es el lago de fuego donde terminan los impíos?',
       o: ['La superficie de la tierra en llamas', 'Un lugar bajo tierra que arde siempre', 'Un lago real del Medio Oriente', 'El fuego del sol que no se apaga'], a: 0,
-      e: 'Cuando Dios hace descender fuego del cielo (20:9), la superficie de la tierra parece «un inmenso lago de fuego hirviente». Fuente: Elena de White, El conflicto de los siglos, pág. 539.' },
+      e: 'Cuando Dios hace descender fuego del cielo (20:9), la superficie de la tierra parece «un inmenso lago de fuego hirviente». Fuente: CS 731.' },
     { t: 'mc', v: '20:14', f: 'c',
       q: 'En la interpretación adventista, ¿qué es «la muerte segunda» de Apocalipsis 20:14?',
       o: ['Una muerte sin resurrección', 'Una vida eterna de tormento', 'La muerte del cuerpo en esta vida', 'Un sueño de mil años en la tumba'], a: 0,
-      e: 'Es la muerte final de la cual no se vuelve: los impíos «serán como si no hubieran sido» (Abdías 16). Fuentes: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 76; Elena de White, El conflicto de los siglos, pág. 441.' },
+      e: 'Es la muerte final de la cual no se vuelve: los impíos «serán como si no hubieran sido» (Abdías 16). Fuente: Bohr, 15 principios 2:76; CS 600.' },
     { t: 'mc', v: '20:10', f: 'c',
-      q: 'Según Bohr, ¿qué quiere decir «por los siglos de los siglos» en Apocalipsis 20:10?',
+      q: '¿Qué quiere decir «por los siglos de los siglos» en Apocalipsis 20:10?',
       o: ['Un tiempo largo cuyo fin no se ve', 'Un tiempo que nunca termina', 'Exactamente otros mil años', 'Un solo instante, sin dolor'], a: 0,
-      e: 'Traduce aion (en hebreo olam): un período largo e indefinido; «lo que el fuego consume se apaga finalmente». Como Sodoma: «fuego eterno» (Judas 7), pero quedó en ceniza (2 Pedro 2:6). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 86, 92 y 97-99.' },
+      e: 'Traduce aion (en hebreo olam): un período largo e indefinido; lo que el fuego consume, al final se apaga. Como Sodoma: «fuego eterno» (Judas 7), pero quedó en ceniza (2 Pedro 2:6). Fuente: Bohr, Tres ángeles 2:86, 92 y 97-99.' },
     { t: 'tf', v: '20:10', f: 'c',
-      q: 'Según Elena de White, Satanás sufre más tiempo que los que engañó, porque carga también con los pecados que les hizo cometer.', a: true,
-      e: 'Verdadero: «Después de haber perecido todos los que cayeron por sus seducciones, el diablo tiene que seguir viviendo y sufriendo». Al final queda destruido, «raíz y rama». Fuente: Elena de White, El conflicto de los siglos, pág. 539.' },
+      q: 'Satanás sufre más tiempo que los que engañó, porque carga también con los pecados que les hizo cometer.', a: true,
+      e: 'Verdadero: «Después de haber perecido todos los que cayeron por sus seducciones, el diablo tiene que seguir viviendo y sufriendo». Al final queda destruido, raíz y rama. Fuente: CS 731.' },
     { t: 'mc', v: '20:12', f: 'c',
-      q: 'Según Bohr, ¿qué contiene el libro de la vida que se abre en 20:12?',
+      q: '¿Qué contiene el libro de la vida que se abre en 20:12?',
       o: ['Los nombres de los que se salvarán', 'Las obras de todos los impíos', 'La historia de las naciones', 'Las leyes del reino de Dios'], a: 0,
-      e: 'Contiene los nombres de los salvos (Apocalipsis 3:5; Filipenses 4:3; Éxodo 32:32; Daniel 12:1). Se abre para mostrar a los impíos que su nombre no está. Los otros libros registran las obras. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 78.' },
+      e: 'Contiene los nombres de los salvos (Apocalipsis 3:5; Filipenses 4:3; Éxodo 32:32; Daniel 12:1). Se abre para mostrar a los impíos que su nombre no está. Los otros libros registran las obras. Fuente: Bohr, 15 principios 2:78.' },
     { t: 'tf', v: '20:13', f: 'c',
-      q: 'Según las notas de Camilo, el Hades de 20:13-14 es el sepulcro y no un lugar donde los muertos sufren.', a: true,
-      e: 'Verdadero: Hades es el sepulcro, el Seol del Antiguo Testamento. Por eso «entrega los muertos» que había en él (20:13). Fuente: notas de Camilo en Evernote, "El estado de los muertos - El rico y Lázaro".' },
+      q: 'El Hades de 20:13-14 es el sepulcro y no un lugar donde los muertos sufren.', a: true,
+      e: 'Verdadero: Hades es el sepulcro, el Seol del Antiguo Testamento (Salmo 16:10 con Hechos 2:27). Por eso «entrega los muertos» que había en él (20:13). Fuente: apuntes «El estado de los muertos - El rico y Lázaro».' },
     { t: 'mc', v: '20:10', f: 'c',
-      q: 'Según Bohr, ¿qué ejemplo bíblico muestra que un «fuego eterno» consume del todo?',
+      q: '¿Qué ejemplo bíblico muestra que un «fuego eterno» consume del todo?',
       o: ['Sodoma y Gomorra, hechas ceniza', 'El horno de Nabucodonosor', 'La zarza que no se consumía', 'El fuego del altar del templo'], a: 0,
-      e: 'Sodoma sufrió «el castigo del fuego eterno» (Judas 7), pero quedó reducida a ceniza (2 Pedro 2:6). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. PDF 86.' },
+      e: 'Sodoma sufrió «el castigo del fuego eterno» (Judas 7), pero quedó reducida a ceniza (2 Pedro 2:6). Fuente: Bohr, Tres ángeles 2:86.' },
     { t: 'mc', v: '20:11', f: 'c',
-      q: 'Según Elena de White, ¿cuándo ocurre la escena del gran trono blanco (20:11-12)?',
+      q: '¿Cuándo ocurre la escena del gran trono blanco (20:11-12)?',
       o: ['Al final de los mil años', 'Cuando muere cada persona', 'Al comenzar los mil años', 'En 1844, al empezar el juicio'], a: 0,
-      e: 'Con los impíos resucitados alrededor de la ciudad, Cristo es coronado y se abren los libros. Bohr ubica 20:11 en la segunda venida; aquí se sigue a Elena de White, como las notas de Camilo. Fuente: Elena de White, El conflicto de los siglos, págs. PDF 533-534.' },
+      e: 'Con los impíos resucitados alrededor de la ciudad, Cristo es coronado y se abren los libros. Otra lectura ubica 20:11 en la segunda venida. Fuente: CS 722-724.' },
   ],
 
   tarjetas: [

@@ -784,8 +784,8 @@ export const CATALOGO = {
     "sub": "Cautivos en Babilonia",
     "grupo": "Biblia",
     "n": [
-     40,
-     35,
+     49,
+     26,
      14
     ]
    },
@@ -795,8 +795,8 @@ export const CATALOGO = {
     "sub": "El sueño de la gran imagen",
     "grupo": "Biblia",
     "n": [
-     36,
-     58,
+     46,
+     48,
      9
     ]
    },
@@ -806,8 +806,8 @@ export const CATALOGO = {
     "sub": "La imagen de oro y el horno",
     "grupo": "Biblia",
     "n": [
-     35,
-     46,
+     42,
+     39,
      13
     ]
    },
@@ -817,8 +817,8 @@ export const CATALOGO = {
     "sub": "Nabucodonosor humillado",
     "grupo": "Biblia",
     "n": [
-     16,
-     39,
+     24,
+     31,
      13
     ]
    },
@@ -828,8 +828,8 @@ export const CATALOGO = {
     "sub": "La escritura en la pared",
     "grupo": "Biblia",
     "n": [
-     17,
-     32,
+     25,
+     24,
      8
     ]
    },
@@ -839,8 +839,8 @@ export const CATALOGO = {
     "sub": "En el foso de los leones",
     "grupo": "Biblia",
     "n": [
-     31,
-     46,
+     38,
+     39,
      20
     ]
    },
@@ -850,8 +850,8 @@ export const CATALOGO = {
     "sub": "Las cuatro bestias y el juicio",
     "grupo": "Biblia",
     "n": [
-     25,
-     25,
+     35,
+     15,
      20
     ]
    },
@@ -861,8 +861,8 @@ export const CATALOGO = {
     "sub": "El carnero, el macho cabrío y las 2.300 tardes",
     "grupo": "Biblia",
     "n": [
-     22,
-     24,
+     31,
+     15,
      22
     ]
    },
@@ -872,8 +872,8 @@ export const CATALOGO = {
     "sub": "Las setenta semanas y el Mesías",
     "grupo": "Biblia",
     "n": [
-     23,
-     24,
+     33,
+     14,
      20
     ]
    },
@@ -883,8 +883,8 @@ export const CATALOGO = {
     "sub": "La visión junto al Tigris",
     "grupo": "Biblia",
     "n": [
-     17,
-     22,
+     24,
+     15,
      17
     ]
    },
@@ -894,8 +894,8 @@ export const CATALOGO = {
     "sub": "Los reyes del norte y del sur",
     "grupo": "Biblia",
     "n": [
-     24,
      36,
+     24,
      30
     ]
    },
@@ -905,8 +905,8 @@ export const CATALOGO = {
     "sub": "El tiempo del fin",
     "grupo": "Biblia",
     "n": [
-     12,
-     32,
+     23,
+     21,
      9
     ]
    },
@@ -1713,8 +1713,8 @@ export const CATALOGO = {
     "sub": "Cristo entre los candelabros",
     "grupo": "Biblia",
     "n": [
-     20,
-     38,
+     35,
+     23,
      4
     ]
    },
@@ -1724,8 +1724,8 @@ export const CATALOGO = {
     "sub": "Cartas a Éfeso, Esmirna, Pérgamo y Tiatira",
     "grupo": "Biblia",
     "n": [
-     24,
-     37,
+     39,
+     22,
      5
     ]
    },
@@ -1735,8 +1735,8 @@ export const CATALOGO = {
     "sub": "Cartas a Sardis, Filadelfia y Laodicea",
     "grupo": "Biblia",
     "n": [
-     20,
-     37,
+     36,
+     21,
      4
     ]
    },
@@ -1746,8 +1746,8 @@ export const CATALOGO = {
     "sub": "El trono en el cielo",
     "grupo": "Biblia",
     "n": [
-     14,
-     27,
+     25,
+     16,
      3
     ]
    },
@@ -1757,8 +1757,8 @@ export const CATALOGO = {
     "sub": "El libro sellado y el Cordero",
     "grupo": "Biblia",
     "n": [
-     14,
-     31,
+     29,
+     16,
      3
     ]
    },
@@ -1768,8 +1768,8 @@ export const CATALOGO = {
     "sub": "Los seis primeros sellos",
     "grupo": "Biblia",
     "n": [
-     17,
-     35,
+     34,
+     18,
      3
     ]
    },
@@ -1779,8 +1779,8 @@ export const CATALOGO = {
     "sub": "Los 144.000 y la gran multitud",
     "grupo": "Biblia",
     "n": [
-     22,
-     34,
+     40,
+     16,
      4
     ]
    },
@@ -1790,8 +1790,8 @@ export const CATALOGO = {
     "sub": "El séptimo sello y las primeras trompetas",
     "grupo": "Biblia",
     "n": [
-     20,
-     23,
+     32,
+     11,
      4
     ]
    },
@@ -1801,8 +1801,8 @@ export const CATALOGO = {
     "sub": "La quinta y la sexta trompetas",
     "grupo": "Biblia",
     "n": [
-     26,
-     30,
+     41,
+     15,
      5
     ]
    },
@@ -1812,8 +1812,8 @@ export const CATALOGO = {
     "sub": "El ángel con el librito",
     "grupo": "Biblia",
     "n": [
-     16,
-     25,
+     30,
+     11,
      3
     ]
    },
@@ -1823,8 +1823,8 @@ export const CATALOGO = {
     "sub": "Los dos testigos y la séptima trompeta",
     "grupo": "Biblia",
     "n": [
-     22,
-     33,
+     40,
+     15,
      4
     ]
    },
@@ -1834,8 +1834,8 @@ export const CATALOGO = {
     "sub": "La mujer, el dragón y el niño",
     "grupo": "Biblia",
     "n": [
-     21,
-     32,
+     34,
+     19,
      4
     ]
    },
@@ -1845,8 +1845,8 @@ export const CATALOGO = {
     "sub": "Las dos bestias, la marca y el número",
     "grupo": "Biblia",
     "n": [
-     17,
-     38,
+     30,
+     25,
      4
     ]
    },
@@ -1856,8 +1856,8 @@ export const CATALOGO = {
     "sub": "Los 144.000 y los tres ángeles",
     "grupo": "Biblia",
     "n": [
-     21,
-     42,
+     36,
+     27,
      5
     ]
    },
@@ -1867,8 +1867,8 @@ export const CATALOGO = {
     "sub": "El cántico de Moisés y del Cordero",
     "grupo": "Biblia",
     "n": [
-     11,
-     25,
+     20,
+     16,
      3
     ]
    },
@@ -1878,8 +1878,8 @@ export const CATALOGO = {
     "sub": "Las siete copas y Armagedón",
     "grupo": "Biblia",
     "n": [
-     20,
-     43,
+     34,
+     29,
      4
     ]
    },
@@ -1889,8 +1889,8 @@ export const CATALOGO = {
     "sub": "La mujer sobre la bestia escarlata",
     "grupo": "Biblia",
     "n": [
-     14,
-     48,
+     31,
+     31,
      4
     ]
    },
@@ -1900,8 +1900,8 @@ export const CATALOGO = {
     "sub": "La caída de Babilonia",
     "grupo": "Biblia",
     "n": [
-     14,
-     45,
+     28,
+     31,
      4
     ]
    },
@@ -1911,8 +1911,8 @@ export const CATALOGO = {
     "sub": "Las bodas del Cordero y el jinete fiel",
     "grupo": "Biblia",
     "n": [
-     12,
-     49,
+     29,
+     32,
      4
     ]
    },
@@ -1922,8 +1922,8 @@ export const CATALOGO = {
     "sub": "Los mil años y el gran trono blanco",
     "grupo": "Biblia",
     "n": [
-     12,
-     37,
+     28,
+     21,
      3
     ]
    },
@@ -1933,8 +1933,8 @@ export const CATALOGO = {
     "sub": "Cielo nuevo, tierra nueva y la Nueva Jerusalén",
     "grupo": "Biblia",
     "n": [
-     29,
-     33,
+     39,
+     23,
      4
     ]
    },
@@ -1944,8 +1944,8 @@ export const CATALOGO = {
     "sub": "El río y el árbol de la vida",
     "grupo": "Biblia",
     "n": [
-     16,
-     36,
+     26,
+     26,
      3
     ]
    }

@@ -87,33 +87,32 @@ module.exports = {
     { t: '🧭 Dónde encaja Apocalipsis 15', capa: 'contexto', h:
       hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
       de aquí van marcadas como complementarias.<br><br>
-      Bohr lee Apocalipsis 11:19 y 15:5-8 como los dos extremos de un mismo
-      cuadro. En 11:19 se abre el templo de Dios en el cielo y se ve el arca:
-      empieza el juicio en el <strong>lugar santísimo</strong> (la parte más
-      interna del santuario, donde estaba el arca con la ley), que la iglesia
-      adventista ubica en <strong>1844</strong>. En 15:5-8 el templo se abre
-      otra vez, pero para que salgan los ángeles con las plagas: es el
+      Apocalipsis 11:19 y 15:5-8 son los dos extremos de un mismo cuadro. En
+      11:19 se abre el templo de Dios en el cielo y se ve el arca: empieza el
+      juicio en el <strong>lugar santísimo</strong> (la parte más interna del
+      santuario, donde estaba el arca con la ley), que la iglesia adventista
+      ubica en <strong>1844</strong>. En 15:5-8 el templo se abre otra vez,
+      pero para que salgan los ángeles con las plagas: es el
       <strong>final</strong> de ese juicio.<br><br>
       Lo que queda en medio (capítulos 12 a 14) cuenta lo que pasa en la tierra
       mientras el juicio sigue abierto.`) +
-      tbl(['Texto', 'Qué marca, según Bohr'], [
+      tbl(['Texto', 'Qué marca'], [
         ['11:19', 'Se abre el templo: comienza el juicio'],
         ['12 a 14', 'La lucha del dragón y las bestias; los tres ángeles'],
         ['15:2-4', 'Los vencedores ya están a salvo'],
         ['15:5-8', 'Se cierra la puerta de la gracia'],
         ['16', 'Caen las siete plagas'],
       ]) +
-      hi(`Fuente: Bohr, «15 principios de interpretación profética», tomo 2,
-      pág. 93-94.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:93-94.</p>` },
 
     { t: '🧭 El cántico de Moisés: el éxodo se repite (15:2-4)', capa: 'contexto', h:
       hi(`Apocalipsis usa palabras del Antiguo Testamento para que estudiemos
-      toda la historia de donde vienen. Para Bohr, «el cántico de Moisés» nos
-      lleva a Éxodo 14 y 15: la liberación final del pueblo de Dios seguirá el
-      mismo patrón que la salida de Egipto, pero en todo el mundo. Los que
-      cantan son el remanente (el pueblo fiel del final) que venció a la bestia
-      en la última crisis; Bohr los llama los 144.000.`) +
-      tbl(['En Egipto', 'Al final, según Bohr'], [
+      toda la historia de donde vienen. «El cántico de Moisés» nos lleva a
+      Éxodo 14 y 15: la liberación final del pueblo de Dios seguirá el mismo
+      patrón que la salida de Egipto, pero en todo el mundo. Los que cantan
+      son el remanente (el pueblo fiel del final) que venció a la bestia en la
+      última crisis: los 144.000.`) +
+      tbl(['En Egipto', 'Al final'], [
         ['Faraón, llamado «el gran dragón» (Ezequiel 29:3)', 'El dragón que hace guerra al remanente (12:17)'],
         ['Plagas que endurecen a Faraón', 'Plagas que no traen arrepentimiento (16:9, 11)'],
         ['Israel encerrado junto al mar', 'El pueblo de Dios bajo un decreto de muerte'],
@@ -122,51 +121,45 @@ module.exports = {
         ['Truenos y terremoto (Salmo 77)', 'La séptima plaga (16:18)'],
         ['Cantan a orillas del mar (Éxodo 15)', 'Cantan sobre el mar de vidrio'],
       ]) +
-      hi(`Fuente: Bohr, «15 principios de interpretación profética», tomo 2,
-      pág. 221, 225-227, 230 y 236-238.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:221, 225-227, 230 y 236-238.</p>` },
 
     { t: '🧭 El templo cerrado: termina la intercesión (15:5-8)', capa: 'contexto', h:
-      hi(`Para Bohr, «el templo del tabernáculo del testimonio» es el lugar
-      santísimo dentro del santuario del cielo: «el templo del templo». Antes
-      se abría para que el pueblo entrara por la fe; aquí se abre para que
-      salgan los ángeles con las copas.<br><br>
+      hi(`«El templo del tabernáculo del testimonio» es el lugar santísimo
+      dentro del santuario del cielo: «el templo del templo». Antes se abría
+      para que el pueblo entrara por la fe; aquí se abre para que salgan los
+      ángeles con las copas.<br><br>
       Que nadie pueda entrar hasta que terminen las plagas quiere decir que
       Cristo terminó su <strong>intercesión</strong> (su obra de pedir perdón
       por nosotros como sacerdote): se cerró la <strong>puerta de la
       gracia</strong>, el tiempo en que Dios todavía ofrece perdón.`) +
-      li([`Elena de White: Jesús deja de interceder y anuncia «el que es
-           injusto, sea injusto aún» (Apocalipsis 22:11). Cada caso ya fue
-           decidido.`,
+      li([`Jesús deja de interceder y anuncia «el que es injusto, sea injusto
+           aún» (Apocalipsis 22:11). Cada caso ya fue decidido.`,
           `Desde ahí los justos viven «sin intercesor, a la vista del santo
-           Dios», pero protegidos por él.`,
-          `Bohr lo compara con Noé: se predicó con poder, se cerró la puerta
-           del arca y después vino el diluvio.`,
+           Dios» (CS 672), pero protegidos por él.`,
+          `Es como con Noé: se predicó con poder, se cerró la puerta del arca y
+           después vino el diluvio.`,
           `Daniel 12:1 describe el mismo momento: «se levantará Miguel», es
            decir, Jesús empieza a reinar porque el número de los suyos está
            completo.`]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      pág. 28 y 157-158; Bohr, «Culto en el trono de Satanás», pág. 26; Elena
-      de White, «El conflicto de los siglos», pág. 671-672.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:28 y 157-158; Bohr, <i>Culto en el trono de Satanás</i>, p. 26; CS 671-672.</p>` },
 
     { t: '🧭 ¿Por qué ahora copas de ira? (15:1, 7)', capa: 'contexto', h:
       hi(`Las copas están «llenas de la ira de Dios» porque llegan cuando la
-      gracia ya se cerró (Bohr). Elena de White explica la diferencia:
-      <strong>todos los juicios anteriores</strong> al cierre de la gracia
-      «fueron mitigados con misericordia», porque la sangre de Cristo todavía
-      cubría al pecador; en las siete plagas la ira cae «sin mezcla de
-      misericordia».<br><br>
+      gracia ya se cerró. <strong>Todos los juicios anteriores</strong> al
+      cierre de la gracia «fueron mitigados con misericordia» (CS 687),
+      porque la sangre de Cristo todavía cubría al pecador; en las siete
+      plagas la ira cae sin mezcla de misericordia.<br><br>
       Dios es «lento en iras»: espera hasta que una nación o un sistema llena
       la medida de su maldad. Por eso las plagas no son un llamado al
       arrepentimiento, sino la respuesta final a quienes ya decidieron.`) +
       wa(`La aplicación es para hoy: todavía estamos en tiempo de gracia. El
       mensaje de Apocalipsis 15 no es miedo, sino una invitación a decidirse
       mientras la puerta sigue abierta.`) +
-      hi(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 685-687;
-      Bohr, «15 principios de interpretación profética», tomo 2, pág. 28.`) },
+      `<p>Fuente: CS 685-687; Bohr, <i>15 principios</i> 2:28.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
-      hi(`Bohr enseña a buscar primero si el mismo pasaje explica el símbolo, y
-      después dónde aparece antes en la Biblia.`) +
+      hi(`Primero se busca si el mismo pasaje explica el símbolo, y después
+      dónde aparece antes en la Biblia.`) +
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Siete (ángeles, plagas, copas)', 'Plenitud: algo completo', 'Génesis 2:2; Josué 6:15-16; 2 Reyes 5:14'],
         ['Copa que Dios da a beber', 'Su ira, su juicio', 'Jeremías 25:15; Apocalipsis 14:10 («el cáliz de su ira»)'],
@@ -175,9 +168,7 @@ module.exports = {
         ['Lino limpio y resplandeciente', 'Pureza y justicia', 'Apocalipsis 19:8: el lino fino «representa las acciones justas de los santos»'],
         ['Cántico de Moisés', 'El canto de los que Dios acaba de librar', 'Éxodo 15:1-2, junto al mar Rojo'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      pág. 102-105, 157 y 230; Doukhan, «Secretos del Apocalipsis», pág.
-      156-158.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:102-105, 157 y 230; Doukhan, <i>Secretos del Apocalipsis</i>, p. 156-158.</p>` },
   ],
 
   preguntas: [
@@ -266,61 +257,61 @@ module.exports = {
     { t: 'fill', v: '15:8', ins: 'Apocalipsis 15:8 (RV1995) — Completa:',
       p: [{ x: '«Nadie podía entrar en el ' }, { b: 'templo', h: '¿en dónde?' }, { x: ' hasta que se cumplieran las siete ' }, { b: 'plagas', h: '¿las siete qué?' }, { x: ' de los siete ángeles.»' }] },
     { t: 'mc', v: '15:1', f: 'c',
-      q: 'En la interpretación adventista (según Bohr), ¿cuándo se derraman las siete plagas postreras de Apocalipsis 15:1?',
+      q: 'En la interpretación adventista, ¿cuándo se derraman las siete plagas postreras de Apocalipsis 15:1?',
       o: ['Después de que se cierra la puerta de la gracia', 'Durante los 1260 años de la Edad Media', 'Antes de que se predique el fuerte pregón', 'Durante los mil años después de la venida'], a: 0,
-      e: 'Bohr: las siete plagas caen «después que se cierre la puerta de la gracia (Apocalipsis 15:5-8)». Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 221.' },
+      e: 'Las siete plagas caen después de que se cierra la puerta de la gracia (15:5-8). Fuente: Bohr, 15 principios 2:221.' },
     { t: 'mc', v: '15:2', f: 'c',
-      q: 'Según Bohr, ¿quiénes están de pie sobre el mar de vidrio en Apocalipsis 15:2?',
+      q: '¿Quiénes están de pie sobre el mar de vidrio en Apocalipsis 15:2?',
       o: ['El remanente que venció en la crisis final', 'Los ángeles que no siguieron a Lucifer', 'Los profetas del Antiguo Testamento', 'Los mártires de los primeros siglos cristianos'], a: 0,
-      e: 'Para Bohr es el remanente final, el que venció a la bestia, su imagen y su marca; por eso canta el cántico de la liberación. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 236-238.' },
+      e: 'Es el remanente final, el que venció a la bestia, su imagen y su marca; por eso canta el cántico de la liberación. Fuente: Bohr, 15 principios 2:236-238.' },
     { t: 'mc', v: '15:3', f: 'c',
-      q: 'Según Bohr, ¿por qué los vencedores cantan «el cántico de Moisés» (Apocalipsis 15:3)?',
+      q: '¿Por qué los vencedores cantan «el cántico de Moisés» (Apocalipsis 15:3)?',
       o: ['Porque la liberación final repite el éxodo de Egipto', 'Porque recuerda la entrega de la ley en el Sinaí', 'Porque Moisés resucitará para cantar con ellos', 'Porque Moisés fue el autor del libro de los Salmos'], a: 0,
-      e: 'Bohr: la experiencia de Israel al salir de Egipto es un tipo (un modelo) de la liberación final; los sucesos que llevaron a cantar en Éxodo 15 se repiten en escala mundial. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 230 y 238.' },
+      e: 'La salida de Egipto es un tipo (un modelo) de la liberación final; lo que llevó a cantar en Éxodo 15 se repite en todo el mundo. Fuente: Bohr, 15 principios 2:230 y 238.' },
     { t: 'tf', v: '15:3', f: 'c',
-      q: 'Según Bohr, en el éxodo hubo tinieblas para los egipcios y luz para Israel, igual que en la quinta plaga del fin.', a: true,
-      e: 'Verdadero: Bohr compara Éxodo 14:19-20 (nube oscura para Egipto, luz para Israel) con la quinta plaga, y el mar que se seca con la sexta. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 225-226.' },
+      q: 'En el éxodo hubo tinieblas para los egipcios y luz para Israel, igual que en la quinta plaga del fin.', a: true,
+      e: 'Verdadero: Éxodo 14:19-20 (nube oscura para Egipto, luz para Israel) se parece a la quinta plaga, y el mar que se seca, a la sexta. Fuente: Bohr, 15 principios 2:225-226.' },
     { t: 'mc', v: '15:5', f: 'c',
-      q: 'Según Bohr, ¿qué marca Apocalipsis 15:5-8 dentro del libro?',
+      q: '¿Qué marca Apocalipsis 15:5-8 dentro del libro?',
       o: ['El final del juicio en el santuario del cielo', 'El comienzo del juicio en el año 1844', 'La destrucción de Jerusalén en el año 70', 'El nacimiento de la iglesia de los apóstoles'], a: 0,
-      e: 'Bohr: Apocalipsis 11:19 abre el templo y marca el comienzo del juicio (1844); 15:5-8 marca su final, cuando termina la intercesión y salen las plagas. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 93-94.' },
+      e: 'Apocalipsis 11:19 abre el templo y marca el comienzo del juicio (1844); 15:5-8 marca su final, cuando termina la intercesión y salen las plagas. Fuente: Bohr, 15 principios 2:93-94.' },
     { t: 'mc', v: '15:5', f: 'c',
-      q: 'Según Bohr, ¿a qué parte del santuario se refiere «el templo» del tabernáculo del testimonio en Apocalipsis 15:5?',
+      q: '¿A qué parte del santuario se refiere «el templo» del tabernáculo del testimonio en Apocalipsis 15:5?',
       o: ['Al lugar santísimo', 'Al atrio de afuera', 'Al altar del holocausto', 'Al lugar del candelero'], a: 0,
-      e: 'Bohr: el «tabernáculo del testimonio» es todo el santuario celestial; el «templo» (en griego naos) es el lugar santísimo, «el templo del templo». Fuente: Bohr, «Culto en el trono de Satanás», pág. 26.' },
+      e: 'El «tabernáculo del testimonio» es todo el santuario celestial; el «templo» (en griego naos) es el lugar santísimo, «el templo del templo». Fuente: Bohr, Culto en el trono de Satanás, p. 26.' },
     { t: 'mc', v: '15:8', f: 'c',
-      q: 'Según Elena de White, ¿qué texto anuncia Jesús cuando deja de interceder en el santuario?',
+      q: '¿Qué texto anuncia Jesús cuando deja de interceder en el santuario?',
       o: ['«El que es injusto, sea injusto aún»', '«Consumado es»', '«He aquí, yo hago nuevas todas las cosas»', '«Venid, benditos de mi Padre»'], a: 0,
-      e: 'Elena de White: Jesús dice «Hecho es» y anuncia Apocalipsis 22:11: «El que es injusto, sea injusto aún…». Cada caso ya fue decidido. Fuente: Elena de White, «El conflicto de los siglos», pág. 671.' },
+      e: 'Jesús dice «Hecho es» y anuncia Apocalipsis 22:11: «El que es injusto, sea injusto aún…». Cada caso ya fue decidido. Fuente: CS 671.' },
     { t: 'tf', v: '15:8', f: 'c',
-      q: 'Según Elena de White, después del cierre de la gracia los justos viven sin intercesor, a la vista del santo Dios.', a: true,
-      e: 'Verdadero: «los justos deben vivir sin intercesor, a la vista del santo Dios», aunque Dios los protege. Fuente: Elena de White, «El conflicto de los siglos», pág. 672.' },
+      q: 'Después del cierre de la gracia, los justos viven sin intercesor, a la vista del santo Dios.', a: true,
+      e: 'Verdadero: viven «sin intercesor, a la vista del santo Dios» (CS 672), aunque Dios los protege. Fuente: CS 672.' },
     { t: 'mc', v: '15:8', f: 'c',
-      q: 'Según Bohr, ¿qué historia del Antiguo Testamento se parece al cierre de la gracia de Apocalipsis 15:8?',
+      q: '¿Qué historia del Antiguo Testamento se parece al cierre de la gracia de Apocalipsis 15:8?',
       o: ['La puerta del arca de Noé que se cerró', 'La caída de los muros de Jericó', 'El paso del río Jordán con Josué', 'La confusión de lenguas en Babel'], a: 0,
-      e: 'Bohr: como en los días de Noé, primero se predica con poder, luego se cierra la puerta y después viene la destrucción. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 158.' },
+      e: 'Como en los días de Noé, primero se predica con poder, luego se cierra la puerta y después viene la destrucción. Fuente: Bohr, 15 principios 2:158.' },
     { t: 'mc', v: '15:8', f: 'c',
-      q: 'Según Bohr, ¿qué texto de Daniel describe el mismo momento que Apocalipsis 15:5-8?',
+      q: '¿Qué texto de Daniel describe el mismo momento que Apocalipsis 15:5-8?',
       o: ['Daniel 12:1, cuando se levanta Miguel', 'Daniel 8:14, la purificación del santuario', 'Daniel 9:27, a la mitad de la semana', 'Daniel 7:9, cuando se ponen los tronos'], a: 0,
-      e: 'Bohr: «se levantará Miguel» (Daniel 12:1) es cuando Jesús comienza a reinar porque el número de sus súbditos está completo; es el cierre de la intercesión de 15:5-8. Daniel 8:14 y 7:9 hablan del comienzo del juicio. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 28.' },
+      e: '«Se levantará Miguel» (Daniel 12:1) es cuando Jesús comienza a reinar porque el número de sus súbditos está completo: el cierre de la intercesión de 15:5-8. Daniel 8:14 y 7:9 hablan del comienzo del juicio. Fuente: Bohr, 15 principios 2:28.' },
     { t: 'tf', v: '15:7', f: 'c',
-      q: 'Según Elena de White, los juicios de Dios antes del cierre de la gracia venían mezclados con misericordia, pero las siete plagas no.', a: true,
-      e: 'Verdadero: «Todos los juicios que cayeron sobre los hombres antes del fin del tiempo de gracia fueron mitigados con misericordia»; en las plagas la ira cae sin esa mezcla. Fuente: Elena de White, «El conflicto de los siglos», pág. 687.' },
+      q: 'Los juicios de Dios antes del cierre de la gracia venían mezclados con misericordia, pero las siete plagas no.', a: true,
+      e: 'Verdadero: los juicios anteriores «fueron mitigados con misericordia»; en las plagas la ira cae sin esa mezcla. Fuente: CS 687.' },
     { t: 'mc', v: '15:6', f: 'c',
       q: '¿Qué texto del Apocalipsis explica qué representa el lino fino, como el de los siete ángeles (15:6)?',
       o: ['Apocalipsis 19:8', 'Apocalipsis 7:14', 'Apocalipsis 3:5', 'Apocalipsis 1:13'], a: 0,
-      e: 'Apocalipsis 19:8 dice que el lino fino «representa las acciones justas de los santos»: es pureza y justicia. Bohr pone la vestimenta como símbolo de justicia. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105.' },
+      e: 'Apocalipsis 19:8 dice que el lino fino «representa las acciones justas de los santos»: es pureza y justicia. Fuente: Bohr, 15 principios 2:105.' },
     { t: 'mc', v: '15:7', f: 'c',
       q: 'En la Biblia, ¿qué representa una copa que Dios da a beber, como las copas de oro de 15:7?',
       o: ['Su ira y su juicio', 'Su perdón y su paz', 'La cena del Señor', 'Las oraciones de los santos'], a: 0,
-      e: 'Dios le dice a Jeremías: toma la copa del vino de este furor y dala a beber a las naciones (Jeremías 25:15); Apocalipsis 14:10 habla del «cáliz de su ira». Las copas con las oraciones son las de 5:8, llenas de incienso. Fuente: Doukhan, «Secretos del Apocalipsis», pág. 158.' },
+      e: 'Dios le dice a Jeremías: toma la copa del vino de este furor y dala a beber a las naciones (Jeremías 25:15); Apocalipsis 14:10 habla del «cáliz de su ira». Las copas con las oraciones son las de 5:8, llenas de incienso. Fuente: Doukhan, Secretos del Apocalipsis, p. 158.' },
     { t: 'tf', v: '15:5', f: 'c',
       q: 'El «testimonio» del tabernáculo del testimonio (15:5) son las tablas de la ley que se guardaban en el arca.', a: true,
-      e: 'Verdadero: Dios mandó poner el testimonio dentro del arca (Éxodo 25:16, 21), y las tablas de piedra se llaman tablas del testimonio (Éxodo 31:18). Por eso en 11:19 se ve el arca cuando se abre el templo. Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 157.' },
+      e: 'Verdadero: Dios mandó poner el testimonio dentro del arca (Éxodo 25:16, 21), y las tablas de piedra se llaman tablas del testimonio (Éxodo 31:18). Por eso en 11:19 se ve el arca cuando se abre el templo. Fuente: Bohr, 15 principios 2:157.' },
     { t: 'mc', v: '15:8', f: 'c',
-      q: 'Según Doukhan, ¿qué escena del Antiguo Testamento se parece al templo lleno de humo donde nadie podía entrar (15:8)?',
+      q: '¿Qué escena del Antiguo Testamento se parece al templo lleno de humo donde nadie podía entrar (15:8)?',
       o: ['La nube que llenó el tabernáculo', 'El fuego que cayó en el Carmelo', 'La zarza que ardía sin quemarse', 'La columna de nube en el mar'], a: 0,
-      e: 'Cuando se terminó el tabernáculo, la nube de la gloria de Dios lo llenó y Moisés no podía entrar (Éxodo 40:34-35). Fuente: Doukhan, «Secretos del Apocalipsis», pág. 156-157.' },
+      e: 'Cuando se terminó el tabernáculo, la nube de la gloria de Dios lo llenó y Moisés no podía entrar (Éxodo 40:34-35). Fuente: Doukhan, Secretos del Apocalipsis, p. 156-157.' },
   ],
 
   tarjetas: [

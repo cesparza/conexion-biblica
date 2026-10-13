@@ -108,34 +108,32 @@ module.exports = {
       después de los grandes reformadores las iglesias se quedaron en sus
       credos y no quisieron recibir más luz. Tenían fama de vivas (3:1) pero se
       iban apagando en un formalismo seco.<br><br>
-      «No he hallado tus obras <strong>bien acabadas</strong>» (3:2): según Bohr,
-      la palabra griega habla de algo <strong>incompleto</strong>, no imperfecto.
-      La Reforma no se terminó: muchos siguieron guardando el domingo y otras
+      «No he hallado tus obras <strong>bien acabadas</strong>» (3:2): la palabra
+      griega habla de algo <strong>incompleto</strong>, no imperfecto. La
+      Reforma no se terminó: muchos siguieron guardando el domingo y otras
       fiestas que no vienen de la Biblia, aunque algunos sí guardaron el
       sábado.`) +
-      wa(`Elena de White ubica la frase «tienes nombre de que vives y estás
-      muerto» (3:1) en el tiempo de las señales de 1755 a 1780. Otras fechas:
-      Urías Smith empieza Sardis en 1798; Maxwell la pone en 1565-1740. Un
-      sermón de las notas de Camilo usa 1517-1780 para Sardis y 1780-1844 para
-      Filadelfia.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 107-113; Elena de White, El conflicto de los siglos, pág. 259; Urías Smith, Las profecías del Apocalipsis, pág. 30; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, pág. 127; notas de Camilo en Evernote, "Sermón - Laodicea: El mensaje del Testigo Fiel".</p>` },
+      wa(`La frase «tienes nombre de que vives y estás muerto» (3:1) se ubica
+      también en el tiempo de las señales de 1755 a 1780. Otra lectura empieza
+      Sardis en 1798; otra la pone en 1565-1740.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 14 y 107-113; CS 355; Smith, <i>Las profecías del Apocalipsis</i>, p. 30; Maxwell, <i>Apocalipsis</i>, p. 127.</p>` },
 
     { t: '🧭 Sardis: velar, el libro de la vida y las vestiduras (3:3-5)', capa: 'contexto', h:
       hi(`<strong>Velar.</strong> Sardis estaba sobre un cerro tan empinado que se
       creía invencible. Cayó dos veces (ante Ciro, en 549 a.C., y ante Antíoco,
       en 218 a.C.) porque nadie vigilaba de noche. Por eso Jesús le dice
       «vela».<br><br>
-      Elena de White aplica el llamado a velar sobre todo al
-      <strong>cierre de la gracia</strong>, cuando Jesús termine su obra en el
-      santuario: llegará de repente, como un ladrón.`) +
-      tbl(['Promesa (3:5)', 'Significado, según Bohr'], [
+      El llamado a velar apunta sobre todo al <strong>cierre de la
+      gracia</strong>, cuando Jesús termine su obra en el santuario: llegará de
+      repente, como un ladrón.`) +
+      tbl(['Promesa (3:5)', 'Significado'], [
         ['Vestiduras blancas', 'La justicia de Cristo: Dios ve en el creyente la obediencia perfecta de Jesús.'],
         ['No borrar su nombre del libro de la vida', 'Los nombres quedan escritos hasta que el caso de cada uno pasa en el juicio investigador.'],
         ['Confesar su nombre ante el Padre', 'Jesús defiende al creyente en ese juicio.'],
       ]) +
       wa(`Las tres promesas tienen que ver con el <strong>juicio investigador</strong>,
       el juicio que hace Dios en el cielo antes de la venida de Jesús.`) +
-      `<p>Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 115-120 (cita a Elena de White, Testimonios para la iglesia, tomo 2, págs. 190-192; Palabras de vida del gran Maestro, pág. 253).</p>` },
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 115-120; 2TI 190-192; PVGM 253.</p>` },
 
     { t: '🧭 Filadelfia, el gran despertar (1833-1843)', capa: 'contexto', h:
       hi(`<strong>Filadelfia</strong> significa «amor fraternal». Como período,
@@ -145,20 +143,20 @@ module.exports = {
       diferencias y se unió para esperarlo.<br><br>
       Se equivocaron en <strong>lo que</strong> pasaría, pero no en la
       <strong>fecha</strong>: en 1844 terminaron los 2.300 días de Daniel 8:14 y
-      Jesús empezó una nueva obra en el cielo. Según Bohr, cada vez que Jesús
-      empieza una nueva etapa de su obra, Dios lo anuncia en la tierra: al
-      nacer, los pastores; en Pentecostés, las lenguas de fuego; en 1844, el
-      movimiento millerita.`) +
-      wa(`Elena de White dice que ningún gran movimiento desde los apóstoles fue
-      más libre de imperfecciones humanas que el del otoño de 1844. Urías Smith
-      también cierra Filadelfia en 1844; Maxwell la empieza en 1750.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 123-128; Elena de White, El conflicto de los siglos, pág. 331; Urías Smith, Las profecías del Apocalipsis, pág. 32; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, pág. 130.</p>` },
+      Jesús empezó una nueva obra en el cielo. Cada vez que Jesús empieza una
+      nueva etapa de su obra, Dios lo anuncia en la tierra: al nacer, los
+      pastores; en Pentecostés, las lenguas de fuego; en 1844, el movimiento
+      millerita.`) +
+      wa(`Ningún gran movimiento desde los apóstoles fue más libre de
+      imperfecciones humanas que el del otoño de 1844. Otra lectura también
+      cierra Filadelfia en 1844, pero la empieza en 1750.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 14 y 123-128; CS 453; Smith, <i>Las profecías del Apocalipsis</i>, p. 32; Maxwell, <i>Apocalipsis</i>, p. 130.</p>` },
 
     { t: '🧭 Filadelfia: la puerta abierta de 1844 (3:7-8)', capa: 'contexto', h:
-      hi(`Para Bohr y Elena de White, la <strong>puerta abierta</strong> es la del
-      <strong>lugar santísimo</strong> del santuario celestial. En 1844 Jesús
-      terminó su obra en el lugar santo, cerró esa puerta y abrió la del
-      santísimo, donde está el arca con los diez mandamientos (11:19).<br><br>
+      hi(`La <strong>puerta abierta</strong> es la del <strong>lugar
+      santísimo</strong> del santuario celestial. En 1844 Jesús terminó su obra
+      en el lugar santo, cerró esa puerta y abrió la del santísimo, donde está
+      el arca con los diez mandamientos (11:19).<br><br>
       Por eso Jesús se presenta como el que «abre y ninguno cierra, y cierra y
       ninguno abre» (3:7). Cuando los creyentes de 1844 entendieron el
       santuario, vieron que esas palabras eran para su tiempo.`) +
@@ -166,24 +164,24 @@ module.exports = {
         ['8:14: a las 2.300 tardes y mañanas el santuario será purificado', '11:19: se abre el templo y se ve el arca'],
         ['7:13: el Hijo del hombre llega ante el Anciano de días para el juicio', '14:7: «la hora de su juicio ha llegado»'],
       ]) +
-      wa(`Elena de White: desde que se abrió esa puerta, los mandamientos brillan
-      sobre el pueblo de Dios, y el sábado llegó a ser una prueba.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 37 y 124-126 (cita a Elena de White, Primeros escritos, pág. 42); Elena de White, El conflicto de los siglos, págs. 353 y 356.</p>` },
+      wa(`Desde que se abrió esa puerta, los mandamientos brillan sobre el pueblo
+      de Dios, y el sábado llegó a ser una prueba.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 37 y 124-126; PE 42; CS 483 y 488.</p>` },
 
     { t: '🧭 Filadelfia: la hora de la prueba, en dos etapas (3:9-12)', capa: 'contexto', h:
-      hi(`Según Bohr, el mensaje a Filadelfia se cumple en <strong>dos
-      etapas</strong>: en parte con los milleritas, y en pleno con los fieles
-      que vivan cuando Jesús venga.`) +
-      tbl(['Frase', 'Significado, según Bohr'], [
+      hi(`El mensaje a Filadelfia se cumple en <strong>dos etapas</strong>: en
+      parte con los milleritas, y en pleno con los fieles que vivan cuando Jesús
+      venga.`) +
+      tbl(['Frase', 'Significado'], [
         ['«Sinagoga de Satanás»', 'Los que se opusieron con dureza al mensaje; al final reconocerán que Dios amó a su pueblo fiel.'],
         ['«La hora de la prueba»', 'Viene sobre todo el mundo habitado (en griego, <em>oikouméne</em>): es la gran prueba final.'],
         ['«Te guardaré»', 'Dios guarda a los suyos en la prueba, sin sacarlos del mundo (Juan 17:15). No es un rapto antes de la tribulación.'],
         ['Columna y nombre de Dios', 'Se cumple en los 144.000, que llevan el nombre de Dios en la frente (14:1).'],
       ]) +
-      hi(`Elena de White: a los que estudian la verdad y obedecen, Jesús les
-      promete que enviaría a todos los ángeles del cielo antes que dejar que
-      Satanás venza a uno solo que confíe en él.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 128-134 y 137-149; Elena de White, El conflicto de los siglos, págs. 452-453.</p>` },
+      hi(`A los que estudian la verdad y obedecen, Jesús les promete que enviaría
+      a todos los ángeles del cielo antes que dejar que Satanás venza a uno solo
+      que confíe en él.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 128-134 y 137-149; CS 615-618.</p>` },
 
     { t: '🧭 Laodicea, la iglesia del juicio (desde 1844)', capa: 'contexto', h:
       hi(`<strong>Laodicea</strong> significa «juicio del pueblo»: es la iglesia
@@ -191,47 +189,44 @@ module.exports = {
       el cierre de la gracia.<br><br>
       Quien habla es <strong>el Amén</strong> (el «así sea»), el testigo fiel y
       verdadero. Su mensaje es la verdad completa. «El Principio de la creación
-      de Dios» (3:14) no quiere decir que Jesús fue creado: Urías Smith explica
-      que él es el que inició la creación, aquel por medio de quien Dios creó
-      todo (Juan 1:3).`) +
-      wa(`La iglesia adventista no lee este mensaje como dicho a otros: Elena de
-      White lo aplica a los adventistas que han tenido gran luz y no andan en
-      ella. Bohr insiste en que es para cada miembro de hoy.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 152-154 (cita a Elena de White, Mensajes selectos, tomo 2, pág. 75); Urías Smith, Las profecías del Apocalipsis, pág. 35.</p>` },
+      de Dios» (3:14) no quiere decir que Jesús fue creado: él inició la
+      creación, y por medio de él Dios creó todo (Juan 1:3).`) +
+      wa(`Este mensaje no es para otros: es para los adventistas que han tenido
+      gran luz y no andan en ella. Es para cada miembro de hoy.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 14 y 152-154; 2MS 75; Smith, <i>Las profecías del Apocalipsis</i>, p. 35.</p>` },
 
     { t: '🧭 Laodicea: el diagnóstico y la cura (3:15-20)', capa: 'contexto', h:
-      hi(`<strong>Tibio</strong> es agua caliente mezclada con fría. Según Bohr,
-      Laodicea es caliente por fuera (doctrinas, escuelas, hospitales, buen
-      estilo de vida) y fría por dentro: hace lo correcto con motivos
-      equivocados, y no sabe que está enferma.`) +
-      tbl(['Lo que Jesús aconseja comprar (3:18)', 'Significado, según Elena de White'], [
+      hi(`<strong>Tibio</strong> es agua caliente mezclada con fría. Laodicea es
+      caliente por fuera (doctrinas, escuelas, hospitales, buen estilo de vida)
+      y fría por dentro: hace lo correcto con motivos equivocados, y no sabe que
+      está enferma.`) +
+      tbl(['Lo que Jesús aconseja comprar (3:18)', 'Significado'], [
         ['Oro refinado en el fuego', 'La fe y el amor'],
         ['Vestiduras blancas', 'La pureza de carácter: la justicia de Cristo'],
         ['Colirio', 'La sabiduría y la gracia para distinguir el bien del mal y descubrir el pecado'],
       ]) +
       hi(`«Yo estoy a la puerta y llamo» (3:20): el problema de Laodicea es que
-      Jesús está <strong>fuera</strong> del corazón. Elena de White: muchos
-      tienen tanta escoria ante la puerta (rencores, mal genio, codicia, el
-      mundo) que no pueden abrirla.<br><br>
+      Jesús está <strong>fuera</strong> del corazón. Muchos tienen tanta escoria
+      ante la puerta (rencores, mal genio, codicia, el mundo) que no pueden
+      abrirla.<br><br>
       Y el mensaje no deja sin esperanza: «Yo reprendo y castigo a todos los que
       amo» (3:19).`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 155-158 y 165-178 (cita a Elena de White, Testimonios para la iglesia, tomo 4, pág. 91, y tomo 1, pág. 135).</p>` },
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 155-158 y 165-178; 4TI 91; 1TI 135.</p>` },
 
     { t: '🧭 De Laodicea a Filadelfia: el zarandeo (3:16, 3:21)', capa: 'contexto', h:
-      hi(`Según Bohr, <strong>«te vomitaré de mi boca»</strong> (3:16) es el
-      <strong>zarandeo</strong>: una separación dentro del pueblo de Dios. Elena
-      de White vio que lo causará el testimonio directo del consejo del Testigo
-      fiel a Laodicea: unos lo aceptan, otros se levantan contra él.`) +
+      hi(`<strong>«Te vomitaré de mi boca»</strong> (3:16) es el
+      <strong>zarandeo</strong>: una separación dentro del pueblo de Dios. Lo
+      causará el testimonio directo del consejo del Testigo fiel a Laodicea:
+      unos lo aceptan, otros se levantan contra él.`) +
       tbl(['Los tibios que…', 'Terminan'], [
         ['Se calientan', 'Unidos a Filadelfia, con el sello de Dios'],
         ['Se enfrían', 'Con la sinagoga de Satanás, con la marca de la bestia'],
       ]) +
-      hi(`Por eso Bohr dice que cuando Jesús venga ya no habrá tibios: solo fríos
-      y calientes.<br><br>
-      <strong>El trono (3:21).</strong> Elena de White explica que Cristo está
-      sentado ahora con el Padre en su trono como sacerdote: el vencedor
-      compartirá ese trono con él.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 15, 124 y 152 (cita a Elena de White, Primeros escritos, pág. 270); Elena de White, El conflicto de los siglos, pág. 342.</p>` },
+      hi(`Por eso, cuando Jesús venga ya no habrá tibios: solo fríos y
+      calientes.<br><br>
+      <strong>El trono (3:21).</strong> Cristo está sentado ahora con el Padre
+      en su trono como sacerdote: el vencedor compartirá ese trono con él.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 15, 124 y 152; PE 270; CS 468.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
@@ -245,7 +240,7 @@ module.exports = {
         ['Oro refinado en fuego', 'La fe probada', '1 Pedro 1:7'],
         ['Colirio y ojos', 'Discernimiento espiritual que da Dios', 'Efesios 1:18; Juan 9:39'],
       ]) +
-      `<p>Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104-105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 23, 35, 82, 116-121, 124-125, 134 y 170-172; notas de Camilo en Evernote, "10. Filadelfia: La Iglesia reavivada - Parte 1" y "Sermón - Laodicea: El mensaje del Testigo Fiel".</p>` },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:104-105; Bohr, <i>Las siete iglesias</i>, p. 23, 35, 82, 116-121, 124-125, 134 y 170-172.</p>` },
   ],
 
   preguntas: [
@@ -343,9 +338,9 @@ module.exports = {
       o: ['Apocalipsis 3:14', 'Apocalipsis 3:7', 'Apocalipsis 2:8', 'Apocalipsis 1:8'], a: 0,
       e: 'Apocalipsis 3:14, al empezar la carta a Laodicea.' },
     { t: 'mc', v: '3:14', f: 'c',
-      q: 'Según Bohr, ¿qué período de la historia de la iglesia representa Laodicea?',
+      q: '¿Qué período de la historia de la iglesia representa Laodicea?',
       o: ['Desde 1844 hasta el cierre de la gracia', 'El tiempo de los apóstoles', 'El tiempo de la Reforma protestante', 'El tiempo de la persecución romana'], a: 0,
-      e: 'Laodicea («juicio del pueblo») es la última etapa: el tiempo del juicio, desde 1844. El texto solo dice que la carta es para la iglesia en Laodicea (3:14). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14-15.' },
+      e: 'Laodicea («juicio del pueblo») es la última etapa: el tiempo del juicio, desde 1844. El texto solo dice que la carta es para la iglesia en Laodicea (3:14). Fuente: Bohr, <i>Las siete iglesias</i>, p. 14-15.' },
     { t: 'mc', v: '3:15', lit: 'ni eres frío ni caliente',
       q: 'Según Apocalipsis 3:15-16, ¿cómo era la iglesia de Laodicea?',
       o: ['Tibia, ni fría ni caliente', 'Fría, pero no muerta', 'Caliente, pero sin amor', 'Pobre, aunque rica'], a: 0,
@@ -367,9 +362,9 @@ module.exports = {
       q: 'Jesús le aconseja a Laodicea ungir sus ojos con aceite para que vea. (Apocalipsis 3:18)', a: false,
       e: 'Falso: con COLIRIO: «unge tus ojos con colirio para que veas» (3:18).' },
     { t: 'mc', v: '3:18', f: 'c',
-      q: 'Según Elena de White, ¿qué representan las vestiduras blancas que Jesús aconseja comprar en Apocalipsis 3:18?',
+      q: '¿Qué representan las vestiduras blancas que Jesús aconseja comprar en Apocalipsis 3:18?',
       o: ['La justicia de Cristo', 'La riqueza de la iglesia', 'La ropa de los sacerdotes', 'Los ángeles del trono'], a: 0,
-      e: 'La vestidura blanca es la pureza de carácter, la justicia de Cristo impartida al pecador. El texto dice que son «para vestirte». Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 172 (cita a Elena de White, Testimonios para la iglesia, tomo 4, pág. 91).' },
+      e: 'La vestidura blanca es la pureza de carácter, la justicia de Cristo impartida al pecador. El texto dice que son «para vestirte». Fuente: Bohr, <i>Las siete iglesias</i>, p. 172; 4TI 91.' },
     { t: 'mc', v: '3:19', lit: 'Yo reprendo y castigo a todos los que amo',
       q: 'Según Apocalipsis 3:19, ¿a quiénes reprende y castiga Jesús?',
       o: ['A todos los que ama', 'A los que no lo conocen', 'A los reyes de la tierra', 'A los que adoran ídolos'], a: 0,
@@ -381,9 +376,9 @@ module.exports = {
     { t: 'fill', v: '3:20', ins: 'Apocalipsis 3:20 (RV1995) — Completa:',
       p: [{ x: '«si alguno oye mi ' }, { b: 'voz', h: '¿oye qué?' }, { x: ' y abre la ' }, { b: 'puerta', h: '¿abre qué?' }, { x: ', entraré a él y ' }, { b: 'cenaré', h: '¿qué hará con él?' }, { x: ' con él y él conmigo.»' }] },
     { t: 'mc', v: '3:20', f: 'c',
-      q: 'Según Bohr, ¿qué muestra «Yo estoy a la puerta y llamo» sobre el problema de Laodicea?',
+      q: '¿Qué muestra «Yo estoy a la puerta y llamo» sobre el problema de Laodicea?',
       o: ['Que Jesús está fuera del corazón y pide entrar', 'Que Jesús ya entró en todos los corazones', 'Que la puerta del cielo ya se cerró', 'Que solo los pastores pueden abrirle'], a: 0,
-      e: 'El gran problema de Laodicea es que Jesús está afuera y el yo reina adentro; Jesús llama y no fuerza la puerta. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 173.' },
+      e: 'El gran problema de Laodicea es que Jesús está afuera y el yo reina adentro; Jesús llama y no fuerza la puerta. Fuente: Bohr, <i>Las siete iglesias</i>, p. 173.' },
     { t: 'mc', v: '3:21', lit: 'que se siente conmigo en mi trono',
       q: '¿Qué promete Jesús al vencedor de Laodicea? (Apocalipsis 3:21)',
       o: ['Sentarse con él en su trono', 'Ser columna en el templo', 'Comer del maná escondido', 'Autoridad sobre las naciones'], a: 0,
@@ -396,80 +391,80 @@ module.exports = {
       o: ['Siete, una en cada carta', 'Tres, una en cada carta del capítulo 3', 'Cuatro, en las cartas del capítulo 2', 'Doce, como las tribus'], a: 0,
       e: 'Siete: 2:7, 2:11, 2:17, 2:29, 3:6, 3:13 y 3:22. La última está en 3:22, al cerrar la carta a Laodicea.' },
     { t: 'mc', v: '3:1', f: 'c',
-      q: 'Según Bohr, ¿qué período de la historia de la iglesia representa Sardis?',
+      q: '¿Qué período de la historia de la iglesia representa Sardis?',
       o: ['1517-1833, la Reforma y lo que siguió', '538-1517, la Edad Media', '313-538, desde Constantino', '1844 en adelante, el tiempo del juicio'], a: 0,
-      e: 'Sardis («escapando») empezó a salir de la oscuridad medieval, pero no se desligó del todo. Urías Smith la empieza en 1798. Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 14; Urías Smith, Las profecías del Apocalipsis, pág. 30.' },
+      e: 'Sardis («escapando») empezó a salir de la oscuridad medieval, pero no se desligó del todo. Otra lectura la empieza en 1798. Fuente: Bohr, <i>Las siete iglesias</i>, p. 14; Smith, <i>Las profecías del Apocalipsis</i>, p. 30.' },
     { t: 'mc', v: '3:1', f: 'c',
-      q: 'Según Bohr, ¿qué significa el nombre «Sardis»?',
+      q: '¿Qué significa el nombre «Sardis»?',
       o: ['Escapando', 'Deseable', 'Amor fraternal', 'Juicio del pueblo'], a: 0,
-      e: 'Sardis es «escapando»: la iglesia que se escapaba del dominio de la Edad Media. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 110.' },
+      e: 'Sardis es «escapando»: la iglesia que se escapaba del dominio de la Edad Media. Fuente: Bohr, <i>Las siete iglesias</i>, p. 14 y 110.' },
     { t: 'mc', v: '3:2', f: 'c',
-      q: 'Según Bohr, ¿qué quiere decir que Jesús no halló «bien acabadas» las obras de Sardis?',
+      q: '¿Qué quiere decir que Jesús no halló «bien acabadas» las obras de Sardis?',
       o: ['Que no completó la Reforma ni quiso recibir más luz', 'Que sus templos quedaron sin terminar', 'Que sus miembros no daban suficientes ofrendas', 'Que dejó de predicar la justificación por la fe'], a: 0,
-      e: 'La palabra griega habla de algo incompleto: las iglesias se quedaron en lo que enseñaron los reformadores. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 114-115.' },
+      e: 'La palabra griega habla de algo incompleto: las iglesias se quedaron en lo que enseñaron los reformadores. Fuente: Bohr, <i>Las siete iglesias</i>, p. 114-115.' },
     { t: 'tf', v: '3:3', f: 'c',
-      q: 'Según Bohr, la ciudad de Sardis cayó dos veces porque nadie vigilaba de noche, y por eso Jesús le dice que vele.', a: true,
-      e: 'Verdadero: cayó ante Ciro (549 a.C.) y ante Antíoco (218 a.C.) por exceso de confianza. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 115.' },
+      q: 'La ciudad de Sardis cayó dos veces porque nadie vigilaba de noche, y por eso Jesús le dice que vele.', a: true,
+      e: 'Verdadero: cayó ante Ciro (549 a.C.) y ante Antíoco (218 a.C.) por exceso de confianza. Fuente: Bohr, <i>Las siete iglesias</i>, p. 115.' },
     { t: 'mc', v: '3:3', f: 'c',
-      q: 'Según Elena de White (citada por Bohr), ¿a qué momento apunta sobre todo el llamado a velar?',
+      q: '¿A qué momento apunta sobre todo el llamado a velar?',
       o: ['Al cierre de la gracia en el santuario', 'A la destrucción de Jerusalén', 'Al regreso de Juan de Patmos', 'Al comienzo de la Reforma'], a: 0,
-      e: 'Se refiere a cuando Jesús termine su obra en el santuario y se cierre la gracia: llegará de repente. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 117-118 (cita Testimonios para la iglesia, tomo 2, págs. 190-192).' },
+      e: 'Se refiere a cuando Jesús termine su obra en el santuario y se cierre la gracia: llegará de repente. Fuente: Bohr, <i>Las siete iglesias</i>, p. 117-118; 2TI 190-192.' },
     { t: 'mc', v: '3:5', f: 'c',
-      q: 'Según Bohr, ¿con qué obra de Jesús en el cielo tienen que ver las tres promesas de Apocalipsis 3:5?',
+      q: '¿Con qué obra de Jesús en el cielo tienen que ver las tres promesas de Apocalipsis 3:5?',
       o: ['Con el juicio investigador', 'Con la creación del mundo', 'Con el milenio en el cielo', 'Con la purificación del templo de Jerusalén'], a: 0,
-      e: 'Vestiduras blancas, no borrar el nombre del libro de la vida y confesar el nombre ante el Padre: las tres son del juicio investigador. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 119-120.' },
+      e: 'Vestiduras blancas, no borrar el nombre del libro de la vida y confesar el nombre ante el Padre: las tres son del juicio investigador. Fuente: Bohr, <i>Las siete iglesias</i>, p. 119-120.' },
     { t: 'mc', v: '3:7', f: 'c',
-      q: 'Según Bohr, ¿qué período de la historia de la iglesia representa Filadelfia?',
+      q: '¿Qué período de la historia de la iglesia representa Filadelfia?',
       o: ['1833-1843, el gran despertar adventista', '1517-1833, la Reforma protestante', '1844 en adelante, el tiempo del juicio', '31-100 d.C., los apóstoles'], a: 0,
-      e: 'Filadelfia («amor fraternal») es el gran despertar de mediados del siglo XIX, con el movimiento millerita. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14 y 124.' },
+      e: 'Filadelfia («amor fraternal») es el gran despertar de mediados del siglo XIX, con el movimiento millerita. Fuente: Bohr, <i>Las siete iglesias</i>, p. 14 y 124.' },
     { t: 'mc', v: '3:8', f: 'c',
-      q: 'Según Bohr y Elena de White, ¿qué puerta abrió Jesús en 1844?',
+      q: '¿Qué puerta abrió Jesús en 1844?',
       o: ['La del lugar santísimo del santuario celestial', 'La del lugar santo del santuario celestial', 'La de la salvación para los gentiles', 'La del cielo para los redimidos'], a: 0,
-      e: 'Jesús cerró la puerta del lugar santo y abrió la del santísimo, donde está el arca (11:19). Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 124-125; Elena de White, El conflicto de los siglos, pág. 356.' },
+      e: 'Jesús cerró la puerta del lugar santo y abrió la del santísimo, donde está el arca (11:19). Fuente: Bohr, <i>Las siete iglesias</i>, p. 124-125; CS 488.' },
     { t: 'tf', v: '3:8', f: 'c',
-      q: 'Según Bohr, los milleritas se equivocaron sobre lo que pasaría en 1844, pero la fecha era correcta.', a: true,
-      e: 'Verdadero: en 1844 empezó el juicio en el lugar santísimo, aunque ellos esperaban la venida de Jesús. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 125.' },
+      q: 'Los milleritas se equivocaron sobre lo que pasaría en 1844, pero la fecha era correcta.', a: true,
+      e: 'Verdadero: en 1844 empezó el juicio en el lugar santísimo, aunque ellos esperaban la venida de Jesús. Fuente: Bohr, <i>Las siete iglesias</i>, p. 125.' },
     { t: 'mc', v: '3:10', f: 'c',
-      q: 'Según Bohr, ¿qué significa «te guardaré de la hora de la prueba» (3:10)?',
+      q: '¿Qué significa «te guardaré de la hora de la prueba» (3:10)?',
       o: ['Que Dios cuida a los suyos en la prueba, sin sacarlos del mundo', 'Que Dios se llevará a la iglesia al cielo antes de la tribulación', 'Que la iglesia no tendrá pruebas en el tiempo del fin', 'Que la prueba solo vendrá sobre los que no creen'], a: 0,
-      e: 'Es como la oración de Jesús: «No ruego que los quites del mundo, sino que los guardes del mal» (Juan 17:15). No enseña un rapto antes de la tribulación. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 131.' },
+      e: 'Es como la oración de Jesús: «No ruego que los quites del mundo, sino que los guardes del mal» (Juan 17:15). No enseña un rapto antes de la tribulación. Fuente: Bohr, <i>Las siete iglesias</i>, p. 131.' },
     { t: 'tf', v: '3:10', f: 'c',
-      q: 'Según Bohr, el mensaje a Filadelfia se cumple en dos etapas: en parte con los milleritas y en pleno con los fieles que vivan cuando Jesús venga.', a: true,
-      e: 'Verdadero: la «hora de la prueba» viene sobre todo el mundo habitado, algo que en 1844 no ocurrió. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 124 y 131-132.' },
+      q: 'El mensaje a Filadelfia se cumple en dos etapas: en parte con los milleritas y en pleno con los fieles que vivan cuando Jesús venga.', a: true,
+      e: 'Verdadero: la «hora de la prueba» viene sobre todo el mundo habitado, algo que en 1844 no ocurrió. Fuente: Bohr, <i>Las siete iglesias</i>, p. 124 y 131-132.' },
     { t: 'mc', v: '3:12', f: 'c',
-      q: 'Según Bohr, ¿en quiénes se cumple al final la promesa de llevar escrito el nombre de Dios (3:12)?',
+      q: '¿En quiénes se cumple al final la promesa de llevar escrito el nombre de Dios (3:12)?',
       o: ['En los 144.000 que estarán vivos cuando Jesús venga', 'En los apóstoles que fundaron la iglesia', 'En los reformadores del siglo XVI', 'En los mártires de Esmirna'], a: 0,
-      e: 'Los 144.000 tienen el nombre del Padre escrito en la frente (14:1). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 134.' },
+      e: 'Los 144.000 tienen el nombre del Padre escrito en la frente (14:1). Fuente: Bohr, <i>Las siete iglesias</i>, p. 134.' },
     { t: 'mc', v: '3:14', f: 'c',
-      q: 'Según Urías Smith, ¿qué significa que Jesús sea «el Principio de la creación de Dios»?',
+      q: '¿Qué significa que Jesús sea «el Principio de la creación de Dios»?',
       o: ['Que por medio de él Dios creó todas las cosas', 'Que fue el primer ser creado por Dios', 'Que nació al principio del mundo', 'Que apareció antes que los ángeles'], a: 0,
-      e: 'No significa que fue creado: él inició la obra de la creación (Juan 1:3). Fuente: Urías Smith, Las profecías del Apocalipsis, pág. 35.' },
+      e: 'No significa que fue creado: él inició la obra de la creación (Juan 1:3). Fuente: Smith, <i>Las profecías del Apocalipsis</i>, p. 35.' },
     { t: 'mc', v: '3:15', f: 'c',
-      q: 'Según Bohr, ¿cuál es el problema principal de Laodicea?',
+      q: '¿Cuál es el problema principal de Laodicea?',
       o: ['Hace lo correcto con motivos equivocados', 'Persigue a los que guardan el sábado', 'Dejó de tener escuelas e instituciones', 'Abandonó todas sus doctrinas'], a: 0,
-      e: 'Es caliente por fuera y fría por dentro: tiene la forma de la piedad sin su poder, y no sabe que está enferma. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 155-163.' },
+      e: 'Es caliente por fuera y fría por dentro: tiene la forma de la piedad sin su poder, y no sabe que está enferma. Fuente: Bohr, <i>Las siete iglesias</i>, p. 155-163.' },
     { t: 'mc', v: '3:16', f: 'c',
-      q: 'Según Bohr, ¿qué es el «te vomitaré de mi boca» de Apocalipsis 3:16?',
+      q: '¿Qué es el «te vomitaré de mi boca» de Apocalipsis 3:16?',
       o: ['El zarandeo: los tibios se calientan o se enfrían', 'La destrucción de la ciudad de Laodicea', 'La expulsión de los pastores infieles', 'El terremoto final antes de la venida'], a: 0,
-      e: 'Cuando termine el zarandeo solo habrá fríos y calientes; cuando Jesús venga no habrá tibios. Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 15 y 124 (cita a Elena de White, Primeros escritos, pág. 270).' },
+      e: 'Cuando termine el zarandeo solo habrá fríos y calientes; cuando Jesús venga no habrá tibios. Fuente: Bohr, <i>Las siete iglesias</i>, p. 15 y 124; PE 270.' },
     { t: 'mc', v: '3:18', f: 'c',
-      q: 'Según Elena de White, ¿qué representa el «oro refinado en el fuego» de Apocalipsis 3:18?',
+      q: '¿Qué representa el «oro refinado en el fuego» de Apocalipsis 3:18?',
       o: ['La fe y el amor', 'Las ofrendas de la iglesia', 'Las doctrinas correctas', 'El don de profecía'], a: 0,
-      e: 'El oro probado en el fuego es la fe y el amor, que brillan más cuanto más se prueban. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 172 (cita Testimonios para la iglesia, tomo 4, pág. 91).' },
+      e: 'El oro probado en el fuego es la fe y el amor, que brillan más cuanto más se prueban. Fuente: Bohr, <i>Las siete iglesias</i>, p. 172; 4TI 91.' },
     { t: 'tf', v: '3:18', f: 'c',
-      q: 'Según Elena de White, el colirio es la sabiduría y la gracia que permiten distinguir el bien del mal y descubrir el pecado.', a: true,
-      e: 'Verdadero: con ese colirio Dios da claridad al entendimiento. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 172 (cita Testimonios para la iglesia, tomo 4, pág. 91).' },
+      q: 'El colirio es la sabiduría y la gracia que permiten distinguir el bien del mal y descubrir el pecado.', a: true,
+      e: 'Verdadero: con ese colirio Dios da claridad al entendimiento. Fuente: Bohr, <i>Las siete iglesias</i>, p. 172; 4TI 91.' },
     { t: 'mc', v: '3:7', f: 'c',
-      q: 'Según las notas de Camilo, ¿qué texto del Antiguo Testamento explica «la llave de David»?',
+      q: '¿Qué texto del Antiguo Testamento explica «la llave de David»?',
       o: ['Isaías 22:20-22', 'Daniel 7:13-14', 'Génesis 32:28', 'Salmo 2:8-9'], a: 0,
-      e: 'Allí Dios pone la llave de la casa de David sobre Eliaquim: abre y nadie cierra. Es autoridad para abrir y cerrar. Fuente: notas de Camilo en Evernote, "10. Apocalipsis - Las 7 iglesias - Filadelfia: La Iglesia reavivada - Parte 1".' },
+      e: 'Allí Dios pone la llave de la casa de David sobre Eliaquim: abre y nadie cierra. Es autoridad para abrir y cerrar. Fuente: apuntes «Filadelfia: la iglesia reavivada».' },
     { t: 'tf', v: '3:5', f: 'c',
       q: 'La Biblia explica la ropa blanca en Apocalipsis 19:8: el lino fino representa las acciones justas de los santos.', a: true,
-      e: 'Verdadero. Por eso las vestiduras blancas de 3:5 y 3:18 son la justicia (Isaías 61:10). Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 170.' },
+      e: 'Verdadero. Por eso las vestiduras blancas de 3:5 y 3:18 son la justicia (Isaías 61:10). Fuente: Bohr, <i>15 principios</i> 2:105; Bohr, <i>Las siete iglesias</i>, p. 170.' },
     { t: 'mc', v: '3:12', f: 'c',
       q: 'En la profecía, ¿qué significa llevar escrito el nombre de Dios?',
       o: ['Pertenecer a Dios y tener su carácter', 'Saber de memoria los nombres de Dios', 'Tener un cargo de pastor en la iglesia', 'Haber nacido en la ciudad de Jerusalén'], a: 0,
-      e: 'El nombre expresa el carácter, y llevar el nombre de alguien indica que se le pertenece (Deuteronomio 28:10). Los 144.000 lo llevan en la frente, que representa la mente (14:1). Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104-105.' },
+      e: 'El nombre expresa el carácter, y llevar el nombre de alguien indica que se le pertenece (Deuteronomio 28:10). Los 144.000 lo llevan en la frente, que representa la mente (14:1). Fuente: Bohr, <i>15 principios</i> 2:104-105.' },
   ],
 
   tarjetas: [

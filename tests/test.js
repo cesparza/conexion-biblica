@@ -79,7 +79,7 @@ ok(esc('Camilo Esparza')==='Camilo Esparza','esc() no daña texto normal');
 // 7. Módulos de repaso
 ok(MODULOS.every(m=>CONT_MODULOS[m.id]&&CONT_MODULOS[m.id].length>=2),'Cada módulo tiene 2+ secciones');
 ok(MODULOS.every(m=>CONT_MODULOS[m.id].every(s=>s.t&&s.h)),'Cada sección de módulo tiene título y cuerpo');
-ok(MODULOS.every(m=>m.cats&&m.cats.length&&m.icono&&m.color),'Cada módulo tiene categorías, icono y color');
+ok(MODULOS.every(m=>(m.prof?m.tema:m.cats&&m.cats.length)&&m.icono&&m.color),'Cada módulo tiene categorías (o su tema, si es de profundizar), icono y color');
 ok(new Set(MODULOS.map(m=>m.id)).size===MODULOS.length,'Los ids de módulo no se repiten');
 ok(!MODULOS.some(m=>CAPS.find(c=>c.id===m.id)),'Ningún id de módulo choca con un id de capítulo');
 
@@ -1208,7 +1208,7 @@ ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slic
    (10-oct): «cuando le doy siguiente, el scroll sube y baja». verCap() llamaba
    a ir(), que subía al principio, y después bajaba animado hasta el capítulo.
    El recorrido con navegador está en tools/en-navegador.js. */
-ok(/ir\('estudio',true\);/.test(APP)&&/if\(!quedarse\)window\.scrollTo\(\{top:0\}\);/.test(APP),
+ok(/ir\('estudio',true\);/.test(APP)&&/if\(!quedarse\)\{/.test(APP),
   'Abrir un capítulo no manda primero la página al principio');
 ok(/if\(abierto\|\|!enEstudio\)llevaA\('detalle',true\);/.test(APP)&&/if\(deUna\)\{el\.scrollIntoView\(\{behavior:'auto',block:'start'\}\);return;\}/.test(APP),
   'Con un capítulo ya abierto, el siguiente se pone en su sitio de una, sin animar');
@@ -1832,8 +1832,11 @@ for(const id of ['nv-est','nv-tj','nv-ex','nv-lg'])
   ok(new RegExp('id="'+id+'"').test(CUERPO),'El nodo '+id+' vive en el HTML, no lo crea el JS');
 ok(!/nv-anillo/.test(CUERPO)&&!/\.nv-ring\{/.test(CSS),
   'No quedo el anillo de progreso, que se descarto por ilegible y por el mask en Safari');
-ok(/function pintaSenales\(\)/.test(js)&&/pintaSenales\(\);\s*if\(!quedarse\)window\.scrollTo/.test(js),
+ok(/function pintaSenales\(\)/.test(js)&&/pintaSenales\(\);\s*if\(!quedarse\)\{/.test(js),
   'pintaSenales() se llama en cada navegacion, dentro de ir()');
+/* v188: cada pestaña recuerda su altura y Estudiar su capítulo abierto. */
+ok(/lugarDe\[antes\]=Math\.round\(window\.scrollY/.test(js)&&/const y=vuelve\?lugarDe\[id\]:0;/.test(js)&&/S\.ultItem=capAbierto/.test(js),
+  'Volver a una pestaña regresa a donde se iba; ir a otra empieza arriba');
 
 /* ───────── modo lectura ─────────
    Es el MISMO texto de VERS, en una capa aparte. Lo que se fija es que no se
@@ -2205,7 +2208,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Las categorías que acepta el servidor son las de las fichas, en el mismo orden');
 
   /* Una ficha mal escrita no pasa. */
-  const TEMAS_P={daniel:[...CAPS,...MODULOS].map(x=>x.id),matutina:[...MATU.MAT_CAPS,...MATU.MAT_MODULOS].map(x=>x.id),
+  const TEMAS_P={daniel:[...CAPS,...MODULOS.filter(x=>!x.prof)].map(x=>x.id),matutina:[...MATU.MAT_CAPS,...MATU.MAT_MODULOS].map(x=>x.id),
     creencias:[...CREC.CR_CAPS,...CREC.CR_MODULOS].map(x=>x.id),
     apocalipsis:require(path.join(RAIZ,'fuente','apocalipsis.js')).AP_CAPS.map(x=>x.id)};
   ok(F.revisa(F.CAMPAMENTOS,TEMAS_P).length===0&&F.sinUsar(F.CAMPAMENTOS,TEMAS_P).length===0,

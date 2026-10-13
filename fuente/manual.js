@@ -429,8 +429,8 @@ const MANUAL = [
     h:`<p>Los capítulos que tienen interpretación muestran arriba dos pestañas:</p>
     <ul><li><strong>Para el examen:</strong> lo que se pregunta en el concurso. Al final, un
     aviso lleva a profundizar.</li>
-    <li><strong>Para profundizar</strong> (color petróleo): lo que significa el capítulo según
-    Stephen Bohr, Elena de White y otros autores adventistas, cómo la Biblia explica sus
+    <li><strong>Para profundizar</strong> (color petróleo): lo que significa el capítulo,
+    cómo la Biblia explica sus
     símbolos y el estudio interactivo cuando lo hay. Cada sección dice de qué libro y página
     sale. <strong>No entra al examen.</strong></li>
     <li>La pestaña que elijas se queda al pasar de capítulo.</li>

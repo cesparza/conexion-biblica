@@ -130,8 +130,8 @@ module.exports = {
     { t: '🧭 ¿Cuándo baja la ciudad? (21:1-2, 21:10)', capa: 'contexto', h:
       hi(`Esto es interpretación, no texto del capítulo. En la lectura adventista, la
       nueva Jerusalén <strong>baja al terminar los mil años</strong>, con Cristo, los
-      redimidos y los ángeles. Elena de White: se asienta en el lugar purificado y
-      preparado, donde estaba el monte de los Olivos (Zacarías 14:4).`) +
+      redimidos y los ángeles. Se asienta en el lugar purificado y preparado,
+      donde estaba el monte de los Olivos (Zacarías 14:4).`) +
       tbl(['Orden', 'Qué pasa', 'Dónde se lee'], [
         ['1', 'Cristo vuelve y los impíos resucitan', '20:5'],
         ['2', 'La ciudad baja del cielo', '21:2; 21:10'],
@@ -139,33 +139,32 @@ module.exports = {
         ['4', 'Fuego de Dios los consume', '20:9'],
         ['5', 'Cielo nuevo y tierra nueva', '21:1'],
       ]) +
-      wa(`Bohr: por eso 21:2 pasa <strong>antes</strong> que 21:1. El versículo 21:1
-      en realidad cierra el capítulo 20 (la división de capítulos la pusieron
-      después), y 21:2 empieza el último ciclo, el de Dios con su pueblo. Bohr nota que
-      allí, por primera vez en estos ciclos, la ciudad recibe su nombre: «la nueva
+      wa(`Por eso 21:2 pasa <strong>antes</strong> que 21:1. El versículo 21:1 en
+      realidad cierra el capítulo 20 (la división de capítulos la pusieron
+      después), y 21:2 empieza el último ciclo, el de Dios con su pueblo. Allí, por
+      primera vez en estos ciclos, la ciudad recibe su nombre: «la nueva
       Jerusalén».`) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. 531; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 79.</p>` },
+      `<p>Fuente: CS 720-721; Bohr, <i>15 principios</i> 2:79.</p>` },
 
     { t: '🧭 Esta misma tierra, hecha nueva (21:1)', capa: 'contexto', h:
-      hi(`Elena de White: «El fuego que consume a los impíos purifica la tierra».
+      hi(`«El fuego que consume a los impíos purifica la tierra» (CS 732).
       Desaparece todo rastro de la maldición, y ningún infierno que arda para
       siempre quedará recordando el pecado.`) +
       li([`<strong>«Nuevo»</strong> traduce el griego <em>kainos</em>: nuevo en
            calidad, no en origen. Es este planeta, purificado y restaurado
-           (2 Pedro 3:10-13). (Escuela Sabática 2019.)`,
-          `<strong>«El mar ya no existía más»</strong>: la misma lección piensa que
-           Juan recordaba el mar de Patmos, que lo separaba de los suyos; en la
-           tierra nueva no hay más separación.`,
-          `Elena de White advierte contra <strong>espiritualizar</strong> la
-           herencia: la tierra será la morada eterna de los redimidos (Salmo 37:29;
-           Isaías 45:18).`,
-          `Bohr: así se cumplen las dos promesas, ir con Jesús a la casa del Padre
+           (2 Pedro 3:10-13).`,
+          `<strong>«El mar ya no existía más»</strong>: Juan quizá recordaba el mar
+           de Patmos, que lo separaba de los suyos; en la tierra nueva no hay más
+           separación.`,
+          `La herencia no se debe <strong>espiritualizar</strong>: la tierra será
+           la morada eterna de los redimidos (Salmo 37:29; Isaías 45:18).`,
+          `Así se cumplen las dos promesas, ir con Jesús a la casa del Padre
            (Juan 14:3) y heredar la tierra (Mateo 5:5): mil años en el cielo y
            después la tierra nueva como hogar para siempre.`]) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 539-540; Escuela Sabática 2019-1T, lección 13, pág. 94; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 81; Stephen Bohr, El calendario religioso hebreo, pág. 253.</p>` },
+      `<p>Fuente: CS 732-733; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 94; Bohr, <i>15 principios</i> 2:81; Bohr, <i>El calendario religioso hebreo</i>, p. 253.</p>` },
 
     { t: '🧭 «El tabernáculo de Dios está ahora con los hombres» (21:3-4)', capa: 'contexto', h:
-      hi(`Bohr ve aquí el <strong>último paso del santuario</strong>: Jesús vuelve al
+      hi(`Aquí está el <strong>último paso del santuario</strong>: Jesús vuelve al
       «campamento» para vivir con su pueblo para siempre (21:2-4). El Apocalipsis
       presenta a Jesús en este orden:`) +
       tbl(['Función', 'Dónde'], [
@@ -175,81 +174,80 @@ module.exports = {
         ['<strong>Rey</strong>', '19:11-14 y capítulos 21-22'],
       ]) +
       li([`«Tabernáculo» recuerda la <strong>Fiesta de los Tabernáculos</strong>.
-           Bohr: Jesús ya «tabernaculó» entre nosotros (Juan 1:14); ahora Dios
-           habitará con su pueblo para siempre.`,
-          `Escuela Sabática 2019: la <strong>presencia de Dios</strong> es la que
-           quita el dolor y la muerte. Marta lo sabía: «Señor, si hubieses estado
-           aquí, mi hermano no habría muerto» (Juan 11:21).`]) +
-      `<p>Fuentes: Stephen Bohr, El Santuario en Apocalipsis, págs. 2 y 8; Stephen Bohr, El calendario religioso hebreo, pág. 255; Escuela Sabática 2019-1T, lección 13, pág. 94.</p>` },
+           Jesús ya «tabernaculó» entre nosotros (Juan 1:14); ahora Dios habitará
+           con su pueblo para siempre.`,
+          `La <strong>presencia de Dios</strong> es la que quita el dolor y la
+           muerte. Marta lo sabía: «Señor, si hubieses estado aquí, mi hermano no
+           habría muerto» (Juan 11:21).`]) +
+      `<p>Fuente: Bohr, <i>El Santuario en Apocalipsis</i>, p. 2 y 8; Bohr, <i>El calendario religioso hebreo</i>, p. 255; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 94.</p>` },
 
     { t: '🧭 La esposa: una ciudad para los fieles de todos los tiempos (21:9-14)', capa: 'contexto', h:
       hi(`El ángel dice «te mostraré la desposada, la esposa del Cordero» (21:9), y lo
-      que le muestra es <strong>la ciudad</strong> (21:10). Elena de White: «la
-      Esposa representa la ciudad santa», y los fieles son los invitados a las
-      bodas (19:9).`) +
-      li([`Bohr: en las puertas están los nombres de las <strong>doce
-           tribus</strong> (21:12) y en los cimientos los de los <strong>doce
-           apóstoles</strong> (21:14). Es <strong>una sola ciudad</strong> para los
-           fieles del Antiguo y del Nuevo Testamento. Abraham ya la esperaba
-           (Hebreos 11:10).`,
-          `Bohr: es la <strong>vuelta al Edén</strong>. Adán fue echado por la
-           puerta del huerto y había ángeles guardando la entrada; ahora hay ángeles en
+      que le muestra es <strong>la ciudad</strong> (21:10). «La Esposa representa
+      la ciudad santa» (CS 479), y los fieles son los invitados a las bodas
+      (19:9).`) +
+      li([`En las puertas están los nombres de las <strong>doce tribus</strong>
+           (21:12) y en los cimientos los de los <strong>doce apóstoles</strong>
+           (21:14). Es <strong>una sola ciudad</strong> para los fieles del
+           Antiguo y del Nuevo Testamento. Abraham ya la esperaba (Hebreos
+           11:10).`,
+          `Es la <strong>vuelta al Edén</strong>. Adán fue echado por la puerta
+           del huerto y había ángeles guardando la entrada; ahora hay ángeles en
            las puertas, pero para dejar entrar a los fieles (21:12).`,
-          `Escuela Sabática 2019: tres puertas a cada lado permiten entrar desde
-           cualquier dirección; la ciudad es para gente de todo el mundo.`]) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. 350; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 121 y 159; Escuela Sabática 2019-1T, lección 13, pág. 95.</p>` },
+          `Tres puertas a cada lado permiten entrar desde cualquier dirección; la
+           ciudad es para gente de todo el mundo.`]) +
+      `<p>Fuente: CS 479; Bohr, <i>Tres ángeles</i> 2:121 y 159; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 95.</p>` },
 
     { t: '🧭 Un cubo como el lugar santísimo, y sin templo (21:16, 21:22)', capa: 'contexto', h:
       hi(`«La longitud, la altura y la anchura de ella son iguales» (21:16): la ciudad
-      es un <strong>cubo</strong>. La Escuela Sabática 2019 recuerda que el
-      <strong>lugar santísimo</strong> del templo de Salomón también era un cubo
-      (1 Reyes 6:20). La ciudad entera es el lugar donde se adora a Dios.<br><br>
+      es un <strong>cubo</strong>. El <strong>lugar santísimo</strong> del templo
+      de Salomón también era un cubo (1 Reyes 6:20). La ciudad entera es el lugar
+      donde se adora a Dios.<br><br>
       Por eso no hace falta templo: «el Señor Dios Todopoderoso es su templo, y el
-      Cordero» (21:22). Elena de White: el pueblo de Dios tendrá «comunión directa
-      con el Padre y el Hijo», y lo verá cara a cara (1 Corintios 13:12).`) +
+      Cordero» (21:22). El pueblo de Dios tendrá «comunión directa con el Padre y
+      el Hijo» (CS 735), y lo verá cara a cara (1 Corintios 13:12).`) +
       wa(`Es un lugar <strong>real</strong>, habitado por gente real, pero las
       palabras humanas no alcanzan para describirlo: son «cosas que ojo no vio»
       (1 Corintios 2:9).`) +
-      `<p>Fuentes: Escuela Sabática 2019-1T, lección 13, pág. 95; Elena de White, El conflicto de los siglos, págs. 540 y 542.</p>` },
+      `<p>Fuente: <i>Escuela Sabática</i> 2019-1T, lección 13, p. 95; CS 733 y 735.</p>` },
 
     { t: '🧭 Sin necesidad de sol ni de luna, pero con meses y sábados (21:23-25)', capa: 'contexto', h:
-      hi(`Bohr se fija en las palabras exactas: el texto no dice que el sol y la luna
-      dejarán de existir. Dice que «la ciudad no tiene necesidad de sol ni de luna»
-      (21:23), porque la gloria de Dios brilla más. Lo mismo anuncia Isaías 24:23:
-      la luna se avergonzará y el sol se confundirá cuando Dios reine en Sion.`) +
+      hi(`Hay que fijarse en las palabras exactas: el texto no dice que el sol y la
+      luna dejarán de existir. Dice que «la ciudad no tiene necesidad de sol ni de
+      luna» (21:23), porque la gloria de Dios brilla más. Lo mismo anuncia Isaías
+      24:23: la luna se avergonzará y el sol se confundirá cuando Dios reine en
+      Sion.`) +
       li([`Habrá <strong>meses</strong>: el árbol de la vida da fruto «cada mes»
            (22:2).`,
           `Habrá <strong>sábados</strong>: «de mes en mes, y de día de reposo en día
            de reposo, vendrán todos a adorar delante de mí» (Isaías 66:22-23).`,
-          `Bohr: el sol, la luna y las estrellas, movidos de su lugar en la venida,
+          `El sol, la luna y las estrellas, movidos de su lugar en la venida,
            vuelven a su lugar cuando Dios hace cielos nuevos y tierra nueva.`,
-          `Elena de White: en la ciudad «no habrá ya más noche»; es una luz que
-           supera al sol sin deslumbrar.`]) +
-      `<p>Fuentes: Stephen Bohr, El calendario religioso hebreo, pág. 84; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 80; Stephen Bohr, ¿Cuán cerca al fin?, págs. 210-211; Elena de White, El conflicto de los siglos, págs. 541-542.</p>` },
+          `En la ciudad no habrá más noche; es una luz que supera al sol sin
+           deslumbrar.`]) +
+      `<p>Fuente: Bohr, <i>El calendario religioso hebreo</i>, p. 84; Bohr, <i>15 principios</i> 2:80; Bohr, <i>¿Cuán cerca al fin?</i>, p. 210-211; CS 734-736.</p>` },
 
     { t: '🧭 Quiénes entran y quiénes quedan fuera (21:7-8, 21:27)', capa: 'contexto', h:
-      hi(`Bohr: en este último ciclo se ve <strong>qué decían los libros</strong> que
+      hi(`En este último ciclo se ve <strong>qué decían los libros</strong> que
       condenaron a los impíos (20:12). La lista de 21:8 (y la de 22:15) es la de los
       <strong>mandamientos</strong> quebrantados:`) +
-      tbl(['En la lista', 'Mandamiento, según Bohr'], [
+      tbl(['En la lista', 'Mandamiento'], [
         ['Hechiceros', '1.º · otros dioses'],
         ['Idólatras', '2.º · imágenes'],
         ['Homicidas', '6.º · no matarás'],
         ['Fornicarios', '7.º · no cometerás adulterio'],
         ['Mentirosos', '9.º · no hablarás falso testimonio'],
       ]) +
-      li([`«El vencedor heredará todas las cosas» (21:7). Bohr: el verbo griego
+      li([`«El vencedor heredará todas las cosas» (21:7). El verbo griego
            (<em>nikao</em>) describe al que <strong>sigue venciendo</strong>, una
            lucha que continúa hasta la victoria.`,
           `Solo entran «los que están inscritos en el libro de la vida del
-           Cordero» (21:27). Bohr: para ver a Dios hay que ser limpio de corazón
-           (Mateo 5:8), y el que tiene esta esperanza «se purifica a sí mismo»
-           (1 Juan 3:3), guardando la Palabra en el corazón (Salmo 119:11).`]) +
-      `<p>Fuentes: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 121-122; Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. 80-81; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 52.</p>` },
+           Cordero» (21:27). Para ver a Dios hay que ser limpio de corazón (Mateo
+           5:8), y el que tiene esta esperanza «se purifica a sí mismo» (1 Juan
+           3:3), guardando la Palabra en el corazón (Salmo 119:11).`]) +
+      `<p>Fuente: Bohr, <i>Tres ángeles</i> 2:121-122; Bohr, <i>15 principios</i> 2:80-81; Bohr, <i>Las siete iglesias</i>, p. 52.</p>` },
 
     { t: '🧭 Cómo será la vida allí (21:4-5)', capa: 'contexto', h:
-      hi(`Elena de White describe la tierra nueva al final de «El conflicto de los
-      siglos»:`) +
       li([`Los redimidos tendrán casas y viñas (Isaías 65:21-22): una vida real;
            construirán y plantarán.`,
           `Conocerán «como son conocidos»: amistad con los ángeles y con los fieles
@@ -258,9 +256,10 @@ module.exports = {
           `Cuanto más conozcan a Dios, más lo admirarán y lo amarán.`,
           `Del pecado quedará <strong>una sola huella</strong>: las marcas de la
            crucifixión en las manos, los pies y el costado de Jesús.`]) +
-      wa(`Así termina el libro: «El gran conflicto ha terminado. Ya no hay más
-      pecado ni pecadores», y toda la creación declara «que Dios es amor».`) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, págs. 540-543.</p>` },
+      wa(`Así termina la historia: «El gran conflicto ha terminado. Ya no hay más
+      pecado ni pecadores» (CS 737), y toda la creación declara que Dios es
+      amor.`) +
+      `<p>Fuente: CS 732-737.</p>` },
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Esposa del Cordero', 'La santa ciudad', '«te mostraré la desposada, la esposa del Cordero» (21:9) y le muestra «la santa Jerusalén» (21:10)'],
@@ -271,7 +270,7 @@ module.exports = {
         ['Cordero', 'Jesucristo', 'Juan 1:29; Apocalipsis 5:6, 9'],
         ['Agua de la vida', 'La vida que Dios da gratis', 'Juan 4:13-14; Isaías 55:1. En la ciudad será un río real (22:1)'],
       ]) +
-      `<p>Fuentes: Elena de White, El conflicto de los siglos, pág. PDF 350; Stephen Bohr, 15 principios de interpretación profética, vol. 2, págs. PDF 80 y 106; Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. PDF 159; Stephen Bohr, El calendario religioso hebreo, pág. PDF 255; Escuela Sabática 2019-1T, lección 13, pág. PDF 95.</p>` },
+      `<p>Fuente: CS 479; Bohr, <i>15 principios</i> 2:80 y 106; Bohr, <i>Tres ángeles</i> 2:159; Bohr, <i>El calendario religioso hebreo</i>, p. 255; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 95.</p>` },
   ],
 
   preguntas: [
@@ -438,85 +437,85 @@ module.exports = {
     { t: 'mc', v: '21:2', f: 'c',
       q: 'En la lectura adventista, ¿cuándo desciende la santa ciudad, la nueva Jerusalén, a la tierra?',
       o: ['Al terminar los mil años', 'En la segunda venida de Jesús', 'Al comenzar los mil años', 'Nunca: se queda en el cielo'], a: 0,
-      e: 'Baja al final de los mil años y se asienta donde estaba el monte de los Olivos; después los impíos la rodean (20:9). El texto solo dice que Juan la vio «descender del cielo, de parte de Dios» (21:2). Fuentes: Elena de White, El conflicto de los siglos, pág. 531; Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 79.' },
+      e: 'Baja al final de los mil años y se asienta donde estaba el monte de los Olivos; después los impíos la rodean (20:9). El texto solo dice que Juan la vio «descender del cielo, de parte de Dios» (21:2). Fuente: CS 720-721; Bohr, 15 principios 2:79.' },
     { t: 'tf', v: '21:1', f: 'c',
-      q: 'Según Bohr, lo que cuenta 21:1 (el cielo nuevo y la tierra nueva) ocurre antes que lo de 21:2 (la ciudad que desciende).', a: false,
-      e: 'Falso: para Bohr 21:2 pasa antes, porque los impíos rodean una ciudad que ya está en la tierra (20:9); 21:1 en realidad cierra el capítulo 20. Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. 79.' },
+      q: 'Lo que cuenta 21:1 (el cielo nuevo y la tierra nueva) ocurre antes que lo de 21:2 (la ciudad que desciende).', a: false,
+      e: 'Falso: 21:2 pasa antes, porque los impíos rodean una ciudad que ya está en la tierra (20:9); 21:1 en realidad cierra el capítulo 20. Fuente: Bohr, 15 principios 2:79.' },
     { t: 'mc', v: '21:1', f: 'c',
       q: 'En la interpretación adventista, ¿dónde vivirán para siempre los redimidos?',
       o: ['En esta tierra, hecha nueva por Dios', 'En el cielo, lejos de toda tierra', 'En un lugar solo espiritual, sin cuerpo', 'En la Jerusalén que hoy existe'], a: 0,
-      e: 'Dios purifica esta tierra y la hace el hogar eterno: «Los justos heredarán la tierra» (Salmo 37:29). El texto dice que Juan vio «un cielo nuevo y una tierra nueva» (21:1). Fuente: Elena de White, El conflicto de los siglos, pág. 540.' },
+      e: 'Dios purifica esta tierra y la hace el hogar eterno: «Los justos heredarán la tierra» (Salmo 37:29). El texto dice que Juan vio «un cielo nuevo y una tierra nueva» (21:1). Fuente: CS 733.' },
     { t: 'mc', v: '21:1', f: 'c',
-      q: 'Según Elena de White, ¿qué hace con la tierra el fuego que consume a los impíos?',
+      q: '¿Qué hace con la tierra el fuego que consume a los impíos?',
       o: ['La purifica', 'La deja ardiendo para siempre', 'La convierte en desierto eterno', 'La hace desaparecer del universo'], a: 0,
-      e: '«El fuego que consume a los impíos purifica la tierra»; no queda un infierno que arda para siempre. Fuente: Elena de White, El conflicto de los siglos, págs. 539-540.' },
+      e: '«El fuego que consume a los impíos purifica la tierra»; no queda un infierno que arda para siempre. Fuente: CS 731-732.' },
     { t: 'mc', v: '21:1', f: 'c',
-      q: 'En la interpretación adventista (Escuela Sabática 2019), ¿qué significa «nuevo» (en griego kainos) en «una tierra nueva»?',
+      q: '¿Qué significa «nuevo» (en griego kainos) en «una tierra nueva»?',
       o: ['Nuevo en calidad, no en origen', 'Creado otra vez desde la nada', 'Un planeta distinto, en otro lugar', 'Nuevo solo en sentido espiritual'], a: 0,
-      e: 'Kainos es algo nuevo en calidad: este mismo planeta, purificado por el fuego y restaurado (2 Pedro 3:10-13). Fuente: Escuela Sabática 2019-1T, lección 13, pág. 94.' },
+      e: 'Kainos es algo nuevo en calidad: este mismo planeta, purificado por el fuego y restaurado (2 Pedro 3:10-13). Fuente: Escuela Sabática 2019-1T, lección 13, p. 94.' },
     { t: 'tf', v: '21:1', f: 'c',
-      q: 'En la interpretación adventista (Escuela Sabática 2019), «el mar ya no existía más» se relaciona con el fin de la separación, como el mar que separaba a Juan de los suyos en Patmos.', a: true,
-      e: 'Verdadero: la lección piensa que Juan tenía en mente el mar de Patmos, símbolo de separación y sufrimiento. Fuente: Escuela Sabática 2019-1T, lección 13, pág. 94.' },
+      q: '«El mar ya no existía más» se puede relacionar con el fin de la separación, como el mar que separaba a Juan de los suyos en Patmos.', a: true,
+      e: 'Verdadero: Juan quizá tenía en mente el mar de Patmos, símbolo de separación y sufrimiento. Fuente: Escuela Sabática 2019-1T, lección 13, p. 94.' },
     { t: 'mc', v: '21:3', f: 'c',
-      q: 'Según Bohr, ¿qué último paso de la obra de Jesús en el santuario muestra Apocalipsis 21:2-4?',
+      q: '¿Qué último paso de la obra de Jesús en el santuario muestra Apocalipsis 21:2-4?',
       o: ['Volver al campamento a vivir con su pueblo', 'Entrar al lugar santísimo para el juicio', 'Ofrecerse en el altar del sacrificio', 'Interceder en el lugar santo por todos'], a: 0,
-      e: 'Después del juicio y del castigo de Azazel, Jesús «regresa al campamento de los santos para habitar con ellos para siempre». Fuente: Stephen Bohr, El Santuario en Apocalipsis, págs. 2 y 8.' },
+      e: 'Después del juicio y del castigo de Azazel, Jesús regresa al campamento de los santos para habitar con ellos para siempre. Fuente: Bohr, El Santuario en Apocalipsis, p. 2 y 8.' },
     { t: 'mc', v: '21:3', f: 'c',
-      q: 'Según Bohr, ¿en qué orden presenta el Apocalipsis las funciones de Jesús?',
+      q: '¿En qué orden presenta el Apocalipsis las funciones de Jesús?',
       o: ['Cordero, Sacerdote, Juez y Rey', 'Rey, Juez, Sacerdote y Cordero', 'Sacerdote, Cordero, Rey y Juez', 'Juez, Cordero, Rey y Sacerdote'], a: 0,
-      e: 'Cordero inmolado (1:5), Sumo sacerdote (capítulos 4 a 11), Juez (11:19 al capítulo 20) y Rey (19:11-14; capítulos 21-22). Fuente: Stephen Bohr, El Santuario en Apocalipsis, pág. 8.' },
+      e: 'Cordero inmolado (1:5), Sumo sacerdote (capítulos 4 a 11), Juez (11:19 al capítulo 20) y Rey (19:11-14; capítulos 21-22). Fuente: Bohr, El Santuario en Apocalipsis, p. 8.' },
     { t: 'mc', v: '21:4', f: 'c',
       q: 'En la lectura adventista, ¿qué significa que no habrá más muerte ni dolor (Apocalipsis 21:4)?',
       o: ['Que el pecado termina para siempre y no vuelve', 'Que solo los ángeles quedan libres del dolor', 'Que el dolor vuelve después de otros mil años', 'Que la muerte pasa a ser solo un sueño corto'], a: 0,
-      e: '«El gran conflicto ha terminado. Ya no hay más pecado ni pecadores». El texto dice que no habrá más muerte, llanto, clamor ni dolor «porque las primeras cosas ya pasaron» (21:4). Fuente: Elena de White, El conflicto de los siglos, pág. 543.' },
+      e: '«El gran conflicto ha terminado. Ya no hay más pecado ni pecadores». El texto dice que no habrá más muerte, llanto, clamor ni dolor «porque las primeras cosas ya pasaron» (21:4). Fuente: CS 737.' },
     { t: 'tf', v: '21:4', f: 'c',
-      q: 'Según Elena de White, en la tierra nueva quedará una sola huella del pecado: las marcas de la crucifixión en Jesús.', a: true,
-      e: 'Verdadero: en su cabeza, su costado, sus manos y sus pies se verán «las únicas huellas» del pecado, y serán su mayor honor. Fuente: Elena de White, El conflicto de los siglos, pág. 540.' },
+      q: 'En la tierra nueva quedará una sola huella del pecado: las marcas de la crucifixión en Jesús.', a: true,
+      e: 'Verdadero: en su cabeza, su costado, sus manos y sus pies se verán «las únicas huellas» del pecado, y serán su mayor honor. Fuente: CS 732.' },
     { t: 'mc', v: '21:9', f: 'c',
-      q: 'Según Elena de White, ¿qué muestra Apocalipsis 21:9-10 sobre la esposa del Cordero?',
+      q: '¿Qué muestra Apocalipsis 21:9-10 sobre la esposa del Cordero?',
       o: ['Que la esposa es la ciudad santa', 'Que la esposa es el ángel de las copas', 'Que la esposa son los veinticuatro ancianos', 'Que la esposa es un monte grande y alto'], a: 0,
-      e: 'El ángel promete mostrar «la esposa del Cordero» y le muestra la ciudad: «la Esposa representa la ciudad santa». Fuente: Elena de White, El conflicto de los siglos, pág. 350.' },
+      e: 'El ángel promete mostrar «la esposa del Cordero» y le muestra la ciudad: «la Esposa representa la ciudad santa». Fuente: CS 479.' },
     { t: 'mc', v: '21:12', f: 'c',
-      q: 'Según Bohr, ¿qué enseñan los nombres de las doce tribus (en las puertas) y de los doce apóstoles (en los cimientos)?',
+      q: '¿Qué enseñan los nombres de las doce tribus (en las puertas) y de los doce apóstoles (en los cimientos)?',
       o: ['Una sola ciudad para los fieles de todos los tiempos', 'Que solo entran los descendientes de Israel', 'Que cada tribu tendrá su propia ciudad', 'Que los apóstoles reemplazan a las tribus'], a: 0,
-      e: 'Dios tiene una sola ciudad, compuesta por los santos de las dos épocas (Antiguo y Nuevo Testamento). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 159.' },
+      e: 'Dios tiene una sola ciudad, compuesta por los santos de las dos épocas (Antiguo y Nuevo Testamento). Fuente: Bohr, Tres ángeles 2:159.' },
     { t: 'tf', v: '21:12', f: 'c',
-      q: 'Según Bohr, los ángeles de las puertas recuerdan al Edén, donde había ángeles guardando la entrada; pero en la ciudad dejan entrar a los fieles.', a: true,
-      e: 'Verdadero: es la vuelta al Génesis: los que guardan los mandamientos entran por las puertas y comen del árbol de la vida (21:12; 22:14). Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, pág. 121.' },
+      q: 'Los ángeles de las puertas recuerdan al Edén, donde había ángeles guardando la entrada; pero en la ciudad dejan entrar a los fieles.', a: true,
+      e: 'Verdadero: es la vuelta al Génesis: los que guardan los mandamientos entran por las puertas y comen del árbol de la vida (21:12; 22:14). Fuente: Bohr, Tres ángeles 2:121.' },
     { t: 'mc', v: '21:16', f: 'c',
-      q: 'En la interpretación adventista (Escuela Sabática 2019), ¿qué recuerda la ciudad con largo, ancho y alto iguales?',
+      q: '¿Qué recuerda la ciudad con largo, ancho y alto iguales?',
       o: ['El lugar santísimo del templo', 'La torre de Babel en Sinar', 'El arca de Noé sobre las aguas', 'El altar de bronce del atrio'], a: 0,
-      e: 'El lugar santísimo era un cubo perfecto (1 Reyes 6:20); la ciudad entera es el centro de la adoración a Dios. Fuente: Escuela Sabática 2019-1T, lección 13, pág. 95.' },
+      e: 'El lugar santísimo era un cubo perfecto (1 Reyes 6:20); la ciudad entera es el centro de la adoración a Dios. Fuente: Escuela Sabática 2019-1T, lección 13, p. 95.' },
     { t: 'mc', v: '21:22', f: 'c',
-      q: 'Según Elena de White, ¿qué privilegio tendrá el pueblo de Dios en una ciudad sin templo?',
+      q: '¿Qué privilegio tendrá el pueblo de Dios en una ciudad sin templo?',
       o: ['Comunión directa con el Padre y el Hijo', 'Un sacerdote para cada familia', 'Un altar de oro en cada casa', 'Un sacrificio cada día de reposo'], a: 0,
-      e: 'Sin templo, el pueblo de Dios lo ve cara a cara, «sin velo que nos lo oculte». El texto: «el Señor Dios Todopoderoso es su templo, y el Cordero» (21:22). Fuente: Elena de White, El conflicto de los siglos, pág. 542.' },
+      e: 'Sin templo, el pueblo de Dios lo ve cara a cara, «sin velo que nos lo oculte». El texto: «el Señor Dios Todopoderoso es su templo, y el Cordero» (21:22). Fuente: CS 735.' },
     { t: 'tf', v: '21:23', f: 'c',
-      q: 'Según Bohr, Apocalipsis 21:23 enseña que en la tierra nueva ya no existirán el sol ni la luna.', a: false,
-      e: 'Falso: el texto dice que la ciudad «no tiene necesidad» de ellos; habrá meses y sábados (22:2; Isaías 66:22-23). Fuente: Stephen Bohr, El calendario religioso hebreo, pág. 84.' },
+      q: 'Apocalipsis 21:23 enseña que en la tierra nueva ya no existirán el sol ni la luna.', a: false,
+      e: 'Falso: el texto dice que la ciudad «no tiene necesidad» de ellos; habrá meses y sábados (22:2; Isaías 66:22-23). Fuente: Bohr, El calendario religioso hebreo, p. 84.' },
     { t: 'mc', v: '21:25', f: 'c',
-      q: 'Según Bohr, ¿con qué ritmo se adorará a Dios en la tierra nueva, según Isaías 66:22-23?',
+      q: '¿Con qué ritmo se adorará a Dios en la tierra nueva, según Isaías 66:22-23?',
       o: ['De mes en mes y de sábado en sábado', 'Solo una vez al año, en una gran fiesta', 'Cada siete años, en el año del jubileo', 'Sin días ni meses, en un tiempo sin fin'], a: 0,
-      e: '«De mes en mes, y de día de reposo en día de reposo, vendrán todos a adorar delante de mí». Fuentes: Stephen Bohr, El calendario religioso hebreo, pág. 84; Stephen Bohr, Gemas de la verdad presente, pág. 110.' },
+      e: '«De mes en mes, y de día de reposo en día de reposo, vendrán todos a adorar delante de mí». Fuente: Bohr, El calendario religioso hebreo, p. 84; Bohr, Gemas de la verdad presente, p. 110.' },
     { t: 'mc', v: '21:8', f: 'c',
-      q: 'Según Bohr, ¿con qué se corresponde la lista de 21:8 (homicidas, fornicarios, hechiceros, idólatras, mentirosos)?',
+      q: '¿Con qué se corresponde la lista de 21:8 (homicidas, fornicarios, hechiceros, idólatras, mentirosos)?',
       o: ['Con mandamientos de la ley de Dios', 'Con las siete plagas postreras', 'Con las siete iglesias de Asia', 'Con los doce cimientos del muro'], a: 0,
-      e: 'Son transgresores de los mandamientos (1.º, 2.º, 6.º, 7.º y 9.º); dentro de la ciudad están los que los guardan. Fuente: Stephen Bohr, El mensaje de los tres ángeles, tomo 2, págs. 121-122.' },
+      e: 'Son transgresores de los mandamientos (1.º, 2.º, 6.º, 7.º y 9.º); dentro de la ciudad están los que los guardan. Fuente: Bohr, Tres ángeles 2:121-122.' },
     { t: 'mc', v: '21:7', f: 'c',
-      q: 'Según Bohr, ¿qué describe el verbo griego «vencer» (nikao) en promesas como «El vencedor heredará todas las cosas» (21:7)?',
+      q: '¿Qué describe el verbo griego «vencer» (nikao) en promesas como «El vencedor heredará todas las cosas» (21:7)?',
       o: ['Una lucha continua que acaba en victoria', 'Un solo triunfo que basta para siempre', 'Derrotar a otros pueblos en la guerra', 'Haber nacido en una familia fiel'], a: 0,
-      e: 'Es un participio presente: «el que continúa ganando la victoria». Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 52.' },
+      e: 'Es un participio presente: el que sigue ganando la victoria. Fuente: Bohr, Las siete iglesias, p. 52.' },
     { t: 'mc', v: '21:6', f: 'c',
-      q: 'Según Bohr, ¿cómo se relaciona el agua de vida que se bebe hoy (Juan 4:13-14) con la de la ciudad (21:6)?',
+      q: '¿Cómo se relaciona el agua de vida que se bebe hoy (Juan 4:13-14) con la de la ciudad (21:6)?',
       o: ['Hoy se bebe por la fe; allí será un río real', 'Las dos son solo un símbolo', 'Hoy es real; allí será un símbolo', 'No tienen ninguna relación'], a: 0,
-      e: '«Aun ahora podemos beber espiritualmente… Pero en la ciudad beberemos agua literal de un río literal». Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 80.' },
+      e: 'Aun ahora se puede beber espiritualmente; pero en la ciudad se beberá agua literal de un río literal (22:1). Fuente: Bohr, 15 principios 2:80.' },
     { t: 'mc', v: '21:2', f: 'c',
-      q: 'Según Bohr, ¿qué textos muestran que «Jerusalén» en la profecía es el pueblo y la ciudad de Dios, no un lugar de Palestina?',
+      q: '¿Qué textos muestran que «Jerusalén» en la profecía es el pueblo y la ciudad de Dios, no un lugar de Palestina?',
       o: ['Gálatas 4 y Hebreos 12:22-24', 'Génesis 11 y Daniel 4', 'Jonás 3 y Nahúm 1', 'Ester 1 y Nehemías 2'], a: 0,
-      e: 'Bohr pone a Israel y Jerusalén entre los lugares simbólicos de la profecía (Gálatas 3:29; 4; Romanos 9:6-8; Hebreos 12:22-24). Fuente: Stephen Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 106.' },
+      e: 'Israel y Jerusalén están entre los lugares simbólicos de la profecía (Gálatas 3:29; 4; Romanos 9:6-8; Hebreos 12:22-24). Fuente: Bohr, 15 principios 2:106.' },
     { t: 'tf', v: '21:3', f: 'c',
-      q: 'Según Bohr, la palabra «tabernáculo» de 21:3 recuerda que Jesús ya habitó entre nosotros (Juan 1:14) y que ahora Dios vivirá con su pueblo para siempre.', a: true,
-      e: 'Verdadero: en su primera venida Jesús «tabernaculó» entre nosotros; en la tierra nueva Dios será el tabernáculo con su pueblo. Fuente: Stephen Bohr, El calendario religioso hebreo, pág. PDF 255.' },
+      q: 'La palabra «tabernáculo» de 21:3 recuerda que Jesús ya habitó entre nosotros (Juan 1:14) y que ahora Dios vivirá con su pueblo para siempre.', a: true,
+      e: 'Verdadero: en su primera venida Jesús «tabernaculó» entre nosotros; en la tierra nueva Dios será el tabernáculo con su pueblo. Fuente: Bohr, El calendario religioso hebreo, p. 255.' },
   ],
 
   tarjetas: [

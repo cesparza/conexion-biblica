@@ -79,7 +79,9 @@ let f=0; const ok=(c,m)=>{console.log((c?'✅':'❌')+' '+m); if(!c)f++;};
 // Aventureros
 A.ponCat('av');
 ok(A.capsDe().length===7,'Aventureros ve 7 capítulos');
-ok(A.modsDe().length===9,'Aventureros ve 9 módulos de repaso ('+A.modsDe().length+')');
+const repA=A.modsDe().filter(m=>!m.prof);
+ok(repA.length===9,'Aventureros ve 9 módulos de repaso ('+repA.length+')');
+ok(A.modsDe().filter(m=>m.prof).map(m=>m.id).join()==='m-glosario,m-simbolos,m-comparar','v188: y los tres de «Para profundizar» (glosario, símbolos y la comparación)');
 /* PISO, no cifra exacta: la cuenta sube cada vez que se agregan tarjetas y
    una igualdad obliga a editar la prueba en cada tanda de contenido. Lo que
    de verdad hay que cazar es que se PIERDAN tarjetas. */
@@ -98,7 +100,7 @@ A.ponCat('gm');
    (cats:['gm'], extra:['gm']), asi que el conteo de capitulos sube a 13
    aunque Daniel 7 no entre al examen de nadie (extra lo saca del pool). */
 ok(capsCampamento().length===18,'Guías Mayores ve 18 capítulos del campamento (12 del alcance original + Daniel 7 a 12)');
-ok(A.modsDe().length===11,'Guías Mayores ve 11 módulos');
+ok(A.modsDe().filter(m=>!m.prof).length===11,'Guías Mayores ve 11 módulos');
 ok(A.tarjetasDe().length>=126,'Guías Mayores: '+A.tarjetasDe().length+' tarjetas (piso 126)');
 
 // buscaItem resuelve ambos tipos
@@ -1302,7 +1304,7 @@ ok(N.el('nv-lg').hidden,'Con errores, Logros sigue sin globito: el pendiente se 
 
 /* Progreso: promedia capitulos Y repasos. Promediar solo capitulos daria 100%
    con los repasos sin leer, y la insignia «Lector completo» exige los dos. */
-const items=[...N.capsDe(),...N.modsDe()];
+const items=[...N.capsDe(),...N.modsDe().filter(m=>!m.prof)];
 N.avanza(items[0].id,100);
 N.pintaSenales();
 const esperado=Math.round(items.reduce((a,c)=>a+Math.min(100,N.S().prog[c.id]||0),0)/items.length);
@@ -3156,13 +3158,19 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const Z=montar(`verCap, ponCat, modsDe, poolDe, refrescaEx, cambiaInterp, cambiaFuente, el:id=>document.getElementById(id), get soloInterp(){return soloInterp}, set alc(v){alcance=v}`,{});
   Z.ponCat('apme');
   ok(!Z.modsDe().some(m=>/^m-interp-/.test(m.id)),'La interpretación ya no va en repasos aparte');
+  ok(Z.modsDe().map(m=>m.id).join()==='ma-glosario,ma-simbolos,ma-comparar','v188: Apocalipsis también trae el glosario, los símbolos y la comparación');
+  Z.verCap('ma-simbolos');
+  const HS=Z.el('detalle').innerHTML;
+  ok(!/ponPest\(/.test(HS)&&/No entra al examen|no entra al examen/i.test(HS)&&(HS.match(/data-pest="prof"/g)||[]).length>=5,'v188: un repaso de profundizar no trae pestañas y avisa que no entra al examen');
   Z.verCap('ap8');
   const H=Z.el('detalle').innerHTML, secs=H.split('<div class="sec').slice(1);
   const k=secs.findIndex(x=>/^ interp-cab/.test(x));
   const tras=secs.slice(k+1), antes=secs.slice(0,k);
-  ok(k>0&&tras.length>=3&&tras.every(x=>/^" data-capa="contexto"/.test(x))&&!antes.some(x=>/Las siete trompetas según Bohr/.test(x)),
+  ok(k>0&&tras.length>=3&&tras.every(x=>/^" data-capa="contexto"/.test(x))&&!antes.some(x=>/>Las siete trompetas</.test(x)),
     'En Apocalipsis 8 la interpretación va junta al final, bajo su título ('+tras.length+' secciones)');
-  ok(/Las siete trompetas según Bohr/.test(tras.join(' '))&&/verVers\(this,'ap8',7,/.test(H),'Trae las trompetas según Bohr y sus citas se tocan');
+  ok(/>Las siete trompetas</.test(tras.join(' '))&&/verVers\(this,'ap8',7,/.test(H),'Trae las siete trompetas y sus citas se tocan');
+  ok(!/Bohr (dice|compara|explica|lee|subraya)|según Bohr|notas de Camilo/.test(H.replace(/<p class="sec-fuente">[\s\S]*?<\/p>/g,'')),'v188: la interpretación dice la idea sin atribuirla; el autor va solo en la fuente');
+  ok((H.match(/class="sec-fuente"/g)||[]).length===tras.length,'v188: cada sección de profundizar termina con una sola fuente corta');
   ok(/onclick="ponPest\('examen'\)"/.test(H)&&/onclick="ponPest\('prof'\)"/.test(H)&&/Para el examen/.test(H)&&/Para profundizar/.test(H),'v187: el capítulo trae dos pestañas, «Para el examen» y «Para profundizar»');
   ok(antes.every(x=>/data-pest="examen"/.test(x))&&tras.every(x=>/data-pest="prof"/.test(x))&&/No entra al examen|no entra al examen/i.test(secs[k]),'v187: cada sección dice en qué pestaña vive y la de profundizar avisa que no entra al examen');
   ok(/irProf\(\)/.test(H)&&!/filtraCapa\(this,'contexto'\)/.test(H),'v187: al final del examen, un aviso lleva a profundizar; el filtro sigue con dos opciones');

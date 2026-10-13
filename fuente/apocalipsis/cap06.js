@@ -115,8 +115,7 @@ module.exports = {
       sellados y la gran multitud que está «delante del trono» (7:9).`) },
 
     { t: '🧭 Cómo leer los sellos (6:1)', capa: 'contexto', h:
-      hi(`Desde aquí, lo que sigue es <strong>interpretación</strong>. La guía
-      principal es el pastor Stephen (Esteban) Bohr.<br><br>
+      hi(`Desde aquí, lo que sigue es <strong>interpretación</strong>.<br><br>
       · <strong>De dónde a dónde:</strong> los sellos empiezan cuando Jesús llega
       al cielo y es puesto como sacerdote y rey (capítulos 4 y 5) y terminan con
       la segunda venida (el séptimo sello, 8:1). Van <strong>en orden</strong>,
@@ -130,14 +129,13 @@ module.exports = {
       iglesia para corromperla.<br>
       · Los sellos hablan de la historia <strong>religiosa</strong>, no de la
       historia política en general.<br><br>
-      <strong>Aplicación:</strong> Bohr dice que al final de la historia se
-      repetirán los mismos principios: una iglesia con poder del Espíritu
-      (blanco), persecución (rojizo), errores (negro), muerte (amarillo), y por
-      fin la venida de Jesús.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 108,
-      116-117 y 208; tomo 2, págs. 213-216.`) },
+      <strong>Aplicación:</strong> al final de la historia se repetirán los
+      mismos principios: una iglesia con poder del Espíritu (blanco),
+      persecución (rojizo), errores (negro), muerte (amarillo), y por fin la
+      venida de Jesús.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:108, 116-117 y 208; Bohr, <i>Los siete sellos</i> 2:213-216.</p>` },
 
-    { t: '🧭 Los sellos y sus períodos según Bohr', capa: 'contexto', h:
+    { t: '🧭 Los sellos y sus períodos', capa: 'contexto', h:
       tbl(['Sello', 'Qué representa', 'Período', 'Iglesia'], [
         ['1.º Blanco', 'La iglesia apostólica vence con el evangelio', 'Era apostólica', 'Éfeso'],
         ['2.º Rojizo', 'Los emperadores romanos persiguen a la iglesia', 'Hasta el edicto de Constantino (313)', 'Esmirna'],
@@ -147,51 +145,45 @@ module.exports = {
         ['6.º Señales', 'Señales en el cielo y en la tierra; después, la venida', '1755, 1780, 1833… y la segunda venida', '—'],
         ['7.º (8:1)', 'Silencio en el cielo', 'La segunda venida', '—'],
       ]) +
-      hi(`<strong>Otras lecturas:</strong> Urías Smith ve en el caballo rojizo
-      el comienzo de la corrupción, y cierra el caballo amarillo con la Reforma.
-      Varias notas de Camilo siguen ese esquema: amarillo de 538 a 1517 y
-      quinto sello desde 1517 (hasta 1755 o 1798). Sus notas de la serie de Bohr
-      usan 538-1798.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 117-119,
-      165, 177, 208, 219 y 244; Urías Smith, «Las profecías del Apocalipsis»,
-      págs. 55 y 58-59; notas de Camilo en Evernote, "Los 144000", "Resumen
-      Apocalipsis" y "13. Los 7 sellos".`) },
+      hi(`<strong>Otra lectura</strong> ve en el caballo rojizo el comienzo de la
+      corrupción y cierra el amarillo con la Reforma: amarillo de 538 a 1517, y
+      quinto sello desde 1517.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:117-119, 165, 177, 208, 219 y 244; Smith, <i>Las profecías del Apocalipsis</i>, p. 55 y 58-59.</p>` },
 
     { t: '🧭 El caballo blanco y el rojizo (6:1-4)', capa: 'contexto', h:
-      hi(`<strong>Caballo blanco</strong> (según Bohr):<br>
+      hi(`<strong>Caballo blanco:</strong><br>
       · El <strong>jinete es Cristo</strong> y el <strong>caballo es su
-      iglesia</strong>: el jinete guía al caballo. Elena de White aplica
-      «venciendo y para vencer» a las conquistas del evangelio.<br>
+      iglesia</strong>: el jinete guía al caballo. «Venciendo y para vencer»
+      son las conquistas del evangelio.<br>
       · El <strong>blanco</strong>, en el Apocalipsis, siempre se relaciona con
       Cristo o con la victoria.<br>
       · Las <strong>flechas</strong> del arco son el mensaje de la Palabra
       (2 Reyes 13:17, «saeta de salvación»).<br>
       · La <strong>corona</strong> es <em>stéfanos</em>, la del vencedor.
       «Vencer» es la misma palabra de las promesas a las siete iglesias.<br>
-      · La lectura <strong>futurista</strong> ve aquí al anticristo; Bohr dice
-      que el texto no da base para eso.<br><br>
+      · La lectura <strong>futurista</strong> ve aquí al anticristo, pero el
+      texto no da base para eso.<br><br>
       <strong>Caballo rojizo:</strong><br>
       · El rojo es <strong>sangre derramada</strong>.<br>
       · La espada que quita la paz se explica con Mateo 10:34: el evangelio trae
-      paz al que lo recibe, pero despierta el odio del que lo rechaza. Elena de
-      White dice que por eso el evangelio se llama una espada.<br>
+      paz al que lo recibe, pero despierta el odio del que lo rechaza. Por eso
+      el evangelio se llama una espada.<br>
       · Los emperadores usaron mal la espada del Estado (Romanos 13:4) para
-      perseguir a los cristianos, hasta el edicto de Constantino en 313.<br><br>
-      Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 108,
-      165-172 y 177-181 (cita «El conflicto de los siglos», pág. 43).`) },
+      perseguir a los cristianos, hasta el edicto de Constantino en 313.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:108, 165-172 y 177-181; CS 58-59.</p>` },
 
     { t: '🧭 El caballo negro y el amarillo (6:5-8)', capa: 'contexto', h:
-      hi(`<strong>Caballo negro</strong> (según Bohr):<br>
+      hi(`<strong>Caballo negro:</strong><br>
       · Cuando la persecución no detuvo a la iglesia, Satanás cambió de plan:
       en los días de <strong>Constantino</strong> el Estado la favoreció, y
       entraron costumbres y enseñanzas paganas. El <strong>negro</strong> es la
       oscuridad donde falta la luz de la Palabra.<br>
       · La <strong>balanza</strong> pesa granos. El trigo y la cebada, con los
-      que se hacía el pan, estaban carísimos: según Cicerón, de 8 a 16 veces más.
+      que se hacía el pan, estaban carísimos: de 8 a 16 veces más de lo normal.
       Es <strong>hambre de la Palabra de Dios</strong> (Amós 8:11).<br>
       · El <strong>aceite</strong> es el Espíritu Santo y el
-      <strong>vino</strong>, la sangre de Cristo. Elena de White usa la frase
-      para pedir que no se maltrate a nadie de los comprados por esa sangre.<br><br>
+      <strong>vino</strong>, la sangre de Cristo. Por eso no se debe maltratar
+      a nadie de los comprados por esa sangre.<br><br>
       <strong>Caballo amarillo:</strong><br>
       · En griego es <em>chloros</em>: un verde pálido, el color de la
       muerte.<br>
@@ -201,19 +193,17 @@ module.exports = {
       crueldad.<br>
       · Es el período de los <strong>1.260 años</strong> en que el sistema papal
       privó al pueblo de la Palabra y persiguió a quienes no aceptaban sus
-      enseñanzas. En 1798 recibió la
-      «herida mortal».<br><br>
-      Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 118,
-      207-213, 219-223 (cita «Testimonios para la iglesia», tomo 5, pág. 578).`) },
+      enseñanzas. En 1798 recibió la «herida mortal».`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:118, 207-213, 219-223; 5TI 578.</p>` },
 
     { t: '🧭 Quinto sello: el clamor de los mártires (6:9-11)', capa: 'contexto', h:
-      hi(`<strong>¿Cómo claman los muertos?</strong> Bohr responde con la
-      Biblia: igual que <strong>la sangre de Abel</strong> clamaba desde la
-      tierra (Génesis 4:10). En el santuario, la sangre se derramaba <strong>al
-      pie del altar del sacrificio</strong>, en el atrio (Levítico 4:7), y «la
-      vida de la carne en la sangre está» (Levítico 17:11). Por eso las «almas»
-      debajo del altar son la vida derramada de los mártires que pide justicia;
-      el texto <strong>no enseña</strong> que los muertos estén conscientes.<br><br>
+      hi(`<strong>¿Cómo claman los muertos?</strong> La Biblia responde: igual
+      que <strong>la sangre de Abel</strong> clamaba desde la tierra (Génesis
+      4:10). En el santuario, la sangre se derramaba <strong>al pie del altar del
+      sacrificio</strong>, en el atrio (Levítico 4:7), y «la vida de la carne en
+      la sangre está» (Levítico 17:11). Por eso las «almas» debajo del altar son
+      la vida derramada de los mártires que pide justicia; el texto <strong>no
+      enseña</strong> que los muertos estén conscientes.<br><br>
       <strong>Dos grupos de mártires:</strong><br>
       · Los que murieron durante los <strong>1.260 años</strong> (538-1798),
       sin olvidar a los que mataron los emperadores.<br>
@@ -224,29 +214,26 @@ module.exports = {
       juicio del cielo lo confirma ante el universo y anula las sentencias
       injustas de los tribunales de la tierra. En la segunda venida recibirán un
       manto de luz.<br><br>
-      Bohr distingue <strong>«juzgar»</strong> (examinar los casos, desde 1844)
-      de <strong>«vengar»</strong> (ejecutar la sentencia, en la venida).<br><br>
-      Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 118,
-      234-237, 243-247 y 254-256.`) },
+      Hay que distinguir <strong>«juzgar»</strong> (examinar los casos, desde
+      1844) de <strong>«vengar»</strong> (ejecutar la sentencia, en la
+      venida).`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:118, 234-237, 243-247 y 254-256.</p>` },
 
     { t: '🧭 Sexto sello: señales del juicio (6:12-17)', capa: 'contexto', h:
       hi(`<strong>¿Literales o simbólicas?</strong> Los adventistas las leen
-      <strong>literales</strong>. Bohr explica que la palabra «como» compara un
-      hecho real con una figura: el sol se puso negro <em>como</em> tela de
-      luto.<br><br>
-      <strong>Dos partes, según Bohr:</strong>`) +
+      <strong>literales</strong>. La palabra «como» compara un hecho real con
+      una figura: el sol se puso negro <em>como</em> tela de luto.<br><br>
+      <strong>Dos partes:</strong>`) +
       tbl(['Parte', 'Qué pasó o pasará', 'Para qué'], [
         ['6:12-13', 'Terremoto de Lisboa (1 de noviembre de 1755); día oscuro y luna como sangre (19 de mayo de 1780); lluvia de estrellas (13 de noviembre de 1833)', 'Anunciar el fin de los 1.260 años y el comienzo del juicio en 1844'],
         ['6:14-17', 'El cielo se enrolla, se mueven montes e islas, los impíos se esconden', 'Es la segunda venida: Dios venga a los mártires'],
       ]) +
-      hi(`Elena de White ve en Lisboa, el día oscuro y la lluvia de estrellas el
-      cumplimiento de 6:12-13, y aplica 6:15-17 a la venida de Cristo.<br><br>
+      hi(`Lisboa, el día oscuro y la lluvia de estrellas cumplen 6:12-13; 6:15-17
+      es la venida de Cristo.<br><br>
       Entre las dos partes está el juicio y el <strong>sellamiento</strong>. La
       pregunta final, «¿quién podrá sostenerse en pie?», tiene respuesta en el
-      capítulo 7: los sellados.<br><br>
-      Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 262,
-      266-268 y 299; tomo 2, págs. 4-5; Elena de White, «El conflicto de los
-      siglos», págs. 255-258, 278 y 516.`) },
+      capítulo 7: los sellados.`) +
+      `<p>Fuente: Bohr, <i>Los siete sellos</i> 1:262, 266-268 y 299; Bohr, <i>Los siete sellos</i> 2:4-5; CS 349-354, 380-381 y 699-700.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos (1)', capa: 'contexto', h:
       hi(`Los colores y los objetos de los sellos no se adivinan: la misma Biblia
@@ -259,9 +246,7 @@ module.exports = {
         ['Espada', 'La Palabra de Dios; en otro contexto, el poder del Estado', 'Hebreos 4:12; Efesios 6:17; Romanos 13:4'],
         ['Negro', 'Tinieblas, error, pecado', '1 Juan 1:5-6'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      págs. 103-106; Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs.
-      166-169 y 178-180.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:103-106; Bohr, <i>Los siete sellos</i> 1:166-169 y 178-180.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos (2)', capa: 'contexto', h:
       hi(`Estos son los símbolos del tercer al quinto sello.`) +
@@ -274,9 +259,7 @@ module.exports = {
         ['Almas debajo del altar', 'La vida derramada de los mártires, que pide justicia', 'Levítico 17:11; Levítico 4:7; Génesis 4:10'],
         ['Vestiduras blancas', 'La justicia de Cristo', 'Isaías 61:10; Apocalipsis 19:8'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      págs. 102-105 y 155; Bohr, «Los siete sellos de Apocalipsis», tomo 1,
-      págs. 212-213, 220 y 235-237.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:102-105 y 155; Bohr, <i>Los siete sellos</i> 1:212-213, 220 y 235-237.</p>` },
   ],
 
   preguntas: [
@@ -396,93 +379,93 @@ module.exports = {
       o: ['¿Quién podrá sostenerse en pie?', '¿Quién es digno de abrir el libro?', '¿Hasta cuándo, Señor, santo y verdadero?', '¿Quién es semejante a la bestia?'], a: 0,
       e: '«…porque el gran día de su ira ha llegado y ¿quién podrá sostenerse en pie?» (6:17).' },
     { t: 'mc', v: '6:1', f: 'c',
-      q: 'Según Bohr, ¿qué período de la historia cubren los siete sellos?',
+      q: '¿Qué período de la historia cubren los siete sellos?',
       o: ['De la ascensión de Jesús a su segunda venida', 'Del diluvio de Noé a la caída de Babilonia', 'Solo los siete años antes de la venida', 'Del reinado de Constantino hasta 1844'], a: 0,
-      e: 'Los sellos empiezan cuando Jesús es puesto como sacerdote y rey en el cielo y terminan con el séptimo sello, en la segunda venida. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 108.' },
+      e: 'Los sellos empiezan cuando Jesús es puesto como sacerdote y rey en el cielo y terminan con el séptimo sello, en la segunda venida. Fuente: Bohr, <i>Los siete sellos</i> 1:108.' },
     { t: 'tf', v: '6:1', f: 'c',
-      q: 'Según Bohr, los sellos y las siete iglesias cubren los mismos períodos: las iglesias muestran la condición interna de la iglesia y los sellos, las fuerzas de afuera.', a: true,
-      e: 'Verdadero: es la misma historia vista desde dos ángulos. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 116.' },
+      q: 'Los sellos y las siete iglesias cubren los mismos períodos: las iglesias muestran la condición interna de la iglesia y los sellos, las fuerzas de afuera.', a: true,
+      e: 'Verdadero: es la misma historia vista desde dos ángulos. Fuente: Bohr, <i>Los siete sellos</i> 1:116.' },
     { t: 'mc', v: '6:1-2', f: 'c',
-      q: 'Según Bohr, ¿qué representan el caballo blanco y su jinete?',
+      q: '¿Qué representan el caballo blanco y su jinete?',
       o: ['La iglesia apostólica guiada por Cristo', 'El anticristo que imita a Cristo', 'Un emperador romano conquistador', 'Los ejércitos de la antigua Babilonia'], a: 0,
-      e: 'El jinete es Cristo y el caballo, su iglesia, que en la era apostólica salió «venciendo y para vencer» con el evangelio. Los futuristas ven aquí al anticristo; Bohr lo rechaza. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 165-168 y 172.' },
+      e: 'El jinete es Cristo y el caballo, su iglesia, que en la era apostólica salió «venciendo y para vencer» con el evangelio. La lectura futurista ve aquí al anticristo, sin base en el texto. Fuente: Bohr, <i>Los siete sellos</i> 1:165-168 y 172.' },
     { t: 'mc', v: '6:2', f: 'c',
-      q: 'Según Bohr, ¿qué simbolizan las flechas del arco del primer jinete?',
+      q: '¿Qué simbolizan las flechas del arco del primer jinete?',
       o: ['El mensaje de la Palabra que predicaban los apóstoles', 'Las guerras de Roma contra los pueblos vecinos', 'Las plagas que caerán sobre los impíos', 'Los dardos de fuego del maligno'], a: 0,
-      e: 'Bohr cita 2 Reyes 13:17, «saeta de salvación de Jehová»: las flechas son la Palabra que hiere el corazón y lo convierte. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 169-170.' },
+      e: '2 Reyes 13:17 habla de la «saeta de salvación de Jehová»: las flechas son la Palabra que hiere el corazón y lo convierte. Fuente: Bohr, <i>Los siete sellos</i> 1:169-170.' },
     { t: 'mc', v: '6:3-4', f: 'c',
-      q: 'Según Bohr, ¿qué período representa el caballo rojizo?',
+      q: '¿Qué período representa el caballo rojizo?',
       o: ['La persecución de los emperadores hasta el año 313', 'La conquista de Jerusalén por los babilonios', 'Las dos guerras mundiales del siglo XX', 'La Reforma protestante del siglo XVI'], a: 0,
-      e: 'Es la iglesia perseguida, paralela a Esmirna, hasta el edicto de Constantino en 313. Urías Smith lo ve, en cambio, como el comienzo de la corrupción. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 177; Urías Smith, «Las profecías del Apocalipsis», pág. 55.' },
+      e: 'Es la iglesia perseguida, paralela a Esmirna, hasta el edicto de Constantino en 313. Otra lectura lo ve como el comienzo de la corrupción. Fuente: Bohr, <i>Los siete sellos</i> 1:177; Smith, <i>Las profecías del Apocalipsis</i>, p. 55.' },
     { t: 'mc', v: '6:4', f: 'c',
-      q: 'Según Bohr y Elena de White, ¿por qué el evangelio, que es mensaje de paz, se relaciona con la espada que quita la paz?',
+      q: '¿Por qué el evangelio, que es mensaje de paz, se relaciona con la espada que quita la paz?',
       o: ['Despierta el odio de los que lo rechazan', 'Los apóstoles tomaron armas para predicar', 'Dios mandó guerras contra los paganos', 'Los cristianos pelearon entre ellos mismos'], a: 0,
-      e: 'Jesús dijo que no vino a traer paz sino espada (Mateo 10:34): el evangelio condena el pecado y los que lo rechazan persiguen a los fieles. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 180-181 (cita «El conflicto de los siglos», pág. 43).' },
+      e: 'Jesús dijo que no vino a traer paz sino espada (Mateo 10:34): el evangelio condena el pecado y los que lo rechazan persiguen a los fieles. Fuente: Bohr, <i>Los siete sellos</i> 1:180-181; CS 58-59.' },
     { t: 'mc', v: '6:5', f: 'c',
-      q: 'Según Bohr, ¿qué representa el color negro del tercer caballo?',
+      q: '¿Qué representa el color negro del tercer caballo?',
       o: ['La oscuridad que entró a la iglesia con Constantino', 'La peste negra que mató a media Europa', 'El luto por la caída de Jerusalén', 'El día oscuro de mayo de 1780'], a: 0,
-      e: 'Cuando la persecución no detuvo a la iglesia, el mundo entró en ella (313 a 538) y faltó la luz de la Palabra. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 207-209.' },
+      e: 'Cuando la persecución no detuvo a la iglesia, el mundo entró en ella (313 a 538) y faltó la luz de la Palabra. Fuente: Bohr, <i>Los siete sellos</i> 1:207-209.' },
     { t: 'mc', v: '6:6', f: 'c',
-      q: 'Según Bohr, ¿qué significa que el trigo y la cebada estuvieran tan caros?',
+      q: '¿Qué significa que el trigo y la cebada estuvieran tan caros?',
       o: ['Había hambre de la Palabra de Dios', 'Había una gran sequía en Palestina', 'Roma cobraba impuestos muy altos', 'Los mercaderes se volvieron ricos'], a: 0,
-      e: 'Según Cicerón, ese precio era de 8 a 16 veces lo normal. El pan es la Palabra, y hay «hambre… de oír la palabra de Jehová» (Amós 8:11). Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 212-213.' },
+      e: 'Ese precio era de 8 a 16 veces lo normal. El pan es la Palabra, y hay «hambre… de oír la palabra de Jehová» (Amós 8:11). Fuente: Bohr, <i>Los siete sellos</i> 1:212-213.' },
     { t: 'mc', v: '6:6', f: 'c',
-      q: 'Según Bohr, ¿qué simbolizan el aceite y el vino que no se deben dañar?',
+      q: '¿Qué simbolizan el aceite y el vino que no se deben dañar?',
       o: ['El Espíritu Santo y la sangre de Cristo', 'La riqueza de la iglesia y su poder', 'Las fiestas y los sacrificios judíos', 'Las cosechas de Israel y de Egipto'], a: 0,
-      e: 'Elena de White usa la frase para pedir que nadie maltrate a los que fueron comprados por la sangre de Cristo. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 213 (cita «Testimonios para la iglesia», tomo 5, pág. 578).' },
+      e: 'La frase pide que nadie maltrate a los que fueron comprados por la sangre de Cristo. Fuente: Bohr, <i>Los siete sellos</i> 1:213; 5TI 578.' },
     { t: 'mc', v: '6:7-8', f: 'c',
-      q: 'Según Bohr, ¿qué período representa el caballo amarillo?',
+      q: '¿Qué período representa el caballo amarillo?',
       o: ['Los 1.260 años de dominio papal (538-1798)', 'Las invasiones bárbaras contra Roma', 'La Revolución francesa de 1789', 'El tiempo de angustia después de 1844'], a: 0,
-      e: 'Es la Edad Media, cuando faltó la Palabra y hubo mártires. Varias notas de Camilo ("Los 144000", "Resumen Apocalipsis") lo cierran en 1517, con la Reforma, como Urías Smith. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 118, 219 y 244; Urías Smith, «Las profecías del Apocalipsis», pág. 58; notas de Camilo en Evernote, "Los 144000".' },
+      e: 'Es la Edad Media, cuando faltó la Palabra y hubo mártires. Otra lectura lo cierra en 1517, con la Reforma. Fuente: Bohr, <i>Los siete sellos</i> 1:118, 219 y 244; Smith, <i>Las profecías del Apocalipsis</i>, p. 58.' },
     { t: 'mc', v: '6:9', f: 'c',
-      q: 'Según Bohr, ¿debajo de qué altar estaban las almas del quinto sello?',
+      q: '¿Debajo de qué altar estaban las almas del quinto sello?',
       o: ['El del sacrificio, en el atrio', 'El del incienso, en el lugar santo', 'El de Baal, en el monte Carmelo', 'El de Noé, después del diluvio'], a: 0,
-      e: 'La sangre de las víctimas se derramaba al pie del altar del holocausto (Levítico 4:7); en el altar del incienso nunca se ofrecía sangre. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 236.' },
+      e: 'La sangre de las víctimas se derramaba al pie del altar del holocausto (Levítico 4:7); en el altar del incienso nunca se ofrecía sangre. Fuente: Bohr, <i>Los siete sellos</i> 1:236.' },
     { t: 'mc', v: '6:9-10', f: 'c',
-      q: 'Según Bohr, ¿cómo «claman» los mártires que ya están muertos?',
+      q: '¿Cómo «claman» los mártires que ya están muertos?',
       o: ['Como la sangre de Abel que clamaba desde la tierra', 'Como espíritus que viven conscientes en el cielo', 'Como ángeles que oran en lugar de ellos', 'Como voces que se oyen en los sueños'], a: 0,
-      e: 'Es lenguaje figurado: la vida está en la sangre (Levítico 17:11), y la sangre derramada pide justicia, como la de Abel (Génesis 4:10). No enseña que los muertos estén conscientes. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 234-237.' },
+      e: 'Es lenguaje figurado: la vida está en la sangre (Levítico 17:11), y la sangre derramada pide justicia, como la de Abel (Génesis 4:10). No enseña que los muertos estén conscientes. Fuente: Bohr, <i>Los siete sellos</i> 1:234-237.' },
     { t: 'mc', v: '6:11', f: 'c',
-      q: 'Según Bohr, ¿qué significan las vestiduras blancas que reciben los mártires?',
+      q: '¿Qué significan las vestiduras blancas que reciben los mártires?',
       o: ['La justicia de Cristo que ya tenían, confirmada en el juicio', 'Un premio por haber muerto con valentía', 'Un permiso para volver a vivir en la tierra', 'La ropa de los sacerdotes del templo'], a: 0,
-      e: 'Desde 1844 el juicio confirma ante el universo que tenían el manto de Cristo; en la segunda venida recibirán un manto de luz. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 246-247 y 254-256.' },
+      e: 'Desde 1844 el juicio confirma ante el universo que tenían el manto de Cristo; en la segunda venida recibirán un manto de luz. Fuente: Bohr, <i>Los siete sellos</i> 1:246-247 y 254-256.' },
     { t: 'tf', v: '6:11', f: 'c',
-      q: 'Según Bohr, el quinto sello habla de dos grupos de mártires: los de los 1.260 años y otros que morirán al final, antes del cierre de la gracia.', a: true,
-      e: 'Verdadero: son los «consiervos» que faltaban; cuando se complete su número, Dios vengará a los dos grupos. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 243-244 y 256.' },
+      q: 'El quinto sello habla de dos grupos de mártires: los de los 1.260 años y otros que morirán al final, antes del cierre de la gracia.', a: true,
+      e: 'Verdadero: son los «consiervos» que faltaban; cuando se complete su número, Dios vengará a los dos grupos. Fuente: Bohr, <i>Los siete sellos</i> 1:243-244 y 256.' },
     { t: 'mc', v: '6:12-13', f: 'c',
-      q: 'Según Bohr, ¿por qué las señales de 6:12-13 se entienden de forma literal?',
+      q: '¿Por qué las señales de 6:12-13 se entienden de forma literal?',
       o: ['Por la palabra «como», que compara con hechos reales', 'Porque Juan las vio con los ojos abiertos', 'Porque ocurrieron en tiempos de Juan', 'Porque todo el Apocalipsis es literal'], a: 0,
-      e: 'Bohr cita a Ranko Stefanovic: «como» introduce una comparación figurada de un hecho real. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 262.' },
+      e: '«Como» introduce una comparación figurada de un hecho real. Fuente: Bohr, <i>Los siete sellos</i> 1:262.' },
     { t: 'mc', v: '6:12', f: 'c',
-      q: 'Según Elena de White, ¿qué terremoto cumplió la primera señal del sexto sello?',
+      q: '¿Qué terremoto cumplió la primera señal del sexto sello?',
       o: ['El de Lisboa, en 1755', 'El de San Francisco, en 1906', 'El de Messina, en 1908', 'El de Jerusalén, en la cruz'], a: 0,
-      e: 'El terremoto del 1 de noviembre de 1755, que se sintió en gran parte de Europa, África y América. Fuentes: Elena de White, «El conflicto de los siglos», pág. 255; Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 266.' },
+      e: 'El terremoto del 1 de noviembre de 1755, que se sintió en gran parte de Europa, África y América. Fuente: CS 349; Bohr, <i>Los siete sellos</i> 1:266.' },
     { t: 'mc', v: '6:12', f: 'c',
       q: 'En la interpretación adventista, ¿en qué fecha fue el «día oscuro» que cumplió la señal del sol?',
       o: ['19 de mayo de 1780', '1 de noviembre de 1755', '13 de noviembre de 1833', '22 de octubre de 1844'], a: 0,
-      e: 'El sol se oscureció el 19 de mayo de 1780; esa noche la luna se vio como sangre. Las otras fechas son el terremoto de Lisboa, la lluvia de estrellas y el fin de los 2.300 días. Fuentes: Elena de White, «El conflicto de los siglos», págs. 256-258; Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 266.' },
+      e: 'El sol se oscureció el 19 de mayo de 1780; esa noche la luna se vio como sangre. Las otras fechas son el terremoto de Lisboa, la lluvia de estrellas y el fin de los 2.300 días. Fuente: CS 350-353; Bohr, <i>Los siete sellos</i> 1:266.' },
     { t: 'mc', v: '6:13', f: 'c',
-      q: 'Según Elena de White, ¿qué hecho cumplió la caída de las estrellas?',
+      q: '¿Qué hecho cumplió la caída de las estrellas?',
       o: ['La lluvia de meteoros de 1833', 'El paso del cometa Halley en 1910', 'El gran eclipse de sol de 1919', 'La caída de un meteorito en 1908'], a: 0,
-      e: 'La gran lluvia de estrellas fugaces del 13 de noviembre de 1833, vista en toda América del Norte. Fuente: Elena de White, «El conflicto de los siglos», pág. 278.' },
+      e: 'La gran lluvia de estrellas fugaces del 13 de noviembre de 1833, vista en toda América del Norte. Fuente: CS 381.' },
     { t: 'mc', v: '6:14-17', f: 'c',
-      q: 'Según Bohr, ¿qué anuncian las dos partes del sexto sello?',
+      q: '¿Qué anuncian las dos partes del sexto sello?',
       o: ['El comienzo del juicio y la segunda venida', 'La caída de Roma y la de Constantinopla', 'La Reforma y la Revolución francesa', 'El diluvio y la destrucción de Sodoma'], a: 0,
-      e: 'Las señales de 1755-1833 anunciaron el juicio de 1844; las de 6:14-17 son la segunda venida. Elena de White aplica 6:15-17 a la venida de Cristo. Fuentes: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 267-268; Elena de White, «El conflicto de los siglos», pág. 516.' },
+      e: 'Las señales de 1755-1833 anunciaron el juicio de 1844; las de 6:14-17 son la segunda venida. Fuente: Bohr, <i>Los siete sellos</i> 1:267-268; CS 699-700.' },
     { t: 'tf', v: '6:17', f: 'c',
-      q: 'Según Bohr, la pregunta «¿quién podrá sostenerse en pie?» recibe su respuesta en el capítulo 7, con los sellados.', a: true,
-      e: 'Verdadero: «sostenerse en pie» es lo contrario de caer, y los sellados de 7:1-8 son los que estarán firmes. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 2, págs. 4-5.' },
+      q: 'La pregunta «¿quién podrá sostenerse en pie?» recibe su respuesta en el capítulo 7, con los sellados.', a: true,
+      e: 'Verdadero: «sostenerse en pie» es lo contrario de caer, y los sellados de 7:1-8 son los que estarán firmes. Fuente: Bohr, <i>Los siete sellos</i> 2:4-5.' },
     { t: 'mc', v: '6:2', f: 'c',
-      q: 'Según Bohr, ¿qué texto del Antiguo Testamento compara al pueblo de Dios con un caballo que va a la guerra?',
+      q: '¿Qué texto del Antiguo Testamento compara al pueblo de Dios con un caballo que va a la guerra?',
       o: ['Zacarías 10:3', 'Jeremías 6:2', 'Amós 8:11', 'Levítico 17:11'], a: 0,
-      e: 'Dios dice que pondrá a la casa de Judá como su caballo de honor en la guerra. Por eso el caballo blanco es la iglesia y el jinete, Cristo. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, págs. 165-166.' },
+      e: 'Dios dice que pondrá a la casa de Judá como su caballo de honor en la guerra. Por eso el caballo blanco es la iglesia y el jinete, Cristo. Fuente: Bohr, <i>Los siete sellos</i> 1:165-166.' },
     { t: 'mc', v: '6:8', f: 'c',
       q: 'Según Daniel 7:17, ¿qué representan las bestias o fieras en la profecía?',
       o: ['Reyes o reinos', 'Ángeles caídos', 'Plagas de la naturaleza', 'Falsos profetas'], a: 0,
-      e: 'Daniel 7:17: «Estas cuatro grandes bestias son cuatro reyes». Bohr explica que las fieras del cuarto sello son líderes y naciones que actuaron como bestias contra el pueblo de Dios. Fuentes: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105; Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 220.' },
+      e: 'Daniel 7:17: «Estas cuatro grandes bestias son cuatro reyes». Las fieras del cuarto sello son líderes y naciones que actuaron como bestias contra el pueblo de Dios. Fuente: Bohr, <i>15 principios</i> 2:105; Bohr, <i>Los siete sellos</i> 1:220.' },
     { t: 'tf', v: '6:4', f: 'c',
-      q: 'Según Bohr, en la Biblia el color rojo del segundo caballo representa la sangre derramada, como en Isaías 63 y Nahúm 2.', a: true,
-      e: 'Verdadero: cuando la espada quita la paz, el resultado es la persecución y la sangre de los fieles. Fuente: Bohr, «Los siete sellos de Apocalipsis», tomo 1, pág. 178.' },
+      q: 'En la Biblia el color rojo del segundo caballo representa la sangre derramada, como en Isaías 63 y Nahúm 2.', a: true,
+      e: 'Verdadero: cuando la espada quita la paz, el resultado es la persecución y la sangre de los fieles. Fuente: Bohr, <i>Los siete sellos</i> 1:178.' },
   ],
 
   tarjetas: [

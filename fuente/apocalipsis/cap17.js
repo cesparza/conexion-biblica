@@ -116,86 +116,76 @@ module.exports = {
       hi(`Esto es interpretación, no texto del capítulo. Las preguntas que salen
       de aquí van marcadas como complementarias. Aquí se habla de
       <strong>sistemas y poderes, no de personas</strong>.<br><br>
-      <strong>¿Qué ángel habla?</strong> Bohr razona así: la Babilonia antigua
-      estaba sentada sobre las aguas del Éufrates (Jeremías 51:13), y la única
-      copa que menciona ese río es la sexta (16:12). Por eso cree que es el
-      ángel de la sexta plaga, que vuelve a explicar lo que quedó pendiente.`) +
+      <strong>¿Qué ángel habla?</strong> La Babilonia antigua estaba sentada
+      sobre las aguas del Éufrates (Jeremías 51:13), y la única copa que
+      menciona ese río es la sexta (16:12). Por eso parece ser el ángel de la
+      sexta plaga, que vuelve a explicar lo que quedó pendiente.`) +
       tbl(['Símbolo', 'Significado'], [
-        ['Una mujer', 'Una iglesia: la mujer pura es la iglesia fiel; la ramera, una iglesia que se apartó de Dios (Elena de White; ver Ezequiel 16)'],
-        ['Fornicar con los reyes', 'Unir la iglesia con el estado para apoyarse en el poder civil (Bohr)'],
-        ['Sentarse sobre algo', 'Gobernarlo: sobre las aguas, sobre la bestia y sobre los montes (Bohr)'],
+        ['Una mujer', 'Una iglesia: la mujer pura es la iglesia fiel; la ramera, una iglesia que se apartó de Dios (ver Ezequiel 16)'],
+        ['Fornicar con los reyes', 'Unir la iglesia con el estado para apoyarse en el poder civil'],
+        ['Sentarse sobre algo', 'Gobernarlo: sobre las aguas, sobre la bestia y sobre los montes'],
         ['Las muchas aguas', 'Pueblos, muchedumbres, naciones y lenguas (17:15)'],
       ]) +
-      hi(`Bohr añade que la ramera representa la religión apartada de Dios que
-      se monta sobre los poderes civiles para perseguir al pueblo de Dios. Se
-      aplica al papado como sistema, pero el símbolo es más amplio: a lo largo
-      de la historia la religión falsa se alió con siete poderes civiles.`) +
-      hi(`Fuentes: Bohr, «Apocalipsis 17», pág. 3-5; Elena de White, «El
-      conflicto de los siglos», pág. 431.`) },
+      hi(`La ramera es la religión apartada de Dios que se monta sobre los
+      poderes civiles para perseguir al pueblo de Dios. Se aplica al papado
+      como sistema, pero el símbolo es más amplio: a lo largo de la historia
+      la religión falsa se alió con siete poderes civiles.`) +
+      `<p>Fuente: Bohr, <i>Apocalipsis 17</i>, p. 3-5; CS 431.</p>` },
 
     { t: '🧭 La ropa, la copa y el vino (17:4-6)', capa: 'contexto', h:
       li([`<strong>Púrpura, escarlata, oro y perlas</strong>: colores de la
-           realeza y gran riqueza. Elena de White los aplica a «la magnificencia
-           y la pompa más que reales» de la sede romana.`,
+           realeza y gran riqueza. Describen «la magnificencia y la pompa más
+           que reales» de la sede romana (CS 432).`,
           `<strong>La copa de oro y el vino</strong>: el vino son las falsas
-           doctrinas que emborrachan a las naciones. Elena de White nombra
-           algunas: la inmortalidad natural del alma, el tormento eterno de los
-           impíos y exaltar el primer día de la semana por encima del sábado.
-           Quien bebe ese vino se enfurece contra los que no lo aceptan.`,
+           doctrinas que emborrachan a las naciones. Por ejemplo, la
+           inmortalidad natural del alma, el tormento eterno de los impíos y
+           exaltar el primer día de la semana por encima del sábado. Quien bebe
+           ese vino se enfurece contra los que no lo aceptan.`,
           `<strong>Nombres de blasfemia</strong> (los lleva la bestia, que está
-           «llena de nombres de blasfemia», 17:3): para Bohr, blasfemia es que
-           un hombre pretenda el lugar de Dios en la tierra o el poder de
-           perdonar pecados (Juan 10:33; Marcos 2:7).`,
-          `<strong>Ebria de la sangre de los santos</strong>: Elena de White
-           dice que de ningún otro poder se puede decir eso con más propiedad
-           que del que por siglos persiguió a los discípulos de Cristo.`]) +
+           «llena de nombres de blasfemia», 17:3): blasfemia es que un hombre
+           pretenda el lugar de Dios en la tierra o el poder de perdonar
+           pecados (Juan 10:33; Marcos 2:7).`,
+          `<strong>Ebria de la sangre de los santos</strong>: de ningún otro
+           poder se puede decir eso con más propiedad que del que por siglos
+           persiguió a los discípulos de Cristo.`]) +
       wa(`Esto describe un sistema en su historia. No acusa a los creyentes
       sinceros que hoy pertenecen a esa iglesia.`) +
-      hi(`Fuentes: Bohr, «Apocalipsis 17», pág. 10-13 (cita a Elena de White,
-      «Testimonios para los ministros», pág. 59); Elena de White, «El
-      conflicto de los siglos», pág. 432-433.`) },
+      `<p>Fuente: Bohr, <i>Apocalipsis 17</i>, p. 10-13; TM 59; CS 432-433.</p>` },
 
     { t: '🧭 La madre y sus hijas (17:5)', capa: 'contexto', h:
-      hi(`Si Babilonia es «la madre de las rameras», tiene hijas. Elena de
-      White dice que las hijas son <strong>las iglesias que se quedan con sus
-      doctrinas y tradiciones</strong> y la imitan buscando alianza con el
-      mundo. Bohr las identifica con el protestantismo que se apartó de los
-      principios de la Reforma, y ve una triple alianza: la madre, las hijas y
-      los reyes de la tierra (lo mismo que el dragón, la bestia y el falso
-      profeta de 16:13). Treiyer insiste en distinguirlas: la madre existió
-      primero; las hijas se le unen al final y le devuelven su antigua
-      autoridad.<br><br>
-      El nombre <strong>Babilonia</strong> quiere decir «confusión». Elena de
-      White lo aplica a iglesias que dicen basarse en la Biblia pero están
-      divididas en muchos credos opuestos.`) +
-      wa(`Lo más importante para no juzgar a nadie: Elena de White escribió que
-      la mayoría de los verdaderos discípulos de Cristo están todavía en esas
-      iglesias. Por eso Dios los llama con amor: «Salid de ella, pueblo mío»
-      (18:4).`) +
-      hi(`Fuentes: Elena de White, «El conflicto de los siglos», pág. 433-434 y
-      441; Bohr, «Apocalipsis 17», pág. 8-9; Treiyer, «Identificando a
-      Babilonia», pág. 10-11.`) },
+      hi(`Si Babilonia es «la madre de las rameras», tiene hijas: <strong>las
+      iglesias que se quedan con sus doctrinas y tradiciones</strong> y la
+      imitan buscando alianza con el mundo. Es el protestantismo que se apartó
+      de los principios de la Reforma. Así se forma una triple alianza: la
+      madre, las hijas y los reyes de la tierra (lo mismo que el dragón, la
+      bestia y el falso profeta de 16:13). La madre existió primero; las hijas
+      se le unen al final y le devuelven su antigua autoridad.<br><br>
+      El nombre <strong>Babilonia</strong> quiere decir «confusión»: iglesias
+      que dicen basarse en la Biblia pero están divididas en muchos credos
+      opuestos.`) +
+      wa(`Lo más importante para no juzgar a nadie: la mayoría de los
+      verdaderos discípulos de Cristo están todavía en esas iglesias. Por eso
+      Dios los llama con amor: «Salid de ella, pueblo mío» (18:4).`) +
+      `<p>Fuente: CS 430-434 y 441; Bohr, <i>Apocalipsis 17</i>, p. 8-9; Treiyer, <i>Identificando a Babilonia</i>, p. 10-11.</p>` },
 
     { t: '🧭 La bestia que «era y no es, y será» (17:8)', capa: 'contexto', h:
-      hi(`Bohr nota que las tres etapas son de la <strong>bestia</strong>, no
-      de la mujer, y las une con Apocalipsis 12 y 13 y con el cuerno pequeño
-      de Daniel 7:`) +
-      tbl(['Etapa', 'Significado, según Bohr'], [
+      hi(`Las tres etapas son de la <strong>bestia</strong>, no de la mujer, y
+      se unen con Apocalipsis 12 y 13 y con el cuerno pequeño de Daniel 7:`) +
+      tbl(['Etapa', 'Significado'], [
         ['«Era»', 'Los 1260 años de dominio papal (538 a 1798), cuando la iglesia usó al estado para perseguir'],
         ['«No es»', 'La herida mortal de 1798: pierde el apoyo del poder civil'],
         ['«Está para subir del abismo»', 'La herida se sana y el mundo se maravilla en pos de la bestia (13:3)'],
       ]) +
       hi(`El <strong>abismo</strong> es el lugar de los muertos (Romanos
-      10:7): la bestia «sube» porque revive de su herida. Bohr ve el mismo
-      orden en Daniel 11:40-45: el rey del norte es herido, se recupera, inunda
-      el mundo y al final llega a su fin sin que nadie lo ayude.`) +
-      hi(`Fuente: Bohr, «Apocalipsis 17», pág. 7-8, 15-18.`) },
+      10:7): la bestia «sube» porque revive de su herida. Daniel 11:40-45
+      sigue el mismo orden: el rey del norte es herido, se recupera, inunda el
+      mundo y al final llega a su fin sin que nadie lo ayude.`) +
+      `<p>Fuente: Bohr, <i>Apocalipsis 17</i>, p. 7-8 y 15-18.</p>` },
 
     { t: '🧭 Las siete cabezas y el octavo (17:9-11)', capa: 'contexto', h:
       hi(`En la profecía, los <strong>montes</strong> son reinos, no reyes
-      sueltos (Daniel 2:35, 44). Las cabezas gobiernan una tras otra. La lista
-      de Bohr:`) +
-      tbl(['Cabeza', 'Reino, según Bohr'], [
+      sueltos (Daniel 2:35, 44). Las cabezas gobiernan una tras otra:`) +
+      tbl(['Cabeza', 'Reino'], [
         ['1', 'Babilonia'],
         ['2', 'Medo-Persia'],
         ['3', 'Grecia'],
@@ -206,55 +196,50 @@ module.exports = {
       ]) +
       hi(`<strong>El octavo</strong> no es otra cabeza: es la séptima, que
       cuenta como octava porque revive (el 8 es el número de la resurrección).
-      Bohr empieza por Babilonia porque Daniel 2 y 7 y Apocalipsis 13 siempre
-      empiezan ahí, y rechaza leer las cabezas como siete papas desde 1929,
-      porque eso termina fijando fechas.<br><br>
-      Otra lectura, de Treiyer, que también está en las notas de estudio:
-      la quinta cabeza es Roma papal; la sexta, el poder secular y ateo que
-      nació con la Revolución francesa y la hirió en 1798; la séptima, el
-      protestantismo de Estados Unidos que le devuelve su poder; y el octavo,
-      el papado restaurado.`) +
-      hi(`Fuentes: Bohr, «Apocalipsis 17», pág. 14-20; Treiyer, «Identificando
-      a Babilonia», pág. 7.`) },
+      La lista empieza por Babilonia porque Daniel 2 y 7 y Apocalipsis 13
+      siempre empiezan ahí. Leer las cabezas como siete papas desde 1929 no
+      encaja, porque termina fijando fechas.<br><br>
+      Otra lectura: la quinta cabeza es Roma papal; la sexta, el poder secular
+      y ateo que nació con la Revolución francesa y la hirió en 1798; la
+      séptima, el protestantismo de Estados Unidos que le devuelve su poder; y
+      el octavo, el papado restaurado.`) +
+      `<p>Fuente: Bohr, <i>Apocalipsis 17</i>, p. 14-20; Treiyer, <i>Identificando a Babilonia</i>, p. 7.</p>` },
 
     { t: '🧭 Diez cuernos, «una hora» y el Cordero que vence (17:12-14)', capa: 'contexto', h:
       li([`Las cabezas reinan una tras otra; los <strong>diez cuernos</strong>
            reinan juntos, todos en la séptima cabeza, cuando la bestia revive.`,
           `En Daniel los diez cuernos fueron las divisiones de Europa; al
-           final, dice Bohr, son <strong>«los reyes de la tierra en todo el
-           mundo»</strong> (16:14). El número diez significa «todos», como los
-           diez mandamientos expresan todo el deber.`,
-          `<strong>«Un mismo propósito»</strong>: Bohr lo aplica a la unión de
-           los gobiernos para imponer una ley dominical mundial. Elena de
-           White habla de «un vínculo de unión universal, una gran armonía,
-           una confederación de fuerzas de Satanás».`,
+           final son <strong>los reyes de la tierra en todo el mundo</strong>
+           (16:14). El número diez significa «todos», como los diez
+           mandamientos expresan todo el deber.`,
+          `<strong>«Un mismo propósito»</strong>: la unión de los gobiernos
+           para imponer una ley dominical mundial. Será «un vínculo de unión
+           universal, una gran armonía, una confederación de fuerzas de
+           Satanás» (3MS 447).`,
           `Reinan <strong>«por una hora»</strong> juntamente con la bestia
            y le entregan su poder, como el dragón le dio el suyo en 13:2.`,
           `Pelean contra el Cordero al perseguir a sus seguidores: lo que se
            hace a ellos se le hace a él (Mateo 25:40). Pero <strong>el Cordero
            vence</strong>, y los suyos son «llamados, elegidos y fieles».`]) +
-      hi(`Fuentes: Bohr, «Apocalipsis 17», pág. 21-23 (cita a Elena de White,
-      «Mensajes selectos», tomo 3, pág. 447-448).`) },
+      `<p>Fuente: Bohr, <i>Apocalipsis 17</i>, p. 21-23; 3MS 447-448.</p>` },
 
     { t: '🧭 Los reyes se vuelven contra la ramera (17:15-18)', capa: 'contexto', h:
-      hi(`Para Bohr, las aguas que sostienen a la ramera se le secaron una vez
-      y se le secarán otra:`) +
-      tbl(['Momento', 'Qué pasa, según Bohr'], [
+      hi(`Las aguas que sostienen a la ramera se le secaron una vez y se le
+      secarán otra:`) +
+      tbl(['Momento', 'Qué pasa'], [
         ['538-1798', 'Las aguas la sostienen: persecución'],
         ['1798', 'Se secan: pierde el apoyo del estado (Revolución francesa)'],
         ['Tiempo del fin', 'Vuelven a fluir: se sana la herida'],
         ['Sexta plaga', 'Se secan para siempre: los reyes y las multitudes la aborrecen (17:16)'],
       ]) +
-      hi(`Elena de White describe ese momento: las multitudes ven que fueron
-      engañadas y se vuelven contra quienes las guiaron mal; «las espadas que
-      debían servir para destruir al pueblo de Dios se emplean ahora para
-      matar a sus enemigos».<br><br>
+      hi(`En ese momento las multitudes ven que fueron engañadas y se vuelven
+      contra quienes las guiaron mal: «las espadas que debían servir para
+      destruir al pueblo de Dios se emplean ahora para matar a sus enemigos»
+      (CS 714).<br><br>
       Dios lo permite «hasta que se hayan cumplido las palabras de Dios»
       (17:17). Y 17:18, que llama a la mujer «la gran ciudad», es el puente al
       capítulo 18.`) +
-      hi(`Fuentes: Bohr, «Apocalipsis 17», pág. 5-8 y 23-24; Elena de White,
-      «El conflicto de los siglos», pág. 713-714; Bohr, «El Mensaje de los
-      Tres Ángeles», tomo 2, pág. 217.`) },
+      `<p>Fuente: Bohr, <i>Apocalipsis 17</i>, p. 5-8 y 23-24; Bohr, <i>Tres ángeles</i> 2:217; CS 713-714.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos (1): la mujer', capa: 'contexto', h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
@@ -267,9 +252,7 @@ module.exports = {
         ['Púrpura y escarlata', 'Realeza', 'Juan 19:2, 5; Mateo 27:28'],
         ['Babilonia', 'Confusión', 'Génesis 11:9'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      pág. 102-106; Bohr, «Apocalipsis 17», pág. 4-5 y 11; Elena de White,
-      «El conflicto de los siglos», pág. 431 y 434.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:102-106; Bohr, <i>Apocalipsis 17</i>, p. 4-5 y 11; CS 431 y 434.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos (2): la bestia', capa: 'contexto', h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
@@ -282,8 +265,7 @@ module.exports = {
         ['Perdición', 'La destrucción final', '2 Tesalonicenses 2:3; Juan 17:12'],
         ['El Cordero', 'Cristo', 'Apocalipsis 17:14 con 19:13, 16: «La Palabra de Dios» lleva el nombre «Rey de reyes y Señor de señores»'],
       ]) +
-      hi(`Fuentes: Bohr, «15 principios de interpretación profética», tomo 2,
-      pág. 105-106; Bohr, «Apocalipsis 17», pág. 14-16, 20-21 y 23-24.`) },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:105-106; Bohr, <i>Apocalipsis 17</i>, p. 14-16, 20-21 y 23-24.</p>` },
   ],
 
   preguntas: [
@@ -438,96 +420,96 @@ module.exports = {
       o: ['Apocalipsis 17:18', 'Apocalipsis 17:15', 'Apocalipsis 17:9', 'Apocalipsis 17:5'], a: 0,
       e: 'Apocalipsis 17:18, el último versículo del capítulo.' },
     { t: 'mc', v: '17:1', f: 'c',
-      q: 'Según Bohr, ¿cuál de los siete ángeles de las copas le habla a Juan en Apocalipsis 17:1?',
+      q: '¿Cuál de los siete ángeles de las copas le habla a Juan en Apocalipsis 17:1?',
       o: ['El de la sexta copa, la del Éufrates', 'El de la primera copa, la de la úlcera', 'El de la séptima copa, la del terremoto', 'El de la quinta copa, la de las tinieblas'], a: 0,
-      e: 'Bohr: Babilonia estaba sentada sobre las aguas del Éufrates (Jeremías 51:13) y la única plaga que nombra ese río es la sexta (16:12); ese ángel vuelve para explicar a Juan lo pendiente. Fuente: Bohr, «Apocalipsis 17», pág. 3-4.' },
+      e: 'Babilonia estaba sentada sobre las aguas del Éufrates (Jeremías 51:13) y la única plaga que nombra ese río es la sexta (16:12); ese ángel vuelve para explicar a Juan lo pendiente. Fuente: Bohr, Apocalipsis 17, p. 3-4.' },
     { t: 'mc', v: '17:1', f: 'c',
-      q: 'Según Elena de White, ¿qué representa una mujer en la profecía bíblica?',
+      q: '¿Qué representa una mujer en la profecía bíblica?',
       o: ['Una iglesia', 'Un imperio', 'Una ciudad antigua', 'Un ángel caído'], a: 0,
-      e: 'Elena de White: la mujer es «figura que se emplea en la Biblia para representar una iglesia»; la virtuosa, una iglesia pura; la vil, una iglesia apóstata (que se apartó de Dios). Fuente: Elena de White, «El conflicto de los siglos», pág. 431.' },
+      e: 'La mujer es «figura que se emplea en la Biblia para representar una iglesia» (CS 431); la virtuosa, una iglesia pura; la vil, una iglesia apóstata (que se apartó de Dios). Fuente: CS 431.' },
     { t: 'mc', v: '17:2', f: 'c',
-      q: 'Según Bohr, ¿qué significa que los reyes de la tierra «han fornicado» con la ramera (Apocalipsis 17:2)?',
+      q: '¿Qué significa que los reyes de la tierra «han fornicado» con la ramera (Apocalipsis 17:2)?',
       o: ['Que la iglesia se une con el estado', 'Que los reyes adoran ídolos de piedra', 'Que hay alianzas de guerra entre reyes', 'Que el comercio mundial se corrompe'], a: 0,
-      e: 'Bohr: si la ramera es la religión que se apartó de Dios, su fornicación con los reyes es la unión de la iglesia con el estado. Fuente: Bohr, «Apocalipsis 17», pág. 4.' },
+      e: 'Si la ramera es la religión que se apartó de Dios, su fornicación con los reyes es la unión de la iglesia con el estado. Fuente: Bohr, Apocalipsis 17, p. 4.' },
     { t: 'mc', v: '17:4', f: 'c',
-      q: 'Según Elena de White, ¿qué describen la púrpura, la escarlata, el oro y las perlas de la mujer (Apocalipsis 17:4)?',
+      q: '¿Qué describen la púrpura, la escarlata, el oro y las perlas de la mujer (Apocalipsis 17:4)?',
       o: ['La pompa más que real de la sede romana', 'La riqueza de la antigua Babilonia', 'La hermosura de la iglesia fiel', 'El lujo de los imperios paganos'], a: 0,
-      e: 'Elena de White: describen «la magnificencia y la pompa más que reales» de la sede romana en su historia. Es un juicio sobre un sistema, no sobre sus fieles. Fuente: Elena de White, «El conflicto de los siglos», pág. 432-433.' },
+      e: 'Describen «la magnificencia y la pompa más que reales» de la sede romana en su historia. Es un juicio sobre un sistema, no sobre sus fieles. Fuente: CS 432-433.' },
     { t: 'mc', v: '17:4', f: 'c',
-      q: 'Según Elena de White, citada por Bohr, ¿qué es el «vino» que Babilonia da a las naciones?',
+      q: '¿Qué es el «vino» que Babilonia da a las naciones?',
       o: ['Falsas doctrinas, como el alma inmortal', 'Bebidas alcohólicas en los cultos', 'Riquezas mal ganadas en el comercio', 'Persecución contra los profetas'], a: 0,
-      e: 'El vino del error son falsas doctrinas como la inmortalidad natural del alma, el tormento eterno y exaltar el primer día de la semana sobre el sábado. Fuente: Bohr, «Apocalipsis 17», pág. 11-12 (cita «Testimonios para los ministros», pág. 59).' },
+      e: 'El vino del error son falsas doctrinas como la inmortalidad natural del alma, el tormento eterno y exaltar el primer día de la semana sobre el sábado. Fuente: Bohr, Apocalipsis 17, p. 11-12; TM 59.' },
     { t: 'tf', v: '17:6', f: 'c',
-      q: 'Según Elena de White, la mujer ebria de la sangre de los santos señala al poder que por siglos persiguió a los discípulos de Cristo.', a: true,
-      e: 'Verdadero: dice que de ningún otro poder se podría decir con más propiedad que estaba «embriagada de la sangre de los santos». Fuente: Elena de White, «El conflicto de los siglos», pág. 433.' },
+      q: 'La mujer ebria de la sangre de los santos señala al poder que por siglos persiguió a los discípulos de Cristo.', a: true,
+      e: 'Verdadero: de ningún otro poder se podría decir con más propiedad que estaba «embriagada de la sangre de los santos». Fuente: CS 432-433.' },
     { t: 'mc', v: '17:5', f: 'c',
-      q: 'Según Elena de White, ¿qué simbolizan las hijas de «la madre de las rameras» (Apocalipsis 17:5)?',
+      q: '¿Qué simbolizan las hijas de «la madre de las rameras» (Apocalipsis 17:5)?',
       o: ['Iglesias que siguen sus doctrinas', 'Naciones que se separaron de Roma', 'Ciudades edificadas sobre siete montes', 'Reyes que la aborrecen al final'], a: 0,
-      e: 'Elena de White: las hijas son las iglesias que se atienen a sus doctrinas y tradiciones y buscan alianza ilícita con el mundo. Fuente: Elena de White, «El conflicto de los siglos», pág. 433.' },
+      e: 'Las hijas son las iglesias que se atienen a sus doctrinas y tradiciones y buscan alianza ilícita con el mundo. Fuente: CS 433.' },
     { t: 'tf', v: '17:5', f: 'c',
-      q: 'Según Elena de White, la mayoría de los verdaderos discípulos de Cristo se encuentran todavía en las iglesias que forman Babilonia.', a: true,
-      e: 'Verdadero: por eso el juicio es contra un sistema y no contra personas, y Dios llama a los suyos a salir (18:4). Fuente: Elena de White, «El conflicto de los siglos», pág. 441.' },
+      q: 'La mayoría de los verdaderos discípulos de Cristo se encuentran todavía en las iglesias que forman Babilonia.', a: true,
+      e: 'Verdadero: por eso el juicio es contra un sistema y no contra personas, y Dios llama a los suyos a salir (18:4). Fuente: CS 441.' },
     { t: 'mc', v: '17:8', f: 'c',
-      q: 'Según Bohr, ¿qué significa que la bestia «era y no es, y será» (Apocalipsis 17:8)?',
+      q: '¿Qué significa que la bestia «era y no es, y será» (Apocalipsis 17:8)?',
       o: ['Dominó 1260 años, fue herida y volverá a dominar', 'Reinó en Babilonia, cayó con Ciro y no volverá', 'Existió en tiempos de Juan y luego desapareció', 'Es un espíritu que aparece y se esconde en la historia'], a: 0,
-      e: 'Bohr: «era» durante los 1260 años; «no es» por la herida mortal; «subirá del abismo» cuando se sane la herida y el mundo la siga. Fuente: Bohr, «Apocalipsis 17», pág. 17-18.' },
+      e: '«Era» durante los 1260 años; «no es» por la herida mortal; «subirá del abismo» cuando se sane la herida y el mundo la siga. Fuente: Bohr, Apocalipsis 17, p. 17-18.' },
     { t: 'mc', v: '17:8', f: 'c',
-      q: 'Según Bohr, ¿qué fechas marcan el período en que la bestia «era»?',
+      q: '¿Qué fechas marcan el período en que la bestia «era»?',
       o: ['Del 538 al 1798', 'Del 1798 al 1844', 'Del 313 al 1517', 'Del 1260 al 1798'], a: 0,
-      e: 'Bohr: los 1260 años (42 meses) de persecución papal van del 538 al 1798; en 1798 la bestia recibe la herida mortal. Fuente: Bohr, «Apocalipsis 17», pág. 8.' },
+      e: 'Los 1260 años (42 meses) de persecución papal van del 538 al 1798; en 1798 la bestia recibe la herida mortal. Fuente: Bohr, Apocalipsis 17, p. 8.' },
     { t: 'mc', v: '17:8', f: 'c',
-      q: 'Según Bohr, ¿qué representa «el abismo» del que sube la bestia en Apocalipsis 17:8?',
+      q: '¿Qué representa «el abismo» del que sube la bestia en Apocalipsis 17:8?',
       o: ['La esfera de los muertos', 'El fondo del mar Mediterráneo', 'El desierto donde huyó la mujer', 'Un infierno que arde para siempre'], a: 0,
-      e: 'Bohr: el abismo es la esfera de los muertos (Romanos 10:7); la bestia «sube» porque revive de su herida mortal. Fuente: Bohr, «Apocalipsis 17», pág. 15-16.' },
+      e: 'El abismo es la esfera de los muertos (Romanos 10:7); la bestia «sube» porque revive de su herida mortal. Fuente: Bohr, Apocalipsis 17, p. 15-16.' },
     { t: 'mc', v: '17:9', f: 'c',
-      q: 'Según Bohr, ¿qué representan los siete montes de Apocalipsis 17:9?',
+      q: '¿Qué representan los siete montes de Apocalipsis 17:9?',
       o: ['Siete reinos que gobiernan en sucesión', 'Las siete colinas de la ciudad de Roma', 'Siete papas que reinan desde 1929', 'Siete iglesias de la provincia de Asia'], a: 0,
-      e: 'Bohr: en la profecía los montes representan reinos, no gobernantes sueltos (Daniel 2:35, 44); las cabezas reinan una tras otra. Fuente: Bohr, «Apocalipsis 17», pág. 14 y 18.' },
+      e: 'En la profecía los montes representan reinos, no gobernantes sueltos (Daniel 2:35, 44); las cabezas reinan una tras otra. Fuente: Bohr, Apocalipsis 17, p. 14 y 18.' },
     { t: 'mc', v: '17:10', f: 'c',
-      q: 'Según Bohr, ¿cuál es la sexta cabeza de la bestia escarlata?',
+      q: 'En la lista de las siete cabezas de esta lección, ¿cuál es la sexta?',
       o: ['Estados Unidos bajo el protestantismo', 'El Imperio romano de los días de Juan', 'Medo-Persia, después de Babilonia', 'El papado ya sanado de su herida'], a: 0,
-      e: 'Bohr: 1 Babilonia, 2 Medo-Persia, 3 Grecia, 4 Roma imperial, 5 Europa bajo el papado, 6 Estados Unidos bajo un protestantismo que se apartó de sus principios, 7 Roma papal sanada. (Treiyer, en otra lectura, pone como sexta al poder secular nacido en la Revolución francesa.) Fuente: Bohr, «Apocalipsis 17», pág. 18.' },
+      e: '1 Babilonia, 2 Medo-Persia, 3 Grecia, 4 Roma imperial, 5 Europa bajo el papado, 6 Estados Unidos bajo un protestantismo que se apartó de sus principios, 7 Roma papal sanada. Otra lectura pone como sexta al poder secular nacido en la Revolución francesa. Fuente: Bohr, Apocalipsis 17, p. 18.' },
     { t: 'mc', v: '17:10', f: 'c',
-      q: 'Según Bohr, ¿por qué no empieza las siete cabezas con Egipto y Asiria?',
+      q: '¿Por qué las siete cabezas no empiezan con Egipto y Asiria?',
       o: ['En Daniel la serie siempre empieza con Babilonia', 'Egipto y Asiria nunca oprimieron a Israel', 'Juan no conocía la historia de esos dos reinos', 'Esos reinos ya no existían cuando escribió Daniel'], a: 0,
-      e: 'Bohr: Egipto y Asiria no aparecen en la secuencia de Daniel 2, Daniel 7 ni Apocalipsis 13, que siempre comienza con Babilonia. Fuente: Bohr, «Apocalipsis 17», pág. 16.' },
+      e: 'Egipto y Asiria no aparecen en la secuencia de Daniel 2, Daniel 7 ni Apocalipsis 13, que siempre comienza con Babilonia. Fuente: Bohr, Apocalipsis 17, p. 16.' },
     { t: 'mc', v: '17:10', f: 'c',
-      q: 'En la otra lectura que recogen las notas de estudio (Treiyer), ¿cuál es la sexta cabeza de la bestia?',
+      q: 'En la otra lectura de las cabezas, ¿cuál es la sexta cabeza de la bestia?',
       o: ['El poder secular de la Revolución francesa', 'El Imperio romano de los días de Juan', 'El papado sanado de su herida mortal', 'El Imperio griego después de Alejandro'], a: 0,
-      e: 'Treiyer: la quinta es Roma papal, la sexta la Francia atea que la hirió en 1798, la séptima el protestantismo de Estados Unidos que le devuelve el poder, y el octavo el papado restaurado. Bohr, en cambio, pone a Estados Unidos como sexta. Fuente: Treiyer, «Identificando a Babilonia», pág. 7.' },
+      e: 'En esa lectura la quinta es Roma papal, la sexta la Francia atea que la hirió en 1798, la séptima el protestantismo de Estados Unidos que le devuelve el poder, y el octavo el papado restaurado. La lista principal pone a Estados Unidos como sexta. Fuente: Treiyer, Identificando a Babilonia, p. 7.' },
     { t: 'tf', v: '17:11', f: 'c',
-      q: 'Según Bohr, la bestia escarlata tiene una octava cabeza distinta de las siete.', a: false,
-      e: 'Falso: para Bohr solo tiene siete cabezas; la séptima cuenta como «octava» porque revive de su herida, y el 8 es el número de la resurrección. Fuente: Bohr, «Apocalipsis 17», pág. 20.' },
+      q: 'La bestia escarlata tiene una octava cabeza distinta de las siete.', a: false,
+      e: 'Falso: solo tiene siete cabezas; la séptima cuenta como «octava» porque revive de su herida, y el 8 es el número de la resurrección. Fuente: Bohr, Apocalipsis 17, p. 20.' },
     { t: 'mc', v: '17:12', f: 'c',
-      q: 'Según Bohr, ¿qué representan los diez cuernos al final de la historia?',
+      q: '¿Qué representan los diez cuernos al final de la historia?',
       o: ['Los reyes de la tierra y de todo el mundo', 'Diez reinos bárbaros que dividieron Roma', 'Diez naciones de la Unión Europea', 'Diez papas que gobernarán en el fin'], a: 0,
-      e: 'Bohr: en Daniel los diez cuernos fueron las divisiones de Europa, pero al final son «los reyes de la tierra en todo el mundo» (16:14); el diez significa «todos». Fuente: Bohr, «Apocalipsis 17», pág. 21.' },
+      e: 'En Daniel los diez cuernos fueron las divisiones de Europa, pero al final son los reyes de la tierra en todo el mundo (16:14); el diez significa «todos». Fuente: Bohr, Apocalipsis 17, p. 21.' },
     { t: 'mc', v: '17:13', f: 'c',
-      q: 'Según Bohr, ¿en qué tendrán «un mismo propósito» los reyes de Apocalipsis 17:13?',
+      q: '¿En qué tendrán «un mismo propósito» los reyes de Apocalipsis 17:13?',
       o: ['En imponer una ley dominical mundial', 'En reconstruir la ciudad de Babilonia', 'En destruir la ciudad de Jerusalén', 'En formar un gobierno sin religión'], a: 0,
-      e: 'Bohr: los gobernantes del mundo, influidos por los sistemas religiosos, se unirán para redactar y hacer cumplir una ley dominical mundial. Fuente: Bohr, «Apocalipsis 17», pág. 21-22.' },
+      e: 'Los gobernantes del mundo, influidos por los sistemas religiosos, se unirán para redactar y hacer cumplir una ley dominical mundial. Fuente: Bohr, Apocalipsis 17, p. 21-22.' },
     { t: 'mc', v: '17:16', f: 'c',
-      q: 'Según Bohr, ¿qué hecho histórico ilustra que los reyes se vuelvan contra la ramera (Apocalipsis 17:16)?',
+      q: '¿Qué hecho histórico ilustra que los reyes se vuelvan contra la ramera (Apocalipsis 17:16)?',
       o: ['La Revolución francesa', 'La Reforma protestante', 'La caída de Constantinopla', 'El edicto de Constantino'], a: 0,
-      e: 'Bohr: como en la Revolución francesa, la espada del poder civil que se usó contra el pueblo de Dios se levantará contra la ramera. Fuente: Bohr, «Apocalipsis 17», pág. 7.' },
+      e: 'Como en la Revolución francesa, la espada del poder civil que se usó contra el pueblo de Dios se levantará contra la ramera. Fuente: Bohr, Apocalipsis 17, p. 7.' },
     { t: 'tf', v: '17:16', f: 'c',
-      q: 'Según Elena de White, al final las multitudes engañadas se vuelven contra quienes las guiaron a perseguir al pueblo de Dios.', a: true,
-      e: 'Verdadero: «Las espadas que debían servir para destruir al pueblo de Dios se emplean ahora para matar a sus enemigos». Bohr lo une con 17:16. Fuentes: Elena de White, «El conflicto de los siglos», pág. 713-714; Bohr, «Apocalipsis 17», pág. 23-24.' },
+      q: 'Al final, las multitudes engañadas se vuelven contra quienes las guiaron a perseguir al pueblo de Dios.', a: true,
+      e: 'Verdadero: «Las espadas que debían servir para destruir al pueblo de Dios se emplean ahora para matar a sus enemigos». Es lo que anuncia 17:16. Fuente: CS 713-714; Bohr, Apocalipsis 17, p. 23-24.' },
     { t: 'mc', v: '17:15', f: 'c',
       q: '¿Qué versículo del mismo capítulo explica qué son las aguas donde se sienta la ramera?',
       o: ['Apocalipsis 17:15', 'Apocalipsis 17:1', 'Apocalipsis 17:9', 'Apocalipsis 17:18'], a: 0,
-      e: '«Las aguas que has visto, donde se sienta la ramera, son pueblos, muchedumbres, naciones y lenguas» (17:15). El ángel intérprete explica la visión en los versículos 9-18. Fuente: Bohr, «Apocalipsis 17», pág. 3 y 5.' },
+      e: '«Las aguas que has visto, donde se sienta la ramera, son pueblos, muchedumbres, naciones y lenguas» (17:15). El ángel intérprete explica la visión en los versículos 9-18. Fuente: Bohr, Apocalipsis 17, p. 3 y 5.' },
     { t: 'mc', v: '17:1', f: 'c',
-      q: 'Según Bohr, ¿qué texto del Antiguo Testamento compara al pueblo de Dios con una mujer?',
+      q: '¿Qué texto del Antiguo Testamento compara al pueblo de Dios con una mujer?',
       o: ['Jeremías 6:2, la hija de Sión', 'Génesis 3:20, Eva, madre de todos', 'Rut 1:16, la moabita fiel', 'Proverbios 31:10, la mujer virtuosa'], a: 0,
-      e: 'Bohr: una mujer pura representa una iglesia pura (Jeremías 6:2; Efesios 5:25-27), y una ramera, una iglesia que se prostituyó (Ezequiel 16). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 103.' },
+      e: 'Una mujer pura representa una iglesia pura (Jeremías 6:2; Efesios 5:25-27), y una ramera, una iglesia que se prostituyó (Ezequiel 16). Fuente: Bohr, 15 principios 2:103.' },
     { t: 'mc', v: '17:2', f: 'c',
-      q: 'Según Bohr, ¿qué texto llama adulterio a la amistad con el mundo, como la fornicación de la ramera con los reyes?',
+      q: '¿Qué texto llama adulterio a la amistad con el mundo, como la fornicación de la ramera con los reyes?',
       o: ['Santiago 4:4', 'Romanos 12:2', '1 Juan 2:15', 'Mateo 6:24'], a: 0,
-      e: 'Bohr: la mujer que se comporta como ramera es una iglesia que tiene relaciones ilícitas con los poderes civiles (Apocalipsis 17:1; Santiago 4:4; Ezequiel 16:15, 26). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 106.' },
+      e: 'La mujer que se comporta como ramera es una iglesia que tiene relaciones ilícitas con los poderes civiles (Apocalipsis 17:1; Santiago 4:4; Ezequiel 16:15, 26). Fuente: Bohr, 15 principios 2:106.' },
     { t: 'tf', v: '17:12', f: 'c',
       q: 'Tanto Daniel 7:24 como Apocalipsis 17:12 explican que los cuernos representan reyes.', a: true,
-      e: 'Verdadero: «Los diez cuernos significan que de aquel reino se levantarán diez reyes» (Daniel 7:24); «Los diez cuernos que has visto son diez reyes» (17:12). Fuente: Bohr, «15 principios de interpretación profética», tomo 2, pág. 105.' },
+      e: 'Verdadero: «Los diez cuernos significan que de aquel reino se levantarán diez reyes» (Daniel 7:24); «Los diez cuernos que has visto son diez reyes» (17:12). Fuente: Bohr, 15 principios 2:105.' },
   ],
 
   tarjetas: [

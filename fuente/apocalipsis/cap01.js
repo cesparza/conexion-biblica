@@ -104,19 +104,18 @@ module.exports = {
 
     { t: '🧭 Un libro abierto, no sellado (1:1-3)', capa: 'contexto', h:
       hi(`<strong>Apocalipsis</strong> viene del griego <em>apokalypsis</em>:
-      «quitar el velo», revelar. Bohr lo contrasta con <em>apocryphon</em>, que
-      significa esconder. Por eso el libro no está cerrado: a Daniel se le dijo
-      que sellara su libro «hasta el tiempo del fin» (Daniel 12:4), pero a Juan
-      se le dijo que no lo sellara (Apocalipsis 22:10). El Apocalipsis le quita
-      el sello a Daniel.<br><br>
+      «quitar el velo», revelar. Lo contrario es <em>apocryphon</em>, esconder.
+      Por eso el libro no está cerrado: a Daniel se le dijo que sellara su libro
+      «hasta el tiempo del fin» (Daniel 12:4), y a Juan, que no lo sellara
+      (Apocalipsis 22:10). El Apocalipsis le quita el sello a Daniel.<br><br>
       La palabra «declaró» de 1:1 viene de <em>semaino</em>, «dar a conocer por
       señales»: el mensaje llega en <strong>símbolos</strong>, como un drama con
       escenas y personajes.<br><br>
-      En 1:3, dice Bohr, el verbo «oír» indica oír <strong>entendiendo</strong>.
-      Dios no bendeciría a alguien por leer algo imposible de entender.`) +
-      wa(`Elena de White responde a quienes dicen que el libro es un misterio:
-      el mismo título lo desmiente; es «un misterio revelado, un libro abierto».`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 9-12; Elena de White, El conflicto de los siglos, págs. 284-285.</p>` },
+      En 1:3, «oír» es oír <strong>entendiendo</strong>. Dios no bendice a nadie
+      por leer algo imposible de entender.`) +
+      wa(`El mismo título desmiente que el libro sea un misterio: es «un misterio
+      revelado, un libro abierto» (CS 389-390).`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 9-12; CS 389-390.</p>` },
 
     { t: '🧭 Pasado, presente y futuro (1:4-8, 1:19)', capa: 'contexto', h:
       hi(`Hay tres maneras de leer el Apocalipsis:`) +
@@ -125,23 +124,22 @@ module.exports = {
         ['Futurista', 'Casi todo se cumplirá al final'],
         ['Historicista', 'Se va cumpliendo en orden, desde Juan hasta la venida de Jesús'],
       ]) +
-      hi(`La iglesia adventista lee de la tercera forma (Bohr la llama
-      <strong>método histórico continuo</strong>). Se apoya en 1:19: «las cosas
-      que has visto» (pasado), «las que son» (presente) y «las que han de ser»
-      (futuro); y en el nombre de Dios en 1:4: el que es, el que era y el que ha
-      de venir.<br><br>
+      hi(`La iglesia adventista lee de la tercera forma, el <strong>método
+      histórico continuo</strong>. Se apoya en 1:19: «las cosas que has visto»
+      (pasado), «las que son» (presente) y «las que han de ser» (futuro); y en el
+      nombre de Dios en 1:4: el que es, el que era y el que ha de venir.<br><br>
       En 1:5-6 los verbos miran atrás (nos lavó, nos hizo): la obra de Jesús en
       la tierra. En 1:7 se mira adelante: la segunda venida. Entre esos dos
       postes cabe toda la historia que cuenta el libro.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 6-7 y 36; notas de Camilo en Evernote, "Las 7 iglesias".</p>` },
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 6-7 y 36.</p>` },
 
     { t: '🧭 Las siete iglesias y sus siete períodos (1:11, 1:20)', capa: 'contexto', h:
-      hi(`Había más iglesias en Asia (Troas, Mileto, Colosas…). Bohr da dos razones
-      para que Jesús escogiera estas siete: en el mapa forman un candelabro, y su
-      carácter retrata <strong>siete etapas</strong> de la iglesia. Elena de
-      White: sus nombres son «un símbolo de la iglesia en distintos períodos de
-      la era cristiana».`) +
-      tbl(['Iglesia', 'Su nombre', 'Período, según Bohr'], [
+      hi(`Había más iglesias en Asia (Troas, Mileto, Colosas…). Jesús escogió
+      estas siete por dos razones: en el mapa forman un candelabro, y su
+      carácter retrata <strong>siete etapas</strong> de la iglesia. Sus nombres
+      son «un símbolo de la iglesia en distintos períodos de la era cristiana»
+      (HAp 585).`) +
+      tbl(['Iglesia', 'Su nombre', 'Período'], [
         ['Éfeso', 'deseable', '31-100 d.C. · los apóstoles'],
         ['Esmirna', 'mirra', '100-313 · la persecución romana'],
         ['Pérgamo', 'elevación', '313-538 · la iglesia unida al Estado'],
@@ -150,34 +148,33 @@ module.exports = {
         ['Filadelfia', 'amor fraternal', '1833-1843 · el gran despertar'],
         ['Laodicea', 'juicio del pueblo', 'de 1844 al cierre de la gracia'],
       ]) +
-      wa(`Otras fechas adventistas: Urías Smith pone Pérgamo en 323-538, Tiatira
-      en 538-1798 y Sardis desde 1798; Maxwell, Tiatira en 538-1565 y Sardis en
-      1565-1740. Un sermón de las notas de Camilo usa Sardis 1517-1780 y
-      Filadelfia 1780-1844. Todos ponen el comienzo de Laodicea en 1844.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 6, 13-15 (cita a Elena de White, Hechos de los apóstoles, pág. 585); Urías Smith, Las profecías del Apocalipsis, págs. 26 y 30; C. Mervyn Maxwell, Apocalipsis, sus revelaciones, págs. 121 y 127; notas de Camilo en Evernote, "Sermón - Laodicea: El mensaje del Testigo Fiel".</p>` },
+      wa(`Otra lectura pone Pérgamo en 323-538, Tiatira en 538-1798 y Sardis
+      desde 1798; otra, Tiatira en 538-1565 y Sardis en 1565-1740. Todas
+      empiezan Laodicea en 1844.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 6, 13-15; HAp 585; Smith, <i>Las profecías del Apocalipsis</i>, p. 26 y 30; Maxwell, <i>Apocalipsis</i>, p. 121 y 127.</p>` },
 
     { t: '🧭 Patmos y el «día del Señor» (1:9-10)', capa: 'contexto', h:
       hi(`<strong>Patmos</strong> es una isla rocosa del mar Egeo, a unos 80 km de
-      Éfeso, sin árboles ni ríos: Roma mandaba allí a sus desterrados. Según
-      Elena de White, en tiempos del emperador <strong>Domiciano</strong> (81-96
-      d.C.) echaron a Juan en una caldera de aceite hirviendo; Dios lo guardó
-      como a los tres hebreos en el horno, y luego lo desterraron. Tertuliano
-      cuenta lo mismo.`) +
+      Éfeso, sin árboles ni ríos: Roma mandaba allí a sus desterrados. En
+      tiempos del emperador <strong>Domiciano</strong> (81-96 d.C.) echaron a
+      Juan en una caldera de aceite hirviendo; Dios lo guardó como a los tres
+      hebreos en el horno, y luego lo desterraron. Tertuliano cuenta lo
+      mismo.`) +
       hi(`<strong>El día del Señor.</strong> Algunos lo leen como el día de la
-      segunda venida. Bohr responde que el capítulo muestra a Jesús sirviendo
-      como sacerdote, no viniendo, y que Elena de White lo dice claro: fue
-      <strong>en sábado</strong> cuando Juan vio la gloria del Señor.<br><br>
+      segunda venida. Pero el capítulo muestra a Jesús sirviendo como
+      sacerdote, no viniendo. Fue <strong>en sábado</strong> cuando Juan vio la
+      gloria del Señor.<br><br>
       La Biblia llama al sábado «mi día santo» (Isaías 58:13), y Jesús se
-      llamó «Señor aun del sábado» (Marcos 2:28). Elena de White: la Biblia
-      señala el séptimo día, «y no el primero, como día del Señor».`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 8-9 (cita a Elena de White, Hechos de los apóstoles, págs. 455 y 464-465); Elena de White, El conflicto de los siglos, pág. 365; Urías Smith, Las profecías del Apocalipsis, pág. 14.</p>` },
+      llamó «Señor aun del sábado» (Marcos 2:28). La Biblia señala el séptimo
+      día, «y no el primero, como día del Señor» (CS 500).`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 8-9; HAp 455 y 464-465; CS 500; Smith, <i>Las profecías del Apocalipsis</i>, p. 14.</p>` },
 
     { t: '🧭 Jesús, sumo sacerdote entre los candelabros (1:12-13)', capa: 'contexto', h:
       hi(`El candelabro estaba en el <strong>lugar santo</strong>, la primera sala
       del santuario. Al verlo entre los candelabros, Juan ve a Jesús en el lugar
       santo del santuario celestial, donde ministró durante la mayor parte de la
-      era cristiana. Elena de White: Juan vio allí las lámparas y el altar de
-      oro del primer departamento.<br><br>
+      era cristiana. Juan vio allí las lámparas y el altar de oro del primer
+      departamento.<br><br>
       La ropa hasta los pies y el cinto de oro son el vestido del
       <strong>sumo sacerdote</strong> (Levítico 8). Jesús es nuestro sumo
       sacerdote en el cielo (Hebreos 8:1-2).<br><br>
@@ -185,13 +182,13 @@ module.exports = {
       24:1-4). El <strong>aceite</strong> es el Espíritu Santo y la
       <strong>luz</strong>, la predicación del evangelio. Jesús camina entre las
       iglesias para que la luz no se apague, ni siquiera en la Edad Media.`) +
-      wa(`Según Bohr, el libro sigue los pasos de Jesús por el santuario: las
-      iglesias, los sellos y las trompetas pasan en el lugar santo; desde 11:19
-      se abre el lugar santísimo.`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 18-22; Bohr, El Santuario en Apocalipsis, págs. 3 y 6; Elena de White, El conflicto de los siglos, pág. 341.</p>` },
+      wa(`El libro sigue los pasos de Jesús por el santuario: las iglesias, los
+      sellos y las trompetas pasan en el lugar santo; desde 11:19 se abre el
+      lugar santísimo.`) +
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 18-22; Bohr, <i>El santuario en Apocalipsis</i>, p. 3 y 6; CS 466-467.</p>` },
 
     { t: '🧭 Qué significa cada rasgo de Jesús (1:14-16, 1:20)', capa: 'contexto', h:
-      tbl(['Símbolo', 'Significado, según Bohr'], [
+      tbl(['Símbolo', 'Significado'], [
         ['Ojos como llama de fuego', 'Lo ven todo. Buscan el pecado para quitarlo: por eso cada carta dice «yo conozco tus obras». En 19:12 esos ojos ya vienen a juzgar.'],
         ['Espada de dos filos', 'La palabra de Dios, que sale de su boca (Hebreos 4:12; Efesios 6:17).'],
         ['Siete estrellas en la diestra', 'Los mensajeros o ministros de la iglesia en cada etapa. La diestra es la mano del favor: nadie los arrebata de ella (Juan 10:28).'],
@@ -200,39 +197,39 @@ module.exports = {
       hi(`Los ojos y la espada trabajan juntos, como un médico: primero
       <strong>diagnostica</strong> dónde está el mal y después
       <strong>opera</strong> para quitarlo. Duele, pero salva.`) +
-      `<p>Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 22-28.</p>` },
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 22-28.</p>` },
 
     { t: '🧭 Viene con las nubes: la resurrección especial (1:7)', capa: 'contexto', h:
-      hi(`Para Bohr, las <strong>nubes</strong> son nubes de ángeles: una nube se
-      llevó a Jesús al cielo (Hechos 1:9) y él volverá con todos sus ángeles
-      (Mateo 25:31). En Daniel 7:13, con las nubes llega el Hijo del hombre ante
-      el Anciano de días para el juicio.<br><br>
-      «Los que lo traspasaron» no viven hoy. Por eso Bohr y Elena de White
-      hablan de una <strong>resurrección especial</strong> antes de la venida:
-      Daniel 12:2 dice que despertarán «muchos», no todos.`) +
+      hi(`Las <strong>nubes</strong> son nubes de ángeles: una nube se llevó a
+      Jesús al cielo (Hechos 1:9) y él volverá con todos sus ángeles (Mateo
+      25:31). En Daniel 7:13, con las nubes llega el Hijo del hombre ante el
+      Anciano de días para el juicio.<br><br>
+      «Los que lo traspasaron» no viven hoy. Por eso hay una
+      <strong>resurrección especial</strong> antes de la venida: Daniel 12:2
+      dice que despertarán «muchos», no todos.`) +
       tbl(['Quiénes resucitan para verlo venir', 'Por qué'], [
         ['Los que se burlaron de Cristo y los peores enemigos de su verdad', 'Para mirarlo en su gloria y ver el honor de los fieles (Mateo 26:64)'],
         ['Los que murieron en la fe del mensaje del tercer ángel (desde 1844)', 'Para oír el pacto de paz de Dios con los que guardaron su ley (14:13)'],
       ]) +
       wa(`La resurrección de todos los demás impíos es después del milenio (20:5).`) +
-      `<p>Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 37-43; Elena de White, El conflicto de los siglos, pág. 512.</p>` },
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 37-43; CS 695.</p>` },
 
     { t: '🧭 Las llaves de la muerte y del Hades (1:5, 1:17-18)', capa: 'contexto', h:
       hi(`<strong>Hades</strong> es la palabra griega que equivale al
       <strong>Seol</strong> hebreo: el <strong>sepulcro</strong>, no un lugar de
       tormento. Pedro cita el Salmo 16:10 («no dejarás mi alma en el Seol») y en
       griego dice Hades (Hechos 2:27).<br><br>
-      La imagen de Bohr: Satanás era el carcelero, el sepulcro la cárcel y los
-      muertos sus presos. Jesús entró al sepulcro, le quitó las llaves y salió
-      con ellas en la mano (Hebreos 2:14-15).<br><br>
+      Satanás era el carcelero, el sepulcro la cárcel y los muertos sus presos.
+      Jesús entró al sepulcro, le quitó las llaves y salió con ellas en la mano
+      (Hebreos 2:14-15).<br><br>
       <strong>«El primogénito de los muertos»</strong> (1:5) no quiere decir el
       primero que resucitó (antes resucitaron Lázaro y otros). Quiere decir el
       de <strong>mayor rango</strong>, porque su resurrección hace posibles todas
       las demás (Colosenses 1:15-18).<br><br>
-      El capítulo empieza y termina con su muerte y resurrección (1:5 y 1:18):
-      «un muerto no puede mantener las lámparas encendidas». Jesús vive para
+      El capítulo empieza y termina con su muerte y resurrección (1:5 y 1:18).
+      Un muerto no puede mantener las lámparas encendidas: Jesús vive para
       interceder (Hebreos 7:25).`) +
-      `<p>Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 17-18 y 31-36.</p>` },
+      `<p>Fuente: Bohr, <i>Las siete iglesias</i>, p. 17-18 y 31-36.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
       `<p>Dos símbolos se explican en el mismo capítulo (1:20); los demás, en otros textos.</p>` +
@@ -248,7 +245,7 @@ module.exports = {
         ['Sol', 'Cristo, el Sol de justicia', 'Malaquías 4:2'],
         ['Hades', 'El sepulcro', 'Hechos 2:27 con Salmo 16:10'],
       ]) +
-      `<p>Fuentes: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104-105; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. PDF 19, 23-24, 32-33 y 37; notas de Camilo en Evernote, "Las 7 iglesias" y "El Jesús del Apocalipsis".</p>` },
+      `<p>Fuente: Bohr, <i>15 principios</i> 2:104-105; Bohr, <i>Las siete iglesias</i>, p. 19, 23-24, 32-33 y 37.</p>` },
   ],
 
   preguntas: [
@@ -333,9 +330,9 @@ module.exports = {
       o: ['Una gran voz, como de trompeta', 'Una voz suave, como de brisa', 'Una voz como de muchas aguas', 'Una voz como de trueno lejano'], a: 0,
       e: '«…oí detrás de mí una gran voz, como de trompeta» (1:10). La voz «como de muchas aguas» es la de 1:15.' },
     { t: 'mc', v: '1:10', f: 'c',
-      q: 'Según Elena de White, ¿qué día es «el día del Señor» de Apocalipsis 1:10?',
+      q: '¿Qué día es «el día del Señor» de Apocalipsis 1:10?',
       o: ['El sábado', 'El domingo', 'El día de la segunda venida', 'El día de la Pascua'], a: 0,
-      e: 'Fue en sábado cuando Juan vio la gloria del Señor; Jesús es «Señor aun del sábado» (Marcos 2:28). Bohr menciona que algunos lo leen como la segunda venida, pero el capítulo muestra a Jesús como sacerdote. Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 8-9; Elena de White, El conflicto de los siglos, pág. 365.' },
+      e: 'Fue en sábado cuando Juan vio la gloria del Señor; Jesús es «Señor aun del sábado» (Marcos 2:28). Algunos lo leen como la segunda venida, pero el capítulo muestra a Jesús como sacerdote. Fuente: Bohr, <i>Las siete iglesias</i>, p. 8-9; CS 500.' },
     { t: 'mc', v: '1:11', lit: 'Esmirna, Pérgamo, Tiatira',
       q: '¿Cuál es el orden de las siete iglesias en Apocalipsis 1:11?',
       o: ['Éfeso, Esmirna, Pérgamo, Tiatira, Sardis, Filadelfia, Laodicea', 'Éfeso, Pérgamo, Esmirna, Sardis, Tiatira, Laodicea, Filadelfia', 'Esmirna, Éfeso, Tiatira, Pérgamo, Filadelfia, Sardis, Laodicea', 'Laodicea, Filadelfia, Sardis, Tiatira, Pérgamo, Esmirna, Éfeso'], a: 0,
@@ -397,89 +394,89 @@ module.exports = {
       q: 'Según Apocalipsis 1:20, los siete candelabros son los ángeles de las siete iglesias.', a: false,
       e: 'Falso: los candelabros son las siete IGLESIAS; las estrellas son los ángeles (1:20).' },
     { t: 'mc', v: '1:20', f: 'c',
-      q: 'Según Bohr y Elena de White, además de ser iglesias reales de Asia, ¿qué representan las siete iglesias?',
+      q: 'Además de ser iglesias reales de Asia, ¿qué representan las siete iglesias?',
       o: ['Siete etapas de la historia de la iglesia hasta el fin', 'Siete denominaciones que existirán al mismo tiempo', 'Siete ángeles que gobiernan las naciones', 'Siete años de tribulación antes del fin'], a: 0,
-      e: 'Sus nombres son «un símbolo de la iglesia en distintos períodos de la era cristiana» (Elena de White, Hechos de los apóstoles, pág. 585). El texto solo las nombra (1:11, 1:20). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 6.' },
+      e: 'Sus nombres son «un símbolo de la iglesia en distintos períodos de la era cristiana» (HAp 585). El texto solo las nombra (1:11, 1:20). Fuente: Bohr, <i>Las siete iglesias</i>, p. 6; HAp 585.' },
     { t: 'mc', v: '1:1', f: 'c',
-      q: 'Según Bohr, ¿qué significa la palabra griega «apokalypsis», que da nombre al libro?',
+      q: '¿Qué significa la palabra griega «apokalypsis», que da nombre al libro?',
       o: ['Quitar el velo, revelar', 'Esconder, ocultar', 'El fin del mundo', 'Una visión de castigo'], a: 0,
-      e: 'Apokalypsis es «quitar el velo»; lo contrario es apocryphon, «esconder». Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 9.' },
+      e: 'Apokalypsis es «quitar el velo»; lo contrario es apocryphon, «esconder». Fuente: Bohr, <i>Las siete iglesias</i>, p. 9.' },
     { t: 'tf', v: '1:1', f: 'c',
-      q: 'Según Bohr, el Apocalipsis no fue sellado como Daniel, y le quita el sello a la parte de Daniel que estaba cerrada hasta el tiempo del fin.', a: true,
-      e: 'Verdadero: a Daniel se le dijo que sellara el libro (Daniel 12:4) y a Juan que no lo sellara (Apocalipsis 22:10). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 9-10.' },
+      q: 'El Apocalipsis no fue sellado como Daniel, y le quita el sello a la parte de Daniel que estaba cerrada hasta el tiempo del fin.', a: true,
+      e: 'Verdadero: a Daniel se le dijo que sellara el libro (Daniel 12:4) y a Juan que no lo sellara (Apocalipsis 22:10). Fuente: Bohr, <i>Las siete iglesias</i>, p. 9-10.' },
     { t: 'mc', v: '1:3', f: 'c',
-      q: 'Según Bohr, ¿qué quiere decir «oír» en la bienaventuranza de Apocalipsis 1:3?',
+      q: '¿Qué quiere decir «oír» en la bienaventuranza de Apocalipsis 1:3?',
       o: ['Oír entendiendo lo que se oye', 'Oír el sonido sin entenderlo', 'Obedecer sin hacer preguntas', 'Leer en voz alta en la iglesia'], a: 0,
-      e: 'Para Bohr el verbo indica comprender lo que se oye: Dios no bendice por leer algo imposible de entender. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 11-12.' },
+      e: 'El verbo indica comprender lo que se oye: Dios no bendice por leer algo imposible de entender. Fuente: Bohr, <i>Las siete iglesias</i>, p. 11-12.' },
     { t: 'mc', v: '1:19', f: 'c',
       q: 'En la interpretación adventista (método histórico), ¿cómo se leen las tres partes de Apocalipsis 1:19?',
       o: ['Como pasado, presente y futuro', 'Como tres visiones del mismo día final', 'Como tres cartas para tres iglesias', 'Como tres etapas de la vida de Juan'], a: 0,
-      e: '«Las cosas que has visto» (pasado), «las que son» (presente) y «las que han de ser» (futuro): el libro se cumple en orden a lo largo de la historia. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 6-7.' },
+      e: '«Las cosas que has visto» (pasado), «las que son» (presente) y «las que han de ser» (futuro): el libro se cumple en orden a lo largo de la historia. Fuente: Bohr, <i>Las siete iglesias</i>, p. 6-7.' },
     { t: 'mc', v: '1:11', f: 'c',
-      q: 'Según Bohr, ¿qué fechas tiene el período de Éfeso, la primera iglesia?',
+      q: '¿Qué fechas tiene el período de Éfeso, la primera iglesia?',
       o: ['31-100 d.C.', '100-313 d.C.', '313-538 d.C.', '538-1517 d.C.'], a: 0,
-      e: 'Éfeso es la iglesia apostólica, del 31 al 100 d.C. Las otras fechas son de Esmirna, Pérgamo y Tiatira. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 13.' },
+      e: 'Éfeso es la iglesia apostólica, del 31 al 100 d.C. Las otras fechas son de Esmirna, Pérgamo y Tiatira. Fuente: Bohr, <i>Las siete iglesias</i>, p. 13.' },
     { t: 'mc', v: '1:11', f: 'c',
-      q: 'Según Bohr, ¿desde cuándo corre el período de Laodicea, la última iglesia?',
+      q: '¿Desde cuándo corre el período de Laodicea, la última iglesia?',
       o: ['Desde 1844 hasta el cierre de la gracia', 'Desde 1517 hasta el despertar de 1833', 'Desde 1798 hasta el chasco de 1844', 'Desde 538 hasta la herida de 1798'], a: 0,
-      e: 'Laodicea («juicio del pueblo») va de 1844 al cierre de la gracia. Urías Smith y Maxwell también la empiezan en 1844. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 14-15.' },
+      e: 'Laodicea («juicio del pueblo») va de 1844 al cierre de la gracia. Las otras lecturas adventistas también la empiezan en 1844. Fuente: Bohr, <i>Las siete iglesias</i>, p. 14-15.' },
     { t: 'mc', v: '1:9', f: 'c',
-      q: 'Según Elena de White (citada por Bohr), ¿qué le pasó a Juan antes de ser desterrado a Patmos?',
+      q: '¿Qué le pasó a Juan antes de ser desterrado a Patmos?',
       o: ['Lo echaron en aceite hirviendo y salió con vida', 'Lo echaron a los leones en Éfeso', 'Lo encerraron en una cárcel de Roma', 'Lo apedrearon y lo dieron por muerto'], a: 0,
-      e: 'Bajo Domiciano lo echaron en una caldera de aceite hirviendo; Dios lo guardó como a los tres hebreos en el horno. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 8 (cita Hechos de los apóstoles, pág. 455).' },
+      e: 'Bajo Domiciano lo echaron en una caldera de aceite hirviendo; Dios lo guardó como a los tres hebreos en el horno. Fuente: Bohr, <i>Las siete iglesias</i>, p. 8; HAp 455.' },
     { t: 'mc', v: '1:9', f: 'c',
-      q: 'Según Bohr, ¿bajo qué emperador romano fue desterrado Juan a Patmos?',
+      q: '¿Bajo qué emperador romano fue desterrado Juan a Patmos?',
       o: ['Domiciano', 'Nerón', 'Constantino', 'Diocleciano'], a: 0,
-      e: 'Domiciano gobernó del 81 al 96 d.C. Nerón persiguió antes; Diocleciano, en los «diez días» de Esmirna; Constantino detuvo la persecución. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 8.' },
+      e: 'Domiciano gobernó del 81 al 96 d.C. Nerón persiguió antes; Diocleciano, en los «diez días» de Esmirna; Constantino detuvo la persecución. Fuente: Bohr, <i>Las siete iglesias</i>, p. 8.' },
     { t: 'mc', v: '1:12', f: 'c',
-      q: 'Según Bohr, ¿en qué parte del santuario celestial ve Juan a Jesús en Apocalipsis 1?',
+      q: '¿En qué parte del santuario celestial ve Juan a Jesús en Apocalipsis 1?',
       o: ['En el lugar santo, entre los candelabros', 'En el lugar santísimo, junto al arca', 'En el atrio, junto al altar del sacrificio', 'A la entrada del santuario, por fuera'], a: 0,
-      e: 'El candelabro estaba en el lugar santo; el lugar santísimo se abre hasta 11:19. Fuentes: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 18; Bohr, El Santuario en Apocalipsis, págs. 3 y 6.' },
+      e: 'El candelabro estaba en el lugar santo; el lugar santísimo se abre hasta 11:19. Fuente: Bohr, <i>Las siete iglesias</i>, p. 18; Bohr, <i>El santuario en Apocalipsis</i>, p. 3 y 6.' },
     { t: 'mc', v: '1:13', f: 'c',
-      q: 'En la interpretación de Bohr, ¿qué muestran la ropa hasta los pies y el cinto de oro de Apocalipsis 1:13?',
+      q: '¿Qué muestran la ropa hasta los pies y el cinto de oro de Apocalipsis 1:13?',
       o: ['Que Jesús viste como sumo sacerdote', 'Que Jesús viste como rey guerrero', 'Que Jesús viste como profeta del desierto', 'Que Jesús viste como juez romano'], a: 0,
-      e: 'Es el vestido del sumo sacerdote (Levítico 8); Jesús ministra en el santuario celestial (Hebreos 8:1-2). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 19.' },
+      e: 'Es el vestido del sumo sacerdote (Levítico 8); Jesús ministra en el santuario celestial (Hebreos 8:1-2). Fuente: Bohr, <i>Las siete iglesias</i>, p. 19.' },
     { t: 'tf', v: '1:12', f: 'c',
-      q: 'Según Bohr, en los candelabros el aceite representa al Espíritu Santo y la luz, la predicación del evangelio.', a: true,
-      e: 'Verdadero. Jesús camina entre ellos para que la luz nunca se apague (Levítico 24:1-4). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 21.' },
+      q: 'En los candelabros, el aceite representa al Espíritu Santo y la luz, la predicación del evangelio.', a: true,
+      e: 'Verdadero. Jesús camina entre ellos para que la luz nunca se apague (Levítico 24:1-4). Fuente: Bohr, <i>Las siete iglesias</i>, p. 21.' },
     { t: 'mc', v: '1:14', f: 'c',
-      q: 'Según Bohr, ¿qué hacen en Apocalipsis 1 los ojos de Jesús «como llama de fuego»?',
+      q: '¿Qué hacen en Apocalipsis 1 los ojos de Jesús «como llama de fuego»?',
       o: ['Ven el pecado para quitarlo de la iglesia', 'Anuncian el castigo de las naciones', 'Muestran que Jesús está enojado con Juan', 'Alumbran el camino de los ángeles'], a: 0,
-      e: 'Son ojos que lo ven todo para sanar: «yo conozco tus obras». En 19:12 los mismos ojos vienen a juzgar. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 23 y 28.' },
+      e: 'Son ojos que lo ven todo para sanar: «yo conozco tus obras». En 19:12 los mismos ojos vienen a juzgar. Fuente: Bohr, <i>Las siete iglesias</i>, p. 23 y 28.' },
     { t: 'mc', v: '1:16', f: 'c',
-      q: 'Según Bohr, ¿qué representa la espada aguda de dos filos que sale de la boca de Jesús?',
+      q: '¿Qué representa la espada aguda de dos filos que sale de la boca de Jesús?',
       o: ['La palabra de Dios', 'La ira del Cordero', 'El poder de los ejércitos', 'El juicio de los ángeles'], a: 0,
-      e: 'Lo que sale de la boca son palabras: la espada es la palabra de Dios (Hebreos 4:12; Efesios 6:17). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 24.' },
+      e: 'Lo que sale de la boca son palabras: la espada es la palabra de Dios (Hebreos 4:12; Efesios 6:17). Fuente: Bohr, <i>Las siete iglesias</i>, p. 24.' },
     { t: 'mc', v: '1:20', f: 'c',
-      q: 'Según Bohr, ¿a quiénes representan las siete estrellas que Jesús tiene en su diestra?',
+      q: '¿A quiénes representan las siete estrellas que Jesús tiene en su diestra?',
       o: ['A los ministros de la iglesia en cada etapa', 'A los siete arcángeles del trono', 'A los siete diáconos de Hechos 6', 'A los siete emperadores de Roma'], a: 0,
-      e: 'Son los mensajeros o ministros de cada etapa, sostenidos en la mano del favor de Jesús. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 22 y 47.' },
+      e: 'Son los mensajeros o ministros de cada etapa, sostenidos en la mano del favor de Jesús. Fuente: Bohr, <i>Las siete iglesias</i>, p. 22 y 47.' },
     { t: 'mc', v: '1:7', f: 'c',
-      q: 'Según Elena de White, ¿quiénes resucitan antes de la venida de Jesús, además de «los que lo traspasaron»?',
+      q: '¿Quiénes resucitan antes de la venida de Jesús, además de «los que lo traspasaron»?',
       o: ['Los que murieron en la fe del mensaje del tercer ángel', 'Todos los justos que han muerto desde Adán', 'Todos los impíos de todas las épocas', 'Solo los apóstoles y los profetas'], a: 0,
-      e: 'Es una resurrección especial (Daniel 12:2: «muchos», no todos). Los demás impíos resucitan después del milenio (20:5). Fuentes: Elena de White, El conflicto de los siglos, pág. 512; Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 38-43.' },
+      e: 'Es una resurrección especial (Daniel 12:2: «muchos», no todos). Los demás impíos resucitan después del milenio (20:5). Fuente: CS 695; Bohr, <i>Las siete iglesias</i>, p. 38-43.' },
     { t: 'tf', v: '1:7', f: 'c',
-      q: 'Según Bohr, las nubes con las que viene Jesús son nubes de ángeles.', a: true,
-      e: 'Verdadero: vendrá «con todos los santos ángeles» (Mateo 25:31; Salmo 68:17). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, pág. 37.' },
+      q: 'Las nubes con las que viene Jesús son nubes de ángeles.', a: true,
+      e: 'Verdadero: vendrá «con todos los santos ángeles» (Mateo 25:31; Salmo 68:17). Fuente: Bohr, <i>Las siete iglesias</i>, p. 37.' },
     { t: 'mc', v: '1:18', f: 'c',
-      q: 'Según Bohr, ¿qué significa «Hades» en Apocalipsis 1:18?',
+      q: '¿Qué significa «Hades» en Apocalipsis 1:18?',
       o: ['El sepulcro, igual que el Seol hebreo', 'Un lugar de tormento para las almas', 'Un lugar de espera entre cielo y tierra', 'El fondo del mar, donde quedan los muertos'], a: 0,
-      e: 'Hades es la palabra griega que traduce el Seol hebreo: el sepulcro (Hechos 2:27; Salmo 16:10). Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 32-34.' },
+      e: 'Hades es la palabra griega que traduce el Seol hebreo: el sepulcro (Hechos 2:27; Salmo 16:10). Fuente: Bohr, <i>Las siete iglesias</i>, p. 32-34.' },
     { t: 'mc', v: '1:5', f: 'c',
-      q: 'Según Bohr, ¿por qué se llama a Jesús «el primogénito de los muertos» si otros resucitaron antes?',
+      q: '¿Por qué se llama a Jesús «el primogénito de los muertos» si otros resucitaron antes?',
       o: ['Por su rango: su resurrección hace posibles las demás', 'Porque fue el primero que resucitó en la historia', 'Porque resucitó el primer día de la semana', 'Porque fue el hijo mayor de María y José'], a: 0,
-      e: 'Primogénito habla de preeminencia, no de orden (Colosenses 1:15-18). Moisés, Lázaro y otros resucitaron antes. Fuente: Stephen Bohr, Las siete iglesias, la iglesia militante y triunfante, págs. 17-18.' },
+      e: 'Primogénito habla de preeminencia, no de orden (Colosenses 1:15-18). Moisés, Lázaro y otros resucitaron antes. Fuente: Bohr, <i>Las siete iglesias</i>, p. 17-18.' },
     { t: 'mc', v: '1:20', f: 'c',
       q: '¿Dónde explica la Biblia qué son los candelabros de Apocalipsis 1?',
       o: ['En el mismo capítulo, en 1:20', 'En Daniel 7:17, con las bestias', 'En Apocalipsis 17:15, con las aguas', 'En Hebreos 4:12, con la espada'], a: 0,
-      e: 'Apocalipsis 1:20 dice que «los siete candelabros que has visto son las siete iglesias». Bohr enseña que a veces el símbolo se explica en el contexto inmediato. Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 102.' },
+      e: 'Apocalipsis 1:20 dice que «los siete candelabros que has visto son las siete iglesias». A veces el símbolo se explica en el contexto inmediato. Fuente: Bohr, <i>15 principios</i> 2:102.' },
     { t: 'mc', v: '1:4', f: 'c',
-      q: 'Según Apocalipsis 4:5 y las notas de Camilo, ¿qué representan «los siete espíritus» de Apocalipsis 1:4?',
+      q: 'Según Apocalipsis 4:5, ¿qué representan «los siete espíritus» de Apocalipsis 1:4?',
       o: ['El Espíritu Santo en su plenitud', 'Siete ángeles que gobiernan', 'Siete profetas del pasado', 'Siete virtudes del creyente'], a: 0,
-      e: 'Las siete lámparas del trono son «los siete espíritus de Dios» (Apocalipsis 4:5), y el siete indica plenitud (Isaías 11:2). Fuentes: notas de Camilo en Evernote, "Las 7 iglesias"; Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 104.' },
+      e: 'Las siete lámparas del trono son «los siete espíritus de Dios» (Apocalipsis 4:5), y el siete indica plenitud (Isaías 11:2). Fuente: Bohr, <i>15 principios</i> 2:104.' },
     { t: 'tf', v: '1:16', f: 'c',
-      q: 'En la lista de símbolos de Bohr, el sol representa a Cristo, a quien Malaquías 4:2 llama Sol de justicia.', a: true,
-      e: 'Verdadero. Por eso el rostro de Jesús brilla «como el sol» en 1:16. Fuente: Esteban Bohr, 15 principios de interpretación profética, vol. 2, pág. PDF 105.' },
+      q: 'El sol representa a Cristo, a quien Malaquías 4:2 llama Sol de justicia.', a: true,
+      e: 'Verdadero. Por eso el rostro de Jesús brilla «como el sol» en 1:16. Fuente: Bohr, <i>15 principios</i> 2:105.' },
   ],
 
   tarjetas: [
