@@ -25,8 +25,9 @@ const TARJETAS = [
   {cap:'d2', f:'Material de la <b>cabeza</b>', r:'Oro fino → Babilonia'},
   {cap:'d2', f:'Material del <b>pecho y brazos</b>', r:'Plata → Medo-Persia'},
   {cap:'d2', f:'Material del <b>vientre y muslos</b>', r:'Bronce → Grecia'},
-  {cap:'d2', f:'Material de las <b>piernas</b>', r:'Hierro → Roma'},
-  {cap:'d2', f:'Material de los <b>pies</b>', r:'Hierro y barro cocido → reinos divididos'},
+  {cap:'d2', f:'Material de las <b>piernas</b>', r:'Hierro → Roma imperial (168 a.C.-476 d.C.)'},
+  {cap:'d2', f:'Material de los <b>pies</b>', r:'Hierro mezclado con barro cocido → Roma papal, el poder político unido al religioso (supremacía 538-1798 d.C.)'},
+  {cap:'d2', f:'Qué representan los <b>diez dedos</b>', r:'Roma dividida en los reinos bárbaros, desde 476 d.C.'},
   {cap:'d2', f:'Dónde hirió la piedra a la imagen', r:'En sus pies de hierro y de barro cocido (2:34)'},
   {cap:'d2', f:'En qué se convirtió la piedra', r:'En un gran monte que llenó toda la tierra (2:35)'},
   {cap:'d2', f:'Cargo que recibió Daniel', r:'Gobernador de la provincia de Babilonia y principal de los gobernadores sobre los sabios (2:48)'},
@@ -179,11 +180,11 @@ TARJETAS.push(
   {cap:'d7', f:'Quién se sienta a juzgar en la visión', r:'El <b>Anciano de días</b> (7:9)'},
   {cap:'d7', f:'A quién se le entrega el reino al final del juicio', r:'A <b>los santos del Altísimo</b>, para siempre (7:18, 27)'},
   {cap:'d7', f:'Cuántas veces se repite la escena del juicio en el capítulo', r:'<b>Cuatro veces</b>: 7:9-14, 7:18, 7:22 y 7:26-27'},
-  {cap:'d7', f:'A qué corresponde el cuerno pequeño en la estatua de Daniel 2', r:'A los <b>pies de hierro y barro</b>: Europa dividida, sin volver a unirse'}
+  {cap:'d7', f:'A qué corresponde el cuerno pequeño en la estatua de Daniel 2', r:'Al <b>hierro mezclado con barro</b>: Roma papal, el poder político unido al religioso (supremacía 538-1798 d.C.)'}
 );
 
 TARJETAS.push(
-{cap:'d8', f:'¿En qué año de qué rey tuvo Daniel la visión del capítulo 8?', r:'Año tercero de Belsasar, 551 a.C. (dos años después de Daniel 7).'},
+{cap:'d8', f:'¿En qué año de qué rey tuvo Daniel la visión del capítulo 8?', r:'Año tercero de Belsasar, 550 a.C. (Daniel 7 fue en el primero, 553 a.C.).'},
 {cap:'d8', f:'¿Dónde estaba Daniel en la visión?', r:'Junto al río Ulay, en Susa, provincia de Elam (futura capital de invierno de Medo-Persia).'},
 {cap:'d8', f:'¿Qué representa el carnero de dos cuernos?', r:'Medo-Persia (Daniel 8:20); el cuerno más alto, que despuntó después, es Persia.'},
 {cap:'d8', f:'¿Qué representa el macho cabrío?', r:'Grecia (Yaván), Daniel 8:21.'},
@@ -233,7 +234,7 @@ TARJETAS.push(
 {cap:'d10', f:'¿Cuándo empezó a ser oída la oración de Daniel, según el ángel?', r:'Desde el primer día en que oró y se humilló, aunque la respuesta visible tardó tres semanas por la resistencia angélica invisible (Daniel 10:12-13).'},
 );
 TARJETAS.push(
-{cap:'d11', f:'¿Quién es el cuarto rey persa que "acumulará más riquezas que todos" e incita contra Grecia? (Daniel 11:2)', r:'Jerjes I (486-465 a.C.), que lanzó la gran invasión persa de Grecia.'},
+{cap:'d11', f:'¿Quién es el cuarto rey persa que "se hará de grandes riquezas, más que todos ellos"? (Daniel 11:2)', r:'Artajerjes I (465-424 a.C.), el del decreto de 457 a.C. (Esdras 7). Los tres anteriores: Cambises, Darío I y Asuero (Jerjes I).'},
 {cap:'d11', f:'¿En qué se divide el reino de Alejandro tras su muerte, según Daniel 11:4?', r:'Se reparte "a los cuatro vientos del cielo": el mismo reparto entre cuatro generales que describe Daniel 8.'},
 {cap:'d11', f:'¿A qué dos reinos se refieren "rey del sur" y "rey del norte" en Daniel 11?', r:'Egipto (dinastía ptolemaica) y Siria (dinastía seléucida), los dos reinos entre los que quedó Palestina.'},
 {cap:'d11', f:'¿Qué matrimonio anuncia Daniel 11:6 y cómo termina?', r:'El matrimonio de Berenice (hija de Tolomeo II) con Antíoco II; termina en tragedia cuando Laodicea, la primera esposa repudiada, hace asesinar a Antíoco, a Berenice y a su hijo.'},
@@ -285,7 +286,7 @@ TARJETAS.push(
   {cap:'d9', f:'¿Qué actitud muestra Daniel en su oración, comparada con Daniel 6:4?', r:'Se identificaba con las faltas de su nación aun siendo personalmente irreprochable'},
 
   {cap:'d10', f:'¿De qué se abstuvo Daniel durante las tres semanas de ayuno?', r:'De alimentos suculentos, carne y vino'},
-  {cap:'d10', f:'¿A qué edad fue Daniel llevado cautivo, y a cuál se acercaba en Daniel 10?', r:'Cautivo a los 17 años; se acercaba a los noventa'},
+  {cap:'d10', f:'¿A qué edad fue Daniel llevado cautivo, y a cuál se acercaba en Daniel 10?', r:'Cautivo a los 18 años (605 a.C.); unos setenta años después tenía unos 88: se acercaba a los noventa'},
   {cap:'d10', f:'¿Con qué pasaje de Pablo se compara la guerra invisible de Daniel 10?', r:'Efesios 6:12: "no tenemos lucha contra sangre y carne..."'},
   {cap:'d10', f:'¿Qué lección práctica deja que la respuesta tardara tres semanas en manifestarse?', r:'Que una oración sin respuesta inmediata no significa una oración no escuchada'},
 
@@ -319,7 +320,7 @@ TARJETAS.push(
   {cap:'d1', f:'¿Qué profeta, activo en Jerusalén cuando Daniel era niño, pudo haber sido su maestro?', r:'Jeremías'},
   {cap:'d2', f:'¿En qué venida de Cristo cae la Piedra de Daniel 2 sobre la estatua?', r:'En la segunda venida, todavía futura; en la primera estableció el "reino de la gracia"'},
   {cap:'d2', f:'¿Qué fenómeno astronómico deja fuera de lugar los signos del zodiaco moderno?', r:'La precesión de los equinoccios, desde los tiempos de Claudio Tolomeo (siglo II)'},
-  {cap:'d2', f:'Menciona dos gobernantes que intentaron reunificar Europa, contradiciendo sin éxito Daniel 2:43', r:'Carlomagno y Napoleón (también Carlos V y Hitler)'},
+  {cap:'d2', f:'Menciona dos gobernantes que intentaron, sin éxito, volver a unir los reinos en que se dividió Roma (los diez dedos de Daniel 2)', r:'Carlomagno y Napoleón (también Carlos V y Hitler)'},
   {cap:'d3', f:'¿Qué significa la frase "y si no" de Sadrac, Mesac y Abed-nego (3:17-18)?', r:'Que obedecerían a Dios sin importar si los libraba del horno o no'},
   {cap:'d3', f:'¿Qué soldado cristiano de la Segunda Guerra Mundial rescató a 75 heridos sin portar armas, en las barrancas de Maeda?', r:'Desmond Doss, único no combatiente condecorado con la Medalla de Honor del Congreso'},
   {cap:'d4', f:'¿Qué otros dos profetas servían al mismo tiempo que Daniel?', r:'Jeremías (en Judá y Egipto) y Ezequiel (junto al canal de Kebar, cerca de Babilonia)'},

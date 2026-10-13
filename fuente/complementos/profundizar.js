@@ -240,7 +240,7 @@ module.exports = {
           ['Grecia (331-168 a.C.)', 'Vientre y muslos de bronce (2:32, 39)', 'Leopardo con cuatro alas (7:6)', 'Macho cabrío; su cuerno notable es «el rey primero», Alejandro (8:5, 21)'],
           ['Los cuatro reinos de Grecia', '—', 'Cuatro cabezas del leopardo (7:6)', 'Cuatro cuernos hacia los cuatro vientos (8:8, 22)'],
           ['Roma imperial (168 a.C.-476 d.C.)', 'Piernas de hierro (2:33, 40)', 'Cuarta bestia, con dientes de hierro (7:7, 23)', 'Cuerno pequeño que crece hacia el sur, el oriente y la tierra gloriosa (8:9-10)'],
-          ['Roma dividida (desde 476)', 'Pies y dedos: «un reino dividido» (2:41-42)', 'Diez cuernos: «diez reyes» (7:7, 24)', '—'],
+          ['Roma dividida (desde 476)', 'Diez dedos: «será un reino dividido» (2:41-42)', 'Diez cuernos: «diez reyes» (7:7, 24)', '—'],
           ['Roma papal (538-1798)', 'Hierro mezclado con barro cocido (2:41-43)', 'Cuerno pequeño: arranca tres cuernos, habla contra el Altísimo, persigue a los santos por «tiempo, tiempos y medio tiempo» (7:8, 24-25)', 'El mismo cuerno se engrandece contra el Príncipe, quita el continuo y echa por tierra su santuario (8:11-12)'],
           ['El juicio en el cielo (1844)', '—', 'Se ponen tronos, se abren los libros; el Hijo del hombre va al Anciano de días (7:9-10, 13, 22)', '«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» (8:14): 457 a.C.-1844'],
           ['El tiempo del fin (desde 1798)', 'Dios muestra «lo que ha de acontecer en los últimos días» (2:28)', '—', '«La visión es para el tiempo del fin» (8:17, 19)'],
@@ -254,7 +254,7 @@ module.exports = {
       h: `<p>Daniel 8 va en las dos tablas: es el puente. Daniel 11 sigue su mismo orden y Daniel 12 lo termina.</p>` +
         tbl(['Poder o época', 'Daniel 8', 'Daniel 11', 'Daniel 12'], [
           ['Babilonia (605-539 a.C.)', '—', '—', '—'],
-          ['Medo-Persia (539-331 a.C.)', 'Carnero de dos cuernos (8:3-4, 20)', '«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2)', '—'],
+          ['Medo-Persia (539-331 a.C.)', 'Carnero de dos cuernos (8:3-4, 20)', '«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas» (11:2): el cuarto es Artajerjes, el del decreto de 457 a.C.', '—'],
           ['Grecia (331-168 a.C.)', 'Macho cabrío y su cuerno grande (8:5, 21)', 'Un rey valiente que domina con gran poder (11:3)', '—'],
           ['Los cuatro reinos de Grecia', 'Cuatro cuernos (8:8, 22)', 'El reino, «repartido hacia los cuatro vientos del cielo» (11:4); después, el rey del norte (Siria) contra el rey del sur (Egipto) (11:5-15)', '—'],
           ['Roma imperial (168 a.C.-476 d.C.)', 'Cuerno pequeño que crece hasta el ejército del cielo (8:9-10)', 'Se queda en la tierra gloriosa (11:16); el príncipe del pacto es quebrantado (11:22). Abarca 11:16-28', '—'],
@@ -295,7 +295,11 @@ function parte(sec) {
   const filas = cuerpo.match(/<tr>[\s\S]*?<\/tr>/g) || [];
   const fuente = (resto.match(/<p>Fuentes?:[\s\S]*?<\/p>/) || [''])[0];
   const antes = ini.slice(0, ini.indexOf('<div class="tabla-scroll">')), cab = ini.slice(antes.length);
-  const n = Math.ceil(sec.h.length / LIM), k = Math.ceil(filas.length / n), out = [];
+  let n = Math.ceil(sec.h.length / LIM), k;
+  /* Las filas no miden lo mismo: se parte más fino hasta que ninguna parte pase. */
+  const mide = k => { let m = 0; for (let i = 0; i < filas.length; i += k) m = Math.max(m, filas.slice(i, i + k).join('').length); return m; };
+  for (k = Math.ceil(filas.length / n); k > 1 && mide(k) + ini.length + resto.length > LIM; k--);
+  const out = [];
   for (let i = 0; i < filas.length; i += k) {
     const primera = i === 0, ultima = i + k >= filas.length;
     out.push({ ...sec, t: sec.t + ' (' + (out.length + 1) + ')',
@@ -304,6 +308,20 @@ function parte(sec) {
   return out;
 }
 for (const k of ['glosario', 'simbolos', 'comparar']) module.exports[k] = module.exports[k].flatMap(parte);
+
+/* v189: «Quién es quién», armado de fuente/personajes.js (la misma ficha que
+   abre el nombre en el estudio). Una tabla por tipo, partida por filas. */
+{
+  const { PERSONAJES } = require('../personajes.js');
+  const orden = (a, b) => a.nombre.localeCompare(b.nombre, 'es');
+  const tabla = (titulo, lista) => parte({ t: titulo, capa: 'contexto',
+    h: tbl(['Nombre', 'Quién fue', 'Época'], lista.sort(orden).map(p => [p.nombre, p.quien, p.fechas || '—'])) +
+      '<p>Fuente: la ficha de cada personaje (toca su nombre).</p>' });
+  module.exports.personas = [
+    ...tabla('🧭 Personajes bíblicos', PERSONAJES.filter(p => p.tipo === 'biblico')),
+    ...tabla('🧭 Personajes de la historia', PERSONAJES.filter(p => p.tipo !== 'biblico')),
+  ];
+}
 
 /* Los tres repasos, con el prefijo de cada tema (un id solo puede ser de un
    tema). `prof` los pinta como «Para profundizar»: no entran al examen ni
@@ -314,6 +332,7 @@ P.modulos = (pre, tema) => [
   { id: pre + '-glosario', label: 'Glosario', sub: 'Las palabras de la profecía, en sencillo', icono: '📗', color: '#0E6A78', prof: true, tema },
   { id: pre + '-simbolos', label: 'Símbolos proféticos', sub: 'Qué representa cada uno y el texto que lo prueba', icono: '🧭', color: '#0E6A78', prof: true, tema },
   { id: pre + '-comparar', label: 'Daniel 2, 7, 8, 11 y 12', sub: 'Las visiones lado a lado', icono: '📕', color: '#0E6A78', prof: true, tema },
+  { id: pre + '-personas', label: 'Quién es quién', sub: 'Los personajes bíblicos y de la historia', icono: '👥', color: '#0E6A78', prof: true, tema },
 ];
-P.contenido = pre => ({ [pre + '-glosario']: P.glosario, [pre + '-simbolos']: P.simbolos, [pre + '-comparar']: P.comparar });
+P.contenido = pre => ({ [pre + '-glosario']: P.glosario, [pre + '-simbolos']: P.simbolos, [pre + '-comparar']: P.comparar, [pre + '-personas']: P.personas });
 

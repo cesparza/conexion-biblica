@@ -59,7 +59,7 @@ module.exports = {
       capa: 'contexto',
       h: `<p>«Propuso en su corazón» (1:8) quiere decir que <strong>tomó una decisión de la voluntad</strong> antes de que llegara la presión. Y hay un detalle que se pasa por alto: en la corte había otros jóvenes hebreos (1:6), pero solo estos cuatro decidieron ser fieles, y son los únicos que Dios usa en el resto del libro.</p>` +
         li([
-          'Daniel tenía unos <strong>18 años</strong> cuando fue llevado.',
+          'Daniel tenía <strong>18 años</strong> cuando fue llevado: «sólo tenía dieciocho años cuando fue llevado a una corte pagana» (4T 570).',
           'Creció durante la reforma del rey Josías, iniciada en 621 a.C.: su formación en casa lo preparó para Babilonia.',
           'Su cautiverio se puede comparar con el de José en Egipto: parecía una desgracia y fue el medio para llevar el conocimiento de Dios al imperio más grande de su tiempo.',
         ]) +
@@ -116,7 +116,7 @@ module.exports = {
     { t: 'mc', v: '1:8', f: 'c', q: '¿Qué representa para el tiempo del fin no beber el vino de Babilonia?',
       o: ['Rechazar las doctrinas falsas de la Babilonia espiritual', 'Apartarse de toda escuela o universidad', 'No comer nada preparado por otros', 'No tener trato con ningún gobernante'], a: 0,
       e: 'La comida y el vino de Babilonia representan sus doctrinas y tradiciones falsas (Apocalipsis 18:2-3). Fuente: Bohr, Daniel 1-10, p. 52.' },
-    { t: 'tf', v: '1:6', f: 'c', q: 'Daniel tenía unos 18 años cuando fue llevado cautivo a Babilonia.',
+    { t: 'tf', v: '1:6', f: 'c', q: 'Daniel tenía 18 años cuando fue llevado cautivo a Babilonia.',
       a: true,
       e: 'Verdadero. Había crecido durante la reforma de Josías. Fuente: Bohr, Daniel 1-10, p. 45; 4T 570.' },
     { t: 'mc', v: '1:8', f: 'c', q: '¿Qué significa que Daniel «propuso en su corazón»?',

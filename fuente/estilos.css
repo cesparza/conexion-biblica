@@ -2756,3 +2756,13 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 /* v188: el rótulo de los repasos de «Para profundizar» en la rejilla. */
 .grupo.grupo-prof{color:var(--prof)}
 .grupo.grupo-prof small{font-weight:600;color:var(--gris);margin-left:.35rem;text-transform:none;letter-spacing:0}
+/* v189: el nombre de un personaje se toca y abre su ficha. Se ve como texto
+   con un subrayado punteado: avisa sin gritar. */
+button.per{display:inline;padding:0;margin:0;border:0;background:none;font:inherit;color:inherit;cursor:pointer;
+  text-decoration:underline dotted color-mix(in srgb,var(--prof) 70%,transparent);text-decoration-thickness:1.5px;text-underline-offset:3px}
+button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-style:solid}
+.per-nom{font-size:1.375rem;font-weight:800;line-height:1.2;color:var(--txt);text-wrap:balance}
+.per-txt{padding:0 16px 16px;overflow:auto}
+.per-quien{margin:.2rem 0 .6rem;font-size:1rem;font-weight:600}
+.per-hizo{margin:0 0 .6rem;padding-left:1.1rem;display:grid;gap:.35rem}
+.per-textos{margin:.4rem 0 0;font-size:.875rem}

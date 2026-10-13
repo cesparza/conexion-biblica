@@ -81,7 +81,7 @@ A.ponCat('av');
 ok(A.capsDe().length===7,'Aventureros ve 7 capítulos');
 const repA=A.modsDe().filter(m=>!m.prof);
 ok(repA.length===9,'Aventureros ve 9 módulos de repaso ('+repA.length+')');
-ok(A.modsDe().filter(m=>m.prof).map(m=>m.id).join()==='m-glosario,m-simbolos,m-comparar','v188: y los tres de «Para profundizar» (glosario, símbolos y la comparación)');
+ok(A.modsDe().filter(m=>m.prof).map(m=>m.id).join()==='m-glosario,m-simbolos,m-comparar,m-personas','v188: y los de «Para profundizar» (glosario, símbolos, la comparación y quién es quién)');
 /* PISO, no cifra exacta: la cuenta sube cada vez que se agregan tarjetas y
    una igualdad obliga a editar la prueba en cada tanda de contenido. Lo que
    de verdad hay que cazar es que se PIERDAN tarjetas. */
@@ -3158,7 +3158,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const Z=montar(`verCap, ponCat, modsDe, poolDe, refrescaEx, cambiaInterp, cambiaFuente, el:id=>document.getElementById(id), get soloInterp(){return soloInterp}, set alc(v){alcance=v}`,{});
   Z.ponCat('apme');
   ok(!Z.modsDe().some(m=>/^m-interp-/.test(m.id)),'La interpretación ya no va en repasos aparte');
-  ok(Z.modsDe().map(m=>m.id).join()==='ma-glosario,ma-simbolos,ma-comparar','v188: Apocalipsis también trae el glosario, los símbolos y la comparación');
+  ok(Z.modsDe().map(m=>m.id).join()==='ma-glosario,ma-simbolos,ma-comparar,ma-personas','v188: Apocalipsis también trae el glosario, los símbolos y la comparación');
   Z.verCap('ma-simbolos');
   const HS=Z.el('detalle').innerHTML;
   ok(!/ponPest\(/.test(HS)&&/No entra al examen|no entra al examen/i.test(HS)&&(HS.match(/data-pest="prof"/g)||[]).length>=5,'v188: un repaso de profundizar no trae pestañas y avisa que no entra al examen');
@@ -3185,6 +3185,16 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(Z.soloInterp&&pool.length>=300&&pool.every(q=>q.f==='c'),'Con «Solo la interpretación» el examen trae solo esas preguntas ('+pool.length+')');
   Z.el('ex-fuente').checked=true;Z.cambiaFuente();
   ok(!Z.soloInterp&&Z.poolDe().every(q=>q.f!=='c'),'Prender «Solo el material del reglamento» apaga «Solo la interpretación»');
+}
+/* v189: los nombres de los personajes se tocan y abren su ficha. */
+{
+  const Z=montar('verCap, ponCat, el:id=>document.getElementById(id)',{});
+  Z.ponCat('pa');Z.verCap('d2');
+  const H=Z.el('detalle').innerHTML;
+  const ids=[...H.matchAll(/verPersona\('([^']+)'\)/g)].map(x=>x[1]);
+  const fuentes=(H.match(/<p class="sec-fuente">[\s\S]*?<\/p>/g)||[]).join('');
+  ok(ids.includes('berthier')&&ids.includes('nabucodonosor')&&ids.includes('romulo'),'v189: en Daniel 2 se tocan Nabucodonosor, Rómulo Augústulo y Berthier ('+new Set(ids).size+' personas)');
+  ok(!/verPersona/.test(fuentes)&&!/<button[^>]*class="ref[^"]*"[^>]*>[^<]*<button/.test(H),'v189: la línea de la fuente y las citas bíblicas no se vuelven personajes');
 }
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 

@@ -1,0 +1,1835 @@
+/* Personajes de Conexión Bíblica: quién fue cada persona bíblica o histórica
+   que aparece en el estudio. La app busca cada alias en el texto y lo vuelve
+   tocable. Un alias { t, caps } solo vale en esos capítulos (nombre ambiguo).
+   Fuentes: la Biblia primero, después Elena de White, después Bohr y otros. */
+const PERSONAJES = [
+  { id: 'daniel', nombre: 'Daniel (Beltsasar)', tipo: 'biblico',
+    fechas: 'n. hacia 623 a.C.; llevado a Babilonia en 605 a.C.',
+    quien: 'Profeta hebreo de la familia real de Judá. Lo llevaron cautivo a Babilonia a los 18 años y allí le pusieron el nombre de Beltsasar.',
+    hizo: [
+      'Decidió no contaminarse con la comida del rey, y Dios le dio sabiduría y entendimiento (Daniel 1).',
+      'Explicó el sueño de la estatua y la escritura en la pared (Daniel 2 y 5).',
+      'Siguió orando tres veces al día, aunque eso lo llevó al foso de los leones (Daniel 6).',
+      'Recibió las visiones de los capítulos 7 al 12, que llegan hasta el tiempo del fin.'
+    ],
+    textos: 'Daniel 1:6-8; 6:10; 12:13',
+    alias: ['Daniel', 'Beltsasar'],
+    fuente: 'Daniel 1-12; 4T 570; Bohr, <i>Daniel 1-10</i>, p. 3' },
+  { id: 'ananias', nombre: 'Ananías (Sadrac)', tipo: 'biblico',
+    fechas: 'llevado a Babilonia en 605 a.C.',
+    quien: 'Joven de Judá, compañero de Daniel. En Babilonia le pusieron el nombre de Sadrac.',
+    hizo: [
+      'Con Daniel, no quiso la comida del rey y salió diez veces mejor en el examen (Daniel 1).',
+      'No se arrodilló ante la estatua de oro y fue echado al horno de fuego, del que Dios lo libró (Daniel 3).'
+    ],
+    textos: 'Daniel 1:6-7; 3:12-30',
+    alias: ['Ananías', 'Sadrac', 'Sadrach'],
+    fuente: 'Daniel 1:6-7; 3' },
+  { id: 'misael', nombre: 'Misael (Mesac)', tipo: 'biblico',
+    fechas: 'llevado a Babilonia en 605 a.C.',
+    quien: 'Joven de Judá, compañero de Daniel. En Babilonia le pusieron el nombre de Mesac.',
+    hizo: [
+      'Con Daniel, no quiso la comida del rey (Daniel 1).',
+      'No adoró la estatua de oro; salió del horno sin olor a humo (Daniel 3:27).'
+    ],
+    textos: 'Daniel 1:6-7; 3:12-30',
+    alias: ['Misael', 'Mesac', 'Mesach'],
+    fuente: 'Daniel 1:6-7; 3' },
+  { id: 'azarias', nombre: 'Azarías (Abed-nego)', tipo: 'biblico',
+    fechas: 'llevado a Babilonia en 605 a.C.',
+    quien: 'Joven de Judá, compañero de Daniel. En Babilonia le pusieron el nombre de Abed-nego.',
+    hizo: [
+      'Con Daniel, no quiso la comida del rey (Daniel 1).',
+      'Con sus amigos le dijo al rey: «Y si no, has de saber, oh rey, que no serviremos a tus dioses ni tampoco adoraremos la estatua que has levantado» (3:18).'
+    ],
+    textos: 'Daniel 1:6-7; 3:17-18',
+    alias: ['Azarías', 'Abed-nego', 'Abednego'],
+    fuente: 'Daniel 1:6-7; 3' },
+  { id: 'nabucodonosor', nombre: 'Nabucodonosor II', tipo: 'biblico',
+    fechas: 'reinó 605-562 a.C.',
+    quien: 'El rey más grande de Babilonia, hijo de Nabopolasar. Dios lo llama «la cabeza de oro» de la estatua.',
+    hizo: [
+      'Sitió Jerusalén en el tercer año de Joacim y se llevó a Daniel y a sus amigos (Daniel 1:1).',
+      'Soñó con la estatua (Daniel 2) y después levantó una estatua toda de oro para que la adoraran (Daniel 3).',
+      'Por su orgullo vivió siete tiempos como un animal; al volver en sí alabó al Rey del cielo (Daniel 4:37).'
+    ],
+    textos: 'Daniel 1-4; 2:38',
+    alias: ['Nabucodonosor'],
+    fuente: 'Daniel 1-4; Bohr, <i>Daniel 1-10</i>, p. 86' },
+  { id: 'belsasar', nombre: 'Belsasar', tipo: 'biblico',
+    fechas: 'murió en 539 a.C.',
+    quien: 'Último rey de Babilonia. Hijo de Nabonido, gobernaba junto con su padre; era nieto de Nabucodonosor.',
+    hizo: [
+      'Hizo un banquete para mil príncipes y bebió vino en los vasos del templo de Jerusalén (Daniel 5:1-4).',
+      'Una mano escribió en la pared su sentencia; Daniel le dijo que sabía todo esto y no se humilló (5:22).',
+      'Esa misma noche murió y Babilonia cayó ante medos y persas (5:30-31).'
+    ],
+    textos: 'Daniel 5; 7:1; 8:1',
+    alias: ['Belsasar', 'Baltasar'],
+    fuente: 'Daniel 5; PR 384; Bohr, <i>Daniel 1-10</i>, p. 93' },
+  { id: 'dario-medo', nombre: 'Darío de Media (Darío el Medo)', tipo: 'biblico',
+    fechas: 'recibió el reino en 539 a.C.',
+    quien: 'Rey medo que recibió el reino de Babilonia cuando tenía 62 años (Daniel 5:31).',
+    hizo: [
+      'Puso 120 sátrapas y tres gobernadores; Daniel era uno de los tres (6:1-2).',
+      'Firmó el decreto de 30 días que llevó a Daniel al foso de los leones (Daniel 6).',
+      'Al ver que Dios libró a Daniel, mandó que todos temieran al Dios de Daniel (6:26-27).',
+      'En su primer año Daniel recibió la profecía de las setenta semanas (9:1).'
+    ],
+    textos: 'Daniel 5:31; 6; 9:1; 11:1',
+    alias: ['Darío de Media', 'Darío el Medo', 'Darío el medo', { t: 'Darío', caps: ['d6', 'd11', 'pr43', 'pr44', 'm-linea', 'm-personajes', 'm-numeros', 'm-versiculos', 'm-reyes', 'm-prioridades', 'm-glosario', 'ma-glosario'] }],
+    fuente: 'Daniel 5:31; 6; 9:1; PR 384' },
+  { id: 'ciro', nombre: 'Ciro el Grande', tipo: 'biblico',
+    fechas: 'rey de Persia, 559-530 a.C.',
+    quien: 'Rey persa que unió a medos y persas. Según PR, era sobrino de Darío el Medo.',
+    hizo: [
+      'Tomó Babilonia en 539 a.C.: desvió el río Éufrates y entró por el cauce seco (Daniel 5).',
+      'Isaías lo llamó por su nombre más de cien años antes (Isaías 44:28; 45:1).',
+      'En 536 a.C. dio el decreto para reconstruir el templo y dejó volver a los judíos (Esdras 1).',
+      'Daniel sirvió hasta su primer año (Daniel 1:21) y tuvo la visión de Daniel 10 en su tercer año.'
+    ],
+    textos: 'Daniel 1:21; 10:1; Isaías 45:1; Apocalipsis 16:12',
+    alias: ['Ciro', 'Ciro de Persia', 'Ciro el Persa'],
+    fuente: 'Isaías 45:1; Esdras 1; PR 384; Bohr, <i>Daniel 1-10</i>, p. 4' },
+  { id: 'aspenaz', nombre: 'Aspenaz', tipo: 'biblico',
+    fechas: '',
+    quien: 'Jefe de los eunucos del rey Nabucodonosor.',
+    hizo: [
+      'Recibió la orden de traer a los jóvenes de Judá y les puso nombres babilónicos (Daniel 1:3, 7).',
+      'Tuvo miedo de que el rey lo castigara si los jóvenes se veían flacos (1:10). No confundir con Melsar.'
+    ],
+    textos: 'Daniel 1:3-10',
+    alias: ['Aspenaz'],
+    fuente: 'Daniel 1:3-10' },
+  { id: 'melsar', nombre: 'Melsar', tipo: 'biblico',
+    fechas: '',
+    quien: 'Sirviente que el jefe de los eunucos puso a cargo de Daniel y sus tres compañeros.',
+    hizo: [
+      'Daniel le pidió una prueba de diez días con legumbres y agua (Daniel 1:11-14).',
+      'Fue él quien aceptó la prueba, no Aspenaz.'
+    ],
+    textos: 'Daniel 1:11-16',
+    alias: ['Melsar'],
+    fuente: 'Daniel 1:11-16' },
+  { id: 'arioc', nombre: 'Arioc', tipo: 'biblico',
+    fechas: '',
+    quien: 'Capitán de la guardia del rey Nabucodonosor.',
+    hizo: [
+      'Salió a matar a los sabios de Babilonia por orden del rey (Daniel 2:14).',
+      'Daniel le habló con prudencia, y Arioc lo llevó ante el rey para dar la interpretación (2:24-25).'
+    ],
+    textos: 'Daniel 2:14-15, 24-25',
+    alias: ['Arioc'],
+    fuente: 'Daniel 2:14-25' },
+  { id: 'joacim', nombre: 'Joacim', tipo: 'biblico',
+    fechas: 'rey de Judá, 609-598 a.C.',
+    quien: 'Rey de Judá, hijo de Josías.',
+    hizo: [
+      'En su tercer año Nabucodonosor sitió Jerusalén y se llevó a Daniel (Daniel 1:1-2).',
+      'Mandó matar al profeta Urías, que predicaba contra sus pecados (Jeremías 26:20-23).'
+    ],
+    textos: 'Daniel 1:1-2; 2 Reyes 23:34-24:6',
+    alias: ['Joacim'],
+    fuente: 'Daniel 1:1; 2 Reyes 23:34-24:6' },
+  { id: 'joaquin', nombre: 'Joaquín', tipo: 'biblico',
+    fechas: 'rey de Judá en 597 a.C.',
+    quien: 'Rey de Judá, hijo de Joacim. Reinó solo tres meses.',
+    hizo: [
+      'Se rindió a Nabucodonosor en 597 a.C. y fue llevado a Babilonia con su corte y con Ezequiel (2 Reyes 24:12-15).',
+      'Pusieron en su lugar a su tío Sedequías como rey vasallo (2 Reyes 24:17).'
+    ],
+    textos: '2 Reyes 24:8-15',
+    alias: ['Joaquín'],
+    fuente: '2 Reyes 24:8-15' },
+  { id: 'sedequias', nombre: 'Sedequías', tipo: 'biblico',
+    fechas: 'rey de Judá, 597-586 a.C.',
+    quien: 'Último rey de Judá, puesto por Nabucodonosor como rey vasallo.',
+    hizo: [
+      'Viajó a Babilonia en su cuarto año (Jeremías 51:59).',
+      'Se rebeló contra Babilonia; en 586 a.C. Jerusalén y el templo fueron destruidos (2 Reyes 25).'
+    ],
+    textos: '2 Reyes 24:17-25:7',
+    alias: ['Sedequías'],
+    fuente: '2 Reyes 24:17-25:7' },
+  { id: 'ezequias', nombre: 'Ezequías', tipo: 'biblico',
+    fechas: 'rey de Judá, hacia 715-686 a.C.',
+    quien: 'Rey fiel de Judá.',
+    hizo: [
+      'Isaías le anunció que algunos de sus descendientes servirían en el palacio del rey de Babilonia (Isaías 39:7).',
+      'Daniel y sus amigos, de familia real, cumplieron esa profecía (Daniel 1:3).'
+    ],
+    textos: 'Isaías 39:5-7; Daniel 1:3',
+    alias: ['Ezequías'],
+    fuente: 'Isaías 39:5-7' },
+  { id: 'josias', nombre: 'Josías', tipo: 'biblico',
+    fechas: 'rey de Judá, 640-609 a.C.',
+    quien: 'Rey de Judá que hizo una gran reforma cuando se halló el libro de la ley.',
+    hizo: [
+      'Su reforma empezó en 621 a.C.; Daniel creció en ese ambiente de fe.',
+      'Murió en batalla en Meguido en 609 a.C. (2 Reyes 23:29).'
+    ],
+    textos: '2 Reyes 22-23',
+    alias: ['Josías'],
+    fuente: '2 Reyes 22-23; Bohr, <i>Daniel 1-10</i>, p. 3' },
+  { id: 'gabriel', nombre: 'Gabriel', tipo: 'biblico',
+    fechas: '',
+    quien: 'Ángel que está en la presencia de Dios.',
+    hizo: [
+      'Le explicó a Daniel la visión del capítulo 8 (8:16).',
+      'Volvió en el capítulo 9 para darle la profecía de las setenta semanas (9:21-27).',
+      'Anunció el nacimiento de Juan el Bautista y de Jesús (Lucas 1:19, 26).'
+    ],
+    textos: 'Daniel 8:16; 9:21; Lucas 1:19',
+    alias: ['Gabriel'],
+    fuente: 'Daniel 8:16; 9:21; Lucas 1:19' },
+  { id: 'jeremias', nombre: 'Jeremías', tipo: 'biblico',
+    fechas: 'profetizó desde 626 a.C., unos 40 años',
+    quien: 'Profeta de Judá en los años en que Daniel era niño; anunció la caída de Jerusalén y la de Babilonia.',
+    hizo: [
+      'Profetizó que el cautiverio duraría 70 años; Daniel lo leyó y se puso a orar (Jeremías 25:11; Daniel 9:2).',
+      'Mandó a Seraías a hundir una piedra en el Éufrates como señal de que Babilonia se hundiría (Jeremías 51:63-64).'
+    ],
+    textos: 'Jeremías 25:11-12; 51:63-64; Daniel 9:2',
+    alias: ['Jeremías'],
+    fuente: 'Jeremías 25; 51; Bohr, <i>Daniel 1-10</i>, p. 3' },
+  { id: 'ezequiel', nombre: 'Ezequiel', tipo: 'biblico',
+    fechas: 'llevado a Babilonia en 597 a.C.',
+    quien: 'Profeta y sacerdote, contemporáneo de Daniel. Vivió entre los cautivos junto al río Quebar.',
+    hizo: [
+      'Recibió la regla de día por año: un día profético es un año (Ezequiel 4:6).',
+      'Vio las ruedas y los querubines que muestran que Dios guía la historia (Ezequiel 1; 10).',
+      'Nombra a Daniel como ejemplo de justicia (Ezequiel 14:14).'
+    ],
+    textos: 'Ezequiel 1:1-3; 4:6; 14:14',
+    alias: ['Ezequiel'],
+    fuente: 'Ezequiel 1; 4:6; 14:14' },
+  { id: 'isaias', nombre: 'Isaías', tipo: 'biblico',
+    fechas: 'siglo VIII a.C.',
+    quien: 'Profeta de Judá en tiempos de los reyes Uzías, Jotam, Acaz y Ezequías.',
+    hizo: [
+      'Anunció la caída de Babilonia y llamó a Ciro por su nombre (Isaías 45:1).',
+      'Anunció a Ezequías que sus descendientes servirían en Babilonia (Isaías 39:7).'
+    ],
+    textos: 'Isaías 1:1; 39:7; 44:28-45:1',
+    alias: ['Isaías'],
+    fuente: 'Isaías 1:1; 39; 45' },
+  { id: 'seraias', nombre: 'Seraías', tipo: 'biblico',
+    fechas: '594 a.C.',
+    quien: 'Oficial que viajó a Babilonia con el rey Sedequías.',
+    hizo: [
+      'Jeremías le encargó leer la profecía contra Babilonia y hundir el libro con una piedra en el Éufrates (Jeremías 51:59-64).',
+      'Era el gesto de que Babilonia se hundiría y no se levantaría más; Apocalipsis 18:21 repite la escena con una piedra de molino.'
+    ],
+    textos: 'Jeremías 51:59-64',
+    alias: ['Seraías'],
+    fuente: 'Jeremías 51:59-64' },
+  { id: 'urias-profeta', nombre: 'Urías, el profeta', tipo: 'biblico',
+    fechas: '',
+    quien: 'Profeta de Judá en tiempos del rey Joacim.',
+    hizo: [
+      'Predicó contra Jerusalén como Jeremías; el rey lo mandó matar y no hubo milagro (Jeremías 26:20-23).',
+      'Muestra que Dios no siempre libra de la muerte: la fidelidad no depende del resultado, como dijeron los tres jóvenes (Daniel 3:18).'
+    ],
+    textos: 'Jeremías 26:20-23',
+    alias: ['Urías'],
+    fuente: 'Jeremías 26:20-23' },
+  { id: 'esdras', nombre: 'Esdras', tipo: 'biblico',
+    fechas: 'llegó a Jerusalén en 457 a.C.',
+    quien: 'Sacerdote y escriba judío.',
+    hizo: [
+      'Recibió el decreto de Artajerjes I en 457 a.C., el punto de partida de las setenta semanas y de los 2.300 días (Esdras 7).',
+      'Volvió a Jerusalén y enseñó la ley de Dios al pueblo (Esdras 7:10; Nehemías 8).'
+    ],
+    textos: 'Esdras 7; Daniel 9:25',
+    alias: ['Esdras'],
+    fuente: 'Esdras 7; Bohr, <i>Daniel 1-10</i>, p. 328-329' },
+  { id: 'zorobabel', nombre: 'Zorobabel', tipo: 'biblico',
+    fechas: '536-515 a.C.',
+    quien: 'Gobernador de Judá que guió el regreso de los cautivos.',
+    hizo: [
+      'Dirigió la reconstrucción del templo después del decreto de Ciro (Esdras 3; Hageo 1).',
+      'Era descendiente del rey David (Mateo 1:12).'
+    ],
+    textos: 'Esdras 3; Zacarías 4:9',
+    alias: ['Zorobabel'],
+    fuente: 'Esdras 3; Zacarías 4:9' },
+  { id: 'juan-apostol', nombre: 'Juan, el apóstol', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Discípulo amado de Jesús, hermano de Santiago. Escribió el Evangelio de Juan, tres cartas y el Apocalipsis.',
+    hizo: [
+      'Estuvo con Pedro y Santiago en el monte de la Transfiguración.',
+      'Bajo el emperador Domiciano fue desterrado a la isla de Patmos (Apocalipsis 1:9).',
+      'Allí recibió la revelación de Jesucristo, el libro del Apocalipsis.'
+    ],
+    textos: 'Apocalipsis 1:1, 9; 22:8',
+    alias: [{ t: 'Juan', caps: ['ap1', 'ap10', 'ap11', 'ap12', 'ap13', 'ap14', 'ap15', 'ap16', 'ap17', 'ap18', 'ap19', 'ap2', 'ap20', 'ap21', 'ap22', 'ap3', 'ap4', 'ap5', 'ap6', 'ap7', 'ap8', 'ap9', 'cr01', 'cr02', 'cr03', 'cr04', 'cr05', 'cr06', 'cr08', 'cr09', 'cr10', 'cr11', 'cr16', 'cr19', 'cr22', 'cr23', 'cr25', 'cr26', 'd1', 'd10', 'd11', 'd12', 'd2', 'd7', 'd9', 'm-glosario', 'm-simbolos', 'm01', 'm02', 'm03', 'm06', 'm08', 'm14', 'm15', 'm17', 'm18', 'm19', 'm21', 'ma-glosario', 'ma-simbolos', 'mm-versiculos'] }],
+    fuente: 'Apocalipsis 1:1-9; HAp 455' },
+  { id: 'juan-bautista', nombre: 'Juan el Bautista', tipo: 'biblico',
+    fechas: 'predicó desde el 27 d.C.',
+    quien: 'Profeta que preparó el camino de Jesús.',
+    hizo: [
+      'Bautizó a Jesús en el Jordán en el otoño del 27 d.C., cuando terminaron las 69 semanas (Daniel 9:25).',
+      'Señaló a Jesús como el Cordero de Dios que quita el pecado del mundo (Juan 1:29).'
+    ],
+    textos: 'Mateo 3:13-17; Daniel 9:25',
+    alias: ['Juan el Bautista'],
+    fuente: 'Mateo 3; Bohr, <i>Daniel 1-10</i>, p. 4' },
+  { id: 'pablo', nombre: 'Pablo, el apóstol', tipo: 'biblico',
+    fechas: 'murió hacia 67 d.C.',
+    quien: 'Fariseo que persiguió a la iglesia y se convirtió camino a Damasco. Fue el gran misionero a los gentiles.',
+    hizo: [
+      'Escribió la mayoría de las cartas del Nuevo Testamento.',
+      'Trabajó en Éfeso, una de las siete iglesias (Hechos 19).',
+      'Enseña que las autoridades vienen de Dios (Romanos 13:1), la misma idea de Daniel 4:17.'
+    ],
+    textos: 'Hechos 9; 19; Romanos 13:1',
+    alias: [{ t: 'Pablo', caps: ['ap11', 'ap12', 'ap2', 'ap5', 'cr19', 'd10', 'd4', 'd9', 'm21'] }],
+    fuente: 'Hechos 9; 19' },
+  { id: 'pedro', nombre: 'Pedro, el apóstol', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Pescador de Galilea, uno de los doce apóstoles. Escribió dos cartas.',
+    hizo: [
+      'Vio la gloria de Jesús en la Transfiguración, con Santiago y Juan (Mateo 17:1-6).',
+      'Llama a Jesús «la piedra» escogida (1 Pedro 2:6), como la piedra de Daniel 2.'
+    ],
+    textos: 'Mateo 17:1-6; 1 Pedro 2:6',
+    alias: ['Pedro'],
+    fuente: 'Mateo 17; 1 Pedro 2:6' },
+  { id: 'santiago-zebedeo', nombre: 'Santiago, hijo de Zebedeo', tipo: 'biblico',
+    fechas: 'murió hacia 44 d.C.',
+    quien: 'Apóstol, hermano de Juan.',
+    hizo: [
+      'Estuvo con Pedro y Juan en la Transfiguración (Mateo 17:1).',
+      'Fue el primer apóstol mártir (Hechos 12:2).'
+    ],
+    textos: 'Mateo 17:1; Hechos 12:2',
+    alias: [{ t: 'Santiago', caps: ['d10'] }],
+    fuente: 'Mateo 17:1; Hechos 12:2' },
+  { id: 'moises', nombre: 'Moisés', tipo: 'biblico',
+    fechas: 'siglo XV a.C.',
+    quien: 'Líder que sacó a Israel de Egipto y recibió la ley en el Sinaí.',
+    hizo: [
+      'Construyó el santuario según el modelo que Dios le mostró (Éxodo 25:8-9).',
+      'Se quitó el calzado ante Dios en la zarza (Éxodo 3:5).',
+      'El «cántico de Moisés» lo cantan los vencedores en el mar de vidrio (Apocalipsis 15:3).'
+    ],
+    textos: 'Éxodo 3; 25:8-9; Apocalipsis 15:3',
+    alias: [{ t: 'Moisés', caps: ['ap1', 'ap11', 'ap12', 'ap13', 'ap14', 'ap15', 'ap18', 'ap2', 'ap20', 'ap22', 'ap4', 'ap5', 'ap7', 'd1', 'd10', 'd12', 'd4', 'd5', 'd8', 'd9', 'm-glosario', 'm21', 'ma-glosario'] }],
+    fuente: 'Éxodo 3; 25; Apocalipsis 15:3' },
+  { id: 'elias', nombre: 'Elías', tipo: 'biblico',
+    fechas: 'siglo IX a.C.',
+    quien: 'Profeta del reino del norte en tiempos del rey Acab y de Jezabel.',
+    hizo: [
+      'Oró y no llovió tres años y seis meses (Santiago 5:17).',
+      'En el monte Carmelo Dios mandó fuego del cielo y el pueblo volvió a Dios (1 Reyes 18).',
+      'Jezabel lo persiguió; su historia ayuda a entender a «Jezabel» en Apocalipsis 2:20.'
+    ],
+    textos: '1 Reyes 17-19; Apocalipsis 11:6',
+    alias: ['Elías'],
+    fuente: '1 Reyes 17-19' },
+  { id: 'eliseo', nombre: 'Eliseo', tipo: 'biblico',
+    fechas: 'siglo IX a.C.',
+    quien: 'Profeta, discípulo y sucesor de Elías.',
+    hizo: [
+      'Cuando el ejército sirio rodeó Dotán, oró para que su siervo viera los carros de fuego de Dios (2 Reyes 6:15-17).',
+      'Recibió una doble porción del espíritu de Elías (2 Reyes 2:9-15).'
+    ],
+    textos: '2 Reyes 6:15-17',
+    alias: ['Eliseo'],
+    fuente: '2 Reyes 6:15-17' },
+  { id: 'josue', nombre: 'Josué', tipo: 'biblico',
+    fechas: 'siglo XV a.C.',
+    quien: 'Sucesor de Moisés; llevó a Israel a Canaán.',
+    hizo: [
+      'Se postró ante el Príncipe del ejército del Señor y se quitó el calzado (Josué 5:13-15).',
+      'El Príncipe del ejército es Cristo, el mismo «Príncipe de los ejércitos» de Daniel 8:11.'
+    ],
+    textos: 'Josué 5:13-15; Daniel 8:11',
+    alias: [{ t: 'Josué', caps: ['d10'] }],
+    fuente: 'Josué 5:13-15' },
+  { id: 'aaron', nombre: 'Aarón', tipo: 'biblico',
+    fechas: 'siglo XV a.C.',
+    quien: 'Hermano de Moisés y primer sumo sacerdote de Israel.',
+    hizo: [
+      'Fue ungido con aceite para servir como sacerdote (Levítico 8:12).',
+      'Él y sus hijos servían en el santuario terrenal, figura del ministerio de Cristo en el cielo (Hebreos 8:1-5).'
+    ],
+    textos: 'Éxodo 28:1; Levítico 8:12',
+    alias: ['Aarón'],
+    fuente: 'Levítico 8' },
+  { id: 'nadab', nombre: 'Nadab', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo mayor de Aarón, sacerdote.',
+    hizo: [
+      'Con su hermano Abiú ofreció ante Dios un fuego que él no había mandado, y murió (Levítico 10:1-2).',
+      'Dios dijo luego a los sacerdotes que no bebieran vino, para distinguir lo santo de lo común (10:9-10).'
+    ],
+    textos: 'Levítico 10:1-10',
+    alias: ['Nadab'],
+    fuente: 'Levítico 10' },
+  { id: 'abiu', nombre: 'Abiú', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo de Aarón, sacerdote, hermano de Nadab.',
+    hizo: [
+      'Con Nadab ofreció un fuego que Dios no había mandado, y murió (Levítico 10:1-2).',
+      'Dios dijo luego a los sacerdotes que no bebieran vino al servir (Levítico 10:9-10).'
+    ],
+    textos: 'Levítico 10:1-10',
+    alias: ['Abiú', 'Abihú'],
+    fuente: 'Levítico 10' },
+  { id: 'core', nombre: 'Coré', tipo: 'biblico',
+    fechas: '',
+    quien: 'Levita que se rebeló contra Moisés y Aarón en el desierto.',
+    hizo: [
+      'La tierra se abrió y lo tragó junto con Datán y Abiram (Números 16).',
+      'Su rebelión muestra el peligro de rechazar a los que Dios escoge.'
+    ],
+    textos: 'Números 16',
+    alias: ['Coré'],
+    fuente: 'Números 16' },
+  { id: 'datan', nombre: 'Datán', tipo: 'biblico',
+    fechas: '',
+    quien: 'Rubenita que se rebeló con Coré contra Moisés.',
+    hizo: [
+      'Murió cuando la tierra se abrió (Números 16:31-33).',
+      'Se negó a ir cuando Moisés lo llamó (Números 16:12).'
+    ],
+    textos: 'Números 16',
+    alias: ['Datán'],
+    fuente: 'Números 16' },
+  { id: 'abiram', nombre: 'Abiram', tipo: 'biblico',
+    fechas: '',
+    quien: 'Rubenita, hermano de Datán, que se rebeló con Coré.',
+    hizo: [
+      'Murió cuando la tierra se abrió (Números 16:31-33).',
+      'Con Datán, acusó a Moisés de querer hacerse príncipe sobre el pueblo (Números 16:13).'
+    ],
+    textos: 'Números 16',
+    alias: ['Abiram'],
+    fuente: 'Números 16' },
+  { id: 'acan', nombre: 'Acán', tipo: 'biblico',
+    fechas: '',
+    quien: 'Israelita de la tribu de Judá en tiempos de Josué.',
+    hizo: [
+      'Tomó del botín de Jericó lo que Dios había prohibido, e Israel perdió en Hai (Josué 7).',
+      'Su pecado escondido afectó a todo el pueblo hasta que fue descubierto (Josué 7:19-26).'
+    ],
+    textos: 'Josué 7',
+    alias: ['Acán'],
+    fuente: 'Josué 7' },
+  { id: 'ofni', nombre: 'Ofni', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo del sacerdote Elí.',
+    hizo: [
+      'Con su hermano Finees deshonró el servicio del santuario; los dos murieron el mismo día (1 Samuel 2:12-17; 4:11).',
+      'Despreciaban las ofrendas del Señor (1 Samuel 2:17).'
+    ],
+    textos: '1 Samuel 2; 4',
+    alias: ['Ofni'],
+    fuente: '1 Samuel 2:12-17; 4:11' },
+  { id: 'finees-eli', nombre: 'Finees, hijo de Elí', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo del sacerdote Elí, hermano de Ofni.',
+    hizo: [
+      'Deshonró el servicio del santuario y murió cuando los filisteos tomaron el arca (1 Samuel 4:11).',
+      'Su padre Elí no los corrigió, y Dios lo reprendió por eso (1 Samuel 3:13).'
+    ],
+    textos: '1 Samuel 2; 4',
+    alias: ['Finees'],
+    fuente: '1 Samuel 2:12-17; 4:11' },
+  { id: 'adan', nombre: 'Adán', tipo: 'biblico',
+    fechas: '',
+    quien: 'El primer hombre, creado por Dios para gobernar la tierra.',
+    hizo: [
+      'Con Eva desobedeció a Dios en el Edén, y el pecado entró al mundo (Génesis 3; Romanos 5:12).',
+      'Perdió el dominio de la tierra, que Cristo recupera (Salmo 8; Apocalipsis 5).',
+      'En la Tierra Nueva Jesús lo llevará al árbol de la vida.'
+    ],
+    textos: 'Génesis 1-3; Romanos 5:12',
+    alias: ['Adán'],
+    fuente: 'Génesis 1-3' },
+  { id: 'eva', nombre: 'Eva', tipo: 'biblico',
+    fechas: '',
+    quien: 'La primera mujer, esposa de Adán.',
+    hizo: [
+      'Escuchó a la serpiente y quiso ser como Dios (Génesis 3:5-6).',
+      'Dios prometió que la simiente de la mujer heriría a la serpiente en la cabeza (Génesis 3:15).'
+    ],
+    textos: 'Génesis 2-3',
+    alias: ['Eva'],
+    fuente: 'Génesis 2-3' },
+  { id: 'cain', nombre: 'Caín', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo mayor de Adán y Eva.',
+    hizo: [
+      'Mató a su hermano Abel por envidia: la primera persecución por causa de la adoración (Génesis 4:3-8).',
+      'Satanás usa las mismas dos armas contra la iglesia: la persecución y, cuando esta no funciona, la infiltración.'
+    ],
+    textos: 'Génesis 4',
+    alias: ['Caín'],
+    fuente: 'Génesis 4' },
+  { id: 'abel', nombre: 'Abel', tipo: 'biblico',
+    fechas: '',
+    quien: 'Segundo hijo de Adán y Eva.',
+    hizo: [
+      'Ofreció un sacrificio que Dios aceptó y fue muerto por Caín (Génesis 4).',
+      'Dios dijo que su sangre clamaba desde la tierra (Génesis 4:10), como claman los mártires del quinto sello (Apocalipsis 6:9-10).'
+    ],
+    textos: 'Génesis 4:4-10; Hebreos 11:4',
+    alias: ['Abel'],
+    fuente: 'Génesis 4' },
+  { id: 'enoc', nombre: 'Enoc', tipo: 'biblico',
+    fechas: '',
+    quien: 'Antepasado de Noé que caminó con Dios.',
+    hizo: [
+      'Dios se lo llevó sin que viera la muerte (Génesis 5:24; Hebreos 11:5).',
+      'Una lectura dice que los dos testigos son Enoc y Elías; pero son el Antiguo y el Nuevo Testamento.'
+    ],
+    textos: 'Génesis 5:21-24',
+    alias: ['Enoc'],
+    fuente: 'Génesis 5:21-24' },
+  { id: 'noe', nombre: 'Noé', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hombre justo que construyó el arca.',
+    hizo: [
+      'Se salvó del diluvio con su familia (Génesis 6-8).',
+      'Dios cerró la puerta del arca (Génesis 7:16), como se cierra la gracia antes del fin.'
+    ],
+    textos: 'Génesis 6-9',
+    alias: ['Noé'],
+    fuente: 'Génesis 6-9' },
+  { id: 'nimrod', nombre: 'Nimrod', tipo: 'biblico',
+    fechas: '',
+    quien: 'Descendiente de Cam, gran cazador y fundador de reinos (Génesis 10:8-9).',
+    hizo: [
+      'Fundó Babel en la tierra de Sinar, donde se levantó la torre (Génesis 10:8-10; 11:2).',
+      'Allí nace Babilonia como proyecto humano contra Dios.'
+    ],
+    textos: 'Génesis 10:8-10; 11:1-9',
+    alias: ['Nimrod'],
+    fuente: 'Génesis 10:8-10' },
+  { id: 'abraham', nombre: 'Abraham', tipo: 'biblico',
+    fechas: '',
+    quien: 'Padre del pueblo de Israel y padre de todos los creyentes (Romanos 4:11).',
+    hizo: [
+      'Dios lo llamó a salir de Ur de los caldeos (Génesis 12:1).',
+      'La circuncisión fue sello de su fe (Romanos 4:11).',
+      'Esperaba la ciudad que tiene fundamentos (Hebreos 11:10).'
+    ],
+    textos: 'Génesis 12; Romanos 4:11; Hebreos 11:8-10',
+    alias: ['Abraham'],
+    fuente: 'Génesis 12; Hebreos 11' },
+  { id: 'jose-patriarca', nombre: 'José, hijo de Jacob', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo de Jacob, vendido como esclavo por sus hermanos.',
+    hizo: [
+      'En Egipto fue fiel a Dios y llegó a gobernar el país después del faraón (Génesis 39-41).',
+      'Su cautiverio, como el de Daniel, parecía una desgracia y fue el medio para salvar a su pueblo (Génesis 50:20).'
+    ],
+    textos: 'Génesis 37-50',
+    alias: [{ t: 'José', caps: ['d1'] }],
+    fuente: 'Génesis 37-50' },
+  { id: 'isaac', nombre: 'Isaac', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo de Abraham y Sara, padre de Jacob.',
+    hizo: [
+      'Dios se presentó a Moisés como el Dios de Abraham, de Isaac y de Jacob (Éxodo 3:6).',
+      'Nació cuando Abraham y Sara ya eran ancianos, como Dios lo había prometido (Génesis 21:1-3).'
+    ],
+    textos: 'Génesis 21; Éxodo 3:6',
+    alias: ['Isaac'],
+    fuente: 'Génesis 21; Éxodo 3:6' },
+  { id: 'jacob', nombre: 'Jacob (Israel)', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hijo de Isaac; sus doce hijos dieron nombre a las tribus de Israel.',
+    hizo: [
+      'Soñó con una escalera por la que subían y bajaban ángeles (Génesis 28:12).',
+      'Luchó con el ángel y no lo soltó hasta ser bendecido; Dios le cambió el nombre a Israel (Génesis 32:24-28).'
+    ],
+    textos: 'Génesis 28; 32',
+    alias: ['Jacob'],
+    fuente: 'Génesis 28; 32' },
+  { id: 'laban', nombre: 'Labán', tipo: 'biblico',
+    fechas: '',
+    quien: 'Tío y suegro de Jacob.',
+    hizo: [
+      'Jacob huyó de su casa para volver a su tierra (Génesis 31).',
+      'Trabajó para él veinte años y se casó con sus hijas Lea y Raquel (Génesis 31:41).'
+    ],
+    textos: 'Génesis 29-31',
+    alias: ['Labán'],
+    fuente: 'Génesis 31' },
+  { id: 'saul', nombre: 'Saúl', tipo: 'biblico',
+    fechas: 'hacia 1000 a.C.',
+    quien: 'Primer rey de Israel.',
+    hizo: [
+      'Persiguió a David por envidia (1 Samuel 18-26).',
+      'Desobedeció a Dios y fue rechazado como rey (1 Samuel 15:22-23).'
+    ],
+    textos: '1 Samuel 9-31',
+    alias: ['Saúl'],
+    fuente: '1 Samuel 9-31' },
+  { id: 'david', nombre: 'David', tipo: 'biblico',
+    fechas: 'reinó hacia 1010-970 a.C.',
+    quien: 'Pastor de Belén que llegó a ser rey de Israel. Jesús es «la raíz y el linaje de David».',
+    hizo: [
+      'Fue ungido rey (1 Samuel 16:13).',
+      'Escribió muchos salmos.',
+      'Abigail lo detuvo cuando iba a vengarse de Nabal (1 Samuel 25).'
+    ],
+    textos: '1 Samuel 16; 25; Apocalipsis 5:5; 22:16',
+    alias: [{ t: 'David', caps: ['ap1', 'ap14', 'ap15', 'ap16', 'ap2', 'ap22', 'ap3', 'ap5', 'd4', 'd9', 'm30', 'm31', 'pr43'] }],
+    fuente: '1 Samuel 16; 25; Apocalipsis 22:16' },
+  { id: 'nabal', nombre: 'Nabal', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hombre rico de Maón, esposo de Abigail.',
+    hizo: [
+      'Respondió con groserías a David, que había cuidado sus rebaños.',
+      'La Biblia dice que era un necio (1 Samuel 25:25).'
+    ],
+    textos: '1 Samuel 25',
+    alias: ['Nabal'],
+    fuente: '1 Samuel 25' },
+  { id: 'abigail', nombre: 'Abigail', tipo: 'biblico',
+    fechas: '',
+    quien: 'Esposa de Nabal; mujer sabia y prudente. Después fue esposa de David.',
+    hizo: [
+      'Llevó comida a David y a sus hombres, y con palabras humildes evitó una matanza (1 Samuel 25:18-35).',
+      'Por su prudencia David bendijo a Dios por haberla enviado (1 Samuel 25:32-33).'
+    ],
+    textos: '1 Samuel 25',
+    alias: ['Abigail'],
+    fuente: '1 Samuel 25' },
+  { id: 'salomon', nombre: 'Salomón', tipo: 'biblico',
+    fechas: 'reinó hacia 970-931 a.C.',
+    quien: 'Hijo de David, rey de Israel, conocido por su sabiduría.',
+    hizo: [
+      'Construyó el templo de Jerusalén; su lugar santísimo era un cubo (1 Reyes 6:20).',
+      'Oró por el pueblo que un día estaría cautivo (1 Reyes 8:46-50).',
+      'Recibía 666 talentos de oro al año (1 Reyes 10:14).'
+    ],
+    textos: '1 Reyes 6; 8; 10:14',
+    alias: ['Salomón'],
+    fuente: '1 Reyes 6; 8; 10' },
+  { id: 'acab', nombre: 'Acab', tipo: 'biblico',
+    fechas: 'rey de Israel, siglo IX a.C.',
+    quien: 'Rey del reino del norte, esposo de Jezabel.',
+    hizo: [
+      'Dejó que Jezabel impusiera el culto a Baal y persiguiera a los profetas (1 Reyes 16:30-33; 18:4).',
+      'Elías le anunció que no llovería, y el cielo se cerró tres años y medio (1 Reyes 17:1).'
+    ],
+    textos: '1 Reyes 16-21',
+    alias: ['Acab'],
+    fuente: '1 Reyes 16-21' },
+  { id: 'jezabel', nombre: 'Jezabel', tipo: 'biblico',
+    fechas: 'siglo IX a.C.',
+    quien: 'Reina de Israel, esposa de Acab, hija del rey de Sidón.',
+    hizo: [
+      'Usó el poder del rey para imponer el culto a Baal y matar a los profetas de Dios (1 Reyes 18:4).',
+      'En Apocalipsis 2:20 su nombre es un símbolo: una iglesia apóstata que usa el poder civil para perseguir.'
+    ],
+    textos: '1 Reyes 18-21; Apocalipsis 2:20',
+    alias: ['Jezabel'],
+    fuente: '1 Reyes 18:4; Apocalipsis 2:20' },
+  { id: 'balaam', nombre: 'Balaam', tipo: 'biblico',
+    fechas: 'siglo XV a.C.',
+    quien: 'Profeta que se dejó comprar por el rey de Moab.',
+    hizo: [
+      'Iba a maldecir a Israel, pero su asna se detuvo ante el ángel y Dios lo hizo bendecir (Números 22-24).',
+      'Enseñó a Balac a poner tropiezo a Israel con la idolatría y la inmoralidad (Apocalipsis 2:14).'
+    ],
+    textos: 'Números 22-24; Apocalipsis 2:14',
+    alias: ['Balaam'],
+    fuente: 'Números 22-24; Apocalipsis 2:14' },
+  { id: 'balac', nombre: 'Balac', tipo: 'biblico',
+    fechas: 'siglo XV a.C.',
+    quien: 'Rey de Moab.',
+    hizo: [
+      'Quiso pagarle a Balaam para que maldijera a Israel (Números 22).',
+      'Balaam le enseñó cómo poner tropiezo al pueblo (Apocalipsis 2:14).'
+    ],
+    textos: 'Números 22; Apocalipsis 2:14',
+    alias: ['Balac'],
+    fuente: 'Números 22; Apocalipsis 2:14' },
+  { id: 'ester', nombre: 'Ester', tipo: 'biblico',
+    fechas: 'siglo V a.C.',
+    quien: 'Joven judía que llegó a ser reina de Persia.',
+    hizo: [
+      'Arriesgó la vida ante el rey para salvar a su pueblo del decreto de muerte de Amán (Ester 4-8).',
+      'Su historia se parece al decreto final contra el pueblo de Dios (Apocalipsis 13:15).'
+    ],
+    textos: 'Ester 3:8-9; 4:16',
+    alias: [{ t: 'Ester', caps: ['ap2'] }],
+    fuente: 'Ester 3-8' },
+  { id: 'aman', nombre: 'Amán', tipo: 'biblico',
+    fechas: 'siglo V a.C.',
+    quien: 'Alto funcionario del rey de Persia.',
+    hizo: [
+      'Logró un decreto para matar a todos los judíos del imperio (Ester 3:8-9), como el decreto final de Apocalipsis 13:15.',
+      'Al final él mismo murió en la horca que había preparado para Mardoqueo (Ester 7:10).'
+    ],
+    textos: 'Ester 3',
+    alias: ['Amán'],
+    fuente: 'Ester 3' },
+  { id: 'job', nombre: 'Job', tipo: 'biblico',
+    fechas: '',
+    quien: 'Hombre justo de Uz, probado por Satanás con permiso de Dios.',
+    hizo: [
+      'Perdió bienes, hijos y salud, y siguió confiando en Dios (Job 1-2).',
+      'Su libro muestra a Satanás presentándose ante Dios entre los hijos de Dios (Job 1:6).'
+    ],
+    textos: 'Job 1-2; 42',
+    alias: ['Job'],
+    fuente: 'Job 1-2' },
+  { id: 'dalila', nombre: 'Dalila', tipo: 'biblico',
+    fechas: '',
+    quien: 'Mujer filistea que engañó a Sansón.',
+    hizo: [
+      'Descubrió el secreto de su fuerza y lo entregó a los filisteos (Jueces 16).',
+      'Recibió dinero de los príncipes filisteos por traicionarlo (Jueces 16:5).'
+    ],
+    textos: 'Jueces 16',
+    alias: ['Dalila'],
+    fuente: 'Jueces 16' },
+  { id: 'atalia', nombre: 'Atalía', tipo: 'biblico',
+    fechas: 'siglo IX a.C.',
+    quien: 'Hija de Acab y Jezabel; reina de Judá.',
+    hizo: [
+      'Mató a la familia real para quedarse con el trono (2 Reyes 11:1).',
+      'Reinó seis años, hasta que el sacerdote Joiada puso en el trono al niño Joás (2 Reyes 11:3-16).'
+    ],
+    textos: '2 Reyes 11',
+    alias: ['Atalía'],
+    fuente: '2 Reyes 11' },
+  { id: 'herodias', nombre: 'Herodías', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Esposa de Herodes Antipas.',
+    hizo: [
+      'Pidió la cabeza de Juan el Bautista (Marcos 6:17-28).',
+      'Usó a su hija para conseguirlo en la fiesta de Herodes.'
+    ],
+    textos: 'Marcos 6:17-28',
+    alias: ['Herodías'],
+    fuente: 'Marcos 6:17-28' },
+  { id: 'maria', nombre: 'María, madre de Jesús', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Joven de Nazaret, esposa de José, que fue la madre de Jesús.',
+    hizo: [
+      'Jesús fue concebido por el Espíritu Santo y nació de ella (Lucas 1:35).',
+      'Con José llevó a Jesús al templo cuando tenía doce años (Lucas 2:41-51).'
+    ],
+    textos: 'Lucas 1-2',
+    alias: [{ t: 'María', caps: ['ap1', 'ap12', 'm22', 'cr03', 'cr04'] }],
+    fuente: 'Lucas 1:26-38; 2:41-51' },
+  { id: 'jose-esposo', nombre: 'José, esposo de María', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Carpintero de Nazaret, de la familia de David.',
+    hizo: [
+      'Cuidó a Jesús como padre; lo llevó con María al templo (Lucas 2:41-51).',
+      'Por un ángel supo que el niño venía del Espíritu Santo, y recibió a María como esposa (Mateo 1:20-24).'
+    ],
+    textos: 'Mateo 1:18-25; Lucas 2',
+    alias: [{ t: 'José', caps: ['ap1', 'm22'] }],
+    fuente: 'Mateo 1:18-25; Lucas 2' },
+  { id: 'herodes-grande', nombre: 'Herodes el Grande', tipo: 'biblico',
+    fechas: 'rey de Judea, 37-4 a.C.',
+    quien: 'Rey de Judea puesto por Roma.',
+    hizo: [
+      'Mandó matar a los niños de Belén para eliminar a Jesús (Mateo 2:16); detrás estaba el dragón (Apocalipsis 12:4).',
+      'Amplió y embelleció el templo de Jerusalén.'
+    ],
+    textos: 'Mateo 2:16; Apocalipsis 12:4',
+    alias: [{ t: 'Herodes', caps: ['ap11', 'ap12'] }],
+    fuente: 'Mateo 2:16; CS 491' },
+  { id: 'herodes-antipas', nombre: 'Herodes Antipas', tipo: 'biblico',
+    fechas: 'gobernó 4 a.C.-39 d.C.',
+    quien: 'Hijo de Herodes el Grande, gobernador de Galilea.',
+    hizo: [
+      'Gobernó «en lugar de» su padre: así se ve que «anti» también significa «en lugar de».',
+      'Mandó decapitar a Juan el Bautista (Marcos 6).'
+    ],
+    textos: 'Marcos 6:14-29; Lucas 23:7-12',
+    alias: ['Herodes Antipas'],
+    fuente: 'Marcos 6; Bohr, <i>Daniel 1-10</i>, p. 201' },
+  { id: 'pilato', nombre: 'Poncio Pilato', tipo: 'biblico',
+    fechas: 'gobernador de Judea, 26-36 d.C.',
+    quien: 'Gobernador romano de Judea.',
+    hizo: [
+      'Entregó a Jesús para ser crucificado (Juan 19:16).',
+      'Sabía que Jesús era inocente, pero cedió ante la presión de la multitud (Mateo 27:24).'
+    ],
+    textos: 'Mateo 27; Juan 18-19',
+    alias: ['Poncio Pilato'],
+    fuente: 'Mateo 27; Juan 19' },
+  { id: 'barrabas', nombre: 'Barrabás', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Preso famoso en tiempos de Pilato.',
+    hizo: [
+      'Los dirigentes y el pueblo pidieron soltarlo a él en lugar de Jesús (Mateo 27:15-26).',
+      'Una lectura dice que esa decisión quedó escrita en el libro sellado de Apocalipsis 5.'
+    ],
+    textos: 'Mateo 27:15-26',
+    alias: ['Barrabás'],
+    fuente: 'Mateo 27:15-26' },
+  { id: 'judas-iscariote', nombre: 'Judas Iscariote', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Uno de los doce apóstoles.',
+    hizo: [
+      'Entregó a Jesús; luego se escogió a Matías para completar los doce (Hechos 1:15-26).',
+      'Los doce apóstoles y las doce tribus forman la corona de doce estrellas de la mujer (Apocalipsis 12:1).'
+    ],
+    textos: 'Mateo 26:14-16; Hechos 1',
+    alias: [{ t: 'Judas', caps: ['ap12'] }],
+    fuente: 'Mateo 26; Hechos 1' },
+  { id: 'lazaro', nombre: 'Lázaro de Betania', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Amigo de Jesús, hermano de Marta y María.',
+    hizo: [
+      'Jesús lo resucitó al cuarto día (Juan 11).',
+      'Resucitó antes que Jesús: por eso «primogénito» (Apocalipsis 1:5) habla de rango, no de orden.'
+    ],
+    textos: 'Juan 11; Apocalipsis 1:5',
+    alias: [{ t: 'Lázaro', caps: ['ap1'] }],
+    fuente: 'Juan 11' },
+  { id: 'esteban', nombre: 'Esteban', tipo: 'biblico',
+    fechas: 'murió en el 34 d.C.',
+    quien: 'Uno de los siete diáconos de la iglesia de Jerusalén; el primer mártir cristiano.',
+    hizo: [
+      'Vio a Jesús de pie a la diestra de Dios y fue apedreado (Hechos 7:55-60).',
+      'Su muerte en el 34 d.C. marca el fin de las setenta semanas (Daniel 9:24).'
+    ],
+    textos: 'Hechos 6-7; Daniel 9:24',
+    alias: ['Esteban'],
+    fuente: 'Hechos 7; Bohr, <i>Daniel 1-10</i>, p. 4' },
+  { id: 'cornelio', nombre: 'Cornelio', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Centurión romano de Cesarea que temía a Dios.',
+    hizo: [
+      'Fue el primer gentil bautizado por Pedro; el evangelio se abrió a todas las naciones (Hechos 10).',
+      'Dios le mostró a Pedro que no debía llamar inmundo a ningún hombre (Hechos 10:28).'
+    ],
+    textos: 'Hechos 10',
+    alias: ['Cornelio'],
+    fuente: 'Hechos 10' },
+  { id: 'felipe-evangelista', nombre: 'Felipe, el evangelista', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Uno de los siete diáconos de Jerusalén.',
+    hizo: [
+      'Tenía cuatro hijas que profetizaban (Hechos 21:8-9).',
+      'Predicó en Samaria y bautizó al eunuco etíope (Hechos 8).'
+    ],
+    textos: 'Hechos 21:8-9',
+    alias: [{ t: 'Felipe', caps: ['d4'] }],
+    fuente: 'Hechos 21:8-9' },
+  { id: 'agabo', nombre: 'Agabo', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Profeta de la iglesia primitiva.',
+    hizo: [
+      'Anunció un hambre en todo el mundo (Hechos 11:28) y la prisión de Pablo (Hechos 21:10-11).',
+      'Dios tenía varios profetas a la vez, como en tiempos de Daniel, Jeremías y Ezequiel.'
+    ],
+    textos: 'Hechos 11:28; 21:10-11',
+    alias: ['Agabo'],
+    fuente: 'Hechos 11:28; 21:10-11' },
+  { id: 'antipas', nombre: 'Antipas', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Creyente de Pérgamo.',
+    hizo: [
+      'Jesús lo llama «mi testigo fiel», que fue muerto en Pérgamo (Apocalipsis 2:13).',
+      'Pérgamo era la sede del culto al emperador: allí estaba «el trono de Satanás» (Apocalipsis 2:13).'
+    ],
+    textos: 'Apocalipsis 2:13',
+    alias: [{ t: 'Antipas', caps: ['ap2'] }],
+    fuente: 'Apocalipsis 2:13' },
+  { id: 'lidia', nombre: 'Lidia', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Vendedora de púrpura de la ciudad de Tiatira.',
+    hizo: [
+      'Escuchó a Pablo en Filipos y fue la primera creyente de Europa (Hechos 16:14-15).',
+      'Tiatira, su ciudad, es una de las siete iglesias de Apocalipsis 2.'
+    ],
+    textos: 'Hechos 16:14-15',
+    alias: ['Lidia'],
+    fuente: 'Hechos 16:14-15' },
+  { id: 'epafras', nombre: 'Epafras', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Colaborador de Pablo, de la ciudad de Colosas.',
+    hizo: [
+      'Llevó el evangelio a Colosas y oraba por esa iglesia (Colosenses 1:7; 4:12).',
+      'Pablo lo llama compañero de servicio y fiel ministro de Cristo (Colosenses 1:7).'
+    ],
+    textos: 'Colosenses 1:7; 4:12',
+    alias: ['Epafras'],
+    fuente: 'Colosenses 1:7; 4:12' },
+  { id: 'timoteo', nombre: 'Timoteo', tipo: 'biblico',
+    fechas: 'siglo I d.C.',
+    quien: 'Joven colaborador de Pablo; recibió dos cartas suyas.',
+    hizo: [
+      'Acompañó a Pablo en sus viajes y cuidó la iglesia de Éfeso (1 Timoteo 1:3).',
+      'Desde niño conoció las Sagradas Escrituras (2 Timoteo 3:15).'
+    ],
+    textos: 'Hechos 16:1-3; 1 Timoteo 1:3',
+    alias: [{ t: 'Timoteo', caps: ['ap2'] }],
+    fuente: 'Hechos 16:1-3' },
+  { id: 'lucifer', nombre: 'Lucifer (Satanás)', tipo: 'biblico',
+    fechas: '',
+    quien: 'Ángel creado por Dios, el «lucero». Se rebeló y se convirtió en Satanás.',
+    hizo: [
+      'Se enorgulleció de su belleza y quiso ser como el Altísimo (Ezequiel 28:17; Isaías 14:13-14).',
+      'Arrastró con sus mentiras a la tercera parte de los ángeles (Apocalipsis 12:4, 9).',
+      'Tentó a Adán y Eva y empezó el gran conflicto en la tierra.'
+    ],
+    textos: 'Isaías 14:12-15; Ezequiel 28:12-17; Apocalipsis 12:4-9',
+    alias: ['Lucifer'],
+    fuente: 'Isaías 14:12-15; Apocalipsis 12:7-9' },
+  { id: 'nabopolasar', nombre: 'Nabopolasar', tipo: 'historico',
+    fechas: 'reinó 626-605 a.C.',
+    quien: 'Fundador del imperio neobabilónico y padre de Nabucodonosor.',
+    hizo: [
+      'Murió en agosto de 605 a.C., poco después de que su hijo sitiara Jerusalén; Nabucodonosor volvió para subir al trono.',
+      'Con los medos destruyó Nínive, la capital de Asiria, en 612 a.C.'
+    ],
+    textos: 'Daniel 1:1; 2:1',
+    alias: ['Nabopolasar'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 45-46' },
+  { id: 'nabonido', nombre: 'Nabonido', tipo: 'historico',
+    fechas: 'reinó 556-539 a.C.',
+    quien: 'Último rey de Babilonia y padre de Belsasar.',
+    hizo: [
+      'Pasó años lejos de la capital y dejó el gobierno en manos de su hijo Belsasar, que reinaba como segundo.',
+      'Por eso Belsasar solo podía ofrecer a Daniel el tercer lugar del reino (Daniel 5:16).',
+      'Las tablillas que lo nombran con su hijo confirmaron que Belsasar existió.'
+    ],
+    textos: 'Daniel 5:7, 16, 29',
+    alias: ['Nabonido'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 93; Britannica, «Nabonidus»' },
+  { id: 'gubaru', nombre: 'Gubaru (Gobryas)', tipo: 'historico',
+    fechas: '539 a.C.',
+    quien: 'General de origen medo, gobernador de la provincia de Gutium.',
+    hizo: [
+      'La Crónica de Nabonido dice que tomó Babilonia en octubre de 539 a.C. y nombró gobernadores en ella.',
+      'Algunos eruditos lo identifican con Darío el Medo de Daniel 6.'
+    ],
+    textos: 'Daniel 5:31; 6:1-2',
+    alias: ['Gubaru', 'Gobryas'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 113-116' },
+  { id: 'astiages', nombre: 'Astiages', tipo: 'historico',
+    fechas: 'rey de Media, hacia 585-550 a.C.',
+    quien: 'Último rey de Media y abuelo de Ciro.',
+    hizo: [
+      'Ciro se rebeló contra él en 553 a.C. y puso a Media bajo Persia: por eso el cuerno más alto del carnero salió después (Daniel 8:3).',
+      'Así Persia, el cuerno que salió después, llegó a ser el más alto.'
+    ],
+    textos: 'Daniel 8:3, 20',
+    alias: ['Astiages'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 293-295' },
+  { id: 'cambises', nombre: 'Cambises II', tipo: 'historico',
+    fechas: 'reinó 530-522 a.C.',
+    quien: 'Rey de Persia, hijo de Ciro.',
+    hizo: [
+      'Conquistó Egipto.',
+      'Suspendió la reconstrucción del templo que Ciro había autorizado.',
+      'Es el primero de los reyes persas que siguen a Ciro en Daniel 11:2.'
+    ],
+    textos: 'Daniel 11:2; Esdras 4:4-5',
+    alias: ['Cambises II', 'Cambises'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'gaumata', nombre: 'Gaumata (Pseudo-Esmerdis)', tipo: 'historico',
+    fechas: '522 a.C.',
+    quien: 'Usurpador del trono persa.',
+    hizo: [
+      'Reinó unos meses haciéndose pasar por Esmerdis, el hermano de Cambises (Daniel 11:2).',
+      'Darío I lo quitó del trono y reinó en su lugar.'
+    ],
+    textos: 'Daniel 11:2',
+    alias: ['Pseudo-Esmerdis', 'Gaumata'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'dario-i', nombre: 'Darío I el Grande', tipo: 'historico',
+    fechas: 'reinó 522-486 a.C.',
+    quien: 'Rey de Persia.',
+    hizo: [
+      'Reorganizó el imperio en veinte satrapías.',
+      'En 520 a.C. confirmó el decreto de Ciro para terminar el templo (Esdras 6).'
+    ],
+    textos: 'Esdras 6; Daniel 11:2',
+    alias: ['Darío I', { t: 'Darío', caps: ['d9'] }],
+    fuente: 'Esdras 6; Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'jerjes', nombre: 'Jerjes I', tipo: 'historico',
+    fechas: 'reinó 486-465 a.C.',
+    quien: 'Rey de Persia, hijo de Darío I.',
+    hizo: [
+      'Una lectura lo ve como el cuarto rey de Daniel 11:2, el más rico, que levantó a todos contra Grecia; otra ve allí a Artajerjes I.',
+      'Peleó contra Grecia en las Termópilas y Salamina (480 a.C.).',
+      'Arrasó las murallas y templos de Babilonia tras una revuelta.'
+    ],
+    textos: 'Daniel 11:2',
+    alias: ['Jerjes I', { t: 'Jerjes', caps: ['d5', 'd11'] }],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'artajerjes', nombre: 'Artajerjes I', tipo: 'historico',
+    fechas: 'reinó 465-424 a.C.',
+    quien: 'Rey de Persia.',
+    hizo: [
+      'En su séptimo año, 457 a.C., dio el decreto para restaurar y edificar Jerusalén (Esdras 7).',
+      'Ese decreto es el punto de partida de las setenta semanas y de los 2.300 días (Daniel 9:25; 8:14).',
+      'Por eso una lectura lo ve como el cuarto rey de Daniel 11:2.'
+    ],
+    textos: 'Esdras 7; Daniel 8:14; 9:25',
+    alias: ['Artajerjes I', 'Artajerjes'],
+    fuente: 'Esdras 7; Bohr, <i>Daniel 1-10</i>, p. 327-329' },
+  { id: 'dario-iii', nombre: 'Darío III', tipo: 'historico',
+    fechas: 'reinó 336-330 a.C.',
+    quien: 'Último rey del imperio persa.',
+    hizo: [
+      'Alejandro Magno lo venció en Gránico (334), Iso (333) y Arbela o Gaugamela (331 a.C.).',
+      'Con su caída el macho cabrío derribó al carnero (Daniel 8:7).'
+    ],
+    textos: 'Daniel 8:5-7',
+    alias: ['Darío III', { t: 'Darío', caps: ['d8'] }],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 293-295' },
+  { id: 'alejandro', nombre: 'Alejandro Magno', tipo: 'historico',
+    fechas: '356-323 a.C.',
+    quien: 'Rey de Macedonia. Es el «cuerno notable» del macho cabrío, el primer rey de Grecia (Daniel 8:21).',
+    hizo: [
+      'Unió a los griegos y venció a Persia en tres grandes batallas; la última en Arbela, 331 a.C.',
+      'Conquistó con una rapidez nunca vista: las alas del leopardo (Daniel 7:6).',
+      'Murió a los 32 años; su reino se repartió entre cuatro generales (Daniel 8:8; 11:4).'
+    ],
+    textos: 'Daniel 7:6; 8:5-8, 21; 11:3-4',
+    alias: ['Alejandro Magno', { t: 'Alejandro', caps: ['ap17', 'd11', 'd2', 'd7', 'd8', 'm-comparar', 'm-glosario', 'ma-comparar', 'ma-glosario'] }],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 57, 293-295' },
+  { id: 'roxana', nombre: 'Roxana', tipo: 'historico',
+    fechas: 'murió hacia 310 a.C.',
+    quien: 'Princesa de Bactriana, esposa de Alejandro Magno.',
+    hizo: [
+      'Su boda fue un gesto de Alejandro para unir a griegos y persas.',
+      'Alejandro también hizo casar a diez mil de sus soldados griegos con mujeres persas.'
+    ],
+    textos: '',
+    alias: ['Roxana'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 293-295' },
+  { id: 'casandro', nombre: 'Casandro', tipo: 'historico',
+    fechas: 'hacia 355-297 a.C.',
+    quien: 'General de Alejandro.',
+    hizo: [
+      'Después de la batalla de Ipso (301 a.C.) se quedó con Macedonia y Grecia: una de las cuatro cabezas del leopardo (Daniel 7:6).',
+      'Daniel 8:8 dice que en lugar del cuerno grande salieron cuatro, «hacia los cuatro vientos del cielo».'
+    ],
+    textos: 'Daniel 7:6; 8:8',
+    alias: ['Casandro'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119' },
+  { id: 'lisimaco', nombre: 'Lisímaco', tipo: 'historico',
+    fechas: 'hacia 360-281 a.C.',
+    quien: 'General de Alejandro.',
+    hizo: [
+      'Se quedó con Tracia y buena parte de Asia Menor: otro de los cuatro reinos griegos (Daniel 8:8).',
+      'Su reino fue uno de los cuatro en que se repartió el imperio de Alejandro.'
+    ],
+    textos: 'Daniel 7:6; 8:8',
+    alias: ['Lisímaco'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119' },
+  { id: 'seleuco-i', nombre: 'Seleuco I Nicátor', tipo: 'historico',
+    fechas: 'reinó 312-281 a.C.',
+    quien: 'General de Alejandro y fundador del reino seléucida (Siria y el oriente).',
+    hizo: [
+      'Fue el primer «rey del norte» de Daniel 11.',
+      'Fundó la ciudad de Seleucia y se llevó gente y ladrillos de Babilonia, que fue quedando vacía.'
+    ],
+    textos: 'Daniel 8:8; 11:5',
+    alias: ['Seleuco I Nicátor', 'Seleuco Nicátor', { t: 'Seleuco', caps: ['d7', 'd8', 'd11'] }],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'seleuco-ii', nombre: 'Seleuco II Calínico', tipo: 'historico',
+    fechas: 'reinó 246-225 a.C.',
+    quien: 'Rey seléucida, «rey del norte».',
+    hizo: [
+      'Peleó contra Tolomeo III, rey del sur, que invadió su reino (Daniel 11:7-9).',
+      'Era hijo de Antíoco II y de Laódice.'
+    ],
+    textos: 'Daniel 11:7-9',
+    alias: ['Seleuco II'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'tolomeo-i', nombre: 'Tolomeo I Sóter', tipo: 'historico',
+    fechas: '323-285 a.C.',
+    quien: 'General de Alejandro y fundador del reino tolemaico de Egipto.',
+    hizo: [
+      'Se quedó con Egipto, Cirenaica y Palestina: el primer «rey del sur» de Daniel 11:5.',
+      'Su dinastía, los tolomeos, gobernó Egipto hasta el año 30 a.C.'
+    ],
+    textos: 'Daniel 7:6; 11:5',
+    alias: ['Tolomeo I Sóter', { t: 'Tolomeo', caps: ['d7', 'd8'] }],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'tolomeo-ii', nombre: 'Tolomeo II Filadelfo', tipo: 'historico',
+    fechas: 'reinó 285-246 a.C.',
+    quien: 'Rey de Egipto, «rey del sur».',
+    hizo: [
+      'Dio a su hija Berenice en matrimonio a Antíoco II para sellar la paz (Daniel 11:6).',
+      'Cuando él murió, el pacto se rompió y Berenice fue asesinada.'
+    ],
+    textos: 'Daniel 11:6',
+    alias: ['Tolomeo II'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'tolomeo-iii', nombre: 'Tolomeo III Evergetes', tipo: 'historico',
+    fechas: 'reinó 246-221 a.C.',
+    quien: 'Rey de Egipto, hermano de Berenice.',
+    hizo: [
+      'Invadió el reino del norte para vengar a su hermana (Daniel 11:7-8).',
+      'Volvió a Egipto con mucho botín y con los dioses que antes se habían llevado de allí (Daniel 11:8).'
+    ],
+    textos: 'Daniel 11:7-8',
+    alias: ['Tolomeo III'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'tolomeo-iv', nombre: 'Tolomeo IV Filopátor', tipo: 'historico',
+    fechas: 'reinó 221-203 a.C.',
+    quien: 'Rey de Egipto.',
+    hizo: [
+      'Venció a Antíoco III en Rafia, en 217 a.C. (Daniel 11:11).',
+      'Esa victoria no le duró: «pero no prevalecerá» (Daniel 11:12).'
+    ],
+    textos: 'Daniel 11:10-12',
+    alias: ['Tolomeo IV'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'tolomeo-v', nombre: 'Tolomeo V Epífanes', tipo: 'historico',
+    fechas: 'reinó 204-181 a.C.',
+    quien: 'Rey de Egipto que subió al trono siendo niño.',
+    hizo: [
+      'En su tiempo Antíoco III le quitó Palestina (Daniel 11:14-16).',
+      'La Piedra de Rosetta es un decreto de su reinado.'
+    ],
+    textos: 'Daniel 11:14-17',
+    alias: ['Tolomeo V', 'Ptolomeo V'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'antioco-i', nombre: 'Antíoco I Sóter', tipo: 'historico',
+    fechas: 'reinó 281-261 a.C.',
+    quien: 'Rey seléucida, hijo de Seleuco I.',
+    hizo: [
+      'Siguió la línea de los «reyes del norte» de Daniel 11.',
+      'Era hijo de Seleuco I, fundador del reino del norte.'
+    ],
+    textos: 'Daniel 11:5-6',
+    alias: ['Antíoco I'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'antioco-ii', nombre: 'Antíoco II Teos («el Divino»)', tipo: 'historico',
+    fechas: 'reinó 261-246 a.C.',
+    quien: 'Rey seléucida, «rey del norte».',
+    hizo: [
+      'Se divorció de su esposa Laódice para casarse con Berenice, hija del rey del sur (Daniel 11:6).',
+      'Cuando murió Tolomeo II volvió con Laódice, que lo hizo matar junto con Berenice y su hijo.'
+    ],
+    textos: 'Daniel 11:6',
+    alias: ['Antíoco II', { t: 'Antíoco', caps: ['d11'] }],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'antioco-iii', nombre: 'Antíoco III el Grande', tipo: 'historico',
+    fechas: 'reinó 223-187 a.C.',
+    quien: 'Rey seléucida, «rey del norte».',
+    hizo: [
+      'Peleó contra Egipto y le quitó Palestina (Daniel 11:10-16).',
+      'Tomó la ciudad de Sardis, que se creía invencible, porque nadie vigilaba de noche (ver Apocalipsis 3:3).'
+    ],
+    textos: 'Daniel 11:10-19; Apocalipsis 3:2-3',
+    alias: ['Antíoco III', { t: 'Antíoco', caps: ['ap3'] }],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12; Bohr, <i>Las siete iglesias</i>, p. 115' },
+  { id: 'antioco-iv', nombre: 'Antíoco IV Epífanes', tipo: 'historico',
+    fechas: 'reinó 175-164 a.C.',
+    quien: 'Rey seléucida que profanó el templo de Jerusalén entre 168 y 165 a.C.',
+    hizo: [
+      'Su historia se cuenta en 1 y 2 de Macabeos.',
+      'Algunos dicen que él es el cuerno pequeño, pero no encaja: no salió al final del reino griego ni fue más grande que los otros.',
+      'El cuerno pequeño de Daniel 7 y 8 es Roma, en su etapa pagana y papal.'
+    ],
+    textos: 'Daniel 8:9-12, 23',
+    alias: ['Antíoco IV Epífanes', 'Antíoco Epífanes', { t: 'Antíoco', caps: ['d7', 'd8', 'd9', 'd12'] }],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 293-295, 305-306' },
+  { id: 'berenice', nombre: 'Berenice', tipo: 'historico',
+    fechas: 'murió en 246 a.C.',
+    quien: 'Hija de Tolomeo II, rey del sur.',
+    hizo: [
+      'Se casó con Antíoco II, rey del norte, para sellar la paz: «la hija del rey del sur» (Daniel 11:6).',
+      'El pacto fracasó: ella, su hijo y Antíoco fueron asesinados.'
+    ],
+    textos: 'Daniel 11:6',
+    alias: ['Berenice'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'onias-iii', nombre: 'Onías III', tipo: 'historico',
+    fechas: 'murió hacia 171 a.C.',
+    quien: 'Sumo sacerdote judío en tiempos de los seléucidas.',
+    hizo: [
+      'Algunos lo ven como el «príncipe del pacto» de Daniel 11:22.',
+      'Pero ese príncipe es Jesucristo, cuya muerte anuncia la profecía.'
+    ],
+    textos: 'Daniel 11:22; 9:26',
+    alias: ['Onías III'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'atalo-iii', nombre: 'Atalo III', tipo: 'historico',
+    fechas: 'reinó 138-133 a.C.',
+    quien: 'Último rey de Pérgamo.',
+    hizo: [
+      'Al morir en 133 a.C. dejó su reino en herencia al Senado romano.',
+      'Así Roma, el cuerno pequeño, salió de uno de los cuatro reinos sin pelear (Daniel 8:9).'
+    ],
+    textos: 'Daniel 8:9',
+    alias: ['Atalo III'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 302' },
+  { id: 'pompeyo', nombre: 'Pompeyo', tipo: 'historico',
+    fechas: '106-48 a.C.',
+    quien: 'General romano.',
+    hizo: [
+      'Tomó Jerusalén en 63 a.C. y puso a Judea bajo Roma.',
+      'Desde entonces Roma dominó la tierra de Israel en los días de Jesús.'
+    ],
+    textos: '',
+    alias: ['Pompeyo'],
+    fuente: 'Britannica, «Pompey the Great»' },
+  { id: 'claudio-tolomeo', nombre: 'Claudio Tolomeo', tipo: 'historico',
+    fechas: 'siglo II d.C.',
+    quien: 'Astrónomo y geógrafo griego de Alejandría.',
+    hizo: [
+      'Los astrólogos de hoy usan los signos del zodiaco según el cielo de su tiempo, que ya no coincide con el actual.',
+      'Por un movimiento del cielo llamado precesión de los equinoccios, las constelaciones ya no están donde estaban.'
+    ],
+    textos: 'Daniel 2:27-28',
+    alias: ['Claudio Tolomeo'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57' },
+  { id: 'tito', nombre: 'Tito', tipo: 'historico',
+    fechas: '39-81 d.C.; emperador 79-81',
+    quien: 'General romano y después emperador, hijo de Vespasiano.',
+    hizo: [
+      'Destruyó Jerusalén y el templo en el año 70 d.C.',
+      'Una lectura tradicional lo ve en «el pueblo de un príncipe que ha de venir» (Daniel 9:26).'
+    ],
+    textos: 'Daniel 9:26; Mateo 24:15',
+    alias: [{ t: 'Tito', caps: ['d9'] }],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 4, 341-342' },
+  { id: 'neron', nombre: 'Nerón', tipo: 'historico',
+    fechas: '37-68 d.C.; emperador 54-68',
+    quien: 'Emperador romano.',
+    hizo: [
+      'Persiguió a los cristianos de Roma desde el año 64 d.C., antes que Domiciano y Diocleciano.',
+      'Le echó la culpa del incendio de Roma a los cristianos.'
+    ],
+    textos: '',
+    alias: ['Nerón'],
+    fuente: 'Britannica, «Nero»' },
+  { id: 'domiciano', nombre: 'Domiciano', tipo: 'historico',
+    fechas: 'emperador 81-96 d.C.',
+    quien: 'Emperador romano.',
+    hizo: [
+      'Bajo su gobierno echaron a Juan en aceite hirviendo; Dios lo guardó y luego lo desterraron a Patmos (Apocalipsis 1:9).',
+      'Gobernó del 81 al 96 d.C.; en sus días Juan escribió el Apocalipsis.'
+    ],
+    textos: 'Apocalipsis 1:9',
+    alias: ['Domiciano'],
+    fuente: 'HAp 455; Bohr, <i>Las siete iglesias</i>, p. 8' },
+  { id: 'policarpo', nombre: 'Policarpo', tipo: 'historico',
+    fechas: 'hacia 69-156 d.C.',
+    quien: 'Obispo de Esmirna.',
+    hizo: [
+      'Murió quemado en el año 156 por no adorar al emperador: fiel hasta la muerte, como pide Apocalipsis 2:10.',
+      'Había sido discípulo del apóstol Juan.'
+    ],
+    textos: 'Apocalipsis 2:10',
+    alias: ['Policarpo'],
+    fuente: 'Bohr, <i>Las siete iglesias</i>, p. 55-63' },
+  { id: 'decio', nombre: 'Decio', tipo: 'historico',
+    fechas: 'emperador 249-251 d.C.',
+    quien: 'Emperador romano.',
+    hizo: [
+      'Hacia el 250 d.C. hizo una de las dos persecuciones sistemáticas contra los cristianos; la otra fue la de Diocleciano.',
+      'Bajo los dos, la cifra de mártires cristianos fue menor de lo que se suele creer.'
+    ],
+    textos: '',
+    alias: ['Decio'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'diocleciano', nombre: 'Diocleciano', tipo: 'historico',
+    fechas: 'emperador 284-305 d.C.',
+    quien: 'Emperador romano.',
+    hizo: [
+      'Su persecución duró de 303 a 313 d.C.: los «diez días» de tribulación de Esmirna (Apocalipsis 2:10).',
+      'Terminó con el Edicto de Milán de Constantino, en 313.'
+    ],
+    textos: 'Apocalipsis 2:10',
+    alias: ['Diocleciano'],
+    fuente: 'Bohr, <i>Las siete iglesias</i>, p. 60' },
+  { id: 'constantino', nombre: 'Constantino I el Grande', tipo: 'historico',
+    fechas: 'emperador 306-337 d.C.',
+    quien: 'Emperador romano que se declaró cristiano.',
+    hizo: [
+      'Con el Edicto de Milán (313) terminó la persecución.',
+      'Desde entonces la iglesia subió a la popularidad y se unió al Estado: es el tiempo de Pérgamo (313-538).',
+      'En 330 mudó la capital a Constantinopla y el occidente empezó a declinar.'
+    ],
+    textos: 'Apocalipsis 2:12-13; Daniel 2:40-41',
+    alias: ['Constantino I', 'Constantino'],
+    fuente: 'Bohr, <i>Las siete iglesias</i>, p. 55-63; Bohr, <i>Daniel 1-10</i>, p. 62' },
+  { id: 'silvestre', nombre: 'Silvestre I', tipo: 'historico',
+    fechas: 'obispo de Roma 314-335 d.C.',
+    quien: 'Obispo de Roma en tiempos de Constantino.',
+    hizo: [
+      'Con él empezó el pacto entre el obispo de Roma y el poder imperial (Daniel 11:23).',
+      'Ese pacto fue el comienzo de la unión entre la iglesia de Roma y el Estado.'
+    ],
+    textos: 'Daniel 11:21-23',
+    alias: ['Silvestre I'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'teodosio', nombre: 'Teodosio I', tipo: 'historico',
+    fechas: 'emperador 379-395 d.C.',
+    quien: 'Emperador romano.',
+    hizo: [
+      'Declaró el cristianismo religión del Estado y el paganismo un delito.',
+      'Así la religión del emperador pasó a ser obligatoria para todos.'
+    ],
+    textos: 'Daniel 11:21-23',
+    alias: ['Teodosio I'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'valentiniano', nombre: 'Valentiniano III', tipo: 'historico',
+    fechas: 'emperador 425-455 d.C.',
+    quien: 'Emperador romano de occidente.',
+    hizo: [
+      'Hizo un acuerdo con el papa León I que dio más autoridad al obispo de Roma.',
+      'Fue un paso más en la unión entre Iglesia y Estado que lleva a 538.'
+    ],
+    textos: 'Daniel 11:21-23',
+    alias: ['Valentiniano III'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'leon-i', nombre: 'León I el Magno', tipo: 'historico',
+    fechas: 'papa 440-461 d.C.',
+    quien: 'Obispo de Roma.',
+    hizo: [
+      'Con apoyo del emperador Valentiniano III afirmó la autoridad del papa sobre las demás iglesias.',
+      'Es uno de los pasos que llevan al poder del papado en 538.'
+    ],
+    textos: 'Daniel 11:21-23',
+    alias: ['León I'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'romulo', nombre: 'Rómulo Augústulo', tipo: 'historico',
+    fechas: 'emperador 475-476 d.C.',
+    quien: 'Último emperador romano de occidente; era un muchacho y gobernaba su padre Orestes.',
+    hizo: [
+      'Fue depuesto en 476 d.C. por Odoacro, jefe de los hérulos.',
+      'Con él termina la Roma imperial (las piernas de hierro) y empieza la Roma dividida (los pies y los dedos, Daniel 2:41).'
+    ],
+    textos: 'Daniel 2:40-43; 7:7',
+    alias: ['Rómulo Augústulo'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 133; Britannica, «Romulus Augustulus»' },
+  { id: 'teodorico', nombre: 'Teodorico el Grande', tipo: 'historico',
+    fechas: 'rey 471-526 d.C.',
+    quien: 'Rey de los ostrogodos, arriano, que gobernó Italia.',
+    hizo: [
+      'Los ostrogodos fueron el último de los tres cuernos arrancados delante del cuerno pequeño (Daniel 7:8).',
+      'Era arriano: no aceptaba la divinidad plena de Cristo, que la iglesia de Roma sí enseñaba.'
+    ],
+    textos: 'Daniel 7:8',
+    alias: ['Teodorico'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134' },
+  { id: 'clodoveo', nombre: 'Clodoveo I', tipo: 'historico',
+    fechas: 'rey de los francos, 481-511 d.C.',
+    quien: 'Rey de los francos.',
+    hizo: [
+      'Dejó el paganismo y se hizo católico: Francia fue la primera nación de Europa en hacerlo.',
+      'En 508 dio por primera vez el poder civil al servicio del papado.',
+      'Desde 508 se cuentan los 1.290 y los 1.335 días (Daniel 12:11-12).'
+    ],
+    textos: 'Daniel 11:31; 12:11-12',
+    alias: ['Clodoveo'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 26; Bohr, <i>Daniel 1-10</i>, p. 5' },
+  { id: 'justiniano', nombre: 'Justiniano I', tipo: 'historico',
+    fechas: 'emperador 527-565 d.C.',
+    quien: 'Emperador romano de oriente.',
+    hizo: [
+      'En 533 escribió al papa Juan II y lo reconoció como «cabeza de todas las santas iglesias»; la carta entró en su código de leyes.',
+      'El decreto solo pudo aplicarse en 538, cuando su general Belisario venció a los ostrogodos.',
+      'Así empiezan los 1.260 años del cuerno pequeño (Daniel 7:25).'
+    ],
+    textos: 'Daniel 7:25; Apocalipsis 12:6; 13:5',
+    alias: ['Justiniano'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134, 198' },
+  { id: 'juan-ii', nombre: 'Juan II, papa', tipo: 'historico',
+    fechas: 'papa 533-535 d.C.',
+    quien: 'Obispo de Roma.',
+    hizo: [
+      'Recibió la carta de Justiniano (533) que lo reconocía como cabeza de todas las iglesias.',
+      'Desde 538, cuando ese decreto se pudo cumplir, se cuentan los 1.260 años (Daniel 7:25).'
+    ],
+    textos: 'Daniel 7:25',
+    alias: ['papa Juan'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 198' },
+  { id: 'belisario', nombre: 'Belisario', tipo: 'historico',
+    fechas: 'hacia 505-565 d.C.',
+    quien: 'General del emperador Justiniano.',
+    hizo: [
+      'Venció a los vándalos en 533-534.',
+      'En febrero de 538 derrotó a los ostrogodos en Roma, el último cuerno arriano.',
+      'Así quedó libre el camino para la supremacía del papa: empiezan los 1.260 años (Daniel 7:25).'
+    ],
+    textos: 'Daniel 7:8, 25',
+    alias: ['Belisario'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134; Britannica, «Belisarius»' },
+  { id: 'leon-iii', nombre: 'León III', tipo: 'historico',
+    fechas: 'papa 795-816 d.C.',
+    quien: 'Obispo de Roma.',
+    hizo: [
+      'Coronó a Carlomagno como emperador la Navidad del año 800: así el papado mostraba que el poder político dependía de él.',
+      'Ese acto resume siglos de victorias del papado sobre el poder civil (Daniel 11:28).'
+    ],
+    textos: 'Daniel 11:28',
+    alias: ['León III'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'carlomagno', nombre: 'Carlomagno', tipo: 'historico',
+    fechas: 'hacia 747-814 d.C.; emperador desde 800',
+    quien: 'Rey de los francos y emperador de occidente.',
+    hizo: [
+      'El papa León III lo coronó emperador en el año 800.',
+      'Intentó volver a unir Europa bajo un solo poder, pero el hierro no se pega con el barro (Daniel 2:43).'
+    ],
+    textos: 'Daniel 2:43; 11:28',
+    alias: ['Carlomagno'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12; Bohr, <i>Daniel 1-10</i>, p. 55-57' },
+  { id: 'arnulfo', nombre: 'Arnulfo de Orleans', tipo: 'historico',
+    fechas: 'siglo X',
+    quien: 'Obispo católico de Orleans, Francia.',
+    hizo: [
+      'En un concilio del año 991 llamó «anticristo» al papa, siglos antes de la Reforma.',
+      'Muestra que aun dentro de la iglesia católica algunos reconocían al papado en la profecía.'
+    ],
+    textos: 'Daniel 7:8, 25',
+    alias: ['Arnulfo'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'gregorio-vii', nombre: 'Gregorio VII', tipo: 'historico',
+    fechas: 'papa 1073-1085',
+    quien: 'Obispo de Roma.',
+    hizo: [
+      'Excomulgó y depuso al emperador Enrique IV; en enero de 1077 el emperador esperó tres días en la nieve de Canossa para pedirle perdón.',
+      'Ese episodio se conoce como «la humillación de Canossa».'
+    ],
+    textos: 'Daniel 11:27-28',
+    alias: ['Gregorio VII'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'enrique-iv', nombre: 'Enrique IV', tipo: 'historico',
+    fechas: '1050-1106',
+    quien: 'Emperador del Sacro Imperio Romano Germánico.',
+    hizo: [
+      'Excomulgado por Gregorio VII, cruzó los Alpes en invierno y esperó tres días en Canossa (1077) para ser perdonado.',
+      'Canossa fue durante siglos el ejemplo del poder del papa sobre los reyes.'
+    ],
+    textos: 'Daniel 11:27-28',
+    alias: ['Enrique IV'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'felipe-augusto', nombre: 'Felipe II Augusto', tipo: 'historico',
+    fechas: 'rey de Francia, 1180-1223',
+    quien: 'Rey de Francia.',
+    hizo: [
+      'Hacia el año 1200 el papa usó contra él el entredicho, la misma arma que se usó en Canossa.',
+      'Era el castigo que suspendía los servicios religiosos en todo un reino.'
+    ],
+    textos: '',
+    alias: ['Felipe II Augusto'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'juan-sin-tierra', nombre: 'Juan Sin Tierra', tipo: 'historico',
+    fechas: 'rey de Inglaterra, 1199-1216',
+    quien: 'Rey de Inglaterra.',
+    hizo: [
+      'En 1209 el papa lo excomulgó; al final tuvo que someterse a Roma.',
+      'Es otro ejemplo del poder del papado sobre los reyes de Europa en la Edad Media.'
+    ],
+    textos: '',
+    alias: ['Juan Sin Tierra'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'eberardo', nombre: 'Eberardo II de Salzburgo', tipo: 'historico',
+    fechas: 'arzobispo 1200-1246',
+    quien: 'Arzobispo católico de Salzburgo.',
+    hizo: [
+      'En un sínodo de Regensburgo (1240) llamó «anticristo» al papado.',
+      'Fue antes de la Reforma: aun católicos veían al papado en la profecía.'
+    ],
+    textos: 'Daniel 7:8, 25',
+    alias: ['Eberardo II'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'wiclef', nombre: 'Juan Wiclef', tipo: 'historico',
+    fechas: 'hacia 1330-1384',
+    quien: 'Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.',
+    hizo: [
+      'Enseñó que la Biblia está por encima del papa.',
+      'Dijo que dos papas rivales eran «las dos mitades del Anticristo».',
+      'Se le llama «el lucero de la Reforma» (Apocalipsis 2:28).'
+    ],
+    textos: 'Apocalipsis 2:28',
+    alias: ['Juan Wiclef', 'Wiclef'],
+    fuente: 'CS 85-86; Bohr, <i>Las siete iglesias</i>, p. 106' },
+  { id: 'gutenberg', nombre: 'Johannes Gutenberg', tipo: 'historico',
+    fechas: 'hacia 1400-1468',
+    quien: 'Inventor alemán.',
+    hizo: [
+      'Hacia 1455 imprimió con tipos móviles; la Biblia impresa ayudó a la Reforma.',
+      'La imprenta llegó pocas décadas antes de la Reforma de 1517.'
+    ],
+    textos: '',
+    alias: ['Gutenberg'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'lutero', nombre: 'Martín Lutero', tipo: 'historico',
+    fechas: '1483-1546',
+    quien: 'Monje agustino y profesor alemán; inició la Reforma protestante en 1517.',
+    hizo: [
+      'Enseñó la salvación por la fe y la Biblia como única regla.',
+      'Llegó a la conclusión de que el papado era el anticristo, el cuerno pequeño de Daniel 7.'
+    ],
+    textos: 'Daniel 7:8, 25',
+    alias: ['Martín Lutero', 'Lutero'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'andreas-fischer', nombre: 'Andreas Fischer', tipo: 'historico',
+    fechas: 'hacia 1480-1540',
+    quien: 'Anabautista del siglo XVI, compañero de Oswald Glait.',
+    hizo: [
+      'Al estudiar Daniel 7:25 se convenció de que debía guardar el sábado bíblico.',
+      'Lo sostuvo a pesar de la oposición y murió ejecutado por su fe.'
+    ],
+    textos: 'Daniel 7:25; 12:3',
+    alias: ['Andreas Fischer'],
+    fuente: 'Maxwell, <i>El porvenir del mundo revelado</i>; Wikipedia, «Andreas Fischer (Anabaptist)»' },
+  { id: 'oswald-glait', nombre: 'Oswald Glait', tipo: 'historico',
+    fechas: '1490-1546',
+    quien: 'Anabautista del siglo XVI.',
+    hizo: [
+      'Enseñó, por Daniel 7:25, que se debía guardar el sábado y no el domingo.',
+      'Fue arrestado en Viena y en 1546 lo ahogaron en el río Danubio.'
+    ],
+    textos: 'Daniel 7:25; 12:3',
+    alias: ['Oswald Glait'],
+    fuente: 'Maxwell, <i>El porvenir del mundo revelado</i>; Wikipedia, «Oswald Glaidt»' },
+  { id: 'carlos-v', nombre: 'Carlos V', tipo: 'historico',
+    fechas: '1500-1558; emperador 1519-1556',
+    quien: 'Rey de España y emperador del Sacro Imperio.',
+    hizo: [
+      'Intentó, como otros, reunir a Europa bajo un solo poder; no lo logró (Daniel 2:43).',
+      'Fue emperador cuando empezó la Reforma de Lutero.'
+    ],
+    textos: 'Daniel 2:43',
+    alias: ['Carlos V'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57' },
+  { id: 'pio-v', nombre: 'Pío V', tipo: 'historico',
+    fechas: 'papa 1566-1572',
+    quien: 'Obispo de Roma.',
+    hizo: [
+      'Con la bula «Regnans in excelsis» (1570) declaró hereje a la reina Isabel I de Inglaterra.',
+      'En ese tiempo hubo miles de protestantes perseguidos en Holanda y Francia.'
+    ],
+    textos: 'Daniel 7:21, 25',
+    alias: ['Pío V'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'isabel-i', nombre: 'Isabel I de Inglaterra', tipo: 'historico',
+    fechas: '1533-1603; reina 1558-1603',
+    quien: 'Reina protestante de Inglaterra.',
+    hizo: [
+      'El papa Pío V la declaró hereje en 1570.',
+      'Bajo ella Inglaterra quedó como nación protestante.'
+    ],
+    textos: '',
+    alias: ['Isabel I'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'berthier', nombre: 'Louis-Alexandre Berthier', tipo: 'historico',
+    fechas: '1753-1815',
+    quien: 'General francés, jefe del estado mayor de Napoleón.',
+    hizo: [
+      'En febrero de 1798 entró en Roma, quitó del trono al papa Pío VI y se lo llevó preso.',
+      'Ahí terminan los 1.260 años (538-1798) y el papado recibe la herida mortal (Daniel 7:25; Apocalipsis 13:3).',
+      'Febrero de 538 y febrero de 1798: los 1.260 años se cumplen «al mes».'
+    ],
+    textos: 'Daniel 7:25; Apocalipsis 13:3',
+    alias: ['Louis-Alexandre Berthier', 'Louis Alexandre Berthier', 'Berthier'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 199; Britannica, «Louis-Alexandre Berthier»' },
+  { id: 'pio-vi', nombre: 'Pío VI', tipo: 'historico',
+    fechas: '1717-1799; papa 1775-1799',
+    quien: 'Obispo de Roma cuando la Francia revolucionaria invadió Italia.',
+    hizo: [
+      'En febrero de 1798 el general Berthier lo quitó del trono y se lo llevó preso.',
+      'Murió en el destierro, en Valence, Francia, en 1799.',
+      'Su caída es la herida mortal de la bestia (Apocalipsis 13:3).'
+    ],
+    textos: 'Daniel 7:25; 11:40; Apocalipsis 13:3',
+    alias: ['Pío VI'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 199; Britannica, «Pius VI»' },
+  { id: 'pio-vii', nombre: 'Pío VII', tipo: 'historico',
+    fechas: 'papa 1800-1823',
+    quien: 'Obispo de Roma elegido después de la muerte de Pío VI.',
+    hizo: [
+      'Su elección en 1800 terminó el tiempo sin papa y empezó la recuperación del poder papal.',
+      'Estuvo presente en la coronación de Napoleón como emperador en 1804.'
+    ],
+    textos: 'Apocalipsis 13:3',
+    alias: ['Pío VII'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'napoleon', nombre: 'Napoleón Bonaparte', tipo: 'historico',
+    fechas: '1769-1821; emperador 1804-1815',
+    quien: 'General y emperador de Francia.',
+    hizo: [
+      'Sus tropas, al mando de Berthier, tomaron preso al papa en 1798.',
+      'Quiso unir Europa bajo su poder y no pudo (Daniel 2:43).'
+    ],
+    textos: 'Daniel 2:43; 11:40',
+    alias: ['Napoleón Bonaparte', 'Napoleón'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57, 199' },
+  { id: 'mussolini', nombre: 'Benito Mussolini', tipo: 'historico',
+    fechas: '1883-1945',
+    quien: 'Dictador de Italia.',
+    hizo: [
+      'En 1929 firmó con el Vaticano los Tratados de Letrán, que devolvieron al papa un territorio propio: la Ciudad del Vaticano.',
+      'Fue un paso en la curación de la herida mortal (Apocalipsis 13:3).'
+    ],
+    textos: 'Apocalipsis 13:3',
+    alias: ['Mussolini'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
+  { id: 'hitler', nombre: 'Adolf Hitler', tipo: 'historico',
+    fechas: '1889-1945',
+    quien: 'Dictador de Alemania.',
+    hizo: [
+      'En el siglo XX intentó dominar a Europa bajo un solo poder; tampoco pudo (Daniel 2:43).',
+      'Su régimen causó la Segunda Guerra Mundial y el Holocausto.'
+    ],
+    textos: 'Daniel 2:43',
+    alias: ['Hitler'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57' },
+  { id: 'juan-pablo-ii', nombre: 'Juan Pablo II', tipo: 'historico',
+    fechas: '1920-2005; papa 1978-2005',
+    quien: 'Obispo de Roma, de origen polaco.',
+    hizo: [
+      'En la carta «Dies Domini» (1998) explicó el paso del sábado al domingo por la tradición de la iglesia.',
+      'El cuerno pequeño pensaría «cambiar los tiempos y la Ley» (Daniel 7:25).'
+    ],
+    textos: 'Daniel 7:25',
+    alias: ['Juan Pablo II'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 162, 265, 273-274' },
+  { id: 'osman', nombre: 'Osmán I', tipo: 'historico',
+    fechas: 'murió hacia 1324',
+    quien: 'Fundador del imperio otomano (turco).',
+    hizo: [
+      'En Apocalipsis 9:11 el rey del abismo que gobierna a las langostas no es él, sino Satanás.',
+      'Su imperio, el otomano, duró hasta el siglo XX.'
+    ],
+    textos: 'Apocalipsis 9:11',
+    alias: ['Osmán'],
+    fuente: 'Bohr, <i>Tres ángeles</i> 1:5' },
+  { id: 'ireneo', nombre: 'Ireneo de Lyon', tipo: 'historico',
+    fechas: 'siglo II',
+    quien: 'Obispo de Lyon, Francia.',
+    hizo: [
+      'Fue de los primeros autores cristianos en enseñar que los cuatro metales de Daniel 2 son Babilonia, Medo-Persia, Grecia y Roma.',
+      'Enseñó que la piedra es Cristo, que destruye los reinos del mundo en su segunda venida.'
+    ],
+    textos: 'Daniel 2; 7',
+    alias: ['Ireneo'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57' },
+  { id: 'hipolito', nombre: 'Hipólito de Roma', tipo: 'historico',
+    fechas: 'murió en 236 d.C.',
+    quien: 'Escritor cristiano de Roma.',
+    hizo: [
+      'Ya explicaba que el león de Daniel 7 era Babilonia y el oso Persia.',
+      'Mostró el paralelo entre Daniel 2 y 7, y escribió que la piedra «es Cristo, quien viene del cielo y trae al mundo juicio».'
+    ],
+    textos: 'Daniel 2:34-35; 7',
+    alias: ['Hipólito de Roma', 'Hipólito'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57' },
+  { id: 'tertuliano', nombre: 'Tertuliano', tipo: 'historico',
+    fechas: 'hacia 155-220 d.C.',
+    quien: 'Escritor cristiano de Cartago, en el norte de África.',
+    hizo: [
+      'Cuenta que Juan fue echado en aceite hirviendo y salió ileso, antes de ser desterrado a Patmos.',
+      'Fue de los primeros escritores cristianos en latín.'
+    ],
+    textos: 'Apocalipsis 1:9',
+    alias: ['Tertuliano'],
+    fuente: 'Bohr, <i>Las siete iglesias</i>, p. 8-9' },
+  { id: 'porfirio', nombre: 'Porfirio', tipo: 'historico',
+    fechas: 'hacia 234-305 d.C.',
+    quien: 'Filósofo pagano que escribió «Contra los cristianos».',
+    hizo: [
+      'Hacia el 270-280 d.C. dijo que el cuerno pequeño era Antíoco Epífanes, para negar que Daniel fuera profecía.',
+      'Esa misma idea la repiten hoy algunos críticos.'
+    ],
+    textos: 'Daniel 7:8; 8:9',
+    alias: ['Porfirio'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'eusebio', nombre: 'Eusebio de Cesarea', tipo: 'historico',
+    fechas: 'hacia 260-339 d.C.',
+    quien: 'Obispo de Cesarea, llamado padre de la historia de la iglesia.',
+    hizo: [
+      'Enseñó que Daniel 2 y Daniel 7 dicen lo mismo, pero cambió de postura cuando la iglesia se unió al Estado con Constantino.',
+      'Escribió la primera historia de la iglesia cristiana.'
+    ],
+    textos: 'Daniel 2; 7',
+    alias: ['Eusebio de Cesarea'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 55-57' },
+  { id: 'jeronimo', nombre: 'Jerónimo', tipo: 'historico',
+    fechas: 'hacia 340-420 d.C.',
+    quien: 'Erudito cristiano que tradujo la Biblia al latín (la Vulgata).',
+    hizo: [
+      'Escribió el comentario cristiano más influyente sobre Daniel; en él copió y refutó los argumentos de Porfirio.',
+      'Lo que se conoce de Porfirio es por las citas que hizo Jerónimo para refutarlo.'
+    ],
+    textos: 'Daniel 7; 8',
+    alias: ['Jerónimo'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119, 124-125' },
+  { id: 'agustin', nombre: 'Agustín de Hipona', tipo: 'historico',
+    fechas: '354-430 d.C.',
+    quien: 'Obispo de Hipona, en el norte de África; uno de los escritores cristianos más influyentes.',
+    hizo: [
+      'Escribió «La ciudad de Dios».',
+      'Sus ideas influyeron por siglos en la iglesia de occidente.'
+    ],
+    textos: '',
+    alias: ['Agustín'],
+    fuente: 'Britannica, «Saint Augustine»' },
+  { id: 'fox-talbot', nombre: 'William Henry Fox Talbot', tipo: 'historico',
+    fechas: '1800-1877',
+    quien: 'Científico inglés, pionero de la fotografía, que también estudió la escritura cuneiforme.',
+    hizo: [
+      'En 1861 publicó una oración en la que el rey Nabonido pide a su dios que bendiga a su hijo Belsasar.',
+      'Así se probó que Belsasar sí existió, como dice Daniel 5.'
+    ],
+    textos: 'Daniel 5:1',
+    alias: ['W. H. Fox Talbot', 'Fox Talbot'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 93; Britannica, «William Henry Fox Talbot»' },
+  { id: 'sidney-smith', nombre: 'Sidney Smith', tipo: 'historico',
+    fechas: '1889-1979',
+    quien: 'Asiriólogo inglés del Museo Británico.',
+    hizo: [
+      'En 1924 tradujo la Crónica en Verso de Nabonido, que muestra que Nabonido dejó el reino en manos de su hijo Belsasar.',
+      'Así se entiende por qué Belsasar solo podía dar el tercer lugar del reino (Daniel 5:29).'
+    ],
+    textos: 'Daniel 5:29',
+    alias: ['Sidney Smith'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 93; Wikipedia, «Sidney Smith (Assyriologist)»' },
+  { id: 'miller', nombre: 'Guillermo Miller (William Miller)', tipo: 'historico',
+    fechas: '1782-1849',
+    quien: 'Agricultor bautista de Estados Unidos que estudió solo la Biblia.',
+    hizo: [
+      'Por Daniel 8:14 concluyó que los 2.300 días terminaban hacia 1843-1844.',
+      'Predicó que Jesús volvería; el movimiento millerita unió a creyentes de muchas iglesias.',
+      'Esperó a Jesús en 1843 y luego en 1844: fueron los chascos de Apocalipsis 10:9-10.'
+    ],
+    textos: 'Daniel 8:14; Apocalipsis 10; 14:6-7',
+    alias: ['Guillermo Miller', 'William Miller', 'Miller'],
+    fuente: 'Bohr, <i>La razón de nuestro existir</i>, p. 51-54' },
+  { id: 'samuel-snow', nombre: 'Samuel S. Snow', tipo: 'historico',
+    fechas: '1806-1890',
+    quien: 'Predicador millerita.',
+    hizo: [
+      'El 12 de agosto de 1844 mostró que el día de la expiación de ese año caía el 22 de octubre.',
+      'Su mensaje fue el «clamor de medianoche».'
+    ],
+    textos: 'Daniel 8:14; Mateo 25:6',
+    alias: ['Samuel Snow'],
+    fuente: 'Bohr, <i>La razón de nuestro existir</i>, p. 51-54; Wikipedia, «Samuel S. Snow»' },
+  { id: 'hiram-edson', nombre: 'Hiram Edson', tipo: 'historico',
+    fechas: '1806-1882',
+    quien: 'Agricultor millerita de Nueva York, luego pionero adventista.',
+    hizo: [
+      'Escribió que después del chasco del 22 de octubre de 1844 lloraron hasta el amanecer.',
+      'Al día siguiente entendió que Jesús había entrado al lugar santísimo del santuario celestial.'
+    ],
+    textos: 'Daniel 8:14; Apocalipsis 10:9-10; 11:19',
+    alias: ['Hiram Edson'],
+    fuente: 'Bohr, <i>La razón de nuestro existir</i>, p. 65-69' },
+  { id: 'elena-white', nombre: 'Elena G. de White', tipo: 'historico',
+    fechas: '1827-1915',
+    quien: 'Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.',
+    hizo: [
+      'Escribió libros como «Profetas y reyes» y «El conflicto de los siglos».',
+      'Sus escritos son una luz menor que lleva a la Biblia, la luz mayor; la Biblia es la norma.',
+      'La iglesia ve en su ministerio «el testimonio de Jesús» (Apocalipsis 12:17; 19:10).'
+    ],
+    textos: 'Apocalipsis 12:17; 19:10',
+    alias: ['Elena G. de White', 'Elena de White'],
+    fuente: 'Creencia 18; Bohr, <i>Tres ángeles</i> 2:179, 187-188' },
+  { id: 'jaime-white', nombre: 'Jaime White', tipo: 'historico',
+    fechas: '1821-1881',
+    quien: 'Pionero adventista, esposo de Elena G. de White.',
+    hizo: [
+      'En 1877-1878 se opuso a identificar al rey del norte con Turquía; defendió que era el papado.',
+      'Fue uno de los fundadores de la Iglesia Adventista del Séptimo Día.'
+    ],
+    textos: 'Daniel 11:40-45',
+    alias: ['Jaime White'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 12-13' },
+  { id: 'louis-were', nombre: 'Louis F. Were', tipo: 'historico',
+    fechas: '1896-1967',
+    quien: 'Evangelista adventista de Australia.',
+    hizo: [
+      'En los años 1930 volvió a la postura de los pioneros: el rey del norte es el papado.',
+      'Por enseñarlo perdió sus credenciales.'
+    ],
+    textos: 'Daniel 11:40-45',
+    alias: ['Louis F. Were', 'Were'],
+    fuente: 'Bohr, <i>Daniel 11</i>, p. 12-13; Avondale, «Were, Louis Fitzroy»' },
+  { id: 'hewitt', nombre: 'Hewitt', tipo: 'historico',
+    fechas: 'siglo XIX',
+    quien: 'Creyente adventista de los primeros años.',
+    hizo: [
+      'Enseñaba que los 1.335 días aún no habían terminado; Elena de White corrigió ese error.',
+      'Elena de White enseñó que no se deben fijar fechas para el futuro.'
+    ],
+    textos: 'Daniel 12:12',
+    alias: ['Hewitt'],
+    fuente: '16MR 208; Bohr, <i>Daniel 11</i>, p. 217-218' },
+  { id: 'desmond-doss', nombre: 'Desmond Doss', tipo: 'historico',
+    fechas: '1919-2006',
+    quien: 'Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.',
+    hizo: [
+      'Se alistó en 1942 como camillero: guardaba el sábado y su conciencia no le permitía portar armas.',
+      'En mayo de 1945, en Okinawa, bajó a 75 heridos por un acantilado, bajo fuego, hasta ponerlos a salvo.',
+      'Recibió la Medalla de Honor de manos del presidente Truman.'
+    ],
+    textos: 'Daniel 3:17-18',
+    alias: ['Desmond Doss'],
+    fuente: 'Pacific Wrecks, «Desmond Doss»' },
+  { id: 'gladys-aylward', nombre: 'Gladys Aylward', tipo: 'historico',
+    fechas: '1902-1970',
+    quien: 'Misionera inglesa en China. Había trabajado como empleada doméstica.',
+    hizo: [
+      'Gastó sus ahorros en un pasaje de tren y cruzó Siberia para llegar a China.',
+      'Con Jeannie Lawson abrió una posada en Yangcheng, donde contaba historias de Jesús.',
+      'En 1938 guio a más de cien huérfanos por las montañas para salvarlos de la guerra.'
+    ],
+    textos: 'Filipenses 3:14',
+    alias: ['Gladys Aylward', { t: 'Gladys', caps: ['m12', 'm13', 'm14'] }],
+    fuente: 'Wikipedia, «Gladys Aylward»' },
+  { id: 'jeannie-lawson', nombre: 'Jeannie Lawson', tipo: 'historico',
+    fechas: '',
+    quien: 'Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.',
+    hizo: [
+      'Pidió una ayudante y Gladys respondió; juntas atendieron una posada para viajeros en Yangcheng.',
+      'Murió pocos años después, y Gladys siguió con la obra.'
+    ],
+    textos: '',
+    alias: ['Jeannie Lawson'],
+    fuente: 'GFA Missions, «Jeanie Lawson»' },
+  { id: 'tim-donaghy', nombre: 'Tim Donaghy', tipo: 'historico',
+    fechas: 'condenado en 2008',
+    quien: 'Exárbitro de la NBA, la liga de baloncesto de Estados Unidos.',
+    hizo: [
+      'Apostó en partidos que él mismo arbitraba y pasó información a apostadores.',
+      'En 2008 fue condenado a 15 meses de prisión.'
+    ],
+    textos: 'Filipenses 4:8',
+    alias: ['Tim Donaghy'],
+    fuente: 'Wikipedia, «2007 NBA betting scandal»' },
+  { id: 'pablo-pineda', nombre: 'Pablo Pineda', tipo: 'historico',
+    fechas: 'n. 1974',
+    quien: 'Maestro y conferencista de Málaga, España, con síndrome de Down.',
+    hizo: [
+      'Fue el primer europeo con síndrome de Down en obtener un título universitario.',
+      'En 2009 ganó la Concha de Plata del Festival de San Sebastián como actor.'
+    ],
+    textos: '',
+    alias: ['Pablo Pineda', { t: 'Pablo', caps: ['m28'] }],
+    fuente: 'Universidad de La Laguna, noticia 2019' },
+  { id: 'charles-tindley', nombre: 'Charles Albert Tindley', tipo: 'historico',
+    fechas: '1851-1933',
+    quien: 'Pastor metodista de Filadelfia y compositor de himnos.',
+    hizo: [
+      'No pudo ir a la escuela; aprendió a leer por su cuenta.',
+      'Llegó a ser pastor de la iglesia donde antes trabajaba como conserje.',
+      'Escribió himnos como «Stand by Me» y «I\'ll Overcome Someday».'
+    ],
+    textos: 'Filipenses 4:19',
+    alias: ['Charles Tindley'],
+    fuente: 'Wikipedia, «Charles Albert Tindley»' },
+];
+
+module.exports = { PERSONAJES };

@@ -1,5 +1,5 @@
 /* Daniel 11: interpretación con fuentes (capa 'contexto', preguntas f:'c').
-   Ya están en fuente/contenido.js: reyes persas (con Jerjes como cuarto),
+   Ya están en fuente/contenido.js: reyes persas (con Artajerjes como cuarto, v189),
    reyes tolomeos y seléucidas, Berenice, guerras sirias, Roma, el pacto de
    Constantino a Justiniano, Canossa, Carlomagno, 1798, el «pequeño socorro»,
    36-39 y 40-45 según Treiyer y Maxwell. Aquí va la lectura de Bohr: cómo se
@@ -26,7 +26,7 @@ module.exports = {
 
     { t: '🧭 El esquema de Daniel 11', capa: 'contexto', h:
       `<p><b>Cuándo:</b> la visión sigue la de Daniel 10, el tercer año de Ciro, hacia el 535 a.C. El versículo 1 es un paréntesis: recuerda lo que el ángel hizo en el primer año de Darío (538 a.C.).</p>` +
-      `<p>Esa mención une el capítulo 11 con las setenta semanas de Daniel 9. Por eso el <b>cuarto rey</b> de 11:2 es <b>Artajerjes</b>, el del decreto de 457 a.C.; Gabriel nombra a los tres anteriores solo para ubicarlo. Otra lectura, la del estudio de arriba, ve aquí a Jerjes.</p>` +
+      `<p>Esa mención une el capítulo 11 con las setenta semanas de Daniel 9. Por eso el <b>cuarto rey</b> de 11:2 es <b>Artajerjes</b>, el del decreto de 457 a.C.; Gabriel nombra a los tres anteriores (Cambises, Darío I y Asuero, o Jerjes) solo para ubicarlo.</p>` +
       tbl(['Versículos', 'Qué describe', 'En Daniel 8'], [
         ['11:2', 'Persia hasta Artajerjes', '8:3-4'],
         ['11:3-4', 'Alejandro y su reino partido en cuatro', '8:5-8'],
@@ -49,7 +49,7 @@ module.exports = {
 
     { t: '🧭 Daniel 11:31: las tropas de 508', capa: 'contexto', h:
       `<p>«Se levantarán sus tropas, que profanarán el santuario... quitarán el sacrificio continuo y pondrán la abominación desoladora» (11:31). «Tropas», en plural, son fuerzas militares o políticas: el rey del norte ya existía, pero ahora recibe el apoyo del estado.</p>` +
-      hi('En el año <b>508</b>, Clodoveo, rey de los francos, fue el primero en dar poder civil al papado. Francia fue la primera nación de Europa en dejar el paganismo por la religión católica. Es la unión de iglesia y estado, como el hierro y el barro de los pies de Daniel 2.') +
+      hi('En el año <b>508</b>, Clodoveo, rey de los francos, fue el primero en dar poder civil al papado. Francia fue la primera nación de Europa en dejar el paganismo por la religión católica. Es la unión de iglesia y estado: el hierro mezclado con barro de Daniel 2, Roma papal.') +
       `<p>Desde ese año se cuentan los 1.290 y los 1.335 días de Daniel 12:11-12 (ver Daniel 12).</p>` +
       `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 25-26; Bohr, <i>Daniel 1-10</i>, p. 5.</p>` },
 
@@ -98,7 +98,7 @@ module.exports = {
       `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 18-21, 126, 134-136, 175 y 235; Bohr, <i>15 principios</i> 2:106.</p>` },
   ],
   preguntas: [
-    { t: 'mc', v: '11:2', f: 'c', q: 'Si se une Daniel 11:2 con las setenta semanas, ¿quién es el cuarto rey persa?', o: ['Artajerjes I', 'Jerjes I', 'Darío I', 'Cambises II'], a: 0, e: 'El cuarto rey es el que dio el decreto de 457 a.C. Otra lectura, la del estudio de este capítulo, ve a Jerjes. Fuente: Bohr, <i>Daniel 11</i>, p. 16.' },
+    { t: 'mc', v: '11:2', f: 'c', q: 'Si se une Daniel 11:2 con las setenta semanas, ¿quién es el cuarto rey persa?', o: ['Artajerjes I', 'Jerjes I', 'Darío I', 'Cambises II'], a: 0, e: 'El cuarto rey es el que dio el decreto de 457 a.C.; los tres anteriores son Cambises, Darío I y Asuero (Jerjes). Fuente: Bohr, <i>Daniel 11</i>, p. 16.' },
     { t: 'mc', v: '11:40', f: 'c', q: '¿Qué representa el «rey del sur» en el tiempo del fin?', o: ['El ateísmo y el secularismo', 'El mundo islámico', 'El Imperio otomano', 'El protestantismo'], a: 0, e: 'Egipto fue la nación que negó al Dios vivo (Éxodo 5:2). En el tiempo del fin representa todo sistema que deja a Dios fuera. Fuente: Bohr, <i>Daniel 11</i>, p. 98-99.' },
     { t: 'mc', v: '11:40', f: 'c', q: '¿Qué hecho de 1798 cumple que «el rey del sur contenderá con él»?', o: ['Francia tomó preso al papa', 'Napoleón invadió Egipto', 'Rusia derrotó a Turquía', 'Inglaterra rompió con Roma'], a: 0, e: 'La Francia revolucionaria y atea hirió al papado: llevó cautivo a Pío VI. Así comenzó el tiempo del fin. Fuente: Bohr, <i>Daniel 11</i>, p. 105.' },
     { t: 'mc', v: '11:41', f: 'c', q: '¿Qué representa la «tierra gloriosa» de 11:41?', o: ['Estados Unidos como baluarte protestante', 'El actual Estado de Israel', 'La ciudad de Roma y el Vaticano', 'Palestina bajo los turcos'], a: 0, e: 'No es Estados Unidos solo como país, sino como el lugar fuerte de los principios protestantes, que los llevó al mundo. Fuente: Bohr, <i>Daniel 11</i>, p. 126.' },

@@ -2574,10 +2574,77 @@ function filtroCapas(){
     {t:'Solo lo central',clic:"filtraCapa(this,'nucleo')"}]);
 }
 /* Una sección del estudio, igual en las dos pestañas. `p` dice en cuál vive. */
+/* ───────── LOS PERSONAJES (v189) ─────────
+   Camilo (13-oct): «cuando aparezca el nombre, al dar clic aparece la
+   información, así con todos los nombres históricos y bíblicos».
+   MECANISMO: PERSONAJES trae cada persona con sus alias, tal como se escriben
+   en el material. Se arma UNA expresión con todos los alias, del más largo
+   al más corto (así «Juan Wiclef» gana sobre «Juan»), con bordes de palabra.
+   personasTocables() recorre el HTML ya armado y solo toca texto suelto: no
+   entra en botones (las citas bíblicas ya son botones), ni en títulos, ni en
+   la línea de la fuente. Un alias con `caps` solo vale en esos capítulos
+   (p. ej. «Darío» es Darío de Media en Daniel 6 y Darío III en Daniel 8).
+   En cada sección se marca solo la PRIMERA vez que sale cada persona: marcar
+   las veinte veces que dice «Daniel» volvería el texto un campo de botones. */
+let perRe=null, perDe=null;
+function perPrepara(){
+  if(perRe||typeof PERSONAJES==='undefined')return;
+  perDe={};
+  const todos=[];
+  PERSONAJES.forEach(p=>p.alias.forEach(a=>{
+    const t=typeof a==='string'?a:a.t, caps=typeof a==='string'?null:a.caps;
+    (perDe[t]=perDe[t]||[]).push({id:p.id,caps});todos.push(t);}));
+  const esc2=t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const lista=[...new Set(todos)].sort((a,b)=>b.length-a.length).map(esc2).join('|');
+  try{perRe=new RegExp('(?<![\\p{L}\\p{N}])('+lista+')(?![\\p{L}\\p{N}])','gu');}catch(e){perRe=null;}
+}
+const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id===id);
+function personasTocables(html,capId){
+  perPrepara();
+  if(!perRe)return html;
+  const vistos=new Set();
+  /* La línea de la fuente no se toca: ahí van autores, no personajes. */
+  return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>)/).map(parte=>{
+    if(/^<p class="sec-fuente">/.test(parte))return parte;
+    let dentro=0;
+    return parte.split(/(<[^>]+>)/).map(tr=>{
+      if(tr.charAt(0)==='<'){
+        if(/^<(button|a|h\d|q|blockquote)[\s>]/.test(tr))dentro++;
+        else if(/^<\/(button|a|h\d|q|blockquote)>/.test(tr)&&dentro>0)dentro--;
+        return tr;
+      }
+      if(dentro>0||!tr.trim())return tr;
+      return tr.replace(perRe,t=>{
+        const c=(perDe[t]||[]).find(x=>!x.caps||x.caps.includes(capId));
+        if(!c||vistos.has(c.id))return t;
+        vistos.add(c.id);
+        return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+t+'</button>';
+      });
+    }).join('');
+  }).join('');
+}
+/* La ficha sube en la MISMA hoja del versículo (una pieza, un armado). */
+function verPersona(id){
+  const p=perPorId(id);
+  if(!p)return;
+  const tipo=p.tipo==='biblico'?'Personaje bíblico':'Personaje histórico';
+  const cid=S.ultItem||'';
+  abreHojaHtml('<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-caja per-caja" role="dialog" aria-modal="true" aria-label="'+esc(p.nombre)+'">'+
+    '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-cab"><div><div class="hoja-ref">'+tipo+(p.fechas?' · '+esc(p.fechas):'')+'</div>'+
+      '<div class="per-nom">'+esc(p.nombre)+'</div></div>'+
+      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">'+IC('x')+'</button></div>'+
+    '<div class="per-txt"><p class="per-quien">'+p.quien+'</p>'+
+      '<ul class="per-hizo">'+p.hizo.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+      (p.textos?'<p class="per-textos"><b>Textos:</b> '+refsTocables(esc(p.textos),cid)+'</p>':'')+
+      '<p class="sec-fuente">Fuente: '+p.fuente+'</p></div></div>','per');
+}
+
 /* v188: la fuente de cada sección va en una sola línea corta y discreta. */
 const conFuente=h=>h.replace(/<p class="fuente"><small>(Fuentes?:[\s\S]*?)<\/small><\/p>/g,'<p>$1</p>').replace(/<p>(Fuentes?:)/g,'<p class="sec-fuente">$1');
 const htmlSec=(id,p)=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+'>'+cabezaSec(s)+
-  conFuente(refsTocables(s.h,s.cap||id))+(s.preg?recordarHTML(s.preg):'')+'</div>';
+  personasTocables(conFuente(refsTocables(s.h,s.cap||id)),s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>';
 
 /* v187: «Para el examen» y «Para profundizar». Antes la interpretación iba al
    final del mismo estudio y solo un filtro la separaba: se leía todo seguido y

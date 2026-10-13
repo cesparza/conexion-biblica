@@ -271,8 +271,9 @@ const CONT_MODULOS = {
       ['Cabeza','Oro fino','Babilonia','2:32, 37-38'],
       ['Pecho y brazos','Plata','Medo-Persia','2:32, 39'],
       ['Vientre y muslos','Bronce','Grecia','2:32, 39'],
-      ['Piernas','Hierro','Roma','2:33, 40'],
-      ['Pies y dedos','Hierro y barro','Reinos divididos','2:33, 41-43'],
+      ['Piernas','Hierro','Roma imperial (168 a.C.-476 d.C.)','2:33, 40'],
+      ['Diez dedos','Hierro y barro','Roma dividida en los reinos bárbaros (desde 476 d.C.)','2:41-42'],
+      ['Pies','Hierro mezclado con barro cocido','Roma papal: el poder político unido al religioso (supremacía 538-1798 d.C.)','2:33, 41-43'],
       ['La piedra','Cortada sin manos','Reino eterno de Dios','2:34, 44-45'],
     ]) },
 
@@ -281,7 +282,8 @@ const CONT_MODULOS = {
     del oro al hierro.<br><br>
     Los imperios se vuelven más fuertes militarmente y menos gloriosos.
     Los pies mezclan hierro con barro: fuerza y fragilidad juntas,
-    <strong>«no se unirán el uno con el otro»</strong> (2:43).`) },
+    <strong>«no se unirán el uno con el otro»</strong> (2:43). Es Roma papal:
+    el poder político (hierro) unido al religioso (barro).`) },
 
   { t:'🪨 Lo que dice el texto sobre la piedra', h:
     vs(`«En los días de estos reyes, el Dios del cielo levantará <strong>un reino

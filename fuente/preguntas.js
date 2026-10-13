@@ -455,7 +455,7 @@ BANCO.push(
  o:['Más fuerte que el tuyo','Inferior al tuyo','Semejante al tuyo','Más rico que el tuyo'],a:1},
 {cap:'d2',t:'mc',q:'Según Daniel 2:40, ¿con qué comparó Daniel la fuerza del cuarto reino?',
  o:['Con el bronce que resiste los golpes de cualquier arma','Con el hierro que desmenuza y rompe todas las cosas','Con la piedra que no se mueve aunque la golpee el viento','Con el oro que no se corroe ni pierde su brillo'],a:1},
-{cap:'d2',t:'mc',q:'Según Daniel 2:41, ¿qué significan los pies y los dedos en parte de barro cocido y en parte de hierro?',
+{cap:'d2',t:'mc',q:'Según Daniel 2:41, ¿qué sería lo que el rey vio en los pies y los dedos, en parte de barro cocido y en parte de hierro?',
  o:['Un reino de artesanos','Un reino dividido','Un reino de dos reyes','Un reino sin ejército'],a:1},
 {cap:'d2',t:'mc',q:'¿Qué hizo el rey Nabucodonosor después de oír la interpretación? (Daniel 2:46)',
  o:['Se enojó mucho y calló a Daniel','Se postró sobre su rostro y se humilló ante Daniel','Mandó destruir la estatua de su sueño','Reunió otra vez a sus magos'],a:1},
@@ -1238,7 +1238,7 @@ BANCO.push(
 );
 BANCO.push(
 {cap:'d11',t:'mc',q:'¿Quién es el cuarto rey persa de Daniel 11:2, que incita a todos contra Grecia?',
- o:['El rey Ciro el Grande','Darío el Medo, primer rey','Jerjes I, el más rico','Artajerjes I Longimano'],a:2},
+ o:['El rey Ciro el Grande','Darío el Medo, primer rey','Jerjes I (Asuero)','Artajerjes I Longimano'],a:3},
 {cap:'d11',t:'mc',q:'¿En cuántas partes se reparte el reino de Alejandro Magno tras su muerte, según Daniel 11:4?',
  o:['En solo dos partes','En apenas tres partes','En cuatro partes iguales','En siete partes distintas'],a:2},
 {cap:'d11',t:'mc',q:'¿A qué dos dinastías corresponden "rey del sur" y "rey del norte" en Daniel 11?',
@@ -1518,7 +1518,7 @@ BANCO.push(
  o:['Que responsabilizaba solo a los sacerdotes del exilio','Que se consideraba mejor que su pueblo por su fidelidad','Que evitaba mencionar los pecados de Israel para no ofender a Dios','Que se identificaba con las faltas de su nación aun siendo personalmente irreprochable'],a:3},
 
 {cap:'d10',t:'mc',q:'¿A qué edad aproximada fue Daniel llevado cautivo, y a cuál se acercaba cuando ocurre la visión de Daniel 10?',
- o:['Cautivo a los 25, cerca de los setenta','Cautivo a los 17, cerca de los noventa','Cautivo a los 12, cerca de los sesenta','Cautivo a los 30, cerca de los cien'],a:1},
+ o:['Cautivo a los 25, cerca de los setenta','Cautivo a los 18, cerca de los noventa','Cautivo a los 12, cerca de los sesenta','Cautivo a los 30, cerca de los cien'],a:1},
 {cap:'d10',t:'mc',q:'¿De qué se abstuvo Daniel durante las tres semanas de ayuno de Daniel 10:2-3?',
  o:['De hablar con cualquier persona','De salir de su casa','De alimentos suculentos, carne y vino','De leer los rollos proféticos'],a:2},
 {cap:'d10',t:'mc',q:'¿Con qué pasaje del Apocalipsis coincide en cada detalle la descripción del Ser glorioso de Daniel 10:5-6?',
@@ -1529,8 +1529,8 @@ BANCO.push(
  o:['Romanos 8:38-39','Colosenses 2:15','Efesios 6:12','2 Corintios 10:4'],a:2},
 {cap:'d10',t:'mc',q:'Según la lección práctica de Daniel 10, ¿qué significa que la respuesta a la oración de Daniel tardara tres semanas en manifestarse?',
  o:['Que Dios necesita tiempo para decidir cómo actuar ante cada petición','Que una oración sin respuesta inmediata no significa una oración no escuchada','Que Daniel no había orado con suficiente fe durante esas tres semanas','Que el ayuno de tres semanas fue innecesario y Dios no lo pedía'],a:1},
-{cap:'d10',t:'tf',q:'Cuando ocurre la visión de Daniel 10, Daniel llevaba ya más de setenta años en Babilonia desde su cautiverio.',
- a:true,e:'Verdadero. Fue llevado cautivo siendo apenas un adolescente, y ahora se acercaba a los noventa años.'},
+{cap:'d10',t:'tf',q:'Cuando ocurre la visión de Daniel 10, Daniel llevaba ya unos setenta años en Babilonia desde su cautiverio.',
+ a:true,e:'Verdadero. Fue llevado cautivo a los 18 años, en 605 a.C.; en 535 a.C. tenía unos 88 y se acercaba a los noventa.'},
 {cap:'d10',t:'mc',q:'¿Cuál fue, según Daniel 10, el motivo de oración y ayuno de Daniel?',
  o:['Una enfermedad grave de su familia','El anuncio de una nueva invasión a Babilonia','La oposición a la reconstrucción del templo de Jerusalén','La muerte de sus tres compañeros'],a:2},
 
@@ -1642,7 +1642,7 @@ BANCO.push(
    o:['En la primera venida, cuando Jesús nació en Belén','En la segunda venida, todavía futura','En el bautismo de Jesús','En la resurrección de Jesús'],a:1},
   {cap:'d2',f:'c',t:'tf',q:'El "reino de la gracia" que Jesús estableció en su primera venida es el mismo "reino de gloria" que describe Daniel 2:44.',
    a:false,e:'Son dos etapas distintas: el reino de la gracia crece despacio en los corazones desde la primera venida; el reino de gloria, el que destruye a las naciones, llega solo con la segunda venida.'},
-  {cap:'d2',f:'c',t:'mc',q:'¿Cuál de estos gobernantes NO intentó reunificar Europa bajo un solo poder, contradiciendo (sin éxito) la profecía de Daniel 2:43?',
+  {cap:'d2',f:'c',t:'mc',q:'¿Cuál de estos gobernantes NO intentó volver a unir bajo un solo poder los reinos en que se dividió Roma, los diez dedos de Daniel 2?',
    o:['Carlomagno','Napoleón','Hitler, en el siglo XX','Ciro el Grande'],a:3},
 );
 

@@ -371,6 +371,16 @@ for (const W of ANCHOS) {
     ok(fin[0] === '15 / 15' && /fiel su interpretación/.test(fin[1]), W + ' · Presentar recorre los 15 pasos y termina en 2:45 (' + fin[0] + ')');
     await p.evaluate(() => lamCierra());
   }
+  /* v189: tocar el nombre de un personaje abre su ficha en la hoja. */
+  {
+    await p.evaluate(() => { ponCat('pa'); ponPest('prof'); verCap('d2', true); });
+    await p.waitForTimeout(400);
+    await p.locator('#detalle button.per', { hasText: 'Berthier' }).first().click();
+    await p.waitForTimeout(500);
+    const f = await p.evaluate(() => { const h = document.getElementById('hoja'); return [!h.hidden, h.textContent]; });
+    ok(f[0] && /Louis-Alexandre Berthier/.test(f[1]) && /1798/.test(f[1]), W + ' · v189: tocar «Berthier» abre su ficha');
+    await p.evaluate(() => cierraHoja()); await p.waitForTimeout(300);
+  }
   /* v188: volver a una pestaña regresa a donde se iba; otra pestaña empieza arriba. */
   {
     await p.evaluate(() => { ponCat('pa'); verCap('d2'); });

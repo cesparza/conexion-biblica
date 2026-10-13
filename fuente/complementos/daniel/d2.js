@@ -36,7 +36,7 @@ module.exports = {
           ['Bronce', 'Grecia', '331-168 a.C.'],
           ['Piernas de hierro', 'Roma imperial, una monarquía de hierro', '168 a.C.-476 d.C.'],
           ['Diez dedos', 'Roma dividida en los reinos bárbaros', 'Desde 476 d.C.'],
-          ['Hierro mezclado con barro', 'Roma papal: el poder político unido al religioso', 'Desde 538 d.C.: domina 538-1798 y vuelve al final'],
+          ['Hierro mezclado con barro', 'Roma papal: el poder político unido al religioso', 'Supremacía 538-1798 d.C.; herida en 1798, sana y vuelve al final'],
           ['La piedra que se hace monte', 'La segunda venida de Cristo y su reino eterno', 'Futuro'],
         ]) +
         `<p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial, dividida y papal. Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p>` +
@@ -44,7 +44,7 @@ module.exports = {
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; CBA 4:1168.</p>`,
     },
     {
-      t: '🧭 Los pies: la Europa dividida',
+      t: '🧭 Los diez dedos: Roma dividida',
       capa: 'contexto',
       h: `<p>Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino mudó la capital a Constantinopla, el occidente declinó. Las tribus del norte dividieron el imperio y en <strong>476</strong> depusieron a Rómulo Augústulo, el último emperador de occidente.</p>` +
         `<p>Los dedos son diez, y Daniel 7 tiene diez cuernos que el mismo capítulo explica como «diez reyes» (7:24). Los dedos son <strong>los reinos en que se dividió el Imperio Romano de Occidente</strong>, entre <strong>351 y 476</strong>:</p>` +
@@ -53,7 +53,7 @@ module.exports = {
           'Sus nombres siguen vivos en Europa: Inglaterra, Borgoña, Lombardía, Francia.',
           '«En los días de estos reyes» (2:44) habla de varios reyes al mismo tiempo: el reino de Dios llega cuando Europa ya está dividida.',
         ]) +
-        `<p>La división no aparece en las piernas sino en los pies, justo donde entra el barro. Ninguno de los pedazos volvió a tener la fuerza del hierro original.</p>` +
+        `<p>La división no aparece en las piernas sino en los dedos. Ninguno de los pedazos volvió a tener la fuerza del hierro original.</p>` +
         hi(`«No podemos esperar unión entre las naciones de la tierra» (1T 361). Estamos en los dedos, en las uñas de los pies de la historia.`) +
         `<p>Fuente: Smith, <i>Las profecías de Daniel</i>, p. 24-25; Bohr, <i>Daniel 1-10</i>, p. 62, 64, 128, 133.</p>`,
     },
@@ -73,7 +73,7 @@ module.exports = {
           ['El general Berthier entra en Roma y toma prisionero al papa', '1798 d.C.'],
         ]) +
         hi(`«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).`) +
-        `<p>El cumplimiento final es Apocalipsis 17: la ramera que se une a los reyes de la tierra. Otra lectura ve en el barro sobre todo la debilidad que partió el imperio.</p>` +
+        `<p>El cumplimiento final es Apocalipsis 17: la ramera que se une a los reyes de la tierra.</p>` +
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 58-62, 134; Smith, <i>Las profecías de Daniel</i>, p. 24, 80.</p>`,
     },
     {
@@ -106,7 +106,7 @@ module.exports = {
         tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
           ['La imagen y sus metales', 'Reinos que se suceden', 'Daniel 2:38-39: «Tú eres aquella cabeza de oro. Después de ti se levantará otro reino»'],
           ['El hierro', 'Un reino fuerte que todo lo rompe: Roma', 'Daniel 2:40'],
-          ['Pies y dedos', 'Un reino dividido en varios reyes', 'Daniel 2:41: «será un reino dividido»; 7:24: los diez cuernos son «diez reyes»'],
+          ['Diez dedos', 'Roma dividida en varios reyes', 'Daniel 2:41: «será un reino dividido»; 7:24: los diez cuernos son «diez reyes»'],
           ['Barro de alfarero', 'El pueblo de Dios', 'Jeremías 18:6; Isaías 64:8'],
           ['Hierro mezclado con barro', 'La iglesia unida al Estado', 'Apocalipsis 17:2: «con ella han fornicado los reyes de la tierra»'],
           ['La piedra', 'Cristo', '1 Pedro 2:6-8; Salmo 118:22; Mateo 21:44'],
@@ -128,7 +128,7 @@ module.exports = {
       e: 'Babilonia (605-539), Medo-Persia (539-331), Grecia (331-168) y Roma (168 a.C.-476 d.C.). Fuente: Bohr, Daniel 1-10, p. 57.' },
     { t: 'mc', v: '2:40', f: 'c', q: '¿Hasta qué año gobernó Roma, el reino de hierro, antes de dividirse?',
       o: ['Hasta el 70 d.C.', 'Hasta el 538 d.C.', 'Hasta el 1798 d.C.', 'Hasta el 476 d.C.'], a: 3,
-      e: 'Roma gobernó del 168 a.C. al 476 d.C., cuando fue depuesto Rómulo Augústulo, el último emperador de occidente; después viene la etapa de los pies, la Roma dividida. Fuente: Bohr, Daniel 1-10, p. 57-58, 133.' },
+      e: 'Roma gobernó del 168 a.C. al 476 d.C., cuando fue depuesto Rómulo Augústulo, el último emperador de occidente; después viene la etapa de los dedos, la Roma dividida. Fuente: Bohr, Daniel 1-10, p. 57-58, 133.' },
     { t: 'tf', v: '2:32', f: 'c', q: 'El valor decreciente de los metales muestra que la historia va en descenso, y la imagen representa también el deterioro moral de las naciones.',
       a: true,
       e: 'Verdadero. La historia no avanza hacia una edad de oro humana; a medida que las naciones olvidan a Dios se debilitan moralmente. Fuente: Bohr, Daniel 1-10, p. 57; CBA 4:1168.' },

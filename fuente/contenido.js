@@ -294,8 +294,9 @@ d2: [
       ['Cabeza — ORO FINO','Babilonia / Nabucodonosor (2:32, 37-38)'],
       ['Pecho y brazos — PLATA','Medo-Persia (2:32, 39)'],
       ['Vientre y muslos — BRONCE','Grecia (2:32, 39)'],
-      ['Piernas — HIERRO','Roma (2:33, 40)'],
-      ['Pies — HIERRO Y BARRO COCIDO','Reinos divididos, no se unen entre sí (2:33, 41-43)'],
+      ['Piernas — HIERRO','Roma imperial, 168 a.C.-476 d.C. (2:33, 40)'],
+      ['Diez dedos — HIERRO Y BARRO','Roma dividida en los reinos bárbaros, desde 476 d.C. (2:41-42)'],
+      ['HIERRO MEZCLADO CON BARRO COCIDO','Roma papal: el poder político unido al religioso; supremacía 538-1798 d.C., herida en 1798, sana y vuelve al final (2:41-43)'],
       ['La PIEDRA — sin manos','El reino eterno de Dios / Cristo (2:34, 44-45)'],
     ]) },
 
@@ -330,9 +331,13 @@ d2: [
          el uno con el otro, como el hierro no se mezcla con el barro»</strong>
          (2:43).`]) +
     hi(`Aquí está el único detalle del sueño que trae su propia explicación de
-    por qué falla: <strong>las alianzas se intentan y no pegan</strong>. Si en
-    el examen preguntan qué representan los pies, la respuesta lleva las dos
-    partes: divididos, y que no logran unirse.`) },
+    por qué falla: <strong>las alianzas se intentan y no pegan</strong>.<br><br>
+    Ojo con la diferencia entre lo que <strong>dice</strong> el texto y lo que
+    <strong>representa</strong>. El versículo dice «será un reino dividido»
+    (2:41). Lo que representa: los <strong>diez dedos</strong> son Roma dividida
+    en los reinos bárbaros (desde 476 d.C.), y el <strong>hierro mezclado con
+    barro</strong> es <strong>Roma papal</strong>, el poder político unido al
+    religioso (supremacía 538-1798 d.C.).`) },
 
   { t:'👑 El reino que no será destruido (2:44-45)', h:
     tbl(['Lo que dice el texto','Versículo'],[
@@ -374,8 +379,8 @@ d2: [
 
   { t: '🪨 ¿Quién es la Piedra? Cristo, en dos tiempos distintos',
     h: hi(`La Escritura identifica varias veces a Cristo con una piedra o roca: "la roca era Cristo" (1 Corintios 10:4), y Jesús mismo se aplicó a sí mismo la imagen de la piedra que los constructores desecharon. Pero la Piedra de Daniel 2 no cae sobre la estatua en la primera venida de Cristo, sino en la segunda. Jesús vino primero a establecer el <strong>"reino de la gracia"</strong> — crece despacio y sin ruido, "como la levadura que una mujer esconde en la masa" — y solo al final establecerá el <strong>"reino de gloria"</strong>, el que "desmenuzará y consumirá a todos estos reinos" (2:44). Por eso el Imperio Romano y las naciones de Europa que salieron de él siguieron existiendo siglos después de la cruz: la piedra todavía no ha caído sobre los pies de la estatua.`) },
-  { t: '🔗 "No se mezclarán": intentos reales de reunir Europa',
-    h: hi(`<strong>El verso 2:43 dice que los reinos que salieron de Roma "se mezclarán por medio de alianzas humanas, pero no se unirán el uno con el otro".</strong> La historia registra varios intentos concretos de deshacer esa profecía, todos fracasados:<ul style="margin:.4rem 0 .2rem 1.1rem;padding:0"><li><strong>Alianzas matrimoniales</strong> entre las casas reales de Europa: hacia 1914 casi todas estaban emparentadas entre sí, y aun así estalló la Primera Guerra Mundial entre ellas.</li><li><strong>Carlomagno</strong> (siglo VIII), <strong>Carlos V</strong> (siglo XVI), <strong>Napoleón</strong> (siglo XIX) y <strong>Hitler</strong> (siglo XX) intentaron, cada uno a su manera, reunificar Europa bajo un solo poder.</li><li>La Iglesia sostuvo por siglos el ideal de un "Santo Imperio Romano" unido bajo un rey y un papa; las naciones siguieron guerreando entre sí de todos modos.</li></ul>`) },
+  { t: '🔗 Los dedos no se vuelven a unir: intentos reales de reunir Europa',
+    h: hi(`<strong>Los diez dedos son Roma dividida en los reinos bárbaros (desde 476 d.C.), y después de ellos la estatua no tiene otro imperio: el siguiente reino es la piedra, que llega «en los días de estos reyes» (2:44).</strong> La historia registra varios intentos concretos de volver a unir esos reinos bajo un solo poder, todos fracasados:<ul style="margin:.4rem 0 .2rem 1.1rem;padding:0"><li><strong>Alianzas matrimoniales</strong> entre las casas reales de Europa: hacia 1914 casi todas estaban emparentadas entre sí, y aun así estalló la Primera Guerra Mundial entre ellas.</li><li><strong>Carlomagno</strong> (siglo VIII), <strong>Carlos V</strong> (siglo XVI), <strong>Napoleón</strong> (siglo XIX) y <strong>Hitler</strong> (siglo XX) intentaron, cada uno a su manera, reunificar Europa bajo un solo poder.</li><li>La Iglesia unida al Estado (el hierro mezclado con barro, Roma papal) sostuvo por siglos el ideal de un "Santo Imperio Romano" unido bajo un rey y un papa; las naciones siguieron guerreando entre sí de todos modos.</li></ul>`) },
   { t: '🔮 Por qué la astrología moderna es menos científica que la de Babilonia',
     h: hi(`<strong>Cuando Daniel salvó su vida, salvó también la de todos los astrólogos y sabios de Babilonia (2:24): Dios los amaba a ellos también, aunque su "ciencia" fuera un fracaso.</strong> Los astrólogos modernos calculan los signos zodiacales según la posición de las constelaciones en tiempos de Claudio Tolomeo, en el siglo II — pero por un fenómeno astronómico llamado "precesión de los equinoccios", esas constelaciones ya no están donde estaban hace casi veinte siglos: alguien "nacido bajo Libra" en realidad nació bajo Virgo. Un estudio sobre 154.000 reclutas de la Marina de EE. UU. tampoco encontró que los nacidos bajo Aries o Escorpio (los signos "guerreros") se hicieran soldados con más frecuencia que los demás, y otro estudio con 2.000 artistas no encontró más músicos ni pintores nacidos bajo Libra.`) },
 
@@ -1515,12 +1520,13 @@ d7: [
       ['Cabeza de oro','León con alas','Babilonia'],
       ['Pecho y brazos de plata','Oso','Medo-Persia'],
       ['Vientre y muslos de bronce','Leopardo','Grecia'],
-      ['Piernas de hierro','Cuarta bestia','Roma'],
-      ['Pies de hierro y barro','Diez cuernos','Europa dividida'],
+      ['Piernas de hierro','Cuarta bestia','Roma imperial (168 a.C.-476 d.C.)'],
+      ['Diez dedos','Diez cuernos','Roma dividida (desde 476 d.C.)'],
+      ['Hierro mezclado con barro','Cuerno pequeño','Roma papal (supremacía 538-1798 d.C.)'],
       ['La piedra que crece','El reino dado a los santos','El reino de Dios'],
     ]) + `<p class="nota">Es la misma historia contada dos veces. Lo que Daniel 7
-    agrega es <strong>el cuerno pequeño y la escena del juicio</strong>, que en
-    Daniel 2 no aparecen.</p>` },
+    agrega son <strong>los rasgos del cuerno pequeño y la escena del juicio</strong>,
+    que en Daniel 2 no aparecen.</p>` },
 
   { t:'👑 Los diez cuernos', h:
     `<p>Roma no cayó de golpe: se fue partiendo mientras entraban las tribus
@@ -1529,8 +1535,8 @@ d7: [
     li(['Visigodos','Ostrogodos','Vándalos','Burgundios','Lombardos',
         'Anglosajones','Francos','Alamanes','Hérulos','Suevos']) +
     `<p class="nota">«De aquel reino se levantarán diez reyes» (7:24). Concuerda con los
-    pies de hierro y barro de Daniel 2: un imperio que se divide y ya no se
-    vuelve a pegar.</p>` },
+    diez dedos de Daniel 2: Roma dividida desde 476 d.C., que ya no se vuelve
+    a pegar.</p>` },
 
   { t:'🔍 Las ocho marcas del cuerno pequeño', h:
     `<p>El capítulo da ocho señas para identificarlo. Todas salen del texto:</p>` +
@@ -1618,9 +1624,9 @@ d7: [
 
   d8: [
     { t: '📚 En pocas palabras',
-      h: hi(`Dos años después de la visión de Daniel 7 (año tercero de Belsasar, 551 a.C.), Daniel ve un carnero de dos cuernos derrotado por un macho cabrío con un cuerno "magnífico". El cuerno se rompe y salen cuatro; de uno de ellos crece un cuerno pequeño que llega hasta el santuario mismo, detiene el sacrificio continuo (tamid) y lo pisotea 2.300 tardes y mañanas, tras lo cual el santuario será purificado (reivindicado).`) },
+      h: hi(`En el año tercero de Belsasar, 550 a.C. (Daniel 7 fue en el primero, 553 a.C.), Daniel ve un carnero de dos cuernos derrotado por un macho cabrío con un cuerno "magnífico". El cuerno se rompe y salen cuatro; de uno de ellos crece un cuerno pequeño que llega hasta el santuario mismo, detiene el sacrificio continuo (tamid) y lo pisotea 2.300 tardes y mañanas, tras lo cual el santuario será purificado (reivindicado).`) },
     { t: '🌊 Cuándo y dónde',
-      h: hi(`Daniel está en visión junto al río Ulay, en Susa (Elam), la futura capital de invierno del Imperio Medo-Persa: simbólicamente el profeta es trasladado a la época que va a describir. La visión ocurre en el año 551 a.C., dos años después de Daniel 7; a Babilonia todavía le quedaba más de una década de existencia, pero Dios ya no la incluye en esta profecía porque Ciro de Persia estaba en plena expansión.`) },
+      h: hi(`Daniel está en visión junto al río Ulay, en Susa (Elam), la futura capital de invierno del Imperio Medo-Persa: simbólicamente el profeta es trasladado a la época que va a describir. La visión ocurre en el año 550 a.C., el tercero de Belsasar (Daniel 7 fue en el primero, 553 a.C.); a Babilonia todavía le quedaba más de una década de existencia, pero Dios ya no la incluye en esta profecía porque Ciro de Persia estaba en plena expansión.`) },
     { t: '🐏 El carnero de dos cuernos',
       h: hi(`El carnero con dos cuernos, uno más alto que el otro y el más alto salido después, es <strong>Media-Persia</strong> (Daniel 8:20). El cuerno que despunta después y llega a ser el mayor representa a Persia, que en un principio fue la nación menor: Ciro se rebeló contra su abuelo Astiages (rey de Media) en el año 553 a.C. y puso a Media bajo su control, invirtiendo el orden de los cuernos. El carnero embiste hacia el oeste, el norte y el sur, y "ninguna bestia podía resistirle" (v. 4).`) },
     { t: '🐐 El macho cabrío y su cuerno',
@@ -1689,7 +1695,7 @@ d7: [
     { t: '📚 En pocas palabras',
       h: hi(`Daniel 10 es la introducción a la última gran visión del libro (capítulos 10-12): mientras Daniel ayuna tres semanas junto al río Tigris, angustiado por la oposición a la reconstrucción del templo, se le aparece un Ser glorioso —Jesús mismo— que le revela una guerra invisible entre ángeles de Dios y espíritus malignos por el destino de las naciones.`) },
     { t: '🌊 Cuándo y dónde',
-      h: hi(`La escena ocurre en la primavera del año tercero de Ciro, hacia el 535 a.C., junto al río Tigris. Daniel, que tenía unos 17 años cuando fue llevado cautivo, se acercaba ya a los noventa. Su motivo de oración: la reconstrucción del templo de Jerusalén, autorizada por Ciro, enfrentaba la fuerte oposición de los pueblos vecinos (Esdras 4). Daniel ayunó "tres semanas" completas (Daniel 10:2-3), del 4 al 24 del primer mes, absteniéndose de alimentos suculentos, carne y vino.`) },
+      h: hi(`La escena ocurre en la primavera del año tercero de Ciro, hacia el 535 a.C., junto al río Tigris. Daniel, que tenía 18 años cuando fue llevado cautivo en 605 a.C., tenía ahora unos 88: se acercaba ya a los noventa. Su motivo de oración: la reconstrucción del templo de Jerusalén, autorizada por Ciro, enfrentaba la fuerte oposición de los pueblos vecinos (Esdras 4). Daniel ayunó "tres semanas" completas (Daniel 10:2-3), del 4 al 24 del primer mes, absteniéndose de alimentos suculentos, carne y vino.`) },
     { t: '✨ El Ser glorioso junto al Tigris',
       h: hi(`El personaje que se le aparece a Daniel —"un hombre vestido de lino... su cuerpo como de crisólito, su rostro como el aspecto del relámpago, sus ojos como antorchas de fuego" (Daniel 10:5-6)— coincide en cada detalle con la descripción que Juan hace de Jesús glorificado en Apocalipsis 1:13-16. El impacto es tan grande que Daniel queda sin fuerzas, "desvanecido, rostro en tierra" (v. 9), como también les ocurrió a Pedro, Santiago y Juan en el monte de la Transfiguración, y al propio Juan en Patmos.`) },
     { t: '🛡️ El príncipe de Persia y la guerra invisible',
@@ -1705,7 +1711,7 @@ d7: [
     { t: '🌍 Una guerra que también se libra hoy',
       h: hi(`Pablo describe la misma clase de conflicto invisible en Efesios 6:12: "No tenemos lucha contra sangre y carne, sino contra... los espíritus del mal que están en las regiones celestes". Si un ángel maligno pudo resistir por tres semanas la respuesta a la oración de un anciano fiel como Daniel, la lección práctica es doble: primero, que una oración aparentemente sin respuesta inmediata no significa una oración no escuchada; y segundo, que la perseverancia en la oración —"orando en toda ocasión... y velando en ello con toda perseverancia" (Efesios 6:18)— tiene un peso real en un conflicto que no siempre se ve.`) },
     { t: '🕰️ Daniel, anciano y todavía útil',
-      h: hi(`Cuando ocurre esta visión Daniel se acercaba a los noventa años: fue llevado cautivo siendo apenas un adolescente de unos 17 años, y ahora, más de setenta años después, seguía orando con el mismo fervor de su juventud. El libro no presenta a Daniel como una figura del pasado que ya cumplió su función: su último acto registrado es un ayuno de tres semanas por el bienestar de su pueblo, seguido de la visión más larga y detallada de todo el libro (capítulos 10-12). La vejez, para Daniel, no fue el final de su utilidad espiritual sino la continuación natural de una vida entera de fidelidad.`) },
+      h: hi(`Cuando ocurre esta visión Daniel se acercaba a los noventa años: fue llevado cautivo siendo un joven de 18 años, y ahora, unos setenta años después (605-535 a.C.), seguía orando con el mismo fervor de su juventud. El libro no presenta a Daniel como una figura del pasado que ya cumplió su función: su último acto registrado es un ayuno de tres semanas por el bienestar de su pueblo, seguido de la visión más larga y detallada de todo el libro (capítulos 10-12). La vejez, para Daniel, no fue el final de su utilidad espiritual sino la continuación natural de una vida entera de fidelidad.`) },
     { t: '🔥 Dos hombres descalzos: Josué y Moisés frente al mismo Comandante', h:
       `<p>La identificación de Miguel con Jesús no depende de un solo texto: la Biblia ya había mostrado antes al mismo Ser divino presentándose como "ángel" en dos escenas muy conocidas.</p><p>Antes del ataque a Jericó, Josué se encontró con un soldado armado y le preguntó de qué bando era. La respuesta fue: "Yo soy el jefe del ejército de Yahvéh... Quítate las sandalias de tus pies, porque el lugar en que estás es sagrado" (Josué 5:13-15). Años antes, Moisés había recibido la misma orden junto a la zarza que ardía sin consumirse, de labios de Aquel que se identificó como "el Dios de tu padre, el Dios de Abraham, el Dios de Isaac y el Dios de Jacob" y como "YO SOY EL QUE SOY" (Éxodo 3:2-6, 14) —y sin embargo el propio relato lo llama, en ese mismo pasaje, "el Ángel de Yahvéh".</p><div class="highlight-box">La palabra "ángel" significa simplemente "mensajero". Jesús es, en ese sentido especial, el Mensajero supremo del Padre, según su propia oración antes de la cruz: plenamente Dios y, a la vez, el que trae el mensaje de Dios a la tierra. Eso es lo que hace posible que el mismo Ser sea "Yahvéh" en Éxodo 3 y "Miguel, uno de los principales príncipes" en Daniel 10.</p>`},
     { t: '🐴 «Más son los que están con nosotros»: la protección invisible de Eliseo', h:
@@ -1718,11 +1724,11 @@ d7: [
     { t: '📚 En pocas palabras',
       h: hi(`Daniel 11 es la profecía más detallada y con más nombres de reyes de todo el libro: el ángel (el mismo Miguel/Jesús de Daniel 10) le narra a Daniel, verso a verso, la sucesión de imperios desde Persia hasta el fin de los tiempos, pasando por Grecia, los reinos de Egipto y Siria que se disputan Palestina durante siglos, Roma, y finalmente un poder que "se engreirá por encima de todo dios" antes de llegar a su fin.`) },
     { t: '👑 Los cuatro reyes persas',
-      h: hi(`<strong>"He aquí que se levantarán tres reyes en Persia, y el cuarto acumulará más riquezas que todos ellos" (Daniel 11:2): son cuatro reyes concretos, identificables uno por uno.</strong><ul style="margin:.4rem 0 .2rem 1.1rem;padding:0"><li><strong>Cambises II</strong> (530-522 a.C.) — hijo de Ciro, conquistó Egipto.</li><li><strong>Pseudo-Esmerdis o Gaumata</strong> (522 a.C.) — un usurpador que reinó solo unos meses haciéndose pasar por el hermano de Cambises.</li><li><strong>Darío I</strong> (522-486 a.C.) — reorganizó el imperio en veinte satrapías y reconstruyó la administración persa.</li><li><strong>Jerjes I</strong> (486-465 a.C.) — el cuarto y "más rico" de los cuatro, que "con todas sus riquezas incitará a todos contra el reino de Yaván [Grecia]": es quien lanzó la célebre invasión persa de Grecia de 480 a.C. (las guerras médicas, con las batallas de las Termópilas y Salamina).</li></ul>`) },
+      h: hi(`<strong>«Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas, más que todos ellos» (Daniel 11:2): son cuatro reyes concretos, contados después de Ciro.</strong><ul style="margin:.4rem 0 .2rem 1.1rem;padding:0"><li><strong>Cambises II</strong> (530-522 a.C.) — hijo de Ciro, conquistó Egipto.</li><li><strong>Darío I</strong> (522-486 a.C.) — reorganizó el imperio en veinte satrapías y reconstruyó la administración persa.</li><li><strong>Asuero, o Jerjes I</strong> (486-465 a.C.) — el rey del libro de Ester; lanzó la invasión persa de Grecia de 480 a.C. (las guerras médicas, con las batallas de las Termópilas y Salamina).</li><li><strong>Artajerjes I</strong> (465-424 a.C.) — el <strong>cuarto</strong>: el rey que dio el decreto de 457 a.C. para restaurar y edificar Jerusalén (Esdras 7), el punto de partida de las setenta semanas y de las 2.300 tardes y mañanas.</li></ul>Daniel 11:1 repite la fecha de Daniel 9:1, «el primer año de Darío», y el capítulo arranca con el mismo rey del decreto de Daniel 9: el ángel nombra a los tres anteriores solo para ubicar al cuarto.`) },
     { t: '⚔️ El reino de Grecia se divide',
       h: hi(`Alejandro Magno ("un rey valeroso") conquista un vasto imperio y, tras su muerte, "su reino será quebrantado y repartido a los cuatro vientos del cielo" (v. 4) —el mismo reparto entre cuatro generales visto en Daniel 8—. Daniel 11 se concentra desde aquí en dos de esos cuatro reinos: <strong>Egipto</strong> (dinastía ptolemaica, "rey del sur") y <strong>Siria</strong> (dinastía seléucida, "rey del norte"), porque Palestina —la Tierra del Esplendor— queda geográficamente entre ambos y es el terreno de sus guerras.`) },
     { t: '📋 Reyes ptolemaicos y seléucidas',
-      h: hi(`<p>Los "reyes del sur" (Egipto, dinastía de Tolomeo) y "reyes del norte" (Siria, dinastía de Seleuco) que Daniel 11 describe, con sus fechas:</p><ul style="margin:.4rem 0 .2rem 1.1rem;padding:0"><li><strong>Tolomeo I Sóter</strong> (323-285 a.C.) — sur — y <strong>Seleuco I Nicátor</strong> (312-281 a.C.) — norte.</li><li><strong>Tolomeo II Filadelfo</strong> (285-246) — sur — y <strong>Antíoco I Sóter</strong> (281-261), seguido de <strong>Antíoco II "el Divino"</strong> (261-246) — norte.</li><li><strong>Tolomeo III Evergetes</strong> (246-221) — sur — y <strong>Seleuco II Calínico</strong> — norte.</li><li><strong>Tolomeo IV Filopátor</strong> (221-203) — sur — y <strong>Antíoco III "el Grande"</strong> (223-187) — norte.</li><li><strong>Tolomeo V, VI y VII</strong>, hasta <strong>Cleopatra VI</strong> (51-30 a.C.), la última reina ptolemaica — sur.</li></ul>`) },
+      h: hi(`<p>Los "reyes del sur" (Egipto, dinastía de Tolomeo) y "reyes del norte" (Siria, dinastía de Seleuco) que Daniel 11 describe, con sus fechas:</p><ul style="margin:.4rem 0 .2rem 1.1rem;padding:0"><li><strong>Tolomeo I Sóter</strong> (323-285 a.C.) — sur — y <strong>Seleuco I Nicátor</strong> (312-281 a.C.) — norte.</li><li><strong>Tolomeo II Filadelfo</strong> (285-246) — sur — y <strong>Antíoco I Sóter</strong> (281-261), seguido de <strong>Antíoco II "el Divino"</strong> (261-246) — norte.</li><li><strong>Tolomeo III Evergetes</strong> (246-221) — sur — y <strong>Seleuco II Calínico</strong> — norte.</li><li><strong>Tolomeo IV Filopátor</strong> (221-203) — sur — y <strong>Antíoco III "el Grande"</strong> (223-187) — norte.</li><li><strong>Tolomeo V, VI y VII</strong>, hasta <strong>Cleopatra VII</strong> (51-30 a.C.), la última reina ptolemaica — sur.</li></ul>`) },
     { t: '💍 El matrimonio roto de Antíoco II y Berenice',
       h: hi(`Daniel 11:6 anuncia una alianza matrimonial entre "la hija del rey del sur" (Berenice, hija de Tolomeo II) y el rey del norte (Antíoco II), que se divorció de su primera esposa, Laodicea, para casarse con ella. El pacto fracasó: cuando murió Tolomeo II, Antíoco volvió con Laodicea, quien hizo asesinar a Antíoco, a Berenice y a su hijo pequeño, cumpliendo con precisión la advertencia "no se sostendrá el brazo del rey del norte... ni ella se mantendrá, ni su brazo" (v. 6).`) },
     { t: '🗡️ Antíoco III el Grande y el ascenso de Roma',
