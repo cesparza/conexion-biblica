@@ -69,6 +69,7 @@ const LAMINAS = {
   /* v190: escenas de la historia (imágenes de Camilo hechas con ChatGPT). Salen
      en la explicación de su parte y en la línea de tiempo desde su año. */
   escenas: [
+    { y: -605, f: 'e605', parte: 'oro', t: '605 a.C. · Nabucodonosor sitia Jerusalén y se lleva cautivos a Daniel y sus amigos (1:1-6)' },
     { y: -539, f: 'e539', parte: 'plata', t: '539 a.C. · Ciro el Grande toma Babilonia la noche del banquete de Belsasar (5:30-31)' },
     { y: -331, f: 'e331', parte: 'bronce', t: '331 a.C. · Alejandro Magno vence a Darío III en Arbela' },
     { y: -168, f: 'e168', parte: 'hierro', t: '168 a.C. · Roma vence a Macedonia en Pidna' },
