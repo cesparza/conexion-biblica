@@ -70,14 +70,14 @@ const LAMINAS = {
      en la explicación de su parte y en la línea de tiempo desde su año. */
   escenas: [
     { y: -605, f: 'e605', parte: 'oro', t: '605 a.C. · Nabucodonosor sitia Jerusalén y se lleva cautivos a Daniel y sus amigos (1:1-6)' },
-    { y: -597, f: 'e597', t: '597 a.C. · Segunda deportación: Joaquín, su madre, su corte y Ezequiel son llevados a Babilonia (2 Reyes 24:12-15; Ezequiel 1:2)' },
-    { y: -586, f: 'e586', t: '586 a.C. · Jerusalén y el templo son destruidos; tercera deportación (2 Reyes 25:8-11)' },
+    { y: -597, f: 'e597', c: '597 a.C. · Segunda deportación', t: '597 a.C. · Segunda deportación: Joaquín, su madre, su corte y Ezequiel son llevados a Babilonia (2 Reyes 24:12-15; Ezequiel 1:2)' },
+    { y: -586, f: 'e586', c: '586 a.C. · Cae Jerusalén y el templo', t: '586 a.C. · Jerusalén y el templo son destruidos; tercera deportación (2 Reyes 25:8-11)' },
     { y: -539, f: 'e539', parte: 'plata', t: '539 a.C. · Ciro el Grande toma Babilonia la noche del banquete de Belsasar (5:30-31)' },
     { y: -331, f: 'e331', parte: 'bronce', t: '331 a.C. · Alejandro Magno vence a Darío III en Arbela' },
     { y: -168, f: 'e168', parte: 'hierro', t: '168 a.C. · Roma vence a Macedonia en Pidna' },
     { y: 476, f: 'e476', parte: 'dedos', t: '476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente' },
     { y: 538, f: 'e538', parte: 'barro', t: '538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal' },
-    { y: 1798, f: 'e1798', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
+    { y: 1798, f: 'e1798', c: '1798 d.C. · Berthier toma preso a Pío VI', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
     /* v195: lo que viene. Año futuro: salen en su parte, nunca en la línea de tiempo. */
     { y: 9998, f: 'e-piedra', parte: 'piedra', t: 'Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 44; Mateo 25:31)' },
     { y: 9999, f: 'e-monte', parte: 'monte', t: 'Para siempre · El reino de Dios llena toda la tierra (2:35, 44)' },

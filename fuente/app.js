@@ -289,9 +289,16 @@ function lamHist(t){
   const im=new Image();im.onload=()=>pon(true);im.onerror=()=>pon(false);im.src=src;
 }
 const lamEscenaDe=id=>(LAM().escenas||[]).find(e=>e.parte===id);
+/* v200: las escenas sin parte que caen en las fechas de una parte (597 y 586 en
+   Babilonia, 1798 en Roma papal) salen también en su hoja, más chicas. */
+const lamEscenasDe=p=>(LAM().escenas||[]).filter(e=>!e.parte&&p.de!=null&&e.y>=p.de&&e.y<=p.a);
+function lamEscenasHTML(p){
+  const m=lamEscenasDe(p);
+  return lamEscenaHTML(lamEscenaDe(p.id))+(m.length?'<div class="lam-mas">'+m.map(e=>lamEscenaHTML(Object.assign({},e,{t:e.c||e.t}))).join('')+'</div>':'');
+}
 const lamEscenaAnio=y=>(LAM().escenas||[]).filter(e=>e.y<=y).pop();
 function lamHojaParte(p,i,n){
-  return lamEscenaHTML(lamEscenaDe(p.id))+'<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
+  return lamEscenasHTML(p)+'<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
     '<div class="lam-p2">'+esc(p.reino)+'</div><div class="lam-fechas">'+esc(p.fechas)+'</div></div>'+
     (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
