@@ -149,6 +149,7 @@ function lamEscena(){
        aparecía. El monte se recorta con clip-path de CSS y la luz son círculos. */
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<image class="lam-hist" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="#000" fill-opacity=".28"/>'+
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
     '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
@@ -172,7 +173,7 @@ function lamAcerca(dest,ms){
 }
 /* En Presentar, con pantalla ancha, la escena es apaisada: la estatua a la izquierda y
    la explicación a la derecha, sin taparla. */
-const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900;
+const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900&&innerWidth>innerHeight*1.1;
 const lamTodo=()=>lamAncho()?[-150,0,2050,LAM().h]:[0,0,LAM().w,LAM().h];
 /* Acercarse a una parte, centrada (la explicación ya no la tapa). */
 function lamCaja(id){
@@ -210,6 +211,8 @@ function lamAbre(cid,modo){
   el.innerHTML='<div class="lam-cab"><div class="lam-cabtx"><div class="lam-ant">Daniel 2 · '+(modo==='presentar'?'presentación':'estudio interactivo')+'</div>'+
     '<div class="lam-tit">'+esc(L.titulo)+'</div></div><div class="lam-bots">'+
     (modo==='presentar'?'':'<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button>')+
+    /* v191: pantalla completa donde el navegador la deja (el iPhone no). */
+    (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-cerrar lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
@@ -225,6 +228,16 @@ function lamAbre(cid,modo){
   lamPrecarga(cid,document.getElementById('lamEsc'));
   if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();}
   const f=el.querySelector('.lam-cerrar');if(f)f.focus();
+}
+const lamPuedeTodo=()=>{const e=document.getElementById('lam');return !!(e&&(e.requestFullscreen||e.webkitRequestFullscreen));};
+function lamPantalla(){
+  const e=document.getElementById('lam');if(!e)return;
+  const p=e.requestFullscreen?e.requestFullscreen():e.webkitRequestFullscreen&&e.webkitRequestFullscreen();
+  if(p&&p.catch)p.catch(()=>{});
+  const b=e.querySelector('.lam-full');if(b)b.hidden=true;
+  if(e.__fs)return;e.__fs=true;
+  e.addEventListener('fullscreenchange',()=>{const f=e.matches(':fullscreen');const bb=e.querySelector('.lam-full');if(bb)bb.hidden=f;
+    e.classList.toggle('ancho',lamAncho()||f);lamAcerca(lamTodo(),0);},{once:false});
 }
 function lamCierra(){
   const el=document.getElementById('lam');
@@ -262,6 +275,19 @@ function lamEscenaHTML(e){
   if(!e)return '';
   return '<figure class="lam-fig" data-f="'+e.f+'"><img src="'+lamSrc(e.f)+'" alt="'+esc(e.t)+'" loading="lazy"><figcaption>'+esc(e.t)+'</figcaption></figure>';
 }
+/* v191: la escena de un paso de la historia, si su imagen existe (se prueba
+   una vez); si no, la estatua se ve entera. */
+const lamHayImg={};
+function lamHist(t){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const h=svg.querySelector('.lam-hist'),est=svg.querySelector('.lam-estatua');
+  if(!t||!t.f){h.style.opacity='0';return;}
+  const src=lamSrc(t.f),pon=ok=>{lamHayImg[src]=ok;if(!ok){h.style.opacity='0';est.style.opacity='1';lamEnciende([]);return;}
+    h.setAttribute('href',src);h.style.opacity='1';est.style.opacity='0';};
+  if(src in lamHayImg){pon(lamHayImg[src]);return;}
+  if(typeof Image==='undefined'){pon(false);return;}
+  const im=new Image();im.onload=()=>pon(true);im.onerror=()=>pon(false);im.src=src;
+}
 const lamEscenaDe=id=>(LAM().escenas||[]).find(e=>e.parte===id);
 const lamEscenaAnio=y=>(LAM().escenas||[]).filter(e=>e.y<=y).pop();
 function lamHojaParte(p,i,n){
@@ -282,7 +308,7 @@ function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEa
 
 /* ── Explorar ── */
 function lamInicio(){
-  lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
+  lamHist(null);lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
   lamAcerca(lamTodo(),650);
@@ -295,7 +321,7 @@ function lamToca(id){
 }
 function lamElige(i){
   const L=LAM(),p=L.partes[i];if(!p)return;
-  lamPara();lamSel=p.id;lamMarcaPaso('est');
+  lamPara();lamHist(null);lamSel=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   const esMonte=p.id==='monte',esPiedra=p.id==='piedra';
   if(!esMonte)lamMonte('no');
@@ -318,6 +344,7 @@ function lamHistoria(k){
   lamPara();lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
   const svg=document.getElementById('lamSvg');
   if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
+  lamHist(t);
   lamHoja(lamHojaTexto(t));lamVeHoja();
 }
 
@@ -339,7 +366,7 @@ function lamQuien(y){
   return {on,suave,tx};
 }
 function lamVeAnio(y){
-  lamAnio=y;lamSel='';lamEtiquetas(false);lamMarcaPaso('est');
+  lamAnio=y;lamHist(null);lamSel='';lamEtiquetas(false);lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();
   const q=lamQuien(y);lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
@@ -391,7 +418,8 @@ function lamPres(k){
   const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
   const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos?'0':'1';
   if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
-  else if(s.tipo==='portada'||s.tipo==='hist')lamEnciende(['__ninguna']);
+  /* La portada muestra la estatua entera; la historia, a media luz. */
+  else if(s.tipo==='hist')lamEnciende(['__ninguna']);
   else lamEnciende([]);
   lamEtiquetas(false);
   const piedra=svg.querySelector('.lam-piedra');
@@ -406,6 +434,7 @@ function lamPres(k){
   const ult=vistos.filter(id=>L.tiempo.includes(id)).pop();
   if(ult){const p=lamParte(ult);const r=document.getElementById('lamRango');r.value=Math.min(p.a,2026);
     document.getElementById('lamTano').textContent=lamAnioTx(p.de)+' – '+(p.a>=2026?'hoy':lamAnioTx(p.a));document.getElementById('lamTq').textContent=p.reino;}
+  lamHist(s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:null);
   if(s.tipo==='portada')lamHoja('<div class="lam-hcab"><div><div class="lam-p1">Daniel 2</div><div class="lam-p2">'+esc(L.titulo)+'</div></div></div>'+
     '<div class="lam-capa t"><div class="lam-rot">'+L.inicio.ref+' · RV1995</div><p><q>'+esc(L.inicio.texto)+'</q></p></div><p class="lam-nota">Cuatro reinos, Roma en tres fases y un reino que no será jamás destruido.</p>');
   else if(s.tipo==='hist')lamHoja(lamHojaTexto(L.historia[s.i]));
@@ -479,6 +508,14 @@ function lamPolvo(svg){
     if(vivos)requestAnimationFrame(f);else capa.innerHTML='';};
   requestAnimationFrame(f);
 }
+/* v191: si la ventana cambia (girar la tableta, achicar el navegador), la
+   presentación se reacomoda sin cerrarla. */
+if(typeof addEventListener==='function')addEventListener('resize',()=>{
+  if(lamModo!=='presentar')return;
+  const e=document.getElementById('lam');if(!e)return;
+  const a=lamAncho()||(e.matches&&e.matches(':fullscreen'));
+  if(e.classList.contains('ancho')!==a){e.classList.toggle('ancho',a);lamPres(lamPaso);}
+});
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
   if(e.key==='Escape'){lamCierra();return;}
@@ -569,7 +606,7 @@ const icoDe=(e,c)=>ICO_DE[e]?IC(ICO_DE[e],c):'';
 /* Protectores de racha que se pueden guardar (ver sumaRacha). Va aquí arriba,
    junto a BASE, porque normalizar() la usa al cargar: más abajo daría TDZ. */
 const PROTECTOR_MAX=2;
-const BASE={v:4,pid:'',nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,protector:0,protegio:'',insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
+const BASE={v:4,pid:'',nombre:'',cat:'av',aCargo:false,tutor:'',prog:{},examenes:[],racha:0,ultimo:null,protector:0,protegio:'',insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -604,6 +641,10 @@ function normalizar(x){
      sobrevive a que le cambien el nombre. */
   if(typeof x.pid==='string')s.pid=x.pid.slice(0,64);
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
+  /* v191: una ficha «a cargo» es de un niño que estudia en el teléfono de un
+     adulto (Aventureros, o un conquistador sin cuenta); `tutor` es ese adulto. */
+  if(x.aCargo===true)s.aCargo=true;
+  if(typeof x.tutor==='string')s.tutor=x.tutor.slice(0,60);
   if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
   /* DONDE SE QUEDO, para que un refresco no la mande siempre a Inicio (ver
      el arranque, mas abajo). Son solo una pestaña y un id de material: nunca
@@ -1484,25 +1525,91 @@ function pasaAActividad(c){
   return true;
 }
 
-/* Selector de participantes. Cada uno con su nombre y su categoría, para
-   que se sepa de quién es el progreso que se está viendo. */
+/* v191 (Camilo, 13-oct): QUIÉN ESTUDIA, POR PERSONA. Antes salía un botón por
+   ficha, y quien estudia dos actividades aparecía dos o tres veces («Camilo»,
+   «Camilo», «Camilo»). Ahora cada persona sale una vez, con sus actividades
+   debajo; tocar una actividad es pasar a esa ficha. La persona se reconoce por
+   el nombre, que es como `pasaAActividad` ya empareja las fichas.
+   OPC_APP lo llena la app que monta el módulo (Jóvenes): `aCargo` son las
+   personas que esa app tiene a cargo de quien entró. */
+let OPC_APP={};
+const enApp=()=>!!(OPC_APP&&OPC_APP.app);
+function personasDB(){
+  const g=new Map();
+  alumnos().forEach(([id,al])=>{
+    const k=(al.nombre||'').trim().toLowerCase()||('#'+id);
+    if(!g.has(k))g.set(k,{nombre:(al.nombre||'').trim()||'Sin nombre',fichas:[]});
+    g.get(k).fichas.push([id,al]);
+  });
+  return [...g.values()];
+}
 function pintaAlumnos(){
   const cont=document.getElementById('alu-sel');
   if(!cont)return;
-  cont.innerHTML=alumnos().map(([id,al])=>{
-    const c=CATS[al.cat]||CATS.av;
-    return '<button class="alu-btn'+(DB.activo===id?' on':'')+'" onclick="cambiaAlumno(\''+id+'\')">'+
-      '<div class="an">'+esc(al.nombre||'Sin nombre')+'</div>'+
-      /* Con el icono de la actividad, no solo el nombre: en un aparato con
-         fichas de dos actividades salian dos «Aventureros» iguales. */
-      '<div class="ac">'+esc(catConActividad(al.cat))+'</div></button>';
+  cont.innerHTML=personasDB().map(p=>{
+    const aC=p.fichas.find(([,a])=>a.aCargo), activa=p.fichas.some(([id])=>id===DB.activo);
+    return '<div class="alu-per'+(activa?' on':'')+'"><div class="alu-cab"><span class="alu-av" aria-hidden="true">'+esc(p.nombre.charAt(0).toUpperCase())+'</span>'+
+      '<div class="alu-nom"><div class="an">'+esc(p.nombre)+'</div>'+
+      (aC?'<div class="ac">A cargo de '+esc(aC[1].tutor||'un adulto')+'</div>':'')+'</div></div>'+
+      '<div class="alu-acts">'+p.fichas.map(([id,al])=>
+        '<button type="button" class="alu-act'+(id===DB.activo?' on':'')+'" aria-pressed="'+(id===DB.activo)+'" onclick="cambiaAlumno(\''+id+'\')">'+
+        esc(catConActividad(al.cat))+'</button>').join('')+'</div>'+
+      (aC&&activa?'<button type="button" class="btn txt alu-pasa" onclick="pasaASuCuenta()">'+IC('compartir')+' Pasar su avance a su propia cuenta</button>':'')+
+      '</div>';
   }).join('')+
   (alumnos().length<MAX_ALUMNOS
-    ?'<button class="alu-btn nuevo" onclick="agregaAlumno()"><div class="an">+ Agregar</div>'+
-     '<div class="ac">otro participante</div></button>':'');
+    ?'<button type="button" class="alu-btn nuevo" onclick="agregaPersona()"><div class="an">+ Agregar</div>'+
+     '<div class="ac">otra persona</div></button>':'')+
+  '<div id="alu-nueva"></div>';
+}
+/* «+ Agregar» pregunta primero para quién es: cada club entra distinto. */
+function agregaPersona(){
+  const z=document.getElementById('alu-nueva');if(!z)return;
+  const hijos=(OPC_APP.aCargo||[]).filter(n=>!personasDB().some(p=>p.nombre.toLowerCase()===String(n).trim().toLowerCase()));
+  z.innerHTML='<div class="alu-nueva"><p class="alu-q">¿Para quién es?</p>'+
+    (hijos.length?'<div class="alu-hijos">'+hijos.map((n,i)=>'<button type="button" class="alu-op" onclick="nuevaDeCargo('+i+')"><b>'+esc(n)+'</b><span>A tu cargo en la app</span></button>').join('')+'</div>':'')+
+    '<button type="button" class="alu-op" onclick="nuevaFicha(\'cargo\')"><b>Un niño a mi cargo</b><span>Aventureros, o un conquistador que no tiene cuenta. Lo manejas tú desde este teléfono.</span></button>'+
+    '<button type="button" class="alu-op" onclick="nuevaFicha(\'otra\')"><b>Otra persona en este teléfono</b><span>Un adulto, o alguien que no tiene cuenta propia.</span></button>'+
+    '<div class="alu-op info"><b>Alguien con su propia cuenta</b><span>'+
+      (enApp()?'Que entre a la app con su cuenta, desde su teléfono: su avance queda guardado en ella.':'Que abra la app en su propio teléfono.')+
+      ' Los Guías Mayores estudian siempre así, y los Conquistadores que tienen cuenta también.</span></div></div>';
+}
+/* Las categorías que puede tener un niño a cargo: las de su actividad que no
+   son de adultos ni de Guías Mayores. */
+const catsDeNino=act=>Object.keys(CATS).filter(k=>CATS[k].act===act&&CATS[k].club!=='guias'&&!/adulto/i.test(CATS[k].edad||''));
+function nuevaFicha(tipo,nombre){
+  if(tipo!=='cargo'){agregaAlumno();return;}
+  if(alumnos().length>=MAX_ALUMNOS)return;
+  const tutor=(S.aCargo?S.tutor:S.nombre)||'';
+  const cats=catsDeNino(ACT_DE(S.cat));
+  const id=nuevoId();
+  DB.alumnos[id]=normalizar({nombre:nombre||'',cat:cats[0]||S.cat,aCargo:true,tutor});
+  cambiaAlumno(id);
+  abreYo();
+  if(!nombre)try{document.getElementById('nombre').focus();}catch(e){}
+}
+function nuevaDeCargo(i){const n=(OPC_APP.aCargo||[])[i];if(n)nuevaFicha('cargo',String(n).trim().slice(0,60));}
+/* Cuando el niño ya tiene cuenta: su ficha se pasa con el código de la ficha
+   completa (el mismo de «Pasar o compartir mi progreso»). */
+function pasaASuCuenta(){
+  const z=document.getElementById('alu-nueva');if(!z)return;
+  const cod=codigoCompleto();
+  z.innerHTML='<div class="alu-nueva"><p class="alu-q">Pasar el avance de '+esc(S.nombre||'esta ficha')+'</p>'+
+    '<ol class="alu-pasos"><li>Copia este código y mándaselo.</li>'+
+    '<li>En su teléfono, que entre '+(enApp()?'a la app con su cuenta':'a la app')+' y vaya a <b>Logros → Pasar o compartir mi progreso → Pegar un código</b>.</li>'+
+    '<li>Que toque <b>Agregarla como ficha nueva</b>. Su avance queda en su cuenta.</li></ol>'+
+    '<textarea id="alu-cod" class="cod" readonly></textarea>'+
+    '<button type="button" class="btn ver" onclick="copiaAluCod()">'+IC('copiar')+' Copiar</button></div>';
+  const t=document.getElementById('alu-cod');if(t)t.value=cod;
+}
+function copiaAluCod(){
+  const t=document.getElementById('alu-cod');if(!t)return;
+  try{t.select();document.execCommand('copy');}catch(e){}
+  if(navigator.clipboard)navigator.clipboard.writeText(t.value).catch(()=>{});
 }
 
 /* Selector de categoría, pintado desde los datos de CATS. */
+const CLUB_NOMBRE={aventureros:'Club de Aventureros',conquistadores:'Club de Conquistadores',guias:'Guías Mayores'};
 function pintaSelectorCat(){
   const cont=document.getElementById('cat-sel');
   if(!cont)return;
@@ -1513,10 +1620,15 @@ function pintaSelectorCat(){
   cont.innerHTML=eventos.map(ev=>
     '<div class="cat-grupo">'+icoDe(ACTIVIDADES[ev].icono)+' '+esc(ACTIVIDADES[ev].nombre)+
     ' <small>· '+esc(ACTIVIDADES[ev].cuando)+'</small></div>'+
-    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.act===ev).map(([k,c])=>
-      '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
+    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.act===ev).map(([k,c])=>{
+      /* v191: un niño a cargo no puede quedar en una categoría de adultos ni de
+         Guías Mayores (ellos estudian con su propia cuenta). */
+      const no=S.aCargo&&!catsDeNino(ev).includes(k);
+      return '<button class="cat-btn'+(S.cat===k?' on':'')+'"'+(no?' disabled title="Es para quien estudia con su propia cuenta"':' onclick="ponCat(\''+k+'\')"')+'>'+
+      (c.club?'<div class="cc">'+esc(CLUB_NOMBRE[c.club]||'')+'</div>':'')+
       '<div class="cn">'+esc(c.nombre)+'</div>'+
-      '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('')+'</div>').join('');
+      '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>';}).join('')+'</div>').join('')+
+    (S.aCargo?'<p class="nota">'+esc(S.nombre||'Esta ficha')+' está a tu cargo: puede estar en Aventureros o en Conquistadores. Guías Mayores y adultos estudian con su propia cuenta.</p>':'');
 }
 
 /* ───────── qué estudiar hoy ─────────
@@ -1687,8 +1799,8 @@ function abreYo(){
       '<h3>'+IC('grupo')+' ¿Quién estudia?</h3>'+
       '<div class="alu-sel" id="alu-sel"></div>'+
       '<input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">'+
-      '<p class="nota">Cada participante guarda su <strong>propio progreso</strong>. '+
-      'Toca un nombre para cambiar de persona.</p>'+
+      '<p class="nota">Cada persona guarda su <strong>propio progreso</strong> en cada actividad. '+
+      'Toca una actividad para cambiar.</p>'+
       '<h3>'+IC('diana')+' Actividad y categoría</h3>'+
       '<div class="cat-sel" id="cat-sel"></div>'+
       '<p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y '+
@@ -6775,7 +6887,9 @@ function abreConcurso(a){
   if(ACT_DE(S.cat)===a)return true;
   const nom=(S.nombre||'').trim().toLowerCase();
   const suyas=alumnos().filter(([,al])=>ACT_DE(al.cat)===a);
-  const mia=suyas.find(([,al])=>(al.nombre||'').trim().toLowerCase()===nom)||suyas[0];
+  /* v191: solo la ficha de ESTA persona. Antes, sin una suya, tomaba la
+     primera de la actividad, que podía ser la de otra persona del aparato. */
+  const mia=suyas.find(([,al])=>(al.nombre||'').trim().toLowerCase()===nom);
   if(mia){cambiaAlumno(mia[0]);return true;}
   const cats=CATS_DE_ACT(a);
   if(cats.length===1)ponCat(cats[0]);else hojaCategorias(a);

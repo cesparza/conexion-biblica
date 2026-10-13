@@ -3186,6 +3186,18 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   Z.el('ex-fuente').checked=true;Z.cambiaFuente();
   ok(!Z.soloInterp&&Z.poolDe().every(q=>q.f!=='c'),'Prender «Solo el material del reglamento» apaga «Solo la interpretación»');
 }
+/* v191: quién estudia, por persona; un niño a cargo de un adulto. */
+{
+  const Z=montar('ponCat, nuevaFicha, personasDB, catsDeNino, ponNombre, avanza, S:()=>S, DB:()=>DB',{});
+  Z.ponCat('pa');Z.ponNombre('Camilo');Z.avanza('d1',50);
+  Z.ponCat('apgm');
+  const yo=Z.personasDB().filter(p=>p.nombre==='Camilo');
+  ok(yo.length===1&&yo[0].fichas.length===2,'v191: Camilo sale una sola vez, con sus dos actividades debajo');
+  Z.nuevaFicha('cargo','Sofía');
+  const n=Z.S();
+  ok(n.aCargo===true&&n.tutor==='Camilo'&&n.nombre==='Sofía'&&Z.catsDeNino('ap').includes(n.cat)&&!['appa','apgm'].includes(n.cat),'v191: la niña a cargo queda con su tutor y en una categoría de niños ('+n.cat+')');
+  ok(Z.catsDeNino('ap').join()==='apme,apav,apcq'&&Z.catsDeNino('cb').join()==='me,av','v191: a cargo solo Menores, Aventureros y Conquistadores; nunca adultos ni Guías Mayores');
+}
 /* v189: los nombres de los personajes se tocan y abren su ficha. */
 {
   const Z=montar('verCap, ponCat, el:id=>document.getElementById(id)',{});

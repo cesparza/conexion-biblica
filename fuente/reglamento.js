@@ -23,6 +23,10 @@ const REGLAS = (function () {
     apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
+  /* v191: el club de una categoría, si lo tiene. Decide cómo se entra:
+     Aventureros puede ir a cargo de un adulto; Conquistadores y Guías Mayores
+     estudian con cuenta propia (y un conquistador sin cuenta, a cargo). */
+  const CLUBES = ['aventureros', 'conquistadores', 'guias'];
   const SEG_POR_PREGUNTA = 72;
   const ID = /^[a-z][a-z0-9]{1,11}$/;
   const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
@@ -55,7 +59,7 @@ const REGLAS = (function () {
       for (const c of f.categorias) {
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
           sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
-          rampa: !c.sinRampa };
+          rampa: !c.sinRampa, club: c.club || '' };
         orden.push(c);
       }
     }
@@ -104,6 +108,7 @@ const REGLAS = (function () {
         if (c.sinVF !== undefined && typeof c.sinVF !== 'boolean') mal.push(dc + ' no dice bien si lleva verdadero o falso');
         if (c.tarjetas !== undefined && !(Number.isInteger(c.tarjetas) && c.tarjetas >= 5 && c.tarjetas <= 100)) mal.push(dc + ' tiene tarjetas por sesión fuera de 5 a 100');
         if (c.sinRampa !== undefined && typeof c.sinRampa !== 'boolean') mal.push(dc + ' no dice bien si entra directo a su nivel');
+        if (c.club !== undefined && !CLUBES.includes(c.club)) mal.push(dc + ' tiene un club que no es ' + CLUBES.join(', '));
         if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
         if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
         if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
@@ -182,6 +187,7 @@ const REGLAS = (function () {
       if (c.sinRampa !== undefined) o.sinRampa = c.sinRampa;
       if (c.sinVF !== undefined) o.sinVF = c.sinVF;
       if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
+      if (c.club !== undefined) o.club = c.club;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;

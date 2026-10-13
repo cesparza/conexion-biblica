@@ -88,7 +88,7 @@ const CAMPAMENTOS = [
        Daniel), dos de 7 a 9 (Daniel y Profetas y Reyes) y dos padres o
        consejeros con el alcance de 7 a 9. */
     categorias: [
-      { id: 'me', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100,
+      { id: 'me', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100, club: 'aventureros',
         alcance: 'Daniel 1, 2, 3 y 6',
         estudia: [...DANIEL_RELATOS, ...REPASOS_MENORES] },
       /* v177: el formato del examen real del 10-oct (fuente/examenes-reales.js),
@@ -98,10 +98,10 @@ const CAMPAMENTOS = [
          Antes: 15 con las tres secciones, y 25 con completar. La sesión de
          tarjetas del día seguía al tamaño del examen; se deja donde estaba
          (15 y 25) con `tarjetas`, para no doblarle el estudio diario a nadie. */
-      { id: 'av', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15,
+      { id: 'av', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15, club: 'aventureros',
         alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44 para estudiar',
         estudia: AV_ESTUDIA, soloEstudio: ['pr39', 'pr41', 'pr44'] },
-      { id: 'pa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25,
+      { id: 'pa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25, club: 'aventureros',
         alcance: 'Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44',
         estudia: AV_ESTUDIA },
     ] },
@@ -114,7 +114,7 @@ const CAMPAMENTOS = [
   { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica: Daniel', icono: '📘', cuando: 'Fecha por confirmar', fecha: '',
     que: 'Daniel 1 al 6 y Profetas y Reyes 39 al 44',
     categorias: [
-      { id: 'gm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 25, techo: 3, sinCompletar: false,
+      { id: 'gm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 25, techo: 3, sinCompletar: false, club: 'guias',
         alcance: 'Daniel 1 al 6 · P&R 39 al 44',
         estudia: [...Array.from({ length: 12 }, (_, i) => 'd' + (i + 1)), ...sec('pr', 39, 44),
           ...REPASOS_AV, 'm-reyes', 'm-profetico'],
@@ -152,11 +152,19 @@ const CAMPAMENTOS = [
   { id: 'ap', tema: 'apocalipsis', nombre: 'Conexión Bíblica: Apocalipsis', icono: '📖', cuando: 'Fecha por confirmar', fecha: '',
     que: 'El libro de Apocalipsis completo, en RV1995',
     categorias: [
-      { id: 'apme', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100,
+      { id: 'apme', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100, club: 'aventureros',
         alcance: 'Apocalipsis', estudia: APOCALIPSIS },
-      { id: 'apav', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15,
+      { id: 'apav', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15, club: 'aventureros',
         alcance: 'Apocalipsis', estudia: APOCALIPSIS },
-      { id: 'appa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25,
+      { id: 'appa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25, club: 'aventureros',
+        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
+      /* v191 (Camilo, 13-oct): en Conquistadores solo entran los del club (10 a
+         15 años, sin padres) y en Guías Mayores cada uno con su cuenta. El
+         material es el mismo; la dificultad la pone el techo. Formato
+         provisional hasta que llegue el reglamento, como las de arriba. */
+      { id: 'apcq', nombre: 'Conquistadores', edad: '10 a 15 años', n: 30, techo: 2, sinCompletar: true, segundos: 80, tarjetas: 20, club: 'conquistadores',
+        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
+      { id: 'apgm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias',
         alcance: 'Apocalipsis', estudia: APOCALIPSIS },
     ] },
 ];

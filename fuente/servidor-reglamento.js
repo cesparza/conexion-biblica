@@ -24,6 +24,10 @@ const REGLAS = (function () {
     apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
+  /* v191: el club de una categoría, si lo tiene. Decide cómo se entra:
+     Aventureros puede ir a cargo de un adulto; Conquistadores y Guías Mayores
+     estudian con cuenta propia (y un conquistador sin cuenta, a cargo). */
+  const CLUBES = ['aventureros', 'conquistadores', 'guias'];
   const SEG_POR_PREGUNTA = 72;
   const ID = /^[a-z][a-z0-9]{1,11}$/;
   const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
@@ -56,7 +60,7 @@ const REGLAS = (function () {
       for (const c of f.categorias) {
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
           sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
-          rampa: !c.sinRampa };
+          rampa: !c.sinRampa, club: c.club || '' };
         orden.push(c);
       }
     }
@@ -105,6 +109,7 @@ const REGLAS = (function () {
         if (c.sinVF !== undefined && typeof c.sinVF !== 'boolean') mal.push(dc + ' no dice bien si lleva verdadero o falso');
         if (c.tarjetas !== undefined && !(Number.isInteger(c.tarjetas) && c.tarjetas >= 5 && c.tarjetas <= 100)) mal.push(dc + ' tiene tarjetas por sesión fuera de 5 a 100');
         if (c.sinRampa !== undefined && typeof c.sinRampa !== 'boolean') mal.push(dc + ' no dice bien si entra directo a su nivel');
+        if (c.club !== undefined && !CLUBES.includes(c.club)) mal.push(dc + ' tiene un club que no es ' + CLUBES.join(', '));
         if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
         if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
         if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
@@ -183,6 +188,7 @@ const REGLAS = (function () {
       if (c.sinRampa !== undefined) o.sinRampa = c.sinRampa;
       if (c.sinVF !== undefined) o.sinVF = c.sinVF;
       if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
+      if (c.club !== undefined) o.club = c.club;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
@@ -212,6 +218,7 @@ export const FICHAS_BASE = [
     "techo": 1,
     "sinCompletar": true,
     "segundos": 100,
+    "club": "aventureros",
     "alcance": "Daniel 1, 2, 3 y 6",
     "estudia": [
      "d1",
@@ -235,6 +242,7 @@ export const FICHAS_BASE = [
     "sinVF": true,
     "segundos": 80,
     "tarjetas": 15,
+    "club": "aventureros",
     "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44 para estudiar",
     "estudia": [
      "d1",
@@ -269,6 +277,7 @@ export const FICHAS_BASE = [
     "sinCompletar": true,
     "sinRampa": true,
     "tarjetas": 25,
+    "club": "aventureros",
     "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
     "estudia": [
      "d1",
@@ -307,6 +316,7 @@ export const FICHAS_BASE = [
     "n": 25,
     "techo": 3,
     "sinCompletar": false,
+    "club": "guias",
     "alcance": "Daniel 1 al 6 · P&R 39 al 44",
     "estudia": [
      "d1",
@@ -548,6 +558,7 @@ export const FICHAS_BASE = [
     "techo": 1,
     "sinCompletar": true,
     "segundos": 100,
+    "club": "aventureros",
     "alcance": "Apocalipsis",
     "estudia": [
      "ap1",
@@ -584,6 +595,7 @@ export const FICHAS_BASE = [
     "sinVF": true,
     "segundos": 80,
     "tarjetas": 15,
+    "club": "aventureros",
     "alcance": "Apocalipsis",
     "estudia": [
      "ap1",
@@ -619,6 +631,79 @@ export const FICHAS_BASE = [
     "sinCompletar": true,
     "sinRampa": true,
     "tarjetas": 25,
+    "club": "aventureros",
+    "alcance": "Apocalipsis",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap6",
+     "ap7",
+     "ap8",
+     "ap9",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap15",
+     "ap16",
+     "ap17",
+     "ap18",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ]
+   },
+   {
+    "id": "apcq",
+    "nombre": "Conquistadores",
+    "edad": "10 a 15 años",
+    "n": 30,
+    "techo": 2,
+    "sinCompletar": true,
+    "segundos": 80,
+    "tarjetas": 20,
+    "club": "conquistadores",
+    "alcance": "Apocalipsis",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap6",
+     "ap7",
+     "ap8",
+     "ap9",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap15",
+     "ap16",
+     "ap17",
+     "ap18",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ]
+   },
+   {
+    "id": "apgm",
+    "nombre": "Guías Mayores",
+    "edad": "Desde 16 años",
+    "n": 35,
+    "techo": 3,
+    "sinCompletar": false,
+    "sinRampa": true,
+    "tarjetas": 25,
+    "club": "guias",
     "alcance": "Apocalipsis",
     "estudia": [
      "ap1",

@@ -333,7 +333,7 @@ for (const W of ANCHOS) {
     await p.locator('#detalle .lam-invita .btn.ver').click();
     await p.waitForTimeout(700);
     const capas = await p.evaluate(() => document.querySelectorAll('#lamSvg .lam-estatua image').length);
-    const imgs = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamSvg image')].map(i => i.getAttribute('href'));
+    const imgs = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamSvg image')].map(i => i.getAttribute('href')).filter(Boolean);
       const r = await Promise.all(hs.map(h => fetch(h).then(x => x.ok && x.headers.get('content-type') === 'image/webp').catch(() => false))); return r.every(Boolean) && r.length; });
     ok(capas === 6 && imgs === 9, W + ' · la lámina trae las 6 capas de la estatua y sus 9 imágenes (' + capas + ', ' + imgs + ')');
     ok(await p.evaluate(() => !document.getElementById('lamEsc').classList.contains('cargando')), W + ' · v188: las imágenes cargan antes de mostrar la escena');
@@ -364,6 +364,11 @@ for (const W of ANCHOS) {
     ok(await p.evaluate(() => document.getElementById('lam').hidden), W + ' · Escape cierra la lámina');
     await p.evaluate(() => { lamAbre('d2', 'presentar'); lamToca('hierro'); });
     const k = await p.evaluate(() => [lamPaso, lamPasos()[lamPaso].id]);
+    if (W >= 1000) {
+      const cabe = await p.evaluate(() => { const l = document.getElementById('lam'), b = document.getElementById('lamSig').getBoundingClientRect();
+        return [l.scrollHeight - l.clientHeight, Math.round(b.bottom), innerHeight]; });
+      ok(cabe[0] <= 1 && cabe[1] <= cabe[2], W + ' · v191: Presentar cabe en la pantalla, con Siguiente a la vista (' + cabe.join(', ') + ')');
+    }
     ok(k[1] === 'hierro', W + ' · en Presentar, tocar el hierro lleva a su paso (' + (k[0] + 1) + ')');
     for (let i = 0; i < 16; i++) await p.keyboard.press('ArrowRight');
     await p.waitForTimeout(300);

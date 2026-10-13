@@ -2185,15 +2185,20 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     apme:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',10,1],
     apav:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',30,3],
     appa:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',35,3],
+    /* v191: Conquistadores (10 a 15, sin padres) y Guías Mayores, Camilo 13-oct. */
+    apcq:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',30,2],
+    apgm:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',35,3],
   };
   const C=REGLAMENTO.CATS;
   const distintas=Object.keys(VIGENTE).filter(k=>!C[k]||ve(k)!==VIGENTE[k][0]||solo(k)!==VIGENTE[k][1]||C[k].n!==VIGENTE[k][2]||C[k].techo!==VIGENTE[k][3]);
   ok(Object.keys(C).join()===Object.keys(VIGENTE).join()&&!distintas.length,
-    'El reglamento vigente no cambió: las 11 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
+    'El reglamento vigente no cambió: las 13 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
   /* v164: Guías Mayores tiene su ficha (cbg). Su categoría conserva el id. */
   const AC=REGLAMENTO.ACTIVIDADES;
-  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apme,apav,appa'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
+  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apme,apav,appa,apcq,apgm'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
     'Las actividades son cb, cbg, dm, ec y ap; Guías Mayores va en la suya y conserva su categoría gm');
+  ok(C.me.club==='aventureros'&&C.pa.club==='aventureros'&&C.gm.club==='guias'&&C.apcq.club==='conquistadores'&&C.apgm.club==='guias'&&C.ec1.club==='',
+    'v191: cada categoría de club dice su club (Aventureros, Conquistadores, Guías Mayores)');
   ok(AC.cb.tipo==='libro'&&AC.cbg.tipo==='libro'&&AC.dm.tipo==='dias'&&AC.ec.tipo==='creencias'&&AC.cbg.tema===AC.cb.tema,
     'Cada actividad sabe de qué tipo es su material: dos campamentos del mismo libro, un devocional por días y las creencias');
   const APP_F=lee('app.js');
@@ -2230,8 +2235,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Cada ficha trae su fecha: los tres concursos de Aventureros el 10 de octubre de 2026, y Guías Mayores sin fecha');
   ok(!/Tres tarjetas|el 9 de octubre/.test(lee('manual.js')),
     'El manual no cuenta las actividades ni afirma una fecha: las dos cosas salen de las fichas');
-  ok(C.me.seg===100&&C.av.seg===80&&C.apme.seg===100&&C.apav.seg===80&&['pa','gm','dm1','dm2','ec1','ec2','appa'].every(k=>C[k].seg===72)&&
-     C.pa.rampa===false&&C.appa.rampa===false&&Object.keys(C).filter(k=>k!=='pa'&&k!=='appa').every(k=>C[k].rampa===true),
+  ok(C.me.seg===100&&C.av.seg===80&&C.apme.seg===100&&C.apav.seg===80&&C.apcq.seg===80&&['pa','gm','dm1','dm2','ec1','ec2','appa','apgm'].every(k=>C[k].seg===72)&&
+     C.pa.rampa===false&&C.appa.rampa===false&&C.apgm.rampa===false&&Object.keys(C).filter(k=>!['pa','appa','apgm'].includes(k)).every(k=>C[k].rampa===true),
     'El tiempo por pregunta y la rampa son los de antes: 100 s Menores, 80 s Aventureros, 72 s los demás, y solo Padres entra sin rampa');
   ok(!/FECHA_META/.test(lee('app.js'))&&!/S\.cat==='(me|av|pa|gm|dm1|dm2|ec1|ec2)'/.test(lee('app.js')),
     'app.js no tiene fechas ni reglas escritas por categoría');
@@ -2257,7 +2262,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      puede quedar «sin tipo», así que se le quita el suyo para probar eso. */
   const SIN_AP=Object.assign({},F.TEMAS); delete SIN_AP.apocalipsis;
   const conAp=F.deriva([...F.CAMPAMENTOS,fAp],TIPOS_AP);
-  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP,TIPOS_AP).length===0&&conAp.catsDe('ap2').join()==='apme,apav,appa,ap1c'&&
+  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP,TIPOS_AP).length===0&&conAp.catsDe('ap2').join()==='apme,apav,appa,apcq,apgm,ap1c'&&
      conAp.ACTIVIDADES.ap27.tipo==='libro'&&JSON.stringify(conAp.CATS.gm)===JSON.stringify(C.gm)&&
      F.revisa([...F.CAMPAMENTOS.filter(f=>f.id!=='ap'),fAp],TEMAS_AP,SIN_AP).some(m=>/sin tipo/.test(m))&&
      F.revisa([...F.CAMPAMENTOS,ficha(cat({estudia:['ap1']}))],TEMAS_AP,TIPOS_AP).some(m=>/ap1/.test(m)),

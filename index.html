@@ -2757,10 +2757,21 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam.pres .lam-esc{width:min(100%,calc((100vh - 380px) * 1100 / 1152))}
 .lam.pres .lam-hoja{font-size:1.125rem}
 .lam.pres:not(.ancho) .lam-ctl{position:sticky;bottom:0;z-index:3;background:#0E0D0B;padding:8px 0 calc(env(safe-area-inset-bottom,0px) + 8px)}
-.lam.pres.ancho>*{max-width:1400px}
-.lam.pres.ancho .lam-marco{position:relative;display:block;width:min(100%,calc((100vh - 250px) * 2050 / 1152));margin:0 auto}
-.lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:100%}
-.lam.pres.ancho .lam-hoja{position:absolute;right:18px;top:18px;bottom:18px;width:44%;overflow:auto;background:rgba(20,15,8,.88);box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:1.125rem;display:flex;flex-direction:column;justify-content:safe center}
+.lam.pres.ancho .lam-hoja{position:absolute;right:18px;top:18px;bottom:18px;width:42%;overflow:auto;background:rgba(20,15,8,.88);box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:1.125rem;display:flex;flex-direction:column;justify-content:safe center}
+/* v191 (Camilo, 13-oct: «el modo presentación no toma toda la pantalla»): en
+   pantalla ancha la presentación es una sola pantalla sin scroll. La escena
+   toma todo el alto que sobra entre la cabecera y la línea de tiempo, y los
+   botones de Anterior y Siguiente siempre se ven. */
+.lam.pres.ancho{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;justify-items:center;align-items:stretch;overflow:hidden;gap:10px;
+  padding:calc(env(safe-area-inset-top,0px) + 10px) 24px calc(env(safe-area-inset-bottom,0px) + 10px)}
+.lam.pres.ancho>*{max-width:none;width:100%}
+.lam.pres.ancho .lam-marco{position:relative;display:block;width:auto;height:100%;max-width:100%;aspect-ratio:2050/1152;min-height:0;margin:0 auto}
+.lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:100%;height:auto;max-height:100%}
+.lam.pres.ancho .lam-tiempo{padding:6px 14px 0}
+.lam.pres.ancho .lam-tcab{margin-bottom:2px}
+.lam.pres.ancho .lam-ctl{padding:0}
+.lam:fullscreen{padding-top:12px}
+.lam-full[hidden]{display:none}
 .lam.pres .lam-p2{font-size:1.75rem}
 .lam.pres .lam-tiempo{background:#17150F;box-shadow:none}
 .lam.pres .lam-tano{color:#F2C46B}
@@ -2819,6 +2830,31 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   background:linear-gradient(transparent,rgba(10,8,5,.85))}
 .lam.pres.ancho .lam-fig{margin:0 0 10px}
 .lam.pres.ancho .lam-fig img{border-radius:12px}
+/* v191: quién estudia, por persona: una tarjeta por persona y sus actividades debajo. */
+.alu-per{flex:1 1 100%;display:flex;flex-direction:column;gap:.5rem;padding:.7rem .8rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:12px;background:var(--fondo-suave)}
+.alu-per.on{border-color:var(--naranja);background:var(--fondo-calido)}
+.alu-cab{display:flex;align-items:center;gap:.6rem}
+.alu-av{flex:0 0 auto;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--azul-fondo);color:var(--v-sobre,#fff);font-weight:800}
+.alu-nom{min-width:0}
+.alu-nom .an{font-weight:800;color:var(--txt)}
+.alu-nom .ac{font-size:.75rem;color:var(--gris)}
+.alu-acts{display:flex;flex-wrap:wrap;gap:.4rem}
+.alu-act{min-height:36px;padding:.3rem .75rem;border-radius:999px;border:1.5px solid var(--v-linea,#e5e7eb);background:var(--card);color:var(--txt);font:inherit;font-size:.875rem;cursor:pointer}
+.alu-act.on{border-color:var(--naranja);background:var(--nar-fondo);color:var(--v-sobre,#fff);font-weight:700}
+.alu-pasa{align-self:flex-start;font-size:.875rem}
+#alu-nueva{flex:1 1 100%}
+.alu-nueva{display:grid;gap:.5rem;padding:.8rem;border:1.5px dashed var(--v-linea,#e5e7eb);border-radius:12px}
+.alu-q{margin:0;font-weight:800;color:var(--azul)}
+.alu-hijos{display:grid;gap:.5rem}
+.alu-op{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:.6rem .8rem;border:1.5px solid var(--v-linea,#e5e7eb);border-radius:12px;background:var(--card);color:var(--txt);font:inherit;cursor:pointer}
+.alu-op b{font-size:1rem}
+.alu-op span{font-size:.875rem;color:var(--gris)}
+.alu-op:hover{border-color:var(--cielo)}
+.alu-op.info{cursor:default;background:var(--fondo-suave)}
+.alu-pasos{margin:0;padding-left:1.2rem;display:grid;gap:.3rem;font-size:.875rem}
+.cat-btn .cc{font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gris);margin-bottom:2px}
+.cat-btn:disabled{opacity:.45;cursor:not-allowed}
+.lam-hist{opacity:0;transition:opacity .6s ease;pointer-events:none}
 </style>
 </head>
 <body>
@@ -3366,7 +3402,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <!-- v185: el estudio interactivo con imagen (lamAbre). -->
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = 'eb2531024adb';
+const VERSION_APP = 'e3728853f196';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -3389,6 +3425,7 @@ const FICHAS_BASE = [
     "techo": 1,
     "sinCompletar": true,
     "segundos": 100,
+    "club": "aventureros",
     "alcance": "Daniel 1, 2, 3 y 6",
     "estudia": [
      "d1",
@@ -3412,6 +3449,7 @@ const FICHAS_BASE = [
     "sinVF": true,
     "segundos": 80,
     "tarjetas": 15,
+    "club": "aventureros",
     "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44 para estudiar",
     "estudia": [
      "d1",
@@ -3446,6 +3484,7 @@ const FICHAS_BASE = [
     "sinCompletar": true,
     "sinRampa": true,
     "tarjetas": 25,
+    "club": "aventureros",
     "alcance": "Daniel 1, 2, 3 y 6 · P&R 39, 41 y 44",
     "estudia": [
      "d1",
@@ -3484,6 +3523,7 @@ const FICHAS_BASE = [
     "n": 25,
     "techo": 3,
     "sinCompletar": false,
+    "club": "guias",
     "alcance": "Daniel 1 al 6 · P&R 39 al 44",
     "estudia": [
      "d1",
@@ -3725,6 +3765,7 @@ const FICHAS_BASE = [
     "techo": 1,
     "sinCompletar": true,
     "segundos": 100,
+    "club": "aventureros",
     "alcance": "Apocalipsis",
     "estudia": [
      "ap1",
@@ -3761,6 +3802,7 @@ const FICHAS_BASE = [
     "sinVF": true,
     "segundos": 80,
     "tarjetas": 15,
+    "club": "aventureros",
     "alcance": "Apocalipsis",
     "estudia": [
      "ap1",
@@ -3796,6 +3838,79 @@ const FICHAS_BASE = [
     "sinCompletar": true,
     "sinRampa": true,
     "tarjetas": 25,
+    "club": "aventureros",
+    "alcance": "Apocalipsis",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap6",
+     "ap7",
+     "ap8",
+     "ap9",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap15",
+     "ap16",
+     "ap17",
+     "ap18",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ]
+   },
+   {
+    "id": "apcq",
+    "nombre": "Conquistadores",
+    "edad": "10 a 15 años",
+    "n": 30,
+    "techo": 2,
+    "sinCompletar": true,
+    "segundos": 80,
+    "tarjetas": 20,
+    "club": "conquistadores",
+    "alcance": "Apocalipsis",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap6",
+     "ap7",
+     "ap8",
+     "ap9",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap15",
+     "ap16",
+     "ap17",
+     "ap18",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ]
+   },
+   {
+    "id": "apgm",
+    "nombre": "Guías Mayores",
+    "edad": "Desde 16 años",
+    "n": 35,
+    "techo": 3,
+    "sinCompletar": false,
+    "sinRampa": true,
+    "tarjetas": 25,
+    "club": "guias",
     "alcance": "Apocalipsis",
     "estudia": [
      "ap1",
@@ -56357,24 +56472,28 @@ const LAMINAS = {
   },
   "historia": [
    {
+    "f": "h1",
     "titulo": "Un sueño que nadie puede decir",
     "ref": "Daniel 2:1, 11",
     "texto": "tuvo Nabucodonosor sueños, y se turbó su espíritu y se le fue el sueño.",
     "nota": "El rey exige que le digan el sueño y su significado. Los sabios responden que solo podrían «los dioses cuya morada no está entre los hombres» (2:11), y el rey manda matarlos a todos (2:12)."
    },
    {
+    "f": "h2",
     "titulo": "Daniel pide tiempo y ora",
     "ref": "Daniel 2:18-19",
     "texto": "para que pidieran misericordias del Dios del cielo sobre este misterio",
     "nota": "Daniel pide tiempo al rey (2:16) y ora con Ananías, Misael y Azarías. Esa noche Dios le revela el secreto (2:19)."
    },
    {
+    "f": "h3",
     "titulo": "Él quita reyes y pone reyes",
     "ref": "Daniel 2:21",
     "texto": "Él muda los tiempos y las edades, quita reyes y pone reyes; da la sabiduría a los sabios y la ciencia a los entendidos.",
     "nota": "Es la clave del capítulo: la historia no la mueven los imperios, la mueve Dios. Daniel lo alaba antes de ir al rey (2:20-23)."
    },
    {
+    "f": "h4",
     "titulo": "Hay un Dios en los cielos",
     "ref": "Daniel 2:28",
     "texto": "Pero hay un Dios en los cielos que revela los misterios, y él ha hecho saber al rey Nabucodonosor lo que ha de acontecer en los últimos días.",
@@ -56382,6 +56501,7 @@ const LAMINAS = {
    }
   ],
   "despues": {
+   "f": "h5",
    "titulo": "El rey reconoce al Dios de Daniel",
    "ref": "Daniel 2:47",
    "texto": "Ciertamente el Dios vuestro es Dios de dioses, Señor de los reyes y el que revela los misterios",
@@ -70050,6 +70170,10 @@ const REGLAS = (function () {
     apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
+  /* v191: el club de una categoría, si lo tiene. Decide cómo se entra:
+     Aventureros puede ir a cargo de un adulto; Conquistadores y Guías Mayores
+     estudian con cuenta propia (y un conquistador sin cuenta, a cargo). */
+  const CLUBES = ['aventureros', 'conquistadores', 'guias'];
   const SEG_POR_PREGUNTA = 72;
   const ID = /^[a-z][a-z0-9]{1,11}$/;
   const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
@@ -70082,7 +70206,7 @@ const REGLAS = (function () {
       for (const c of f.categorias) {
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
           sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
-          rampa: !c.sinRampa };
+          rampa: !c.sinRampa, club: c.club || '' };
         orden.push(c);
       }
     }
@@ -70131,6 +70255,7 @@ const REGLAS = (function () {
         if (c.sinVF !== undefined && typeof c.sinVF !== 'boolean') mal.push(dc + ' no dice bien si lleva verdadero o falso');
         if (c.tarjetas !== undefined && !(Number.isInteger(c.tarjetas) && c.tarjetas >= 5 && c.tarjetas <= 100)) mal.push(dc + ' tiene tarjetas por sesión fuera de 5 a 100');
         if (c.sinRampa !== undefined && typeof c.sinRampa !== 'boolean') mal.push(dc + ' no dice bien si entra directo a su nivel');
+        if (c.club !== undefined && !CLUBES.includes(c.club)) mal.push(dc + ' tiene un club que no es ' + CLUBES.join(', '));
         if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
         if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
         if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
@@ -70209,6 +70334,7 @@ const REGLAS = (function () {
       if (c.sinRampa !== undefined) o.sinRampa = c.sinRampa;
       if (c.sinVF !== undefined) o.sinVF = c.sinVF;
       if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
+      if (c.club !== undefined) o.club = c.club;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
@@ -70669,6 +70795,7 @@ function lamEscena(){
        aparecía. El monte se recorta con clip-path de CSS y la luz son círculos. */
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<image class="lam-hist" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="#000" fill-opacity=".28"/>'+
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
     '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
@@ -70692,7 +70819,7 @@ function lamAcerca(dest,ms){
 }
 /* En Presentar, con pantalla ancha, la escena es apaisada: la estatua a la izquierda y
    la explicación a la derecha, sin taparla. */
-const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900;
+const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900&&innerWidth>innerHeight*1.1;
 const lamTodo=()=>lamAncho()?[-150,0,2050,LAM().h]:[0,0,LAM().w,LAM().h];
 /* Acercarse a una parte, centrada (la explicación ya no la tapa). */
 function lamCaja(id){
@@ -70730,6 +70857,8 @@ function lamAbre(cid,modo){
   el.innerHTML='<div class="lam-cab"><div class="lam-cabtx"><div class="lam-ant">Daniel 2 · '+(modo==='presentar'?'presentación':'estudio interactivo')+'</div>'+
     '<div class="lam-tit">'+esc(L.titulo)+'</div></div><div class="lam-bots">'+
     (modo==='presentar'?'':'<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button>')+
+    /* v191: pantalla completa donde el navegador la deja (el iPhone no). */
+    (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-cerrar lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
@@ -70745,6 +70874,16 @@ function lamAbre(cid,modo){
   lamPrecarga(cid,document.getElementById('lamEsc'));
   if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();}
   const f=el.querySelector('.lam-cerrar');if(f)f.focus();
+}
+const lamPuedeTodo=()=>{const e=document.getElementById('lam');return !!(e&&(e.requestFullscreen||e.webkitRequestFullscreen));};
+function lamPantalla(){
+  const e=document.getElementById('lam');if(!e)return;
+  const p=e.requestFullscreen?e.requestFullscreen():e.webkitRequestFullscreen&&e.webkitRequestFullscreen();
+  if(p&&p.catch)p.catch(()=>{});
+  const b=e.querySelector('.lam-full');if(b)b.hidden=true;
+  if(e.__fs)return;e.__fs=true;
+  e.addEventListener('fullscreenchange',()=>{const f=e.matches(':fullscreen');const bb=e.querySelector('.lam-full');if(bb)bb.hidden=f;
+    e.classList.toggle('ancho',lamAncho()||f);lamAcerca(lamTodo(),0);},{once:false});
 }
 function lamCierra(){
   const el=document.getElementById('lam');
@@ -70782,6 +70921,19 @@ function lamEscenaHTML(e){
   if(!e)return '';
   return '<figure class="lam-fig" data-f="'+e.f+'"><img src="'+lamSrc(e.f)+'" alt="'+esc(e.t)+'" loading="lazy"><figcaption>'+esc(e.t)+'</figcaption></figure>';
 }
+/* v191: la escena de un paso de la historia, si su imagen existe (se prueba
+   una vez); si no, la estatua se ve entera. */
+const lamHayImg={};
+function lamHist(t){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const h=svg.querySelector('.lam-hist'),est=svg.querySelector('.lam-estatua');
+  if(!t||!t.f){h.style.opacity='0';return;}
+  const src=lamSrc(t.f),pon=ok=>{lamHayImg[src]=ok;if(!ok){h.style.opacity='0';est.style.opacity='1';lamEnciende([]);return;}
+    h.setAttribute('href',src);h.style.opacity='1';est.style.opacity='0';};
+  if(src in lamHayImg){pon(lamHayImg[src]);return;}
+  if(typeof Image==='undefined'){pon(false);return;}
+  const im=new Image();im.onload=()=>pon(true);im.onerror=()=>pon(false);im.src=src;
+}
 const lamEscenaDe=id=>(LAM().escenas||[]).find(e=>e.parte===id);
 const lamEscenaAnio=y=>(LAM().escenas||[]).filter(e=>e.y<=y).pop();
 function lamHojaParte(p,i,n){
@@ -70802,7 +70954,7 @@ function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEa
 
 /* ── Explorar ── */
 function lamInicio(){
-  lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
+  lamHist(null);lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
   lamAcerca(lamTodo(),650);
@@ -70815,7 +70967,7 @@ function lamToca(id){
 }
 function lamElige(i){
   const L=LAM(),p=L.partes[i];if(!p)return;
-  lamPara();lamSel=p.id;lamMarcaPaso('est');
+  lamPara();lamHist(null);lamSel=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   const esMonte=p.id==='monte',esPiedra=p.id==='piedra';
   if(!esMonte)lamMonte('no');
@@ -70838,6 +70990,7 @@ function lamHistoria(k){
   lamPara();lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
   const svg=document.getElementById('lamSvg');
   if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
+  lamHist(t);
   lamHoja(lamHojaTexto(t));lamVeHoja();
 }
 
@@ -70859,7 +71012,7 @@ function lamQuien(y){
   return {on,suave,tx};
 }
 function lamVeAnio(y){
-  lamAnio=y;lamSel='';lamEtiquetas(false);lamMarcaPaso('est');
+  lamAnio=y;lamHist(null);lamSel='';lamEtiquetas(false);lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();
   const q=lamQuien(y);lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
@@ -70911,7 +71064,8 @@ function lamPres(k){
   const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
   const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos?'0':'1';
   if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
-  else if(s.tipo==='portada'||s.tipo==='hist')lamEnciende(['__ninguna']);
+  /* La portada muestra la estatua entera; la historia, a media luz. */
+  else if(s.tipo==='hist')lamEnciende(['__ninguna']);
   else lamEnciende([]);
   lamEtiquetas(false);
   const piedra=svg.querySelector('.lam-piedra');
@@ -70926,6 +71080,7 @@ function lamPres(k){
   const ult=vistos.filter(id=>L.tiempo.includes(id)).pop();
   if(ult){const p=lamParte(ult);const r=document.getElementById('lamRango');r.value=Math.min(p.a,2026);
     document.getElementById('lamTano').textContent=lamAnioTx(p.de)+' – '+(p.a>=2026?'hoy':lamAnioTx(p.a));document.getElementById('lamTq').textContent=p.reino;}
+  lamHist(s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:null);
   if(s.tipo==='portada')lamHoja('<div class="lam-hcab"><div><div class="lam-p1">Daniel 2</div><div class="lam-p2">'+esc(L.titulo)+'</div></div></div>'+
     '<div class="lam-capa t"><div class="lam-rot">'+L.inicio.ref+' · RV1995</div><p><q>'+esc(L.inicio.texto)+'</q></p></div><p class="lam-nota">Cuatro reinos, Roma en tres fases y un reino que no será jamás destruido.</p>');
   else if(s.tipo==='hist')lamHoja(lamHojaTexto(L.historia[s.i]));
@@ -70999,6 +71154,14 @@ function lamPolvo(svg){
     if(vivos)requestAnimationFrame(f);else capa.innerHTML='';};
   requestAnimationFrame(f);
 }
+/* v191: si la ventana cambia (girar la tableta, achicar el navegador), la
+   presentación se reacomoda sin cerrarla. */
+if(typeof addEventListener==='function')addEventListener('resize',()=>{
+  if(lamModo!=='presentar')return;
+  const e=document.getElementById('lam');if(!e)return;
+  const a=lamAncho()||(e.matches&&e.matches(':fullscreen'));
+  if(e.classList.contains('ancho')!==a){e.classList.toggle('ancho',a);lamPres(lamPaso);}
+});
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
   if(e.key==='Escape'){lamCierra();return;}
@@ -71089,7 +71252,7 @@ const icoDe=(e,c)=>ICO_DE[e]?IC(ICO_DE[e],c):'';
 /* Protectores de racha que se pueden guardar (ver sumaRacha). Va aquí arriba,
    junto a BASE, porque normalizar() la usa al cargar: más abajo daría TDZ. */
 const PROTECTOR_MAX=2;
-const BASE={v:4,pid:'',nombre:'',cat:'av',prog:{},examenes:[],racha:0,ultimo:null,protector:0,protegio:'',insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
+const BASE={v:4,pid:'',nombre:'',cat:'av',aCargo:false,tutor:'',prog:{},examenes:[],racha:0,ultimo:null,protector:0,protegio:'',insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -71124,6 +71287,10 @@ function normalizar(x){
      sobrevive a que le cambien el nombre. */
   if(typeof x.pid==='string')s.pid=x.pid.slice(0,64);
   if(typeof x.nombre==='string')s.nombre=x.nombre.slice(0,60);
+  /* v191: una ficha «a cargo» es de un niño que estudia en el teléfono de un
+     adulto (Aventureros, o un conquistador sin cuenta); `tutor` es ese adulto. */
+  if(x.aCargo===true)s.aCargo=true;
+  if(typeof x.tutor==='string')s.tutor=x.tutor.slice(0,60);
   if(Object.keys(CATS).includes(x.cat))s.cat=x.cat;
   /* DONDE SE QUEDO, para que un refresco no la mande siempre a Inicio (ver
      el arranque, mas abajo). Son solo una pestaña y un id de material: nunca
@@ -72004,25 +72171,91 @@ function pasaAActividad(c){
   return true;
 }
 
-/* Selector de participantes. Cada uno con su nombre y su categoría, para
-   que se sepa de quién es el progreso que se está viendo. */
+/* v191 (Camilo, 13-oct): QUIÉN ESTUDIA, POR PERSONA. Antes salía un botón por
+   ficha, y quien estudia dos actividades aparecía dos o tres veces («Camilo»,
+   «Camilo», «Camilo»). Ahora cada persona sale una vez, con sus actividades
+   debajo; tocar una actividad es pasar a esa ficha. La persona se reconoce por
+   el nombre, que es como `pasaAActividad` ya empareja las fichas.
+   OPC_APP lo llena la app que monta el módulo (Jóvenes): `aCargo` son las
+   personas que esa app tiene a cargo de quien entró. */
+let OPC_APP={};
+const enApp=()=>!!(OPC_APP&&OPC_APP.app);
+function personasDB(){
+  const g=new Map();
+  alumnos().forEach(([id,al])=>{
+    const k=(al.nombre||'').trim().toLowerCase()||('#'+id);
+    if(!g.has(k))g.set(k,{nombre:(al.nombre||'').trim()||'Sin nombre',fichas:[]});
+    g.get(k).fichas.push([id,al]);
+  });
+  return [...g.values()];
+}
 function pintaAlumnos(){
   const cont=document.getElementById('alu-sel');
   if(!cont)return;
-  cont.innerHTML=alumnos().map(([id,al])=>{
-    const c=CATS[al.cat]||CATS.av;
-    return '<button class="alu-btn'+(DB.activo===id?' on':'')+'" onclick="cambiaAlumno(\''+id+'\')">'+
-      '<div class="an">'+esc(al.nombre||'Sin nombre')+'</div>'+
-      /* Con el icono de la actividad, no solo el nombre: en un aparato con
-         fichas de dos actividades salian dos «Aventureros» iguales. */
-      '<div class="ac">'+esc(catConActividad(al.cat))+'</div></button>';
+  cont.innerHTML=personasDB().map(p=>{
+    const aC=p.fichas.find(([,a])=>a.aCargo), activa=p.fichas.some(([id])=>id===DB.activo);
+    return '<div class="alu-per'+(activa?' on':'')+'"><div class="alu-cab"><span class="alu-av" aria-hidden="true">'+esc(p.nombre.charAt(0).toUpperCase())+'</span>'+
+      '<div class="alu-nom"><div class="an">'+esc(p.nombre)+'</div>'+
+      (aC?'<div class="ac">A cargo de '+esc(aC[1].tutor||'un adulto')+'</div>':'')+'</div></div>'+
+      '<div class="alu-acts">'+p.fichas.map(([id,al])=>
+        '<button type="button" class="alu-act'+(id===DB.activo?' on':'')+'" aria-pressed="'+(id===DB.activo)+'" onclick="cambiaAlumno(\''+id+'\')">'+
+        esc(catConActividad(al.cat))+'</button>').join('')+'</div>'+
+      (aC&&activa?'<button type="button" class="btn txt alu-pasa" onclick="pasaASuCuenta()">'+IC('compartir')+' Pasar su avance a su propia cuenta</button>':'')+
+      '</div>';
   }).join('')+
   (alumnos().length<MAX_ALUMNOS
-    ?'<button class="alu-btn nuevo" onclick="agregaAlumno()"><div class="an">+ Agregar</div>'+
-     '<div class="ac">otro participante</div></button>':'');
+    ?'<button type="button" class="alu-btn nuevo" onclick="agregaPersona()"><div class="an">+ Agregar</div>'+
+     '<div class="ac">otra persona</div></button>':'')+
+  '<div id="alu-nueva"></div>';
+}
+/* «+ Agregar» pregunta primero para quién es: cada club entra distinto. */
+function agregaPersona(){
+  const z=document.getElementById('alu-nueva');if(!z)return;
+  const hijos=(OPC_APP.aCargo||[]).filter(n=>!personasDB().some(p=>p.nombre.toLowerCase()===String(n).trim().toLowerCase()));
+  z.innerHTML='<div class="alu-nueva"><p class="alu-q">¿Para quién es?</p>'+
+    (hijos.length?'<div class="alu-hijos">'+hijos.map((n,i)=>'<button type="button" class="alu-op" onclick="nuevaDeCargo('+i+')"><b>'+esc(n)+'</b><span>A tu cargo en la app</span></button>').join('')+'</div>':'')+
+    '<button type="button" class="alu-op" onclick="nuevaFicha(\'cargo\')"><b>Un niño a mi cargo</b><span>Aventureros, o un conquistador que no tiene cuenta. Lo manejas tú desde este teléfono.</span></button>'+
+    '<button type="button" class="alu-op" onclick="nuevaFicha(\'otra\')"><b>Otra persona en este teléfono</b><span>Un adulto, o alguien que no tiene cuenta propia.</span></button>'+
+    '<div class="alu-op info"><b>Alguien con su propia cuenta</b><span>'+
+      (enApp()?'Que entre a la app con su cuenta, desde su teléfono: su avance queda guardado en ella.':'Que abra la app en su propio teléfono.')+
+      ' Los Guías Mayores estudian siempre así, y los Conquistadores que tienen cuenta también.</span></div></div>';
+}
+/* Las categorías que puede tener un niño a cargo: las de su actividad que no
+   son de adultos ni de Guías Mayores. */
+const catsDeNino=act=>Object.keys(CATS).filter(k=>CATS[k].act===act&&CATS[k].club!=='guias'&&!/adulto/i.test(CATS[k].edad||''));
+function nuevaFicha(tipo,nombre){
+  if(tipo!=='cargo'){agregaAlumno();return;}
+  if(alumnos().length>=MAX_ALUMNOS)return;
+  const tutor=(S.aCargo?S.tutor:S.nombre)||'';
+  const cats=catsDeNino(ACT_DE(S.cat));
+  const id=nuevoId();
+  DB.alumnos[id]=normalizar({nombre:nombre||'',cat:cats[0]||S.cat,aCargo:true,tutor});
+  cambiaAlumno(id);
+  abreYo();
+  if(!nombre)try{document.getElementById('nombre').focus();}catch(e){}
+}
+function nuevaDeCargo(i){const n=(OPC_APP.aCargo||[])[i];if(n)nuevaFicha('cargo',String(n).trim().slice(0,60));}
+/* Cuando el niño ya tiene cuenta: su ficha se pasa con el código de la ficha
+   completa (el mismo de «Pasar o compartir mi progreso»). */
+function pasaASuCuenta(){
+  const z=document.getElementById('alu-nueva');if(!z)return;
+  const cod=codigoCompleto();
+  z.innerHTML='<div class="alu-nueva"><p class="alu-q">Pasar el avance de '+esc(S.nombre||'esta ficha')+'</p>'+
+    '<ol class="alu-pasos"><li>Copia este código y mándaselo.</li>'+
+    '<li>En su teléfono, que entre '+(enApp()?'a la app con su cuenta':'a la app')+' y vaya a <b>Logros → Pasar o compartir mi progreso → Pegar un código</b>.</li>'+
+    '<li>Que toque <b>Agregarla como ficha nueva</b>. Su avance queda en su cuenta.</li></ol>'+
+    '<textarea id="alu-cod" class="cod" readonly></textarea>'+
+    '<button type="button" class="btn ver" onclick="copiaAluCod()">'+IC('copiar')+' Copiar</button></div>';
+  const t=document.getElementById('alu-cod');if(t)t.value=cod;
+}
+function copiaAluCod(){
+  const t=document.getElementById('alu-cod');if(!t)return;
+  try{t.select();document.execCommand('copy');}catch(e){}
+  if(navigator.clipboard)navigator.clipboard.writeText(t.value).catch(()=>{});
 }
 
 /* Selector de categoría, pintado desde los datos de CATS. */
+const CLUB_NOMBRE={aventureros:'Club de Aventureros',conquistadores:'Club de Conquistadores',guias:'Guías Mayores'};
 function pintaSelectorCat(){
   const cont=document.getElementById('cat-sel');
   if(!cont)return;
@@ -72033,10 +72266,15 @@ function pintaSelectorCat(){
   cont.innerHTML=eventos.map(ev=>
     '<div class="cat-grupo">'+icoDe(ACTIVIDADES[ev].icono)+' '+esc(ACTIVIDADES[ev].nombre)+
     ' <small>· '+esc(ACTIVIDADES[ev].cuando)+'</small></div>'+
-    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.act===ev).map(([k,c])=>
-      '<button class="cat-btn'+(S.cat===k?' on':'')+'" onclick="ponCat(\''+k+'\')">'+
+    '<div class="cat-fila">'+Object.entries(CATS).filter(([,c])=>c.act===ev).map(([k,c])=>{
+      /* v191: un niño a cargo no puede quedar en una categoría de adultos ni de
+         Guías Mayores (ellos estudian con su propia cuenta). */
+      const no=S.aCargo&&!catsDeNino(ev).includes(k);
+      return '<button class="cat-btn'+(S.cat===k?' on':'')+'"'+(no?' disabled title="Es para quien estudia con su propia cuenta"':' onclick="ponCat(\''+k+'\')"')+'>'+
+      (c.club?'<div class="cc">'+esc(CLUB_NOMBRE[c.club]||'')+'</div>':'')+
       '<div class="cn">'+esc(c.nombre)+'</div>'+
-      '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>').join('')+'</div>').join('');
+      '<div class="cd">'+esc(c.edad)+'<br>'+c.alcance+'</div></button>';}).join('')+'</div>').join('')+
+    (S.aCargo?'<p class="nota">'+esc(S.nombre||'Esta ficha')+' está a tu cargo: puede estar en Aventureros o en Conquistadores. Guías Mayores y adultos estudian con su propia cuenta.</p>':'');
 }
 
 /* ───────── qué estudiar hoy ─────────
@@ -72207,8 +72445,8 @@ function abreYo(){
       '<h3>'+IC('grupo')+' ¿Quién estudia?</h3>'+
       '<div class="alu-sel" id="alu-sel"></div>'+
       '<input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">'+
-      '<p class="nota">Cada participante guarda su <strong>propio progreso</strong>. '+
-      'Toca un nombre para cambiar de persona.</p>'+
+      '<p class="nota">Cada persona guarda su <strong>propio progreso</strong> en cada actividad. '+
+      'Toca una actividad para cambiar.</p>'+
       '<h3>'+IC('diana')+' Actividad y categoría</h3>'+
       '<div class="cat-sel" id="cat-sel"></div>'+
       '<p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y '+
@@ -77295,7 +77533,9 @@ function abreConcurso(a){
   if(ACT_DE(S.cat)===a)return true;
   const nom=(S.nombre||'').trim().toLowerCase();
   const suyas=alumnos().filter(([,al])=>ACT_DE(al.cat)===a);
-  const mia=suyas.find(([,al])=>(al.nombre||'').trim().toLowerCase()===nom)||suyas[0];
+  /* v191: solo la ficha de ESTA persona. Antes, sin una suya, tomaba la
+     primera de la actividad, que podía ser la de otra persona del aparato. */
+  const mia=suyas.find(([,al])=>(al.nombre||'').trim().toLowerCase()===nom);
   if(mia){cambiaAlumno(mia[0]);return true;}
   const cats=CATS_DE_ACT(a);
   if(cats.length===1)ponCat(cats[0]);else hojaCategorias(a);

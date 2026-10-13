@@ -101,7 +101,7 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
    que NINGUNA se quita nunca de esta lista o esas filas quedarian
    invalidas. `ec1` y `ec2` son las de «En esto creemos», que paso a ser una
    actividad con sus propias categorias en vez de colgarse de `pa` y `gm`. */
-const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2','apme','apav','appa'];
+const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2','apme','apav','appa','apcq','apgm'];
 
 /* Antes esto traía UNA sola fila (LIMIT 1): solo podía existir una
    evaluación abierta a la vez en toda la app. Camilo necesita un caso real:

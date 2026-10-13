@@ -41,17 +41,19 @@ const LAMINAS = {
   /* El capítulo en orden: lo que pasa antes del sueño y después. La
      estatua no se entiende sin esto: Dios le muestra al rey el futuro que
      ningún sabio podía decirle (2:10-11, 27-28). Textos literales RV1995. */
+  /* v191: `f` es la escena de cada paso de la historia (laminas/d2/hN.webp).
+     Mientras no exista la imagen, se ve la estatua entera, no a media luz. */
   historia: [
-    { titulo: 'Un sueño que nadie puede decir', ref: 'Daniel 2:1, 11', texto: 'tuvo Nabucodonosor sueños, y se turbó su espíritu y se le fue el sueño.',
+    { f: 'h1', titulo: 'Un sueño que nadie puede decir', ref: 'Daniel 2:1, 11', texto: 'tuvo Nabucodonosor sueños, y se turbó su espíritu y se le fue el sueño.',
       nota: 'El rey exige que le digan el sueño y su significado. Los sabios responden que solo podrían «los dioses cuya morada no está entre los hombres» (2:11), y el rey manda matarlos a todos (2:12).' },
-    { titulo: 'Daniel pide tiempo y ora', ref: 'Daniel 2:18-19', texto: 'para que pidieran misericordias del Dios del cielo sobre este misterio',
+    { f: 'h2', titulo: 'Daniel pide tiempo y ora', ref: 'Daniel 2:18-19', texto: 'para que pidieran misericordias del Dios del cielo sobre este misterio',
       nota: 'Daniel pide tiempo al rey (2:16) y ora con Ananías, Misael y Azarías. Esa noche Dios le revela el secreto (2:19).' },
-    { titulo: 'Él quita reyes y pone reyes', ref: 'Daniel 2:21', texto: 'Él muda los tiempos y las edades, quita reyes y pone reyes; da la sabiduría a los sabios y la ciencia a los entendidos.',
+    { f: 'h3', titulo: 'Él quita reyes y pone reyes', ref: 'Daniel 2:21', texto: 'Él muda los tiempos y las edades, quita reyes y pone reyes; da la sabiduría a los sabios y la ciencia a los entendidos.',
       nota: 'Es la clave del capítulo: la historia no la mueven los imperios, la mueve Dios. Daniel lo alaba antes de ir al rey (2:20-23).' },
-    { titulo: 'Hay un Dios en los cielos', ref: 'Daniel 2:28', texto: 'Pero hay un Dios en los cielos que revela los misterios, y él ha hecho saber al rey Nabucodonosor lo que ha de acontecer en los últimos días.',
+    { f: 'h4', titulo: 'Hay un Dios en los cielos', ref: 'Daniel 2:28', texto: 'Pero hay un Dios en los cielos que revela los misterios, y él ha hecho saber al rey Nabucodonosor lo que ha de acontecer en los últimos días.',
       nota: 'Daniel no se lleva el mérito (2:30), y dice hasta dónde llega el sueño: hasta los últimos días.' },
   ],
-  despues: { titulo: 'El rey reconoce al Dios de Daniel', ref: 'Daniel 2:47', texto: 'Ciertamente el Dios vuestro es Dios de dioses, Señor de los reyes y el que revela los misterios',
+  despues: { f: 'h5', titulo: 'El rey reconoce al Dios de Daniel', ref: 'Daniel 2:47', texto: 'Ciertamente el Dios vuestro es Dios de dioses, Señor de los reyes y el que revela los misterios',
     nota: 'El rey se postra (2:46), engrandece a Daniel y, a pedido suyo, pone a Sadrac, Mesac y Abed-nego sobre la provincia (2:48-49).' },
   paralelo: [['oro','León con alas de águila','Babilonia'],['plata','Oso','Medo-Persia'],['bronce','Leopardo de cuatro cabezas','Grecia'],
     ['hierro','Bestia con dientes de hierro','Roma imperial'],['dedos','Diez cuernos','Roma dividida'],['barro','El cuerno pequeño','Roma papal'],
