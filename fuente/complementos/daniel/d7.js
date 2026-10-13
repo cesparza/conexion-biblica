@@ -1,26 +1,54 @@
 /* Daniel 7: interpretación con fuentes (capa 'contexto', preguntas f:'c').
    Completa lo que ya está en fuente/contenido.js (bestias, ocho marcas, tres
    cuernos, 1.260 años, orden del juicio, anticristo, Porfirio) sin repetirlo:
-   las once señas de Bohr, las fechas exactas 533/538 y 1793/1798, cuándo y
-   dónde empieza el juicio, cómo se juzga a los muertos y la acusación de
-   cambiar la ley. Lo de Bohr en inglés va traducido. v188: voz directa,
-   sin nombrar autores en el cuerpo; una sola «Fuente:» corta por sección. */
+   las once señas con su cumplimiento, los tiempos y la ley, las fechas
+   533/538 y 1793/1798, la escena de los tronos, el juicio como Día de la
+   Expiación, a quién se juzga, los muertos en el juicio, los símbolos que
+   explica la Biblia y la comparación con el dragón de Apocalipsis 12, 13 y
+   17. Lo de Bohr en inglés va traducido. v188: voz directa, sin nombrar
+   autores en el cuerpo; una sola «Fuente:» corta por sección. v198 (13-oct):
+   pedido de Camilo sobre el juicio y la bestia espantosa. */
 const { tbl, hi, wa, li } = require('../../apocalipsis/ayudas.js');
 
 module.exports = {
   cap: 'd7',
   secciones: [
-    { t: '🧭 Las once señas del cuerno pequeño', capa: 'contexto', h:
+    { t: '🧭 Las señas del cuerno pequeño (1): de dónde sale', capa: 'contexto', h:
       `<p><b>Cuándo:</b> el primer año de Belsasar (7:1), hacia el 553 a.C., catorce años antes de la caída de Babilonia.</p>` +
-      `<p>Daniel 7 da <b>once</b> señas del cuerno, no ocho. Tres agregan algo a la lista de arriba:</p>` +
-      li([
-        '<b>«Los tiempos» (7:25)</b>: no son solo fechas del calendario, sino el <b>calendario profético de Dios</b>, el que «muda los tiempos y las edades» (2:21). El cuerno inventaría formas de leer la profecía rivales del historicismo (leerla como historia que se cumple en orden, de Daniel hasta el fin).',
-        '<b>«Diferente de los primeros» (7:24)</b>: los diez cuernos eran reinos políticos; el cuerno pequeño es una <b>mezcla de iglesia y estado</b>.',
-        '<b>«Ojos como de hombre» (7:8)</b>: en la profecía los ojos son sabiduría (Efesios 1:18). Este poder se apoyaría en la <b>sabiduría y la tradición humanas</b>.',
+      `<p>Daniel 7 da <b>once</b> señas del cuerno, y las once se cumplen en un mismo poder. Las seis primeras dicen de dónde sale:</p>` +
+      tbl(['Seña', 'Texto', 'Se cumple en'], [
+        ['Sale de la cuarta bestia', '7:8, 24', 'Es romano: sede en Roma, el latín y el título de <i>Pontifex Maximus</i> que usaban los emperadores.'],
+        ['Sale entre los diez cuernos', '7:8', 'Nace en Europa occidental.'],
+        ['Se levanta «tras ellos»', '7:24', 'Después del 476, cuando cayó Rómulo Augústulo, el último emperador de occidente.'],
+        ['Es «pequeño» y después «parecía más grande que sus compañeros»', '7:8, 20', 'El obispo de Roma creció poco a poco hasta estar por encima de los reyes de Europa.'],
+        ['Derriba a tres reyes', '7:8, 20, 24', 'Hérulos (493), vándalos (534) y ostrogodos (538), los tres arrianos.'],
+        ['Es «diferente de los primeros»', '7:24', 'Los diez eran reinos políticos; este une la iglesia y el estado.'],
       ]) +
-      `<p>Las otras ocho: es romano (sale de la cuarta bestia), sube entre los diez, después del 476, arranca a tres, habla contra el Altísimo, persigue a los santos, piensa cambiar la ley y domina 1.260 años. Al sumar Apocalipsis 13 y 17 y 2 Tesalonicenses 2 se llega a <b>dieciocho</b>.</p>` +
+      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 124-127; Smith, <i>Las profecías de Daniel</i>, p. 58; Vicuña, <i>Estudios del libro de Daniel</i>, p. 89.</p>` },
+
+    { t: '🧭 Las señas del cuerno pequeño (2): qué hace', capa: 'contexto', h:
+      tbl(['Seña', 'Texto', 'Se cumple en'], [
+        ['«Ojos como de hombre»', '7:8, 20', 'En la profecía los ojos son entendimiento (Efesios 1:18): se apoya en la sabiduría y la tradición humanas.'],
+        ['Una boca que habla «con gran insolencia»', '7:8, 20', 'La palabra aramea es «cosas grandes»: un cuerno pequeño con palabras grandes, señal de orgullo.'],
+        ['«Hablará palabras contra el Altísimo»', '7:25', 'Toma títulos y poderes de Dios: ocupar su lugar en la tierra y perdonar pecados (Juan 10:33; Marcos 2:7; Apocalipsis 13:5-6).'],
+        ['Hace guerra contra los santos y los vence', '7:21, 25', 'La persecución de valdenses, albigenses y hugonotes, y la Inquisición.'],
+        ['«Pensará en cambiar los tiempos y la Ley»', '7:25', 'El sábado y el calendario profético de Dios (ver «Los tiempos y la ley»).'],
+        ['Domina «tiempo, tiempos y medio tiempo»', '7:25', '1.260 años: del 538 al 1798.'],
+      ]) +
+      `<p>Al sumar Apocalipsis 13 y 17 y 2 Tesalonicenses 2 las señas llegan a <b>dieciocho</b>.</p>` +
       wa('Se habla de un <b>sistema</b>, no de personas: dentro de él hay muchas personas sinceras que aman a Dios de corazón.') +
-      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 119 y 124-125; Bohr, <i>La gran cadena</i>, p. 7.</p>` },
+      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 119 y 125; Bohr, <i>La gran cadena</i>, p. 7; Doukhan, <i>Secretos de Daniel</i>, p. 109; Vicuña, <i>Estudios del libro de Daniel</i>, p. 91-92.</p>` },
+
+    { t: '🧭 Los tiempos y la ley (7:25)', capa: 'contexto', h:
+      `<p>Daniel 7:25 usa dos palabras arameas para «tiempo». En «tiempo, tiempos y medio tiempo» es un <b>lapso</b>: los 1.260 años. En «cambiar los tiempos» es otra palabra, <b>tiempos fijados que se repiten</b>, y va unida a «la Ley», en singular. Dios es el que «muda los tiempos» (2:21); el cuerno quiere hacer lo que solo Dios hace.</p>` +
+      li([
+        '<b>La ley.</b> Se quitó el mandamiento sobre las imágenes y se dividió en dos el último para seguir contando diez (CS 55).',
+        '<b>El sábado.</b> Es el único tiempo fijado de los diez mandamientos, y se cambió por el domingo. «El cambio introducido en el cuarto mandamiento cumple exactamente la profecía» (CS 499).',
+        '<b>El calendario profético.</b> En lugar de leer la profecía como historia que se cumple en orden, de Daniel hasta el fin, se propuso ponerla toda en el pasado o toda en el futuro.',
+      ]) +
+      `<p>El cuerno quebranta sobre todo la <b>primera tabla</b>: se hace como Dios (1.º), blasfema (3.º), cambia el sábado (4.º) y además mata a los santos (6.º). Apocalipsis 13 agrega la adoración a una imagen (2.º). En la carta <i>Dies Domini</i> (1998), el papa Juan Pablo II explica el paso del sábado al domingo por la <b>tradición</b>.</p>` +
+      wa('Si en 1844 se juzga con la ley, la ley seguía vigente en 1844: no fue clavada en la cruz.') +
+      `<p>Fuente: CS 55 y 499; Shea, <i>Daniel</i>, p. 122 y 208; Bohr, <i>Daniel 1-10</i>, p. 125, 162, 265 y 273-274.</p>` },
 
     { t: '🧭 De febrero a febrero: 538 y 1798 al mes', capa: 'contexto', h:
       tbl(['Año', 'Qué pasó', '1.260 años después'], [
@@ -30,6 +58,18 @@ module.exports = {
       `<p>Que coincida «al mes» confirma que los 1.260 días son años. El período empezó «con la supremacía del papado, en el año 538» y terminó en 1798, cuando el papa fue hecho prisionero (CS 492).</p>` +
       hi('<b>«Anti» también es «en lugar de».</b> En griego <i>anti</i> no solo es «contra»: Herodes <i>Antipas</i> gobernó «en lugar de» su padre. Un poder que se presenta como representante de Cristo en la tierra encaja con «anticristo».') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 133-134, 198-199 y 201; CS 492.</p>` },
+
+    { t: '🧭 «Fueron puestos unos tronos»: la escena del juicio (7:9-10, 13)', capa: 'contexto', h:
+      tbl(['Lo que ve Daniel', 'Qué enseña'], [
+        ['«Fueron puestos unos tronos»', 'El verbo arameo es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.'],
+        ['«Se sentó un Anciano de días»', 'Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.'],
+        ['Vestido blanco como la nieve; pelo como lana limpia', 'Pureza sin mancha y eternidad: un Juez que no se puede comprar.'],
+        ['Trono de llamas con ruedas de fuego, y un río de fuego', 'Un trono que se mueve, como el carro de Ezequiel 1. El fuego es el juicio que purifica.'],
+        ['Miles de miles y millones de millones', 'Ángeles, «ministros y testigos» del tribunal (CS 533; Apocalipsis 5:11). No son los juzgados.'],
+        ['El Hijo del hombre viene «con las nubes» y «lo hicieron acercarse»', 'Los ángeles lo llevan ante el Padre, no a la tierra. El Día de la Expiación la nube entraba al lugar santísimo (Levítico 16:2).'],
+      ]) +
+      hi('El trono con ruedas muestra un <b>traslado</b>: del lugar santo al <b>lugar santísimo</b> del santuario celestial, donde está el arca con la ley. Los tronos son varios: en Apocalipsis 4:4 hay veinticuatro tronos alrededor del de Dios. Otra lectura ve un plural de majestad: un solo gran trono.') +
+      `<p>Fuente: CS 533; Bohr, <i>Daniel 1-10</i>, p. 276-280; Smith, <i>Las profecías de Daniel</i>, p. 58-59; Doukhan, <i>Secretos de Daniel</i>, p. 115-116.</p>` },
 
     { t: '🧭 Dónde y cuándo empieza el juicio', capa: 'contexto', h:
       `<p><b>Dónde: en el cielo.</b> En Daniel 7 lo que pasa en la tierra va en prosa y lo que pasa en el cielo va en poesía:</p>` +
@@ -41,6 +81,27 @@ module.exports = {
       hi('<b>Tres etapas</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia a favor de los santos (7:22) y ejecución, cuando los santos reciben el reino.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 120-121 y 275-276; Bohr, <i>La hora del juicio</i>, p. 1 y 6; CS 477.</p>` },
 
+    { t: '🧭 El juicio es el gran Día de la Expiación', capa: 'contexto', h:
+      `<p>Daniel 7 ve el juicio; Daniel 8:14 lo llama purificar el santuario. Es el mismo suceso, y el santuario de Israel lo ensayaba cada año:</p>` +
+      tbl(['Día de la Expiación (Levítico 16)', 'El juicio en el cielo'], [
+        ['Una vez al año, el día diez del mes séptimo (16:29)', 'Una sola vez: desde 1844, al terminar las 2.300 tardes y mañanas (8:14)'],
+        ['El sumo sacerdote entra al lugar santísimo, ante el arca (16:2, 12-15)', '«El templo de Dios fue abierto en el cielo, y el Arca de su pacto se dejó ver» (Apocalipsis 11:19)'],
+        ['Se purifica el santuario de los pecados confesados en el año (16:16, 30)', 'Se abren los libros (7:10) y se borran los pecados perdonados'],
+        ['Quien no se humillaba ese día era cortado del pueblo (Levítico 23:29)', 'Se decide quién recibe el reino (7:22, 27)'],
+      ]) +
+      hi('Por eso el primer ángel anuncia: «la hora de su juicio ha llegado» (Apocalipsis 14:7). Lo dice mientras todavía se predica el evangelio eterno (14:6) y antes de que el Hijo del hombre venga sobre la nube (14:14): el juicio va <b>antes</b> de la segunda venida. Cristo trae su recompensa cuando viene (Mateo 16:27; Apocalipsis 22:12) porque ya se decidió en el juicio.') +
+      `<p>Fuente: CS 471-472, 476-477, 485 y 537-538; Bohr, <i>Daniel 1-10</i>, p. 275 y 280; Bohr, <i>La hora del juicio</i>, p. 1 y 6; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 144.</p>` },
+
+    { t: '🧭 A quién se juzga y a favor de quién (7:22, 26)', capa: 'contexto', h:
+      `<p>«Se hizo justicia a los santos del Altísimo» (7:22). Otras versiones dicen «se dio el juicio a los santos»: el fallo sale <b>a favor</b> de ellos. Y para que el fallo sea a su favor, sus casos tienen que estar en el juicio.</p>` +
+      li([
+        '<b>Los que profesaron ser hijos de Dios.</b> En el Día de la Expiación solo contaban los pecados que se habían confesado en el santuario. Así, ahora se examinan solo los casos de quienes hayan profesado ser hijos de Dios (CS 534): el juicio empieza por la casa de Dios (1 Pedro 4:17).',
+        '<b>El cuerno pequeño.</b> Dice ser cristiano, y su caso también llega al tribunal: «le quitarán su dominio» (7:26). La sentencia a favor de los santos es sentencia contra él.',
+        '<b>Los impíos</b> se juzgan después, en otra etapa: durante los mil años (Apocalipsis 20:4, 12).',
+      ]) +
+      hi('Dios no necesita el juicio para enterarse. Los libros se abren para que todo el universo vea que sus decisiones son justas, y después «llegó el tiempo, y los santos recibieron el reino» (7:22).') +
+      `<p>Fuente: CS 534; Pfandl, <i>Daniel</i>, p. 47; Bohr, <i>Daniel 1-10</i>, p. 121 y 279; Bohr, <i>La hora del juicio</i>, p. 1; Vicuña, <i>Estudios del libro de Daniel</i>, p. 87.</p>` },
+
     { t: '🧭 Cómo se juzga a los que ya murieron', capa: 'contexto', h:
       `<p>Si Adán murió y volvió al polvo, ¿cómo pudo comparecer en el juicio de 1844? La respuesta está en los <b>libros</b> de 7:10:</p>` +
       li([
@@ -51,17 +112,6 @@ module.exports = {
       ]) +
       hi('Por eso el juicio es una buena noticia para el que está en Cristo: lo que se borra en el juicio no se le devuelve en la resurrección.') +
       `<p>Fuente: Bohr, <i>La hora del juicio</i>, p. 3-13; CS 536-537.</p>` },
-
-    { t: '🧭 «Pensará en cambiar la ley»', capa: 'contexto', h:
-      `<p>El cuerno pequeño es acusado sobre todo de quebrantar la <b>primera tabla</b> de la ley: se proclama como Dios (1.º), blasfema (3.º), piensa cambiar la ley (4.º) y además mata a los santos (6.º). Apocalipsis 13 agrega la adoración a una imagen (2.º).</p>` +
-      `<p>Dos ejemplos de ese cambio en los catecismos católicos:</p>` +
-      li([
-        'Se omite el mandamiento sobre las imágenes y se divide en dos el último («no codiciarás»), para seguir contando diez.',
-        'Se pide descansar y asistir a misa el domingo, en lugar del sábado del cuarto mandamiento.',
-      ]) +
-      `<p>En la carta <i>Dies Domini</i> (1998), Juan Pablo II explica el cambio por la <b>tradición</b>: los cristianos sintieron que tenían autoridad para pasar el sentido del sábado al día de la resurrección.</p>` +
-      wa('Si en 1844 se juzga con la ley, la ley seguía vigente en 1844: no fue clavada en la cruz.') +
-      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 162, 265 y 273-274.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos (1): la visión', capa: 'contexto', h:
       `<p>Daniel 7 no deja los símbolos a la imaginación: la misma Biblia dice qué son.</p>` +
@@ -85,10 +135,23 @@ module.exports = {
       ]) +
       hi('Con esta clave, 7:13 no es la segunda venida: las nubes de ángeles llevan al Hijo del hombre <b>hasta el Anciano de días</b>, al juicio.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 125 y 280; Bohr, <i>15 principios</i> 2:105; Bohr, <i>La hora del juicio</i>, p. 3-4.</p>` },
+
+    { t: '🧭 ¿La bestia espantosa es el dragón?', capa: 'contexto', h:
+      `<p>Daniel no le da nombre: solo dice que era «muy diferente de todas las bestias» (7:7). Apocalipsis muestra el mismo poder con otras figuras:</p>` +
+      tbl(['', 'Daniel 7', 'Apoc. 12', 'Apoc. 13', 'Apoc. 17'], [
+        ['Figura', 'Sin nombre, dientes de hierro', 'Gran dragón escarlata', 'Leopardo con pies de oso y boca de león', 'Bestia escarlata; una mujer encima'],
+        ['Cabezas', 'Una (7:20)', 'Siete', 'Siete', 'Siete'],
+        ['Cuernos', 'Diez y el pequeño', 'Diez', 'Diez', 'Diez'],
+        ['Coronas', 'No dice', 'Siete, en las cabezas', 'Diez, en los cuernos', 'No dice'],
+        ['El poder', 'El cuerno pequeño sale de su cabeza', 'Da a la bestia «su poder, su trono y gran autoridad» (13:2)', 'Lo recibe del dragón', 'Los diez reyes se lo entregan (17:13)'],
+        ['Es', 'Roma imperial', 'Satanás (12:9), por medio de Roma pagana', 'Roma papal, 1.260 años', 'Roma papal sanada, al final'],
+      ]) +
+      `<p><b>Respuesta:</b> el dragón es primero Satanás (12:9) y en segundo lugar Roma pagana (CS 491); en esa etapa es la cuarta bestia de Daniel 7, con los mismos diez cuernos. Pero el dragón es más amplio: sus siete cabezas abarcan los reinos uno tras otro, con Satanás detrás de todos. Lo que Daniel muestra como un cuerno que sale de la cabeza de la bestia, Apocalipsis lo muestra como el dragón que le da su trono a la bestia del mar (CS 492).</p>` +
+      `<p>Fuente: CS 491-492; Bohr, <i>Daniel 1-10</i>, p. 61, 120 y 304; Smith, <i>Las profecías del Apocalipsis</i>, p. 127-129.</p>` },
   ],
   preguntas: [
     { t: 'mc', v: '7:8', f: 'c', q: '¿Qué representan los «ojos como de hombre» del cuerno pequeño?', o: ['Dependencia de la sabiduría humana', 'Vigilancia constante sobre los santos', 'Un conocimiento profético verdadero', 'La fuerza de sus ejércitos'], a: 0, e: 'En la profecía los ojos simbolizan sabiduría (Efesios 1:18). El cuerno se apoyaría en la sabiduría y la tradición de los hombres. Fuente: Bohr, <i>Daniel 1-10</i>, p. 125.' },
-    { t: 'mc', v: '7:25', f: 'c', q: '¿Qué son «los tiempos» que el cuerno pequeño pensaría cambiar?', o: ['El calendario profético de Dios', 'Las fechas de las fiestas judías', 'El calendario juliano por el gregoriano', 'Los años de reinado de los césares'], a: 0, e: 'Daniel 2:21 dice que Dios «muda los tiempos». El cuerno inventaría formas de leer la profecía rivales del historicismo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 125.' },
+    { t: 'mc', v: '7:25', f: 'c', q: '¿Qué son «los tiempos» que el cuerno pequeño pensaría cambiar?', o: ['Tiempos fijados por Dios, como el sábado', 'Las fechas de las fiestas judías', 'El calendario juliano por el gregoriano', 'Los años de reinado de los césares'], a: 0, e: 'La palabra aramea habla de tiempos fijados que se repiten, unidos a «la Ley»: el sábado del cuarto mandamiento, y también el calendario profético de Dios, que «muda los tiempos» (2:21). Fuente: CS 499; Shea, <i>Daniel</i>, p. 122; Bohr, <i>Daniel 1-10</i>, p. 125.' },
     { t: 'mc', v: '7:24', f: 'c', q: '¿En qué era «diferente» el cuerno pequeño de los diez cuernos?', o: ['Unía la iglesia y el estado', 'Era un reino de Asia', 'Nunca tuvo un rey propio', 'Solo gobernaba en África'], a: 0, e: 'Los diez cuernos eran reinos políticos; el cuerno pequeño sería una mezcla de poder religioso y civil. Fuente: Bohr, <i>Daniel 1-10</i>, p. 125.' },
     { t: 'mc', v: '7:25', f: 'c', q: '¿En qué mes de 538 fueron derrotados los ostrogodos y en qué mes de 1798 Berthier quitó al papa de su trono?', o: ['Febrero en los dos casos', 'Marzo y octubre', 'Junio y febrero', 'Diciembre y agosto'], a: 0, e: 'La derrota decisiva de los ostrogodos fue en febrero de 538 y Louis-Alexandre Berthier actuó el 10 de febrero de 1798: 1.260 años «al mes». Fuente: Bohr, <i>Daniel 1-10</i>, p. 134 y 199.' },
     { t: 'tf', v: '7:25', f: 'c', q: 'El decreto de Justiniano que reconoció al papa como cabeza de todas las iglesias se dio en 533, pero solo pudo aplicarse del todo en 538.', a: true, e: 'Verdadero. Mientras los ostrogodos arrianos dominaban Italia el decreto no se podía hacer cumplir; su derrota en 538 lo hizo efectivo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 134 y 198.' },
@@ -96,12 +159,20 @@ module.exports = {
     { t: 'mc', v: '7:9', f: 'c', q: '¿Qué detalle del texto muestra que el juicio de Daniel 7 ocurre en el cielo?', o: ['Va en poesía, como toda escena celestial del capítulo', 'Se celebra en el valle de Josafat', 'Lo preside un tribunal del Imperio romano', 'Ocurre después de la segunda venida'], a: 0, e: 'En Daniel 7 lo terrenal va en prosa y lo celestial en poesía; las escenas del juicio (7:9-10, 13-14, 23-27) están en poesía. Fuente: Bohr, <i>Daniel 1-10</i>, p. 120 y 275.' },
     { t: 'tf', v: '7:13', f: 'c', q: 'En Daniel 7:13 el Hijo del hombre viene a la tierra en su segunda venida.', a: false, e: 'Falso: viene «no a la tierra, sino» al Anciano de días, en el cielo, para el juicio que empezó en 1844. Fuente: CS 477.' },
     { t: 'mc', v: '7:22', f: 'c', q: '¿Cuáles son las tres etapas del juicio que muestra Daniel 7?', o: ['Investigación, sentencia y ejecución', 'Acusación, defensa y apelación', 'Arresto, proceso y perdón', 'Registro, sellamiento y castigo'], a: 0, e: 'Se abren los libros (7:10), se da la sentencia a favor de los santos (7:22) y los santos reciben el reino. Fuente: Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>La hora del juicio</i>, p. 1.' },
-    { t: 'mc', v: '7:10', f: 'c', q: '¿Con quiénes comenzó el juicio en 1844?', o: ['Con los que vivieron primero en la tierra', 'Con los creyentes que vivían en 1844', 'Con los mártires de la Edad Media', 'Con los doce apóstoles de Jesús'], a: 0, e: 'El juicio empieza con los primeros que vivieron, sigue generación por generación y termina con los vivos. Adán fue el primero en comparecer. Fuente: Bohr, <i>La hora del juicio</i>, p. 7; CS 537.' },
-    { t: 'tf', v: '7:25', f: 'c', q: 'El cuerno pequeño es acusado sobre todo de quebrantar mandamientos de la primera tabla de la ley.', a: true, e: 'Verdadero: se hace Dios (1.º), blasfema (3.º) y piensa cambiar la ley (4.º); además mata a los santos (6.º). Fuente: Bohr, <i>Daniel 1-10</i>, p. 162.' },
+    { t: 'mc', v: '7:10', f: 'c', q: '¿Con quiénes comenzó el juicio en 1844?', o: ['Con los que vivieron primero en la tierra', 'Con los creyentes que vivían en 1844', 'Con los mártires de la Edad Media', 'Con los doce apóstoles de Jesús'], a: 0, e: 'El juicio empieza con los primeros que vivieron, sigue generación por generación y termina con los vivos. Adán fue el primero en comparecer. Fuente: Bohr, <i>La hora del juicio</i>, p. 7; CS 536.' },
+    { t: 'tf', v: '7:25', f: 'c', q: 'El cuerno pequeño es acusado sobre todo de quebrantar mandamientos de la primera tabla de la ley.', a: true, e: 'Verdadero: se hace como Dios (1.º), blasfema (3.º) y cambia el sábado (4.º); además mata a los santos (6.º). Fuente: Bohr, <i>Daniel 1-10</i>, p. 162.' },
     { t: 'mc', v: '7:2', f: 'c', q: 'Según la misma Biblia, ¿qué representan los vientos que agitan el mar en Daniel 7:2?', o: ['Guerras y luchas entre naciones', 'El Espíritu Santo obrando', 'Los ángeles de Dios', 'El paso del tiempo'], a: 0, e: 'Jeremías 25:32-33 usa la tempestad para la calamidad que pasa de nación en nación; los vientos simbolizan luchas. Fuente: Bohr, <i>Daniel 1-10</i>, p. 121; CS 493.' },
     { t: 'mc', v: '7:17', f: 'c', q: '¿Qué versículo del mismo capítulo explica que las bestias de Daniel 7 son reyes o reinos?', o: ['Daniel 7:17', 'Daniel 7:2', 'Daniel 7:9', 'Daniel 7:28'], a: 0, e: '«Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra» (7:17), y 7:23 lo repite: la cuarta bestia será «un cuarto reino». Fuente: Bohr, <i>La gran cadena</i>, p. 4.' },
     { t: 'tf', v: '7:25', f: 'c', q: 'Apocalipsis 12:6 y 14 muestran que «un tiempo, tiempos y la mitad de un tiempo» es lo mismo que 1.260 días.', a: true, e: 'Verdadero: el tiempo de la mujer en el desierto se da de las dos formas. Con la regla de día por año (Números 14:34; Ezequiel 4:6) son 1.260 años. Fuente: Bohr, <i>15 principios</i> 2:105.' },
     { t: 'mc', v: '7:13', f: 'c', q: '¿Qué representan las nubes con las que el Hijo del hombre llega al Anciano de días?', o: ['Una multitud de ángeles', 'Las oraciones de los santos', 'Las naciones de la tierra', 'El humo del incienso'], a: 0, e: 'Salmo 68:17 y Deuteronomio 33:2 muestran a Dios rodeado de miles de ángeles. En 7:13 esas nubes llevan a Cristo al Padre para comenzar el juicio, no a la tierra. Fuente: Bohr, <i>Daniel 1-10</i>, p. 280.' },
     { t: 'mc', v: '7:8', f: 'c', q: '¿Qué otro sentido tiene el prefijo griego «anti» de «anticristo»?', o: ['En lugar de', 'Antes de', 'Después de', 'Junto a'], a: 0, e: '«Anti» puede ser «contra», pero también «en lugar de», como en Herodes Antipas, que gobernó en lugar de su padre. Fuente: Bohr, <i>Daniel 1-10</i>, p. 201.' },
+    { t: 'mc', v: '7:9', f: 'c', q: '¿Qué significa el verbo arameo de «fueron puestos unos tronos» en Daniel 7:9?', o: ['Colocar: los tronos se ponen para juzgar', 'Derribar: caen los tronos de los reyes', 'Quemar: los tronos arden en el fuego', 'Esconder: las nubes cubren los tronos'], a: 0, e: 'Es el mismo verbo de «echar» al horno y al foso, pero aquí significa colocar: los tronos se ponen porque antes no estaban, y empieza el juicio. Fuente: Smith, <i>Las profecías de Daniel</i>, p. 58-59; Bohr, <i>Daniel 1-10</i>, p. 277.' },
+    { t: 'mc', v: '7:9', f: 'c', q: '¿Qué muestran las ruedas de fuego del trono del Anciano de días?', o: ['Que el trono se traslada al lugar del juicio', 'Que Dios destruye la tierra con fuego', 'Que el juicio dura muy poco tiempo', 'Que los ángeles adoran sin descanso'], a: 0, e: 'Como el trono de Ezequiel 1, es un trono que se mueve: el Padre pasa al lugar santísimo del santuario celestial para el juicio. Fuente: Bohr, <i>Daniel 1-10</i>, p. 277-278.' },
+    { t: 'mc', v: '7:13', f: 'c', q: '¿Qué día del santuario de Israel anunciaba el juicio de Daniel 7?', o: ['El Día de la Expiación', 'La Pascua', 'La fiesta de los Tabernáculos', 'El día de Pentecostés'], a: 0, e: 'Una vez al año el sumo sacerdote entraba al lugar santísimo para purificar el santuario (Levítico 16). En 1844 Cristo entró al lugar santísimo del cielo para el juicio. Fuente: CS 471-472 y 477.' },
+    { t: 'mc', v: '7:22', f: 'c', q: '¿De quiénes son los casos que se examinan en el juicio que empezó en 1844?', o: ['De los que profesaron ser hijos de Dios', 'Solo de los que nunca creyeron en Dios', 'Solo de los que vivían en 1844', 'De los ángeles que cayeron con Satanás'], a: 0, e: 'Como en el Día de la Expiación, se consideran los casos de quienes profesaron ser hijos de Dios; el juicio de los impíos es obra distinta y posterior (1 Pedro 4:17). Fuente: CS 534.' },
+    { t: 'tf', v: '7:22', f: 'c', q: 'Daniel 7:22 muestra que el juicio se da a favor de los santos del Altísimo.', a: true, e: 'Verdadero: «se hizo justicia a los santos del Altísimo», y la sentencia a su favor es a la vez sentencia contra el cuerno pequeño (7:26). Fuente: Pfandl, <i>Daniel</i>, p. 47; Bohr, <i>Daniel 1-10</i>, p. 121.' },
+    { t: 'mc', v: '7:10', f: 'c', q: '¿Qué anuncio de Apocalipsis dice que el juicio de Daniel 7 ya empezó?', o: ['«La hora de su juicio ha llegado»', '«Salid de ella, pueblo mío»', '«¡Vengo pronto!, y mi galardón conmigo»', '«Hecho está. Yo soy el Alfa y la Omega»'], a: 0, e: 'El primer ángel lo anuncia mientras todavía se predica el evangelio (Apocalipsis 14:6-7), antes de la segunda venida (14:14). Fuente: CS 476-477; Bohr, <i>Daniel 1-10</i>, p. 275.' },
+    { t: 'tf', v: '7:7', f: 'c', q: 'Daniel 7 llama «dragón» a la cuarta bestia.', a: false, e: 'Falso: Daniel no le da nombre; solo dice que era muy diferente de todas. El dragón de Apocalipsis 12 es primero Satanás y en segundo lugar Roma pagana, la misma cuarta bestia en su etapa imperial. Fuente: CS 491.' },
+    { t: 'mc', v: '7:20', f: 'c', q: '¿Qué dice Daniel 7:20 del cuerno que al principio era pequeño?', o: ['Que parecía más grande que sus compañeros', 'Que se quebró en cuatro cuernos', 'Que cayó delante de los diez cuernos', 'Que creció hacia el oriente y el sur'], a: 0, e: 'Empezó pequeño (7:8) y llegó a ser mayor que los otros: el obispo de Roma creció poco a poco hasta estar sobre los reyes de Europa. Fuente: Smith, <i>Las profecías de Daniel</i>, p. 58; Vicuña, <i>Estudios del libro de Daniel</i>, p. 88-89.' },
   ],
 };
