@@ -98,7 +98,7 @@ const esSecInterp=s=>s&&s.capa==='contexto'&&/^🧭/.test(String(s.t||''));
    Las imágenes son archivos aparte (laminas/), no van dentro de index.html:
    se piden solo al abrir la lámina. En Jóvenes, traer.mjs cambia LAMINAS_DIR. */
 const LAMINAS_DIR='/laminas/';
-let lamId='', lamModo='', lamSel='', lamPaso=0, lamReto=0, lamBien=0, lamListo=false, lamAnio=null, lamCorre=0;
+let lamSinTexto=false, lamId='', lamModo='', lamSel='', lamPaso=0, lamReto=0, lamBien=0, lamListo=false, lamAnio=null, lamCorre=0;
 const lamQuieto=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}};
 const LAM=()=>LAMINAS[lamId];
 const lamParte=id=>LAM().partes.find(p=>p.id===id);
@@ -149,6 +149,10 @@ function lamEscena(){
        aparecía. El monte se recorta con clip-path de CSS y la luz son círculos. */
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    /* v201: al presentar en pantalla ancha la escena va a la izquierda, entera,
+       sobre una copia oscurecida de sí misma; el texto queda a la derecha sin taparla. */
+    '<image class="lam-hist-bg" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<rect class="lam-hist-osc" x="-150" y="0" width="2050" height="1152" fill="#0E0D0B"/>'+
     '<image class="lam-hist" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="#000" fill-opacity=".28"/>'+
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
@@ -201,7 +205,7 @@ function lamEtiquetas(ver){const e=document.getElementById('lamEts');if(e)e.clas
 /* ── Abrir y cerrar ── */
 function lamAbre(cid,modo){
   if(!LAMINAS[cid])return;
-  lamId=cid;lamModo=modo;lamSel='';lamPaso=0;lamReto=0;lamBien=0;lamListo=false;lamAnio=null;lamPara();
+  lamSinTexto=false;lamId=cid;lamModo=modo;lamSel='';lamPaso=0;lamReto=0;lamBien=0;lamListo=false;lamAnio=null;lamPara();
   const el=document.getElementById('lam'),L=LAM();
   el.hidden=false;el.className='lam'+(modo==='presentar'?' pres':'')+(lamAncho()?' ancho':'');
   document.body.classList.add('leyendo');
@@ -213,6 +217,7 @@ function lamAbre(cid,modo){
     (modo==='presentar'?'':'<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button>')+
     /* v191: pantalla completa donde el navegador la deja (el iPhone no). */
     (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
+    (modo==='presentar'?'<button type="button" class="btn txt lam-txt" id="lamTxt" aria-pressed="false" onclick="lamTexto()">'+IC('ojo')+' Ocultar texto</button>':'')+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
@@ -278,12 +283,22 @@ function lamEscenaHTML(e){
 /* v191: la escena de un paso de la historia, si su imagen existe (se prueba
    una vez); si no, la estatua se ve entera. */
 const lamHayImg={};
+/* v201: la escena de la historia a la izquierda (texto al lado) o a toda la
+   escena (texto oculto, o fuera de Presentar en pantalla ancha). */
+function lamHistGeo(){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const h=svg.querySelector('.lam-hist'),bg=svg.querySelector('.lam-hist-bg'),osc=svg.querySelector('.lam-hist-osc');
+  const lado=lamAncho()&&!lamSinTexto,ve=h.style.opacity==='1';
+  h.setAttribute('x',lado?-130:-150);h.setAttribute('width',lado?1150:2050);
+  h.setAttribute('preserveAspectRatio',lado?'xMidYMid meet':'xMidYMid slice');
+  bg.style.opacity=ve&&lado?'1':'0';osc.style.opacity=ve&&lado?'.62':'0';
+}
 function lamHist(t){
   const svg=document.getElementById('lamSvg');if(!svg)return;
   const h=svg.querySelector('.lam-hist'),est=svg.querySelector('.lam-estatua');
-  if(!t||!t.f){h.style.opacity='0';return;}
-  const src=lamSrc(t.f),pon=ok=>{lamHayImg[src]=ok;if(!ok){h.style.opacity='0';est.style.opacity='1';lamEnciende([]);return;}
-    h.setAttribute('href',src);h.style.opacity='1';est.style.opacity='0';};
+  if(!t||!t.f){h.style.opacity='0';lamHistGeo();return;}
+  const src=lamSrc(t.f),pon=ok=>{lamHayImg[src]=ok;if(!ok){h.style.opacity='0';lamHistGeo();est.style.opacity='1';lamEnciende([]);return;}
+    h.setAttribute('href',src);svg.querySelector('.lam-hist-bg').setAttribute('href',src);h.style.opacity='1';lamHistGeo();est.style.opacity='0';};
   if(src in lamHayImg){pon(lamHayImg[src]);return;}
   if(typeof Image==='undefined'){pon(false);return;}
   const im=new Image();im.onload=()=>pon(true);im.onerror=()=>pon(false);im.src=src;
@@ -291,7 +306,10 @@ function lamHist(t){
 const lamEscenaDe=id=>(LAM().escenas||[]).find(e=>e.parte===id);
 /* v200: las escenas sin parte que caen en las fechas de una parte (597 y 586 en
    Babilonia, 1798 en Roma papal) salen también en su hoja, más chicas. */
-const lamEscenasDe=p=>(LAM().escenas||[]).filter(e=>!e.parte&&p.de!=null&&e.y>=p.de&&e.y<=p.a);
+const lamEnRango=(p,y)=>p.de!=null&&y>=p.de&&y<=p.a;
+/* Cada escena sin parte va solo a la parte de rango más corto que la contiene (1798: Roma papal, no los dedos). */
+const lamEscenasDe=p=>(LAM().escenas||[]).filter(e=>!e.parte&&lamEnRango(p,e.y)&&
+  LAM().partes.filter(q=>lamEnRango(q,e.y)).sort((x,z)=>(x.a-x.de)-(z.a-z.de))[0]===p);
 function lamEscenasHTML(p){
   const m=lamEscenasDe(p);
   return lamEscenaHTML(lamEscenaDe(p.id))+(m.length?'<div class="lam-mas">'+m.map(e=>lamEscenaHTML(Object.assign({},e,{t:e.c||e.t}))).join('')+'</div>':'');
@@ -523,10 +541,19 @@ if(typeof addEventListener==='function')addEventListener('resize',()=>{
   const a=lamAncho()||(e.matches&&e.matches(':fullscreen'));
   if(e.classList.contains('ancho')!==a){e.classList.toggle('ancho',a);lamPres(lamPaso);}
 });
+/* v201: «Ocultar texto» (o la tecla T) deja la imagen sola mientras se explica de palabra. */
+function lamTexto(){
+  lamSinTexto=!lamSinTexto;
+  const e=document.getElementById('lam');if(e)e.classList.toggle('sin-texto',lamSinTexto);
+  const b=document.getElementById('lamTxt');
+  if(b){b.setAttribute('aria-pressed',String(lamSinTexto));b.innerHTML=IC('ojo')+(lamSinTexto?' Mostrar texto':' Ocultar texto');}
+  lamHistGeo();
+}
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
   if(e.key==='Escape'){lamCierra();return;}
   if(lamModo!=='presentar')return;
+  if(e.key==='t'||e.key==='T'){lamTexto();return;}
   if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();lamPres(lamPaso+1);}
   else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();lamPres(lamPaso-1);}
 });

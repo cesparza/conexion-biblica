@@ -2847,3 +2847,8 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .lam-mas .lam-fig,.lam.pres.ancho .lam-mas .lam-fig{margin:0}
 .lam-mas .lam-fig img{border-radius:8px}
 .lam-mas figcaption{font-size:.75rem}
+/* v201: escena a la izquierda y texto a la derecha; «Ocultar texto» deja la imagen sola. */
+.lam-hist-bg,.lam-hist-osc{opacity:0;transition:opacity .6s ease;pointer-events:none}
+.lam.pres.sin-texto .lam-hoja{display:none}
+.lam.pres .lam-txt{color:#F4EEE2}
+.lam-mas .lam-fig img{width:100%;max-height:22vh;object-fit:cover}
