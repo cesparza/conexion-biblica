@@ -2661,32 +2661,25 @@ const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id=
 function personasTocables(html,capId){
   perPrepara();
   if(!perRe)return html;
-  /* La línea de la fuente no se toca: ahí van autores, no personajes. Y la
-     Biblia citada tampoco (Camilo, 13-oct: «cuando es una cita bíblica, ahí no
-     hay links»): nada dentro de «…», <q>, citas en bloque ni recuadros de
-     versículo. */
-  return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>|<div class="verse-box">[\s\S]*?<\/div>)/).map(parte=>{
-    if(/^<p class="sec-fuente">|^<div class="verse-box">/.test(parte))return parte;
-    let dentro=0,cita=0;
+  /* La línea de la fuente no se toca: ahí van autores, no personajes. Dentro
+     de una cita bíblica SÍ (Camilo, 13-oct 10:12), pero no en la referencia:
+     en «Daniel 11:2» o «1 Juan 3» el nombre es el libro, no la persona. */
+  return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>)/).map(parte=>{
+    if(/^<p class="sec-fuente">/.test(parte))return parte;
+    let dentro=0;
     return parte.split(/(<[^>]+>)/).map(tr=>{
       if(tr.charAt(0)==='<'){
-        if(/^<(button|a|h\d|q|blockquote)[\s>]/.test(tr))dentro++;
-        else if(/^<\/(button|a|h\d|q|blockquote)>/.test(tr)&&dentro>0)dentro--;
+        if(/^<(button|a|h\d|blockquote)[\s>]/.test(tr))dentro++;
+        else if(/^<\/(button|a|h\d|blockquote)>/.test(tr)&&dentro>0)dentro--;
         return tr;
       }
-      if(!tr.trim())return tr;
-      /* Se parte el texto en lo que está dentro y fuera de «…»; la comilla puede
-         abrir en un trozo y cerrar en otro (con <strong> en medio). */
-      return tr.split(/([«»])/).map(t=>{
-        if(t==='«'){cita++;return t;}
-        if(t==='»'){cita=Math.max(0,cita-1);return t;}
-        if(dentro>0||cita>0)return t;
-        return t.replace(perRe,n=>{
-          const c=(perDe[n]||[]).find(x=>!x.caps||x.caps.includes(capId));
-          if(!c)return n;
-          return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+n+'</button>';
-        });
-      }).join('');
+      if(dentro>0||!tr.trim())return tr;
+      return tr.replace(perRe,(n,_g,pos,todo)=>{
+        if(/^\s*\d/.test(todo.slice(pos+n.length))||/\d\s*$/.test(todo.slice(Math.max(0,pos-3),pos)))return n;
+        const c=(perDe[n]||[]).find(x=>!x.caps||x.caps.includes(capId));
+        if(!c)return n;
+        return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+n+'</button>';
+      });
     }).join('');
   }).join('');
 }

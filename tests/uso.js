@@ -3194,7 +3194,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const ids=[...H.matchAll(/verPersona\('([^']+)'\)/g)].map(x=>x[1]);
   const fuentes=(H.match(/<p class="sec-fuente">[\s\S]*?<\/p>/g)||[]).join('');
   ok(ids.includes('berthier')&&ids.includes('nabucodonosor')&&ids.includes('romulo'),'v189: en Daniel 2 se tocan Nabucodonosor, Rómulo Augústulo y Berthier ('+new Set(ids).size+' personas)');
-  ok(!/verPersona/.test(fuentes)&&!/<button[^>]*class="ref[^"]*"[^>]*>[^<]*<button/.test(H),'v189: la línea de la fuente y las citas bíblicas no se vuelven personajes');
+  ok(!/verPersona/.test(fuentes)&&!/verPersona\('[^']+'\)">[^<]+<\/button>\s*\d/.test(H),'v190: ni la fuente ni una referencia («Daniel 11:2») se vuelven personaje');
 }
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
