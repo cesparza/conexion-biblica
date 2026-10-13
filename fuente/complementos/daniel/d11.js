@@ -105,7 +105,7 @@ module.exports = {
       `<p>Así se leen estos versos en la división 16-20 / 21-39 (ver arriba). Desde el v. 21 el norte y el sur ya no son lugares. El rey del norte es el poder religioso, el papado: como Babilonia, una religión falsa. El rey del sur es el poder civil, el Estado: como Egipto, que dijo «no conozco a Jehová» (Éxodo 5:2).</p>` +
       tbl(['Verso', 'Qué significa'], [
         ['21', 'El «hombre despreciable» no es el emperador Tiberio, sino el papado. Empieza pequeño, «sin aviso», y toma el reino «con halagos»: salvación sin arrepentimiento, por indulgencias y sacramentos.'],
-        ['22', 'El «príncipe del pacto» es Cristo (8:25; 9:26). Primero muere en la cruz, bajo Roma. Después este poder quebranta el conocimiento de su obra en el santuario del cielo, y la cambia por una falsificación.'],
+        ['22', 'El «príncipe del pacto» es Cristo (8:25; 9:26). Muere en tiempos de Roma imperial. Más tarde Roma papal, unión de poder político y religioso, oculta su intercesión en el cielo.'],
         ['24', '«Esto durará un tiempo»: los 1.260 años. En 756 Pepino el Breve le da al papa las tierras de los Estados Pontificios, que pierde en 1870.'],
         ['29', '«Al tiempo señalado», en 1798, la venida al sur ya no es como la primera: esta vez el poder civil le gana.'],
         ['30', 'El rey del norte es Roma papal, en sus 1.260 años. Durante ese tiempo «se entenderá con los que abandonen el santo pacto»: los que dejan los Diez Mandamientos (Deuteronomio 4:13). Las «naves de Quitim» son el golpe que la hiere al final: la Francia de la Revolución, el mismo golpe de 11:40. Sus tropas entran en Roma el 10 de febrero de 1798; el 15 toman preso a Pío VI, que muere cautivo en Valence el 29 de agosto de 1799. Pero «volverá».'],

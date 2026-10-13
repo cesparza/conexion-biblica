@@ -1156,7 +1156,7 @@ const PERSONAJES = [
     quien: 'Sumo sacerdote judío en tiempos de los seléucidas.',
     hizo: [
       'Algunos lo ven como el «príncipe del pacto» de Daniel 11:22.',
-      'Pero ese príncipe es Jesucristo: la profecía anuncia su muerte en la cruz, y después cómo se oculta su obra de intercesión en el santuario del cielo (Daniel 8:11; 11:31).'
+      'Pero ese príncipe es Jesucristo: muere en la cruz en tiempos de Roma imperial, y más adelante Roma papal, la unión del poder político y el religioso, oculta su obra de intercesión en el santuario del cielo (Daniel 8:11; 11:31).'
     ],
     textos: 'Daniel 11:22; 9:26',
     alias: ['Onías III'],
