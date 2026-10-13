@@ -39,8 +39,8 @@ module.exports = {
           ['Hierro mezclado con barro', 'Roma papal: el poder político unido al religioso', 'Supremacía 538-1798 d.C.; herida en 1798, sana y vuelve al final'],
           ['La piedra que se hace monte', 'La segunda venida de Cristo y su reino eterno', 'Futuro'],
         ]) +
-        `<p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial, dividida y papal. Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p>` +
-        `<p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. La imagen muestra también el deterioro de la religión y la moral: a medida que las naciones olvidan a Dios se debilitan moralmente. Y, sin valores morales, tienden a imponer la moral por la fuerza.</p>` +
+        `<p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial (las piernas), dividida (los dedos) y papal (el hierro mezclado con barro). Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p><p>Y una <strong>cuarta</strong>: el papado sanado de su herida (Apocalipsis 13:3), en pie cuando la piedra golpea los pies (2:34).</p>` +
+        `<p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. Muestra también el deterioro moral: las naciones que olvidan a Dios terminan imponiendo la moral por la fuerza.</p>` +
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; CBA 4:1168.</p>`,
     },
     {

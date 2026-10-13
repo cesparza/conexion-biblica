@@ -39,6 +39,18 @@ module.exports = {
       wa('Se habla de un <b>sistema</b>, no de personas: dentro de él hay muchas personas sinceras que aman a Dios de corazón.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 119 y 125; Bohr, <i>La gran cadena</i>, p. 7; Doukhan, <i>Secretos de Daniel</i>, p. 109; Vicuña, <i>Estudios del libro de Daniel</i>, p. 91-92.</p>` },
 
+    { t: '🧭 Las cuatro etapas de Roma', capa: 'contexto', h:
+      `<p>La cuarta bestia, sus diez cuernos y el cuerno pequeño son el mismo imperio en etapas seguidas:</p>` +
+      tbl(['Etapa', 'En Daniel 7', 'Años'], [
+        ['1. Roma imperial', 'La bestia misma, con dientes de hierro (7:7, 23)', '168 a.C.-476 d.C.'],
+        ['2. Roma dividida', 'Los diez cuernos: «diez reyes» (7:24)', 'Desde 476'],
+        ['3. Roma papal', 'El cuerno pequeño (7:8, 24-25)', '538-1798'],
+        ['4. Roma papal sanada', 'No va aparte en Daniel 2 ni 7; la muestra Apocalipsis 13:3, 12 y 17:8: la bestia «era y no es, y será»', 'Desde 1798 hasta la venida de Cristo'],
+      ]) +
+      `<p>La cuarta etapa se incluye porque el poder papal sigue hasta el fin. El cuerno hace guerra a los santos «hasta que vino el Anciano de días» (7:21-22), y solo en el juicio «le quitarán su dominio, para que sea destruido» (7:26). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34, 44-45). El cuerno de Daniel 8 «será quebrantado, aunque no por mano humana» (8:25), y el rey del norte, recuperado de su herida, «llegará a su fin» (11:40-45).</p>` +
+      hi('La herida mortal es la caída del papado en 1798; la profecía anuncia que sana y que «toda la tierra» va en pos de la bestia. El hombre de pecado sigue hasta la segunda venida (2 Tesalonicenses 2:8).') +
+      `<p>Fuente: CS 492 y 636; Bohr, <i>Daniel 1-10</i>, p. 120-121; Bohr, <i>Apocalipsis 17</i>, p. 7-8.</p>` },
+
     { t: '🧭 Los tiempos y la ley (7:25)', capa: 'contexto', h:
       `<p>Daniel 7:25 usa dos palabras arameas para «tiempo». En «tiempo, tiempos y medio tiempo» es un <b>lapso</b>: los 1.260 años. En «cambiar los tiempos» es otra palabra, <b>tiempos fijados que se repiten</b>, y va unida a «la Ley», en singular. Dios es el que «muda los tiempos» (2:21); el cuerno quiere hacer lo que solo Dios hace.</p>` +
       li([

@@ -35,7 +35,7 @@ const LAMINAS = {
   },
   tiempo: ['oro', 'plata', 'bronce', 'hierro', 'dedos', 'barro'],
   inicio: { ref: 'Daniel 2:31', texto: 'Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.',
-    nota: 'Los metales bajan de valor (del oro al hierro) pero suben en dureza: la historia no camina hacia una edad de oro hecha por el hombre. Y Roma aparece en tres fases: imperial, dividida y papal.' },
+    nota: 'Los metales bajan de valor (del oro al hierro) pero suben en dureza: la historia no camina hacia una edad de oro hecha por el hombre. Y Roma aparece en tres fases: imperial, dividida y papal. Hay una cuarta: el papado sanado de su herida (Apocalipsis 13:3), que sigue en pie cuando la piedra golpea los pies.' },
   cierre: { ref: 'Daniel 2:45', texto: 'El gran Dios ha mostrado al rey lo que ha de acontecer en lo por venir; y el sueño es verdadero, y fiel su interpretación.',
     titulo: 'Un reino que no será jamás destruido', nota: 'Hoy estamos en los pies. Lo que sigue es la piedra.' },
   /* El capítulo en orden: lo que pasa antes del sueño y después. La
@@ -70,6 +70,8 @@ const LAMINAS = {
      en la explicación de su parte y en la línea de tiempo desde su año. */
   escenas: [
     { y: -605, f: 'e605', parte: 'oro', t: '605 a.C. · Nabucodonosor sitia Jerusalén y se lleva cautivos a Daniel y sus amigos (1:1-6)' },
+    { y: -597, f: 'e597', t: '597 a.C. · Segunda deportación: Joaquín, su madre, su corte y Ezequiel son llevados a Babilonia (2 Reyes 24:12-15; Ezequiel 1:2)' },
+    { y: -586, f: 'e586', t: '586 a.C. · Jerusalén y el templo son destruidos; tercera deportación (2 Reyes 25:8-11)' },
     { y: -539, f: 'e539', parte: 'plata', t: '539 a.C. · Ciro el Grande toma Babilonia la noche del banquete de Belsasar (5:30-31)' },
     { y: -331, f: 'e331', parte: 'bronce', t: '331 a.C. · Alejandro Magno vence a Darío III en Arbela' },
     { y: -168, f: 'e168', parte: 'hierro', t: '168 a.C. · Roma vence a Macedonia en Pidna' },
