@@ -2735,7 +2735,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-ops button.mal{border-color:var(--rojo,#C0392B)}
 .lam-fb{min-height:1.5em;margin-top:8px;font-size:.875rem;color:var(--gris)}
 .lam.pres{background:#0E0D0B;color:#F4EEE2}
-.lam.pres .lam-tit,.lam.pres .lam-cerrar{color:#F4EEE2}
+.lam.pres .lam-tit,.lam.pres .lam-cerrar,.lam.pres .lam-full{color:#F4EEE2}
 .lam.pres .lam-ant{color:#F2C46B}
 .lam.pres .lam-esc{width:min(100%,calc((100vh - 380px) * 1100 / 1152))}
 .lam.pres .lam-hoja{font-size:1.125rem}

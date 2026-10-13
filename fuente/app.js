@@ -212,7 +212,7 @@ function lamAbre(cid,modo){
     '<div class="lam-tit">'+esc(L.titulo)+'</div></div><div class="lam-bots">'+
     (modo==='presentar'?'':'<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button>')+
     /* v191: pantalla completa donde el navegador la deja (el iPhone no). */
-    (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-cerrar lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
+    (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
