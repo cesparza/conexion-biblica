@@ -104,7 +104,7 @@ const LAMINAS = {
   texto:'la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra',ref:'2:35',texto2:'él permanecerá para siempre',ref2:'2:44',
   corto:'Todo lo demás se lo lleva el viento. Solo queda el reino de Dios.',
   interp:['La piedra sale del monte Sion (2:45; 1 Pedro 2:6) y se convierte en el gran monte: el reino eterno. En la Biblia un monte es un reino (Isaías 2:2). Todo lo demás se lo lleva el viento «como tamo» (2:35).','Daniel 7 termina igual: el reino se da «al pueblo de los santos del Altísimo, cuyo reino es reino eterno» (7:27).'],
-  fuente:BOHR+', pág. 63-64.'}
+  fuente:BOHR+', p. 63-64.'}
 ],
  },
 };
