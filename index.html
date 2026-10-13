@@ -42,6 +42,18 @@
   --rojo-txt:var(--v-mal-txt,#C82832);
   /* v138: el azul claro (--cielo) daba 3,66 a 3,98 como letra. */
   --cielo-txt:var(--v-marca2-txt,#2866AA);
+  /* v186: EL COLOR COMO RELLENO Y EL COLOR COMO LETRA SON DOS FICHAS. En la piel
+     oscura de Jóvenes el morado de letra es claro (se lee sobre fondo oscuro) y
+     un botón relleno con él dejaba la letra blanca en 2,8:1. Quien aloja la app
+     da el relleno (--v-marca-fondo, --v-acento-fondo); aquí valen lo de siempre. */
+  --azul-fondo:var(--v-marca-fondo,var(--azul)); --nar-fondo:var(--v-acento-fondo,var(--naranja-txt)); --verde-fondo:var(--v-ok-fondo,var(--verde-txt));
+  /* Los fondos suaves salen de la superficie y su color, no de un claro fijo:
+     así cambian solos con el modo oscuro. */
+  --fondo-suave:color-mix(in srgb,var(--azul) 5%,var(--card));
+  --fondo-calido:color-mix(in srgb,var(--naranja) 16%,var(--card));
+  --fondo-ok:color-mix(in srgb,var(--verde) 14%,var(--card));
+  --fondo-mal:color-mix(in srgb,var(--rojo) 13%,var(--card));
+  --fondo-info:color-mix(in srgb,var(--cielo) 14%,var(--card));
 }
 *{box-sizing:border-box;margin:0;padding:0}
 /* EL ATRIBUTO hidden GANA SIEMPRE.
@@ -72,7 +84,7 @@ body{font-family:ui-rounded,'SF Pro Rounded','Hiragino Maru Gothic ProN',
 /* ═══ AVISO DE MATERIAL NUEVO ═══
    Arriba de la barra de navegacion, para que se vea entre en la pantalla que
    sea y sin tapar las pestanas. Naranja de marca: es un aviso, no un error. */
-.av-nuevo{background:var(--naranja-txt);color:var(--v-sobre,#fff);display:flex;align-items:center;
+.av-nuevo{background:var(--nar-fondo);color:var(--v-sobre,#fff);display:flex;align-items:center;
   gap:.6rem;padding:.5rem .8rem;font-size:.875rem;font-weight:700}
 .av-nuevo>span{flex:1;min-width:0}
 .av-nuevo .av-ok{padding:.35rem .8rem;font-size:.875rem;min-height:36px;flex:0 0 auto}
@@ -122,7 +134,7 @@ html{touch-action:manipulation}
 
 @media print{.av-nuevo{display:none!important}}
 
-.nav{background:var(--azul);display:flex;position:sticky;top:0;z-index:50;box-shadow:var(--v-s1)}
+.nav{background:var(--azul-fondo);display:flex;position:sticky;top:0;z-index:50;box-shadow:var(--v-s1)}
 .nav-b{color:var(--v-sobre,#fff);font-size:1rem;font-weight:800;padding:.9rem 1rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .nav-t{display:flex;flex:1}
 .nav-t button{color:rgba(255,255,255,.9);font-weight:700;cursor:pointer;border:none;background:none;
@@ -156,9 +168,9 @@ html{touch-action:manipulation}
 .cat-grupo{font-size:.75rem;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin:.75rem 0 .4rem}
 .cat-grupo:first-child{margin-top:0}
 .cat-fila{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
-.cat-btn{background:#f8f9ff;border:3px solid var(--v-linea,#e5e7eb);border-radius:12px;padding:1rem .8rem;cursor:pointer;font-family:inherit;text-align:center;min-height:46px}
+.cat-btn{background:var(--fondo-suave);border:3px solid var(--v-linea,#e5e7eb);border-radius:12px;padding:1rem .8rem;cursor:pointer;font-family:inherit;text-align:center;min-height:46px}
 .cat-btn:hover{border-color:var(--cielo)}
-.cat-btn.on{border-color:var(--naranja);background:#fff8f0}
+.cat-btn.on{border-color:var(--naranja);background:var(--fondo-calido)}
 .cat-btn .cn{font-size:1rem;font-weight:800;color:var(--azul)}
 .cat-btn .cd{font-size:.75rem;color:var(--gris);margin-top:4px;line-height:1.35}
 
@@ -190,7 +202,7 @@ html{touch-action:manipulation}
 @media(max-width:560px){.caps{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}}
 .cap{background:var(--card);border:2px solid var(--v-linea,#e5e7eb);border-radius:18px;padding:1rem;cursor:pointer;text-align:left;font-family:inherit;min-height:46px}
 .cap:hover{border-color:var(--cielo)}
-.cap.on{border-color:var(--naranja);background:#fff8f0}
+.cap.on{border-color:var(--naranja);background:var(--fondo-calido)}
 .cap .n{font-size:1.375rem;font-weight:900;line-height:1}
 .cap .t{font-size:.75rem;font-weight:700;color:var(--azul);margin-top:3px;line-height:1.3}
 .cap .f{font-size:.75rem;color:var(--gris);margin-top:2px}
@@ -215,16 +227,17 @@ html{touch-action:manipulation}
 .sec-linea{flex:1 1 auto;height:1px;background:var(--v-linea,#e5e7eb);min-width:10px}
 .sec-capa{flex:0 0 auto;display:inline-flex;align-items:center;gap:.35rem;
   font-size:.75rem;font-weight:800;letter-spacing:.02em;color:var(--azul)}
-.sec-capa i{width:6px;height:6px;border-radius:50%;background:var(--azul);display:block}
+.sec-capa i{width:6px;height:6px;border-radius:50%;background:var(--azul-fondo);display:block}
 /* Relleno, contorno y gris: una escala, no tres colores sin relacion. */
 .sec-capa.c-apoyo i{background:none;box-shadow:inset 0 0 0 1.5px var(--azul)}
 .sec-capa.c-contexto{color:var(--gris)}
 .sec-capa.c-contexto i{background:none;box-shadow:inset 0 0 0 1.5px var(--gris)}
 @media(max-width:420px){.sec-capa{font-size:.75rem}.sec-rot{font-size:.75rem}}
 .info-table{width:100%;border-collapse:collapse;font-size:.875rem;margin:.4rem 0}
-.info-table th{background:var(--azul);color:var(--v-sobre,#fff);padding:.5rem .7rem;text-align:left;font-size:.75rem}
-.info-table td{padding:.45rem .7rem;border-bottom:1px solid #eef0f4;vertical-align:top}
-.info-table tr:nth-child(even) td{background:#f7f9ff}
+.info-table th{background:var(--azul-fondo);color:var(--v-sobre,#fff);padding:.5rem .7rem;text-align:left;font-size:.75rem}
+.info-table th .vref{color:inherit}
+.info-table td{padding:.45rem .7rem;border-bottom:1px solid var(--v-linea,#eef0f4);vertical-align:top}
+.info-table tr:nth-child(even) td{background:var(--fondo-suave)}
 .info-table td.key{font-weight:700;color:var(--azul);white-space:nowrap}
 /* Una tabla no puede medir menos que el ancho mínimo de su contenido, y con
    nowrap en la columna clave ese mínimo pasaba de 390px: la tabla se salía de
@@ -252,7 +265,7 @@ html{touch-action:manipulation}
    Georgia y Palatino existen en iOS y en macOS; la lista termina en serif
    genérica por si acaso. */
 .biblia{font-family:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
-  font-size:1rem;line-height:1.78;color:#23262e}
+  font-size:1rem;line-height:1.78;color:var(--txt)}
 .biblia p{margin:0 0 .75rem}
 .biblia p:last-child{margin-bottom:0}
 /* El numero va volado y en la sans de la app, como en una Biblia impresa: si
@@ -335,7 +348,7 @@ html{touch-action:manipulation}
 .hoja-asa{width:42px;height:5px;border-radius:8px;background:#d3d9e2;
   margin:.55rem auto .2rem;flex:0 0 auto;cursor:pointer}
 .hoja-cab{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem .95rem .6rem;
-  border-bottom:1px solid #eef0f4;flex:0 0 auto}
+  border-bottom:1px solid var(--v-linea,#eef0f4);flex:0 0 auto}
 .hoja-cab>div:first-child{flex:1;min-width:0}
 .hoja-ref{font-size:.75rem;font-weight:800;color:var(--azul);
   text-transform:uppercase;letter-spacing:.6px}
@@ -349,7 +362,7 @@ html{touch-action:manipulation}
   -webkit-overflow-scrolling:touch}
 .hoja-pie{display:flex;align-items:center;gap:.5rem;padding:.6rem .95rem .85rem;
   border-top:1px solid #eef0f4;flex:0 0 auto}
-.hoja-nav{background:#f4f7fb;border:2px solid var(--v-linea,#e5e7eb);border-radius:12px;
+.hoja-nav{background:var(--fondo-suave);border:2px solid var(--v-linea,#e5e7eb);border-radius:12px;
   padding:.45rem .7rem;font-family:inherit;font-size:.75rem;font-weight:700;
   color:var(--azul);cursor:pointer;min-height:44px;flex:0 0 auto}
 .hoja-nav:disabled{opacity:.4;cursor:default}
@@ -363,7 +376,7 @@ html{touch-action:manipulation}
 .lect>summary::-webkit-details-marker{display:none}
 .lect>summary::after{content:'▾';margin-left:auto;font-size:1.125rem;color:var(--gris)}
 .lect[open]>summary::after{content:'▴'}
-.lect[open]>summary{border-bottom:1px solid #eef0f4}
+.lect[open]>summary{border-bottom:1px solid var(--v-linea,#eef0f4)}
 .lect-cuerpo{padding:.3rem 1rem 1rem}
 /* El boton de voz va en una fila propia y alineado a la derecha, NO al lado
    del texto. Estaba al lado y le quitaba unos 50px de ancho a las cinco
@@ -394,51 +407,51 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .divisor::after{content:"";flex:1 1 auto;height:1px;background:var(--v-linea,#e5e7eb);min-width:10px}
 
 .q{background:var(--card);border-radius:12px;box-shadow:var(--v-s1);padding:1.1rem;margin-bottom:.9rem;border:2px solid transparent}
-.q.hecha{border-color:#d1fae5}
-.q.mal{border-color:#fee2e2}
+.q.hecha{border-color:var(--fondo-ok)}
+.q.mal{border-color:var(--fondo-mal)}
 .q .qt{font-size:.875rem;font-weight:600;margin-bottom:.75rem;line-height:1.5}
 .q .qn{color:var(--naranja-txt);font-weight:800;margin-right:4px}
 
 .ops{display:flex;flex-direction:column;gap:.4rem}
-.op{display:flex;align-items:center;gap:.65rem;background:#f8f9ff;color:var(--v-tinta,#1a1a2e);border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;padding:.5rem .85rem;cursor:pointer;font-family:inherit;font-size:.875rem;text-align:left;min-height:46px}
-.op:hover:not(:disabled){border-color:var(--cielo);background:#eff6ff}
-.op.sel{border-color:var(--cielo);background:#eff6ff}
+.op{display:flex;align-items:center;gap:.65rem;background:var(--fondo-suave);color:var(--v-tinta,#1a1a2e);border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;padding:.5rem .85rem;cursor:pointer;font-family:inherit;font-size:.875rem;text-align:left;min-height:46px}
+.op:hover:not(:disabled){border-color:var(--cielo);background:var(--fondo-info)}
+.op.sel{border-color:var(--cielo);background:var(--fondo-info)}
 /* Deshabilitada (examen entregado) el navegador la pone al 30%: 1,99. Se
    repasa despues de entregar, asi que tiene que leerse. */
 .op:disabled,.vf button:disabled{color:var(--v-tinta2,#5B5F6B)}
-.op.ok{border-color:var(--verde);background:#e8f5e9;color:var(--verde-txt);font-weight:700}
-.op.ko{border-color:var(--rojo);background:#fee2e2;color:var(--rojo-txt)}
+.op.ok{border-color:var(--verde);background:var(--fondo-ok);color:var(--verde-txt);font-weight:700}
+.op.ko{border-color:var(--rojo);background:var(--fondo-mal);color:var(--rojo-txt)}
 .op:disabled{cursor:default}
-.ol{width:25px;height:25px;border-radius:50%;background:var(--azul);color:var(--v-sobre,#fff);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
-.op.ok .ol{background:var(--verde-txt)} .op.ko .ol{background:var(--rojo-txt)} .op.sel .ol{background:var(--cielo-txt)}
+.ol{width:25px;height:25px;border-radius:50%;background:var(--azul-fondo);color:var(--v-sobre,#fff);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.op.ok .ol{background:var(--verde-fondo)} .op.ko .ol{background:var(--rojo-txt)} .op.sel .ol{background:var(--cielo-txt)}
 
 .vf{display:flex;gap:.6rem}
-.vf button{flex:1;padding:.6rem;border-radius:8px;border:2px solid var(--v-linea,#e5e7eb);cursor:pointer;font-family:inherit;font-size:.875rem;font-weight:700;background:#f8f9ff;min-height:46px}
-.vf button.sel{border-color:var(--cielo);background:#eff6ff}
-.vf button.ok{border-color:var(--verde);background:#e8f5e9;color:var(--verde-txt)}
-.vf button.ko{border-color:var(--rojo);background:#fee2e2;color:var(--rojo-txt)}
+.vf button{flex:1;padding:.6rem;border-radius:8px;border:2px solid var(--v-linea,#e5e7eb);cursor:pointer;font-family:inherit;font-size:.875rem;font-weight:700;background:var(--fondo-suave);min-height:46px}
+.vf button.sel{border-color:var(--cielo);background:var(--fondo-info)}
+.vf button.ok{border-color:var(--verde);background:var(--fondo-ok);color:var(--verde-txt)}
+.vf button.ko{border-color:var(--rojo);background:var(--fondo-mal);color:var(--rojo-txt)}
 .vf button:disabled{cursor:default}
 
 .rell{display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;font-size:.875rem;line-height:2.1}
-.rell input{border:none;border-bottom:2px solid var(--cielo);background:#eff6ff;border-radius:8px 8px 0 0;padding:.2rem .45rem;font-family:inherit;font-size:.875rem;color:var(--azul);min-width:95px;max-width:190px;outline:none;min-height:34px}
-.rell input:focus{background:#dbeafe}
-.rell input.ok{background:#d1fae5;border-bottom-color:var(--verde);color:var(--verde-txt);font-weight:700}
-.rell input.ko{background:#fee2e2;border-bottom-color:var(--rojo);color:var(--rojo-txt)}
+.rell input{border:none;border-bottom:2px solid var(--cielo);background:var(--fondo-info);border-radius:8px 8px 0 0;padding:.2rem .45rem;font-family:inherit;font-size:.875rem;color:var(--azul);min-width:95px;max-width:190px;outline:none;min-height:34px}
+.rell input:focus{background:var(--fondo-info)}
+.rell input.ok{background:var(--fondo-ok);border-bottom-color:var(--verde);color:var(--verde-txt);font-weight:700}
+.rell input.ko{background:var(--fondo-mal);border-bottom-color:var(--rojo);color:var(--rojo-txt)}
 
 .fb{font-size:.75rem;margin-top:.5rem;padding:.35rem .6rem;border-radius:8px;font-weight:600;line-height:1.5}
-.fb.ok{background:#d1fae5;color:var(--verde-txt)}
-.fb.ko{background:#fee2e2;color:var(--rojo-txt)}
+.fb.ok{background:var(--fondo-ok);color:var(--verde-txt)}
+.fb.ko{background:var(--fondo-mal);color:var(--rojo-txt)}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:.6rem 1.3rem;border-radius:999px;border:none;cursor:pointer;font-family:inherit;font-size:.875rem;font-weight:700;min-height:46px}
-.btn.azul{background:var(--azul);color:var(--v-sobre,#fff)}
+.btn.azul{background:var(--azul-fondo);color:var(--v-sobre,#fff)}
 /* Letra blanca va sobre el naranja oscuro: sobre el de marca daba 3,07. */
-.btn.nar{background:var(--naranja-txt);color:var(--v-sobre,#fff)}
+.btn.nar{background:var(--nar-fondo);color:var(--v-sobre,#fff)}
 /* Letra blanca sobre el verde oscuro: sobre el de marca daba 3,38. */
-.btn.ver{background:var(--verde-txt);color:var(--v-sobre,#fff)}
+.btn.ver{background:var(--verde-fondo);color:var(--v-sobre,#fff)}
 .btn.gho{background:transparent;color:var(--azul);border:2px solid var(--azul)}
 
 /* Letra blanca: el degradado va en los tonos oscuros (daba 1,94 a 3,03). */
-.res{background:linear-gradient(135deg,var(--verde-txt),var(--azul));color:var(--v-sobre,#fff);border-radius:var(--r);padding:1.8rem 1.2rem;text-align:center;margin-bottom:1.1rem}
+.res{background:linear-gradient(135deg,var(--verde-fondo),var(--azul-fondo));color:var(--v-sobre,#fff);border-radius:var(--r);padding:1.8rem 1.2rem;text-align:center;margin-bottom:1.1rem}
 .res .pt{font-size:3rem;font-weight:900;line-height:1}
 .res .sec3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1rem}
 /* >div: con «div» a secas el fondo caia tambien en .sv y .sl, doble capa. */
@@ -447,8 +460,8 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .res .sec3 .sl{font-size:.75rem;margin-top:2px}
 
 .ins{display:inline-flex;align-items:center;gap:5px;padding:.4rem .9rem;border-radius:999px;font-size:.75rem;font-weight:700;margin:.25rem}
-.ins.oro{background:#fef3c7;color:#92400e;border:2px solid #D4AC0D}
-.ins.gris{background:#f1f5f9;color:#627188;border:2px solid #cbd5e1}   /* 4,34 -> 4,52 */
+.ins.oro{background:#fef3c7;color:var(--naranja-txt);border:2px solid #D4AC0D}
+.ins.gris{background:var(--fondo-suave);color:var(--gris);border:2px solid #cbd5e1}   /* 4,34 -> 4,52 */
 
 .txti{width:100%;max-width:330px;padding:.55rem .8rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;font-size:.875rem;font-family:inherit;min-height:46px}
 .pil{display:inline-block;padding:2px 10px;border-radius:18px;font-size:.75rem;font-weight:700}
@@ -457,7 +470,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .grupo:first-child{margin-top:0}
 .mod{background:var(--card);border:2px solid var(--v-linea,#e5e7eb);border-radius:18px;padding:1rem;cursor:pointer;text-align:left;font-family:inherit;min-height:46px;display:flex;gap:.7rem;align-items:flex-start}
 .mod:hover{border-color:var(--cielo)}
-.mod.on{border-color:var(--naranja);background:#fff8f0}
+.mod.on{border-color:var(--naranja);background:var(--fondo-calido)}
 .mod .ic{font-size:1.375rem;line-height:1}
 .mod .t{font-size:.875rem;font-weight:700;color:var(--azul);line-height:1.3}
 .mod .s{font-size:.75rem;color:var(--gris);margin-top:2px;line-height:1.3}
@@ -530,7 +543,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 /* Panel «Qué estudiar hoy»: es lo primero que se ve, así que lleva el
    borde de acento y va antes que cualquier otra tarjeta. */
 .card.hoy{border-left:5px solid var(--naranja)}
-.hoy-cab{display:flex;gap:1rem;align-items:center;background:#fff8f0;border-radius:12px;padding:.8rem 1rem;margin-bottom:.9rem;flex-wrap:wrap}
+.hoy-cab{display:flex;gap:1rem;align-items:center;background:var(--fondo-calido);border-radius:12px;padding:.8rem 1rem;margin-bottom:.9rem;flex-wrap:wrap}
 .cuenta{text-align:center;min-width:78px}
 .cuenta .cd{font-size:1.75rem;font-weight:900;color:var(--naranja-txt);line-height:1}
 .cuenta .cl{font-size:.75rem;color:var(--gris);font-weight:700;line-height:1.25;margin-top:3px}
@@ -576,14 +589,14 @@ body.av .tj .rev{font-size:1.125rem}
 /* Selector de participantes: fichas pequeñas, porque pueden ser hasta doce
    (dos por categoría en los dos eventos, más los padres). */
 .alu-sel{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
-.alu-btn{background:#f8f9ff;border:2px solid var(--v-linea,#e5e7eb);border-radius:12px;padding:.45rem .8rem;cursor:pointer;font-family:inherit;text-align:left;min-height:var(--v-toque,44px)}
+.alu-btn{background:var(--fondo-suave);border:2px solid var(--v-linea,#e5e7eb);border-radius:12px;padding:.45rem .8rem;cursor:pointer;font-family:inherit;text-align:left;min-height:var(--v-toque,44px)}
 .alu-btn:hover{border-color:var(--cielo)}
-.alu-btn.on{border-color:var(--naranja);background:#fff8f0}
+.alu-btn.on{border-color:var(--naranja);background:var(--fondo-calido)}
 .alu-btn.nuevo{border-style:dashed}
 .alu-btn .an{font-size:.875rem;font-weight:800;color:var(--azul);line-height:1.2}
 .alu-btn .ac{font-size:.75rem;color:var(--gris);margin-top:2px}
-.pil.az{background:#dbeafe;color:var(--cielo-txt)}
-.pil.na{background:#ffedd5;color:#AD5409}   /* un paso mas: sobre este crema, 4,14 -> 4,53 */
+.pil.az{background:var(--fondo-info);color:var(--cielo-txt)}
+.pil.na{background:var(--fondo-calido);color:var(--naranja-txt)}   /* un paso mas: sobre este crema, 4,14 -> 4,53 */
 .pil.ve{background:#dcfce7;color:var(--verde-txt)}
 .nota{font-size:.75rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
 
@@ -609,9 +622,9 @@ body.av .tj .rev{font-size:1.125rem}
 /* CAPA POR SECCIÓN — filtro, franja e h3 en .sec, y la tarjeta de recordar.
    Ver la nota de mecanismo en fuente/app.js junto a filtroCapas(). */
 .capa-filtro{display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap}
-.cf{padding:.35rem .9rem;border-radius:18px;border:1px solid #e2e5ea;background:#fff;
+.cf{padding:.35rem .9rem;border-radius:18px;border:1px solid #e2e5ea;background:var(--card);
   font-size:.75rem;font-weight:700;color:var(--gris);cursor:pointer;font-family:inherit}
-.cf.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.cf.on{background:var(--azul-fondo);color:#fff;border-color:var(--azul)}
 .recordar{margin-top:1rem;padding:.9rem 1rem;background:var(--v-sup,#fff);
   border-radius:var(--v-r-sm,12px);border:1px solid var(--v-linea,#e5e7eb)}
 .rec-tit{font-size:.75rem;font-weight:800;color:var(--naranja-txt);text-transform:uppercase;
@@ -622,11 +635,11 @@ body.av .tj .rev{font-size:1.125rem}
    quedan de 80px, por debajo del area tocable. */
 .rec-ops .btn.peq{text-align:left;min-height:var(--v-toque,44px);font-size:.875rem;
   border-radius:var(--v-r-sm,12px);padding:.5rem .9rem}
-.btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.75rem;border:1px solid #e2e5ea;background:#fff;color:var(--azul)}
+.btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.75rem;border:1px solid #e2e5ea;background:var(--card);color:var(--azul)}
 .btn.peq:disabled{opacity:.55;cursor:default}
 .rec-comp{margin-top:.6rem;font-size:.875rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
-.rec-comp.ok{background:#e8f5e9;color:var(--verde-txt)}
-.rec-comp.ko{background:#fee2e2;color:var(--rojo-txt)}
+.rec-comp.ok{background:var(--fondo-ok);color:var(--verde-txt)}
+.rec-comp.ko{background:var(--fondo-mal);color:var(--rojo-txt)}
 
 /* ═══ LA PANTALLA DE ESTUDIO DE LAS CREENCIAS ═══
    MECANISMO
@@ -742,7 +755,7 @@ body.av .tj .rev{font-size:1.125rem}
 .bv-in:focus{outline:none;border-color:var(--cielo)}
 .bv-err{color:var(--rojo-txt);font-size:.875rem;font-weight:700;min-height:1.1rem;margin:.35rem 0;text-align:left}
 .bv-btn{width:100%;justify-content:center;font-size:1rem;min-height:54px}
-.bv-op{display:block;width:100%;background:#f8f9ff;border:3px solid var(--v-linea,#e5e7eb);border-radius:18px;
+.bv-op{display:block;width:100%;background:var(--fondo-suave);border:3px solid var(--v-linea,#e5e7eb);border-radius:18px;
   padding:.95rem 1rem;margin-bottom:.7rem;cursor:pointer;font-family:inherit;text-align:left;min-height:60px}
 .bv-op:hover{border-color:var(--cielo);background:var(--v-sup,#fff)}
 .bv-op b{display:block;font-size:1rem;font-weight:800;color:var(--azul)}
@@ -807,14 +820,14 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 
 /* Boletín: lo que se ve al pegar un código de resumen. Es de solo lectura, y
    se ve distinto al resto para que nadie lo confunda con su propio progreso. */
-.bol{background:#f8f9ff;border:2px solid var(--cielo);border-radius:12px;padding:1rem}
+.bol{background:var(--fondo-suave);border:2px solid var(--cielo);border-radius:12px;padding:1rem}
 .bol h3{font-size:1rem;font-weight:900;color:var(--azul)}
 .bol-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:.6rem;margin:.8rem 0}
 .bol-g>div{background:var(--v-sup,#fff);border-radius:12px;padding:.6rem .4rem;text-align:center}
 .bol-g b{display:block;font-size:1.125rem;font-weight:900;color:var(--naranja-txt);line-height:1.1}
 .bol-g span{display:block;font-size:.75rem;color:var(--gris);font-weight:600;margin-top:3px}
 .bol-t{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.75rem}
-.bol-t th{background:var(--azul);color:var(--v-sobre,#fff);padding:.35rem .5rem;text-align:left}
+.bol-t th{background:var(--azul-fondo);color:var(--v-sobre,#fff);padding:.35rem .5rem;text-align:left}
 .bol-t td{border-bottom:1px solid var(--v-linea,#e5e7eb);padding:.35rem .5rem;color:var(--gris)}
 
 /* ───────── PALETA DE COMANDOS ─────────
@@ -829,14 +842,14 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
   box-shadow:0 30px 70px -20px rgba(8,14,26,.55),0 0 0 1px rgba(16,24,40,.08);
   overflow:hidden;display:flex;flex-direction:column;max-height:76vh}
 .pc-in{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.05rem;
-  border-bottom:1px solid #eef0f4;flex:0 0 auto}
-.pc-in>span{font-size:.75rem;font-weight:800;color:#94a3b8;letter-spacing:.5px}
+  border-bottom:1px solid var(--v-linea,#eef0f4);flex:0 0 auto}
+.pc-in>span{font-size:.75rem;font-weight:800;color:var(--gris);letter-spacing:.5px}
 .pc-in input{flex:1;min-width:0;border:0;outline:none;background:none;
   font-family:inherit;font-size:1rem;color:var(--azul)}
 .pc-in input::placeholder{color:var(--v-tinta2,#5B5F6B);font-weight:500}
 .pc-l{flex:1 1 auto;overflow-y:auto;padding:.4rem 0 .6rem;-webkit-overflow-scrolling:touch}
 .pc-g{font-size:.75rem;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;
-  color:#94a3b8;padding:.7rem 1.05rem .3rem}
+  color:var(--gris);padding:.7rem 1.05rem .3rem}
 .pc-r{display:flex;align-items:center;gap:.75rem;padding:.5rem 1.05rem;width:100%;
   border:0;background:none;font-family:inherit;font-size:.875rem;text-align:left;
   cursor:pointer;min-height:40px}
@@ -845,13 +858,13 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .pc-r b{font-weight:700;color:var(--azul);flex:0 0 auto}
 .pc-r small{color:var(--gris);font-weight:500;overflow:hidden;text-overflow:ellipsis;
   white-space:nowrap;min-width:0}
-.pc-r.on,.pc-r:hover{background:#eff6ff}
+.pc-r.on,.pc-r:hover{background:var(--fondo-info)}
 .pc-r.on{box-shadow:inset 3px 0 0 var(--cielo)}
-.pc-r.on .ic{background:#dbeafe}
+.pc-r.on .ic{background:var(--fondo-info)}
 .pc-nada{padding:1.6rem 1.05rem;color:var(--gris);font-size:.875rem;text-align:center}
 .pc-pie{display:flex;gap:1.1rem;padding:.55rem 1.05rem;border-top:1px solid #eef0f4;
   font-size:.75rem;color:var(--gris);font-weight:600;flex:0 0 auto}
-.pc-pie kbd{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:0 5px;
+.pc-pie kbd{background:var(--fondo-suave);border:1px solid #e2e8f0;border-radius:8px;padding:0 5px;
   font-family:inherit;font-size:.75rem}
 @media print{#paleta{display:none!important}}
 
@@ -879,7 +892,7 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
      modo lectura trae el reproductor: esconderlo dejo el computador sin forma
      de escuchar el capitulo. Ahora va compacto, al lado del reproductor, y
      los dos quedan pegados arriba de la columna del texto. */
-  .vd-izq .lect-top{position:sticky;top:0;z-index:3;background:#fff;padding-bottom:.6rem;
+  .vd-izq .lect-top{position:sticky;top:0;z-index:3;background:var(--card);padding-bottom:.6rem;
     display:flex;align-items:stretch;gap:.5rem}
   .vd-izq .lect-top .txt-rp{flex:1;min-width:0;margin:0}
 }
@@ -898,23 +911,23 @@ body.leyendo{overflow:hidden}
 .lec-prog i{display:block;height:100%;width:0;background:#c98a2b;border-radius:8px;
   transition:width .12s linear}
 /* v138: el café claro del modo lectura (#8a7a5f, #a3946f) daba 2,86 a 4. */
-.lec-pct{font-size:.75rem;font-weight:700;color:#76674c;white-space:nowrap;
+.lec-pct{font-size:.75rem;font-weight:700;color:var(--v-tinta2,#76674c);white-space:nowrap;
   font-variant-numeric:tabular-nums}
-.lec-voz,.lec-x{background:none;border:0;font-size:1rem;color:#76674c;cursor:pointer;
+.lec-voz,.lec-x{background:none;border:0;font-size:1rem;color:var(--v-tinta2,#76674c);cursor:pointer;
   padding:4px 6px;line-height:1;font-family:inherit;min-height:34px}
-.lec-voz:hover,.lec-x:hover{color:#5b4d33}
+.lec-voz:hover,.lec-x:hover{color:var(--v-tinta2,#5b4d33)}
 /* El reproductor del modo lectura (v127): franja bajo la barra, con el mismo
    papel crema de la lectura. Botón naranja de la app, velocidad en pastillas. */
 .lec-rp{flex:0 0 auto;display:flex;align-items:center;gap:.7rem;padding:.5rem .8rem .5rem 1rem;
-  background:#fff4e0;border-bottom:1px solid #f0e2c4;
+  background:var(--fondo-calido);border-bottom:1px solid var(--v-linea,#f0e2c4);
   /* En pantalla ancha los controles se alinean con la columna del texto. */
   padding-left:max(1rem,calc(50% - 22rem));padding-right:max(.8rem,calc(50% - 22rem))}
 .lec-play{width:42px;height:42px;flex:0 0 auto;border-radius:50%;border:0;cursor:pointer;
-  background:var(--v-cat,#E8720C);color:#fff;font-size:1rem;line-height:1;font-family:inherit}
+  background:var(--v-cat-fondo,var(--v-cat,#E8720C));color:#fff;font-size:1rem;line-height:1;font-family:inherit}
 .lec-rp-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
-.lec-rp-tx b{font-size:.875rem;color:#2b2418}
-.lec-rp-tx span{font-size:.75rem;color:#6b5f47;font-variant-numeric:tabular-nums}
-.lec-rp-tx .lec-ios{font-size:.75rem;color:#76674c}
+.lec-rp-tx b{font-size:.875rem;color:var(--txt)}
+.lec-rp-tx span{font-size:.75rem;color:var(--v-tinta2,#6b5f47);font-variant-numeric:tabular-nums}
+.lec-rp-tx .lec-ios{font-size:.75rem;color:var(--v-tinta2,#76674c)}
 /* La franja del estudio (v129): la misma del modo lectura, pegada arriba al
    bajar para poder pausar desde cualquier sección. En celular queda debajo de
    la barra de arriba (46px). */
@@ -926,16 +939,16 @@ body.leyendo{overflow:hidden}
   color:var(--v-marca);text-decoration:none;font-weight:800;font-size:.875rem}
 .est-egw small{font-weight:600;font-size:.75rem;color:var(--v-tinta2)}
 .est-egw:hover{border-color:var(--v-marca)}
-#detalle .suena{background:#fdecc8;border-radius:8px;box-shadow:0 0 0 4px #fdecc8}
+#detalle .suena{background:var(--fondo-calido);border-radius:8px;box-shadow:0 0 0 4px var(--fondo-calido)}
 @media print{.est-rp,.est-egw{display:none!important}}
-.lec-vel{display:flex;gap:2px;background:#fff;border:1px solid #f0e2c4;border-radius:999px;padding:2px}
+.lec-vel{display:flex;gap:2px;background:var(--card);border:1px solid #f0e2c4;border-radius:999px;padding:2px}
 .lec-vel button{border:0;background:none;cursor:pointer;font:700 .68rem/1 inherit;font-family:inherit;
-  color:#6b5f47;padding:.45rem .5rem;border-radius:999px;min-height:32px}
-.lec-vel button[aria-pressed="true"]{background:var(--v-cat,#E8720C);color:#fff}
+  color:var(--v-tinta2,#6b5f47);padding:.45rem .5rem;border-radius:999px;min-height:32px}
+.lec-vel button[aria-pressed="true"]{background:var(--v-cat-fondo,var(--v-cat,#E8720C));color:#fff}
 /* Tocar un versículo empieza ahí; el que suena se marca y los ya dichos se apagan. */
 .lec-toca p{cursor:pointer;border-radius:8px;transition:background .2s,color .2s}
-.lec-txt p.suena{background:#fdecc8;box-shadow:-.45rem 0 0 #fdecc8,.45rem 0 0 #fdecc8,-.7rem 0 0 #c98a2b}
-.lec-txt p.ya{color:#8b8676}
+.lec-txt p.suena{background:var(--fondo-calido);box-shadow:-.45rem 0 0 #fdecc8,.45rem 0 0 #fdecc8,-.7rem 0 0 #c98a2b}
+.lec-txt p.ya{color:var(--gris)}
 @media (prefers-reduced-motion:reduce){.lec-toca p{transition:none}}
 /* El scroll vive en la caja, no en el body: asi la barra de avance se queda
    arriba y la medimos contra un elemento con altura conocida. */
@@ -948,22 +961,22 @@ body.leyendo{overflow:hidden}
 .lec-caja h1{font-family:Georgia,'Times New Roman',serif;font-size:1.375rem;font-weight:600;
   /* `margin:0 auto`, no `0 0`: el shorthand pisaba el auto de .lec-caja>* y en
      pantalla ancha el titulo quedaba corrido a la izquierda del texto. */
-  color:#2b2418;text-align:center;margin:0 auto .4rem;line-height:1.25;text-wrap:balance}
+  color:var(--txt);text-align:center;margin:0 auto .4rem;line-height:1.25;text-wrap:balance}
 .lec-sub{text-align:center;font-size:.75rem;letter-spacing:1.4px;text-transform:uppercase;
-  color:#76674c;margin:0 auto 2.4rem;font-weight:600}
+  color:var(--v-tinta2,#76674c);margin:0 auto 2.4rem;font-weight:600}
 /* Se reescribe .biblia adentro: el cuerpo de la app es mas chico y va en azul. */
 /* Alineado a la IZQUIERDA por defecto. Justificar reparte el sobrante entre los
    espacios, y a 38 caracteres por linea (un iPhone de 390 px) eso deja huecos
    de tres espacios entre palabras: se ve en el render, no en el codigo.
    Justificar solo se enciende cuando la linea da para repartir. */
 .lec-txt p{font-family:Georgia,'Times New Roman',serif;font-size:1.125rem;line-height:1.95;
-  color:#2b2418;margin:0 0 1.25rem;text-align:left;hyphens:auto;-webkit-hyphens:auto}
+  color:var(--txt);margin:0 0 1.25rem;text-align:left;hyphens:auto;-webkit-hyphens:auto}
 @media (min-width:640px){.lec-txt p{text-align:justify}}
-.lec-txt .vn{font-family:inherit;font-size:.75rem;font-weight:700;color:#946312;
+.lec-txt .vn{font-family:inherit;font-size:.75rem;font-weight:700;color:var(--naranja-txt);
   vertical-align:super;margin-right:.35rem;top:auto}
 .lec-fin{margin-top:3rem;padding-top:1.6rem;border-top:1px solid #ece7dd;text-align:center}
-.lec-fin p{font-size:.875rem;color:#6b5f47;margin:0 0 1rem}
-.lec-fin .lec-ok{color:#2f7a4f;font-weight:700}
+.lec-fin p{font-size:.875rem;color:var(--v-tinta2,#6b5f47);margin:0 0 1rem}
+.lec-fin .lec-ok{color:var(--verde-txt);font-weight:700}
 .lec-fin .btn{margin:.3rem .25rem}
 @media (min-width:900px){
   .lec-caja{padding:3.4rem 1.3rem 6rem}
@@ -981,7 +994,7 @@ body.leyendo{overflow:hidden}
    un numero encima del icono se lee como parte del dibujo. */
 .nav-t button{position:relative}
 .nv{position:absolute;min-width:18px;height:18px;padding:0 5px;border-radius:12px;
-  background:var(--naranja-txt);color:var(--v-sobre,#fff);font-size:.75rem;font-weight:900;
+  background:var(--nar-fondo);color:var(--v-sobre,#fff);font-size:.75rem;font-weight:900;
   display:flex;align-items:center;justify-content:center;line-height:1;
   font-family:inherit;letter-spacing:0;
   box-shadow:0 0 0 2px rgba(22,48,91,.92);pointer-events:none}
@@ -1068,7 +1081,7 @@ body.leyendo{overflow:hidden}
 .ay-tabs button{background:var(--card);border:3px solid var(--v-linea,#e5e7eb);border-radius:12px;
   padding:.75rem .5rem;cursor:pointer;font-family:inherit;font-size:.875rem;font-weight:800;
   color:var(--gris);min-height:50px}
-.ay-tabs button.on{border-color:var(--naranja);color:var(--azul);background:#fff8f0}
+.ay-tabs button.on{border-color:var(--naranja);color:var(--azul);background:var(--fondo-calido)}
 details.card.ay-item>summary{display:flex;align-items:center;gap:.8rem;padding:.95rem 1.2rem}
 .ay-ic{font-size:1.375rem;flex:none}
 .ay-tx{flex:1}
@@ -1523,7 +1536,7 @@ button:active:not(:disabled),[role=button]:active,.cap:active,.anillo:active{
 .ex-avance{display:flex;align-items:center;gap:.6rem;margin-top:.45rem;font-size:.75rem;
   font-weight:700;color:var(--v-tinta2,#5B5F6B);font-variant-numeric:tabular-nums}
 .ex-prog{flex:1;height:6px;border-radius:999px;background:var(--v-linea,#e5e7eb);overflow:hidden}
-.ex-prog i{display:block;height:100%;width:0;background:var(--azul);border-radius:inherit;transition:width .25s}
+.ex-prog i{display:block;height:100%;width:0;background:var(--azul-fondo);border-radius:inherit;transition:width .25s}
 @media (max-width:620px){.ex-barra{top:calc(53px + env(safe-area-inset-top, 0px))}}
 @media (min-width:621px) and (max-width:899px){.ex-barra{top:67px}}
 /* Solo con la pantalla de examen a la vista: si sale a Estudiar a mitad del
@@ -1949,8 +1962,8 @@ details.card summary::marker{content:''}
 .grupo-voz:has(.btn-voz.sonando) .btn-reinicia{display:inline-flex}
 /* En la barra clara del modo lectura (.lec-voz) el boton de audio no lleva
    borde ni fondo: el de reiniciar hace juego, no el circulo azul de arriba. */
-.lec-barra .btn-reinicia{border:0;background:none;color:#76674c;min-width:28px;min-height:28px}
-.lec-barra .btn-reinicia:hover{color:#5b4d33}
+.lec-barra .btn-reinicia{border:0;background:none;color:var(--v-tinta2,#76674c);min-width:28px;min-height:28px}
+.lec-barra .btn-reinicia:hover{color:var(--v-tinta2,#5b4d33)}
 
 .pan-paso{
   border:1.5px solid var(--v-linea);border-radius:var(--v-r-md);
@@ -1997,7 +2010,7 @@ details.card summary::marker{content:''}
 .jg-m{flex:0 0 auto;min-height:38px;padding:.45rem .8rem;border-radius:999px;cursor:pointer;
   border:1.5px solid var(--borde);background:var(--v-sup,#fff);color:var(--gris);font-size:.875rem;
   font-weight:600;white-space:nowrap}
-.jg-m.on{background:var(--azul);border-color:var(--azul);color:var(--v-sobre,#fff)}
+.jg-m.on{background:var(--azul-fondo);border-color:var(--azul);color:var(--v-sobre,#fff)}
 .jg-zona{max-width:640px;margin:0 auto}
 .jg-zona .prog-lin{margin-bottom:.9rem}
 .jg-par{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
@@ -2013,21 +2026,21 @@ details.card summary::marker{content:''}
   font-weight:600;text-align:left;min-width:0;overflow:hidden;text-overflow:ellipsis;
   box-shadow:0 1.5px 0 var(--borde)}
 .jg-g:active{transform:var(--v-hundir,scale(.97));box-shadow:none}
-.jg-g.sel{border-color:var(--azul);background:#EEF3FB}
-.jg-g.ok{border-color:#1A7A1A;background:#EAF7EA;color:#1A7A1A}
+.jg-g.sel{border-color:var(--azul);background:var(--fondo-info)}
+.jg-g.ok{border-color:var(--verde-txt);background:var(--fondo-ok);color:var(--verde-txt)}
 .jg-g[style*="--c"]{border-left:5px solid var(--c)}
 .jg-carta{background:var(--v-sup,#fff);border:1.5px solid var(--borde);border-radius:18px;padding:1.1rem;
   text-align:center;font-size:.75rem;color:var(--gris)}
 .jg-carta b{display:block;margin-top:.3rem;font-size:1rem;color:var(--tinta);line-height:1.3}
 .jg-fila{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;min-height:38px}
 .jg-p{padding:.35rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600;
-  background:#EAF7EA;color:#1A7A1A}
+  background:var(--fondo-ok);color:var(--verde-txt)}
 .jg-ins{font-size:.75rem;color:var(--gris);font-style:italic;margin-bottom:.5rem}
 .jg-frase{background:var(--v-sup,#fff);border:1.5px solid var(--borde);border-radius:18px;padding:1rem;
   line-height:2.1;font-size:1rem}
 .jg-h{display:inline-block;min-width:82px;text-align:center;border-bottom:2.5px solid var(--nar);
   padding:0 .3rem;font-weight:700;color:var(--gris)}
-.jg-h.ok{border-color:#1A7A1A;color:#1A7A1A}
+.jg-h.ok{border-color:var(--verde-txt);color:var(--verde-txt)}
 .jg-fin{text-align:center;padding:1.6rem 1rem}
 .jg-fin-t{font-size:1.375rem;font-weight:800;color:var(--azul)}
 .jg-fin-s{margin:.4rem 0 1.1rem;color:var(--gris);font-size:.875rem}
@@ -2048,7 +2061,7 @@ details.card summary::marker{content:''}
 .rev-q .rev-p{flex:0 0 auto;font-size:.75rem;font-weight:600;color:var(--nar);
   text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
 .rev-q .rev-t{min-width:0}
-.rev-q.abierto{border-color:var(--azul);background:#EEF3FB;border-bottom-left-radius:0;
+.rev-q.abierto{border-color:var(--azul);background:var(--fondo-info);border-bottom-left-radius:0;
   border-bottom-right-radius:0}
 .rev-a{border:1.5px solid var(--azul);border-top:0;border-radius:0 0 12px 12px;
   padding:.7rem .85rem;background:#F7FAFF;font-size:.875rem;line-height:1.5}
@@ -2068,14 +2081,14 @@ details.card summary::marker{content:''}
 .jg-preg{background:var(--v-sup,#fff);border:1.5px solid var(--borde);border-radius:18px;padding:1rem;
   font-size:1rem;line-height:1.45;font-weight:600;color:var(--tinta)}
 .jg-fb{margin-top:.8rem;padding:.75rem .9rem;border-radius:12px;font-size:.875rem;line-height:1.45}
-.jg-fb.ok{background:#EAF7EA;border:1.5px solid #1A7A1A;color:#135613}
-.jg-fb.ko{background:#FDECEC;border:1.5px solid #C0392B;color:#8E2A1F}
+.jg-fb.ok{background:var(--fondo-ok);border:1.5px solid #1A7A1A;color:var(--verde-txt)}
+.jg-fb.ko{background:var(--fondo-mal);border:1.5px solid #C0392B;color:var(--rojo-txt)}
 /* Las palabras tocables de «caza el error» van dentro del renglón, no en fila
    aparte: hay que verlas en su frase, que es donde chirría la que no va. */
 .jg-w{display:inline;padding:.12rem .38rem;margin:0 .1rem;border-radius:8px;cursor:pointer;
   border:1.5px solid var(--borde);background:var(--v-sup,#fff);color:var(--tinta);font:inherit;font-weight:700}
-.jg-w.ok{border-color:#1A7A1A;background:#EAF7EA;color:#1A7A1A}
-.jg-w.ko{border-color:#C0392B;background:#FDECEC;color:#C0392B}
+.jg-w.ok{border-color:var(--verde-txt);background:var(--fondo-ok);color:var(--verde-txt)}
+.jg-w.ko{border-color:var(--rojo-txt);background:var(--fondo-mal);color:var(--rojo-txt)}
 
 /* La tabla del recorrido versículo por versículo: el número angosto y fijo,
    el texto ocupando el resto. Sin esto el número se estira y el renglón se
@@ -2242,8 +2255,8 @@ details.card summary::marker{content:''}
 .fch{display:flex;flex-wrap:wrap;gap:.4rem}
 .fch-b{font:inherit;font-weight:800;font-size:1rem;min-width:46px;min-height:44px;border-radius:999px;
   border:2px solid var(--v-linea,#d8e0ef);background:var(--v-sup,#fff);color:var(--gris);cursor:pointer;padding:0 .7rem}
-.fch-b.da[aria-pressed="true"]{background:var(--naranja-txt);border-color:var(--naranja-txt);color:#fff}
-.fch-b.pr[aria-pressed="true"]{background:#7B2D8B;border-color:#7B2D8B;color:#fff}
+.fch-b.da[aria-pressed="true"]{background:var(--nar-fondo);border-color:var(--nar-fondo);color:#fff}
+.fch-b.pr[aria-pressed="true"]{background:#7B2D8B;border-color:var(--azul);color:#fff}
 .fch-b:focus-visible,.fch-todo:focus-visible,.fe-b:focus-visible{outline:3px solid var(--cielo);outline-offset:2px}
 
 .fe{max-width:880px;margin:.9rem auto 0;padding:0 1rem;display:flex;flex-direction:column;gap:.5rem}
@@ -2251,8 +2264,8 @@ details.card summary::marker{content:''}
 .fe-k{font-size:.75rem;font-weight:800;color:var(--gris);margin-right:.2rem}
 .fe-b{font:inherit;font-size:.875rem;font-weight:800;min-height:38px;padding:0 .85rem;border-radius:999px;
   border:1.5px solid var(--v-linea,#d8e0ef);background:var(--v-sup,#fff);color:var(--gris);cursor:pointer}
-.fe-b[aria-pressed="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
-.fe.on .fe-aviso{background:#FFF1E4;color:#8F4506;border-radius:12px;padding:.5rem .75rem;
+.fe-b[aria-pressed="true"]{background:var(--azul-fondo);border-color:var(--azul);color:#fff}
+.fe.on .fe-aviso{background:#FFF1E4;color:var(--naranja-txt);border-radius:12px;padding:.5rem .75rem;
   font-size:.875rem;font-weight:700;margin:0}
 .fe-fichas{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#d8e0ef);border-radius:18px;padding:.75rem}
 .lg-libros{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.9rem}
@@ -2272,12 +2285,12 @@ details.card summary::marker{content:''}
 .lec-rp-tx span{white-space:nowrap}
 .lec-tira{display:flex;gap:2px;flex:1 0 100%;min-width:0}
 .lec-tira button{flex:1 1 0;min-width:0;border:0;background:none;padding:6px 0;cursor:pointer}
-.lec-tira i{display:block;height:5px;border-radius:8px;background:#ead9bc}
+.lec-tira i{display:block;height:5px;border-radius:8px;background:var(--fondo-calido)}
 .lec-tira button.ya i{background:#e8a24a}
 .lec-tira button.ahora i{background:#c96a0e;height:7px;margin-top:-1px}
 .lec-tira button:focus-visible{outline:2px solid var(--cielo);outline-offset:1px}
-#detalle .biblia p.suena{background:#fdecc8;border-radius:8px;box-shadow:0 0 0 4px #fdecc8}
-#detalle .biblia p.ya{color:#8b8676}
+#detalle .biblia p.suena{background:var(--fondo-calido);border-radius:8px;box-shadow:0 0 0 4px var(--fondo-calido)}
+#detalle .biblia p.ya{color:var(--gris)}
 @media print{.lect-top{display:none!important}}
 /* En la columna del texto la franja es angosta (unos 290 px en el celular):
    con la velocidad al lado, «Escuchando · Versículo 4 de 21» quedaba tapado.
@@ -2294,9 +2307,9 @@ details.card summary::marker{content:''}
 /* v139: pantalla de arranque (ver build.js). Colores fijos y no variables:
    se pinta antes de que el JavaScript ponga la categoría. */
 #arranque{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:.6rem;background:#FFFBF2;color:#1F3864;font-family:system-ui,-apple-system,sans-serif}
+  justify-content:center;gap:.6rem;background:#FFFBF2;color:var(--azul);font-family:system-ui,-apple-system,sans-serif}
 #arranque b{font-size:1.125rem;font-weight:800}
-#arranque span{font-size:.875rem;color:#5B5F6B}
+#arranque span{font-size:.875rem;color:var(--gris)}
 @media print{#arranque{display:none}}
 
 /* ═════════ v146: ÍCONOS DENTRO DE TEXTO Y BOTONES ═════════
@@ -2325,8 +2338,8 @@ details.card summary::marker{content:''}
    renglón que la tira. Sin voz en el aparato va suelto (.btn .tono). */
 .lec-rp .lect-full{order:6;display:inline-flex;align-items:center;gap:.35rem;margin-left:auto;
   border:0;border-radius:999px;padding:.5rem .9rem;min-height:44px;cursor:pointer;font:inherit;
-  font-size:.75rem;font-weight:800;color:var(--v-cat);background:color-mix(in srgb,var(--v-cat) 12%,#fff)}
-.lec-rp .lect-full:hover{background:color-mix(in srgb,var(--v-cat) 18%,#fff)}
+  font-size:.75rem;font-weight:800;color:var(--v-cat);background:color-mix(in srgb,var(--v-cat) 12%,var(--card))}
+.lec-rp .lect-full:hover{background:color-mix(in srgb,var(--v-cat) 18%,var(--card))}
 .lect-top>.lect-full{margin-bottom:.9rem}
 
 /* La bocina de cada bloque: ícono de línea y la palabra, en el color de la
@@ -2336,7 +2349,7 @@ details.card summary::marker{content:''}
   background:transparent;color:var(--v-cat);font:inherit;font-size:.75rem;font-weight:800;
   min-width:44px;min-height:44px;padding:0 .55rem;border-radius:12px;cursor:pointer;vertical-align:middle}
 .btn-voz:hover{background:color-mix(in srgb,var(--v-cat) 10%,transparent);border:0}
-.btn-voz.sonando{background:color-mix(in srgb,var(--v-cat) 14%,#fff);color:var(--v-cat);border:0}
+.btn-voz.sonando{background:color-mix(in srgb,var(--v-cat) 14%,var(--card));color:var(--v-cat);border:0}
 .btn-voz .ico-t{width:1.35em;height:1.35em}
 .tj .btn-voz span,.hoja .btn-voz span{display:none}
 .btn-reinicia{min-width:44px;min-height:44px;border:0;background:transparent;border-radius:12px}
@@ -2367,8 +2380,8 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .fe-pill b{color:var(--azul);font-weight:800}
 .fe-pill .fe-fl{width:1em;height:1em;color:var(--gris);transition:transform var(--v-paso,.18s)}
 .fe-pill[aria-expanded="true"] .fe-fl{transform:rotate(180deg)}
-.fe.on .fe-pill{border-color:#E7A35C;background:#FFF6EC}
-.fe.on .fe-pill b{color:#8F4506}
+.fe.on .fe-pill{border-color:#E7A35C;background:var(--fondo-calido)}
+.fe.on .fe-pill b{color:var(--naranja-txt)}
 .fe-menu{display:flex;flex-wrap:wrap;gap:.5rem;padding:.5rem;background:var(--v-sup,#fff);
   border:1px solid var(--v-linea,#d8e0ef);border-radius:18px;box-shadow:var(--v-s1);width:max-content;max-width:100%}
 
@@ -2431,9 +2444,9 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   grid-template-areas:"tx vel" "ios ios" "ti ti" "bot bot";align-items:center;gap:0 .6rem}
 .lec-rp-tx{grid-area:tx;min-height:3.2rem;justify-content:center}
 .lec-rp-tx b{font-size:.75rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;white-space:normal;
-  color:color-mix(in srgb,var(--v-cat,#E8720C) 70%,#000)}
-.lec-rp-tx span{font-size:1rem;font-weight:700;color:#2b2418;white-space:normal}
-.lec-rp .lec-ios{grid-area:ios;font-size:.75rem;color:#76674c}
+  color:color-mix(in srgb,var(--v-cat,#E8720C) 70%,var(--txt))}
+.lec-rp-tx span{font-size:1rem;font-weight:700;color:var(--txt);white-space:normal}
+.lec-rp .lec-ios{grid-area:ios;font-size:.75rem;color:var(--v-tinta2,#76674c)}
 /* El aviso del modo silencio es para antes de empezar: sonando ya no hace falta. */
 .lec-rp.activo .lec-ios{display:none}
 .lec-vel{grid-area:vel;justify-self:end}
@@ -2442,14 +2455,14 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .lec-tira i{height:6px}
 .lec-tira button.ahora i{height:8px}
 /* Antes de cargar, la tira del estudio no tiene partes: queda su riel. */
-.lec-tira:empty::before{content:"";flex:1;align-self:center;height:6px;border-radius:8px;background:#ead9bc}
+.lec-tira:empty::before{content:"";flex:1;align-self:center;height:6px;border-radius:8px;background:var(--fondo-calido)}
 .lec-rp-bot{grid-area:bot;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;min-width:0}
 .lec-trans{grid-column:2;display:flex;align-items:center;justify-content:center;gap:.5rem}
 .lec-play{width:56px;height:56px;display:grid;place-items:center}
 .lec-play .ico-t{width:1.6rem;height:1.6rem}
 .lec-otra{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:12px;
   cursor:pointer;color:var(--v-cat);background:none}
-.lec-otra:hover,.lec-paso:hover:not(:disabled){background:color-mix(in srgb,var(--v-cat) 12%,#fff)}
+.lec-otra:hover,.lec-paso:hover:not(:disabled){background:color-mix(in srgb,var(--v-cat) 12%,var(--card))}
 .lec-otra .ico-t{width:1.25rem;height:1.25rem}
 .lec-paso{width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:12px;cursor:pointer;
   color:var(--v-cat);background:none}
@@ -2531,17 +2544,17 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
    texto bíblico: es el texto oficial que se memoriza, y se ve distinto del
    resto de la app. Las frases van numeradas como versículos. */
 blockquote.decl:not(.frase-libro){max-width:none;margin:.2rem 0 .4rem;
-  padding:1.1rem 1.25rem 1rem;background:#fffaf0;border:1px solid #f0e2c4;border-radius:12px;
+  padding:1.1rem 1.25rem 1rem;background:var(--fondo-calido);border:1px solid var(--v-linea,#f0e2c4);border-radius:12px;
   font-family:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
-  font-size:1.125rem;line-height:1.8;letter-spacing:0;color:#2b2418}
+  font-size:1.125rem;line-height:1.8;letter-spacing:0;color:var(--txt)}
 .decl-txt .fn{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.62em;font-weight:800;
   color:var(--v-cat);margin-right:.2em;vertical-align:.5em;line-height:0}
 /* v158: la frase que suena y, dentro, la palabra. La frase es un texto que
    corre por varios renglones: el fondo se repite en cada renglón y no lleva
    la sombra de los bloques, que en un texto corrido saldría a pedazos. */
-#detalle .decl-txt .dfr.suena{background:#fdecc8;box-shadow:none;border-radius:8px;
+#detalle .decl-txt .dfr.suena{background:var(--fondo-calido);box-shadow:none;border-radius:8px;
   -webkit-box-decoration-break:clone;box-decoration-break:clone}
-::highlight(voz-palabra){background-color:#f0b54a;color:#2b2418}
+::highlight(voz-palabra){background-color:#f0b54a;color:var(--txt)}
 blockquote.decl:not(.frase-libro) .decl-src{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
   margin-top:.9rem;padding-top:.7rem;border-top:1px solid #f0e2c4}
 blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
@@ -2567,14 +2580,14 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 }
 @media (min-width:900px) and (prefers-reduced-motion:reduce){.hoja-vers .hoja-caja{transition:none}}
 /* v155: el versículo al que lleva una cita del estudio, resaltado un momento. */
-.biblia p.salto{background:#fdecc8;box-shadow:0 0 0 4px #fdecc8;border-radius:8px;outline:0;transition:background .6s,box-shadow .6s}
+.biblia p.salto{background:var(--fondo-calido);box-shadow:0 0 0 4px var(--fondo-calido);border-radius:8px;outline:0;transition:background .6s,box-shadow .6s}
 
 /* v182: el bloque de interpretación al final de cada capítulo. */
 .ir-interp{margin:0 0 .9rem;min-height:40px;font-size:.875rem;color:var(--cielo-txt,#2866AA)}
 .vd-cab .ir-interp{margin:.5rem 0 0}
 .sec.interp-cab{margin-top:1.6rem;padding:1rem 1.1rem;border-radius:var(--r,16px);
   background:color-mix(in srgb,#0E7490 10%,var(--card,#fff));border:1px solid color-mix(in srgb,#0E7490 30%,transparent)}
-.interp-tit{margin:0;font-size:1.125rem;color:#0E6A82;display:flex;align-items:center;gap:.45rem}
+.interp-tit{margin:0;font-size:1.125rem;color:var(--cielo-txt);display:flex;align-items:center;gap:.45rem}
 .interp-nota{margin:.35rem 0 0;font-size:.875rem;color:var(--gris)}
 
 /* ── LÁMINAS (v185): estudio interactivo con imagen ── */
@@ -2641,7 +2654,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-nav span{font-size:.75rem;color:#C9BFA9;font-variant-numeric:tabular-nums}
 .lam-tiempo{background:var(--card,#fff);border-radius:18px;box-shadow:var(--sh);padding:12px 14px 6px}
 .lam-tcab{display:flex;gap:10px;align-items:center;margin-bottom:8px}
-.lam-play{width:44px;height:44px;border-radius:50%;border:0;background:var(--azul);color:#fff;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+.lam-play{width:44px;height:44px;border-radius:50%;border:0;background:var(--azul-fondo);color:#fff;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
 .lam-play.on{background:var(--naranja,#E8720C)}
 .lam-tano{font-weight:800;color:var(--azul);font-variant-numeric:tabular-nums}
 .lam-tq{font-size:.875rem;color:var(--gris)}
@@ -2672,7 +2685,8 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-ops button.mal{border-color:var(--rojo,#C0392B)}
 .lam-fb{min-height:1.5em;margin-top:8px;font-size:.875rem;color:var(--gris)}
 .lam.pres{background:#0E0D0B;color:#F4EEE2}
-.lam.pres .lam-tit{color:#F4EEE2}
+.lam.pres .lam-tit,.lam.pres .lam-cerrar{color:#F4EEE2}
+.lam.pres .lam-ant{color:#F2C46B}
 .lam.pres .lam-esc{width:min(100%,calc((100vh - 270px) * 1100 / 1152))}
 .lam.pres.ancho>*{max-width:1400px}
 .lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:min(100%,calc((100vh - 250px) * 2050 / 1152))}
@@ -3239,7 +3253,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 <!-- v185: el estudio interactivo con imagen (lamAbre). -->
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = '677c35cb4c4c';
+const VERSION_APP = '4008e992cd83';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
