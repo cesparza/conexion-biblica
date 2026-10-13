@@ -144,11 +144,14 @@ function lamEscena(){
       '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</span></button>';}).join('');
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
-    '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'+
+    '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>'+
+    '<radialGradient id="lamLuz"><stop offset="0" stop-color="#FFF6D8" stop-opacity="1"/><stop offset=".35" stop-color="#F7D774" stop-opacity=".75"/><stop offset="1" stop-color="#F2C46B" stop-opacity="0"/></radialGradient>'+
+    '<clipPath id="lamClip"><circle id="lamClipC" cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0"/></clipPath></defs>'+
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
-    '<image class="lam-monte" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
+    '<image class="lam-monte" clip-path="url(#lamClip)" href="'+lamSrc('monte')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="url(#lamSombra)"/>'+
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
+    '<circle class="lam-luz" cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" fill="url(#lamLuz)"/>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
     '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
@@ -181,9 +184,10 @@ function lamCaja(id){
   return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H/2)),W,H];
 }
 /* Encender: las partes de `ids` se ven, las demás se apagan (vacío: todas normales). */
-function lamEnciende(ids,suaves){
+function lamEnciende(ids,suaves,vecinas){
   const svg=document.getElementById('lamSvg');if(!svg)return;
   const hay=ids&&ids.length;
+  svg.querySelectorAll('.lam-estatua .lam-parte').forEach(x=>x.classList.toggle('vecina',!!hay&&(vecinas||[]).includes(x.getAttribute('data-p'))));
   svg.querySelectorAll('.lam-estatua .lam-parte').forEach(x=>{const id=x.getAttribute('data-p');
     x.classList.toggle('on',!!hay&&ids.includes(id));
     x.classList.toggle('apagada',!!hay&&!ids.includes(id)&&!(suaves||[]).includes(id));
@@ -273,7 +277,7 @@ function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEa
 function lamInicio(){
   lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
+  if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
   lamAcerca(lamTodo(),650);
 }
 function lamToca(id){
@@ -287,15 +291,18 @@ function lamElige(i){
   lamPara();lamSel=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   const esMonte=p.id==='monte',esPiedra=p.id==='piedra';
-  svg.querySelector('.lam-monte').style.opacity=esMonte?'1':'0';
+  if(!esMonte)lamMonte('no');
   svg.querySelector('.lam-estatua').style.opacity=esMonte?'0':'1';
-  lamEnciende(esMonte||esPiedra?[]:[p.id]);lamEtiquetas(false);
+  /* v189: el reino de antes y el de después se ven en otro tono, a media luz:
+     se lee de dónde viene y a dónde va (Camilo, 13-oct). */
+  const T=L.tiempo,k=T.indexOf(p.id),vec=k<0?[]:[T[k-1],T[k+1]].filter(Boolean);
+  lamEnciende(esMonte||esPiedra?[]:[p.id],[],vec);lamEtiquetas(false);
   lamAcerca(esMonte||esPiedra?lamTodo():lamCaja(p.id),650);
   /* v187: también en Explorar la piedra cae y golpea los pies (2:34), y el
      monte nace del polvo que se lleva el viento (2:35). */
   const pi=svg.querySelector('.lam-piedra');
   if(esPiedra){lamPiedraArriba();lamCae(pi);}
-  else if(esMonte){lamVuelo++;pi.style.opacity='1';pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');lamPolvo(svg);}
+  else if(esMonte){lamVuelo++;pi.style.opacity='1';pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');lamPolvo(svg);setTimeout(()=>{if(lamSel==='monte')lamMonte('crece');},500);}
   else lamPiedraArriba();
   lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
 }
@@ -303,7 +310,7 @@ function lamHistoria(k){
   const L=LAM(),t=k==='desp'?L.despues:L.historia[k];if(!t)return;
   lamPara();lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
   const svg=document.getElementById('lamSvg');
-  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
+  if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
   lamHoja(lamHojaTexto(t));lamVeHoja();
 }
 
@@ -327,7 +334,7 @@ function lamQuien(y){
 function lamVeAnio(y){
   lamAnio=y;lamSel='';lamEtiquetas(false);lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();
+  lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();
   const q=lamQuien(y);lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
   lamAcerca(lamTodo(),0);
   document.getElementById('lamTano').textContent=lamAnioTx(y);
@@ -377,11 +384,12 @@ function lamPres(k){
   lamEtiquetas(false);
   const piedra=svg.querySelector('.lam-piedra');
   piedra.style.opacity=(s.id==='piedra')?'1':'0';
-  svg.querySelector('.lam-monte').style.opacity=(rotos||s.tipo==='desp'||s.tipo==='cierre')?'1':'0';
+  const verMonte=rotos||s.tipo==='desp'||s.tipo==='cierre';
   piedra.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');
   if(s.anim==='cae'&&dir>0)lamCae(piedra);
   else if(s.id==='piedra')piedra.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');
-  if(s.anim==='monte'&&dir>0)lamPolvo(svg);
+  if(s.anim==='monte'&&dir>0){lamMonte('no');lamPolvo(svg);setTimeout(()=>{if(lamPasos()[lamPaso]&&lamPasos()[lamPaso].anim==='monte')lamMonte('crece');},500);}
+  else lamMonte(verMonte?'ya':'no');
   lamAcerca(s.tipo==='parte'&&L.tiempo.includes(s.id)?lamCaja(s.id):lamTodo(),900);
   const ult=vistos.filter(id=>L.tiempo.includes(id)).pop();
   if(ult){const p=lamParte(ult);const r=document.getElementById('lamRango');r.value=Math.min(p.a,2026);
@@ -407,6 +415,32 @@ function lamCae(piedra){
       if(est&&est.animate)est.animate([{transform:'translate(0,0)'},{transform:'translate(-12px,4px)'},{transform:'translate(12px,-2px)'},{transform:'translate(0,0)'}],{duration:380});}};
   requestAnimationFrame(f);
 }
+/* v189: EL MONTE (Camilo, 13-oct: «es el reino de Dios establecido, la
+   animación no es suficiente»). La piedra «se hizo un gran monte que llenó
+   toda la tierra» (2:35): el monte nace DESDE el punto donde golpeó la
+   piedra, en un círculo de luz que crece hasta cubrir toda la escena, y la
+   piedra se funde en esa luz. modo: 'no' (escondido), 'ya' (completo, sin
+   animar) o 'crece'. */
+function lamMonte(modo){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const m=svg.querySelector('.lam-monte'),c=svg.querySelector('#lamClipC'),luz=svg.querySelector('.lam-luz');
+  const R=1900,yo=++lamCrece;
+  if(modo==='no'||modo==='ya'||lamQuieto()){
+    m.style.opacity=modo==='no'?'0':'1';c.setAttribute('r',modo==='no'?0:R);luz.setAttribute('r',0);luz.style.opacity='0';return;}
+  m.style.opacity='1';c.setAttribute('r',0);
+  const t0=performance.now(),ms=4200,pi=svg.querySelector('.lam-piedra');
+  const f=t=>{if(yo!==lamCrece)return;
+    /* Primero la piedra brilla (un sexto del tiempo); después el monte crece
+       despacio al principio, rápido en medio y se asienta al final. */
+    const k=Math.min(1,(t-t0)/ms),q=Math.max(0,(k-.16)/.84),e=(1-Math.cos(Math.PI*q))/2;
+    c.setAttribute('r',(R*e).toFixed(1));
+    /* La luz va delante del monte y se apaga al final. */
+    luz.setAttribute('r',(k<.16?60+k/.16*200:260+R*0.5*e).toFixed(1));luz.style.opacity=String(k<.75?Math.min(1,k*5):Math.max(0,(1-k)/.25));
+    if(pi)pi.style.opacity=String(Math.max(0,1-q*2.5));
+    if(k<1)requestAnimationFrame(f);};
+  requestAnimationFrame(f);
+}
+let lamCrece=0;
 /* La estatua se hace «tamo» y se lo lleva el viento (2:35). */
 function lamPolvo(svg){
   const capa=svg.querySelector('.lam-polvo');
