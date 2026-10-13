@@ -159,7 +159,7 @@ function lamEscena(){
     '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
-    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div>'+(lamModo==='presentar'?'':'<div class="lam-aviso" id="lamAviso">Toca una parte de la estatua</div>')+'</div>'+
     /* v187: la explicación va DEBAJO de la imagen (al lado en pantalla ancha),
        nunca encima: en el celular tapaba la animación. Solo en Presentar con
        pantalla ancha va sobre la parte vacía de la escena apaisada. */
@@ -346,6 +346,7 @@ function lamToca(id){
 }
 function lamElige(i){
   const L=LAM(),p=L.partes[i];if(!p)return;
+  const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
   lamPara();lamHist(null);lamSel=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   const esMonte=p.id==='monte',esPiedra=p.id==='piedra';

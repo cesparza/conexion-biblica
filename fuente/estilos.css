@@ -2641,7 +2641,8 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-monte{opacity:0;transition:opacity .4s ease}
 .lam-estatua{transition:opacity .8s}
 .lam-parte{transition:opacity .45s,filter .45s}
-.lam-parte.apagada{opacity:.16}
+/* v202 (Camilo: «los pies cuando no están, están completamente invisibles»): las partes no elegidas siguen viéndose, en sombra. */
+.lam-parte.apagada{opacity:.42;filter:saturate(.35) brightness(.55)}
 .lam-parte.tenue{opacity:.55}
 /* v193: el reino de antes y el de después se ven enteros pero en sombra, como
    una estatua con un solo foco: con transparencia se perdían contra el cielo. */
@@ -2852,3 +2853,10 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .lam.pres.sin-texto .lam-hoja{display:none}
 .lam.pres .lam-txt{color:#F4EEE2}
 .lam-mas .lam-fig img{width:100%;max-height:22vh;object-fit:cover}
+/* v202: que se note que cada parte se toca. El punto de color de cada etiqueta
+   late suave tres veces al abrir, y la estatua tiene un aviso corto. */
+@keyframes lamInvita{0%,100%{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 35%,transparent),0 0 10px var(--c)}50%{box-shadow:0 0 0 9px color-mix(in srgb,var(--c) 0%,transparent),0 0 18px var(--c)}}
+.lam-et::before{animation:lamInvita 1.6s ease-in-out 3}
+.lam-aviso{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:rgba(14,13,11,.72);color:#F4EEE2;font-size:.875rem;font-weight:600;pointer-events:none;white-space:nowrap;transition:opacity .4s}
+.lam-aviso.fuera{opacity:0}
+@media (prefers-reduced-motion:reduce){.lam-et::before{animation:none}}

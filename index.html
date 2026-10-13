@@ -2658,7 +2658,8 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-monte{opacity:0;transition:opacity .4s ease}
 .lam-estatua{transition:opacity .8s}
 .lam-parte{transition:opacity .45s,filter .45s}
-.lam-parte.apagada{opacity:.16}
+/* v202 (Camilo: «los pies cuando no están, están completamente invisibles»): las partes no elegidas siguen viéndose, en sombra. */
+.lam-parte.apagada{opacity:.42;filter:saturate(.35) brightness(.55)}
 .lam-parte.tenue{opacity:.55}
 /* v193: el reino de antes y el de después se ven enteros pero en sombra, como
    una estatua con un solo foco: con transparencia se perdían contra el cielo. */
@@ -2869,6 +2870,13 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .lam.pres.sin-texto .lam-hoja{display:none}
 .lam.pres .lam-txt{color:#F4EEE2}
 .lam-mas .lam-fig img{width:100%;max-height:22vh;object-fit:cover}
+/* v202: que se note que cada parte se toca. El punto de color de cada etiqueta
+   late suave tres veces al abrir, y la estatua tiene un aviso corto. */
+@keyframes lamInvita{0%,100%{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 35%,transparent),0 0 10px var(--c)}50%{box-shadow:0 0 0 9px color-mix(in srgb,var(--c) 0%,transparent),0 0 18px var(--c)}}
+.lam-et::before{animation:lamInvita 1.6s ease-in-out 3}
+.lam-aviso{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:rgba(14,13,11,.72);color:#F4EEE2;font-size:.875rem;font-weight:600;pointer-events:none;white-space:nowrap;transition:opacity .4s}
+.lam-aviso.fuera{opacity:0}
+@media (prefers-reduced-motion:reduce){.lam-et::before{animation:none}}
 </style>
 </head>
 <body>
@@ -3416,7 +3424,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <!-- v185: el estudio interactivo con imagen (lamAbre). -->
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = '19a57b32dd81';
+const VERSION_APP = '26fb619d98e9';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -71334,7 +71342,7 @@ function lamEscena(){
     '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
-    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div>'+(lamModo==='presentar'?'':'<div class="lam-aviso" id="lamAviso">Toca una parte de la estatua</div>')+'</div>'+
     /* v187: la explicación va DEBAJO de la imagen (al lado en pantalla ancha),
        nunca encima: en el celular tapaba la animación. Solo en Presentar con
        pantalla ancha va sobre la parte vacía de la escena apaisada. */
@@ -71521,6 +71529,7 @@ function lamToca(id){
 }
 function lamElige(i){
   const L=LAM(),p=L.partes[i];if(!p)return;
+  const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
   lamPara();lamHist(null);lamSel=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   const esMonte=p.id==='monte',esPiedra=p.id==='piedra';
