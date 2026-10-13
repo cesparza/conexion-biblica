@@ -264,7 +264,7 @@ module.exports = {
           ['El tiempo del fin (desde 1798)', '«La visión es para el tiempo del fin» (8:17, 19)', '«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)', 'El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)'],
           ['La segunda venida y el reino eterno', 'El cuerno, quebrantado «no por mano humana» (8:25)', '«Llegará a su fin, y no tendrá quien lo ayude» (11:45)', 'Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)'],
         ]) +
-        `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>`,
+        `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>`,
     },
     {
       t: '🧭 Lo que muestra la comparación',

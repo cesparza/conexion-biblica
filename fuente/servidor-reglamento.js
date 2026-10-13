@@ -979,8 +979,8 @@ export const CATALOGO = {
     "sub": "Los reyes del norte y del sur",
     "grupo": "Biblia",
     "n": [
-     36,
-     24,
+     40,
+     25,
      30
     ]
    },
@@ -990,8 +990,8 @@ export const CATALOGO = {
     "sub": "El tiempo del fin",
     "grupo": "Biblia",
     "n": [
+     26,
      23,
-     21,
      9
     ]
    },

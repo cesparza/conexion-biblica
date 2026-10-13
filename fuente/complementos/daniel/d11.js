@@ -7,7 +7,12 @@
    leyó el rey del norte en la historia adventista, su esquema del capítulo,
    el paso de lo literal a lo espiritual, 11:31 y el 508, y 11:40-45 como
    postura suya, con otras lecturas al lado. v188: voz directa, sin nombrar
-   autores en el cuerpo; una sola «Fuente:» corta por sección. */
+   autores en el cuerpo; una sola «Fuente:» corta por sección.
+   Camilo (13-oct 13:04: «complementar con el libro de Daniel 11 de
+   Treiyer»): Humberto R. Treiyer, «Enigmas descifrados» (2006; no confundir
+   con Alberto Treiyer). Se suman los saltos del relato, 11:3-20 verso por
+   verso, 21-30, palabras clave de 31-39 y detalles de 40-45. Donde choca
+   con Bohr (división 16-28/29-39; 11:22) queda como «otra lectura». */
 const { tbl, hi, wa, li } = require('../../apocalipsis/ayudas.js');
 
 module.exports = {
@@ -37,7 +42,75 @@ module.exports = {
         ['11:40-45', 'El tiempo del fin, desde 1798', '8:17, 19, 25'],
         ['12:1-3', 'Se levanta Miguel, angustia, liberación', '—'],
       ]) +
-      `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-18; Bohr, <i>Daniel 1-10</i>, p. 357; Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.</p>` },
+      `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-18; Bohr, <i>Daniel 1-10</i>, p. 357; Treiyer, <i>Enigmas descifrados</i>, p. 34 y 50-52.</p>` },
+
+    { t: '🧭 Daniel 11 en el tiempo: los saltos del relato', capa: 'contexto', h:
+      `<p>El capítulo no cuenta toda la historia. Salta lo que no aclara la visión de Daniel 7 y 8, y a veces vuelve atrás.</p>` +
+      tbl(['Versículos', 'Qué cubre', 'Años'], [
+        ['11:2', 'De Ciro el Grande a la muerte de Jerjes I', '536-465 a.C.'],
+        ['11:3-4', 'Alejandro Magno y el reparto de su reino', '336-301 a.C.'],
+        ['11:5-13 y 15', 'Los Tolomeos (sur) contra los seléucidas (norte)', '301-198 a.C.'],
+        ['11:14', 'Un paréntesis: Roma entra en escena, y cae', '198 a.C.-476 d.C.'],
+        ['11:16-20', 'Roma vence a los dos reyes, hasta César Augusto', '198 a.C.-14 d.C.'],
+        ['11:21-30', 'Roma papal frente al poder civil', '538-1798'],
+        ['11:31-39', 'La misma época, vista por su enseñanza', '538-1798'],
+        ['11:40-45', 'El tiempo del fin', 'desde 1798'],
+      ]) +
+      li([
+        '<b>Entre 2 y 3</b> faltan unos 130 años: de Jerjes I (465 a.C.) a Alejandro (336 a.C.).',
+        '<b>Entre 20 y 21</b> faltan siglos: de la muerte de Augusto (14 d.C.) a los obispos de Roma.',
+        '<b>En 31 y en 40</b> el relato vuelve atrás: 31 regresa al comienzo de Roma papal, y 40 regresa a 1798, el golpe de 11:29-30.',
+      ]) +
+      `<p>Otra lectura pone el paso de Roma imperial a Roma papal en 11:29 (ver la tabla anterior).</p>` +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 30-36.</p>` },
+
+    { t: '🧭 Daniel 11:3-13: los reyes, uno por uno', capa: 'contexto', h:
+      tbl(['Verso', 'Cómo se cumplió'], [
+        ['3', 'Alejandro Magno sube al trono en 336 a.C., con 20 años, y muere en 323 a.C.'],
+        ['4', 'Sus hijos son asesinados. Tras la batalla de Ipso (301 a.C.) el reino queda en cuatro: Casandro, Lisímaco, Seleuco I Nicátor y Tolomeo I Sóter.'],
+        ['5', 'El rey del sur es Tolomeo I Sóter. «Uno de sus príncipes», Seleuco I Nicátor, llega a ser más fuerte: domina del mar Egeo al río Indo.'],
+        ['6', 'Berenice, hija de Tolomeo II Filadelfo, se casa con Antíoco II Teos. Laodice, la esposa repudiada, lo envenena; Berenice y su hijo mueren (246 a.C.).'],
+        ['7-8', 'Tolomeo III Evergetes, hermano de Berenice, entra en Antioquía y vence a Seleuco II Calínico. Lleva a Egipto unos 2.500 ídolos: por eso lo llaman «Benefactor».'],
+        ['9', 'Seleuco II Calínico ataca Egipto y vuelve derrotado (242 a.C.).'],
+        ['10', '«Los hijos de aquél» son los dos hijos de Seleuco II: el mayor muere asesinado en 223 a.C.; el otro es Antíoco III el Grande.'],
+        ['11-12', 'En Rafia, el 22 de junio de 217 a.C., Tolomeo IV Filopátor vence, pero no aprovecha la victoria.'],
+        ['13', 'Antíoco III el Grande vuelve con un ejército mayor: vence en Gaza (201 a.C.) y en Panias (198 a.C.).'],
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 52-64.</p>` },
+
+    { t: '🧭 Daniel 11:14-20: entra Roma', capa: 'contexto', h:
+      tbl(['Verso', 'Cómo se cumplió'], [
+        ['14', 'Muchos se levantan contra el niño-rey Tolomeo V Epífanes. Los «hombres turbulentos» son, en hebreo, «los que quebrantan a tu pueblo»: los romanos. Se levantan «para que se cumpla la visión» de Daniel 7 y 8, y caen en 476 d.C.'],
+        ['15', 'Antíoco III el Grande vence a Escopas, general de Egipto, y toma «la ciudad fuerte» en la costa de Gaza, Tiro y Sidón (198 a.C.).'],
+        ['16', 'Roma vence a Antíoco III el Grande en Magnesia (190 a.C.). Siria es provincia romana en 64 a.C., y Judea, «la tierra gloriosa», en 63 a.C.'],
+        ['17', 'Roma pacta con Tolomeo XII Auletes, que deja a sus hijos bajo su protección. La «hija» es Cleopatra VII. El reino de los Tolomeos no permanece: Egipto es provincia romana en 30 a.C.'],
+        ['18', 'Julio César vuelve su rostro «a las costas»: las Galias y Britania. «Un príncipe», Pompeyo, le ordena volver a Roma como simple ciudadano.'],
+        ['19', 'Julio César se hace dictador de por vida, pero cae asesinado el 15 de marzo de 44 a.C.'],
+        ['20', 'César Augusto hace pasar «un cobrador de tributos»: el censo de Lucas 2:1-3, que lleva a José y María a Belén. Muere en paz en 14 d.C., «no con ira ni en batalla».'],
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 64-73.</p>` },
+
+    { t: '🧭 Daniel 11:21-30: el papado frente al poder civil', capa: 'contexto', h:
+      `<p>Desde el v. 21 el norte y el sur ya no son lugares. El rey del norte es el poder religioso, el papado: como Babilonia, una religión falsa. El rey del sur es el poder civil, el Estado: como Egipto, que dijo «no conozco a Jehová» (Éxodo 5:2).</p>` +
+      tbl(['Verso', 'Qué significa'], [
+        ['21', 'El «hombre despreciable» no es el emperador Tiberio, sino el papado. Empieza pequeño, «sin aviso», y toma el reino «con halagos»: salvación sin arrepentimiento, por indulgencias y sacramentos.'],
+        ['22', 'El «príncipe del pacto» es Cristo (8:25). Lo que se destruye es el conocimiento de su obra en el santuario del cielo, que se cambia por una falsificación. Otra lectura ve aquí su muerte en la cruz.'],
+        ['24', '«Esto durará un tiempo»: los 1.260 años. En 756 Pepino el Breve le da al papa las tierras de los Estados Pontificios, que pierde en 1870.'],
+        ['29', '«Al tiempo señalado», en 1798, la venida al sur ya no es como la primera: esta vez el poder civil le gana.'],
+        ['30', 'Las «naves de Quitim» son la Francia de la Revolución. Sus tropas entran en Roma el 10 de febrero de 1798; el 15 toman preso a Pío VI, que muere cautivo en Valence el 29 de agosto de 1799. «Volverá»: el papado se recupera con ayuda de «los que abandonen el santo pacto». Otra lectura ve aquí a Roma.'],
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 76-115.</p>` },
+
+    { t: '🧭 Daniel 11:31-39: palabras clave', capa: 'contexto', h:
+      li([
+        '<b>«El santuario y la fortaleza» (31).</b> En hebreo no hay «y»: es «el santuario fortaleza», el santuario del cielo, de donde le viene la fuerza al creyente (Hebreos 4:14-16).',
+        '<b>«El sacrificio continuo» (31).</b> «Sacrificio» fue agregado. «Continuo» (hebreo <i>tamid</i>) sale 103 veces en el Antiguo Testamento, y solo en Daniel va sin sustantivo (8:11-13; 11:31; 12:11). Es la obra continua de Cristo, que intercede en el santuario del cielo (Hebreos 7:24-25).',
+        '<b>«Lisonjas» (32).</b> Promesas fáciles: perdón sin arrepentimiento, indulgencias, la intercesión de los santos.',
+        '<b>«Algunos días» (33).</b> Varios manuscritos hebreos dicen «muchos días»: los 1.260 años.',
+        '<b>«Hasta el tiempo determinado» (35).</b> Hasta el tiempo del fin, en 1798.',
+        '<b>«Repartirá tierras» (39).</b> El papa repartió tierras y reinos: en 1493 dividió las tierras de América entre España y Portugal. La Inquisición, fundada en 1232 por Gregorio IX, daba a los delatores los bienes de los condenados.',
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 39, 120-130, 140 y 148-149.</p>` },
 
     { t: '🧭 Norte y sur: de lo literal a lo espiritual', capa: 'contexto', h:
       `<p>Un principio: hasta el año 34 d.C. (el fin de las setenta semanas), Israel, Jerusalén, Egipto y Babilonia son lugares literales. Después, el pueblo de Dios es la iglesia en todo el mundo, y sus enemigos también son sistemas mundiales. Por eso en 11:5-15 el norte es Siria y el sur es Egipto, pero en 11:40 ya no.</p>` +
@@ -66,6 +139,16 @@ module.exports = {
       ]) +
       `<p>Daniel 3 y 6 son la base: la crisis final será por la adoración y la obediencia a Dios.</p>` +
       `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 17-19, 98-117, 126, 134-136, 157-158 y 175; Bohr, <i>Daniel 1-10</i>, p. 43.</p>` },
+
+    { t: '🧭 Daniel 11:40-45: más detalles', capa: 'contexto', h:
+      li([
+        '<b>La tierra gloriosa (41)</b> aparece a fines del siglo XVIII, guarda la Biblia en su pureza, después se aparta del pacto (11:30) y llega a ser la única superpotencia: Estados Unidos (Apocalipsis 13:11).',
+        '<b>El acercamiento.</b> En 1939 Franklin D. Roosevelt manda un representante personal al Vaticano. El 7 de junio de 1982 Ronald Reagan y Juan Pablo II acuerdan en el Vaticano poner fin al comunismo. En 1983 el Congreso aprueba una embajada ante el Vaticano.',
+        '<b>Libia y Etiopía (43).</b> Libia era sinónimo de pobreza, y Etiopía de riqueza: pobres y ricos quedan bajo su control económico (Apocalipsis 13:16-17).',
+        '<b>Del oriente y del norte (44).</b> El oriente es el lado de Cristo (Mateo 24:27; Apocalipsis 7:2), y el norte, el de Dios (Salmo 48:2). Las noticias son los tres mensajes de Apocalipsis 14:6-12.',
+        '<b>«Plantará las tiendas» (45)</b> es lenguaje militar: usará la fuerza. «No tendrá quien lo ayude» porque ya tiene todo el poder humano; la única ayuda tendría que venir del cielo, y de allí viene Miguel (12:1).',
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 154-191.</p>` },
 
     { t: '🧭 Otras lecturas de 11:40-45', capa: 'contexto', h:
       li([
@@ -99,7 +182,7 @@ module.exports = {
       `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 18-21, 126, 134-136, 175 y 235; Bohr, <i>15 principios</i> 2:106.</p>` },
   ],
   preguntas: [
-    { t: 'mc', v: '11:2', f: 'c', q: '¿Quién es el cuarto rey persa de Daniel 11:2, el más rico, que levantó a todos contra Grecia?', o: ['Jerjes I', 'Artajerjes I', 'Darío I', 'Cambises II'], a: 0, e: 'Los tres que siguieron a Ciro el Grande fueron Cambises II, Bardiya (el falso Esmerdis) y Darío I; el cuarto, Jerjes I, invadió Grecia en 480 a.C. Artajerjes I es el del decreto de 457 a.C., no el cuarto rey. Fuente: Treiyer, <i>Daniel 11</i> (notas de clase), v. 2.' },
+    { t: 'mc', v: '11:2', f: 'c', q: '¿Quién es el cuarto rey persa de Daniel 11:2, el más rico, que levantó a todos contra Grecia?', o: ['Jerjes I', 'Artajerjes I', 'Darío I', 'Cambises II'], a: 0, e: 'Los tres que siguieron a Ciro el Grande fueron Cambises II, Bardiya (el falso Esmerdis) y Darío I; el cuarto, Jerjes I, invadió Grecia en 480 a.C. Artajerjes I es el del decreto de 457 a.C., no el cuarto rey. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 50-52.' },
     { t: 'mc', v: '11:40', f: 'c', q: '¿Qué representa el «rey del sur» en el tiempo del fin?', o: ['El ateísmo y el secularismo', 'El mundo islámico', 'El Imperio otomano', 'El protestantismo'], a: 0, e: 'Egipto fue la nación que negó al Dios vivo (Éxodo 5:2). En el tiempo del fin representa todo sistema que deja a Dios fuera. Fuente: Bohr, <i>Daniel 11</i>, p. 98-99.' },
     { t: 'mc', v: '11:40', f: 'c', q: '¿Qué hecho de 1798 cumple que «el rey del sur contenderá con él»?', o: ['Francia tomó preso al papa', 'Napoleón invadió Egipto', 'Rusia derrotó a Turquía', 'Inglaterra rompió con Roma'], a: 0, e: 'La Francia revolucionaria y atea hirió al papado: llevó cautivo a Pío VI. Así comenzó el tiempo del fin. Fuente: Bohr, <i>Daniel 11</i>, p. 105.' },
     { t: 'mc', v: '11:41', f: 'c', q: '¿Qué representa la «tierra gloriosa» de 11:41?', o: ['Estados Unidos como baluarte protestante', 'El actual Estado de Israel', 'La ciudad de Roma y el Vaticano', 'Palestina bajo los turcos'], a: 0, e: 'No es Estados Unidos solo como país, sino como el lugar fuerte de los principios protestantes, que los llevó al mundo. Fuente: Bohr, <i>Daniel 11</i>, p. 126.' },
@@ -116,5 +199,10 @@ module.exports = {
     { t: 'mc', v: '11:40', f: 'c', q: '¿Por qué el «norte» de Daniel 11 representa una religión que imita a Dios?', o: ['El trono de Dios está a los lados del norte', 'Roma queda al norte de Jerusalén', 'Los papas vinieron del norte de Europa', 'En el norte se adoraba al sol'], a: 0, e: 'Sion está a los lados del norte (Salmo 48:2) y Lucifer quiso sentarse allí (Isaías 14:13). El rey del norte falso no niega a Dios: usurpa su lugar. Fuente: Bohr, <i>Daniel 11</i>, p. 23.' },
     { t: 'tf', v: '11:41', f: 'c', q: 'Como Edom, Moab y Amón ya no existen como naciones, Daniel 11:40-45 no se puede leer como un mapa literal.', a: true, e: 'Verdadero. Después de la cruz, Israel es espiritual y mundial, y sus enemigos también. Fuente: Bohr, <i>Daniel 11</i>, p. 19-21.' },
     { t: 'mc', v: '11:44', f: 'c', q: '¿Con qué texto se explican las «noticias del oriente» de 11:44?', o: ['Apocalipsis 7:2, el ángel con el sello', 'Apocalipsis 13:11, la bestia de la tierra', 'Apocalipsis 12:3, el dragón escarlata', 'Apocalipsis 9:14, los cuatro ángeles'], a: 0, e: 'El ángel sube «desde donde sale el sol» con el sello del Dios vivo: es el mensaje del sellamiento. Fuente: Bohr, <i>Daniel 11</i>, p. 175 y 235.' },
+    { t: 'mc', v: '11:3', f: 'c', q: '¿Cuántos años salta la profecía entre Jerjes I (11:2) y Alejandro Magno (11:3)?', o: ['Unos 130 años', 'Unos 30 años', 'Unos 300 años', 'Unos 70 años'], a: 0, e: 'De la muerte de Jerjes I (465 a.C.) a la subida de Alejandro (336 a.C.). La profecía deja fuera lo que no aclara la visión de Daniel 7 y 8. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 30-31.' },
+    { t: 'mc', v: '11:14', f: 'c', q: '¿Quiénes son los «hombres turbulentos» que se levantan «para que se cumpla la visión» (11:14)?', o: ['Los romanos', 'Los macabeos', 'Los egipcios', 'Los persas'], a: 0, e: 'En hebreo son «los que quebrantan a tu pueblo». Roma entra en las guerras de Egipto y Siria, cumple la visión de Daniel 7 y 8, y cae en 476 d.C. Otra lectura ve aquí a los macabeos. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 64-66.' },
+    { t: 'mc', v: '11:20', f: 'c', q: '¿Qué «cobrador de tributos» de 11:20 llevó a José y María a Belén?', o: ['El censo de César Augusto', 'El impuesto de Herodes', 'El diezmo del templo', 'El tributo de Julio César'], a: 0, e: 'César Augusto mandó empadronar a todos (Lucas 2:1-3) y murió en paz en 14 d.C., «no con ira ni en batalla». Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 71-73.' },
+    { t: 'tf', v: '11:31', f: 'c', q: 'En Daniel 11:31 la palabra «sacrificio» no está en el hebreo: dice solo «el continuo».', a: true, e: 'Verdadero. En Daniel, «continuo» (<i>tamid</i>) va siempre sin sustantivo: es la obra continua de Cristo en el santuario del cielo. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 39 y 128.' },
+    { t: 'mc', v: '11:43', f: 'c', q: '¿Qué representan Libia y Etiopía, que siguen al rey del norte (11:43)?', o: ['Los pobres y los ricos', 'Los aliados del sur', 'Las naciones del islam', 'Las iglesias de África'], a: 0, e: 'Libia era sinónimo de pobreza, y Etiopía de riqueza. Todos quedan bajo su control económico (Apocalipsis 13:16-17). Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 154 y 182.' },
   ],
 };

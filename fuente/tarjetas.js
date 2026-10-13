@@ -291,7 +291,7 @@ TARJETAS.push(
   {cap:'d10', f:'¿Qué lección práctica deja que la respuesta tardara tres semanas en manifestarse?', r:'Que una oración sin respuesta inmediata no significa una oración no escuchada'},
 
   {cap:'d11', f:'¿Quién es "un rey valeroso" cuyo imperio se reparte entre cuatro generales?', r:'Alejandro Magno'},
-  {cap:'d11', f:'¿Quién es la última reina de la dinastía ptolemaica?', r:'Cleopatra VI'},
+  {cap:'d11', f:'¿Quién es la última reina de la dinastía ptolemaica?', r:'Cleopatra VII'},
   {cap:'d11', f:'¿Qué distingue a "rey del norte" después de la derrota de Antíoco III frente a Roma?', r:'Deja de referirse solo a Siria y pasa a describir a Roma'},
   {cap:'d11', f:'¿Qué dijo Jesús en Mateo 24:15 sobre la abominación desoladora?', r:'Que todavía era futura en su tiempo, casi dos siglos después de Antíoco Epífanes'},
 
@@ -348,7 +348,7 @@ TARJETAS.push(
   {cap:'d10', f:'¿Qué frase de Eliseo resume la protección angélica invisible, la misma idea detrás de la guerra de Daniel 10?', r:'"No temas, que hay más con nosotros que con ellos"'},
   {cap:'d11', f:'¿Qué objeto famoso, hoy en el Museo Británico, ilustra el cumplimiento de Daniel 11:14?', r:'La Piedra Rosetta, con las concesiones del niño-rey Ptolomeo V a los egipcios rebelados'},
   {cap:'d12', f:'¿Qué dos anabautistas del siglo XVI cita Maxwell como ejemplo de los "doctos" de Daniel 12:3?', r:'Oswald Glait y Andreas Fischer, ejecutados por guardar el sábado bíblico tras estudiar Daniel 7:25'},
-  {cap:'d11', f:'¿Qué cinco hitos marcan, según Treiyer, la recuperación del poder papal después de 1798?', r:'1800: elección de Pío VII. 1815: Congreso de Viena. 1870: infalibilidad papal (Vaticano I). 1929: Tratados de Letrán. Y el crecimiento diplomático de 14 a más de 170 países'},
+  {cap:'d11', f:'¿Qué cinco hitos marcan la recuperación del poder papal después de 1798?', r:'1800: elección de Pío VII. 1815: Congreso de Viena. 1870: infalibilidad papal (Vaticano I). 1929: Tratados de Letrán. Y el crecimiento diplomático de 14 a más de 170 países'},
   {cap:'d11', f:'¿Qué ganó el papado en 1870 justo cuando perdía sus últimos territorios políticos?', r:'El dogma de la infalibilidad papal, proclamado por el Concilio Vaticano I'},
   {cap:'d12', f:'¿Qué frase de Zacarías 3:1-2 usa también Miguel en Judas 9, mostrando que ambos son el mismo Ser divino?', r:'"Jehová (el Señor) te reprenda, oh Satanás"'},
   {cap:'d2', f:'¿Qué autor cristiano del siglo II ya sostenía que la piedra de Daniel 2 era Cristo destruyendo los reinos del mundo en su Segunda Venida?', r:'Ireneo, obispo de Lyon'},

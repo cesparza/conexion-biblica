@@ -5,7 +5,13 @@
    agrega Bohr: qué es «levantarse» y «ser libertado», qué parte del libro
    se selló, y su lectura de 1.290 (508-1798) y 1.335 (508-1843). v188: voz
    directa, sin nombrar autores en el cuerpo; una sola «Fuente:» corta por
-   sección. */
+   sección.
+   Camilo (13-oct 13:04: «complementar con el libro de Daniel 11 de
+   Treiyer»): Humberto R. Treiyer, «Enigmas descifrados» (2006). Se suman
+   Miguel y la angustia (12:1), el varón sobre las aguas (12:5-8), por qué
+   508 y por qué 1844 (12:11-12) y la heredad de Daniel (12:13). Su lectura
+   de 12:4 («correrán» = confusión desde 1789) y de la parte sellada (solo
+   8:14 y 12:12) choca con Bohr: no se usó; se le reportó a Camilo. */
 const { tbl, hi, wa, li } = require('../../apocalipsis/ayudas.js');
 
 module.exports = {
@@ -22,6 +28,15 @@ module.exports = {
       hi('<b>El orden de 12:1-2</b>, el mismo de <i>El conflicto de los siglos</i>: Miguel se levanta, viene el tiempo de angustia, el pueblo de Dios es librado y ocurre la resurrección especial.') +
       `<p>Fuente: Bohr, <i>La gran cadena</i>, p. 44; Bohr, <i>Daniel 11</i>, p. 11 y 136; Bohr, <i>Daniel 1-10</i>, p. 357; PE 280.</p>` },
 
+    { t: '🧭 Daniel 12:1: Miguel y el tiempo de angustia', capa: 'contexto', h:
+      li([
+        '<b>El nombre.</b> Miguel quiere decir «¿quién como Dios?». Ningún ser creado llevaría ese nombre como propio.',
+        '<b>Por qué ahora.</b> «En aquel tiempo» es el final de 11:45. Las noticias de 11:44 anuncian que el juicio termina; el rey del norte quiere destruir al pueblo de Dios, y Miguel se levanta a librarlo.',
+        '<b>Dos angustias.</b> Los impíos sufren las siete plagas (Apocalipsis 16:2). Los justos viven sin intercesor (Apocalipsis 22:11) y temen tener pecados sin confesar; pero esos pecados ya fueron borrados en el juicio, y no los pueden recordar (CS 677-678).',
+        '<b>Libertado de qué.</b> No de pasar por la angustia, sino del pecado, de la tristeza y de la muerte: reciben la inmortalidad.',
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 197-203; CS 677-678.</p>` },
+
     { t: '🧭 Qué parte del libro se selló', capa: 'contexto', h:
       `<p>Lo que quedó «cerrado y sellado hasta el tiempo del fin» (12:4, 9) no es todo Daniel, sino los capítulos <b>8 a 12</b>: la parte de los 2.300 días y del mensaje del juicio. Las razones:</p>` +
       li([
@@ -31,6 +46,15 @@ module.exports = {
       ]) +
       hi('<b>«Muchos correrán de aquí para allá».</b> Son ojos que recorren el libro: muchos lo estudiarían y aumentaría el conocimiento de su contenido. Se cumplió en el despertar adventista de los años 1830 y 1840.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 28-29 y 360.</p>` },
+
+    { t: '🧭 El varón sobre las aguas (12:5-8)', capa: 'contexto', h:
+      li([
+        'En las orillas del río hay dos seres; sobre las aguas, el varón vestido de lino: Miguel. Al ángel que preguntó, Miguel le responde; después, a Daniel.',
+        'Jura con las dos manos alzadas «por el que vive por los siglos». Dios, como no tiene a nadie mayor, jura por sí mismo (Hebreos 6:13, 17): el que jura aquí es divino.',
+        '«La dispersión del poder del pueblo santo» es la persecución de «tiempo, tiempos y la mitad de un tiempo»: 538-1798.',
+        'Daniel dice «oí, pero no entendí», como en 8:27: no entendía los 2.300 días. La respuesta llega con los 1.290 y los 1.335 días (12:11-12).',
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 211-218.</p>` },
 
     { t: '🧭 1.260, 1.290 y 1.335: tres períodos, un mismo poder', capa: 'contexto', h:
       `<p>El punto de partida de 12:11 es «desde el tiempo en que sea quitado el sacrificio continuo» y puesta «la abominación desoladora»: el año <b>508</b>, cuando Clodoveo I, rey de los francos, dio por primera vez poder civil al papado (ver Daniel 11:31). Los 1.290 y los 1.335 empiezan juntos.</p>` +
@@ -44,6 +68,15 @@ module.exports = {
       `<p>Otra lectura hace terminar los 1.335 junto con los 2.300, en 1844.</p>` +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 5; Bohr, <i>Daniel 11</i>, p. 26 y 217; Smith, <i>Las profecías de Daniel</i>, p. 158 y 195-196; Shea, <i>Daniel</i>, p. 275; Doukhan, <i>Secretos de Daniel</i>, p. 192; apuntes «Daniel 12 (Bohr)».</p>` },
 
+    { t: '🧭 Por qué 508 y por qué 1844 (12:11-12)', capa: 'contexto', h:
+      li([
+        '<b>Treinta años antes.</b> Los 1.290 son 30 más que los 1.260. La abominación tenía que estar puesta antes de poder perseguir, y la persecución termina cuando cae ese poder: los dos períodos terminan juntos en 1798. Así los 1.290 empiezan 30 años antes de 538: en 508.',
+        '<b>Qué pasó en 508.</b> Clodoveo I, rey de los francos, se hizo católico hacia 496. En 507 venció en Vouillé a los visigodos arrianos, y en 508 puso el poder de los francos al servicio del obispo de Roma. Por eso a Francia la llamaron «la hija favorita» del papado.',
+        '<b>1843 o 1844.</b> De 508 se llega a 1843. Pero Guillermo Miller contaba 1843 como año judío, y en tiempos de Esdras el año judío iba de otoño a otoño. Ese «1843» termina en el otoño de 1844, el 22 de octubre, Día de la Expiación: los 1.335 terminan con los 2.300.',
+        '<b>La bienaventuranza.</b> En 1844 se vuelve a conocer la obra de Cristo en el santuario del cielo. Por eso es dichoso «el que espere».',
+      ]) +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 220-225 y 231-233.</p>` },
+
     { t: '🧭 «Bienaventurado el que espere»: por qué los 1.335 ya terminaron', capa: 'contexto', h:
       `<p>Dos bienaventuranzas van juntas:</p>` +
       li([
@@ -54,6 +87,16 @@ module.exports = {
       wa('<b>Una advertencia.</b> Algunos adventistas bien intencionados proyectan los 1.335 días al futuro como días literales. No es así: al hermano Hewitt se le corrigió, entre otras cosas, porque enseñaba que los 1.335 días no habían terminado (16MR 208). Después de 1844 «no puede haber ningún cómputo definido de tiempo profético» (CBA 7:971; Apocalipsis 10:6).') +
       `<p>Otra lectura prefiere no dar por cerrado cómo se cumplen estos dos períodos (ver arriba).</p>` +
       `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 217-218; 16MR 208; CBA 7:971.</p>` },
+
+    { t: '🧭 «Recibir tu heredad al fin de los días» (12:13)', capa: 'contexto', h:
+      `<p>«El fin de los días» es el final de los 1.335 días, en 1844. La promesa a Daniel tiene tres partes:</p>` +
+      li([
+        'Su libro se entendería desde 1798, y sobre todo desde 1844.',
+        'Desde 1844, en el juicio, Daniel recibe su heredad.',
+        'Daniel resucitará con los justos, en la primera resurrección.',
+      ]) +
+      hi('«Ha llegado el tiempo para que Daniel reciba su heredad. Ha llegado el tiempo para que, como nunca antes, se propague por el mundo la luz que le fue dada» (CBA 4:1196).') +
+      `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 228-230; CBA 4:1196.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos (1): Miguel, el libro y las estrellas', capa: 'contexto', h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
@@ -91,5 +134,10 @@ module.exports = {
     { t: 'mc', v: '12:1', f: 'c', q: '¿Qué contiene el libro en que están inscritos los que serán librados (12:1)?', o: ['Los nombres de los que sirven a Dios', 'La lista de los reyes del fin', 'Las fechas de todas las profecías', 'Las leyes de Media y de Persia'], a: 0, e: 'Es el libro de la vida (Apocalipsis 3:5; 20:12; Lucas 10:20). Fuente: apuntes «Los Libros de Registro del Cielo».' },
     { t: 'tf', v: '12:7', f: 'c', q: 'Al comparar Apocalipsis 12:6 con 12:14 se ve que «tiempo, tiempos y la mitad de un tiempo» son 1.260 días.', a: true, e: 'Verdadero: la misma huida de la mujer dura 1.260 días en el versículo 6 y «un tiempo, tiempos y la mitad de un tiempo» en el 14. Con día por año, son 1.260 años (538-1798). Fuente: Bohr, <i>15 principios</i> 2:105.' },
     { t: 'mc', v: '12:4', f: 'c', q: '¿En qué texto aparece abierto el libro que Daniel 12:4 manda sellar?', o: ['Apocalipsis 10:2', 'Apocalipsis 5:1', 'Apocalipsis 20:12', 'Apocalipsis 22:10'], a: 0, e: 'Es el único libro del Antiguo Testamento sellado hasta el tiempo del fin; en Apocalipsis 10:2 el ángel tiene «un librito abierto». Fuente: Bohr, <i>Daniel 1-10</i>, p. 28-29.' },
+    { t: 'mc', v: '12:11', f: 'c', q: '¿Por qué los 1.290 días empiezan 30 años antes que los 1.260?', o: ['La abominación se puso antes de perseguir', 'Se cuentan desde el bautismo de Clodoveo', 'El año judío era más largo', 'Terminan treinta años más tarde'], a: 0, e: 'Los dos períodos terminan juntos en 1798; por eso los 1.290 empiezan en 508 y los 1.260 en 538. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 220-221.' },
+    { t: 'tf', v: '12:12', f: 'c', q: 'Contado como año judío, de otoño a otoño, el «1843» en que terminan los 1.335 días llega hasta octubre de 1844.', a: true, e: 'Verdadero. Así los 1.335 terminan junto con los 2.300, el 22 de octubre de 1844. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 223-224.' },
+    { t: 'mc', v: '12:7', f: 'c', q: '¿Qué muestra que el varón vestido de lino que jura en 12:7 es divino?', o: ['Jura por el que vive por los siglos', 'Viste ropas de lino fino', 'Está de pie junto al río', 'Habla con el profeta Daniel'], a: 0, e: 'Dios, como no tiene a nadie mayor, jura por sí mismo (Hebreos 6:13). Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 214.' },
+    { t: 'mc', v: '12:13', f: 'c', q: '¿Qué es «el fin de los días» en que Daniel recibe su heredad (12:13)?', o: ['El fin de los 1.335 días, en 1844', 'El regreso de Babilonia', 'La muerte de Daniel en Persia', 'El fin del milenio'], a: 0, e: 'Desde 1844, en el juicio, Daniel recibe su heredad, y su libro se entiende como nunca antes. Y resucitará con los justos. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 228-230; CBA 4:1196.' },
+    { t: 'tf', v: '12:1', f: 'c', q: 'En el tiempo de angustia los justos temen tener pecados sin confesar, aunque ya fueron borrados en el juicio.', a: true, e: 'Verdadero. Viven sin intercesor (Apocalipsis 22:11), pero sus pecados ya fueron borrados y no los pueden recordar (CS 677-678). Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 202; CS 677-678.' },
   ],
 };

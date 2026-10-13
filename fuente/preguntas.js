@@ -1537,7 +1537,7 @@ BANCO.push(
 {cap:'d11',t:'mc',q:'¿Quién es "un rey valeroso" que conquista un vasto imperio y, tras su muerte, lo ve repartido entre cuatro generales (Daniel 11:3-4)?',
  o:['Ciro el Persa','Antíoco III el Grande','Alejandro Magno','Jerjes I'],a:2},
 {cap:'d11',t:'mc',q:'¿Cuál es la última reina de la dinastía ptolemaica que menciona el resumen de reyes del sur?',
- o:['Berenice','Laodicea','Cleopatra VI','Semíramis'],a:2},
+ o:['Berenice','Laodicea','Cleopatra VII','Semíramis'],a:2},
 {cap:'d11',t:'tf',q:'Los "cuatro vientos del cielo" entre los que se reparte el imperio de Alejandro Magno son los mismos cuatro reinos que ya aparecían repartidos en Daniel 8.',
  a:true,e:'Verdadero. Es el mismo reparto del imperio griego visto en Daniel 8.'},
 {cap:'d11',t:'mc',q:'¿Qué le exigió Laodicea a Antíoco II al volver con ella tras el fracaso del matrimonio con Berenice?',
