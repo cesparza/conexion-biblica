@@ -413,23 +413,27 @@ const MANUAL = [
     apágalo en <strong>Cambiar este examen</strong>. El director tiene el mismo
     interruptor al abrir una evaluación, y viene prendido.</p>` },
   { t:'El estudio interactivo de Daniel 2',
-    h:`<p>Al abrir Daniel 2 aparece la tarjeta <strong>Estudio interactivo</strong>.</p>
-    <ul><li><strong>Explorar:</strong> cada parte de la estatua tiene su etiqueta con el
-    reino y sus fechas. Al tocarla, la explicación se abre dentro de la misma imagen:
-    primero lo que dice el texto y después lo que significa, con su fuente.</li>
+    h:`<p>En Daniel 2, en la pestaña <strong>Para profundizar</strong>, está la tarjeta
+    <strong>Estudio interactivo</strong>.</p>
+    <ul><li><strong>Explorar:</strong> cada parte de la estatua, la piedra y el monte tienen su
+    etiqueta. Al tocar una etiqueta o la parte en la imagen, la explicación sale debajo de la
+    imagen (al lado en una pantalla grande), sin taparla: primero lo que dice el texto y después
+    lo que significa, con su fuente. La piedra cae y golpea los pies; el monte nace del polvo.</li>
     <li><strong>La línea de tiempo:</strong> arrastra el año o toca el botón de reproducir y se enciende la
     parte que gobernaba en ese momento.</li>
     <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o
     con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el
-    polvo que se lleva el viento y el monte que llena la tierra.</li></ul>` },
-  { t:'Estudiar la interpretación',
-    h:`<p>Además del examen, la app sirve para aprender qué significa cada
-    pasaje. Esa parte se llama <strong>interpretación</strong>: lo que dicen
-    Stephen Bohr, Elena de White y otros autores adventistas, y cada sección
-    dice de qué libro y página sale. No entra al concurso.</p>
-    <ul><li>En cada capítulo, debajo del estudio, el bloque <strong>La
-    interpretación</strong> la junta toda. El botón <strong>Ir a la
-    interpretación</strong> baja hasta ahí.</li>
+    polvo que se lleva el viento y el monte que llena la tierra. Tocar una parte de la
+    estatua salta a su paso.</li></ul>` },
+  { t:'Para el examen y para profundizar',
+    h:`<p>Los capítulos que tienen interpretación muestran arriba dos pestañas:</p>
+    <ul><li><strong>Para el examen:</strong> lo que se pregunta en el concurso. Al final, un
+    aviso lleva a profundizar.</li>
+    <li><strong>Para profundizar</strong> (color petróleo): lo que significa el capítulo según
+    Stephen Bohr, Elena de White y otros autores adventistas, cómo la Biblia explica sus
+    símbolos y el estudio interactivo cuando lo hay. Cada sección dice de qué libro y página
+    sale. <strong>No entra al examen.</strong></li>
+    <li>La pestaña que elijas se queda al pasar de capítulo.</li>
     <li>En el examen, <strong>Solo la interpretación</strong> trae solo sus
     preguntas.</li></ul>` },
   { t:'Mientras lo haces',

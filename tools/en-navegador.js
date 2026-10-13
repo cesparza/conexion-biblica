@@ -319,8 +319,16 @@ for (const W of ANCHOS) {
      etiqueta abre su explicación dentro de la imagen, la línea de tiempo
      enciende lo que gobernaba, y Presentar recorre los 15 pasos. ── */
   {
-    await p.evaluate(() => { ponCat('pa'); verCap('d2', true); });
+    await p.evaluate(() => { ponCat('pa'); ponPest('examen'); verCap('d2', true); });
     await p.waitForTimeout(300);
+    /* v187: dos pestañas; en la del examen no se ve nada de la interpretación. */
+    const vis = sel => p.evaluate(s => [...document.querySelectorAll(s)].filter(x => x.getClientRects().length).length, sel);
+    const enEx = [await vis('#detalle [data-pest="prof"]'), await vis('#detalle .sec[data-pest="examen"]'), await vis('#detalle .cap-pest .pest')];
+    ok(enEx[0] === 0 && enEx[1] > 5 && enEx[2] === 2, W + ' · «Para el examen» muestra solo el examen (' + enEx.join(', ') + ')');
+    await p.locator('#detalle .pest-prof').click();
+    await p.waitForTimeout(200);
+    const enPr = [await vis('#detalle .sec[data-pest="examen"]'), await vis('#detalle .sec[data-pest="prof"]')];
+    ok(enPr[0] === 0 && enPr[1] > 3, W + ' · «Para profundizar» muestra solo la interpretación (' + enPr.join(', ') + ')');
     ok(await p.locator('#detalle .lam-invita').count() === 1, W + ' · Daniel 2 ofrece el estudio interactivo');
     await p.locator('#detalle .lam-invita .btn.ver').click();
     await p.waitForTimeout(700);
@@ -331,8 +339,15 @@ for (const W of ANCHOS) {
     await p.locator('#lamEts .lam-et[data-p="plata"]').click();
     await p.waitForTimeout(800);
     const hoja = await p.evaluate(() => { const h = document.getElementById('lamHoja'); const r = h.getBoundingClientRect(), e = document.getElementById('lamEsc').getBoundingClientRect();
-      return { ver: !h.hidden, tx: h.textContent, dentro: r.left >= e.left - 1 && r.right <= e.right + 1 && r.bottom <= e.bottom + 1 }; });
-    ok(hoja.ver && /Medo-Persia/.test(hoja.tx) && /5:28/.test(hoja.tx) && hoja.dentro, W + ' · tocar la etiqueta abre la explicación dentro de la imagen');
+      const cruza = r.left < e.right - 1 && r.right > e.left + 1 && r.top < e.bottom - 1 && r.bottom > e.top + 1;
+      return { ver: !h.hidden, tx: h.textContent, libre: !cruza }; });
+    ok(hoja.ver && /Medo-Persia/.test(hoja.tx) && /5:28/.test(hoja.tx) && hoja.libre, W + ' · tocar la etiqueta abre la explicación sin tapar la imagen');
+    for (const [id, re] of [['piedra', /segunda venida/], ['monte', /reino eterno/i]]) {
+      await p.evaluate(() => lamInicio()); await p.waitForTimeout(400);
+      await p.locator('#lamEts .lam-et[data-p="' + id + '"]').click(); await p.waitForTimeout(1300);
+      const r = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.querySelector('#lamSvg .lam-piedra').getAttribute('transform'), document.querySelector('#lamSvg .lam-monte').style.opacity]);
+      ok(re.test(r[0]) && /translate\(550 1085\)/.test(r[1]) && (id !== 'monte' || r[2] === '1'), W + ' · la etiqueta «' + id + '» explica y anima (' + r[1] + ')');
+    }
     await p.evaluate(() => { const r = document.getElementById('lamRango'); r.value = 1520; r.dispatchEvent(new Event('input')); });
     const anio = await p.evaluate(() => [document.getElementById('lamTq').textContent, [...document.querySelectorAll('#lamSvg .lam-parte.on')].map(x => x.getAttribute('data-p')).sort().join()]);
     ok(/Roma dividida y Roma papal/.test(anio[0]) && anio[1] === 'barro,dedos', W + ' · en 1520 se encienden los dedos y el barro: ' + anio.join(' / '));
@@ -340,7 +355,9 @@ for (const W of ANCHOS) {
     ok(ancho <= 0, W + ' · la lámina no se desborda a lo ancho (' + ancho + ')');
     await p.keyboard.press('Escape');
     ok(await p.evaluate(() => document.getElementById('lam').hidden), W + ' · Escape cierra la lámina');
-    await p.evaluate(() => lamAbre('d2', 'presentar'));
+    await p.evaluate(() => { lamAbre('d2', 'presentar'); lamToca('hierro'); });
+    const k = await p.evaluate(() => [lamPaso, lamPasos()[lamPaso].id]);
+    ok(k[1] === 'hierro', W + ' · en Presentar, tocar el hierro lleva a su paso (' + (k[0] + 1) + ')');
     for (let i = 0; i < 16; i++) await p.keyboard.press('ArrowRight');
     await p.waitForTimeout(300);
     const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent]);

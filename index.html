@@ -54,6 +54,10 @@
   --fondo-ok:color-mix(in srgb,var(--verde) 14%,var(--card));
   --fondo-mal:color-mix(in srgb,var(--rojo) 13%,var(--card));
   --fondo-info:color-mix(in srgb,var(--cielo) 14%,var(--card));
+  /* v187: el color de «Para profundizar» (petróleo). --prof es letra y filete;
+     --prof-fondo, relleno con letra blanca encima. */
+  --prof:var(--v-prof,#0E6A78); --prof-fondo:var(--v-prof-fondo,#0E6A78);
+  --fondo-prof:color-mix(in srgb,var(--prof) 9%,var(--card));
 }
 *{box-sizing:border-box;margin:0;padding:0}
 /* EL ATRIBUTO hidden GANA SIEMPRE.
@@ -2582,13 +2586,40 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 /* v155: el versículo al que lleva una cita del estudio, resaltado un momento. */
 .biblia p.salto{background:var(--fondo-calido);box-shadow:0 0 0 4px var(--fondo-calido);border-radius:8px;outline:0;transition:background .6s,box-shadow .6s}
 
-/* v182: el bloque de interpretación al final de cada capítulo. */
-.ir-interp{margin:0 0 .9rem;min-height:40px;font-size:.875rem;color:var(--cielo-txt,#2866AA)}
-.vd-cab .ir-interp{margin:.5rem 0 0}
-.sec.interp-cab{margin-top:1.6rem;padding:1rem 1.1rem;border-radius:var(--r,16px);
-  background:color-mix(in srgb,#0E7490 10%,var(--card,#fff));border:1px solid color-mix(in srgb,#0E7490 30%,transparent)}
-.interp-tit{margin:0;font-size:1.125rem;color:var(--cielo-txt);display:flex;align-items:center;gap:.45rem}
-.interp-nota{margin:.35rem 0 0;font-size:.875rem;color:var(--gris)}
+/* v187: dos pestañas por capítulo, «Para el examen» y «Para profundizar».
+   Cada sección trae data-pest y #detalle la abierta: se esconde la otra. */
+#detalle[data-pest="examen"] [data-pest="prof"],
+#detalle[data-pest="prof"] [data-pest="examen"],
+#detalle[data-pest="prof"] .capa-filtro{display:none!important}
+.cap-pest{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:0 0 1.1rem;scroll-margin-top:5rem}
+.vd-cab .cap-pest{flex:1 1 100%;margin:0}
+.pest{display:flex;align-items:center;gap:.6rem;min-height:56px;padding:.55rem .8rem;text-align:left;cursor:pointer;
+  border:1.5px solid var(--v-linea,#d8e0ef);border-radius:var(--r,16px);background:var(--card);color:var(--gris);font:inherit;
+  transition:background .2s,border-color .2s,color .2s}
+.pest svg{flex:0 0 auto;width:22px;height:22px}
+.pest-tx{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.pest-tx b{font-size:1rem;font-weight:800;color:var(--txt)}
+.pest-tx small{font-size:.75rem}
+.pest-examen.on{border-color:var(--azul);background:var(--fondo-suave);color:var(--azul);box-shadow:inset 0 -3px 0 var(--azul)}
+.pest-prof.on{border-color:var(--prof);background:var(--fondo-prof);color:var(--prof);box-shadow:inset 0 -3px 0 var(--prof)}
+.pest.on .pest-tx small{color:inherit;font-weight:700}
+.pest:focus-visible{outline:3px solid var(--cielo);outline-offset:2px}
+/* Las secciones de profundizar llevan su filete y su color: no se confunden
+   con las del examen aunque alguien llegue por un enlace. */
+.sec[data-pest="prof"]:not(.interp-cab){padding-left:.9rem;border-left:3px solid var(--prof)}
+.sec[data-pest="prof"] .sec-rot{color:var(--prof)}
+.sec.interp-cab{margin:0 0 1.4rem;padding:1rem 1.1rem;border-radius:var(--r,16px);
+  background:var(--fondo-prof);border:1px solid color-mix(in srgb,var(--prof) 35%,transparent)}
+.interp-tit{margin:0;font-size:1.125rem;color:var(--prof);display:flex;align-items:center;gap:.45rem}
+.interp-nota{margin:.35rem 0 0;font-size:.875rem;color:var(--txt)}
+.interp-cab .lam-invita{margin:1rem 0 0}
+.prof-cta{margin-top:1.6rem}
+.prof-ir{display:flex;align-items:center;gap:.75rem;width:100%;padding:.9rem 1rem;text-align:left;cursor:pointer;font:inherit;font-size:1rem;
+  color:var(--txt);background:var(--fondo-prof);border:1.5px dashed color-mix(in srgb,var(--prof) 55%,transparent);border-radius:var(--r,16px)}
+.prof-ir svg{flex:0 0 auto;width:24px;height:24px;color:var(--prof)}
+.prof-ir b{color:var(--prof)}
+.prof-ir:hover{border-style:solid}
+@media (max-width:440px){.pest{padding:.5rem .7rem}.pest svg{display:none}}
 
 /* ── LÁMINAS (v185): estudio interactivo con imagen ── */
 .lam-invita{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin:0 0 1.2rem;padding:.9rem;border-radius:var(--r);background:var(--card,#fff);box-shadow:var(--sh)}
@@ -2608,7 +2639,19 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-paso{flex:0 0 auto;display:flex;align-items:center;gap:6px;min-height:40px;padding:0 12px 0 6px;border-radius:999px;border:2px solid var(--v-linea,#F0E6D2);background:var(--card,#fff);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
 .lam-paso i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--v-sup2,#FFF4E0);color:var(--azul);font-size:.75rem}
 .lam-paso.on{border-color:var(--azul)}
+.lam:not(.pres)>*{max-width:1180px}
+/* v187: la imagen y su explicación. En el celular, una debajo de la otra y la
+   imagen pegada arriba mientras se lee; en pantalla ancha, lado a lado. */
+.lam-marco{display:grid;gap:12px;justify-items:center;align-items:start}
 .lam-esc{position:relative;aspect-ratio:1100/1152;width:min(100%,calc(80vh * 1100 / 1152));border-radius:18px;overflow:hidden;background:#2A2117;box-shadow:var(--sh)}
+@media (max-width:899px){
+  .lam:not(.pres) .lam-esc{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;width:min(100%,calc(54vh * 1100 / 1152))}
+}
+@media (min-width:900px){
+  .lam:not(.pres) .lam-marco{grid-template-columns:minmax(0,1fr) minmax(300px,400px)}
+  .lam:not(.pres) .lam-esc{justify-self:end}
+  .lam:not(.pres) .lam-hoja{position:sticky;top:0;max-height:80vh;overflow:auto}
+}
 .lam-svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
 .lam-monte{opacity:0;transition:opacity 1.6s ease}
 .lam-estatua{transition:opacity .8s}
@@ -2628,11 +2671,12 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-et span{font-size:.875rem;color:#F2C46B;font-variant-numeric:tabular-nums;line-height:1.2}
 .lam-et.on{outline:2px solid #F2C46B}
 .lam-ets.fuera .lam-et{opacity:0;pointer-events:none;transform:scale(.96)}
-.lam-anio[hidden],.lam-hoja[hidden]{display:none}
-.lam-anio{position:absolute;left:12px;top:12px;max-width:60%;padding:8px 12px;border-radius:12px;background:rgba(18,13,6,.78);color:#fff;display:flex;flex-direction:column}
-.lam-anio b{font-size:1.375rem;font-variant-numeric:tabular-nums;color:#F2C46B}
-.lam-anio span{font-size:.875rem;line-height:1.3}
-.lam-hoja{position:absolute;left:10px;right:10px;bottom:10px;max-height:54%;overflow:auto;padding:12px 14px;border-radius:18px;background:rgba(20,15,8,.88);color:#F4EEE2;box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:1rem;line-height:1.45}
+/* La explicación es una placa oscura a propósito, igual en claro y oscuro:
+   continúa la imagen. */
+.lam-hoja{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:18px;background:#1D170F;color:#F4EEE2;box-shadow:var(--sh);font-size:1rem;line-height:1.45}
+.lam-hoja.vacia{background:#2A2117}
+.lam-pista{margin:0;display:flex;gap:8px;align-items:flex-start;color:#E6DCC8;font-size:1rem}
+.lam-pista svg{flex:0 0 auto;width:20px;height:20px;margin-top:2px;color:#F2C46B}
 .lam-hcab{display:flex;gap:10px;align-items:center;margin-bottom:8px}
 .lam-hcab>div{flex:1;min-width:0}
 .lam-metal{width:38px;height:38px;border-radius:12px;flex:0 0 auto;background:var(--c);box-shadow:inset 0 -6px 12px rgba(0,0,0,.3),inset 0 4px 10px rgba(255,255,255,.35)}
@@ -2687,12 +2731,13 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam.pres{background:#0E0D0B;color:#F4EEE2}
 .lam.pres .lam-tit,.lam.pres .lam-cerrar{color:#F4EEE2}
 .lam.pres .lam-ant{color:#F2C46B}
-.lam.pres .lam-esc{width:min(100%,calc((100vh - 270px) * 1100 / 1152))}
+.lam.pres .lam-esc{width:min(100%,calc((100vh - 380px) * 1100 / 1152))}
+.lam.pres .lam-hoja{font-size:1.125rem}
+.lam.pres:not(.ancho) .lam-ctl{position:sticky;bottom:0;z-index:3;background:#0E0D0B;padding:8px 0 calc(env(safe-area-inset-bottom,0px) + 8px)}
 .lam.pres.ancho>*{max-width:1400px}
-.lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:min(100%,calc((100vh - 250px) * 2050 / 1152))}
-.lam.pres.ancho .lam-hoja{left:auto;right:18px;top:18px;bottom:18px;width:44%;max-height:none;display:flex;flex-direction:column;justify-content:center}
-.lam.pres.ancho .lam-anio{display:none}
-.lam.pres .lam-hoja{font-size:1.125rem;max-height:48%}
+.lam.pres.ancho .lam-marco{position:relative;display:block;width:min(100%,calc((100vh - 250px) * 2050 / 1152));margin:0 auto}
+.lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:100%}
+.lam.pres.ancho .lam-hoja{position:absolute;right:18px;top:18px;bottom:18px;width:44%;overflow:auto;background:rgba(20,15,8,.88);box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:1.125rem;display:flex;flex-direction:column;justify-content:safe center}
 .lam.pres .lam-p2{font-size:1.75rem}
 .lam.pres .lam-tiempo{background:#17150F;box-shadow:none}
 .lam.pres .lam-tano{color:#F2C46B}
@@ -3253,7 +3298,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 <!-- v185: el estudio interactivo con imagen (lamAbre). -->
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = '4008e992cd83';
+const VERSION_APP = '5867ce9f17eb';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -56010,7 +56055,7 @@ const LAMINAS = {
     "lado": "d",
     "ax": 655,
     "ay": 600,
-    "ly": 520,
+    "ly": 560,
     "f": "331 – 168 a.C."
    },
    "hierro": {
@@ -56033,6 +56078,18 @@ const LAMINAS = {
     "ay": 1110,
     "ly": 1010,
     "f": "desde 476"
+   },
+   "piedra": {
+    "lado": "d",
+    "ly": 420,
+    "t": "La piedra",
+    "f": "Cristo vuelve"
+   },
+   "monte": {
+    "lado": "i",
+    "ly": 40,
+    "t": "El gran monte",
+    "f": "el reino eterno"
    }
   },
   "tiempo": [
@@ -61988,11 +62045,11 @@ const MANUAL = [
    },
    {
     "t": "El estudio interactivo de Daniel 2",
-    "h": "<p>Al abrir Daniel 2 aparece la tarjeta <strong>Estudio interactivo</strong>.</p>\n    <ul><li><strong>Explorar:</strong> cada parte de la estatua tiene su etiqueta con el\n    reino y sus fechas. Al tocarla, la explicación se abre dentro de la misma imagen:\n    primero lo que dice el texto y después lo que significa, con su fuente.</li>\n    <li><strong>La línea de tiempo:</strong> arrastra el año o toca el botón de reproducir y se enciende la\n    parte que gobernaba en ese momento.</li>\n    <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o\n    con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el\n    polvo que se lleva el viento y el monte que llena la tierra.</li></ul>"
+    "h": "<p>En Daniel 2, en la pestaña <strong>Para profundizar</strong>, está la tarjeta\n    <strong>Estudio interactivo</strong>.</p>\n    <ul><li><strong>Explorar:</strong> cada parte de la estatua, la piedra y el monte tienen su\n    etiqueta. Al tocar una etiqueta o la parte en la imagen, la explicación sale debajo de la\n    imagen (al lado en una pantalla grande), sin taparla: primero lo que dice el texto y después\n    lo que significa, con su fuente. La piedra cae y golpea los pies; el monte nace del polvo.</li>\n    <li><strong>La línea de tiempo:</strong> arrastra el año o toca el botón de reproducir y se enciende la\n    parte que gobernaba en ese momento.</li>\n    <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o\n    con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el\n    polvo que se lleva el viento y el monte que llena la tierra. Tocar una parte de la\n    estatua salta a su paso.</li></ul>"
    },
    {
-    "t": "Estudiar la interpretación",
-    "h": "<p>Además del examen, la app sirve para aprender qué significa cada\n    pasaje. Esa parte se llama <strong>interpretación</strong>: lo que dicen\n    Stephen Bohr, Elena de White y otros autores adventistas, y cada sección\n    dice de qué libro y página sale. No entra al concurso.</p>\n    <ul><li>En cada capítulo, debajo del estudio, el bloque <strong>La\n    interpretación</strong> la junta toda. El botón <strong>Ir a la\n    interpretación</strong> baja hasta ahí.</li>\n    <li>En el examen, <strong>Solo la interpretación</strong> trae solo sus\n    preguntas.</li></ul>"
+    "t": "Para el examen y para profundizar",
+    "h": "<p>Los capítulos que tienen interpretación muestran arriba dos pestañas:</p>\n    <ul><li><strong>Para el examen:</strong> lo que se pregunta en el concurso. Al final, un\n    aviso lleva a profundizar.</li>\n    <li><strong>Para profundizar</strong> (color petróleo): lo que significa el capítulo según\n    Stephen Bohr, Elena de White y otros autores adventistas, cómo la Biblia explica sus\n    símbolos y el estudio interactivo cuando lo hay. Cada sección dice de qué libro y página\n    sale. <strong>No entra al examen.</strong></li>\n    <li>La pestaña que elijas se queda al pasar de capítulo.</li>\n    <li>En el examen, <strong>Solo la interpretación</strong> trae solo sus\n    preguntas.</li></ul>"
    },
    {
     "t": "Mientras lo haces",
@@ -66649,12 +66706,12 @@ function lamEscena(){
   const capa=id=>'<g class="lam-parte" data-p="'+id+'"><image href="'+lamSrc(id)+'" x="'+L.ox+'" y="0" width="768" height="1152"/>'+
     '<rect class="lam-hit" x="'+C[id][0]+'" y="'+C[id][1]+'" width="'+C[id][2]+'" height="'+C[id][3]+'" fill="transparent" onclick="lamToca(\''+id+'\')"/></g>';
   /* La línea va del punto de la estatua al borde de su etiqueta. */
-  const lineas=Object.keys(E).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
+  const lineas=Object.keys(E).filter(id=>E[id].ax).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
     return '<g class="lam-guia" data-p="'+id+'"><circle cx="'+e.ax+'" cy="'+e.ay+'" r="7"/><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+30:x2-30)+' '+(e.ly+32)+' L'+x2+' '+(e.ly+32)+'"/></g>';}).join('');
   const etiquetas=Object.keys(E).map(id=>{const e=E[id],p=lamParte(id);
     return '<button type="button" class="lam-et '+e.lado+'" data-p="'+id+'" style="--c:'+p.c+';top:'+(e.ly/L.h*100)+'%" onclick="lamToca(\''+id+'\')">'+
-      '<b>'+esc(p.reino)+'</b><span>'+esc(e.f||p.fechas)+'</span></button>';}).join('');
-  return '<div class="lam-esc" id="lamEsc">'+
+      '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas)+'</span></button>';}).join('');
+  return '<div class="lam-marco"><div class="lam-esc" id="lamEsc">'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
     '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'+
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
@@ -66663,9 +66720,11 @@ function lamEscena(){
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" onclick="lamToca(\'piedra\')"/></g></svg>'+
-    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div>'+
-    '<div class="lam-anio" id="lamAnioEsc" hidden></div>'+
-    '<div class="lam-hoja" id="lamHoja" hidden aria-live="polite"></div></div>';
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
+    /* v187: la explicación va DEBAJO de la imagen (al lado en pantalla ancha),
+       nunca encima: en el celular tapaba la animación. Solo en Presentar con
+       pantalla ancha va sobre la parte vacía de la escena apaisada. */
+    '<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
 }
 /* Mueve el viewBox con suavidad. */
 function lamAcerca(dest,ms){
@@ -66681,14 +66740,14 @@ function lamAcerca(dest,ms){
    la explicación a la derecha, sin taparla. */
 const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900;
 const lamTodo=()=>lamAncho()?[-150,0,2050,LAM().h]:[0,0,LAM().w,LAM().h];
-/* Acercarse a una parte dejándola en la mitad de arriba: la de abajo es de la tarjeta. */
+/* Acercarse a una parte, centrada (la explicación ya no la tapa). */
 function lamCaja(id){
   const L=LAM(),[x,y,w,h]=L.cajas[id];
   if(lamAncho()){const H=Math.min(L.h,Math.max(h*2,440)),W=H*2050/L.h,cx=x+w/2,cy=y+h/2;
     return [Math.max(-150,Math.min(1900-W,cx-W*0.3)),Math.max(0,Math.min(L.h-H,cy-H/2)),W,H];}
   const R=L.w/L.h;
-  let W=Math.min(L.w,Math.max(w*1.6,h*R*1.9,380)),H=W/R;if(H>L.h){H=L.h;W=H*R;}
-  return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H*0.3)),W,H];
+  let W=Math.min(L.w,Math.max(w*1.6,h*R*1.4,380)),H=W/R;if(H>L.h){H=L.h;W=H*R;}
+  return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H/2)),W,H];
 }
 /* Encender: las partes de `ids` se ven, las demás se apagan (vacío: todas normales). */
 function lamEnciende(ids,suaves){
@@ -66741,8 +66800,26 @@ function lamCierra(){
 /* ── La tarjeta dentro de la imagen ── */
 function lamHoja(html){
   const h=document.getElementById('lamHoja');if(!h)return;
-  if(!html){h.hidden=true;h.innerHTML='';return;}
-  h.innerHTML=html;h.hidden=false;h.scrollTop=0;
+  h.classList.toggle('vacia',!html);
+  h.innerHTML=html||'<p class="lam-pista">'+IC('lupa')+' Toca una parte de la estatua, la piedra, el monte o una etiqueta. Arriba están los pasos del capítulo; abajo, la historia año por año.</p>';
+  h.scrollTop=0;
+}
+/* En el celular la imagen queda pegada arriba y la explicación debajo: si la
+   explicación quedó fuera de la vista, sube lo justo para que empiece donde
+   termina la imagen. */
+function lamVeHoja(){
+  if(lamAncho())return;
+  const l=document.getElementById('lam'),h=document.getElementById('lamHoja'),e=document.getElementById('lamEsc');
+  if(!l||!h||!e||!l.scrollBy)return;
+  const pega=getComputedStyle(e).position==='sticky',eb=pega?e.getBoundingClientRect().bottom:0,t=h.getBoundingClientRect().top;
+  if(t>innerHeight-160||t<eb-2)l.scrollBy({top:t-eb-10,behavior:lamQuieto()?'auto':'smooth'});
+}
+/* La piedra vuelve a su sitio (y se corta una caída a medias). */
+let lamVuelo=0;
+function lamPiedraArriba(){
+  lamVuelo++;
+  const pi=document.querySelector('#lamSvg .lam-piedra');
+  if(pi){pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
 }
 function lamHojaParte(p,i,n){
   return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
@@ -66764,12 +66841,12 @@ function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEa
 function lamInicio(){
   lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
-    const pi=svg.querySelector('.lam-piedra');pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
+  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
   lamAcerca(lamTodo(),650);
 }
 function lamToca(id){
-  if(lamModo==='presentar'){lamPres(lamPaso+1);return;}
+  /* En Presentar, tocar una parte lleva a SU paso (antes avanzaba uno). */
+  if(lamModo==='presentar'){const k=lamPasos().findIndex(x=>x.tipo==='parte'&&x.id===id);lamPres(k>=0&&k!==lamPaso?k:lamPaso+1);return;}
   if(lamSel===id){lamInicio();return;}
   lamElige(LAM().partes.findIndex(p=>p.id===id));
 }
@@ -66777,17 +66854,25 @@ function lamElige(i){
   const L=LAM(),p=L.partes[i];if(!p)return;
   lamPara();lamSel=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  const esMonte=p.id==='monte';
+  const esMonte=p.id==='monte',esPiedra=p.id==='piedra';
   svg.querySelector('.lam-monte').style.opacity=esMonte?'1':'0';
   svg.querySelector('.lam-estatua').style.opacity=esMonte?'0':'1';
-  lamEnciende(esMonte?[]:[p.id]);lamEtiquetas(false);
-  lamAcerca(esMonte||p.id==='piedra'?lamTodo():lamCaja(p.id),650);
-  lamHoja(lamHojaParte(p,i,L.partes.length));
+  lamEnciende(esMonte||esPiedra?[]:[p.id]);lamEtiquetas(false);
+  lamAcerca(esMonte||esPiedra?lamTodo():lamCaja(p.id),650);
+  /* v187: también en Explorar la piedra cae y golpea los pies (2:34), y el
+     monte nace del polvo que se lleva el viento (2:35). */
+  const pi=svg.querySelector('.lam-piedra');
+  if(esPiedra){lamPiedraArriba();lamCae(pi);}
+  else if(esMonte){lamVuelo++;pi.style.opacity='1';pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');lamPolvo(svg);}
+  else lamPiedraArriba();
+  lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
 }
 function lamHistoria(k){
   const L=LAM(),t=k==='desp'?L.despues:L.historia[k];if(!t)return;
   lamPara();lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
-  lamHoja(lamHojaTexto(t));
+  const svg=document.getElementById('lamSvg');
+  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
+  lamHoja(lamHojaTexto(t));lamVeHoja();
 }
 
 /* ── La línea de tiempo ── */
@@ -66808,14 +66893,15 @@ function lamQuien(y){
   return {on,suave,tx};
 }
 function lamVeAnio(y){
-  lamAnio=y;lamSel='';lamHoja('');lamEtiquetas(false);lamMarcaPaso('est');
+  lamAnio=y;lamSel='';lamEtiquetas(false);lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
+  svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();
   const q=lamQuien(y);lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
   lamAcerca(lamTodo(),0);
   document.getElementById('lamTano').textContent=lamAnioTx(y);
   document.getElementById('lamTq').textContent=q.tx;
-  const a=document.getElementById('lamAnioEsc');a.hidden=false;a.innerHTML='<b>'+lamAnioTx(y)+'</b><span>'+esc(q.tx)+'</span>';
+  /* El año va en la explicación, no sobre la imagen. */
+  lamHoja('<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>');
   const r=document.getElementById('lamRango');if(r&&Number(r.value)!==y)r.value=y;
 }
 /* El botón recorre la historia sola, de 605 a.C. a hoy, en unos 14 segundos. */
@@ -66850,7 +66936,7 @@ const lamPasos=()=>{const L=LAM();return [{tipo:'portada'},...L.historia.map((h,
   {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'}];};
 function lamPres(k){
   const pasos=lamPasos();if(k<0||k>=pasos.length)return;
-  const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
+  const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();lamVuelo++;const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
   const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
   const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos?'0':'1';
   if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
@@ -66882,8 +66968,8 @@ function lamAdelante(){lamPres(lamPaso+1);}
 function lamCae(piedra){
   const [gx,gy]=LAM().golpe;
   if(lamQuieto()){piedra.setAttribute('transform','translate('+gx+' '+gy+') rotate(40)');return;}
-  const t0=performance.now(),ms=1100,[x0,y0]=PIEDRA0;
-  const f=t=>{const k=Math.min(1,(t-t0)/ms),e=k*k;
+  const t0=performance.now(),ms=1100,[x0,y0]=PIEDRA0,yo=++lamVuelo;
+  const f=t=>{if(yo!==lamVuelo)return;const k=Math.min(1,(t-t0)/ms),e=k*k;
     piedra.setAttribute('transform','translate('+(x0+(gx-x0)*e)+' '+(y0+(gy-y0)*e)+') rotate('+(k*300)+')');
     if(k<1)requestAnimationFrame(f);else{const est=piedra.parentNode.querySelector('.lam-estatua');
       if(est&&est.animate)est.animate([{transform:'translate(0,0)'},{transform:'translate(-12px,4px)'},{transform:'translate(12px,-2px)'},{transform:'translate(0,0)'}],{duration:380});}};
@@ -69010,7 +69096,7 @@ function cabezaSec(s){
    quedaron tres reproductores parecidos. Por eso cada pieza tiene UNA función
    que la arma y todos los lugares la llaman; tests/test.js cuenta que su
    HTML no se escriba en ningún otro lado.
-     segmentado()  el control de dos o tres opciones (Todo / Solo lo del examen;
+     segmentado()  el control de dos o tres opciones (Todo / Solo lo central;
                    Ver / Con pistas / Tapadas)
      filaNav()     Anterior · por cuál va · Siguiente (la hoja del versículo y
                    cada capítulo)
@@ -69029,20 +69115,48 @@ function filaNav(ant,centro,sig){
 function filtroCapas(){
   return segmentado('Qué secciones ver',[
     {t:'Todo',on:true,clic:"filtraCapa(this,'')"},
-    {t:'Solo lo del examen',clic:"filtraCapa(this,'nucleo')"}]);
+    {t:'Solo lo central',clic:"filtraCapa(this,'nucleo')"}]);
 }
-/* Una sección del estudio, igual arriba que en el bloque de interpretación. */
-const htmlSec=id=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
+/* Una sección del estudio, igual en las dos pestañas. `p` dice en cuál vive. */
+const htmlSec=(id,p)=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+'>'+cabezaSec(s)+
   refsTocables(s.h,s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>';
-/* Baja al bloque de interpretación del capítulo abierto. */
-function irInterp(){const el=document.getElementById('interp-de-cap');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* v187: «Para el examen» y «Para profundizar». Antes la interpretación iba al
+   final del mismo estudio y solo un filtro la separaba: se leía todo seguido y
+   no quedaba claro qué entraba al examen. Ahora cada capítulo que tiene
+   interpretación muestra dos pestañas. Cada sección lleva data-pest con la
+   suya y #detalle lleva data-pest con la abierta; el CSS esconde la otra. Así
+   funciona igual en una y en dos columnas (divideVista mueve las secciones,
+   el atributo viaja con ellas). La pestaña elegida se mantiene al pasar de
+   capítulo. */
+let capPest='examen';
+function pestanasCap(){
+  const b=(k,ic,t,sub)=>'<button type="button" role="tab" class="pest pest-'+k+(capPest===k?' on':'')+
+    '" aria-selected="'+(capPest===k)+'" onclick="ponPest(\''+k+'\')">'+IC(ic)+'<span class="pest-tx"><b>'+t+'</b><small>'+sub+'</small></span></button>';
+  return '<div class="cap-pest" role="tablist" aria-label="Qué estudiar">'+
+    b('examen','examen','Para el examen','Lo que se pregunta')+b('prof','brujula','Para profundizar','No entra al examen')+'</div>';
+}
+function ponPest(k){
+  capPest=k==='prof'?'prof':'examen';
+  const d=document.getElementById('detalle');
+  if(!d)return;
+  d.setAttribute('data-pest',capPest);
+  d.querySelectorAll('.cap-pest .pest').forEach(b=>{const on=b.classList.contains('pest-'+capPest);
+    b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on));});
+}
+/* El aviso al final del examen: cambia de pestaña y sube a ella. */
+function irProf(){
+  ponPest('prof');
+  const t=document.querySelector('#detalle .cap-pest');
+  if(t&&t.scrollIntoView)t.scrollIntoView({behavior:'smooth',block:'start'});
+}
 
 function filtraCapa(btn,modo){
   const d=document.getElementById('detalle');
   if(!d)return;
   d.querySelectorAll('.capa-filtro .cf').forEach(b=>{b.classList.remove('on');b.setAttribute('aria-pressed','false');});
   btn.classList.add('on');btn.setAttribute('aria-pressed','true');
-  d.querySelectorAll('.sec').forEach(function(s){
+  d.querySelectorAll('.sec:not([data-pest="prof"]):not(.prof-cta)').forEach(function(s){
     const c=s.getAttribute('data-capa')||'';
     s.style.display=(!modo||c===modo)?'':'none';
   });
@@ -69163,6 +69277,8 @@ function verCap(id,quieto){
   if(!c)return;
   const secs=CONTENIDO[id]||CONT_MODULOS[id]||[];
   const d=document.getElementById('detalle');
+  const hayI=secs.some(esSecInterp);
+  if(hayI)d.setAttribute?.('data-pest',capPest);else d.removeAttribute?.('data-pest');
   /* v156: «Volver a …» solo si se llegó desde una lista (ver verCreencia). */
   if(crVuelve&&crVuelve.a!==id)crVuelve=null;
   const deDonde=crVuelve?buscaItem(crVuelve.de):null;
@@ -69185,15 +69301,20 @@ function verCap(id,quieto){
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
-    /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
-    lamTarjeta(id)+
-    (secs.some(s=>s.capa)?filtroCapas():'')+
-    (secs.some(esSecInterp)?'<button type="button" class="btn txt ir-interp" onclick="irInterp()">'+IC('brujula')+' Ir a la interpretación</button>':'')+
-    secs.filter(s=>!esSecInterp(s)).map(htmlSec(id)).join('')+
-    (secs.some(esSecInterp)?
-      '<div class="sec interp-cab" data-capa="contexto" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' La interpretación</h3>'+
-      '<p class="interp-nota">Lo que significa este capítulo según Stephen Bohr, Elena de White y otros autores adventistas. Cada sección dice de qué obra y página sale. No entra al examen.</p></div>'+
-      secs.filter(esSecInterp).map(htmlSec(id)).join(''):'')+
+    /* v187: con interpretación, dos pestañas (ver pestanasCap). */
+    (hayI?pestanasCap():'')+
+    /* El filtro solo cuando hay qué filtrar: secciones centrales y de apoyo. */
+    (secs.some(s=>s.capa==='nucleo')&&secs.some(s=>!esSecInterp(s)&&s.capa!=='nucleo')?filtroCapas():'')+
+    secs.filter(s=>!esSecInterp(s)).map(htmlSec(id,hayI?'examen':'')).join('')+
+    (hayI?
+      '<div class="sec prof-cta" data-pest="examen"><button type="button" class="prof-ir" onclick="irProf()">'+IC('brujula')+
+      '<span><b>¿Quieres ir más hondo?</b> Para profundizar: '+(LAMINAS[id]?'el estudio interactivo, ':'')+
+      'qué significa el capítulo y cómo la Biblia explica sus símbolos.</span></button></div>'+
+      '<div class="sec interp-cab" data-capa="contexto" data-pest="prof" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
+      '<p class="interp-nota"><b>Esto no entra al examen.</b> Es lo que significa el capítulo según Stephen Bohr, Elena de White y otros autores adventistas. Cada sección dice de qué obra y página sale.</p>'+
+      /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
+      lamTarjeta(id)+'</div>'+
+      secs.filter(esSecInterp).map(htmlSec(id,'prof')).join(''):lamTarjeta(id))+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
@@ -69499,15 +69620,15 @@ function divideVista(d,id){
     const iz=document.createElement('div');iz.className='vd-izq';
     const de=document.createElement('div');de.className='vd-der';
     iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
-    /* v147: «Todo / Solo lo del examen» filtra las secciones de estudio, así
+    /* v147: «Todo / Solo lo central» filtra las secciones de estudio, así
        que va en la cabecera de SU columna. Se quedaba suelto en `d`, debajo de
        las dos columnas, y en celular salía al final, después de todo lo que
        filtra. */
     de.innerHTML='<div class="vd-cab"><p class="vd-rot">El estudio</p></div>';
     const cf=d.querySelector(':scope>.capa-filtro');
     if(cf)de.firstChild.appendChild(cf);
-    const ii=d.querySelector(':scope>.ir-interp');
-    if(ii)de.firstChild.appendChild(ii);
+    const cp=d.querySelector(':scope>.cap-pest');
+    if(cp)de.firstChild.insertBefore(cp,de.firstChild.firstChild.nextSibling);
     iz.appendChild(det);
     secs.forEach(x=>de.appendChild(x));
     fila.appendChild(iz);fila.appendChild(de);

@@ -125,12 +125,12 @@ function lamEscena(){
   const capa=id=>'<g class="lam-parte" data-p="'+id+'"><image href="'+lamSrc(id)+'" x="'+L.ox+'" y="0" width="768" height="1152"/>'+
     '<rect class="lam-hit" x="'+C[id][0]+'" y="'+C[id][1]+'" width="'+C[id][2]+'" height="'+C[id][3]+'" fill="transparent" onclick="lamToca(\''+id+'\')"/></g>';
   /* La línea va del punto de la estatua al borde de su etiqueta. */
-  const lineas=Object.keys(E).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
+  const lineas=Object.keys(E).filter(id=>E[id].ax).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
     return '<g class="lam-guia" data-p="'+id+'"><circle cx="'+e.ax+'" cy="'+e.ay+'" r="7"/><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+30:x2-30)+' '+(e.ly+32)+' L'+x2+' '+(e.ly+32)+'"/></g>';}).join('');
   const etiquetas=Object.keys(E).map(id=>{const e=E[id],p=lamParte(id);
     return '<button type="button" class="lam-et '+e.lado+'" data-p="'+id+'" style="--c:'+p.c+';top:'+(e.ly/L.h*100)+'%" onclick="lamToca(\''+id+'\')">'+
-      '<b>'+esc(p.reino)+'</b><span>'+esc(e.f||p.fechas)+'</span></button>';}).join('');
-  return '<div class="lam-esc" id="lamEsc">'+
+      '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas)+'</span></button>';}).join('');
+  return '<div class="lam-marco"><div class="lam-esc" id="lamEsc">'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
     '<defs><radialGradient id="lamSombra"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'+
     '<image class="lam-fondo" href="'+lamSrc('babilonia')+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
@@ -139,9 +139,11 @@ function lamEscena(){
     '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" onclick="lamToca(\'piedra\')"/></g></svg>'+
-    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div>'+
-    '<div class="lam-anio" id="lamAnioEsc" hidden></div>'+
-    '<div class="lam-hoja" id="lamHoja" hidden aria-live="polite"></div></div>';
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div></div>'+
+    /* v187: la explicación va DEBAJO de la imagen (al lado en pantalla ancha),
+       nunca encima: en el celular tapaba la animación. Solo en Presentar con
+       pantalla ancha va sobre la parte vacía de la escena apaisada. */
+    '<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
 }
 /* Mueve el viewBox con suavidad. */
 function lamAcerca(dest,ms){
@@ -157,14 +159,14 @@ function lamAcerca(dest,ms){
    la explicación a la derecha, sin taparla. */
 const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900;
 const lamTodo=()=>lamAncho()?[-150,0,2050,LAM().h]:[0,0,LAM().w,LAM().h];
-/* Acercarse a una parte dejándola en la mitad de arriba: la de abajo es de la tarjeta. */
+/* Acercarse a una parte, centrada (la explicación ya no la tapa). */
 function lamCaja(id){
   const L=LAM(),[x,y,w,h]=L.cajas[id];
   if(lamAncho()){const H=Math.min(L.h,Math.max(h*2,440)),W=H*2050/L.h,cx=x+w/2,cy=y+h/2;
     return [Math.max(-150,Math.min(1900-W,cx-W*0.3)),Math.max(0,Math.min(L.h-H,cy-H/2)),W,H];}
   const R=L.w/L.h;
-  let W=Math.min(L.w,Math.max(w*1.6,h*R*1.9,380)),H=W/R;if(H>L.h){H=L.h;W=H*R;}
-  return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H*0.3)),W,H];
+  let W=Math.min(L.w,Math.max(w*1.6,h*R*1.4,380)),H=W/R;if(H>L.h){H=L.h;W=H*R;}
+  return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H/2)),W,H];
 }
 /* Encender: las partes de `ids` se ven, las demás se apagan (vacío: todas normales). */
 function lamEnciende(ids,suaves){
@@ -217,8 +219,26 @@ function lamCierra(){
 /* ── La tarjeta dentro de la imagen ── */
 function lamHoja(html){
   const h=document.getElementById('lamHoja');if(!h)return;
-  if(!html){h.hidden=true;h.innerHTML='';return;}
-  h.innerHTML=html;h.hidden=false;h.scrollTop=0;
+  h.classList.toggle('vacia',!html);
+  h.innerHTML=html||'<p class="lam-pista">'+IC('lupa')+' Toca una parte de la estatua, la piedra, el monte o una etiqueta. Arriba están los pasos del capítulo; abajo, la historia año por año.</p>';
+  h.scrollTop=0;
+}
+/* En el celular la imagen queda pegada arriba y la explicación debajo: si la
+   explicación quedó fuera de la vista, sube lo justo para que empiece donde
+   termina la imagen. */
+function lamVeHoja(){
+  if(lamAncho())return;
+  const l=document.getElementById('lam'),h=document.getElementById('lamHoja'),e=document.getElementById('lamEsc');
+  if(!l||!h||!e||!l.scrollBy)return;
+  const pega=getComputedStyle(e).position==='sticky',eb=pega?e.getBoundingClientRect().bottom:0,t=h.getBoundingClientRect().top;
+  if(t>innerHeight-160||t<eb-2)l.scrollBy({top:t-eb-10,behavior:lamQuieto()?'auto':'smooth'});
+}
+/* La piedra vuelve a su sitio (y se corta una caída a medias). */
+let lamVuelo=0;
+function lamPiedraArriba(){
+  lamVuelo++;
+  const pi=document.querySelector('#lamSvg .lam-piedra');
+  if(pi){pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
 }
 function lamHojaParte(p,i,n){
   return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+'</div>'+
@@ -240,12 +260,12 @@ function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEa
 function lamInicio(){
   lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
-    const pi=svg.querySelector('.lam-piedra');pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
+  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
   lamAcerca(lamTodo(),650);
 }
 function lamToca(id){
-  if(lamModo==='presentar'){lamPres(lamPaso+1);return;}
+  /* En Presentar, tocar una parte lleva a SU paso (antes avanzaba uno). */
+  if(lamModo==='presentar'){const k=lamPasos().findIndex(x=>x.tipo==='parte'&&x.id===id);lamPres(k>=0&&k!==lamPaso?k:lamPaso+1);return;}
   if(lamSel===id){lamInicio();return;}
   lamElige(LAM().partes.findIndex(p=>p.id===id));
 }
@@ -253,17 +273,25 @@ function lamElige(i){
   const L=LAM(),p=L.partes[i];if(!p)return;
   lamPara();lamSel=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  const esMonte=p.id==='monte';
+  const esMonte=p.id==='monte',esPiedra=p.id==='piedra';
   svg.querySelector('.lam-monte').style.opacity=esMonte?'1':'0';
   svg.querySelector('.lam-estatua').style.opacity=esMonte?'0':'1';
-  lamEnciende(esMonte?[]:[p.id]);lamEtiquetas(false);
-  lamAcerca(esMonte||p.id==='piedra'?lamTodo():lamCaja(p.id),650);
-  lamHoja(lamHojaParte(p,i,L.partes.length));
+  lamEnciende(esMonte||esPiedra?[]:[p.id]);lamEtiquetas(false);
+  lamAcerca(esMonte||esPiedra?lamTodo():lamCaja(p.id),650);
+  /* v187: también en Explorar la piedra cae y golpea los pies (2:34), y el
+     monte nace del polvo que se lleva el viento (2:35). */
+  const pi=svg.querySelector('.lam-piedra');
+  if(esPiedra){lamPiedraArriba();lamCae(pi);}
+  else if(esMonte){lamVuelo++;pi.style.opacity='1';pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');lamPolvo(svg);}
+  else lamPiedraArriba();
+  lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
 }
 function lamHistoria(k){
   const L=LAM(),t=k==='desp'?L.despues:L.historia[k];if(!t)return;
   lamPara();lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
-  lamHoja(lamHojaTexto(t));
+  const svg=document.getElementById('lamSvg');
+  if(svg){svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
+  lamHoja(lamHojaTexto(t));lamVeHoja();
 }
 
 /* ── La línea de tiempo ── */
@@ -284,14 +312,15 @@ function lamQuien(y){
   return {on,suave,tx};
 }
 function lamVeAnio(y){
-  lamAnio=y;lamSel='';lamHoja('');lamEtiquetas(false);lamMarcaPaso('est');
+  lamAnio=y;lamSel='';lamEtiquetas(false);lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
-  svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';
+  svg.querySelector('.lam-monte').style.opacity='0';svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();
   const q=lamQuien(y);lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
   lamAcerca(lamTodo(),0);
   document.getElementById('lamTano').textContent=lamAnioTx(y);
   document.getElementById('lamTq').textContent=q.tx;
-  const a=document.getElementById('lamAnioEsc');a.hidden=false;a.innerHTML='<b>'+lamAnioTx(y)+'</b><span>'+esc(q.tx)+'</span>';
+  /* El año va en la explicación, no sobre la imagen. */
+  lamHoja('<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>');
   const r=document.getElementById('lamRango');if(r&&Number(r.value)!==y)r.value=y;
 }
 /* El botón recorre la historia sola, de 605 a.C. a hoy, en unos 14 segundos. */
@@ -326,7 +355,7 @@ const lamPasos=()=>{const L=LAM();return [{tipo:'portada'},...L.historia.map((h,
   {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'}];};
 function lamPres(k){
   const pasos=lamPasos();if(k<0||k>=pasos.length)return;
-  const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
+  const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();lamVuelo++;const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
   const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
   const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos?'0':'1';
   if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
@@ -358,8 +387,8 @@ function lamAdelante(){lamPres(lamPaso+1);}
 function lamCae(piedra){
   const [gx,gy]=LAM().golpe;
   if(lamQuieto()){piedra.setAttribute('transform','translate('+gx+' '+gy+') rotate(40)');return;}
-  const t0=performance.now(),ms=1100,[x0,y0]=PIEDRA0;
-  const f=t=>{const k=Math.min(1,(t-t0)/ms),e=k*k;
+  const t0=performance.now(),ms=1100,[x0,y0]=PIEDRA0,yo=++lamVuelo;
+  const f=t=>{if(yo!==lamVuelo)return;const k=Math.min(1,(t-t0)/ms),e=k*k;
     piedra.setAttribute('transform','translate('+(x0+(gx-x0)*e)+' '+(y0+(gy-y0)*e)+') rotate('+(k*300)+')');
     if(k<1)requestAnimationFrame(f);else{const est=piedra.parentNode.querySelector('.lam-estatua');
       if(est&&est.animate)est.animate([{transform:'translate(0,0)'},{transform:'translate(-12px,4px)'},{transform:'translate(12px,-2px)'},{transform:'translate(0,0)'}],{duration:380});}};
@@ -2486,7 +2515,7 @@ function cabezaSec(s){
    quedaron tres reproductores parecidos. Por eso cada pieza tiene UNA función
    que la arma y todos los lugares la llaman; tests/test.js cuenta que su
    HTML no se escriba en ningún otro lado.
-     segmentado()  el control de dos o tres opciones (Todo / Solo lo del examen;
+     segmentado()  el control de dos o tres opciones (Todo / Solo lo central;
                    Ver / Con pistas / Tapadas)
      filaNav()     Anterior · por cuál va · Siguiente (la hoja del versículo y
                    cada capítulo)
@@ -2505,20 +2534,48 @@ function filaNav(ant,centro,sig){
 function filtroCapas(){
   return segmentado('Qué secciones ver',[
     {t:'Todo',on:true,clic:"filtraCapa(this,'')"},
-    {t:'Solo lo del examen',clic:"filtraCapa(this,'nucleo')"}]);
+    {t:'Solo lo central',clic:"filtraCapa(this,'nucleo')"}]);
 }
-/* Una sección del estudio, igual arriba que en el bloque de interpretación. */
-const htmlSec=id=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'">'+cabezaSec(s)+
+/* Una sección del estudio, igual en las dos pestañas. `p` dice en cuál vive. */
+const htmlSec=(id,p)=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+'>'+cabezaSec(s)+
   refsTocables(s.h,s.cap||id)+(s.preg?recordarHTML(s.preg):'')+'</div>';
-/* Baja al bloque de interpretación del capítulo abierto. */
-function irInterp(){const el=document.getElementById('interp-de-cap');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* v187: «Para el examen» y «Para profundizar». Antes la interpretación iba al
+   final del mismo estudio y solo un filtro la separaba: se leía todo seguido y
+   no quedaba claro qué entraba al examen. Ahora cada capítulo que tiene
+   interpretación muestra dos pestañas. Cada sección lleva data-pest con la
+   suya y #detalle lleva data-pest con la abierta; el CSS esconde la otra. Así
+   funciona igual en una y en dos columnas (divideVista mueve las secciones,
+   el atributo viaja con ellas). La pestaña elegida se mantiene al pasar de
+   capítulo. */
+let capPest='examen';
+function pestanasCap(){
+  const b=(k,ic,t,sub)=>'<button type="button" role="tab" class="pest pest-'+k+(capPest===k?' on':'')+
+    '" aria-selected="'+(capPest===k)+'" onclick="ponPest(\''+k+'\')">'+IC(ic)+'<span class="pest-tx"><b>'+t+'</b><small>'+sub+'</small></span></button>';
+  return '<div class="cap-pest" role="tablist" aria-label="Qué estudiar">'+
+    b('examen','examen','Para el examen','Lo que se pregunta')+b('prof','brujula','Para profundizar','No entra al examen')+'</div>';
+}
+function ponPest(k){
+  capPest=k==='prof'?'prof':'examen';
+  const d=document.getElementById('detalle');
+  if(!d)return;
+  d.setAttribute('data-pest',capPest);
+  d.querySelectorAll('.cap-pest .pest').forEach(b=>{const on=b.classList.contains('pest-'+capPest);
+    b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on));});
+}
+/* El aviso al final del examen: cambia de pestaña y sube a ella. */
+function irProf(){
+  ponPest('prof');
+  const t=document.querySelector('#detalle .cap-pest');
+  if(t&&t.scrollIntoView)t.scrollIntoView({behavior:'smooth',block:'start'});
+}
 
 function filtraCapa(btn,modo){
   const d=document.getElementById('detalle');
   if(!d)return;
   d.querySelectorAll('.capa-filtro .cf').forEach(b=>{b.classList.remove('on');b.setAttribute('aria-pressed','false');});
   btn.classList.add('on');btn.setAttribute('aria-pressed','true');
-  d.querySelectorAll('.sec').forEach(function(s){
+  d.querySelectorAll('.sec:not([data-pest="prof"]):not(.prof-cta)').forEach(function(s){
     const c=s.getAttribute('data-capa')||'';
     s.style.display=(!modo||c===modo)?'':'none';
   });
@@ -2639,6 +2696,8 @@ function verCap(id,quieto){
   if(!c)return;
   const secs=CONTENIDO[id]||CONT_MODULOS[id]||[];
   const d=document.getElementById('detalle');
+  const hayI=secs.some(esSecInterp);
+  if(hayI)d.setAttribute?.('data-pest',capPest);else d.removeAttribute?.('data-pest');
   /* v156: «Volver a …» solo si se llegó desde una lista (ver verCreencia). */
   if(crVuelve&&crVuelve.a!==id)crVuelve=null;
   const deDonde=crVuelve?buscaItem(crVuelve.de):null;
@@ -2661,15 +2720,20 @@ function verCap(id,quieto){
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera
        leer primero lo abre, y a quien viene a repasar un dato no le estorba. */
     seccionLectura(id)+
-    /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
-    lamTarjeta(id)+
-    (secs.some(s=>s.capa)?filtroCapas():'')+
-    (secs.some(esSecInterp)?'<button type="button" class="btn txt ir-interp" onclick="irInterp()">'+IC('brujula')+' Ir a la interpretación</button>':'')+
-    secs.filter(s=>!esSecInterp(s)).map(htmlSec(id)).join('')+
-    (secs.some(esSecInterp)?
-      '<div class="sec interp-cab" data-capa="contexto" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' La interpretación</h3>'+
-      '<p class="interp-nota">Lo que significa este capítulo según Stephen Bohr, Elena de White y otros autores adventistas. Cada sección dice de qué obra y página sale. No entra al examen.</p></div>'+
-      secs.filter(esSecInterp).map(htmlSec(id)).join(''):'')+
+    /* v187: con interpretación, dos pestañas (ver pestanasCap). */
+    (hayI?pestanasCap():'')+
+    /* El filtro solo cuando hay qué filtrar: secciones centrales y de apoyo. */
+    (secs.some(s=>s.capa==='nucleo')&&secs.some(s=>!esSecInterp(s)&&s.capa!=='nucleo')?filtroCapas():'')+
+    secs.filter(s=>!esSecInterp(s)).map(htmlSec(id,hayI?'examen':'')).join('')+
+    (hayI?
+      '<div class="sec prof-cta" data-pest="examen"><button type="button" class="prof-ir" onclick="irProf()">'+IC('brujula')+
+      '<span><b>¿Quieres ir más hondo?</b> Para profundizar: '+(LAMINAS[id]?'el estudio interactivo, ':'')+
+      'qué significa el capítulo y cómo la Biblia explica sus símbolos.</span></button></div>'+
+      '<div class="sec interp-cab" data-capa="contexto" data-pest="prof" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
+      '<p class="interp-nota"><b>Esto no entra al examen.</b> Es lo que significa el capítulo según Stephen Bohr, Elena de White y otros autores adventistas. Cada sección dice de qué obra y página sale.</p>'+
+      /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
+      lamTarjeta(id)+'</div>'+
+      secs.filter(esSecInterp).map(htmlSec(id,'prof')).join(''):lamTarjeta(id))+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como
@@ -2975,15 +3039,15 @@ function divideVista(d,id){
     const iz=document.createElement('div');iz.className='vd-izq';
     const de=document.createElement('div');de.className='vd-der';
     iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
-    /* v147: «Todo / Solo lo del examen» filtra las secciones de estudio, así
+    /* v147: «Todo / Solo lo central» filtra las secciones de estudio, así
        que va en la cabecera de SU columna. Se quedaba suelto en `d`, debajo de
        las dos columnas, y en celular salía al final, después de todo lo que
        filtra. */
     de.innerHTML='<div class="vd-cab"><p class="vd-rot">El estudio</p></div>';
     const cf=d.querySelector(':scope>.capa-filtro');
     if(cf)de.firstChild.appendChild(cf);
-    const ii=d.querySelector(':scope>.ir-interp');
-    if(ii)de.firstChild.appendChild(ii);
+    const cp=d.querySelector(':scope>.cap-pest');
+    if(cp)de.firstChild.insertBefore(cp,de.firstChild.firstChild.nextSibling);
     iz.appendChild(det);
     secs.forEach(x=>de.appendChild(x));
     fila.appendChild(iz);fila.appendChild(de);

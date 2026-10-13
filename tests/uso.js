@@ -3163,7 +3163,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(k>0&&tras.length>=3&&tras.every(x=>/^" data-capa="contexto"/.test(x))&&!antes.some(x=>/Las siete trompetas según Bohr/.test(x)),
     'En Apocalipsis 8 la interpretación va junta al final, bajo su título ('+tras.length+' secciones)');
   ok(/Las siete trompetas según Bohr/.test(tras.join(' '))&&/verVers\(this,'ap8',7,/.test(H),'Trae las trompetas según Bohr y sus citas se tocan');
-  ok(/irInterp\(\)/.test(H)&&!/filtraCapa\(this,'contexto'\)/.test(H),'Un botón baja a la interpretación; el filtro vuelve a tener dos opciones');
+  ok(/onclick="ponPest\('examen'\)"/.test(H)&&/onclick="ponPest\('prof'\)"/.test(H)&&/Para el examen/.test(H)&&/Para profundizar/.test(H),'v187: el capítulo trae dos pestañas, «Para el examen» y «Para profundizar»');
+  ok(antes.every(x=>/data-pest="examen"/.test(x))&&tras.every(x=>/data-pest="prof"/.test(x))&&/No entra al examen|no entra al examen/i.test(secs[k]),'v187: cada sección dice en qué pestaña vive y la de profundizar avisa que no entra al examen');
+  ok(/irProf\(\)/.test(H)&&!/filtraCapa\(this,'contexto'\)/.test(H),'v187: al final del examen, un aviso lleva a profundizar; el filtro sigue con dos opciones');
   Z.verCap('d3');
   const d3=Z.el('detalle').innerHTML.split('<div class="sec').slice(1), k3=d3.findIndex(x=>/^ interp-cab/.test(x));
   ok(k3>0&&d3.slice(0,k3).some(x=>/Desmond Doss/.test(x)),'Lo de contexto que no es interpretación (Desmond Doss) se queda en su lugar');

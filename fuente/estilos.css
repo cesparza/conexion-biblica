@@ -37,6 +37,10 @@
   --fondo-ok:color-mix(in srgb,var(--verde) 14%,var(--card));
   --fondo-mal:color-mix(in srgb,var(--rojo) 13%,var(--card));
   --fondo-info:color-mix(in srgb,var(--cielo) 14%,var(--card));
+  /* v187: el color de «Para profundizar» (petróleo). --prof es letra y filete;
+     --prof-fondo, relleno con letra blanca encima. */
+  --prof:var(--v-prof,#0E6A78); --prof-fondo:var(--v-prof-fondo,#0E6A78);
+  --fondo-prof:color-mix(in srgb,var(--prof) 9%,var(--card));
 }
 *{box-sizing:border-box;margin:0;padding:0}
 /* EL ATRIBUTO hidden GANA SIEMPRE.
@@ -2565,13 +2569,40 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 /* v155: el versículo al que lleva una cita del estudio, resaltado un momento. */
 .biblia p.salto{background:var(--fondo-calido);box-shadow:0 0 0 4px var(--fondo-calido);border-radius:8px;outline:0;transition:background .6s,box-shadow .6s}
 
-/* v182: el bloque de interpretación al final de cada capítulo. */
-.ir-interp{margin:0 0 .9rem;min-height:40px;font-size:.875rem;color:var(--cielo-txt,#2866AA)}
-.vd-cab .ir-interp{margin:.5rem 0 0}
-.sec.interp-cab{margin-top:1.6rem;padding:1rem 1.1rem;border-radius:var(--r,16px);
-  background:color-mix(in srgb,#0E7490 10%,var(--card,#fff));border:1px solid color-mix(in srgb,#0E7490 30%,transparent)}
-.interp-tit{margin:0;font-size:1.125rem;color:var(--cielo-txt);display:flex;align-items:center;gap:.45rem}
-.interp-nota{margin:.35rem 0 0;font-size:.875rem;color:var(--gris)}
+/* v187: dos pestañas por capítulo, «Para el examen» y «Para profundizar».
+   Cada sección trae data-pest y #detalle la abierta: se esconde la otra. */
+#detalle[data-pest="examen"] [data-pest="prof"],
+#detalle[data-pest="prof"] [data-pest="examen"],
+#detalle[data-pest="prof"] .capa-filtro{display:none!important}
+.cap-pest{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:0 0 1.1rem;scroll-margin-top:5rem}
+.vd-cab .cap-pest{flex:1 1 100%;margin:0}
+.pest{display:flex;align-items:center;gap:.6rem;min-height:56px;padding:.55rem .8rem;text-align:left;cursor:pointer;
+  border:1.5px solid var(--v-linea,#d8e0ef);border-radius:var(--r,16px);background:var(--card);color:var(--gris);font:inherit;
+  transition:background .2s,border-color .2s,color .2s}
+.pest svg{flex:0 0 auto;width:22px;height:22px}
+.pest-tx{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.pest-tx b{font-size:1rem;font-weight:800;color:var(--txt)}
+.pest-tx small{font-size:.75rem}
+.pest-examen.on{border-color:var(--azul);background:var(--fondo-suave);color:var(--azul);box-shadow:inset 0 -3px 0 var(--azul)}
+.pest-prof.on{border-color:var(--prof);background:var(--fondo-prof);color:var(--prof);box-shadow:inset 0 -3px 0 var(--prof)}
+.pest.on .pest-tx small{color:inherit;font-weight:700}
+.pest:focus-visible{outline:3px solid var(--cielo);outline-offset:2px}
+/* Las secciones de profundizar llevan su filete y su color: no se confunden
+   con las del examen aunque alguien llegue por un enlace. */
+.sec[data-pest="prof"]:not(.interp-cab){padding-left:.9rem;border-left:3px solid var(--prof)}
+.sec[data-pest="prof"] .sec-rot{color:var(--prof)}
+.sec.interp-cab{margin:0 0 1.4rem;padding:1rem 1.1rem;border-radius:var(--r,16px);
+  background:var(--fondo-prof);border:1px solid color-mix(in srgb,var(--prof) 35%,transparent)}
+.interp-tit{margin:0;font-size:1.125rem;color:var(--prof);display:flex;align-items:center;gap:.45rem}
+.interp-nota{margin:.35rem 0 0;font-size:.875rem;color:var(--txt)}
+.interp-cab .lam-invita{margin:1rem 0 0}
+.prof-cta{margin-top:1.6rem}
+.prof-ir{display:flex;align-items:center;gap:.75rem;width:100%;padding:.9rem 1rem;text-align:left;cursor:pointer;font:inherit;font-size:1rem;
+  color:var(--txt);background:var(--fondo-prof);border:1.5px dashed color-mix(in srgb,var(--prof) 55%,transparent);border-radius:var(--r,16px)}
+.prof-ir svg{flex:0 0 auto;width:24px;height:24px;color:var(--prof)}
+.prof-ir b{color:var(--prof)}
+.prof-ir:hover{border-style:solid}
+@media (max-width:440px){.pest{padding:.5rem .7rem}.pest svg{display:none}}
 
 /* ── LÁMINAS (v185): estudio interactivo con imagen ── */
 .lam-invita{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin:0 0 1.2rem;padding:.9rem;border-radius:var(--r);background:var(--card,#fff);box-shadow:var(--sh)}
@@ -2591,7 +2622,19 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-paso{flex:0 0 auto;display:flex;align-items:center;gap:6px;min-height:40px;padding:0 12px 0 6px;border-radius:999px;border:2px solid var(--v-linea,#F0E6D2);background:var(--card,#fff);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
 .lam-paso i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--v-sup2,#FFF4E0);color:var(--azul);font-size:.75rem}
 .lam-paso.on{border-color:var(--azul)}
+.lam:not(.pres)>*{max-width:1180px}
+/* v187: la imagen y su explicación. En el celular, una debajo de la otra y la
+   imagen pegada arriba mientras se lee; en pantalla ancha, lado a lado. */
+.lam-marco{display:grid;gap:12px;justify-items:center;align-items:start}
 .lam-esc{position:relative;aspect-ratio:1100/1152;width:min(100%,calc(80vh * 1100 / 1152));border-radius:18px;overflow:hidden;background:#2A2117;box-shadow:var(--sh)}
+@media (max-width:899px){
+  .lam:not(.pres) .lam-esc{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;width:min(100%,calc(54vh * 1100 / 1152))}
+}
+@media (min-width:900px){
+  .lam:not(.pres) .lam-marco{grid-template-columns:minmax(0,1fr) minmax(300px,400px)}
+  .lam:not(.pres) .lam-esc{justify-self:end}
+  .lam:not(.pres) .lam-hoja{position:sticky;top:0;max-height:80vh;overflow:auto}
+}
 .lam-svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
 .lam-monte{opacity:0;transition:opacity 1.6s ease}
 .lam-estatua{transition:opacity .8s}
@@ -2611,11 +2654,12 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-et span{font-size:.875rem;color:#F2C46B;font-variant-numeric:tabular-nums;line-height:1.2}
 .lam-et.on{outline:2px solid #F2C46B}
 .lam-ets.fuera .lam-et{opacity:0;pointer-events:none;transform:scale(.96)}
-.lam-anio[hidden],.lam-hoja[hidden]{display:none}
-.lam-anio{position:absolute;left:12px;top:12px;max-width:60%;padding:8px 12px;border-radius:12px;background:rgba(18,13,6,.78);color:#fff;display:flex;flex-direction:column}
-.lam-anio b{font-size:1.375rem;font-variant-numeric:tabular-nums;color:#F2C46B}
-.lam-anio span{font-size:.875rem;line-height:1.3}
-.lam-hoja{position:absolute;left:10px;right:10px;bottom:10px;max-height:54%;overflow:auto;padding:12px 14px;border-radius:18px;background:rgba(20,15,8,.88);color:#F4EEE2;box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:1rem;line-height:1.45}
+/* La explicación es una placa oscura a propósito, igual en claro y oscuro:
+   continúa la imagen. */
+.lam-hoja{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:18px;background:#1D170F;color:#F4EEE2;box-shadow:var(--sh);font-size:1rem;line-height:1.45}
+.lam-hoja.vacia{background:#2A2117}
+.lam-pista{margin:0;display:flex;gap:8px;align-items:flex-start;color:#E6DCC8;font-size:1rem}
+.lam-pista svg{flex:0 0 auto;width:20px;height:20px;margin-top:2px;color:#F2C46B}
 .lam-hcab{display:flex;gap:10px;align-items:center;margin-bottom:8px}
 .lam-hcab>div{flex:1;min-width:0}
 .lam-metal{width:38px;height:38px;border-radius:12px;flex:0 0 auto;background:var(--c);box-shadow:inset 0 -6px 12px rgba(0,0,0,.3),inset 0 4px 10px rgba(255,255,255,.35)}
@@ -2670,12 +2714,13 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam.pres{background:#0E0D0B;color:#F4EEE2}
 .lam.pres .lam-tit,.lam.pres .lam-cerrar{color:#F4EEE2}
 .lam.pres .lam-ant{color:#F2C46B}
-.lam.pres .lam-esc{width:min(100%,calc((100vh - 270px) * 1100 / 1152))}
+.lam.pres .lam-esc{width:min(100%,calc((100vh - 380px) * 1100 / 1152))}
+.lam.pres .lam-hoja{font-size:1.125rem}
+.lam.pres:not(.ancho) .lam-ctl{position:sticky;bottom:0;z-index:3;background:#0E0D0B;padding:8px 0 calc(env(safe-area-inset-bottom,0px) + 8px)}
 .lam.pres.ancho>*{max-width:1400px}
-.lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:min(100%,calc((100vh - 250px) * 2050 / 1152))}
-.lam.pres.ancho .lam-hoja{left:auto;right:18px;top:18px;bottom:18px;width:44%;max-height:none;display:flex;flex-direction:column;justify-content:center}
-.lam.pres.ancho .lam-anio{display:none}
-.lam.pres .lam-hoja{font-size:1.125rem;max-height:48%}
+.lam.pres.ancho .lam-marco{position:relative;display:block;width:min(100%,calc((100vh - 250px) * 2050 / 1152));margin:0 auto}
+.lam.pres.ancho .lam-esc{aspect-ratio:2050/1152;width:100%}
+.lam.pres.ancho .lam-hoja{position:absolute;right:18px;top:18px;bottom:18px;width:44%;overflow:auto;background:rgba(20,15,8,.88);box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:1.125rem;display:flex;flex-direction:column;justify-content:safe center}
 .lam.pres .lam-p2{font-size:1.75rem}
 .lam.pres .lam-tiempo{background:#17150F;box-shadow:none}
 .lam.pres .lam-tano{color:#F2C46B}

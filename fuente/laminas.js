@@ -24,10 +24,14 @@ const LAMINAS = {
   etiquetas: {
     oro: { lado: 'd', ax: 640, ay: 140, ly: 110, f: '605 – 539 a.C.' },
     plata: { lado: 'i', ax: 400, ay: 330, ly: 300, f: '539 – 331 a.C.' },
-    bronce: { lado: 'd', ax: 655, ay: 600, ly: 520, f: '331 – 168 a.C.' },
+    bronce: { lado: 'd', ax: 655, ay: 600, ly: 560, f: '331 – 168 a.C.' },
     hierro: { lado: 'i', ax: 470, ay: 850, ly: 760, f: '168 a.C. – 476' },
     barro: { lado: 'i', ax: 470, ay: 1035, ly: 975, f: '538 – 1798 · vuelve' },
     dedos: { lado: 'd', ax: 640, ay: 1110, ly: 1010, f: 'desde 476' },
+    /* Sin línea: la piedra se ve sola arriba a la derecha y el monte aparece
+       cuando se toca. `t` reemplaza el reino en la etiqueta. */
+    piedra: { lado: 'd', ly: 420, t: 'La piedra', f: 'Cristo vuelve' },
+    monte: { lado: 'i', ly: 40, t: 'El gran monte', f: 'el reino eterno' },
   },
   tiempo: ['oro', 'plata', 'bronce', 'hierro', 'dedos', 'barro'],
   inicio: { ref: 'Daniel 2:31', texto: 'Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.',
