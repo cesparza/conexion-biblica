@@ -529,7 +529,7 @@ for (const W of ANCHOS) {
     const tira = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamTira .lam-ri img'), document.querySelector('#lamSvg .lam-hist')].map(i => i.getAttribute('src') || i.getAttribute('href'));
       const r = await Promise.all(hs.map(h => fetch(h).then(x => x.ok && x.headers.get('content-type') === 'image/webp').catch(() => false)));
       return [document.querySelectorAll('#lamTira .lam-ri').length, r.every(Boolean) && r.length, !document.getElementById('lamEsc').classList.contains('cargando')]; });
-    ok(tira[0] === 12 && tira[1] === 13 && tira[2], W + ' · Daniel 7: la tira trae las 9 partes, las señas, los 1.260 años y las tres fases, y sus imágenes cargan (' + tira.join(', ') + ')');
+    ok(tira[0] === 13 && tira[1] === 14 && tira[2], W + ' · Daniel 7: la tira trae las 10 partes, las señas, los 1.260 años y las tres fases, y sus imágenes cargan (' + tira.join(', ') + ')');
     const lado = await p.evaluate(() => { const r = document.getElementById('lamEsc').getBoundingClientRect(); return Math.round(r.width / r.height * 100) / 100; });
     ok(Math.abs(lado - 2050 / 1152) < 0.02, W + ' · la imagen de Daniel 7 es apaisada (' + lado + ')');
     /* v205: aquí se prueba la foto entera del oso; con oso-solo.png sube recortado sobre el mar (ver 3e). */
@@ -579,7 +579,7 @@ for (const W of ANCHOS) {
     for (let i = 0; i < nPasos; i++) await p.keyboard.press(i % 2 ? 'PageDown' : 'ArrowRight');
     await p.waitForTimeout(700);
     const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamSig').disabled]);
-    ok(nPasos === 37 && fin[0] === '17 / 17' && fin[3] && /se hizo justicia a los santos/.test(fin[1]) && fin[2].endsWith('d7/juicio.webp'), W + ' · Presentar recorre los ' + nPasos + ' pasos de Daniel 7 (contador ' + fin[0] + ') y termina en 7:22');
+    ok(nPasos === 38 && fin[0] === '18 / 18' && fin[3] && /se hizo justicia a los santos/.test(fin[1]) && fin[2].endsWith('d7/juicio.webp'), W + ' · Presentar recorre los ' + nPasos + ' pasos de Daniel 7 (contador ' + fin[0] + ') y termina en 7:22');
     await p.evaluate(() => lamCierra());
   }
   /* ── 3e. Daniel 7 interactivo (v205): con Daniel 2 se enciende el metal de cada
@@ -594,7 +594,7 @@ for (const W of ANCHOS) {
     const metales = await p.evaluate(() => LAMINAS.d7.paralelo.map(r => { lamEligeE(LAMINAS.d7.partes.findIndex(q => q.id === r[0]));
       const d = document.getElementById('lamD2'), on = [...d.querySelectorAll('img[data-p].on,.lam-d2-pie button.on')].map(x => x.dataset.p);
       return r[0] + ':' + (d.hidden ? 'oculta' : d.classList.contains('agrega') ? 'agrega' : on.join('+')); }).join(' '));
-    ok(metales === 'leon:oro oso:plata leopardo:bronce bestia:hierro cuernos:dedos cuerno:barro juicio:agrega hijo:agrega reino:piedra+monte',
+    ok(metales === 'leon:oro oso:plata leopardo:bronce bestia:hierro cuernos:dedos cuerno:barro juicio:agrega hijo:agrega santos:piedra reino:monte',
       W + ' · con Daniel 2 cada parte enciende su metal y el juicio dice que lo agrega Daniel 7 (' + metales + ')');
     const ag = await p.evaluate(() => { lamEligeE(LAMINAS.d7.partes.findIndex(q => q.id === 'juicio')); return [document.getElementById('lamD2Ag').textContent, document.getElementById('lamChip').textContent]; });
     ok(/El juicio/.test(ag[0]) && /lo agrega Daniel 7/.test(ag[1]), W + ' · el juicio: «lo que Daniel 7 agrega» (' + ag[1].slice(-40) + ')');
@@ -687,7 +687,7 @@ for (const W of ANCHOS) {
     /* Presentar: las bestias suben del mar, los tres cuernos caen, el juicio por pasos y una seña por paso. */
     await p.evaluate(() => lamAbre('d7', 'presentar'));
     const pres = await p.evaluate(() => lamPasos().map(x => x.tipo === 'parte' ? x.id + (x.sub != null ? x.sub : '') : x.tipo === 'senas' ? 's' + x.sub : x.tipo === 'senasT' ? 'S' : x.tipo === 'periodo' ? 't' + x.sub : x.tipo === 'fases' ? 'f' + x.sub : x.tipo[0]).join(' '));
-    ok(pres === 'p h h leon oso leopardo bestia cuernos cuerno S s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 t0 t1 t2 t3 juicio0 juicio1 juicio2 juicio3 f0 f1 f2 hijo0 hijo1 reino d c',
+    ok(pres === 'p h h leon oso leopardo bestia cuernos cuerno S s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 t0 t1 t2 t3 juicio0 juicio1 juicio2 juicio3 f0 f1 f2 hijo0 hijo1 santos reino d c',
       W + ' · Presentar: ' + pres);
     /* v214: en Presentar también: el nombre sobre la imagen (la seña) se toca y la presentación no se mueve. */
     {
@@ -705,16 +705,16 @@ for (const W of ANCHOS) {
     /* v208: la portada de las señas (las características del cuerno pequeño). */
     await p.evaluate(() => lamPres(lamPasos().findIndex(x => x.tipo === 'senasT')));
     const st = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.querySelectorAll('#lamHoja .lam-sl li').length, document.querySelector('#lamTabla:not([hidden]) .lam-sen-tit b').textContent, document.getElementById('lamCuenta').textContent]);
-    ok(/Las características del cuerno pequeño/.test(st[0]) && st[1] === 11 && /características/.test(st[2]) && st[3] === '10 / 17', W + ' · Presentar: portada de las once señas del cuerno pequeño (' + st.slice(1).join(', ') + ')');
+    ok(/Las características del cuerno pequeño/.test(st[0]) && st[1] === 11 && /características/.test(st[2]) && st[3] === '10 / 18', W + ' · Presentar: portada de las once señas del cuerno pequeño (' + st.slice(1).join(', ') + ')');
     const ix = await p.evaluate(() => lamPasos().findIndex(x => x.tipo === 'senas' && x.sub === 3));
     await p.evaluate(k => lamPres(k), ix);
     const sp = await p.evaluate(() => [document.querySelectorAll('#lamHoja .lam-sl li.on').length, document.querySelector('#lamHoja .lam-sl li.ahora b').textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamCuenta').textContent]);
-    ok(sp[0] === 4 && /pequeño/.test(sp[1]) && sp[2].endsWith('d7/cuerno.webp') && sp[3] === '10 / 17', W + ' · la seña 4 en Presentar: cuatro encendidas sobre el cuerno pequeño (' + sp.join(', ') + ')');
+    ok(sp[0] === 4 && /pequeño/.test(sp[1]) && sp[2].endsWith('d7/cuerno.webp') && sp[3] === '10 / 18', W + ' · la seña 4 en Presentar: cuatro encendidas sobre el cuerno pequeño (' + sp.join(', ') + ')');
     ok(await p.evaluate(() => document.querySelector('#lamTabla .lam-sen-cap b').textContent === LAMINAS.d7.senas[3].t.replace(/<[^>]+>/g, '')), W + ' · la seña va también al pie de la imagen');
     /* v208: tiempo, tiempos y medio tiempo: la cuenta, día por año, Apocalipsis y 538 → 1798. */
     const t0 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 0));
       return [document.querySelectorAll('#lamTabla .lam-fila.ve').length, document.querySelector('#lamTabla .lam-per-total b').textContent, document.getElementById('lamHoja').textContent, document.getElementById('lamCuenta').textContent]; });
-    ok(t0[0] === 3 && t0[1] === '1.260 días' && /hasta tiempo, tiempos y medio tiempo/.test(t0[2]) && t0[3] === '11 / 17', W + ' · tiempo, tiempos y medio tiempo: 360 + 720 + 180 = 1.260 días (' + t0[1] + ', ' + t0[3] + ')');
+    ok(t0[0] === 3 && t0[1] === '1.260 días' && /hasta tiempo, tiempos y medio tiempo/.test(t0[2]) && t0[3] === '11 / 18', W + ' · tiempo, tiempos y medio tiempo: 360 + 720 + 180 = 1.260 días (' + t0[1] + ', ' + t0[3] + ')');
     const t2 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 2)); return [document.querySelectorAll('#lamTabla .lam-igual').length, document.getElementById('lamHoja').textContent]; });
     ok(t2[0] === 3 && /cuarenta y dos meses/.test(t2[1]) && /mil doscientos sesenta días/.test(t2[1]) && /Apocalipsis 12:14/.test(t2[1]), W + ' · el mismo tiempo en Apocalipsis: 3½ tiempos, 42 meses, 1.260 días');
     const t3 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 3)); const b = document.getElementById('lamTramo');
@@ -726,15 +726,15 @@ for (const W of ANCHOS) {
     await p.evaluate(k => lamPres(k), ij);
     const JUICIO2 = await p.evaluate(() => lamParte('juicio').pasos[2].caja.map(n => n.toFixed(1)).join(' '));
     const pj = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.getElementById('lamZoom').getAttribute('viewBox'), document.getElementById('lamCuenta').textContent]);
-    ok(/paso 3 de 4/.test(pj[0]) && /Un río de fuego procedía/.test(pj[0]) && pj[1] === JUICIO2 && pj[2] === '12 / 17', W + ' · el juicio, paso 3 de 4 en Presentar (' + pj[1] + ', ' + pj[2] + ')');
+    ok(/paso 3 de 4/.test(pj[0]) && /Un río de fuego procedía/.test(pj[0]) && pj[1] === JUICIO2 && pj[2] === '12 / 18', W + ' · el juicio, paso 3 de 4 en Presentar (' + pj[1] + ', ' + pj[2] + ')');
     /* v210: «El Juez se sentó y los libros fueron abiertos»: con «reducir movimiento», el cuadro final (libro abierto, luces, cita). */
     const lb = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.id === 'juicio' && x.sub === 3)); const l = document.getElementById('lamLibro'), c = document.querySelector('.lam-libro-cita');
       return [!!l && l.classList.contains('abre') && l.classList.contains('luz'), !!c && /El Juez se sentó y los libros fueron abiertos/.test(c.textContent) && getComputedStyle(c).opacity === '1',
         document.querySelectorAll('#lamZoom .lam-j-trono,#lamZoom .lam-j-lib').length, getComputedStyle(document.getElementById('lamChip')).opacity, document.getElementById('lamCuenta').textContent]; });
-    ok(lb[0] && lb[1] && lb[2] === 4 && lb[3] === '0' && lb[4] === '12 / 17', W + ' · los libros fueron abiertos: el libro abierto, la luz del trono y de los libros, y la cita (' + lb.slice(2).join(', ') + ')');
+    ok(lb[0] && lb[1] && lb[2] === 4 && lb[3] === '0' && lb[4] === '12 / 18', W + ' · los libros fueron abiertos: el libro abierto, la luz del trono y de los libros, y la cita (' + lb.slice(2).join(', ') + ')');
     const fa = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'fases' && x.sub === 1)); const t = document.getElementById('lamTabla');
       return [t.querySelectorAll('.lam-fp').length, t.querySelectorAll('.lam-fp.on').length, [...t.querySelectorAll('.lam-fp')].findIndex(e => e.classList.contains('ahora')), document.getElementById('lamHoja').textContent, document.getElementById('lamCuenta').textContent, t.scrollHeight - t.clientHeight, document.querySelector('#lamSvg .lam-hist').getAttribute('href')]; });
-    ok(fa[0] === 3 && fa[1] === 2 && fa[2] === 1 && /Daniel 7:14/.test(fa[3]) && /Sentencia/.test(fa[3]) && fa[4] === '13 / 17' && fa[5] <= 2 && fa[6].endsWith('d7/juicio.webp'),
+    ok(fa[0] === 3 && fa[1] === 2 && fa[2] === 1 && /Daniel 7:14/.test(fa[3]) && /Sentencia/.test(fa[3]) && fa[4] === '13 / 18' && fa[5] <= 2 && fa[6].endsWith('d7/juicio.webp'),
       W + ' · las tres fases del juicio: la segunda encendida sobre la imagen del juicio (' + [fa[1], fa[2], fa[4], fa[5]].join(', ') + ')');
     await p.keyboard.press('ArrowRight'); await p.waitForTimeout(200);
     ok(await p.evaluate(() => document.querySelectorAll('#lamTabla .lam-fp.on').length === 3 && /Daniel 7:27/.test(document.getElementById('lamHoja').textContent)), W + ' · con el clicker, la tercera fase (Ejecución)');
@@ -1006,7 +1006,7 @@ for (const W of ANCHOS) {
   await p.evaluate(() => lamCierra());
   /* 3. Daniel 7 también abre en su primer paso y sigue en orden. */
   const d7 = await p.evaluate(() => { lamAbre('d7', 'explorar'); const r = [lamDonde, lamRecorrido().map(x => x.k).join(' ')]; lamCierra(); return r; });
-  ok(d7[0] === 'h0' && /^h0 h1 est leon .* cuerno x-senas x-periodo juicio x-fases hijo reino desp cierre$/.test(d7[1]), W + ' · v215: Daniel 7 abre en su primer paso y su recorrido sigue el de Presentar (' + d7[1] + ')');
+  ok(d7[0] === 'h0' && /^h0 h1 est leon .* cuerno x-senas x-periodo juicio x-fases hijo santos reino desp cierre$/.test(d7[1]), W + ' · v215: Daniel 7 abre en su primer paso y su recorrido sigue el de Presentar (' + d7[1] + ')');
   /* 4. El río: un carril por visión; lo que gobierna a la vez es un hilo con nombre. */
   await p.evaluate(() => verComparar()); await p.waitForTimeout(500);
   const rio = await p.evaluate(() => [...document.querySelectorAll('.cmp-rio .cmp-carril')].map(c => {
@@ -1015,9 +1015,13 @@ for (const W of ANCHOS) {
   ok(rio.length === 2 && rio.every(r => r.filas === 1) && rio.every(r => r.hilos.some(h => /^Roma papal/.test(h))) && rio[1].hilos.some(h => /^Juicio/.test(h)) && await p.locator('.cmp-ley').count() === 1,
     W + ' · v215: en el río cada visión es una sola fila; Roma papal y el juicio son hilos con su nombre, y hay leyenda (' + JSON.stringify(rio) + ')');
   /* 5. Los últimos acontecimientos. */
-  const ult = await p.evaluate(() => { cmpUlt(2); return { n: document.querySelectorAll('#cmpUlt .cmp-ult-ev').length, sel: document.querySelector('#cmpUlt .cmp-ult-ev.on i').textContent,
-    det: document.getElementById('cmpUltDet').textContent, d2: [...document.querySelectorAll('#cmpUlt .cmp-ult-c.si')].length }; });
-  ok(ult.n === 7 && ult.sel === '3' && /siete últimas plagas/i.test(ult.det) && /Apocalipsis 15:1/.test(ult.det) && ult.d2 > 10, W + ' · v215: «Los últimos acontecimientos» en Comparar: siete, y tocar uno abre sus textos');
+  /* v218: diecinueve acontecimientos en cinco fases; la tabla rueda de lado dentro de su caja, la página no. */
+  const ult = await p.evaluate(() => { cmpUlt(ultIdx('plagas')); const sc = document.querySelector('#cmpUlt .cmp-ult-scroll'), fz = [...document.querySelectorAll('#cmpUlt .cmp-ult-fase')];
+    return { n: document.querySelectorAll('#cmpUlt .cmp-ult-ev').length, sel: document.querySelector('#cmpUlt .cmp-ult-ev.on i').textContent,
+    det: document.getElementById('cmpUltDet').textContent, d2: [...document.querySelectorAll('#cmpUlt .cmp-ult-c.si')].length, fases: fz.map(f => f.textContent).join('|'),
+    caja: sc.getBoundingClientRect().right <= document.documentElement.clientWidth + 1, pag: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1 }; });
+  ok(ult.n === 19 && ult.sel === '10' && /siete últimas plagas/i.test(ult.det) && /Apocalipsis 15:1/.test(ult.det) && /tiempo de angustia/i.test(ult.det) && ult.d2 > 20 && ult.fases.split('|').length === 5 && ult.caja && ult.pag,
+    W + ' · v218: «Los últimos acontecimientos»: diecinueve en cinco fases, tocar uno abre sus textos, y nada se sale de la pantalla (' + JSON.stringify(Object.assign({}, ult, { det: '' })) + ')');
   /* 6. El lugar vuelve igual al recargar (y el enlace lo dice). */
   const recarga = async (nombre, prepara, mira) => {
     await p.evaluate(prepara); await p.waitForTimeout(500);
@@ -1032,8 +1036,8 @@ for (const W of ANCHOS) {
     () => lamModo === 'presentar' && lamId === 'd2' && lamPaso === 7 || [lamModo, lamId, lamPaso]);
   await recarga('la sala de Comparar en Grecia', () => { lamCierra(); verComparar(); cmpToca('-331'); },
     () => cmpSel === '-331' && !document.getElementById('cmpSala').hidden || [cmpSel]);
-  await recarga('las plagas en «Los últimos acontecimientos»', () => { cmpCierra(); cmpUlt(2); },
-    () => ultSel === 2 && /plagas/i.test(document.getElementById('cmpUltDet').textContent) || [ultSel]);
+  await recarga('las plagas en «Los últimos acontecimientos»', () => { cmpCierra(); cmpUlt(ultIdx('plagas')); },
+    () => ultSel === ultIdx('plagas') && /plagas/i.test(document.getElementById('cmpUltDet').textContent) || [ultSel]);
   /* Un enlace copiado abre lo mismo en otro aparato (sin nada anotado). */
   await p.evaluate(() => { cmpCierra(); verCap('d7'); lamAbre('d7', 'explorar'); lamIr('cuerno'); });
   await p.waitForTimeout(400);

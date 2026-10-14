@@ -886,7 +886,7 @@ function lamVeAnio(y){
   /* Al recorrer solo, el año cambia veinte veces por segundo: la escena se
      vuelve a pintar solo cuando cambia, si no parpadea. */
   /* v215: en el tramo futuro, la secuencia de los últimos acontecimientos. */
-  const futU=q.fut?lamUltHTML([q.fut.id==='monte'||q.fut.id==='reino'?'reino':'venida']):'';
+  const futU=q.fut?lamUltHTML([q.fut.ult||(q.fut.id==='monte'||q.fut.id==='reino'?'reino':'venida')]):'';
   const esA0=lamEscenaAnio(y),esA=lamEnEscena(esA0)?null:esA0,hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>'+futU;
   const fig=hj&&hj.querySelector('.lam-fig'),igual=fig?(esA&&fig.getAttribute('data-f')===esA.f):!esA;
   if(hj&&igual&&hj.querySelector('.lam-anio-tx')){hj.querySelector('.lam-anio-tx').innerHTML=lamPer(txt);hj.classList.remove('vacia');}
@@ -899,7 +899,7 @@ function lamRecorre(){
   lamParaVision();
   const r=document.getElementById('lamRango'),L=LAM(),H=L.hitos||[];let y=Number(r.value),espera=0;if(y>=LAM_FIN)y=-620;
   /* El futuro se detiene más: la piedra cae (dos segundos) y el monte crece (cinco). */
-  const F=(L.futuro||[]).map((f,i)=>[f.de+1,i?100:44]);
+  const F=(L.futuro||[]).map(f=>[f.de+1,f.ult==='reino'?100:44]);
   const b=document.getElementById('lamPlay');if(b)b.classList.add('on');
   lamFutVisto='';
   /* v211: mientras corre, la línea de tiempo se ve (en Explorar quedaba bajo la imagen). */
@@ -9259,11 +9259,18 @@ function quitaPersona(i,p){
    en la última fila: el reino de Dios.
    Agregar una lámina con `partes` agrega una columna. Nada más. */
 const CMP_FIN='fin';
+/* v218 (Camilo, 14-oct 16:01: «la piedra y el gran monte son eventos separados: la piedra
+   es la segunda venida; el gran monte es el reino eterno, después de los mil años. No
+   pueden ir lado a lado»). Lo que no tiene fecha se reparte por su `fin`: 'venida' (la
+   piedra, los santos reciben el reino) o 'reino' (el monte, el reino eterno). Cada uno
+   es su propia época, en ese orden; sin `fin` cae en el reino. */
+const CMP_FINES={venida:{reino:'La segunda venida',fechas:'Cristo vuelve: la piedra'},reino:{reino:'El reino eterno',fechas:'Después de los mil años, para siempre'}};
+const cmpEsFin=k=>String(k).indexOf(CMP_FIN)===0;
 /* v211 (Camilo, 14-oct): la fila de una parte es su `era` si la tiene, si no su `de`.
    El Hijo del hombre no tiene tramo propio (de:null) pero NO es «lo que no pasa»:
    llega al Anciano de días en 1844 (era:1844), en la época del juicio. Antes caía en
    el reino de Dios, junto a la piedra, y parecía el mismo suceso que la segunda venida. */
-const cmpClave=p=>Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN;
+const cmpClave=p=>Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN+'-'+(CMP_FINES[p.fin]?p.fin:'reino');
 function cmpModelo(Ls){
   Ls=Ls||(typeof LAMINAS!=='undefined'?LAMINAS:{});
   const cols=Object.keys(Ls).filter(k=>Array.isArray(Ls[k].partes)&&Ls[k].partes.length&&libroCid(k))
@@ -9274,10 +9281,11 @@ function cmpModelo(Ls){
     const L=Ls[k];
     L.partes.forEach(p=>{
       const key=cmpClave(p);
-      if(!filas.has(key))filas.set(key,{key,de:key===CMP_FIN?Infinity:Number(key),reino:'',fechas:'',c:p.c||'',celdas:{}});
+      const fin=cmpEsFin(key)?CMP_FINES[key.slice(CMP_FIN.length+1)]:null;
+      if(!filas.has(key))filas.set(key,{key,de:fin?1e9+Object.keys(CMP_FINES).indexOf(key.slice(CMP_FIN.length+1)):Number(key),reino:'',fechas:'',c:p.c||'',celdas:{}});
       const f=filas.get(key);
-      if(!f.reino)f.reino=key===CMP_FIN?'El reino de Dios':(p.reino||'');
-      if(!f.fechas)f.fechas=key===CMP_FIN?'Lo que no pasa':(p.fechas||'');
+      if(!f.reino)f.reino=fin?fin.reino:(p.reino||'');
+      if(!f.fechas)f.fechas=fin?fin.fechas:(p.fechas||'');
       (f.celdas[k]=f.celdas[k]||[]).push(p);
     });
   });
@@ -9343,7 +9351,7 @@ function cmpRio(M){
   const carril=k=>{
     const fin=[],pistas=[],sub=[];
     const t=(LAMINAS[k].partes||[]).map(p=>{const key=cmpClave(p);
-      if(key===CMP_FIN){fin.push(p);return '';}
+      if(cmpEsFin(key)){fin.push(p);return '';}
       /* Lo que va en una época sin tramo propio (el Hijo del hombre) ya lo dibuja su época. */
       if(!Number.isFinite(p.de))return '';
       const a=Math.min(Number.isFinite(p.a)?p.a:2026,2026);
@@ -9356,7 +9364,7 @@ function cmpRio(M){
     const hilos=sub.map(o=>{const corto=o.p.reino.replace(/^El /,'').replace(/ en el cielo$/,'').replace(/^./,c=>c.toUpperCase()),fe=o.a>=2026?'desde '+lamAnioTx(o.p.de):Math.abs(o.p.de)+'–'+o.a;
       return '<button type="button" class="cmp-hilo'+(o.w<22?' der':'')+'" data-k="'+esc(o.key)+'" style="--c:'+esc(o.p.c||'')+';left:'+pc(o.x)+';width:'+pc(o.w)+'" '+
         'aria-label="'+esc(o.lb+'; al mismo tiempo')+'" title="'+esc(o.p.reino+' · '+o.p.fechas)+'" onclick="cmpToca(\''+o.key+'\')"><i></i><span>'+esc(corto)+' <small>'+esc(fe)+'</small></span></button>';}).join('');
-    const f=fin.length?'<button type="button" class="cmp-tr fin" data-k="'+CMP_FIN+'" aria-label="'+esc(cmpNom(k)+': '+fin.map(p=>p.nombre).join(', '))+'" title="El reino de Dios" onclick="cmpToca(\''+CMP_FIN+'\')"></button>':'';
+    const fk=fin.length?cmpClave(fin[0]):'',f=fin.length?'<button type="button" class="cmp-tr fin" data-k="'+esc(fk)+'" aria-label="'+esc(cmpNom(k)+': '+fin.map(p=>p.nombre).join(', '))+'" title="La venida y el reino eterno" onclick="cmpToca(\''+fk+'\')"></button>':'';
     return '<div class="cmp-carril'+(sub.length?' con-hilo':'')+'"><span class="cmp-carril-n">'+esc(cmpNom(k))+'</span><div class="cmp-carril-t">'+t+f+hilos+'</div></div>';
   };
   /* En el teléfono quedan las tres que caben: 605 a.C., 476 y hoy. */
@@ -9367,7 +9375,7 @@ function cmpRio(M){
     marcas.map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+pc(cmpX(y))+'">'+t+'</span>').join('')+
     '<span class="siempre" style="left:'+pc(96)+'">siempre</span></div></div>'+
     '<div class="cmp-ley" aria-hidden="true"><span class="cmp-eje-n"></span><p><span><i class="l-tr"></i>Los reinos, uno tras otro</span>'+
-    '<span><i class="l-hilo"></i>Al mismo tiempo, dentro del anterior</span><span><i class="l-fin"></i>El reino de Dios</span></p></div></div>';
+    '<span><i class="l-hilo"></i>Al mismo tiempo, dentro del anterior</span><span><i class="l-fin"></i>La venida y el reino eterno</span></p></div></div>';
 }
 /* La época que se lee queda pegada arriba, justo debajo de las barras que ya
    están pegadas (la de la marca en el teléfono; dentro de Jóvenes, la de la app y
@@ -9422,14 +9430,17 @@ const ULT=()=>typeof ULTIMOS!=='undefined'?ULTIMOS:null;
 function ultHTML(){
   const U=ULT();if(!U)return '';
   const E=U.eventos,cel=(e,lb)=>{const r=e.en[lb]||'';return r?(r[0]==='~'?'sup':'si'):'no';};
+  /* v218: los acontecimientos agrupados en fases (una fila arriba, cada fase sobre los suyos). */
+  const fases=(U.fases||[]).map(([id,t])=>[t,E.filter(e=>e.fase===id).length]).filter(x=>x[1]);
   return '<section class="cmp-ult" id="cmpUlt" aria-labelledby="cmpUltT"><header class="cmp-ult-cab"><div class="cmp-ant">'+IC('historial')+' Después del juicio</div>'+
     '<h3 class="cmp-tit" id="cmpUltT">'+esc(U.titulo)+'</h3><p class="cmp-p">'+esc(U.nota)+'</p></header>'+
-    '<div class="cmp-ult-m" style="--n:'+E.length+'" role="group" aria-label="Qué libro muestra cada acontecimiento">'+
+    '<div class="cmp-ult-scroll"><div class="cmp-ult-m" style="--n:'+E.length+'" role="group" aria-label="Qué libro muestra cada acontecimiento">'+
+      (fases.length?'<span class="cmp-ult-0" aria-hidden="true"></span>'+fases.map(([t,n])=>'<span class="cmp-ult-fase" style="grid-column:span '+n+'">'+esc(t)+'</span>').join(''):'')+
       '<span class="cmp-ult-0" aria-hidden="true"></span>'+
-      E.map((e,i)=>'<button type="button" class="cmp-ult-ev'+(i===ultSel?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===ultSel)+'" onclick="cmpUlt('+i+')"><i>'+(i+1)+'</i><span>'+esc(e.t)+'</span></button>').join('')+
+      E.map((e,i)=>'<button type="button" class="cmp-ult-ev'+(i===ultSel?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===ultSel)+'" onclick="cmpUlt('+i+')" title="'+esc(e.t)+'"><i>'+(i+1)+'</i><span>'+esc(e.c||e.t)+'</span></button>').join('')+
       U.libros.map(([k,nom])=>'<span class="cmp-ult-lb">'+esc(nom)+'</span>'+E.map((e,i)=>{const c=cel(e,k),r=(e.en[k]||'').replace(/^~/,'');
         return '<span class="cmp-ult-c '+c+(i===ultSel?' on':'')+'" data-i="'+i+'" title="'+esc(nom+(c==='no'?': no lo trae':c==='sup'?': lo supone ('+r+')':': '+r))+'"><b></b></span>';}).join('')).join('')+
-    '</div><p class="cmp-ult-claves" aria-hidden="true">'+E.map((e,i)=>'<span><b>'+(i+1)+'</b> '+esc(e.c||e.t)+'</span>').join('')+'</p><p class="cmp-ult-ley" aria-hidden="true"><span><b class="si"></b>Lo muestra</span><span><b class="sup"></b>Lo supone, sin contarlo</span><span><b class="no"></b>No lo trae</span></p>'+
+    '</div></div><p class="cmp-ult-claves" aria-hidden="true">'+E.map((e,i)=>'<span><b>'+(i+1)+'</b> '+esc(e.c||e.t)+'</span>').join('')+'</p><p class="cmp-ult-ley" aria-hidden="true"><span><b class="si"></b>Lo muestra</span><span><b class="sup"></b>Lo supone, sin contarlo</span><span><b class="no"></b>No lo trae</span></p>'+
     '<div class="cmp-ult-det" id="cmpUltDet" aria-live="polite">'+ultDetHTML(ultSel)+'</div>'+
     '<p class="sec-fuente">Fuente: '+U.fuente+'</p></section>';
 }
@@ -9437,7 +9448,7 @@ function ultDetHTML(i){
   const U=ULT(),e=U&&U.eventos[i];if(!e)return '';
   const muestra=U.libros.filter(([k])=>e.en[k]),no=U.libros.filter(([k])=>!e.en[k]);
   return '<div class="cmp-ult-dc">'+(e.img?'<span class="cmp-ult-img"><img src="'+LAMINAS_DIR+e.img+'.webp" alt="" loading="lazy" decoding="async"></span>':'<span class="cmp-ult-num">'+(i+1)+'</span>')+
-    '<div><small>'+(i+1)+' de '+U.eventos.length+' · '+esc(e.cuando)+'</small><h4>'+esc(e.t)+'</h4><p>'+esc(e.nota)+'</p></div></div>'+
+    '<div><small>'+(i+1)+' de '+U.eventos.length+((U.fases||[]).find(x=>x[0]===e.fase)?' · '+esc(U.fases.find(x=>x[0]===e.fase)[1]):'')+'</small><small class="cmp-ult-cu">'+esc(e.cuando)+'</small><h4>'+esc(e.t)+'</h4><p>'+esc(e.nota)+'</p></div></div>'+
     '<ul class="cmp-ult-citas">'+e.citas.map(([r,c])=>'<li><q>'+esc(c)+'</q> <cite>'+refsTocables(esc(r),'d7')+'</cite></li>').join('')+'</ul>'+
     '<div class="cmp-ult-libs"><span class="cmp-ult-k">Lo muestran</span>'+muestra.map(([k,nom])=>{const r=e.en[k];
       return '<span class="cmp-ult-lib'+(r[0]==='~'?' sup':'')+'"><b>'+esc(nom)+'</b> '+esc(r.replace(/^~/,''))+(r[0]==='~'?' · lo supone':'')+'</span>';}).join('')+
@@ -9451,6 +9462,9 @@ function cmpUlt(i,quieto){
   const m=document.getElementById('cmpUlt');if(!m)return;
   m.querySelectorAll('[data-i]').forEach(x=>{const on=x.getAttribute('data-i')===String(i);x.classList.toggle('on',on);if(x.tagName==='BUTTON')x.setAttribute('aria-pressed',String(on));});
   const d=document.getElementById('cmpUltDet');if(d)d.innerHTML=ultDetHTML(i);
+  /* v218: en el teléfono la tabla rueda de lado: el acontecimiento elegido queda a la vista. */
+  const sc=m.querySelector('.cmp-ult-scroll'),b=m.querySelector('.cmp-ult-ev.on');
+  if(sc&&b&&sc.scrollWidth>sc.clientWidth+1){const x=Math.max(0,b.offsetLeft-(sc.clientWidth-b.offsetWidth)/2);if(sc.scrollTo)sc.scrollTo({left:x,behavior:lamQuieto()?'auto':'smooth'});else sc.scrollLeft=x;}
   lugarAnota();
 }
 /* El índice de un acontecimiento por su id (los enlaces usan el id: «ultimos/plagas»). */
@@ -9469,7 +9483,11 @@ function lamUltHTML(ids){
   const U=ULT();if(!U||!lamId)return '';
   const L=LAM(),E=U.eventos,on=E.map((e,i)=>ids.includes(e.id)?i:-1).filter(i=>i>=0);if(!on.length)return '';
   const cid=lamId,cuenta=E.filter(e=>e.en[cid]&&e.en[cid][0]!=='~').map(e=>e.t.charAt(0).toLowerCase()+e.t.slice(1));
-  return '<div class="lam-ult"><div class="lam-rot">'+esc(U.titulo)+'</div><ol>'+E.map((e,i)=>'<li class="'+(on.includes(i)?'on':'')+(e.en[cid]&&e.en[cid][0]!=='~'?' en':'')+'" title="'+esc(e.t)+'"><i>'+(i+1)+'</i><span>'+esc(e.c||e.t)+'</span></li>').join('')+'</ol>'+
+  /* v218: con diecinueve acontecimientos, la secuencia corta va por fases; se enciende la
+     fase del acontecimiento y su nombre va debajo. */
+  const F=(U.fases||[]).map(([id,t])=>({id,t,ev:E.filter(e=>e.fase===id)})).filter(x=>x.ev.length),onE=on.map(i=>E[i]);
+  return '<div class="lam-ult"><div class="lam-rot">'+esc(U.titulo)+'</div><ol style="--n:'+F.length+'">'+F.map((f,i)=>{const o=onE.filter(e=>e.fase===f.id);
+    return '<li class="'+(o.length?'on':'')+(f.ev.some(e=>e.en[cid]&&e.en[cid][0]!=='~')?' en':'')+'" title="'+esc(f.t+': '+f.ev.map(e=>e.t).join(', '))+'"><i>'+(i+1)+'</i><span>'+esc(f.t)+'</span>'+(o.length?'<em>'+esc(o.map(e=>e.c||e.t).join(' · '))+'</em>':'')+'</li>';}).join('')+'</ol>'+
     '<p>'+esc((L.libro||'')+' cuenta '+cuenta.join(', ').replace(/, ([^,]*)$/,' y $1')+'. Daniel 11 y 12 y Apocalipsis llenan lo de en medio.')+'</p>'+
     (lamModo==='presentar'?'':'<button type="button" class="btn txt peq lam-ult-ir" onclick="lamUltIr('+on[0]+')">'+IC('comparar')+' Ver la secuencia completa</button>')+'</div>';
 }
@@ -9481,7 +9499,7 @@ let cmpSel='';
 function cmpSalaHTML(M){
   const i=M.filas.findIndex(x=>x.key===cmpSel),f=M.filas[i];if(!f)return '';
   const con=M.cols.filter(k=>(f.celdas[k]||[]).length),sin=M.cols.filter(k=>!(f.celdas[k]||[]).length);
-  const pc=n=>(Math.round(n*100)/100)+'%',fin=f.key===CMP_FIN,ant=M.filas[i-1],sig=M.filas[i+1];
+  const pc=n=>(Math.round(n*100)/100)+'%',fin=cmpEsFin(f.key),ant=M.filas[i-1],sig=M.filas[i+1];
   /* La época en la línea de la historia, en oro: hasta donde llega la que más dura. */
   const as=con.flatMap(k=>f.celdas[k].map(p=>p.a)).filter(Number.isFinite),a=as.length?Math.min(2026,Math.max(...as)):2026;
   const linea='<div class="cmp-sl" aria-hidden="true"><i style="left:'+pc(fin?92:cmpX(f.de))+';width:'+pc(fin?8:Math.max(.9,cmpX(a)-cmpX(f.de)))+'"></i>'+

@@ -4565,13 +4565,19 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
    el libro lo muestra; aro: lo supone; raya: no lo trae. La columna elegida se ilumina. */
 .cmp-ult{margin-top:30px;padding-top:24px;border-top:1px solid var(--cine-linea);display:grid;gap:16px}
 .cmp-ult-cab .cmp-tit{margin-top:6px}
-.cmp-ult-m{display:grid;grid-template-columns:max-content repeat(var(--n),minmax(0,1fr));align-items:center;gap:0;position:relative}
+/* v218: diecinueve acontecimientos en cinco fases: la tabla rueda de lado si no cabe. */
+.cmp-ult-scroll{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:4px}
+.cmp-ult-m{display:grid;grid-template-columns:max-content repeat(var(--n),minmax(80px,1fr));align-items:center;gap:0;position:relative;min-width:min-content}
+/* El nombre del libro queda fijo a la izquierda mientras la tabla rueda. */
+.cmp-ult-lb,.cmp-ult-0{position:sticky;left:0;z-index:2;background:#100D0A;align-self:stretch;display:flex;align-items:center}
+.cmp-ult-fase{align-self:end;margin:0 3px 6px;padding:0 4px 5px;border-bottom:1px solid rgba(214,178,106,.45);font-size:.75rem;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:var(--cine-oro);text-align:center;text-wrap:balance}
+.cmp-ult-dc small.cmp-ult-cu{display:block;margin-top:2px;letter-spacing:0;text-transform:none;color:var(--cine-gris)}
 .cmp-ult-0{display:block}
-.cmp-ult-ev{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;min-height:44px;padding:6px 2px 10px;border:0;border-radius:12px 12px 0 0;
+.cmp-ult-ev{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;min-height:44px;padding:6px 4px 10px;border:0;border-radius:12px 12px 0 0;
   background:none;color:var(--cine-gris);font:inherit;text-align:center;cursor:pointer;transition:background-color .25s ease,color .25s ease}
 .cmp-ult-ev i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-style:normal;font-family:var(--cine-serif);font-size:1rem;
   color:var(--cine-tinta);box-shadow:inset 0 0 0 1px rgba(243,237,226,.28);background:#15110C;position:relative;z-index:1}
-.cmp-ult-ev span{font-size:.75rem;line-height:1.25;text-wrap:balance;overflow-wrap:anywhere}
+.cmp-ult-ev span{font-size:.75rem;line-height:1.25;text-wrap:balance;overflow-wrap:normal;hyphens:auto}
 .cmp-ult-ev::after{content:'';position:absolute;top:21px;left:-50%;right:50%;height:1px;background:rgba(214,178,106,.35)}
 .cmp-ult-ev[data-i="0"]::after{display:none}
 .cmp-ult-ev:hover{color:var(--cine-tinta)}
@@ -4615,6 +4621,8 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .cmp-ult-f{margin:0;font-size:.75rem;color:var(--cine-tenue)}
 @container (max-width:620px){
   .cmp-ult-ev span{display:none}
+  .cmp-ult-m{grid-template-columns:max-content repeat(var(--n),minmax(34px,1fr))}
+  .cmp-ult-fase{letter-spacing:0;text-transform:none}
   .cmp-ult-ev{padding-bottom:6px}
   .cmp-ult-lb{padding-right:10px;letter-spacing:.06em}
   .cmp-ult-dc{grid-template-columns:minmax(0,1fr)}
@@ -4624,7 +4632,8 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 /* En la lámina: la misma secuencia, corta, con el acontecimiento de la parte encendido. */
 .lam-ult{margin-top:16px;padding:14px;border-radius:12px;background:rgba(243,237,226,.04);box-shadow:inset 0 0 0 1px rgba(243,237,226,.1)}
 .lam .lam-ult .lam-rot{color:var(--cine-oro)}
-.lam-ult ol{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;position:relative}
+.lam-ult ol{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:4px;position:relative}
+.lam-ult li em{font-style:normal;font-size:.75rem;line-height:1.2;color:var(--cine-oro2);text-wrap:balance}
 .lam-ult ol::before{content:'';position:absolute;left:7%;right:7%;top:11px;height:1px;background:rgba(214,178,106,.3)}
 .lam-ult li{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;min-width:0}
 .lam-ult li i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;font-style:normal;font-size:.75rem;color:var(--cine-gris);background:#15110C;box-shadow:inset 0 0 0 1px rgba(243,237,226,.22)}
@@ -4633,7 +4642,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .lam-ult li span{font-size:.75rem;line-height:1.2;color:var(--cine-tenue);text-wrap:balance;overflow-wrap:normal;hyphens:none}
 .lam-ult li.en span{color:var(--cine-gris)}
 .lam-ult li.on span{color:var(--cine-oro2)}
-.lam-ult li:not(.on):not(.en) span{visibility:hidden}
+.lam-ult li:not(.on):not(.en) span{color:var(--cine-tenue);opacity:.7}
 .lam-ult p{margin:10px 0 0;font-size:.875rem;line-height:1.45;color:var(--cine-gris)}
 .lam-ult .lam-ult-ir{margin-top:6px;color:var(--cine-oro);padding-left:0}
 @media (max-width:560px){.lam-ult li span{display:none}}
@@ -5331,7 +5340,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '23f76c34e03a';
+const VERSION_APP = '78831ac6911d';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -6974,7 +6983,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Los cuatro imperios, con sus fechas",
    "capa": "contexto",
-   "h": "<p>Daniel solo nombra a Babilonia, pero el mismo libro identifica a los siguientes (la plata en 5:28, el bronce en 8:20-21):</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Metal</th><th>Imperio</th><th>Fechas</th></tr></thead><tbody><tr><td class=\"key\">Oro</td><td>Babilonia</td><td>605-539 a.C.</td></tr><tr><td class=\"key\">Plata</td><td>Medo-Persia</td><td>539-331 a.C.</td></tr><tr><td class=\"key\">Bronce</td><td>Grecia</td><td>331-168 a.C.</td></tr><tr><td class=\"key\">Piernas de hierro</td><td>Roma imperial, una monarquía de hierro</td><td>168 a.C.-476 d.C.</td></tr><tr><td class=\"key\">Diez dedos</td><td>Roma dividida en los reinos bárbaros</td><td>Desde 476 d.C.</td></tr><tr><td class=\"key\">Hierro mezclado con barro</td><td>Roma papal: el poder político unido al religioso</td><td>Supremacía 538-1798 d.C.; herida en 1798, sana y vuelve al final</td></tr><tr><td class=\"key\">La piedra que se hace monte</td><td>La segunda venida de Cristo y su reino eterno</td><td>Futuro</td></tr></tbody></table></div><p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial (las piernas), dividida (los dedos) y papal (el hierro mezclado con barro). Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p><p>Y una <strong>cuarta</strong>: el papado sanado de su herida (Apocalipsis 13:3), en pie cuando la piedra golpea los pies (2:34).</p><p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. Muestra también el deterioro moral: las naciones que olvidan a Dios terminan imponiendo la moral por la fuerza.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; CBA 4:1168.</p>"
+   "h": "<p>Daniel solo nombra a Babilonia, pero el mismo libro identifica a los siguientes (la plata en 5:28, el bronce en 8:20-21):</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Metal</th><th>Imperio</th><th>Fechas</th></tr></thead><tbody><tr><td class=\"key\">Oro</td><td>Babilonia</td><td>605-539 a.C.</td></tr><tr><td class=\"key\">Plata</td><td>Medo-Persia</td><td>539-331 a.C.</td></tr><tr><td class=\"key\">Bronce</td><td>Grecia</td><td>331-168 a.C.</td></tr><tr><td class=\"key\">Piernas de hierro</td><td>Roma imperial, una monarquía de hierro</td><td>168 a.C.-476 d.C.</td></tr><tr><td class=\"key\">Diez dedos</td><td>Roma dividida en los reinos bárbaros</td><td>Desde 476 d.C.</td></tr><tr><td class=\"key\">Hierro mezclado con barro</td><td>Roma papal: el poder político unido al religioso</td><td>Supremacía 538-1798 d.C.; herida en 1798, sana y vuelve al final</td></tr><tr><td class=\"key\">La piedra</td><td>La segunda venida de Cristo</td><td>Futuro</td></tr><tr><td class=\"key\">El gran monte</td><td>El reino eterno de Cristo</td><td>Después de los mil años</td></tr></tbody></table></div><p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial (las piernas), dividida (los dedos) y papal (el hierro mezclado con barro). Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p><p>Y una <strong>cuarta</strong>: el papado sanado de su herida (Apocalipsis 13:3), en pie cuando la piedra golpea los pies (2:34).</p><p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. Muestra también el deterioro moral: las naciones que olvidan a Dios terminan imponiendo la moral por la fuerza.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; CBA 4:1168.</p>"
   },
   {
    "t": "🧭 La cabeza de oro: Babilonia (605-539 a.C.)",
@@ -7009,7 +7018,7 @@ const CONTENIDO = {
   {
    "t": "🧭 La piedra que nadie cortó y el monte",
    "capa": "contexto",
-   "h": "<p>Ya se vio que la piedra es Cristo en su segunda venida. Hay dos detalles que suelen pasarse por alto:</p><ul class=\"tight\"><li><strong>«Sin que la cortara mano alguna» (2:34, 45).</strong> La misma idea está en 8:25 («no por mano humana») y en 11:45 («no tendrá quien lo ayude»): el poder perseguidor cae <strong>sin intervención humana</strong>. El fin de la historia será una irrupción sobrenatural de Dios, no una iglesia que va conquistando el mundo hasta establecer el reino aquí.</li><li><strong>El monte.</strong> En la Escritura los montes representan reinos (Isaías 2:2). Hay dos montes: la piedra sale del monte Sion, la Sion celestial (2:45; 1 Pedro 2:6), y después ella misma se vuelve el gran monte que llena la tierra: el reino eterno de Cristo (2:35, 44).</li></ul><div class=\"warn-box\">Jesús lo aplicó a cada persona (Mateo 21:44): «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado». Caer hoy sobre la piedra es dejar que Cristo quiebre el orgullo; si no, ella caerá al final.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 63-64.</p>"
+   "h": "<p>Ya se vio que la piedra es Cristo en su segunda venida. Hay dos detalles que suelen pasarse por alto:</p><ul class=\"tight\"><li><strong>«Sin que la cortara mano alguna» (2:34, 45).</strong> La misma idea está en 8:25 («no por mano humana») y en 11:45 («no tendrá quien lo ayude»): el poder perseguidor cae <strong>sin intervención humana</strong>. El fin de la historia será una irrupción sobrenatural de Dios, no una iglesia que va conquistando el mundo hasta establecer el reino aquí.</li><li><strong>El monte.</strong> En la Escritura los montes representan reinos (Isaías 2:2). Hay dos montes: la piedra sale del monte Sion, la Sion celestial (2:45; 1 Pedro 2:6), y después ella misma se vuelve el gran monte que llena la tierra: el reino eterno de Cristo (2:35, 44). No pasa al mismo tiempo que la piedra: la piedra es la venida; el monte llena la tierra después de los mil años, cuando la tierra es hecha nueva (Apocalipsis 20:4; 21:1).</li></ul><div class=\"warn-box\">Jesús lo aplicó a cada persona (Mateo 21:44): «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado». Caer hoy sobre la piedra es dejar que Cristo quiebre el orgullo; si no, ella caerá al final.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 732.</p>"
   },
   {
    "t": "🧭 Daniel 1-7: un libro en espejo",
@@ -8159,7 +8168,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Las tres fases del juicio",
    "capa": "contexto",
-   "h": "<p>Daniel 7 muestra las tres fases en orden. Las dos primeras pasan en el cielo; la tercera empieza cuando Cristo vuelve:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Fase</th><th>Cuándo</th><th>Qué pasa</th></tr></thead><tbody><tr><td class=\"key\">1 · Investigación</td><td>Desde 1844 hasta el cierre de la gracia</td><td>Se abren los libros de los que profesaron ser hijos de Dios (7:10)</td></tr><tr><td class=\"key\">2 · Sentencia</td><td>Cuando el Hijo del hombre recibe el reino: al terminar la investigación, en el cielo, antes de la venida</td><td>El Hijo va ante el Anciano de días y recibe el reino (7:13-14); el fallo es a favor de los santos (7:22a)</td></tr><tr><td class=\"key\">3 · Ejecución</td><td>Cuando los santos reciben el reino: en la segunda venida</td><td>Los santos reciben el reino (7:18, 22b, 27) y al cuerno le quitan el dominio (7:26)</td></tr></tbody></table></div><ul class=\"tight\"><li>El reino son sus súbditos. Cuando se falla el último caso, el número está completo: Cristo «había recibido su reino» (PE 280). Ahí termina la gracia: «se levantará Miguel» (Daniel 12:1).</li><li>Primero el Hijo recibe el reino en el cielo; después vuelve y lo reciben los santos. Es como la boda: el Señor regresa «de las bodas» por los suyos (Lucas 12:36; CS 480).</li></ul><div class=\"highlight-box\">Apocalipsis 20 sigue el juicio más allá de la venida: en los mil años los santos juzgan con Cristo (20:4) y el gran trono blanco cumple la sentencia de los perdidos (20:11-15). No se contradicen: la ejecución empieza en la venida y termina después del milenio.</div><p>Fuente: PE 280; CS 368-369, 480-481 y 718-719; Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>15 principios</i> 2:306-307.</p>"
+   "h": "<p>Daniel 7 muestra las tres fases en orden. Las dos primeras pasan en el cielo; la tercera empieza cuando Cristo vuelve:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Fase</th><th>Cuándo</th><th>Qué pasa</th></tr></thead><tbody><tr><td class=\"key\">1 · Investigación</td><td>Desde 1844 hasta el cierre de la gracia</td><td>Se abren los libros de los que profesaron ser hijos de Dios (7:10)</td></tr><tr><td class=\"key\">2 · Sentencia</td><td>Al cierre de la gracia, en el cielo, antes de las plagas y de la venida</td><td>El Hijo va ante el Anciano de días y recibe el reino (7:13-14); el fallo es a favor de los santos (7:22a)</td></tr><tr><td class=\"key\">3 · Ejecución</td><td>Cuando los santos reciben el reino: en la segunda venida</td><td>Los santos reciben el reino (7:18, 22b, 27) y al cuerno le quitan el dominio (7:26)</td></tr></tbody></table></div><ul class=\"tight\"><li>El reino son sus súbditos. Cuando se falla el último caso, el número está completo: Cristo «había recibido su reino» (PE 280). Termina su mediación y se cierra la gracia: «se levantará Miguel» (Daniel 12:1; Apocalipsis 22:11).</li><li>En 1844 va al Padre a recibir el reino (7:13), y se le da al terminar su obra de mediador (CS 533). Como el noble de Lucas 19:12 y 15: recibe el reino y vuelve.</li><li>Primero el Hijo recibe el reino en el cielo; después vuelve por los suyos «de las bodas» (Lucas 12:36; CS 480).</li></ul><div class=\"highlight-box\">Apocalipsis 20 sigue el juicio más allá de la venida: en los mil años los santos juzgan con Cristo (20:4) y el gran trono blanco cumple la sentencia de los perdidos (20:11-15). No se contradicen: la ejecución empieza en la venida y termina después del milenio.</div><p>Fuente: PE 55 y 280; CS 368-369, 480-481, 533, 671 y 718-719; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307.</p>"
   },
   {
    "t": "🧭 La Biblia explica sus símbolos (1): la visión",
@@ -57002,8 +57011,24 @@ const BANCO = [
    "En el gran trono blanco"
   ],
   "a": 0,
-  "e": "«Vino hasta el Anciano de días» y «le fue dado dominio, gloria y reino» (7:13-14), en el cielo, antes de la venida: el fallo es a favor de los santos (7:22). La ejecución viene después, cuando «los santos recibieron el reino» (7:22). Fuente: PE 280; Bohr, <i>15 principios</i> 2:306-307.",
+  "e": "«Vino hasta el Anciano de días» y «le fue dado dominio, gloria y reino» (7:13-14), en el cielo, al cierre de la gracia, antes de las plagas y de la venida: el fallo es a favor de los santos (7:22). La ejecución viene después, cuando «los santos recibieron el reino» (7:22). Fuente: PE 280; CS 533; Bohr, <i>15 principios</i> 2:306-307.",
   "nv": 2
+ },
+ {
+  "cap": "d7",
+  "t": "mc",
+  "v": "7:14",
+  "f": "c",
+  "q": "¿Cuándo recibe el Hijo del hombre el reino?",
+  "o": [
+   "Al cierre de la gracia",
+   "En 1844, al llegar al Padre",
+   "En la segunda venida",
+   "Después de los mil años"
+  ],
+  "a": 0,
+  "e": "En 1844 va al Padre a recibirlo (7:13), pero el reino «le será dado a la conclusión de su obra de mediador» (CS 533): cuando se levanta Miguel (12:1) y se cierra la gracia (Apocalipsis 22:11). Después vuelve como Rey de reyes (Lucas 19:12, 15). Fuente: CS 533 y 671; Bohr, <i>Daniel 1-10</i>, p. 288.",
+  "nv": 1
  },
  {
   "cap": "d7",
@@ -58805,7 +58830,7 @@ const LAMINAS = {
    "titulo": "Una gran imagen",
    "ref": "Daniel 2:31",
    "texto": "Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.",
-   "nota": "De la cabeza a los pies, cuatro reinos y Roma en tres fases. Después, una piedra que nadie cortó y un monte que llena toda la tierra.",
+   "nota": "De la cabeza a los pies, cuatro reinos y Roma en tres fases. Después, una piedra que nadie cortó: Cristo vuelve. Y, pasados los mil años, un monte que llena toda la tierra.",
    "datos": [
     [
      "4",
@@ -58833,18 +58858,29 @@ const LAMINAS = {
    {
     "id": "piedra",
     "de": 2026,
-    "a": 2326,
+    "a": 2226,
     "t": "La piedra",
     "s": "Cristo vuelve",
-    "f": "e-piedra"
+    "f": "e-piedra",
+    "ult": "venida"
+   },
+   {
+    "id": "",
+    "de": 2226,
+    "a": 2426,
+    "t": "Los mil años",
+    "s": "los santos con Cristo en el cielo; la tierra, desolada",
+    "f": "e-piedra",
+    "ult": "mil"
    },
    {
     "id": "monte",
-    "de": 2326,
+    "de": 2426,
     "a": 2626,
     "t": "El gran monte",
-    "s": "el reino eterno",
-    "f": "e-monte"
+    "s": "el reino eterno, después de los mil años",
+    "f": "e-monte",
+    "ult": "reino"
    }
   ],
   "juicio": 1844,
@@ -58888,12 +58924,17 @@ const LAMINAS = {
     "izq"
    ],
    [
-    2176,
+    2126,
     "la piedra",
     "fut"
    ],
    [
-    2476,
+    2326,
+    "mil años",
+    "fut"
+   ],
+   [
+    2526,
     "el monte",
     "fut"
    ],
@@ -59008,8 +59049,13 @@ const LAMINAS = {
    ],
    [
     "piedra",
-    "El reino se da a los santos (7:27)",
-    "La segunda venida y el reino eterno"
+    "Los santos reciben el reino (7:22)",
+    "La segunda venida"
+   ],
+   [
+    "monte",
+    "Su reino es reino eterno (7:27)",
+    "El reino eterno, después de los mil años"
    ]
   ],
   "paraleloFuente": "Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-121.",
@@ -59110,13 +59156,13 @@ const LAMINAS = {
     "y": 2027,
     "f": "e-piedra",
     "parte": "piedra",
-    "t": "Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 44; Mateo 25:31)"
+    "t": "Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 45; Mateo 25:31)"
    },
    {
-    "y": 2327,
+    "y": 2427,
     "f": "e-monte",
     "parte": "monte",
-    "t": "Para siempre · El reino de Dios llena toda la tierra (2:35, 44)"
+    "t": "Después de los mil años · El reino de Dios llena toda la tierra (2:35, 44; Apocalipsis 21:1)"
    }
   ],
   "partes": [
@@ -59243,6 +59289,7 @@ const LAMINAS = {
     "reino": "La segunda venida de Cristo",
     "fechas": "futuro",
     "de": null,
+    "fin": "venida",
     "c": "#6B7B5A",
     "texto": "una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies",
     "ref": "2:34",
@@ -59251,27 +59298,30 @@ const LAMINAS = {
     "corto": "Cristo en su segunda venida. «Sin que la cortara mano alguna»: no lo hace el hombre.",
     "interp": [
      "La piedra es Cristo en su segunda venida. Golpea los pies, no la cabeza: llega «en los días de estos reyes» (2:44), con Europa ya dividida.",
-     "«Sin que la cortara mano alguna» (2:34, 45): es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco."
+     "«Sin que la cortara mano alguna» (2:34, 45): es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco.",
+     "La piedra y el monte no pasan al mismo tiempo. La piedra deshace los reinos cuando Cristo vuelve; el monte llena la tierra después de los mil años (Apocalipsis 20:4; 21:1)."
     ],
-    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63-64."
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
    },
    {
     "id": "monte",
     "nombre": "El gran monte",
     "reino": "El reino eterno",
-    "fechas": "para siempre",
+    "fechas": "después de los mil años, para siempre",
     "de": null,
+    "fin": "reino",
     "c": "#0E7490",
     "texto": "la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra",
     "ref": "2:35",
     "texto2": "él permanecerá para siempre",
     "ref2": "2:44",
-    "corto": "Todo lo demás se lo lleva el viento. Solo queda el reino de Dios.",
+    "corto": "Después de los mil años. Todo lo demás se lo lleva el viento; solo queda el reino de Dios.",
     "interp": [
      "La piedra sale del monte Sion (2:45; 1 Pedro 2:6) y se convierte en el gran monte: el reino eterno. En la Biblia un monte es un reino (Isaías 2:2). Todo lo demás se lo lleva el viento «como tamo» (2:35).",
+     "No es la venida: es lo que viene después. Cristo vuelve (la piedra), pasan los mil años, baja la Nueva Jerusalén, el fuego consume a los impíos y la tierra es hecha nueva (Apocalipsis 20-21). Ahí el reino llena toda la tierra.",
      "Daniel 7 termina igual: el reino se da «al pueblo de los santos del Altísimo, cuyo reino es reino eterno» (7:27)."
     ],
-    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63-64."
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
    }
   ]
  },
@@ -59334,20 +59384,31 @@ const LAMINAS = {
   ],
   "futuro": [
    {
-    "id": "",
+    "id": "santos",
     "de": 2026,
-    "a": 2326,
+    "a": 2226,
     "t": "La segunda venida",
-    "s": "Cristo vuelve por los suyos",
-    "f": "d2/e-piedra"
+    "s": "los santos reciben el reino",
+    "f": "d2/e-piedra",
+    "ult": "venida"
+   },
+   {
+    "id": "",
+    "de": 2226,
+    "a": 2426,
+    "t": "Los mil años",
+    "s": "los santos juzgan con Cristo",
+    "f": "d2/e-piedra",
+    "ult": "mil"
    },
    {
     "id": "reino",
-    "de": 2326,
+    "de": 2426,
     "a": 2626,
     "t": "El reino eterno",
-    "s": "dado a los santos",
-    "f": "d2/e-monte"
+    "s": "después de los mil años",
+    "f": "d2/e-monte",
+    "ult": "reino"
    }
   ],
   "historia": [
@@ -59378,7 +59439,7 @@ const LAMINAS = {
    "ref": "Daniel 7:22",
    "texto": "se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.",
    "titulo": "El juicio es a favor de los santos",
-   "nota": "Hoy vivimos en el tiempo del juicio. Después se cierra la gracia, Cristo vuelve y los santos reciben el reino."
+   "nota": "Hoy vivimos en el tiempo del juicio. Al cerrarse la gracia el Hijo recibe el reino; después Cristo vuelve y los santos lo reciben. Pasados los mil años, el reino eterno llena la tierra."
   },
   "paraleloCols": [
    "Daniel 7",
@@ -59440,11 +59501,18 @@ const LAMINAS = {
     null
    ],
    [
-    "reino",
-    "La piedra que hiere los pies y se hace un gran monte",
-    "La segunda venida y el reino eterno",
+    "santos",
+    "La piedra que hiere los pies",
+    "La segunda venida",
     [
-     "piedra",
+     "piedra"
+    ]
+   ],
+   [
+    "reino",
+    "La piedra que se hace un gran monte",
+    "El reino eterno, después de los mil años",
+    [
      "monte"
     ]
    ]
@@ -59481,6 +59549,11 @@ const LAMINAS = {
     "q": "«Lo hicieron acercarse delante de él». ¿A quién?",
     "ok": "hijo",
     "e": "7:13 · Cristo llega al Anciano de días, en el cielo, no a la tierra."
+   },
+   {
+    "q": "¿Qué parte es la segunda venida, la piedra de Daniel 2?",
+    "ok": "santos",
+    "e": "7:22 · «llegó el tiempo, y los santos recibieron el reino»; al cuerno le quitan el dominio (7:26)."
    }
   ],
   "escenas": [
@@ -59590,12 +59663,17 @@ const LAMINAS = {
     "izq"
    ],
    [
-    2176,
+    2126,
     "la venida",
     "fut"
    ],
    [
-    2476,
+    2326,
+    "mil años",
+    "fut"
+   ],
+   [
+    2526,
     "el reino",
     "fut"
    ],
@@ -59960,7 +60038,7 @@ const LAMINAS = {
      "Se abren los libros"
     ],
     [
-     "Antes de la venida",
+     "Al cierre de la gracia",
      "El Hijo recibe el reino"
     ],
     [
@@ -59995,10 +60073,10 @@ const LAMINAS = {
      "t": "Sentencia",
      "n": "El Hijo recibe el reino",
      "ref": "7:13-14, 22a",
-     "cuando": "Cuando el Hijo del hombre recibe el reino, antes de la venida",
+     "cuando": "Al cierre de la gracia: termina su mediación y el Hijo del hombre recibe el reino, antes de las plagas y de la venida",
      "donde": "En el cielo",
      "quien": "El Hijo del hombre va ante el Anciano de días",
-     "que": "El fallo es a favor de los santos y contra el cuerno. El reino son sus súbditos: cuando todos los casos están decididos, el número está completo y el Padre le da el reino al Hijo. Se cierra la gracia.",
+     "que": "El fallo es a favor de los santos y contra el cuerno. El reino son sus súbditos: cuando el último caso está decidido, el número está completo y el Padre le da el reino al Hijo. Termina su obra de mediador y se cierra la gracia: «se levantará Miguel» (12:1). Como el noble de Lucas 19:12 y 15, recibe el reino y después vuelve.",
      "para": "Para que el reino quede completo",
      "citas": [
       [
@@ -60006,8 +60084,16 @@ const LAMINAS = {
        "Y le fue dado dominio, gloria y reino"
       ],
       [
-       "Daniel 7:22",
-       "se hizo justicia a los santos del Altísimo"
+       "Daniel 12:1",
+       "En aquel tiempo se levantará Miguel"
+      ],
+      [
+       "Apocalipsis 22:11",
+       "El que es injusto, sea injusto todavía"
+      ],
+      [
+       "Apocalipsis 11:15",
+       "Los reinos del mundo han venido a ser de nuestro Señor y de su Cristo"
       ]
      ],
      "de": 1,
@@ -60037,7 +60123,7 @@ const LAMINAS = {
     }
    ],
    "nota": "Es el orden de Daniel 7: se abren los libros (7:10), el Hijo recibe el reino (7:14) y después los santos lo reciben (7:22, 27). Apocalipsis 20 sigue el juicio más allá de la venida: los santos juzgan durante los mil años y el gran trono blanco cumple la sentencia de los perdidos. No se contradicen: la ejecución empieza en la venida y termina después del milenio.",
-   "fuente": "PE 280; CS 368-369, 480; Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>15 principios</i> 2:306-307."
+   "fuente": "CS 480-481, 533 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307."
   },
   "partes": [
    {
@@ -60364,13 +60450,13 @@ const LAMINAS = {
     "ref": "7:13",
     "texto2": "su dominio es dominio eterno, que nunca pasará",
     "ref2": "7:14",
-    "corto": "1844: Cristo va al Padre, no a la tierra. Llega al juicio y recibe el reino. No es la piedra de Daniel 2: esa es la segunda venida, después.",
+    "corto": "1844: Cristo va al Padre, no a la tierra. Va al juicio a recibir el reino, que se le da al cierre de la gracia. No es la piedra de Daniel 2: esa es la segunda venida, después.",
     "interp": [
      "Uno «como un hijo de hombre» es Cristo. Las nubes son ángeles (Salmo 68:17) que lo llevan ante el Padre, al juicio, no a la tierra (CS 477).",
      "Pasa en 1844, cuando empieza el juicio (8:14). No es la segunda venida: la piedra de Daniel 2 cae después, cuando el juicio termina y Cristo vuelve por los suyos.",
-     "Ahí recibe «dominio, gloria y reino» (7:14). Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27), herederos con Cristo (Romanos 8:17)."
+     "Va a recibir dominio, gloria y reino, que se le dan al terminar su obra de mediador, al cierre de la gracia (7:14; CS 533). Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27), herederos con Cristo (Romanos 8:17)."
     ],
-    "fuente": "CS 477; Bohr, <i>Daniel 1-10</i>, p. 280.",
+    "fuente": "CS 477 y 533; Bohr, <i>Daniel 1-10</i>, p. 280 y 288.",
     "pasos": [
      {
       "t": "Con las nubes del cielo",
@@ -60394,28 +60480,49 @@ const LAMINAS = {
        660,
        371
       ],
-      "nota": "Recibe el reino en el juicio. Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27)."
+      "nota": "Recibe el reino al terminar el juicio, cuando se cierra la gracia. Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27)."
      }
     ]
+   },
+   {
+    "id": "santos",
+    "img": "d2/e-piedra",
+    "nombre": "Los santos reciben el reino",
+    "reino": "La segunda venida",
+    "fechas": "futuro",
+    "de": null,
+    "fin": "venida",
+    "c": "#6B7B5A",
+    "texto": "y llegó el tiempo, y los santos recibieron el reino.",
+    "ref": "7:22",
+    "texto2": "Pero se sentará el Juez, y le quitarán su dominio, para que sea destruido y arruinado hasta el fin,",
+    "ref2": "7:26",
+    "corto": "Cristo vuelve: los santos reciben el reino y al cuerno le quitan el dominio. Es la piedra de Daniel 2.",
+    "interp": [
+     "Es la ejecución del juicio. El Hijo ya recibió el reino en el cielo; ahora vuelve como «Rey de reyes y Señor de señores» (Apocalipsis 19:16) y los santos lo reciben (7:22).",
+     "Al cuerno le quitan el dominio (7:26), como la piedra deshace la imagen en sus pies (2:34). Los santos van con Cristo; el reino eterno llena la tierra después de los mil años (Apocalipsis 20:4; 21:1)."
+    ],
+    "fuente": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
    },
    {
     "id": "reino",
     "img": "d2/e-monte",
     "nombre": "El reino eterno",
     "reino": "Dado a los santos",
-    "fechas": "para siempre",
+    "fechas": "después de los mil años, para siempre",
     "de": null,
-    "c": "#6B7B5A",
+    "fin": "reino",
+    "c": "#0E7490",
     "texto": "Después recibirán el reino los santos del Altísimo, y poseerán el reino hasta el siglo, eternamente y para siempre.",
     "ref": "7:18",
     "texto2": "cuyo reino es reino eterno, y todos los dominios lo servirán y obedecerán.",
     "ref2": "7:27",
     "corto": "Las bestias pasan. El reino de Dios queda para siempre, y es de los santos.",
     "interp": [
-     "Cuatro veces el capítulo termina en el reino: lo recibe el Hijo del hombre (7:14) y lo reciben los santos (7:18, 22, 27). Es la piedra que se hace un gran monte en Daniel 2 (2:35, 44).",
+     "Cuatro veces el capítulo termina en el reino: lo recibe el Hijo del hombre (7:14) y lo reciben los santos (7:18, 22, 27). El reino eterno es el gran monte de Daniel 2 (2:35, 44): llena la tierra después de los mil años, cuando la tierra es hecha nueva (Apocalipsis 21:1).",
      "El juicio no es contra el pueblo de Dios: es a favor de él (7:22)."
     ],
-    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 121."
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 121; CS 732-737."
    }
   ]
  }
@@ -60450,10 +60557,33 @@ const ULTIMOS = {
    "Apocalipsis"
   ]
  ],
- "nota": "Daniel 2, 7 y 8 pasan del juicio a la piedra y al reino: dicen qué viene, no cada paso. Daniel 11 y 12 y Apocalipsis llenan los detalles: el cierre de la gracia, las plagas, los mil años y el fin de los impíos. Daniel y Apocalipsis se refuerzan.",
+ "nota": "Daniel 2, 7 y 8 pasan del juicio a la piedra y al reino: dicen qué viene, no cada paso. Daniel 11 y 12 y Apocalipsis llenan los detalles. Algunos acontecimientos se cruzan: van en el orden en que empiezan.",
+ "fases": [
+  [
+   "antes",
+   "Hasta el cierre de la gracia"
+  ],
+  [
+   "angustia",
+   "El tiempo de angustia"
+  ],
+  [
+   "venida",
+   "La venida"
+  ],
+  [
+   "mil",
+   "Los mil años"
+  ],
+  [
+   "fin",
+   "El fin"
+  ]
+ ],
  "eventos": [
   {
    "id": "juicio",
+   "fase": "antes",
    "t": "El juicio investigador",
    "c": "Juicio",
    "s": "Desde 1844",
@@ -60461,7 +60591,7 @@ const ULTIMOS = {
    "img": "d7/juicio",
    "en": {
     "d2": "",
-    "d7": "7:9-10, 13-14",
+    "d7": "7:9-10, 13",
     "d8": "8:14",
     "d11": "",
     "d12": "",
@@ -60490,18 +60620,201 @@ const ULTIMOS = {
    "fuente": "CS 533-545"
   },
   {
-   "id": "gracia",
-   "t": "Se cierra la gracia",
-   "c": "Fin de la gracia",
-   "s": "Termina la intercesión",
-   "cuando": "Al terminar el juicio, antes de las plagas",
+   "id": "zarandeo",
+   "fase": "antes",
+   "t": "El zarandeo",
+   "c": "Zarandeo",
+   "s": "Se separa la paja",
+   "cuando": "Empieza con el mensaje a Laodicea y crece con la persecución",
    "en": {
     "d2": "",
-    "d7": "~7:13-14",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "",
+    "ap": "~3:15-19"
+   },
+   "citas": [
+    [
+     "Apocalipsis 3:16",
+     "por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca"
+    ],
+    [
+     "Apocalipsis 3:19",
+     "sé, pues, celoso y arrepiéntete"
+    ]
+   ],
+   "nota": "El testimonio directo del Testigo fiel sacude a la iglesia: unos lo aceptan y se purifican; otros se levantan contra él. Cuando llega la prueba, los que no fueron santificados por la verdad dejan la fe.",
+   "partes": [],
+   "fuente": "PE 270-271; CS 666"
+  },
+  {
+   "id": "lluvia",
+   "fase": "antes",
+   "t": "La lluvia tardía",
+   "c": "Lluvia tardía",
+   "s": "El Espíritu Santo",
+   "cuando": "Sobre los que vencen en el zarandeo; da poder al fuerte pregón",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "",
+    "ap": "18:1"
+   },
+   "citas": [
+    [
+     "Apocalipsis 18:1",
+     "la tierra fue alumbrada con su gloria"
+    ]
+   ],
+   "nota": "El Espíritu se derrama como en Pentecostés, la lluvia temprana (Joel 2:23; Hechos 3:19). Madura la cosecha y prepara al pueblo de Dios para la hora de prueba.",
+   "partes": [],
+   "fuente": "PE 271; CS 669-671"
+  },
+  {
+   "id": "ley",
+   "fase": "antes",
+   "t": "La ley dominical",
+   "c": "Ley dominical",
+   "s": "La marca de la bestia",
+   "cuando": "Se impone el domingo por ley: la gran prueba",
+   "en": {
+    "d2": "",
+    "d7": "~7:25",
+    "d8": "",
+    "d11": "~11:41-43",
+    "d12": "",
+    "ap": "13:12-17"
+   },
+   "citas": [
+    [
+     "Apocalipsis 13:12",
+     "hace que la tierra y sus habitantes adoren a la primera bestia"
+    ],
+    [
+     "Apocalipsis 13:16",
+     "se les pusiera una marca en la mano derecha o en la frente"
+    ],
+    [
+     "Apocalipsis 14:9",
+     "Si alguno adora a la bestia y a su imagen y recibe la marca"
+    ]
+   ],
+   "nota": "La imagen de la bestia obliga a honrar el domingo. Nadie la recibe a ciegas: cada uno tendrá la luz para decidir. El cuerno que pensó «cambiar los tiempos y la ley» (7:25) vuelve a imponerse.",
+   "partes": [],
+   "fuente": "CS 663-666"
+  },
+  {
+   "id": "pregon",
+   "fase": "antes",
+   "t": "El fuerte pregón",
+   "c": "Fuerte pregón",
+   "s": "«¡Salid de ella, pueblo mío!»",
+   "cuando": "Mientras se impone la ley dominical",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "11:44",
+    "d12": "~12:3",
+    "ap": "18:1-4"
+   },
+   "citas": [
+    [
+     "Apocalipsis 18:2",
+     "Ha caído, ha caído la gran Babilonia"
+    ],
+    [
+     "Apocalipsis 18:4",
+     "Salid de ella, pueblo mío"
+    ],
+    [
+     "Daniel 11:44",
+     "Pero noticias del oriente y del norte lo atemorizarán"
+    ]
+   ],
+   "nota": "El ángel de Apocalipsis 18 se une al tercer ángel. Son las «noticias» que atemorizan al rey del norte (11:44). Muchos que estaban en Babilonia salen y se unen al pueblo de Dios.",
+   "partes": [],
+   "fuente": "CS 661-663; PE 277-279; Bohr, <i>Daniel 11</i>, p. 166"
+  },
+  {
+   "id": "persecucion",
+   "fase": "antes",
+   "t": "La persecución",
+   "c": "Persecución",
+   "s": "Contra los que guardan el sábado",
+   "cuando": "Cuando los fieles no honran el domingo",
+   "en": {
+    "d2": "",
+    "d7": "~7:21, 25",
+    "d8": "",
+    "d11": "11:44",
+    "d12": "",
+    "ap": "12:17; 13:15"
+   },
+   "citas": [
+    [
+     "Apocalipsis 12:17",
+     "se fue a hacer la guerra contra el resto de la descendencia de ella"
+    ],
+    [
+     "Apocalipsis 13:15",
+     "hiciera matar a todo el que no la adorara"
+    ],
+    [
+     "Daniel 11:44",
+     "saldrá con gran ira para destruir y matar a muchos"
+    ]
+   ],
+   "nota": "Unos son encarcelados, otros desterrados o tratados como esclavos. Es la guerra del cuerno contra los santos (7:21), en su última forma.",
+   "partes": [],
+   "fuente": "CS 666-667"
+  },
+  {
+   "id": "sello",
+   "fase": "antes",
+   "t": "El sellamiento",
+   "c": "Sellamiento",
+   "s": "El sello del Dios vivo",
+   "cuando": "Durante el fuerte pregón; termina al cerrarse la gracia",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "~11:44",
+    "d12": "",
+    "ap": "7:1-4"
+   },
+   "citas": [
+    [
+     "Apocalipsis 7:3",
+     "No hagáis daño a la tierra ni al mar ni a los árboles hasta que hayamos sellado en sus frentes a los siervos de nuestro Dios"
+    ],
+    [
+     "Apocalipsis 7:2",
+     "que tenía el sello del Dios vivo"
+    ]
+   ],
+   "nota": "Los vientos se detienen hasta que los siervos de Dios estén sellados. Los que muestran su lealtad guardando la ley de Dios reciben el sello; los que aceptan el falso día de reposo, la marca.",
+   "partes": [],
+   "fuente": "CS 671; PE 279"
+  },
+  {
+   "id": "gracia",
+   "fase": "antes",
+   "t": "Se cierra la gracia",
+   "c": "Fin de la gracia",
+   "s": "El Hijo recibe el reino",
+   "cuando": "Al terminar el juicio investigador, antes de las plagas",
+   "en": {
+    "d2": "",
+    "d7": "7:14",
     "d8": "",
     "d11": "",
     "d12": "12:1",
-    "ap": "15:8; 22:11"
+    "ap": "11:15; 15:8; 22:11"
    },
    "citas": [
     [
@@ -60509,39 +60822,62 @@ const ULTIMOS = {
      "En aquel tiempo se levantará Miguel"
     ],
     [
-     "Apocalipsis 15:8",
-     "Nadie podía entrar en el templo hasta que se cumplieran las siete plagas"
-    ],
-    [
      "Apocalipsis 22:11",
      "El que es injusto, sea injusto todavía"
+    ],
+    [
+     "Apocalipsis 15:8",
+     "Nadie podía entrar en el templo hasta que se cumplieran las siete plagas"
     ]
    ],
-   "nota": "Cada caso quedó decidido, para vida o para muerte. El Hijo ya recibió su reino (Daniel 7:14: es la sentencia) y Cristo deja de interceder: se levanta Miguel.",
+   "nota": "Cada caso quedó decidido para vida o para muerte y Cristo deja de interceder. Termina su obra de mediador y el Hijo recibe el reino (Daniel 7:14: es la sentencia): «se levantará Miguel».",
    "partes": [
-    "x-fases"
+    "x-fases",
+    "hijo"
    ],
-   "fuente": "CS 671; PE 280"
+   "fuente": "CS 533 y 671; PE 279-280; Bohr, <i>Daniel 1-10</i>, p. 288"
   },
   {
-   "id": "plagas",
-   "t": "Las siete últimas plagas",
-   "c": "Plagas",
-   "s": "El tiempo de angustia",
-   "cuando": "Después del cierre de la gracia, antes de la venida",
+   "id": "angustia",
+   "fase": "angustia",
+   "t": "El tiempo de angustia",
+   "c": "Angustia",
+   "s": "Cual nunca fue",
+   "cuando": "Desde el cierre de la gracia hasta la liberación",
    "en": {
     "d2": "",
     "d7": "",
     "d8": "",
     "d11": "",
     "d12": "12:1",
-    "ap": "15:1; 16"
+    "ap": "~16"
    },
    "citas": [
     [
      "Daniel 12:1",
      "Será tiempo de angustia, cual nunca fue desde que hubo gente hasta entonces"
-    ],
+    ]
+   ],
+   "nota": "Los justos viven sin intercesor. Es la angustia de Jacob (Jeremías 30:7): luchan en oración como él, y Dios los guarda.",
+   "partes": [],
+   "fuente": "CS 671-676"
+  },
+  {
+   "id": "plagas",
+   "fase": "angustia",
+   "t": "Las siete últimas plagas",
+   "c": "Plagas",
+   "s": "La ira de Dios sin mezcla",
+   "cuando": "Después del cierre de la gracia, antes de la venida",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "~12:1",
+    "ap": "15:1; 16"
+   },
+   "citas": [
     [
      "Apocalipsis 15:1",
      "siete ángeles con las siete plagas postreras"
@@ -60549,25 +60885,117 @@ const ULTIMOS = {
     [
      "Apocalipsis 16:1",
      "Id y derramad sobre la tierra las siete copas de la ira de Dios"
+    ],
+    [
+     "Apocalipsis 16:2",
+     "sobre los hombres que tenían la marca de la bestia"
     ]
    ],
-   "nota": "Caen sobre los que tienen la marca de la bestia y adoran su imagen (Apocalipsis 16:2). El pueblo de Dios pasa por la angustia, pero Dios lo guarda.",
+   "nota": "Caen sobre los que tienen la marca de la bestia y adoran su imagen. Dios guarda a su pueblo en medio de ellas.",
    "partes": [],
    "fuente": "CS 686-687"
   },
   {
+   "id": "decreto",
+   "fase": "angustia",
+   "t": "El decreto de muerte",
+   "c": "Decreto de muerte",
+   "s": "Una noche fijada",
+   "cuando": "Durante las plagas",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "~11:44",
+    "d12": "",
+    "ap": "13:15"
+   },
+   "citas": [
+    [
+     "Apocalipsis 13:15",
+     "hiciera matar a todo el que no la adorara"
+    ]
+   ],
+   "nota": "Acusan a los que guardan el sábado de traer los juicios de Dios. Un decreto general fija una noche para darles muerte. El pueblo de Dios huye a los lugares más apartados.",
+   "partes": [],
+   "fuente": "CS 673, 684 y 689-693"
+  },
+  {
+   "id": "liberacion",
+   "fase": "venida",
+   "t": "La liberación del pueblo de Dios",
+   "c": "Liberación",
+   "s": "La voz de Dios",
+   "cuando": "A medianoche, en la séptima plaga",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "11:45",
+    "d12": "12:1",
+    "ap": "16:17-18"
+   },
+   "citas": [
+    [
+     "Daniel 12:1",
+     "en aquel tiempo será libertado tu pueblo, todos los que se hallen inscritos en el libro"
+    ],
+    [
+     "Apocalipsis 16:17",
+     "salió una gran voz del santuario del cielo, desde el trono, que decía: «¡Ya está hecho!»"
+    ],
+    [
+     "Daniel 11:45",
+     "llegará a su fin, y no tendrá quien lo ayude"
+    ]
+   ],
+   "nota": "Cuando van a matarlos, Dios interviene. Su voz sacude cielos y tierra y viene un terremoto como nunca hubo. El poder perseguidor llega a su fin sin que nadie lo ayude.",
+   "partes": [],
+   "fuente": "CS 693-694; PE 285-286"
+  },
+  {
+   "id": "resurreccion",
+   "fase": "venida",
+   "t": "La resurrección especial",
+   "c": "Resurrección especial",
+   "s": "Antes de la venida",
+   "cuando": "En el terremoto de la séptima plaga, antes de que aparezca Cristo",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "12:2",
+    "ap": "1:7"
+   },
+   "citas": [
+    [
+     "Daniel 12:2",
+     "Muchos de los que duermen en el polvo de la tierra serán despertados: unos para vida eterna, otros para vergüenza y confusión perpetua"
+    ],
+    [
+     "Apocalipsis 1:7",
+     "Todo ojo lo verá, y los que lo traspasaron"
+    ]
+   ],
+   "nota": "Se abren los sepulcros. Resucitan los que murieron en la fe del tercer ángel, para ver la venida, y los que traspasaron a Cristo, para verlo en su gloria.",
+   "partes": [],
+   "fuente": "CS 695"
+  },
+  {
    "id": "venida",
+   "fase": "venida",
    "t": "La segunda venida",
    "c": "Venida",
    "s": "La piedra",
    "cuando": "Al final de las plagas",
    "img": "d2/e-piedra",
    "en": {
-    "d2": "2:34-35, 44-45",
-    "d7": "7:22, 26-27",
+    "d2": "2:34, 44-45",
+    "d7": "7:22, 26",
     "d8": "8:25",
-    "d11": "11:45",
-    "d12": "12:1-2",
+    "d11": "~11:45",
+    "d12": "~12:1",
     "ap": "19:11-16"
    },
    "citas": [
@@ -60576,23 +61004,25 @@ const ULTIMOS = {
      "una piedra se desprendió sin que la cortara mano alguna"
     ],
     [
-     "Daniel 12:1",
-     "será libertado tu pueblo, todos los que se hallen inscritos en el libro"
+     "Daniel 7:22",
+     "llegó el tiempo, y los santos recibieron el reino"
     ],
     [
      "Apocalipsis 19:16",
      "Rey de reyes y Señor de señores"
     ]
    ],
-   "nota": "Es la piedra de Daniel 2 y la ejecución del juicio de Daniel 7: los santos reciben el reino. Los justos que duermen resucitan y, con los vivos, suben a recibir a Cristo (1 Tesalonicenses 4:16-17).",
+   "nota": "Es la piedra de Daniel 2 y la ejecución del juicio de Daniel 7: los santos reciben el reino y al cuerno le quitan el dominio. Los justos que duermen resucitan y, con los vivos, suben a recibir a Cristo (1 Tesalonicenses 4:16-17).",
    "partes": [
     "piedra",
+    "santos",
     "x-fases"
    ],
-   "fuente": "CS 693-710; Bohr, <i>Daniel 1-10</i>, p. 63-64"
+   "fuente": "CS 698-703; Bohr, <i>Daniel 1-10</i>, p. 63-64"
   },
   {
    "id": "mil",
+   "fase": "mil",
    "t": "Los mil años",
    "c": "Mil años",
    "s": "Satanás, atado en la tierra",
@@ -60611,17 +61041,43 @@ const ULTIMOS = {
      "lo ató por mil años"
     ],
     [
-     "Apocalipsis 20:4",
-     "vivieron y reinaron con Cristo mil años"
+     "Apocalipsis 20:5",
+     "Ésta es la primera resurrección"
     ]
    ],
-   "nota": "Los santos están con Cristo en el cielo y revisan los casos de los perdidos (20:4). La tierra queda desolada y Satanás, sin nadie a quien engañar.",
+   "nota": "Los santos están con Cristo en el cielo. La tierra queda desolada y Satanás, sin nadie a quien engañar.",
    "partes": [],
-   "fuente": "CS 711-719"
+   "fuente": "CS 711-718"
   },
   {
-   "id": "final",
-   "t": "La Nueva Jerusalén y el fin de los impíos",
+   "id": "juzgan",
+   "fase": "mil",
+   "t": "El juicio de los santos",
+   "c": "Juicio de los santos",
+   "s": "Se revisan los casos de los perdidos",
+   "cuando": "Durante los mil años, en el cielo",
+   "en": {
+    "d2": "",
+    "d7": "~7:22",
+    "d8": "",
+    "d11": "",
+    "d12": "",
+    "ap": "20:4"
+   },
+   "citas": [
+    [
+     "Apocalipsis 20:4",
+     "se sentaron sobre ellos los que recibieron facultad de juzgar"
+    ]
+   ],
+   "nota": "Con Cristo, los santos juzgan a los impíos y a los ángeles caídos (1 Corintios 6:2-3). Comparan sus actos con los libros y fijan el castigo de cada uno según sus obras.",
+   "partes": [],
+   "fuente": "CS 718-719"
+  },
+  {
+   "id": "jerusalen",
+   "fase": "fin",
+   "t": "Desciende la Nueva Jerusalén",
    "c": "Nueva Jerusalén",
    "s": "Después de los mil años",
    "cuando": "Al terminar los mil años",
@@ -60631,7 +61087,7 @@ const ULTIMOS = {
     "d8": "",
     "d11": "",
     "d12": "",
-    "ap": "20:7-15; 21:2"
+    "ap": "20:7-9; 21:2"
    },
    "citas": [
     [
@@ -60639,20 +61095,50 @@ const ULTIMOS = {
      "vi la santa ciudad, la nueva Jerusalén, descender del cielo"
     ],
     [
+     "Apocalipsis 20:5",
+     "los otros muertos no volvieron a vivir hasta que se cumplieron mil años"
+    ]
+   ],
+   "nota": "Cristo baja con los santos y la ciudad (Zacarías 14:4). Los impíos resucitan, Satanás queda suelto y los reúne para atacar la ciudad.",
+   "partes": [],
+   "fuente": "CS 720-723"
+  },
+  {
+   "id": "final",
+   "fase": "fin",
+   "t": "La destrucción final de los impíos",
+   "c": "Destrucción final",
+   "s": "La muerte segunda",
+   "cuando": "Ante el gran trono blanco",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "~12:2",
+    "ap": "20:9-15"
+   },
+   "citas": [
+    [
      "Apocalipsis 20:9",
      "de Dios descendió fuego del cielo y los consumió"
+    ],
+    [
+     "Apocalipsis 20:12",
+     "fueron juzgados los muertos por las cosas que estaban escritas en los libros, según sus obras"
     ],
     [
      "Apocalipsis 20:14",
      "Ésta es la muerte segunda"
     ]
    ],
-   "nota": "La ciudad baja con los santos. Los impíos resucitan (20:5), la rodean con Satanás y el fuego los consume: es la muerte segunda, de la que no se vuelve.",
+   "nota": "Ante el gran trono blanco todos reconocen que Dios es justo. El fuego consume a los impíos y a Satanás: es la muerte segunda, de la que no se vuelve.",
    "partes": [],
-   "fuente": "CS 720-731"
+   "fuente": "CS 724-731"
   },
   {
    "id": "reino",
+   "fase": "fin",
    "t": "La tierra nueva",
    "c": "Tierra nueva",
    "s": "El reino eterno",
@@ -60668,8 +61154,8 @@ const ULTIMOS = {
    },
    "citas": [
     [
-     "Daniel 2:44",
-     "un reino que no será jamás destruido"
+     "Daniel 2:35",
+     "la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra"
     ],
     [
      "Daniel 7:27",
@@ -60684,7 +61170,7 @@ const ULTIMOS = {
      "ya no habrá más muerte"
     ]
    ],
-   "nota": "La piedra se hizo un gran monte que llenó toda la tierra (2:35). Dios vive con su pueblo, y el reino es de los santos para siempre.",
+   "nota": "Es el gran monte de Daniel 2: el reino llena toda la tierra después de los mil años, no en la venida. Dios vive con su pueblo, y el reino es de los santos para siempre.",
    "partes": [
     "monte",
     "reino"
@@ -60692,7 +61178,7 @@ const ULTIMOS = {
    "fuente": "CS 732-737"
   }
  ],
- "fuente": "CS 533-545, 671-737; PE 280; Bohr, <i>15 principios</i> 2:347-349 y 396-397; Bohr, <i>Daniel 1-10</i>, p. 24."
+ "fuente": "CS 533-545 y 661-737; PE 270-291; Bohr, <i>Daniel 1-10</i>, p. 288; Bohr, <i>Daniel 11</i>, p. 166; Bohr, <i>15 principios</i> 2:347-349 y 396-397."
 };
 
 /* v189: las fichas de personajes (fuente/personajes.js). En el estudio, el
@@ -75704,7 +76190,7 @@ function lamVeAnio(y){
   /* Al recorrer solo, el año cambia veinte veces por segundo: la escena se
      vuelve a pintar solo cuando cambia, si no parpadea. */
   /* v215: en el tramo futuro, la secuencia de los últimos acontecimientos. */
-  const futU=q.fut?lamUltHTML([q.fut.id==='monte'||q.fut.id==='reino'?'reino':'venida']):'';
+  const futU=q.fut?lamUltHTML([q.fut.ult||(q.fut.id==='monte'||q.fut.id==='reino'?'reino':'venida')]):'';
   const esA0=lamEscenaAnio(y),esA=lamEnEscena(esA0)?null:esA0,hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>'+futU;
   const fig=hj&&hj.querySelector('.lam-fig'),igual=fig?(esA&&fig.getAttribute('data-f')===esA.f):!esA;
   if(hj&&igual&&hj.querySelector('.lam-anio-tx')){hj.querySelector('.lam-anio-tx').innerHTML=lamPer(txt);hj.classList.remove('vacia');}
@@ -75717,7 +76203,7 @@ function lamRecorre(){
   lamParaVision();
   const r=document.getElementById('lamRango'),L=LAM(),H=L.hitos||[];let y=Number(r.value),espera=0;if(y>=LAM_FIN)y=-620;
   /* El futuro se detiene más: la piedra cae (dos segundos) y el monte crece (cinco). */
-  const F=(L.futuro||[]).map((f,i)=>[f.de+1,i?100:44]);
+  const F=(L.futuro||[]).map(f=>[f.de+1,f.ult==='reino'?100:44]);
   const b=document.getElementById('lamPlay');if(b)b.classList.add('on');
   lamFutVisto='';
   /* v211: mientras corre, la línea de tiempo se ve (en Explorar quedaba bajo la imagen). */
@@ -84077,11 +84563,18 @@ function quitaPersona(i,p){
    en la última fila: el reino de Dios.
    Agregar una lámina con `partes` agrega una columna. Nada más. */
 const CMP_FIN='fin';
+/* v218 (Camilo, 14-oct 16:01: «la piedra y el gran monte son eventos separados: la piedra
+   es la segunda venida; el gran monte es el reino eterno, después de los mil años. No
+   pueden ir lado a lado»). Lo que no tiene fecha se reparte por su `fin`: 'venida' (la
+   piedra, los santos reciben el reino) o 'reino' (el monte, el reino eterno). Cada uno
+   es su propia época, en ese orden; sin `fin` cae en el reino. */
+const CMP_FINES={venida:{reino:'La segunda venida',fechas:'Cristo vuelve: la piedra'},reino:{reino:'El reino eterno',fechas:'Después de los mil años, para siempre'}};
+const cmpEsFin=k=>String(k).indexOf(CMP_FIN)===0;
 /* v211 (Camilo, 14-oct): la fila de una parte es su `era` si la tiene, si no su `de`.
    El Hijo del hombre no tiene tramo propio (de:null) pero NO es «lo que no pasa»:
    llega al Anciano de días en 1844 (era:1844), en la época del juicio. Antes caía en
    el reino de Dios, junto a la piedra, y parecía el mismo suceso que la segunda venida. */
-const cmpClave=p=>Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN;
+const cmpClave=p=>Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN+'-'+(CMP_FINES[p.fin]?p.fin:'reino');
 function cmpModelo(Ls){
   Ls=Ls||(typeof LAMINAS!=='undefined'?LAMINAS:{});
   const cols=Object.keys(Ls).filter(k=>Array.isArray(Ls[k].partes)&&Ls[k].partes.length&&libroCid(k))
@@ -84092,10 +84585,11 @@ function cmpModelo(Ls){
     const L=Ls[k];
     L.partes.forEach(p=>{
       const key=cmpClave(p);
-      if(!filas.has(key))filas.set(key,{key,de:key===CMP_FIN?Infinity:Number(key),reino:'',fechas:'',c:p.c||'',celdas:{}});
+      const fin=cmpEsFin(key)?CMP_FINES[key.slice(CMP_FIN.length+1)]:null;
+      if(!filas.has(key))filas.set(key,{key,de:fin?1e9+Object.keys(CMP_FINES).indexOf(key.slice(CMP_FIN.length+1)):Number(key),reino:'',fechas:'',c:p.c||'',celdas:{}});
       const f=filas.get(key);
-      if(!f.reino)f.reino=key===CMP_FIN?'El reino de Dios':(p.reino||'');
-      if(!f.fechas)f.fechas=key===CMP_FIN?'Lo que no pasa':(p.fechas||'');
+      if(!f.reino)f.reino=fin?fin.reino:(p.reino||'');
+      if(!f.fechas)f.fechas=fin?fin.fechas:(p.fechas||'');
       (f.celdas[k]=f.celdas[k]||[]).push(p);
     });
   });
@@ -84161,7 +84655,7 @@ function cmpRio(M){
   const carril=k=>{
     const fin=[],pistas=[],sub=[];
     const t=(LAMINAS[k].partes||[]).map(p=>{const key=cmpClave(p);
-      if(key===CMP_FIN){fin.push(p);return '';}
+      if(cmpEsFin(key)){fin.push(p);return '';}
       /* Lo que va en una época sin tramo propio (el Hijo del hombre) ya lo dibuja su época. */
       if(!Number.isFinite(p.de))return '';
       const a=Math.min(Number.isFinite(p.a)?p.a:2026,2026);
@@ -84174,7 +84668,7 @@ function cmpRio(M){
     const hilos=sub.map(o=>{const corto=o.p.reino.replace(/^El /,'').replace(/ en el cielo$/,'').replace(/^./,c=>c.toUpperCase()),fe=o.a>=2026?'desde '+lamAnioTx(o.p.de):Math.abs(o.p.de)+'–'+o.a;
       return '<button type="button" class="cmp-hilo'+(o.w<22?' der':'')+'" data-k="'+esc(o.key)+'" style="--c:'+esc(o.p.c||'')+';left:'+pc(o.x)+';width:'+pc(o.w)+'" '+
         'aria-label="'+esc(o.lb+'; al mismo tiempo')+'" title="'+esc(o.p.reino+' · '+o.p.fechas)+'" onclick="cmpToca(\''+o.key+'\')"><i></i><span>'+esc(corto)+' <small>'+esc(fe)+'</small></span></button>';}).join('');
-    const f=fin.length?'<button type="button" class="cmp-tr fin" data-k="'+CMP_FIN+'" aria-label="'+esc(cmpNom(k)+': '+fin.map(p=>p.nombre).join(', '))+'" title="El reino de Dios" onclick="cmpToca(\''+CMP_FIN+'\')"></button>':'';
+    const fk=fin.length?cmpClave(fin[0]):'',f=fin.length?'<button type="button" class="cmp-tr fin" data-k="'+esc(fk)+'" aria-label="'+esc(cmpNom(k)+': '+fin.map(p=>p.nombre).join(', '))+'" title="La venida y el reino eterno" onclick="cmpToca(\''+fk+'\')"></button>':'';
     return '<div class="cmp-carril'+(sub.length?' con-hilo':'')+'"><span class="cmp-carril-n">'+esc(cmpNom(k))+'</span><div class="cmp-carril-t">'+t+f+hilos+'</div></div>';
   };
   /* En el teléfono quedan las tres que caben: 605 a.C., 476 y hoy. */
@@ -84185,7 +84679,7 @@ function cmpRio(M){
     marcas.map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+pc(cmpX(y))+'">'+t+'</span>').join('')+
     '<span class="siempre" style="left:'+pc(96)+'">siempre</span></div></div>'+
     '<div class="cmp-ley" aria-hidden="true"><span class="cmp-eje-n"></span><p><span><i class="l-tr"></i>Los reinos, uno tras otro</span>'+
-    '<span><i class="l-hilo"></i>Al mismo tiempo, dentro del anterior</span><span><i class="l-fin"></i>El reino de Dios</span></p></div></div>';
+    '<span><i class="l-hilo"></i>Al mismo tiempo, dentro del anterior</span><span><i class="l-fin"></i>La venida y el reino eterno</span></p></div></div>';
 }
 /* La época que se lee queda pegada arriba, justo debajo de las barras que ya
    están pegadas (la de la marca en el teléfono; dentro de Jóvenes, la de la app y
@@ -84240,14 +84734,17 @@ const ULT=()=>typeof ULTIMOS!=='undefined'?ULTIMOS:null;
 function ultHTML(){
   const U=ULT();if(!U)return '';
   const E=U.eventos,cel=(e,lb)=>{const r=e.en[lb]||'';return r?(r[0]==='~'?'sup':'si'):'no';};
+  /* v218: los acontecimientos agrupados en fases (una fila arriba, cada fase sobre los suyos). */
+  const fases=(U.fases||[]).map(([id,t])=>[t,E.filter(e=>e.fase===id).length]).filter(x=>x[1]);
   return '<section class="cmp-ult" id="cmpUlt" aria-labelledby="cmpUltT"><header class="cmp-ult-cab"><div class="cmp-ant">'+IC('historial')+' Después del juicio</div>'+
     '<h3 class="cmp-tit" id="cmpUltT">'+esc(U.titulo)+'</h3><p class="cmp-p">'+esc(U.nota)+'</p></header>'+
-    '<div class="cmp-ult-m" style="--n:'+E.length+'" role="group" aria-label="Qué libro muestra cada acontecimiento">'+
+    '<div class="cmp-ult-scroll"><div class="cmp-ult-m" style="--n:'+E.length+'" role="group" aria-label="Qué libro muestra cada acontecimiento">'+
+      (fases.length?'<span class="cmp-ult-0" aria-hidden="true"></span>'+fases.map(([t,n])=>'<span class="cmp-ult-fase" style="grid-column:span '+n+'">'+esc(t)+'</span>').join(''):'')+
       '<span class="cmp-ult-0" aria-hidden="true"></span>'+
-      E.map((e,i)=>'<button type="button" class="cmp-ult-ev'+(i===ultSel?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===ultSel)+'" onclick="cmpUlt('+i+')"><i>'+(i+1)+'</i><span>'+esc(e.t)+'</span></button>').join('')+
+      E.map((e,i)=>'<button type="button" class="cmp-ult-ev'+(i===ultSel?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===ultSel)+'" onclick="cmpUlt('+i+')" title="'+esc(e.t)+'"><i>'+(i+1)+'</i><span>'+esc(e.c||e.t)+'</span></button>').join('')+
       U.libros.map(([k,nom])=>'<span class="cmp-ult-lb">'+esc(nom)+'</span>'+E.map((e,i)=>{const c=cel(e,k),r=(e.en[k]||'').replace(/^~/,'');
         return '<span class="cmp-ult-c '+c+(i===ultSel?' on':'')+'" data-i="'+i+'" title="'+esc(nom+(c==='no'?': no lo trae':c==='sup'?': lo supone ('+r+')':': '+r))+'"><b></b></span>';}).join('')).join('')+
-    '</div><p class="cmp-ult-claves" aria-hidden="true">'+E.map((e,i)=>'<span><b>'+(i+1)+'</b> '+esc(e.c||e.t)+'</span>').join('')+'</p><p class="cmp-ult-ley" aria-hidden="true"><span><b class="si"></b>Lo muestra</span><span><b class="sup"></b>Lo supone, sin contarlo</span><span><b class="no"></b>No lo trae</span></p>'+
+    '</div></div><p class="cmp-ult-claves" aria-hidden="true">'+E.map((e,i)=>'<span><b>'+(i+1)+'</b> '+esc(e.c||e.t)+'</span>').join('')+'</p><p class="cmp-ult-ley" aria-hidden="true"><span><b class="si"></b>Lo muestra</span><span><b class="sup"></b>Lo supone, sin contarlo</span><span><b class="no"></b>No lo trae</span></p>'+
     '<div class="cmp-ult-det" id="cmpUltDet" aria-live="polite">'+ultDetHTML(ultSel)+'</div>'+
     '<p class="sec-fuente">Fuente: '+U.fuente+'</p></section>';
 }
@@ -84255,7 +84752,7 @@ function ultDetHTML(i){
   const U=ULT(),e=U&&U.eventos[i];if(!e)return '';
   const muestra=U.libros.filter(([k])=>e.en[k]),no=U.libros.filter(([k])=>!e.en[k]);
   return '<div class="cmp-ult-dc">'+(e.img?'<span class="cmp-ult-img"><img src="'+LAMINAS_DIR+e.img+'.webp" alt="" loading="lazy" decoding="async"></span>':'<span class="cmp-ult-num">'+(i+1)+'</span>')+
-    '<div><small>'+(i+1)+' de '+U.eventos.length+' · '+esc(e.cuando)+'</small><h4>'+esc(e.t)+'</h4><p>'+esc(e.nota)+'</p></div></div>'+
+    '<div><small>'+(i+1)+' de '+U.eventos.length+((U.fases||[]).find(x=>x[0]===e.fase)?' · '+esc(U.fases.find(x=>x[0]===e.fase)[1]):'')+'</small><small class="cmp-ult-cu">'+esc(e.cuando)+'</small><h4>'+esc(e.t)+'</h4><p>'+esc(e.nota)+'</p></div></div>'+
     '<ul class="cmp-ult-citas">'+e.citas.map(([r,c])=>'<li><q>'+esc(c)+'</q> <cite>'+refsTocables(esc(r),'d7')+'</cite></li>').join('')+'</ul>'+
     '<div class="cmp-ult-libs"><span class="cmp-ult-k">Lo muestran</span>'+muestra.map(([k,nom])=>{const r=e.en[k];
       return '<span class="cmp-ult-lib'+(r[0]==='~'?' sup':'')+'"><b>'+esc(nom)+'</b> '+esc(r.replace(/^~/,''))+(r[0]==='~'?' · lo supone':'')+'</span>';}).join('')+
@@ -84269,6 +84766,9 @@ function cmpUlt(i,quieto){
   const m=document.getElementById('cmpUlt');if(!m)return;
   m.querySelectorAll('[data-i]').forEach(x=>{const on=x.getAttribute('data-i')===String(i);x.classList.toggle('on',on);if(x.tagName==='BUTTON')x.setAttribute('aria-pressed',String(on));});
   const d=document.getElementById('cmpUltDet');if(d)d.innerHTML=ultDetHTML(i);
+  /* v218: en el teléfono la tabla rueda de lado: el acontecimiento elegido queda a la vista. */
+  const sc=m.querySelector('.cmp-ult-scroll'),b=m.querySelector('.cmp-ult-ev.on');
+  if(sc&&b&&sc.scrollWidth>sc.clientWidth+1){const x=Math.max(0,b.offsetLeft-(sc.clientWidth-b.offsetWidth)/2);if(sc.scrollTo)sc.scrollTo({left:x,behavior:lamQuieto()?'auto':'smooth'});else sc.scrollLeft=x;}
   lugarAnota();
 }
 /* El índice de un acontecimiento por su id (los enlaces usan el id: «ultimos/plagas»). */
@@ -84287,7 +84787,11 @@ function lamUltHTML(ids){
   const U=ULT();if(!U||!lamId)return '';
   const L=LAM(),E=U.eventos,on=E.map((e,i)=>ids.includes(e.id)?i:-1).filter(i=>i>=0);if(!on.length)return '';
   const cid=lamId,cuenta=E.filter(e=>e.en[cid]&&e.en[cid][0]!=='~').map(e=>e.t.charAt(0).toLowerCase()+e.t.slice(1));
-  return '<div class="lam-ult"><div class="lam-rot">'+esc(U.titulo)+'</div><ol>'+E.map((e,i)=>'<li class="'+(on.includes(i)?'on':'')+(e.en[cid]&&e.en[cid][0]!=='~'?' en':'')+'" title="'+esc(e.t)+'"><i>'+(i+1)+'</i><span>'+esc(e.c||e.t)+'</span></li>').join('')+'</ol>'+
+  /* v218: con diecinueve acontecimientos, la secuencia corta va por fases; se enciende la
+     fase del acontecimiento y su nombre va debajo. */
+  const F=(U.fases||[]).map(([id,t])=>({id,t,ev:E.filter(e=>e.fase===id)})).filter(x=>x.ev.length),onE=on.map(i=>E[i]);
+  return '<div class="lam-ult"><div class="lam-rot">'+esc(U.titulo)+'</div><ol style="--n:'+F.length+'">'+F.map((f,i)=>{const o=onE.filter(e=>e.fase===f.id);
+    return '<li class="'+(o.length?'on':'')+(f.ev.some(e=>e.en[cid]&&e.en[cid][0]!=='~')?' en':'')+'" title="'+esc(f.t+': '+f.ev.map(e=>e.t).join(', '))+'"><i>'+(i+1)+'</i><span>'+esc(f.t)+'</span>'+(o.length?'<em>'+esc(o.map(e=>e.c||e.t).join(' · '))+'</em>':'')+'</li>';}).join('')+'</ol>'+
     '<p>'+esc((L.libro||'')+' cuenta '+cuenta.join(', ').replace(/, ([^,]*)$/,' y $1')+'. Daniel 11 y 12 y Apocalipsis llenan lo de en medio.')+'</p>'+
     (lamModo==='presentar'?'':'<button type="button" class="btn txt peq lam-ult-ir" onclick="lamUltIr('+on[0]+')">'+IC('comparar')+' Ver la secuencia completa</button>')+'</div>';
 }
@@ -84299,7 +84803,7 @@ let cmpSel='';
 function cmpSalaHTML(M){
   const i=M.filas.findIndex(x=>x.key===cmpSel),f=M.filas[i];if(!f)return '';
   const con=M.cols.filter(k=>(f.celdas[k]||[]).length),sin=M.cols.filter(k=>!(f.celdas[k]||[]).length);
-  const pc=n=>(Math.round(n*100)/100)+'%',fin=f.key===CMP_FIN,ant=M.filas[i-1],sig=M.filas[i+1];
+  const pc=n=>(Math.round(n*100)/100)+'%',fin=cmpEsFin(f.key),ant=M.filas[i-1],sig=M.filas[i+1];
   /* La época en la línea de la historia, en oro: hasta donde llega la que más dura. */
   const as=con.flatMap(k=>f.celdas[k].map(p=>p.a)).filter(Number.isFinite),a=as.length?Math.min(2026,Math.max(...as)):2026;
   const linea='<div class="cmp-sl" aria-hidden="true"><i style="left:'+pc(fin?92:cmpX(f.de))+';width:'+pc(fin?8:Math.max(.9,cmpX(a)-cmpX(f.de)))+'"></i>'+

@@ -37,7 +37,8 @@ module.exports = {
           ['Piernas de hierro', 'Roma imperial, una monarquía de hierro', '168 a.C.-476 d.C.'],
           ['Diez dedos', 'Roma dividida en los reinos bárbaros', 'Desde 476 d.C.'],
           ['Hierro mezclado con barro', 'Roma papal: el poder político unido al religioso', 'Supremacía 538-1798 d.C.; herida en 1798, sana y vuelve al final'],
-          ['La piedra que se hace monte', 'La segunda venida de Cristo y su reino eterno', 'Futuro'],
+          ['La piedra', 'La segunda venida de Cristo', 'Futuro'],
+          ['El gran monte', 'El reino eterno de Cristo', 'Después de los mil años'],
         ]) +
         `<p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial (las piernas), dividida (los dedos) y papal (el hierro mezclado con barro). Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p><p>Y una <strong>cuarta</strong>: el papado sanado de su herida (Apocalipsis 13:3), en pie cuando la piedra golpea los pies (2:34).</p>` +
         `<p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. Muestra también el deterioro moral: las naciones que olvidan a Dios terminan imponiendo la moral por la fuerza.</p>` +
@@ -147,10 +148,10 @@ module.exports = {
       h: `<p>Ya se vio que la piedra es Cristo en su segunda venida. Hay dos detalles que suelen pasarse por alto:</p>` +
         li([
           '<strong>«Sin que la cortara mano alguna» (2:34, 45).</strong> La misma idea está en 8:25 («no por mano humana») y en 11:45 («no tendrá quien lo ayude»): el poder perseguidor cae <strong>sin intervención humana</strong>. El fin de la historia será una irrupción sobrenatural de Dios, no una iglesia que va conquistando el mundo hasta establecer el reino aquí.',
-          '<strong>El monte.</strong> En la Escritura los montes representan reinos (Isaías 2:2). Hay dos montes: la piedra sale del monte Sion, la Sion celestial (2:45; 1 Pedro 2:6), y después ella misma se vuelve el gran monte que llena la tierra: el reino eterno de Cristo (2:35, 44).',
+          '<strong>El monte.</strong> En la Escritura los montes representan reinos (Isaías 2:2). Hay dos montes: la piedra sale del monte Sion, la Sion celestial (2:45; 1 Pedro 2:6), y después ella misma se vuelve el gran monte que llena la tierra: el reino eterno de Cristo (2:35, 44). No pasa al mismo tiempo que la piedra: la piedra es la venida; el monte llena la tierra después de los mil años, cuando la tierra es hecha nueva (Apocalipsis 20:4; 21:1).',
         ]) +
         wa(`Jesús lo aplicó a cada persona (Mateo 21:44): «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado». Caer hoy sobre la piedra es dejar que Cristo quiebre el orgullo; si no, ella caerá al final.`) +
-        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 63-64.</p>`,
+        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 732.</p>`,
     },
     {
       t: '🧭 Daniel 1-7: un libro en espejo',

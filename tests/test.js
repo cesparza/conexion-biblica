@@ -2552,7 +2552,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const citas=[...L.partes.flatMap(p=>p.interp.concat(p.corto)),...L.historia.map(h=>h.nota),L.despues.nota].flatMap(t=>[...String(t).matchAll(/«([^»]+)»/g)].map(m=>m[1]));
   const sueltas=citas.filter(c=>!d7.includes(n(c))&&!otros.includes(n(c)));
   ok(citas.length>=15&&!sueltas.length,'Las citas dentro de la interpretación de Daniel 7 son literales ('+citas.length+')'+(sueltas.length?': '+sueltas.slice(0,3).join(' | '):''));
-  ok(L.partes.length===9&&L.partes.every(p=>p.img&&p.c&&p.interp.length&&/\S/.test(p.fuente)&&p.corto),'Cada parte de Daniel 7 trae su imagen, interpretación y fuente');
+  ok(L.partes.length===10&&L.partes.every(p=>p.img&&p.c&&p.interp.length&&/\S/.test(p.fuente)&&p.corto),'Cada parte de Daniel 7 trae su imagen, interpretación y fuente');
   const ids=new Set(L.partes.map(p=>p.id));
   ok(L.reto.length>=4&&L.reto.every(r=>ids.has(r.ok))&&L.tiempo.every(k=>ids.has(k))&&L.paralelo.every(r=>ids.has(r[0]))&&L.escenas.every(e=>!e.parte||ids.has(e.parte)),
     'Pruébate, la línea de tiempo, el paralelo y las escenas de Daniel 7 nombran partes que existen');
@@ -2574,8 +2574,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const L=LAMINAS.d7,D2=LAMINAS[L.comparar],n=t=>String(t).replace(/<[^>]+>/g,'').replace(/[«»“”—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
   const d7=n(Object.values(VERS.d7).join(' '));
   const par=Object.fromEntries(L.paralelo.map(r=>[r[0],r[3]]));
-  ok(L.comparar==='d2'&&D2&&D2.marcoEstatua&&JSON.stringify(par)===JSON.stringify({leon:'oro',oso:'plata',leopardo:'bronce',bestia:'hierro',cuernos:'dedos',cuerno:'barro',juicio:null,hijo:null,reino:['piedra','monte']}),
-    'Con Daniel 2: cada parte de Daniel 7 enciende su metal (el juicio y el Hijo del hombre no tienen: los agrega Daniel 7; el reino enciende la piedra y el monte)');
+  ok(L.comparar==='d2'&&D2&&D2.marcoEstatua&&JSON.stringify(par)===JSON.stringify({leon:'oro',oso:'plata',leopardo:'bronce',bestia:'hierro',cuernos:'dedos',cuerno:'barro',juicio:null,hijo:null,santos:['piedra'],reino:['monte']}),
+    'Con Daniel 2: cada parte de Daniel 7 enciende su metal (el juicio y el Hijo del hombre no tienen: los agrega Daniel 7; la venida enciende la piedra y el reino eterno, el monte)');
   ok(L.paralelo.every(r=>r[3]===null||[].concat(r[3]).every(k=>D2.capas.includes(k)||['piedra','monte'].includes(k)))&&/lo agrega Daniel 7/.test(L.agrega),'La cuarta columna del paralelo nombra partes de la estatua de Daniel 2');
   const C=L.cuernos;
   ok(C&&C.diez.length===10&&C.nombres.length===10&&C.tres.map(t=>t.t+' '+t.y).join(', ')==='Hérulos 493, Vándalos 534, Ostrogodos 538'&&C.nombres.slice(7).join()==='Hérulos,Vándalos,Ostrogodos',
@@ -2648,8 +2648,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const verso=r=>{const m=/^(Daniel|Apocalipsis|1 Corintios|Malaquías) (\d+):(\d+)$/.exec(r);if(!m)return '';
     return m[1]==='Daniel'?VERS['d'+m[2]][m[3]]:m[1]==='Apocalipsis'?(VERS_AP['ap'+m[2]]||{})[m[3]]:(OTRAS_VERS[(m[1]==='Malaquías'?'malaquias':'1corintios')+'-'+m[2]]||{})[m[3]];};
   const citas=F.pasos.flatMap(x=>x.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
-  ok(F&&F.tras==='juicio'&&F.pasos.map(x=>x.t).join()==='Investigación,Sentencia,Ejecución'&&citas.length===6&&!malas.length,
-    'Las tres fases del juicio: Investigación, Sentencia y Ejecución, con 6 citas literales'+(malas.length?' ('+malas[0][0]+')':''));
+  ok(F&&F.tras==='juicio'&&F.pasos.map(x=>x.t).join()==='Investigación,Sentencia,Ejecución'&&citas.length===8&&!malas.length,
+    'Las tres fases del juicio: Investigación, Sentencia y Ejecución, con 8 citas literales'+(malas.length?' ('+malas[0][0]+')':''));
   ok(F.hitos.length===3&&F.pasos.every(x=>x.de>=0&&x.a<F.hitos.length&&x.de<=x.a&&x.cuando&&x.donde&&x.quien&&x.que&&x.para)&&/1844/.test(F.pasos[0].cuando)&&/venida/.test(F.pasos[2].cuando),
     'La mini línea de tiempo: 1844 → el Hijo recibe el reino → la venida, y cada fase con cuándo, dónde, quién y para quién');
   /* v213 (Camilo, 14-oct 13:24): el orden de Daniel 7. La sentencia es cuando el Hijo
@@ -2673,9 +2673,13 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   /* Doctrina: el Hijo del hombre (7:13) llega al Anciano de días en 1844; NO es la piedra. */
   const M=cmpModelo(LAMINAS),fila=k=>M.filas.find(f=>f.key===k),ids=(f,c)=>((f&&f.celdas[c])||[]).map(p=>p.id).join();
   ok(ids(fila('1844'),'d7')==='juicio,hijo'&&!ids(fila('1844'),'d2'),'Comparar: el Hijo del hombre va en la época del juicio (desde 1844), con el juicio; Daniel 2 no la trae');
-  ok(ids(fila('fin'),'d2')==='piedra,monte'&&ids(fila('fin'),'d7')==='reino','Comparar: el reino de Dios junta la piedra y el monte con el reino dado a los santos (7:18, 22, 27)');
+  /* v218 (Camilo, 14-oct 16:01): la piedra (la venida) y el monte (el reino eterno, después de los mil años) no van lado a lado. */
+  const fv=M.filas.findIndex(f=>f.key==='fin-venida'),fr=M.filas.findIndex(f=>f.key==='fin-reino');
+  ok(ids(fila('fin-venida'),'d2')==='piedra'&&ids(fila('fin-venida'),'d7')==='santos'&&ids(fila('fin-reino'),'d2')==='monte'&&ids(fila('fin-reino'),'d7')==='reino'&&fv>=0&&fr===fv+1&&fr===M.filas.length-1&&!fila('fin')&&
+    fila('fin-venida').reino==='La segunda venida'&&fila('fin-reino').reino==='El reino eterno'&&/mil años/.test(fila('fin-reino').fechas),
+    'Comparar: la segunda venida (la piedra; los santos reciben el reino, 7:22, 26) y, después, el reino eterno (el monte; 7:27), dos épocas');
   const par=Object.fromEntries(LAMINAS.d7.paralelo.map(r=>[r[0],r[3]]));
-  ok(par.hijo===null&&![].concat(par.hijo||[]).includes('piedra')&&JSON.stringify(par.reino)==='["piedra","monte"]','Con Daniel 2: el Hijo del hombre no enciende la piedra; el reino enciende la piedra y el monte');
+  ok(par.hijo===null&&![].concat(par.hijo||[]).includes('piedra')&&JSON.stringify(par.santos)==='["piedra"]'&&JSON.stringify(par.reino)==='["monte"]','Con Daniel 2: el Hijo del hombre no enciende la piedra; la venida enciende la piedra y el reino eterno, el monte');
   const H=LAMINAS.d7.partes.find(p=>p.id==='hijo');
   ok(H.era===1844&&/1844/.test(H.fechas)&&/No es la piedra|No es la segunda venida/.test(H.corto+H.interp.join(' ')),'El Hijo del hombre dice 1844 y que no es la segunda venida');
   ok(/function cmpFasesHTML\(/.test(js)&&/cmpFasesHTML\(f,M,false\)/.test(js)&&/cmpFasesHTML\(f,M,true\)/.test(js),'La época del juicio se conecta con sus tres fases (en la lista y lado a lado)');
@@ -2684,8 +2688,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(fu.length===1,'Comparar cita su fuente una sola vez ('+fu.length+')');
   /* La línea de tiempo llega al futuro: 1844, la piedra y el monte después de hoy. */
   const F2=LAMINAS.d2.futuro,F7=LAMINAS.d7.futuro;
-  ok(F2.map(f=>f.id).join()==='piedra,monte'&&F2[0].de===2026&&F2[1].de===F2[0].a&&F7.length===2&&F7[1].id==='reino',
-    'La línea de tiempo sigue después de hoy: la piedra y el monte (Daniel 2), la venida y el reino (Daniel 7)');
+  ok(F2.map(f=>f.id).join()==='piedra,,monte'&&F2[0].de===2026&&F2.every((f,i)=>!i||f.de===F2[i-1].a)&&F2.map(f=>f.ult).join()==='venida,mil,reino'&&
+    F7.map(f=>f.id).join()==='santos,,reino'&&F7.map(f=>f.ult).join()==='venida,mil,reino',
+    'La línea de tiempo sigue después de hoy: la piedra, los mil años y el monte (Daniel 2); la venida, los mil años y el reino (Daniel 7)');
   ok([LAMINAS.d2,LAMINAS.d7].every(L=>L.marcas.some(m=>m[0]===1844)&&L.marcas.some(m=>m[0]===2026))&&LAMINAS.d2.escenas.some(e=>e.y===1844)&&LAMINAS.d2.juicio===1844,
     'Las dos líneas de tiempo marcan 1844 (el juicio) y hoy');
   ok(/const LAM_HOY=2026,LAM_FIN=2626;/.test(js)&&/max="'\+LAM_FIN\+'"/.test(js)&&/lamFuturo\(y\)/.test(js),'El control de la línea de tiempo llega hasta el final del futuro');
@@ -2774,7 +2779,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Cada cambio de lugar lo anota (pantalla, capítulo, pestaña, lámina, Comparar) y el arranque lo aplica');
   /* 3. Explorar en orden, desde el primer paso. */
   ok(rec2==='h0 h1 h2 h3 h4 est oro plata bronce hierro dedos barro piedra monte desp cierre','Daniel 2 en Explorar: la historia, la estatua, cada parte, la piedra, el monte, el rey y el cierre ('+rec2+')');
-  ok(/^h0 h1 est leon oso leopardo bestia cuernos cuerno x-senas x-periodo juicio x-fases hijo reino desp cierre$/.test(rec7),'Daniel 7 en Explorar: el mismo orden que Presentar ('+rec7+')');
+  ok(/^h0 h1 est leon oso leopardo bestia cuernos cuerno x-senas x-periodo juicio x-fases hijo santos reino desp cierre$/.test(rec7),'Daniel 7 en Explorar: el mismo orden que Presentar ('+rec7+')');
   ok(/lamIr\('h0'\);lamPintaReto\(\)/.test(js)&&/function lamNavHTML\(k\)\{\s*const P=lamRecorrido\(\)/.test(js),'Explorar abre en «Cautivos en Babilonia» y Anterior/Siguiente siguen el recorrido entero');
   /* La piedra: oculta hasta su paso, y sin rótulo sobre la estatua. */
   ok(/function lamPiedraArriba\(\)\{[\s\S]*?pi\.style\.opacity='0'/.test(js)&&/data-p="piedra" style="opacity:0"/.test(js)&&/Object\.keys\(E\)\.filter\(id=>id!=='piedra'\)/.test(js)&&/esPiedra\)\{lamPiedraArriba\(\);pi\.style\.opacity='1'/.test(js),
@@ -2789,19 +2794,26 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Comparar: cada visión en una sola fila; Roma papal y el juicio, hilos con nombre; y una leyenda');
   /* 5. Las tres fases, con sus versículos (Camilo, v213). */
   const F=LAMINAS.d7.fases;
-  ok(F.pasos.map(x=>x.ref).join('|')==='7:9-10|7:13-14, 22a|7:22b, 26-27'&&/Hijo del hombre recibe el reino/.test(F.pasos[1].cuando)&&/santos reciben el reino, en la segunda venida/.test(F.pasos[2].cuando)&&/cmp-fases-r/.test(js),
+  ok(F.pasos.map(x=>x.ref).join('|')==='7:9-10|7:13-14, 22a|7:22b, 26-27'&&/^Al cierre de la gracia/.test(F.pasos[1].cuando)&&/antes de las plagas y de la venida/.test(F.pasos[1].cuando)&&F.hitos[1][0]==='Al cierre de la gracia'&&/Apocalipsis 22:11/.test(JSON.stringify(F.pasos[1].citas))&&/santos reciben el reino, en la segunda venida/.test(F.pasos[2].cuando)&&/cmp-fases-r/.test(js),
     'Las tres fases: Investigación (7:9-10), Sentencia cuando el Hijo recibe el reino (7:13-14, 22a), Ejecución en la venida (7:22b, 26-27)');
   const ap20=fs.readFileSync(path.join(RAIZ,'fuente','apocalipsis','cap20.js'),'utf8');
   ok(!/'2 · Sentencia', 'Durante los mil años/.test(ap20)&&!/'3 · Ejecución', 'Después de los mil años/.test(ap20)&&!/dicta sentencia \(durante los mil años\)/.test(ap20),
     'Apocalipsis 20 ya no dice «Sentencia · durante los mil años; Ejecución · después»: los mil años van dentro de la ejecución');
   /* 6. Los últimos acontecimientos. */
   const E=ULTIMOS.eventos,citas=E.flatMap(e=>e.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
-  ok(E.map(e=>e.id).join()==='juicio,gracia,plagas,venida,mil,final,reino'&&!malas.length&&citas.length>=18,
-    'Los últimos acontecimientos: juicio, cierre de la gracia, plagas, venida, mil años, Nueva Jerusalén y fin de los impíos, tierra nueva; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
+  /* v218 (Camilo, 14-oct 16:01-16:06): los acontecimientos de su lista, en el orden de El conflicto
+     de los siglos y Primeros escritos, en cinco fases. */
+  const ev=id=>E.find(e=>e.id===id),ord=E.map(e=>e.id).join();
+  ok(ord==='juicio,zarandeo,lluvia,ley,pregon,persecucion,sello,gracia,angustia,plagas,decreto,liberacion,resurreccion,venida,mil,juzgan,jerusalen,final,reino'&&!malas.length&&citas.length>=40&&
+    E.every(e=>e.t&&e.c&&e.cuando&&e.nota&&e.fuente&&e.citas.length&&ULTIMOS.fases.some(f=>f[0]===e.fase))&&
+    ULTIMOS.fases.map(f=>f[0]).join()==='antes,angustia,venida,mil,fin'&&ULTIMOS.fases.every(([f],i)=>E.filter(e=>e.fase===f).length&&E.findIndex(e=>e.fase===f)>=(i?E.map(e=>e.fase).lastIndexOf(ULTIMOS.fases[i-1][0]):0)),
+    'Los últimos acontecimientos: 19, en el orden de CS y PE, agrupados en 5 fases; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
+  ok(ord.indexOf('resurreccion')<ord.indexOf('venida')&&ord.indexOf('gracia')<ord.indexOf('angustia')&&ord.indexOf('jerusalen')<ord.indexOf('final')&&ord.indexOf('zarandeo')<ord.indexOf('lluvia')&&ord.indexOf('venida')<ord.indexOf('mil')&&ord.indexOf('mil')<ord.indexOf('reino'),
+    'El orden: el zarandeo antes de la lluvia tardía, la angustia desde el cierre de la gracia, la resurrección especial antes de la venida, la Nueva Jerusalén antes de la destrucción final, y el reino eterno después de los mil años');
   const refs=E.map(e=>Object.values(e.en).join(' ')).join(' | ');
-  ok(['12:1','14:6-7','15:1','15:8','16','19:11-16','20:1-6','20:7-15','21:2','22:11','2:34-35','7:9-10','8:14'].every(r=>refs.includes(r))&&
-    E[1].en.d2===''&&E[2].en.d7===''&&E[4].en.d8===''&&E[3].en.d2&&E[3].en.d7&&E[3].en.d8,
-    'Cada acontecimiento dice qué libro lo muestra: Daniel 2, 7 y 8 pasan del juicio a la venida; Daniel 12 y Apocalipsis cuentan lo de en medio');
+  ok(['12:1','12:2','14:6-7','15:1','16','18:1-4','7:1-4','13:12-17','19:11-16','20:1-6','20:4','21:2','22:11','2:34','2:35','7:9-10','8:14','11:44','11:45'].every(r=>refs.includes(r))&&
+    ev('gracia').en.d2===''&&ev('plagas').en.d7===''&&ev('mil').en.d8===''&&ev('venida').en.d2&&ev('venida').en.d7&&ev('venida').en.d8&&!ev('venida').en.d2.includes('35')&&ev('reino').en.d2.includes('35'),
+    'Cada acontecimiento dice qué libro lo muestra: la piedra en la venida (2:34) y el monte en el reino eterno (2:35); Daniel 11-12 y Apocalipsis cuentan lo de en medio');
   ok(/class="cmp-ult"/.test(js)&&/function cmpUlt\(/.test(js)&&/ultHTML\(\)\+/.test(js)&&/function lamUltHTML\(/.test(js)&&/lamUltHTML\(lamUltDe\(p\.id\)\)/.test(js),'La secuencia está en Comparar y en las láminas (la piedra, el monte, el juicio y el tramo futuro)');
   /* 5. La auditoría: lo que se corrigió no vuelve. */
   const D2=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d2.js'),'utf8'),D7=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d7.js'),'utf8'),

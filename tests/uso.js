@@ -3229,7 +3229,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   /* La comparación crece sola: una lámina más con `partes` es una columna más,
      y sus partes caen en la fila de su fecha sin tocar ninguna tabla. */
   const M=Z.cmpModelo();
-  ok(M.cols.join()==='d2,d7'&&M.filas.some(f=>f.key==='-539')&&M.filas[M.filas.length-1].key==='fin','v205: Comparar arma sus columnas de LAMINAS (hoy '+M.cols.join(', ')+') y sus filas por fecha');
+  ok(M.cols.join()==='d2,d7'&&M.filas.some(f=>f.key==='-539')&&M.filas[M.filas.length-1].key==='fin-reino'&&M.filas[M.filas.length-2].key==='fin-venida','v205: Comparar arma sus columnas de LAMINAS (hoy '+M.cols.join(', ')+') y sus filas por fecha');
   const L2=Object.assign({},Z.LAMINAS,{d8:{dir:'d8/',tipo:'escenas',partes:[
     {id:'carnero',img:'carnero',nombre:'Carnero de dos cuernos',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,c:'#8C98A6'},
     {id:'macho',img:'macho',nombre:'Macho cabrío',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,c:'#A85A2A'}]}});
