@@ -20,6 +20,7 @@ const RET=`juegosDisponibles, ponJuego, nuevaRonda, jgPar, jgClasif, jgOrden, jg
   ponSemilla:x=>{rndEx=prng(x)},
         ponAlcance:v=>{alcance=v}, ponCuantas:v=>{cuantas=v}, alcanceActual:()=>alcance,
         barajaOpciones, CATS, CAT, poolNivel, nivelRecomendado, NPREG,
+        ponVer, verTodo, hayConcurso, capsTema, esCat, libreDe, prepAbre, prepActividad, prepElige, pintaPrep, normalizarDB, ACT_DE, DB:()=>DB, catsValidas,
         ponNivel:v=>{nivel=v},
         htmlHoja, seccionLectura, refsTocables, VERS,
         ACTIVIDADES, ACT, ACT_DE, CATS_DE_ACT, bvActividad, bvCategoria,
@@ -852,9 +853,16 @@ A.S().act={};A.S().acc={};
 
 /* Examinar un capítulo desde el punto débil, con guarda: un capítulo que para
    esta categoría es solo material de estudio no se puede examinar. */
+/* v214: Guías Mayores no tiene reglamento de concurso: Daniel 7 se examina. Lo que se
+   ignora es un capítulo que el concurso de la categoría no pide (Daniel 7 en
+   Aventureros, que se ve con «Todo el material» pero no entra a su examen). */
 A.ponCat('gm'); A.ponAlcance('todo');
 A.examenDelCapitulo('d7');
-ok(A.alcanceActual()==='todo','examenDelCapitulo ignora un capítulo de solo estudio (Daniel 7 en Guías Mayores)');
+ok(A.alcanceActual()==='d7','v214: en Guías Mayores (sin reglamento) Daniel 7 se examina');
+A.ponCat('av'); A.ponVer('todo'); A.ponAlcance('todo');
+A.examenDelCapitulo('d7');
+ok(A.alcanceActual()==='todo','examenDelCapitulo ignora un capítulo que el concurso no pide (Daniel 7 en Aventureros, aunque lo vea)');
+A.ponVer('concurso');
 /* Y Daniel 2, que dejo de ser solo estudio, si se puede examinar en Aventureros. */
 A.ponCat('av'); A.ponAlcance('todo');
 A.examenDelCapitulo('d2');
@@ -1179,8 +1187,11 @@ ok(A.hojaTipoActual()==='yo','La hoja de identidad se abre desde cualquier panta
 ok(/alu-sel/.test(A.el('hoja').innerHTML),'La hoja trae el selector de participantes');
 ok(A.el('alu-sel').innerHTML.length>0,'  y viene pintado, no vacio');
 ok(A.el('cat-sel').innerHTML.length>0,'La hoja trae el selector de actividad y categoria pintado');
-ok(/Conexi.n B.blica/.test(A.el('cat-sel').innerHTML)&&/En esto creemos/.test(A.el('cat-sel').innerHTML),
-  '  con las actividades agrupadas');
+ok(/Agregar actividad/.test(A.el('cat-sel').innerHTML)&&/prep-pone/.test(A.el('cat-sel').innerHTML),
+  '  v214: dice la preparación (lo que pone la categoría) y ofrece «Agregar actividad»');
+A.prepAbre();
+ok(/Conexi.n B.blica/.test(A.el('prep').innerHTML)&&/En esto creemos/.test(A.el('prep').innerHTML)&&/Sin concurso/.test(A.el('prep').innerHTML),
+  '  «Agregar actividad» muestra los concursos y el estudio sin concurso');
 A.cierraHoja();
 ok(A.hojaTipoActual()===null,'La hoja de identidad se cierra');
 
@@ -2339,8 +2350,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
      seis de solo estudio (Daniel 7 al 12) y esos no se ofrecen. */
   P.llenaCapPanel('cbg',false);
   const ofrecidosG=[...el('pan-cap').innerHTML.matchAll(/value="([^"]+)"/g)].map(m=>m[1]);
-  ok(ofrecidosG.length===P.capsExaminables('cbg').length&&ofrecidosG.length<P.capsDeActividad('cbg').length&&!ofrecidosG.includes('d7'),
-    'En la de Guías se ofrecen '+ofrecidosG.length+', menos que todos sus capitulos ('+P.capsDeActividad('cbg').length+')');
+  /* v214: Guías Mayores no tiene reglamento de concurso: se examina todo, Daniel 7 al 12 también. */
+  ok(ofrecidosG.length===P.capsExaminables('cbg').length&&ofrecidosG.length===P.capsDeActividad('cbg').length&&ofrecidosG.includes('d7'),
+    'En la de Guías (sin reglamento) se ofrecen los '+ofrecidosG.length+' capítulos, Daniel 7 al 12 incluidos');
 
   /* LAS RECETAS NO SON UN SEGUNDO CAMINO. Cada una dice en que actividad y en
      que material se para; el alcance lo sigue calculando alcancePanel(). */
@@ -2844,8 +2856,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(el('pan-zona-fichas').hidden===false,'Y las fichas se ven en «Ajustar lo escogido»');
   V.fichaPan('libro','d'); V.fichaPan('cap','d2');
   const al=V.alcancePanel();
-  ok(al==='d1,d3,d4,d5,d6','Todo Daniel menos el 2: '+al);
-  ok(V.textoAlcancePanel(al)==='Daniel 1, 3, 4, 5 y 6','El panel lo dice en palabras');
+  ok(al==='d1,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12','Todo Daniel menos el 2 (Guías Mayores examina también 7 al 12): '+al);
+  ok(/^Daniel 1, 3/.test(V.textoAlcancePanel(al))&&/12/.test(V.textoAlcancePanel(al)),'El panel lo dice en palabras: '+V.textoAlcancePanel(al));
   ok(V.cuantasPara('av',al)>0&&V.cuantasPara('gm',al)>V.cuantasPara('av',al),
     'Aventureros recibe lo suyo (1, 3 y 6) y Guias Mayores mas (4 y 5)');
   const API=require('fs').readFileSync(require('path').join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
@@ -2893,8 +2905,10 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'En Menores, que no tiene P&R, el filtro «P&R» cuenta como todo');
   ok(V.alcanceActual()==='todo','Y el examen tambien');
   V.ponCat(dm);
-  ok(V.capsVista().length===V.capsDe().length&&el('filtro-est').hidden,
-    'Fuera de Conexion Biblica el filtro no aplica ni se ve');
+  /* v214: fuera de los libros no hay filtro de capítulos; sí «Lo del concurso / Todo el
+     material» cuando el concurso pide menos que todo (la matutina de Menores: 1 al 15). */
+  ok(V.capsVista().length===V.capsDe().length&&el('filtro-est').hidden===!V.hayConcurso()&&!/Escoger cap/.test(el('filtro-est').innerHTML),
+    'Fuera de Conexion Biblica no hay filtro de capítulos (y «Lo del concurso» solo si hay más material)');
   /* Volver a Conexion Biblica pasa a la ficha que ya habia (la de Menores);
      el segundo ponCat la deja en Aventureros. */
   V.ponCat('av'); V.ponCat('av'); V.guardaFiltro('todo');
@@ -3238,6 +3252,82 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(h.c.id==='d2'&&h.k===3&&h.bl.de===16,'v205: Continuar lleva a Daniel 2, sección 4 (vers. '+h.bl.de+')');
   const pd=Z.preguntaDelDia();
   ok(pd&&pd.cap==='d2','v205: la pregunta del día es del capítulo en el que va');
+}
+/* v214: LAS CATEGORÍAS. Camilo (14-oct): «todo el mundo debería poder estudiar; el
+   material para todos los clubes es el mismo… la diferencia son las políticas
+   (reglamento de concurso)… Guías Mayores no tiene políticas de concurso». */
+{
+  const Z=montar('ponCat, ponVer, verTodo, hayConcurso, capsDe, capsTema, bancoDe, buscaItem, verCap, CATS, ACTIVIDADES, esCat, libreDe, '+
+    'catsValidas, catsDeNino, prepAbre, prepActividad, prepElige, pintaPrep, abreYo, nuevaFicha, ponNombre, avanza, personasDB, normalizarDB, normalizar, ACT_DE, '+
+    'S:()=>S, DB:()=>DB, IDS_DE_TEMA, ACT, CAPS',{});
+  /* 1. Cualquiera abre cualquier contenido, sea cual sea su categoría. */
+  const todas=[...Object.keys(Z.CATS),...Object.keys(Z.ACTIVIDADES).map(a=>Z.ACTIVIDADES[a].tema).filter((t,i,x)=>x.indexOf(t)===i).map(Z.libreDe)];
+  let malo=[];
+  for(const k of todas){
+    Z.ponCat(k);Z.ponVer('todo');
+    const tema=Z.ACT().tema,ids=Z.IDS_DE_TEMA[tema].filter(id=>Z.CAPS.some(c=>c.id===id));
+    if(Z.capsDe().map(c=>c.id).join()!==ids.join())malo.push(k);
+    if(!ids.every(id=>Z.buscaItem(id)))malo.push(k+' (abrir)');
+  }
+  ok(malo.length===0&&todas.length>=14,'v214: cualquier categoría ('+todas.length+', con el estudio libre) ve y abre todo el material de su tema'+(malo.length?': '+malo.join(', '):''));
+  /* 2. Aventureros: de entrada lo del concurso, y «Todo» sigue ahí; el examen sigue el reglamento. */
+  const A=montar('ponCat, ponVer, verTodo, hayConcurso, capsDe, bancoDe, S:()=>S, pintaFiltro, abreFiltroMenu, el:id=>document.getElementById(id)',{});
+  A.ponCat('av');
+  ok(!A.verTodo()&&A.hayConcurso()&&!A.capsDe().some(c=>c.id==='d7')&&A.capsDe().some(c=>c.id==='d1'),'v214: Aventureros arranca en «Lo del concurso» (Daniel 1, 2, 3 y 6)');
+  A.pintaFiltro('estudio');
+  ok(/Lo del concurso/.test(A.el('filtro-est').innerHTML)&&!A.el('filtro-est').hidden,'v214: la pastilla dice «Estudiando: Lo del concurso»');
+  A.abreFiltroMenu();
+  ok(/ponVer\('todo'\)/.test(A.el('filtro-est').innerHTML)&&/Todo el material/.test(A.el('filtro-est').innerHTML),'v214: y ofrece «Todo el material»');
+  A.ponVer('todo');
+  ok(A.verTodo()&&A.capsDe().some(c=>c.id==='d7')&&A.capsDe().some(c=>c.id==='d12'),'v214: con «Todo», Aventureros ve Daniel 7 al 12');
+  ok(!A.bancoDe().some(q=>q.cap==='d7')&&A.bancoDe().some(q=>q.cap==='d1')&&A.bancoDe().every(q=>!['pr39','pr41','pr44'].includes(q.cap)),'v214: su examen sigue el reglamento (sin Daniel 7 ni P&R de solo estudio)');
+  A.ponVer('concurso');
+  ok(!A.verTodo(),'v214: se puede volver a «Lo del concurso»');
+  /* 3. Guías Mayores no tiene políticas de concurso: todo, de entrada y en el examen. */
+  A.ponCat('gm');A.ponVer('concurso');
+  ok(A.verTodo()&&!A.hayConcurso()&&A.capsDe().some(c=>c.id==='d12'),'v214: Guías Mayores ve todo aunque la ficha diga «concurso»');
+  ok(A.bancoDe().some(q=>q.cap==='d7')&&A.bancoDe().some(q=>q.cap==='d11'),'v214: y practica el examen sobre todo (Daniel 7 al 12 incluidos)');
+  A.ponCat('apgm');
+  ok(A.verTodo()&&!A.hayConcurso(),'v214: también Guías Mayores de Apocalipsis');
+  /* 4. Sin preparación: todo, con la dificultad de adultos. */
+  A.ponCat(Z.libreDe('daniel'));
+  const L=A.S();
+  ok(A.verTodo()&&Z.CATS[L.cat].techo===3&&!Z.CATS[L.cat].rampa&&Z.ACTIVIDADES[Z.ACT_DE(L.cat)].fecha==='','v214: sin concurso estudia todo, hasta el nivel 3 y sin cuenta de días');
+  ok(!Object.keys(Z.CATS).some(k=>k.startsWith('libre-'))&&!Object.keys(Z.ACTIVIDADES).some(k=>k.startsWith('libre-')),'v214: el estudio libre no sale en las listas de concursos (ni en el panel)');
+  /* 5. «Agregar actividad»: primero el concurso, después solo las categorías que le caben. */
+  const P=montar('ponCat, nuevaFicha, ponNombre, prepAbre, prepActividad, pintaPrep, abreYo, catsValidas, S:()=>S, el:id=>document.getElementById(id), personasDB, prepElige, avanza, cambiaAlumno',{});
+  P.ponCat('pa');P.ponNombre('Camilo');P.avanza('d1',60);
+  P.abreYo();P.prepAbre();
+  const h1=P.el('prep').innerHTML;
+  ok(/prepActividad\('cb'\)/.test(h1)&&/prepActividad\('ap'\)/.test(h1)&&/prepElige\('libre-daniel'\)/.test(h1)&&!/prepElige\('(av|me|pa)'\)/.test(h1),'v214: «Agregar actividad» pregunta primero la actividad');
+  P.prepActividad('ap');
+  const h2=P.el('prep').innerHTML;
+  ok(['apme','apav','appa','apcq','apgm'].every(k=>h2.includes("prepElige('"+k+"')"))&&!/prepElige\('(me|av|pa|gm)'\)/.test(h2)&&/libre-apocalipsis/.test(h2),'v214: después, solo las categorías de esa actividad (y «Sin concurso»)');
+  P.nuevaFicha('cargo','Sofía');
+  ok(P.catsValidas('ap').join()==='apme,apav,apcq'&&P.catsValidas('cbg').length===0,'v214: a un niño a cargo solo le caben categorías de niños; Guías Mayores no');
+  P.abreYo();P.prepAbre();
+  ok(!/prepActividad\('cbg'\)/.test(P.el('prep').innerHTML),'v214: y la actividad sin categorías para él no se ofrece');
+  P.prepActividad('ap');
+  ok(!/prepElige\('(appa|apgm)'\)/.test(P.el('prep').innerHTML),'v214: ni adultos ni Guías Mayores en la lista del niño');
+  /* Elegir otra actividad no toca el avance de la primera. */
+  const camilo=()=>P.personasDB().find(p=>p.nombre==='Camilo');
+  P.cambiaAlumno(camilo().fichas[0][0]);
+  P.prepElige('appa');
+  const fichasC=camilo().fichas;
+  ok(P.S().cat==='appa'&&P.S().nombre==='Camilo'&&fichasC.length===2&&fichasC.some(([,al])=>al.cat==='pa'&&al.prog.d1===60),'v214: sumar Apocalipsis crea su ficha y el avance de Daniel sigue en la suya');
+}
+/* 6. La migración: lo guardado sigue igual, sin perder nada. */
+{
+  const M=montar('normalizarDB, verDe, esCat, CATS',{});
+  const viejo={v:4,activo:'a2',alumnos:{
+    a1:{nombre:'Ana',cat:'av',prog:{d1:100,d2:40},examenes:[{pts:20,total:30,cat:'av',fecha:'2026-10-01',modo:'normal',nv:2}],racha:5,insignias:['Lector']},
+    a2:{nombre:'Luis',cat:'gm',prog:{d7:80},racha:2},
+    a3:{nombre:'Eva',cat:'libre-apocalipsis',ver:'todo',prog:{ap1:30}}}};
+  const db=M.normalizarDB(JSON.parse(JSON.stringify(viejo)));
+  ok(db.activo==='a2'&&db.alumnos.a1.cat==='av'&&db.alumnos.a1.prog.d1===100&&db.alumnos.a1.prog.d2===40&&db.alumnos.a1.examenes.length===1&&db.alumnos.a1.racha===5&&db.alumnos.a1.insignias.join()==='Lector',
+    'v214: una ficha vieja de Aventureros llega con su avance, sus exámenes, su racha y sus insignias');
+  ok(M.verDe(db.alumnos.a1)==='concurso'&&M.verDe(db.alumnos.a2)==='todo','v214: sin dato nuevo, Aventureros ve lo de siempre (el concurso) y Guías Mayores, todo');
+  ok(db.alumnos.a2.prog.d7===80&&db.alumnos.a3.cat==='libre-apocalipsis'&&db.alumnos.a3.prog.ap1===30&&db.alumnos.a3.ver==='todo','v214: el estudio libre se guarda y vuelve igual');
 }
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 

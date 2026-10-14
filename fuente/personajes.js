@@ -849,7 +849,8 @@ const PERSONAJES = [
       'Tiatira, su ciudad, es una de las siete iglesias de Apocalipsis 2.'
     ],
     textos: 'Hechos 16:14-15',
-    alias: ['Lidia'],
+    /* v214: solo en Apocalipsis 2 (Tiatira): en Daniel 7 «Lidia» es el reino que conquistó Persia. */
+    alias: [{ t: 'Lidia', caps: ['ap2'] }],
     fuente: 'Hechos 16:14-15' },
   { id: 'epafras', nombre: 'Epafras', tipo: 'biblico',
     fechas: 'siglo I d.C.',
@@ -1366,6 +1367,48 @@ const PERSONAJES = [
     textos: 'Daniel 7:8',
     alias: ['Teodorico'],
     fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134' },
+  /* v214: los tres cuernos arrancados son pueblos, no personas (tipo 'pueblo'); salen
+     tocables en la lámina de Daniel 7 y en el estudio. Fechas de Bohr, Daniel 1-10, p. 134. */
+  { id: 'odoacro', nombre: 'Odoacro', tipo: 'historico',
+    fechas: 'rey de Italia 476-493 d.C.',
+    quien: 'Jefe de los hérulos, arriano.',
+    hizo: [
+      'En 476 d.C. quitó del trono a Rómulo Augústulo, el último emperador de occidente, y gobernó Italia.',
+      'Lo venció Teodorico, rey de los ostrogodos, en 493: cayó el primero de los tres cuernos (Daniel 7:8).'
+    ],
+    textos: 'Daniel 7:8, 24',
+    alias: ['Odoacro'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 133-134; Britannica, «Odoacer»' },
+  { id: 'herulos', nombre: 'Los hérulos', tipo: 'pueblo',
+    fechas: 'reinaron en Italia de 476 a 493 d.C.',
+    quien: 'Pueblo germánico y arriano. Su jefe Odoacro depuso al último emperador de occidente en 476.',
+    hizo: [
+      'Fueron uno de los diez reinos que salieron de Roma (los diez cuernos, Daniel 7:24).',
+      'Cayeron en 493 ante los ostrogodos: el primero de los tres cuernos arrancados delante del cuerno pequeño (7:8).'
+    ],
+    textos: 'Daniel 7:8, 20, 24',
+    alias: ['Hérulos', 'hérulos'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 133-134' },
+  { id: 'vandalos', nombre: 'Los vándalos', tipo: 'pueblo',
+    fechas: 'reino en el norte de África, 439-534 d.C.',
+    quien: 'Pueblo germánico y arriano que se estableció en el norte de África, con Cartago por capital.',
+    hizo: [
+      'Saquearon Roma en 455 d.C.',
+      'Belisario, general del emperador Justiniano, acabó con su reino en 534: el segundo de los tres cuernos arrancados (Daniel 7:8).'
+    ],
+    textos: 'Daniel 7:8, 20, 24',
+    alias: ['Vándalos', 'vándalos'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134; Britannica, «Vandal»' },
+  { id: 'ostrogodos', nombre: 'Los ostrogodos', tipo: 'pueblo',
+    fechas: 'reinaron en Italia de 493 a 553 d.C.',
+    quien: 'Los godos del este, arrianos. Su rey Teodorico gobernó Italia desde 493.',
+    hizo: [
+      'En 538 Belisario los venció en Roma y levantaron el sitio de la ciudad: el último de los tres cuernos arrancados (Daniel 7:8).',
+      'Con ellos fuera, el decreto de Justiniano que reconocía al obispo de Roma pudo aplicarse: empiezan los 1.260 años (7:25).'
+    ],
+    textos: 'Daniel 7:8, 20, 24-25',
+    alias: ['Ostrogodos', 'ostrogodos'],
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 134, 198' },
   { id: 'clodoveo', nombre: 'Clodoveo I', tipo: 'historico',
     fechas: 'rey de los francos, 481-511 d.C.',
     quien: 'Rey de los francos.',

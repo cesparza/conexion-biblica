@@ -1139,8 +1139,11 @@ for(const resto of ['S.evento','dosActividades','cambiaEvento','pintaActividad',
   ok(!APP.includes(resto+'('),'No queda rastro de '+resto);
 /* capsDelEvento() existia SOLO para desmezclar. Con una categoria por
    actividad, capsDe() ya trae lo correcto. */
-ok(/const capsDe=\(\)=>CAPS\.filter\(c=>c\.cats\.includes\(S\.cat\)\)/.test(APP),
-  'capsDe() volvio a ser un filtro simple por categoria');
+/* v214: la biblioteca es una sola. capsDe() es lo del concurso (capsConcurso, el
+   filtro simple por categoría de siempre) o todo el material del tema (capsTema). */
+ok(/const capsConcurso=\(\)=>CAPS\.filter\(c=>c\.cats\.includes\(S\.cat\)\)/.test(APP)&&
+   /const capsDe=\(\)=>verTodo\(\)\?capsTema\(\):capsConcurso\(\);/.test(APP),
+  'capsDe() es lo del concurso (filtro por categoría) o todo el material del tema');
 
 /* La bienvenida pregunta la actividad ANTES de la categoria. Al revés hacia
    falta mapear cada edad a cada actividad a mano. */
@@ -2577,8 +2580,16 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const C=L.cuernos;
   ok(C&&C.diez.length===10&&C.nombres.length===10&&C.tres.map(t=>t.t+' '+t.y).join(', ')==='Hérulos 493, Vándalos 534, Ostrogodos 538'&&C.nombres.slice(7).join()==='Hérulos,Vándalos,Ostrogodos',
     'Los diez cuernos: diez puntos y diez reinos; caen hérulos (493), vándalos (534) y ostrogodos (538)');
-  ok(C.capas.suelto==='cuerno-suelto.png'&&C.capas.pequeno==='cuerno-pequeno.png'&&C.capas.tres.length===3&&C.capas.tapa.length===3&&L.sube.solo.join()==='leon-solo.png,oso-solo.png,leopardo-solo.png,cuarta-solo.png',
-    'Las capas que la app espera: cuerno-suelto.png, cuerno-pequeno.png y {leon,oso,leopardo,cuarta}-solo.png');
+  ok(C.capas.pequeno==='cuerno-pequeno.png'&&C.capas.tres.map(t=>t.f).join()==='cuerno-8.png,cuerno-9.png,cuerno-10.png'&&C.capas.sin.f==='cuarta-sin-tres.png'&&L.sube.solo.join()==='leon-solo.png,oso-solo.png,leopardo-solo.png,cuarta-solo.png',
+    'Las capas que la app espera: los tres cuernos recortados, el parche sin ellos, cuerno-pequeno.png y {leon,oso,leopardo,cuarta}-solo.png');
+  /* v214 (Camilo, 14-oct: «está como sobre los ojos»): el pequeño sale de la cresta, en el
+     hueco de los tres que caen (a la derecha del cuerno 7), y termina más alto que ellos. */
+  { const P=C.capas.pq,ojo=[725,175],tres=C.capas.tres.map(t=>t.en);
+    ok(P.base[1]<ojo[1]-12&&P.base[0]>C.capas.delante.en[0]+C.capas.delante.en[2]/2&&P.base[0]<Math.max(...tres.map(t=>t[0]+t[2]))&&P.corte<=ojo[1]-10,
+      'El cuerno pequeño sale de la cresta, en el hueco de los tres, y su raíz queda escondida por encima de los ojos');
+    ok(P.alto>Math.max(...tres.map(t=>t[3]))&&P.de<1,'Sale pequeño y termina más grande que sus compañeros (7:8, 20)');
+    const fsC=require('fs'),pathC=require('path'),d7=pathC.join(__dirname,'..','laminas','d7');
+    ok([C.capas.sin.f,C.capas.pequeno,C.capas.delante.f,...C.capas.tres.map(t=>t.f)].every(f=>fsC.existsSync(pathC.join(d7,f))),'Las piezas del cuerno están en laminas/d7 (tools/lamina-cuernos.py)'); }
   const fs7=[...new Set([L.sube.fondo,C.diezEn&&L.partes.find(p=>p.id===C.diezEn).img,L.partes.find(p=>p.id===C.caenEn).img])];
   ok(fs7.every(f=>fs.existsSync(path.join(RAIZ,'laminas',L.dir+f+'.webp'))),'Las imágenes de hoy (mar, cuarta, cuerno) existen: lo de las capas es una mejora, no una falta');
   const pasos=L.partes.flatMap(p=>(p.pasos||[]).map(x=>Object.assign({p:p.id},x)));
@@ -2701,7 +2712,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
   const css=fs.readFileSync(FUENTE('estilos.css'),'utf8').replace(/\/\*[\s\S]*?\*\//g,'');
   /* La causa de la hoja vacía: dos cosas con el mismo nombre de clase. */
-  ok((js.match(/class="lam-pista"/g)||[]).length===1&&/h\.innerHTML=html\|\|lamIntroHTML\(\);/.test(js),
+  ok((js.match(/class="lam-pista"/g)||[]).length===1&&/h\.innerHTML=(?:lamPer\()?html\|\|lamIntroHTML\(\)\)?;/.test(js),
     'La hoja sin parte es una portada (lamIntroHTML); «lam-pista» es solo la pista de la línea de tiempo');
   ok(['d2','d7'].every(k=>{const I=LAMINAS[k].intro;return I&&I.titulo&&I.ref&&I.texto&&I.nota&&I.datos.length===3;}),'Daniel 2 y Daniel 7 traen su portada: título, pasaje, de qué trata y tres datos');
   /* El riel: con el teclado, y sin texto cortado. */

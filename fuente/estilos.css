@@ -4465,3 +4465,47 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   .lam:not(.pres):not(.escenas) .lam-riel-l::before{left:32px}
 }
 @media (max-width:560px){.lam:not(.escenas) .lam-aviso{display:none}}
+/* v214: las entradas de Explorar que no son una parte (las señas, los 1.260 años y las
+   tres fases): la miniatura de su parte, a media luz, con su ícono encima. */
+.lam-ri.x .lam-ri-m img,.lam-ri.x .lam-ri-m svg:not(.ico-t){opacity:.42;filter:saturate(.6)}
+.lam-ri-x{position:absolute;inset:0;display:grid;place-items:center;color:var(--cine-oro2,var(--lam-oro))}
+.lam-ri-x .ico-t{width:20px;height:20px}
+.lam-ri.x.on .lam-ri-m img{opacity:.6}
+/* v214: los personajes dentro de la lámina. El nombre se lee como un enlace discreto
+   (subrayado de puntos en oro) también sobre la imagen; lo que va encima de la imagen
+   no recibe toques, salvo estos nombres. */
+.lam button.per{text-decoration-color:color-mix(in srgb,var(--cine-oro) 70%,transparent)}
+.lam button.per:hover,.lam button.per:focus-visible{color:var(--cine-oro2)}
+.lam-tabla button.per,.lam-chip button.per,.lam-sobre button.per{pointer-events:auto}
+/* La tarjeta del personaje: encima de la escena, sin retrato; la presentación sigue debajo. */
+.lam-perc{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:16px}
+.lam-perc[hidden]{display:none}
+.lam-perc-fondo{position:absolute;inset:0;background:rgba(6,5,4,.55);opacity:0;transition:opacity .25s ease}
+.lam-perc-caja{position:relative;width:min(460px,100%);max-height:min(78vh,640px);overflow:auto;box-sizing:border-box;padding:20px 22px 18px;border-radius:18px;
+  background:linear-gradient(180deg,#1C160E,#120E09);color:var(--cine-tinta);border:1px solid var(--cine-linea);
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.75),inset 0 1px 0 rgba(240,219,166,.08);opacity:0;transform:translateY(10px) scale(.98);transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1)}
+.lam-perc.ve .lam-perc-fondo{opacity:1}
+.lam-perc.ve .lam-perc-caja{opacity:1;transform:none}
+.lam-perc-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--cine-linea)}
+.lam-perc-t{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--cine-oro)}
+.lam-perc-n{margin-top:4px;font-family:var(--cine-serif);font-weight:500;font-size:1.75rem;line-height:1.15;color:var(--cine-tinta);text-wrap:balance}
+.lam-perc-f{margin-top:4px;font-size:.875rem;color:var(--cine-gris);font-variant-numeric:tabular-nums}
+.lam-perc .per-txt{padding:0;overflow:visible}
+.lam-perc .per-quien{font-family:var(--cine-serif);font-weight:400;font-size:1.125rem;line-height:1.45;color:var(--cine-tinta)}
+.lam-perc .per-hizo{font-size:1rem;line-height:1.45;color:color-mix(in srgb,var(--cine-tinta) 88%,transparent)}
+.lam-perc .per-hizo li::marker{color:var(--cine-oro)}
+.lam-perc .per-textos{color:var(--cine-gris)}
+.lam-perc .sec-fuente{margin:12px 0 0;font-size:.75rem;color:var(--cine-tenue)}
+@media (prefers-reduced-motion:reduce){.lam-perc-fondo,.lam-perc-caja{transition:none}}
+/* v214: «Lo del concurso / Todo el material» y su explicación de una línea. */
+.fe-nota{margin:0;max-width:44rem;font-size:.875rem;line-height:1.4;color:var(--gris)}
+/* v214: la preparación en «Quién estudia»: lo que pone la categoría, en tres renglones. */
+.prep-ahora{padding:.75rem .9rem;border-radius:12px;background:var(--fondo-suave);margin-bottom:.75rem}
+.prep-t{font-weight:800;font-size:1rem;color:var(--azul);display:flex;align-items:center;gap:.4rem}
+.prep-pone{margin:.4rem 0 0;padding-left:1.1rem;display:grid;gap:.2rem;font-size:.875rem;line-height:1.4;color:var(--v-tinta2,#5B5F6B)}
+.prep-mas{margin-top:.75rem}
+.prep-g{font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);margin-top:.25rem}
+.prep-ya{margin-left:.5rem;font-style:normal;font-size:.75rem;font-weight:700;color:var(--verde,#2E7D32)}
+.prep .cat-fila{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.prep .cat-btn{text-align:left}
+.bv-g{margin:.9rem 0 .4rem;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}

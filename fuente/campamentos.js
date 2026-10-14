@@ -114,7 +114,9 @@ const CAMPAMENTOS = [
   { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica: Daniel', icono: '📘', cuando: 'Fecha por confirmar', fecha: '',
     que: 'Daniel 1 al 6 y Profetas y Reyes 39 al 44',
     categorias: [
-      { id: 'gm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 25, techo: 3, sinCompletar: false, club: 'guias',
+      /* v214 (Camilo, 14-oct): «Guías Mayores no tiene políticas de concurso»: ve todo
+         y practica sobre todo; `soloEstudio` queda escrito por si un día lo tiene. */
+      { id: 'gm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 25, techo: 3, sinCompletar: false, club: 'guias', sinPoliticas: true,
         alcance: 'Daniel 1 al 6 · P&R 39 al 44',
         estudia: [...Array.from({ length: 12 }, (_, i) => 'd' + (i + 1)), ...sec('pr', 39, 44),
           ...REPASOS_AV, 'm-reyes', 'm-profetico'],
@@ -164,11 +166,11 @@ const CAMPAMENTOS = [
          provisional hasta que llegue el reglamento, como las de arriba. */
       { id: 'apcq', nombre: 'Conquistadores', edad: '10 a 15 años', n: 30, techo: 2, sinCompletar: true, segundos: 80, tarjetas: 20, club: 'conquistadores',
         alcance: 'Apocalipsis', estudia: APOCALIPSIS },
-      { id: 'apgm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias',
+      { id: 'apgm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias', sinPoliticas: true,
         alcance: 'Apocalipsis', estudia: APOCALIPSIS },
     ] },
 ];
 
-const { TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma } = require('./reglamento.js');
+const { TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma, libres } = require('./reglamento.js');
 
-module.exports = { CAMPAMENTOS, TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma };
+module.exports = { CAMPAMENTOS, TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma, libres };

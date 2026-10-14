@@ -16,11 +16,12 @@
    campamentos.js (las fichas de fábrica) y en la tabla `ficha` de la base. */
 const REGLAS = (function () {
   /* `nombre` es como se le dice el tema a quien arma un concurso. */
+  /* `corto` es como se nombra el material solo, sin concurso (v214). */
   const TEMAS = {
-    daniel: { tipo: 'libro', nombre: 'Daniel y Profetas y Reyes' },
-    matutina: { tipo: 'dias', nombre: 'Devoción Matutina · Héroes y villanos' },
-    creencias: { tipo: 'creencias', nombre: 'Las 28 creencias' },
-    apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis' },
+    daniel: { tipo: 'libro', nombre: 'Daniel y Profetas y Reyes', corto: 'Daniel' },
+    matutina: { tipo: 'dias', nombre: 'Devoción Matutina · Héroes y villanos', corto: 'Devoción Matutina' },
+    creencias: { tipo: 'creencias', nombre: 'Las 28 creencias', corto: 'En esto creemos' },
+    apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis', corto: 'Apocalipsis' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
   /* v191: el club de una categoría, si lo tiene. Decide cómo se entra:
@@ -57,9 +58,13 @@ const REGLAS = (function () {
         cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '',
         fecha: f.fecha || '' };
       for (const c of f.categorias) {
+        /* v214: `sinPoliticas`: la categoría no tiene reglamento de concurso (Guías
+           Mayores, Camilo 14-oct): ve todo el material y practica el examen sobre todo.
+           Si la ficha no lo dice, lo dice el club. */
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
           sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
-          rampa: !c.sinRampa, club: c.club || '' };
+          rampa: !c.sinRampa, club: c.club || '',
+          sinPoliticas: c.sinPoliticas !== undefined ? !!c.sinPoliticas : c.club === 'guias' };
         orden.push(c);
       }
     }
@@ -109,6 +114,7 @@ const REGLAS = (function () {
         if (c.tarjetas !== undefined && !(Number.isInteger(c.tarjetas) && c.tarjetas >= 5 && c.tarjetas <= 100)) mal.push(dc + ' tiene tarjetas por sesión fuera de 5 a 100');
         if (c.sinRampa !== undefined && typeof c.sinRampa !== 'boolean') mal.push(dc + ' no dice bien si entra directo a su nivel');
         if (c.club !== undefined && !CLUBES.includes(c.club)) mal.push(dc + ' tiene un club que no es ' + CLUBES.join(', '));
+        if (c.sinPoliticas !== undefined && typeof c.sinPoliticas !== 'boolean') mal.push(dc + ' no dice bien si tiene reglamento de concurso');
         if (c.segundos !== undefined && !(Number.isInteger(c.segundos) && c.segundos >= 20 && c.segundos <= 600)) mal.push(dc + ' tiene un tiempo por pregunta fuera de 20 a 600 segundos');
         if (!Array.isArray(c.estudia) || !c.estudia.length) { mal.push(dc + ' no estudia nada'); continue; }
         if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
@@ -188,6 +194,7 @@ const REGLAS = (function () {
       if (c.sinVF !== undefined) o.sinVF = c.sinVF;
       if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
       if (c.club !== undefined) o.club = c.club;
+      if (c.sinPoliticas !== undefined) o.sinPoliticas = c.sinPoliticas;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
@@ -197,6 +204,39 @@ const REGLAS = (function () {
       fecha: f.fecha === undefined ? '' : f.fecha, que: f.que, categorias: f.categorias.map(cat) };
   }
 
-  return { TEMAS, TIPOS, deriva, revisa, sinUsar, junta, forma };
+  /* EL ESTUDIO SIN CONCURSO (v214)
+
+     LA DECISIÓN (Camilo, 14-oct): «todo el mundo debería poder estudiar; el material
+     para todos los clubes es el mismo y pueden acceder a él; la diferencia son las
+     políticas (reglamento de concurso)». El material es una sola biblioteca. Una
+     persona puede sumar una preparación (un concurso y su categoría), que solo pone
+     tres cosas: qué se ve de entrada («Lo del concurso» o «Todo»), la dificultad
+     por edad y las reglas del examen. Sin preparación se estudia todo, con la
+     dificultad completa.
+
+     MECANISMO
+     Por cada tema que tenga al menos un concurso sale una actividad «sin concurso»
+     y su única categoría, «Estudio libre». No son fichas del reglamento: no se
+     guardan en la base, el servidor no las conoce y no se ofrecen al armar una
+     evaluación. Su id lleva guion (`libre-daniel`), que ningún id de ficha puede
+     tener (ID), así que nunca chocan con uno guardado. Devuelve { ACTS, CATS }. */
+  const LIBRE = 'libre-';
+  function libres(actividades, tipos) {
+    tipos = tipos || TEMAS;
+    const ACTS = {}, CATS = {};
+    for (const a of Object.values(actividades)) {
+      const id = LIBRE + a.tema;
+      if (ACTS[id] || !tipos[a.tema]) continue;
+      const T = tipos[a.tema];
+      ACTS[id] = { nombre: T.corto || T.nombre, icono: a.icono, cuando: 'Sin concurso', que: T.nombre,
+        cats: [id], tema: a.tema, tipo: T.tipo, fecha: '', libre: true };
+      CATS[id] = { act: id, nombre: 'Estudio libre', edad: 'Para todos', n: 25, techo: 3,
+        sinCompletar: false, sinVF: false, tarjetas: 20, alcance: 'Todo el material', seg: SEG_POR_PREGUNTA,
+        rampa: false, club: '', sinPoliticas: true, libre: true };
+    }
+    return { ACTS, CATS };
+  }
+
+  return { TEMAS, TIPOS, CLUBES, deriva, revisa, sinUsar, junta, forma, libres, LIBRE };
 })();
 if (typeof module !== 'undefined' && module.exports) module.exports = REGLAS;

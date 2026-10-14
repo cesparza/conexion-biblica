@@ -108,7 +108,7 @@ const LAMINAS = {
     { y: -168, f: 'e168', parte: 'hierro', t: '168 a.C. · Roma vence a Macedonia en Pidna' },
     { y: 476, f: 'e476', parte: 'dedos', t: '476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente' },
     { y: 538, f: 'e538', parte: 'barro', t: '538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal' },
-    { y: 1798, f: 'e1798', c: '1798 d.C. · Berthier toma preso a Pío VI', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
+    { y: 1798, f: 'e1798', c: '1798 d.C. · Louis-Alexandre Berthier toma preso a Pío VI', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
     /* v211: 1844 también en Daniel 2 (la imagen es la del juicio de Daniel 7). */
     { y: 1844, f: 'd7/juicio', c: '1844 d.C. · Empieza el juicio en el cielo', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (Daniel 7:9-10; 8:14)' },
     /* v195: lo que viene. v211: con año del tramo «futuro» de la línea de tiempo (no es un año real). */
@@ -129,7 +129,7 @@ const LAMINAS = {
  {id:'bronce',nombre:'Vientre y muslos de bronce',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,a:-168,c:'#A85A2A',
   texto:'su vientre y sus muslos, de bronce',ref:'2:32',texto2:'un tercer reino de bronce, el cual dominará sobre toda la tierra',ref2:'2:39',
   corto:'Alejandro Magno. Daniel 8:21 lo llama «el rey de Grecia».',
-  interp:['Daniel 8:20-21 lo nombra: el carnero es Media y Persia; el macho cabrío, «el rey de Grecia».','De Arbela (331 a.C.), cuando Alejandro vence a Darío III, a Pidna (168 a.C.), cuando Roma acaba con la monarquía macedónica.'],
+  interp:['Daniel 8:20-21 lo nombra: el carnero es Media y Persia; el macho cabrío, «el rey de Grecia».','De Arbela (331 a.C.), cuando Alejandro Magno vence a Darío III, a Pidna (168 a.C.), cuando Roma acaba con la monarquía macedónica.'],
   fuente:BOHR+', p. 57; Smith, <i>Las profecías de Daniel</i>, p. 21.'},
  {id:'hierro',nombre:'Piernas de hierro',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',
   texto:'sus piernas, de hierro',ref:'2:33',texto2:'el cuarto reino será fuerte como el hierro',ref2:'2:40',
@@ -227,7 +227,7 @@ LAMINAS.d7 = {
   retoSin: [],
   reto: [
     { q: '¿Qué bestia tenía tres costillas en la boca?', ok: 'oso', e: '7:5 · Medo-Persia y sus tres conquistas: Lidia, Babilonia y Egipto.' },
-    { q: '¿Qué bestia tenía cuatro cabezas?', ok: 'leopardo', e: '7:6 · Grecia, que se repartieron los cuatro generales de Alejandro.' },
+    { q: '¿Qué bestia tenía cuatro cabezas?', ok: 'leopardo', e: '7:6 · Grecia, que se repartieron los cuatro generales de Alejandro Magno.' },
     { q: '¿Qué parte representa a Roma dividida?', ok: 'cuernos', e: '7:24 · «diez reyes»: los reinos que salieron de Roma desde 476 d.C.' },
     { q: '¿Quién domina «tiempo, tiempos y medio tiempo»?', ok: 'cuerno', e: '7:25 · 1.260 años, de 538 a 1798 d.C.: Roma papal.' },
     { q: '¿Qué empieza en 1844?', ok: 'juicio', e: '7:9-10 y 8:14 · Se sienta el Anciano de días y se abren los libros.' },
@@ -255,7 +255,8 @@ LAMINAS.d7 = {
      los tres que caen. Cuando existan cuerno-suelto.png (un cuerno, fondo
      transparente, la punta arriba) y cuerno-pequeno.png (el pequeño, fondo
      transparente), la app los anima sobre cuarta.webp: los tres se desprenden y
-     caen, y el pequeño crece entre los demás. Medidas en píxeles de 1200 × 675. */
+     caen, y el pequeño crece entre los demás. Medidas en píxeles de 1200 × 675.
+     v214: los tres caen recortados de la misma imagen (ver `capas`). */
   cuernos: {
     diezEn: 'cuernos', caenEn: 'cuerno',
     /* Los diez, de izquierda a derecha sobre cuarta.webp (un punto arriba y otro
@@ -265,16 +266,23 @@ LAMINAS.d7 = {
     /* `a`: adónde van al caer; en cuerno.webp, donde están los tres arrancados. */
     tres: [{ t: 'Hérulos', y: 493, a: [960, 150] }, { t: 'Vándalos', y: 534, a: [1040, 270] }, { t: 'Ostrogodos', y: 538, a: [990, 400] }],
     pequeno: { t: 'El cuerno pequeño', s: 'Roma papal · desde 538', en: [655, 130] },
-    /* Con las capas: cada uno de los tres cuernos pintados se tapa con cielo de
-       cuarta.webp corrido (`tapa`: caja girada x, y, ancho, alto, grados; y de
-       dónde se toma el cielo: dx, dy; el borde se difumina con capas) y en su sitio se pone cuerno-suelto.png
-       (`tres`: x, y, ancho, alto, grados, girando sobre la base), que se cae.
-       `pq`: la ventana de donde sale el pequeño (crece desde abajo); `pqEn`: su punto. */
-    capas: { suelto: 'cuerno-suelto.png', pequeno: 'cuerno-pequeno.png',
-      /* cuerno-suelto.png viene con la punta arriba a la izquierda: `espejo` lo voltea. */
-      espejo: true, tres: [[820, 86, 68, 76, -22], [843, 106, 68, 76, -20], [860, 130, 68, 76, -18]],
-      tapa: [[798, 50, 66, 100, 6, 84, 149], [823, 74, 64, 96, 14, 60, 127], [841, 94, 66, 100, 17, 41, 105]],
-      pq: [674, 20, 112, 150], pqEn: [730, 95] },
+    /* v214: LAS CAPAS SALEN DE LA MISMA IMAGEN (tools/lamina-cuernos.py). `sin`: el
+       parche de cuarta.webp sin los tres de la derecha (cielo rellenado); `tres`: esos
+       tres cuernos recortados tal cual, cada uno con su caja (x, y, ancho, alto), así
+       que el que se desprende es el que estaba pintado, en su píxel. `delante`: el
+       cuerno 7, que se vuelve a poner encima para que el pequeño salga DETRÁS de él.
+       Camilo (14-oct): «el lugar donde está el cuerno pequeño no está chévere, está
+       como sobre los ojos». Ahora sube de la cresta, en el hueco que dejan los tres
+       (7:8 «salió entre ellos»), y termina más alto que los demás (7:20 «parecía más
+       grande que sus compañeros»). `pq`: el centro de su base, el alto final, el giro
+       (grados, hacia la derecha), si va en espejo (la cara mira al hueco), `corte`:
+       la raya de la cabeza (debajo no se ve: ahí está su raíz) y `de`: el tamaño con
+       que sale antes de crecer. Medidas en píxeles de 1200 × 675. */
+    capas: { pequeno: 'cuerno-pequeno.png',
+      sin: { f: 'cuarta-sin-tres.png', en: [811, 59, 104, 166] },
+      tres: [{ f: 'cuerno-8.png', en: [819, 70, 35, 136] }, { f: 'cuerno-9.png', en: [839, 93, 41, 121] }, { f: 'cuerno-10.png', en: [861, 114, 43, 96] }],
+      delante: { f: 'cuerno-7.png', en: [794, 61, 30, 101] },
+      pq: { base: [838.6, 156], alto: 150, giro: 10, espejo: true, corte: 160, de: 0.72 }, pqEn: [862, 70] },
   },
   /* v205: LAS ONCE SEÑAS DEL CUERNO PEQUEÑO, las mismas de la interpretación de
      Daniel 7 (complementos/daniel/d7.js); se encienden una por una con su
@@ -299,7 +307,7 @@ LAMINAS.d7 = {
      `citas`: lo que la hoja cita literal en RV1995 (Daniel 7 y Apocalipsis). */
   periodo: {
     tras: 'cuerno', t: 'Tiempo, tiempos y medio tiempo', s: '1.260 años · 538 – 1798 d.C.', de: 538, a: 1798,
-    fotos: [['d2/e538', '538 d.C.', 'Los ostrogodos dejan Roma'], ['d2/e1798', '1798 d.C.', 'Berthier toma preso a Pío VI']],
+    fotos: [['d2/e538', '538 d.C.', 'Los ostrogodos dejan Roma'], ['d2/e1798', '1798 d.C.', 'Louis-Alexandre Berthier toma preso a Pío VI']],
     pasos: [
       { t: 'Tiempo, tiempos y medio tiempo', v: 'suma', citas: [['Daniel 7:25', 'y serán entregados en sus manos hasta tiempo, tiempos y medio tiempo.']],
         nota: 'Un «tiempo» es un año, «tiempos» son dos años y «medio tiempo», medio año. El año profético tiene 360 días (doce meses de 30): 360 + 720 + 180 = 1.260 días.' },
@@ -308,7 +316,7 @@ LAMINAS.d7 = {
       { t: 'El mismo tiempo en Apocalipsis', v: 'mismo', citas: [['Apocalipsis 12:14', 'un tiempo, tiempos y la mitad de un tiempo'], ['Apocalipsis 12:6', 'mil doscientos sesenta días'], ['Apocalipsis 11:3', 'mil doscientos sesenta días'], ['Apocalipsis 13:5', 'cuarenta y dos meses'], ['Apocalipsis 11:2', 'cuarenta y dos meses']],
         nota: 'Tres maneras de decir el mismo periodo: tres tiempos y medio, 42 meses (42 × 30) y 1.260 días.' },
       { t: 'De 538 a 1798', v: 'cumple', citas: [['Apocalipsis 13:3', 'Vi una de sus cabezas como herida de muerte, pero su herida mortal fue sanada.']],
-        nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Berthier toma preso al papa Pío VI: es la herida de muerte. Después la herida sana y el cuerno sigue hasta que viene el Anciano de días (7:21-22).' }],
+        nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Louis-Alexandre Berthier toma preso al papa Pío VI: es la herida de muerte. Después la herida sana y el cuerno sigue hasta que viene el Anciano de días (7:21-22).' }],
     fuente: BOHR + ', p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309 y 492.',
   },
   /* v210: LAS TRES FASES DEL JUICIO (Camilo, 14-oct: «y el asunto de las tres fases
@@ -347,7 +355,7 @@ LAMINAS.d7 = {
   fuente:BOHR+', p. 123; Smith, <i>Las profecías de Daniel</i>, p. 56.'},
  {id:'leopardo',img:'leopardo',nombre:'Leopardo de cuatro cabezas',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,a:-168,c:'#A85A2A',
   texto:'semejante a un leopardo, con cuatro alas de ave en sus espaldas',ref:'7:6',texto2:'Esta bestia tenía cuatro cabezas; y le fue dado dominio.',ref2:'7:6',
-  corto:'Grecia, el bronce de Daniel 2. Cuatro alas: Alejandro conquistó más rápido que nadie.',
+  corto:'Grecia, el bronce de Daniel 2. Cuatro alas: Alejandro Magno conquistó más rápido que nadie.',
   interp:['El leopardo es Grecia (8:21), el vientre y los muslos de bronce de Daniel 2. Un leopardo ya es veloz, y este tiene cuatro alas: Alejandro Magno conquistó de Egipto a la India en pocos años.','Las cuatro cabezas salieron después. Alejandro murió joven y, tras la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio: Casandro, Lisímaco, Tolomeo y Seleuco. Daniel 8:8 lo muestra como cuatro cuernos.','«Le fue dado dominio»: no lo tomó, se lo dieron.'],
   fuente:BOHR+', p. 123; Smith, <i>Las profecías de Daniel</i>, p. 57.'},
  {id:'bestia',img:'cuarta',nombre:'La bestia espantosa',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',
