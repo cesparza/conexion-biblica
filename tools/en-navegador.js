@@ -430,9 +430,9 @@ for (const W of ANCHOS) {
     /* La piedra y el monte, a la mano desde cualquier parte. */
     await p.evaluate(() => lamAbre('d2', 'explorar')); await p.waitForTimeout(700);
     await p.evaluate(() => lamElige(4)); await p.waitForTimeout(400);
-    const sig = await p.evaluate(() => { const b = document.querySelector('#lamHoja .lam-nav .lam-rd.sig'), r = b.getBoundingClientRect(); return [b.getAttribute('aria-label') + ' ' + document.querySelector('#lamHoja .lam-nav-p').textContent, r.bottom <= innerHeight + 1 && r.top >= 0]; });
+    const sig = await p.evaluate(() => { const b = document.querySelector('#lam .lam-nav .lam-rd.sig'), r = b.getBoundingClientRect(); return [b.getAttribute('aria-label') + ' ' + document.querySelector('#lam .lam-nav-p').textContent, r.bottom <= innerHeight + 1 && r.top >= 0]; });
     const vistas = [];
-    for (let i = 0; i < 3; i++) { await p.locator('#lamHoja .lam-nav .lam-rd.sig').click(); await p.waitForTimeout(350); vistas.push(await p.evaluate(() => lamSel)); }
+    for (let i = 0; i < 3; i++) { await p.locator('#lam .lam-nav .lam-rd.sig').click(); await p.waitForTimeout(350); vistas.push(await p.evaluate(() => lamSel)); }
     const tira = await p.evaluate(() => [...document.querySelectorAll('#lamTira .lam-ri')].map(b => b.dataset.p).join());
     ok(/Hierro mezclado/.test(sig[0]) && sig[1] && vistas.join() === 'barro,piedra,monte' && /piedra,monte$/.test(tira),
       W + ' · v211: desde los dedos, Siguiente (a la vista) lleva al barro, la piedra y el monte; la tira los trae (' + vistas.join(' → ') + ')');
@@ -475,7 +475,7 @@ for (const W of ANCHOS) {
       await p.evaluate(id => { lamAbre(id, 'explorar'); lamInicio(); }, id); await p.waitForTimeout(900);
       /* La portada es una hoja llena, no una barra: alto, título, pasaje y Siguiente. */
       const h = await p.evaluate(() => { const h = document.getElementById('lamHoja'), r = h.getBoundingClientRect();
-        return { alto: Math.round(r.height), tx: h.textContent, intro: !!h.querySelector('.lam-intro .lam-nav .lam-rd.sig'), pista: h.querySelectorAll('.lam-pista').length,
+        return { alto: Math.round(r.height), tx: h.textContent, intro: !!(h.querySelector('.lam-intro .lam-nav .lam-rd.sig')||document.querySelector('#lamPie .lam-nav .lam-rd.sig')), pista: h.querySelectorAll('.lam-pista').length,
           tit: h.querySelector('.lam-intro-tit') && h.querySelector('.lam-intro-tit').getBoundingClientRect().height }; });
       const I = await p.evaluate(id => LAMINAS[id].intro, id);
       ok(h.alto >= 220 && h.intro && h.pista === 0 && h.tit > 20 && h.tx.includes(I.titulo) && h.tx.includes(I.ref), W + ' · v212: ' + id + ' abre con la hoja llena (portada de ' + h.alto + ' px), no una barra vacía');
@@ -497,10 +497,10 @@ for (const W of ANCHOS) {
       const corta = await p.evaluate(async () => { const malos = [];
         const mira = (sel, d) => document.querySelectorAll(sel).forEach(e => { const cs = getComputedStyle(e);
           if (e.getClientRects().length && (e.scrollWidth > e.clientWidth + 1 || cs.textOverflow === 'ellipsis')) malos.push(d + ':' + e.textContent.trim().slice(0, 24)); });
-        for (let i = 0; i < LAM().partes.length; i++) { lamElige(i); await new Promise(r => setTimeout(r, 60)); mira('#lamHoja .lam-nav-p, #lamHoja .lam-nav-n', 'nav' + i); }
+        for (let i = 0; i < LAM().partes.length; i++) { lamElige(i); await new Promise(r => setTimeout(r, 60)); mira('#lam .lam-nav-p, #lam .lam-nav-n', 'nav' + i); }
         mira('#lamTira .lam-ri-t b, #lamTira .lam-ri-t small', 'riel'); return malos; });
       ok(!corta.length, W + ' · v212: ' + id + ', ningún nombre se corta en el riel ni en Anterior/Siguiente' + (corta.length ? ' (' + corta.slice(0, 4).join(', ') + ')' : ''));
-      const rd = await p.evaluate(() => [...document.querySelectorAll('#lamHoja .lam-nav .lam-rd')].map(b => { const r = b.getBoundingClientRect(); return Math.round(r.width) + 'x' + Math.round(r.height) + ':' + getComputedStyle(b).borderRadius; }));
+      const rd = await p.evaluate(() => [...document.querySelectorAll('#lam .lam-nav .lam-rd')].map(b => { const r = b.getBoundingClientRect(); return Math.round(r.width) + 'x' + Math.round(r.height) + ':' + getComputedStyle(b).borderRadius; }));
       ok(rd.length === 2 && rd.every(x => /^4\dx4\d:50%$/.test(x) || /^4\dx4\d:\d+px$/.test(x)), W + ' · v212: Anterior y Siguiente son dos botones redondos (' + rd.join(', ') + ')');
       await p.evaluate(() => lamCierra());
     }
@@ -644,7 +644,7 @@ for (const W of ANCHOS) {
     const rielX = await p.evaluate(() => [...document.querySelectorAll('#lamTira .lam-ri')].map(b => b.getAttribute('data-p')).join(' '));
     ok(/cuerno x-senas x-periodo juicio x-fases hijo/.test(rielX), W + ' · v214: en Explorar, las señas, los 1.260 años y las tres fases son entradas del riel (' + rielX + ')');
     await p.evaluate(() => lamEligeX('senas')); await p.waitForTimeout(200);
-    const hx = await p.evaluate(() => [document.querySelector('#lamTira .lam-ri.on').getAttribute('data-p'), /Las once señas/.test(document.getElementById('lamHoja').textContent), document.querySelector('#lamHoja .lam-nav-p').textContent]);
+    const hx = await p.evaluate(() => [document.querySelector('#lamTira .lam-ri.on').getAttribute('data-p'), /Las once señas/.test(document.getElementById('lamHoja').textContent), document.querySelector('#lam .lam-nav-p').textContent]);
     ok(hx[0] === 'x-senas' && hx[1] && /Tiempo, tiempos y medio tiempo/.test(hx[2]), W + ' · v214: la entrada de las señas tiene su hoja y Siguiente lleva a los 1.260 años (' + hx[2] + ')');
     await p.evaluate(() => lamSenasPlay()); await p.waitForTimeout(300);
     const se = await p.evaluate(() => [document.querySelectorAll('#lamSenas li').length, document.querySelectorAll('#lamSenas li.on').length]);
@@ -989,7 +989,7 @@ for (const W of ANCHOS) {
   for (let i = 0; i < 20; i++) {
     const d = await p.evaluate(() => ({ k: lamDonde, pi: document.querySelector('#lamSvg .lam-piedra').style.opacity }));
     vistos.push(d.k); piedras.push(d.k + ':' + d.pi);
-    const b = p.locator('#lamHoja .lam-nav .lam-rd.sig');
+    const b = p.locator('#lam .lam-nav .lam-rd.sig');
     if (!(await b.count()) || await b.isDisabled()) break;
     await b.click(); await p.waitForTimeout(250);
   }
@@ -1047,6 +1047,94 @@ for (const W of ANCHOS) {
   ok(lejos.join() === 'explorar,d7,cuerno,d7', W + ' · v215: un enlace copiado abre el mismo capítulo, lámina y paso en otro aparato (' + lejos.join() + ')');
   await otro.context().close();
   ok(errores.length === 0, W + ' · v215: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+/* ── v217: la lámina en el teléfono (Camilo, 14-oct: «¿Esto está bien?», iPhone a 390 pt) ──
+   Cada paso de Explorar muestra SU escena; la barra de Anterior/Siguiente (y la de
+   Presentar) va al borde de la pantalla y no tapa la última línea de la hoja; el navegador
+   de partes deja ver al menos tres, tocables (≥44 px); ningún nombre se vuelve enlace en un
+   título; el paso activo de la fila se ve entero; nada se sale a lo ancho. */
+for (const [W, H] of [[390, 844], [430, 932]]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block', isMobile: true, hasTouch: true });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => d.dismiss());
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
+  const TIT = 'h1,h2,h3,h4,.lam-p1,.lam-p2,.lam-intro-tit,.lam-nav-p,.lam-chip-t,.lam-cartel-tit,.lam-fin-tit,.lam-tit';
+  for (const id of ['d7', 'd2']) {
+    await p.evaluate(id => { verCap(id); lamAbre(id, 'explorar'); }, id); await p.waitForTimeout(1500);
+    /* 1. La escena de cada paso es la que el paso declara (la parte con capas —las bestias que
+       suben, el cuerno pequeño que sale de la cresta— vale con su capa). */
+    if (W === 390) {
+      const pasos = await p.evaluate(() => lamRecorrido().map(x => x.k));
+      const mal = [], enlaces = [];let cuerpo = 0;
+      for (const k of pasos) {
+        await p.evaluate(k => lamIr(k), k); await p.waitForTimeout(/^x-/.test(k) ? 300 : 900);
+        const r = await p.evaluate(([k, TIT]) => {
+          const L = LAM(), svg = document.getElementById('lamSvg'), vis = el => el && el.style.opacity !== '0' && getComputedStyle(el).opacity !== '0';
+          const ve = [...svg.querySelectorAll('.lam-hist,.lam-zoom-img,.lam-capa-g image')].filter(e => (e.classList.contains('lam-hist') || e.classList.contains('lam-zoom-img')) ? e.style.opacity === '1' : true).map(e => e.getAttribute('href'));
+          const hist = svg.querySelector('.lam-hist'), histVe = hist.style.opacity === '1' ? hist.getAttribute('href') : '';
+          let quiere = null, ok = true;
+          if (/^h\d+$/.test(k)) { quiere = lamSrc(L.historia[+k.slice(1)].f); ok = histVe === quiere; }
+          else if (k === 'desp') { quiere = lamSrc(L.despues.f); ok = histVe === quiere; }
+          else if (k === 'est') { if (lamEsE()) { quiere = lamSrc(L.inicioF); ok = histVe === quiere; } else { quiere = '(la estatua)'; ok = !histVe; } }
+          else if (k === 'cierre') { if (lamEsE()) { quiere = lamSrc(L.cierre.f); ok = histVe === quiere; } else { quiere = '(la placa)'; ok = document.getElementById('lamFin').classList.contains('ve'); } }
+          else if (!/^x-/.test(k)) { const pt = lamParte(k);
+            if (lamEsE()) { const S = L.sube, i = S ? S.ids.indexOf(k) : -1; const C = L.cuernos, ok1 = [lamSrc(pt.img)].concat(i >= 0 ? [lamSrc(S.solo[i])] : [], C && C.capas && k === C.caenEn ? [lamSrc(C.capas.pequeno)] : []); quiere = ok1.join(' o '); ok = ok1.some(x => ve.includes(x)); }
+            else { quiere = '(la estatua, ' + k + ')'; ok = !histVe; } }
+          const en = [...document.querySelectorAll('#lam .per')].filter(b => b.closest(TIT)).map(b => b.textContent);
+          return { ok, quiere, ve: histVe || ve.join(','), en, cuerpo: document.querySelectorAll('#lamHoja .per').length };
+        }, [k, TIT]);
+        if (!r.ok) mal.push(k + ': quiere ' + r.quiere + ', se ve ' + r.ve);
+        if (r.en.length) enlaces.push(k + ': ' + r.en.join(','));
+        cuerpo += r.cuerpo;
+      }
+      ok(!mal.length, W + ' · v217: ' + id + ', cada paso de Explorar muestra su escena (' + pasos.length + ' pasos)' + (mal.length ? ' — ' + mal.slice(0, 3).join(' | ') : ''));
+      ok(!enlaces.length && cuerpo > 0, W + ' · v217: ' + id + ', ningún nombre es enlace dentro de un título (y en el texto sí: ' + cuerpo + ')' + (enlaces.length ? ' — ' + enlaces.slice(0, 3).join(' | ') : ''));
+    }
+    if (id === 'd7') {
+      const de = await p.evaluate(() => [LAM().despues.f, LAM().historia.map(h => h.f)]);
+      ok(de[0] === 'recuerdo' && !de[1].includes(de[0]), W + ' · v217: «Daniel guardó el asunto en su corazón» (7:28) ya no muestra el mar en tormenta de 7:2');
+    }
+    /* 2. La barra de Anterior/Siguiente: al pie de la pantalla, sin nada debajo, y la última
+       línea de la hoja queda encima de ella al llevar la hoja a la vista. */
+    for (const k of ['desp', id === 'd7' ? 'cuerno' : 'barro']) {
+      await p.evaluate(k => { document.getElementById('lam').scrollTo(0, 0); lamIr(k); }, k); await p.waitForTimeout(700);
+      const b = await p.evaluate(() => { const l = document.getElementById('lam'), n = document.querySelector('#lamPie .lam-nav'), h = document.getElementById('lamHoja');
+        h.scrollIntoView({ block: 'end' }); const nr = n.getBoundingClientRect();
+        const w = document.createTreeWalker(h, NodeFilter.SHOW_TEXT); let t, ult = null; while ((t = w.nextNode())) if (t.textContent.trim()) ult = t;
+        const rg = document.createRange(); rg.selectNodeContents(ult); const rs = [...rg.getClientRects()], lr = rs[rs.length - 1];
+        l.scrollTo(0, l.scrollHeight); const fin = [...l.children].filter(c => c.id !== 'lamPie' && c.getClientRects().length).pop().getBoundingClientRect();
+        return { fija: getComputedStyle(n).position, abajo: Math.round(innerHeight - nr.bottom), linea: Math.round(lr.bottom), barra: Math.round(nr.top), fin: Math.round(fin.bottom), barra2: Math.round(n.getBoundingClientRect().top), alto: Math.round(nr.height), ancho: Math.round(document.getElementById('lam').scrollWidth - document.getElementById('lam').clientWidth) }; });
+      ok(b.fija === 'fixed' && b.abajo === 0 && b.linea <= b.barra && b.fin <= b.barra2 + 1 && b.alto <= 96 && b.ancho <= 0,
+        W + ' · v217: ' + id + ' «' + k + '», la barra va al borde (' + b.abajo + ' px debajo, ' + b.alto + ' px de alto) y la última línea queda encima (' + b.linea + ' ≤ ' + b.barra + '; al final ' + b.fin + ' ≤ ' + b.barra2 + '), sin desborde a lo ancho');
+    }
+    /* 3. El navegador de partes: tres o más a la vista, tocables, y la siguiente asoma. */
+    await p.evaluate(() => { document.getElementById('lam').scrollTo(0, 0); lamIr('est'); }); await p.waitForTimeout(500);
+    const rl = await p.evaluate(() => { const t = document.getElementById('lamTira'), r = t.getBoundingClientRect(), bs = [...t.querySelectorAll('.lam-ri')];
+      const ent = bs.filter(b => { const q = b.getBoundingClientRect(); return q.left >= r.left - 1 && q.right <= r.right + 1; }).length;
+      const asoma = bs.some(b => { const q = b.getBoundingClientRect(); return q.left < r.right - 4 && q.right > r.right + 4; });
+      const chico = bs.filter(b => { const q = b.getBoundingClientRect(); return q.width < 44 || q.height < 44; }).length;
+      const bt = [...document.querySelectorAll('.lam-riel .lam-tira-bots .btn')].map(b => Math.round(b.getBoundingClientRect().height));
+      const tops = new Set([...document.querySelectorAll('.lam-riel .lam-tira-bots .btn')].map(b => Math.round(b.getBoundingClientRect().top)));
+      return { n: bs.length, ent, asoma, chico, bt, fila: tops.size, snap: getComputedStyle(t).scrollSnapType }; });
+    ok(rl.ent >= 3 && rl.asoma && rl.chico === 0 && /x/.test(rl.snap), W + ' · v217: ' + id + ', el navegador de partes deja ver ' + rl.ent + ' enteras de ' + rl.n + ', asoma la siguiente, todas ≥44 px y con imán (' + rl.snap + ')');
+    if (id === 'd7') ok(rl.bt.length === 2 && rl.bt.every(h => h >= 32 && h <= 40) && rl.fila === 1, W + ' · v217: «Ver la visión» y «Con Daniel 2» son dos pastillas chicas en una fila (' + rl.bt.join(', ') + ' px)');
+    /* 4. La fila de pasos: el activo, entero a la vista; el borde se desvanece donde hay más. */
+    await p.evaluate(() => lamIr('desp')); await p.waitForTimeout(600);
+    const ps = await p.evaluate(() => { const f = document.querySelector('.lam-pasos'), a = f.querySelector('.lam-paso.on'), r = f.getBoundingClientRect(), q = a.getBoundingClientRect();
+      return { dentro: q.left >= r.left - 1 && q.right <= r.right + 1, cur: a.getAttribute('aria-current'), fade: f.classList.contains('m-i') || f.classList.contains('m-d') || f.scrollWidth <= f.clientWidth }; });
+    ok(ps.dentro && ps.cur === 'step' && ps.fade, W + ' · v217: ' + id + ', el paso activo de la fila se ve entero (y se desvanece el borde que sigue)');
+    await p.evaluate(() => lamCierra());
+    /* 5. Presentar: los botones ‹ › al borde, sin texto debajo. */
+    await p.evaluate(id => { lamAbre(id, 'presentar'); lamPres(5); }, id); await p.waitForTimeout(800);
+    const pr = await p.evaluate(() => { const l = document.getElementById('lam'); l.scrollTo(0, l.scrollHeight); const c = document.querySelector('.lam-ctl').getBoundingClientRect(), h = document.getElementById('lamHoja').getBoundingClientRect();
+      return { abajo: Math.round(innerHeight - c.bottom), hoja: Math.round(h.bottom), barra: Math.round(c.top) }; });
+    ok(pr.abajo === 0 && pr.hoja <= pr.barra + 1, W + ' · v217: ' + id + ', al presentar los botones van al borde y la hoja termina encima (' + pr.abajo + ' px debajo; ' + pr.hoja + ' ≤ ' + pr.barra + ')');
+    await p.evaluate(() => lamCierra());
+  }
+  ok(errores.length === 0, W + ' · v217: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();

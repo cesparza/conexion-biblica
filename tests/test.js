@@ -2814,5 +2814,35 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     '«Quién estudia»: las actividades son filas (actividad arriba, categoría abajo) y «Agregar persona» es una fila con su círculo');
 }
 
+/* v217: la lámina en el teléfono (Camilo, 14-oct, captura del iPhone). Lo que se ve lo mide
+   tools/en-navegador.js a 390 y 430; aquí, que los datos y el código lo sostengan. */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const css=fs.readFileSync(FUENTE('estilos.css'),'utf8').replace(/\/\*[\s\S]*?\*\//g,'');
+  /* 1. Cada paso de la historia con su propia escena: ninguno repite la de otro. */
+  const rep=Object.keys(LAMINAS).filter(k=>LAMINAS[k].historia).map(k=>{const L=LAMINAS[k],fs_=L.historia.map(h=>h.f).concat(L.despues?[L.despues.f]:[]).filter(Boolean);
+    return fs_.filter((f,i)=>fs_.indexOf(f)!==i).map(f=>k+':'+f);}).flat();
+  ok(!rep.length,'Ningún paso de la historia de una lámina repite la escena de otro'+(rep.length?' ('+rep.join(', ')+')':''));
+  ok(LAMINAS.d7.despues.f==='recuerdo'&&fs.existsSync(path.join(RAIZ,'laminas','d7','recuerdo.webp'))&&fs.existsSync(path.join(RAIZ,'tools','lamina-recuerdo.py')),
+    'Daniel 7:28 («guardé el asunto en mi corazón») tiene su escena (recuerdo.webp), no el mar de 7:2');
+  const faltan=Object.keys(LAMINAS).flatMap(k=>{const L=LAMINAS[k];return L.historia?L.historia.map(h=>h.f).concat(L.despues?[L.despues.f]:[],L.cierre&&L.cierre.f?[L.cierre.f]:[])
+    .filter(f=>f&&!fs.existsSync(path.join(RAIZ,'laminas',(f.includes('/')?'':L.dir)+f+(/\.\w+$/.test(f)?'':'.webp')))).map(f=>k+':'+f):[];});
+  ok(!faltan.length,'Toda escena que declara un paso existe en laminas/'+(faltan.length?' ('+faltan.join(', ')+')':''));
+  ok(/\.\.\.\[L\.despues,L\.cierre\]\.filter\(x=>x&&x\.f\)\.map\(x=>x\.f\)/.test(js),'La precarga de Daniel 7 incluye la escena de 7:28 y la del cierre');
+  /* 2. Ningún nombre es enlace dentro de un título. */
+  ok(/const PER_TITULOS=new Set\(\[[^\]]*'lam-p2'[^\]]*'lam-nav-p'[^\]]*\]\)/.test(js)&&/role="heading"/.test(js)&&/class="lam-chip-t"/.test(js),
+    'Los personajes no se vuelven enlace en títulos (h1-h6, cabecera de la hoja, «Sigue…», rótulo de la imagen)');
+  /* 3. La barra de Anterior/Siguiente al pie de la pantalla, con su espacio reservado. */
+  ok(/\.lam:not\(\.pres\) \.lam-pie \.lam-nav\{position:fixed;left:0;right:0;bottom:0/.test(css)&&/env\(safe-area-inset-bottom,0px\)\) max\(16px/.test(css)&&
+    /\.lam\.con-nav:not\(\.pres\)\{padding-bottom:calc\(var\(--lam-nav-h,72px\) \+ 16px\)\}/.test(css)&&/function lamNavAlto\(\)/.test(js)&&/id="lamPie"/.test(js),
+    'En el teléfono la barra de Anterior/Siguiente va fija al pie (con el área segura) y la lámina reserva su alto');
+  ok(/\.lam\.pres:not\(\.ancho\)\{padding-bottom:0\}/.test(css),'Al presentar en el teléfono los botones ‹ › van al borde de la pantalla');
+  /* 4. El navegador de partes y la fila de pasos. */
+  ok(/\.lam:not\(\.pres\) \.lam-riel-l>li\{flex:0 0 104px;width:104px;scroll-snap-align:start\}/.test(css)&&/scroll-snap-type:x proximity/.test(css)&&/\.lam-ri-t small:not\(\.lam-ri-f\)\{display:none\}/.test(css),
+    'El navegador de partes en el teléfono es una tira de tarjetas de 104 px (tres a la vista y la siguiente asomando), con imán');
+  ok(/function lamMarcaPaso\(k\)\{[\s\S]{0,900}scrollTo\(\{left:x/.test(js)&&/-webkit-mask-image:linear-gradient\(90deg,transparent 0,#000 var\(--fi\)/.test(css),
+    'La fila de pasos corre sola al paso activo y desvanece el borde donde hay más');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

@@ -135,7 +135,7 @@ const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
   const C=L.comparar&&LAMINAS[L.comparar];
-  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
+  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
   const p=lamPrecargadas[cid]||(lamPrecargadas[cid]=Promise.all(fs.map(src=>new Promise(ok=>{
     const im=new Image();im.onload=()=>{(im.decode?im.decode():Promise.resolve()).then(ok,ok);};im.onerror=ok;im.src=src;}))));
@@ -403,10 +403,11 @@ function lamRielMarca(ids){
   const v=t.scrollHeight>t.clientHeight+2,h=t.scrollWidth>t.clientWidth+2;if(!v&&!h)return;
   const d=v?{top:pri.offsetTop-t.clientHeight/2+pri.offsetHeight/2}:{left:pri.offsetLeft-t.clientWidth/2+pri.offsetWidth/2};
   if(t.scrollTo)t.scrollTo(Object.assign(d,{behavior:lamQuieto()||lamCorre?'auto':'smooth'}));
+  lamPasosBordes(t);
 }
 /* Las flechas, dentro del riel: pasan de parte y llevan el foco con ellas. */
 function lamRielTeclas(){
-  const t=document.getElementById('lamTira');if(!t||t.__k)return;t.__k=true;
+  const t=document.getElementById('lamTira');if(!t||t.__k)return;t.__k=true;lamPasosBordes(t);
   t.addEventListener('keydown',e=>{
     const E=lamEntradas(),n=E.length,i=E.findIndex(x=>x.k===lamSel),k={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key];
     let j=null;if(k!=null)j=i<0?(k>0?0:n-1):i+k;else if(e.key==='Home')j=0;else if(e.key==='End')j=n-1;
@@ -487,7 +488,7 @@ function lamAbre(cid,modo){
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" class="lam-rd" aria-label="Anterior" onclick="lamAtras()">'+IC('izq')+'</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="lam-rd sig" aria-label="Siguiente" onclick="lamAdelante()">'+IC('der')+'</button></div>':
      '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
      L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
-     '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
+     '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div><div class="lam-pie" id="lamPie"></div>');
   document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
   lamPrecarga(cid,document.getElementById('lamEsc'));
   lamRielTeclas();
@@ -497,6 +498,7 @@ function lamAbre(cid,modo){
     /* v209: al abrir, el título de la lámina un momento, como al empezar una película. */
     lamCartel(true,true);lamCartelT=setTimeout(()=>lamCartel(false),2600);}
   if(!el.__ocio){el.__ocio=true;['pointermove','pointerdown','focusin'].forEach(t=>el.addEventListener(t,lamDespierta,{passive:true}));}
+  if(!el.__pega){el.__pega=true;el.addEventListener('scroll',lamPega,{passive:true});}lamPega();
   lamDespierta();
   const f=el.querySelector('.lam-cerrar');if(f)f.focus();
 }
@@ -528,6 +530,27 @@ function lamHoja(html){
   h.classList.toggle('vacia',!html);
   h.innerHTML=lamPer(html||lamIntroHTML());
   h.scrollTop=0;
+  lamNavAlto();
+}
+/* v217 (Camilo: la barra de Anterior/Siguiente tapaba «mis pensamientos me turbaron…»): en el
+   teléfono la barra va fija al pie de la lámina, encima del área segura, y la lámina deja
+   abajo un espacio igual a su alto (--lam-nav-h): nada queda debajo de ella al final. */
+/* v217: en el teléfono, ¿la imagen ya está pegada arriba? (ver .lam-esc.pegada) */
+function lamPega(){
+  const l=document.getElementById('lam'),e=document.getElementById('lamEsc');if(!l||!e)return;
+  const p=lamModo!=='presentar'&&getComputedStyle(e).position==='sticky'&&l.scrollTop>0&&e.getBoundingClientRect().top-l.getBoundingClientRect().top<=parseFloat(getComputedStyle(l).paddingTop)-11;
+  e.classList.toggle('pegada',!!p);
+}
+const lamPieFijo=()=>lamModo!=='presentar'&&typeof matchMedia==='function'&&matchMedia('(max-width:899px)').matches;
+function lamNavAlto(){
+  const l=document.getElementById('lam'),pie=document.getElementById('lamPie'),hj=document.getElementById('lamHoja');if(!l)return;
+  /* En el teléfono la barra vive en #lamPie (hijo directo de la lámina); en pantalla ancha, al pie de la hoja. */
+  if(pie&&hj){const nueva=hj.querySelector('.lam-nav');
+    if(lamPieFijo()){if(nueva){pie.innerHTML='';pie.appendChild(nueva);}else if(!hj.innerHTML)pie.innerHTML='';}
+    else if(pie.firstChild){if(!nueva)hj.appendChild(pie.firstChild);pie.innerHTML='';}}
+  const n=pie&&pie.querySelector('.lam-nav');
+  const h=n&&getComputedStyle(n).position==='fixed'?Math.ceil(n.getBoundingClientRect().height):0;
+  l.style.setProperty('--lam-nav-h',h+'px');l.classList.toggle('con-nav',h>0);
 }
 /* ── v209: EL CARTEL, LA FRANJA DE ORO Y LOS CONTROLES QUE SE APARTAN ──
    Camilo (14-oct): «como Hollywood, unas escenas que se diga que es algo muy
@@ -726,7 +749,25 @@ function lamHojaTexto(t,k){
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(t.texto)+'</q></p></div><p class="lam-nota">'+t.nota+'</p>'+
     (k&&lamModo!=='presentar'?lamNavHTML(k):'');
 }
-function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEach(b=>b.classList.toggle('on',b.getAttribute('data-h')===String(k)));}
+function lamMarcaPaso(k){
+  let on=null;
+  document.querySelectorAll('.lam-pasos .lam-paso').forEach(b=>{const s=b.getAttribute('data-h')===String(k);b.classList.toggle('on',s);
+    if(s){b.setAttribute('aria-current','step');on=b;}else b.removeAttribute('aria-current');});
+  /* v217 (Camilo: «3 Las bestias» salía cortado a la izquierda): la fila de pasos corre sola
+     para que el paso activo quede entero y centrado, sin mover la página; los bordes se
+     desvanecen solo hacia donde hay más pasos (lamPasosBordes). */
+  const f=on&&on.parentNode;
+  if(f&&f.scrollWidth>f.clientWidth+2){
+    const rb=on.getBoundingClientRect(),rf=f.getBoundingClientRect(),x=Math.max(0,Math.min(f.scrollWidth-f.clientWidth,f.scrollLeft+rb.left-rf.left-(f.clientWidth-rb.width)/2));
+    if(f.scrollTo)f.scrollTo({left:x,behavior:lamQuieto()||!f.__vista?'auto':'smooth'});else f.scrollLeft=x;}
+  if(f){f.__vista=true;lamPasosBordes(f);}
+}
+function lamPasosBordes(f){
+  if(!f){[document.querySelector('.lam-pasos'),document.getElementById('lamTira')].forEach(x=>{if(x)lamPasosBordes(x);});return;}
+  const pon=()=>{const m=f.scrollWidth-f.clientWidth;f.classList.toggle('m-i',f.scrollLeft>2);f.classList.toggle('m-d',f.scrollLeft<m-2);};
+  if(!f.__b){f.__b=true;f.addEventListener('scroll',pon,{passive:true});}
+  pon();setTimeout(pon,400);
+}
 
 /* ── Explorar ── */
 function lamInicio(){
@@ -1013,7 +1054,7 @@ if(typeof addEventListener==='function')addEventListener('resize',()=>{
   if(!lamModo)return;
   clearTimeout(lamResT);lamResT=setTimeout(()=>{
     const e=document.getElementById('lam');if(!e||e.hidden)return;
-    if(lamModo!=='presentar'){lamGeo();return;}
+    if(lamModo!=='presentar'){lamGeo();lamNavAlto();lamPasosBordes();return;}
     const a=lamAncho()||(e.matches&&e.matches(':fullscreen'));
     e.classList.toggle('ancho',a);lamGeo();lamPres(lamPaso);},140);
 });
@@ -1132,7 +1173,7 @@ function lamChip(p,extra){
   c.hidden=!p;if(!p)return;
   c.style.setProperty('--c',p.c);
   const L=LAM(),r=L.comparar&&lamConD2&&(L.paralelo||[]).find(x=>x[0]===p.id);
-  c.innerHTML=lamPer('<b>'+esc(p.nombre)+'</b><span>'+esc(p.reino)+' · '+esc(p.fechas)+'</span>'+
+  c.innerHTML=lamPer('<b class="lam-chip-t">'+esc(p.nombre)+'</b><span>'+esc(p.reino)+' · '+esc(p.fechas)+'</span>'+
     (extra?'<span class="sub">'+(Array.isArray(extra)?esc(extra[0])+'<em> · '+esc(extra[1])+'</em>':esc(extra))+'</span>':'')+
     (r?'<span class="d2">'+(r[3]?'En Daniel 2: '+esc(r[1]):esc(L.agrega||r[1]))+'</span>':''));
   lamD2Pos();
@@ -4252,6 +4293,10 @@ function perPrepara(){
   try{perRe=new RegExp('(?<![\\p{L}\\p{N}])('+lista+')(?![\\p{L}\\p{N}])','gu');}catch(e){perRe=null;}
 }
 const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id===id);
+/* Los títulos donde un nombre nunca se vuelve enlace (v217): la cabecera de la hoja de la
+   lámina, su portada, el «Sigue…» de la navegación, el rótulo sobre la imagen, el cartel y el cierre. */
+const PER_TITULOS=new Set(['lam-p1','lam-p2','lam-intro-tit','lam-nav-p','lam-chip-t','lam-cartel-tit','lam-fin-tit','lam-rot','lam-tit','sin-per']);
+const PER_VACIAS=/^(img|br|hr|input|source|meta|link|wbr|col|area|base|embed|track|param)$/;
 function personasTocables(html,capId){
   perPrepara();
   if(!perRe)return html;
@@ -4261,11 +4306,20 @@ function personasTocables(html,capId){
   /* v214: la fuente de las láminas (lam-fu) tampoco: ahí van autores y libros. */
   return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>|<(?:div|p) class="lam-fu">[\s\S]*?<\/(?:div|p)>)/).map(parte=>{
     if(/^<p class="sec-fuente">|^<(div|p) class="lam-fu">/.test(parte))return parte;
-    let dentro=0;
+    /* v217 (Camilo, 14-oct: «Daniel» subrayado en el título «Daniel guardó el asunto en su
+       corazón»): nunca en un título. Además de h1-h6, botones, enlaces y citas en bloque,
+       los títulos con clase (PER_TITULOS) o role="heading". Se lleva una pila de etiquetas
+       abiertas: un </div> cierra el div que lo abrió, sea título o no. */
+    const pila=[];let dentro=0;
     return parte.split(/(<[^>]+>)/).map(tr=>{
       if(tr.charAt(0)==='<'){
-        if(/^<(button|a|h\d|blockquote)[\s>]/.test(tr))dentro++;
-        else if(/^<\/(button|a|h\d|blockquote)>/.test(tr)&&dentro>0)dentro--;
+        const m=/^<(\/?)([a-zA-Z][\w-]*)/.exec(tr);if(!m||/^<!/.test(tr))return tr;
+        const tag=m[2].toLowerCase();
+        if(m[1]){const i=pila.map(x=>x[0]).lastIndexOf(tag);if(i>=0){pila.splice(i).forEach(x=>{if(x[1])dentro--;});}return tr;}
+        if(/\/>$/.test(tr)||PER_VACIAS.test(tag))return tr;
+        const cl=(/\sclass="([^"]*)"/.exec(tr)||[])[1]||'';
+        const no=/^(button|a|h\d|blockquote)$/.test(tag)||/\srole="heading"/.test(tr)||cl.split(/\s+/).some(c=>PER_TITULOS.has(c));
+        pila.push([tag,no]);if(no)dentro++;
         return tr;
       }
       if(dentro>0||!tr.trim())return tr;

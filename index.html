@@ -4683,6 +4683,96 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .hoja-yo .yo-cats>summary{gap:10px;padding:0 6px;font-weight:700}
 .hoja-yo .yo-cats>summary b{max-width:62%;text-align:right;line-height:1.3;font-weight:600;background:color-mix(in srgb,var(--azul) 8%,transparent);color:var(--azul)}
 @media (prefers-reduced-motion:reduce){.ident-cuerpo .alu-per,.lam-brillo{transition:none}}
+
+/* ═══════════ v217: LA LÁMINA EN EL TELÉFONO (Camilo, 14-oct: «¿Esto está bien?») ═══════════
+   Una captura del iPhone a 390 pt, dentro de Jóvenes: (1) la barra de Anterior/Siguiente,
+   pegada al pie, tapaba el texto de la hoja y dejaba líneas visibles debajo de ella (se
+   pegaba al borde del relleno de la lámina, no al de la pantalla); (2) «Las partes de la
+   visión» mostraba dos partes y media, con letra grande, sin parecer tocables; (3) la fila
+   de pasos salía cortada a la izquierda; (4) «Ver la visión / Con Daniel 2» eran dos
+   cajas grandes. Todo con el mismo sistema de letra de v211 (serif para nombres, sans
+   para datos; .75 / .875 / 1 rem) y los colores de la lámina. */
+
+/* La fila de pasos: corre sola al paso activo (lamMarcaPaso) y sus bordes se desvanecen
+   solo hacia donde hay más pasos (clases m-i / m-d, lamBordes). */
+.lam-pasos,.lam:not(.pres) .lam-riel-l{--fi:0px;--fd:0px;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fi),#000 calc(100% - var(--fd)),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 var(--fi),#000 calc(100% - var(--fd)),transparent 100%)}
+.lam-pasos.m-i,.lam:not(.pres) .lam-riel-l.m-i{--fi:28px}
+.lam-pasos.m-d,.lam:not(.pres) .lam-riel-l.m-d{--fd:28px}
+.lam-pasos{scroll-padding-inline:24px}
+
+@media (max-width:899px){
+  .lam:not(.pres) .lam-pasos{gap:2px}
+  .lam:not(.pres) .lam-paso{min-height:44px;padding:0 12px 0 2px;font-size:.875rem;gap:6px}
+  .lam:not(.pres) .lam-paso i{font-size:.875rem}
+
+  /* El navegador de partes: una tira de película. Cada parte es una tarjeta de 104 px
+     (imagen 16:10, nombre entero, sin «…», y fechas): a 390 se ven tres enteras y el
+     borde de la cuarta, que dice que la tira sigue. Se desliza con imán suave; la
+     elegida lleva el marco de oro y su luz. */
+  .lam:not(.pres) .lam-riel,.lam:not(.pres) .lam-riel.e{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+  .lam:not(.pres) .lam-riel-cab{order:1;padding:0 2px}
+  .lam:not(.pres) .lam-riel .lam-tira-bots,.lam:not(.pres) .lam-riel.e .lam-tira-bots{order:2;display:flex;flex-wrap:wrap;gap:8px;padding:0 2px}
+  .lam:not(.pres) .lam-riel-l{order:3;gap:8px;margin:0;padding:2px 0 6px;scroll-snap-type:x proximity;scroll-padding-inline:0;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none}
+  .lam:not(.pres) .lam-riel-l::before{display:none}
+  .lam:not(.pres) .lam-riel-l>li{flex:0 0 104px;width:104px;scroll-snap-align:start}
+  .lam:not(.pres) .lam-ri,.lam.escenas:not(.pres) .lam-ri{flex-direction:column;align-items:stretch;gap:6px;min-height:44px;padding:4px 4px 8px;border-radius:12px}
+  .lam:not(.pres) .lam-ri-m,.lam:not(.pres) .lam-riel.e .lam-ri-m{width:100%;height:auto;aspect-ratio:16/10;border-radius:8px}
+  .lam:not(.pres) .lam-ri-t{gap:2px;padding:0 2px}
+  .lam .lam-riel .lam-ri-t b{font-family:var(--cine-serif);font-size:.875rem;font-weight:500;line-height:1.2;overflow-wrap:normal;hyphens:manual;text-wrap:balance}
+  .lam:not(.pres) .lam-ri-t small:not(.lam-ri-f){display:none}
+  .lam .lam-riel .lam-ri-t small.lam-ri-f{font-size:.75rem;line-height:1.25}
+  .lam:not(.pres) .lam-ri::before,.lam.escenas:not(.pres) .lam-ri::before{top:auto;bottom:0;left:10px;right:10px;width:auto;height:2px;transform:scaleX(.3)}
+  .lam:not(.pres) .lam-ri.on::before{transform:none}
+  .lam:not(.pres) .lam-ri.on{background:color-mix(in srgb,var(--lam-oro) 12%,transparent)}
+  .lam:not(.pres) .lam-ri.on .lam-ri-m{box-shadow:0 0 0 2px var(--lam-oro),0 6px 18px -6px color-mix(in srgb,var(--c) 80%,transparent)}
+  .lam:not(.pres) .lam-ri-x .ico-t{width:22px;height:22px}
+
+  /* Ver la visión / Con Daniel 2: dos pastillas chicas, como filtros, no dos cajas. */
+  .lam:not(.pres) .lam-riel .lam-tira-bots .btn,.lam:not(.pres) .lam-riel.e .lam-tira-bots .btn{flex:0 0 auto;min-height:36px;padding:0 12px;gap:6px;font-size:.875rem;font-weight:600;border-radius:999px;justify-content:center}
+  .lam:not(.pres) .lam-tira-bots .btn .ico-t{width:14px;height:14px}
+
+  /* Anterior / Siguiente: fija al pie de la pantalla, sobre el área segura (la raya del
+     iPhone), con fondo opaco. La lámina deja abajo un espacio igual a su alto
+     (--lam-nav-h, lo mide lamNavAlto): al final de la hoja nada queda debajo de la barra.
+     La barra se pinta en la hoja y lamNavAlto la pasa a #lamPie, hijo directo de la lámina:
+     dentro de la hoja quedaba bajo lo que viene después (la línea de tiempo) y, dentro de una
+     pieza animada, fija a esa pieza y no a la pantalla. */
+  .lam:not(.pres) .lam-pie .lam-nav{position:fixed;left:0;right:0;bottom:0;z-index:30;margin:0;
+    padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+    background:#15110C;opacity:1;
+    border-top:1px solid var(--cine-linea);box-shadow:0 -12px 28px -16px rgba(0,0,0,.55);gap:12px;animation:none}
+  .lam.con-nav:not(.pres){padding-bottom:calc(var(--lam-nav-h,72px) + 16px)}
+  .lam:not(.pres) .lam-nav .lam-nav-tx{gap:3px}
+  .lam .lam-nav .lam-nav-p{font-size:.875rem;line-height:1.25}
+}
+@media (max-width:899px) and (prefers-reduced-motion:reduce){.lam:not(.pres) .lam-riel-l,.lam-pasos{scroll-behavior:auto}}
+@media (max-width:899px){
+  /* La entrada de cada pieza de la hoja, sin mover (solo opacidad): una pieza con
+     transform animado se vuelve el marco de lo fijo que lleva dentro, y la barra de la
+     portada (dentro de lam-intro) quedaba encima del texto en vez de ir al pie. */
+  .lam:not(.pres) .lam-hoja>*{animation-name:lamEntraO}
+  .lam:not(.pres) .lam-riel-cab,.lam:not(.pres) .lam-riel .lam-tira-bots{justify-content:flex-start;text-align:left}
+}
+@keyframes lamEntraO{from{opacity:0}to{opacity:1}}
+
+.lam-pie{flex:0 0 0;height:0;margin:0;padding:0}
+.lam-pie:empty{display:none}
+@media (max-width:899px){
+  /* La imagen se pega al borde de arriba (sobre el relleno de la lámina, no 12 px más abajo)
+     y, pegada (clase que pone lamPega), tapa la franja de la barra de estado del iPhone y
+     pierde las esquinas de arriba: lo que pasa por debajo al leer ya no asoma sobre ella. */
+  .lam:not(.pres) .lam-esc{top:-12px}
+  .lam:not(.pres) .lam-esc.pegada{border-radius:0 0 12px 12px;box-shadow:0 calc(-1px - env(safe-area-inset-top,0px)) 0 0 var(--bg),0 30px 60px -34px rgba(0,0,0,.65)}
+}
+/* v217: lo mismo al presentar en el teléfono (vertical): los botones ‹ 5/17 › se pegaban al
+   borde del relleno de la lámina, no al de la pantalla, y el texto asomaba por debajo. La
+   barra es lo último de la lámina: sin relleno abajo, se pega al borde y lleva dentro el
+   área segura (padding de .lam-ctl). */
+.lam.pres:not(.ancho){padding-bottom:0}
+.lam.pres:not(.ancho) .lam-ctl{border-top:1px solid var(--cine-linea)}
+@media (max-width:899px){.lam.con-nav:not(.pres){scroll-padding-bottom:calc(var(--lam-nav-h,72px) + 8px)}}
 </style>
 </head>
 <body>
@@ -5241,7 +5331,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '5333de02ac44';
+const VERSION_APP = '23f76c34e03a';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -59277,7 +59367,7 @@ const LAMINAS = {
    }
   ],
   "despues": {
-   "f": "mar",
+   "f": "recuerdo",
    "titulo": "Daniel guardó el asunto en su corazón",
    "ref": "Daniel 7:28",
    "texto": "mis pensamientos me turbaron y mi rostro se demudó; pero guardé el asunto en mi corazón.",
@@ -74863,7 +74953,7 @@ const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
   const C=L.comparar&&LAMINAS[L.comparar];
-  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
+  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
   const p=lamPrecargadas[cid]||(lamPrecargadas[cid]=Promise.all(fs.map(src=>new Promise(ok=>{
     const im=new Image();im.onload=()=>{(im.decode?im.decode():Promise.resolve()).then(ok,ok);};im.onerror=ok;im.src=src;}))));
@@ -75131,10 +75221,11 @@ function lamRielMarca(ids){
   const v=t.scrollHeight>t.clientHeight+2,h=t.scrollWidth>t.clientWidth+2;if(!v&&!h)return;
   const d=v?{top:pri.offsetTop-t.clientHeight/2+pri.offsetHeight/2}:{left:pri.offsetLeft-t.clientWidth/2+pri.offsetWidth/2};
   if(t.scrollTo)t.scrollTo(Object.assign(d,{behavior:lamQuieto()||lamCorre?'auto':'smooth'}));
+  lamPasosBordes(t);
 }
 /* Las flechas, dentro del riel: pasan de parte y llevan el foco con ellas. */
 function lamRielTeclas(){
-  const t=document.getElementById('lamTira');if(!t||t.__k)return;t.__k=true;
+  const t=document.getElementById('lamTira');if(!t||t.__k)return;t.__k=true;lamPasosBordes(t);
   t.addEventListener('keydown',e=>{
     const E=lamEntradas(),n=E.length,i=E.findIndex(x=>x.k===lamSel),k={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key];
     let j=null;if(k!=null)j=i<0?(k>0?0:n-1):i+k;else if(e.key==='Home')j=0;else if(e.key==='End')j=n-1;
@@ -75215,7 +75306,7 @@ function lamAbre(cid,modo){
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" class="lam-rd" aria-label="Anterior" onclick="lamAtras()">'+IC('izq')+'</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="lam-rd sig" aria-label="Siguiente" onclick="lamAdelante()">'+IC('der')+'</button></div>':
      '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
      L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
-     '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
+     '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div><div class="lam-pie" id="lamPie"></div>');
   document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
   lamPrecarga(cid,document.getElementById('lamEsc'));
   lamRielTeclas();
@@ -75225,6 +75316,7 @@ function lamAbre(cid,modo){
     /* v209: al abrir, el título de la lámina un momento, como al empezar una película. */
     lamCartel(true,true);lamCartelT=setTimeout(()=>lamCartel(false),2600);}
   if(!el.__ocio){el.__ocio=true;['pointermove','pointerdown','focusin'].forEach(t=>el.addEventListener(t,lamDespierta,{passive:true}));}
+  if(!el.__pega){el.__pega=true;el.addEventListener('scroll',lamPega,{passive:true});}lamPega();
   lamDespierta();
   const f=el.querySelector('.lam-cerrar');if(f)f.focus();
 }
@@ -75256,6 +75348,27 @@ function lamHoja(html){
   h.classList.toggle('vacia',!html);
   h.innerHTML=lamPer(html||lamIntroHTML());
   h.scrollTop=0;
+  lamNavAlto();
+}
+/* v217 (Camilo: la barra de Anterior/Siguiente tapaba «mis pensamientos me turbaron…»): en el
+   teléfono la barra va fija al pie de la lámina, encima del área segura, y la lámina deja
+   abajo un espacio igual a su alto (--lam-nav-h): nada queda debajo de ella al final. */
+/* v217: en el teléfono, ¿la imagen ya está pegada arriba? (ver .lam-esc.pegada) */
+function lamPega(){
+  const l=document.getElementById('lam'),e=document.getElementById('lamEsc');if(!l||!e)return;
+  const p=lamModo!=='presentar'&&getComputedStyle(e).position==='sticky'&&l.scrollTop>0&&e.getBoundingClientRect().top-l.getBoundingClientRect().top<=parseFloat(getComputedStyle(l).paddingTop)-11;
+  e.classList.toggle('pegada',!!p);
+}
+const lamPieFijo=()=>lamModo!=='presentar'&&typeof matchMedia==='function'&&matchMedia('(max-width:899px)').matches;
+function lamNavAlto(){
+  const l=document.getElementById('lam'),pie=document.getElementById('lamPie'),hj=document.getElementById('lamHoja');if(!l)return;
+  /* En el teléfono la barra vive en #lamPie (hijo directo de la lámina); en pantalla ancha, al pie de la hoja. */
+  if(pie&&hj){const nueva=hj.querySelector('.lam-nav');
+    if(lamPieFijo()){if(nueva){pie.innerHTML='';pie.appendChild(nueva);}else if(!hj.innerHTML)pie.innerHTML='';}
+    else if(pie.firstChild){if(!nueva)hj.appendChild(pie.firstChild);pie.innerHTML='';}}
+  const n=pie&&pie.querySelector('.lam-nav');
+  const h=n&&getComputedStyle(n).position==='fixed'?Math.ceil(n.getBoundingClientRect().height):0;
+  l.style.setProperty('--lam-nav-h',h+'px');l.classList.toggle('con-nav',h>0);
 }
 /* ── v209: EL CARTEL, LA FRANJA DE ORO Y LOS CONTROLES QUE SE APARTAN ──
    Camilo (14-oct): «como Hollywood, unas escenas que se diga que es algo muy
@@ -75454,7 +75567,25 @@ function lamHojaTexto(t,k){
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(t.texto)+'</q></p></div><p class="lam-nota">'+t.nota+'</p>'+
     (k&&lamModo!=='presentar'?lamNavHTML(k):'');
 }
-function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEach(b=>b.classList.toggle('on',b.getAttribute('data-h')===String(k)));}
+function lamMarcaPaso(k){
+  let on=null;
+  document.querySelectorAll('.lam-pasos .lam-paso').forEach(b=>{const s=b.getAttribute('data-h')===String(k);b.classList.toggle('on',s);
+    if(s){b.setAttribute('aria-current','step');on=b;}else b.removeAttribute('aria-current');});
+  /* v217 (Camilo: «3 Las bestias» salía cortado a la izquierda): la fila de pasos corre sola
+     para que el paso activo quede entero y centrado, sin mover la página; los bordes se
+     desvanecen solo hacia donde hay más pasos (lamPasosBordes). */
+  const f=on&&on.parentNode;
+  if(f&&f.scrollWidth>f.clientWidth+2){
+    const rb=on.getBoundingClientRect(),rf=f.getBoundingClientRect(),x=Math.max(0,Math.min(f.scrollWidth-f.clientWidth,f.scrollLeft+rb.left-rf.left-(f.clientWidth-rb.width)/2));
+    if(f.scrollTo)f.scrollTo({left:x,behavior:lamQuieto()||!f.__vista?'auto':'smooth'});else f.scrollLeft=x;}
+  if(f){f.__vista=true;lamPasosBordes(f);}
+}
+function lamPasosBordes(f){
+  if(!f){[document.querySelector('.lam-pasos'),document.getElementById('lamTira')].forEach(x=>{if(x)lamPasosBordes(x);});return;}
+  const pon=()=>{const m=f.scrollWidth-f.clientWidth;f.classList.toggle('m-i',f.scrollLeft>2);f.classList.toggle('m-d',f.scrollLeft<m-2);};
+  if(!f.__b){f.__b=true;f.addEventListener('scroll',pon,{passive:true});}
+  pon();setTimeout(pon,400);
+}
 
 /* ── Explorar ── */
 function lamInicio(){
@@ -75741,7 +75872,7 @@ if(typeof addEventListener==='function')addEventListener('resize',()=>{
   if(!lamModo)return;
   clearTimeout(lamResT);lamResT=setTimeout(()=>{
     const e=document.getElementById('lam');if(!e||e.hidden)return;
-    if(lamModo!=='presentar'){lamGeo();return;}
+    if(lamModo!=='presentar'){lamGeo();lamNavAlto();lamPasosBordes();return;}
     const a=lamAncho()||(e.matches&&e.matches(':fullscreen'));
     e.classList.toggle('ancho',a);lamGeo();lamPres(lamPaso);},140);
 });
@@ -75860,7 +75991,7 @@ function lamChip(p,extra){
   c.hidden=!p;if(!p)return;
   c.style.setProperty('--c',p.c);
   const L=LAM(),r=L.comparar&&lamConD2&&(L.paralelo||[]).find(x=>x[0]===p.id);
-  c.innerHTML=lamPer('<b>'+esc(p.nombre)+'</b><span>'+esc(p.reino)+' · '+esc(p.fechas)+'</span>'+
+  c.innerHTML=lamPer('<b class="lam-chip-t">'+esc(p.nombre)+'</b><span>'+esc(p.reino)+' · '+esc(p.fechas)+'</span>'+
     (extra?'<span class="sub">'+(Array.isArray(extra)?esc(extra[0])+'<em> · '+esc(extra[1])+'</em>':esc(extra))+'</span>':'')+
     (r?'<span class="d2">'+(r[3]?'En Daniel 2: '+esc(r[1]):esc(L.agrega||r[1]))+'</span>':''));
   lamD2Pos();
@@ -78980,6 +79111,10 @@ function perPrepara(){
   try{perRe=new RegExp('(?<![\\p{L}\\p{N}])('+lista+')(?![\\p{L}\\p{N}])','gu');}catch(e){perRe=null;}
 }
 const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id===id);
+/* Los títulos donde un nombre nunca se vuelve enlace (v217): la cabecera de la hoja de la
+   lámina, su portada, el «Sigue…» de la navegación, el rótulo sobre la imagen, el cartel y el cierre. */
+const PER_TITULOS=new Set(['lam-p1','lam-p2','lam-intro-tit','lam-nav-p','lam-chip-t','lam-cartel-tit','lam-fin-tit','lam-rot','lam-tit','sin-per']);
+const PER_VACIAS=/^(img|br|hr|input|source|meta|link|wbr|col|area|base|embed|track|param)$/;
 function personasTocables(html,capId){
   perPrepara();
   if(!perRe)return html;
@@ -78989,11 +79124,20 @@ function personasTocables(html,capId){
   /* v214: la fuente de las láminas (lam-fu) tampoco: ahí van autores y libros. */
   return html.split(/(<p class="sec-fuente">[\s\S]*?<\/p>|<(?:div|p) class="lam-fu">[\s\S]*?<\/(?:div|p)>)/).map(parte=>{
     if(/^<p class="sec-fuente">|^<(div|p) class="lam-fu">/.test(parte))return parte;
-    let dentro=0;
+    /* v217 (Camilo, 14-oct: «Daniel» subrayado en el título «Daniel guardó el asunto en su
+       corazón»): nunca en un título. Además de h1-h6, botones, enlaces y citas en bloque,
+       los títulos con clase (PER_TITULOS) o role="heading". Se lleva una pila de etiquetas
+       abiertas: un </div> cierra el div que lo abrió, sea título o no. */
+    const pila=[];let dentro=0;
     return parte.split(/(<[^>]+>)/).map(tr=>{
       if(tr.charAt(0)==='<'){
-        if(/^<(button|a|h\d|blockquote)[\s>]/.test(tr))dentro++;
-        else if(/^<\/(button|a|h\d|blockquote)>/.test(tr)&&dentro>0)dentro--;
+        const m=/^<(\/?)([a-zA-Z][\w-]*)/.exec(tr);if(!m||/^<!/.test(tr))return tr;
+        const tag=m[2].toLowerCase();
+        if(m[1]){const i=pila.map(x=>x[0]).lastIndexOf(tag);if(i>=0){pila.splice(i).forEach(x=>{if(x[1])dentro--;});}return tr;}
+        if(/\/>$/.test(tr)||PER_VACIAS.test(tag))return tr;
+        const cl=(/\sclass="([^"]*)"/.exec(tr)||[])[1]||'';
+        const no=/^(button|a|h\d|blockquote)$/.test(tag)||/\srole="heading"/.test(tr)||cl.split(/\s+/).some(c=>PER_TITULOS.has(c));
+        pila.push([tag,no]);if(no)dentro++;
         return tr;
       }
       if(dentro>0||!tr.trim())return tr;

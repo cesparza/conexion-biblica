@@ -201,7 +201,11 @@ LAMINAS.d7 = {
     { f: 'mar', titulo: 'Cuatro vientos sobre el gran mar', ref: 'Daniel 7:2-3', texto: 'vi que los cuatro vientos del cielo combatían en el gran mar. … cuatro bestias grandes, diferentes la una de la otra, subían del mar.',
       nota: 'La Biblia explica sus símbolos. Los vientos son guerras entre naciones (Jeremías 25:32-33); el mar, «pueblos, muchedumbres, naciones y lenguas» (Apocalipsis 17:15); las bestias, reyes o reinos (7:17, 23).' },
   ],
-  despues: { f: 'mar', titulo: 'Daniel guardó el asunto en su corazón', ref: 'Daniel 7:28', texto: 'mis pensamientos me turbaron y mi rostro se demudó; pero guardé el asunto en mi corazón.',
+  /* v217 (Camilo, 14-oct: «¿esto está bien?»): este paso mostraba el mar en tormenta, que es
+     la escena de 7:2 y ya está en el paso 2. 7:28 es Daniel después de la visión: la visión
+     entera como un recuerdo (recuerdo.webp, tools/lamina-recuerdo.py). Ningún paso de la
+     historia repite la escena de otro (prueba en tests/test.js). */
+  despues: { f: 'recuerdo', titulo: 'Daniel guardó el asunto en su corazón', ref: 'Daniel 7:28', texto: 'mis pensamientos me turbaron y mi rostro se demudó; pero guardé el asunto en mi corazón.',
     nota: 'Daniel no lo entiende todo todavía. Daniel 8 vuelve sobre el cuerno y da la fecha del juicio: «Hasta dos mil trescientas tardes y mañanas» (8:14).' },
   cierre: { f: 'juicio', ref: 'Daniel 7:22', texto: 'se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.',
     titulo: 'El juicio es a favor de los santos', nota: 'Hoy vivimos en el tiempo del juicio. Después se cierra la gracia, Cristo vuelve y los santos reciben el reino.' },

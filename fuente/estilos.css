@@ -4666,3 +4666,93 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .hoja-yo .yo-cats>summary{gap:10px;padding:0 6px;font-weight:700}
 .hoja-yo .yo-cats>summary b{max-width:62%;text-align:right;line-height:1.3;font-weight:600;background:color-mix(in srgb,var(--azul) 8%,transparent);color:var(--azul)}
 @media (prefers-reduced-motion:reduce){.ident-cuerpo .alu-per,.lam-brillo{transition:none}}
+
+/* ═══════════ v217: LA LÁMINA EN EL TELÉFONO (Camilo, 14-oct: «¿Esto está bien?») ═══════════
+   Una captura del iPhone a 390 pt, dentro de Jóvenes: (1) la barra de Anterior/Siguiente,
+   pegada al pie, tapaba el texto de la hoja y dejaba líneas visibles debajo de ella (se
+   pegaba al borde del relleno de la lámina, no al de la pantalla); (2) «Las partes de la
+   visión» mostraba dos partes y media, con letra grande, sin parecer tocables; (3) la fila
+   de pasos salía cortada a la izquierda; (4) «Ver la visión / Con Daniel 2» eran dos
+   cajas grandes. Todo con el mismo sistema de letra de v211 (serif para nombres, sans
+   para datos; .75 / .875 / 1 rem) y los colores de la lámina. */
+
+/* La fila de pasos: corre sola al paso activo (lamMarcaPaso) y sus bordes se desvanecen
+   solo hacia donde hay más pasos (clases m-i / m-d, lamBordes). */
+.lam-pasos,.lam:not(.pres) .lam-riel-l{--fi:0px;--fd:0px;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fi),#000 calc(100% - var(--fd)),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 var(--fi),#000 calc(100% - var(--fd)),transparent 100%)}
+.lam-pasos.m-i,.lam:not(.pres) .lam-riel-l.m-i{--fi:28px}
+.lam-pasos.m-d,.lam:not(.pres) .lam-riel-l.m-d{--fd:28px}
+.lam-pasos{scroll-padding-inline:24px}
+
+@media (max-width:899px){
+  .lam:not(.pres) .lam-pasos{gap:2px}
+  .lam:not(.pres) .lam-paso{min-height:44px;padding:0 12px 0 2px;font-size:.875rem;gap:6px}
+  .lam:not(.pres) .lam-paso i{font-size:.875rem}
+
+  /* El navegador de partes: una tira de película. Cada parte es una tarjeta de 104 px
+     (imagen 16:10, nombre entero, sin «…», y fechas): a 390 se ven tres enteras y el
+     borde de la cuarta, que dice que la tira sigue. Se desliza con imán suave; la
+     elegida lleva el marco de oro y su luz. */
+  .lam:not(.pres) .lam-riel,.lam:not(.pres) .lam-riel.e{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+  .lam:not(.pres) .lam-riel-cab{order:1;padding:0 2px}
+  .lam:not(.pres) .lam-riel .lam-tira-bots,.lam:not(.pres) .lam-riel.e .lam-tira-bots{order:2;display:flex;flex-wrap:wrap;gap:8px;padding:0 2px}
+  .lam:not(.pres) .lam-riel-l{order:3;gap:8px;margin:0;padding:2px 0 6px;scroll-snap-type:x proximity;scroll-padding-inline:0;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none}
+  .lam:not(.pres) .lam-riel-l::before{display:none}
+  .lam:not(.pres) .lam-riel-l>li{flex:0 0 104px;width:104px;scroll-snap-align:start}
+  .lam:not(.pres) .lam-ri,.lam.escenas:not(.pres) .lam-ri{flex-direction:column;align-items:stretch;gap:6px;min-height:44px;padding:4px 4px 8px;border-radius:12px}
+  .lam:not(.pres) .lam-ri-m,.lam:not(.pres) .lam-riel.e .lam-ri-m{width:100%;height:auto;aspect-ratio:16/10;border-radius:8px}
+  .lam:not(.pres) .lam-ri-t{gap:2px;padding:0 2px}
+  .lam .lam-riel .lam-ri-t b{font-family:var(--cine-serif);font-size:.875rem;font-weight:500;line-height:1.2;overflow-wrap:normal;hyphens:manual;text-wrap:balance}
+  .lam:not(.pres) .lam-ri-t small:not(.lam-ri-f){display:none}
+  .lam .lam-riel .lam-ri-t small.lam-ri-f{font-size:.75rem;line-height:1.25}
+  .lam:not(.pres) .lam-ri::before,.lam.escenas:not(.pres) .lam-ri::before{top:auto;bottom:0;left:10px;right:10px;width:auto;height:2px;transform:scaleX(.3)}
+  .lam:not(.pres) .lam-ri.on::before{transform:none}
+  .lam:not(.pres) .lam-ri.on{background:color-mix(in srgb,var(--lam-oro) 12%,transparent)}
+  .lam:not(.pres) .lam-ri.on .lam-ri-m{box-shadow:0 0 0 2px var(--lam-oro),0 6px 18px -6px color-mix(in srgb,var(--c) 80%,transparent)}
+  .lam:not(.pres) .lam-ri-x .ico-t{width:22px;height:22px}
+
+  /* Ver la visión / Con Daniel 2: dos pastillas chicas, como filtros, no dos cajas. */
+  .lam:not(.pres) .lam-riel .lam-tira-bots .btn,.lam:not(.pres) .lam-riel.e .lam-tira-bots .btn{flex:0 0 auto;min-height:36px;padding:0 12px;gap:6px;font-size:.875rem;font-weight:600;border-radius:999px;justify-content:center}
+  .lam:not(.pres) .lam-tira-bots .btn .ico-t{width:14px;height:14px}
+
+  /* Anterior / Siguiente: fija al pie de la pantalla, sobre el área segura (la raya del
+     iPhone), con fondo opaco. La lámina deja abajo un espacio igual a su alto
+     (--lam-nav-h, lo mide lamNavAlto): al final de la hoja nada queda debajo de la barra.
+     La barra se pinta en la hoja y lamNavAlto la pasa a #lamPie, hijo directo de la lámina:
+     dentro de la hoja quedaba bajo lo que viene después (la línea de tiempo) y, dentro de una
+     pieza animada, fija a esa pieza y no a la pantalla. */
+  .lam:not(.pres) .lam-pie .lam-nav{position:fixed;left:0;right:0;bottom:0;z-index:30;margin:0;
+    padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+    background:#15110C;opacity:1;
+    border-top:1px solid var(--cine-linea);box-shadow:0 -12px 28px -16px rgba(0,0,0,.55);gap:12px;animation:none}
+  .lam.con-nav:not(.pres){padding-bottom:calc(var(--lam-nav-h,72px) + 16px)}
+  .lam:not(.pres) .lam-nav .lam-nav-tx{gap:3px}
+  .lam .lam-nav .lam-nav-p{font-size:.875rem;line-height:1.25}
+}
+@media (max-width:899px) and (prefers-reduced-motion:reduce){.lam:not(.pres) .lam-riel-l,.lam-pasos{scroll-behavior:auto}}
+@media (max-width:899px){
+  /* La entrada de cada pieza de la hoja, sin mover (solo opacidad): una pieza con
+     transform animado se vuelve el marco de lo fijo que lleva dentro, y la barra de la
+     portada (dentro de lam-intro) quedaba encima del texto en vez de ir al pie. */
+  .lam:not(.pres) .lam-hoja>*{animation-name:lamEntraO}
+  .lam:not(.pres) .lam-riel-cab,.lam:not(.pres) .lam-riel .lam-tira-bots{justify-content:flex-start;text-align:left}
+}
+@keyframes lamEntraO{from{opacity:0}to{opacity:1}}
+
+.lam-pie{flex:0 0 0;height:0;margin:0;padding:0}
+.lam-pie:empty{display:none}
+@media (max-width:899px){
+  /* La imagen se pega al borde de arriba (sobre el relleno de la lámina, no 12 px más abajo)
+     y, pegada (clase que pone lamPega), tapa la franja de la barra de estado del iPhone y
+     pierde las esquinas de arriba: lo que pasa por debajo al leer ya no asoma sobre ella. */
+  .lam:not(.pres) .lam-esc{top:-12px}
+  .lam:not(.pres) .lam-esc.pegada{border-radius:0 0 12px 12px;box-shadow:0 calc(-1px - env(safe-area-inset-top,0px)) 0 0 var(--bg),0 30px 60px -34px rgba(0,0,0,.65)}
+}
+/* v217: lo mismo al presentar en el teléfono (vertical): los botones ‹ 5/17 › se pegaban al
+   borde del relleno de la lámina, no al de la pantalla, y el texto asomaba por debajo. La
+   barra es lo último de la lámina: sin relleno abajo, se pega al borde y lleva dentro el
+   área segura (padding de .lam-ctl). */
+.lam.pres:not(.ancho){padding-bottom:0}
+.lam.pres:not(.ancho) .lam-ctl{border-top:1px solid var(--cine-linea)}
+@media (max-width:899px){.lam.con-nav:not(.pres){scroll-padding-bottom:calc(var(--lam-nav-h,72px) + 8px)}}
