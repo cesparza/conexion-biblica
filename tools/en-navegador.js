@@ -378,9 +378,10 @@ for (const W of ANCHOS) {
     ok(hoja.ver && /Medo-Persia/.test(hoja.tx) && /5:28/.test(hoja.tx) && hoja.libre, W + ' · tocar la etiqueta abre la explicación sin tapar la imagen');
     for (const [id, re] of [['piedra', /segunda venida/], ['monte', /reino eterno/i]]) {
       await p.evaluate(() => lamInicio()); await p.waitForTimeout(400);
-      await p.locator('#lamEts .lam-et[data-p="' + id + '"]').click(); await p.waitForTimeout(1300);
+      /* v212: el monte ya no tiene rótulo sobre la estatua: se elige en el riel. */
+      await p.locator(id === 'monte' ? '#lamTira .lam-ri[data-p="monte"]' : '#lamEts .lam-et[data-p="' + id + '"]').click(); await p.waitForTimeout(1300);
       const r = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.querySelector('#lamSvg .lam-piedra').getAttribute('transform'), document.querySelector('#lamSvg .lam-monte').style.opacity]);
-      ok(re.test(r[0]) && /translate\(550 1085\)/.test(r[1]) && (id !== 'monte' || r[2] === '1'), W + ' · la etiqueta «' + id + '» explica y anima (' + r[1] + ')');
+      ok(re.test(r[0]) && /translate\(550 1085\)/.test(r[1]) && (id !== 'monte' || r[2] === '1'), W + ' · «' + id + '» (rótulo o riel) explica y anima (' + r[1] + ')');
     }
     await p.evaluate(() => { const r = document.getElementById('lamRango'); r.value = 1520; r.dispatchEvent(new Event('input')); });
     const anio = await p.evaluate(() => [document.getElementById('lamTq').textContent, [...document.querySelectorAll('#lamSvg .lam-parte.on')].map(x => x.getAttribute('data-p')).sort().join()]);
@@ -426,10 +427,10 @@ for (const W of ANCHOS) {
     /* La piedra y el monte, a la mano desde cualquier parte. */
     await p.evaluate(() => lamAbre('d2', 'explorar')); await p.waitForTimeout(700);
     await p.evaluate(() => lamElige(4)); await p.waitForTimeout(400);
-    const sig = await p.evaluate(() => { const b = document.querySelector('#lamHoja .lam-nav .lam-nv.sig'), r = b.getBoundingClientRect(); return [b.textContent, r.bottom <= innerHeight + 1 && r.top >= 0]; });
+    const sig = await p.evaluate(() => { const b = document.querySelector('#lamHoja .lam-nav .lam-rd.sig'), r = b.getBoundingClientRect(); return [b.getAttribute('aria-label') + ' ' + document.querySelector('#lamHoja .lam-nav-p').textContent, r.bottom <= innerHeight + 1 && r.top >= 0]; });
     const vistas = [];
-    for (let i = 0; i < 3; i++) { await p.locator('#lamHoja .lam-nav .lam-nv.sig').click(); await p.waitForTimeout(350); vistas.push(await p.evaluate(() => lamSel)); }
-    const tira = await p.evaluate(() => [...document.querySelectorAll('#lamTira .lam-tb')].map(b => b.dataset.p).join());
+    for (let i = 0; i < 3; i++) { await p.locator('#lamHoja .lam-nav .lam-rd.sig').click(); await p.waitForTimeout(350); vistas.push(await p.evaluate(() => lamSel)); }
+    const tira = await p.evaluate(() => [...document.querySelectorAll('#lamTira .lam-ri')].map(b => b.dataset.p).join());
     ok(/Hierro mezclado/.test(sig[0]) && sig[1] && vistas.join() === 'barro,piedra,monte' && /piedra,monte$/.test(tira),
       W + ' · v211: desde los dedos, Siguiente (a la vista) lleva al barro, la piedra y el monte; la tira los trae (' + vistas.join(' → ') + ')');
     /* La línea de tiempo: una pista, el tramo dentro; el año sobre la imagen; el futuro. */
@@ -463,6 +464,53 @@ for (const W of ANCHOS) {
       W + ' · v211: «Quién estudia» dice la actividad de cada pastilla y abre la suya (' + cat.join(' → ') + ')');
     await p.evaluate(() => { cierraHoja(); DB = JSON.parse(window.__dbAntes); S = DB.alumnos[DB.activo]; guardar(); marcaCat(); });
   }
+  /* ── 3c-ter. v212, la ronda de Camilo (14-oct, 13:00): la hoja nunca vacía, el riel
+     de las partes con el teclado, nada cortado, y el monte y el cierre distintos. ── */
+  {
+    for (const id of ['d2', 'd7']) {
+      await p.evaluate(id => lamAbre(id, 'explorar'), id); await p.waitForTimeout(900);
+      /* Al abrir, la hoja es una portada, no una barra: alto, título, pasaje y por dónde empezar. */
+      const h = await p.evaluate(() => { const h = document.getElementById('lamHoja'), r = h.getBoundingClientRect();
+        return { alto: Math.round(r.height), tx: h.textContent, intro: !!h.querySelector('.lam-intro .lam-intro-go'), pista: h.querySelectorAll('.lam-pista').length,
+          tit: h.querySelector('.lam-intro-tit') && h.querySelector('.lam-intro-tit').getBoundingClientRect().height }; });
+      const I = await p.evaluate(id => LAMINAS[id].intro, id);
+      ok(h.alto >= 220 && h.intro && h.pista === 0 && h.tit > 20 && h.tx.includes(I.titulo) && h.tx.includes(I.ref), W + ' · v212: ' + id + ' abre con la hoja llena (portada de ' + h.alto + ' px), no una barra vacía');
+      /* El riel: todas las partes, con su miniatura, y las flechas pasan de parte llevando el foco. */
+      const n = await p.evaluate(() => LAM().partes.length);
+      await p.locator('#lamTira .lam-ri').first().focus();
+      await p.keyboard.press('ArrowDown'); await p.waitForTimeout(250); await p.keyboard.press('ArrowDown'); await p.waitForTimeout(250);
+      const k1 = await p.evaluate(() => [lamSel, LAM().partes[1].id, document.activeElement.dataset.p, document.querySelector('#lamTira .lam-ri[aria-current="true"]').dataset.p]);
+      await p.keyboard.press('End'); await p.waitForTimeout(250);
+      const k2 = await p.evaluate(() => [lamSel, LAM().partes[LAM().partes.length - 1].id, document.activeElement.dataset.p]);
+      await p.keyboard.press('ArrowUp'); await p.waitForTimeout(250);
+      const k3 = await p.evaluate(() => [lamSel, LAM().partes[LAM().partes.length - 2].id]);
+      await p.keyboard.press('Home'); await p.waitForTimeout(250);
+      const k4 = await p.evaluate(() => [lamSel, LAM().partes[0].id, document.querySelectorAll('#lamTira .lam-ri .lam-ri-m > *').length]);
+      ok(k1[0] === k1[1] && k1[2] === k1[0] && k1[3] === k1[0] && k2[0] === k2[1] && k2[2] === k2[0] && k3[0] === k3[1] && k4[0] === k4[1] && k4[2] === n,
+        W + ' · v212: ' + id + ', el riel elige con ↓ ↓ Fin ↑ Inicio y el foco lo sigue (' + [k1[0], k2[0], k3[0], k4[0]].join(' → ') + ')');
+      /* Nada cortado: ni en el riel ni en Anterior/Siguiente, en ninguna parte. */
+      const corta = await p.evaluate(async () => { const malos = [];
+        const mira = (sel, d) => document.querySelectorAll(sel).forEach(e => { const cs = getComputedStyle(e);
+          if (e.getClientRects().length && (e.scrollWidth > e.clientWidth + 1 || cs.textOverflow === 'ellipsis')) malos.push(d + ':' + e.textContent.trim().slice(0, 24)); });
+        for (let i = 0; i < LAM().partes.length; i++) { lamElige(i); await new Promise(r => setTimeout(r, 60)); mira('#lamHoja .lam-nav-p, #lamHoja .lam-nav-n', 'nav' + i); }
+        mira('#lamTira .lam-ri-t b, #lamTira .lam-ri-t small', 'riel'); return malos; });
+      ok(!corta.length, W + ' · v212: ' + id + ', ningún nombre se corta en el riel ni en Anterior/Siguiente' + (corta.length ? ' (' + corta.slice(0, 4).join(', ') + ')' : ''));
+      const rd = await p.evaluate(() => [...document.querySelectorAll('#lamHoja .lam-nav .lam-rd')].map(b => { const r = b.getBoundingClientRect(); return Math.round(r.width) + 'x' + Math.round(r.height) + ':' + getComputedStyle(b).borderRadius; }));
+      ok(rd.length === 2 && rd.every(x => /^4\dx4\d:50%$/.test(x) || /^4\dx4\d:\d+px$/.test(x)), W + ' · v212: Anterior y Siguiente son dos botones redondos (' + rd.join(', ') + ')');
+      await p.evaluate(() => lamCierra());
+    }
+    /* Presentar Daniel 2: el monte sin la foto repetida; el cierre, otra imagen (la placa con toda la historia). */
+    await p.evaluate(() => lamAbre('d2', 'presentar')); await p.waitForTimeout(600);
+    const ver = async tipo => { await p.evaluate(t => lamPres(lamPasos().findIndex(s => s.tipo === t || s.id === t)), tipo); await p.waitForTimeout(1200);
+      return p.evaluate(() => { const op = sel => Number(getComputedStyle(document.querySelector(sel)).opacity), f = document.getElementById('lamFin');
+        return { monte: op('#lamSvg .lam-monte'), est: op('#lamSvg .lam-estatua'), figs: [...document.querySelectorAll('#lamHoja .lam-fig')].map(x => x.dataset.f).join(),
+          fin: !!f && f.classList.contains('ve') && op('#lamFin') > .5, reel: f ? f.querySelectorAll('.lam-fin-reel li').length : 0, cuenta: document.getElementById('lamCuenta').textContent }; }); };
+    const mo = await ver('monte'), ci = await ver('cierre'), mo2 = await ver('monte');
+    ok(mo.monte > .95 && mo.figs === '' && !mo.fin, W + ' · v212: el paso del monte muestra el monte una sola vez (fotos en la hoja: «' + mo.figs + '»)');
+    ok(ci.fin && ci.reel === 8 && ci.monte < .05 && ci.est > .95 && ci.cuenta === '16 / 16', W + ' · v212: el cierre es otra imagen: la placa con los 8 tiempos sobre la estatua en sombra, sin el monte (' + ci.cuenta + ')');
+    ok(!mo2.fin && mo2.monte > .95, W + ' · v212: al volver del cierre al monte, la placa se va');
+    await p.evaluate(() => lamCierra());
+  }
   /* ── 3d. la lámina de Daniel 7 (v204): escenas, no estatua. Se ofrece en su
      capítulo; la tira de partes cambia la imagen y abre la hoja; la línea de
      tiempo muestra la escena del año (1798: Berthier); Presentar recorre los
@@ -473,23 +521,23 @@ for (const W of ANCHOS) {
     ok(await p.locator('#detalle .lam-invita').count() === 1, W + ' · Daniel 7 ofrece el estudio interactivo');
     await p.locator('#detalle .lam-invita .btn.ver').click();
     await p.waitForTimeout(900);
-    const tira = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamTira .lam-tb img'), document.querySelector('#lamSvg .lam-hist')].map(i => i.getAttribute('src') || i.getAttribute('href'));
+    const tira = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamTira .lam-ri img'), document.querySelector('#lamSvg .lam-hist')].map(i => i.getAttribute('src') || i.getAttribute('href'));
       const r = await Promise.all(hs.map(h => fetch(h).then(x => x.ok && x.headers.get('content-type') === 'image/webp').catch(() => false)));
-      return [document.querySelectorAll('#lamTira .lam-tb').length, r.every(Boolean) && r.length, !document.getElementById('lamEsc').classList.contains('cargando')]; });
+      return [document.querySelectorAll('#lamTira .lam-ri').length, r.every(Boolean) && r.length, !document.getElementById('lamEsc').classList.contains('cargando')]; });
     ok(tira[0] === 9 && tira[1] === 10 && tira[2], W + ' · Daniel 7: la tira trae las 9 partes y sus imágenes cargan (' + tira.join(', ') + ')');
     const lado = await p.evaluate(() => { const r = document.getElementById('lamEsc').getBoundingClientRect(); return Math.round(r.width / r.height * 100) / 100; });
     ok(Math.abs(lado - 2050 / 1152) < 0.02, W + ' · la imagen de Daniel 7 es apaisada (' + lado + ')');
     /* v205: aquí se prueba la foto entera del oso; con oso-solo.png sube recortado sobre el mar (ver 3e). */
     await p.evaluate(() => { for (const k in lamHayP) delete lamHayP[k]; LAMINAS.d7.sube.solo.forEach(f => { lamHayImg[lamSrc(f)] = false; }); });
-    await p.locator('#lamTira .lam-tb[data-p="oso"]').click();
+    await p.locator('#lamTira .lam-ri[data-p="oso"]').click();
     await p.waitForTimeout(2300); /* v205: el oso sube del mar (1,7 s) antes de quedar como imagen */
     const oso = await p.evaluate(() => { const h = document.getElementById('lamHoja'), r = h.getBoundingClientRect(), e = document.getElementById('lamEsc').getBoundingClientRect();
       return [h.textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamChip').textContent,
-        document.querySelector('#lamTira .lam-tb.on').dataset.p, !(r.left < e.right - 1 && r.right > e.left + 1 && r.top < e.bottom - 1 && r.bottom > e.top + 1)]; });
+        document.querySelector('#lamTira .lam-ri.on').dataset.p, !(r.left < e.right - 1 && r.right > e.left + 1 && r.top < e.bottom - 1 && r.bottom > e.top + 1)]; });
     await p.evaluate(() => LAMINAS.d7.sube.solo.forEach(f => { delete lamHayImg[lamSrc(f)]; }));
     ok(/Medo-Persia/.test(oso[0]) && /Lidia/.test(oso[0]) && /d7\/oso\.webp$/.test(oso[1]) && /^Oso/.test(oso[2]) && oso[3] === 'oso' && oso[4],
       W + ' · tocar el oso en la tira cambia la imagen y abre su explicación sin taparla');
-    await p.locator('#lamTira .lam-tb[data-p="cuerno"]').click();
+    await p.locator('#lamTira .lam-ri[data-p="cuerno"]').click();
     await p.waitForTimeout(700);
     const cu = await p.evaluate(() => [document.getElementById('lamHoja').textContent, [...document.querySelectorAll('#lamHoja .lam-fig')].map(f => f.dataset.f).join()]);
     ok(/Roma papal/.test(cu[0]) && /13:3/.test(cu[0]) && /d2\/e538/.test(cu[1]) && /d2\/e1798/.test(cu[1]), W + ' · el cuerno pequeño trae 538 y 1798 de Daniel 2 (' + cu[1] + ')');

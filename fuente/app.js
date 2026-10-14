@@ -149,8 +149,13 @@ function lamEscena(){
   const capa=id=>'<g class="lam-parte" data-p="'+id+'"><image href="'+lamSrc(id)+'" x="'+L.ox+'" y="0" width="768" height="1152"/>'+
     '<rect class="lam-hit" x="'+C[id][0]+'" y="'+C[id][1]+'" width="'+C[id][2]+'" height="'+C[id][3]+'" fill="transparent" pointer-events="all" onclick="lamToca(\''+id+'\')"/></g>';
   /* La línea va del punto de la estatua al borde de su etiqueta. */
-  const lineas=Object.keys(E).filter(id=>E[id].ax).map(id=>{const e=E[id],x2=e.lado==='i'?330:770;
-    return '<g class="lam-guia" data-p="'+id+'"><circle cx="'+e.ax+'" cy="'+e.ay+'" r="7"/><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+30:x2-30)+' '+(e.ly+32)+' L'+x2+' '+(e.ly+32)+'"/></g>';}).join('');
+  /* v212 (Camilo: «las etiquetas sobre la estatua se ven desordenadas»): anotaciones de
+     museo. Dos columnas alineadas (la izquierda termina en 30 %, la derecha empieza en
+     70,7 %), sin cajas; un hilo fino va del punto de la estatua al CENTRO de su rótulo
+     (ly es ese centro). El trazo no engorda al acercarse (non-scaling-stroke). */
+  const lineas=Object.keys(E).filter(id=>E[id].ax).map(id=>{const e=E[id],x2=e.lado==='i'?322:770;
+    return '<g class="lam-guia" data-p="'+id+'"><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+44:x2-44)+' '+e.ly+' L'+x2+' '+e.ly+'" vector-effect="non-scaling-stroke"/>'+
+      '<circle cx="'+e.ax+'" cy="'+e.ay+'" r="5" vector-effect="non-scaling-stroke"/></g>';}).join('');
   const etiquetas=Object.keys(E).map(id=>{const e=E[id],p=lamParte(id);
     return '<button type="button" class="lam-et '+e.lado+'" data-p="'+id+'" style="--c:'+p.c+';top:'+(e.ly/L.h*100)+'%" onclick="lamToca(\''+id+'\')">'+
       '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</span></button>';}).join('');
@@ -173,12 +178,11 @@ function lamEscena(){
     '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
-    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div><div class="lam-chip" id="lamChip" hidden></div>'+lamAnioVHTML()+lamCartelHTML()+
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div><div class="lam-chip" id="lamChip" hidden></div>'+lamAnioVHTML()+lamCartelHTML()+lamFinHTML()+
     (lamModo==='presentar'?'':'<div class="lam-aviso" id="lamAviso">Toca una parte de la estatua</div>')+'</div>'+
-    /* v211 (Camilo: «desde los dedos no hay cómo llegar a la piedra ni al monte»): todas
-       las partes en una tira, también la piedra y el monte, siempre a la vista. */
-    (lamModo==='presentar'?'':'<div class="lam-tira-c lam-tira-d2"><div class="lam-tira-t">Las partes del sueño · elige una</div><div class="lam-tira chips" id="lamTira">'+
-      L.partes.map((p,i)=>'<button type="button" class="lam-tb chip" data-p="'+p.id+'" style="--c:'+p.c+'" title="'+esc(p.reino)+'" onclick="lamElige('+i+')"><b>'+esc(p.nombre)+'</b><small>'+esc(p.reino)+'</small></button>').join('')+'</div></div>')+
+    /* v211: todas las partes siempre a la mano, también la piedra y el monte.
+       v212: ya no como pastillas: el riel de la estatua (lamRielHTML). */
+    (lamModo==='presentar'?'':lamRielHTML())+
     /* v187: la explicación va DEBAJO de la imagen (al lado en pantalla ancha),
        nunca encima: en el celular tapaba la animación. Solo en Presentar con
        pantalla ancha va sobre la parte vacía de la escena apaisada. */
@@ -264,10 +268,103 @@ function lamEnciende(ids,suaves,vecinas){
     x.classList.toggle('on',!!hay&&ids.includes(id));
     x.classList.toggle('apagada',!!hay&&!ids.includes(id)&&!(suaves||[]).includes(id));
     x.classList.toggle('tenue',!!hay&&(suaves||[]).includes(id));});
-  document.querySelectorAll('#lamEts .lam-et, #lamTira .lam-tb').forEach(b=>b.classList.toggle('on',!!hay&&ids.includes(b.getAttribute('data-p'))));
+  document.querySelectorAll('#lamEts .lam-et').forEach(b=>b.classList.toggle('on',!!hay&&ids.includes(b.getAttribute('data-p'))));
+  lamRielMarca(hay?ids:[]);
 }
 function lamEtiquetas(ver){const e=document.getElementById('lamEts');if(e)e.classList.toggle('fuera',!ver);
   const g=document.querySelector('#lamSvg .lam-guias');if(g)g.style.opacity=ver?'1':'0';}
+
+/* ── v212: EL RIEL DE LAS PARTES ──
+   Camilo (14-oct): las pastillas «Cabeza de oro, Pecho y brazos…» no eran dignas de
+   la lámina. En su lugar, un riel como el índice de una sala de museo: una columna
+   al lado de la imagen con las partes en orden (de la cabeza a los pies, y después la
+   piedra y el monte), cada una con su metal recortado de la misma estatua, su nombre
+   y sus fechas. La elegida lleva un hilo de oro y una luz suave. Se maneja con el
+   dedo, el mouse o el teclado (↑ ↓ ← →, Inicio, Fin). En pantallas angostas el mismo
+   riel corre a lo ancho bajo la imagen. Daniel 7 usa el mismo riel con sus escenas. */
+/* La miniatura de una parte: el recorte de su metal (Daniel 2) o su imagen. Sin
+   loading=lazy: una imagen perezosa dentro de una lista con scroll no carga en Safari (v209). */
+function lamMini(L,p){
+  if(L.tipo!=='escenas'&&L.capas.includes(p.id)){
+    const [x,y,w,h]=L.cajas[p.id],sz=Math.max(w,h)*1.1,cx=x-L.ox+w/2,cy=y+h/2;
+    return '<svg class="lam-mini" viewBox="'+[cx-sz/2,cy-sz/2,sz,sz].map(v=>v.toFixed(0)).join(' ')+'" aria-hidden="true">'+
+      '<image href="'+lamRuta(L,p.id)+'" x="0" y="0" width="768" height="1152"/></svg>';}
+  return '<img src="'+lamRuta(L,p.img||p.id)+'" alt="">';
+}
+const lamFechaCorta=p=>p.de!=null?lamAnioTx(p.de):p.fechas.replace(/^./,c=>c.toUpperCase());
+/* Las fechas del riel, cortas: el rótulo de la estatua si lo hay; si no, de dónde a dónde. */
+const lamFechasRiel=(L,p)=>{const e=(L.etiquetas||{})[p.id];if(e&&e.f&&p.de!=null)return e.f;
+  if(p.de!=null)return p.a>=LAM_HOY?'desde '+lamAnioTx(p.de):p.de<0===p.a<0?(Math.abs(p.de)+' – '+lamAnioTx(p.a)):lamAnioTx(p.de)+' – '+lamAnioTx(p.a);
+  return p.era?'desde '+lamAnioTx(p.era):p.fechas;};
+function lamRielHTML(extra){
+  const L=LAM(),t=lamEsE()?'Las partes de la visión':'Las partes del sueño';
+  return '<nav class="lam-riel'+(lamEsE()?' e':'')+'" aria-label="'+t+'"><div class="lam-riel-cab"><div class="lam-rot">'+t+'</div></div>'+
+    '<ol class="lam-riel-l" id="lamTira">'+L.partes.map((p,i)=>'<li><button type="button" class="lam-ri" data-p="'+p.id+'" style="--c:'+p.c+'" tabindex="'+(i?'-1':'0')+'" onclick="lamElige('+i+')">'+
+      '<span class="lam-ri-m">'+lamMini(L,p)+'</span><span class="lam-ri-t"><b>'+esc(p.nombre)+'</b><small>'+esc(p.reino)+'</small><small class="lam-ri-f">'+
+      esc(lamFechasRiel(L,p)).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</small></span></button></li>').join('')+'</ol>'+(extra||'')+'</nav>';
+}
+/* Marca en el riel lo elegido (o lo que gobierna en el año que se recorre) y lo trae a la vista
+   moviendo solo el riel, nunca la página. */
+function lamRielMarca(ids){
+  const t=document.getElementById('lamTira');if(!t)return;
+  const bs=[...t.querySelectorAll('.lam-ri')];let pri=null;
+  bs.forEach(b=>{const on=!!ids&&ids.includes(b.getAttribute('data-p'));b.classList.toggle('on',on);
+    if(on)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');if(on&&!pri)pri=b;});
+  bs.forEach(b=>{b.tabIndex=b===(pri||bs[0])?0:-1;});
+  if(!pri||t.__ve===pri)return;t.__ve=pri;
+  const v=t.scrollHeight>t.clientHeight+2,h=t.scrollWidth>t.clientWidth+2;if(!v&&!h)return;
+  const d=v?{top:pri.offsetTop-t.clientHeight/2+pri.offsetHeight/2}:{left:pri.offsetLeft-t.clientWidth/2+pri.offsetWidth/2};
+  if(t.scrollTo)t.scrollTo(Object.assign(d,{behavior:lamQuieto()||lamCorre?'auto':'smooth'}));
+}
+/* Las flechas, dentro del riel: pasan de parte y llevan el foco con ellas. */
+function lamRielTeclas(){
+  const t=document.getElementById('lamTira');if(!t||t.__k)return;t.__k=true;
+  t.addEventListener('keydown',e=>{
+    const n=LAM().partes.length,i=LAM().partes.findIndex(p=>p.id===lamSel),k={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key];
+    let j=null;if(k!=null)j=i<0?(k>0?0:n-1):i+k;else if(e.key==='Home')j=0;else if(e.key==='End')j=n-1;
+    if(j==null)return;e.preventDefault();e.stopPropagation();if(j<0||j>=n)return;
+    lamElige(j);const b=t.querySelectorAll('.lam-ri')[j];if(b&&b.focus)b.focus({preventScroll:true});});
+}
+/* v212: LA PORTADA DE EXPLORAR. Camilo vio la hoja de la derecha como una barra oscura
+   vacía: la pista era un <p> con la clase lam-pista, y en v211 la pista de la línea de tiempo
+   tomó ese mismo nombre (posición absoluta, 6 px de alto, overflow oculto). La hoja
+   quedaba en su relleno. Ahora la hoja sin parte es una portada con nombre propio
+   (lam-intro): el pasaje que abre la visión, de qué trata y por dónde empezar. */
+function lamIntroHTML(){
+  const L=LAM(),I=L.intro||{},p0=L.partes[0];
+  return '<div class="lam-intro"><div class="lam-rot">'+esc(L.libro||'Daniel 2')+' · Explorar</div>'+
+    '<h3 class="lam-intro-tit">'+esc(I.titulo||L.titulo)+'</h3>'+
+    (I.texto?'<p class="lam-intro-q"><q>'+esc(I.texto)+'</q> <span class="lam-ref">'+esc(I.ref)+'</span></p>':'')+
+    (I.nota?'<p class="lam-intro-n">'+esc(I.nota)+'</p>':'')+
+    (I.datos?'<dl class="lam-intro-d">'+I.datos.map(d=>'<div><dt>'+esc(d[0])+'</dt><dd>'+esc(d[1])+'</dd></div>').join('')+'</dl>':'')+
+    '<div class="lam-intro-pie"><div class="lam-rot">Elige una parte</div><p>En la lista o tocando la imagen. Con el teclado, las flechas.</p>'+
+    '<button type="button" class="lam-intro-go" onclick="lamElige(0)"><span><small>Empezar por</small><b>'+esc(p0.nombre)+'</b></span>'+IC('der')+'</button></div></div>';
+}
+/* v212: EL CIERRE DE DANIEL 2 (Camilo: «la imagen del reino que jamás será destruido
+   se repite con el anterior»). El monte ya es el paso de antes; el cierre es otra
+   cosa: una placa final sobre la estatua en sombra que sigue acercándose despacio,
+   con toda la historia en una sola fila (los seis reinos, la piedra y el monte, cada
+   uno con su metal y su año) que se enciende de izquierda a derecha y termina en el
+   reino que no se acaba. */
+function lamFinHTML(){
+  const L=LAM(),c=L.cierre;if(!c||lamModo!=='presentar'||lamEsE())return '';
+  return '<div class="lam-fin" id="lamFin">'+(c.fondo?'<img class="lam-fin-bg" alt="" hidden>':'')+'<div class="lam-fin-in"><div class="lam-fin-ant" data-o="0">'+esc(c.ref2||c.ref)+'</div>'+
+    '<div class="lam-fin-tit" data-o="1">'+esc(c.titulo)+'</div><i class="lam-fin-reg" data-o="1"></i>'+
+    '<ol class="lam-fin-reel">'+L.partes.map((p,i)=>'<li data-o="2" class="'+(p.id==='monte'?'ult':p.id==='piedra'?'pi':'')+'" style="--i:'+i+';--c:'+p.c+'">'+
+      '<span class="lam-ri-m">'+lamMini(L,p)+'</span><b>'+esc(p.de==null&&(L.etiquetas[p.id]||{}).f||p.reino)+'</b><small>'+esc(lamFechaCorta(p))+'</small></li>').join('')+'</ol>'+
+    '<p class="lam-fin-cita" data-o="3"><q>'+esc(c.texto)+'</q> <cite>'+esc(c.ref)+'</cite></p>'+
+    '<p class="lam-fin-nota" data-o="4">'+esc(c.nota)+'</p></div></div>';
+}
+function lamFin(on){
+  const f=document.getElementById('lamFin'),l=document.getElementById('lam'),e=document.getElementById('lamEsc');
+  if(l)l.classList.toggle('en-fin',!!(on&&f));if(e)e.classList.toggle('en-fin',!!(on&&f));
+  if(!f)return;
+  if(!on){f.classList.remove('ve');return;}
+  /* Si Camilo agrega la imagen propia del cierre (cierre.fondo, opcional), va detrás de la placa. */
+  const bg=f.querySelector('.lam-fin-bg'),c=LAM().cierre;
+  if(bg&&bg.hidden&&c.fondo){const src=lamSrc(c.fondo);lamExiste(src).then(ok=>{if(ok){bg.src=src;bg.hidden=false;}});}
+  if(!f.classList.contains('ve')){f.classList.toggle('quieto',lamQuieto());void f.offsetWidth;f.classList.add('ve');}
+}
 
 /* ── Abrir y cerrar ── */
 function lamAbre(cid,modo){
@@ -297,12 +394,14 @@ function lamAbre(cid,modo){
     '<div class="lam-rango"><div class="lam-pista" id="lamPista" style="background:'+lamPista()+'"><i class="lam-hoy" style="left:'+lamPos(LAM_HOY)+'%"></i><i class="lam-tramo" id="lamTramo"></i></div>'+
     '<input type="range" id="lamRango" min="-620" max="'+LAM_FIN+'" step="1" value="-620" aria-label="Año"></div>'+
     '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
-    (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" onclick="lamAtras()">‹ Anterior</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="pri" onclick="lamAdelante()">Siguiente ›</button></div>':
+    /* v212: los mismos botones redondos de Explorar (lamNavHTML). */
+    (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" class="lam-rd" aria-label="Anterior" onclick="lamAtras()">'+IC('izq')+'</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="lam-rd sig" aria-label="Siguiente" onclick="lamAdelante()">'+IC('der')+'</button></div>':
      '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
      L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
      '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
   document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
   lamPrecarga(cid,document.getElementById('lamEsc'));
+  lamRielTeclas();
   lamGeo();
   if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();
     /* v209: al abrir, el título de la lámina un momento, como al empezar una película. */
@@ -332,7 +431,7 @@ function lamCierra(){
 function lamHoja(html){
   const h=document.getElementById('lamHoja');if(!h)return;
   h.classList.toggle('vacia',!html);
-  h.innerHTML=html||'<p class="lam-pista">'+IC('lupa')+' '+esc(LAM().pista||'Toca una parte de la estatua, la piedra, el monte o una etiqueta. Arriba están los pasos del capítulo; abajo, la historia año por año.')+'</p>';
+  h.innerHTML=html||lamIntroHTML();
   h.scrollTop=0;
 }
 /* ── v209: EL CARTEL, LA FRANJA DE ORO Y LOS CONTROLES QUE SE APARTAN ──
@@ -484,9 +583,12 @@ const lamEnRango=(p,y)=>p.de!=null&&y>=p.de&&y<=p.a;
 /* Cada escena sin parte va solo a la parte de rango más corto que la contiene (1798: Roma papal, no los dedos). */
 const lamEscenasDe=p=>(LAM().escenas||[]).filter(e=>!e.parte&&lamEnRango(p,e.y)&&
   LAM().partes.filter(q=>lamEnRango(q,e.y)).sort((x,z)=>(x.a-x.de)-(z.a-z.de))[0]===p);
+/* v212 (Camilo: «salen dos imágenes de lo mismo»): lo que ya está en el escenario (el
+   monte, que crece en la escena) no se repite como foto en la hoja (`enEscena`). */
+const lamEnEscena=e=>!!e&&!!e.parte&&(LAM().enEscena||[]).includes(e.parte);
 function lamEscenasHTML(p){
-  const m=lamEscenasDe(p);
-  return lamEscenaHTML(lamEscenaDe(p.id))+(m.length?'<div class="lam-mas">'+m.map(e=>lamEscenaHTML(Object.assign({},e,{t:e.c||e.t}))).join('')+'</div>':'');
+  const m=lamEscenasDe(p),e=lamEscenaDe(p.id);
+  return (lamEnEscena(e)?'':lamEscenaHTML(e))+(m.length?'<div class="lam-mas">'+m.map(e=>lamEscenaHTML(Object.assign({},e,{t:e.c||e.t}))).join('')+'</div>':'');
 }
 const lamEscenaAnio=y=>(LAM().escenas||[]).filter(e=>e.y<=y).pop();
 function lamHojaParte(p,i,n){
@@ -506,11 +608,16 @@ function lamHojaParteTx(p,i,n,figs){
 /* v211 (Camilo: «se perdió el Anterior y Siguiente»): la navegación entre partes va
    pegada al pie de la explicación (siempre a la vista, aunque el texto sea largo) y
    dice a qué parte lleva. También con las flechas del teclado. */
+/* v212 (Camilo: «los botones de Anterior y Siguiente se ven feos»: cajas pesadas con el
+   nombre cortado): dos botones redondos, solo flecha, como los de Presentar, y entre
+   ellos dónde vamos (2 / 8, una regla de ocho marcas) y a qué parte se sigue, entero. */
 function lamNavHTML(i,n){
   const P=LAM().partes,a=P[i-1],b=P[i+1];
-  return '<nav class="lam-nav" aria-label="Partes"><button type="button" class="lam-nv" '+(a?'onclick="lamElige('+(i-1)+')"':'disabled')+'><small>‹ Anterior</small><b>'+(a?esc(a.nombre):'')+'</b></button>'+
-    '<span>'+(i+1)+' de '+n+'</span>'+
-    '<button type="button" class="lam-nv sig" '+(b?'onclick="lamElige('+(i+1)+')"':'disabled')+'><small>Siguiente ›</small><b>'+(b?esc(b.nombre):'')+'</b></button></nav>';
+  return '<nav class="lam-nav" aria-label="Partes">'+
+    '<button type="button" class="lam-rd" '+(a?'onclick="lamElige('+(i-1)+')" aria-label="Anterior: '+esc(a.nombre)+'" title="'+esc(a.nombre)+'"':'disabled aria-label="Anterior"')+'>'+IC('izq')+'</button>'+
+    '<div class="lam-nav-tx"><div class="lam-nav-n"><span><b>'+(i+1)+'</b> / '+n+'</span><span class="lam-nav-bar" aria-hidden="true">'+P.map((_,k)=>'<i'+(k===i?' class="on"':k<i?' class="ya"':'')+'></i>').join('')+'</span></div>'+
+    '<div class="lam-nav-p">'+(b?'<span>Sigue</span> '+esc(b.nombre):(lamEsE()?'Fin de la visión':'Fin del sueño'))+'</div></div>'+
+    '<button type="button" class="lam-rd sig" '+(b?'onclick="lamElige('+(i+1)+')" aria-label="Siguiente: '+esc(b.nombre)+'" title="'+esc(b.nombre)+'"':'disabled aria-label="Siguiente"')+'>'+IC('der')+'</button></nav>';
 }
 function lamHojaTexto(t){
   return '<div class="lam-hcab"><div><div class="lam-p1">'+esc(t.ref)+'</div><div class="lam-p2">'+esc(t.titulo)+'</div></div>'+
@@ -554,7 +661,7 @@ function lamElige(i){
   if(esPiedra){lamPiedraArriba();lamCae(pi);}
   else if(esMonte){lamVuelo++;pi.style.opacity='1';pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');lamPolvo(svg);setTimeout(()=>{if(lamSel==='monte')lamMonte('crece');},500);}
   else lamPiedraArriba();
-  lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
+  lamRielMarca([p.id]);lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
   /* v209: el nombre como un rótulo de documental, y su periodo en oro sobre la línea de tiempo. */
   lamChip(p);lamTramo(p.de,p.a);
   const fv=(L.futuro||[]).find(f=>f.id===p.id);if(fv)lamTiempoFut(fv,true);
@@ -629,7 +736,7 @@ function lamVeAnio(y){
   /* El año va en la explicación, no sobre la imagen. */
   /* Al recorrer solo, el año cambia veinte veces por segundo: la escena se
      vuelve a pintar solo cuando cambia, si no parpadea. */
-  const esA=lamEscenaAnio(y),hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>';
+  const esA0=lamEscenaAnio(y),esA=lamEnEscena(esA0)?null:esA0,hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>';
   const fig=hj&&hj.querySelector('.lam-fig'),igual=fig?(esA&&fig.getAttribute('data-f')===esA.f):!esA;
   if(hj&&igual&&hj.querySelector('.lam-anio-tx')){hj.querySelector('.lam-anio-tx').innerHTML=txt;hj.classList.remove('vacia');}
   else lamHoja(lamEscenaHTML(esA)+'<div class="lam-anio-tx">'+txt+'</div>');
@@ -683,15 +790,17 @@ function lamPres(k){
   const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
   /* v211 (Camilo: «la estatua intenta aparecer y salta»): en los pasos de la historia la
      estatua no se asoma mientras llega la escena; si la escena no existe, lamHist la muestra. */
-  const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos||s.tipo==='hist'||s.tipo==='desp'?'0':'1';
+  const cierre=s.tipo==='cierre';
+  /* v212: en el cierre la estatua vuelve entera, en sombra, detrás de la placa final (lamFin). */
+  const est=svg.querySelector('.lam-estatua');est.style.opacity=!cierre&&(rotos||s.tipo==='hist'||s.tipo==='desp')?'0':'1';
   if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
   /* La portada muestra la estatua entera; la historia, a media luz. */
-  else if(s.tipo==='hist')lamEnciende(['__ninguna']);
+  else if(s.tipo==='hist'||cierre)lamEnciende(['__ninguna']);
   else lamEnciende([]);
   lamEtiquetas(false);
   const piedra=svg.querySelector('.lam-piedra');
   piedra.style.opacity=(s.id==='piedra')?'1':'0';
-  const verMonte=rotos||s.tipo==='desp'||s.tipo==='cierre';
+  const verMonte=!cierre&&(rotos||s.tipo==='desp');
   piedra.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');
   if(s.anim==='cae'&&dir>0)lamCae(piedra);
   else if(s.id==='piedra')piedra.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');
@@ -711,6 +820,7 @@ function lamPres(k){
   else if(s.tipo==='desp')lamHoja(lamHojaTexto(L.despues));
   else if(s.tipo==='cierre')lamHoja(lamHojaTexto({ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}));
   else lamHoja(lamHojaParte(lamParte(s.id),0,1));
+  lamFin(cierre);
   document.getElementById('lamCuenta').textContent=(k+1)+' / '+pasos.length;
   document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
 }
@@ -865,9 +975,7 @@ function lamEscenaE(){
   const L=LAM(),f=lamSrc(L.inicioF),pres=lamModo==='presentar';
   const bots='<div class="lam-tira-bots"><button type="button" class="btn tono lam-vision" id="lamVision" aria-pressed="false" onclick="lamVision()">'+IC('play')+' Ver la visión</button>'+
     (L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' Con Daniel 2</button>':'')+'</div>';
-  const tira=pres?'':'<div class="lam-tira-c"><div class="lam-tira-cab"><div class="lam-tira-t">Las partes de la visión · elige una</div>'+bots+'</div><div class="lam-tira" id="lamTira">'+
-    L.partes.map((p,i)=>'<button type="button" class="lam-tb" data-p="'+p.id+'" style="--c:'+p.c+'" onclick="lamElige('+i+')"><img src="'+lamSrc(p.img)+'" alt="" loading="lazy">'+
-      '<span><b>'+esc(p.nombre)+'</b><small>'+esc(p.reino)+'</small><small class="f">'+esc(p.fechas).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</small></span></button>').join('')+'</div></div>';
+  const tira=pres?'':lamRielHTML(bots);
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
     '<rect class="lam-hist-osc" x="-150" y="0" width="2050" height="1152" fill="#0E0D0B"/>'+
@@ -1224,9 +1332,8 @@ function lamEligeE(i,vis){
   const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
   if(!vis)lamPara();
   lamSel=p.id;lamMarcaPaso('est');lamVista(p.id,null,true);
-  /* La tira se corre sola para que la parte elegida se vea (sin mover la página). */
-  const t=document.getElementById('lamTira'),b=t&&t.querySelector('[data-p="'+p.id+'"]');
-  if(b&&t.scrollTo)t.scrollTo({left:b.offsetLeft-t.clientWidth/2+b.offsetWidth/2,behavior:lamQuieto()?'auto':'smooth'});
+  /* El riel se corre solo para que la parte elegida se vea (sin mover la página). */
+  lamRielMarca([p.id]);
   lamHoja(lamHojaParte(p,i,L.partes.length));if(!vis)lamVeHoja();
   /* La línea de tiempo va al año de la parte. */
   const r=document.getElementById('lamRango');

@@ -2515,7 +2515,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const todo=n([...Object.values(VERS.d1),...Object.values(VERS.d2)].join(' ')); // v203: el primer paso cita Daniel 1:2
   const faltan=[...L.capas,'piedra','babilonia','monte'].filter(k=>!fs.existsSync(path.join(RAIZ,'laminas',L.dir+k+'.webp')));
   ok(!faltan.length,'La lámina de Daniel 2 tiene sus 9 imágenes'+(faltan.length?' (faltan '+faltan.join(', ')+')':''));
-  const textos=[...L.partes.flatMap(p=>[p.texto,p.texto2]),...L.historia.map(h=>h.texto),L.despues.texto,L.inicio.texto,L.cierre.texto];
+  const textos=[...L.partes.flatMap(p=>[p.texto,p.texto2]),...L.historia.map(h=>h.texto),L.despues.texto,L.inicio.texto,L.cierre.texto,L.intro.texto];
   const malos=textos.filter(t=>!String(t).split('…').every(tr=>todo.includes(n(tr))));
   ok(!malos.length,'Cada texto de la lámina está literal en Daniel 1-2 RV1995 ('+textos.length+')'+(malos.length?': '+malos[0].slice(0,50):''));
   ok(L.partes.every(p=>/\S/.test(p.fuente)&&p.interp.length&&p.c)&&L.partes.length===8,'Cada parte trae su interpretación y su fuente');
@@ -2542,7 +2542,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const fs7=[L.inicioF,L.miniF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),L.despues.f,L.cierre.f,...L.escenas.map(e=>e.f)];
   const faltan=[...new Set(fs7)].filter(f=>!fs.existsSync(ruta(f)));
   ok(!faltan.length&&fs7.includes('d2/e1798'),'La lámina de Daniel 7 tiene sus '+new Set(fs7).size+' imágenes'+(faltan.length?' (faltan '+faltan.join(', ')+')':''));
-  const textos=[...L.partes.flatMap(p=>[p.texto,p.texto2]),...L.historia.map(h=>h.texto),L.despues.texto,L.cierre.texto];
+  const textos=[...L.partes.flatMap(p=>[p.texto,p.texto2]),...L.historia.map(h=>h.texto),L.despues.texto,L.cierre.texto,L.intro.texto];
   const malos=textos.filter(t=>!String(t).split('…').every(tr=>d7.includes(n(tr))));
   ok(!malos.length,'Cada texto de la lámina de Daniel 7 está literal en Daniel 7 RV1995 ('+textos.length+')'+(malos.length?': '+malos[0].slice(0,50):''));
   /* Lo que va entre comillas en la interpretación también es literal (Daniel 7-8 o Apocalipsis). */
@@ -2680,14 +2680,35 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/if\(!t\|\|!t\.f\)\{h\.classList\.remove\('entra'\)/.test(lh)&&/lamHistT=setTimeout\(\(\)=>\{apagaBg\(\);h\.classList\.remove\('entra'\)/.test(lh),
     'La escena de la historia no queda encima de las partes: se le quita la animación al esconderla');
   /* La piedra y el monte, a la mano en Explorar. */
-  ok(/class="lam-tira chips" id="lamTira"/.test(js)&&/function lamNavHTML\(/.test(js)&&LAMINAS.d2.partes.slice(-3).map(p=>p.id).join()==='barro,piedra,monte',
-    'Daniel 2 en Explorar: todas las partes en una tira, y Siguiente pasa del barro a la piedra y al monte');
+  ok(/class="lam-riel-l" id="lamTira"/.test(js)&&/function lamNavHTML\(/.test(js)&&LAMINAS.d2.partes.slice(-3).map(p=>p.id).join()==='barro,piedra,monte',
+    'Daniel 2 en Explorar: todas las partes en el riel, y Siguiente pasa del barro a la piedra y al monte');
   /* Las categorías: cada pastilla dice su actividad. */
   ok(actCorta('ap')==='Apocalipsis'&&actCorta('cb')==='Daniel'&&catCorta('appa')==='Apocalipsis · Padres y consejeros'&&catCorta('pa')==='Daniel · Padres y consejeros'&&catCorta('gm')==='Daniel · Guías Mayores',
     'Quién estudia: «Apocalipsis · Padres y consejeros» y «Daniel · Padres y consejeros» ya no se ven iguales');
   ok(/class="alu-act-a">'\+esc\(c\?actCorta\(c\.act\)/.test(js)&&/onclick="cambiaAlumno\(\\''\+id\+'\\'\)">'\+\s*'<span class="alu-act-a">/.test(js),'Cada pastilla abre su propia ficha y nombra su actividad');
   /* La portada de Daniel 7: las cuatro bestias. */
   ok(LAMINAS.d7.cartel.f==='bestias'&&LAMINAS.d7.inicioF==='bestias'&&fs.existsSync(path.join(RAIZ,'laminas','d7','bestias.webp')),'Daniel 7 abre con las cuatro bestias que suben del mar (bestias.webp)');
+}
+/* v212: la ronda de Camilo del 14-oct (13:00) sobre la lámina. Lo que se ve de verdad
+   (la hoja no vacía, el riel con el teclado, nada cortado, monte y cierre distintos) lo
+   mide tools/en-navegador.js; aquí, que el código y los datos lo sostengan. */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const css=fs.readFileSync(FUENTE('estilos.css'),'utf8').replace(/\/\*[\s\S]*?\*\//g,'');
+  /* La causa de la hoja vacía: dos cosas con el mismo nombre de clase. */
+  ok((js.match(/class="lam-pista"/g)||[]).length===1&&/h\.innerHTML=html\|\|lamIntroHTML\(\);/.test(js),
+    'La hoja sin parte es una portada (lamIntroHTML); «lam-pista» es solo la pista de la línea de tiempo');
+  ok(['d2','d7'].every(k=>{const I=LAMINAS[k].intro;return I&&I.titulo&&I.ref&&I.texto&&I.nota&&I.datos.length===3;}),'Daniel 2 y Daniel 7 traen su portada: título, pasaje, de qué trata y tres datos');
+  /* El riel: con el teclado, y sin texto cortado. */
+  ok(/function lamRielTeclas\(/.test(js)&&/ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1/.test(js)&&/lamRielTeclas\(\);/.test(js),'El riel se maneja con las flechas, Inicio y Fin');
+  const v212=css.slice(css.indexOf('--v-tet:'));
+  ok(!/ellipsis/.test(v212)&&!/\.lam-ri-t b[^{]*\{[^}]*nowrap/.test(v212)&&!/\.lam-nav-p[^{]*\{[^}]*nowrap/.test(v212),'Ni el riel ni Anterior/Siguiente cortan un nombre con «…»');
+  ok(!/lam-tb chip/.test(js)&&!/onclick="lamAtras\(\)">‹ Anterior/.test(js)&&/class="lam-rd sig"/.test(js)&&/id="lamSig" class="lam-rd sig"/.test(js),'Las pastillas y los botones de caja se fueron: botones redondos en Explorar y en Presentar');
+  /* El monte y el cierre: cada uno con lo suyo. */
+  ok(JSON.stringify(LAMINAS.d2.enEscena)==='["monte"]'&&/const lamEnEscena=/.test(js)&&/\(lamEnEscena\(e\)\?'':lamEscenaHTML\(e\)\)/.test(js),
+    'En el paso del monte la hoja no repite el monte como foto (enEscena)');
+  ok(/const verMonte=!cierre&&/.test(js)&&/lamFin\(cierre\);/.test(js)&&/function lamFinHTML\(/.test(js)&&LAMINAS.d2.cierre.ref2==='Daniel 2:44',
+    'El cierre de Daniel 2 ya no es el monte otra vez: es la placa final con toda la historia');
 }
 
 /* v179: la interpretación con fuentes (Bohr, Elena de White, las notas de

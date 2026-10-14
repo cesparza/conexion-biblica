@@ -26,17 +26,23 @@ const LAMINAS = {
      estatua al que apunta (ax, ay) y la altura de la etiqueta (ly), en las
      unidades de la escena (1100 × 1152). */
   etiquetas: {
-    oro: { lado: 'd', ax: 640, ay: 140, ly: 110, f: '605 – 539 a.C.' },
-    plata: { lado: 'i', ax: 400, ay: 330, ly: 300, f: '539 – 331 a.C.' },
-    bronce: { lado: 'd', ax: 655, ay: 600, ly: 560, f: '331 – 168 a.C.' },
-    hierro: { lado: 'i', ax: 470, ay: 850, ly: 760, f: '168 a.C. – 476 d.C.' },
-    barro: { lado: 'i', ax: 470, ay: 1035, ly: 960, f: '538 – 1798 d.C.' },
-    dedos: { lado: 'd', ax: 640, ay: 1110, ly: 990, f: 'desde 476 d.C.' },
-    /* Sin línea: la piedra se ve sola arriba a la derecha y el monte aparece
-       cuando se toca. `t` reemplaza el reino en la etiqueta. */
-    piedra: { lado: 'd', ly: 420, t: 'La piedra', f: 'Cristo vuelve' },
-    monte: { lado: 'i', ly: 40, t: 'El gran monte', f: 'el reino eterno' },
+    /* v212: `ly` es el centro del rótulo (el hilo llega a su mitad); dos columnas parejas. */
+    oro: { lado: 'd', ax: 640, ay: 140, ly: 140, f: '605 – 539 a.C.' },
+    plata: { lado: 'i', ax: 400, ay: 330, ly: 330, f: '539 – 331 a.C.' },
+    bronce: { lado: 'd', ax: 655, ay: 600, ly: 600, f: '331 – 168 a.C.' },
+    hierro: { lado: 'i', ax: 470, ay: 850, ly: 830, f: '168 a.C. – 476 d.C.' },
+    barro: { lado: 'i', ax: 470, ay: 1035, ly: 1030, f: '538 – 1798 d.C.' },
+    dedos: { lado: 'd', ax: 640, ay: 1110, ly: 1060, f: 'desde 476 d.C.' },
+    /* Sin línea: el rótulo de la piedra va justo debajo de ella. v212: el monte ya no
+       lleva rótulo sobre la estatua (no se ve hasta que se elige): está en el riel. */
+    piedra: { lado: 'd', ly: 478, t: 'La piedra', f: 'Cristo vuelve' },
   },
+  /* v212: lo que se dibuja en el escenario no se repite como foto en la hoja. */
+  enEscena: ['monte'],
+  /* v212: la portada de Explorar (la hoja antes de elegir una parte). */
+  intro: { titulo: 'Una gran imagen', ref: 'Daniel 2:31', texto: 'Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.',
+    nota: 'De la cabeza a los pies, cuatro reinos y Roma en tres fases. Después, una piedra que nadie cortó y un monte que llena toda la tierra.',
+    datos: [['4', 'reinos'], ['3', 'fases de Roma'], ['1', 'reino eterno']] },
   tiempo: ['oro', 'plata', 'bronce', 'hierro', 'dedos', 'barro'],
   /* v211 (Camilo, 14-oct: «el play corre pero no se ve el avance»; la línea de
      tiempo llega hasta el futuro). Después de «hoy», un tramo «futuro» a escala
@@ -57,7 +63,9 @@ const LAMINAS = {
   inicio: { ref: 'Daniel 2:31', texto: 'Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.',
     nota: 'Los metales bajan de valor (del oro al hierro) pero suben en dureza: la historia no camina hacia una edad de oro hecha por el hombre. Y Roma aparece en tres fases: imperial, dividida y papal. Hay una cuarta: el papado sanado de su herida (Apocalipsis 13:3), que sigue en pie cuando la piedra golpea los pies.' },
   cierre: { ref: 'Daniel 2:45', texto: 'El gran Dios ha mostrado al rey lo que ha de acontecer en lo por venir; y el sueño es verdadero, y fiel su interpretación.',
-    titulo: 'Un reino que no será jamás destruido', nota: 'Hoy estamos en los pies. Lo que sigue es la piedra.' },
+    titulo: 'Un reino que no será jamás destruido', ref2: 'Daniel 2:44',
+    /* v212: la imagen propia del cierre, si existe (opcional: sin ella, la estatua en sombra). */
+    fondo: 'cierre.webp', nota: 'Hoy estamos en los pies. Lo que sigue es la piedra.' },
   /* El capítulo en orden: lo que pasa antes del sueño y después. La
      estatua no se entiende sin esto: Dios le muestra al rey el futuro que
      ningún sabio podía decirle (2:10-11, 27-28). Textos literales RV1995. */
@@ -178,7 +186,9 @@ LAMINAS.d7 = {
   miniF: 'bestias', inicioF: 'bestias',
   verTodo: 'Las bestias',
   invita: 'Elige cada bestia, los cuernos y el juicio: lo que dice el texto, lo que significa, sus fechas y su fuente.',
-  pista: 'Elige una parte en la tira de abajo de la imagen. Arriba están los pasos del capítulo; abajo, la historia año por año.',
+  intro: { titulo: 'Cuatro bestias suben del mar', ref: 'Daniel 7:2-3', texto: 'vi que los cuatro vientos del cielo combatían en el gran mar. … cuatro bestias grandes, diferentes la una de la otra, subían del mar.',
+    nota: 'La misma historia de Daniel 2, con más detalle: cuatro reinos, diez cuernos, un cuerno pequeño y el juicio en el cielo.',
+    datos: [['4', 'bestias'], ['10', 'cuernos'], ['1844', 'el juicio']] },
   /* En la línea de tiempo: lo que se pinta encima de otro reino no va en la pista,
      y desde 1798 el cuerno herido se ve a media luz sobre los diez cuernos. */
   solapa: ['cuerno', 'juicio'],
