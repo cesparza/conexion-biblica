@@ -3988,7 +3988,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 /* ── v210: el juicio de Daniel 7 ──
    El libro que se abre en primer plano (HTML sobre la imagen; las luces de la
    escena van en el svg del zoom). Colores fijos: va sobre la imagen, igual en
-   claro y en oscuro. Sin url(#) ni el.animate(): transiciones y una animación
+   claro y en oscuro. Sin referencias a #id ni el.animate(): transiciones y una animación
    de CSS para las chispas. Con «reducir movimiento», el libro ya abierto. */
 .lam-marcas-img.con-libro{overflow:hidden}
 .lam-esc .lam-chip{transition:opacity .8s ease}
