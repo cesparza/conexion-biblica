@@ -2688,8 +2688,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(fu.length===1,'Comparar cita su fuente una sola vez ('+fu.length+')');
   /* La línea de tiempo llega al futuro: 1844, la piedra y el monte después de hoy. */
   const F2=LAMINAS.d2.futuro,F7=LAMINAS.d7.futuro;
-  ok(F2.map(f=>f.id).join()==='piedra,,monte'&&F2[0].de===2026&&F2.every((f,i)=>!i||f.de===F2[i-1].a)&&F2.map(f=>f.ult).join()==='venida,mil,reino'&&
-    F7.map(f=>f.id).join()==='santos,,reino'&&F7.map(f=>f.ult).join()==='venida,mil,reino',
+  ok(F2.map(f=>f.id).join()==='piedra,,monte'&&F2[0].de===2026&&F2.every((f,i)=>!i||f.de===F2[i-1].a)&&F2.map(f=>f.ult).join()==='venida,desolada,reino'&&
+    F7.map(f=>f.id).join()==='santos,,reino'&&F7.map(f=>f.ult).join()==='venida,juzgan,reino',
     'La línea de tiempo sigue después de hoy: la piedra, los mil años y el monte (Daniel 2); la venida, los mil años y el reino (Daniel 7)');
   ok([LAMINAS.d2,LAMINAS.d7].every(L=>L.marcas.some(m=>m[0]===1844)&&L.marcas.some(m=>m[0]===2026))&&LAMINAS.d2.escenas.some(e=>e.y===1844)&&LAMINAS.d2.juicio===1844,
     'Las dos líneas de tiempo marcan 1844 (el juicio) y hoy');
@@ -2799,21 +2799,29 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const ap20=fs.readFileSync(path.join(RAIZ,'fuente','apocalipsis','cap20.js'),'utf8');
   ok(!/'2 · Sentencia', 'Durante los mil años/.test(ap20)&&!/'3 · Ejecución', 'Después de los mil años/.test(ap20)&&!/dicta sentencia \(durante los mil años\)/.test(ap20),
     'Apocalipsis 20 ya no dice «Sentencia · durante los mil años; Ejecución · después»: los mil años van dentro de la ejecución');
-  /* 6. Los últimos acontecimientos. */
+  /* 6. Los últimos acontecimientos. v219 (Camilo, 14-oct 18:12-18:17): la secuencia de CS,
+     PE y EUD; columnas por capítulo (Mateo 24 y Apocalipsis 12, 13 y 17 aparte) y Elena de
+     White; cada celda dice si lo dice el texto o según qué interpretación, con su fuente. */
   const E=ULTIMOS.eventos,citas=E.flatMap(e=>e.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
-  /* v218 (Camilo, 14-oct 16:01-16:06): los acontecimientos de su lista, en el orden de El conflicto
-     de los siglos y Primeros escritos, en cinco fases. */
-  const ev=id=>E.find(e=>e.id===id),ord=E.map(e=>e.id).join();
-  ok(ord==='juicio,zarandeo,lluvia,ley,pregon,persecucion,sello,gracia,angustia,plagas,decreto,liberacion,resurreccion,venida,mil,juzgan,jerusalen,final,reino'&&!malas.length&&citas.length>=40&&
-    E.every(e=>e.t&&e.c&&e.cuando&&e.nota&&e.fuente&&e.citas.length&&ULTIMOS.fases.some(f=>f[0]===e.fase))&&
+  const ev=id=>E.find(e=>e.id===id),ord=E.map(e=>e.id).join(),cols=ULTIMOS.libros.map(x=>x[0]).join();
+  ok(ord==='juicio,zarandeo,imagen,ley,ciudades,pequena,lluvia,pregon,sello,gracia,jacob,plagas,falso,huida,decreto,liberacion,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
+    E.every(e=>e.t&&e.c&&e.cuando&&e.nota&&e.egw&&/\b(CS|PE|EUD) \d/.test(e.egw)&&ULTIMOS.fases.some(f=>f[0]===e.fase))&&
     ULTIMOS.fases.map(f=>f[0]).join()==='antes,angustia,venida,mil,fin'&&ULTIMOS.fases.every(([f],i)=>E.filter(e=>e.fase===f).length&&E.findIndex(e=>e.fase===f)>=(i?E.map(e=>e.fase).lastIndexOf(ULTIMOS.fases[i-1][0]):0)),
-    'Los últimos acontecimientos: 19, en el orden de CS y PE, agrupados en 5 fases; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
-  ok(ord.indexOf('resurreccion')<ord.indexOf('venida')&&ord.indexOf('gracia')<ord.indexOf('angustia')&&ord.indexOf('jerusalen')<ord.indexOf('final')&&ord.indexOf('zarandeo')<ord.indexOf('lluvia')&&ord.indexOf('venida')<ord.indexOf('mil')&&ord.indexOf('mil')<ord.indexOf('reino'),
-    'El orden: el zarandeo antes de la lluvia tardía, la angustia desde el cierre de la gracia, la resurrección especial antes de la venida, la Nueva Jerusalén antes de la destrucción final, y el reino eterno después de los mil años');
+    'Los últimos acontecimientos: 29, en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
+  ok(cols==='d2,d7,d8,d11,d12,mt24,ap12,ap13,ap14,ap16,ap17,ap18,ap19,ap20,ap21,apo,egw'&&
+    E.every(e=>Object.entries(e.l).every(([k,x])=>ULTIMOS.libros.some(y=>y[0]===k)&&k!=='egw'&&x[0]&&(x[1]===0||x[1]===1)&&x[2]&&x[3]&&Array.isArray(x[4])&&(k==='mt24'?!x[4].length:true))),
+    'Las columnas: Daniel 2, 7, 8, 11, 12, Mateo 24, Apocalipsis 12, 13, 14, 16, 17, 18, 19, 20, 21-22 y otros, y Elena de White; cada celda con referencia, si es explícito o interpretación, una línea y su fuente; Mateo sin comillas');
+  ok(ord.indexOf('pequena')<ord.indexOf('gracia')&&ord.indexOf('gracia')<ord.indexOf('jacob')&&ord.indexOf('especial')<ord.indexOf('venida')&&ord.indexOf('voz')<ord.indexOf('venida')&&ord.indexOf('segunda')<ord.indexOf('jerusalen')&&ord.indexOf('jerusalen')<ord.indexOf('final')&&ord.indexOf('zarandeo')<ord.indexOf('lluvia')&&ord.indexOf('venida')<ord.indexOf('desolada')&&ord.indexOf('desolada')<ord.indexOf('reino'),
+    'El orden: el pequeño tiempo de angustia antes del cierre y la angustia de Jacob después; la resurrección especial y la voz de Dios antes de la venida; la segunda resurrección, la Nueva Jerusalén y después la destrucción final');
+  /* Lo que Camilo pidió revisar: zarandeo, lluvia tardía y ley dominical en Daniel 11-12
+     solo por interpretación (Daniel 11:41, 44), nunca como texto explícito ni en 12:3 o 12:10. */
+  ok(['zarandeo','lluvia','ley'].every(id=>ev(id).l.d11&&ev(id).l.d11[1]===0&&!ev(id).l.d12)&&!ev('pregon').l.d12&&ev('jacob').l.d12[1]===1&&ev('liberacion').l.d12[1]===1&&ev('gracia').l.d12[1]===0&&
+    ev('falso').l.mt24[1]===1&&ev('ley').l.mt24[1]===0&&ev('ley').l.ap17&&ev('ley').l.ap13[1]===0&&ev('imagen').l.ap13[1]===1,
+    'Daniel 11-12: el zarandeo (11:41), la lluvia tardía (11:44) y la ley dominical (11:41) van como interpretación con su fuente; el tiempo de angustia y la liberación (12:1) son texto');
   const refs=E.map(e=>Object.values(e.en).join(' ')).join(' | ');
-  ok(['12:1','12:2','14:6-7','15:1','16','18:1-4','7:1-4','13:12-17','19:11-16','20:1-6','20:4','21:2','22:11','2:34','2:35','7:9-10','8:14','11:44','11:45'].every(r=>refs.includes(r))&&
-    ev('gracia').en.d2===''&&ev('plagas').en.d7===''&&ev('mil').en.d8===''&&ev('venida').en.d2&&ev('venida').en.d7&&ev('venida').en.d8&&!ev('venida').en.d2.includes('35')&&ev('reino').en.d2.includes('35'),
-    'Cada acontecimiento dice qué libro lo muestra: la piedra en la venida (2:34) y el monte en el reino eterno (2:35); Daniel 11-12 y Apocalipsis cuentan lo de en medio');
+  ok(['12:1','12:2','12:13','14:6-7','15:1','16','18:1-4','7:1-4','13:16-17','19:11-16','20:1-3','20:4','21:2','22:11','2:34','2:35','7:9-10','8:14','11:41','11:44','11:45','24:9','24:15','24:23-27','17:12-13','12:17'].every(r=>refs.includes(r))&&
+    !ev('gracia').en.d2&&!ev('plagas').en.d7&&!ev('desolada').en.d8&&ev('venida').en.d2&&ev('venida').en.d7&&ev('venida').en.d8&&!ev('venida').en.d2.includes('35')&&ev('reino').en.d2.includes('35'),
+    'Cada acontecimiento dice qué capítulo lo muestra: la piedra en la venida (2:34) y el monte en el reino eterno (2:35); Daniel 11-12, Mateo 24 y Apocalipsis cuentan lo de en medio');
   ok(/class="cmp-ult"/.test(js)&&/function cmpUlt\(/.test(js)&&/ultHTML\(\)\+/.test(js)&&/function lamUltHTML\(/.test(js)&&/lamUltHTML\(lamUltDe\(p\.id\)\)/.test(js),'La secuencia está en Comparar y en las láminas (la piedra, el monte, el juicio y el tramo futuro)');
   /* 5. La auditoría: lo que se corrigió no vuelve. */
   const D2=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d2.js'),'utf8'),D7=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d7.js'),'utf8'),

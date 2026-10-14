@@ -4769,7 +4769,7 @@ function lugarActual(){
   }
   if(lamModo&&lamId)r.push('lamina',lamId,lamModo,lamModo==='presentar'?String(lamPaso):(lamDonde||'est'));
   else if(cmpSel)r.push('comparar',cmpSel);
-  else if(ultTocado&&document.getElementById('cmpUlt')&&ULT())r.push('ultimos',ULT().eventos[ultSel].id);
+  else if(ultTocado&&document.getElementById('cmpUlt')&&ULT()){r.push('ultimos',ULT().eventos[ultSel].id);if(ultCol&&ultAbierto)r.push(ultCol);}
   let c=r.join('/');
   if(personasDB().some(p=>p.fichas.length>1&&p.fichas.some(([id])=>id===DB.activo)))c+='?a='+S.cat;
   return c;
@@ -4793,7 +4793,7 @@ function lugarParte(c){
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
     else if(s[i]==='lamina'&&s[i+1]&&/^(explorar|presentar)$/.test(s[i+2]||'')){o.lam={id:s[i+1],modo:s[i+2],paso:s[i+3]||''};i+=3;}
     else if(s[i]==='comparar'&&s[i+1]){o.cmp=s[i+1];i++;}
-    else if(s[i]==='ultimos'&&s[i+1]){o.ult=s[i+1];i++;}
+    else if(s[i]==='ultimos'&&s[i+1]){o.ult=s[i+1];i++;if(/^(d\d+|mt24|ap\d+|apo)$/.test(s[i+1]||'')){o.ultK=s[i+1];i++;}}
   }
   return o;
 }
@@ -4820,7 +4820,7 @@ function lugarAplica(c,dondeOk){
     if(o.lam.modo==='presentar'){const n=Number(o.lam.paso)||0;if(n>0)lamPres(Math.min(n,lamPasos().length-1));}
     else if(o.lam.paso&&lamRecorrido().some(x=>x.k===o.lam.paso))lamIr(o.lam.paso);
   }else if(o.cmp&&document.getElementById('cmpSala'))cmpToca(o.cmp);
-  else if(o.ult&&ultIdx(o.ult)>=0&&document.getElementById('cmpUlt')){cmpUlt(ultIdx(o.ult));
+  else if(o.ult&&ultIdx(o.ult)>=0&&document.getElementById('cmpUlt')){cmpUlt(ultIdx(o.ult),false,o.ultK||'');
     if(!dondeOk){const m=document.getElementById('cmpUlt');if(m&&m.scrollIntoView)m.scrollIntoView({block:'start'});}}
   return true;
 }
@@ -9392,6 +9392,8 @@ function cmpPega(){
     document.querySelectorAll('.est-rp').forEach(c=>c.style.setProperty('--cb-pega',Math.round(y)+'px'));
     const h=rp?rp.getBoundingClientRect().height+6:0;
     document.querySelectorAll('.cmp').forEach(c=>c.style.setProperty('--cmp-pega',Math.round(y+h)+'px'));
+    /* v219: la tabla de los últimos acontecimientos sabe cuánto se ve (el detalle) y si rueda. */
+    if(typeof ultPista==='function')ultPista();
   }catch(e){}
 }
 if(typeof addEventListener==='function')addEventListener('resize',()=>{if(document.querySelector('.cmp'))cmpPega();});
@@ -9420,51 +9422,83 @@ function comparaHTML(){
     '</div>'+ultHTML()+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
 }
 /* ───────── v215: LOS ÚLTIMOS ACONTECIMIENTOS (ULTIMOS, fuente/laminas.js) ─────────
-   Camilo (14-oct): «Daniel y Apocalipsis se refuerzan». Daniel 2, 7 y 8 pasan del juicio
-   a la piedra y al reino; Daniel 11-12 y Apocalipsis cuentan lo de en medio. Una matriz:
-   arriba los siete acontecimientos en orden, a la izquierda los libros; un punto lleno
-   donde el libro lo muestra, un aro donde lo supone. Tocar un acontecimiento abre debajo
-   sus textos (RV1995), qué libro lo trae y dónde, y su fuente. */
-let ultSel=0,ultTocado=false;
+   v219 (Camilo, 14-oct 18:12-18:17): veintinueve acontecimientos en cinco fases, en
+   filas; las columnas son los capítulos (Daniel 2, 7, 8, 11, 12, Mateo 24, Apocalipsis
+   12, 13, 14, 16, 17, 18, 19, 20, 21-22, los otros) y Elena de White. Un punto lleno:
+   el texto lo dice; un aro: está ahí según la interpretación que se nombra; un rombo: la
+   fuente de la secuencia. El nombre queda fijo a la izquierda mientras la tabla rueda.
+   Tocar un acontecimiento abre su detalle debajo de su fila; tocar una celda, el texto
+   (RV1995), una línea de interpretación y su fuente. */
+let ultSel=0,ultTocado=false,ultCol='',ultAbierto=true;
 const ULT=()=>typeof ULTIMOS!=='undefined'?ULTIMOS:null;
+const ultCelda=(e,k)=>k==='egw'?'egw':e.l&&e.l[k]?(e.l[k][1]?'si':'int'):'no';
 function ultHTML(){
   const U=ULT();if(!U)return '';
-  const E=U.eventos,cel=(e,lb)=>{const r=e.en[lb]||'';return r?(r[0]==='~'?'sup':'si'):'no';};
-  /* v218: los acontecimientos agrupados en fases (una fila arriba, cada fase sobre los suyos). */
-  const fases=(U.fases||[]).map(([id,t])=>[t,E.filter(e=>e.fase===id).length]).filter(x=>x[1]);
+  const E=U.eventos,L=U.libros,F=U.fases||[];
+  const cab='<span class="cmp-ult-0" role="columnheader">Acontecimiento</span>'+L.map(([k,c,n])=>'<span class="cmp-ult-lb'+(k==='egw'?' egw':'')+'" role="columnheader" title="'+esc(n)+'">'+esc(c)+'</span>').join('');
+  const fila=(e,i)=>'<div class="cmp-ult-fila'+(i===ultSel&&ultAbierto?' on':'')+'" role="row" data-i="'+i+'">'+
+    '<button type="button" class="cmp-ult-ev'+(i===ultSel&&!ultCol?' on':'')+'" role="rowheader" data-i="'+i+'" aria-expanded="'+(i===ultSel&&ultAbierto)+'" onclick="cmpUlt('+i+')"><i>'+(i+1)+'</i><span>'+esc(e.t)+'</span></button>'+
+    L.map(([k,c,n])=>{const s=ultCelda(e,k),x=e.l&&e.l[k],r=k==='egw'?'':x?x[0]:'';
+      if(s==='no')return '<span class="cmp-ult-c no" role="cell" aria-label="'+esc(n+': no lo trae')+'"><b></b></span>';
+      return '<button type="button" class="cmp-ult-c '+s+(i===ultSel&&ultCol===k?' on':'')+'" role="cell" data-i="'+i+'" data-c="'+k+'" onclick="cmpUlt('+i+',false,\''+k+'\')" aria-label="'+
+        esc(n+(r?' '+r:'')+(s==='si'?': lo dice el texto':s==='int'?': según la interpretación':': '+e.egw))+'"><b></b>'+(r?'<small>'+esc(r)+'</small>':'')+'</button>';}).join('')+'</div>'+
+    (i===ultSel&&ultAbierto?'<div class="cmp-ult-det" id="cmpUltDet" role="row" aria-live="polite"><div class="cmp-ult-dw" role="cell">'+ultDetHTML(i,ultCol)+'</div></div>':'');
   return '<section class="cmp-ult" id="cmpUlt" aria-labelledby="cmpUltT"><header class="cmp-ult-cab"><div class="cmp-ant">'+IC('historial')+' Después del juicio</div>'+
     '<h3 class="cmp-tit" id="cmpUltT">'+esc(U.titulo)+'</h3><p class="cmp-p">'+esc(U.nota)+'</p></header>'+
-    '<div class="cmp-ult-scroll"><div class="cmp-ult-m" style="--n:'+E.length+'" role="group" aria-label="Qué libro muestra cada acontecimiento">'+
-      (fases.length?'<span class="cmp-ult-0" aria-hidden="true"></span>'+fases.map(([t,n])=>'<span class="cmp-ult-fase" style="grid-column:span '+n+'">'+esc(t)+'</span>').join(''):'')+
-      '<span class="cmp-ult-0" aria-hidden="true"></span>'+
-      E.map((e,i)=>'<button type="button" class="cmp-ult-ev'+(i===ultSel?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===ultSel)+'" onclick="cmpUlt('+i+')" title="'+esc(e.t)+'"><i>'+(i+1)+'</i><span>'+esc(e.c||e.t)+'</span></button>').join('')+
-      U.libros.map(([k,nom])=>'<span class="cmp-ult-lb">'+esc(nom)+'</span>'+E.map((e,i)=>{const c=cel(e,k),r=(e.en[k]||'').replace(/^~/,'');
-        return '<span class="cmp-ult-c '+c+(i===ultSel?' on':'')+'" data-i="'+i+'" title="'+esc(nom+(c==='no'?': no lo trae':c==='sup'?': lo supone ('+r+')':': '+r))+'"><b></b></span>';}).join('')).join('')+
-    '</div></div><p class="cmp-ult-claves" aria-hidden="true">'+E.map((e,i)=>'<span><b>'+(i+1)+'</b> '+esc(e.c||e.t)+'</span>').join('')+'</p><p class="cmp-ult-ley" aria-hidden="true"><span><b class="si"></b>Lo muestra</span><span><b class="sup"></b>Lo supone, sin contarlo</span><span><b class="no"></b>No lo trae</span></p>'+
-    '<div class="cmp-ult-det" id="cmpUltDet" aria-live="polite">'+ultDetHTML(ultSel)+'</div>'+
+    '<p class="cmp-ult-ley"><span><b class="si"></b>Lo dice el texto</span><span><b class="int"></b>Según la interpretación</span><span><b class="egw"></b>Elena de White</span><span><b class="no"></b>No lo trae</span></p>'+
+    '<p class="cmp-ult-pista" aria-hidden="true">'+IC('der')+' Desliza la tabla para ver los demás libros</p>'+
+    '<div class="cmp-ult-scroll" onscroll="ultPista(this)"><div class="cmp-ult-m" role="table" aria-label="Qué libro muestra cada acontecimiento" style="--n:'+L.length+'">'+
+      '<div class="cmp-ult-fila cab" role="row">'+cab+'</div>'+
+      F.map(([f,t])=>{const ev=E.map((e,i)=>[e,i]).filter(([e])=>e.fase===f);return ev.length?'<div class="cmp-ult-fz" role="row"><span role="cell">'+esc(t)+'</span></div>'+ev.map(([e,i])=>fila(e,i)).join(''):'';}).join('')+
+    '</div></div>'+
     '<p class="sec-fuente">Fuente: '+U.fuente+'</p></section>';
 }
-function ultDetHTML(i){
+function ultDetHTML(i,k){
   const U=ULT(),e=U&&U.eventos[i];if(!e)return '';
-  const muestra=U.libros.filter(([k])=>e.en[k]),no=U.libros.filter(([k])=>!e.en[k]);
-  return '<div class="cmp-ult-dc">'+(e.img?'<span class="cmp-ult-img"><img src="'+LAMINAS_DIR+e.img+'.webp" alt="" loading="lazy" decoding="async"></span>':'<span class="cmp-ult-num">'+(i+1)+'</span>')+
-    '<div><small>'+(i+1)+' de '+U.eventos.length+((U.fases||[]).find(x=>x[0]===e.fase)?' · '+esc(U.fases.find(x=>x[0]===e.fase)[1]):'')+'</small><small class="cmp-ult-cu">'+esc(e.cuando)+'</small><h4>'+esc(e.t)+'</h4><p>'+esc(e.nota)+'</p></div></div>'+
-    '<ul class="cmp-ult-citas">'+e.citas.map(([r,c])=>'<li><q>'+esc(c)+'</q> <cite>'+refsTocables(esc(r),'d7')+'</cite></li>').join('')+'</ul>'+
-    '<div class="cmp-ult-libs"><span class="cmp-ult-k">Lo muestran</span>'+muestra.map(([k,nom])=>{const r=e.en[k];
-      return '<span class="cmp-ult-lib'+(r[0]==='~'?' sup':'')+'"><b>'+esc(nom)+'</b> '+esc(r.replace(/^~/,''))+(r[0]==='~'?' · lo supone':'')+'</span>';}).join('')+
-      (no.length?'<span class="cmp-ult-k no">No lo traen: '+esc(no.map(x=>x[1]).join(', '))+'</span>':'')+'</div>'+
-    '<nav class="cmp-ult-nav" aria-label="Acontecimientos"><button type="button" class="btn txt peq"'+(i>0?' onclick="cmpUlt('+(i-1)+')"':' disabled')+'>'+IC('izq')+' '+(i>0?esc(U.eventos[i-1].t):'Anterior')+'</button>'+
-    '<button type="button" class="btn txt peq"'+(i<U.eventos.length-1?' onclick="cmpUlt('+(i+1)+')"':' disabled')+'>'+(i<U.eventos.length-1?esc(U.eventos[i+1].t):'Siguiente')+' '+IC('der')+'</button></nav>'+
-    '<p class="cmp-ult-f">Fuente: '+e.fuente+'</p>';
+  const fz=(U.fases||[]).find(x=>x[0]===e.fase),lib=U.libros.find(x=>x[0]===k),x=k&&k!=='egw'&&e.l&&e.l[k];
+  const cab='<small>'+(i+1)+' de '+U.eventos.length+(fz?' · '+esc(fz[1]):'')+'</small>';
+  const cierra='<button type="button" class="cmp-ult-x" onclick="cmpUlt('+i+',false,\'\',true)" aria-label="Cerrar">'+IC('x')+'</button>';
+  if(x){const nom=lib[0]==='apo'?'Apocalipsis':lib[2].split(' ')[0];
+    return '<div class="cmp-ult-dc"><div>'+cab+'<h4>'+esc(e.t)+'</h4><p class="cmp-ult-dl"><b>'+esc(nom+' '+x[0])+'</b> '+
+      '<span class="cmp-ult-tipo '+(x[1]?'si':'int')+'">'+(x[1]?'Lo dice el texto':'Según la interpretación')+'</span></p></div>'+cierra+'</div>'+
+      (x[4].length?'<ul class="cmp-ult-citas">'+x[4].map(([r,c])=>'<li><q>'+esc(c)+'</q> <cite>'+refsTocables(esc(r),'d7')+'</cite></li>').join('')+'</ul>':'<p class="cmp-ult-sin">Mateo '+esc(x[0])+': léelo en tu Biblia.</p>')+
+      '<p class="cmp-ult-int">'+esc(x[2])+'</p>'+
+      '<p class="cmp-ult-f">Fuente: '+x[3]+'</p>'+ultNavHTML(i);}
+  const muestra=U.libros.filter(([q])=>q!=='egw'&&e.l&&e.l[q]),no=U.libros.filter(([q])=>q!=='egw'&&!(e.l&&e.l[q]));
+  return '<div class="cmp-ult-dc">'+(e.img?'<span class="cmp-ult-img"><img src="'+LAMINAS_DIR+e.img+'.webp" alt="" loading="lazy" decoding="async"></span>':'')+
+    '<div>'+cab+'<small class="cmp-ult-cu">'+esc(e.cuando)+'</small><h4>'+esc(e.t)+'</h4><p>'+esc(e.nota)+'</p></div>'+cierra+'</div>'+
+    '<div class="cmp-ult-libs"><span class="cmp-ult-k">Dónde está</span>'+(muestra.length?muestra.map(([q,c,n])=>{const y=e.l[q];
+      return '<button type="button" class="cmp-ult-lib '+(y[1]?'si':'int')+'" onclick="cmpUlt('+i+',false,\''+q+'\')"><b>'+esc(c)+'</b> '+esc(y[0])+'</button>';}).join(''):'<span class="cmp-ult-k no">Ningún capítulo lo cuenta; lo describe Elena de White.</span>')+
+      (muestra.length&&no.length?'<span class="cmp-ult-k no">No lo traen: '+esc(no.map(x=>x[1]).join(', '))+'</span>':'')+'</div>'+
+    '<p class="cmp-ult-f"><b>Elena de White:</b> '+e.egw+'</p>'+ultNavHTML(i);
 }
-function cmpUlt(i,quieto){
-  const U=ULT();if(!U)return;i=Math.max(0,Math.min(U.eventos.length-1,Number(i)||0));ultSel=i;if(!quieto)ultTocado=true;
+function ultNavHTML(i){
+  const U=ULT();
+  return '<nav class="cmp-ult-nav" aria-label="Acontecimientos"><button type="button" class="btn txt peq"'+(i>0?' onclick="cmpUlt('+(i-1)+')"':' disabled')+'>'+IC('izq')+' '+(i>0?esc(U.eventos[i-1].t):'Anterior')+'</button>'+
+    '<button type="button" class="btn txt peq"'+(i<U.eventos.length-1?' onclick="cmpUlt('+(i+1)+')"':' disabled')+'>'+(i<U.eventos.length-1?esc(U.eventos[i+1].t):'Siguiente')+' '+IC('der')+'</button></nav>';
+}
+/* La pista de deslizar se ve mientras la tabla no cabe y no se ha llegado al final. */
+function ultPista(sc){
+  const m=document.getElementById('cmpUlt');if(!m)return;sc=sc||m.querySelector('.cmp-ult-scroll');if(!sc)return;
+  const sobra=sc.scrollWidth>sc.clientWidth+1;m.classList.toggle('rueda',sobra&&sc.scrollLeft+sc.clientWidth<sc.scrollWidth-24);
+  m.style.setProperty('--vw',sc.clientWidth+'px');
+}
+function cmpUlt(i,quieto,k,cerrar){
+  const U=ULT();if(!U)return;i=Math.max(0,Math.min(U.eventos.length-1,Number(i)||0));if(!quieto)ultTocado=true;
+  const e=U.eventos[i];k=k&&k!=='egw'&&e.l&&e.l[k]?k:'';
+  ultSel=i;ultCol=k;ultAbierto=!cerrar;
   const m=document.getElementById('cmpUlt');if(!m)return;
-  m.querySelectorAll('[data-i]').forEach(x=>{const on=x.getAttribute('data-i')===String(i);x.classList.toggle('on',on);if(x.tagName==='BUTTON')x.setAttribute('aria-pressed',String(on));});
-  const d=document.getElementById('cmpUltDet');if(d)d.innerHTML=ultDetHTML(i);
-  /* v218: en el teléfono la tabla rueda de lado: el acontecimiento elegido queda a la vista. */
-  const sc=m.querySelector('.cmp-ult-scroll'),b=m.querySelector('.cmp-ult-ev.on');
-  if(sc&&b&&sc.scrollWidth>sc.clientWidth+1){const x=Math.max(0,b.offsetLeft-(sc.clientWidth-b.offsetWidth)/2);if(sc.scrollTo)sc.scrollTo({left:x,behavior:lamQuieto()?'auto':'smooth'});else sc.scrollLeft=x;}
+  const sc=m.querySelector('.cmp-ult-scroll'),x0=sc?sc.scrollLeft:0;
+  const t=document.createElement('div');t.innerHTML=ultHTML();
+  const nm=t.querySelector('.cmp-ult-m'),vm=m.querySelector('.cmp-ult-m');
+  if(nm&&vm)vm.replaceWith(nm);
+  if(sc)sc.scrollLeft=x0;
+  ultPista(sc);
+  /* La celda tocada queda a la vista, sin esconderse detrás de la columna fija. */
+  const b=ultCol&&m.querySelector('.cmp-ult-c.on');
+  if(sc&&b){const fx=(m.querySelector('.cmp-ult-ev')||{}).offsetWidth||0,bl=b.offsetLeft;
+    if(bl<sc.scrollLeft+fx||bl+b.offsetWidth>sc.scrollLeft+sc.clientWidth){const xx=Math.max(0,bl-fx-(sc.clientWidth-fx-b.offsetWidth)/2);
+      if(sc.scrollTo)sc.scrollTo({left:xx,behavior:lamQuieto()?'auto':'smooth'});else sc.scrollLeft=xx;}}
   lugarAnota();
 }
 /* El índice de un acontecimiento por su id (los enlaces usan el id: «ultimos/plagas»). */
@@ -9482,13 +9516,14 @@ function lamUltIr(i){
 function lamUltHTML(ids){
   const U=ULT();if(!U||!lamId)return '';
   const L=LAM(),E=U.eventos,on=E.map((e,i)=>ids.includes(e.id)?i:-1).filter(i=>i>=0);if(!on.length)return '';
-  const cid=lamId,cuenta=E.filter(e=>e.en[cid]&&e.en[cid][0]!=='~').map(e=>e.t.charAt(0).toLowerCase()+e.t.slice(1));
-  /* v218: con diecinueve acontecimientos, la secuencia corta va por fases; se enciende la
+  /* v219: lo que la visión muestra, por el texto o por la interpretación. */
+  const cid=lamId,cuenta=E.filter(e=>e.en[cid]).map(e=>e.t.charAt(0).toLowerCase()+e.t.slice(1));
+  /* v218: con muchos acontecimientos, la secuencia corta va por fases; se enciende la
      fase del acontecimiento y su nombre va debajo. */
   const F=(U.fases||[]).map(([id,t])=>({id,t,ev:E.filter(e=>e.fase===id)})).filter(x=>x.ev.length),onE=on.map(i=>E[i]);
   return '<div class="lam-ult"><div class="lam-rot">'+esc(U.titulo)+'</div><ol style="--n:'+F.length+'">'+F.map((f,i)=>{const o=onE.filter(e=>e.fase===f.id);
-    return '<li class="'+(o.length?'on':'')+(f.ev.some(e=>e.en[cid]&&e.en[cid][0]!=='~')?' en':'')+'" title="'+esc(f.t+': '+f.ev.map(e=>e.t).join(', '))+'"><i>'+(i+1)+'</i><span>'+esc(f.t)+'</span>'+(o.length?'<em>'+esc(o.map(e=>e.c||e.t).join(' · '))+'</em>':'')+'</li>';}).join('')+'</ol>'+
-    '<p>'+esc((L.libro||'')+' cuenta '+cuenta.join(', ').replace(/, ([^,]*)$/,' y $1')+'. Daniel 11 y 12 y Apocalipsis llenan lo de en medio.')+'</p>'+
+    return '<li class="'+(o.length?'on':'')+(f.ev.some(e=>e.en[cid])?' en':'')+'" title="'+esc(f.t+': '+f.ev.map(e=>e.t).join(', '))+'"><i>'+(i+1)+'</i><span>'+esc(f.t)+'</span>'+(o.length?'<em>'+esc(o.map(e=>e.c||e.t).join(' · '))+'</em>':'')+'</li>';}).join('')+'</ol>'+
+    '<p>'+esc((L.libro||'')+' muestra '+cuenta.join(', ').replace(/, ([^,]*)$/,' y $1')+'. Daniel 11 y 12, Mateo 24 y el Apocalipsis llenan lo de en medio.')+'</p>'+
     (lamModo==='presentar'?'':'<button type="button" class="btn txt peq lam-ult-ir" onclick="lamUltIr('+on[0]+')">'+IC('comparar')+' Ver la secuencia completa</button>')+'</div>';
 }
 /* Qué acontecimientos tocan a una entrada de la lámina (parte o entrada del riel). */

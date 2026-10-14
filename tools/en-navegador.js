@@ -1015,13 +1015,32 @@ for (const W of ANCHOS) {
   ok(rio.length === 2 && rio.every(r => r.filas === 1) && rio.every(r => r.hilos.some(h => /^Roma papal/.test(h))) && rio[1].hilos.some(h => /^Juicio/.test(h)) && await p.locator('.cmp-ley').count() === 1,
     W + ' · v215: en el río cada visión es una sola fila; Roma papal y el juicio son hilos con su nombre, y hay leyenda (' + JSON.stringify(rio) + ')');
   /* 5. Los últimos acontecimientos. */
-  /* v218: diecinueve acontecimientos en cinco fases; la tabla rueda de lado dentro de su caja, la página no. */
-  const ult = await p.evaluate(() => { cmpUlt(ultIdx('plagas')); const sc = document.querySelector('#cmpUlt .cmp-ult-scroll'), fz = [...document.querySelectorAll('#cmpUlt .cmp-ult-fase')];
-    return { n: document.querySelectorAll('#cmpUlt .cmp-ult-ev').length, sel: document.querySelector('#cmpUlt .cmp-ult-ev.on i').textContent,
-    det: document.getElementById('cmpUltDet').textContent, d2: [...document.querySelectorAll('#cmpUlt .cmp-ult-c.si')].length, fases: fz.map(f => f.textContent).join('|'),
-    caja: sc.getBoundingClientRect().right <= document.documentElement.clientWidth + 1, pag: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1 }; });
-  ok(ult.n === 19 && ult.sel === '10' && /siete últimas plagas/i.test(ult.det) && /Apocalipsis 15:1/.test(ult.det) && /tiempo de angustia/i.test(ult.det) && ult.d2 > 20 && ult.fases.split('|').length === 5 && ult.caja && ult.pag,
-    W + ' · v218: «Los últimos acontecimientos»: diecinueve en cinco fases, tocar uno abre sus textos, y nada se sale de la pantalla (' + JSON.stringify(Object.assign({}, ult, { det: '' })) + ')');
+  /* v219: veintinueve acontecimientos en filas, diecisiete columnas (capítulos y Elena de
+     White); el nombre queda fijo al rodar; tocar una celda abre debajo de su fila el
+     texto, si es explícito o interpretación, y su fuente, a lo ancho de lo que se ve. */
+  const ult = await p.evaluate(async () => {
+    const m = document.getElementById('cmpUlt'), sc = m.querySelector('.cmp-ult-scroll');
+    m.scrollIntoView({ block: 'start' }); cmpUlt(ultIdx('ley'), false, 'd11'); await new Promise(r => setTimeout(r, 400));
+    const det = document.getElementById('cmpUltDet'), dw = det.querySelector('.cmp-ult-dw').getBoundingClientRect(), scr = sc.getBoundingClientRect();
+    const fila = document.querySelector('.cmp-ult-fila.on'), ev = fila.querySelector('.cmp-ult-ev').getBoundingClientRect(), celda = document.querySelector('.cmp-ult-c.on').getBoundingClientRect();
+    const r = { n: document.querySelectorAll('#cmpUlt .cmp-ult-ev').length, cols: document.querySelectorAll('#cmpUlt .cmp-ult-fila.cab .cmp-ult-lb').length,
+      fases: document.querySelectorAll('#cmpUlt .cmp-ult-fz').length, det: det.textContent, despues: fila.nextElementSibling === det,
+      detVe: dw.left >= scr.left - 1 && dw.right <= scr.right + 1, celdaVe: celda.left >= ev.right - 1 && celda.right <= scr.right + 1,
+      rueda: sc.scrollWidth > sc.clientWidth + 1, pista: getComputedStyle(m.querySelector('.cmp-ult-pista')).display !== 'none',
+      caja: scr.right <= document.documentElement.clientWidth + 1, pag: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
+      si: document.querySelectorAll('#cmpUlt .cmp-ult-c.si').length, int: document.querySelectorAll('#cmpUlt .cmp-ult-c.int').length };
+    /* Al rodar al final, el nombre del acontecimiento sigue en su sitio. */
+    sc.scrollLeft = sc.scrollWidth; await new Promise(r2 => setTimeout(r2, 150));
+    r.fijo = Math.abs(document.querySelector('.cmp-ult-fila.on .cmp-ult-ev').getBoundingClientRect().left - scr.left) < 2;
+    r.pistaFin = getComputedStyle(m.querySelector('.cmp-ult-pista')).display === 'none';
+    sc.scrollLeft = 0; ultPista(sc);
+    return r; });
+  ok(ult.n === 29 && ult.cols === 17 && ult.fases === 5 && ult.despues && /Daniel 11:41/.test(ult.det) && /Según la interpretación/.test(ult.det) && /Pippenger/.test(ult.det) &&
+    ult.detVe && ult.celdaVe && ult.fijo && ult.caja && ult.pag && ult.si >= 30 && ult.int >= 30 && (!ult.rueda || (ult.pista && ult.pistaFin)),
+    W + ' · v219: «Los últimos acontecimientos»: 29 filas en 5 fases y 17 columnas; la celda de Daniel 11 en la ley dominical abre debajo su texto, «según la interpretación» y su fuente, a la vista; el nombre queda fijo al rodar y la pista se va al final (' + JSON.stringify(Object.assign({}, ult, { det: '' })) + ')');
+  /* Mateo 24 va sin comillas: la referencia y la fuente. */
+  const mt = await p.evaluate(() => { cmpUlt(ultIdx('falso'), false, 'mt24'); const d = document.getElementById('cmpUltDet'); return { q: d.querySelectorAll('q').length, t: d.textContent }; });
+  ok(mt.q === 0 && /Mateo 24:23-27/.test(mt.t) && /Lo dice el texto/.test(mt.t) && /CS 683/.test(mt.t), W + ' · v219: Mateo 24 en la celda: referencia sin comillas, explícito y su fuente (' + mt.q + ')');
   /* 6. El lugar vuelve igual al recargar (y el enlace lo dice). */
   const recarga = async (nombre, prepara, mira) => {
     await p.evaluate(prepara); await p.waitForTimeout(500);
@@ -1036,8 +1055,8 @@ for (const W of ANCHOS) {
     () => lamModo === 'presentar' && lamId === 'd2' && lamPaso === 7 || [lamModo, lamId, lamPaso]);
   await recarga('la sala de Comparar en Grecia', () => { lamCierra(); verComparar(); cmpToca('-331'); },
     () => cmpSel === '-331' && !document.getElementById('cmpSala').hidden || [cmpSel]);
-  await recarga('las plagas en «Los últimos acontecimientos»', () => { cmpCierra(); cmpUlt(ultIdx('plagas')); },
-    () => ultSel === ultIdx('plagas') && /plagas/i.test(document.getElementById('cmpUltDet').textContent) || [ultSel]);
+  await recarga('las plagas en Apocalipsis 16, en «Los últimos acontecimientos»', () => { cmpCierra(); cmpUlt(ultIdx('plagas'), false, 'ap16'); },
+    () => ultSel === ultIdx('plagas') && ultCol === 'ap16' && /Apocalipsis 16/.test(document.getElementById('cmpUltDet').textContent) || [ultSel, ultCol]);
   /* Un enlace copiado abre lo mismo en otro aparato (sin nada anotado). */
   await p.evaluate(() => { cmpCierra(); verCap('d7'); lamAbre('d7', 'explorar'); lamIr('cuerno'); });
   await p.waitForTimeout(400);
