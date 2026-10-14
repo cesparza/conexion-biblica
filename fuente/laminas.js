@@ -38,6 +38,18 @@ const LAMINAS = {
     monte: { lado: 'i', ly: 40, t: 'El gran monte', f: 'el reino eterno' },
   },
   tiempo: ['oro', 'plata', 'bronce', 'hierro', 'dedos', 'barro'],
+  /* v211 (Camilo, 14-oct: «el play corre pero no se ve el avance»; la línea de
+     tiempo llega hasta el futuro). Después de «hoy», un tramo «futuro» a escala
+     propia (años que no se cuentan: `de` y `a` solo ubican el tramo): la piedra,
+     que es la segunda venida, y el monte, el reino eterno. Al recorrer la
+     historia la piedra cae y el monte crece en su tramo. */
+  futuro: [{ id: 'piedra', de: 2026, a: 2326, t: 'La piedra', s: 'Cristo vuelve', f: 'e-piedra' },
+    { id: 'monte', de: 2326, a: 2626, t: 'El gran monte', s: 'el reino eterno', f: 'e-monte' }],
+  /* Daniel 2 no trae el juicio, pero la historia sí pasa por 1844 (Daniel 7 y 8). */
+  juicio: 1844,
+  marcas: [[-605, '605 a.C.'], [-331, '331<i> a.C.</i>', 'chico'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [476, '476 d.C.'],
+    [1798, '1798', 'der'], [1844, '1844<i> · juicio</i>', 'izq chico'], [2026, 'hoy', 'izq'], [2176, 'la piedra', 'fut'], [2476, 'el monte', 'fut'], [2476, 'futuro', 'tel']],
+  hitos: [-539, -331, -168, 476, 538, 1798, 1844],
   /* v209: el cartel de apertura, como el título de una película: capítulo, lugar y
      cuándo (lo que dice el texto, sin años que el capítulo no da). `lado`: dónde va el
      título sobre la escena ('d' a la derecha de la estatua, 'i' abajo a la izquierda). */
@@ -69,7 +81,7 @@ const LAMINAS = {
   paralelo: [['oro','León con alas de águila','Babilonia'],['plata','Oso','Medo-Persia'],['bronce','Leopardo de cuatro cabezas','Grecia'],
     ['hierro','Bestia con dientes de hierro','Roma imperial'],['dedos','Diez cuernos','Roma dividida'],['barro','El cuerno pequeño','Roma papal'],
     ['piedra','El reino se da a los santos (7:27)','La segunda venida y el reino eterno']],
-  paraleloFuente: 'Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-120.',
+  paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
   reto: [
     {q:'¿Qué parte es «otro reino, inferior al tuyo»?',ok:'plata',e:'2:39 · Medo-Persia, que el mismo libro nombra en 5:28.'},
     {q:'¿Dónde golpeó la piedra?',ok:'barro',e:'2:34 · «hirió a la imagen en sus pies de hierro y de barro cocido».'},
@@ -89,9 +101,11 @@ const LAMINAS = {
     { y: 476, f: 'e476', parte: 'dedos', t: '476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente' },
     { y: 538, f: 'e538', parte: 'barro', t: '538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal' },
     { y: 1798, f: 'e1798', c: '1798 d.C. · Berthier toma preso a Pío VI', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
-    /* v195: lo que viene. Año futuro: salen en su parte, nunca en la línea de tiempo. */
-    { y: 9998, f: 'e-piedra', parte: 'piedra', t: 'Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 44; Mateo 25:31)' },
-    { y: 9999, f: 'e-monte', parte: 'monte', t: 'Para siempre · El reino de Dios llena toda la tierra (2:35, 44)' },
+    /* v211: 1844 también en Daniel 2 (la imagen es la del juicio de Daniel 7). */
+    { y: 1844, f: 'd7/juicio', c: '1844 d.C. · Empieza el juicio en el cielo', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (Daniel 7:9-10; 8:14)' },
+    /* v195: lo que viene. v211: con año del tramo «futuro» de la línea de tiempo (no es un año real). */
+    { y: 2027, f: 'e-piedra', parte: 'piedra', t: 'Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 44; Mateo 25:31)' },
+    { y: 2327, f: 'e-monte', parte: 'monte', t: 'Para siempre · El reino de Dios llena toda la tierra (2:35, 44)' },
   ],
   partes: [
  {id:'oro',nombre:'Cabeza de oro',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
@@ -154,10 +168,14 @@ LAMINAS.d7 = {
   libro: 'Daniel 7',
   titulo: 'Las cuatro bestias y el juicio',
   dir: 'd7/',
-  cartel: { lugar: 'Babilonia', cuando: 'En el primer año de Belsasar, hacia 553 a.C.', ref: 'Daniel 7:1', lado: 'i',
+  /* v211 (Camilo: «¿no vale la pena una imagen con todas las bestias?»): la portada
+     son las cuatro bestias que suben del mar (bestias.webp, armada con
+     tools/lamina-bestias.py de las capas leon/oso/leopardo-solo.png, mar.webp y un
+     recorte difuminado de cuarta.webp). */
+  cartel: { f: 'bestias', lugar: 'Babilonia', cuando: 'En el primer año de Belsasar, hacia 553 a.C.', ref: 'Daniel 7:1', lado: 'i',
     cita: { ref: 'Daniel 7:2', texto: 'Miraba yo en mi visión de noche, y vi que los cuatro vientos del cielo combatían en el gran mar.' } },
   /* La imagen de la tarjeta del capítulo y la de Explorar antes de elegir. */
-  miniF: 'leon', inicioF: 'mar',
+  miniF: 'bestias', inicioF: 'bestias',
   verTodo: 'Las bestias',
   invita: 'Elige cada bestia, los cuernos y el juicio: lo que dice el texto, lo que significa, sus fechas y su fuente.',
   pista: 'Elige una parte en la tira de abajo de la imagen. Arriba están los pasos del capítulo; abajo, la historia año por año.',
@@ -166,7 +184,8 @@ LAMINAS.d7 = {
   solapa: ['cuerno', 'juicio'],
   herida: ['cuernos', 'cuerno'],
   tiempo: ['leon', 'oso', 'leopardo', 'bestia', 'cuernos', 'cuerno', 'juicio'],
-  historia: [
+  futuro: [{ id: '', de: 2026, a: 2326, t: 'La segunda venida', s: 'Cristo vuelve por los suyos', f: 'd2/e-piedra' },
+    { id: 'reino', de: 2326, a: 2626, t: 'El reino eterno', s: 'dado a los santos', f: 'd2/e-monte' }],  historia: [
     { f: 'd2/babilonia', titulo: 'En el primer año de Belsasar', ref: 'Daniel 7:1', texto: 'En el primer año de Belsasar, rey de Babilonia, tuvo Daniel un sueño y visiones de su cabeza mientras estaba en su lecho',
       nota: 'Hacia el 553 a.C., unos cincuenta años después del sueño de la estatua. Daniel tiene unos setenta años, y Babilonia caerá catorce años después (Daniel 5). Daniel «escribió el sueño» (7:1).' },
     { f: 'mar', titulo: 'Cuatro vientos sobre el gran mar', ref: 'Daniel 7:2-3', texto: 'vi que los cuatro vientos del cielo combatían en el gran mar. … cuatro bestias grandes, diferentes la una de la otra, subían del mar.',
@@ -186,8 +205,14 @@ LAMINAS.d7 = {
   d2Izq: ['cuerno'],
   paralelo: [['leon', 'Cabeza de oro', 'Babilonia', 'oro'], ['oso', 'Pecho y brazos de plata', 'Medo-Persia', 'plata'], ['leopardo', 'Vientre y muslos de bronce', 'Grecia', 'bronce'],
     ['bestia', 'Piernas de hierro', 'Roma imperial', 'hierro'], ['cuernos', 'Los diez dedos', 'Roma dividida', 'dedos'], ['cuerno', 'Hierro mezclado con barro', 'Roma papal', 'barro'],
-    ['juicio', 'No aparece: lo agrega Daniel 7', 'El juicio en el cielo, desde 1844', null], ['hijo', 'La piedra que se desprende sin mano', 'Cristo recibe el reino', 'piedra'],
-    ['reino', 'La piedra que se hace un gran monte', 'El reino eterno', 'monte']],
+    /* v211 (Camilo, 14-oct): el Hijo del hombre NO es la piedra. La piedra es la
+       segunda venida; el Hijo del hombre «vino hasta el Anciano de días» (7:13) en
+       1844, cuando empieza el juicio en el cielo (CS 477). Va en la época del juicio,
+       y Daniel 2 no lo trae. El reino de Dios: la piedra y el monte de Daniel 2 con
+       el reino dado a los santos (7:18, 22, 27). La cuarta columna puede ser una
+       lista: se encienden las dos. */
+    ['juicio', 'No aparece: lo agrega Daniel 7', 'El juicio en el cielo, desde 1844', null], ['hijo', 'No aparece: lo agrega Daniel 7', 'Cristo llega al Anciano de días, en el juicio (1844)', null],
+    ['reino', 'La piedra que hiere los pies y se hace un gran monte', 'La segunda venida y el reino eterno', ['piedra', 'monte']]],
   paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
   retoSin: [],
   reto: [
@@ -198,12 +223,14 @@ LAMINAS.d7 = {
     { q: '¿Qué empieza en 1844?', ok: 'juicio', e: '7:9-10 y 8:14 · Se sienta el Anciano de días y se abren los libros.' },
     { q: '«Lo hicieron acercarse delante de él». ¿A quién?', ok: 'hijo', e: '7:13 · Cristo llega al Anciano de días, en el cielo, no a la tierra.' }],
   /* Las escenas de la historia son las de Daniel 2, cada una en su bestia. */
-  escenas: LAMINAS.d2.escenas.filter(e => e.y < 9000).map(e => Object.assign({}, e, { f: 'd2/' + e.f }, e.parte ? { parte: D2_A_D7[e.parte] } : {}))
+  escenas: LAMINAS.d2.escenas.filter(e => e.y <= 2026 && e.y !== 1844).map(e => Object.assign({}, e, { f: 'd2/' + e.f }, e.parte ? { parte: D2_A_D7[e.parte] } : {}))
     /* v205: al pasar de 1798 a 1844 la línea de tiempo llega al juicio. */
-    .concat([{ y: 1844, f: 'juicio', c: '1844 d.C. · Empieza el juicio en el cielo (8:14)', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (7:9-10; 8:14)' }]),
+    .concat([{ y: 1844, f: 'juicio', c: '1844 d.C. · Empieza el juicio en el cielo (8:14)', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (7:9-10; 8:14)' },
+      { y: 2027, f: 'd2/e-piedra', t: 'Futuro · Cristo vuelve por los suyos (Juan 14:3)' }]),
   /* v205: la línea de tiempo con 1844 (va arriba de la pista: abajo choca con 1798),
      y los años donde el recorrido se detiene un momento. */
-  marcas: [[-605, '605 a.C.'], [-331, '331<i> a.C.</i>', 'chico'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [476, '476 d.C.'], [1798, '1798 d.C.'], [1844, '1844 · el juicio', 'arriba'], [2026, 'hoy', 'chico']],
+  marcas: [[-605, '605 a.C.'], [-331, '331<i> a.C.</i>', 'chico'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [476, '476 d.C.'],
+    [1798, '1798', 'der'], [1844, '1844<i> · juicio</i>', 'izq chico'], [2026, 'hoy', 'izq'], [2176, 'la venida', 'fut'], [2476, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
   hitos: [-539, -331, -168, 476, 538, 1798, 1844],
   /* v205: LAS BESTIAS SUBEN DEL MAR (7:3), una por paso. Hoy: la imagen entera de
      cada bestia sube y aparece sobre la anterior. Cuando existan
@@ -355,10 +382,11 @@ LAMINAS.d7 = {
     libros:[[215,468],[532,484],[915,468]],
     camara:[[150,0,900,506],[330,0,540,304],[250,225,800,450]],
     libro:'libro.png'}},
- {id:'hijo',img:'hijo',nombre:'El Hijo del hombre',reino:'Cristo recibe el reino',fechas:'en el juicio',de:null,c:'#0E7490',
+ /* v211: `era` lo pone en la época del juicio al comparar (no tiene tramo propio en la línea de tiempo). */
+ {id:'hijo',img:'hijo',nombre:'El Hijo del hombre',reino:'Cristo llega al Anciano de días',fechas:'desde 1844 d.C., en el juicio',de:null,era:1844,c:'#0E7490',
   texto:'con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días',ref:'7:13',texto2:'su dominio es dominio eterno, que nunca pasará',ref2:'7:14',
-  corto:'Cristo va al Padre, no a la tierra: llega al juicio y recibe el reino.',
-  interp:['Uno «como un hijo de hombre» es Cristo. Las nubes son ángeles (Salmo 68:17) que lo llevan ante el Padre, al juicio, no a la tierra (CS 477).','Ahí recibe «dominio, gloria y reino» (7:14). Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27), herederos con Cristo (Romanos 8:17).'],
+  corto:'1844: Cristo va al Padre, no a la tierra. Llega al juicio y recibe el reino. No es la piedra de Daniel 2: esa es la segunda venida, después.',
+  interp:['Uno «como un hijo de hombre» es Cristo. Las nubes son ángeles (Salmo 68:17) que lo llevan ante el Padre, al juicio, no a la tierra (CS 477).','Pasa en 1844, cuando empieza el juicio (8:14). No es la segunda venida: la piedra de Daniel 2 cae después, cuando el juicio termina y Cristo vuelve por los suyos.','Ahí recibe «dominio, gloria y reino» (7:14). Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27), herederos con Cristo (Romanos 8:17).'],
   fuente:'CS 477; '+BOHR+', p. 280.',
   pasos:[
    {t:'Con las nubes del cielo',ref:'7:13',texto:'con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días, y lo hicieron acercarse delante de él.',caja:[0,60,780,439],

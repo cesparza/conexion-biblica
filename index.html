@@ -4108,6 +4108,154 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   .lam-fp b{font-size:1em}
 }
 @media (prefers-reduced-motion:reduce){.lam-ft,.lam-fp,.lam-fh i,.lam-esc .lam-chip{transition:none}.lb-chispas span{animation:none;opacity:.75}.lb-chispas span:nth-child(3n){bottom:18%}.lb-chispas span:nth-child(3n+1){bottom:42%}.lb-chispas span:nth-child(3n+2){bottom:66%}}
+
+/* ═══════════ v211: RONDA DE CAMILO (14-oct) SOBRE v209/v210 ═══════════ */
+/* 1. PRESENTAR EN PANTALLA ANCHA: la escena llena todo el escenario. Antes era una
+   caja 16:9 centrada (franjas negras a los lados) y el cartel ponía dos franjas
+   más arriba y abajo que cortaban la corona. El SVG cubre la caja (lamGeo). */
+.lam.pres.ancho .lam-marco{width:100%;height:100%;max-width:none;aspect-ratio:auto}
+.lam.pres.ancho .lam-esc{width:100%;height:100%;max-height:none;aspect-ratio:auto}
+.lam-esc::before,.lam-esc.cartel::before{display:none}
+/* Lo que sobra al lado de una escena: la misma imagen, grande y a media luz. */
+.lam-hist-amb{opacity:0;transition:opacity .6s ease;pointer-events:none;filter:blur(22px) saturate(.8)}
+/* El texto, una columna a la derecha que se funde con la imagen. */
+.lam.pres.ancho .lam-hoja{width:min(38%,640px);min-width:360px;padding:clamp(20px,3vw,48px) clamp(20px,2.6vw,44px) clamp(20px,3vw,48px) clamp(44px,4.5vw,84px);
+  background:linear-gradient(90deg,rgba(5,4,3,0),rgba(5,4,3,.82) clamp(36px,3.6vw,72px),rgba(5,4,3,.92))}
+.lam-esc.lado .lam-chip{left:16px;top:16px;bottom:auto;max-width:calc(60% - 32px)}
+
+/* 2. LA LÍNEA DE TIEMPO: una pista. El tramo de la parte va dentro de ella; pista,
+   marcas y pulgar con el mismo margen (11 px, el radio del pulgar). */
+.lam-rango{position:relative;height:26px}
+.lam-pista{position:absolute;left:11px;right:11px;top:50%;height:6px;margin-top:-3px;border-radius:999px;overflow:hidden;background-color:#3a332a}
+.lam-hoy{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--cine-tinta,#F3EDE2);opacity:.7}
+.lam-pista .lam-tramo{top:0;bottom:0;height:auto;margin:0;border-radius:999px;box-shadow:none;
+  background:linear-gradient(90deg,rgba(255,236,190,.95),rgba(242,196,107,.95));mix-blend-mode:normal}
+.lam-pista .lam-tramo.banda{animation:lamBanda 1.4s ease 1}
+@keyframes lamBanda{0%{opacity:.2}40%{opacity:1}60%{opacity:.55}100%{opacity:1}}
+.lam-tiempo input[type=range]{position:relative;z-index:1;display:block;width:100%;height:26px;margin:0;background:transparent}
+.lam-tiempo input[type=range]::-webkit-slider-runnable-track{height:26px;background:transparent;border-radius:0}
+.lam-tiempo input[type=range]::-moz-range-track{height:26px;background:transparent}
+.lam-tiempo input[type=range]::-webkit-slider-thumb{box-sizing:border-box;width:22px;height:22px;margin-top:2px;border-radius:50%;background:#FFF8E6;border:3px solid #17120A;box-shadow:0 0 0 1px var(--cine-oro,#D6B26A),0 1px 6px rgba(0,0,0,.5)}
+.lam-tiempo input[type=range]::-moz-range-thumb{box-sizing:border-box;width:22px;height:22px;border-radius:50%;background:#FFF8E6;border:3px solid #17120A;box-shadow:0 0 0 1px var(--cine-oro,#D6B26A)}
+.lam-tiempo input[type=range]:focus-visible{outline:none}
+.lam-tiempo input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px var(--cine-oro,#D6B26A)}
+.lam-marcas{margin:2px 11px 0;height:20px}
+.lam-marcas span{transform:translateX(-50%)}
+.lam-marcas span:first-child{transform:none}
+.lam-marcas span:last-child{transform:translateX(-50%)}
+.lam-marcas span.izq{transform:translateX(-2px)}
+.lam-marcas span.der{transform:translateX(calc(-100% + 2px))}
+.lam-marcas span.fut{color:var(--lam-oro,#B98A35)}
+.lam-marcas span.tel{display:none;color:var(--lam-oro,#B98A35)}
+@media (max-width:1100px){.lam-marcas span.chico i{display:none}}
+@media (max-width:700px){.lam-marcas span.chico,.lam-marcas span.fut{display:none}.lam-marcas span.tel{display:block}}
+
+/* 3. EL AÑO SOBRE LA IMAGEN mientras se recorre la historia. */
+.lam-anio-v{position:absolute;left:16px;top:16px;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 14px 9px 12px;border-left:3px solid var(--cine-oro,#D6B26A);
+  background:rgba(8,6,4,.72);color:#F3EDE2;pointer-events:none;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:calc(100% - 32px)}
+.lam-anio-v[hidden]{display:none}
+.lam-anio-v b{font-family:var(--cine-serif);font-weight:500;font-size:1.75rem;line-height:1.05;font-variant-numeric:tabular-nums}
+.lam-anio-v span{font-size:.875rem;color:#E6DCC8;line-height:1.3}
+@media (max-width:560px){.lam-anio-v{left:8px;top:auto;bottom:8px;padding:5px 10px 6px 9px}.lam-anio-v b{font-size:1.125rem}.lam-anio-v span{font-size:.75rem}}
+/* La estatua al recorrer: las partes que no gobiernan, enteras y en sombra (no transparentes). */
+.lam-parte.apagada{opacity:1;filter:saturate(.25) brightness(.38)}
+.lam-parte.tenue{opacity:1;filter:saturate(.5) brightness(.62)}
+
+/* 4. DANIEL 2 EN EXPLORAR: la tira con todas las partes (también la piedra y el monte). */
+.lam-tira.chips{display:flex;flex-wrap:wrap;gap:6px;overflow:visible;padding:0}
+.lam-tb.chip{width:auto;flex:0 1 auto;flex-direction:row;align-items:baseline;gap:6px;padding:7px 12px 7px 10px;border-width:1px;border-radius:999px;box-shadow:none;animation:none}
+.lam-tb.chip::before{content:'';align-self:center;flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--c)}
+.lam-tb.chip b{font-size:.875rem}
+.lam-tb.chip small{font-size:.75rem}
+.lam-tb.chip.on{border-color:var(--lam-oro,#B98A35);box-shadow:0 0 0 1px var(--lam-oro,#B98A35)}
+@media (max-width:560px){.lam-tb.chip small{display:none}}
+@media (min-width:900px){
+  .lam:not(.pres):not(.escenas) .lam-esc{width:min(100%,calc((100vh - 300px) * 1100 / 1152))}
+  .lam:not(.pres):not(.escenas) .lam-tira-c{grid-column:1;justify-self:end;width:min(100%,calc((100vh - 300px) * 1100 / 1152))}
+  .lam:not(.pres):not(.escenas) .lam-hoja{grid-column:2;grid-row:1 / span 2;max-height:calc(100vh - 220px)}
+}
+/* La navegación entre partes, pegada al pie de la explicación. */
+.lam:not(.pres) .lam-nav{position:sticky;bottom:-12px;z-index:2;margin:12px -14px -12px;padding:10px 14px 12px;background:#1D170F;border-top:1px solid rgba(243,237,226,.1);
+  display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.lam-nv{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-height:48px;padding:6px 12px;border:0;border-radius:12px;background:rgba(255,255,255,.08);color:#F4EEE2;font:inherit;text-align:left;cursor:pointer;min-width:0}
+.lam-nv.sig{align-items:flex-end;text-align:right;background:rgba(214,178,106,.2)}
+.lam-nv small{font-size:.75rem;color:#D6B26A;font-weight:600}
+.lam-nv b{font-family:var(--cine-serif);font-weight:500;font-size:1rem;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.lam-nv:hover:not(:disabled){background:rgba(214,178,106,.3)}
+.lam-nv:disabled{opacity:.3;cursor:default}
+.lam-nav>span{font-size:.75rem;color:#C9BFA9;font-variant-numeric:tabular-nums}
+
+/* 5. LAS SEÑAS: el número es el hijo directo; una <i> dentro del texto
+   (Pontifex Maximus) ya no se vuelve un círculo encima de la letra. */
+.lam-sen-cap i,.lam-sen-cap p i{all:unset;font-style:italic}
+.lam-sen-cap>i{all:revert;font-style:normal;flex:0 0 auto;width:1.9em;height:1.9em;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--cine-oro,#D6B26A);
+  box-shadow:inset 0 0 0 1px var(--cine-oro,#D6B26A);font-family:var(--cine-serif);font-weight:500}
+.lam-sl p i,.lam-sl b i{all:unset;font-style:italic}
+
+/* 6. UN SOLO SISTEMA DE LETRA (Camilo: «hay tantas que no hacen match»).
+   - Títulos y nombres: la serif (--cine-serif), peso 500.
+   - Todo lo demás: la sans (--cine-sans), en minúsculas normales, sin espaciado.
+   - Citas de la Biblia: la serif, derecha (sin cursiva).
+   - Un solo rótulo en versalitas, para nombrar secciones: .75rem, peso 600, +.08em. */
+.lam,.cmp,.cmp-sala{--rot-ls:.08em}
+.lam .lam-rot,.lam .lam-ant,.lam .lam-tira-t,.cmp .cmp-ant,.lam .lam-cartel-ant,.cmp-sala .cmp-sala-cu,.lam .lam-portada,.lam .lam-per-cab,.lam .lam-sen-tit small{
+  font-family:var(--cine-sans);font-size:.75rem;font-weight:600;letter-spacing:var(--rot-ls);text-transform:uppercase}
+.lam .lam-cartel-ant{font-size:.875rem}
+.lam .lam-fechas,.lam .lam-et span,.lam .lam-chip span,.lam .lam-tano,.lam .lam-fig figcaption b,.lam .lam-p1,.lam .lam-cartel-meta,.lam .lam-ctl span,.lam .lam-marcas,
+.lam .lam-ref,.lam .lam-tb small,.lam .lam-d2-t,.lam .lam-fl-mil,.lam .lam-aviso,.lam .lam-libro-cita small,.lam .lam-cartel-cita cite,
+.cmp .cmp-et small,.cmp .cmp-lt small,.cmp .cmp-carril-n,.cmp .cmp-abre,.cmp-sala .cmp-sala-f,.cmp-sala .cmp-vis-tx small,.cmp-sala .cmp-nv small,.cmp-sala .cmp-cita cite,.cmp .cmp-cita cite{
+  font-family:var(--cine-sans);letter-spacing:0;text-transform:none}
+.lam .lam-fechas,.lam .lam-tano,.lam .lam-cartel-meta,.cmp .cmp-et small,.cmp-sala .cmp-sala-f,.cmp .cmp-lt small,.cmp-sala .cmp-vis-tx small{font-weight:600;font-variant-numeric:tabular-nums}
+.lam .lam-fechas{font-size:.875rem}
+.lam .lam-cartel-meta{font-size:.875rem}
+.cmp-sala .cmp-sala-f{font-size:1rem}
+.lam .lam-capa q,.lam .lam-cartel-cita,.cmp .cmp-cita,.cmp-sala .cmp-cita,.lam .lam-libro-cita,.lam .lam-tq,.cmp .cmp-faltan,.cmp-sala .cmp-sala-sin,.lam .lam-sen-tit span{font-style:normal}
+.lam .lam-tq,.cmp .cmp-faltan,.cmp-sala .cmp-sala-sin{font-family:var(--cine-sans)}
+.lam .lam-capa q{font-family:var(--cine-serif);line-height:1.5}
+.lam .lam-p2,.lam .lam-et b,.lam .lam-chip b,.lam .lam-tb b,.lam .lam-cartel-tit,.lam .lam-tit,.cmp .cmp-tit,.cmp .cmp-et b,.cmp .cmp-lt b,.cmp-sala h2,.cmp-sala .cmp-vis-tx b,.cmp-sala .cmp-nv b{font-family:var(--cine-serif);font-weight:500;letter-spacing:0}
+.lam .lam-hoja,.lam .lam-capa p,.lam .lam-nota{font-family:var(--cine-sans)}
+.lam .lam-ley span,.lam .lam-pt{letter-spacing:0}
+
+/* 7. COMPARAR, OSCURO DE VERDAD: lo que se está escuchando y la fuente. Dentro de la
+   placa oscura el resaltado de la voz era el crema de la página (rosado en Jóvenes),
+   con la letra clara encima. */
+#detalle .cmp .suena,.cmp .suena{background:rgba(214,178,106,.14);box-shadow:0 0 0 4px rgba(214,178,106,.14);color:inherit;border-radius:8px}
+.cmp .sec-fuente{background:transparent;color:var(--cine-tenue)}
+/* El reproductor del estudio, cuando suena, se pega justo bajo las barras de la app
+   (lo mide cmpPega: en Jóvenes tapaba la barra de arriba y las pestañas), y deja de
+   ser la placa crema (rosada en Jóvenes) para ser un vidrio del color de la tarjeta.
+   Mide lo mismo sonando que en reposo (v162: la tarjeta no cambia de tamaño). */
+.est-rp.activo{top:var(--cb-pega,0px);background:color-mix(in srgb,var(--card,#fff) 86%,transparent);
+  -webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);box-shadow:0 8px 24px -14px rgba(0,0,0,.5)}
+/* Comparar, la época del juicio: sus tres fases. */
+.cmp-fases{margin:12px 0 0;padding:14px 16px;border-radius:12px;background:rgba(243,237,226,.05);box-shadow:inset 0 0 0 1px rgba(243,237,226,.1)}
+.cmp-fases-t{display:block;margin-bottom:10px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--cine-oro)}
+.cmp-fases ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cmp-fases li{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:baseline}
+.cmp-fases li i{grid-row:1 / span 3;font-style:normal;font-family:var(--cine-serif);color:var(--cine-oro);font-size:1.125rem}
+.cmp-fases li b{font-family:var(--cine-serif);font-weight:500;font-size:1.125rem;color:var(--cine-tinta)}
+.cmp-fases li small{font-size:.875rem;color:var(--cine-gris)}
+.cmp-fases li span{font-size:.875rem;color:var(--cine-tenue);margin-top:2px}
+.cmp-fases p{margin:12px 0 0;color:var(--cine-gris);font-size:1rem}
+.cmp-fases .cmp-lam{margin-top:10px}
+@container (max-width:560px){.cmp-fases ol{grid-template-columns:1fr}}
+@media (max-width:560px){.cmp-fases ol{grid-template-columns:1fr}}
+/* v211: la actividad de cada pastilla, antes de la categoría. */
+.alu-act{display:inline-flex;align-items:baseline;gap:.4rem;text-align:left}
+.alu-act-a{font-weight:700}
+.alu-act-a::after{content:'·';margin-left:.4rem;font-weight:400;opacity:.6}
+.alu-act.on .alu-act-a::after{opacity:.85}
+/* Las marcas según el ancho de la línea (no de la ventana): en Explorar la línea es
+   más angosta que la pantalla. */
+.lam-tiempo{container-type:inline-size}
+@container (max-width:1400px){.lam-marcas span.chico i{display:none}}
+@container (max-width:900px){.lam-marcas span.chico{display:none}}
+@container (max-width:640px){.lam-marcas span.fut{display:none}.lam-marcas span.tel{display:block}}
+.lam-tb.chip small{display:none}
+.cmp .cmp-carta.vacia b,.cmp .cmp-carta .cmp-lt b{font-style:normal}
+/* En el teléfono, al presentar, el título ya va en la explicación de abajo: sobre una
+   imagen de 390 px el cartel la tapaba entera y se salía por arriba. */
+.lam.pres:not(.ancho) .lam-cartel{display:none}
 </style>
 </head>
 <body>
@@ -4666,7 +4814,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '2d625d7bc6aa';
+const VERSION_APP = '5164c345c13f';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -58145,6 +58293,89 @@ const LAMINAS = {
    "dedos",
    "barro"
   ],
+  "futuro": [
+   {
+    "id": "piedra",
+    "de": 2026,
+    "a": 2326,
+    "t": "La piedra",
+    "s": "Cristo vuelve",
+    "f": "e-piedra"
+   },
+   {
+    "id": "monte",
+    "de": 2326,
+    "a": 2626,
+    "t": "El gran monte",
+    "s": "el reino eterno",
+    "f": "e-monte"
+   }
+  ],
+  "juicio": 1844,
+  "marcas": [
+   [
+    -605,
+    "605 a.C."
+   ],
+   [
+    -331,
+    "331<i> a.C.</i>",
+    "chico"
+   ],
+   [
+    -168,
+    "168<i> a.C.</i>",
+    "chico"
+   ],
+   [
+    1,
+    "1<i> d.C.</i>",
+    "chico"
+   ],
+   [
+    476,
+    "476 d.C."
+   ],
+   [
+    1798,
+    "1798",
+    "der"
+   ],
+   [
+    1844,
+    "1844<i> · juicio</i>",
+    "izq chico"
+   ],
+   [
+    2026,
+    "hoy",
+    "izq"
+   ],
+   [
+    2176,
+    "la piedra",
+    "fut"
+   ],
+   [
+    2476,
+    "el monte",
+    "fut"
+   ],
+   [
+    2476,
+    "futuro",
+    "tel"
+   ]
+  ],
+  "hitos": [
+   -539,
+   -331,
+   -168,
+   476,
+   538,
+   1798,
+   1844
+  ],
   "cartel": {
    "lugar": "Babilonia",
    "cuando": "En el segundo año de Nabucodonosor",
@@ -58243,7 +58474,7 @@ const LAMINAS = {
     "La segunda venida y el reino eterno"
    ]
   ],
-  "paraleloFuente": "Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-120.",
+  "paraleloFuente": "Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-121.",
   "reto": [
    {
     "q": "¿Qué parte es «otro reino, inferior al tuyo»?",
@@ -58332,13 +58563,19 @@ const LAMINAS = {
     "t": "1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI"
    },
    {
-    "y": 9998,
+    "y": 1844,
+    "f": "d7/juicio",
+    "c": "1844 d.C. · Empieza el juicio en el cielo",
+    "t": "1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (Daniel 7:9-10; 8:14)"
+   },
+   {
+    "y": 2027,
     "f": "e-piedra",
     "parte": "piedra",
     "t": "Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 44; Mateo 25:31)"
    },
    {
-    "y": 9999,
+    "y": 2327,
     "f": "e-monte",
     "parte": "monte",
     "t": "Para siempre · El reino de Dios llena toda la tierra (2:35, 44)"
@@ -58506,6 +58743,7 @@ const LAMINAS = {
   "titulo": "Las cuatro bestias y el juicio",
   "dir": "d7/",
   "cartel": {
+   "f": "bestias",
    "lugar": "Babilonia",
    "cuando": "En el primer año de Belsasar, hacia 553 a.C.",
    "ref": "Daniel 7:1",
@@ -58515,8 +58753,8 @@ const LAMINAS = {
     "texto": "Miraba yo en mi visión de noche, y vi que los cuatro vientos del cielo combatían en el gran mar."
    }
   },
-  "miniF": "leon",
-  "inicioF": "mar",
+  "miniF": "bestias",
+  "inicioF": "bestias",
   "verTodo": "Las bestias",
   "invita": "Elige cada bestia, los cuernos y el juicio: lo que dice el texto, lo que significa, sus fechas y su fuente.",
   "pista": "Elige una parte en la tira de abajo de la imagen. Arriba están los pasos del capítulo; abajo, la historia año por año.",
@@ -58536,6 +58774,24 @@ const LAMINAS = {
    "cuernos",
    "cuerno",
    "juicio"
+  ],
+  "futuro": [
+   {
+    "id": "",
+    "de": 2026,
+    "a": 2326,
+    "t": "La segunda venida",
+    "s": "Cristo vuelve por los suyos",
+    "f": "d2/e-piedra"
+   },
+   {
+    "id": "reino",
+    "de": 2326,
+    "a": 2626,
+    "t": "El reino eterno",
+    "s": "dado a los santos",
+    "f": "d2/e-monte"
+   }
   ],
   "historia": [
    {
@@ -58622,15 +58878,18 @@ const LAMINAS = {
    ],
    [
     "hijo",
-    "La piedra que se desprende sin mano",
-    "Cristo recibe el reino",
-    "piedra"
+    "No aparece: lo agrega Daniel 7",
+    "Cristo llega al Anciano de días, en el juicio (1844)",
+    null
    ],
    [
     "reino",
-    "La piedra que se hace un gran monte",
-    "El reino eterno",
-    "monte"
+    "La piedra que hiere los pies y se hace un gran monte",
+    "La segunda venida y el reino eterno",
+    [
+     "piedra",
+     "monte"
+    ]
    ]
   ],
   "paraleloFuente": "Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-121.",
@@ -58727,6 +58986,11 @@ const LAMINAS = {
     "f": "juicio",
     "c": "1844 d.C. · Empieza el juicio en el cielo (8:14)",
     "t": "1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (7:9-10; 8:14)"
+   },
+   {
+    "y": 2027,
+    "f": "d2/e-piedra",
+    "t": "Futuro · Cristo vuelve por los suyos (Juan 14:3)"
    }
   ],
   "marcas": [
@@ -58755,17 +59019,33 @@ const LAMINAS = {
    ],
    [
     1798,
-    "1798 d.C."
+    "1798",
+    "der"
    ],
    [
     1844,
-    "1844 · el juicio",
-    "arriba"
+    "1844<i> · juicio</i>",
+    "izq chico"
    ],
    [
     2026,
     "hoy",
-    "chico"
+    "izq"
+   ],
+   [
+    2176,
+    "la venida",
+    "fut"
+   ],
+   [
+    2476,
+    "el reino",
+    "fut"
+   ],
+   [
+    2476,
+    "futuro",
+    "tel"
    ]
   ],
   "hitos": [
@@ -59516,17 +59796,19 @@ const LAMINAS = {
     "id": "hijo",
     "img": "hijo",
     "nombre": "El Hijo del hombre",
-    "reino": "Cristo recibe el reino",
-    "fechas": "en el juicio",
+    "reino": "Cristo llega al Anciano de días",
+    "fechas": "desde 1844 d.C., en el juicio",
     "de": null,
+    "era": 1844,
     "c": "#0E7490",
     "texto": "con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días",
     "ref": "7:13",
     "texto2": "su dominio es dominio eterno, que nunca pasará",
     "ref2": "7:14",
-    "corto": "Cristo va al Padre, no a la tierra: llega al juicio y recibe el reino.",
+    "corto": "1844: Cristo va al Padre, no a la tierra. Llega al juicio y recibe el reino. No es la piedra de Daniel 2: esa es la segunda venida, después.",
     "interp": [
      "Uno «como un hijo de hombre» es Cristo. Las nubes son ángeles (Salmo 68:17) que lo llevan ante el Padre, al juicio, no a la tierra (CS 477).",
+     "Pasa en 1844, cuando empieza el juicio (8:14). No es la segunda venida: la piedra de Daniel 2 cae después, cuando el juicio termina y Cristo vuelve por los suyos.",
      "Ahí recibe «dominio, gloria y reino» (7:14). Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27), herederos con Cristo (Romanos 8:17)."
     ],
     "fuente": "CS 477; Bohr, <i>Daniel 1-10</i>, p. 280.",
@@ -73699,7 +73981,11 @@ const lamRuta=(L,f)=>LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+(/\.\w+$/.test(f)?
 const lamSrc=f=>lamRuta(LAM(),f);
 /* v204: Daniel 7 no es una estatua: una imagen entera por parte (ver lamEscenaE). */
 const lamEsE=()=>LAM().tipo==='escenas';
-const lamAnioTx=y=>y<0?(-y)+' a.C.':y+' d.C.';
+/* v211: la línea de tiempo sigue después de hoy: un tramo «futuro» (la piedra y el
+   monte en Daniel 2; la venida y el reino en Daniel 7) con años que solo ubican. */
+const LAM_HOY=2026,LAM_FIN=2626;
+const lamAnioTx=y=>y>LAM_HOY?'Futuro':y<0?(-y)+' a.C.':y+' d.C.';
+const lamFuturo=y=>y>LAM_HOY?(LAM().futuro||[]).find(f=>y>f.de&&y<=f.a)||null:null;
 const PIEDRA0=[960,330];
 
 /* v188: las imágenes se piden todas y se decodifican antes de mostrar la
@@ -73710,7 +73996,7 @@ const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
   const C=L.comparar&&LAMINAS[L.comparar];
-  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f)]:[...L.capas,'babilonia','monte','piedra']).map(f=>lamRuta(L,f))
+  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
   const p=lamPrecargadas[cid]||(lamPrecargadas[cid]=Promise.all(fs.map(src=>new Promise(ok=>{
     const im=new Image();im.onload=()=>{(im.decode?im.decode():Promise.resolve()).then(ok,ok);};im.onerror=ok;im.src=src;}))));
@@ -73752,6 +74038,7 @@ function lamEscena(){
        sobre una copia oscurecida de sí misma; el texto queda a la derecha sin taparla. */
     /* v209: lam-hist-bg guarda la escena anterior mientras la nueva entra encima (fundido). */
     '<rect class="lam-hist-osc" x="-150" y="0" width="2050" height="1152" fill="#0E0D0B"/>'+
+    '<image class="lam-hist-amb" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-hist-bg" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-hist" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="#000" fill-opacity=".28"/>'+
@@ -73759,8 +74046,12 @@ function lamEscena(){
     '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
     '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
-    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div><div class="lam-chip" id="lamChip" hidden></div>'+lamCartelHTML()+
+    '<div class="lam-ets" id="lamEts">'+etiquetas+'</div><div class="lam-chip" id="lamChip" hidden></div>'+lamAnioVHTML()+lamCartelHTML()+
     (lamModo==='presentar'?'':'<div class="lam-aviso" id="lamAviso">Toca una parte de la estatua</div>')+'</div>'+
+    /* v211 (Camilo: «desde los dedos no hay cómo llegar a la piedra ni al monte»): todas
+       las partes en una tira, también la piedra y el monte, siempre a la vista. */
+    (lamModo==='presentar'?'':'<div class="lam-tira-c lam-tira-d2"><div class="lam-tira-t">Las partes del sueño · elige una</div><div class="lam-tira chips" id="lamTira">'+
+      L.partes.map((p,i)=>'<button type="button" class="lam-tb chip" data-p="'+p.id+'" style="--c:'+p.c+'" title="'+esc(p.reino)+'" onclick="lamElige('+i+')"><b>'+esc(p.nombre)+'</b><small>'+esc(p.reino)+'</small></button>').join('')+'</div></div>')+
     /* v187: la explicación va DEBAJO de la imagen (al lado en pantalla ancha),
        nunca encima: en el celular tapaba la animación. Solo en Presentar con
        pantalla ancha va sobre la parte vacía de la escena apaisada. */
@@ -73797,12 +74088,42 @@ function lamDeriva(d,yo){
 /* En Presentar, con pantalla ancha, la escena es apaisada: la estatua a la izquierda y
    la explicación a la derecha, sin taparla. */
 const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900&&innerWidth>innerHeight*1.1;
-const lamTodo=()=>lamAncho()||lamEsE()?[-150,0,2050,1152]:[0,0,LAM().w,LAM().h];
+/* v211 (Camilo: «la imagen está cortada arriba y en una caja con franjas negras»): al
+   presentar en pantalla ancha la escena llena TODO el escenario, del ancho que tenga.
+   El viewBox toma la forma del escenario (alto fijo, con aire arriba para la corona) y
+   el SVG la cubre (slice); los fondos se estiran a lo ancho (lamGeo). Antes era una
+   caja 16:9 centrada, con franjas negras a los lados y, en el cartel, arriba y abajo. */
+const LAM_TOP=-70,LAM_VH=1222;
+function lamAsp(){
+  const e=document.getElementById('lamEsc'),r=e&&e.getBoundingClientRect?e.getBoundingClientRect():null;
+  return r&&r.width>0&&r.height>0?r.width/r.height:2050/1152;
+}
+const lamTodo=()=>{
+  if(lamAncho()){const W=Math.max(LAM_VH*2050/1152,LAM_VH*lamAsp());return [875-W/2,LAM_TOP,W,LAM_VH];}
+  return lamEsE()?[-150,0,2050,1152]:[0,0,LAM().w,LAM().h];};
+/* La parte de la escena que de verdad se ve (el SVG cubre su caja y recorta lo que sobra). */
+function lamVisible(V){
+  const e=document.getElementById('lamEsc'),r=e&&e.getBoundingClientRect?e.getBoundingClientRect():null;
+  if(!r||!r.width||!r.height)return V;
+  const k=(lamAncho()?Math.max:Math.min)(r.width/V[2],r.height/V[3]),w=r.width/k,h=r.height/k;
+  return [V[0]+(V[2]-w)/2,V[1]+(V[3]-h)/2,w,h];
+}
+/* Los fondos, la penumbra y el SVG, a la medida del escenario. */
+function lamGeo(){
+  const svg=document.getElementById('lamSvg');if(!svg)return;
+  const anc=lamAncho(),V=lamTodo(),M=anc?[V[0]-260,V[1],V[2]+520,V[3]]:[-150,0,2050,1152];
+  if(anc)svg.setAttribute('preserveAspectRatio','xMidYMid slice');else svg.removeAttribute('preserveAspectRatio');
+  const pon=(el,r)=>{if(el)['x','y','width','height'].forEach((a,i)=>el.setAttribute(a,r[i].toFixed(1)));};
+  pon(svg.querySelector('.lam-fondo'),M);pon(svg.querySelector('.lam-hist-osc'),M);pon(svg.querySelector('.lam-hist-amb'),M);
+  /* El monte, centrado en lo que se ve (en Explorar se veía corrido a la izquierda). */
+  pon(svg.querySelector('.lam-monte'),anc?M:lamEsE()?M:[LAM().w/2-1025,0,2050,1152]);
+  lamHistGeo();
+}
 /* Acercarse a una parte, centrada (la explicación ya no la tapa). */
 function lamCaja(id){
   const L=LAM(),[x,y,w,h]=L.cajas[id];
-  if(lamAncho()){const H=Math.min(L.h,Math.max(h*2,440)),W=H*2050/L.h,cx=x+w/2,cy=y+h/2;
-    return [Math.max(-150,Math.min(1900-W,cx-W*0.3)),Math.max(0,Math.min(L.h-H,cy-H/2)),W,H];}
+  if(lamAncho()){const V=lamTodo(),H=Math.min(V[3],Math.max(h*2,440)),W=H*V[2]/V[3],cx=x+w/2,cy=y+h/2;
+    return [cx-W*0.3,Math.max(LAM_TOP,Math.min(LAM_TOP+LAM_VH-H,cy-H/2)),W,H];}
   const R=L.w/L.h;
   let W=Math.min(L.w,Math.max(w*1.6,h*R*1.4,380)),H=W/R;if(H>L.h){H=L.h;W=H*R;}
   return [Math.max(0,Math.min(L.w-W,x+w/2-W/2)),Math.max(0,Math.min(L.h-H,y+h/2-H/2)),W,H];
@@ -73841,16 +74162,21 @@ function lamAbre(cid,modo){
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
+    /* v211 (Camilo: «la línea de tiempo tiene una raya encima»): una sola pista. El
+       tramo de la parte va DENTRO de ella, y la pista, las marcas y el pulgar usan el
+       mismo margen (el radio del pulgar), así quedan alineados a cualquier ancho. */
     '<div class="lam-tiempo"><div class="lam-tcab"><button type="button" class="lam-play" id="lamPlay" onclick="lamRecorre()" aria-label="Recorrer la historia">'+IC('play')+'</button>'+
-    '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">De 605 a.C. hasta hoy, a escala</div></div></div>'+
-    '<div class="lam-rango"><input type="range" id="lamRango" min="-620" max="2026" step="1" value="-620" aria-label="Año" style="--pista:'+lamPista()+'"></div>'+
-    '<div class="lam-marcas">'+(L.marcas||[[-605,'605 a.C.'],[-331,'331<i> a.C.</i>',1],[-168,'168<i> a.C.</i>',1],[1,'1<i> d.C.</i>',1],[476,'476 d.C.'],[1798,'1798 d.C.'],[2026,'hoy',1]]).map(([y,t,ch])=>'<span'+(ch?' class="'+(ch===1?'chico':ch)+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
+    '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">De 605 a.C. hasta hoy, y lo que viene</div></div></div>'+
+    '<div class="lam-rango"><div class="lam-pista" id="lamPista" style="background:'+lamPista()+'"><i class="lam-hoy" style="left:'+lamPos(LAM_HOY)+'%"></i><i class="lam-tramo" id="lamTramo"></i></div>'+
+    '<input type="range" id="lamRango" min="-620" max="'+LAM_FIN+'" step="1" value="-620" aria-label="Año"></div>'+
+    '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" onclick="lamAtras()">‹ Anterior</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="pri" onclick="lamAdelante()">Siguiente ›</button></div>':
      '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
      L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
      '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div>');
   document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
   lamPrecarga(cid,document.getElementById('lamEsc'));
+  lamGeo();
   if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();
     /* v209: al abrir, el título de la lámina un momento, como al empezar una película. */
     lamCartel(true,true);lamCartelT=setTimeout(()=>lamCartel(false),2600);}
@@ -73866,7 +74192,7 @@ function lamPantalla(){
   const b=e.querySelector('.lam-full');if(b)b.hidden=true;
   if(e.__fs)return;e.__fs=true;
   e.addEventListener('fullscreenchange',()=>{const f=e.matches(':fullscreen');const bb=e.querySelector('.lam-full');if(bb)bb.hidden=f;
-    e.classList.toggle('ancho',lamAncho()||f);lamAcerca(lamTodo(),0);},{once:false});
+    e.classList.toggle('ancho',lamAncho()||f);lamGeo();lamPres(lamPaso);},{once:false});
 }
 function lamCierra(){
   const el=document.getElementById('lam');
@@ -73912,13 +74238,20 @@ function lamCartel(on,anima){
 }
 /* La franja de oro sobre la línea de tiempo: el periodo de la parte que se ve. */
 function lamTramo(de,a){
-  const w=document.querySelector('#lam .lam-rango');if(!w)return;
-  let b=document.getElementById('lamTramo');
-  if(de==null){if(b)b.classList.remove('ve');return;}
-  if(!b){b=document.createElement('i');b.id='lamTramo';b.className='lam-tramo';w.appendChild(b);}
-  const x0=lamPos(de)/100,x1=lamPos(Math.min(a==null?2026:a,2026))/100;
-  b.style.left='calc(8px + (100% - 16px) * '+x0.toFixed(4)+')';b.style.width='max(6px, calc((100% - 16px) * '+(x1-x0).toFixed(4)+'))';
+  const b=document.getElementById('lamTramo');if(!b)return;
+  b.classList.remove('banda');
+  if(de==null){b.classList.remove('ve');return;}
+  const x0=lamPos(de),x1=lamPos(a==null?LAM_HOY:a);
+  b.style.left=x0.toFixed(3)+'%';b.style.width='max(6px, '+Math.max(0,x1-x0).toFixed(3)+'%)';
   b.classList.add('ve');
+}
+/* v211: el año sobre la imagen mientras se recorre la historia (antes el avance
+   solo se veía en la línea de tiempo, que en Explorar quedaba fuera de la pantalla). */
+const lamAnioVHTML=()=>'<div class="lam-anio-v" id="lamAnioV" hidden aria-hidden="true"><b></b><span></span></div>';
+function lamAnioV(y,tx){
+  const v=document.getElementById('lamAnioV');if(!v)return;
+  v.hidden=y==null;if(y==null)return;
+  v.querySelector('b').textContent=lamAnioTx(y);v.querySelector('span').textContent=tx||'';
 }
 /* Al presentar, los botones se apartan si nadie mueve el mouse ni toca la pantalla
    (el control remoto no los despierta: pasa de paso sin que aparezcan). */
@@ -73956,42 +74289,62 @@ function lamEscenaHTML(e){
 /* v191: la escena de un paso de la historia, si su imagen existe (se prueba
    una vez); si no, la estatua se ve entera. */
 const lamHayImg={};
-let lamHistN=0;
+let lamHistN=0,lamHistT=0;
 /* v201: la escena de la historia a la izquierda (texto al lado) o a toda la
    escena (texto oculto, o fuera de Presentar en pantalla ancha). */
 function lamHistGeo(){
   const svg=document.getElementById('lamSvg');if(!svg)return;
-  const h=svg.querySelector('.lam-hist'),bg=svg.querySelector('.lam-hist-bg'),osc=svg.querySelector('.lam-hist-osc');
+  const h=svg.querySelector('.lam-hist'),bg=svg.querySelector('.lam-hist-bg'),osc=svg.querySelector('.lam-hist-osc'),amb=svg.querySelector('.lam-hist-amb');
   /* v209: con el cartel de apertura la escena va entera, sin texto al lado. */
-  const lado=lamAncho()&&!lamSinTexto&&!lamEnCartel(),ve=h.style.opacity==='1';
-  [h,bg].forEach(im=>{im.setAttribute('x',lado?-135:-150);im.setAttribute('width',lado?1110:2050);/* v204: 1110 para que no quede bajo el texto */
-    im.setAttribute('preserveAspectRatio',lado?'xMidYMid meet':'xMidYMid slice');});
+  const anc=lamAncho(),lado=anc&&!lamSinTexto&&!lamEnCartel(),ve=h.style.opacity==='1';
+  /* v211 (Camilo: «la imagen chiquita con mucho negro»): al presentar en pantalla ancha
+     la escena va a TODO el alto del escenario, entera (16:9, sin recorte): pegada a la
+     izquierda con el texto al lado, o al centro sin texto. Lo que sobra a los lados no
+     es negro: la misma imagen, ampliada y a media luz (lam-hist-amb). */
+  /* Con texto, la escena llega hasta donde empieza el texto, nunca debajo de él: si no
+     cabe a todo el alto, se centra en alto y lo de arriba y abajo es la misma luz. */
+  const V=lamTodo(),r=anc?(()=>{const B=lamVisible(V),hj=document.getElementById('lamHoja'),es=document.getElementById('lamEsc');
+    const pf=lado&&hj&&es&&es.getBoundingClientRect().width?Math.min(.6,Math.max(0,1-(hj.getBoundingClientRect().left-es.getBoundingClientRect().left)/es.getBoundingClientRect().width)):0;
+    let w=B[3]*1200/675;if(lado)w=Math.min(w,B[2]*(1-pf));const h=w*675/1200;
+    return [lado?B[0]:B[0]+(B[2]-w)/2,B[1]+(B[3]-h)/2,w,h];})():[-150,0,2050,1152];
+  [h,bg].forEach(im=>{['x','y','width','height'].forEach((a,i)=>im.setAttribute(a,r[i].toFixed(1)));
+    im.setAttribute('preserveAspectRatio',anc?'xMidYMid meet':'xMidYMid slice');});
   /* v203: fondo liso y oscuro, como una diapositiva. v209: lam-hist-bg ya no es una
      copia oscurecida: guarda la escena de antes durante el fundido (lamHist). */
-  osc.style.opacity=ve&&lado?'1':'0';
+  osc.style.opacity=ve&&anc?'1':'0';
+  if(amb){if(ve&&anc&&amb.getAttribute('href')!==h.getAttribute('href'))amb.setAttribute('href',h.getAttribute('href'));amb.style.opacity=ve&&anc?'.34':'0';}
   const e=document.getElementById('lamEsc');if(e)e.classList.toggle('lado',ve&&lado);
   /* v205: el svg del zoom y las marcas de encima, sobre el mismo rectángulo que la imagen. */
   const z=svg.querySelector('.lam-zoom'),so=document.getElementById('lamSobre');
-  if(z){const r=lado?[-135,(1152-1110*675/1200)/2,1110,1110*675/1200]:[-150,0,2050,1152];
-    ['x','y','width','height'].forEach((a,i)=>z.setAttribute(a,r[i].toFixed(1)));
-    if(so){so.style.left=((r[0]+150)/20.5).toFixed(3)+'%';so.style.top=(r[1]/11.52).toFixed(3)+'%';so.style.width=(r[2]/20.5).toFixed(3)+'%';so.style.height=(r[3]/11.52).toFixed(3)+'%';}}
+  if(z){['x','y','width','height'].forEach((a,i)=>z.setAttribute(a,r[i].toFixed(1)));
+    if(so){const B=lamVisible(V),pc=(v,t)=>(v/t*100).toFixed(3)+'%';
+      so.style.left=pc(r[0]-B[0],B[2]);so.style.top=pc(r[1]-B[1],B[3]);so.style.width=pc(r[2],B[2]);so.style.height=pc(r[3],B[3]);}}
   if(typeof lamD2Pos==='function')lamD2Pos();
 }
 function lamHist(t){
   const svg=document.getElementById('lamSvg');if(!svg)return;
   const h=svg.querySelector('.lam-hist'),bg=svg.querySelector('.lam-hist-bg'),est=svg.querySelector('.lam-estatua');
   const yo=++lamHistN;
-  if(!t||!t.f){h.style.opacity='0';bg.style.opacity='0';lamHistGeo();return;}
+  /* v211 (Camilo: «las imágenes quedan una encima de otra», «en el monte sale el rey
+     arrodillado»): la escena que entra lleva una animación de CSS con relleno
+     (`both`), y una animación manda sobre el estilo en línea: al pasar a una parte,
+     opacity 0 no la escondía y la escena de antes quedaba encima como un rectángulo.
+     Ahora se le quita la clase al esconderla y al terminar el fundido, y la de abajo
+     (lam-hist-bg) se apaga siempre, aunque el paso haya cambiado antes de tiempo. */
+  clearTimeout(lamHistT);
+  const apagaBg=()=>{bg.style.transition='';bg.style.opacity='0';};
+  if(!t||!t.f){h.classList.remove('entra');h.style.opacity='0';apagaBg();lamHistGeo();return;}
   /* v204: con el clicker los pasos van rápido; una imagen que llega tarde no pisa la del paso actual. */
-  const src=lamSrc(t.f),pon=ok=>{lamHayImg[src]=ok;if(yo!==lamHistN)return;if(!ok){h.style.opacity='0';lamHistGeo();if(est)est.style.opacity='1';lamEnciende([]);return;}
+  const src=lamSrc(t.f),pon=ok=>{lamHayImg[src]=ok;if(yo!==lamHistN)return;if(!ok){h.classList.remove('entra');h.style.opacity='0';apagaBg();lamHistGeo();if(est)est.style.opacity='1';lamEnciende([]);return;}
     /* v209: FUNDIDO, nunca un salto. La escena de antes se queda abajo (lam-hist-bg)
        y la nueva entra encima con una animación de CSS (Safari-seguro). */
     const antes=h.getAttribute('href'),vista=h.style.opacity==='1';
     if(antes!==src){
       if(vista&&antes&&!lamQuieto()){bg.setAttribute('href',antes);bg.style.transition='none';bg.style.opacity='1';
         h.classList.remove('entra');h.setAttribute('href',src);void h.getBoundingClientRect();h.classList.add('entra');
-        setTimeout(()=>{if(yo===lamHistN){bg.style.transition='';bg.style.opacity='0';}},900);}
-      else h.setAttribute('href',src);}
+        lamHistT=setTimeout(()=>{apagaBg();h.classList.remove('entra');},900);}
+      else{h.classList.remove('entra');h.setAttribute('href',src);apagaBg();}}
+    else apagaBg();
     h.style.opacity='1';lamHistGeo();if(est)est.style.opacity='0';};
   if(src in lamHayImg){pon(lamHayImg[src]);return;}
   if(typeof Image==='undefined'){pon(false);return;}
@@ -74021,8 +74374,16 @@ function lamHojaParteTx(p,i,n,figs){
     (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
     '<div class="lam-capa i"><div class="lam-rot">Lo que significa · interpretación</div>'+(lamModo==='presentar'?'<p>'+esc(p.corto)+'</p>':p.interp.map(x=>'<p>'+x+'</p>').join(''))+'<div class="lam-fu">Fuente: '+p.fuente+'</div></div>'+figs+
-    (lamModo==='presentar'?'':'<div class="lam-nav"><button type="button" class="btn tono" '+(i>0?'':'disabled ')+'onclick="lamElige('+(i-1)+')">‹ Anterior</button><span>'+(i+1)+' de '+n+'</span>'+
-    '<button type="button" class="btn ver" '+(i<n-1?'':'disabled ')+'onclick="lamElige('+(i+1)+')">Siguiente ›</button></div>');
+    (lamModo==='presentar'?'':lamNavHTML(i,n));
+}
+/* v211 (Camilo: «se perdió el Anterior y Siguiente»): la navegación entre partes va
+   pegada al pie de la explicación (siempre a la vista, aunque el texto sea largo) y
+   dice a qué parte lleva. También con las flechas del teclado. */
+function lamNavHTML(i,n){
+  const P=LAM().partes,a=P[i-1],b=P[i+1];
+  return '<nav class="lam-nav" aria-label="Partes"><button type="button" class="lam-nv" '+(a?'onclick="lamElige('+(i-1)+')"':'disabled')+'><small>‹ Anterior</small><b>'+(a?esc(a.nombre):'')+'</b></button>'+
+    '<span>'+(i+1)+' de '+n+'</span>'+
+    '<button type="button" class="lam-nv sig" '+(b?'onclick="lamElige('+(i+1)+')"':'disabled')+'><small>Siguiente ›</small><b>'+(b?esc(b.nombre):'')+'</b></button></nav>';
 }
 function lamHojaTexto(t){
   return '<div class="lam-hcab"><div><div class="lam-p1">'+esc(t.ref)+'</div><div class="lam-p2">'+esc(t.titulo)+'</div></div>'+
@@ -74069,6 +74430,7 @@ function lamElige(i){
   lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
   /* v209: el nombre como un rótulo de documental, y su periodo en oro sobre la línea de tiempo. */
   lamChip(p);lamTramo(p.de,p.a);
+  const fv=(L.futuro||[]).find(f=>f.id===p.id);if(fv)lamTiempoFut(fv,true);
 }
 function lamHistoria(k){
   const L=LAM(),t=k==='desp'?L.despues:L.historia[k];if(!t)return;
@@ -74082,38 +74444,59 @@ function lamHistoria(k){
 }
 
 /* ── La línea de tiempo ── */
-const lamPos=y=>(y+620)/(2026+620)*100;
+const lamPos=y=>(y+620)/(LAM_FIN+620)*100;
 function lamPista(){
-  const L=LAM();
-  const seg=L.tiempo.filter(id=>!(L.solapa||['barro']).includes(id)).map(id=>{const p=lamParte(id);return p.c+' '+lamPos(p.de)+'% '+lamPos(Math.min(p.a,2026))+'%';});
-  return 'linear-gradient(90deg,#4a4032 0% '+lamPos(-605)+'%,'+seg.join(',')+')';
+  const L=LAM(),r=n=>n.toFixed(3);
+  const seg=L.tiempo.filter(id=>!(L.solapa||['barro']).includes(id)).map(id=>{const p=lamParte(id);return p.c+' '+r(lamPos(p.de))+'% '+r(lamPos(Math.min(p.a,LAM_HOY)))+'%';});
+  /* El futuro, con el color de su parte y rayado: todavía no ha pasado. */
+  const fu=(L.futuro||[]).map(f=>{const p=f.id&&lamParte(f.id);return (p?p.c:'#6B7B5A')+' '+r(lamPos(f.de))+'% '+r(lamPos(f.a))+'%';});
+  const h=lamPos(LAM_HOY);
+  return 'repeating-linear-gradient(115deg,rgba(14,13,11,.45) 0 5px,transparent 5px 10px) right 0 / '+r(100-h)+'% 100% no-repeat,'+
+    'linear-gradient(90deg,#4a4032 0% '+r(lamPos(-605))+'%,'+seg.concat(fu).join(',')+')';
 }
 /* Qué gobernaba en el año y: las partes encendidas y la frase. */
 function lamQuien(y){
   const on=[],suave=[];
+  const fu=lamFuturo(y);
+  if(y>LAM_HOY)return {on:fu&&fu.id?[fu.id]:[],suave,tx:fu?fu.t+' · '+fu.s:'Lo que viene',fut:fu};
   for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&y<p.a)on.push(id);}
   const [hd,hs]=LAM().herida||['dedos','barro'];
   if(y>=1798&&on.includes(hd))suave.push(hs);
   const n=on.map((id,i)=>{const r=lamParte(id).reino;return i&&/^El /.test(r)?'e'+r.slice(1):r;});
   let tx=!on.length?'Antes de Nabucodonosor':n.join(' y ');
   if(suave.length)tx+='; el papado, herido en 1798, se va sanando (Ap 13:3)';
+  if(LAM().juicio&&y>=LAM().juicio)tx+='; desde 1844, el juicio en el cielo';
   return {on,suave,tx};
 }
+let lamFutVisto='';
 function lamVeAnio(y){
   lamAnio=y;lamSel='';lamMarcaPaso('est');lamTramo(null);
   const q=lamQuien(y);
+  const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
   if(lamEsE()){
     /* La imagen es la del reino más preciso de ese año (en 1520, el cuerno y no los diez cuernos). */
-    const p=q.on.map(lamParte).sort((x,z)=>(x.a-x.de)-(z.a-z.de))[0];
-    lamLimpia();lamHist({f:p?p.img:LAM().inicioF});lamChip(p||null);lamD2(p?p.id:null);lamEnciende(q.on);
-    const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
+    const p=q.on.map(lamParte).filter(Boolean).sort((x,z)=>(x.a-x.de)-(z.a-z.de))[0];
+    lamLimpia();lamHist({f:q.fut?q.fut.f:p?p.img:LAM().inicioF});lamChip(q.fut?null:p||null);lamD2(p?p.id:null);lamEnciende(q.on);
   }else{
   lamHist(null);lamEtiquetas(false);lamChip(null);
-  const svg=document.getElementById('lamSvg');
-  lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();
-  lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
+  const svg=document.getElementById('lamSvg'),est=svg.querySelector('.lam-estatua'),pi=svg.querySelector('.lam-piedra'),fu=q.fut,L=LAM();
+  /* v211 (Camilo: «la estatua sale fantasma y la piedra flotando»): las partes que no
+     gobiernan se ven enteras, en sombra (no transparentes), y la piedra no está hasta
+     el tramo del futuro: ahí cae sobre los pies y después crece el monte. */
+  if(fu&&fu.id==='monte'){
+    if(lamFutVisto!=='monte'){lamFutVisto='monte';est.style.opacity='0';lamVuelo++;pi.style.opacity='1';
+      pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');
+      if(lamQuieto())lamMonte('ya');else{lamPolvo(svg);setTimeout(()=>{if(lamFutVisto==='monte')lamMonte('crece');},500);}}
+  }else if(fu){
+    est.style.opacity='1';lamEnciende([]);
+    if(lamFutVisto!=='piedra'){lamFutVisto='piedra';lamMonte('no');lamPiedraArriba();pi.style.opacity='1';lamCae(pi);}
+  }else{
+    lamFutVisto='';lamMonte('no');est.style.opacity='1';lamPiedraArriba();pi.style.opacity='0';
+    lamEnciende(q.on.length?q.on:['__ninguna'],q.suave);
+  }
   lamAcerca(lamTodo(),0);
   }
+  lamAnioV(y,q.tx);
   document.getElementById('lamTano').textContent=lamAnioTx(y);
   document.getElementById('lamTq').textContent=q.tx;
   /* El año va en la explicación, no sobre la imagen. */
@@ -74129,12 +74512,18 @@ function lamVeAnio(y){
 function lamRecorre(){
   if(lamCorre){lamPara();return;}
   lamParaVision();
-  const r=document.getElementById('lamRango'),H=LAM().hitos||[];let y=Number(r.value),espera=0;if(y>=2026)y=-620;
+  const r=document.getElementById('lamRango'),L=LAM(),H=L.hitos||[];let y=Number(r.value),espera=0;if(y>=LAM_FIN)y=-620;
+  /* El futuro se detiene más: la piedra cae (dos segundos) y el monte crece (cinco). */
+  const F=(L.futuro||[]).map((f,i)=>[f.de+1,i?100:44]);
   const b=document.getElementById('lamPlay');if(b)b.classList.add('on');
+  lamFutVisto='';
+  /* v211: mientras corre, la línea de tiempo se ve (en Explorar quedaba bajo la imagen). */
+  const tl=document.querySelector('#lam .lam-tiempo');if(tl&&tl.scrollIntoView&&lamModo!=='presentar'){const rr=tl.getBoundingClientRect();if(rr.bottom>innerHeight)tl.scrollIntoView({block:'end',behavior:lamQuieto()?'auto':'smooth'});}
   /* v205: en los años clave (476, 538, 1798, 1844…) se detiene un segundo. */
-  lamCorre=setInterval(()=>{if(espera>0){espera--;return;}const y0=y;y+=Math.max(4,Math.round((2026+620)/280));
-    const h=H.find(v=>v>y0&&v<=y);if(h!=null){y=h;espera=lamQuieto()?0:22;}
-    if(y>=2026){y=2026;lamVeAnio(y);lamPara();return;}lamVeAnio(y);},50);
+  lamCorre=setInterval(()=>{if(espera>0){espera--;return;}const y0=y;y+=Math.max(4,Math.round((LAM_HOY+620)/280));
+    const h=H.find(v=>v>y0&&v<=y),f=F.find(v=>v[0]>y0&&v[0]<=y);
+    if(f){y=f[0];espera=lamQuieto()?10:f[1];}else if(h!=null){y=h;espera=lamQuieto()?0:22;}else if(y0<LAM_HOY&&y>=LAM_HOY){y=LAM_HOY;espera=lamQuieto()?0:22;}
+    if(y>=LAM_FIN){y=LAM_FIN;lamVeAnio(y);lamPara();return;}lamVeAnio(y);},50);
 }
 function lamPara(){if(lamModo!=='presentar')lamCartel(false);lamSenasN++;if(lamCorre){clearInterval(lamCorre);lamCorre=0;}const b=document.getElementById('lamPlay');if(b)b.classList.remove('on');if(typeof lamParaVision==='function')lamParaVision();}
 
@@ -74165,7 +74554,9 @@ function lamPres(k){
   const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();lamVuelo++;const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
   lamCartel(k===0,true);
   const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
-  const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos?'0':'1';
+  /* v211 (Camilo: «la estatua intenta aparecer y salta»): en los pasos de la historia la
+     estatua no se asoma mientras llega la escena; si la escena no existe, lamHist la muestra. */
+  const est=svg.querySelector('.lam-estatua');est.style.opacity=rotos||s.tipo==='hist'||s.tipo==='desp'?'0':'1';
   if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
   /* La portada muestra la estatua entera; la historia, a media luz. */
   else if(s.tipo==='hist')lamEnciende(['__ninguna']);
@@ -74185,6 +74576,8 @@ function lamPres(k){
     document.getElementById('lamTano').textContent=lamAnioTx(p.de)+' – '+(p.a>=2026?'hoy':lamAnioTx(p.a));document.getElementById('lamTq').textContent=p.reino;}
   lamHist(s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:null);
   const pp=s.tipo==='parte'?lamParte(s.id):null;lamChip(pp);lamTramo(pp?pp.de:null,pp?pp.a:null);
+  /* v211: la piedra y el monte, en su tramo del futuro de la línea de tiempo. */
+  const fv=(L.futuro||[]).filter(f=>vistos.includes(f.id)).pop();if(fv)lamTiempoFut(fv,s.tipo==='parte'&&s.id===fv.id);
   if(s.tipo==='portada')lamHoja('<div class="lam-hcab"><div><div class="lam-p1">Daniel 2</div><div class="lam-p2">'+esc(L.titulo)+'</div></div></div>'+
     '<div class="lam-capa t"><div class="lam-rot">'+L.inicio.ref+' · RV1995</div><p><q>'+esc(L.inicio.texto)+'</q></p></div><p class="lam-nota">Cuatro reinos, Roma en tres fases (y una cuarta: el papado sanado de su herida) y un reino que no será jamás destruido.</p>');
   else if(s.tipo==='hist')lamHoja(lamHojaTexto(L.historia[s.i]));
@@ -74193,6 +74586,11 @@ function lamPres(k){
   else lamHoja(lamHojaParte(lamParte(s.id),0,1));
   document.getElementById('lamCuenta').textContent=(k+1)+' / '+pasos.length;
   document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
+}
+function lamTiempoFut(f,tramo){
+  const r=document.getElementById('lamRango');if(r)r.value=Math.round((f.de+f.a)/2);
+  document.getElementById('lamTano').textContent='Futuro';document.getElementById('lamTq').textContent=f.t+' · '+f.s;
+  if(tramo)lamTramo(f.de,f.a);
 }
 function lamAtras(){lamPres(lamPaso-1);}
 function lamAdelante(){lamPres(lamPaso+1);}
@@ -74217,8 +74615,9 @@ function lamCae(piedra){
 function lamMonte(modo){
   const svg=document.getElementById('lamSvg');if(!svg)return;
   const L=LAM(),m=svg.querySelector('.lam-monte'),luz=svg.querySelector('.lam-luz'),yo=++lamCrece;
-  /* El centro del círculo, en % de la imagen del monte (x -150..1900, y 0..1152). */
-  const cx=((L.golpe[0]+150)/2050*100).toFixed(1)+'%',cy=(L.golpe[1]/1152*100).toFixed(1)+'%';
+  /* El centro del círculo, en % de la imagen del monte (v211: donde esté puesta, ver lamGeo). */
+  const mx=+m.getAttribute('x'),my=+m.getAttribute('y'),mw=+m.getAttribute('width')||2050,mh=+m.getAttribute('height')||1152;
+  const cx=((L.golpe[0]-mx)/mw*100).toFixed(1)+'%',cy=((L.golpe[1]-my)/mh*100).toFixed(1)+'%';
   const recorta=r=>{const v='circle('+r.toFixed(1)+'% at '+cx+' '+cy+')';m.style.clipPath=v;m.style.webkitClipPath=v;};
   const pinta=r=>luz.querySelectorAll('circle').forEach(c=>c.setAttribute('r',(r*+c.getAttribute('data-f')).toFixed(1)));
   if(modo==='no'||modo==='ya'||lamQuieto()){
@@ -74260,11 +74659,15 @@ function lamPolvo(svg){
 }
 /* v191: si la ventana cambia (girar la tableta, achicar el navegador), la
    presentación se reacomoda sin cerrarla. */
+/* v211: con cualquier cambio de tamaño la escena se vuelve a medir (llena el escenario). */
+let lamResT=0;
 if(typeof addEventListener==='function')addEventListener('resize',()=>{
-  if(lamModo!=='presentar')return;
-  const e=document.getElementById('lam');if(!e)return;
-  const a=lamAncho()||(e.matches&&e.matches(':fullscreen'));
-  if(e.classList.contains('ancho')!==a){e.classList.toggle('ancho',a);lamPres(lamPaso);}
+  if(!lamModo)return;
+  clearTimeout(lamResT);lamResT=setTimeout(()=>{
+    const e=document.getElementById('lam');if(!e||e.hidden)return;
+    if(lamModo!=='presentar'){lamGeo();return;}
+    const a=lamAncho()||(e.matches&&e.matches(':fullscreen'));
+    e.classList.toggle('ancho',a);lamGeo();lamPres(lamPaso);},140);
 });
 /* v201: «Ocultar texto» (o la tecla T) deja la imagen sola mientras se explica de palabra. */
 function lamTexto(){
@@ -74277,7 +74680,13 @@ function lamTexto(){
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
   if(e.key==='Escape'){lamCierra();return;}
-  if(lamModo!=='presentar')return;
+  if(lamModo!=='presentar'){
+    /* En Explorar, con una parte abierta, las flechas pasan a la anterior o la siguiente. */
+    const t=e.target,i=lamSel?LAM().partes.findIndex(p=>p.id===lamSel):-1;
+    if(i<0||(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName||'')))return;
+    if(e.key==='ArrowRight'&&i<LAM().partes.length-1){e.preventDefault();lamElige(i+1);}
+    else if(e.key==='ArrowLeft'&&i>0){e.preventDefault();lamElige(i-1);}
+    return;}
   if(e.key==='t'||e.key==='T'){lamTexto();return;}
   if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();lamPres(lamPaso+1);}
   else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();lamPres(lamPaso-1);}
@@ -74335,18 +74744,20 @@ function lamEscenaE(){
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
     '<rect class="lam-hist-osc" x="-150" y="0" width="2050" height="1152" fill="#0E0D0B"/>'+
+    '<image class="lam-hist-amb" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-hist-bg" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-hist" href="'+f+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<svg class="lam-zoom" id="lamZoom" x="-150" y="0" width="2050" height="1152" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice">'+
     '<image class="lam-zoom-img" href="" x="0" y="0" width="1200" height="675" preserveAspectRatio="xMidYMid slice"/><g class="lam-capa-g"></g></svg></svg>'+
     '<div class="lam-sobre" id="lamSobre"><div class="lam-marcas-img" id="lamMarcasImg"></div>'+lamD2HTML()+'<div class="lam-tabla" id="lamTabla" hidden></div></div>'+
-    '<div class="lam-chip" id="lamChip" hidden></div>'+lamCartelHTML()+
+    '<div class="lam-chip" id="lamChip" hidden></div>'+lamAnioVHTML()+lamCartelHTML()+
     (pres?'':'<div class="lam-aviso" id="lamAviso">Elige una parte abajo</div>')+'</div>'+
     tira+'<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
 }
 /* El nombre y las fechas de la parte, sobre la imagen (se lee aun con el texto
    oculto); `extra`: el paso del juicio o la seña. Con Daniel 2, también su par. */
 function lamChip(p,extra){
+  lamAnioV(null);
   const c=document.getElementById('lamChip');if(!c)return;
   c.hidden=!p;if(!p)return;
   c.style.setProperty('--c',p.c);
@@ -74361,7 +74772,7 @@ function lamChip(p,extra){
 function lamD2HTML(){
   const L=LAM(),C=LAMINAS[L.comparar];if(!C||!C.marcoEstatua)return '';
   const [vx,vy,vw,vh]=C.marcoEstatua,pc=(v,t)=>(v/t*100).toFixed(2)+'%';
-  const nom=k=>{const q=C.partes.find(p=>p.id===k);return q?q.nombre:k;},de=k=>(L.paralelo||[]).some(r=>r[3]===k);
+  const nom=k=>{const q=C.partes.find(p=>p.id===k);return q?q.nombre:k;},de=k=>(L.paralelo||[]).some(r=>[].concat(r[3]||[]).includes(k));
   const capas=C.capas.map(k=>'<img src="'+lamRuta(C,k)+'" alt="" data-p="'+k+'" style="left:'+pc(C.ox-vx,vw)+';top:'+pc(-vy,vh)+';width:'+pc(768,vw)+';height:'+pc(1152,vh)+'">').join('');
   /* Para tocar: las partes chicas encima de las grandes. */
   const hits=C.capas.filter(de).sort((a,b)=>C.cajas[b][2]*C.cajas[b][3]-C.cajas[a][2]*C.cajas[a][3]).map(k=>{const [x,y,w,h]=C.cajas[k];
@@ -74380,8 +74791,8 @@ function lamD2(id){
   const so=document.getElementById('lamSobre'),izq=!!r&&(L.d2Izq||[]).includes(id),e=document.getElementById('lamEsc');
   if(so){so.classList.toggle('con-d2',!el.hidden);so.classList.toggle('d2-izq',izq);}if(e)e.classList.toggle('d2-izq',!el.hidden&&izq);
   if(!r)return;
-  const k=r[3];el.classList.toggle('agrega',!k);el.setAttribute('data-on',k||'');
-  el.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',x.getAttribute('data-p')===k));
+  const k=r[3],ks=[].concat(k||[]);el.classList.toggle('agrega',!ks.length);el.setAttribute('data-on',ks.join(' '));
+  el.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',ks.includes(x.getAttribute('data-p'))));
   const ag=document.getElementById('lamD2Ag');if(ag)ag.textContent=k?'':'+ '+(lamParte(id).nombre);
   lamD2Pos();
 }
@@ -74396,7 +74807,7 @@ function lamD2Pos(){
   const t=Math.min(40,Math.max(4,(b.bottom-r.top+8)/r.height*100));
   el.style.top=t.toFixed(2)+'%';el.style.height=(96-t).toFixed(2)+'%';
 }
-function lamTocaD2(k){const r=(LAM().paralelo||[]).find(x=>x[3]===k);if(r)lamToca(r[0]);}
+function lamTocaD2(k){const r=(LAM().paralelo||[]).find(x=>[].concat(x[3]||[]).includes(k));if(r)lamToca(r[0]);}
 function lamConD2Cambia(){
   lamConD2=!lamConD2;
   document.querySelectorAll('.lam-cond2').forEach(b=>b.setAttribute('aria-pressed',String(lamConD2)));
@@ -74693,7 +75104,9 @@ function lamEligeE(i,vis){
   /* La línea de tiempo va al año de la parte. */
   const r=document.getElementById('lamRango');
   if(r&&p.de!=null){r.value=p.de;document.getElementById('lamTano').textContent=p.fechas;document.getElementById('lamTq').textContent=p.reino;}
+  else if(r&&p.era){r.value=p.era;document.getElementById('lamTano').textContent=p.fechas;document.getElementById('lamTq').textContent=p.reino;}
   lamTramo(p.de,p.a);
+  const fv=(L.futuro||[]).find(f=>f.id&&f.id===p.id);if(fv)lamTiempoFut(fv,true);
 }
 /* Lo que la hoja de una parte agrega en Explorar: los pasos, los cuernos, las señas. */
 function lamExtraE(p){
@@ -74781,15 +75194,13 @@ function lamSenasVis(j,anima){
   lamArma(lamTablaPon('<div class="lam-sen-cap" data-o="0"><i>'+(j+1)+'</i><div><b>'+x.t+'</b> <span class="lam-ref">'+x.ref+'</span><p>'+x.c+'</p></div></div>','pie'),anima);
 }
 /* La franja de 538 a 1798 sobre la línea de tiempo. */
+/* v211: ya no es otra raya encima de la pista: es el mismo tramo de oro, dentro de
+   ella, que late una vez (los 1.260 años de 538 a 1798). */
 function lamBanda(on){
-  const tm=document.querySelector('#lam .lam-rango');
-  let b=document.getElementById('lamBanda');
-  if(!on){if(b)b.classList.remove('ve');return;}
-  const P=LAM().periodo;if(!tm||!P)return;
-  if(!b){b=document.createElement('div');b.id='lamBanda';b.className='lam-banda';b.innerHTML='<span>1.260 años</span>';tm.appendChild(b);}
-  /* v209: en porcentaje del ancho de la pista (el pulgar mide 16 px): sigue en su sitio aunque la ventana cambie. */
-  b.style.left='calc(8px + (100% - 16px) * '+(lamPos(P.de)/100).toFixed(4)+')';b.style.width='calc((100% - 16px) * '+((lamPos(P.a)-lamPos(P.de))/100).toFixed(4)+')';
-  if(lamQuieto())b.classList.add('ve');else requestAnimationFrame(()=>b.classList.add('ve'));
+  const b=document.getElementById('lamTramo');if(!b)return;
+  if(!on){if(b.classList.contains('banda'))lamTramo(null);return;}
+  const P=LAM().periodo;if(!P)return;
+  lamTramo(P.de,P.a);b.classList.add('banda');
 }
 function lamPeriodoVis(j,anima){
   const L=LAM(),P=L.periodo,x=P&&P.pasos[j];if(!x)return;
@@ -74896,8 +75307,9 @@ function lamVision(){
     if(s.sub==null||s.sub===0)lamEligeE(L.partes.findIndex(p=>p.id===s.id),true);
     if(s.sub!=null)lamSubE(s.sub,true);
     lamVis=setTimeout(sig,lamQuieto()?2600:C&&s.id===C.caenEn?6200:s.sub!=null?(lamParte(s.id).pasos[s.sub].ms||4200):3800);};
-  const mar=L.historia.find(h=>h.f===L.inicioF)||L.historia[0];
-  lamLimpia();lamSel='';lamChip(null);lamD2(null);lamEnciende([]);lamMarcaPaso('est');lamHist({f:L.inicioF});lamHoja(lamHojaTexto(mar));
+  /* Empieza en el mar, sin bestias: suben una por una. */
+  const mar=L.historia.find(h=>h.f===(L.sube&&L.sube.fondo))||L.historia[0];
+  lamLimpia();lamSel='';lamChip(null);lamD2(null);lamEnciende([]);lamMarcaPaso('est');lamHist({f:mar.f});lamHoja(lamHojaTexto(mar));
   lamVis=setTimeout(sig,lamQuieto()?1500:2800);
 }
 function lamParaVision(){
@@ -74920,7 +75332,9 @@ const lamPasosE=()=>{
     /* v210: después de los pasos del juicio, sus tres fases (una por paso). */
     if(L.fases&&p.id===L.fases.tras)L.fases.pasos.forEach((x,j)=>r.push({tipo:'fases',id:p.id,sub:j,n:L.fases.pasos.length}));
   });
-  return [...r,{tipo:'desp'},{tipo:'cierre'}];
+  /* v211: el primer paso es la portada (las cuatro bestias); antes era el primer paso
+     de la historia con el cartel encima, y su texto no se llegaba a ver. */
+  return [...(L.cartel&&L.cartel.f?[{tipo:'portada'}]:[]),...r,{tipo:'desp'},{tipo:'cierre'}];
 };
 function lamHojaSub(p,j){
   const x=p.pasos[j];
@@ -74956,7 +75370,8 @@ function lamPresE(k){
   const dir=k>lamPaso?1:k<lamPaso?-1:0;lamPaso=k;lamPara();const s=pasos[k],L=LAM();
   const p=s.id?lamParte(s.id):null;
   lamCartel(k===0,true);
-  const t=s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:s.tipo==='cierre'?{f:L.cierre.f,ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}:null;
+  const t=s.tipo==='portada'?{f:L.cartel.f,ref:L.cartel.cita?L.cartel.cita.ref:L.cartel.ref,titulo:L.titulo,texto:L.cartel.cita?L.cartel.cita.texto:'',nota:''}:
+    s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:s.tipo==='cierre'?{f:L.cierre.f,ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}:null;
   if(s.tipo==='senasT'){lamSenasVis(-1,dir>0);lamHoja(lamHojaSenasT());}
   else if(s.tipo==='senas'){
     /* Las señas van sobre el cuerno ya armado: la imagen no se vuelve a armar en cada una. */
@@ -74970,8 +75385,13 @@ function lamPresE(k){
   if(ult){const q=lamParte(ult),r=document.getElementById('lamRango');r.value=q.id==='juicio'?q.de:Math.min(q.a,2026);
     document.getElementById('lamTano').textContent=lamAnioTx(q.de)+' – '+(q.a>=2026?'hoy':lamAnioTx(q.a));document.getElementById('lamTq').textContent=q.reino;}
   if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.a;document.getElementById('lamTano').textContent=P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent='1.260 años del cuerno pequeño';}
+  /* v211: el Hijo del hombre en 1844; el reino, en el tramo del futuro. */
+  if(p&&p.era){const r=document.getElementById('lamRango');r.value=p.era;document.getElementById('lamTano').textContent=lamAnioTx(p.era);document.getElementById('lamTq').textContent=p.reino;}
+  const fv=p&&(L.futuro||[]).find(f=>f.id&&f.id===p.id);
   /* v209: el periodo de la parte en oro, y la cámara que se acerca despacio (no en los pasos que ya se acercan solos). */
-  lamTramo(p&&s.tipo!=='periodo'?p.de:null,p?p.a:null);
+  /* En la cuenta de los 1.260 años el tramo es la franja de 538 a 1798 (lamBanda). */
+  if(s.tipo!=='periodo')lamTramo(p?p.de:null,p?p.a:null);
+  if(fv)lamTiempoFut(fv,true);
   if(!(p&&p.pasos))lamAcerca(lamTodo(),0);
   /* El contador: cada parte, la portada de las señas y la cuenta de los 1.260 años (las señas van dentro de su portada). */
   const prim=pasos.map(x=>x.tipo==='senas'?false:x.sub==null||x.sub===0);
@@ -75030,6 +75450,16 @@ const actYCat=(k,modo)=>{
   return modo==='de'?c.nombre+' de '+a:modo==='cat'?c.nombre+' · '+a:
     modo==='par'?c.nombre+' ('+a+')':a+' · '+c.nombre;
 };
+/* v211 (Camilo, 14-oct: «toco Padres y consejeros y me lleva a Apocalipsis»): en «Quién
+   estudia» cada actividad de una persona salía solo con un ícono y la categoría
+   («📖 Padres y consejeros»). 📖 es Apocalipsis y 📘 Daniel: la única diferencia era
+   el dibujo del libro. La pastilla abría bien la ficha; lo que no decía era de qué
+   actividad era. Ahora dice las dos cosas, la actividad primero y en corto
+   («Apocalipsis · Padres y consejeros»), y van en el orden de las actividades. */
+const actCorta=a=>{const x=ACTIVIDADES[a];if(!x)return String(a||'');
+  const n=String(x.nombre||'');const m=/^Conexión Bíblica:\s*(.+)$/.exec(n);
+  return m?m[1]:(x.tema==='daniel'?'Daniel':n);};
+const catCorta=k=>CATS[k]?actCorta(CATS[k].act)+' · '+CATS[k].nombre:String(k);
 const catLarga=k=>CATS[k]
   ? actYCat(k)+' '+CATS[k].edad
   : String(k);
@@ -76036,7 +76466,9 @@ function pintaAlumnos(){
   cont.innerHTML=personasDB().map((p,i)=>{
     const aC=p.fichas.find(([,a])=>a.aCargo), activa=p.fichas.some(([id])=>id===DB.activo);
     const suya=p.fichas.find(([id])=>id===DB.activo)||p.fichas[0];
-    const sub=(aC?'A cargo de '+(aC[1].tutor||'un adulto')+' · ':'')+(p.fichas.length>1?p.fichas.length+' actividades':catConActividad(suya[1].cat));
+    const sub=(aC?'A cargo de '+(aC[1].tutor||'un adulto')+' · ':'')+(p.fichas.length>1?p.fichas.length+' actividades':catCorta(suya[1].cat));
+    const ordenAct=Object.keys(ACTIVIDADES),fichas=p.fichas.slice().sort(([,a],[,b])=>{const x=CATS[a.cat],y=CATS[b.cat];
+      return (x?ordenAct.indexOf(x.act):99)-(y?ordenAct.indexOf(y.act):99);});
     const ini=esc(p.nombre.charAt(0).toUpperCase()||'?');
     return '<div class="alu-per'+(activa?' on':'')+'">'+
       '<div class="alu-fila">'+
@@ -76054,9 +76486,9 @@ function pintaAlumnos(){
         '<input id="alu-ren" class="txti" type="text" maxlength="60" autocomplete="off" value="'+esc(p.nombre==='Sin nombre'?'':p.nombre)+'" onkeydown="if(event.key===\'Enter\')yoGuardaNombre('+i+')">'+
         '<button type="button" class="btn ver peq" onclick="yoGuardaNombre('+i+')">Guardar</button>'+
         '<button type="button" class="btn txt peq" onclick="yoCancela()">Cancelar</button></div>':'')+
-      (p.fichas.length>1?'<div class="alu-acts">'+p.fichas.map(([id,al])=>
-        '<button type="button" class="alu-act'+(id===DB.activo?' on':'')+'" aria-pressed="'+(id===DB.activo)+'" onclick="cambiaAlumno(\''+id+'\')">'+
-        esc(catConActividad(al.cat))+'</button>').join('')+'</div>':'')+
+      (p.fichas.length>1?'<div class="alu-acts">'+fichas.map(([id,al])=>{const c=CATS[al.cat];
+        return '<button type="button" class="alu-act'+(id===DB.activo?' on':'')+'" data-act="'+esc(c?c.act:'')+'" aria-pressed="'+(id===DB.activo)+'" onclick="cambiaAlumno(\''+id+'\')">'+
+        '<span class="alu-act-a">'+esc(c?actCorta(c.act):'')+'</span><span class="alu-act-c">'+esc(c?c.nombre:al.cat)+'</span></button>';}).join('')+'</div>':'')+
       (aC&&activa?'<button type="button" class="btn txt alu-pasa" onclick="pasaASuCuenta()">'+IC('compartir')+' Pasar su avance a su propia cuenta</button>':'')+
       '</div>';
   }).join('')+
@@ -78696,7 +79128,7 @@ function pintaRpVoz(modo,llevar){
   }catch(e){}
   /* .activo: ya se está escuchando (o va en pausa). El del estudio solo se
      pega arriba en ese estado, para no quitarle pantalla a quien solo lee. */
-  try{const caja=play.closest?play.closest('.lec-rp'):null;if(caja&&caja.classList)caja.classList.toggle('activo',activo);}catch(e){}
+  try{const caja=play.closest?play.closest('.lec-rp'):null;if(caja&&caja.classList){const era=caja.classList.contains('activo');caja.classList.toggle('activo',activo);if(era!==activo)cmpPega();}}catch(e){}
   try{document.querySelectorAll('#'+pf+'-vel [data-vel]').forEach(b=>
     b.setAttribute('aria-pressed',String(Number(b.dataset.vel)===lecVel)));}catch(e){}
   if(llevar&&mio&&VZ.sonando){
@@ -82143,6 +82575,11 @@ function quitaPersona(i,p){
    en la última fila: el reino de Dios.
    Agregar una lámina con `partes` agrega una columna. Nada más. */
 const CMP_FIN='fin';
+/* v211 (Camilo, 14-oct): la fila de una parte es su `era` si la tiene, si no su `de`.
+   El Hijo del hombre no tiene tramo propio (de:null) pero NO es «lo que no pasa»:
+   llega al Anciano de días en 1844 (era:1844), en la época del juicio. Antes caía en
+   el reino de Dios, junto a la piedra, y parecía el mismo suceso que la segunda venida. */
+const cmpClave=p=>Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN;
 function cmpModelo(Ls){
   Ls=Ls||(typeof LAMINAS!=='undefined'?LAMINAS:{});
   const cols=Object.keys(Ls).filter(k=>Array.isArray(Ls[k].partes)&&Ls[k].partes.length&&libroCid(k))
@@ -82152,8 +82589,8 @@ function cmpModelo(Ls){
   cols.forEach(k=>{
     const L=Ls[k];
     L.partes.forEach(p=>{
-      const key=Number.isFinite(p.de)?String(p.de):CMP_FIN;
-      if(!filas.has(key))filas.set(key,{key,de:Number.isFinite(p.de)?p.de:Infinity,reino:'',fechas:'',c:p.c||'',celdas:{}});
+      const key=cmpClave(p);
+      if(!filas.has(key))filas.set(key,{key,de:key===CMP_FIN?Infinity:Number(key),reino:'',fechas:'',c:p.c||'',celdas:{}});
       const f=filas.get(key);
       if(!f.reino)f.reino=key===CMP_FIN?'El reino de Dios':(p.reino||'');
       if(!f.fechas)f.fechas=key===CMP_FIN?'Lo que no pasa':(p.fechas||'');
@@ -82216,8 +82653,10 @@ function cmpRio(M){
   const carril=k=>{
     /* Lo que se pisa en fechas (los diez cuernos y el cuerno pequeño) va en otra pista. */
     const fin=[],pistas=[];
-    const t=(LAMINAS[k].partes||[]).map(p=>{const key=Number.isFinite(p.de)?String(p.de):CMP_FIN;
+    const t=(LAMINAS[k].partes||[]).map(p=>{const key=cmpClave(p);
       if(key===CMP_FIN){fin.push(p);return '';}
+      /* Lo que va en una época sin tramo propio (el Hijo del hombre) ya lo dibuja su época. */
+      if(!Number.isFinite(p.de))return '';
       const a=Math.min(Number.isFinite(p.a)?p.a:2026,2026);
       let n=pistas.findIndex(f=>f<=p.de);if(n<0){n=pistas.length;pistas.push(a);}else pistas[n]=a;
       return '<button type="button" class="cmp-tr" data-k="'+esc(key)+'" style="--c:'+esc(p.c||'')+';left:'+pc(cmpX(p.de))+';width:'+pc(Math.max(.9,cmpX(a)-cmpX(p.de)))+';--n:'+n+'" '+
@@ -82242,7 +82681,12 @@ function cmpPega(){
     document.querySelectorAll('.nav,.nav-b').forEach(n=>{if(!n.getClientRects().length)return;const cs=getComputedStyle(n),r=n.getBoundingClientRect();
       if(cs.position==='fixed'&&r.top<=1&&r.height<240)y=Math.max(y,r.bottom);
       else if(cs.position==='sticky')y=Math.max(y,(parseFloat(cs.top)||0)+r.height);});
-    document.querySelectorAll('.cmp').forEach(c=>c.style.setProperty('--cmp-pega',Math.round(y)+'px'));
+    /* v211: el reproductor del estudio, cuando suena, se pega justo debajo de las barras
+       (en Jóvenes tapaba la barra de la app); la época de Comparar, debajo de él. */
+    const rp=[...document.querySelectorAll('.est-rp.activo')].find(x=>x.getClientRects().length);
+    document.querySelectorAll('.est-rp').forEach(c=>c.style.setProperty('--cb-pega',Math.round(y)+'px'));
+    const h=rp?rp.getBoundingClientRect().height+6:0;
+    document.querySelectorAll('.cmp').forEach(c=>c.style.setProperty('--cmp-pega',Math.round(y+h)+'px'));
   }catch(e){}
 }
 if(typeof addEventListener==='function')addEventListener('resize',()=>{if(document.querySelector('.cmp'))cmpPega();});
@@ -82250,7 +82694,8 @@ function comparaHTML(){
   const M=cmpModelo();
   if(M.cols.length<1)return '';
   if(typeof setTimeout==='function')setTimeout(cmpPega,0);
-  const fu=[...new Set(M.cols.map(k=>LAMINAS[k].paraleloFuente).filter(Boolean))];
+  /* v211: una sola vez cada fuente (antes «Bohr…; Bohr…» con la misma obra dos veces). */
+  const fu=[...new Set(M.cols.map(k=>String(LAMINAS[k].paraleloFuente||'').trim().replace(/\.$/,'')).filter(Boolean))];
   return '<div class="cmp" style="--cols:'+M.cols.length+'">'+
     '<div class="cmp-cab"><div class="cmp-ant">'+IC('comparar')+' Comparar · las profecías paralelas</div>'+
     '<h3 class="cmp-tit">Las mismas épocas en '+(M.cols.length===1?'una visión':M.cols.length+' visiones')+'</h3>'+
@@ -82265,7 +82710,8 @@ function comparaHTML(){
         return '<button type="button" class="cmp-carta" onclick="cmpToca(\''+f.key+'\')">'+cmpMini(LAMINAS[k],p,16/10,p.nombre)+
           '<span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>'+esc(ps.map(q=>q.nombre).join(' · '))+'</b></span></button>';}).join('')+'</div>'+
       /* En una caja angosta las vacías no se dibujan: se dice en una línea. */
-      (()=>{const no=M.cols.filter(k=>!(f.celdas[k]||[]).length);return no.length?'<p class="cmp-faltan">No aparece en '+esc(no.map(cmpNom).join(', '))+'.</p>':'';})()+'</section>').join('')+
+      (()=>{const no=M.cols.filter(k=>!(f.celdas[k]||[]).length);return no.length?'<p class="cmp-faltan">No aparece en '+esc(no.map(cmpNom).join(', '))+'.</p>':'';})()+
+      cmpFasesHTML(f,M,true)+'</section>').join('')+
     '</div>'+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
 }
 /* La sala: una época a pantalla completa, cada visión lado a lado. */
@@ -82291,9 +82737,20 @@ function cmpSalaHTML(M){
       (f.fechas?'<p class="cmp-sala-f">'+esc(f.fechas)+'</p>':'')+'</div></header>'+linea+
     '<div class="cmp-sala-g">'+con.map(vis).join('')+'</div>'+
     (sin.length?'<p class="cmp-sala-sin">No aparece en '+esc(sin.map(cmpNom).join(' ni en '))+'.</p>':'')+
+    cmpFasesHTML(f,M,false)+
     '<nav class="cmp-sala-nav" aria-label="Épocas">'+
       '<button type="button" class="cmp-nv"'+(ant?' onclick="cmpMueve(-1)"':' disabled')+'><small>Anterior</small><b>'+(ant?esc(ant.reino):'')+'</b></button>'+
       '<button type="button" class="cmp-nv sig"'+(sig?' onclick="cmpMueve(1)"':' disabled')+'><small>Siguiente</small><b>'+(sig?esc(sig.reino):'')+'</b></button></nav></div>';
+}
+/* v211: la época del juicio se conecta con sus tres fases (las de la lámina que las
+   trae: Daniel 7). Investigación desde 1844, sentencia en el milenio, ejecución al final. */
+function cmpFasesHTML(f,M,corto){
+  const k=M.cols.find(c=>{const F=LAMINAS[c].fases;return F&&(f.celdas[c]||[]).some(p=>p.id===F.tras);});
+  if(!k)return '';
+  const F=LAMINAS[k].fases;
+  return '<div class="cmp-fases'+(corto?' corto':'')+'"><span class="cmp-fases-t">'+esc(F.t)+'</span><ol>'+
+    F.pasos.map((x,i)=>'<li><i>'+(i+1)+'</i><b>'+esc(x.t)+'</b><small>'+esc(x.cuando)+'</small>'+(corto?'':'<span>'+esc(x.donde)+' · '+esc(x.quien)+'</span>')+'</li>').join('')+'</ol>'+
+    (corto?'':'<p>'+esc(F.nota)+'</p><button type="button" class="cmp-lam" onclick="cmpALamina(\''+k+'\')">'+IC('lupa')+' Ver las tres fases en la lámina de '+esc(cmpNom(k))+'</button>')+'</div>';
 }
 let cmpVuelve='';
 function cmpToca(key){

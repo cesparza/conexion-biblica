@@ -4091,3 +4091,151 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   .lam-fp b{font-size:1em}
 }
 @media (prefers-reduced-motion:reduce){.lam-ft,.lam-fp,.lam-fh i,.lam-esc .lam-chip{transition:none}.lb-chispas span{animation:none;opacity:.75}.lb-chispas span:nth-child(3n){bottom:18%}.lb-chispas span:nth-child(3n+1){bottom:42%}.lb-chispas span:nth-child(3n+2){bottom:66%}}
+
+/* ═══════════ v211: RONDA DE CAMILO (14-oct) SOBRE v209/v210 ═══════════ */
+/* 1. PRESENTAR EN PANTALLA ANCHA: la escena llena todo el escenario. Antes era una
+   caja 16:9 centrada (franjas negras a los lados) y el cartel ponía dos franjas
+   más arriba y abajo que cortaban la corona. El SVG cubre la caja (lamGeo). */
+.lam.pres.ancho .lam-marco{width:100%;height:100%;max-width:none;aspect-ratio:auto}
+.lam.pres.ancho .lam-esc{width:100%;height:100%;max-height:none;aspect-ratio:auto}
+.lam-esc::before,.lam-esc.cartel::before{display:none}
+/* Lo que sobra al lado de una escena: la misma imagen, grande y a media luz. */
+.lam-hist-amb{opacity:0;transition:opacity .6s ease;pointer-events:none;filter:blur(22px) saturate(.8)}
+/* El texto, una columna a la derecha que se funde con la imagen. */
+.lam.pres.ancho .lam-hoja{width:min(38%,640px);min-width:360px;padding:clamp(20px,3vw,48px) clamp(20px,2.6vw,44px) clamp(20px,3vw,48px) clamp(44px,4.5vw,84px);
+  background:linear-gradient(90deg,rgba(5,4,3,0),rgba(5,4,3,.82) clamp(36px,3.6vw,72px),rgba(5,4,3,.92))}
+.lam-esc.lado .lam-chip{left:16px;top:16px;bottom:auto;max-width:calc(60% - 32px)}
+
+/* 2. LA LÍNEA DE TIEMPO: una pista. El tramo de la parte va dentro de ella; pista,
+   marcas y pulgar con el mismo margen (11 px, el radio del pulgar). */
+.lam-rango{position:relative;height:26px}
+.lam-pista{position:absolute;left:11px;right:11px;top:50%;height:6px;margin-top:-3px;border-radius:999px;overflow:hidden;background-color:#3a332a}
+.lam-hoy{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--cine-tinta,#F3EDE2);opacity:.7}
+.lam-pista .lam-tramo{top:0;bottom:0;height:auto;margin:0;border-radius:999px;box-shadow:none;
+  background:linear-gradient(90deg,rgba(255,236,190,.95),rgba(242,196,107,.95));mix-blend-mode:normal}
+.lam-pista .lam-tramo.banda{animation:lamBanda 1.4s ease 1}
+@keyframes lamBanda{0%{opacity:.2}40%{opacity:1}60%{opacity:.55}100%{opacity:1}}
+.lam-tiempo input[type=range]{position:relative;z-index:1;display:block;width:100%;height:26px;margin:0;background:transparent}
+.lam-tiempo input[type=range]::-webkit-slider-runnable-track{height:26px;background:transparent;border-radius:0}
+.lam-tiempo input[type=range]::-moz-range-track{height:26px;background:transparent}
+.lam-tiempo input[type=range]::-webkit-slider-thumb{box-sizing:border-box;width:22px;height:22px;margin-top:2px;border-radius:50%;background:#FFF8E6;border:3px solid #17120A;box-shadow:0 0 0 1px var(--cine-oro,#D6B26A),0 1px 6px rgba(0,0,0,.5)}
+.lam-tiempo input[type=range]::-moz-range-thumb{box-sizing:border-box;width:22px;height:22px;border-radius:50%;background:#FFF8E6;border:3px solid #17120A;box-shadow:0 0 0 1px var(--cine-oro,#D6B26A)}
+.lam-tiempo input[type=range]:focus-visible{outline:none}
+.lam-tiempo input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px var(--cine-oro,#D6B26A)}
+.lam-marcas{margin:2px 11px 0;height:20px}
+.lam-marcas span{transform:translateX(-50%)}
+.lam-marcas span:first-child{transform:none}
+.lam-marcas span:last-child{transform:translateX(-50%)}
+.lam-marcas span.izq{transform:translateX(-2px)}
+.lam-marcas span.der{transform:translateX(calc(-100% + 2px))}
+.lam-marcas span.fut{color:var(--lam-oro,#B98A35)}
+.lam-marcas span.tel{display:none;color:var(--lam-oro,#B98A35)}
+@media (max-width:1100px){.lam-marcas span.chico i{display:none}}
+@media (max-width:700px){.lam-marcas span.chico,.lam-marcas span.fut{display:none}.lam-marcas span.tel{display:block}}
+
+/* 3. EL AÑO SOBRE LA IMAGEN mientras se recorre la historia. */
+.lam-anio-v{position:absolute;left:16px;top:16px;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 14px 9px 12px;border-left:3px solid var(--cine-oro,#D6B26A);
+  background:rgba(8,6,4,.72);color:#F3EDE2;pointer-events:none;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:calc(100% - 32px)}
+.lam-anio-v[hidden]{display:none}
+.lam-anio-v b{font-family:var(--cine-serif);font-weight:500;font-size:1.75rem;line-height:1.05;font-variant-numeric:tabular-nums}
+.lam-anio-v span{font-size:.875rem;color:#E6DCC8;line-height:1.3}
+@media (max-width:560px){.lam-anio-v{left:8px;top:auto;bottom:8px;padding:5px 10px 6px 9px}.lam-anio-v b{font-size:1.125rem}.lam-anio-v span{font-size:.75rem}}
+/* La estatua al recorrer: las partes que no gobiernan, enteras y en sombra (no transparentes). */
+.lam-parte.apagada{opacity:1;filter:saturate(.25) brightness(.38)}
+.lam-parte.tenue{opacity:1;filter:saturate(.5) brightness(.62)}
+
+/* 4. DANIEL 2 EN EXPLORAR: la tira con todas las partes (también la piedra y el monte). */
+.lam-tira.chips{display:flex;flex-wrap:wrap;gap:6px;overflow:visible;padding:0}
+.lam-tb.chip{width:auto;flex:0 1 auto;flex-direction:row;align-items:baseline;gap:6px;padding:7px 12px 7px 10px;border-width:1px;border-radius:999px;box-shadow:none;animation:none}
+.lam-tb.chip::before{content:'';align-self:center;flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--c)}
+.lam-tb.chip b{font-size:.875rem}
+.lam-tb.chip small{font-size:.75rem}
+.lam-tb.chip.on{border-color:var(--lam-oro,#B98A35);box-shadow:0 0 0 1px var(--lam-oro,#B98A35)}
+@media (max-width:560px){.lam-tb.chip small{display:none}}
+@media (min-width:900px){
+  .lam:not(.pres):not(.escenas) .lam-esc{width:min(100%,calc((100vh - 300px) * 1100 / 1152))}
+  .lam:not(.pres):not(.escenas) .lam-tira-c{grid-column:1;justify-self:end;width:min(100%,calc((100vh - 300px) * 1100 / 1152))}
+  .lam:not(.pres):not(.escenas) .lam-hoja{grid-column:2;grid-row:1 / span 2;max-height:calc(100vh - 220px)}
+}
+/* La navegación entre partes, pegada al pie de la explicación. */
+.lam:not(.pres) .lam-nav{position:sticky;bottom:-12px;z-index:2;margin:12px -14px -12px;padding:10px 14px 12px;background:#1D170F;border-top:1px solid rgba(243,237,226,.1);
+  display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.lam-nv{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-height:48px;padding:6px 12px;border:0;border-radius:12px;background:rgba(255,255,255,.08);color:#F4EEE2;font:inherit;text-align:left;cursor:pointer;min-width:0}
+.lam-nv.sig{align-items:flex-end;text-align:right;background:rgba(214,178,106,.2)}
+.lam-nv small{font-size:.75rem;color:#D6B26A;font-weight:600}
+.lam-nv b{font-family:var(--cine-serif);font-weight:500;font-size:1rem;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.lam-nv:hover:not(:disabled){background:rgba(214,178,106,.3)}
+.lam-nv:disabled{opacity:.3;cursor:default}
+.lam-nav>span{font-size:.75rem;color:#C9BFA9;font-variant-numeric:tabular-nums}
+
+/* 5. LAS SEÑAS: el número es el hijo directo; una <i> dentro del texto
+   (Pontifex Maximus) ya no se vuelve un círculo encima de la letra. */
+.lam-sen-cap i,.lam-sen-cap p i{all:unset;font-style:italic}
+.lam-sen-cap>i{all:revert;font-style:normal;flex:0 0 auto;width:1.9em;height:1.9em;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--cine-oro,#D6B26A);
+  box-shadow:inset 0 0 0 1px var(--cine-oro,#D6B26A);font-family:var(--cine-serif);font-weight:500}
+.lam-sl p i,.lam-sl b i{all:unset;font-style:italic}
+
+/* 6. UN SOLO SISTEMA DE LETRA (Camilo: «hay tantas que no hacen match»).
+   - Títulos y nombres: la serif (--cine-serif), peso 500.
+   - Todo lo demás: la sans (--cine-sans), en minúsculas normales, sin espaciado.
+   - Citas de la Biblia: la serif, derecha (sin cursiva).
+   - Un solo rótulo en versalitas, para nombrar secciones: .75rem, peso 600, +.08em. */
+.lam,.cmp,.cmp-sala{--rot-ls:.08em}
+.lam .lam-rot,.lam .lam-ant,.lam .lam-tira-t,.cmp .cmp-ant,.lam .lam-cartel-ant,.cmp-sala .cmp-sala-cu,.lam .lam-portada,.lam .lam-per-cab,.lam .lam-sen-tit small{
+  font-family:var(--cine-sans);font-size:.75rem;font-weight:600;letter-spacing:var(--rot-ls);text-transform:uppercase}
+.lam .lam-cartel-ant{font-size:.875rem}
+.lam .lam-fechas,.lam .lam-et span,.lam .lam-chip span,.lam .lam-tano,.lam .lam-fig figcaption b,.lam .lam-p1,.lam .lam-cartel-meta,.lam .lam-ctl span,.lam .lam-marcas,
+.lam .lam-ref,.lam .lam-tb small,.lam .lam-d2-t,.lam .lam-fl-mil,.lam .lam-aviso,.lam .lam-libro-cita small,.lam .lam-cartel-cita cite,
+.cmp .cmp-et small,.cmp .cmp-lt small,.cmp .cmp-carril-n,.cmp .cmp-abre,.cmp-sala .cmp-sala-f,.cmp-sala .cmp-vis-tx small,.cmp-sala .cmp-nv small,.cmp-sala .cmp-cita cite,.cmp .cmp-cita cite{
+  font-family:var(--cine-sans);letter-spacing:0;text-transform:none}
+.lam .lam-fechas,.lam .lam-tano,.lam .lam-cartel-meta,.cmp .cmp-et small,.cmp-sala .cmp-sala-f,.cmp .cmp-lt small,.cmp-sala .cmp-vis-tx small{font-weight:600;font-variant-numeric:tabular-nums}
+.lam .lam-fechas{font-size:.875rem}
+.lam .lam-cartel-meta{font-size:.875rem}
+.cmp-sala .cmp-sala-f{font-size:1rem}
+.lam .lam-capa q,.lam .lam-cartel-cita,.cmp .cmp-cita,.cmp-sala .cmp-cita,.lam .lam-libro-cita,.lam .lam-tq,.cmp .cmp-faltan,.cmp-sala .cmp-sala-sin,.lam .lam-sen-tit span{font-style:normal}
+.lam .lam-tq,.cmp .cmp-faltan,.cmp-sala .cmp-sala-sin{font-family:var(--cine-sans)}
+.lam .lam-capa q{font-family:var(--cine-serif);line-height:1.5}
+.lam .lam-p2,.lam .lam-et b,.lam .lam-chip b,.lam .lam-tb b,.lam .lam-cartel-tit,.lam .lam-tit,.cmp .cmp-tit,.cmp .cmp-et b,.cmp .cmp-lt b,.cmp-sala h2,.cmp-sala .cmp-vis-tx b,.cmp-sala .cmp-nv b{font-family:var(--cine-serif);font-weight:500;letter-spacing:0}
+.lam .lam-hoja,.lam .lam-capa p,.lam .lam-nota{font-family:var(--cine-sans)}
+.lam .lam-ley span,.lam .lam-pt{letter-spacing:0}
+
+/* 7. COMPARAR, OSCURO DE VERDAD: lo que se está escuchando y la fuente. Dentro de la
+   placa oscura el resaltado de la voz era el crema de la página (rosado en Jóvenes),
+   con la letra clara encima. */
+#detalle .cmp .suena,.cmp .suena{background:rgba(214,178,106,.14);box-shadow:0 0 0 4px rgba(214,178,106,.14);color:inherit;border-radius:8px}
+.cmp .sec-fuente{background:transparent;color:var(--cine-tenue)}
+/* El reproductor del estudio, cuando suena, se pega justo bajo las barras de la app
+   (lo mide cmpPega: en Jóvenes tapaba la barra de arriba y las pestañas), y deja de
+   ser la placa crema (rosada en Jóvenes) para ser un vidrio del color de la tarjeta.
+   Mide lo mismo sonando que en reposo (v162: la tarjeta no cambia de tamaño). */
+.est-rp.activo{top:var(--cb-pega,0px);background:color-mix(in srgb,var(--card,#fff) 86%,transparent);
+  -webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);box-shadow:0 8px 24px -14px rgba(0,0,0,.5)}
+/* Comparar, la época del juicio: sus tres fases. */
+.cmp-fases{margin:12px 0 0;padding:14px 16px;border-radius:12px;background:rgba(243,237,226,.05);box-shadow:inset 0 0 0 1px rgba(243,237,226,.1)}
+.cmp-fases-t{display:block;margin-bottom:10px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--cine-oro)}
+.cmp-fases ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cmp-fases li{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:baseline}
+.cmp-fases li i{grid-row:1 / span 3;font-style:normal;font-family:var(--cine-serif);color:var(--cine-oro);font-size:1.125rem}
+.cmp-fases li b{font-family:var(--cine-serif);font-weight:500;font-size:1.125rem;color:var(--cine-tinta)}
+.cmp-fases li small{font-size:.875rem;color:var(--cine-gris)}
+.cmp-fases li span{font-size:.875rem;color:var(--cine-tenue);margin-top:2px}
+.cmp-fases p{margin:12px 0 0;color:var(--cine-gris);font-size:1rem}
+.cmp-fases .cmp-lam{margin-top:10px}
+@container (max-width:560px){.cmp-fases ol{grid-template-columns:1fr}}
+@media (max-width:560px){.cmp-fases ol{grid-template-columns:1fr}}
+/* v211: la actividad de cada pastilla, antes de la categoría. */
+.alu-act{display:inline-flex;align-items:baseline;gap:.4rem;text-align:left}
+.alu-act-a{font-weight:700}
+.alu-act-a::after{content:'·';margin-left:.4rem;font-weight:400;opacity:.6}
+.alu-act.on .alu-act-a::after{opacity:.85}
+/* Las marcas según el ancho de la línea (no de la ventana): en Explorar la línea es
+   más angosta que la pantalla. */
+.lam-tiempo{container-type:inline-size}
+@container (max-width:1400px){.lam-marcas span.chico i{display:none}}
+@container (max-width:900px){.lam-marcas span.chico{display:none}}
+@container (max-width:640px){.lam-marcas span.fut{display:none}.lam-marcas span.tel{display:block}}
+.lam-tb.chip small{display:none}
+.cmp .cmp-carta.vacia b,.cmp .cmp-carta .cmp-lt b{font-style:normal}
+/* En el teléfono, al presentar, el título ya va en la explicación de abajo: sobre una
+   imagen de 390 px el cartel la tapaba entera y se salía por arriba. */
+.lam.pres:not(.ancho) .lam-cartel{display:none}

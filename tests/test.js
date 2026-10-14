@@ -2571,9 +2571,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const L=LAMINAS.d7,D2=LAMINAS[L.comparar],n=t=>String(t).replace(/<[^>]+>/g,'').replace(/[«»“”—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
   const d7=n(Object.values(VERS.d7).join(' '));
   const par=Object.fromEntries(L.paralelo.map(r=>[r[0],r[3]]));
-  ok(L.comparar==='d2'&&D2&&D2.marcoEstatua&&JSON.stringify(par)===JSON.stringify({leon:'oro',oso:'plata',leopardo:'bronce',bestia:'hierro',cuernos:'dedos',cuerno:'barro',juicio:null,hijo:'piedra',reino:'monte'}),
-    'Con Daniel 2: cada parte de Daniel 7 enciende su metal (el juicio no tiene: lo agrega Daniel 7)');
-  ok(L.paralelo.every(r=>r[3]===null||D2.capas.includes(r[3])||['piedra','monte'].includes(r[3]))&&/lo agrega Daniel 7/.test(L.agrega),'La cuarta columna del paralelo nombra partes de la estatua de Daniel 2');
+  ok(L.comparar==='d2'&&D2&&D2.marcoEstatua&&JSON.stringify(par)===JSON.stringify({leon:'oro',oso:'plata',leopardo:'bronce',bestia:'hierro',cuernos:'dedos',cuerno:'barro',juicio:null,hijo:null,reino:['piedra','monte']}),
+    'Con Daniel 2: cada parte de Daniel 7 enciende su metal (el juicio y el Hijo del hombre no tienen: los agrega Daniel 7; el reino enciende la piedra y el monte)');
+  ok(L.paralelo.every(r=>r[3]===null||[].concat(r[3]).every(k=>D2.capas.includes(k)||['piedra','monte'].includes(k)))&&/lo agrega Daniel 7/.test(L.agrega),'La cuarta columna del paralelo nombra partes de la estatua de Daniel 2');
   const C=L.cuernos;
   ok(C&&C.diez.length===10&&C.nombres.length===10&&C.tres.map(t=>t.t+' '+t.y).join(', ')==='Hérulos 493, Vándalos 534, Ostrogodos 538'&&C.nombres.slice(7).join()==='Hérulos,Vándalos,Ostrogodos',
     'Los diez cuernos: diez puntos y diez reinos; caen hérulos (493), vándalos (534) y ostrogodos (538)');
@@ -2648,6 +2648,46 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Daniel 7 explica las tres fases del juicio y el tribunal con sus libros (🧭)');
   const pre=js.slice(js.indexOf('const lamPasosE=()=>{'),js.indexOf('function lamHojaSub('));
   ok(/tipo:'fases'/.test(pre)&&/lamFasesVis\(s\.sub/.test(js)&&/lamFasE\(/.test(js),'Al presentar, después de los pasos del juicio van sus tres fases; en Explorar, una por una');
+}
+
+/* v211: la ronda de Camilo sobre v209/v210 (14-oct). */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {cmpModelo,catCorta,actCorta}=montar('cmpModelo, catCorta, actCorta');
+  /* Doctrina: el Hijo del hombre (7:13) llega al Anciano de días en 1844; NO es la piedra. */
+  const M=cmpModelo(LAMINAS),fila=k=>M.filas.find(f=>f.key===k),ids=(f,c)=>((f&&f.celdas[c])||[]).map(p=>p.id).join();
+  ok(ids(fila('1844'),'d7')==='juicio,hijo'&&!ids(fila('1844'),'d2'),'Comparar: el Hijo del hombre va en la época del juicio (desde 1844), con el juicio; Daniel 2 no la trae');
+  ok(ids(fila('fin'),'d2')==='piedra,monte'&&ids(fila('fin'),'d7')==='reino','Comparar: el reino de Dios junta la piedra y el monte con el reino dado a los santos (7:18, 22, 27)');
+  const par=Object.fromEntries(LAMINAS.d7.paralelo.map(r=>[r[0],r[3]]));
+  ok(par.hijo===null&&![].concat(par.hijo||[]).includes('piedra')&&JSON.stringify(par.reino)==='["piedra","monte"]','Con Daniel 2: el Hijo del hombre no enciende la piedra; el reino enciende la piedra y el monte');
+  const H=LAMINAS.d7.partes.find(p=>p.id==='hijo');
+  ok(H.era===1844&&/1844/.test(H.fechas)&&/No es la piedra|No es la segunda venida/.test(H.corto+H.interp.join(' ')),'El Hijo del hombre dice 1844 y que no es la segunda venida');
+  ok(/function cmpFasesHTML\(/.test(js)&&/cmpFasesHTML\(f,M,false\)/.test(js)&&/cmpFasesHTML\(f,M,true\)/.test(js),'La época del juicio se conecta con sus tres fases (en la lista y lado a lado)');
+  /* Las fuentes de Comparar, una vez cada una. */
+  const fu=[...new Set(M.cols.map(k=>String(LAMINAS[k].paraleloFuente||'').trim().replace(/\.$/,'')))];
+  ok(fu.length===1,'Comparar cita su fuente una sola vez ('+fu.length+')');
+  /* La línea de tiempo llega al futuro: 1844, la piedra y el monte después de hoy. */
+  const F2=LAMINAS.d2.futuro,F7=LAMINAS.d7.futuro;
+  ok(F2.map(f=>f.id).join()==='piedra,monte'&&F2[0].de===2026&&F2[1].de===F2[0].a&&F7.length===2&&F7[1].id==='reino',
+    'La línea de tiempo sigue después de hoy: la piedra y el monte (Daniel 2), la venida y el reino (Daniel 7)');
+  ok([LAMINAS.d2,LAMINAS.d7].every(L=>L.marcas.some(m=>m[0]===1844)&&L.marcas.some(m=>m[0]===2026))&&LAMINAS.d2.escenas.some(e=>e.y===1844)&&LAMINAS.d2.juicio===1844,
+    'Las dos líneas de tiempo marcan 1844 (el juicio) y hoy');
+  ok(/const LAM_HOY=2026,LAM_FIN=2626;/.test(js)&&/max="'\+LAM_FIN\+'"/.test(js)&&/lamFuturo\(y\)/.test(js),'El control de la línea de tiempo llega hasta el final del futuro');
+  /* Una sola pista: el tramo va dentro de ella (antes era otra raya encima). */
+  ok(/class="lam-pista" id="lamPista"[^']*'[^]*?class="lam-tramo" id="lamTramo"/.test(js)&&!/b\.className='lam-banda'/.test(js),'La línea de tiempo es una sola pista con el tramo dentro');
+  /* Capas: la escena que entra lleva una animación con relleno; al esconderla se le quita la clase. */
+  const lh=js.slice(js.indexOf('function lamHist(t){'),js.indexOf('const lamEscenaDe='));
+  ok(/if\(!t\|\|!t\.f\)\{h\.classList\.remove\('entra'\)/.test(lh)&&/lamHistT=setTimeout\(\(\)=>\{apagaBg\(\);h\.classList\.remove\('entra'\)/.test(lh),
+    'La escena de la historia no queda encima de las partes: se le quita la animación al esconderla');
+  /* La piedra y el monte, a la mano en Explorar. */
+  ok(/class="lam-tira chips" id="lamTira"/.test(js)&&/function lamNavHTML\(/.test(js)&&LAMINAS.d2.partes.slice(-3).map(p=>p.id).join()==='barro,piedra,monte',
+    'Daniel 2 en Explorar: todas las partes en una tira, y Siguiente pasa del barro a la piedra y al monte');
+  /* Las categorías: cada pastilla dice su actividad. */
+  ok(actCorta('ap')==='Apocalipsis'&&actCorta('cb')==='Daniel'&&catCorta('appa')==='Apocalipsis · Padres y consejeros'&&catCorta('pa')==='Daniel · Padres y consejeros'&&catCorta('gm')==='Daniel · Guías Mayores',
+    'Quién estudia: «Apocalipsis · Padres y consejeros» y «Daniel · Padres y consejeros» ya no se ven iguales');
+  ok(/class="alu-act-a">'\+esc\(c\?actCorta\(c\.act\)/.test(js)&&/onclick="cambiaAlumno\(\\''\+id\+'\\'\)">'\+\s*'<span class="alu-act-a">/.test(js),'Cada pastilla abre su propia ficha y nombra su actividad');
+  /* La portada de Daniel 7: las cuatro bestias. */
+  ok(LAMINAS.d7.cartel.f==='bestias'&&LAMINAS.d7.inicioF==='bestias'&&fs.existsSync(path.join(RAIZ,'laminas','d7','bestias.webp')),'Daniel 7 abre con las cuatro bestias que suben del mar (bestias.webp)');
 }
 
 /* v179: la interpretación con fuentes (Bohr, Elena de White, las notas de
