@@ -274,6 +274,27 @@ LAMINAS.d7 = {
         nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Berthier toma preso al papa Pío VI: es la herida de muerte. Después la herida sana y el cuerno sigue hasta que viene el Anciano de días (7:21-22).' }],
     fuente: BOHR + ', p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309 y 492.',
   },
+  /* v210: LAS TRES FASES DEL JUICIO (Camilo, 14-oct: «y el asunto de las tres fases
+     del juicio»). Después de los pasos del juicio, una mini línea de tiempo
+     (1844 → segunda venida → mil años → fin) y tres paneles que se encienden en
+     orden. Los mismos nombres de Apocalipsis 20 (fuente/apocalipsis/cap20.js:
+     Investigación, Sentencia, Ejecución). `citas`: RV1995 literal (tests/test.js). */
+  fases: {
+    tras: 'juicio', t: 'Las tres fases del juicio', s: 'De 1844 al fin del milenio',
+    hitos: [['1844', 'Empieza el juicio'], ['La venida', 'Se cierra la gracia y viene Cristo'], ['El fin', 'Gran trono blanco']],
+    pasos: [
+      { t: 'Investigación', n: 'El juicio investigador', cuando: 'Desde 1844 hasta el cierre de la gracia', donde: 'En el cielo', quien: 'El Padre juzga; Cristo es el abogado; los ángeles, testigos',
+        que: 'Se abren los libros de los que profesaron ser hijos de Dios. El fallo es a favor de los santos y contra el cuerno.', para: 'Para que el universo vea que Dios es justo',
+        citas: [['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.'], ['Apocalipsis 14:7', 'la hora de su juicio ha llegado']], de: 0, a: 1 },
+      { t: 'Sentencia', n: 'El juicio del milenio', cuando: 'Durante los mil años', donde: 'En el cielo', quien: 'Los santos juzgan con Cristo',
+        que: 'Revisan los casos de los perdidos y de los ángeles caídos, y queda medido lo que cada uno ha de recibir.', para: 'Para que los redimidos vean que Dios fue justo',
+        citas: [['Apocalipsis 20:4', 'Vi tronos, y se sentaron sobre ellos los que recibieron facultad de juzgar'], ['1 Corintios 6:2', 'los santos han de juzgar al mundo']], de: 1, a: 2 },
+      { t: 'Ejecución', n: 'El juicio ejecutivo', cuando: 'Después de los mil años', donde: 'En la tierra', quien: 'Cristo, en el gran trono blanco',
+        que: 'Los perdidos resucitan, se abren los libros y el fuego los consume. Toda rodilla se dobla y reconoce que Dios es justo.', para: 'Para que los perdidos reconozcan su sentencia',
+        citas: [['Apocalipsis 20:12', 'fueron juzgados los muertos por las cosas que estaban escritas en los libros, según sus obras'], ['Malaquías 4:1', 'aquel día que vendrá los abrasará']], de: 2, a: 2 }],
+    nota: 'Daniel 7 ve la primera fase; Apocalipsis 20 las otras dos. Los libros se abren en las tres (Daniel 7:10; Apocalipsis 20:12).',
+    fuente: 'CS 534, 718-719 y 726-728; Bohr, <i>La hora del juicio</i>, p. 1; Goldstein, <i>Desequilibrio fatal</i>, p. 92.',
+  },
   partes: [
  {id:'leon',img:'leon',nombre:'León con alas de águila',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La primera era como un león, y tenía alas de águila.',ref:'7:4',texto2:'Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.',ref2:'7:17',
@@ -309,18 +330,31 @@ LAMINAS.d7 = {
   texto:'fueron puestos unos tronos y se sentó un Anciano de días',ref:'7:9',texto2:'El Juez se sentó y los libros fueron abiertos.',ref2:'7:10',
   corto:'Desde 1844 el Padre juzga en el cielo, y el fallo es a favor de los santos (7:22).',
   interp:['El juicio empieza cuando terminan los 1.260 años del cuerno (7:25-26) y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.','El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.','Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26).'],
-  fuente:'CS 477 y 533; '+BOHR+', p. 120-121, 276-280.',
+  fuente:'CS 477 y 533-536; PE 55; '+BOHR+', p. 120-121, 276-280.',
   /* v205: la escena del juicio por pasos: la imagen se acerca a cada parte
      (`caja`: x, y, ancho y alto en píxeles de juicio.webp, 1200 × 675, en 16:9). */
   pasos:[
    {t:'Fueron puestos unos tronos',ref:'7:9',texto:'Estuve mirando hasta que fueron puestos unos tronos',caja:[150,40,880,495],
     nota:'Los tronos se colocan porque antes no estaban: en el cielo empieza algo nuevo. Es 1844, cuando terminan las 2.300 tardes y mañanas (8:14).'},
    {t:'Se sentó un Anciano de días',ref:'7:9',texto:'y se sentó un Anciano de días. Su vestido era blanco como la nieve; el pelo de su cabeza, como lana limpia',caja:[400,20,400,225],
-    nota:'Dios el Padre preside el juicio. Blanco y lana limpia: pureza y eternidad, un Juez que no se puede comprar.'},
+    nota:'Dios el Padre preside el juicio. Blanco y lana limpia: pureza y eternidad, un Juez que no se puede comprar. En visión, el Padre se levanta y en un carro de llamas entra en el lugar santísimo, y se sienta (PE 55).'},
    {t:'Un río de fuego',ref:'7:9-10',texto:'su trono, llama de fuego, y fuego ardiente las ruedas del mismo. Un río de fuego procedía y salía de delante de él',caja:[250,200,680,383],
     nota:'Un trono con ruedas es un trono que se mueve, como el carro de Ezequiel 1: el Padre pasa al lugar santísimo. Los millones que están delante de él son ángeles, testigos del tribunal (CS 533).'},
-   {t:'Los libros fueron abiertos',ref:'7:10',texto:'El Juez se sentó y los libros fueron abiertos.',caja:[380,290,680,383],
-    nota:'Los libros guardan cada vida (Apocalipsis 20:12). El fallo es a favor de los santos: «se hizo justicia a los santos del Altísimo» (7:22).'}]},
+   {t:'Los libros fueron abiertos',ref:'7:10',texto:'El Juez se sentó y los libros fueron abiertos.',caja:[380,290,680,383],ms:8200,
+    nota:'El Juez se sienta y empieza la sesión. Los libros guardan cada vida: el libro de la vida, el de memoria y el registro de los pecados (Apocalipsis 20:12; Malaquías 3:16; Eclesiastés 12:14). El fallo es a favor de los santos: «se hizo justicia a los santos del Altísimo» (7:22).'}],
+  /* v210: LA ANIMACIÓN DEL JUICIO (Camilo, 14-oct: «se puede agregar una animación
+     para cuando dice: el Juez se sentó y los libros fueron abiertos»). Sobre
+     juicio.webp, en píxeles de 1200 × 675: la luz del trono (el rostro nunca se
+     dibuja: queda dentro de la luz), los tronos que se colocan, el río de fuego,
+     los «millares de millares» como chispas de luz y los libros de la escena.
+     El libro grande que se abre va encima, en HTML; si existe `libro` (un libro
+     abierto con fondo transparente), se usa esa imagen en vez del dibujo. */
+  anim:{trono:[600,62],sentado:[600,175],
+    tronos:[[64,262],[150,262],[236,270],[964,270],[1050,262],[1136,262],[470,226],[730,226]],
+    rio:[[600,318],[545,348],[480,382],[548,408],[640,436],[692,470],[690,520],[680,580]],
+    libros:[[215,468],[532,484],[915,468]],
+    camara:[[150,0,900,506],[330,0,540,304],[250,225,800,450]],
+    libro:'libro.png'}},
  {id:'hijo',img:'hijo',nombre:'El Hijo del hombre',reino:'Cristo recibe el reino',fechas:'en el juicio',de:null,c:'#0E7490',
   texto:'con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días',ref:'7:13',texto2:'su dominio es dominio eterno, que nunca pasará',ref2:'7:14',
   corto:'Cristo va al Padre, no a la tierra: llega al juicio y recibe el reino.',

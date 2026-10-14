@@ -3984,3 +3984,110 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 @media (max-height:860px){.lam.pres.ancho .lam-hoja .lam-figs .lam-fig img{height:11vh}}
 /* «Ocultar texto» (T) sigue mandando sobre la rejilla de la hoja. */
 .lam.pres.ancho.sin-texto .lam-hoja{display:none}
+
+/* ── v210: el juicio de Daniel 7 ──
+   El libro que se abre en primer plano (HTML sobre la imagen; las luces de la
+   escena van en el svg del zoom). Colores fijos: va sobre la imagen, igual en
+   claro y en oscuro. Sin url(#) ni el.animate(): transiciones y una animación
+   de CSS para las chispas. Con «reducir movimiento», el libro ya abierto. */
+.lam-marcas-img.con-libro{overflow:hidden}
+.lam-esc .lam-chip{transition:opacity .8s ease}
+.lam-esc.con-libro .lam-chip{opacity:0;pointer-events:none}
+.lam-libro{position:absolute;left:50%;bottom:8%;width:33%;transform:translate(-50%,14%) scale(.92);opacity:0;perspective:520px;-webkit-perspective:520px;
+  transition:opacity 1.1s ease,transform 1.6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.lam-libro.ve{opacity:1;transform:translate(-50%,0) scale(1)}
+.lam-libro::before{content:'';position:absolute;left:-55%;right:-55%;top:-70%;bottom:-30%;background:radial-gradient(ellipse 50% 50% at 50% 62%,rgba(6,4,10,.7),rgba(6,4,10,.35) 55%,rgba(6,4,10,0) 75%);pointer-events:none}
+.lb-3d{position:relative;width:100%;aspect-ratio:2/1.28;transform:rotateX(42deg);transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.lb-3d>div{position:absolute;top:0;height:100%;width:50%;border-radius:3px}
+.lb-tapa-i,.lb-tapa-d{background:linear-gradient(135deg,#6B3415,#3E1C0A);box-shadow:0 0 0 1.5px #C9973E,0 22px 30px rgba(0,0,0,.7)}
+.lb-tapa-i{left:0;border-radius:8px 0 0 8px;opacity:0;transition:opacity .5s ease .5s}
+.lb-tapa-d{left:50%;border-radius:0 8px 8px 0}
+.lb-pila-i,.lb-pila-d{top:4%!important;height:92%!important;width:47%!important;background:#EFE1BF;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 9%,rgba(110,72,24,.2) 9% 10%);background-size:78% 78%;background-position:50% 55%;background-repeat:no-repeat;
+  box-shadow:inset 0 0 18px rgba(120,80,30,.35)}
+.lb-pila-i{left:3%;border-radius:3px 0 0 3px;opacity:0;transition:opacity .4s ease .7s}
+.lb-pila-d{left:50%;border-radius:0 3px 3px 0}
+.lb-h,.lb-portada{left:50%;transform-origin:0 50%;-webkit-transform-origin:0 50%;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+  transition:transform 1.5s cubic-bezier(.45,.05,.2,1)}
+.lb-h{top:4%!important;height:92%!important;width:47%!important;transform:translateZ(calc(2px + var(--k)*.6px));transition-delay:calc(.55s + var(--k)*.22s)}
+.lb-portada{transform:translateZ(5px)}
+.lb-h i,.lb-portada i{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:inherit}
+.lb-h i{background:#F4E8C9;background-image:repeating-linear-gradient(to bottom,transparent 0 9%,rgba(110,72,24,.18) 9% 10%);background-size:78% 78%;background-position:50% 55%;background-repeat:no-repeat;
+  box-shadow:inset 0 0 14px rgba(120,80,30,.3);border-radius:0 3px 3px 0}
+.lb-h i.b,.lb-portada i.b{transform:rotateY(180deg)}
+.lb-portada i.f{background:radial-gradient(circle at 50% 50%,#D9AE55 0 9%,transparent 9.5%),linear-gradient(135deg,#7A3C17,#40200B);border-radius:0 8px 8px 0;
+  box-shadow:inset 0 0 0 4px #40200B,inset 0 0 0 6px #C9973E,inset 0 0 0 10px #40200B,inset 0 0 0 11px rgba(201,151,62,.6)}
+.lb-portada i.b{background:#7C2E1C;border-radius:8px 0 0 8px;box-shadow:inset 0 0 0 5px #40200B}
+.lam-libro.abre .lb-portada{transform:rotateY(-179deg) translateZ(5px)}
+.lam-libro.abre .lb-h{transform:rotateY(calc(-176deg + var(--k)*1.2deg)) translateZ(calc(2px + var(--k)*.6px))}
+.lam-libro.abre .lb-tapa-i,.lam-libro.abre .lb-pila-i{opacity:1}
+/* La luz que sube de las páginas y las chispas de oro. */
+.lb-luz{position:absolute;left:-6%;right:-6%;bottom:28%;height:300%;transform-origin:50% 100%;transform:scaleY(.15);opacity:0;
+  background:radial-gradient(ellipse 22% 70% at 50% 100%,rgba(255,250,228,.95),rgba(255,226,150,.55) 45%,rgba(255,214,120,0) 100%),radial-gradient(ellipse 50% 45% at 50% 100%,rgba(255,236,180,.85),rgba(242,196,107,.35) 50%,rgba(242,196,107,0) 100%);
+  transition:opacity 1.6s ease,transform 2.4s cubic-bezier(.2,.7,.2,1)}
+.lam-libro.luz .lb-pila-i,.lam-libro.luz .lb-pila-d,.lam-libro.luz .lb-h i{background-color:#FFF4D6;box-shadow:inset 0 0 18px rgba(255,214,120,.5),0 0 26px rgba(255,214,120,.55)}
+.lb-luz::after{content:'';position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 100%,rgba(255,238,180,.42) 0deg 1.6deg,rgba(255,238,180,0) 1.6deg 6.5deg);
+  -webkit-mask-image:linear-gradient(to top,transparent 0%,#000 16%,rgba(0,0,0,.55) 50%,transparent 92%);mask-image:linear-gradient(to top,transparent 0%,#000 16%,rgba(0,0,0,.55) 50%,transparent 92%)}
+.lam-libro.luz .lb-luz{opacity:1;transform:none}
+.lb-chispas{position:absolute;left:0;right:0;bottom:30%;height:260%;opacity:0;transition:opacity 1s ease .4s}
+.lam-libro.luz .lb-chispas{opacity:1}
+.lb-chispas span{position:absolute;bottom:0;width:1.3%;aspect-ratio:1;border-radius:50%;background:#FFEAB0;box-shadow:0 0 6px 2px rgba(255,214,120,.8);opacity:0;
+  animation:lb-sube var(--d,3s) linear infinite}
+@keyframes lb-sube{0%{bottom:0;opacity:0;transform:scale(.6)}15%{opacity:1}70%{opacity:.8}100%{bottom:96%;opacity:0;transform:scale(1.1)}}
+.lam-libro.foto .lb-img{display:block;width:100%;height:auto;filter:drop-shadow(0 14px 22px rgba(0,0,0,.6))}
+.lam-libro-cita{position:absolute;left:50%;top:5%;width:min(86%,34em);transform:translate(-50%,-8px);opacity:0;text-align:center;color:#FFF4D8;
+  font-family:var(--cine-serif,Georgia,serif);font-size:1.375rem;line-height:1.2;text-shadow:0 2px 14px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.9);
+  transition:opacity 1.4s ease,transform 1.4s ease;pointer-events:none}
+.lam-libro-cita.ve{opacity:1;transform:translate(-50%,0)}
+.lam-libro-cita q{font-style:italic;quotes:'«' '»'}
+.lam-libro-cita small{display:block;margin-top:.3em;font-family:var(--cine-sans,system-ui,sans-serif);font-size:.55em;letter-spacing:.14em;text-transform:uppercase;color:#F2C46B;font-weight:800}
+.lam.pres .lam-esc.lado .lam-libro{width:38%}
+.lam-sobre.con-d2 .lam-libro{left:43%}
+.lam-sobre.con-d2 .lam-libro-cita{left:42%;width:min(76%,30em)}
+.lam-libro.quieto,.lam-libro.quieto *,.lam-libro-cita.ve{transition:none}
+@media (max-width:900px){.lam-libro-cita{font-size:1.125rem}}
+@media (max-width:560px){.lam-libro{width:36%}.lam-libro-cita{top:3%;font-size:.875rem}}
+
+/* ── v210: las tres fases del juicio ── */
+.lam-tabla.fases{justify-content:center;gap:.5em}
+.lam-fl{position:relative;height:4.4em;margin:.6em 1.5em .2em}
+.lam-fl-l{position:absolute;left:0;right:0;top:1.1em;height:3px;background:rgba(243,237,226,.22);border-radius:3px}
+.lam-fl-mil{position:absolute;top:-.25em;text-align:center;font-size:.72em;letter-spacing:.06em;text-transform:uppercase;color:#C9BFA9}
+.lam-ft{position:absolute;top:calc(1.1em - 3px);height:9px;border-radius:999px;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#B45309,#F2C46B);
+  box-shadow:0 0 12px rgba(242,196,107,.7);transition:transform 1.3s cubic-bezier(.3,0,.2,1)}
+.lam-ft.f2{transform-origin:center;background:radial-gradient(circle,#FFE3A0,#E2571B);border-radius:50%;width:1.3em!important;height:1.3em;margin-left:-.65em;top:calc(1.1em - .55em)}
+.lam-ft.on.ya,.lam-ft.on.ve,.lam-ft.on:not([data-o]){transform:none}
+.lam-fh{position:absolute;top:0;transform:translateX(-50%);text-align:center;width:7.5em;color:#C9BFA9}
+.lam-fh i{display:block;width:.9em;height:.9em;margin:.68em auto .25em;border-radius:50%;background:#3A332A;box-shadow:0 0 0 2px #C9BFA9;transition:background .6s,box-shadow .6s}
+.lam-fh.on i{background:#F2C46B;box-shadow:0 0 0 2px #F2C46B,0 0 10px rgba(242,196,107,.9)}
+.lam-fh b{display:block;color:#F4EEE2;font-size:.9em;white-space:nowrap}
+.lam-fh small{display:block;font-size:.7em;line-height:1.15}
+.lam-fl .lam-fh:nth-last-child(3){transform:translateX(-20%)}
+.lam-fl .lam-fh:last-child{transform:translateX(-80%)}
+.lam-fps{display:grid;grid-template-columns:repeat(3,1fr);gap:.6em}
+.lam-fp{position:relative;border-radius:12px;padding:.6em .7em .7em 2.6em;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(243,237,226,.16);opacity:.42;
+  transition:opacity .8s ease,box-shadow .8s ease,background .8s ease}
+.lam-fp i{position:absolute;left:.6em;top:.6em;font-style:normal;width:1.55em;height:1.55em;border-radius:50%;display:grid;place-items:center;font-weight:800;background:#3A332A;color:#F4EEE2;transition:background .8s,color .8s}
+.lam-fp b{display:block;font-size:1.15em;font-weight:800}
+.lam-fp small{display:block;color:#C9BFA9;font-size:.8em;line-height:1.2}
+.lam-fp small.n{color:#F2C46B;font-weight:700}
+.lam-fp .det{display:block;margin-top:.35em;font-size:.8em;color:#E6DCC8;line-height:1.25}
+.lam-fp.on{opacity:.8}
+.lam-fp.on i{background:#F2C46B;color:#1B140A}
+.lam-fp.on.ahora{opacity:1;background:rgba(242,196,107,.14);box-shadow:inset 0 0 0 2px #F2C46B,0 0 22px rgba(242,196,107,.35)}
+.lam-tabla.fases .lam-fp[data-o]{transform:none}
+.lam-tabla.fases .lam-fp[data-o]:not(.ve){opacity:.42;box-shadow:inset 0 0 0 1px rgba(243,237,226,.16);background:rgba(255,255,255,.05)}
+.lam-tabla.fases .lam-ft[data-o]{opacity:1}
+.lam-tabla.fases .lam-ft[data-o]:not(.ve){transform:scaleX(0)}
+.lam-tabla.fases .lam-ft.f2[data-o]:not(.ve){transform:scale(0)}
+.lam-tabla.fases .lam-per-nota{color:#F2C46B;font-weight:700;font-size:.95em}
+.lam:not(.pres) .lam-fp .det{display:none}
+@media (max-width:560px){
+  .lam-fl{height:3.2em;margin:.2em .8em 0}
+  .lam-fh small,.lam-fl-mil,.lam-fp small.n,.lam-fp .det{display:none}
+  .lam-fps{gap:.35em}
+  .lam-fp{padding:.4em .45em .45em 1.9em}
+  .lam-fp i{left:.35em;top:.4em}
+  .lam-fp b{font-size:1em}
+}
+@media (prefers-reduced-motion:reduce){.lam-ft,.lam-fp,.lam-fh i,.lam-esc .lam-chip{transition:none}.lb-chispas span{animation:none;opacity:.75}.lb-chispas span:nth-child(3n){bottom:18%}.lb-chispas span:nth-child(3n+1){bottom:42%}.lb-chispas span:nth-child(3n+2){bottom:66%}}

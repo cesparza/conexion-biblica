@@ -2614,6 +2614,42 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(L.senas.length===11&&refsD7.length===11&&refsD7.join('|')===L.senas.map(x=>x.ref).join('|'),'Las once señas de la lámina son las de d7.js, en el mismo orden ('+refsD7.length+')');
 }
 
+/* v210: el juicio que se anima (7:9-10) y las tres fases del juicio. Las luces
+   caen dentro de juicio.webp; la animación no dibuja el rostro del Juez (solo
+   luces y un libro); las fases usan los nombres de Apocalipsis 20 (cap20.js) y
+   lo citado es literal (Daniel y Apocalipsis en RV1995 de la app). */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const {VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const {OTRAS_VERS}=require(path.join(RAIZ,'fuente','biblia-otros.js'));
+  const L=LAMINAS.d7,J=L.partes.find(p=>p.id==='juicio'),A=J.anim,F=L.fases;
+  const n=t=>String(t).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/<[^>]+>/g,'').replace(/[«»“”—,.;:¿?¡!]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  const dentro=([x,y])=>x>=0&&x<=1200&&y>=0&&y<=675;
+  ok(A&&dentro(A.trono)&&dentro(A.sentado)&&[A.tronos,A.rio,A.libros].every(a=>a.length>=3&&a.every(dentro))&&A.camara.every(c=>c.length===4&&c[0]+c[2]<=1200&&c[1]+c[3]<=675&&Math.abs(c[2]/c[3]-1200/675)<.02),
+    'La animación del juicio: el trono, los tronos, el río y los libros caen dentro de juicio.webp, y la cámara va en 16:9');
+  ok(J.pasos[3].t==='Los libros fueron abiertos'&&J.pasos[3].ms>=6000&&/El Juez se sentó y los libros fueron abiertos/.test(VERS.d7[10]),'«El Juez se sentó y los libros fueron abiertos» (7:10, RV1995) tiene tiempo para animarse');
+  const lib=js.slice(js.indexOf('function lamJuicio('),js.indexOf('function lamFasesHTML('));
+  ok(lib.length>2000&&!/url\(#|\.animate\(|filter=/.test(lib)&&/lamQuieto\(\)/.test(lib)&&/El Juez se sentó y los libros fueron abiertos\./.test(lib)&&!/\b(rostro|cara|face)\b/i.test(lib.replace(/\/\*[\s\S]*?\*\//g,'')),
+    'El juicio se anima sin url(#), sin filtros de svg ni el.animate(), con «reducir movimiento», y sin dibujar el rostro del Juez');
+  const css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8');
+  ok(/\.lam-libro\{/.test(css)&&/@keyframes lb-sube/.test(css)&&/prefers-reduced-motion:reduce\)\{\.lam-ft/.test(css),'El libro que se abre y las chispas tienen su estilo, también con «reducir movimiento»');
+  const verso=r=>{const m=/^(Daniel|Apocalipsis|1 Corintios|Malaquías) (\d+):(\d+)$/.exec(r);if(!m)return '';
+    return m[1]==='Daniel'?VERS['d'+m[2]][m[3]]:m[1]==='Apocalipsis'?(VERS_AP['ap'+m[2]]||{})[m[3]]:(OTRAS_VERS[(m[1]==='Malaquías'?'malaquias':'1corintios')+'-'+m[2]]||{})[m[3]];};
+  const citas=F.pasos.flatMap(x=>x.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
+  ok(F&&F.tras==='juicio'&&F.pasos.map(x=>x.t).join()==='Investigación,Sentencia,Ejecución'&&citas.length===6&&!malas.length,
+    'Las tres fases del juicio: Investigación, Sentencia y Ejecución, con 6 citas literales'+(malas.length?' ('+malas[0][0]+')':''));
+  ok(F.hitos.length===3&&F.pasos.every(x=>x.de>=0&&x.a<F.hitos.length&&x.de<=x.a&&x.cuando&&x.donde&&x.quien&&x.que&&x.para)&&/1844/.test(F.pasos[0].cuando)&&/mil años/.test(F.pasos[1].cuando+F.pasos[2].cuando),
+    'La mini línea de tiempo: 1844 → la venida → el fin, y cada fase con cuándo, dónde, quién y para quién');
+  const ap20=fs.readFileSync(path.join(RAIZ,'fuente','apocalipsis','cap20.js'),'utf8');
+  ok(['1 · Investigación','2 · Sentencia','3 · Ejecución'].every(t=>ap20.includes(t)),'Los mismos nombres que Apocalipsis 20 (cap20.js)');
+  const CD=require(path.join(RAIZ,'fuente','complementos','daniel.js')),tf=CD.secciones.d7.find(x=>/tres fases del juicio/.test(x.t));
+  ok(tf&&['Investigación','Sentencia','Ejecución','1844','Apocalipsis 20:4','Daniel 12:1'].every(t=>tf.h.includes(t))&&CD.secciones.d7.some(x=>/El Juez se sentó/.test(x.t)&&/PE 55/.test(x.h)),
+    'Daniel 7 explica las tres fases del juicio y el tribunal con sus libros (🧭)');
+  const pre=js.slice(js.indexOf('const lamPasosE=()=>{'),js.indexOf('function lamHojaSub('));
+  ok(/tipo:'fases'/.test(pre)&&/lamFasesVis\(s\.sub/.test(js)&&/lamFasE\(/.test(js),'Al presentar, después de los pasos del juicio van sus tres fases; en Explorar, una por una');
+}
+
 /* v179: la interpretación con fuentes (Bohr, Elena de White, las notas de
    Camilo) va en su propia capa: secciones 'contexto' y preguntas f:'c', cada
    una con «Fuente:». En Apocalipsis y, aparte del examen, en Daniel. */

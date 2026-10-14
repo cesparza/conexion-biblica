@@ -935,8 +935,8 @@ export const CATALOGO = {
     "sub": "Las cuatro bestias y el juicio",
     "grupo": "Biblia",
     "n": [
-     41,
-     17,
+     44,
+     18,
      20
     ]
    },

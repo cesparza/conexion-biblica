@@ -818,7 +818,7 @@ function lamConD2Cambia(){
 function lamLimpia(conserva){
   lamAnim++;lamVisto='';
   const s=document.getElementById('lamMarcasImg');if(s){s.innerHTML='';s.className='lam-marcas-img';}
-  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla');
+  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla','con-libro');
   const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';tb.className='lam-tabla';}
   lamBanda(false);
   const z=lamZ();if(!z)return;
@@ -837,7 +837,12 @@ function lamVista(id,sub,anima){
   if(L.sube&&L.sube.ids.includes(id))lamSube(p,anima);
   else if(C&&id===C.diezEn)lamDiez(anima);
   else if(C&&id===C.caenEn)lamMomento(anima);
-  else if(pa&&pa.caja)lamAcercaImg(p.img,pa.caja,true);
+  else if(pa&&pa.caja){
+    /* v210: en «Los libros fueron abiertos» la cámara sube primero al trono (el Juez se sienta) y después baja a los libros. */
+    const J=p.anim,ult=sub===p.pasos.length-1;
+    if(J&&ult&&anima&&!lamQuieto()){lamAcercaImg(p.img,J.camara[1],true,1500);lamT(()=>lamAcercaImg(p.img,pa.caja,true,1900),2300);}
+    else lamAcercaImg(p.img,pa.caja,true);
+    if(J)lamJuicio(sub,anima);}
   else lamHist({f:p.img});
 }
 
@@ -965,14 +970,119 @@ function lamMomentoCapas(anima){
 
 /* El juicio por pasos: la imagen se acerca a la caja de cada paso, y después
    sigue acercándose muy despacio (como una cámara), hasta el paso siguiente. */
-function lamAcercaImg(f,caja,anima){
-  const z=lamZ(),zi=lamZi(),src=lamSrc(f);
+let lamCamN=0;
+function lamAcercaImg(f,caja,anima,ms){
+  const z=lamZ(),zi=lamZi(),src=lamSrc(f),cam=++lamCamN;
   lamHist({f});
   if(zi.getAttribute('href')!==src||zi.style.opacity!=='1'){zi.setAttribute('href',src);zi.removeAttribute('transform');zi.style.transition='none';zi.style.opacity='1';z.setAttribute('viewBox','0 0 1200 675');}
-  const ini=z.getAttribute('viewBox').split(/\s+/).map(Number),ve=v=>z.setAttribute('viewBox',v.map(n=>n.toFixed(1)).join(' '));
-  lamTween(anima?1700:0,k=>{const e=lamSuave(k);ve(ini.map((v,i)=>v+(caja[i]-v)*e));},()=>{
-    if(lamQuieto())return;const [x,y,w,h]=caja,d=.07,fin=[x+w*d/2,y+h*d/2,w*(1-d),h*(1-d)];
+  /* v210: cada movimiento de cámara deja quieto al anterior (el juicio encadena dos). */
+  const ini=z.getAttribute('viewBox').split(/\s+/).map(Number),ve=v=>{if(cam===lamCamN)z.setAttribute('viewBox',v.map(n=>n.toFixed(1)).join(' '));};
+  lamTween(anima?(ms||1700):0,k=>{const e=lamSuave(k);ve(ini.map((v,i)=>v+(caja[i]-v)*e));},()=>{
+    if(lamQuieto()||cam!==lamCamN)return;const [x,y,w,h]=caja,d=.07,fin=[x+w*d/2,y+h*d/2,w*(1-d),h*(1-d)];
     lamTween(9000,k=>ve(caja.map((v,i)=>v+(fin[i]-v)*k)));});
+}
+
+/* ── v210: EL JUEZ SE SENTÓ Y LOS LIBROS FUERON ABIERTOS (Daniel 7:9-10) ──
+   Camilo (14-oct): «toda la experiencia debe ser de otro nivel, pero la
+   interactiva debe ser increíble»; «se puede agregar una animación para cuando
+   dice: el Juez se sentó y los libros fueron abiertos».
+   Cuatro momentos que se suman, uno por paso del juicio:
+   0. Fueron puestos unos tronos: la escena sale de la penumbra y se encienden
+      los tronos, uno por uno, como si se colocaran.
+   1. Se sentó un Anciano de días: la luz del trono crece y se abren rayos. El
+      rostro no se dibuja nunca: queda dentro de la luz.
+   2. Un río de fuego: el fuego baja del trono por el río y los «miles de miles»
+      se encienden como chispas de luz.
+   3. El Juez se sentó y los libros fueron abiertos: la cámara sube al trono, la
+      luz late una vez (el Juez se sienta), baja a los libros y un libro grande se
+      abre en primer plano con una luz de oro que sube de sus páginas.
+   Todo en el <svg> del zoom (sigue a la cámara) salvo el libro grande, que va en
+   HTML encima. Sin url(#), sin filtros, sin el.animate(): las luces son una
+   imagen redonda dibujada una vez en un canvas, y todo se mueve con
+   requestAnimationFrame y transiciones de CSS. Con «reducir movimiento», el
+   cuadro final de cada paso, quieto. */
+const lamLuzC={};
+function lamLuz(c){
+  if(c in lamLuzC)return lamLuzC[c];
+  let u='';
+  try{const k=document.createElement('canvas');k.width=k.height=128;const g=k.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);
+    [[0,1],[.22,.62],[.5,.22],[.75,.06],[1,0]].forEach(([o,a])=>r.addColorStop(o,'rgba('+c+','+a+')'));g.fillStyle=r;g.fillRect(0,0,128,128);u=k.toDataURL('image/png');}catch(e){}
+  return lamLuzC[c]=u;
+}
+/* Un bucle mientras la vista no cambie: la luz que respira, el fuego, las chispas. */
+function lamBucle(fn){const yo=lamAnim;if(lamQuieto()){fn(0);return;}const t0=performance.now(),f=t=>{if(yo!==lamAnim)return;fn((t-t0)/1000);requestAnimationFrame(f);};requestAnimationFrame(f);}
+const lamJFin=[{velo:.52,ray:0,tr:.3,trR:150,se:0,rio:0,ch:0,lib:0},{velo:.18,ray:1,tr:.78,trR:200,se:.6,rio:0,ch:0,lib:0},
+  {velo:.1,ray:.85,tr:.7,trR:200,se:.55,rio:.62,ch:1,lib:0},{velo:.46,ray:.7,tr:.75,trR:210,se:.6,rio:.5,ch:.75,lib:.9}];
+function lamJuicio(j,anima){
+  const p=lamParte('juicio'),A=p&&p.anim,z=lamZ(),g=z&&z.querySelector('.lam-capa-g');if(!A||!g||j==null)return;
+  const q=!anima||lamQuieto(),oro=lamLuz('255,212,128'),blanca=lamLuz('255,249,228'),fuego=lamLuz('255,128,36');
+  const luz=(cl,u,[x,y],r)=>'<image class="'+cl+'" href="'+u+'" x="'+(x-r)+'" y="'+(y-r)+'" width="'+2*r+'" height="'+2*r+'" style="opacity:0"/>';
+  const [tx,ty]=A.trono,R=820;
+  /* Las chispas de los «miles de miles»: siempre las mismas (semilla fija), sobre la multitud. */
+  let sm=11;const az=()=>(sm=(sm*9301+49297)%233280)/233280,ch=[];
+  for(let i=0;i<84;i++){const x=az()*1200,y=30+az()*330;if(Math.abs(x-tx)<120&&y<300)continue;ch.push([x,y,.7+az()*1.9,az()*6.283]);}
+  g.innerHTML='<rect class="lam-j-velo" x="-40" y="-40" width="1280" height="755" fill="#07050B" style="opacity:0"/>'+
+    '<g class="lam-j-rayos" style="opacity:0">'+Array.from({length:16},(_,i)=>{const a=i/16*6.2832,w=i%2?.035:.06;
+      return '<polygon points="'+tx+','+ty+' '+(tx+R*Math.cos(a-w)).toFixed(0)+','+(ty+R*Math.sin(a-w)).toFixed(0)+' '+(tx+R*Math.cos(a+w)).toFixed(0)+','+(ty+R*Math.sin(a+w)).toFixed(0)+'" fill="#FFF1C6" opacity="'+(i%2?.06:.1)+'"/>';}).join('')+'</g>'+
+    A.rio.map(t=>luz('lam-j-rio',fuego,t,74)).join('')+A.tronos.map(t=>luz('lam-j-tr',blanca,t,62)).join('')+
+    luz('lam-j-trono',blanca,A.trono,300)+luz('lam-j-sienta',oro,A.sentado,150)+A.libros.map(t=>luz('lam-j-lib',oro,t,118)).join('')+
+    '<g class="lam-j-ch" style="opacity:0">'+ch.map(([x,y,r])=>'<circle cx="'+x.toFixed(0)+'" cy="'+y.toFixed(0)+'" r="'+r.toFixed(1)+'" fill="#FFF6DC"/>').join('')+'</g>';
+  const $=s=>[...g.querySelectorAll(s)],velo=g.querySelector('.lam-j-velo'),ray=g.querySelector('.lam-j-rayos'),tro=g.querySelector('.lam-j-trono'),
+    sie=g.querySelector('.lam-j-sienta'),rios=$('.lam-j-rio'),trs=$('.lam-j-tr'),libs=$('.lam-j-lib'),chg=g.querySelector('.lam-j-ch'),chs=[...chg.children];
+  /* El estado: de dónde sale este paso (el final del anterior) y a dónde llega. */
+  const fin=lamJFin[j],st=Object.assign({},q||j===0?(q?fin:{velo:.78,ray:0,tr:0,trR:200,se:0,rio:0,ch:0,lib:0}):lamJFin[j-1]),
+    gp=trs.map(()=>q||j>0?1:0);let riop=q||j>2?1:0,late=0;
+  const pinta=t=>{
+    velo.style.opacity=st.velo.toFixed(3);
+    ray.style.opacity=st.ray.toFixed(3);ray.setAttribute('transform','rotate('+(t*1.6).toFixed(2)+' '+tx+' '+ty+')');
+    const r=st.trR*(1+.025*Math.sin(t*1.3))+late*110;
+    tro.setAttribute('x',(tx-r).toFixed(1));tro.setAttribute('y',(ty-r).toFixed(1));tro.setAttribute('width',(2*r).toFixed(1));tro.setAttribute('height',(2*r).toFixed(1));
+    tro.style.opacity=Math.min(1,st.tr+late*.25).toFixed(3);
+    sie.style.opacity=Math.min(1,st.se*(.88+.12*Math.sin(t*1.1+1))+late*.4).toFixed(3);
+    trs.forEach((e,i)=>{const k=gp[i],[x,y]=A.tronos[i];e.setAttribute('y',(y-62-46*(1-k)).toFixed(1));e.style.opacity=(k*(.85+.15*Math.sin(t*1.7+i))).toFixed(3);});
+    rios.forEach((e,i)=>{const k=Math.max(0,Math.min(1,riop*rios.length-i));e.style.opacity=(st.rio*k*(.68+.32*Math.sin(t*4.2+i*1.9))).toFixed(3);});
+    chg.style.opacity=st.ch.toFixed(3);
+    if(st.ch>0)chs.forEach((e,i)=>{const f=ch[i][3];e.style.opacity=(.18+.82*Math.abs(Math.sin(t*.8+f))).toFixed(2);});
+    libs.forEach((e,i)=>{e.style.opacity=(st.lib*(.78+.22*Math.sin(t*2.1+i))).toFixed(3);});
+  };
+  lamBucle(pinta);
+  const hacia=(ms,a,b,fn)=>lamTween(ms,k=>{const e=lamSuave(k);Object.keys(b).forEach(n=>{st[n]=a[n]+(b[n]-a[n])*e;});if(fn)fn(k);});
+  if(!q){
+    const a=Object.assign({},st);
+    if(j===0){hacia(2600,a,fin);trs.forEach((e,i)=>lamT(()=>lamTween(900,k=>{gp[i]=lamSale(k);}),500+i*230));}
+    else if(j===1)hacia(2400,a,fin);
+    else if(j===2){hacia(2200,a,fin);lamTween(3200,k=>{riop=k;});}
+    else{
+      /* «El Juez se sentó»: la luz late una vez; después la cámara baja a los libros. */
+      hacia(1200,a,{velo:.2,ray:.9,tr:.8,trR:200,se:.6,rio:.5,ch:.75,lib:0});riop=1;
+      lamT(()=>lamTween(1500,k=>{late=Math.sin(Math.PI*k)*(k<.5?1:.9);}),950);
+      lamT(()=>hacia(1800,Object.assign({},st),fin),2300);
+    }
+  }
+  if(j===3)lamLibro(q);
+}
+/* El libro grande que se abre (HTML, encima de la imagen). Con `libro` (un libro
+   abierto con fondo transparente en laminas/d7/) aparece esa imagen; si no
+   existe, se arma con CSS: tapas, cuatro hojas que pasan y la luz de oro. */
+function lamLibro(q){
+  const A=lamParte('juicio').anim,s=document.getElementById('lamMarcasImg'),yo=lamAnim,src=A.libro?lamSrc(A.libro):'';
+  if(!s)return;
+  const pon=img=>{if(yo!==lamAnim)return;
+    const hoja=k=>'<div class="lb-h" style="--k:'+k+'"><i class="f"></i><i class="b"></i></div>';
+    const chispas=Array.from({length:18},(_,i)=>'<span style="left:'+(22+((i*37)%56))+'%;animation-delay:'+(-(i*.53)%3.4).toFixed(2)+'s;--d:'+(2.6+(i%5)*.35).toFixed(2)+'s"></span>').join('');
+    s.classList.add('con-libro');if(q){const e=document.getElementById('lamEsc');if(e)e.classList.add('con-libro');}
+    s.innerHTML='<div class="lam-libro'+(img?' foto':'')+(q?' quieto ve abre luz':'')+'" id="lamLibro" aria-hidden="true"><div class="lb-luz"></div>'+
+      (img?'<img class="lb-img" src="'+src+'" alt="">':'<div class="lb-3d"><div class="lb-tapa-i"></div><div class="lb-tapa-d"></div><div class="lb-pila-i"></div><div class="lb-pila-d"></div>'+
+        [0,1,2,3].map(hoja).join('')+'<div class="lb-portada"><i class="f"></i><i class="b"></i></div></div>')+
+      '<div class="lb-chispas">'+chispas+'</div></div>'+
+      '<div class="lam-libro-cita'+(q?' ve':'')+'"><q>El Juez se sentó y los libros fueron abiertos.</q><small>Daniel 7:10</small></div>';
+    if(q)return;
+    const l=document.getElementById('lamLibro'),c=s.querySelector('.lam-libro-cita');
+    lamT(()=>{l.classList.add('ve');const e=document.getElementById('lamEsc');if(e)e.classList.add('con-libro');},2700);lamT(()=>l.classList.add('abre'),3500);lamT(()=>l.classList.add('luz'),4300);lamT(()=>c.classList.add('ve'),5200);};
+  if(!src){pon(false);return;}
+  /* Ya se sabe si la imagen existe: de una vez (el clicker no espera). */
+  if(src in lamHayImg){pon(lamHayImg[src]);return;}
+  lamExiste(src).then(ok=>pon(ok));
 }
 
 /* ── Explorar ── */
@@ -1012,6 +1122,10 @@ function lamExtraE(p){
   if(P&&p.id===P.tras)h+='<div class="lam-subs-c lam-per-c"><div class="lam-rot">'+esc(P.t)+' · 1.260 años</div><div class="lam-subs">'+
     P.pasos.map((x,j)=>'<button type="button" data-per="'+j+'" onclick="lamPerE('+j+')"><i>'+(j+1)+'</i><span>'+esc(x.t)+'</span></button>').join('')+
     '</div><button type="button" class="btn tono lam-recorre" onclick="lamPerTodos()">'+IC('play')+' Armar la cuenta</button><div class="lam-sub-tx" id="lamPerTx"></div></div>';
+  const F=L.fases;
+  if(F&&p.id===F.tras)h+='<div class="lam-subs-c lam-fas-c"><div class="lam-rot">'+esc(F.t)+' · '+esc(F.s)+'</div><div class="lam-subs">'+
+    F.pasos.map((x,j)=>'<button type="button" data-fa="'+j+'" onclick="lamFasE('+j+')"><i>'+(j+1)+'</i><span>'+esc(x.t)+'</span><small>'+esc(x.cuando)+'</small></button>').join('')+
+    '</div><button type="button" class="btn tono lam-recorre" onclick="lamFasTodas()">'+IC('play')+' Encender las tres</button><div class="lam-sub-tx" id="lamFasTx"></div></div>';
   return h;
 }
 function lamSubE(j,vis){
@@ -1026,7 +1140,7 @@ function lamSubsTodos(){
   const p=lamParte(lamSel);if(!p||!p.pasos)return;
   lamPara();let j=0;
   const b=document.getElementById('lamVision');
-  const sig=()=>{if(j>=p.pasos.length||lamSel!==p.id){lamVis=0;return;}lamSubE(j++,true);lamVis=setTimeout(sig,lamQuieto()?2000:4200);};
+  const sig=()=>{if(j>=p.pasos.length||lamSel!==p.id){lamVis=0;return;}const ms=p.pasos[j].ms;lamSubE(j++,true);lamVis=setTimeout(sig,lamQuieto()?2000:ms||4200);};
   sig();if(b)b.setAttribute('aria-pressed','false');
 }
 function lamSena(j,ver){
@@ -1128,6 +1242,56 @@ function lamPerTodos(){
   const sig=()=>{if(j>=P.pasos.length||lamSel!==sel){lamVis=0;return;}lamPerE(j++,true);lamVis=setTimeout(sig,lamQuieto()?2000:6500);};
   sig();
 }
+/* ── v210: LAS TRES FASES DEL JUICIO, sobre la imagen del juicio ──
+   Una mini línea de tiempo (1844 → la venida → mil años → el fin) y tres
+   paneles que se encienden en orden: el de la fase actual brilla, los
+   anteriores quedan encendidos y los siguientes, a media luz. */
+function lamFasesHTML(j){
+  const F=LAM().fases,cl=k=>k<j?' on':k===j?' on ahora':'',o=(k,n)=>k===j?' data-o="'+n+'"':'';
+  const pos=[5,44,95],hito=(h,i)=>'<span class="lam-fh'+(F.pasos.some((x,k)=>k<=j&&(x.de===i||x.a===i))?' on':'')+'" style="left:'+pos[i]+'%"><i></i><b>'+esc(h[0])+'</b><small>'+esc(h[1])+'</small></span>';
+  const tramo=(x,k)=>'<span class="lam-ft f'+k+cl(k)+'"'+o(k,1)+' style="left:'+pos[x.de]+'%;width:'+Math.max(2.5,pos[x.a]-pos[x.de])+'%"></span>';
+  return '<div class="lam-per-cab"'+(j===0?' data-o="0"':'')+'><span>'+esc(F.t)+'</span> · Daniel 7 y Apocalipsis 20</div>'+
+    '<div class="lam-fl"><span class="lam-fl-l"></span><span class="lam-fl-mil" style="left:'+pos[1]+'%;width:'+(pos[2]-pos[1])+'%">1.000 años</span>'+F.pasos.map(tramo).join('')+F.hitos.map(hito).join('')+'</div>'+
+    '<div class="lam-fps">'+F.pasos.map((x,k)=>'<div class="lam-fp f'+k+cl(k)+'"'+o(k,2)+'><i>'+(k+1)+'</i><b>'+esc(x.t)+'</b><small class="n">'+esc(x.n)+'</small>'+
+      '<small class="c">'+esc(x.cuando)+'</small><span class="det"><span>'+esc(x.donde)+' · '+esc(x.quien)+'</span></span></div>').join('')+'</div>'+
+    '<div class="lam-per-nota"'+o(j,3)+'>'+esc(F.pasos[j].para)+'</div>';
+}
+function lamFasesVis(j,anima){
+  const L=LAM(),F=L.fases,x=F&&F.pasos[j];if(!x)return;
+  const p=lamParte(F.tras),seguia=lamVisto==='fases';
+  if(!seguia){lamLimpia();lamHist({f:p.img});}
+  lamVisto='fases';lamD2(null);lamEnciende([p.id]);
+  lamChip(p,['Fase '+(j+1)+' de '+F.pasos.length,x.t]);
+  const t=lamTablaPon(lamFasesHTML(j),'per fases');
+  if(seguia&&t)t.querySelectorAll('.lam-fp.on:not(.ahora),.lam-ft.on:not([data-o])').forEach(e=>e.classList.add('ya'));
+  lamArma(t,anima,520);
+}
+function lamFasesTx(j){
+  const F=LAM().fases,x=F.pasos[j];
+  return '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div>'+x.citas.map(([r,c])=>'<p><q>'+esc(c)+'</q> <span class="lam-ref">'+esc(r)+'</span></p>').join('')+'</div>'+
+    '<div class="lam-capa i"><div class="lam-rot">'+esc(x.n)+' · '+esc(x.cuando)+'</div><p><b>Dónde:</b> '+esc(x.donde)+'. <b>Quién:</b> '+esc(x.quien)+'.</p><p>'+esc(x.que)+'</p>'+
+    /* Al presentar, «para quién» ya va sobre la imagen. */
+    (lamModo==='presentar'?'':'<p><b>'+esc(x.para)+'.</b></p>'+(j===F.pasos.length-1?'<p>'+esc(F.nota)+'</p>':''))+'<div class="lam-fu">Fuente: '+F.fuente+'</div></div>';
+}
+function lamFasE(j,vis){
+  const F=LAM().fases;if(!F||!F.pasos[j])return;
+  if(!vis)lamPara();
+  lamFasesVis(j,true);
+  document.querySelectorAll('.lam-fas-c .lam-subs button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-fa')===String(j)));
+  const t=document.getElementById('lamFasTx');if(t)t.innerHTML='<div class="lam-rot">Fase '+(j+1)+' de '+F.pasos.length+'</div>'+lamFasesTx(j);
+}
+function lamFasTodas(){
+  const F=LAM().fases;if(!F)return;
+  lamPara();let j=0;const sel=lamSel;
+  const sig=()=>{if(j>=F.pasos.length||lamSel!==sel){lamVis=0;return;}lamFasE(j++,true);lamVis=setTimeout(sig,lamQuieto()?2000:5200);};
+  sig();
+}
+function lamHojaFases(j){
+  const F=LAM().fases,p=lamParte(F.tras),x=F.pasos[j];
+  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(F.t)+' · fase '+(j+1)+' de '+F.pasos.length+'</div>'+
+    '<div class="lam-p2">'+esc(x.t)+'</div><div class="lam-fechas">'+esc(x.cuando)+'</div></div></div>'+
+    '<div class="lam-puntos" aria-hidden="true">'+F.pasos.map((y,k)=>'<i'+(k<=j?' class="on"':'')+'></i>').join('')+'</div>'+lamFasesTx(j);
+}
 /* «Ver la visión»: del mar al reino, cada parte con su movimiento, sola. */
 function lamVision(){
   if(lamVis){lamParaVision();return;}
@@ -1140,7 +1304,7 @@ function lamVision(){
     const s=seq[k++];
     if(s.sub==null||s.sub===0)lamEligeE(L.partes.findIndex(p=>p.id===s.id),true);
     if(s.sub!=null)lamSubE(s.sub,true);
-    lamVis=setTimeout(sig,lamQuieto()?2600:C&&s.id===C.caenEn?6200:s.sub!=null?4200:3800);};
+    lamVis=setTimeout(sig,lamQuieto()?2600:C&&s.id===C.caenEn?6200:s.sub!=null?(lamParte(s.id).pasos[s.sub].ms||4200):3800);};
   const mar=L.historia.find(h=>h.f===L.inicioF)||L.historia[0];
   lamLimpia();lamSel='';lamChip(null);lamD2(null);lamEnciende([]);lamMarcaPaso('est');lamHist({f:L.inicioF});lamHoja(lamHojaTexto(mar));
   lamVis=setTimeout(sig,lamQuieto()?1500:2800);
@@ -1162,6 +1326,8 @@ const lamPasosE=()=>{
     /* v208: tras el cuerno pequeño, la portada de sus señas, una seña por paso y la cuenta de los 1.260 años. */
     if(L.senas&&p.id===L.senasTras){r.push({tipo:'senasT',id:p.id});L.senas.forEach((x,j)=>r.push({tipo:'senas',id:p.id,sub:j,n:L.senas.length}));}
     if(L.periodo&&p.id===L.periodo.tras)L.periodo.pasos.forEach((x,j)=>r.push({tipo:'periodo',id:p.id,sub:j,n:L.periodo.pasos.length}));
+    /* v210: después de los pasos del juicio, sus tres fases (una por paso). */
+    if(L.fases&&p.id===L.fases.tras)L.fases.pasos.forEach((x,j)=>r.push({tipo:'fases',id:p.id,sub:j,n:L.fases.pasos.length}));
   });
   return [...r,{tipo:'desp'},{tipo:'cierre'}];
 };
@@ -1204,7 +1370,8 @@ function lamPresE(k){
   else if(s.tipo==='senas'){
     /* Las señas van sobre el cuerno ya armado: la imagen no se vuelve a armar en cada una. */
     lamSenasVis(s.sub,dir!==0);lamHoja(lamHojaSenas(s.sub));
-  }else if(s.tipo==='periodo'){lamPeriodoVis(s.sub,dir>=0);lamHoja(lamHojaPer(s.sub));}else if(p){lamVista(p.id,s.sub,dir>0);lamHoja(s.sub!=null?lamHojaSub(p,s.sub):lamHojaParte(p,0,1));}
+  }else if(s.tipo==='periodo'){lamPeriodoVis(s.sub,dir>=0);lamHoja(lamHojaPer(s.sub));}
+  else if(s.tipo==='fases'){lamFasesVis(s.sub,dir!==0);lamHoja(lamHojaFases(s.sub));}else if(p){lamVista(p.id,s.sub,dir>0);lamHoja(s.sub!=null?lamHojaSub(p,s.sub):lamHojaParte(p,0,1));}
   else{lamLimpia();lamHist(t);lamChip(null);lamD2(null);lamEnciende([]);
     lamHoja((k===0?'<div class="lam-portada">'+esc(L.libro)+' · '+esc(L.titulo)+'</div>':'')+lamHojaTexto(t));}
   /* La línea de tiempo marca hasta dónde va la historia, como en Daniel 2. */
