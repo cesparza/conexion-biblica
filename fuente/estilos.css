@@ -2911,3 +2911,126 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   .lam-chip b,.lam.pres .lam-chip b{font-size:.875rem}
   .lam-chip span,.lam.pres .lam-chip span{font-size:.75rem}
 }
+/* v205: DANIEL 7 INTERACTIVO. Encima de la imagen, en el mismo rectángulo que
+   ella (lamSobre): los puntos de los cuernos, la leyenda y la estatua chica de
+   Daniel 2. Todo con transiciones de CSS (Safari no siempre corre el.animate). */
+.lam-zoom{pointer-events:none}
+.lam-zoom-img{opacity:0}
+.lam-sobre{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.lam-marcas-img{position:absolute;inset:0}
+.lam-pt{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;display:grid;place-items:center;background:#F2C46B;color:#1B140A;
+  font-size:.75rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;box-shadow:0 0 0 3px rgba(14,11,7,.6),0 2px 8px rgba(0,0,0,.5);
+  opacity:0;transform:scale(.2);transition:opacity .35s,transform .45s cubic-bezier(.3,1.7,.5,1),left 1.2s cubic-bezier(.35,0,.6,1),top 1.2s cubic-bezier(.55,0,.85,.55),background-color .3s}
+.lam-pt.ve{opacity:1;transform:none}
+.lam-pt.senal{background:#E5484D;color:#fff;animation:lamLate 1s ease-in-out infinite}
+.lam-pt.vuela{background:#7A7064;color:#F4EEE2;animation:none}
+.lam-pt.pq{width:34px;height:34px;margin:-17px 0 0 -17px;background:transparent;box-shadow:0 0 0 3px #F2C46B,0 0 22px 6px rgba(242,196,107,.75);animation:lamLatePq 1.6s ease-in-out infinite}
+@keyframes lamLate{50%{box-shadow:0 0 0 8px rgba(229,72,77,.4),0 2px 8px rgba(0,0,0,.5)}}
+@keyframes lamLatePq{50%{box-shadow:0 0 0 5px #F2C46B,0 0 34px 12px rgba(242,196,107,.85)}}
+.lam-marcas-img.sigue .lam-pt.vuela{transition:opacity .35s,transform .45s,background-color .3s}
+.lam-marcas-img.quieto .lam-pt,.lam-marcas-img.quieto .lam-ley span{transition:none}
+.lam-ley{position:absolute;left:1.5%;right:1.5%;bottom:3%;display:flex;flex-wrap:wrap;gap:5px;align-items:flex-end}
+.lam-sobre.con-d2 .lam-ley{right:19%}
+.lam-sobre.d2-izq .lam-d2{right:auto;left:1.2%}
+.lam-sobre.con-d2.d2-izq .lam-ley{right:1.5%;left:18%}
+.lam-esc.d2-izq .lam-chip{max-width:min(46%,calc(100% - 24px))}
+.lam-ley span{display:inline-flex;align-items:center;white-space:nowrap;gap:5px;padding:3px 10px 3px 3px;border-radius:999px;background:rgba(14,11,7,.8);color:#F4EEE2;
+  font-size:.75rem;line-height:1.2;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .4s,color .4s,background-color .4s}
+.lam-ley span.ve{opacity:1;transform:none}
+.lam-ley i{font-style:normal;min-width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:#F2C46B;color:#1B140A;font-weight:800;font-size:.75rem}
+.lam-ley .tres i{background:#E5484D;color:#fff}
+.lam-ley span.cae{color:#CFC6B4;text-decoration:line-through;text-decoration-color:#E5484D}
+.lam-ley .cae i{background:#7A7064}
+.lam-ley span.pq{background:rgba(242,196,107,.95);color:#1B140A;padding-left:10px;gap:6px}
+.lam-ley .pq b{font-weight:800}
+.lam-ley .pq small{font-size:inherit}
+.lam.pres .lam-esc:not(.lado) .lam-ley span{font-size:.875rem}
+.lam.pres .lam-esc:not(.lado) .lam-ley i{min-width:20px;height:20px}
+.lam-esc.lado .lam-pt:not(.pq),.lam:not(.pres) .lam-pt:not(.pq){width:20px;height:20px;margin:-10px 0 0 -10px}
+/* La estatua chica de Daniel 2, a la derecha de la imagen: el metal de la parte se enciende. */
+.lam-d2{position:absolute;right:1.2%;top:4%;height:92%;aspect-ratio:.3;border-radius:12px;background:rgba(14,11,7,.6);box-shadow:0 4px 18px rgba(0,0,0,.35);
+  pointer-events:auto;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.lam-d2[hidden]{display:none}
+.lam-d2-t{position:absolute;left:0;right:0;top:1.6%;text-align:center;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#F2C46B;white-space:nowrap}
+.lam-d2-est{position:absolute;top:7.5%;height:72%;left:50%;transform:translateX(-50%);aspect-ratio:420/1152;overflow:hidden}
+.lam-d2-est img{position:absolute;max-width:none;pointer-events:none}
+.lam-d2 img[data-p],.lam-d2-pie button{opacity:.5;filter:grayscale(.7) brightness(.8);transition:opacity .5s,filter .5s}
+.lam-d2 img[data-p].on,.lam-d2-pie button.on{opacity:1;filter:drop-shadow(0 0 5px rgba(255,226,140,.95)) drop-shadow(0 0 1px #fff)}
+.lam-d2-hit{position:absolute;padding:0;border:0;background:transparent;cursor:pointer;border-radius:8px}
+.lam-d2-hit:focus-visible,.lam-d2-pie button:focus-visible{outline:2px solid #F2C46B;outline-offset:1px}
+.lam-d2-pie{position:absolute;left:5%;right:5%;top:82%;height:14%;display:flex;align-items:center;justify-content:center;gap:7%}
+.lam-d2-pie button{padding:0;border:0;background:transparent;cursor:pointer}
+.lam-d2-piedra{height:72%;aspect-ratio:1}
+.lam-d2-monte{height:62%;aspect-ratio:16/10}
+.lam-d2-pie img{display:block;width:100%;height:100%;object-fit:contain}
+.lam-d2-monte img{object-fit:cover;border-radius:8px}
+.lam-d2-ag{position:absolute;left:5%;right:5%;top:36%;padding:6px 4px;border-radius:8px;background:rgba(180,83,9,.94);color:#fff;font-size:.75rem;font-weight:800;line-height:1.15;text-align:center;display:none}
+.lam-d2.agrega .lam-d2-ag{display:block}
+.lam-chip .sub{color:#fff;font-weight:700}
+.lam-chip .sub em{font-style:normal}
+.lam-esc.lado .lam-chip .sub em{display:none}
+.lam-chip .d2{color:#BFE6EE}
+/* La tira: arriba, «Ver la visión» y «Con Daniel 2». */
+.lam-tira-cab{display:flex;align-items:center;justify-content:space-between;gap:6px 10px;flex-wrap:wrap;margin:0 0 6px}
+.lam-tira-cab .lam-tira-t{margin:0}
+.lam-tira-bots{display:flex;gap:6px;flex-wrap:wrap}
+.lam-vision.on{background:var(--naranja,#E8720C);color:#fff}
+.lam-cond2[aria-pressed="false"]{opacity:.6}
+.lam-cond2[aria-pressed="false"] svg{opacity:.35}
+.lam.pres .lam-cond2{color:#F4EEE2}
+/* En la hoja: los pasos del juicio, los botones de los cuernos y las once señas. */
+.lam-subs-c{margin-top:10px}
+.lam-subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin:6px 0 8px}
+.lam-subs button{display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 10px 6px 6px;border-radius:12px;border:2px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);color:#F4EEE2;font:inherit;font-size:.875rem;font-weight:700;text-align:left;cursor:pointer;line-height:1.2}
+.lam-subs button i{font-style:normal;flex:0 0 auto;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#F2C46B;color:#1B140A;font-size:.75rem}
+.lam-subs button span{flex:1}
+.lam-subs button small{font-size:.75rem;color:#C9BFA9}
+.lam-subs button.on{border-color:#F2C46B;background:rgba(242,196,107,.16)}
+.lam-sub-tx:empty{display:none}
+.lam-hbots{margin-top:10px}
+.lam-hoja .btn.ver{color:#fff}
+.lam-senas{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12)}
+.lam-senas>.btn{margin:6px 0 8px}
+.lam-sl{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.lam-sl li{border-radius:8px;background:rgba(255,255,255,.05);transition:background-color .35s}
+.lam-sl button,.lam-slb{display:flex;align-items:center;gap:8px;width:100%;min-height:40px;padding:6px 8px;border:0;background:transparent;color:#C9BFA9;font:inherit;font-size:.875rem;text-align:left;cursor:pointer;line-height:1.25}
+.lam-slb{cursor:default}
+.lam-sl button>i,.lam-slb>i{font-style:normal;flex:0 0 auto;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:2px solid #6B6358;color:#C9BFA9;font-size:.75rem;font-weight:800;
+  transition:background-color .35s,border-color .35s,color .35s}
+.lam-sl b{flex:1;font-weight:700}
+.lam-sl p{display:none;margin:0;padding:0 10px 8px 40px;color:#E6DCC8;font-size:.875rem}
+.lam-sl li.on{background:rgba(242,196,107,.12)}
+.lam-sl li.on button,.lam-sl li.on .lam-slb{color:#F4EEE2}
+.lam-sl li.on button>i,.lam-sl li.on .lam-slb>i{background:#F2C46B;border-color:#F2C46B;color:#1B140A}
+.lam-sl li.on p{display:block}
+.lam-sl.pres li.ahora{background:rgba(242,196,107,.24);box-shadow:inset 3px 0 0 #F2C46B}
+.lam.pres .lam-sl .lam-slb{font-size:1rem;min-height:32px;padding:3px 8px}
+.lam.pres .lam-sl p{font-size:1.125rem;padding-left:40px}
+.lam-puntos{display:flex;gap:6px;margin:2px 0 4px}
+.lam-puntos i{width:22px;height:6px;border-radius:3px;background:rgba(255,255,255,.18)}
+.lam-puntos i.on{background:#F2C46B}
+/* 1844 va arriba de la pista: abajo chocaba con 1798. */
+.lam-marcas span.arriba{top:-50px;transform:translateX(-50%);padding:1px 6px;border-radius:8px;background:#B45309;color:#fff;font-weight:700}
+.lam-marcas span.arriba::after{content:'';position:absolute;left:50%;top:100%;width:2px;height:12px;background:#B45309}
+.lam.escenas .lam-tiempo{position:relative}
+@media (max-width:560px){
+  .lam-pt,.lam-esc.lado .lam-pt:not(.pq),.lam:not(.pres) .lam-pt:not(.pq){width:9px;height:9px;margin:-4.5px 0 0 -4.5px;font-size:0;box-shadow:0 0 0 1.5px rgba(14,11,7,.85)}
+  .lam-pt.pq{width:22px;height:22px;margin:-11px 0 0 -11px}
+  .lam-ley{gap:3px;bottom:2%}
+  .lam-ley.diez{display:none}
+  .lam-ley .pq small{display:none}
+  .lam-ley span{padding:1px 7px 1px 2px;gap:3px}
+  .lam-ley i{min-width:15px;height:15px}
+  .lam-d2-t{display:none}
+  .lam-d2-est{top:3%;height:76%}
+  .lam-d2{border-radius:8px}
+  .lam-chip .d2{display:none}
+  .lam-sobre.con-d2.d2-izq .lam-ley{left:20%}
+  .lam-esc.con-ley .lam-chip{display:none}
+  .lam-marcas span.arriba{top:-46px}
+}
+@media (prefers-reduced-motion:reduce){
+  .lam-pt,.lam-ley span,.lam-d2 img[data-p],.lam-d2-pie button,.lam-sl li,.lam-sl button>i,.lam-slb>i{transition:none}
+  .lam-pt.senal,.lam-pt.pq{animation:none}
+}

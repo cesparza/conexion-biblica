@@ -18,6 +18,9 @@ const LAMINAS = {
   capas: ['plata', 'oro', 'bronce', 'hierro', 'barro', 'dedos'],
   cajas: { oro: [403, 0, 292, 256], plata: [359, 240, 379, 468], bronce: [423, 416, 252, 291], hierro: [430, 708, 237, 273], barro: [431, 982, 235, 104], dedos: [417, 1087, 264, 51], piedra: [850, 220, 220, 220], monte: [0, 0, 1100, 1152] },
   golpe: [550, 1085],
+  /* v205: la ventana de la escena donde está la estatua (x, y, ancho, alto). Otras
+     láminas (Daniel 7, después Daniel 8) la dibujan chica al lado y encienden el metal. */
+  marcoEstatua: [340, 0, 420, 1152],
   /* Etiqueta de cada parte, sobre la imagen: de qué lado va, el punto de la
      estatua al que apunta (ax, ay) y la altura de la etiqueta (ly), en las
      unidades de la escena (1100 × 1152). */
@@ -167,9 +170,17 @@ LAMINAS.d7 = {
   cierre: { f: 'juicio', ref: 'Daniel 7:22', texto: 'se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.',
     titulo: 'El juicio es a favor de los santos', nota: 'Hoy vivimos en el tiempo del juicio. Lo que sigue es el reino.' },
   paraleloCols: ['Daniel 7', 'Daniel 2', 'Reino'],
-  paralelo: [['leon', 'Cabeza de oro', 'Babilonia'], ['oso', 'Pecho y brazos de plata', 'Medo-Persia'], ['leopardo', 'Vientre y muslos de bronce', 'Grecia'],
-    ['bestia', 'Piernas de hierro', 'Roma imperial'], ['cuernos', 'Los diez dedos', 'Roma dividida'], ['cuerno', 'Hierro mezclado con barro', 'Roma papal'],
-    ['juicio', 'No aparece: lo agrega Daniel 7', 'El juicio en el cielo, desde 1844'], ['reino', 'La piedra que se hace un gran monte', 'El reino eterno']],
+  /* v205: la cuarta columna es la parte de Daniel 2 que se enciende en la estatua
+     chica al elegir cada parte (null: Daniel 2 no la tiene, la agrega Daniel 7).
+     Daniel 8 puede reusar lo mismo con su propio `paralelo` y `comparar`. */
+  comparar: 'd2',
+  agrega: 'Daniel 2 no lo muestra: lo agrega Daniel 7',
+  /* Donde lo que pasa está a la derecha de la imagen, la estatua va a la izquierda. */
+  d2Izq: ['cuerno'],
+  paralelo: [['leon', 'Cabeza de oro', 'Babilonia', 'oro'], ['oso', 'Pecho y brazos de plata', 'Medo-Persia', 'plata'], ['leopardo', 'Vientre y muslos de bronce', 'Grecia', 'bronce'],
+    ['bestia', 'Piernas de hierro', 'Roma imperial', 'hierro'], ['cuernos', 'Los diez dedos', 'Roma dividida', 'dedos'], ['cuerno', 'Hierro mezclado con barro', 'Roma papal', 'barro'],
+    ['juicio', 'No aparece: lo agrega Daniel 7', 'El juicio en el cielo, desde 1844', null], ['hijo', 'La piedra que se desprende sin mano', 'Cristo recibe el reino', 'piedra'],
+    ['reino', 'La piedra que se hace un gran monte', 'El reino eterno', 'monte']],
   paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
   retoSin: [],
   reto: [
@@ -180,7 +191,63 @@ LAMINAS.d7 = {
     { q: '¿Qué empieza en 1844?', ok: 'juicio', e: '7:9-10 y 8:14 · Se sienta el Anciano de días y se abren los libros.' },
     { q: '«Lo hicieron acercarse delante de él». ¿A quién?', ok: 'hijo', e: '7:13 · Cristo llega al Anciano de días, en el cielo, no a la tierra.' }],
   /* Las escenas de la historia son las de Daniel 2, cada una en su bestia. */
-  escenas: LAMINAS.d2.escenas.filter(e => e.y < 9000).map(e => Object.assign({}, e, { f: 'd2/' + e.f }, e.parte ? { parte: D2_A_D7[e.parte] } : {})),
+  escenas: LAMINAS.d2.escenas.filter(e => e.y < 9000).map(e => Object.assign({}, e, { f: 'd2/' + e.f }, e.parte ? { parte: D2_A_D7[e.parte] } : {}))
+    /* v205: al pasar de 1798 a 1844 la línea de tiempo llega al juicio. */
+    .concat([{ y: 1844, f: 'juicio', c: '1844 d.C. · Empieza el juicio en el cielo (8:14)', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (7:9-10; 8:14)' }]),
+  /* v205: la línea de tiempo con 1844 (va arriba de la pista: abajo choca con 1798),
+     y los años donde el recorrido se detiene un momento. */
+  marcas: [[-605, '605 a.C.'], [-331, '331<i> a.C.</i>', 'chico'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [476, '476 d.C.'], [1798, '1798 d.C.'], [1844, '1844 · el juicio', 'arriba'], [2026, 'hoy', 'chico']],
+  hitos: [-539, -331, -168, 476, 538, 1798, 1844],
+  /* v205: LAS BESTIAS SUBEN DEL MAR (7:3), una por paso. Hoy: la imagen entera de
+     cada bestia sube y aparece sobre la anterior. Cuando existan
+     laminas/d7/{leon,oso,leopardo,cuarta}-solo.png (fondo transparente), suben
+     recortadas sobre mar.webp y las anteriores quedan chicas atrás. Medidas en
+     píxeles de una imagen de 1200 × 675. */
+  sube: { fondo: 'mar', ids: ['leon', 'oso', 'leopardo', 'bestia'], solo: ['leon-solo.png', 'oso-solo.png', 'leopardo-solo.png', 'cuarta-solo.png'],
+    sitio: [330, 90, 540, 520], atras: [[20, 150, 250, 240], [930, 150, 250, 240], [40, 360, 230, 220]], olas: 520 },
+  /* v205: LOS DIEZ CUERNOS Y EL CUERNO PEQUEÑO (7:7-8, 24). En «Los diez cuernos» se
+     cuentan sobre cuarta.webp (tiene exactamente diez); en «El cuerno pequeño» tres
+     caen y sube el pequeño. Hoy: de cuarta.webp a cuerno.webp, con los nombres de
+     los tres que caen. Cuando existan cuerno-suelto.png (un cuerno, fondo
+     transparente, la punta arriba) y cuerno-pequeno.png (el pequeño, fondo
+     transparente), la app los anima sobre cuarta.webp: los tres se desprenden y
+     caen, y el pequeño crece entre los demás. Medidas en píxeles de 1200 × 675. */
+  cuernos: {
+    diezEn: 'cuernos', caenEn: 'cuerno',
+    /* Los diez, de izquierda a derecha sobre cuarta.webp (un punto arriba y otro
+       abajo, para que no se toquen): los tres últimos son los que caen. */
+    nombres: ['Alamanes', 'Francos', 'Burgundios', 'Suevos', 'Visigodos', 'Sajones', 'Lombardos', 'Hérulos', 'Vándalos', 'Ostrogodos'],
+    diez: [[587, 67], [623, 97], [665, 63], [707, 100], [742, 70], [778, 110], [808, 87], [833, 133], [868, 120], [883, 167]],
+    /* `a`: adónde van al caer; en cuerno.webp, donde están los tres arrancados. */
+    tres: [{ t: 'Hérulos', y: 493, a: [960, 150] }, { t: 'Vándalos', y: 534, a: [1040, 270] }, { t: 'Ostrogodos', y: 538, a: [990, 400] }],
+    pequeno: { t: 'El cuerno pequeño', s: 'Roma papal · desde 538', en: [655, 130] },
+    /* Con las capas: cada uno de los tres cuernos pintados se tapa con cielo de
+       cuarta.webp corrido (`tapa`: caja girada x, y, ancho, alto, grados; y de
+       dónde se toma el cielo: dx, dy; el borde se difumina con capas) y en su sitio se pone cuerno-suelto.png
+       (`tres`: x, y, ancho, alto, grados, girando sobre la base), que se cae.
+       `pq`: la ventana de donde sale el pequeño (crece desde abajo); `pqEn`: su punto. */
+    capas: { suelto: 'cuerno-suelto.png', pequeno: 'cuerno-pequeno.png',
+      tres: [[812, 63, 38, 94, 6], [836, 85, 37, 92, 14], [853, 104, 38, 96, 17]],
+      tapa: [[798, 50, 66, 100, 6, 84, 149], [823, 74, 64, 96, 14, 60, 127], [841, 94, 66, 100, 17, 41, 105]],
+      pq: [700, 20, 64, 116], pqEn: [732, 70] },
+  },
+  /* v205: LAS ONCE SEÑAS DEL CUERNO PEQUEÑO, las mismas de la interpretación de
+     Daniel 7 (complementos/daniel/d7.js); se encienden una por una con su
+     cumplimiento (en Presentar, una por paso, después del cuerno pequeño). */
+  senasTras: 'cuerno',
+  senas: [
+    { t: 'Sale de la cuarta bestia', ref: '7:8, 24', c: 'Es romano: sede en Roma, el latín y el título de <i>Pontifex Maximus</i> que usaban los emperadores.' },
+    { t: 'Sale entre los diez cuernos', ref: '7:8', c: 'Nace en Europa occidental, donde estaban los diez reinos.' },
+    { t: 'Se levanta «tras ellos»', ref: '7:24', c: 'Después de 476, cuando cayó Rómulo Augústulo, el último emperador de occidente.' },
+    { t: 'Es pequeño y después «parecía más grande que sus compañeros»', ref: '7:8, 20', c: 'El obispo de Roma creció poco a poco hasta estar por encima de los reyes de Europa.' },
+    { t: '«Derribará a tres reyes»', ref: '7:8, 20, 24', c: 'Hérulos (493), vándalos (534) y ostrogodos (538), los tres arrianos.' },
+    { t: 'Es «diferente de los primeros»', ref: '7:24', c: 'Los diez eran reinos políticos; este une la iglesia y el Estado.' },
+    { t: 'Tiene «ojos como de hombre»', ref: '7:8, 20', c: 'En la profecía los ojos son entendimiento (Efesios 1:18): se apoya en la sabiduría y la tradición humanas.' },
+    { t: '«Una boca que hablaba con gran insolencia»', ref: '7:8, 20, 25', c: '«Hablará palabras contra el Altísimo»: toma títulos y poderes de Dios, ocupar su lugar en la tierra y perdonar pecados (Marcos 2:7; Apocalipsis 13:5-6).' },
+    { t: '«Hacía guerra contra los santos»', ref: '7:21, 25', c: 'La persecución de valdenses, albigenses y hugonotes, y la Inquisición.' },
+    { t: '«Pensará en cambiar los tiempos y la Ley»', ref: '7:25', c: 'El calendario profético de Dios y el sábado: el día de reposo se pasó al domingo y se quitó el mandamiento sobre las imágenes (CS 55-56).' },
+    { t: 'Domina «tiempo, tiempos y medio tiempo»', ref: '7:25', c: '1.260 años: de 538 a 1798 d.C.' }],
+  senasFuente: BOHR + ', p. 119, 124-127; CS 55-56.',
   partes: [
  {id:'leon',img:'leon',nombre:'León con alas de águila',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La primera era como un león, y tenía alas de águila.',ref:'7:4',texto2:'Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.',ref2:'7:17',
@@ -216,12 +283,28 @@ LAMINAS.d7 = {
   texto:'fueron puestos unos tronos y se sentó un Anciano de días',ref:'7:9',texto2:'El Juez se sentó y los libros fueron abiertos.',ref2:'7:10',
   corto:'Desde 1844 el Padre juzga en el cielo, y el fallo es a favor de los santos (7:22).',
   interp:['El juicio empieza cuando terminan los 1.260 años del cuerno (7:25-26) y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.','El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.','Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26).'],
-  fuente:'CS 477 y 533; '+BOHR+', p. 120-121, 276-280.'},
+  fuente:'CS 477 y 533; '+BOHR+', p. 120-121, 276-280.',
+  /* v205: la escena del juicio por pasos: la imagen se acerca a cada parte
+     (`caja`: x, y, ancho y alto en píxeles de juicio.webp, 1200 × 675, en 16:9). */
+  pasos:[
+   {t:'Fueron puestos unos tronos',ref:'7:9',texto:'Estuve mirando hasta que fueron puestos unos tronos',caja:[150,40,880,495],
+    nota:'Los tronos se colocan porque antes no estaban: en el cielo empieza algo nuevo. Es 1844, cuando terminan las 2.300 tardes y mañanas (8:14).'},
+   {t:'Se sentó un Anciano de días',ref:'7:9',texto:'y se sentó un Anciano de días. Su vestido era blanco como la nieve; el pelo de su cabeza, como lana limpia',caja:[400,20,400,225],
+    nota:'Dios el Padre preside el juicio. Blanco y lana limpia: pureza y eternidad, un Juez que no se puede comprar.'},
+   {t:'Un río de fuego',ref:'7:9-10',texto:'su trono, llama de fuego, y fuego ardiente las ruedas del mismo. Un río de fuego procedía y salía de delante de él',caja:[250,200,680,383],
+    nota:'Un trono con ruedas es un trono que se mueve, como el carro de Ezequiel 1: el Padre pasa al lugar santísimo. Los millones que están delante de él son ángeles, testigos del tribunal (CS 533).'},
+   {t:'Los libros fueron abiertos',ref:'7:10',texto:'El Juez se sentó y los libros fueron abiertos.',caja:[380,290,680,383],
+    nota:'Los libros guardan cada vida (Apocalipsis 20:12). El fallo es a favor de los santos: «se hizo justicia a los santos del Altísimo» (7:22).'}]},
  {id:'hijo',img:'hijo',nombre:'El Hijo del hombre',reino:'Cristo recibe el reino',fechas:'en el juicio',de:null,c:'#0E7490',
   texto:'con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días',ref:'7:13',texto2:'su dominio es dominio eterno, que nunca pasará',ref2:'7:14',
   corto:'Cristo va al Padre, no a la tierra: llega al juicio y recibe el reino.',
   interp:['Uno «como un hijo de hombre» es Cristo. Las nubes son ángeles (Salmo 68:17) que lo llevan ante el Padre, al juicio, no a la tierra (CS 477).','Ahí recibe «dominio, gloria y reino» (7:14). Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27), herederos con Cristo (Romanos 8:17).'],
-  fuente:'CS 477; '+BOHR+', p. 280.'},
+  fuente:'CS 477; '+BOHR+', p. 280.',
+  pasos:[
+   {t:'Con las nubes del cielo',ref:'7:13',texto:'con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días, y lo hicieron acercarse delante de él.',caja:[0,60,780,439],
+    nota:'Cristo va al Padre, no a la tierra: llega al juicio en el cielo (CS 477).'},
+   {t:'Le fue dado dominio',ref:'7:14',texto:'Y le fue dado dominio, gloria y reino, para que todos los pueblos, naciones y lenguas lo sirvieran',caja:[540,0,660,371],
+    nota:'Recibe el reino en el juicio. Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27).'}]},
  {id:'reino',img:'d2/e-monte',nombre:'El reino eterno',reino:'Dado a los santos',fechas:'para siempre',de:null,c:'#6B7B5A',
   texto:'Después recibirán el reino los santos del Altísimo, y poseerán el reino hasta el siglo, eternamente y para siempre.',ref:'7:18',texto2:'cuyo reino es reino eterno, y todos los dominios lo servirán y obedecerán.',ref2:'7:27',
   corto:'Las bestias pasan. El reino de Dios queda para siempre, y es de los santos.',

@@ -2522,6 +2522,39 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/lamTarjeta\(id\)/.test(js)&&!/lamAbre\('d2'/.test(js),'Daniel 7 se ofrece desde su capítulo igual que Daniel 2 (nada atado a d2)');
 }
 
+/* v205: Daniel 7 tan interactivo como Daniel 2. Con Daniel 2 (cuarta columna de
+   `paralelo`: el metal que se enciende), los diez cuernos y los tres que caen,
+   el juicio por pasos, 1844 en la línea de tiempo y las once señas. Todo lo
+   citado, literal en RV1995; nada de el.animate() ni url(#) (Safari). */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const L=LAMINAS.d7,D2=LAMINAS[L.comparar],n=t=>String(t).replace(/<[^>]+>/g,'').replace(/[«»“”—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  const d7=n(Object.values(VERS.d7).join(' '));
+  const par=Object.fromEntries(L.paralelo.map(r=>[r[0],r[3]]));
+  ok(L.comparar==='d2'&&D2&&D2.marcoEstatua&&JSON.stringify(par)===JSON.stringify({leon:'oro',oso:'plata',leopardo:'bronce',bestia:'hierro',cuernos:'dedos',cuerno:'barro',juicio:null,hijo:'piedra',reino:'monte'}),
+    'Con Daniel 2: cada parte de Daniel 7 enciende su metal (el juicio no tiene: lo agrega Daniel 7)');
+  ok(L.paralelo.every(r=>r[3]===null||D2.capas.includes(r[3])||['piedra','monte'].includes(r[3]))&&/lo agrega Daniel 7/.test(L.agrega),'La cuarta columna del paralelo nombra partes de la estatua de Daniel 2');
+  const C=L.cuernos;
+  ok(C&&C.diez.length===10&&C.nombres.length===10&&C.tres.map(t=>t.t+' '+t.y).join(', ')==='Hérulos 493, Vándalos 534, Ostrogodos 538'&&C.nombres.slice(7).join()==='Hérulos,Vándalos,Ostrogodos',
+    'Los diez cuernos: diez puntos y diez reinos; caen hérulos (493), vándalos (534) y ostrogodos (538)');
+  ok(C.capas.suelto==='cuerno-suelto.png'&&C.capas.pequeno==='cuerno-pequeno.png'&&C.capas.tres.length===3&&C.capas.tapa.length===3&&L.sube.solo.join()==='leon-solo.png,oso-solo.png,leopardo-solo.png,cuarta-solo.png',
+    'Las capas que la app espera: cuerno-suelto.png, cuerno-pequeno.png y {leon,oso,leopardo,cuarta}-solo.png');
+  const fs7=[...new Set([L.sube.fondo,C.diezEn&&L.partes.find(p=>p.id===C.diezEn).img,L.partes.find(p=>p.id===C.caenEn).img])];
+  ok(fs7.every(f=>fs.existsSync(path.join(RAIZ,'laminas',L.dir+f+'.webp'))),'Las imágenes de hoy (mar, cuarta, cuerno) existen: lo de las capas es una mejora, no una falta');
+  const pasos=L.partes.flatMap(p=>(p.pasos||[]).map(x=>Object.assign({p:p.id},x)));
+  const malos=pasos.filter(x=>!d7.includes(n(x.texto))||!x.caja||x.caja.length!==4||Math.abs(x.caja[2]/x.caja[3]-1200/675)>.02||x.caja[0]<0||x.caja[1]<0||x.caja[0]+x.caja[2]>1200||x.caja[1]+x.caja[3]>675);
+  ok(pasos.filter(x=>x.p==='juicio').map(x=>x.t).join(' / ')==='Fueron puestos unos tronos / Se sentó un Anciano de días / Un río de fuego / Los libros fueron abiertos'&&pasos.filter(x=>x.p==='hijo').length===2&&!malos.length,
+    'El juicio en 4 pasos y el Hijo del hombre en 2: texto literal RV1995 y la caja dentro de la imagen, en 16:9'+(malos.length?' ('+malos[0].t+')':''));
+  ok(L.marcas.some(m=>m[0]===1844)&&L.escenas.some(e=>e.y===1844&&e.f==='juicio')&&L.hitos.includes(1844)&&L.partes.find(p=>p.id==='juicio').de===1844,'La línea de tiempo marca 1844: ahí empieza el juicio (8:14)');
+  const senQ=L.senas.flatMap(x=>[...(x.t+' '+x.c).matchAll(/«([^»]+)»/g)].map(m=>m[1]));
+  ok(L.senas.length===11&&L.senas.every(x=>x.t&&/^7:/.test(x.ref)&&x.c)&&senQ.length>=9&&senQ.every(q=>d7.includes(n(q)))&&/Fuente|Bohr/.test(L.senasFuente),
+    'Las once señas del cuerno: cada una con su texto y su cumplimiento, y lo citado literal en Daniel 7 ('+senQ.length+')');
+  const lam=js.slice(js.indexOf('/* ── v204: láminas de escenas'),js.indexOf('function lamPresE(')).replace(/\/\*[\s\S]*?\*\//g,'');
+  ok(lam.length>5000&&!/\.animate\(/.test(lam)&&!/url\(#/.test(lam)&&/requestAnimationFrame/.test(lam)&&/lamQuieto\(\)/.test(lam),'Daniel 7 se mueve con requestAnimationFrame, sin el.animate() ni url(#), y respeta «reducir movimiento»');
+  ok(/\/\\\.\\w\+\$\/\.test\(f\)\?'':'\.webp'/.test(js),'lamRuta acepta la extensión (las capas .png)');
+}
+
 /* v179: la interpretación con fuentes (Bohr, Elena de White, las notas de
    Camilo) va en su propia capa: secciones 'contexto' y preguntas f:'c', cada
    una con «Fuente:». En Apocalipsis y, aparte del examen, en Daniel. */
