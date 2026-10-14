@@ -3208,6 +3208,37 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(ids.includes('berthier')&&ids.includes('nabucodonosor')&&ids.includes('romulo'),'v189: en Daniel 2 se tocan Nabucodonosor, Rómulo Augústulo y Berthier ('+new Set(ids).size+' personas)');
   ok(!/verPersona/.test(fuentes)&&!/verPersona\('[^']+'\)">[^<]+<\/button>\s*\d/.test(H),'v190: ni la fuente ni una referencia («Daniel 11:2») se vuelven personaje');
 }
+/* v205: EL REDISEÑO DEL ESTUDIO. */
+{
+  const Z=montar('cmpModelo, comparaHTML, LAMINAS, nivelesDe, adsReparto, bloquesDe, refsQ, heroDatos, preguntaDelDia, ponCat, sigueAnota, S:()=>S, el:id=>document.getElementById(id), verCap',{});
+  Z.ponCat('gm');
+  /* La comparación crece sola: una lámina más con `partes` es una columna más,
+     y sus partes caen en la fila de su fecha sin tocar ninguna tabla. */
+  const M=Z.cmpModelo();
+  ok(M.cols.join()==='d2,d7'&&M.filas.some(f=>f.key==='-539')&&M.filas[M.filas.length-1].key==='fin','v205: Comparar arma sus columnas de LAMINAS (hoy '+M.cols.join(', ')+') y sus filas por fecha');
+  const L2=Object.assign({},Z.LAMINAS,{d8:{dir:'d8/',tipo:'escenas',partes:[
+    {id:'carnero',img:'carnero',nombre:'Carnero de dos cuernos',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,c:'#8C98A6'},
+    {id:'macho',img:'macho',nombre:'Macho cabrío',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,c:'#A85A2A'}]}});
+  const M2=Z.cmpModelo(L2), mp=M2.filas.find(f=>f.key==='-539');
+  ok(M2.cols.join()==='d2,d7,d8'&&mp.celdas.d8&&mp.celdas.d8[0].id==='carnero'&&!M2.filas.find(f=>f.key==='-605').celdas.d8,
+    'v205: agregar la lámina de Daniel 8 agrega su columna, y el carnero cae solo en la fila de Medo-Persia');
+  ok(/cmpToca\('-539'\)/.test(Z.comparaHTML())&&/Las mismas épocas en 2 visiones/.test(Z.comparaHTML()),'v205: la tabla de Comparar se toca por fila');
+  /* Los tres niveles salen de lo guardado, sin inventar. */
+  const s=Z.S(); s.prog={d2:100}; s.ft={}; s.qv={}; s.fq={};
+  let n=Z.nivelesDe('d2');
+  ok(n.leido===100&&n.practicado===0&&n.dominado===0,'v205: sin practicar, Leído 100 % y los otros dos en cero');
+  /* «Antes de seguir»: dos por sección, sin repetir, primero las que citan sus versículos. */
+  const rep=Z.adsReparto('d2'), bl=Z.bloquesDe('d2'), todas=rep.flat();
+  ok(rep.length===bl.length&&rep.every(l=>l.length<=2)&&new Set(todas).size===todas.length,'v205: Antes de seguir reparte hasta dos preguntas por sección sin repetir ('+todas.length+' en '+bl.length+' secciones)');
+  const propias=rep.filter((l,k)=>l.some(q=>Z.refsQ(q,'d2').some(v=>v>=bl[k].de&&v<=bl[k].a))).length;
+  ok(propias>=Math.ceil(bl.length/2),'v205: en la mayoría de las secciones sale una pregunta de sus propios versículos ('+propias+' de '+bl.length+')');
+  /* «Continuar» va a donde se quedó. */
+  Z.verCap('d2'); Z.sigueAnota('d2',3);
+  const h=Z.heroDatos();
+  ok(h.c.id==='d2'&&h.k===3&&h.bl.de===16,'v205: Continuar lleva a Daniel 2, sección 4 (vers. '+h.bl.de+')');
+  const pd=Z.preguntaDelDia();
+  ok(pd&&pd.cap==='d2','v205: la pregunta del día es del capítulo en el que va');
+}
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 
 

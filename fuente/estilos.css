@@ -2413,7 +2413,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .nv3-b{flex:1 1 80px;min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 8px}
 .nv3-t{font-size:.75rem;font-weight:700;color:var(--v-tinta2,#5B5F6B)}
 .nv3-v{font-size:.75rem;font-weight:800;color:var(--txt);font-variant-numeric:tabular-nums}
-.nv3-pista{grid-column:1/-1;display:block;height:8px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--c) 14%,var(--card))}
+.nv3-pista{grid-column:1/-1;display:block;height:8px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--c) 20%,var(--card))}
 .nv3-pista i{display:block;height:100%;border-radius:inherit;background:var(--c);transition:width .5s cubic-bezier(.2,.7,.3,1)}
 .nv3-l{--c:var(--nv-l)} .nv3-p{--c:var(--nv-p)} .nv3-d{--c:var(--nv-d)}
 .nv3.fino{flex-wrap:nowrap;gap:3px}
@@ -2496,6 +2496,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .cap-t-img{display:block;width:100%;aspect-ratio:16/9;height:auto;object-fit:cover}
 .cap-t-img.sin-img{display:grid}
 .hero-img.sin-img{display:grid}
+.hero-img.sin-img span{transform:scale(2.4)}
 .cap-t-img.sin-img span{font-size:2.25rem}
 .cap-t-tx{display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px}
 .cap-t-lab{font-size:.75rem;font-weight:800;color:var(--azul);letter-spacing:.02em}
@@ -2660,6 +2661,9 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .lect-top .lec-otra{order:4}
 .lect-top .lec-rp .lec-rp-bot .lect-full{order:5}
 .lect-top .lec-ios{order:9;flex:1 1 100%}
+/* Dentro de Jóvenes la barra de abajo es la de la app (unos 84 px en el
+   celular); la app no publica su alto, así que va medido aquí. */
+@media (max-width:899px){.cb-cuerpo{--pie-alto:var(--alto-pie-app,calc(env(safe-area-inset-bottom, 0px) + 84px))}}
 @media (max-width:620px){
   body:not(.cb-cuerpo){--pie-alto:calc(env(safe-area-inset-bottom, 0px) + 74px)}
   .lect-top .lec-rp-tx{order:7;flex:1 1 100%}

@@ -2430,7 +2430,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .nv3-b{flex:1 1 80px;min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 8px}
 .nv3-t{font-size:.75rem;font-weight:700;color:var(--v-tinta2,#5B5F6B)}
 .nv3-v{font-size:.75rem;font-weight:800;color:var(--txt);font-variant-numeric:tabular-nums}
-.nv3-pista{grid-column:1/-1;display:block;height:8px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--c) 14%,var(--card))}
+.nv3-pista{grid-column:1/-1;display:block;height:8px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--c) 20%,var(--card))}
 .nv3-pista i{display:block;height:100%;border-radius:inherit;background:var(--c);transition:width .5s cubic-bezier(.2,.7,.3,1)}
 .nv3-l{--c:var(--nv-l)} .nv3-p{--c:var(--nv-p)} .nv3-d{--c:var(--nv-d)}
 .nv3.fino{flex-wrap:nowrap;gap:3px}
@@ -2513,6 +2513,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .cap-t-img{display:block;width:100%;aspect-ratio:16/9;height:auto;object-fit:cover}
 .cap-t-img.sin-img{display:grid}
 .hero-img.sin-img{display:grid}
+.hero-img.sin-img span{transform:scale(2.4)}
 .cap-t-img.sin-img span{font-size:2.25rem}
 .cap-t-tx{display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px}
 .cap-t-lab{font-size:.75rem;font-weight:800;color:var(--azul);letter-spacing:.02em}
@@ -2677,6 +2678,9 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .lect-top .lec-otra{order:4}
 .lect-top .lec-rp .lec-rp-bot .lect-full{order:5}
 .lect-top .lec-ios{order:9;flex:1 1 100%}
+/* Dentro de Jóvenes la barra de abajo es la de la app (unos 84 px en el
+   celular); la app no publica su alto, así que va medido aquí. */
+@media (max-width:899px){.cb-cuerpo{--pie-alto:var(--alto-pie-app,calc(env(safe-area-inset-bottom, 0px) + 84px))}}
 @media (max-width:620px){
   body:not(.cb-cuerpo){--pie-alto:calc(env(safe-area-inset-bottom, 0px) + 74px)}
   .lect-top .lec-rp-tx{order:7;flex:1 1 100%}
@@ -3882,7 +3886,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <!-- v185: el estudio interactivo con imagen (lamAbre). -->
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <script>
-const VERSION_APP = 'bef2f42cbff8';
+const VERSION_APP = '1cab465f55f0';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -75619,8 +75623,8 @@ function divideVista(d,id){
     if(cp)de.firstChild.insertBefore(cp,de.firstChild.firstChild.nextSibling);
     const ea=document.createElement('div');ea.className='est-ahora';ea.id='est-ahora';ea.hidden=true;
     if(ea.setAttribute)ea.setAttribute('aria-live','polite');
-    de.firstChild.appendChild(ea);
     iz.appendChild(det);
+    de.appendChild(ea);
     secs.forEach(x=>de.appendChild(x));
     fila.appendChild(ind);fila.appendChild(iz);fila.appendChild(de);
     d.insertBefore(fila,d.children[1]);
@@ -79448,9 +79452,21 @@ const corta=(t,n)=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=n)re
 const PORTADA_CAP={d2:'h2'};
 function portadaDe(cid){
   const L=typeof LAMINAS!=='undefined'?LAMINAS[cid]:null;
-  if(!L)return '';
+  if(!L)return escenaDeOtra(cid);
   const f=L.portada||PORTADA_CAP[cid]||(L.tipo==='escenas'?L.inicioF:((L.historia||[]).find(h=>/^h\d/.test(h.f))||{}).f);
   return f?LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+'.webp':'';
+}
+/* Un capítulo sin lámina propia puede salir en la historia de otra: Daniel 1
+   es la primera escena de la lámina de Daniel 2 («Cautivos en Babilonia»,
+   Daniel 1:2). Se busca por la cita de la escena, no por una lista a mano. */
+function escenaDeOtra(cid){
+  const lb=libroCid(cid);
+  if(!lb||typeof LAMINAS==='undefined')return '';
+  const pre=lb.nombre+' '+lb.n+':';
+  for(const k of Object.keys(LAMINAS)){const L=LAMINAS[k];
+    const h=(L.historia||[]).find(x=>String(x.ref||'').startsWith(pre)&&x.f);
+    if(h)return LAMINAS_DIR+(h.f.includes('/')?'':L.dir)+h.f+'.webp';}
+  return '';
 }
 const numCap=c=>String(c.label||'').replace(/^(Daniel|Apocalipsis|P&R|Creencia|Día)\s*/i,'')||'·';
 function portadaHTML(c,clase){

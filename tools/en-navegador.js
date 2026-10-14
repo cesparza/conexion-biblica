@@ -476,6 +476,58 @@ for (const W of ANCHOS) {
   ok(errores.length === 0, W + ' · cero errores de JavaScript' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
+/* ── 6. v205: el rediseño del estudio, en 1440 y 390 ── */
+for (const W of [1440, 390]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: 900 }, serviceWorkers: 'block' });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message));
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base); await p.waitForTimeout(500);
+  await p.evaluate(() => {
+    localStorage.setItem('conexion-biblica-v4', JSON.stringify({ v: 4, activo: 'a1', alumnos: {
+      a1: { nombre: 'Camilo', cat: 'gm', prog: { d2: 60 }, ultPantalla: 'inicio' },
+      a2: { nombre: 'Alejo', cat: 'av', aCargo: true, tutor: 'Camilo', prog: {} } } }));
+    localStorage.setItem('cb-sigue', JSON.stringify({ a1: { c: 'd2', s: 3 } }));
+  });
+  await p.reload(); await p.waitForTimeout(1500);
+  // «Continuar» abre Daniel 2 en la sección 4 (vers. 16-20), a la vista.
+  await p.evaluate(() => ir('inicio'));
+  await p.locator('#ini-hero .hero-go').click(); await p.waitForTimeout(1300);
+  const sig = await p.evaluate(() => { const b = document.querySelector('#detalle .lect-bl[data-sec="3"]'), r = b && b.getBoundingClientRect();
+    return [capAbierto, seccionALaVista(), !!b && r.top >= 0 && r.top < innerHeight / 2]; });
+  ok(sig[0] === 'd2' && sig[1] === 3 && sig[2], W + ' · v205: Continuar abre Daniel 2 en la sección 4, a la vista (' + sig.join(', ') + ')');
+  // Tres columnas en el computador, una en el teléfono; sin desborde.
+  const col = await p.evaluate(() => { const v = document.querySelector('#detalle .vd'), cs = getComputedStyle(v);
+    return [cs.display, cs.gridTemplateColumns.split(' ').length, document.documentElement.scrollWidth - innerWidth,
+      getComputedStyle(document.querySelector('#detalle .vd-ind')).display]; });
+  ok(W >= 1100 ? col[0] === 'grid' && col[1] === 3 && col[3] !== 'none' : col[0] !== 'grid' && col[3] === 'none', W + ' · v205: el capítulo va en ' + (W >= 1100 ? 'tres columnas' : 'una columna') + ' (' + col.slice(0, 2).join(' ') + ')');
+  ok(col[2] <= 0, W + ' · v205: el capítulo no se desborda a lo ancho (' + col[2] + ')');
+  // «Antes de seguir»: responder cuenta como practicado.
+  const pr = await p.evaluate(() => { const antes = nivelesDe('d2').pr; const b = document.querySelector('#detalle .lect-bl[data-sec="3"] .ads-op');
+    b.click(); const q = b.closest('.ads-q'); return [antes, nivelesDe('d2').pr, q.classList.contains('hecha'), !!q.querySelector('.ads-res')]; });
+  ok(pr[1] === pr[0] + 1 && pr[2] && pr[3], W + ' · v205: responder «Antes de seguir» da la respuesta al instante y suma a Practicado (' + pr[0] + ' → ' + pr[1] + ')');
+  // Comparar: tocar una fila la enciende y abre su detalle.
+  await p.evaluate(() => verComparar()); await p.waitForTimeout(500);
+  await p.locator('button.cmp-fila[data-k="-539"]').click();
+  const cm = await p.evaluate(() => [document.querySelector('button.cmp-fila.on').getAttribute('data-k'), document.querySelector('.cmp-dt').textContent, document.documentElement.scrollWidth - innerWidth]);
+  ok(cm[0] === '-539' && /Pecho y brazos de plata/.test(cm[1]) && /Oso/.test(cm[1]) && cm[2] <= 0, W + ' · v205: en Comparar, Medo-Persia se enciende en Daniel 2 y Daniel 7 (desborde ' + cm[2] + ')');
+  // Quitar a una persona, con la pregunta de la app (no el confirm del navegador).
+  await p.evaluate(() => { ir('inicio'); abreYo(); });
+  await p.locator('.alu-mas').nth(1).click();
+  await p.locator('.alu-mi.peligro').click(); await p.waitForTimeout(300);
+  const pre = await p.evaluate(() => [document.querySelector('#hoja .preg-t') && document.querySelector('#hoja .preg-t').textContent, personasDB().length]);
+  await p.locator('#hoja .preg-pie .btn.gho').click(); await p.waitForTimeout(300);
+  const cancela = await p.evaluate(() => personasDB().length);
+  await p.locator('.alu-mas').nth(1).click();
+  await p.locator('.alu-mi.peligro').click(); await p.waitForTimeout(300);
+  await p.locator('#hoja .preg-pie .btn.rojo').click(); await p.waitForTimeout(400);
+  const fin = await p.evaluate(() => [personasDB().map(x => x.nombre).join(), JSON.parse(localStorage.getItem('conexion-biblica-v4')).alumnos.a2 === undefined]);
+  ok(/Quitar a Alejo/.test(pre[0]) && pre[1] === 2 && cancela === 2 && fin[0] === 'Camilo' && fin[1], W + ' · v205: «Quitar» pregunta en la app; Cancelar no borra y Quitar borra la ficha (' + fin[0] + ')');
+  const yo = await p.evaluate(() => [document.getElementById('nav-yo').classList.contains('solo'), getComputedStyle(document.querySelector('#nav-yo .yo-tx')).display]);
+  ok(yo[0] && yo[1] === 'none', W + ' · v205: con una sola persona la ficha queda en la inicial');
+  ok(errores.length === 0, W + ' · v205: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
 /* ── 5. en un teléfono, ningún campo hace que la página se amplíe sola (v159) ── */
 {
   const ctx = await nav.newContext({ viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });

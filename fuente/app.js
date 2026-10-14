@@ -3589,8 +3589,8 @@ function divideVista(d,id){
     if(cp)de.firstChild.insertBefore(cp,de.firstChild.firstChild.nextSibling);
     const ea=document.createElement('div');ea.className='est-ahora';ea.id='est-ahora';ea.hidden=true;
     if(ea.setAttribute)ea.setAttribute('aria-live','polite');
-    de.firstChild.appendChild(ea);
     iz.appendChild(det);
+    de.appendChild(ea);
     secs.forEach(x=>de.appendChild(x));
     fila.appendChild(ind);fila.appendChild(iz);fila.appendChild(de);
     d.insertBefore(fila,d.children[1]);
@@ -7418,9 +7418,21 @@ const corta=(t,n)=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=n)re
 const PORTADA_CAP={d2:'h2'};
 function portadaDe(cid){
   const L=typeof LAMINAS!=='undefined'?LAMINAS[cid]:null;
-  if(!L)return '';
+  if(!L)return escenaDeOtra(cid);
   const f=L.portada||PORTADA_CAP[cid]||(L.tipo==='escenas'?L.inicioF:((L.historia||[]).find(h=>/^h\d/.test(h.f))||{}).f);
   return f?LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+'.webp':'';
+}
+/* Un capítulo sin lámina propia puede salir en la historia de otra: Daniel 1
+   es la primera escena de la lámina de Daniel 2 («Cautivos en Babilonia»,
+   Daniel 1:2). Se busca por la cita de la escena, no por una lista a mano. */
+function escenaDeOtra(cid){
+  const lb=libroCid(cid);
+  if(!lb||typeof LAMINAS==='undefined')return '';
+  const pre=lb.nombre+' '+lb.n+':';
+  for(const k of Object.keys(LAMINAS)){const L=LAMINAS[k];
+    const h=(L.historia||[]).find(x=>String(x.ref||'').startsWith(pre)&&x.f);
+    if(h)return LAMINAS_DIR+(h.f.includes('/')?'':L.dir)+h.f+'.webp';}
+  return '';
 }
 const numCap=c=>String(c.label||'').replace(/^(Daniel|Apocalipsis|P&R|Creencia|Día)\s*/i,'')||'·';
 function portadaHTML(c,clase){
