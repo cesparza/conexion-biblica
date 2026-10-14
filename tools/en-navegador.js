@@ -376,6 +376,64 @@ for (const W of ANCHOS) {
     ok(fin[0] === '16 / 16' && /fiel su interpretación/.test(fin[1]), W + ' · Presentar recorre los 16 pasos y termina en 2:45 (' + fin[0] + ')');
     await p.evaluate(() => lamCierra());
   }
+  /* ── 3d. la lámina de Daniel 7 (v204): escenas, no estatua. Se ofrece en su
+     capítulo; la tira de partes cambia la imagen y abre la hoja; la línea de
+     tiempo muestra la escena del año (1798: Berthier); Presentar recorre los
+     13 pasos con la imagen al lado del texto, y T oculta el texto. ── */
+  {
+    await p.evaluate(() => { ponCat('pa'); ponPest('prof'); verCap('d7', true); });
+    await p.waitForTimeout(400);
+    ok(await p.locator('#detalle .lam-invita').count() === 1, W + ' · Daniel 7 ofrece el estudio interactivo');
+    await p.locator('#detalle .lam-invita .btn.ver').click();
+    await p.waitForTimeout(900);
+    const tira = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamTira .lam-tb img'), document.querySelector('#lamSvg .lam-hist')].map(i => i.getAttribute('src') || i.getAttribute('href'));
+      const r = await Promise.all(hs.map(h => fetch(h).then(x => x.ok && x.headers.get('content-type') === 'image/webp').catch(() => false)));
+      return [document.querySelectorAll('#lamTira .lam-tb').length, r.every(Boolean) && r.length, !document.getElementById('lamEsc').classList.contains('cargando')]; });
+    ok(tira[0] === 9 && tira[1] === 10 && tira[2], W + ' · Daniel 7: la tira trae las 9 partes y sus imágenes cargan (' + tira.join(', ') + ')');
+    const lado = await p.evaluate(() => { const r = document.getElementById('lamEsc').getBoundingClientRect(); return Math.round(r.width / r.height * 100) / 100; });
+    ok(Math.abs(lado - 2050 / 1152) < 0.02, W + ' · la imagen de Daniel 7 es apaisada (' + lado + ')');
+    await p.locator('#lamTira .lam-tb[data-p="oso"]').click();
+    await p.waitForTimeout(900);
+    const oso = await p.evaluate(() => { const h = document.getElementById('lamHoja'), r = h.getBoundingClientRect(), e = document.getElementById('lamEsc').getBoundingClientRect();
+      return [h.textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamChip').textContent,
+        document.querySelector('#lamTira .lam-tb.on').dataset.p, !(r.left < e.right - 1 && r.right > e.left + 1 && r.top < e.bottom - 1 && r.bottom > e.top + 1)]; });
+    ok(/Medo-Persia/.test(oso[0]) && /Lidia/.test(oso[0]) && /d7\/oso\.webp$/.test(oso[1]) && /^Oso/.test(oso[2]) && oso[3] === 'oso' && oso[4],
+      W + ' · tocar el oso en la tira cambia la imagen y abre su explicación sin taparla');
+    await p.locator('#lamTira .lam-tb[data-p="cuerno"]').click();
+    await p.waitForTimeout(700);
+    const cu = await p.evaluate(() => [document.getElementById('lamHoja').textContent, [...document.querySelectorAll('#lamHoja .lam-fig')].map(f => f.dataset.f).join()]);
+    ok(/Roma papal/.test(cu[0]) && /13:3/.test(cu[0]) && /d2\/e538/.test(cu[1]) && /d2\/e1798/.test(cu[1]), W + ' · el cuerno pequeño trae 538 y 1798 de Daniel 2 (' + cu[1] + ')');
+    for (const [y, re, img] of [[1798, /Roma dividida/, 'cuarta'], [1520, /Roma dividida y Roma papal/, 'cuerno'], [1900, /el juicio en el cielo/, 'juicio']]) {
+      await p.evaluate(y => { const r = document.getElementById('lamRango'); r.value = y; r.dispatchEvent(new Event('input')); }, y);
+      await p.waitForTimeout(300);
+      const a = await p.evaluate(() => [document.getElementById('lamTq').textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), [...document.querySelectorAll('#lamHoja .lam-fig')].map(f => f.dataset.f).join()]);
+      ok(re.test(a[0]) && a[1].endsWith('d7/' + img + '.webp') && (y !== 1798 || a[2] === 'd2/e1798'), W + ' · Daniel 7 en ' + y + ': ' + a[0] + ' · ' + a[1].split('/').pop() + ' · ' + a[2]);
+    }
+    const ancho = await p.evaluate(() => { const l = document.getElementById('lam'); return l.scrollWidth - l.clientWidth; });
+    ok(ancho <= 0, W + ' · la lámina de Daniel 7 no se desborda a lo ancho (' + ancho + ')');
+    await p.keyboard.press('Escape');
+    ok(await p.evaluate(() => document.getElementById('lam').hidden), W + ' · Escape cierra la lámina de Daniel 7');
+    await p.evaluate(() => { lamAbre('d7', 'presentar'); lamToca('juicio'); });
+    await p.waitForTimeout(600);
+    const k = await p.evaluate(() => [lamPasos()[lamPaso].id, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamHoja').textContent]);
+    ok(k[0] === 'juicio' && k[1].endsWith('d7/juicio.webp') && /1844/.test(k[2]), W + ' · en Presentar, la parte del juicio lleva a su paso y su imagen');
+    if (W >= 1000) {
+      const cabe = await p.evaluate(() => { const l = document.getElementById('lam'), b = document.getElementById('lamSig').getBoundingClientRect(), h = document.getElementById('lamHoja').getBoundingClientRect(),
+        i = document.querySelector('#lamSvg .lam-hist').getBoundingClientRect();
+        return [l.scrollHeight - l.clientHeight, Math.round(b.bottom), innerHeight, Math.round(i.right - h.left)]; });
+      ok(cabe[0] <= 1 && cabe[1] <= cabe[2] && cabe[3] <= 4, W + ' · Daniel 7 al presentar cabe en la pantalla, con la imagen a la izquierda del texto (' + cabe.join(', ') + ')');
+    }
+    await p.keyboard.press('t'); await p.waitForTimeout(300);
+    const sin = await p.evaluate(() => [document.getElementById('lam').classList.contains('sin-texto'), getComputedStyle(document.getElementById('lamHoja')).display, document.querySelector('#lamSvg .lam-hist').getAttribute('preserveAspectRatio')]);
+    ok(sin[0] && sin[1] === 'none' && sin[2] === 'xMidYMid slice', W + ' · la tecla T oculta el texto y la imagen toma toda la escena');
+    await p.keyboard.press('t');
+    await p.evaluate(() => lamPres(0));
+    for (let i = 0; i < 14; i++) await p.keyboard.press('PageDown');
+    await p.waitForTimeout(700);
+    const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href')]);
+    ok(fin[0] === '13 / 13' && /se hizo justicia a los santos/.test(fin[1]) && fin[2].endsWith('d7/juicio.webp'), W + ' · Presentar recorre los 13 pasos de Daniel 7 y termina en 7:22 (' + fin[0] + ')');
+    await p.evaluate(() => lamCierra());
+  }
   /* v189: tocar el nombre de un personaje abre su ficha en la hoja. */
   {
     await p.evaluate(() => { ponCat('pa'); ponPest('prof'); verCap('d2', true); });

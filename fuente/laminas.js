@@ -129,4 +129,104 @@ const LAMINAS = {
 ],
  },
 };
+
+/* v204: DANIEL 7 (Camilo, 13-oct: «mucha de esta información se reutiliza, se
+   agrega más o se complementa»). No es una estatua: no hay capas que
+   encender. `tipo:'escenas'`: cada parte tiene su imagen entera (16:9,
+   laminas/d7/), se elige en una tira de botones bajo la imagen y al presentar
+   va a la izquierda con el texto a la derecha, como los pasos de la historia
+   de Daniel 2. La línea de tiempo, las escenas de cada año y los colores de
+   cada reino son los de Daniel 2: es la misma historia contada dos veces.
+   Lectura de Camilo: la bestia = Roma imperial, los diez cuernos = Roma
+   dividida, el cuerno pequeño = Roma papal (y sanado, Ap 13:3); la cuarta
+   bestia no es el dragón. Textos literales RV1995 (tests/test.js los verifica). */
+const D2_A_D7 = { oro: 'leon', plata: 'oso', bronce: 'leopardo', hierro: 'bestia', dedos: 'cuernos', barro: 'cuerno' };
+LAMINAS.d7 = {
+  tipo: 'escenas',
+  libro: 'Daniel 7',
+  titulo: 'Las cuatro bestias y el juicio',
+  dir: 'd7/',
+  /* La imagen de la tarjeta del capítulo y la de Explorar antes de elegir. */
+  miniF: 'leon', inicioF: 'mar',
+  verTodo: 'Las bestias',
+  invita: 'Elige cada bestia, los cuernos y el juicio: lo que dice el texto, lo que significa, sus fechas y su fuente.',
+  pista: 'Elige una parte en la tira de abajo de la imagen. Arriba están los pasos del capítulo; abajo, la historia año por año.',
+  /* En la línea de tiempo: lo que se pinta encima de otro reino no va en la pista,
+     y desde 1798 el cuerno herido se ve a media luz sobre los diez cuernos. */
+  solapa: ['cuerno', 'juicio'],
+  herida: ['cuernos', 'cuerno'],
+  tiempo: ['leon', 'oso', 'leopardo', 'bestia', 'cuernos', 'cuerno', 'juicio'],
+  historia: [
+    { f: 'd2/babilonia', titulo: 'En el primer año de Belsasar', ref: 'Daniel 7:1', texto: 'En el primer año de Belsasar, rey de Babilonia, tuvo Daniel un sueño y visiones de su cabeza mientras estaba en su lecho',
+      nota: 'Hacia el 553 a.C., unos cincuenta años después del sueño de la estatua. Daniel tiene unos setenta años, y Babilonia caerá catorce años después (Daniel 5). Daniel «escribió el sueño» (7:1).' },
+    { f: 'mar', titulo: 'Cuatro vientos sobre el gran mar', ref: 'Daniel 7:2-3', texto: 'vi que los cuatro vientos del cielo combatían en el gran mar. … cuatro bestias grandes, diferentes la una de la otra, subían del mar.',
+      nota: 'La Biblia explica sus símbolos. Los vientos son guerras entre naciones (Jeremías 25:32-33); el mar, «pueblos, muchedumbres, naciones y lenguas» (Apocalipsis 17:15); las bestias, reyes o reinos (7:17, 23).' },
+  ],
+  despues: { f: 'mar', titulo: 'Daniel guardó el asunto en su corazón', ref: 'Daniel 7:28', texto: 'mis pensamientos me turbaron y mi rostro se demudó; pero guardé el asunto en mi corazón.',
+    nota: 'Daniel no lo entiende todo todavía. Daniel 8 vuelve sobre el cuerno y da la fecha del juicio: «Hasta dos mil trescientas tardes y mañanas» (8:14).' },
+  cierre: { f: 'juicio', ref: 'Daniel 7:22', texto: 'se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.',
+    titulo: 'El juicio es a favor de los santos', nota: 'Hoy vivimos en el tiempo del juicio. Lo que sigue es el reino.' },
+  paraleloCols: ['Daniel 7', 'Daniel 2', 'Reino'],
+  paralelo: [['leon', 'Cabeza de oro', 'Babilonia'], ['oso', 'Pecho y brazos de plata', 'Medo-Persia'], ['leopardo', 'Vientre y muslos de bronce', 'Grecia'],
+    ['bestia', 'Piernas de hierro', 'Roma imperial'], ['cuernos', 'Los diez dedos', 'Roma dividida'], ['cuerno', 'Hierro mezclado con barro', 'Roma papal'],
+    ['juicio', 'No aparece: lo agrega Daniel 7', 'El juicio en el cielo, desde 1844'], ['reino', 'La piedra que se hace un gran monte', 'El reino eterno']],
+  paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
+  retoSin: [],
+  reto: [
+    { q: '¿Qué bestia tenía tres costillas en la boca?', ok: 'oso', e: '7:5 · Medo-Persia y sus tres conquistas: Lidia, Babilonia y Egipto.' },
+    { q: '¿Qué bestia tenía cuatro cabezas?', ok: 'leopardo', e: '7:6 · Grecia, que se repartieron los cuatro generales de Alejandro.' },
+    { q: '¿Qué parte representa a Roma dividida?', ok: 'cuernos', e: '7:24 · «diez reyes»: los reinos que salieron de Roma desde 476 d.C.' },
+    { q: '¿Quién domina «tiempo, tiempos y medio tiempo»?', ok: 'cuerno', e: '7:25 · 1.260 años, de 538 a 1798 d.C.: Roma papal.' },
+    { q: '¿Qué empieza en 1844?', ok: 'juicio', e: '7:9-10 y 8:14 · Se sienta el Anciano de días y se abren los libros.' },
+    { q: '«Lo hicieron acercarse delante de él». ¿A quién?', ok: 'hijo', e: '7:13 · Cristo llega al Anciano de días, en el cielo, no a la tierra.' }],
+  /* Las escenas de la historia son las de Daniel 2, cada una en su bestia. */
+  escenas: LAMINAS.d2.escenas.filter(e => e.y < 9000).map(e => Object.assign({}, e, { f: 'd2/' + e.f }, e.parte ? { parte: D2_A_D7[e.parte] } : {})),
+  partes: [
+ {id:'leon',img:'leon',nombre:'León con alas de águila',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
+  texto:'La primera era como un león, y tenía alas de águila.',ref:'7:4',texto2:'Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.',ref2:'7:17',
+  corto:'Babilonia, la cabeza de oro de Daniel 2. Las alas son la rapidez de sus conquistas.',
+  interp:['El león es Babilonia (Jeremías 50:17), la misma cabeza de oro de Daniel 2: lo mejor de cada especie, como el oro entre los metales. Las alas de águila son la rapidez de sus conquistas (Habacuc 1:6-8).','Le arrancan las alas: Babilonia ya no conquista. Y recibe «corazón de hombre», un león sin valor. Así se vio Belsasar la noche en que cayó el reino, en 539 a.C. (5:6, 30).','Mira los verbos: sus alas «le fueron arrancadas», «fue levantada», «se le dio». Otro guía la historia.'],
+  fuente:BOHR+', p. 122.'},
+ {id:'oso',img:'oso',nombre:'Oso',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,a:-331,c:'#8C98A6',
+  texto:'semejante a un oso, la cual se alzaba de un costado más que del otro. En su boca, entre los dientes, tenía tres costillas',ref:'7:5',texto2:'Levántate y devora mucha carne.',ref2:'7:5',
+  corto:'Medo-Persia, la plata de Daniel 2. Las tres costillas: Lidia, Babilonia y Egipto.',
+  interp:['El oso es Medo-Persia (8:20), el pecho y los brazos de plata de Daniel 2. Se alza de un costado: de los dos pueblos, los persas llegaron a mandar más que los medos (8:3).','Las tres costillas son sus tres grandes conquistas: Lidia (547 a.C.), Babilonia (539 a.C.) y Egipto (525 a.C.).','«Levántate», se le dijo: alguien le da permiso para conquistar.'],
+  fuente:BOHR+', p. 123; Smith, <i>Las profecías de Daniel</i>, p. 56.'},
+ {id:'leopardo',img:'leopardo',nombre:'Leopardo de cuatro cabezas',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,a:-168,c:'#A85A2A',
+  texto:'semejante a un leopardo, con cuatro alas de ave en sus espaldas',ref:'7:6',texto2:'Esta bestia tenía cuatro cabezas; y le fue dado dominio.',ref2:'7:6',
+  corto:'Grecia, el bronce de Daniel 2. Cuatro alas: Alejandro conquistó más rápido que nadie.',
+  interp:['El leopardo es Grecia (8:21), el vientre y los muslos de bronce de Daniel 2. Un leopardo ya es veloz, y este tiene cuatro alas: Alejandro Magno conquistó de Egipto a la India en pocos años.','Las cuatro cabezas salieron después. Alejandro murió joven y, tras la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio: Casandro, Lisímaco, Tolomeo y Seleuco. Daniel 8:8 lo muestra como cuatro cuernos.','«Le fue dado dominio»: no lo tomó, se lo dieron.'],
+  fuente:BOHR+', p. 123; Smith, <i>Las profecías de Daniel</i>, p. 57.'},
+ {id:'bestia',img:'cuarta',nombre:'La bestia espantosa',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',
+  texto:'la cuarta bestia, espantosa, terrible y en gran manera fuerte, la cual tenía unos grandes dientes de hierro',ref:'7:7',texto2:'La cuarta bestia será un cuarto reino en la tierra, el cual será diferente de todos los otros reinos',ref2:'7:23',
+  corto:'Roma imperial. Sus dientes de hierro son las piernas de hierro de Daniel 2.',
+  interp:['La primera etapa de Roma. No se parece a ningún animal: era «muy diferente de todas las bestias» (7:7). Sus dientes de hierro son las piernas de hierro de Daniel 2, y en 7:19 tiene además «uñas de bronce».','Devora, desmenuza y pisotea: el reino más fuerte y el que más duró, la monarquía de hierro. De Pidna (168 a.C.), cuando acaba con la monarquía macedónica, a 476 d.C., cuando cae Rómulo Augústulo, el último emperador de occidente.','Daniel no le da nombre.'],
+  fuente:BOHR+', p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58.'},
+ {id:'cuernos',img:'cuarta',nombre:'Los diez cuernos',reino:'Roma dividida',fechas:'desde 476 d.C.',de:476,a:2026,c:'#4E6A8F',
+  texto:'y tenía diez cuernos',ref:'7:7',texto2:'Los diez cuernos significan que de aquel reino se levantarán diez reyes',ref2:'7:24',
+  corto:'Roma dividida: los reinos que salieron de Roma, como los diez dedos de Daniel 2.',
+  interp:['La segunda etapa de Roma. Las tribus del norte se repartieron el imperio de occidente, y en 476 d.C. cayó el último emperador. Son los diez dedos de Daniel 2.','Alamanes, francos, burgundios, vándalos, suevos, visigodos, sajones, ostrogodos, lombardos y hérulos. De ellos salieron las naciones de Europa occidental, que nunca se volvieron a unir.'],
+  fuente:BOHR+', p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24.'},
+ {id:'cuerno',img:'cuerno',nombre:'El cuerno pequeño',reino:'Roma papal',fechas:'supremacía 538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',
+  texto:'otro cuerno pequeño salió entre ellos, y delante de él fueron arrancados tres cuernos de los primeros',ref:'7:8',texto2:'serán entregados en sus manos hasta tiempo, tiempos y medio tiempo.',ref2:'7:25',
+  corto:'Roma papal: 1.260 años, de 538 a 1798. Herido en 1798, sana (Apocalipsis 13:3) y sigue en pie hasta que viene el Anciano de días (7:21-22).',
+  interp:['La tercera etapa de Roma: el poder religioso unido al político. Sale entre los diez cuernos, después de ellos (7:24), y arranca a tres: hérulos (493), vándalos (534) y ostrogodos (538).','Tiene ojos de hombre y una boca que habla «con gran insolencia» (7:8). Habla contra el Altísimo, persigue a los santos y piensa en cambiar los tiempos y la Ley (7:25).','Domina «tiempo, tiempos y medio tiempo»: 1.260 años, de 538 a 1798 d.C. En 1798 el general Louis-Alexandre Berthier entra en Roma y toma preso al papa Pío VI.','Hay una cuarta etapa: el papado sanado de su herida, «su herida mortal fue sanada» (Apocalipsis 13:3). El cuerno hace guerra contra los santos «hasta que vino el Anciano de días» (7:21-22).'],
+  fuente:BOHR+', p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492.'},
+ {id:'juicio',img:'juicio',nombre:'El juicio',reino:'El juicio en el cielo',fechas:'desde 1844 d.C.',de:1844,a:2026,c:'#B45309',
+  texto:'fueron puestos unos tronos y se sentó un Anciano de días',ref:'7:9',texto2:'El Juez se sentó y los libros fueron abiertos.',ref2:'7:10',
+  corto:'Desde 1844 el Padre juzga en el cielo, y el fallo es a favor de los santos (7:22).',
+  interp:['El juicio empieza cuando terminan los 1.260 años del cuerno (7:25-26) y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.','El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.','Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26).'],
+  fuente:'CS 477 y 533; '+BOHR+', p. 120-121, 276-280.'},
+ {id:'hijo',img:'hijo',nombre:'El Hijo del hombre',reino:'Cristo recibe el reino',fechas:'en el juicio',de:null,c:'#0E7490',
+  texto:'con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días',ref:'7:13',texto2:'su dominio es dominio eterno, que nunca pasará',ref2:'7:14',
+  corto:'Cristo va al Padre, no a la tierra: llega al juicio y recibe el reino.',
+  interp:['Uno «como un hijo de hombre» es Cristo. Las nubes son ángeles (Salmo 68:17) que lo llevan ante el Padre, al juicio, no a la tierra (CS 477).','Ahí recibe «dominio, gloria y reino» (7:14). Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27), herederos con Cristo (Romanos 8:17).'],
+  fuente:'CS 477; '+BOHR+', p. 280.'},
+ {id:'reino',img:'d2/e-monte',nombre:'El reino eterno',reino:'Dado a los santos',fechas:'para siempre',de:null,c:'#6B7B5A',
+  texto:'Después recibirán el reino los santos del Altísimo, y poseerán el reino hasta el siglo, eternamente y para siempre.',ref:'7:18',texto2:'cuyo reino es reino eterno, y todos los dominios lo servirán y obedecerán.',ref2:'7:27',
+  corto:'Las bestias pasan. El reino de Dios queda para siempre, y es de los santos.',
+  interp:['Cuatro veces el capítulo termina igual: el reino se da a los santos (7:14, 18, 22, 27). Es la piedra que se hace un gran monte en Daniel 2 (2:35, 44).','El juicio no es contra el pueblo de Dios: es a favor de él (7:22).'],
+  fuente:BOHR+', p. 121.'},
+  ],
+};
 module.exports = { LAMINAS };

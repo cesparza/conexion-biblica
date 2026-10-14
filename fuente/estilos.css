@@ -2860,3 +2860,54 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .lam-aviso{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:rgba(14,13,11,.72);color:#F4EEE2;font-size:.875rem;font-weight:600;pointer-events:none;white-space:nowrap;transition:opacity .4s}
 .lam-aviso.fuera{opacity:0}
 @media (prefers-reduced-motion:reduce){.lam-et::before{animation:none}}
+/* v204: láminas de escenas (Daniel 7): una imagen entera por parte, apaisada,
+   y una tira de partes con su miniatura que se ve tocable. */
+.lam.escenas .lam-esc{aspect-ratio:2050/1152;width:100%;background:#0E0D0B}
+.lam.escenas:not(.pres) .lam-esc{width:100%}
+.lam.pres.escenas:not(.ancho) .lam-esc{width:min(100%,calc((100vh - 380px) * 2050 / 1152))}
+.lam-tira-c{width:100%;min-width:0}
+.lam-tira-t{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--naranja-txt,#B65909);margin:0 0 6px}
+.lam-tira{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 8px;overscroll-behavior-x:contain}
+.lam-tb{flex:0 0 auto;width:148px;scroll-snap-align:start;display:flex;flex-direction:column;padding:0;border:2px solid var(--v-linea,#F0E6D2);border-radius:12px;
+  background:var(--card,#fff);color:var(--txt);font:inherit;text-align:left;cursor:pointer;overflow:hidden;box-shadow:var(--sh);transition:transform .2s,border-color .2s,box-shadow .2s;
+  animation:lamTb 1.6s ease-in-out 2}
+.lam-tb img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#2A2117}
+.lam-tb span{display:flex;flex-direction:column;gap:1px;padding:6px 8px 8px;border-top:4px solid var(--c)}
+.lam-tb b{font-size:.875rem;line-height:1.2}
+.lam-tb small{font-size:.75rem;color:var(--gris);line-height:1.25}
+.lam-tb small.f{font-weight:700;color:var(--azul);font-variant-numeric:tabular-nums}
+.lam-tb:hover,.lam-tb:focus-visible{transform:translateY(-2px);border-color:var(--c)}
+.lam-tb.on{border-color:var(--naranja,#E8720C);box-shadow:0 0 0 2px var(--naranja,#E8720C)}
+@keyframes lamTb{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 45%,transparent)}}
+@media (min-width:900px){
+  .lam.escenas:not(.pres) .lam-marco{grid-template-columns:minmax(0,1fr) minmax(300px,400px)}
+  .lam.escenas:not(.pres) .lam-esc{justify-self:stretch}
+  .lam.escenas:not(.pres) .lam-tira-c{grid-column:1}
+  .lam.escenas:not(.pres) .lam-hoja{grid-column:2;grid-row:1 / span 2}
+  .lam.escenas .lam-tira{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));overflow:visible}
+  .lam.escenas .lam-tb{width:auto}
+}
+.lam-chip{position:absolute;left:12px;top:12px;z-index:2;max-width:calc(100% - 24px);display:flex;flex-direction:column;padding:6px 12px 6px 10px;border-radius:12px;
+  border-left:4px solid var(--c);background:rgba(14,11,7,.72);color:#fff;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);pointer-events:none}
+.lam-chip[hidden]{display:none}
+.lam-chip b{font-size:1rem;line-height:1.2}
+.lam-chip span{font-size:.75rem;color:#F2D9A6;font-variant-numeric:tabular-nums}
+.lam.pres .lam-chip b{font-size:1.125rem}
+.lam.pres .lam-chip span{font-size:.875rem}
+.lam-portada{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#F2C46B;margin-bottom:6px}
+@media (prefers-reduced-motion:reduce){.lam-tb{animation:none;transition:none}}
+/* La imagen al lado del texto ocupa el 56 % del ancho, centrada en alto: el nombre va sobre ella. */
+.lam-esc.lado .lam-chip{left:calc(1% + 12px);top:calc(22% + 12px);max-width:calc(56% - 24px)}
+@media (min-width:900px){
+  .lam.escenas:not(.pres) .lam-esc{width:min(100%,calc(46vh * 2050 / 1152));justify-self:center}
+  .lam.escenas .lam-tb img{aspect-ratio:2/1}
+}
+.lam-figs{margin:10px 0 0}
+.lam.pres.ancho .lam-figs .lam-fig img{max-height:18vh}
+.lam.pres:not(.ancho):not(.sin-texto) .lam-chip{display:none}
+/* En el celular el nombre va abajo y más chico: arriba tapaba la cabeza de la bestia. */
+@media (max-width:560px){
+  .lam-chip{top:auto;bottom:8px;left:8px;padding:3px 8px 4px;border-radius:8px}
+  .lam-chip b,.lam.pres .lam-chip b{font-size:.875rem}
+  .lam-chip span,.lam.pres .lam-chip span{font-size:.75rem}
+}

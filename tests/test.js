@@ -2487,6 +2487,41 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/lamTarjeta\(id\)/.test(js)&&/const LAMINAS_DIR='\/laminas\/';/.test(js),'El capítulo ofrece la lámina y las imágenes se piden aparte (LAMINAS_DIR)');
 }
 
+/* v204: la lámina de Daniel 7 (tipo 'escenas'): una imagen entera por parte.
+   Las imágenes existen (las de Daniel 2 que reusa también), cada texto está
+   literal en RV1995 (Daniel 7, y lo citado de Daniel 8 y Apocalipsis), y
+   sigue la lectura de Camilo: bestia = Roma imperial, diez cuernos = Roma
+   dividida, cuerno pequeño = Roma papal sanada; la cuarta bestia no es el dragón. */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const {VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const L=LAMINAS.d7, n=t=>String(t).replace(/<[^>]+>/g,'').replace(/[«»“”—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  const d7=n(Object.values(VERS.d7).join(' ')), otros=n([...Object.values(VERS.d8),...Object.values(VERS_AP).flatMap(c=>Object.values(c))].join(' '));
+  ok(L&&L.tipo==='escenas'&&!LAMINAS.d2.tipo,'Daniel 7 es una lámina de escenas y Daniel 2 sigue siendo la estatua');
+  const ruta=f=>path.join(RAIZ,'laminas',(f.includes('/')?'':L.dir)+f+'.webp');
+  const fs7=[L.inicioF,L.miniF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),L.despues.f,L.cierre.f,...L.escenas.map(e=>e.f)];
+  const faltan=[...new Set(fs7)].filter(f=>!fs.existsSync(ruta(f)));
+  ok(!faltan.length&&fs7.includes('d2/e1798'),'La lámina de Daniel 7 tiene sus '+new Set(fs7).size+' imágenes'+(faltan.length?' (faltan '+faltan.join(', ')+')':''));
+  const textos=[...L.partes.flatMap(p=>[p.texto,p.texto2]),...L.historia.map(h=>h.texto),L.despues.texto,L.cierre.texto];
+  const malos=textos.filter(t=>!String(t).split('…').every(tr=>d7.includes(n(tr))));
+  ok(!malos.length,'Cada texto de la lámina de Daniel 7 está literal en Daniel 7 RV1995 ('+textos.length+')'+(malos.length?': '+malos[0].slice(0,50):''));
+  /* Lo que va entre comillas en la interpretación también es literal (Daniel 7-8 o Apocalipsis). */
+  const citas=[...L.partes.flatMap(p=>p.interp.concat(p.corto)),...L.historia.map(h=>h.nota),L.despues.nota].flatMap(t=>[...String(t).matchAll(/«([^»]+)»/g)].map(m=>m[1]));
+  const sueltas=citas.filter(c=>!d7.includes(n(c))&&!otros.includes(n(c)));
+  ok(citas.length>=15&&!sueltas.length,'Las citas dentro de la interpretación de Daniel 7 son literales ('+citas.length+')'+(sueltas.length?': '+sueltas.slice(0,3).join(' | '):''));
+  ok(L.partes.length===9&&L.partes.every(p=>p.img&&p.c&&p.interp.length&&/\S/.test(p.fuente)&&p.corto),'Cada parte de Daniel 7 trae su imagen, interpretación y fuente');
+  const ids=new Set(L.partes.map(p=>p.id));
+  ok(L.reto.length>=4&&L.reto.every(r=>ids.has(r.ok))&&L.tiempo.every(k=>ids.has(k))&&L.paralelo.every(r=>ids.has(r[0]))&&L.escenas.every(e=>!e.parte||ids.has(e.parte)),
+    'Pruébate, la línea de tiempo, el paralelo y las escenas de Daniel 7 nombran partes que existen');
+  const P=id=>L.partes.find(p=>p.id===id);
+  ok(P('bestia').reino==='Roma imperial'&&P('cuernos').reino==='Roma dividida'&&P('cuerno').reino==='Roma papal'&&/Apocalipsis 13:3/.test(P('cuerno').corto+P('cuerno').interp.join(' '))&&/7:21-22/.test(P('cuerno').corto),
+    'Daniel 7 sigue la lectura de Camilo: Roma en tres etapas y el papado sanado hasta que viene el Anciano de días');
+  ok(!/drag[oó]n/i.test(JSON.stringify(L)),'La cuarta bestia no se llama dragón');
+  ok(!/\b(según|para) Bohr\b|Bohr (dice|ve|explica|compara)/.test(JSON.stringify(L).replace(/Fuente:[^"]*/g,'')),'Voz directa: Bohr solo en la fuente');
+  ok(/lamTarjeta\(id\)/.test(js)&&!/lamAbre\('d2'/.test(js),'Daniel 7 se ofrece desde su capítulo igual que Daniel 2 (nada atado a d2)');
+}
+
 /* v179: la interpretación con fuentes (Bohr, Elena de White, las notas de
    Camilo) va en su propia capa: secciones 'contexto' y preguntas f:'c', cada
    una con «Fuente:». En Apocalipsis y, aparte del examen, en Daniel. */
