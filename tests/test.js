@@ -2473,12 +2473,12 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
   const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
   const L=LAMINAS.d2, n=t=>String(t).replace(/[«»—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
-  const todo=n(Object.values(VERS.d2).join(' '));
+  const todo=n([...Object.values(VERS.d1),...Object.values(VERS.d2)].join(' ')); // v203: el primer paso cita Daniel 1:2
   const faltan=[...L.capas,'piedra','babilonia','monte'].filter(k=>!fs.existsSync(path.join(RAIZ,'laminas',L.dir+k+'.webp')));
   ok(!faltan.length,'La lámina de Daniel 2 tiene sus 9 imágenes'+(faltan.length?' (faltan '+faltan.join(', ')+')':''));
   const textos=[...L.partes.flatMap(p=>[p.texto,p.texto2]),...L.historia.map(h=>h.texto),L.despues.texto,L.inicio.texto,L.cierre.texto];
   const malos=textos.filter(t=>!String(t).split('…').every(tr=>todo.includes(n(tr))));
-  ok(!malos.length,'Cada texto de la lámina está literal en Daniel 2 RV1995 ('+textos.length+')'+(malos.length?': '+malos[0].slice(0,50):''));
+  ok(!malos.length,'Cada texto de la lámina está literal en Daniel 1-2 RV1995 ('+textos.length+')'+(malos.length?': '+malos[0].slice(0,50):''));
   ok(L.partes.every(p=>/\S/.test(p.fuente)&&p.interp.length&&p.c)&&L.partes.length===8,'Cada parte trae su interpretación y su fuente');
   const ids=new Set(L.partes.map(p=>p.id));
   ok(L.capas.every(k=>ids.has(k)&&L.cajas[k]&&L.etiquetas[k])&&L.reto.every(r=>ids.has(r.ok))&&L.tiempo.every(k=>ids.has(k)),'Las capas, etiquetas, cajas, la línea de tiempo y Pruébate nombran partes que existen');

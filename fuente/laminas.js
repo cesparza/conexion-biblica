@@ -44,6 +44,9 @@ const LAMINAS = {
   /* v191: `f` es la escena de cada paso de la historia (laminas/d2/hN.webp).
      Mientras no exista la imagen, se ve la estatua entera, no a media luz. */
   historia: [
+    /* v203 (Camilo 13-oct): la presentación empieza por el contexto, el cautiverio de 605. */
+    { f: 'e605', titulo: 'Cautivos en Babilonia', ref: 'Daniel 1:2', texto: 'El Señor entregó en sus manos a Joacim, rey de Judá',
+      nota: 'En 605 a.C. Nabucodonosor sitia Jerusalén y se lleva a Daniel, Ananías, Misael y Azarías, jóvenes de unos 18 años (1:1-6). Vendrán dos deportaciones más, en 597 y 586 a.C. En el segundo año de Nabucodonosor llega el sueño (2:1).' },
     { f: 'h1', titulo: 'Un sueño que nadie puede decir', ref: 'Daniel 2:1, 11', texto: 'tuvo Nabucodonosor sueños, y se turbó su espíritu y se le fue el sueño.',
       nota: 'El rey exige que le digan el sueño y su significado. Los sabios responden que solo podrían «los dioses cuya morada no está entre los hombres» (2:11), y el rey manda matarlos a todos (2:12).' },
     { f: 'h2', titulo: 'Daniel pide tiempo y ora', ref: 'Daniel 2:18-19', texto: 'para que pidieran misericordias del Dios del cielo sobre este misterio',

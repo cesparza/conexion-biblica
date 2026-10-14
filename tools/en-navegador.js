@@ -317,7 +317,7 @@ for (const W of ANCHOS) {
 
   /* ── 3c. la lámina de Daniel 2 (v185): se abre desde el capítulo, cada
      etiqueta abre su explicación dentro de la imagen, la línea de tiempo
-     enciende lo que gobernaba, y Presentar recorre los 15 pasos. ── */
+     enciende lo que gobernaba, y Presentar recorre los 16 pasos (v203: empieza por el cautiverio). ── */
   {
     await p.evaluate(() => { ponCat('pa'); ponPest('examen'); verCap('d2', true); });
     await p.waitForTimeout(300);
@@ -370,10 +370,10 @@ for (const W of ANCHOS) {
       ok(cabe[0] <= 1 && cabe[1] <= cabe[2], W + ' · v191: Presentar cabe en la pantalla, con Siguiente a la vista (' + cabe.join(', ') + ')');
     }
     ok(k[1] === 'hierro', W + ' · en Presentar, tocar el hierro lleva a su paso (' + (k[0] + 1) + ')');
-    for (let i = 0; i < 16; i++) await p.keyboard.press('ArrowRight');
+    for (let i = 0; i < 17; i++) await p.keyboard.press('ArrowRight');
     await p.waitForTimeout(300);
     const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent]);
-    ok(fin[0] === '15 / 15' && /fiel su interpretación/.test(fin[1]), W + ' · Presentar recorre los 15 pasos y termina en 2:45 (' + fin[0] + ')');
+    ok(fin[0] === '16 / 16' && /fiel su interpretación/.test(fin[1]), W + ' · Presentar recorre los 16 pasos y termina en 2:45 (' + fin[0] + ')');
     await p.evaluate(() => lamCierra());
   }
   /* v189: tocar el nombre de un personaje abre su ficha en la hoja. */

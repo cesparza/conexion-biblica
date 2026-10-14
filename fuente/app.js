@@ -210,8 +210,8 @@ function lamAbre(cid,modo){
   el.hidden=false;el.className='lam'+(modo==='presentar'?' pres':'')+(lamAncho()?' ancho':'');
   document.body.classList.add('leyendo');
   const hist=[...L.historia.map((h,i)=>'<button type="button" class="lam-paso" data-h="'+i+'" onclick="lamHistoria('+i+')"><i>'+(i+1)+'</i>'+esc(h.titulo)+'</button>'),
-    '<button type="button" class="lam-paso" data-h="est" onclick="lamInicio()"><i>5</i>La estatua</button>',
-    '<button type="button" class="lam-paso" data-h="desp" onclick="lamHistoria(\'desp\')"><i>6</i>'+esc(L.despues.titulo)+'</button>'].join('');
+    '<button type="button" class="lam-paso" data-h="est" onclick="lamInicio()"><i>'+(L.historia.length+1)+'</i>La estatua</button>',
+    '<button type="button" class="lam-paso" data-h="desp" onclick="lamHistoria(\'desp\')"><i>'+(L.historia.length+2)+'</i>'+esc(L.despues.titulo)+'</button>'].join('');
   el.innerHTML='<div class="lam-cab"><div class="lam-cabtx"><div class="lam-ant">Daniel 2 · '+(modo==='presentar'?'presentación':'estudio interactivo')+'</div>'+
     '<div class="lam-tit">'+esc(L.titulo)+'</div></div><div class="lam-bots">'+
     (modo==='presentar'?'':'<button type="button" class="btn tono" onclick="lamAbre(\''+cid+'\',\'presentar\')">'+IC('play')+' Presentar</button>')+
@@ -291,7 +291,8 @@ function lamHistGeo(){
   const lado=lamAncho()&&!lamSinTexto,ve=h.style.opacity==='1';
   h.setAttribute('x',lado?-130:-150);h.setAttribute('width',lado?1150:2050);
   h.setAttribute('preserveAspectRatio',lado?'xMidYMid meet':'xMidYMid slice');
-  bg.style.opacity=ve&&lado?'1':'0';osc.style.opacity=ve&&lado?'.62':'0';
+  /* v203: fondo liso y oscuro, como una diapositiva; la copia oscurecida de la misma escena se veía repetida. */
+  bg.style.opacity='0';osc.style.opacity=ve&&lado?'1':'0';
 }
 function lamHist(t){
   const svg=document.getElementById('lamSvg');if(!svg)return;
@@ -1875,6 +1876,16 @@ function ancla(){
        borde derecho dejaba el popover metido debajo del riel. */
     const nav=document.querySelector('.nav');
     const borde=nav&&nav.getBoundingClientRect?nav.getBoundingClientRect().right:r.right;
+    /* v203: dentro de la app de Jóvenes la ficha no está en un riel sino arriba,
+       en una barra a lo ancho: anclar al borde de esa barra dejaba el panel fuera
+       de la pantalla y el toque «no hacía nada». Ahí el panel sale debajo de la ficha. */
+    if(borde-r.right>200){
+      const ancho=Math.min(420,(window.innerWidth||1200)-32);
+      h.classList.remove('hoja-arriba');
+      h.style.setProperty('--yo-x',Math.round(Math.max(16,Math.min(r.left,(window.innerWidth||1200)-ancho-16)))+'px');
+      h.style.setProperty('--yo-y',Math.round(r.bottom+8)+'px');
+      return;
+    }
     h.style.setProperty('--yo-x',Math.round(Math.max(r.right,borde)+12)+'px');
 
     /* HACIA ARRIBA O HACIA ABAJO, medido y no supuesto.
