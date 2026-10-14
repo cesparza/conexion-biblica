@@ -3151,7 +3151,10 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
    una estatua con un solo foco: con transparencia se perdían contra el cielo. */
 .lam-parte.apagada.vecina,.lam-parte.vecina{opacity:1;filter:saturate(.6) brightness(.72) contrast(1.05)}
 .lam-luz{pointer-events:none;mix-blend-mode:screen}
-.lam-parte.on{filter:drop-shadow(0 0 16px rgba(255,226,140,.95))}
+/* v215: la luz va detrás de la estatua (lam-brillo), no sobre la capa: así no se derrama sobre la vecina. */
+.lam-parte.on{filter:brightness(1.06) contrast(1.04)}
+.lam-brillo{opacity:0;transition:opacity .45s;filter:drop-shadow(0 0 7px rgba(255,226,140,.95)) drop-shadow(0 0 18px rgba(255,214,120,.8))}
+.lam-brillo.on{opacity:1}
 .lam-hit{cursor:pointer}
 /* v188: las capas son imágenes del tamaño de toda la escena; si recibieran el toque, la de encima (los dedos) tapaba a todas las demás. Solo los rectángulos lo reciben. */
 .lam-svg image{pointer-events:none}
@@ -3167,7 +3170,7 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-esc .lam-svg,.lam-esc .lam-ets{transition:opacity .5s ease}
 .lam-esc.cargando .lam-svg,.lam-esc.cargando .lam-ets{opacity:0}
 .lam-hit{cursor:pointer}
-@media (hover:hover){.lam-parte:hover{filter:drop-shadow(0 0 10px rgba(255,226,140,.7))}}
+@media (hover:hover){.lam-parte:hover{filter:brightness(1.12)}}
 .lam-ets{position:absolute;inset:0;pointer-events:none}
 .lam-et{position:absolute;pointer-events:auto;max-width:29%;display:grid;grid-template-columns:auto 1fr;column-gap:7px;align-items:center;
   padding:6px 10px 6px 8px;border:1px solid rgba(255,255,255,.22);border-radius:12px;
@@ -3655,12 +3658,33 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .cmp-carril-n{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cine-gris);white-space:nowrap}
 .cmp-carril-t{position:relative;height:calc(var(--pistas,1) * 16px - 4px);
   background:linear-gradient(rgba(243,237,226,.08),rgba(243,237,226,.08)) 0 50% / 92% 1px no-repeat}
-.cmp-tr{position:absolute;top:calc(var(--n,0) * 16px);height:12px;padding:0;border:0;border-radius:999px;background:var(--c);cursor:pointer;
+.cmp-tr{position:absolute;top:0;height:12px;padding:0;border:0;border-radius:999px;background:var(--c);cursor:pointer;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 0 10px -2px var(--c);transition:filter .25s,transform .25s}
 .cmp-tr::before{content:'';position:absolute;left:-2px;right:-2px;top:-8px;bottom:-8px}
 .cmp-tr:hover,.cmp-tr:focus-visible{filter:brightness(1.3);transform:scaleY(1.3)}
 .cmp-tr:focus-visible{outline:2px solid var(--cine-oro);outline-offset:3px}
 .cmp-tr.fin{left:93.5%;width:5.5%;background:linear-gradient(90deg,var(--cine-oro),var(--cine-oro2));box-shadow:0 0 12px rgba(214,178,106,.6)}
+/* v215: un carril por visión. Lo que gobierna al mismo tiempo (Roma papal, el juicio) es
+   un hilo fino bajo el carril con su nombre, no otra barra. */
+.cmp-rio .cmp-carril-t{height:12px;background-position:0 6px}
+.cmp-rio .con-hilo .cmp-carril-t{height:34px}
+.cmp-rio .con-hilo .cmp-carril-n{align-self:start;line-height:12px}
+.cmp-hilo{position:absolute;top:16px;height:18px;padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer}
+.cmp-hilo i{position:absolute;left:0;right:0;top:0;height:3px;border-radius:999px;background:var(--c);box-shadow:0 0 0 1px rgba(10,9,7,.6)}
+.cmp-hilo span{position:absolute;left:0;top:5px;font-size:.75rem;line-height:1.1;white-space:nowrap;color:color-mix(in srgb,var(--c) 55%,#F3EDE2)}
+.cmp-hilo span small{font-size:.75rem;color:var(--cine-tenue);font-variant-numeric:tabular-nums}
+.cmp-hilo.der span{left:auto;right:0}
+.cmp-hilo::before{content:'';position:absolute;left:-2px;right:-2px;top:-6px;bottom:-4px}
+.cmp-hilo:hover i,.cmp-hilo:focus-visible i{filter:brightness(1.35)}
+.cmp-hilo:focus-visible{outline:2px solid var(--cine-oro);outline-offset:3px;border-radius:8px}
+.cmp-ley{display:contents}
+.cmp-ley p{display:flex;flex-wrap:wrap;gap:4px 16px;margin:2px 0 0;font-size:.75rem;color:var(--cine-tenue)}
+.cmp-ley p span{display:inline-flex;align-items:center;gap:6px}
+.cmp-ley i{display:inline-block;width:18px;border-radius:999px}
+.cmp-ley .l-tr{height:8px;background:#4E6A8F}
+.cmp-ley .l-hilo{height:3px;background:#A0694A}
+.cmp-ley .l-fin{width:12px;height:8px;background:linear-gradient(90deg,var(--cine-oro),var(--cine-oro2))}
+@container (max-width:420px){.cmp-hilo span small{display:none}}
 .cmp-eje-t{position:relative;height:24px;border-top:1px solid var(--cine-linea);font-size:.75rem;color:var(--cine-tenue);font-variant-numeric:tabular-nums}
 .cmp-eje-t span{position:absolute;top:7px;transform:translateX(-50%);white-space:nowrap}
 .cmp-eje-t span:first-child{transform:none}
@@ -4235,6 +4259,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .cmp-fases li i{grid-row:1 / span 3;font-style:normal;font-family:var(--cine-serif);color:var(--cine-oro);font-size:1.125rem}
 .cmp-fases li b{font-family:var(--cine-serif);font-weight:500;font-size:1.125rem;color:var(--cine-tinta)}
 .cmp-fases li small{font-size:.875rem;color:var(--cine-gris)}
+.cmp-fases-r{display:block;margin-top:2px;font-family:var(--cine-sans);font-style:normal;font-size:.75rem;font-weight:600;letter-spacing:.04em;color:var(--cine-oro)}
 .cmp-fases li span{font-size:.875rem;color:var(--cine-tenue);margin-top:2px}
 .cmp-fases p{margin:12px 0 0;color:var(--cine-gris);font-size:1rem}
 .cmp-fases .cmp-lam{margin-top:10px}
@@ -4262,7 +4287,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
    cine. Una serif y una sans (las de v211), un solo acento de oro, hilos finos en
    vez de cajas. Los tamaños nuevos van en la escala (--v-t…): crecen con la escena (cqw). */
 :root{--v-tet:clamp(.875rem,2.3cqw,1.1875rem);--v-tfin:clamp(1.5rem,5cqw,4.5rem);--v-treel:clamp(.75rem,1.3cqw,1.0625rem);
-  --v-tfincita:clamp(1rem,1.55cqw,1.375rem);--v-tfinnota:clamp(.875rem,1.2cqw,1.125rem)}
+  --v-tfincita:clamp(1rem,1.55cqw,1.375rem);--v-tfinnota:clamp(.875rem,1.2cqw,1.125rem);--v-tfinx:clamp(1.375rem,4.2cqw,2.25rem)}
 
 /* 1. EL RIEL DE LAS PARTES (lamRielHTML). A lo ancho bajo la imagen en pantallas
    angostas; en pantalla ancha, una columna al lado de la imagen. */
@@ -4423,6 +4448,9 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .lam-fin.ve [data-o="4"]{transition-delay:3.4s}
 .lam-fin.quieto,.lam-fin.quieto [data-o]{transition:none}
 .lam.pres:not(.ancho) .lam-fin-cita,.lam.pres:not(.ancho) .lam-fin-nota{display:none}
+/* v215: en Explorar la cita y la nota del cierre ya están en la hoja de al lado. */
+.lam:not(.pres) .lam-fin-cita,.lam:not(.pres) .lam-fin-nota{display:none}
+.lam:not(.pres) .lam-fin-tit{font-size:var(--v-tfinx)}
 @media (max-width:640px){.lam-fin-reel{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:10px}.lam-fin-reel::before{display:none}.lam-fin-reel{--m:44px}}
 @media (prefers-reduced-motion:reduce){.lam-fin,.lam-fin [data-o]{transition:none}}
 .lam-intro-d{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:4px 0 0;padding:14px 0 0;border-top:1px solid var(--cine-linea)}
@@ -4430,6 +4458,11 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .lam-intro-d dt{font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine2);line-height:1;color:var(--cine-oro2);font-variant-numeric:lining-nums}
 .lam-intro-d dd{margin:4px 0 0;font-size:.75rem;line-height:1.3;color:var(--cine-gris)}
 .lam-nav-n>span:first-child{white-space:nowrap}
+/* v215: el recorrido entero (historia, partes, después, cierre) tiene 16 a 30 pasos: la
+   regla se encoge para caber entre los dos botones, nunca se monta sobre ellos. */
+.lam-nav-n{width:100%;min-width:0;justify-content:center}
+.lam-nav-bar{flex:0 1 auto;min-width:0;overflow:hidden}
+.lam-nav-bar i{flex:0 1 9px;min-width:2px}
 .lam-riel .lam-tira-bots{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .lam-riel .lam-tira-bots .btn{min-height:40px;padding:0 10px;font-size:.875rem;justify-content:center}
 @media (min-width:1100px){
@@ -4526,6 +4559,130 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .prep .cat-fila{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 .prep .cat-btn{text-align:left}
 .bv-g{margin:.9rem 0 .4rem;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+
+/* ═══════════ v215: LOS ÚLTIMOS ACONTECIMIENTOS ═══════════
+   Una matriz: los siete acontecimientos arriba, los libros a la izquierda. Punto lleno:
+   el libro lo muestra; aro: lo supone; raya: no lo trae. La columna elegida se ilumina. */
+.cmp-ult{margin-top:30px;padding-top:24px;border-top:1px solid var(--cine-linea);display:grid;gap:16px}
+.cmp-ult-cab .cmp-tit{margin-top:6px}
+.cmp-ult-m{display:grid;grid-template-columns:max-content repeat(var(--n),minmax(0,1fr));align-items:center;gap:0;position:relative}
+.cmp-ult-0{display:block}
+.cmp-ult-ev{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;min-height:44px;padding:6px 2px 10px;border:0;border-radius:12px 12px 0 0;
+  background:none;color:var(--cine-gris);font:inherit;text-align:center;cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.cmp-ult-ev i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-style:normal;font-family:var(--cine-serif);font-size:1rem;
+  color:var(--cine-tinta);box-shadow:inset 0 0 0 1px rgba(243,237,226,.28);background:#15110C;position:relative;z-index:1}
+.cmp-ult-ev span{font-size:.75rem;line-height:1.25;text-wrap:balance;overflow-wrap:anywhere}
+.cmp-ult-ev::after{content:'';position:absolute;top:21px;left:-50%;right:50%;height:1px;background:rgba(214,178,106,.35)}
+.cmp-ult-ev[data-i="0"]::after{display:none}
+.cmp-ult-ev:hover{color:var(--cine-tinta)}
+.cmp-ult-ev.on{background:rgba(214,178,106,.10);color:var(--cine-oro2)}
+.cmp-ult-ev.on i{background:var(--cine-oro);color:#17120A;box-shadow:0 0 16px rgba(214,178,106,.55)}
+.cmp-ult-ev:focus-visible{outline:2px solid var(--cine-oro);outline-offset:-2px}
+.cmp-ult-lb{padding:7px 14px 7px 0;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cine-gris);white-space:nowrap;border-top:1px solid rgba(243,237,226,.06)}
+.cmp-ult-c{display:grid;place-items:center;height:100%;min-height:30px;border-top:1px solid rgba(243,237,226,.06)}
+.cmp-ult-c.on{background:rgba(214,178,106,.10)}
+.cmp-ult-c b,.cmp-ult-ley b{display:block;width:10px;height:10px;border-radius:50%}
+.cmp-ult-c.si b,.cmp-ult-ley b.si{background:var(--cine-oro)}
+.cmp-ult-c.sup b,.cmp-ult-ley b.sup{box-shadow:inset 0 0 0 1.5px var(--cine-oro)}
+.cmp-ult-c.no b,.cmp-ult-ley b.no{width:8px;height:1px;border-radius:0;background:rgba(243,237,226,.22)}
+.cmp-ult-c.on.si b{box-shadow:0 0 10px rgba(214,178,106,.8)}
+.cmp-ult-claves{display:none;flex-wrap:wrap;gap:4px 12px;margin:0;font-size:.75rem;color:var(--cine-gris)}
+.cmp-ult-claves b{font-family:var(--cine-serif);font-weight:500;color:var(--cine-oro)}
+@container (max-width:620px){.cmp-ult-claves{display:flex}}
+.cmp-ult-ley{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;font-size:.75rem;color:var(--cine-tenue)}
+.cmp-ult-ley span{display:inline-flex;align-items:center;gap:7px}
+.cmp-ult-det{padding:18px;border-radius:12px;background:rgba(243,237,226,.04);box-shadow:inset 0 0 0 1px rgba(243,237,226,.1);display:grid;gap:14px}
+.cmp-ult-dc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start}
+.cmp-ult-img{display:block;width:clamp(84px,18cqw,168px);aspect-ratio:16/10;border-radius:8px;overflow:hidden;box-shadow:0 0 0 1px var(--cine-linea)}
+.cmp-ult-img img{display:block;width:100%;height:100%;object-fit:cover}
+.cmp-ult-num{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;font-family:var(--cine-serif);font-size:1.375rem;color:var(--cine-oro2);box-shadow:inset 0 0 0 1px var(--cine-oro)}
+.cmp-ult-dc small{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cine-oro)}
+.cmp-ult-dc h4{margin:4px 0 6px;font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine3);line-height:1.15;color:var(--cine-tinta)}
+.cmp-ult-dc p{margin:0;color:var(--cine-gris);font-size:1rem;line-height:1.5}
+.cmp-ult-citas{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cmp-ult-citas li{padding-left:14px;border-left:2px solid rgba(214,178,106,.5);font-family:var(--cine-serif);font-size:1.125rem;line-height:1.45;color:#E9E1D3}
+.cmp-ult-citas q{quotes:'«' '»'}
+.cmp-ult-citas cite{font-family:var(--cine-sans);font-style:normal;font-size:.75rem;font-weight:600;color:var(--cine-oro);white-space:nowrap}
+.cmp-ult-libs{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.cmp-ult-k{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cine-tenue);margin-right:4px}
+.cmp-ult-k.no{flex-basis:100%;margin-top:2px;text-transform:none;letter-spacing:0;font-style:italic}
+.cmp-ult-lib{display:inline-flex;gap:5px;align-items:baseline;padding:4px 10px;border-radius:999px;font-size:.875rem;color:var(--cine-gris);box-shadow:inset 0 0 0 1px rgba(214,178,106,.45);font-variant-numeric:tabular-nums}
+.cmp-ult-lib b{font-weight:600;color:var(--cine-tinta)}
+.cmp-ult-lib.sup{box-shadow:inset 0 0 0 1px rgba(214,178,106,.3);border:1px dashed transparent}
+.cmp-ult-nav{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cmp-ult-nav .btn{color:var(--cine-oro)}
+.cmp-ult-nav .btn:disabled{opacity:.35}
+.cmp-ult-f{margin:0;font-size:.75rem;color:var(--cine-tenue)}
+@container (max-width:620px){
+  .cmp-ult-ev span{display:none}
+  .cmp-ult-ev{padding-bottom:6px}
+  .cmp-ult-lb{padding-right:10px;letter-spacing:.06em}
+  .cmp-ult-dc{grid-template-columns:minmax(0,1fr)}
+  .cmp-ult-img{width:100%;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){.cmp-ult-ev{transition:none}}
+/* En la lámina: la misma secuencia, corta, con el acontecimiento de la parte encendido. */
+.lam-ult{margin-top:16px;padding:14px;border-radius:12px;background:rgba(243,237,226,.04);box-shadow:inset 0 0 0 1px rgba(243,237,226,.1)}
+.lam .lam-ult .lam-rot{color:var(--cine-oro)}
+.lam-ult ol{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;position:relative}
+.lam-ult ol::before{content:'';position:absolute;left:7%;right:7%;top:11px;height:1px;background:rgba(214,178,106,.3)}
+.lam-ult li{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;min-width:0}
+.lam-ult li i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;font-style:normal;font-size:.75rem;color:var(--cine-gris);background:#15110C;box-shadow:inset 0 0 0 1px rgba(243,237,226,.22)}
+.lam-ult li.en i{color:var(--cine-tinta);box-shadow:inset 0 0 0 1px var(--cine-oro)}
+.lam-ult li.on i{background:var(--cine-oro);color:#17120A;box-shadow:0 0 12px rgba(214,178,106,.7)}
+.lam-ult li span{font-size:.75rem;line-height:1.2;color:var(--cine-tenue);text-wrap:balance;overflow-wrap:normal;hyphens:none}
+.lam-ult li.en span{color:var(--cine-gris)}
+.lam-ult li.on span{color:var(--cine-oro2)}
+.lam-ult li:not(.on):not(.en) span{visibility:hidden}
+.lam-ult p{margin:10px 0 0;font-size:.875rem;line-height:1.45;color:var(--cine-gris)}
+.lam-ult .lam-ult-ir{margin-top:6px;color:var(--cine-oro);padding-left:0}
+@media (max-width:560px){.lam-ult li span{display:none}}
+
+/* ═══════════ v215: «QUIÉN ESTUDIA», MÁS FINO (Camilo, 14-oct) ═══════════
+   Las actividades ya no son pastillas que se parten («En esto creemos · Los dos del
+   examen escrito» en cuatro renglones): son filas bajo la persona, la actividad arriba y
+   la categoría debajo, con un hilo a la izquierda que las une a su dueño. «Agregar
+   persona» es una fila más, con su círculo, no una caja punteada. Un solo ritmo: 8, 12, 16. */
+.hoja-yo .hoja-cab{padding:16px 16px 12px;border-bottom:1px solid var(--v-linea,#e5e7eb)}
+.hoja-yo .hoja-ref{letter-spacing:.12em}
+.hoja-yo .hoja-sub{margin-top:4px;display:flex;align-items:center;gap:6px}
+.hoja-yo .ident-cuerpo{padding:12px 12px 16px}
+.ident-cuerpo .alu-sel{gap:4px;margin-bottom:0}
+.ident-cuerpo .alu-per{border-radius:12px;transition:background-color .2s ease}
+.ident-cuerpo .alu-per.on{border-color:transparent;background:color-mix(in srgb,var(--azul) 7%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--azul) 22%,transparent)}
+.alu-elige{gap:12px;min-height:60px;padding:10px 8px 10px 10px}
+.alu-elige .an{font-size:1rem;font-weight:700;letter-spacing:-.005em}
+.alu-elige .ac{margin-top:2px}
+.ident-cuerpo .alu-av{width:40px;height:40px;font-size:1rem;font-weight:700;letter-spacing:.02em;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--azul) 82%,#fff),var(--azul));color:var(--card);
+  box-shadow:0 0 0 2px var(--card),0 0 0 3px color-mix(in srgb,var(--azul) 22%,transparent)}
+.ident-cuerpo .alu-per:not(.on) .alu-av{background:color-mix(in srgb,var(--azul) 14%,var(--card));color:var(--azul);box-shadow:none}
+.alu-ok{width:24px;height:24px;border-radius:50%;background:var(--verde-txt);color:var(--card)}
+.alu-ok .ico-t{width:14px;height:14px}
+.ident-cuerpo .alu-per .alu-acts{position:relative;display:flex;flex-direction:column;gap:2px;padding:0 8px 10px 58px}
+.ident-cuerpo .alu-per .alu-acts::before{content:'';position:absolute;left:29px;top:-6px;bottom:18px;width:1px;background:color-mix(in srgb,var(--azul) 20%,transparent)}
+.ident-cuerpo .alu-act{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:10px;row-gap:1px;align-items:center;align-content:center;
+  width:100%;min-height:48px;padding:7px 10px;border:0;border-radius:8px;background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.ident-cuerpo .alu-act::before{content:'';position:absolute;left:-29px;top:50%;width:18px;height:1px;background:color-mix(in srgb,var(--azul) 20%,transparent)}
+.ident-cuerpo .alu-act:hover{background:var(--sup-hover)}
+.ident-cuerpo .alu-act .alu-act-a{grid-column:1;font-size:.875rem;font-weight:700;line-height:1.3}
+.ident-cuerpo .alu-act .alu-act-a::after{content:none}
+.ident-cuerpo .alu-act .alu-act-c{grid-column:1;font-size:.75rem;line-height:1.3;color:var(--v-tinta2,#5B5F6B);text-wrap:pretty}
+.ident-cuerpo .alu-act .alu-act-ok{grid-column:2;grid-row:1 / span 2;width:18px;height:18px;color:var(--azul)}
+.ident-cuerpo .alu-act.on{background:color-mix(in srgb,var(--azul) 10%,transparent);color:var(--txt);font-weight:inherit;border:0}
+.ident-cuerpo .alu-act.on .alu-act-a{color:var(--azul)}
+.ident-cuerpo .alu-act.on::before{background:var(--azul)}
+.ident-cuerpo .alu-btn.nuevo{flex-direction:row;align-items:center;gap:12px;min-height:60px;margin-top:4px;padding:10px;border:0;border-radius:12px;background:none;color:var(--txt)}
+.ident-cuerpo .alu-btn.nuevo:hover{background:var(--sup-hover)}
+.ident-cuerpo .alu-btn.nuevo .alu-av.mas{background:none;color:var(--azul);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--azul) 45%,transparent);border:0}
+.ident-cuerpo .alu-btn.nuevo .alu-av.mas .ico-t{width:18px;height:18px}
+.ident-cuerpo .alu-btn.nuevo .alu-nom{display:flex;flex-direction:column;min-width:0}
+.ident-cuerpo .alu-btn.nuevo .an{font-size:1rem;font-weight:700;color:var(--azul)}
+.ident-cuerpo .alu-btn.nuevo .ac{margin-top:2px;font-size:.75rem;color:var(--v-tinta2,#5B5F6B)}
+.hoja-yo .yo-cats{margin:12px 0 0;padding:4px 4px 0;border-top:1px solid var(--v-linea,#e5e7eb)}
+.hoja-yo .yo-cats>summary{gap:10px;padding:0 6px;font-weight:700}
+.hoja-yo .yo-cats>summary b{max-width:62%;text-align:right;line-height:1.3;font-weight:600;background:color-mix(in srgb,var(--azul) 8%,transparent);color:var(--azul)}
+@media (prefers-reduced-motion:reduce){.ident-cuerpo .alu-per,.lam-brillo{transition:none}}
 </style>
 </head>
 <body>
@@ -5084,7 +5241,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'a7611350d27e';
+const VERSION_APP = '5333de02ac44';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -6752,7 +6909,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Los diez dedos: Roma dividida",
    "capa": "contexto",
-   "h": "<p>Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino I mudó la capital a Constantinopla, el occidente declinó. Las tribus del norte dividieron el imperio y en <strong>476</strong> depusieron a Rómulo Augústulo, el último emperador de occidente.</p><p>Los dedos son diez, y Daniel 7 tiene diez cuernos que el mismo capítulo explica como «diez reyes» (7:24). Los dedos son <strong>los reinos en que se dividió el Imperio Romano de Occidente</strong>, entre <strong>351 y 476</strong>:</p><ul class=\"tight\"><li>Anglosajones, francos, alamanes, lombardos, suevos, visigodos, burgundios, ostrogodos, hérulos y vándalos. Los tres últimos fueron «arrancados» (7:8): hérulos en 493, vándalos en 534 y ostrogodos en 538. Otra lista pone a los hunos en lugar de los alamanes.</li><li>Sus nombres siguen vivos en Europa: Inglaterra, Borgoña, Lombardía, Francia.</li><li>«En los días de estos reyes» (2:44) habla de varios reyes al mismo tiempo: el reino de Dios llega cuando Europa ya está dividida.</li></ul><p>La división no aparece en las piernas sino en los dedos. Ninguno de los pedazos volvió a tener la fuerza del hierro original.</p><div class=\"highlight-box\">«No podemos esperar unión entre las naciones de la tierra» (1T 361). Estamos en los dedos, en las uñas de los pies de la historia.</div><p>Fuente: Smith, <i>Las profecías de Daniel</i>, p. 24-25; Bohr, <i>Daniel 1-10</i>, p. 62, 64, 128, 133.</p>"
+   "h": "<p>Roma no cayó ante otro imperio: se fue deshaciendo. Desde 330 d.C., cuando Constantino I mudó la capital a Constantinopla, el occidente declinó. Las tribus del norte dividieron el imperio y en <strong>476</strong> depusieron a Rómulo Augústulo, el último emperador de occidente.</p><p>Los dedos son diez, y Daniel 7 tiene diez cuernos que el mismo capítulo explica como «diez reyes» (7:24). Los dedos son <strong>los reinos en que se dividió el Imperio Romano de Occidente</strong>, entre <strong>351 y 476</strong>:</p><ul class=\"tight\"><li>Anglosajones, francos, alamanes, lombardos, suevos, visigodos, burgundios, ostrogodos, hérulos y vándalos. Los tres últimos fueron «arrancados» (7:8): hérulos en 493, vándalos en 534 y ostrogodos en 538. Otra lista pone a los hunos en lugar de los alamanes.</li><li>Sus nombres siguen vivos en Europa: Inglaterra, Borgoña, Lombardía, Francia.</li><li>«En los días de estos reyes» (2:44) habla de varios reyes al mismo tiempo: el reino de Dios llega cuando Europa ya está dividida.</li></ul><p>La división no aparece en las piernas sino en los dedos. Ninguno de los pedazos volvió a tener la fuerza del hierro original.</p><div class=\"highlight-box\">«No podemos esperar unión entre las naciones del mundo» (1T 361). Estamos en los dedos, en las uñas de los pies de la historia.</div><p>Fuente: Smith, <i>Las profecías de Daniel</i>, p. 24-25; Bohr, <i>Daniel 1-10</i>, p. 62, 64, 128, 133.</p>"
   },
   {
    "t": "🧭 El barro de alfarero",
@@ -6760,14 +6917,14 @@ const CONTENIDO = {
    "h": "<p>El hierro de las piernas sigue en los pies: <strong>Roma continúa</strong>, pero es otra clase de Roma, mezclada con algo que no es metal. Y el barro es especial: «barro cocido de alfarero» (2:41).</p><ul class=\"tight\"><li>En la Biblia el barro en manos del alfarero es el pueblo de Dios (Jeremías 18:6; Isaías 64:8).</li><li>Por eso el hierro mezclado con barro es el <strong>poder político unido a la iglesia</strong>: la unión de iglesia y Estado que dominó Europa en la Edad Media. Esa mezcla tiene dos etapas: los 1.260 años (538-1798) y, cuando sane la herida de 1798, una alianza mundial poco antes de la venida de Cristo (Apocalipsis 13:3; 17:12-14). Por eso la piedra todavía la encuentra en los pies.</li><li>Por separado, cada uno tiene su lugar; mezclados, los dos se debilitan. La fuerza de la iglesia está en predicar con el poder del Espíritu, no en apoyarse en el Estado.</li></ul><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>En la imagen</th><th>Fecha</th></tr></thead><tbody><tr><td class=\"key\">Piernas de hierro: Imperio Romano</td><td>168 a.C.-476 d.C.</td></tr><tr><td class=\"key\">Diez dedos: Roma dividida</td><td>476 d.C.</td></tr><tr><td class=\"key\">Se añade el barro: Flavio Belisario expulsa de Roma a los ostrogodos y empieza la Roma papal</td><td>538 d.C.</td></tr><tr><td class=\"key\">El general Louis-Alexandre Berthier entra en Roma y toma prisionero al papa</td><td>1798 d.C.</td></tr></tbody></table></div><div class=\"highlight-box\">«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).</div><p>El cumplimiento final es Apocalipsis 17: la ramera que se une a los reyes de la tierra.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 58-62, 134; Smith, <i>Las profecías de Daniel</i>, p. 24, 80.</p>"
   },
   {
-   "t": "🧭 La piedra «no con mano» y el monte",
+   "t": "🧭 La piedra que nadie cortó y el monte",
    "capa": "contexto",
-   "h": "<p>Ya se vio que la piedra es Cristo en su segunda venida. Hay dos detalles que suelen pasarse por alto:</p><ul class=\"tight\"><li><strong>«No con mano».</strong> La misma idea está en 8:25 («no por mano humana») y en 11:45 («no tendrá quien le ayude»): el poder perseguidor cae <strong>sin intervención humana</strong>. El fin de la historia será una irrupción sobrenatural de Dios, no una iglesia que va conquistando el mundo hasta establecer el reino aquí.</li><li><strong>El monte.</strong> En la Escritura los montes representan reinos (Isaías 2:2). Hay dos montes: la piedra sale del monte Sion, la Sion celestial (2:45; 1 Pedro 2:6), y después ella misma se vuelve el gran monte que llena la tierra: el reino eterno de Cristo (2:35, 44).</li></ul><div class=\"warn-box\">Jesús lo aplicó a cada persona (Mateo 21:44): «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado». Caer hoy sobre la piedra es dejar que Cristo quiebre el orgullo; si no, ella caerá al final.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 63-64.</p>"
+   "h": "<p>Ya se vio que la piedra es Cristo en su segunda venida. Hay dos detalles que suelen pasarse por alto:</p><ul class=\"tight\"><li><strong>«Sin que la cortara mano alguna» (2:34, 45).</strong> La misma idea está en 8:25 («no por mano humana») y en 11:45 («no tendrá quien lo ayude»): el poder perseguidor cae <strong>sin intervención humana</strong>. El fin de la historia será una irrupción sobrenatural de Dios, no una iglesia que va conquistando el mundo hasta establecer el reino aquí.</li><li><strong>El monte.</strong> En la Escritura los montes representan reinos (Isaías 2:2). Hay dos montes: la piedra sale del monte Sion, la Sion celestial (2:45; 1 Pedro 2:6), y después ella misma se vuelve el gran monte que llena la tierra: el reino eterno de Cristo (2:35, 44).</li></ul><div class=\"warn-box\">Jesús lo aplicó a cada persona (Mateo 21:44): «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado». Caer hoy sobre la piedra es dejar que Cristo quiebre el orgullo; si no, ella caerá al final.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 63-64.</p>"
   },
   {
    "t": "🧭 Daniel 1-7: un libro en espejo",
    "capa": "contexto",
-   "h": "<p>Daniel 2 a 7 tiene forma de <strong>quiasmo</strong>: una estructura en espejo donde el primer capítulo se corresponde con el último, el segundo con el penúltimo, y así hacia el centro. Esos capítulos, además, están escritos en arameo, no en hebreo (2:4 a 7:28). Se puede ver como un candelabro: el capítulo 1 en el centro y cada brazo con su pareja. Toca una lámpara.</p><div class=\"qm-aqui\"></div><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Capítulos</th><th>Lo que tienen en común</th></tr></thead><tbody><tr><td class=\"key\">2 y 7</td><td>Cuatro reinos (cuatro metales, cuatro bestias) y después el reino eterno de Dios</td></tr><tr><td class=\"key\">3 y 6</td><td>Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar»</td></tr><tr><td class=\"key\">4 y 5</td><td>Dos reyes de Babilonia soberbios: uno es humillado y restaurado; el otro, juzgado para siempre</td></tr></tbody></table></div><p>Por eso Daniel 2 y 7 se estudian juntos: el mismo orden («tú eres la cabeza de oro», «otro», «tercer», «cuarto»), el hierro en el cuarto reino en los dos, y el reino eterno descrito casi con las mismas palabras (2:44; 7:27).</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-120.</p>"
+   "h": "<p>Daniel 2 a 7 tiene forma de <strong>quiasmo</strong>: una estructura en espejo donde el primer capítulo se corresponde con el último, el segundo con el penúltimo, y así hacia el centro. Esos capítulos, además, están escritos en arameo, no en hebreo (2:4 a 7:28). Se puede ver como un candelabro: el capítulo 1 en el centro y cada brazo con su pareja. Toca una lámpara.</p><div class=\"qm-aqui\"></div><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Capítulos</th><th>Lo que tienen en común</th></tr></thead><tbody><tr><td class=\"key\">2 y 7</td><td>Cuatro reinos (cuatro metales, cuatro bestias) y después el reino eterno de Dios</td></tr><tr><td class=\"key\">3 y 6</td><td>Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar»</td></tr><tr><td class=\"key\">4 y 5</td><td>Dos reyes de Babilonia soberbios: uno es humillado y restaurado; el otro, juzgado para siempre</td></tr></tbody></table></div><p>Por eso Daniel 2 y 7 se estudian juntos: el mismo orden («Tú eres aquella cabeza de oro», «otro», «tercer», «cuarto»), el hierro en el cuarto reino en los dos, y el reino eterno descrito casi con las mismas palabras (2:44; 7:27).</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-120.</p>"
   },
   {
    "t": "🧭 La Biblia explica sus símbolos",
@@ -7887,7 +8044,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde y cuándo empieza el juicio",
    "capa": "contexto",
-   "h": "<p><b>Dónde: en el cielo.</b> En Daniel 7 lo que pasa en la tierra va en prosa y lo que pasa en el cielo va en poesía:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Versículos</th><th>Escena</th><th>Estilo</th></tr></thead><tbody><tr><td class=\"key\">2-8</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">9-10</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">11-12</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">13-14</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">15-22</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">23-27</td><td>Cielo</td><td>Poesía</td></tr></tbody></table></div><p><b>Cuándo: después de 1798 y antes de la segunda venida.</b> Tres veces el juicio llega como respuesta a la obra del cuerno (7:8 y 9; 7:21 y 22; 7:25 y 26): empieza cuando terminan sus 1.260 años. En 7:13 el Hijo del hombre va <i>al Padre</i> para juzgar, «no a la tierra» (CS 477), y solo después vuelve a dar el reino. La fecha exacta, 1844, la da Daniel 8:14.</p><p>Daniel 8:14 dice que el santuario «será purificado». El verbo hebreo (<i>nitsdaq</i>) también es «será vindicado, declarado justo»: es el lenguaje de un tribunal. Daniel 8:14 y 7:9-10 hablan del mismo juicio.</p><div class=\"highlight-box\"><b>Tres pasos</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia, cuando el Hijo recibe el reino y el fallo sale a favor de los santos (7:14, 22), y ejecución, cuando los santos reciben el reino y el cuerno pierde su dominio (7:22, 26-27). Son las tres fases del juicio, que van más abajo.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 120-121 y 275-276; Bohr, <i>La hora del juicio</i>, p. 1 y 6; CS 477; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 139-140.</p>"
+   "h": "<p><b>Dónde: en el cielo.</b> En Daniel 7 lo que pasa en la tierra va en prosa y lo que pasa en el cielo va en poesía:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Versículos</th><th>Escena</th><th>Estilo</th></tr></thead><tbody><tr><td class=\"key\">2-8</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">9-10</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">11-12</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">13-14</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">15-22</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">23-27</td><td>Cielo</td><td>Poesía</td></tr></tbody></table></div><p><b>Cuándo: después de 1798 y antes de la segunda venida.</b> Tres veces el juicio llega como respuesta a la obra del cuerno (7:8 y 9; 7:21 y 22; 7:25 y 26): empieza después de sus 1.260 años (538-1798). En 7:13 el Hijo del hombre va <i>al Padre</i>, al juicio, «no a la tierra» (CS 477), y solo después vuelve a dar el reino. La fecha exacta, 1844, la da Daniel 8:14.</p><p>Daniel 8:14 dice que el santuario «será purificado». El verbo hebreo (<i>nitsdaq</i>) también es «será vindicado, declarado justo»: es el lenguaje de un tribunal. Daniel 8:14 y 7:9-10 hablan del mismo juicio.</p><div class=\"highlight-box\"><b>Tres pasos</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia, cuando el Hijo recibe el reino y el fallo sale a favor de los santos (7:14, 22), y ejecución, cuando los santos reciben el reino y el cuerno pierde su dominio (7:22, 26-27). Son las tres fases del juicio, que van más abajo.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 120-121 y 275-276; Bohr, <i>La hora del juicio</i>, p. 1 y 6; CS 477; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 139-140.</p>"
   },
   {
    "t": "🧭 El juicio es el gran Día de la Expiación",
@@ -7912,7 +8069,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Las tres fases del juicio",
    "capa": "contexto",
-   "h": "<p>Daniel 7 muestra las tres fases en orden. Las dos primeras pasan en el cielo; la tercera empieza cuando Cristo vuelve:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Fase</th><th>Cuándo</th><th>Qué pasa</th></tr></thead><tbody><tr><td class=\"key\">1 · Investigación</td><td>Desde 1844 hasta el cierre de la gracia</td><td>Se abren los libros de los que profesaron ser hijos de Dios (7:10)</td></tr><tr><td class=\"key\">2 · Sentencia</td><td>Al terminar la investigación, antes de la venida</td><td>El Hijo va ante el Anciano de días y recibe el reino (7:13-14); el fallo es a favor de los santos (7:22)</td></tr><tr><td class=\"key\">3 · Ejecución</td><td>En la segunda venida</td><td>Los santos reciben el reino (7:18, 22, 27) y al cuerno le quitan el dominio (7:26)</td></tr></tbody></table></div><ul class=\"tight\"><li>El reino son sus súbditos. Cuando se falla el último caso, el número está completo: Cristo «había recibido su reino» (PE 280). Ahí termina la gracia: «se levantará Miguel» (Daniel 12:1).</li><li>Primero el Hijo recibe el reino en el cielo; después vuelve y lo reciben los santos. Es como la boda: el Señor regresa «de las bodas» por los suyos (Lucas 12:36; CS 480).</li></ul><div class=\"highlight-box\">Apocalipsis 20 sigue el juicio más allá de la venida: en los mil años los santos juzgan con Cristo (20:4) y el gran trono blanco cumple la sentencia de los perdidos (20:11-15). No se contradicen: la ejecución empieza en la venida y termina después del milenio.</div><p>Fuente: PE 280; CS 368-369, 480-481 y 718-719; Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>15 principios</i> 2:306-307.</p>"
+   "h": "<p>Daniel 7 muestra las tres fases en orden. Las dos primeras pasan en el cielo; la tercera empieza cuando Cristo vuelve:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Fase</th><th>Cuándo</th><th>Qué pasa</th></tr></thead><tbody><tr><td class=\"key\">1 · Investigación</td><td>Desde 1844 hasta el cierre de la gracia</td><td>Se abren los libros de los que profesaron ser hijos de Dios (7:10)</td></tr><tr><td class=\"key\">2 · Sentencia</td><td>Cuando el Hijo del hombre recibe el reino: al terminar la investigación, en el cielo, antes de la venida</td><td>El Hijo va ante el Anciano de días y recibe el reino (7:13-14); el fallo es a favor de los santos (7:22a)</td></tr><tr><td class=\"key\">3 · Ejecución</td><td>Cuando los santos reciben el reino: en la segunda venida</td><td>Los santos reciben el reino (7:18, 22b, 27) y al cuerno le quitan el dominio (7:26)</td></tr></tbody></table></div><ul class=\"tight\"><li>El reino son sus súbditos. Cuando se falla el último caso, el número está completo: Cristo «había recibido su reino» (PE 280). Ahí termina la gracia: «se levantará Miguel» (Daniel 12:1).</li><li>Primero el Hijo recibe el reino en el cielo; después vuelve y lo reciben los santos. Es como la boda: el Señor regresa «de las bodas» por los suyos (Lucas 12:36; CS 480).</li></ul><div class=\"highlight-box\">Apocalipsis 20 sigue el juicio más allá de la venida: en los mil años los santos juzgan con Cristo (20:4) y el gran trono blanco cumple la sentencia de los perdidos (20:11-15). No se contradicen: la ejecución empieza en la venida y termina después del milenio.</div><p>Fuente: PE 280; CS 368-369, 480-481 y 718-719; Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>15 principios</i> 2:306-307.</p>"
   },
   {
    "t": "🧭 La Biblia explica sus símbolos (1): la visión",
@@ -12707,7 +12864,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Primer ángel: «la hora de su juicio ha llegado» (14:7)",
    "capa": "contexto",
-   "h": "<div class=\"highlight-box\">El juicio no es un solo momento sino un proceso en <strong>tres\n      etapas</strong>: antes de la segunda venida (14:7), durante los mil años\n      (20:4) y después de los mil años (20:13). El primer ángel anuncia la\n      primera.</div><ul class=\"tight\"><li><strong>Cuándo empieza:</strong> en <strong>1844</strong>, al\n           terminar los 2.300 días de Daniel 8:14. Contados como años desde el\n           decreto para restaurar Jerusalén en el otoño del <strong>457\n           a.C.</strong>, llegan al otoño de 1844.</li><li><strong>Por qué antes de la venida:</strong> Jesús viene «y mi\n           galardón conmigo» (22:12); para traer la recompensa, el juicio tiene\n           que haberse hecho antes.</li><li><strong>Cómo es:</strong> se abren los libros del cielo (Daniel\n           7:10) y se revisan los casos de los que profesaron creer en Jesús,\n           empezando por Adán y terminando con los vivos.</li><li><strong>Tres pasos:</strong> investigación, veredicto y\n           recompensa, como en un tribunal.</li></ul><div class=\"warn-box\">Es el antitipo (el cumplimiento real) del Día de la Expiación, el\n      gran día de juicio de Israel en el lugar santísimo. El juicio que empezó\n      en 1844 sigue hasta que se decidan los casos de todos; por eso el\n      mensaje se predica hasta el fin del tiempo de gracia.</div><p>Fuente: Bohr, <i>Tres ángeles</i> 1:8-9, 49-50, 55-56 y 63-64; CS 374, 450 y 488-489.</p>"
+   "h": "<div class=\"highlight-box\">El juicio no es un solo momento sino un proceso: se investiga antes de\n      la segunda venida (14:7), los santos revisan los casos de los perdidos\n      durante los mil años (20:4) y la pena de los impíos se cumple después de\n      ellos (20:13-15). El primer ángel anuncia el comienzo.</div><ul class=\"tight\"><li><strong>Cuándo empieza:</strong> en <strong>1844</strong>, al\n           terminar los 2.300 días de Daniel 8:14. Contados como años desde el\n           decreto para restaurar Jerusalén en el otoño del <strong>457\n           a.C.</strong>, llegan al otoño de 1844.</li><li><strong>Por qué antes de la venida:</strong> Jesús viene «y mi\n           galardón conmigo» (22:12); para traer la recompensa, el juicio tiene\n           que haberse hecho antes.</li><li><strong>Cómo es:</strong> se abren los libros del cielo (Daniel\n           7:10) y se revisan los casos de los que profesaron creer en Jesús,\n           empezando por Adán y terminando con los vivos.</li><li><strong>Tres pasos:</strong> investigación, veredicto y\n           recompensa, como en un tribunal.</li></ul><div class=\"warn-box\">Es el antitipo (el cumplimiento real) del Día de la Expiación, el\n      gran día de juicio de Israel en el lugar santísimo. El juicio que empezó\n      en 1844 sigue hasta que se decidan los casos de todos; por eso el\n      mensaje se predica hasta el fin del tiempo de gracia.</div><p>Fuente: Bohr, <i>Tres ángeles</i> 1:8-9, 49-50, 55-56 y 63-64; CS 374, 450 y 488-489.</p>"
   },
   {
    "t": "🧭 Primer ángel: «Adorad a aquel que hizo el cielo y la tierra» (14:7)",
@@ -13218,7 +13375,7 @@ const CONTENIDO = {
   {
    "t": "🧭 El juicio de los mil años (20:4, 20:12)",
    "capa": "contexto",
-   "h": "<div class=\"highlight-box\">«Vi tronos, y se sentaron sobre ellos los que recibieron facultad de\n      juzgar» (20:4). El juicio de Dios tiene <strong>tres etapas</strong>:</div><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Etapa</th><th>Cuándo</th><th>Qué se hace</th></tr></thead><tbody><tr><td class=\"key\">1 · Investigación</td><td>Antes de la venida, en el cielo (Daniel 7:9-10; Apocalipsis 14:7)</td><td>Se decide quiénes son de Cristo</td></tr><tr><td class=\"key\">2 · Sentencia</td><td>Durante los mil años (20:4; 1 Corintios 6:2-3)</td><td>Los santos, con Cristo, revisan los casos de los perdidos y de los ángeles caídos</td></tr><tr><td class=\"key\">3 · Ejecución</td><td>Después de los mil años (20:9, 20:14-15)</td><td>Se cumple la sentencia</td></tr></tbody></table></div><div class=\"highlight-box\">Los santos comparan los actos de cada uno con el libro de la ley, y queda\n      anotado lo que cada impío ha de sufrir «según sus obras».<br><br>\n      ¿Para qué un juicio, si Dios lo sabe todo? No es para informar a Dios, sino\n      para que los seres que <strong>no</strong> lo saben todo vean que Dios fue\n      justo y amoroso con cada persona.</div><p>Fuente: Bohr, <i>Lo que Jesús dijo</i>, p. 231-232; CS 719; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 93.</p>"
+   "h": "<div class=\"highlight-box\">«Vi tronos, y se sentaron sobre ellos los que recibieron facultad de\n      juzgar» (20:4). El juicio tiene <strong>tres fases</strong>, en el orden de\n      Daniel 7, y Apocalipsis 20 muestra dónde entran los mil años:</div><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Fase</th><th>Cuándo</th><th>Qué se hace</th></tr></thead><tbody><tr><td class=\"key\">1 · Investigación</td><td>Desde 1844 hasta el cierre de la gracia, en el cielo (Daniel 7:9-10; Apocalipsis 14:7)</td><td>Se decide quiénes son de Cristo</td></tr><tr><td class=\"key\">2 · Sentencia</td><td>Cuando el Hijo del hombre recibe el reino, en el cielo, antes de la venida (Daniel 7:13-14, 22)</td><td>El fallo es a favor de los santos; se cierra la gracia (22:11)</td></tr><tr><td class=\"key\">3 · Ejecución</td><td>Empieza en la segunda venida (Daniel 7:22, 26-27) y termina después de los mil años (20:9, 20:14-15)</td><td>Los santos reciben el reino; al final, los perdidos reciben su pena</td></tr></tbody></table></div><div class=\"highlight-box\"><strong>Durante los mil años</strong> (20:4; 1 Corintios 6:2-3) los santos,\n      con Cristo, revisan los casos de los perdidos y de los ángeles caídos. No\n      deciden quién se salva: eso ya se decidió. Comparan los actos de cada uno con\n      el libro de la ley, y queda anotado lo que cada impío ha de sufrir «según sus\n      obras».<br><br>\n      ¿Para qué un juicio, si Dios lo sabe todo? No es para informar a Dios, sino\n      para que los seres que <strong>no</strong> lo saben todo vean que Dios fue\n      justo y amoroso con cada persona.</div><p>Fuente: PE 280; CS 719; Bohr, <i>15 principios</i> 2:306-307; Bohr, <i>Lo que Jesús dijo</i>, p. 231-232; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 93.</p>"
   },
   {
    "t": "🧭 Cómo está ordenado 20:1 a 21:8: cuatro ciclos",
@@ -53439,7 +53596,7 @@ const BANCO = [
    "Investigación, ejecución y sentencia"
   ],
   "a": 0,
-  "e": "Primero se investiga (antes de la venida), luego se dicta sentencia (durante los mil años) y al final se ejecuta (después). Fuente: Bohr, Lo que Jesús dijo, p. 232.",
+  "e": "Primero se investiga (desde 1844), luego se da la sentencia cuando el Hijo recibe el reino (antes de la venida) y se ejecuta desde la venida hasta después de los mil años (Daniel 7:10, 14, 22, 26-27). Fuente: PE 280; Bohr, 15 principios 2:306-307.",
   "nv": 1
  },
  {
@@ -55733,7 +55890,7 @@ const BANCO = [
   "t": "mc",
   "v": "2:34",
   "f": "c",
-  "q": "Comparando 2:34 con 8:25, ¿qué significa que la piedra fue cortada «no con mano»?",
+  "q": "Comparando 2:34 con 8:25, ¿qué significa que la piedra se desprendió «sin que la cortara mano alguna»?",
   "o": [
    "Que vendría con un gran ejército",
    "Que llegaría por la predicación",
@@ -56739,7 +56896,7 @@ const BANCO = [
   "f": "c",
   "q": "En Daniel 7:13 el Hijo del hombre viene a la tierra en su segunda venida.",
   "a": false,
-  "e": "Falso: viene «no a la tierra, sino» al Anciano de días, en el cielo, para el juicio que empezó en 1844. Fuente: CS 477.",
+  "e": "Falso: Cristo vino «no a la tierra, como ellos lo esperaban, sino» al lugar santísimo, ante el Anciano de días, en el cielo, para el juicio que empezó en 1844. Fuente: CS 477.",
   "nv": 2
  },
  {
@@ -59001,10 +59158,10 @@ const LAMINAS = {
     "ref": "2:34",
     "texto2": "el Dios del cielo levantará un reino que no será jamás destruido",
     "ref2": "2:44",
-    "corto": "Cristo en su segunda venida. «Sin mano»: no lo hace el hombre.",
+    "corto": "Cristo en su segunda venida. «Sin que la cortara mano alguna»: no lo hace el hombre.",
     "interp": [
      "La piedra es Cristo en su segunda venida. Golpea los pies, no la cabeza: llega «en los días de estos reyes» (2:44), con Europa ya dividida.",
-     "«Sin mano»: es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco."
+     "«Sin que la cortara mano alguna» (2:34, 45): es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco."
     ],
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63-64."
    },
@@ -59131,7 +59288,7 @@ const LAMINAS = {
    "ref": "Daniel 7:22",
    "texto": "se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.",
    "titulo": "El juicio es a favor de los santos",
-   "nota": "Hoy vivimos en el tiempo del juicio. Lo que sigue es el reino."
+   "nota": "Hoy vivimos en el tiempo del juicio. Después se cierra la gracia, Cristo vuelve y los santos reciben el reino."
   },
   "paraleloCols": [
    "Daniel 7",
@@ -59725,6 +59882,7 @@ const LAMINAS = {
     {
      "t": "Investigación",
      "n": "Se abren los libros",
+     "ref": "7:9-10",
      "cuando": "Desde 1844 hasta el cierre de la gracia",
      "donde": "En el cielo",
      "quien": "El Padre juzga; Cristo es el abogado; los ángeles, testigos",
@@ -59746,7 +59904,8 @@ const LAMINAS = {
     {
      "t": "Sentencia",
      "n": "El Hijo recibe el reino",
-     "cuando": "Al terminar la investigación, antes de la venida",
+     "ref": "7:13-14, 22a",
+     "cuando": "Cuando el Hijo del hombre recibe el reino, antes de la venida",
      "donde": "En el cielo",
      "quien": "El Hijo del hombre va ante el Anciano de días",
      "que": "El fallo es a favor de los santos y contra el cuerno. El reino son sus súbditos: cuando todos los casos están decididos, el número está completo y el Padre le da el reino al Hijo. Se cierra la gracia.",
@@ -59767,7 +59926,8 @@ const LAMINAS = {
     {
      "t": "Ejecución",
      "n": "Los santos reciben el reino",
-     "cuando": "En la segunda venida",
+     "ref": "7:22b, 26-27",
+     "cuando": "Cuando los santos reciben el reino, en la segunda venida",
      "donde": "Del cielo a la tierra",
      "quien": "Cristo vuelve como Rey de reyes",
      "que": "Cristo vuelve por los suyos y los santos reciben el reino. Al cuerno le quitan el dominio para que sea destruido y arruinado hasta el fin (7:26).",
@@ -59931,7 +60091,7 @@ const LAMINAS = {
     "ref2": "7:10",
     "corto": "Desde 1844 el Padre juzga en el cielo, y el fallo es a favor de los santos (7:22).",
     "interp": [
-     "El juicio empieza cuando terminan los 1.260 años del cuerno (7:25-26) y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.",
+     "El juicio empieza después de los 1.260 años del cuerno (7:25-26), que terminan en 1798, y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.",
      "El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.",
      "Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26)."
     ],
@@ -60162,13 +60322,287 @@ const LAMINAS = {
     "ref2": "7:27",
     "corto": "Las bestias pasan. El reino de Dios queda para siempre, y es de los santos.",
     "interp": [
-     "Cuatro veces el capítulo termina igual: el reino se da a los santos (7:14, 18, 22, 27). Es la piedra que se hace un gran monte en Daniel 2 (2:35, 44).",
+     "Cuatro veces el capítulo termina en el reino: lo recibe el Hijo del hombre (7:14) y lo reciben los santos (7:18, 22, 27). Es la piedra que se hace un gran monte en Daniel 2 (2:35, 44).",
      "El juicio no es contra el pueblo de Dios: es a favor de él (7:22)."
     ],
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 121."
    }
   ]
  }
+};
+
+/* v215: los últimos acontecimientos, una sola secuencia para Comparar y las láminas. */
+const ULTIMOS = {
+ "titulo": "Los últimos acontecimientos",
+ "libros": [
+  [
+   "d2",
+   "Daniel 2"
+  ],
+  [
+   "d7",
+   "Daniel 7"
+  ],
+  [
+   "d8",
+   "Daniel 8"
+  ],
+  [
+   "d11",
+   "Daniel 11"
+  ],
+  [
+   "d12",
+   "Daniel 12"
+  ],
+  [
+   "ap",
+   "Apocalipsis"
+  ]
+ ],
+ "nota": "Daniel 2, 7 y 8 pasan del juicio a la piedra y al reino: dicen qué viene, no cada paso. Daniel 11 y 12 y Apocalipsis llenan los detalles: el cierre de la gracia, las plagas, los mil años y el fin de los impíos. Daniel y Apocalipsis se refuerzan.",
+ "eventos": [
+  {
+   "id": "juicio",
+   "t": "El juicio investigador",
+   "c": "Juicio",
+   "s": "Desde 1844",
+   "cuando": "Desde 1844, en el cielo, mientras sigue abierta la gracia",
+   "img": "d7/juicio",
+   "en": {
+    "d2": "",
+    "d7": "7:9-10, 13-14",
+    "d8": "8:14",
+    "d11": "",
+    "d12": "",
+    "ap": "14:6-7"
+   },
+   "citas": [
+    [
+     "Daniel 7:10",
+     "El Juez se sentó y los libros fueron abiertos."
+    ],
+    [
+     "Daniel 8:14",
+     "luego el santuario será purificado"
+    ],
+    [
+     "Apocalipsis 14:7",
+     "la hora de su juicio ha llegado"
+    ]
+   ],
+   "nota": "Se abren los libros de los que profesaron ser hijos de Dios. Mientras dura, se predica el evangelio eterno a toda nación (Apocalipsis 14:6).",
+   "partes": [
+    "juicio",
+    "hijo",
+    "x-fases"
+   ],
+   "fuente": "CS 533-545"
+  },
+  {
+   "id": "gracia",
+   "t": "Se cierra la gracia",
+   "c": "Fin de la gracia",
+   "s": "Termina la intercesión",
+   "cuando": "Al terminar el juicio, antes de las plagas",
+   "en": {
+    "d2": "",
+    "d7": "~7:13-14",
+    "d8": "",
+    "d11": "",
+    "d12": "12:1",
+    "ap": "15:8; 22:11"
+   },
+   "citas": [
+    [
+     "Daniel 12:1",
+     "En aquel tiempo se levantará Miguel"
+    ],
+    [
+     "Apocalipsis 15:8",
+     "Nadie podía entrar en el templo hasta que se cumplieran las siete plagas"
+    ],
+    [
+     "Apocalipsis 22:11",
+     "El que es injusto, sea injusto todavía"
+    ]
+   ],
+   "nota": "Cada caso quedó decidido, para vida o para muerte. El Hijo ya recibió su reino (Daniel 7:14: es la sentencia) y Cristo deja de interceder: se levanta Miguel.",
+   "partes": [
+    "x-fases"
+   ],
+   "fuente": "CS 671; PE 280"
+  },
+  {
+   "id": "plagas",
+   "t": "Las siete últimas plagas",
+   "c": "Plagas",
+   "s": "El tiempo de angustia",
+   "cuando": "Después del cierre de la gracia, antes de la venida",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "12:1",
+    "ap": "15:1; 16"
+   },
+   "citas": [
+    [
+     "Daniel 12:1",
+     "Será tiempo de angustia, cual nunca fue desde que hubo gente hasta entonces"
+    ],
+    [
+     "Apocalipsis 15:1",
+     "siete ángeles con las siete plagas postreras"
+    ],
+    [
+     "Apocalipsis 16:1",
+     "Id y derramad sobre la tierra las siete copas de la ira de Dios"
+    ]
+   ],
+   "nota": "Caen sobre los que tienen la marca de la bestia y adoran su imagen (Apocalipsis 16:2). El pueblo de Dios pasa por la angustia, pero Dios lo guarda.",
+   "partes": [],
+   "fuente": "CS 686-687"
+  },
+  {
+   "id": "venida",
+   "t": "La segunda venida",
+   "c": "Venida",
+   "s": "La piedra",
+   "cuando": "Al final de las plagas",
+   "img": "d2/e-piedra",
+   "en": {
+    "d2": "2:34-35, 44-45",
+    "d7": "7:22, 26-27",
+    "d8": "8:25",
+    "d11": "11:45",
+    "d12": "12:1-2",
+    "ap": "19:11-16"
+   },
+   "citas": [
+    [
+     "Daniel 2:34",
+     "una piedra se desprendió sin que la cortara mano alguna"
+    ],
+    [
+     "Daniel 12:1",
+     "será libertado tu pueblo, todos los que se hallen inscritos en el libro"
+    ],
+    [
+     "Apocalipsis 19:16",
+     "Rey de reyes y Señor de señores"
+    ]
+   ],
+   "nota": "Es la piedra de Daniel 2 y la ejecución del juicio de Daniel 7: los santos reciben el reino. Los justos que duermen resucitan y, con los vivos, suben a recibir a Cristo (1 Tesalonicenses 4:16-17).",
+   "partes": [
+    "piedra",
+    "x-fases"
+   ],
+   "fuente": "CS 693-710; Bohr, <i>Daniel 1-10</i>, p. 63-64"
+  },
+  {
+   "id": "mil",
+   "t": "Los mil años",
+   "c": "Mil años",
+   "s": "Satanás, atado en la tierra",
+   "cuando": "Después de la venida",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "",
+    "ap": "20:1-6"
+   },
+   "citas": [
+    [
+     "Apocalipsis 20:2",
+     "lo ató por mil años"
+    ],
+    [
+     "Apocalipsis 20:4",
+     "vivieron y reinaron con Cristo mil años"
+    ]
+   ],
+   "nota": "Los santos están con Cristo en el cielo y revisan los casos de los perdidos (20:4). La tierra queda desolada y Satanás, sin nadie a quien engañar.",
+   "partes": [],
+   "fuente": "CS 711-719"
+  },
+  {
+   "id": "final",
+   "t": "La Nueva Jerusalén y el fin de los impíos",
+   "c": "Nueva Jerusalén",
+   "s": "Después de los mil años",
+   "cuando": "Al terminar los mil años",
+   "en": {
+    "d2": "",
+    "d7": "",
+    "d8": "",
+    "d11": "",
+    "d12": "",
+    "ap": "20:7-15; 21:2"
+   },
+   "citas": [
+    [
+     "Apocalipsis 21:2",
+     "vi la santa ciudad, la nueva Jerusalén, descender del cielo"
+    ],
+    [
+     "Apocalipsis 20:9",
+     "de Dios descendió fuego del cielo y los consumió"
+    ],
+    [
+     "Apocalipsis 20:14",
+     "Ésta es la muerte segunda"
+    ]
+   ],
+   "nota": "La ciudad baja con los santos. Los impíos resucitan (20:5), la rodean con Satanás y el fuego los consume: es la muerte segunda, de la que no se vuelve.",
+   "partes": [],
+   "fuente": "CS 720-731"
+  },
+  {
+   "id": "reino",
+   "t": "La tierra nueva",
+   "c": "Tierra nueva",
+   "s": "El reino eterno",
+   "cuando": "Para siempre",
+   "img": "d2/e-monte",
+   "en": {
+    "d2": "2:35, 44",
+    "d7": "7:14, 18, 27",
+    "d8": "",
+    "d11": "",
+    "d12": "12:3",
+    "ap": "21:1-4; 22:5"
+   },
+   "citas": [
+    [
+     "Daniel 2:44",
+     "un reino que no será jamás destruido"
+    ],
+    [
+     "Daniel 7:27",
+     "cuyo reino es reino eterno"
+    ],
+    [
+     "Apocalipsis 21:1",
+     "vi un cielo nuevo y una tierra nueva"
+    ],
+    [
+     "Apocalipsis 21:4",
+     "ya no habrá más muerte"
+    ]
+   ],
+   "nota": "La piedra se hizo un gran monte que llenó toda la tierra (2:35). Dios vive con su pueblo, y el reino es de los santos para siempre.",
+   "partes": [
+    "monte",
+    "reino"
+   ],
+   "fuente": "CS 732-737"
+  }
+ ],
+ "fuente": "CS 533-545, 671-737; PE 280; Bohr, <i>15 principios</i> 2:347-349 y 396-397; Bohr, <i>Daniel 1-10</i>, p. 24."
 };
 
 /* v189: las fichas de personajes (fuente/personajes.js). En el estudio, el
@@ -64950,7 +65384,7 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Daniel 2, 7 y 8 lado a lado (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 2</th><th>Daniel 7</th><th>Daniel 8</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>La piedra cortada «sin que la cortara mano alguna» hiere los pies y se hace un gran monte (2:34-35, 44-45)</td><td>La bestia es destruida y el reino se da a los santos para siempre (7:11, 26-27)</td><td>El cuerno «será quebrantado, aunque no por mano humana» (8:25)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-64, 119-121, 133-134, 293-298 y 307-316; Bohr, <i>15 principios</i> 2:105; CS 492 y 636.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 2</th><th>Daniel 7</th><th>Daniel 8</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>La piedra que se desprendió «sin que la cortara mano alguna» hiere los pies y se hace un gran monte (2:34-35, 44-45)</td><td>La bestia es destruida y el reino se da a los santos para siempre (7:11, 26-27)</td><td>El cuerno «será quebrantado, aunque no por mano humana» (8:25)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-64, 119-121, 133-134, 293-298 y 307-316; Bohr, <i>15 principios</i> 2:105; CS 492 y 636.</p>"
   },
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (1)",
@@ -64960,12 +65394,12 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39, o 11:21-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">Roma papal sanada (desde 1798 hasta la venida de Cristo)</td><td>Se levanta «contra el Príncipe de los príncipes» hasta ser quebrantado (8:25)</td><td>El rey del norte, herido en 1798, se recupera, se extiende por el mundo y «llegará a su fin» (11:40-45)</td><td>Sigue hasta que «se levantará Miguel» (12:1)</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel»: son librados los «inscritos en el libro» (12:1). Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39, o 11:21-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">Roma papal sanada (desde 1798 hasta la venida de Cristo)</td><td>Se levanta «contra el Príncipe de los príncipes» hasta ser quebrantado (8:25)</td><td>El rey del norte, herido en 1798, se recupera, se extiende por el mundo y «llegará a su fin» (11:40-45)</td><td>Sigue hasta que «se levantará Miguel» (12:1)</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel» (12:1): se cierra la gracia. Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
   },
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Tiempo de angustia; «será libertado tu pueblo, todos los que se hallen inscritos en el libro» y hay resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
   },
   {
    "t": "🧭 Lo que muestra la comparación",
@@ -65291,7 +65725,7 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Daniel 2, 7 y 8 lado a lado (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 2</th><th>Daniel 7</th><th>Daniel 8</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>La piedra cortada «sin que la cortara mano alguna» hiere los pies y se hace un gran monte (2:34-35, 44-45)</td><td>La bestia es destruida y el reino se da a los santos para siempre (7:11, 26-27)</td><td>El cuerno «será quebrantado, aunque no por mano humana» (8:25)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-64, 119-121, 133-134, 293-298 y 307-316; Bohr, <i>15 principios</i> 2:105; CS 492 y 636.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 2</th><th>Daniel 7</th><th>Daniel 8</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>La piedra que se desprendió «sin que la cortara mano alguna» hiere los pies y se hace un gran monte (2:34-35, 44-45)</td><td>La bestia es destruida y el reino se da a los santos para siempre (7:11, 26-27)</td><td>El cuerno «será quebrantado, aunque no por mano humana» (8:25)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-64, 119-121, 133-134, 293-298 y 307-316; Bohr, <i>15 principios</i> 2:105; CS 492 y 636.</p>"
   },
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (1)",
@@ -65301,12 +65735,12 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39, o 11:21-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">Roma papal sanada (desde 1798 hasta la venida de Cristo)</td><td>Se levanta «contra el Príncipe de los príncipes» hasta ser quebrantado (8:25)</td><td>El rey del norte, herido en 1798, se recupera, se extiende por el mundo y «llegará a su fin» (11:40-45)</td><td>Sigue hasta que «se levantará Miguel» (12:1)</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel»: son librados los «inscritos en el libro» (12:1). Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">Roma dividida (desde 476)</td><td>—</td><td>—</td><td>—</td></tr><tr><td class=\"key\">Roma papal (538-1798)</td><td>Quita el continuo y echa por tierra el santuario (8:11-12)</td><td>Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39, o 11:21-39</td><td>«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798</td></tr><tr><td class=\"key\">Roma papal sanada (desde 1798 hasta la venida de Cristo)</td><td>Se levanta «contra el Príncipe de los príncipes» hasta ser quebrantado (8:25)</td><td>El rey del norte, herido en 1798, se recupera, se extiende por el mundo y «llegará a su fin» (11:40-45)</td><td>Sigue hasta que «se levantará Miguel» (12:1)</td></tr><tr><td class=\"key\">El juicio en el cielo (1844)</td><td>Purificación del santuario (8:14): 1844</td><td>—</td><td>Termina cuando «se levantará Miguel» (12:1): se cierra la gracia. Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio</td></tr><tr><td class=\"key\">El tiempo del fin (desde 1798)</td><td>«La visión es para el tiempo del fin» (8:17, 19)</td><td>«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)</td><td>El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
   },
   {
    "t": "🧭 Daniel 8, 11 y 12 lado a lado (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Poder o época</th><th>Daniel 8</th><th>Daniel 11</th><th>Daniel 12</th></tr></thead><tbody><tr><td class=\"key\">La segunda venida y el reino eterno</td><td>El cuerno, quebrantado «no por mano humana» (8:25)</td><td>«Llegará a su fin, y no tendrá quien lo ayude» (11:45)</td><td>Tiempo de angustia; «será libertado tu pueblo, todos los que se hallen inscritos en el libro» y hay resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>"
   },
   {
    "t": "🧭 Lo que muestra la comparación",
@@ -74462,7 +74896,9 @@ function lamEscena(){
   const lineas=Object.keys(E).filter(id=>E[id].ax).map(id=>{const e=E[id],x2=e.lado==='i'?322:770;
     return '<g class="lam-guia" data-p="'+id+'"><path d="M'+e.ax+' '+e.ay+' L'+(e.lado==='i'?x2+44:x2-44)+' '+e.ly+' L'+x2+' '+e.ly+'" vector-effect="non-scaling-stroke"/>'+
       '<circle cx="'+e.ax+'" cy="'+e.ay+'" r="5" vector-effect="non-scaling-stroke"/></g>';}).join('');
-  const etiquetas=Object.keys(E).map(id=>{const e=E[id],p=lamParte(id);
+  /* v215 (Camilo: «la piedra se ve todo el tiempo, hasta en Cautivos en Babilonia»): la
+     piedra no está sobre la estatua hasta su paso; su rótulo tampoco (está en el riel). */
+  const etiquetas=Object.keys(E).filter(id=>id!=='piedra').map(id=>{const e=E[id],p=lamParte(id);
     return '<button type="button" class="lam-et '+e.lado+'" data-p="'+id+'" style="--c:'+p.c+';top:'+(e.ly/L.h*100)+'%" onclick="lamToca(\''+id+'\')">'+
       '<b>'+esc(e.t||p.reino)+'</b><span>'+esc(e.f||p.fechas).replace(/ ([ad])\.C\./g,'&nbsp;$1.C.')+'</span></button>';}).join('');
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
@@ -74480,9 +74916,14 @@ function lamEscena(){
     '<image class="lam-hist-bg" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<image class="lam-hist" href="" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<ellipse cx="'+(L.ox+384)+'" cy="1138" rx="230" ry="26" fill="#000" fill-opacity=".28"/>'+
-    '<g class="lam-estatua">'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
+    /* v215 (Camilo: «el brillo de las piernas de hierro sale corrido hacia arriba»): la
+       luz de la parte elegida era un drop-shadow sobre su capa, y como cada capa se pinta
+       encima de la anterior, la luz del hierro caía sobre el bronce (las caderas se veían
+       encendidas). Ahora la luz es una copia de la capa DETRÁS de toda la estatua: solo se
+       ve donde la parte asoma, nunca encima de la vecina. Igual para todas las capas. */
+    '<g class="lam-estatua"><g class="lam-brillos" aria-hidden="true">'+L.capas.map(id=>'<image class="lam-brillo" data-p="'+id+'" href="'+lamSrc(id)+'" x="'+L.ox+'" y="0" width="768" height="1152"/>').join('')+'</g>'+L.capas.map(capa).join('')+'</g><g class="lam-guias">'+lineas+'</g><g class="lam-polvo"></g>'+
     '<g class="lam-luz">'+[1,.72,.48,.26].map(k=>'<circle cx="'+L.golpe[0]+'" cy="'+L.golpe[1]+'" r="0" data-f="'+k+'" fill="'+(k<.3?'#FFF8E2':'#F6D57A')+'" fill-opacity="'+(k<.3?.9:.22)+'"/>').join('')+'</g>'+
-    '<g class="lam-parte lam-piedra" data-p="piedra" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
+    '<g class="lam-parte lam-piedra" data-p="piedra" style="opacity:0" transform="translate('+PIEDRA0.join(' ')+')"><image href="'+lamSrc('piedra')+'" x="-110" y="-110" width="220" height="220"/>'+
     '<rect class="lam-hit" x="-110" y="-110" width="220" height="220" fill="transparent" pointer-events="all" onclick="lamToca(\'piedra\')"/></g></svg>'+
     '<div class="lam-ets" id="lamEts">'+etiquetas+'</div><div class="lam-chip" id="lamChip" hidden></div>'+lamAnioVHTML()+lamCartelHTML()+lamFinHTML()+
     (lamModo==='presentar'?'':'<div class="lam-aviso" id="lamAviso">Toca una parte de la estatua</div>')+'</div>'+
@@ -74574,6 +75015,7 @@ function lamEnciende(ids,suaves,vecinas){
     x.classList.toggle('on',!!hay&&ids.includes(id));
     x.classList.toggle('apagada',!!hay&&!ids.includes(id)&&!(suaves||[]).includes(id));
     x.classList.toggle('tenue',!!hay&&(suaves||[]).includes(id));});
+  svg.querySelectorAll('.lam-brillo').forEach(x=>x.classList.toggle('on',!!hay&&ids.includes(x.getAttribute('data-p'))));
   document.querySelectorAll('#lamEts .lam-et').forEach(b=>b.classList.toggle('on',!!hay&&ids.includes(b.getAttribute('data-p'))));
   lamRielMarca(hay?ids:[]);
 }
@@ -74630,6 +75072,45 @@ function lamVeEntrada(k){
   const e=lamEntradas().find(y=>y.k===k);if(!e)return;
   if(e.x)lamEligeX(e.x);else lamElige(e.i);
 }
+/* v215: EXPLORAR EN ORDEN (Camilo, 14-oct: «Explorar debe abrir en el paso 1, Cautivos en
+   Babilonia, y Siguiente debe recorrer la historia EN ORDEN, no solo con clics»). El
+   recorrido es el del capítulo: los pasos de la historia, la estatua (o las bestias)
+   entera, cada parte con sus entradas (en Daniel 7 las señas, los 1.260 años y las tres
+   fases), la piedra y el monte, lo que pasa después y el cierre. Anterior/Siguiente,
+   las flechas y el enlace (lugar) usan la misma lista. `k` es la llave de cada paso:
+   'h0'…'hN' (historia), 'est' (la estatua entera), la llave de la entrada del riel, 'desp'
+   y 'cierre'. */
+let lamDonde='';
+function lamRecorrido(){
+  const L=LAM(),r=[];
+  L.historia.forEach((h,i)=>r.push({k:'h'+i,t:h.titulo}));
+  r.push({k:'est',t:L.verTodo||'La estatua'});
+  lamEntradas().forEach(e=>r.push({k:e.k,e,t:lamEntDice(L,e)[0]}));
+  if(L.despues)r.push({k:'desp',t:L.despues.titulo});
+  if(L.cierre)r.push({k:'cierre',t:L.cierre.titulo});
+  return r;
+}
+function lamIr(k){
+  k=String(k||'');
+  if(/^h\d+$/.test(k))return lamHistoria(Number(k.slice(1)));
+  if(k==='est')return lamInicio();
+  if(k==='desp')return lamHistoria('desp');
+  if(k==='cierre')return lamCierreX();
+  if(lamEntradas().some(e=>e.k===k))return lamVeEntrada(k);
+}
+/* El cierre en Explorar: el mismo de Presentar. En Daniel 2 la placa con toda la historia
+   sobre la estatua en sombra; en Daniel 7 su escena (7:22). */
+function lamCierreX(){
+  const L=LAM(),c=L.cierre;if(!c)return;
+  lamPara();lamTramo(null);lamSel='';lamDonde='cierre';lamMarcaPaso('desp');lamAvisoFuera();
+  const t={f:c.f,ref:c.ref,titulo:c.titulo,texto:c.texto,nota:esc(c.nota)};
+  if(lamEsE()){lamLimpia();lamEnciende([]);lamChip(null);lamD2(null);lamHist(t);}
+  else{lamHist(null);lamChip(null);lamEtiquetas(false);lamEnciende(['__ninguna']);
+    const svg=document.getElementById('lamSvg');if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
+    lamAcerca(lamTodo(),650);lamFin(true);}
+  lamHoja(lamHojaTexto(t,'cierre'));lamVeHoja();lamRielMarca([]);lamLugar();
+}
+const lamAvisoFuera=()=>{const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');};
 function lamRielHTML(extra){
   const L=LAM(),t=lamEsE()?'Las partes de la visión':'Las partes del sueño';
   return '<nav class="lam-riel'+(lamEsE()?' e':'')+'" aria-label="'+t+'"><div class="lam-riel-cab"><div class="lam-rot">'+t+'</div></div>'+
@@ -74672,8 +75153,8 @@ function lamIntroHTML(){
     (I.texto?'<p class="lam-intro-q"><q>'+esc(I.texto)+'</q> <span class="lam-ref">'+esc(I.ref)+'</span></p>':'')+
     (I.nota?'<p class="lam-intro-n">'+esc(I.nota)+'</p>':'')+
     (I.datos?'<dl class="lam-intro-d">'+I.datos.map(d=>'<div><dt>'+esc(d[0])+'</dt><dd>'+esc(d[1])+'</dd></div>').join('')+'</dl>':'')+
-    '<div class="lam-intro-pie"><div class="lam-rot">Elige una parte</div><p>En la lista o tocando la imagen. Con el teclado, las flechas.</p>'+
-    '<button type="button" class="lam-intro-go" onclick="lamElige(0)"><span><small>Empezar por</small><b>'+esc(p0.nombre)+'</b></span>'+IC('der')+'</button></div></div>';
+    '<div class="lam-intro-pie"><div class="lam-rot">Elige una parte</div><p>En la lista o tocando la imagen, o sigue en orden. Con el teclado, las flechas.</p></div>'+
+    lamNavHTML('est')+'</div>';
 }
 /* v212: EL CIERRE DE DANIEL 2 (Camilo: «la imagen del reino que jamás será destruido
    se repite con el anterior»). El monte ya es el paso de antes; el cierre es otra
@@ -74682,7 +75163,8 @@ function lamIntroHTML(){
    uno con su metal y su año) que se enciende de izquierda a derecha y termina en el
    reino que no se acaba. */
 function lamFinHTML(){
-  const L=LAM(),c=L.cierre;if(!c||lamModo!=='presentar'||lamEsE())return '';
+  /* v215: también en Explorar, como último paso del recorrido (lamCierreX). */
+  const L=LAM(),c=L.cierre;if(!c||lamEsE())return '';
   return '<div class="lam-fin" id="lamFin">'+(c.fondo?'<img class="lam-fin-bg" alt="" hidden>':'')+'<div class="lam-fin-in"><div class="lam-fin-ant" data-o="0">'+esc(c.ref2||c.ref)+'</div>'+
     '<div class="lam-fin-tit" data-o="1">'+esc(c.titulo)+'</div><i class="lam-fin-reg" data-o="1"></i>'+
     '<ol class="lam-fin-reel">'+L.partes.map((p,i)=>'<li data-o="2" class="'+(p.id==='monte'?'ult':p.id==='piedra'?'pi':'')+'" style="--i:'+i+';--c:'+p.c+'">'+
@@ -74738,7 +75220,8 @@ function lamAbre(cid,modo){
   lamPrecarga(cid,document.getElementById('lamEsc'));
   lamRielTeclas();
   lamGeo();
-  if(modo==='presentar')lamPres(0);else{lamInicio();lamPintaReto();
+  /* v215: Explorar abre en el primer paso de la historia (Cautivos en Babilonia). */
+  if(modo==='presentar')lamPres(0);else{lamIr('h0');lamPintaReto();
     /* v209: al abrir, el título de la lámina un momento, como al empezar una película. */
     lamCartel(true,true);lamCartelT=setTimeout(()=>lamCartel(false),2600);}
   if(!el.__ocio){el.__ocio=true;['pointermove','pointerdown','focusin'].forEach(t=>el.addEventListener(t,lamDespierta,{passive:true}));}
@@ -74758,7 +75241,7 @@ function lamPantalla(){
 function lamCierra(){
   const el=document.getElementById('lam');
   if(!el||el.hidden)return;
-  lamPara();lamCartel(false);clearTimeout(lamOcioT);lamCam++;if(lamEsE())lamLimpia();el.hidden=true;el.innerHTML='';lamModo='';
+  lamPara();lamCartel(false);clearTimeout(lamOcioT);lamCam++;if(lamEsE())lamLimpia();el.hidden=true;el.innerHTML='';lamModo='';lamDonde='';lugarAnota();
   document.body.classList.remove('leyendo');
 }
 
@@ -74838,12 +75321,14 @@ function lamVeHoja(){
   const pega=getComputedStyle(e).position==='sticky',eb=pega?e.getBoundingClientRect().bottom:0,t=h.getBoundingClientRect().top;
   if(t>innerHeight-160||t<eb-2)l.scrollBy({top:t-eb-10,behavior:lamQuieto()?'auto':'smooth'});
 }
-/* La piedra vuelve a su sitio (y se corta una caída a medias). */
+/* La piedra vuelve a su sitio (y se corta una caída a medias). v215: y no se ve: solo
+   aparece en su paso (la piedra, el monte, el futuro de la línea de tiempo), que la
+   encienden al dejarla caer. */
 let lamVuelo=0;
 function lamPiedraArriba(){
   lamVuelo++;
   const pi=document.querySelector('#lamSvg .lam-piedra');
-  if(pi){pi.style.opacity='1';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
+  if(pi){pi.style.opacity='0';pi.setAttribute('transform','translate('+PIEDRA0.join(' ')+')');}
 }
 /* v190: la escena de la historia, si la parte o el año tienen una. */
 function lamEscenaHTML(e){
@@ -74943,6 +75428,7 @@ function lamHojaParteTx(p,i,n,figs){
     (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
     '<div class="lam-capa i"><div class="lam-rot">Lo que significa · interpretación</div>'+(lamModo==='presentar'?'<p>'+esc(p.corto)+'</p>':p.interp.map(x=>'<p>'+x+'</p>').join(''))+'<div class="lam-fu">Fuente: '+p.fuente+'</div></div>'+figs+
+    (lamModo==='presentar'?'':lamUltHTML(lamUltDe(p.id)))+
     (lamModo==='presentar'?'':lamNavHTML(p.id));
 }
 /* v211 (Camilo: «se perdió el Anterior y Siguiente»): la navegación entre partes va
@@ -74954,30 +75440,35 @@ function lamHojaParteTx(p,i,n,figs){
 /* v214: va por las entradas del riel (las partes, y en Daniel 7 las señas, los 1.260
    años y las tres fases), así Siguiente pasa por todo lo que hay. */
 function lamNavHTML(k){
-  const L=LAM(),P=lamEntradas(),i=Math.max(0,P.findIndex(x=>x.k===k)),n=P.length,a=P[i-1],b=P[i+1],nom=e=>lamEntDice(L,e)[0];
-  const ir=e=>'onclick="lamVeEntrada(\''+e.k+'\')"';
+  const P=lamRecorrido(),i=Math.max(0,P.findIndex(x=>x.k===k)),n=P.length,a=P[i-1],b=P[i+1],nom=e=>e.t;
+  const ir=e=>'onclick="lamIr(\''+e.k+'\')"';
   return '<nav class="lam-nav" aria-label="Partes">'+
     '<button type="button" class="lam-rd" '+(a?ir(a)+' aria-label="Anterior: '+esc(nom(a))+'" title="'+esc(nom(a))+'"':'disabled aria-label="Anterior"')+'>'+IC('izq')+'</button>'+
     '<div class="lam-nav-tx"><div class="lam-nav-n"><span><b>'+(i+1)+'</b> / '+n+'</span><span class="lam-nav-bar" aria-hidden="true">'+P.map((_,j)=>'<i'+(j===i?' class="on"':j<i?' class="ya"':'')+'></i>').join('')+'</span></div>'+
     '<div class="lam-nav-p">'+(b?'<span>Sigue</span> '+esc(nom(b)):(lamEsE()?'Fin de la visión':'Fin del sueño'))+'</div></div>'+
     '<button type="button" class="lam-rd sig" '+(b?ir(b)+' aria-label="Siguiente: '+esc(nom(b))+'" title="'+esc(nom(b))+'"':'disabled aria-label="Siguiente"')+'>'+IC('der')+'</button></nav>';
 }
-function lamHojaTexto(t){
+function lamHojaTexto(t,k){
   return '<div class="lam-hcab"><div><div class="lam-p1">'+esc(t.ref)+'</div><div class="lam-p2">'+esc(t.titulo)+'</div></div>'+
     (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
-    '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(t.texto)+'</q></p></div><p class="lam-nota">'+t.nota+'</p>';
+    '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(t.texto)+'</q></p></div><p class="lam-nota">'+t.nota+'</p>'+
+    (k&&lamModo!=='presentar'?lamNavHTML(k):'');
 }
 function lamMarcaPaso(k){document.querySelectorAll('.lam-pasos .lam-paso').forEach(b=>b.classList.toggle('on',b.getAttribute('data-h')===String(k)));}
 
 /* ── Explorar ── */
 function lamInicio(){
+  lamFin(false);lamDonde='est';
+  const av=document.getElementById('lamAviso');if(av)av.classList.remove('fuera');
   if(lamEsE())return lamInicioE();
   lamHist(null);lamSel='';lamEnciende([]);lamEtiquetas(true);lamHoja('');lamMarcaPaso('est');lamChip(null);lamTramo(null);
   const svg=document.getElementById('lamSvg');
   if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
-  lamAcerca(lamTodo(),650);
+  lamAcerca(lamTodo(),650);lamLugar();
 }
 function lamToca(id){
+  /* La piedra escondida no se toca (su rectángulo sigue ahí). */
+  if(id==='piedra'){const pi=document.querySelector('#lamSvg .lam-piedra');if(pi&&pi.style.opacity==='0')return;}
   /* En Presentar, tocar una parte lleva a SU paso (antes avanzaba uno). */
   if(lamEsE()&&lamModo!=='presentar'){lamElige(LAM().partes.findIndex(p=>p.id===id));return;}
   if(lamModo==='presentar'){const k=lamPasos().findIndex(x=>x.tipo==='parte'&&x.id===id);lamPres(k>=0&&k!==lamPaso?k:lamPaso+1);return;}
@@ -74988,7 +75479,7 @@ function lamElige(i){
   if(lamEsE())return lamEligeE(i);
   const L=LAM(),p=L.partes[i];if(!p)return;
   const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
-  lamPara();lamHist(null);lamSel=p.id;lamMarcaPaso('est');
+  lamPara();lamHist(null);lamFin(false);lamSel=p.id;lamDonde=p.id;lamMarcaPaso('est');
   const svg=document.getElementById('lamSvg');
   const esMonte=p.id==='monte',esPiedra=p.id==='piedra';
   if(!esMonte)lamMonte('no');
@@ -75001,23 +75492,25 @@ function lamElige(i){
   /* v187: también en Explorar la piedra cae y golpea los pies (2:34), y el
      monte nace del polvo que se lleva el viento (2:35). */
   const pi=svg.querySelector('.lam-piedra');
-  if(esPiedra){lamPiedraArriba();lamCae(pi);}
+  if(esPiedra){lamPiedraArriba();pi.style.opacity='1';lamCae(pi);}
   else if(esMonte){lamVuelo++;pi.style.opacity='1';pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');lamPolvo(svg);setTimeout(()=>{if(lamSel==='monte')lamMonte('crece');},500);}
   else lamPiedraArriba();
   lamRielMarca([p.id]);lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
   /* v209: el nombre como un rótulo de documental, y su periodo en oro sobre la línea de tiempo. */
   lamChip(p);lamTramo(p.de,p.a);
   const fv=(L.futuro||[]).find(f=>f.id===p.id);if(fv)lamTiempoFut(fv,true);
+  lamLugar();
 }
 function lamHistoria(k){
   const L=LAM(),t=k==='desp'?L.despues:L.historia[k];if(!t)return;
-  lamTramo(null);
-  if(lamEsE()){lamPara();lamLimpia();lamSel='';lamMarcaPaso(k);lamEnciende([]);lamChip(null);lamD2(null);lamHist(t);lamHoja(lamHojaTexto(t));lamVeHoja();return;}
+  const kk=k==='desp'?'desp':'h'+k;
+  lamTramo(null);lamFin(false);lamAvisoFuera();lamDonde=kk;lamRielMarca([]);
+  if(lamEsE()){lamPara();lamLimpia();lamSel='';lamMarcaPaso(k);lamEnciende([]);lamChip(null);lamD2(null);lamHist(t);lamHoja(lamHojaTexto(t,kk));lamVeHoja();lamLugar();return;}
   lamPara();lamChip(null);lamSel='';lamMarcaPaso(k);lamEnciende(['__ninguna']);lamEtiquetas(false);lamAcerca(lamTodo(),650);
   const svg=document.getElementById('lamSvg');
   if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
   lamHist(t);
-  lamHoja(lamHojaTexto(t));lamVeHoja();
+  lamHoja(lamHojaTexto(t,kk));lamVeHoja();lamLugar();
 }
 
 /* ── La línea de tiempo ── */
@@ -75079,7 +75572,9 @@ function lamVeAnio(y){
   /* El año va en la explicación, no sobre la imagen. */
   /* Al recorrer solo, el año cambia veinte veces por segundo: la escena se
      vuelve a pintar solo cuando cambia, si no parpadea. */
-  const esA0=lamEscenaAnio(y),esA=lamEnEscena(esA0)?null:esA0,hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>';
+  /* v215: en el tramo futuro, la secuencia de los últimos acontecimientos. */
+  const futU=q.fut?lamUltHTML([q.fut.id==='monte'||q.fut.id==='reino'?'reino':'venida']):'';
+  const esA0=lamEscenaAnio(y),esA=lamEnEscena(esA0)?null:esA0,hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>'+futU;
   const fig=hj&&hj.querySelector('.lam-fig'),igual=fig?(esA&&fig.getAttribute('data-f')===esA.f):!esA;
   if(hj&&igual&&hj.querySelector('.lam-anio-tx')){hj.querySelector('.lam-anio-tx').innerHTML=lamPer(txt);hj.classList.remove('vacia');}
   else lamHoja(lamEscenaHTML(esA)+'<div class="lam-anio-tx">'+txt+'</div>');
@@ -75166,6 +75661,7 @@ function lamPres(k){
   lamFin(cierre);
   document.getElementById('lamCuenta').textContent=(k+1)+' / '+pasos.length;
   document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
+  lamLugar();
 }
 function lamTiempoFut(f,tramo){
   const r=document.getElementById('lamRango');if(r)r.value=Math.round((f.de+f.a)/2);
@@ -75285,10 +75781,11 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){lamCierra();return;}
   if(lamModo!=='presentar'){
     /* En Explorar, con una parte abierta, las flechas pasan a la anterior o la siguiente. */
-    const t=e.target,E=lamEntradas(),i=lamSel?E.findIndex(x=>x.k===lamSel):-1;
-    if(i<0||(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName||'')))return;
-    if(e.key==='ArrowRight'&&i<E.length-1){e.preventDefault();lamVeEntrada(E[i+1].k);}
-    else if(e.key==='ArrowLeft'&&i>0){e.preventDefault();lamVeEntrada(E[i-1].k);}
+    /* v215: las flechas siguen el recorrido entero (historia, estatua, partes, después, cierre). */
+    const t=e.target,E=lamRecorrido(),i=lamDonde?E.findIndex(x=>x.k===lamDonde):-1;
+    if(i<0||(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName||''))||(t&&t.closest&&t.closest('.lam-riel')))return;
+    if(e.key==='ArrowRight'&&i<E.length-1){e.preventDefault();lamIr(E[i+1].k);}
+    else if(e.key==='ArrowLeft'&&i>0){e.preventDefault();lamIr(E[i-1].k);}
     return;}
   if(e.key==='t'||e.key==='T'){lamTexto();return;}
   if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();lamPres(lamPaso+1);}
@@ -75700,13 +76197,13 @@ function lamLibro(q){
 /* ── Explorar ── */
 function lamInicioE(){
   lamPara();lamLimpia();lamSel='';lamEnciende([]);lamChip(null);lamD2(null);lamMarcaPaso('est');lamTramo(null);
-  lamHist({f:LAM().inicioF});lamHoja('');
+  lamHist({f:LAM().inicioF});lamHoja('');lamLugar();
 }
 function lamEligeE(i,vis){
   const L=LAM(),p=L.partes[i];if(!p)return;
   const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
   if(!vis)lamPara();
-  lamSel=p.id;lamMarcaPaso('est');lamVista(p.id,null,true);
+  lamFin(false);lamSel=p.id;lamDonde=p.id;lamMarcaPaso('est');lamVista(p.id,null,true);
   /* El riel se corre solo para que la parte elegida se vea (sin mover la página). */
   lamRielMarca([p.id]);
   lamHoja(lamHojaParte(p,i,L.partes.length));if(!vis)lamVeHoja();
@@ -75716,6 +76213,7 @@ function lamEligeE(i,vis){
   else if(r&&p.era){r.value=p.era;document.getElementById('lamTano').textContent=p.fechas;document.getElementById('lamTq').textContent=p.reino;}
   lamTramo(p.de,p.a);
   const fv=(L.futuro||[]).find(f=>f.id&&f.id===p.id);if(fv)lamTiempoFut(fv,true);
+  if(!vis)lamLugar();
 }
 /* Lo que la hoja de una parte agrega en Explorar: los pasos, los cuernos, las señas. */
 function lamExtraE(p){
@@ -75739,7 +76237,7 @@ function lamEligeX(x,vis){
   if(x==='senas'){lamSenasVis(-1,true);lamHoja(lamHojaSenasE());}
   else if(x==='periodo'){lamHoja(lamHojaPerE());lamPerE(0,true);}
   else{lamVista(e.p.id,null,false);lamHoja(lamHojaFasE());lamFasE(0,true);}
-  lamSel=e.k;lamRielMarca([e.k]);if(!vis)lamVeHoja();
+  lamSel=e.k;lamDonde=e.k;lamRielMarca([e.k]);if(!vis){lamVeHoja();lamLugar();}
 }
 /* La cabecera de la hoja de una entrada: el color de su parte, de dónde es, el nombre y las fechas. */
 const lamCabX=(p,de,t,f)=>'<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(de)+'</div>'+
@@ -75765,7 +76263,7 @@ function lamHojaFasE(){
   return lamCabX(p,p.nombre+' · '+p.reino,F.t,F.s)+
     '<div class="lam-subs-c lam-fas-c"><div class="lam-rot">Una fase por paso</div><div class="lam-subs">'+
     F.pasos.map((x,j)=>'<button type="button" data-fa="'+j+'" onclick="lamFasE('+j+')"><i>'+(j+1)+'</i><span>'+esc(x.t)+'</span></button>').join('')+
-    '</div><button type="button" class="btn tono lam-recorre" onclick="lamFasTodas()">'+IC('play')+' Encender las tres</button><div class="lam-sub-tx" id="lamFasTx"></div></div>'+lamNavHTML(LAM_X.fases);
+    '</div><button type="button" class="btn tono lam-recorre" onclick="lamFasTodas()">'+IC('play')+' Encender las tres</button><div class="lam-sub-tx" id="lamFasTx"></div></div>'+lamUltHTML(['juicio','gracia','venida'])+lamNavHTML(LAM_X.fases);
 }
 function lamSubE(j,vis){
   const p=lamParte(lamSel);if(!p||!p.pasos||!p.pasos[j])return;
@@ -76033,6 +76531,7 @@ function lamPresE(k){
   const prim=pasos.map(x=>x.tipo==='senas'?false:x.sub==null||x.sub===0);
   document.getElementById('lamCuenta').textContent=prim.slice(0,k+1).filter(Boolean).length+' / '+prim.filter(Boolean).length;
   document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
+  lamLugar();
 }
 
 
@@ -76980,6 +77479,7 @@ function ir(id,quedarse){
     S.ultItem='';
     guardar();
   }
+  lugarAnota();
   if(id==='inicio')pintaInicio();
   if(id==='estudio')pintaCaps();
   if(id==='tarjetas')pintaTarjetas();
@@ -77146,13 +77646,13 @@ function pintaAlumnos(){
         '<button type="button" class="btn txt peq" onclick="yoCancela()">Cancelar</button></div>':'')+
       (p.fichas.length>1?'<div class="alu-acts">'+fichas.map(([id,al])=>{const c=CATS[al.cat];
         return '<button type="button" class="alu-act'+(id===DB.activo?' on':'')+'" data-act="'+esc(c?c.act:'')+'" aria-pressed="'+(id===DB.activo)+'" onclick="cambiaAlumno(\''+id+'\')">'+
-        '<span class="alu-act-a">'+esc(c?actCorta(c.act):'')+'</span><span class="alu-act-c">'+esc(c?c.nombre:al.cat)+'</span></button>';}).join('')+'</div>':'')+
+        '<span class="alu-act-a">'+esc(c?actCorta(c.act):'')+'</span><span class="alu-act-c">'+esc(c?c.nombre:al.cat)+'</span>'+(id===DB.activo?IC('check','alu-act-ok'):'')+'</button>';}).join('')+'</div>':'')+
       (aC&&activa?'<button type="button" class="btn txt alu-pasa" onclick="pasaASuCuenta()">'+IC('compartir')+' Pasar su avance a su propia cuenta</button>':'')+
       '</div>';
   }).join('')+
   (alumnos().length<MAX_ALUMNOS
-    ?'<button type="button" class="alu-btn nuevo" onclick="agregaPersona()"><span class="an">'+IC('mas')+' Agregar persona</span>'+
-     '<span class="ac">Un niño a tu cargo, o alguien con su propia cuenta</span></button>':'')+
+    ?'<button type="button" class="alu-btn nuevo" onclick="agregaPersona()"><span class="alu-av mas" aria-hidden="true">'+IC('mas')+'</span>'+
+     '<span class="alu-nom"><span class="an">Agregar persona</span><span class="ac">Un niño a tu cargo, o alguien con su propia cuenta</span></span></button>':'')+
   '<div id="alu-nueva"></div>';
 }
 const ORDEN_ACT=()=>[...Object.keys(ACTIVIDADES),...Object.keys(LIBRES.ACTS)];
@@ -78620,7 +79120,7 @@ function ponPest(k){
   capPest=k==='prof'?'prof':'examen';
   const d=document.getElementById('detalle');
   if(!d)return;
-  d.setAttribute('data-pest',capPest);
+  d.setAttribute('data-pest',capPest);lugarAnota();
   d.querySelectorAll('.cap-pest .pest').forEach(b=>{const on=b.classList.contains('pest-'+capPest);
     b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on));});
 }
@@ -78750,7 +79250,7 @@ function verCap(id,quieto){
     abierto=enEstudio&&!!(d0&&d0.style&&d0.style.display==='block');
   }catch(e){}
   ir('estudio',true);
-  S.ultItem=id;capAbierto=id;guardar();
+  S.ultItem=id;capAbierto=id;guardar();lugarAnota();
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
   document.querySelector('.c-'+id)?.classList.add('on');
   const c=buscaItem(id);
@@ -78876,6 +79376,7 @@ function anotaDonde(){
       if(r.top<=DONDE_TOPE){o.s=i;o.dy=Math.round(DONDE_TOPE-r.top);}}
     localStorage.setItem(DONDE_K,JSON.stringify(o));
   }catch(e){}
+  lugarAnota();
 }
 function vuelveADonde(){
   let o=null;
@@ -78899,6 +79400,109 @@ function vuelveADonde(){
 if(typeof window!=='undefined'&&window.addEventListener){
   window.addEventListener('scroll',()=>{clearTimeout(dondeT);dondeT=setTimeout(anotaDonde,200);},{passive:true});
   window.addEventListener('pagehide',anotaDonde);
+}
+
+/* ───────── v215: EL LUGAR, EN EL ENLACE (Camilo, 14-oct: «según el lugar donde esté,
+   si recargo me debe dejar en el mismo lugar; debe haber estado o link para todo») ─────────
+   MECANISMO
+   «Dónde iba leyendo» (v156) ya devolvía la pantalla, el capítulo y la altura, pero
+   solo en este aparato y no en lo que se abre encima: la lámina (y su paso), la sala de
+   Comparar o la pestaña «Para profundizar». Ahora todo eso se escribe como un camino
+   corto, legible, que es a la vez la recarga y el enlace que se puede mandar:
+     estudio/d7/profundizar/s2/lamina/d7/explorar/x-fases?a=gm
+   pantalla, capítulo, pestaña, sección (s0, s1…), la lámina con su modo y su paso (la
+   llave del recorrido en Explorar, el número en Presentar), la época de Comparar
+   (comparar/<época>) y la actividad (a=<categoría>, para elegir la ficha de la misma
+   persona en esa actividad).
+   DÓNDE VIVE
+   Sola: en el fragmento de la dirección (#/…), con replaceState (sin llenar el
+   historial). Dentro de Jóvenes el fragmento es de la app, que ya guarda ahí su
+   pestaña: tools/cb-traer/traer.mjs cambia el bloque LUGAR por uno que le pasa el
+   camino a la app (`lugar`/`alLugar` del montaje: «#estudio/<camino>») y lo guarda
+   además en sessionStorage por persona. Nada más del código sabe dónde vive. */
+/* LUGAR:INICIO */
+function lugarLee(){
+  try{const h=String(location.hash||'');return h.indexOf('#/')===0?decodeURIComponent(h.slice(2)):'';}catch(e){return '';}
+}
+function lugarEscribe(c){
+  try{const h=c&&c!=='inicio'?'#/'+encodeURI(c):'';
+    if(String(location.hash||'')!==h)history.replaceState(history.state,'',location.pathname+location.search+h);}catch(e){}
+}
+/* LUGAR:FIN */
+const LUGAR_PANT=['inicio','estudio','tarjetas','examen','logros'];
+let lugarT=0,lugarListo=false;
+/* El camino de lo que se ve ahora. */
+function lugarActual(){
+  const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[pant];
+  if(pant==='estudio'&&S.ultItem){
+    r.push(S.ultItem);
+    const d=document.getElementById('detalle');
+    if(capPest==='prof'&&d&&d.getAttribute&&d.getAttribute('data-pest')==='prof'&&!(CONTENIDO[S.ultItem]||CONT_MODULOS[S.ultItem]||[]).every(esSecInterp))r.push('profundizar');
+    const secs=secsDeDonde(),i=secs.findIndex(x=>x.getBoundingClientRect().bottom>DONDE_TOPE);
+    if(i>0)r.push('s'+i);
+  }
+  if(lamModo&&lamId)r.push('lamina',lamId,lamModo,lamModo==='presentar'?String(lamPaso):(lamDonde||'est'));
+  else if(cmpSel)r.push('comparar',cmpSel);
+  else if(ultTocado&&document.getElementById('cmpUlt')&&ULT())r.push('ultimos',ULT().eventos[ultSel].id);
+  let c=r.join('/');
+  if(personasDB().some(p=>p.fichas.length>1&&p.fichas.some(([id])=>id===DB.activo)))c+='?a='+S.cat;
+  return c;
+}
+function lugarAnota(){
+  if(!lugarListo)return;
+  clearTimeout(lugarT);
+  lugarT=setTimeout(()=>{try{lugarEscribe(lugarActual());}catch(e){}},120);
+}
+const lamLugar=()=>lugarAnota();
+/* Lee un camino: lo que no se entiende se ignora (un enlace viejo o mal copiado nunca rompe nada). */
+function lugarParte(c){
+  const o={};c=String(c||'').trim().replace(/^#?\/?/,'');if(!c)return o;
+  const q=c.indexOf('?');
+  if(q>=0){const a=/(?:^|&)a=([\w-]{1,24})/.exec(c.slice(q+1));if(a)o.a=a[1];c=c.slice(0,q);}
+  const s=c.split('/').filter(Boolean);let i=0;
+  if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
+  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|s\d+)$/.test(s[i]))o.item=s[i++];
+  for(;i<s.length;i++){
+    if(s[i]==='profundizar')o.prof=true;
+    else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
+    else if(s[i]==='lamina'&&s[i+1]&&/^(explorar|presentar)$/.test(s[i+2]||'')){o.lam={id:s[i+1],modo:s[i+2],paso:s[i+3]||''};i+=3;}
+    else if(s[i]==='comparar'&&s[i+1]){o.cmp=s[i+1];i++;}
+    else if(s[i]==='ultimos'&&s[i+1]){o.ult=s[i+1];i++;}
+  }
+  return o;
+}
+/* Lleva al camino. `dondeOk`: el arranque ya puso la pantalla y la altura de este aparato. */
+function lugarAplica(c,dondeOk){
+  const o=lugarParte(c);if(!o.pant)return false;
+  if(o.a&&o.a!==S.cat&&CATS[o.a]){
+    const p=personasDB().find(x=>x.fichas.some(([id])=>id===DB.activo)),f=p&&p.fichas.find(([,al])=>al.cat===o.a);
+    if(f){DB.activo=f[0];S=DB.alumnos[f[0]];guardar();marcaCat();pintaYo();}
+  }
+  const mismo=o.pant===S.ultPantalla&&(o.item||'')===(S.ultItem||'')&&pantallaAct===o.pant;
+  if(!mismo){
+    if(o.pant==='estudio'&&o.item&&buscaItem(o.item))verCap(o.item,true);
+    else ir(o.pant==='estudio'&&o.item?'estudio':o.pant);
+    dondeOk=false;
+  }
+  if(o.prof&&S.ultItem)ponPest('prof');
+  if(!dondeOk&&o.sec!=null&&S.ultItem){
+    const pon=()=>{const sec=secsDeDonde()[o.sec];if(sec)window.scrollTo(0,Math.max(0,Math.round(sec.getBoundingClientRect().top+(window.scrollY||0)-DONDE_TOPE)));};
+    pon();if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(pon));
+  }else if(!dondeOk&&S.ultItem)llevaA('detalle',true);
+  if(o.lam&&typeof LAMINAS!=='undefined'&&LAMINAS[o.lam.id]){
+    lamAbre(o.lam.id,o.lam.modo);
+    if(o.lam.modo==='presentar'){const n=Number(o.lam.paso)||0;if(n>0)lamPres(Math.min(n,lamPasos().length-1));}
+    else if(o.lam.paso&&lamRecorrido().some(x=>x.k===o.lam.paso))lamIr(o.lam.paso);
+  }else if(o.cmp&&document.getElementById('cmpSala'))cmpToca(o.cmp);
+  else if(o.ult&&ultIdx(o.ult)>=0&&document.getElementById('cmpUlt')){cmpUlt(ultIdx(o.ult));
+    if(!dondeOk){const m=document.getElementById('cmpUlt');if(m&&m.scrollIntoView)m.scrollIntoView({block:'start'});}}
+  return true;
+}
+/* Al arrancar: el camino del enlace o de la recarga manda sobre lo anotado en el aparato. */
+function lugarArranca(dondeOk){
+  let c='';try{c=lugarLee();}catch(e){}
+  try{if(c)lugarAplica(c,dondeOk);}catch(e){console.error(e);}
+  lugarListo=true;lugarAnota();
 }
 
 /* ───────── LO RETIRADO TAMPOCO SALE EN «COMPRUEBALO» ─────────
@@ -83402,21 +84006,32 @@ const CMP_ROM=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
 /* La escala del río: de 620 a.C. a hoy en el 92 % del ancho; el resto es «para siempre». */
 const cmpX=y=>y==null?96:Math.max(0,Math.min(92,(y+620)/2646*92));
 const cmpNom=k=>{const l=libroCid(k);return l?l.nombre+' '+l.n:k;};
+/* v215 (Camilo: «bajo los carriles de Daniel 2 y Daniel 7 hay barras naranjas de más,
+   confunde»): cada visión es UN carril limpio con los reinos que se suceden. Lo que
+   gobierna al mismo tiempo que otro (Roma papal, 538-1798, dentro de Roma dividida; el
+   juicio desde 1844) ya no es una segunda barra sin nombre: es un hilo fino pegado bajo
+   el carril, con su nombre escrito (a la izquierda si cabe, si no terminando en su
+   fecha), y la leyenda dice qué es cada trazo. */
 function cmpRio(M){
   const pc=n=>(Math.round(n*100)/100)+'%';
   const carril=k=>{
-    /* Lo que se pisa en fechas (los diez cuernos y el cuerno pequeño) va en otra pista. */
-    const fin=[],pistas=[];
+    const fin=[],pistas=[],sub=[];
     const t=(LAMINAS[k].partes||[]).map(p=>{const key=cmpClave(p);
       if(key===CMP_FIN){fin.push(p);return '';}
       /* Lo que va en una época sin tramo propio (el Hijo del hombre) ya lo dibuja su época. */
       if(!Number.isFinite(p.de))return '';
       const a=Math.min(Number.isFinite(p.a)?p.a:2026,2026);
       let n=pistas.findIndex(f=>f<=p.de);if(n<0){n=pistas.length;pistas.push(a);}else pistas[n]=a;
-      return '<button type="button" class="cmp-tr" data-k="'+esc(key)+'" style="--c:'+esc(p.c||'')+';left:'+pc(cmpX(p.de))+';width:'+pc(Math.max(.9,cmpX(a)-cmpX(p.de)))+';--n:'+n+'" '+
-        'aria-label="'+esc(cmpNom(k)+': '+p.nombre+', '+p.fechas)+'" onclick="cmpToca(\''+key+'\')"></button>';}).join('');
-    const f=fin.length?'<button type="button" class="cmp-tr fin" data-k="'+CMP_FIN+'" style="--n:0" aria-label="'+esc(cmpNom(k)+': '+fin.map(p=>p.nombre).join(', '))+'" onclick="cmpToca(\''+CMP_FIN+'\')"></button>':'';
-    return '<div class="cmp-carril" style="--pistas:'+Math.max(1,pistas.length)+'"><span class="cmp-carril-n">'+esc(cmpNom(k))+'</span><div class="cmp-carril-t">'+t+f+'</div></div>';
+      const x=cmpX(p.de),w=Math.max(.9,cmpX(a)-x),lb=cmpNom(k)+': '+p.reino+' ('+p.nombre+'), '+p.fechas;
+      if(n>0){sub.push({p,key,x,w,lb,a});return '';}
+      return '<button type="button" class="cmp-tr" data-k="'+esc(key)+'" style="--c:'+esc(p.c||'')+';left:'+pc(x)+';width:'+pc(w)+'" '+
+        'aria-label="'+esc(lb)+'" title="'+esc(p.reino+' · '+p.fechas)+'" onclick="cmpToca(\''+key+'\')"></button>';}).join('');
+    /* El nombre del hilo: dentro, desde su comienzo, si el tramo es largo; si no, termina en su fin. */
+    const hilos=sub.map(o=>{const corto=o.p.reino.replace(/^El /,'').replace(/ en el cielo$/,'').replace(/^./,c=>c.toUpperCase()),fe=o.a>=2026?'desde '+lamAnioTx(o.p.de):Math.abs(o.p.de)+'–'+o.a;
+      return '<button type="button" class="cmp-hilo'+(o.w<22?' der':'')+'" data-k="'+esc(o.key)+'" style="--c:'+esc(o.p.c||'')+';left:'+pc(o.x)+';width:'+pc(o.w)+'" '+
+        'aria-label="'+esc(o.lb+'; al mismo tiempo')+'" title="'+esc(o.p.reino+' · '+o.p.fechas)+'" onclick="cmpToca(\''+o.key+'\')"><i></i><span>'+esc(corto)+' <small>'+esc(fe)+'</small></span></button>';}).join('');
+    const f=fin.length?'<button type="button" class="cmp-tr fin" data-k="'+CMP_FIN+'" aria-label="'+esc(cmpNom(k)+': '+fin.map(p=>p.nombre).join(', '))+'" title="El reino de Dios" onclick="cmpToca(\''+CMP_FIN+'\')"></button>':'';
+    return '<div class="cmp-carril'+(sub.length?' con-hilo':'')+'"><span class="cmp-carril-n">'+esc(cmpNom(k))+'</span><div class="cmp-carril-t">'+t+f+hilos+'</div></div>';
   };
   /* En el teléfono quedan las tres que caben: 605 a.C., 476 y hoy. */
   const marcas=[[-605,'605 a.C.'],[-331,'331','chico'],[1,'1 d.C.','ancho'],[476,'476 d.C.','tel'],[1798,'1798','ancho'],[2026,'hoy']];
@@ -83424,7 +84039,9 @@ function cmpRio(M){
     M.cols.map(carril).join('')+
     '<div class="cmp-eje" aria-hidden="true"><span class="cmp-eje-n"></span><div class="cmp-eje-t">'+
     marcas.map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+pc(cmpX(y))+'">'+t+'</span>').join('')+
-    '<span class="siempre" style="left:'+pc(96)+'">siempre</span></div></div></div>';
+    '<span class="siempre" style="left:'+pc(96)+'">siempre</span></div></div>'+
+    '<div class="cmp-ley" aria-hidden="true"><span class="cmp-eje-n"></span><p><span><i class="l-tr"></i>Los reinos, uno tras otro</span>'+
+    '<span><i class="l-hilo"></i>Al mismo tiempo, dentro del anterior</span><span><i class="l-fin"></i>El reino de Dios</span></p></div></div>';
 }
 /* La época que se lee queda pegada arriba, justo debajo de las barras que ya
    están pegadas (la de la marca en el teléfono; dentro de Jóvenes, la de la app y
@@ -83466,8 +84083,73 @@ function comparaHTML(){
       /* En una caja angosta las vacías no se dibujan: se dice en una línea. */
       (()=>{const no=M.cols.filter(k=>!(f.celdas[k]||[]).length);return no.length?'<p class="cmp-faltan">No aparece en '+esc(no.map(cmpNom).join(', '))+'.</p>':'';})()+
       cmpFasesHTML(f,M,true)+'</section>').join('')+
-    '</div>'+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
+    '</div>'+ultHTML()+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
 }
+/* ───────── v215: LOS ÚLTIMOS ACONTECIMIENTOS (ULTIMOS, fuente/laminas.js) ─────────
+   Camilo (14-oct): «Daniel y Apocalipsis se refuerzan». Daniel 2, 7 y 8 pasan del juicio
+   a la piedra y al reino; Daniel 11-12 y Apocalipsis cuentan lo de en medio. Una matriz:
+   arriba los siete acontecimientos en orden, a la izquierda los libros; un punto lleno
+   donde el libro lo muestra, un aro donde lo supone. Tocar un acontecimiento abre debajo
+   sus textos (RV1995), qué libro lo trae y dónde, y su fuente. */
+let ultSel=0,ultTocado=false;
+const ULT=()=>typeof ULTIMOS!=='undefined'?ULTIMOS:null;
+function ultHTML(){
+  const U=ULT();if(!U)return '';
+  const E=U.eventos,cel=(e,lb)=>{const r=e.en[lb]||'';return r?(r[0]==='~'?'sup':'si'):'no';};
+  return '<section class="cmp-ult" id="cmpUlt" aria-labelledby="cmpUltT"><header class="cmp-ult-cab"><div class="cmp-ant">'+IC('historial')+' Después del juicio</div>'+
+    '<h3 class="cmp-tit" id="cmpUltT">'+esc(U.titulo)+'</h3><p class="cmp-p">'+esc(U.nota)+'</p></header>'+
+    '<div class="cmp-ult-m" style="--n:'+E.length+'" role="group" aria-label="Qué libro muestra cada acontecimiento">'+
+      '<span class="cmp-ult-0" aria-hidden="true"></span>'+
+      E.map((e,i)=>'<button type="button" class="cmp-ult-ev'+(i===ultSel?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===ultSel)+'" onclick="cmpUlt('+i+')"><i>'+(i+1)+'</i><span>'+esc(e.t)+'</span></button>').join('')+
+      U.libros.map(([k,nom])=>'<span class="cmp-ult-lb">'+esc(nom)+'</span>'+E.map((e,i)=>{const c=cel(e,k),r=(e.en[k]||'').replace(/^~/,'');
+        return '<span class="cmp-ult-c '+c+(i===ultSel?' on':'')+'" data-i="'+i+'" title="'+esc(nom+(c==='no'?': no lo trae':c==='sup'?': lo supone ('+r+')':': '+r))+'"><b></b></span>';}).join('')).join('')+
+    '</div><p class="cmp-ult-claves" aria-hidden="true">'+E.map((e,i)=>'<span><b>'+(i+1)+'</b> '+esc(e.c||e.t)+'</span>').join('')+'</p><p class="cmp-ult-ley" aria-hidden="true"><span><b class="si"></b>Lo muestra</span><span><b class="sup"></b>Lo supone, sin contarlo</span><span><b class="no"></b>No lo trae</span></p>'+
+    '<div class="cmp-ult-det" id="cmpUltDet" aria-live="polite">'+ultDetHTML(ultSel)+'</div>'+
+    '<p class="sec-fuente">Fuente: '+U.fuente+'</p></section>';
+}
+function ultDetHTML(i){
+  const U=ULT(),e=U&&U.eventos[i];if(!e)return '';
+  const muestra=U.libros.filter(([k])=>e.en[k]),no=U.libros.filter(([k])=>!e.en[k]);
+  return '<div class="cmp-ult-dc">'+(e.img?'<span class="cmp-ult-img"><img src="'+LAMINAS_DIR+e.img+'.webp" alt="" loading="lazy" decoding="async"></span>':'<span class="cmp-ult-num">'+(i+1)+'</span>')+
+    '<div><small>'+(i+1)+' de '+U.eventos.length+' · '+esc(e.cuando)+'</small><h4>'+esc(e.t)+'</h4><p>'+esc(e.nota)+'</p></div></div>'+
+    '<ul class="cmp-ult-citas">'+e.citas.map(([r,c])=>'<li><q>'+esc(c)+'</q> <cite>'+refsTocables(esc(r),'d7')+'</cite></li>').join('')+'</ul>'+
+    '<div class="cmp-ult-libs"><span class="cmp-ult-k">Lo muestran</span>'+muestra.map(([k,nom])=>{const r=e.en[k];
+      return '<span class="cmp-ult-lib'+(r[0]==='~'?' sup':'')+'"><b>'+esc(nom)+'</b> '+esc(r.replace(/^~/,''))+(r[0]==='~'?' · lo supone':'')+'</span>';}).join('')+
+      (no.length?'<span class="cmp-ult-k no">No lo traen: '+esc(no.map(x=>x[1]).join(', '))+'</span>':'')+'</div>'+
+    '<nav class="cmp-ult-nav" aria-label="Acontecimientos"><button type="button" class="btn txt peq"'+(i>0?' onclick="cmpUlt('+(i-1)+')"':' disabled')+'>'+IC('izq')+' '+(i>0?esc(U.eventos[i-1].t):'Anterior')+'</button>'+
+    '<button type="button" class="btn txt peq"'+(i<U.eventos.length-1?' onclick="cmpUlt('+(i+1)+')"':' disabled')+'>'+(i<U.eventos.length-1?esc(U.eventos[i+1].t):'Siguiente')+' '+IC('der')+'</button></nav>'+
+    '<p class="cmp-ult-f">Fuente: '+e.fuente+'</p>';
+}
+function cmpUlt(i,quieto){
+  const U=ULT();if(!U)return;i=Math.max(0,Math.min(U.eventos.length-1,Number(i)||0));ultSel=i;if(!quieto)ultTocado=true;
+  const m=document.getElementById('cmpUlt');if(!m)return;
+  m.querySelectorAll('[data-i]').forEach(x=>{const on=x.getAttribute('data-i')===String(i);x.classList.toggle('on',on);if(x.tagName==='BUTTON')x.setAttribute('aria-pressed',String(on));});
+  const d=document.getElementById('cmpUltDet');if(d)d.innerHTML=ultDetHTML(i);
+  lugarAnota();
+}
+/* El índice de un acontecimiento por su id (los enlaces usan el id: «ultimos/plagas»). */
+const ultIdx=id=>{const U=ULT();return U?U.eventos.findIndex(e=>e.id===id):-1;};
+/* Desde una lámina: cierra la lámina y lleva a la secuencia en Comparar. */
+function lamUltIr(i){
+  lamCierra();
+  if(!modsDe().some(x=>ES_COMPARAR.test(x.id)))return;
+  verComparar();
+  setTimeout(()=>{cmpUlt(i);const m=document.getElementById('cmpUlt');if(m&&m.scrollIntoView)m.scrollIntoView({block:'start',behavior:lamQuieto()?'auto':'smooth'});},60);
+}
+/* En la lámina (el tramo futuro, la piedra, el monte, el juicio y sus fases): la
+   secuencia corta, con el acontecimiento de esa parte encendido y los que esta visión
+   cuenta marcados. */
+function lamUltHTML(ids){
+  const U=ULT();if(!U||!lamId)return '';
+  const L=LAM(),E=U.eventos,on=E.map((e,i)=>ids.includes(e.id)?i:-1).filter(i=>i>=0);if(!on.length)return '';
+  const cid=lamId,cuenta=E.filter(e=>e.en[cid]&&e.en[cid][0]!=='~').map(e=>e.t.charAt(0).toLowerCase()+e.t.slice(1));
+  return '<div class="lam-ult"><div class="lam-rot">'+esc(U.titulo)+'</div><ol>'+E.map((e,i)=>'<li class="'+(on.includes(i)?'on':'')+(e.en[cid]&&e.en[cid][0]!=='~'?' en':'')+'" title="'+esc(e.t)+'"><i>'+(i+1)+'</i><span>'+esc(e.c||e.t)+'</span></li>').join('')+'</ol>'+
+    '<p>'+esc((L.libro||'')+' cuenta '+cuenta.join(', ').replace(/, ([^,]*)$/,' y $1')+'. Daniel 11 y 12 y Apocalipsis llenan lo de en medio.')+'</p>'+
+    (lamModo==='presentar'?'':'<button type="button" class="btn txt peq lam-ult-ir" onclick="lamUltIr('+on[0]+')">'+IC('comparar')+' Ver la secuencia completa</button>')+'</div>';
+}
+/* Qué acontecimientos tocan a una entrada de la lámina (parte o entrada del riel). */
+const lamUltDe=k=>{const U=ULT();return U?U.eventos.filter(e=>(e.partes||[]).includes(k)).map(e=>e.id):[];};
+
 /* La sala: una época a pantalla completa, cada visión lado a lado. */
 let cmpSel='';
 function cmpSalaHTML(M){
@@ -83504,14 +84186,14 @@ function cmpFasesHTML(f,M,corto){
   if(!k)return '';
   const F=LAMINAS[k].fases;
   return '<div class="cmp-fases'+(corto?' corto':'')+'"><span class="cmp-fases-t">'+esc(F.t)+'</span><ol>'+
-    F.pasos.map((x,i)=>'<li><i>'+(i+1)+'</i><b>'+esc(x.t)+'</b><small>'+esc(x.cuando)+'</small>'+(corto?'':'<span>'+esc(x.donde)+' · '+esc(x.quien)+'</span>')+'</li>').join('')+'</ol>'+
+    F.pasos.map((x,i)=>'<li><i>'+(i+1)+'</i><b>'+esc(x.t)+(x.ref?' <em class="cmp-fases-r">Daniel '+esc(x.ref)+'</em>':'')+'</b><small>'+esc(x.cuando)+'</small>'+(corto?'':'<span>'+esc(x.donde)+' · '+esc(x.quien)+'</span>')+'</li>').join('')+'</ol>'+
     (corto?'':'<p>'+esc(F.nota)+'</p><button type="button" class="cmp-lam" onclick="cmpALamina(\''+k+'\')">'+IC('lupa')+' Ver las tres fases en la lámina de '+esc(cmpNom(k))+'</button>')+'</div>';
 }
 let cmpVuelve='';
 function cmpToca(key){
   const M=cmpModelo();if(!M.filas.some(f=>f.key===key))return;
   const s=document.getElementById('cmpSala');if(!s)return;
-  const nueva=s.hidden;cmpSel=key;if(nueva)cmpVuelve=key;
+  const nueva=s.hidden;cmpSel=key;if(nueva)cmpVuelve=key;lugarAnota();
   s.innerHTML=personasTocables(cmpSalaHTML(M),M.cols[0]||'');s.setAttribute('aria-labelledby','cmpSalaT');
   if(nueva){s.hidden=false;document.body.classList.add('leyendo');
     s.classList.remove('ve');void s.offsetWidth;s.classList.add('ve');}
@@ -83529,7 +84211,7 @@ function cmpCierra(){
   if(!lamModo)document.body.classList.remove('leyendo');
   /* El foco vuelve a la época que se abrió. */
   const b=document.querySelector('.cmp-epoca[data-k="'+cmpVuelve+'"] .cmp-ecab');if(b&&b.focus)b.focus();
-  cmpSel='';
+  cmpSel='';lugarAnota();
 }
 function cmpALamina(k){cmpCierra();lamAbre(k,'explorar');}
 document.addEventListener('keydown',e=>{
@@ -83572,6 +84254,9 @@ try{
        nada anotado, un capítulo reabierto se muestra desde su título. */
     if(!vuelveADonde()&&S.ultItem)llevaA('detalle');
   }else vuelveADonde();
+  /* v215: y lo que se abre encima (la lámina, Comparar, la pestaña), del enlace o de la
+     recarga. Un tic después: usa piezas que se declaran más abajo. */
+  setTimeout(()=>{if(!esNuevo())lugarArranca(true);else lugarListo=true;},0);
 }catch(e){console.error(e);}
 
 /* ───────── entrar con el código (v20) ─────────

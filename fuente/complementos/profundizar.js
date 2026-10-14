@@ -245,7 +245,7 @@ module.exports = {
           ['Roma papal sanada (desde 1798 hasta la venida de Cristo)', 'Los pies siguen hasta que la piedra los hiere (2:34, 44-45)', 'El cuerno hace guerra a los santos «hasta que vino el Anciano de días» (7:21-22); en el juicio «le quitarán su dominio» (7:26)', 'Se levanta «contra el Príncipe de los príncipes» hasta ser quebrantado (8:25)'],
           ['El juicio en el cielo (1844)', '—', 'Se ponen tronos, se abren los libros; el Hijo del hombre va al Anciano de días (7:9-10, 13, 22)', '«Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado» (8:14): 457 a.C.-1844'],
           ['El tiempo del fin (desde 1798)', 'Dios muestra «lo que ha de acontecer en los últimos días» (2:28)', '—', '«La visión es para el tiempo del fin» (8:17, 19)'],
-          ['La segunda venida y el reino eterno', 'La piedra cortada «sin que la cortara mano alguna» hiere los pies y se hace un gran monte (2:34-35, 44-45)', 'La bestia es destruida y el reino se da a los santos para siempre (7:11, 26-27)', 'El cuerno «será quebrantado, aunque no por mano humana» (8:25)'],
+          ['La segunda venida y el reino eterno', 'La piedra que se desprendió «sin que la cortara mano alguna» hiere los pies y se hace un gran monte (2:34-35, 44-45)', 'La bestia es destruida y el reino se da a los santos para siempre (7:11, 26-27)', 'El cuerno «será quebrantado, aunque no por mano humana» (8:25)'],
         ]) +
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-64, 119-121, 133-134, 293-298 y 307-316; Bohr, <i>15 principios</i> 2:105; CS 492 y 636.</p>`,
     },
@@ -262,9 +262,9 @@ module.exports = {
           ['Roma dividida (desde 476)', '—', '—', '—'],
           ['Roma papal (538-1798)', 'Quita el continuo y echa por tierra el santuario (8:11-12)', 'Sus tropas quitan el continuo y ponen la abominación desoladora (11:31, desde 508); se engrandece sobre todo dios (11:36). Abarca 11:29-39, o 11:21-39', '«Tiempo, tiempos y la mitad de un tiempo» (12:7): 538-1798. Los 1.290 días (12:11): 508-1798'],
           ['Roma papal sanada (desde 1798 hasta la venida de Cristo)', 'Se levanta «contra el Príncipe de los príncipes» hasta ser quebrantado (8:25)', 'El rey del norte, herido en 1798, se recupera, se extiende por el mundo y «llegará a su fin» (11:40-45)', 'Sigue hasta que «se levantará Miguel» (12:1)'],
-          ['El juicio en el cielo (1844)', 'Purificación del santuario (8:14): 1844', '—', 'Termina cuando «se levantará Miguel»: son librados los «inscritos en el libro» (12:1). Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio'],
+          ['El juicio en el cielo (1844)', 'Purificación del santuario (8:14): 1844', '—', 'Termina cuando «se levantará Miguel» (12:1): se cierra la gracia. Los 1.335 días (12:12) llegan a 1843, al anuncio del juicio'],
           ['El tiempo del fin (desde 1798)', '«La visión es para el tiempo del fin» (8:17, 19)', '«Al cabo del tiempo»: el rey del sur hiere al del norte en 1798; luego el norte se recupera (11:40-44)', 'El libro queda sellado «hasta el tiempo del fin»; «la ciencia aumentará» (12:4, 9)'],
-          ['La segunda venida y el reino eterno', 'El cuerno, quebrantado «no por mano humana» (8:25)', '«Llegará a su fin, y no tendrá quien lo ayude» (11:45)', 'Se levanta Miguel; tiempo de angustia, liberación y resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)'],
+          ['La segunda venida y el reino eterno', 'El cuerno, quebrantado «no por mano humana» (8:25)', '«Llegará a su fin, y no tendrá quien lo ayude» (11:45)', 'Tiempo de angustia; «será libertado tu pueblo, todos los que se hallen inscritos en el libro» y hay resurrección (12:1-3); Daniel se levantará para recibir su heredad (12:13)'],
         ]) +
         `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5, 293-295 y 357; Bohr, <i>La gran cadena</i>, p. 44; CS 636; Treiyer, <i>Enigmas descifrados</i>, p. 50-52.</p>`,
     },

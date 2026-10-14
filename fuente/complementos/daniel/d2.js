@@ -119,7 +119,7 @@ module.exports = {
           '«En los días de estos reyes» (2:44) habla de varios reyes al mismo tiempo: el reino de Dios llega cuando Europa ya está dividida.',
         ]) +
         `<p>La división no aparece en las piernas sino en los dedos. Ninguno de los pedazos volvió a tener la fuerza del hierro original.</p>` +
-        hi(`«No podemos esperar unión entre las naciones de la tierra» (1T 361). Estamos en los dedos, en las uñas de los pies de la historia.`) +
+        hi(`«No podemos esperar unión entre las naciones del mundo» (1T 361). Estamos en los dedos, en las uñas de los pies de la historia.`) +
         `<p>Fuente: Smith, <i>Las profecías de Daniel</i>, p. 24-25; Bohr, <i>Daniel 1-10</i>, p. 62, 64, 128, 133.</p>`,
     },
     {
@@ -142,11 +142,11 @@ module.exports = {
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 58-62, 134; Smith, <i>Las profecías de Daniel</i>, p. 24, 80.</p>`,
     },
     {
-      t: '🧭 La piedra «no con mano» y el monte',
+      t: '🧭 La piedra que nadie cortó y el monte',
       capa: 'contexto',
       h: `<p>Ya se vio que la piedra es Cristo en su segunda venida. Hay dos detalles que suelen pasarse por alto:</p>` +
         li([
-          '<strong>«No con mano».</strong> La misma idea está en 8:25 («no por mano humana») y en 11:45 («no tendrá quien le ayude»): el poder perseguidor cae <strong>sin intervención humana</strong>. El fin de la historia será una irrupción sobrenatural de Dios, no una iglesia que va conquistando el mundo hasta establecer el reino aquí.',
+          '<strong>«Sin que la cortara mano alguna» (2:34, 45).</strong> La misma idea está en 8:25 («no por mano humana») y en 11:45 («no tendrá quien lo ayude»): el poder perseguidor cae <strong>sin intervención humana</strong>. El fin de la historia será una irrupción sobrenatural de Dios, no una iglesia que va conquistando el mundo hasta establecer el reino aquí.',
           '<strong>El monte.</strong> En la Escritura los montes representan reinos (Isaías 2:2). Hay dos montes: la piedra sale del monte Sion, la Sion celestial (2:45; 1 Pedro 2:6), y después ella misma se vuelve el gran monte que llena la tierra: el reino eterno de Cristo (2:35, 44).',
         ]) +
         wa(`Jesús lo aplicó a cada persona (Mateo 21:44): «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado». Caer hoy sobre la piedra es dejar que Cristo quiebre el orgullo; si no, ella caerá al final.`) +
@@ -161,7 +161,7 @@ module.exports = {
           ['3 y 6', 'Un decreto sobre la adoración, un remanente fiel, una condena a muerte y la palabra «librar»'],
           ['4 y 5', 'Dos reyes de Babilonia soberbios: uno es humillado y restaurado; el otro, juzgado para siempre'],
         ]) +
-        `<p>Por eso Daniel 2 y 7 se estudian juntos: el mismo orden («tú eres la cabeza de oro», «otro», «tercer», «cuarto»), el hierro en el cuarto reino en los dos, y el reino eterno descrito casi con las mismas palabras (2:44; 7:27).</p>` +
+        `<p>Por eso Daniel 2 y 7 se estudian juntos: el mismo orden («Tú eres aquella cabeza de oro», «otro», «tercer», «cuarto»), el hierro en el cuarto reino en los dos, y el reino eterno descrito casi con las mismas palabras (2:44; 7:27).</p>` +
         `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-120.</p>`,
     },
     {
@@ -206,7 +206,7 @@ module.exports = {
     { t: 'tf', v: '2:43', f: 'c', q: 'La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro.',
       a: true,
       e: 'Verdadero. Fuente: Bohr, Daniel 1-10, p. 62; Ms 63, 1899 (CBA 4:1168).' },
-    { t: 'mc', v: '2:34', f: 'c', q: 'Comparando 2:34 con 8:25, ¿qué significa que la piedra fue cortada «no con mano»?',
+    { t: 'mc', v: '2:34', f: 'c', q: 'Comparando 2:34 con 8:25, ¿qué significa que la piedra se desprendió «sin que la cortara mano alguna»?',
       o: ['Que vendría con un gran ejército', 'Que llegaría por la predicación', 'Que crecería en forma lenta', 'Sin intervención humana'], a: 3,
       e: 'El fin de la historia será una irrupción sobrenatural de Dios, no obra humana. Fuente: Bohr, Daniel 1-10, p. 63.' },
     { t: 'tf', v: '2:44', f: 'c', q: 'La piedra representa a la iglesia que va conquistando el mundo poco a poco hasta establecer el reino de Dios en la tierra.',

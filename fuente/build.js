@@ -21,7 +21,7 @@ const { MAT_EXTRA } = require('./matutina-extra.js');
 const CR = require('./creencias.js');
 const AP = require('./apocalipsis.js');
 const COMP_DANIEL = require('./complementos/daniel.js');
-const { LAMINAS } = require('./laminas.js');
+const { LAMINAS, ULTIMOS } = require('./laminas.js');
 const { PERSONAJES } = require('./personajes.js');
 const { VERS_AP } = require('./biblia-apocalipsis.js');
 const { GRUPOS, grupoDaniel } = require('./grupos.js');
@@ -271,6 +271,9 @@ const MODULOS_BASE = ${JSON.stringify(MODULOS_ALL, null, 1)};
 /* Los estudios interactivos con imagen (fuente/laminas.js); las imágenes van
    aparte, en laminas/, y se piden al abrir. */
 const LAMINAS = ${JSON.stringify(LAMINAS, null, 1)};
+
+/* v215: los últimos acontecimientos, una sola secuencia para Comparar y las láminas. */
+const ULTIMOS = ${JSON.stringify(ULTIMOS, null, 1)};
 
 /* v189: las fichas de personajes (fuente/personajes.js). En el estudio, el
    primer nombre de cada persona en cada sección se vuelve tocable. */

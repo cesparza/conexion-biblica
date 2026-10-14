@@ -178,10 +178,10 @@ module.exports = {
       `<p>Fuente: Bohr, <i>Tres ángeles</i> 1:11-12, 25-28 y 37-38 y 2:210-211.</p>` },
 
     { t: '🧭 Primer ángel: «la hora de su juicio ha llegado» (14:7)', capa: 'contexto', h:
-      hi(`El juicio no es un solo momento sino un proceso en <strong>tres
-      etapas</strong>: antes de la segunda venida (14:7), durante los mil años
-      (20:4) y después de los mil años (20:13). El primer ángel anuncia la
-      primera.`) +
+      hi(`El juicio no es un solo momento sino un proceso: se investiga antes de
+      la segunda venida (14:7), los santos revisan los casos de los perdidos
+      durante los mil años (20:4) y la pena de los impíos se cumple después de
+      ellos (20:13-15). El primer ángel anuncia el comienzo.`) +
       li([`<strong>Cuándo empieza:</strong> en <strong>1844</strong>, al
            terminar los 2.300 días de Daniel 8:14. Contados como años desde el
            decreto para restaurar Jerusalén en el otoño del <strong>457

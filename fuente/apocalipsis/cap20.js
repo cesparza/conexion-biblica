@@ -168,18 +168,22 @@ module.exports = {
 
     { t: '🧭 El juicio de los mil años (20:4, 20:12)', capa: 'contexto', h:
       hi(`«Vi tronos, y se sentaron sobre ellos los que recibieron facultad de
-      juzgar» (20:4). El juicio de Dios tiene <strong>tres etapas</strong>:`) +
-      tbl(['Etapa', 'Cuándo', 'Qué se hace'], [
-        ['1 · Investigación', 'Antes de la venida, en el cielo (Daniel 7:9-10; Apocalipsis 14:7)', 'Se decide quiénes son de Cristo'],
-        ['2 · Sentencia', 'Durante los mil años (20:4; 1 Corintios 6:2-3)', 'Los santos, con Cristo, revisan los casos de los perdidos y de los ángeles caídos'],
-        ['3 · Ejecución', 'Después de los mil años (20:9, 20:14-15)', 'Se cumple la sentencia'],
+      juzgar» (20:4). El juicio tiene <strong>tres fases</strong>, en el orden de
+      Daniel 7, y Apocalipsis 20 muestra dónde entran los mil años:`) +
+      tbl(['Fase', 'Cuándo', 'Qué se hace'], [
+        ['1 · Investigación', 'Desde 1844 hasta el cierre de la gracia, en el cielo (Daniel 7:9-10; Apocalipsis 14:7)', 'Se decide quiénes son de Cristo'],
+        ['2 · Sentencia', 'Cuando el Hijo del hombre recibe el reino, en el cielo, antes de la venida (Daniel 7:13-14, 22)', 'El fallo es a favor de los santos; se cierra la gracia (22:11)'],
+        ['3 · Ejecución', 'Empieza en la segunda venida (Daniel 7:22, 26-27) y termina después de los mil años (20:9, 20:14-15)', 'Los santos reciben el reino; al final, los perdidos reciben su pena'],
       ]) +
-      hi(`Los santos comparan los actos de cada uno con el libro de la ley, y queda
-      anotado lo que cada impío ha de sufrir «según sus obras».<br><br>
+      hi(`<strong>Durante los mil años</strong> (20:4; 1 Corintios 6:2-3) los santos,
+      con Cristo, revisan los casos de los perdidos y de los ángeles caídos. No
+      deciden quién se salva: eso ya se decidió. Comparan los actos de cada uno con
+      el libro de la ley, y queda anotado lo que cada impío ha de sufrir «según sus
+      obras».<br><br>
       ¿Para qué un juicio, si Dios lo sabe todo? No es para informar a Dios, sino
       para que los seres que <strong>no</strong> lo saben todo vean que Dios fue
       justo y amoroso con cada persona.`) +
-      `<p>Fuente: Bohr, <i>Lo que Jesús dijo</i>, p. 231-232; CS 719; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 93.</p>` },
+      `<p>Fuente: PE 280; CS 719; Bohr, <i>15 principios</i> 2:306-307; Bohr, <i>Lo que Jesús dijo</i>, p. 231-232; <i>Escuela Sabática</i> 2019-1T, lección 13, p. 93.</p>` },
 
     { t: '🧭 Cómo está ordenado 20:1 a 21:8: cuatro ciclos', capa: 'contexto', h:
       hi(`Esta parte <strong>no va en orden de reloj</strong>: cuenta los mismos
@@ -418,7 +422,7 @@ module.exports = {
     { t: 'mc', v: '20:12', f: 'c',
       q: '¿Cuáles son las tres etapas del juicio de Dios, en su orden?',
       o: ['Investigación, sentencia y ejecución', 'Sentencia, investigación y ejecución', 'Ejecución, investigación y sentencia', 'Investigación, ejecución y sentencia'], a: 0,
-      e: 'Primero se investiga (antes de la venida), luego se dicta sentencia (durante los mil años) y al final se ejecuta (después). Fuente: Bohr, Lo que Jesús dijo, p. 232.' },
+      e: 'Primero se investiga (desde 1844), luego se da la sentencia cuando el Hijo recibe el reino (antes de la venida) y se ejecuta desde la venida hasta después de los mil años (Daniel 7:10, 14, 22, 26-27). Fuente: PE 280; Bohr, 15 principios 2:306-307.' },
     { t: 'mc', v: '20:12', f: 'c',
       q: 'Si Dios ya lo sabe todo, ¿para quién es necesario el juicio?',
       o: ['Para los seres que no lo saben todo', 'Para que Dios conozca cada caso', 'Para darles otra oportunidad a los impíos', 'Para salvar a los ángeles caídos'], a: 0,

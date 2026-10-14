@@ -2750,5 +2750,69 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(senasD7.length===2&&senasD7[0]+senasD7[1]===11&&/<b>once<\/b> señas/.test(CD.secciones.d7[0].h),'Daniel 7: la interpretación cuenta once señas y sus tablas tienen once filas ('+senasD7.join(' + ')+')');
 }
 
+/* v215: la ronda de Camilo (14-oct, 13:44-13:58). Lo que se puede afirmar sin
+   navegador; lo que se ve y la recarga, en tools/en-navegador.js. */
+{
+  const {LAMINAS,ULTIMOS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const {VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8');
+  const n=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/<[^>]+>/g,'').replace(/[«»“”—,.;:¿?¡!]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  const verso=r=>{const m=/^(Daniel|Apocalipsis) (\d+):(\d+)$/.exec(r);if(!m)return '';return m[1]==='Daniel'?VERS['d'+m[2]][m[3]]:(VERS_AP['ap'+m[2]]||{})[m[3]];};
+  /* 7. El lugar: un camino legible, en un solo bloque que Jóvenes cambia. */
+  const {lugarParte,rec2,rec7}=montar("lugarParte, rec2:(lamId='d2',lamRecorrido().map(x=>x.k).join(' ')), rec7:(lamId='d7',lamRecorrido().map(x=>x.k).join(' '))");
+  const o=lugarParte('estudio/d7/profundizar/s2/lamina/d7/explorar/x-fases?a=gm');
+  ok(o.pant==='estudio'&&o.item==='d7'&&o.prof===true&&o.sec===2&&o.lam.id==='d7'&&o.lam.modo==='explorar'&&o.lam.paso==='x-fases'&&o.a==='gm',
+    'El lugar se lee: pantalla, capítulo, pestaña, sección, lámina, modo, paso y actividad');
+  ok(lugarParte('estudio/m-comparar/comparar/-331').cmp==='-331'&&lugarParte('estudio/m-comparar/ultimos/plagas').ult==='plagas'&&lugarParte('logros').pant==='logros'&&
+    !lugarParte('cualquier/cosa').pant&&!lugarParte('').pant&&lugarParte('estudio/d2/lamina/d2/presentar/7').lam.paso==='7',
+    'El lugar también dice la época de Comparar y el último acontecimiento; lo que no se entiende se ignora');
+  const bloque=/\/\* LUGAR:INICIO \*\/\nfunction lugarLee\(\)\{[\s\S]*?\nfunction lugarEscribe\(c\)\{[\s\S]*?\/\* LUGAR:FIN \*\//;
+  ok(bloque.test(js)&&(js.match(/\/\* LUGAR:INICIO \*\//g)||[]).length===1&&!/location\.hash/.test(js.replace(bloque,'')),
+    'El lugar vive en un solo bloque (LUGAR:INICIO/FIN): fuera de él nadie toca el fragmento (Jóvenes lo cambia por el suyo)');
+  ok(/lugarArranca\(true\)/.test(js)&&['ir(','verCap(','ponPest(','lamCierra(','cmpToca(','cmpCierra('].every(f=>new RegExp('function '+f.replace('(','\\(')+'[^]*?lugarAnota\\(\\)').test(js)),
+    'Cada cambio de lugar lo anota (pantalla, capítulo, pestaña, lámina, Comparar) y el arranque lo aplica');
+  /* 3. Explorar en orden, desde el primer paso. */
+  ok(rec2==='h0 h1 h2 h3 h4 est oro plata bronce hierro dedos barro piedra monte desp cierre','Daniel 2 en Explorar: la historia, la estatua, cada parte, la piedra, el monte, el rey y el cierre ('+rec2+')');
+  ok(/^h0 h1 est leon oso leopardo bestia cuernos cuerno x-senas x-periodo juicio x-fases hijo reino desp cierre$/.test(rec7),'Daniel 7 en Explorar: el mismo orden que Presentar ('+rec7+')');
+  ok(/lamIr\('h0'\);lamPintaReto\(\)/.test(js)&&/function lamNavHTML\(k\)\{\s*const P=lamRecorrido\(\)/.test(js),'Explorar abre en «Cautivos en Babilonia» y Anterior/Siguiente siguen el recorrido entero');
+  /* La piedra: oculta hasta su paso, y sin rótulo sobre la estatua. */
+  ok(/function lamPiedraArriba\(\)\{[\s\S]*?pi\.style\.opacity='0'/.test(js)&&/data-p="piedra" style="opacity:0"/.test(js)&&/Object\.keys\(E\)\.filter\(id=>id!=='piedra'\)/.test(js)&&/esPiedra\)\{lamPiedraArriba\(\);pi\.style\.opacity='1'/.test(js),
+    'La piedra no se ve hasta su paso (ni en la historia ni en la estatua entera)');
+  /* 2. La luz detrás de la estatua. */
+  ok(/<g class="lam-estatua"><g class="lam-brillos"/.test(js)&&/\.lam-brillo\{opacity:0/.test(css)&&!/\.lam-parte\.on\{filter:drop-shadow/.test(css)&&!/\.lam-parte:hover\{filter:drop-shadow/.test(css),
+    'La luz de la parte elegida va detrás de la estatua (lam-brillo), no derramada sobre la vecina');
+  /* 4. El río: un carril por visión, los hilos con nombre y la leyenda. */
+  const {cmpRio,cmpModelo}=montar('cmpRio, cmpModelo');
+  const rio=cmpRio(cmpModelo(LAMINAS));
+  ok(!/--n:/.test(rio)&&(rio.match(/class="cmp-hilo/g)||[]).length===3&&/Roma papal <small>538–1798/.test(rio)&&/Juicio <small>desde 1844/.test(rio)&&/class="cmp-ley"/.test(rio),
+    'Comparar: cada visión en una sola fila; Roma papal y el juicio, hilos con nombre; y una leyenda');
+  /* 5. Las tres fases, con sus versículos (Camilo, v213). */
+  const F=LAMINAS.d7.fases;
+  ok(F.pasos.map(x=>x.ref).join('|')==='7:9-10|7:13-14, 22a|7:22b, 26-27'&&/Hijo del hombre recibe el reino/.test(F.pasos[1].cuando)&&/santos reciben el reino, en la segunda venida/.test(F.pasos[2].cuando)&&/cmp-fases-r/.test(js),
+    'Las tres fases: Investigación (7:9-10), Sentencia cuando el Hijo recibe el reino (7:13-14, 22a), Ejecución en la venida (7:22b, 26-27)');
+  const ap20=fs.readFileSync(path.join(RAIZ,'fuente','apocalipsis','cap20.js'),'utf8');
+  ok(!/'2 · Sentencia', 'Durante los mil años/.test(ap20)&&!/'3 · Ejecución', 'Después de los mil años/.test(ap20)&&!/dicta sentencia \(durante los mil años\)/.test(ap20),
+    'Apocalipsis 20 ya no dice «Sentencia · durante los mil años; Ejecución · después»: los mil años van dentro de la ejecución');
+  /* 6. Los últimos acontecimientos. */
+  const E=ULTIMOS.eventos,citas=E.flatMap(e=>e.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
+  ok(E.map(e=>e.id).join()==='juicio,gracia,plagas,venida,mil,final,reino'&&!malas.length&&citas.length>=18,
+    'Los últimos acontecimientos: juicio, cierre de la gracia, plagas, venida, mil años, Nueva Jerusalén y fin de los impíos, tierra nueva; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
+  const refs=E.map(e=>Object.values(e.en).join(' ')).join(' | ');
+  ok(['12:1','14:6-7','15:1','15:8','16','19:11-16','20:1-6','20:7-15','21:2','22:11','2:34-35','7:9-10','8:14'].every(r=>refs.includes(r))&&
+    E[1].en.d2===''&&E[2].en.d7===''&&E[4].en.d8===''&&E[3].en.d2&&E[3].en.d7&&E[3].en.d8,
+    'Cada acontecimiento dice qué libro lo muestra: Daniel 2, 7 y 8 pasan del juicio a la venida; Daniel 12 y Apocalipsis cuentan lo de en medio');
+  ok(/class="cmp-ult"/.test(js)&&/function cmpUlt\(/.test(js)&&/ultHTML\(\)\+/.test(js)&&/function lamUltHTML\(/.test(js)&&/lamUltHTML\(lamUltDe\(p\.id\)\)/.test(js),'La secuencia está en Comparar y en las láminas (la piedra, el monte, el juicio y el tramo futuro)');
+  /* 5. La auditoría: lo que se corrigió no vuelve. */
+  const D2=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d2.js'),'utf8'),D7=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d7.js'),'utf8'),
+    LJ=fs.readFileSync(path.join(RAIZ,'fuente','laminas.js'),'utf8'),PR=fs.readFileSync(path.join(RAIZ,'fuente','complementos','profundizar.js'),'utf8');
+  ok(!/«Sin mano»|«[Nn]o con mano»|quien le ayude|«tú eres la cabeza de oro»|«no a la tierra, sino»|el reino se da a los santos \(7:14/.test(D2+D7+LJ+PR)&&
+    /lo recibe el Hijo del hombre \(7:14\) y lo reciben los santos/.test(LJ)&&/empieza después de sus 1\.260 años/.test(D7),
+    'Auditoría v215: las citas de 2:34, 2:38, 11:45 y CS 477 literales; 7:14 es el Hijo, no los santos; el juicio empieza después de los 1.260 años');
+  /* 1. «Quién estudia». */
+  ok(/class="alu-btn nuevo" onclick="agregaPersona\(\)"><span class="alu-av mas"/.test(js)&&/IC\('check','alu-act-ok'\)/.test(css+js)&&/\.ident-cuerpo \.alu-act\{position:relative;display:grid/.test(css),
+    '«Quién estudia»: las actividades son filas (actividad arriba, categoría abajo) y «Agregar persona» es una fila con su círculo');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

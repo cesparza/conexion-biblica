@@ -359,10 +359,12 @@ for (const W of ANCHOS) {
     ok(await p.locator('#detalle .lam-invita').count() === 1, W + ' · Daniel 2 ofrece el estudio interactivo');
     await p.locator('#detalle .lam-invita .btn.ver').click();
     await p.waitForTimeout(700);
-    const capas = await p.evaluate(() => document.querySelectorAll('#lamSvg .lam-estatua image').length);
-    const imgs = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamSvg image')].map(i => i.getAttribute('href')).filter(Boolean);
+    /* v215: Explorar abre en «Cautivos en Babilonia» (una imagen más: su escena) y la luz de
+       cada parte es una copia de su capa detrás de la estatua (lam-brillo, no se cuenta). */
+    const capas = await p.evaluate(() => document.querySelectorAll('#lamSvg .lam-estatua .lam-parte image').length);
+    const imgs = await p.evaluate(async () => { const hs = [...document.querySelectorAll('#lamSvg image:not(.lam-brillo)')].map(i => i.getAttribute('href')).filter(Boolean);
       const r = await Promise.all(hs.map(h => fetch(h).then(x => x.ok && x.headers.get('content-type') === 'image/webp').catch(() => false))); return r.every(Boolean) && r.length; });
-    ok(capas === 6 && imgs === 9, W + ' · la lámina trae las 6 capas de la estatua y sus 9 imágenes (' + capas + ', ' + imgs + ')');
+    ok(capas === 6 && imgs === 10, W + ' · la lámina trae las 6 capas de la estatua y sus 10 imágenes (' + capas + ', ' + imgs + ')');
     ok(await p.evaluate(() => !document.getElementById('lamEsc').classList.contains('cargando')), W + ' · v188: las imágenes cargan antes de mostrar la escena');
     /* v188: tocar la parte en la imagen hace lo mismo que su etiqueta. */
     const bronce = await p.evaluate(() => { const r = document.querySelector('#lamSvg .lam-parte[data-p="bronce"] .lam-hit').getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height * 0.6]; });
@@ -379,7 +381,8 @@ for (const W of ANCHOS) {
     for (const [id, re] of [['piedra', /segunda venida/], ['monte', /reino eterno/i]]) {
       await p.evaluate(() => lamInicio()); await p.waitForTimeout(400);
       /* v212: el monte ya no tiene rótulo sobre la estatua: se elige en el riel. */
-      await p.locator(id === 'monte' ? '#lamTira .lam-ri[data-p="monte"]' : '#lamEts .lam-et[data-p="' + id + '"]').click(); await p.waitForTimeout(1300);
+      /* v215: la piedra ya no tiene rótulo sobre la estatua (no está hasta su paso): las dos, por el riel. */
+      await p.locator('#lamTira .lam-ri[data-p="' + id + '"]').click(); await p.waitForTimeout(1300);
       const r = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.querySelector('#lamSvg .lam-piedra').getAttribute('transform'), document.querySelector('#lamSvg .lam-monte').style.opacity]);
       ok(re.test(r[0]) && /translate\(550 1085\)/.test(r[1]) && (id !== 'monte' || r[2] === '1'), W + ' · «' + id + '» (rótulo o riel) explica y anima (' + r[1] + ')');
     }
@@ -468,10 +471,11 @@ for (const W of ANCHOS) {
      de las partes con el teclado, nada cortado, y el monte y el cierre distintos. ── */
   {
     for (const id of ['d2', 'd7']) {
-      await p.evaluate(id => lamAbre(id, 'explorar'), id); await p.waitForTimeout(900);
-      /* Al abrir, la hoja es una portada, no una barra: alto, título, pasaje y por dónde empezar. */
+      /* v215: Explorar abre en el primer paso de la historia; la portada es el paso «La estatua». */
+      await p.evaluate(id => { lamAbre(id, 'explorar'); lamInicio(); }, id); await p.waitForTimeout(900);
+      /* La portada es una hoja llena, no una barra: alto, título, pasaje y Siguiente. */
       const h = await p.evaluate(() => { const h = document.getElementById('lamHoja'), r = h.getBoundingClientRect();
-        return { alto: Math.round(r.height), tx: h.textContent, intro: !!h.querySelector('.lam-intro .lam-intro-go'), pista: h.querySelectorAll('.lam-pista').length,
+        return { alto: Math.round(r.height), tx: h.textContent, intro: !!h.querySelector('.lam-intro .lam-nav .lam-rd.sig'), pista: h.querySelectorAll('.lam-pista').length,
           tit: h.querySelector('.lam-intro-tit') && h.querySelector('.lam-intro-tit').getBoundingClientRect().height }; });
       const I = await p.evaluate(id => LAMINAS[id].intro, id);
       ok(h.alto >= 220 && h.intro && h.pista === 0 && h.tit > 20 && h.tx.includes(I.titulo) && h.tx.includes(I.ref), W + ' · v212: ' + id + ' abre con la hoja llena (portada de ' + h.alto + ' px), no una barra vacía');
@@ -655,7 +659,7 @@ for (const W of ANCHOS) {
         document.getElementById('lamChip').textContent.includes(P.t); }, j));
     ok(ju.every(Boolean), W + ' · el juicio en 4 pasos: tronos, Anciano de días, río de fuego, libros (' + ju.join() + ')');
     const fe = await p.evaluate(() => { lamEligeX('fases'); lamFasE(2); return [document.getElementById('lamFasTx').textContent, document.querySelectorAll('#lamTabla .lam-fp.on').length, document.querySelector('.lam-fas-c .lam-subs button.on').dataset.fa]; });
-    ok(/Daniel 7:27/.test(fe[0]) && /En la segunda venida/.test(fe[0]) && fe[1] === 3 && fe[2] === '2', W + ' · en Explorar, las tres fases del juicio se encienden una por una (' + fe.slice(1).join(', ') + ')');
+    ok(/Daniel 7:27/.test(fe[0]) && /en la segunda venida/i.test(fe[0]) && fe[1] === 3 && fe[2] === '2', W + ' · en Explorar, las tres fases del juicio se encienden una por una (' + fe.slice(1).join(', ') + ')');
     /* v214: los personajes en la lámina: el nombre se toca, sube su tarjeta y Escape la cierra sin cerrar la lámina. */
     await p.evaluate(() => lamEligeE(5)); await p.waitForTimeout(200);
     const per = await p.evaluate(() => { const bs = [...document.querySelectorAll('#lamHoja button.per')].map(b => b.textContent);
@@ -961,6 +965,88 @@ for (const W of [390, 1440]) {
   const sel = await p.evaluate(() => [...document.querySelectorAll('#apar-ops .apar-b')].map(b => b.textContent + ':' + b.getAttribute('aria-checked')).join(' '));
   ok(sel === 'Automático:true Claro:false Oscuro:false', W + ' · v207: el selector marca la opción elegida (' + sel + ')');
   ok(errores.length === 0, W + ' · v207: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+/* ── v215: la ronda de Camilo (14-oct, 13:44-13:58) ──
+   Explorar abre en «Cautivos en Babilonia» y Siguiente recorre el capítulo en orden;
+   la piedra no se ve antes de su paso; la luz de la parte elegida va detrás de la
+   estatua; cada visión es un carril limpio en el río de Comparar; y el lugar (pantalla,
+   capítulo, pestaña, lámina, paso, Comparar) vuelve igual al recargar. */
+for (const W of ANCHOS) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: 900 }, serviceWorkers: 'block' });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => d.dismiss());
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
+  /* 1. Explorar en orden. */
+  await p.evaluate(() => lamAbre('d2', 'explorar')); await p.waitForTimeout(900);
+  const ini = await p.evaluate(() => ({ donde: lamDonde, hoja: document.getElementById('lamHoja').textContent.slice(0, 80), piedra: document.querySelector('#lamSvg .lam-piedra').style.opacity,
+    rec: lamRecorrido().map(x => x.k).join(' '), etPiedra: !!document.querySelector('#lamEts .lam-et[data-p="piedra"]') }));
+  ok(ini.donde === 'h0' && /Cautivos en Babilonia/.test(ini.hoja) && ini.piedra === '0' && !ini.etPiedra, W + ' · v215: Explorar abre en «Cautivos en Babilonia», sin la piedra ni su rótulo');
+  ok(ini.rec === 'h0 h1 h2 h3 h4 est oro plata bronce hierro dedos barro piedra monte desp cierre', W + ' · v215: el recorrido de Daniel 2 va en orden (' + ini.rec + ')');
+  const vistos = [], piedras = [];
+  for (let i = 0; i < 20; i++) {
+    const d = await p.evaluate(() => ({ k: lamDonde, pi: document.querySelector('#lamSvg .lam-piedra').style.opacity }));
+    vistos.push(d.k); piedras.push(d.k + ':' + d.pi);
+    const b = p.locator('#lamHoja .lam-nav .lam-rd.sig');
+    if (!(await b.count()) || await b.isDisabled()) break;
+    await b.click(); await p.waitForTimeout(250);
+  }
+  ok(vistos.join(' ') === ini.rec, W + ' · v215: Siguiente pasa por todo, en orden, hasta el cierre (' + vistos.join(' ') + ')');
+  const antes = piedras.slice(0, vistos.indexOf('piedra')).filter(x => !/:0$/.test(x));
+  ok(!antes.length, W + ' · v215: la piedra no se ve antes de su paso' + (antes.length ? ' (' + antes.join(', ') + ')' : ''));
+  await p.evaluate(() => lamIr('piedra')); await p.waitForTimeout(300);
+  ok(await p.evaluate(() => document.querySelector('#lamSvg .lam-piedra').style.opacity) === '1', W + ' · v215: en su paso la piedra cae');
+  /* 2. La luz de la parte va detrás de la estatua, en todas las capas. */
+  const luz = await p.evaluate(() => LAM().capas.map(id => { lamIr(id); const g = document.querySelector('#lamSvg .lam-estatua'), b = g.querySelector('.lam-brillo[data-p="' + id + '"]'),
+    pr = g.querySelector('.lam-parte'), on = [...g.querySelectorAll('.lam-brillo.on')].map(x => x.getAttribute('data-p'));
+    return b && on.join() === id && (b.compareDocumentPosition(pr) & 4) ? '' : id; }).filter(Boolean));
+  ok(!luz.length, W + ' · v215: la luz de cada parte está detrás de la estatua y solo en la suya' + (luz.length ? ' (mal: ' + luz.join(', ') + ')' : ''));
+  await p.evaluate(() => lamCierra());
+  /* 3. Daniel 7 también abre en su primer paso y sigue en orden. */
+  const d7 = await p.evaluate(() => { lamAbre('d7', 'explorar'); const r = [lamDonde, lamRecorrido().map(x => x.k).join(' ')]; lamCierra(); return r; });
+  ok(d7[0] === 'h0' && /^h0 h1 est leon .* cuerno x-senas x-periodo juicio x-fases hijo reino desp cierre$/.test(d7[1]), W + ' · v215: Daniel 7 abre en su primer paso y su recorrido sigue el de Presentar (' + d7[1] + ')');
+  /* 4. El río: un carril por visión; lo que gobierna a la vez es un hilo con nombre. */
+  await p.evaluate(() => verComparar()); await p.waitForTimeout(500);
+  const rio = await p.evaluate(() => [...document.querySelectorAll('.cmp-rio .cmp-carril')].map(c => {
+    const tops = [...c.querySelectorAll('.cmp-tr')].map(b => Math.round(b.getBoundingClientRect().top));
+    return { n: c.querySelector('.cmp-carril-n').textContent, filas: new Set(tops).size, hilos: [...c.querySelectorAll('.cmp-hilo')].map(h => h.textContent.trim()) }; }));
+  ok(rio.length === 2 && rio.every(r => r.filas === 1) && rio.every(r => r.hilos.some(h => /^Roma papal/.test(h))) && rio[1].hilos.some(h => /^Juicio/.test(h)) && await p.locator('.cmp-ley').count() === 1,
+    W + ' · v215: en el río cada visión es una sola fila; Roma papal y el juicio son hilos con su nombre, y hay leyenda (' + JSON.stringify(rio) + ')');
+  /* 5. Los últimos acontecimientos. */
+  const ult = await p.evaluate(() => { cmpUlt(2); return { n: document.querySelectorAll('#cmpUlt .cmp-ult-ev').length, sel: document.querySelector('#cmpUlt .cmp-ult-ev.on i').textContent,
+    det: document.getElementById('cmpUltDet').textContent, d2: [...document.querySelectorAll('#cmpUlt .cmp-ult-c.si')].length }; });
+  ok(ult.n === 7 && ult.sel === '3' && /siete últimas plagas/i.test(ult.det) && /Apocalipsis 15:1/.test(ult.det) && ult.d2 > 10, W + ' · v215: «Los últimos acontecimientos» en Comparar: siete, y tocar uno abre sus textos');
+  /* 6. El lugar vuelve igual al recargar (y el enlace lo dice). */
+  const recarga = async (nombre, prepara, mira) => {
+    await p.evaluate(prepara); await p.waitForTimeout(500);
+    const h = await p.evaluate(() => location.hash);
+    await p.reload(); await p.waitForTimeout(1600);
+    const r = await p.evaluate(mira), h2 = await p.evaluate(() => location.hash);
+    ok(r === true && h === h2 && /^#\/estudio\//.test(h), W + ' · v215: recargar deja en el mismo lugar · ' + nombre + ' (' + h + (r === true ? '' : ' → ' + JSON.stringify(r)) + ')');
+  };
+  await recarga('Daniel 7, «Para profundizar», lámina en las tres fases', () => { verCap('d7'); ponPest('prof'); lamAbre('d7', 'explorar'); lamIr('x-fases'); },
+    () => lamModo === 'explorar' && lamId === 'd7' && lamDonde === 'x-fases' && capPest === 'prof' && S.ultItem === 'd7' || [lamModo, lamId, lamDonde, capPest, S.ultItem]);
+  await recarga('Presentar en el paso 7', () => { lamCierra(); verCap('d2'); lamAbre('d2', 'presentar'); lamPres(7); },
+    () => lamModo === 'presentar' && lamId === 'd2' && lamPaso === 7 || [lamModo, lamId, lamPaso]);
+  await recarga('la sala de Comparar en Grecia', () => { lamCierra(); verComparar(); cmpToca('-331'); },
+    () => cmpSel === '-331' && !document.getElementById('cmpSala').hidden || [cmpSel]);
+  await recarga('las plagas en «Los últimos acontecimientos»', () => { cmpCierra(); cmpUlt(2); },
+    () => ultSel === 2 && /plagas/i.test(document.getElementById('cmpUltDet').textContent) || [ultSel]);
+  /* Un enlace copiado abre lo mismo en otro aparato (sin nada anotado). */
+  await p.evaluate(() => { cmpCierra(); verCap('d7'); lamAbre('d7', 'explorar'); lamIr('cuerno'); });
+  await p.waitForTimeout(400);
+  const enlace = await p.evaluate(() => location.href);
+  const otro = await (await nav.newContext({ viewport: { width: W, height: 900 }, serviceWorkers: 'block' })).newPage();
+  await otro.route('**/api/**', r => r.fulfill({ json: {} }));
+  await otro.goto(base + '?quedarse=1'); await otro.waitForTimeout(400);
+  await otro.evaluate(() => { S.nombre = 'Ana'; S.cat = 'gm'; guardar(); });
+  await otro.goto(enlace.replace(/^[^#]*/, base)); await otro.waitForTimeout(400); await otro.reload(); await otro.waitForTimeout(1500);
+  const lejos = await otro.evaluate(() => [lamModo, lamId, lamDonde, S.ultItem]);
+  ok(lejos.join() === 'explorar,d7,cuerno,d7', W + ' · v215: un enlace copiado abre el mismo capítulo, lámina y paso en otro aparato (' + lejos.join() + ')');
+  await otro.context().close();
+  ok(errores.length === 0, W + ' · v215: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();

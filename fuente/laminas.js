@@ -148,8 +148,8 @@ const LAMINAS = {
   fuente:'Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46; '+BOHR+', p. 58-62; CBA 4:1168.'},
  {id:'piedra',nombre:'La piedra',reino:'La segunda venida de Cristo',fechas:'futuro',de:null,c:'#6B7B5A',
   texto:'una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies',ref:'2:34',texto2:'el Dios del cielo levantará un reino que no será jamás destruido',ref2:'2:44',
-  corto:'Cristo en su segunda venida. «Sin mano»: no lo hace el hombre.',
-  interp:['La piedra es Cristo en su segunda venida. Golpea los pies, no la cabeza: llega «en los días de estos reyes» (2:44), con Europa ya dividida.','«Sin mano»: es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco.'],
+  corto:'Cristo en su segunda venida. «Sin que la cortara mano alguna»: no lo hace el hombre.',
+  interp:['La piedra es Cristo en su segunda venida. Golpea los pies, no la cabeza: llega «en los días de estos reyes» (2:44), con Europa ya dividida.','«Sin que la cortara mano alguna» (2:34, 45): es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco.'],
   fuente:BOHR+', p. 63-64.'},
  {id:'monte',nombre:'El gran monte',reino:'El reino eterno',fechas:'para siempre',de:null,c:'#0E7490',
   texto:'la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra',ref:'2:35',texto2:'él permanecerá para siempre',ref2:'2:44',
@@ -204,7 +204,7 @@ LAMINAS.d7 = {
   despues: { f: 'mar', titulo: 'Daniel guardó el asunto en su corazón', ref: 'Daniel 7:28', texto: 'mis pensamientos me turbaron y mi rostro se demudó; pero guardé el asunto en mi corazón.',
     nota: 'Daniel no lo entiende todo todavía. Daniel 8 vuelve sobre el cuerno y da la fecha del juicio: «Hasta dos mil trescientas tardes y mañanas» (8:14).' },
   cierre: { f: 'juicio', ref: 'Daniel 7:22', texto: 'se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.',
-    titulo: 'El juicio es a favor de los santos', nota: 'Hoy vivimos en el tiempo del juicio. Lo que sigue es el reino.' },
+    titulo: 'El juicio es a favor de los santos', nota: 'Hoy vivimos en el tiempo del juicio. Después se cierra la gracia, Cristo vuelve y los santos reciben el reino.' },
   paraleloCols: ['Daniel 7', 'Daniel 2', 'Reino'],
   /* v205: la cuarta columna es la parte de Daniel 2 que se enciende en la estatua
      chica al elegir cada parte (null: Daniel 2 no la tiene, la agrega Daniel 7).
@@ -330,13 +330,13 @@ LAMINAS.d7 = {
     tras: 'juicio', t: 'Las tres fases del juicio', s: 'De 1844 a la segunda venida', de: 'Daniel 7',
     hitos: [['1844', 'Se abren los libros'], ['Antes de la venida', 'El Hijo recibe el reino'], ['La venida', 'Los santos reciben el reino']],
     pasos: [
-      { t: 'Investigación', n: 'Se abren los libros', cuando: 'Desde 1844 hasta el cierre de la gracia', donde: 'En el cielo', quien: 'El Padre juzga; Cristo es el abogado; los ángeles, testigos',
+      { t: 'Investigación', n: 'Se abren los libros', ref: '7:9-10', cuando: 'Desde 1844 hasta el cierre de la gracia', donde: 'En el cielo', quien: 'El Padre juzga; Cristo es el abogado; los ángeles, testigos',
         que: 'Se abren los libros de los que profesaron ser hijos de Dios, primero los muertos y después los vivos. Se ve quién pertenece al reino.', para: 'Para que el universo vea que Dios es justo',
         citas: [['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.'], ['Apocalipsis 14:7', 'la hora de su juicio ha llegado']], de: 0, a: 1 },
-      { t: 'Sentencia', n: 'El Hijo recibe el reino', cuando: 'Al terminar la investigación, antes de la venida', donde: 'En el cielo', quien: 'El Hijo del hombre va ante el Anciano de días',
+      { t: 'Sentencia', n: 'El Hijo recibe el reino', ref: '7:13-14, 22a', cuando: 'Cuando el Hijo del hombre recibe el reino, antes de la venida', donde: 'En el cielo', quien: 'El Hijo del hombre va ante el Anciano de días',
         que: 'El fallo es a favor de los santos y contra el cuerno. El reino son sus súbditos: cuando todos los casos están decididos, el número está completo y el Padre le da el reino al Hijo. Se cierra la gracia.', para: 'Para que el reino quede completo',
         citas: [['Daniel 7:14', 'Y le fue dado dominio, gloria y reino'], ['Daniel 7:22', 'se hizo justicia a los santos del Altísimo']], de: 1, a: 1 },
-      { t: 'Ejecución', n: 'Los santos reciben el reino', cuando: 'En la segunda venida', donde: 'Del cielo a la tierra', quien: 'Cristo vuelve como Rey de reyes',
+      { t: 'Ejecución', n: 'Los santos reciben el reino', ref: '7:22b, 26-27', cuando: 'Cuando los santos reciben el reino, en la segunda venida', donde: 'Del cielo a la tierra', quien: 'Cristo vuelve como Rey de reyes',
         que: 'Cristo vuelve por los suyos y los santos reciben el reino. Al cuerno le quitan el dominio para que sea destruido y arruinado hasta el fin (7:26).', para: 'Para que los santos posean el reino para siempre',
         citas: [['Daniel 7:22', 'llegó el tiempo, y los santos recibieron el reino.'], ['Daniel 7:27', 'sean dados al pueblo de los santos del Altísimo']], de: 1, a: 2 }],
     nota: 'Es el orden de Daniel 7: se abren los libros (7:10), el Hijo recibe el reino (7:14) y después los santos lo reciben (7:22, 27). Apocalipsis 20 sigue el juicio más allá de la venida: los santos juzgan durante los mil años y el gran trono blanco cumple la sentencia de los perdidos. No se contradicen: la ejecución empieza en la venida y termina después del milenio.',
@@ -376,7 +376,7 @@ LAMINAS.d7 = {
  {id:'juicio',img:'juicio',nombre:'El juicio',reino:'El juicio en el cielo',fechas:'desde 1844 d.C.',de:1844,a:2026,c:'#B45309',
   texto:'fueron puestos unos tronos y se sentó un Anciano de días',ref:'7:9',texto2:'El Juez se sentó y los libros fueron abiertos.',ref2:'7:10',
   corto:'Desde 1844 el Padre juzga en el cielo, y el fallo es a favor de los santos (7:22).',
-  interp:['El juicio empieza cuando terminan los 1.260 años del cuerno (7:25-26) y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.','El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.','Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26).'],
+  interp:['El juicio empieza después de los 1.260 años del cuerno (7:25-26), que terminan en 1798, y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.','El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.','Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26).'],
   fuente:'CS 477 y 533-536; PE 55; '+BOHR+', p. 120-121, 276-280.',
   /* v205: la escena del juicio por pasos: la imagen se acerca a cada parte
      (`caja`: x, y, ancho y alto en píxeles de juicio.webp, 1200 × 675, en 16:9). */
@@ -416,8 +416,62 @@ LAMINAS.d7 = {
  {id:'reino',img:'d2/e-monte',nombre:'El reino eterno',reino:'Dado a los santos',fechas:'para siempre',de:null,c:'#6B7B5A',
   texto:'Después recibirán el reino los santos del Altísimo, y poseerán el reino hasta el siglo, eternamente y para siempre.',ref:'7:18',texto2:'cuyo reino es reino eterno, y todos los dominios lo servirán y obedecerán.',ref2:'7:27',
   corto:'Las bestias pasan. El reino de Dios queda para siempre, y es de los santos.',
-  interp:['Cuatro veces el capítulo termina igual: el reino se da a los santos (7:14, 18, 22, 27). Es la piedra que se hace un gran monte en Daniel 2 (2:35, 44).','El juicio no es contra el pueblo de Dios: es a favor de él (7:22).'],
+  interp:['Cuatro veces el capítulo termina en el reino: lo recibe el Hijo del hombre (7:14) y lo reciben los santos (7:18, 22, 27). Es la piedra que se hace un gran monte en Daniel 2 (2:35, 44).','El juicio no es contra el pueblo de Dios: es a favor de él (7:22).'],
   fuente:BOHR+', p. 121.'},
   ],
 };
-module.exports = { LAMINAS };
+/* v215: LOS ÚLTIMOS ACONTECIMIENTOS (Camilo, 14-oct 13:58, regla «Daniel y Apocalipsis
+   se refuerzan»): «después del juicio viene la segunda venida, que es la piedra, y
+   después el reino eterno, eso según Daniel 2, 7, 8; pero Apocalipsis, así como Daniel
+   11, nos habla del juicio hasta que se acabe la gracia, vienen las plagas, después la
+   segunda venida, después los mil años, luego la destrucción final de los impíos,
+   desciende la Nueva Jerusalén y el reino eterno […] aunque no los cuenten Daniel 2, 7 y
+   8 es bueno saberlo». Una sola secuencia que usan Comparar y el tramo futuro de las
+   láminas. `en`: qué libro lo muestra y dónde ('' no lo trae; '~' lo supone sin
+   contarlo). `citas`: RV1995 literal (tests/test.js). `partes`: las partes de las
+   láminas que caen en ese acontecimiento. */
+const ULTIMOS = {
+  titulo: 'Los últimos acontecimientos',
+  libros: [['d2', 'Daniel 2'], ['d7', 'Daniel 7'], ['d8', 'Daniel 8'], ['d11', 'Daniel 11'], ['d12', 'Daniel 12'], ['ap', 'Apocalipsis']],
+  nota: 'Daniel 2, 7 y 8 pasan del juicio a la piedra y al reino: dicen qué viene, no cada paso. Daniel 11 y 12 y Apocalipsis llenan los detalles: el cierre de la gracia, las plagas, los mil años y el fin de los impíos. Daniel y Apocalipsis se refuerzan.',
+  eventos: [
+    { id: 'juicio', t: 'El juicio investigador', c: 'Juicio', s: 'Desde 1844', cuando: 'Desde 1844, en el cielo, mientras sigue abierta la gracia', img: 'd7/juicio',
+      en: { d2: '', d7: '7:9-10, 13-14', d8: '8:14', d11: '', d12: '', ap: '14:6-7' },
+      citas: [['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.'], ['Daniel 8:14', 'luego el santuario será purificado'], ['Apocalipsis 14:7', 'la hora de su juicio ha llegado']],
+      nota: 'Se abren los libros de los que profesaron ser hijos de Dios. Mientras dura, se predica el evangelio eterno a toda nación (Apocalipsis 14:6).',
+      partes: ['juicio', 'hijo', 'x-fases'], fuente: 'CS 533-545' },
+    { id: 'gracia', t: 'Se cierra la gracia', c: 'Fin de la gracia', s: 'Termina la intercesión', cuando: 'Al terminar el juicio, antes de las plagas',
+      en: { d2: '', d7: '~7:13-14', d8: '', d11: '', d12: '12:1', ap: '15:8; 22:11' },
+      citas: [['Daniel 12:1', 'En aquel tiempo se levantará Miguel'], ['Apocalipsis 15:8', 'Nadie podía entrar en el templo hasta que se cumplieran las siete plagas'], ['Apocalipsis 22:11', 'El que es injusto, sea injusto todavía']],
+      nota: 'Cada caso quedó decidido, para vida o para muerte. El Hijo ya recibió su reino (Daniel 7:14: es la sentencia) y Cristo deja de interceder: se levanta Miguel.',
+      partes: ['x-fases'], fuente: 'CS 671; PE 280' },
+    { id: 'plagas', t: 'Las siete últimas plagas', c: 'Plagas', s: 'El tiempo de angustia', cuando: 'Después del cierre de la gracia, antes de la venida',
+      en: { d2: '', d7: '', d8: '', d11: '', d12: '12:1', ap: '15:1; 16' },
+      citas: [['Daniel 12:1', 'Será tiempo de angustia, cual nunca fue desde que hubo gente hasta entonces'], ['Apocalipsis 15:1', 'siete ángeles con las siete plagas postreras'], ['Apocalipsis 16:1', 'Id y derramad sobre la tierra las siete copas de la ira de Dios']],
+      nota: 'Caen sobre los que tienen la marca de la bestia y adoran su imagen (Apocalipsis 16:2). El pueblo de Dios pasa por la angustia, pero Dios lo guarda.',
+      partes: [], fuente: 'CS 686-687' },
+    { id: 'venida', t: 'La segunda venida', c: 'Venida', s: 'La piedra', cuando: 'Al final de las plagas', img: 'd2/e-piedra',
+      en: { d2: '2:34-35, 44-45', d7: '7:22, 26-27', d8: '8:25', d11: '11:45', d12: '12:1-2', ap: '19:11-16' },
+      citas: [['Daniel 2:34', 'una piedra se desprendió sin que la cortara mano alguna'], ['Daniel 12:1', 'será libertado tu pueblo, todos los que se hallen inscritos en el libro'], ['Apocalipsis 19:16', 'Rey de reyes y Señor de señores']],
+      nota: 'Es la piedra de Daniel 2 y la ejecución del juicio de Daniel 7: los santos reciben el reino. Los justos que duermen resucitan y, con los vivos, suben a recibir a Cristo (1 Tesalonicenses 4:16-17).',
+      partes: ['piedra', 'x-fases'], fuente: 'CS 693-710; Bohr, <i>Daniel 1-10</i>, p. 63-64' },
+    { id: 'mil', t: 'Los mil años', c: 'Mil años', s: 'Satanás, atado en la tierra', cuando: 'Después de la venida',
+      en: { d2: '', d7: '', d8: '', d11: '', d12: '', ap: '20:1-6' },
+      citas: [['Apocalipsis 20:2', 'lo ató por mil años'], ['Apocalipsis 20:4', 'vivieron y reinaron con Cristo mil años']],
+      nota: 'Los santos están con Cristo en el cielo y revisan los casos de los perdidos (20:4). La tierra queda desolada y Satanás, sin nadie a quien engañar.',
+      partes: [], fuente: 'CS 711-719' },
+    { id: 'final', t: 'La Nueva Jerusalén y el fin de los impíos', c: 'Nueva Jerusalén', s: 'Después de los mil años', cuando: 'Al terminar los mil años',
+      en: { d2: '', d7: '', d8: '', d11: '', d12: '', ap: '20:7-15; 21:2' },
+      citas: [['Apocalipsis 21:2', 'vi la santa ciudad, la nueva Jerusalén, descender del cielo'], ['Apocalipsis 20:9', 'de Dios descendió fuego del cielo y los consumió'], ['Apocalipsis 20:14', 'Ésta es la muerte segunda']],
+      nota: 'La ciudad baja con los santos. Los impíos resucitan (20:5), la rodean con Satanás y el fuego los consume: es la muerte segunda, de la que no se vuelve.',
+      partes: [], fuente: 'CS 720-731' },
+    { id: 'reino', t: 'La tierra nueva', c: 'Tierra nueva', s: 'El reino eterno', cuando: 'Para siempre', img: 'd2/e-monte',
+      en: { d2: '2:35, 44', d7: '7:14, 18, 27', d8: '', d11: '', d12: '12:3', ap: '21:1-4; 22:5' },
+      citas: [['Daniel 2:44', 'un reino que no será jamás destruido'], ['Daniel 7:27', 'cuyo reino es reino eterno'], ['Apocalipsis 21:1', 'vi un cielo nuevo y una tierra nueva'], ['Apocalipsis 21:4', 'ya no habrá más muerte']],
+      nota: 'La piedra se hizo un gran monte que llenó toda la tierra (2:35). Dios vive con su pueblo, y el reino es de los santos para siempre.',
+      partes: ['monte', 'reino'], fuente: 'CS 732-737' },
+  ],
+  fuente: 'CS 533-545, 671-737; PE 280; Bohr, <i>15 principios</i> 2:347-349 y 396-397; Bohr, <i>Daniel 1-10</i>, p. 24.',
+};
+
+module.exports = { LAMINAS, ULTIMOS };
