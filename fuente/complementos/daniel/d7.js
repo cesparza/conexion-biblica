@@ -8,8 +8,10 @@
    17. Lo de Bohr en inglés va traducido. v188: voz directa, sin nombrar
    autores en el cuerpo; una sola «Fuente:» corta por sección. v198 (13-oct):
    pedido de Camilo sobre el juicio y la bestia espantosa. v210 (14-oct): el tribunal
-   y sus libros, las tres fases del juicio (como Apocalipsis 20), nitsdaq, el día
-   de las trompetas y la justicia que absuelve y condena. */
+   y sus libros, las tres fases del juicio, nitsdaq, el día de las trompetas y la
+   justicia que absuelve y condena. v213 (Camilo, 14-oct): las tres fases en el
+   orden de Daniel 7: la sentencia cuando el Hijo recibe el reino (7:13-14, 22), la
+   ejecución cuando los santos lo reciben (7:22, 27); Apocalipsis 20 la continúa. */
 const { tbl, hi, wa, li } = require('../../apocalipsis/ayudas.js');
 
 module.exports = {
@@ -92,7 +94,7 @@ module.exports = {
       ]) +
       `<p><b>Cuándo: después de 1798 y antes de la segunda venida.</b> Tres veces el juicio llega como respuesta a la obra del cuerno (7:8 y 9; 7:21 y 22; 7:25 y 26): empieza cuando terminan sus 1.260 años. En 7:13 el Hijo del hombre va <i>al Padre</i> para juzgar, «no a la tierra» (CS 477), y solo después vuelve a dar el reino. La fecha exacta, 1844, la da Daniel 8:14.</p>` +
       `<p>Daniel 8:14 dice que el santuario «será purificado». El verbo hebreo (<i>nitsdaq</i>) también es «será vindicado, declarado justo»: es el lenguaje de un tribunal. Daniel 8:14 y 7:9-10 hablan del mismo juicio.</p>` +
-      hi('<b>Tres pasos</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia a favor de los santos (7:22) y ejecución, cuando el cuerno pierde su dominio y los santos reciben el reino (7:26-27). No son las tres fases del juicio, que van más abajo.') +
+      hi('<b>Tres pasos</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia, cuando el Hijo recibe el reino y el fallo sale a favor de los santos (7:14, 22), y ejecución, cuando los santos reciben el reino y el cuerno pierde su dominio (7:22, 26-27). Son las tres fases del juicio, que van más abajo.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 120-121 y 275-276; Bohr, <i>La hora del juicio</i>, p. 1 y 6; CS 477; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 139-140.</p>` },
 
     { t: '🧭 El juicio es el gran Día de la Expiación', capa: 'contexto', h:
@@ -147,19 +149,18 @@ module.exports = {
       `<p>Fuente: PE 55; CS 533-538; Bohr, <i>Culto en el trono de Satanás</i>, p. 44; Bohr, <i>La hora del juicio</i>, p. 3-5 y 11-12.</p>` },
 
     { t: '🧭 Las tres fases del juicio', capa: 'contexto', h:
-      `<p>Daniel 7 ve la primera fase. Apocalipsis 20 muestra las otras dos. En las tres se abren libros (Daniel 7:10; Apocalipsis 20:12):</p>` +
-      tbl(['Fase', 'Cuándo', 'Dónde y quién', 'Para quién'], [
-        ['1 · Investigación (juicio investigador)', 'Desde 1844 hasta el cierre de la gracia (Daniel 8:14; Apocalipsis 14:7)', 'En el cielo: el Padre juzga, Cristo aboga', 'Para el universo que mira'],
-        ['2 · Sentencia (juicio del milenio)', 'Durante los mil años (Apocalipsis 20:4; 1 Corintios 6:2-3)', 'En el cielo: los santos revisan los casos con Cristo', 'Para los redimidos'],
-        ['3 · Ejecución (juicio ejecutivo)', 'Después de los mil años (Apocalipsis 20:11-15; Malaquías 4:1)', 'En la tierra: el gran trono blanco', 'Para los perdidos'],
+      `<p>Daniel 7 muestra las tres fases en orden. Las dos primeras pasan en el cielo; la tercera empieza cuando Cristo vuelve:</p>` +
+      tbl(['Fase', 'Cuándo', 'Qué pasa'], [
+        ['1 · Investigación', 'Desde 1844 hasta el cierre de la gracia', 'Se abren los libros de los que profesaron ser hijos de Dios (7:10)'],
+        ['2 · Sentencia', 'Al terminar la investigación, antes de la venida', 'El Hijo va ante el Anciano de días y recibe el reino (7:13-14); el fallo es a favor de los santos (7:22)'],
+        ['3 · Ejecución', 'En la segunda venida', 'Los santos reciben el reino (7:18, 22, 27) y al cuerno le quitan el dominio (7:26)'],
       ]) +
       li([
-        'La primera fase termina cuando «se levantará Miguel» (Daniel 12:1): cuando se falla el último caso, termina el tiempo de gracia (CS 481).',
-        'Daniel anuncia cuatro veces el fin del cuerno: «le quitarán su dominio» (7:26), «será quebrantado, aunque no por mano humana» (8:25), lo determinado se derrama «sobre el desolador» (9:27) y la piedra hiere la estatua (2:44-45).',
-        'En la tercera fase toda rodilla se dobla y aun Satanás reconoce que su sentencia es justa (Filipenses 2:10-11; CS 728).',
+        'El reino son sus súbditos. Cuando se falla el último caso, el número está completo: Cristo «había recibido su reino» (PE 280). Ahí termina la gracia: «se levantará Miguel» (Daniel 12:1).',
+        'Primero el Hijo recibe el reino en el cielo; después vuelve y lo reciben los santos. Es como la boda: el Señor regresa «de las bodas» por los suyos (Lucas 12:36; CS 480).',
       ]) +
-      `<p>Otra lectura cuenta cuatro fases, porque separa la venida, cuando el Hijo del hombre aparta las ovejas de los cabritos (Mateo 25:31-46).</p>` +
-      `<p>Fuente: Bohr, <i>La hora del juicio</i>, p. 1; CS 481, 534, 718-719 y 726-728; Goldstein, <i>Desequilibrio fatal</i>, p. 92; H. Treiyer, <i>Enigmas descifrados</i>, p. 191 y 198; Maxwell, <i>El porvenir del mundo revelado</i>, p. 242.</p>` },
+      hi('Apocalipsis 20 sigue el juicio más allá de la venida: en los mil años los santos juzgan con Cristo (20:4) y el gran trono blanco cumple la sentencia de los perdidos (20:11-15). No se contradicen: la ejecución empieza en la venida y termina después del milenio.') +
+      `<p>Fuente: PE 280; CS 368-369, 480-481 y 718-719; Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>15 principios</i> 2:306-307.</p>` },
 
     { t: '🧭 La Biblia explica sus símbolos (1): la visión', capa: 'contexto', h:
       `<p>Daniel 7 no deja los símbolos a la imaginación: la misma Biblia dice qué son.</p>` +
@@ -206,11 +207,11 @@ module.exports = {
     { t: 'mc', v: '7:25', f: 'c', q: '¿Qué pasó en Francia el 26 de noviembre de 1793, 1.260 años después del decreto de Justiniano?', o: ['Se decretó abolir toda religión', 'Napoleón fue coronado emperador', 'Se firmó un concordato con Roma', 'Se proclamó la libertad de cultos'], a: 0, e: 'La Convención francesa decretó la abolición de la religión: iglesias cerradas y Biblias quemadas. Contado desde 533, es la contraparte de 1798, que se cuenta desde 538. Fuente: Bohr, <i>Daniel 1-10</i>, p. 198-199.' },
     { t: 'mc', v: '7:9', f: 'c', q: '¿Qué detalle del texto muestra que el juicio de Daniel 7 ocurre en el cielo?', o: ['Va en poesía, como toda escena celestial del capítulo', 'Se celebra en el valle de Josafat', 'Lo preside un tribunal del Imperio romano', 'Ocurre después de la segunda venida'], a: 0, e: 'En Daniel 7 lo terrenal va en prosa y lo celestial en poesía; las escenas del juicio (7:9-10, 13-14, 23-27) están en poesía. Fuente: Bohr, <i>Daniel 1-10</i>, p. 120 y 275.' },
     { t: 'tf', v: '7:13', f: 'c', q: 'En Daniel 7:13 el Hijo del hombre viene a la tierra en su segunda venida.', a: false, e: 'Falso: viene «no a la tierra, sino» al Anciano de días, en el cielo, para el juicio que empezó en 1844. Fuente: CS 477.' },
-    { t: 'mc', v: '7:22', f: 'c', q: '¿En qué fase del juicio juzgan los santos junto con Cristo?', o: ['Durante los mil años', 'Desde 1844 en el cielo', 'El día de la segunda venida', 'Antes del cierre de la gracia'], a: 0, e: '«Vi tronos, y se sentaron sobre ellos los que recibieron facultad de juzgar» (Apocalipsis 20:4): en el milenio los santos revisan los casos de los perdidos y de los ángeles caídos (1 Corintios 6:2-3). Fuente: CS 718-719; Bohr, <i>La hora del juicio</i>, p. 1.' },
+    { t: 'mc', v: '7:14', f: 'c', q: 'Según Daniel 7, ¿cuándo se da la sentencia del juicio?', o: ['Cuando el Hijo recibe el reino', 'Cuando Cristo vuelve a la tierra', 'Durante los mil años', 'En el gran trono blanco'], a: 0, e: '«Vino hasta el Anciano de días» y «le fue dado dominio, gloria y reino» (7:13-14), en el cielo, antes de la venida: el fallo es a favor de los santos (7:22). La ejecución viene después, cuando «los santos recibieron el reino» (7:22). Fuente: PE 280; Bohr, <i>15 principios</i> 2:306-307.' },
     { t: 'tf', v: '7:10', f: 'c', q: 'En la visión de Primeros escritos, el Padre entra en el lugar santísimo en un carro de llamas y se sienta: es el Juez que se sienta en Daniel 7:10.', a: true, e: 'Verdadero. Hasta 1844 el Padre y el Hijo estaban en el lugar santo; allí el Padre pasa al lugar santísimo y empieza el juicio. Fuente: PE 55; Bohr, <i>Culto en el trono de Satanás</i>, p. 44.' },
     { t: 'mc', v: '7:10', f: 'c', q: '¿Qué fiesta llamaba a Israel a prepararse diez días antes del Día de la Expiación?', o: ['El día de las trompetas', 'La fiesta de la Pascua', 'El día de Pentecostés', 'La fiesta de los Tabernáculos'], a: 0, e: 'El primer día del mes séptimo sonaban las trompetas; el día diez era la Expiación (Levítico 23:24, 27). Es el tono de Apocalipsis 14:7: «la hora de su juicio ha llegado». Fuente: Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 78-79.' },
     { t: 'mc', v: '7:26', f: 'c', q: '¿Por qué el mismo juicio da el reino a los santos y le quita el dominio al cuerno?', o: ['La justicia absuelve al justo y condena al culpable', 'El cuerno pidió que lo juzgaran aparte', 'Los santos juzgan al cuerno en la tierra', 'El juicio solo trata del cuerno pequeño'], a: 0, e: 'Así se juzgaba en Israel: «absolverán al justo, y condenarán al culpable» (Deuteronomio 25:1; 1 Reyes 8:32). El fallo a favor de los santos (7:22) es el fallo contra el cuerno (7:26). Fuente: Goldstein, <i>Ataque contra el lugar santísimo</i>, p. 78-79.' },
-    { t: 'mc', v: '7:22', f: 'c', q: '¿Cuáles son los tres pasos del juicio que muestra Daniel 7?', o: ['Investigación, sentencia y ejecución', 'Acusación, defensa y apelación', 'Arresto, proceso y perdón', 'Registro, sellamiento y castigo'], a: 0, e: 'Se abren los libros (7:10), se da la sentencia a favor de los santos (7:22) y los santos reciben el reino. Fuente: Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>La hora del juicio</i>, p. 1.' },
+    { t: 'mc', v: '7:22', f: 'c', q: '¿Cuáles son los tres pasos del juicio que muestra Daniel 7?', o: ['Investigación, sentencia y ejecución', 'Acusación, defensa y apelación', 'Arresto, proceso y perdón', 'Registro, sellamiento y castigo'], a: 0, e: 'Se abren los libros (7:10), el Hijo recibe el reino y la sentencia sale a favor de los santos (7:14, 22), y en la venida los santos reciben el reino (7:22, 27). Fuente: Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>15 principios</i> 2:306-307.' },
     { t: 'mc', v: '7:10', f: 'c', q: '¿Con quiénes comenzó el juicio en 1844?', o: ['Con los que vivieron primero en la tierra', 'Con los creyentes que vivían en 1844', 'Con los mártires de la Edad Media', 'Con los doce apóstoles de Jesús'], a: 0, e: 'El juicio empieza con los primeros que vivieron, sigue generación por generación y termina con los vivos. Adán fue el primero en comparecer. Fuente: Bohr, <i>La hora del juicio</i>, p. 7; CS 536.' },
     { t: 'tf', v: '7:25', f: 'c', q: 'El cuerno pequeño es acusado sobre todo de quebrantar mandamientos de la primera tabla de la ley.', a: true, e: 'Verdadero: se hace como Dios (1.º), blasfema (3.º) y cambia el sábado (4.º); además mata a los santos (6.º). Fuente: Bohr, <i>Daniel 1-10</i>, p. 162.' },
     { t: 'mc', v: '7:2', f: 'c', q: 'Según la misma Biblia, ¿qué representan los vientos que agitan el mar en Daniel 7:2?', o: ['Guerras y luchas entre naciones', 'El Espíritu Santo obrando', 'Los ángeles de Dios', 'El paso del tiempo'], a: 0, e: 'Jeremías 25:32-33 usa la tempestad para la calamidad que pasa de nación en nación; los vientos simbolizan luchas. Fuente: Bohr, <i>Daniel 1-10</i>, p. 121; CS 493.' },

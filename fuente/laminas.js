@@ -312,25 +312,27 @@ LAMINAS.d7 = {
     fuente: BOHR + ', p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309 y 492.',
   },
   /* v210: LAS TRES FASES DEL JUICIO (Camilo, 14-oct: «y el asunto de las tres fases
-     del juicio»). Después de los pasos del juicio, una mini línea de tiempo
-     (1844 → segunda venida → mil años → fin) y tres paneles que se encienden en
-     orden. Los mismos nombres de Apocalipsis 20 (fuente/apocalipsis/cap20.js:
-     Investigación, Sentencia, Ejecución). `citas`: RV1995 literal (tests/test.js). */
+     del juicio»). Después de los pasos del juicio, una mini línea de tiempo y tres
+     paneles que se encienden en orden. `citas`: RV1995 literal (tests/test.js).
+     v213 (Camilo, 14-oct 13:24): en el orden de Daniel 7, no el de Apocalipsis 20.
+     La sentencia se da cuando el Hijo va al Padre y recibe el reino (7:13-14, 22);
+     la ejecución, cuando los santos reciben el reino (7:22, 27). Apocalipsis 20
+     (cap20.js) sigue con su esquema: la nota los une. */
   fases: {
-    tras: 'juicio', t: 'Las tres fases del juicio', s: 'De 1844 al fin del milenio',
-    hitos: [['1844', 'Empieza el juicio'], ['La venida', 'Se cierra la gracia y viene Cristo'], ['El fin', 'Gran trono blanco']],
+    tras: 'juicio', t: 'Las tres fases del juicio', s: 'De 1844 a la segunda venida', de: 'Daniel 7',
+    hitos: [['1844', 'Se abren los libros'], ['Antes de la venida', 'El Hijo recibe el reino'], ['La venida', 'Los santos reciben el reino']],
     pasos: [
-      { t: 'Investigación', n: 'El juicio investigador', cuando: 'Desde 1844 hasta el cierre de la gracia', donde: 'En el cielo', quien: 'El Padre juzga; Cristo es el abogado; los ángeles, testigos',
-        que: 'Se abren los libros de los que profesaron ser hijos de Dios. El fallo es a favor de los santos y contra el cuerno.', para: 'Para que el universo vea que Dios es justo',
+      { t: 'Investigación', n: 'Se abren los libros', cuando: 'Desde 1844 hasta el cierre de la gracia', donde: 'En el cielo', quien: 'El Padre juzga; Cristo es el abogado; los ángeles, testigos',
+        que: 'Se abren los libros de los que profesaron ser hijos de Dios, primero los muertos y después los vivos. Se ve quién pertenece al reino.', para: 'Para que el universo vea que Dios es justo',
         citas: [['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.'], ['Apocalipsis 14:7', 'la hora de su juicio ha llegado']], de: 0, a: 1 },
-      { t: 'Sentencia', n: 'El juicio del milenio', cuando: 'Durante los mil años', donde: 'En el cielo', quien: 'Los santos juzgan con Cristo',
-        que: 'Revisan los casos de los perdidos y de los ángeles caídos, y queda medido lo que cada uno ha de recibir.', para: 'Para que los redimidos vean que Dios fue justo',
-        citas: [['Apocalipsis 20:4', 'Vi tronos, y se sentaron sobre ellos los que recibieron facultad de juzgar'], ['1 Corintios 6:2', 'los santos han de juzgar al mundo']], de: 1, a: 2 },
-      { t: 'Ejecución', n: 'El juicio ejecutivo', cuando: 'Después de los mil años', donde: 'En la tierra', quien: 'Cristo, en el gran trono blanco',
-        que: 'Los perdidos resucitan, se abren los libros y el fuego los consume. Toda rodilla se dobla y reconoce que Dios es justo.', para: 'Para que los perdidos reconozcan su sentencia',
-        citas: [['Apocalipsis 20:12', 'fueron juzgados los muertos por las cosas que estaban escritas en los libros, según sus obras'], ['Malaquías 4:1', 'aquel día que vendrá los abrasará']], de: 2, a: 2 }],
-    nota: 'Daniel 7 ve la primera fase; Apocalipsis 20 las otras dos. Los libros se abren en las tres (Daniel 7:10; Apocalipsis 20:12).',
-    fuente: 'CS 534, 718-719 y 726-728; Bohr, <i>La hora del juicio</i>, p. 1; Goldstein, <i>Desequilibrio fatal</i>, p. 92.',
+      { t: 'Sentencia', n: 'El Hijo recibe el reino', cuando: 'Al terminar la investigación, antes de la venida', donde: 'En el cielo', quien: 'El Hijo del hombre va ante el Anciano de días',
+        que: 'El fallo es a favor de los santos y contra el cuerno. El reino son sus súbditos: cuando todos los casos están decididos, el número está completo y el Padre le da el reino al Hijo. Se cierra la gracia.', para: 'Para que el reino quede completo',
+        citas: [['Daniel 7:14', 'Y le fue dado dominio, gloria y reino'], ['Daniel 7:22', 'se hizo justicia a los santos del Altísimo']], de: 1, a: 1 },
+      { t: 'Ejecución', n: 'Los santos reciben el reino', cuando: 'En la segunda venida', donde: 'Del cielo a la tierra', quien: 'Cristo vuelve como Rey de reyes',
+        que: 'Cristo vuelve por los suyos y los santos reciben el reino. Al cuerno le quitan el dominio para que sea destruido y arruinado hasta el fin (7:26).', para: 'Para que los santos posean el reino para siempre',
+        citas: [['Daniel 7:22', 'llegó el tiempo, y los santos recibieron el reino.'], ['Daniel 7:27', 'sean dados al pueblo de los santos del Altísimo']], de: 1, a: 2 }],
+    nota: 'Es el orden de Daniel 7: se abren los libros (7:10), el Hijo recibe el reino (7:14) y después los santos lo reciben (7:22, 27). Apocalipsis 20 sigue el juicio más allá de la venida: los santos juzgan durante los mil años y el gran trono blanco cumple la sentencia de los perdidos. No se contradicen: la ejecución empieza en la venida y termina después del milenio.',
+    fuente: 'PE 280; CS 368-369, 480; Bohr, <i>Daniel 1-10</i>, p. 121; Bohr, <i>15 principios</i> 2:306-307.',
   },
   partes: [
  {id:'leon',img:'leon',nombre:'León con alas de águila',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',

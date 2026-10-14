@@ -2616,7 +2616,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
 
 /* v210: el juicio que se anima (7:9-10) y las tres fases del juicio. Las luces
    caen dentro de juicio.webp; la animación no dibuja el rostro del Juez (solo
-   luces y un libro); las fases usan los nombres de Apocalipsis 20 (cap20.js) y
+   luces y un libro); las fases usan los nombres de Apocalipsis 20 (cap20.js), en el orden de Daniel 7 (v213), y
    lo citado es literal (Daniel y Apocalipsis en RV1995 de la app). */
 {
   const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
@@ -2639,12 +2639,17 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const citas=F.pasos.flatMap(x=>x.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
   ok(F&&F.tras==='juicio'&&F.pasos.map(x=>x.t).join()==='Investigación,Sentencia,Ejecución'&&citas.length===6&&!malas.length,
     'Las tres fases del juicio: Investigación, Sentencia y Ejecución, con 6 citas literales'+(malas.length?' ('+malas[0][0]+')':''));
-  ok(F.hitos.length===3&&F.pasos.every(x=>x.de>=0&&x.a<F.hitos.length&&x.de<=x.a&&x.cuando&&x.donde&&x.quien&&x.que&&x.para)&&/1844/.test(F.pasos[0].cuando)&&/mil años/.test(F.pasos[1].cuando+F.pasos[2].cuando),
-    'La mini línea de tiempo: 1844 → la venida → el fin, y cada fase con cuándo, dónde, quién y para quién');
+  ok(F.hitos.length===3&&F.pasos.every(x=>x.de>=0&&x.a<F.hitos.length&&x.de<=x.a&&x.cuando&&x.donde&&x.quien&&x.que&&x.para)&&/1844/.test(F.pasos[0].cuando)&&/venida/.test(F.pasos[2].cuando),
+    'La mini línea de tiempo: 1844 → el Hijo recibe el reino → la venida, y cada fase con cuándo, dónde, quién y para quién');
+  /* v213 (Camilo, 14-oct 13:24): el orden de Daniel 7. La sentencia es cuando el Hijo
+     recibe el reino (7:14), la ejecución cuando los santos lo reciben (7:22); no el milenio. */
+  const cit=k=>F.pasos[k].citas.map(c=>c[0]).join();
+  ok(/Daniel 7:14/.test(cit(1))&&/Daniel 7:22/.test(cit(2))&&!/mil años|trono blanco/.test(F.pasos[1].cuando+F.pasos[2].cuando+F.pasos[2].quien)&&/Apocalipsis 20/.test(F.nota)&&!F.mil,
+    'Las fases en el orden de Daniel 7: sentencia cuando el Hijo recibe el reino (7:14), ejecución cuando los santos lo reciben (7:22), y la nota une Apocalipsis 20');
   const ap20=fs.readFileSync(path.join(RAIZ,'fuente','apocalipsis','cap20.js'),'utf8');
   ok(['1 · Investigación','2 · Sentencia','3 · Ejecución'].every(t=>ap20.includes(t)),'Los mismos nombres que Apocalipsis 20 (cap20.js)');
   const CD=require(path.join(RAIZ,'fuente','complementos','daniel.js')),tf=CD.secciones.d7.find(x=>/tres fases del juicio/.test(x.t));
-  ok(tf&&['Investigación','Sentencia','Ejecución','1844','Apocalipsis 20:4','Daniel 12:1'].every(t=>tf.h.includes(t))&&CD.secciones.d7.some(x=>/El Juez se sentó/.test(x.t)&&/PE 55/.test(x.h)),
+  ok(tf&&['Investigación','Sentencia','Ejecución','1844','(20:4)','Daniel 12:1','7:13-14','PE 280'].every(t=>tf.h.includes(t))&&!/juicio del milenio/.test(tf.h)&&CD.secciones.d7.some(x=>/El Juez se sentó/.test(x.t)&&/PE 55/.test(x.h)),
     'Daniel 7 explica las tres fases del juicio y el tribunal con sus libros (🧭)');
   const pre=js.slice(js.indexOf('const lamPasosE=()=>{'),js.indexOf('function lamHojaSub('));
   ok(/tipo:'fases'/.test(pre)&&/lamFasesVis\(s\.sub/.test(js)&&/lamFasE\(/.test(js),'Al presentar, después de los pasos del juicio van sus tres fases; en Explorar, una por una');

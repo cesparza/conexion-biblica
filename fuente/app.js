@@ -1479,15 +1479,16 @@ function lamPerTodos(){
   sig();
 }
 /* ── v210: LAS TRES FASES DEL JUICIO, sobre la imagen del juicio ──
-   Una mini línea de tiempo (1844 → la venida → mil años → el fin) y tres
+   Una mini línea de tiempo (v213: 1844 → el Hijo recibe el reino → la venida) y tres
    paneles que se encienden en orden: el de la fase actual brilla, los
    anteriores quedan encendidos y los siguientes, a media luz. */
 function lamFasesHTML(j){
   const F=LAM().fases,cl=k=>k<j?' on':k===j?' on ahora':'',o=(k,n)=>k===j?' data-o="'+n+'"':'';
   const pos=[5,44,95],hito=(h,i)=>'<span class="lam-fh'+(F.pasos.some((x,k)=>k<=j&&(x.de===i||x.a===i))?' on':'')+'" style="left:'+pos[i]+'%"><i></i><b>'+esc(h[0])+'</b><small>'+esc(h[1])+'</small></span>';
   const tramo=(x,k)=>'<span class="lam-ft f'+k+cl(k)+'"'+o(k,1)+' style="left:'+pos[x.de]+'%;width:'+Math.max(2.5,pos[x.a]-pos[x.de])+'%"></span>';
-  return '<div class="lam-per-cab"'+(j===0?' data-o="0"':'')+'><span>'+esc(F.t)+'</span> · Daniel 7 y Apocalipsis 20</div>'+
-    '<div class="lam-fl"><span class="lam-fl-l"></span><span class="lam-fl-mil" style="left:'+pos[1]+'%;width:'+(pos[2]-pos[1])+'%">1.000 años</span>'+F.pasos.map(tramo).join('')+F.hitos.map(hito).join('')+'</div>'+
+  return '<div class="lam-per-cab"'+(j===0?' data-o="0"':'')+'><span>'+esc(F.t)+'</span> · '+esc(F.de||'Daniel 7')+'</div>'+
+    /* v213: la franja de los mil años solo si las fases la traen (Daniel 7 termina en la venida). */
+    '<div class="lam-fl"><span class="lam-fl-l"></span>'+(F.mil?'<span class="lam-fl-mil" style="left:'+pos[1]+'%;width:'+(pos[2]-pos[1])+'%">1.000 años</span>':'')+F.pasos.map(tramo).join('')+F.hitos.map(hito).join('')+'</div>'+
     '<div class="lam-fps">'+F.pasos.map((x,k)=>'<div class="lam-fp f'+k+cl(k)+'"'+o(k,2)+'><i>'+(k+1)+'</i><b>'+esc(x.t)+'</b><small class="n">'+esc(x.n)+'</small>'+
       '<small class="c">'+esc(x.cuando)+'</small><span class="det"><span>'+esc(x.donde)+' · '+esc(x.quien)+'</span></span></div>').join('')+'</div>'+
     '<div class="lam-per-nota"'+o(j,3)+'>'+esc(F.pasos[j].para)+'</div>';
@@ -8977,7 +8978,8 @@ function cmpSalaHTML(M){
       '<button type="button" class="cmp-nv sig"'+(sig?' onclick="cmpMueve(1)"':' disabled')+'><small>Siguiente</small><b>'+(sig?esc(sig.reino):'')+'</b></button></nav></div>';
 }
 /* v211: la época del juicio se conecta con sus tres fases (las de la lámina que las
-   trae: Daniel 7). Investigación desde 1844, sentencia en el milenio, ejecución al final. */
+   trae: Daniel 7). v213: investigación desde 1844, sentencia cuando el Hijo recibe el
+   reino, ejecución cuando los santos lo reciben, en la venida. */
 function cmpFasesHTML(f,M,corto){
   const k=M.cols.find(c=>{const F=LAMINAS[c].fases;return F&&(f.celdas[c]||[]).some(p=>p.id===F.tras);});
   if(!k)return '';
