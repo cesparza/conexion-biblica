@@ -3599,3 +3599,388 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 @media (prefers-reduced-motion:reduce){
   .lam-tabla [data-o],.lam-fila .barra i,.lam-cum-barra i,.lam-banda{transition:none}
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v209 · CINE. Camilo (14-oct): «quiero el mejor diseño… no una presentación
+   de niños sino como Hollywood». Este bloque viste Comparar, Explorar y
+   Presentar con un mismo lenguaje:
+   · LETRA: una serif clásica para los títulos y los nombres (la del sistema:
+     Iowan en el iPhone y el Mac, Palatino en Windows; Lora dentro de Jóvenes,
+     que la trae) y una sans sobria para lo demás. Cero archivos de la red.
+   · COLOR: negro cálido, marfil y un solo acento de oro. Presentar y Comparar
+     son siempre oscuros, como una sala; Explorar sigue el tema de la app.
+   · MOVIMIENTO: fundidos y una cámara lenta; nada salta. Todo con CSS o
+     requestAnimationFrame (Safari), y nada se mueve con «reducir movimiento».
+   Va al final a propósito: pisa lo de antes sin tocarlo. */
+:root{
+  --v-tcine:clamp(2.25rem, 1.1rem + 3.4vw, 4.5rem);
+  --v-tcine2:clamp(1.375rem, 1rem + 1.4vw, 2.25rem);
+  --v-tcine3:clamp(1.125rem, .98rem + .55vw, 1.5rem);
+  --v-tcita:clamp(1.125rem, .8rem + .6vw, 1.375rem);
+  --cine-serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Lora,Georgia,serif;
+  --cine-sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI Variable Text','Segoe UI',Inter,system-ui,sans-serif;
+  --cine-negro:#0A0907; --cine-tinta:#F3EDE2; --cine-gris:#B9AF9D; --cine-tenue:#8E8576;
+  --cine-oro:#D6B26A; --cine-oro2:#F0DBA6; --cine-linea:rgba(243,237,226,.14);
+}
+
+/* ─── COMPARAR: la sala oscura dentro del estudio ─── */
+.cmp{container-type:inline-size;position:relative;gap:22px;padding:28px 26px 20px;border-radius:18px;font-family:var(--cine-sans);color:var(--cine-tinta);
+  background:radial-gradient(120% 70% at 50% -8%,#2A2014 0%,#120F0B 46%,#0A0907 100%);box-shadow:0 34px 60px -36px rgba(0,0,0,.7)}
+.cmp-ant{color:var(--cine-oro);font-weight:600;letter-spacing:.22em}
+.cmp-ant .ico-t{color:var(--cine-oro)}
+.cmp-tit{margin:12px 0 8px;font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine2);line-height:1.08;letter-spacing:-.005em;color:var(--cine-tinta);text-wrap:balance}
+.cmp-p{color:var(--cine-gris);font-size:1rem;line-height:1.5;max-width:54ch}
+.cmp .sec-fuente{color:var(--cine-tenue);border-top:1px solid var(--cine-linea);padding-top:12px;margin:4px 0 0}
+.cmp .sec-fuente i{color:var(--cine-gris)}
+/* El río: la historia a escala y un carril por visión. */
+.cmp-rio{display:grid;grid-template-columns:max-content minmax(0,1fr);align-items:center;gap:7px 14px;padding:18px 0 2px;border-top:1px solid var(--cine-linea)}
+.cmp-carril,.cmp-eje{display:contents}
+.cmp-carril-n{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cine-gris);white-space:nowrap}
+.cmp-carril-t{position:relative;height:calc(var(--pistas,1) * 16px - 4px);
+  background:linear-gradient(rgba(243,237,226,.08),rgba(243,237,226,.08)) 0 50% / 92% 1px no-repeat}
+.cmp-tr{position:absolute;top:calc(var(--n,0) * 16px);height:12px;padding:0;border:0;border-radius:999px;background:var(--c);cursor:pointer;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 0 10px -2px var(--c);transition:filter .25s,transform .25s}
+.cmp-tr::before{content:'';position:absolute;left:-2px;right:-2px;top:-8px;bottom:-8px}
+.cmp-tr:hover,.cmp-tr:focus-visible{filter:brightness(1.3);transform:scaleY(1.3)}
+.cmp-tr:focus-visible{outline:2px solid var(--cine-oro);outline-offset:3px}
+.cmp-tr.fin{left:93.5%;width:5.5%;background:linear-gradient(90deg,var(--cine-oro),var(--cine-oro2));box-shadow:0 0 12px rgba(214,178,106,.6)}
+.cmp-eje-t{position:relative;height:24px;border-top:1px solid var(--cine-linea);font-size:.75rem;color:var(--cine-tenue);font-variant-numeric:tabular-nums}
+.cmp-eje-t span{position:absolute;top:7px;transform:translateX(-50%);white-space:nowrap}
+.cmp-eje-t span:first-child{transform:none}
+.cmp-eje-t .siempre{color:var(--cine-oro)}
+.cmp-eje-t .tel{display:none}
+/* Las marcas del río según el ancho de la caja (dentro de Jóvenes la columna es más angosta). */
+@container (max-width:820px){.cmp-eje-t .chico,.cmp-eje-t .siempre{display:none}}
+@container (max-width:560px){.cmp-eje-t .ancho{display:none}.cmp-eje-t .tel{display:block}}
+@container (max-width:420px){.cmp-eje-t .cmp-eje-t,.cmp-eje-t .tel{display:none}}
+/* Las épocas: número, nombre y fechas; una tarjeta por visión. */
+.cmp-epocas{display:grid;gap:26px;margin-top:4px}
+.cmp-epoca{display:grid;gap:12px}
+/* La época que se lee queda pegada arriba; --cmp-pega lo mide cmpPega(). */
+.cmp-ecab{position:sticky;top:var(--cmp-pega,0px);z-index:2;display:flex;align-items:center;gap:14px;width:100%;padding:12px 0 10px;border:0;
+  border-bottom:1px solid var(--cine-linea);background:#0D0B09;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.cmp-num{flex:0 0 auto;min-width:2.3em;font-family:var(--cine-serif);font-size:1.375rem;line-height:1;color:color-mix(in srgb,var(--c) 62%,#F3EDE2);letter-spacing:.04em}
+.cmp-et{flex:1;min-width:0;display:flex;flex-direction:column}
+.cmp-et b{font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine3);line-height:1.15;color:var(--cine-tinta)}
+.cmp-et small{margin-top:4px;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cine-gris);font-variant-numeric:tabular-nums}
+.cmp-abre{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cine-oro);white-space:nowrap;transition:gap .25s}
+.cmp-abre .ico-t{width:14px;height:14px}
+.cmp-ecab:hover .cmp-abre{gap:8px}
+.cmp-ecab:focus-visible,.cmp-carta:focus-visible{outline:2px solid var(--cine-oro);outline-offset:3px}
+.cmp-cartas{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;scrollbar-width:none;padding:2px}
+.cmp-cartas::-webkit-scrollbar{display:none}
+.cmp-carta{position:relative;display:block;aspect-ratio:16/10;padding:0;border:0;border-radius:12px;overflow:hidden;scroll-snap-align:start;
+  background:#15120E;color:inherit;font:inherit;text-align:left;cursor:pointer;box-shadow:0 0 0 1px var(--cine-linea),0 18px 30px -22px #000}
+.cmp-carta>.cmp-img{position:absolute;inset:0}
+.cmp-lt{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:3px;padding:34px 14px 12px;
+  background:linear-gradient(rgba(6,5,4,0),rgba(6,5,4,.62) 45%,rgba(6,5,4,.92))}
+.cmp-lt small{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cine-oro)}
+.cmp-lt b{font-family:var(--cine-serif);font-weight:500;font-size:1.125rem;line-height:1.2;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.cmp-carta.vacia{cursor:default;background:repeating-linear-gradient(135deg,rgba(243,237,226,.035) 0 10px,transparent 10px 20px),#0F0D0A;box-shadow:inset 0 0 0 1px var(--cine-linea)}
+.cmp-carta.vacia .cmp-img{background:none}
+.cmp-carta.vacia .cmp-lt{background:none}
+.cmp-carta.vacia b{color:var(--cine-tenue);font-style:italic}
+.cmp-faltan{display:none;margin:-2px 0 0;font-family:var(--cine-serif);font-style:italic;font-size:.875rem;color:var(--cine-tenue)}
+@container (max-width:560px){.cmp-carta.vacia{display:none}.cmp-faltan{display:block}}
+/* La imagen de una parte (tarjeta y sala). */
+.cmp-img{position:relative;display:block;overflow:hidden;background:radial-gradient(80% 70% at 50% 42%,#2B2117,#0C0A08)}
+.cmp-img img{position:absolute;display:block;max-width:none;transition:transform 1.6s cubic-bezier(.2,.6,.2,1)}
+.cmp-img .cmp-cubre{inset:0;width:100%;height:100%;object-fit:cover}
+.cmp-capa img{filter:brightness(.3) saturate(.45)}
+.cmp-capa img.cmp-fondo{filter:brightness(.4) saturate(.8)}
+.cmp-capa img.on{filter:brightness(1.12) drop-shadow(0 0 12px rgba(255,214,140,.5))}
+@media (hover:hover){.cmp-carta:hover .cmp-cubre{transform:scale(1.045)}}
+@media (max-width:560px){
+  .cmp{margin:0 -16px;padding:24px 16px 18px;border-radius:0}
+  .cmp-rio{column-gap:10px}
+  .cmp-cartas{grid-auto-columns:80%;margin:0 -16px;padding:2px 16px;scroll-padding:0 16px}
+  .cmp-abre{font-size:0;gap:0}
+  .cmp-abre .ico-t{width:18px;height:18px}
+}
+/* La sala: una época a pantalla completa. */
+.cmp-sala{position:fixed;inset:0;z-index:3100;overflow:auto;overscroll-behavior:contain;background:radial-gradient(120% 80% at 50% -10%,#21190F,#070605 55%);
+  color:var(--cine-tinta);font-family:var(--cine-sans);opacity:0;transition:opacity .45s ease}
+.cmp-sala[hidden]{display:none}
+.cmp-sala.ve{opacity:1}
+.cmp-sala-in{box-sizing:border-box;max-width:1320px;min-height:100%;margin:0 auto;display:grid;gap:22px;align-content:start;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) clamp(16px,4vw,48px) calc(env(safe-area-inset-bottom,0px) + 24px)}
+.cmp-sala.ve .cmp-sala-in>*,.cmp-sala-in.cambia>*{animation:cmpEntra .7s cubic-bezier(.2,.7,.2,1) both}
+.cmp-sala-in>*:nth-child(3){animation-delay:.06s}
+.cmp-sala-in>*:nth-child(4){animation-delay:.12s}
+.cmp-sala-in>*:nth-child(5){animation-delay:.18s}
+@keyframes cmpEntra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cmp-sala-bar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cmp-sala-cu{font-size:.75rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cine-gris)}
+.cmp-x,.cmp-lam{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(243,237,226,.24);
+  background:transparent;color:var(--cine-tinta);font:inherit;font-size:.875rem;font-weight:600;letter-spacing:.02em;cursor:pointer;transition:border-color .25s,background-color .25s}
+.cmp-x:hover,.cmp-lam:hover{border-color:var(--cine-oro);background:rgba(214,178,106,.08)}
+.cmp-x:focus-visible,.cmp-lam:focus-visible,.cmp-nv:focus-visible{outline:2px solid var(--cine-oro);outline-offset:2px}
+.cmp-x .ico-t,.cmp-lam .ico-t{width:16px;height:16px}
+.cmp-sala-cab{display:flex;align-items:flex-start;gap:clamp(12px,2.4vw,28px)}
+.cmp-sala-cab .cmp-num{font-size:2.25rem;padding-top:.18em}
+.cmp-sala-cab h2{margin:0;font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine);line-height:1;letter-spacing:-.012em;color:var(--cine-tinta);text-wrap:balance}
+.cmp-sala-f{margin:12px 0 0;font-size:.875rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cine-oro);font-variant-numeric:tabular-nums}
+.cmp-sl{position:relative;height:28px;border-top:1px solid var(--cine-linea);font-size:.75rem;color:var(--cine-tenue);font-variant-numeric:tabular-nums}
+.cmp-sl i{position:absolute;top:-2px;height:3px;border-radius:999px;background:linear-gradient(90deg,var(--cine-oro),var(--cine-oro2));box-shadow:0 0 14px rgba(214,178,106,.8)}
+.cmp-sl span{position:absolute;top:9px;transform:translateX(-50%);white-space:nowrap}
+.cmp-sl span:first-of-type{transform:none}
+.cmp-sala-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,3vw,36px);align-items:start}
+.cmp-vis{display:flex;flex-direction:column;gap:16px;min-width:0}
+.cmp-vis-p{display:flex;flex-direction:column;gap:14px}
+.cmp-vis .cmp-img{aspect-ratio:16/10;border-radius:12px;box-shadow:0 0 0 1px var(--cine-linea),0 34px 50px -30px #000}
+.cmp-vis-tx small{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cine-oro)}
+.cmp-vis-tx b{display:block;margin:6px 0 10px;font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine3);line-height:1.15;color:var(--cine-tinta)}
+.cmp-vis-tx p{margin:0 0 8px;color:var(--cine-gris);font-size:1rem;line-height:1.55}
+.cmp-cita{font-family:var(--cine-serif);font-style:italic;color:var(--cine-tinta)!important;font-size:1.125rem!important;line-height:1.5!important}
+.cmp-cita q{quotes:"«" "»"}
+.cmp-cita cite{font-family:var(--cine-sans);font-style:normal;font-size:.75rem;letter-spacing:.14em;color:var(--cine-oro);white-space:nowrap}
+.cmp-lam{align-self:flex-start}
+.cmp-sala-sin{margin:0;color:var(--cine-tenue);font-family:var(--cine-serif);font-style:italic;font-size:1rem}
+.cmp-sala-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:14px;border-top:1px solid var(--cine-linea)}
+.cmp-nv{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:56px;padding:6px 0;border:0;background:none;color:var(--cine-tinta);font:inherit;text-align:left;cursor:pointer}
+.cmp-nv.sig{align-items:flex-end;text-align:right}
+.cmp-nv small{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cine-gris)}
+.cmp-nv b{font-family:var(--cine-serif);font-weight:500;font-size:1.375rem;transition:color .25s}
+.cmp-nv:hover b{color:var(--cine-oro2)}
+.cmp-nv:disabled{visibility:hidden}
+@media (max-width:640px){
+  .cmp-sala-g{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:86%;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin:0 calc(-1 * clamp(16px,4vw,48px));padding:0 clamp(16px,4vw,48px);scroll-padding:0 clamp(16px,4vw,48px);scrollbar-width:none}
+  .cmp-sala-g::-webkit-scrollbar{display:none}
+  .cmp-vis{scroll-snap-align:start}
+  .cmp-sala-cab .cmp-num{font-size:1.375rem}
+  .cmp-nv b{font-size:1.125rem}
+}
+
+/* ─── LÁMINAS: Explorar y Presentar ─── */
+.lam{font-family:var(--cine-sans);--lam-oro:color-mix(in srgb,#B98A35 60%,var(--txt,#1a1a2e))}
+.lam-tit{font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine3);letter-spacing:-.005em;color:var(--txt);line-height:1.15}
+.lam .lam-ant{font-weight:600;letter-spacing:.22em;color:var(--lam-oro)}
+.lam-cab .btn{min-height:44px;padding:0 18px;border-radius:999px;font-weight:600;letter-spacing:.02em;background:transparent;color:var(--txt);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--txt) 22%,transparent);outline-offset:2px}
+.lam-cab .btn:hover{box-shadow:inset 0 0 0 1px var(--lam-oro)}
+.lam:not(.pres) .lam-cab .btn.tono{background:var(--lam-oro);color:var(--bg);box-shadow:none}
+.lam-cab .btn .ico-t{width:16px;height:16px}
+/* Los pasos del capítulo: un índice, no pastillas. */
+.lam-pasos{gap:4px;border-bottom:1px solid var(--v-linea,#E8DFCC);padding:0;scrollbar-width:none}
+.lam-pasos::-webkit-scrollbar{display:none}
+.lam-paso{min-height:44px;padding:0 14px 0 2px;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;border-radius:0;background:none;color:var(--v-tinta2,#5B5F6B);font-weight:500;gap:8px}
+.lam-paso i{width:auto;height:auto;background:none;color:var(--lam-oro);font-family:var(--cine-serif);font-size:1rem;font-style:normal}
+.lam-paso:hover{color:var(--txt)}
+.lam-paso.on{color:var(--txt);border-bottom-color:var(--lam-oro)}
+/* La escena. */
+.lam-esc{border-radius:12px;box-shadow:0 30px 60px -34px rgba(0,0,0,.65)}
+.lam-esc>.lam-chip{z-index:2}
+.lam-hist.entra{animation:lamFunde .9s ease both}
+@keyframes lamFunde{from{opacity:0}to{opacity:1}}
+/* Las etiquetas de la estatua: rótulos finos con el color de su metal del lado de la estatua. */
+.lam-et{padding:6px 12px 7px 10px;border:0;border-radius:8px;background:linear-gradient(90deg,rgba(8,6,4,.7),rgba(8,6,4,.46));box-shadow:none;column-gap:9px;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.lam-et.d{box-shadow:inset 2px 0 0 var(--c)}
+.lam-et.i{box-shadow:inset -2px 0 0 var(--c)}
+.lam-et::before{width:7px;height:7px}
+.lam-et b{font-family:var(--cine-serif);font-weight:500;font-size:1.125rem;letter-spacing:0}
+.lam-et span{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cine-oro2)}
+.lam-et:hover,.lam-et:focus-visible{transform:translateY(-1px);background:linear-gradient(90deg,rgba(8,6,4,.84),rgba(8,6,4,.62))}
+.lam-et.on{box-shadow:inset 0 0 0 1px var(--cine-oro)}
+.lam-guia path{stroke:rgba(255,246,226,.62);stroke-width:1.5}
+.lam-guia circle{fill:var(--cine-oro2);stroke:rgba(214,178,106,.35)}
+/* El rótulo de la parte: abajo a la izquierda, como en un documental. */
+.lam-chip{top:auto;left:clamp(12px,3%,40px);bottom:clamp(12px,5%,44px);max-width:min(62%,560px);gap:3px;padding:10px 22px 10px 16px;border-radius:0;
+  border-left:2px solid var(--c);background:linear-gradient(90deg,rgba(6,5,4,.8),rgba(6,5,4,.5) 70%,rgba(6,5,4,0));-webkit-backdrop-filter:none;backdrop-filter:none}
+.lam-chip b{font-family:var(--cine-serif);font-weight:500;font-size:1.375rem;line-height:1.1;text-shadow:0 1px 12px rgba(0,0,0,.55)}
+.lam-chip span{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cine-oro2)}
+.lam-chip .sub,.lam-chip .d2{text-transform:none;letter-spacing:.01em;font-size:.875rem}
+.lam.pres .lam-chip b{font-size:var(--v-tcine2)}
+.lam.pres .lam-chip span{font-size:.75rem}
+.lam.pres .lam-chip .sub,.lam.pres .lam-chip .d2{font-size:1rem}
+.lam-esc.con-ley .lam-chip,.lam-esc.en-senas .lam-chip{top:clamp(12px,4%,36px);bottom:auto}
+.lam-esc.lado .lam-chip{top:auto;left:calc(1% + 18px);bottom:calc(23% + 14px);max-width:calc(54% - 36px)}
+.lam-esc.lado.con-ley .lam-chip,.lam-esc.lado.en-senas .lam-chip{top:calc(23% + 14px);bottom:auto}
+.lam-esc.lado .lam-chip b,.lam.pres .lam-esc.lado .lam-chip b{font-size:1.375rem}
+.lam-esc.lado .lam-chip{padding:8px 18px 8px 14px;max-width:min(44%,420px)}
+.lam.pres .lam-esc.lado .lam-chip .sub,.lam.pres .lam-esc.lado .lam-chip .d2{font-size:.75rem}
+/* El pie de cada escena: el año aparte, en oro. */
+.lam-fig figcaption{display:flex;flex-direction:column;gap:2px;padding:30px 14px 10px;background:linear-gradient(rgba(6,5,4,0),rgba(6,5,4,.9))}
+.lam-fig figcaption b{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--cine-oro)}
+.lam-fig figcaption span{font-size:.875rem;font-weight:500;line-height:1.35;color:#F3EDE2}
+.lam-mas figcaption{padding:22px 10px 8px}
+.lam-mas figcaption span{font-size:.75rem}
+/* La explicación: menos cajas, más letra. */
+.lam-hoja{background:#15110C;color:var(--cine-tinta);box-shadow:0 30px 60px -34px rgba(0,0,0,.6);line-height:1.5}
+.lam-hoja.vacia{background:#1A150F}
+.lam-hoja>*{animation:lamEntra .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lamEntra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.lam-hcab{gap:12px;margin-bottom:4px}
+.lam-metal{width:3px;height:auto;align-self:stretch;min-height:44px;border-radius:999px;box-shadow:0 0 12px var(--c)}
+.lam-p1{font-weight:600;letter-spacing:.18em;color:var(--cine-gris)}
+.lam-p2{font-family:var(--cine-serif);font-weight:500;font-size:1.375rem;line-height:1.15;margin-top:2px}
+.lam-fechas{font-weight:600;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cine-oro);margin-top:4px}
+.lam-capa,.lam-capa.t,.lam-capa.i{background:none;border-radius:0;padding:12px 0 0;margin-top:12px;border-top:1px solid var(--cine-linea)}
+.lam-rot{font-weight:600;letter-spacing:.2em;color:var(--cine-oro)}
+.lam-capa.i .lam-rot{color:#9DC3CB}
+.lam-capa q{font-family:var(--cine-serif);font-style:italic;font-size:1.125rem;line-height:1.45;color:var(--cine-tinta)}
+.lam-ref{color:var(--cine-gris);letter-spacing:.06em}
+.lam-capa.i p{color:#E7E0D3}
+.lam-fu{color:var(--cine-tenue)}
+.lam-x{background:transparent;box-shadow:inset 0 0 0 1px var(--cine-linea)}
+.lam-hoja .btn.tono,.lam-hoja .btn.ver{background:transparent;color:var(--cine-tinta);box-shadow:inset 0 0 0 1px rgba(243,237,226,.24)}
+.lam-hoja .btn.ver{box-shadow:inset 0 0 0 1px var(--cine-oro);color:var(--cine-oro2)}
+.lam-pista{color:var(--cine-gris)}
+.lam-pista svg{color:var(--cine-oro)}
+/* La tira de Daniel 7: tarjetas oscuras, como fotogramas. */
+.lam-tira-t{color:var(--lam-oro);font-weight:600;letter-spacing:.2em}
+.lam-tb{border:0;border-radius:12px;background:#14110D;color:var(--cine-tinta);box-shadow:0 0 0 1px rgba(20,17,13,.12),0 16px 26px -20px rgba(0,0,0,.7);animation:none}
+.lam-tb span{border-top:2px solid var(--c);padding:8px 10px 10px;gap:2px}
+.lam-tb b{font-family:var(--cine-serif);font-weight:500;font-size:1rem}
+.lam-tb small{color:var(--cine-gris);letter-spacing:.06em}
+.lam-tb small.f{color:var(--cine-oro);font-weight:600;letter-spacing:.1em}
+.lam-tb:hover,.lam-tb:focus-visible{transform:translateY(-2px)}
+.lam-tb.on{box-shadow:0 0 0 2px var(--cine-oro),0 16px 26px -20px rgba(0,0,0,.7)}
+/* La línea del tiempo: fina, con el periodo en oro. */
+.lam-tiempo{position:relative;background:transparent;box-shadow:none;border-radius:0;border-top:1px solid var(--v-linea,#E8DFCC);padding:12px 2px 4px}
+.lam-rango{position:relative}
+.lam-play{width:40px;height:40px;background:transparent;color:var(--lam-oro);box-shadow:inset 0 0 0 1px var(--lam-oro)}
+.lam-play.on{background:var(--lam-oro);color:var(--bg)}
+.lam-play .ico-t{width:16px;height:16px}
+.lam-tano{font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lam-oro)}
+.lam-tq{font-family:var(--cine-serif);font-style:italic;font-size:1rem;color:var(--txt)}
+.lam-tiempo input[type=range]{height:24px}
+.lam-tiempo input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--pista)}
+.lam-tiempo input[type=range]::-moz-range-track{height:4px;background:var(--pista)}
+.lam-tiempo input[type=range]::-webkit-slider-thumb{width:16px;height:16px;margin-top:-6px;background:var(--cine-oro2);border:2px solid var(--cine-negro);box-shadow:0 0 0 1px var(--cine-oro),0 0 12px rgba(214,178,106,.7)}
+.lam-tiempo input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--cine-oro2);border:2px solid var(--cine-negro)}
+.lam-tramo{position:absolute;top:50%;height:6px;margin-top:-3px;border-radius:999px;background:linear-gradient(90deg,var(--cine-oro),var(--cine-oro2));
+  box-shadow:0 0 0 2px rgba(10,9,7,.55),0 0 16px rgba(214,178,106,.8);pointer-events:none;opacity:0;transform:scaleX(.3);transform-origin:left;
+  transition:opacity .5s ease,transform .9s cubic-bezier(.2,.7,.2,1),left .9s cubic-bezier(.2,.7,.2,1),width .9s cubic-bezier(.2,.7,.2,1)}
+.lam-tramo.ve{opacity:1;transform:none}
+.lam-banda{top:50%;height:10px;margin-top:-5px}
+.lam-marcas{font-size:.75rem;letter-spacing:.04em;color:var(--v-tinta2,#5B5F6B)}
+.lam-marcas span.arriba{top:-46px;padding:1px 8px;border-radius:999px;background:transparent;color:var(--lam-oro);box-shadow:inset 0 0 0 1px var(--lam-oro);font-weight:600}
+.lam-marcas span.arriba::after{width:1px;left:78%;background:var(--lam-oro)}
+.lam-marcas span.arriba{transform:translateX(-78%);padding:1px 6px}
+.lam-aviso{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;background:rgba(8,6,4,.62)}
+
+/* ─── PRESENTAR: una sala oscura, la escena de borde a borde ─── */
+.lam.pres{background:#050404;color:var(--cine-tinta);--txt:#F3EDE2;--bg:#050404;--v-linea:rgba(243,237,226,.12);--v-tinta2:#B9AF9D;--lam-oro:#D6B26A}
+.lam.pres .lam-tit{color:var(--cine-tinta)}
+.lam.pres .lam-esc{border-radius:0;box-shadow:none}
+.lam.pres .lam-esc::after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 140px rgba(0,0,0,.5)}
+.lam.pres.ancho .lam-hoja{top:0;right:0;bottom:0;width:40%;padding:clamp(18px,3vw,44px) clamp(20px,3vw,48px);border-radius:0;
+  background:linear-gradient(90deg,rgba(5,4,3,0),rgba(5,4,3,.8) 16%,rgba(5,4,3,.9));box-shadow:none}
+.lam.pres .lam-hoja{font-size:1.125rem}
+.lam.pres .lam-p2{font-size:var(--v-tcine2)}
+.lam.pres .lam-capa q{font-size:var(--v-tcita)}
+.lam.pres .lam-capa.i p{font-size:1.125rem}
+.lam.pres .lam-tiempo{background:transparent}
+.lam.pres .lam-tq{color:var(--cine-gris)}
+.lam.pres .lam-cab .btn{color:var(--cine-tinta)}
+.lam-ctl{gap:18px}
+.lam-ctl button{min-height:44px;padding:0 22px;border-radius:999px;border:0;box-shadow:inset 0 0 0 1px rgba(243,237,226,.24);background:transparent;color:var(--cine-tinta);
+  font-size:.875rem;font-weight:600;letter-spacing:.04em;transition:box-shadow .25s,background-color .25s,opacity .25s}
+.lam-ctl button:hover{box-shadow:inset 0 0 0 1px var(--cine-oro)}
+.lam-ctl button.pri{background:var(--cine-oro);color:#17120A;box-shadow:none}
+.lam-ctl button.pri:hover{background:var(--cine-oro2)}
+.lam-ctl span{font-size:.75rem;letter-spacing:.2em;color:var(--cine-gris)}
+.lam.pres:not(.ancho) .lam-ctl{background:#050404}
+/* Los controles se apartan cuando nadie los usa. */
+.lam.pres .lam-bots,.lam.pres .lam-ctl,.lam.pres .lam-cabtx,.lam.pres .lam-tiempo{transition:opacity .8s ease}
+/* Solo en pantalla ancha (la clase): en el teléfono los botones se quedan donde el dedo los busca. */
+.lam.pres.ancho.ocio .lam-bots,.lam.pres.ancho.ocio .lam-ctl{opacity:0}
+.lam.pres.ancho.ocio .lam-cabtx,.lam.pres.ancho.ocio .lam-tiempo{opacity:.4}
+.lam.pres.ancho.ocio{cursor:none}
+/* El cartel de apertura. */
+.lam-cartel{position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;justify-content:flex-start;pointer-events:none;visibility:hidden;opacity:0;
+  background:linear-gradient(0deg,rgba(5,4,3,.94) 0%,rgba(5,4,3,.6) 36%,rgba(5,4,3,0) 68%);transition:opacity 1s ease,visibility 0s linear 1s}
+.lam-cartel.d{align-items:center;justify-content:flex-end;background:linear-gradient(270deg,rgba(5,4,3,.92) 0%,rgba(5,4,3,.66) 38%,rgba(5,4,3,0) 66%)}
+.lam-cartel.ve{visibility:visible;opacity:1;transition:opacity 1s ease}
+.lam-cartel-in{box-sizing:border-box;max-width:min(72%,780px);padding:clamp(18px,5%,64px);color:var(--cine-tinta)}
+.lam-cartel.d .lam-cartel-in{max-width:min(48%,640px)}
+.lam-cartel-ant{font-size:.875rem;font-weight:600;letter-spacing:.42em;text-transform:uppercase;color:var(--cine-oro)}
+.lam-esc{container-type:inline-size}
+.lam-cartel{--v-tcinec:clamp(1.75rem, 6.4cqw, 4.75rem)}
+.lam-cartel.d{--v-tcinec:clamp(1.75rem, 4.9cqw, 4rem)}
+.lam-cartel-tit{margin:.3em 0 .32em;font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcinec);line-height:1.02;letter-spacing:-.012em;text-wrap:balance;text-shadow:0 2px 30px rgba(0,0,0,.55)}
+.lam-cartel-reg{display:block;width:72px;height:1px;margin:0 0 14px;background:var(--cine-oro)}
+.lam-cartel-meta{font-size:.75rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cine-gris)}
+.lam-cartel-cita{margin:18px 0 0;max-width:46ch;font-family:var(--cine-serif);font-style:italic;font-size:1.125rem;line-height:1.5;color:#E9E1D3}
+.lam-cartel-cita q{quotes:"«" "»"}
+.lam-cartel-cita cite{font-family:var(--cine-sans);font-style:normal;font-size:.75rem;letter-spacing:.16em;color:var(--cine-oro);white-space:nowrap}
+.lam-cartel [data-o]{opacity:0;transform:translateY(14px);transition:opacity 1.1s ease,transform 1.5s cubic-bezier(.2,.7,.2,1)}
+.lam-cartel .lam-cartel-reg[data-o]{transform:scaleX(0);transform-origin:left}
+.lam-cartel.ve [data-o]{opacity:1;transform:none}
+.lam-cartel.ve [data-o="1"]{transition-delay:.25s}
+.lam-cartel.ve [data-o="2"]{transition-delay:.65s}
+.lam-cartel.ve [data-o="3"]{transition-delay:1.05s}
+.lam-cartel.quieto,.lam-cartel.quieto [data-o]{transition:none}
+.lam.pres .lam-cartel-cita{font-size:1.375rem}
+.lam.pres.ancho.en-cartel .lam-hoja{display:none}
+/* Las franjas negras del cine mientras está el cartel. */
+.lam-esc::before{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity 1s ease;
+  background:linear-gradient(#000,#000) top / 100% 9% no-repeat,linear-gradient(#000,#000) bottom / 100% 9% no-repeat}
+.lam-esc.cartel::before{opacity:1}
+.lam-esc .lam-ets,.lam-esc .lam-aviso{transition:opacity .6s ease}
+.lam-esc.cartel .lam-ets,.lam-esc.cartel .lam-aviso,.lam-esc.cartel .lam-chip{opacity:0;pointer-events:none}
+@media (max-width:640px){
+  .lam-cartel,.lam-cartel.d{align-items:flex-end;justify-content:flex-start;background:linear-gradient(0deg,rgba(5,4,3,.95) 0%,rgba(5,4,3,.62) 42%,rgba(5,4,3,0) 74%)}
+  .lam-cartel-in,.lam-cartel.d .lam-cartel-in{max-width:100%;padding:18px 16px}
+  .lam-cartel-ant{letter-spacing:.3em;font-size:.75rem}
+  .lam-cartel-cita,.lam.pres .lam-cartel-cita{font-size:.875rem;margin-top:10px}
+  .lam-chip{left:8px;bottom:8px;padding:6px 14px 6px 10px;max-width:calc(100% - 16px)}
+  .lam-chip b,.lam.pres .lam-chip b{font-size:1rem}
+  .lam-chip span,.lam.pres .lam-chip span{font-size:.75rem;letter-spacing:.1em}
+  .lam-et b{font-size:.875rem;white-space:nowrap}
+  .lam-et span{letter-spacing:.02em;text-transform:none;white-space:nowrap}
+  .lam-et{padding:4px 8px}
+  .lam:not(.pres) .lam-cartel-cita{display:none}
+}
+/* Los botones de la tira, finos como los de arriba. */
+.lam-tira-bots .btn{min-height:40px;padding:0 16px;border-radius:999px;background:transparent;color:var(--txt);font-weight:600;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--txt) 22%,transparent)}
+.lam-tira-bots .btn.on,.lam-vision.on{background:var(--lam-oro);color:var(--bg);box-shadow:none}
+@media (prefers-reduced-motion:reduce){
+  .lam-hist.entra,.lam-hoja>*,.cmp-sala.ve .cmp-sala-in>*,.cmp-sala-in.cambia>*{animation:none}
+  .lam-cartel,.lam-cartel [data-o],.lam-tramo,.cmp-sala,.cmp-img img,.lam-esc::before,.lam.pres .lam-bots,.lam.pres .lam-ctl,.lam.pres .lam-cabtx,.lam.pres .lam-tiempo{transition:none}
+}
+/* v209: lo que se arma sobre la imagen de Daniel 7 (señas, 1.260 años) con la misma letra. */
+.lam-sen-tit small,.lam-per-cab{font-weight:600;letter-spacing:.24em;color:var(--cine-oro)}
+.lam-sen-tit b,.lam-per-h{font-family:var(--cine-serif);font-weight:500;letter-spacing:-.005em}
+.lam-sen-tit span{font-family:var(--cine-serif);font-style:italic;color:#E9E1D3}
+.lam-sen-cap{border-radius:0;background:linear-gradient(90deg,rgba(6,5,4,.88),rgba(6,5,4,.7));box-shadow:inset 2px 0 0 var(--cine-oro)}
+.lam-sen-cap i{background:transparent;color:var(--cine-oro);box-shadow:inset 0 0 0 1px var(--cine-oro);font-family:var(--cine-serif);font-weight:500}
+.lam-sen-cap b{font-family:var(--cine-serif);font-weight:500}
+.lam-tabla.titulo,.lam-tabla.per{background:radial-gradient(90% 90% at 50% 50%,rgba(8,6,4,.72),rgba(8,6,4,.9))}
+.lam-sl b{font-weight:600}
+.lam-sl li{border-radius:0;background:none;border-bottom:1px solid var(--cine-linea)}
+.lam-sl li.on{background:rgba(214,178,106,.08)}
+.lam-sl.pres li.ahora{background:rgba(214,178,106,.16);box-shadow:inset 2px 0 0 var(--cine-oro)}
+.lam-sl button>i,.lam-slb>i{border-width:1px}
+/* Al presentar, las escenas de la hoja ceden espacio al texto. */
+.lam.pres.ancho .lam-hoja>.lam-fig img{max-height:24vh}
+.lam.pres.ancho .lam-mas .lam-fig img{max-height:13vh}
+.lam.pres.ancho .lam-mas{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+/* Las dos escenas de una parte, una al lado de la otra arriba del texto (la hoja es una rejilla). */
+.lam.pres.ancho .lam-hoja{display:grid;grid-template-columns:1fr 1fr;column-gap:10px;align-content:safe center}
+.lam.pres.ancho .lam-hoja>*{grid-column:1 / -1}
+.lam.pres.ancho .lam-hoja>.lam-fig:has(+ .lam-mas){grid-column:1}
+.lam.pres.ancho .lam-hoja>.lam-fig+.lam-mas{grid-column:2;margin:0 0 10px;grid-template-columns:1fr}
+.lam.pres.ancho .lam-hoja>.lam-fig img,.lam.pres.ancho .lam-hoja>.lam-mas .lam-fig img{max-height:22vh}
+.lam.pres.ancho .lam-hoja>.lam-fig:has(+ .lam-mas) img,.lam.pres.ancho .lam-hoja>.lam-fig+.lam-mas .lam-fig img{height:17vh;max-height:none}
+.lam.pres .lam-sl{gap:0}
+.lam.pres .lam-sl .lam-slb{min-height:0;padding:3px 6px}
+/* En pantallas bajas (un portátil de 800 px) el texto cede un poco para caber entero. */
+@media (max-height:860px){
+  .lam.pres.ancho .lam-hoja{font-size:1rem;padding-top:14px;padding-bottom:14px}
+  .lam.pres.ancho .lam-p2{font-size:1.75rem}
+  .lam.pres.ancho .lam-capa q{font-size:1.125rem}
+  .lam.pres.ancho .lam-capa.i p{font-size:1rem}
+  .lam.pres.ancho .lam-capa{padding-top:8px;margin-top:8px}
+  .lam.pres.ancho .lam-hoja>.lam-fig:has(+ .lam-mas) img,.lam.pres.ancho .lam-hoja>.lam-fig+.lam-mas .lam-fig img{height:14vh}
+  .lam.pres.ancho .lam-hoja>.lam-fig img{max-height:18vh}
+}
+/* Daniel 7: las escenas de la historia van al pie de la hoja, bajas y en fila. */
+.lam.pres.ancho .lam-hoja .lam-figs{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));margin-top:10px}
+.lam.pres.ancho .lam-hoja .lam-figs .lam-fig img{height:13vh;max-height:none}
+@media (max-height:860px){.lam.pres.ancho .lam-hoja .lam-figs .lam-fig img{height:11vh}}
+/* «Ocultar texto» (T) sigue mandando sobre la rejilla de la hoja. */
+.lam.pres.ancho.sin-texto .lam-hoja{display:none}

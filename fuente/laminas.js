@@ -12,6 +12,7 @@
 const BOHR = 'Bohr, <i>Daniel 1-10</i>';
 const LAMINAS = {
  d2: {
+  libro: 'Daniel 2',
   titulo: 'La imagen del sueño de Nabucodonosor',
   dir: 'd2/',
   ox: 166, w: 1100, h: 1152,
@@ -37,6 +38,10 @@ const LAMINAS = {
     monte: { lado: 'i', ly: 40, t: 'El gran monte', f: 'el reino eterno' },
   },
   tiempo: ['oro', 'plata', 'bronce', 'hierro', 'dedos', 'barro'],
+  /* v209: el cartel de apertura, como el título de una película: capítulo, lugar y
+     cuándo (lo que dice el texto, sin años que el capítulo no da). `lado`: dónde va el
+     título sobre la escena ('d' a la derecha de la estatua, 'i' abajo a la izquierda). */
+  cartel: { lugar: 'Babilonia', cuando: 'En el segundo año de Nabucodonosor', ref: 'Daniel 2:1', lado: 'd' },
   inicio: { ref: 'Daniel 2:31', texto: 'Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.',
     nota: 'Los metales bajan de valor (del oro al hierro) pero suben en dureza: la historia no camina hacia una edad de oro hecha por el hombre. Y Roma aparece en tres fases: imperial, dividida y papal. Hay una cuarta: el papado sanado de su herida (Apocalipsis 13:3), que sigue en pie cuando la piedra golpea los pies.' },
   cierre: { ref: 'Daniel 2:45', texto: 'El gran Dios ha mostrado al rey lo que ha de acontecer en lo por venir; y el sueño es verdadero, y fiel su interpretación.',
@@ -149,6 +154,8 @@ LAMINAS.d7 = {
   libro: 'Daniel 7',
   titulo: 'Las cuatro bestias y el juicio',
   dir: 'd7/',
+  cartel: { lugar: 'Babilonia', cuando: 'En el primer año de Belsasar, hacia 553 a.C.', ref: 'Daniel 7:1', lado: 'i',
+    cita: { ref: 'Daniel 7:2', texto: 'Miraba yo en mi visión de noche, y vi que los cuatro vientos del cielo combatían en el gran mar.' } },
   /* La imagen de la tarjeta del capítulo y la de Explorar antes de elegir. */
   miniF: 'leon', inicioF: 'mar',
   verTodo: 'Las bestias',

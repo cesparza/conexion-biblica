@@ -30,6 +30,33 @@ const srv = http.createServer((q, r) => {
 await new Promise(s => srv.listen(0, '127.0.0.1', s));
 const base = 'http://127.0.0.1:' + srv.address().port + '/';
 const nav = await chromium.launch();
+/* v209: mide una foto (PNG) en una página en blanco: cuánto varía y, si hay otra, cuánto difieren. */
+const lienzo = await (await nav.newContext()).newPage();
+const mide = (a, b) => lienzo.evaluate(async ([a, b]) => {
+  const lee = async b64 => { const t = atob(b64), u = new Uint8Array(t.length); for (let i = 0; i < t.length; i++) u[i] = t.charCodeAt(i);
+    const bm = await createImageBitmap(new Blob([u], { type: 'image/png' })), c = new OffscreenCanvas(bm.width, bm.height), x = c.getContext('2d');
+    x.drawImage(bm, 0, 0); return x.getImageData(0, 0, bm.width, bm.height).data; };
+  const A = await lee(a), B = b ? await lee(b) : null;
+  let n = 0, s = 0, s2 = 0, d = 0;
+  for (let i = 0; i < A.length; i += 16) { const l = A[i] * .3 + A[i + 1] * .59 + A[i + 2] * .11; s += l; s2 += l * l; n++;
+    if (B) d += (Math.abs(A[i] - B[i]) + Math.abs(A[i + 1] - B[i + 1]) + Math.abs(A[i + 2] - B[i + 2])) / 3; }
+  const m = s / n; return { std: Math.sqrt(Math.max(0, s2 / n - m * m)), dif: B ? d / n : null };
+}, [a.toString('base64'), b ? b.toString('base64') : null]);
+/* Cada miniatura bajo `sel`: su imagen varía y, si es de la estatua, su metal se ve. */
+async function thumbsBien(p, sel) {
+  const ts = p.locator(sel + ' .cmp-img'), n = await ts.count(), mal = [];
+  for (let i = 0; i < n; i++) {
+    const t = ts.nth(i); await t.scrollIntoViewIfNeeded(); await p.waitForTimeout(250);
+    await t.evaluate(e => Promise.all([...e.querySelectorAll('img')].map(im => im.decode ? im.decode().catch(() => {}) : 0)));
+    const nom = await t.evaluate(e => (e.closest('.cmp-carta,.cmp-vis-p').textContent || '').trim().slice(0, 30));
+    const a = await t.screenshot(), capa = await t.evaluate(e => !!e.querySelector('img.on'));
+    let b = null;
+    if (capa) { await t.evaluate(e => { e.querySelector('img.on').style.visibility = 'hidden'; }); b = await t.screenshot(); await t.evaluate(e => { e.querySelector('img.on').style.visibility = ''; }); }
+    const r = await mide(a, b);
+    if (r.std < 14 || (capa && r.dif < 4)) mal.push(nom + ' (' + Math.round(r.std) + (capa ? '/' + r.dif.toFixed(1) : '') + ')');
+  }
+  return { n, mal };
+}
 
 for (const W of ANCHOS) {
   const ctx = await nav.newContext({ viewport: { width: W, height: 844 }, serviceWorkers: 'block' });
@@ -639,11 +666,46 @@ for (const W of [1440, 390]) {
   const pr = await p.evaluate(() => { const antes = nivelesDe('d2').pr; const b = document.querySelector('#detalle .lect-bl[data-sec="3"] .ads-op');
     b.click(); const q = b.closest('.ads-q'); return [antes, nivelesDe('d2').pr, q.classList.contains('hecha'), !!q.querySelector('.ads-res')]; });
   ok(pr[1] === pr[0] + 1 && pr[2] && pr[3], W + ' · v205: responder «Antes de seguir» da la respuesta al instante y suma a Practicado (' + pr[0] + ' → ' + pr[1] + ')');
-  // Comparar: tocar una fila la enciende y abre su detalle.
+  // Comparar (v209): tocar una época abre la sala con cada visión lado a lado.
   await p.evaluate(() => verComparar()); await p.waitForTimeout(500);
-  await p.locator('button.cmp-fila[data-k="-539"]').click();
-  const cm = await p.evaluate(() => [document.querySelector('button.cmp-fila.on').getAttribute('data-k'), document.querySelector('.cmp-dt').textContent, document.documentElement.scrollWidth - innerWidth]);
-  ok(cm[0] === '-539' && /Pecho y brazos de plata/.test(cm[1]) && /Oso/.test(cm[1]) && cm[2] <= 0, W + ' · v205: en Comparar, Medo-Persia se enciende en Daniel 2 y Daniel 7 (desborde ' + cm[2] + ')');
+  await p.locator('.cmp-epoca[data-k="-539"] .cmp-ecab').click(); await p.waitForTimeout(700);
+  const cm = await p.evaluate(() => { const s = document.getElementById('cmpSala'); return [!s.hidden, s.textContent, document.documentElement.scrollWidth - innerWidth, document.activeElement && document.activeElement.className]; });
+  ok(cm[0] && /Medo-Persia/.test(cm[1]) && /Pecho y brazos de plata/.test(cm[1]) && /Oso/.test(cm[1]) && cm[2] <= 0, W + ' · v209: en Comparar, Medo-Persia abre su sala con Daniel 2 y Daniel 7 (desborde ' + cm[2] + ')');
+  ok(cm[3] === 'cmp-x', W + ' · v209: al abrir la sala el foco va a Cerrar');
+  await p.keyboard.press('ArrowRight'); await p.waitForTimeout(400);
+  ok(/Grecia/.test(await p.evaluate(() => document.querySelector('#cmpSala h2').textContent)), W + ' · v209: la flecha pasa a la época siguiente');
+  await p.keyboard.press('Escape'); await p.waitForTimeout(300);
+  ok(await p.evaluate(() => document.getElementById('cmpSala').hidden && !document.body.classList.contains('leyendo')), W + ' · v209: Escape cierra la sala y suelta la página');
+  /* v209 (Camilo, 14-oct: «No aparece Daniel 2 Grecia ni todo Roma»): cada miniatura
+     se ve de verdad. Se fotografía cada tarjeta y se mide: la imagen tiene que
+     variar (no un cuadro de un color), y en las de la estatua, quitar la capa de
+     su metal tiene que cambiar la foto (el metal está dentro del recorte). */
+  const fotos = await thumbsBien(p, '.cmp-carta:not(.vacia)');
+  ok(fotos.n >= 14 && !fotos.mal.length, W + ' · v209: las ' + fotos.n + ' miniaturas de Comparar se ven (planas o sin su metal: ' + (fotos.mal.join(', ') || 'ninguna') + ')');
+  await p.evaluate(() => cmpToca('538')); await p.waitForTimeout(900);
+  const sala = await thumbsBien(p, '#cmpSala .cmp-vis-p');
+  ok(sala.n === 2 && !sala.mal.length, W + ' · v209: en la sala de Roma papal se ven el barro y el cuerno (' + (sala.mal.join(', ') || 'bien') + ')');
+  await p.evaluate(() => cmpCierra());
+  /* v209: con seis visiones (Daniel 8, 11, 12 y Apocalipsis 13 de mentira) no se rompe:
+     seis carriles en el río, Daniel antes que Apocalipsis, seis tarjetas por época
+     (en el teléfono, las vacías pasan a una línea) y la página no se ensancha. */
+  const seis = await p.evaluate(async () => {
+    const guarda = Object.assign({}, LAMINAS);
+    const mk = ps => ({ dir: 'd7/', tipo: 'escenas', paraleloFuente: 'Prueba', partes: ps });
+    LAMINAS.d8 = mk([{ id: 'carnero', img: 'oso', nombre: 'Carnero', reino: 'Medo-Persia', fechas: '539 – 331 a.C.', de: -539, a: -331, c: '#8C98A6' }, { id: 'macho', img: 'leopardo', nombre: 'Macho cabrío', reino: 'Grecia', fechas: '', de: -331, a: -168, c: '#A85A2A' }]);
+    LAMINAS.d11 = mk([{ id: 'rn', img: 'cuarta', nombre: 'Rey del norte', reino: 'Roma', fechas: '', de: -168, a: 476, c: '#3E4651' }]);
+    LAMINAS.d12 = mk([{ id: 'mig', img: 'hijo', nombre: 'Miguel', reino: '', fechas: '', de: null, c: '#0E7490' }]);
+    LAMINAS.ap13 = mk([{ id: 'bm', img: 'cuerno', nombre: 'La bestia del mar', reino: 'Roma papal', fechas: '', de: 538, a: 1798, c: '#A0694A' }]);
+    verComparar(); await new Promise(r => setTimeout(r, 400));
+    const c = document.querySelector('.cmp'), cartas = [...document.querySelectorAll('.cmp-epoca[data-k="-539"] .cmp-carta')].filter(x => x.getClientRects().length);
+    const r = [[...c.querySelectorAll('.cmp-carril-n')].map(x => x.textContent).join(), cartas.length, document.querySelector('.cmp-epoca[data-k="-539"] .cmp-faltan').getClientRects().length > 0,
+      document.documentElement.scrollWidth - innerWidth];
+    cmpToca('-539'); await new Promise(r => setTimeout(r, 300));
+    r.push(document.querySelectorAll('#cmpSala .cmp-vis').length, document.getElementById('cmpSala').scrollWidth - document.getElementById('cmpSala').clientWidth);
+    cmpCierra(); for (const k of ['d8', 'd11', 'd12', 'ap13']) delete LAMINAS[k]; Object.assign(LAMINAS, guarda); verComparar();
+    return r; });
+  ok(seis[0] === 'Daniel 2,Daniel 7,Daniel 8,Daniel 11,Daniel 12,Apocalipsis 13' && seis[1] === (W < 600 ? 3 : 6) && seis[2] === (W < 600) && seis[3] <= 0 && seis[4] === 3 && seis[5] <= 0,
+    W + ' · v209: con seis visiones Comparar no se rompe (' + JSON.stringify(seis) + ')');
   // Quitar a una persona, con la pregunta de la app (no el confirm del navegador).
   await p.evaluate(() => { ir('inicio'); abreYo(); });
   await p.locator('.alu-mas').nth(1).click();
