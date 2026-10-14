@@ -754,7 +754,8 @@ function lamVista(id,sub,anima){
 /* Las bestias suben del mar (7:3). */
 function lamSube(p,anima){
   const S=LAM().sube,yo=lamAnim;
-  Promise.all(S.solo.map(f=>lamExiste(lamSrc(f)))).then(r=>{if(yo===lamAnim)(r.every(Boolean)?lamSubeCapas:lamSubeFoto)(p,anima);});
+  /* Cada bestia con su capa sube recortada; la que no la tiene (hoy la cuarta) sube con su foto entera. */
+  Promise.all(S.solo.map(f=>lamExiste(lamSrc(f)))).then(r=>{if(yo!==lamAnim)return;if(r[S.ids.indexOf(p.id)])lamSubeCapas(p,anima,r);else lamSubeFoto(p,anima);});
 }
 function lamSubeFoto(p,anima){
   const zi=lamZi(),src=lamSrc(p.img),h=document.querySelector('#lamSvg .lam-hist');
@@ -764,14 +765,16 @@ function lamSubeFoto(p,anima){
     ()=>{lamHist({f:p.img});lamT(()=>{zi.style.opacity='0';zi.removeAttribute('transform');},220);});
 }
 /* Con las bestias recortadas: suben sobre el mar, la anterior se achica y queda atrás. */
-function lamSubeCapas(p,anima){
+function lamSubeCapas(p,anima,hay){
   const S=LAM().sube,i=S.ids.indexOf(p.id),g=lamZ().querySelector('.lam-capa-g'),[x,y,w,h]=S.sitio;
   lamHist({f:S.fondo});
+  /* Atrás quedan las anteriores que tienen capa, cada una en su lugar del horizonte. */
+  const ant=S.solo.slice(0,i).map((f,j)=>j).filter(j=>!hay||hay[j]),pos=j=>S.atras[ant.indexOf(j)%S.atras.length];
   const img=(cl,f,r,j)=>'<image class="'+cl+'"'+(j!=null?' data-j="'+j+'"':'')+' href="'+lamSrc(f)+'" x="'+r[0]+'" y="'+r[1]+'" width="'+r[2]+'" height="'+r[3]+'" preserveAspectRatio="xMidYMax meet"/>';
-  g.innerHTML=S.solo.slice(0,i).map((f,j)=>img('lam-atras',f,S.atras[j%S.atras.length],j)).join('')+img('lam-sube-img',S.solo[i],S.sitio)+
+  g.innerHTML=ant.map(j=>img('lam-atras',S.solo[j],pos(j),j)).join('')+img('lam-sube-img',S.solo[i],S.sitio)+
     '<svg x="0" y="'+S.olas+'" width="1200" height="'+(675-S.olas)+'" viewBox="0 '+S.olas+' 1200 '+(675-S.olas)+'"><image class="lam-olas" href="'+lamSrc(S.fondo)+'" x="0" y="0" width="1200" height="675"/></svg>';
   if(!anima)return;
-  const cur=g.querySelector('.lam-sube-img'),prev=i>0&&g.querySelector('.lam-atras[data-j="'+(i-1)+'"]'),a=prev&&S.atras[(i-1)%S.atras.length];
+  const cur=g.querySelector('.lam-sube-img'),pj=ant[ant.length-1],prev=pj===i-1&&g.querySelector('.lam-atras[data-j="'+pj+'"]'),a=prev&&pos(pj);
   lamTween(1600,k=>{const e=lamSale(k);
     cur.setAttribute('transform','translate(0 '+(h*.8*(1-e)).toFixed(1)+')');cur.style.opacity=String(Math.min(1,k*2.5).toFixed(3));
     if(prev)[x,y,w,h].forEach((v,n)=>prev.setAttribute(['x','y','width','height'][n],(v+(a[n]-v)*e).toFixed(1)));});
@@ -842,20 +845,21 @@ function lamMomentoFotos(anima){
 function lamMomentoCapas(anima){
   const C=LAM().cuernos,K=C.capas,g=lamZ().querySelector('.lam-capa-g'),n=C.diez.length-C.tres.length,base=lamParte(C.diezEn).img;
   lamHist({f:base});
-  const ctr=r=>[r[0]+r[2]/2,r[1]+r[3]/2],[px,py,pw,ph]=K.pq;
+  const ctr=r=>[r[0]+r[2]/2,r[1]+r[3]/2],[px,py,pw,ph]=K.pq,voltea=(x,w)=>K.espejo?' translate('+(2*x+w)+' 0) scale(-1 1)':'';
   /* Cada tapa en cuatro capas, cada una más adentro y más opaca: el borde se difumina sin máscaras. */
   g.innerHTML='<g class="lam-tapa" style="opacity:0">'+K.tapa.map(([x,y,w,h,r,sx,sy])=>{const ex=x+w/2,ey=y+h;
       return '<g transform="rotate('+r+' '+ex+' '+ey+')">'+[[0,.3],[4,.45],[8,.7],[12,1]].map(([d,o])=>{const X=x+d,Y=y+d,W=w-2*d,H=h-2*d;
         return '<svg x="'+X+'" y="'+Y+'" width="'+W+'" height="'+H+'" viewBox="'+X+' '+Y+' '+W+' '+H+'" opacity="'+o+'">'+
           '<image href="'+lamSrc(base)+'" x="'+(-sx)+'" y="'+(-sy)+'" width="1200" height="675" transform="rotate('+(-r)+' '+ex+' '+ey+')"/></svg>';}).join('')+'</g>';}).join('')+'</g>'+
-    K.tres.map(([x,y,w,h,r],i)=>'<image class="lam-suelto" data-i="'+i+'" style="opacity:0" href="'+lamSrc(K.suelto)+'" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" preserveAspectRatio="xMidYMax meet" transform="rotate('+r+' '+(x+w/2)+' '+(y+h)+')"/>').join('')+
+    K.tres.map(([x,y,w,h,r],i)=>'<image class="lam-suelto" data-i="'+i+'" style="opacity:0" href="'+lamSrc(K.suelto)+'" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" preserveAspectRatio="xMidYMax meet" transform="rotate('+r+' '+(x+w/2)+' '+(y+h)+')'+voltea(x,w)+'"/>').join('')+
     '<svg x="'+px+'" y="'+py+'" width="'+pw+'" height="'+ph+'" viewBox="0 0 '+pw+' '+ph+'"><image class="lam-pq-img" href="'+lamSrc(K.pequeno)+'" x="0" y="'+ph+'" width="'+pw+'" height="'+ph+'" preserveAspectRatio="xMidYMax meet"/></svg>';
-  const s=lamMomentoHTML(C.diez,K.pqEn),tapa=g.querySelector('.lam-tapa'),hs=[...g.querySelectorAll('.lam-suelto')],pq=g.querySelector('.lam-pq-img');
+  /* Con la capa, el pequeño se ve solo (con su cara): sin el aro encima. */
+  const s=lamMomentoHTML(C.diez,K.pqEn);s.classList.add('capas');const tapa=g.querySelector('.lam-tapa'),hs=[...g.querySelectorAll('.lam-suelto')],pq=g.querySelector('.lam-pq-img');
   const pts=[...s.querySelectorAll('.lam-pt:not(.pq)')],ley=[...s.querySelectorAll('.lam-ley span')];
   /* Cada cuerno va de su sitio al punto `a` en arco, girando; el punto va con él. */
   const pon=(i,k)=>{const [x,y,w,h,r]=K.tres[i],[cx,cy]=ctr(K.tres[i]),[ox,oy]=C.diez[n+i],a=C.tres[i].a,e=k*k,
       dx=(a[0]-cx)*k,dy=(a[1]-cy)*e-70*Math.sin(Math.PI*k)*(1-k);
-    hs[i].setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') rotate('+(r+150*k).toFixed(1)+' '+(x+w/2)+' '+(y+h)+')');
+    hs[i].setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') rotate('+(r+150*k).toFixed(1)+' '+(x+w/2)+' '+(y+h)+')'+voltea(x,w));
     hs[i].style.opacity=String((1-.2*k).toFixed(3));
     pts[n+i].style.left=lamPx(ox+dx+(cx-ox)*k);pts[n+i].style.top=lamPy(oy+dy+(cy-oy)*k);};
   const suelta=()=>{tapa.style.opacity='1';hs.forEach(h=>{h.style.opacity='1';});};
@@ -2029,23 +2033,42 @@ function personasDB(){
   });
   return [...g.values()];
 }
+/* v205: UNA FILA POR PERSONA, CON SU MENÚ. La fila entera elige a la persona;
+   el «⋯» abre Renombrar, Agregar actividad y Quitar. Quien estudia dos
+   actividades las ve como pastillas debajo de su nombre. */
 function pintaAlumnos(){
   const cont=document.getElementById('alu-sel');
   if(!cont)return;
-  cont.innerHTML=personasDB().map(p=>{
+  cont.innerHTML=personasDB().map((p,i)=>{
     const aC=p.fichas.find(([,a])=>a.aCargo), activa=p.fichas.some(([id])=>id===DB.activo);
-    return '<div class="alu-per'+(activa?' on':'')+'"><div class="alu-cab"><span class="alu-av" aria-hidden="true">'+esc(p.nombre.charAt(0).toUpperCase())+'</span>'+
-      '<div class="alu-nom"><div class="an">'+esc(p.nombre)+'</div>'+
-      (aC?'<div class="ac">A cargo de '+esc(aC[1].tutor||'un adulto')+'</div>':'')+'</div></div>'+
-      '<div class="alu-acts">'+p.fichas.map(([id,al])=>
+    const suya=p.fichas.find(([id])=>id===DB.activo)||p.fichas[0];
+    const sub=(aC?'A cargo de '+(aC[1].tutor||'un adulto')+' · ':'')+(p.fichas.length>1?p.fichas.length+' actividades':catConActividad(suya[1].cat));
+    const ini=esc(p.nombre.charAt(0).toUpperCase()||'?');
+    return '<div class="alu-per'+(activa?' on':'')+'">'+
+      '<div class="alu-fila">'+
+        '<button type="button" class="alu-elige" aria-pressed="'+activa+'" onclick="'+(activa?'cierraHoja()':'cambiaAlumno(\''+suya[0]+'\')')+'">'+
+          '<span class="alu-av" aria-hidden="true">'+ini+'</span>'+
+          '<span class="alu-nom"><span class="an">'+esc(p.nombre)+'</span><span class="ac">'+esc(sub)+'</span></span>'+
+          (activa?'<span class="alu-ok">'+IC('check')+'<span class="sr">Estudiando ahora</span></span>':'')+'</button>'+
+        '<button type="button" class="alu-mas" aria-label="Opciones de '+esc(p.nombre)+'" aria-expanded="'+(yoMenu===i)+'" onclick="yoAbreMenu('+i+')">'+IC('puntos')+'</button>'+
+      '</div>'+
+      (yoMenu===i?'<div class="alu-menu" role="group" aria-label="Opciones de '+esc(p.nombre)+'">'+
+        '<button type="button" class="alu-mi" onclick="yoRenombra('+i+')">'+IC('lapiz')+' Renombrar</button>'+
+        '<button type="button" class="alu-mi" onclick="yoActividad('+i+')">'+IC('mas')+' Agregar actividad</button>'+
+        '<button type="button" class="alu-mi peligro" onclick="yoQuita('+i+')">'+IC('basura')+' Quitar</button></div>':'')+
+      (yoRen===i?'<div class="alu-ren"><label class="sr" for="alu-ren">Nuevo nombre</label>'+
+        '<input id="alu-ren" class="txti" type="text" maxlength="60" autocomplete="off" value="'+esc(p.nombre==='Sin nombre'?'':p.nombre)+'" onkeydown="if(event.key===\'Enter\')yoGuardaNombre('+i+')">'+
+        '<button type="button" class="btn ver peq" onclick="yoGuardaNombre('+i+')">Guardar</button>'+
+        '<button type="button" class="btn txt peq" onclick="yoCancela()">Cancelar</button></div>':'')+
+      (p.fichas.length>1?'<div class="alu-acts">'+p.fichas.map(([id,al])=>
         '<button type="button" class="alu-act'+(id===DB.activo?' on':'')+'" aria-pressed="'+(id===DB.activo)+'" onclick="cambiaAlumno(\''+id+'\')">'+
-        esc(catConActividad(al.cat))+'</button>').join('')+'</div>'+
+        esc(catConActividad(al.cat))+'</button>').join('')+'</div>':'')+
       (aC&&activa?'<button type="button" class="btn txt alu-pasa" onclick="pasaASuCuenta()">'+IC('compartir')+' Pasar su avance a su propia cuenta</button>':'')+
       '</div>';
   }).join('')+
   (alumnos().length<MAX_ALUMNOS
-    ?'<button type="button" class="alu-btn nuevo" onclick="agregaPersona()"><div class="an">+ Agregar</div>'+
-     '<div class="ac">otra persona</div></button>':'')+
+    ?'<button type="button" class="alu-btn nuevo" onclick="agregaPersona()"><span class="an">'+IC('mas')+' Agregar persona</span>'+
+     '<span class="ac">Un niño a tu cargo, o alguien con su propia cuenta</span></button>':'')+
   '<div id="alu-nueva"></div>';
 }
 /* «+ Agregar» pregunta primero para quién es: cada club entra distinto. */
@@ -2064,7 +2087,7 @@ function agregaPersona(){
    son de adultos ni de Guías Mayores. */
 const catsDeNino=act=>Object.keys(CATS).filter(k=>CATS[k].act===act&&CATS[k].club!=='guias'&&!/adulto/i.test(CATS[k].edad||''));
 function nuevaFicha(tipo,nombre){
-  if(tipo!=='cargo'){agregaAlumno();return;}
+  if(tipo!=='cargo'){agregaAlumno();abreYo();try{document.getElementById('nombre').focus();}catch(e){}return;}
   if(alumnos().length>=MAX_ALUMNOS)return;
   const tutor=(S.aCargo?S.tutor:S.nombre)||'';
   const cats=catsDeNino(ACT_DE(S.cat));
@@ -2135,7 +2158,7 @@ const PLAN_SEMANAS=[
 function tareasDeHoy(){
   const tareas=[];
   const err=falladasDe().length;
-  if(err>=3)tareas.push({ic:'repetir',t:'Repasar '+err+' errores',
+  if(err>=3)tareas.push({ic:'repetir',t:'Repasar '+err+' errores',k:'err',n:err,c:'Lo que más puntos recupera',
     d:'Preguntas que fallaste y todavía no dominas. Es lo que más puntos recupera.',
     b:'Repasar ahora',f:"arrancaExamen('errores')"});
 
@@ -2143,7 +2166,8 @@ function tareasDeHoy(){
      dominar» no le dice a nadie qué hacer hoy; «15 tarjetas hoy» sí. */
   const nHoy=Math.min(tocanHoy().length,topeSesion());
   const porDominar=tarjetasVista().filter(t=>cajaT(t)<2).length;
-  if(nHoy)tareas.push({ic:'tarjetas',t:nHoy+' tarjetas para hoy',
+  if(nHoy)tareas.push({ic:'tarjetas',t:nHoy+' tarjetas para hoy',k:'tj',n:nHoy,
+    c:'Unos '+Math.max(1,Math.round(nHoy*20/60))+' minutos · primero las que fallaste',
     d:(recta()?'Repaso final antes del examen: también vuelven las que ya dominas. ':
       'La sesión del día: primero lo que fallaste, y las dominadas vuelven a salir '+
       (plazoDominada()===1?'cada día':'a los '+plazoDominada()+' días')+
@@ -2152,7 +2176,7 @@ function tareasDeHoy(){
     b:'Abrir la sesión',f:"irTarjetasHoy()"});
   else if(tarjetasVista().length)tareas.push({ic:'tarjetas',t:'Tarjetas al día',
     d:'Ya repasaste lo que tocaba hoy. Las dominadas vuelven a salir en unos días.',
-    b:'Repasar igual',f:"irTarjetasTodas()"});
+    b:'Repasar igual',f:"irTarjetasTodas()",k:'tj',c:'Ya repasaste las de hoy'});
 
   const sinLeer=[...capsVista(),...modsAvance()].filter(x=>(S.prog[x.id]||0)<100);
   if(sinLeer.length)tareas.push({ic:'libro',t:'Leer '+esc(sinLeer[0].label),
@@ -2166,12 +2190,12 @@ function tareasDeHoy(){
     .sort((p,q)=>p.pct-q.pct)[0];
   if(flojo&&flojo.pct<0.8)tareas.push({ic:'diana',t:'Reforzar '+esc(flojo.c.label),
     d:'Vas en '+Math.round(flojo.pct*100)+'% en ese capítulo, tu punto más flojo.',
-    b:'Examen de ese capítulo',f:"examenDeCapitulo('"+flojo.c.id+"')"});
+    b:'Examen de ese capítulo',f:"examenDeCapitulo('"+flojo.c.id+"')",k:'flojo',c:'Vas en '+Math.round(flojo.pct*100)+'%: tu punto más flojo'});
 
   const n=nivelEfectivo();
   tareas.push({ic:'examen',t:'Examen de nivel '+n+' · '+ETIQ_NIVEL[n],
     d:'Un examen de práctica de '+NPREG()+' preguntas, con el formato del concurso.',
-    b:'Comenzar',f:"arrancaExamen('normal')"});
+    b:'Comenzar',f:"arrancaExamen('normal')",k:'ex',n:n,c:'Nivel '+n+' · '+NPREG()+' preguntas'});
 
   /* Con los exámenes cerrados, las tareas que arrancan uno no se ofrecen: leer y
      las tarjetas siguen igual, y en su lugar entra una que explica por qué, para
@@ -2180,7 +2204,7 @@ function tareasDeHoy(){
     const quedan=tareas.filter(t=>!/arrancaExamen\(|examenDeCapitulo\(/.test(t.f));
     quedan.push({ic:'candado',t:'Los exámenes están cerrados',
       d:'Hay una evaluación abierta. Si tienes tu código, te sale arriba en Examen.',
-      b:'Ver',f:"ir('examen')"});
+      b:'Ver',f:"ir('examen')",k:'cerrado',c:'Hay una evaluación abierta'});
     return quedan.slice(0,4);
   }
 
@@ -2203,12 +2227,18 @@ function pintaHoy(){
     '<div class="sem"><div class="st">Semana '+sem+' de '+SEMANAS_PLAN+' · '+esc(p.t)+'</div>'+
     '<div class="sd">'+esc(p.d)+'</div></div>';
 
-  /* v147: solo la primera tarea lleva botón lleno. Tres botones naranjas
-     iguales no dicen por dónde empezar; uno lleno y los demás tonales sí. */
-  const lista=tareasDeHoy().map((t,i)=>
-    '<div class="tarea"><div class="tic"><svg class="ico" aria-hidden="true"><use href="#i-'+t.ic+'"/></svg></div>'+
-    '<div class="ttx"><div class="tt">'+t.t+'</div><div class="td">'+t.d+'</div></div>'+
-    '<button class="btn '+(i===0?'nar':'tono')+' tbt" onclick="'+t.f+'">'+t.b+'</button></div>').join('');
+  /* v205: «Para hoy» son fichas cortas, una por tarea, y TODA la ficha se
+     toca. Leer ya no va aquí: lo dice el «Continuar» de arriba, que sabe en
+     qué sección se quedó. Entra la pregunta del día del capítulo en el que va. */
+  const tareas=tareasDeHoy().filter(t=>!/^verCap\(/.test(t.f));
+  const pd=preguntaDelDia();
+  if(pd)tareas.splice(Math.min(1,tareas.length),0,{ic:'bocadillo',k:'pdd',t:'Pregunta del día',c:pd.q,f:'abrePreguntaDia()',d:''});
+  const num=t=>t.k==='pdd'?'?':t.n!=null?String(t.n):'';
+  const lista='<div class="hoy-g">'+tareas.map(t=>
+    '<button type="button" class="hoy-t hoy-'+(t.k||'x')+'" onclick="'+t.f+'">'+
+    '<span class="hoy-ic" aria-hidden="true">'+(num(t)?'<b>'+esc(num(t))+'</b>':IC(t.ic))+'</span>'+
+    '<span class="hoy-tx"><span class="tt">'+t.t+'</span><span class="td">'+esc(t.c||sinEtiquetas(t.d))+'</span></span>'+
+    IC('der','hoy-fl')+'</button>').join('')+'</div>';
 
   document.getElementById('hoy').innerHTML='<div class="hoy-cab">'+cab+'</div>'+lista;
 }
@@ -2253,9 +2283,16 @@ function pintaYo(){
   const b=document.getElementById('nav-yo');
   if(!b)return;
   const nom=S.nombre||'Sin nombre';
+  /* v205: la ficha es compacta: inicial, nombre y ▾ (la categoría va en el
+     globo y en el panel). Con una sola persona en el aparato no hay a quién
+     cambiar: queda la inicial sola, y el panel sigue abriendo igual. No dice
+     «Estudiando:» como el prototipo, porque el filtro de al lado ya se llama
+     así («Estudiando: Todo») y serían dos rótulos iguales para dos cosas. */
+  const varias=personasDB().length>1;
+  if(b.classList)b.classList.toggle('solo',!varias);
   b.innerHTML='<span class="yo-ini" aria-hidden="true">'+esc(nom.trim().charAt(0).toUpperCase()||'?')+'</span>'+
     '<span class="yo-tx"><span class="yo-n">'+esc(nom)+'</span>'+
-    '<span class="yo-c">'+icoDe(ACT().icono)+' '+esc(CAT().nombre)+'</span></span>'+
+    '<span class="yo-c">'+icoDe(ACT().icono)+' '+esc(CAT().nombre)+'</span></span>'+IC('abajo','yo-fl')+
     /* El globo es un nodo propio, no el `title` del navegador, por dos razones:
        el title tarda un segundo largo en salir y no admite dos renglones. En
        escritorio la ficha se reduce a la inicial, así que sin esto queda un
@@ -2268,7 +2305,8 @@ function pintaYo(){
 /** Sube la hoja de identidad. El esqueleto trae los mismos ids que ya usan
  *  pintaAlumnos() y pintaSelectorCat(), así que esas dos siguen sirviendo sin
  *  cambios: pintan si su contenedor existe, y existe solo con la hoja abierta. */
-function abreYo(){
+function abreYo(cats){
+  if(!cats){yoMenu=-1;yoRen=-1;}
   abreHojaHtml(
     '<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
     '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="Quién estudia y qué estudia">'+
@@ -2282,12 +2320,12 @@ function abreYo(){
       '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">'+IC('x')+'</button>'+
     '</div>'+
     '<div class="hoja-txt ident-cuerpo">'+
-      '<h3>'+IC('grupo')+' ¿Quién estudia?</h3>'+
       '<div class="alu-sel" id="alu-sel"></div>'+
-      '<input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)">'+
-      '<p class="nota">Cada persona guarda su <strong>propio progreso</strong> en cada actividad. '+
-      'Toca una actividad para cambiar.</p>'+
-      '<h3>'+IC('diana')+' Actividad y categoría</h3>'+
+      /* El nombre se escribe aquí solo cuando falta (una persona recién
+         agregada); para cambiarlo después está «⋯ › Renombrar». */
+      '<div class="yo-nom"'+(S.nombre?' hidden':'')+'><label class="yo-lb" for="nombre">¿Cómo se llama?</label>'+
+      '<input id="nombre" class="txti" type="text" placeholder="Escribe el nombre..." oninput="ponNombre(this.value)"></div>'+
+      '<details class="yo-cats"'+(cats?' open':'')+'><summary>'+IC('diana')+'<span>Actividad y categoría</span><b>'+esc(CAT().nombre)+'</b></summary>'+
       '<div class="cat-sel" id="cat-sel"></div>'+
       '<p class="nota">Cada categoría pertenece a <strong>una actividad</strong>, y '+
       'define qué capítulos ves, de dónde salen las preguntas y hasta qué '+
@@ -2298,7 +2336,7 @@ function abreYo(){
       '<p class="nota">En Conexión Bíblica el campamento va en '+
       '<strong>Daniel 1, 2, 3 y 6</strong> y los capítulos 39, 41 y 44 de Profetas y '+
       'Reyes; <strong>Guías Mayores</strong> es el alcance ampliado de otro '+
-      'evento.</p>'+
+      'evento.</p></details>'+
     '</div></div>','yo');
   pintaAlumnos();pintaSelectorCat();
   const ni=document.getElementById('nombre');
@@ -2329,10 +2367,13 @@ function ancla(){
     /* v203: dentro de la app de Jóvenes la ficha no está en un riel sino arriba,
        en una barra a lo ancho: anclar al borde de esa barra dejaba el panel fuera
        de la pantalla y el toque «no hacía nada». Ahí el panel sale debajo de la ficha. */
-    if(borde-r.right>200){
-      const ancho=Math.min(420,(window.innerWidth||1200)-32);
+    /* v205: en el computador la ficha ya no va en el riel sino arriba a la
+       derecha (ver estilos): ahí el panel cae debajo, alineado por su borde
+       derecho. */
+    if(Math.abs(borde-r.right)>200){
+      const W=window.innerWidth||1200, der=r.left>W/2, ancho=Math.min(der?380:420,W-32);
       h.classList.remove('hoja-arriba');
-      h.style.setProperty('--yo-x',Math.round(Math.max(16,Math.min(r.left,(window.innerWidth||1200)-ancho-16)))+'px');
+      h.style.setProperty('--yo-x',Math.round(Math.max(16,Math.min(der?r.right-ancho:r.left,W-ancho-16)))+'px');
       h.style.setProperty('--yo-y',Math.round(r.bottom+8)+'px');
       return;
     }
@@ -2430,8 +2471,8 @@ function pintaInicio(){
 
   const pn=document.getElementById('prog-nota');
   if(pn)pn.textContent=listos>=cs.length
-    ?'Terminaste de leer los '+cs.length+' capítulos. Ahora toca repasar.'
-    :'Al terminar de leer un capítulo toca «Ya lo estudié» y el círculo se llena. Vas '+listos+' de '+cs.length+'.';
+    ?'Terminaste de leer los '+cs.length+'. Ahora toca repasar.'
+    :'Vas '+listos+' de '+cs.length+'. Las tres rayitas son leído, practicado y dominado.';
 
   document.getElementById('stats').innerHTML=
     '<div class="stat"><div class="v">'+listos+'<small style="font-size:.875rem">/'+cs.length+'</small></div><div class="l">Capítulos<br>estudiados</div></div>'+
@@ -2444,15 +2485,11 @@ function pintaInicio(){
     '<div class="v" style="color:'+(falladasDe().length?'var(--rojo)':'var(--verde)')+'">'+falladasDe().length+'</div>'+
     '<div class="l">Errores por<br>repasar</div></div>';
 
-  document.getElementById('anillos').innerHTML=cs.map(c=>{
-    const p=S.prog[c.id]||0,C=Math.PI*2*22,off=C*(1-p/100);
-    return '<button class="anillo'+(p>=100?' full':'')+'" onclick="verCap(\''+c.id+'\')">'+
-      '<svg viewBox="0 0 52 52" width="58" height="58">'+
-      '<circle class="bg" cx="26" cy="26" r="22"/>'+
-      '<circle class="fg" cx="26" cy="26" r="22" stroke="'+c.color+'" stroke-dasharray="'+C+'" stroke-dashoffset="'+off+'"/>'+
-      '<text x="26" y="26" font-size="11" font-weight="800" fill="'+c.color+'" text-anchor="middle" dominant-baseline="central" transform="rotate(90 26 26)">'+p+'%</text>'+
-      '</svg><div class="al">'+esc(c.label)+'</div><div class="as">'+esc(c.sub)+'</div></button>';
-  }).join('');
+  /* v205: la rejilla lleva la imagen de cada capítulo y sus tres niveles. */
+  pintaRejillaIni();
+  pintaHero();
+  const ct=document.getElementById('ini-caps-t');
+  if(ct)ct.textContent=TIPO()==='creencias'?'Las 28 creencias':(conFiltro()?'Capítulo por capítulo':'Lo que vas a estudiar');
 
 }
 
@@ -2878,7 +2915,7 @@ function saltaAlTexto(btn,cid,de,hasta){
   try{
     if(!btn||!btn.closest||!btn.closest('#detalle')||btn.closest('.vd-izq'))return false;
     const vd=document.querySelector('#detalle .vd'), iz=document.querySelector('#detalle .vd-izq');
-    if(!vd||!iz||getComputedStyle(vd).display!=='flex'||!iz.getClientRects().length)return false;
+    if(!vd||!iz||!/^(flex|grid)$/.test(getComputedStyle(vd).display)||!iz.getClientRects().length)return false;
     const lect=iz.querySelector('details.lect[data-cid="'+cid+'"]');
     if(!lect)return false;
     const h=hasta&&hasta>de?hasta:de;
@@ -2887,8 +2924,12 @@ function saltaAlTexto(btn,cid,de,hasta){
     if(!ps.length)return false;
     lect.open=true;
     const quieto=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const top=ps[0].getBoundingClientRect().top-iz.getBoundingClientRect().top+iz.scrollTop-iz.clientHeight/3;
-    iz.scrollTo({top:Math.max(0,top),behavior:quieto?'auto':'smooth'});
+    /* v205: el texto va con el scroll de la página (el estudio es el que se
+       queda pegado); si la columna tuviera su propio scroll, se usa el suyo. */
+    if(iz.scrollHeight>iz.clientHeight+4&&getComputedStyle(iz).overflowY!=='visible'){
+      const top=ps[0].getBoundingClientRect().top-iz.getBoundingClientRect().top+iz.scrollTop-iz.clientHeight/3;
+      iz.scrollTo({top:Math.max(0,top),behavior:quieto?'auto':'smooth'});
+    }else window.scrollTo({top:Math.max(0,ps[0].getBoundingClientRect().top+(window.scrollY||0)-(window.innerHeight||800)/3),behavior:quieto?'auto':'smooth'});
     lect.querySelectorAll('.biblia p.salto').forEach(p=>p.classList.remove('salto'));
     ps.forEach(p=>p.classList.add('salto'));
     ps[0].setAttribute('tabindex','-1');ps[0].focus({preventScroll:true});
@@ -3054,14 +3095,20 @@ function seccionLectura(cid){
   if(typeof VERS==='undefined'||!VERS[cid])return '';
   const nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b);
   const bloques=[];
-  for(let i=0;i<nums.length;i+=5){
-    const grupo=nums.slice(i,i+5);
+  /* v205: cada bloque es una SECCIÓN («Sección 3 de 10»), y cierra con
+     «Antes de seguir»: dos preguntas de ese capítulo (ver adsReparto). */
+  const nb=Math.ceil(nums.length/POR_BLOQUE);
+  let rep=[];
+  try{rep=adsReparto(cid);}catch(e){rep=[];}
+  for(let i=0;i<nums.length;i+=POR_BLOQUE){
+    const grupo=nums.slice(i,i+POR_BLOQUE), k=i/POR_BLOQUE;
     const rot='Vers. '+grupo[0]+(grupo.length>1?'-'+grupo[grupo.length-1]:'');
     const txt=grupo.map(v=>'<p><span class="vn">'+v+'</span>'+esc(VERS[cid][v])+'</p>').join('');
-    bloques.push('<div class="lect-bl">'+
-      '<div class="lect-cab"><span class="lect-rot">'+rot+'</span>'+
+    bloques.push('<div class="lect-bl" data-sec="'+k+'">'+
+      '<div class="lect-cab"><span class="lect-sec">Sección '+(k+1)+' de '+nb+'</span><span class="lect-rot">'+rot+'</span>'+
       (puedeHablar()?grupoVoz('btn-voz','Escuchar estos versículos','Escuchar '+rot):'')+
-      '</div><div class="biblia" data-leer>'+txt+'</div></div>');
+      '</div><div class="biblia" data-leer>'+txt+'</div>'+
+      adsHTML(rep[k]||[],'Antes de seguir')+'</div>');
   }
   /* v131: EL REPRODUCTOR TAMBIEN VIVE AQUI, arriba del texto. Antes solo
      estaba en el modo lectura, y en dos columnas (1200 px o mas) el boton que
@@ -3075,9 +3122,12 @@ function seccionLectura(cid){
        Books: es una forma de leer y escuchar, no una caja aparte (tenía casi
        el peso del reproductor y el texto se partía en tres renglones). Sin voz
        en el aparato no hay reproductor, y el botón va solo. */
+    /* v205: va AL FINAL y pegado abajo (CSS): una barra delgada que no tapa
+       el texto mientras se lee, con los mismos controles. */
+    bloques.join('')+
     '<div class="lect-top">'+(puedeHablar()?htmlLecVoz(nums.length,'texto',cid)
       :'<button type="button" class="btn tono lect-full" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+' Pantalla completa</button>')+'</div>'+
-    bloques.join('')+'</div></details>';
+    '</div></details>';
 }
 
 /* ───────── MODO LECTURA ─────────
@@ -3347,8 +3397,37 @@ function qmToca(n){
 
 /* v188: la fuente de cada sección va en una sola línea corta y discreta. */
 const conFuente=h=>h.replace(/<p class="fuente"><small>(Fuentes?:[\s\S]*?)<\/small><\/p>/g,'<p>$1</p>').replace(/<p>(Fuentes?:)/g,'<p class="sec-fuente">$1');
-const htmlSec=(id,p)=>s=>'<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+'>'+cabezaSec(s)+
-  personasTocables(conFuente(refsTocables(s.h,s.cap||id)),s.cap||id).replace('<div class="qm-aqui"></div>',()=>quiasmoHTML())+(s.preg?recordarHTML(s.preg):'')+'</div>';
+/* v205: EL MISMO ORDEN EN CADA SECCIÓN. Lo que dice (el versículo) → lo que
+   significa → cómo vivirlo → la fuente, en una línea al final. «Lo que dice»
+   solo sale en las de interpretación, y solo con un versículo que la sección
+   cita y no copia ya entre comillas; «Cómo vivirlo» es el rótulo de las
+   secciones de aplicación que el material ya trae (no se escribe ninguna). */
+function diceDe(s,cid){
+  if(typeof VERS==='undefined'||!VERS[cid])return '';
+  const vs=refsCap(s.h,cid).filter((v,i,a)=>a.indexOf(v)===i&&VERS[cid][v]);
+  if(!vs.length)return '';
+  const norm=t=>String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9ñ ]/g,' ').replace(/\s+/g,' ').trim();
+  const citas=[];String(s.h).replace(/«([^»]{12,})»/g,(_,q)=>{citas.push(norm(sinEtiquetas(q)));return '';});
+  const libre=vs.filter(v=>{const t=norm(VERS[cid][v]);return !citas.some(q=>t.includes(q)||q.includes(t.slice(0,40)));});
+  if(!libre.length)return '';
+  const v0=libre[0], v1=libre.includes(v0+1)&&(VERS[cid][v0]+VERS[cid][v0+1]).length<260?v0+1:v0;
+  const lb=libroCid(cid);
+  return '<div class="lq-dice"><div class="lq-eti">Lo que dice</div><p class="biblia-t">«'+esc(VERS[cid][v0]+(v1>v0?' '+VERS[cid][v1]:''))+'»'+
+    ' <cite>'+esc(lb.nombre+' '+lb.n+':'+v0+(v1>v0?'-'+v1:''))+'</cite></p></div>';
+}
+const htmlSec=(id,p)=>s=>{
+  const todas=CONTENIDO[id]||CONT_MODULOS[id]||[], i=todas.indexOf(s);
+  const sk=(typeof VERS==='undefined'||!VERS[id])?secsEstudioDe(id).indexOf(s):-1;
+  const interp=esSecInterp(s), vivir=!interp&&ES_VIVIR.test(String(s.t||''));
+  let h=personasTocables(conFuente(refsTocables(s.h,s.cap||id)),s.cap||id).replace('<div class="qm-aqui"></div>',()=>quiasmoHTML());
+  let fu='';
+  const m=/<p class="sec-fuente">[\s\S]*?<\/p>\s*$/.exec(h);
+  if(m&&(interp||vivir)){fu=m[0];h=h.slice(0,m.index);}
+  const cuerpo=interp?diceDe(s,s.cap||id)+'<div class="lq-sig"><div class="lq-eti">Lo que significa</div>'+h+'</div>'
+    :vivir?'<div class="lq-viv"><div class="lq-eti">Cómo vivirlo</div>'+h+'</div>':h;
+  return '<div class="sec" data-capa="'+(s.capa||'')+'"'+(p?' data-pest="'+p+'"':'')+(i>=0?' data-i="'+i+'"':'')+(sk>=0?' data-sk="'+sk+'"':'')+'>'+cabezaSec(s)+
+    cuerpo+fu+(s.preg?recordarHTML(s.preg):'')+'</div>';
+};
 
 /* v187: «Para el examen» y «Para profundizar». Antes la interpretación iba al
    final del mismo estudio y solo un filtro la separaba: se leía todo seguido y
@@ -3545,10 +3624,13 @@ function verCap(id,quieto){
       '<div class="sec interp-cab" data-capa="contexto" data-pest="prof" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
       '<p class="interp-nota"><b>Esto no entra al examen.</b> Es lo que significa el capítulo y cómo la Biblia explica sus símbolos. Cada sección cierra con su fuente.</p>'+
       /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
-      lamTarjeta(id)+'</div>'+
+      lamTarjeta(id)+cmpBoton(id)+'</div>'+
       secs.filter(esSecInterp).map(htmlSec(id,'prof')).join(''):
       soloI?'<div class="sec interp-cab" data-capa="contexto" data-pest="prof"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
-        '<p class="interp-nota"><b>Esto no entra al examen.</b> Cada sección cierra con su fuente.</p></div>'+secs.map(htmlSec(id,'prof')).join(''):
+        '<p class="interp-nota"><b>Esto no entra al examen.</b> Cada sección cierra con su fuente.</p></div>'+
+        /* v205: el repaso de comparar abre con la tabla que se toca. */
+        (ES_COMPARAR.test(id)?'<div class="sec cmp-sec" data-capa="contexto" data-pest="prof">'+comparaHTML()+'</div>':'')+
+        secs.map(htmlSec(id,'prof')).join(''):
       lamTarjeta(id))+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
@@ -3850,8 +3932,14 @@ function divideVista(d,id){
        vio en el render que sin esta guarda quedaba abierto también a 390 px.
        Es el único sitio donde el JS mira el ancho, y no necesita `resize`: el
        acordeón lo abre y lo cierra quien quiera con un toque. */
-    det.open=!!(window.matchMedia&&window.matchMedia('(min-width:1200px)').matches);
+    det.open=enColumnas(d);
     const fila=document.createElement('div');fila.className='vd';
+    /* v205: tres columnas. A la izquierda el índice (capítulos y secciones),
+       en medio el texto y a la derecha el estudio, que empieza por «Esta
+       sección» (ver estaSeccionHTML). */
+    const ind=document.createElement('nav');ind.className='vd-ind';
+    if(ind.setAttribute)ind.setAttribute('aria-label','Índice del capítulo');
+    ind.innerHTML=indiceHTML(id);
     const iz=document.createElement('div');iz.className='vd-izq';
     const de=document.createElement('div');de.className='vd-der';
     iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
@@ -3864,11 +3952,26 @@ function divideVista(d,id){
     if(cf)de.firstChild.appendChild(cf);
     const cp=d.querySelector(':scope>.cap-pest');
     if(cp)de.firstChild.insertBefore(cp,de.firstChild.firstChild.nextSibling);
+    const ea=document.createElement('div');ea.className='est-ahora';ea.id='est-ahora';ea.hidden=true;
+    if(ea.setAttribute)ea.setAttribute('aria-live','polite');
     iz.appendChild(det);
+    de.appendChild(ea);
     secs.forEach(x=>de.appendChild(x));
-    fila.appendChild(iz);fila.appendChild(de);
+    fila.appendChild(ind);fila.appendChild(iz);fila.appendChild(de);
     d.insertBefore(fila,d.children[1]);
+    eaK=-1;
+    const sg=sigueDe();
+    pintaEstaSeccion(sg&&sg.c===id?sg.s:0);
   }catch(e){}
+}
+/* LAS COLUMNAS LAS DECIDE EL ANCHO DEL CAPÍTULO, no el de la ventana (v205).
+   Dentro de la app de Jóvenes el módulo vive en una columna de 46rem aunque
+   la ventana mida 1900 px: con una media query las tres columnas salían
+   apretadas en 736 px. El CSS usa una consulta de contenedor sobre #detalle
+   (VD_ANCHO px, el mismo número), y el JS mide la misma caja. */
+const VD_ANCHO=920;
+function enColumnas(d){
+  try{return !!d&&d.getBoundingClientRect().width>=VD_ANCHO;}catch(e){return false;}
 }
 
 function avanza(id,p){S.prog[id]=Math.max(S.prog[id]||0,p);guardar();pintaCaps();}
@@ -7521,6 +7624,626 @@ async function mudanza(){
 }
 if(typeof setTimeout==='function')setTimeout(mudanza,0);
 /* MUDANZA:FIN */
+
+/* ═══════════════════ v205: EL REDISEÑO DEL ESTUDIO ═══════════════════
+   Camilo (13-oct): «que el diseño quede como las mejores aplicaciones… lo más
+   interactivo posible». Cinco piezas, todas armadas con datos que la app ya
+   tenía; ninguna inventa contenido:
+   1. Inicio: UN paso siguiente («Continuar»), con el capítulo y la sección
+      donde se quedó, y el avance en tres niveles: Leído, Practicado, Dominado.
+   2. El capítulo en tres columnas cuando hay ancho: índice, texto y estudio.
+   3. «Antes de seguir»: dos preguntas al final de cada sección del texto.
+   4. Quién estudia: un control compacto, con un menú por persona.
+   5. Comparar: las profecías paralelas, armadas de LAMINAS.
+
+   LOS TRES NIVELES, Y DE DÓNDE SALE CADA UNO
+   Leído      S.prog: lo mismo que ya decían los anillos (60 al abrir, 100 con
+              «Ya lo estudié»).
+   Practicado de las tarjetas y preguntas del capítulo, las que ya se
+              respondieron alguna vez (una tarjeta con caja en S.ft, una pregunta
+              vista en S.qv o con error en S.fq).
+   Dominado   de las tarjetas del capítulo, las que llegaron a la caja 2: las
+              que se acertaron dos veces seguidas (ver tjSabia). */
+const tjDeCap=id=>tarjetasDe().filter(t=>t.cap===id);
+const qDeCap=id=>bancoDe().filter(q=>q.cap===id);
+function nivelesDe(id){
+  const leido=Math.max(0,Math.min(100,Math.round(S.prog[id]||0)));
+  const tj=tjDeCap(id), qs=qDeCap(id), tot=tj.length+qs.length;
+  const pr=tj.filter(t=>claveT(t) in S.ft).length+
+    qs.filter(q=>{const k=claveQ(q);return (S.qv[k]||0)>0||k in S.fq;}).length;
+  const dom=tj.filter(t=>cajaT(t)>=2).length;
+  return {leido,practicado:tot?Math.round(pr/tot*100):0,dominado:tj.length?Math.round(dom/tj.length*100):0,
+    tot,pr,tj:tj.length,dom};
+}
+/* Las tres barras, en una pieza (una pieza, un armado). `fino`: la de la
+   rejilla, sin rótulos. */
+function barrasNivel(n,fino){
+  const b=(k,t,v)=>'<div class="nv3-b nv3-'+k+'"'+(fino?'':' role="img" aria-label="'+t+': '+v+'%"')+'>'+
+    (fino?'':'<span class="nv3-t">'+t+'</span>')+
+    '<span class="nv3-pista"><i style="width:'+v+'%"></i></span>'+(fino?'':'<b class="nv3-v">'+v+'%</b>')+'</div>';
+  return '<div class="nv3'+(fino?' fino':'')+'"'+(fino?' aria-label="Leído '+n.leido+'%, practicado '+n.practicado+'%, dominado '+n.dominado+'%"':'')+'>'+
+    b('l','Leído',n.leido)+b('p','Practicado',n.practicado)+b('d','Dominado',n.dominado)+'</div>';
+}
+
+/* ───────── LAS SECCIONES DE UN CAPÍTULO ─────────
+   Con texto bíblico, una sección es un bloque de cinco versículos: el mismo
+   corte que ya tenía «Leer el capítulo» (seccionLectura), con su botón de voz.
+   Sin texto (Profetas y Reyes, creencias, matutina), son las secciones del
+   estudio. */
+const POR_BLOQUE=5;
+function bloquesDe(cid){
+  if(typeof VERS==='undefined'||!VERS[cid])return [];
+  const nums=Object.keys(VERS[cid]).map(Number).sort((a,b)=>a-b), o=[];
+  for(let i=0;i<nums.length;i+=POR_BLOQUE){const g=nums.slice(i,i+POR_BLOQUE);o.push({de:g[0],a:g[g.length-1],vs:g});}
+  return o;
+}
+const secsEstudioDe=cid=>(CONTENIDO[cid]||CONT_MODULOS[cid]||[]).filter(s=>!esSecInterp(s));
+const nSeccionesDe=cid=>bloquesDe(cid).length||secsEstudioDe(cid).length||1;
+/* Lo que dice cada versículo en palabras sencillas: el recorrido «📜 Versículos
+   N a M» que build.js arma de mapa-versiculos.js y ya viaja en CONTENIDO. Se lee
+   de ahí para no mandar el mismo dato dos veces. */
+const mapaCache={};
+function mapaDe(cid){
+  if(mapaCache[cid])return mapaCache[cid];
+  const m={};
+  (CONTENIDO[cid]||[]).filter(s=>/^📜 Versículos/.test(String(s.t||''))).forEach(s=>{
+    String(s.h||'').replace(/<tr><td class="key">(\d+)<\/td><td>([\s\S]*?)<\/td><\/tr>/g,(_,v,t)=>{m[+v]=sinEtiquetas(t);return '';});
+  });
+  return (mapaCache[cid]=m);
+}
+/* El tiempo que falta, por palabras: 160 por minuto es leer con calma para
+   estudiar, no leer de corrido. Se redondea hacia arriba y nunca dice cero. */
+const PALABRAS_MIN=160;
+function minutosDesde(cid,k){
+  const bl=bloquesDe(cid);
+  let txt='';
+  if(bl.length)bl.slice(k).forEach(b=>b.vs.forEach(v=>{txt+=' '+VERS[cid][v];}));
+  else secsEstudioDe(cid).slice(k).forEach(s=>{txt+=' '+sinEtiquetas(s.h);});
+  const p=txt.split(/\s+/).filter(Boolean).length;
+  return Math.max(1,Math.ceil(p/PALABRAS_MIN));
+}
+
+/* ───────── DÓNDE SE QUEDÓ CADA PERSONA ─────────
+   MECANISMO
+   Mientras se lee, se anota el capítulo y la sección que está a la altura de
+   los ojos. Va en el aparato y no en la ficha, por la misma razón que «dónde
+   iba leyendo» (DONDE_K): la ficha sube al servidor y se funde con la de otros
+   aparatos, y la sección es de esta pantalla. Una llave por ficha, para que dos
+   hermanas en el mismo teléfono no se pisen el «Continuar».
+   `m` guarda hasta qué sección llegó en cada capítulo (para el índice). */
+const SIGUE_K='cb-sigue';
+function sigueLee(){try{const o=JSON.parse(localStorage.getItem(SIGUE_K)||'{}');return o&&typeof o==='object'?o:{};}catch(e){return {};}}
+function sigueDe(aid){const o=sigueLee()[aid||DB.activo];return o&&typeof o.c==='string'?o:null;}
+function sigueAnota(cid,k){
+  try{
+    const o=sigueLee(), a=o[DB.activo]||{}, m=Object.assign({},a.m||{});
+    m[cid]=Math.max(m[cid]||0,k+1);
+    o[DB.activo]={c:cid,s:Math.max(0,k|0),m};
+    localStorage.setItem(SIGUE_K,JSON.stringify(o));
+  }catch(e){}
+}
+/* La sección que está a la altura de los ojos: la última cuyo borde de
+   arriba ya pasó el primer tercio de su caja (la columna del texto, si tiene
+   su propio scroll; si no, la ventana). */
+function seccionALaVista(){
+  const d=document.getElementById('detalle');
+  if(!d||!capAbierto||d.style.display!=='block'||!d.getClientRects().length)return -1;
+  const lect=d.querySelector('details.lect');
+  let els=lect&&lect.open?[...lect.querySelectorAll('.lect-bl')]:[];
+  if(!els.length)els=[...d.querySelectorAll('.sec[data-sk]')].filter(x=>x.getClientRects().length);
+  if(!els.length)return -1;
+  const iz=d.querySelector('.vd-izq');
+  const enCol=iz&&els[0].closest&&els[0].closest('.vd-izq')&&iz.scrollHeight>iz.clientHeight+4;
+  const linea=enCol?iz.getBoundingClientRect().top+iz.clientHeight/3:(window.innerHeight||800)/3;
+  let k=0;
+  els.forEach((e,i)=>{if(e.getBoundingClientRect().top<=linea)k=i;});
+  const sk=els[k].getAttribute&&els[k].getAttribute('data-sk');
+  return sk!=null?Number(sk):k;
+}
+let sigueT=0;
+function sigueMide(){
+  if(pantallaAct!=='estudio'||!capAbierto)return;
+  const k=seccionALaVista();
+  if(k<0)return;
+  sigueAnota(capAbierto,k);
+  pintaEstaSeccion(k);
+  marcaIndice(k);
+}
+const sigueProg=()=>{clearTimeout(sigueT);sigueT=setTimeout(sigueMide,160);};
+if(typeof window!=='undefined'&&window.addEventListener)window.addEventListener('scroll',sigueProg,{passive:true});
+
+/* ───────── «CONTINUAR» ─────────
+   El capítulo es el último que se estuvo leyendo, si sigue a la vista con el
+   filtro y la categoría de ahora; si ya quedó estudiado entero, el siguiente
+   que falte. Sin nada anotado, el primero que falte, desde su comienzo. */
+function heroDatos(){
+  const items=[...capsVista(),...modsAvance()];
+  if(!items.length)return null;
+  const sg=sigueDe();
+  let c=sg?items.find(x=>x.id===sg.c):null, k=c?sg.s:0;
+  const n0=c?nSeccionesDe(c.id):0;
+  if(c&&(S.prog[c.id]||0)>=100&&k>=n0-1){
+    const sig=items.find(x=>(S.prog[x.id]||0)<100);
+    if(sig&&sig.id!==c.id){c=sig;k=0;}
+  }
+  if(!c){c=items.find(x=>(S.prog[x.id]||0)<100)||items[0];k=0;}
+  const n=nSeccionesDe(c.id);
+  k=Math.max(0,Math.min(n-1,k));
+  const bl=bloquesDe(c.id);
+  let tema='';
+  if(bl.length){const m=mapaDe(c.id)[bl[k].de];if(m)tema=corta(m,90);}
+  else{const s=secsEstudioDe(c.id)[k];if(s)tema=tituloSec(s.t);}
+  return {c,k,n,tema,bl:bl[k]||null,min:minutosDesde(c.id,k),empezado:!!sg&&sg.c===c.id,niv:nivelesDe(c.id)};
+}
+const corta=(t,n)=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=n)return t;
+  const c=t.slice(0,n);return c.slice(0,Math.max(c.lastIndexOf(' '),n-12)).replace(/[\s,;:.—–-]+$/,'')+'…';};
+/* La imagen del capítulo: la escena de su lámina si la tiene. `portada` en
+   fuente/laminas.js manda; si no, la escena del principio (Daniel 7) o la de la
+   oración (Daniel 2). Sin lámina, el número del capítulo. */
+const PORTADA_CAP={d2:'h2'};
+function portadaDe(cid){
+  const L=typeof LAMINAS!=='undefined'?LAMINAS[cid]:null;
+  if(!L)return escenaDeOtra(cid);
+  const f=L.portada||PORTADA_CAP[cid]||(L.tipo==='escenas'?L.inicioF:((L.historia||[]).find(h=>/^h\d/.test(h.f))||{}).f);
+  return f?LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+'.webp':'';
+}
+/* Un capítulo sin lámina propia puede salir en la historia de otra: Daniel 1
+   es la primera escena de la lámina de Daniel 2 («Cautivos en Babilonia»,
+   Daniel 1:2). Se busca por la cita de la escena, no por una lista a mano. */
+function escenaDeOtra(cid){
+  const lb=libroCid(cid);
+  if(!lb||typeof LAMINAS==='undefined')return '';
+  const pre=lb.nombre+' '+lb.n+':';
+  for(const k of Object.keys(LAMINAS)){const L=LAMINAS[k];
+    const h=(L.historia||[]).find(x=>String(x.ref||'').startsWith(pre)&&x.f);
+    if(h)return LAMINAS_DIR+(h.f.includes('/')?'':L.dir)+h.f+'.webp';}
+  return '';
+}
+const numCap=c=>String(c.label||'').replace(/^(Daniel|Apocalipsis|P&R|Creencia|Día)\s*/i,'')||'·';
+function portadaHTML(c,clase){
+  const src=portadaDe(c.id);
+  return src?'<img class="'+clase+'" src="'+src+'" alt="" loading="lazy" decoding="async">'
+    :'<div class="'+clase+' sin-img" aria-hidden="true"><span>'+esc(numCap(c))+'</span></div>';
+}
+function pintaHero(){
+  const z=document.getElementById('ini-hero');
+  if(!z)return;
+  const h=heroDatos();
+  if(!h){z.innerHTML='';z.hidden=true;return;}
+  z.hidden=false;
+  const c=h.c, lam=typeof LAMINAS!=='undefined'&&LAMINAS[c.id];
+  const donde=h.bl?'Versículos '+h.bl.de+(h.bl.a>h.bl.de?'–'+h.bl.a:''):'';
+  z.innerHTML=portadaHTML(c,'hero-img')+
+    '<div class="hero-tx">'+
+      '<div class="hero-ant">'+(h.empezado?'Sigue donde quedaste':(S.prog[c.id]||0)>0?'Sigue con':'Empieza aquí')+'</div>'+
+      '<h1 class="hero-tit"><span class="hero-lab">'+esc(c.label)+'</span> '+esc(c.sub||'')+'</h1>'+
+      '<p class="hero-donde">Sección '+(h.k+1)+' de '+h.n+(donde?' · '+donde:'')+
+        (h.tema?'<span class="hero-tema">'+esc(h.tema)+'</span>':'')+
+        '<span class="hero-min">'+IC('reloj')+' Unos '+h.min+' minuto'+(h.min===1?'':'s')+' para terminar</span></p>'+
+      barrasNivel(h.niv)+
+      '<div class="hero-bots"><button type="button" class="btn nar hero-go" onclick="continuar()">Continuar</button>'+
+      (lam?'<button type="button" class="btn tono" onclick="lamAbre(\''+c.id+'\',\'explorar\')">'+IC('lupa')+' Ver la lámina</button>':'')+
+      '</div></div>';
+}
+/* Lo que queda pegado arriba y tapa: la barra de arriba (celular, Jóvenes) o
+   la ficha flotante del computador (--pega-arriba). Medido, no supuesto. */
+function altoPegado(){
+  let n=0;
+  try{n=parseFloat(getComputedStyle(document.body).getPropertyValue('--pega-arriba'))||0;}catch(e){}
+  try{const r=document.querySelector('.nav').getBoundingClientRect();
+    if(r.width>r.height&&r.top<=1&&r.bottom<(window.innerHeight||800)/2)n=Math.max(n,r.bottom);}catch(e){}
+  return n;
+}
+function continuar(){
+  const h=heroDatos();
+  if(!h)return;
+  verCap(h.c.id);
+  irSeccion(h.k);
+}
+/* Pone la sección `k` del capítulo abierto a la vista. Con texto, abre la
+   lectura y lleva su bloque arriba (dentro de la columna, si la columna tiene
+   su propio scroll). */
+function irSeccion(k){
+  const d=document.getElementById('detalle');
+  if(!d)return;
+  k=Number(k)||0;
+  const lect=d.querySelector('details.lect');
+  const bls=lect?[...lect.querySelectorAll('.lect-bl')]:[];
+  let el=null;
+  if(bls.length){lect.open=true;el=bls[Math.min(k,bls.length-1)];}
+  else el=[...d.querySelectorAll('.sec[data-sk]')].find(x=>Number(x.getAttribute('data-sk'))===k)||null;
+  if(!el)return;
+  dondeEspera(900);
+  try{
+    const iz=el.closest?el.closest('.vd-izq'):null;
+    if(iz&&iz.scrollHeight>iz.clientHeight+4&&getComputedStyle(iz).position==='sticky'){
+      const top=d.getBoundingClientRect().top+(window.scrollY||0)-8;
+      window.scrollTo(0,Math.max(0,top));
+      iz.scrollTop+=el.getBoundingClientRect().top-iz.getBoundingClientRect().top-8;
+    }else{
+      window.scrollTo(0,Math.max(0,el.getBoundingClientRect().top+(window.scrollY||0)-altoPegado()-12));
+    }
+  }catch(e){}
+  sigueAnota(capAbierto||'',k);
+  pintaEstaSeccion(k);marcaIndice(k);
+}
+
+/* ───────── LA REJILLA DE CAPÍTULOS DEL INICIO ───────── */
+function pintaRejillaIni(){
+  const z=document.getElementById('anillos');
+  if(!z)return;
+  const sg=sigueDe();
+  z.innerHTML=capsVista().map(c=>{
+    const n=nivelesDe(c.id);
+    return '<button type="button" class="cap-t'+(sg&&sg.c===c.id?' aqui':'')+(n.leido>=100?' full':'')+'" onclick="verCap(\''+c.id+'\')">'+
+      portadaHTML(c,'cap-t-img')+
+      '<span class="cap-t-tx"><span class="cap-t-lab">'+esc(c.label)+'</span>'+
+      '<span class="cap-t-sub">'+esc(c.sub||'')+'</span>'+barrasNivel(n,true)+'</span></button>';
+  }).join('');
+}
+
+/* ───────── «ANTES DE SEGUIR» ─────────
+   Recordar es lo que fija, no releer (la práctica de recuperación). Al final de
+   cada sección del texto salen dos preguntas del banco de ESE capítulo:
+   primero las que citan un versículo de la sección, después las demás, sin
+   repetir ninguna en el capítulo. El reparto es fijo (por la huella de cada
+   pregunta), así que al volver a la sección salen las mismas.
+   LO QUE GUARDA: lo mismo que una respuesta de examen en S.qv (vista) y S.fq
+   (error por repasar; acertarla lo quita). No toca S.acc ni S.act: esos son el
+   acierto DE EXAMEN, y una pregunta con el texto a la vista no es un examen. */
+const ADS_N=2;
+const refsQ=(q,cid)=>{
+  const lb=libroCid(cid);if(!lb)return [];
+  const n=lb.n, out=[];
+  String((q.q||'')+' '+(q.e||'')).replace(/(?:\b([A-ZÁÉÍÓÚ][a-záéíóúñ]+)\s+)?\b(\d{1,2}):(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/g,(m,libro,c,v,h)=>{
+    if(libro&&libro!==lb.nombre)return m;
+    if(c!==n)return m;
+    for(let i=+v;i<=(h?+h:+v)&&i<+v+8;i++)out.push(i);
+    return m;
+  });
+  return out;
+};
+const adsCache={};
+function adsReparto(cid){
+  const llave=cid+'|'+retiradas.size;
+  if(adsCache[llave])return adsCache[llave];
+  const bl=bloquesDe(cid);
+  const n=bl.length||1;
+  const qs=qDeCap(cid).filter(q=>(q.t==='mc'&&(q.o||[]).length>1)||q.t==='tf')
+    .map(q=>({q,vs:refsQ(q,cid),h:hashTxt(claveQ(q))})).sort((a,b)=>a.h<b.h?-1:a.h>b.h?1:0);
+  const usadas=new Set(), rep=[];
+  for(let i=0;i<n;i++){
+    const b=bl[i], lista=[];
+    if(b)for(const x of qs){if(lista.length>=ADS_N)break;if(!usadas.has(x)&&x.vs.some(v=>v>=b.de&&v<=b.a)){lista.push(x);usadas.add(x);}}
+    rep.push(lista);
+  }
+  /* Las secciones que se quedaron cortas se completan con las que no citan
+     versículo (las de interpretación, las de un dato del capítulo entero). */
+  rep.forEach(lista=>{for(const x of qs){if(lista.length>=ADS_N)break;if(!usadas.has(x)&&!x.vs.length){lista.push(x);usadas.add(x);}}});
+  const out=rep.map(l=>l.map(x=>x.q));
+  return (adsCache[llave]=out);
+}
+let adsQ={}, adsN=0;
+function adsHTML(qs,titulo){
+  if(!qs||!qs.length)return '';
+  const id='ads'+(++adsN);
+  return '<div class="ads" id="'+id+'" role="group" aria-label="'+esc(titulo)+'">'+
+    '<div class="ads-cab">'+IC('rayo')+'<b>'+esc(titulo)+'</b><span>'+qs.length+' pregunta'+(qs.length===1?'':'s')+'</span></div>'+
+    qs.map((q,i)=>{const k=id+'-'+i;adsQ[k]=q;
+      const ops=q.t==='tf'?['Verdadero','Falso']:q.o;
+      return '<div class="ads-q" id="'+k+'"'+(i>0?' hidden':'')+'>'+
+        '<p class="ads-t">'+(qs.length>1?'<span class="ads-k">'+(i+1)+' de '+qs.length+'</span>':'')+esc(q.q)+'</p>'+
+        '<div class="ads-ops'+(q.t==='tf'?' vf':'')+'">'+ops.map((o,j)=>'<button type="button" class="ads-op" onclick="adsResponde(\''+k+'\','+j+')">'+esc(o)+'</button>').join('')+'</div>'+
+        '<div class="ads-fb" aria-live="polite"></div></div>';}).join('')+'</div>';
+}
+const adsCorrecta=(q,j)=>q.t==='tf'?((j===0)===!!q.a):j===q.a;
+function versoDeQ(q){
+  const cid=q.cap, vs=refsQ(q,cid);
+  if(!vs.length||typeof VERS==='undefined'||!VERS[cid])return null;
+  const lb=libroCid(cid), v=vs.filter(x=>VERS[cid][x]).slice(0,2);
+  if(!v.length)return null;
+  return {txt:v.map(x=>VERS[cid][x]).join(' '),ref:lb.nombre+' '+lb.n+':'+v[0]+(v.length>1?'-'+v[v.length-1]:'')};
+}
+function adsResponde(k,j){
+  const q=adsQ[k], box=document.getElementById(k);
+  if(!q||!box||box.classList.contains('hecha'))return;
+  const ok=adsCorrecta(q,j);
+  box.classList.add('hecha',ok?'ok':'ko');
+  box.querySelectorAll('.ads-op').forEach((b,i)=>{b.disabled=true;
+    if(adsCorrecta(q,i))b.classList.add('bien');else if(i===j)b.classList.add('mal');
+    b.setAttribute('aria-pressed',String(i===j));});
+  try{
+    const c=claveQ(q);
+    S.qv[c]=Math.min(99,(S.qv[c]||0)+1);
+    if(ok)delete S.fq[c];else S.fq[c]={m:Math.min(99,((S.fq[c]||{}).m||0)+1)};
+    sumaRacha();guardar();
+  }catch(e){}
+  const resp=q.t==='tf'?(q.a?'Verdadero':'Falso'):(q.o||[])[q.a];
+  const v=versoDeQ(q);
+  const sig=box.nextElementSibling&&box.nextElementSibling.classList&&box.nextElementSibling.classList.contains('ads-q');
+  const fb=box.querySelector('.ads-fb');
+  if(fb)fb.innerHTML='<p class="ads-res">'+(ok?IC('check')+' <b>Así es.</b>':IC('x')+' <b>Era «'+esc(resp)+'».</b>')+
+    (q.e?' '+esc(q.e):'')+'</p>'+
+    (v?'<blockquote class="ads-v"><span class="biblia-t">«'+esc(v.txt)+'»</span> <cite>'+esc(v.ref)+'</cite></blockquote>':'')+
+    (sig?'<button type="button" class="btn tono peq ads-sig" onclick="adsSigue(\''+k+'\')">Siguiente pregunta</button>':'');
+  try{pintaSenales();}catch(e){}
+}
+function adsSigue(k){
+  const box=document.getElementById(k);if(!box)return;
+  const s=box.nextElementSibling;if(!s)return;
+  s.hidden=false;
+  const b=box.querySelector('.ads-sig');if(b)b.remove();
+  const p=s.querySelector('.ads-op');if(p&&p.focus)p.focus({preventScroll:true});
+}
+
+/* ───────── LA PREGUNTA DEL DÍA ─────────
+   Una sola, del capítulo en el que va. Primero las de «¿por qué?», después
+   las de interpretación (f:'c'), después cualquiera con explicación. Cambia
+   cada día y es la misma todo el día. */
+function preguntaDelDia(){
+  const h=heroDatos();if(!h)return null;
+  const qs=qDeCap(h.c.id).filter(q=>(q.t==='mc'&&(q.o||[]).length>1)||q.t==='tf');
+  const pool=[qs.filter(q=>/^¿\s*Por qué/i.test(q.q||'')),qs.filter(q=>q.f==='c'),qs.filter(q=>q.e),qs].find(l=>l.length);
+  if(!pool)return null;
+  return pool[(diaHoy()+h.c.id.length)%pool.length];
+}
+function abrePreguntaDia(){
+  const q=preguntaDelDia();if(!q)return;
+  const c=buscaItem(q.cap);
+  abreHojaHtml('<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="Pregunta del día">'+
+    '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-cab"><div><div class="hoja-ref">Pregunta del día</div>'+
+      '<div class="hoja-sub">'+esc(c?c.label+' · '+(c.sub||''):'')+'</div></div>'+
+      '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">'+IC('x')+'</button></div>'+
+    '<div class="hoja-txt pdd">'+adsHTML([q],'Pregunta del día')+'</div></div>','pdd');
+}
+
+/* ───────── EL ÍNDICE DE LA IZQUIERDA ───────── */
+function indiceHTML(id){
+  const caps=capsVista(), sg=sigueDe(), lleg=(sg&&sg.m)||{};
+  const bl=bloquesDe(id);
+  return '<div class="ind-cab"><span>'+esc(TIPO()==='creencias'?'Las creencias':'Capítulos')+'</span></div>'+
+    '<ol class="ind-l">'+caps.map(c=>{
+      const on=c.id===id, n=nivelesDe(c.id);
+      return '<li><button type="button" class="ind-c'+(on?' on':'')+'"'+(on?' aria-current="page"':'')+' onclick="verCap(\''+c.id+'\')">'+
+        '<span class="ind-n">'+esc(numCap(c))+'</span><span class="ind-t">'+esc(c.sub||c.label)+'</span>'+
+        '<span class="ind-p" aria-hidden="true"><i style="width:'+n.leido+'%"></i></span></button>'+
+        (on&&bl.length>1?'<ol class="ind-s">'+bl.map((b,k)=>'<li><button type="button" class="ind-b'+(k<(lleg[id]||0)?' ya':'')+'" data-sec="'+k+'" onclick="irSeccion('+k+')">'+
+          '<span>'+(k+1)+'</span>Vers. '+b.de+(b.a>b.de?'–'+b.a:'')+'</button></li>').join('')+'</ol>':'')+
+        '</li>';}).join('')+'</ol>';
+}
+function marcaIndice(k){
+  try{document.querySelectorAll('#detalle .ind-b').forEach(b=>{const i=Number(b.getAttribute('data-sec'));
+    b.classList.toggle('ahora',i===k);if(i<=k)b.classList.add('ya');});}catch(e){}
+}
+
+/* ───────── «ESTA SECCIÓN», AL LADO DEL TEXTO ─────────
+   En tres columnas, arriba del estudio va lo de la sección que se está leyendo,
+   siempre en el mismo orden:
+     Lo que dice       los versículos en palabras sencillas (mapa-versiculos)
+     Lo que significa  las secciones de «Para profundizar» que citan versículos
+                       de esta sección, con su primera frase y el botón a ella
+     Cómo vivirlo      solo si el capítulo trae una sección de aplicación que
+                       cite estos versículos (hoy, ninguna de Daniel: no se
+                       inventa)
+     Fuente            la de lo que se cita arriba, una línea. */
+const ES_VIVIR=/^\S*\s*(Aplicaci|La lecci|C[oó]mo vivir)/i;
+const refsCap=(h,cid)=>refsQ({q:sinEtiquetas(h)},cid);
+const ligaCache={};
+function ligasDe(cid){
+  if(ligaCache[cid])return ligaCache[cid];
+  const todas=(CONTENIDO[cid]||[]).map((s,i)=>({s,i,vs:refsCap(s.h,cid)}));
+  return (ligaCache[cid]={
+    sig:todas.filter(x=>esSecInterp(x.s)),
+    viv:todas.filter(x=>!esSecInterp(x.s)&&ES_VIVIR.test(String(x.s.t||'')))});
+}
+const fuenteDe=h=>{const m=/<p>(?:Fuentes?:)\s*([\s\S]*?)<\/p>/.exec(h||'');return m?m[1]:'';};
+const primeraFrase=h=>{const p=/<p>([\s\S]*?)<\/p>/.exec(String(h||'').replace(/<p>Fuentes?:[\s\S]*?<\/p>/g,''));
+  return corta(sinEtiquetas(p?p[1]:h),170);};
+function estaSeccionHTML(cid,k){
+  const bl=bloquesDe(cid)[k];
+  if(!bl)return '';
+  const m=mapaDe(cid), L=ligasDe(cid);
+  const dentro=x=>x.vs.some(v=>v>=bl.de&&v<=bl.a);
+  /* Primero las que EMPIEZAN aquí, después las más puntuales (menos versículos). */
+  const orden=(a,b)=>((a.vs[0]>=bl.de&&a.vs[0]<=bl.a)?0:1)-((b.vs[0]>=bl.de&&b.vs[0]<=bl.a)?0:1)||a.vs.length-b.vs.length;
+  const sig=L.sig.filter(dentro).sort(orden).slice(0,3), viv=L.viv.filter(dentro).slice(0,2);
+  const dice=bl.vs.filter(v=>m[v]);
+  if(!dice.length&&!sig.length&&!viv.length)return '';
+  const fu=[...new Set([...sig,...viv].map(x=>fuenteDe(x.s.h)).filter(Boolean))].slice(0,1);
+  const lb=libroCid(cid);
+  return '<div class="ea-cab"><span>Esta sección</span><b>'+esc(lb?lb.nombre+' '+lb.n+':'+bl.de+(bl.a>bl.de?'–'+bl.a:''):'')+'</b></div>'+
+    (dice.length?'<div class="ea-p ea-dice"><div class="ea-rot">Lo que dice</div><ul>'+
+      dice.slice(0,5).map(v=>'<li><span class="vn">'+v+'</span>'+esc(m[v])+'</li>').join('')+'</ul></div>':'')+
+    (sig.length?'<div class="ea-p ea-sig"><div class="ea-rot">Lo que significa</div>'+
+      sig.map(x=>'<button type="button" class="ea-ir" onclick="irASec('+x.i+')"><b>'+esc(tituloSec(x.s.t))+'</b><span>'+esc(primeraFrase(x.s.h))+'</span></button>').join('')+'</div>':'')+
+    (viv.length?'<div class="ea-p ea-viv"><div class="ea-rot">Cómo vivirlo</div>'+
+      viv.map(x=>'<button type="button" class="ea-ir" onclick="irASec('+x.i+')"><b>'+esc(tituloSec(x.s.t))+'</b><span>'+esc(primeraFrase(x.s.h))+'</span></button>').join('')+'</div>':'')+
+    (fu.length?'<p class="ea-fu">Fuente: '+fu[0]+'</p>':'');
+}
+let eaK=-1;
+function pintaEstaSeccion(k){
+  const z=document.getElementById('est-ahora');
+  if(!z||!capAbierto)return;
+  if(k===eaK&&z.innerHTML)return;
+  eaK=k;
+  const h=estaSeccionHTML(capAbierto,k);
+  z.hidden=!h;
+  if(h)z.innerHTML=h;
+}
+/* Lleva a una sección del estudio por su lugar en CONTENIDO: cambia de pestaña
+   si hace falta y la resalta un momento. */
+function irASec(i){
+  const d=document.getElementById('detalle');if(!d)return;
+  const s=d.querySelector('.sec[data-i="'+i+'"]');if(!s)return;
+  const p=s.getAttribute('data-pest');if(p&&p!==capPest)ponPest(p);
+  if(s.style.display==='none')s.style.display='';
+  /* En tres columnas la sección vive en la columna del estudio, que tiene su
+     propio scroll; si no, se mueve la página. */
+  const col=s.closest?s.closest('.vd-der'):null;
+  if(col&&col.scrollHeight>col.clientHeight+4&&getComputedStyle(col).overflowY!=='visible')
+    col.scrollTo({top:Math.max(0,s.getBoundingClientRect().top-col.getBoundingClientRect().top+col.scrollTop-60),behavior:lamQuieto()?'auto':'smooth'});
+  else window.scrollTo({top:Math.max(0,s.getBoundingClientRect().top+(window.scrollY||0)-altoPegado()-16),behavior:lamQuieto()?'auto':'smooth'});
+  s.classList.remove('destaca');void s.offsetWidth;s.classList.add('destaca');
+}
+
+/* ───────── QUIÉN ESTUDIA: EL MENÚ DE CADA PERSONA ─────────
+   Antes, quitar a alguien estaba en Logros › Datos guardados y solo servía
+   para la ficha activa. Ahora cada persona trae su «⋯» con Renombrar, Agregar
+   actividad y Quitar. Los índices son los de personasDB() al pintar: la lista
+   no cambia mientras el panel está abierto sin repintarse. */
+let yoMenu=-1, yoRen=-1;
+function yoAbreMenu(i){yoMenu=yoMenu===i?-1:i;yoRen=-1;pintaAlumnos();}
+function yoRenombra(i){yoRen=i;yoMenu=-1;pintaAlumnos();
+  try{const t=document.getElementById('alu-ren');if(t){t.focus();t.select&&t.select();}}catch(e){}}
+function yoGuardaNombre(i){
+  const p=personasDB()[i], t=document.getElementById('alu-ren');
+  if(!p||!t)return;
+  const v=String(t.value||'').trim().slice(0,60);
+  if(!v){t.focus();return;}
+  p.fichas.forEach(([,al])=>{al.nombre=v;});
+  yoRen=-1;guardar();pintaAlumnos();pintaYo();pintaInicio();
+}
+function yoCancela(){yoRen=-1;yoMenu=-1;pintaAlumnos();}
+/* «Agregar actividad»: pasa a esa persona y abre el selector de categorías,
+   que es donde ya vive la regla de una ficha por actividad (ponCat). */
+function yoActividad(i){
+  const p=personasDB()[i];if(!p)return;
+  yoMenu=-1;
+  if(!p.fichas.some(([id])=>id===DB.activo))cambiaAlumno(p.fichas[0][0]);
+  abreYo(true);
+}
+async function yoQuita(i){
+  const p=personasDB()[i];if(!p)return;
+  const n=p.fichas.length;
+  if(!await preguntaApp('¿Quitar a '+p.nombre+'?',
+    'Se borra su avance en este aparato'+(n>1?' en sus '+n+' actividades':'')+'. No se puede deshacer.','Quitar',true)){abreYo();return;}
+  quitaPersona(i,p);
+}
+function quitaPersona(i,p){
+  p=p||personasDB()[i];if(!p)return;
+  const ids=p.fichas.map(([id])=>id);
+  if(ids.length>=alumnos().length){
+    try{localStorage.removeItem(CLAVE);localStorage.removeItem(CLAVE_VIEJA);}catch(e){}
+    DB=normalizarDB(null);S=DB.alumnos[DB.activo];guardar();marcaCat();
+    try{const o=sigueLee();ids.forEach(id=>delete o[id]);localStorage.setItem(SIGUE_K,JSON.stringify(o));}catch(e){}
+    yoMenu=-1;ir('bienvenida');bvPaso(1);return;
+  }
+  const eraActiva=ids.includes(DB.activo);
+  ids.forEach(id=>delete DB.alumnos[id]);
+  try{const o=sigueLee();ids.forEach(id=>delete o[id]);localStorage.setItem(SIGUE_K,JSON.stringify(o));}catch(e){}
+  yoMenu=-1;
+  if(eraActiva)cambiaAlumno(Object.keys(DB.alumnos)[0]);
+  else{guardar();pintaYo();pintaInicio();}
+}
+
+/* ───────── COMPARAR: LAS PROFECÍAS PARALELAS ─────────
+   MECANISMO
+   Las columnas son los capítulos que tienen lámina con partes (hoy Daniel 2 y
+   7). Las filas son los poderes, y se juntan por FECHA de comienzo (`de`): el
+   año en que empieza un reino es el mismo en cualquier visión, y así Daniel 8
+   (el carnero, -539) cae solo en la fila de Medo-Persia sin escribir ninguna
+   tabla. Lo que no tiene fecha (la piedra, el Hijo del hombre, el reino) va
+   en la última fila: el reino de Dios.
+   Agregar una lámina con `partes` agrega una columna. Nada más. */
+const CMP_FIN='fin';
+function cmpModelo(Ls){
+  Ls=Ls||(typeof LAMINAS!=='undefined'?LAMINAS:{});
+  const cols=Object.keys(Ls).filter(k=>Array.isArray(Ls[k].partes)&&Ls[k].partes.length&&libroCid(k))
+    .sort((a,b)=>{const x=libroCid(a),y=libroCid(b);return x.pre===y.pre?x.n-y.n:x.pre<y.pre?-1:1;});
+  const filas=new Map();
+  cols.forEach(k=>{
+    const L=Ls[k];
+    L.partes.forEach(p=>{
+      const key=Number.isFinite(p.de)?String(p.de):CMP_FIN;
+      if(!filas.has(key))filas.set(key,{key,de:Number.isFinite(p.de)?p.de:Infinity,reino:'',fechas:'',c:p.c||'',celdas:{}});
+      const f=filas.get(key);
+      if(!f.reino)f.reino=key===CMP_FIN?'El reino de Dios':(p.reino||'');
+      if(!f.fechas)f.fechas=key===CMP_FIN?'Lo que no pasa':(p.fechas||'');
+      (f.celdas[k]=f.celdas[k]||[]).push(p);
+    });
+  });
+  return {cols,filas:[...filas.values()].sort((a,b)=>a.de-b.de)};
+}
+/* La miniatura de una parte. En una lámina de escenas (Daniel 7) es su imagen.
+   En la de capas (Daniel 2) cada parte es una capa del tamaño de la estatua
+   entera, así que se recorta con su caja (`cajas`): la cabeza de oro sale como
+   cabeza, no como un punto en un lienzo vacío. `T` es el lado en px. */
+function cmpMini(L,p,T,alt){
+  const a=' alt="'+esc(alt||'')+'" loading="lazy" decoding="async"';
+  if(L.tipo==='escenas'){const f=p.img||p.id;
+    return '<span class="cmp-th"><img class="cmp-cubre" src="'+LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+'.webp"'+a+'></span>';}
+  /* Las capas miden 768 px y van corridas `ox` dentro del lienzo de la
+     lámina (ver lamSvg); las cajas están en coordenadas del lienzo. Lo que no
+     es capa (la piedra, el monte) usa su escena. */
+  const c=(L.cajas||{})[p.id], esCapa=(L.capas||[]).includes(p.id);
+  if(!c||!esCapa){const e=(L.escenas||[]).find(x=>x.parte===p.id), f=e?e.f:p.id;
+    return '<span class="cmp-th"><img class="cmp-cubre" src="'+LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+'.webp"'+a+'></span>';}
+  const IW=768, ox=L.ox||0, k=T/Math.max(c[2],c[3]), r=n=>Math.round(n*10)/10;
+  return '<span class="cmp-th cmp-capa"><img src="'+LAMINAS_DIR+L.dir+p.id+'.webp"'+a+
+    ' style="width:'+r(IW*k)+'px;left:'+r((T-c[2]*k)/2-(c[0]-ox)*k)+'px;top:'+r((T-c[3]*k)/2-c[1]*k)+'px"></span>';
+}
+let cmpSel='';
+function comparaHTML(){
+  const M=cmpModelo();
+  if(M.cols.length<1)return '';
+  const nom=k=>{const l=libroCid(k);return l.nombre+' '+l.n;};
+  const fu=[...new Set(M.cols.map(k=>LAMINAS[k].paraleloFuente).filter(Boolean))];
+  return '<div class="cmp" data-sel="'+esc(cmpSel)+'" style="--cols:'+M.cols.length+'">'+
+    '<div class="cmp-cab"><div class="cmp-ant">'+IC('comparar')+' Comparar</div>'+
+    '<h3 class="cmp-tit">Las mismas épocas en '+(M.cols.length===1?'una visión':M.cols.length+' visiones')+'</h3>'+
+    '<p class="cmp-p">Toca un poder y se enciende en cada visión, con su texto y sus fechas. Cada capítulo que gane su lámina aparece aquí como una columna más.</p></div>'+
+    '<div class="cmp-tabla" role="group" aria-label="Profecías paralelas">'+
+    '<div class="cmp-fila cmp-enc" aria-hidden="true"><div class="cmp-poder">Poder</div>'+
+      M.cols.map(k=>'<div class="cmp-col">'+esc(nom(k))+'</div>').join('')+'</div>'+
+    M.filas.map(f=>'<button type="button" class="cmp-fila'+(cmpSel===f.key?' on':'')+'" data-k="'+esc(f.key)+'" aria-pressed="'+(cmpSel===f.key)+'" style="--c:'+esc(f.c)+'" onclick="cmpToca(\''+f.key+'\')">'+
+      '<span class="cmp-poder"><b>'+esc(f.reino)+'</b>'+(f.fechas?'<small>'+esc(f.fechas)+'</small>':'')+'</span>'+
+      M.cols.map(k=>{const ps=f.celdas[k]||[];
+        return '<span class="cmp-celda'+(ps.length?'':' vacia')+'">'+(ps.length?ps.map(p=>
+          '<span class="cmp-p1">'+cmpMini(LAMINAS[k],p,44)+'<span>'+esc(p.nombre)+'</span></span>').join('')
+          :'<span class="cmp-no">No la trae</span>')+'</span>';}).join('')+'</button>').join('')+
+    '</div><div class="cmp-det" id="cmp-det" aria-live="polite">'+cmpDetalle(M)+'</div>'+
+    (fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
+}
+function cmpDetalle(M){
+  M=M||cmpModelo();
+  const f=M.filas.find(x=>x.key===cmpSel);
+  if(!f)return '<p class="cmp-pista">Toca una fila para ver cada visión de ese poder lado a lado.</p>';
+  return '<div class="cmp-dt" style="--c:'+esc(f.c)+'"><div class="cmp-dt-cab"><b>'+esc(f.reino)+'</b>'+(f.fechas?' <span>'+esc(f.fechas)+'</span>':'')+'</div>'+
+    '<div class="cmp-dt-g">'+M.cols.map(k=>{const ps=f.celdas[k]||[], l=libroCid(k);
+      return '<div class="cmp-dt-c"><div class="cmp-dt-cap">'+esc(l.nombre+' '+l.n)+'</div>'+(ps.length?ps.map(p=>
+        '<div class="cmp-dt-p">'+cmpMini(LAMINAS[k],p,96,p.nombre)+'<div><b>'+esc(p.nombre)+'</b>'+
+        (p.texto?'<p class="biblia-t">«'+esc(p.texto)+'» <cite>'+esc(l.n+':'+String(p.ref||'').replace(/^\d+:/,''))+'</cite></p>':'')+
+        (p.corto?'<p>'+esc(p.corto)+'</p>':'')+'</div></div>').join('')
+        :'<p class="cmp-no">Esta visión no lo trae.</p>')+
+        (ps.length&&LAMINAS[k]?'<button type="button" class="btn txt peq" onclick="lamAbre(\''+k+'\',\'explorar\')">'+IC('lupa')+' Ver en la lámina</button>':'')+'</div>';}).join('')+'</div></div>';
+}
+function cmpToca(key){
+  cmpSel=cmpSel===key?'':key;
+  document.querySelectorAll('.cmp').forEach(c=>{
+    c.setAttribute('data-sel',cmpSel);
+    c.querySelectorAll('button.cmp-fila').forEach(b=>{const on=b.getAttribute('data-k')===cmpSel;
+      b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
+    const d=c.querySelector('.cmp-det');if(d)d.innerHTML=cmpDetalle();
+  });
+}
+/* Se abre como un repaso más (el de «Daniel 2, 7, 8, 11 y 12»), con la tabla
+   interactiva arriba y las tablas escritas debajo para lo que todavía no tiene
+   lámina. */
+const ES_COMPARAR=/-comparar$/;
+/* En «Para profundizar» de un capítulo que ya es columna de la comparación. */
+function cmpBoton(id){
+  let M;try{M=cmpModelo();}catch(e){return '';}
+  if(!M.cols.includes(id)||M.cols.length<2||!modsDe().some(x=>ES_COMPARAR.test(x.id)))return '';
+  const otros=M.cols.filter(k=>k!==id).map(k=>{const l=libroCid(k);return l.nombre+' '+l.n;});
+  return '<button type="button" class="cmp-ir" onclick="verComparar()">'+IC('comparar')+
+    '<span><b>Compararlo con '+esc(otros.join(' y '))+'</b><small>Las mismas épocas, lado a lado: toca un poder y se enciende en cada visión.</small></span>'+IC('der','cmp-ir-fl')+'</button>';
+}
+function verComparar(){
+  const m=modsDe().find(x=>ES_COMPARAR.test(x.id));
+  if(m)verCap(m.id);
+}
 
 /* ───────── arranque ───────── */
 try{

@@ -392,11 +392,14 @@ for (const W of ANCHOS) {
     ok(tira[0] === 9 && tira[1] === 10 && tira[2], W + ' · Daniel 7: la tira trae las 9 partes y sus imágenes cargan (' + tira.join(', ') + ')');
     const lado = await p.evaluate(() => { const r = document.getElementById('lamEsc').getBoundingClientRect(); return Math.round(r.width / r.height * 100) / 100; });
     ok(Math.abs(lado - 2050 / 1152) < 0.02, W + ' · la imagen de Daniel 7 es apaisada (' + lado + ')');
+    /* v205: aquí se prueba la foto entera del oso; con oso-solo.png sube recortado sobre el mar (ver 3e). */
+    await p.evaluate(() => { for (const k in lamHayP) delete lamHayP[k]; LAMINAS.d7.sube.solo.forEach(f => { lamHayImg[lamSrc(f)] = false; }); });
     await p.locator('#lamTira .lam-tb[data-p="oso"]').click();
     await p.waitForTimeout(2300); /* v205: el oso sube del mar (1,7 s) antes de quedar como imagen */
     const oso = await p.evaluate(() => { const h = document.getElementById('lamHoja'), r = h.getBoundingClientRect(), e = document.getElementById('lamEsc').getBoundingClientRect();
       return [h.textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamChip').textContent,
         document.querySelector('#lamTira .lam-tb.on').dataset.p, !(r.left < e.right - 1 && r.right > e.left + 1 && r.top < e.bottom - 1 && r.bottom > e.top + 1)]; });
+    await p.evaluate(() => LAMINAS.d7.sube.solo.forEach(f => { delete lamHayImg[lamSrc(f)]; }));
     ok(/Medo-Persia/.test(oso[0]) && /Lidia/.test(oso[0]) && /d7\/oso\.webp$/.test(oso[1]) && /^Oso/.test(oso[2]) && oso[3] === 'oso' && oso[4],
       W + ' · tocar el oso en la tira cambia la imagen y abre su explicación sin taparla');
     await p.locator('#lamTira .lam-tb[data-p="cuerno"]').click();
@@ -458,7 +461,14 @@ for (const W of ANCHOS) {
     await p.locator('.lam-tira-bots .lam-cond2').click();
     ok(await p.evaluate(() => document.getElementById('lamD2').hidden && !/Daniel 2/.test(document.getElementById('lamChip').textContent)), W + ' · «Con Daniel 2» se apaga');
     await p.locator('.lam-tira-bots .lam-cond2').click();
-    /* Los diez cuernos y el cuerno pequeño, hoy (sin capas): de cuarta.webp a cuerno.webp. */
+    /* Las capas (cuerno-suelto.png, leon-solo.png…) ya existen; el camino sin ellas se
+       fuerza sembrando «no existe» en lo que la app ya averiguó (lamHayImg), y se
+       vuelve a probar con los archivos reales. */
+    const capas = (hay) => p.evaluate(hay => { const L = LAMINAS.d7, fs = [L.cuernos.capas.suelto, L.cuernos.capas.pequeno, ...L.sube.solo];
+      for (const k in lamHayP) delete lamHayP[k];
+      fs.forEach(f => { const s = lamSrc(f); if (hay) delete lamHayImg[s]; else lamHayImg[s] = false; }); }, hay);
+    await capas(false);
+    /* Sin capas: de cuarta.webp a cuerno.webp. */
     const diez = await p.evaluate(() => { lamEligeE(4); return [document.querySelectorAll('#lamMarcasImg .lam-pt.ve').length, document.querySelectorAll('#lamMarcasImg .lam-ley span').length, document.querySelector('#lamSvg .lam-hist').getAttribute('href')]; });
     ok(diez[0] === 10 && diez[1] === 10 && diez[2].endsWith('d7/cuarta.webp'), W + ' · los diez cuernos se cuentan sobre cuarta.webp (' + diez.join(', ') + ')');
     await p.evaluate(() => lamEligeE(5)); await p.waitForTimeout(500);
@@ -466,18 +476,26 @@ for (const W of ANCHOS) {
       [...document.querySelectorAll('#lamMarcasImg .lam-ley .cae b')].map(b => b.textContent).join(), document.querySelectorAll('#lamZoom .lam-suelto').length, !!document.querySelector('#lamMarcasImg .lam-pt.pq.ve')]);
     ok(fot[0].endsWith('d7/cuerno.webp') && fot[1] === 3 && fot[2] === 'Hérulos,Vándalos,Ostrogodos' && fot[3] === 0 && fot[4],
       W + ' · sin capas: caen hérulos, vándalos y ostrogodos y queda cuerno.webp con el pequeño (' + fot.join(', ') + ')');
-    /* Con capas: un PNG transparente de 1 × 1 hace de cuerno-suelto.png y cuerno-pequeno.png. */
-    const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'base64');
-    await p.route(/laminas\/d7\/cuerno-(suelto|pequeno)\.png$/, r => r.fulfill({ body: PNG, contentType: 'image/png' }));
-    await p.evaluate(() => { for (const k in lamHayImg) if (/\.png$/.test(k)) delete lamHayImg[k]; for (const k in lamHayP) delete lamHayP[k]; lamEligeE(4); lamEligeE(5); });
-    await p.waitForTimeout(600);
+    await p.evaluate(() => lamEligeE(2)); await p.waitForTimeout(300);
+    const subeSin = await p.evaluate(() => { return [document.querySelectorAll('#lamZoom .lam-atras,#lamZoom .lam-sube-img').length, document.querySelector('#lamSvg .lam-hist').getAttribute('href')]; });
+    ok(subeSin[0] === 0 && subeSin[1].endsWith('d7/leopardo.webp'), W + ' · sin capas: el leopardo es su foto entera (' + subeSin.join(', ') + ')');
+    /* Con las capas reales. */
+    await capas(true);
+    await p.evaluate(() => { lamEligeE(4); lamEligeE(5); });
+    await p.waitForTimeout(800);
     const cap = await p.evaluate(() => { const g = document.querySelector('#lamZoom .lam-capa-g'), h = [...g.querySelectorAll('.lam-suelto')];
-      return [document.querySelector('#lamSvg .lam-hist').getAttribute('href'), h.length, h.every(x => /translate\((?!0 0)/.test(x.getAttribute('transform')) && x.style.opacity !== '0'),
+      return [document.querySelector('#lamSvg .lam-hist').getAttribute('href'), h.length, h.every(x => /translate\((?!0 0)/.test(x.getAttribute('transform')) && x.style.opacity !== '0' && /cuerno-suelto\.png$/.test(x.getAttribute('href'))),
         g.querySelector('.lam-tapa').style.opacity, g.querySelector('.lam-pq-img').getAttribute('y'), document.querySelectorAll('#lamMarcasImg .lam-ley .cae').length]; });
     ok(cap[0].endsWith('d7/cuarta.webp') && cap[1] === 3 && cap[2] && cap[3] === '1' && cap[4] === '0' && cap[5] === 3,
       W + ' · con cuerno-suelto.png y cuerno-pequeno.png: los tres se desprenden sobre cuarta.webp y crece el pequeño (' + cap.join(', ') + ')');
-    await p.unroute(/laminas\/d7\/cuerno-(suelto|pequeno)\.png$/);
-    await p.evaluate(() => { for (const k in lamHayImg) if (/\.png$/.test(k)) delete lamHayImg[k]; for (const k in lamHayP) delete lamHayP[k]; });
+    await p.evaluate(() => lamEligeE(2)); await p.waitForTimeout(800);
+    const subeCon = await p.evaluate(() => [[...document.querySelectorAll('#lamZoom .lam-atras')].map(i => i.getAttribute('href').split('/').pop()).join(), (document.querySelector('#lamZoom .lam-sube-img') || { getAttribute: () => '' }).getAttribute('href').split('/').pop(), document.querySelector('#lamSvg .lam-hist').getAttribute('href').split('/').pop()]);
+    ok(subeCon.join(' | ') === 'leon-solo.png,oso-solo.png | leopardo-solo.png | mar.webp', W + ' · con capas: el leopardo sube del mar y el león y el oso quedan atrás (' + subeCon.join(' | ') + ')');
+    await p.evaluate(() => lamEligeE(3)); await p.waitForTimeout(800);
+    const bes = await p.evaluate(() => [document.querySelectorAll('#lamZoom .lam-atras,#lamZoom .lam-sube-img').length, document.querySelector('#lamSvg .lam-hist').getAttribute('href').split('/').pop()]);
+    ok(bes[0] === 0 && bes[1] === 'cuarta.webp', W + ' · la cuarta bestia, sin capa propia, sube con su foto entera (' + bes.join(', ') + ')');
+    await capas(false);
+    await p.evaluate(() => lamEligeE(5)); await p.waitForTimeout(300);
     /* Las once señas, en la hoja del cuerno pequeño. */
     await p.evaluate(() => lamSenasPlay()); await p.waitForTimeout(300);
     const se = await p.evaluate(() => [document.querySelectorAll('#lamSenas li').length, document.querySelectorAll('#lamSenas li.on').length]);
@@ -528,6 +546,7 @@ for (const W of ANCHOS) {
     const anchoP = await p.evaluate(() => { const l = document.getElementById('lam'); return l.scrollWidth - l.clientWidth; });
     ok(anchoP <= 0, W + ' · Presentar Daniel 7 no se desborda a lo ancho (' + anchoP + ')');
     await p.evaluate(() => lamCierra());
+    await capas(true);
     await p.emulateMedia({ reducedMotion: 'no-preference' });
   }
   /* v189: tocar el nombre de un personaje abre su ficha en la hoja. */
@@ -570,6 +589,58 @@ for (const W of ANCHOS) {
   });
   ok(Object.values(ancho).every(x => x <= 0), W + ' · sin desborde a lo ancho ' + JSON.stringify(ancho));
   ok(errores.length === 0, W + ' · cero errores de JavaScript' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+/* ── 6. v205: el rediseño del estudio, en 1440 y 390 ── */
+for (const W of [1440, 390]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: 900 }, serviceWorkers: 'block' });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message));
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base); await p.waitForTimeout(500);
+  await p.evaluate(() => {
+    localStorage.setItem('conexion-biblica-v4', JSON.stringify({ v: 4, activo: 'a1', alumnos: {
+      a1: { nombre: 'Camilo', cat: 'gm', prog: { d2: 60 }, ultPantalla: 'inicio' },
+      a2: { nombre: 'Alejo', cat: 'av', aCargo: true, tutor: 'Camilo', prog: {} } } }));
+    localStorage.setItem('cb-sigue', JSON.stringify({ a1: { c: 'd2', s: 3 } }));
+  });
+  await p.reload(); await p.waitForTimeout(1500);
+  // «Continuar» abre Daniel 2 en la sección 4 (vers. 16-20), a la vista.
+  await p.evaluate(() => ir('inicio'));
+  await p.locator('#ini-hero .hero-go').click(); await p.waitForTimeout(1300);
+  const sig = await p.evaluate(() => { const b = document.querySelector('#detalle .lect-bl[data-sec="3"]'), r = b && b.getBoundingClientRect();
+    return [capAbierto, seccionALaVista(), !!b && r.top >= 0 && r.top < innerHeight / 2]; });
+  ok(sig[0] === 'd2' && sig[1] === 3 && sig[2], W + ' · v205: Continuar abre Daniel 2 en la sección 4, a la vista (' + sig.join(', ') + ')');
+  // Tres columnas en el computador, una en el teléfono; sin desborde.
+  const col = await p.evaluate(() => { const v = document.querySelector('#detalle .vd'), cs = getComputedStyle(v);
+    return [cs.display, cs.gridTemplateColumns.split(' ').length, document.documentElement.scrollWidth - innerWidth,
+      getComputedStyle(document.querySelector('#detalle .vd-ind')).display]; });
+  ok(W >= 1100 ? col[0] === 'grid' && col[1] === 3 && col[3] !== 'none' : col[0] !== 'grid' && col[3] === 'none', W + ' · v205: el capítulo va en ' + (W >= 1100 ? 'tres columnas' : 'una columna') + ' (' + col.slice(0, 2).join(' ') + ')');
+  ok(col[2] <= 0, W + ' · v205: el capítulo no se desborda a lo ancho (' + col[2] + ')');
+  // «Antes de seguir»: responder cuenta como practicado.
+  const pr = await p.evaluate(() => { const antes = nivelesDe('d2').pr; const b = document.querySelector('#detalle .lect-bl[data-sec="3"] .ads-op');
+    b.click(); const q = b.closest('.ads-q'); return [antes, nivelesDe('d2').pr, q.classList.contains('hecha'), !!q.querySelector('.ads-res')]; });
+  ok(pr[1] === pr[0] + 1 && pr[2] && pr[3], W + ' · v205: responder «Antes de seguir» da la respuesta al instante y suma a Practicado (' + pr[0] + ' → ' + pr[1] + ')');
+  // Comparar: tocar una fila la enciende y abre su detalle.
+  await p.evaluate(() => verComparar()); await p.waitForTimeout(500);
+  await p.locator('button.cmp-fila[data-k="-539"]').click();
+  const cm = await p.evaluate(() => [document.querySelector('button.cmp-fila.on').getAttribute('data-k'), document.querySelector('.cmp-dt').textContent, document.documentElement.scrollWidth - innerWidth]);
+  ok(cm[0] === '-539' && /Pecho y brazos de plata/.test(cm[1]) && /Oso/.test(cm[1]) && cm[2] <= 0, W + ' · v205: en Comparar, Medo-Persia se enciende en Daniel 2 y Daniel 7 (desborde ' + cm[2] + ')');
+  // Quitar a una persona, con la pregunta de la app (no el confirm del navegador).
+  await p.evaluate(() => { ir('inicio'); abreYo(); });
+  await p.locator('.alu-mas').nth(1).click();
+  await p.locator('.alu-mi.peligro').click(); await p.waitForTimeout(300);
+  const pre = await p.evaluate(() => [document.querySelector('#hoja .preg-t') && document.querySelector('#hoja .preg-t').textContent, personasDB().length]);
+  await p.locator('#hoja .preg-pie .btn.gho').click(); await p.waitForTimeout(300);
+  const cancela = await p.evaluate(() => personasDB().length);
+  await p.locator('.alu-mas').nth(1).click();
+  await p.locator('.alu-mi.peligro').click(); await p.waitForTimeout(300);
+  await p.locator('#hoja .preg-pie .btn.rojo').click(); await p.waitForTimeout(400);
+  const fin = await p.evaluate(() => [personasDB().map(x => x.nombre).join(), JSON.parse(localStorage.getItem('conexion-biblica-v4')).alumnos.a2 === undefined]);
+  ok(/Quitar a Alejo/.test(pre[0]) && pre[1] === 2 && cancela === 2 && fin[0] === 'Camilo' && fin[1], W + ' · v205: «Quitar» pregunta en la app; Cancelar no borra y Quitar borra la ficha (' + fin[0] + ')');
+  const yo = await p.evaluate(() => [document.getElementById('nav-yo').classList.contains('solo'), getComputedStyle(document.querySelector('#nav-yo .yo-tx')).display]);
+  ok(yo[0] && yo[1] === 'none', W + ' · v205: con una sola persona la ficha queda en la inicial');
+  ok(errores.length === 0, W + ' · v205: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
 /* ── 5. en un teléfono, ningún campo hace que la página se amplíe sola (v159) ── */

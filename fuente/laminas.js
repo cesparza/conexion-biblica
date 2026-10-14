@@ -200,11 +200,11 @@ LAMINAS.d7 = {
   hitos: [-539, -331, -168, 476, 538, 1798, 1844],
   /* v205: LAS BESTIAS SUBEN DEL MAR (7:3), una por paso. Hoy: la imagen entera de
      cada bestia sube y aparece sobre la anterior. Cuando existan
-     laminas/d7/{leon,oso,leopardo,cuarta}-solo.png (fondo transparente), suben
+     laminas/d7/{leon,oso,leopardo,cuarta}-solo.png (fondo transparente; la que falte sube con su foto entera), suben
      recortadas sobre mar.webp y las anteriores quedan chicas atrás. Medidas en
      píxeles de una imagen de 1200 × 675. */
   sube: { fondo: 'mar', ids: ['leon', 'oso', 'leopardo', 'bestia'], solo: ['leon-solo.png', 'oso-solo.png', 'leopardo-solo.png', 'cuarta-solo.png'],
-    sitio: [330, 90, 540, 520], atras: [[20, 150, 250, 240], [930, 150, 250, 240], [40, 360, 230, 220]], olas: 520 },
+    sitio: [370, 110, 600, 440], atras: [[10, 210, 260, 180], [200, 250, 260, 200], [20, 340, 250, 190]], olas: 500 },
   /* v205: LOS DIEZ CUERNOS Y EL CUERNO PEQUEÑO (7:7-8, 24). En «Los diez cuernos» se
      cuentan sobre cuarta.webp (tiene exactamente diez); en «El cuerno pequeño» tres
      caen y sube el pequeño. Hoy: de cuarta.webp a cuerno.webp, con los nombres de
@@ -227,9 +227,10 @@ LAMINAS.d7 = {
        (`tres`: x, y, ancho, alto, grados, girando sobre la base), que se cae.
        `pq`: la ventana de donde sale el pequeño (crece desde abajo); `pqEn`: su punto. */
     capas: { suelto: 'cuerno-suelto.png', pequeno: 'cuerno-pequeno.png',
-      tres: [[812, 63, 38, 94, 6], [836, 85, 37, 92, 14], [853, 104, 38, 96, 17]],
+      /* cuerno-suelto.png viene con la punta arriba a la izquierda: `espejo` lo voltea. */
+      espejo: true, tres: [[820, 86, 68, 76, -22], [843, 106, 68, 76, -20], [860, 130, 68, 76, -18]],
       tapa: [[798, 50, 66, 100, 6, 84, 149], [823, 74, 64, 96, 14, 60, 127], [841, 94, 66, 100, 17, 41, 105]],
-      pq: [700, 20, 64, 116], pqEn: [732, 70] },
+      pq: [674, 20, 112, 150], pqEn: [730, 95] },
   },
   /* v205: LAS ONCE SEÑAS DEL CUERNO PEQUEÑO, las mismas de la interpretación de
      Daniel 7 (complementos/daniel/d7.js); se encienden una por una con su

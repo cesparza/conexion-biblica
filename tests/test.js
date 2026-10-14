@@ -1770,11 +1770,19 @@ ok(/divideVista\(d,id\);/.test(js)&&js.indexOf('divideVista(d,id);')<js.indexOf(
 const bloqueVd=js.slice(js.indexOf('function divideVista'),js.indexOf('function divideVista')+1400);
 ok(/if\(typeof VERS==='undefined'\|\|!VERS\[id\]\)return;/.test(bloqueVd),
   'Solo parte capitulos con texto RV1995: en P&R no habria nada en la izquierda');
-ok(/@media \(min-width:1200px\)\{\s*\.vd\{display:flex/.test(CSS_SIN),
-  'Las dos columnas son una media query, no una decision del JS');
-ok(/\.vd-izq\{position:sticky/.test(CSS_SIN),
-  'La columna del texto se queda pegada mientras el estudio se desplaza');
-ok(/\.vd-izq\{[^}]*max-height:calc\(100vh/.test(CSS_SIN),
+/* v205: tres columnas (indice, texto, estudio) y por CONSULTA DE CONTENEDOR:
+   dentro de Jovenes el capitulo mide 46rem aunque la ventana sea ancha, y una
+   media query las ponia apretadas en 736 px. El numero es uno solo: VD_ANCHO
+   en el JS y el min-width del @container. */
+{
+  const vdAncho=(js.match(/const VD_ANCHO=(\d+);/)||[])[1];
+  ok(/#detalle\{container:det \/ inline-size\}/.test(CSS_SIN)&&
+    new RegExp('@container det \\(min-width:'+vdAncho+'px\\)\\{\\s*\\.vd\\{display:grid').test(CSS_SIN),
+    'Las tres columnas son una consulta de contenedor sobre #detalle, con el mismo ancho que VD_ANCHO ('+vdAncho+')');
+}
+ok(/\.vd-der\{position:sticky/.test(CSS_SIN),
+  'El estudio se queda pegado mientras el texto va con la pagina');
+ok(/\.vd-der\{[^}]*max-height:calc\(100vh/.test(CSS_SIN),
   'con max-height, o la columna crece y deja de estar pegada');
 /* v131, REGLA PARA QUE NO VUELVA A PASAR: ningun ancho de pantalla puede
    esconder la forma de escuchar el capitulo. En v127 el reproductor quedo solo
@@ -1797,8 +1805,8 @@ ok(!/classList\.toggle\('suena',VZ\.sonando&&k===i\)/.test(APP),
   'Ningun reproductor marca el que suena por numero de parte');
 /* El unico sitio donde el JS mira el ancho es el `open` inicial del acordeon:
    sin la guarda quedaba abierto tambien a 390px, contra la decision de v43. */
-ok(/det\.open=!!\(window\.matchMedia&&window\.matchMedia\('\(min-width:1200px\)'\)\.matches\);/.test(js),
-  'El acordeon se abre de entrada SOLO en dos columnas');
+ok(/det\.open=enColumnas\(d\);/.test(js)&&/function enColumnas\(d\)\{[^}]*VD_ANCHO/.test(js),
+  'El acordeon se abre de entrada SOLO en columnas (mide la caja, como el CSS)');
 
 /* ───────── paleta de comandos ─────────
    La lista sale de los mismos datos del material: no hay un catalogo aparte. */
