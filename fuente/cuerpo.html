@@ -128,6 +128,7 @@
   <symbol id="i-copiar" viewBox="0 0 24 24"><rect class="f" x="8.4" y="8.4" width="11.4" height="11.4" rx="2"/><rect x="8.4" y="8.4" width="11.4" height="11.4" rx="2"/><path d="M15.6 8.4V6a1.8 1.8 0 0 0-1.8-1.8H6A1.8 1.8 0 0 0 4.2 6v7.8A1.8 1.8 0 0 0 6 15.6h2.4"/></symbol>
   <symbol id="i-bajar" viewBox="0 0 24 24"><path d="M12 4v11.2M7.6 11 12 15.4l4.4-4.4M5 19.6h14"/></symbol>
   <symbol id="i-ojo" viewBox="0 0 24 24"><path class="f" d="M2.8 12s3.4-6.4 9.2-6.4 9.2 6.4 9.2 6.4-3.4 6.4-9.2 6.4S2.8 12 2.8 12z"/><path d="M2.8 12s3.4-6.4 9.2-6.4 9.2 6.4 9.2 6.4-3.4 6.4-9.2 6.4S2.8 12 2.8 12z"/><circle cx="12" cy="12" r="2.6"/></symbol>
+  <symbol id="i-puntos" viewBox="0 0 24 24"><circle cx="5.6" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="18.4" cy="12" r="1.7" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-birrete" viewBox="0 0 24 24"><path class="f" d="M2.8 9.6 12 5l9.2 4.6L12 14.2z"/><path d="M2.8 9.6 12 5l9.2 4.6L12 14.2zM6.6 11.6v4.2c1.4 1.4 3.4 2 5.4 2s4-.6 5.4-2v-4.2M21.2 9.6v5"/></symbol>
 </svg>
@@ -229,16 +230,21 @@
     </div>
   </div>
 
-  <div class="card hoy">
-    <h2><svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg><span>Qué estudiar hoy</span></h2>
-    <div id="hoy"></div>
-  </div>
+  <!-- v205: EL INICIO DICE UNA SOLA COSA PRIMERO: por dónde seguir. La llena
+       pintaHero() con el capítulo y la sección donde se quedó, cuánto falta y
+       los tres niveles (leído, practicado, dominado). -->
+  <section class="hero-c" id="ini-hero" aria-label="Continuar" hidden></section>
 
-  <div class="card">
-    <h2><svg class="ico" aria-hidden="true"><use href="#i-grafico"/></svg><span>Progreso por capítulo</span></h2>
-    <p class="nota" id="prog-nota"></p>
-    <div class="rejilla" id="anillos"></div>
-  </div>
+  <section class="ini-sec ini-hoy" aria-labelledby="ini-hoy-t">
+    <h2 class="ini-h" id="ini-hoy-t">Para hoy</h2>
+    <div id="hoy"></div>
+  </section>
+
+  <section class="ini-sec ini-caps" aria-labelledby="ini-caps-t">
+    <div class="ini-h-fila"><h2 class="ini-h" id="ini-caps-t">Capítulo por capítulo</h2>
+    <p class="nota" id="prog-nota"></p></div>
+    <div class="rej-c" id="anillos"></div>
+  </section>
 
   <div class="card" id="card-stats">
     <h2><svg class="ico" aria-hidden="true"><use href="#i-medalla"/></svg><span>Tus números</span></h2>

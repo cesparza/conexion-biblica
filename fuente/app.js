@@ -1918,12 +1918,15 @@ function pintaYo(){
   const b=document.getElementById('nav-yo');
   if(!b)return;
   const nom=S.nombre||'Sin nombre';
-  /* v205: «Estudiando: Camilo ▾». Con una sola persona en el aparato no hay a
-     quién cambiar: queda la inicial sola (el panel sigue abriendo igual). */
+  /* v205: la ficha es compacta: inicial, nombre y ▾ (la categoría va en el
+     globo y en el panel). Con una sola persona en el aparato no hay a quién
+     cambiar: queda la inicial sola, y el panel sigue abriendo igual. No dice
+     «Estudiando:» como el prototipo, porque el filtro de al lado ya se llama
+     así («Estudiando: Todo») y serían dos rótulos iguales para dos cosas. */
   const varias=personasDB().length>1;
   if(b.classList)b.classList.toggle('solo',!varias);
   b.innerHTML='<span class="yo-ini" aria-hidden="true">'+esc(nom.trim().charAt(0).toUpperCase()||'?')+'</span>'+
-    '<span class="yo-tx"><span class="yo-k">Estudiando</span><span class="yo-n">'+esc(nom)+'</span>'+
+    '<span class="yo-tx"><span class="yo-n">'+esc(nom)+'</span>'+
     '<span class="yo-c">'+icoDe(ACT().icono)+' '+esc(CAT().nombre)+'</span></span>'+IC('abajo','yo-fl')+
     /* El globo es un nodo propio, no el `title` del navegador, por dos razones:
        el title tarda un segundo largo en salir y no admite dos renglones. En
@@ -1999,10 +2002,13 @@ function ancla(){
     /* v203: dentro de la app de Jóvenes la ficha no está en un riel sino arriba,
        en una barra a lo ancho: anclar al borde de esa barra dejaba el panel fuera
        de la pantalla y el toque «no hacía nada». Ahí el panel sale debajo de la ficha. */
-    if(borde-r.right>200){
-      const ancho=Math.min(420,(window.innerWidth||1200)-32);
+    /* v205: en el computador la ficha ya no va en el riel sino arriba a la
+       derecha (ver estilos): ahí el panel cae debajo, alineado por su borde
+       derecho. */
+    if(Math.abs(borde-r.right)>200){
+      const W=window.innerWidth||1200, der=r.left>W/2, ancho=Math.min(der?380:420,W-32);
       h.classList.remove('hoja-arriba');
-      h.style.setProperty('--yo-x',Math.round(Math.max(16,Math.min(r.left,(window.innerWidth||1200)-ancho-16)))+'px');
+      h.style.setProperty('--yo-x',Math.round(Math.max(16,Math.min(der?r.right-ancho:r.left,W-ancho-16)))+'px');
       h.style.setProperty('--yo-y',Math.round(r.bottom+8)+'px');
       return;
     }
@@ -2544,7 +2550,7 @@ function saltaAlTexto(btn,cid,de,hasta){
   try{
     if(!btn||!btn.closest||!btn.closest('#detalle')||btn.closest('.vd-izq'))return false;
     const vd=document.querySelector('#detalle .vd'), iz=document.querySelector('#detalle .vd-izq');
-    if(!vd||!iz||getComputedStyle(vd).display!=='flex'||!iz.getClientRects().length)return false;
+    if(!vd||!iz||!/^(flex|grid)$/.test(getComputedStyle(vd).display)||!iz.getClientRects().length)return false;
     const lect=iz.querySelector('details.lect[data-cid="'+cid+'"]');
     if(!lect)return false;
     const h=hasta&&hasta>de?hasta:de;
@@ -2553,8 +2559,12 @@ function saltaAlTexto(btn,cid,de,hasta){
     if(!ps.length)return false;
     lect.open=true;
     const quieto=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const top=ps[0].getBoundingClientRect().top-iz.getBoundingClientRect().top+iz.scrollTop-iz.clientHeight/3;
-    iz.scrollTo({top:Math.max(0,top),behavior:quieto?'auto':'smooth'});
+    /* v205: el texto va con el scroll de la página (el estudio es el que se
+       queda pegado); si la columna tuviera su propio scroll, se usa el suyo. */
+    if(iz.scrollHeight>iz.clientHeight+4&&getComputedStyle(iz).overflowY!=='visible'){
+      const top=ps[0].getBoundingClientRect().top-iz.getBoundingClientRect().top+iz.scrollTop-iz.clientHeight/3;
+      iz.scrollTo({top:Math.max(0,top),behavior:quieto?'auto':'smooth'});
+    }else window.scrollTo({top:Math.max(0,ps[0].getBoundingClientRect().top+(window.scrollY||0)-(window.innerHeight||800)/3),behavior:quieto?'auto':'smooth'});
     lect.querySelectorAll('.biblia p.salto').forEach(p=>p.classList.remove('salto'));
     ps.forEach(p=>p.classList.add('salto'));
     ps[0].setAttribute('tabindex','-1');ps[0].focus({preventScroll:true});
@@ -2747,9 +2757,12 @@ function seccionLectura(cid){
        Books: es una forma de leer y escuchar, no una caja aparte (tenía casi
        el peso del reproductor y el texto se partía en tres renglones). Sin voz
        en el aparato no hay reproductor, y el botón va solo. */
+    /* v205: va AL FINAL y pegado abajo (CSS): una barra delgada que no tapa
+       el texto mientras se lee, con los mismos controles. */
+    bloques.join('')+
     '<div class="lect-top">'+(puedeHablar()?htmlLecVoz(nums.length,'texto',cid)
       :'<button type="button" class="btn tono lect-full" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+' Pantalla completa</button>')+'</div>'+
-    bloques.join('')+'</div></details>';
+    '</div></details>';
 }
 
 /* ───────── MODO LECTURA ─────────
@@ -3246,10 +3259,13 @@ function verCap(id,quieto){
       '<div class="sec interp-cab" data-capa="contexto" data-pest="prof" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
       '<p class="interp-nota"><b>Esto no entra al examen.</b> Es lo que significa el capítulo y cómo la Biblia explica sus símbolos. Cada sección cierra con su fuente.</p>'+
       /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
-      lamTarjeta(id)+'</div>'+
+      lamTarjeta(id)+cmpBoton(id)+'</div>'+
       secs.filter(esSecInterp).map(htmlSec(id,'prof')).join(''):
       soloI?'<div class="sec interp-cab" data-capa="contexto" data-pest="prof"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
-        '<p class="interp-nota"><b>Esto no entra al examen.</b> Cada sección cierra con su fuente.</p></div>'+secs.map(htmlSec(id,'prof')).join(''):
+        '<p class="interp-nota"><b>Esto no entra al examen.</b> Cada sección cierra con su fuente.</p></div>'+
+        /* v205: el repaso de comparar abre con la tabla que se toca. */
+        (ES_COMPARAR.test(id)?'<div class="sec cmp-sec" data-capa="contexto" data-pest="prof">'+comparaHTML()+'</div>':'')+
+        secs.map(htmlSec(id,'prof')).join(''):
       lamTarjeta(id))+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
@@ -3551,8 +3567,14 @@ function divideVista(d,id){
        vio en el render que sin esta guarda quedaba abierto también a 390 px.
        Es el único sitio donde el JS mira el ancho, y no necesita `resize`: el
        acordeón lo abre y lo cierra quien quiera con un toque. */
-    det.open=!!(window.matchMedia&&window.matchMedia('(min-width:1200px)').matches);
+    det.open=enColumnas(d);
     const fila=document.createElement('div');fila.className='vd';
+    /* v205: tres columnas. A la izquierda el índice (capítulos y secciones),
+       en medio el texto y a la derecha el estudio, que empieza por «Esta
+       sección» (ver estaSeccionHTML). */
+    const ind=document.createElement('nav');ind.className='vd-ind';
+    if(ind.setAttribute)ind.setAttribute('aria-label','Índice del capítulo');
+    ind.innerHTML=indiceHTML(id);
     const iz=document.createElement('div');iz.className='vd-izq';
     const de=document.createElement('div');de.className='vd-der';
     iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
@@ -3565,11 +3587,26 @@ function divideVista(d,id){
     if(cf)de.firstChild.appendChild(cf);
     const cp=d.querySelector(':scope>.cap-pest');
     if(cp)de.firstChild.insertBefore(cp,de.firstChild.firstChild.nextSibling);
+    const ea=document.createElement('div');ea.className='est-ahora';ea.id='est-ahora';ea.hidden=true;
+    if(ea.setAttribute)ea.setAttribute('aria-live','polite');
+    de.firstChild.appendChild(ea);
     iz.appendChild(det);
     secs.forEach(x=>de.appendChild(x));
-    fila.appendChild(iz);fila.appendChild(de);
+    fila.appendChild(ind);fila.appendChild(iz);fila.appendChild(de);
     d.insertBefore(fila,d.children[1]);
+    eaK=-1;
+    const sg=sigueDe();
+    pintaEstaSeccion(sg&&sg.c===id?sg.s:0);
   }catch(e){}
+}
+/* LAS COLUMNAS LAS DECIDE EL ANCHO DEL CAPÍTULO, no el de la ventana (v205).
+   Dentro de la app de Jóvenes el módulo vive en una columna de 46rem aunque
+   la ventana mida 1900 px: con una media query las tres columnas salían
+   apretadas en 736 px. El CSS usa una consulta de contenedor sobre #detalle
+   (VD_ANCHO px, el mismo número), y el JS mide la misma caja. */
+const VD_ANCHO=920;
+function enColumnas(d){
+  try{return !!d&&d.getBoundingClientRect().width>=VD_ANCHO;}catch(e){return false;}
 }
 
 function avanza(id,p){S.prog[id]=Math.max(S.prog[id]||0,p);guardar();pintaCaps();}
@@ -7411,6 +7448,15 @@ function pintaHero(){
       (lam?'<button type="button" class="btn tono" onclick="lamAbre(\''+c.id+'\',\'explorar\')">'+IC('lupa')+' Ver la lámina</button>':'')+
       '</div></div>';
 }
+/* Lo que queda pegado arriba y tapa: la barra de arriba (celular, Jóvenes) o
+   la ficha flotante del computador (--pega-arriba). Medido, no supuesto. */
+function altoPegado(){
+  let n=0;
+  try{n=parseFloat(getComputedStyle(document.body).getPropertyValue('--pega-arriba'))||0;}catch(e){}
+  try{const r=document.querySelector('.nav').getBoundingClientRect();
+    if(r.width>r.height&&r.top<=1&&r.bottom<(window.innerHeight||800)/2)n=Math.max(n,r.bottom);}catch(e){}
+  return n;
+}
 function continuar(){
   const h=heroDatos();
   if(!h)return;
@@ -7438,8 +7484,7 @@ function irSeccion(k){
       window.scrollTo(0,Math.max(0,top));
       iz.scrollTop+=el.getBoundingClientRect().top-iz.getBoundingClientRect().top-8;
     }else{
-      const tope=document.querySelector('.nav')?Math.max(0,document.querySelector('.nav').getBoundingClientRect().bottom):0;
-      window.scrollTo(0,Math.max(0,el.getBoundingClientRect().top+(window.scrollY||0)-tope-12));
+      window.scrollTo(0,Math.max(0,el.getBoundingClientRect().top+(window.scrollY||0)-altoPegado()-12));
     }
   }catch(e){}
   sigueAnota(capAbierto||'',k);
@@ -7657,8 +7702,12 @@ function irASec(i){
   const s=d.querySelector('.sec[data-i="'+i+'"]');if(!s)return;
   const p=s.getAttribute('data-pest');if(p&&p!==capPest)ponPest(p);
   if(s.style.display==='none')s.style.display='';
-  const tope=document.querySelector('.nav')?Math.max(0,document.querySelector('.nav').getBoundingClientRect().bottom):0;
-  window.scrollTo({top:Math.max(0,s.getBoundingClientRect().top+(window.scrollY||0)-tope-16),behavior:lamQuieto()?'auto':'smooth'});
+  /* En tres columnas la sección vive en la columna del estudio, que tiene su
+     propio scroll; si no, se mueve la página. */
+  const col=s.closest?s.closest('.vd-der'):null;
+  if(col&&col.scrollHeight>col.clientHeight+4&&getComputedStyle(col).overflowY!=='visible')
+    col.scrollTo({top:Math.max(0,s.getBoundingClientRect().top-col.getBoundingClientRect().top+col.scrollTop-60),behavior:lamQuieto()?'auto':'smooth'});
+  else window.scrollTo({top:Math.max(0,s.getBoundingClientRect().top+(window.scrollY||0)-altoPegado()-16),behavior:lamQuieto()?'auto':'smooth'});
   s.classList.remove('destaca');void s.offsetWidth;s.classList.add('destaca');
 }
 
@@ -7728,40 +7777,57 @@ function cmpModelo(Ls){
     .sort((a,b)=>{const x=libroCid(a),y=libroCid(b);return x.pre===y.pre?x.n-y.n:x.pre<y.pre?-1:1;});
   const filas=new Map();
   cols.forEach(k=>{
-    const L=Ls[k], par={};
-    (L.paralelo||[]).forEach(p=>{if(Array.isArray(p))par[p[0]]=p[2];});
+    const L=Ls[k];
     L.partes.forEach(p=>{
       const key=Number.isFinite(p.de)?String(p.de):CMP_FIN;
       if(!filas.has(key))filas.set(key,{key,de:Number.isFinite(p.de)?p.de:Infinity,reino:'',fechas:'',c:p.c||'',celdas:{}});
       const f=filas.get(key);
-      if(!f.reino)f.reino=key===CMP_FIN?(par[p.id]||p.reino||''):(p.reino||'');
-      if(!f.fechas&&key!==CMP_FIN)f.fechas=p.fechas||'';
+      if(!f.reino)f.reino=key===CMP_FIN?'El reino de Dios':(p.reino||'');
+      if(!f.fechas)f.fechas=key===CMP_FIN?'Lo que no pasa':(p.fechas||'');
       (f.celdas[k]=f.celdas[k]||[]).push(p);
     });
   });
   return {cols,filas:[...filas.values()].sort((a,b)=>a.de-b.de)};
 }
-const cmpImg=(L,p)=>LAMINAS_DIR+(L.tipo==='escenas'?((p.img||p.id).includes('/')?'':L.dir)+(p.img||p.id):L.dir+p.id)+'.webp';
+/* La miniatura de una parte. En una lámina de escenas (Daniel 7) es su imagen.
+   En la de capas (Daniel 2) cada parte es una capa del tamaño de la estatua
+   entera, así que se recorta con su caja (`cajas`): la cabeza de oro sale como
+   cabeza, no como un punto en un lienzo vacío. `T` es el lado en px. */
+function cmpMini(L,p,T,alt){
+  const a=' alt="'+esc(alt||'')+'" loading="lazy" decoding="async"';
+  if(L.tipo==='escenas'){const f=p.img||p.id;
+    return '<span class="cmp-th"><img class="cmp-cubre" src="'+LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+'.webp"'+a+'></span>';}
+  /* Las capas miden 768 px y van corridas `ox` dentro del lienzo de la
+     lámina (ver lamSvg); las cajas están en coordenadas del lienzo. Lo que no
+     es capa (la piedra, el monte) usa su escena. */
+  const c=(L.cajas||{})[p.id], esCapa=(L.capas||[]).includes(p.id);
+  if(!c||!esCapa){const e=(L.escenas||[]).find(x=>x.parte===p.id), f=e?e.f:p.id;
+    return '<span class="cmp-th"><img class="cmp-cubre" src="'+LAMINAS_DIR+(f.includes('/')?'':L.dir)+f+'.webp"'+a+'></span>';}
+  const IW=768, ox=L.ox||0, k=T/Math.max(c[2],c[3]), r=n=>Math.round(n*10)/10;
+  return '<span class="cmp-th cmp-capa"><img src="'+LAMINAS_DIR+L.dir+p.id+'.webp"'+a+
+    ' style="width:'+r(IW*k)+'px;left:'+r((T-c[2]*k)/2-(c[0]-ox)*k)+'px;top:'+r((T-c[3]*k)/2-c[1]*k)+'px"></span>';
+}
 let cmpSel='';
 function comparaHTML(){
   const M=cmpModelo();
   if(M.cols.length<1)return '';
   const nom=k=>{const l=libroCid(k);return l.nombre+' '+l.n;};
+  const fu=[...new Set(M.cols.map(k=>LAMINAS[k].paraleloFuente).filter(Boolean))];
   return '<div class="cmp" data-sel="'+esc(cmpSel)+'" style="--cols:'+M.cols.length+'">'+
     '<div class="cmp-cab"><div class="cmp-ant">'+IC('comparar')+' Comparar</div>'+
     '<h3 class="cmp-tit">Las mismas épocas en '+(M.cols.length===1?'una visión':M.cols.length+' visiones')+'</h3>'+
     '<p class="cmp-p">Toca un poder y se enciende en cada visión, con su texto y sus fechas. Cada capítulo que gane su lámina aparece aquí como una columna más.</p></div>'+
     '<div class="cmp-tabla" role="group" aria-label="Profecías paralelas">'+
-    '<div class="cmp-fila cmp-th" aria-hidden="true"><div class="cmp-poder">Poder</div>'+
+    '<div class="cmp-fila cmp-enc" aria-hidden="true"><div class="cmp-poder">Poder</div>'+
       M.cols.map(k=>'<div class="cmp-col">'+esc(nom(k))+'</div>').join('')+'</div>'+
     M.filas.map(f=>'<button type="button" class="cmp-fila'+(cmpSel===f.key?' on':'')+'" data-k="'+esc(f.key)+'" aria-pressed="'+(cmpSel===f.key)+'" style="--c:'+esc(f.c)+'" onclick="cmpToca(\''+f.key+'\')">'+
       '<span class="cmp-poder"><b>'+esc(f.reino)+'</b>'+(f.fechas?'<small>'+esc(f.fechas)+'</small>':'')+'</span>'+
       M.cols.map(k=>{const ps=f.celdas[k]||[];
         return '<span class="cmp-celda'+(ps.length?'':' vacia')+'">'+(ps.length?ps.map(p=>
-          '<span class="cmp-p1"><img src="'+cmpImg(LAMINAS[k]||{dir:k+'/'},p)+'" alt="" loading="lazy"><span>'+esc(p.nombre)+'</span></span>').join('')
+          '<span class="cmp-p1">'+cmpMini(LAMINAS[k],p,44)+'<span>'+esc(p.nombre)+'</span></span>').join('')
           :'<span class="cmp-no">No la trae</span>')+'</span>';}).join('')+'</button>').join('')+
     '</div><div class="cmp-det" id="cmp-det" aria-live="polite">'+cmpDetalle(M)+'</div>'+
-    (LAMINAS.d2&&LAMINAS.d2.paraleloFuente?'<p class="sec-fuente">Fuente: '+LAMINAS.d2.paraleloFuente+'</p>':'')+'</div>';
+    (fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
 }
 function cmpDetalle(M){
   M=M||cmpModelo();
@@ -7770,7 +7836,7 @@ function cmpDetalle(M){
   return '<div class="cmp-dt" style="--c:'+esc(f.c)+'"><div class="cmp-dt-cab"><b>'+esc(f.reino)+'</b>'+(f.fechas?' <span>'+esc(f.fechas)+'</span>':'')+'</div>'+
     '<div class="cmp-dt-g">'+M.cols.map(k=>{const ps=f.celdas[k]||[], l=libroCid(k);
       return '<div class="cmp-dt-c"><div class="cmp-dt-cap">'+esc(l.nombre+' '+l.n)+'</div>'+(ps.length?ps.map(p=>
-        '<div class="cmp-dt-p"><img src="'+cmpImg(LAMINAS[k],p)+'" alt="'+esc(p.nombre)+'" loading="lazy"><div><b>'+esc(p.nombre)+'</b>'+
+        '<div class="cmp-dt-p">'+cmpMini(LAMINAS[k],p,96,p.nombre)+'<div><b>'+esc(p.nombre)+'</b>'+
         (p.texto?'<p class="biblia-t">«'+esc(p.texto)+'» <cite>'+esc(l.n+':'+String(p.ref||'').replace(/^\d+:/,''))+'</cite></p>':'')+
         (p.corto?'<p>'+esc(p.corto)+'</p>':'')+'</div></div>').join('')
         :'<p class="cmp-no">Esta visión no lo trae.</p>')+
@@ -7789,6 +7855,14 @@ function cmpToca(key){
    interactiva arriba y las tablas escritas debajo para lo que todavía no tiene
    lámina. */
 const ES_COMPARAR=/-comparar$/;
+/* En «Para profundizar» de un capítulo que ya es columna de la comparación. */
+function cmpBoton(id){
+  let M;try{M=cmpModelo();}catch(e){return '';}
+  if(!M.cols.includes(id)||M.cols.length<2||!modsDe().some(x=>ES_COMPARAR.test(x.id)))return '';
+  const otros=M.cols.filter(k=>k!==id).map(k=>{const l=libroCid(k);return l.nombre+' '+l.n;});
+  return '<button type="button" class="cmp-ir" onclick="verComparar()">'+IC('comparar')+
+    '<span><b>Compararlo con '+esc(otros.join(' y '))+'</b><small>Las mismas épocas, lado a lado: toca un poder y se enciende en cada visión.</small></span>'+IC('der','cmp-ir-fl')+'</button>';
+}
 function verComparar(){
   const m=modsDe().find(x=>ES_COMPARAR.test(x.id));
   if(m)verCap(m.id);
