@@ -1121,6 +1121,35 @@ const VELS=[.9,1,1.25];
 let lecVel=.9;
 try{const v=Number(localStorage.getItem('cb-vel'));if(VELS.includes(v))lecVel=v;}catch(e){}
 
+/* ── APARIENCIA (v207): automático, claro u oscuro ──
+   Es del aparato, como la velocidad de lectura: va en su propia llave y viaja
+   con la mudanza (LLAVES_MUDANZA). «Automático» no escribe nada en el <html>
+   y deja que el CSS siga al teléfono (prefers-color-scheme); «Claro» y
+   «Oscuro» lo fijan con data-apariencia, el mismo nombre que usa Jóvenes.
+   DENTRO DE JÓVENES NO SE TOCA: allá el <html> es el de Jóvenes (no lleva
+   data-cb-solo) y el modo lo decide esa app. */
+const APAR_K='cb-apariencia', APARIENCIAS=[['auto','Automático'],['claro','Claro'],['oscuro','Oscuro']];
+let apariencia=(()=>{try{const v=localStorage.getItem(APAR_K);return v==='claro'||v==='oscuro'?v:'auto';}catch(e){return 'auto';}})();
+const appSola=()=>{const h=document.documentElement;return !!(h&&h.hasAttribute&&h.hasAttribute('data-cb-solo'));};
+function aplicaApariencia(){
+  if(!appSola())return;
+  const h=document.documentElement;
+  if(apariencia==='auto')h.removeAttribute('data-apariencia');else h.setAttribute('data-apariencia',apariencia);
+}
+aplicaApariencia();
+function ponApariencia(v){
+  if(!APARIENCIAS.some(a=>a[0]===v))return;
+  apariencia=v;
+  try{if(v==='auto')localStorage.removeItem(APAR_K);else localStorage.setItem(APAR_K,v);}catch(e){}
+  aplicaApariencia();pintaApariencia();
+}
+function pintaApariencia(){
+  const c=document.getElementById('apar-card');if(!c)return;
+  c.hidden=!appSola();if(c.hidden)return;
+  document.getElementById('apar-ops').innerHTML=APARIENCIAS.map(([k,t])=>
+    '<button type="button" role="radio" class="apar-b" aria-checked="'+(apariencia===k)+'" onclick="ponApariencia(\''+k+'\')">'+t+'</button>').join('');
+}
+
 const diaHoy=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
 
 function normalizar(x){
@@ -6735,6 +6764,7 @@ function revisaInsignias(pct){
 }
 
 function pintaLogros(){
+  pintaApariencia();
   /* Puntos débiles: % de acierto por capítulo con lo respondido en
      exámenes. Ordena del más flojo al más fuerte para dirigir el
      estudio a donde duele. */
@@ -7598,7 +7628,7 @@ function bvTermina(){
    todo lo que hay entre MUDANZA:INICIO y MUDANZA:FIN. */
 const CASA_NUEVA='https://jovenestierralinda.org/estudiar/';
 const PEDIDO_AL_ABRIR=(()=>{try{return new URL(location.href).searchParams.get('concurso')||'';}catch(e){return '';}})();
-const LLAVES_MUDANZA=['conexion-biblica-v4','conexion-biblica-v3','cb-vel','cb-filtro','cb-donde','cb-cola'];
+const LLAVES_MUDANZA=['conexion-biblica-v4','conexion-biblica-v3','cb-vel','cb-apariencia','cb-filtro','cb-donde','cb-cola'];
 async function mudanza(){
   try{
     if(typeof location==='undefined'||location.hostname!=='conexion-biblica.pages.dev')return;

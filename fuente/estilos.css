@@ -180,7 +180,7 @@ html{touch-action:manipulation}
 .anillo:hover{transform:translateY(-2px)}
 .anillo.full{border-color:var(--verde)}
 .anillo svg{transform:rotate(-90deg)}
-.anillo circle.bg{fill:none;stroke:#e5e7eb;stroke-width:6}
+.anillo circle.bg{fill:none;stroke:var(--o-pista,#e5e7eb);stroke-width:6}
 .anillo circle.fg{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s}
 .anillo .al{font-size:.75rem;font-weight:700;color:var(--azul);margin-top:.4rem}
 .anillo .as{font-size:.75rem;color:var(--gris);margin-top:2px;line-height:1.3}
@@ -240,7 +240,7 @@ html{touch-action:manipulation}
 .highlight-box{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
   border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:var(--v-t0);
   margin:.6rem 0;line-height:1.65}
-.warn-box{background:var(--v-sup2,#fff4e0);border:1px solid #F0DCBE;
+.warn-box{background:var(--v-sup2,#fff4e0);border:1px solid var(--o-filete,#F0DCBE);
   border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:var(--v-t0);
   margin:.6rem 0;line-height:1.65}
 /* ═══ EL TEXTO BIBLICO ═══
@@ -329,10 +329,10 @@ html{touch-action:manipulation}
   .preg-pie{flex-direction:column-reverse}
 }
 /* El boton de una accion que borra NO puede ser el azul de siempre. */
-.btn.rojo{background:var(--rojo);color:var(--v-sobre,#fff)}
+.btn.rojo{background:var(--o-mal-fondo,var(--rojo));color:var(--v-sobre,#fff)}
 .btn.rojo:hover{filter:brightness(.94)}
 /* El asa: dice «esto se cierra hacia abajo» sin ponerle texto. */
-.hoja-asa{width:42px;height:5px;border-radius:8px;background:#d3d9e2;
+.hoja-asa{width:42px;height:5px;border-radius:8px;background:var(--o-pista,#d3d9e2);
   margin:.55rem auto .2rem;flex:0 0 auto;cursor:pointer}
 .hoja-cab{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem .95rem .6rem;
   border-bottom:1px solid var(--v-linea,#eef0f4);flex:0 0 auto}
@@ -348,7 +348,7 @@ html{touch-action:manipulation}
 .hoja-txt{padding:.85rem .95rem;overflow-y:auto;flex:1 1 auto;
   -webkit-overflow-scrolling:touch}
 .hoja-pie{display:flex;align-items:center;gap:.5rem;padding:.6rem .95rem .85rem;
-  border-top:1px solid #eef0f4;flex:0 0 auto}
+  border-top:1px solid var(--o-filete,#eef0f4);flex:0 0 auto}
 .hoja-nav{background:var(--fondo-suave);border:2px solid var(--v-linea,#e5e7eb);border-radius:12px;
   padding:.45rem .7rem;font-family:inherit;font-size:.75rem;font-weight:700;
   color:var(--azul);cursor:pointer;min-height:44px;flex:0 0 auto}
@@ -370,7 +370,7 @@ html{touch-action:manipulation}
    lineas del bloque: el texto quedaba comprimido en una columna angosta. En
    su propia fila el texto usa todo el ancho, y de paso el rotulo dice que
    versiculos son. */
-.lect-bl{padding:.8rem 0;border-bottom:1px solid #f1f3f7}
+.lect-bl{padding:.8rem 0;border-bottom:1px solid var(--o-filete,#f1f3f7)}
 .lect-bl:last-child{border-bottom:0;padding-bottom:.2rem}
 .lect-cab{display:flex;align-items:center;justify-content:flex-end;gap:.5rem;
   margin-bottom:.15rem}
@@ -379,7 +379,7 @@ html{touch-action:manipulation}
 
 /* El boton que esta sonando se distingue: sin esto no se sabe cual de los
    diez botones de un capitulo hay que tocar para parar. */
-.btn-voz.sonando{background:var(--cielo-txt);border-color:var(--cielo-txt);color:var(--v-sobre,#fff)}
+.btn-voz.sonando{background:var(--o-cielo-fondo,var(--cielo-txt));border-color:var(--o-cielo-fondo,var(--cielo-txt));color:var(--v-sobre,#fff)}
 
 .verse-box{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#e5e7eb);
   border-radius:var(--v-r-sm,12px);padding:.9rem 1rem;font-size:var(--v-t0);
@@ -410,7 +410,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .op.ko{border-color:var(--rojo);background:var(--fondo-mal);color:var(--rojo-txt)}
 .op:disabled{cursor:default}
 .ol{width:25px;height:25px;border-radius:50%;background:var(--azul-fondo);color:var(--v-sobre,#fff);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
-.op.ok .ol{background:var(--verde-fondo)} .op.ko .ol{background:var(--rojo-txt)} .op.sel .ol{background:var(--cielo-txt)}
+.op.ok .ol{background:var(--verde-fondo)} .op.ko .ol{background:var(--o-mal-fondo,var(--rojo-txt))} .op.sel .ol{background:var(--o-cielo-fondo,var(--cielo-txt))}
 
 .vf{display:flex;gap:.6rem}
 .vf button{flex:1;padding:.6rem;border-radius:8px;border:2px solid var(--v-linea,#e5e7eb);cursor:pointer;font-family:inherit;font-size:.875rem;font-weight:700;background:var(--fondo-suave);min-height:46px}
@@ -447,8 +447,8 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .res .sec3 .sl{font-size:.75rem;margin-top:2px}
 
 .ins{display:inline-flex;align-items:center;gap:5px;padding:.4rem .9rem;border-radius:999px;font-size:.75rem;font-weight:700;margin:.25rem}
-.ins.oro{background:#fef3c7;color:var(--naranja-txt);border:2px solid #D4AC0D}
-.ins.gris{background:var(--fondo-suave);color:var(--gris);border:2px solid #cbd5e1}   /* 4,34 -> 4,52 */
+.ins.oro{background:var(--o-oro-suave,#fef3c7);color:var(--naranja-txt);border:2px solid #D4AC0D}
+.ins.gris{background:var(--fondo-suave);color:var(--gris);border:2px solid var(--o-filete,#cbd5e1)}   /* 4,34 -> 4,52 */
 
 .txti{width:100%;max-width:330px;padding:.55rem .8rem;border:2px solid var(--v-linea,#e5e7eb);border-radius:8px;font-size:.875rem;font-family:inherit;min-height:46px}
 .pil{display:inline-block;padding:2px 10px;border-radius:18px;font-size:.75rem;font-weight:700}
@@ -464,7 +464,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 
 .tj-zona{max-width:520px;margin:0 auto}
 .tj{background:var(--card);border-radius:18px;box-shadow:var(--v-s2);padding:2rem 1.4rem;min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;border:3px solid var(--cielo);position:relative}
-.tj.volteada{border-color:var(--verde);background:#f4fcf5}
+.tj.volteada{border-color:var(--verde);background:var(--o-ok-suave,#f4fcf5)}
 .tj .cara{font-size:1rem;font-weight:700;color:var(--azul);line-height:1.6}
 .tj .cara b{color:var(--naranja-txt)}
 .tj .rev{font-size:1rem;color:var(--verde-txt);font-weight:600;line-height:1.65}
@@ -508,7 +508,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
      regla no aplicara, el boton quedaria ocupando media fila. */
   .tj-solo{grid-template-columns:1fr}
 }
-.prog-lin{height:7px;background:#e5e7eb;border-radius:8px;overflow:hidden;margin:.5rem 0}
+.prog-lin{height:7px;background:var(--o-pista,#e5e7eb);border-radius:8px;overflow:hidden;margin:.5rem 0}
 .prog-lin div{height:100%;background:var(--verde);transition:width .3s}
 .menu-ex{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
 .menu-ex label{display:flex;flex-direction:column;gap:.3rem;font-size:.75rem;font-weight:700;color:var(--gris);min-width:0}
@@ -537,7 +537,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 .sem{flex:1;min-width:190px}
 .sem .st{font-size:.875rem;font-weight:800;color:var(--azul)}
 .sem .sd{font-size:.75rem;color:var(--gris);line-height:1.5;margin-top:2px}
-.tarea{display:flex;gap:.75rem;align-items:center;padding:.7rem 0;border-top:1px solid #eef0f4;flex-wrap:wrap}
+.tarea{display:flex;gap:.75rem;align-items:center;padding:.7rem 0;border-top:1px solid var(--o-filete,#eef0f4);flex-wrap:wrap}
 .tarea:first-of-type{border-top:none}
 .tic{font-size:1.375rem;line-height:1;width:26px;text-align:center;flex-shrink:0}
 .ttx{flex:1;min-width:150px}
@@ -584,7 +584,7 @@ body.av .tj .rev{font-size:1.125rem}
 .alu-btn .ac{font-size:.75rem;color:var(--gris);margin-top:2px}
 .pil.az{background:var(--fondo-info);color:var(--cielo-txt)}
 .pil.na{background:var(--fondo-calido);color:var(--naranja-txt)}   /* un paso mas: sobre este crema, 4,14 -> 4,53 */
-.pil.ve{background:#dcfce7;color:var(--verde-txt)}
+.pil.ve{background:var(--o-ok-suave,#dcfce7);color:var(--verde-txt)}
 .nota{font-size:.75rem;color:var(--gris);margin-top:.5rem;line-height:1.5}
 
 /* ACCIONES DE UNA FILA DE PARTICIPANTE.
@@ -597,7 +597,7 @@ body.av .tj .rev{font-size:1.125rem}
   border-radius:8px}
 .pf-b:hover{background:var(--v-sup2,#fff4e0)}
 .pf-x{color:var(--gris)}
-.pf-x:hover{color:var(--rojo-txt);background:#fdeceb}
+.pf-x:hover{color:var(--rojo-txt);background:var(--o-mal-suave,#fdeceb)}
 .pf-ok{color:var(--verde-txt)}
 .info-table td .txti{max-width:190px;min-height:38px;padding:.35rem .5rem;font-size:.875rem}
 .info-table td select{max-width:230px;min-height:38px;padding:.35rem .5rem;font-family:inherit;
@@ -609,7 +609,7 @@ body.av .tj .rev{font-size:1.125rem}
 /* CAPA POR SECCIÓN — filtro, franja e h3 en .sec, y la tarjeta de recordar.
    Ver la nota de mecanismo en fuente/app.js junto a filtroCapas(). */
 .capa-filtro{display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap}
-.cf{padding:.35rem .9rem;border-radius:18px;border:1px solid #e2e5ea;background:var(--card);
+.cf{padding:.35rem .9rem;border-radius:18px;border:1px solid var(--o-filete,#e2e5ea);background:var(--card);
   font-size:.75rem;font-weight:700;color:var(--gris);cursor:pointer;font-family:inherit}
 .cf.on{background:var(--azul-fondo);color:#fff;border-color:var(--azul)}
 .recordar{margin-top:1rem;padding:.9rem 1rem;background:var(--v-sup,#fff);
@@ -622,7 +622,7 @@ body.av .tj .rev{font-size:1.125rem}
    quedan de 80px, por debajo del area tocable. */
 .rec-ops .btn.peq{text-align:left;min-height:var(--v-toque,44px);font-size:.875rem;
   border-radius:var(--v-r-sm,12px);padding:.5rem .9rem}
-.btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.75rem;border:1px solid #e2e5ea;background:var(--card);color:var(--azul)}
+.btn.peq{padding:.4rem .8rem;min-height:34px;font-size:.75rem;border:1px solid var(--o-filete,#e2e5ea);background:var(--card);color:var(--azul)}
 .btn.peq:disabled{opacity:.55;cursor:default}
 .rec-comp{margin-top:.6rem;font-size:.875rem;font-weight:700;padding:.5rem .7rem;border-radius:8px}
 .rec-comp.ok{background:var(--fondo-ok);color:var(--verde-txt)}
@@ -769,7 +769,7 @@ details.card>summary::-webkit-details-marker{display:none}
 details.card>summary::after{content:'▸';margin-left:auto;color:var(--cielo-txt);font-size:1.125rem}
 details.card[open]>summary::after{content:'▾'}
 details.card.dir>summary{color:var(--gris)}
-.det-cuerpo,.ayuda-cuerpo{padding:.2rem 1.4rem 1.3rem;border-top:1px solid #eef0f5}
+.det-cuerpo,.ayuda-cuerpo{padding:.2rem 1.4rem 1.3rem;border-top:1px solid var(--o-filete,#eef0f5)}
 .det-cuerpo>p,.ayuda-cuerpo>p{font-size:.875rem;line-height:1.65;color:var(--gris);margin:.7rem 0}
 .det-cuerpo>p strong,.ayuda-cuerpo>p strong{color:var(--azul)}
 
@@ -840,7 +840,7 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .pc-r{display:flex;align-items:center;gap:.75rem;padding:.5rem 1.05rem;width:100%;
   border:0;background:none;font-family:inherit;font-size:.875rem;text-align:left;
   cursor:pointer;min-height:40px}
-.pc-r .ic{width:26px;height:26px;border-radius:8px;background:#eef2ff;flex:0 0 auto;
+.pc-r .ic{width:26px;height:26px;border-radius:8px;background:var(--o-azul-suave,#eef2ff);flex:0 0 auto;
   display:flex;align-items:center;justify-content:center;font-size:.875rem}
 .pc-r b{font-weight:700;color:var(--azul);flex:0 0 auto}
 .pc-r small{color:var(--gris);font-weight:500;overflow:hidden;text-overflow:ellipsis;
@@ -849,9 +849,9 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
 .pc-r.on{box-shadow:inset 3px 0 0 var(--cielo)}
 .pc-r.on .ic{background:var(--fondo-info)}
 .pc-nada{padding:1.6rem 1.05rem;color:var(--gris);font-size:.875rem;text-align:center}
-.pc-pie{display:flex;gap:1.1rem;padding:.55rem 1.05rem;border-top:1px solid #eef0f4;
+.pc-pie{display:flex;gap:1.1rem;padding:.55rem 1.05rem;border-top:1px solid var(--o-filete,#eef0f4);
   font-size:.75rem;color:var(--gris);font-weight:600;flex:0 0 auto}
-.pc-pie kbd{background:var(--fondo-suave);border:1px solid #e2e8f0;border-radius:8px;padding:0 5px;
+.pc-pie kbd{background:var(--fondo-suave);border:1px solid var(--o-filete,#e2e8f0);border-radius:8px;padding:0 5px;
   font-family:inherit;font-size:.75rem}
 @media print{#paleta{display:none!important}}
 
@@ -871,12 +871,12 @@ input.clave-dir:focus{outline:none;border-color:var(--cielo)}
    una Biblia y no una pantalla de datos. Es el unico sitio de la app que se sale
    de la paleta azul, y por eso mismo se entiende que uno esta «adentro».
    La medida que manda: 62 caracteres de ancho de linea. */
-.lec{position:fixed;inset:0;z-index:300;background:#fbfaf7;display:flex;flex-direction:column}
+.lec{position:fixed;inset:0;z-index:300;background:var(--o-lec,#fbfaf7);display:flex;flex-direction:column}
 body.leyendo{overflow:hidden}
 .lec-barra{flex:0 0 auto;display:flex;align-items:center;gap:.75rem;height:46px;
-  padding:0 .8rem 0 1rem;background:rgba(251,250,247,.95);border-bottom:1px solid #ece7dd;
+  padding:0 .8rem 0 1rem;background:var(--o-lec-barra,rgba(251,250,247,.95));border-bottom:1px solid var(--o-filete,#ece7dd);
   padding-top:env(safe-area-inset-top,0);height:calc(46px + env(safe-area-inset-top,0))}
-.lec-prog{flex:1;height:5px;border-radius:8px;background:#e7e1d5;overflow:hidden}
+.lec-prog{flex:1;height:5px;border-radius:8px;background:var(--o-pista,#e7e1d5);overflow:hidden}
 .lec-prog i{display:block;height:100%;width:0;background:#c98a2b;border-radius:8px;
   transition:width .12s linear}
 /* v138: el café claro del modo lectura (#8a7a5f, #a3946f) daba 2,86 a 4. */
@@ -900,7 +900,7 @@ body.leyendo{overflow:hidden}
 /* La franja del estudio (v129): la misma del modo lectura, pegada arriba al
    bajar para poder pausar desde cualquier sección. En celular queda debajo de
    la barra de arriba (46px). */
-.est-rp{position:sticky;top:0;z-index:20;border:1px solid #f0e2c4;border-radius:18px;
+.est-rp{position:sticky;top:0;z-index:20;border:1px solid var(--o-filete,#f0e2c4);border-radius:18px;
   margin:.2rem 0 .6rem;padding:.5rem .7rem}
 @media (max-width:899px){.est-rp{top:calc(46px + env(safe-area-inset-top,0px) + 6px)}}
 .est-egw{display:flex;flex-direction:column;gap:2px;margin:0 0 1.1rem;padding:.6rem .8rem;
@@ -910,13 +910,13 @@ body.leyendo{overflow:hidden}
 .est-egw:hover{border-color:var(--v-marca)}
 #detalle .suena{background:var(--fondo-calido);border-radius:8px;box-shadow:0 0 0 4px var(--fondo-calido)}
 @media print{.est-rp,.est-egw{display:none!important}}
-.lec-vel{display:flex;gap:2px;background:var(--card);border:1px solid #f0e2c4;border-radius:999px;padding:2px}
+.lec-vel{display:flex;gap:2px;background:var(--card);border:1px solid var(--o-filete,#f0e2c4);border-radius:999px;padding:2px}
 .lec-vel button{border:0;background:none;cursor:pointer;font:700 .68rem/1 inherit;font-family:inherit;
   color:var(--v-tinta2,#6b5f47);padding:.45rem .5rem;border-radius:999px;min-height:32px}
 .lec-vel button[aria-pressed="true"]{background:var(--v-cat-fondo,var(--v-cat,#E8720C));color:#fff}
 /* Tocar un versículo empieza ahí; el que suena se marca y los ya dichos se apagan. */
 .lec-toca p{cursor:pointer;border-radius:8px;transition:background .2s,color .2s}
-.lec-txt p.suena{background:var(--fondo-calido);box-shadow:-.45rem 0 0 #fdecc8,.45rem 0 0 #fdecc8,-.7rem 0 0 #c98a2b}
+.lec-txt p.suena{background:var(--fondo-calido);box-shadow:-.45rem 0 0 var(--o-calido,#fdecc8),.45rem 0 0 var(--o-calido,#fdecc8),-.7rem 0 0 #c98a2b}
 .lec-txt p.ya{color:var(--gris)}
 @media (prefers-reduced-motion:reduce){.lec-toca p{transition:none}}
 /* El scroll vive en la caja, no en el body: asi la barra de avance se queda
@@ -943,7 +943,7 @@ body.leyendo{overflow:hidden}
 @media (min-width:640px){.lec-txt p{text-align:justify}}
 .lec-txt .vn{font-family:inherit;font-size:.75rem;font-weight:700;color:var(--naranja-txt);
   vertical-align:super;margin-right:.35rem;top:auto}
-.lec-fin{margin-top:3rem;padding-top:1.6rem;border-top:1px solid #ece7dd;text-align:center}
+.lec-fin{margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--o-filete,#ece7dd);text-align:center}
 .lec-fin p{font-size:.875rem;color:var(--v-tinta2,#6b5f47);margin:0 0 1rem}
 .lec-fin .lec-ok{color:var(--verde-txt);font-weight:700}
 .lec-fin .btn{margin:.3rem .25rem}
@@ -1073,7 +1073,7 @@ h4.ay-h{font-size:.875rem;font-weight:800;color:var(--azul);margin:1rem 0 .35rem
    no era solo el espacio: faltaba decir que lo de abajo es de otra clase de
    cosa. Esta línea con etiqueta separa y clasifica al mismo tiempo. */
 .sep{display:flex;align-items:center;gap:.8rem;margin:2.4rem 0 1.1rem}
-.sep::before,.sep::after{content:'';height:1px;background:#dbe2ec;flex:1}
+.sep::before,.sep::after{content:'';height:1px;background:var(--o-pista,#dbe2ec);flex:1}
 .sep span{font-size:.75rem;font-weight:800;color:var(--gris);text-transform:uppercase;
   letter-spacing:.9px;white-space:nowrap}
 @media(max-width:560px){.sep{margin:2rem 0 .9rem}.sep span{font-size:.75rem;letter-spacing:.6px}}
@@ -1182,9 +1182,90 @@ body.av{--v-cat:#0E7490; --v-cat-suave:#E6F6FA}   /* 7 a 9: turquesa profundo */
 body.pa{--v-cat:#B45309; --v-cat-suave:#FFF4E5}
 body.gm{--v-cat:#1F3864; --v-cat-suave:#EAF0FA}
 
+/* ═══ MODO OSCURO DE LA APP SOLA (v207) ═══
+   Camilo, 14-oct: «modo oscuro sí». Los valores vienen de la piel oscura de
+   Jóvenes (tokens.css: lienzo #141110, superficie #201b18, tinta #f1ece6) para
+   que las dos apps se vean de la misma familia; el azul y el naranja son los
+   de esta app, subidos hasta que se leen sobre lo oscuro.
+
+   SOLO EN LA APP SOLA. El <html> de esta app lleva `data-cb-solo`; dentro de
+   Jóvenes `html` pasa a ser `:host` (tools/cb-traer) y el anfitrión no lleva
+   ese atributo, así que nada de esto entra allá: el modo lo decide Jóvenes
+   con sus propias fichas.
+
+   DOS COPIAS A PROPÓSITO. Una regla de CSS no puede decir «si el teléfono es
+   oscuro O si lo eligió»: el bloque va dos veces, como en Jóvenes, y una
+   prueba (tests/test.js) revisa que digan lo mismo. «Claro» elegido apaga el
+   automático; sin atributo (antes de que corra el JavaScript) manda el
+   teléfono, y por eso no hay destello blanco al abrir. */
+@media (prefers-color-scheme:dark){
+  html[data-cb-solo]:not([data-apariencia="claro"]){
+    color-scheme:dark;
+    --v-lienzo:#141110; --v-sup:#201b18; --v-sup2:#2a2420;
+    --v-linea:#3a322d; --v-linea2:#2e2723;
+    --v-tinta:#f1ece6; --v-tinta2:#c4bbb3; --v-tinta3:#b3aaa2;
+    --v-marca:#8fb6ee; --v-marca2:#7fb0e6; --v-marca2-txt:#93bdf0;
+    --v-marca-alto:#163a6e; --v-marca-bajo:#0c2448; --v-marca-fondo:#1f5199;
+    --v-barra:rgba(19,44,84,.95); --v-barra-pie:rgba(20,17,16,.95);
+    --v-acento:#E8720C; --v-acento-alto:#d9690b; --v-acento-bajo:#a84f06;
+    --v-acento-txt:#ff9a5c; --v-acento-fondo:#b65909;
+    --v-ok:#4fb88a; --v-ok-txt:#6dd3a5; --v-ok-fondo:#2a7553;
+    --v-mal:#e5545c; --v-mal-txt:#ff8d8d;
+    --v-prof:#6cc3c9; --v-prof-fondo:#1c6f79;
+    --v-cat:#ff9a5c; --v-cat-fondo:#b65909; --v-cat-suave:#3a2618;
+    --v-s1:0 1px 2px rgba(0,0,0,.5);
+    --v-s2:0 1px 2px rgba(0,0,0,.45), 0 10px 24px -10px rgba(0,0,0,.6);
+    --v-s3:0 2px 4px rgba(0,0,0,.5), 0 22px 44px -16px rgba(0,0,0,.7);
+    /* --o-*: lo que solo existe en oscuro. Cada regla que lo usa trae su valor
+       de siempre como respaldo, así que en claro y dentro de Jóvenes no cambia nada. */
+    --o-halo:rgba(143,182,238,.07); --o-hero:#123468;
+  --o-pista:#3a322d; --o-filete:#3a322d;
+  --o-ok-suave:var(--fondo-ok); --o-mal-suave:var(--fondo-mal); --o-azul-suave:var(--fondo-info);
+  --o-nar-suave:var(--fondo-calido); --o-oro-suave:#3a2e14; --o-calido:#4a3418;
+  --o-lec:#141110; --o-lec-barra:rgba(20,17,16,.95); --o-resalta-tinta:#1B140A;
+  --o-mal-fondo:#b3262e; --o-cielo-fondo:#1f5199; --o-marca-fondo:#1f5199; --o-ok-fondo:#2a7553;
+  --o-ind-n:#7ea3d8;
+  }
+    html[data-cb-solo]:not([data-apariencia="claro"]) body.me{--v-cat:#b99cff; --v-cat-fondo:#6a35cf; --v-cat-suave:#2b2140}
+    html[data-cb-solo]:not([data-apariencia="claro"]) body.av{--v-cat:#5cc8de; --v-cat-fondo:#0e6a80; --v-cat-suave:#14292e}
+    html[data-cb-solo]:not([data-apariencia="claro"]) body.pa{--v-cat:#f0a05a; --v-cat-fondo:#a14a08; --v-cat-suave:#33241a}
+    html[data-cb-solo]:not([data-apariencia="claro"]) body.gm{--v-cat:#8fb6ee; --v-cat-fondo:#2a5aa0; --v-cat-suave:#1b2433}
+}
+html[data-cb-solo][data-apariencia="oscuro"]{
+  color-scheme:dark;
+  --v-lienzo:#141110; --v-sup:#201b18; --v-sup2:#2a2420;
+  --v-linea:#3a322d; --v-linea2:#2e2723;
+  --v-tinta:#f1ece6; --v-tinta2:#c4bbb3; --v-tinta3:#b3aaa2;
+  --v-marca:#8fb6ee; --v-marca2:#7fb0e6; --v-marca2-txt:#93bdf0;
+  --v-marca-alto:#163a6e; --v-marca-bajo:#0c2448; --v-marca-fondo:#1f5199;
+  --v-barra:rgba(19,44,84,.95); --v-barra-pie:rgba(20,17,16,.95);
+  --v-acento:#E8720C; --v-acento-alto:#d9690b; --v-acento-bajo:#a84f06;
+  --v-acento-txt:#ff9a5c; --v-acento-fondo:#b65909;
+  --v-ok:#4fb88a; --v-ok-txt:#6dd3a5; --v-ok-fondo:#2a7553;
+  --v-mal:#e5545c; --v-mal-txt:#ff8d8d;
+  --v-prof:#6cc3c9; --v-prof-fondo:#1c6f79;
+  --v-cat:#ff9a5c; --v-cat-fondo:#b65909; --v-cat-suave:#3a2618;
+  --v-s1:0 1px 2px rgba(0,0,0,.5);
+  --v-s2:0 1px 2px rgba(0,0,0,.45), 0 10px 24px -10px rgba(0,0,0,.6);
+  --v-s3:0 2px 4px rgba(0,0,0,.5), 0 22px 44px -16px rgba(0,0,0,.7);
+  /* --o-*: lo que solo existe en oscuro. Cada regla que lo usa trae su valor
+     de siempre como respaldo, así que en claro y dentro de Jóvenes no cambia nada. */
+  --o-halo:rgba(143,182,238,.07); --o-hero:#123468;
+  --o-pista:#3a322d; --o-filete:#3a322d;
+  --o-ok-suave:var(--fondo-ok); --o-mal-suave:var(--fondo-mal); --o-azul-suave:var(--fondo-info);
+  --o-nar-suave:var(--fondo-calido); --o-oro-suave:#3a2e14; --o-calido:#4a3418;
+  --o-lec:#141110; --o-lec-barra:rgba(20,17,16,.95); --o-resalta-tinta:#1B140A;
+  --o-mal-fondo:#b3262e; --o-cielo-fondo:#1f5199; --o-marca-fondo:#1f5199; --o-ok-fondo:#2a7553;
+  --o-ind-n:#7ea3d8;
+}
+  html[data-cb-solo][data-apariencia="oscuro"] body.me{--v-cat:#b99cff; --v-cat-fondo:#6a35cf; --v-cat-suave:#2b2140}
+  html[data-cb-solo][data-apariencia="oscuro"] body.av{--v-cat:#5cc8de; --v-cat-fondo:#0e6a80; --v-cat-suave:#14292e}
+  html[data-cb-solo][data-apariencia="oscuro"] body.pa{--v-cat:#f0a05a; --v-cat-fondo:#a14a08; --v-cat-suave:#33241a}
+  html[data-cb-solo][data-apariencia="oscuro"] body.gm{--v-cat:#8fb6ee; --v-cat-fondo:#2a5aa0; --v-cat-suave:#1b2433}
+
 body{
   background:
-    radial-gradient(120% 60% at 50% -10%, #EAF1FB 0%, rgba(234,241,251,0) 60%),
+    radial-gradient(120% 60% at 50% -10%, var(--o-halo,#EAF1FB) 0%, rgba(234,241,251,0) 60%),
     var(--v-lienzo);
   color:var(--v-tinta);
   font-size:var(--v-t0);
@@ -1230,7 +1311,7 @@ body{
 .card h2{font-size:var(--v-t1);letter-spacing:-.02em;color:var(--v-marca)}
 
 .hero{
-  background:linear-gradient(145deg,var(--v-marca-alto,#22406F) 0%,var(--v-marca,#1F3864) 45%,var(--v-marca-bajo,#16305B) 100%);
+  background:linear-gradient(145deg,var(--v-marca-alto,#22406F) 0%,var(--o-hero,var(--v-marca,#1F3864)) 45%,var(--v-marca-bajo,#16305B) 100%);
   border-radius:18px;
   box-shadow:var(--v-s3);
   padding:2rem 1.4rem;
@@ -2033,11 +2114,11 @@ details.card summary::marker{content:''}
 .rev-q.abierto{border-color:var(--azul);background:var(--fondo-info);border-bottom-left-radius:0;
   border-bottom-right-radius:0}
 .rev-a{border:1.5px solid var(--azul);border-top:0;border-radius:0 0 12px 12px;
-  padding:.7rem .85rem;background:#F7FAFF;font-size:.875rem;line-height:1.5}
+  padding:.7rem .85rem;background:var(--o-azul-suave,#F7FAFF);font-size:.875rem;line-height:1.5}
 /* La frase activa del juego de completar se distingue de las ya hechas */
 .jg-frase{margin-bottom:.6rem}
 .jg-frase.lista{opacity:.55}
-.jg-frase.activa{border-color:var(--azul);box-shadow:0 0 0 2px #EEF3FB}
+.jg-frase.activa{border-color:var(--azul);box-shadow:0 0 0 2px var(--o-azul-suave,#EEF3FB)}
 
 /* El banco de palabras queda pegado abajo. Con cuatro frases la lista de
    palabras se iba debajo del pliegue y tocaba bajar y subir por cada palabra:
@@ -2076,7 +2157,7 @@ details.card summary::marker{content:''}
 /* La confirmacion de que si paso algo. Va DENTRO de la tarjeta que se acaba
    de crear, que es donde aterriza el scroll. */
 .pan-nueva{display:inline-block;font-size:var(--v-t-1);font-weight:700;
-  color:var(--v-sobre,#fff);background:var(--v-ok);
+  color:var(--v-sobre,#fff);background:var(--o-ok-fondo,var(--v-ok));
   border-radius:999px;padding:.15rem .6rem;margin-bottom:.4rem}
 
 .rb-cab{display:flex;gap:.6rem;align-items:center;margin-bottom:.8rem}
@@ -2180,7 +2261,7 @@ details.card summary::marker{content:''}
 
 /* Los tres accesos de «Ajustar lo escogido» y la barra de abajo. */
 .pan-acc{display:flex;flex-direction:column;gap:.35rem;margin-top:.5rem}
-.pan-chip.on{border-color:var(--v-marca);background:var(--v-marca);color:var(--v-sobre,#fff)}
+.pan-chip.on{border-color:var(--v-marca);background:var(--o-marca-fondo,var(--v-marca));color:var(--v-sobre,#fff)}
 /* LA BARRA: lo escogido y cuantas preguntas recibe de verdad quien presenta.
    Va pegada al paso 3, que es el boton de abrir, porque es lo ultimo que se
    lee antes de tocarlo. */
@@ -2234,7 +2315,7 @@ details.card summary::marker{content:''}
 .fe-b{font:inherit;font-size:.875rem;font-weight:800;min-height:38px;padding:0 .85rem;border-radius:999px;
   border:1.5px solid var(--v-linea,#d8e0ef);background:var(--v-sup,#fff);color:var(--gris);cursor:pointer}
 .fe-b[aria-pressed="true"]{background:var(--azul-fondo);border-color:var(--azul);color:#fff}
-.fe.on .fe-aviso{background:#FFF1E4;color:var(--naranja-txt);border-radius:12px;padding:.5rem .75rem;
+.fe.on .fe-aviso{background:var(--o-nar-suave,#FFF1E4);color:var(--naranja-txt);border-radius:12px;padding:.5rem .75rem;
   font-size:.875rem;font-weight:700;margin:0}
 .fe-fichas{background:var(--v-sup,#fff);border:1px solid var(--v-linea,#d8e0ef);border-radius:18px;padding:.75rem}
 .lg-libros{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.9rem}
@@ -2250,7 +2331,7 @@ details.card summary::marker{content:''}
    una columna (celular) va arriba del texto abierto y no se pega: arriba ya
    esta la barra de la app. La tira tiene un segmento por versiculo; el boton
    es alto para el dedo aunque la raya se vea delgada. */
-.txt-rp{border:1px solid #f0e2c4;border-radius:18px;margin:0 0 .8rem;padding:.5rem .7rem}
+.txt-rp{border:1px solid var(--o-filete,#f0e2c4);border-radius:18px;margin:0 0 .8rem;padding:.5rem .7rem}
 .lec-rp-tx span{white-space:nowrap}
 .lec-tira{display:flex;gap:2px;flex:1 0 100%;min-width:0}
 .lec-tira button{flex:1 1 0;min-width:0;border:0;background:none;padding:6px 0;cursor:pointer}
@@ -2276,7 +2357,7 @@ details.card summary::marker{content:''}
 /* v139: pantalla de arranque (ver build.js). Colores fijos y no variables:
    se pinta antes de que el JavaScript ponga la categoría. */
 #arranque{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:.6rem;background:#FFFBF2;color:var(--azul);font-family:system-ui,-apple-system,sans-serif}
+  justify-content:center;gap:.6rem;background:var(--o-lec,#FFFBF2);color:var(--azul);font-family:system-ui,-apple-system,sans-serif}
 #arranque b{font-size:1.125rem;font-weight:800}
 #arranque span{font-size:.875rem;color:var(--gris)}
 @media print{#arranque{display:none}}
@@ -2678,7 +2759,7 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
   border:0;border-radius:12px;background:none;color:var(--txt);font:inherit;font-size:.875rem;text-align:left;cursor:pointer;line-height:1.25}
 .ind-c:hover{background:var(--sup-hover)}
 .ind-c.on{background:color-mix(in srgb,var(--azul) 10%,var(--card));font-weight:800}
-.ind-n{font-weight:800;color:color-mix(in srgb,var(--azul) 70%,var(--card));font-variant-numeric:tabular-nums}
+.ind-n{font-weight:800;color:var(--o-ind-n,color-mix(in srgb,var(--azul) 70%,var(--card)));font-variant-numeric:tabular-nums}
 .ind-p{grid-column:2;display:block;height:3px;border-radius:999px;background:color-mix(in srgb,var(--azul) 12%,var(--card));overflow:hidden}
 .ind-p i{display:block;height:100%;background:var(--azul-fondo);border-radius:inherit}
 .ind-s{margin:4px 0 8px 22px}
@@ -2946,9 +3027,9 @@ blockquote.decl:not(.frase-libro){max-width:none;margin:.2rem 0 .4rem;
    la sombra de los bloques, que en un texto corrido saldría a pedazos. */
 #detalle .decl-txt .dfr.suena{background:var(--fondo-calido);box-shadow:none;border-radius:8px;
   -webkit-box-decoration-break:clone;box-decoration-break:clone}
-::highlight(voz-palabra){background-color:#f0b54a;color:var(--txt)}
+::highlight(voz-palabra){background-color:#f0b54a;color:var(--o-resalta-tinta,var(--txt))}
 blockquote.decl:not(.frase-libro) .decl-src{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
-  margin-top:.9rem;padding-top:.7rem;border-top:1px solid #f0e2c4}
+  margin-top:.9rem;padding-top:.7rem;border-top:1px solid var(--o-filete,#f0e2c4)}
 blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 
 /* ───────── v154: el versículo en escritorio sale a la derecha ─────────
@@ -3440,3 +3521,12 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   .lam-pt,.lam-ley span,.lam-d2 img[data-p],.lam-d2-pie button,.lam-sl li,.lam-sl button>i,.lam-slb>i{transition:none}
   .lam-pt.senal,.lam-pt.pq{animation:none}
 }
+
+/* v207: el selector de tema (Logros). Tres botones que se reparten el ancho. */
+.apar{display:flex;gap:.35rem;padding:.3rem;margin:.3rem 0 .5rem;border:1px solid var(--v-linea,#d8e0ef);
+  border-radius:var(--v-r-md,18px);background:var(--v-sup2,#f4f6fa)}
+.apar-b{flex:1;min-height:var(--v-toque,44px);border:0;border-radius:var(--v-r-sm,12px);background:none;
+  font:inherit;font-weight:700;color:var(--v-tinta2,#5c6884);cursor:pointer}
+.apar-b[aria-checked="true"]{background:var(--v-sup,#fff);color:var(--v-tinta,#1a1a2e);box-shadow:var(--v-s1);
+  outline:2px solid var(--v-cat,#E8720C);outline-offset:-2px}
+.apar-b:focus-visible{outline:3px solid var(--v-cat,#E8720C);outline-offset:1px}

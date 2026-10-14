@@ -1382,7 +1382,8 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
    y el borde siguen intactos. Esta prueba existe porque el error no se nota
    leyendo el CSS: el color «se ve bien» en la pantalla del que lo escribe. */
 {
-  const sinCom = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  /* v207: el modo oscuro va aparte (más abajo); aquí se mide la piel clara. */
+  const sinCom = CSS.replace(/\/\*[\s\S]*?\*\//g, '').replace(/html\[data-cb-solo\][^{]*\{[^}]*\}/g, '');
   ok(/--naranja-txt:/.test(sinCom)&&/--verde-txt:/.test(sinCom)&&/--rojo-txt:/.test(sinCom),
     'Los tres colores de marca tienen su version tinta declarada');
   /* Tambien en el JS: los mensajes de error se pintan con style= en linea, y
@@ -1422,6 +1423,36 @@ const coarse = (CSS.match(/@media \(pointer:coarse\)\{[^}]*\}/) || [''])[0];
     ok(r >= 4.5, 'Contraste ' + que + ': ' + r.toFixed(2) + ' (minimo 4,5)');
   });
   ok(!/#8a7a5f|#a3946f/i.test(sinCom), 'El modo lectura no vuelve al cafe claro (2,86 a 4)');
+  /* v207: EL MODO OSCURO DE LA APP SOLA. Dos copias del mismo bloque (el del
+     teléfono y el elegido en Logros): tienen que decir lo mismo. Solo cuelga
+     de html[data-cb-solo], que dentro de Jóvenes no existe. Y cada --o-* trae
+     su valor de siempre como respaldo, para que en claro nada cambie. */
+  {
+    const conCom = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
+    const reglas = sel => [...conCom.matchAll(/(html\[data-cb-solo\][^{]*)\{([^}]*)\}/g)]
+      .filter(m => sel.test(m[1])).map(m => m[1].replace(sel, '').trim() + '{' + m[2].replace(/\s+/g, ' ').trim() + '}');
+    const auto = reglas(/^html\[data-cb-solo\]:not\(\[data-apariencia="claro"\]\)/), fijo = reglas(/^html\[data-cb-solo\]\[data-apariencia="oscuro"\]/);
+    ok(auto.length >= 5 && auto.join('\n') === fijo.join('\n'), 'Modo oscuro: las dos copias (automático y elegido) dicen lo mismo (' + auto.length + ' reglas)');
+    ok(/@media \(prefers-color-scheme:dark\)\{\s*html\[data-cb-solo\]:not\(\[data-apariencia="claro"\]\)/.test(conCom), 'Modo oscuro: el automático sigue al teléfono (prefers-color-scheme)');
+    ok(/<html lang="es" data-cb-solo>/.test(htmlApp), 'El <html> de la app sola lleva data-cb-solo (dentro de Jóvenes no está)');
+    const usosO = [...conCom.matchAll(/var\(--o-[a-z0-9-]+(,?)/g)];
+    ok(usosO.length >= 20 && usosO.every(m => m[1] === ','), 'Cada ficha --o-* trae su valor de siempre como respaldo (' + usosO.length + ' usos)');
+    ok(!/(^|[;{\s])--o-[a-z0-9-]+:/.test(conCom.replace(/html\[data-cb-solo\][^{]*\{[^}]*\}/g, '')), 'Las fichas --o-* solo se definen en el modo oscuro');
+    const os = auto[0] || '';
+    const ho = n => (os.match(new RegExp('--' + n + ':\\s*(#[0-9a-fA-F]{6})')) || [])[1];
+    const fondos = [['el lienzo', ho('v-lienzo')], ['la tarjeta', ho('v-sup')], ['lo hundido', ho('v-sup2')]];
+    const tintas = [['la tinta', 'v-tinta'], ['la tinta 2', 'v-tinta2'], ['el gris', 'v-tinta3'], ['el azul', 'v-marca'], ['el azul claro', 'v-marca2-txt'],
+      ['el naranja', 'v-acento-txt'], ['el verde', 'v-ok-txt'], ['el rojo', 'v-mal-txt'], ['el petróleo', 'v-prof']];
+    const malos = [];
+    for (const [tq, tn] of tintas) for (const [fq, f] of fondos) { const r = ho(tn) && f ? ratio(ho(tn), f) : 0; if (r < 4.5) malos.push(tq + ' sobre ' + fq + ' ' + r.toFixed(2)); }
+    for (const m of auto.slice(1)) { const c = (m.match(/--v-cat:(#[0-9a-fA-F]{6})/) || [])[1], su = (m.match(/--v-cat-suave:(#[0-9a-fA-F]{6})/) || [])[1], fo = (m.match(/--v-cat-fondo:(#[0-9a-fA-F]{6})/) || [])[1];
+      if (c) for (const f of [ho('v-sup'), su]) if (ratio(c, f) < 4.5) malos.push('categoría ' + c + ' sobre ' + f);
+      if (fo && ratio('#FFFFFF', fo) < 4.5) malos.push('blanco sobre ' + fo); }
+    for (const n of ['v-marca-fondo', 'v-acento-fondo', 'v-ok-fondo', 'v-prof-fondo', 'v-cat-fondo']) if (ratio('#FFFFFF', ho(n) || '#FFFFFF') < 4.5) malos.push('blanco sobre --' + n);
+    ok(malos.length === 0, 'Modo oscuro: toda la letra se lee (4,5:1 o más)' + (malos.length ? ' — ' + malos.join('; ') : ''));
+    ok(/function ponApariencia\(v\)/.test(APP) && /if\(!appSola\(\)\)return;/.test(APP) && /'cb-apariencia'/.test(APP) && /LLAVES_MUDANZA=\[[^\]]*'cb-apariencia'/.test(APP),
+      'El tema se elige en Logros, se guarda en el aparato, viaja con la mudanza y no toca el <html> de Jóvenes');
+  }
   const blancoTenue = [...sinCom.matchAll(/(?<![-\w])color:rgba\(255,\s*255,\s*255,\s*(0?\.\d+)\)/g)].map(m => +m[1]).filter(a => a < .9);
   ok(blancoTenue.length === 0, 'Ninguna letra en blanco translucido por debajo de 90%' + (blancoTenue.length ? ' (' + blancoTenue.join(', ') + ')' : ''));
   ok(/(^|\})\s*::placeholder\{color:var\(--v-tinta2/.test(sinCom), 'Los placeholders no usan el gris del navegador (#757575)');
@@ -2581,6 +2612,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(Object.keys(CD.secciones).length===12&&CD.preguntas.length>=100&&CD.preguntas.every(q=>q.f==='c'&&/^d\d/.test(q.cap)),
     'Daniel 1-12 tiene interpretación aparte del examen ('+CD.preguntas.length+' preguntas, todas complementarias)');
   ok(html.includes(CD.secciones.d8[0].t.slice(2,30).trim()),'La interpretación de Daniel llega a la app');
+  /* v207: «once señas», como la lámina: boca y palabras contra el Altísimo van juntas. */
+  const senasD7=CD.secciones.d7.filter(x=>/señas del cuerno pequeño/.test(x.t)).map(x=>(x.h.match(/<tr>/g)||[]).length-1);
+  ok(senasD7.length===2&&senasD7[0]+senasD7[1]===11&&/<b>once<\/b> señas/.test(CD.secciones.d7[0].h),'Daniel 7: la interpretación cuenta once señas y sus tablas tienen once filas ('+senasD7.join(' + ')+')');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

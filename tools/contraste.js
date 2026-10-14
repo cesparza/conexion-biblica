@@ -6,11 +6,12 @@
    peor punto de un degradado, aplica opacidad y usa 3:1 para texto grande.
    Necesita Playwright (no es parte de la suite porque la suite no tiene
    navegador; tests/test.js mide los pares de colores desde el CSS).
-   Uso:  node tools/contraste.js [ancho]      (CATS=me,av para acotar) */
+   Uso:  node tools/contraste.js [ancho]      (CATS=me,av para acotar)
+   v207: OSCURO=1 mide lo mismo con el teléfono en modo oscuro. */
 const path = require('path');
 const { chromium } = require('playwright');
 const W=+(process.argv[2]||390);
-(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:W,height:900}});
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:W,height:900},colorScheme:process.env.OSCURO?'dark':'light'});
 p.on('pageerror',e=>{});p.on('dialog',d=>d.dismiss());
 await p.goto('file://'+path.join(__dirname,'..','index.html'));await p.waitForTimeout(400);
 await p.addScriptTag({content:`

@@ -661,6 +661,73 @@ for (const W of [1440, 390]) {
     'teléfono · los ' + vistos + ' campos de escribir que se ven miden 16 px o más, y el doble toque no amplía (' + tocar + ')' + (chicos.length ? ' — chicos: ' + chicos.join(',') : ''));
   await ctx.close();
 }
+/* ── 7. v207: el modo oscuro de la app sola ──
+   Con el teléfono en oscuro, las fichas cambian solas; «Claro» en Logros lo
+   apaga y «Oscuro» lo prende aunque el teléfono esté en claro; la elección
+   sobrevive a recargar. Y en las pantallas principales no queda ninguna caja
+   clara (luminancia > 0,8): la lámina en modo presentar se deja como está. */
+for (const W of [390, 1440]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: 900 }, serviceWorkers: 'block', colorScheme: 'dark' });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => d.dismiss());
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base); await p.waitForTimeout(400);
+  await p.evaluate(() => {
+    localStorage.setItem('conexion-biblica-v4', JSON.stringify({ v: 4, activo: 'a1', alumnos: {
+      a1: { nombre: 'Camilo', cat: 'gm', prog: { d2: 60 }, ultPantalla: 'inicio', acc: { d2: { b: 3, m: 4 } }, act: { mc: { b: 5, m: 2 } }, insignias: ['Racha de fuego'] },
+      a2: { nombre: 'Alejo', cat: 'av', aCargo: true, tutor: 'Camilo', prog: {} } } }));
+    localStorage.removeItem('cb-apariencia');
+  });
+  await p.reload(); await p.waitForTimeout(1300);
+  const fichas = () => p.evaluate(() => { const c = getComputedStyle(document.documentElement), b = getComputedStyle(document.body);
+    return [c.getPropertyValue('--v-lienzo').trim(), c.getPropertyValue('--v-tinta').trim(), b.backgroundColor, document.documentElement.getAttribute('data-apariencia')]; });
+  const a = await fichas();
+  ok(a[0] === '#141110' && a[1] === '#f1ece6' && a[2] === 'rgb(20, 17, 16)' && a[3] === null, W + ' · v207: con el teléfono en oscuro, la app sola se pone oscura sola (' + a.slice(0, 3).join(' ') + ')');
+  const claras = await p.evaluate(async () => {
+    const lum = s => { const m = s.match(/rgba?\(([^)]+)\)/); if (!m) return null; const v = m[1].split(/[ ,\/]+/).filter(Boolean).map(Number);
+      if (v.length > 3 && v[3] < .5) return null; const [r, g, b] = v.slice(0, 3).map(x => { x /= 255; return x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4; }); return .2126 * r + .7152 * g + .0722 * b; };
+    const espera = ms => new Promise(r => setTimeout(r, ms));
+    const pasos = [['Inicio', () => ir('inicio')], ['Daniel 2', () => verCap('d2')], ['tarjetas', () => ir('tarjetas')], ['tarjeta volteada', () => voltea()],
+      ['Examen', () => ir('examen')], ['examen en curso', () => { arrancaExamen('normal'); const o = document.querySelector('#p-examen .op'); o && o.click(); }],
+      ['examen entregado', () => entregar()], ['Comparar', () => verComparar()], ['Logros', () => ir('logros')], ['selector', () => { ir('inicio'); abreYo(); }],
+      ['lámina explorar', () => { cierraHoja(); lamAbre('d7', 'explorar'); }]];
+    const malas = [];
+    for (const [n, f] of pasos) {
+      try { f(); } catch (e) { malas.push(n + ': ' + e.message); continue; }
+      await espera(450);
+      for (const e of document.querySelectorAll('body *')) {
+        if (e.closest('svg,img,.lam-presentar')) continue;
+        const r = e.getBoundingClientRect(); if (r.width < 6 || r.height < 6 || !e.getClientRects().length) continue;
+        const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity < .1) continue;
+        const l = lum(cs.backgroundColor);
+        const g = [...cs.backgroundImage.matchAll(/rgba?\([^)]+\)/g)].map(m => lum(m[0])).filter(x => x != null && x > .8);
+        if ((l != null && l > .8) || g.length) malas.push(n + ': ' + e.tagName.toLowerCase() + '.' + String(e.className).split(' ')[0] + ' ' + cs.backgroundColor);
+      }
+    }
+    return malas;
+  });
+  ok(claras.length === 0, W + ' · v207: en oscuro no queda ninguna caja clara en Inicio, Daniel 2, tarjetas, examen, Comparar, Logros, selector y lámina' + (claras.length ? ' — ' + claras.slice(0, 5).join(' | ') : ''));
+  // «Claro» en Logros gana al teléfono, y sobrevive a recargar.
+  await p.evaluate(() => { try { lamCierra(); } catch (e) {} ir('logros'); });
+  await p.locator('#apar-ops .apar-b', { hasText: 'Claro' }).click(); await p.waitForTimeout(200);
+  const c = await fichas();
+  ok(c[0] === '#FFF9EF' && c[3] === 'claro', W + ' · v207: «Claro» en Logros apaga el oscuro del teléfono (' + c[0] + ')');
+  await p.reload(); await p.waitForTimeout(1000);
+  const c2 = await fichas();
+  ok(c2[0] === '#FFF9EF' && c2[3] === 'claro', W + ' · v207: la elección se guarda y sobrevive a recargar');
+  // «Oscuro» con el teléfono en claro.
+  await p.emulateMedia({ colorScheme: 'light' });
+  await p.evaluate(() => ponApariencia('oscuro')); await p.waitForTimeout(150);
+  const o = await fichas();
+  ok(o[0] === '#141110' && o[3] === 'oscuro', W + ' · v207: «Oscuro» elegido gana aunque el teléfono esté en claro');
+  await p.evaluate(() => ponApariencia('auto')); await p.waitForTimeout(150);
+  const au = await fichas();
+  ok(au[0] === '#FFF9EF' && au[3] === null && await p.evaluate(() => localStorage.getItem('cb-apariencia')) === null, W + ' · v207: «Automático» vuelve a seguir al teléfono');
+  const sel = await p.evaluate(() => [...document.querySelectorAll('#apar-ops .apar-b')].map(b => b.textContent + ':' + b.getAttribute('aria-checked')).join(' '));
+  ok(sel === 'Automático:true Claro:false Oscuro:false', W + ' · v207: el selector marca la opción elegida (' + sel + ')');
+  ok(errores.length === 0, W + ' · v207: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
 await nav.close(); srv.close();
 console.log('\n' + (fallas ? fallas + ' FALLOS' : 'EN EL NAVEGADOR: TODO BIEN'));
 process.exit(fallas ? 1 : 0);

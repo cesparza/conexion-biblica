@@ -29,8 +29,7 @@ module.exports = {
     { t: '🧭 Las señas del cuerno pequeño (2): qué hace', capa: 'contexto', h:
       tbl(['Seña', 'Texto', 'Se cumple en'], [
         ['«Ojos como de hombre»', '7:8, 20', 'En la profecía los ojos son entendimiento (Efesios 1:18): se apoya en la sabiduría y la tradición humanas.'],
-        ['Una boca que habla «con gran insolencia»', '7:8, 20', 'La palabra aramea es «cosas grandes»: un cuerno pequeño con palabras grandes, señal de orgullo.'],
-        ['«Hablará palabras contra el Altísimo»', '7:25', 'Toma títulos y poderes de Dios: ocupar su lugar en la tierra y perdonar pecados (Juan 10:33; Marcos 2:7; Apocalipsis 13:5-6).'],
+        ['Una boca que habla «con gran insolencia» y «palabras contra el Altísimo»', '7:8, 20, 25', 'La palabra aramea es «cosas grandes»: un cuerno pequeño con palabras grandes, señal de orgullo. Toma títulos y poderes de Dios: ocupar su lugar en la tierra y perdonar pecados (Juan 10:33; Marcos 2:7; Apocalipsis 13:5-6).'],
         ['Hace guerra contra los santos y los vence', '7:21, 25', 'La persecución de valdenses, albigenses y hugonotes, y la Inquisición.'],
         ['«Pensará en cambiar los tiempos y la Ley»', '7:25', 'El sábado y el calendario profético de Dios (ver «Los tiempos y la ley»).'],
         ['Domina «tiempo, tiempos y medio tiempo»', '7:25', '1.260 años: del 538 al 1798.'],

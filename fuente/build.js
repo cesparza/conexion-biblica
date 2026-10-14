@@ -317,7 +317,7 @@ ${(LOGO_TL.match(/.{1,1400}/g) || []).map(t => ' ' + JSON.stringify(t)).join(',\
 ].join('');`;
 
 const html = `<!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-cb-solo>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
