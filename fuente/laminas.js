@@ -249,6 +249,24 @@ LAMINAS.d7 = {
     { t: '«Pensará en cambiar los tiempos y la Ley»', ref: '7:25', c: 'El calendario profético de Dios y el sábado: el día de reposo se pasó al domingo y se quitó el mandamiento sobre las imágenes (CS 55-56).' },
     { t: 'Domina «tiempo, tiempos y medio tiempo»', ref: '7:25', c: '1.260 años: de 538 a 1798 d.C.' }],
   senasFuente: BOHR + ', p. 119, 124-127; CS 55-56.',
+  /* v208: TIEMPO, TIEMPOS Y MEDIO TIEMPO (7:25), después de las once señas: cuatro
+     pasos que se arman sobre la imagen (la suma, un día por un año, el mismo
+     tiempo en Apocalipsis y el cumplimiento de 538 a 1798 en la línea de tiempo).
+     `citas`: lo que la hoja cita literal en RV1995 (Daniel 7 y Apocalipsis). */
+  periodo: {
+    tras: 'cuerno', t: 'Tiempo, tiempos y medio tiempo', s: '1.260 años · 538 – 1798 d.C.', de: 538, a: 1798,
+    fotos: [['d2/e538', '538 d.C.', 'Los ostrogodos dejan Roma'], ['d2/e1798', '1798 d.C.', 'Berthier toma preso a Pío VI']],
+    pasos: [
+      { t: 'Tiempo, tiempos y medio tiempo', v: 'suma', citas: [['Daniel 7:25', 'y serán entregados en sus manos hasta tiempo, tiempos y medio tiempo.']],
+        nota: 'Un «tiempo» es un año, «tiempos» son dos años y «medio tiempo», medio año. El año profético tiene 360 días (doce meses de 30): 360 + 720 + 180 = 1.260 días.' },
+      { t: 'Un día por un año', v: 'dia', citas: [],
+        nota: 'En la profecía simbólica cada día vale un año. Dios mismo usa esa medida en Números 14:34 y en Ezequiel 4:6. Por eso los 1.260 días son 1.260 años.' },
+      { t: 'El mismo tiempo en Apocalipsis', v: 'mismo', citas: [['Apocalipsis 12:14', 'un tiempo, tiempos y la mitad de un tiempo'], ['Apocalipsis 12:6', 'mil doscientos sesenta días'], ['Apocalipsis 11:3', 'mil doscientos sesenta días'], ['Apocalipsis 13:5', 'cuarenta y dos meses'], ['Apocalipsis 11:2', 'cuarenta y dos meses']],
+        nota: 'Tres maneras de decir el mismo periodo: tres tiempos y medio, 42 meses (42 × 30) y 1.260 días.' },
+      { t: 'De 538 a 1798', v: 'cumple', citas: [['Apocalipsis 13:3', 'Vi una de sus cabezas como herida de muerte, pero su herida mortal fue sanada.']],
+        nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Berthier toma preso al papa Pío VI: es la herida de muerte. Después la herida sana y el cuerno sigue hasta que viene el Anciano de días (7:21-22).' }],
+    fuente: BOHR + ', p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309 y 492.',
+  },
   partes: [
  {id:'leon',img:'leon',nombre:'León con alas de águila',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La primera era como un león, y tenía alas de águila.',ref:'7:4',texto2:'Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.',ref2:'7:17',

@@ -437,7 +437,7 @@ for (const W of ANCHOS) {
     for (let i = 0; i < nPasos; i++) await p.keyboard.press(i % 2 ? 'PageDown' : 'ArrowRight');
     await p.waitForTimeout(700);
     const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamSig').disabled]);
-    ok(nPasos === 28 && fin[0] === '14 / 14' && fin[3] && /se hizo justicia a los santos/.test(fin[1]) && fin[2].endsWith('d7/juicio.webp'), W + ' · Presentar recorre los ' + nPasos + ' pasos de Daniel 7 (contador ' + fin[0] + ') y termina en 7:22');
+    ok(nPasos === 33 && fin[0] === '15 / 15' && fin[3] && /se hizo justicia a los santos/.test(fin[1]) && fin[2].endsWith('d7/juicio.webp'), W + ' · Presentar recorre los ' + nPasos + ' pasos de Daniel 7 (contador ' + fin[0] + ') y termina en 7:22');
     await p.evaluate(() => lamCierra());
   }
   /* ── 3e. Daniel 7 interactivo (v205): con Daniel 2 se enciende el metal de cada
@@ -500,6 +500,8 @@ for (const W of ANCHOS) {
     await p.evaluate(() => lamSenasPlay()); await p.waitForTimeout(300);
     const se = await p.evaluate(() => [document.querySelectorAll('#lamSenas li').length, document.querySelectorAll('#lamSenas li.on').length]);
     ok(se[0] === 11 && se[1] === 11, W + ' · las once señas del cuerno se encienden (' + se.join(', ') + ')');
+    const pe = await p.evaluate(() => { lamPerE(1); return [document.querySelector('#lamTabla .lam-eq.grande').textContent, document.getElementById('lamPerTx').textContent, document.querySelector('.lam-per-c .lam-subs button.on').dataset.per]; });
+    ok(/1.260 días→1.260 años/.test(pe[0]) && /Números 14:34/.test(pe[1]) && pe[2] === '1', W + ' · en Explorar, la cuenta de los 1.260 años va por pasos (un día por un año)');
     /* El juicio por pasos: la imagen se acerca a la parte del texto de cada paso. */
     await p.evaluate(() => lamEligeE(6));
     const ju = [];
@@ -523,18 +525,34 @@ for (const W of ANCHOS) {
     await p.evaluate(() => lamCierra());
     /* Presentar: las bestias suben del mar, los tres cuernos caen, el juicio por pasos y una seña por paso. */
     await p.evaluate(() => lamAbre('d7', 'presentar'));
-    const pres = await p.evaluate(() => lamPasos().map(x => x.tipo === 'parte' ? x.id + (x.sub != null ? x.sub : '') : x.tipo === 'senas' ? 's' + x.sub : x.tipo[0]).join(' '));
-    ok(pres === 'h h leon oso leopardo bestia cuernos cuerno s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 juicio0 juicio1 juicio2 juicio3 hijo0 hijo1 reino d c',
+    const pres = await p.evaluate(() => lamPasos().map(x => x.tipo === 'parte' ? x.id + (x.sub != null ? x.sub : '') : x.tipo === 'senas' ? 's' + x.sub : x.tipo === 'senasT' ? 'S' : x.tipo === 'periodo' ? 't' + x.sub : x.tipo[0]).join(' '));
+    ok(pres === 'h h leon oso leopardo bestia cuernos cuerno S s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 t0 t1 t2 t3 juicio0 juicio1 juicio2 juicio3 hijo0 hijo1 reino d c',
       W + ' · Presentar: ' + pres);
+    /* v208: la portada de las señas (las características del cuerno pequeño). */
+    await p.evaluate(() => lamPres(lamPasos().findIndex(x => x.tipo === 'senasT')));
+    const st = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.querySelectorAll('#lamHoja .lam-sl li').length, document.querySelector('#lamTabla:not([hidden]) .lam-sen-tit b').textContent, document.getElementById('lamCuenta').textContent]);
+    ok(/Las características del cuerno pequeño/.test(st[0]) && st[1] === 11 && /características/.test(st[2]) && st[3] === '9 / 15', W + ' · Presentar: portada de las once señas del cuerno pequeño (' + st.slice(1).join(', ') + ')');
     const ix = await p.evaluate(() => lamPasos().findIndex(x => x.tipo === 'senas' && x.sub === 3));
     await p.evaluate(k => lamPres(k), ix);
     const sp = await p.evaluate(() => [document.querySelectorAll('#lamHoja .lam-sl li.on').length, document.querySelector('#lamHoja .lam-sl li.ahora b').textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamCuenta').textContent]);
-    ok(sp[0] === 4 && /pequeño/.test(sp[1]) && sp[2].endsWith('d7/cuerno.webp') && sp[3] === '9 / 14', W + ' · la seña 4 en Presentar: cuatro encendidas sobre el cuerno pequeño (' + sp.join(', ') + ')');
+    ok(sp[0] === 4 && /pequeño/.test(sp[1]) && sp[2].endsWith('d7/cuerno.webp') && sp[3] === '9 / 15', W + ' · la seña 4 en Presentar: cuatro encendidas sobre el cuerno pequeño (' + sp.join(', ') + ')');
+    ok(await p.evaluate(() => document.querySelector('#lamTabla .lam-sen-cap b').textContent === LAMINAS.d7.senas[3].t.replace(/<[^>]+>/g, '')), W + ' · la seña va también al pie de la imagen');
+    /* v208: tiempo, tiempos y medio tiempo: la cuenta, día por año, Apocalipsis y 538 → 1798. */
+    const t0 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 0));
+      return [document.querySelectorAll('#lamTabla .lam-fila.ve').length, document.querySelector('#lamTabla .lam-per-total b').textContent, document.getElementById('lamHoja').textContent, document.getElementById('lamCuenta').textContent]; });
+    ok(t0[0] === 3 && t0[1] === '1.260 días' && /hasta tiempo, tiempos y medio tiempo/.test(t0[2]) && t0[3] === '10 / 15', W + ' · tiempo, tiempos y medio tiempo: 360 + 720 + 180 = 1.260 días (' + t0[1] + ', ' + t0[3] + ')');
+    const t2 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 2)); return [document.querySelectorAll('#lamTabla .lam-igual').length, document.getElementById('lamHoja').textContent]; });
+    ok(t2[0] === 3 && /cuarenta y dos meses/.test(t2[1]) && /mil doscientos sesenta días/.test(t2[1]) && /Apocalipsis 12:14/.test(t2[1]), W + ' · el mismo tiempo en Apocalipsis: 3½ tiempos, 42 meses, 1.260 días');
+    const t3 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 3)); const b = document.getElementById('lamBanda');
+      return [[...document.querySelectorAll('#lamTabla .lam-cum img')].map(i => i.getAttribute('src').split('/').pop()).join(), b && b.classList.contains('ve') && b.getBoundingClientRect().width > 50, document.getElementById('lamRango').value, document.getElementById('lamTano').textContent]; });
+    ok(t3[0] === 'e538.webp,e1798.webp' && t3[1] && t3[2] === '1798' && /538 – 1798/.test(t3[3]), W + ' · de 538 a 1798: las dos escenas y la franja en la línea de tiempo (' + t3.join(', ') + ')');
+    const anchoT = await p.evaluate(() => { const l = document.getElementById('lam'), t = document.getElementById('lamTabla'); return [l.scrollWidth - l.clientWidth, t.scrollHeight - t.clientHeight]; });
+    ok(anchoT[0] <= 0 && anchoT[1] <= 2, W + ' · la cuenta de los 1.260 años cabe en la imagen (' + anchoT.join(', ') + ')');
     const ij = await p.evaluate(() => lamPasos().findIndex(x => x.id === 'juicio' && x.sub === 2));
     await p.evaluate(k => lamPres(k), ij);
     const JUICIO2 = await p.evaluate(() => lamParte('juicio').pasos[2].caja.map(n => n.toFixed(1)).join(' '));
     const pj = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.getElementById('lamZoom').getAttribute('viewBox'), document.getElementById('lamCuenta').textContent]);
-    ok(/paso 3 de 4/.test(pj[0]) && /Un río de fuego procedía/.test(pj[0]) && pj[1] === JUICIO2, W + ' · el juicio, paso 3 de 4 en Presentar (' + pj[1] + ', ' + pj[2] + ')');
+    ok(/paso 3 de 4/.test(pj[0]) && /Un río de fuego procedía/.test(pj[0]) && pj[1] === JUICIO2 && pj[2] === '11 / 15', W + ' · el juicio, paso 3 de 4 en Presentar (' + pj[1] + ', ' + pj[2] + ')');
     await p.keyboard.press('t'); await p.waitForTimeout(300);
     const sinT = await p.evaluate(() => [document.getElementById('lam').classList.contains('sin-texto'), getComputedStyle(document.getElementById('lamHoja')).display, document.getElementById('lamChip').hidden]);
     ok(sinT[0] && sinT[1] === 'none' && !sinT[2], W + ' · T oculta el texto en el juicio por pasos y queda la etiqueta sobre la imagen');

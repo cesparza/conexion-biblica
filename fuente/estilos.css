@@ -3530,3 +3530,72 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .apar-b[aria-checked="true"]{background:var(--v-sup,#fff);color:var(--v-tinta,#1a1a2e);box-shadow:var(--v-s1);
   outline:2px solid var(--v-cat,#E8720C);outline-offset:-2px}
 .apar-b:focus-visible{outline:3px solid var(--v-cat,#E8720C);outline-offset:1px}
+
+/* v208: LAS SEÑAS Y «TIEMPO, TIEMPOS Y MEDIO TIEMPO» SOBRE LA IMAGEN (lamTabla).
+   Va sobre la foto oscura del cuerno, con sus propios colores (igual en claro y
+   en oscuro). Cada pieza [data-o] aparece en orden; la letra crece con la escena. */
+.lam-tabla{position:absolute;inset:0;pointer-events:none;color:#F4EEE2;font-size:1rem;line-height:1.25}
+.lam-tabla[hidden]{display:none}
+.lam.sin-texto .lam-tabla{font-size:1.375rem}
+.lam-tabla.titulo,.lam-tabla.per{background:rgba(12,9,6,.78);display:flex;flex-direction:column;justify-content:center;padding:3% 6%}
+.lam-tabla [data-o]{opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.lam-tabla [data-o].ve{opacity:1;transform:none}
+.lam-tabla.quieto [data-o],.lam-tabla.quieto [data-o] i{transition:none}
+.lam-esc.en-senas .lam-ley,.lam-esc.con-tabla .lam-chip{display:none}
+.lam-sen-tit{text-align:center}
+.lam-sen-tit small{display:block;font-size:.85em;letter-spacing:.08em;text-transform:uppercase;color:#F2C46B;font-weight:800}
+.lam-sen-tit b{display:block;font-size:2.1em;line-height:1.1;margin:.3em 0;font-weight:800}
+.lam-sen-tit span{display:block;font-size:1.1em;color:#E6DCC8}
+.lam-tabla.pie{display:flex;align-items:flex-end;padding:0 2% 2%}
+.lam-sen-cap{display:flex;gap:.6em;align-items:flex-start;background:rgba(14,11,7,.88);border-radius:12px;padding:.6em .9em;box-shadow:inset 0 0 0 2px #F2C46B;max-width:100%}
+.lam-sen-cap i{font-style:normal;flex:0 0 auto;width:1.9em;height:1.9em;border-radius:50%;background:#F2C46B;color:#1B140A;display:grid;place-items:center;font-weight:800}
+.lam-sen-cap b{font-size:1.1em;font-weight:800}
+.lam-sen-cap .lam-ref{color:#F2C46B;font-size:.85em;white-space:nowrap}
+.lam-sen-cap p{margin:.25em 0 0;color:#E6DCC8;font-size:.95em}
+.lam-per-cab{font-size:.8em;text-transform:uppercase;letter-spacing:.08em;color:#F2C46B;font-weight:800;text-align:center}
+.lam-per-h{font-size:1.6em;font-weight:800;text-align:center;margin:.1em 0 .45em}
+.lam-fila{display:grid;grid-template-columns:7.5em 1fr 3em;align-items:center;gap:.6em;margin:.25em 0}
+.lam-fila .et{font-weight:700}
+.lam-fila .et small{display:block;color:#C9BFA9;font-size:.8em;font-weight:400}
+.lam-fila .barra{height:1.1em;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden}
+.lam-fila .barra i{display:block;height:100%;width:0;background:linear-gradient(90deg,#B45309,#F2C46B);border-radius:999px;transition:width 1s cubic-bezier(.3,0,.2,1) .2s}
+.lam-fila.ve .barra i{width:var(--w)}
+.lam-fila b{font-size:1.3em;text-align:right;font-variant-numeric:tabular-nums}
+.lam-per-total{display:flex;justify-content:space-between;align-items:baseline;gap:.6em;border-top:2px solid #F2C46B;margin-top:.4em;padding-top:.25em}
+.lam-per-total span{color:#C9BFA9}
+.lam-per-total b{font-size:1.9em;color:#F2C46B;font-variant-numeric:tabular-nums}
+.lam-per-nota{text-align:center;color:#C9BFA9;font-size:.85em;margin-top:.4em}
+.lam-eq{display:flex;justify-content:center;align-items:center;gap:.5em;font-size:1.8em;font-weight:800;margin:.2em 0}
+.lam-eq i{font-style:normal;color:#F2C46B}
+.lam-eq.grande{font-size:2.1em}
+.lam-eq .oro{color:#F2C46B}
+.lam-igual{display:grid;grid-template-columns:7em 1fr auto;gap:.6em;align-items:center;padding:.35em .6em;margin:.2em 0;border-radius:8px;background:rgba(255,255,255,.08)}
+.lam-igual b{font-size:1.2em}
+.lam-igual small{color:#C9BFA9;font-size:.85em}
+.lam-igual span{color:#F2C46B;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lam-cum{display:flex;align-items:center;gap:.6em;margin:.4em 0 0}
+.lam-cum figure{margin:0;flex:0 0 30%}
+.lam-cum img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;box-shadow:0 0 0 2px #F2C46B}
+.lam-cum figcaption b{display:block;font-size:1.3em;color:#F2C46B;margin-top:.2em}
+.lam-cum figcaption small{display:block;color:#E6DCC8;font-size:.8em}
+.lam-cum-barra{flex:1;position:relative;height:1.2em;background:rgba(255,255,255,.1);border-radius:999px;margin-bottom:2.2em}
+.lam-cum-barra i{position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#B45309,#F2C46B);border-radius:999px;transition:transform 1.4s ease .3s}
+.lam-cum-barra.ve i{transform:none}
+.lam-cum-barra span{position:absolute;left:0;right:0;top:-1.6em;text-align:center;font-weight:800;white-space:nowrap}
+/* La franja de 538 a 1798 sobre la línea de tiempo. */
+.lam-banda{position:absolute;height:18px;border-radius:999px;box-shadow:0 0 0 3px #F2C46B,0 0 14px rgba(242,196,107,.8);pointer-events:none;transform-origin:left;transform:scaleX(0);opacity:0;transition:transform 1.2s ease,opacity .3s}
+.lam-banda.ve{transform:none;opacity:1}
+.lam-banda span{position:absolute;left:50%;top:-26px;transform:translateX(-50%);background:#B45309;color:#fff;font-size:.75rem;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+@media (max-width:560px){
+  .lam-tabla,.lam.sin-texto .lam-tabla{font-size:.75rem}
+  .lam-banda span{display:none}
+  .lam-tabla.titulo,.lam-tabla.per{padding:2% 4%}
+  .lam-per-cab,.lam-tabla.per .lam-per-nota,.lam-sen-cap p{display:none}
+  .lam-per-h{font-size:1.3em;margin-bottom:.3em}
+  .lam-fila{margin:.15em 0}
+  .lam-igual{padding:.25em .5em;margin:.15em 0}
+  .lam-sen-tit b{font-size:1.75em}
+}
+@media (prefers-reduced-motion:reduce){
+  .lam-tabla [data-o],.lam-fila .barra i,.lam-cum-barra i,.lam-banda{transition:none}
+}

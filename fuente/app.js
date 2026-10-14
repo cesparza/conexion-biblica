@@ -459,7 +459,7 @@ function lamRecorre(){
     const h=H.find(v=>v>y0&&v<=y);if(h!=null){y=h;espera=lamQuieto()?0:22;}
     if(y>=2026){y=2026;lamVeAnio(y);lamPara();return;}lamVeAnio(y);},50);
 }
-function lamPara(){if(lamCorre){clearInterval(lamCorre);lamCorre=0;}const b=document.getElementById('lamPlay');if(b)b.classList.remove('on');if(typeof lamParaVision==='function')lamParaVision();}
+function lamPara(){lamSenasN++;if(lamCorre){clearInterval(lamCorre);lamCorre=0;}const b=document.getElementById('lamPlay');if(b)b.classList.remove('on');if(typeof lamParaVision==='function')lamParaVision();}
 
 /* ── Pruébate ── */
 function lamPintaReto(){
@@ -660,7 +660,7 @@ function lamEscenaE(){
     '<image class="lam-hist" href="'+f+'" x="-150" y="0" width="2050" height="1152" preserveAspectRatio="xMidYMid slice"/>'+
     '<svg class="lam-zoom" id="lamZoom" x="-150" y="0" width="2050" height="1152" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice">'+
     '<image class="lam-zoom-img" href="" x="0" y="0" width="1200" height="675" preserveAspectRatio="xMidYMid slice"/><g class="lam-capa-g"></g></svg></svg>'+
-    '<div class="lam-sobre" id="lamSobre"><div class="lam-marcas-img" id="lamMarcasImg"></div>'+lamD2HTML()+'</div>'+
+    '<div class="lam-sobre" id="lamSobre"><div class="lam-marcas-img" id="lamMarcasImg"></div>'+lamD2HTML()+'<div class="lam-tabla" id="lamTabla" hidden></div></div>'+
     '<div class="lam-chip" id="lamChip" hidden></div>'+
     (pres?'':'<div class="lam-aviso" id="lamAviso">Elige una parte abajo</div>')+'</div>'+
     tira+'<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
@@ -730,7 +730,9 @@ function lamConD2Cambia(){
 function lamLimpia(conserva){
   lamAnim++;lamVisto='';
   const s=document.getElementById('lamMarcasImg');if(s){s.innerHTML='';s.className='lam-marcas-img';}
-  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley');
+  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla');
+  const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';tb.className='lam-tabla';}
+  lamBanda(false);
   const z=lamZ();if(!z)return;
   z.querySelector('.lam-capa-g').innerHTML='';
   if(!conserva){const i=lamZi();i.style.transition='none';i.style.opacity='0';i.removeAttribute('transform');z.setAttribute('viewBox','0 0 1200 675');}
@@ -917,6 +919,10 @@ function lamExtraE(p){
     '<button type="button" class="btn tono" onclick="lamSenasPlay()">'+IC('play')+' Encenderlas una por una</button>'+
     '<ol class="lam-sl" id="lamSenas">'+L.senas.map((x,j)=>'<li data-j="'+j+'"><button type="button" aria-expanded="false" onclick="lamSena('+j+')"><i>'+(j+1)+'</i><b>'+x.t+'</b><span class="lam-ref">'+x.ref+'</span></button><p>'+x.c+'</p></li>').join('')+
     '</ol><div class="lam-fu">Fuente: '+L.senasFuente+'</div></div>';
+  const P=L.periodo;
+  if(P&&p.id===P.tras)h+='<div class="lam-subs-c lam-per-c"><div class="lam-rot">'+esc(P.t)+' · 1.260 años</div><div class="lam-subs">'+
+    P.pasos.map((x,j)=>'<button type="button" data-per="'+j+'" onclick="lamPerE('+j+')"><i>'+(j+1)+'</i><span>'+esc(x.t)+'</span></button>').join('')+
+    '</div><button type="button" class="btn tono lam-recorre" onclick="lamPerTodos()">'+IC('play')+' Armar la cuenta</button><div class="lam-sub-tx" id="lamPerTx"></div></div>';
   return h;
 }
 function lamSubE(j,vis){
@@ -937,11 +943,101 @@ function lamSubsTodos(){
 function lamSena(j,ver){
   const li=document.querySelector('#lamSenas li[data-j="'+j+'"]');if(!li)return;
   const on=ver!=null?ver:!li.classList.contains('on');li.classList.toggle('on',on);li.querySelector('button').setAttribute('aria-expanded',String(on));
+  /* v208: la seña que se enciende también va sobre la imagen del cuerno. */
+  if(on&&lamSel===LAM().senasTras)lamSenasVis(j,true);
 }
 function lamSenasPlay(){
   const n=LAM().senas.length,yo=++lamSenasN;
   for(let j=0;j<n;j++)lamSena(j,false);
-  for(let j=0;j<n;j++)setTimeout(()=>{if(yo===lamSenasN)lamSena(j,true);},lamQuieto()?0:250+j*650);
+  lamSenasVis(-1,true);
+  for(let j=0;j<n;j++)setTimeout(()=>{if(yo===lamSenasN)lamSena(j,true);},lamQuieto()?0:1600+j*1300);
+}
+/* ── v208: las señas y «tiempo, tiempos y medio tiempo» sobre la imagen ──
+   Camilo: «en la presentación se debe agregar el tiempo, tiempos y la mitad de
+   un tiempo, o 1.260 años, y las características del cuerno pequeño». Sobre la
+   imagen del cuerno (lamTabla, en el mismo rectángulo): la portada de las señas,
+   cada seña al pie, y la cuenta de los 1.260 años que se arma pieza por pieza
+   (cada [data-o] aparece en orden; con «reducir movimiento», todo de una vez). */
+function lamTablaPon(html,cl){
+  const t=document.getElementById('lamTabla');if(!t)return null;
+  t.className='lam-tabla'+(cl?' '+cl:'');t.innerHTML=html;t.hidden=false;
+  /* La tabla trae su propio título: la etiqueta de la parte se esconde mientras la tapa. */
+  const e=document.getElementById('lamEsc');if(e)e.classList.toggle('con-tabla',/titulo|per/.test(cl||''));return t;
+}
+function lamArma(t,anima,ms){
+  const els=[...t.querySelectorAll('[data-o]')];
+  if(!anima||lamQuieto()){t.classList.add('quieto');els.forEach(e=>e.classList.add('ve'));return;}
+  els.forEach(e=>lamT(()=>e.classList.add('ve'),120+Number(e.getAttribute('data-o'))*(ms||700)));
+}
+/* El cuerno ya armado (los tres caídos), sin la leyenda: la imagen de fondo de las señas. */
+function lamCuernoFondo(){
+  const L=LAM(),p=lamParte(L.senasTras);
+  if(lamVisto!==p.id)lamVista(p.id,null,false);
+  else{const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';}lamBanda(false);}
+  lamD2(null);const e=document.getElementById('lamEsc');if(e)e.classList.add('en-senas');
+  return p;
+}
+/* j = -1: la portada de las señas; j ≥ 0: la seña al pie de la imagen. */
+function lamSenasVis(j,anima){
+  const L=LAM(),p=lamCuernoFondo(),n=L.senas.length,N=n===11?'Once':n;
+  if(j<0){lamChip(p,[N+' señas','Las características del cuerno pequeño']);
+    lamArma(lamTablaPon('<div class="lam-sen-tit"><small data-o="0">Daniel 7:8, 20-25</small><b data-o="1">Las características del cuerno pequeño</b>'+
+      '<span data-o="2">'+N+' señas que se cumplen en un mismo poder</span></div>','titulo'),anima,500);return;}
+  const x=L.senas[j];lamChip(p,['Seña '+(j+1)+' de '+n,x.t.replace(/<[^>]+>/g,'')]);
+  lamArma(lamTablaPon('<div class="lam-sen-cap" data-o="0"><i>'+(j+1)+'</i><div><b>'+x.t+'</b> <span class="lam-ref">'+x.ref+'</span><p>'+x.c+'</p></div></div>','pie'),anima);
+}
+/* La franja de 538 a 1798 sobre la línea de tiempo. */
+function lamBanda(on){
+  const tm=document.querySelector('#lam .lam-tiempo'),r=document.getElementById('lamRango');
+  let b=document.getElementById('lamBanda');
+  if(!on){if(b)b.classList.remove('ve');return;}
+  const P=LAM().periodo;if(!tm||!r||!P)return;
+  if(!b){b=document.createElement('div');b.id='lamBanda';b.className='lam-banda';b.innerHTML='<span>1.260 años</span>';tm.appendChild(b);}
+  const a=tm.getBoundingClientRect(),q=r.getBoundingClientRect(),w=q.width-26,x0=q.left-a.left+13;
+  b.style.left=(x0+w*lamPos(P.de)/100).toFixed(1)+'px';b.style.width=(w*(lamPos(P.a)-lamPos(P.de))/100).toFixed(1)+'px';b.style.top=(q.top-a.top+q.height/2-9).toFixed(1)+'px';
+  if(lamQuieto())b.classList.add('ve');else requestAnimationFrame(()=>b.classList.add('ve'));
+}
+function lamPeriodoVis(j,anima){
+  const L=LAM(),P=L.periodo,x=P&&P.pasos[j];if(!x)return;
+  const p=lamCuernoFondo();lamVisto=p.id;
+  lamChip(p,['Paso '+(j+1)+' de '+P.pasos.length,x.t]);
+  const cab='<div class="lam-per-cab" data-o="0"><span>'+esc(P.t)+'</span> · Daniel 7:25</div>';
+  const fila=(k,et,sub,w,n)=>'<div class="lam-fila" data-o="'+k+'"><span class="et">'+et+'<small>'+sub+'</small></span><span class="barra"><i style="--w:'+w+'%"></i></span><b>'+n+'</b></div>';
+  let h='';
+  if(x.v==='suma')h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div>'+fila(1,'tiempo','1 año',50,'360')+fila(2,'tiempos','2 años',100,'720')+fila(3,'medio tiempo','½ año',25,'180')+
+    '<div class="lam-per-total" data-o="4"><span>3½ años</span><b>1.260 días</b></div><div class="lam-per-nota" data-o="5">1 año profético = 12 meses de 30 días = 360 días</div>';
+  else if(x.v==='dia')h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div><div class="lam-eq" data-o="1"><span>1 día</span><i>=</i><span>1 año</span></div>'+
+    '<div class="lam-per-nota" data-o="2">Números 14:34 · Ezequiel 4:6</div><div class="lam-eq grande" data-o="3"><span>1.260 días</span><i>→</i><span class="oro">1.260 años</span></div>';
+  else if(x.v==='mismo')h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div>'+
+    [['3½ tiempos','Daniel 7:25 · Apocalipsis 12:14','3½ × 360'],['42 meses','Apocalipsis 11:2 · 13:5','42 × 30'],['1.260 días','Apocalipsis 11:3 · 12:6','']].map(([a,b,c],i)=>
+      '<div class="lam-igual" data-o="'+(i+1)+'"><b>'+a+'</b><small>'+b+'</small><span>'+(c?c+' = ':'')+'1.260</span></div>').join('')+
+    '<div class="lam-per-total" data-o="4"><span>el mismo periodo</span><b>1.260 años</b></div>';
+  else h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div><div class="lam-cum">'+
+    P.fotos.map(([f,y,t],i)=>'<figure data-o="'+(i*2+1)+'"><img src="'+lamSrc(f)+'" alt=""><figcaption><b>'+y+'</b><small>'+esc(t)+'</small></figcaption></figure>').join('<div class="lam-cum-barra" data-o="2"><i></i><span>1.260 años</span></div>')+
+    '</div><div class="lam-per-nota" data-o="4">538 + 1.260 = 1798</div>';
+  const t=lamTablaPon(h,'per per-'+x.v);lamArma(t,anima);
+  /* La línea de tiempo: el año y, en el cumplimiento, la franja de 538 a 1798. */
+  const r=document.getElementById('lamRango');
+  if(r){r.value=P.a;document.getElementById('lamTano').textContent=P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent='1.260 años del cuerno pequeño';}
+  if(x.v==='cumple'){if(!anima||lamQuieto())lamBanda(true);else lamT(()=>lamBanda(true),1500);}
+}
+function lamPerTx(j){
+  const P=LAM().periodo,x=P.pasos[j];
+  return (x.citas.length?'<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div>'+x.citas.map(([r,c])=>'<p><q>'+esc(c)+'</q> <span class="lam-ref">'+esc(r)+'</span></p>').join('')+'</div>':'')+
+    '<div class="lam-capa i"><div class="lam-rot">Lo que significa</div><p>'+x.nota+'</p><div class="lam-fu">Fuente: '+P.fuente+'</div></div>';
+}
+function lamPerE(j,vis){
+  const P=LAM().periodo;if(!P||!P.pasos[j])return;
+  if(!vis)lamPara();
+  lamPeriodoVis(j,true);
+  document.querySelectorAll('.lam-per-c .lam-subs button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-per')===String(j)));
+  const t=document.getElementById('lamPerTx');if(t)t.innerHTML='<div class="lam-rot">Paso '+(j+1)+' de '+P.pasos.length+'</div>'+lamPerTx(j);
+}
+function lamPerTodos(){
+  const P=LAM().periodo;if(!P)return;
+  lamPara();let j=0;const sel=lamSel;
+  const sig=()=>{if(j>=P.pasos.length||lamSel!==sel){lamVis=0;return;}lamPerE(j++,true);lamVis=setTimeout(sig,lamQuieto()?2000:6500);};
+  sig();
 }
 /* «Ver la visión»: del mar al reino, cada parte con su movimiento, sola. */
 function lamVision(){
@@ -974,7 +1070,9 @@ const lamPasosE=()=>{
   const L=LAM(),r=L.historia.map((h,i)=>({tipo:'hist',i}));
   L.partes.forEach(p=>{
     if(p.pasos)p.pasos.forEach((x,j)=>r.push({tipo:'parte',id:p.id,sub:j,n:p.pasos.length}));else r.push({tipo:'parte',id:p.id});
-    if(L.senas&&p.id===L.senasTras)L.senas.forEach((x,j)=>r.push({tipo:'senas',id:p.id,sub:j,n:L.senas.length}));
+    /* v208: tras el cuerno pequeño, la portada de sus señas, una seña por paso y la cuenta de los 1.260 años. */
+    if(L.senas&&p.id===L.senasTras){r.push({tipo:'senasT',id:p.id});L.senas.forEach((x,j)=>r.push({tipo:'senas',id:p.id,sub:j,n:L.senas.length}));}
+    if(L.periodo&&p.id===L.periodo.tras)L.periodo.pasos.forEach((x,j)=>r.push({tipo:'periodo',id:p.id,sub:j,n:L.periodo.pasos.length}));
   });
   return [...r,{tipo:'desp'},{tipo:'cierre'}];
 };
@@ -985,6 +1083,20 @@ function lamHojaSub(p,j){
     '<div class="lam-puntos" aria-hidden="true">'+p.pasos.map((y,k)=>'<i'+(k<=j?' class="on"':'')+'></i>').join('')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(x.texto)+'</q> <span class="lam-ref">'+x.ref+'</span></p></div>'+
     '<div class="lam-capa i"><div class="lam-rot">Lo que significa</div><p>'+x.nota+'</p><div class="lam-fu">Fuente: '+p.fuente+'</div></div>';
+}
+function lamHojaSenasT(){
+  const L=LAM(),p=lamParte(L.senasTras),N=L.senas.length===11?'Once':L.senas.length;
+  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+' · '+esc(p.reino)+'</div>'+
+    '<div class="lam-p2">Las características del cuerno pequeño</div><div class="lam-fechas">'+N+' señas en Daniel 7</div></div></div>'+
+    '<p class="lam-nota">Daniel 7 da '+N.toString().toLowerCase()+' señas del cuerno, y las '+N.toString().toLowerCase()+' se cumplen en un mismo poder. Una por una:</p>'+
+    '<ol class="lam-sl pres">'+L.senas.map((x,k)=>'<li><span class="lam-slb"><i>'+(k+1)+'</i><b>'+x.t+'</b><span class="lam-ref">'+x.ref+'</span></span></li>').join('')+'</ol>'+
+    '<div class="lam-fu">Fuente: '+L.senasFuente+'</div>';
+}
+function lamHojaPer(j){
+  const P=LAM().periodo,p=lamParte(P.tras),x=P.pasos[j];
+  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(P.t)+' · paso '+(j+1)+' de '+P.pasos.length+'</div>'+
+    '<div class="lam-p2">'+esc(x.t)+'</div><div class="lam-fechas">'+esc(P.s)+'</div></div></div>'+
+    '<div class="lam-puntos" aria-hidden="true">'+P.pasos.map((y,k)=>'<i'+(k<=j?' class="on"':'')+'></i>').join('')+'</div>'+lamPerTx(j);
 }
 function lamHojaSenas(j){
   const L=LAM(),p=lamParte(L.senasTras);
@@ -998,18 +1110,20 @@ function lamPresE(k){
   const dir=k>lamPaso?1:k<lamPaso?-1:0;lamPaso=k;lamPara();const s=pasos[k],L=LAM();
   const p=s.id?lamParte(s.id):null;
   const t=s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:s.tipo==='cierre'?{f:L.cierre.f,ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}:null;
-  if(s.tipo==='senas'){
-    /* La primera seña llega desde el cuerno pequeño: la imagen ya está; las demás no la vuelven a armar. */
-    if(lamVisto!==s.id)lamVista(p.id,null,false);
-    lamChip(p,['Seña '+(s.sub+1)+' de '+s.n,L.senas[s.sub].t.replace(/<[^>]+>/g,'')]);lamHoja(lamHojaSenas(s.sub));
-  }else if(p){lamVista(p.id,s.sub,dir>0);lamHoja(s.sub!=null?lamHojaSub(p,s.sub):lamHojaParte(p,0,1));}
+  if(s.tipo==='senasT'){lamSenasVis(-1,dir>0);lamHoja(lamHojaSenasT());}
+  else if(s.tipo==='senas'){
+    /* Las señas van sobre el cuerno ya armado: la imagen no se vuelve a armar en cada una. */
+    lamSenasVis(s.sub,dir!==0);lamHoja(lamHojaSenas(s.sub));
+  }else if(s.tipo==='periodo'){lamPeriodoVis(s.sub,dir>=0);lamHoja(lamHojaPer(s.sub));}else if(p){lamVista(p.id,s.sub,dir>0);lamHoja(s.sub!=null?lamHojaSub(p,s.sub):lamHojaParte(p,0,1));}
   else{lamLimpia();lamHist(t);lamChip(null);lamD2(null);lamEnciende([]);
     lamHoja((k===0?'<div class="lam-portada">'+esc(L.libro)+' · '+esc(L.titulo)+'</div>':'')+lamHojaTexto(t));}
   /* La línea de tiempo marca hasta dónde va la historia, como en Daniel 2. */
   const ult=pasos.slice(0,k+1).filter(x=>x.tipo==='parte'&&L.tiempo.includes(x.id)).map(x=>x.id).pop();
   if(ult){const q=lamParte(ult),r=document.getElementById('lamRango');r.value=q.id==='juicio'?q.de:Math.min(q.a,2026);
     document.getElementById('lamTano').textContent=lamAnioTx(q.de)+' – '+(q.a>=2026?'hoy':lamAnioTx(q.a));document.getElementById('lamTq').textContent=q.reino;}
-  const prim=pasos.map(x=>x.sub==null||x.sub===0);
+  if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.a;document.getElementById('lamTano').textContent=P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent='1.260 años del cuerno pequeño';}
+  /* El contador: cada parte, la portada de las señas y la cuenta de los 1.260 años (las señas van dentro de su portada). */
+  const prim=pasos.map(x=>x.tipo==='senas'?false:x.sub==null||x.sub===0);
   document.getElementById('lamCuenta').textContent=prim.slice(0,k+1).filter(Boolean).length+' / '+prim.filter(Boolean).length;
   document.getElementById('lamAnt').disabled=k===0;document.getElementById('lamSig').disabled=k===pasos.length-1;
 }

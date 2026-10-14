@@ -2594,6 +2594,26 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/\/\\\.\\w\+\$\/\.test\(f\)\?'':'\.webp'/.test(js),'lamRuta acepta la extensión (las capas .png)');
 }
 
+/* v208: tiempo, tiempos y medio tiempo (1.260 años) y las señas del cuerno como
+   segmento de la presentación. Lo citado, literal en RV1995; la cuenta cuadra;
+   las once señas son las mismas de la interpretación (d7.js), en el mismo orden. */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const {VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const L=LAMINAS.d7,P=L.periodo,n=t=>String(t).replace(/<[^>]+>/g,'').replace(/[«»“”—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  const verso=r=>{const m=/^(Daniel|Apocalipsis) (\d+):(\d+)$/.exec(r);if(!m)return '';return m[1]==='Daniel'?VERS['d'+m[2]][m[3]]:(VERS_AP['ap'+m[2]]||{})[m[3]];};
+  const citas=P.pasos.flatMap(x=>x.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
+  ok(P&&P.tras==='cuerno'&&P.pasos.length===4&&citas.length===7&&!malas.length,'Tiempo, tiempos y medio tiempo: 4 pasos y 7 citas literales en Daniel 7 y Apocalipsis'+(malas.length?' ('+malas[0][0]+')':''));
+  ok(360+720+180===1260&&42*30===1260&&P.de+1260===P.a&&P.de===538&&P.a===1798&&P.fotos.map(f=>f[0]).join()==='d2/e538,d2/e1798'&&P.fotos.every(f=>fs.existsSync(path.join(RAIZ,'laminas',f[0]+'.webp'))),
+    'La cuenta cuadra: 360 + 720 + 180 = 1.260 = 42 × 30, y 538 + 1.260 = 1798 (con sus dos escenas)');
+  ok(/Números 14:34/.test(P.pasos[1].nota)&&/Ezequiel 4:6/.test(P.pasos[1].nota)&&!/«/.test(P.pasos[1].nota)&&/CS 309 y 492/.test(P.fuente)&&/15 principios/.test(P.fuente),
+    'Día por año: Números 14:34 y Ezequiel 4:6 sin comillas (no están en la Biblia de la app); fuentes Bohr y CS 309, 492');
+  const D7=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d7.js'),'utf8');
+  const refsD7=[...D7.slice(D7.indexOf('Las señas del cuerno pequeño (1)'),D7.indexOf('Al sumar Apocalipsis')).matchAll(/\['[^']*', '(7:[\d, ]+)'/g)].map(m=>m[1]);
+  ok(L.senas.length===11&&refsD7.length===11&&refsD7.join('|')===L.senas.map(x=>x.ref).join('|'),'Las once señas de la lámina son las de d7.js, en el mismo orden ('+refsD7.length+')');
+}
+
 /* v179: la interpretación con fuentes (Bohr, Elena de White, las notas de
    Camilo) va en su propia capa: secciones 'contexto' y preguntas f:'c', cada
    una con «Fuente:». En Apocalipsis y, aparte del examen, en Daniel. */
