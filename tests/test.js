@@ -2804,10 +2804,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      White; cada celda dice si lo dice el texto o según qué interpretación, con su fuente. */
   const E=ULTIMOS.eventos,citas=E.flatMap(e=>e.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
   const ev=id=>E.find(e=>e.id===id),ord=E.map(e=>e.id).join(),cols=ULTIMOS.libros.map(x=>x[0]).join();
-  ok(ord==='juicio,zarandeo,imagen,ley,ciudades,pequena,lluvia,pregon,sello,gracia,jacob,plagas,falso,huida,decreto,liberacion,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
+  ok(ord==='juicio,zarandeo,imagen,ley,ciudades,pequena,lluvia,pregon,sello,gracia,gran,jacob,plagas,falso,huida,decreto,liberacion,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
     E.every(e=>e.t&&e.c&&e.cuando&&e.nota&&e.egw&&/\b(CS|PE|EUD) \d/.test(e.egw)&&ULTIMOS.fases.some(f=>f[0]===e.fase))&&
     ULTIMOS.fases.map(f=>f[0]).join()==='antes,angustia,venida,mil,fin'&&ULTIMOS.fases.every(([f],i)=>E.filter(e=>e.fase===f).length&&E.findIndex(e=>e.fase===f)>=(i?E.map(e=>e.fase).lastIndexOf(ULTIMOS.fases[i-1][0]):0)),
-    'Los últimos acontecimientos: 29, en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
+    'Los últimos acontecimientos: 30, en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
   ok(cols==='d2,d7,d8,d11,d12,mt24,ap12,ap13,ap14,ap16,ap17,ap18,ap19,ap20,ap21,apo,egw'&&
     E.every(e=>Object.entries(e.l).every(([k,x])=>ULTIMOS.libros.some(y=>y[0]===k)&&k!=='egw'&&x[0]&&(x[1]===0||x[1]===1)&&x[2]&&x[3]&&Array.isArray(x[4])&&(k==='mt24'?!x[4].length:true))),
     'Las columnas: Daniel 2, 7, 8, 11, 12, Mateo 24, Apocalipsis 12, 13, 14, 16, 17, 18, 19, 20, 21-22 y otros, y Elena de White; cada celda con referencia, si es explícito o interpretación, una línea y su fuente; Mateo sin comillas');
@@ -2815,7 +2815,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'El orden: el pequeño tiempo de angustia antes del cierre y la angustia de Jacob después; la resurrección especial y la voz de Dios antes de la venida; la segunda resurrección, la Nueva Jerusalén y después la destrucción final');
   /* Lo que Camilo pidió revisar: zarandeo, lluvia tardía y ley dominical en Daniel 11-12
      solo por interpretación (Daniel 11:41, 44), nunca como texto explícito ni en 12:3 o 12:10. */
-  ok(['zarandeo','lluvia','ley'].every(id=>ev(id).l.d11&&ev(id).l.d11[1]===0&&!ev(id).l.d12)&&!ev('pregon').l.d12&&ev('jacob').l.d12[1]===1&&ev('liberacion').l.d12[1]===1&&ev('gracia').l.d12[1]===0&&
+  ok(['zarandeo','lluvia','ley'].every(id=>ev(id).l.d11&&ev(id).l.d11[1]===0&&!ev(id).l.d12)&&!ev('pregon').l.d12&&ev('gran').l.d12[1]===1&&ev('liberacion').l.d12[1]===1&&ev('gracia').l.d12[1]===0&&
     ev('falso').l.mt24[1]===1&&ev('ley').l.mt24[1]===0&&ev('ley').l.ap17&&ev('ley').l.ap13[1]===0&&ev('imagen').l.ap13[1]===1,
     'Daniel 11-12: el zarandeo (11:41), la lluvia tardía (11:44) y la ley dominical (11:41) van como interpretación con su fuente; el tiempo de angustia y la liberación (12:1) son texto');
   const refs=E.map(e=>Object.values(e.en).join(' ')).join(' | ');

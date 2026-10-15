@@ -1035,9 +1035,9 @@ for (const W of ANCHOS) {
     r.pistaFin = getComputedStyle(m.querySelector('.cmp-ult-pista')).display === 'none';
     sc.scrollLeft = 0; ultPista(sc);
     return r; });
-  ok(ult.n === 29 && ult.cols === 17 && ult.fases === 5 && ult.despues && /Daniel 11:41/.test(ult.det) && /Según la interpretación/.test(ult.det) && /Pippenger/.test(ult.det) &&
+  ok(ult.n === 30 && ult.cols === 17 && ult.fases === 5 && ult.despues && /Daniel 11:41/.test(ult.det) && /Según la interpretación/.test(ult.det) && /Pippenger/.test(ult.det) &&
     ult.detVe && ult.celdaVe && ult.fijo && ult.caja && ult.pag && ult.si >= 30 && ult.int >= 30 && (!ult.rueda || (ult.pista && ult.pistaFin)),
-    W + ' · v219: «Los últimos acontecimientos»: 29 filas en 5 fases y 17 columnas; la celda de Daniel 11 en la ley dominical abre debajo su texto, «según la interpretación» y su fuente, a la vista; el nombre queda fijo al rodar y la pista se va al final (' + JSON.stringify(Object.assign({}, ult, { det: '' })) + ')');
+    W + ' · v219: «Los últimos acontecimientos»: 30 filas en 5 fases y 17 columnas; la celda de Daniel 11 en la ley dominical abre debajo su texto, «según la interpretación» y su fuente, a la vista; el nombre queda fijo al rodar y la pista se va al final (' + JSON.stringify(Object.assign({}, ult, { det: '' })) + ')');
   /* Mateo 24 va sin comillas: la referencia y la fuente. */
   const mt = await p.evaluate(() => { cmpUlt(ultIdx('falso'), false, 'mt24'); const d = document.getElementById('cmpUltDet'); return { q: d.querySelectorAll('q').length, t: d.textContent }; });
   ok(mt.q === 0 && /Mateo 24:23-27/.test(mt.t) && /Lo dice el texto/.test(mt.t) && /CS 683/.test(mt.t), W + ' · v219: Mateo 24 en la celda: referencia sin comillas, explícito y su fuente (' + mt.q + ')');
