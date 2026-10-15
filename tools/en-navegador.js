@@ -1041,6 +1041,29 @@ for (const W of ANCHOS) {
   /* Mateo 24 va sin comillas: la referencia y la fuente. */
   const mt = await p.evaluate(() => { cmpUlt(ultIdx('falso'), false, 'mt24'); const d = document.getElementById('cmpUltDet'); return { q: d.querySelectorAll('q').length, t: d.textContent }; });
   ok(mt.q === 0 && /Mateo 24:23-27/.test(mt.t) && /Lo dice el texto/.test(mt.t) && /CS 683/.test(mt.t), W + ' · v219: Mateo 24 en la celda: referencia sin comillas, explícito y su fuente (' + mt.q + ')');
+  /* v221 (Camilo, iPhone): tocar un acontecimiento, una celda o «Siguiente» no lleva lejos:
+     la fila tocada se queda donde estaba (±80 px) aunque se cierre un detalle de arriba, en
+     la página y dentro de una caja que rueda. Sin anclaje del navegador, como Safari. */
+  await p.addStyleTag({ content: '*{overflow-anchor:none!important}' });
+  for (const enCaja of [false, true]) {
+    await p.evaluate(c => { cmpUlt(0, true); const m = document.getElementById('cmpUlt');
+      if (c) { const b = document.createElement('div'); b.id = 'cajaPrueba'; b.style.cssText = 'height:700px;overflow:auto'; m.parentNode.insertBefore(b, m); b.appendChild(m); b.scrollIntoView({ block: 'start' }); } }, enCaja);
+    const tops = [];
+    for (const sel of ['.cmp-ult-ev[data-i="1"]', '.cmp-ult-ev[data-i="2"]', '.cmp-ult-ev[data-i="8"]', '.cmp-ult-c[data-i="2"][data-c="d11"]', '.cmp-ult-ev[data-i="12"]']) {
+      const a = await p.evaluate(s => { const e = document.querySelector(s), b = document.getElementById('cajaPrueba');
+        if (b) b.scrollTop += e.getBoundingClientRect().top - b.getBoundingClientRect().top - 300; else window.scrollBy(0, e.getBoundingClientRect().top - 400);
+        return Math.round(e.getBoundingClientRect().top); }, sel);
+      await p.click(sel); await p.waitForTimeout(350);
+      tops.push([sel.replace(/\.cmp-ult-|\[data-|"|\]/g, ''), a, await p.evaluate(s => Math.round(document.querySelector(s).getBoundingClientRect().top), sel)]);
+    }
+    const sig = await p.evaluate(async () => { const d = document.getElementById('cmpUltDet'), b = d.querySelectorAll('.cmp-ult-nav button')[1], y = d.getBoundingClientRect().top;
+      b.click(); await new Promise(r => setTimeout(r, 350)); const f = document.querySelector('.cmp-ult-fila.on').getBoundingClientRect().top;
+      return [Math.round(y), Math.round(document.getElementById('cmpUltDet').getBoundingClientRect().top), Math.round(f), ultSel]; });
+    const malos = tops.filter(([, a, d]) => Math.abs(a - d) > 80);
+    ok(!malos.length && Math.abs(sig[0] - sig[1]) <= 80 && sig[2] > 0 && sig[3] === 13,
+      W + ' · v221: tocar una fila, una celda o «Siguiente» deja lo tocado donde estaba ' + (enCaja ? 'dentro de una caja que rueda' : 'en la página') + ' (' + JSON.stringify(tops) + ' sig ' + sig + ')');
+    await p.evaluate(c => { if (c) { const b = document.getElementById('cajaPrueba'), m = document.getElementById('cmpUlt'); b.parentNode.insertBefore(m, b); b.remove(); } }, enCaja);
+  }
   /* 6. El lugar vuelve igual al recargar (y el enlace lo dice). */
   const recarga = async (nombre, prepara, mira) => {
     await p.evaluate(prepara); await p.waitForTimeout(500);

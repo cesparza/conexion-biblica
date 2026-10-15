@@ -9436,7 +9436,7 @@ function ultHTML(){
   const U=ULT();if(!U)return '';
   const E=U.eventos,L=U.libros,F=U.fases||[];
   const cab='<span class="cmp-ult-0" role="columnheader">Acontecimiento</span>'+L.map(([k,c,n])=>'<span class="cmp-ult-lb'+(k==='egw'?' egw':'')+'" role="columnheader" title="'+esc(n)+'">'+esc(c)+'</span>').join('');
-  const fila=(e,i)=>'<div class="cmp-ult-fila'+(i===ultSel&&ultAbierto?' on':'')+'" role="row" data-i="'+i+'">'+
+  const fila=(e,i)=>'<div class="cmp-ult-fila'+(i===ultSel&&ultAbierto?' on':'')+(e.vez?' vez':'')+'" role="row" data-i="'+i+'">'+
     '<button type="button" class="cmp-ult-ev'+(i===ultSel&&!ultCol?' on':'')+'" role="rowheader" data-i="'+i+'" aria-expanded="'+(i===ultSel&&ultAbierto)+'" onclick="cmpUlt('+i+')"><i>'+(i+1)+'</i><span>'+esc(e.t)+'</span></button>'+
     L.map(([k,c,n])=>{const s=ultCelda(e,k),x=e.l&&e.l[k],r=k==='egw'?'':x?x[0]:'';
       if(s==='no')return '<span class="cmp-ult-c no" role="cell" aria-label="'+esc(n+': no lo trae')+'"><b></b></span>';
@@ -9449,14 +9449,17 @@ function ultHTML(){
     '<p class="cmp-ult-pista" aria-hidden="true">'+IC('der')+' Desliza la tabla para ver los demás libros</p>'+
     '<div class="cmp-ult-scroll"><div class="cmp-ult-m" role="table" aria-label="Qué libro muestra cada acontecimiento" style="--n:'+L.length+'">'+
       '<div class="cmp-ult-fila cab" role="row">'+cab+'</div>'+
-      F.map(([f,t])=>{const ev=E.map((e,i)=>[e,i]).filter(([e])=>e.fase===f);return ev.length?'<div class="cmp-ult-fz" role="row"><span role="cell">'+esc(t)+'</span></div>'+ev.map(([e,i])=>fila(e,i)).join(''):'';}).join('')+
+      F.map(([f,t])=>{const ev=E.map((e,i)=>[e,i]).filter(([e])=>e.fase===f);return ev.length?'<div class="cmp-ult-fz" role="row"><span role="cell">'+esc(t)+'</span></div>'+ev.map(([e,i],j)=>
+        /* v221: lo que pasa a la vez va bajo una misma línea, no en fila falsa. */
+        (e.vez&&(!j||ev[j-1][0].vez!==e.vez)?'<div class="cmp-ult-vz" role="row"><span role="cell">'+esc((U.veces||{})[e.vez]||'A la vez')+'</span></div>':'')+fila(e,i)).join(''):'';}).join('')+
     '</div></div>'+
     '<p class="sec-fuente">Fuente: '+U.fuente+'</p></section>';
 }
 function ultDetHTML(i,k){
   const U=ULT(),e=U&&U.eventos[i];if(!e)return '';
   const fz=(U.fases||[]).find(x=>x[0]===e.fase),lib=U.libros.find(x=>x[0]===k),x=k&&k!=='egw'&&e.l&&e.l[k];
-  const cab='<small>'+(i+1)+' de '+U.eventos.length+(fz?' · '+esc(fz[1]):'')+'</small>';
+  const vz=e.vez?U.eventos.filter(x=>x.vez===e.vez&&x!==e).map(x=>x.c||x.t):[];
+  const cab='<small>'+(i+1)+' de '+U.eventos.length+(fz?' · '+esc(fz[1]):'')+(vz.length?' · a la vez con '+esc(vz.join(', ').replace(/, ([^,]*)$/,' y $1').toLowerCase()):'')+'</small>';
   const cierra='<button type="button" class="cmp-ult-x" onclick="cmpUlt('+i+',false,\'\',true)" aria-label="Cerrar">'+IC('x')+'</button>';
   if(x){const nom=lib[0]==='apo'?'Apocalipsis':lib[2].split(' ')[0];
     return '<div class="cmp-ult-dc"><div>'+cab+'<h4>'+esc(e.t)+'</h4><p class="cmp-ult-dl"><b>'+esc(nom+' '+x[0])+'</b> '+
@@ -9474,8 +9477,8 @@ function ultDetHTML(i,k){
 }
 function ultNavHTML(i){
   const U=ULT();
-  return '<nav class="cmp-ult-nav" aria-label="Acontecimientos"><button type="button" class="btn txt peq"'+(i>0?' onclick="cmpUlt('+(i-1)+')"':' disabled')+'>'+IC('izq')+' '+(i>0?esc(U.eventos[i-1].t):'Anterior')+'</button>'+
-    '<button type="button" class="btn txt peq"'+(i<U.eventos.length-1?' onclick="cmpUlt('+(i+1)+')"':' disabled')+'>'+(i<U.eventos.length-1?esc(U.eventos[i+1].t):'Siguiente')+' '+IC('der')+'</button></nav>';
+  return '<nav class="cmp-ult-nav" aria-label="Acontecimientos"><button type="button" class="btn txt peq"'+(i>0?' onclick="ultVa('+(i-1)+')"':' disabled')+'>'+IC('izq')+' '+(i>0?esc(U.eventos[i-1].t):'Anterior')+'</button>'+
+    '<button type="button" class="btn txt peq"'+(i<U.eventos.length-1?' onclick="ultVa('+(i+1)+')"':' disabled')+'>'+(i<U.eventos.length-1?esc(U.eventos[i+1].t):'Siguiente')+' '+IC('der')+'</button></nav>';
 }
 /* La pista de deslizar se ve mientras la tabla no cabe y no se ha llegado al final. */
 function ultPista(sc){
@@ -9485,17 +9488,44 @@ function ultPista(sc){
   const sobra=sc.scrollWidth>sc.clientWidth+1;m.classList.toggle('rueda',sobra&&sc.scrollLeft+sc.clientWidth<sc.scrollWidth-24);
   m.style.setProperty('--vw',sc.clientWidth+'px');
 }
-function cmpUlt(i,quieto,k,cerrar){
+/* v221: lo que rueda a lo alto alrededor de la tabla: la página o una caja que la contenga. */
+function ultRueda(el){
+  for(let p=el&&el.parentElement;p&&p!==document.body&&p!==document.documentElement;p=p.parentElement){
+    const o=getComputedStyle(p).overflowY;if((o==='auto'||o==='scroll')&&p.scrollHeight>p.clientHeight+1)return p;}
+  return null;
+}
+/* v221: Anterior y Siguiente del detalle: el detalle nuevo queda donde estaba el que se tocó. */
+function ultVa(i){cmpUlt(i,false,'',false,true);}
+function cmpUlt(i,quieto,k,cerrar,desdeDet){
   const U=ULT();if(!U)return;i=Math.max(0,Math.min(U.eventos.length-1,Number(i)||0));if(!quieto)ultTocado=true;
   const e=U.eventos[i];k=k&&k!=='egw'&&e.l&&e.l[k]?k:'';
   ultSel=i;ultCol=k;ultAbierto=!cerrar;
   const m=document.getElementById('cmpUlt');if(!m)return;
   const sc=m.querySelector('.cmp-ult-scroll'),x0=sc?sc.scrollLeft:0;
+  /* v221 (Camilo, iPhone): al tocar, la fila tocada se queda donde estaba. Antes, si el
+     detalle abierto estaba ARRIBA, al cerrarse subía todo lo de abajo su altura (Safari no
+     ancla el desplazamiento) y la página parecía saltar lejos. Se mide antes y se corrige
+     después, en la página o en la caja que rueda. */
+  const fila=j=>{const b=m.querySelector('.cmp-ult-ev[data-i="'+j+'"]');return b&&b.parentElement;};
+  const d0=desdeDet&&document.getElementById('cmpUltDet'),f0=!quieto&&(d0||fila(i)),y0=f0?f0.getBoundingClientRect().top:null;
   const t=document.createElement('div');t.innerHTML=ultHTML();
   const nm=t.querySelector('.cmp-ult-m'),vm=m.querySelector('.cmp-ult-m');
-  if(nm&&vm)vm.replaceWith(nm);
+  /* El estilo de la tabla pasa ya (dentro de Jóvenes llega un instante después, y en ese
+     instante la tabla se mediría sin sus columnas). */
+  if(nm&&vm){if(vm.style.cssText)nm.style.cssText=vm.style.cssText;vm.replaceWith(nm);}
   if(sc)sc.scrollLeft=x0;
   ultPista(sc);
+  if(y0!=null){
+    const cj=ultRueda(m),mueve=d=>{if(!d)return;if(cj)cj.scrollTop+=d;else window.scrollBy(0,d);};
+    const f1=desdeDet?document.getElementById('cmpUltDet'):fila(i);
+    if(f1)mueve(Math.round(f1.getBoundingClientRect().top-y0));
+    /* Y a lo sumo un poco más, para que el detalle se vea, sin perder la fila de vista. */
+    const det=document.getElementById('cmpUltDet'),fr=fila(i);
+    if(det&&fr){const cr=cj?cj.getBoundingClientRect():{top:0,bottom:innerHeight},tope=cj?cr.top+8:DONDE_TOPE;
+      const sobra=det.getBoundingClientRect().bottom-(cr.bottom-12),cabe=fr.getBoundingClientRect().top-tope;
+      if(sobra>0&&cabe>0)mueve(Math.round(Math.min(sobra,cabe,72)));
+      else if(cabe<0)mueve(Math.round(cabe));}
+  }
   /* La celda tocada queda a la vista, sin esconderse detrás de la columna fija. */
   const b=ultCol&&m.querySelector('.cmp-ult-c.on');
   if(sc&&b){const fx=(m.querySelector('.cmp-ult-ev')||{}).offsetWidth||0,bl=b.offsetLeft;

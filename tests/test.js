@@ -2804,7 +2804,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      White; cada celda dice si lo dice el texto o según qué interpretación, con su fuente. */
   const E=ULTIMOS.eventos,citas=E.flatMap(e=>e.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
   const ev=id=>E.find(e=>e.id===id),ord=E.map(e=>e.id).join(),cols=ULTIMOS.libros.map(x=>x[0]).join();
-  ok(ord==='juicio,zarandeo,imagen,ley,ciudades,pequena,lluvia,pregon,sello,gracia,gran,jacob,plagas,falso,huida,decreto,liberacion,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
+  ok(ord==='juicio,imagen,ley,ciudades,pequena,zarandeo,lluvia,pregon,sello,gracia,gran,jacob,plagas,falso,huida,decreto,liberacion,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
     E.every(e=>e.t&&e.c&&e.cuando&&e.nota&&e.egw&&/\b(CS|PE|EUD) \d/.test(e.egw)&&ULTIMOS.fases.some(f=>f[0]===e.fase))&&
     ULTIMOS.fases.map(f=>f[0]).join()==='antes,angustia,venida,mil,fin'&&ULTIMOS.fases.every(([f],i)=>E.filter(e=>e.fase===f).length&&E.findIndex(e=>e.fase===f)>=(i?E.map(e=>e.fase).lastIndexOf(ULTIMOS.fases[i-1][0]):0)),
     'Los últimos acontecimientos: 30, en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
@@ -2813,6 +2813,13 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Las columnas: Daniel 2, 7, 8, 11, 12, Mateo 24, Apocalipsis 12, 13, 14, 16, 17, 18, 19, 20, 21-22 y otros, y Elena de White; cada celda con referencia, si es explícito o interpretación, una línea y su fuente; Mateo sin comillas');
   ok(ord.indexOf('pequena')<ord.indexOf('gracia')&&ord.indexOf('gracia')<ord.indexOf('jacob')&&ord.indexOf('especial')<ord.indexOf('venida')&&ord.indexOf('voz')<ord.indexOf('venida')&&ord.indexOf('segunda')<ord.indexOf('jerusalen')&&ord.indexOf('jerusalen')<ord.indexOf('final')&&ord.indexOf('zarandeo')<ord.indexOf('lluvia')&&ord.indexOf('venida')<ord.indexOf('desolada')&&ord.indexOf('desolada')<ord.indexOf('reino'),
     'El orden: el pequeño tiempo de angustia antes del cierre y la angustia de Jacob después; la resurrección especial y la voz de Dios antes de la venida; la segunda resurrección, la Nueva Jerusalén y después la destrucción final');
+  /* v221 (Camilo, 14-oct: «corrobora el orden»): la imagen se levanta al imponer el domingo
+     (CS 498, 502): van a la vez; desde la ley hasta el cierre, todo lo de la crisis va a la vez
+     (PE 33 y 85-86; CS 661-671), con el zarandeo decisivo en CS 666. */
+  const vez=v=>E.filter(e=>e.vez===v).map(e=>e.id).join();
+  ok(vez('ley')==='imagen,ley'&&vez('crisis')==='ciudades,pequena,zarandeo,lluvia,pregon,sello'&&!ev('juicio').vez&&!ev('gracia').vez&&
+    ULTIMOS.veces&&/CS 498 y 502/.test(ULTIMOS.veces.ley)&&/PE 33 y 85-86/.test(ULTIMOS.veces.crisis)&&/CS 666/.test(ev('zarandeo').egw)&&/Laodicea/.test(ev('zarandeo').cuando),
+    'Lo simultáneo va «a la vez»: imagen y ley dominical; y, de la ley al cierre, salida de las ciudades, pequeño tiempo de angustia, zarandeo, lluvia tardía, fuerte pregón y sellamiento');
   /* Lo que Camilo pidió revisar: zarandeo, lluvia tardía y ley dominical en Daniel 11-12
      solo por interpretación (Daniel 11:41, 44), nunca como texto explícito ni en 12:3 o 12:10. */
   ok(['zarandeo','lluvia','ley'].every(id=>ev(id).l.d11&&ev(id).l.d11[1]===0&&!ev(id).l.d12)&&!ev('pregon').l.d12&&ev('gran').l.d12[1]===1&&ev('liberacion').l.d12[1]===1&&ev('gracia').l.d12[1]===0&&

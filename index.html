@@ -4565,7 +4565,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
    White. Punto lleno: el texto lo dice; aro: según la interpretación; rombo: Elena de
    White; raya: no lo trae. El nombre queda fijo a la izquierda mientras la tabla rueda;
    el detalle se abre debajo de la fila, a lo ancho de lo que se ve. */
-.cmp-ult{--c0:210px;--cw:54px;margin-top:30px;padding-top:24px;border-top:1px solid var(--cine-linea);display:grid;gap:14px;min-width:0}
+.cmp-ult{--c0:210px;--cw:54px;overflow-anchor:none;margin-top:30px;padding-top:24px;border-top:1px solid var(--cine-linea);display:grid;gap:14px;min-width:0}
 .cmp-ult-cab .cmp-tit{margin-top:6px}
 .cmp-ult-scroll{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:4px;min-width:0}
 .cmp-ult-m{display:grid;min-width:calc(var(--c0) + var(--n) * var(--cw))}
@@ -4577,6 +4577,8 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .cmp-ult-lb.egw{color:var(--cine-oro)}
 .cmp-ult-fz{position:relative;border-top:1px solid rgba(214,178,106,.4)}
 .cmp-ult-fz span{position:sticky;left:0;display:inline-block;padding:14px 10px 6px 0;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cine-oro)}
+.cmp-ult-vz span{position:sticky;left:0;display:inline-block;padding:10px 10px 4px 14px;font-size:.75rem;font-style:italic;color:var(--cine-oro);opacity:.9;max-width:min(100%,var(--vw,100vw) - 24px)}
+.cmp-ult-fila.vez .cmp-ult-ev{box-shadow:inset 3px 0 0 rgba(214,178,106,.55)}
 .cmp-ult-ev{display:flex;align-items:center;gap:9px;min-height:44px;padding:6px 10px 6px 0;border:0;font:inherit;text-align:left;color:var(--cine-gris);cursor:pointer;box-shadow:6px 0 10px -8px rgba(0,0,0,.9)}
 .cmp-ult-ev i{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;font-style:normal;font-family:var(--cine-serif);font-size:.875rem;color:var(--cine-tinta);box-shadow:inset 0 0 0 1px rgba(243,237,226,.28)}
 .cmp-ult-ev span{font-size:.875rem;line-height:1.25;text-wrap:pretty}
@@ -5357,7 +5359,7 @@ span.cmp-ult-c{cursor:default}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'a31e5a6157e2';
+const VERSION_APP = '08e4ddcaccac';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -60636,6 +60638,10 @@ const ULTIMOS = {
   ]
  ],
  "nota": "Daniel 2, 7 y 8 pasan del juicio a la venida y al reino. Daniel 11 y 12, Mateo 24 y el Apocalipsis llenan lo de en medio. Un punto lleno: el texto lo dice. Un aro: está ahí según la interpretación que se nombra. Toca una celda para ver el texto y su fuente.",
+ "veces": {
+  "ley": "A la vez: al imponer el domingo, las iglesias levantan la imagen de la bestia (CS 498 y 502)",
+  "crisis": "A la vez, desde la ley dominical hasta el cierre de la gracia (PE 33 y 85-86; CS 661-671)"
+ },
  "fases": [
   [
    "antes",
@@ -60733,78 +60739,12 @@ const ULTIMOS = {
    "fuente": "CS 374 y 533-545"
   },
   {
-   "id": "zarandeo",
-   "fase": "antes",
-   "t": "El zarandeo",
-   "c": "Zarandeo",
-   "cuando": "Empieza con el mensaje a Laodicea y se completa con la persecución",
-   "nota": "El testimonio directo del Testigo fiel sacude a la iglesia: unos lo aceptan y se purifican; otros se levantan contra él. Cuando llega la prueba, los que no fueron santificados por la verdad dejan la fe.",
-   "egw": "PE 269-271; CS 666; EUD 147-156",
-   "l": {
-    "d11": [
-     "11:41",
-     0,
-     "«Muchas provincias caerán»: al entrar el poder del norte en la tierra gloriosa (la iglesia), muchos tropiezan y caen.",
-     "Bohr, <i>Daniel 11</i>, p. 128",
-     [
-      [
-       "Daniel 11:41",
-       "Entrará en la tierra gloriosa, y muchas provincias caerán"
-      ]
-     ]
-    ],
-    "mt24": [
-     "24:10-12",
-     0,
-     "Muchos tropiezan, se entregan unos a otros y el amor de muchos se enfría.",
-     "Bohr, <i>Daniel 11</i>, p. 128",
-     []
-    ],
-    "apo": [
-     "3:15-19",
-     0,
-     "El consejo del Testigo fiel a Laodicea causa el zarandeo.",
-     "PE 270",
-     [
-      [
-       "Apocalipsis 3:16",
-       "por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca"
-      ],
-      [
-       "Apocalipsis 3:19",
-       "sé, pues, celoso y arrepiéntete"
-      ]
-     ]
-    ]
-   },
-   "en": {
-    "d11": "~11:41",
-    "mt24": "~24:10-12",
-    "apo": "~3:15-19"
-   },
-   "citas": [
-    [
-     "Daniel 11:41",
-     "Entrará en la tierra gloriosa, y muchas provincias caerán"
-    ],
-    [
-     "Apocalipsis 3:16",
-     "por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca"
-    ],
-    [
-     "Apocalipsis 3:19",
-     "sé, pues, celoso y arrepiéntete"
-    ]
-   ],
-   "partes": [],
-   "fuente": "PE 269-271; CS 666; EUD 147-156"
-  },
-  {
    "id": "imagen",
    "fase": "antes",
    "t": "La imagen de la bestia",
    "c": "Imagen de la bestia",
-   "cuando": "Antes de la ley dominical: la iglesia busca el poder del Estado",
+   "vez": "ley",
+   "cuando": "Se forma cuando las iglesias usan el poder del Estado para imponer sus dogmas; la ley dominical es su primera obra",
    "nota": "Los Estados Unidos, la bestia con cuernos de cordero, hablan como dragón: las iglesias usan el poder civil para imponer sus dogmas, como hizo el papado. Así se sana la herida mortal.",
    "egw": "CS 496-502 y 636",
    "l": {
@@ -60880,7 +60820,8 @@ const ULTIMOS = {
    "fase": "antes",
    "t": "La ley dominical",
    "c": "Ley dominical",
-   "cuando": "Se impone el domingo por ley: la gran prueba",
+   "vez": "ley",
+   "cuando": "Se impone el domingo por ley: la gran prueba. Al imponerlo, las iglesias levantan la imagen de la bestia",
    "nota": "El sábado es la piedra de toque de la lealtad. Quien pisotea la ley de Dios para obedecer una ley humana recibe la marca de la bestia; nadie la recibe a ciegas.",
    "egw": "CS 502-503 y 662-663; EUD 107-122",
    "l": {
@@ -60988,6 +60929,7 @@ const ULTIMOS = {
   {
    "id": "ciudades",
    "fase": "antes",
+   "vez": "crisis",
    "t": "La salida de las ciudades",
    "c": "Salida de las ciudades",
    "cuando": "Cuando se promulga la ley dominical",
@@ -61012,6 +60954,7 @@ const ULTIMOS = {
   {
    "id": "pequena",
    "fase": "antes",
+   "vez": "crisis",
    "t": "El pequeño tiempo de angustia",
    "c": "Pequeño tiempo de angustia",
    "cuando": "Con la ley dominical, antes del cierre de la gracia",
@@ -61086,8 +61029,77 @@ const ULTIMOS = {
    "fuente": "PE 33 y 85-86; CS 665-667; EUD 123-132"
   },
   {
+   "id": "zarandeo",
+   "fase": "antes",
+   "t": "El zarandeo",
+   "c": "Zarandeo",
+   "vez": "crisis",
+   "cuando": "Empieza con el mensaje a Laodicea; llega a su punto decisivo con la ley dominical y la persecución",
+   "nota": "El testimonio directo del Testigo fiel sacude a la iglesia: unos lo aceptan y se purifican; otros se levantan contra él. Cuando llega la prueba, los que no fueron santificados por la verdad dejan la fe.",
+   "egw": "PE 269-271; CS 666; EUD 147-156",
+   "l": {
+    "d11": [
+     "11:41",
+     0,
+     "«Muchas provincias caerán»: al entrar el poder del norte en la tierra gloriosa (la iglesia), muchos tropiezan y caen.",
+     "Bohr, <i>Daniel 11</i>, p. 128",
+     [
+      [
+       "Daniel 11:41",
+       "Entrará en la tierra gloriosa, y muchas provincias caerán"
+      ]
+     ]
+    ],
+    "mt24": [
+     "24:10-12",
+     0,
+     "Muchos tropiezan, se entregan unos a otros y el amor de muchos se enfría.",
+     "Bohr, <i>Daniel 11</i>, p. 128",
+     []
+    ],
+    "apo": [
+     "3:15-19",
+     0,
+     "El consejo del Testigo fiel a Laodicea causa el zarandeo.",
+     "PE 270",
+     [
+      [
+       "Apocalipsis 3:16",
+       "por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca"
+      ],
+      [
+       "Apocalipsis 3:19",
+       "sé, pues, celoso y arrepiéntete"
+      ]
+     ]
+    ]
+   },
+   "en": {
+    "d11": "~11:41",
+    "mt24": "~24:10-12",
+    "apo": "~3:15-19"
+   },
+   "citas": [
+    [
+     "Daniel 11:41",
+     "Entrará en la tierra gloriosa, y muchas provincias caerán"
+    ],
+    [
+     "Apocalipsis 3:16",
+     "por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca"
+    ],
+    [
+     "Apocalipsis 3:19",
+     "sé, pues, celoso y arrepiéntete"
+    ]
+   ],
+   "partes": [],
+   "fuente": "PE 269-271; CS 666; EUD 147-156"
+  },
+  {
    "id": "lluvia",
    "fase": "antes",
+   "vez": "crisis",
    "t": "La lluvia tardía",
    "c": "Lluvia tardía",
    "cuando": "Al empezar el pequeño tiempo de angustia; da poder al fuerte pregón",
@@ -61139,6 +61151,7 @@ const ULTIMOS = {
   {
    "id": "pregon",
    "fase": "antes",
+   "vez": "crisis",
    "t": "El fuerte pregón",
    "c": "Fuerte pregón",
    "cuando": "Mientras se impone la ley dominical",
@@ -61231,6 +61244,7 @@ const ULTIMOS = {
   {
    "id": "sello",
    "fase": "antes",
+   "vez": "crisis",
    "t": "El sellamiento",
    "c": "Sellamiento",
    "cuando": "Durante el fuerte pregón; termina al cerrarse la gracia",
@@ -86132,7 +86146,7 @@ function ultHTML(){
   const U=ULT();if(!U)return '';
   const E=U.eventos,L=U.libros,F=U.fases||[];
   const cab='<span class="cmp-ult-0" role="columnheader">Acontecimiento</span>'+L.map(([k,c,n])=>'<span class="cmp-ult-lb'+(k==='egw'?' egw':'')+'" role="columnheader" title="'+esc(n)+'">'+esc(c)+'</span>').join('');
-  const fila=(e,i)=>'<div class="cmp-ult-fila'+(i===ultSel&&ultAbierto?' on':'')+'" role="row" data-i="'+i+'">'+
+  const fila=(e,i)=>'<div class="cmp-ult-fila'+(i===ultSel&&ultAbierto?' on':'')+(e.vez?' vez':'')+'" role="row" data-i="'+i+'">'+
     '<button type="button" class="cmp-ult-ev'+(i===ultSel&&!ultCol?' on':'')+'" role="rowheader" data-i="'+i+'" aria-expanded="'+(i===ultSel&&ultAbierto)+'" onclick="cmpUlt('+i+')"><i>'+(i+1)+'</i><span>'+esc(e.t)+'</span></button>'+
     L.map(([k,c,n])=>{const s=ultCelda(e,k),x=e.l&&e.l[k],r=k==='egw'?'':x?x[0]:'';
       if(s==='no')return '<span class="cmp-ult-c no" role="cell" aria-label="'+esc(n+': no lo trae')+'"><b></b></span>';
@@ -86145,14 +86159,17 @@ function ultHTML(){
     '<p class="cmp-ult-pista" aria-hidden="true">'+IC('der')+' Desliza la tabla para ver los demás libros</p>'+
     '<div class="cmp-ult-scroll"><div class="cmp-ult-m" role="table" aria-label="Qué libro muestra cada acontecimiento" style="--n:'+L.length+'">'+
       '<div class="cmp-ult-fila cab" role="row">'+cab+'</div>'+
-      F.map(([f,t])=>{const ev=E.map((e,i)=>[e,i]).filter(([e])=>e.fase===f);return ev.length?'<div class="cmp-ult-fz" role="row"><span role="cell">'+esc(t)+'</span></div>'+ev.map(([e,i])=>fila(e,i)).join(''):'';}).join('')+
+      F.map(([f,t])=>{const ev=E.map((e,i)=>[e,i]).filter(([e])=>e.fase===f);return ev.length?'<div class="cmp-ult-fz" role="row"><span role="cell">'+esc(t)+'</span></div>'+ev.map(([e,i],j)=>
+        /* v221: lo que pasa a la vez va bajo una misma línea, no en fila falsa. */
+        (e.vez&&(!j||ev[j-1][0].vez!==e.vez)?'<div class="cmp-ult-vz" role="row"><span role="cell">'+esc((U.veces||{})[e.vez]||'A la vez')+'</span></div>':'')+fila(e,i)).join(''):'';}).join('')+
     '</div></div>'+
     '<p class="sec-fuente">Fuente: '+U.fuente+'</p></section>';
 }
 function ultDetHTML(i,k){
   const U=ULT(),e=U&&U.eventos[i];if(!e)return '';
   const fz=(U.fases||[]).find(x=>x[0]===e.fase),lib=U.libros.find(x=>x[0]===k),x=k&&k!=='egw'&&e.l&&e.l[k];
-  const cab='<small>'+(i+1)+' de '+U.eventos.length+(fz?' · '+esc(fz[1]):'')+'</small>';
+  const vz=e.vez?U.eventos.filter(x=>x.vez===e.vez&&x!==e).map(x=>x.c||x.t):[];
+  const cab='<small>'+(i+1)+' de '+U.eventos.length+(fz?' · '+esc(fz[1]):'')+(vz.length?' · a la vez con '+esc(vz.join(', ').replace(/, ([^,]*)$/,' y $1').toLowerCase()):'')+'</small>';
   const cierra='<button type="button" class="cmp-ult-x" onclick="cmpUlt('+i+',false,\'\',true)" aria-label="Cerrar">'+IC('x')+'</button>';
   if(x){const nom=lib[0]==='apo'?'Apocalipsis':lib[2].split(' ')[0];
     return '<div class="cmp-ult-dc"><div>'+cab+'<h4>'+esc(e.t)+'</h4><p class="cmp-ult-dl"><b>'+esc(nom+' '+x[0])+'</b> '+
@@ -86170,8 +86187,8 @@ function ultDetHTML(i,k){
 }
 function ultNavHTML(i){
   const U=ULT();
-  return '<nav class="cmp-ult-nav" aria-label="Acontecimientos"><button type="button" class="btn txt peq"'+(i>0?' onclick="cmpUlt('+(i-1)+')"':' disabled')+'>'+IC('izq')+' '+(i>0?esc(U.eventos[i-1].t):'Anterior')+'</button>'+
-    '<button type="button" class="btn txt peq"'+(i<U.eventos.length-1?' onclick="cmpUlt('+(i+1)+')"':' disabled')+'>'+(i<U.eventos.length-1?esc(U.eventos[i+1].t):'Siguiente')+' '+IC('der')+'</button></nav>';
+  return '<nav class="cmp-ult-nav" aria-label="Acontecimientos"><button type="button" class="btn txt peq"'+(i>0?' onclick="ultVa('+(i-1)+')"':' disabled')+'>'+IC('izq')+' '+(i>0?esc(U.eventos[i-1].t):'Anterior')+'</button>'+
+    '<button type="button" class="btn txt peq"'+(i<U.eventos.length-1?' onclick="ultVa('+(i+1)+')"':' disabled')+'>'+(i<U.eventos.length-1?esc(U.eventos[i+1].t):'Siguiente')+' '+IC('der')+'</button></nav>';
 }
 /* La pista de deslizar se ve mientras la tabla no cabe y no se ha llegado al final. */
 function ultPista(sc){
@@ -86181,17 +86198,44 @@ function ultPista(sc){
   const sobra=sc.scrollWidth>sc.clientWidth+1;m.classList.toggle('rueda',sobra&&sc.scrollLeft+sc.clientWidth<sc.scrollWidth-24);
   m.style.setProperty('--vw',sc.clientWidth+'px');
 }
-function cmpUlt(i,quieto,k,cerrar){
+/* v221: lo que rueda a lo alto alrededor de la tabla: la página o una caja que la contenga. */
+function ultRueda(el){
+  for(let p=el&&el.parentElement;p&&p!==document.body&&p!==document.documentElement;p=p.parentElement){
+    const o=getComputedStyle(p).overflowY;if((o==='auto'||o==='scroll')&&p.scrollHeight>p.clientHeight+1)return p;}
+  return null;
+}
+/* v221: Anterior y Siguiente del detalle: el detalle nuevo queda donde estaba el que se tocó. */
+function ultVa(i){cmpUlt(i,false,'',false,true);}
+function cmpUlt(i,quieto,k,cerrar,desdeDet){
   const U=ULT();if(!U)return;i=Math.max(0,Math.min(U.eventos.length-1,Number(i)||0));if(!quieto)ultTocado=true;
   const e=U.eventos[i];k=k&&k!=='egw'&&e.l&&e.l[k]?k:'';
   ultSel=i;ultCol=k;ultAbierto=!cerrar;
   const m=document.getElementById('cmpUlt');if(!m)return;
   const sc=m.querySelector('.cmp-ult-scroll'),x0=sc?sc.scrollLeft:0;
+  /* v221 (Camilo, iPhone): al tocar, la fila tocada se queda donde estaba. Antes, si el
+     detalle abierto estaba ARRIBA, al cerrarse subía todo lo de abajo su altura (Safari no
+     ancla el desplazamiento) y la página parecía saltar lejos. Se mide antes y se corrige
+     después, en la página o en la caja que rueda. */
+  const fila=j=>{const b=m.querySelector('.cmp-ult-ev[data-i="'+j+'"]');return b&&b.parentElement;};
+  const d0=desdeDet&&document.getElementById('cmpUltDet'),f0=!quieto&&(d0||fila(i)),y0=f0?f0.getBoundingClientRect().top:null;
   const t=document.createElement('div');t.innerHTML=ultHTML();
   const nm=t.querySelector('.cmp-ult-m'),vm=m.querySelector('.cmp-ult-m');
-  if(nm&&vm)vm.replaceWith(nm);
+  /* El estilo de la tabla pasa ya (dentro de Jóvenes llega un instante después, y en ese
+     instante la tabla se mediría sin sus columnas). */
+  if(nm&&vm){if(vm.style.cssText)nm.style.cssText=vm.style.cssText;vm.replaceWith(nm);}
   if(sc)sc.scrollLeft=x0;
   ultPista(sc);
+  if(y0!=null){
+    const cj=ultRueda(m),mueve=d=>{if(!d)return;if(cj)cj.scrollTop+=d;else window.scrollBy(0,d);};
+    const f1=desdeDet?document.getElementById('cmpUltDet'):fila(i);
+    if(f1)mueve(Math.round(f1.getBoundingClientRect().top-y0));
+    /* Y a lo sumo un poco más, para que el detalle se vea, sin perder la fila de vista. */
+    const det=document.getElementById('cmpUltDet'),fr=fila(i);
+    if(det&&fr){const cr=cj?cj.getBoundingClientRect():{top:0,bottom:innerHeight},tope=cj?cr.top+8:DONDE_TOPE;
+      const sobra=det.getBoundingClientRect().bottom-(cr.bottom-12),cabe=fr.getBoundingClientRect().top-tope;
+      if(sobra>0&&cabe>0)mueve(Math.round(Math.min(sobra,cabe,72)));
+      else if(cabe<0)mueve(Math.round(cabe));}
+  }
   /* La celda tocada queda a la vista, sin esconderse detrás de la columna fija. */
   const b=ultCol&&m.querySelector('.cmp-ult-c.on');
   if(sc&&b){const fx=(m.querySelector('.cmp-ult-ev')||{}).offsetWidth||0,bl=b.offsetLeft;
