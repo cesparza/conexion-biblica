@@ -2871,5 +2871,63 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'La fila de pasos corre sola al paso activo y desvanece el borde donde hay más');
 }
 
+/* v222: la lámina de Daniel 8 (como Daniel 7: escenas). Las imágenes y las piezas existen,
+   los textos y lo citado son literales en RV1995, el recorrido va en orden, cada movimiento
+   tiene sus piezas dentro de su imagen, la cuenta de los 2.300 años cuadra y Daniel 8 entra
+   en Comparar y en los últimos acontecimientos. Lo que se ve, en tools/en-navegador.js. */
+{
+  const {LAMINAS,ULTIMOS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const {VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const L=LAMINAS.d8,n=t=>String(t).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/<[^>]+>/g,'').replace(/[«»“”—,.;:¿?¡!]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  const d8=n(Object.values(VERS.d8).join(' ')),dan=n(['d2','d7','d8','d9','d12'].flatMap(k=>Object.values(VERS[k])).join(' ')+' '+Object.values(VERS_AP).flatMap(c=>Object.values(c)).join(' '));
+  ok(L&&L.tipo==='escenas'&&L.comparar==='d2'&&L.comparar2==='d7','Daniel 8 es una lámina de escenas que se compara con Daniel 2 y Daniel 7');
+  const ruta=f=>path.join(RAIZ,'laminas',(f.includes('/')?'':L.dir)+f+(/\.\w+$/.test(f)?'':'.webp'));
+  const fs8=[L.inicioF,L.miniF,L.cartel.f,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),L.despues.f,L.cierre.f,...L.escenas.map(e=>e.f),...L.precarga];
+  const faltan=[...new Set(fs8)].filter(f=>!fs.existsSync(ruta(f)));
+  ok(!faltan.length&&['ulai','gabriel','santuario','carnero-solo.png','macho-cabrio-solo.png','cuernos-cuatro.png','cuerno-roto.png'].every(f=>fs.existsSync(ruta(f))),
+    'Las imágenes de Camilo y las piezas de tools/lamina-d8.py están en laminas/d8 ('+new Set(fs8).size+')'+(faltan.length?' — faltan '+faltan.join(', '):''));
+  const textos=[...L.partes.flatMap(p=>[p.texto,p.texto2]),...L.historia.map(h=>h.texto),L.despues.texto,L.cierre.texto,L.intro.texto,L.cartel.cita.texto];
+  const malos=textos.filter(t=>!String(t).split('…').every(tr=>d8.includes(n(tr))));
+  ok(!malos.length,'Cada texto de la lámina de Daniel 8 está literal en Daniel 8 RV1995 ('+textos.length+')'+(malos.length?': '+malos[0].slice(0,50):''));
+  const citas=[...L.partes.flatMap(p=>p.interp.concat(p.corto)),...L.historia.map(h=>h.nota),L.despues.nota,L.cierre.nota,...L.reto.map(r=>r.q),...L.periodo.pasos.map(x=>x.nota)].flatMap(t=>[...String(t).matchAll(/«([^»]+)»/g)].map(m=>m[1]));
+  const sueltas=citas.filter(c=>!dan.includes(n(c)));
+  ok(citas.length>=25&&!sueltas.length,'Lo citado en la interpretación de Daniel 8 es literal ('+citas.length+')'+(sueltas.length?': '+sueltas.slice(0,3).join(' | '):''));
+  const verso=r=>{const m=/^Daniel (\d+):(\d+)$/.exec(r);return m?VERS['d'+m[1]][m[2]]:'';};
+  const pc=L.periodo.pasos.flatMap(x=>x.citas),pm=pc.filter(([r,c])=>!n(verso(r)).includes(n(c)));
+  ok(pc.length>=6&&!pm.length,'Las citas de las 2.300 tardes y mañanas son literales (Daniel 7, 8 y 9)'+(pm.length?' ('+pm[0][0]+')':''));
+  const P=id=>L.partes.find(p=>p.id===id);
+  ok(L.partes.map(p=>p.id).join()==='carnero,macho,cuatro,cuerno,cielo,santuario,purificado,quebrantado'&&L.partes.every(p=>p.img&&p.c&&p.interp.length&&/\S/.test(p.fuente)&&p.corto),'Daniel 8: ocho partes, cada una con su imagen, interpretación y fuente');
+  ok(P('carnero').reino==='Medo-Persia'&&P('macho').reino==='Grecia'&&P('cuerno').reino==='Roma imperial'&&P('cielo').reino==='Roma papal'&&P('santuario').reino==='Roma papal'&&P('purificado').de===1844&&P('quebrantado').fin==='venida'&&
+    /550 a\.C\./.test(L.cartel.cuando)&&/tercer año de Belsasar/.test(L.cartel.cuando),'La lectura de Camilo: Medo-Persia, Grecia, Roma imperial y papal en un solo cuerno, 1844 y la venida; tercer año de Belsasar, 550 a.C.');
+  ok(!/\b(según|para) (Bohr|Smith|Maxwell)\b|(Bohr|Smith|Maxwell) (dice|ve|explica|compara)/.test(JSON.stringify(L).replace(/fuente[^,]*,/g,'')),'Daniel 8, voz directa: los autores solo en la fuente');
+  /* El recorrido, en orden. */
+  const {rec8,cmp,cmpRio}=montar("rec8:(lamId='d8',lamRecorrido().map(x=>x.k).join(' ')), cmp:cmpModelo, cmpRio");
+  ok(rec8==='h0 est carnero macho cuatro cuerno cielo santuario purificado x-periodo quebrantado desp cierre','Daniel 8 en Explorar: la historia, la visión, cada parte, las 2.300 tardes y mañanas, la venida, Gabriel y el cierre ('+rec8+')');
+  /* Cada movimiento: sus piezas existen y caen dentro de su imagen. */
+  const M=L.mov,dentro=(c,w,h)=>c[0]>=0&&c[1]>=0&&c[2]<=w&&c[3]<=h&&c[0]<c[2]&&c[1]<c[3];
+  const piezas=[[M.carnero.a,M.carnero],[M.carnero.b,M.carnero],[M.macho.cuerno,M.macho],...M.cabeza.cuernos.map(c=>[c,M.cabeza])];
+  ok(piezas.every(([q,I])=>dentro(q.caja,I.w,I.h)&&q.base[0]>=q.caja[0]-20&&q.base[0]<=q.caja[2]+20&&fs.existsSync(ruta(q.f)))&&[M.carnero,M.macho,M.cabeza].every(I=>fs.existsSync(ruta(I.f)))&&M.cabeza.cuernos.length===4&&
+    M.cabeza.cuernos.map(c=>c.t).join()==='Casandro,Lisímaco,Seleuco,Tolomeo'&&L.partes.filter(p=>p.mov).map(p=>p.mov).join()==='carnero,choque,cuatro,crece,cielo,santuario,purifica'&&L.partes.filter(p=>p.mov).every(p=>p.ms>=5000),
+    'Cada movimiento de Daniel 8 tiene sus piezas en su imagen y tiempo para verse; los cuatro cuernos son Casandro, Lisímaco, Seleuco y Tolomeo');
+  ok(M.mapa.va.map(v=>M.mapa.reinos[v.r].t+' '+v.s).join(', ')==='Macedonia 168 a.C., Siria 65 a.C., Judea 63 a.C., Egipto 30 a.C.'&&M.mapa.reinos[3].g,'El cuerno crece al oriente (Macedonia, Siria), a la tierra gloriosa (Judea) y al sur (Egipto)');
+  const lam=js.slice(js.indexOf('/* ── v222: DANIEL 8, LO QUE SE MUEVE'),js.indexOf('/* ── Explorar ── */\nfunction lamInicioE('));
+  ok(lam.length>8000&&!/\.animate\(|url\(#|filter=/.test(lam)&&/requestAnimationFrame|lamTween/.test(lam)&&(lam.match(/if\(q\)\{/g)||[]).length>=6,'Daniel 8 se mueve con requestAnimationFrame, sin el.animate() ni url(#), y cada movimiento tiene su cuadro final quieto («reducir movimiento»)');
+  /* La cuenta. */
+  const Pe=L.periodo,L23=y=>y>0?y+456:y+457;
+  ok(Pe.tras==='purificado'&&Pe.de===-457&&Pe.a===1844&&L23(1844)===2300&&L23(34)===490&&L23(27)===483&&2300-490===1810&&34+1810===1844&&Pe.pasos.map(x=>x.v).join()==='tm,decreto,semanas,resta,purif'&&Pe.ir[0][0]==='d7'&&Pe.ir[0][1]==='juicio',
+    'Las 2.300 tardes y mañanas: de 457 a.C. a 1844 (sin año cero), 70 semanas hasta 34 d.C., 1.810 años después, y el paso al juicio de Daniel 7');
+  /* Comparar y los últimos acontecimientos. */
+  const Mo=cmp(LAMINAS),fila=k=>Mo.filas.find(f=>f.key===k),ids=(f,c)=>((f&&f.celdas[c])||[]).map(p=>p.id).join();
+  ok(Mo.cols.join()==='d2,d7,d8'&&ids(fila('-539'),'d8')==='carnero'&&ids(fila('-331'),'d8')==='macho,cuatro'&&ids(fila('-168'),'d8')==='cuerno'&&ids(fila('538'),'d8')==='cielo,santuario'&&ids(fila('1844'),'d8')==='purificado'&&ids(fila('fin-venida'),'d8')==='quebrantado'&&!ids(fila('-605'),'d8')&&/Medo-Persia/.test(L.noTrae['-605']),
+    'Comparar suma la columna de Daniel 8: carnero, macho cabrío y cuatro cuernos, Roma imperial, papal, 1844 y la venida; Babilonia no, y dice por qué');
+  ok(L.paralelo.every(r=>r.length===6&&(r[3]===null||[].concat(r[3]).every(k=>LAMINAS.d2.capas.includes(k)||['piedra','monte'].includes(k)))&&LAMINAS.d7.partes.some(p=>p.id===r[5])),'Con Daniel 2 y 7: cada parte enciende su metal y muestra su parte de Daniel 7');
+  const ev=id=>ULTIMOS.eventos.find(e=>e.id===id);
+  ok(ev('juicio').l.d8&&ev('juicio').l.d8[0]==='8:14'&&ev('venida').l.d8[0]==='8:25'&&ev('juicio').partes.includes('purificado')&&ev('venida').partes.includes('quebrantado')&&ULTIMOS.eventos.filter(e=>e.l.d8).length===2,
+    'Los últimos acontecimientos: Daniel 8 solo donde aplica (el juicio en 8:14 y la venida en 8:25), y su lámina los muestra');
+  const CD=require(path.join(RAIZ,'fuente','complementos','daniel.js')),s8=CD.secciones.d8.map(x=>x.t).join(' | ');
+  ok(['Antíoco','457 a.C. a 1844','Expiación','primero a lo ancho'].every(t=>s8.includes(t))&&CD.secciones.d8.every(x=>/Fuente:/.test(x.h)),'Daniel 8 explica (🧭) la cuenta de 457 a 1844, la purificación como juicio, hacia dónde crece el cuerno y por qué no es Antíoco');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

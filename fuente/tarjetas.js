@@ -185,7 +185,7 @@ TARJETAS.push(
 
 TARJETAS.push(
 {cap:'d8', f:'¿En qué año de qué rey tuvo Daniel la visión del capítulo 8?', r:'Año tercero de Belsasar, 550 a.C. (Daniel 7 fue en el primero, 553 a.C.).'},
-{cap:'d8', f:'¿Dónde estaba Daniel en la visión?', r:'Junto al río Ulay, en Susa, provincia de Elam (futura capital de invierno de Medo-Persia).'},
+{cap:'d8', f:'¿Dónde estaba Daniel en la visión?', r:'Junto al río Ulai, en Susa, provincia de Elam (futura capital de invierno de Medo-Persia).'},
 {cap:'d8', f:'¿Qué representa el carnero de dos cuernos?', r:'Medo-Persia (Daniel 8:20); el cuerno más alto, que despuntó después, es Persia.'},
 {cap:'d8', f:'¿Qué representa el macho cabrío?', r:'Grecia (Yaván), Daniel 8:21.'},
 {cap:'d8', f:'¿Qué representa el cuerno grande del macho cabrío?', r:'El primer rey de Grecia, Alejandro Magno (Daniel 8:21).'},
@@ -193,13 +193,13 @@ TARJETAS.push(
 {cap:'d8', f:'¿Qué representan los cuatro cuernos que salen tras romperse el grande?', r:'Los cuatro reinos en que se repartió el imperio de Alejandro: Casandro, Lisímaco, Seleuco y Tolomeo.'},
 {cap:'d8', f:'¿A qué edad murió Alejandro Magno y en qué año?', r:'A los 32 años, en el 323 a.C.'},
 {cap:'d8', f:'¿De dónde sale el cuerno pequeño de Daniel 8, según el hebreo del pasaje?', r:'De uno de los cuatro "vientos" (puntos cardinales), no de uno de los cuatro cuernos griegos: por eso apunta a un poder que crece desde afuera, Roma.'},
-{cap:'d8', f:'¿Qué tres cosas hace el cuerno pequeño de Daniel 8?', r:'Crece hacia el sur, el oriente y la Tierra del Esplendor; abole el sacrificio continuo (tamid); hace caer el lugar del santuario.'},
+{cap:'d8', f:'¿Qué tres cosas hace el cuerno pequeño de Daniel 8?', r:'Crece hacia el sur, el oriente y la tierra gloriosa; abole el sacrificio continuo (tamid); hace caer el lugar del santuario.'},
 {cap:'d8', f:'¿Por qué el cuerno pequeño de Daniel 8 no puede ser Antíoco Epífanes?', r:'Antíoco aparece hacia la mitad de la dinastía seléucida, no "al término" del reino helénico como pide el texto; murió en 164 a.C., casi 200 años antes de que Jesús hablara de esta profecía como futura (Mateo 24:15); y los cuernos representan reinos, no reyes individuales.'},
 {cap:'d8', f:'¿Qué territorios conquistó Roma que cumplen «creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa»?', r:'Macedonia (168 a.C.), Siria (65 a.C.), Palestina (63 a.C.) y Egipto (30 a.C.).'},
 {cap:'d8', f:'¿Qué significa la palabra hebrea tamid?', r:'"Continuo" o "permanente"; en el santuario se aplicaba al holocausto diario, las lámparas y el pan siempre presentes. En Daniel 8 representa el ministerio permanente de Cristo como Sumo Sacerdote.'},
 {cap:'d8', f:'¿Cuánto duran las "2.300 tardes y mañanas" de Daniel 8:14, con la regla de día por año?', r:'2.300 años.'},
 {cap:'d8', f:'¿Qué significa la palabra hebrea nitsdaq, traducida "reivindicado" o "purificado"?', r:'Está emparentada con "justificar"; señala el Día de la Expiación, el día de juicio del santuario del Antiguo Testamento.'},
-{cap:'d8', f:'¿En qué decreto y año comienzan las 2.300 años, y en qué año terminan?', r:'En el decreto de Artajerjes I para restaurar Jerusalén, año 457 a.C. (Esdras 7); terminan en el año 1844.'},
+{cap:'d8', f:'¿En qué decreto y año comienzan los 2.300 años, y en qué año terminan?', r:'En el decreto de Artajerjes I para restaurar Jerusalén, año 457 a.C. (Esdras 7); terminan en el año 1844.'},
 {cap:'d8', f:'¿Qué pasó en 1844 según esta interpretación?', r:'Comenzó el juicio investigador en el santuario celestial (no el regreso visible de Cristo, que era lo que esperaba el movimiento de William Miller).'},
 {cap:'d8', f:'¿A qué enfoca cada visión de Daniel según su tema central?', r:'Daniel 2: a Cristo Rey. Daniel 7: a Cristo Juez. Daniel 8-9: a Cristo Sumo Sacerdote.'},
 );

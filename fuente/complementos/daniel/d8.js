@@ -90,6 +90,49 @@ module.exports = {
       ]) +
       hi('Por eso 2.300 tardes y mañanas son 2.300 días proféticos, es decir, 2.300 años: de 457 a.C. a 1844.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 306-308 y 315; Bohr, <i>15 principios</i> 2:105.</p>` },
+
+    { t: '🧭 Hacia dónde crece el cuerno: primero a lo ancho, después hacia arriba', capa: 'contexto', h:
+      `<p>El carnero «se engrandecía» (8:4), el macho cabrío «creció en gran manera» (8:8) y el cuerno crece más que los dos. Pero no crece igual todo el tiempo:</p>` +
+      tbl(['Fase', 'Hacia dónde', 'Cumplimiento'], [
+        ['Roma imperial (8:9)', 'A lo ancho, sobre la tierra: al oriente, al sur y a la tierra gloriosa', 'Macedonia (168 a.C.), Siria (65 a.C.), Judea (63 a.C.) y Egipto (30 a.C.)'],
+        ['Roma papal (8:10-12)', 'Hacia arriba: hasta el ejército del cielo y frente al Príncipe', 'Persigue al pueblo de Dios y pone en la tierra lo que Cristo hace en el santuario del cielo (538-1798)'],
+      ]) +
+      hi('Es un solo cuerno porque es un solo poder en dos fases, como en Daniel 2 (hierro y hierro con barro) y Daniel 7 (la bestia espantosa y su cuerno pequeño). Las dos fases gobiernan desde Roma.') +
+      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 305-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164.</p>` },
+
+    { t: '🧭 ¿Antíoco IV Epífanes? Por qué no', capa: 'contexto', h:
+      `<p>Muchos comentarios dicen que el cuerno pequeño es Antíoco IV Epífanes, el rey seléucida que profanó el templo de Jerusalén entre 168 y 165 a.C. El texto no encaja:</p>` +
+      li([
+        '<b>Un cuerno es un reino</b> (8:22), y Antíoco era un rey de uno de los cuatro cuernos, no un poder nuevo.',
+        '<b>Llega tarde y es chico.</b> El cuerno sale «al fin del reinado de estos» (8:23); Antíoco reinó a mitad de la dinastía seléucida (312-65 a.C.). Y el cuerno crece más que Persia y que Alejandro; Antíoco tuvo que salir de Egipto porque Roma se lo ordenó.',
+        '<b>El tiempo no da.</b> Su profanación duró unos tres años (1 Macabeos 1:54; 4:52), no 2.300 días; para hacerlo encajar se parten las tardes y mañanas en 1.150 días.',
+        '<b>Jesús la puso en el futuro.</b> La «abominación desoladora» de Daniel todavía estaba por venir cuando Jesús habló (Mateo 24:15), casi dos siglos después de la muerte de Antíoco (164 a.C.).',
+        '<b>La visión es para el tiempo del fin</b> (8:17, 19), y el cuerno solo es quebrantado «no por mano humana» (8:25).',
+      ]) +
+      `<p>Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 162-163; Bohr, <i>Daniel 1-10</i>, p. 305-306 y 314-315.</p>` },
+
+    { t: '🧭 De 457 a.C. a 1844: la cuenta de las 2.300 tardes y mañanas', capa: 'contexto', h:
+      `<p>Daniel 8 da el número y Daniel 9 el punto de partida: «desde la salida de la orden para restaurar y edificar a Jerusalén» (9:25). Gabriel vuelve a explicar lo que en 8:27 quedó sin entender.</p>` +
+      tbl(['Paso', 'Cuenta', 'Fecha'], [
+        ['La orden de Artajerjes I (Esdras 7:7-26)', 'su séptimo año, contado de otoño a otoño', 'otoño de 457 a.C.'],
+        ['7 semanas (9:25)', '49 años: Jerusalén reedificada', '408 a.C.'],
+        ['62 semanas más (9:25)', '483 años: el Mesías Príncipe, ungido en su bautismo', 'otoño de 27 d.C.'],
+        ['La mitad de la última semana (9:27)', 'la cruz: cesan el sacrificio y la ofrenda', 'primavera de 31 d.C.'],
+        ['Fin de las 70 semanas (9:24)', '490 años: Esteban muere y el evangelio va a los gentiles', '34 d.C.'],
+        ['Lo que queda: 2.300 − 490 = 1.810', '34 + 1.810', '1844'],
+      ]) +
+      hi('«Determinadas» (9:24) quiere decir cortadas. Solo se pueden cortar 490 años de un periodo más largo que empieza a la vez: los 2.300. Por eso son años, y empiezan juntos en 457 a.C. Sin año cero, 2.300 − 457 da 1843 y se llega a 1844.') +
+      `<p>Fuente: CS 372-376; Bohr, <i>Daniel 1-10</i>, p. 325-336.</p>` },
+
+    { t: '🧭 «Será purificado»: el Día de la Expiación y el juicio de Daniel 7', capa: 'contexto', h:
+      `<p>En el santuario, cada día los pecados confesados se llevaban al lugar santo; una vez al año, el Día de la Expiación, el sumo sacerdote entraba al lugar santísimo y purificaba el santuario (Levítico 16:16, 29-30). Era un día de juicio: quien no se afligía era cortado de su pueblo (Levítico 23:29).</p>` +
+      li([
+        '<b>La palabra.</b> Daniel 8:14 usa <i>nitsdaq</i>: será justificado, vindicado. Las traducciones antiguas la leyeron «purificado», y en la Biblia «justo» y «limpio» van juntos (Job 4:17; 25:4).',
+        '<b>El mismo suceso que Daniel 7.</b> Daniel 7 pasa del cuerno al juicio (7:9-10) y Daniel 8 del cuerno al santuario purificado (8:14): las dos visiones ponen en el mismo lugar el comienzo del juicio, en 1844.',
+        '<b>En el cielo.</b> El templo de Jerusalén ya no existía cuando terminaron los 2.300 años. Cristo entró en 1844 al lugar santísimo del santuario celestial para su obra final: el juicio investigador.',
+      ]) +
+      wa('La purificación del santuario no es la segunda venida: eso esperaba la mayoría en 1844. Es la obra que Cristo hace en el cielo antes de volver.') +
+      `<p>Fuente: CS 451 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 315-320.</p>` },
   ],
   preguntas: [
     { t: 'mc', v: '8:3', f: 'c', q: '¿Por qué Daniel 8 usa un carnero y un macho cabrío y no fieras como en Daniel 7?', o: ['Son animales del servicio del santuario', 'Eran signos zodiacales de Persia y Grecia', 'Muestran que esos imperios fueron pacíficos', 'Eran animales sagrados en Babilonia'], a: 0, e: 'El carnero se usaba en el servicio diario y el macho cabrío en el del Día de la Expiación: el tema del capítulo es el santuario. Fuente: Bohr, <i>Daniel 1-10</i>, p. 293.' },
@@ -107,5 +150,13 @@ module.exports = {
     { t: 'mc', v: '8:14', f: 'c', q: '¿Qué pasaje da el mes y el día en que terminaron los 2.300 años?', o: ['Levítico 23:27', 'Éxodo 12:6', 'Números 29:1', 'Ezequiel 4:6'], a: 0, e: 'Daniel 8:14 da el año (1844) y Levítico 23:27 el día diez del mes séptimo, el Día de la Expiación, que en 1844 cayó el 22 de octubre. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8.' },
     { t: 'mc', v: '8:14', f: 'c', q: '¿Cuándo creyeron primero Miller y sus colaboradores que terminarían los 2.300 días?', o: ['En la primavera de 1844', 'En el otoño de 1843', 'En el invierno de 1844', 'En el verano de 1845'], a: 0, e: 'Primero pensaron en la primavera de 1844, pero la profecía señalaba el otoño de ese año. Fuente: CS 376.' },
     { t: 'tf', v: '8:14', f: 'c', q: 'El 22 de octubre de 1844 es la última fecha del calendario profético que Dios ha revelado.', a: true, e: 'Verdadero. Dios tiene fecha para el cierre de la gracia y la segunda venida, pero no la ha revelado; por eso no se deben fijar fechas. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8; PE 75.' },
+
+    { t: 'mc', v: '8:9', f: 'c', q: '¿En qué orden «creció» Roma imperial sobre los reinos de Daniel 8:9?', o: ['Macedonia, Siria, Judea y Egipto', 'Egipto, Judea, Siria y Macedonia', 'Siria, Egipto, Macedonia y Judea', 'Judea, Macedonia, Egipto y Siria'], a: 0, e: 'Macedonia en 168 a.C., Siria en 65, Judea en 63 y Egipto en 30 a.C. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 164.' },
+    { t: 'tf', v: '8:10', f: 'c', q: 'En Daniel 8 el cuerno crece primero a lo ancho (Roma imperial) y después hacia arriba, hasta el ejército del cielo (Roma papal).', a: true, e: 'Verdadero: primero conquista reinos de la tierra (8:9) y después se levanta contra Dios y su pueblo (8:10-12). Fuente: Bohr, <i>Daniel 1-10</i>, p. 306.' },
+    { t: 'mc', v: '8:23', f: 'c', q: '¿Por qué la abominación desoladora de Daniel no fue la de Antíoco IV Epífanes?', o: ['Jesús la puso en el futuro (Mateo 24:15)', 'Antíoco nunca fue rey seléucida', 'Antíoco no persiguió a los judíos', 'Antíoco reinó después de Roma'], a: 0, e: 'Antíoco murió en 164 a.C.; casi dos siglos después Jesús habló de la abominación como algo por venir. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 163.' },
+    { t: 'mc', v: '8:14', f: 'c', q: '¿En qué año empiezan juntas las 70 semanas y las 2.300 tardes y mañanas?', o: ['457 a.C.', '538 a.C.', '536 a.C.', '444 a.C.'], a: 0, e: 'Con la orden de Artajerjes I, en su séptimo año (Esdras 7), que entró en vigencia en el otoño de 457 a.C. Fuente: CS 373.' },
+    { t: 'mc', v: '8:14', f: 'c', q: 'Si de las 2.300 tardes y mañanas se cortan las 70 semanas, ¿cuántos años quedan después de 34 d.C.?', o: ['1.810', '1.260', '1.844', '2.300'], a: 0, e: '2.300 − 490 = 1.810, y 34 + 1.810 = 1844. Fuente: CS 376.' },
+    { t: 'tf', v: '8:14', f: 'c', q: 'La purificación del santuario de Daniel 8:14 y el juicio de Daniel 7:9-10 son el mismo suceso, que empieza en 1844.', a: true, e: 'Verdadero: las dos visiones pasan del cuerno pequeño al juicio en el cielo. Fuente: CS 477; Bohr, <i>Daniel 1-10</i>, p. 288.' },
+    { t: 'mc', v: '8:14', f: 'c', q: '¿Qué fiesta del santuario representa la purificación de Daniel 8:14?', o: ['El Día de la Expiación', 'La Pascua', 'Pentecostés', 'La fiesta de las Cabañas'], a: 0, e: 'El día diez del mes séptimo el sumo sacerdote purificaba el santuario (Levítico 16:29-30); en 1844 cayó el 22 de octubre. Fuente: CS 451.' },
   ],
 };

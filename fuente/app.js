@@ -135,7 +135,7 @@ const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
   const C=L.comparar&&LAMINAS[L.comparar];
-  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
+  const fs=(L.tipo==='escenas'?[...(L.precarga||[]),L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
   const p=lamPrecargadas[cid]||(lamPrecargadas[cid]=Promise.all(fs.map(src=>new Promise(ok=>{
     const im=new Image();im.onload=()=>{(im.decode?im.decode():Promise.resolve()).then(ok,ok);};im.onerror=ok;im.src=src;}))));
@@ -337,7 +337,7 @@ function lamEntradas(){
 function lamEntDice(L,e){
   if(!e.x)return [e.p.nombre,e.p.reino,lamFechasRiel(L,e.p)];
   if(e.x==='senas')return ['Las '+(L.senas.length===11?'once':L.senas.length)+' señas','del cuerno pequeño','Daniel 7:8, 20-25'];
-  if(e.x==='periodo')return [L.periodo.t,'1.260 años',L.periodo.de+' – '+L.periodo.a+' d.C.'];
+  if(e.x==='periodo')return [L.periodo.t,L.periodo.n||'1.260 años',L.periodo.rango||L.periodo.de+' – '+L.periodo.a+' d.C.'];
   return [L.fases.t,L.fases.pasos.map(x=>x.t).join(', '),L.fases.s];
 }
 function lamVeEntrada(k){
@@ -472,7 +472,7 @@ function lamAbre(cid,modo){
     /* v191: pantalla completa donde el navegador la deja (el iPhone no). */
     (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
     (modo==='presentar'?'<button type="button" class="btn txt lam-txt" id="lamTxt" aria-pressed="false" onclick="lamTexto()">'+IC('ojo')+' Ocultar texto</button>':'')+
-    (modo==='presentar'&&L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' Con Daniel 2</button>':'')+
+    (modo==='presentar'&&L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' '+esc(L.conTxt||'Con Daniel 2')+'</button>':'')+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
@@ -486,8 +486,9 @@ function lamAbre(cid,modo){
     '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
     /* v212: los mismos botones redondos de Explorar (lamNavHTML). */
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" class="lam-rd" aria-label="Anterior" onclick="lamAtras()">'+IC('izq')+'</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="lam-rd sig" aria-label="Siguiente" onclick="lamAdelante()">'+IC('der')+'</button></div>':
-     '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
-     L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
+     '<div class="lam-carta"><h3>'+esc(L.paraleloTit||'Daniel 2 y Daniel 7 dicen lo mismo')+'</h3>'+(L.paraleloNota?'<p class="lam-nota">'+esc(L.paraleloNota)+'</p>':'')+'<div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
+     /* v222: con cuatro columnas (Daniel 8) va también la parte de Daniel 7 (quinta del paralelo). */
+     L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td>'+((L.paraleloCols||[]).length===4?'<td>'+esc(r[4]||'')+'</td>':'')+'<td>'+r[2]+'</td></tr>').join('')+
      '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div><div class="lam-pie" id="lamPie"></div>');
   document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
   lamPrecarga(cid,document.getElementById('lamEsc'));
@@ -846,7 +847,8 @@ function lamQuien(y){
   const [hd,hs]=LAM().herida||['dedos','barro'];
   if(y>=1798&&on.includes(hd))suave.push(hs);
   const n=on.map((id,i)=>{const r=lamParte(id).reino;return i&&/^El /.test(r)?'e'+r.slice(1):r;});
-  let tx=!on.length?'Antes de Nabucodonosor':n.join(' y ');
+  const vac=(LAM().vacios||[]).find(v=>y>=v[0]&&y<v[1]);
+  let tx=!on.length?(vac?vac[2]:'Antes de Nabucodonosor'):n.join(' y ');
   if(suave.length)tx+='; el papado, herido en 1798, se va sanando (Ap 13:3)';
   if(LAM().juicio&&y>=LAM().juicio)tx+='; desde 1844, el juicio en el cielo';
   return {on,suave,tx};
@@ -1150,7 +1152,7 @@ function lamExiste(src){
 function lamEscenaE(){
   const L=LAM(),f=lamSrc(L.inicioF),pres=lamModo==='presentar';
   const bots='<div class="lam-tira-bots"><button type="button" class="btn tono lam-vision" id="lamVision" aria-pressed="false" onclick="lamVision()">'+IC('play')+' Ver la visión</button>'+
-    (L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' Con Daniel 2</button>':'')+'</div>';
+    (L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' '+esc(L.conTxt||'Con Daniel 2')+'</button>':'')+'</div>';
   const tira=pres?'':lamRielHTML(bots);
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
@@ -1175,7 +1177,7 @@ function lamChip(p,extra){
   const L=LAM(),r=L.comparar&&lamConD2&&(L.paralelo||[]).find(x=>x[0]===p.id);
   c.innerHTML=lamPer('<b class="lam-chip-t">'+esc(p.nombre)+'</b><span>'+esc(p.reino)+' · '+esc(p.fechas)+'</span>'+
     (extra?'<span class="sub">'+(Array.isArray(extra)?esc(extra[0])+'<em> · '+esc(extra[1])+'</em>':esc(extra))+'</span>':'')+
-    (r?'<span class="d2">'+(r[3]?'En Daniel 2: '+esc(r[1]):esc(L.agrega||r[1]))+'</span>':''));
+    (r?'<span class="d2">'+(r[3]?'En Daniel 2: '+esc(r[1]):esc(L.agrega||r[1]))+(L.comparar2&&r[4]?' · en Daniel 7: '+esc(r[4]):'')+'</span>':''));
   lamD2Pos();
 }
 
@@ -1189,8 +1191,10 @@ function lamD2HTML(){
   const hits=C.capas.filter(de).sort((a,b)=>C.cajas[b][2]*C.cajas[b][3]-C.cajas[a][2]*C.cajas[a][3]).map(k=>{const [x,y,w,h]=C.cajas[k];
     return '<button type="button" class="lam-d2-hit" data-p="'+k+'" aria-label="'+esc(nom(k))+'" style="left:'+pc(x-vx,vw)+';top:'+pc(y-vy,vh)+';width:'+pc(w,vw)+';height:'+pc(h,vh)+'" onclick="lamTocaD2(\''+k+'\')"></button>';}).join('');
   const pie=['piedra','monte'].filter(de).map(k=>'<button type="button" class="lam-d2-'+k+'" data-p="'+k+'" aria-label="'+esc(nom(k))+'" onclick="lamTocaD2(\''+k+'\')"><img src="'+lamRuta(C,k)+'" alt=""></button>').join('');
-  return '<div class="lam-d2" id="lamD2" hidden><div class="lam-d2-t">'+esc(C.libro||'Daniel 2')+'</div>'+
-    '<div class="lam-d2-est" role="group" aria-label="La estatua de '+esc(C.libro||'Daniel 2')+'">'+capas+hits+'</div><div class="lam-d2-pie">'+pie+'</div><div class="lam-d2-ag" id="lamD2Ag"></div></div>';
+  /* v222: con Daniel 8 va también Daniel 7: debajo de la estatua, la imagen de la parte que le corresponde. */
+  const d7=L.comparar2&&LAMINAS[L.comparar2]?'<button type="button" class="lam-d7m" id="lamD7m" onclick="lamTocaD7()"><span class="lam-d2-t">'+esc(LAMINAS[L.comparar2].libro)+'</span><img alt="" src=""><small></small></button>':'';
+  return '<div class="lam-d2'+(d7?' con7':'')+'" id="lamD2" hidden><div class="lam-d2-t">'+esc(C.libro||'Daniel 2')+'</div>'+
+    '<div class="lam-d2-est" role="group" aria-label="La estatua de '+esc(C.libro||'Daniel 2')+'">'+capas+hits+'</div><div class="lam-d2-pie">'+pie+'</div><div class="lam-d2-ag" id="lamD2Ag"></div>'+d7+'</div>';
 }
 /* Enciende en la estatua lo que corresponde a la parte `id` (null: se esconde). */
 function lamD2(id){
@@ -1205,7 +1209,17 @@ function lamD2(id){
   const k=r[3],ks=[].concat(k||[]);el.classList.toggle('agrega',!ks.length);el.setAttribute('data-on',ks.join(' '));
   el.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',ks.includes(x.getAttribute('data-p'))));
   const ag=document.getElementById('lamD2Ag');if(ag)ag.textContent=k?'':'+ '+(lamParte(id).nombre);
+  const m7=document.getElementById('lamD7m'),D7=L.comparar2&&LAMINAS[L.comparar2],q7=D7&&r[5]&&D7.partes.find(x=>x.id===r[5]);
+  if(m7){m7.hidden=!q7;if(q7){const im=m7.querySelector('img'),src=lamRuta(D7,q7.img||q7.id);if(im.getAttribute('src')!==src)im.setAttribute('src',src);m7.querySelector('small').textContent=r[4];m7.setAttribute('aria-label','Daniel 7: '+r[4]);}}
   lamD2Pos();
+}
+/* Tocar la imagen de Daniel 7 abre esa parte en su lámina. */
+function lamTocaD7(){const L=LAM(),r=lamD2Id&&(L.paralelo||[]).find(x=>x[0]===lamD2Id);if(r&&r[5])lamIrA(L.comparar2,r[5]);}
+/* v222: de una lámina a la parte de otra (del santuario purificado al juicio de Daniel 7). */
+function lamIrA(cid,k){
+  if(!LAMINAS[cid])return;
+  const m=lamModo==='presentar'?'explorar':(lamModo||'explorar');lamCierra();lamAbre(cid,m);
+  setTimeout(()=>{if(lamId===cid)lamIr(k);},60);
 }
 /* Con la estatua a la izquierda, empieza debajo de la etiqueta de la parte (que cambia de alto). */
 function lamD2Pos(){
@@ -1224,6 +1238,7 @@ function lamConD2Cambia(){
   document.querySelectorAll('.lam-cond2').forEach(b=>b.setAttribute('aria-pressed',String(lamConD2)));
   lamD2(lamD2Id);
   const p=lamD2Id&&lamParte(lamD2Id),c=document.getElementById('lamChip');
+  if(p&&p.mov&&LAM().mov){lamVista(p.id,null,false);return;}
   if(p&&c&&!c.hidden){const sub=c.querySelector('.sub'),em=sub&&sub.querySelector('em');lamChip(p,sub?(em?[sub.firstChild.textContent,em.textContent.replace(/^ · /,'')]:sub.textContent):'');}
 }
 
@@ -1231,7 +1246,7 @@ function lamConD2Cambia(){
 function lamLimpia(conserva){
   lamAnim++;lamVisto='';
   const s=document.getElementById('lamMarcasImg');if(s){s.innerHTML='';s.className='lam-marcas-img';}
-  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla','con-libro');
+  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla','con-libro','con-d8');
   const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';tb.className='lam-tabla';}
   lamBanda(false);
   const z=lamZ();if(!z)return;
@@ -1247,7 +1262,8 @@ function lamVista(id,sub,anima){
   lamLimpia(sigue);lamVisto=id+(sub!=null?':'+sub:'');
   lamChip(p,pa?['Paso '+(sub+1)+' de '+p.pasos.length,pa.t]:'');lamD2(id);lamEnciende([id]);
   const C=L.cuernos;
-  if(L.sube&&L.sube.ids.includes(id))lamSube(p,anima);
+  if(p.mov&&L.mov)lamMov(p,anima);
+  else if(L.sube&&L.sube.ids.includes(id))lamSube(p,anima);
   else if(C&&id===C.diezEn)lamDiez(anima);
   else if(C&&id===C.caenEn)lamMomento(anima);
   else if(pa&&pa.caja){
@@ -1507,6 +1523,270 @@ function lamLibro(q){
   lamExiste(src).then(ok=>pon(ok));
 }
 
+/* ── v222: DANIEL 8, LO QUE SE MUEVE (LAMINAS.d8.mov) ──
+   Camilo (14-oct): «lo mismo de Daniel 2 y 7: premium, cinematográfico, interactivo».
+   Cada parte con `mov` arma su escena en el <svg> del zoom (1200 × 675, sigue a la
+   imagen) con las piezas de tools/lamina-d8.py, y pone sus rótulos en HTML encima
+   (lamMarcasImg, para que la letra no se encoja). Todo con requestAnimationFrame y
+   transiciones de CSS; sin la API de animaciones ni referencias por id (Safari). Con «reducir
+   movimiento» (o al llegar hacia atrás) se pinta de una vez el cuadro final.
+   - carnero: sube con su cuerno curvo (Media); el más alto «creció después» (Persia, 8:3)
+     y hiere al poniente, al norte y al sur (8:4).
+   - choque: el macho cabrío viene del poniente sin tocar tierra, golpea, le quiebra los
+     dos cuernos al carnero y lo derriba (8:5-7).
+   - cuatro: el gran cuerno se quiebra en su mayor fuerza y salen cuatro (8:8).
+   - crece: el cuerno pequeño crece al oriente, a la tierra gloriosa y al sur (8:9).
+   - cielo: sube hasta el ejército del cielo y echa estrellas por tierra (8:10-11).
+   - santuario: se apaga lo que el continuo representa (8:11-12).
+   - purifica: 1844, el santuario purificado (8:14). */
+const lamNS=(n,a)=>'<'+n+' '+Object.keys(a).map(k=>k+'="'+a[k]+'"').join(' ')+'/>';
+/* Una pieza recortada en su sitio: `caja` en píxeles de su imagen, `k` la escala, (ox, oy) dónde va la imagen entera. */
+const lamPieza=(f,caja,k,ox,oy,cl)=>'<image'+(cl?' class="'+cl+'"':'')+' href="'+lamSrc(f)+'" x="'+(ox+caja[0]*k).toFixed(1)+'" y="'+(oy+caja[1]*k).toFixed(1)+'" width="'+((caja[2]-caja[0])*k).toFixed(1)+'" height="'+((caja[3]-caja[1])*k).toFixed(1)+'"/>';
+/* Mover, girar y escalar una pieza por su atributo transform (Safari-seguro). */
+function lamTf(el,o){if(!el)return;const n=v=>(+v||0).toFixed(2);let t='';
+  if(o.x||o.y)t+='translate('+n(o.x)+' '+n(o.y)+') ';
+  if(o.r)t+='rotate('+n(o.r)+' '+n(o.cx)+' '+n(o.cy)+') ';
+  if(o.k!=null&&o.k!==1)t+='translate('+n(o.cx)+' '+n(o.cy)+') scale('+Math.max(.001,o.k).toFixed(4)+') translate('+n(-o.cx)+' '+n(-o.cy)+')';
+  if(t)el.setAttribute('transform',t.trim());else el.removeAttribute('transform');}
+/* Un rótulo sobre la escena: (x, y) en píxeles de la escena; `a` dónde se ancla ('i' a la izquierda, 'd' a la derecha, 'c' al centro, 'ab' debajo). */
+/* Con la estatua chica a la derecha (Con Daniel 2 y 7), los rótulos no pasan de `lamD8Der`. */
+let lamD8Der=1188;
+const lamEt=(x,y,a,t,sub,cl,o)=>{const D=lamD8Der;x=/\bd\b/.test(a)?Math.min(x,D):/\bc\b/.test(a)?Math.min(x,(cl||'').includes('cita')?Math.min(600,D/2+20):D-120):Math.min(x,D-190);
+  return '<div class="d8-et '+a+(cl?' '+cl:'')+'"'+(o!=null?' data-o="'+o+'"':'')+' style="left:'+lamPx(x)+';top:'+lamPy(y)+'"><b>'+t+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div>';};
+/* Una línea que se dibuja sola (stroke-dashoffset por cuadro) y su punta. */
+function lamTraza(d,cl){return '<path class="d8-traza'+(cl?' '+cl:'')+'" d="'+d+'" fill="none" vector-effect="non-scaling-stroke"/>';}
+function lamDibuja(el,ms,fin){
+  if(!el)return;let L=0;try{L=el.getTotalLength();}catch(e){L=0;}
+  if(!L){el.style.opacity='1';if(fin)fin();return;}
+  el.setAttribute('stroke-dasharray',L.toFixed(1));el.setAttribute('stroke-dashoffset',L.toFixed(1));el.style.opacity='1';
+  lamTween(ms,k=>el.setAttribute('stroke-dashoffset',(L*(1-lamSuave(k))).toFixed(1)),fin);
+}
+const lamDibujado=el=>{if(el){el.removeAttribute('stroke-dasharray');el.removeAttribute('stroke-dashoffset');el.style.opacity='1';}};
+/* Los rótulos [data-o] aparecen en el orden y a la hora que se les diga. */
+function lamVeEt(s,o,ms){const yo=lamAnim;const f=()=>{if(yo!==lamAnim)return;s.querySelectorAll('[data-o="'+o+'"]').forEach(e=>e.classList.add('ve'));};if(!ms||lamQuieto())f();else lamT(f,ms);}
+/* Polvo que se levanta del suelo: puntos que suben y se apagan. */
+function lamPolvo8(g,cx,cy,n,q){
+  if(q)return;const yo=lamAnim;let sm=5;const az=()=>(sm=(sm*9301+49297)%233280)/233280;
+  const ps=Array.from({length:n},()=>({x:cx+(az()-.5)*260,y:cy-az()*20,vx:(az()-.5)*120,vy:-30-az()*90,r:3+az()*7}));
+  g.innerHTML=ps.map(p=>'<circle r="'+p.r.toFixed(1)+'" fill="#C9AE86"/>').join('');const cs=[...g.querySelectorAll('circle')];
+  lamTween(1600,k=>{if(yo!==lamAnim)return;ps.forEach((p,i)=>{cs[i].setAttribute('cx',(p.x+p.vx*k).toFixed(1));cs[i].setAttribute('cy',(p.y+p.vy*k).toFixed(1));cs[i].style.opacity=(.6*(1-k)).toFixed(3);});},
+    ()=>{g.innerHTML='';});
+}
+function lamMov(p,anima){
+  const M=LAM().mov,q=!anima||lamQuieto(),z=lamZ(),g=z&&z.querySelector('.lam-capa-g'),s=document.getElementById('lamMarcasImg');
+  if(!g||!s)return;
+  const e=document.getElementById('lamEsc');if(e)e.classList.add('con-d8');
+  lamD8Der=lamConD2&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
+  s.className='lam-marcas-img d8'+(q?' quieto':'');
+  ({carnero:lamMovCarnero,choque:lamMovChoque,cuatro:lamMovCuatro,crece:lamMovCrece,cielo:lamMovCielo,santuario:lamMovSantuario,purifica:lamMovPurifica}[p.mov]||(()=>lamHist({f:p.img})))(M,g,s,q);
+}
+/* El carnero en su sitio: el cuerno b (detrás), el cuerpo y el cuerno a (delante). */
+function lamCarneroHTML(C,cl){
+  const [x,y,h]=C.en,k=h/C.h,cuerpo=[0,0,C.w,C.h];
+  return '<g class="d8-car'+(cl?' '+cl:'')+'"><ellipse class="d8-sombra" cx="'+(x+C.w*k*.5).toFixed(0)+'" cy="'+(y+h-10).toFixed(0)+'" rx="'+(C.w*k*.42).toFixed(0)+'" ry="15"/>'+
+    '<g class="d8-cb">'+lamPieza(C.b.f,C.b.caja,k,x,y)+'</g><g class="d8-cuerpo">'+lamPieza(C.f,cuerpo,k,x,y)+'</g><g class="d8-ca">'+lamPieza(C.a.f,C.a.caja,k,x,y)+'</g></g>';
+}
+const lamEnEsc=(C,pt)=>{const [x,y,h]=C.en,k=h/C.h;return [x+pt[0]*k,y+pt[1]*k];};
+function lamMovCarnero(M,g,s,q){
+  const C=M.carnero,[x,y,h]=C.en,k=h/C.h,pb=lamEnEsc(C,C.b.base);
+  lamHist({f:'llanura'});
+  g.innerHTML=lamCarneroHTML(C)+'<g class="d8-dirs">'+C.dirs.map(d=>lamTraza('M'+d.a.join(' ')+' L'+d.b.join(' '),'flecha')).join('')+'</g>';
+  const ram=g.querySelector('.d8-car'),cb=g.querySelector('.d8-cb'),dirs=[...g.querySelectorAll('.d8-dirs path')];
+  const ta=lamEnEsc(C,[C.a.caja[0],C.a.caja[1]]),tb=lamEnEsc(C,[C.b.caja[2],C.b.caja[1]]);
+  s.innerHTML=lamEt(ta[0]-6,ta[1]+8,'d','Media','el primero',null,1)+lamEt(tb[0]+8,tb[1]+14,'i','Persia','el más alto: creció después','oro',2)+
+    C.dirs.map((d,i)=>lamEt(d.b[0]+(d.b[0]>900?-4:6),d.b[1]+(d.b[1]<100?18:d.b[1]>500?-6:-14),d.b[0]>900?'d':'i','«'+d.t+'»',d.s,'dir',3+i)).join('')+
+    lamEt(600,640,'c ab','«Hacía conforme a su voluntad, y se engrandecía»','Daniel 8:4','cita',6);
+  if(q){s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  dirs.forEach(d=>d.style.opacity='0');
+  lamTf(cb,{k:.06,cx:pb[0],cy:pb[1]});ram.style.opacity='0';
+  lamTween(900,t=>{const e=lamSale(t);ram.style.opacity=String(Math.min(1,t*1.6).toFixed(3));lamTf(ram,{y:40*(1-e)});});
+  lamVeEt(s,1,900);
+  /* «el más alto creció después» */
+  lamT(()=>lamTween(1700,t=>lamTf(cb,{k:.06+.94*lamSuave(t),cx:pb[0],cy:pb[1]})),1500);
+  lamVeEt(s,2,2900);
+  dirs.forEach((d,i)=>lamT(()=>{lamDibuja(d,700);lamVeEt(s,3+i,500);},3600+i*550));
+  lamVeEt(s,6,5400);
+}
+function lamMovChoque(M,g,s,q){
+  const C=M.carnero,X=M.macho,H=X.choque,k2=H.alto/X.h,kc=C.en[2]/C.h;
+  lamHist({f:'llanura'});
+  const pa=lamEnEsc(C,C.a.base),pb=lamEnEsc(C,C.b.base),pie=lamEnEsc(C,[90,780]);
+  const macho='<g class="d8-mac"><ellipse class="d8-sombra" cx="'+(400*k2).toFixed(0)+'" cy="0" rx="'+(330*k2).toFixed(0)+'" ry="13"/>'+
+    '<g class="d8-mac-c">'+lamPieza(X.f,[0,0,X.w,X.h],k2,0,0)+lamPieza(X.cuerno.f,X.cuerno.caja,k2,0,0)+'</g></g>';
+  g.innerHTML=lamCarneroHTML(C)+macho+'<image class="d8-luz" href="'+lamLuz('255,236,190')+'" x="'+(H.golpe[0]-200)+'" y="'+(H.golpe[1]-200)+'" width="400" height="400" style="opacity:0"/><g class="d8-polvo"></g>';
+  const ram=g.querySelector('.d8-car'),ca=g.querySelector('.d8-ca'),cb=g.querySelector('.d8-cb'),mac=g.querySelector('.d8-mac'),mc=g.querySelector('.d8-mac-c'),
+    som=mac.querySelector('.d8-sombra'),luz=g.querySelector('.d8-luz'),polvo=g.querySelector('.d8-polvo');
+  s.innerHTML=lamEt(1170,96,'d','Del poniente','sin tocar tierra','dir',0)+lamEt(600,640,'c ab',esc(X.batallas),'Alejandro Magno vence a Darío III','oro',2)+
+    lamEt(40,170,'i','Los dos cuernos, quebrados','Medo-Persia cae','',1);
+  /* Dónde está el macho cabrío: su esquina (gx, gy); la sombra va en el suelo, lejos de sus patas. */
+  const pon=(gx,gy)=>{lamTf(mc,{x:gx,y:gy});som.setAttribute('cx',(gx+400*k2).toFixed(1));som.setAttribute('cy','628');};
+  /* Los cuernos vuelan y caen al suelo; el carnero cae a tierra. */
+  const cae=t=>{const e=lamSale(t);
+    lamTf(ca,{x:-150*t,y:-150*4*t*(1-t)+(612-pa[1])*t,r:-230*t,cx:pa[0],cy:pa[1]});
+    lamTf(cb,{x:-40*t,y:-190*4*t*(1-t)+(616-pb[1])*t,r:-160*t,cx:pb[0],cy:pb[1]});
+    lamTf(ram.querySelector('.d8-cuerpo'),{x:-40*e,y:58*e,r:13*e,cx:pie[0],cy:pie[1]});
+    ram.querySelector('.d8-cuerpo').style.opacity=(1-.3*e).toFixed(3);};
+  if(q){pon(H.fin[0],H.fin[1]);cae(1);s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  pon(H.de[0],H.de[1]);lamVeEt(s,0,100);
+  /* Viene del poniente, cada vez más rápido, sin tocar tierra. */
+  lamTween(1500,t=>{const e=t*t;pon(H.de[0]+(H.a[0]-H.de[0])*e,H.de[1]+(H.a[1]-H.de[1])*e-46*Math.sin(Math.PI*t));});
+  lamT(()=>{
+    /* El golpe: la luz, el carnero tiembla, los cuernos saltan y el polvo se levanta. */
+    lamTween(700,t=>{luz.style.opacity=(t<.25?t*4:(1-t)/.75).toFixed(3);const r=.6+.8*t;lamTf(luz,{k:r,cx:H.golpe[0],cy:H.golpe[1]});});
+    lamTween(1300,cae);lamPolvo8(polvo,380,612,26,false);lamVeEt(s,1,250);
+    /* «lo derribó, por tanto, a tierra, lo pisoteó» */
+    lamTween(1100,t=>{const e=lamSuave(t);pon(H.a[0]+(H.fin[0]-H.a[0])*e,H.a[1]+(H.fin[1]-H.a[1])*e-30*Math.sin(Math.PI*t));});
+  },1500);
+  lamVeEt(s,2,3100);
+}
+function lamMovCuatro(M,g,s,q){
+  const X=M.macho,Q=X.quiebra.en,km=Q[2]/X.h,B=M.cabeza,[hx,hy,hh]=B.en,kh=hh/B.h,base=[Q[0]+X.cuerno.base[0]*km,Q[1]+X.cuerno.base[1]*km];
+  lamHist({f:'llanura'});
+  g.innerHTML='<g class="d8-mac">'+lamPieza(X.f,[0,0,X.w,X.h],km,Q[0],Q[1])+'<g class="d8-mac-h">'+lamPieza(X.cuerno.f,X.cuerno.caja,km,Q[0],Q[1])+'</g></g>'+
+    '<image class="d8-luz" href="'+lamLuz('255,236,190')+'" x="'+(base[0]-150)+'" y="'+(base[1]-150)+'" width="300" height="300" style="opacity:0"/>'+
+    '<g class="d8-cab">'+B.cuernos.map((c,i)=>'<g class="d8-c4" data-i="'+i+'">'+lamPieza(c.f,c.caja,kh,hx,hy)+'</g>').join('')+lamPieza(B.f,[0,0,B.w,B.h],kh,hx,hy)+'</g>';
+  const mac=g.querySelector('.d8-mac'),mh=g.querySelector('.d8-mac-h'),luz=g.querySelector('.d8-luz'),cab=g.querySelector('.d8-cab'),cs=[...g.querySelectorAll('.d8-c4')];
+  const pb=c=>[hx+c.base[0]*kh,hy+c.base[1]*kh];
+  s.innerHTML=B.cuernos.map((c,i)=>lamEt(c.et[0],c.et[1],i<2?(i?'c':'i'):(i===2?'c':'d'),esc(c.t),esc(c.s),'gen',2+i)).join('')+
+    lamEt(600,92,'c','«En su mayor fuerza»','el gran cuerno, quebrado: Alejandro Magno muere en 323 a.C.','oro rompe',1)+
+    lamEt(600,640,'c ab','«Hacia los cuatro vientos del cielo»','Ipso, 301 a.C.: cuatro reinos','cita',6);
+  const fin=()=>{mac.style.opacity='0';cab.style.opacity='1';cs.forEach(c=>lamTf(c,{}));s.querySelectorAll('[data-o]').forEach(e=>{if(!e.classList.contains('rompe'))e.classList.add('ve');});};
+  if(q){fin();return;}
+  cab.style.opacity='0';cs.forEach((c,i)=>{const b=pb(B.cuernos[i]);lamTf(c,{k:.02,cx:b[0],cy:b[1]});});
+  /* «El macho cabrío creció en gran manera» */
+  const cm=[Q[0]+X.w*km/2,Q[1]+X.h*km/2];
+  lamTween(1300,t=>lamTf(mac,{k:.9+.1*lamSale(t),cx:cm[0],cy:cm[1]}));
+  lamVeEt(s,1,1300);
+  /* y en su mayor fuerza el cuerno se quiebra */
+  lamT(()=>{lamTween(600,t=>{luz.style.opacity=(t<.3?t/.3:(1-t)/.7).toFixed(3);});
+    lamTween(1200,t=>{const e=t*t;lamTf(mh,{x:-50*t,y:420*e,r:-140*t,cx:base[0],cy:base[1]});mh.style.opacity=(1-Math.max(0,(t-.6)/.4)).toFixed(3);});},1500);
+  /* La cabeza con los cuatro: el macho cabrío se aparta y los cuernos crecen uno por uno. */
+  lamT(()=>{const r=s.querySelector('.rompe');if(r)r.classList.remove('ve');
+    lamTween(900,t=>{mac.style.opacity=(1-t).toFixed(3);cab.style.opacity=t.toFixed(3);});},2900);
+  B.cuernos.forEach((c,i)=>lamT(()=>{const b=pb(c);lamTween(1000,t=>lamTf(cs[i],{k:.02+.98*lamSale(t),cx:b[0],cy:b[1]}));lamVeEt(s,2+i,600);},3500+i*500));
+  lamVeEt(s,6,6200);
+}
+/* El cuerno pequeño sobre el mapa: Roma, al poniente; los cuatro reinos; lo que conquista. */
+function lamMovCrece(M,g,s,q){
+  const P=M.mapa,[rx,ry]=P.roma,W=435,H=700;
+  lamHist({f:'noche'});
+  const hz=(h)=>'<image href="'+lamSrc(P.pq)+'" x="'+(rx-h*W/H/2).toFixed(1)+'" y="'+(ry-h).toFixed(1)+'" width="'+(h*W/H).toFixed(1)+'" height="'+h+'"/>';
+  const curva=(a,b)=>{const mx=(a[0]+b[0])/2,my=Math.min(a[1],b[1])-70;return 'M'+a.join(' ')+' Q'+mx.toFixed(0)+' '+my.toFixed(0)+' '+b.join(' ');};
+  const sale=[rx+10,ry-70];
+  g.innerHTML='<g class="d8-rosa"><circle cx="96" cy="580" r="38"/><path d="M96 536 L96 624 M52 580 L140 580"/></g>'+
+    P.reinos.map(r=>'<circle class="d8-nodo'+(r.g?' gl':'')+'" cx="'+r.en[0]+'" cy="'+r.en[1]+'" r="7"/>').join('')+P.va.map(v=>lamTraza(curva(sale,P.reinos[v.r].en),'ruta')).join('')+
+    '<g class="d8-pq">'+hz(200)+'</g>';
+  const pq=g.querySelector('.d8-pq'),rutas=[...g.querySelectorAll('.d8-traza')];
+  s.innerHTML=P.reinos.map((r,i)=>{const v=P.va.find(x=>x.r===i);return lamEt(r.en[0],r.en[1]+12,'c ab',esc(r.t),esc(r.s),'reino'+(r.g?' gl':''),0).replace('</small></div>','</small>'+(v?'<em><span class="d8-dir">«'+esc(v.t)+'» · </span>'+esc(v.s)+'</em>':'')+'</div>').replace('class="d8-et','data-r="'+i+'" class="d8-et');}).join('')+
+    lamEt(96,528,'c','N','','rosa',0)+lamEt(96,654,'c ab','S','','rosa',0)+lamEt(146,580,'i','E','','rosa',0)+lamEt(46,580,'d','O','','rosa',0)+
+    lamEt(rx,ry+12,'c ab','Roma','del poniente','oro',1)+
+    lamEt(600,640,'c ab','«Creció mucho»','más que el carnero y el macho cabrío: Roma imperial','cita',7);
+  const toma=v=>{const e=s.querySelector('[data-r="'+v.r+'"]');if(e)e.classList.add('toma');};
+  if(q){rutas.forEach(lamDibujado);P.va.forEach(toma);s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  rutas.forEach(r=>r.style.opacity='0');
+  lamVeEt(s,0,100);
+  /* «salió un cuerno pequeño»: sale chico y crece con cada conquista. */
+  let kk=.3;lamTf(pq,{k:kk,cx:rx,cy:ry});pq.style.opacity='0';
+  lamT(()=>lamTween(800,t=>{pq.style.opacity=t.toFixed(3);}),700);lamVeEt(s,1,900);
+  P.va.forEach((v,i)=>lamT(()=>{lamDibuja(rutas[i],1000,()=>toma(v));const k0=kk,k1=.3+.7*(i+1)/P.va.length;kk=k1;
+    lamTween(1000,t=>lamTf(pq,{k:k0+(k1-k0)*lamSuave(t),cx:rx,cy:ry}));},1900+i*1300));
+  lamVeEt(s,7,1900+P.va.length*1300+400);
+}
+/* Hasta el ejército del cielo: el cuerno sube, echa estrellas por tierra y se levanta frente al Príncipe. */
+function lamMovCielo(M,g,s,q){
+  const P=M.cielo,[bx,by]=P.base,h=P.alto,w=h*435/700;
+  lamHist({f:'noche'});
+  let sm=21;const az=()=>(sm=(sm*9301+49297)%233280)/233280;
+  const est=Array.from({length:70},()=>[60+az()*1080,24+az()*250,1+az()*2.4,az()*6.28]).filter(e=>Math.abs(e[0]-P.principe[0])>110||e[1]>150);
+  const caen=est.filter((e,i)=>i%6===2).slice(0,10);
+  g.innerHTML='<image class="d8-principe" href="'+lamLuz('255,244,214')+'" x="'+(P.principe[0]-230)+'" y="'+(P.principe[1]-230)+'" width="460" height="460" style="opacity:0"/>'+
+    '<g class="d8-est">'+est.map(e=>'<circle cx="'+e[0].toFixed(0)+'" cy="'+e[1].toFixed(0)+'" r="'+e[2].toFixed(1)+'"/>').join('')+'</g>'+
+    '<g class="d8-pq"><image href="'+lamSrc(P.pq)+'" x="'+(bx-w/2).toFixed(1)+'" y="'+(by-h)+'" width="'+w.toFixed(1)+'" height="'+h+'"/></g>';
+  const pq=g.querySelector('.d8-pq'),pr=g.querySelector('.d8-principe'),cs=[...g.querySelectorAll('.d8-est circle')],ic=caen.map(e=>est.indexOf(e));
+  s.innerHTML=lamEt(P.principe[0],P.principe[1]+70,'c','«El príncipe de los ejércitos»','Cristo (Josué 5:14)','oro',3)+
+    lamEt(180,120,'c','«El ejército del cielo»','el pueblo de los santos (8:24)','op',1)+
+    lamEt(bx+w/2+12,by-h*.45,'i','Roma papal','538 – 1798 d.C.','dir',2)+
+    lamEt(600,640,'c ab','«Parte del ejército y de las estrellas echó por tierra»','Daniel 8:10','cita',4);
+  const fin=()=>{lamTf(pq,{});pr.style.opacity='.9';ic.forEach(i=>{cs[i].style.opacity='0';});s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));};
+  if(q){fin();return;}
+  /* Las estrellas titilan mientras la vista no cambie. */
+  lamBucle(t=>cs.forEach((c,i)=>{if(!c.__cae)c.style.opacity=(.45+.55*Math.abs(Math.sin(t*.9+est[i][3]))).toFixed(2);}));
+  lamTf(pq,{y:260,k:.45,cx:bx,cy:by});
+  lamTween(2400,t=>{const e=lamSuave(t);lamTf(pq,{y:260*(1-e),k:.45+.55*e,cx:bx,cy:by});});
+  lamVeEt(s,1,600);lamVeEt(s,2,2200);
+  /* Echa estrellas por tierra. */
+  ic.forEach((i,j)=>lamT(()=>{const c=cs[i],x0=+c.getAttribute('cx'),y0=+c.getAttribute('cy');c.__cae=true;c.classList.add('cae');
+    lamTween(1100,t=>{const e=t*t;c.setAttribute('cx',(x0+(bx-x0)*.25*t).toFixed(1));c.setAttribute('cy',(y0+(640-y0)*e).toFixed(1));c.style.opacity=(1-t*.85).toFixed(3);});},1800+j*170));
+  lamVeEt(s,4,3000);
+  lamT(()=>lamTween(1400,t=>{pr.style.opacity=(.9*t).toFixed(3);}),3600);lamVeEt(s,3,4100);
+}
+/* La sombra que avanza sobre el santuario: un degradado dibujado una vez en un canvas. */
+let lamSombraU='';
+function lamSombra(){if(lamSombraU)return lamSombraU;try{const k=document.createElement('canvas');k.width=512;k.height=4;const c=k.getContext('2d'),r=c.createLinearGradient(0,0,512,0);
+  r.addColorStop(0,'rgba(6,4,10,0)');r.addColorStop(.3,'rgba(6,4,10,.55)');r.addColorStop(1,'rgba(6,4,10,.66)');c.fillStyle=r;c.fillRect(0,0,512,4);lamSombraU=k.toDataURL('image/png');}catch(e){}return lamSombraU;}
+function lamMovSantuario(M,g,s,q){
+  const C=M.santuario.cosas;
+  lamHist({f:'santuario'});
+  g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="1200" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
+    C.map(c=>'<circle class="d8-punto" cx="'+c.en[0]+'" cy="'+c.en[1]+'" r="9"/>').join('');
+  const so=g.querySelector('.d8-sombra-s'),pts=[...g.querySelectorAll('.d8-punto')];
+  s.innerHTML=C.map((c,i)=>'<div class="d8-et '+(c.a||'i')+' cosa" data-o="'+(i+1)+'" style="left:'+lamPx(c.en[0]+(c.a==='d'?-16:16))+';top:'+lamPy(c.en[1]+(c.dy||0))+'"><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>en su lugar: '+esc(c.c)+'</em></div>').join('')+
+    lamEt(600,30,'c','«El continuo»','el servicio de cada día en el atrio y el lugar santo','oro',0)+
+    lamEt(600,640,'c ab','«Echó por tierra la verdad»','Daniel 8:11-12','cita',5);
+  const apaga=()=>{s.querySelectorAll('.cosa').forEach(e=>e.classList.add('apaga'));pts.forEach(p=>p.classList.add('apaga'));};
+  if(q){so.setAttribute('x','-420');s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));apaga();return;}
+  lamVeEt(s,0,200);C.forEach((c,i)=>lamVeEt(s,1+i,700+i*600));
+  /* La sombra del cuerno cubre el santuario de derecha a izquierda. */
+  lamT(()=>{lamTween(2600,t=>so.setAttribute('x',(1200-1620*lamSuave(t)).toFixed(1)));lamT(apaga,1500);},2800);
+  lamVeEt(s,5,4600);
+}
+function lamMovPurifica(M,g,s,q){
+  lamHist({f:'santuario'});
+  g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="-420" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
+    '<image class="d8-luz" href="'+lamLuz('255,226,150')+'" x="260" y="0" width="600" height="600" style="opacity:0"/>';
+  const so=g.querySelector('.d8-sombra-s'),luz=g.querySelector('.d8-luz');
+  s.innerHTML=lamEt(600,36,'c','1844','«luego el santuario será purificado»','oro grande',1)+
+    lamEt(600,640,'c ab','22 de octubre de 1844 · el Día de la Expiación','empieza el juicio de Daniel 7:9-10','cita',2);
+  if(q){g.innerHTML='';lamHist({f:'purificado'});s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  /* La sombra se retira, la luz sale del lugar santísimo y entra el santuario purificado. */
+  lamTween(1600,t=>{so.setAttribute('x',(-420+1620*lamSuave(t)).toFixed(1));});
+  lamT(()=>lamTween(1500,t=>{luz.style.opacity=(t<.5?t*2:(1-t)*2).toFixed(3);lamTf(luz,{k:.6+1.2*t,cx:560,cy:300});}),700);
+  lamT(()=>{lamHist({f:'purificado'});lamT(()=>{g.innerHTML='';},900);},1500);
+  lamVeEt(s,1,1900);lamVeEt(s,2,2700);
+}
+/* El fondo de una cuenta que no es la del cuerno de Daniel 7: la escena de su parte, ya quieta. */
+function lamPerFondo(id){
+  const p=lamParte(id);
+  if(lamVisto!==id)lamVista(id,null,false);
+  else{const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';}lamBanda(false);}
+  const s=document.getElementById('lamMarcasImg');if(s)s.innerHTML='';
+  lamD2(null);return p;
+}
+/* ── v222: LAS 2.300 TARDES Y MAÑANAS, la línea que se arma (Daniel 8:14; 9:24-27) ──
+   Una línea de 457 a.C. a 1844 a escala (los 490 años son el primer 21 %) y, debajo,
+   las setenta semanas por partes (7, 62 y 1), sin escala, como el diagrama de CS 374. */
+const L23=y=>((y>0?y+456:y+457)/2300*100).toFixed(2);
+function lamL23Linea(o,fase){
+  const m=(y,t,s,cl)=>'<span class="l23-m'+(cl?' '+cl:'')+'" style="left:'+L23(y)+'%"><b>'+t+'</b>'+(s?'<small>'+s+'</small>':'')+'</span>';
+  return '<div class="l23" data-o="'+o+'"><div class="l23-barra"><i class="l23-70'+(fase>=2?' on':'')+'" style="width:'+L23(34)+'%"></i><i class="l23-resto'+(fase>=3?' on':'')+'" style="left:'+L23(34)+'%;width:'+(100-L23(34))+'%"></i></div>'+
+    m(-457,'457 a.C.','la orden')+(fase>=2?m(34,'34 d.C.','490 años'):'')+(fase>=3?m(1844,'1844','el santuario','fin'+(fase>=4?' brilla':'')):m(1844,'¿?','','fin tenue'))+'</div>';
+}
+const lamL23={
+  tm:()=>'<div class="lam-eq" data-o="1"><span>1 tarde + 1 mañana</span><i>=</i><span>1 día</span></div><div class="lam-per-nota" data-o="1">Génesis 1:5</div>'+
+    '<div class="lam-eq" data-o="2"><span>1 día</span><i>=</i><span>1 año</span></div><div class="lam-per-nota" data-o="2">Números 14:34 · Ezequiel 4:6</div>'+
+    '<div class="lam-eq grande" data-o="3"><span>2.300 días</span><i>→</i><span class="oro">2.300 años</span></div>',
+  decreto:()=>'<div class="l23-tarj" data-o="1"><b>Artajerjes I</b><span>la orden de restaurar y edificar Jerusalén · Esdras 7</span><small>su séptimo año: otoño de 457 a.C.</small></div>'+lamL23Linea(2,1)+
+    '<div class="lam-per-nota" data-o="3">¿Hasta cuándo? 2.300 años desde aquí</div>',
+  semanas:()=>lamL23Linea(1,2)+'<div class="l23-sem" data-o="2"><div class="l23-s7"><b>7 semanas</b><small>49 años</small></div><div class="l23-s62"><b>62 semanas</b><small>434 años</small></div><div class="l23-s1"><b>1 semana</b><small>7 años</small></div></div>'+
+    '<div class="l23-sm"><span data-o="3" style="left:0"><b>457 a.C.</b><small>la orden</small></span><span data-o="3" style="left:22%"><b>408 a.C.</b><small>Jerusalén reedificada</small></span>'+
+    '<span data-o="4" class="oro" style="left:70%"><b>27 d.C.</b><small>el Mesías Príncipe: su bautismo</small></span><span data-o="5" class="oro" style="left:85%"><b>31</b><small>la cruz</small></span><span data-o="6" style="left:100%"><b>34</b><small>Esteban</small></span></div>'+
+    '<div class="lam-per-nota" data-o="6">70 semanas = 490 años, cortados de los 2.300 · sin escala</div>',
+  resta:()=>lamL23Linea(1,3)+'<div class="lam-eq" data-o="2"><span>2.300 − 490</span><i>=</i><span>1.810</span></div><div class="lam-eq grande" data-o="3"><span>34 + 1.810</span><i>=</i><span class="oro">1844</span></div>',
+  purif:()=>lamL23Linea(1,4)+'<div class="l23-igual" data-o="2"><figure><img src="'+lamSrc('purificado')+'" alt=""><figcaption><b>Daniel 8:14</b><small>el santuario purificado</small></figcaption></figure><i>=</i>'+
+    '<figure><img src="'+lamSrc('d7/juicio')+'" alt=""><figcaption><b>Daniel 7:10</b><small>se abren los libros</small></figcaption></figure></div>'+
+    '<div class="lam-per-nota" data-o="3">22 de octubre de 1844 · el Día de la Expiación</div>',
+};
+
 /* ── Explorar ── */
 function lamInicioE(){
   lamPara();lamLimpia();lamSel='';lamEnciende([]);lamChip(null);lamD2(null);lamMarcaPaso('est');lamTramo(null);
@@ -1537,6 +1817,7 @@ function lamExtraE(p){
     '</div><button type="button" class="btn tono lam-recorre" onclick="lamSubsTodos()">'+IC('play')+' Recorrer la escena</button><div class="lam-sub-tx" id="lamSubTx"></div></div>';
   if(C&&p.id===C.diezEn)h+='<div class="lam-bots lam-hbots"><button type="button" class="btn tono" onclick="lamVista(\''+p.id+'\',null,true)">'+IC('repetir')+' Contarlos otra vez</button>'+
     '<button type="button" class="btn ver" onclick="lamToca(\''+C.caenEn+'\')">'+IC('play')+' Sale el cuerno pequeño</button></div>';
+  if(p.mov)h+='<div class="lam-bots lam-hbots"><button type="button" class="btn tono" onclick="lamVista(\''+p.id+'\',null,true)">'+IC('repetir')+' Verlo otra vez</button></div>';
   if(C&&p.id===C.caenEn)h+='<div class="lam-bots lam-hbots"><button type="button" class="btn tono" onclick="lamVista(\''+p.id+'\',null,true)">'+IC('repetir')+' Ver otra vez cómo caen los tres</button></div>';
   return h;
 }
@@ -1566,7 +1847,7 @@ function lamHojaSenasE(){
 }
 function lamHojaPerE(){
   const L=LAM(),P=L.periodo,p=lamParte(P.tras);
-  return lamCabX(p,'Daniel 7:25 · '+p.nombre,P.t,P.s)+
+  return lamCabX(p,(P.rot||'Daniel 7:25')+' · '+p.nombre,P.t,P.s)+
     '<div class="lam-subs-c lam-per-c"><div class="lam-rot">La cuenta, paso a paso</div><div class="lam-subs">'+
     P.pasos.map((x,j)=>'<button type="button" data-per="'+j+'" onclick="lamPerE('+j+')"><i>'+(j+1)+'</i><span>'+esc(x.t)+'</span></button>').join('')+
     '</div><button type="button" class="btn tono lam-recorre" onclick="lamPerTodos()">'+IC('play')+' Armar la cuenta</button><div class="lam-sub-tx" id="lamPerTx"></div></div>'+lamNavHTML(LAM_X.periodo);
@@ -1650,9 +1931,9 @@ function lamBanda(on){
 }
 function lamPeriodoVis(j,anima){
   const L=LAM(),P=L.periodo,x=P&&P.pasos[j];if(!x)return;
-  const p=lamCuernoFondo();lamVisto=p.id;
+  const p=L.senasTras===P.tras?lamCuernoFondo():lamPerFondo(P.tras);lamVisto=p.id;
   lamChip(p,['Paso '+(j+1)+' de '+P.pasos.length,x.t]);
-  const cab='<div class="lam-per-cab" data-o="0"><span>'+esc(P.t)+'</span> · Daniel 7:25</div>';
+  const cab='<div class="lam-per-cab" data-o="0"><span>'+esc(P.t)+'</span> · '+esc(P.rot||'Daniel 7:25')+'</div>';
   const fila=(k,et,sub,w,n)=>'<div class="lam-fila" data-o="'+k+'"><span class="et">'+et+'<small>'+sub+'</small></span><span class="barra"><i style="--w:'+w+'%"></i></span><b>'+n+'</b></div>';
   let h='';
   if(x.v==='suma')h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div>'+fila(1,'tiempo','1 año',50,'360')+fila(2,'tiempos','2 años',100,'720')+fila(3,'medio tiempo','½ año',25,'180')+
@@ -1663,19 +1944,22 @@ function lamPeriodoVis(j,anima){
     [['3½ tiempos','Daniel 7:25 · Apocalipsis 12:14','3½ × 360'],['42 meses','Apocalipsis 11:2 · 13:5','42 × 30'],['1.260 días','Apocalipsis 11:3 · 12:6','']].map(([a,b,c],i)=>
       '<div class="lam-igual" data-o="'+(i+1)+'"><b>'+a+'</b><small>'+b+'</small><span>'+(c?c+' = ':'')+'1.260</span></div>').join('')+
     '<div class="lam-per-total" data-o="4"><span>el mismo periodo</span><b>1.260 años</b></div>';
+  else if(lamL23[x.v])h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div>'+lamL23[x.v]();
   else h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div><div class="lam-cum">'+
     P.fotos.map(([f,y,t],i)=>'<figure data-o="'+(i*2+1)+'"><img src="'+lamSrc(f)+'" alt=""><figcaption><b>'+y+'</b><small>'+esc(t)+'</small></figcaption></figure>').join('<div class="lam-cum-barra" data-o="2"><i></i><span>1.260 años</span></div>')+
     '</div><div class="lam-per-nota" data-o="4">538 + 1.260 = 1798</div>';
   const t=lamTablaPon(h,'per per-'+x.v);lamArma(t,anima);
   /* La línea de tiempo: el año y, en el cumplimiento, la franja de 538 a 1798. */
   const r=document.getElementById('lamRango');
-  if(r){r.value=P.a;document.getElementById('lamTano').textContent=P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent='1.260 años del cuerno pequeño';}
-  if(x.v==='cumple'){if(!anima||lamQuieto())lamBanda(true);else lamT(()=>lamBanda(true),1500);}
+  if(r){r.value=P.a;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
+  if(x.v==='cumple'||x.v==='resta'||x.v==='purif'){if(!anima||lamQuieto())lamBanda(true);else lamT(()=>lamBanda(true),1500);}
 }
 function lamPerTx(j){
   const P=LAM().periodo,x=P.pasos[j];
   return (x.citas.length?'<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div>'+x.citas.map(([r,c])=>'<p><q>'+esc(c)+'</q> <span class="lam-ref">'+esc(r)+'</span></p>').join('')+'</div>':'')+
-    '<div class="lam-capa i"><div class="lam-rot">Lo que significa</div><p>'+x.nota+'</p><div class="lam-fu">Fuente: '+P.fuente+'</div></div>';
+    '<div class="lam-capa i"><div class="lam-rot">Lo que significa</div><p>'+x.nota+'</p><div class="lam-fu">Fuente: '+P.fuente+'</div></div>'+
+    /* v222: del santuario purificado (Daniel 8:14) al juicio de Daniel 7 y a Daniel 9. */
+    (x.v==='purif'&&lamModo!=='presentar'?'<div class="lam-bots lam-hbots">'+(P.ir||[]).map(([c,k,t])=>'<button type="button" class="btn tono" onclick="lamIrA(\''+c+'\',\''+k+'\')">'+IC('der')+' '+esc(t)+'</button>').join('')+'</div>':'');
 }
 function lamPerE(j,vis){
   const P=LAM().periodo;if(!P||!P.pasos[j])return;
@@ -1753,7 +2037,7 @@ function lamVision(){
     const s=seq[k++];
     if(s.sub==null||s.sub===0)lamEligeE(L.partes.findIndex(p=>p.id===s.id),true);
     if(s.sub!=null)lamSubE(s.sub,true);
-    lamVis=setTimeout(sig,lamQuieto()?2600:C&&s.id===C.caenEn?6200:s.sub!=null?(lamParte(s.id).pasos[s.sub].ms||4200):3800);};
+    lamVis=setTimeout(sig,lamQuieto()?2600:C&&s.id===C.caenEn?6200:s.sub!=null?(lamParte(s.id).pasos[s.sub].ms||4200):(lamParte(s.id).ms||3800));};
   /* Empieza en el mar, sin bestias: suben una por una. */
   const mar=L.historia.find(h=>h.f===(L.sube&&L.sube.fondo))||L.historia[0];
   lamLimpia();lamSel='';lamChip(null);lamD2(null);lamEnciende([]);lamMarcaPaso('est');lamHist({f:mar.f});lamHoja(lamHojaTexto(mar));
@@ -1831,7 +2115,7 @@ function lamPresE(k){
   const ult=pasos.slice(0,k+1).filter(x=>x.tipo==='parte'&&L.tiempo.includes(x.id)).map(x=>x.id).pop();
   if(ult){const q=lamParte(ult),r=document.getElementById('lamRango');r.value=q.id==='juicio'?q.de:Math.min(q.a,2026);
     document.getElementById('lamTano').textContent=lamAnioTx(q.de)+' – '+(q.a>=2026?'hoy':lamAnioTx(q.a));document.getElementById('lamTq').textContent=q.reino;}
-  if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.a;document.getElementById('lamTano').textContent=P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent='1.260 años del cuerno pequeño';}
+  if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.a;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
   /* v211: el Hijo del hombre en 1844; el reino, en el tramo del futuro. */
   if(p&&p.era){const r=document.getElementById('lamRango');r.value=p.era;document.getElementById('lamTano').textContent=lamAnioTx(p.era);document.getElementById('lamTq').textContent=p.reino;}
   const fv=p&&(L.futuro||[]).find(f=>f.id&&f.id===p.id);
@@ -9270,7 +9554,7 @@ const cmpEsFin=k=>String(k).indexOf(CMP_FIN)===0;
    El Hijo del hombre no tiene tramo propio (de:null) pero NO es «lo que no pasa»:
    llega al Anciano de días en 1844 (era:1844), en la época del juicio. Antes caía en
    el reino de Dios, junto a la piedra, y parecía el mismo suceso que la segunda venida. */
-const cmpClave=p=>Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN+'-'+(CMP_FINES[p.fin]?p.fin:'reino');
+const cmpClave=p=>Number.isFinite(p.cmp)?String(p.cmp):Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN+'-'+(CMP_FINES[p.fin]?p.fin:'reino');
 function cmpModelo(Ls){
   Ls=Ls||(typeof LAMINAS!=='undefined'?LAMINAS:{});
   const cols=Object.keys(Ls).filter(k=>Array.isArray(Ls[k].partes)&&Ls[k].partes.length&&libroCid(k))
@@ -9413,7 +9697,7 @@ function comparaHTML(){
       '<button type="button" class="cmp-ecab" onclick="cmpToca(\''+f.key+'\')"><span class="cmp-num">'+(CMP_ROM[i]||i+1)+'</span>'+
         '<span class="cmp-et"><b>'+esc(f.reino)+'</b>'+(f.fechas?'<small>'+esc(f.fechas)+'</small>':'')+'</span><span class="cmp-abre">Lado a lado'+IC('der')+'</span></button>'+
       '<div class="cmp-cartas">'+M.cols.map(k=>{const ps=f.celdas[k]||[],p=ps[0];
-        if(!p)return '<div class="cmp-carta vacia"><span class="cmp-img"></span><span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>No la trae</b></span></div>';
+        if(!p)return '<div class="cmp-carta vacia"><span class="cmp-img"></span><span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>'+esc(cmpNoTrae(k,f.key)||'No la trae')+'</b></span></div>';
         return '<button type="button" class="cmp-carta" onclick="cmpToca(\''+f.key+'\')">'+cmpMini(LAMINAS[k],p,16/10,p.nombre)+
           '<span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>'+esc(ps.map(q=>q.nombre).join(' · '))+'</b></span></button>';}).join('')+'</div>'+
       /* En una caja angosta las vacías no se dibujan: se dice en una línea. */
@@ -9583,7 +9867,7 @@ function cmpSalaHTML(M){
     '<header class="cmp-sala-cab"><span class="cmp-num">'+(CMP_ROM[i]||i+1)+'</span><div><h2 id="cmpSalaT">'+esc(f.reino)+'</h2>'+
       (f.fechas?'<p class="cmp-sala-f">'+esc(f.fechas)+'</p>':'')+'</div></header>'+linea+
     '<div class="cmp-sala-g">'+con.map(vis).join('')+'</div>'+
-    (sin.length?'<p class="cmp-sala-sin">No aparece en '+esc(sin.map(cmpNom).join(' ni en '))+'.</p>':'')+
+    (sin.length?'<p class="cmp-sala-sin">No aparece en '+esc(sin.map(cmpNom).join(' ni en '))+'.'+sin.filter(k=>cmpNoTrae(k,f.key)).map(k=>' '+esc(cmpNom(k))+': '+esc(cmpNoTrae(k,f.key).replace(/^./,c=>c.toLowerCase()))+'.').join('')+'</p>':'')+
     cmpFasesHTML(f,M,false)+
     '<nav class="cmp-sala-nav" aria-label="Épocas">'+
       '<button type="button" class="cmp-nv"'+(ant?' onclick="cmpMueve(-1)"':' disabled')+'><small>Anterior</small><b>'+(ant?esc(ant.reino):'')+'</b></button>'+
@@ -9625,6 +9909,8 @@ function cmpCierra(){
   cmpSel='';lugarAnota();
 }
 function cmpALamina(k){cmpCierra();lamAbre(k,'explorar');}
+/* v222: lo que una visión dice que no trae, con su razón (Daniel 8 empieza en Medo-Persia). */
+const cmpNoTrae=(k,key)=>((LAMINAS[k]||{}).noTrae||{})[key]||'';
 document.addEventListener('keydown',e=>{
   const s=document.getElementById('cmpSala');if(!s||s.hidden||lamModo)return;
   if(e.key==='Escape'){e.preventDefault();cmpCierra();}

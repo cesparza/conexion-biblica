@@ -23,7 +23,7 @@ const srv = http.createServer((q, r) => {
   const u = q.url.split('?')[0], f = path.join(RAIZ, u === '/' ? 'index.html' : u);
   fs.readFile(f, (e, b) => {
     if (e) { r.writeHead(404); r.end(); return; }
-    r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html; charset=utf-8' : f.endsWith('.webp') ? 'image/webp' : 'application/json' });
+    r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html; charset=utf-8' : f.endsWith('.webp') ? 'image/webp' : f.endsWith('.png') ? 'image/png' : 'application/json' });
     r.end(b);
   });
 });
@@ -470,7 +470,7 @@ for (const W of ANCHOS) {
   /* ── 3c-ter. v212, la ronda de Camilo (14-oct, 13:00): la hoja nunca vacía, el riel
      de las partes con el teclado, nada cortado, y el monte y el cierre distintos. ── */
   {
-    for (const id of ['d2', 'd7']) {
+    for (const id of ['d2', 'd7', 'd8']) {
       /* v215: Explorar abre en el primer paso de la historia; la portada es el paso «La estatua». */
       await p.evaluate(id => { lamAbre(id, 'explorar'); lamInicio(); }, id); await p.waitForTimeout(900);
       /* La portada es una hoja llena, no una barra: alto, título, pasaje y Siguiente. */
@@ -843,7 +843,7 @@ for (const W of [1440, 390]) {
   ok(fotos.n >= 14 && !fotos.mal.length, W + ' · v209: las ' + fotos.n + ' miniaturas de Comparar se ven (planas o sin su metal: ' + (fotos.mal.join(', ') || 'ninguna') + ')');
   await p.evaluate(() => cmpToca('538')); await p.waitForTimeout(900);
   const sala = await thumbsBien(p, '#cmpSala .cmp-vis-p');
-  ok(sala.n === 2 && !sala.mal.length, W + ' · v209: en la sala de Roma papal se ven el barro y el cuerno (' + (sala.mal.join(', ') || 'bien') + ')');
+  ok(sala.n === 4 && !sala.mal.length, W + ' · v209/v222: en la sala de Roma papal se ven el barro, el cuerno y los dos pasos papales de Daniel 8 (' + (sala.mal.join(', ') || 'bien') + ')');
   await p.evaluate(() => cmpCierra());
   /* v209: con seis visiones (Daniel 8, 11, 12 y Apocalipsis 13 de mentira) no se rompe:
      seis carriles en el río, Daniel antes que Apocalipsis, seis tarjetas por época
@@ -1012,7 +1012,7 @@ for (const W of ANCHOS) {
   const rio = await p.evaluate(() => [...document.querySelectorAll('.cmp-rio .cmp-carril')].map(c => {
     const tops = [...c.querySelectorAll('.cmp-tr')].map(b => Math.round(b.getBoundingClientRect().top));
     return { n: c.querySelector('.cmp-carril-n').textContent, filas: new Set(tops).size, hilos: [...c.querySelectorAll('.cmp-hilo')].map(h => h.textContent.trim()) }; }));
-  ok(rio.length === 2 && rio.every(r => r.filas === 1) && rio.every(r => r.hilos.some(h => /^Roma papal/.test(h))) && rio[1].hilos.some(h => /^Juicio/.test(h)) && await p.locator('.cmp-ley').count() === 1,
+  ok(rio.length === 3 && rio.every(r => r.filas === 1) && rio.slice(0, 2).every(r => r.hilos.some(h => /^Roma papal/.test(h))) && rio[1].hilos.some(h => /^Juicio/.test(h)) && await p.locator('.cmp-ley').count() === 1,
     W + ' · v215: en el río cada visión es una sola fila; Roma papal y el juicio son hilos con su nombre, y hay leyenda (' + JSON.stringify(rio) + ')');
   /* 5. Los últimos acontecimientos. */
   /* v219: veintinueve acontecimientos en filas, diecisiete columnas (capítulos y Elena de
@@ -1108,7 +1108,7 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
   await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
   await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
   const TIT = 'h1,h2,h3,h4,.lam-p1,.lam-p2,.lam-intro-tit,.lam-nav-p,.lam-chip-t,.lam-cartel-tit,.lam-fin-tit,.lam-tit';
-  for (const id of ['d7', 'd2']) {
+  for (const id of ['d7', 'd2', 'd8']) {
     await p.evaluate(id => { verCap(id); lamAbre(id, 'explorar'); }, id); await p.waitForTimeout(1500);
     /* 1. La escena de cada paso es la que el paso declara (la parte con capas —las bestias que
        suben, el cuerno pequeño que sale de la cresta— vale con su capa). */
@@ -1127,7 +1127,9 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
           else if (k === 'est') { if (lamEsE()) { quiere = lamSrc(L.inicioF); ok = histVe === quiere; } else { quiere = '(la estatua)'; ok = !histVe; } }
           else if (k === 'cierre') { if (lamEsE()) { quiere = lamSrc(L.cierre.f); ok = histVe === quiere; } else { quiere = '(la placa)'; ok = document.getElementById('lamFin').classList.contains('ve'); } }
           else if (!/^x-/.test(k)) { const pt = lamParte(k);
-            if (lamEsE()) { const S = L.sube, i = S ? S.ids.indexOf(k) : -1; const C = L.cuernos, ok1 = [lamSrc(pt.img)].concat(i >= 0 ? [lamSrc(S.solo[i])] : [], C && C.capas && k === C.caenEn ? [lamSrc(C.capas.pequeno)] : []); quiere = ok1.join(' o '); ok = ok1.some(x => ve.includes(x)); }
+            /* v222: las partes que se mueven (Daniel 8) arman su escena sobre su propio fondo. */
+            if (pt.mov) { quiere = '(su movimiento: ' + pt.mov + ')'; ok = !!histVe && document.querySelectorAll('#lamMarcasImg .d8-et').length > 0; }
+            else if (lamEsE()) { const S = L.sube, i = S ? S.ids.indexOf(k) : -1; const C = L.cuernos, ok1 = [lamSrc(pt.img)].concat(i >= 0 ? [lamSrc(S.solo[i])] : [], C && C.capas && k === C.caenEn ? [lamSrc(C.capas.pequeno)] : []); quiere = ok1.join(' o '); ok = ok1.some(x => ve.includes(x)); }
             else { quiere = '(la estatua, ' + k + ')'; ok = !histVe; } }
           const en = [...document.querySelectorAll('#lam .per')].filter(b => b.closest(TIT)).map(b => b.textContent);
           return { ok, quiere, ve: histVe || ve.join(','), en, cuerpo: document.querySelectorAll('#lamHoja .per').length };
@@ -1139,13 +1141,23 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
       ok(!mal.length, W + ' · v217: ' + id + ', cada paso de Explorar muestra su escena (' + pasos.length + ' pasos)' + (mal.length ? ' — ' + mal.slice(0, 3).join(' | ') : ''));
       ok(!enlaces.length && cuerpo > 0, W + ' · v217: ' + id + ', ningún nombre es enlace dentro de un título (y en el texto sí: ' + cuerpo + ')' + (enlaces.length ? ' — ' + enlaces.slice(0, 3).join(' | ') : ''));
     }
+    if (id === 'd8') {
+      const fuera = [];
+      for (const k of await p.evaluate(() => LAM().partes.filter(q => q.mov).map(q => q.id))) {
+        await p.evaluate(k => lamIr(k), k); await p.waitForTimeout(await p.evaluate(k => lamParte(k).ms + 700, k));
+        const r = await p.evaluate(() => { const e = document.getElementById('lamEsc').getBoundingClientRect(), ets = [...document.querySelectorAll('#lamMarcasImg .d8-et.ve')].filter(x => getComputedStyle(x).display !== 'none');
+          return { n: ets.length, mal: ets.filter(x => { const q = x.getBoundingClientRect(); return q.left < e.left - 2 || q.right > e.right + 2; }).map(x => x.textContent.slice(0, 20)) }; });
+        if (!r.n || r.mal.length) fuera.push(k + ': ' + r.n + ' rótulos' + (r.mal.length ? ', fuera: ' + r.mal.join(', ') : ''));
+      }
+      ok(!fuera.length, W + ' · v222: Daniel 8, cada movimiento termina con sus rótulos dentro de la escena' + (fuera.length ? ' — ' + fuera.join(' | ') : ''));
+    }
     if (id === 'd7') {
       const de = await p.evaluate(() => [LAM().despues.f, LAM().historia.map(h => h.f)]);
       ok(de[0] === 'recuerdo' && !de[1].includes(de[0]), W + ' · v217: «Daniel guardó el asunto en su corazón» (7:28) ya no muestra el mar en tormenta de 7:2');
     }
     /* 2. La barra de Anterior/Siguiente: al pie de la pantalla, sin nada debajo, y la última
        línea de la hoja queda encima de ella al llevar la hoja a la vista. */
-    for (const k of ['desp', id === 'd7' ? 'cuerno' : 'barro']) {
+    for (const k of ['desp', ({ d7: 'cuerno', d8: 'cielo' })[id] || 'barro']) {
       await p.evaluate(k => { document.getElementById('lam').scrollTo(0, 0); lamIr(k); }, k); await p.waitForTimeout(700);
       const b = await p.evaluate(() => { const l = document.getElementById('lam'), n = document.querySelector('#lamPie .lam-nav'), h = document.getElementById('lamHoja');
         h.scrollIntoView({ block: 'end' }); const nr = n.getBoundingClientRect();

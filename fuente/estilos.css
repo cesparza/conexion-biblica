@@ -4784,3 +4784,105 @@ span.cmp-ult-c{cursor:default}
 .lam.pres:not(.ancho){padding-bottom:0}
 .lam.pres:not(.ancho) .lam-ctl{border-top:1px solid var(--cine-linea)}
 @media (max-width:899px){.lam.con-nav:not(.pres){scroll-padding-bottom:calc(var(--lam-nav-h,72px) + 8px)}}
+
+/* v222: DANIEL 8. Los rótulos de lo que se mueve (lamMov) y la línea de las 2.300 tardes
+   y mañanas. Van sobre la escena oscura, con sus propios colores (iguales en claro y en
+   oscuro), como las señas y los 1.260 años de Daniel 7. */
+.d8-et{position:absolute;max-width:30%;padding:5px 10px;border-radius:12px;font-size:1rem;background:rgba(12,9,6,.82);color:#F4EEE2;line-height:1.2;
+  box-shadow:0 2px 10px rgba(0,0,0,.4);opacity:0;transform:translate(var(--tx,0),calc(var(--ty,-50%) + 8px));transition:opacity .5s,transform .5s,background-color .4s,color .4s}
+.d8-et.ve{opacity:1;transform:translate(var(--tx,0),var(--ty,-50%))}
+.d8-et.i{--tx:0}.d8-et.d{--tx:-100%;text-align:right}.d8-et.c{--tx:-50%;text-align:center}.d8-et.ab{--ty:-100%}
+.d8-et b{display:block;font-size:.94em;font-weight:800}
+.d8-et small{display:block;font-size:.75em;color:#D9CDB5;margin-top:1px}
+.d8-et.oro{box-shadow:inset 0 0 0 2px #F2C46B,0 2px 10px rgba(0,0,0,.4)}
+.d8-et.oro b{color:#F2C46B}
+.d8-et.grande b{font-size:2.25rem;line-height:1}
+.d8-et.cita{max-width:72%;background:rgba(12,9,6,.86);box-shadow:inset 0 2px 0 #F2C46B}
+.d8-et.cita b{font-weight:700;font-style:italic}
+.d8-et.dir b{color:#F7D58C}
+.d8-et.gl{box-shadow:inset 0 0 0 2px #7FD1C2}.d8-et.gl b{color:#9FE3D6}
+.d8-et.reino{background:rgba(12,9,6,.6);padding:2px 7px}.d8-et.reino b{font-size:.82em;color:#E6DCC8}.d8-et.reino small{font-size:.7em}
+.d8-et.rosa{background:none;box-shadow:none;padding:0 3px;max-width:none}.d8-et.rosa b{font-size:.75em;color:#C9BFA9}
+.d8-et.gen b{color:#F7D58C}
+.d8-et.cosa em{display:block;font-style:normal;font-size:.75em;color:#F4A28C;margin-top:2px;max-height:0;overflow:hidden;opacity:0;transition:max-height .6s,opacity .6s}
+.d8-et.cosa.apaga{background:rgba(12,9,6,.92)}
+.d8-et.reino em{display:block;font-style:normal;font-size:.75em;font-weight:700;color:#F7D58C;max-height:0;overflow:hidden;opacity:0;transition:max-height .6s,opacity .6s}
+.d8-et.reino.toma{background:rgba(12,9,6,.88);box-shadow:inset 0 0 0 2px #F2C46B}
+.d8-et.reino.gl.toma{box-shadow:inset 0 0 0 2px #7FD1C2}
+.d8-et.reino.toma em{max-height:3em;opacity:1}
+.d8-et.cosa.apaga b{color:#9A9082;text-decoration:line-through;text-decoration-color:#E5484D}
+.d8-et.cosa.apaga em{max-height:3em;opacity:1}
+.d8-traza{stroke:#F2C46B;stroke-width:3;stroke-linecap:round;opacity:0}
+.d8-traza.ruta{stroke-dasharray:none}
+.d8-sombra{fill:#000;opacity:.45}
+.d8-nodo{fill:#F2C46B;opacity:.85;stroke:rgba(12,9,6,.8);stroke-width:3}
+.d8-nodo.gl{fill:#7FD1C2}
+.d8-rosa circle,.d8-rosa path{fill:none;stroke:rgba(242,196,107,.5);stroke-width:1.5}
+.d8-punto{fill:#F2C46B;stroke:rgba(12,9,6,.85);stroke-width:4;transition:fill .6s}
+.d8-punto.apaga{fill:#6B6358}
+.d8-est circle{fill:#FFF6DC}
+.d8-est circle.cae{fill:#F2C46B}
+.lam-esc.con-d8 .lam-chip{display:none}
+/* La línea de los 2.300 años. */
+.l23{position:relative;margin:.6em 0 2.6em}
+.l23-barra{position:relative;height:1.1em;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.l23-barra i{position:absolute;top:0;bottom:0;left:0;transform-origin:left;transform:scaleX(0);transition:transform 1.3s cubic-bezier(.3,0,.2,1) .25s}
+.l23-70{background:linear-gradient(90deg,#7FD1C2,#3FA89A)}
+.l23-resto{background:linear-gradient(90deg,#B45309,#F2C46B)}
+.l23.ve .l23-barra i.on{transform:none}
+.lam-tabla.quieto .l23-barra i{transition:none}
+.l23-m{position:absolute;top:1.35em;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.l23-m:first-of-type{transform:none;text-align:left}
+.l23-m.fin{transform:translateX(-100%);text-align:right}
+.l23-m b{display:block;font-size:.95em;color:#F4EEE2}
+.l23-m small{display:block;font-size:.75em;color:#C9BFA9}
+.l23-m.tenue b{color:#7A7064}
+.l23-m.brilla b{color:#F2C46B;font-size:1.3em;text-shadow:0 0 14px rgba(242,196,107,.8)}
+.l23-tarj{text-align:center;margin:.2em auto .6em;padding:.45em .9em;border-radius:12px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 2px #F2C46B;max-width:30em}
+.l23-tarj b{display:block;font-size:1.35em;color:#F2C46B}
+.l23-tarj span{display:block}
+.l23-tarj small{display:block;color:#C9BFA9}
+.l23-sem{display:flex;gap:4px;margin:.3em 0 .2em}
+.l23-sem>div{border-radius:8px;padding:.3em .5em;background:rgba(127,209,194,.18);box-shadow:inset 0 0 0 1px rgba(127,209,194,.6);text-align:center}
+.l23-s7{flex:0 0 22%}.l23-s62{flex:0 0 48%}.l23-s1{flex:1;background:rgba(242,196,107,.2)!important;box-shadow:inset 0 0 0 1px #F2C46B!important}
+.l23-sem b{display:block;font-size:.95em}.l23-sem small{color:#C9BFA9;font-size:.78em}
+.l23-sm{position:relative;height:3.1em;margin:.25em 0 .3em}
+.l23-sm span{position:absolute;top:0;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.l23-sm span:first-child{transform:none;text-align:left}
+.l23-sm span:last-child{transform:translateX(-100%);text-align:right}
+.l23-sm b{display:block;font-size:.95em}.l23-sm small{display:block;font-size:.72em;color:#C9BFA9}
+.l23-sm .oro b{color:#F2C46B}
+.l23-igual{display:flex;align-items:center;justify-content:center;gap:.6em;margin:.2em 0}
+.l23-igual figure{margin:0;flex:0 0 36%}
+.l23-igual img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;box-shadow:0 0 0 2px #F2C46B}
+.l23-igual figcaption b{display:block;color:#F2C46B;margin-top:.2em}
+.l23-igual figcaption small{color:#E6DCC8;font-size:.8em}
+.l23-igual>i{font-style:normal;font-size:2em;font-weight:800;color:#F2C46B}
+/* Con Daniel 2 y 7: debajo de la estatua chica, la imagen de la parte de Daniel 7. */
+.lam-d2.con7 .lam-d2-est{top:7%;height:46%}
+.lam-d2.con7 .lam-d2-pie{top:54%;height:9%}
+.lam-d2.con7 .lam-d2-ag{top:24%}
+.lam-d7m{position:absolute;left:6%;right:6%;top:64%;bottom:2%;padding:0;border:0;border-radius:8px;background:none;color:#F4EEE2;cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:3px}
+.lam-d7m[hidden]{display:none}
+.lam-d7m .lam-d2-t{position:static;font-size:.75rem}
+.lam-d7m img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;box-shadow:0 0 0 2px #F2C46B}
+.lam-d7m small{font-size:.75rem;line-height:1.1;text-align:center;color:#E6DCC8}
+.lam-d7m:focus-visible{outline:2px solid #F2C46B;outline-offset:1px}
+@media (max-width:560px){
+  /* En el teléfono la escena mide un tercio: solo el nombre (y lo que cambia); el texto completo va en la hoja. */
+  .d8-et{padding:2px 6px;border-radius:8px;max-width:none;white-space:nowrap;font-size:.75rem}
+  .d8-et b{font-size:.92em}
+  .d8-et small{display:none}
+  .d8-et.cosa em,.d8-et.reino em{font-size:.78em}
+  .d8-et.cita{display:none}
+  .d8-et.op,.d8-et.reino:not(.toma),.d8-dir{display:none}
+  .d8-et.grande b{font-size:1.75em}
+  .d8-et.rosa{display:none}
+  .l23{margin:.4em 0 2.3em}
+  .l23-sm small,.l23-m small,.l23-tarj span,.l23-igual figcaption small{display:none}
+  .l23-sm{height:1.6em}
+  .lam-d7m small,.lam-d7m .lam-d2-t{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .d8-et,.d8-et.cosa em,.l23-barra i,.d8-punto{transition:none}
+}

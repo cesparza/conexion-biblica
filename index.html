@@ -4801,6 +4801,108 @@ span.cmp-ult-c{cursor:default}
 .lam.pres:not(.ancho){padding-bottom:0}
 .lam.pres:not(.ancho) .lam-ctl{border-top:1px solid var(--cine-linea)}
 @media (max-width:899px){.lam.con-nav:not(.pres){scroll-padding-bottom:calc(var(--lam-nav-h,72px) + 8px)}}
+
+/* v222: DANIEL 8. Los rótulos de lo que se mueve (lamMov) y la línea de las 2.300 tardes
+   y mañanas. Van sobre la escena oscura, con sus propios colores (iguales en claro y en
+   oscuro), como las señas y los 1.260 años de Daniel 7. */
+.d8-et{position:absolute;max-width:30%;padding:5px 10px;border-radius:12px;font-size:1rem;background:rgba(12,9,6,.82);color:#F4EEE2;line-height:1.2;
+  box-shadow:0 2px 10px rgba(0,0,0,.4);opacity:0;transform:translate(var(--tx,0),calc(var(--ty,-50%) + 8px));transition:opacity .5s,transform .5s,background-color .4s,color .4s}
+.d8-et.ve{opacity:1;transform:translate(var(--tx,0),var(--ty,-50%))}
+.d8-et.i{--tx:0}.d8-et.d{--tx:-100%;text-align:right}.d8-et.c{--tx:-50%;text-align:center}.d8-et.ab{--ty:-100%}
+.d8-et b{display:block;font-size:.94em;font-weight:800}
+.d8-et small{display:block;font-size:.75em;color:#D9CDB5;margin-top:1px}
+.d8-et.oro{box-shadow:inset 0 0 0 2px #F2C46B,0 2px 10px rgba(0,0,0,.4)}
+.d8-et.oro b{color:#F2C46B}
+.d8-et.grande b{font-size:2.25rem;line-height:1}
+.d8-et.cita{max-width:72%;background:rgba(12,9,6,.86);box-shadow:inset 0 2px 0 #F2C46B}
+.d8-et.cita b{font-weight:700;font-style:italic}
+.d8-et.dir b{color:#F7D58C}
+.d8-et.gl{box-shadow:inset 0 0 0 2px #7FD1C2}.d8-et.gl b{color:#9FE3D6}
+.d8-et.reino{background:rgba(12,9,6,.6);padding:2px 7px}.d8-et.reino b{font-size:.82em;color:#E6DCC8}.d8-et.reino small{font-size:.7em}
+.d8-et.rosa{background:none;box-shadow:none;padding:0 3px;max-width:none}.d8-et.rosa b{font-size:.75em;color:#C9BFA9}
+.d8-et.gen b{color:#F7D58C}
+.d8-et.cosa em{display:block;font-style:normal;font-size:.75em;color:#F4A28C;margin-top:2px;max-height:0;overflow:hidden;opacity:0;transition:max-height .6s,opacity .6s}
+.d8-et.cosa.apaga{background:rgba(12,9,6,.92)}
+.d8-et.reino em{display:block;font-style:normal;font-size:.75em;font-weight:700;color:#F7D58C;max-height:0;overflow:hidden;opacity:0;transition:max-height .6s,opacity .6s}
+.d8-et.reino.toma{background:rgba(12,9,6,.88);box-shadow:inset 0 0 0 2px #F2C46B}
+.d8-et.reino.gl.toma{box-shadow:inset 0 0 0 2px #7FD1C2}
+.d8-et.reino.toma em{max-height:3em;opacity:1}
+.d8-et.cosa.apaga b{color:#9A9082;text-decoration:line-through;text-decoration-color:#E5484D}
+.d8-et.cosa.apaga em{max-height:3em;opacity:1}
+.d8-traza{stroke:#F2C46B;stroke-width:3;stroke-linecap:round;opacity:0}
+.d8-traza.ruta{stroke-dasharray:none}
+.d8-sombra{fill:#000;opacity:.45}
+.d8-nodo{fill:#F2C46B;opacity:.85;stroke:rgba(12,9,6,.8);stroke-width:3}
+.d8-nodo.gl{fill:#7FD1C2}
+.d8-rosa circle,.d8-rosa path{fill:none;stroke:rgba(242,196,107,.5);stroke-width:1.5}
+.d8-punto{fill:#F2C46B;stroke:rgba(12,9,6,.85);stroke-width:4;transition:fill .6s}
+.d8-punto.apaga{fill:#6B6358}
+.d8-est circle{fill:#FFF6DC}
+.d8-est circle.cae{fill:#F2C46B}
+.lam-esc.con-d8 .lam-chip{display:none}
+/* La línea de los 2.300 años. */
+.l23{position:relative;margin:.6em 0 2.6em}
+.l23-barra{position:relative;height:1.1em;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.l23-barra i{position:absolute;top:0;bottom:0;left:0;transform-origin:left;transform:scaleX(0);transition:transform 1.3s cubic-bezier(.3,0,.2,1) .25s}
+.l23-70{background:linear-gradient(90deg,#7FD1C2,#3FA89A)}
+.l23-resto{background:linear-gradient(90deg,#B45309,#F2C46B)}
+.l23.ve .l23-barra i.on{transform:none}
+.lam-tabla.quieto .l23-barra i{transition:none}
+.l23-m{position:absolute;top:1.35em;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.l23-m:first-of-type{transform:none;text-align:left}
+.l23-m.fin{transform:translateX(-100%);text-align:right}
+.l23-m b{display:block;font-size:.95em;color:#F4EEE2}
+.l23-m small{display:block;font-size:.75em;color:#C9BFA9}
+.l23-m.tenue b{color:#7A7064}
+.l23-m.brilla b{color:#F2C46B;font-size:1.3em;text-shadow:0 0 14px rgba(242,196,107,.8)}
+.l23-tarj{text-align:center;margin:.2em auto .6em;padding:.45em .9em;border-radius:12px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 2px #F2C46B;max-width:30em}
+.l23-tarj b{display:block;font-size:1.35em;color:#F2C46B}
+.l23-tarj span{display:block}
+.l23-tarj small{display:block;color:#C9BFA9}
+.l23-sem{display:flex;gap:4px;margin:.3em 0 .2em}
+.l23-sem>div{border-radius:8px;padding:.3em .5em;background:rgba(127,209,194,.18);box-shadow:inset 0 0 0 1px rgba(127,209,194,.6);text-align:center}
+.l23-s7{flex:0 0 22%}.l23-s62{flex:0 0 48%}.l23-s1{flex:1;background:rgba(242,196,107,.2)!important;box-shadow:inset 0 0 0 1px #F2C46B!important}
+.l23-sem b{display:block;font-size:.95em}.l23-sem small{color:#C9BFA9;font-size:.78em}
+.l23-sm{position:relative;height:3.1em;margin:.25em 0 .3em}
+.l23-sm span{position:absolute;top:0;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.l23-sm span:first-child{transform:none;text-align:left}
+.l23-sm span:last-child{transform:translateX(-100%);text-align:right}
+.l23-sm b{display:block;font-size:.95em}.l23-sm small{display:block;font-size:.72em;color:#C9BFA9}
+.l23-sm .oro b{color:#F2C46B}
+.l23-igual{display:flex;align-items:center;justify-content:center;gap:.6em;margin:.2em 0}
+.l23-igual figure{margin:0;flex:0 0 36%}
+.l23-igual img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;box-shadow:0 0 0 2px #F2C46B}
+.l23-igual figcaption b{display:block;color:#F2C46B;margin-top:.2em}
+.l23-igual figcaption small{color:#E6DCC8;font-size:.8em}
+.l23-igual>i{font-style:normal;font-size:2em;font-weight:800;color:#F2C46B}
+/* Con Daniel 2 y 7: debajo de la estatua chica, la imagen de la parte de Daniel 7. */
+.lam-d2.con7 .lam-d2-est{top:7%;height:46%}
+.lam-d2.con7 .lam-d2-pie{top:54%;height:9%}
+.lam-d2.con7 .lam-d2-ag{top:24%}
+.lam-d7m{position:absolute;left:6%;right:6%;top:64%;bottom:2%;padding:0;border:0;border-radius:8px;background:none;color:#F4EEE2;cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:3px}
+.lam-d7m[hidden]{display:none}
+.lam-d7m .lam-d2-t{position:static;font-size:.75rem}
+.lam-d7m img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;box-shadow:0 0 0 2px #F2C46B}
+.lam-d7m small{font-size:.75rem;line-height:1.1;text-align:center;color:#E6DCC8}
+.lam-d7m:focus-visible{outline:2px solid #F2C46B;outline-offset:1px}
+@media (max-width:560px){
+  /* En el teléfono la escena mide un tercio: solo el nombre (y lo que cambia); el texto completo va en la hoja. */
+  .d8-et{padding:2px 6px;border-radius:8px;max-width:none;white-space:nowrap;font-size:.75rem}
+  .d8-et b{font-size:.92em}
+  .d8-et small{display:none}
+  .d8-et.cosa em,.d8-et.reino em{font-size:.78em}
+  .d8-et.cita{display:none}
+  .d8-et.op,.d8-et.reino:not(.toma),.d8-dir{display:none}
+  .d8-et.grande b{font-size:1.75em}
+  .d8-et.rosa{display:none}
+  .l23{margin:.4em 0 2.3em}
+  .l23-sm small,.l23-m small,.l23-tarj span,.l23-igual figcaption small{display:none}
+  .l23-sm{height:1.6em}
+  .lam-d7m small,.lam-d7m .lam-d2-t{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .d8-et,.d8-et.cosa em,.l23-barra i,.d8-punto{transition:none}
+}
 </style>
 </head>
 <body>
@@ -5359,7 +5461,7 @@ span.cmp-ult-c{cursor:default}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '08e4ddcaccac';
+const VERSION_APP = 'a1fc9a91ca63';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -8228,11 +8330,11 @@ const CONTENIDO = {
  "d8": [
   {
    "t": "📚 En pocas palabras",
-   "h": "<div class=\"highlight-box\">En el año tercero de Belsasar, 550 a.C. (Daniel 7 fue en el primero, 553 a.C.), Daniel ve un carnero de dos cuernos derrotado por un macho cabrío con un cuerno \"magnífico\". El cuerno se rompe y salen cuatro; de uno de ellos crece un cuerno pequeño que llega hasta el santuario mismo, detiene el sacrificio continuo (tamid) y lo pisotea 2.300 tardes y mañanas, tras lo cual el santuario será purificado (reivindicado).</div>"
+   "h": "<div class=\"highlight-box\">En el año tercero de Belsasar, 550 a.C. (Daniel 7 fue en el primero, 553 a.C.), Daniel ve un carnero de dos cuernos derrotado por un macho cabrío con un cuerno \"notable\". El cuerno se rompe y salen cuatro; de uno de ellos crece un cuerno pequeño que llega hasta el santuario mismo, detiene el sacrificio continuo (tamid) y lo pisotea 2.300 tardes y mañanas, tras lo cual el santuario será purificado (reivindicado).</div>"
   },
   {
    "t": "🌊 Cuándo y dónde",
-   "h": "<div class=\"highlight-box\">Daniel está en visión junto al río Ulay, en Susa (Elam), la futura capital de invierno del Imperio Medo-Persa: simbólicamente el profeta es trasladado a la época que va a describir. La visión ocurre en el año 550 a.C., el tercero de Belsasar (Daniel 7 fue en el primero, 553 a.C.); a Babilonia todavía le quedaba más de una década de existencia, pero Dios ya no la incluye en esta profecía porque Ciro de Persia estaba en plena expansión.</div>"
+   "h": "<div class=\"highlight-box\">Daniel está en visión junto al río Ulai, en Susa (Elam), la futura capital de invierno del Imperio Medo-Persa: simbólicamente el profeta es trasladado a la época que va a describir. La visión ocurre en el año 550 a.C., el tercero de Belsasar (Daniel 7 fue en el primero, 553 a.C.); a Babilonia todavía le quedaba más de una década de existencia, pero Dios ya no la incluye en esta profecía porque Ciro de Persia estaba en plena expansión.</div>"
   },
   {
    "t": "🐏 El carnero de dos cuernos",
@@ -8248,7 +8350,7 @@ const CONTENIDO = {
   },
   {
    "t": "🗡️ El cuerno pequeño que llega al santuario",
-   "h": "<div class=\"highlight-box\">De uno de esos cuatro cuernos —mejor dicho, de uno de los cuatro \"vientos\" o puntos cardinales, según la gramática hebrea del pasaje— sale un cuerno pequeño que \"creció mucho en dirección del sur, del oriente y de la Tierra del Esplendor\" (Palestina). Ese cuerno llega hasta \"el Jefe del ejército\", abole el sacrificio continuo (tamid) y hace caer el lugar de su santuario (Daniel 8:9-11). El punto de origen —el oeste, uno de los cuatro vientos, y no uno de los cuatro cuernos griegos— señala a un poder que no nace del reparto de Alejandro Magno sino que crece después, desde afuera: <strong>Roma</strong>.</div>"
+   "h": "<div class=\"highlight-box\">De uno de esos cuatro cuernos —mejor dicho, de uno de los cuatro \"vientos\" o puntos cardinales, según la gramática hebrea del pasaje— sale un cuerno pequeño que \"creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa\" (Palestina). Ese cuerno llega hasta \"el príncipe de los ejércitos\", abole el sacrificio continuo (tamid) y hace caer el lugar de su santuario (Daniel 8:9-11). El punto de origen —el oeste, uno de los cuatro vientos, y no uno de los cuatro cuernos griegos— señala a un poder que no nace del reparto de Alejandro Magno sino que crece después, desde afuera: <strong>Roma</strong>.</div>"
   },
   {
    "t": "⚖️ Por qué no es Antíoco Epífanes",
@@ -8326,6 +8428,26 @@ const CONTENIDO = {
    "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Símbolo</th><th>Qué representa</th><th>Dónde lo explica la Biblia</th></tr></thead><tbody><tr><td class=\"key\">Ejército y estrellas</td><td>El pueblo de Dios</td><td>Daniel 8:24: destruirá «al pueblo de los santos»; Daniel 12:3; Éxodo 12:41</td></tr><tr><td class=\"key\">Príncipe del ejército</td><td>Cristo</td><td>Josué 5:13-15 (recibe adoración); Daniel 8:25: «el Príncipe de los príncipes»</td></tr><tr><td class=\"key\">Santuario</td><td>El santuario del cielo, donde Cristo ministra</td><td>Hebreos 8:1-2; 9:24</td></tr><tr><td class=\"key\">Tarde y mañana</td><td>Un día completo</td><td>Génesis 1:5, 8</td></tr><tr><td class=\"key\">Día</td><td>Año</td><td>Números 14:34; Ezequiel 4:6</td></tr></tbody></table></div><div class=\"highlight-box\">Por eso 2.300 tardes y mañanas son 2.300 días proféticos, es decir, 2.300 años: de 457 a.C. a 1844.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 306-308 y 315; Bohr, <i>15 principios</i> 2:105.</p>"
   },
   {
+   "t": "🧭 Hacia dónde crece el cuerno: primero a lo ancho, después hacia arriba",
+   "capa": "contexto",
+   "h": "<p>El carnero «se engrandecía» (8:4), el macho cabrío «creció en gran manera» (8:8) y el cuerno crece más que los dos. Pero no crece igual todo el tiempo:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Fase</th><th>Hacia dónde</th><th>Cumplimiento</th></tr></thead><tbody><tr><td class=\"key\">Roma imperial (8:9)</td><td>A lo ancho, sobre la tierra: al oriente, al sur y a la tierra gloriosa</td><td>Macedonia (168 a.C.), Siria (65 a.C.), Judea (63 a.C.) y Egipto (30 a.C.)</td></tr><tr><td class=\"key\">Roma papal (8:10-12)</td><td>Hacia arriba: hasta el ejército del cielo y frente al Príncipe</td><td>Persigue al pueblo de Dios y pone en la tierra lo que Cristo hace en el santuario del cielo (538-1798)</td></tr></tbody></table></div><div class=\"highlight-box\">Es un solo cuerno porque es un solo poder en dos fases, como en Daniel 2 (hierro y hierro con barro) y Daniel 7 (la bestia espantosa y su cuerno pequeño). Las dos fases gobiernan desde Roma.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 305-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164.</p>"
+  },
+  {
+   "t": "🧭 ¿Antíoco IV Epífanes? Por qué no",
+   "capa": "contexto",
+   "h": "<p>Muchos comentarios dicen que el cuerno pequeño es Antíoco IV Epífanes, el rey seléucida que profanó el templo de Jerusalén entre 168 y 165 a.C. El texto no encaja:</p><ul class=\"tight\"><li><b>Un cuerno es un reino</b> (8:22), y Antíoco era un rey de uno de los cuatro cuernos, no un poder nuevo.</li><li><b>Llega tarde y es chico.</b> El cuerno sale «al fin del reinado de estos» (8:23); Antíoco reinó a mitad de la dinastía seléucida (312-65 a.C.). Y el cuerno crece más que Persia y que Alejandro; Antíoco tuvo que salir de Egipto porque Roma se lo ordenó.</li><li><b>El tiempo no da.</b> Su profanación duró unos tres años (1 Macabeos 1:54; 4:52), no 2.300 días; para hacerlo encajar se parten las tardes y mañanas en 1.150 días.</li><li><b>Jesús la puso en el futuro.</b> La «abominación desoladora» de Daniel todavía estaba por venir cuando Jesús habló (Mateo 24:15), casi dos siglos después de la muerte de Antíoco (164 a.C.).</li><li><b>La visión es para el tiempo del fin</b> (8:17, 19), y el cuerno solo es quebrantado «no por mano humana» (8:25).</li></ul><p>Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 162-163; Bohr, <i>Daniel 1-10</i>, p. 305-306 y 314-315.</p>"
+  },
+  {
+   "t": "🧭 De 457 a.C. a 1844: la cuenta de las 2.300 tardes y mañanas",
+   "capa": "contexto",
+   "h": "<p>Daniel 8 da el número y Daniel 9 el punto de partida: «desde la salida de la orden para restaurar y edificar a Jerusalén» (9:25). Gabriel vuelve a explicar lo que en 8:27 quedó sin entender.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Paso</th><th>Cuenta</th><th>Fecha</th></tr></thead><tbody><tr><td class=\"key\">La orden de Artajerjes I (Esdras 7:7-26)</td><td>su séptimo año, contado de otoño a otoño</td><td>otoño de 457 a.C.</td></tr><tr><td class=\"key\">7 semanas (9:25)</td><td>49 años: Jerusalén reedificada</td><td>408 a.C.</td></tr><tr><td class=\"key\">62 semanas más (9:25)</td><td>483 años: el Mesías Príncipe, ungido en su bautismo</td><td>otoño de 27 d.C.</td></tr><tr><td class=\"key\">La mitad de la última semana (9:27)</td><td>la cruz: cesan el sacrificio y la ofrenda</td><td>primavera de 31 d.C.</td></tr><tr><td class=\"key\">Fin de las 70 semanas (9:24)</td><td>490 años: Esteban muere y el evangelio va a los gentiles</td><td>34 d.C.</td></tr><tr><td class=\"key\">Lo que queda: 2.300 − 490 = 1.810</td><td>34 + 1.810</td><td>1844</td></tr></tbody></table></div><div class=\"highlight-box\">«Determinadas» (9:24) quiere decir cortadas. Solo se pueden cortar 490 años de un periodo más largo que empieza a la vez: los 2.300. Por eso son años, y empiezan juntos en 457 a.C. Sin año cero, 2.300 − 457 da 1843 y se llega a 1844.</div><p>Fuente: CS 372-376; Bohr, <i>Daniel 1-10</i>, p. 325-336.</p>"
+  },
+  {
+   "t": "🧭 «Será purificado»: el Día de la Expiación y el juicio de Daniel 7",
+   "capa": "contexto",
+   "h": "<p>En el santuario, cada día los pecados confesados se llevaban al lugar santo; una vez al año, el Día de la Expiación, el sumo sacerdote entraba al lugar santísimo y purificaba el santuario (Levítico 16:16, 29-30). Era un día de juicio: quien no se afligía era cortado de su pueblo (Levítico 23:29).</p><ul class=\"tight\"><li><b>La palabra.</b> Daniel 8:14 usa <i>nitsdaq</i>: será justificado, vindicado. Las traducciones antiguas la leyeron «purificado», y en la Biblia «justo» y «limpio» van juntos (Job 4:17; 25:4).</li><li><b>El mismo suceso que Daniel 7.</b> Daniel 7 pasa del cuerno al juicio (7:9-10) y Daniel 8 del cuerno al santuario purificado (8:14): las dos visiones ponen en el mismo lugar el comienzo del juicio, en 1844.</li><li><b>En el cielo.</b> El templo de Jerusalén ya no existía cuando terminaron los 2.300 años. Cristo entró en 1844 al lugar santísimo del santuario celestial para su obra final: el juicio investigador.</li></ul><div class=\"warn-box\">La purificación del santuario no es la segunda venida: eso esperaba la mayoría en 1844. Es la obra que Cristo hace en el cielo antes de volver.</div><p>Fuente: CS 451 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 315-320.</p>"
+  },
+  {
    "t": "📜 Versículos 1 a 8",
    "h": "<div class=\"highlight-box\"><strong>El capítulo, versículo por versículo</strong><br>Para comprobar que no se quedó nada por fuera. Toca cualquier referencia para leer el texto completo.</div><div class=\"tabla-scroll\"><table class=\"info-table vpv\"><tbody><tr><td class=\"key\">1</td><td>Año tercero de Belsasar: la segunda visión de Daniel, «después de aquella que había tenido antes» (la de Daniel 7).</td></tr><tr><td class=\"key\">2</td><td>El lugar: Susa, capital del reino, en la provincia de Elam, junto al río Ulai.</td></tr><tr><td class=\"key\">3</td><td>El carnero de dos cuernos: los dos altos, pero uno más alto que el otro, y «el más alto creció después».</td></tr><tr><td class=\"key\">4</td><td>Hiere hacia el poniente, el norte y el sur. Ninguna bestia podía pararse delante de él; hacía conforme a su voluntad y se engrandecía.</td></tr><tr><td class=\"key\">5</td><td>Un macho cabrío viene del poniente «sobre la faz de toda la tierra, sin tocar tierra», con un cuerno notable entre los ojos. La velocidad es el dato.</td></tr><tr><td class=\"key\">6</td><td>Corre contra el carnero «con la furia de su fuerza».</td></tr><tr><td class=\"key\">7</td><td>Lo hiere, le quiebra los dos cuernos, lo derriba y lo pisotea; nadie lo libra.</td></tr><tr><td class=\"key\">8</td><td>En su mayor fuerza el gran cuerno es quebrado y salen cuatro cuernos notables «hacia los cuatro vientos del cielo».</td></tr></tbody></table></div>"
   },
@@ -8389,7 +8511,7 @@ const CONTENIDO = {
   },
   {
    "t": "🔗 Por qué esto responde la pregunta de Daniel 8",
-   "h": "<div class=\"highlight-box\">El ángel Gabriel había sido interrumpido en Daniel 8:27 antes de aclarar cuándo empezaban a contarse las 2.300 tardes y mañanas; Daniel quedó \"perplejo\" porque no lograba entenderlo. Daniel 9 es la continuación directa de esa misma conversación: Gabriel regresa \"para ilustrar tu inteligencia\" (9:22) y da el dato que faltaba —el decreto del 457 a.C.— exactamente en el mismo punto de la explicación donde se había detenido. Esto solo tiene sentido si las 2.300 años y las 70 semanas comparten el mismo punto de arranque.</div>"
+   "h": "<div class=\"highlight-box\">El ángel Gabriel había sido interrumpido en Daniel 8:27 antes de aclarar cuándo empezaban a contarse las 2.300 tardes y mañanas; Daniel quedó \"perplejo\" porque no lograba entenderlo. Daniel 9 es la continuación directa de esa misma conversación: Gabriel regresa \"para ilustrar tu inteligencia\" (9:22) y da el dato que faltaba —el decreto del 457 a.C.— exactamente en el mismo punto de la explicación donde se había detenido. Esto solo tiene sentido si los 2.300 años y las 70 semanas comparten el mismo punto de arranque.</div>"
   },
   {
    "t": "🙏 La oración de Daniel 9: un modelo de confesión",
@@ -8571,7 +8693,7 @@ const CONTENIDO = {
   },
   {
    "t": "⚔️ El reino de Grecia se divide",
-   "h": "<div class=\"highlight-box\">Alejandro Magno (\"un rey valeroso\") conquista un vasto imperio y, tras su muerte, «su reino será quebrantado y repartido hacia los cuatro vientos del cielo» (v. 4) —el mismo reparto entre cuatro generales visto en Daniel 8—. Daniel 11 se concentra desde aquí en dos de esos cuatro reinos: <strong>Egipto</strong> (dinastía ptolemaica, \"rey del sur\") y <strong>Siria</strong> (dinastía seléucida, \"rey del norte\"), porque Palestina —la Tierra del Esplendor— queda geográficamente entre ambos y es el terreno de sus guerras.</div>"
+   "h": "<div class=\"highlight-box\">Alejandro Magno (\"un rey valeroso\") conquista un vasto imperio y, tras su muerte, «su reino será quebrantado y repartido hacia los cuatro vientos del cielo» (v. 4) —el mismo reparto entre cuatro generales visto en Daniel 8—. Daniel 11 se concentra desde aquí en dos de esos cuatro reinos: <strong>Egipto</strong> (dinastía ptolemaica, \"rey del sur\") y <strong>Siria</strong> (dinastía seléucida, \"rey del norte\"), porque Palestina —la tierra gloriosa— queda geográficamente entre ambos y es el terreno de sus guerras.</div>"
   },
   {
    "t": "📋 Reyes ptolemaicos y seléucidas",
@@ -19908,7 +20030,7 @@ const BANCO = [
   "q": "¿Dónde estaba Daniel durante esta visión? (Daniel 8:2)",
   "o": [
    "Junto al río Éufrates, en Babilonia",
-   "Junto al río Ulay, en Susa",
+   "Junto al río Ulai, en Susa",
    "En Jerusalén, junto al templo",
    "En el foso de los leones"
   ],
@@ -20035,7 +20157,7 @@ const BANCO = [
  {
   "cap": "d8",
   "t": "mc",
-  "q": "¿Qué le hizo el cuerno pequeño al \"Jefe del ejército\" y a su santuario? (Daniel 8:11)",
+  "q": "¿Qué le hizo el cuerno pequeño al \"príncipe de los ejércitos\" y a su santuario? (Daniel 8:11)",
   "o": [
    "Le rindió pleno homenaje y tributo",
    "Abolió su culto y derribó su templo",
@@ -20074,7 +20196,7 @@ const BANCO = [
  {
   "cap": "d8",
   "t": "mc",
-  "q": "¿Qué territorio conquistó Roma en el año 63 a.C., cumpliendo el crecimiento hacia \"la Tierra del Esplendor\"?",
+  "q": "¿Qué territorio conquistó Roma en el año 63 a.C., cumpliendo el crecimiento hacia \"la tierra gloriosa\"?",
   "o": [
    "El territorio de Egipto entero",
    "La región de Macedonia y Grecia",
@@ -57540,6 +57662,106 @@ const BANCO = [
   "nv": 2
  },
  {
+  "cap": "d8",
+  "t": "mc",
+  "v": "8:9",
+  "f": "c",
+  "q": "¿En qué orden «creció» Roma imperial sobre los reinos de Daniel 8:9?",
+  "o": [
+   "Macedonia, Siria, Judea y Egipto",
+   "Egipto, Judea, Siria y Macedonia",
+   "Siria, Egipto, Macedonia y Judea",
+   "Judea, Macedonia, Egipto y Siria"
+  ],
+  "a": 0,
+  "e": "Macedonia en 168 a.C., Siria en 65, Judea en 63 y Egipto en 30 a.C. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 164.",
+  "nv": 1
+ },
+ {
+  "cap": "d8",
+  "t": "tf",
+  "v": "8:10",
+  "f": "c",
+  "q": "En Daniel 8 el cuerno crece primero a lo ancho (Roma imperial) y después hacia arriba, hasta el ejército del cielo (Roma papal).",
+  "a": true,
+  "e": "Verdadero: primero conquista reinos de la tierra (8:9) y después se levanta contra Dios y su pueblo (8:10-12). Fuente: Bohr, <i>Daniel 1-10</i>, p. 306.",
+  "nv": 2
+ },
+ {
+  "cap": "d8",
+  "t": "mc",
+  "v": "8:23",
+  "f": "c",
+  "q": "¿Por qué la abominación desoladora de Daniel no fue la de Antíoco IV Epífanes?",
+  "o": [
+   "Jesús la puso en el futuro (Mateo 24:15)",
+   "Antíoco nunca fue rey seléucida",
+   "Antíoco no persiguió a los judíos",
+   "Antíoco reinó después de Roma"
+  ],
+  "a": 0,
+  "e": "Antíoco murió en 164 a.C.; casi dos siglos después Jesús habló de la abominación como algo por venir. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 163.",
+  "nv": 1
+ },
+ {
+  "cap": "d8",
+  "t": "mc",
+  "v": "8:14",
+  "f": "c",
+  "q": "¿En qué año empiezan juntas las 70 semanas y las 2.300 tardes y mañanas?",
+  "o": [
+   "457 a.C.",
+   "538 a.C.",
+   "536 a.C.",
+   "444 a.C."
+  ],
+  "a": 0,
+  "e": "Con la orden de Artajerjes I, en su séptimo año (Esdras 7), que entró en vigencia en el otoño de 457 a.C. Fuente: CS 373.",
+  "nv": 1
+ },
+ {
+  "cap": "d8",
+  "t": "mc",
+  "v": "8:14",
+  "f": "c",
+  "q": "Si de las 2.300 tardes y mañanas se cortan las 70 semanas, ¿cuántos años quedan después de 34 d.C.?",
+  "o": [
+   "1.810",
+   "1.260",
+   "1.844",
+   "2.300"
+  ],
+  "a": 0,
+  "e": "2.300 − 490 = 1.810, y 34 + 1.810 = 1844. Fuente: CS 376.",
+  "nv": 1
+ },
+ {
+  "cap": "d8",
+  "t": "tf",
+  "v": "8:14",
+  "f": "c",
+  "q": "La purificación del santuario de Daniel 8:14 y el juicio de Daniel 7:9-10 son el mismo suceso, que empieza en 1844.",
+  "a": true,
+  "e": "Verdadero: las dos visiones pasan del cuerno pequeño al juicio en el cielo. Fuente: CS 477; Bohr, <i>Daniel 1-10</i>, p. 288.",
+  "nv": 2
+ },
+ {
+  "cap": "d8",
+  "t": "mc",
+  "v": "8:14",
+  "f": "c",
+  "q": "¿Qué fiesta del santuario representa la purificación de Daniel 8:14?",
+  "o": [
+   "El Día de la Expiación",
+   "La Pascua",
+   "Pentecostés",
+   "La fiesta de las Cabañas"
+  ],
+  "a": 0,
+  "e": "El día diez del mes séptimo el sumo sacerdote purificaba el santuario (Levítico 16:29-30); en 1844 cayó el 22 de octubre. Fuente: CS 451.",
+  "nv": 1
+ },
+ {
   "cap": "d9",
   "t": "mc",
   "v": "9:24",
@@ -60544,6 +60766,956 @@ const LAMINAS = {
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 121; CS 732-737."
    }
   ]
+ },
+ "d8": {
+  "tipo": "escenas",
+  "libro": "Daniel 8",
+  "titulo": "El carnero, el macho cabrío y el santuario",
+  "dir": "d8/",
+  "cartel": {
+   "f": "portada",
+   "lugar": "Susa, junto al río Ulai",
+   "cuando": "En el tercer año de Belsasar, hacia 550 a.C.",
+   "ref": "Daniel 8:1-2",
+   "lado": "i",
+   "cita": {
+    "ref": "Daniel 8:3",
+    "texto": "Alcé los ojos y miré, y había un carnero que estaba delante del río, y tenía dos cuernos"
+   }
+  },
+  "miniF": "portada",
+  "inicioF": "portada",
+  "verTodo": "La visión",
+  "invita": "El carnero, el macho cabrío, los cuernos y las 2.300 tardes y mañanas: cada parte se mueve como en el texto, con su significado, sus fechas y su fuente.",
+  "intro": {
+   "titulo": "Un carnero y un macho cabrío",
+   "ref": "Daniel 8:3, 5",
+   "texto": "había un carnero que estaba delante del río, y tenía dos cuernos … un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra",
+   "nota": "La historia de Daniel 2 y 7 contada otra vez, ahora con animales del santuario. Empieza en Medo-Persia, sigue con Grecia y con Roma en dos fases, y termina en el santuario purificado: 1844.",
+   "datos": [
+    [
+     "2",
+     "animales del santuario"
+    ],
+    [
+     "2.300",
+     "tardes y mañanas"
+    ],
+    [
+     "1844",
+     "el santuario purificado"
+    ]
+   ]
+  },
+  "precarga": [
+   "llanura",
+   "noche",
+   "carnero-cuerpo.webp",
+   "carnero-cuerno-a.webp",
+   "carnero-cuerno-b.webp",
+   "macho-cuerpo.webp",
+   "macho-cuerno.webp",
+   "cabeza.webp",
+   "cuerno-1.webp",
+   "cuerno-2.webp",
+   "cuerno-3.webp",
+   "cuerno-4.webp",
+   "d7/cuerno-pequeno.png",
+   "santuario",
+   "purificado"
+  ],
+  "solapa": [],
+  "tiempo": [
+   "carnero",
+   "macho",
+   "cuatro",
+   "cuerno",
+   "cielo",
+   "purificado"
+  ],
+  "vacios": [
+   [
+    -620,
+    -539,
+    "Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia ya cae"
+   ],
+   [
+    476,
+    538,
+    "Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal"
+   ]
+  ],
+  "futuro": [
+   {
+    "id": "quebrantado",
+    "de": 2026,
+    "a": 2226,
+    "t": "La segunda venida",
+    "s": "el cuerno es quebrantado, no por mano humana",
+    "f": "d2/e-piedra",
+    "ult": "venida"
+   },
+   {
+    "id": "",
+    "de": 2226,
+    "a": 2426,
+    "t": "Los mil años",
+    "s": "la tierra desolada",
+    "f": "d2/e-piedra",
+    "ult": "desolada"
+   },
+   {
+    "id": "",
+    "de": 2426,
+    "a": 2626,
+    "t": "El reino eterno",
+    "s": "Daniel 8 no lo muestra: llega en Daniel 12:1-3",
+    "f": "d2/e-monte",
+    "ult": "reino"
+   }
+  ],
+  "historia": [
+   {
+    "f": "ulai",
+    "titulo": "En el tercer año de Belsasar",
+    "ref": "Daniel 8:1-2",
+    "texto": "En el año tercero del reinado del rey Belsasar, yo, Daniel, tuve una visión, después de aquella que había tenido antes. … En la visión, pues, me veía junto al río Ulai.",
+    "nota": "Hacia el 550 a.C., unos tres años después de Daniel 7. Babilonia caerá once años después (Daniel 5). En visión, Daniel está en Susa, que será capital de Persia: la visión empieza donde empiezan las 2.300 tardes y mañanas, en tiempos de Persia."
+   }
+  ],
+  "despues": {
+   "f": "gabriel",
+   "titulo": "Gabriel, enseña a éste la visión",
+   "ref": "Daniel 8:16-18",
+   "texto": "Gabriel, enseña a éste la visión. … Él me tocó y me hizo estar en pie.",
+   "nota": "Gabriel explica los animales y los cuernos (8:19-26) y dice que «la visión es para el tiempo del fin» (8:17). Lo del tiempo queda sin explicar: Daniel queda «quebrantado» y no la entiende (8:27). Gabriel vuelve en Daniel 9 a explicar desde cuándo se cuentan las 2.300 tardes y mañanas (9:22-25)."
+  },
+  "cierre": {
+   "f": "purificado",
+   "ref": "Daniel 8:17",
+   "texto": "Entiende, hijo de hombre, que la visión es para el tiempo del fin.",
+   "titulo": "La visión es para el tiempo del fin",
+   "nota": "Desde 1844 el santuario se purifica: es el juicio de Daniel 7. Hoy vivimos en ese tiempo. Después el cuerno será quebrantado, «aunque no por mano humana» (8:25)."
+  },
+  "paraleloCols": [
+   "Daniel 8",
+   "Daniel 2",
+   "Daniel 7",
+   "Reino"
+  ],
+  "paraleloTit": "Daniel 2, 7 y 8 dicen lo mismo",
+  "paraleloNota": "Daniel 8 empieza en Medo-Persia: Babilonia ya cae. Los dos animales son del santuario, y Roma, en sus dos fases, es un solo cuerno.",
+  "comparar": "d2",
+  "comparar2": "d7",
+  "conTxt": "Con Daniel 2 y 7",
+  "agrega": "Daniel 2 no lo muestra: lo agrega Daniel 8",
+  "noTrae": {
+   "476": "Pasa de Roma imperial a Roma papal",
+   "-605": "Empieza en Medo-Persia: Babilonia ya cae"
+  },
+  "paralelo": [
+   [
+    "carnero",
+    "Pecho y brazos de plata",
+    "Medo-Persia",
+    "plata",
+    "Oso",
+    "oso"
+   ],
+   [
+    "macho",
+    "Vientre y muslos de bronce",
+    "Grecia",
+    "bronce",
+    "Leopardo",
+    "leopardo"
+   ],
+   [
+    "cuatro",
+    "Vientre y muslos de bronce",
+    "Grecia dividida en cuatro",
+    "bronce",
+    "Las cuatro cabezas del leopardo",
+    "leopardo"
+   ],
+   [
+    "cuerno",
+    "Piernas de hierro",
+    "Roma imperial",
+    "hierro",
+    "La bestia espantosa",
+    "bestia"
+   ],
+   [
+    "cielo",
+    "Hierro mezclado con barro",
+    "Roma papal",
+    "barro",
+    "El cuerno pequeño",
+    "cuerno"
+   ],
+   [
+    "santuario",
+    "Hierro mezclado con barro",
+    "Roma papal",
+    "barro",
+    "El cuerno pequeño",
+    "cuerno"
+   ],
+   [
+    "purificado",
+    "No aparece: lo agrega Daniel 7 y 8",
+    "El juicio en el cielo, desde 1844",
+    null,
+    "El juicio",
+    "juicio"
+   ],
+   [
+    "quebrantado",
+    "La piedra que hiere los pies",
+    "La segunda venida",
+    [
+     "piedra"
+    ],
+    "Los santos reciben el reino",
+    "santos"
+   ]
+  ],
+  "paraleloFuente": "Bohr, <i>Daniel 1-10</i>, p. 20, 83, 119-121.",
+  "retoSin": [],
+  "reto": [
+   {
+    "q": "¿Qué símbolo es «los reyes de Media y de Persia»?",
+    "ok": "carnero",
+    "e": "8:20 · El carnero de dos cuernos; el más alto, que creció después, es Persia."
+   },
+   {
+    "q": "¿Qué símbolo es «el rey de Grecia»?",
+    "ok": "macho",
+    "e": "8:21 · El macho cabrío; su cuerno grande, el primer rey: Alejandro Magno."
+   },
+   {
+    "q": "¿Qué parte muestra el reino repartido hacia los cuatro vientos?",
+    "ok": "cuatro",
+    "e": "8:8, 22 · Cuatro reinos: Casandro, Lisímaco, Seleuco y Tolomeo."
+   },
+   {
+    "q": "¿Qué creció «mucho hacia el sur y el oriente, y hacia la tierra gloriosa»?",
+    "ok": "cuerno",
+    "e": "8:9 · Roma imperial: Macedonia (168 a.C.), Siria (65), Judea (63) y Egipto (30)."
+   },
+   {
+    "q": "¿Qué parte creció «hasta llegar al ejército del cielo»?",
+    "ok": "cielo",
+    "e": "8:10 · La fase papal de Roma: pelea contra Dios y su pueblo."
+   },
+   {
+    "q": "¿Qué pasa al terminar las 2.300 tardes y mañanas?",
+    "ok": "purificado",
+    "e": "8:14 · En 1844 el santuario es purificado: empieza el juicio."
+   },
+   {
+    "q": "«Será quebrantado, aunque no por mano humana». ¿Cuándo?",
+    "ok": "quebrantado",
+    "e": "8:25 · En la segunda venida, como la piedra de Daniel 2."
+   }
+  ],
+  "escenas": [
+   {
+    "y": -539,
+    "f": "d2/e539",
+    "parte": "carnero",
+    "t": "539 a.C. · Ciro el Grande toma Babilonia la noche del banquete de Belsasar (5:30-31)"
+   },
+   {
+    "y": -331,
+    "f": "d2/e331",
+    "parte": "macho",
+    "t": "331 a.C. · Alejandro Magno vence a Darío III en Arbela"
+   },
+   {
+    "y": -168,
+    "f": "d2/e168",
+    "parte": "cuerno",
+    "t": "168 a.C. · Roma vence a Macedonia en Pidna"
+   },
+   {
+    "y": 476,
+    "f": "d2/e476",
+    "t": "476 d.C. · Es depuesto Rómulo Augústulo, el último emperador de occidente"
+   },
+   {
+    "y": 538,
+    "f": "d2/e538",
+    "parte": "cielo",
+    "t": "538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal"
+   },
+   {
+    "y": 1798,
+    "f": "d2/e1798",
+    "c": "1798 d.C. · Louis-Alexandre Berthier toma preso a Pío VI",
+    "t": "1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI"
+   }
+  ],
+  "marcas": [
+   [
+    -539,
+    "539 a.C."
+   ],
+   [
+    -168,
+    "168<i> a.C.</i>",
+    "chico"
+   ],
+   [
+    1,
+    "1<i> d.C.</i>",
+    "chico"
+   ],
+   [
+    538,
+    "538 d.C."
+   ],
+   [
+    1798,
+    "1798",
+    "der"
+   ],
+   [
+    1844,
+    "1844<i> · purificado</i>",
+    "izq chico"
+   ],
+   [
+    2026,
+    "hoy",
+    "izq"
+   ],
+   [
+    2126,
+    "la venida",
+    "fut"
+   ],
+   [
+    2326,
+    "mil años",
+    "fut"
+   ],
+   [
+    2526,
+    "el reino",
+    "fut"
+   ],
+   [
+    2476,
+    "futuro",
+    "tel"
+   ]
+  ],
+  "hitos": [
+   -539,
+   -457,
+   -331,
+   -301,
+   -168,
+   34,
+   538,
+   1798,
+   1844
+  ],
+  "mov": {
+   "carnero": {
+    "f": "carnero-cuerpo.webp",
+    "w": 751,
+    "h": 800,
+    "en": [
+     150,
+     200,
+     420
+    ],
+    "a": {
+     "f": "carnero-cuerno-a.webp",
+     "caja": [
+      514,
+      97,
+      676,
+      211
+     ],
+     "base": [
+      612,
+      168
+     ]
+    },
+    "b": {
+     "f": "carnero-cuerno-b.webp",
+     "caja": [
+      608,
+      0,
+      730,
+      181
+     ],
+     "base": [
+      690,
+      172
+     ]
+    },
+    "dirs": [
+     {
+      "t": "al poniente",
+      "s": "Lidia 547 · Babilonia 539 a.C.",
+      "a": [
+       560,
+       330
+      ],
+      "b": [
+       930,
+       330
+      ]
+     },
+     {
+      "t": "al norte",
+      "s": "",
+      "a": [
+       470,
+       210
+      ],
+      "b": [
+       600,
+       50
+      ]
+     },
+     {
+      "t": "al sur",
+      "s": "Egipto 525 a.C.",
+      "a": [
+       540,
+       470
+      ],
+      "b": [
+       860,
+       540
+      ]
+     }
+    ]
+   },
+   "macho": {
+    "f": "macho-cuerpo.webp",
+    "w": 800,
+    "h": 763,
+    "cuerno": {
+     "f": "macho-cuerno.webp",
+     "caja": [
+      0,
+      0,
+      133,
+      241
+     ],
+     "base": [
+      86,
+      228
+     ]
+    },
+    "choque": {
+     "de": [
+      1260,
+      70
+     ],
+     "a": [
+      500,
+      145
+     ],
+     "fin": [
+      455,
+      150
+     ],
+     "alto": 360,
+     "golpe": [
+      530,
+      300
+     ]
+    },
+    "quiebra": {
+     "en": [
+      355,
+      92,
+      470
+     ]
+    },
+    "batallas": "Gránico 334 · Iso 333 · Arbela 331 a.C."
+   },
+   "cabeza": {
+    "f": "cabeza.webp",
+    "w": 800,
+    "h": 732,
+    "en": [
+     240,
+     50,
+     600
+    ],
+    "cuernos": [
+     {
+      "f": "cuerno-1.webp",
+      "caja": [
+       0,
+       160,
+       342,
+       311
+      ],
+      "base": [
+       318,
+       246
+      ],
+      "t": "Casandro",
+      "s": "Macedonia y Grecia · oeste",
+      "et": [
+       70,
+       360
+      ]
+     },
+     {
+      "f": "cuerno-2.webp",
+      "caja": [
+       263,
+       0,
+       412,
+       239
+      ],
+      "base": [
+       386,
+       228
+      ],
+      "t": "Lisímaco",
+      "s": "Tracia y Asia Menor · norte",
+      "et": [
+       360,
+       34
+      ]
+     },
+     {
+      "f": "cuerno-3.webp",
+      "caja": [
+       421,
+       2,
+       573,
+       231
+      ],
+      "base": [
+       450,
+       226
+      ],
+      "t": "Seleuco",
+      "s": "Siria y Babilonia · oriente",
+      "et": [
+       740,
+       34
+      ]
+     },
+     {
+      "f": "cuerno-4.webp",
+      "caja": [
+       467,
+       157,
+       800,
+       294
+      ],
+      "base": [
+       500,
+       252
+      ],
+      "t": "Tolomeo",
+      "s": "Egipto · sur",
+      "et": [
+       1000,
+       360
+      ]
+     }
+    ]
+   },
+   "mapa": {
+    "pq": "d7/cuerno-pequeno.png",
+    "roma": [
+     175,
+     300
+    ],
+    "reinos": [
+     {
+      "t": "Macedonia",
+      "s": "Casandro",
+      "en": [
+       420,
+       220
+      ]
+     },
+     {
+      "t": "Tracia y Asia Menor",
+      "s": "Lisímaco",
+      "en": [
+       600,
+       150
+      ]
+     },
+     {
+      "t": "Siria",
+      "s": "Seleuco",
+      "en": [
+       840,
+       270
+      ]
+     },
+     {
+      "t": "Judea",
+      "s": "la tierra gloriosa",
+      "en": [
+       790,
+       405
+      ],
+      "g": true
+     },
+     {
+      "t": "Egipto",
+      "s": "Tolomeo",
+      "en": [
+       640,
+       520
+      ]
+     }
+    ],
+    "va": [
+     {
+      "r": 0,
+      "t": "al oriente",
+      "s": "168 a.C."
+     },
+     {
+      "r": 2,
+      "t": "al oriente",
+      "s": "65 a.C."
+     },
+     {
+      "r": 3,
+      "t": "hacia la tierra gloriosa",
+      "s": "63 a.C."
+     },
+     {
+      "r": 4,
+      "t": "hacia el sur",
+      "s": "30 a.C."
+     }
+    ]
+   },
+   "cielo": {
+    "pq": "d7/cuerno-pequeno.png",
+    "base": [
+     600,
+     655
+    ],
+    "alto": 470,
+    "principe": [
+     600,
+     40
+    ]
+   },
+   "santuario": {
+    "cosas": [
+     {
+      "t": "El candelabro",
+      "s": "la luz: Cristo y su Espíritu",
+      "en": [
+       228,
+       168
+      ],
+      "c": "una iglesia a oscuras"
+     },
+     {
+      "t": "La mesa de los panes",
+      "s": "la Palabra de Dios",
+      "en": [
+       330,
+       318
+      ],
+      "c": "la tradición",
+      "dy": 70
+     },
+     {
+      "t": "El altar del incienso",
+      "s": "la oración y la intercesión de Cristo",
+      "en": [
+       555,
+       330
+      ],
+      "c": "el confesionario",
+      "dy": -60
+     }
+    ]
+   }
+  },
+  "periodo": {
+   "tras": "purificado",
+   "t": "Las 2.300 tardes y mañanas",
+   "s": "2.300 años · 457 a.C. – 1844 d.C.",
+   "de": -457,
+   "a": 1844,
+   "rot": "Daniel 8:14",
+   "n": "2.300 años",
+   "rango": "457 a.C. – 1844 d.C.",
+   "tq": "Las 2.300 tardes y mañanas",
+   "pasos": [
+    {
+     "t": "Tardes y mañanas",
+     "v": "tm",
+     "citas": [
+      [
+       "Daniel 8:14",
+       "Hasta dos mil trescientas tardes y mañanas"
+      ]
+     ],
+     "nota": "Una tarde y una mañana son un día, como en la creación (Génesis 1:5). Son 2.300 días proféticos, y en la profecía simbólica cada día vale un año (Números 14:34; Ezequiel 4:6). Seis años y medio no alcanzan para una visión que va de Persia hasta «el tiempo del fin» (8:17): son 2.300 años."
+    },
+    {
+     "t": "Desde la orden de restaurar Jerusalén",
+     "v": "decreto",
+     "citas": [
+      [
+       "Daniel 9:25",
+       "desde la salida de la orden para restaurar y edificar a Jerusalén"
+      ]
+     ],
+     "nota": "Daniel 8 no dice desde cuándo se cuentan; Gabriel vuelve en Daniel 9 a explicarlo. La orden completa la dio Artajerjes I en su séptimo año (Esdras 7:7-26). Los judíos contaban el año de otoño a otoño: entró en vigencia en el otoño de 457 a.C. Y empieza en tiempos de Persia: por eso la visión empieza con el carnero y no con Babilonia."
+    },
+    {
+     "t": "Setenta semanas cortadas",
+     "v": "semanas",
+     "citas": [
+      [
+       "Daniel 9:24",
+       "Setenta semanas están determinadas sobre tu pueblo"
+      ],
+      [
+       "Daniel 9:27",
+       "a la mitad de la semana hará cesar el sacrificio y la ofrenda"
+      ]
+     ],
+     "nota": "«Determinadas» quiere decir cortadas: 70 semanas, 490 años, se cortan de los 2.300 para el pueblo judío y empiezan juntas. Siete semanas (49 años) hasta 408 a.C., Jerusalén reedificada. Sesenta y dos más llegan al Mesías Príncipe: Jesús es ungido en su bautismo, en el otoño de 27 d.C. A la mitad de la última semana, en 31 d.C., muere en la cruz. En 34 d.C. matan a Esteban y el evangelio va a los gentiles."
+    },
+    {
+     "t": "Hasta 1844",
+     "v": "resta",
+     "citas": [],
+     "nota": "Quedan 2.300 − 490 = 1.810 años. Contados desde 34 d.C. llegan a 1844. O de una vez: 2.300 − 457 = 1843, y como no hay año cero, 1844."
+    },
+    {
+     "t": "Luego el santuario será purificado",
+     "v": "purif",
+     "citas": [
+      [
+       "Daniel 8:14",
+       "luego el santuario será purificado"
+      ],
+      [
+       "Daniel 7:10",
+       "El Juez se sentó y los libros fueron abiertos."
+      ]
+     ],
+     "nota": "La purificación del santuario era el Día de la Expiación, el día diez del mes séptimo (Levítico 16:29-30), un día de juicio para Israel. En 1844 cayó el 22 de octubre. Ese día Cristo pasó al lugar santísimo del santuario celestial y empezó el juicio investigador: es el mismo juicio de Daniel 7:9-10."
+    }
+   ],
+   "fuente": "CS 372-376, 451 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-316 y 325-336.",
+   "ir": [
+    [
+     "d7",
+     "juicio",
+     "El juicio de Daniel 7"
+    ]
+   ]
+  },
+  "partes": [
+   {
+    "id": "carnero",
+    "img": "carnero",
+    "nombre": "El carnero de dos cuernos",
+    "reino": "Medo-Persia",
+    "fechas": "539 – 331 a.C.",
+    "de": -539,
+    "a": -331,
+    "c": "#8C98A6",
+    "mov": "carnero",
+    "ms": 6400,
+    "texto": "había un carnero que estaba delante del río, y tenía dos cuernos; y aunque los cuernos eran altos, uno era más alto que el otro, y el más alto creció después.",
+    "ref": "8:3",
+    "texto2": "En cuanto al carnero que viste, que tenía dos cuernos: éstos son los reyes de Media y de Persia.",
+    "ref2": "8:20",
+    "corto": "Media y Persia (8:20). El cuerno más alto creció después: Persia, que llegó a mandar más que los medos.",
+    "interp": [
+     "Gabriel lo dice: el carnero son «los reyes de Media y de Persia» (8:20). Es el oso de Daniel 7 y la plata de Daniel 2.",
+     "Dos cuernos, dos pueblos. El más alto salió después: Persia empezó como la menor, y con Ciro el Grande llegó a mandar más que los medos. Es el oso que «se alzaba de un costado más que del otro» (7:5).",
+     "Hería «al poniente, al norte y al sur» (8:4): Lidia (547 a.C.), Babilonia (539) y Egipto (525). «Se engrandecía»: cada reino crece más que el anterior.",
+     "El carnero era un animal del santuario. Daniel 8 trata del santuario de principio a fin."
+    ],
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 293-296; Smith, <i>Las profecías de Daniel</i>, p. 86."
+   },
+   {
+    "id": "macho",
+    "img": "macho",
+    "nombre": "El macho cabrío",
+    "reino": "Grecia",
+    "fechas": "331 – 301 a.C.",
+    "de": -331,
+    "a": -301,
+    "c": "#A85A2A",
+    "mov": "choque",
+    "ms": 6800,
+    "texto": "un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra; y aquel macho cabrío tenía un cuerno notable entre sus ojos.",
+    "ref": "8:5",
+    "texto2": "El macho cabrío es el rey de Grecia, y el cuerno grande que tenía entre sus ojos es el rey primero.",
+    "ref2": "8:21",
+    "corto": "Grecia (8:21). El cuerno notable es Alejandro Magno, que venció a Persia en tres batallas.",
+    "interp": [
+     "Gabriel lo nombra: «el rey de Grecia» (8:21). Es el leopardo de Daniel 7 y el bronce de Daniel 2.",
+     "Viene «del lado del poniente»: Grecia estaba al oeste de Persia. «Sin tocar tierra»: la rapidez de Alejandro Magno, como las cuatro alas del leopardo (7:6).",
+     "«Le quebró sus dos cuernos» (8:7): Alejandro venció a Darío III en el Gránico (334 a.C.), en Iso (333) y en Arbela (331). Medo-Persia no pudo levantarse más.",
+     "El cuerno grande «es el rey primero» (8:21): Alejandro Magno."
+    ],
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87."
+   },
+   {
+    "id": "cuatro",
+    "img": "cuatro",
+    "nombre": "El cuerno quebrado y los cuatro cuernos",
+    "reino": "Grecia dividida en cuatro",
+    "fechas": "301 – 168 a.C.",
+    "de": -301,
+    "a": -168,
+    "cmp": -331,
+    "c": "#B97A45",
+    "mov": "cuatro",
+    "ms": 7600,
+    "texto": "cuando estaba en su mayor fuerza, aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo.",
+    "ref": "8:8",
+    "texto2": "cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él.",
+    "ref2": "8:22",
+    "corto": "Alejandro muere en su mayor fuerza; su reino se reparte entre cuatro generales.",
+    "interp": [
+     "«Cuando estaba en su mayor fuerza» (8:8): Alejandro Magno murió en 323 a.C., a los 32 años, en la cumbre de su poder.",
+     "Después de la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio hacia los cuatro vientos: Casandro al oeste (Macedonia y Grecia), Lisímaco al norte (Tracia y Asia Menor), Seleuco I Nicátor al oriente (Siria y Babilonia) y Tolomeo I Sóter al sur (Egipto).",
+     "Son las cuatro cabezas del leopardo de Daniel 7 (7:6). Gabriel lo dice: «cuatro reinos se levantarán de esa nación» (8:22)."
+    ],
+    "fuente": "Smith, <i>Las profecías de Daniel</i>, p. 88; Bohr, <i>Daniel 1-10</i>, p. 296-297."
+   },
+   {
+    "id": "cuerno",
+    "img": "pequeno",
+    "nombre": "El cuerno pequeño crece",
+    "reino": "Roma imperial",
+    "fechas": "168 a.C. – 476 d.C.",
+    "de": -168,
+    "a": 476,
+    "c": "#3E4651",
+    "mov": "crece",
+    "ms": 8200,
+    "texto": "De uno de ellos salió un cuerno pequeño, que creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa.",
+    "ref": "8:9",
+    "texto2": "Al fin del reinado de estos, cuando los transgresores lleguen al colmo, se levantará un rey altivo de rostro y entendido en enigmas.",
+    "ref2": "8:23",
+    "corto": "La primera fase de Roma: pequeña al principio, crece sobre los reinos griegos. Es la bestia espantosa de Daniel 7.",
+    "interp": [
+     "El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.",
+     "Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).",
+     "«De uno de ellos»: por el género de las palabras hebreas, sale de uno de los vientos, del poniente, donde estaba Roma. Otra lectura lo ve salir de uno de los cuernos, Pérgamo, que Atalo III dejó en herencia a Roma en 133 a.C. Las dos llegan a Roma.",
+     "La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén."
+    ],
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 162-164."
+   },
+   {
+    "id": "cielo",
+    "img": "cielo",
+    "nombre": "Hasta el ejército del cielo",
+    "reino": "Roma papal",
+    "fechas": "538 – 1798 d.C.",
+    "de": 538,
+    "a": 1798,
+    "c": "#A0694A",
+    "mov": "cielo",
+    "ms": 7200,
+    "texto": "Creció hasta llegar al ejército del cielo; y parte del ejército y de las estrellas echó por tierra, y las pisoteó.",
+    "ref": "8:10",
+    "texto2": "destruirá a los fuertes y al pueblo de los santos.",
+    "ref2": "8:24",
+    "corto": "La fase papal: el cuerno ya no pelea solo con reinos de la tierra; se levanta contra Dios y persigue a su pueblo. Es el cuerno pequeño de Daniel 7.",
+    "interp": [
+     "Ahora crece hacia arriba. Los animales pelean contra otros reinos; el cuerno además pelea contra Dios. Es el cuerno pequeño de Daniel 7, con sus 1.260 años, de 538 a 1798.",
+     "El ejército y las estrellas son el pueblo de Dios: Gabriel habla del «pueblo de los santos» (8:24), y Daniel 12:3 compara a los fieles con estrellas.",
+     "«Aun se engrandeció frente al príncipe de los ejércitos» (8:11). El Príncipe del ejército es Cristo, el mismo que Josué adoró (Josué 5:13-15). El cuerno se pone en su lugar en la tierra."
+    ],
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+   },
+   {
+    "id": "santuario",
+    "img": "santuario",
+    "nombre": "El santuario pisoteado",
+    "reino": "Roma papal",
+    "fechas": "el continuo quitado: 508 y 538 – 1798 d.C.",
+    "de": null,
+    "era": 538,
+    "c": "#7C4A2E",
+    "mov": "santuario",
+    "ms": 7000,
+    "texto": "por él fue quitado el sacrificio continuo, y el lugar de su santuario fue echado por tierra.",
+    "ref": "8:11",
+    "texto2": "echó por tierra la verdad e hizo cuanto quiso, y prosperó.",
+    "ref2": "8:12",
+    "corto": "El cuerno quita el continuo: pone en la tierra lo que Cristo hace cada día por nosotros en el santuario del cielo.",
+    "interp": [
+     "En hebreo dice solo «continuo» (<i>hatamid</i>), con artículo: «sacrificio» lo agregaron los traductores. En el santuario esa palabra es el servicio de cada día en el atrio y el lugar santo: el sacrificio, el pan, la luz y el incienso. Es la obra de Cristo, que vive siempre para interceder por nosotros (Hebreos 7:25).",
+     "El cuerno no puede subir al cielo: pone en la tierra un sustituto. En lugar del sacrificio de una vez, la misa; en lugar de la Palabra, la tradición; en lugar de la intercesión de Cristo, el confesionario. Así «el lugar de su santuario fue echado por tierra».",
+     "«Echó por tierra la verdad» (8:12): la Ley de Dios y el sábado, como el cuerno de Daniel 7 que piensa «cambiar los tiempos y la Ley» (7:25).",
+     "Otra lectura ve en el continuo el paganismo, quitado para dar lugar al papado. Las dos llegan a 508, cuando Clodoveo I dio poder civil al papado (ver Daniel 11:31 y 12:11)."
+    ],
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+   },
+   {
+    "id": "purificado",
+    "img": "purificado",
+    "nombre": "El santuario será purificado",
+    "reino": "El juicio en el cielo",
+    "fechas": "desde 1844 d.C.",
+    "de": 1844,
+    "a": 2026,
+    "c": "#B45309",
+    "mov": "purifica",
+    "ms": 5600,
+    "texto": "¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?",
+    "ref": "8:13",
+    "texto2": "Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.",
+    "ref2": "8:14",
+    "corto": "En 1844 terminan las 2.300 tardes y mañanas: empieza la purificación del santuario, el juicio de Daniel 7.",
+    "interp": [
+     "Un santo pregunta «¿Hasta cuándo?»: no cuánto dura, sino cuándo termina. La respuesta da el final: «luego el santuario será purificado» (8:14).",
+     "Son 2.300 años: de 457 a.C. a 1844. Daniel 9 da el punto de partida.",
+     "La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio. La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia. Es el mismo suceso de Daniel 7:9-10: el Juez se sienta y se abren los libros, en 1844."
+    ],
+    "fuente": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+   },
+   {
+    "id": "quebrantado",
+    "img": "d2/e-piedra",
+    "nombre": "Quebrantado, no por mano humana",
+    "reino": "La segunda venida",
+    "fechas": "futuro",
+    "de": null,
+    "fin": "venida",
+    "c": "#6B7B5A",
+    "texto": "Se levantará contra el Príncipe de los príncipes, pero será quebrantado, aunque no por mano humana.",
+    "ref": "8:25",
+    "texto2": "la visión es para el tiempo del fin.",
+    "ref2": "8:17",
+    "corto": "El cuerno llega hasta el fin y lo quebranta Dios, no un hombre: es la piedra de Daniel 2.",
+    "interp": [
+     "Ningún reino le sigue al cuerno: llega hasta «el tiempo del fin» (8:17, 19). Lo quebranta Dios, «no por mano humana», como la piedra que se desprendió «sin que la cortara mano alguna» (2:34).",
+     "Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26)."
+    ],
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 698-703."
+   }
+  ]
  }
 };
 
@@ -60677,7 +61849,8 @@ const ULTIMOS = {
    "partes": [
     "juicio",
     "hijo",
-    "x-fases"
+    "x-fases",
+    "purificado"
    ],
    "l": {
     "d7": [
@@ -61844,7 +63017,8 @@ const ULTIMOS = {
    "partes": [
     "piedra",
     "santos",
-    "x-fases"
+    "x-fases",
+    "quebrantado"
    ],
    "l": {
     "d2": [
@@ -68538,7 +69712,7 @@ const TARJETAS = [
  {
   "cap": "d8",
   "f": "¿Dónde estaba Daniel en la visión?",
-  "r": "Junto al río Ulay, en Susa, provincia de Elam (futura capital de invierno de Medo-Persia)."
+  "r": "Junto al río Ulai, en Susa, provincia de Elam (futura capital de invierno de Medo-Persia)."
  },
  {
   "cap": "d8",
@@ -68578,7 +69752,7 @@ const TARJETAS = [
  {
   "cap": "d8",
   "f": "¿Qué tres cosas hace el cuerno pequeño de Daniel 8?",
-  "r": "Crece hacia el sur, el oriente y la Tierra del Esplendor; abole el sacrificio continuo (tamid); hace caer el lugar del santuario."
+  "r": "Crece hacia el sur, el oriente y la tierra gloriosa; abole el sacrificio continuo (tamid); hace caer el lugar del santuario."
  },
  {
   "cap": "d8",
@@ -68607,7 +69781,7 @@ const TARJETAS = [
  },
  {
   "cap": "d8",
-  "f": "¿En qué decreto y año comienzan las 2.300 años, y en qué año terminan?",
+  "f": "¿En qué decreto y año comienzan los 2.300 años, y en qué año terminan?",
   "r": "En el decreto de Artajerjes I para restaurar Jerusalén, año 457 a.C. (Esdras 7); terminan en el año 1844."
  },
  {
@@ -76845,7 +78019,7 @@ const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
   const C=L.comparar&&LAMINAS[L.comparar];
-  const fs=(L.tipo==='escenas'?[L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
+  const fs=(L.tipo==='escenas'?[...(L.precarga||[]),L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
   const p=lamPrecargadas[cid]||(lamPrecargadas[cid]=Promise.all(fs.map(src=>new Promise(ok=>{
     const im=new Image();im.onload=()=>{(im.decode?im.decode():Promise.resolve()).then(ok,ok);};im.onerror=ok;im.src=src;}))));
@@ -77047,7 +78221,7 @@ function lamEntradas(){
 function lamEntDice(L,e){
   if(!e.x)return [e.p.nombre,e.p.reino,lamFechasRiel(L,e.p)];
   if(e.x==='senas')return ['Las '+(L.senas.length===11?'once':L.senas.length)+' señas','del cuerno pequeño','Daniel 7:8, 20-25'];
-  if(e.x==='periodo')return [L.periodo.t,'1.260 años',L.periodo.de+' – '+L.periodo.a+' d.C.'];
+  if(e.x==='periodo')return [L.periodo.t,L.periodo.n||'1.260 años',L.periodo.rango||L.periodo.de+' – '+L.periodo.a+' d.C.'];
   return [L.fases.t,L.fases.pasos.map(x=>x.t).join(', '),L.fases.s];
 }
 function lamVeEntrada(k){
@@ -77182,7 +78356,7 @@ function lamAbre(cid,modo){
     /* v191: pantalla completa donde el navegador la deja (el iPhone no). */
     (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
     (modo==='presentar'?'<button type="button" class="btn txt lam-txt" id="lamTxt" aria-pressed="false" onclick="lamTexto()">'+IC('ojo')+' Ocultar texto</button>':'')+
-    (modo==='presentar'&&L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' Con Daniel 2</button>':'')+
+    (modo==='presentar'&&L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' '+esc(L.conTxt||'Con Daniel 2')+'</button>':'')+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
@@ -77196,8 +78370,9 @@ function lamAbre(cid,modo){
     '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
     /* v212: los mismos botones redondos de Explorar (lamNavHTML). */
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" class="lam-rd" aria-label="Anterior" onclick="lamAtras()">'+IC('izq')+'</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="lam-rd sig" aria-label="Siguiente" onclick="lamAdelante()">'+IC('der')+'</button></div>':
-     '<div class="lam-carta"><h3>Daniel 2 y Daniel 7 dicen lo mismo</h3><div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
-     L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+
+     '<div class="lam-carta"><h3>'+esc(L.paraleloTit||'Daniel 2 y Daniel 7 dicen lo mismo')+'</h3>'+(L.paraleloNota?'<p class="lam-nota">'+esc(L.paraleloNota)+'</p>':'')+'<div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
+     /* v222: con cuatro columnas (Daniel 8) va también la parte de Daniel 7 (quinta del paralelo). */
+     L.paralelo.map(r=>'<tr><td><span class="lam-sw" style="--c:'+lamParte(r[0]).c+'"></span>'+esc(lamParte(r[0]).nombre)+'</td><td>'+r[1]+'</td>'+((L.paraleloCols||[]).length===4?'<td>'+esc(r[4]||'')+'</td>':'')+'<td>'+r[2]+'</td></tr>').join('')+
      '</table></div><p class="lam-fu">Fuente: '+L.paraleloFuente+'</p></div><div class="lam-carta"><h3>Pruébate</h3><div id="lamReto"></div></div><div class="lam-pie" id="lamPie"></div>');
   document.getElementById('lamRango').addEventListener('input',e=>{lamPara();lamVeAnio(Number(e.target.value));});
   lamPrecarga(cid,document.getElementById('lamEsc'));
@@ -77556,7 +78731,8 @@ function lamQuien(y){
   const [hd,hs]=LAM().herida||['dedos','barro'];
   if(y>=1798&&on.includes(hd))suave.push(hs);
   const n=on.map((id,i)=>{const r=lamParte(id).reino;return i&&/^El /.test(r)?'e'+r.slice(1):r;});
-  let tx=!on.length?'Antes de Nabucodonosor':n.join(' y ');
+  const vac=(LAM().vacios||[]).find(v=>y>=v[0]&&y<v[1]);
+  let tx=!on.length?(vac?vac[2]:'Antes de Nabucodonosor'):n.join(' y ');
   if(suave.length)tx+='; el papado, herido en 1798, se va sanando (Ap 13:3)';
   if(LAM().juicio&&y>=LAM().juicio)tx+='; desde 1844, el juicio en el cielo';
   return {on,suave,tx};
@@ -77860,7 +79036,7 @@ function lamExiste(src){
 function lamEscenaE(){
   const L=LAM(),f=lamSrc(L.inicioF),pres=lamModo==='presentar';
   const bots='<div class="lam-tira-bots"><button type="button" class="btn tono lam-vision" id="lamVision" aria-pressed="false" onclick="lamVision()">'+IC('play')+' Ver la visión</button>'+
-    (L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' Con Daniel 2</button>':'')+'</div>';
+    (L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' '+esc(L.conTxt||'Con Daniel 2')+'</button>':'')+'</div>';
   const tira=pres?'':lamRielHTML(bots);
   return '<div class="lam-marco"><div class="lam-esc cargando" id="lamEsc"><div class="lam-carga" aria-hidden="true"><i></i>Preparando la imagen…</div>'+
     '<svg class="lam-svg" id="lamSvg" viewBox="'+lamTodo().join(' ')+'" role="img" aria-label="'+esc(L.titulo)+'">'+
@@ -77885,7 +79061,7 @@ function lamChip(p,extra){
   const L=LAM(),r=L.comparar&&lamConD2&&(L.paralelo||[]).find(x=>x[0]===p.id);
   c.innerHTML=lamPer('<b class="lam-chip-t">'+esc(p.nombre)+'</b><span>'+esc(p.reino)+' · '+esc(p.fechas)+'</span>'+
     (extra?'<span class="sub">'+(Array.isArray(extra)?esc(extra[0])+'<em> · '+esc(extra[1])+'</em>':esc(extra))+'</span>':'')+
-    (r?'<span class="d2">'+(r[3]?'En Daniel 2: '+esc(r[1]):esc(L.agrega||r[1]))+'</span>':''));
+    (r?'<span class="d2">'+(r[3]?'En Daniel 2: '+esc(r[1]):esc(L.agrega||r[1]))+(L.comparar2&&r[4]?' · en Daniel 7: '+esc(r[4]):'')+'</span>':''));
   lamD2Pos();
 }
 
@@ -77899,8 +79075,10 @@ function lamD2HTML(){
   const hits=C.capas.filter(de).sort((a,b)=>C.cajas[b][2]*C.cajas[b][3]-C.cajas[a][2]*C.cajas[a][3]).map(k=>{const [x,y,w,h]=C.cajas[k];
     return '<button type="button" class="lam-d2-hit" data-p="'+k+'" aria-label="'+esc(nom(k))+'" style="left:'+pc(x-vx,vw)+';top:'+pc(y-vy,vh)+';width:'+pc(w,vw)+';height:'+pc(h,vh)+'" onclick="lamTocaD2(\''+k+'\')"></button>';}).join('');
   const pie=['piedra','monte'].filter(de).map(k=>'<button type="button" class="lam-d2-'+k+'" data-p="'+k+'" aria-label="'+esc(nom(k))+'" onclick="lamTocaD2(\''+k+'\')"><img src="'+lamRuta(C,k)+'" alt=""></button>').join('');
-  return '<div class="lam-d2" id="lamD2" hidden><div class="lam-d2-t">'+esc(C.libro||'Daniel 2')+'</div>'+
-    '<div class="lam-d2-est" role="group" aria-label="La estatua de '+esc(C.libro||'Daniel 2')+'">'+capas+hits+'</div><div class="lam-d2-pie">'+pie+'</div><div class="lam-d2-ag" id="lamD2Ag"></div></div>';
+  /* v222: con Daniel 8 va también Daniel 7: debajo de la estatua, la imagen de la parte que le corresponde. */
+  const d7=L.comparar2&&LAMINAS[L.comparar2]?'<button type="button" class="lam-d7m" id="lamD7m" onclick="lamTocaD7()"><span class="lam-d2-t">'+esc(LAMINAS[L.comparar2].libro)+'</span><img alt="" src=""><small></small></button>':'';
+  return '<div class="lam-d2'+(d7?' con7':'')+'" id="lamD2" hidden><div class="lam-d2-t">'+esc(C.libro||'Daniel 2')+'</div>'+
+    '<div class="lam-d2-est" role="group" aria-label="La estatua de '+esc(C.libro||'Daniel 2')+'">'+capas+hits+'</div><div class="lam-d2-pie">'+pie+'</div><div class="lam-d2-ag" id="lamD2Ag"></div>'+d7+'</div>';
 }
 /* Enciende en la estatua lo que corresponde a la parte `id` (null: se esconde). */
 function lamD2(id){
@@ -77915,7 +79093,17 @@ function lamD2(id){
   const k=r[3],ks=[].concat(k||[]);el.classList.toggle('agrega',!ks.length);el.setAttribute('data-on',ks.join(' '));
   el.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',ks.includes(x.getAttribute('data-p'))));
   const ag=document.getElementById('lamD2Ag');if(ag)ag.textContent=k?'':'+ '+(lamParte(id).nombre);
+  const m7=document.getElementById('lamD7m'),D7=L.comparar2&&LAMINAS[L.comparar2],q7=D7&&r[5]&&D7.partes.find(x=>x.id===r[5]);
+  if(m7){m7.hidden=!q7;if(q7){const im=m7.querySelector('img'),src=lamRuta(D7,q7.img||q7.id);if(im.getAttribute('src')!==src)im.setAttribute('src',src);m7.querySelector('small').textContent=r[4];m7.setAttribute('aria-label','Daniel 7: '+r[4]);}}
   lamD2Pos();
+}
+/* Tocar la imagen de Daniel 7 abre esa parte en su lámina. */
+function lamTocaD7(){const L=LAM(),r=lamD2Id&&(L.paralelo||[]).find(x=>x[0]===lamD2Id);if(r&&r[5])lamIrA(L.comparar2,r[5]);}
+/* v222: de una lámina a la parte de otra (del santuario purificado al juicio de Daniel 7). */
+function lamIrA(cid,k){
+  if(!LAMINAS[cid])return;
+  const m=lamModo==='presentar'?'explorar':(lamModo||'explorar');lamCierra();lamAbre(cid,m);
+  setTimeout(()=>{if(lamId===cid)lamIr(k);},60);
 }
 /* Con la estatua a la izquierda, empieza debajo de la etiqueta de la parte (que cambia de alto). */
 function lamD2Pos(){
@@ -77934,6 +79122,7 @@ function lamConD2Cambia(){
   document.querySelectorAll('.lam-cond2').forEach(b=>b.setAttribute('aria-pressed',String(lamConD2)));
   lamD2(lamD2Id);
   const p=lamD2Id&&lamParte(lamD2Id),c=document.getElementById('lamChip');
+  if(p&&p.mov&&LAM().mov){lamVista(p.id,null,false);return;}
   if(p&&c&&!c.hidden){const sub=c.querySelector('.sub'),em=sub&&sub.querySelector('em');lamChip(p,sub?(em?[sub.firstChild.textContent,em.textContent.replace(/^ · /,'')]:sub.textContent):'');}
 }
 
@@ -77941,7 +79130,7 @@ function lamConD2Cambia(){
 function lamLimpia(conserva){
   lamAnim++;lamVisto='';
   const s=document.getElementById('lamMarcasImg');if(s){s.innerHTML='';s.className='lam-marcas-img';}
-  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla','con-libro');
+  const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla','con-libro','con-d8');
   const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';tb.className='lam-tabla';}
   lamBanda(false);
   const z=lamZ();if(!z)return;
@@ -77957,7 +79146,8 @@ function lamVista(id,sub,anima){
   lamLimpia(sigue);lamVisto=id+(sub!=null?':'+sub:'');
   lamChip(p,pa?['Paso '+(sub+1)+' de '+p.pasos.length,pa.t]:'');lamD2(id);lamEnciende([id]);
   const C=L.cuernos;
-  if(L.sube&&L.sube.ids.includes(id))lamSube(p,anima);
+  if(p.mov&&L.mov)lamMov(p,anima);
+  else if(L.sube&&L.sube.ids.includes(id))lamSube(p,anima);
   else if(C&&id===C.diezEn)lamDiez(anima);
   else if(C&&id===C.caenEn)lamMomento(anima);
   else if(pa&&pa.caja){
@@ -78217,6 +79407,270 @@ function lamLibro(q){
   lamExiste(src).then(ok=>pon(ok));
 }
 
+/* ── v222: DANIEL 8, LO QUE SE MUEVE (LAMINAS.d8.mov) ──
+   Camilo (14-oct): «lo mismo de Daniel 2 y 7: premium, cinematográfico, interactivo».
+   Cada parte con `mov` arma su escena en el <svg> del zoom (1200 × 675, sigue a la
+   imagen) con las piezas de tools/lamina-d8.py, y pone sus rótulos en HTML encima
+   (lamMarcasImg, para que la letra no se encoja). Todo con requestAnimationFrame y
+   transiciones de CSS; sin la API de animaciones ni referencias por id (Safari). Con «reducir
+   movimiento» (o al llegar hacia atrás) se pinta de una vez el cuadro final.
+   - carnero: sube con su cuerno curvo (Media); el más alto «creció después» (Persia, 8:3)
+     y hiere al poniente, al norte y al sur (8:4).
+   - choque: el macho cabrío viene del poniente sin tocar tierra, golpea, le quiebra los
+     dos cuernos al carnero y lo derriba (8:5-7).
+   - cuatro: el gran cuerno se quiebra en su mayor fuerza y salen cuatro (8:8).
+   - crece: el cuerno pequeño crece al oriente, a la tierra gloriosa y al sur (8:9).
+   - cielo: sube hasta el ejército del cielo y echa estrellas por tierra (8:10-11).
+   - santuario: se apaga lo que el continuo representa (8:11-12).
+   - purifica: 1844, el santuario purificado (8:14). */
+const lamNS=(n,a)=>'<'+n+' '+Object.keys(a).map(k=>k+'="'+a[k]+'"').join(' ')+'/>';
+/* Una pieza recortada en su sitio: `caja` en píxeles de su imagen, `k` la escala, (ox, oy) dónde va la imagen entera. */
+const lamPieza=(f,caja,k,ox,oy,cl)=>'<image'+(cl?' class="'+cl+'"':'')+' href="'+lamSrc(f)+'" x="'+(ox+caja[0]*k).toFixed(1)+'" y="'+(oy+caja[1]*k).toFixed(1)+'" width="'+((caja[2]-caja[0])*k).toFixed(1)+'" height="'+((caja[3]-caja[1])*k).toFixed(1)+'"/>';
+/* Mover, girar y escalar una pieza por su atributo transform (Safari-seguro). */
+function lamTf(el,o){if(!el)return;const n=v=>(+v||0).toFixed(2);let t='';
+  if(o.x||o.y)t+='translate('+n(o.x)+' '+n(o.y)+') ';
+  if(o.r)t+='rotate('+n(o.r)+' '+n(o.cx)+' '+n(o.cy)+') ';
+  if(o.k!=null&&o.k!==1)t+='translate('+n(o.cx)+' '+n(o.cy)+') scale('+Math.max(.001,o.k).toFixed(4)+') translate('+n(-o.cx)+' '+n(-o.cy)+')';
+  if(t)el.setAttribute('transform',t.trim());else el.removeAttribute('transform');}
+/* Un rótulo sobre la escena: (x, y) en píxeles de la escena; `a` dónde se ancla ('i' a la izquierda, 'd' a la derecha, 'c' al centro, 'ab' debajo). */
+/* Con la estatua chica a la derecha (Con Daniel 2 y 7), los rótulos no pasan de `lamD8Der`. */
+let lamD8Der=1188;
+const lamEt=(x,y,a,t,sub,cl,o)=>{const D=lamD8Der;x=/\bd\b/.test(a)?Math.min(x,D):/\bc\b/.test(a)?Math.min(x,(cl||'').includes('cita')?Math.min(600,D/2+20):D-120):Math.min(x,D-190);
+  return '<div class="d8-et '+a+(cl?' '+cl:'')+'"'+(o!=null?' data-o="'+o+'"':'')+' style="left:'+lamPx(x)+';top:'+lamPy(y)+'"><b>'+t+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div>';};
+/* Una línea que se dibuja sola (stroke-dashoffset por cuadro) y su punta. */
+function lamTraza(d,cl){return '<path class="d8-traza'+(cl?' '+cl:'')+'" d="'+d+'" fill="none" vector-effect="non-scaling-stroke"/>';}
+function lamDibuja(el,ms,fin){
+  if(!el)return;let L=0;try{L=el.getTotalLength();}catch(e){L=0;}
+  if(!L){el.style.opacity='1';if(fin)fin();return;}
+  el.setAttribute('stroke-dasharray',L.toFixed(1));el.setAttribute('stroke-dashoffset',L.toFixed(1));el.style.opacity='1';
+  lamTween(ms,k=>el.setAttribute('stroke-dashoffset',(L*(1-lamSuave(k))).toFixed(1)),fin);
+}
+const lamDibujado=el=>{if(el){el.removeAttribute('stroke-dasharray');el.removeAttribute('stroke-dashoffset');el.style.opacity='1';}};
+/* Los rótulos [data-o] aparecen en el orden y a la hora que se les diga. */
+function lamVeEt(s,o,ms){const yo=lamAnim;const f=()=>{if(yo!==lamAnim)return;s.querySelectorAll('[data-o="'+o+'"]').forEach(e=>e.classList.add('ve'));};if(!ms||lamQuieto())f();else lamT(f,ms);}
+/* Polvo que se levanta del suelo: puntos que suben y se apagan. */
+function lamPolvo8(g,cx,cy,n,q){
+  if(q)return;const yo=lamAnim;let sm=5;const az=()=>(sm=(sm*9301+49297)%233280)/233280;
+  const ps=Array.from({length:n},()=>({x:cx+(az()-.5)*260,y:cy-az()*20,vx:(az()-.5)*120,vy:-30-az()*90,r:3+az()*7}));
+  g.innerHTML=ps.map(p=>'<circle r="'+p.r.toFixed(1)+'" fill="#C9AE86"/>').join('');const cs=[...g.querySelectorAll('circle')];
+  lamTween(1600,k=>{if(yo!==lamAnim)return;ps.forEach((p,i)=>{cs[i].setAttribute('cx',(p.x+p.vx*k).toFixed(1));cs[i].setAttribute('cy',(p.y+p.vy*k).toFixed(1));cs[i].style.opacity=(.6*(1-k)).toFixed(3);});},
+    ()=>{g.innerHTML='';});
+}
+function lamMov(p,anima){
+  const M=LAM().mov,q=!anima||lamQuieto(),z=lamZ(),g=z&&z.querySelector('.lam-capa-g'),s=document.getElementById('lamMarcasImg');
+  if(!g||!s)return;
+  const e=document.getElementById('lamEsc');if(e)e.classList.add('con-d8');
+  lamD8Der=lamConD2&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
+  s.className='lam-marcas-img d8'+(q?' quieto':'');
+  ({carnero:lamMovCarnero,choque:lamMovChoque,cuatro:lamMovCuatro,crece:lamMovCrece,cielo:lamMovCielo,santuario:lamMovSantuario,purifica:lamMovPurifica}[p.mov]||(()=>lamHist({f:p.img})))(M,g,s,q);
+}
+/* El carnero en su sitio: el cuerno b (detrás), el cuerpo y el cuerno a (delante). */
+function lamCarneroHTML(C,cl){
+  const [x,y,h]=C.en,k=h/C.h,cuerpo=[0,0,C.w,C.h];
+  return '<g class="d8-car'+(cl?' '+cl:'')+'"><ellipse class="d8-sombra" cx="'+(x+C.w*k*.5).toFixed(0)+'" cy="'+(y+h-10).toFixed(0)+'" rx="'+(C.w*k*.42).toFixed(0)+'" ry="15"/>'+
+    '<g class="d8-cb">'+lamPieza(C.b.f,C.b.caja,k,x,y)+'</g><g class="d8-cuerpo">'+lamPieza(C.f,cuerpo,k,x,y)+'</g><g class="d8-ca">'+lamPieza(C.a.f,C.a.caja,k,x,y)+'</g></g>';
+}
+const lamEnEsc=(C,pt)=>{const [x,y,h]=C.en,k=h/C.h;return [x+pt[0]*k,y+pt[1]*k];};
+function lamMovCarnero(M,g,s,q){
+  const C=M.carnero,[x,y,h]=C.en,k=h/C.h,pb=lamEnEsc(C,C.b.base);
+  lamHist({f:'llanura'});
+  g.innerHTML=lamCarneroHTML(C)+'<g class="d8-dirs">'+C.dirs.map(d=>lamTraza('M'+d.a.join(' ')+' L'+d.b.join(' '),'flecha')).join('')+'</g>';
+  const ram=g.querySelector('.d8-car'),cb=g.querySelector('.d8-cb'),dirs=[...g.querySelectorAll('.d8-dirs path')];
+  const ta=lamEnEsc(C,[C.a.caja[0],C.a.caja[1]]),tb=lamEnEsc(C,[C.b.caja[2],C.b.caja[1]]);
+  s.innerHTML=lamEt(ta[0]-6,ta[1]+8,'d','Media','el primero',null,1)+lamEt(tb[0]+8,tb[1]+14,'i','Persia','el más alto: creció después','oro',2)+
+    C.dirs.map((d,i)=>lamEt(d.b[0]+(d.b[0]>900?-4:6),d.b[1]+(d.b[1]<100?18:d.b[1]>500?-6:-14),d.b[0]>900?'d':'i','«'+d.t+'»',d.s,'dir',3+i)).join('')+
+    lamEt(600,640,'c ab','«Hacía conforme a su voluntad, y se engrandecía»','Daniel 8:4','cita',6);
+  if(q){s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  dirs.forEach(d=>d.style.opacity='0');
+  lamTf(cb,{k:.06,cx:pb[0],cy:pb[1]});ram.style.opacity='0';
+  lamTween(900,t=>{const e=lamSale(t);ram.style.opacity=String(Math.min(1,t*1.6).toFixed(3));lamTf(ram,{y:40*(1-e)});});
+  lamVeEt(s,1,900);
+  /* «el más alto creció después» */
+  lamT(()=>lamTween(1700,t=>lamTf(cb,{k:.06+.94*lamSuave(t),cx:pb[0],cy:pb[1]})),1500);
+  lamVeEt(s,2,2900);
+  dirs.forEach((d,i)=>lamT(()=>{lamDibuja(d,700);lamVeEt(s,3+i,500);},3600+i*550));
+  lamVeEt(s,6,5400);
+}
+function lamMovChoque(M,g,s,q){
+  const C=M.carnero,X=M.macho,H=X.choque,k2=H.alto/X.h,kc=C.en[2]/C.h;
+  lamHist({f:'llanura'});
+  const pa=lamEnEsc(C,C.a.base),pb=lamEnEsc(C,C.b.base),pie=lamEnEsc(C,[90,780]);
+  const macho='<g class="d8-mac"><ellipse class="d8-sombra" cx="'+(400*k2).toFixed(0)+'" cy="0" rx="'+(330*k2).toFixed(0)+'" ry="13"/>'+
+    '<g class="d8-mac-c">'+lamPieza(X.f,[0,0,X.w,X.h],k2,0,0)+lamPieza(X.cuerno.f,X.cuerno.caja,k2,0,0)+'</g></g>';
+  g.innerHTML=lamCarneroHTML(C)+macho+'<image class="d8-luz" href="'+lamLuz('255,236,190')+'" x="'+(H.golpe[0]-200)+'" y="'+(H.golpe[1]-200)+'" width="400" height="400" style="opacity:0"/><g class="d8-polvo"></g>';
+  const ram=g.querySelector('.d8-car'),ca=g.querySelector('.d8-ca'),cb=g.querySelector('.d8-cb'),mac=g.querySelector('.d8-mac'),mc=g.querySelector('.d8-mac-c'),
+    som=mac.querySelector('.d8-sombra'),luz=g.querySelector('.d8-luz'),polvo=g.querySelector('.d8-polvo');
+  s.innerHTML=lamEt(1170,96,'d','Del poniente','sin tocar tierra','dir',0)+lamEt(600,640,'c ab',esc(X.batallas),'Alejandro Magno vence a Darío III','oro',2)+
+    lamEt(40,170,'i','Los dos cuernos, quebrados','Medo-Persia cae','',1);
+  /* Dónde está el macho cabrío: su esquina (gx, gy); la sombra va en el suelo, lejos de sus patas. */
+  const pon=(gx,gy)=>{lamTf(mc,{x:gx,y:gy});som.setAttribute('cx',(gx+400*k2).toFixed(1));som.setAttribute('cy','628');};
+  /* Los cuernos vuelan y caen al suelo; el carnero cae a tierra. */
+  const cae=t=>{const e=lamSale(t);
+    lamTf(ca,{x:-150*t,y:-150*4*t*(1-t)+(612-pa[1])*t,r:-230*t,cx:pa[0],cy:pa[1]});
+    lamTf(cb,{x:-40*t,y:-190*4*t*(1-t)+(616-pb[1])*t,r:-160*t,cx:pb[0],cy:pb[1]});
+    lamTf(ram.querySelector('.d8-cuerpo'),{x:-40*e,y:58*e,r:13*e,cx:pie[0],cy:pie[1]});
+    ram.querySelector('.d8-cuerpo').style.opacity=(1-.3*e).toFixed(3);};
+  if(q){pon(H.fin[0],H.fin[1]);cae(1);s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  pon(H.de[0],H.de[1]);lamVeEt(s,0,100);
+  /* Viene del poniente, cada vez más rápido, sin tocar tierra. */
+  lamTween(1500,t=>{const e=t*t;pon(H.de[0]+(H.a[0]-H.de[0])*e,H.de[1]+(H.a[1]-H.de[1])*e-46*Math.sin(Math.PI*t));});
+  lamT(()=>{
+    /* El golpe: la luz, el carnero tiembla, los cuernos saltan y el polvo se levanta. */
+    lamTween(700,t=>{luz.style.opacity=(t<.25?t*4:(1-t)/.75).toFixed(3);const r=.6+.8*t;lamTf(luz,{k:r,cx:H.golpe[0],cy:H.golpe[1]});});
+    lamTween(1300,cae);lamPolvo8(polvo,380,612,26,false);lamVeEt(s,1,250);
+    /* «lo derribó, por tanto, a tierra, lo pisoteó» */
+    lamTween(1100,t=>{const e=lamSuave(t);pon(H.a[0]+(H.fin[0]-H.a[0])*e,H.a[1]+(H.fin[1]-H.a[1])*e-30*Math.sin(Math.PI*t));});
+  },1500);
+  lamVeEt(s,2,3100);
+}
+function lamMovCuatro(M,g,s,q){
+  const X=M.macho,Q=X.quiebra.en,km=Q[2]/X.h,B=M.cabeza,[hx,hy,hh]=B.en,kh=hh/B.h,base=[Q[0]+X.cuerno.base[0]*km,Q[1]+X.cuerno.base[1]*km];
+  lamHist({f:'llanura'});
+  g.innerHTML='<g class="d8-mac">'+lamPieza(X.f,[0,0,X.w,X.h],km,Q[0],Q[1])+'<g class="d8-mac-h">'+lamPieza(X.cuerno.f,X.cuerno.caja,km,Q[0],Q[1])+'</g></g>'+
+    '<image class="d8-luz" href="'+lamLuz('255,236,190')+'" x="'+(base[0]-150)+'" y="'+(base[1]-150)+'" width="300" height="300" style="opacity:0"/>'+
+    '<g class="d8-cab">'+B.cuernos.map((c,i)=>'<g class="d8-c4" data-i="'+i+'">'+lamPieza(c.f,c.caja,kh,hx,hy)+'</g>').join('')+lamPieza(B.f,[0,0,B.w,B.h],kh,hx,hy)+'</g>';
+  const mac=g.querySelector('.d8-mac'),mh=g.querySelector('.d8-mac-h'),luz=g.querySelector('.d8-luz'),cab=g.querySelector('.d8-cab'),cs=[...g.querySelectorAll('.d8-c4')];
+  const pb=c=>[hx+c.base[0]*kh,hy+c.base[1]*kh];
+  s.innerHTML=B.cuernos.map((c,i)=>lamEt(c.et[0],c.et[1],i<2?(i?'c':'i'):(i===2?'c':'d'),esc(c.t),esc(c.s),'gen',2+i)).join('')+
+    lamEt(600,92,'c','«En su mayor fuerza»','el gran cuerno, quebrado: Alejandro Magno muere en 323 a.C.','oro rompe',1)+
+    lamEt(600,640,'c ab','«Hacia los cuatro vientos del cielo»','Ipso, 301 a.C.: cuatro reinos','cita',6);
+  const fin=()=>{mac.style.opacity='0';cab.style.opacity='1';cs.forEach(c=>lamTf(c,{}));s.querySelectorAll('[data-o]').forEach(e=>{if(!e.classList.contains('rompe'))e.classList.add('ve');});};
+  if(q){fin();return;}
+  cab.style.opacity='0';cs.forEach((c,i)=>{const b=pb(B.cuernos[i]);lamTf(c,{k:.02,cx:b[0],cy:b[1]});});
+  /* «El macho cabrío creció en gran manera» */
+  const cm=[Q[0]+X.w*km/2,Q[1]+X.h*km/2];
+  lamTween(1300,t=>lamTf(mac,{k:.9+.1*lamSale(t),cx:cm[0],cy:cm[1]}));
+  lamVeEt(s,1,1300);
+  /* y en su mayor fuerza el cuerno se quiebra */
+  lamT(()=>{lamTween(600,t=>{luz.style.opacity=(t<.3?t/.3:(1-t)/.7).toFixed(3);});
+    lamTween(1200,t=>{const e=t*t;lamTf(mh,{x:-50*t,y:420*e,r:-140*t,cx:base[0],cy:base[1]});mh.style.opacity=(1-Math.max(0,(t-.6)/.4)).toFixed(3);});},1500);
+  /* La cabeza con los cuatro: el macho cabrío se aparta y los cuernos crecen uno por uno. */
+  lamT(()=>{const r=s.querySelector('.rompe');if(r)r.classList.remove('ve');
+    lamTween(900,t=>{mac.style.opacity=(1-t).toFixed(3);cab.style.opacity=t.toFixed(3);});},2900);
+  B.cuernos.forEach((c,i)=>lamT(()=>{const b=pb(c);lamTween(1000,t=>lamTf(cs[i],{k:.02+.98*lamSale(t),cx:b[0],cy:b[1]}));lamVeEt(s,2+i,600);},3500+i*500));
+  lamVeEt(s,6,6200);
+}
+/* El cuerno pequeño sobre el mapa: Roma, al poniente; los cuatro reinos; lo que conquista. */
+function lamMovCrece(M,g,s,q){
+  const P=M.mapa,[rx,ry]=P.roma,W=435,H=700;
+  lamHist({f:'noche'});
+  const hz=(h)=>'<image href="'+lamSrc(P.pq)+'" x="'+(rx-h*W/H/2).toFixed(1)+'" y="'+(ry-h).toFixed(1)+'" width="'+(h*W/H).toFixed(1)+'" height="'+h+'"/>';
+  const curva=(a,b)=>{const mx=(a[0]+b[0])/2,my=Math.min(a[1],b[1])-70;return 'M'+a.join(' ')+' Q'+mx.toFixed(0)+' '+my.toFixed(0)+' '+b.join(' ');};
+  const sale=[rx+10,ry-70];
+  g.innerHTML='<g class="d8-rosa"><circle cx="96" cy="580" r="38"/><path d="M96 536 L96 624 M52 580 L140 580"/></g>'+
+    P.reinos.map(r=>'<circle class="d8-nodo'+(r.g?' gl':'')+'" cx="'+r.en[0]+'" cy="'+r.en[1]+'" r="7"/>').join('')+P.va.map(v=>lamTraza(curva(sale,P.reinos[v.r].en),'ruta')).join('')+
+    '<g class="d8-pq">'+hz(200)+'</g>';
+  const pq=g.querySelector('.d8-pq'),rutas=[...g.querySelectorAll('.d8-traza')];
+  s.innerHTML=P.reinos.map((r,i)=>{const v=P.va.find(x=>x.r===i);return lamEt(r.en[0],r.en[1]+12,'c ab',esc(r.t),esc(r.s),'reino'+(r.g?' gl':''),0).replace('</small></div>','</small>'+(v?'<em><span class="d8-dir">«'+esc(v.t)+'» · </span>'+esc(v.s)+'</em>':'')+'</div>').replace('class="d8-et','data-r="'+i+'" class="d8-et');}).join('')+
+    lamEt(96,528,'c','N','','rosa',0)+lamEt(96,654,'c ab','S','','rosa',0)+lamEt(146,580,'i','E','','rosa',0)+lamEt(46,580,'d','O','','rosa',0)+
+    lamEt(rx,ry+12,'c ab','Roma','del poniente','oro',1)+
+    lamEt(600,640,'c ab','«Creció mucho»','más que el carnero y el macho cabrío: Roma imperial','cita',7);
+  const toma=v=>{const e=s.querySelector('[data-r="'+v.r+'"]');if(e)e.classList.add('toma');};
+  if(q){rutas.forEach(lamDibujado);P.va.forEach(toma);s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  rutas.forEach(r=>r.style.opacity='0');
+  lamVeEt(s,0,100);
+  /* «salió un cuerno pequeño»: sale chico y crece con cada conquista. */
+  let kk=.3;lamTf(pq,{k:kk,cx:rx,cy:ry});pq.style.opacity='0';
+  lamT(()=>lamTween(800,t=>{pq.style.opacity=t.toFixed(3);}),700);lamVeEt(s,1,900);
+  P.va.forEach((v,i)=>lamT(()=>{lamDibuja(rutas[i],1000,()=>toma(v));const k0=kk,k1=.3+.7*(i+1)/P.va.length;kk=k1;
+    lamTween(1000,t=>lamTf(pq,{k:k0+(k1-k0)*lamSuave(t),cx:rx,cy:ry}));},1900+i*1300));
+  lamVeEt(s,7,1900+P.va.length*1300+400);
+}
+/* Hasta el ejército del cielo: el cuerno sube, echa estrellas por tierra y se levanta frente al Príncipe. */
+function lamMovCielo(M,g,s,q){
+  const P=M.cielo,[bx,by]=P.base,h=P.alto,w=h*435/700;
+  lamHist({f:'noche'});
+  let sm=21;const az=()=>(sm=(sm*9301+49297)%233280)/233280;
+  const est=Array.from({length:70},()=>[60+az()*1080,24+az()*250,1+az()*2.4,az()*6.28]).filter(e=>Math.abs(e[0]-P.principe[0])>110||e[1]>150);
+  const caen=est.filter((e,i)=>i%6===2).slice(0,10);
+  g.innerHTML='<image class="d8-principe" href="'+lamLuz('255,244,214')+'" x="'+(P.principe[0]-230)+'" y="'+(P.principe[1]-230)+'" width="460" height="460" style="opacity:0"/>'+
+    '<g class="d8-est">'+est.map(e=>'<circle cx="'+e[0].toFixed(0)+'" cy="'+e[1].toFixed(0)+'" r="'+e[2].toFixed(1)+'"/>').join('')+'</g>'+
+    '<g class="d8-pq"><image href="'+lamSrc(P.pq)+'" x="'+(bx-w/2).toFixed(1)+'" y="'+(by-h)+'" width="'+w.toFixed(1)+'" height="'+h+'"/></g>';
+  const pq=g.querySelector('.d8-pq'),pr=g.querySelector('.d8-principe'),cs=[...g.querySelectorAll('.d8-est circle')],ic=caen.map(e=>est.indexOf(e));
+  s.innerHTML=lamEt(P.principe[0],P.principe[1]+70,'c','«El príncipe de los ejércitos»','Cristo (Josué 5:14)','oro',3)+
+    lamEt(180,120,'c','«El ejército del cielo»','el pueblo de los santos (8:24)','op',1)+
+    lamEt(bx+w/2+12,by-h*.45,'i','Roma papal','538 – 1798 d.C.','dir',2)+
+    lamEt(600,640,'c ab','«Parte del ejército y de las estrellas echó por tierra»','Daniel 8:10','cita',4);
+  const fin=()=>{lamTf(pq,{});pr.style.opacity='.9';ic.forEach(i=>{cs[i].style.opacity='0';});s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));};
+  if(q){fin();return;}
+  /* Las estrellas titilan mientras la vista no cambie. */
+  lamBucle(t=>cs.forEach((c,i)=>{if(!c.__cae)c.style.opacity=(.45+.55*Math.abs(Math.sin(t*.9+est[i][3]))).toFixed(2);}));
+  lamTf(pq,{y:260,k:.45,cx:bx,cy:by});
+  lamTween(2400,t=>{const e=lamSuave(t);lamTf(pq,{y:260*(1-e),k:.45+.55*e,cx:bx,cy:by});});
+  lamVeEt(s,1,600);lamVeEt(s,2,2200);
+  /* Echa estrellas por tierra. */
+  ic.forEach((i,j)=>lamT(()=>{const c=cs[i],x0=+c.getAttribute('cx'),y0=+c.getAttribute('cy');c.__cae=true;c.classList.add('cae');
+    lamTween(1100,t=>{const e=t*t;c.setAttribute('cx',(x0+(bx-x0)*.25*t).toFixed(1));c.setAttribute('cy',(y0+(640-y0)*e).toFixed(1));c.style.opacity=(1-t*.85).toFixed(3);});},1800+j*170));
+  lamVeEt(s,4,3000);
+  lamT(()=>lamTween(1400,t=>{pr.style.opacity=(.9*t).toFixed(3);}),3600);lamVeEt(s,3,4100);
+}
+/* La sombra que avanza sobre el santuario: un degradado dibujado una vez en un canvas. */
+let lamSombraU='';
+function lamSombra(){if(lamSombraU)return lamSombraU;try{const k=document.createElement('canvas');k.width=512;k.height=4;const c=k.getContext('2d'),r=c.createLinearGradient(0,0,512,0);
+  r.addColorStop(0,'rgba(6,4,10,0)');r.addColorStop(.3,'rgba(6,4,10,.55)');r.addColorStop(1,'rgba(6,4,10,.66)');c.fillStyle=r;c.fillRect(0,0,512,4);lamSombraU=k.toDataURL('image/png');}catch(e){}return lamSombraU;}
+function lamMovSantuario(M,g,s,q){
+  const C=M.santuario.cosas;
+  lamHist({f:'santuario'});
+  g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="1200" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
+    C.map(c=>'<circle class="d8-punto" cx="'+c.en[0]+'" cy="'+c.en[1]+'" r="9"/>').join('');
+  const so=g.querySelector('.d8-sombra-s'),pts=[...g.querySelectorAll('.d8-punto')];
+  s.innerHTML=C.map((c,i)=>'<div class="d8-et '+(c.a||'i')+' cosa" data-o="'+(i+1)+'" style="left:'+lamPx(c.en[0]+(c.a==='d'?-16:16))+';top:'+lamPy(c.en[1]+(c.dy||0))+'"><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>en su lugar: '+esc(c.c)+'</em></div>').join('')+
+    lamEt(600,30,'c','«El continuo»','el servicio de cada día en el atrio y el lugar santo','oro',0)+
+    lamEt(600,640,'c ab','«Echó por tierra la verdad»','Daniel 8:11-12','cita',5);
+  const apaga=()=>{s.querySelectorAll('.cosa').forEach(e=>e.classList.add('apaga'));pts.forEach(p=>p.classList.add('apaga'));};
+  if(q){so.setAttribute('x','-420');s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));apaga();return;}
+  lamVeEt(s,0,200);C.forEach((c,i)=>lamVeEt(s,1+i,700+i*600));
+  /* La sombra del cuerno cubre el santuario de derecha a izquierda. */
+  lamT(()=>{lamTween(2600,t=>so.setAttribute('x',(1200-1620*lamSuave(t)).toFixed(1)));lamT(apaga,1500);},2800);
+  lamVeEt(s,5,4600);
+}
+function lamMovPurifica(M,g,s,q){
+  lamHist({f:'santuario'});
+  g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="-420" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
+    '<image class="d8-luz" href="'+lamLuz('255,226,150')+'" x="260" y="0" width="600" height="600" style="opacity:0"/>';
+  const so=g.querySelector('.d8-sombra-s'),luz=g.querySelector('.d8-luz');
+  s.innerHTML=lamEt(600,36,'c','1844','«luego el santuario será purificado»','oro grande',1)+
+    lamEt(600,640,'c ab','22 de octubre de 1844 · el Día de la Expiación','empieza el juicio de Daniel 7:9-10','cita',2);
+  if(q){g.innerHTML='';lamHist({f:'purificado'});s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
+  /* La sombra se retira, la luz sale del lugar santísimo y entra el santuario purificado. */
+  lamTween(1600,t=>{so.setAttribute('x',(-420+1620*lamSuave(t)).toFixed(1));});
+  lamT(()=>lamTween(1500,t=>{luz.style.opacity=(t<.5?t*2:(1-t)*2).toFixed(3);lamTf(luz,{k:.6+1.2*t,cx:560,cy:300});}),700);
+  lamT(()=>{lamHist({f:'purificado'});lamT(()=>{g.innerHTML='';},900);},1500);
+  lamVeEt(s,1,1900);lamVeEt(s,2,2700);
+}
+/* El fondo de una cuenta que no es la del cuerno de Daniel 7: la escena de su parte, ya quieta. */
+function lamPerFondo(id){
+  const p=lamParte(id);
+  if(lamVisto!==id)lamVista(id,null,false);
+  else{const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';}lamBanda(false);}
+  const s=document.getElementById('lamMarcasImg');if(s)s.innerHTML='';
+  lamD2(null);return p;
+}
+/* ── v222: LAS 2.300 TARDES Y MAÑANAS, la línea que se arma (Daniel 8:14; 9:24-27) ──
+   Una línea de 457 a.C. a 1844 a escala (los 490 años son el primer 21 %) y, debajo,
+   las setenta semanas por partes (7, 62 y 1), sin escala, como el diagrama de CS 374. */
+const L23=y=>((y>0?y+456:y+457)/2300*100).toFixed(2);
+function lamL23Linea(o,fase){
+  const m=(y,t,s,cl)=>'<span class="l23-m'+(cl?' '+cl:'')+'" style="left:'+L23(y)+'%"><b>'+t+'</b>'+(s?'<small>'+s+'</small>':'')+'</span>';
+  return '<div class="l23" data-o="'+o+'"><div class="l23-barra"><i class="l23-70'+(fase>=2?' on':'')+'" style="width:'+L23(34)+'%"></i><i class="l23-resto'+(fase>=3?' on':'')+'" style="left:'+L23(34)+'%;width:'+(100-L23(34))+'%"></i></div>'+
+    m(-457,'457 a.C.','la orden')+(fase>=2?m(34,'34 d.C.','490 años'):'')+(fase>=3?m(1844,'1844','el santuario','fin'+(fase>=4?' brilla':'')):m(1844,'¿?','','fin tenue'))+'</div>';
+}
+const lamL23={
+  tm:()=>'<div class="lam-eq" data-o="1"><span>1 tarde + 1 mañana</span><i>=</i><span>1 día</span></div><div class="lam-per-nota" data-o="1">Génesis 1:5</div>'+
+    '<div class="lam-eq" data-o="2"><span>1 día</span><i>=</i><span>1 año</span></div><div class="lam-per-nota" data-o="2">Números 14:34 · Ezequiel 4:6</div>'+
+    '<div class="lam-eq grande" data-o="3"><span>2.300 días</span><i>→</i><span class="oro">2.300 años</span></div>',
+  decreto:()=>'<div class="l23-tarj" data-o="1"><b>Artajerjes I</b><span>la orden de restaurar y edificar Jerusalén · Esdras 7</span><small>su séptimo año: otoño de 457 a.C.</small></div>'+lamL23Linea(2,1)+
+    '<div class="lam-per-nota" data-o="3">¿Hasta cuándo? 2.300 años desde aquí</div>',
+  semanas:()=>lamL23Linea(1,2)+'<div class="l23-sem" data-o="2"><div class="l23-s7"><b>7 semanas</b><small>49 años</small></div><div class="l23-s62"><b>62 semanas</b><small>434 años</small></div><div class="l23-s1"><b>1 semana</b><small>7 años</small></div></div>'+
+    '<div class="l23-sm"><span data-o="3" style="left:0"><b>457 a.C.</b><small>la orden</small></span><span data-o="3" style="left:22%"><b>408 a.C.</b><small>Jerusalén reedificada</small></span>'+
+    '<span data-o="4" class="oro" style="left:70%"><b>27 d.C.</b><small>el Mesías Príncipe: su bautismo</small></span><span data-o="5" class="oro" style="left:85%"><b>31</b><small>la cruz</small></span><span data-o="6" style="left:100%"><b>34</b><small>Esteban</small></span></div>'+
+    '<div class="lam-per-nota" data-o="6">70 semanas = 490 años, cortados de los 2.300 · sin escala</div>',
+  resta:()=>lamL23Linea(1,3)+'<div class="lam-eq" data-o="2"><span>2.300 − 490</span><i>=</i><span>1.810</span></div><div class="lam-eq grande" data-o="3"><span>34 + 1.810</span><i>=</i><span class="oro">1844</span></div>',
+  purif:()=>lamL23Linea(1,4)+'<div class="l23-igual" data-o="2"><figure><img src="'+lamSrc('purificado')+'" alt=""><figcaption><b>Daniel 8:14</b><small>el santuario purificado</small></figcaption></figure><i>=</i>'+
+    '<figure><img src="'+lamSrc('d7/juicio')+'" alt=""><figcaption><b>Daniel 7:10</b><small>se abren los libros</small></figcaption></figure></div>'+
+    '<div class="lam-per-nota" data-o="3">22 de octubre de 1844 · el Día de la Expiación</div>',
+};
+
 /* ── Explorar ── */
 function lamInicioE(){
   lamPara();lamLimpia();lamSel='';lamEnciende([]);lamChip(null);lamD2(null);lamMarcaPaso('est');lamTramo(null);
@@ -78247,6 +79701,7 @@ function lamExtraE(p){
     '</div><button type="button" class="btn tono lam-recorre" onclick="lamSubsTodos()">'+IC('play')+' Recorrer la escena</button><div class="lam-sub-tx" id="lamSubTx"></div></div>';
   if(C&&p.id===C.diezEn)h+='<div class="lam-bots lam-hbots"><button type="button" class="btn tono" onclick="lamVista(\''+p.id+'\',null,true)">'+IC('repetir')+' Contarlos otra vez</button>'+
     '<button type="button" class="btn ver" onclick="lamToca(\''+C.caenEn+'\')">'+IC('play')+' Sale el cuerno pequeño</button></div>';
+  if(p.mov)h+='<div class="lam-bots lam-hbots"><button type="button" class="btn tono" onclick="lamVista(\''+p.id+'\',null,true)">'+IC('repetir')+' Verlo otra vez</button></div>';
   if(C&&p.id===C.caenEn)h+='<div class="lam-bots lam-hbots"><button type="button" class="btn tono" onclick="lamVista(\''+p.id+'\',null,true)">'+IC('repetir')+' Ver otra vez cómo caen los tres</button></div>';
   return h;
 }
@@ -78276,7 +79731,7 @@ function lamHojaSenasE(){
 }
 function lamHojaPerE(){
   const L=LAM(),P=L.periodo,p=lamParte(P.tras);
-  return lamCabX(p,'Daniel 7:25 · '+p.nombre,P.t,P.s)+
+  return lamCabX(p,(P.rot||'Daniel 7:25')+' · '+p.nombre,P.t,P.s)+
     '<div class="lam-subs-c lam-per-c"><div class="lam-rot">La cuenta, paso a paso</div><div class="lam-subs">'+
     P.pasos.map((x,j)=>'<button type="button" data-per="'+j+'" onclick="lamPerE('+j+')"><i>'+(j+1)+'</i><span>'+esc(x.t)+'</span></button>').join('')+
     '</div><button type="button" class="btn tono lam-recorre" onclick="lamPerTodos()">'+IC('play')+' Armar la cuenta</button><div class="lam-sub-tx" id="lamPerTx"></div></div>'+lamNavHTML(LAM_X.periodo);
@@ -78360,9 +79815,9 @@ function lamBanda(on){
 }
 function lamPeriodoVis(j,anima){
   const L=LAM(),P=L.periodo,x=P&&P.pasos[j];if(!x)return;
-  const p=lamCuernoFondo();lamVisto=p.id;
+  const p=L.senasTras===P.tras?lamCuernoFondo():lamPerFondo(P.tras);lamVisto=p.id;
   lamChip(p,['Paso '+(j+1)+' de '+P.pasos.length,x.t]);
-  const cab='<div class="lam-per-cab" data-o="0"><span>'+esc(P.t)+'</span> · Daniel 7:25</div>';
+  const cab='<div class="lam-per-cab" data-o="0"><span>'+esc(P.t)+'</span> · '+esc(P.rot||'Daniel 7:25')+'</div>';
   const fila=(k,et,sub,w,n)=>'<div class="lam-fila" data-o="'+k+'"><span class="et">'+et+'<small>'+sub+'</small></span><span class="barra"><i style="--w:'+w+'%"></i></span><b>'+n+'</b></div>';
   let h='';
   if(x.v==='suma')h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div>'+fila(1,'tiempo','1 año',50,'360')+fila(2,'tiempos','2 años',100,'720')+fila(3,'medio tiempo','½ año',25,'180')+
@@ -78373,19 +79828,22 @@ function lamPeriodoVis(j,anima){
     [['3½ tiempos','Daniel 7:25 · Apocalipsis 12:14','3½ × 360'],['42 meses','Apocalipsis 11:2 · 13:5','42 × 30'],['1.260 días','Apocalipsis 11:3 · 12:6','']].map(([a,b,c],i)=>
       '<div class="lam-igual" data-o="'+(i+1)+'"><b>'+a+'</b><small>'+b+'</small><span>'+(c?c+' = ':'')+'1.260</span></div>').join('')+
     '<div class="lam-per-total" data-o="4"><span>el mismo periodo</span><b>1.260 años</b></div>';
+  else if(lamL23[x.v])h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div>'+lamL23[x.v]();
   else h=cab+'<div class="lam-per-h" data-o="0">'+esc(x.t)+'</div><div class="lam-cum">'+
     P.fotos.map(([f,y,t],i)=>'<figure data-o="'+(i*2+1)+'"><img src="'+lamSrc(f)+'" alt=""><figcaption><b>'+y+'</b><small>'+esc(t)+'</small></figcaption></figure>').join('<div class="lam-cum-barra" data-o="2"><i></i><span>1.260 años</span></div>')+
     '</div><div class="lam-per-nota" data-o="4">538 + 1.260 = 1798</div>';
   const t=lamTablaPon(h,'per per-'+x.v);lamArma(t,anima);
   /* La línea de tiempo: el año y, en el cumplimiento, la franja de 538 a 1798. */
   const r=document.getElementById('lamRango');
-  if(r){r.value=P.a;document.getElementById('lamTano').textContent=P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent='1.260 años del cuerno pequeño';}
-  if(x.v==='cumple'){if(!anima||lamQuieto())lamBanda(true);else lamT(()=>lamBanda(true),1500);}
+  if(r){r.value=P.a;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
+  if(x.v==='cumple'||x.v==='resta'||x.v==='purif'){if(!anima||lamQuieto())lamBanda(true);else lamT(()=>lamBanda(true),1500);}
 }
 function lamPerTx(j){
   const P=LAM().periodo,x=P.pasos[j];
   return (x.citas.length?'<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div>'+x.citas.map(([r,c])=>'<p><q>'+esc(c)+'</q> <span class="lam-ref">'+esc(r)+'</span></p>').join('')+'</div>':'')+
-    '<div class="lam-capa i"><div class="lam-rot">Lo que significa</div><p>'+x.nota+'</p><div class="lam-fu">Fuente: '+P.fuente+'</div></div>';
+    '<div class="lam-capa i"><div class="lam-rot">Lo que significa</div><p>'+x.nota+'</p><div class="lam-fu">Fuente: '+P.fuente+'</div></div>'+
+    /* v222: del santuario purificado (Daniel 8:14) al juicio de Daniel 7 y a Daniel 9. */
+    (x.v==='purif'&&lamModo!=='presentar'?'<div class="lam-bots lam-hbots">'+(P.ir||[]).map(([c,k,t])=>'<button type="button" class="btn tono" onclick="lamIrA(\''+c+'\',\''+k+'\')">'+IC('der')+' '+esc(t)+'</button>').join('')+'</div>':'');
 }
 function lamPerE(j,vis){
   const P=LAM().periodo;if(!P||!P.pasos[j])return;
@@ -78463,7 +79921,7 @@ function lamVision(){
     const s=seq[k++];
     if(s.sub==null||s.sub===0)lamEligeE(L.partes.findIndex(p=>p.id===s.id),true);
     if(s.sub!=null)lamSubE(s.sub,true);
-    lamVis=setTimeout(sig,lamQuieto()?2600:C&&s.id===C.caenEn?6200:s.sub!=null?(lamParte(s.id).pasos[s.sub].ms||4200):3800);};
+    lamVis=setTimeout(sig,lamQuieto()?2600:C&&s.id===C.caenEn?6200:s.sub!=null?(lamParte(s.id).pasos[s.sub].ms||4200):(lamParte(s.id).ms||3800));};
   /* Empieza en el mar, sin bestias: suben una por una. */
   const mar=L.historia.find(h=>h.f===(L.sube&&L.sube.fondo))||L.historia[0];
   lamLimpia();lamSel='';lamChip(null);lamD2(null);lamEnciende([]);lamMarcaPaso('est');lamHist({f:mar.f});lamHoja(lamHojaTexto(mar));
@@ -78541,7 +79999,7 @@ function lamPresE(k){
   const ult=pasos.slice(0,k+1).filter(x=>x.tipo==='parte'&&L.tiempo.includes(x.id)).map(x=>x.id).pop();
   if(ult){const q=lamParte(ult),r=document.getElementById('lamRango');r.value=q.id==='juicio'?q.de:Math.min(q.a,2026);
     document.getElementById('lamTano').textContent=lamAnioTx(q.de)+' – '+(q.a>=2026?'hoy':lamAnioTx(q.a));document.getElementById('lamTq').textContent=q.reino;}
-  if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.a;document.getElementById('lamTano').textContent=P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent='1.260 años del cuerno pequeño';}
+  if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.a;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
   /* v211: el Hijo del hombre en 1844; el reino, en el tramo del futuro. */
   if(p&&p.era){const r=document.getElementById('lamRango');r.value=p.era;document.getElementById('lamTano').textContent=lamAnioTx(p.era);document.getElementById('lamTq').textContent=p.reino;}
   const fv=p&&(L.futuro||[]).find(f=>f.id&&f.id===p.id);
@@ -85980,7 +87438,7 @@ const cmpEsFin=k=>String(k).indexOf(CMP_FIN)===0;
    El Hijo del hombre no tiene tramo propio (de:null) pero NO es «lo que no pasa»:
    llega al Anciano de días en 1844 (era:1844), en la época del juicio. Antes caía en
    el reino de Dios, junto a la piedra, y parecía el mismo suceso que la segunda venida. */
-const cmpClave=p=>Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN+'-'+(CMP_FINES[p.fin]?p.fin:'reino');
+const cmpClave=p=>Number.isFinite(p.cmp)?String(p.cmp):Number.isFinite(p.era)?String(p.era):Number.isFinite(p.de)?String(p.de):CMP_FIN+'-'+(CMP_FINES[p.fin]?p.fin:'reino');
 function cmpModelo(Ls){
   Ls=Ls||(typeof LAMINAS!=='undefined'?LAMINAS:{});
   const cols=Object.keys(Ls).filter(k=>Array.isArray(Ls[k].partes)&&Ls[k].partes.length&&libroCid(k))
@@ -86123,7 +87581,7 @@ function comparaHTML(){
       '<button type="button" class="cmp-ecab" onclick="cmpToca(\''+f.key+'\')"><span class="cmp-num">'+(CMP_ROM[i]||i+1)+'</span>'+
         '<span class="cmp-et"><b>'+esc(f.reino)+'</b>'+(f.fechas?'<small>'+esc(f.fechas)+'</small>':'')+'</span><span class="cmp-abre">Lado a lado'+IC('der')+'</span></button>'+
       '<div class="cmp-cartas">'+M.cols.map(k=>{const ps=f.celdas[k]||[],p=ps[0];
-        if(!p)return '<div class="cmp-carta vacia"><span class="cmp-img"></span><span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>No la trae</b></span></div>';
+        if(!p)return '<div class="cmp-carta vacia"><span class="cmp-img"></span><span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>'+esc(cmpNoTrae(k,f.key)||'No la trae')+'</b></span></div>';
         return '<button type="button" class="cmp-carta" onclick="cmpToca(\''+f.key+'\')">'+cmpMini(LAMINAS[k],p,16/10,p.nombre)+
           '<span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>'+esc(ps.map(q=>q.nombre).join(' · '))+'</b></span></button>';}).join('')+'</div>'+
       /* En una caja angosta las vacías no se dibujan: se dice en una línea. */
@@ -86293,7 +87751,7 @@ function cmpSalaHTML(M){
     '<header class="cmp-sala-cab"><span class="cmp-num">'+(CMP_ROM[i]||i+1)+'</span><div><h2 id="cmpSalaT">'+esc(f.reino)+'</h2>'+
       (f.fechas?'<p class="cmp-sala-f">'+esc(f.fechas)+'</p>':'')+'</div></header>'+linea+
     '<div class="cmp-sala-g">'+con.map(vis).join('')+'</div>'+
-    (sin.length?'<p class="cmp-sala-sin">No aparece en '+esc(sin.map(cmpNom).join(' ni en '))+'.</p>':'')+
+    (sin.length?'<p class="cmp-sala-sin">No aparece en '+esc(sin.map(cmpNom).join(' ni en '))+'.'+sin.filter(k=>cmpNoTrae(k,f.key)).map(k=>' '+esc(cmpNom(k))+': '+esc(cmpNoTrae(k,f.key).replace(/^./,c=>c.toLowerCase()))+'.').join('')+'</p>':'')+
     cmpFasesHTML(f,M,false)+
     '<nav class="cmp-sala-nav" aria-label="Épocas">'+
       '<button type="button" class="cmp-nv"'+(ant?' onclick="cmpMueve(-1)"':' disabled')+'><small>Anterior</small><b>'+(ant?esc(ant.reino):'')+'</b></button>'+
@@ -86335,6 +87793,8 @@ function cmpCierra(){
   cmpSel='';lugarAnota();
 }
 function cmpALamina(k){cmpCierra();lamAbre(k,'explorar');}
+/* v222: lo que una visión dice que no trae, con su razón (Daniel 8 empieza en Medo-Persia). */
+const cmpNoTrae=(k,key)=>((LAMINAS[k]||{}).noTrae||{})[key]||'';
 document.addEventListener('keydown',e=>{
   const s=document.getElementById('cmpSala');if(!s||s.hidden||lamModo)return;
   if(e.key==='Escape'){e.preventDefault();cmpCierra();}

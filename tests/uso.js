@@ -3226,17 +3226,17 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
 {
   const Z=montar('cmpModelo, comparaHTML, LAMINAS, nivelesDe, adsReparto, bloquesDe, refsQ, heroDatos, preguntaDelDia, ponCat, sigueAnota, S:()=>S, el:id=>document.getElementById(id), verCap',{});
   Z.ponCat('gm');
-  /* La comparación crece sola: una lámina más con `partes` es una columna más,
+  /* La comparación crece sola: una lámina más con `partes` es una columna más (v222: ya está Daniel 8),
      y sus partes caen en la fila de su fecha sin tocar ninguna tabla. */
   const M=Z.cmpModelo();
-  ok(M.cols.join()==='d2,d7'&&M.filas.some(f=>f.key==='-539')&&M.filas[M.filas.length-1].key==='fin-reino'&&M.filas[M.filas.length-2].key==='fin-venida','v205: Comparar arma sus columnas de LAMINAS (hoy '+M.cols.join(', ')+') y sus filas por fecha');
+  ok(M.cols.join()==='d2,d7,d8'&&M.filas.some(f=>f.key==='-539')&&M.filas[M.filas.length-1].key==='fin-reino'&&M.filas[M.filas.length-2].key==='fin-venida','v205: Comparar arma sus columnas de LAMINAS (hoy '+M.cols.join(', ')+') y sus filas por fecha');
   const L2=Object.assign({},Z.LAMINAS,{d8:{dir:'d8/',tipo:'escenas',partes:[
     {id:'carnero',img:'carnero',nombre:'Carnero de dos cuernos',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,c:'#8C98A6'},
     {id:'macho',img:'macho',nombre:'Macho cabrío',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,c:'#A85A2A'}]}});
   const M2=Z.cmpModelo(L2), mp=M2.filas.find(f=>f.key==='-539');
   ok(M2.cols.join()==='d2,d7,d8'&&mp.celdas.d8&&mp.celdas.d8[0].id==='carnero'&&!M2.filas.find(f=>f.key==='-605').celdas.d8,
     'v205: agregar la lámina de Daniel 8 agrega su columna, y el carnero cae solo en la fila de Medo-Persia');
-  ok(/cmpToca\('-539'\)/.test(Z.comparaHTML())&&/Las mismas épocas en 2 visiones/.test(Z.comparaHTML()),'v205: la tabla de Comparar se toca por fila');
+  ok(/cmpToca\('-539'\)/.test(Z.comparaHTML())&&/Las mismas épocas en 3 visiones/.test(Z.comparaHTML()),'v205: la tabla de Comparar se toca por fila');
   /* Los tres niveles salen de lo guardado, sin inventar. */
   const s=Z.S(); s.prog={d2:100}; s.ft={}; s.qv={}; s.fq={};
   let n=Z.nivelesDe('d2');

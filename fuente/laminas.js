@@ -449,6 +449,180 @@ LAMINAS.d7 = {
   fuente:BOHR+', p. 121; CS 732-737.'},
   ],
 };
+/* v222: DANIEL 8 (Camilo, 14-oct: «lo mismo de Daniel 2 y 7: premium, cinematográfico,
+   interactivo»). Lámina de escenas como Daniel 7, con sus propios movimientos (`mov` de
+   cada parte, ver lamMov en app.js) sobre las imágenes de Camilo (laminas/d8/) y las
+   piezas que arma tools/lamina-d8.py de esas mismas imágenes:
+   - el carnero sube con un cuerno y el más alto «creció después» (8:3);
+   - el macho cabrío viene del poniente sin tocar tierra, hiere al carnero y le quiebra
+     los dos cuernos (8:5-7);
+   - el gran cuerno se quiebra y salen cuatro hacia los cuatro vientos (8:8);
+   - el cuerno pequeño crece al sur, al oriente y a la tierra gloriosa (Roma imperial,
+     8:9) y después hacia arriba, hasta el ejército del cielo (Roma papal, 8:10-12);
+   - el santuario pisoteado: se apaga lo que el continuo representa (8:11-13);
+   - las 2.300 tardes y mañanas se arman sobre una línea: 457 a.C., las setenta semanas
+     (27, 31 y 34 d.C.) y 1844, el juicio de Daniel 7 (periodo, como los 1.260 años).
+   Lectura de Camilo: el cuerno pequeño de Daniel 8 es Roma en sus fases, imperial y
+   papal (las mismas de Daniel 2 y 7); 550 a.C.; 2.300 años de 457 a.C. a 1844, con las
+   setenta semanas cortadas de ellos; la purificación es el Día de la Expiación, el
+   juicio investigador. Textos literales RV1995 (tests/test.js). */
+const D2_A_D8 = { plata: 'carnero', bronce: 'macho', hierro: 'cuerno', barro: 'cielo' };
+LAMINAS.d8 = {
+  tipo: 'escenas',
+  libro: 'Daniel 8',
+  titulo: 'El carnero, el macho cabrío y el santuario',
+  dir: 'd8/',
+  cartel: { f: 'portada', lugar: 'Susa, junto al río Ulai', cuando: 'En el tercer año de Belsasar, hacia 550 a.C.', ref: 'Daniel 8:1-2', lado: 'i',
+    cita: { ref: 'Daniel 8:3', texto: 'Alcé los ojos y miré, y había un carnero que estaba delante del río, y tenía dos cuernos' } },
+  miniF: 'portada', inicioF: 'portada',
+  verTodo: 'La visión',
+  invita: 'El carnero, el macho cabrío, los cuernos y las 2.300 tardes y mañanas: cada parte se mueve como en el texto, con su significado, sus fechas y su fuente.',
+  intro: { titulo: 'Un carnero y un macho cabrío', ref: 'Daniel 8:3, 5', texto: 'había un carnero que estaba delante del río, y tenía dos cuernos … un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra',
+    nota: 'La historia de Daniel 2 y 7 contada otra vez, ahora con animales del santuario. Empieza en Medo-Persia, sigue con Grecia y con Roma en dos fases, y termina en el santuario purificado: 1844.',
+    datos: [['2', 'animales del santuario'], ['2.300', 'tardes y mañanas'], ['1844', 'el santuario purificado']] },
+  /* Las piezas que se mueven: se piden con la lámina (lamPrecarga). */
+  precarga: ['llanura', 'noche', 'carnero-cuerpo.webp', 'carnero-cuerno-a.webp', 'carnero-cuerno-b.webp', 'macho-cuerpo.webp', 'macho-cuerno.webp',
+    'cabeza.webp', 'cuerno-1.webp', 'cuerno-2.webp', 'cuerno-3.webp', 'cuerno-4.webp', 'd7/cuerno-pequeno.png', 'santuario', 'purificado'],
+  solapa: [],
+  tiempo: ['carnero', 'macho', 'cuatro', 'cuerno', 'cielo', 'purificado'],
+  /* Los años que Daniel 8 no cubre: lo dice la línea de tiempo en vez de «antes de Nabucodonosor». */
+  vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia ya cae'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal']],
+  futuro: [{ id: 'quebrantado', de: 2026, a: 2226, t: 'La segunda venida', s: 'el cuerno es quebrantado, no por mano humana', f: 'd2/e-piedra', ult: 'venida' },
+    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'la tierra desolada', f: 'd2/e-piedra', ult: 'desolada' },
+    { id: '', de: 2426, a: 2626, t: 'El reino eterno', s: 'Daniel 8 no lo muestra: llega en Daniel 12:1-3', f: 'd2/e-monte', ult: 'reino' }],
+  historia: [
+    { f: 'ulai', titulo: 'En el tercer año de Belsasar', ref: 'Daniel 8:1-2', texto: 'En el año tercero del reinado del rey Belsasar, yo, Daniel, tuve una visión, después de aquella que había tenido antes. … En la visión, pues, me veía junto al río Ulai.',
+      nota: 'Hacia el 550 a.C., unos tres años después de Daniel 7. Babilonia caerá once años después (Daniel 5). En visión, Daniel está en Susa, que será capital de Persia: la visión empieza donde empiezan las 2.300 tardes y mañanas, en tiempos de Persia.' },
+  ],
+  despues: { f: 'gabriel', titulo: 'Gabriel, enseña a éste la visión', ref: 'Daniel 8:16-18', texto: 'Gabriel, enseña a éste la visión. … Él me tocó y me hizo estar en pie.',
+    nota: 'Gabriel explica los animales y los cuernos (8:19-26) y dice que «la visión es para el tiempo del fin» (8:17). Lo del tiempo queda sin explicar: Daniel queda «quebrantado» y no la entiende (8:27). Gabriel vuelve en Daniel 9 a explicar desde cuándo se cuentan las 2.300 tardes y mañanas (9:22-25).' },
+  cierre: { f: 'purificado', ref: 'Daniel 8:17', texto: 'Entiende, hijo de hombre, que la visión es para el tiempo del fin.',
+    titulo: 'La visión es para el tiempo del fin', nota: 'Desde 1844 el santuario se purifica: es el juicio de Daniel 7. Hoy vivimos en ese tiempo. Después el cuerno será quebrantado, «aunque no por mano humana» (8:25).' },
+  paraleloCols: ['Daniel 8', 'Daniel 2', 'Daniel 7', 'Reino'],
+  paraleloTit: 'Daniel 2, 7 y 8 dicen lo mismo',
+  paraleloNota: 'Daniel 8 empieza en Medo-Persia: Babilonia ya cae. Los dos animales son del santuario, y Roma, en sus dos fases, es un solo cuerno.',
+  /* Con Daniel 2 y Daniel 7: la cuarta columna es el metal que se enciende en la estatua
+     chica; la sexta, la parte de Daniel 7 cuya imagen va debajo. */
+  comparar: 'd2', comparar2: 'd7', conTxt: 'Con Daniel 2 y 7',
+  agrega: 'Daniel 2 no lo muestra: lo agrega Daniel 8',
+  noTrae: { '-605': 'Empieza en Medo-Persia: Babilonia ya cae', '476': 'Pasa de Roma imperial a Roma papal' },
+  paralelo: [['carnero', 'Pecho y brazos de plata', 'Medo-Persia', 'plata', 'Oso', 'oso'],
+    ['macho', 'Vientre y muslos de bronce', 'Grecia', 'bronce', 'Leopardo', 'leopardo'],
+    ['cuatro', 'Vientre y muslos de bronce', 'Grecia dividida en cuatro', 'bronce', 'Las cuatro cabezas del leopardo', 'leopardo'],
+    ['cuerno', 'Piernas de hierro', 'Roma imperial', 'hierro', 'La bestia espantosa', 'bestia'],
+    ['cielo', 'Hierro mezclado con barro', 'Roma papal', 'barro', 'El cuerno pequeño', 'cuerno'],
+    ['santuario', 'Hierro mezclado con barro', 'Roma papal', 'barro', 'El cuerno pequeño', 'cuerno'],
+    ['purificado', 'No aparece: lo agrega Daniel 7 y 8', 'El juicio en el cielo, desde 1844', null, 'El juicio', 'juicio'],
+    ['quebrantado', 'La piedra que hiere los pies', 'La segunda venida', ['piedra'], 'Los santos reciben el reino', 'santos']],
+  paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
+  retoSin: [],
+  reto: [
+    { q: '¿Qué símbolo es «los reyes de Media y de Persia»?', ok: 'carnero', e: '8:20 · El carnero de dos cuernos; el más alto, que creció después, es Persia.' },
+    { q: '¿Qué símbolo es «el rey de Grecia»?', ok: 'macho', e: '8:21 · El macho cabrío; su cuerno grande, el primer rey: Alejandro Magno.' },
+    { q: '¿Qué parte muestra el reino repartido hacia los cuatro vientos?', ok: 'cuatro', e: '8:8, 22 · Cuatro reinos: Casandro, Lisímaco, Seleuco y Tolomeo.' },
+    { q: '¿Qué creció «mucho hacia el sur y el oriente, y hacia la tierra gloriosa»?', ok: 'cuerno', e: '8:9 · Roma imperial: Macedonia (168 a.C.), Siria (65), Judea (63) y Egipto (30).' },
+    { q: '¿Qué parte creció «hasta llegar al ejército del cielo»?', ok: 'cielo', e: '8:10 · La fase papal de Roma: pelea contra Dios y su pueblo.' },
+    { q: '¿Qué pasa al terminar las 2.300 tardes y mañanas?', ok: 'purificado', e: '8:14 · En 1844 el santuario es purificado: empieza el juicio.' },
+    { q: '«Será quebrantado, aunque no por mano humana». ¿Cuándo?', ok: 'quebrantado', e: '8:25 · En la segunda venida, como la piedra de Daniel 2.' }],
+  escenas: LAMINAS.d2.escenas.filter(e => e.y >= -539 && e.y <= 2026 && e.y !== 1844).map(e => {
+    const x = Object.assign({}, e, { f: 'd2/' + e.f });
+    if (e.parte) { if (D2_A_D8[e.parte]) x.parte = D2_A_D8[e.parte]; else delete x.parte; }
+    return x; }),
+  marcas: [[-539, '539 a.C.'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [538, '538 d.C.'],
+    [1798, '1798', 'der'], [1844, '1844<i> · purificado</i>', 'izq chico'], [2026, 'hoy', 'izq'], [2126, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
+  hitos: [-539, -457, -331, -301, -168, 34, 538, 1798, 1844],
+  /* LO QUE SE MUEVE, en píxeles de la escena (1200 × 675). Las piezas, en píxeles de su
+     imagen (carnero-solo.png 751 × 800, macho-cabrio-solo.png 800 × 763,
+     cuernos-cuatro.png 800 × 732): `caja` es [x0, y0, x1, y1] y `base`, el punto de donde
+     sale el cuerno (crece y se quiebra desde ahí). `en`: [x, y, alto] en la escena. */
+  mov: {
+    carnero: { f: 'carnero-cuerpo.webp', w: 751, h: 800, en: [150, 200, 420],
+      a: { f: 'carnero-cuerno-a.webp', caja: [514, 97, 676, 211], base: [612, 168] },
+      b: { f: 'carnero-cuerno-b.webp', caja: [608, 0, 730, 181], base: [690, 172] },
+      dirs: [{ t: 'al poniente', s: 'Lidia 547 · Babilonia 539 a.C.', a: [560, 330], b: [930, 330] }, { t: 'al norte', s: '', a: [470, 210], b: [600, 50] },
+        { t: 'al sur', s: 'Egipto 525 a.C.', a: [540, 470], b: [860, 540] }] },
+    macho: { f: 'macho-cuerpo.webp', w: 800, h: 763, cuerno: { f: 'macho-cuerno.webp', caja: [0, 0, 133, 241], base: [86, 228] },
+      choque: { de: [1260, 70], a: [500, 145], fin: [455, 150], alto: 360, golpe: [530, 300] },
+      quiebra: { en: [355, 92, 470] },
+      batallas: 'Gránico 334 · Iso 333 · Arbela 331 a.C.' },
+    cabeza: { f: 'cabeza.webp', w: 800, h: 732, en: [240, 50, 600],
+      cuernos: [{ f: 'cuerno-1.webp', caja: [0, 160, 342, 311], base: [318, 246], t: 'Casandro', s: 'Macedonia y Grecia · oeste', et: [70, 360] },
+        { f: 'cuerno-2.webp', caja: [263, 0, 412, 239], base: [386, 228], t: 'Lisímaco', s: 'Tracia y Asia Menor · norte', et: [360, 34] },
+        { f: 'cuerno-3.webp', caja: [421, 2, 573, 231], base: [450, 226], t: 'Seleuco', s: 'Siria y Babilonia · oriente', et: [740, 34] },
+        { f: 'cuerno-4.webp', caja: [467, 157, 800, 294], base: [500, 252], t: 'Tolomeo', s: 'Egipto · sur', et: [1000, 360] }] },
+    /* El cuerno pequeño sobre el mapa: Roma, al poniente, y lo que conquista. */
+    mapa: { pq: 'd7/cuerno-pequeno.png', roma: [175, 300],
+      reinos: [{ t: 'Macedonia', s: 'Casandro', en: [420, 220] }, { t: 'Tracia y Asia Menor', s: 'Lisímaco', en: [600, 150] }, { t: 'Siria', s: 'Seleuco', en: [840, 270] },
+        { t: 'Judea', s: 'la tierra gloriosa', en: [790, 405], g: true }, { t: 'Egipto', s: 'Tolomeo', en: [640, 520] }],
+      /* `r`: el reino que toma, en el orden en que lo toma. */
+      va: [{ r: 0, t: 'al oriente', s: '168 a.C.' }, { r: 2, t: 'al oriente', s: '65 a.C.' }, { r: 3, t: 'hacia la tierra gloriosa', s: '63 a.C.' }, { r: 4, t: 'hacia el sur', s: '30 a.C.' }] },
+    cielo: { pq: 'd7/cuerno-pequeno.png', base: [600, 655], alto: 470, principe: [600, 40] },
+    santuario: { cosas: [{ t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', en: [228, 168], c: 'una iglesia a oscuras' },
+      { t: 'La mesa de los panes', s: 'la Palabra de Dios', en: [330, 318], c: 'la tradición', dy: 70 },
+      { t: 'El altar del incienso', s: 'la oración y la intercesión de Cristo', en: [555, 330], c: 'el confesionario', dy: -60 }] },
+  },
+  /* LAS 2.300 TARDES Y MAÑANAS (8:13-14), después del santuario purificado: la cuenta se
+     arma sobre una línea, como los 1.260 años de Daniel 7. */
+  periodo: {
+    tras: 'purificado', t: 'Las 2.300 tardes y mañanas', s: '2.300 años · 457 a.C. – 1844 d.C.', de: -457, a: 1844,
+    rot: 'Daniel 8:14', n: '2.300 años', rango: '457 a.C. – 1844 d.C.', tq: 'Las 2.300 tardes y mañanas',
+    pasos: [
+      { t: 'Tardes y mañanas', v: 'tm', citas: [['Daniel 8:14', 'Hasta dos mil trescientas tardes y mañanas']],
+        nota: 'Una tarde y una mañana son un día, como en la creación (Génesis 1:5). Son 2.300 días proféticos, y en la profecía simbólica cada día vale un año (Números 14:34; Ezequiel 4:6). Seis años y medio no alcanzan para una visión que va de Persia hasta «el tiempo del fin» (8:17): son 2.300 años.' },
+      { t: 'Desde la orden de restaurar Jerusalén', v: 'decreto', citas: [['Daniel 9:25', 'desde la salida de la orden para restaurar y edificar a Jerusalén']],
+        nota: 'Daniel 8 no dice desde cuándo se cuentan; Gabriel vuelve en Daniel 9 a explicarlo. La orden completa la dio Artajerjes I en su séptimo año (Esdras 7:7-26). Los judíos contaban el año de otoño a otoño: entró en vigencia en el otoño de 457 a.C. Y empieza en tiempos de Persia: por eso la visión empieza con el carnero y no con Babilonia.' },
+      { t: 'Setenta semanas cortadas', v: 'semanas', citas: [['Daniel 9:24', 'Setenta semanas están determinadas sobre tu pueblo'], ['Daniel 9:27', 'a la mitad de la semana hará cesar el sacrificio y la ofrenda']],
+        nota: '«Determinadas» quiere decir cortadas: 70 semanas, 490 años, se cortan de los 2.300 para el pueblo judío y empiezan juntas. Siete semanas (49 años) hasta 408 a.C., Jerusalén reedificada. Sesenta y dos más llegan al Mesías Príncipe: Jesús es ungido en su bautismo, en el otoño de 27 d.C. A la mitad de la última semana, en 31 d.C., muere en la cruz. En 34 d.C. matan a Esteban y el evangelio va a los gentiles.' },
+      { t: 'Hasta 1844', v: 'resta', citas: [],
+        nota: 'Quedan 2.300 − 490 = 1.810 años. Contados desde 34 d.C. llegan a 1844. O de una vez: 2.300 − 457 = 1843, y como no hay año cero, 1844.' },
+      { t: 'Luego el santuario será purificado', v: 'purif', citas: [['Daniel 8:14', 'luego el santuario será purificado'], ['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.']],
+        nota: 'La purificación del santuario era el Día de la Expiación, el día diez del mes séptimo (Levítico 16:29-30), un día de juicio para Israel. En 1844 cayó el 22 de octubre. Ese día Cristo pasó al lugar santísimo del santuario celestial y empezó el juicio investigador: es el mismo juicio de Daniel 7:9-10.' }],
+    fuente: 'CS 372-376, 451 y 470-477; ' + BOHR + ', p. 313-316 y 325-336.',
+    ir: [['d7', 'juicio', 'El juicio de Daniel 7']],
+  },
+  partes: [
+ {id:'carnero',img:'carnero',nombre:'El carnero de dos cuernos',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,a:-331,c:'#8C98A6',mov:'carnero',ms:6400,
+  texto:'había un carnero que estaba delante del río, y tenía dos cuernos; y aunque los cuernos eran altos, uno era más alto que el otro, y el más alto creció después.',ref:'8:3',texto2:'En cuanto al carnero que viste, que tenía dos cuernos: éstos son los reyes de Media y de Persia.',ref2:'8:20',
+  corto:'Media y Persia (8:20). El cuerno más alto creció después: Persia, que llegó a mandar más que los medos.',
+  interp:['Gabriel lo dice: el carnero son «los reyes de Media y de Persia» (8:20). Es el oso de Daniel 7 y la plata de Daniel 2.','Dos cuernos, dos pueblos. El más alto salió después: Persia empezó como la menor, y con Ciro el Grande llegó a mandar más que los medos. Es el oso que «se alzaba de un costado más que del otro» (7:5).','Hería «al poniente, al norte y al sur» (8:4): Lidia (547 a.C.), Babilonia (539) y Egipto (525). «Se engrandecía»: cada reino crece más que el anterior.','El carnero era un animal del santuario. Daniel 8 trata del santuario de principio a fin.'],
+  fuente:BOHR+', p. 293-296; Smith, <i>Las profecías de Daniel</i>, p. 86.'},
+ {id:'macho',img:'macho',nombre:'El macho cabrío',reino:'Grecia',fechas:'331 – 301 a.C.',de:-331,a:-301,c:'#A85A2A',mov:'choque',ms:6800,
+  texto:'un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra; y aquel macho cabrío tenía un cuerno notable entre sus ojos.',ref:'8:5',texto2:'El macho cabrío es el rey de Grecia, y el cuerno grande que tenía entre sus ojos es el rey primero.',ref2:'8:21',
+  corto:'Grecia (8:21). El cuerno notable es Alejandro Magno, que venció a Persia en tres batallas.',
+  interp:['Gabriel lo nombra: «el rey de Grecia» (8:21). Es el leopardo de Daniel 7 y el bronce de Daniel 2.','Viene «del lado del poniente»: Grecia estaba al oeste de Persia. «Sin tocar tierra»: la rapidez de Alejandro Magno, como las cuatro alas del leopardo (7:6).','«Le quebró sus dos cuernos» (8:7): Alejandro venció a Darío III en el Gránico (334 a.C.), en Iso (333) y en Arbela (331). Medo-Persia no pudo levantarse más.','El cuerno grande «es el rey primero» (8:21): Alejandro Magno.'],
+  fuente:BOHR+', p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87.'},
+ {id:'cuatro',img:'cuatro',nombre:'El cuerno quebrado y los cuatro cuernos',reino:'Grecia dividida en cuatro',fechas:'301 – 168 a.C.',de:-301,a:-168,cmp:-331,c:'#B97A45',mov:'cuatro',ms:7600,
+  texto:'cuando estaba en su mayor fuerza, aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo.',ref:'8:8',texto2:'cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él.',ref2:'8:22',
+  corto:'Alejandro muere en su mayor fuerza; su reino se reparte entre cuatro generales.',
+  interp:['«Cuando estaba en su mayor fuerza» (8:8): Alejandro Magno murió en 323 a.C., a los 32 años, en la cumbre de su poder.','Después de la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio hacia los cuatro vientos: Casandro al oeste (Macedonia y Grecia), Lisímaco al norte (Tracia y Asia Menor), Seleuco I Nicátor al oriente (Siria y Babilonia) y Tolomeo I Sóter al sur (Egipto).','Son las cuatro cabezas del leopardo de Daniel 7 (7:6). Gabriel lo dice: «cuatro reinos se levantarán de esa nación» (8:22).'],
+  fuente:'Smith, <i>Las profecías de Daniel</i>, p. 88; '+BOHR+', p. 296-297.'},
+ {id:'cuerno',img:'pequeno',nombre:'El cuerno pequeño crece',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',mov:'crece',ms:8200,
+  texto:'De uno de ellos salió un cuerno pequeño, que creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa.',ref:'8:9',texto2:'Al fin del reinado de estos, cuando los transgresores lleguen al colmo, se levantará un rey altivo de rostro y entendido en enigmas.',ref2:'8:23',
+  corto:'La primera fase de Roma: pequeña al principio, crece sobre los reinos griegos. Es la bestia espantosa de Daniel 7.',
+  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos»: por el género de las palabras hebreas, sale de uno de los vientos, del poniente, donde estaba Roma. Otra lectura lo ve salir de uno de los cuernos, Pérgamo, que Atalo III dejó en herencia a Roma en 133 a.C. Las dos llegan a Roma.','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
+  fuente:BOHR+', p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 162-164.'},
+ {id:'cielo',img:'cielo',nombre:'Hasta el ejército del cielo',reino:'Roma papal',fechas:'538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',mov:'cielo',ms:7200,
+  texto:'Creció hasta llegar al ejército del cielo; y parte del ejército y de las estrellas echó por tierra, y las pisoteó.',ref:'8:10',texto2:'destruirá a los fuertes y al pueblo de los santos.',ref2:'8:24',
+  corto:'La fase papal: el cuerno ya no pelea solo con reinos de la tierra; se levanta contra Dios y persigue a su pueblo. Es el cuerno pequeño de Daniel 7.',
+  interp:['Ahora crece hacia arriba. Los animales pelean contra otros reinos; el cuerno además pelea contra Dios. Es el cuerno pequeño de Daniel 7, con sus 1.260 años, de 538 a 1798.','El ejército y las estrellas son el pueblo de Dios: Gabriel habla del «pueblo de los santos» (8:24), y Daniel 12:3 compara a los fieles con estrellas.','«Aun se engrandeció frente al príncipe de los ejércitos» (8:11). El Príncipe del ejército es Cristo, el mismo que Josué adoró (Josué 5:13-15). El cuerno se pone en su lugar en la tierra.'],
+  fuente:BOHR+', p. 305-307.'},
+ {id:'santuario',img:'santuario',nombre:'El santuario pisoteado',reino:'Roma papal',fechas:'el continuo quitado: 508 y 538 – 1798 d.C.',de:null,era:538,c:'#7C4A2E',mov:'santuario',ms:7000,
+  texto:'por él fue quitado el sacrificio continuo, y el lugar de su santuario fue echado por tierra.',ref:'8:11',texto2:'echó por tierra la verdad e hizo cuanto quiso, y prosperó.',ref2:'8:12',
+  corto:'El cuerno quita el continuo: pone en la tierra lo que Cristo hace cada día por nosotros en el santuario del cielo.',
+  interp:['En hebreo dice solo «continuo» (<i>hatamid</i>), con artículo: «sacrificio» lo agregaron los traductores. En el santuario esa palabra es el servicio de cada día en el atrio y el lugar santo: el sacrificio, el pan, la luz y el incienso. Es la obra de Cristo, que vive siempre para interceder por nosotros (Hebreos 7:25).','El cuerno no puede subir al cielo: pone en la tierra un sustituto. En lugar del sacrificio de una vez, la misa; en lugar de la Palabra, la tradición; en lugar de la intercesión de Cristo, el confesionario. Así «el lugar de su santuario fue echado por tierra».','«Echó por tierra la verdad» (8:12): la Ley de Dios y el sábado, como el cuerno de Daniel 7 que piensa «cambiar los tiempos y la Ley» (7:25).','Otra lectura ve en el continuo el paganismo, quitado para dar lugar al papado. Las dos llegan a 508, cuando Clodoveo I dio poder civil al papado (ver Daniel 11:31 y 12:11).'],
+  fuente:BOHR+', p. 307-313; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado».'},
+ {id:'purificado',img:'purificado',nombre:'El santuario será purificado',reino:'El juicio en el cielo',fechas:'desde 1844 d.C.',de:1844,a:2026,c:'#B45309',mov:'purifica',ms:5600,
+  texto:'¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?',ref:'8:13',texto2:'Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.',ref2:'8:14',
+  corto:'En 1844 terminan las 2.300 tardes y mañanas: empieza la purificación del santuario, el juicio de Daniel 7.',
+  interp:['Un santo pregunta «¿Hasta cuándo?»: no cuánto dura, sino cuándo termina. La respuesta da el final: «luego el santuario será purificado» (8:14).','Son 2.300 años: de 457 a.C. a 1844. Daniel 9 da el punto de partida.','La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio. La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia. Es el mismo suceso de Daniel 7:9-10: el Juez se sienta y se abren los libros, en 1844.'],
+  fuente:'CS 374-376 y 470-477; '+BOHR+', p. 313-320.'},
+ {id:'quebrantado',img:'d2/e-piedra',nombre:'Quebrantado, no por mano humana',reino:'La segunda venida',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
+  texto:'Se levantará contra el Príncipe de los príncipes, pero será quebrantado, aunque no por mano humana.',ref:'8:25',texto2:'la visión es para el tiempo del fin.',ref2:'8:17',
+  corto:'El cuerno llega hasta el fin y lo quebranta Dios, no un hombre: es la piedra de Daniel 2.',
+  interp:['Ningún reino le sigue al cuerno: llega hasta «el tiempo del fin» (8:17, 19). Lo quebranta Dios, «no por mano humana», como la piedra que se desprendió «sin que la cortara mano alguna» (2:34).','Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26).'],
+  fuente:BOHR+', p. 63; CS 698-703.'},
+  ],
+};
 /* v219: LOS ÚLTIMOS ACONTECIMIENTOS (Camilo, 14-oct 18:12-18:17): «En la comparación
    debes agregar Mateo 24 […] Revisa bien si los eventos sí están en ciertos capítulos
    […] no me hagas caso a lo que te digo sin corroborar en todos los apuntes […] En vez
@@ -489,7 +663,7 @@ const ULTIMOS = {
   eventos: [
     { id: 'juicio', fase: 'antes', t: 'El juicio investigador', c: 'Juicio', cuando: 'Desde 1844, en el cielo, mientras sigue abierta la gracia', img: 'd7/juicio',
       nota: 'Se abren los libros de los que profesaron ser hijos de Dios. Mientras dura, se predica el evangelio eterno a toda nación.',
-      egw: 'CS 374 y 533-545', partes: ['juicio', 'hijo', 'x-fases'],
+      egw: 'CS 374 y 533-545', partes: ['juicio', 'hijo', 'x-fases', 'purificado'],
       l: { d7: X('7:9-10, 13', 'El Juez se sienta, se abren los libros y el Hijo del hombre llega ante el Anciano de días.', 'CS 533', [['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.']]),
         d8: I('8:14', 'La purificación del santuario es la hora del juicio, desde 1844.', 'CS 374', [['Daniel 8:14', 'luego el santuario será purificado']]),
         ap14: X('14:6-7', 'El primer ángel anuncia que la hora del juicio ha llegado.', 'CS 374', [['Apocalipsis 14:7', 'la hora de su juicio ha llegado']]) } },
@@ -599,7 +773,7 @@ const ULTIMOS = {
       egw: 'CS 698; PE 15, 34 y 285', l: {} },
     { id: 'venida', fase: 'venida', t: 'La segunda venida', c: 'Venida', cuando: 'Al final de las plagas', img: 'd2/e-piedra',
       nota: 'Aparece una pequeña nube negra que se hace gran nube blanca. Cristo viene como Rey de reyes. Es la piedra de Daniel 2 y la ejecución del juicio de Daniel 7.',
-      egw: 'CS 698-701; PE 286-287', partes: ['piedra', 'santos', 'x-fases'],
+      egw: 'CS 698-701; PE 286-287', partes: ['piedra', 'santos', 'x-fases', 'quebrantado'],
       l: { d2: I('2:34, 44-45', 'La piedra cortada sin mano hiere a la imagen en los pies: la venida, sin intervención humana.', B110 + ', p. 63-64', [['Daniel 2:34', 'una piedra se desprendió sin que la cortara mano alguna']]),
         d7: I('7:22, 26', 'Se ejecuta el juicio: los santos reciben el reino y al cuerno le quitan el dominio.', B110 + ', p. 121', [['Daniel 7:22', 'llegó el tiempo, y los santos recibieron el reino'], ['Daniel 7:26', 'le quitarán su dominio']]),
         d8: I('8:25', 'Será quebrantado «no por mano humana», como la piedra de Daniel 2.', B110 + ', p. 63', [['Daniel 8:25', 'será quebrantado, aunque no por mano humana']]),
