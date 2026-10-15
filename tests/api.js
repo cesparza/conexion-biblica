@@ -444,6 +444,26 @@ async function pruebaMiddleware() {
 
 (async () => {
   try { await pruebaMiddleware(); } catch (e) { ok(false, 'La prueba del middleware no corrió: ' + e.message); }
+  /* v230: /nombres (los nombres del libro abierto, Daniel 7:10): solo nombres de pila, sin repetir,
+     sin id ni categoría, y solo con sesión (o, dentro de Jóvenes, con SESION_APP que pone la puerta). */
+  try {
+    const i = API.indexOf("ruta === '/nombres'"), g = API.indexOf('const sesion = await sesionActual(request, env);');
+    ok(i > g && g > 0 && /if \(!sesion && env\.SESION_APP !== true\) return error/.test(API.slice(i, i + 400)), '/nombres va después de leer la sesión y la exige');
+    const M = await import('file://' + path.join(RAIZ, 'functions/api/[[ruta]].js'));
+    const filas = [{ nombre: 'María Camila Esparza' }, { nombre: 'maría José' }, { nombre: 'Isabella' }, { nombre: '<b>Hack</b>' }, { nombre: 'Luis Pérez' }, { nombre: '' }];
+    const DB = conSesion => ({ prepare: sql => { const q = { bind: () => q,
+      first: async () => /FROM sesion/.test(sql) && conSesion ? { token: 't', cuenta_id: 'c', rol: 'participante', persona_id: 'p' } : null,
+      all: async () => ({ results: /FROM participante/.test(sql) ? filas : [] }), run: async () => ({}) }; return q; } });
+    const pide = async (cookie, extra) => { const r = await M.onRequest({ request: new Request('https://x/api/nombres', { headers: cookie ? { cookie: 'cb_sesion=t' } : {} }),
+      env: Object.assign({ DB: DB(!!cookie), SAL_IP: 's' }, extra || {}), params: { ruta: ['nombres'] }, waitUntil: () => {} }); return [r.status, await r.json()]; };
+    const COOKIE = (API.match(/const COOKIE = '([^']+)'/) || [])[1];
+    const conCookie = async extra => { const r = await M.onRequest({ request: new Request('https://x/api/nombres', { headers: { cookie: COOKIE + '=t' } }),
+      env: Object.assign({ DB: DB(true), SAL_IP: 's' }, extra || {}), params: { ruta: ['nombres'] }, waitUntil: () => {} }); return [r.status, await r.json()]; };
+    const [s0] = await pide(false), [s1, d1] = await conCookie(), [s2, d2] = await pide(false, { SESION_APP: true }), [s3] = await pide(false, { SESION_APP: 'true' });
+    const n1 = (d1.nombres || []).slice().sort().join();
+    ok(s0 === 401 && s3 === 401 && s1 === 200 && s2 === 200 && n1 === 'Isabella,Luis,María' && Object.keys(d1).join() === 'nombres' && (d2.nombres || []).length === 3,
+      '/nombres: sin sesión 401; con sesión (o SESION_APP de la puerta) solo nombres de pila sin repetir ni HTML (' + n1 + ')');
+  } catch (e) { ok(false, 'La prueba de /nombres no corrió: ' + e.message); }
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }
   }

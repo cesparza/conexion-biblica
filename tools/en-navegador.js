@@ -1312,14 +1312,16 @@ for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
   for (const id of ['d2', 'd7', 'd8']) {
     const t = await p.evaluate(async id => { verCap(id); lamAbre(id, 'explorar'); await new Promise(r => setTimeout(r, 700));
       const q = s => document.querySelector('#lam .lam-hitos ' + s), x = e => e ? e.getBoundingClientRect().left + e.getBoundingClientRect().width / 2 : NaN;
-      const ms = [...document.querySelectorAll('#lam .lam-marcas span')].filter(e => getComputedStyle(e).display !== 'none' && e.getBoundingClientRect().width > 0).map(e => e.getBoundingClientRect()).sort((a, b) => a.left - b.left);
-      const pisan = ms.some((r, i) => i && r.left < ms[i - 1].right - 1);
+      /* v230: los años van en dos alturas: se pisan solo si se cruzan de verdad (en x y en y). */
+      const ms = [...document.querySelectorAll('#lam .lam-marcas span')].filter(e => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && e.getBoundingClientRect().width > 0).map(e => e.getBoundingClientRect());
+      const pisan = ms.some((a, i) => ms.some((b, j) => j > i && a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1));
+      const futVe = [...document.querySelectorAll('#lam .lam-marcas span.fut')].some(e => getComputedStyle(e).display !== 'none');
       const r = { juicio: !!q('.lam-hito.juicio'), venida: !!q('.lam-hito.venida'), hoy: !!q('.lam-hito.hoy'), corte: q('.lam-corte') ? q('.lam-corte').textContent : '', mil: !!q('.lam-mil'),
         orden: x(q('.lam-hito.juicio')) < x(q('.lam-hito.hoy')) && x(q('.lam-hito.hoy')) < x(q('.lam-corte')) && x(q('.lam-corte')) < x(q('.lam-hito.venida')) && x(q('.lam-hito.venida')) < x(q('.lam-mil')),
-        pisan, ley: getComputedStyle(document.querySelector('#lam .lam-hley')).display };
+        pisan, ley: getComputedStyle(document.querySelector('#lam .lam-hley')).display, futVe };
       lamCierra(); return r; }, id);
-    ok(t.juicio && t.venida && t.hoy && t.corte === '//' && t.mil && t.orden && !t.pisan && (W < 700 ? t.ley === 'flex' : t.ley === 'none'),
-      W + ' · v228: ' + id + ', la línea de tiempo con 1844, hoy, el corte «//», la venida y los mil años, en orden y sin rótulos encimados (' + JSON.stringify(t) + ')');
+    ok(t.juicio && t.venida && t.hoy && t.corte === '//' && t.mil && t.orden && !t.pisan && (t.futVe ? t.ley === 'none' : t.ley === 'flex'),
+      W + ' · v228: ' + id + ', la línea de tiempo con 1844, hoy, el corte «//», la venida y los mil años, en orden y sin rótulos encimados; la leyenda sale cuando los nombres del futuro no caben (' + JSON.stringify(t) + ')');
   }
   ok(errores.length === 0, W + ' · v228: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
@@ -1360,6 +1362,62 @@ for (const [W, H] of [[1440, 900], [1900, 745]]) {
   ok(nombres[0].t === 'Camilo' && nombres[1].t === '<b' && nombres[1].hijos === 0 && nombres[2].t === 'tu nombre' && nombres.every(x => x.ap),
     W + ' · v229: el libro abierto dice el primer nombre de quien estudia (sin HTML; sin nombre, «tu nombre») con Apocalipsis 3:5 (' + JSON.stringify(nombres.map(x => x.t)) + ')');
   ok(errores.length === 0, W + ' · v229: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+/* ── v230: al arrastrar por cada marca la escena, el rótulo y la parte coinciden; los años no se
+   pisan; en Explorar la línea va debajo de la escena y se pega abajo sin tapar el texto ni la
+   barra; el libro abierto con los nombres de pila. ── */
+for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block', isMobile: W < 600, hasTouch: W < 600 });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => { errores.push('diálogo'); d.dismiss(); });
+  await p.route('**/api/**', r => r.fulfill({ json: /\/api\/nombres/.test(r.request().url()) ? { nombres: ['Ana', 'Luis', 'Camilo', '<i>X'] } : {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo Esparza'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
+  for (const id of ['d2', 'd7', 'd8']) {
+    await p.evaluate(id => { verCap(id); lamAbre(id, 'explorar'); }, id); await p.waitForTimeout(900);
+    const r = await p.evaluate(async () => {
+      const L = LAM(), R = document.getElementById('lamRango'), ms = L.marcas.map(m => m[0]).filter(y => y !== 2476).sort((a, b) => a - b), ys = [];
+      ms.forEach((y, i) => { ys.push(y); if (i < ms.length - 1) ys.push(Math.round((y + ms[i + 1]) / 2)); });
+      const mal = [];
+      for (const y of ys) { R.value = y; R.dispatchEvent(new Event('input')); await new Promise(r => setTimeout(r, lamEsE() ? 80 : 10));
+        const exp = L.tiempo.filter(i => { const q = lamParte(i); return y >= q.de && y < q.a; }), fu = y > LAM_HOY ? L.futuro.find(f => y > f.de && y <= f.a) : null;
+        const on = [...document.querySelectorAll('#lamTira .lam-ri.on')].map(e => e.getAttribute('data-p')).filter(Boolean).sort().join(), eon = (fu ? (fu.id ? [fu.id] : []) : exp).slice().sort().join();
+        const tano = document.getElementById('lamTano').textContent, tq = document.getElementById('lamTq').textContent;
+        const yTx = y > LAM_HOY ? 'Futuro' : y < 0 ? (-y) + ' a.C.' : y + ' d.C.';
+        let esc = true;
+        if (lamEsE()) { const pp = exp.map(lamParte).sort((x, z) => (x.a - x.de) - (z.a - z.de))[0], vac = !pp && !fu && (L.vacios || []).find(v => y >= v[0] && y < v[1]);
+          const quiere = lamSrc(fu ? fu.f : pp ? pp.img : vac && vac[3] ? vac[3] : L.inicioF);
+          /* La escena cambia cuando la imagen ya está decodificada: se espera hasta 1,5 s. */
+          for (let k = 0; k < 30 && document.querySelector('#lamSvg .lam-hist').getAttribute('href') !== quiere; k++) await new Promise(r => setTimeout(r, 50));
+          esc = document.querySelector('#lamSvg .lam-hist').getAttribute('href') === quiere; }
+        const txt = fu ? tq.startsWith(fu.t) : exp.every(i => tq.toLowerCase().includes(lamParte(i).reino.toLowerCase().replace(/^el /, '')));
+        if (on !== eon || tano !== yTx || !esc || !txt) mal.push(y + ': ' + [on !== eon && 'parte ' + on + '≠' + eon, tano !== yTx && 'año ' + tano, !esc && 'escena', !txt && 'rótulo ' + tq].filter(Boolean).join(', ')); }
+      /* Los años de abajo no se pisan. */
+      const vis = [...document.querySelectorAll('#lam .lam-marcas span')].filter(e => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && e.getBoundingClientRect().width).map(e => e.getBoundingClientRect());
+      const pisan = vis.some((a, i) => vis.some((b, j) => j > i && a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1));
+      const ven = document.querySelector('#lam .lam-hito.venida').getBoundingClientRect(), mil = document.querySelector('#lam .lam-mil').getBoundingClientRect();
+      return { n: ys.length, mal, pisan, venMil: Math.abs((ven.left + ven.width / 2) - mil.left) <= 2 }; }, id);
+    ok(!r.mal.length && !r.pisan && r.venMil, W + ' · v230: ' + id + ', arrastrando por las ' + r.n + ' marcas y sus medios: la escena, el año, el rótulo y la parte coinciden; los años no se pisan; los mil años empiezan en la venida' + (r.mal.length ? ' — ' + r.mal.slice(0, 3).join(' | ') : '') + (r.pisan ? ' — se pisan' : ''));
+    const lay = await p.evaluate(async () => { const m = document.querySelector('#lam .lam-marco'), t = m.querySelector(':scope>.lam-tiempo'), es = document.getElementById('lamEsc'), ri = m.querySelector('.lam-riel');
+      const bj = m.querySelector(':scope>.lam-bajo'), rbj = bj && bj.getBoundingClientRect().height ? bj.getBoundingClientRect() : null, rt = t.getBoundingClientRect(), re0 = es.getBoundingClientRect(), re = rbj ? { top: re0.top, bottom: rbj.bottom, left: re0.left, right: re0.right } : re0, rr = ri.getBoundingClientRect();
+      const debajo = rt.top >= re.bottom - 1 && rt.top - re.bottom < 60 && rt.left < re.right && rt.right > re.left, antesRiel = !(rr.top > re.bottom - 1) || rr.top >= rt.bottom - 1;
+      const l = document.getElementById('lam'); l.scrollTo(0, l.scrollHeight); await new Promise(r => setTimeout(r, 450));
+      const f = t.getBoundingClientRect(), hj = document.getElementById('lamHoja').getBoundingClientRect(), hjFija = getComputedStyle(document.getElementById('lamHoja')).position !== 'static';
+      const e0 = document.elementsFromPoint(innerWidth / 2, innerHeight - 2).find(e => !t.contains(e)); let barra = 0;
+      for (let e = e0; e; e = e.parentElement) { const c = getComputedStyle(e); if ((c.position === 'fixed' || c.position === 'sticky') && e.getBoundingClientRect().top > innerHeight * .45) { barra = innerHeight - e.getBoundingClientRect().top; break; } }
+      return { debajo, antesRiel, aparte: !!document.querySelector('#lam .lam-l23-sec #lamL23t') || !LAM().linea2300, fija: t.classList.contains('fija') || (f.top >= 0 && f.bottom <= innerHeight), pegada: t.classList.contains('fija'), sobreBarra: Math.round(innerHeight - f.bottom - barra),
+        tapaTexto: hjFija && f.right > hj.left + 1 && f.left < hj.right - 1 && f.top < hj.bottom - 1 && f.bottom > hj.top + 1 }; });
+    ok(lay.debajo && lay.antesRiel && lay.aparte && lay.fija && (Math.abs(lay.sobreBarra) <= 2 || !lay.pegada) && !lay.tapaTexto,
+      W + ' · v230: ' + id + ', Explorar: la línea va justo debajo de la escena (antes de las partes), las 2.300 tardes y mañanas aparte, y al bajar se pega encima de la barra sin tapar el texto (' + JSON.stringify(lay) + ')');
+    await p.evaluate(() => lamCierra());
+  }
+  const lib = await p.evaluate(async () => { lamOtrosNombres = null; lamAbre('d7', 'presentar'); lamPres(lamPasos().findIndex(x => x.id === 'juicio' && x.sub === 3)); await new Promise(r => setTimeout(r, 600));
+    const n = document.querySelector('.lb-nombre'), r = { mio: n.querySelector('b').textContent, otros: [...n.querySelectorAll('.lb-otros span')].map(e => e.textContent), html: n.querySelectorAll('.lb-otros *:not(span)').length, ap: /El vencedor será vestido/.test(document.querySelector('.lam-libro-cita').textContent) };
+    lamCierra(); return r; });
+  ok(lib.mio === 'Camilo' && lib.otros.length === 2 && lib.otros.every(x => ['Ana', 'Luis', '<i>X'].includes(x)) && !lib.otros.includes('Camilo') && lib.html === 0 && lib.ap,
+    W + ' · v230: el libro abierto: primero el nombre de quien estudia, después dos nombres de pila de otros, como texto, con Apocalipsis 3:5 (' + JSON.stringify(lib) + ')');
+  ok(errores.length === 0, W + ' · v230: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();

@@ -3075,5 +3075,26 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v229: el libro abierto lleva el nombre de quien estudia (con textContent; sin nombre, «tu nombre») y Apocalipsis 3:5 literal, con su condición');
 }
 
+/* v230 (Camilo, 15-oct): la línea de tiempo con todas sus fechas y los mil años desde la venida;
+   en Explorar, la línea debajo de la escena; los nombres del libro abierto. */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js')),js=APP;
+  const pide={d2:[-605,-539,-331,-168,476,538,1798,1844],d7:[-605,-539,-331,-168,476,538,1798,1844],d8:[-539,-331,-301,-168,476,538,1798,1844]};
+  const malos=Object.entries(pide).flatMap(([k,ys])=>{const L=LAMINAS[k],m=L.marcas.map(x=>x[0]),fu=L.futuro,ven=L.marcas.find(x=>/\bfut\b/.test(x[2]||''))[0];
+    const ini=L.tiempo.map(id=>L.partes.find(p=>p.id===id).de).filter(y=>y<2026);
+    return [...ys,...ini].filter(y=>!m.includes(y)).map(y=>k+' sin '+y).concat(ven===fu[1].de&&fu[0].a===fu[1].de&&fu[1].a===fu[2].de?[]:[k+': la venida no es el comienzo de los mil años']);});
+  ok(!malos.length,'v230: cada reino con su fecha en la línea (Daniel 2 y 7: 605, 539, 331, 168, 476, 538, 1798, 1844; Daniel 8: 539, 331, 301, 168, 476, 538, 1798, 1844) y los mil años empiezan en la venida'+(malos.length?' — '+malos.join(', '):''));
+  /* La pista: cada año del pasado tiene el color del reino que gobierna (sin degradados). */
+  const pis=montar("p2:(lamId='d2',lamPista()), p7:(lamId='d7',lamPista()), p8:(lamId='d8',lamPista())"),mal=[];
+  for(const [k,g] of [['d2',pis.p2],['d7',pis.p7],['d8',pis.p8]]){const L=LAMINAS[k],lin=g.slice(g.lastIndexOf('linear-gradient(90deg,')+22,-1);
+    const st=[...lin.matchAll(/(#[0-9A-Fa-f]{6}|transparent) ([\d.]+)% ([\d.]+)%/g)].map(m=>[m[1],+m[2],+m[3]]);
+    const pos=y=>(y+620)/(2626+620)*100;
+    for(let y=-615;y<1844;y+=7){const x=pos(y),s=st.find(q=>x>=q[1]&&x<q[2]),gob=L.tiempo.filter(id=>!(L.solapa||['barro']).includes(id)).map(id=>L.partes.find(p=>p.id===id)).filter(p=>y>=p.de&&y<p.a).sort((a,b)=>b.de-a.de)[0];
+      const quiere=gob?gob.c:'#4a4032';if(!s||s[0].toLowerCase()!==quiere.toLowerCase()){mal.push(k+' '+y+' '+(s&&s[0])+'≠'+quiere);break;}}}
+  ok(!mal.length,'v230: la pista tiene, año por año, el color del reino que gobierna, de borde a borde, y gris donde el capítulo no tiene reino'+(mal.length?' — '+mal.join(', '):''));
+  ok(/function lamTiempoAlMarco/.test(js)&&/function lamTiempoPega/.test(js)&&/function lamBordeAbajo/.test(js)&&/lam-l23-sec/.test(js),'v230: en Explorar la línea va debajo de la escena, se pega abajo al pasarla y el panel de las 2.300 tardes y mañanas sigue aparte');
+  ok(/srvFetch\('\/nombres'\)/.test(js)&&/e\.textContent=x/.test(js)&&!/lb-otros[^\n]*innerHTML/.test(js),'v230: el libro abierto pide los nombres de pila al servidor y los escribe con textContent');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

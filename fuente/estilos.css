@@ -5158,3 +5158,36 @@ span.cmp-ult-c{cursor:default}
 .lam-libro.quieto .lb-3d>.lb-nombre{transition:none}
 @media (max-width:900px){.lb-nombre small{display:none}.lb-nombre b{font-size:1rem}}
 .lam-libro-cita .lb-ap{display:block;margin-top:.5em;font-size:.75em}
+/* v230: los años de la línea de tiempo en dos alturas (lamMarcasSep); el sufijo «a.C.» se esconde
+   donde no cabe, nunca el año. */
+.lam-marcas{height:38px}
+.lam-marcas span.r1{top:18px}
+.lam-marcas span.oculta{visibility:hidden}
+.lam-marcas span.izq,.lam-marcas span.der{transform:translateX(-50%)}
+@media (max-width:1100px){.lam-marcas span i{display:none}}
+@container (max-width:1400px){.lam-marcas span i{display:none}}
+/* v230: en Explorar la línea de tiempo va debajo de la imagen, en su bloque, y el panel de las 2.300
+   tardes y mañanas queda aparte. Al bajar, la línea se pega abajo (lamTiempoPega). */
+.lam:not(.pres) .lam-marco>.lam-tiempo{width:100%;min-width:0;box-sizing:border-box;margin:0}
+.lam:not(.pres) .lam-marco>.lam-tiempo-sitio{width:100%;height:0}
+@media (min-width:900px){
+  .lam.escenas:not(.pres) .lam-marco>.lam-tiempo-sitio,.lam.escenas:not(.pres) .lam-marco>.lam-tiempo{grid-column:1;grid-row:3}
+  .lam.escenas:not(.pres) .lam-riel,.lam.escenas:not(.pres) .lam-tira-c{grid-row:4}
+  .lam.escenas:not(.pres) .lam-hoja{grid-row:1 / span 4}
+}
+@media (min-width:1100px){
+  .lam:not(.pres):not(.escenas) .lam-marco>.lam-tiempo-sitio,.lam:not(.pres):not(.escenas) .lam-marco>.lam-tiempo{grid-column:2;grid-row:2}
+  .lam:not(.pres):not(.escenas) .lam-riel,.lam:not(.pres):not(.escenas) .lam-hoja{grid-row:1 / span 2}
+}
+.lam:not(.pres) .lam-marco>.lam-tiempo.fija{position:fixed;z-index:30;margin:0;padding:8px 12px 4px;border-top:0;border-radius:12px 12px 0 0;
+  background:var(--bg,#fff);box-shadow:0 -10px 24px -14px rgba(0,0,0,.45)}
+.lam:not(.pres):has(.lam-tiempo.fija){padding-bottom:calc(var(--lam-t-alto,120px) + 24px)}
+.lam-l23-sec{width:100%;min-width:0}
+@media (min-width:900px) and (max-width:1099px){
+  .lam:not(.pres):not(.escenas) .lam-marco>.lam-tiempo-sitio,.lam:not(.pres):not(.escenas) .lam-marco>.lam-tiempo{grid-column:1;grid-row:2}
+  .lam:not(.pres):not(.escenas) .lam-riel{grid-column:1;grid-row:3}
+  .lam:not(.pres):not(.escenas) .lam-hoja{grid-row:1 / span 3}
+}
+.lb-nombre .lb-otros{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:3px;font-size:1rem;line-height:1.15;color:#5A3412}
+.lb-nombre .lb-otros:empty{display:none}
+@media (max-width:900px){.lb-nombre .lb-otros{font-size:.75rem}}

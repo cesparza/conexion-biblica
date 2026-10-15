@@ -55,12 +55,14 @@ const LAMINAS = {
      entre la piedra y el monte van los mil años. `ult`: el acontecimiento de
      ULTIMOS que muestra el tramo. */
   futuro: [{ id: 'piedra', de: 2026, a: 2226, t: 'La piedra', s: 'Cristo vuelve', f: 'e-piedra', ult: 'venida' },
-    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'los santos con Cristo en el cielo; la tierra, desolada', f: 'e-piedra', ult: 'desolada' },
+    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos con Cristo en el cielo; la tierra, desolada (CS 718)', f: 'e-piedra', ult: 'desolada' },
     { id: 'monte', de: 2426, a: 2626, t: 'El gran monte', s: 'el reino eterno, después de los mil años', f: 'e-monte', ult: 'reino' }],
   /* Daniel 2 no trae el juicio, pero la historia sí pasa por 1844 (Daniel 7 y 8). */
   juicio: 1844,
-  marcas: [[-605, '605 a.C.'], [-331, '331<i> a.C.</i>', 'chico'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [476, '476 d.C.'],
-    [1798, '1798', 'der'], [1844, '1844<i> · juicio</i>', 'izq chico'], [2026, 'hoy', 'izq'], [2126, 'la piedra', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el monte', 'fut'], [2476, 'futuro', 'tel']],
+  /* v230 (Camilo: «faltan fechas»): una marca por cada reino que empieza (605, 539, 331, 168, 476,
+     538), 1798 y 1844; «1 d.C.» es menor. La venida va en 2226: ahí empiezan los mil años. */
+  marcas: [[-605, '605 a.C.'], [-539, '539<i> a.C.</i>'], [-331, '331<i> a.C.</i>'], [-168, '168<i> a.C.</i>'], [1, '1<i> d.C.</i>', 'menor'], [476, '476<i> d.C.</i>'], [538, '538<i> d.C.</i>'],
+    [1798, '1798'], [1844, '1844<i> · juicio</i>'], [2026, 'hoy'], [2226, 'la piedra', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el monte', 'fut'], [2476, 'futuro', 'tel']],
   hitos: [-539, -331, -168, 476, 538, 1798, 1844],
   /* v209: el cartel de apertura, como el título de una película: capítulo, lugar y
      cuándo (lo que dice el texto, sin años que el capítulo no da). `lado`: dónde va el
@@ -213,7 +215,7 @@ LAMINAS.d7 = {
   tiempo: ['leon', 'oso', 'leopardo', 'bestia', 'cuernos', 'cuerno', 'juicio'],
   /* v218: la venida, los mil años y el reino eterno, como en Daniel 2. */
   futuro: [{ id: 'santos', de: 2026, a: 2226, t: 'La segunda venida', s: 'los santos reciben el reino', f: 'd2/e-piedra', ult: 'venida' },
-    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'los santos juzgan con Cristo', f: 'd2/e-piedra', ult: 'juzgan' },
+    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos juzgan con Cristo (CS 718)', f: 'd2/e-piedra', ult: 'juzgan' },
     { id: 'reino', de: 2426, a: 2626, t: 'El reino eterno', s: 'después de los mil años', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
     { f: 'd2/babilonia', titulo: 'En el primer año de Belsasar', ref: 'Daniel 7:1', texto: 'En el primer año de Belsasar, rey de Babilonia, tuvo Daniel un sueño y visiones de su cabeza mientras estaba en su lecho',
@@ -270,8 +272,10 @@ LAMINAS.d7 = {
       { y: 2027, f: 'd2/e-piedra', t: 'Futuro · Cristo vuelve por los suyos (Juan 14:3)' }]),
   /* v205: la línea de tiempo con 1844 (va arriba de la pista: abajo choca con 1798),
      y los años donde el recorrido se detiene un momento. */
-  marcas: [[-605, '605 a.C.'], [-331, '331<i> a.C.</i>', 'chico'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [476, '476 d.C.'],
-    [1798, '1798', 'der'], [1844, '1844<i> · juicio</i>', 'izq chico'], [2026, 'hoy', 'izq'], [2126, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
+  /* v230 (Camilo: «faltan fechas»): una marca por cada reino que empieza (605, 539, 331, 168, 476,
+     538), 1798 y 1844; «1 d.C.» es menor. La venida va en 2226: ahí empiezan los mil años. */
+  marcas: [[-605, '605 a.C.'], [-539, '539<i> a.C.</i>'], [-331, '331<i> a.C.</i>'], [-168, '168<i> a.C.</i>'], [1, '1<i> d.C.</i>', 'menor'], [476, '476<i> d.C.</i>'], [538, '538<i> d.C.</i>'],
+    [1798, '1798'], [1844, '1844<i> · juicio</i>'], [2026, 'hoy'], [2226, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
   hitos: [-539, -331, -168, 476, 538, 1798, 1844],
   /* v205: LAS BESTIAS SUBEN DEL MAR (7:3), una por paso. Hoy: la imagen entera de
      cada bestia sube y aparece sobre la anterior. Cuando existan
@@ -531,9 +535,9 @@ LAMINAS.d8 = {
   solapa: [],
   tiempo: ['carnero', 'macho', 'cuatro', 'cuerno', 'cielo', 'purificado'],
   /* Los años que Daniel 8 no cubre: lo dice la línea de tiempo en vez de «antes de Nabucodonosor». */
-  vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia está por caer (539 a.C.)'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal']],
+  vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia está por caer (539 a.C.)'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal', 'pequeno']],
   futuro: [{ id: 'quebrantado', de: 2026, a: 2226, t: 'La segunda venida', s: 'el cuerno es quebrantado, no por mano humana', f: 'd2/e-piedra', ult: 'venida' },
-    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'la tierra desolada', f: 'd2/e-piedra', ult: 'desolada' },
+    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: la tierra desolada (CS 718)', f: 'd2/e-piedra', ult: 'desolada' },
     { id: '', de: 2426, a: 2626, t: 'El reino eterno', s: 'Daniel 8 no lo muestra: llega en Daniel 12:1-3', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
     { f: 'ulai', titulo: 'En el tercer año de Belsasar', ref: 'Daniel 8:1-2', texto: 'En el año tercero del reinado del rey Belsasar, yo, Daniel, tuve una visión, después de aquella que había tenido antes. … En la visión, pues, me veía junto al río Ulai.',
@@ -577,8 +581,9 @@ LAMINAS.d8 = {
     const x = Object.assign({}, e, { f: 'd2/' + e.f });
     if (e.parte) { if (D2_A_D8[e.parte]) x.parte = D2_A_D8[e.parte]; else delete x.parte; }
     return x; }),
-  marcas: [[-539, '539 a.C.'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [538, '538 d.C.'],
-    [1798, '1798', 'der'], [1844, '1844', 'izq chico'], [2026, 'hoy', 'izq'], [2126, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
+  /* v230: también 331 (Grecia), 301 (los cuatro reinos) y 476 (Roma dividida). */
+  marcas: [[-539, '539 a.C.'], [-331, '331<i> a.C.</i>'], [-301, '301<i> a.C.</i>'], [-168, '168<i> a.C.</i>'], [1, '1<i> d.C.</i>', 'menor'], [476, '476<i> d.C.</i>'], [538, '538<i> d.C.</i>'],
+    [1798, '1798'], [1844, '1844'], [2026, 'hoy'], [2226, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
   hitos: [-539, -457, -331, -301, -168, 34, 538, 1798, 1844],
   /* LO QUE SE MUEVE, en píxeles de la escena (1200 × 675). Las piezas, en píxeles de su
      imagen (carnero-solo.png 751 × 800, macho-cabrio-solo.png 800 × 763,
@@ -962,7 +967,7 @@ const ULTIMOS = {
         apo: I('15:2-3', 'Los que vencieron a la bestia, de pie sobre el mar de vidrio.', 'CS 707', [['Apocalipsis 15:2', 'a los que habían alcanzado la victoria sobre la bestia y su imagen']]) } },
     { id: 'desolada', fase: 'mil', t: 'La tierra desolada; Satanás atado', c: 'Tierra desolada', cuando: 'Desde la venida, mil años',
       nota: 'Los impíos vivos mueren en la venida. La tierra queda desolada, y en ella Satanás vaga mil años sin nadie a quien engañar: así está atado.',
-      egwC: [["CS 718", "Durante mil años, Satanás andará errante de un lado para otro en la tierra desolada, considerando los resultados de su rebelión contra la ley de Dios.", "En los mil años la tierra queda desolada y Satanás, atado a ella."]],
+      egwC: [["CS 718", "Durante los mil años que transcurrirán entre la primera resurrección y la segunda, se verificará el juicio de los impíos.", "Los mil años empiezan con la primera resurrección, en la venida, y terminan con la segunda."], ["CS 718", "Durante mil años, Satanás andará errante de un lado para otro en la tierra desolada, considerando los resultados de su rebelión contra la ley de Dios.", "En los mil años la tierra queda desolada y Satanás, atado a ella."]],
       egw: 'CS 711-718; PE 289-290',
       l: { ap18: I('18:8', 'Babilonia es quemada con fuego en un solo día.', 'CS 711', [['Apocalipsis 18:8', 'será quemada con fuego']]),
         ap19: X('19:20-21', 'La bestia y el falso profeta son lanzados al lago de fuego; los demás mueren con la espada de su boca.', 'CS 711-715', [['Apocalipsis 19:21', 'Los demás fueron muertos con la espada que salía de la boca del que montaba el caballo']]),

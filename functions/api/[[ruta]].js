@@ -543,6 +543,26 @@ export async function onRequest(context) {
       return json({ rol: 'participante', id: p.id, nombre: p.nombre, categoria: p.categoria });
     }
 
+    /* v230 (Camilo, 15-oct): en el libro abierto del juicio (Daniel 7:10), después del nombre de
+       quien estudia, unos nombres de pila de otras personas de la app. Solo nombres de pila, sin
+       repetir, sin id, sin categoría ni edad, y solo para quien entró: con su código o la clave
+       del director aquí, o (dentro de la app de Jóvenes) con la sesión de esa app, que la puerta
+       pasa como `SESION_APP` y que el navegador no puede inventar. */
+    if (metodo === 'GET' && ruta === '/nombres') {
+      if (!sesion && env.SESION_APP !== true) return error('Entra para ver los nombres.', 401);
+      const filas = await env.DB.prepare('SELECT nombre FROM participante WHERE borrado_en IS NULL').all();
+      const vistos = new Map();
+      for (const f of (filas.results || [])) {
+        const n = String(f.nombre || '').trim().split(/\s+/)[0] || '';
+        if (!/^[\p{L}][\p{L}'’-]{1,19}$/u.test(n)) continue;
+        const k = n.toLocaleLowerCase('es');
+        if (!vistos.has(k)) vistos.set(k, n.charAt(0).toLocaleUpperCase('es') + n.slice(1).toLocaleLowerCase('es'));
+      }
+      const l = [...vistos.values()];
+      for (let i = l.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [l[i], l[j]] = [l[j], l[i]]; }
+      return json({ nombres: l.slice(0, 24) }, 200, { 'cache-control': 'private, no-store' });
+    }
+
     /* ─────────────── EL PROGRESO, QUE YA NO ES DEL NAVEGADOR ───────────────
        MECANISMO
        El aparato manda SU ficha, el servidor la funde con la guardada y
