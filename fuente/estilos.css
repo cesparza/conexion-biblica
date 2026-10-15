@@ -5191,3 +5191,15 @@ span.cmp-ult-c{cursor:default}
 .lb-nombre .lb-otros{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:3px;font-size:1rem;line-height:1.15;color:#5A3412}
 .lb-nombre .lb-otros:empty{display:none}
 @media (max-width:900px){.lb-nombre .lb-otros{font-size:.75rem}}
+/* v231 (Camilo: «las eras que se solapan, en dos carriles»): Roma dividida, delgada, debajo de
+   la pista y hasta la venida; Roma papal y el papado sanado van en la pista, encima. */
+.lam-carriles{position:absolute;left:11px;right:11px;top:calc(50% + 5px);height:4px;pointer-events:none}
+.lam-carril2{position:absolute;top:0;height:4px;border-radius:999px;background:var(--c);opacity:.9;transition:box-shadow .3s ease}
+.lam-carril2.on{box-shadow:0 0 0 1.5px #F2C46B,0 0 7px 1px rgba(242,196,107,.85);opacity:1}
+/* v231: las señales de la liberación, numeradas; las copas, bajo su propia línea (sin «a la vez»). */
+.cmp-ult-num{display:grid;gap:6px;margin:0;padding:0;list-style:none;counter-reset:sen}
+.cmp-ult-num li{counter-increment:sen;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:start}
+.cmp-ult-num li::before{content:counter(sen);min-width:1.6em;height:1.6em;margin-top:4px;border-radius:999px;display:grid;place-items:center;font-size:.75rem;font-weight:800;color:#17120A;background:#D6B26A}
+.cmp-ult-vz.grupo span{font-style:normal}
+/* v231: al arrastrar, el año va arriba a la izquierda; el rótulo de la parte no queda debajo, asomado. */
+.lam-esc:has(.lam-anio-v:not([hidden])) .lam-chip{opacity:0;pointer-events:none}

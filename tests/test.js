@@ -2819,10 +2819,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      White; cada celda dice si lo dice el texto o según qué interpretación, con su fuente. */
   const E=ULTIMOS.eventos,citas=E.flatMap(e=>e.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
   const ev=id=>E.find(e=>e.id===id),ord=E.map(e=>e.id).join(),cols=ULTIMOS.libros.map(x=>x[0]).join();
-  ok(ord==='juicio,imagen,ley,ciudades,pequena,zarandeo,lluvia,pregon,sello,gracia,gran,jacob,plagas,falso,huida,decreto,liberacion,senales,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
+  ok(ord==='juicio,imagen,ley,ciudades,pequena,zarandeo,lluvia,pregon,sello,gracia,gran,jacob,plagas,plaga1,plaga2,plaga3,plaga4,plaga5,plaga6,falso,huida,decreto,plaga7,liberacion,senales,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
     E.every(e=>e.t&&e.c&&e.cuando&&e.nota&&e.egw&&/\b(CS|PE|EUD) \d/.test(e.egw)&&ULTIMOS.fases.some(f=>f[0]===e.fase))&&
     ULTIMOS.fases.map(f=>f[0]).join()==='antes,angustia,venida,mil,fin'&&ULTIMOS.fases.every(([f],i)=>E.filter(e=>e.fase===f).length&&E.findIndex(e=>e.fase===f)>=(i?E.map(e=>e.fase).lastIndexOf(ULTIMOS.fases[i-1][0]):0)),
-    'Los últimos acontecimientos: 31, en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
+    'Los últimos acontecimientos: 38 (con las siete plagas desde v231), en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
   ok(cols==='d2,d7,d8,d11,d12,mt24,ap12,ap13,ap14,ap16,ap17,ap18,ap19,ap20,ap21,apo,egw'&&
     E.every(e=>Object.entries(e.l).every(([k,x])=>ULTIMOS.libros.some(y=>y[0]===k)&&k!=='egw'&&x[0]&&(x[1]===0||x[1]===1)&&x[2]&&x[3]&&Array.isArray(x[4])&&(k==='mt24'?!x[4].length:true))),
     'Las columnas: Daniel 2, 7, 8, 11, 12, Mateo 24, Apocalipsis 12, 13, 14, 16, 17, 18, 19, 20, 21-22 y otros, y Elena de White; cada celda con referencia, si es explícito o interpretación, una línea y su fuente; Mateo sin comillas');
@@ -3089,11 +3089,55 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   for(const [k,g] of [['d2',pis.p2],['d7',pis.p7],['d8',pis.p8]]){const L=LAMINAS[k],lin=g.slice(g.lastIndexOf('linear-gradient(90deg,')+22,-1);
     const st=[...lin.matchAll(/(#[0-9A-Fa-f]{6}|transparent) ([\d.]+)% ([\d.]+)%/g)].map(m=>[m[1],+m[2],+m[3]]);
     const pos=y=>(y+620)/(2626+620)*100;
-    for(let y=-615;y<1844;y+=7){const x=pos(y),s=st.find(q=>x>=q[1]&&x<q[2]),gob=L.tiempo.filter(id=>!(L.solapa||['barro']).includes(id)).map(id=>L.partes.find(p=>p.id===id)).filter(p=>y>=p.de&&y<p.a).sort((a,b)=>b.de-a.de)[0];
-      const quiere=gob?gob.c:'#4a4032';if(!s||s[0].toLowerCase()!==quiere.toLowerCase()){mal.push(k+' '+y+' '+(s&&s[0])+'≠'+quiere);break;}}}
+    /* v231: donde se solapan, la pista lleva la parte más corta (Roma papal sobre Roma dividida, que va en
+       su carril de abajo); de 1798 a 1844, el papado sanado. */
+    const hd=L.herida||['dedos','barro'],san=L.tiempo.includes(hd[1])&&L.partes.find(p=>p.id===hd[0]).hasta?L.partes.find(p=>p.id===hd[1]):null,sanC=san&&((L.cmpExtra||[]).find(e=>e.de===san.a)||san).c;
+    for(let y=-615;y<1844;y+=7){const x=pos(y),s=st.find(q=>x>=q[1]&&x<q[2]),act=L.tiempo.map(id=>L.partes.find(p=>p.id===id)).filter(p=>p.de!=null&&y>=p.de&&y<p.a),gob=act.filter(p=>!p.hasta).sort((a,b)=>(a.a-a.de)-(b.a-b.de))[0]||act[0];
+      const quiere=san&&y>=san.a?sanC:gob?gob.c:'#4a4032';if(!s||s[0].toLowerCase()!==quiere.toLowerCase()){mal.push(k+' '+y+' '+(s&&s[0])+'≠'+quiere);break;}}}
   ok(!mal.length,'v230: la pista tiene, año por año, el color del reino que gobierna, de borde a borde, y gris donde el capítulo no tiene reino'+(mal.length?' — '+mal.join(', '):''));
   ok(/function lamTiempoAlMarco/.test(js)&&/function lamTiempoPega/.test(js)&&/function lamBordeAbajo/.test(js)&&/lam-l23-sec/.test(js),'v230: en Explorar la línea va debajo de la escena, se pega abajo al pasarla y el panel de las 2.300 tardes y mañanas sigue aparte');
   ok(/srvFetch\('\/nombres'\)/.test(js)&&/e\.textContent=x/.test(js)&&!/lb-otros[^\n]*innerHTML/.test(js),'v230: el libro abierto pide los nombres de pila al servidor y los escribe con textContent');
+}
+
+/* v231 (Camilo, 15-oct): las eras que se solapan van en dos carriles (Roma dividida, delgada, hasta
+   la venida; Roma papal y el papado sanado, encima); al elegir o llegar a una parte, el pulgar, la
+   escena y el rótulo van a su INICIO; las catorce señales numeradas; las siete plagas. */
+{
+  const {LAMINAS,ULTIMOS}=require(path.join(RAIZ,'fuente','laminas.js')),{VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const js=APP,E=ULTIMOS.eventos,ev=id=>E.find(e=>e.id===id),pa=(k,id)=>LAMINAS[k].partes.find(p=>p.id===id);
+  const q=montar("r2:(lamId='d2',lamRangoTx(lamParte('dedos'))), r7:(lamId='d7',lamRangoTx(lamParte('cuernos'))), rp:(lamId='d7',lamRangoTx(lamParte('cuerno'))), "+
+    "a2:(lamId='d2',lamQuien(1520).tx), b2:(lamId='d2',lamQuien(1820).tx), c2:(lamId='d2',lamQuien(500).tx), a7:(lamId='d7',lamQuien(1520).tx), "+
+    "k2:(lamId='d2',lamCarrilHTML(LAMINAS.d2)), k7:(lamId='d7',lamCarrilHTML(LAMINAS.d7)), k8:(lamId='d8',lamCarrilHTML(LAMINAS.d8)), ven:(lamId='d2',lamHitos(LAMINAS.d2).ven)");
+  ok(pa('d2','dedos').hasta==='venida'&&pa('d7','cuernos').hasta==='venida'&&!pa('d2','barro').hasta&&!pa('d7','cuerno').hasta&&
+    q.r2==='476 d.C. – hasta la venida'&&q.r7==='476 d.C. – hasta la venida'&&q.rp==='538 d.C. – 1798 d.C.'&&/Maxwell, <i>El porvenir del mundo revelado<\/i>, p\. 39-40/.test(pa('d2','dedos').fuente+pa('d7','cuernos').fuente),
+    'v231: Roma dividida (los diez dedos y los diez cuernos) va de 476 «hasta la venida» (2:43-44; Maxwell, p. 39-40); Roma papal, de 538 a 1798 ('+[q.r2,q.r7,q.rp].join(' · ')+')');
+  ok(/^Roma papal; a la vez, Roma dividida sigue hasta la venida/.test(q.a2)&&/^Roma papal; a la vez, Roma dividida sigue hasta la venida/.test(q.a7)&&/^Roma papal, herida en 1798, se va sanando \(Ap 13:3\); a la vez, Roma dividida sigue/.test(q.b2)&&/^Roma dividida, hasta la venida/.test(q.c2),
+    'v231: al arrastrar, el rótulo dice primero la fase de arriba (Roma papal, o el papado que sana) y después que Roma dividida sigue a la vez ('+q.a2+' | '+q.b2+')');
+  const kk=h=>(h.match(/class="lam-carril2"/g)||[]).length,lf=h=>{const m=h.match(/left:([\d.]+)%;width:([\d.]+)%/);return m?[+m[1],+m[1]+ +m[2]]:[];};
+  const pos=y=>(y+620)/(2626+620)*100,[x0,x1]=lf(q.k2);
+  ok(kk(q.k2)===1&&kk(q.k7)===1&&kk(q.k8)===0&&Math.abs(x0-pos(476))<.01&&Math.abs(x1-pos(q.ven))<.01&&/data-de="476"/.test(q.k7),
+    'v231: el carril de abajo: Roma dividida, de 476 a la venida, en Daniel 2 y 7 (Daniel 8 no la trae)');
+  const nPres=(js.match(/getElementById\('lamTano'\)\.textContent=lamRangoTx\(/g)||[]).length;
+  ok(nPres>=4&&!/textContent=lamAnioTx\(p\.de\)\+' – '/.test(js)&&!/textContent=lamAnioTx\(q\.de\)\+' – '/.test(js)&&/r\.value=P\.de;document\.getElementById\('lamTano'\)/.test(js)&&!/r\.value=P\.a;/.test(js)&&
+    /lamTramo\(p\.de,p\.a,p\.hasta\)/.test(js)&&/function lamSanada/.test(js),
+    'v231: en Explorar y en Presentar (Daniel 2, 7 y 8) el pulgar y el rótulo van al INICIO de la parte, con su tramo; la cuenta de los 1.260 años empieza en 538 ('+nPres+')');
+  /* Las señales, numeradas del 1 al 14. */
+  const se=ev('senales'),h=montar("h:ultDetHTML(ultIdx('senales'),'')").h;
+  ok(se.egwNum===true&&se.egwC.length===14&&se.t==='Las señales de la liberación'&&(h.match(/<li>/g)||[]).length===14&&/<ol class="cmp-ult-num">/.test(h)&&!/\b12\b|doce/.test(se.t+se.nota),
+    'v231: «Las señales de la liberación», numeradas del 1 al 14 (lista ordenada), sin «12»');
+  /* Las siete plagas. */
+  const ps=[1,2,3,4,5,6,7].map(n=>ev('plaga'+n)),ord=E.map(e=>e.id),vv=r=>{const [c,v]=r.split(':');return VERS_AP['ap'+c][+v];};
+  const lit=ps.every(p=>p&&p.l.ap16&&p.l.ap16[1]===1&&p.l.ap16[4].every(([r,c])=>vv(r.replace('Apocalipsis ',''))&&vv(r.replace('Apocalipsis ','')).includes(c)));
+  const nota=ps.every((p,i)=>{const v=[2,3,4,8,10,12,17][i];return p.nota.includes(VERS_AP.ap16[v].replace(/[.»]+$/,'').slice(0,60));});
+  ok(ps.every(Boolean)&&lit&&nota&&ps.slice(0,6).every(p=>p.fase==='angustia'&&p.grupo==='copas')&&ps[6].fase==='venida'&&ps[6].vez==='medianoche'&&
+    ord.indexOf('plagas')<ord.indexOf('plaga1')&&[1,2,3,4,5].every(n=>ord.indexOf('plaga'+n)+1===ord.indexOf('plaga'+(n+1)))&&ord.indexOf('plaga7')+1===ord.indexOf('liberacion'),
+    'v231: las siete plagas de Apocalipsis 16, una fila cada una, en su orden y con su texto RV1995 literal; la séptima, a medianoche, con la liberación');
+  const cita=e=>(e.egwC||[]).map(x=>x[0]+' '+x[1]).join(' | ');
+  ok([1,2,3,4].every(n=>/CS 686/.test(cita(ev('plaga'+n))))&&!(ev('plaga5').egwC||[]).length&&/CS 618 .*no dice que sea en la sexta plaga/.test(ev('plaga6').egwC.map(x=>x.join(' ')).join())&&
+    /CS 694 .*Hecho es/.test(cita(ev('plaga7')))&&/CS 695 .*Babilonia/.test(cita(ev('plaga7')))&&/CS 687 Estas plagas no serán universales/.test(cita(ev('plagas')))&&
+    ['falso','huida','decreto'].every(id=>ev(id).grupo==='sin'&&!ev(id).vez)&&ULTIMOS.grupos&&/ni la Biblia ni Elena de White/.test(ULTIMOS.grupos.sin)&&/CS 687/.test(ULTIMOS.grupos.copas)&&
+    /Apocalipsis 16:17, 18, 19 y 21/.test(ULTIMOS.veces.medianoche)&&ev('falso').l.ap16[3]==='CS 618'&&/cmp-ult-vz grupo/.test(js),
+    'v231: Elena de White, literal: las plagas 1-4 (CS 686), que no son universales (CS 687) y la séptima en la liberación (CS 694-695); el falso Cristo, la huida y el decreto, sin plaga precisa');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

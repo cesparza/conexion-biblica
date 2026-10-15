@@ -313,6 +313,10 @@ function lamMini(L,p){
       '<image href="'+lamRuta(L,p.id)+'" x="0" y="0" width="768" height="1152"/></svg>';}
   return '<img src="'+lamRuta(L,p.img||p.id)+'" alt="">';
 }
+/* v231 (Camilo: «al elegir una parte, el pulgar, la escena y el rótulo van a su INICIO»): el
+   rótulo del tramo, de su inicio a su fin. Roma dividida no termina en 1798 ni hoy: los diez
+   dedos y los diez cuernos siguen hasta que cae la piedra (2:43-44; Maxwell, p. 39-40). */
+const lamRangoTx=p=>p.de==null?(p.era!=null?lamAnioTx(p.era):p.fechas):lamAnioTx(p.de)+' – '+(p.hasta==='venida'?'hasta la venida':p.a>=LAM_HOY?'hoy':lamAnioTx(p.a));
 const lamFechaCorta=p=>p.de!=null?lamAnioTx(p.de):p.fechas.replace(/^./,c=>c.toUpperCase());
 /* Las fechas del riel, cortas: el rótulo de la estatua si lo hay; si no, de dónde a dónde. */
 const lamFechasRiel=(L,p)=>{const e=(L.etiquetas||{})[p.id];if(e&&e.f&&p.de!=null)return e.f;
@@ -498,6 +502,7 @@ function lamAbre(cid,modo){
     '<div class="lam-tiempo"><div class="lam-tcab"><button type="button" class="lam-play" id="lamPlay" onclick="lamRecorre()" aria-label="Recorrer la historia">'+IC('play')+'</button>'+
     '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">'+esc(L.tq0||'De 605 a.C. hasta hoy, y lo que viene')+'</div></div></div>'+
     '<div class="lam-rango"><div class="lam-pista" id="lamPista" style="background:'+lamPista()+'"><i class="lam-tramo" id="lamTramo"></i></div>'+lamHitosHTML(L)+
+    '<div class="lam-carriles" aria-hidden="true">'+lamCarrilHTML(L)+'</div>'+
     '<input type="range" id="lamRango" min="-620" max="'+LAM_FIN+'" step="1" value="-620" aria-label="Año"></div>'+
     '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div>'+lamHitosLeyenda(L)+lamL23tHTML(L)+'</div>'+
     /* v212: los mismos botones redondos de Explorar (lamNavHTML). */
@@ -668,10 +673,12 @@ function lamCartel(on,anima){
   c.classList.add('ve');
 }
 /* La franja de oro sobre la línea de tiempo: el periodo de la parte que se ve. */
-function lamTramo(de,a){
+function lamTramo(de,a,c2){
   const b=document.getElementById('lamTramo');if(!b)return;
   b.classList.remove('banda');
-  if(de==null){b.classList.remove('ve');return;}
+  /* v231: Roma dividida se marca en su carril de abajo, de 476 a la venida. */
+  document.querySelectorAll('#lam .lam-carril2').forEach(x=>x.classList.toggle('on',!!c2&&de!=null&&Number(x.dataset.de)===de));
+  if(de==null||c2){b.classList.remove('ve');return;}
   const x0=lamPos(de),x1=lamPos(a==null?LAM_HOY:a);
   b.style.left=x0.toFixed(3)+'%';b.style.width='max(6px, '+Math.max(0,x1-x0).toFixed(3)+'%)';
   b.classList.add('ve');
@@ -923,7 +930,9 @@ function lamElige(i){
   else lamPiedraArriba();
   lamRielMarca([p.id]);lamHoja(lamHojaParte(p,i,L.partes.length));lamVeHoja();
   /* v209: el nombre como un rótulo de documental, y su periodo en oro sobre la línea de tiempo. */
-  lamChip(p);lamTramo(p.de,p.a);
+  lamChip(p);lamTramo(p.de,p.a,p.hasta);
+  /* v231: el pulgar y el rótulo, al inicio de la parte. */
+  const rg=document.getElementById('lamRango');if(rg&&p.de!=null){rg.value=p.de;document.getElementById('lamTano').textContent=lamRangoTx(p);document.getElementById('lamTq').textContent=p.reino;}
   const fv=(L.futuro||[]).find(f=>f.id===p.id);if(fv)lamTiempoFut(fv,true);
   lamLugar();
 }
@@ -1002,15 +1011,31 @@ function lamPista(){
   /* v230 (Camilo: «colores que no cuadran al moverme»): cada reino con su color de borde a borde,
      sin degradado; donde el capítulo no tiene reino (Daniel 8 antes de 539 y entre 476 y 538, o
      entre 1798 y 1844), el gris de la pista. */
-  const NEU='#4a4032',ps=L.tiempo.filter(id=>!(L.solapa||['barro']).includes(id)).map(lamParte).filter(p=>p.de<LAM_JUICIO).sort((a,b)=>a.de-b.de),seg=[];
-  let cur=-620;
-  ps.forEach(p=>{const a=Math.max(cur,p.de),b=Math.min(p.a,LAM_JUICIO);if(a>cur)seg.push(NEU+' '+r(lamPos(cur))+'% '+r(lamPos(a))+'%');if(b>a){seg.push(p.c+' '+r(lamPos(a))+'% '+r(lamPos(b))+'%');cur=b;}});
-  if(cur<LAM_JUICIO)seg.push(NEU+' '+r(lamPos(cur))+'% '+r(lamPos(LAM_JUICIO))+'%');
+  /* v231 (Camilo: «las eras que se solapan, en dos carriles»): en la pista va, año por año, la
+     parte más corta de las que gobiernan (538-1798, Roma papal sobre Roma dividida); de 1798 a
+     1844, el papado sanado, rayado. Roma dividida va en su carril de abajo hasta la venida. */
+  const NEU='#4a4032',ps=L.tiempo.map(lamParte).filter(p=>p&&p.de!=null&&p.de<LAM_JUICIO),seg=[];
+  const S=lamSanada(L),cortes=[...new Set([-620,LAM_JUICIO].concat(...ps.map(p=>[p.de,p.a]),S?[S.de]:[]).filter(y=>y>=-620&&y<=LAM_JUICIO))].sort((a,b)=>a-b);
+  cortes.slice(0,-1).forEach((a,i)=>{const b=cortes[i+1],m=(a+b)/2,p=ps.filter(q=>m>=q.de&&m<q.a&&!q.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de))[0]||ps.filter(q=>m>=q.de&&m<q.a)[0];
+    const c=S&&m>=S.de?S.c:p?p.c:NEU;seg.push(c+' '+r(lamPos(a))+'% '+r(lamPos(b))+'%');});
   const j=r(lamPos(LAM_JUICIO)),v=r(lamPos(H.ven)),re=H.rei&&H.rei.id?lamParte(H.rei.id):null,rd=H.rei?r(lamPos(H.rei.de)):'100';
   const fut=['#D6B26A '+j+'%','#F2C46B '+v+'%','#8C8576 '+v+'%','#8C8576 '+rd+'%',(re?re.c:'#B98A35')+' '+rd+'%','transparent 100%'];
   /* El futuro, rayado: todavía no ha pasado (desde la venida). */
+  const sx=S?lamPos(S.de)/100:0,sw=S?(lamPos(LAM_JUICIO)-lamPos(S.de))/100:0;
   return 'repeating-linear-gradient(115deg,rgba(14,13,11,.4) 0 4px,transparent 4px 9px) right 0 / '+r(100-lamPos(H.ven))+'% 100% no-repeat,'+
+    (S?'repeating-linear-gradient(115deg,rgba(255,244,214,.38) 0 3px,transparent 3px 7px) '+r(sx/(1-sw)*100)+'% 0 / '+r(sw*100)+'% 100% no-repeat,':'')+
     'linear-gradient(90deg,'+seg.concat(fut).join(',')+')';
+}
+/* v231: el papado sanado (de 1798 en adelante) en la pista principal, sobre Roma dividida. */
+function lamSanada(L){
+  const h=L.herida||['dedos','barro'],d=L.tiempo.includes(h[0])&&lamParte(h[0]),p=L.tiempo.includes(h[1])&&lamParte(h[1]);if(!d||!p||!d.hasta)return null;
+  const x=(L.cmpExtra||[]).find(e=>e.de===p.a);
+  return {de:p.a,c:x?x.c:p.c,reino:x?x.reino:p.reino+' sanada'};
+}
+/* El carril de abajo: lo que sigue hasta la venida (Roma dividida), con su color. */
+function lamCarrilHTML(L){
+  const H=lamHitos(L);
+  return L.tiempo.map(lamParte).filter(p=>p&&p.hasta==='venida').map(p=>'<i class="lam-carril2" data-de="'+p.de+'" title="'+esc(p.reino+' · '+lamRangoTx(p))+'" style="left:'+lamPos(p.de).toFixed(3)+'%;width:'+(lamPos(H.ven)-lamPos(p.de)).toFixed(3)+'%;--c:'+p.c+'"></i>').join('');
 }
 /* Qué gobernaba en el año y: las partes encendidas y la frase. */
 function lamQuien(y){
@@ -1020,11 +1045,16 @@ function lamQuien(y){
   for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&y<p.a)on.push(id);}
   const [hd,hs]=LAM().herida||['dedos','barro'];
   if(y>=1798&&on.includes(hd))suave.push(hs);
-  const n=on.map((id,i)=>{const r=lamParte(id).reino;return i&&/^El /.test(r)?'e'+r.slice(1):r;});
+  /* v231: primero la fase de la pista (Roma papal, o el papado que sana); después lo que sigue
+     debajo, a la vez (Roma dividida, hasta la venida). */
+  const P=on.map(lamParte),arr=P.filter(p=>!p.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de)),aba=P.filter(p=>p.hasta);
+  const n=arr.map((p,i)=>i&&/^El /.test(p.reino)?'e'+p.reino.slice(1):p.reino),seg=[];
+  if(n.length)seg.push(n.join(' y '));
+  if(suave.length)seg.push('Roma papal, herida en 1798, se va sanando (Ap 13:3)');
+  if(aba.length)seg.push((seg.length?'a la vez, ':'')+aba.map(p=>p.reino).join(' y ')+(seg.length?' sigue hasta la venida':', hasta la venida'));
   const vac=(LAM().vacios||[]).find(v=>y>=v[0]&&y<v[1]);
-  let tx=!on.length?(vac?vac[2]:'Antes de Nabucodonosor'):n.join(' y ');
-  if(suave.length)tx+='; el papado, herido en 1798, se va sanando (Ap 13:3)';
-  if(LAM().juicio&&y>=LAM().juicio)tx+='; desde 1844, el juicio en el cielo';
+  let tx=!on.length?(vac?vac[2]:'Antes de Nabucodonosor'):seg.join('; ');
+  if(LAM().juicio&&y>=LAM().juicio&&!arr.some(p=>/juicio/i.test(p.reino)))tx+='; desde 1844, el juicio en el cielo';
   return {on,suave,tx};
 }
 let lamFutVisto='';
@@ -1139,9 +1169,9 @@ function lamPres(k){
   const ult=vistos.filter(id=>L.tiempo.includes(id)).pop();
   /* v230: el pulgar en el año en que empieza la parte (en su fin ya gobierna la siguiente). */
   if(ult){const p=lamParte(ult);const r=document.getElementById('lamRango');r.value=p.de;
-    document.getElementById('lamTano').textContent=lamAnioTx(p.de)+' – '+(p.a>=2026?'hoy':lamAnioTx(p.a));document.getElementById('lamTq').textContent=p.reino;}
+    document.getElementById('lamTano').textContent=lamRangoTx(p);document.getElementById('lamTq').textContent=p.reino;}
   lamHist(s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:null);
-  const pp=s.tipo==='parte'?lamParte(s.id):null;lamChip(pp);lamTramo(pp?pp.de:null,pp?pp.a:null);
+  const pp=s.tipo==='parte'?lamParte(s.id):null;lamChip(pp);lamTramo(pp?pp.de:null,pp?pp.a:null,pp&&pp.hasta);
   /* v211: la piedra y el monte, en su tramo del futuro de la línea de tiempo. */
   const fv=(L.futuro||[]).filter(f=>vistos.includes(f.id)).pop();if(fv)lamTiempoFut(fv,s.tipo==='parte'&&s.id===fv.id);
   if(s.tipo==='portada')lamHoja('<div class="lam-hcab"><div><div class="lam-p1">Daniel 2</div><div class="lam-p2">'+esc(L.titulo)+'</div></div></div>'+
@@ -2141,9 +2171,9 @@ function lamEligeE(i,vis){
   lamHoja(lamHojaParte(p,i,L.partes.length));if(!vis)lamVeHoja();
   /* La línea de tiempo va al año de la parte. */
   const r=document.getElementById('lamRango');
-  if(r&&p.de!=null){r.value=p.de;document.getElementById('lamTano').textContent=p.fechas;document.getElementById('lamTq').textContent=p.reino;}
+  if(r&&p.de!=null){r.value=p.de;document.getElementById('lamTano').textContent=lamRangoTx(p);document.getElementById('lamTq').textContent=p.reino;}
   else if(r&&p.era){r.value=p.era;document.getElementById('lamTano').textContent=p.fechas;document.getElementById('lamTq').textContent=p.reino;}
-  lamTramo(p.de,p.a);
+  lamTramo(p.de,p.a,p.hasta);
   const fv=(L.futuro||[]).find(f=>f.id&&f.id===p.id);if(fv)lamTiempoFut(fv,true);
   if(!vis)lamLugar();
 }
@@ -2290,7 +2320,7 @@ function lamPeriodoVis(j,anima){
   const t=lamTablaPon(h,'per per-'+x.v);lamArma(t,anima);
   /* La línea de tiempo: el año y, en el cumplimiento, la franja de 538 a 1798. */
   const r=document.getElementById('lamRango');
-  if(r){r.value=P.a;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
+  if(r){r.value=P.de;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
   if(x.v==='cumple'||x.v==='resta'||x.v==='purif'){if(!anima||lamQuieto())lamBanda(true);else lamT(()=>lamBanda(true),1500);}
 }
 function lamPerTx(j){
@@ -2473,14 +2503,14 @@ function lamPresE(k){
   /* La línea de tiempo marca hasta dónde va la historia, como en Daniel 2. */
   const ult=pasos.slice(0,k+1).filter(x=>x.tipo==='parte'&&L.tiempo.includes(x.id)).map(x=>x.id).pop();
   if(ult){const q=lamParte(ult),r=document.getElementById('lamRango');r.value=q.de;
-    document.getElementById('lamTano').textContent=lamAnioTx(q.de)+' – '+(q.a>=2026?'hoy':lamAnioTx(q.a));document.getElementById('lamTq').textContent=q.reino;}
-  if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.a;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
+    document.getElementById('lamTano').textContent=lamRangoTx(q);document.getElementById('lamTq').textContent=q.reino;}
+  if(s.tipo==='periodo'){const P=L.periodo,r=document.getElementById('lamRango');r.value=P.de;document.getElementById('lamTano').textContent=P.rango||P.de+' – '+P.a+' d.C.';document.getElementById('lamTq').textContent=P.tq||'1.260 años del cuerno pequeño';}
   /* v211: el Hijo del hombre en 1844; el reino, en el tramo del futuro. */
   if(p&&p.era){const r=document.getElementById('lamRango');r.value=p.era;document.getElementById('lamTano').textContent=lamAnioTx(p.era);document.getElementById('lamTq').textContent=p.reino;}
   const fv=p&&(L.futuro||[]).find(f=>f.id&&f.id===p.id);
   /* v209: el periodo de la parte en oro, y la cámara que se acerca despacio (no en los pasos que ya se acercan solos). */
   /* En la cuenta de los 1.260 años el tramo es la franja de 538 a 1798 (lamBanda). */
-  if(s.tipo!=='periodo')lamTramo(p?p.de:null,p?p.a:null);
+  if(s.tipo!=='periodo')lamTramo(p?p.de:null,p?p.a:null,p&&p.hasta);
   if(fv)lamTiempoFut(fv,true);
   if(!(p&&p.pasos))lamAcerca(lamTodo(),0);
   /* El contador: cada parte, la portada de las señas y la cuenta de los 1.260 años (las señas van dentro de su portada). */
@@ -10109,7 +10139,9 @@ function ultHTML(){
       '<div class="cmp-ult-fila cab" role="row">'+cab+'</div>'+
       F.map(([f,t])=>{const ev=E.map((e,i)=>[e,i]).filter(([e])=>e.fase===f);return ev.length?'<div class="cmp-ult-fz" role="row"><span role="cell">'+esc(t)+'</span></div>'+ev.map(([e,i],j)=>
         /* v221: lo que pasa a la vez va bajo una misma línea, no en fila falsa. */
-        (e.vez&&(!j||ev[j-1][0].vez!==e.vez)?'<div class="cmp-ult-vz" role="row"><span role="cell">'+esc((U.veces||{})[e.vez]||'A la vez')+'</span></div>':'')+fila(e,i)).join(''):'';}).join('')+
+        (e.vez&&(!j||ev[j-1][0].vez!==e.vez)?'<div class="cmp-ult-vz" role="row"><span role="cell">'+esc((U.veces||{})[e.vez]||'A la vez')+'</span></div>':'')+
+        /* v231: las copas (una tras otra) y lo que no tiene plaga precisa, bajo su propia línea. */
+        (e.grupo&&(!j||ev[j-1][0].grupo!==e.grupo)?'<div class="cmp-ult-vz grupo" role="row"><span role="cell">'+esc((U.grupos||{})[e.grupo]||'')+'</span></div>':'')+fila(e,i)).join(''):'';}).join('')+
     '</div></div>'+
     '<p class="sec-fuente">Fuente: '+U.fuente+'</p></section>';
 }
@@ -10131,13 +10163,15 @@ function ultDetHTML(i,k){
     '<div class="cmp-ult-libs"><span class="cmp-ult-k">Dónde está</span>'+(muestra.length?muestra.map(([q,c,n])=>{const y=e.l[q];
       return '<button type="button" class="cmp-ult-lib '+(y[1]?'si':'int')+'" onclick="cmpUlt('+i+',false,\''+q+'\')"><b>'+esc(c)+'</b> '+esc(y[0])+'</button>';}).join(''):'<span class="cmp-ult-k no">Ningún capítulo lo cuenta; lo describe Elena de White.</span>')+
       (muestra.length&&no.length?'<span class="cmp-ult-k no">No lo traen: '+esc(no.map(x=>x[1]).join(', '))+'</span>':'')+'</div>'+
-    '<p class="cmp-ult-f"><b>Elena de White:</b> '+e.egw+'</p>'+ultEgwHTML(e.egwC)+ultNavHTML(i);
+    '<p class="cmp-ult-f"><b>Elena de White:</b> '+e.egw+'</p>'+ultEgwHTML(e.egwC,e.egwNum)+ultNavHTML(i);
 }
 /* v227 (Camilo: «cada vez que Elena de White aplica un texto, su cita literal y una línea que
    la explica»): [[referencia, cita, explicación]]. Solo libros que están en la biblioteca (CS). */
-function ultEgwHTML(l){
+function ultEgwHTML(l,num){
   if(!l||!l.length)return '';
-  return '<div class="cmp-ult-egw"><span class="cmp-ult-k">Elena de White, literal</span>'+l.map(([r,c,n])=>'<blockquote><p>“'+esc(c)+'” <cite>'+esc(r)+'</cite></p><small>'+esc(n)+'</small></blockquote>').join('')+'</div>';
+  /* v231: las señales de la liberación, numeradas del 1 al 14 en su orden (num). */
+  const q=([r,c,n])=>'<blockquote><p>“'+esc(c)+'” <cite>'+esc(r)+'</cite></p><small>'+esc(n)+'</small></blockquote>';
+  return '<div class="cmp-ult-egw"><span class="cmp-ult-k">Elena de White, literal</span>'+(num?'<ol class="cmp-ult-num">'+l.map(x=>'<li>'+q(x)+'</li>').join('')+'</ol>':l.map(q).join(''))+'</div>';
 }
 function ultNavHTML(i){
   const U=ULT();
