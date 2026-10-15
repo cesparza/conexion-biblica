@@ -5150,6 +5150,31 @@ span.cmp-ult-c{cursor:default}
 .prep-actual .ico-t{width:14px;height:14px}
 .prep-guardado{font-size:.75rem;color:var(--gris)}
 .prep-edad{font-weight:700}
+/* v229 (Camilo: «la imagen llena solo una parte; la comparación tapa la escena»): al presentar
+   en pantalla ancha el texto mide --lam-hoja-w (lamCubre), y «Con Daniel 2 y 7» no es una
+   columna sobre la imagen: va en pastillas al pie de la hoja. */
+.lam.pres.ancho .lam-hoja{width:var(--lam-hoja-w,min(38%,640px));max-width:60%}
+.lam.pres .lam-d2{display:none!important}
+.lam.pres:not(.ancho) .lam-d2-fila:not([hidden]){display:flex;flex-wrap:wrap;gap:6px;width:100%;margin:6px 0 0}
+@media (min-width:601px){.lam.pres:not(.ancho) .lam-d2-fila .lam-d2f{flex:1 1 0;min-width:0}}
+.lam.pres.ancho .lam-bajo{position:absolute;right:0;bottom:0;z-index:4;width:var(--lam-hoja-w,min(38%,640px));max-width:60%;
+  padding:0 clamp(20px,2.6vw,44px) clamp(12px,1.6vw,20px) clamp(44px,4.5vw,84px);box-sizing:border-box}
+.lam.pres.ancho .lam-d2-fila:not([hidden]){display:flex;flex-wrap:nowrap;gap:8px;width:100%;margin:0}
+.lam.pres.ancho .lam-d2-fila .lam-d2f{flex:1 1 0;min-width:0}
+.lam.pres.ancho .lam-marco:has(.lam-d2-fila:not([hidden])) .lam-hoja{bottom:clamp(76px,10vh,96px)}
+.lam.pres.ancho .lam-bajo:has(.lam-d2-fila:not([hidden])){height:clamp(76px,10vh,96px);display:flex;align-items:center;padding-top:0;padding-bottom:0;
+  background:linear-gradient(90deg,rgba(5,4,3,0),rgba(5,4,3,.82) clamp(36px,3.6vw,72px),rgba(5,4,3,.92))}
+/* v229: el nombre de quien estudia en la página derecha del libro abierto (Daniel 7:10), después
+   de que pasan las hojas; y debajo de 7:10, Apocalipsis 3:5 con su condición («El vencedor»). */
+.lb-3d>.lb-nombre{position:absolute;left:53%;width:44%;top:18%;height:64%;margin:0;border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  transform:translateZ(7px);opacity:0;transition:opacity .7s ease 1.7s;color:#4A250B;text-align:center;pointer-events:none;font-family:var(--cine-serif,Georgia,serif)}
+.lb-nombre small{font-family:var(--cine-sans,system-ui,sans-serif);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#8A5A22;font-weight:700}
+.lb-nombre b{font-size:1.375rem;font-weight:600;line-height:1.1;overflow-wrap:anywhere;max-width:100%}
+.lb-nombre.vacio b{font-style:italic;font-weight:400;opacity:.75}
+.lam-libro.abre .lb-3d>.lb-nombre{opacity:1}
+.lam-libro.quieto .lb-3d>.lb-nombre{transition:none}
+@media (max-width:900px){.lb-nombre small{display:none}.lb-nombre b{font-size:1rem}}
+.lam-libro-cita .lb-ap{display:block;margin-top:.5em;font-size:.75em}
 </style>
 </head>
 <body>
@@ -5708,7 +5733,7 @@ span.cmp-ult-c{cursor:default}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'bcdd01228ee3';
+const VERSION_APP = '5838d9a59548';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -62423,7 +62448,8 @@ const ULTIMOS = {
  "nota": "Daniel 2, 7 y 8 pasan del juicio a la venida y al reino. Daniel 11 y 12, Mateo 24 y el Apocalipsis llenan lo de en medio. Un punto lleno: el texto lo dice. Un aro: está ahí según la interpretación que se nombra. Toca una celda para ver el texto y su fuente.",
  "veces": {
   "ley": "A la vez: al imponer el domingo, las iglesias levantan la imagen de la bestia (CS 498 y 502)",
-  "crisis": "A la vez, desde la ley dominical hasta el cierre de la gracia (PE 33 y 85-86; CS 661-671)"
+  "crisis": "A la vez, desde la ley dominical hasta el cierre de la gracia (PE 33 y 85-86; CS 661-671)",
+  "medianoche": "A la vez, a medianoche, en la séptima plaga (CS 693-695)"
  },
  "fases": [
   [
@@ -63626,6 +63652,7 @@ const ULTIMOS = {
   {
    "id": "liberacion",
    "fase": "venida",
+   "vez": "medianoche",
    "t": "La liberación del pueblo de Dios",
    "c": "Liberación",
    "cuando": "A medianoche, en la séptima plaga",
@@ -63720,20 +63747,165 @@ const ULTIMOS = {
    "fuente": "CS 693-694; PE 285"
   },
   {
+   "id": "senales",
+   "fase": "venida",
+   "vez": "medianoche",
+   "t": "Las señales de la liberación",
+   "c": "Señales de la liberación",
+   "cuando": "A medianoche, en la séptima plaga, mientras Dios libra a su pueblo",
+   "nota": "Una tras otra, en la noche de la liberación: “Sucédense señales y prodigios con rapidez. Los malos miran la escena con terror y asombro, mientras los justos contemplan con gozo las señales de su liberación” (CS 694).",
+   "egwC": [
+    [
+     "CS 693",
+     "de pronto densas tinieblas, más sombrías que la obscuridad de la noche caen sobre la tierra.",
+     "Las tinieblas caen cuando los impíos van a atacar."
+    ],
+    [
+     "CS 693",
+     "Luego un arco iris, que refleja la gloria del trono de Dios, se extiende de un lado a otro del cielo, y parece envolver a todos los grupos en oración.",
+     "El arco iris de la promesa rodea a los que oran."
+    ],
+    [
+     "CS 694",
+     "Los hijos de Dios oyen una voz clara y melodiosa que dice: \"Enderezaos,\" y, al levantar la vista al cielo, contemplan el arco de la promesa.",
+     "Una voz a los hijos de Dios; ven la gloria de Dios y al Hijo del hombre en su trono."
+    ],
+    [
+     "CS 694",
+     "Es a medianoche cuando Dios manifiesta su poder para librar a su pueblo. Sale el sol en todo su esplendor.",
+     "El sol sale a medianoche."
+    ],
+    [
+     "CS 694",
+     "La naturaleza entera parece trastornada. Los ríos dejan de correr.",
+     "Los ríos se detienen."
+    ],
+    [
+     "CS 694",
+     "Nubes negras y pesadas se levantan y chocan unas con otras.",
+     "Las nubes chocan unas con otras."
+    ],
+    [
+     "CS 694",
+     "En medio de los cielos conmovidos hay un claro de gloria indescriptible, de donde baja la voz de Dios semejante al ruido de muchas aguas, diciendo: \"Hecho es.\" (Apocalipsis 16: 17.)",
+     "La voz de Dios de la séptima copa (Apocalipsis 16:17)."
+    ],
+    [
+     "CS 694",
+     "Esa misma voz sacude los cielos y la tierra. Síguese un gran terremoto, \"cual no fue jamás desde que los hombres han estado sobre la tierra.\" (Vers. 18.)",
+     "El gran terremoto (Apocalipsis 16:18)."
+    ],
+    [
+     "CS 695",
+     "Pedrisco grande, cada piedra, \"como del peso de un talento\" (vers. 21), hace su obra de destrucción.",
+     "El granizo (Apocalipsis 16:21)."
+    ],
+    [
+     "CS 695",
+     "Los muros de las cárceles se parten de arriba abajo, y son libertados los hijos de Dios que habían sido apresados por su fe.",
+     "Se abren las cárceles: quedan libres los presos por su fe."
+    ],
+    [
+     "CS 695",
+     "Los sepulcros se abren y \"muchos de los que duermen en el polvo de la tierra serán despertados, unos para vida eterna, y otros para vergüenza y confusión perpetua.\" (Daniel 12: 2.)",
+     "La resurrección especial (Daniel 12:2); tiene su propia fila."
+    ],
+    [
+     "CS 695",
+     "Fieros relámpagos rasgan el cielo con fragor, envolviendo a la tierra en claridad de llamaradas. Por encima del ruido aterrador de los truenos, se oyen voces misteriosas y terribles que anuncian la condenación de los impíos.",
+     "Relámpagos y voces que anuncian la condenación de los impíos."
+    ],
+    [
+     "CS 696",
+     "Por un desgarrón de las nubes una estrella arroja rayos de luz cuyo brillo queda cuadruplicado por el contraste con la obscuridad.",
+     "Una estrella: esperanza para los fieles, severidad para los transgresores."
+    ],
+    [
+     "CS 697",
+     "Entonces aparece en el cielo una mano que sostiene dos tablas de piedra puestas una sobre otra.",
+     "La ley de Dios en el cielo, norma del juicio (Salmo 50:6)."
+    ]
+   ],
+   "egw": "CS 693-697",
+   "l": {
+    "ap16": [
+     "16:17-21",
+     1,
+     "La séptima copa: la gran voz desde el trono, el terremoto y el granizo.",
+     "CS 694-695",
+     [
+      [
+       "Apocalipsis 16:17",
+       "salió una gran voz del santuario del cielo, desde el trono, que decía: «¡Ya está hecho!»"
+      ],
+      [
+       "Apocalipsis 16:18",
+       "un terremoto tan grande cual no lo hubo jamás desde que los hombres existen sobre la tierra"
+      ],
+      [
+       "Apocalipsis 16:21",
+       "Del cielo cayó sobre los hombres un enorme granizo, como del peso de un talento."
+      ]
+     ],
+     []
+    ]
+   },
+   "en": {
+    "ap16": "16:17-21"
+   },
+   "citas": [
+    [
+     "Apocalipsis 16:17",
+     "salió una gran voz del santuario del cielo, desde el trono, que decía: «¡Ya está hecho!»"
+    ],
+    [
+     "Apocalipsis 16:18",
+     "un terremoto tan grande cual no lo hubo jamás desde que los hombres existen sobre la tierra"
+    ],
+    [
+     "Apocalipsis 16:21",
+     "Del cielo cayó sobre los hombres un enorme granizo, como del peso de un talento."
+    ]
+   ],
+   "partes": [],
+   "fuente": "CS 693-697"
+  },
+  {
    "id": "especial",
    "fase": "venida",
+   "vez": "medianoche",
    "t": "La resurrección especial",
    "c": "Resurrección especial",
    "cuando": "En el terremoto de la séptima plaga, antes de que aparezca Cristo",
-   "nota": "Se abren los sepulcros. Resucitan los que murieron en la fe del tercer ángel, para ver la venida, y los que traspasaron a Cristo, para verlo en su gloria.",
+   "nota": "Se abren los sepulcros. Resucitan dos grupos: los que murieron en la fe del mensaje del tercer ángel, para ver la venida, y «los que lo traspasaron» (Apocalipsis 1:7) con los que se burlaron de Cristo y los enemigos más acérrimos de su verdad, para verlo en su gloria. Es la resurrección parcial de Daniel 12:2, «unos para vida eterna, otros para vergüenza y confusión perpetua». Jesús se lo dijo al sumo sacerdote (Mateo 26:64).",
    "egwC": [
     [
      "CS 695",
+     "Los sepulcros se abren y \"muchos de los que duermen en el polvo de la tierra serán despertados, unos para vida eterna, y otros para vergüenza y confusión perpetua.\" (Daniel 12: 2.)",
+     "Aplica Daniel 12:2 a esta resurrección: resucitan de las dos clases."
+    ],
+    [
+     "CS 695",
      "Todos los que murieron en la fe del mensaje del tercer ángel, salen glorificados de la tumba, para oír el pacto de paz que Dios hace con los que guardaron su ley.",
-     "La resurrección especial: resucitan antes de la venida los que murieron en el mensaje del tercer ángel."
+     "El primer grupo: los fieles del mensaje del tercer ángel."
+    ],
+    [
+     "CS 695",
+     "\"Los que le traspasaron\" (Apocalipsis 1: 7), los que se mofaron y se rieron de la agonía de Cristo y los enemigos más acérrimos de su verdad y de su pueblo, son resucitados para mirarle en su gloria y para ver el honor con que serán recompensados los fieles y obedientes.",
+     "El segundo grupo: los que lo crucificaron, los que se burlaron y los peores enemigos de su verdad (Apocalipsis 1:7)."
+    ],
+    [
+     "CS 700",
+     "Allí están los que se mofaron de Cristo en su humillación. Con fuerza penetrante acuden a su mente las palabras del Varón de dolores, cuando, conjurado por el sumo sacerdote, declaró solemnemente: \"Desde ahora habéis de ver al Hijo del hombre sentado a la diestra de la potencia de Dios, y que viene en las nubes del cielo.\" (S. Mateo 26: 64.)",
+     "Se cumple lo que Jesús dijo al sumo sacerdote (Mateo 26:64)."
+    ],
+    [
+     "CS 701",
+     "Los que atravesaron con clavos sus manos y sus pies, los soldados que le abrieron el costado, consideran esas señales con terror y remordimiento.",
+     "Los que lo clavaron en la cruz lo ven venir."
     ]
    ],
-   "egw": "CS 695; PE 285",
+   "egw": "CS 695 y 700-701; PE 285",
    "l": {
     "d12": [
      "12:2",
@@ -63795,7 +63967,7 @@ const ULTIMOS = {
     ]
    ],
    "partes": [],
-   "fuente": "CS 695; PE 285"
+   "fuente": "CS 695 y 700-701; PE 285"
   },
   {
    "id": "voz",
@@ -79075,7 +79247,9 @@ function lamDeriva(d,yo){
 }
 /* En Presentar, con pantalla ancha, la escena es apaisada: la estatua a la izquierda y
    la explicación a la derecha, sin taparla. */
-const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900&&innerWidth>innerHeight*1.1;
+/* v229: la escena y el texto lado a lado solo si caben: una escena 16:9 a todo el alto y el
+   texto al lado piden una pantalla 1,45 veces más ancha que alta (1024 × 768 va apilada). */
+const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900&&innerWidth>innerHeight*1.45;
 /* v211 (Camilo: «la imagen está cortada arriba y en una caja con franjas negras»): al
    presentar en pantalla ancha la escena llena TODO el escenario, del ancho que tenga.
    El viewBox toma la forma del escenario (alto fijo, con aire arriba para la corona) y
@@ -79346,6 +79520,9 @@ function lamAbre(cid,modo){
   lamPrecarga(cid,document.getElementById('lamEsc'));
   lamRielTeclas();
   lamGeo();
+  /* v229: el escenario cambia de alto sin que cambie la ventana (el panel de las 2.300 tardes
+     y mañanas va y viene): la escena se vuelve a medir. */
+  if(typeof ResizeObserver==='function'){const es=document.getElementById('lamEsc');if(es){if(!lamEscRO)lamEscRO=new ResizeObserver(()=>{if(lamAncho())requestAnimationFrame(lamHistGeo);});lamEscRO.disconnect();lamEscRO.observe(es);}}
   lamMarcasSep();if(typeof ResizeObserver==='function'){const mc=el.querySelector('.lam-marcas');if(mc){if(!lamMarcasRO)lamMarcasRO=new ResizeObserver(lamMarcasSep);lamMarcasRO.disconnect();lamMarcasRO.observe(mc);}}
   /* v215: Explorar abre en el primer paso de la historia (Cautivos en Babilonia). */
   if(modo==='presentar')lamPres(0);else{lamIr('h0');lamPintaReto();
@@ -79359,7 +79536,7 @@ function lamAbre(cid,modo){
 /* v225 (revisión de Camilo, B10: «hoyla piedra»): los años de la línea de tiempo no se pisan.
    De izquierda a derecha, el que choca con el anterior se corre a la derecha (6 px de aire);
    el último se queda dentro de la línea. Se mide de nuevo cuando cambia el ancho. */
-let lamMarcasRO=null;
+let lamMarcasRO=null,lamEscRO=null;
 function lamMarcasSep(){
   const m=document.querySelector('#lam .lam-marcas');if(!m||!m.getBoundingClientRect)return;
   const ss=[...m.children].filter(x=>!x.classList.contains('arriba'));ss.forEach(x=>{x.style.marginLeft='';});
@@ -79517,10 +79694,7 @@ function lamHistGeo(){
      es negro: la misma imagen, ampliada y a media luz (lam-hist-amb). */
   /* Con texto, la escena llega hasta donde empieza el texto, nunca debajo de él: si no
      cabe a todo el alto, se centra en alto y lo de arriba y abajo es la misma luz. */
-  const V=lamTodo(),r=anc?(()=>{const B=lamVisible(V),hj=document.getElementById('lamHoja'),es=document.getElementById('lamEsc');
-    const pf=lado&&hj&&es&&es.getBoundingClientRect().width?Math.min(.6,Math.max(0,1-(hj.getBoundingClientRect().left-es.getBoundingClientRect().left)/es.getBoundingClientRect().width)):0;
-    let w=B[3]*1200/675;if(lado)w=Math.min(w,B[2]*(1-pf));const h=w*675/1200;
-    return [lado?B[0]:B[0]+(B[2]-w)/2,B[1]+(B[3]-h)/2,w,h];})():[-150,0,2050,1152];
+  const V=lamTodo(),r=anc?lamCubre(V,lado):[-150,0,2050,1152];
   [h,bg].forEach(im=>{['x','y','width','height'].forEach((a,i)=>im.setAttribute(a,r[i].toFixed(1)));
     im.setAttribute('preserveAspectRatio',anc?'xMidYMid meet':'xMidYMid slice');});
   /* v203: fondo liso y oscuro, como una diapositiva. v209: lam-hist-bg ya no es una
@@ -79534,6 +79708,33 @@ function lamHistGeo(){
     if(so){const B=lamVisible(V),pc=(v,t)=>(v/t*100).toFixed(3)+'%';
       so.style.left=pc(r[0]-B[0],B[2]);so.style.top=pc(r[1]-B[1],B[3]);so.style.width=pc(r[2],B[2]);so.style.height=pc(r[3],B[3]);}}
   if(typeof lamD2Pos==='function')lamD2Pos();
+}
+/* v229 (Camilo, captura a ~1900 px: «la imagen llena solo una parte y lo demás es la misma
+   imagen borrosa»): al presentar en pantalla ancha la escena LLENA su área, la que queda a la
+   izquierda del texto. El texto mide lo que haga falta para eso: más angosto (hasta 360 px)
+   en una pantalla alta, más ancho (hasta la mitad) en una baja y ancha; la escena cubre su
+   área recortando a lo sumo un 12 %. Sin texto (cartel u «Ocultar texto») cubre todo el
+   escenario si recorta 18 % o menos; si no, va entera y lo de los lados es la misma luz.
+   Devuelve el rectángulo de la imagen en unidades del SVG y deja el ancho del texto en
+   --lam-hoja-w (el CSS lo usa en la hoja y en la comparación de debajo). */
+function lamCubre(V,lado){
+  const B=lamVisible(V),es=document.getElementById('lamEsc'),E=es&&es.getBoundingClientRect?es.getBoundingClientRect():null,lm=document.getElementById('lam');
+  if(!E||!E.width||!E.height)return [B[0],B[1],B[3]*1200/675,B[3]];
+  const W=E.width,H=E.height,u=B[2]/W,nat=H*1200/675;
+  /* Un escenario bajo (el panel de las 2.300 tardes y mañanas ocupa la mitad de la pantalla):
+     la escena es solo el fondo de la cuenta, así que el texto llega a 60 % y se recorta hasta 30 %. */
+  const corto=H<360,tope=corto?.6:.5,lim=corto?.3:.125;
+  let hw=0;
+  if(lado){const def=Math.max(360,Math.min(.38*W,640));
+    hw=W-def<.88*nat?Math.max(360,W-.88*nat):W-def>nat?Math.max(def,Math.min(tope*W,W-nat)):def;}
+  if(lm)lm.style.setProperty('--lam-hoja-w',lado?Math.round(hw)+'px':'');
+  const A=W-hw;let wi=Math.max(A,nat),hi=wi*675/1200;
+  /* Recorte de más: entera, a lo ancho o a lo alto que quepa, y centrada. */
+  const recorte=Math.max(1-A/wi,1-H/hi);
+  /* El cartel de apertura es fondo de su título: cubre aunque recorte más (hasta 55 %). */
+  if(recorte>(lado?lim:lamEnCartel()?.55:.18)){wi=Math.min(A,nat);hi=wi*675/1200;}
+  const x=lado?(A-wi)/2:(W-wi)/2,y=(H-hi)/2;
+  return [B[0]+x*u,B[1]+y*u,wi*u,hi*u];
 }
 function lamHist(t){
   const svg=document.getElementById('lamSvg');if(!svg)return;
@@ -80135,7 +80336,9 @@ function lamD2(id){
   const abajo=!!r&&(L.d2Abajo||[]).includes(id),fi=document.getElementById('lamD2Fila');
   /* Al presentar en la pantalla ancha no hay lugar debajo: esa parte va sin la comparación (es
      la misma del paso anterior: el santuario y «hasta el ejército del cielo» son Roma papal). */
-  const sinCmp=abajo&&lamModo==='presentar'&&!lamTel();
+  /* v229: al presentar la comparación va en pastillas (al pie del texto en la pantalla ancha, debajo
+     de la escena en las demás), nunca sobre la escena; así cabe también en esas partes. */
+  const sinCmp=false;
   if(fi)fi.classList.toggle('siempre',abajo);
   el.hidden=!lamConD2||!r||abajo;
   if(!r||!lamConD2||sinCmp)lamD2Fila(null);
@@ -80466,9 +80669,12 @@ function lamLibro(q){
     s.classList.add('con-libro');if(q){const e=document.getElementById('lamEsc');if(e)e.classList.add('con-libro');}
     s.innerHTML='<div class="lam-libro'+(img?' foto':'')+(q?' quieto ve abre luz':'')+'" id="lamLibro" aria-hidden="true"><div class="lb-luz"></div>'+
       (img?'<img class="lb-img" src="'+src+'" alt="">':'<div class="lb-3d"><div class="lb-tapa-i"></div><div class="lb-tapa-d"></div><div class="lb-pila-i"></div><div class="lb-pila-d"></div>'+
-        [0,1,2,3].map(hoja).join('')+'<div class="lb-portada"><i class="f"></i><i class="b"></i></div></div>')+
+        [0,1,2,3].map(hoja).join('')+'<div class="lb-portada"><i class="f"></i><i class="b"></i></div><p class="lb-nombre"><small>Libro de la vida</small><b></b></p></div>')+
       '<div class="lb-chispas">'+chispas+'</div></div>'+
-      '<div class="lam-libro-cita'+(q?' ve':'')+'"><q>El Juez se sentó y los libros fueron abiertos.</q><small>Daniel 7:10</small></div>';
+      '<div class="lam-libro-cita'+(q?' ve':'')+'"><q>El Juez se sentó y los libros fueron abiertos.</q><small>Daniel 7:10</small>'+
+      /* v229 (Camilo): el nombre de quien estudia en el libro, con la condición de Apocalipsis 3:5 a la vista. */
+      '<q class="lb-ap">El vencedor será vestido de vestiduras blancas, y no borraré su nombre del libro de la vida</q><small>Apocalipsis 3:5</small></div>';
+    lamLibroNombre(s);
     if(q)return;
     const l=document.getElementById('lamLibro'),c=s.querySelector('.lam-libro-cita');
     lamT(()=>{l.classList.add('ve');const e=document.getElementById('lamEsc');if(e)e.classList.add('con-libro');},2700);lamT(()=>l.classList.add('abre'),3500);lamT(()=>l.classList.add('luz'),4300);lamT(()=>c.classList.add('ve'),5200);};
@@ -80478,6 +80684,14 @@ function lamLibro(q){
   lamExiste(src).then(ok=>pon(ok));
 }
 
+/* v229: el nombre en el libro abierto es el de quien estudia, como lo muestra la ficha (S.nombre;
+   dentro de la app de Jóvenes llega de su sesión), solo el primer nombre. Va con textContent: nunca
+   como HTML. Sin nombre, «tu nombre». Nunca nombres de otras personas (pendiente de Camilo). */
+const lamNombreLibro=()=>String((typeof S!=='undefined'&&S&&S.nombre)||'').trim().split(/\s+/)[0].slice(0,24);
+function lamLibroNombre(s){
+  const p=s&&s.querySelector('.lb-nombre');if(!p)return;
+  const n=lamNombreLibro(),b=p.querySelector('b');b.textContent=n||'tu nombre';p.classList.toggle('vacio',!n);
+}
 /* ── v222: DANIEL 8, LO QUE SE MUEVE (LAMINAS.d8.mov) ──
    Camilo (14-oct): «lo mismo de Daniel 2 y 7: premium, cinematográfico, interactivo».
    Cada parte con `mov` arma su escena en el <svg> del zoom (1200 × 675, sigue a la
@@ -80540,7 +80754,7 @@ function lamMov(p,anima,sub){
   if(!g||!s)return;
   const ly=document.getElementById('lamLey8');if(ly){ly.hidden=true;ly.innerHTML='';}
   const e=document.getElementById('lamEsc');if(e)e.classList.add('con-d8');
-  lamD8Der=lamConD2&&!lamTel()&&!(LAM().d2Abajo||[]).includes(p.id)&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
+  lamD8Der=lamConD2&&!lamTel()&&lamModo!=='presentar'&&!(LAM().d2Abajo||[]).includes(p.id)&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
   /* v223: en una escena angosta (al presentar en la pantalla ancha mide ~500 px) los rótulos van como en el teléfono. */
   s.className='lam-marcas-img d8'+(q?' quieto':'');lamChica();
   /* v224: al entrar a Presentar la escena todavía no tiene su tamaño final: se vuelve a medir

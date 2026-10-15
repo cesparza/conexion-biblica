@@ -5133,3 +5133,28 @@ span.cmp-ult-c{cursor:default}
 .prep-actual .ico-t{width:14px;height:14px}
 .prep-guardado{font-size:.75rem;color:var(--gris)}
 .prep-edad{font-weight:700}
+/* v229 (Camilo: «la imagen llena solo una parte; la comparación tapa la escena»): al presentar
+   en pantalla ancha el texto mide --lam-hoja-w (lamCubre), y «Con Daniel 2 y 7» no es una
+   columna sobre la imagen: va en pastillas al pie de la hoja. */
+.lam.pres.ancho .lam-hoja{width:var(--lam-hoja-w,min(38%,640px));max-width:60%}
+.lam.pres .lam-d2{display:none!important}
+.lam.pres:not(.ancho) .lam-d2-fila:not([hidden]){display:flex;flex-wrap:wrap;gap:6px;width:100%;margin:6px 0 0}
+@media (min-width:601px){.lam.pres:not(.ancho) .lam-d2-fila .lam-d2f{flex:1 1 0;min-width:0}}
+.lam.pres.ancho .lam-bajo{position:absolute;right:0;bottom:0;z-index:4;width:var(--lam-hoja-w,min(38%,640px));max-width:60%;
+  padding:0 clamp(20px,2.6vw,44px) clamp(12px,1.6vw,20px) clamp(44px,4.5vw,84px);box-sizing:border-box}
+.lam.pres.ancho .lam-d2-fila:not([hidden]){display:flex;flex-wrap:nowrap;gap:8px;width:100%;margin:0}
+.lam.pres.ancho .lam-d2-fila .lam-d2f{flex:1 1 0;min-width:0}
+.lam.pres.ancho .lam-marco:has(.lam-d2-fila:not([hidden])) .lam-hoja{bottom:clamp(76px,10vh,96px)}
+.lam.pres.ancho .lam-bajo:has(.lam-d2-fila:not([hidden])){height:clamp(76px,10vh,96px);display:flex;align-items:center;padding-top:0;padding-bottom:0;
+  background:linear-gradient(90deg,rgba(5,4,3,0),rgba(5,4,3,.82) clamp(36px,3.6vw,72px),rgba(5,4,3,.92))}
+/* v229: el nombre de quien estudia en la página derecha del libro abierto (Daniel 7:10), después
+   de que pasan las hojas; y debajo de 7:10, Apocalipsis 3:5 con su condición («El vencedor»). */
+.lb-3d>.lb-nombre{position:absolute;left:53%;width:44%;top:18%;height:64%;margin:0;border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  transform:translateZ(7px);opacity:0;transition:opacity .7s ease 1.7s;color:#4A250B;text-align:center;pointer-events:none;font-family:var(--cine-serif,Georgia,serif)}
+.lb-nombre small{font-family:var(--cine-sans,system-ui,sans-serif);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#8A5A22;font-weight:700}
+.lb-nombre b{font-size:1.375rem;font-weight:600;line-height:1.1;overflow-wrap:anywhere;max-width:100%}
+.lb-nombre.vacio b{font-style:italic;font-weight:400;opacity:.75}
+.lam-libro.abre .lb-3d>.lb-nombre{opacity:1}
+.lam-libro.quieto .lb-3d>.lb-nombre{transition:none}
+@media (max-width:900px){.lb-nombre small{display:none}.lb-nombre b{font-size:1rem}}
+.lam-libro-cita .lb-ap{display:block;margin-top:.5em;font-size:.75em}

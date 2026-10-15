@@ -2819,10 +2819,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      White; cada celda dice si lo dice el texto o según qué interpretación, con su fuente. */
   const E=ULTIMOS.eventos,citas=E.flatMap(e=>e.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
   const ev=id=>E.find(e=>e.id===id),ord=E.map(e=>e.id).join(),cols=ULTIMOS.libros.map(x=>x[0]).join();
-  ok(ord==='juicio,imagen,ley,ciudades,pequena,zarandeo,lluvia,pregon,sello,gracia,gran,jacob,plagas,falso,huida,decreto,liberacion,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
+  ok(ord==='juicio,imagen,ley,ciudades,pequena,zarandeo,lluvia,pregon,sello,gracia,gran,jacob,plagas,falso,huida,decreto,liberacion,senales,especial,voz,venida,justos,traslacion,desolada,juzgan,segunda,jerusalen,asedio,trono,final,reino'&&!malas.length&&citas.length>=70&&
     E.every(e=>e.t&&e.c&&e.cuando&&e.nota&&e.egw&&/\b(CS|PE|EUD) \d/.test(e.egw)&&ULTIMOS.fases.some(f=>f[0]===e.fase))&&
     ULTIMOS.fases.map(f=>f[0]).join()==='antes,angustia,venida,mil,fin'&&ULTIMOS.fases.every(([f],i)=>E.filter(e=>e.fase===f).length&&E.findIndex(e=>e.fase===f)>=(i?E.map(e=>e.fase).lastIndexOf(ULTIMOS.fases[i-1][0]):0)),
-    'Los últimos acontecimientos: 30, en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
+    'Los últimos acontecimientos: 31, en el orden de CS, PE y EUD, en 5 fases; cada uno con su página de Elena de White; las citas, literales'+(malas.length?' ('+malas[0][0]+')':''));
   ok(cols==='d2,d7,d8,d11,d12,mt24,ap12,ap13,ap14,ap16,ap17,ap18,ap19,ap20,ap21,apo,egw'&&
     E.every(e=>Object.entries(e.l).every(([k,x])=>ULTIMOS.libros.some(y=>y[0]===k)&&k!=='egw'&&x[0]&&(x[1]===0||x[1]===1)&&x[2]&&x[3]&&Array.isArray(x[4])&&(k==='mt24'?!x[4].length:true))),
     'Las columnas: Daniel 2, 7, 8, 11, 12, Mateo 24, Apocalipsis 12, 13, 14, 16, 17, 18, 19, 20, 21-22 y otros, y Elena de White; cada celda con referencia, si es explícito o interpretación, una línea y su fuente; Mateo sin comillas');
@@ -3053,6 +3053,26 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v228: la línea de tiempo trae 1844 (juicio), la venida, hoy, el corte «//» y los mil años');
   ok(/@media \(prefers-reduced-motion:reduce\)\{\.lam-hito\.hoy::after\{animation:none/.test(css),'v228: «hoy» late, salvo con movimiento reducido');
   ok(!/Ya la tiene/.test(js)&&/Tu preparación actual/.test(js)&&/prep-chip/.test(js)&&/Escoge para qué te preparas/.test(js),'v228: el panel dice la preparación actual, las edades de cada categoría y para qué sirve');
+}
+
+/* v229 (Camilo, 15-oct): la escena llena su área al presentar; las señales de la liberación; la
+   resurrección especial con «los que le traspasaron»; el nombre en el libro abierto. */
+{
+  const {ULTIMOS}=require(path.join(RAIZ,'fuente','laminas.js')),{VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const js=APP,css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8'),E=ULTIMOS.eventos,ev=id=>E.find(e=>e.id===id);
+  ok(/function lamCubre\(V,lado\)/.test(js)&&/--lam-hoja-w/.test(js)&&/\.lam\.pres \.lam-d2\{display:none!important\}/.test(css)&&/innerHeight\*1\.45/.test(js)&&/const sinCmp=false;/.test(js),
+    'v229: al presentar la escena llena su área (lamCubre) y «Con Daniel 2 y 7» va en pastillas, nunca sobre la escena');
+  const se=ev('senales'),pg=se&&se.egwC.map(x=>+x[0].slice(3));
+  ok(se&&se.fase==='venida'&&se.egwC.length===14&&pg.every((v,i)=>v>=693&&v<=697&&(!i||v>=pg[i-1]))&&!/\b12\b|doce/.test(se.t+se.nota)&&['liberacion','senales','especial'].every(id=>ev(id).vez==='medianoche')&&ULTIMOS.veces.medianoche&&
+    se.l.ap16&&se.l.ap16[4].length===3,
+    'v229: «Las señales de la liberación»: 14 citas literales de CS 693-697 en su orden, sin decir «12», a la vez que la liberación y la resurrección especial, con Apocalipsis 16:17, 18 y 21');
+  const es=ev('especial'),tx=es.egwC.map(x=>x.join(' ')).join(' ');
+  ok(/Los que le traspasaron/.test(tx)&&/se mofaron y se rieron de la agonía de Cristo/.test(tx)&&/S\. Mateo 26: 64/.test(tx)&&/Daniel 12: 2/.test(tx)&&es.egwC.every(x=>/^CS \d+$/.test(x[0])&&x[2])&&/Mateo 26:64/.test(es.nota),
+    'v229: la resurrección especial con «los que le traspasaron», los que se burlaron y Mateo 26:64, cada uno con la cita literal de CS');
+  const ap35=VERS_AP.ap3[5];
+  ok(/function lamLibroNombre/.test(js)&&/b\.textContent=n\|\|'tu nombre'/.test(js)&&ap35.startsWith('El vencedor será vestido de vestiduras blancas, y no borraré su nombre del libro de la vida')&&
+    js.includes('El vencedor será vestido de vestiduras blancas, y no borraré su nombre del libro de la vida</q><small>Apocalipsis 3:5')&&!/lb-nombre[^\n]*innerHTML/.test(js),
+    'v229: el libro abierto lleva el nombre de quien estudia (con textContent; sin nombre, «tu nombre») y Apocalipsis 3:5 literal, con su condición');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

@@ -237,7 +237,9 @@ function lamDeriva(d,yo){
 }
 /* En Presentar, con pantalla ancha, la escena es apaisada: la estatua a la izquierda y
    la explicación a la derecha, sin taparla. */
-const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900&&innerWidth>innerHeight*1.1;
+/* v229: la escena y el texto lado a lado solo si caben: una escena 16:9 a todo el alto y el
+   texto al lado piden una pantalla 1,45 veces más ancha que alta (1024 × 768 va apilada). */
+const lamAncho=()=>lamModo==='presentar'&&innerWidth>=900&&innerWidth>innerHeight*1.45;
 /* v211 (Camilo: «la imagen está cortada arriba y en una caja con franjas negras»): al
    presentar en pantalla ancha la escena llena TODO el escenario, del ancho que tenga.
    El viewBox toma la forma del escenario (alto fijo, con aire arriba para la corona) y
@@ -508,6 +510,9 @@ function lamAbre(cid,modo){
   lamPrecarga(cid,document.getElementById('lamEsc'));
   lamRielTeclas();
   lamGeo();
+  /* v229: el escenario cambia de alto sin que cambie la ventana (el panel de las 2.300 tardes
+     y mañanas va y viene): la escena se vuelve a medir. */
+  if(typeof ResizeObserver==='function'){const es=document.getElementById('lamEsc');if(es){if(!lamEscRO)lamEscRO=new ResizeObserver(()=>{if(lamAncho())requestAnimationFrame(lamHistGeo);});lamEscRO.disconnect();lamEscRO.observe(es);}}
   lamMarcasSep();if(typeof ResizeObserver==='function'){const mc=el.querySelector('.lam-marcas');if(mc){if(!lamMarcasRO)lamMarcasRO=new ResizeObserver(lamMarcasSep);lamMarcasRO.disconnect();lamMarcasRO.observe(mc);}}
   /* v215: Explorar abre en el primer paso de la historia (Cautivos en Babilonia). */
   if(modo==='presentar')lamPres(0);else{lamIr('h0');lamPintaReto();
@@ -521,7 +526,7 @@ function lamAbre(cid,modo){
 /* v225 (revisión de Camilo, B10: «hoyla piedra»): los años de la línea de tiempo no se pisan.
    De izquierda a derecha, el que choca con el anterior se corre a la derecha (6 px de aire);
    el último se queda dentro de la línea. Se mide de nuevo cuando cambia el ancho. */
-let lamMarcasRO=null;
+let lamMarcasRO=null,lamEscRO=null;
 function lamMarcasSep(){
   const m=document.querySelector('#lam .lam-marcas');if(!m||!m.getBoundingClientRect)return;
   const ss=[...m.children].filter(x=>!x.classList.contains('arriba'));ss.forEach(x=>{x.style.marginLeft='';});
@@ -679,10 +684,7 @@ function lamHistGeo(){
      es negro: la misma imagen, ampliada y a media luz (lam-hist-amb). */
   /* Con texto, la escena llega hasta donde empieza el texto, nunca debajo de él: si no
      cabe a todo el alto, se centra en alto y lo de arriba y abajo es la misma luz. */
-  const V=lamTodo(),r=anc?(()=>{const B=lamVisible(V),hj=document.getElementById('lamHoja'),es=document.getElementById('lamEsc');
-    const pf=lado&&hj&&es&&es.getBoundingClientRect().width?Math.min(.6,Math.max(0,1-(hj.getBoundingClientRect().left-es.getBoundingClientRect().left)/es.getBoundingClientRect().width)):0;
-    let w=B[3]*1200/675;if(lado)w=Math.min(w,B[2]*(1-pf));const h=w*675/1200;
-    return [lado?B[0]:B[0]+(B[2]-w)/2,B[1]+(B[3]-h)/2,w,h];})():[-150,0,2050,1152];
+  const V=lamTodo(),r=anc?lamCubre(V,lado):[-150,0,2050,1152];
   [h,bg].forEach(im=>{['x','y','width','height'].forEach((a,i)=>im.setAttribute(a,r[i].toFixed(1)));
     im.setAttribute('preserveAspectRatio',anc?'xMidYMid meet':'xMidYMid slice');});
   /* v203: fondo liso y oscuro, como una diapositiva. v209: lam-hist-bg ya no es una
@@ -696,6 +698,33 @@ function lamHistGeo(){
     if(so){const B=lamVisible(V),pc=(v,t)=>(v/t*100).toFixed(3)+'%';
       so.style.left=pc(r[0]-B[0],B[2]);so.style.top=pc(r[1]-B[1],B[3]);so.style.width=pc(r[2],B[2]);so.style.height=pc(r[3],B[3]);}}
   if(typeof lamD2Pos==='function')lamD2Pos();
+}
+/* v229 (Camilo, captura a ~1900 px: «la imagen llena solo una parte y lo demás es la misma
+   imagen borrosa»): al presentar en pantalla ancha la escena LLENA su área, la que queda a la
+   izquierda del texto. El texto mide lo que haga falta para eso: más angosto (hasta 360 px)
+   en una pantalla alta, más ancho (hasta la mitad) en una baja y ancha; la escena cubre su
+   área recortando a lo sumo un 12 %. Sin texto (cartel u «Ocultar texto») cubre todo el
+   escenario si recorta 18 % o menos; si no, va entera y lo de los lados es la misma luz.
+   Devuelve el rectángulo de la imagen en unidades del SVG y deja el ancho del texto en
+   --lam-hoja-w (el CSS lo usa en la hoja y en la comparación de debajo). */
+function lamCubre(V,lado){
+  const B=lamVisible(V),es=document.getElementById('lamEsc'),E=es&&es.getBoundingClientRect?es.getBoundingClientRect():null,lm=document.getElementById('lam');
+  if(!E||!E.width||!E.height)return [B[0],B[1],B[3]*1200/675,B[3]];
+  const W=E.width,H=E.height,u=B[2]/W,nat=H*1200/675;
+  /* Un escenario bajo (el panel de las 2.300 tardes y mañanas ocupa la mitad de la pantalla):
+     la escena es solo el fondo de la cuenta, así que el texto llega a 60 % y se recorta hasta 30 %. */
+  const corto=H<360,tope=corto?.6:.5,lim=corto?.3:.125;
+  let hw=0;
+  if(lado){const def=Math.max(360,Math.min(.38*W,640));
+    hw=W-def<.88*nat?Math.max(360,W-.88*nat):W-def>nat?Math.max(def,Math.min(tope*W,W-nat)):def;}
+  if(lm)lm.style.setProperty('--lam-hoja-w',lado?Math.round(hw)+'px':'');
+  const A=W-hw;let wi=Math.max(A,nat),hi=wi*675/1200;
+  /* Recorte de más: entera, a lo ancho o a lo alto que quepa, y centrada. */
+  const recorte=Math.max(1-A/wi,1-H/hi);
+  /* El cartel de apertura es fondo de su título: cubre aunque recorte más (hasta 55 %). */
+  if(recorte>(lado?lim:lamEnCartel()?.55:.18)){wi=Math.min(A,nat);hi=wi*675/1200;}
+  const x=lado?(A-wi)/2:(W-wi)/2,y=(H-hi)/2;
+  return [B[0]+x*u,B[1]+y*u,wi*u,hi*u];
 }
 function lamHist(t){
   const svg=document.getElementById('lamSvg');if(!svg)return;
@@ -1297,7 +1326,9 @@ function lamD2(id){
   const abajo=!!r&&(L.d2Abajo||[]).includes(id),fi=document.getElementById('lamD2Fila');
   /* Al presentar en la pantalla ancha no hay lugar debajo: esa parte va sin la comparación (es
      la misma del paso anterior: el santuario y «hasta el ejército del cielo» son Roma papal). */
-  const sinCmp=abajo&&lamModo==='presentar'&&!lamTel();
+  /* v229: al presentar la comparación va en pastillas (al pie del texto en la pantalla ancha, debajo
+     de la escena en las demás), nunca sobre la escena; así cabe también en esas partes. */
+  const sinCmp=false;
   if(fi)fi.classList.toggle('siempre',abajo);
   el.hidden=!lamConD2||!r||abajo;
   if(!r||!lamConD2||sinCmp)lamD2Fila(null);
@@ -1628,9 +1659,12 @@ function lamLibro(q){
     s.classList.add('con-libro');if(q){const e=document.getElementById('lamEsc');if(e)e.classList.add('con-libro');}
     s.innerHTML='<div class="lam-libro'+(img?' foto':'')+(q?' quieto ve abre luz':'')+'" id="lamLibro" aria-hidden="true"><div class="lb-luz"></div>'+
       (img?'<img class="lb-img" src="'+src+'" alt="">':'<div class="lb-3d"><div class="lb-tapa-i"></div><div class="lb-tapa-d"></div><div class="lb-pila-i"></div><div class="lb-pila-d"></div>'+
-        [0,1,2,3].map(hoja).join('')+'<div class="lb-portada"><i class="f"></i><i class="b"></i></div></div>')+
+        [0,1,2,3].map(hoja).join('')+'<div class="lb-portada"><i class="f"></i><i class="b"></i></div><p class="lb-nombre"><small>Libro de la vida</small><b></b></p></div>')+
       '<div class="lb-chispas">'+chispas+'</div></div>'+
-      '<div class="lam-libro-cita'+(q?' ve':'')+'"><q>El Juez se sentó y los libros fueron abiertos.</q><small>Daniel 7:10</small></div>';
+      '<div class="lam-libro-cita'+(q?' ve':'')+'"><q>El Juez se sentó y los libros fueron abiertos.</q><small>Daniel 7:10</small>'+
+      /* v229 (Camilo): el nombre de quien estudia en el libro, con la condición de Apocalipsis 3:5 a la vista. */
+      '<q class="lb-ap">El vencedor será vestido de vestiduras blancas, y no borraré su nombre del libro de la vida</q><small>Apocalipsis 3:5</small></div>';
+    lamLibroNombre(s);
     if(q)return;
     const l=document.getElementById('lamLibro'),c=s.querySelector('.lam-libro-cita');
     lamT(()=>{l.classList.add('ve');const e=document.getElementById('lamEsc');if(e)e.classList.add('con-libro');},2700);lamT(()=>l.classList.add('abre'),3500);lamT(()=>l.classList.add('luz'),4300);lamT(()=>c.classList.add('ve'),5200);};
@@ -1640,6 +1674,14 @@ function lamLibro(q){
   lamExiste(src).then(ok=>pon(ok));
 }
 
+/* v229: el nombre en el libro abierto es el de quien estudia, como lo muestra la ficha (S.nombre;
+   dentro de la app de Jóvenes llega de su sesión), solo el primer nombre. Va con textContent: nunca
+   como HTML. Sin nombre, «tu nombre». Nunca nombres de otras personas (pendiente de Camilo). */
+const lamNombreLibro=()=>String((typeof S!=='undefined'&&S&&S.nombre)||'').trim().split(/\s+/)[0].slice(0,24);
+function lamLibroNombre(s){
+  const p=s&&s.querySelector('.lb-nombre');if(!p)return;
+  const n=lamNombreLibro(),b=p.querySelector('b');b.textContent=n||'tu nombre';p.classList.toggle('vacio',!n);
+}
 /* ── v222: DANIEL 8, LO QUE SE MUEVE (LAMINAS.d8.mov) ──
    Camilo (14-oct): «lo mismo de Daniel 2 y 7: premium, cinematográfico, interactivo».
    Cada parte con `mov` arma su escena en el <svg> del zoom (1200 × 675, sigue a la
@@ -1702,7 +1744,7 @@ function lamMov(p,anima,sub){
   if(!g||!s)return;
   const ly=document.getElementById('lamLey8');if(ly){ly.hidden=true;ly.innerHTML='';}
   const e=document.getElementById('lamEsc');if(e)e.classList.add('con-d8');
-  lamD8Der=lamConD2&&!lamTel()&&!(LAM().d2Abajo||[]).includes(p.id)&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
+  lamD8Der=lamConD2&&!lamTel()&&lamModo!=='presentar'&&!(LAM().d2Abajo||[]).includes(p.id)&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
   /* v223: en una escena angosta (al presentar en la pantalla ancha mide ~500 px) los rótulos van como en el teléfono. */
   s.className='lam-marcas-img d8'+(q?' quieto':'');lamChica();
   /* v224: al entrar a Presentar la escena todavía no tiene su tamaño final: se vuelve a medir

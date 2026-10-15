@@ -1035,9 +1035,9 @@ for (const W of ANCHOS) {
     r.pistaFin = getComputedStyle(m.querySelector('.cmp-ult-pista')).display === 'none';
     sc.scrollLeft = 0; ultPista(sc);
     return r; });
-  ok(ult.n === 30 && ult.cols === 17 && ult.fases === 5 && ult.despues && /Daniel 11:41/.test(ult.det) && /Según la interpretación/.test(ult.det) && /Pippenger/.test(ult.det) &&
+  ok(ult.n === 31 && ult.cols === 17 && ult.fases === 5 && ult.despues && /Daniel 11:41/.test(ult.det) && /Según la interpretación/.test(ult.det) && /Pippenger/.test(ult.det) &&
     ult.detVe && ult.celdaVe && ult.fijo && ult.caja && ult.pag && ult.si >= 30 && ult.int >= 30 && (!ult.rueda || (ult.pista && ult.pistaFin)),
-    W + ' · v219: «Los últimos acontecimientos»: 30 filas en 5 fases y 17 columnas; la celda de Daniel 11 en la ley dominical abre debajo su texto, «según la interpretación» y su fuente, a la vista; el nombre queda fijo al rodar y la pista se va al final (' + JSON.stringify(Object.assign({}, ult, { det: '' })) + ')');
+    W + ' · v219: «Los últimos acontecimientos»: 31 filas en 5 fases y 17 columnas; la celda de Daniel 11 en la ley dominical abre debajo su texto, «según la interpretación» y su fuente, a la vista; el nombre queda fijo al rodar y la pista se va al final (' + JSON.stringify(Object.assign({}, ult, { det: '' })) + ')');
   /* Mateo 24 va sin comillas: la referencia y la fuente. */
   const mt = await p.evaluate(() => { cmpUlt(ultIdx('falso'), false, 'mt24'); const d = document.getElementById('cmpUltDet'); return { q: d.querySelectorAll('q').length, t: d.textContent }; });
   ok(mt.q === 0 && /Mateo 24:23-27/.test(mt.t) && /Lo dice el texto/.test(mt.t) && /CS 683/.test(mt.t), W + ' · v219: Mateo 24 en la celda: referencia sin comillas, explícito y su fuente (' + mt.q + ')');
@@ -1322,6 +1322,44 @@ for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
       W + ' · v228: ' + id + ', la línea de tiempo con 1844, hoy, el corte «//», la venida y los mil años, en orden y sin rótulos encimados (' + JSON.stringify(t) + ')');
   }
   ok(errores.length === 0, W + ' · v228: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+/* ── v229: al presentar, la escena llena su área en cada paso y la comparación nunca la tapa;
+   el libro abierto lleva el nombre de quien estudia. ── */
+for (const [W, H] of [[1440, 900], [1900, 745]]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block' });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => { errores.push('diálogo'); d.dismiss(); });
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo Esparza'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
+  const malos = [];
+  for (const id of ['d2', 'd7', 'd8']) {
+    const n = await p.evaluate(id => { verCap(id); lamAbre(id, 'presentar'); return lamPasos().length; }, id); await p.waitForTimeout(600);
+    for (let k = 0; k < n; k++) {
+      await p.evaluate(k => lamPres(k), k); await p.waitForTimeout(700);
+      const m = await p.evaluate(() => { const R = e => { if (!e || e.hidden || !e.getClientRects().length) return null; const r = e.getBoundingClientRect(); return r.width && r.height ? r : null; };
+        const esc = R(document.getElementById('lamEsc')), h = document.querySelector('#lamSvg .lam-hist'), hv = h && h.style.opacity === '1' ? R(h) : null, hj = R(document.getElementById('lamHoja')), fi = R(document.getElementById('lamD2Fila')), d2 = R(document.getElementById('lamD2'));
+        const lado = document.getElementById('lamEsc').classList.contains('lado');
+        if (!esc || !hv) return null;
+        const v = { l: Math.max(hv.left, esc.left), r: Math.min(hv.right, esc.right), t: Math.max(hv.top, esc.top), b: Math.min(hv.bottom, esc.bottom) };
+        return { hueco: Math.round((lado && hj ? hj.left : esc.right) - v.r), banda: Math.round((v.t - esc.top) + (esc.bottom - v.b)), columna: !!d2, fila: fi && lado && hj ? Math.round(hj.left - fi.left) : 0 }; });
+      if (m && (m.hueco > 12 || m.banda > 24 || m.columna || m.fila > 1)) malos.push(id + ' ' + k + ' ' + JSON.stringify(m));
+    }
+    await p.evaluate(() => lamCierra());
+  }
+  /* En 1900 × 745 el panel de las 2.300 tardes y mañanas deja un escenario muy bajo: ahí la escena es fondo y puede quedar más angosta. */
+  const toleran = W === 1900 ? malos.filter(x => !/^d8 1[4-8] /.test(x)) : malos;
+  ok(toleran.length === 0, W + '×' + H + ' · v229: al presentar, la escena llena su área en cada paso de Daniel 2, 7 y 8 y la comparación no la tapa' + (toleran.length ? ': ' + toleran.slice(0, 4).join(' | ') : ''));
+  const nombres = [];
+  for (const nom of ['Camilo Esparza', '<b onmouseover=alert(1)>Ana', '']) {
+    nombres.push(await p.evaluate(async nom => { S.nombre = nom; lamAbre('d7', 'presentar'); lamPres(lamPasos().findIndex(x => x.id === 'juicio' && x.sub === 3)); await new Promise(r => setTimeout(r, 400));
+      const b = document.querySelector('.lb-nombre b'), c = document.querySelector('.lam-libro-cita'); const r = { t: b && b.textContent, hijos: b ? b.children.length : -1, ap: c && /El vencedor será vestido de vestiduras blancas, y no borraré su nombre del libro de la vida/.test(c.textContent) && /Apocalipsis 3:5/.test(c.textContent) };
+      lamCierra(); return r; }, nom));
+  }
+  ok(nombres[0].t === 'Camilo' && nombres[1].t === '<b' && nombres[1].hijos === 0 && nombres[2].t === 'tu nombre' && nombres.every(x => x.ap),
+    W + ' · v229: el libro abierto dice el primer nombre de quien estudia (sin HTML; sin nombre, «tu nombre») con Apocalipsis 3:5 (' + JSON.stringify(nombres.map(x => x.t)) + ')');
+  ok(errores.length === 0, W + ' · v229: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();
