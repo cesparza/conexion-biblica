@@ -9447,7 +9447,7 @@ function ultHTML(){
     '<h3 class="cmp-tit" id="cmpUltT">'+esc(U.titulo)+'</h3><p class="cmp-p">'+esc(U.nota)+'</p></header>'+
     '<p class="cmp-ult-ley"><span><b class="si"></b>Lo dice el texto</span><span><b class="int"></b>Según la interpretación</span><span><b class="egw"></b>Elena de White</span><span><b class="no"></b>No lo trae</span></p>'+
     '<p class="cmp-ult-pista" aria-hidden="true">'+IC('der')+' Desliza la tabla para ver los demás libros</p>'+
-    '<div class="cmp-ult-scroll" onscroll="ultPista(this)"><div class="cmp-ult-m" role="table" aria-label="Qué libro muestra cada acontecimiento" style="--n:'+L.length+'">'+
+    '<div class="cmp-ult-scroll"><div class="cmp-ult-m" role="table" aria-label="Qué libro muestra cada acontecimiento" style="--n:'+L.length+'">'+
       '<div class="cmp-ult-fila cab" role="row">'+cab+'</div>'+
       F.map(([f,t])=>{const ev=E.map((e,i)=>[e,i]).filter(([e])=>e.fase===f);return ev.length?'<div class="cmp-ult-fz" role="row"><span role="cell">'+esc(t)+'</span></div>'+ev.map(([e,i])=>fila(e,i)).join(''):'';}).join('')+
     '</div></div>'+
@@ -9480,6 +9480,8 @@ function ultNavHTML(i){
 /* La pista de deslizar se ve mientras la tabla no cabe y no se ha llegado al final. */
 function ultPista(sc){
   const m=document.getElementById('cmpUlt');if(!m)return;sc=sc||m.querySelector('.cmp-ult-scroll');if(!sc)return;
+  /* Sin atributos on… (Jóvenes los traslada a datos y no sabe pasar onscroll): se escucha aquí, una vez por tabla. */
+  if(!sc.dataset.ultOye){sc.dataset.ultOye='1';sc.addEventListener('scroll',()=>ultPista(sc),{passive:true});}
   const sobra=sc.scrollWidth>sc.clientWidth+1;m.classList.toggle('rueda',sobra&&sc.scrollLeft+sc.clientWidth<sc.scrollWidth-24);
   m.style.setProperty('--vw',sc.clientWidth+'px');
 }
