@@ -1286,6 +1286,44 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
   ok(errores.length === 0, W + ' · v227: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
+/* ── v228: el panel «Quién estudia» no se desplaza de lado y muestra las edades; la línea de
+   tiempo tiene sus hitos (1844, la venida, hoy, el corte de escala y los mil años). ── */
+for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block', isMobile: W < 600, hasTouch: W < 600 });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => d.dismiss());
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); document.getElementById('nav-yo').click(); }); await p.waitForTimeout(500);
+  await p.evaluate(() => prepAbre()); await p.waitForTimeout(400);
+  const mide = () => p.evaluate(() => { const c = document.querySelector('.hoja-yo .hoja-caja'), t = c.querySelector('.hoja-txt'), r = c.getBoundingClientRect();
+    return { ancho: Math.round(r.width), lado: t.scrollWidth - t.clientWidth, dentro: r.left >= -1 && r.right <= innerWidth + 1, doc: document.documentElement.scrollWidth - innerWidth,
+      chips: document.querySelectorAll('#prep .prep-chip').length, edades: [...document.querySelectorAll('#prep .prep-chip')].every(x => x.textContent.trim().split(' ').length > 1),
+      actual: [...document.querySelectorAll('#prep .prep-op.actual')].map(x => /Tu preparación actual/.test(x.textContent)), ya: /Ya la tiene/.test(document.getElementById('prep').textContent),
+      secc: [...document.querySelectorAll('#prep .prep-g + .prep-gd')].length, intro: !!document.querySelector('#prep .prep-intro'),
+      cols: document.querySelector('#prep .prep-lista') ? getComputedStyle(document.querySelector('#prep .prep-lista')).gridTemplateColumns.split(' ').length : 0 }; });
+  const m1 = await mide();
+  ok(m1.lado <= 0 && m1.doc <= 0 && m1.dentro && (W < 900 || (m1.ancho >= 560 && m1.cols === 2)) && m1.chips >= 8 && m1.edades && m1.actual.length === 1 && m1.actual[0] && !m1.ya && m1.secc === 2 && m1.intro,
+    W + ' · v228: «Quién estudia» sin desplazamiento de lado, con las edades, «Tu preparación actual» y las dos secciones explicadas (' + JSON.stringify(m1) + ')');
+  await p.evaluate(() => prepActividad('cb')); await p.waitForTimeout(300);
+  const m2 = await mide().catch(() => null), paso = await p.evaluate(() => document.querySelector('#prep .prep-paso') && document.querySelector('#prep .prep-paso').textContent);
+  ok(m2 && m2.lado <= 0 && m2.doc <= 0 && /Paso 2 de 2/.test(paso || ''), W + ' · v228: el segundo paso (la categoría) se ve como segundo paso y no se desplaza de lado');
+  await p.evaluate(() => cierraHoja());
+  for (const id of ['d2', 'd7', 'd8']) {
+    const t = await p.evaluate(async id => { verCap(id); lamAbre(id, 'explorar'); await new Promise(r => setTimeout(r, 700));
+      const q = s => document.querySelector('#lam .lam-hitos ' + s), x = e => e ? e.getBoundingClientRect().left + e.getBoundingClientRect().width / 2 : NaN;
+      const ms = [...document.querySelectorAll('#lam .lam-marcas span')].filter(e => getComputedStyle(e).display !== 'none' && e.getBoundingClientRect().width > 0).map(e => e.getBoundingClientRect()).sort((a, b) => a.left - b.left);
+      const pisan = ms.some((r, i) => i && r.left < ms[i - 1].right - 1);
+      const r = { juicio: !!q('.lam-hito.juicio'), venida: !!q('.lam-hito.venida'), hoy: !!q('.lam-hito.hoy'), corte: q('.lam-corte') ? q('.lam-corte').textContent : '', mil: !!q('.lam-mil'),
+        orden: x(q('.lam-hito.juicio')) < x(q('.lam-hito.hoy')) && x(q('.lam-hito.hoy')) < x(q('.lam-corte')) && x(q('.lam-corte')) < x(q('.lam-hito.venida')) && x(q('.lam-hito.venida')) < x(q('.lam-mil')),
+        pisan, ley: getComputedStyle(document.querySelector('#lam .lam-hley')).display };
+      lamCierra(); return r; }, id);
+    ok(t.juicio && t.venida && t.hoy && t.corte === '//' && t.mil && t.orden && !t.pisan && (W < 700 ? t.ley === 'flex' : t.ley === 'none'),
+      W + ' · v228: ' + id + ', la línea de tiempo con 1844, hoy, el corte «//», la venida y los mil años, en orden y sin rótulos encimados (' + JSON.stringify(t) + ')');
+  }
+  ok(errores.length === 0, W + ' · v228: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
 await nav.close(); srv.close();
 console.log('\n' + (fallas ? fallas + ' FALLOS' : 'EN EL NAVEGADOR: TODO BIEN'));
 process.exit(fallas ? 1 : 0);

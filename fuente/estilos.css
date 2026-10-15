@@ -1853,7 +1853,7 @@ summary:focus:not(:focus-visible){outline:none}
      categorías. No hay HTML ni JS nuevo, solo esta caja de reglas. */
   .hoja-yo .hoja-caja{
     left:var(--yo-x,104px);right:auto;top:var(--yo-y,72px);bottom:auto;
-    width:380px;max-width:calc(100vw - var(--yo-x, 104px) - 24px);
+    width:600px;max-width:calc(100vw - var(--yo-x, 104px) - 24px);
     max-height:min(78vh, calc(100vh - var(--yo-y, 72px) - 24px));
     border-radius:18px;
     box-shadow:0 18px 44px -12px rgba(8,14,26,.45),0 0 0 1px rgba(16,24,40,.07);
@@ -5082,3 +5082,54 @@ span.cmp-ult-c{cursor:default}
 .lam-sl p .per{display:inline;width:auto;min-height:0;padding:0;gap:0;font-size:inherit;color:inherit;line-height:inherit;text-align:inherit}
 /* Al hundirse no pierde su lugar (el button:active general cambia el transform entero). */
 .d8-et.gen:active:not(:disabled){transform:translate(var(--tx,0),var(--ty,-50%)) scale(.97)}
+/* v228 (Camilo: «los momentos clave no resaltan»): los hitos de la línea de tiempo, en una capa
+   sobre la pista con su mismo margen (11 px). El color nunca va solo: cada hito tiene su nombre
+   debajo (o en la leyenda del teléfono). */
+.lam-pista{background-color:transparent}
+.lam-hitos{position:absolute;left:11px;right:11px;top:0;bottom:0;pointer-events:none}
+.lam-hito,.lam-corte,.lam-mil{position:absolute;display:block}
+.lam-hito{top:50%;width:2px;margin-left:-1px}
+.lam-hito.chica{height:8px;margin-top:-4px;background:color-mix(in srgb,var(--txt,#1a1a2e) 30%,transparent)}
+.lam-hito.media{height:14px;margin-top:-7px;background:color-mix(in srgb,var(--txt,#1a1a2e) 55%,transparent)}
+.lam-hito.juicio{height:22px;margin-top:-11px;width:3px;margin-left:-1.5px;background:#D6B26A;box-shadow:0 0 0 1px rgba(23,18,10,.35)}
+.lam-hito.venida{top:0;bottom:0;width:4px;margin-left:-2px;background:#FFFDF6;box-shadow:0 0 0 1px rgba(23,18,10,.55),0 0 8px 2px rgba(255,244,214,.85)}
+.lam-hito.hoy{width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;box-sizing:border-box;border:3px solid var(--txt,#1a1a2e);background:var(--bg,#fff)}
+.lam-hito.hoy::after{content:'';position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--txt,#1a1a2e);animation:lamHoyLate 1.8s ease-out infinite}
+@keyframes lamHoyLate{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.4);opacity:0}}
+@media (prefers-reduced-motion:reduce){.lam-hito.hoy::after{animation:none;opacity:.5;transform:scale(1.6)}}
+.lam-corte{top:50%;width:14px;height:16px;margin:-8px 0 0 -7px;background:var(--bg,#fff);display:grid;place-items:center}
+.lam-corte b{font-size:.75rem;font-weight:800;line-height:1;letter-spacing:-.12em;color:var(--txt,#1a1a2e)}
+.lam-mil{top:calc(50% + 5px);height:6px;border:1.5px solid color-mix(in srgb,var(--txt,#1a1a2e) 60%,transparent);border-top:0}
+/* La leyenda del futuro: solo donde sus nombres no caben bajo la línea. */
+.lam-hley{display:none;flex-wrap:wrap;gap:4px 12px;margin:4px 11px 2px;font-size:.75rem;color:var(--v-tinta2,#5B5F6B)}
+.lam-hley span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.lam-hley-m{display:inline-block;flex:0 0 auto;font-style:normal}
+.lam-hley-m.juicio{width:3px;height:12px;background:#D6B26A}
+.lam-hley-m.hoy{width:10px;height:10px;border-radius:50%;box-sizing:border-box;border:2.5px solid var(--txt,#1a1a2e)}
+.lam-hley-m.corte{font-weight:800;font-size:.75rem;letter-spacing:-.12em;color:var(--txt,#1a1a2e)}
+.lam-hley-m.venida{width:4px;height:14px;background:#FFFDF6;box-shadow:0 0 0 1px rgba(23,18,10,.55),0 0 6px 1px rgba(255,244,214,.85)}
+.lam-hley-m.mil{width:16px;height:6px;border:1.5px solid color-mix(in srgb,var(--txt,#1a1a2e) 60%,transparent);border-top:0}
+.lam-hley-m.reino{width:18px;height:6px;border-radius:999px;background:linear-gradient(90deg,#B98A35,transparent)}
+@media (max-width:700px){.lam-hley{display:flex}}
+@container (max-width:640px){.lam-hley{display:flex}}
+/* v228 (Camilo: «el panel es muy angosto, se mueve de lado, no dice las edades»): el popover
+   de «Quién estudia» mide 600 px (YO_ANCHO en app.js), nunca se desplaza de lado, y las
+   preparaciones van en dos columnas cuando caben. */
+.hoja-yo .hoja-txt{overflow-x:hidden}
+.hoja-yo .hoja-txt *{min-width:0}
+.prep-intro{margin:0;font-size:.875rem;line-height:1.45;color:var(--v-tinta2,var(--gris))}
+.prep-paso{margin:0;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+.prep-gd{margin:-.2rem 0 .1rem;font-size:.875rem;color:var(--gris)}
+.prep-g{margin-top:.5rem;color:var(--txt);font-size:.875rem}
+.prep-lista{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.prep-op{position:relative;gap:4px;overflow-wrap:anywhere}
+.prep-op.actual{border:2px solid var(--v-ok,#2E7D32);background:color-mix(in srgb,var(--v-ok,#2E7D32) 9%,var(--card,#fff))}
+.prep-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.prep-chip{display:inline-flex;gap:4px;align-items:baseline;padding:2px 8px;border-radius:999px;background:var(--fondo-suave,#F2F0EC);border:1px solid var(--v-linea,#e5e7eb);font-size:.75rem;color:var(--gris);white-space:nowrap}
+.prep-chip b{font-size:.75rem;color:var(--txt);font-weight:700}
+.prep-sig{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;font-weight:700;color:var(--cielo,var(--v-marca,#1f5199))}
+.prep-sig .ico-t{width:14px;height:14px}
+.prep-actual{display:inline-flex;align-items:center;gap:4px;margin-top:2px;font-size:.75rem;font-weight:800;color:var(--v-ok-txt,var(--verde,#2E7D32))}
+.prep-actual .ico-t{width:14px;height:14px}
+.prep-guardado{font-size:.75rem;color:var(--gris)}
+.prep-edad{font-weight:700}

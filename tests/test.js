@@ -1769,8 +1769,9 @@ for(const cl of ['yo-ini','yo-tx','yo-n','yo-c']){
    categorias se leen como un muro de cuatro columnas. El MISMO nodo se
    convierte en popover anclado al riel: 380px, sin oscurecer, una columna. */
 const ESCRITORIO=CSS.slice(CSS.indexOf('@media (min-width:900px){',CSS.indexOf('.nav-yo')));
-ok(/\.hoja-yo \.hoja-caja\{[^}]*width:380px/.test(ESCRITORIO),
-  'En escritorio el panel de identidad mide 380px, no el ancho de la pantalla');
+/* v228: 600 px (Camilo: «muy angosto»), el mismo número en app.js (YO_ANCHO) y en el CSS. */
+ok(/\.hoja-yo \.hoja-caja\{[^}]*width:600px/.test(ESCRITORIO)&&/const YO_ANCHO=600;/.test(APP),
+  'En escritorio el panel de identidad mide 600px (YO_ANCHO), no el ancho de la pantalla');
 ok(/\.hoja-yo \.hoja-caja\{[^}]*left:var\(--yo-x/.test(ESCRITORIO)&&
    /\.hoja-yo \.hoja-caja\{[^}]*top:var\(--yo-y/.test(ESCRITORIO),
   'El popover se ancla con las dos variables que mide ancla()');
@@ -3043,6 +3044,15 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(ancho===1600&&alto===900&&!/guarda\([^)]*'purificado\.webp'/.test(py),'v227: purificado.webp es la imagen de Camilo (1600 × 900) y tools/lamina-d8.py ya no la genera ('+ancho+' × '+alto+')');
   const tr=L8.mapa&&L8.mapa.reinos?L8.mapa.reinos.find(r=>/Tracia/.test(r.t||r.s||'')):null;
   ok(!tr||!tr.en||tr.en[1]>150,'v227: «Tracia y Asia Menor» va debajo de «NORTE» (no se encima)');
+}
+
+/* v228 (Camilo, 15-oct): los hitos de la línea de tiempo y el panel «Quién estudia». */
+{
+  const js=APP,css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8');
+  ok(/function lamHitosHTML/.test(js)&&/lam-hito juicio/.test(js)&&/lam-hito venida/.test(js)&&/lam-hito hoy/.test(js)&&/class="lam-corte"[^\n]{0,60}<b>\/\/<\/b>/.test(js)&&/class="lam-mil"/.test(js)&&!/class="lam-hoy"/.test(js),
+    'v228: la línea de tiempo trae 1844 (juicio), la venida, hoy, el corte «//» y los mil años');
+  ok(/@media \(prefers-reduced-motion:reduce\)\{\.lam-hito\.hoy::after\{animation:none/.test(css),'v228: «hoy» late, salvo con movimiento reducido');
+  ok(!/Ya la tiene/.test(js)&&/Tu preparación actual/.test(js)&&/prep-chip/.test(js)&&/Escoge para qué te preparas/.test(js),'v228: el panel dice la preparación actual, las edades de cada categoría y para qué sirve');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

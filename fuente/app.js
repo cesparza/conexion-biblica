@@ -495,9 +495,9 @@ function lamAbre(cid,modo){
        mismo margen (el radio del pulgar), así quedan alineados a cualquier ancho. */
     '<div class="lam-tiempo"><div class="lam-tcab"><button type="button" class="lam-play" id="lamPlay" onclick="lamRecorre()" aria-label="Recorrer la historia">'+IC('play')+'</button>'+
     '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">'+esc(L.tq0||'De 605 a.C. hasta hoy, y lo que viene')+'</div></div></div>'+
-    '<div class="lam-rango"><div class="lam-pista" id="lamPista" style="background:'+lamPista()+'"><i class="lam-hoy" style="left:'+lamPos(LAM_HOY)+'%"></i><i class="lam-tramo" id="lamTramo"></i></div>'+
+    '<div class="lam-rango"><div class="lam-pista" id="lamPista" style="background:'+lamPista()+'"><i class="lam-tramo" id="lamTramo"></i></div>'+lamHitosHTML(L)+
     '<input type="range" id="lamRango" min="-620" max="'+LAM_FIN+'" step="1" value="-620" aria-label="Año"></div>'+
-    '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div>'+lamL23tHTML(L)+'</div>'+
+    '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div>'+lamHitosLeyenda(L)+lamL23tHTML(L)+'</div>'+
     /* v212: los mismos botones redondos de Explorar (lamNavHTML). */
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" class="lam-rd" aria-label="Anterior" onclick="lamAtras()">'+IC('izq')+'</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="lam-rd sig" aria-label="Siguiente" onclick="lamAdelante()">'+IC('der')+'</button></div>':
      '<div class="lam-carta"><h3>'+esc(L.paraleloTit||'Daniel 2 y Daniel 7 dicen lo mismo')+'</h3>'+(L.paraleloNota?'<p class="lam-nota">'+esc(L.paraleloNota)+'</p>':'')+'<div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
@@ -887,14 +887,43 @@ function lamL23tToca(i){
 }
 /* ── La línea de tiempo ── */
 const lamPos=y=>(y+620)/(LAM_FIN+620)*100;
+/* v228 (Camilo: «1844, la venida y los mil años no tienen línea ni color propio»): los hitos,
+   sacados de `marcas` y `futuro` de cada lámina. 1844 es el juicio; la venida, la primera marca
+   del futuro; los mil años, el tramo del medio de `futuro`; el reino, el último, sin fin. */
+const LAM_JUICIO=1844;
+function lamHitos(L){
+  const m=L.marcas||[],fu=L.futuro||[],fut=m.filter(x=>/\bfut\b/.test(x[2]||''));
+  const ven=fut[0]?fut[0][0]:(fu[0]?(fu[0].de+fu[0].a)/2:LAM_HOY+100),mil=fu[1]||null,rei=fu[2]||null;
+  return {ven,venT:fut[0]?fut[0][1]:'la venida',mil,milT:fut[1]?fut[1][1]:'mil años',rei,reiT:fut[2]?fut[2][1]:'el reino',
+    corte:LAM_HOY+(ven-LAM_HOY)*.42,
+    /* Marcas de en medio: las grandes (sin «chico») van con raya mediana; las chicas, con una corta. */
+    rayas:m.filter(([y,t,ch])=>y<LAM_HOY&&y!==LAM_JUICIO&&!/\b(fut|tel)\b/.test(ch||'')).map(([y,t,ch])=>[y,/\bchico\b/.test(ch||'')?'chica':'media'])};
+}
+function lamHitosHTML(L){
+  const H=lamHitos(L),P=y=>lamPos(y).toFixed(3)+'%';
+  return '<div class="lam-hitos" aria-hidden="true">'+H.rayas.map(([y,c])=>'<i class="lam-hito '+c+'" style="left:'+P(y)+'"></i>').join('')+
+    '<i class="lam-hito juicio" style="left:'+P(LAM_JUICIO)+'"></i>'+
+    (H.mil?'<i class="lam-mil" style="left:'+P(H.mil.de)+';width:'+(lamPos(H.mil.a)-lamPos(H.mil.de)).toFixed(3)+'%"></i>':'')+
+    '<i class="lam-corte" style="left:'+P(H.corte)+'"><b>//</b></i>'+
+    '<i class="lam-hito venida" style="left:'+P(H.ven)+'"></i>'+
+    '<i class="lam-hito hoy" style="left:'+P(LAM_HOY)+'"></i></div>';
+}
+/* En el teléfono los nombres del futuro no caben bajo la línea: van en una leyenda con la misma marca. */
+function lamHitosLeyenda(L){
+  const H=lamHitos(L),q=t=>String(t).replace(/<[^>]+>/g,'');
+  return '<div class="lam-hley"><span><i class="lam-hley-m juicio"></i>1844 · juicio</span><span><i class="lam-hley-m hoy"></i>hoy</span><span><i class="lam-hley-m corte">//</i>sin escala</span>'+
+    '<span><i class="lam-hley-m venida"></i>'+esc(q(H.venT))+'</span>'+(H.mil?'<span><i class="lam-hley-m mil"></i>'+esc(q(H.milT))+'</span>':'')+
+    '<span><i class="lam-hley-m reino"></i>'+esc(q(H.reiT))+'</span></div>';
+}
 function lamPista(){
-  const L=LAM(),r=n=>n.toFixed(3);
-  const seg=L.tiempo.filter(id=>!(L.solapa||['barro']).includes(id)).map(id=>{const p=lamParte(id);return p.c+' '+r(lamPos(p.de))+'% '+r(lamPos(Math.min(p.a,LAM_HOY)))+'%';});
-  /* El futuro, con el color de su parte y rayado: todavía no ha pasado. */
-  const fu=(L.futuro||[]).map(f=>{const p=f.id&&lamParte(f.id);return (p?p.c:'#6B7B5A')+' '+r(lamPos(f.de))+'% '+r(lamPos(f.a))+'%';});
-  const h=lamPos(LAM_HOY);
-  return 'repeating-linear-gradient(115deg,rgba(14,13,11,.45) 0 5px,transparent 5px 10px) right 0 / '+r(100-h)+'% 100% no-repeat,'+
-    'linear-gradient(90deg,#4a4032 0% '+r(lamPos(-605))+'%,'+seg.concat(fu).join(',')+')';
+  const L=LAM(),r=n=>n.toFixed(3),H=lamHitos(L);
+  /* El pasado con el color de cada reino hasta 1844; de 1844 a la venida, el juicio en oro. */
+  const seg=L.tiempo.filter(id=>!(L.solapa||['barro']).includes(id)).map(id=>{const p=lamParte(id);return p.de<LAM_JUICIO?p.c+' '+r(lamPos(p.de))+'% '+r(lamPos(Math.min(p.a,LAM_JUICIO)))+'%':null;}).filter(Boolean);
+  const j=r(lamPos(LAM_JUICIO)),v=r(lamPos(H.ven)),re=H.rei&&H.rei.id?lamParte(H.rei.id):null,rd=H.rei?r(lamPos(H.rei.de)):'100';
+  const fut=['#D6B26A '+j+'%','#F2C46B '+v+'%','#8C8576 '+v+'%','#8C8576 '+rd+'%',(re?re.c:'#B98A35')+' '+rd+'%','transparent 100%'];
+  /* El futuro, rayado: todavía no ha pasado (desde la venida). */
+  return 'repeating-linear-gradient(115deg,rgba(14,13,11,.4) 0 4px,transparent 4px 9px) right 0 / '+r(100-lamPos(H.ven))+'% 100% no-repeat,'+
+    'linear-gradient(90deg,#4a4032 0% '+r(lamPos(-605))+'%,'+seg.concat(fut).join(',')+')';
 }
 /* Qué gobernaba en el año y: las partes encendidas y la frase. */
 function lamQuien(y){
@@ -3567,28 +3596,40 @@ function prepVolver(){prepPaso=1;prepAct='';pintaPrep();}
 function prepActividad(a){if(!ACTIVIDADES[a])return;
   const cats=catsValidas(a);if(cats.length===1){prepElige(cats[0]);return;}
   prepPaso=2;prepAct=a;pintaPrep();}
+/* v228 (Camilo, captura del panel: «no dice las edades, las opciones no se ven distintas, las
+   secciones no se entienden»): cada concurso muestra sus categorías con su edad (de CATS, nada
+   inventado); la preparación de ahora va marcada; Concursos y Sin concurso con una línea que
+   dice qué son; con más de una categoría se ve que hay un segundo paso. */
+const prepChip=k=>{const c=CATS[k];return '<span class="prep-chip"><b>'+esc(c.nombre)+'</b> '+esc(c.edad)+'</span>';};
 function pintaPrep(){
   const z=document.getElementById('prep');if(!z)return;
   if(!prepPaso){z.innerHTML='';return;}
-  const nom=esc((S.nombre||'').trim()||'esta persona');
+  const nom=esc((S.nombre||'').trim()||'esta persona'),ya=ACT_DE(S.cat);
   const tiene=a=>personasDB().some(p=>p.fichas.some(([id])=>id===DB.activo)&&p.fichas.some(([,al])=>ACT_DE(al.cat)===a));
-  const marca=a=>tiene(a)?'<i class="prep-ya">Ya la tiene</i>':'';
+  const estado=a=>a===ya?'<span class="prep-actual">'+IC('check')+' Tu preparación actual</span>':tiene(a)?'<span class="prep-guardado">Con avance guardado</span>':'';
+  const op=(a,onc,cuerpo)=>'<button type="button" class="alu-op prep-op'+(a===ya?' actual':'')+'" aria-pressed="'+(a===ya)+'" onclick="'+onc+'">'+cuerpo+estado(a)+'</button>';
   if(prepPaso===1){
     const acts=Object.keys(ACTIVIDADES).filter(a=>catsValidas(a).length);
     z.innerHTML='<div class="alu-nueva prep"><p class="alu-q">¿Para qué se prepara '+nom+'?</p>'+
-      '<div class="prep-g">Concursos</div>'+acts.map(a=>{const A=ACTIVIDADES[a];
-        return '<button type="button" class="alu-op" onclick="prepActividad(\''+a+'\')"><b>'+icoDe(A.icono)+' '+esc(A.nombre)+marca(a)+'</b><span>'+esc(A.que)+' · '+esc(A.cuando)+'</span></button>';}).join('')+
-      '<div class="prep-g">Sin concurso</div>'+temasLibres().map(t=>{const k=libreDe(t),A=ACTIVIDADES[k];
-        return '<button type="button" class="alu-op" onclick="prepElige(\''+k+'\')"><b>'+icoDe(A.icono)+' '+esc(A.nombre)+marca(k)+'</b><span>Todo el material, a su ritmo</span></button>';}).join('')+
+      '<p class="prep-intro">Escoge para qué te preparas. Cambia el filtro de entrada, la dificultad por edad y las reglas del examen; el contenido es el mismo para todos.</p>'+
+      '<div class="prep-g">Concursos</div><p class="prep-gd">Un concurso con su reglamento: primero el concurso y después la categoría por edad.</p>'+
+      '<div class="prep-lista">'+acts.map(a=>{const A=ACTIVIDADES[a],cs=catsValidas(a);
+        return op(a,'prepActividad(\''+a+'\')','<b>'+icoDe(A.icono)+' '+esc(A.nombre)+'</b><span>'+esc(A.que)+' · '+esc(A.cuando)+'</span>'+
+          '<span class="prep-chips">'+cs.map(prepChip).join('')+'</span>'+
+          (cs.length>1?'<span class="prep-sig">Después escoges la categoría '+IC('der')+'</span>':''));}).join('')+'</div>'+
+      '<div class="prep-g">Sin concurso</div><p class="prep-gd">Todo el material de un tema, sin reglamento ni categoría.</p>'+
+      '<div class="prep-lista">'+temasLibres().map(t=>{const k=libreDe(t),A=ACTIVIDADES[k];
+        return op(k,'prepElige(\''+k+'\')','<b>'+icoDe(A.icono)+' '+esc(A.nombre)+'</b><span>Todo el material, a su ritmo</span>');}).join('')+'</div>'+
       '<button type="button" class="btn txt peq" onclick="prepCierra()">Cancelar</button></div>';
     return;
   }
   const A=ACTIVIDADES[prepAct];if(!A){prepCierra();return;}
-  z.innerHTML='<div class="alu-nueva prep"><p class="alu-q">'+icoDe(A.icono)+' '+esc(A.nombre)+': ¿en qué categoría?</p>'+
+  z.innerHTML='<div class="alu-nueva prep"><p class="prep-paso">Paso 2 de 2 · la categoría</p><p class="alu-q">'+icoDe(A.icono)+' '+esc(A.nombre)+': ¿en qué categoría?</p>'+
     '<p class="nota">El material es el mismo para todos. La categoría pone la dificultad por edad y las reglas del examen.</p>'+
     '<div class="cat-fila">'+catsValidas(prepAct).map(k=>{const c=CATS[k];
-      return '<button type="button" class="cat-btn" onclick="prepElige(\''+k+'\')">'+(c.club?'<div class="cc">'+esc(CLUB_NOMBRE[c.club]||'')+'</div>':'')+
-      '<div class="cn">'+esc(c.nombre)+'</div><div class="cd">'+esc(c.edad)+'<br>'+(c.sinPoliticas?'Sin reglamento de concurso':esc(c.alcance))+'</div></button>';}).join('')+'</div>'+
+      return '<button type="button" class="cat-btn'+(k===S.cat?' on':'')+'" aria-pressed="'+(k===S.cat)+'" onclick="prepElige(\''+k+'\')">'+(c.club?'<div class="cc">'+esc(CLUB_NOMBRE[c.club]||'')+'</div>':'')+
+      '<div class="cn">'+esc(c.nombre)+'</div><div class="cd"><span class="prep-edad">'+esc(c.edad)+'</span><br>'+(c.sinPoliticas?'Sin reglamento de concurso':esc(c.alcance))+'</div>'+
+      (k===S.cat?'<div class="prep-actual">'+IC('check')+' Tu preparación actual</div>':'')+'</button>';}).join('')+'</div>'+
     '<button type="button" class="alu-op" onclick="prepElige(\''+libreDe(A.tema)+'\')"><b>Sin concurso</b><span>Estudiar todo el material de '+esc(ACTIVIDADES[libreDe(A.tema)].nombre)+', sin categoría</span></button>'+
     '<button type="button" class="btn txt peq" onclick="prepVolver()">'+IC('izq')+' Volver</button></div>';
 }
@@ -3811,6 +3852,8 @@ function abreYo(cats){
 /* Debajo de esto el popover no vale la pena: no alcanza para el selector de
    participantes y el primer grupo de categorías. */
 const MIN_POPOVER=380;
+/* v228 (Camilo: «el panel es muy angosto»): el ancho del popover en el computador; en el CSS va el mismo. */
+const YO_ANCHO=600;
 
 function ancla(){
   try{
@@ -3830,7 +3873,7 @@ function ancla(){
        derecha (ver estilos): ahí el panel cae debajo, alineado por su borde
        derecho. */
     if(Math.abs(borde-r.right)>200){
-      const W=window.innerWidth||1200, der=r.left>W/2, ancho=Math.min(der?380:420,W-32);
+      const W=window.innerWidth||1200, der=r.left>W/2, ancho=Math.min(YO_ANCHO,W-32);
       h.classList.remove('hoja-arriba');
       h.style.setProperty('--yo-x',Math.round(Math.max(16,Math.min(der?r.right-ancho:r.left,W-ancho-16)))+'px');
       h.style.setProperty('--yo-y',Math.round(r.bottom+8)+'px');
