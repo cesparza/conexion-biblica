@@ -10,6 +10,8 @@
    Camilo y los PDFs (Bohr, Smith, Elena de White): Roma en tres fases,
    la piedra en la segunda venida, el monte como reino eterno. */
 const BOHR = 'Bohr, <i>Daniel 1-10</i>';
+/* v225: Gerhard F. Hasel, cap. VI del Simposio sobre Daniel; las páginas son las impresas del libro (fuentes/daniel/Simposio sobre Daniel.txt). */
+const SIMP = 'Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>';
 const LAMINAS = {
  d2: {
   libro: 'Daniel 2',
@@ -41,7 +43,7 @@ const LAMINAS = {
   enEscena: ['monte'],
   /* v212: la portada de Explorar (la hoja antes de elegir una parte). */
   intro: { titulo: 'Una gran imagen', ref: 'Daniel 2:31', texto: 'Tú, rey, veías en tu sueño una gran imagen. Esta imagen era muy grande y su gloria, muy sublime.',
-    nota: 'De la cabeza a los pies, cuatro reinos y Roma en tres fases. Después, una piedra que nadie cortó: Cristo vuelve. Y, pasados los mil años, un monte que llena toda la tierra.',
+    nota: 'De la cabeza a los pies, cuatro reinos y Roma en tres fases: imperial, dividida y papal. Hay una cuarta: el papado sanado de su herida (Apocalipsis 13:3), que sigue en pie hasta que una piedra que nadie cortó hiere los pies: Cristo vuelve. Y, pasados los mil años, un monte que llena toda la tierra.',
     datos: [['4', 'reinos'], ['3', 'fases de Roma'], ['1', 'reino eterno']] },
   tiempo: ['oro', 'plata', 'bronce', 'hierro', 'dedos', 'barro'],
   /* v211 (Camilo, 14-oct: «el play corre pero no se ve el avance»; la línea de
@@ -93,7 +95,7 @@ const LAMINAS = {
   paralelo: [['oro','León con alas de águila','Babilonia'],['plata','Oso','Medo-Persia'],['bronce','Leopardo de cuatro cabezas','Grecia'],
     ['hierro','Bestia con dientes de hierro','Roma imperial'],['dedos','Diez cuernos','Roma dividida'],['barro','El cuerno pequeño','Roma papal'],
     ['piedra','Los santos reciben el reino (7:22)','La segunda venida'],['monte','Su reino es reino eterno (7:27)','El reino eterno, después de los mil años']],
-  paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
+  paraleloFuente: BOHR + ', p. 20, 83, 119-121; CS 492 y 636.',
   reto: [
     {q:'¿Qué parte es «otro reino, inferior al tuyo»?',ok:'plata',e:'2:39 · Medo-Persia, que el mismo libro nombra en 5:28.'},
     {q:'¿Dónde golpeó la piedra?',ok:'barro',e:'2:34 · «hirió a la imagen en sus pies de hierro y de barro cocido».'},
@@ -114,11 +116,19 @@ const LAMINAS = {
     { y: 538, f: 'e538', parte: 'barro', t: '538 d.C. · Los ostrogodos dejan Roma; empieza la supremacía papal' },
     { y: 1798, f: 'e1798', c: '1798 d.C. · Louis-Alexandre Berthier toma preso a Pío VI', t: '1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI' },
     /* v211: 1844 también en Daniel 2 (la imagen es la del juicio de Daniel 7). */
-    { y: 1844, f: 'd7/juicio', c: '1844 d.C. · Empieza el juicio en el cielo', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (Daniel 7:9-10; 8:14)' },
+    /* v225 (B10): `hoja: false`, solo en la línea de tiempo: no cae en la hoja de «Los diez dedos»
+       (el juicio no es de Roma dividida; Daniel 2 no lo trae). */
+    { y: 1844, f: 'd7/juicio', hoja: false, c: '1844 d.C. · Empieza el juicio en el cielo', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (Daniel 7:9-10; 8:14)' },
     /* v195: lo que viene. v211: con año del tramo «futuro» de la línea de tiempo (no es un año real). */
     { y: 2027, f: 'e-piedra', parte: 'piedra', t: 'Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 45; Mateo 25:31)' },
     { y: 2427, f: 'e-monte', parte: 'monte', t: 'Después de los mil años · El reino de Dios llena toda la tierra (2:35, 44; Apocalipsis 21:1)' },
   ],
+  /* v225 (revisión de Camilo, B1): la cuarta etapa de Roma con nombre en Comparar. `cmpExtra` va
+     solo a Comparar (una época «Roma papal sanada · desde 1798 hasta la venida»), no a la lámina
+     ni al río. En Daniel 2 lleva el id del barro: su retrato es el de los pies. */
+  cmpExtra: [{ id: 'barro', nombre: 'Los pies, hasta que cae la piedra', reino: 'Roma papal sanada', fechas: 'desde 1798 d.C. hasta la venida', de: 1798, a: 2026, c: '#8A5A3C',
+    texto: 'hirió a la imagen en sus pies de hierro y de barro cocido', ref: '2:34',
+    corto: 'Herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue en los pies hasta que la piedra los hiere: la segunda venida (2:34, 44-45).' }],
   partes: [
  {id:'oro',nombre:'Cabeza de oro',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La cabeza de esta imagen era de oro fino',ref:'2:32',texto2:'Tú eres aquella cabeza de oro.',ref2:'2:38',
@@ -143,13 +153,13 @@ const LAMINAS = {
  {id:'dedos',nombre:'Los diez dedos',reino:'Roma dividida',fechas:'desde 476 d.C.',de:476,a:2026,c:'#4E6A8F',
   texto:'Lo que viste de los pies y los dedos… será un reino dividido',ref:'2:41',texto2:'este reino será en parte fuerte y en parte frágil',ref2:'2:42',
   corto:'Segunda fase: las tribus bárbaras se reparten el imperio.',
-  interp:['La segunda fase: el imperio de occidente se lo repartieron las tribus bárbaras entre 351 y 476 d.C. Diez, como los diez cuernos de Daniel 7 (7:24).','Anglosajones, francos, alamanes, lombardos, suevos, visigodos, burgundios, ostrogodos, hérulos y vándalos. Los tres últimos fueron «arrancados» (7:8): hérulos en 493, vándalos en 534 y ostrogodos en 538 d.C. Otra lista pone a los hunos en lugar de los alamanes.','Llegan hasta la segunda venida: la piedra cae «en los días de estos reyes» (2:44). Hoy estamos en los dedos: el mundo sigue dividido (1T 361).'],
+  interp:['La segunda fase: el imperio de occidente se lo repartieron las tribus bárbaras entre 351 y 476 d.C. Diez, como los diez cuernos de Daniel 7 (7:24). Los dedos también son de hierro y de barro: «por ser los dedos de los pies en parte de hierro y en parte de barro cocido» (2:42).','Anglosajones, francos, alamanes, lombardos, suevos, visigodos, burgundios, ostrogodos, hérulos y vándalos. Los tres últimos fueron «arrancados» (7:8): hérulos en 493, vándalos en 534 y ostrogodos en 538 d.C. Otra lista pone a los hunos en lugar de los alamanes.','Llegan hasta la segunda venida: la piedra cae «en los días de estos reyes» (2:44). Hoy estamos en los dedos: el mundo sigue dividido (1T 361).'],
   fuente:'Smith, <i>Las profecías de Daniel</i>, p. 23-25; '+BOHR+', p. 58, 62; 1T 361.'},
  {id:'barro',nombre:'Hierro mezclado con barro',reino:'Roma papal',fechas:'desde 538 d.C. · supremacía 538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',
   texto:'sus pies, en parte de hierro y en parte de barro cocido',ref:'2:33',texto2:'se mezclarán por medio de alianzas humanas; pero no se unirán el uno con el otro',ref2:'2:43',
   corto:'Tercera fase: el poder político unido al religioso.',
-  interp:['La tercera fase: el poder político unido al religioso. El hierro es el poder civil de Roma; el barro «de alfarero» representa en la Biblia al pueblo de Dios (Jeremías 18:6). Mezclados, es la iglesia que dejó a Cristo para unirse al Estado, la ramera de Apocalipsis 17:2. Por eso la piedra destruye también el barro (2:35).','Domina 1.260 años, de 538 a 1798 d.C. (Daniel 7:25): es el cuerno pequeño. En 538 los ostrogodos son expulsados de Roma; en 1798 el general Louis-Alexandre Berthier entra en Roma y toma prisionero al papa. En 1798 recibe la herida; la herida sana y, al final, la mezcla vuelve en todo el mundo (Apocalipsis 13:3; 17:12-14). Por eso la piedra todavía la encuentra en los pies.','«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).'],
-  fuente:'Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46; '+BOHR+', p. 58-62; CBA 4:1168.'},
+  interp:['La tercera fase: el poder político unido al religioso. El hierro es el poder civil de Roma; el barro «de alfarero» representa en la Biblia al pueblo de Dios (Jeremías 18:6). Mezclados, es la iglesia que dejó a Cristo para unirse al Estado, la ramera de Apocalipsis 17:2. La piedra desmenuza también «el barro cocido» (2:35).','Domina 1.260 años, de 538 a 1798 d.C. (Daniel 7:25): es el cuerno pequeño. En 538 los ostrogodos son expulsados de Roma; en 1798 el general Louis-Alexandre Berthier entra en Roma y toma prisionero al papa. En 1798 recibe la herida; la herida sana y, al final, la mezcla vuelve en todo el mundo (Apocalipsis 13:3; 17:12-14). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34).','Los reyes de la tierra fornican con la ramera (Apocalipsis 17:2) y entregan «su poder y autoridad a la bestia» (17:13), pero la unión no dura: «no se unirán el uno con el otro, como el hierro no se mezcla con el barro» (2:43), y «aborrecerán a la ramera» (17:16).','«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).'],
+  fuente:'Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; '+BOHR+', p. 58-62; CBA 4:1168.'},
  {id:'piedra',nombre:'La piedra',reino:'La segunda venida de Cristo',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
   texto:'una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies',ref:'2:34',texto2:'el Dios del cielo levantará un reino que no será jamás destruido',ref2:'2:44',
   corto:'Cristo en su segunda venida. «Sin que la cortara mano alguna»: no lo hace el hombre.',
@@ -238,7 +248,7 @@ LAMINAS.d7 = {
     ['juicio', 'No aparece: lo agrega Daniel 7', 'El juicio en el cielo, desde 1844', null], ['hijo', 'No aparece: lo agrega Daniel 7', 'Cristo llega al Anciano de días, en el juicio (1844)', null],
     ['santos', 'La piedra que hiere los pies', 'La segunda venida', ['piedra']],
     ['reino', 'La piedra que se hace un gran monte', 'El reino eterno, después de los mil años', ['monte']]],
-  paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
+  paraleloFuente: BOHR + ', p. 20, 83, 119-121; CS 492 y 636.',
   retoSin: [],
   reto: [
     { q: '¿Qué bestia tenía tres costillas en la boca?', ok: 'oso', e: '7:5 · Medo-Persia y sus tres conquistas: Lidia, Babilonia y Egipto.' },
@@ -312,11 +322,11 @@ LAMINAS.d7 = {
     { t: '«Derribará a tres reyes»', ref: '7:8, 20, 24', c: 'Hérulos (493), vándalos (534) y ostrogodos (538), los tres arrianos.' },
     { t: 'Es «diferente de los primeros»', ref: '7:24', c: 'Los diez eran reinos políticos; este une la iglesia y el Estado.' },
     { t: 'Tiene «ojos como de hombre»', ref: '7:8, 20', c: 'En la profecía los ojos son entendimiento (Efesios 1:18): se apoya en la sabiduría y la tradición humanas.' },
-    { t: '«Una boca que hablaba con gran insolencia»', ref: '7:8, 20, 25', c: '«Hablará palabras contra el Altísimo»: toma títulos y poderes de Dios, ocupar su lugar en la tierra y perdonar pecados (Marcos 2:7; Apocalipsis 13:5-6).' },
+    { t: '«Una boca que hablaba con gran insolencia»', ref: '7:8, 20, 25', c: '«Hablará palabras contra el Altísimo»: toma títulos y poderes de Dios: ocupar su lugar en la tierra y perdonar pecados (Marcos 2:7; Apocalipsis 13:5-6).' },
     { t: '«Hacía guerra contra los santos»', ref: '7:21, 25', c: 'La persecución de valdenses, albigenses y hugonotes, y la Inquisición.' },
-    { t: '«Pensará en cambiar los tiempos y la Ley»', ref: '7:25', c: 'El calendario profético de Dios y el sábado: el día de reposo se pasó al domingo y se quitó el mandamiento sobre las imágenes (CS 55-56).' },
+    { t: '«Pensará en cambiar los tiempos y la Ley»', ref: '7:25', c: 'El sábado: el día de reposo se pasó al domingo y se quitó el mandamiento sobre las imágenes (CS 55-56 y 499). También quiso cambiar el calendario profético de Dios (Bohr, <i>Daniel 1-10</i>, p. 125).' },
     { t: 'Domina «tiempo, tiempos y medio tiempo»', ref: '7:25', c: '1.260 años: de 538 a 1798 d.C.' }],
-  senasFuente: BOHR + ', p. 119, 124-127; CS 55-56.',
+  senasFuente: BOHR + ', p. 119, 124-127; CS 55-56 y 499.',
   /* v208: TIEMPO, TIEMPOS Y MEDIO TIEMPO (7:25), después de las once señas: cuatro
      pasos que se arman sobre la imagen (la suma, un día por un año, el mismo
      tiempo en Apocalipsis y el cumplimiento de 538 a 1798 en la línea de tiempo).
@@ -332,8 +342,8 @@ LAMINAS.d7 = {
       { t: 'El mismo tiempo en Apocalipsis', v: 'mismo', citas: [['Apocalipsis 12:14', 'un tiempo, tiempos y la mitad de un tiempo'], ['Apocalipsis 12:6', 'mil doscientos sesenta días'], ['Apocalipsis 11:3', 'mil doscientos sesenta días'], ['Apocalipsis 13:5', 'cuarenta y dos meses'], ['Apocalipsis 11:2', 'cuarenta y dos meses']],
         nota: 'Tres maneras de decir el mismo periodo: tres tiempos y medio, 42 meses (42 × 30) y 1.260 días.' },
       { t: 'De 538 a 1798', v: 'cumple', citas: [['Apocalipsis 13:3', 'Vi una de sus cabezas como herida de muerte, pero su herida mortal fue sanada.']],
-        nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Louis-Alexandre Berthier toma preso al papa Pío VI: es la herida de muerte. Después la herida sana y el cuerno sigue hasta que viene el Anciano de días (7:21-22).' }],
-    fuente: BOHR + ', p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309 y 492.',
+        nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Louis-Alexandre Berthier toma preso al papa Pío VI: es la herida de muerte. Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26).' }],
+    fuente: BOHR + ', p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309, 492 y 636.',
   },
   /* v210: LAS TRES FASES DEL JUICIO (Camilo, 14-oct: «y el asunto de las tres fases
      del juicio»). Después de los pasos del juicio, una mini línea de tiempo y tres
@@ -348,38 +358,45 @@ LAMINAS.d7 = {
      termina el juicio investigador, se levanta Miguel (12:1), «Hecho es» (Ap 22:11) y el
      número de sus súbditos está completo (CS 671). Antes de las plagas y de la venida
      (Bohr, Daniel 1-10, p. 288). Lucas 19:12, 15: va a recibir el reino y después vuelve. */
+  /* v225 (revisión de Camilo, B6): al presentar, las fases van DESPUÉS del Hijo del hombre
+     (la sentencia es el reino que se le da, 7:13-14): `tras: 'hijo'`. `ve`: la parte cuya
+     imagen y color usan (el juicio). */
   fases: {
-    tras: 'juicio', t: 'Las tres fases del juicio', s: 'De 1844 a la segunda venida', de: 'Daniel 7',
+    tras: 'hijo', ve: 'juicio', t: 'Las tres fases del juicio', s: 'De 1844 a la segunda venida', de: 'Daniel 7',
     hitos: [['1844', 'Se abren los libros'], ['Al cierre de la gracia', 'El Hijo recibe el reino'], ['La venida', 'Los santos reciben el reino']],
     pasos: [
       { t: 'Investigación', n: 'Se abren los libros', ref: '7:9-10', cuando: 'Desde 1844 hasta el cierre de la gracia', donde: 'En el cielo', quien: 'El Padre juzga; Cristo es el abogado; los ángeles, testigos',
         que: 'Se abren los libros de los que profesaron ser hijos de Dios, primero los muertos y después los vivos. Se ve quién pertenece al reino.', para: 'Para que el universo vea que Dios es justo',
         citas: [['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.'], ['Apocalipsis 14:7', 'la hora de su juicio ha llegado']], de: 0, a: 1 },
-      { t: 'Sentencia', n: 'El Hijo recibe el reino', ref: '7:13-14, 22a', cuando: 'Al cierre de la gracia: termina su mediación y el Hijo del hombre recibe el reino, antes de las plagas y de la venida', donde: 'En el cielo', quien: 'El Hijo del hombre va ante el Anciano de días',
+      { t: 'Sentencia', n: 'El Hijo recibe el reino', ref: '7:13-14, 22a', cuando: 'Al cierre de la gracia: termina su mediación y el Hijo del hombre recibe el reino, antes de las plagas y de la venida', donde: 'En el cielo', quien: 'El Padre le da el reino al Hijo, que está ante él desde 1844 (7:13-14)',
         que: 'El fallo es a favor de los santos y contra el cuerno. El reino son sus súbditos: cuando el último caso está decidido, el número está completo y el Padre le da el reino al Hijo. Termina su obra de mediador y se cierra la gracia: «se levantará Miguel» (12:1). Como el noble de Lucas 19:12 y 15, recibe el reino y después vuelve.', para: 'Para que el reino quede completo',
-        citas: [['Daniel 7:14', 'Y le fue dado dominio, gloria y reino'], ['Daniel 12:1', 'En aquel tiempo se levantará Miguel'], ['Apocalipsis 22:11', 'El que es injusto, sea injusto todavía'], ['Apocalipsis 11:15', 'Los reinos del mundo han venido a ser de nuestro Señor y de su Cristo']], de: 1, a: 1 },
+        /* v225: al presentar, solo la cita principal (7:14); las otras, en Explorar. */
+        citasPres: 1, citas: [['Daniel 7:14', 'Y le fue dado dominio, gloria y reino'], ['Daniel 12:1', 'En aquel tiempo se levantará Miguel'], ['Apocalipsis 22:11', 'El que es injusto, sea injusto todavía'], ['Apocalipsis 11:15', 'Los reinos del mundo han venido a ser de nuestro Señor y de su Cristo']], de: 1, a: 1 },
       { t: 'Ejecución', n: 'Los santos reciben el reino', ref: '7:22b, 26-27', cuando: 'Cuando los santos reciben el reino, en la segunda venida', donde: 'Del cielo a la tierra', quien: 'Cristo vuelve como Rey de reyes',
         que: 'Cristo vuelve por los suyos y los santos reciben el reino. Al cuerno le quitan el dominio para que sea destruido y arruinado hasta el fin (7:26).', para: 'Para que los santos posean el reino para siempre',
         citas: [['Daniel 7:22', 'llegó el tiempo, y los santos recibieron el reino.'], ['Daniel 7:27', 'sean dados al pueblo de los santos del Altísimo']], de: 1, a: 2 }],
     nota: 'Es el orden de Daniel 7: se abren los libros (7:10), el Hijo recibe el reino (7:14) y después los santos lo reciben (7:22, 27). Apocalipsis 20 sigue el juicio más allá de la venida: los santos juzgan durante los mil años y el gran trono blanco cumple la sentencia de los perdidos. No se contradicen: la ejecución empieza en la venida y termina después del milenio.',
     fuente: 'CS 480-481, 533 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307.',
   },
+  cmpExtra: [{ id: 'sanado', img: 'cuerno', nombre: 'El cuerno, sanado de su herida', reino: 'Roma papal sanada', fechas: 'desde 1798 d.C. hasta la venida', de: 1798, a: 2026, c: '#8A5A3C',
+    texto: 'este cuerno hacía guerra contra los santos y los vencía', ref: '7:21',
+    corto: 'Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26).' }],
   partes: [
  {id:'leon',img:'leon',nombre:'León con alas de águila',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La primera era como un león, y tenía alas de águila.',ref:'7:4',texto2:'Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.',ref2:'7:17',
   corto:'Babilonia, la cabeza de oro de Daniel 2. Las alas son la rapidez de sus conquistas.',
   interp:['El león es Babilonia (Jeremías 50:17), la misma cabeza de oro de Daniel 2: lo mejor de cada especie, como el oro entre los metales. Las alas de águila son la rapidez de sus conquistas (Habacuc 1:6-8).','Le arrancan las alas: Babilonia ya no conquista. Y recibe «corazón de hombre», un león sin valor. Así se vio Belsasar la noche en que cayó el reino, en 539 a.C. (5:6, 30).','Mira los verbos: sus alas «le fueron arrancadas», «fue levantada», «se le dio». Otro guía la historia.'],
-  fuente:BOHR+', p. 122.'},
+  fuente:BOHR+', p. 17 y 122.'},
  {id:'oso',img:'oso',nombre:'Oso',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,a:-331,c:'#8C98A6',
   texto:'semejante a un oso, la cual se alzaba de un costado más que del otro. En su boca, entre los dientes, tenía tres costillas',ref:'7:5',texto2:'Levántate y devora mucha carne.',ref2:'7:5',
   corto:'Medo-Persia, la plata de Daniel 2. Las tres costillas: Lidia, Babilonia y Egipto.',
-  interp:['El oso es Medo-Persia (8:20), el pecho y los brazos de plata de Daniel 2. Se alza de un costado: de los dos pueblos, los persas llegaron a mandar más que los medos (8:3).','Las tres costillas son sus tres grandes conquistas: Lidia (547 a.C.), Babilonia (539 a.C.) y Egipto (525 a.C.).','«Levántate», se le dijo: alguien le da permiso para conquistar.'],
-  fuente:BOHR+', p. 123; Smith, <i>Las profecías de Daniel</i>, p. 56.'},
+  interp:['El oso es Medo-Persia (8:20), el pecho y los brazos de plata de Daniel 2. Se alza de un costado: de los dos pueblos, los persas llegaron a mandar más que los medos (8:3).','Las tres costillas son sus tres grandes conquistas: Lidia (546 a.C.), Babilonia (539 a.C.) y Egipto (525 a.C.).','«Levántate», se le dijo: alguien le da permiso para conquistar.'],
+  fuente:BOHR+', p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 56.'},
  {id:'leopardo',img:'leopardo',nombre:'Leopardo de cuatro cabezas',reino:'Grecia',fechas:'331 – 168 a.C.',de:-331,a:-168,c:'#A85A2A',
   texto:'semejante a un leopardo, con cuatro alas de ave en sus espaldas',ref:'7:6',texto2:'Esta bestia tenía cuatro cabezas; y le fue dado dominio.',ref2:'7:6',
   corto:'Grecia, el bronce de Daniel 2. Cuatro alas: Alejandro Magno conquistó más rápido que nadie.',
   interp:['El leopardo es Grecia (8:21), el vientre y los muslos de bronce de Daniel 2. Un leopardo ya es veloz, y este tiene cuatro alas: Alejandro Magno conquistó de Egipto a la India en pocos años.','Las cuatro cabezas salieron después. Alejandro murió joven y, tras la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio: Casandro, Lisímaco, Tolomeo y Seleuco. Daniel 8:8 lo muestra como cuatro cuernos.','«Le fue dado dominio»: no lo tomó, se lo dieron.'],
-  fuente:BOHR+', p. 123; Smith, <i>Las profecías de Daniel</i>, p. 57.'},
+  fuente:BOHR+', p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 57.'},
  {id:'bestia',img:'cuarta',nombre:'La bestia espantosa',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',
   texto:'la cuarta bestia, espantosa, terrible y en gran manera fuerte, la cual tenía unos grandes dientes de hierro',ref:'7:7',texto2:'La cuarta bestia será un cuarto reino en la tierra, el cual será diferente de todos los otros reinos',ref2:'7:23',
   corto:'Roma imperial. Sus dientes de hierro son las piernas de hierro de Daniel 2.',
@@ -392,9 +409,9 @@ LAMINAS.d7 = {
   fuente:BOHR+', p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24.'},
  {id:'cuerno',img:'cuerno',nombre:'El cuerno pequeño',reino:'Roma papal',fechas:'supremacía 538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',
   texto:'otro cuerno pequeño salió entre ellos, y delante de él fueron arrancados tres cuernos de los primeros',ref:'7:8',texto2:'serán entregados en sus manos hasta tiempo, tiempos y medio tiempo.',ref2:'7:25',
-  corto:'Roma papal: 1.260 años, de 538 a 1798. Herido en 1798, sana (Apocalipsis 13:3) y sigue en pie hasta que viene el Anciano de días (7:21-22).',
-  interp:['La tercera etapa de Roma: el poder religioso unido al político. Sale entre los diez cuernos, después de ellos (7:24), y arranca a tres: hérulos (493), vándalos (534) y ostrogodos (538).','Tiene ojos de hombre y una boca que habla «con gran insolencia» (7:8). Habla contra el Altísimo, persigue a los santos y piensa en cambiar los tiempos y la Ley (7:25).','Domina «tiempo, tiempos y medio tiempo»: 1.260 años, de 538 a 1798 d.C. En 1798 el general Louis-Alexandre Berthier entra en Roma y toma preso al papa Pío VI.','Hay una cuarta etapa: el papado sanado de su herida, «su herida mortal fue sanada» (Apocalipsis 13:3). El cuerno hace guerra contra los santos «hasta que vino el Anciano de días» (7:21-22).'],
-  fuente:BOHR+', p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492.'},
+  corto:'Roma papal: 1.260 años, de 538 a 1798. Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26).',
+  interp:['La tercera etapa de Roma: el poder religioso unido al político. Sale entre los diez cuernos, después de ellos (7:24), y arranca a tres: hérulos (493), vándalos (534) y ostrogodos (538).','Tiene ojos de hombre y una boca que habla «con gran insolencia» (7:8). Habla contra el Altísimo, persigue a los santos y piensa en cambiar los tiempos y la Ley (7:25).','Domina «tiempo, tiempos y medio tiempo»: 1.260 años, de 538 a 1798 d.C. En 1798 el general Louis-Alexandre Berthier entra en Roma y toma preso al papa Pío VI.','Hay una cuarta etapa: el papado sanado de su herida, «su herida mortal fue sanada» (Apocalipsis 13:3). Herido en 1798, sana y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26). Elena de White lo dice así: el hombre de pecado subsiste hasta la segunda venida (CS 636; 2 Tesalonicenses 2:8).'],
+  fuente:BOHR+', p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636.'},
  {id:'juicio',img:'juicio',nombre:'El juicio',reino:'El juicio en el cielo',fechas:'desde 1844 d.C.',de:1844,a:2026,c:'#B45309',
   texto:'fueron puestos unos tronos y se sentó un Anciano de días',ref:'7:9',texto2:'El Juez se sentó y los libros fueron abiertos.',ref2:'7:10',
   corto:'Desde 1844 el Padre juzga en el cielo, y el fallo es a favor de los santos (7:22).',
@@ -486,7 +503,7 @@ LAMINAS.d8 = {
   solapa: [],
   tiempo: ['carnero', 'macho', 'cuatro', 'cuerno', 'cielo', 'purificado'],
   /* Los años que Daniel 8 no cubre: lo dice la línea de tiempo en vez de «antes de Nabucodonosor». */
-  vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia ya cae'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal']],
+  vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia está por caer (539 a.C.)'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal']],
   futuro: [{ id: 'quebrantado', de: 2026, a: 2226, t: 'La segunda venida', s: 'el cuerno es quebrantado, no por mano humana', f: 'd2/e-piedra', ult: 'venida' },
     { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'la tierra desolada', f: 'd2/e-piedra', ult: 'desolada' },
     { id: '', de: 2426, a: 2626, t: 'El reino eterno', s: 'Daniel 8 no lo muestra: llega en Daniel 12:1-3', f: 'd2/e-monte', ult: 'reino' }],
@@ -500,12 +517,12 @@ LAMINAS.d8 = {
     titulo: 'La visión es para el tiempo del fin', nota: 'Desde 1844 el santuario se purifica: es el juicio de Daniel 7. Hoy vivimos en ese tiempo. Después el cuerno será quebrantado, «aunque no por mano humana» (8:25).' },
   paraleloCols: ['Daniel 8', 'Daniel 2', 'Daniel 7', 'Reino'],
   paraleloTit: 'Daniel 2, 7 y 8 dicen lo mismo',
-  paraleloNota: 'Daniel 8 empieza en Medo-Persia: Babilonia ya cae. Los dos animales son del santuario, y Roma, en sus dos fases, es un solo cuerno.',
+  paraleloNota: 'Daniel 8 empieza en Medo-Persia: Babilonia está por caer (539 a.C.). Los dos animales son del santuario, y Roma, en sus dos fases, es un solo cuerno.',
   /* Con Daniel 2 y Daniel 7: la cuarta columna es el metal que se enciende en la estatua
      chica; la sexta, la parte de Daniel 7 cuya imagen va debajo. */
   comparar: 'd2', comparar2: 'd7', conTxt: 'Con Daniel 2 y 7',
   agrega: 'Daniel 2 no lo muestra: lo agrega Daniel 8',
-  noTrae: { '-605': 'Empieza en Medo-Persia: Babilonia ya cae', '476': 'Pasa de Roma imperial a Roma papal' },
+  noTrae: { '-605': 'Empieza en Medo-Persia: Babilonia está por caer (539 a.C.)', '476': 'Pasa de Roma imperial a Roma papal' },
   paralelo: [['carnero', 'Pecho y brazos de plata', 'Medo-Persia', 'plata', 'Oso', 'oso'],
     ['macho', 'Vientre y muslos de bronce', 'Grecia', 'bronce', 'Leopardo', 'leopardo'],
     ['cuatro', 'Vientre y muslos de bronce', 'Grecia dividida en cuatro', 'bronce', 'Las cuatro cabezas del leopardo', 'leopardo'],
@@ -514,7 +531,7 @@ LAMINAS.d8 = {
     ['santuario', 'Hierro mezclado con barro', 'Roma papal', 'barro', 'El cuerno pequeño', 'cuerno'],
     ['purificado', 'No aparece: lo agrega Daniel 7 y 8', 'El juicio en el cielo, desde 1844', null, 'El juicio', 'juicio'],
     ['quebrantado', 'La piedra que hiere los pies', 'La segunda venida', ['piedra'], 'Los santos reciben el reino', 'santos']],
-  paraleloFuente: BOHR + ', p. 20, 83, 119-121.',
+  paraleloFuente: BOHR + ', p. 20, 83, 119-121; CS 492 y 636.',
   retoSin: [],
   reto: [
     { q: '¿Qué símbolo es «los reyes de Media y de Persia»?', ok: 'carnero', e: '8:20 · El carnero de dos cuernos; el más alto, que creció después, es Persia.' },
@@ -556,9 +573,11 @@ LAMINAS.d8 = {
        interacción no se entendía). 8:8: los cuatro vientos del cielo, la rosa de los vientos
        sobre el mundo griego. 8:9: «de uno de ellos»: en hebreo «ellos» (mehem) es masculino y
        «cuernos» (qeranot) femenino, así que «ellos» no son los cuernos: sale de uno de los
-       vientos. v224 (Camilo, 15-oct): el texto no dice de cuál; se deduce de 8:9: crece al sur,
-       al oriente y a la tierra gloriosa, así que viene del cuarto, el poniente, donde estaba Roma.
-       La lectura «de uno de los cuernos» quedó fuera (decisión de Camilo). Después crece, en el
+       vientos. El texto no dice de cuál. v225 (Camilo, 15-oct: «nunca saques deducciones tú»):
+       el oeste no es deducción de la app; lo concluye Hasel en el Simposio sobre Daniel (SIMP),
+       p. 396-397 (la gramática: de un viento, no de un cuerno) y p. 399 («el punto cardinal del
+       que salió el "cuerno pequeño" solo puede ser el oeste»; «Roma salió del oeste (desde el
+       punto de vista de Israel)»). La lectura «de uno de los cuernos» quedó fuera (decisión de Camilo). Después crece, en el
        orden de la historia: al oriente (Macedonia, Siria), a la tierra gloriosa (Judea) y al sur
        (Egipto). Desde Roma, Macedonia y Siria quedan al oriente y Egipto al sur (Smith, Maxwell).
        `rosa`: el centro y el largo de cada brazo; `pasos`: el rótulo de arriba en cada tiempo. */
@@ -569,7 +588,7 @@ LAMINAS.d8 = {
       /* `r`: el reino que toma, en el orden en que lo toma. */
       va: [{ r: 0, t: 'al oriente', s: '168 a.C.' }, { r: 2, t: 'al oriente', s: '65 a.C.' }, { r: 3, t: 'hacia la tierra gloriosa', s: '63 a.C.' }, { r: 4, t: 'hacia el sur', s: '30 a.C.' }],
       pasos: [['1 · Los cuatro vientos del cielo', 'el reino de Alejandro, repartido hacia los cuatro puntos cardinales (8:8)'],
-        ['2 · «De uno de ellos»: uno de los vientos; por 8:9 se deduce el poniente', 'el texto no dice cuál: si crece al sur, al oriente y a la tierra gloriosa, viene del cuarto, donde estaba Roma'],
+        ['2 · «De uno de ellos»: de uno de los cuatro vientos (8:8-9)', 'el texto no dice cuál; el Simposio sobre Daniel concluye que el oeste: “Roma salió del oeste” (p. 399)'],
         ['3 · Crece al oriente, a la tierra gloriosa y al sur', 'Roma imperial, de 168 a 30 a.C. (8:9)'],
         ['4 · Después crece hacia arriba', 'hasta el ejército del cielo: Roma papal (8:10)']] },
     cielo: { pq: 'd7/cuerno-pequeno.png', base: [600, 655], alto: 470, principe: [600, 40] },
@@ -581,17 +600,25 @@ LAMINAS.d8 = {
        delante del velo: la intercesión de Cristo (Hebreos 7:25), cambiada por el confesionario,
        María y los santos. «La verdad» (8:12) es aparte: la Ley y el sábado (7:25), no un mueble
        del cuarto. El arca no va: está detrás del velo, en el santísimo.
-       LAS COORDENADAS SON DE LA IMAGEN: `en` es [x, y] del punto en la escena (1200 × 675) y `dy`,
-       cuánto más abajo va su rótulo. Sin `en`, la seña va sin punto en la franja de abajo. La
-       imagen de hoy (santuario.webp de v223) trae candelabro y mesa, y además el arca (que no se
-       marca); no trae el altar del incienso. Cuando llegue la imagen nueva (lugar santo visto
-       desde la entrada, velo cerrado, altar del incienso delante del velo con humo, candelabro a
-       la izquierda, mesa a la derecha, el cuerno abajo al centro) solo se cambian estos `en`. */
+       LAS COORDENADAS SON DE LA IMAGEN: `en` es [x, y] del punto en la escena (1200 × 675); `dy`
+       y `dx`, cuánto se corre su rótulo (abajo y a la derecha; negativo, arriba y a la izquierda).
+       Sin `en`, la seña va sin punto en la franja de abajo.
+       v225: la imagen nueva de Camilo (santuario.webp, 1600 × 900 de su original de 1672 × 941):
+       el lugar santo visto desde la entrada, el velo con querubines al fondo, el altar del
+       incienso al centro con sus cuernos y el humo, el candelabro de siete brazos a la izquierda,
+       la mesa con dos pilas de seis panes a la derecha y el cuerno oscuro que sube de una nube
+       negra abajo al centro. Puntos en el candelabro, la mesa (en su extremo izquierdo: con «Con
+       Daniel 2 y 7» la estatua chica tapa la escena desde x = 952) y el altar del incienso (arriba
+       de la punta del cuerno); el altar del holocausto (está en el atrio) y «la verdad» van sin
+       punto. Los rótulos: el del candelabro arriba de sus llamas, el de la mesa sobre el velo, y
+       el del altar del incienso abajo a la izquierda, en el piso, sin tapar el altar ni el cuerno
+       (en el teléfono, `tel: { fila: true }`, su rótulo va en la franja de abajo; el punto se queda
+       en el altar). */
     santuario: { cosas: [
       { id: 'altar', t: 'El altar del holocausto', s: 'en el atrio: Cristo, sacrificado una vez', c: 'la misa' },
-      { id: 'mesa', t: 'La mesa de los panes', s: 'la Palabra de Dios', c: 'la tradición', en: [935, 222], dy: 108 },
-      { id: 'candelabro', t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', c: 'la iglesia a oscuras', en: [280, 160], dy: 170 },
-      { id: 'incienso', t: 'El altar del incienso', s: 'la intercesión de Cristo (Hebreos 7:25)', c: 'el confesionario, María y los santos', en: null }],
+      { id: 'mesa', t: 'La mesa de los panes', s: 'la Palabra de Dios', c: 'la tradición', en: [935, 330], dy: -205 },
+      { id: 'candelabro', t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', c: 'la iglesia a oscuras', en: [166, 330], dy: -275, tel: { dy: -245 } },
+      { id: 'incienso', t: 'El altar del incienso', s: 'la intercesión de Cristo (Hebreos 7:25)', c: 'el confesionario, María y los santos', en: [585, 292], dx: -255, dy: 168, tel: { fila: true } }],
       verdad: { t: 'La verdad', s: 'la Ley de Dios y el sábado (8:12)', c: 'pensó cambiar los tiempos y la Ley (7:25)' } },
   },
   /* v223: la primera frase de la línea de tiempo (antes decía «De 605 a.C.» en todas). */
@@ -631,9 +658,12 @@ LAMINAS.d8 = {
         nota: 'Quedan 2.300 − 490 = 1.810 años. Contados desde 34 d.C. llegan a 1844. O de una vez: 2.300 − 457 = 1843, y como no hay año cero, 1844.' },
       { t: 'Luego el santuario será purificado', v: 'purif', citas: [['Daniel 8:14', 'luego el santuario será purificado'], ['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.']],
         nota: 'La purificación del santuario era el Día de la Expiación, el día diez del mes séptimo (Levítico 16:29-30), un día de juicio para Israel. En 1844 cayó el 22 de octubre. Ese día Cristo pasó al lugar santísimo del santuario celestial y empezó el juicio investigador: es el mismo juicio de Daniel 7:9-10.' }],
-    fuente: 'CS 372-376, 451 y 470-477; ' + BOHR + ', p. 313-316 y 325-336.',
+    fuente: 'CS 372-376, 451 y 470-477; ' + BOHR + ', p. 293, 313-316 y 325-336.',
     ir: [['d7', 'juicio', 'El juicio de Daniel 7']],
   },
+  cmpExtra: [{ id: 'sanado', img: 'cielo', nombre: 'Hasta ser quebrantado', reino: 'Roma papal sanada', fechas: 'desde 1798 d.C. hasta la venida', de: 1798, a: 2026, c: '#8A5A3C',
+    texto: 'Se levantará contra el Príncipe de los príncipes', ref: '8:25',
+    corto: 'Herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue hasta el fin (CS 636): se levanta contra el Príncipe de los príncipes hasta ser quebrantado (8:25).' }],
   partes: [
  {id:'carnero',img:'carnero',nombre:'El carnero de dos cuernos',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,a:-331,c:'#8C98A6',mov:'carnero',ms:6400,
   texto:'había un carnero que estaba delante del río, y tenía dos cuernos; y aunque los cuernos eran altos, uno era más alto que el otro, y el más alto creció después.',ref:'8:3',texto2:'En cuanto al carnero que viste, que tenía dos cuernos: éstos son los reyes de Media y de Persia.',ref2:'8:20',
@@ -643,7 +673,7 @@ LAMINAS.d8 = {
  {id:'macho',img:'macho',nombre:'El macho cabrío',reino:'Grecia',fechas:'331 – 301 a.C.',de:-331,a:-301,c:'#A85A2A',mov:'choque',ms:6800,
   texto:'un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra; y aquel macho cabrío tenía un cuerno notable entre sus ojos.',ref:'8:5',texto2:'El macho cabrío es el rey de Grecia, y el cuerno grande que tenía entre sus ojos es el rey primero.',ref2:'8:21',
   corto:'Grecia (8:21). El cuerno notable es Alejandro Magno, que venció a Persia en tres batallas.',
-  interp:['Gabriel lo nombra: «el rey de Grecia» (8:21). Es el leopardo de Daniel 7 y el bronce de Daniel 2.','Viene «del lado del poniente»: Grecia estaba al oeste de Persia. «Sin tocar tierra»: la rapidez de Alejandro Magno, como las cuatro alas del leopardo (7:6).','«Le quebró sus dos cuernos» (8:7): Alejandro venció a Darío III en el Gránico (334 a.C.), en Iso (333) y en Arbela (331). Medo-Persia no pudo levantarse más.','El cuerno grande «es el rey primero» (8:21): Alejandro Magno.'],
+  interp:['Gabriel lo nombra: «el rey de Grecia» (8:21). Es el leopardo de Daniel 7 y el bronce de Daniel 2.','Viene «del lado del poniente»: Grecia estaba al oeste de Persia. «Sin tocar tierra»: la rapidez de Alejandro Magno, como las cuatro alas del leopardo (7:6).','«Le quebró sus dos cuernos» (8:7): Alejandro venció a los persas en el Gránico (334 a.C.) y a Darío III en Iso (333) y en Arbela (331). Medo-Persia no pudo levantarse más.','El cuerno grande «es el rey primero» (8:21): Alejandro Magno.'],
   fuente:BOHR+', p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87.'},
  {id:'cuatro',img:'cuatro',nombre:'El cuerno quebrado y los cuatro cuernos',reino:'Grecia dividida en cuatro',fechas:'301 – 168 a.C.',de:-301,a:-168,cmp:-331,c:'#B97A45',mov:'cuatro',ms:7600,
   texto:'cuando estaba en su mayor fuerza, aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo.',ref:'8:8',texto2:'cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él.',ref2:'8:22',
@@ -653,19 +683,19 @@ LAMINAS.d8 = {
  {id:'cuerno',img:'pequeno',nombre:'El cuerno pequeño crece',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',mov:'crece',ms:10600,
   texto:'De uno de ellos salió un cuerno pequeño, que creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa.',ref:'8:9',texto2:'Al fin del reinado de estos, cuando los transgresores lleguen al colmo, se levantará un rey altivo de rostro y entendido en enigmas.',ref2:'8:23',
   corto:'La primera fase de Roma: pequeña al principio, crece sobre los reinos griegos. Es la bestia espantosa de Daniel 7.',
-  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal. El texto no dice cuál: se deduce del mismo versículo. Crece «hacia el sur y el oriente, y hacia la tierra gloriosa»; si crece hacia esos tres, viene del cuarto, el poniente, donde estaba Roma.','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
-  fuente:BOHR+', p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91.'},
+  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos (Simposio, p. 396-397). El texto no nombra el viento: dice que creció «hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9). La Septuaginta pone “el norte” donde dice «la tierra gloriosa», y el Simposio concluye: “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
+  fuente:SIMP+', p. 394-399; '+BOHR+', p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91.'},
  {id:'cielo',img:'cielo',nombre:'Hasta el ejército del cielo',reino:'Roma papal',fechas:'538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',mov:'cielo',ms:7200,
   texto:'Creció hasta llegar al ejército del cielo; y parte del ejército y de las estrellas echó por tierra, y las pisoteó.',ref:'8:10',texto2:'destruirá a los fuertes y al pueblo de los santos.',ref2:'8:24',
   corto:'La fase papal: el cuerno ya no pelea solo con reinos de la tierra; se levanta contra Dios y persigue a su pueblo. Es el cuerno pequeño de Daniel 7.',
   interp:['Ahora crece hacia arriba. Los animales pelean contra otros reinos; el cuerno además pelea contra Dios. Es el cuerno pequeño de Daniel 7, con sus 1.260 años, de 538 a 1798.','El ejército y las estrellas son el pueblo de Dios: Gabriel habla del «pueblo de los santos» (8:24), y Daniel 12:3 compara a los fieles con estrellas.','«Aun se engrandeció frente al príncipe de los ejércitos» (8:11). El Príncipe del ejército es Cristo, el mismo que Josué adoró (Josué 5:13-15). El cuerno se pone en su lugar en la tierra.'],
   fuente:BOHR+', p. 305-307.'},
- {id:'santuario',img:'santuario',nombre:'El santuario pisoteado',reino:'Roma papal',fechas:'el continuo quitado: 508 y 538 – 1798 d.C.',de:null,era:538,c:'#7C4A2E',mov:'santuario',ms:8200,
+ {id:'santuario',img:'santuario',nombre:'El santuario pisoteado',reino:'Roma papal',fechas:'el continuo quitado: desde 508 (12:11); supremacía 538 – 1798 d.C.',de:null,era:538,c:'#7C4A2E',mov:'santuario',ms:8200,
   texto:'por él fue quitado el sacrificio continuo, y el lugar de su santuario fue echado por tierra.',ref:'8:11',texto2:'echó por tierra la verdad e hizo cuanto quiso, y prosperó.',ref2:'8:12',
   corto:'El cuerno quita el continuo: pone en la tierra lo que Cristo hace cada día por nosotros en el santuario del cielo. Y echa por tierra la verdad.',
   interp:['En hebreo dice solo «continuo» (<i>hatamid</i>), con artículo: «sacrificio» lo agregaron los traductores. La palabra nombra el servicio de cada día en el atrio y en el lugar santo, nunca en el santísimo: el holocausto de la mañana y de la tarde, el pan, la luz y el incienso. En el cielo es la obra de Cristo, que vive siempre para interceder por nosotros (Hebreos 7:25).',
     'El cuerno no puede subir al cielo: pone en la tierra un sustituto de cada pieza. En lugar del sacrificio de una vez para siempre, la misa; en lugar de la Palabra, la tradición; en lugar de la luz, una iglesia a oscuras; en lugar de la intercesión de Cristo, el único mediador (1 Timoteo 2:5), el confesionario y las oraciones a María y a los santos. Así «el lugar de su santuario fue echado por tierra».',
-    'El continuo es del atrio y del lugar santo; el santísimo queda fuera, porque Cristo entra allí al terminar las 2.300 tardes y mañanas, en 1844 (8:14). Por eso el arca no está entre lo que el cuerno quita: queda detrás del velo.',
+    'El continuo es del atrio y del lugar santo; el santísimo queda fuera, porque Cristo entra allí al terminar las 2.300 tardes y mañanas, en 1844 (8:14). El arca no está entre lo que el cuerno quita: queda detrás del velo.',
     '«Echó por tierra la verdad» (8:12) va aparte: no es un mueble del santuario. Es la Ley de Dios, que el Salmo 119:142 llama la verdad, y con ella el sábado: el cuerno de Daniel 7 «pensará en cambiar los tiempos y la ley» (7:25).',
     'Otra lectura ve en el continuo el paganismo, quitado para dar lugar al papado. Las dos llegan a 508, cuando Clodoveo I dio poder civil al papado (ver Daniel 11:31 y 12:11).'],
   fuente:BOHR+', p. 307-313; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado».'},
@@ -677,8 +707,8 @@ LAMINAS.d8 = {
  {id:'quebrantado',img:'d2/e-piedra',nombre:'Quebrantado, no por mano humana',reino:'La segunda venida',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
   texto:'Se levantará contra el Príncipe de los príncipes, pero será quebrantado, aunque no por mano humana.',ref:'8:25',texto2:'la visión es para el tiempo del fin.',ref2:'8:17',
   corto:'El cuerno llega hasta el fin y lo quebranta Dios, no un hombre: es la piedra de Daniel 2.',
-  interp:['Ningún reino le sigue al cuerno: llega hasta «el tiempo del fin» (8:17, 19). Lo quebranta Dios, «no por mano humana», como la piedra que se desprendió «sin que la cortara mano alguna» (2:34).','Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26).'],
-  fuente:BOHR+', p. 63; CS 698-703.'},
+  interp:['Ningún reino le sigue al cuerno: llega hasta «el tiempo del fin» (8:17, 19). Lo quebranta Dios, «no por mano humana», como la piedra que se desprendió «sin que la cortara mano alguna» (2:34).','Antes de eso está la cuarta etapa de Roma: herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue hasta el fin (CS 636). Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26).'],
+  fuente:BOHR+', p. 63; CS 636 y 698-703.'},
   ],
 };
 /* v219: LOS ÚLTIMOS ACONTECIMIENTOS (Camilo, 14-oct 18:12-18:17): «En la comparación
@@ -728,7 +758,7 @@ const ULTIMOS = {
     { id: 'imagen', fase: 'antes', t: 'La imagen de la bestia', c: 'Imagen de la bestia', vez: 'ley', cuando: 'Se forma cuando las iglesias usan el poder del Estado para imponer sus dogmas; la ley dominical es su primera obra',
       nota: 'Los Estados Unidos, la bestia con cuernos de cordero, hablan como dragón: las iglesias usan el poder civil para imponer sus dogmas, como hizo el papado. Así se sana la herida mortal.',
       egw: 'CS 496-502 y 636',
-      l: { d11: I('11:41', 'El poder del norte entra en la tierra gloriosa: los Estados Unidos caen bajo su mano.', B11 + ', p. 125', [['Daniel 11:41', 'Entrará en la tierra gloriosa']]),
+      l: { d11: I('11:41', 'El poder del norte entra en la tierra gloriosa: los Estados Unidos, baluarte del protestantismo, caen bajo su mano.', B11 + ', p. 125-126', [['Daniel 11:41', 'Entrará en la tierra gloriosa']]),
         ap13: X('13:3, 11-14', 'La bestia que sube de la tierra manda hacer una imagen a la bestia cuya herida fue sanada.', 'CS 496', [['Apocalipsis 13:11', 'Tenía dos cuernos semejantes a los de un cordero, pero hablaba como un dragón.'], ['Apocalipsis 13:14', 'que le hagan una imagen a la bestia que fue herida de espada y revivió']]),
         ap17: I('17:8', 'La bestia «que era y no es, y será»: el papado vuelve al poder.', B17 + ', p. 22', [['Apocalipsis 17:8', 'la bestia que era y no es, y será']]) } },
     { id: 'ley', fase: 'antes', t: 'La ley dominical', c: 'Ley dominical', vez: 'ley', cuando: 'Se impone el domingo por ley: la gran prueba. Al imponerlo, las iglesias levantan la imagen de la bestia',
@@ -754,7 +784,7 @@ const ULTIMOS = {
     { id: 'zarandeo', fase: 'antes', t: 'El zarandeo', c: 'Zarandeo', vez: 'crisis', cuando: 'Empieza con el mensaje a Laodicea; llega a su punto decisivo con la ley dominical y la persecución',
       nota: 'El testimonio directo del Testigo fiel sacude a la iglesia: unos lo aceptan y se purifican; otros se levantan contra él. Cuando llega la prueba, los que no fueron santificados por la verdad dejan la fe.',
       egw: 'PE 269-271; CS 666; EUD 147-156',
-      l: { d11: I('11:41', '«Muchas provincias caerán»: al entrar el poder del norte en la tierra gloriosa (la iglesia), muchos tropiezan y caen.', B11 + ', p. 128', [['Daniel 11:41', 'Entrará en la tierra gloriosa, y muchas provincias caerán']]),
+      l: { d11: I('11:41', '«Muchas provincias caerán»: al entrar el poder del norte en la tierra gloriosa, el ámbito de la iglesia protestante y adventista, muchos tropiezan y caen.', B11 + ', p. 128', [['Daniel 11:41', 'Entrará en la tierra gloriosa, y muchas provincias caerán']]),
         mt24: I('24:10-12', 'Muchos tropiezan, se entregan unos a otros y el amor de muchos se enfría.', B11 + ', p. 128'),
         apo: I('3:15-19', 'El consejo del Testigo fiel a Laodicea causa el zarandeo.', 'PE 270', [['Apocalipsis 3:16', 'por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca'], ['Apocalipsis 3:19', 'sé, pues, celoso y arrepiéntete']]) } },
     { id: 'lluvia', fase: 'antes', vez: 'crisis', t: 'La lluvia tardía', c: 'Lluvia tardía', cuando: 'Al empezar el pequeño tiempo de angustia; da poder al fuerte pregón',
@@ -862,7 +892,7 @@ const ULTIMOS = {
     { id: 'juzgan', fase: 'mil', t: 'El juicio de los santos', c: 'Juicio de los santos', cuando: 'Durante los mil años, en el cielo',
       nota: 'Con Cristo, los santos juzgan a los impíos y a los ángeles caídos (1 Corintios 6:2-3). Comparan sus actos con los libros y fijan el castigo de cada uno según sus obras.',
       egw: 'CS 718-719; PE 52 y 290-291',
-      l: { d7: I('7:22', 'El Anciano de días hace justicia a los santos; la autora lo lee «se dio el juicio a los santos».', 'CS 719', [['Daniel 7:22', 'se hizo justicia a los santos del Altísimo']]),
+      l: { d7: I('7:22', 'El Anciano de días hace justicia a los santos; Elena de White lo lee «se dio el juicio a los santos».', 'CS 719', [['Daniel 7:22', 'se hizo justicia a los santos del Altísimo']]),
         ap20: X('20:4', 'Tronos para los que recibieron facultad de juzgar.', 'CS 719', [['Apocalipsis 20:4', 'se sentaron sobre ellos los que recibieron facultad de juzgar']]) } },
     { id: 'segunda', fase: 'fin', t: 'La segunda resurrección', c: 'Segunda resurrección', cuando: 'Al fin de los mil años',
       nota: 'Cristo vuelve a la tierra con los santos y manda a los impíos muertos que resuciten para recibir su condenación.',

@@ -24,7 +24,7 @@ module.exports = {
         ]) +
         hi(`«Satanás no puede leer nuestros pensamientos», pero ve nuestras acciones y oye nuestras palabras (RH 27-feb-1913).`) +
         `<p>Los caldeos dijeron que solo lo sabrían dioses que no viven con los hombres (2:11). El Dios de la Biblia sí se acerca: en Jesús «se hizo carne y habitó entre nosotros» (Juan 1:14). Y Daniel no consultó estrellas: el secreto llegó cuando los cuatro oraron (2:17-19; Amós 3:7).</p>` +
-        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 55-57; Bohr, <i>15 principios</i> 1:17; Smith, <i>Las profecías de Daniel</i>, p. 8.</p>`,
+        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 55-57; Bohr, <i>15 principios</i> 1:17; Smith, <i>Las profecías de Daniel</i>, p. 8; apuntes «Daniel 2 - Jaque Mate».</p>`,
     },
     {
       t: '🧭 Los cuatro imperios, con sus fechas',
@@ -120,7 +120,7 @@ module.exports = {
           '«En los días de estos reyes» (2:44) habla de varios reyes al mismo tiempo: el reino de Dios llega cuando Europa ya está dividida.',
         ]) +
         `<p>La división no aparece en las piernas sino en los dedos. Ninguno de los pedazos volvió a tener la fuerza del hierro original.</p>` +
-        hi(`«No podemos esperar unión entre las naciones del mundo» (1T 361). Estamos en los dedos, en las uñas de los pies de la historia.`) +
+        hi(`«No podemos esperar unión entre las naciones del mundo» (1T 361). Estamos en los dedos.`) +
         `<p>Fuente: Smith, <i>Las profecías de Daniel</i>, p. 24-25; Bohr, <i>Daniel 1-10</i>, p. 62, 64, 128, 133.</p>`,
     },
     {
@@ -129,7 +129,7 @@ module.exports = {
       h: `<p>El hierro de las piernas sigue en los pies: <strong>Roma continúa</strong>, pero es otra clase de Roma, mezclada con algo que no es metal. Y el barro es especial: «barro cocido de alfarero» (2:41).</p>` +
         li([
           'En la Biblia el barro en manos del alfarero es el pueblo de Dios (Jeremías 18:6; Isaías 64:8).',
-          'Por eso el hierro mezclado con barro es el <strong>poder político unido a la iglesia</strong>: la unión de iglesia y Estado que dominó Europa en la Edad Media. Esa mezcla tiene dos etapas: los 1.260 años (538-1798) y, cuando sane la herida de 1798, una alianza mundial poco antes de la venida de Cristo (Apocalipsis 13:3; 17:12-14). Por eso la piedra todavía la encuentra en los pies.',
+          'Por eso el hierro mezclado con barro es el <strong>poder político unido a la iglesia</strong>: la unión de iglesia y Estado que dominó Europa en la Edad Media. Esa mezcla tiene dos etapas: los 1.260 años (538-1798) y, cuando sane la herida de 1798, una alianza mundial poco antes de la venida de Cristo (Apocalipsis 13:3; 17:12-14). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34).',
           'Por separado, cada uno tiene su lugar; mezclados, los dos se debilitan. La fuerza de la iglesia está en predicar con el poder del Espíritu, no en apoyarse en el Estado.',
         ]) +
         tbl(['En la imagen', 'Fecha'], [

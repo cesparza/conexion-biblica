@@ -2618,10 +2618,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(P&&P.tras==='cuerno'&&P.pasos.length===4&&citas.length===7&&!malas.length,'Tiempo, tiempos y medio tiempo: 4 pasos y 7 citas literales en Daniel 7 y Apocalipsis'+(malas.length?' ('+malas[0][0]+')':''));
   ok(360+720+180===1260&&42*30===1260&&P.de+1260===P.a&&P.de===538&&P.a===1798&&P.fotos.map(f=>f[0]).join()==='d2/e538,d2/e1798'&&P.fotos.every(f=>fs.existsSync(path.join(RAIZ,'laminas',f[0]+'.webp'))),
     'La cuenta cuadra: 360 + 720 + 180 = 1.260 = 42 × 30, y 538 + 1.260 = 1798 (con sus dos escenas)');
-  ok(/Números 14:34/.test(P.pasos[1].nota)&&/Ezequiel 4:6/.test(P.pasos[1].nota)&&!/«/.test(P.pasos[1].nota)&&/CS 309 y 492/.test(P.fuente)&&/15 principios/.test(P.fuente),
-    'Día por año: Números 14:34 y Ezequiel 4:6 sin comillas (no están en la Biblia de la app); fuentes Bohr y CS 309, 492');
+  ok(/Números 14:34/.test(P.pasos[1].nota)&&/Ezequiel 4:6/.test(P.pasos[1].nota)&&!/«/.test(P.pasos[1].nota)&&/CS 309, 492 y 636/.test(P.fuente)&&/15 principios/.test(P.fuente),
+    'Día por año: Números 14:34 y Ezequiel 4:6 sin comillas (no están en la Biblia de la app); fuentes Bohr y CS 309, 492 y 636');
   const D7=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d7.js'),'utf8');
-  const refsD7=[...D7.slice(D7.indexOf('Las señas del cuerno pequeño (1)'),D7.indexOf('Al sumar Apocalipsis')).matchAll(/\['[^']*', '(7:[\d, ]+)'/g)].map(m=>m[1]);
+  const refsD7=[...D7.slice(D7.indexOf('Las señas del cuerno pequeño (1)'),D7.indexOf('Apocalipsis 13 describe el mismo poder')).matchAll(/\['[^']*', '(7:[\d, ]+)'/g)].map(m=>m[1]);
   ok(L.senas.length===11&&refsD7.length===11&&refsD7.join('|')===L.senas.map(x=>x.ref).join('|'),'Las once señas de la lámina son las de d7.js, en el mismo orden ('+refsD7.length+')');
 }
 
@@ -2648,7 +2648,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const verso=r=>{const m=/^(Daniel|Apocalipsis|1 Corintios|Malaquías) (\d+):(\d+)$/.exec(r);if(!m)return '';
     return m[1]==='Daniel'?VERS['d'+m[2]][m[3]]:m[1]==='Apocalipsis'?(VERS_AP['ap'+m[2]]||{})[m[3]]:(OTRAS_VERS[(m[1]==='Malaquías'?'malaquias':'1corintios')+'-'+m[2]]||{})[m[3]];};
   const citas=F.pasos.flatMap(x=>x.citas),malas=citas.filter(([r,c])=>!n(verso(r)).includes(n(c)));
-  ok(F&&F.tras==='juicio'&&F.pasos.map(x=>x.t).join()==='Investigación,Sentencia,Ejecución'&&citas.length===8&&!malas.length,
+  ok(F&&F.tras==='hijo'&&F.ve==='juicio'&&F.pasos.map(x=>x.t).join()==='Investigación,Sentencia,Ejecución'&&citas.length===8&&!malas.length,
     'Las tres fases del juicio: Investigación, Sentencia y Ejecución, con 8 citas literales'+(malas.length?' ('+malas[0][0]+')':''));
   ok(F.hitos.length===3&&F.pasos.every(x=>x.de>=0&&x.a<F.hitos.length&&x.de<=x.a&&x.cuando&&x.donde&&x.quien&&x.que&&x.para)&&/1844/.test(F.pasos[0].cuando)&&/venida/.test(F.pasos[2].cuando),
     'La mini línea de tiempo: 1844 → el Hijo recibe el reino → la venida, y cada fase con cuándo, dónde, quién y para quién');
@@ -2660,7 +2660,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const ap20=fs.readFileSync(path.join(RAIZ,'fuente','apocalipsis','cap20.js'),'utf8');
   ok(['1 · Investigación','2 · Sentencia','3 · Ejecución'].every(t=>ap20.includes(t)),'Los mismos nombres que Apocalipsis 20 (cap20.js)');
   const CD=require(path.join(RAIZ,'fuente','complementos','daniel.js')),tf=CD.secciones.d7.find(x=>/tres fases del juicio/.test(x.t));
-  ok(tf&&['Investigación','Sentencia','Ejecución','1844','(20:4)','Daniel 12:1','7:13-14','PE 280'].every(t=>tf.h.includes(t))&&!/juicio del milenio/.test(tf.h)&&CD.secciones.d7.some(x=>/El Juez se sentó/.test(x.t)&&/PE 55/.test(x.h)),
+  ok(tf&&['Investigación','Sentencia','Ejecución','1844','(20:4)','Daniel 12:1','(7:13)','(7:14)','PE 280'].every(t=>tf.h.includes(t))&&!/juicio del milenio/.test(tf.h)&&CD.secciones.d7.some(x=>/El Juez se sentó/.test(x.t)&&/PE 55/.test(x.h)),
     'Daniel 7 explica las tres fases del juicio y el tribunal con sus libros (🧭)');
   const pre=js.slice(js.indexOf('const lamPasosE=()=>{'),js.indexOf('function lamHojaSub('));
   ok(/tipo:'fases'/.test(pre)&&/lamFasesVis\(s\.sub/.test(js)&&/lamFasE\(/.test(js),'Al presentar, después de los pasos del juicio van sus tres fases; en Explorar, una por una');
@@ -2779,7 +2779,21 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Cada cambio de lugar lo anota (pantalla, capítulo, pestaña, lámina, Comparar) y el arranque lo aplica');
   /* 3. Explorar en orden, desde el primer paso. */
   ok(rec2==='h0 h1 h2 h3 h4 est oro plata bronce hierro dedos barro piedra monte desp cierre','Daniel 2 en Explorar: la historia, la estatua, cada parte, la piedra, el monte, el rey y el cierre ('+rec2+')');
-  ok(/^h0 h1 est leon oso leopardo bestia cuernos cuerno x-senas x-periodo juicio x-fases hijo santos reino desp cierre$/.test(rec7),'Daniel 7 en Explorar: el mismo orden que Presentar ('+rec7+')');
+  ok(/^h0 h1 est leon oso leopardo bestia cuernos cuerno x-senas x-periodo juicio hijo x-fases santos reino desp cierre$/.test(rec7),'Daniel 7 en Explorar: el mismo orden que Presentar ('+rec7+')');
+  /* v225 (revisión de Camilo): B6, A3, B1. */
+  const {dd2}=montar("dd2:(lamId='d2',lamEscenasDe(LAMINAS.d2.partes.find(p=>p.id==='dedos')).map(e=>e.y).join())");
+  ok(!/1844/.test(dd2)&&LAMINAS.d2.escenas.some(e=>e.y===1844&&e.hoja===false),'v225: la escena del juicio de 1844 va en la línea de tiempo de Daniel 2, no en la hoja de «Los diez dedos» (Roma dividida) ('+dd2+')');
+  const {pres7}=montar("pres7:(lamId='d7',lamPasosE().map(x=>x.tipo==='parte'?x.id+(x.sub!=null?'.'+x.sub:''):x.tipo).join(' '))");
+  ok(/juicio\.3 hijo\.0 hijo\.1 fases fases fases santos/.test(pres7),'v225: al presentar Daniel 7, las tres fases del juicio van después del Hijo del hombre (la sentencia es el reino que recibe)');
+  const fuenteTodo=['laminas.js','contenido.js','complementos/profundizar.js','complementos/daniel/d7.js','complementos/daniel/d2.js','complementos/daniel/d8.js'].map(f=>fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8')).join('\n');
+  const L7=LAMINAS.d7,A3=/sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve \(7:21-22, 26\)/;
+  ok(!/hasta que viene el Anciano de días|sigue en pie hasta que viene|el cuerno sigue hasta que/.test(fuenteTodo)&&A3.test(L7.periodo.pasos[3].nota)&&A3.test(L7.partes.find(p=>p.id==='cuerno').corto)&&
+    (fuenteTodo.match(/sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve/g)||[]).length>=6&&/El Padre le da el reino al Hijo, que está ante él desde 1844/.test(L7.fases.pasos[1].quien),
+    'v225: ya no dice que el cuerno sigue «hasta que viene el Anciano de días» (7:13 es 1844): sigue hasta que el juicio le quita el dominio y Cristo vuelve; la sentencia: el Padre le da el reino al Hijo, que está ante él desde 1844');
+  const Mc=montar('cmpModelo').cmpModelo(LAMINAS),is=Mc.filas.findIndex(f=>f.key==='1798'),fs98=Mc.filas[is];
+  ok(fs98&&fs98.reino==='Roma papal sanada'&&/1798/.test(fs98.fechas)&&/venida/.test(fs98.fechas)&&['d2','d7','d8'].every(k=>(fs98.celdas[k]||[]).length===1)&&
+    Mc.filas[is-1].key==='538'&&Mc.filas[is+1].key==='1844'&&!LAMINAS.d7.partes.some(p=>p.de===1798),
+    'v225: Comparar nombra la cuarta etapa: «Roma papal sanada · desde 1798 hasta la venida», entre Roma papal y el juicio, en Daniel 2, 7 y 8 (sin tocar las láminas)');
   ok(/lamIr\('h0'\);lamPintaReto\(\)/.test(js)&&/function lamNavHTML\(k\)\{\s*const P=lamRecorrido\(\)/.test(js),'Explorar abre en «Cautivos en Babilonia» y Anterior/Siguiente siguen el recorrido entero');
   /* La piedra: oculta hasta su paso, y sin rótulo sobre la estatua. */
   ok(/function lamPiedraArriba\(\)\{[\s\S]*?pi\.style\.opacity='0'/.test(js)&&/data-p="piedra" style="opacity:0"/.test(js)&&/Object\.keys\(E\)\.filter\(id=>id!=='piedra'\)/.test(js)&&/esPiedra\)\{lamPiedraArriba\(\);pi\.style\.opacity='1'/.test(js),
@@ -2935,9 +2949,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(M.carnero.dirs.map(d=>d.t+' '+d.s).join(' | ')==='al poniente Babilonia 539 a.C. | al norte Lidia 546 a.C. | al sur Egipto 525 a.C.'&&/al poniente, Babilonia \(539 a\.C\.\); al norte, Lidia \(546\); al sur, Egipto \(525\)/.test(P('carnero').interp.join(' ')),
     'v223: el carnero hiere al poniente (Babilonia 539), al norte (Lidia 546) y al sur (Egipto 525), como Bohr, Daniel 1-10, p. 295');
   const Mp=M.mapa,app8=js.slice(js.indexOf('function lamMovCrece'),js.indexOf('/* Hasta el ejército del cielo'));
-  ok(Mp.rosa&&Mp.rosa.vientos.map(v=>v[1]).join()==='n,e,s,o'&&Mp.pasos.length===4&&/«De uno de ellos»: uno de los vientos; por 8:9 se deduce el poniente/.test(Mp.pasos[1][0])&&Mp.roma[0]<Mp.rosa.c[0]-Mp.rosa.dx+80&&
-    /paso\(0\)[\s\S]*poniente\(\)[\s\S]*paso\(2\)[\s\S]*paso\(3\)/.test(app8)&&/«ellos» \(<i>mehem<\/i>\) es masculino y «cuernos» \(<i>qeranot<\/i>\) es femenino/.test(P('cuerno').interp.join(' '))&&/se deduce/.test(P('cuerno').interp.join(' ')),
-    'v223/v224: el cuerno pequeño sigue 8:8-9: los cuatro vientos, «de uno de ellos» (uno de los vientos, por el género hebreo; el poniente, deducido de 8:9), Roma, y después crece al oriente, a la tierra gloriosa y al sur');
+  ok(Mp.rosa&&Mp.rosa.vientos.map(v=>v[1]).join()==='n,e,s,o'&&Mp.pasos.length===4&&/«De uno de ellos»: de uno de los cuatro vientos/.test(Mp.pasos[1][0])&&/Simposio sobre Daniel/.test(Mp.pasos[1][1])&&!/deduc/.test(Mp.pasos.join(' '))&&Mp.roma[0]<Mp.rosa.c[0]-Mp.rosa.dx+80&&
+    /paso\(0\)[\s\S]*poniente\(\)[\s\S]*paso\(2\)[\s\S]*paso\(3\)/.test(app8)&&/«ellos» \(<i>mehem<\/i>\) es masculino y «cuernos» \(<i>qeranot<\/i>\) es femenino/.test(P('cuerno').interp.join(' '))&&!/deduc/.test(P('cuerno').interp.join(' '))&&/solo puede ser el oeste/.test(P('cuerno').interp.join(' '))&&/Simposio sobre Daniel<\/i>, p\. 394-399/.test(P('cuerno').fuente),
+    'v223/v225: el cuerno pequeño sigue 8:8-9: los cuatro vientos, «de uno de ellos» (uno de los vientos, por el género hebreo), Roma (el oeste, de Hasel, Simposio sobre Daniel, p. 399, no una deducción de la app), y después crece al oriente, a la tierra gloriosa y al sur');
   const appC=js.slice(js.indexOf('function lamMovChoque'),js.indexOf('function lamMovCuatro'));
   ok(/cuerpo\.style\.opacity=\(1-f\)/.test(appC)&&/lamTween\(1600,cae\)/.test(appC),'v223: el carnero cae a tierra y se apaga (8:7); al final queda solo el macho cabrío, sin cuerpos encimados');
   const T=L.linea2300,Hy=T.hitos.map(h=>h.y),sinCero=(a,n)=>a+n+(a<0&&a+n>0?1:0);
@@ -2954,8 +2968,12 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(cs.map(c=>c.id).join()==='altar,mesa,candelabro,incienso'&&!cs.some(c=>/arca/i.test(c.t+c.s+c.c))&&/confesionario/.test(cs[3].c)&&/María y los santos/.test(cs[3].c)&&/misa/.test(cs[0].c)&&
     Sa.verdad&&/Ley/.test(Sa.verdad.s)&&/7:25/.test(Sa.verdad.c)&&cs.every(c=>!c.en||(c.en.length===2&&c.en[0]>0&&c.en[0]<1200&&c.en[1]>0&&c.en[1]<675)),
     'v224: el continuo en cuatro piezas (altar del holocausto → la misa, mesa → la tradición, candelabro → la iglesia a oscuras, altar del incienso → el confesionario, María y los santos), «la verdad» aparte, sin el arca; los puntos salen de coordenadas de la imagen');
-  ok(cs.find(c=>c.id==='incienso').en==null&&cs.find(c=>c.id==='altar').en==null&&cs.filter(c=>c.en).map(c=>c.id).join()==='mesa,candelabro',
-    'v224: con la imagen de hoy solo llevan punto la mesa y el candelabro (el altar del incienso no está en ella; el arca no se marca)');
+  /* v225: la imagen nueva de Camilo trae el altar del incienso al centro (con humo), delante del velo;
+     el cuerno sube de abajo al centro y su punta llega a la altura del altar (x ≈ 624, y ≈ 337 en la escena). */
+  const inc=cs.find(c=>c.id==='incienso'),san=fs.readFileSync(ruta('santuario')),wv=san.toString('latin1',12,16);
+  ok(inc.en&&inc.en[0]>520&&inc.en[0]<660&&inc.en[1]<320&&cs.find(c=>c.id==='altar').en==null&&cs.filter(c=>c.en).map(c=>c.id).join()==='mesa,candelabro,incienso'&&
+    cs.find(c=>c.id==='candelabro').en[0]<300&&cs.find(c=>c.id==='mesa').en[0]>900&&/^VP8/.test(wv)&&san.length<260000,
+    'v225: con la imagen nueva llevan punto el candelabro (izquierda), la mesa (derecha) y el altar del incienso (centro, arriba de la punta del cuerno); el altar del holocausto y «la verdad», sin punto; santuario.webp pesa '+Math.round(san.length/1024)+' KB');
   const d8txt=JSON.stringify(L)+fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d8.js'),'utf8');
   ok(!/Pérgamo|Atalo|atálidas|de uno de los cuernos[^»]*(sale|ve)|Otra lectura del hebreo/i.test(d8txt.replace(/\/\*[\s\S]*?\*\//g,''))&&!/atalo-iii/.test(fs.readFileSync(path.join(RAIZ,'fuente','personajes.js'),'utf8')),
     'v224: Daniel 8 sin la lectura «de uno de los cuernos» (Pérgamo, Atalo III), decisión de Camilo');

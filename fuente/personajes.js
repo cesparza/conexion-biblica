@@ -984,12 +984,12 @@ const PERSONAJES = [
     fechas: 'reinó 336-330 a.C.',
     quien: 'Último rey del imperio persa.',
     hizo: [
-      'Alejandro Magno lo venció en Gránico (334), Iso (333) y Arbela o Gaugamela (331 a.C.).',
+      'Alejandro Magno venció a sus generales en el Gránico (334 a.C.), y a él en Iso (333) y en Arbela o Gaugamela (331 a.C.).',
       'Con su caída el macho cabrío derribó al carnero (Daniel 8:7).'
     ],
     textos: 'Daniel 8:5-7',
     alias: ['Darío III', { t: 'Darío', caps: ['d8'] }],
-    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 293-295' },
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 87' },
   { id: 'alejandro', nombre: 'Alejandro Magno', tipo: 'historico',
     fechas: '356-323 a.C.',
     quien: 'Rey de Macedonia. Es el «cuerno notable» del macho cabrío, el primer rey de Grecia (Daniel 8:21).',

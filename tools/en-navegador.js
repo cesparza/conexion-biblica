@@ -642,7 +642,7 @@ for (const W of ANCHOS) {
     await p.evaluate(() => lamEligeE(5)); await p.waitForTimeout(300);
     /* Las once señas: v214, una entrada propia del riel, después del cuerno pequeño. */
     const rielX = await p.evaluate(() => [...document.querySelectorAll('#lamTira .lam-ri')].map(b => b.getAttribute('data-p')).join(' '));
-    ok(/cuerno x-senas x-periodo juicio x-fases hijo/.test(rielX), W + ' · v214: en Explorar, las señas, los 1.260 años y las tres fases son entradas del riel (' + rielX + ')');
+    ok(/cuerno x-senas x-periodo juicio hijo x-fases santos/.test(rielX), W + ' · v214: en Explorar, las señas, los 1.260 años y las tres fases son entradas del riel (' + rielX + ')');
     await p.evaluate(() => lamEligeX('senas')); await p.waitForTimeout(200);
     const hx = await p.evaluate(() => [document.querySelector('#lamTira .lam-ri.on').getAttribute('data-p'), /Las once señas/.test(document.getElementById('lamHoja').textContent), document.querySelector('#lam .lam-nav-p').textContent]);
     ok(hx[0] === 'x-senas' && hx[1] && /Tiempo, tiempos y medio tiempo/.test(hx[2]), W + ' · v214: la entrada de las señas tiene su hoja y Siguiente lleva a los 1.260 años (' + hx[2] + ')');
@@ -687,7 +687,7 @@ for (const W of ANCHOS) {
     /* Presentar: las bestias suben del mar, los tres cuernos caen, el juicio por pasos y una seña por paso. */
     await p.evaluate(() => lamAbre('d7', 'presentar'));
     const pres = await p.evaluate(() => lamPasos().map(x => x.tipo === 'parte' ? x.id + (x.sub != null ? x.sub : '') : x.tipo === 'senas' ? 's' + x.sub : x.tipo === 'senasT' ? 'S' : x.tipo === 'periodo' ? 't' + x.sub : x.tipo === 'fases' ? 'f' + x.sub : x.tipo[0]).join(' '));
-    ok(pres === 'p h h leon oso leopardo bestia cuernos cuerno S s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 t0 t1 t2 t3 juicio0 juicio1 juicio2 juicio3 f0 f1 f2 hijo0 hijo1 santos reino d c',
+    ok(pres === 'p h h leon oso leopardo bestia cuernos cuerno S s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 t0 t1 t2 t3 juicio0 juicio1 juicio2 juicio3 hijo0 hijo1 f0 f1 f2 santos reino d c',
       W + ' · Presentar: ' + pres);
     /* v214: en Presentar también: el nombre sobre la imagen (la seña) se toca y la presentación no se mueve. */
     {
@@ -734,7 +734,7 @@ for (const W of ANCHOS) {
     ok(lb[0] && lb[1] && lb[2] === 4 && lb[3] === '0' && lb[4] === '12 / 18', W + ' · los libros fueron abiertos: el libro abierto, la luz del trono y de los libros, y la cita (' + lb.slice(2).join(', ') + ')');
     const fa = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'fases' && x.sub === 1)); const t = document.getElementById('lamTabla');
       return [t.querySelectorAll('.lam-fp').length, t.querySelectorAll('.lam-fp.on').length, [...t.querySelectorAll('.lam-fp')].findIndex(e => e.classList.contains('ahora')), document.getElementById('lamHoja').textContent, document.getElementById('lamCuenta').textContent, t.scrollHeight - t.clientHeight, document.querySelector('#lamSvg .lam-hist').getAttribute('href')]; });
-    ok(fa[0] === 3 && fa[1] === 2 && fa[2] === 1 && /Daniel 7:14/.test(fa[3]) && /Sentencia/.test(fa[3]) && fa[4] === '13 / 18' && fa[5] <= 2 && fa[6].endsWith('d7/juicio.webp'),
+    ok(fa[0] === 3 && fa[1] === 2 && fa[2] === 1 && /Daniel 7:14/.test(fa[3]) && /Sentencia/.test(fa[3]) && fa[4] === '14 / 18' && fa[5] <= 2 && fa[6].endsWith('d7/juicio.webp') && !/Daniel 12:1/.test(fa[3].split('Lo que significa')[0].split('RV1995')[1] || ''),
       W + ' · las tres fases del juicio: la segunda encendida sobre la imagen del juicio (' + [fa[1], fa[2], fa[4], fa[5]].join(', ') + ')');
     await p.keyboard.press('ArrowRight'); await p.waitForTimeout(200);
     ok(await p.evaluate(() => document.querySelectorAll('#lamTabla .lam-fp.on').length === 3 && /Daniel 7:27/.test(document.getElementById('lamHoja').textContent)), W + ' · con el clicker, la tercera fase (Ejecución)');
@@ -1006,7 +1006,7 @@ for (const W of ANCHOS) {
   await p.evaluate(() => lamCierra());
   /* 3. Daniel 7 también abre en su primer paso y sigue en orden. */
   const d7 = await p.evaluate(() => { lamAbre('d7', 'explorar'); const r = [lamDonde, lamRecorrido().map(x => x.k).join(' ')]; lamCierra(); return r; });
-  ok(d7[0] === 'h0' && /^h0 h1 est leon .* cuerno x-senas x-periodo juicio x-fases hijo santos reino desp cierre$/.test(d7[1]), W + ' · v215: Daniel 7 abre en su primer paso y su recorrido sigue el de Presentar (' + d7[1] + ')');
+  ok(d7[0] === 'h0' && /^h0 h1 est leon .* cuerno x-senas x-periodo juicio hijo x-fases santos reino desp cierre$/.test(d7[1]), W + ' · v215: Daniel 7 abre en su primer paso y su recorrido sigue el de Presentar (' + d7[1] + ')');
   /* 4. El río: un carril por visión; lo que gobierna a la vez es un hilo con nombre. */
   await p.evaluate(() => verComparar()); await p.waitForTimeout(500);
   const rio = await p.evaluate(() => [...document.querySelectorAll('.cmp-rio .cmp-carril')].map(c => {
@@ -1166,8 +1166,9 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
         for (let i = 0; i < rs.length; i++) for (let j = i + 1; j < rs.length; j++) { const a = rs[i], c = rs[j]; if (a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1) pisa++; }
         return { ids: ets.map(x => x.getAttribute('data-cosa')).join(), apaga: ets.filter(x => x.classList.contains('apaga') && x.classList.contains('ve')).length, pts,
           fuera: rs.filter(q => q.left < e.left - 2 || q.right > e.right + 2 || q.top < e.top - 2 || q.bottom > e.bottom + 2).length, pisa }; });
-      ok(sa.ids.split(',').sort().join() === 'altar,candelabro,incienso,mesa,verdad' && sa.apaga === 5 && sa.pts.length === 2 && !sa.pts.some(([x, y]) => x > 450 && x < 800 && y < 330) && !sa.fuera && !sa.pisa,
-        W + ' · v224: Daniel 8, el continuo: altar del holocausto, mesa, candelabro, altar del incienso y «la verdad» (' + sa.ids + '), tachadas, ' + sa.pts.length + ' puntos y ninguno sobre el arca, sin salirse ni pisarse');
+      /* v225: la imagen nueva trae el altar del incienso: tres puntos (candelabro, mesa, altar del incienso) y ninguno sobre el cuerno, que sube de abajo al centro (x 500-720, y > 335). */
+      ok(sa.ids.split(',').sort().join() === 'altar,candelabro,incienso,mesa,verdad' && sa.apaga === 5 && sa.pts.length === 3 && !sa.pts.some(([x, y]) => x > 500 && x < 720 && y > 335) && !sa.fuera && !sa.pisa,
+        W + ' · v225: Daniel 8, el continuo: altar del holocausto, mesa, candelabro, altar del incienso y «la verdad» (' + sa.ids + '), tachadas, ' + sa.pts.length + ' puntos y ninguno sobre el cuerno, sin salirse ni pisarse');
       /* v223: la comparación con Daniel 2 y 7: al lado de la imagen en la pantalla ancha, debajo en el teléfono. */
       await p.evaluate(() => { lamCierra(); lamAbre('d8', 'presentar'); if (!lamConD2) lamConD2Cambia(); lamPres(lamPasos().findIndex(s => s.id === 'purificado' && s.tipo === 'parte')); }); await p.waitForTimeout(1500);
       const cm = await p.evaluate(() => { const col = document.getElementById('lamD2'), fila = document.getElementById('lamD2Fila'), e = document.getElementById('lamEsc').getBoundingClientRect();
@@ -1182,6 +1183,12 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
         let pisa = 0; for (let i = 0; i < rs.length; i++) for (let j = i + 1; j < rs.length; j++) { const a = rs[i], c = rs[j]; if (a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1) pisa++; }
         lamL23tToca(2); return { n: bs.length, pisa, alto: Math.min(...bs.map(b => b.getBoundingClientRect().height)), info: document.getElementById('lamL23tInfo').textContent, anio: lamAnio }; });
       ok(l23.n === 8 && !l23.pisa && l23.alto >= 36 && /27 d\.C\./.test(l23.info) && l23.anio === 27, W + ' · v223: Daniel 8, las fechas de los 2.300 años (' + l23.n + ') no se pisan, se tocan (≥36 px) y llevan la línea de tiempo al año');
+      /* v225 (pedagogía): al presentar, el panel de los 2.300 años sale solo en los pasos de su cuenta. */
+      const p23 = await p.evaluate(async () => { lamCierra(); lamAbre('d8', 'presentar'); const P = lamPasos(), ve = () => { const e = document.getElementById('lamL23t'); return !!e && getComputedStyle(e).display !== 'none' && e.getBoundingClientRect().height > 0; };
+        const fuera = [], dentro = [];
+        for (let k = 0; k < P.length; k++) { lamPres(k); (P[k].tipo === 'periodo' ? dentro : fuera).push(ve()); }
+        lamCierra(); lamAbre('d8', 'explorar'); return { fuera: fuera.filter(Boolean).length, nf: fuera.length, dentro: dentro.filter(Boolean).length, nd: dentro.length, explorar: ve() }; });
+      ok(!p23.fuera && p23.nf > 5 && p23.nd === 5 && p23.dentro === 5 && p23.explorar, W + ' · v225: Daniel 8, al presentar el panel de las 2.300 tardes y mañanas sale solo en los ' + p23.nd + ' pasos de su cuenta (fuera: ' + p23.fuera + ' de ' + p23.nf + '); en Explorar, siempre');
     }
     if (id === 'd7') {
       const de = await p.evaluate(() => [LAM().despues.f, LAM().historia.map(h => h.f)]);

@@ -116,6 +116,13 @@ guarda(pon(noche, cp, 520, 140, 520), 'cielo.webp')
 # El santuario purificado (v223): el santuario de Camilo sin el cuerno ni las nubes oscuras. Lo
 # oscuro de abajo (el cuerno y su humo) se rellena desde los bordes y queda como nube de luz;
 # el candelabro, el arca y la mesa no se tocan.
+# v225: santuario.webp ya es la imagen nueva (lugar santo con el velo cerrado, sin el arca, el
+# cuerno grande en el centro): purificado.webp NO se vuelve a sacar de ella (saldría sin el arca
+# y con el cuerno a medias). Se deja el de v223 hasta que Camilo traiga la imagen propia del
+# santuario purificado. Para sacarlo otra vez de santuario.webp: PURIFICADO=1.
+import os
+if os.environ.get('PURIFICADO') != '1':
+    print(json.dumps(cajas)); sys.exit(0)
 import numpy as np, cv2
 san = cv2.resize(cv2.imread(R + 'santuario.webp'), (W, H), interpolation=cv2.INTER_AREA)
 v = cv2.cvtColor(san, cv2.COLOR_BGR2HSV)[..., 2]
