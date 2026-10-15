@@ -17,7 +17,7 @@ module.exports = {
       `<p>Comparado con Daniel 7, hay cuatro diferencias que apuntan al santuario:</p>` +
       li([
         '<b>No aparece Babilonia</b>: la visión empieza con Persia porque los 2.300 años empiezan en tiempos de Persia (457 a.C.).',
-        '<b>Animales domésticos, no fieras</b>: el carnero se usaba en el servicio diario del santuario y el macho cabrío en el anual, el Día de la Expiación (Levítico 16). El cuerno quita «el continuo» (lo diario) y Dios lo juzga en lo anual.',
+        '<b>Animales domésticos, no fieras</b>: el carnero se ofrecía en los sacrificios de cada día por la culpa (Levítico 5:15; 6:6) y el macho cabrío es el del Día de la Expiación, el servicio anual (Levítico 16:7-10). El cuerno quita «el continuo» (lo diario) y Dios lo juzga en lo anual.',
         '<b>Un solo símbolo para las dos Romas</b>: la pagana y la papal son el mismo cuerno, para no romper la imagen del santuario.',
         '<b>No termina con el reino eterno</b>: Daniel 8 a 12 es un solo libro y el reino llega al final, en 12:1-3.',
       ]) +
@@ -25,14 +25,15 @@ module.exports = {
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 293-295 y 305-306.</p>` },
 
     { t: '🧭 ¿De un viento o de un cuerno?', capa: 'contexto', h:
-      `<p>El estudio de arriba dice que el cuerno sale de uno de los cuatro <i>vientos</i>, por el género de las palabras hebreas. Otra lectura del hebreo ve que sale de uno de los cuernos, <b>que están hacia</b> los cuatro vientos; así leen también la Septuaginta, Flavio Josefo y 1 Macabeos. Las dos llegan a Roma.</p>` +
+      `<p>En hebreo, «uno» (<i>ajat</i>) es femenino, como «vientos» y como «cuernos»; «ellos» (<i>mehem</i>) es masculino, y en 8:8 lo masculino es «cielo». Por eso se lee «de uno de los vientos del cielo»: el cuerno sale de un punto cardinal, el poniente, donde estaba Roma, y no nace del reparto de Alejandro.</p>` +
+      `<p>Otra lectura del hebreo ve que sale de uno de los cuernos, <b>que están hacia</b> los cuatro vientos; así leen también la Septuaginta, Flavio Josefo y 1 Macabeos. Una variante ve salir a Roma de Macedonia, el primer cuerno que derribó (168 a.C.). Todas llegan a Roma.</p>` +
       `<p>En esta lectura los cuatro cuernos son reinos, no generales:</p>` +
       tbl(['Punto cardinal', 'Reino'], [
         ['Oeste', 'Antigónidas (Macedonia y Grecia)'], ['Este', 'Seléucidas (Siria y Mesopotamia)'],
         ['Sur', 'Tolomeos (Egipto)'], ['Norte', 'Atálidas (Pérgamo)'],
       ]) +
       `<p>Roma sale de <b>Pérgamo</b>: fue el único de los cuatro que no tuvo que conquistar, porque el rey Atalo III se lo dejó en herencia al Senado romano en 133 a.C. Allí se habían refugiado los sacerdotes de la religión babilónica, y desde allí esa religión pasó a Roma. Pérgamo une a Babilonia con la Roma pagana, y más tarde con la papal.</p>` +
-      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 296-302.</p>` },
+      `<p>Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-162; Bohr, <i>Daniel 1-10</i>, p. 296-302; Smith, <i>Las profecías de Daniel</i>, p. 90; apuntes «Daniel 8».</p>` },
 
     { t: '🧭 Qué quitó el cuerno: «el continuo» del atrio y del lugar santo', capa: 'contexto', h:
       `<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p>` +

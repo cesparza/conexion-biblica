@@ -472,9 +472,9 @@ LAMINAS.d8 = {
   libro: 'Daniel 8',
   titulo: 'El carnero, el macho cabrío y el santuario',
   dir: 'd8/',
-  cartel: { f: 'portada', lugar: 'Susa, junto al río Ulai', cuando: 'En el tercer año de Belsasar, hacia 550 a.C.', ref: 'Daniel 8:1-2', lado: 'i',
+  cartel: { f: 'ulai', lugar: 'Susa, junto al río Ulai', cuando: 'En el tercer año de Belsasar, hacia 550 a.C.', ref: 'Daniel 8:1-2', lado: 'i',
     cita: { ref: 'Daniel 8:3', texto: 'Alcé los ojos y miré, y había un carnero que estaba delante del río, y tenía dos cuernos' } },
-  miniF: 'portada', inicioF: 'portada',
+  miniF: 'portada', inicioF: 'ulai', portada: 'portada',
   verTodo: 'La visión',
   invita: 'El carnero, el macho cabrío, los cuernos y las 2.300 tardes y mañanas: cada parte se mueve como en el texto, con su significado, sus fechas y su fuente.',
   intro: { titulo: 'Un carnero y un macho cabrío', ref: 'Daniel 8:3, 5', texto: 'había un carnero que estaba delante del río, y tenía dos cuernos … un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra',
@@ -529,37 +529,75 @@ LAMINAS.d8 = {
     if (e.parte) { if (D2_A_D8[e.parte]) x.parte = D2_A_D8[e.parte]; else delete x.parte; }
     return x; }),
   marcas: [[-539, '539 a.C.'], [-168, '168<i> a.C.</i>', 'chico'], [1, '1<i> d.C.</i>', 'chico'], [538, '538 d.C.'],
-    [1798, '1798', 'der'], [1844, '1844<i> · purificado</i>', 'izq chico'], [2026, 'hoy', 'izq'], [2126, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
+    [1798, '1798', 'der'], [1844, '1844', 'izq chico'], [2026, 'hoy', 'izq'], [2126, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
   hitos: [-539, -457, -331, -301, -168, 34, 538, 1798, 1844],
   /* LO QUE SE MUEVE, en píxeles de la escena (1200 × 675). Las piezas, en píxeles de su
      imagen (carnero-solo.png 751 × 800, macho-cabrio-solo.png 800 × 763,
-     cuernos-cuatro.png 800 × 732): `caja` es [x0, y0, x1, y1] y `base`, el punto de donde
+     cuernos-cuatro.png 758 × 800): `caja` es [x0, y0, x1, y1] y `base`, el punto de donde
      sale el cuerno (crece y se quiebra desde ahí). `en`: [x, y, alto] en la escena. */
   mov: {
     carnero: { f: 'carnero-cuerpo.webp', w: 751, h: 800, en: [150, 200, 420],
       a: { f: 'carnero-cuerno-a.webp', caja: [514, 97, 676, 211], base: [612, 168] },
       b: { f: 'carnero-cuerno-b.webp', caja: [608, 0, 730, 181], base: [690, 172] },
-      dirs: [{ t: 'al poniente', s: 'Lidia 547 · Babilonia 539 a.C.', a: [560, 330], b: [930, 330] }, { t: 'al norte', s: '', a: [470, 210], b: [600, 50] },
+      dirs: [{ t: 'al poniente', s: 'Babilonia 539 a.C.', a: [560, 330], b: [930, 330] }, { t: 'al norte', s: 'Lidia 546 a.C.', a: [470, 210], b: [600, 50] },
         { t: 'al sur', s: 'Egipto 525 a.C.', a: [540, 470], b: [860, 540] }] },
     macho: { f: 'macho-cuerpo.webp', w: 800, h: 763, cuerno: { f: 'macho-cuerno.webp', caja: [0, 0, 133, 241], base: [86, 228] },
       choque: { de: [1260, 70], a: [500, 145], fin: [455, 150], alto: 360, golpe: [530, 300] },
       quiebra: { en: [355, 92, 470] },
       batallas: 'Gránico 334 · Iso 333 · Arbela 331 a.C.' },
-    cabeza: { f: 'cabeza.webp', w: 800, h: 732, en: [240, 50, 600],
-      cuernos: [{ f: 'cuerno-1.webp', caja: [0, 160, 342, 311], base: [318, 246], t: 'Casandro', s: 'Macedonia y Grecia · oeste', et: [70, 360] },
-        { f: 'cuerno-2.webp', caja: [263, 0, 412, 239], base: [386, 228], t: 'Lisímaco', s: 'Tracia y Asia Menor · norte', et: [360, 34] },
-        { f: 'cuerno-3.webp', caja: [421, 2, 573, 231], base: [450, 226], t: 'Seleuco', s: 'Siria y Babilonia · oriente', et: [740, 34] },
-        { f: 'cuerno-4.webp', caja: [467, 157, 800, 294], base: [500, 252], t: 'Tolomeo', s: 'Egipto · sur', et: [1000, 360] }] },
-    /* El cuerno pequeño sobre el mapa: Roma, al poniente, y lo que conquista. */
-    mapa: { pq: 'd7/cuerno-pequeno.png', roma: [175, 300],
-      reinos: [{ t: 'Macedonia', s: 'Casandro', en: [420, 220] }, { t: 'Tracia y Asia Menor', s: 'Lisímaco', en: [600, 150] }, { t: 'Siria', s: 'Seleuco', en: [840, 270] },
-        { t: 'Judea', s: 'la tierra gloriosa', en: [790, 405], g: true }, { t: 'Egipto', s: 'Tolomeo', en: [640, 520] }],
+    /* v223: la cabeza rubia de Camilo (758 × 800), la misma del macho cabrío que salta, con el
+       gran cuerno quebrado en el centro. `et`: dónde va el nombre (`a`: cómo se ancla). */
+    cabeza: { f: 'cabeza.webp', w: 758, h: 800, en: [316, 50, 600],
+      cuernos: [{ f: 'cuerno-1.webp', caja: [0, 132, 318, 253], base: [300, 226], t: 'Casandro', s: 'Macedonia y Grecia · oeste', et: [300, 262], a: 'd' },
+        { f: 'cuerno-2.webp', caja: [91, 0, 361, 188], base: [330, 176], t: 'Lisímaco', s: 'Tracia y Asia Menor · norte', et: [440, 34], a: 'd' },
+        { f: 'cuerno-3.webp', caja: [400, 0, 656, 193], base: [428, 176], t: 'Seleuco', s: 'Siria y Babilonia · oriente', et: [760, 34], a: 'i' },
+        { f: 'cuerno-4.webp', caja: [449, 131, 758, 249], base: [472, 224], t: 'Tolomeo', s: 'Egipto · sur', et: [900, 262], a: 'i' }] },
+    /* v223: el cuerno pequeño sobre el mapa, en el orden del texto (Camilo, 14-oct: la
+       interacción no se entendía). 8:8: los cuatro vientos del cielo, la rosa de los vientos
+       sobre el mundo griego. 8:9: «de uno de ellos»: el viento del poniente se enciende (en
+       hebreo «uno» es femenino, como «vientos», y «ellos» masculino, como «cielo»: de uno de
+       los vientos del cielo); allí, en Roma, sale el cuerno. Después crece, en el orden de la
+       historia: al oriente (Macedonia, Siria), a la tierra gloriosa (Judea) y al sur (Egipto).
+       Desde Roma, Macedonia y Siria quedan al oriente y Egipto al sur (Smith, Maxwell).
+       `rosa`: el centro y el largo de cada brazo; `pasos`: el rótulo de arriba en cada tiempo. */
+    mapa: { pq: 'd7/cuerno-pequeno.png', roma: [190, 330],
+      rosa: { c: [620, 350], dx: 380, dy: 210, vientos: [['norte', 'n'], ['oriente', 'e'], ['sur', 's'], ['poniente', 'o']] },
+      reinos: [{ t: 'Macedonia', s: 'Casandro', en: [450, 230] }, { t: 'Tracia y Asia Menor', s: 'Lisímaco', en: [600, 165] }, { t: 'Siria', s: 'Seleuco', en: [930, 250] },
+        { t: 'Judea', s: 'la tierra gloriosa', en: [800, 440], g: true }, { t: 'Egipto', s: 'Tolomeo', en: [520, 565] }],
       /* `r`: el reino que toma, en el orden en que lo toma. */
-      va: [{ r: 0, t: 'al oriente', s: '168 a.C.' }, { r: 2, t: 'al oriente', s: '65 a.C.' }, { r: 3, t: 'hacia la tierra gloriosa', s: '63 a.C.' }, { r: 4, t: 'hacia el sur', s: '30 a.C.' }] },
+      va: [{ r: 0, t: 'al oriente', s: '168 a.C.' }, { r: 2, t: 'al oriente', s: '65 a.C.' }, { r: 3, t: 'hacia la tierra gloriosa', s: '63 a.C.' }, { r: 4, t: 'hacia el sur', s: '30 a.C.' }],
+      pasos: [['1 · Los cuatro vientos del cielo', 'el reino de Alejandro, repartido hacia los cuatro puntos cardinales (8:8)'],
+        ['2 · «De uno de ellos»: del poniente', 'de uno de los vientos sale el cuerno pequeño: Roma (8:9)'],
+        ['3 · Crece al oriente, a la tierra gloriosa y al sur', 'Roma imperial, de 168 a 30 a.C. (8:9)'],
+        ['4 · Después crece hacia arriba', 'hasta el ejército del cielo: Roma papal (8:10)']] },
     cielo: { pq: 'd7/cuerno-pequeno.png', base: [600, 655], alto: 470, principe: [600, 40] },
-    santuario: { cosas: [{ t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', en: [228, 168], c: 'una iglesia a oscuras' },
-      { t: 'La mesa de los panes', s: 'la Palabra de Dios', en: [330, 318], c: 'la tradición', dy: 70 },
-      { t: 'El altar del incienso', s: 'la oración y la intercesión de Cristo', en: [555, 330], c: 'el confesionario', dy: -60 }] },
+    /* v223: el santuario nuevo de Camilo (candelabro de siete lámparas, el arca y la mesa).
+       El altar del incienso no está en la imagen: su lugar lo dice la sección 🧭 del continuo.
+       El arca guarda la Ley: «echó por tierra la verdad» (8:12; Salmo 119:142). */
+    santuario: { cosas: [{ t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', en: [280, 160], a: 'c', dy: 170, c: 'una iglesia a oscuras' },
+      { t: 'La mesa de los panes', s: 'la Palabra de Dios', en: [935, 222], a: 'c', dy: 108, c: 'la tradición' },
+      { t: 'El arca y la Ley', s: 'los Diez Mandamientos, con el sábado', en: [600, 215], a: 'c', dy: 255, c: 'el domingo' }] },
+  },
+  /* v223: la primera frase de la línea de tiempo (antes decía «De 605 a.C.» en todas). */
+  tq0: 'De Medo-Persia (539 a.C.) hasta hoy, y lo que viene',
+  /* v223: LAS 2.300 TARDES Y MAÑANAS EN LA LÍNEA DE TIEMPO (Camilo, 14-oct: «¿para la línea de
+     tiempo de Daniel 8 deberías agregar las 2.300 tardes y mañanas en detalle?»). Debajo de la
+     pista: los 2.300 años de 457 a.C. a 1844 a escala, con las 70 semanas (490 años) cortadas al
+     principio y los 1.810 que quedan; debajo, los reinos que cruzan; y las 70 semanas ampliadas
+     (7, 62 y 1, sin escala, como el diagrama de CS 374). Cada hito se toca. La cuenta: otoño de
+     457 a.C. + 2.300 años = otoño de 1844 (sin año cero: 2.300 − 457 + 1); 457 − 49 = 408 a.C.;
+     483 − 457 + 1 = 27 d.C.; 27 + 3½ = primavera de 31; 27 + 7 = 34; 34 + 1.810 = 1844.
+     Fuente: CS 372-376 y 451; Bohr, Daniel 1-10, p. 325-336; apuntes «2300 tardes y mañanas». */
+  linea2300: {
+    de: -470, a: 1900,
+    reinos: [[-457, -331, 'Persia', '#8C98A6'], [-331, -168, 'Grecia', '#A85A2A'], [-168, 476, 'Roma imperial', '#3E4651'], [538, 1798, 'Roma papal', '#A0694A'], [1844, 1900, 'El juicio', '#B45309']],
+    hitos: [
+      { y: -457, t: '457 a.C.', s: 'La orden de Artajerjes I', n: 'En su séptimo año, contado de otoño a otoño (Esdras 7:7-26). Desde aquí se cuentan juntas las 2.300 tardes y mañanas y las 70 semanas: «desde la salida de la orden para restaurar y edificar a Jerusalén» (Daniel 9:25).', z: 0, b: 'abajo' },
+      { y: -408, t: '408 a.C.', s: 'Jerusalén reedificada', n: 'Siete semanas, 49 años: «se volverán a edificar la plaza y el muro en tiempos angustiosos» (Daniel 9:25).', z: 22, zr: 'abajo' },
+      { y: 27, t: '27 d.C.', s: 'El Mesías Príncipe', n: 'Sesenta y dos semanas más: 483 años desde 457 a.C. (483 − 457 + 1, sin año cero). En el otoño de 27, Jesús es ungido en su bautismo (Lucas 3:1, 21-22; Hechos 10:38).', z: 70 },
+      { y: 31, t: '31 d.C.', s: 'La cruz', n: '«A la mitad de la semana hará cesar el sacrificio y la ofrenda» (Daniel 9:27): en la primavera de 31, tres años y medio después de su bautismo, Cristo muere en la cruz.', z: 85, zr: 'abajo' },
+      { y: 34, t: '34 d.C.', s: 'Esteban; el evangelio a los gentiles', n: 'Terminan las 70 semanas, los 490 años cortados para el pueblo judío. Esteban muere apedreado y el evangelio sale a los gentiles (Hechos 7:54-60; 8:1-4).', z: 100, b: 'arriba' },
+      { y: 1844, t: '1844', s: 'El santuario purificado', n: 'Quedan 2.300 − 490 = 1.810 años, y 34 + 1.810 = 1844. El 22 de octubre, el Día de la Expiación, Cristo empieza en el cielo el juicio de Daniel 7:9-10.', b: 'abajo' }],
   },
   /* LAS 2.300 TARDES Y MAÑANAS (8:13-14), después del santuario purificado: la cuenta se
      arma sobre una línea, como los 1.260 años de Daniel 7. */
@@ -584,8 +622,8 @@ LAMINAS.d8 = {
  {id:'carnero',img:'carnero',nombre:'El carnero de dos cuernos',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,a:-331,c:'#8C98A6',mov:'carnero',ms:6400,
   texto:'había un carnero que estaba delante del río, y tenía dos cuernos; y aunque los cuernos eran altos, uno era más alto que el otro, y el más alto creció después.',ref:'8:3',texto2:'En cuanto al carnero que viste, que tenía dos cuernos: éstos son los reyes de Media y de Persia.',ref2:'8:20',
   corto:'Media y Persia (8:20). El cuerno más alto creció después: Persia, que llegó a mandar más que los medos.',
-  interp:['Gabriel lo dice: el carnero son «los reyes de Media y de Persia» (8:20). Es el oso de Daniel 7 y la plata de Daniel 2.','Dos cuernos, dos pueblos. El más alto salió después: Persia empezó como la menor, y con Ciro el Grande llegó a mandar más que los medos. Es el oso que «se alzaba de un costado más que del otro» (7:5).','Hería «al poniente, al norte y al sur» (8:4): Lidia (547 a.C.), Babilonia (539) y Egipto (525). «Se engrandecía»: cada reino crece más que el anterior.','El carnero era un animal del santuario. Daniel 8 trata del santuario de principio a fin.'],
-  fuente:BOHR+', p. 293-296; Smith, <i>Las profecías de Daniel</i>, p. 86.'},
+  interp:['Gabriel lo dice: el carnero son «los reyes de Media y de Persia» (8:20). Es el oso de Daniel 7 y la plata de Daniel 2.','Dos cuernos, dos pueblos. El más alto salió después: Persia empezó como la menor, y con Ciro el Grande llegó a mandar más que los medos. Es el oso que «se alzaba de un costado más que del otro» (7:5).','Hería «al poniente, al norte y al sur» (8:4): al poniente, Babilonia (539 a.C.); al norte, Lidia (546); al sur, Egipto (525). «Se engrandecía»: cada reino crece más que el anterior.','El carnero era un animal del santuario. Daniel 8 trata del santuario de principio a fin.'],
+  fuente:BOHR+', p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 86.'},
  {id:'macho',img:'macho',nombre:'El macho cabrío',reino:'Grecia',fechas:'331 – 301 a.C.',de:-331,a:-301,c:'#A85A2A',mov:'choque',ms:6800,
   texto:'un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra; y aquel macho cabrío tenía un cuerno notable entre sus ojos.',ref:'8:5',texto2:'El macho cabrío es el rey de Grecia, y el cuerno grande que tenía entre sus ojos es el rey primero.',ref2:'8:21',
   corto:'Grecia (8:21). El cuerno notable es Alejandro Magno, que venció a Persia en tres batallas.',
@@ -596,11 +634,11 @@ LAMINAS.d8 = {
   corto:'Alejandro muere en su mayor fuerza; su reino se reparte entre cuatro generales.',
   interp:['«Cuando estaba en su mayor fuerza» (8:8): Alejandro Magno murió en 323 a.C., a los 32 años, en la cumbre de su poder.','Después de la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio hacia los cuatro vientos: Casandro al oeste (Macedonia y Grecia), Lisímaco al norte (Tracia y Asia Menor), Seleuco I Nicátor al oriente (Siria y Babilonia) y Tolomeo I Sóter al sur (Egipto).','Son las cuatro cabezas del leopardo de Daniel 7 (7:6). Gabriel lo dice: «cuatro reinos se levantarán de esa nación» (8:22).'],
   fuente:'Smith, <i>Las profecías de Daniel</i>, p. 88; '+BOHR+', p. 296-297.'},
- {id:'cuerno',img:'pequeno',nombre:'El cuerno pequeño crece',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',mov:'crece',ms:8200,
+ {id:'cuerno',img:'pequeno',nombre:'El cuerno pequeño crece',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',mov:'crece',ms:10600,
   texto:'De uno de ellos salió un cuerno pequeño, que creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa.',ref:'8:9',texto2:'Al fin del reinado de estos, cuando los transgresores lleguen al colmo, se levantará un rey altivo de rostro y entendido en enigmas.',ref2:'8:23',
   corto:'La primera fase de Roma: pequeña al principio, crece sobre los reinos griegos. Es la bestia espantosa de Daniel 7.',
-  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos»: por el género de las palabras hebreas, sale de uno de los vientos, del poniente, donde estaba Roma. Otra lectura lo ve salir de uno de los cuernos, Pérgamo, que Atalo III dejó en herencia a Roma en 133 a.C. Las dos llegan a Roma.','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
-  fuente:BOHR+', p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 162-164.'},
+  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos»: en hebreo «uno» es femenino, como «vientos», y «ellos» es masculino, como «cielo». Sale de uno de los cuatro vientos del cielo (8:8): del poniente, donde estaba Roma. Otra lectura lo ve salir de uno de los cuernos, Pérgamo, que Atalo III dejó en herencia a Roma en 133 a.C. Las dos llegan a Roma.','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
+  fuente:BOHR+', p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91.'},
  {id:'cielo',img:'cielo',nombre:'Hasta el ejército del cielo',reino:'Roma papal',fechas:'538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',mov:'cielo',ms:7200,
   texto:'Creció hasta llegar al ejército del cielo; y parte del ejército y de las estrellas echó por tierra, y las pisoteó.',ref:'8:10',texto2:'destruirá a los fuertes y al pueblo de los santos.',ref2:'8:24',
   corto:'La fase papal: el cuerno ya no pelea solo con reinos de la tierra; se levanta contra Dios y persigue a su pueblo. Es el cuerno pequeño de Daniel 7.',

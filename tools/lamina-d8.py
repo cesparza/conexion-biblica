@@ -81,21 +81,18 @@ M = [(0, 0), (150, 0), (140, 120), (126, 168), (120, 200), (112, 222), (84, 236)
 parte(mac, M, 'macho-cuerno.webp', mac_sin)
 guarda(mac_sin, 'macho-cuerpo.webp')
 
-# 4. La cabeza de los cuatro cuernos (cuernos-cuatro.png, 800 × 732): de izquierda a derecha.
+# 4. La cabeza de los cuatro cuernos (cuernos-cuatro.png, 758 × 800, v223: la cabeza rubia del
+#    macho cabrío, con el gran cuerno quebrado en el centro): de izquierda a derecha.
 cab = Image.open(R + 'cuernos-cuatro.png').convert('RGBA')
 cab_sin = cab.copy()
 C = [
-    [(0, 330), (0, 120), (240, 120), (300, 168), (336, 212), (338, 246), (304, 268), (262, 256), (200, 238), (150, 236), (90, 262), (30, 318)],  # 1: el de afuera, izquierda
-    [(250, 0), (360, 0), (390, 120), (408, 190), (404, 226), (372, 236), (346, 212), (312, 182), (280, 80)],                                      # 2: el de adentro, izquierda
-    [(430, 0), (600, 0), (560, 90), (530, 150), (506, 196), (472, 226), (434, 228), (424, 190), (436, 120)],                                                    # 3: el de adentro, derecha
-    [(470, 214), (520, 160), (600, 130), (800, 150), (800, 320), (770, 300), (720, 240), (660, 230), (600, 244), (548, 262), (500, 262)],           # 4: el de afuera, derecha
+    [(0, 190), (0, 250), (70, 238), (130, 222), (190, 216), (240, 232), (272, 244), (300, 250), (314, 215), (306, 186), (286, 166), (262, 150), (225, 131), (180, 123), (130, 131), (80, 152), (30, 182)],  # 1: el de afuera, izquierda
+    [(65, 96), (110, 12), (190, -6), (285, -2), (338, 55), (358, 118), (352, 150), (342, 184), (300, 184), (278, 172), (255, 156), (232, 128), (212, 96), (190, 72), (150, 72), (100, 98)],              # 2: el de adentro, izquierda
+    [(404, 186), (402, 120), (420, 55), (470, 5), (545, -6), (622, 10), (672, 78), (664, 102), (636, 86), (606, 72), (565, 58), (532, 84), (514, 122), (505, 150), (478, 162), (458, 190)],                    # 3: el de adentro, derecha
+    [(452, 192), (470, 150), (510, 133), (560, 124), (620, 130), (684, 156), (736, 200), (758, 212), (758, 248), (720, 238), (660, 217), (600, 214), (545, 224), (505, 240), (480, 246), (462, 232)],  # 4: el de afuera, derecha
 ]
 for i, p in enumerate(C): parte(cab, p, 'cuerno-%d.webp' % (i + 1), cab_sin)
 guarda(cab_sin, 'cabeza.webp')
-
-# 5. La cabeza del cuerno roto, al mismo tamaño que la de los cuatro (se superponen).
-roto = Image.open(R + 'cuerno-roto.png').convert('RGBA')
-if roto.size != cab.size: roto = roto.resize(cab.size, Image.LANCZOS); guarda(roto, 'cuerno-roto.png')
 
 # 6. Las escenas quietas (1200 × 675).
 def pon(fondo, capa, x, y, h, espejo=False):
@@ -112,14 +109,25 @@ port = pon(sombra(ulai, 330, 640, 190, 22, .5), car, 150, 240, 400)
 port = pon(sombra(port, 860, 650, 200, 20, .4), mac, 690, 170, 380)
 guarda(port, 'portada.webp')
 cu = Image.new('RGB', (W, H), (12, 10, 9)); cu = Image.blend(cu, llanura, .55)
-guarda(pon(cu, cab, 600 - 330, 40, 610), 'cuatro.webp')
+guarda(pon(cu, cab, 600 - 610 * cab.width / cab.height / 2, 40, 610), 'cuatro.webp')
 cp = Image.open(R + '../d7/cuerno-pequeno.png').convert('RGBA')
 guarda(pon(noche, cp, 120, 330, 300), 'pequeno.webp')
 guarda(pon(noche, cp, 520, 140, 520), 'cielo.webp')
-# El santuario purificado: el interior, sin el cuerno (la parte izquierda de santuario.webp), con luz.
-san = Image.open(R + 'santuario.webp').convert('RGB')
-pu = san.crop((0, 0, 1040, 585)).resize((W, H), Image.LANCZOS)
-pu = ImageEnhance.Brightness(pu).enhance(1.06)
+# El santuario purificado (v223): el santuario de Camilo sin el cuerno ni las nubes oscuras. Lo
+# oscuro de abajo (el cuerno y su humo) se rellena desde los bordes y queda como nube de luz;
+# el candelabro, el arca y la mesa no se tocan.
+import numpy as np, cv2
+san = cv2.resize(cv2.imread(R + 'santuario.webp'), (W, H), interpolation=cv2.INTER_AREA)
+v = cv2.cvtColor(san, cv2.COLOR_BGR2HSV)[..., 2]
+m = np.zeros(v.shape, np.uint8); m[v < 150] = 255; m[:228, :] = 0
+m[80:300, 170:390] = 0; m[170:300, 820:1060] = 0
+m = cv2.dilate(m, np.ones((19, 19), np.uint8))
+r = cv2.inpaint(san, m, 30, cv2.INPAINT_TELEA).astype(np.float32)
+mm = cv2.GaussianBlur(m.astype(np.float32) / 255., (0, 0), 12)[..., None]
+r = r * (1 - mm) + cv2.GaussianBlur(r, (0, 0), 18) * mm
+g = np.clip((np.linspace(0, 1, H)[:, None, None] - .45) / .55, 0, 1)
+r = r * (1 - .35 * g) + np.array([150, 215, 255], np.float32) * .35 * g
+pu = Image.fromarray(cv2.cvtColor(np.clip(r, 0, 255).astype(np.uint8), cv2.COLOR_BGR2RGB))
 guarda(pu, 'purificado.webp')
 
 print(json.dumps(cajas))

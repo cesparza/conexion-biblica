@@ -1150,6 +1150,28 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
         if (!r.n || r.mal.length) fuera.push(k + ': ' + r.n + ' rótulos' + (r.mal.length ? ', fuera: ' + r.mal.join(', ') : ''));
       }
       ok(!fuera.length, W + ' · v222: Daniel 8, cada movimiento termina con sus rótulos dentro de la escena' + (fuera.length ? ' — ' + fuera.join(' | ') : ''));
+      /* v223: al final del choque solo queda el macho cabrío; el cuerno pequeño termina con el poniente encendido. */
+      await p.evaluate(() => lamIr('macho')); await p.waitForTimeout(await p.evaluate(() => lamParte('macho').ms + 700));
+      const ch = await p.evaluate(() => { const c = document.querySelector('.d8-car .d8-cuerpo'), m = document.querySelector('.d8-mac'); return { car: +getComputedStyle(c).opacity, mac: +getComputedStyle(m).opacity }; });
+      ok(ch.car < .05 && ch.mac > .9, W + ' · v223: Daniel 8, después del choque el carnero queda en tierra y apagado (' + ch.car + ') y el macho cabrío de pie');
+      await p.evaluate(() => lamIr('cuerno')); await p.waitForTimeout(await p.evaluate(() => lamParte('cuerno').ms + 700));
+      const cr = await p.evaluate(() => ({ on: [...document.querySelectorAll('.d8-traza.viento.on')].map(x => x.getAttribute('data-v')).join(), tenue: document.querySelectorAll('.d8-traza.viento.tenue').length,
+        toma: document.querySelectorAll('#lamMarcasImg .reino.toma').length, paso: (document.querySelector('#lamMarcasImg .paso b') || {}).textContent || '' }));
+      ok(cr.on === 'o' && cr.tenue === 3 && cr.toma === 4 && /^4 ·/.test(cr.paso), W + ' · v223: Daniel 8, el cuerno pequeño: el viento del poniente encendido, los otros tres apagados, cuatro conquistas y el último paso (' + cr.paso + ')');
+      /* v223: la comparación con Daniel 2 y 7 nunca se corta: al lado de la imagen en la pantalla ancha, debajo en el teléfono. */
+      await p.evaluate(() => { lamCierra(); lamAbre('d8', 'presentar'); if (!lamConD2) lamConD2Cambia(); lamPres(lamPasos().findIndex(s => s.id === 'purificado' && s.tipo === 'parte')); }); await p.waitForTimeout(1500);
+      const cm = await p.evaluate(() => { const col = document.getElementById('lamD2'), fila = document.getElementById('lamD2Fila'), e = document.getElementById('lamEsc').getBoundingClientRect();
+        const vis = x => x && !x.hidden && getComputedStyle(x).display !== 'none';
+        const dentro = el => { const r = el.getBoundingClientRect(); return r.left >= -1 && r.right <= innerWidth + 1; };
+        return { col: vis(col), fila: vis(fila), filaOk: vis(fila) ? [...fila.querySelectorAll('.lam-d2f')].every(dentro) && fila.scrollWidth <= fila.clientWidth + 1 : true,
+          colOk: vis(col) ? (() => { const r = col.getBoundingClientRect(); return r.right <= e.right + 1 && [...col.querySelectorAll('.lam-d2-ag')].every(a => a.scrollWidth <= a.clientWidth + 1); })() : true }; });
+      ok((W <= 600 ? !cm.col && cm.fila : cm.col && !cm.fila) && cm.filaOk && cm.colOk, W + ' · v223: Daniel 8, «Con Daniel 2 y 7» en el santuario purificado ' + (W <= 600 ? 'va debajo de la imagen, sin cortarse' : 'va al lado de la imagen, dentro de ella'));
+      await p.evaluate(() => { lamCierra(); lamAbre('d8', 'explorar'); }); await p.waitForTimeout(1200);
+      /* v223: las fechas de los 2.300 años se tocan y no se pisan. */
+      const l23 = await p.evaluate(() => { const bs = [...document.querySelectorAll('#lamL23t .l23t-h')], rs = bs.map(b => b.querySelector('b').getBoundingClientRect());
+        let pisa = 0; for (let i = 0; i < rs.length; i++) for (let j = i + 1; j < rs.length; j++) { const a = rs[i], c = rs[j]; if (a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1) pisa++; }
+        lamL23tToca(2); return { n: bs.length, pisa, alto: Math.min(...bs.map(b => b.getBoundingClientRect().height)), info: document.getElementById('lamL23tInfo').textContent, anio: lamAnio }; });
+      ok(l23.n === 8 && !l23.pisa && l23.alto >= 36 && /27 d\.C\./.test(l23.info) && l23.anio === 27, W + ' · v223: Daniel 8, las fechas de los 2.300 años (' + l23.n + ') no se pisan, se tocan (≥36 px) y llevan la línea de tiempo al año');
     }
     if (id === 'd7') {
       const de = await p.evaluate(() => [LAM().despues.f, LAM().historia.map(h => h.f)]);

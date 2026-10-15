@@ -480,10 +480,10 @@ function lamAbre(cid,modo){
        tramo de la parte va DENTRO de ella, y la pista, las marcas y el pulgar usan el
        mismo margen (el radio del pulgar), así quedan alineados a cualquier ancho. */
     '<div class="lam-tiempo"><div class="lam-tcab"><button type="button" class="lam-play" id="lamPlay" onclick="lamRecorre()" aria-label="Recorrer la historia">'+IC('play')+'</button>'+
-    '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">De 605 a.C. hasta hoy, y lo que viene</div></div></div>'+
+    '<div><div class="lam-tano" id="lamTano">Arrastra para recorrer la historia</div><div class="lam-tq" id="lamTq">'+esc(L.tq0||'De 605 a.C. hasta hoy, y lo que viene')+'</div></div></div>'+
     '<div class="lam-rango"><div class="lam-pista" id="lamPista" style="background:'+lamPista()+'"><i class="lam-hoy" style="left:'+lamPos(LAM_HOY)+'%"></i><i class="lam-tramo" id="lamTramo"></i></div>'+
     '<input type="range" id="lamRango" min="-620" max="'+LAM_FIN+'" step="1" value="-620" aria-label="Año"></div>'+
-    '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div></div>'+
+    '<div class="lam-marcas">'+(L.marcas||[]).map(([y,t,ch])=>'<span'+(ch?' class="'+ch+'"':'')+' style="left:'+lamPos(y)+'%">'+t+'</span>').join('')+'</div>'+lamL23tHTML(L)+'</div>'+
     /* v212: los mismos botones redondos de Explorar (lamNavHTML). */
     (modo==='presentar'?'<div class="lam-ctl"><button type="button" id="lamAnt" class="lam-rd" aria-label="Anterior" onclick="lamAtras()">'+IC('izq')+'</button><span id="lamCuenta"></span><button type="button" id="lamSig" class="lam-rd sig" aria-label="Siguiente" onclick="lamAdelante()">'+IC('der')+'</button></div>':
      '<div class="lam-carta"><h3>'+esc(L.paraleloTit||'Daniel 2 y Daniel 7 dicen lo mismo')+'</h3>'+(L.paraleloNota?'<p class="lam-nota">'+esc(L.paraleloNota)+'</p>':'')+'<div class="lam-desliza"><table class="lam-par"><tr>'+(L.paraleloCols||['Daniel 2','Daniel 7','Reino']).map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
@@ -827,6 +827,33 @@ function lamHistoria(k){
   lamHoja(lamHojaTexto(t,kk));lamVeHoja();lamLugar();
 }
 
+/* ── v223: las 2.300 tardes y mañanas debajo de la línea de tiempo (LAMINAS.d8.linea2300) ──
+   Una barra a escala de 457 a.C. a 1844 (las 70 semanas y los 1.810 años), los reinos que
+   cruza y las 70 semanas ampliadas. Cada hito es un botón: dice qué pasó y, en Explorar,
+   lleva la línea de tiempo (y la escena) a ese año. */
+function lamL23tHTML(L){
+  const T=L.linea2300;if(!T)return '';
+  const x=y=>((y-T.de)/(T.a-T.de)*100).toFixed(2),w=(a,b)=>((b-a)/(T.a-T.de)*100).toFixed(2);
+  const bot=(h,i,left,cl)=>'<button type="button" class="l23t-h'+(cl?' '+cl:'')+'" data-i="'+i+'" style="left:'+left+'%" onclick="lamL23tToca('+i+')" aria-label="'+esc(h.t+': '+h.s)+'"><i></i><b>'+esc(h.t)+'</b></button>';
+  return '<div class="l23t" id="lamL23t"><div class="l23t-tit"><b>Las 2.300 tardes y mañanas</b><span>457 a.C. – 1844 · Daniel 8:14; 9:24-27</span></div>'+
+    /* Las fechas van arriba o abajo de la barra para no pisarse en el teléfono. */
+    '<div class="l23t-hs arr">'+T.hitos.map((h,i)=>h.b==='arriba'?bot(h,i,x(h.y),''):'').join('')+'</div>'+
+    '<div class="l23t-barra"><i class="s70" style="left:'+x(-457)+'%;width:'+w(-457,34)+'%"><span>490</span></i><i class="resto" style="left:'+x(34)+'%;width:'+w(34,1844)+'%"><span>1.810 años</span></i></div>'+
+    '<div class="l23t-hs">'+T.hitos.map((h,i)=>h.b==='abajo'?bot(h,i,x(h.y),i===0?'pri':h.y===1844?'ult':''):'').join('')+'</div>'+
+    '<div class="l23t-reinos" aria-hidden="true">'+T.reinos.map(([a,b,t,c])=>'<i style="left:'+x(a)+'%;width:'+w(a,b)+'%;background:'+c+'"></i>').join('')+'</div>'+
+    '<div class="l23t-ley">'+T.reinos.map(([a,b,t,c])=>'<span><i style="background:'+c+'"></i>'+esc(t)+'</span>').join('')+'</div>'+
+    '<div class="l23t-zoom"><div class="l23t-zt"><b>Las 70 semanas</b><span>490 años cortados al principio · sin escala</span></div>'+
+    '<div class="l23t-hs z arr">'+T.hitos.map((h,i)=>h.z!=null&&h.zr!=='abajo'?bot(h,i,h.z,h.z===0?'pri':h.z===100?'ult':''):'').join('')+'</div>'+
+    '<div class="l23t-sem"><i style="flex:0 0 22%">7 semanas<small>49 años</small></i><i style="flex:0 0 48%">62 semanas<small>434 años</small></i><i class="una">1 semana<small>7 años</small></i></div>'+
+    '<div class="l23t-hs z">'+T.hitos.map((h,i)=>h.zr==='abajo'?bot(h,i,h.z,''):'').join('')+'</div></div>'+
+    '<div class="l23t-info" id="lamL23tInfo" aria-live="polite"><small>Toca una fecha.</small></div></div>';
+}
+function lamL23tToca(i){
+  const T=LAM().linea2300,h=T&&T.hitos[i],el=document.getElementById('lamL23tInfo');if(!h||!el)return;
+  document.querySelectorAll('.l23t-h').forEach(b=>b.classList.toggle('on',b.getAttribute('data-i')===String(i)));
+  el.innerHTML='<b>'+esc(h.t)+' · '+esc(h.s)+'</b><p>'+esc(h.n)+'</p>';
+  if(lamModo!=='presentar'){lamPara();lamVeAnio(h.y);}
+}
 /* ── La línea de tiempo ── */
 const lamPos=y=>(y+620)/(LAM_FIN+620)*100;
 function lamPista(){
@@ -1165,7 +1192,7 @@ function lamEscenaE(){
     '<div class="lam-sobre" id="lamSobre"><div class="lam-marcas-img" id="lamMarcasImg"></div>'+lamD2HTML()+'<div class="lam-tabla" id="lamTabla" hidden></div></div>'+
     '<div class="lam-chip" id="lamChip" hidden></div>'+lamAnioVHTML()+lamCartelHTML()+
     (pres?'':'<div class="lam-aviso" id="lamAviso">Elige una parte abajo</div>')+'</div>'+
-    tira+'<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
+    (L.comparar?'<div class="lam-d2-fila" id="lamD2Fila" hidden></div>':'')+tira+'<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
 }
 /* El nombre y las fechas de la parte, sobre la imagen (se lee aun con el texto
    oculto); `extra`: el paso del juicio o la seña. Con Daniel 2, también su par. */
@@ -1202,6 +1229,7 @@ function lamD2(id){
   const el=document.getElementById('lamD2');if(!el)return;
   const L=LAM(),r=id&&(L.paralelo||[]).find(x=>x[0]===id);
   el.hidden=!lamConD2||!r;
+  if(!r||el.hidden)lamD2Fila(null);
   /* Donde la acción está a la derecha (los cuernos que vuelan), la estatua va a la izquierda. */
   const so=document.getElementById('lamSobre'),izq=!!r&&(L.d2Izq||[]).includes(id),e=document.getElementById('lamEsc');
   if(so){so.classList.toggle('con-d2',!el.hidden);so.classList.toggle('d2-izq',izq);}if(e)e.classList.toggle('d2-izq',!el.hidden&&izq);
@@ -1209,9 +1237,26 @@ function lamD2(id){
   const k=r[3],ks=[].concat(k||[]);el.classList.toggle('agrega',!ks.length);el.setAttribute('data-on',ks.join(' '));
   el.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',ks.includes(x.getAttribute('data-p'))));
   const ag=document.getElementById('lamD2Ag');if(ag)ag.textContent=k?'':'+ '+(lamParte(id).nombre);
+  lamD2Fila(r);
   const m7=document.getElementById('lamD7m'),D7=L.comparar2&&LAMINAS[L.comparar2],q7=D7&&r[5]&&D7.partes.find(x=>x.id===r[5]);
   if(m7){m7.hidden=!q7;if(q7){const im=m7.querySelector('img'),src=lamRuta(D7,q7.img||q7.id);if(im.getAttribute('src')!==src)im.setAttribute('src',src);m7.querySelector('small').textContent=r[4];m7.setAttribute('aria-label','Daniel 7: '+r[4]);}}
   lamD2Pos();
+}
+/* v223: en el teléfono (≤600 px) la columna de la comparación no cabe al lado de la imagen
+   (Camilo, 14-oct: «+ El santuario será purificado» salía cortado). Ahí va debajo de la
+   imagen como una fila de pastillas: el metal de Daniel 2, la parte de Daniel 7 (con su
+   imagen) o «lo agrega Daniel 8». La columna se esconde por CSS a ese ancho. */
+function lamD2Fila(r){
+  const f=document.getElementById('lamD2Fila');if(!f)return;
+  f.hidden=!r;if(!r){f.innerHTML='';return;}
+  const L=LAM(),C=LAMINAS[L.comparar],D7=L.comparar2&&LAMINAS[L.comparar2],q7=D7&&r[5]&&D7.partes.find(x=>x.id===r[5]),k=[].concat(r[3]||[])[0];
+  /* La estatua en miniatura, con el metal de la parte encendido (las mismas capas de la columna). */
+  const ks=[].concat(r[3]||[]),[vx,vy,vw,vh]=C.marcoEstatua||[0,0,768,1152],pc=(v,t)=>(v/t*100).toFixed(2)+'%';
+  const mini='<span class="lam-d2f-est" aria-hidden="true">'+C.capas.map(c=>'<img src="'+lamRuta(C,c)+'" alt="" class="'+(ks.includes(c)?'on':'')+'" style="left:'+pc(C.ox-vx,vw)+';top:'+pc(-vy,vh)+';width:'+pc(768,vw)+';height:'+pc(1152,vh)+'">').join('')+'</span>';
+  const d2=r[3]?'<button type="button" class="lam-d2f" onclick="lamTocaD2(\''+k+'\')">'+(['piedra','monte'].includes(k)?'<img src="'+lamRuta(C,k)+'" alt="">':mini)+'<span><small>'+esc(C.libro||'Daniel 2')+'</small>'+esc(r[1])+'</span></button>':
+    '<span class="lam-d2f agrega"><span><small>'+esc(C.libro||'Daniel 2')+'</small>'+esc(r[1])+'</span></span>';
+  const d7=q7?'<button type="button" class="lam-d2f" onclick="lamTocaD7()"><img src="'+lamRuta(D7,q7.img||q7.id)+'" alt=""><span><small>'+esc(D7.libro)+'</small>'+esc(r[4])+'</span></button>':'';
+  f.innerHTML=d2+d7;f.setAttribute('aria-label',L.conTxt||'Con Daniel 2');f.setAttribute('role','group');
 }
 /* Tocar la imagen de Daniel 7 abre esa parte en su lámina. */
 function lamTocaD7(){const L=LAM(),r=lamD2Id&&(L.paralelo||[]).find(x=>x[0]===lamD2Id);if(r&&r[5])lamIrA(L.comparar2,r[5]);}
@@ -1551,6 +1596,8 @@ function lamTf(el,o){if(!el)return;const n=v=>(+v||0).toFixed(2);let t='';
 /* Un rótulo sobre la escena: (x, y) en píxeles de la escena; `a` dónde se ancla ('i' a la izquierda, 'd' a la derecha, 'c' al centro, 'ab' debajo). */
 /* Con la estatua chica a la derecha (Con Daniel 2 y 7), los rótulos no pasan de `lamD8Der`. */
 let lamD8Der=1188;
+/* El teléfono: la comparación va debajo de la imagen (v223), los rótulos usan todo el ancho. */
+const lamTel=()=>typeof matchMedia==='function'&&matchMedia('(max-width:600px)').matches;
 const lamEt=(x,y,a,t,sub,cl,o)=>{const D=lamD8Der;x=/\bd\b/.test(a)?Math.min(x,D):/\bc\b/.test(a)?Math.min(x,(cl||'').includes('cita')?Math.min(600,D/2+20):D-120):Math.min(x,D-190);
   return '<div class="d8-et '+a+(cl?' '+cl:'')+'"'+(o!=null?' data-o="'+o+'"':'')+' style="left:'+lamPx(x)+';top:'+lamPy(y)+'"><b>'+t+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div>';};
 /* Una línea que se dibuja sola (stroke-dashoffset por cuadro) y su punta. */
@@ -1576,8 +1623,9 @@ function lamMov(p,anima){
   const M=LAM().mov,q=!anima||lamQuieto(),z=lamZ(),g=z&&z.querySelector('.lam-capa-g'),s=document.getElementById('lamMarcasImg');
   if(!g||!s)return;
   const e=document.getElementById('lamEsc');if(e)e.classList.add('con-d8');
-  lamD8Der=lamConD2&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
-  s.className='lam-marcas-img d8'+(q?' quieto':'');
+  lamD8Der=lamConD2&&!lamTel()&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
+  /* v223: en una escena angosta (al presentar en la pantalla ancha mide ~500 px) los rótulos van como en el teléfono. */
+  s.className='lam-marcas-img d8'+(q?' quieto':'')+(e&&e.getBoundingClientRect().width<700?' chica':'');
   ({carnero:lamMovCarnero,choque:lamMovChoque,cuatro:lamMovCuatro,crece:lamMovCrece,cielo:lamMovCielo,santuario:lamMovSantuario,purifica:lamMovPurifica}[p.mov]||(()=>lamHist({f:p.img})))(M,g,s,q);
 }
 /* El carnero en su sitio: el cuerno b (detrás), el cuerpo y el cuerno a (delante). */
@@ -1620,12 +1668,16 @@ function lamMovChoque(M,g,s,q){
     lamEt(40,170,'i','Los dos cuernos, quebrados','Medo-Persia cae','',1);
   /* Dónde está el macho cabrío: su esquina (gx, gy); la sombra va en el suelo, lejos de sus patas. */
   const pon=(gx,gy)=>{lamTf(mc,{x:gx,y:gy});som.setAttribute('cx',(gx+400*k2).toFixed(1));som.setAttribute('cy','628');};
-  /* Los cuernos vuelan y caen al suelo; el carnero cae a tierra. */
-  const cae=t=>{const e=lamSale(t);
+  /* Los cuernos vuelan y caen al suelo; el carnero cae a tierra. v223 (Camilo, 14-oct: un
+     animal quedaba encima del otro): «lo derribó, por tanto, a tierra, lo pisoteó» (8:7). El
+     carnero se va de lado contra el suelo y se apaga; al final queda solo el macho cabrío, de
+     pie, con los dos cuernos quebrados en el suelo. */
+  const cuerpo=ram.querySelector('.d8-cuerpo'),sr=ram.querySelector('.d8-sombra');
+  const cae=t=>{const e=lamSale(t),f=Math.max(0,(t-.45)/.55);
     lamTf(ca,{x:-150*t,y:-150*4*t*(1-t)+(612-pa[1])*t,r:-230*t,cx:pa[0],cy:pa[1]});
     lamTf(cb,{x:-40*t,y:-190*4*t*(1-t)+(616-pb[1])*t,r:-160*t,cx:pb[0],cy:pb[1]});
-    lamTf(ram.querySelector('.d8-cuerpo'),{x:-40*e,y:58*e,r:13*e,cx:pie[0],cy:pie[1]});
-    ram.querySelector('.d8-cuerpo').style.opacity=(1-.3*e).toFixed(3);};
+    lamTf(cuerpo,{x:-120*e,y:90*e,r:-24*e,cx:pie[0],cy:pie[1]});
+    cuerpo.style.opacity=(1-f).toFixed(3);if(sr)sr.style.opacity=(.45*(1-f)).toFixed(3);};
   if(q){pon(H.fin[0],H.fin[1]);cae(1);s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
   pon(H.de[0],H.de[1]);lamVeEt(s,0,100);
   /* Viene del poniente, cada vez más rápido, sin tocar tierra. */
@@ -1633,9 +1685,12 @@ function lamMovChoque(M,g,s,q){
   lamT(()=>{
     /* El golpe: la luz, el carnero tiembla, los cuernos saltan y el polvo se levanta. */
     lamTween(700,t=>{luz.style.opacity=(t<.25?t*4:(1-t)/.75).toFixed(3);const r=.6+.8*t;lamTf(luz,{k:r,cx:H.golpe[0],cy:H.golpe[1]});});
-    lamTween(1300,cae);lamPolvo8(polvo,380,612,26,false);lamVeEt(s,1,250);
-    /* «lo derribó, por tanto, a tierra, lo pisoteó» */
+    lamPolvo8(polvo,380,612,26,false);lamVeEt(s,1,250);
+    /* «lo derribó, por tanto, a tierra, lo pisoteó»: el carnero cae y se apaga; el macho cabrío
+       llega a su sitio y pisa dos veces donde cayó. */
+    lamTween(1600,cae);
     lamTween(1100,t=>{const e=lamSuave(t);pon(H.a[0]+(H.fin[0]-H.a[0])*e,H.a[1]+(H.fin[1]-H.a[1])*e-30*Math.sin(Math.PI*t));});
+    lamT(()=>lamTween(900,t=>pon(H.fin[0],H.fin[1]-16*Math.abs(Math.sin(2*Math.PI*t)))),1200);
   },1500);
   lamVeEt(s,2,3100);
 }
@@ -1647,7 +1702,7 @@ function lamMovCuatro(M,g,s,q){
     '<g class="d8-cab">'+B.cuernos.map((c,i)=>'<g class="d8-c4" data-i="'+i+'">'+lamPieza(c.f,c.caja,kh,hx,hy)+'</g>').join('')+lamPieza(B.f,[0,0,B.w,B.h],kh,hx,hy)+'</g>';
   const mac=g.querySelector('.d8-mac'),mh=g.querySelector('.d8-mac-h'),luz=g.querySelector('.d8-luz'),cab=g.querySelector('.d8-cab'),cs=[...g.querySelectorAll('.d8-c4')];
   const pb=c=>[hx+c.base[0]*kh,hy+c.base[1]*kh];
-  s.innerHTML=B.cuernos.map((c,i)=>lamEt(c.et[0],c.et[1],i<2?(i?'c':'i'):(i===2?'c':'d'),esc(c.t),esc(c.s),'gen',2+i)).join('')+
+  s.innerHTML=B.cuernos.map((c,i)=>lamEt(c.et[0],c.et[1],c.a||'c',esc(c.t),esc(c.s),'gen',2+i)).join('')+
     lamEt(600,92,'c','«En su mayor fuerza»','el gran cuerno, quebrado: Alejandro Magno muere en 323 a.C.','oro rompe',1)+
     lamEt(600,640,'c ab','«Hacia los cuatro vientos del cielo»','Ipso, 301 a.C.: cuatro reinos','cita',6);
   const fin=()=>{mac.style.opacity='0';cab.style.opacity='1';cs.forEach(c=>lamTf(c,{}));s.querySelectorAll('[data-o]').forEach(e=>{if(!e.classList.contains('rompe'))e.classList.add('ve');});};
@@ -1666,31 +1721,53 @@ function lamMovCuatro(M,g,s,q){
   B.cuernos.forEach((c,i)=>lamT(()=>{const b=pb(c);lamTween(1000,t=>lamTf(cs[i],{k:.02+.98*lamSale(t),cx:b[0],cy:b[1]}));lamVeEt(s,2+i,600);},3500+i*500));
   lamVeEt(s,6,6200);
 }
-/* El cuerno pequeño sobre el mapa: Roma, al poniente; los cuatro reinos; lo que conquista. */
+/* El cuerno pequeño sobre el mapa, en el orden de 8:8-10 (v223). 1: los cuatro vientos del
+   cielo, una rosa sobre el mundo griego. 2: «de uno de ellos»: se enciende el viento del
+   poniente y allí, en Roma, sale el cuerno. 3: crece al oriente (Macedonia, Siria), a la tierra
+   gloriosa (Judea) y al sur (Egipto). 4: después, hacia arriba (8:10). Arriba, un rótulo dice
+   en qué paso va; los vientos llevan su nombre también en el teléfono. */
 function lamMovCrece(M,g,s,q){
-  const P=M.mapa,[rx,ry]=P.roma,W=435,H=700;
+  const P=M.mapa,[rx,ry]=P.roma,W=435,H=700,Ro=P.rosa,[cx,cy]=Ro.c;
   lamHist({f:'noche'});
+  const pt={n:[cx,cy-Ro.dy],s:[cx,cy+Ro.dy],e:[cx+Ro.dx,cy],o:[cx-Ro.dx,cy]};
   const hz=(h)=>'<image href="'+lamSrc(P.pq)+'" x="'+(rx-h*W/H/2).toFixed(1)+'" y="'+(ry-h).toFixed(1)+'" width="'+(h*W/H).toFixed(1)+'" height="'+h+'"/>';
   const curva=(a,b)=>{const mx=(a[0]+b[0])/2,my=Math.min(a[1],b[1])-70;return 'M'+a.join(' ')+' Q'+mx.toFixed(0)+' '+my.toFixed(0)+' '+b.join(' ');};
-  const sale=[rx+10,ry-70];
-  g.innerHTML='<g class="d8-rosa"><circle cx="96" cy="580" r="38"/><path d="M96 536 L96 624 M52 580 L140 580"/></g>'+
+  const sale=[rx+10,ry-70],top=[rx,ry-200];
+  g.innerHTML='<g class="d8-rosa8"><path class="d8-halo" d="M'+cx+' '+cy+' L'+pt.o.join(' ')+'"/>'+
+    Ro.vientos.map(([t,k])=>lamTraza('M'+cx+' '+cy+' L'+pt[k].join(' '),'viento').replace('class="d8-traza viento"','class="d8-traza viento" data-v="'+k+'"')).join('')+
+    '<circle class="d8-rosa-c" cx="'+cx+'" cy="'+cy+'" r="6"/></g>'+
     P.reinos.map(r=>'<circle class="d8-nodo'+(r.g?' gl':'')+'" cx="'+r.en[0]+'" cy="'+r.en[1]+'" r="7"/>').join('')+P.va.map(v=>lamTraza(curva(sale,P.reinos[v.r].en),'ruta')).join('')+
+    lamTraza('M'+top[0]+' '+top[1]+' L'+top[0]+' 70 M'+(top[0]-14)+' 88 L'+top[0]+' 70 L'+(top[0]+14)+' 88','sube')+
     '<g class="d8-pq">'+hz(200)+'</g>';
-  const pq=g.querySelector('.d8-pq'),rutas=[...g.querySelectorAll('.d8-traza')];
+  const pq=g.querySelector('.d8-pq'),rutas=[...g.querySelectorAll('.ruta')],vs=[...g.querySelectorAll('.viento')],halo=g.querySelector('.d8-halo'),rosa=g.querySelector('.d8-rosa8'),sube=g.querySelector('.sube');
+  const vEt={n:[cx+14,pt.n[1]+4,'i'],s:[cx+14,pt.s[1]-4,'i'],e:[pt.e[0]-6,cy-26,'d'],o:[(pt.o[0]+cx)/2-40,cy+28,'c']};
   s.innerHTML=P.reinos.map((r,i)=>{const v=P.va.find(x=>x.r===i);return lamEt(r.en[0],r.en[1]+12,'c ab',esc(r.t),esc(r.s),'reino'+(r.g?' gl':''),0).replace('</small></div>','</small>'+(v?'<em><span class="d8-dir">«'+esc(v.t)+'» · </span>'+esc(v.s)+'</em>':'')+'</div>').replace('class="d8-et','data-r="'+i+'" class="d8-et');}).join('')+
-    lamEt(96,528,'c','N','','rosa',0)+lamEt(96,654,'c ab','S','','rosa',0)+lamEt(146,580,'i','E','','rosa',0)+lamEt(46,580,'d','O','','rosa',0)+
-    lamEt(rx,ry+12,'c ab','Roma','del poniente','oro',1)+
-    lamEt(600,640,'c ab','«Creció mucho»','más que el carnero y el macho cabrío: Roma imperial','cita',7);
+    Ro.vientos.map(([t,k])=>lamEt(vEt[k][0],vEt[k][1],vEt[k][2],esc(t),'','viento',1).replace('class="d8-et','data-v="'+k+'" class="d8-et')).join('')+
+    lamEt(rx,ry+30,'c','Roma','del poniente','oro',2)+
+    lamEt(top[0]+18,104,'i','Hacia arriba','8:10','dir sube8',8)+
+    '<div class="d8-et c oro paso ve" style="left:'+lamPx(600)+';top:'+lamPy(10)+'"><b></b><small></small></div>';
+  const cap=s.querySelector('.paso'),paso=i=>{if(!cap)return;cap.querySelector('b').textContent=P.pasos[i][0];cap.querySelector('small').textContent=P.pasos[i][1];cap.classList.remove('ve');void cap.offsetWidth;cap.classList.add('ve');};
   const toma=v=>{const e=s.querySelector('[data-r="'+v.r+'"]');if(e)e.classList.add('toma');};
-  if(q){rutas.forEach(lamDibujado);P.va.forEach(toma);s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
-  rutas.forEach(r=>r.style.opacity='0');
-  lamVeEt(s,0,100);
-  /* «salió un cuerno pequeño»: sale chico y crece con cada conquista. */
+  /* «de uno de ellos»: el poniente se enciende y los otros tres se apagan. */
+  const poniente=()=>{vs.forEach(v=>v.classList.toggle(v.getAttribute('data-v')==='o'?'on':'tenue',true));halo.classList.add('on');
+    s.querySelectorAll('.viento').forEach(e=>e.classList.add(e.getAttribute('data-v')==='o'?'on':'tenue'));};
+  if(q){vs.forEach(lamDibujado);rutas.forEach(lamDibujado);lamDibujado(sube);poniente();rosa.classList.add('atras');P.va.forEach(toma);
+    s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));paso(2);return;}
+  rutas.forEach(r=>r.style.opacity='0');sube.style.opacity='0';vs.forEach(v=>v.style.opacity='0');
   let kk=.3;lamTf(pq,{k:kk,cx:rx,cy:ry});pq.style.opacity='0';
-  lamT(()=>lamTween(800,t=>{pq.style.opacity=t.toFixed(3);}),700);lamVeEt(s,1,900);
+  /* 1. Los cuatro vientos (8:8). */
+  paso(0);lamVeEt(s,0,100);
+  vs.forEach((v,i)=>lamT(()=>lamDibuja(v,700),200+i*150));lamVeEt(s,1,900);
+  /* 2. «De uno de ellos»: el poniente, y allí sale el cuerno. */
+  lamT(()=>{paso(1);poniente();},2200);lamVeEt(s,2,2900);
+  lamT(()=>lamTween(800,t=>{pq.style.opacity=t.toFixed(3);}),3000);
+  /* 3. Crece al oriente, a la tierra gloriosa y al sur. */
+  const t3=4400;lamT(()=>{paso(2);rosa.classList.add('atras');},t3);
   P.va.forEach((v,i)=>lamT(()=>{lamDibuja(rutas[i],1000,()=>toma(v));const k0=kk,k1=.3+.7*(i+1)/P.va.length;kk=k1;
-    lamTween(1000,t=>lamTf(pq,{k:k0+(k1-k0)*lamSuave(t),cx:rx,cy:ry}));},1900+i*1300));
-  lamVeEt(s,7,1900+P.va.length*1300+400);
+    lamTween(1000,t=>lamTf(pq,{k:k0+(k1-k0)*lamSuave(t),cx:rx,cy:ry}));},t3+400+i*1300));
+  /* 4. Después, hacia arriba (8:10): lo muestra la parte que sigue. */
+  const t4=t3+400+P.va.length*1300+400;
+  lamT(()=>{paso(3);lamDibuja(sube,900);},t4);lamVeEt(s,8,t4+500);
 }
 /* Hasta el ejército del cielo: el cuerno sube, echa estrellas por tierra y se levanta frente al Príncipe. */
 function lamMovCielo(M,g,s,q){
@@ -1730,8 +1807,8 @@ function lamMovSantuario(M,g,s,q){
   g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="1200" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
     C.map(c=>'<circle class="d8-punto" cx="'+c.en[0]+'" cy="'+c.en[1]+'" r="9"/>').join('');
   const so=g.querySelector('.d8-sombra-s'),pts=[...g.querySelectorAll('.d8-punto')];
-  s.innerHTML=C.map((c,i)=>'<div class="d8-et '+(c.a||'i')+' cosa" data-o="'+(i+1)+'" style="left:'+lamPx(c.en[0]+(c.a==='d'?-16:16))+';top:'+lamPy(c.en[1]+(c.dy||0))+'"><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>en su lugar: '+esc(c.c)+'</em></div>').join('')+
-    lamEt(600,30,'c','«El continuo»','el servicio de cada día en el atrio y el lugar santo','oro',0)+
+  s.innerHTML=C.map((c,i)=>'<div class="d8-et '+(c.a||'i')+' cosa" data-o="'+(i+1)+'" style="left:'+lamPx(c.en[0]+(c.a==='d'?-16:c.a==='c'?0:16))+';top:'+lamPy(c.en[1]+(c.dy||0))+'"><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>en su lugar: '+esc(c.c)+'</em></div>').join('')+
+    lamEt(600,30,'c','«El continuo» y «la verdad»','el servicio de cada día en el lugar santo y la Ley del santísimo (8:11-12)','oro',0)+
     lamEt(600,640,'c ab','«Echó por tierra la verdad»','Daniel 8:11-12','cita',5);
   const apaga=()=>{s.querySelectorAll('.cosa').forEach(e=>e.classList.add('apaga'));pts.forEach(p=>p.classList.add('apaga'));};
   if(q){so.setAttribute('x','-420');s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));apaga();return;}
@@ -1743,14 +1820,14 @@ function lamMovSantuario(M,g,s,q){
 function lamMovPurifica(M,g,s,q){
   lamHist({f:'santuario'});
   g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="-420" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
-    '<image class="d8-luz" href="'+lamLuz('255,226,150')+'" x="260" y="0" width="600" height="600" style="opacity:0"/>';
+    '<image class="d8-luz" href="'+lamLuz('255,226,150')+'" x="300" y="-100" width="600" height="600" style="opacity:0"/>';
   const so=g.querySelector('.d8-sombra-s'),luz=g.querySelector('.d8-luz');
   s.innerHTML=lamEt(600,36,'c','1844','«luego el santuario será purificado»','oro grande',1)+
     lamEt(600,640,'c ab','22 de octubre de 1844 · el Día de la Expiación','empieza el juicio de Daniel 7:9-10','cita',2);
   if(q){g.innerHTML='';lamHist({f:'purificado'});s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));return;}
   /* La sombra se retira, la luz sale del lugar santísimo y entra el santuario purificado. */
   lamTween(1600,t=>{so.setAttribute('x',(-420+1620*lamSuave(t)).toFixed(1));});
-  lamT(()=>lamTween(1500,t=>{luz.style.opacity=(t<.5?t*2:(1-t)*2).toFixed(3);lamTf(luz,{k:.6+1.2*t,cx:560,cy:300});}),700);
+  lamT(()=>lamTween(1500,t=>{luz.style.opacity=(t<.5?t*2:(1-t)*2).toFixed(3);lamTf(luz,{k:.6+1.2*t,cx:600,cy:200});}),700);
   lamT(()=>{lamHist({f:'purificado'});lamT(()=>{g.innerHTML='';},900);},1500);
   lamVeEt(s,1,1900);lamVeEt(s,2,2700);
 }
@@ -1769,7 +1846,10 @@ const L23=y=>((y>0?y+456:y+457)/2300*100).toFixed(2);
 function lamL23Linea(o,fase){
   const m=(y,t,s,cl)=>'<span class="l23-m'+(cl?' '+cl:'')+'" style="left:'+L23(y)+'%"><b>'+t+'</b>'+(s?'<small>'+s+'</small>':'')+'</span>';
   return '<div class="l23" data-o="'+o+'"><div class="l23-barra"><i class="l23-70'+(fase>=2?' on':'')+'" style="width:'+L23(34)+'%"></i><i class="l23-resto'+(fase>=3?' on':'')+'" style="left:'+L23(34)+'%;width:'+(100-L23(34))+'%"></i></div>'+
-    m(-457,'457 a.C.','la orden')+(fase>=2?m(34,'34 d.C.','490 años'):'')+(fase>=3?m(1844,'1844','el santuario','fin'+(fase>=4?' brilla':'')):m(1844,'¿?','','fin tenue'))+'</div>';
+    m(-457,'457 a.C.','la orden')+(fase>=2?m(34,'34 d.C.','490 años'):'')+(fase>=3?m(1844,'1844','el santuario','fin'+(fase>=4?' brilla':'')):m(1844,'¿?','','fin tenue'))+
+    /* v223: los reinos que cruzan los 2.300 años, debajo de la barra. */
+    (fase>=3&&LAM().linea2300?'<div class="l23-reinos">'+LAM().linea2300.reinos.filter(r=>r[0]<1844).map(([a,b,t,c])=>'<i style="left:'+L23(a)+'%;width:'+(L23(Math.min(b,1844))-L23(a)).toFixed(2)+'%;background:'+c+'"></i>').join('')+'</div>'+
+      '<div class="l23-ley">'+LAM().linea2300.reinos.filter(r=>r[0]<1844).map(([a,b,t,c])=>'<span><i style="background:'+c+'"></i>'+esc(t)+'</span>').join('')+'</div>':'')+'</div>';
 }
 const lamL23={
   tm:()=>'<div class="lam-eq" data-o="1"><span>1 tarde + 1 mañana</span><i>=</i><span>1 día</span></div><div class="lam-per-nota" data-o="1">Génesis 1:5</div>'+

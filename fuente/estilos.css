@@ -4818,6 +4818,22 @@ span.cmp-ult-c{cursor:default}
 .d8-nodo{fill:#F2C46B;opacity:.85;stroke:rgba(12,9,6,.8);stroke-width:3}
 .d8-nodo.gl{fill:#7FD1C2}
 .d8-rosa circle,.d8-rosa path{fill:none;stroke:rgba(242,196,107,.5);stroke-width:1.5}
+/* v223: la rosa de los cuatro vientos (8:8) y el viento del poniente (8:9). */
+.d8-rosa8{transition:opacity .8s}
+.d8-rosa8.atras{opacity:.4}
+.d8-traza.viento{stroke:rgba(247,213,140,.8);stroke-width:2.5;transition:stroke-width .5s,opacity .5s}
+.d8-traza.viento.on{stroke:#F2C46B;stroke-width:5}
+.d8-traza.viento.tenue{opacity:.3!important}
+.d8-halo{fill:none;stroke:#F2C46B;stroke-width:18;stroke-linecap:round;opacity:0;transition:opacity .6s;vector-effect:non-scaling-stroke}
+.d8-halo.on{opacity:.22}
+.d8-rosa-c{fill:#F2C46B}
+.d8-traza.sube{stroke:#F2C46B;stroke-width:3}
+.d8-et.viento{padding:2px 8px;background:rgba(12,9,6,.72)}
+.d8-et.viento b{font-size:.8em;letter-spacing:.08em;text-transform:uppercase;color:#F7D58C}
+.d8-et.viento.on{box-shadow:inset 0 0 0 2px #F2C46B;background:rgba(12,9,6,.9)}
+.d8-et.viento.on b{color:#F2C46B}
+.d8-et.viento.tenue.ve{opacity:.45}
+.d8-et.paso{max-width:70%;--ty:0}
 .d8-punto{fill:#F2C46B;stroke:rgba(12,9,6,.85);stroke-width:4;transition:fill .6s}
 .d8-punto.apaga{fill:#6B6358}
 .d8-est circle{fill:#FFF6DC}
@@ -4858,6 +4874,54 @@ span.cmp-ult-c{cursor:default}
 .l23-igual figcaption b{display:block;color:#F2C46B;margin-top:.2em}
 .l23-igual figcaption small{color:#E6DCC8;font-size:.8em}
 .l23-igual>i{font-style:normal;font-size:2em;font-weight:800;color:#F2C46B}
+/* v223: los reinos debajo de la barra de los 2.300 años (al presentar la cuenta). */
+.l23-reinos{position:relative;height:.6em;margin-top:2.7em;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.08)}
+.l23-reinos i{position:absolute;top:0;bottom:0}
+.l23-ley{display:flex;flex-wrap:wrap;gap:2px 12px;margin-top:.35em;font-size:.78em;color:#C9BFA9}
+.l23-ley span{display:inline-flex;align-items:center;gap:5px}
+.l23-ley i{width:.8em;height:.8em;border-radius:3px}
+/* v223: las 2.300 tardes y mañanas debajo de la línea de tiempo de Daniel 8. */
+.l23t{margin:10px 0 4px;padding:10px 0 2px;border-top:1px solid color-mix(in srgb,var(--txt) 12%,transparent);color:var(--txt)}
+.l23t-tit{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;margin-bottom:8px}
+.l23t-tit b{font-size:1rem}
+.l23t-tit span,.l23t-zt span{font-size:.75rem;color:var(--gris)}
+.l23t-barra{position:relative;height:14px;border-radius:999px;background:color-mix(in srgb,var(--txt) 8%,transparent)}
+.l23t-barra i{position:absolute;top:0;bottom:0;font-style:normal}
+.l23t-barra .s70{background:#2B7A70;border-radius:999px 0 0 999px}
+.l23t-barra .resto{background:#B45309;border-radius:0 999px 999px 0}
+.l23t-barra .s70 span,.l23t-barra .resto span{display:block;text-align:center;font-size:.75rem;font-weight:700;line-height:14px;color:#fff}
+.l23t-hs{position:relative;height:38px}
+.l23t-h{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;min-width:44px;min-height:36px;padding:0 2px;border:0;background:none;color:var(--txt);font:inherit;cursor:pointer}
+.l23t-h.pri{transform:none;align-items:flex-start}
+.l23t-h.ult{transform:translateX(-100%);align-items:flex-end}
+.l23t-h i{width:2px;height:8px;background:currentColor;opacity:.6}
+.l23t-hs.arr .l23t-h{top:auto;bottom:0;flex-direction:column-reverse}
+.l23t-h b{font-size:.75rem;font-weight:700;white-space:nowrap;padding:1px 6px;border-radius:999px;font-variant-numeric:tabular-nums}
+.l23t-h.on b,.l23t-h:hover b{background:#B45309;color:#fff}
+.l23t-h:focus-visible{outline:2px solid var(--lam-oro);outline-offset:1px;border-radius:8px}
+.l23t-reinos{position:relative;height:8px;border-radius:3px;overflow:hidden;background:color-mix(in srgb,var(--txt) 6%,transparent)}
+.l23t-reinos i{position:absolute;top:0;bottom:0}
+.l23t-ley{display:flex;flex-wrap:wrap;gap:3px 12px;margin:5px 0 8px;font-size:.75rem;color:var(--gris)}
+.l23t-ley span{display:inline-flex;align-items:center;gap:5px}
+.l23t-ley i{width:10px;height:10px;border-radius:3px}
+.l23t-zoom{padding:8px 10px 0;border-radius:12px;background:color-mix(in srgb,#3FA89A 10%,transparent)}
+.l23t-zt{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;margin-bottom:6px}
+.l23t-zt b{font-size:.875rem}
+.l23t-sem{display:flex;gap:3px}
+.l23t-sem i{flex:1;padding:3px 6px;border-radius:8px;background:#2B7A70;color:#fff;font-style:normal;font-size:.75rem;font-weight:700;text-align:center;line-height:1.15}
+.l23t-sem i.una{background:#B45309}
+.l23t-sem small{display:block;font-weight:500;font-size:.75rem}
+.l23t-hs.z{margin:0 6px}
+.l23t-info{min-height:2.4em;margin-top:8px;font-size:.875rem;line-height:1.4}
+.l23t-info small{color:var(--gris)}
+.l23t-info p{margin:2px 0 0;color:var(--txt)}
+.lam.pres .l23t{color:#F4EEE2;border-top-color:rgba(255,255,255,.12)}
+.lam.pres .l23t-tit span,.lam.pres .l23t-zt span,.lam.pres .l23t-ley,.lam.pres .l23t-info small{color:#B9AF9C}
+.lam.pres .l23t-info p,.lam.pres .l23t-h{color:#F4EEE2}
+@media (max-width:560px){
+  .l23t-sem i{font-size:.75rem;padding:3px 3px}
+  .l23t-sem small{display:none}
+}
 /* Con Daniel 2 y 7: debajo de la estatua chica, la imagen de la parte de Daniel 7. */
 .lam-d2.con7 .lam-d2-est{top:7%;height:46%}
 .lam-d2.con7 .lam-d2-pie{top:54%;height:9%}
@@ -4868,6 +4932,26 @@ span.cmp-ult-c{cursor:default}
 .lam-d7m img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;border-radius:8px;box-shadow:0 0 0 2px #F2C46B}
 .lam-d7m small{font-size:.75rem;line-height:1.1;text-align:center;color:#E6DCC8}
 .lam-d7m:focus-visible{outline:2px solid #F2C46B;outline-offset:1px}
+/* v223: en el teléfono la comparación va debajo de la imagen, en una fila de pastillas
+   (la columna al lado de la imagen cortaba «+ El santuario será purificado»). */
+.lam-d2-fila{display:none}
+@media (max-width:600px){
+  .lam-d2{display:none!important}
+  .lam-sobre.con-d2 .lam-ley,.lam-sobre.con-d2.d2-izq .lam-ley{left:1.5%;right:1.5%}
+  .lam-d2-fila:not([hidden]){display:flex;flex-wrap:wrap;gap:6px;width:100%;margin:2px 0 0}
+  .lam-d2f{flex:1 1 calc(50% - 3px);min-width:0;display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:12px;
+    border:1px solid color-mix(in srgb,var(--txt) 16%,transparent);background:color-mix(in srgb,var(--txt) 5%,transparent);color:var(--txt);
+    font:inherit;font-size:.875rem;line-height:1.2;text-align:left;cursor:pointer}
+  .lam-d2f>span:last-child{min-width:0;overflow-wrap:anywhere}
+  .lam-d2f small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lam-oro)}
+  .lam-d2f>img{flex:0 0 auto;width:48px;height:36px;object-fit:cover;border-radius:8px}
+  .lam-d2f-est{position:relative;flex:0 0 auto;width:22px;height:56px;overflow:hidden}
+  .lam-d2f-est img{position:absolute;max-width:none;opacity:.35;filter:grayscale(.8)}
+  .lam-d2f-est img.on{opacity:1;filter:drop-shadow(0 0 3px rgba(242,196,107,.95))}
+  .lam-d2f.agrega{cursor:default;padding-left:10px;border-color:transparent;background:#B45309;color:#fff}
+  .lam-d2f.agrega small{color:#FDE7C7}
+  .lam-d2f:focus-visible{outline:2px solid var(--lam-oro);outline-offset:2px}
+}
 @media (max-width:560px){
   /* En el teléfono la escena mide un tercio: solo el nombre (y lo que cambia); el texto completo va en la hoja. */
   .d8-et{padding:2px 6px;border-radius:8px;max-width:none;white-space:nowrap;font-size:.75rem}
@@ -4878,10 +4962,26 @@ span.cmp-ult-c{cursor:default}
   .d8-et.op,.d8-et.reino:not(.toma),.d8-dir{display:none}
   .d8-et.grande b{font-size:1.75em}
   .d8-et.rosa{display:none}
+  .d8-et.paso{white-space:normal;max-width:94%}
+  .d8-et.viento{padding:1px 5px}
+  .d8-et.sube8{display:none}
   .l23{margin:.4em 0 2.3em}
   .l23-sm small,.l23-m small,.l23-tarj span,.l23-igual figcaption small{display:none}
   .l23-sm{height:1.6em}
   .lam-d7m small,.lam-d7m .lam-d2-t{display:none}
+/* v223: lo mismo en una escena angosta en pantalla ancha (al presentar). */
+.lam-marcas-img.chica .d8-et{padding:2px 6px;border-radius:8px;max-width:none;white-space:nowrap;font-size:.75rem}
+.lam-marcas-img.chica .d8-et b{font-size:.92em}
+.lam-marcas-img.chica .d8-et small{display:none}
+.lam-marcas-img.chica .d8-et.cosa em,.lam-marcas-img.chica .d8-et.reino em{font-size:.78em}
+.lam-marcas-img.chica .d8-et.cita{display:none}
+.lam-marcas-img.chica .d8-et.op,.lam-marcas-img.chica .d8-et.reino:not(.toma),.lam-marcas-img.chica .d8-dir{display:none}
+.lam-marcas-img.chica .d8-et.grande b{font-size:1.75em}
+.lam-marcas-img.chica .d8-et.rosa{display:none}
+.lam-marcas-img.chica .d8-et.paso{white-space:normal;max-width:94%}
+.lam-marcas-img.chica .d8-et.viento{padding:1px 5px}
+.lam-marcas-img.chica .d8-et.sube8{display:none}
+.lam.pres .l23t{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .d8-et,.d8-et.cosa em,.l23-barra i,.d8-punto{transition:none}

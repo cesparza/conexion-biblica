@@ -2927,6 +2927,32 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Los últimos acontecimientos: Daniel 8 solo donde aplica (el juicio en 8:14 y la venida en 8:25), y su lámina los muestra');
   const CD=require(path.join(RAIZ,'fuente','complementos','daniel.js')),s8=CD.secciones.d8.map(x=>x.t).join(' | ');
   ok(['Antíoco','457 a.C. a 1844','Expiación','primero a lo ancho'].every(t=>s8.includes(t))&&CD.secciones.d8.every(x=>/Fuente:/.test(x.h)),'Daniel 8 explica (🧭) la cuenta de 457 a 1844, la purificación como juicio, hacia dónde crece el cuerno y por qué no es Antíoco');
+  /* v223 (Camilo, 14-oct 22:01). */
+  ok(L.inicioF==='ulai'&&L.cartel.f==='ulai'&&L.portada==='portada'&&L.historia[0].f==='ulai',
+    'v223: Daniel 8 abre (Explorar y Presentar) solo en el río Ulai; los animales llegan en su parte (la portada del capítulo sigue con ellos)');
+  const png=f=>{const b=fs.readFileSync(ruta(f));return [b.readUInt32BE(16),b.readUInt32BE(20)];},[cw,ch]=png('cuernos-cuatro.png');
+  ok(M.cabeza.w===cw&&M.cabeza.h===ch&&cw<=800&&ch<=800,'v223: la cabeza rubia de los cuatro cuernos (cuernos-cuatro.png '+cw+' × '+ch+') manda en las piezas de tools/lamina-d8.py');
+  ok(M.carnero.dirs.map(d=>d.t+' '+d.s).join(' | ')==='al poniente Babilonia 539 a.C. | al norte Lidia 546 a.C. | al sur Egipto 525 a.C.'&&/al poniente, Babilonia \(539 a\.C\.\); al norte, Lidia \(546\); al sur, Egipto \(525\)/.test(P('carnero').interp.join(' ')),
+    'v223: el carnero hiere al poniente (Babilonia 539), al norte (Lidia 546) y al sur (Egipto 525), como Bohr, Daniel 1-10, p. 295');
+  const Mp=M.mapa,app8=js.slice(js.indexOf('function lamMovCrece'),js.indexOf('/* Hasta el ejército del cielo'));
+  ok(Mp.rosa&&Mp.rosa.vientos.map(v=>v[1]).join()==='n,e,s,o'&&Mp.pasos.length===4&&/«De uno de ellos»: del poniente/.test(Mp.pasos[1][0])&&Mp.roma[0]<Mp.rosa.c[0]-Mp.rosa.dx+80&&
+    /paso\(0\)[\s\S]*poniente\(\)[\s\S]*paso\(2\)[\s\S]*paso\(3\)/.test(app8)&&/femenino, como «vientos»/.test(P('cuerno').interp.join(' ')),
+    'v223: el cuerno pequeño sigue 8:8-9: los cuatro vientos, «de uno de ellos» (el viento del poniente, por el género hebreo), Roma, y después crece al oriente, a la tierra gloriosa y al sur');
+  const appC=js.slice(js.indexOf('function lamMovChoque'),js.indexOf('function lamMovCuatro'));
+  ok(/cuerpo\.style\.opacity=\(1-f\)/.test(appC)&&/lamTween\(1600,cae\)/.test(appC),'v223: el carnero cae a tierra y se apaga (8:7); al final queda solo el macho cabrío, sin cuerpos encimados');
+  const T=L.linea2300,Hy=T.hitos.map(h=>h.y),sinCero=(a,n)=>a+n+(a<0&&a+n>0?1:0);
+  ok(Hy.join()==='-457,-408,27,31,34,1844'&&sinCero(-457,2300)===1844&&sinCero(-457,49)===-408&&sinCero(-457,483)===27&&27+7===34&&34+1810===1844&&2300-490===1810&&
+    T.reinos.map(r=>r[2]).join()==='Persia,Grecia,Roma imperial,Roma papal,El juicio'&&/function lamL23tHTML/.test(js)&&/onclick="lamL23tToca\(/.test(js),
+    'v223: la línea de tiempo de Daniel 8 dibuja los 2.300 años (457 a.C. – 1844), las 70 semanas (408, 27, 31, 34) y los reinos, con cada fecha para tocar');
+  const q23=T.hitos.flatMap(h=>[...h.n.matchAll(/«([^»]+)»/g)].map(m=>m[1])),q23m=q23.filter(c=>!dan.includes(n(c)));
+  ok(q23.length>=3&&!q23m.length,'v223: lo citado en las fechas de los 2.300 años es literal (Daniel 9 RV1995)'+(q23m.length?': '+q23m[0]:''));
+  const css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8'),m600=(css.match(/@media \(max-width:600px\)\{[\s\S]*?\n\}/g)||[]).join('');
+  ok(/\.lam-d2\{display:none!important\}/.test(m600)&&/\.lam-d2-fila:not\(\[hidden\]\)\{display:flex;flex-wrap:wrap/.test(m600)&&/function lamD2Fila/.test(js)&&/lamD2Fila\(r\)/.test(js),
+    'v223: en el teléfono la comparación con Daniel 2 y 7 va debajo de la imagen en pastillas que se doblan (no se corta)');
+  ok(L.mov.santuario.cosas.length===3&&L.mov.santuario.cosas.some(c=>/arca/i.test(c.t)),'v223: el santuario nuevo marca el candelabro, la mesa y el arca (8:11-12)');
+  const C8=require(path.join(RAIZ,'fuente','contenido.js')),c8=JSON.stringify(C8.CONTENIDO?C8.CONTENIDO.d8:C8.d8||'');
+  ok(c8.length>1000&&!/pisotea 2\.300|guerra verbal|perplejo|Ese año, sin haber|en cada una de las tres/.test(c8)&&/estaba espantado a causa de la visión, y no la entendía/.test(c8)&&/1818/.test(c8),
+    'v223: Daniel 8 en el estudio, sin los errores de la auditoría (2.300 no es el tiempo del pisoteo, 8:27 literal, Miller en 1818, Darío no estuvo en el Gránico)');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
