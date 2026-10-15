@@ -2,8 +2,9 @@
    Ya están en fuente/contenido.js: carnero, macho cabrío, cuatro cuernos
    como generales, Roma y no Antíoco, tamid como ministerio de Cristo, regla
    de día por año, nitsdaq, 457-1844 y Policronio. Aquí va lo que agrega Bohr:
-   por qué animales del santuario, de dónde sale el cuerno (su lectura de
-   Pérgamo, distinta de la de «los vientos»), qué parte del santuario es «el
+   por qué animales del santuario, de dónde sale el cuerno (de uno de los
+   vientos; v224: la lectura «de uno de los cuernos» se quitó, decisión de
+   Camilo), qué parte del santuario es «el
    continuo», por qué la pregunta de 8:13 obliga a contar años, y el mes y
    el día de 1844. v188: voz directa, sin nombrar autores en el cuerpo; una
    sola «Fuente:» corta por sección. */
@@ -24,28 +25,26 @@ module.exports = {
       hi('<b>Cada uno crece más.</b> El carnero «se engrandecía» (8:4), el macho cabrío «creció en gran manera» (8:8) y el cuerno «creció mucho» y aun «hasta llegar al ejército del cielo» (8:9-10). Los dos animales pelean contra otros reinos; el cuerno además pelea hacia arriba, contra Dios.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 293-295 y 305-306.</p>` },
 
-    { t: '🧭 ¿De un viento o de un cuerno?', capa: 'contexto', h:
-      `<p>En hebreo, «uno» (<i>ajat</i>) es femenino, como «vientos» y como «cuernos»; «ellos» (<i>mehem</i>) es masculino, y en 8:8 lo masculino es «cielo». Por eso se lee «de uno de los vientos del cielo»: el cuerno sale de un punto cardinal, el poniente, donde estaba Roma, y no nace del reparto de Alejandro.</p>` +
-      `<p>Otra lectura del hebreo ve que sale de uno de los cuernos, <b>que están hacia</b> los cuatro vientos; así leen también la Septuaginta, Flavio Josefo y 1 Macabeos. Una variante ve salir a Roma de Macedonia, el primer cuerno que derribó (168 a.C.). Todas llegan a Roma.</p>` +
-      `<p>En esta lectura los cuatro cuernos son reinos, no generales:</p>` +
-      tbl(['Punto cardinal', 'Reino'], [
-        ['Oeste', 'Antigónidas (Macedonia y Grecia)'], ['Este', 'Seléucidas (Siria y Mesopotamia)'],
-        ['Sur', 'Tolomeos (Egipto)'], ['Norte', 'Atálidas (Pérgamo)'],
+    { t: '🧭 «De uno de ellos»: de uno de los vientos', capa: 'contexto', h:
+      `<p>En hebreo, «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino: «ellos» no pueden ser los cuernos. El cuerno pequeño sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no nace del reparto de Alejandro.</p>` +
+      tbl(['', 'Daniel 8:9'], [
+        ['Lo que dice el texto', 'Sale de uno de los vientos y «creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9).'],
+        ['Lo que se deduce', 'Si crece hacia el sur, el oriente y la tierra gloriosa, viene del cuarto punto: el poniente. Allí estaba Roma.'],
       ]) +
-      `<p>Roma sale de <b>Pérgamo</b>: fue el único de los cuatro que no tuvo que conquistar, porque el rey Atalo III se lo dejó en herencia al Senado romano en 133 a.C. Allí se habían refugiado los sacerdotes de la religión babilónica, y desde allí esa religión pasó a Roma. Pérgamo une a Babilonia con la Roma pagana, y más tarde con la papal.</p>` +
-      `<p>Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-162; Bohr, <i>Daniel 1-10</i>, p. 296-302; Smith, <i>Las profecías de Daniel</i>, p. 90; apuntes «Daniel 8».</p>` },
+      hi('Por eso sale «al fin del reinado de estos» (8:23): Roma no es uno de los cuatro reinos griegos; llega del poniente y los conquista uno por uno.') +
+      `<p>Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; apuntes «Daniel 8».</p>` },
 
     { t: '🧭 Qué quitó el cuerno: «el continuo» del atrio y del lugar santo', capa: 'contexto', h:
       `<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p>` +
-      tbl(['Mueble', 'Qué representa', 'Qué se puso en su lugar'], [
-        ['Altar del sacrificio', 'La muerte de Cristo', 'La penitencia'],
-        ['Lavacro', 'El bautismo', 'El bautismo por aspersión'],
-        ['Mesa de los panes', 'La Palabra de Dios', 'Solo el sacerdote la explica'],
-        ['Candelabro', 'Cristo, luz del mundo', 'Una iglesia a oscuras'],
-        ['Altar del incienso', 'La oración y la intercesión', 'El confesionario'],
+      tbl(['Pieza', 'Dónde', 'Qué representa', 'Qué se puso en su lugar'], [
+        ['Altar del holocausto', 'Atrio', 'La muerte de Cristo, una vez para siempre', 'La misa, que lo repite, y la penitencia'],
+        ['Mesa de los panes', 'Lugar santo', 'La Palabra de Dios', 'La tradición: solo el sacerdote la explica'],
+        ['Candelabro', 'Lugar santo', 'Cristo, luz del mundo, y su Espíritu', 'Una iglesia a oscuras'],
+        ['Altar del incienso', 'Lugar santo, delante del velo', 'La intercesión de Cristo (Hebreos 7:25)', 'El confesionario, María y los santos'],
       ]) +
+      `<p>El arca no está en la lista: queda detrás del velo, en el santísimo, donde Cristo entra en 1844 (8:14). «Echó por tierra la verdad» (8:12) va aparte: es la Ley de Dios (Salmo 119:142) y el sábado, como el cuerno de Daniel 7 que «pensará en cambiar los tiempos y la ley» (7:25).</p>` +
       wa('Otra lectura ve en «el continuo» el paganismo, quitado para dar lugar al papado. Aquí se sigue la del ministerio de Cristo.') +
-      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-309 y 313; apuntes «Cómo quitó el continuo el papado».</p>` },
+      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-313; apuntes «Cómo quitó el continuo el papado».</p>` },
 
     { t: '🧭 «¿Hasta cuándo durará la visión?»: por qué son años', capa: 'contexto', h:
       `<p>Tres razones del mismo texto:</p>` +
@@ -138,14 +137,13 @@ module.exports = {
   preguntas: [
     { t: 'mc', v: '8:3', f: 'c', q: '¿Por qué Daniel 8 usa un carnero y un macho cabrío y no fieras como en Daniel 7?', o: ['Son animales del servicio del santuario', 'Eran signos zodiacales de Persia y Grecia', 'Muestran que esos imperios fueron pacíficos', 'Eran animales sagrados en Babilonia'], a: 0, e: 'El carnero se usaba en el servicio diario y el macho cabrío en el del Día de la Expiación: el tema del capítulo es el santuario. Fuente: Bohr, <i>Daniel 1-10</i>, p. 293.' },
     { t: 'mc', v: '8:1', f: 'c', q: '¿Por qué la visión de Daniel 8 no incluye a Babilonia?', o: ['Porque los 2.300 años empiezan en tiempos de Persia', 'Porque Babilonia ya había caído cuando Daniel la vio', 'Porque Babilonia no persiguió al pueblo de Dios', 'Porque Daniel 7 ya había explicado todo sobre ella'], a: 0, e: 'Babilonia todavía existía (cayó once años después). Si la visión empezara con Babilonia, parecería que los 2.300 años empiezan allí. Fuente: Bohr, <i>Daniel 1-10</i>, p. 293.' },
-    { t: 'tf', v: '8:9', f: 'c', q: 'Una lectura del hebreo de Daniel 8:8-9 ve salir el cuerno pequeño de uno de los cuatro cuernos, que están hacia los cuatro vientos.', a: true, e: 'Verdadero. Otra lectura, la del estudio de arriba, lo ve salir «de uno de los vientos»; las dos llegan a Roma. Fuente: Bohr, <i>Daniel 1-10</i>, p. 297.' },
-    { t: 'mc', v: '8:8', f: 'c', q: 'Si los cuatro cuernos son reinos, ¿cuál de estos era uno de ellos?', o: ['Los atálidas de Pérgamo', 'Los partos de Persia', 'Los nabateos de Petra', 'Los asmoneos de Judea'], a: 0, e: 'Los cuatro cuernos son antigónidas (oeste), seléucidas (este), tolomeos (sur) y atálidas de Pérgamo (norte). Fuente: Bohr, <i>Daniel 1-10</i>, p. 296-297.' },
-    { t: 'mc', v: '8:9', f: 'c', q: '¿Cómo llegó el reino de Pérgamo a manos de Roma en 133 a.C.?', o: ['Su rey Atalo III se lo dejó en herencia', 'Lo conquistó el general Pompeyo', 'El Senado romano lo compró', 'Se rindió después de un largo sitio'], a: 0, e: 'Fue el único de los cuatro reinos que Roma no tuvo que pelear: Atalo III se lo dejó al Senado. Por eso se ve al cuerno salir de Pérgamo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 302.' },
+    { t: 'tf', v: '8:9', f: 'c', q: 'En Daniel 8:9, «de uno de ellos» no puede referirse a los cuernos, porque en hebreo «ellos» es masculino y «cuernos» es femenino.', a: true, e: 'Verdadero: el cuerno sale de uno de los cuatro vientos del cielo (8:8). Fuente: apuntes «Daniel 8».' },
+    { t: 'mc', v: '8:9', f: 'c', q: '¿Cómo se sabe que el cuerno pequeño viene del poniente?', o: ['Por 8:9: crece hacia los otros tres puntos', 'Porque 8:9 nombra el poniente', 'Porque Gabriel lo nombra en 8:23', 'Porque lo nombra Daniel 11:4'], a: 0, e: 'El texto no nombra el viento. Si crece hacia esos tres puntos, viene del cuarto, el poniente, donde estaba Roma. Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164.' },
     { t: 'mc', v: '8:10', f: 'c', q: 'Según la explicación del ángel en 8:24, ¿qué representan el «ejército» y las «estrellas» que el cuerno echa por tierra?', o: ['El pueblo de Dios', 'Los ángeles caídos', 'Los astros del cielo', 'Los ejércitos persas'], a: 0, e: 'En la explicación, el cuerno destruye «al pueblo de los santos» (8:24), en el mismo lugar que el ejército y las estrellas de la visión; Daniel 12:3 compara a los fieles con estrellas. Fuente: Bohr, <i>Daniel 1-10</i>, p. 306.' },
     { t: 'mc', v: '8:11', f: 'c', q: '¿Qué pasaje usa la misma expresión «Príncipe del ejército» y muestra que es Cristo, porque recibe adoración?', o: ['Josué 5:13-15', 'Génesis 14:18-20', 'Jueces 6:11-14', '1 Samuel 17:45'], a: 0, e: 'Josué se postra y lo adora, y el Príncipe le pide quitarse el calzado porque el lugar es santo, como a Moisés. Fuente: Bohr, <i>Daniel 1-10</i>, p. 307.' },
     { t: 'tf', v: '8:8', f: 'c', q: 'Daniel 11:4 ayuda a entender que los «cuatro vientos del cielo» de Daniel 8:8 son los cuatro puntos cardinales hacia donde se repartió el reino de Alejandro.', a: true, e: 'Verdadero: 11:4 dice que su reino sería «repartido hacia los cuatro vientos del cielo». Fuente: Bohr, <i>Daniel 1-10</i>, p. 296 y 298.' },
     { t: 'mc', v: '8:11', f: 'c', q: '¿En qué partes del santuario se hacía el ministerio llamado «el continuo»?', o: ['En el atrio y el lugar santo', 'Solo en el lugar santísimo', 'Solo en el altar del atrio', 'En el santísimo y el atrio'], a: 0, e: 'La palabra describe el servicio diario del sacerdote en el atrio y el lugar santo; nunca se usa para el santísimo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 308.' },
-    { t: 'mc', v: '8:11', f: 'c', q: '¿Qué puso el papado en lugar del altar del incienso, que representa la oración e intercesión?', o: ['El confesionario', 'El rosario', 'La misa en latín', 'Las procesiones'], a: 0, e: 'En vez de llevar la oración a Dios por medio de Cristo, el único mediador (1 Timoteo 2:5), se pidió hacerlo ante un sacerdote. Fuente: apuntes «Cómo quitó el continuo el papado».' },
+    { t: 'mc', v: '8:11', f: 'c', q: '¿Qué puso el papado en lugar del altar del incienso, que representa la intercesión de Cristo?', o: ['El confesionario, María y los santos', 'El rosario y las procesiones', 'La misa en latín de cada domingo', 'Las peregrinaciones a Roma'], a: 0, e: 'En vez de llevar la oración a Dios por medio de Cristo, el único mediador (1 Timoteo 2:5), se pidió confesarse ante un sacerdote y orar a María y a los santos. Fuente: Bohr, <i>Daniel 1-10</i>, p. 312; apuntes «Cómo quitó el continuo el papado».' },
     { t: 'mc', v: '8:13', f: 'c', q: '¿Qué abarca la «visión» (jazón) por la que pregunta el ángel en 8:13?', o: ['Toda la visión, desde Persia', 'Solo la obra del cuerno pequeño', 'Solo la profanación de Antíoco', 'Solo los 1.260 años papales'], a: 0, e: 'Es la misma palabra de 8:1-2. Si la visión va de Persia hasta la purificación del santuario, 2.300 días literales no alcanzan: tienen que ser años. Fuente: Bohr, <i>Daniel 1-10</i>, p. 314.' },
     { t: 'tf', v: '8:14', f: 'c', q: 'Las «tardes y mañanas» de 8:14 son 1.150 sacrificios de la tarde y 1.150 de la mañana.', a: false, e: 'Falso: el hebreo dice «tarde-mañana» en singular, como en la creación, y los sacrificios siempre se nombran «mañana y tarde». Es una lectura para hacer encajar a Antíoco IV Epífanes. Fuente: Bohr, <i>Daniel 1-10</i>, p. 315.' },
     { t: 'mc', v: '8:14', f: 'c', q: '¿Qué pasaje da el mes y el día en que terminaron los 2.300 años?', o: ['Levítico 23:27', 'Éxodo 12:6', 'Números 29:1', 'Ezequiel 4:6'], a: 0, e: 'Daniel 8:14 da el año (1844) y Levítico 23:27 el día diez del mes séptimo, el Día de la Expiación, que en 1844 cayó el 22 de octubre. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8.' },

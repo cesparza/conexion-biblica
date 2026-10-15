@@ -1158,7 +1158,17 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
       const cr = await p.evaluate(() => ({ on: [...document.querySelectorAll('.d8-traza.viento.on')].map(x => x.getAttribute('data-v')).join(), tenue: document.querySelectorAll('.d8-traza.viento.tenue').length,
         toma: document.querySelectorAll('#lamMarcasImg .reino.toma').length, paso: (document.querySelector('#lamMarcasImg .paso b') || {}).textContent || '' }));
       ok(cr.on === 'o' && cr.tenue === 3 && cr.toma === 4 && /^4 ·/.test(cr.paso), W + ' · v223: Daniel 8, el cuerno pequeño: el viento del poniente encendido, los otros tres apagados, cuatro conquistas y el último paso (' + cr.paso + ')');
-      /* v223: la comparación con Daniel 2 y 7 nunca se corta: al lado de la imagen en la pantalla ancha, debajo en el teléfono. */
+      /* v224: el continuo: cinco señas (cuatro piezas y «la verdad»), el altar del incienso sin punto, ningún punto sobre el arca, todas tachadas y dentro de la escena. */
+      await p.evaluate(() => lamIr('santuario')); await p.waitForTimeout(await p.evaluate(() => lamParte('santuario').ms + 700));
+      const sa = await p.evaluate(() => { const e = document.getElementById('lamMarcasImg').getBoundingClientRect(), ets = [...document.querySelectorAll('#lamMarcasImg .d8-et.cosa')];
+        const pts = [...document.querySelectorAll('.d8-punto')].map(c => [+c.getAttribute('cx'), +c.getAttribute('cy')]);
+        let pisa = 0; const rs = ets.map(x => x.getBoundingClientRect());
+        for (let i = 0; i < rs.length; i++) for (let j = i + 1; j < rs.length; j++) { const a = rs[i], c = rs[j]; if (a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1) pisa++; }
+        return { ids: ets.map(x => x.getAttribute('data-cosa')).join(), apaga: ets.filter(x => x.classList.contains('apaga') && x.classList.contains('ve')).length, pts,
+          fuera: rs.filter(q => q.left < e.left - 2 || q.right > e.right + 2 || q.top < e.top - 2 || q.bottom > e.bottom + 2).length, pisa }; });
+      ok(sa.ids.split(',').sort().join() === 'altar,candelabro,incienso,mesa,verdad' && sa.apaga === 5 && sa.pts.length === 2 && !sa.pts.some(([x, y]) => x > 450 && x < 800 && y < 330) && !sa.fuera && !sa.pisa,
+        W + ' · v224: Daniel 8, el continuo: altar del holocausto, mesa, candelabro, altar del incienso y «la verdad» (' + sa.ids + '), tachadas, ' + sa.pts.length + ' puntos y ninguno sobre el arca, sin salirse ni pisarse');
+      /* v223: la comparación con Daniel 2 y 7: al lado de la imagen en la pantalla ancha, debajo en el teléfono. */
       await p.evaluate(() => { lamCierra(); lamAbre('d8', 'presentar'); if (!lamConD2) lamConD2Cambia(); lamPres(lamPasos().findIndex(s => s.id === 'purificado' && s.tipo === 'parte')); }); await p.waitForTimeout(1500);
       const cm = await p.evaluate(() => { const col = document.getElementById('lamD2'), fila = document.getElementById('lamD2Fila'), e = document.getElementById('lamEsc').getBoundingClientRect();
         const vis = x => x && !x.hidden && getComputedStyle(x).display !== 'none';

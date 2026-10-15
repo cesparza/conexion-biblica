@@ -554,11 +554,13 @@ LAMINAS.d8 = {
         { f: 'cuerno-4.webp', caja: [449, 131, 758, 249], base: [472, 224], t: 'Tolomeo', s: 'Egipto · sur', et: [900, 262], a: 'i' }] },
     /* v223: el cuerno pequeño sobre el mapa, en el orden del texto (Camilo, 14-oct: la
        interacción no se entendía). 8:8: los cuatro vientos del cielo, la rosa de los vientos
-       sobre el mundo griego. 8:9: «de uno de ellos»: el viento del poniente se enciende (en
-       hebreo «uno» es femenino, como «vientos», y «ellos» masculino, como «cielo»: de uno de
-       los vientos del cielo); allí, en Roma, sale el cuerno. Después crece, en el orden de la
-       historia: al oriente (Macedonia, Siria), a la tierra gloriosa (Judea) y al sur (Egipto).
-       Desde Roma, Macedonia y Siria quedan al oriente y Egipto al sur (Smith, Maxwell).
+       sobre el mundo griego. 8:9: «de uno de ellos»: en hebreo «ellos» (mehem) es masculino y
+       «cuernos» (qeranot) femenino, así que «ellos» no son los cuernos: sale de uno de los
+       vientos. v224 (Camilo, 15-oct): el texto no dice de cuál; se deduce de 8:9: crece al sur,
+       al oriente y a la tierra gloriosa, así que viene del cuarto, el poniente, donde estaba Roma.
+       La lectura «de uno de los cuernos» quedó fuera (decisión de Camilo). Después crece, en el
+       orden de la historia: al oriente (Macedonia, Siria), a la tierra gloriosa (Judea) y al sur
+       (Egipto). Desde Roma, Macedonia y Siria quedan al oriente y Egipto al sur (Smith, Maxwell).
        `rosa`: el centro y el largo de cada brazo; `pasos`: el rótulo de arriba en cada tiempo. */
     mapa: { pq: 'd7/cuerno-pequeno.png', roma: [190, 330],
       rosa: { c: [620, 350], dx: 380, dy: 210, vientos: [['norte', 'n'], ['oriente', 'e'], ['sur', 's'], ['poniente', 'o']] },
@@ -567,16 +569,30 @@ LAMINAS.d8 = {
       /* `r`: el reino que toma, en el orden en que lo toma. */
       va: [{ r: 0, t: 'al oriente', s: '168 a.C.' }, { r: 2, t: 'al oriente', s: '65 a.C.' }, { r: 3, t: 'hacia la tierra gloriosa', s: '63 a.C.' }, { r: 4, t: 'hacia el sur', s: '30 a.C.' }],
       pasos: [['1 · Los cuatro vientos del cielo', 'el reino de Alejandro, repartido hacia los cuatro puntos cardinales (8:8)'],
-        ['2 · «De uno de ellos»: del poniente', 'de uno de los vientos sale el cuerno pequeño: Roma (8:9)'],
+        ['2 · «De uno de ellos»: uno de los vientos; por 8:9 se deduce el poniente', 'el texto no dice cuál: si crece al sur, al oriente y a la tierra gloriosa, viene del cuarto, donde estaba Roma'],
         ['3 · Crece al oriente, a la tierra gloriosa y al sur', 'Roma imperial, de 168 a 30 a.C. (8:9)'],
         ['4 · Después crece hacia arriba', 'hasta el ejército del cielo: Roma papal (8:10)']] },
     cielo: { pq: 'd7/cuerno-pequeno.png', base: [600, 655], alto: 470, principe: [600, 40] },
-    /* v223: el santuario nuevo de Camilo (candelabro de siete lámparas, el arca y la mesa).
-       El altar del incienso no está en la imagen: su lugar lo dice la sección 🧭 del continuo.
-       El arca guarda la Ley: «echó por tierra la verdad» (8:12; Salmo 119:142). */
-    santuario: { cosas: [{ t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', en: [280, 160], a: 'c', dy: 170, c: 'una iglesia a oscuras' },
-      { t: 'La mesa de los panes', s: 'la Palabra de Dios', en: [935, 222], a: 'c', dy: 108, c: 'la tradición' },
-      { t: 'El arca y la Ley', s: 'los Diez Mandamientos, con el sábado', en: [600, 215], a: 'c', dy: 255, c: 'el domingo' }] },
+    /* v224: «EL CONTINUO» Y «LA VERDAD» (8:11-12). El continuo (hatamid) es el servicio de cada
+       día en el atrio y el lugar santo, nunca en el santísimo (Bohr, Daniel 1-10, p. 308); en la
+       Edad Media Cristo todavía no había entrado al santísimo (p. 309). Cuatro piezas, cada una
+       con lo que el cuerno puso en su lugar en la tierra (p. 309-313): el altar del holocausto (en
+       el atrio), la mesa de los panes y el candelabro (en el lugar santo) y el altar del incienso,
+       delante del velo: la intercesión de Cristo (Hebreos 7:25), cambiada por el confesionario,
+       María y los santos. «La verdad» (8:12) es aparte: la Ley y el sábado (7:25), no un mueble
+       del cuarto. El arca no va: está detrás del velo, en el santísimo.
+       LAS COORDENADAS SON DE LA IMAGEN: `en` es [x, y] del punto en la escena (1200 × 675) y `dy`,
+       cuánto más abajo va su rótulo. Sin `en`, la seña va sin punto en la franja de abajo. La
+       imagen de hoy (santuario.webp de v223) trae candelabro y mesa, y además el arca (que no se
+       marca); no trae el altar del incienso. Cuando llegue la imagen nueva (lugar santo visto
+       desde la entrada, velo cerrado, altar del incienso delante del velo con humo, candelabro a
+       la izquierda, mesa a la derecha, el cuerno abajo al centro) solo se cambian estos `en`. */
+    santuario: { cosas: [
+      { id: 'altar', t: 'El altar del holocausto', s: 'en el atrio: Cristo, sacrificado una vez', c: 'la misa' },
+      { id: 'mesa', t: 'La mesa de los panes', s: 'la Palabra de Dios', c: 'la tradición', en: [935, 222], dy: 108 },
+      { id: 'candelabro', t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', c: 'la iglesia a oscuras', en: [280, 160], dy: 170 },
+      { id: 'incienso', t: 'El altar del incienso', s: 'la intercesión de Cristo (Hebreos 7:25)', c: 'el confesionario, María y los santos', en: null }],
+      verdad: { t: 'La verdad', s: 'la Ley de Dios y el sábado (8:12)', c: 'pensó cambiar los tiempos y la Ley (7:25)' } },
   },
   /* v223: la primera frase de la línea de tiempo (antes decía «De 605 a.C.» en todas). */
   tq0: 'De Medo-Persia (539 a.C.) hasta hoy, y lo que viene',
@@ -637,22 +653,26 @@ LAMINAS.d8 = {
  {id:'cuerno',img:'pequeno',nombre:'El cuerno pequeño crece',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',mov:'crece',ms:10600,
   texto:'De uno de ellos salió un cuerno pequeño, que creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa.',ref:'8:9',texto2:'Al fin del reinado de estos, cuando los transgresores lleguen al colmo, se levantará un rey altivo de rostro y entendido en enigmas.',ref2:'8:23',
   corto:'La primera fase de Roma: pequeña al principio, crece sobre los reinos griegos. Es la bestia espantosa de Daniel 7.',
-  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos»: en hebreo «uno» es femenino, como «vientos», y «ellos» es masculino, como «cielo». Sale de uno de los cuatro vientos del cielo (8:8): del poniente, donde estaba Roma. Otra lectura lo ve salir de uno de los cuernos, Pérgamo, que Atalo III dejó en herencia a Roma en 133 a.C. Las dos llegan a Roma.','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
+  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal. El texto no dice cuál: se deduce del mismo versículo. Crece «hacia el sur y el oriente, y hacia la tierra gloriosa»; si crece hacia esos tres, viene del cuarto, el poniente, donde estaba Roma.','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
   fuente:BOHR+', p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91.'},
  {id:'cielo',img:'cielo',nombre:'Hasta el ejército del cielo',reino:'Roma papal',fechas:'538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',mov:'cielo',ms:7200,
   texto:'Creció hasta llegar al ejército del cielo; y parte del ejército y de las estrellas echó por tierra, y las pisoteó.',ref:'8:10',texto2:'destruirá a los fuertes y al pueblo de los santos.',ref2:'8:24',
   corto:'La fase papal: el cuerno ya no pelea solo con reinos de la tierra; se levanta contra Dios y persigue a su pueblo. Es el cuerno pequeño de Daniel 7.',
   interp:['Ahora crece hacia arriba. Los animales pelean contra otros reinos; el cuerno además pelea contra Dios. Es el cuerno pequeño de Daniel 7, con sus 1.260 años, de 538 a 1798.','El ejército y las estrellas son el pueblo de Dios: Gabriel habla del «pueblo de los santos» (8:24), y Daniel 12:3 compara a los fieles con estrellas.','«Aun se engrandeció frente al príncipe de los ejércitos» (8:11). El Príncipe del ejército es Cristo, el mismo que Josué adoró (Josué 5:13-15). El cuerno se pone en su lugar en la tierra.'],
   fuente:BOHR+', p. 305-307.'},
- {id:'santuario',img:'santuario',nombre:'El santuario pisoteado',reino:'Roma papal',fechas:'el continuo quitado: 508 y 538 – 1798 d.C.',de:null,era:538,c:'#7C4A2E',mov:'santuario',ms:7000,
+ {id:'santuario',img:'santuario',nombre:'El santuario pisoteado',reino:'Roma papal',fechas:'el continuo quitado: 508 y 538 – 1798 d.C.',de:null,era:538,c:'#7C4A2E',mov:'santuario',ms:8200,
   texto:'por él fue quitado el sacrificio continuo, y el lugar de su santuario fue echado por tierra.',ref:'8:11',texto2:'echó por tierra la verdad e hizo cuanto quiso, y prosperó.',ref2:'8:12',
-  corto:'El cuerno quita el continuo: pone en la tierra lo que Cristo hace cada día por nosotros en el santuario del cielo.',
-  interp:['En hebreo dice solo «continuo» (<i>hatamid</i>), con artículo: «sacrificio» lo agregaron los traductores. En el santuario esa palabra es el servicio de cada día en el atrio y el lugar santo: el sacrificio, el pan, la luz y el incienso. Es la obra de Cristo, que vive siempre para interceder por nosotros (Hebreos 7:25).','El cuerno no puede subir al cielo: pone en la tierra un sustituto. En lugar del sacrificio de una vez, la misa; en lugar de la Palabra, la tradición; en lugar de la intercesión de Cristo, el confesionario. Así «el lugar de su santuario fue echado por tierra».','«Echó por tierra la verdad» (8:12): la Ley de Dios y el sábado, como el cuerno de Daniel 7 que piensa «cambiar los tiempos y la Ley» (7:25).','Otra lectura ve en el continuo el paganismo, quitado para dar lugar al papado. Las dos llegan a 508, cuando Clodoveo I dio poder civil al papado (ver Daniel 11:31 y 12:11).'],
+  corto:'El cuerno quita el continuo: pone en la tierra lo que Cristo hace cada día por nosotros en el santuario del cielo. Y echa por tierra la verdad.',
+  interp:['En hebreo dice solo «continuo» (<i>hatamid</i>), con artículo: «sacrificio» lo agregaron los traductores. La palabra nombra el servicio de cada día en el atrio y en el lugar santo, nunca en el santísimo: el holocausto de la mañana y de la tarde, el pan, la luz y el incienso. En el cielo es la obra de Cristo, que vive siempre para interceder por nosotros (Hebreos 7:25).',
+    'El cuerno no puede subir al cielo: pone en la tierra un sustituto de cada pieza. En lugar del sacrificio de una vez para siempre, la misa; en lugar de la Palabra, la tradición; en lugar de la luz, una iglesia a oscuras; en lugar de la intercesión de Cristo, el único mediador (1 Timoteo 2:5), el confesionario y las oraciones a María y a los santos. Así «el lugar de su santuario fue echado por tierra».',
+    'El continuo es del atrio y del lugar santo; el santísimo queda fuera, porque Cristo entra allí al terminar las 2.300 tardes y mañanas, en 1844 (8:14). Por eso el arca no está entre lo que el cuerno quita: queda detrás del velo.',
+    '«Echó por tierra la verdad» (8:12) va aparte: no es un mueble del santuario. Es la Ley de Dios, que el Salmo 119:142 llama la verdad, y con ella el sábado: el cuerno de Daniel 7 «pensará en cambiar los tiempos y la ley» (7:25).',
+    'Otra lectura ve en el continuo el paganismo, quitado para dar lugar al papado. Las dos llegan a 508, cuando Clodoveo I dio poder civil al papado (ver Daniel 11:31 y 12:11).'],
   fuente:BOHR+', p. 307-313; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado».'},
  {id:'purificado',img:'purificado',nombre:'El santuario será purificado',reino:'El juicio en el cielo',fechas:'desde 1844 d.C.',de:1844,a:2026,c:'#B45309',mov:'purifica',ms:5600,
   texto:'¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?',ref:'8:13',texto2:'Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.',ref2:'8:14',
   corto:'En 1844 terminan las 2.300 tardes y mañanas: empieza la purificación del santuario, el juicio de Daniel 7.',
-  interp:['Un santo pregunta «¿Hasta cuándo?»: no cuánto dura, sino cuándo termina. La respuesta da el final: «luego el santuario será purificado» (8:14).','Son 2.300 años: de 457 a.C. a 1844. Daniel 9 da el punto de partida.','La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio. La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia. Es el mismo suceso de Daniel 7:9-10: el Juez se sienta y se abren los libros, en 1844.'],
+  interp:['Un santo pregunta «¿Hasta cuándo?»: no cuánto dura, sino cuándo termina. La respuesta da el final: «luego el santuario será purificado» (8:14). Aquí también la palabra «sacrificio» la agregaron los traductores: el hebreo dice solo el continuo.','Son 2.300 años: de 457 a.C. a 1844. Daniel 9 da el punto de partida.','La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio. La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia. Es el mismo suceso de Daniel 7:9-10: el Juez se sienta y se abren los libros, en 1844.'],
   fuente:'CS 374-376 y 470-477; '+BOHR+', p. 313-320.'},
  {id:'quebrantado',img:'d2/e-piedra',nombre:'Quebrantado, no por mano humana',reino:'La segunda venida',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
   texto:'Se levantará contra el Príncipe de los príncipes, pero será quebrantado, aunque no por mano humana.',ref:'8:25',texto2:'la visión es para el tiempo del fin.',ref2:'8:17',

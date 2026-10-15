@@ -1162,16 +1162,6 @@ const PERSONAJES = [
     textos: 'Daniel 11:22; 9:26',
     alias: ['Onías III'],
     fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12; Treiyer, <i>Enigmas descifrados</i>, p. 85-86' },
-  { id: 'atalo-iii', nombre: 'Atalo III', tipo: 'historico',
-    fechas: 'reinó 138-133 a.C.',
-    quien: 'Último rey de Pérgamo.',
-    hizo: [
-      'Al morir en 133 a.C. dejó su reino en herencia al Senado romano.',
-      'Así Roma, el cuerno pequeño, salió de uno de los cuatro reinos sin pelear (Daniel 8:9).'
-    ],
-    textos: 'Daniel 8:9',
-    alias: ['Atalo III'],
-    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 302' },
   { id: 'pompeyo', nombre: 'Pompeyo', tipo: 'historico',
     fechas: '106-48 a.C.',
     quien: 'General romano.',

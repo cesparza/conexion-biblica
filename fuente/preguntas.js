@@ -1162,7 +1162,7 @@ BANCO.push(
 {cap:'d8',t:'tf',q:'El carnero de dos cuernos y el macho cabrío de Daniel 8 representan los mismos dos primeros reinos que el león y el oso de Daniel 7.',
  a:false,e:'Falso: el carnero (Medo-Persia) y el macho cabrío (Grecia) corresponden al oso y al leopardo de Daniel 7, no al león y al oso.'},
 {cap:'d8',t:'tf',q:'El cuerno pequeño de Daniel 8 sale de uno de los cuatro cuernos griegos.',
- a:false,e:'Falso: en el hebreo del pasaje sale de uno de los cuatro "vientos" (puntos cardinales), lo que apunta a un poder que crece desde afuera del reparto griego: Roma.'},
+ a:false,e:'Falso: en hebreo «ellos» es masculino y «cuernos» femenino; sale de uno de los cuatro "vientos" (puntos cardinales). Por 8:9 se deduce que del poniente: un poder que crece desde afuera del reparto griego, Roma.'},
 {cap:'d8',t:'tf',q:'Daniel 8 y 9 repiten la historia de los imperios pero omiten a Babilonia.',
  a:true,e:'Verdadero: para cuando Daniel tuvo esta visión, Babilonia ya no tenía futuro profético que anunciar.'}
 );

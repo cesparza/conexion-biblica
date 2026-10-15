@@ -988,7 +988,7 @@ export const CATALOGO = {
     "sub": "El carnero, el macho cabrío y las 2.300 tardes",
     "grupo": "Biblia",
     "n": [
-     36,
+     35,
      17,
      22
     ]

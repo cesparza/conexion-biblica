@@ -1580,9 +1580,10 @@ function lamLibro(q){
    - choque: el macho cabrío viene del poniente sin tocar tierra, golpea, le quiebra los
      dos cuernos al carnero y lo derriba (8:5-7).
    - cuatro: el gran cuerno se quiebra en su mayor fuerza y salen cuatro (8:8).
-   - crece: el cuerno pequeño crece al oriente, a la tierra gloriosa y al sur (8:9).
+   - crece: el cuerno pequeño sale de uno de los vientos (el poniente se deduce de 8:9) y crece al
+     oriente, a la tierra gloriosa y al sur (8:9).
    - cielo: sube hasta el ejército del cielo y echa estrellas por tierra (8:10-11).
-   - santuario: se apaga lo que el continuo representa (8:11-12).
+   - santuario: se apagan las cuatro piezas del continuo y «la verdad» (8:11-12).
    - purifica: 1844, el santuario purificado (8:14). */
 const lamNS=(n,a)=>'<'+n+' '+Object.keys(a).map(k=>k+'="'+a[k]+'"').join(' ')+'/>';
 /* Una pieza recortada en su sitio: `caja` en píxeles de su imagen, `k` la escala, (ox, oy) dónde va la imagen entera. */
@@ -1619,13 +1620,21 @@ function lamPolvo8(g,cx,cy,n,q){
   lamTween(1600,k=>{if(yo!==lamAnim)return;ps.forEach((p,i)=>{cs[i].setAttribute('cx',(p.x+p.vx*k).toFixed(1));cs[i].setAttribute('cy',(p.y+p.vy*k).toFixed(1));cs[i].style.opacity=(.6*(1-k)).toFixed(3);});},
     ()=>{g.innerHTML='';});
 }
+let lamChicaRO=null;
+/* La escena angosta se mide en la capa de los rótulos: al presentar en la pantalla ancha (`lado`)
+   #lamEsc ocupa todo el ancho y la imagen solo una parte. */
+function lamChica(){const s=document.getElementById('lamMarcasImg');
+  if(s&&s.classList.contains('d8')){const w=s.getBoundingClientRect().width;s.classList.toggle('chica',w>0&&w<700);}}
 function lamMov(p,anima){
   const M=LAM().mov,q=!anima||lamQuieto(),z=lamZ(),g=z&&z.querySelector('.lam-capa-g'),s=document.getElementById('lamMarcasImg');
   if(!g||!s)return;
   const e=document.getElementById('lamEsc');if(e)e.classList.add('con-d8');
   lamD8Der=lamConD2&&!lamTel()&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
   /* v223: en una escena angosta (al presentar en la pantalla ancha mide ~500 px) los rótulos van como en el teléfono. */
-  s.className='lam-marcas-img d8'+(q?' quieto':'')+(e&&e.getBoundingClientRect().width<700?' chica':'');
+  s.className='lam-marcas-img d8'+(q?' quieto':'');lamChica();
+  /* v224: al entrar a Presentar la escena todavía no tiene su tamaño final: se vuelve a medir
+     cuando cambia (antes los rótulos quedaban grandes en la escena angosta). */
+  if(typeof ResizeObserver==='function'){if(!lamChicaRO)lamChicaRO=new ResizeObserver(lamChica);lamChicaRO.disconnect();lamChicaRO.observe(s);}
   ({carnero:lamMovCarnero,choque:lamMovChoque,cuatro:lamMovCuatro,crece:lamMovCrece,cielo:lamMovCielo,santuario:lamMovSantuario,purifica:lamMovPurifica}[p.mov]||(()=>lamHist({f:p.img})))(M,g,s,q);
 }
 /* El carnero en su sitio: el cuerno b (detrás), el cuerpo y el cuerno a (delante). */
@@ -1722,8 +1731,9 @@ function lamMovCuatro(M,g,s,q){
   lamVeEt(s,6,6200);
 }
 /* El cuerno pequeño sobre el mapa, en el orden de 8:8-10 (v223). 1: los cuatro vientos del
-   cielo, una rosa sobre el mundo griego. 2: «de uno de ellos»: se enciende el viento del
-   poniente y allí, en Roma, sale el cuerno. 3: crece al oriente (Macedonia, Siria), a la tierra
+   cielo, una rosa sobre el mundo griego. 2: «de uno de ellos»: de uno de los vientos; el texto
+   no dice cuál, pero 8:9 lo deja deducir (crece al sur, al oriente y a la tierra gloriosa: viene
+   del cuarto). Se enciende el poniente y allí, en Roma, sale el cuerno. 3: crece al oriente (Macedonia, Siria), a la tierra
    gloriosa (Judea) y al sur (Egipto). 4: después, hacia arriba (8:10). Arriba, un rótulo dice
    en qué paso va; los vientos llevan su nombre también en el teléfono. */
 function lamMovCrece(M,g,s,q){
@@ -1743,12 +1753,12 @@ function lamMovCrece(M,g,s,q){
   const vEt={n:[cx+14,pt.n[1]+4,'i'],s:[cx+14,pt.s[1]-4,'i'],e:[pt.e[0]-6,cy-26,'d'],o:[(pt.o[0]+cx)/2-40,cy+28,'c']};
   s.innerHTML=P.reinos.map((r,i)=>{const v=P.va.find(x=>x.r===i);return lamEt(r.en[0],r.en[1]+12,'c ab',esc(r.t),esc(r.s),'reino'+(r.g?' gl':''),0).replace('</small></div>','</small>'+(v?'<em><span class="d8-dir">«'+esc(v.t)+'» · </span>'+esc(v.s)+'</em>':'')+'</div>').replace('class="d8-et','data-r="'+i+'" class="d8-et');}).join('')+
     Ro.vientos.map(([t,k])=>lamEt(vEt[k][0],vEt[k][1],vEt[k][2],esc(t),'','viento',1).replace('class="d8-et','data-v="'+k+'" class="d8-et')).join('')+
-    lamEt(rx,ry+30,'c','Roma','del poniente','oro',2)+
+    lamEt(rx,ry+30,'c','Roma','el poniente: se deduce de 8:9','oro',2)+
     lamEt(top[0]+18,104,'i','Hacia arriba','8:10','dir sube8',8)+
     '<div class="d8-et c oro paso ve" style="left:'+lamPx(600)+';top:'+lamPy(10)+'"><b></b><small></small></div>';
   const cap=s.querySelector('.paso'),paso=i=>{if(!cap)return;cap.querySelector('b').textContent=P.pasos[i][0];cap.querySelector('small').textContent=P.pasos[i][1];cap.classList.remove('ve');void cap.offsetWidth;cap.classList.add('ve');};
   const toma=v=>{const e=s.querySelector('[data-r="'+v.r+'"]');if(e)e.classList.add('toma');};
-  /* «de uno de ellos»: el poniente se enciende y los otros tres se apagan. */
+  /* «de uno de ellos»: uno de los vientos; por 8:9 se deduce el poniente: se enciende y los otros tres se apagan. */
   const poniente=()=>{vs.forEach(v=>v.classList.toggle(v.getAttribute('data-v')==='o'?'on':'tenue',true));halo.classList.add('on');
     s.querySelectorAll('.viento').forEach(e=>e.classList.add(e.getAttribute('data-v')==='o'?'on':'tenue'));};
   if(q){vs.forEach(lamDibujado);rutas.forEach(lamDibujado);lamDibujado(sube);poniente();rosa.classList.add('atras');P.va.forEach(toma);
@@ -1758,7 +1768,7 @@ function lamMovCrece(M,g,s,q){
   /* 1. Los cuatro vientos (8:8). */
   paso(0);lamVeEt(s,0,100);
   vs.forEach((v,i)=>lamT(()=>lamDibuja(v,700),200+i*150));lamVeEt(s,1,900);
-  /* 2. «De uno de ellos»: el poniente, y allí sale el cuerno. */
+  /* 2. «De uno de ellos»: uno de los vientos; el poniente, por deducción de 8:9, y allí sale el cuerno. */
   lamT(()=>{paso(1);poniente();},2200);lamVeEt(s,2,2900);
   lamT(()=>lamTween(800,t=>{pq.style.opacity=t.toFixed(3);}),3000);
   /* 3. Crece al oriente, a la tierra gloriosa y al sur. */
@@ -1801,21 +1811,28 @@ function lamMovCielo(M,g,s,q){
 let lamSombraU='';
 function lamSombra(){if(lamSombraU)return lamSombraU;try{const k=document.createElement('canvas');k.width=512;k.height=4;const c=k.getContext('2d'),r=c.createLinearGradient(0,0,512,0);
   r.addColorStop(0,'rgba(6,4,10,0)');r.addColorStop(.3,'rgba(6,4,10,.55)');r.addColorStop(1,'rgba(6,4,10,.66)');c.fillStyle=r;c.fillRect(0,0,512,4);lamSombraU=k.toDataURL('image/png');}catch(e){}return lamSombraU;}
+/* v224: el continuo (8:11) en cuatro piezas del atrio y del lugar santo, y «la verdad» (8:12)
+   aparte. La seña de cada pieza va sobre su objeto si la imagen lo trae (`en` en
+   LAMINAS.d8.mov.santuario, sus coordenadas); si no, sin punto, en la franja de abajo, con
+   «la verdad» al final. Al pasar la sombra del cuerno se tachan y dicen qué se puso en su lugar. */
 function lamMovSantuario(M,g,s,q){
-  const C=M.santuario.cosas;
+  const S=M.santuario,C=S.cosas,D=lamD8Der,conP=C.filter(c=>c.en),fila=C.filter(c=>!c.en).concat(S.verdad?[Object.assign({id:'verdad',pre:''},S.verdad)]:[]);
   lamHist({f:'santuario'});
   g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="1200" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
-    C.map(c=>'<circle class="d8-punto" cx="'+c.en[0]+'" cy="'+c.en[1]+'" r="9"/>').join('');
+    conP.map(c=>'<circle class="d8-punto" cx="'+c.en[0]+'" cy="'+c.en[1]+'" r="9"/>').join('');
   const so=g.querySelector('.d8-sombra-s'),pts=[...g.querySelectorAll('.d8-punto')];
-  s.innerHTML=C.map((c,i)=>'<div class="d8-et '+(c.a||'i')+' cosa" data-o="'+(i+1)+'" style="left:'+lamPx(c.en[0]+(c.a==='d'?-16:c.a==='c'?0:16))+';top:'+lamPy(c.en[1]+(c.dy||0))+'"><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>en su lugar: '+esc(c.c)+'</em></div>').join('')+
-    lamEt(600,30,'c','«El continuo» y «la verdad»','el servicio de cada día en el lugar santo y la Ley del santísimo (8:11-12)','oro',0)+
-    lamEt(600,640,'c ab','«Echó por tierra la verdad»','Daniel 8:11-12','cita',5);
+  const et=(c,x,y,cl,st)=>'<div class="d8-et c '+cl+'" data-o="'+(C.indexOf(c)<0?C.length+1:C.indexOf(c)+1)+'" data-cosa="'+esc(c.id)+'" style="left:'+lamPx(x)+';top:'+lamPy(y)+(st||'')+'"><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>'+(c.pre!=null?c.pre:'en su lugar: ')+esc(c.c)+'</em></div>';
+  /* Con punto: el rótulo debajo del objeto, sin pasar del borde (ni de la estatua chica). */
+  const ancho=(D-80)/Math.max(1,fila.length);
+  s.innerHTML=conP.map(c=>et(c,Math.max(150,Math.min(c.en[0],D-150)),c.en[1]+(c.dy||0),'cosa')).join('')+
+    fila.map((c,i)=>et(c,40+ancho*(i+.5),655,'cosa fila ab'+(c.id==='verdad'?' verdad':''),';max-width:'+((ancho-14)/12).toFixed(2)+'%')).join('')+
+    lamEt(600,30,'c','«El continuo» y «la verdad»','cuatro piezas del atrio y del lugar santo (8:11), y la Ley (8:12)','oro',0);
   const apaga=()=>{s.querySelectorAll('.cosa').forEach(e=>e.classList.add('apaga'));pts.forEach(p=>p.classList.add('apaga'));};
   if(q){so.setAttribute('x','-420');s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));apaga();return;}
-  lamVeEt(s,0,200);C.forEach((c,i)=>lamVeEt(s,1+i,700+i*600));
+  lamVeEt(s,0,200);for(let i=1;i<=C.length+1;i++)lamVeEt(s,i,100+i*600);
   /* La sombra del cuerno cubre el santuario de derecha a izquierda. */
-  lamT(()=>{lamTween(2600,t=>so.setAttribute('x',(1200-1620*lamSuave(t)).toFixed(1)));lamT(apaga,1500);},2800);
-  lamVeEt(s,5,4600);
+  const t=200+(C.length+1)*600+400;
+  lamT(()=>{lamTween(2600,k=>so.setAttribute('x',(1200-1620*lamSuave(k)).toFixed(1)));lamT(apaga,1500);},t);
 }
 function lamMovPurifica(M,g,s,q){
   lamHist({f:'santuario'});

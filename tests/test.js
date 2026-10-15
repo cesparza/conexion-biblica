@@ -2935,9 +2935,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(M.carnero.dirs.map(d=>d.t+' '+d.s).join(' | ')==='al poniente Babilonia 539 a.C. | al norte Lidia 546 a.C. | al sur Egipto 525 a.C.'&&/al poniente, Babilonia \(539 a\.C\.\); al norte, Lidia \(546\); al sur, Egipto \(525\)/.test(P('carnero').interp.join(' ')),
     'v223: el carnero hiere al poniente (Babilonia 539), al norte (Lidia 546) y al sur (Egipto 525), como Bohr, Daniel 1-10, p. 295');
   const Mp=M.mapa,app8=js.slice(js.indexOf('function lamMovCrece'),js.indexOf('/* Hasta el ejército del cielo'));
-  ok(Mp.rosa&&Mp.rosa.vientos.map(v=>v[1]).join()==='n,e,s,o'&&Mp.pasos.length===4&&/«De uno de ellos»: del poniente/.test(Mp.pasos[1][0])&&Mp.roma[0]<Mp.rosa.c[0]-Mp.rosa.dx+80&&
-    /paso\(0\)[\s\S]*poniente\(\)[\s\S]*paso\(2\)[\s\S]*paso\(3\)/.test(app8)&&/femenino, como «vientos»/.test(P('cuerno').interp.join(' ')),
-    'v223: el cuerno pequeño sigue 8:8-9: los cuatro vientos, «de uno de ellos» (el viento del poniente, por el género hebreo), Roma, y después crece al oriente, a la tierra gloriosa y al sur');
+  ok(Mp.rosa&&Mp.rosa.vientos.map(v=>v[1]).join()==='n,e,s,o'&&Mp.pasos.length===4&&/«De uno de ellos»: uno de los vientos; por 8:9 se deduce el poniente/.test(Mp.pasos[1][0])&&Mp.roma[0]<Mp.rosa.c[0]-Mp.rosa.dx+80&&
+    /paso\(0\)[\s\S]*poniente\(\)[\s\S]*paso\(2\)[\s\S]*paso\(3\)/.test(app8)&&/«ellos» \(<i>mehem<\/i>\) es masculino y «cuernos» \(<i>qeranot<\/i>\) es femenino/.test(P('cuerno').interp.join(' '))&&/se deduce/.test(P('cuerno').interp.join(' ')),
+    'v223/v224: el cuerno pequeño sigue 8:8-9: los cuatro vientos, «de uno de ellos» (uno de los vientos, por el género hebreo; el poniente, deducido de 8:9), Roma, y después crece al oriente, a la tierra gloriosa y al sur');
   const appC=js.slice(js.indexOf('function lamMovChoque'),js.indexOf('function lamMovCuatro'));
   ok(/cuerpo\.style\.opacity=\(1-f\)/.test(appC)&&/lamTween\(1600,cae\)/.test(appC),'v223: el carnero cae a tierra y se apaga (8:7); al final queda solo el macho cabrío, sin cuerpos encimados');
   const T=L.linea2300,Hy=T.hitos.map(h=>h.y),sinCero=(a,n)=>a+n+(a<0&&a+n>0?1:0);
@@ -2949,7 +2949,20 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8'),m600=(css.match(/@media \(max-width:600px\)\{[\s\S]*?\n\}/g)||[]).join('');
   ok(/\.lam-d2\{display:none!important\}/.test(m600)&&/\.lam-d2-fila:not\(\[hidden\]\)\{display:flex;flex-wrap:wrap/.test(m600)&&/function lamD2Fila/.test(js)&&/lamD2Fila\(r\)/.test(js),
     'v223: en el teléfono la comparación con Daniel 2 y 7 va debajo de la imagen en pastillas que se doblan (no se corta)');
-  ok(L.mov.santuario.cosas.length===3&&L.mov.santuario.cosas.some(c=>/arca/i.test(c.t)),'v223: el santuario nuevo marca el candelabro, la mesa y el arca (8:11-12)');
+  /* v224 (Camilo, 15-oct): el continuo es del atrio y del lugar santo (Bohr, Daniel 1-10, p. 308-313). */
+  const Sa=L.mov.santuario,cs=Sa.cosas;
+  ok(cs.map(c=>c.id).join()==='altar,mesa,candelabro,incienso'&&!cs.some(c=>/arca/i.test(c.t+c.s+c.c))&&/confesionario/.test(cs[3].c)&&/María y los santos/.test(cs[3].c)&&/misa/.test(cs[0].c)&&
+    Sa.verdad&&/Ley/.test(Sa.verdad.s)&&/7:25/.test(Sa.verdad.c)&&cs.every(c=>!c.en||(c.en.length===2&&c.en[0]>0&&c.en[0]<1200&&c.en[1]>0&&c.en[1]<675)),
+    'v224: el continuo en cuatro piezas (altar del holocausto → la misa, mesa → la tradición, candelabro → la iglesia a oscuras, altar del incienso → el confesionario, María y los santos), «la verdad» aparte, sin el arca; los puntos salen de coordenadas de la imagen');
+  ok(cs.find(c=>c.id==='incienso').en==null&&cs.find(c=>c.id==='altar').en==null&&cs.filter(c=>c.en).map(c=>c.id).join()==='mesa,candelabro',
+    'v224: con la imagen de hoy solo llevan punto la mesa y el candelabro (el altar del incienso no está en ella; el arca no se marca)');
+  const d8txt=JSON.stringify(L)+fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d8.js'),'utf8');
+  ok(!/Pérgamo|Atalo|atálidas|de uno de los cuernos[^»]*(sale|ve)|Otra lectura del hebreo/i.test(d8txt.replace(/\/\*[\s\S]*?\*\//g,''))&&!/atalo-iii/.test(fs.readFileSync(path.join(RAIZ,'fuente','personajes.js'),'utf8')),
+    'v224: Daniel 8 sin la lectura «de uno de los cuernos» (Pérgamo, Atalo III), decisión de Camilo');
+  const fuera=t=>String(t).replace(/<[^>]+>/g,'').replace(/«[^»]*»/g,'').replace(/"[^"]*"/g,'');
+  const expl=[...L.partes.flatMap(p=>p.interp.concat(p.corto)),...CD.secciones.d8.map(x=>x.h)].map(fuera).filter(t=>/sacrificio continuo|continuo sacrificio|sacrificio diario/i.test(t));
+  ok(!expl.length,'v224: en Daniel 8 el texto que explica dice «el continuo»; «sacrificio continuo» solo dentro de las citas'+(expl.length?': '+expl[0].slice(0,60):''));
+  ok(/agregaron los traductores/.test(P('santuario').interp[0])&&/agregaron los traductores/.test(P('purificado').interp[0]),'v224: en 8:11 y en 8:13 la lámina dice que «sacrificio» lo agregaron los traductores');
   const C8=require(path.join(RAIZ,'fuente','contenido.js')),c8=JSON.stringify(C8.CONTENIDO?C8.CONTENIDO.d8:C8.d8||'');
   ok(c8.length>1000&&!/pisotea 2\.300|guerra verbal|perplejo|Ese año, sin haber|en cada una de las tres/.test(c8)&&/estaba espantado a causa de la visión, y no la entendía/.test(c8)&&/1818/.test(c8),
     'v223: Daniel 8 en el estudio, sin los errores de la auditoría (2.300 no es el tiempo del pisoteo, 8:27 literal, Miller en 1818, Darío no estuvo en el Gránico)');

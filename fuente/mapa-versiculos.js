@@ -260,8 +260,8 @@ const MAPA_VERSICULOS = {
   8: "En su mayor fuerza el gran cuerno es quebrado y salen cuatro cuernos notables «hacia los cuatro vientos del cielo».",
   9: "De uno de ellos sale un cuerno pequeño que crece mucho hacia el sur, el oriente y «la tierra gloriosa».",
   10: "Crece hasta el ejército del cielo y echa por tierra parte del ejército y de las estrellas, y las pisotea.",
-  11: "Se engrandece frente al príncipe de los ejércitos; por él es quitado el sacrificio continuo (el tamid) y el lugar de su santuario es echado por tierra.",
-  12: "A causa de la prevaricación le es entregado el ejército junto con el sacrificio continuo; «echó por tierra la verdad e hizo cuanto quiso, y prosperó».",
+  11: "Se engrandece frente al príncipe de los ejércitos; por él es quitado el continuo (el tamid; «sacrificio» lo agregaron los traductores) y el lugar de su santuario es echado por tierra.",
+  12: "A causa de la prevaricación le es entregado el ejército junto con el continuo; «echó por tierra la verdad e hizo cuanto quiso, y prosperó».",
   13: "La pregunta de los dos santos: «¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?».",
   14: "La respuesta, el versículo eje del adventismo: «Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado».",
   15: "Mientras procura comprenderla, se pone delante de él «uno con apariencia de hombre».",
@@ -388,7 +388,7 @@ const MAPA_VERSICULOS = {
   8: "«Yo oí, pero no entendí»: Daniel pregunta cuál será el fin de estas cosas.",
   9: "«Anda, Daniel, pues estas palabras están cerradas y selladas hasta el tiempo del fin».",
   10: "«Muchos serán limpios, emblanquecidos y purificados... ninguno de los impíos entenderá; pero los entendidos comprenderán».",
-  11: "Los mil doscientos noventa días, desde que sea quitado el sacrificio continuo hasta la abominación desoladora.",
+  11: "Los mil doscientos noventa días, desde que sea quitado el continuo («sacrificio» lo agregaron los traductores) hasta la abominación desoladora.",
   12: "«Bienaventurado el que espere, y llegue a mil trescientos treinta y cinco días».",
   13: "La promesa personal a Daniel: «tú irás hasta el fin, y reposarás, y te levantarás para recibir tu heredad al fin de los días»."
  }

@@ -57,7 +57,7 @@ module.exports = {
       `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 211-218.</p>` },
 
     { t: '🧭 1.260, 1.290 y 1.335: tres períodos, un mismo poder', capa: 'contexto', h:
-      `<p>El punto de partida de 12:11 es «desde el tiempo en que sea quitado el sacrificio continuo» y puesta «la abominación desoladora»: el año <b>508</b>, cuando Clodoveo I, rey de los francos, dio por primera vez poder civil al papado (ver Daniel 11:31). Los 1.290 y los 1.335 empiezan juntos.</p>` +
+      `<p>El punto de partida de 12:11 es «desde el tiempo en que sea quitado el sacrificio continuo» (la palabra «sacrificio» la agregaron los traductores) y puesta «la abominación desoladora»: el año <b>508</b>, cuando Clodoveo I, rey de los francos, dio por primera vez poder civil al papado (ver Daniel 11:31). Los 1.290 y los 1.335 empiezan juntos.</p>` +
       tbl(['Período', 'Desde', 'Hasta', 'Qué marca'], [
         ['1.290 días (12:11)', '508', '1798', 'De la unión con el poder civil a la herida de 1798'],
         ['1.260 días (7:25; 12:7)', '538', '1798', 'La supremacía papal'],

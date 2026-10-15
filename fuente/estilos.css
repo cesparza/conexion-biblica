@@ -4969,7 +4969,10 @@ span.cmp-ult-c{cursor:default}
   .l23-sm small,.l23-m small,.l23-tarj span,.l23-igual figcaption small{display:none}
   .l23-sm{height:1.6em}
   .lam-d7m small,.lam-d7m .lam-d2-t{display:none}
-/* v223: lo mismo en una escena angosta en pantalla ancha (al presentar). */
+.lam.pres .l23t{display:none}
+}
+/* v223: lo mismo en una escena angosta en pantalla ancha (al presentar). v224: fuera del
+   @media del teléfono (adentro no se aplicaba nunca en la pantalla ancha). */
 .lam-marcas-img.chica .d8-et{padding:2px 6px;border-radius:8px;max-width:none;white-space:nowrap;font-size:.75rem}
 .lam-marcas-img.chica .d8-et b{font-size:.92em}
 .lam-marcas-img.chica .d8-et small{display:none}
@@ -4981,8 +4984,12 @@ span.cmp-ult-c{cursor:default}
 .lam-marcas-img.chica .d8-et.paso{white-space:normal;max-width:94%}
 .lam-marcas-img.chica .d8-et.viento{padding:1px 5px}
 .lam-marcas-img.chica .d8-et.sube8{display:none}
-.lam.pres .l23t{display:none}
-}
+/* v224: las señas del continuo sin objeto en la imagen (y «la verdad») van en la franja de abajo;
+   se doblan en su ancho (el ancho lo pone app.js) para que quepan cinco también en el teléfono. */
+.lam-marcas-img .d8-et.cosa.fila{white-space:normal}
+.lam-marcas-img .d8-et.cosa.fila.apaga em{max-height:7em}
+.d8-et.cosa.verdad{box-shadow:inset 0 2px 0 #F2C46B,0 2px 10px rgba(0,0,0,.4)}
+.d8-et.cosa.verdad.apaga em{color:#F7D58C}
 @media (prefers-reduced-motion:reduce){
   .d8-et,.d8-et.cosa em,.l23-barra i,.d8-punto{transition:none}
 }
