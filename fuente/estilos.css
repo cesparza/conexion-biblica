@@ -5203,3 +5203,46 @@ span.cmp-ult-c{cursor:default}
 .cmp-ult-vz.grupo span{font-style:normal}
 /* v231: al arrastrar, el año va arriba a la izquierda; el rótulo de la parte no queda debajo, asomado. */
 .lam-esc:has(.lam-anio-v:not([hidden])) .lam-chip{opacity:0;pointer-events:none}
+/* ── v232: LA LÍNEA LIMPIA (app.js, LAM_LIMPIA). Todo va bajo .lam-tiempo.limpia: sin la clase,
+   la línea de v231 queda como estaba. ── */
+.lam-tiempo.limpia .lam-hley{display:none!important}
+.lam-seg{min-height:1.2em;margin:0 11px 4px;font-size:.875rem;font-weight:600;line-height:1.25;color:var(--txt,#1a1a2e);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.lam.pres .lam-seg{color:#D6B26A}
+.lam-tiempo.limpia .lam-marcas{height:30px;margin-top:0}
+.lam-tiempo.limpia .lam-marcas span{top:9px;transform:translateX(-50%);transition:none}
+.lam-tiempo.limpia .lam-marcas span.izq{transform:translateX(3px)}
+.lam-tiempo.limpia .lam-marcas span.der{transform:translateX(calc(-100% - 3px))}
+.lam-tiempo.limpia .lam-marcas span.tel.der{transform:translateX(-100%)}
+.lam-tiempo.limpia .lam-marcas span.r1{top:9px}
+.lam-tiempo.limpia .lam-marcas span.fut{display:none}
+.lam-tiempo.limpia .lam-marcas span.tel{display:block;cursor:pointer;color:var(--lam-oro,#B98A35);font-weight:600}
+.lam-tiempo.limpia .lam-marcas span.oculta{visibility:hidden}
+.lam-tiempo.limpia .lam-marcas span i{display:inline}
+@container (max-width:640px){.lam-tiempo.limpia .lam-marcas span i{display:none}}
+.lam-tks{position:absolute;inset:0 0 auto;height:30px;pointer-events:none}
+.lam-tk{position:absolute;top:0;width:22px;height:30px;margin-left:-11px;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto;z-index:1}
+.lam-tk::before{content:'';position:absolute;left:50%;top:0;width:1.5px;height:6px;margin-left:-.75px;background:color-mix(in srgb,var(--txt,#1a1a2e) 45%,transparent)}
+.lam-tk.seg::before{width:2.5px;height:9px;margin-left:-1.25px;background:var(--lam-oro,#B98A35)}
+.lam-tk:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:-2px;border-radius:8px}
+.lam-tiempo.limpia .lam-marcas span:not(.oculta){pointer-events:none}
+.lam-tiempo.limpia .lam-marcas span.tel:not(.oculta){pointer-events:auto;position:absolute;z-index:2}
+.lam-futx{display:none;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:2px 4px;margin:0 11px 4px;font-size:.875rem}
+.lam-tiempo.limpia.fut-abierto .lam-futx{display:flex}
+.lam-futx button{min-height:32px;padding:2px 10px;border:1px solid color-mix(in srgb,var(--lam-oro,#B98A35) 55%,transparent);border-radius:999px;background:transparent;color:inherit;font:inherit;cursor:pointer}
+.lam-futx button.on{background:var(--lam-oro,#B98A35);border-color:var(--lam-oro,#B98A35);color:#17120A;font-weight:700}
+.lam-futx i{font-style:normal;color:var(--lam-oro,#B98A35)}
+@media (prefers-reduced-motion:no-preference){.lam-futx{animation:lamFutx .25s ease}}
+@keyframes lamFutx{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+/* v232 (Camilo, iPhone): en Explorar, en el celular, la imagen ya no queda pegada arriba: al bajar,
+   la línea de tiempo pasaba por debajo de ella. Y entre la imagen y la línea, aire. */
+@media (max-width:899px){
+  .lam:not(.pres) .lam-esc{position:relative;top:auto}
+  .lam:not(.pres) .lam-marco>.lam-tiempo.en-marco:not(.fija){margin-top:10px}
+}
+.lam-seg.igual{display:none}
+.lam-tiempo.limpia .lam-marcas span.tel{left:100%!important}
+/* Al presentar, el futuro se abre sobre la fila de los años (a la derecha) y no cambia el alto de
+   la línea: la escena no se vuelve a acomodar. */
+.lam.pres .lam-tiempo.limpia .lam-futx{position:absolute;right:11px;margin-top:-30px;height:30px;margin-bottom:0;flex-wrap:nowrap;font-size:.75rem;background:inherit}
+.lam.pres .lam-tiempo.limpia .lam-futx button{min-height:24px;padding:0 8px}
+.lam.pres .lam-tiempo.limpia.fut-abierto .lam-marcas span:not(:first-of-type){visibility:hidden}

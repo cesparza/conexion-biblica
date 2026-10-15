@@ -3140,5 +3140,20 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v231: Elena de White, literal: las plagas 1-4 (CS 686), que no son universales (CS 687) y la séptima en la liberación (CS 694-695); el falso Cristo, la huida y el decreto, sin plaga precisa');
 }
 
+/* v232 (Camilo, iPhone): al avanzar, la imagen entera y la línea de tiempo debajo con aire; la
+   línea limpia detrás de una sola bandera (LAM_LIMPIA) para poder volver atrás. */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js')),js=APP,css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8');
+  const q=montar("a:(lamId='d8',lamSegmento(-320).tx), b:(lamId='d2',lamSegmento(1000).tx), c:(lamId='d2',lamSegmento(1820).tx), d:(lamId='d8',lamSegmento(1820).tx), e:(lamId='d7',lamSegmento(1900).tx), f:(lamId='d8',lamSegmento(-600).tx), g:(lamId='d8',lamQuien(1820).tx)");
+  ok(q.a==='331 – 301 a.C. · Grecia'&&q.b==='538 – 1798 d.C. · Roma papal'&&/^1798 d\.C\. – hasta la venida · Roma papal sanada$/.test(q.c)&&/^1798 – 1844 d\.C\. · Las 2\.300 tardes y mañanas$/.test(q.d)&&/^1844 d\.C\. – hoy · El juicio en el cielo$/.test(q.e)&&q.f==='Antes de 539 a.C. · Babilonia'&&!/Nabucodonosor/.test(q.g),
+    'v232: encima de la línea, el tramo con sus fechas ('+[q.a,q.b,q.c,q.d,q.e,q.f].join(' | ')+'); Daniel 8 de 1798 a 1844 ya no dice «Antes de Nabucodonosor»');
+  ok(/const LAM_LIMPIA=true;/.test(js)&&/PARA VOLVER A LA LÍNEA DE v231 basta poner/.test(js)&&/t\.classList\.add\('limpia'\)/.test(js)&&/\.lam-tiempo\.limpia \.lam-hley\{display:none!important\}/.test(css)&&
+    (css.match(/\.lam-tk|\.lam-futx|\.lam-seg/g)||[]).length>=6&&!/\.lam-tiempo:not\(\.limpia\)/.test(css),
+    'v232: la línea limpia cuelga de una sola bandera (LAM_LIMPIA) y de la clase .limpia: en false vuelve la de v231');
+  ok(/function lamVeEscena/.test(js)&&/if\(lamModo!=='presentar'\)return lamVeEscena\(\);/.test(js)&&/lamModo!=='presentar'&&!lamAncho\(\)\)lamVeEscena\(\)/.test(js)&&!/document\.scrollingElement/.test(js)&&
+    /\.lam:not\(\.pres\) \.lam-esc\{position:relative;top:auto\}/.test(css)&&/lam-tiempo\.en-marco:not\(\.fija\)\{margin-top:10px\}/.test(css),
+    'v232: en el celular la imagen de Explorar ya no queda pegada arriba; al avanzar se ve entera (suave, salvo movimiento reducido) y la línea va debajo con aire');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

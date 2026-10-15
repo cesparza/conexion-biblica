@@ -1320,8 +1320,8 @@ for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
         orden: x(q('.lam-hito.juicio')) < x(q('.lam-hito.hoy')) && x(q('.lam-hito.hoy')) < x(q('.lam-corte')) && x(q('.lam-corte')) < x(q('.lam-hito.venida')) && x(q('.lam-hito.venida')) < x(q('.lam-mil')),
         pisan, ley: getComputedStyle(document.querySelector('#lam .lam-hley')).display, futVe };
       lamCierra(); return r; }, id);
-    ok(t.juicio && t.venida && t.hoy && t.corte === '//' && t.mil && t.orden && !t.pisan && (t.futVe ? t.ley === 'none' : t.ley === 'flex'),
-      W + ' · v228: ' + id + ', la línea de tiempo con 1844, hoy, el corte «//», la venida y los mil años, en orden y sin rótulos encimados; la leyenda sale cuando los nombres del futuro no caben (' + JSON.stringify(t) + ')');
+    ok(t.juicio && t.venida && t.hoy && t.corte === '//' && t.mil && t.orden && !t.pisan && t.ley === 'none',
+      W + ' · v228: ' + id + ', la línea de tiempo con 1844, hoy, el corte «//», la venida y los mil años, en orden y sin rótulos encimados; v232: sin leyenda, los símbolos llevan su nombre (' + JSON.stringify(t) + ')');
   }
   ok(errores.length === 0, W + ' · v228: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
@@ -1478,6 +1478,72 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
   ok(u.pl === 7 && u.grupos.length === 2 && u.li === 14 && u.n1 && u.n1 !== 'none' && u.cab && u.cs && u.pag,
     W + ' · v231: las siete plagas, cada una en su fila, bajo «Las copas, una tras otra» y lo que no tiene plaga precisa aparte; la séptima a la vez con la liberación; las señales numeradas del 1 al 14 (' + JSON.stringify(u) + ')');
   ok(errores.length === 0, W + ' · v231: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+
+/* ── v232 (Camilo, iPhone): al avanzar en Explorar la imagen se ve entera y la línea de tiempo va
+   debajo, con aire; la línea limpia (LAM_LIMPIA): cada fecha es una raya que se toca, pocos años
+   escritos y en una sola fila, el tramo encima, el futuro que se abre, sin leyenda. ── */
+for (const [W, H] of [[390, 844], [430, 932], [1440, 900]]) {
+  const ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block', isMobile: W < 600, hasTouch: W < 600 });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => { errores.push('diálogo'); d.dismiss(); });
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
+  for (const id of ['d2', 'd7', 'd8']) {
+    await p.evaluate(id => { verCap(id); lamAbre(id, 'explorar'); }, id); await p.waitForTimeout(3000);
+    const r = await p.evaluate(async () => {
+      const espera = ms => new Promise(r => setTimeout(r, ms)), L = LAM(), R = document.getElementById('lamRango'), t = document.querySelector('#lam .lam-tiempo'), mal = [];
+      const marcas = L.marcas.filter(m => !/\btel\b/.test(m[2] || '')), tks = [...t.querySelectorAll('.lam-tk')];
+      if (!t.classList.contains('limpia')) mal.push('sin limpia');
+      if (tks.length !== marcas.length || marcas.some(m => !tks.some(b => Number(b.dataset.y) === m[0] && b.getAttribute('aria-label')))) mal.push('rayas ' + tks.length + '/' + marcas.length);
+      const rotulos = () => [...t.querySelectorAll('.lam-marcas span')].filter(e => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && e.getBoundingClientRect().width);
+      const ancho = t.querySelector('.lam-marcas').getBoundingClientRect().width >= 640;
+      for (const b of tks) { const y = Number(b.dataset.y); b.click(); await espera(lamEsE() ? 60 : 15); await new Promise(r => requestAnimationFrame(r));
+        const tano = document.getElementById('lamTano').textContent, ve = rotulos(), rr = ve.map(e => e.getBoundingClientRect());
+        if (Number(R.value) !== y) mal.push(y + ': pulgar ' + R.value);
+        if (tano !== lamAnioTx(y)) mal.push(y + ': año ' + tano);
+        if (rr.some((a, i) => rr.some((c, j) => j > i && a.left < c.right - 1 && c.left < a.right - 1))) mal.push(y + ': rótulos encimados');
+        if (new Set(rr.map(a => Math.round(a.top))).size > 1) mal.push(y + ': dos filas');
+        if (!ancho && ve.length > 4) mal.push(y + ': ' + ve.length + ' rótulos en el teléfono');
+        if (!document.getElementById('lamSeg').textContent) mal.push(y + ': sin tramo');
+        if ((y > LAM_HOY) !== t.classList.contains('fut-abierto')) mal.push(y + ': futuro'); }
+      /* En el teléfono se escriben solo el comienzo, 1798, 1844 y «futuro». */
+      R.value = 1000; R.dispatchEvent(new Event('input')); await espera(250);
+      const tx = rotulos().map(e => e.textContent.replace(/\s.*$/, '')), seg1000 = document.getElementById('lamSeg').textContent;
+      /* El tramo de 320 a.C. */
+      R.value = -320; R.dispatchEvent(new Event('input')); await espera(250);
+      const seg320 = document.getElementById('lamSeg').textContent;
+      /* «futuro» se toca y se abre: la venida → mil años → el reino. */
+      const fu = t.querySelector('.lam-marcas span.tel'); fu.click(); await espera(150);
+      const fx = [...t.querySelectorAll('.lam-futx button')].filter(b => b.getBoundingClientRect().width).map(b => b.textContent);
+      const abre = t.classList.contains('fut-abierto') && Math.abs(Number(R.value) - lamHitos(L).ven) < 1;
+      return { mal, tx, ancho, seg1000, seg320, fx, abre, ley: getComputedStyle(t.querySelector('.lam-hley')).display, n: tks.length,
+        aria: [...t.querySelectorAll('.lam-hitos [role=img]')].map(e => e.getAttribute('aria-label')).filter(Boolean).length }; });
+    const telOk = r.ancho || r.tx.every(x => ['605', '539', '1798', '1844', 'futuro'].includes(x));
+    const s320 = { d2: /^331 – 168 a\.C\. · Grecia$/, d7: /^331 – 168 a\.C\. · Grecia$/, d8: /^331 – 301 a\.C\. · Grecia$/ }[id];
+    ok(!r.mal.length && telOk && /^538 – 1798 d\.C\. · Roma papal/.test(r.seg1000) && s320.test(r.seg320) && r.fx.length === 3 && r.abre && r.ley === 'none' && r.aria >= 4,
+      W + ' · v232: ' + id + ', línea limpia: ' + r.n + ' rayas que se tocan (pulgar y año en cada una), rótulos en una fila sin encimarse' + (r.ancho ? '' : ' (en el teléfono: ' + r.tx.join(', ') + ')') + '; encima el tramo («' + r.seg320 + '»); «futuro» se abre en ' + r.fx.join(' → ') + '; sin leyenda' + (r.mal.length ? ' — ' + r.mal.slice(0, 4).join(' | ') : ''));
+    /* Al avanzar (celular): la imagen se ve entera y la línea de tiempo va debajo, con aire; si ya se ve, la página no se mueve. */
+    if (W < 900) {
+      const pasos = await p.evaluate(async () => { const espera = ms => new Promise(r => setTimeout(r, ms)), l = document.getElementById('lam'), mal = [];
+        lamIr('est'); await espera(900);
+        for (let i = 0; i < 8; i++) {
+          l.scrollBy(0, 700); await espera(120);
+          const sig = l.querySelector('.lam-nav .lam-rd.sig'); if (!sig || sig.disabled) break; sig.click(); await espera(1000);
+          const e = document.getElementById('lamEsc').getBoundingClientRect(), t = l.querySelector('.lam-tiempo'), tr = t.getBoundingClientRect(), bajo = lamBordeAbajo(t, innerWidth / 2);
+          if (e.top < -1 || e.bottom > innerHeight - bajo + 1) mal.push(lamDonde + ' imagen ' + Math.round(e.top) + '-' + Math.round(e.bottom));
+          if (!t.classList.contains('fija') && tr.top < e.bottom + 8) mal.push(lamDonde + ' línea ' + Math.round(tr.top) + ' < ' + Math.round(e.bottom));
+          /* Ya se ve entera: el paso siguiente no mueve la página. */
+          const st = l.scrollTop, s2 = l.querySelector('.lam-nav .lam-rd.sig'); if (s2 && !s2.disabled) { s2.click(); await espera(900); if (Math.abs(l.scrollTop - st) > 2) mal.push(lamDonde + ' se movió sin hacer falta'); }
+        }
+        return mal; });
+      ok(!pasos.length, W + ' · v232: ' + id + ', al avanzar en Explorar la imagen se ve entera, la línea de tiempo va debajo con aire, y si ya se ve la página no se mueve' + (pasos.length ? ' — ' + pasos.slice(0, 3).join(' | ') : ''));
+    }
+    await p.evaluate(() => lamCierra());
+  }
+  ok(errores.length === 0, W + ' · v232: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();

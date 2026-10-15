@@ -535,7 +535,9 @@ LAMINAS.d8 = {
   solapa: [],
   tiempo: ['carnero', 'macho', 'cuatro', 'cuerno', 'cielo', 'purificado'],
   /* Los años que Daniel 8 no cubre: lo dice la línea de tiempo en vez de «antes de Nabucodonosor». */
-  vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia está por caer (539 a.C.)'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal', 'pequeno']],
+  vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia está por caer (539 a.C.)'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal', 'pequeno'],
+    /* v232: de 1798 a 1844 decía «Antes de Nabucodonosor». Corren todavía las 2.300 tardes y mañanas (8:14). */
+    [1798, 1844, 'Las 2.300 tardes y mañanas: siguen corriendo hasta 1844 (8:14)', 'santuario']],
   futuro: [{ id: 'quebrantado', de: 2026, a: 2226, t: 'La segunda venida', s: 'el cuerno es quebrantado, no por mano humana', f: 'd2/e-piedra', ult: 'venida' },
     { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: la tierra desolada (CS 718)', f: 'd2/e-piedra', ult: 'desolada' },
     { id: '', de: 2426, a: 2626, t: 'El reino eterno', s: 'Daniel 8 no lo muestra: llega en Daniel 12:1-3', f: 'd2/e-monte', ult: 'reino' }],
