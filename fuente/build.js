@@ -22,6 +22,7 @@ const CR = require('./creencias.js');
 const AP = require('./apocalipsis.js');
 const COMP_DANIEL = require('./complementos/daniel.js');
 const { LAMINAS, ULTIMOS, REPARTOS } = require('./laminas.js');
+const PAR = require('./paralelos.js');
 const { PERSONAJES } = require('./personajes.js');
 const { VERS_AP } = require('./biblia-apocalipsis.js');
 const { GRUPOS, grupoDaniel } = require('./grupos.js');
@@ -59,6 +60,15 @@ const IDS_DE_TEMA = {
     .filter(x => 'cats' in x || 'extra' in x).map(x => x.id);
   if (conMarca.length) {
     console.error('❌ Estos traen `cats` o `extra` propios; eso va en campamentos.js: ' + conMarca.join(', '));
+    process.exit(1);
+  }
+}
+{
+  /* v234: Paralelos. Ninguna celda sin su texto: la cita en la Biblia de la app, la línea
+     en la lámina, la fuente con página (fuente/paralelos.js). */
+  const mal = PAR.revisaParalelos(LAMINAS, { ...VERS, ...VERS_AP });
+  if (mal.length) {
+    console.error('❌ Paralelos no cuadra:\n  ' + mal.join('\n  '));
     process.exit(1);
   }
 }
@@ -237,11 +247,12 @@ const REALES = Object.fromEntries(Object.entries(EXAMENES_REALES).map(([id, ex])
    template string: no había chequeo de sintaxis y cada comilla de un onclick
    había que escaparla dos veces. */
 const leer = f => fs.readFileSync(path.join(__dirname, f), 'utf8').replace(/\n+$/, '');
-const CSS    = leer('estilos.css');
+const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css');
 const CUERPO = leer('cuerpo.html');
 const REGLAS = leer('reglamento.js');
 const IMPR   = leer('imprimible.js');
 const APP    = leer('app.js');
+const APP_PAR = leer('paralelos-app.js');
 
 /* Se serializa con indentación para que ninguna línea pase de 2.000
    caracteres: con una sola línea, ningún visor de diff abre el archivo. */
@@ -277,6 +288,9 @@ const REPARTOS = ${JSON.stringify(REPARTOS, null, 1)};
 
 /* v215: los últimos acontecimientos, una sola secuencia para Comparar y las láminas. */
 const ULTIMOS = ${JSON.stringify(ULTIMOS, null, 1)};
+
+/* v234: Paralelos, una hoja por poder y por tema, ya armadas (fuente/paralelos.js). */
+const PARALELOS = ${JSON.stringify(PAR.armaParalelos(LAMINAS), null, 1)};
 
 /* v189: las fichas de personajes (fuente/personajes.js). En el estudio, el
    primer nombre de cada persona en cada sección se vuelve tocable. */
@@ -350,6 +364,7 @@ ${DATA}
 ${REGLAS}
 ${IMPR}
 ${APP}
+${APP_PAR}
 </script>
 </body>
 </html>`;

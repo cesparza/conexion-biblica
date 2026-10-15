@@ -5588,6 +5588,8 @@ function lugarActual(){
   if(lamModo&&lamId)r.push('lamina',lamId,lamModo,lamModo==='presentar'?String(lamPaso):(lamDonde||'est'));
   else if(cmpSel)r.push('comparar',cmpSel);
   else if(ultTocado&&document.getElementById('cmpUlt')&&ULT()){r.push('ultimos',ULT().eventos[ultSel].id);if(ultCol&&ultAbierto)r.push(ultCol);}
+  /* v234: la hoja de Paralelos (fuente/paralelos-app.js). */
+  else if(parTocado&&parSel&&document.getElementById('cmpPar'))r.push('paralelos',parSel);
   let c=r.join('/');
   if(personasDB().some(p=>p.fichas.length>1&&p.fichas.some(([id])=>id===DB.activo)))c+='?a='+S.cat;
   return c;
@@ -5605,12 +5607,13 @@ function lugarParte(c){
   if(q>=0){const a=/(?:^|&)a=([\w-]{1,24})/.exec(c.slice(q+1));if(a)o.a=a[1];c=c.slice(0,q);}
   const s=c.split('/').filter(Boolean);let i=0;
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
-  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|s\d+)$/.test(s[i]))o.item=s[i++];
+  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
     if(s[i]==='profundizar')o.prof=true;
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
     else if(s[i]==='lamina'&&s[i+1]&&/^(explorar|presentar)$/.test(s[i+2]||'')){o.lam={id:s[i+1],modo:s[i+2],paso:s[i+3]||''};i+=3;}
     else if(s[i]==='comparar'&&s[i+1]){o.cmp=s[i+1];i++;}
+    else if(s[i]==='paralelos'&&s[i+1]){o.par=s[i+1];i++;}
     else if(s[i]==='ultimos'&&s[i+1]){o.ult=s[i+1];i++;if(/^(d\d+|mt24|ap\d+|apo)$/.test(s[i+1]||'')){o.ultK=s[i+1];i++;}}
   }
   return o;
@@ -5638,6 +5641,7 @@ function lugarAplica(c,dondeOk){
     if(o.lam.modo==='presentar'){const n=Number(o.lam.paso)||0;if(n>0)lamPres(Math.min(n,lamPasos().length-1));}
     else if(o.lam.paso&&lamRecorrido().some(x=>x.k===o.lam.paso))lamIr(o.lam.paso);
   }else if(o.cmp&&document.getElementById('cmpSala'))cmpToca(o.cmp);
+  else if(o.par&&parAplica(o.par,dondeOk)){}
   else if(o.ult&&ultIdx(o.ult)>=0&&document.getElementById('cmpUlt')){cmpUlt(ultIdx(o.ult),false,o.ultK||'');
     if(!dondeOk){const m=document.getElementById('cmpUlt');if(m&&m.scrollIntoView)m.scrollIntoView({block:'start'});}}
   return true;
@@ -10238,7 +10242,7 @@ function comparaHTML(){
       /* En una caja angosta las vacías no se dibujan: se dice en una línea. */
       (()=>{const no=M.cols.filter(k=>!(f.celdas[k]||[]).length);return no.length?'<p class="cmp-faltan">No aparece en '+esc(no.map(cmpNom).join(', '))+'.</p>':'';})()+
       cmpFasesHTML(f,M,true)+'</section>').join('')+
-    '</div>'+ultHTML()+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
+    '</div>'+ultHTML()+parHTML()+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
 }
 /* ───────── v215: LOS ÚLTIMOS ACONTECIMIENTOS (ULTIMOS, fuente/laminas.js) ─────────
    v219 (Camilo, 14-oct 18:12-18:17): veintinueve acontecimientos en cinco fases, en

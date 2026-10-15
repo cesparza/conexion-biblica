@@ -1064,6 +1064,20 @@ for (const W of ANCHOS) {
       W + ' · v221: tocar una fila, una celda o «Siguiente» deja lo tocado donde estaba ' + (enCaja ? 'dentro de una caja que rueda' : 'en la página') + ' (' + JSON.stringify(tops) + ' sig ' + sig + ')');
     await p.evaluate(c => { if (c) { const b = document.getElementById('cajaPrueba'), m = document.getElementById('cmpUlt'); b.parentNode.insertBefore(m, b); b.remove(); } }, enCaja);
   }
+  /* 5b. v234: Paralelos, debajo de los últimos acontecimientos. Ancho: tabla; angosto: una
+     tarjeta por característica, sin nada que se salga de lado; tocar una celda abre su paso. */
+  {
+    const r = await p.evaluate(async () => { verComparar(); await new Promise(r => setTimeout(r, 300)); parElige('papal');
+      const m = document.getElementById('cmpPar'); m.scrollIntoView({ block: 'start' }); await new Promise(r => setTimeout(r, 200));
+      const dentro = [...m.querySelectorAll('.par-c,.par-k,.par-chip,.par-hc')].filter(e => { const b = e.getBoundingClientRect(); return b.right > innerWidth + 1 || b.left < -1; }).length;
+      return { ancho: document.documentElement.scrollWidth <= innerWidth + 1, dentro, cab: getComputedStyle(m.querySelector('.par-f.cab')).display,
+        filas: m.querySelectorAll('.par-f:not(.cab)').length, chips: m.querySelectorAll('.par-chip').length, vacias: m.querySelectorAll('.par-c.vacia').length }; });
+    ok(r.ancho && (W >= 900 || !r.dentro) && r.chips === 13 && r.filas >= 8 && r.vacias > 0 && (W < 700 ? r.cab === 'none' : r.cab !== 'none'),
+      W + ' · v234: Paralelos ' + (W < 700 ? 'en tarjetas, sin nada que se salga de lado' : 'en tabla') + ' (' + JSON.stringify(r) + ')');
+    const ir = await p.evaluate(async () => { const b = [...document.querySelectorAll('#cmpPar button.par-c')].find(x => /'d8','cuerno'/.test(x.getAttribute('onclick') || ''));
+      if (!b) return 'sin celda'; b.click(); await new Promise(r => setTimeout(r, 700)); const res = [lamModo, lamId, lamDonde]; lamCierra(); return res.join(' '); });
+    ok(ir === 'explorar d8 cuerno', W + ' · v234: tocar una celda de Paralelos abre su paso en la lámina (' + ir + ')');
+  }
   /* 6. El lugar vuelve igual al recargar (y el enlace lo dice). */
   const recarga = async (nombre, prepara, mira) => {
     await p.evaluate(prepara); await p.waitForTimeout(500);
@@ -1080,6 +1094,8 @@ for (const W of ANCHOS) {
     () => cmpSel === '-331' && !document.getElementById('cmpSala').hidden || [cmpSel]);
   await recarga('las plagas en Apocalipsis 16, en «Los últimos acontecimientos»', () => { cmpCierra(); cmpUlt(ultIdx('plagas'), false, 'ap16'); },
     () => ultSel === ultIdx('plagas') && ultCol === 'ap16' && /Apocalipsis 16/.test(document.getElementById('cmpUltDet').textContent) || [ultSel, ultCol]);
+  await recarga('la hoja del juicio en Paralelos', () => { cmpCierra(); parElige('juicio'); },
+    () => parSel === 'juicio' && document.querySelector('#cmpPar .par-chip.on').getAttribute('data-par') === 'juicio' || [parSel]);
   /* Un enlace copiado abre lo mismo en otro aparato (sin nada anotado). */
   await p.evaluate(() => { cmpCierra(); verCap('d7'); lamAbre('d7', 'explorar'); lamIr('cuerno'); });
   await p.waitForTimeout(400);

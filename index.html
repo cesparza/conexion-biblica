@@ -5263,6 +5263,68 @@ span.cmp-ult-c{cursor:default}
 .lam.pres .lam-tiempo.limpia .lam-futx{position:absolute;right:11px;margin-top:-30px;height:30px;margin-bottom:0;flex-wrap:nowrap;font-size:.75rem;background:inherit}
 .lam.pres .lam-tiempo.limpia .lam-futx button{min-height:24px;padding:0 8px}
 .lam.pres .lam-tiempo.limpia.fut-abierto .lam-marcas span:not(:first-of-type){visibility:hidden}
+/* ─── v234: PARALELOS (fuente/paralelos-app.js). Va en la sala de Comparar, con su paleta.
+   Ancha: tabla con la característica fija a la izquierda. Angosta (la sala, no la
+   pantalla: así sirve dentro de Jóvenes): una tarjeta por característica con los
+   capítulos como renglones. ─── */
+.par{--c0:176px;--cw:208px;margin-top:30px;padding-top:24px;border-top:1px solid var(--cine-linea);display:grid;gap:18px;min-width:0}
+.par-cab .cmp-tit{margin-top:6px}
+.par-elige{display:grid;gap:10px}
+.par-grupo{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.par-gt{flex:0 0 82px;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cine-tenue)}
+.par-chip{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:6px 14px;border:0;border-radius:999px;background:rgba(243,237,226,.04);
+  font:inherit;font-size:.875rem;color:var(--cine-gris);cursor:pointer;box-shadow:inset 0 0 0 1px rgba(243,237,226,.16);transition:background .2s,color .2s,box-shadow .2s}
+.par-chip i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--c,var(--cine-oro));box-shadow:0 0 0 2px rgba(0,0,0,.35)}
+.par-chip:hover{color:var(--cine-tinta);box-shadow:inset 0 0 0 1px rgba(214,178,106,.5)}
+.par-chip.on{background:var(--cine-oro);color:#17120A;font-weight:600;box-shadow:0 0 18px -4px rgba(214,178,106,.6)}
+.par-chip:focus-visible,.par-c:focus-visible{outline:2px solid var(--cine-oro);outline-offset:2px}
+.par-hoja{display:grid;gap:14px;min-width:0}
+.par-hoja.ve{animation:parVe .35s ease-out}
+@keyframes parVe{from{opacity:0;transform:translateY(6px)}}
+.par-hc{position:relative;padding:4px 0 2px 16px}
+.par-hc::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:3px;background:var(--c,var(--cine-oro))}
+.par-tipo{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cine-oro)}
+.par-hc h4{margin:2px 0 4px;font-family:var(--cine-serif);font-weight:500;font-size:var(--v-tcine2);line-height:1.1;color:var(--cine-tinta)}
+.par-s{margin:0;color:var(--cine-gris);font-size:.9375rem;line-height:1.45}
+.par-lema{margin:8px 0 0;font-family:var(--cine-serif);font-size:1.0625rem;line-height:1.45;color:#E9E1D3}
+.par-lema q,.par-b q{quotes:'«' '»'}
+.par-lema cite,.par-b cite{font-family:var(--cine-sans);font-style:normal;font-size:.75rem;font-weight:600;color:var(--cine-oro);white-space:nowrap}
+.par-scroll{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;min-width:0;border-radius:14px;box-shadow:inset 0 0 0 1px var(--cine-linea)}
+.par-m{display:grid;min-width:calc(var(--c0) + var(--n) * var(--cw))}
+.par-f{display:grid;grid-template-columns:var(--c0) repeat(var(--n),minmax(var(--cw),1fr));border-top:1px solid rgba(243,237,226,.08)}
+.par-f.cab{border-top:0;background:rgba(214,178,106,.06)}
+.par-0,.par-k{position:sticky;left:0;z-index:2;background:#120F0B;box-shadow:6px 0 10px -8px rgba(0,0,0,.9)}
+.par-f.cab .par-0{background:#1A150F}
+.par-0,.par-cl{padding:12px 14px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--cine-oro)}
+.par-0{color:var(--cine-tenue)}
+.par-k{padding:14px;font-family:var(--cine-serif);font-size:1.0625rem;line-height:1.2;color:var(--cine-tinta);text-wrap:balance}
+.par-c{display:flex;flex-direction:column;justify-content:flex-start;min-width:0;padding:12px 14px;border:0;border-left:1px solid rgba(243,237,226,.06);background:none;font:inherit;text-align:left;color:var(--cine-gris);cursor:pointer;transition:background .15s}
+button.par-c:hover{background:rgba(214,178,106,.08)}
+button.par-c:hover .par-b q{color:var(--cine-tinta)}
+.par-c.vacia{cursor:default}
+.par-cap{display:none}
+.par-es{display:grid;gap:9px;min-width:0}
+.par-b{display:block;font-family:var(--cine-serif);font-size:1rem;line-height:1.42;color:#E9E1D3;overflow-wrap:anywhere}
+.par-b q{transition:color .15s}
+.par-n,.par-q{display:block;font-size:.8125rem;line-height:1.45;color:var(--cine-gris);overflow-wrap:anywhere}
+.par-n{padding-left:10px;border-left:2px solid rgba(214,178,106,.35)}
+.par-n b{font-weight:600;color:var(--cine-oro2)}
+.par-q{font-style:italic;color:var(--cine-oro2)}
+.par-nada{display:block;color:rgba(243,237,226,.28);font-size:1.125rem}
+.par-no{margin:0;font-size:.8125rem;font-style:italic;color:var(--cine-gris)}
+@container (max-width:620px){
+  .par-gt{flex-basis:100%}
+  .par-scroll{overflow:visible;border-radius:0;box-shadow:none}
+  .par-m{min-width:0;gap:12px}
+  .par-f.cab{display:none}
+  .par-f{display:block;border:0;border-radius:14px;overflow:hidden;background:rgba(243,237,226,.035);box-shadow:inset 0 0 0 1px var(--cine-linea)}
+  .par-k{position:static;display:block;padding:14px 16px 8px;background:none;box-shadow:none;color:var(--cine-oro2)}
+  .par-c{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;width:100%;padding:12px 16px;border-left:0;border-top:1px solid rgba(243,237,226,.07)}
+  .par-cap{display:block;padding-top:3px;font-size:.75rem;font-weight:600;line-height:1.2;letter-spacing:.04em;color:var(--cine-oro)}
+  .par-c.vacia .par-cap{color:var(--cine-tenue)}
+  .par-b{font-size:1rem}
+}
+@media (prefers-reduced-motion:reduce){.par-hoja.ve{animation:none}.par-chip,.par-c{transition:none}}
 </style>
 </head>
 <body>
@@ -5821,7 +5883,7 @@ span.cmp-ult-c{cursor:default}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '8ee98f325726';
+const VERSION_APP = '73e6d48df4dd';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -65379,6 +65441,2090 @@ const ULTIMOS = {
  "fuente": "CS (<i>El conflicto de los siglos</i>, ed. 1954) 374, 496-503 y 533-737; PE (<i>Primeros escritos</i>) 15-52 y 269-295; EUD (<i>Eventos de los últimos días</i>, 2009) 17, 104-214; Bohr, <i>Daniel 11</i>, p. 18-240; Bohr, <i>Daniel 1-10</i>, p. 63-64, 121 y 288; Bohr, <i>Apocalipsis 17</i>, p. 22-23; Pippenger, <i>El tiempo del fin</i>, p. 21 y 53."
 };
 
+/* v234: Paralelos, una hoja por poder y por tema, ya armadas (fuente/paralelos.js). */
+const PARALELOS = [
+ {
+  "id": "babilonia",
+  "tipo": "poder",
+  "t": "Babilonia",
+  "s": "Cabeza de oro · León con alas de águila",
+  "c": "#C9971C",
+  "lema": null,
+  "cmp": "-605",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "simbolo",
+    "t": "El símbolo",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "oro",
+       "ref": "Daniel 2:32",
+       "t": "La cabeza de esta imagen era de oro fino",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leon",
+       "ref": "Daniel 7:4",
+       "t": "La primera era como un león, y tenía alas de águila.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      }
+     ]
+    }
+   },
+   {
+    "id": "nombre",
+    "t": "Qué es, según el texto",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "oro",
+       "ref": "Daniel 2:38",
+       "t": "Tú eres aquella cabeza de oro.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leon",
+       "ref": "Daniel 7:17",
+       "t": "Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      }
+     ]
+    }
+   },
+   {
+    "id": "caracter",
+    "t": "Cómo es",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leon",
+       "ref": "Daniel 7:4",
+       "t": "se le dio corazón de hombre",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      }
+     ]
+    }
+   },
+   {
+    "id": "obra",
+    "t": "Qué hace",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "oro",
+       "ref": "Daniel 2:37",
+       "t": "el Dios del cielo te ha dado reino, poder, fuerza y majestad",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39."
+      }
+     ]
+    }
+   },
+   {
+    "id": "duracion",
+    "t": "Duración",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "n",
+       "p": "oro",
+       "t": "605 – 539 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "leon",
+       "t": "605 – 539 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "Su fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "monte",
+       "ref": "Daniel 2:35",
+       "t": "fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leon",
+       "ref": "Daniel 7:4",
+       "t": "sus alas le fueron arrancadas",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {
+   "d8": "Empieza en Medo-Persia: Babilonia está por caer (539 a.C.)"
+  },
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 17, 57-58 y 122; Bohr, <i>La gran cadena</i>, p. 39"
+ },
+ {
+  "id": "medopersia",
+  "tipo": "poder",
+  "t": "Medo-Persia",
+  "s": "Pecho y brazos de plata · Oso · El carnero de dos cuernos",
+  "c": "#8C98A6",
+  "lema": null,
+  "cmp": "-539",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "simbolo",
+    "t": "El símbolo",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "plata",
+       "ref": "Daniel 2:32",
+       "t": "su pecho y sus brazos, de plata",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 21."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "oso",
+       "ref": "Daniel 7:5",
+       "t": "semejante a un oso, la cual se alzaba de un costado más que del otro",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 56."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "carnero",
+       "ref": "Daniel 8:3",
+       "t": "había un carnero que estaba delante del río, y tenía dos cuernos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 86."
+      }
+     ]
+    }
+   },
+   {
+    "id": "nombre",
+    "t": "Qué es, según el texto",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "plata",
+       "ref": "Daniel 2:39",
+       "t": "Después de ti se levantará otro reino, inferior al tuyo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 21."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leon",
+       "ref": "Daniel 7:17",
+       "t": "Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "carnero",
+       "ref": "Daniel 8:20",
+       "t": "éstos son los reyes de Media y de Persia",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 86."
+      }
+     ]
+    }
+   },
+   {
+    "id": "caracter",
+    "t": "Cómo es",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "oso",
+       "ref": "Daniel 7:5",
+       "t": "En su boca, entre los dientes, tenía tres costillas",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 56."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "carnero",
+       "ref": "Daniel 8:3",
+       "t": "uno era más alto que el otro, y el más alto creció después",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 86."
+      }
+     ]
+    }
+   },
+   {
+    "id": "obra",
+    "t": "Qué hace",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "oso",
+       "ref": "Daniel 7:5",
+       "t": "Levántate y devora mucha carne.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 56."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "carnero",
+       "ref": "Daniel 8:4",
+       "t": "el carnero hería con los cuernos al poniente, al norte y al sur",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 86."
+      },
+      {
+       "tipo": "b",
+       "p": "carnero",
+       "ref": "Daniel 8:4",
+       "t": "Hacía conforme a su voluntad, y se engrandecía.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 86."
+      }
+     ]
+    }
+   },
+   {
+    "id": "duracion",
+    "t": "Duración",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "n",
+       "p": "plata",
+       "t": "539 – 331 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 21."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "oso",
+       "t": "539 – 331 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 56."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "n",
+       "p": "carnero",
+       "t": "539 – 331 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 293-295; Smith, <i>Las profecías de Daniel</i>, p. 86."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "Su fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "monte",
+       "ref": "Daniel 2:35",
+       "t": "fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "macho",
+       "ref": "Daniel 8:7",
+       "t": "le quebró sus dos cuernos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 17, 57, 123 y 293-295; Wadsworth, <i>La estatua de Nabucodonosor</i>, p. 21; Smith, <i>Las profecías de Daniel</i>, p. 56 y 86"
+ },
+ {
+  "id": "grecia",
+  "tipo": "poder",
+  "t": "Grecia",
+  "s": "Vientre y muslos de bronce · Leopardo de cuatro cabezas · El macho cabrío · El cuerno quebrado y los cuatro cuernos",
+  "c": "#A85A2A",
+  "lema": null,
+  "cmp": "-331",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "simbolo",
+    "t": "El símbolo",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "bronce",
+       "ref": "Daniel 2:32",
+       "t": "su vientre y sus muslos, de bronce",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57; Smith, <i>Las profecías de Daniel</i>, p. 21."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leopardo",
+       "ref": "Daniel 7:6",
+       "t": "semejante a un leopardo, con cuatro alas de ave en sus espaldas",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 57."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "macho",
+       "ref": "Daniel 8:5",
+       "t": "un macho cabrío venía del lado del poniente sobre la faz de toda la tierra, sin tocar tierra",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87."
+      }
+     ]
+    }
+   },
+   {
+    "id": "nombre",
+    "t": "Qué es, según el texto",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "bronce",
+       "ref": "Daniel 2:39",
+       "t": "un tercer reino de bronce, el cual dominará sobre toda la tierra",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57; Smith, <i>Las profecías de Daniel</i>, p. 21."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leon",
+       "ref": "Daniel 7:17",
+       "t": "Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "macho",
+       "ref": "Daniel 8:21",
+       "t": "El macho cabrío es el rey de Grecia",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87."
+      }
+     ]
+    }
+   },
+   {
+    "id": "caracter",
+    "t": "Cómo es",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "macho",
+       "ref": "Daniel 8:21",
+       "t": "el cuerno grande que tenía entre sus ojos es el rey primero",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87."
+      }
+     ]
+    }
+   },
+   {
+    "id": "obra",
+    "t": "Qué hace",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leopardo",
+       "ref": "Daniel 7:6",
+       "t": "le fue dado dominio",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 57."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "macho",
+       "ref": "Daniel 8:7",
+       "t": "se levantó contra él y lo hirió",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87."
+      }
+     ]
+    }
+   },
+   {
+    "id": "division",
+    "t": "Se divide",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "leopardo",
+       "ref": "Daniel 7:6",
+       "t": "Esta bestia tenía cuatro cabezas",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 57."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cuatro",
+       "ref": "Daniel 8:8",
+       "t": "aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 88, 90-91 y 136-137; Maxwell, <i>El porvenir del mundo revelado</i>, p. 113 y 164; Treiyer, <i>Enigmas descifrados</i>, p. 56; Bohr, <i>Daniel 1-10</i>, p. 296-297."
+      },
+      {
+       "tipo": "b",
+       "p": "cuatro",
+       "ref": "Daniel 8:22",
+       "t": "cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 88, 90-91 y 136-137; Maxwell, <i>El porvenir del mundo revelado</i>, p. 113 y 164; Treiyer, <i>Enigmas descifrados</i>, p. 56; Bohr, <i>Daniel 1-10</i>, p. 296-297."
+      }
+     ]
+    }
+   },
+   {
+    "id": "duracion",
+    "t": "Duración",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "n",
+       "p": "bronce",
+       "t": "331 – 168 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57; Smith, <i>Las profecías de Daniel</i>, p. 21."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "leopardo",
+       "t": "331 – 168 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 123; Smith, <i>Las profecías de Daniel</i>, p. 57."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "n",
+       "p": "macho",
+       "t": "331 – 301 a.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87."
+      },
+      {
+       "tipo": "n",
+       "p": "cuatro",
+       "t": "301 – 168 a.C.",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 88, 90-91 y 136-137; Maxwell, <i>El porvenir del mundo revelado</i>, p. 113 y 164; Treiyer, <i>Enigmas descifrados</i>, p. 56; Bohr, <i>Daniel 1-10</i>, p. 296-297."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "Su fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "monte",
+       "ref": "Daniel 2:35",
+       "t": "fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 17, 57, 123 y 296-297; Smith, <i>Las profecías de Daniel</i>, p. 21, 57, 86-87, 88, 90-91 y 136-137; Maxwell, <i>El porvenir del mundo revelado</i>, p. 113 y 164; Treiyer, <i>Enigmas descifrados</i>, p. 56"
+ },
+ {
+  "id": "imperial",
+  "tipo": "poder",
+  "t": "Roma imperial",
+  "s": "Piernas de hierro · La bestia espantosa · El cuerno pequeño crece",
+  "c": "#3E4651",
+  "lema": null,
+  "cmp": "-168",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "simbolo",
+    "t": "El símbolo",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "hierro",
+       "ref": "Daniel 2:33",
+       "t": "sus piernas, de hierro",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58, 133; Smith, <i>Las profecías de Daniel</i>, p. 22-25."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "bestia",
+       "ref": "Daniel 7:7",
+       "t": "la cuarta bestia, espantosa, terrible y en gran manera fuerte, la cual tenía unos grandes dientes de hierro",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 8:9",
+       "t": "De uno de ellos salió un cuerno pequeño",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      }
+     ]
+    }
+   },
+   {
+    "id": "nombre",
+    "t": "Qué es, según el texto",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "hierro",
+       "ref": "Daniel 2:40",
+       "t": "el cuarto reino será fuerte como el hierro",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58, 133; Smith, <i>Las profecías de Daniel</i>, p. 22-25."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "bestia",
+       "ref": "Daniel 7:23",
+       "t": "La cuarta bestia será un cuarto reino en la tierra, el cual será diferente de todos los otros reinos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 8:23",
+       "t": "se levantará un rey altivo de rostro y entendido en enigmas",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      }
+     ]
+    }
+   },
+   {
+    "id": "origen",
+    "t": "De dónde sale",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 8:9",
+       "t": "De uno de ellos salió un cuerno pequeño",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      },
+      {
+       "tipo": "q",
+       "p": "cuerno",
+       "t": "Roma salió del oeste (desde el punto de vista de Israel)",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 399"
+      },
+      {
+       "tipo": "n",
+       "p": "cuerno",
+       "t": "El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      }
+     ]
+    }
+   },
+   {
+    "id": "caracter",
+    "t": "Cómo es",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "bestia",
+       "ref": "Daniel 7:7",
+       "t": "era muy diferente de todas las bestias que había visto antes de ella",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58."
+      },
+      {
+       "tipo": "b",
+       "p": "bestia",
+       "ref": "Daniel 7:19",
+       "t": "tenía dientes de hierro y uñas de bronce",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58."
+      }
+     ]
+    }
+   },
+   {
+    "id": "obra",
+    "t": "Qué hace",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "hierro",
+       "ref": "Daniel 2:40",
+       "t": "como el hierro desmenuza y rompe todas las cosas, así él lo desmenuzará y lo quebrantará todo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58, 133; Smith, <i>Las profecías de Daniel</i>, p. 22-25."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "bestia",
+       "ref": "Daniel 7:7",
+       "t": "devoraba y desmenuzaba, pisoteaba las sobras con sus pies",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58."
+      },
+      {
+       "tipo": "b",
+       "p": "bestia",
+       "ref": "Daniel 7:23",
+       "t": "a toda la tierra devorará, trillará y despedazará",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 8:9",
+       "t": "creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      }
+     ]
+    }
+   },
+   {
+    "id": "duracion",
+    "t": "Duración",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "n",
+       "p": "hierro",
+       "t": "168 a.C. – 476 d.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 57-58, 133; Smith, <i>Las profecías de Daniel</i>, p. 22-25."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "bestia",
+       "t": "168 a.C. – 476 d.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 57-58."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "n",
+       "p": "cuerno",
+       "t": "168 a.C. – 476 d.C.",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "Su fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "monte",
+       "ref": "Daniel 2:35",
+       "t": "fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 57-58, 124, 133 y 297-306; Smith, <i>Las profecías de Daniel</i>, p. 22-25, 57-58 y 89-91; Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164"
+ },
+ {
+  "id": "dividida",
+  "tipo": "poder",
+  "t": "Roma dividida",
+  "s": "Los diez dedos · Los diez cuernos",
+  "c": "#4E6A8F",
+  "lema": null,
+  "cmp": "476",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "simbolo",
+    "t": "El símbolo",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "dedos",
+       "ref": "Daniel 2:41",
+       "t": "Lo que viste de los pies y los dedos… será un reino dividido",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 23-25; Bohr, <i>Daniel 1-10</i>, p. 58, 62; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40; 1T 361."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuernos",
+       "ref": "Daniel 7:7",
+       "t": "y tenía diez cuernos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40."
+      }
+     ]
+    }
+   },
+   {
+    "id": "nombre",
+    "t": "Qué es, según el texto",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuernos",
+       "ref": "Daniel 7:24",
+       "t": "Los diez cuernos significan que de aquel reino se levantarán diez reyes",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40."
+      }
+     ]
+    }
+   },
+   {
+    "id": "caracter",
+    "t": "Cómo es",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "dedos",
+       "ref": "Daniel 2:42",
+       "t": "este reino será en parte fuerte y en parte frágil",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 23-25; Bohr, <i>Daniel 1-10</i>, p. 58, 62; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40; 1T 361."
+      }
+     ]
+    }
+   },
+   {
+    "id": "division",
+    "t": "Se divide",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "dedos",
+       "ref": "Daniel 2:41",
+       "t": "Lo que viste de los pies y los dedos… será un reino dividido",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 23-25; Bohr, <i>Daniel 1-10</i>, p. 58, 62; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40; 1T 361."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuernos",
+       "ref": "Daniel 7:24",
+       "t": "Los diez cuernos significan que de aquel reino se levantarán diez reyes",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40."
+      }
+     ]
+    }
+   },
+   {
+    "id": "duracion",
+    "t": "Duración",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "n",
+       "p": "dedos",
+       "t": "476 d.C. – hasta la venida",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 23-25; Bohr, <i>Daniel 1-10</i>, p. 58, 62; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40; 1T 361."
+      },
+      {
+       "tipo": "n",
+       "p": "dedos",
+       "t": "Llegan hasta la segunda venida",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 23-25; Bohr, <i>Daniel 1-10</i>, p. 58, 62; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40; 1T 361."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "cuernos",
+       "t": "476 d.C. – hasta la venida",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "Su fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "dedos",
+       "ref": "Daniel 2:44",
+       "t": "En los días de estos reyes, el Dios del cielo levantará un reino",
+       "f": "Smith, <i>Las profecías de Daniel</i>, p. 23-25; Bohr, <i>Daniel 1-10</i>, p. 58, 62; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40; 1T 361."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {
+   "d8": "Pasa de Roma imperial a Roma papal"
+  },
+  "fuente": "Smith, <i>Las profecías de Daniel</i>, p. 23-25; Bohr, <i>Daniel 1-10</i>, p. 58, 62 y 124; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40; 1T 361"
+ },
+ {
+  "id": "papal",
+  "tipo": "poder",
+  "t": "Roma papal",
+  "s": "Hierro mezclado con barro · El cuerno pequeño · Hasta el ejército del cielo · El santuario pisoteado",
+  "c": "#A0694A",
+  "lema": null,
+  "cmp": "538",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "simbolo",
+    "t": "El símbolo",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "barro",
+       "ref": "Daniel 2:33",
+       "t": "sus pies, en parte de hierro y en parte de barro cocido",
+       "f": "Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; Bohr, <i>Daniel 1-10</i>, p. 58-62; CBA 4:1168."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:8",
+       "t": "otro cuerno pequeño salió entre ellos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cielo",
+       "ref": "Daniel 8:10",
+       "t": "Creció hasta llegar al ejército del cielo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      }
+     ]
+    }
+   },
+   {
+    "id": "nombre",
+    "t": "Qué es, según el texto",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "barro",
+       "ref": "Daniel 2:43",
+       "t": "se mezclarán por medio de alianzas humanas; pero no se unirán el uno con el otro",
+       "f": "Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; Bohr, <i>Daniel 1-10</i>, p. 58-62; CBA 4:1168."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:24",
+       "t": "el cual será diferente de los primeros, y derribará a tres reyes",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ]
+    }
+   },
+   {
+    "id": "origen",
+    "t": "De dónde sale",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "barro",
+       "ref": "Daniel 2:41",
+       "t": "así como viste el hierro mezclado con barro cocido",
+       "f": "Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; Bohr, <i>Daniel 1-10</i>, p. 58-62; CBA 4:1168."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:8",
+       "t": "delante de él fueron arrancados tres cuernos de los primeros",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      },
+      {
+       "tipo": "b",
+       "p": "x-senas",
+       "ref": "Daniel 7:24",
+       "t": "tras ellos se levantará otro",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 119, 124-127; CS 55-56 y 499."
+      },
+      {
+       "tipo": "n",
+       "p": "x-senas",
+       "t": "Sale de la cuarta bestia",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 119, 124-127; CS 55-56 y 499."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 8:9",
+       "t": "De uno de ellos salió un cuerno pequeño",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      },
+      {
+       "tipo": "n",
+       "p": "cuerno",
+       "t": "El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      }
+     ]
+    }
+   },
+   {
+    "id": "caracter",
+    "t": "Cómo es",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:8",
+       "t": "Este cuerno tenía ojos como de hombre y una boca que hablaba con gran insolencia.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      },
+      {
+       "tipo": "b",
+       "p": "x-senas",
+       "ref": "Daniel 7:20",
+       "t": "parecía más grande que sus compañeros",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 119, 124-127; CS 55-56 y 499."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cielo",
+       "ref": "Daniel 8:24",
+       "t": "Su poder se fortalecerá, mas no con fuerza propia",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      },
+      {
+       "tipo": "n",
+       "p": "cuerno",
+       "t": "Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.",
+       "f": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
+      }
+     ]
+    }
+   },
+   {
+    "id": "contraDios",
+    "t": "Contra Dios",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:25",
+       "t": "Hablará palabras contra el Altísimo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cielo",
+       "ref": "Daniel 8:11",
+       "t": "Aun se engrandeció frente al príncipe de los ejércitos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      },
+      {
+       "tipo": "n",
+       "p": "cielo",
+       "t": "El Príncipe del ejército es Cristo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      }
+     ]
+    }
+   },
+   {
+    "id": "santos",
+    "t": "Contra los santos",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:25",
+       "t": "a los santos del Altísimo quebrantará",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cielo",
+       "ref": "Daniel 8:10",
+       "t": "parte del ejército y de las estrellas echó por tierra, y las pisoteó",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      },
+      {
+       "tipo": "b",
+       "p": "cielo",
+       "ref": "Daniel 8:24",
+       "t": "destruirá a los fuertes y al pueblo de los santos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      }
+     ]
+    }
+   },
+   {
+    "id": "ley",
+    "t": "Contra la ley",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:25",
+       "t": "pensará en cambiar los tiempos y la Ley",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "santuario",
+       "ref": "Daniel 8:12",
+       "t": "echó por tierra la verdad e hizo cuanto quiso, y prosperó",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      }
+     ]
+    }
+   },
+   {
+    "id": "santuario",
+    "t": "Contra el santuario",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "santuario",
+       "ref": "Daniel 8:11",
+       "t": "por él fue quitado el sacrificio continuo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      },
+      {
+       "tipo": "b",
+       "p": "santuario",
+       "ref": "Daniel 8:11",
+       "t": "el lugar de su santuario fue echado por tierra",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      }
+     ]
+    }
+   },
+   {
+    "id": "duracion",
+    "t": "Duración",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "n",
+       "p": "barro",
+       "t": "desde 538 d.C. · supremacía 538 – 1798 d.C.",
+       "f": "Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; Bohr, <i>Daniel 1-10</i>, p. 58-62; CBA 4:1168."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "x-periodo",
+       "ref": "Daniel 7:25",
+       "t": "serán entregados en sus manos hasta tiempo, tiempos y medio tiempo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309, 492 y 636."
+      },
+      {
+       "tipo": "n",
+       "p": "cuerno",
+       "t": "supremacía 538 – 1798 d.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "n",
+       "p": "cielo",
+       "t": "538 – 1798 d.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      },
+      {
+       "tipo": "n",
+       "p": "santuario",
+       "t": "el continuo quitado: desde 508 (12:11); supremacía 538 – 1798 d.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "Su fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "piedra",
+       "ref": "Daniel 2:34",
+       "t": "hirió a la imagen en sus pies de hierro y de barro cocido, y los desmenuzó",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:26",
+       "t": "le quitarán su dominio, para que sea destruido y arruinado hasta el fin",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:25",
+       "t": "será quebrantado, aunque no por mano humana",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; Bohr, <i>Daniel 1-10</i>, p. 58-62, 119, 120-121, 124-127, 133-134, 297-306, 305-307 y 307-313; CBA 4:1168; Smith, <i>Las profecías de Daniel</i>, p. 58, 89-91, 94 y 157-159; CS 55-56, 492, 499 y 636; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; apuntes «Cómo quitó el continuo el papado»"
+ },
+ {
+  "id": "sanado",
+  "tipo": "poder",
+  "t": "El papado sanado",
+  "s": "Los pies, hasta que cae la piedra · El cuerno, sanado de su herida · Hasta ser quebrantado",
+  "c": "#8A5A3C",
+  "lema": [
+   "Apocalipsis 13:3",
+   "Vi una de sus cabezas como herida de muerte, pero su herida mortal fue sanada."
+  ],
+  "cmp": "1798",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "contraDios",
+    "t": "Contra Dios",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:25",
+       "t": "Se levantará contra el Príncipe de los príncipes",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   },
+   {
+    "id": "santos",
+    "t": "Contra los santos",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:21",
+       "t": "este cuerno hacía guerra contra los santos y los vencía",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ]
+    }
+   },
+   {
+    "id": "duracion",
+    "t": "Duración",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "n",
+       "p": "barro",
+       "t": "desde 1798 d.C. hasta la venida",
+       "f": "Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; Bohr, <i>Daniel 1-10</i>, p. 58-62; CBA 4:1168."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "cuerno",
+       "t": "desde 1798 d.C. hasta la venida",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      },
+      {
+       "tipo": "n",
+       "p": "cuerno",
+       "t": "el hombre de pecado subsiste hasta la segunda venida",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "n",
+       "p": "quebrantado",
+       "t": "desde 1798 d.C. hasta la venida",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "Su fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "piedra",
+       "ref": "Daniel 2:34",
+       "t": "hirió a la imagen en sus pies de hierro y de barro cocido, y los desmenuzó",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "santos",
+       "ref": "Daniel 7:22",
+       "t": "hasta que vino el Anciano de días, y se hizo justicia a los santos del Altísimo",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:25",
+       "t": "será quebrantado, aunque no por mano humana",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; Bohr, <i>Daniel 1-10</i>, p. 58-62, 63, 120-121, 124-127 y 133-134; CBA 4:1168; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492, 636 y 698-703"
+ },
+ {
+  "id": "juicio",
+  "tipo": "tema",
+  "t": "El juicio",
+  "s": "Desde 1844, en el cielo",
+  "c": "#B45309",
+  "lema": null,
+  "cmp": "",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "duracion",
+    "t": "Cuándo",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "juicio",
+       "t": "desde 1844 d.C.",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "n",
+       "p": "purificado",
+       "t": "desde 1844 d.C.",
+       "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+      }
+     ]
+    }
+   },
+   {
+    "id": "tribunal",
+    "t": "El tribunal",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "juicio",
+       "ref": "Daniel 7:9",
+       "t": "fueron puestos unos tronos y se sentó un Anciano de días",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+      },
+      {
+       "tipo": "b",
+       "p": "juicio",
+       "ref": "Daniel 7:10",
+       "t": "El Juez se sentó y los libros fueron abiertos.",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+      }
+     ]
+    }
+   },
+   {
+    "id": "hijo",
+    "t": "El Hijo del hombre",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "hijo",
+       "ref": "Daniel 7:13",
+       "t": "con las nubes del cielo venía uno como un hijo de hombre; vino hasta el Anciano de días",
+       "f": "CS 477 y 533; Bohr, <i>Daniel 1-10</i>, p. 280 y 288."
+      },
+      {
+       "tipo": "n",
+       "p": "hijo",
+       "t": "1844: Cristo va al Padre, no a la tierra.",
+       "f": "CS 477 y 533; Bohr, <i>Daniel 1-10</i>, p. 280 y 288."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fallo",
+    "t": "El fallo",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "santos",
+       "ref": "Daniel 7:22",
+       "t": "se hizo justicia a los santos del Altísimo",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "purificado",
+       "ref": "Daniel 8:14",
+       "t": "Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.",
+       "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+      },
+      {
+       "tipo": "n",
+       "p": "purificado",
+       "t": "La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia.",
+       "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fases",
+    "t": "Sus tres fases",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "x-fases",
+       "t": "Desde 1844 hasta el cierre de la gracia",
+       "k": "Investigación",
+       "f": "CS 480-481, 533 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307."
+      },
+      {
+       "tipo": "n",
+       "p": "x-fases",
+       "t": "Al cierre de la gracia: termina su mediación y el Hijo del hombre recibe el reino, antes de las plagas y de la venida",
+       "k": "Sentencia",
+       "f": "CS 480-481, 533 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307."
+      },
+      {
+       "tipo": "n",
+       "p": "x-fases",
+       "t": "Cuando los santos reciben el reino, en la segunda venida",
+       "k": "Ejecución",
+       "f": "CS 480-481, 533 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307."
+      }
+     ]
+    }
+   },
+   {
+    "id": "cuerno",
+    "t": "Contra el cuerno",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "santos",
+       "ref": "Daniel 7:26",
+       "t": "se sentará el Juez, y le quitarán su dominio",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:25",
+       "t": "será quebrantado, aunque no por mano humana",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {
+   "d2": ""
+  },
+  "fuente": "CS 374-376, 470-477, 480-481, 533-536 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280, 288 y 313-320; Bohr, <i>15 principios</i> 2:306-307"
+ },
+ {
+  "id": "santuario",
+  "tipo": "tema",
+  "t": "El santuario",
+  "s": "El continuo, el santuario pisoteado y su purificación",
+  "c": "",
+  "lema": null,
+  "cmp": "",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "cielo",
+    "t": "En el cielo",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "juicio",
+       "ref": "Daniel 7:9",
+       "t": "su trono, llama de fuego, y fuego ardiente las ruedas del mismo",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+      },
+      {
+       "tipo": "n",
+       "p": "juicio",
+       "t": "Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial.",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+      }
+     ]
+    }
+   },
+   {
+    "id": "continuo",
+    "t": "El continuo",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "santuario",
+       "ref": "Daniel 8:11",
+       "t": "por él fue quitado el sacrificio continuo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      }
+     ]
+    }
+   },
+   {
+    "id": "ataque",
+    "t": "Echado por tierra",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "santuario",
+       "ref": "Daniel 8:11",
+       "t": "el lugar de su santuario fue echado por tierra",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      },
+      {
+       "tipo": "b",
+       "p": "purificado",
+       "ref": "Daniel 8:13",
+       "t": "la entrega del santuario y el ejército para ser pisoteados",
+       "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+      }
+     ]
+    }
+   },
+   {
+    "id": "purif",
+    "t": "Será purificado",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "purificado",
+       "ref": "Daniel 8:14",
+       "t": "Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.",
+       "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+      },
+      {
+       "tipo": "n",
+       "p": "purificado",
+       "t": "La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio.",
+       "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {
+   "d2": ""
+  },
+  "fuente": "CS 374-376, 470-477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 313-320"
+ },
+ {
+  "id": "ley",
+  "tipo": "tema",
+  "t": "La ley y el sábado",
+  "s": "Lo que el cuerno hace con la Ley de Dios",
+  "c": "",
+  "lema": null,
+  "cmp": "",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "cambiar",
+    "t": "Cambiar los tiempos y la Ley",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:25",
+       "t": "pensará en cambiar los tiempos y la Ley",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      },
+      {
+       "tipo": "n",
+       "p": "x-senas",
+       "t": "El sábado: el día de reposo se pasó al domingo y se quitó el mandamiento sobre las imágenes (CS 55-56 y 499).",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 119, 124-127; CS 55-56 y 499."
+      },
+      {
+       "tipo": "n",
+       "p": "x-senas",
+       "t": "También quiso cambiar el calendario profético de Dios",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 125"
+      }
+     ]
+    }
+   },
+   {
+    "id": "verdad",
+    "t": "La verdad por tierra",
+    "celdas": {
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "santuario",
+       "ref": "Daniel 8:12",
+       "t": "echó por tierra la verdad e hizo cuanto quiso, y prosperó",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      },
+      {
+       "tipo": "n",
+       "p": "santuario",
+       "t": "Es la Ley de Dios, que el Salmo 119:142 llama la verdad, y con ella el sábado",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {
+   "d2": ""
+  },
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 119, 124-127 y 307-313; CS 55-56 y 499; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»"
+ },
+ {
+  "id": "tiempo",
+  "tipo": "tema",
+  "t": "El tiempo profético",
+  "s": "Los periodos y cómo se cuentan",
+  "c": "",
+  "lema": null,
+  "cmp": "",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "periodo",
+    "t": "El periodo",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "x-periodo",
+       "ref": "Daniel 7:25",
+       "t": "serán entregados en sus manos hasta tiempo, tiempos y medio tiempo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309, 492 y 636."
+      },
+      {
+       "tipo": "n",
+       "p": "x-periodo",
+       "t": "1.260 años · 538 – 1798 d.C.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309, 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "purificado",
+       "ref": "Daniel 8:14",
+       "t": "Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.",
+       "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
+      },
+      {
+       "tipo": "n",
+       "p": "x-periodo",
+       "t": "2.300 años · 457 a.C. – 1844 d.C.",
+       "f": "CS 372-376, 451 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 293, 313-316 y 325-336."
+      }
+     ]
+    }
+   },
+   {
+    "id": "regla",
+    "t": "Cómo se cuenta",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "n",
+       "p": "x-periodo",
+       "t": "En la profecía simbólica cada día vale un año. Dios mismo usa esa medida en Números 14:34 y en Ezequiel 4:6.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309, 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "n",
+       "p": "x-periodo",
+       "t": "Una tarde y una mañana son un día, como en la creación (Génesis 1:5).",
+       "f": "CS 372-376, 451 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 293, 313-316 y 325-336."
+      }
+     ]
+    }
+   },
+   {
+    "id": "fin",
+    "t": "El tiempo del fin",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "cierre",
+       "ref": "Daniel 2:45",
+       "t": "El gran Dios ha mostrado al rey lo que ha de acontecer en lo por venir",
+       "f": ""
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:17",
+       "t": "la visión es para el tiempo del fin",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      },
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:19",
+       "t": "eso es para el tiempo del fin",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 198-199, 293, 313-316 y 325-336; CS 309, 372-376, 451, 470-477, 492 y 636; Bohr, <i>15 principios</i> 1:226-231"
+ },
+ {
+  "id": "santos",
+  "tipo": "tema",
+  "t": "El pueblo de Dios",
+  "s": "Los santos: perseguidos, vindicados y con el reino",
+  "c": "",
+  "lema": null,
+  "cmp": "",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "perseguidos",
+    "t": "Perseguidos",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:25",
+       "t": "a los santos del Altísimo quebrantará",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      },
+      {
+       "tipo": "b",
+       "p": "cuerno",
+       "ref": "Daniel 7:21",
+       "t": "este cuerno hacía guerra contra los santos y los vencía",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "cielo",
+       "ref": "Daniel 8:10",
+       "t": "parte del ejército y de las estrellas echó por tierra, y las pisoteó",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      },
+      {
+       "tipo": "b",
+       "p": "cielo",
+       "ref": "Daniel 8:24",
+       "t": "destruirá a los fuertes y al pueblo de los santos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      },
+      {
+       "tipo": "n",
+       "p": "cielo",
+       "t": "El ejército y las estrellas son el pueblo de Dios",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 305-307."
+      }
+     ]
+    }
+   },
+   {
+    "id": "juicio",
+    "t": "En el juicio",
+    "celdas": {
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "santos",
+       "ref": "Daniel 7:22",
+       "t": "se hizo justicia a los santos del Altísimo",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      }
+     ]
+    }
+   },
+   {
+    "id": "reino",
+    "t": "Reciben el reino",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "piedra",
+       "ref": "Daniel 2:44",
+       "t": "el Dios del cielo levantará un reino que no será jamás destruido, ni será el reino dejado a otro pueblo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "santos",
+       "ref": "Daniel 7:22",
+       "t": "llegó el tiempo, y los santos recibieron el reino.",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      },
+      {
+       "tipo": "b",
+       "p": "reino",
+       "ref": "Daniel 7:18",
+       "t": "Después recibirán el reino los santos del Altísimo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 121; CS 732-737."
+      },
+      {
+       "tipo": "b",
+       "p": "reino",
+       "ref": "Daniel 7:27",
+       "t": "sean dados al pueblo de los santos del Altísimo",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 121; CS 732-737."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 305-307"
+ },
+ {
+  "id": "venida",
+  "tipo": "tema",
+  "t": "La segunda venida y el reino",
+  "s": "La piedra, el fin de los reinos y el reino eterno",
+  "c": "",
+  "lema": null,
+  "cmp": "",
+  "cols": [
+   "d2",
+   "d7",
+   "d8"
+  ],
+  "filas": [
+   {
+    "id": "venida",
+    "t": "Cristo vuelve",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "piedra",
+       "ref": "Daniel 2:34",
+       "t": "una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
+      },
+      {
+       "tipo": "n",
+       "p": "piedra",
+       "t": "La piedra es Cristo en su segunda venida.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "santos",
+       "ref": "Daniel 7:22",
+       "t": "llegó el tiempo, y los santos recibieron el reino.",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      },
+      {
+       "tipo": "n",
+       "p": "santos",
+       "t": "Es la ejecución del juicio.",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:25",
+       "t": "será quebrantado, aunque no por mano humana",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   },
+   {
+    "id": "mano",
+    "t": "Sin mano humana",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "piedra",
+       "ref": "Daniel 2:45",
+       "t": "del monte se desprendió una piedra sin que la cortara mano alguna",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
+      }
+     ],
+     "d8": [
+      {
+       "tipo": "b",
+       "p": "quebrantado",
+       "ref": "Daniel 8:25",
+       "t": "aunque no por mano humana",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+      }
+     ]
+    }
+   },
+   {
+    "id": "reinos",
+    "t": "Los reinos de la tierra",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "piedra",
+       "ref": "Daniel 2:44",
+       "t": "desmenuzará y consumirá a todos estos reinos",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 698-703 y 732."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "santos",
+       "ref": "Daniel 7:26",
+       "t": "le quitarán su dominio, para que sea destruido y arruinado hasta el fin",
+       "f": "CS 480 y 698-703; Bohr, <i>Daniel 1-10</i>, p. 288."
+      }
+     ]
+    }
+   },
+   {
+    "id": "reino",
+    "t": "El reino eterno",
+    "celdas": {
+     "d2": [
+      {
+       "tipo": "b",
+       "p": "monte",
+       "ref": "Daniel 2:35",
+       "t": "la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      },
+      {
+       "tipo": "b",
+       "p": "monte",
+       "ref": "Daniel 2:44",
+       "t": "él permanecerá para siempre",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      },
+      {
+       "tipo": "n",
+       "p": "monte",
+       "t": "Después de los mil años.",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "hijo",
+       "ref": "Daniel 7:14",
+       "t": "su dominio es dominio eterno, que nunca pasará",
+       "f": "CS 477 y 533; Bohr, <i>Daniel 1-10</i>, p. 280 y 288."
+      },
+      {
+       "tipo": "b",
+       "p": "reino",
+       "ref": "Daniel 7:27",
+       "t": "cuyo reino es reino eterno",
+       "f": "Bohr, <i>Daniel 1-10</i>, p. 121; CS 732-737."
+      }
+     ]
+    }
+   }
+  ],
+  "vacias": {},
+  "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63-64 y 288; CS 480, 698-703 y 720-737"
+ }
+];
+
 /* v189: las fichas de personajes (fuente/personajes.js). En el estudio, el
    primer nombre de cada persona en cada sección se vuelve tocable. */
 const PERSONAJES = [
@@ -85118,6 +87264,8 @@ function lugarActual(){
   if(lamModo&&lamId)r.push('lamina',lamId,lamModo,lamModo==='presentar'?String(lamPaso):(lamDonde||'est'));
   else if(cmpSel)r.push('comparar',cmpSel);
   else if(ultTocado&&document.getElementById('cmpUlt')&&ULT()){r.push('ultimos',ULT().eventos[ultSel].id);if(ultCol&&ultAbierto)r.push(ultCol);}
+  /* v234: la hoja de Paralelos (fuente/paralelos-app.js). */
+  else if(parTocado&&parSel&&document.getElementById('cmpPar'))r.push('paralelos',parSel);
   let c=r.join('/');
   if(personasDB().some(p=>p.fichas.length>1&&p.fichas.some(([id])=>id===DB.activo)))c+='?a='+S.cat;
   return c;
@@ -85135,12 +87283,13 @@ function lugarParte(c){
   if(q>=0){const a=/(?:^|&)a=([\w-]{1,24})/.exec(c.slice(q+1));if(a)o.a=a[1];c=c.slice(0,q);}
   const s=c.split('/').filter(Boolean);let i=0;
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
-  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|s\d+)$/.test(s[i]))o.item=s[i++];
+  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
     if(s[i]==='profundizar')o.prof=true;
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
     else if(s[i]==='lamina'&&s[i+1]&&/^(explorar|presentar)$/.test(s[i+2]||'')){o.lam={id:s[i+1],modo:s[i+2],paso:s[i+3]||''};i+=3;}
     else if(s[i]==='comparar'&&s[i+1]){o.cmp=s[i+1];i++;}
+    else if(s[i]==='paralelos'&&s[i+1]){o.par=s[i+1];i++;}
     else if(s[i]==='ultimos'&&s[i+1]){o.ult=s[i+1];i++;if(/^(d\d+|mt24|ap\d+|apo)$/.test(s[i+1]||'')){o.ultK=s[i+1];i++;}}
   }
   return o;
@@ -85168,6 +87317,7 @@ function lugarAplica(c,dondeOk){
     if(o.lam.modo==='presentar'){const n=Number(o.lam.paso)||0;if(n>0)lamPres(Math.min(n,lamPasos().length-1));}
     else if(o.lam.paso&&lamRecorrido().some(x=>x.k===o.lam.paso))lamIr(o.lam.paso);
   }else if(o.cmp&&document.getElementById('cmpSala'))cmpToca(o.cmp);
+  else if(o.par&&parAplica(o.par,dondeOk)){}
   else if(o.ult&&ultIdx(o.ult)>=0&&document.getElementById('cmpUlt')){cmpUlt(ultIdx(o.ult),false,o.ultK||'');
     if(!dondeOk){const m=document.getElementById('cmpUlt');if(m&&m.scrollIntoView)m.scrollIntoView({block:'start'});}}
   return true;
@@ -89768,7 +91918,7 @@ function comparaHTML(){
       /* En una caja angosta las vacías no se dibujan: se dice en una línea. */
       (()=>{const no=M.cols.filter(k=>!(f.celdas[k]||[]).length);return no.length?'<p class="cmp-faltan">No aparece en '+esc(no.map(cmpNom).join(', '))+'.</p>':'';})()+
       cmpFasesHTML(f,M,true)+'</section>').join('')+
-    '</div>'+ultHTML()+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
+    '</div>'+ultHTML()+parHTML()+(fu.length?'<p class="sec-fuente">Fuente: '+fu.join('; ')+'</p>':'')+'</div>';
 }
 /* ───────── v215: LOS ÚLTIMOS ACONTECIMIENTOS (ULTIMOS, fuente/laminas.js) ─────────
    v219 (Camilo, 14-oct 18:12-18:17): veintinueve acontecimientos en cinco fases, en
@@ -92312,6 +94462,85 @@ if(typeof navigator!=='undefined'&&navigator.serviceWorker&&
 if(typeof document!=='undefined'&&document.getElementById){
   const arr=document.getElementById('arranque');
   if(arr&&arr.remove)arr.remove();
+}
+/* ───────── v234: PARALELOS (PARALELOS, armadas en el build por fuente/paralelos.js) ─────────
+   Camilo (15-oct): «paralelos por capítulo de acuerdo a un poder y una característica o
+   temática, de tal manera que se obtenga todo lo que se dice de algo agrupado». Hermana de
+   Comparar y de los últimos acontecimientos: va en la misma sala, debajo de ellos.
+   Una hoja por poder y una por tema; filas = características, columnas = capítulos. En
+   pantalla ancha es una tabla con la característica fija a la izquierda (si un día no
+   caben los capítulos, la tabla rueda de lado dentro de su caja); en una caja angosta
+   cada característica es una tarjeta con los capítulos como renglones. Es el MISMO
+   marcado: lo cambia el CSS por el ancho de la sala (@container), así sirve igual dentro
+   de Jóvenes. Tocar una celda abre su paso en la lámina. Una celda sin texto es «–»:
+   aquí nada se deduce.
+   Este archivo va pegado después de app.js en el mismo <script> (fuente/build.js). Solo
+   declara funciones y `var`: Comparar puede pintarse al arrancar, antes de que el
+   archivo termine de leerse, y un `const` o `let` todavía no existiría. */
+var parSel, parTocado = false;
+function parDatos(){return typeof PARALELOS!=='undefined'&&Array.isArray(PARALELOS)?PARALELOS:[];}
+function parHoja(id){const P=parDatos();return P.find(h=>h.id===(id||parSel))||P.find(h=>h.id==='papal')||P[0]||null;}
+function parHTML(){
+  const P=parDatos(),h=parHoja();if(!h)return '';
+  const chips=t=>P.filter(x=>x.tipo===t).map(x=>'<button type="button" class="par-chip'+(x.id===h.id?' on':'')+'" data-par="'+esc(x.id)+'" aria-pressed="'+(x.id===h.id)+'"'+
+    (x.c?' style="--c:'+esc(x.c)+'"':'')+' onclick="parElige(\''+x.id+'\')">'+(x.c?'<i aria-hidden="true"></i>':'')+esc(x.t)+'</button>').join('');
+  return '<section class="par" id="cmpPar" aria-labelledby="cmpParT"><header class="par-cab"><div class="cmp-ant">'+IC('comparar')+' Paralelos</div>'+
+    '<h3 class="cmp-tit" id="cmpParT">Todo lo que se dice de algo, junto</h3>'+
+    '<p class="cmp-p">Una hoja por poder y una por tema: cada fila es una característica y cada columna, un capítulo. Toca una celda para verla en su lámina.</p></header>'+
+    '<div class="par-elige"><div class="par-grupo" role="group" aria-label="Por poder"><span class="par-gt">Por poder</span>'+chips('poder')+'</div>'+
+    '<div class="par-grupo" role="group" aria-label="Por tema"><span class="par-gt">Por tema</span>'+chips('tema')+'</div></div>'+
+    '<div class="par-hoja" id="parHoja">'+parHojaHTML(h)+'</div></section>';
+}
+function parNomCap(k){return typeof cmpNom==='function'?cmpNom(k):k;}
+function parHojaHTML(h){
+  const cols=h.cols||[];
+  const vac=cols.filter(k=>k in (h.vacias||{}));
+  return '<header class="par-hc"'+(h.c?' style="--c:'+esc(h.c)+'"':'')+'><span class="par-tipo">'+(h.tipo==='tema'?'Tema':'Poder')+'</span><h4>'+esc(h.t)+'</h4>'+
+      (h.s?'<p class="par-s">'+esc(h.s)+'</p>':'')+
+      (h.lema?'<p class="par-lema"><q>'+esc(h.lema[1])+'</q> <cite>'+esc(h.lema[0])+'</cite></p>':'')+'</header>'+
+    '<div class="par-scroll"><div class="par-m" role="table" aria-label="'+esc(h.t+': cada característica en cada capítulo')+'" style="--n:'+cols.length+'">'+
+      '<div class="par-f cab" role="row"><span class="par-0" role="columnheader">Característica</span>'+
+        cols.map(k=>'<span class="par-cl" role="columnheader">'+esc(parNomCap(k))+'</span>').join('')+'</div>'+
+      h.filas.map(f=>'<div class="par-f" role="row"><span class="par-k" role="rowheader">'+esc(f.t)+'</span>'+cols.map(k=>parCelda(f,k)).join('')+'</div>').join('')+
+    '</div></div>'+
+    (vac.length?'<p class="par-no">'+vac.map(k=>'No aparece en '+esc(parNomCap(k))+(h.vacias[k]?': '+esc(h.vacias[k].replace(/^./,c=>c.toLowerCase())):'')+'.').join(' ')+'</p>':'')+
+    (h.fuente?'<p class="sec-fuente">Fuente: '+h.fuente+'</p>':'');
+}
+function parCelda(f,k){
+  const es=f.celdas[k]||[],cap='<span class="par-cap">'+esc(parNomCap(k))+'</span>';
+  if(!es.length)return '<span class="par-c vacia" role="cell" aria-label="'+esc(parNomCap(k)+': no lo trae')+'">'+cap+'<span class="par-es"><span class="par-nada" aria-hidden="true">–</span></span></span>';
+  return '<button type="button" class="par-c" role="cell" onclick="parIr(\''+k+'\',\''+es[0].p+'\')" aria-label="'+esc(f.t+' en '+parNomCap(k)+'. Abre la lámina')+'">'+cap+
+    '<span class="par-es">'+es.map(parEnt).join('')+'</span></button>';
+}
+/* b: la Biblia (RV1995), entre « »; q: un autor, entre “ ”; n: la línea de la lámina, con su rótulo. */
+function parEnt(e){
+  if(e.tipo==='b')return '<span class="par-b"><q>'+esc(e.t)+'</q> <cite>'+esc(e.ref)+'</cite></span>';
+  if(e.tipo==='q')return '<span class="par-q">“'+esc(e.t)+'”</span>';
+  return '<span class="par-n">'+(e.k?'<b>'+esc(e.k)+'.</b> ':'')+e.t+'</span>';
+}
+function parElige(id){
+  const h=parHoja(id);if(!h)return;
+  /* Lo último que se tocó es lo que guarda el enlace: los últimos acontecimientos van antes en lugarActual. */
+  parSel=h.id;parTocado=true;ultTocado=false;
+  const m=document.getElementById('cmpPar'),d=document.getElementById('parHoja');if(!m||!d)return;
+  m.querySelectorAll('.par-chip').forEach(b=>{const on=b.getAttribute('data-par')===h.id;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
+  d.innerHTML=parHojaHTML(h);
+  d.classList.remove('ve');void d.offsetWidth;d.classList.add('ve');
+  lugarAnota();
+}
+/* La celda lleva a su paso en la lámina (una parte, las señas, el periodo, las fases o el cierre). */
+function parIr(cap,k){
+  if(typeof LAMINAS==='undefined'||!LAMINAS[cap])return;
+  parTocado=true;
+  lamAbre(cap,'explorar');
+  setTimeout(()=>{if(lamId===cap&&k)lamIr(k);},60);
+}
+/* Del enlace o la recarga: «…/paralelos/<hoja>». */
+function parAplica(id,dondeOk){
+  if(!parHoja(id)||parHoja(id).id!==id||!document.getElementById('cmpPar'))return false;
+  parElige(id);
+  if(!dondeOk){const m=document.getElementById('cmpPar');if(m&&m.scrollIntoView)m.scrollIntoView({block:'start'});}
+  return true;
 }
 </script>
 </body>

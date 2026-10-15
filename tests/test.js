@@ -616,6 +616,40 @@ ok(inventadas.length===0,'El manual no cita bloques que ya no existen'+
   (inventadas.length?' — '+inventadas.join(' / '):''));
 
 
+/* ───────── v234: Paralelos (fuente/paralelos.js) ─────────
+   Camilo: una hoja por poder y una por tema, armadas solas; ninguna celda sin su texto. */
+{
+  const P=require(path.join(RAIZ,'fuente','paralelos.js')),{LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js')),{VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
+  const mal=P.revisaParalelos(LAMINAS,{...VERS,...VERS_AP});
+  ok(!mal.length,'Paralelos: cada cita está literal en la Biblia de la app, cada línea en su lámina y cada fuente trae página'+(mal.length?' — '+mal.slice(0,4).join(' | '):''));
+  const H=P.armaParalelos(LAMINAS),ids=H.map(h=>h.id);
+  const poderes=['babilonia','medopersia','grecia','imperial','dividida','papal','sanado'],temas=['juicio','santuario','ley','tiempo','santos','venida'];
+  ok(poderes.every(x=>ids.includes(x)&&H.find(h=>h.id===x).tipo==='poder')&&temas.every(x=>ids.includes(x)&&H.find(h=>h.id===x).tipo==='tema'),
+    'Paralelos: existen las hojas de los siete poderes y de los seis temas ('+ids.join(', ')+')');
+  ok(H.every(h=>h.filas.length>=2&&h.cols.join()==='d2,d7,d8'),'Paralelos: cada hoja tiene filas y las columnas son Daniel 2, 7 y 8, en orden');
+  const sinFuente=[];
+  for(const h of H)for(const f of h.filas)for(const [k,es] of Object.entries(f.celdas))for(const e of es){
+    const bien=e.tipo==='b'?/^(Daniel|Apocalipsis) \d+:\d+$/.test(e.ref)&&e.t:(e.tipo==='n'||e.tipo==='q')&&e.t&&/\bp\. ?\d|\b(CS|PE|\dT)\s+\d|\d+:\d+/.test(e.f||'');
+    if(!bien||!e.p)sinFuente.push(h.id+'.'+f.id+'.'+k);}
+  ok(!sinFuente.length,'Paralelos: toda celda es un texto bíblico con su referencia o una línea con fuente y página, o queda vacía'+(sinFuente.length?' — '+sinFuente.slice(0,5).join(', '):''));
+  const papal=H.find(h=>h.id==='papal'),c=(f,k)=>((papal.filas.find(x=>x.id===f)||{celdas:{}}).celdas[k]||[]).map(e=>e.t).join(' | ');
+  ok(/delante de él fueron arrancados tres cuernos/.test(c('origen','d7'))&&/cuatro vientos/.test(c('origen','d8'))&&/Hablará palabras contra el Altísimo/.test(c('contraDios','d7'))&&
+    /cambiar los tiempos y la Ley/.test(c('ley','d7'))&&/quebrantado, aunque no por mano humana/.test(c('fin','d8'))&&/sacrificio continuo/.test(c('santuario','d8'))&&!c('santuario','d2'),
+    'Paralelos: la hoja de Roma papal reúne lo de Daniel 2, 7 y 8 (el cuerno de Daniel 8 sale de uno de los vientos; el continuo lo quita la fase papal)');
+  const imp=H.find(h=>h.id==='imperial'),dv=H.find(h=>h.id==='dividida');
+  ok(!(imp.filas.find(f=>f.id==='santuario'))&&dv.vacias.d8==='Pasa de Roma imperial a Roma papal',
+    'Paralelos: solo la fase papal quita el continuo; Daniel 8 no trae Roma dividida y dice por qué');
+  ok(!/drag[oó]n/i.test(JSON.stringify(H)),'Paralelos: la bestia de Daniel 7 nunca se llama dragón');
+  const venida=JSON.stringify(H.find(h=>h.id==='venida')),juicio=JSON.stringify(H.find(h=>h.id==='juicio'));
+  ok(/hijo de hombre/.test(juicio)&&!/hijo de hombre/.test(venida)&&/Después de los mil años/.test(venida),
+    'Paralelos: el Hijo del hombre va en el juicio (1844), no en la venida; el gran monte, después de los mil años');
+  ok(/const PARALELOS = \[/.test(html)&&/function parHTML\(\)/.test(html)&&/\+ultHTML\(\)\+parHTML\(\)\+/.test(APP)&&/r\.push\('paralelos',parSel\)/.test(APP),
+    'Paralelos: van en index.html, debajo de los últimos acontecimientos, y el enlace guarda la hoja');
+  const PJ=html.slice(html.indexOf('/* ───────── v234: PARALELOS'),html.lastIndexOf('</script>'));
+  ok(!/^(const|let) /m.test(PJ)&&!/onclick="[^"]*\b(this|event)\b/.test(PJ),'Paralelos: el código solo declara funciones y var (se puede pintar al arrancar) y sus toques son llamadas con literales (Jóvenes)');
+}
+
 /* ───────── el panel del director va en tres pasos ─────────
    Los tres defectos que se vieron en el panel real: el botón «Abrir una
    evaluación» pintado ARRIBA del formulario, el texto de ayuda describiendo
