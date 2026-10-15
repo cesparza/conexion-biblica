@@ -521,6 +521,8 @@ LAMINAS.d8 = {
   /* Con Daniel 2 y Daniel 7: la cuarta columna es el metal que se enciende en la estatua
      chica; la sexta, la parte de Daniel 7 cuya imagen va debajo. */
   comparar: 'd2', comparar2: 'd7', conTxt: 'Con Daniel 2 y 7',
+  /* v226: en el santuario la comparación va debajo de la imagen (la columna tapaba la mesa). */
+  d2Abajo: ['santuario'],
   agrega: 'Daniel 2 no lo muestra: lo agrega Daniel 8',
   noTrae: { '-605': 'Empieza en Medo-Persia: Babilonia está por caer (539 a.C.)', '476': 'Pasa de Roma imperial a Roma papal' },
   paralelo: [['carnero', 'Pecho y brazos de plata', 'Medo-Persia', 'plata', 'Oso', 'oso'],
@@ -600,25 +602,19 @@ LAMINAS.d8 = {
        delante del velo: la intercesión de Cristo (Hebreos 7:25), cambiada por el confesionario,
        María y los santos. «La verdad» (8:12) es aparte: la Ley y el sábado (7:25), no un mueble
        del cuarto. El arca no va: está detrás del velo, en el santísimo.
-       LAS COORDENADAS SON DE LA IMAGEN: `en` es [x, y] del punto en la escena (1200 × 675); `dy`
-       y `dx`, cuánto se corre su rótulo (abajo y a la derecha; negativo, arriba y a la izquierda).
-       Sin `en`, la seña va sin punto en la franja de abajo.
-       v225: la imagen nueva de Camilo (santuario.webp, 1600 × 900 de su original de 1672 × 941):
-       el lugar santo visto desde la entrada, el velo con querubines al fondo, el altar del
-       incienso al centro con sus cuernos y el humo, el candelabro de siete brazos a la izquierda,
-       la mesa con dos pilas de seis panes a la derecha y el cuerno oscuro que sube de una nube
-       negra abajo al centro. Puntos en el candelabro, la mesa (en su extremo izquierdo: con «Con
-       Daniel 2 y 7» la estatua chica tapa la escena desde x = 952) y el altar del incienso (arriba
-       de la punta del cuerno); el altar del holocausto (está en el atrio) y «la verdad» van sin
-       punto. Los rótulos: el del candelabro arriba de sus llamas, el de la mesa sobre el velo, y
-       el del altar del incienso abajo a la izquierda, en el piso, sin tapar el altar ni el cuerno
-       (en el teléfono, `tel: { fila: true }`, su rótulo va en la franja de abajo; el punto se queda
-       en el altar). */
+       LAS COORDENADAS SON DE LA IMAGEN: `en` es [x, y] del punto en la escena (1200 × 675).
+       Sin `en`, la seña va sin punto. v225: la imagen nueva de Camilo (santuario.webp, 1600 × 900
+       de su original de 1672 × 941): el lugar santo visto desde la entrada, el velo con querubines,
+       el altar del incienso al centro con el humo, el candelabro de siete brazos a la izquierda,
+       la mesa con dos pilas de seis panes a la derecha y el cuerno que sube de una nube negra
+       abajo al centro. v226 (revisión: cinco rótulos tapaban la imagen): sobre la imagen solo un
+       punto numerado por objeto (1 mesa, en los panes; 2 candelabro; 3 altar del incienso, arriba
+       de la punta del cuerno) y las cinco señas en una lista debajo de la imagen. */
     santuario: { cosas: [
       { id: 'altar', t: 'El altar del holocausto', s: 'en el atrio: Cristo, sacrificado una vez', c: 'la misa' },
-      { id: 'mesa', t: 'La mesa de los panes', s: 'la Palabra de Dios', c: 'la tradición', en: [935, 330], dy: -205 },
-      { id: 'candelabro', t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', c: 'la iglesia a oscuras', en: [166, 330], dy: -275, tel: { dy: -245 } },
-      { id: 'incienso', t: 'El altar del incienso', s: 'la intercesión de Cristo (Hebreos 7:25)', c: 'el confesionario, María y los santos', en: [585, 292], dx: -255, dy: 168, tel: { fila: true } }],
+      { id: 'mesa', t: 'La mesa de los panes', s: 'la Palabra de Dios', c: 'la tradición', en: [1000, 300] },
+      { id: 'candelabro', t: 'El candelabro', s: 'la luz: Cristo y su Espíritu', c: 'la iglesia a oscuras', en: [166, 330] },
+      { id: 'incienso', t: 'El altar del incienso', s: 'la intercesión de Cristo (Hebreos 7:25)', c: 'el confesionario, María y los santos', en: [585, 292] }],
       verdad: { t: 'La verdad', s: 'la Ley de Dios y el sábado (8:12)', c: 'pensó cambiar los tiempos y la Ley (7:25)' } },
   },
   /* v223: la primera frase de la línea de tiempo (antes decía «De 605 a.C.» en todas). */

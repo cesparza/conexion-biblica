@@ -2974,6 +2974,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(inc.en&&inc.en[0]>520&&inc.en[0]<660&&inc.en[1]<320&&cs.find(c=>c.id==='altar').en==null&&cs.filter(c=>c.en).map(c=>c.id).join()==='mesa,candelabro,incienso'&&
     cs.find(c=>c.id==='candelabro').en[0]<300&&cs.find(c=>c.id==='mesa').en[0]>900&&/^VP8/.test(wv)&&san.length<260000,
     'v225: con la imagen nueva llevan punto el candelabro (izquierda), la mesa (derecha) y el altar del incienso (centro, arriba de la punta del cuerno); el altar del holocausto y «la verdad», sin punto; santuario.webp pesa '+Math.round(san.length/1024)+' KB');
+  ok(L.d2Abajo&&L.d2Abajo.includes('santuario')&&/function lamLey8HTML/.test(js)&&/class="d8-num"/.test(js)&&!/d8-punto/.test(js.slice(js.indexOf('function lamMovSantuario'),js.indexOf('function lamMovPurifica')))&&cs.every(c=>!c.dy&&!c.tel),
+    'v226: el santuario lleva puntos numerados y la lista de las señas debajo (sin rótulos encima), y la comparación va debajo de la imagen');
   const d8txt=JSON.stringify(L)+fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d8.js'),'utf8');
   ok(!/Pérgamo|Atalo|atálidas|de uno de los cuernos[^»]*(sale|ve)|Otra lectura del hebreo/i.test(d8txt.replace(/\/\*[\s\S]*?\*\//g,''))&&!/atalo-iii/.test(fs.readFileSync(path.join(RAIZ,'fuente','personajes.js'),'utf8')),
     'v224: Daniel 8 sin la lectura «de uno de los cuernos» (Pérgamo, Atalo III), decisión de Camilo');

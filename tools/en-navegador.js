@@ -1158,17 +1158,26 @@ for (const [W, H] of [[390, 844], [430, 932]]) {
       const cr = await p.evaluate(() => ({ on: [...document.querySelectorAll('.d8-traza.viento.on')].map(x => x.getAttribute('data-v')).join(), tenue: document.querySelectorAll('.d8-traza.viento.tenue').length,
         toma: document.querySelectorAll('#lamMarcasImg .reino.toma').length, paso: (document.querySelector('#lamMarcasImg .paso b') || {}).textContent || '' }));
       ok(cr.on === 'o' && cr.tenue === 3 && cr.toma === 4 && /^4 ·/.test(cr.paso), W + ' · v223: Daniel 8, el cuerno pequeño: el viento del poniente encendido, los otros tres apagados, cuatro conquistas y el último paso (' + cr.paso + ')');
-      /* v224: el continuo: cinco señas (cuatro piezas y «la verdad»), el altar del incienso sin punto, ningún punto sobre el arca, todas tachadas y dentro de la escena. */
+      /* v226: sobre la imagen solo tres puntos numerados (candelabro, mesa, altar del incienso), ninguno sobre el cuerno;
+         las cinco señas en la lista de debajo, tachadas al final; la comparación no tapa la escena (va debajo, en pastillas). */
+      if (!(await p.evaluate(() => lamConD2))) await p.evaluate(() => lamConD2Cambia());
       await p.evaluate(() => lamIr('santuario')); await p.waitForTimeout(await p.evaluate(() => lamParte('santuario').ms + 700));
-      const sa = await p.evaluate(() => { const e = document.getElementById('lamMarcasImg').getBoundingClientRect(), ets = [...document.querySelectorAll('#lamMarcasImg .d8-et.cosa')];
-        const pts = [...document.querySelectorAll('.d8-punto')].map(c => [+c.getAttribute('cx'), +c.getAttribute('cy')]);
-        let pisa = 0; const rs = ets.map(x => x.getBoundingClientRect());
-        for (let i = 0; i < rs.length; i++) for (let j = i + 1; j < rs.length; j++) { const a = rs[i], c = rs[j]; if (a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1) pisa++; }
-        return { ids: ets.map(x => x.getAttribute('data-cosa')).join(), apaga: ets.filter(x => x.classList.contains('apaga') && x.classList.contains('ve')).length, pts,
-          fuera: rs.filter(q => q.left < e.left - 2 || q.right > e.right + 2 || q.top < e.top - 2 || q.bottom > e.bottom + 2).length, pisa }; });
-      /* v225: la imagen nueva trae el altar del incienso: tres puntos (candelabro, mesa, altar del incienso) y ninguno sobre el cuerno, que sube de abajo al centro (x 500-720, y > 335). */
-      ok(sa.ids.split(',').sort().join() === 'altar,candelabro,incienso,mesa,verdad' && sa.apaga === 5 && sa.pts.length === 3 && !sa.pts.some(([x, y]) => x > 500 && x < 720 && y > 335) && !sa.fuera && !sa.pisa,
-        W + ' · v225: Daniel 8, el continuo: altar del holocausto, mesa, candelabro, altar del incienso y «la verdad» (' + sa.ids + '), tachadas, ' + sa.pts.length + ' puntos y ninguno sobre el cuerno, sin salirse ni pisarse');
+      /* En el teléfono la imagen se pega arriba al rodar: se mide con la lámina arriba del todo. */
+      await p.evaluate(() => { const l = document.getElementById('lam'); l.scrollTop = 0; scrollTo(0, 0); }); await p.waitForTimeout(300);
+      const sa = await p.evaluate(() => { const e = document.getElementById('lamMarcasImg').getBoundingClientRect(), nums = [...document.querySelectorAll('#lamMarcasImg .d8-num')];
+        const ley = document.getElementById('lamLey8'), lis = ley ? [...ley.querySelectorAll('li')] : [], esc = document.getElementById('lamEsc').getBoundingClientRect();
+        const d2 = document.getElementById('lamD2'), fila = document.getElementById('lamD2Fila');
+        return { n: nums.map(x => x.textContent).join(), pts: nums.map(x => [+x.dataset.x, +x.dataset.y]), ids: lis.map(x => x.dataset.cosa).join(), apaga: lis.filter(x => x.classList.contains('apaga')).length,
+          fuera: nums.filter(x => { const q = x.getBoundingClientRect(); return q.left < e.left - 2 || q.right > e.right + 2 || q.top < e.top - 2 || q.bottom > e.bottom + 2; }).length,
+          rotulos: document.querySelectorAll('#lamMarcasImg .d8-et.cosa').length, debajo: !!ley && !ley.hidden && ley.getBoundingClientRect().top >= esc.bottom - 1,
+          col: !!d2 && !d2.hidden && getComputedStyle(d2).display !== 'none', fila: !!fila && !fila.hidden && getComputedStyle(fila).display !== 'none' && fila.getBoundingClientRect().top >= esc.bottom - 1 }; });
+      ok(sa.n === '1,2,3' && sa.ids === 'mesa,candelabro,incienso,altar,verdad' && sa.apaga === 5 && !sa.pts.some(([x, y]) => x > 500 && x < 720 && y > 335) && !sa.fuera && !sa.rotulos && sa.debajo && !sa.col && sa.fila,
+        W + ' · v226: Daniel 8, el continuo: tres puntos numerados (' + sa.n + ') sin rótulos encima ni sobre el cuerno, las cinco señas tachadas en la lista de debajo (' + sa.ids + ') y la comparación debajo de la imagen, no encima');
+      /* v226: al presentar, la lista va en la hoja; en la pantalla ancha sin la columna de la comparación. */
+      const sp = await p.evaluate(async () => { lamCierra(); lamAbre('d8', 'presentar'); lamPres(lamPasos().findIndex(s => s.id === 'santuario')); await new Promise(r => setTimeout(r, 300));
+        const d2 = document.getElementById('lamD2'); return { ley: document.querySelectorAll('#lamHoja .d8-ley li').length, col: !!d2 && !d2.hidden && getComputedStyle(d2).display !== 'none' }; });
+      ok(sp.ley === 5 && !sp.col, W + ' · v226: Daniel 8, al presentar el santuario la lista de las cinco señas va en la hoja y la comparación no tapa la imagen');
+      await p.evaluate(() => { lamCierra(); lamAbre('d8', 'explorar'); }); await p.waitForTimeout(800);
       /* v223: la comparación con Daniel 2 y 7: al lado de la imagen en la pantalla ancha, debajo en el teléfono. */
       await p.evaluate(() => { lamCierra(); lamAbre('d8', 'presentar'); if (!lamConD2) lamConD2Cambia(); lamPres(lamPasos().findIndex(s => s.id === 'purificado' && s.tipo === 'parte')); }); await p.waitForTimeout(1500);
       const cm = await p.evaluate(() => { const col = document.getElementById('lamD2'), fila = document.getElementById('lamD2Fila'), e = document.getElementById('lamEsc').getBoundingClientRect();

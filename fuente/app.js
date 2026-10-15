@@ -514,6 +514,9 @@ function lamMarcasSep(){
   const vis=ss.filter(x=>x.getClientRects().length&&x.getBoundingClientRect().width>0).sort((a,b)=>a.getBoundingClientRect().left-b.getBoundingClientRect().left);
   const der=m.getBoundingClientRect().right;let fin=-1e9;
   vis.forEach(x=>{const r=x.getBoundingClientRect();let d=fin+6-r.left;if(d>0){d=Math.min(d,Math.max(0,der-r.right));if(d>0)x.style.marginLeft=d.toFixed(1)+'px';}fin=x.getBoundingClientRect().right;});
+  /* v226: si al final ya no hay lugar a la derecha, se corren los de antes a la izquierda. */
+  for(let i=vis.length-2;i>=0;i--){const a=vis[i].getBoundingClientRect(),b=vis[i+1].getBoundingClientRect(),d=a.right+6-b.left;
+    if(d>0)vis[i].style.marginLeft=((parseFloat(vis[i].style.marginLeft)||0)-d).toFixed(1)+'px';}
 }
 const lamPuedeTodo=()=>{const e=document.getElementById('lam');return !!(e&&(e.requestFullscreen||e.webkitRequestFullscreen));};
 function lamPantalla(){
@@ -736,6 +739,8 @@ function lamHojaParteTx(p,i,n,figs){
     (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar la explicación" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(p.texto)+'</q> <span class="lam-ref">'+p.ref+'</span></p><p><q>'+esc(p.texto2)+'</q> <span class="lam-ref">'+p.ref2+'</span></p></div>'+
     '<div class="lam-capa i"><div class="lam-rot">Lo que significa · interpretación</div>'+(lamModo==='presentar'?'<p>'+esc(p.corto)+'</p>':p.interp.map(x=>'<p>'+x+'</p>').join(''))+'<div class="lam-fu">Fuente: '+p.fuente+'</div></div>'+figs+
+    /* v226: al presentar, la lista del continuo va en la hoja (en Explorar, debajo de la imagen). */
+    (lamModo==='presentar'&&LAM().mov&&LAM().mov[p.mov]&&LAM().mov[p.mov].cosas?lamLey8HTML(LAM().mov[p.mov],'pres'):'')+
     (lamModo==='presentar'?'':lamUltHTML(lamUltDe(p.id)))+
     (lamModo==='presentar'?'':lamNavHTML(p.id));
 }
@@ -1204,7 +1209,10 @@ function lamEscenaE(){
     '<div class="lam-sobre" id="lamSobre"><div class="lam-marcas-img" id="lamMarcasImg"></div>'+lamD2HTML()+'<div class="lam-tabla" id="lamTabla" hidden></div></div>'+
     '<div class="lam-chip" id="lamChip" hidden></div>'+lamAnioVHTML()+lamCartelHTML()+
     (pres?'':'<div class="lam-aviso" id="lamAviso">Elige una parte abajo</div>')+'</div>'+
-    (L.comparar?'<div class="lam-d2-fila" id="lamD2Fila" hidden></div>':'')+tira+'<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
+    /* v226: debajo de la imagen, la comparación en pastillas y la lista de lo que marcan los
+       puntos numerados (el continuo de Daniel 8, en Explorar). */
+    '<div class="lam-bajo">'+(L.comparar?'<div class="lam-d2-fila" id="lamD2Fila" hidden></div>':'')+
+    (L.mov&&!pres?'<div id="lamLey8" hidden></div>':'')+'</div>'+tira+'<div class="lam-hoja" id="lamHoja" aria-live="polite"></div></div>';
 }
 /* El nombre y las fechas de la parte, sobre la imagen (se lee aun con el texto
    oculto); `extra`: el paso del juicio o la seña. Con Daniel 2, también su par. */
@@ -1240,8 +1248,15 @@ function lamD2(id){
   lamD2Id=id;
   const el=document.getElementById('lamD2');if(!el)return;
   const L=LAM(),r=id&&(L.paralelo||[]).find(x=>x[0]===id);
-  el.hidden=!lamConD2||!r;
-  if(!r||el.hidden)lamD2Fila(null);
+  /* v226: `d2Abajo`: en esa parte la comparación va debajo de la imagen a cualquier ancho (la
+     columna tapaba la mesa de los panes en el santuario). */
+  const abajo=!!r&&(L.d2Abajo||[]).includes(id),fi=document.getElementById('lamD2Fila');
+  /* Al presentar en la pantalla ancha no hay lugar debajo: esa parte va sin la comparación (es
+     la misma del paso anterior: el santuario y «hasta el ejército del cielo» son Roma papal). */
+  const sinCmp=abajo&&lamModo==='presentar'&&!lamTel();
+  if(fi)fi.classList.toggle('siempre',abajo);
+  el.hidden=!lamConD2||!r||abajo;
+  if(!r||!lamConD2||sinCmp)lamD2Fila(null);
   /* Donde la acción está a la derecha (los cuernos que vuelan), la estatua va a la izquierda. */
   const so=document.getElementById('lamSobre'),izq=!!r&&(L.d2Izq||[]).includes(id),e=document.getElementById('lamEsc');
   if(so){so.classList.toggle('con-d2',!el.hidden);so.classList.toggle('d2-izq',izq);}if(e)e.classList.toggle('d2-izq',!el.hidden&&izq);
@@ -1249,7 +1264,7 @@ function lamD2(id){
   const k=r[3],ks=[].concat(k||[]);el.classList.toggle('agrega',!ks.length);el.setAttribute('data-on',ks.join(' '));
   el.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',ks.includes(x.getAttribute('data-p'))));
   const ag=document.getElementById('lamD2Ag');if(ag)ag.textContent=k?'':'+ '+(lamParte(id).nombre);
-  lamD2Fila(r);
+  lamD2Fila(lamConD2&&!sinCmp?r:null);
   const m7=document.getElementById('lamD7m'),D7=L.comparar2&&LAMINAS[L.comparar2],q7=D7&&r[5]&&D7.partes.find(x=>x.id===r[5]);
   if(m7){m7.hidden=!q7;if(q7){const im=m7.querySelector('img'),src=lamRuta(D7,q7.img||q7.id);if(im.getAttribute('src')!==src)im.setAttribute('src',src);m7.querySelector('small').textContent=r[4];m7.setAttribute('aria-label','Daniel 7: '+r[4]);}}
   lamD2Pos();
@@ -1305,6 +1320,7 @@ function lamLimpia(conserva){
   const s=document.getElementById('lamMarcasImg');if(s){s.innerHTML='';s.className='lam-marcas-img';}
   const e=document.getElementById('lamEsc');if(e)e.classList.remove('con-ley','en-senas','con-tabla','con-libro','con-d8');
   const tb=document.getElementById('lamTabla');if(tb){tb.hidden=true;tb.innerHTML='';tb.className='lam-tabla';}
+  const ly=document.getElementById('lamLey8');if(ly){ly.hidden=true;ly.innerHTML='';}
   lamBanda(false);
   const z=lamZ();if(!z)return;
   z.querySelector('.lam-capa-g').innerHTML='';
@@ -1640,8 +1656,9 @@ function lamChica(){const s=document.getElementById('lamMarcasImg');
 function lamMov(p,anima){
   const M=LAM().mov,q=!anima||lamQuieto(),z=lamZ(),g=z&&z.querySelector('.lam-capa-g'),s=document.getElementById('lamMarcasImg');
   if(!g||!s)return;
+  const ly=document.getElementById('lamLey8');if(ly){ly.hidden=true;ly.innerHTML='';}
   const e=document.getElementById('lamEsc');if(e)e.classList.add('con-d8');
-  lamD8Der=lamConD2&&!lamTel()&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
+  lamD8Der=lamConD2&&!lamTel()&&!(LAM().d2Abajo||[]).includes(p.id)&&(LAM().paralelo||[]).some(r=>r[0]===p.id)?952:1188;
   /* v223: en una escena angosta (al presentar en la pantalla ancha mide ~500 px) los rótulos van como en el teléfono. */
   s.className='lam-marcas-img d8'+(q?' quieto':'');lamChica();
   /* v224: al entrar a Presentar la escena todavía no tiene su tamaño final: se vuelve a medir
@@ -1822,33 +1839,49 @@ function lamMovCielo(M,g,s,q){
 /* La sombra que avanza sobre el santuario: un degradado dibujado una vez en un canvas. */
 let lamSombraU='';
 function lamSombra(){if(lamSombraU)return lamSombraU;try{const k=document.createElement('canvas');k.width=512;k.height=4;const c=k.getContext('2d'),r=c.createLinearGradient(0,0,512,0);
-  r.addColorStop(0,'rgba(6,4,10,0)');r.addColorStop(.3,'rgba(6,4,10,.55)');r.addColorStop(1,'rgba(6,4,10,.66)');c.fillStyle=r;c.fillRect(0,0,512,4);lamSombraU=k.toDataURL('image/png');}catch(e){}return lamSombraU;}
+  r.addColorStop(0,'rgba(6,4,10,0)');r.addColorStop(.3,'rgba(6,4,10,.28)');r.addColorStop(1,'rgba(6,4,10,.34)');c.fillStyle=r;c.fillRect(0,0,512,4);lamSombraU=k.toDataURL('image/png');}catch(e){}return lamSombraU;}
 /* v224: el continuo (8:11) en cuatro piezas del atrio y del lugar santo, y «la verdad» (8:12)
    aparte. La seña de cada pieza va sobre su objeto si la imagen lo trae (`en` en
    LAMINAS.d8.mov.santuario, sus coordenadas); si no, sin punto, en la franja de abajo, con
    «la verdad» al final. Al pasar la sombra del cuerno se tachan y dicen qué se puso en su lugar. */
+/* v226: la lista de las señas del continuo (debajo de la imagen en Explorar, en la hoja al
+   presentar). `lamLeyE` guarda qué se ve y si ya pasó la sombra: la lista se puede volver a
+   pintar (la hoja) sin perder el estado. */
+let lamLeyE={ve:0,apaga:false};
+function lamLey8Lista(S){
+  const C=S.cosas,conP=C.filter(c=>c.en),ver=S.verdad?[Object.assign({id:'verdad',pre:''},S.verdad)]:[];
+  return conP.map((c,i)=>Object.assign({n:i+1},c)).concat(C.filter(c=>!c.en).concat(ver).map(c=>Object.assign({n:0},c)));
+}
+function lamLey8HTML(S,cl){
+  return '<ol class="d8-ley'+(cl?' '+cl:'')+'" aria-label="Lo que el cuerno quitó">'+lamLey8Lista(S).map((c,i)=>'<li data-cosa="'+esc(c.id)+'" class="'+(c.id==='verdad'?'verdad':'')+(i<lamLeyE.ve?' ve':'')+(lamLeyE.apaga?' apaga':'')+'">'+
+    '<i'+(c.n?'':' class="sin"')+'>'+(c.n||'·')+'</i><div><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>'+(c.pre!=null?c.pre:'en su lugar: ')+esc(c.c)+'</em></div></li>').join('')+'</ol>';
+}
+function lamLey8Pon(){
+  const n=lamLeyE.ve,a=lamLeyE.apaga;
+  document.querySelectorAll('.d8-ley li').forEach((e,i)=>{e.classList.toggle('ve',i<n);e.classList.toggle('apaga',a);});
+  document.querySelectorAll('#lamMarcasImg .d8-num').forEach(e=>{e.classList.toggle('ve',n>0&&+e.getAttribute('data-i')<n);e.classList.toggle('apaga',a);});
+}
 function lamMovSantuario(M,g,s,q){
-  /* v225: `tel: { fila: true }`: en el teléfono el rótulo va en la franja de abajo (el punto se queda en su objeto). */
-  const enFila=c=>!c.en||(lamTel()&&c.tel&&c.tel.fila);
-  const S=M.santuario,C=S.cosas,D=lamD8Der,conP=C.filter(c=>!enFila(c)),fila=C.filter(enFila).concat(S.verdad?[Object.assign({id:'verdad',pre:''},S.verdad)]:[]);
+  /* v226 (revisión: cinco rótulos tapaban la imagen): sobre la imagen solo un punto numerado
+     en cada objeto que la imagen trae (`en`) y el título; las cinco señas van en la lista, con
+     el número de su punto (las que no tienen punto, sin número). Al pasar la sombra del cuerno
+     se tachan y dicen qué se puso en su lugar. */
+  const S=M.santuario,lista=lamLey8Lista(S);
+  lamLeyE={ve:0,apaga:false};
   lamHist({f:'santuario'});
-  g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="1200" y="0" width="1700" height="675" preserveAspectRatio="none"/>'+
-    C.filter(c=>c.en).map(c=>'<circle class="d8-punto" cx="'+c.en[0]+'" cy="'+c.en[1]+'" r="9"/>').join('');
-  const so=g.querySelector('.d8-sombra-s'),pts=[...g.querySelectorAll('.d8-punto')];
-  const et=(c,x,y,cl,st)=>'<div class="d8-et c '+cl+'" data-o="'+(C.indexOf(c)<0?C.length+1:C.indexOf(c)+1)+'" data-cosa="'+esc(c.id)+'" style="left:'+lamPx(x)+';top:'+lamPy(y)+(st||'')+'"><b>'+esc(c.t)+'</b><small>'+esc(c.s)+'</small><em>'+(c.pre!=null?c.pre:'en su lugar: ')+esc(c.c)+'</em></div>';
-  /* Con punto: el rótulo debajo del objeto, sin pasar del borde (ni de la estatua chica). */
-  const ancho=(D-80)/Math.max(1,fila.length);
-    /* `tel: { dx, dy }`: otro sitio para el rótulo en el teléfono. */
-  const rx=c=>Object.assign({dx:c.dx||0,dy:c.dy||0},lamTel()&&c.tel&&!c.tel.fila?c.tel:{});
-  s.innerHTML=conP.map(c=>et(c,Math.max(185,Math.min(c.en[0]+rx(c).dx,D-185)),c.en[1]+rx(c).dy,'cosa')).join('')+
-    fila.map((c,i)=>et(c,40+ancho*(i+.5),655,'cosa fila ab'+(c.id==='verdad'?' verdad':''),';max-width:'+((ancho-14)/12).toFixed(2)+'%')).join('')+
+  g.innerHTML='<image class="d8-sombra-s" href="'+lamSombra()+'" x="1200" y="0" width="1700" height="675" preserveAspectRatio="none"/>';
+  const so=g.querySelector('.d8-sombra-s');
+  s.innerHTML=lista.map((c,i)=>c.n?'<span class="d8-num" data-i="'+i+'" data-cosa="'+esc(c.id)+'" data-x="'+c.en[0]+'" data-y="'+c.en[1]+'" style="left:'+lamPx(c.en[0])+';top:'+lamPy(c.en[1])+'" aria-hidden="true">'+c.n+'</span>':'').join('')+
     lamEt(600,30,'c','«El continuo» y «la verdad»','cuatro piezas del atrio y del lugar santo (8:11), y la Ley (8:12)','oro',0);
-  const apaga=()=>{s.querySelectorAll('.cosa').forEach(e=>e.classList.add('apaga'));pts.forEach(p=>p.classList.add('apaga'));};
-  if(q){so.setAttribute('x','-420');s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));apaga();return;}
-  lamVeEt(s,0,200);for(let i=1;i<=C.length+1;i++)lamVeEt(s,i,100+i*600);
+  const ly=document.getElementById('lamLey8');
+  if(ly){ly.hidden=false;ly.innerHTML=lamPer(lamLey8HTML(S));}
+  if(q){so.setAttribute('x','-420');s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));lamLeyE={ve:lista.length,apaga:true};lamLey8Pon();lamT(lamLey8Pon,0);return;}
+  const yo=lamAnim;
+  lamVeEt(s,0,200);
+  lista.forEach((c,i)=>lamT(()=>{if(yo!==lamAnim)return;lamLeyE.ve=i+1;lamLey8Pon();},300+i*500));
   /* La sombra del cuerno cubre el santuario de derecha a izquierda. */
-  const t=200+(C.length+1)*600+400;
-  lamT(()=>{lamTween(2600,k=>so.setAttribute('x',(1200-1620*lamSuave(k)).toFixed(1)));lamT(apaga,1500);},t);
+  const t=300+lista.length*500+300;
+  lamT(()=>{lamTween(2600,k=>so.setAttribute('x',(1200-1620*lamSuave(k)).toFixed(1)));lamT(()=>{if(yo!==lamAnim)return;lamLeyE.apaga=true;lamLey8Pon();},1500);},t);
 }
 function lamMovPurifica(M,g,s,q){
   lamHist({f:'santuario'});

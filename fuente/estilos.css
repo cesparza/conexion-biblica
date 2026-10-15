@@ -4939,22 +4939,26 @@ span.cmp-ult-c{cursor:default}
 /* v223: en el teléfono la comparación va debajo de la imagen, en una fila de pastillas
    (la columna al lado de la imagen cortaba «+ El santuario será purificado»). */
 .lam-d2-fila{display:none}
+/* v226: las pastillas valen a cualquier ancho; `siempre` = la parte pide la comparación debajo
+   de la imagen también en la pantalla ancha (el santuario: la columna tapaba la mesa). */
+.lam-d2-fila.siempre:not([hidden]){display:flex;flex-wrap:wrap;gap:6px;width:100%;margin:6px 0 0}
+@media (min-width:601px){.lam-d2-fila.siempre .lam-d2f{flex:0 1 320px}}
+.lam-d2f{flex:1 1 calc(50% - 3px);min-width:0;display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:12px;
+  border:1px solid color-mix(in srgb,var(--txt) 16%,transparent);background:color-mix(in srgb,var(--txt) 5%,transparent);color:var(--txt);
+  font:inherit;font-size:.875rem;line-height:1.2;text-align:left;cursor:pointer}
+.lam-d2f>span:last-child{min-width:0;overflow-wrap:anywhere}
+.lam-d2f small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lam-oro)}
+.lam-d2f>img{flex:0 0 auto;width:48px;height:36px;object-fit:cover;border-radius:8px}
+.lam-d2f-est{position:relative;flex:0 0 auto;width:22px;height:56px;overflow:hidden}
+.lam-d2f-est img{position:absolute;max-width:none;opacity:.35;filter:grayscale(.8)}
+.lam-d2f-est img.on{opacity:1;filter:drop-shadow(0 0 3px rgba(242,196,107,.95))}
+.lam-d2f.agrega{cursor:default;padding-left:10px;border-color:transparent;background:#B45309;color:#fff}
+.lam-d2f.agrega small{color:#FDE7C7}
+.lam-d2f:focus-visible{outline:2px solid var(--lam-oro);outline-offset:2px}
 @media (max-width:600px){
   .lam-d2{display:none!important}
   .lam-sobre.con-d2 .lam-ley,.lam-sobre.con-d2.d2-izq .lam-ley{left:1.5%;right:1.5%}
   .lam-d2-fila:not([hidden]){display:flex;flex-wrap:wrap;gap:6px;width:100%;margin:2px 0 0}
-  .lam-d2f{flex:1 1 calc(50% - 3px);min-width:0;display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:12px;
-    border:1px solid color-mix(in srgb,var(--txt) 16%,transparent);background:color-mix(in srgb,var(--txt) 5%,transparent);color:var(--txt);
-    font:inherit;font-size:.875rem;line-height:1.2;text-align:left;cursor:pointer}
-  .lam-d2f>span:last-child{min-width:0;overflow-wrap:anywhere}
-  .lam-d2f small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lam-oro)}
-  .lam-d2f>img{flex:0 0 auto;width:48px;height:36px;object-fit:cover;border-radius:8px}
-  .lam-d2f-est{position:relative;flex:0 0 auto;width:22px;height:56px;overflow:hidden}
-  .lam-d2f-est img{position:absolute;max-width:none;opacity:.35;filter:grayscale(.8)}
-  .lam-d2f-est img.on{opacity:1;filter:drop-shadow(0 0 3px rgba(242,196,107,.95))}
-  .lam-d2f.agrega{cursor:default;padding-left:10px;border-color:transparent;background:#B45309;color:#fff}
-  .lam-d2f.agrega small{color:#FDE7C7}
-  .lam-d2f:focus-visible{outline:2px solid var(--lam-oro);outline-offset:2px}
 }
 @media (max-width:560px){
   /* En el teléfono la escena mide un tercio: solo el nombre (y lo que cambia); el texto completo va en la hoja. */
@@ -4999,3 +5003,50 @@ span.cmp-ult-c{cursor:default}
 @media (prefers-reduced-motion:reduce){
   .d8-et,.d8-et.cosa em,.l23-barra i,.d8-punto{transition:none}
 }
+
+/* v226: el continuo con puntos numerados sobre la imagen y la lista de las cinco señas debajo
+   (antes cinco rótulos tapaban la imagen). */
+.d8-num{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:#F2C46B;color:#1A140C;font:700 .875rem/1 system-ui,sans-serif;box-shadow:0 0 0 3px rgba(12,9,6,.75),0 2px 8px rgba(0,0,0,.5);
+  opacity:0;transition:opacity .5s,background-color .6s}
+.d8-num.ve{opacity:1}
+.d8-num.apaga{background:#9A9082}
+.d8-ley{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
+.d8-ley li{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:12px;font-size:.875rem;line-height:1.25;
+  background:color-mix(in srgb,var(--txt) 5%,transparent);border:1px solid color-mix(in srgb,var(--txt) 14%,transparent);color:var(--txt);
+  opacity:.25;transition:opacity .5s}
+.d8-ley li.ve{opacity:1}
+.d8-ley li>i{flex:0 0 auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.75rem;
+  background:#F2C46B;color:#1A140C}
+.d8-ley li>i.sin{background:transparent;box-shadow:inset 0 0 0 1.5px #B9A27A;color:var(--txt)}
+.d8-ley b{display:block}
+.d8-ley small{display:block;color:var(--gris)}
+.d8-ley em{display:block;font-style:normal;color:#B4462E;max-height:0;overflow:hidden;opacity:0;transition:max-height .6s,opacity .6s}
+.d8-ley li.apaga b{text-decoration:line-through;text-decoration-color:#E5484D}
+.d8-ley li.apaga em{max-height:4em;opacity:1}
+.d8-ley li.verdad{box-shadow:inset 0 2px 0 #F2C46B}
+.lam.pres .d8-ley li{color:#F4EEE2;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+.lam.pres .d8-ley small{color:#B9AF9C}
+.lam.pres .d8-ley em{color:#F4A28C}
+@media (max-width:600px){.d8-ley{grid-template-columns:1fr 1fr}.d8-ley li{font-size:.875rem;padding:6px 8px}.d8-num{width:22px;height:22px;font-size:.75rem}}
+@media (prefers-reduced-motion:reduce){.d8-ley li,.d8-ley em,.d8-num{transition:none}}
+/* v226: lo que va debajo de la imagen (las pastillas de la comparación y la lista del continuo),
+   en la columna de la imagen; en la pantalla ancha, entre la imagen y el riel. */
+.lam-bajo{width:100%;min-width:0}
+.lam-bajo:not(:has(> :not([hidden]))){display:none}
+@media (min-width:900px){
+  .lam.escenas:not(.pres) .lam-bajo{grid-column:1;grid-row:2}
+  .lam.escenas:not(.pres) .lam-riel,.lam.escenas:not(.pres) .lam-tira-c{grid-row:3}
+  .lam.escenas:not(.pres) .lam-hoja{grid-row:1 / span 3}
+}
+.d8-ley.pres{grid-template-columns:1fr 1fr;gap:4px;margin:8px 0 0}
+.d8-ley.pres li{padding:3px 7px;font-size:.875rem;line-height:1.2;gap:6px}
+.d8-ley.pres li>i{width:18px;height:18px;font-size:.75rem}
+.d8-ley.pres small{display:none}
+.d8-ley.pres li.apaga em{max-height:5em}
+/* v226: al presentar, la hoja que trae la lista del continuo cede como en las pantallas bajas. */
+.lam.pres.ancho .lam-hoja:has(.d8-ley){font-size:1rem;padding-top:14px;padding-bottom:14px}
+.lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-p2{font-size:1.75rem}
+.lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa q{font-size:1rem}
+.lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa.i p{font-size:1rem}
+.lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa{padding-top:6px;margin-top:6px}
