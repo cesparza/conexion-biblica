@@ -11,7 +11,7 @@
 #   cabeza.webp / cuerno-1..4.webp
 #                      la cabeza de cuernos-cuatro.png sin sus cuatro cuernos y cada cuerno
 #                      recortado en su sitio: crecen uno por uno hacia los cuatro vientos (8:8)
-#   portada.webp, carnero.webp, macho.webp, cuatro.webp, pequeno.webp, cielo.webp, purificado.webp
+#   portada.webp, carnero.webp, macho.webp, cuatro.webp, pequeno.webp, cielo.webp
 #                      las escenas quietas de cada parte (riel, Comparar, «reducir movimiento»)
 # Las piezas se recortan de la misma imagen: puestas en su sitio, se ve igual que el original.
 # Uso: python3 tools/lamina-d8.py   (imprime las cajas para fuente/laminas.js)
@@ -113,28 +113,7 @@ guarda(pon(cu, cab, 600 - 610 * cab.width / cab.height / 2, 40, 610), 'cuatro.we
 cp = Image.open(R + '../d7/cuerno-pequeno.png').convert('RGBA')
 guarda(pon(noche, cp, 120, 330, 300), 'pequeno.webp')
 guarda(pon(noche, cp, 520, 140, 520), 'cielo.webp')
-# El santuario purificado (v223): el santuario de Camilo sin el cuerno ni las nubes oscuras. Lo
-# oscuro de abajo (el cuerno y su humo) se rellena desde los bordes y queda como nube de luz;
-# el candelabro, el arca y la mesa no se tocan.
-# v225: santuario.webp ya es la imagen nueva (lugar santo con el velo cerrado, sin el arca, el
-# cuerno grande en el centro): purificado.webp NO se vuelve a sacar de ella (saldría sin el arca
-# y con el cuerno a medias). Se deja el de v223 hasta que Camilo traiga la imagen propia del
-# santuario purificado. Para sacarlo otra vez de santuario.webp: PURIFICADO=1.
-import os
-if os.environ.get('PURIFICADO') != '1':
-    print(json.dumps(cajas)); sys.exit(0)
-import numpy as np, cv2
-san = cv2.resize(cv2.imread(R + 'santuario.webp'), (W, H), interpolation=cv2.INTER_AREA)
-v = cv2.cvtColor(san, cv2.COLOR_BGR2HSV)[..., 2]
-m = np.zeros(v.shape, np.uint8); m[v < 150] = 255; m[:228, :] = 0
-m[80:300, 170:390] = 0; m[170:300, 820:1060] = 0
-m = cv2.dilate(m, np.ones((19, 19), np.uint8))
-r = cv2.inpaint(san, m, 30, cv2.INPAINT_TELEA).astype(np.float32)
-mm = cv2.GaussianBlur(m.astype(np.float32) / 255., (0, 0), 12)[..., None]
-r = r * (1 - mm) + cv2.GaussianBlur(r, (0, 0), 18) * mm
-g = np.clip((np.linspace(0, 1, H)[:, None, None] - .45) / .55, 0, 1)
-r = r * (1 - .35 * g) + np.array([150, 215, 255], np.float32) * .35 * g
-pu = Image.fromarray(cv2.cvtColor(np.clip(r, 0, 255).astype(np.uint8), cv2.COLOR_BGR2RGB))
-guarda(pu, 'purificado.webp')
+# v227: purificado.webp ya no sale de aquí: es la imagen propia de Camilo (el mismo lugar santo
+# del santuario, con el velo abierto, el arca y la luz), convertida a 1600 × 900 como santuario.webp.
 
 print(json.dumps(cajas))

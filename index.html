@@ -4984,7 +4984,7 @@ span.cmp-ult-c{cursor:default}
   .d8-et small{display:none}
   .d8-et.cosa em,.d8-et.reino em{font-size:.78em}
   .d8-et.cita{display:none}
-  .d8-et.op,.d8-et.reino:not(.toma),.d8-dir{display:none}
+  .d8-et.op,.d8-et.reino:not(.toma):not(.gen),.d8-dir{display:none}
   .d8-et.grande b{font-size:1.75em}
   .d8-et.rosa{display:none}
   .d8-et.paso{white-space:normal;max-width:94%}
@@ -5002,7 +5002,7 @@ span.cmp-ult-c{cursor:default}
 .lam-marcas-img.chica .d8-et small{display:none}
 .lam-marcas-img.chica .d8-et.cosa em,.lam-marcas-img.chica .d8-et.reino em{font-size:.78em}
 .lam-marcas-img.chica .d8-et.cita{display:none}
-.lam-marcas-img.chica .d8-et.op,.lam-marcas-img.chica .d8-et.reino:not(.toma),.lam-marcas-img.chica .d8-dir{display:none}
+.lam-marcas-img.chica .d8-et.op,.lam-marcas-img.chica .d8-et.reino:not(.toma):not(.gen),.lam-marcas-img.chica .d8-dir{display:none}
 .lam-marcas-img.chica .d8-et.grande b{font-size:1.75em}
 .lam-marcas-img.chica .d8-et.rosa{display:none}
 .lam-marcas-img.chica .d8-et.paso{white-space:normal;max-width:94%}
@@ -5067,6 +5067,38 @@ span.cmp-ult-c{cursor:default}
 .lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa q{font-size:1rem}
 .lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa.i p{font-size:1rem}
 .lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa{padding-top:6px;margin-top:6px}
+/* v227: las citas literales de Elena de White en los últimos acontecimientos. */
+.cmp-ult-egw{display:grid;gap:6px;margin:8px 0 4px}
+.cmp-ult-egw blockquote{margin:0;padding:6px 10px;border-left:3px solid var(--lam-oro,#B98A35);background:color-mix(in srgb,var(--txt) 4%,transparent);border-radius:0 8px 8px 0}
+.cmp-ult-egw blockquote p{margin:0;font-family:var(--cine-serif,Georgia,serif);font-size:1rem;line-height:1.45}
+.cmp-ult-egw cite{font-style:normal;font-size:.75rem;font-weight:700;color:var(--gris)}
+.cmp-ult-egw small{display:block;margin-top:2px;font-size:.875rem;color:var(--gris)}
+/* v227: el reparto del reino de Alejandro: los generales se tocan en el mapa. */
+.d8-et.gen{pointer-events:auto;cursor:pointer;font-family:inherit;border:0;text-align:center;transition:opacity .4s,box-shadow .3s}
+.d8-et.gen.tenue{opacity:.55}
+.d8-et.gen.on{box-shadow:inset 0 0 0 2px #F2C46B}
+.d8-et.gen{--ty:0}
+.d8-et.gen.on{background:rgba(12,9,6,.9);z-index:2}
+.d8-et.gen:focus-visible{outline:2px solid #F2C46B;outline-offset:2px}
+.d8-et.viento.tenue{opacity:.4}
+.d8-nodo.on{fill:#F2C46B}
+/* v227: las once señas en tres pasos, al presentar. */
+.lam-sen-g{list-style:none;margin:.6em 0 0;padding:0;display:grid;gap:.4em}
+.lam-sen-g li{display:flex;gap:.6em;align-items:baseline}
+.lam-sen-g i{font-style:normal;flex:0 0 auto;width:1.7em;height:1.7em;border-radius:50%;background:#F2C46B;color:#1B140A;display:grid;place-items:center;font-weight:800;font-size:.875em}
+.lam-sen-g b{font-weight:700}
+.lam-sen-g .lam-ref{color:#F2C46B;font-size:.875em;white-space:nowrap}
+/* v227: la pregunta para la vida. */
+.lam-aplica-q{font-size:1.375rem;line-height:1.25}
+.d8-et.gen.arriba{--ty:-100%}
+@media (max-width:600px){.d8-et.gen{padding:6px 9px}}
+.lam-marcas-img.chica .d8-et.gen{padding:6px 9px}
+@media (max-width:600px){.d8-et.gen.arriba{--ty:12px}}
+.lam-marcas-img.chica .d8-et.gen.arriba{--ty:12px}
+/* v227: los personajes dentro del texto de una seña siguen en la línea (no son botones de la lista). */
+.lam-sl p .per{display:inline;width:auto;min-height:0;padding:0;gap:0;font-size:inherit;color:inherit;line-height:inherit;text-align:inherit}
+/* Al hundirse no pierde su lugar (el button:active general cambia el transform entero). */
+.d8-et.gen:active:not(:disabled){transform:translate(var(--tx,0),var(--ty,-50%)) scale(.97)}
 </style>
 </head>
 <body>
@@ -5625,7 +5657,7 @@ span.cmp-ult-c{cursor:default}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '40b711d98f5e';
+const VERSION_APP = '2b854fccd9be';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -8333,7 +8365,7 @@ const CONTENIDO = {
  "d7": [
   {
    "t": "📚 En pocas palabras",
-   "h": "<div class=\"highlight-box\">Daniel, ya con unos <strong>setenta años</strong>, sueña de noche con\n    <strong>cuatro bestias que salen del mar</strong>: un león con alas, un oso,\n    un leopardo de cuatro cabezas y una cuarta que no se parece a ningún\n    animal.<br><br>\n    De la cuarta salen <strong>diez cuernos</strong>, y entre ellos brota\n    <strong>uno pequeño</strong> que arranca a tres, habla contra Dios y persigue\n    a los santos.<br><br>\n    Entonces se abre un <strong>tribunal en el cielo</strong>: el Anciano se\n    sienta, se abren los libros, y el reino se le entrega al pueblo de Dios para\n    siempre.<br><br>\n    <em>La idea del capítulo: el juicio no es contra el pueblo de Dios, es a\n    favor de él.</em></div>"
+   "h": "<div class=\"highlight-box\">Daniel, ya con unos <strong>setenta años</strong> (Maxwell, <i>El porvenir del mundo revelado</i>, p. 109), sueña de noche con\n    <strong>cuatro bestias que salen del mar</strong>: un león con alas, un oso,\n    un leopardo de cuatro cabezas y una cuarta que no se parece a ningún\n    animal.<br><br>\n    De la cuarta salen <strong>diez cuernos</strong>, y entre ellos brota\n    <strong>uno pequeño</strong> que arranca a tres, habla contra Dios y persigue\n    a los santos.<br><br>\n    Entonces se abre un <strong>tribunal en el cielo</strong>: el Anciano se\n    sienta, se abren los libros, y el reino se le entrega al pueblo de Dios para\n    siempre.<br><br>\n    <em>La idea del capítulo: el juicio no es contra el pueblo de Dios, es a\n    favor de él.</em></div>"
   },
   {
    "t": "🌊 Cuándo y dónde fue la visión",
@@ -8423,7 +8455,7 @@ const CONTENIDO = {
   {
    "t": "🧭 «Fueron puestos unos tronos»: la escena del juicio (7:9-10, 13)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Lo que ve Daniel</th><th>Qué enseña</th></tr></thead><tbody><tr><td class=\"key\">«Fueron puestos unos tronos»</td><td>El verbo arameo es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.</td></tr><tr><td class=\"key\">«Se sentó un Anciano de días»</td><td>Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.</td></tr><tr><td class=\"key\">Vestido blanco como la nieve; pelo como lana limpia</td><td>Pureza sin mancha y eternidad: un Juez que no se puede comprar.</td></tr><tr><td class=\"key\">Trono de llamas con ruedas de fuego, y un río de fuego</td><td>Un trono que se mueve, como el carro de Ezequiel 1. El fuego es el juicio que purifica.</td></tr><tr><td class=\"key\">Miles de miles y millones de millones</td><td>Ángeles, «ministros y testigos» del tribunal (CS 533; Apocalipsis 5:11). No son los juzgados.</td></tr><tr><td class=\"key\">El Hijo del hombre viene «con las nubes» y «lo hicieron acercarse»</td><td>Los ángeles lo llevan ante el Padre, no a la tierra. El Día de la Expiación la nube entraba al lugar santísimo (Levítico 16:2).</td></tr></tbody></table></div><div class=\"highlight-box\">El trono con ruedas muestra un <b>traslado</b>: del lugar santo al <b>lugar santísimo</b> del santuario celestial, donde está el arca con la ley. Los tronos son varios: en Apocalipsis 4:4 hay veinticuatro tronos alrededor del de Dios. Otra lectura ve un plural de majestad: un solo gran trono.</div><p>Fuente: CS 533; Bohr, <i>Daniel 1-10</i>, p. 276-280; Smith, <i>Las profecías de Daniel</i>, p. 58-59; Doukhan, <i>Secretos de Daniel</i>, p. 115-116.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Lo que ve Daniel</th><th>Qué enseña</th></tr></thead><tbody><tr><td class=\"key\">«Fueron puestos unos tronos»</td><td>El verbo arameo es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.</td></tr><tr><td class=\"key\">«Se sentó un Anciano de días»</td><td>Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.</td></tr><tr><td class=\"key\">Vestido blanco como la nieve; pelo como lana limpia</td><td>Pureza sin mancha y eternidad.</td></tr><tr><td class=\"key\">Trono de llamas con ruedas de fuego, y un río de fuego</td><td>Un trono que se mueve, como el carro de Ezequiel 1. El fuego es el juicio que purifica.</td></tr><tr><td class=\"key\">Miles de miles y millones de millones</td><td>Ángeles, «ministros y testigos» del tribunal (CS 533; Apocalipsis 5:11). No son los juzgados.</td></tr><tr><td class=\"key\">El Hijo del hombre viene «con las nubes» y «lo hicieron acercarse»</td><td>Los ángeles lo llevan ante el Padre, no a la tierra. El Día de la Expiación la nube entraba al lugar santísimo (Levítico 16:2).</td></tr></tbody></table></div><div class=\"highlight-box\">El trono con ruedas muestra un <b>traslado</b>: del lugar santo al <b>lugar santísimo</b> del santuario celestial, donde está el arca con la ley. Los tronos son varios: en Apocalipsis 4:4 hay veinticuatro tronos alrededor del de Dios. Otra lectura ve un plural de majestad: un solo gran trono.</div><p>Fuente: CS 533; Bohr, <i>Daniel 1-10</i>, p. 276-280; Smith, <i>Las profecías de Daniel</i>, p. 58-59; Doukhan, <i>Secretos de Daniel</i>, p. 115-116.</p>"
   },
   {
    "t": "🧭 Dónde y cuándo empieza el juicio",
@@ -8522,7 +8554,7 @@ const CONTENIDO = {
   },
   {
    "t": "✝️ El tamid: el ministerio continuo de Cristo",
-   "h": "<div class=\"highlight-box\">La palabra hebrea <em>tamid</em>, que la Reina-Valera traduce \"sacrificio continuo\", no significa literalmente \"sacrificio\": significa \"continuo\" o \"permanente\" y se usaba en el santuario del Antiguo Testamento para el holocausto diario, las lámparas siempre encendidas y el pan siempre presente. En Daniel 8 representa, en sentido más amplio, el ministerio permanente de Cristo como Sumo Sacerdote en el santuario celestial (Hebreos 7:21-25; 8:1-2). Tanto la Roma pagana (que destruyó el templo de Jerusalén en el año 70 d.C.) como la Roma cristiana medieval \"abolieron\" en la práctica ese ministerio, al desviar la atención del pueblo del único mediador hacia un sistema humano de intermediarios.</div>"
+   "h": "<div class=\"highlight-box\">La palabra hebrea <em>tamid</em>, que la Reina-Valera traduce \"sacrificio continuo\", no significa literalmente \"sacrificio\": significa \"continuo\" o \"permanente\" y se usaba en el santuario del Antiguo Testamento para el holocausto diario, las lámparas siempre encendidas y el pan siempre presente. En Daniel 8 representa, en sentido más amplio, el ministerio permanente de Cristo como Sumo Sacerdote en el santuario celestial (Hebreos 7:21-25; 8:1-2). Solo la fase papal del cuerno quita el continuo: viene después de que el cuerno crece «hasta llegar al ejército del cielo» (8:10-11). Roma pagana destruyó el templo de la tierra: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26). Y los sacrificios de la tierra los terminó la muerte de Cristo: «a la mitad de la semana hará cesar el sacrificio y la ofrenda» (9:27); el velo del templo se rasgó (Mateo 27:51).</div>"
   },
   {
    "t": "⏳ Las 2.300 tardes y mañanas",
@@ -8569,7 +8601,17 @@ const CONTENIDO = {
   {
    "t": "🧭 Qué quitó el cuerno: «el continuo» del atrio y del lugar santo",
    "capa": "contexto",
-   "h": "<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Pieza</th><th>Dónde</th><th>Qué representa</th><th>Qué se puso en su lugar</th></tr></thead><tbody><tr><td class=\"key\">Altar del holocausto</td><td>Atrio</td><td>La muerte de Cristo, una vez para siempre</td><td>La misa, que lo repite, y la penitencia</td></tr><tr><td class=\"key\">Mesa de los panes</td><td>Lugar santo</td><td>La Palabra de Dios</td><td>La tradición: solo el sacerdote la explica</td></tr><tr><td class=\"key\">Candelabro</td><td>Lugar santo</td><td>Cristo, luz del mundo, y su Espíritu</td><td>Una iglesia a oscuras</td></tr><tr><td class=\"key\">Altar del incienso</td><td>Lugar santo, delante del velo</td><td>La intercesión de Cristo (Hebreos 7:25)</td><td>El confesionario, María y los santos</td></tr></tbody></table></div><p>El arca no está en la lista: queda detrás del velo, en el santísimo, donde Cristo entra en 1844 (8:14). «Echó por tierra la verdad» (8:12) va aparte: es la Ley de Dios (Salmo 119:142) y el sábado, como el cuerno de Daniel 7 que «pensará en cambiar los tiempos y la ley» (7:25).</p><div class=\"warn-box\">Otra lectura ve en «el continuo» el paganismo, quitado para dar lugar al papado. Aquí se sigue la del ministerio de Cristo.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-313; apuntes «Cómo quitó el continuo el papado».</p>"
+   "h": "<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Pieza</th><th>Dónde</th><th>Qué representa</th><th>Qué se puso en su lugar</th></tr></thead><tbody><tr><td class=\"key\">Altar del holocausto</td><td>Atrio</td><td>La muerte de Cristo, una vez para siempre</td><td>La misa, que lo repite, y la penitencia</td></tr><tr><td class=\"key\">Mesa de los panes</td><td>Lugar santo</td><td>La Palabra de Dios</td><td>La tradición: solo el sacerdote la explica</td></tr><tr><td class=\"key\">Candelabro</td><td>Lugar santo</td><td>Cristo, luz del mundo, y su Espíritu</td><td>Una iglesia a oscuras</td></tr><tr><td class=\"key\">Altar del incienso</td><td>Lugar santo, delante del velo</td><td>La intercesión de Cristo (Hebreos 7:25)</td><td>El confesionario, María y los santos</td></tr></tbody></table></div><p>El arca no está en la lista: queda detrás del velo, en el santísimo, donde Cristo entra en 1844 (8:14). «Echó por tierra la verdad» (8:12) va aparte: es la Ley de Dios (Salmo 119:142) y el sábado, como el cuerno de Daniel 7 que «pensará en cambiar los tiempos y la ley» (7:25).</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-313; apuntes «Cómo quitó el continuo el papado».</p>"
+  },
+  {
+   "t": "🧭 Dos lecturas del continuo, lado a lado",
+   "capa": "contexto",
+   "h": "<p>Hay dos lecturas del continuo (Bohr, <i>Daniel 1-10</i>, p. 307). Cada una con su fuente:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th></th><th>El ministerio de Cristo</th><th>El paganismo (los pioneros)</th></tr></thead><tbody><tr><td class=\"key\">Qué es el continuo</td><td>El ministerio continuo de Cristo en el santuario del cielo, que el papado usurpó en la tierra (Bohr, p. 307-312)</td><td>“el asolamiento continuo era el paganismo, y la ‘abominación espantosa,’ el papado” (Smith, p. 157)</td></tr><tr><td class=\"key\">Quién lo quita</td><td>El papado: «por él fue quitado el sacrificio continuo» (8:11)</td><td>Se quita para que se levante el papado: “Esto sucedió como preparativo para el establecimiento del papado” (Smith, p. 159)</td></tr><tr><td class=\"key\">Cuándo</td><td>508: 1798 menos los 1.290 días de 12:11 (apuntes «Cómo quitó el continuo el papado»)</td><td>“el continuo fué quitado hacia 508” (Smith, p. 159)</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-312; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; apuntes «Cómo quitó el continuo el papado» y «Periodos proféticos Daniel 12».</p>"
+  },
+  {
+   "t": "🧭 Roma pagana y el continuo",
+   "capa": "contexto",
+   "h": "<p>En Daniel 8 solo la fase papal del cuerno quita el continuo. Lo que dice cada texto:</p><ul class=\"tight\"><li>Roma pagana destruyó el templo de la tierra: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26).</li><li>Los sacrificios de la tierra los terminó la muerte de Cristo: «a la mitad de la semana hará cesar el sacrificio y la ofrenda» (9:27), y el velo del templo se rasgó (Mateo 27:51).</li><li>El continuo de 8:11 viene después de que el cuerno crece «hasta llegar al ejército del cielo» (8:10): «Aun se engrandeció frente al príncipe de los ejércitos; por él fue quitado el sacrificio continuo» (8:11).</li></ul><p>Fuente: Daniel 8:10-11; 9:26-27; Mateo 27:51.</p>"
   },
   {
    "t": "🧭 «¿Hasta cuándo durará la visión?»: por qué son años",
@@ -42750,7 +42792,7 @@ const BANCO = [
    "La destrucción de Jerusalén por Roma"
   ],
   "a": 0,
-  "e": "El griego dice «la tribulación, la grande», la misma de Daniel 12:1 y Mateo 24:21. Otra lectura la ve más amplia. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 122; Escuela Sabática 2019-1T, p. 44.",
+  "e": "El griego dice «la tribulación, la grande», la misma de Daniel 12:1 y Mateo 24:21. Elena de White aplica Mateo 24:21-22 a los 1260 años: “Al predecir la ‘gran tribulación’ que había de venir sobre la iglesia, el Salvador había dicho…” (CS 309), y habla de “una gran tribulación final” después del cierre de la gracia (CS 672). Otra lectura la ve más amplia. Fuente: CS 309 y 672; Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 122; Escuela Sabática 2019-1T, p. 44.",
   "nv": 1
  },
  {
@@ -59359,7 +59401,13 @@ const LAMINAS = {
    "titulo": "Un reino que no será jamás destruido",
    "ref2": "Daniel 2:44",
    "fondo": "cierre.webp",
-   "nota": "Hoy estamos en los pies. Lo que sigue es la piedra."
+   "nota": "Hoy estamos en los pies. Lo que sigue es la piedra. Fuente: Bohr, Daniel 1-10, p. 61-62."
+  },
+  "aplica": {
+   "pregunta": "¿Caes hoy sobre la piedra, o esperas a que ella caiga?",
+   "ref": "Daniel 2:34",
+   "texto": "una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies",
+   "nota": "Jesús lo aplicó a cada persona: «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado» (Mateo 21:44)."
   },
   "historia": [
    {
@@ -59367,7 +59415,7 @@ const LAMINAS = {
     "titulo": "Cautivos en Babilonia",
     "ref": "Daniel 1:2",
     "texto": "El Señor entregó en sus manos a Joacim, rey de Judá",
-    "nota": "En 605 a.C. Nabucodonosor sitia Jerusalén y se lleva a Daniel, Ananías, Misael y Azarías, jóvenes de unos 18 años (1:1-6). Vendrán dos deportaciones más, en 597 y 586 a.C. En el segundo año de Nabucodonosor llega el sueño (2:1)."
+    "nota": "En 605 a.C. Nabucodonosor sitia Jerusalén y se lleva a Daniel, Ananías, Misael y Azarías, jóvenes de unos 18 años (1:1-6): Daniel “sólo tenía dieciocho años cuando fue llevado a una corte pagana” (4T 570, citado en Bohr, <i>Daniel 1-10</i>, p. 45). Vendrán dos deportaciones más, en 597 y 586 a.C. En el segundo año de Nabucodonosor llega el sueño (2:1)."
    },
    {
     "f": "h1",
@@ -59822,7 +59870,7 @@ const LAMINAS = {
     "titulo": "En el primer año de Belsasar",
     "ref": "Daniel 7:1",
     "texto": "En el primer año de Belsasar, rey de Babilonia, tuvo Daniel un sueño y visiones de su cabeza mientras estaba en su lecho",
-    "nota": "Hacia el 553 a.C., unos cincuenta años después del sueño de la estatua. Daniel tiene unos setenta años, y Babilonia caerá catorce años después (Daniel 5). Daniel «escribió el sueño» (7:1)."
+    "nota": "Hacia el 553 a.C., unos cincuenta años después del sueño de la estatua. Daniel tiene unos setenta años (Maxwell, <i>El porvenir del mundo revelado</i>, p. 109), y Babilonia caerá catorce años después (Daniel 5). Daniel «escribió el sueño» (7:1)."
    },
    {
     "f": "mar",
@@ -59845,6 +59893,12 @@ const LAMINAS = {
    "texto": "se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.",
    "titulo": "El juicio es a favor de los santos",
    "nota": "Hoy vivimos en el tiempo del juicio. Al cerrarse la gracia el Hijo recibe el reino; después Cristo vuelve y los santos lo reciben. Pasados los mil años, el reino eterno llena la tierra."
+  },
+  "aplica": {
+   "pregunta": "El juicio es a favor de los santos: ¿ya le confiaste tu caso a Cristo?",
+   "ref": "Daniel 7:22",
+   "texto": "se hizo justicia a los santos del Altísimo",
+   "nota": "En el juicio, “Jesús aparecerá como el abogado de ellos, para interceder en su favor ante Dios” (CS 536)."
   },
   "paraleloCols": [
    "Daniel 7",
@@ -60355,6 +60409,34 @@ const LAMINAS = {
    }
   ],
   "senasFuente": "Bohr, <i>Daniel 1-10</i>, p. 119, 124-127; CS 55-56 y 499.",
+  "senasGrupos": [
+   {
+    "t": "De dónde sale",
+    "s": [
+     0,
+     1,
+     2
+    ]
+   },
+   {
+    "t": "Qué es",
+    "s": [
+     3,
+     5,
+     6
+    ]
+   },
+   {
+    "t": "Qué hace",
+    "s": [
+     4,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  ],
   "periodo": {
    "tras": "cuerno",
    "t": "Tiempo, tiempos y medio tiempo",
@@ -60648,9 +60730,10 @@ const LAMINAS = {
     "corto": "Roma dividida: los reinos que salieron de Roma, como los diez dedos de Daniel 2.",
     "interp": [
      "La segunda etapa de Roma. Las tribus del norte se repartieron el imperio de occidente, y en 476 d.C. cayó el último emperador. Son los diez dedos de Daniel 2.",
-     "Alamanes, francos, burgundios, vándalos, suevos, visigodos, sajones, ostrogodos, lombardos y hérulos. De ellos salieron las naciones de Europa occidental, que nunca se volvieron a unir."
+     "Alamanes, francos, burgundios, vándalos, suevos, visigodos, sajones, ostrogodos, lombardos y hérulos. De ellos salieron las naciones de Europa occidental, que nunca se volvieron a unir: Carlomagno, Carlos V y Napoleón lo intentaron.",
+     "Se unen solo «por una hora»: los diez reyes «recibirán autoridad como reyes por una hora, juntamente con la bestia» y «entregarán su poder y autoridad a la bestia» (Apocalipsis 17:12-13). Pero la unión no dura: «no se unirán el uno con el otro, como el hierro no se mezcla con el barro» (2:43)."
     ],
-    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24."
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40."
    },
    {
     "id": "cuerno",
@@ -60717,7 +60800,7 @@ const LAMINAS = {
        400,
        225
       ],
-      "nota": "Dios el Padre preside el juicio. Blanco y lana limpia: pureza y eternidad, un Juez que no se puede comprar. En visión, el Padre se levanta y en un carro de llamas entra en el lugar santísimo, y se sienta (PE 55)."
+      "nota": "Dios el Padre preside el juicio. Blanco y lana limpia: pureza y eternidad. En visión, el Padre se levanta y en un carro de llamas entra en el lugar santísimo, y se sienta (PE 55)."
      },
      {
       "t": "Un río de fuego",
@@ -61062,7 +61145,7 @@ const LAMINAS = {
     "titulo": "En el tercer año de Belsasar",
     "ref": "Daniel 8:1-2",
     "texto": "En el año tercero del reinado del rey Belsasar, yo, Daniel, tuve una visión, después de aquella que había tenido antes. … En la visión, pues, me veía junto al río Ulai.",
-    "nota": "Hacia el 550 a.C., unos tres años después de Daniel 7. Babilonia caerá once años después (Daniel 5). En visión, Daniel está en Susa, que será capital de Persia: la visión empieza donde empiezan las 2.300 tardes y mañanas, en tiempos de Persia."
+    "nota": "Hacia el 550 a.C., unos tres años después de Daniel 7. Babilonia caerá once años después (Daniel 5). En visión, Daniel está en Susa, que será capital de Persia (Smith, <i>Las profecías de Daniel</i>, p. 19): la visión empieza donde empiezan las 2.300 tardes y mañanas, en tiempos de Persia."
    }
   ],
   "despues": {
@@ -61079,6 +61162,12 @@ const LAMINAS = {
    "titulo": "La visión es para el tiempo del fin",
    "nota": "Desde 1844 el santuario se purifica: es el juicio de Daniel 7. Hoy vivimos en ese tiempo. Después el cuerno será quebrantado, «aunque no por mano humana» (8:25)."
   },
+  "aplica": {
+   "pregunta": "¿Qué parte de la obra diaria de Cristo dejaste en manos de otro?",
+   "ref": "Daniel 8:11",
+   "texto": "por él fue quitado el sacrificio continuo",
+   "nota": "El continuo es el ministerio continuo de Cristo en el santuario del cielo, que el papado quitó en la tierra (Bohr, <i>Daniel 1-10</i>, p. 307)."
+  },
   "paraleloCols": [
    "Daniel 8",
    "Daniel 2",
@@ -61091,7 +61180,8 @@ const LAMINAS = {
   "comparar2": "d7",
   "conTxt": "Con Daniel 2 y 7",
   "d2Abajo": [
-   "santuario"
+   "santuario",
+   "purificado"
   ],
   "agrega": "Daniel 2 no lo muestra: lo agrega Daniel 8",
   "noTrae": {
@@ -61565,8 +61655,8 @@ const LAMINAS = {
       "t": "Tracia y Asia Menor",
       "s": "Lisímaco",
       "en": [
-       600,
-       165
+       830,
+       176
       ]
      },
      {
@@ -61934,6 +62024,7 @@ const LAMINAS = {
     "c": "#B97A45",
     "mov": "cuatro",
     "ms": 7600,
+    "reparto": "alejandro",
     "texto": "cuando estaba en su mayor fuerza, aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo.",
     "ref": "8:8",
     "texto2": "cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él.",
@@ -61941,10 +62032,49 @@ const LAMINAS = {
     "corto": "Alejandro muere en su mayor fuerza; su reino se reparte entre cuatro generales.",
     "interp": [
      "«Cuando estaba en su mayor fuerza» (8:8): Alejandro Magno murió en 323 a.C., a los 32 años, en la cumbre de su poder.",
-     "Después de la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio hacia los cuatro vientos: Casandro al oeste (Macedonia y Grecia), Lisímaco al norte (Tracia y Asia Menor), Seleuco I Nicátor al oriente (Siria y Babilonia) y Tolomeo I Sóter al sur (Egipto).",
-     "Son las cuatro cabezas del leopardo de Daniel 7 (7:6). Gabriel lo dice: «cuatro reinos se levantarán de esa nación» (8:22)."
+     "Después de la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio hacia los cuatro vientos: Casandro al oeste (Macedonia y Grecia), Lisímaco al norte (Tracia y Asia Menor), Seleuco I Nicátor al oriente (Siria y Babilonia) y Tolomeo I Sóter al sur (Egipto). Tócalos en el mapa, paso a paso.",
+     "Son las cuatro cabezas del leopardo de Daniel 7 (7:6). Gabriel lo dice: «cuatro reinos se levantarán de esa nación» (8:22).",
+     "Otra lista, de las dinastías que siguieron, no la de Ipso: antigónidas en Macedonia y Grecia, al oeste (283-168 a.C.); seléucidas en Siria y Mesopotamia, al oriente (312-63 a.C.); tolomeos en Egipto, al sur (323-30 a.C.); y atálidas en Pérgamo, al norte (263-133 a.C.) (Bohr, <i>Daniel 1-10</i>, p. 297)."
     ],
-    "fuente": "Smith, <i>Las profecías de Daniel</i>, p. 88; Bohr, <i>Daniel 1-10</i>, p. 296-297."
+    "fuente": "Smith, <i>Las profecías de Daniel</i>, p. 88, 90-91 y 136-137; Maxwell, <i>El porvenir del mundo revelado</i>, p. 113 y 164; Treiyer, <i>Enigmas descifrados</i>, p. 56; Bohr, <i>Daniel 1-10</i>, p. 296-297.",
+    "pasos": [
+     {
+      "t": "Cuatro cuernos hacia los cuatro vientos",
+      "ref": "8:8",
+      "texto": "en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo",
+      "nota": "Alejandro Magno muere «en su mayor fuerza» (8:8), en 323 a.C., a los 32 años. Gabriel lo explica: «cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él» (8:22)."
+     },
+     {
+      "t": "Casandro · el oeste",
+      "ref": "8:22",
+      "texto": "cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él",
+      "nota": "Después de la batalla de Ipso (301 a.C.), Casandro tomó Macedonia y Grecia, las regiones del oeste (Smith, p. 88; Maxwell, p. 113). Roma conquistó Macedonia en 168 a.C. (Smith, p. 90; Maxwell, p. 164)."
+     },
+     {
+      "t": "Lisímaco · el norte",
+      "ref": "11:4",
+      "texto": "su reino será quebrantado y repartido hacia los cuatro vientos del cielo",
+      "nota": "Lisímaco tomó Tracia y buena parte de Asia Menor, el norte (Smith, p. 88; Maxwell, p. 113). La división en cuatro duró hasta su muerte, en 281 a.C. (Maxwell, p. 113): Seleuco lo venció y se quedó con su reino (Smith, p. 137)."
+     },
+     {
+      "t": "Seleuco · el oriente",
+      "ref": "8:8",
+      "texto": "hacia los cuatro vientos del cielo",
+      "nota": "Seleuco I Nicátor tomó Siria, Babilonia y las tierras del oriente; de él descienden los reyes seléucidas (Smith, p. 88; Maxwell, p. 113). Roma conquistó Siria en 65 a.C. (Smith, p. 91; Maxwell, p. 164)."
+     },
+     {
+      "t": "Tolomeo · el sur",
+      "ref": "8:22",
+      "texto": "aunque no con la fuerza de él",
+      "nota": "Tolomeo I Sóter tomó Egipto, el sur; de él descienden los lágidas (Smith, p. 88; Maxwell, p. 113). Egipto pasó a ser provincia de Roma en 30 a.C. (Smith, p. 91; Maxwell, p. 164)."
+     },
+     {
+      "t": "No para sus descendientes",
+      "ref": "11:4",
+      "texto": "pero no será para sus descendientes, ni según el dominio con que él dominó",
+      "nota": "Los hijos de Alejandro no heredaron el reino: Alejandro IV fue asesinado en 311 a.C. y Heracles en 309 a.C. (Treiyer, <i>Enigmas descifrados</i>, p. 56); “se extinguió la familia de Alejandro” (Smith, p. 88). El reino quedó para cuatro de sus generales."
+     }
+    ]
    },
    {
     "id": "cuerno",
@@ -61966,7 +62096,7 @@ const LAMINAS = {
      "El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.",
      "Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).",
      "«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos (Simposio, p. 396-397). El texto no nombra el viento: dice que creció «hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9). La Septuaginta pone “el norte” donde dice «la tierra gloriosa», y el Simposio concluye: “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).",
-     "La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén."
+     "En la fase pagana, un gobernador romano, Poncio Pilato, crucificó a Cristo, y Roma destruyó el templo de la tierra en 70 d.C.: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26). El continuo lo quita después la fase papal (8:10-11)."
     ],
     "fuente": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
    },
@@ -62014,9 +62144,10 @@ const LAMINAS = {
      "El cuerno no puede subir al cielo: pone en la tierra un sustituto de cada pieza. En lugar del sacrificio de una vez para siempre, la misa; en lugar de la Palabra, la tradición; en lugar de la luz, una iglesia a oscuras; en lugar de la intercesión de Cristo, el único mediador (1 Timoteo 2:5), el confesionario y las oraciones a María y a los santos. Así «el lugar de su santuario fue echado por tierra».",
      "El continuo es del atrio y del lugar santo; el santísimo queda fuera, porque Cristo entra allí al terminar las 2.300 tardes y mañanas, en 1844 (8:14). El arca no está entre lo que el cuerno quita: queda detrás del velo.",
      "«Echó por tierra la verdad» (8:12) va aparte: no es un mueble del santuario. Es la Ley de Dios, que el Salmo 119:142 llama la verdad, y con ella el sábado: el cuerno de Daniel 7 «pensará en cambiar los tiempos y la ley» (7:25).",
-     "Otra lectura ve en el continuo el paganismo, quitado para dar lugar al papado. Las dos llegan a 508, cuando Clodoveo I dio poder civil al papado (ver Daniel 11:31 y 12:11)."
+     "Hay dos lecturas del continuo (Bohr, p. 307): el paganismo, quitado para dar paso al papado, y el ministerio continuo de Cristo en el santuario celestial, que el papado quitó. Esta lámina sigue la segunda (Bohr, p. 307-312; apuntes “Cómo quitó el continuo el papado”), que fecha la quita en 508: 1798 menos los 1.290 días de 12:11 (apuntes).",
+     "La de los pioneros: “el asolamiento continuo era el paganismo, y la ‘abominación espantosa,’ el papado” (Smith, <i>Las profecías de Daniel</i>, p. 157), y “el continuo fué quitado hacia 508. Esto sucedió como preparativo para el establecimiento del papado” (p. 159)."
     ],
-    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
+    "fuente": "Bohr, <i>Daniel 1-10</i>, p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado»."
    },
    {
     "id": "purificado",
@@ -62060,6 +62191,89 @@ const LAMINAS = {
      "Antes de eso está la cuarta etapa de Roma: herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue hasta el fin (CS 636). Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26)."
     ],
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+   }
+  ]
+ }
+};
+
+/* v227: el reparto de un reino (los generales de Alejandro), datos de un mapa reutilizable. */
+const REPARTOS = {
+ "alejandro": {
+  "fondo": "noche",
+  "rosa": {
+   "c": [
+    620,
+    350
+   ],
+   "dx": 380,
+   "dy": 210,
+   "vientos": [
+    [
+     "norte",
+     "n"
+    ],
+    [
+     "oriente",
+     "e"
+    ],
+    [
+     "sur",
+     "s"
+    ],
+    [
+     "poniente",
+     "o"
+    ]
+   ]
+  },
+  "fin": [
+   "No será para sus descendientes",
+   "Alejandro IV († 311 a.C.) y Heracles († 309 a.C.) no heredaron: el reino quedó para cuatro generales (11:4)"
+  ],
+  "gen": [
+   {
+    "t": "Casandro",
+    "s": "Macedonia y Grecia",
+    "v": "o",
+    "viento": "el oeste",
+    "en": [
+     450,
+     230
+    ],
+    "roma": "Roma: Macedonia, 168 a.C."
+   },
+   {
+    "t": "Lisímaco",
+    "s": "Tracia y Asia Menor",
+    "v": "n",
+    "viento": "el norte",
+    "en": [
+     830,
+     176
+    ],
+    "roma": "Seleuco lo vence: 281 a.C."
+   },
+   {
+    "t": "Seleuco",
+    "s": "Siria y Babilonia",
+    "v": "e",
+    "viento": "el oriente",
+    "en": [
+     930,
+     250
+    ],
+    "roma": "Roma: Siria, 65 a.C."
+   },
+   {
+    "t": "Tolomeo",
+    "s": "Egipto",
+    "v": "s",
+    "viento": "el sur",
+    "en": [
+     520,
+     565
+    ],
+    "roma": "Roma: Egipto, 30 a.C."
    }
   ]
  }
@@ -62191,6 +62405,13 @@ const ULTIMOS = {
    "cuando": "Desde 1844, en el cielo, mientras sigue abierta la gracia",
    "img": "d7/juicio",
    "nota": "Se abren los libros de los que profesaron ser hijos de Dios. Mientras dura, se predica el evangelio eterno a toda nación.",
+   "egwC": [
+    [
+     "CS 374",
+     "El período completo de los 2.300 días se extendía de 457 ant. de J. C. hasta 1844 de nuestra era, cuando se inició en el cielo el juicio investigador.",
+     "Pone el comienzo del juicio en 1844, al terminar los 2.300 años de Daniel 8:14."
+    ]
+   ],
    "egw": "CS 374 y 533-545",
    "partes": [
     "juicio",
@@ -62209,7 +62430,8 @@ const ULTIMOS = {
        "Daniel 7:10",
        "El Juez se sentó y los libros fueron abiertos."
       ]
-     ]
+     ],
+     []
     ],
     "d8": [
      "8:14",
@@ -62221,7 +62443,8 @@ const ULTIMOS = {
        "Daniel 8:14",
        "luego el santuario será purificado"
       ]
-     ]
+     ],
+     []
     ],
     "ap14": [
      "14:6-7",
@@ -62233,7 +62456,8 @@ const ULTIMOS = {
        "Apocalipsis 14:7",
        "la hora de su juicio ha llegado"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62265,6 +62489,13 @@ const ULTIMOS = {
    "vez": "ley",
    "cuando": "Se forma cuando las iglesias usan el poder del Estado para imponer sus dogmas; la ley dominical es su primera obra",
    "nota": "Los Estados Unidos, la bestia con cuernos de cordero, hablan como dragón: las iglesias usan el poder civil para imponer sus dogmas, como hizo el papado. Así se sana la herida mortal.",
+   "egwC": [
+    [
+     "CS 502",
+     "por el mismo hecho de imponer un deber religioso con ayuda del poder secular, las mismas iglesias estarían elevando una imagen a la bestia",
+     "La imagen de la bestia se forma cuando las iglesias usan el poder civil para imponer su religión."
+    ]
+   ],
    "egw": "CS 496-502 y 636",
    "l": {
     "d11": [
@@ -62277,7 +62508,8 @@ const ULTIMOS = {
        "Daniel 11:41",
        "Entrará en la tierra gloriosa"
       ]
-     ]
+     ],
+     []
     ],
     "ap13": [
      "13:3, 11-14",
@@ -62293,7 +62525,8 @@ const ULTIMOS = {
        "Apocalipsis 13:14",
        "que le hagan una imagen a la bestia que fue herida de espada y revivió"
       ]
-     ]
+     ],
+     []
     ],
     "ap17": [
      "17:8",
@@ -62305,7 +62538,8 @@ const ULTIMOS = {
        "Apocalipsis 17:8",
        "la bestia que era y no es, y será"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62342,6 +62576,13 @@ const ULTIMOS = {
    "vez": "ley",
    "cuando": "Se impone el domingo por ley: la gran prueba. Al imponerlo, las iglesias levantan la imagen de la bestia",
    "nota": "El sábado es la piedra de toque de la lealtad. Quien pisotea la ley de Dios para obedecer una ley humana recibe la marca de la bestia; nadie la recibe a ciegas.",
+   "egwC": [
+    [
+     "CS 663",
+     "El sábado será la gran piedra de toque de la lealtad; pues es el punto especialmente controvertido.",
+     "La ley dominical pone a prueba a quién se obedece: a Dios o a un poder humano."
+    ]
+   ],
    "egw": "CS 502-503 y 662-663; EUD 107-122",
    "l": {
     "d7": [
@@ -62354,7 +62595,8 @@ const ULTIMOS = {
        "Daniel 7:25",
        "pensará en cambiar los tiempos y la Ley"
       ]
-     ]
+     ],
+     []
     ],
     "d11": [
      "11:41",
@@ -62366,13 +62608,15 @@ const ULTIMOS = {
        "Daniel 11:41",
        "Entrará en la tierra gloriosa"
       ]
-     ]
+     ],
+     []
     ],
     "mt24": [
      "24:15",
      0,
      "La abominación desoladora en el lugar santo: la ley dominical nacional.",
      "Bohr, <i>Daniel 11</i>, p. 49 y 128",
+     [],
      []
     ],
     "ap13": [
@@ -62385,7 +62629,8 @@ const ULTIMOS = {
        "Apocalipsis 13:16",
        "se les pusiera una marca en la mano derecha o en la frente"
       ]
-     ]
+     ],
+     []
     ],
     "ap14": [
      "14:9-11",
@@ -62397,7 +62642,8 @@ const ULTIMOS = {
        "Apocalipsis 14:9",
        "Si alguno adora a la bestia y a su imagen y recibe la marca en su frente o en su mano"
       ]
-     ]
+     ],
+     []
     ],
     "ap17": [
      "17:12-13",
@@ -62409,7 +62655,8 @@ const ULTIMOS = {
        "Apocalipsis 17:13",
        "entregarán su poder y autoridad a la bestia"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62460,6 +62707,7 @@ const ULTIMOS = {
      0,
      "«Los que estén en Judea, huyan a los montes»: la señal de entonces es la de ahora.",
      "EUD 104",
+     [],
      []
     ]
    },
@@ -62478,6 +62726,13 @@ const ULTIMOS = {
    "c": "Pequeño tiempo de angustia",
    "cuando": "Con la ley dominical, antes del cierre de la gracia",
    "nota": "Un corto tiempo de angustia mientras Cristo sigue en el santuario. Los que no honran el domingo son llevados a los tribunales, encarcelados o desterrados; algunos mueren. Hay mártires porque la gracia sigue abierta.",
+   "egwC": [
+    [
+     "CS 666",
+     "Cuando los defensores de la verdad se nieguen a honrar el domingo, unos serán echados en la cárcel, otros serán desterrados y otros aún tratados como esclavos.",
+     "Antes del cierre de la gracia hay cárcel y destierro por no honrar el domingo."
+    ]
+   ],
    "egw": "PE 33 y 85-86; CS 665-667; EUD 123-132",
    "l": {
     "d11": [
@@ -62490,13 +62745,15 @@ const ULTIMOS = {
        "Daniel 11:44",
        "saldrá con gran ira para destruir y matar a muchos"
       ]
-     ]
+     ],
+     []
     ],
     "mt24": [
      "24:9",
      0,
      "«Os entregarán a tribulación, y os matarán»: hay mártires en este tiempo corto.",
      "Bohr, <i>Daniel 11</i>, p. 172",
+     [],
      []
     ],
     "ap12": [
@@ -62509,7 +62766,8 @@ const ULTIMOS = {
        "Apocalipsis 12:17",
        "se fue a hacer la guerra contra el resto de la descendencia de ella"
       ]
-     ]
+     ],
+     []
     ],
     "ap13": [
      "13:17",
@@ -62521,7 +62779,8 @@ const ULTIMOS = {
        "Apocalipsis 13:17",
        "que ninguno pudiera comprar ni vender"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62555,6 +62814,13 @@ const ULTIMOS = {
    "vez": "crisis",
    "cuando": "Empieza con el mensaje a Laodicea; llega a su punto decisivo con la ley dominical y la persecución",
    "nota": "El testimonio directo del Testigo fiel sacude a la iglesia: unos lo aceptan y se purifican; otros se levantan contra él. Cuando llega la prueba, los que no fueron santificados por la verdad dejan la fe.",
+   "egwC": [
+    [
+     "CS 666",
+     "Conforme vaya acercándose la tempestad, muchos que profesaron creer en el mensaje del tercer ángel, pero que no fueron santificados por la obediencia a la verdad, abandonarán su fe, e irán a engrosar las filas de la oposición.",
+     "El zarandeo: muchos que conocían el mensaje lo dejan cuando llega la prueba."
+    ]
+   ],
    "egw": "PE 269-271; CS 666; EUD 147-156",
    "l": {
     "d11": [
@@ -62567,13 +62833,15 @@ const ULTIMOS = {
        "Daniel 11:41",
        "Entrará en la tierra gloriosa, y muchas provincias caerán"
       ]
-     ]
+     ],
+     []
     ],
     "mt24": [
      "24:10-12",
      0,
      "Muchos tropiezan, se entregan unos a otros y el amor de muchos se enfría.",
      "Bohr, <i>Daniel 11</i>, p. 128",
+     [],
      []
     ],
     "apo": [
@@ -62590,7 +62858,8 @@ const ULTIMOS = {
        "Apocalipsis 3:19",
        "sé, pues, celoso y arrepiéntete"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62623,6 +62892,13 @@ const ULTIMOS = {
    "c": "Lluvia tardía",
    "cuando": "Al empezar el pequeño tiempo de angustia; da poder al fuerte pregón",
    "nota": "El Espíritu se derrama como en Pentecostés, la lluvia temprana (Joel 2:23; Hechos 3:19). Madura la cosecha y prepara al pueblo de Dios para la hora de prueba.",
+   "egwC": [
+    [
+     "CS 669",
+     "así la ‘lluvia tardía’ será dada al final de dicho ministerio para hacer madurar la cosecha.",
+     "Como la lluvia temprana de Pentecostés, el Espíritu se derrama otra vez al final para la cosecha."
+    ]
+   ],
    "egw": "PE 33 y 85-86; CS 669-671; EUD 157-168",
    "l": {
     "d11": [
@@ -62635,7 +62911,8 @@ const ULTIMOS = {
        "Daniel 11:44",
        "Pero noticias del oriente y del norte lo atemorizarán"
       ]
-     ]
+     ],
+     []
     ],
     "ap18": [
      "18:1",
@@ -62647,7 +62924,8 @@ const ULTIMOS = {
        "Apocalipsis 18:1",
        "la tierra fue alumbrada con su gloria"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62675,6 +62953,13 @@ const ULTIMOS = {
    "c": "Fuerte pregón",
    "cuando": "Mientras se impone la ley dominical",
    "nota": "El ángel de Apocalipsis 18 se une al tercer ángel. Muchos que estaban en Babilonia salen y se unen al pueblo de Dios.",
+   "egwC": [
+    [
+     "CS 669",
+     "El ángel que une su voz a la proclamación del tercer mensaje, alumbrará toda la tierra con su gloria.",
+     "El fuerte pregón es el mensaje del tercer ángel dado con poder a todo el mundo (Apocalipsis 18:1)."
+    ]
+   ],
    "egw": "CS 661-664 y 669-670; PE 277-279; EUD 169-182",
    "l": {
     "d11": [
@@ -62691,13 +62976,15 @@ const ULTIMOS = {
        "Daniel 11:41",
        "pero escaparán de sus manos Edom, Moab y la mayoría de los hijos de Amón"
       ]
-     ]
+     ],
+     []
     ],
     "mt24": [
      "24:14",
      0,
      "El evangelio predicado en todo el mundo, y entonces el fin.",
      "EUD 17; apuntes «Visión panorámica de los sucesos finales»",
+     [],
      []
     ],
     "ap14": [
@@ -62710,7 +62997,8 @@ const ULTIMOS = {
        "Apocalipsis 14:8",
        "Ha caído, ha caído Babilonia"
       ]
-     ]
+     ],
+     []
     ],
     "ap18": [
      "18:1-4",
@@ -62726,7 +63014,8 @@ const ULTIMOS = {
        "Apocalipsis 18:4",
        "Salid de ella, pueblo mío"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62768,6 +63057,13 @@ const ULTIMOS = {
    "c": "Sellamiento",
    "cuando": "Durante el fuerte pregón; termina al cerrarse la gracia",
    "nota": "Los vientos se detienen hasta que los siervos de Dios estén sellados. Los que muestran su lealtad guardando la ley de Dios reciben el sello; los que aceptan el falso día de reposo, la marca.",
+   "egwC": [
+    [
+     "CS 671",
+     "todos los que han resultado fieles a los preceptos divinos han recibido ‘el sello del Dios vivo.’",
+     "El sellamiento termina cuando todos los fieles lo han recibido, antes de que Jesús deje de interceder."
+    ]
+   ],
    "egw": "CS 663 y 671; PE 38-39",
    "l": {
     "d11": [
@@ -62780,7 +63076,8 @@ const ULTIMOS = {
        "Daniel 11:44",
        "Pero noticias del oriente y del norte lo atemorizarán"
       ]
-     ]
+     ],
+     []
     ],
     "apo": [
      "7:1-4",
@@ -62796,7 +63093,8 @@ const ULTIMOS = {
        "Apocalipsis 7:2",
        "que tenía el sello del Dios vivo"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62827,6 +63125,18 @@ const ULTIMOS = {
    "c": "Fin de la gracia",
    "cuando": "Al terminar el juicio investigador, antes de las plagas",
    "nota": "Cada caso quedó decidido para vida o para muerte y Cristo deja de interceder. Termina su obra de mediador y el Hijo recibe el reino: «se levantará Miguel».",
+   "egwC": [
+    [
+     "CS 671",
+     "Entonces Jesús dejará de interceder en el santuario celestial.",
+     "Al cerrarse la gracia termina la intercesión de Cristo."
+    ],
+    [
+     "CS 671",
+     "Cada caso ha sido fallado para vida o para muerte.",
+     "Cada caso queda decidido: ya no hay cambio de bando."
+    ]
+   ],
    "egw": "CS 671; PE 279-280; EUD 193-202",
    "partes": [
     "x-fases",
@@ -62843,7 +63153,8 @@ const ULTIMOS = {
        "Daniel 7:14",
        "Y le fue dado dominio, gloria y reino"
       ]
-     ]
+     ],
+     []
     ],
     "d12": [
      "12:1",
@@ -62855,7 +63166,8 @@ const ULTIMOS = {
        "Daniel 12:1",
        "En aquel tiempo se levantará Miguel"
       ]
-     ]
+     ],
+     []
     ],
     "ap21": [
      "22:11",
@@ -62867,7 +63179,8 @@ const ULTIMOS = {
        "Apocalipsis 22:11",
        "El que es injusto, sea injusto todavía"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62898,6 +63211,13 @@ const ULTIMOS = {
    "c": "Gran tiempo de angustia",
    "cuando": "Empieza con el cierre de la gracia y dura hasta la liberación",
    "nota": "Cuando se levanta Miguel y Cristo deja el santuario, empieza la angustia «cual nunca fue». Dios retira su Espíritu de los impíos y Satanás los domina; caen las plagas. No es el pequeño tiempo de angustia, que viene antes, con la ley dominical.",
+   "egwC": [
+    [
+     "CS 672",
+     "Desamparados ya de la gracia divina, están a merced de Satanás, el cual sumirá entonces a los habitantes de la tierra en una gran tribulación final.",
+     "El gran tiempo de angustia viene después del cierre de la gracia."
+    ]
+   ],
    "egw": "CS 671-673; PE 33 y 85-86",
    "l": {
     "d12": [
@@ -62910,14 +63230,37 @@ const ULTIMOS = {
        "Daniel 12:1",
        "Será tiempo de angustia, cual nunca fue desde que hubo gente hasta entonces"
       ]
-     ]
+     ],
+     []
     ],
     "mt24": [
      "24:21-22",
      0,
-     "La gran tribulación, cual no la ha habido: es también el tiempo de angustia de Daniel 12:1.",
-     "Bohr, <i>Daniel 11</i>, p. 128",
-     []
+     "La gran tribulación (Mateo 24:21-22) se cumple dos veces: primero en los 1260 años de persecución, que Dios acortó, y después en la tribulación final, después del cierre de la gracia. Es también el tiempo de angustia de Daniel 12:1.",
+     "CS 28, 309-310 y 672; Bohr, <i>Daniel 11</i>, p. 128",
+     [],
+     [
+      [
+       "CS 309",
+       "Al predecir la ‘gran tribulación’ que había de venir sobre la iglesia, el Salvador había dicho: ‘Si aquellos días no fuesen acortados, ninguna carne sería salva; mas por causa de los escogidos, aquellos días serán acortados.’ (S. Mateo 24: 22.)",
+       "Primer cumplimiento: los 1260 años de persecución papal (538-1798)."
+      ],
+      [
+       "CS 309",
+       "La persecución contra la iglesia no continuó durante todos los 1260 años. Dios, usando de misericordia con su pueblo, acortó el tiempo de tan horribles pruebas.",
+       "Los días acortados: por la Reforma, la persecución cesó antes de 1798 (CS 310)."
+      ],
+      [
+       "CS 28",
+       "La profecía del Señor entrañaba un doble significado: al par que anunciaba la ruina de Jerusalén presagiaba también los horrores del gran día final.",
+       "Mateo 24 mira también al fin del mundo."
+      ],
+      [
+       "CS 672",
+       "Satanás, el cual sumirá entonces a los habitantes de la tierra en una gran tribulación final.",
+       "Segundo cumplimiento: la tribulación final, después del cierre de la gracia."
+      ]
+     ]
     ],
     "apo": [
      "3:10",
@@ -62929,7 +63272,8 @@ const ULTIMOS = {
        "Apocalipsis 3:10",
        "yo también te guardaré de la hora de la prueba"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62957,6 +63301,13 @@ const ULTIMOS = {
    "c": "Angustia de Jacob",
    "cuando": "Dentro del gran tiempo de angustia, sobre todo con el decreto de muerte",
    "nota": "Es la experiencia del pueblo de Dios en el gran tiempo de angustia. Viven sin intercesor y, como Jacob en la noche de lucha (Jeremías 30:7; Génesis 32), oran por liberación; no tienen pecados escondidos que confesar. Ya no hay mártires.",
+   "egwC": [
+    [
+     "CS 674",
+     "La noche de la aflicción de Jacob, cuando luchó en oración para ser librado de manos de Esaú (Génesis 32: 24-30), representa la prueba por la que pasará el pueblo de Dios en el tiempo de angustia.",
+     "La lucha de Jacob en oración es figura de lo que vive el pueblo de Dios en el tiempo de angustia."
+    ]
+   ],
    "egw": "CS 674-679 y 692; PE 36-37 y 283",
    "l": {
     "apo": [
@@ -62969,7 +63320,8 @@ const ULTIMOS = {
        "Apocalipsis 3:10",
        "yo también te guardaré de la hora de la prueba"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -62991,6 +63343,13 @@ const ULTIMOS = {
    "c": "Plagas",
    "cuando": "Cuando Cristo deja de interceder, antes de la venida",
    "nota": "La ira de Dios sin mezcla cae sobre los que tienen la marca de la bestia y adoran su imagen. No son universales; Dios guarda a su pueblo en medio de ellas.",
+   "egwC": [
+    [
+     "CS 685-686",
+     "Cuando Cristo deje de interceder en el santuario, se derramará sin mezcla la ira de Dios de la que son amenazados los que adoran a la bestia y a su imagen y reciben su marca.",
+     "Las plagas caen después del cierre de la gracia, sobre los que reciben la marca."
+    ]
+   ],
    "egw": "CS 685-688; PE 36 y 280-282; EUD 203-214",
    "l": {
     "ap16": [
@@ -63007,7 +63366,8 @@ const ULTIMOS = {
        "Apocalipsis 16:2",
        "sobre los hombres que tenían la marca de la bestia"
       ]
-     ]
+     ],
+     []
     ],
     "apo": [
      "15:1",
@@ -63019,7 +63379,8 @@ const ULTIMOS = {
        "Apocalipsis 15:1",
        "siete ángeles con las siete plagas postreras"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63050,6 +63411,13 @@ const ULTIMOS = {
    "c": "Falso Cristo",
    "cuando": "Después del cierre de la gracia, en el gran tiempo de angustia",
    "nota": "«El acto capital que coronará el gran drama del engaño será que el mismo Satanás se dará por el Cristo» (CS 682). Dice que mudó el sábado al domingo. No puede imitar la manera en que viene Jesús. Los engaños empiezan antes (EUD 138), pero este acto capital va después del cierre de la gracia.",
+   "egwC": [
+    [
+     "CS 682",
+     "El acto capital que coronará el gran drama del engaño será que el mismo Satanás se dará por el Cristo.",
+     "El engaño final: Satanás se presenta como si fuera Cristo."
+    ]
+   ],
    "egw": "CS 681-683; EUD 138",
    "l": {
     "mt24": [
@@ -63057,6 +63425,7 @@ const ULTIMOS = {
      1,
      "Falsos cristos con grandes señales; pero la venida será como el relámpago.",
      "CS 683",
+     [],
      []
     ],
     "ap12": [
@@ -63069,7 +63438,8 @@ const ULTIMOS = {
        "Apocalipsis 12:12",
        "el diablo ha descendido a vosotros con gran ira, sabiendo que tiene poco tiempo"
       ]
-     ]
+     ],
+     []
     ],
     "ap13": [
      "13:13-14",
@@ -63081,7 +63451,8 @@ const ULTIMOS = {
        "Apocalipsis 13:14",
        "Engaña a los habitantes de la tierra con las señales"
       ]
-     ]
+     ],
+     []
     ],
     "ap16": [
      "16:13-14",
@@ -63093,7 +63464,8 @@ const ULTIMOS = {
        "Apocalipsis 16:14",
        "Son espíritus de demonios, que hacen señales y van a los reyes de la tierra"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63126,6 +63498,13 @@ const ULTIMOS = {
    "c": "Huida",
    "cuando": "Cuando el decreto les quita la protección de las leyes",
    "nota": "El pueblo de Dios huye de las ciudades y los pueblos y vive en grupos en los lugares más desiertos y solitarios. Muchos son encarcelados; Dios no los olvida.",
+   "egwC": [
+    [
+     "CS 684",
+     "el pueblo de Dios huirá de las ciudades y de los pueblos y se unirá en grupos para vivir en los lugares más desiertos y solitarios.",
+     "Sin la protección del gobierno, el pueblo de Dios huye a lugares solitarios."
+    ]
+   ],
    "egw": "CS 683-685; PE 34 y 282",
    "l": {},
    "en": {},
@@ -63140,6 +63519,13 @@ const ULTIMOS = {
    "c": "Decreto de muerte",
    "cuando": "Durante las plagas; fija una noche",
    "nota": "Acusan a los que guardan el sábado de traer los juicios de Dios. Un decreto general fija una noche para darles muerte.",
+   "egwC": [
+    [
+     "CS 693",
+     "Conforme vaya acercándose el tiempo señalado en el decreto, el pueblo conspirará para extirpar la secta aborrecida.",
+     "El decreto fija una fecha para matar a los que guardan el sábado."
+    ]
+   ],
    "egw": "CS 673 y 692-693; PE 36-37 y 282-284",
    "l": {
     "d11": [
@@ -63152,7 +63538,8 @@ const ULTIMOS = {
        "Daniel 11:45",
        "Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo"
       ]
-     ]
+     ],
+     []
     ],
     "ap13": [
      "13:15",
@@ -63164,7 +63551,8 @@ const ULTIMOS = {
        "Apocalipsis 13:15",
        "hiciera matar a todo el que no la adorara"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63191,6 +63579,13 @@ const ULTIMOS = {
    "c": "Liberación",
    "cuando": "A medianoche, en la séptima plaga",
    "nota": "Cuando van a matarlos, densas tinieblas caen y un arco iris envuelve a los que oran. A medianoche, la voz de Dios dice «Hecho es» y viene un terremoto como nunca hubo. El poder perseguidor llega a su fin sin que nadie lo ayude.",
+   "egwC": [
+    [
+     "CS 693",
+     "Entonces, en la hora de supremo apuro, es cuando el Dios de Israel intervendrá para librar a sus escogidos.",
+     "Dios libra a su pueblo en el momento de mayor peligro."
+    ]
+   ],
    "egw": "CS 693-694; PE 285",
    "l": {
     "d11": [
@@ -63203,7 +63598,8 @@ const ULTIMOS = {
        "Daniel 11:45",
        "llegará a su fin, y no tendrá quien lo ayude"
       ]
-     ]
+     ],
+     []
     ],
     "d12": [
      "12:1",
@@ -63215,7 +63611,8 @@ const ULTIMOS = {
        "Daniel 12:1",
        "en aquel tiempo será libertado tu pueblo, todos los que se hallen inscritos en el libro"
       ]
-     ]
+     ],
+     []
     ],
     "ap16": [
      "16:17-18",
@@ -63227,7 +63624,8 @@ const ULTIMOS = {
        "Apocalipsis 16:17",
        "salió una gran voz del santuario del cielo, desde el trono, que decía: «¡Ya está hecho!»"
       ]
-     ]
+     ],
+     []
     ],
     "ap17": [
      "17:16",
@@ -63239,7 +63637,8 @@ const ULTIMOS = {
        "Apocalipsis 17:16",
        "aborrecerán a la ramera"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63276,6 +63675,13 @@ const ULTIMOS = {
    "c": "Resurrección especial",
    "cuando": "En el terremoto de la séptima plaga, antes de que aparezca Cristo",
    "nota": "Se abren los sepulcros. Resucitan los que murieron en la fe del tercer ángel, para ver la venida, y los que traspasaron a Cristo, para verlo en su gloria.",
+   "egwC": [
+    [
+     "CS 695",
+     "Todos los que murieron en la fe del mensaje del tercer ángel, salen glorificados de la tumba, para oír el pacto de paz que Dios hace con los que guardaron su ley.",
+     "La resurrección especial: resucitan antes de la venida los que murieron en el mensaje del tercer ángel."
+    ]
+   ],
    "egw": "CS 695; PE 285",
    "l": {
     "d12": [
@@ -63288,7 +63694,8 @@ const ULTIMOS = {
        "Daniel 12:2",
        "Muchos de los que duermen en el polvo de la tierra serán despertados: unos para vida eterna, otros para vergüenza y confusión perpetua"
       ]
-     ]
+     ],
+     []
     ],
     "ap16": [
      "16:18",
@@ -63300,7 +63707,8 @@ const ULTIMOS = {
        "Apocalipsis 16:18",
        "un terremoto tan grande cual no lo hubo jamás"
       ]
-     ]
+     ],
+     []
     ],
     "apo": [
      "1:7",
@@ -63312,7 +63720,8 @@ const ULTIMOS = {
        "Apocalipsis 1:7",
        "Todo ojo lo verá, y los que lo traspasaron"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63344,6 +63753,13 @@ const ULTIMOS = {
    "c": "El día y la hora",
    "cuando": "Después de la liberación, antes de que aparezca la nube",
    "nota": "Desde el cielo, la voz de Dios proclama el día y la hora de la venida de Jesús y da a su pueblo el pacto eterno. Frase por frase, resuena como truenos.",
+   "egwC": [
+    [
+     "CS 698",
+     "Desde el cielo se oye la voz de Dios que proclama el día y la hora de la venida de Jesús, y promulga a su pueblo el pacto eterno.",
+     "Dios mismo anuncia el día y la hora de la venida."
+    ]
+   ],
    "egw": "CS 698; PE 15, 34 y 285",
    "l": {},
    "en": {},
@@ -63359,6 +63775,13 @@ const ULTIMOS = {
    "cuando": "Al final de las plagas",
    "img": "d2/e-piedra",
    "nota": "Aparece una pequeña nube negra que se hace gran nube blanca. Cristo viene como Rey de reyes. Es la piedra de Daniel 2 y la ejecución del juicio de Daniel 7.",
+   "egwC": [
+    [
+     "CS 699",
+     "A medida que va acercándose la nube viviente, todos los ojos ven al Príncipe de la vida.",
+     "La segunda venida es visible para todos."
+    ]
+   ],
    "egw": "CS 698-701; PE 286-287",
    "partes": [
     "piedra",
@@ -63377,7 +63800,8 @@ const ULTIMOS = {
        "Daniel 2:34",
        "una piedra se desprendió sin que la cortara mano alguna"
       ]
-     ]
+     ],
+     []
     ],
     "d7": [
      "7:22, 26",
@@ -63393,7 +63817,8 @@ const ULTIMOS = {
        "Daniel 7:26",
        "le quitarán su dominio"
       ]
-     ]
+     ],
+     []
     ],
     "d8": [
      "8:25",
@@ -63405,13 +63830,15 @@ const ULTIMOS = {
        "Daniel 8:25",
        "será quebrantado, aunque no por mano humana"
       ]
-     ]
+     ],
+     []
     ],
     "mt24": [
      "24:27, 30",
      1,
      "Como el relámpago, sobre las nubes del cielo, con poder y gran gloria.",
      "CS 683",
+     [],
      []
     ],
     "ap14": [
@@ -63424,7 +63851,8 @@ const ULTIMOS = {
        "Apocalipsis 14:14",
        "Sentado sobre la nube, uno semejante al Hijo del hombre"
       ]
-     ]
+     ],
+     []
     ],
     "ap17": [
      "17:14",
@@ -63436,7 +63864,8 @@ const ULTIMOS = {
        "Apocalipsis 17:14",
        "el Cordero los vencerá, porque es Señor de señores y Rey de reyes"
       ]
-     ]
+     ],
+     []
     ],
     "ap19": [
      "19:11-16",
@@ -63448,7 +63877,8 @@ const ULTIMOS = {
        "Apocalipsis 19:16",
        "Rey de reyes y Señor de señores"
       ]
-     ]
+     ],
+     []
     ],
     "ap21": [
      "22:12",
@@ -63460,7 +63890,8 @@ const ULTIMOS = {
        "Apocalipsis 22:12",
        "Vengo pronto!, y mi galardón conmigo"
       ]
-     ]
+     ],
+     []
     ],
     "apo": [
      "1:7; 6:14-17",
@@ -63476,7 +63907,8 @@ const ULTIMOS = {
        "Apocalipsis 6:17",
        "el gran día de su ira ha llegado"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63541,6 +63973,13 @@ const ULTIMOS = {
    "c": "Resurrección de los justos",
    "cuando": "En la venida",
    "nota": "Cristo mira las tumbas de los justos y exclama: «¡Despertaos!». Los muertos en Cristo salen con gloria inmortal. Es la primera resurrección.",
+   "egwC": [
+    [
+     "CS 702",
+     "el Hijo de Dios llama a la vida a los santos dormidos.",
+     "En la venida resucitan los justos."
+    ]
+   ],
    "egw": "CS 702; PE 16 y 287",
    "l": {
     "d12": [
@@ -63553,13 +63992,15 @@ const ULTIMOS = {
        "Daniel 12:13",
        "te levantarás para recibir tu heredad al fin de los días"
       ]
-     ]
+     ],
+     []
     ],
     "mt24": [
      "24:31",
      0,
      "Los ángeles juntan a los escogidos con gran voz de trompeta: la resurrección de los justos.",
      "Bohr, <i>Daniel 11</i>, p. 220",
+     [],
      []
     ],
     "ap20": [
@@ -63576,7 +64017,8 @@ const ULTIMOS = {
        "Apocalipsis 20:6",
        "Bienaventurado y santo el que tiene parte en la primera resurrección"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63608,6 +64050,13 @@ const ULTIMOS = {
    "c": "Traslación",
    "cuando": "En la venida, junto con los resucitados",
    "nota": "Los justos vivos son mudados en un momento y, con los resucitados, suben a recibir a Cristo en el aire (1 Tesalonicenses 4:16-17).",
+   "egwC": [
+    [
+     "CS 703",
+     "ahora son hechos inmortales, y juntamente con los santos resucitados son arrebatados para recibir a Cristo su Señor en los aires.",
+     "Los justos vivos son transformados y suben con los resucitados."
+    ]
+   ],
    "egw": "CS 703 y 707; PE 16 y 287",
    "l": {
     "mt24": [
@@ -63615,6 +64064,7 @@ const ULTIMOS = {
      0,
      "«Juntarán a sus escogidos de los cuatro vientos.»",
      "CS 703",
+     [],
      []
     ],
     "ap14": [
@@ -63627,7 +64077,8 @@ const ULTIMOS = {
        "Apocalipsis 14:4",
        "Éstos fueron redimidos de entre los hombres como primicias para Dios y para el Cordero"
       ]
-     ]
+     ],
+     []
     ],
     "apo": [
      "15:2-3",
@@ -63639,7 +64090,8 @@ const ULTIMOS = {
        "Apocalipsis 15:2",
        "a los que habían alcanzado la victoria sobre la bestia y su imagen"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63667,6 +64119,13 @@ const ULTIMOS = {
    "c": "Tierra desolada",
    "cuando": "Desde la venida, mil años",
    "nota": "Los impíos vivos mueren en la venida. La tierra queda desolada, y en ella Satanás vaga mil años sin nadie a quien engañar: así está atado.",
+   "egwC": [
+    [
+     "CS 718",
+     "Durante mil años, Satanás andará errante de un lado para otro en la tierra desolada, considerando los resultados de su rebelión contra la ley de Dios.",
+     "En los mil años la tierra queda desolada y Satanás, atado a ella."
+    ]
+   ],
    "egw": "CS 711-718; PE 289-290",
    "l": {
     "ap18": [
@@ -63679,7 +64138,8 @@ const ULTIMOS = {
        "Apocalipsis 18:8",
        "será quemada con fuego"
       ]
-     ]
+     ],
+     []
     ],
     "ap19": [
      "19:20-21",
@@ -63691,7 +64151,8 @@ const ULTIMOS = {
        "Apocalipsis 19:21",
        "Los demás fueron muertos con la espada que salía de la boca del que montaba el caballo"
       ]
-     ]
+     ],
+     []
     ],
     "ap20": [
      "20:1-3",
@@ -63703,7 +64164,8 @@ const ULTIMOS = {
        "Apocalipsis 20:2",
        "lo ató por mil años"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63735,17 +64197,31 @@ const ULTIMOS = {
    "c": "Juicio de los santos",
    "cuando": "Durante los mil años, en el cielo",
    "nota": "Con Cristo, los santos juzgan a los impíos y a los ángeles caídos (1 Corintios 6:2-3). Comparan sus actos con los libros y fijan el castigo de cada uno según sus obras.",
+   "egwC": [
+    [
+     "CS 719",
+     "Junto con Cristo juzgan a los impíos, comparando sus actos con el libro de la ley, la Biblia, y fallando cada caso en conformidad con los actos que cometieron por medio de su cuerpo.",
+     "En los mil años los santos juzgan con Cristo a los impíos."
+    ]
+   ],
    "egw": "CS 718-719; PE 52 y 290-291",
    "l": {
     "d7": [
      "7:22",
      0,
-     "El Anciano de días hace justicia a los santos; Elena de White lo lee «se dio el juicio a los santos».",
+     "El Anciano de días hace justicia a los santos (7:22). Elena de White aplica también esta frase al juicio de los mil años.",
      "CS 719",
      [
       [
        "Daniel 7:22",
        "se hizo justicia a los santos del Altísimo"
+      ]
+     ],
+     [
+      [
+       "CS 719",
+       "Daniel declara que cuando vino el Anciano de días, ‘se dio el juicio a los santos del Altísimo.’ (Daniel 7: 22.) En ese entonces reinarán los justos como reyes y sacerdotes de Dios.",
+       "Aplica 7:22 también al juicio que los santos hacen con Cristo durante los mil años."
       ]
      ]
     ],
@@ -63759,7 +64235,8 @@ const ULTIMOS = {
        "Apocalipsis 20:4",
        "se sentaron sobre ellos los que recibieron facultad de juzgar"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63786,6 +64263,13 @@ const ULTIMOS = {
    "c": "Segunda resurrección",
    "cuando": "Al fin de los mil años",
    "nota": "Cristo vuelve a la tierra con los santos y manda a los impíos muertos que resuciten para recibir su condenación.",
+   "egwC": [
+    [
+     "CS 720",
+     "Al descender en majestad aterradora, manda a los muertos impíos que resuciten para recibir su condenación.",
+     "Al fin de los mil años resucitan los impíos."
+    ]
+   ],
    "egw": "CS 719-720; PE 291-292",
    "l": {
     "ap20": [
@@ -63798,7 +64282,8 @@ const ULTIMOS = {
        "Apocalipsis 20:5",
        "los otros muertos no volvieron a vivir hasta que se cumplieron mil años"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63820,6 +64305,13 @@ const ULTIMOS = {
    "c": "Nueva Jerusalén",
    "cuando": "Al fin de los mil años",
    "nota": "Cristo baja sobre el monte de los Olivos (Zacarías 14:4). La ciudad desciende y se asienta en el lugar preparado; Cristo, su pueblo y los ángeles entran en ella.",
+   "egwC": [
+    [
+     "CS 721",
+     "La nueva Jerusalén, descendiendo del cielo en su deslumbrante esplendor, se asienta en el lugar purificado y preparado para recibirla",
+     "La Nueva Jerusalén baja del cielo a la tierra."
+    ]
+   ],
    "egw": "CS 720-721; PE 51 y 291-292",
    "l": {
     "ap20": [
@@ -63832,7 +64324,8 @@ const ULTIMOS = {
        "Apocalipsis 20:9",
        "rodearon el campamento de los santos y la ciudad amada"
       ]
-     ]
+     ],
+     []
     ],
     "ap21": [
      "21:2",
@@ -63844,7 +64337,8 @@ const ULTIMOS = {
        "Apocalipsis 21:2",
        "vi la santa ciudad, la nueva Jerusalén, descender del cielo"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63871,6 +64365,13 @@ const ULTIMOS = {
    "c": "Asedio",
    "cuando": "Cuando resucitan los impíos",
    "nota": "Satanás, suelto otra vez, reúne a la multitud de los impíos y la lleva contra la ciudad. Por orden de Jesús se cierran las puertas.",
+   "egwC": [
+    [
+     "CS 722",
+     "los ejércitos de Satanás circundan la ciudad y se preparan para el asalto.",
+     "Satanás reúne a los impíos resucitados contra la ciudad."
+    ]
+   ],
    "egw": "CS 721-723; PE 292-293",
    "l": {
     "ap20": [
@@ -63887,7 +64388,8 @@ const ULTIMOS = {
        "Apocalipsis 20:9",
        "rodearon el campamento de los santos y la ciudad amada"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63913,6 +64415,13 @@ const ULTIMOS = {
    "c": "Gran trono blanco",
    "cuando": "Con los impíos ante la ciudad",
    "nota": "Se corona a Cristo ante todos. En una vista panorámica pasa la historia del conflicto; impíos y Satanás reconocen que Dios es justo.",
+   "egwC": [
+    [
+     "CS 724",
+     "el Rey de reyes falla el juicio de aquellos que se rebelaron contra su gobierno, y ejecuta justicia contra los que transgredieron su ley y oprimieron a su pueblo.",
+     "Ante el gran trono blanco se da la sentencia de los perdidos."
+    ]
+   ],
    "egw": "CS 722-730; PE 293-294",
    "l": {
     "ap20": [
@@ -63929,7 +64438,8 @@ const ULTIMOS = {
        "Apocalipsis 20:12",
        "fueron juzgados los muertos por las cosas que estaban escritas en los libros, según sus obras"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63955,6 +64465,13 @@ const ULTIMOS = {
    "c": "Destrucción final",
    "cuando": "Después del juicio ante el trono",
    "nota": "Desciende fuego de Dios. Los impíos y Satanás son consumidos, raíz y rama: es la muerte segunda, de la que no se vuelve.",
+   "egwC": [
+    [
+     "CS 731",
+     "Dios hace descender fuego del cielo.",
+     "El fuego de Dios destruye a los impíos."
+    ]
+   ],
    "egw": "CS 730-731; PE 294-295",
    "l": {
     "ap20": [
@@ -63971,7 +64488,8 @@ const ULTIMOS = {
        "Apocalipsis 20:14",
        "Ésta es la muerte segunda"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -63998,6 +64516,13 @@ const ULTIMOS = {
    "cuando": "Para siempre",
    "img": "d2/e-monte",
    "nota": "El fuego que consume a los impíos purifica la tierra. Es el gran monte de Daniel 2: el reino llena toda la tierra después de los mil años. Dios vive con su pueblo para siempre.",
+   "egwC": [
+    [
+     "CS 732",
+     "El fuego que consume a los impíos purifica la tierra. Desaparece todo rastro de la maldición.",
+     "La tierra purificada es la tierra nueva."
+    ]
+   ],
    "egw": "CS 732-737; PE 295",
    "partes": [
     "monte",
@@ -64018,7 +64543,8 @@ const ULTIMOS = {
        "Daniel 2:44",
        "el Dios del cielo levantará un reino que no será jamás destruido"
       ]
-     ]
+     ],
+     []
     ],
     "d7": [
      "7:18, 27",
@@ -64034,7 +64560,8 @@ const ULTIMOS = {
        "Daniel 7:18",
        "Después recibirán el reino los santos del Altísimo"
       ]
-     ]
+     ],
+     []
     ],
     "d12": [
      "12:3",
@@ -64046,7 +64573,8 @@ const ULTIMOS = {
        "Daniel 12:3",
        "Los entendidos resplandecerán como el resplandor del firmamento"
       ]
-     ]
+     ],
+     []
     ],
     "ap21": [
      "21:1-5; 22:3-5",
@@ -64062,7 +64590,8 @@ const ULTIMOS = {
        "Apocalipsis 21:4",
        "ya no habrá más muerte"
       ]
-     ]
+     ],
+     []
     ]
    },
    "en": {
@@ -65983,6 +66512,42 @@ const PERSONAJES = [
    "Casandro"
   ],
   "fuente": "Bohr, <i>Daniel 1-10</i>, p. 119"
+ },
+ {
+  "id": "alejandro-iv",
+  "nombre": "Alejandro IV",
+  "tipo": "historico",
+  "fechas": "323-311 a.C.",
+  "quien": "Hijo de Alejandro Magno, nacido después de su muerte.",
+  "hizo": [
+   "Fue asesinado en 311 a.C.: el reino de su padre no quedó para sus descendientes (Daniel 11:4)."
+  ],
+  "textos": "Daniel 11:4",
+  "alias": [
+   "Alejandro IV"
+  ],
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, p. 56; Smith, <i>Las profecías de Daniel</i>, p. 88"
+ },
+ {
+  "id": "heracles",
+  "nombre": "Heracles",
+  "tipo": "historico",
+  "fechas": "murió en 309 a.C.",
+  "quien": "Hijo natural de Alejandro Magno.",
+  "hizo": [
+   "Fue asesinado en 309 a.C.: el reino de su padre no quedó para sus descendientes (Daniel 11:4)."
+  ],
+  "textos": "Daniel 11:4",
+  "alias": [
+   {
+    "t": "Heracles",
+    "caps": [
+     "d8",
+     "d11"
+    ]
+   }
+  ],
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, p. 56; Smith, <i>Las profecías de Daniel</i>, p. 88"
  },
  {
   "id": "lisimaco",
@@ -68932,42 +69497,42 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Personajes de la historia (1)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Adolf Hitler</td><td>Dictador de Alemania.</td><td>1889-1945</td></tr><tr><td class=\"key\">Agustín de Hipona</td><td>Obispo de Hipona, en el norte de África; uno de los escritores cristianos más influyentes.</td><td>354-430 d.C.</td></tr><tr><td class=\"key\">Alejandro Magno</td><td>Rey de Macedonia. Es el «cuerno notable» del macho cabrío, el primer rey de Grecia (Daniel 8:21).</td><td>356-323 a.C.</td></tr><tr><td class=\"key\">Andreas Fischer</td><td>Anabautista del siglo XVI, compañero de Oswald Glait.</td><td>hacia 1480-1540</td></tr><tr><td class=\"key\">Antíoco I Sóter</td><td>Rey seléucida, hijo de Seleuco I.</td><td>reinó 281-261 a.C.</td></tr><tr><td class=\"key\">Antíoco II Teos («el Divino»)</td><td>Rey seléucida, «rey del norte».</td><td>reinó 261-246 a.C.</td></tr><tr><td class=\"key\">Antíoco III el Grande</td><td>Rey seléucida, «rey del norte».</td><td>reinó 223-187 a.C.</td></tr><tr><td class=\"key\">Antíoco IV Epífanes</td><td>Rey seléucida que profanó el templo de Jerusalén entre 168 y 165 a.C.</td><td>reinó 175-164 a.C.</td></tr><tr><td class=\"key\">Arnulfo de Orleans</td><td>Obispo católico de Orleans, Francia.</td><td>siglo X</td></tr><tr><td class=\"key\">Artajerjes I</td><td>Rey de Persia.</td><td>reinó 465-424 a.C.</td></tr><tr><td class=\"key\">Astiages</td><td>Último rey de Media y abuelo de Ciro.</td><td>rey de Media, hacia 585-550 a.C.</td></tr><tr><td class=\"key\">Belisario</td><td>General del emperador Justiniano.</td><td>hacia 505-565 d.C.</td></tr><tr><td class=\"key\">Benito Mussolini</td><td>Dictador de Italia.</td><td>1883-1945</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Adolf Hitler</td><td>Dictador de Alemania.</td><td>1889-1945</td></tr><tr><td class=\"key\">Agustín de Hipona</td><td>Obispo de Hipona, en el norte de África; uno de los escritores cristianos más influyentes.</td><td>354-430 d.C.</td></tr><tr><td class=\"key\">Alejandro IV</td><td>Hijo de Alejandro Magno, nacido después de su muerte.</td><td>323-311 a.C.</td></tr><tr><td class=\"key\">Alejandro Magno</td><td>Rey de Macedonia. Es el «cuerno notable» del macho cabrío, el primer rey de Grecia (Daniel 8:21).</td><td>356-323 a.C.</td></tr><tr><td class=\"key\">Andreas Fischer</td><td>Anabautista del siglo XVI, compañero de Oswald Glait.</td><td>hacia 1480-1540</td></tr><tr><td class=\"key\">Antíoco I Sóter</td><td>Rey seléucida, hijo de Seleuco I.</td><td>reinó 281-261 a.C.</td></tr><tr><td class=\"key\">Antíoco II Teos («el Divino»)</td><td>Rey seléucida, «rey del norte».</td><td>reinó 261-246 a.C.</td></tr><tr><td class=\"key\">Antíoco III el Grande</td><td>Rey seléucida, «rey del norte».</td><td>reinó 223-187 a.C.</td></tr><tr><td class=\"key\">Antíoco IV Epífanes</td><td>Rey seléucida que profanó el templo de Jerusalén entre 168 y 165 a.C.</td><td>reinó 175-164 a.C.</td></tr><tr><td class=\"key\">Arnulfo de Orleans</td><td>Obispo católico de Orleans, Francia.</td><td>siglo X</td></tr><tr><td class=\"key\">Artajerjes I</td><td>Rey de Persia.</td><td>reinó 465-424 a.C.</td></tr><tr><td class=\"key\">Astiages</td><td>Último rey de Media y abuelo de Ciro.</td><td>rey de Media, hacia 585-550 a.C.</td></tr><tr><td class=\"key\">Belisario</td><td>General del emperador Justiniano.</td><td>hacia 505-565 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">César Augusto (Octavio)</td><td>Sobrino nieto de Julio César y primer emperador de Roma.</td><td>63 a.C.-14 d.C.; gobernó solo desde 27 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Cleopatra VII</td><td>Última reina de Egipto de la familia de los Tolomeos, hija de Tolomeo XII Auletes.</td><td>reinó 51-30 a.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-485 a.C.</td></tr><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Benito Mussolini</td><td>Dictador de Italia.</td><td>1883-1945</td></tr><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">César Augusto (Octavio)</td><td>Sobrino nieto de Julio César y primer emperador de Roma.</td><td>63 a.C.-14 d.C.; gobernó solo desde 27 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Cleopatra VII</td><td>Última reina de Egipto de la familia de los Tolomeos, hija de Tolomeo XII Auletes.</td><td>reinó 51-30 a.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-485 a.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata o Bardiya (falso Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata o Bardiya (falso Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (4)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.</td><td>reinó 485-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Heracles</td><td>Hijo natural de Alejandro Magno.</td><td>murió en 309 a.C.</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.</td><td>reinó 485-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (5)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Julio César</td><td>General y dictador romano.</td><td>100-44 a.C.</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">Laodice I (Laodicea)</td><td>Primera esposa de Antíoco II Teos, rey del norte.</td><td>siglo III a.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr><tr><td class=\"key\">Lisímaco</td><td>General de Alejandro.</td><td>hacia 360-281 a.C.</td></tr><tr><td class=\"key\">Los hérulos</td><td>Pueblo germánico y arriano. Su jefe Odoacro depuso al último emperador de occidente en 476.</td><td>reinaron en Italia de 476 a 493 d.C.</td></tr><tr><td class=\"key\">Los ostrogodos</td><td>Los godos del este, arrianos. Su rey Teodorico gobernó Italia desde 493.</td><td>reinaron en Italia de 493 a 553 d.C.</td></tr><tr><td class=\"key\">Los vándalos</td><td>Pueblo germánico y arriano que se estableció en el norte de África, con Cartago por capital.</td><td>reino en el norte de África, 439-534 d.C.</td></tr><tr><td class=\"key\">Louis F. Were</td><td>Evangelista adventista de Australia.</td><td>1896-1967</td></tr><tr><td class=\"key\">Louis-Alexandre Berthier</td><td>General francés, jefe del estado mayor de Napoleón.</td><td>1753-1815</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Julio César</td><td>General y dictador romano.</td><td>100-44 a.C.</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">Laodice I (Laodicea)</td><td>Primera esposa de Antíoco II Teos, rey del norte.</td><td>siglo III a.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr><tr><td class=\"key\">Lisímaco</td><td>General de Alejandro.</td><td>hacia 360-281 a.C.</td></tr><tr><td class=\"key\">Los hérulos</td><td>Pueblo germánico y arriano. Su jefe Odoacro depuso al último emperador de occidente en 476.</td><td>reinaron en Italia de 476 a 493 d.C.</td></tr><tr><td class=\"key\">Los ostrogodos</td><td>Los godos del este, arrianos. Su rey Teodorico gobernó Italia desde 493.</td><td>reinaron en Italia de 493 a 553 d.C.</td></tr><tr><td class=\"key\">Los vándalos</td><td>Pueblo germánico y arriano que se estableció en el norte de África, con Cartago por capital.</td><td>reino en el norte de África, 439-534 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (6)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Martín Lutero</td><td>Monje agustino y profesor alemán; inició la Reforma protestante en 1517.</td><td>1483-1546</td></tr><tr><td class=\"key\">Nabonido</td><td>Último rey de Babilonia y padre de Belsasar.</td><td>reinó 556-539 a.C.</td></tr><tr><td class=\"key\">Nabopolasar</td><td>Fundador del imperio neobabilónico y padre de Nabucodonosor.</td><td>reinó 626-605 a.C.</td></tr><tr><td class=\"key\">Napoleón Bonaparte</td><td>General y emperador de Francia.</td><td>1769-1821; emperador 1804-1815</td></tr><tr><td class=\"key\">Nerón</td><td>Emperador romano.</td><td>37-68 d.C.; emperador 54-68</td></tr><tr><td class=\"key\">Odoacro</td><td>Jefe de los hérulos, arriano.</td><td>rey de Italia 476-493 d.C.</td></tr><tr><td class=\"key\">Onías III</td><td>Sumo sacerdote judío en tiempos de los seléucidas.</td><td>murió hacia 171 a.C.</td></tr><tr><td class=\"key\">Osmán I</td><td>Fundador del imperio otomano (turco).</td><td>murió hacia 1324</td></tr><tr><td class=\"key\">Oswald Glait</td><td>Anabautista del siglo XVI.</td><td>1490-1546</td></tr><tr><td class=\"key\">Pablo Pineda</td><td>Maestro y conferencista de Málaga, España, con síndrome de Down.</td><td>n. 1974</td></tr><tr><td class=\"key\">Pío V</td><td>Obispo de Roma.</td><td>papa 1566-1572</td></tr><tr><td class=\"key\">Pío VI</td><td>Obispo de Roma cuando la Francia revolucionaria invadió Italia.</td><td>1717-1799; papa 1775-1799</td></tr><tr><td class=\"key\">Pío VII</td><td>Obispo de Roma elegido después de la muerte de Pío VI.</td><td>papa 1800-1823</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Louis F. Were</td><td>Evangelista adventista de Australia.</td><td>1896-1967</td></tr><tr><td class=\"key\">Louis-Alexandre Berthier</td><td>General francés, jefe del estado mayor de Napoleón.</td><td>1753-1815</td></tr><tr><td class=\"key\">Martín Lutero</td><td>Monje agustino y profesor alemán; inició la Reforma protestante en 1517.</td><td>1483-1546</td></tr><tr><td class=\"key\">Nabonido</td><td>Último rey de Babilonia y padre de Belsasar.</td><td>reinó 556-539 a.C.</td></tr><tr><td class=\"key\">Nabopolasar</td><td>Fundador del imperio neobabilónico y padre de Nabucodonosor.</td><td>reinó 626-605 a.C.</td></tr><tr><td class=\"key\">Napoleón Bonaparte</td><td>General y emperador de Francia.</td><td>1769-1821; emperador 1804-1815</td></tr><tr><td class=\"key\">Nerón</td><td>Emperador romano.</td><td>37-68 d.C.; emperador 54-68</td></tr><tr><td class=\"key\">Odoacro</td><td>Jefe de los hérulos, arriano.</td><td>rey de Italia 476-493 d.C.</td></tr><tr><td class=\"key\">Onías III</td><td>Sumo sacerdote judío en tiempos de los seléucidas.</td><td>murió hacia 171 a.C.</td></tr><tr><td class=\"key\">Osmán I</td><td>Fundador del imperio otomano (turco).</td><td>murió hacia 1324</td></tr><tr><td class=\"key\">Oswald Glait</td><td>Anabautista del siglo XVI.</td><td>1490-1546</td></tr><tr><td class=\"key\">Pablo Pineda</td><td>Maestro y conferencista de Málaga, España, con síndrome de Down.</td><td>n. 1974</td></tr><tr><td class=\"key\">Pío V</td><td>Obispo de Roma.</td><td>papa 1566-1572</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (7)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Policarpo</td><td>Obispo de Esmirna.</td><td>hacia 69-156 d.C.</td></tr><tr><td class=\"key\">Pompeyo</td><td>General romano.</td><td>106-48 a.C.</td></tr><tr><td class=\"key\">Porfirio</td><td>Filósofo pagano que escribió «Contra los cristianos».</td><td>hacia 234-305 d.C.</td></tr><tr><td class=\"key\">Rómulo Augústulo</td><td>Último emperador romano de occidente; era un muchacho y gobernaba su padre Orestes.</td><td>emperador 475-476 d.C.</td></tr><tr><td class=\"key\">Roxana</td><td>Princesa de Bactriana, esposa de Alejandro Magno.</td><td>murió hacia 310 a.C.</td></tr><tr><td class=\"key\">Samuel S. Snow</td><td>Predicador millerita.</td><td>1806-1890</td></tr><tr><td class=\"key\">Seleuco I Nicátor</td><td>General de Alejandro y fundador del reino seléucida (Siria y el oriente).</td><td>reinó 312-281 a.C.</td></tr><tr><td class=\"key\">Seleuco II Calínico</td><td>Rey seléucida, «rey del norte».</td><td>reinó 246-225 a.C.</td></tr><tr><td class=\"key\">Sidney Smith</td><td>Asiriólogo inglés del Museo Británico.</td><td>1889-1979</td></tr><tr><td class=\"key\">Silvestre I</td><td>Obispo de Roma en tiempos de Constantino.</td><td>obispo de Roma 314-335 d.C.</td></tr><tr><td class=\"key\">Teodorico el Grande</td><td>Rey de los ostrogodos, arriano, que gobernó Italia.</td><td>rey 471-526 d.C.</td></tr><tr><td class=\"key\">Teodosio I</td><td>Emperador romano.</td><td>emperador 379-395 d.C.</td></tr><tr><td class=\"key\">Tertuliano</td><td>Escritor cristiano de Cartago, en el norte de África.</td><td>hacia 155-220 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Pío VI</td><td>Obispo de Roma cuando la Francia revolucionaria invadió Italia.</td><td>1717-1799; papa 1775-1799</td></tr><tr><td class=\"key\">Pío VII</td><td>Obispo de Roma elegido después de la muerte de Pío VI.</td><td>papa 1800-1823</td></tr><tr><td class=\"key\">Policarpo</td><td>Obispo de Esmirna.</td><td>hacia 69-156 d.C.</td></tr><tr><td class=\"key\">Pompeyo</td><td>General romano.</td><td>106-48 a.C.</td></tr><tr><td class=\"key\">Porfirio</td><td>Filósofo pagano que escribió «Contra los cristianos».</td><td>hacia 234-305 d.C.</td></tr><tr><td class=\"key\">Rómulo Augústulo</td><td>Último emperador romano de occidente; era un muchacho y gobernaba su padre Orestes.</td><td>emperador 475-476 d.C.</td></tr><tr><td class=\"key\">Roxana</td><td>Princesa de Bactriana, esposa de Alejandro Magno.</td><td>murió hacia 310 a.C.</td></tr><tr><td class=\"key\">Samuel S. Snow</td><td>Predicador millerita.</td><td>1806-1890</td></tr><tr><td class=\"key\">Seleuco I Nicátor</td><td>General de Alejandro y fundador del reino seléucida (Siria y el oriente).</td><td>reinó 312-281 a.C.</td></tr><tr><td class=\"key\">Seleuco II Calínico</td><td>Rey seléucida, «rey del norte».</td><td>reinó 246-225 a.C.</td></tr><tr><td class=\"key\">Sidney Smith</td><td>Asiriólogo inglés del Museo Británico.</td><td>1889-1979</td></tr><tr><td class=\"key\">Silvestre I</td><td>Obispo de Roma en tiempos de Constantino.</td><td>obispo de Roma 314-335 d.C.</td></tr><tr><td class=\"key\">Teodorico el Grande</td><td>Rey de los ostrogodos, arriano, que gobernó Italia.</td><td>rey 471-526 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (8)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Tim Donaghy</td><td>Exárbitro de la NBA, la liga de baloncesto de Estados Unidos.</td><td>condenado en 2008</td></tr><tr><td class=\"key\">Tito</td><td>General romano y después emperador, hijo de Vespasiano.</td><td>39-81 d.C.; emperador 79-81</td></tr><tr><td class=\"key\">Tolomeo I Sóter</td><td>General de Alejandro y fundador del reino tolemaico de Egipto.</td><td>323-285 a.C.</td></tr><tr><td class=\"key\">Tolomeo II Filadelfo</td><td>Rey de Egipto, «rey del sur».</td><td>reinó 285-246 a.C.</td></tr><tr><td class=\"key\">Tolomeo III Evergetes</td><td>Rey de Egipto, hermano de Berenice.</td><td>reinó 246-221 a.C.</td></tr><tr><td class=\"key\">Tolomeo IV Filopátor</td><td>Rey de Egipto.</td><td>reinó 221-203 a.C.</td></tr><tr><td class=\"key\">Tolomeo V Epífanes</td><td>Rey de Egipto que subió al trono siendo niño.</td><td>reinó 204-181 a.C.</td></tr><tr><td class=\"key\">Valentiniano III</td><td>Emperador romano de occidente.</td><td>emperador 425-455 d.C.</td></tr><tr><td class=\"key\">William Henry Fox Talbot</td><td>Científico inglés, pionero de la fotografía, que también estudió la escritura cuneiforme.</td><td>1800-1877</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Teodosio I</td><td>Emperador romano.</td><td>emperador 379-395 d.C.</td></tr><tr><td class=\"key\">Tertuliano</td><td>Escritor cristiano de Cartago, en el norte de África.</td><td>hacia 155-220 d.C.</td></tr><tr><td class=\"key\">Tim Donaghy</td><td>Exárbitro de la NBA, la liga de baloncesto de Estados Unidos.</td><td>condenado en 2008</td></tr><tr><td class=\"key\">Tito</td><td>General romano y después emperador, hijo de Vespasiano.</td><td>39-81 d.C.; emperador 79-81</td></tr><tr><td class=\"key\">Tolomeo I Sóter</td><td>General de Alejandro y fundador del reino tolemaico de Egipto.</td><td>323-285 a.C.</td></tr><tr><td class=\"key\">Tolomeo II Filadelfo</td><td>Rey de Egipto, «rey del sur».</td><td>reinó 285-246 a.C.</td></tr><tr><td class=\"key\">Tolomeo III Evergetes</td><td>Rey de Egipto, hermano de Berenice.</td><td>reinó 246-221 a.C.</td></tr><tr><td class=\"key\">Tolomeo IV Filopátor</td><td>Rey de Egipto.</td><td>reinó 221-203 a.C.</td></tr><tr><td class=\"key\">Tolomeo V Epífanes</td><td>Rey de Egipto que subió al trono siendo niño.</td><td>reinó 204-181 a.C.</td></tr><tr><td class=\"key\">Valentiniano III</td><td>Emperador romano de occidente.</td><td>emperador 425-455 d.C.</td></tr><tr><td class=\"key\">William Henry Fox Talbot</td><td>Científico inglés, pionero de la fotografía, que también estudió la escritura cuneiforme.</td><td>1800-1877</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   }
  ],
  "mm-quien": [
@@ -69273,42 +69838,42 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Personajes de la historia (1)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Adolf Hitler</td><td>Dictador de Alemania.</td><td>1889-1945</td></tr><tr><td class=\"key\">Agustín de Hipona</td><td>Obispo de Hipona, en el norte de África; uno de los escritores cristianos más influyentes.</td><td>354-430 d.C.</td></tr><tr><td class=\"key\">Alejandro Magno</td><td>Rey de Macedonia. Es el «cuerno notable» del macho cabrío, el primer rey de Grecia (Daniel 8:21).</td><td>356-323 a.C.</td></tr><tr><td class=\"key\">Andreas Fischer</td><td>Anabautista del siglo XVI, compañero de Oswald Glait.</td><td>hacia 1480-1540</td></tr><tr><td class=\"key\">Antíoco I Sóter</td><td>Rey seléucida, hijo de Seleuco I.</td><td>reinó 281-261 a.C.</td></tr><tr><td class=\"key\">Antíoco II Teos («el Divino»)</td><td>Rey seléucida, «rey del norte».</td><td>reinó 261-246 a.C.</td></tr><tr><td class=\"key\">Antíoco III el Grande</td><td>Rey seléucida, «rey del norte».</td><td>reinó 223-187 a.C.</td></tr><tr><td class=\"key\">Antíoco IV Epífanes</td><td>Rey seléucida que profanó el templo de Jerusalén entre 168 y 165 a.C.</td><td>reinó 175-164 a.C.</td></tr><tr><td class=\"key\">Arnulfo de Orleans</td><td>Obispo católico de Orleans, Francia.</td><td>siglo X</td></tr><tr><td class=\"key\">Artajerjes I</td><td>Rey de Persia.</td><td>reinó 465-424 a.C.</td></tr><tr><td class=\"key\">Astiages</td><td>Último rey de Media y abuelo de Ciro.</td><td>rey de Media, hacia 585-550 a.C.</td></tr><tr><td class=\"key\">Belisario</td><td>General del emperador Justiniano.</td><td>hacia 505-565 d.C.</td></tr><tr><td class=\"key\">Benito Mussolini</td><td>Dictador de Italia.</td><td>1883-1945</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Adolf Hitler</td><td>Dictador de Alemania.</td><td>1889-1945</td></tr><tr><td class=\"key\">Agustín de Hipona</td><td>Obispo de Hipona, en el norte de África; uno de los escritores cristianos más influyentes.</td><td>354-430 d.C.</td></tr><tr><td class=\"key\">Alejandro IV</td><td>Hijo de Alejandro Magno, nacido después de su muerte.</td><td>323-311 a.C.</td></tr><tr><td class=\"key\">Alejandro Magno</td><td>Rey de Macedonia. Es el «cuerno notable» del macho cabrío, el primer rey de Grecia (Daniel 8:21).</td><td>356-323 a.C.</td></tr><tr><td class=\"key\">Andreas Fischer</td><td>Anabautista del siglo XVI, compañero de Oswald Glait.</td><td>hacia 1480-1540</td></tr><tr><td class=\"key\">Antíoco I Sóter</td><td>Rey seléucida, hijo de Seleuco I.</td><td>reinó 281-261 a.C.</td></tr><tr><td class=\"key\">Antíoco II Teos («el Divino»)</td><td>Rey seléucida, «rey del norte».</td><td>reinó 261-246 a.C.</td></tr><tr><td class=\"key\">Antíoco III el Grande</td><td>Rey seléucida, «rey del norte».</td><td>reinó 223-187 a.C.</td></tr><tr><td class=\"key\">Antíoco IV Epífanes</td><td>Rey seléucida que profanó el templo de Jerusalén entre 168 y 165 a.C.</td><td>reinó 175-164 a.C.</td></tr><tr><td class=\"key\">Arnulfo de Orleans</td><td>Obispo católico de Orleans, Francia.</td><td>siglo X</td></tr><tr><td class=\"key\">Artajerjes I</td><td>Rey de Persia.</td><td>reinó 465-424 a.C.</td></tr><tr><td class=\"key\">Astiages</td><td>Último rey de Media y abuelo de Ciro.</td><td>rey de Media, hacia 585-550 a.C.</td></tr><tr><td class=\"key\">Belisario</td><td>General del emperador Justiniano.</td><td>hacia 505-565 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (2)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">César Augusto (Octavio)</td><td>Sobrino nieto de Julio César y primer emperador de Roma.</td><td>63 a.C.-14 d.C.; gobernó solo desde 27 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Cleopatra VII</td><td>Última reina de Egipto de la familia de los Tolomeos, hija de Tolomeo XII Auletes.</td><td>reinó 51-30 a.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-485 a.C.</td></tr><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Benito Mussolini</td><td>Dictador de Italia.</td><td>1883-1945</td></tr><tr><td class=\"key\">Berenice</td><td>Hija de Tolomeo II, rey del sur.</td><td>murió en 246 a.C.</td></tr><tr><td class=\"key\">Cambises II</td><td>Rey de Persia, hijo de Ciro.</td><td>reinó 530-522 a.C.</td></tr><tr><td class=\"key\">Carlomagno</td><td>Rey de los francos y emperador de occidente.</td><td>hacia 747-814 d.C.; emperador desde 800</td></tr><tr><td class=\"key\">Carlos V</td><td>Rey de España y emperador del Sacro Imperio.</td><td>1500-1558; emperador 1519-1556</td></tr><tr><td class=\"key\">Casandro</td><td>General de Alejandro.</td><td>hacia 355-297 a.C.</td></tr><tr><td class=\"key\">César Augusto (Octavio)</td><td>Sobrino nieto de Julio César y primer emperador de Roma.</td><td>63 a.C.-14 d.C.; gobernó solo desde 27 a.C.</td></tr><tr><td class=\"key\">Charles Albert Tindley</td><td>Pastor metodista de Filadelfia y compositor de himnos.</td><td>1851-1933</td></tr><tr><td class=\"key\">Claudio Tolomeo</td><td>Astrónomo y geógrafo griego de Alejandría.</td><td>siglo II d.C.</td></tr><tr><td class=\"key\">Cleopatra VII</td><td>Última reina de Egipto de la familia de los Tolomeos, hija de Tolomeo XII Auletes.</td><td>reinó 51-30 a.C.</td></tr><tr><td class=\"key\">Clodoveo I</td><td>Rey de los francos.</td><td>rey de los francos, 481-511 d.C.</td></tr><tr><td class=\"key\">Constantino I el Grande</td><td>Emperador romano que se declaró cristiano.</td><td>emperador 306-337 d.C.</td></tr><tr><td class=\"key\">Darío I el Grande</td><td>Rey de Persia.</td><td>reinó 522-485 a.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (3)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata o Bardiya (falso Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Darío III</td><td>Último rey del imperio persa.</td><td>reinó 336-330 a.C.</td></tr><tr><td class=\"key\">Decio</td><td>Emperador romano.</td><td>emperador 249-251 d.C.</td></tr><tr><td class=\"key\">Desmond Doss</td><td>Soldado adventista de Estados Unidos que por conciencia no portaba armas; sirvió como camillero.</td><td>1919-2006</td></tr><tr><td class=\"key\">Diocleciano</td><td>Emperador romano.</td><td>emperador 284-305 d.C.</td></tr><tr><td class=\"key\">Domiciano</td><td>Emperador romano.</td><td>emperador 81-96 d.C.</td></tr><tr><td class=\"key\">Eberardo II de Salzburgo</td><td>Arzobispo católico de Salzburgo.</td><td>arzobispo 1200-1246</td></tr><tr><td class=\"key\">Elena G. de White</td><td>Pionera de la Iglesia Adventista. La iglesia reconoce en ella el don de profecía.</td><td>1827-1915</td></tr><tr><td class=\"key\">Enrique IV</td><td>Emperador del Sacro Imperio Romano Germánico.</td><td>1050-1106</td></tr><tr><td class=\"key\">Eusebio de Cesarea</td><td>Obispo de Cesarea, llamado padre de la historia de la iglesia.</td><td>hacia 260-339 d.C.</td></tr><tr><td class=\"key\">Felipe II Augusto</td><td>Rey de Francia.</td><td>rey de Francia, 1180-1223</td></tr><tr><td class=\"key\">Gaumata o Bardiya (falso Esmerdis)</td><td>Usurpador del trono persa.</td><td>522 a.C.</td></tr><tr><td class=\"key\">Gladys Aylward</td><td>Misionera inglesa en China. Había trabajado como empleada doméstica.</td><td>1902-1970</td></tr><tr><td class=\"key\">Gregorio VII</td><td>Obispo de Roma.</td><td>papa 1073-1085</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (4)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.</td><td>reinó 485-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Gubaru (Gobryas)</td><td>General de origen medo, gobernador de la provincia de Gutium.</td><td>539 a.C.</td></tr><tr><td class=\"key\">Guillermo Miller (William Miller)</td><td>Agricultor bautista de Estados Unidos que estudió solo la Biblia.</td><td>1782-1849</td></tr><tr><td class=\"key\">Heracles</td><td>Hijo natural de Alejandro Magno.</td><td>murió en 309 a.C.</td></tr><tr><td class=\"key\">Hewitt</td><td>Creyente adventista de los primeros años.</td><td>siglo XIX</td></tr><tr><td class=\"key\">Hipólito de Roma</td><td>Escritor cristiano de Roma.</td><td>murió en 236 d.C.</td></tr><tr><td class=\"key\">Hiram Edson</td><td>Agricultor millerita de Nueva York, luego pionero adventista.</td><td>1806-1882</td></tr><tr><td class=\"key\">Ireneo de Lyon</td><td>Obispo de Lyon, Francia.</td><td>siglo II</td></tr><tr><td class=\"key\">Isabel I de Inglaterra</td><td>Reina protestante de Inglaterra.</td><td>1533-1603; reina 1558-1603</td></tr><tr><td class=\"key\">Jaime White</td><td>Pionero adventista, esposo de Elena G. de White.</td><td>1821-1881</td></tr><tr><td class=\"key\">Jeannie Lawson</td><td>Misionera escocesa en China, ya mayor cuando llegó Gladys Aylward.</td><td>—</td></tr><tr><td class=\"key\">Jerjes I</td><td>Rey de Persia, hijo de Darío I; el Asuero del libro de Ester.</td><td>reinó 485-465 a.C.</td></tr><tr><td class=\"key\">Jerónimo</td><td>Erudito cristiano que tradujo la Biblia al latín (la Vulgata).</td><td>hacia 340-420 d.C.</td></tr><tr><td class=\"key\">Johannes Gutenberg</td><td>Inventor alemán.</td><td>hacia 1400-1468</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (5)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Julio César</td><td>General y dictador romano.</td><td>100-44 a.C.</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">Laodice I (Laodicea)</td><td>Primera esposa de Antíoco II Teos, rey del norte.</td><td>siglo III a.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr><tr><td class=\"key\">Lisímaco</td><td>General de Alejandro.</td><td>hacia 360-281 a.C.</td></tr><tr><td class=\"key\">Los hérulos</td><td>Pueblo germánico y arriano. Su jefe Odoacro depuso al último emperador de occidente en 476.</td><td>reinaron en Italia de 476 a 493 d.C.</td></tr><tr><td class=\"key\">Los ostrogodos</td><td>Los godos del este, arrianos. Su rey Teodorico gobernó Italia desde 493.</td><td>reinaron en Italia de 493 a 553 d.C.</td></tr><tr><td class=\"key\">Los vándalos</td><td>Pueblo germánico y arriano que se estableció en el norte de África, con Cartago por capital.</td><td>reino en el norte de África, 439-534 d.C.</td></tr><tr><td class=\"key\">Louis F. Were</td><td>Evangelista adventista de Australia.</td><td>1896-1967</td></tr><tr><td class=\"key\">Louis-Alexandre Berthier</td><td>General francés, jefe del estado mayor de Napoleón.</td><td>1753-1815</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Juan II, papa</td><td>Obispo de Roma.</td><td>papa 533-535 d.C.</td></tr><tr><td class=\"key\">Juan Pablo II</td><td>Obispo de Roma, de origen polaco.</td><td>1920-2005; papa 1978-2005</td></tr><tr><td class=\"key\">Juan Sin Tierra</td><td>Rey de Inglaterra.</td><td>rey de Inglaterra, 1199-1216</td></tr><tr><td class=\"key\">Juan Wiclef</td><td>Profesor de Oxford, Inglaterra; tradujo la Biblia al inglés.</td><td>hacia 1330-1384</td></tr><tr><td class=\"key\">Julio César</td><td>General y dictador romano.</td><td>100-44 a.C.</td></tr><tr><td class=\"key\">Justiniano I</td><td>Emperador romano de oriente.</td><td>emperador 527-565 d.C.</td></tr><tr><td class=\"key\">Laodice I (Laodicea)</td><td>Primera esposa de Antíoco II Teos, rey del norte.</td><td>siglo III a.C.</td></tr><tr><td class=\"key\">León I el Magno</td><td>Obispo de Roma.</td><td>papa 440-461 d.C.</td></tr><tr><td class=\"key\">León III</td><td>Obispo de Roma.</td><td>papa 795-816 d.C.</td></tr><tr><td class=\"key\">Lisímaco</td><td>General de Alejandro.</td><td>hacia 360-281 a.C.</td></tr><tr><td class=\"key\">Los hérulos</td><td>Pueblo germánico y arriano. Su jefe Odoacro depuso al último emperador de occidente en 476.</td><td>reinaron en Italia de 476 a 493 d.C.</td></tr><tr><td class=\"key\">Los ostrogodos</td><td>Los godos del este, arrianos. Su rey Teodorico gobernó Italia desde 493.</td><td>reinaron en Italia de 493 a 553 d.C.</td></tr><tr><td class=\"key\">Los vándalos</td><td>Pueblo germánico y arriano que se estableció en el norte de África, con Cartago por capital.</td><td>reino en el norte de África, 439-534 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (6)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Martín Lutero</td><td>Monje agustino y profesor alemán; inició la Reforma protestante en 1517.</td><td>1483-1546</td></tr><tr><td class=\"key\">Nabonido</td><td>Último rey de Babilonia y padre de Belsasar.</td><td>reinó 556-539 a.C.</td></tr><tr><td class=\"key\">Nabopolasar</td><td>Fundador del imperio neobabilónico y padre de Nabucodonosor.</td><td>reinó 626-605 a.C.</td></tr><tr><td class=\"key\">Napoleón Bonaparte</td><td>General y emperador de Francia.</td><td>1769-1821; emperador 1804-1815</td></tr><tr><td class=\"key\">Nerón</td><td>Emperador romano.</td><td>37-68 d.C.; emperador 54-68</td></tr><tr><td class=\"key\">Odoacro</td><td>Jefe de los hérulos, arriano.</td><td>rey de Italia 476-493 d.C.</td></tr><tr><td class=\"key\">Onías III</td><td>Sumo sacerdote judío en tiempos de los seléucidas.</td><td>murió hacia 171 a.C.</td></tr><tr><td class=\"key\">Osmán I</td><td>Fundador del imperio otomano (turco).</td><td>murió hacia 1324</td></tr><tr><td class=\"key\">Oswald Glait</td><td>Anabautista del siglo XVI.</td><td>1490-1546</td></tr><tr><td class=\"key\">Pablo Pineda</td><td>Maestro y conferencista de Málaga, España, con síndrome de Down.</td><td>n. 1974</td></tr><tr><td class=\"key\">Pío V</td><td>Obispo de Roma.</td><td>papa 1566-1572</td></tr><tr><td class=\"key\">Pío VI</td><td>Obispo de Roma cuando la Francia revolucionaria invadió Italia.</td><td>1717-1799; papa 1775-1799</td></tr><tr><td class=\"key\">Pío VII</td><td>Obispo de Roma elegido después de la muerte de Pío VI.</td><td>papa 1800-1823</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Louis F. Were</td><td>Evangelista adventista de Australia.</td><td>1896-1967</td></tr><tr><td class=\"key\">Louis-Alexandre Berthier</td><td>General francés, jefe del estado mayor de Napoleón.</td><td>1753-1815</td></tr><tr><td class=\"key\">Martín Lutero</td><td>Monje agustino y profesor alemán; inició la Reforma protestante en 1517.</td><td>1483-1546</td></tr><tr><td class=\"key\">Nabonido</td><td>Último rey de Babilonia y padre de Belsasar.</td><td>reinó 556-539 a.C.</td></tr><tr><td class=\"key\">Nabopolasar</td><td>Fundador del imperio neobabilónico y padre de Nabucodonosor.</td><td>reinó 626-605 a.C.</td></tr><tr><td class=\"key\">Napoleón Bonaparte</td><td>General y emperador de Francia.</td><td>1769-1821; emperador 1804-1815</td></tr><tr><td class=\"key\">Nerón</td><td>Emperador romano.</td><td>37-68 d.C.; emperador 54-68</td></tr><tr><td class=\"key\">Odoacro</td><td>Jefe de los hérulos, arriano.</td><td>rey de Italia 476-493 d.C.</td></tr><tr><td class=\"key\">Onías III</td><td>Sumo sacerdote judío en tiempos de los seléucidas.</td><td>murió hacia 171 a.C.</td></tr><tr><td class=\"key\">Osmán I</td><td>Fundador del imperio otomano (turco).</td><td>murió hacia 1324</td></tr><tr><td class=\"key\">Oswald Glait</td><td>Anabautista del siglo XVI.</td><td>1490-1546</td></tr><tr><td class=\"key\">Pablo Pineda</td><td>Maestro y conferencista de Málaga, España, con síndrome de Down.</td><td>n. 1974</td></tr><tr><td class=\"key\">Pío V</td><td>Obispo de Roma.</td><td>papa 1566-1572</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (7)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Policarpo</td><td>Obispo de Esmirna.</td><td>hacia 69-156 d.C.</td></tr><tr><td class=\"key\">Pompeyo</td><td>General romano.</td><td>106-48 a.C.</td></tr><tr><td class=\"key\">Porfirio</td><td>Filósofo pagano que escribió «Contra los cristianos».</td><td>hacia 234-305 d.C.</td></tr><tr><td class=\"key\">Rómulo Augústulo</td><td>Último emperador romano de occidente; era un muchacho y gobernaba su padre Orestes.</td><td>emperador 475-476 d.C.</td></tr><tr><td class=\"key\">Roxana</td><td>Princesa de Bactriana, esposa de Alejandro Magno.</td><td>murió hacia 310 a.C.</td></tr><tr><td class=\"key\">Samuel S. Snow</td><td>Predicador millerita.</td><td>1806-1890</td></tr><tr><td class=\"key\">Seleuco I Nicátor</td><td>General de Alejandro y fundador del reino seléucida (Siria y el oriente).</td><td>reinó 312-281 a.C.</td></tr><tr><td class=\"key\">Seleuco II Calínico</td><td>Rey seléucida, «rey del norte».</td><td>reinó 246-225 a.C.</td></tr><tr><td class=\"key\">Sidney Smith</td><td>Asiriólogo inglés del Museo Británico.</td><td>1889-1979</td></tr><tr><td class=\"key\">Silvestre I</td><td>Obispo de Roma en tiempos de Constantino.</td><td>obispo de Roma 314-335 d.C.</td></tr><tr><td class=\"key\">Teodorico el Grande</td><td>Rey de los ostrogodos, arriano, que gobernó Italia.</td><td>rey 471-526 d.C.</td></tr><tr><td class=\"key\">Teodosio I</td><td>Emperador romano.</td><td>emperador 379-395 d.C.</td></tr><tr><td class=\"key\">Tertuliano</td><td>Escritor cristiano de Cartago, en el norte de África.</td><td>hacia 155-220 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Pío VI</td><td>Obispo de Roma cuando la Francia revolucionaria invadió Italia.</td><td>1717-1799; papa 1775-1799</td></tr><tr><td class=\"key\">Pío VII</td><td>Obispo de Roma elegido después de la muerte de Pío VI.</td><td>papa 1800-1823</td></tr><tr><td class=\"key\">Policarpo</td><td>Obispo de Esmirna.</td><td>hacia 69-156 d.C.</td></tr><tr><td class=\"key\">Pompeyo</td><td>General romano.</td><td>106-48 a.C.</td></tr><tr><td class=\"key\">Porfirio</td><td>Filósofo pagano que escribió «Contra los cristianos».</td><td>hacia 234-305 d.C.</td></tr><tr><td class=\"key\">Rómulo Augústulo</td><td>Último emperador romano de occidente; era un muchacho y gobernaba su padre Orestes.</td><td>emperador 475-476 d.C.</td></tr><tr><td class=\"key\">Roxana</td><td>Princesa de Bactriana, esposa de Alejandro Magno.</td><td>murió hacia 310 a.C.</td></tr><tr><td class=\"key\">Samuel S. Snow</td><td>Predicador millerita.</td><td>1806-1890</td></tr><tr><td class=\"key\">Seleuco I Nicátor</td><td>General de Alejandro y fundador del reino seléucida (Siria y el oriente).</td><td>reinó 312-281 a.C.</td></tr><tr><td class=\"key\">Seleuco II Calínico</td><td>Rey seléucida, «rey del norte».</td><td>reinó 246-225 a.C.</td></tr><tr><td class=\"key\">Sidney Smith</td><td>Asiriólogo inglés del Museo Británico.</td><td>1889-1979</td></tr><tr><td class=\"key\">Silvestre I</td><td>Obispo de Roma en tiempos de Constantino.</td><td>obispo de Roma 314-335 d.C.</td></tr><tr><td class=\"key\">Teodorico el Grande</td><td>Rey de los ostrogodos, arriano, que gobernó Italia.</td><td>rey 471-526 d.C.</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   },
   {
    "t": "🧭 Personajes de la historia (8)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Tim Donaghy</td><td>Exárbitro de la NBA, la liga de baloncesto de Estados Unidos.</td><td>condenado en 2008</td></tr><tr><td class=\"key\">Tito</td><td>General romano y después emperador, hijo de Vespasiano.</td><td>39-81 d.C.; emperador 79-81</td></tr><tr><td class=\"key\">Tolomeo I Sóter</td><td>General de Alejandro y fundador del reino tolemaico de Egipto.</td><td>323-285 a.C.</td></tr><tr><td class=\"key\">Tolomeo II Filadelfo</td><td>Rey de Egipto, «rey del sur».</td><td>reinó 285-246 a.C.</td></tr><tr><td class=\"key\">Tolomeo III Evergetes</td><td>Rey de Egipto, hermano de Berenice.</td><td>reinó 246-221 a.C.</td></tr><tr><td class=\"key\">Tolomeo IV Filopátor</td><td>Rey de Egipto.</td><td>reinó 221-203 a.C.</td></tr><tr><td class=\"key\">Tolomeo V Epífanes</td><td>Rey de Egipto que subió al trono siendo niño.</td><td>reinó 204-181 a.C.</td></tr><tr><td class=\"key\">Valentiniano III</td><td>Emperador romano de occidente.</td><td>emperador 425-455 d.C.</td></tr><tr><td class=\"key\">William Henry Fox Talbot</td><td>Científico inglés, pionero de la fotografía, que también estudió la escritura cuneiforme.</td><td>1800-1877</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Nombre</th><th>Quién fue</th><th>Época</th></tr></thead><tbody><tr><td class=\"key\">Teodosio I</td><td>Emperador romano.</td><td>emperador 379-395 d.C.</td></tr><tr><td class=\"key\">Tertuliano</td><td>Escritor cristiano de Cartago, en el norte de África.</td><td>hacia 155-220 d.C.</td></tr><tr><td class=\"key\">Tim Donaghy</td><td>Exárbitro de la NBA, la liga de baloncesto de Estados Unidos.</td><td>condenado en 2008</td></tr><tr><td class=\"key\">Tito</td><td>General romano y después emperador, hijo de Vespasiano.</td><td>39-81 d.C.; emperador 79-81</td></tr><tr><td class=\"key\">Tolomeo I Sóter</td><td>General de Alejandro y fundador del reino tolemaico de Egipto.</td><td>323-285 a.C.</td></tr><tr><td class=\"key\">Tolomeo II Filadelfo</td><td>Rey de Egipto, «rey del sur».</td><td>reinó 285-246 a.C.</td></tr><tr><td class=\"key\">Tolomeo III Evergetes</td><td>Rey de Egipto, hermano de Berenice.</td><td>reinó 246-221 a.C.</td></tr><tr><td class=\"key\">Tolomeo IV Filopátor</td><td>Rey de Egipto.</td><td>reinó 221-203 a.C.</td></tr><tr><td class=\"key\">Tolomeo V Epífanes</td><td>Rey de Egipto que subió al trono siendo niño.</td><td>reinó 204-181 a.C.</td></tr><tr><td class=\"key\">Valentiniano III</td><td>Emperador romano de occidente.</td><td>emperador 425-455 d.C.</td></tr><tr><td class=\"key\">William Henry Fox Talbot</td><td>Científico inglés, pionero de la fotografía, que también estudió la escritura cuneiforme.</td><td>1800-1877</td></tr></tbody></table></div><p>Fuente: la ficha de cada personaje (toca su nombre).</p>"
   }
  ]
 };
@@ -76424,6 +76989,9 @@ const OTRAS_VERS = {
   "30": "Y habiendo cantado el himno, salieron al monte de las Olivas.",
   "64": "Jesús le dijo: Tú lo has dicho: y aun os digo, que desde ahora habéis de ver al Hijo del hombre sentado á la diestra de la potencia de Dios, y que viene en las nubes del cielo."
  },
+ "mateo-27": {
+  "51": "Y he aquí, el velo del templo se rompió en dos, de alto á bajo: y la tierra tembló, y las piedras se hendieron;"
+ },
  "mateo-28": {
   "19": "Por tanto, id, y doctrinad á todos los Gentiles, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo:",
   "20": "Enseñándoles que guarden todas las cosas que os he mandado: y he aquí, yo estoy con vosotros todos los días, hasta el fin del mundo. Amén."
@@ -77468,6 +78036,11 @@ const OTRAS_META = {
  "mateo-26": {
   "libro": "Mateo",
   "cap": "26",
+  "version": "RV1909"
+ },
+ "mateo-27": {
+  "libro": "Mateo",
+  "cap": "27",
   "version": "RV1909"
  },
  "mateo-28": {
@@ -78574,6 +79147,8 @@ function lamRecorrido(){
   lamEntradas().forEach(e=>r.push({k:e.k,e,t:lamEntDice(L,e)[0]}));
   if(L.despues)r.push({k:'desp',t:L.despues.titulo});
   if(L.cierre)r.push({k:'cierre',t:L.cierre.titulo});
+  /* v227 (Camilo): la lámina termina con una pregunta para la vida, anclada en un texto. */
+  if(L.aplica)r.push({k:'aplica',t:'Para ti'});
   return r;
 }
 function lamIr(k){
@@ -78582,6 +79157,7 @@ function lamIr(k){
   if(k==='est')return lamInicio();
   if(k==='desp')return lamHistoria('desp');
   if(k==='cierre')return lamCierreX();
+  if(k==='aplica')return lamAplicaX();
   if(lamEntradas().some(e=>e.k===k))return lamVeEntrada(k);
 }
 /* El cierre en Explorar: el mismo de Presentar. En Daniel 2 la placa con toda la historia
@@ -78595,6 +79171,17 @@ function lamCierreX(){
     const svg=document.getElementById('lamSvg');if(svg){lamMonte('no');svg.querySelector('.lam-estatua').style.opacity='1';lamPiedraArriba();}
     lamAcerca(lamTodo(),650);lamFin(true);}
   lamHoja(lamHojaTexto(t,'cierre'));lamVeHoja();lamRielMarca([]);lamLugar();
+}
+function lamHojaAplica(){
+  const A=LAM().aplica;if(!A)return '';
+  return '<div class="lam-hcab"><span class="lam-metal" style="--c:#B98A35"></span><div><div class="lam-p1">Para ti · '+esc(A.ref)+'</div><div class="lam-p2 lam-aplica-q">'+esc(A.pregunta)+'</div></div>'+
+    (lamModo==='presentar'?'':'<button type="button" class="lam-x" aria-label="Cerrar" onclick="lamInicio()">'+IC('x')+'</button>')+'</div>'+
+    '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(A.texto)+'</q> <span class="lam-ref">'+esc(A.ref)+'</span></p></div>'+
+    (A.nota?'<p class="lam-nota">'+A.nota+'</p>':'')+(lamModo!=='presentar'?lamNavHTML('aplica'):'');
+}
+function lamAplicaX(){
+  if(!LAM().aplica)return;
+  lamCierreX();lamDonde='aplica';lamHoja(lamHojaAplica());lamLugar();
 }
 const lamAvisoFuera=()=>{const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');};
 function lamRielHTML(extra){
@@ -79192,7 +79779,7 @@ function lamResponde(id){
 
 /* ── Presentar ── */
 const lamPasos=()=>{const L=LAM();if(L.tipo==='escenas')return lamPasosE();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
-  {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'}];};
+  {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'},...(L.aplica?[{tipo:'aplica'}]:[])];};
 function lamPres(k){
   if(lamEsE())return lamPresE(k);
   const pasos=lamPasos();if(k<0||k>=pasos.length)return;
@@ -79201,7 +79788,7 @@ function lamPres(k){
   const vistos=pasos.slice(1,k+1).filter(x=>x.tipo==='parte').map(x=>x.id),rotos=vistos.includes('monte');
   /* v211 (Camilo: «la estatua intenta aparecer y salta»): en los pasos de la historia la
      estatua no se asoma mientras llega la escena; si la escena no existe, lamHist la muestra. */
-  const cierre=s.tipo==='cierre';
+  const cierre=s.tipo==='cierre'||s.tipo==='aplica';
   /* v212: en el cierre la estatua vuelve entera, en sombra, detrás de la placa final (lamFin). */
   const est=svg.querySelector('.lam-estatua');est.style.opacity=!cierre&&(rotos||s.tipo==='hist'||s.tipo==='desp')?'0':'1';
   if(s.tipo==='parte'&&L.tiempo.includes(s.id))lamEnciende([s.id],vistos.filter(v=>v!==s.id));
@@ -79230,6 +79817,7 @@ function lamPres(k){
   else if(s.tipo==='hist')lamHoja(lamHojaTexto(L.historia[s.i]));
   else if(s.tipo==='desp')lamHoja(lamHojaTexto(L.despues));
   else if(s.tipo==='cierre')lamHoja(lamHojaTexto({ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}));
+  else if(s.tipo==='aplica')lamHoja(lamHojaAplica());
   else lamHoja(lamHojaParte(lamParte(s.id),0,1));
   lamFin(cierre);
   document.getElementById('lamCuenta').textContent=(k+1)+' / '+pasos.length;
@@ -79549,7 +80137,7 @@ function lamVista(id,sub,anima){
   lamLimpia(sigue);lamVisto=id+(sub!=null?':'+sub:'');
   lamChip(p,pa?['Paso '+(sub+1)+' de '+p.pasos.length,pa.t]:'');lamD2(id);lamEnciende([id]);
   const C=L.cuernos;
-  if(p.mov&&L.mov)lamMov(p,anima);
+  if(p.mov&&L.mov)lamMov(p,anima,sub);
   else if(L.sube&&L.sube.ids.includes(id))lamSube(p,anima);
   else if(C&&id===C.diezEn)lamDiez(anima);
   else if(C&&id===C.caenEn)lamMomento(anima);
@@ -79867,7 +80455,7 @@ let lamChicaRO=null;
    #lamEsc ocupa todo el ancho y la imagen solo una parte. */
 function lamChica(){const s=document.getElementById('lamMarcasImg');
   if(s&&s.classList.contains('d8')){const w=s.getBoundingClientRect().width;s.classList.toggle('chica',w>0&&w<700);}}
-function lamMov(p,anima){
+function lamMov(p,anima,sub){
   const M=LAM().mov,q=!anima||lamQuieto(),z=lamZ(),g=z&&z.querySelector('.lam-capa-g'),s=document.getElementById('lamMarcasImg');
   if(!g||!s)return;
   const ly=document.getElementById('lamLey8');if(ly){ly.hidden=true;ly.innerHTML='';}
@@ -79878,6 +80466,8 @@ function lamMov(p,anima){
   /* v224: al entrar a Presentar la escena todavía no tiene su tamaño final: se vuelve a medir
      cuando cambia (antes los rótulos quedaban grandes en la escena angosta). */
   if(typeof ResizeObserver==='function'){if(!lamChicaRO)lamChicaRO=new ResizeObserver(lamChica);lamChicaRO.disconnect();lamChicaRO.observe(s);}
+  /* v227: una parte con `reparto` (REPARTOS en laminas.js) trae pasos: el 1 es su movimiento; desde el 2, el mapa del reparto (lamReparto). */
+  if(p.reparto&&sub>0&&REPARTOS[p.reparto])return lamReparto(REPARTOS[p.reparto],p.id,g,s,sub-1);
   ({carnero:lamMovCarnero,choque:lamMovChoque,cuatro:lamMovCuatro,crece:lamMovCrece,cielo:lamMovCielo,santuario:lamMovSantuario,purifica:lamMovPurifica}[p.mov]||(()=>lamHist({f:p.img})))(M,g,s,q);
 }
 /* El carnero en su sitio: el cuerno b (detrás), el cuerpo y el cuerno a (delante). */
@@ -80021,6 +80611,38 @@ function lamMovCrece(M,g,s,q){
   /* 4. Después, hacia arriba (8:10): lo muestra la parte que sigue. */
   const t4=t3+400+P.va.length*1300+400;
   lamT(()=>{paso(3);lamDibuja(sube,900);},t4);lamVeEt(s,8,t4+500);
+}
+/* v227 (Camilo: «los generales de Alejandro, interactivo», y que sirva para Daniel 11): EL REPARTO
+   DE UN REINO. Solo lee sus datos (`R`, de REPARTOS): la rosa de los vientos (el mismo estilo del
+   cuerno pequeño), un nodo y un botón por cada uno de `R.gen` en su tierra, y arriba el paso. `j`:
+   cuál está escogido; `j` = R.gen.length es el final (`R.fin`), con todos encendidos. `id`: la
+   parte que lo trae, para que tocar un nombre lleve a su paso (lamRepartoToca). */
+function lamReparto(R,id,g,s,j){
+  const Ro=R.rosa,[cx,cy]=Ro.c,gen=R.gen,todos=j>=gen.length,es=i=>todos||i===j,vi=k=>todos||gen[j].v===k;
+  lamHist({f:R.fondo});
+  const pt={n:[cx,cy-Ro.dy],s:[cx,cy+Ro.dy],e:[cx+Ro.dx,cy],o:[cx-Ro.dx,cy]};
+  g.innerHTML='<g class="d8-rosa8">'+Ro.vientos.map(([t,k])=>lamTraza('M'+cx+' '+cy+' L'+pt[k].join(' '),'viento'+(vi(k)?' on':' tenue')).replace('<path ','<path data-v="'+k+'" ')).join('')+
+    '<circle class="d8-rosa-c" cx="'+cx+'" cy="'+cy+'" r="6"/></g>'+
+    gen.map((x,i)=>'<circle class="d8-nodo'+(es(i)?' on':'')+'" cx="'+x.en[0]+'" cy="'+x.en[1]+'" r="'+(i===j?11:7)+'"/>').join('');
+  g.querySelectorAll('.d8-traza').forEach(lamDibujado);
+  /* El oriente y el poniente van debajo del eje; el norte, a la izquierda de su brazo. */
+  const vEt={n:[cx-14,pt.n[1]+4,'d'],s:[cx+14,pt.s[1]-4,'i'],e:[pt.e[0]-6,cy+30,'d'],o:[pt.o[0]+6,cy+30,'i']};
+  s.innerHTML=gen.map((x,i)=>'<button type="button" class="d8-et c reino gen ve'+(es(i)?' on':' tenue')+(x.v==='n'?' arriba':'')+'" data-g="'+i+'" style="left:'+lamPx(x.en[0])+';top:'+lamPy(x.en[1]+(x.v==='n'?-16:16))+'"'+
+        ' onclick="lamRepartoToca(\''+id+':'+(i+1)+'\')" aria-pressed="'+(i===j)+'"><b>'+esc(x.t)+'</b><small>'+esc(x.s)+'</small></button>').join('')+
+    Ro.vientos.map(([t,k])=>lamEt(vEt[k][0],vEt[k][1],vEt[k][2],esc(t),'','viento '+(vi(k)?'on':'tenue'),1).replace('class="d8-et','data-v="'+k+'" class="d8-et')).join('')+
+    '<div class="d8-et c oro paso ve" style="left:'+lamPx(600)+';top:'+lamPy(10)+'"><b>'+esc(todos?R.fin[0]:gen[j].t+' · '+gen[j].viento)+'</b><small>'+esc(todos?R.fin[1]:gen[j].s+' · '+gen[j].roma)+'</small></div>';
+  s.querySelectorAll('[data-o]').forEach(e=>e.classList.add('ve'));
+}
+/* Tocar un nombre del reparto («parte:paso», un solo literal para la app de Jóvenes): en Explorar,
+   su paso; al presentar, el paso de la presentación. */
+function lamRepartoToca(a){
+  const [id,k]=String(a).split(':'),n=+k;
+  if(lamModo==='presentar'){const i=lamPasos().findIndex(s=>s.tipo==='parte'&&s.id===id&&s.sub===n);if(i>=0)lamPres(i);return;}
+  if(lamSel!==id)lamToca(id);lamSubE(n);
+  /* En la pantalla ancha la hoja tiene su propio desplazamiento: muestra la nota del escogido (con sus fuentes). */
+  const h=document.getElementById('lamHoja'),t=document.getElementById('lamSubTx');
+  if(h&&t&&h.scrollHeight>h.clientHeight+2&&/(auto|scroll)/.test(getComputedStyle(h).overflowY))
+    h.scrollTo({top:h.scrollTop+t.getBoundingClientRect().top-h.getBoundingClientRect().top-12,behavior:lamQuieto()?'auto':'smooth'});
 }
 /* Hasta el ejército del cielo: el cuerno sube, echa estrellas por tierra y se levanta frente al Príncipe. */
 function lamMovCielo(M,g,s,q){
@@ -80419,14 +81041,16 @@ const lamPasosE=()=>{
   L.partes.forEach(p=>{
     if(p.pasos)p.pasos.forEach((x,j)=>r.push({tipo:'parte',id:p.id,sub:j,n:p.pasos.length}));else r.push({tipo:'parte',id:p.id});
     /* v208: tras el cuerno pequeño, la portada de sus señas, una seña por paso y la cuenta de los 1.260 años. */
-    if(L.senas&&p.id===L.senasTras){r.push({tipo:'senasT',id:p.id});L.senas.forEach((x,j)=>r.push({tipo:'senas',id:p.id,sub:j,n:L.senas.length}));}
+    /* v227 (Camilo): las once señas en tres pasos (de dónde sale, qué es, qué hace), si la lámina trae los grupos. */
+    if(L.senas&&p.id===L.senasTras){if(L.senasGrupos)L.senasGrupos.forEach((g,j)=>r.push({tipo:'senasG',id:p.id,sub:j,n:L.senasGrupos.length}));
+      else{r.push({tipo:'senasT',id:p.id});L.senas.forEach((x,j)=>r.push({tipo:'senas',id:p.id,sub:j,n:L.senas.length}));}}
     if(L.periodo&&p.id===L.periodo.tras)L.periodo.pasos.forEach((x,j)=>r.push({tipo:'periodo',id:p.id,sub:j,n:L.periodo.pasos.length}));
     /* v210: después de los pasos del juicio, sus tres fases (una por paso). */
     if(L.fases&&p.id===L.fases.tras)L.fases.pasos.forEach((x,j)=>r.push({tipo:'fases',id:p.id,sub:j,n:L.fases.pasos.length}));
   });
   /* v211: el primer paso es la portada (las cuatro bestias); antes era el primer paso
      de la historia con el cartel encima, y su texto no se llegaba a ver. */
-  return [...(L.cartel&&L.cartel.f?[{tipo:'portada'}]:[]),...r,{tipo:'desp'},{tipo:'cierre'}];
+  return [...(L.cartel&&L.cartel.f?[{tipo:'portada'}]:[]),...r,{tipo:'desp'},{tipo:'cierre'},...(L.aplica?[{tipo:'aplica'}]:[])];
 };
 function lamHojaSub(p,j){
   const x=p.pasos[j];
@@ -80442,6 +81066,19 @@ function lamHojaSenasT(){
     '<div class="lam-p2">Las características del cuerno pequeño</div><div class="lam-fechas">'+N+' señas en Daniel 7</div></div></div>'+
     '<p class="lam-nota">Daniel 7 da '+N.toString().toLowerCase()+' señas del cuerno, y las '+N.toString().toLowerCase()+' se cumplen en un mismo poder. Una por una:</p>'+
     '<ol class="lam-sl pres">'+L.senas.map((x,k)=>'<li><span class="lam-slb"><i>'+(k+1)+'</i><b>'+x.t+'</b><span class="lam-ref">'+x.ref+'</span></span></li>').join('')+'</ol>'+
+    '<div class="lam-fu">Fuente: '+L.senasFuente+'</div>';
+}
+function lamSenasGVis(gi,anima){
+  const L=LAM(),G=L.senasGrupos[gi],p=lamCuernoFondo();if(!G)return;
+  lamChip(p,['Señas · '+(gi+1)+' de '+L.senasGrupos.length,G.t]);
+  lamArma(lamTablaPon('<div class="lam-sen-tit"><small data-o="0">Las '+(L.senas.length===11?'once':L.senas.length)+' señas del cuerno pequeño · '+(gi+1)+'\u00a0de\u00a0'+L.senasGrupos.length+'</small><b data-o="1">'+esc(G.t)+'</b></div>'+
+    '<ol class="lam-sen-g">'+G.s.map((k,i)=>{const x=L.senas[k];return '<li data-o="'+(i+2)+'"><i>'+(k+1)+'</i><span><b>'+x.t+'</b> <span class="lam-ref">'+x.ref+'</span></span></li>';}).join('')+'</ol>','titulo'),anima,300);
+}
+function lamHojaSenasG(gi){
+  const L=LAM(),G=L.senasGrupos[gi],p=lamParte(L.senasTras);
+  return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">Las '+(L.senas.length===11?'once':L.senas.length)+' señas · '+(gi+1)+' de '+L.senasGrupos.length+'</div>'+
+    '<div class="lam-p2">'+esc(G.t)+'</div><div class="lam-fechas">'+esc(p.reino)+'</div></div></div>'+
+    '<ol class="lam-sl pres">'+G.s.map(k=>{const x=L.senas[k];return '<li class="on"><span class="lam-slb"><i>'+(k+1)+'</i><b>'+x.t+'</b><span class="lam-ref">'+x.ref+'</span></span><p>'+x.c+'</p></li>';}).join('')+'</ol>'+
     '<div class="lam-fu">Fuente: '+L.senasFuente+'</div>';
 }
 function lamHojaPer(j){
@@ -80463,15 +81100,16 @@ function lamPresE(k){
   const p=s.id?lamParte(s.id):null;
   lamCartel(k===0,true);
   const t=s.tipo==='portada'?{f:L.cartel.f,ref:L.cartel.cita?L.cartel.cita.ref:L.cartel.ref,titulo:L.titulo,texto:L.cartel.cita?L.cartel.cita.texto:'',nota:''}:
-    s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:s.tipo==='cierre'?{f:L.cierre.f,ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}:null;
+    s.tipo==='hist'?L.historia[s.i]:s.tipo==='desp'?L.despues:(s.tipo==='cierre'||s.tipo==='aplica')?{f:L.cierre.f,ref:L.cierre.ref,titulo:L.cierre.titulo,texto:L.cierre.texto,nota:esc(L.cierre.nota)}:null;
   if(s.tipo==='senasT'){lamSenasVis(-1,dir>0);lamHoja(lamHojaSenasT());}
+  else if(s.tipo==='senasG'){lamSenasGVis(s.sub,dir!==0);lamHoja(lamHojaSenasG(s.sub));}
   else if(s.tipo==='senas'){
     /* Las señas van sobre el cuerno ya armado: la imagen no se vuelve a armar en cada una. */
     lamSenasVis(s.sub,dir!==0);lamHoja(lamHojaSenas(s.sub));
   }else if(s.tipo==='periodo'){lamPeriodoVis(s.sub,dir>=0);lamHoja(lamHojaPer(s.sub));}
   else if(s.tipo==='fases'){lamFasesVis(s.sub,dir!==0);lamHoja(lamHojaFases(s.sub));}else if(p){lamVista(p.id,s.sub,dir>0);lamHoja(s.sub!=null?lamHojaSub(p,s.sub):lamHojaParte(p,0,1));}
   else{lamLimpia();lamHist(t);lamChip(null);lamD2(null);lamEnciende([]);
-    lamHoja((k===0?'<div class="lam-portada">'+esc(L.libro)+' · '+esc(L.titulo)+'</div>':'')+lamHojaTexto(t));}
+    lamHoja(s.tipo==='aplica'?lamHojaAplica():(k===0?'<div class="lam-portada">'+esc(L.libro)+' · '+esc(L.titulo)+'</div>':'')+lamHojaTexto(t));}
   /* v225 (Camilo, pedagogía): al presentar, el panel de las 2.300 tardes y mañanas bajo la línea
      de tiempo sale solo en los pasos de su cuenta (en Explorar está siempre). */
   const l23=document.getElementById('lamL23t');if(l23)l23.classList.toggle('ve',s.tipo==='periodo');
@@ -88114,7 +88752,7 @@ function ultDetHTML(i,k){
     return '<div class="cmp-ult-dc"><div>'+cab+'<h4>'+esc(e.t)+'</h4><p class="cmp-ult-dl"><b>'+esc(nom+' '+x[0])+'</b> '+
       '<span class="cmp-ult-tipo '+(x[1]?'si':'int')+'">'+(x[1]?'Lo dice el texto':'Según la interpretación')+'</span></p></div>'+cierra+'</div>'+
       (x[4].length?'<ul class="cmp-ult-citas">'+x[4].map(([r,c])=>'<li><q>'+esc(c)+'</q> <cite>'+refsTocables(esc(r),'d7')+'</cite></li>').join('')+'</ul>':'<p class="cmp-ult-sin">Mateo '+esc(x[0])+': léelo en tu Biblia.</p>')+
-      '<p class="cmp-ult-int">'+esc(x[2])+'</p>'+
+      '<p class="cmp-ult-int">'+esc(x[2])+'</p>'+ultEgwHTML(x[5])+
       '<p class="cmp-ult-f">Fuente: '+x[3]+'</p>'+ultNavHTML(i);}
   const muestra=U.libros.filter(([q])=>q!=='egw'&&e.l&&e.l[q]),no=U.libros.filter(([q])=>q!=='egw'&&!(e.l&&e.l[q]));
   return '<div class="cmp-ult-dc">'+(e.img?'<span class="cmp-ult-img"><img src="'+LAMINAS_DIR+e.img+'.webp" alt="" loading="lazy" decoding="async"></span>':'')+
@@ -88122,7 +88760,13 @@ function ultDetHTML(i,k){
     '<div class="cmp-ult-libs"><span class="cmp-ult-k">Dónde está</span>'+(muestra.length?muestra.map(([q,c,n])=>{const y=e.l[q];
       return '<button type="button" class="cmp-ult-lib '+(y[1]?'si':'int')+'" onclick="cmpUlt('+i+',false,\''+q+'\')"><b>'+esc(c)+'</b> '+esc(y[0])+'</button>';}).join(''):'<span class="cmp-ult-k no">Ningún capítulo lo cuenta; lo describe Elena de White.</span>')+
       (muestra.length&&no.length?'<span class="cmp-ult-k no">No lo traen: '+esc(no.map(x=>x[1]).join(', '))+'</span>':'')+'</div>'+
-    '<p class="cmp-ult-f"><b>Elena de White:</b> '+e.egw+'</p>'+ultNavHTML(i);
+    '<p class="cmp-ult-f"><b>Elena de White:</b> '+e.egw+'</p>'+ultEgwHTML(e.egwC)+ultNavHTML(i);
+}
+/* v227 (Camilo: «cada vez que Elena de White aplica un texto, su cita literal y una línea que
+   la explica»): [[referencia, cita, explicación]]. Solo libros que están en la biblioteca (CS). */
+function ultEgwHTML(l){
+  if(!l||!l.length)return '';
+  return '<div class="cmp-ult-egw"><span class="cmp-ult-k">Elena de White, literal</span>'+l.map(([r,c,n])=>'<blockquote><p>“'+esc(c)+'” <cite>'+esc(r)+'</cite></p><small>'+esc(n)+'</small></blockquote>').join('')+'</div>';
 }
 function ultNavHTML(i){
   const U=ULT();

@@ -71,7 +71,10 @@ const LAMINAS = {
   cierre: { ref: 'Daniel 2:45', texto: 'El gran Dios ha mostrado al rey lo que ha de acontecer en lo por venir; y el sueño es verdadero, y fiel su interpretación.',
     titulo: 'Un reino que no será jamás destruido', ref2: 'Daniel 2:44',
     /* v212: la imagen propia del cierre, si existe (opcional: sin ella, la estatua en sombra). */
-    fondo: 'cierre.webp', nota: 'Hoy estamos en los pies. Lo que sigue es la piedra.' },
+    fondo: 'cierre.webp', nota: 'Hoy estamos en los pies. Lo que sigue es la piedra. Fuente: Bohr, Daniel 1-10, p. 61-62.' },
+  /* v227 (Camilo): la pregunta para la vida, al final de Explorar y de Presentar, anclada en un texto. */
+  aplica: { pregunta: '¿Caes hoy sobre la piedra, o esperas a que ella caiga?', ref: 'Daniel 2:34', texto: 'una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies',
+    nota: 'Jesús lo aplicó a cada persona: «el que caiga sobre esta piedra será quebrantado; y sobre quien ella caiga, será desmenuzado» (Mateo 21:44).' },
   /* El capítulo en orden: lo que pasa antes del sueño y después. La
      estatua no se entiende sin esto: Dios le muestra al rey el futuro que
      ningún sabio podía decirle (2:10-11, 27-28). Textos literales RV1995. */
@@ -80,7 +83,7 @@ const LAMINAS = {
   historia: [
     /* v203 (Camilo 13-oct): la presentación empieza por el contexto, el cautiverio de 605. */
     { f: 'e605', titulo: 'Cautivos en Babilonia', ref: 'Daniel 1:2', texto: 'El Señor entregó en sus manos a Joacim, rey de Judá',
-      nota: 'En 605 a.C. Nabucodonosor sitia Jerusalén y se lleva a Daniel, Ananías, Misael y Azarías, jóvenes de unos 18 años (1:1-6). Vendrán dos deportaciones más, en 597 y 586 a.C. En el segundo año de Nabucodonosor llega el sueño (2:1).' },
+      nota: 'En 605 a.C. Nabucodonosor sitia Jerusalén y se lleva a Daniel, Ananías, Misael y Azarías, jóvenes de unos 18 años (1:1-6): Daniel “sólo tenía dieciocho años cuando fue llevado a una corte pagana” (4T 570, citado en Bohr, <i>Daniel 1-10</i>, p. 45). Vendrán dos deportaciones más, en 597 y 586 a.C. En el segundo año de Nabucodonosor llega el sueño (2:1).' },
     { f: 'h1', titulo: 'Un sueño que nadie puede decir', ref: 'Daniel 2:1, 11', texto: 'tuvo Nabucodonosor sueños, y se turbó su espíritu y se le fue el sueño.',
       nota: 'El rey exige que le digan el sueño y su significado. Los sabios responden que solo podrían «los dioses cuya morada no está entre los hombres» (2:11), y el rey manda matarlos a todos (2:12).' },
     { f: 'h2', titulo: 'Daniel pide tiempo y ora', ref: 'Daniel 2:18-19', texto: 'para que pidieran misericordias del Dios del cielo sobre este misterio',
@@ -214,7 +217,7 @@ LAMINAS.d7 = {
     { id: 'reino', de: 2426, a: 2626, t: 'El reino eterno', s: 'después de los mil años', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
     { f: 'd2/babilonia', titulo: 'En el primer año de Belsasar', ref: 'Daniel 7:1', texto: 'En el primer año de Belsasar, rey de Babilonia, tuvo Daniel un sueño y visiones de su cabeza mientras estaba en su lecho',
-      nota: 'Hacia el 553 a.C., unos cincuenta años después del sueño de la estatua. Daniel tiene unos setenta años, y Babilonia caerá catorce años después (Daniel 5). Daniel «escribió el sueño» (7:1).' },
+      nota: 'Hacia el 553 a.C., unos cincuenta años después del sueño de la estatua. Daniel tiene unos setenta años (Maxwell, <i>El porvenir del mundo revelado</i>, p. 109), y Babilonia caerá catorce años después (Daniel 5). Daniel «escribió el sueño» (7:1).' },
     { f: 'mar', titulo: 'Cuatro vientos sobre el gran mar', ref: 'Daniel 7:2-3', texto: 'vi que los cuatro vientos del cielo combatían en el gran mar. … cuatro bestias grandes, diferentes la una de la otra, subían del mar.',
       nota: 'La Biblia explica sus símbolos. Los vientos son guerras entre naciones (Jeremías 25:32-33); el mar, «pueblos, muchedumbres, naciones y lenguas» (Apocalipsis 17:15); las bestias, reyes o reinos (7:17, 23).' },
   ],
@@ -226,6 +229,8 @@ LAMINAS.d7 = {
     nota: 'Daniel no lo entiende todo todavía. Daniel 8 vuelve sobre el cuerno y da la fecha del juicio: «Hasta dos mil trescientas tardes y mañanas» (8:14).' },
   cierre: { f: 'juicio', ref: 'Daniel 7:22', texto: 'se hizo justicia a los santos del Altísimo; y llegó el tiempo, y los santos recibieron el reino.',
     titulo: 'El juicio es a favor de los santos', nota: 'Hoy vivimos en el tiempo del juicio. Al cerrarse la gracia el Hijo recibe el reino; después Cristo vuelve y los santos lo reciben. Pasados los mil años, el reino eterno llena la tierra.' },
+  aplica: { pregunta: 'El juicio es a favor de los santos: ¿ya le confiaste tu caso a Cristo?', ref: 'Daniel 7:22', texto: 'se hizo justicia a los santos del Altísimo',
+    nota: 'En el juicio, “Jesús aparecerá como el abogado de ellos, para interceder en su favor ante Dios” (CS 536).' },
   paraleloCols: ['Daniel 7', 'Daniel 2', 'Reino'],
   /* v205: la cuarta columna es la parte de Daniel 2 que se enciende en la estatua
      chica al elegir cada parte (null: Daniel 2 no la tiene, la agrega Daniel 7).
@@ -327,6 +332,8 @@ LAMINAS.d7 = {
     { t: '«Pensará en cambiar los tiempos y la Ley»', ref: '7:25', c: 'El sábado: el día de reposo se pasó al domingo y se quitó el mandamiento sobre las imágenes (CS 55-56 y 499). También quiso cambiar el calendario profético de Dios (Bohr, <i>Daniel 1-10</i>, p. 125).' },
     { t: 'Domina «tiempo, tiempos y medio tiempo»', ref: '7:25', c: '1.260 años: de 538 a 1798 d.C.' }],
   senasFuente: BOHR + ', p. 119, 124-127; CS 55-56 y 499.',
+  /* v227 (Camilo): al presentar, las once señas en tres pasos. Son índices de `senas`. */
+  senasGrupos: [{ t: 'De dónde sale', s: [0, 1, 2] }, { t: 'Qué es', s: [3, 5, 6] }, { t: 'Qué hace', s: [4, 7, 8, 9, 10] }],
   /* v208: TIEMPO, TIEMPOS Y MEDIO TIEMPO (7:25), después de las once señas: cuatro
      pasos que se arman sobre la imagen (la suma, un día por un año, el mismo
      tiempo en Apocalipsis y el cumplimiento de 538 a 1798 en la línea de tiempo).
@@ -405,8 +412,8 @@ LAMINAS.d7 = {
  {id:'cuernos',img:'cuarta',nombre:'Los diez cuernos',reino:'Roma dividida',fechas:'desde 476 d.C.',de:476,a:2026,c:'#4E6A8F',
   texto:'y tenía diez cuernos',ref:'7:7',texto2:'Los diez cuernos significan que de aquel reino se levantarán diez reyes',ref2:'7:24',
   corto:'Roma dividida: los reinos que salieron de Roma, como los diez dedos de Daniel 2.',
-  interp:['La segunda etapa de Roma. Las tribus del norte se repartieron el imperio de occidente, y en 476 d.C. cayó el último emperador. Son los diez dedos de Daniel 2.','Alamanes, francos, burgundios, vándalos, suevos, visigodos, sajones, ostrogodos, lombardos y hérulos. De ellos salieron las naciones de Europa occidental, que nunca se volvieron a unir.'],
-  fuente:BOHR+', p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24.'},
+  interp:['La segunda etapa de Roma. Las tribus del norte se repartieron el imperio de occidente, y en 476 d.C. cayó el último emperador. Son los diez dedos de Daniel 2.','Alamanes, francos, burgundios, vándalos, suevos, visigodos, sajones, ostrogodos, lombardos y hérulos. De ellos salieron las naciones de Europa occidental, que nunca se volvieron a unir: Carlomagno, Carlos V y Napoleón lo intentaron.','Se unen solo «por una hora»: los diez reyes «recibirán autoridad como reyes por una hora, juntamente con la bestia» y «entregarán su poder y autoridad a la bestia» (Apocalipsis 17:12-13). Pero la unión no dura: «no se unirán el uno con el otro, como el hierro no se mezcla con el barro» (2:43).'],
+  fuente:BOHR+', p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40.'},
  {id:'cuerno',img:'cuerno',nombre:'El cuerno pequeño',reino:'Roma papal',fechas:'supremacía 538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',
   texto:'otro cuerno pequeño salió entre ellos, y delante de él fueron arrancados tres cuernos de los primeros',ref:'7:8',texto2:'serán entregados en sus manos hasta tiempo, tiempos y medio tiempo.',ref2:'7:25',
   corto:'Roma papal: 1.260 años, de 538 a 1798. Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26).',
@@ -423,7 +430,7 @@ LAMINAS.d7 = {
    {t:'Fueron puestos unos tronos',ref:'7:9',texto:'Estuve mirando hasta que fueron puestos unos tronos',caja:[150,40,880,495],
     nota:'Los tronos se colocan porque antes no estaban: en el cielo empieza algo nuevo. Es 1844, cuando terminan las 2.300 tardes y mañanas (8:14).'},
    {t:'Se sentó un Anciano de días',ref:'7:9',texto:'y se sentó un Anciano de días. Su vestido era blanco como la nieve; el pelo de su cabeza, como lana limpia',caja:[400,20,400,225],
-    nota:'Dios el Padre preside el juicio. Blanco y lana limpia: pureza y eternidad, un Juez que no se puede comprar. En visión, el Padre se levanta y en un carro de llamas entra en el lugar santísimo, y se sienta (PE 55).'},
+    nota:'Dios el Padre preside el juicio. Blanco y lana limpia: pureza y eternidad. En visión, el Padre se levanta y en un carro de llamas entra en el lugar santísimo, y se sienta (PE 55).'},
    {t:'Un río de fuego',ref:'7:9-10',texto:'su trono, llama de fuego, y fuego ardiente las ruedas del mismo. Un río de fuego procedía y salía de delante de él',caja:[250,200,680,383],
     nota:'Un trono con ruedas es un trono que se mueve, como el carro de Ezequiel 1: el Padre pasa al lugar santísimo. Los millones que están delante de él son ángeles, testigos del tribunal (CS 533).'},
    {t:'Los libros fueron abiertos',ref:'7:10',texto:'El Juez se sentó y los libros fueron abiertos.',caja:[380,290,680,383],ms:8200,
@@ -484,6 +491,27 @@ LAMINAS.d7 = {
    setenta semanas cortadas de ellos; la purificación es el Día de la Expiación, el
    juicio investigador. Textos literales RV1995 (tests/test.js). */
 const D2_A_D8 = { plata: 'carnero', bronce: 'macho', hierro: 'cuerno', barro: 'cielo' };
+/* v227 (Camilo: «los generales de Alejandro, interactivo; reutilizable para Daniel 11»): EL
+   REPARTO DE UN REINO. Un mapa de los cuatro vientos que se toca, armado solo con estos datos
+   (lamReparto en app.js): no depende de ninguna lámina. Una parte lo usa con `reparto: '<id>'`;
+   su paso 1 es la parte y desde el 2, un paso por cada uno de `gen` y uno final (`fin`).
+   `rosa`: el centro y el largo de cada brazo, en las coordenadas de la imagen (1200 × 675), la
+   misma rosa del cuerno pequeño para que las dos escenas se lean juntas. Cada uno de `gen`:
+   nombre, tierra, viento (`v`), dónde cae en el mapa (`en`) y su final (`roma`). Las fuentes van
+   en la nota de cada paso. */
+const ROSA_VIENTOS = { c: [620, 350], dx: 380, dy: 210, vientos: [['norte', 'n'], ['oriente', 'e'], ['sur', 's'], ['poniente', 'o']] };
+const REPARTOS = {
+  /* Daniel 8:8, 22; 11:4. Después de Ipso (301 a.C.): «Casandro tenía las regiones occidentales,
+     Lisímaco, las del norte, Seleuco los países orientales, y Tolomeo la porción meridional»
+     (Smith, p. 88; Maxwell, p. 113). */
+  alejandro: { fondo: 'noche', rosa: ROSA_VIENTOS,
+    fin: ['No será para sus descendientes', 'Alejandro IV († 311 a.C.) y Heracles († 309 a.C.) no heredaron: el reino quedó para cuatro generales (11:4)'],
+    gen: [{ t: 'Casandro', s: 'Macedonia y Grecia', v: 'o', viento: 'el oeste', en: [450, 230], roma: 'Roma: Macedonia, 168 a.C.' },
+      { t: 'Lisímaco', s: 'Tracia y Asia Menor', v: 'n', viento: 'el norte', en: [830, 176], roma: 'Seleuco lo vence: 281 a.C.' },
+      { t: 'Seleuco', s: 'Siria y Babilonia', v: 'e', viento: 'el oriente', en: [930, 250], roma: 'Roma: Siria, 65 a.C.' },
+      { t: 'Tolomeo', s: 'Egipto', v: 's', viento: 'el sur', en: [520, 565], roma: 'Roma: Egipto, 30 a.C.' }] },
+};
+
 LAMINAS.d8 = {
   tipo: 'escenas',
   libro: 'Daniel 8',
@@ -509,20 +537,22 @@ LAMINAS.d8 = {
     { id: '', de: 2426, a: 2626, t: 'El reino eterno', s: 'Daniel 8 no lo muestra: llega en Daniel 12:1-3', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
     { f: 'ulai', titulo: 'En el tercer año de Belsasar', ref: 'Daniel 8:1-2', texto: 'En el año tercero del reinado del rey Belsasar, yo, Daniel, tuve una visión, después de aquella que había tenido antes. … En la visión, pues, me veía junto al río Ulai.',
-      nota: 'Hacia el 550 a.C., unos tres años después de Daniel 7. Babilonia caerá once años después (Daniel 5). En visión, Daniel está en Susa, que será capital de Persia: la visión empieza donde empiezan las 2.300 tardes y mañanas, en tiempos de Persia.' },
+      nota: 'Hacia el 550 a.C., unos tres años después de Daniel 7. Babilonia caerá once años después (Daniel 5). En visión, Daniel está en Susa, que será capital de Persia (Smith, <i>Las profecías de Daniel</i>, p. 19): la visión empieza donde empiezan las 2.300 tardes y mañanas, en tiempos de Persia.' },
   ],
   despues: { f: 'gabriel', titulo: 'Gabriel, enseña a éste la visión', ref: 'Daniel 8:16-18', texto: 'Gabriel, enseña a éste la visión. … Él me tocó y me hizo estar en pie.',
     nota: 'Gabriel explica los animales y los cuernos (8:19-26) y dice que «la visión es para el tiempo del fin» (8:17). Lo del tiempo queda sin explicar: Daniel queda «quebrantado» y no la entiende (8:27). Gabriel vuelve en Daniel 9 a explicar desde cuándo se cuentan las 2.300 tardes y mañanas (9:22-25).' },
   cierre: { f: 'purificado', ref: 'Daniel 8:17', texto: 'Entiende, hijo de hombre, que la visión es para el tiempo del fin.',
     titulo: 'La visión es para el tiempo del fin', nota: 'Desde 1844 el santuario se purifica: es el juicio de Daniel 7. Hoy vivimos en ese tiempo. Después el cuerno será quebrantado, «aunque no por mano humana» (8:25).' },
+  aplica: { pregunta: '¿Qué parte de la obra diaria de Cristo dejaste en manos de otro?', ref: 'Daniel 8:11', texto: 'por él fue quitado el sacrificio continuo',
+    nota: 'El continuo es el ministerio continuo de Cristo en el santuario del cielo, que el papado quitó en la tierra (Bohr, <i>Daniel 1-10</i>, p. 307).' },
   paraleloCols: ['Daniel 8', 'Daniel 2', 'Daniel 7', 'Reino'],
   paraleloTit: 'Daniel 2, 7 y 8 dicen lo mismo',
   paraleloNota: 'Daniel 8 empieza en Medo-Persia: Babilonia está por caer (539 a.C.). Los dos animales son del santuario, y Roma, en sus dos fases, es un solo cuerno.',
   /* Con Daniel 2 y Daniel 7: la cuarta columna es el metal que se enciende en la estatua
      chica; la sexta, la parte de Daniel 7 cuya imagen va debajo. */
   comparar: 'd2', comparar2: 'd7', conTxt: 'Con Daniel 2 y 7',
-  /* v226: en el santuario la comparación va debajo de la imagen (la columna tapaba la mesa). */
-  d2Abajo: ['santuario'],
+  /* v226: en el santuario la comparación va debajo de la imagen (la columna tapaba la mesa); v227: también en el santuario purificado, el mismo cuarto. */
+  d2Abajo: ['santuario', 'purificado'],
   agrega: 'Daniel 2 no lo muestra: lo agrega Daniel 8',
   noTrae: { '-605': 'Empieza en Medo-Persia: Babilonia está por caer (539 a.C.)', '476': 'Pasa de Roma imperial a Roma papal' },
   paralelo: [['carnero', 'Pecho y brazos de plata', 'Medo-Persia', 'plata', 'Oso', 'oso'],
@@ -584,8 +614,8 @@ LAMINAS.d8 = {
        (Egipto). Desde Roma, Macedonia y Siria quedan al oriente y Egipto al sur (Smith, Maxwell).
        `rosa`: el centro y el largo de cada brazo; `pasos`: el rótulo de arriba en cada tiempo. */
     mapa: { pq: 'd7/cuerno-pequeno.png', roma: [190, 330],
-      rosa: { c: [620, 350], dx: 380, dy: 210, vientos: [['norte', 'n'], ['oriente', 'e'], ['sur', 's'], ['poniente', 'o']] },
-      reinos: [{ t: 'Macedonia', s: 'Casandro', en: [450, 230] }, { t: 'Tracia y Asia Menor', s: 'Lisímaco', en: [600, 165] }, { t: 'Siria', s: 'Seleuco', en: [930, 250] },
+      rosa: ROSA_VIENTOS,
+      reinos: [{ t: 'Macedonia', s: 'Casandro', en: [450, 230] }, { t: 'Tracia y Asia Menor', s: 'Lisímaco', en: [830, 176] }, { t: 'Siria', s: 'Seleuco', en: [930, 250] },
         { t: 'Judea', s: 'la tierra gloriosa', en: [800, 440], g: true }, { t: 'Egipto', s: 'Tolomeo', en: [520, 565] }],
       /* `r`: el reino que toma, en el orden en que lo toma. */
       va: [{ r: 0, t: 'al oriente', s: '168 a.C.' }, { r: 2, t: 'al oriente', s: '65 a.C.' }, { r: 3, t: 'hacia la tierra gloriosa', s: '63 a.C.' }, { r: 4, t: 'hacia el sur', s: '30 a.C.' }],
@@ -671,15 +701,31 @@ LAMINAS.d8 = {
   corto:'Grecia (8:21). El cuerno notable es Alejandro Magno, que venció a Persia en tres batallas.',
   interp:['Gabriel lo nombra: «el rey de Grecia» (8:21). Es el leopardo de Daniel 7 y el bronce de Daniel 2.','Viene «del lado del poniente»: Grecia estaba al oeste de Persia. «Sin tocar tierra»: la rapidez de Alejandro Magno, como las cuatro alas del leopardo (7:6).','«Le quebró sus dos cuernos» (8:7): Alejandro venció a los persas en el Gránico (334 a.C.) y a Darío III en Iso (333) y en Arbela (331). Medo-Persia no pudo levantarse más.','El cuerno grande «es el rey primero» (8:21): Alejandro Magno.'],
   fuente:BOHR+', p. 296; Smith, <i>Las profecías de Daniel</i>, p. 86-87.'},
- {id:'cuatro',img:'cuatro',nombre:'El cuerno quebrado y los cuatro cuernos',reino:'Grecia dividida en cuatro',fechas:'301 – 168 a.C.',de:-301,a:-168,cmp:-331,c:'#B97A45',mov:'cuatro',ms:7600,
+ {id:'cuatro',img:'cuatro',nombre:'El cuerno quebrado y los cuatro cuernos',reino:'Grecia dividida en cuatro',fechas:'301 – 168 a.C.',de:-301,a:-168,cmp:-331,c:'#B97A45',mov:'cuatro',ms:7600,reparto:'alejandro',
   texto:'cuando estaba en su mayor fuerza, aquel gran cuerno fue quebrado, y en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo.',ref:'8:8',texto2:'cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él.',ref2:'8:22',
   corto:'Alejandro muere en su mayor fuerza; su reino se reparte entre cuatro generales.',
-  interp:['«Cuando estaba en su mayor fuerza» (8:8): Alejandro Magno murió en 323 a.C., a los 32 años, en la cumbre de su poder.','Después de la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio hacia los cuatro vientos: Casandro al oeste (Macedonia y Grecia), Lisímaco al norte (Tracia y Asia Menor), Seleuco I Nicátor al oriente (Siria y Babilonia) y Tolomeo I Sóter al sur (Egipto).','Son las cuatro cabezas del leopardo de Daniel 7 (7:6). Gabriel lo dice: «cuatro reinos se levantarán de esa nación» (8:22).'],
-  fuente:'Smith, <i>Las profecías de Daniel</i>, p. 88; '+BOHR+', p. 296-297.'},
+  interp:['«Cuando estaba en su mayor fuerza» (8:8): Alejandro Magno murió en 323 a.C., a los 32 años, en la cumbre de su poder.','Después de la batalla de Ipso (301 a.C.), sus generales se repartieron el imperio hacia los cuatro vientos: Casandro al oeste (Macedonia y Grecia), Lisímaco al norte (Tracia y Asia Menor), Seleuco I Nicátor al oriente (Siria y Babilonia) y Tolomeo I Sóter al sur (Egipto). Tócalos en el mapa, paso a paso.','Son las cuatro cabezas del leopardo de Daniel 7 (7:6). Gabriel lo dice: «cuatro reinos se levantarán de esa nación» (8:22).','Otra lista, de las dinastías que siguieron, no la de Ipso: antigónidas en Macedonia y Grecia, al oeste (283-168 a.C.); seléucidas en Siria y Mesopotamia, al oriente (312-63 a.C.); tolomeos en Egipto, al sur (323-30 a.C.); y atálidas en Pérgamo, al norte (263-133 a.C.) (Bohr, <i>Daniel 1-10</i>, p. 297).'],
+  fuente:'Smith, <i>Las profecías de Daniel</i>, p. 88, 90-91 y 136-137; Maxwell, <i>El porvenir del mundo revelado</i>, p. 113 y 164; Treiyer, <i>Enigmas descifrados</i>, p. 56; '+BOHR+', p. 296-297.',
+  /* v227 (Camilo: «los generales de Alejandro, interactivo»): el primer paso es el movimiento de
+     los cuatro cuernos; los demás, el mapa del reparto (mov.reparto), un general por paso, y al
+     final 11:4, «no será para sus descendientes». Textos literales RV1995. */
+  pasos:[
+   {t:'Cuatro cuernos hacia los cuatro vientos',ref:'8:8',texto:'en su lugar salieron otros cuatro cuernos notables hacia los cuatro vientos del cielo',
+    nota:'Alejandro Magno muere «en su mayor fuerza» (8:8), en 323 a.C., a los 32 años. Gabriel lo explica: «cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él» (8:22).'},
+   {t:'Casandro · el oeste',ref:'8:22',texto:'cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él',
+    nota:'Después de la batalla de Ipso (301 a.C.), Casandro tomó Macedonia y Grecia, las regiones del oeste (Smith, p. 88; Maxwell, p. 113). Roma conquistó Macedonia en 168 a.C. (Smith, p. 90; Maxwell, p. 164).'},
+   {t:'Lisímaco · el norte',ref:'11:4',texto:'su reino será quebrantado y repartido hacia los cuatro vientos del cielo',
+    nota:'Lisímaco tomó Tracia y buena parte de Asia Menor, el norte (Smith, p. 88; Maxwell, p. 113). La división en cuatro duró hasta su muerte, en 281 a.C. (Maxwell, p. 113): Seleuco lo venció y se quedó con su reino (Smith, p. 137).'},
+   {t:'Seleuco · el oriente',ref:'8:8',texto:'hacia los cuatro vientos del cielo',
+    nota:'Seleuco I Nicátor tomó Siria, Babilonia y las tierras del oriente; de él descienden los reyes seléucidas (Smith, p. 88; Maxwell, p. 113). Roma conquistó Siria en 65 a.C. (Smith, p. 91; Maxwell, p. 164).'},
+   {t:'Tolomeo · el sur',ref:'8:22',texto:'aunque no con la fuerza de él',
+    nota:'Tolomeo I Sóter tomó Egipto, el sur; de él descienden los lágidas (Smith, p. 88; Maxwell, p. 113). Egipto pasó a ser provincia de Roma en 30 a.C. (Smith, p. 91; Maxwell, p. 164).'},
+   {t:'No para sus descendientes',ref:'11:4',texto:'pero no será para sus descendientes, ni según el dominio con que él dominó',
+    nota:'Los hijos de Alejandro no heredaron el reino: Alejandro IV fue asesinado en 311 a.C. y Heracles en 309 a.C. (Treiyer, <i>Enigmas descifrados</i>, p. 56); “se extinguió la familia de Alejandro” (Smith, p. 88). El reino quedó para cuatro de sus generales.'}]},
  {id:'cuerno',img:'pequeno',nombre:'El cuerno pequeño crece',reino:'Roma imperial',fechas:'168 a.C. – 476 d.C.',de:-168,a:476,c:'#3E4651',mov:'crece',ms:10600,
   texto:'De uno de ellos salió un cuerno pequeño, que creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa.',ref:'8:9',texto2:'Al fin del reinado de estos, cuando los transgresores lleguen al colmo, se levantará un rey altivo de rostro y entendido en enigmas.',ref2:'8:23',
   corto:'La primera fase de Roma: pequeña al principio, crece sobre los reinos griegos. Es la bestia espantosa de Daniel 7.',
-  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos (Simposio, p. 396-397). El texto no nombra el viento: dice que creció «hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9). La Septuaginta pone “el norte” donde dice «la tierra gloriosa», y el Simposio concluye: “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).','La Roma pagana se levantó contra el Príncipe: un gobernador romano, Poncio Pilato, lo crucificó, y en 70 d.C. Tito destruyó el templo de Jerusalén.'],
+  interp:['El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.','Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).','«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos (Simposio, p. 396-397). El texto no nombra el viento: dice que creció «hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9). La Septuaginta pone “el norte” donde dice «la tierra gloriosa», y el Simposio concluye: “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).','En la fase pagana, un gobernador romano, Poncio Pilato, crucificó a Cristo, y Roma destruyó el templo de la tierra en 70 d.C.: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26). El continuo lo quita después la fase papal (8:10-11).'],
   fuente:SIMP+', p. 394-399; '+BOHR+', p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91.'},
  {id:'cielo',img:'cielo',nombre:'Hasta el ejército del cielo',reino:'Roma papal',fechas:'538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',mov:'cielo',ms:7200,
   texto:'Creció hasta llegar al ejército del cielo; y parte del ejército y de las estrellas echó por tierra, y las pisoteó.',ref:'8:10',texto2:'destruirá a los fuertes y al pueblo de los santos.',ref2:'8:24',
@@ -693,8 +739,9 @@ LAMINAS.d8 = {
     'El cuerno no puede subir al cielo: pone en la tierra un sustituto de cada pieza. En lugar del sacrificio de una vez para siempre, la misa; en lugar de la Palabra, la tradición; en lugar de la luz, una iglesia a oscuras; en lugar de la intercesión de Cristo, el único mediador (1 Timoteo 2:5), el confesionario y las oraciones a María y a los santos. Así «el lugar de su santuario fue echado por tierra».',
     'El continuo es del atrio y del lugar santo; el santísimo queda fuera, porque Cristo entra allí al terminar las 2.300 tardes y mañanas, en 1844 (8:14). El arca no está entre lo que el cuerno quita: queda detrás del velo.',
     '«Echó por tierra la verdad» (8:12) va aparte: no es un mueble del santuario. Es la Ley de Dios, que el Salmo 119:142 llama la verdad, y con ella el sábado: el cuerno de Daniel 7 «pensará en cambiar los tiempos y la ley» (7:25).',
-    'Otra lectura ve en el continuo el paganismo, quitado para dar lugar al papado. Las dos llegan a 508, cuando Clodoveo I dio poder civil al papado (ver Daniel 11:31 y 12:11).'],
-  fuente:BOHR+', p. 307-313; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado».'},
+    'Hay dos lecturas del continuo (Bohr, p. 307): el paganismo, quitado para dar paso al papado, y el ministerio continuo de Cristo en el santuario celestial, que el papado quitó. Esta lámina sigue la segunda (Bohr, p. 307-312; apuntes “Cómo quitó el continuo el papado”), que fecha la quita en 508: 1798 menos los 1.290 días de 12:11 (apuntes).',
+    'La de los pioneros: “el asolamiento continuo era el paganismo, y la ‘abominación espantosa,’ el papado” (Smith, <i>Las profecías de Daniel</i>, p. 157), y “el continuo fué quitado hacia 508. Esto sucedió como preparativo para el establecimiento del papado” (p. 159).'],
+  fuente:BOHR+', p. 307-313; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; Maxwell, <i>El porvenir del mundo revelado</i>, p. 164; apuntes «Cómo quitó el continuo el papado».'},
  {id:'purificado',img:'purificado',nombre:'El santuario será purificado',reino:'El juicio en el cielo',fechas:'desde 1844 d.C.',de:1844,a:2026,c:'#B45309',mov:'purifica',ms:5600,
   texto:'¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?',ref:'8:13',texto2:'Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.',ref2:'8:14',
   corto:'En 1844 terminan las 2.300 tardes y mañanas: empieza la purificación del santuario, el juicio de Daniel 7.',
@@ -723,8 +770,9 @@ LAMINAS.d8 = {
    Las citas son RV1995 literal (tests/test.js); Mateo 24 va sin citas: la RV1995 de
    Mateo no está en el repositorio. */
 const B11 = 'Bohr, <i>Daniel 11</i>', B110 = 'Bohr, <i>Daniel 1-10</i>', B17 = 'Bohr, <i>Apocalipsis 17</i>', PIP = 'Pippenger, <i>El tiempo del fin</i>';
-const X = (r, n, f, q) => [r, 1, n, f, q || []];
-const I = (r, n, f, q) => [r, 0, n, f, q || []];
+/* v227: el sexto, `e`: lo que Elena de White dice de esa celda, literal: [[referencia, cita, una línea]]. */
+const X = (r, n, f, q, e) => [r, 1, n, f, q || [], e || []];
+const I = (r, n, f, q, e) => [r, 0, n, f, q || [], e || []];
 const ULTIMOS = {
   titulo: 'Los últimos acontecimientos',
   /* Las columnas: [clave, nombre corto, nombre largo]. 'egw' es la fuente de la secuencia. */
@@ -747,18 +795,21 @@ const ULTIMOS = {
   eventos: [
     { id: 'juicio', fase: 'antes', t: 'El juicio investigador', c: 'Juicio', cuando: 'Desde 1844, en el cielo, mientras sigue abierta la gracia', img: 'd7/juicio',
       nota: 'Se abren los libros de los que profesaron ser hijos de Dios. Mientras dura, se predica el evangelio eterno a toda nación.',
+      egwC: [["CS 374", "El período completo de los 2.300 días se extendía de 457 ant. de J. C. hasta 1844 de nuestra era, cuando se inició en el cielo el juicio investigador.", "Pone el comienzo del juicio en 1844, al terminar los 2.300 años de Daniel 8:14."]],
       egw: 'CS 374 y 533-545', partes: ['juicio', 'hijo', 'x-fases', 'purificado'],
       l: { d7: X('7:9-10, 13', 'El Juez se sienta, se abren los libros y el Hijo del hombre llega ante el Anciano de días.', 'CS 533', [['Daniel 7:10', 'El Juez se sentó y los libros fueron abiertos.']]),
         d8: I('8:14', 'La purificación del santuario es la hora del juicio, desde 1844.', 'CS 374', [['Daniel 8:14', 'luego el santuario será purificado']]),
         ap14: X('14:6-7', 'El primer ángel anuncia que la hora del juicio ha llegado.', 'CS 374', [['Apocalipsis 14:7', 'la hora de su juicio ha llegado']]) } },
     { id: 'imagen', fase: 'antes', t: 'La imagen de la bestia', c: 'Imagen de la bestia', vez: 'ley', cuando: 'Se forma cuando las iglesias usan el poder del Estado para imponer sus dogmas; la ley dominical es su primera obra',
       nota: 'Los Estados Unidos, la bestia con cuernos de cordero, hablan como dragón: las iglesias usan el poder civil para imponer sus dogmas, como hizo el papado. Así se sana la herida mortal.',
+      egwC: [["CS 502", "por el mismo hecho de imponer un deber religioso con ayuda del poder secular, las mismas iglesias estarían elevando una imagen a la bestia", "La imagen de la bestia se forma cuando las iglesias usan el poder civil para imponer su religión."]],
       egw: 'CS 496-502 y 636',
       l: { d11: I('11:41', 'El poder del norte entra en la tierra gloriosa: los Estados Unidos, baluarte del protestantismo, caen bajo su mano.', B11 + ', p. 125-126', [['Daniel 11:41', 'Entrará en la tierra gloriosa']]),
         ap13: X('13:3, 11-14', 'La bestia que sube de la tierra manda hacer una imagen a la bestia cuya herida fue sanada.', 'CS 496', [['Apocalipsis 13:11', 'Tenía dos cuernos semejantes a los de un cordero, pero hablaba como un dragón.'], ['Apocalipsis 13:14', 'que le hagan una imagen a la bestia que fue herida de espada y revivió']]),
         ap17: I('17:8', 'La bestia «que era y no es, y será»: el papado vuelve al poder.', B17 + ', p. 22', [['Apocalipsis 17:8', 'la bestia que era y no es, y será']]) } },
     { id: 'ley', fase: 'antes', t: 'La ley dominical', c: 'Ley dominical', vez: 'ley', cuando: 'Se impone el domingo por ley: la gran prueba. Al imponerlo, las iglesias levantan la imagen de la bestia',
       nota: 'El sábado es la piedra de toque de la lealtad. Quien pisotea la ley de Dios para obedecer una ley humana recibe la marca de la bestia; nadie la recibe a ciegas.',
+      egwC: [["CS 663", "El sábado será la gran piedra de toque de la lealtad; pues es el punto especialmente controvertido.", "La ley dominical pone a prueba a quién se obedece: a Dios o a un poder humano."]],
       egw: 'CS 502-503 y 662-663; EUD 107-122',
       l: { d7: I('7:25', 'El cuerno pensó «cambiar los tiempos y la Ley»: el cambio del sábado que la ley dominical impone.', 'CS 499', [['Daniel 7:25', 'pensará en cambiar los tiempos y la Ley']]),
         d11: I('11:41', 'Cuando el poder del norte toma la tierra gloriosa por su «mano», se impone la ley dominical. Es también la abominación desoladora del tiempo del fin (11:31).', PIP + ', p. 53; ' + B11 + ', p. 49', [['Daniel 11:41', 'Entrará en la tierra gloriosa']]),
@@ -772,6 +823,7 @@ const ULTIMOS = {
       l: { mt24: I('24:15-20', '«Los que estén en Judea, huyan a los montes»: la señal de entonces es la de ahora.', 'EUD 104') } },
     { id: 'pequena', fase: 'antes', vez: 'crisis', t: 'El pequeño tiempo de angustia', c: 'Pequeño tiempo de angustia', cuando: 'Con la ley dominical, antes del cierre de la gracia',
       nota: 'Un corto tiempo de angustia mientras Cristo sigue en el santuario. Los que no honran el domingo son llevados a los tribunales, encarcelados o desterrados; algunos mueren. Hay mártires porque la gracia sigue abierta.',
+      egwC: [["CS 666", "Cuando los defensores de la verdad se nieguen a honrar el domingo, unos serán echados en la cárcel, otros serán desterrados y otros aún tratados como esclavos.", "Antes del cierre de la gracia hay cárcel y destierro por no honrar el domingo."]],
       egw: 'PE 33 y 85-86; CS 665-667; EUD 123-132',
       l: { d11: I('11:44', '«Saldrá con gran ira para destruir y matar a muchos»: la ira del poder del norte trae el pequeño tiempo de angustia.', B11 + ', p. 172', [['Daniel 11:44', 'saldrá con gran ira para destruir y matar a muchos']]),
         mt24: I('24:9', '«Os entregarán a tribulación, y os matarán»: hay mártires en este tiempo corto.', B11 + ', p. 172'),
@@ -779,17 +831,20 @@ const ULTIMOS = {
         ap13: I('13:17', 'Nadie puede comprar ni vender sin la marca.', 'EUD 127', [['Apocalipsis 13:17', 'que ninguno pudiera comprar ni vender']]) } },
     { id: 'zarandeo', fase: 'antes', t: 'El zarandeo', c: 'Zarandeo', vez: 'crisis', cuando: 'Empieza con el mensaje a Laodicea; llega a su punto decisivo con la ley dominical y la persecución',
       nota: 'El testimonio directo del Testigo fiel sacude a la iglesia: unos lo aceptan y se purifican; otros se levantan contra él. Cuando llega la prueba, los que no fueron santificados por la verdad dejan la fe.',
+      egwC: [["CS 666", "Conforme vaya acercándose la tempestad, muchos que profesaron creer en el mensaje del tercer ángel, pero que no fueron santificados por la obediencia a la verdad, abandonarán su fe, e irán a engrosar las filas de la oposición.", "El zarandeo: muchos que conocían el mensaje lo dejan cuando llega la prueba."]],
       egw: 'PE 269-271; CS 666; EUD 147-156',
       l: { d11: I('11:41', '«Muchas provincias caerán»: al entrar el poder del norte en la tierra gloriosa, el ámbito de la iglesia protestante y adventista, muchos tropiezan y caen.', B11 + ', p. 128', [['Daniel 11:41', 'Entrará en la tierra gloriosa, y muchas provincias caerán']]),
         mt24: I('24:10-12', 'Muchos tropiezan, se entregan unos a otros y el amor de muchos se enfría.', B11 + ', p. 128'),
         apo: I('3:15-19', 'El consejo del Testigo fiel a Laodicea causa el zarandeo.', 'PE 270', [['Apocalipsis 3:16', 'por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca'], ['Apocalipsis 3:19', 'sé, pues, celoso y arrepiéntete']]) } },
     { id: 'lluvia', fase: 'antes', vez: 'crisis', t: 'La lluvia tardía', c: 'Lluvia tardía', cuando: 'Al empezar el pequeño tiempo de angustia; da poder al fuerte pregón',
       nota: 'El Espíritu se derrama como en Pentecostés, la lluvia temprana (Joel 2:23; Hechos 3:19). Madura la cosecha y prepara al pueblo de Dios para la hora de prueba.',
+      egwC: [["CS 669", "así la ‘lluvia tardía’ será dada al final de dicho ministerio para hacer madurar la cosecha.", "Como la lluvia temprana de Pentecostés, el Espíritu se derrama otra vez al final para la cosecha."]],
       egw: 'PE 33 y 85-86; CS 669-671; EUD 157-168',
       l: { d11: I('11:44', 'Las «noticias» llegan en el pequeño tiempo de angustia, cuando los fieles reciben la lluvia tardía.', B11 + ', p. 172; ' + PIP + ', p. 21', [['Daniel 11:44', 'Pero noticias del oriente y del norte lo atemorizarán']]),
         ap18: I('18:1', 'El ángel que alumbra la tierra con su gloria: la obra de la lluvia tardía.', 'CS 669', [['Apocalipsis 18:1', 'la tierra fue alumbrada con su gloria']]) } },
     { id: 'pregon', fase: 'antes', vez: 'crisis', t: 'El fuerte pregón', c: 'Fuerte pregón', cuando: 'Mientras se impone la ley dominical',
       nota: 'El ángel de Apocalipsis 18 se une al tercer ángel. Muchos que estaban en Babilonia salen y se unen al pueblo de Dios.',
+      egwC: [["CS 669", "El ángel que une su voz a la proclamación del tercer mensaje, alumbrará toda la tierra con su gloria.", "El fuerte pregón es el mensaje del tercer ángel dado con poder a todo el mundo (Apocalipsis 18:1)."]],
       egw: 'CS 661-664 y 669-670; PE 277-279; EUD 169-182',
       l: { d11: I('11:41, 44', 'Las «noticias del oriente y del norte» son el fuerte pregón. Edom, Moab y Amón, que escapan, son los que salen de Babilonia.', B11 + ', p. 150-153 y 166', [['Daniel 11:44', 'Pero noticias del oriente y del norte lo atemorizarán'], ['Daniel 11:41', 'pero escaparán de sus manos Edom, Moab y la mayoría de los hijos de Amón']]),
         mt24: I('24:14', 'El evangelio predicado en todo el mundo, y entonces el fin.', 'EUD 17; apuntes «Visión panorámica de los sucesos finales»'),
@@ -797,11 +852,13 @@ const ULTIMOS = {
         ap18: X('18:1-4', 'Otro ángel anuncia la caída de Babilonia y una voz llama a salir de ella.', 'CS 661-662', [['Apocalipsis 18:2', 'Ha caído, ha caído la gran Babilonia'], ['Apocalipsis 18:4', 'Salid de ella, pueblo mío']]) } },
     { id: 'sello', fase: 'antes', vez: 'crisis', t: 'El sellamiento', c: 'Sellamiento', cuando: 'Durante el fuerte pregón; termina al cerrarse la gracia',
       nota: 'Los vientos se detienen hasta que los siervos de Dios estén sellados. Los que muestran su lealtad guardando la ley de Dios reciben el sello; los que aceptan el falso día de reposo, la marca.',
+      egwC: [["CS 671", "todos los que han resultado fieles a los preceptos divinos han recibido ‘el sello del Dios vivo.’", "El sellamiento termina cuando todos los fieles lo han recibido, antes de que Jesús deje de interceder."]],
       egw: 'CS 663 y 671; PE 38-39',
       l: { d11: I('11:44', 'Las «noticias» llevan también el mensaje del sello, que turba al poder del norte.', B11 + ', p. 240', [['Daniel 11:44', 'Pero noticias del oriente y del norte lo atemorizarán']]),
         apo: X('7:1-4', 'Los vientos se detienen hasta que los siervos de Dios estén sellados en la frente.', 'PE 38-39', [['Apocalipsis 7:3', 'hasta que hayamos sellado en sus frentes a los siervos de nuestro Dios'], ['Apocalipsis 7:2', 'que tenía el sello del Dios vivo']]) } },
     { id: 'gracia', fase: 'antes', t: 'Se cierra la gracia', c: 'Fin de la gracia', cuando: 'Al terminar el juicio investigador, antes de las plagas',
       nota: 'Cada caso quedó decidido para vida o para muerte y Cristo deja de interceder. Termina su obra de mediador y el Hijo recibe el reino: «se levantará Miguel».',
+      egwC: [["CS 671", "Entonces Jesús dejará de interceder en el santuario celestial.", "Al cerrarse la gracia termina la intercesión de Cristo."], ["CS 671", "Cada caso ha sido fallado para vida o para muerte.", "Cada caso queda decidido: ya no hay cambio de bando."]],
       egw: 'CS 671; PE 279-280; EUD 193-202', partes: ['x-fases', 'hijo'],
       l: { d7: I('7:14', 'El Hijo recibe el reino cuando termina el juicio: es la sentencia.', B110 + ', p. 288; CS 671', [['Daniel 7:14', 'Y le fue dado dominio, gloria y reino']]),
         d12: I('12:1', '«Se levantará Miguel»: el juicio termina y Cristo deja el santuario.', 'CS 671; ' + B11 + ', p. 18', [['Daniel 12:1', 'En aquel tiempo se levantará Miguel']]),
@@ -811,21 +868,26 @@ const ULTIMOS = {
        la angustia de Jacob, la experiencia del pueblo de Dios. */
     { id: 'gran', fase: 'angustia', t: 'El gran tiempo de angustia', c: 'Gran tiempo de angustia', cuando: 'Empieza con el cierre de la gracia y dura hasta la liberación',
       nota: 'Cuando se levanta Miguel y Cristo deja el santuario, empieza la angustia «cual nunca fue». Dios retira su Espíritu de los impíos y Satanás los domina; caen las plagas. No es el pequeño tiempo de angustia, que viene antes, con la ley dominical.',
+      egwC: [["CS 672", "Desamparados ya de la gracia divina, están a merced de Satanás, el cual sumirá entonces a los habitantes de la tierra en una gran tribulación final.", "El gran tiempo de angustia viene después del cierre de la gracia."]],
       egw: 'CS 671-673; PE 33 y 85-86',
       l: { d12: X('12:1', 'El tiempo de angustia cual nunca fue llega después que se levanta Miguel.', 'CS 671', [['Daniel 12:1', 'Será tiempo de angustia, cual nunca fue desde que hubo gente hasta entonces']]),
-        mt24: I('24:21-22', 'La gran tribulación, cual no la ha habido: es también el tiempo de angustia de Daniel 12:1.', B11 + ', p. 128'),
+        /* v227 (Camilo): Mateo 24:21-22 se cumple dos veces: los 1260 años de persecución y la tribulación final. */
+        mt24: I('24:21-22', 'La gran tribulación (Mateo 24:21-22) se cumple dos veces: primero en los 1260 años de persecución, que Dios acortó, y después en la tribulación final, después del cierre de la gracia. Es también el tiempo de angustia de Daniel 12:1.', 'CS 28, 309-310 y 672; ' + B11 + ', p. 128', [], [["CS 309", "Al predecir la ‘gran tribulación’ que había de venir sobre la iglesia, el Salvador había dicho: ‘Si aquellos días no fuesen acortados, ninguna carne sería salva; mas por causa de los escogidos, aquellos días serán acortados.’ (S. Mateo 24: 22.)", "Primer cumplimiento: los 1260 años de persecución papal (538-1798)."], ["CS 309", "La persecución contra la iglesia no continuó durante todos los 1260 años. Dios, usando de misericordia con su pueblo, acortó el tiempo de tan horribles pruebas.", "Los días acortados: por la Reforma, la persecución cesó antes de 1798 (CS 310)."], ["CS 28", "La profecía del Señor entrañaba un doble significado: al par que anunciaba la ruina de Jerusalén presagiaba también los horrores del gran día final.", "Mateo 24 mira también al fin del mundo."], ["CS 672", "Satanás, el cual sumirá entonces a los habitantes de la tierra en una gran tribulación final.", "Segundo cumplimiento: la tribulación final, después del cierre de la gracia."]]),
         apo: I('3:10', '«Yo también te guardaré de la hora de la prueba»: la promesa que sostiene a los justos.', 'CS 677', [['Apocalipsis 3:10', 'yo también te guardaré de la hora de la prueba']]) } },
     { id: 'jacob', fase: 'angustia', t: 'La angustia de Jacob', c: 'Angustia de Jacob', cuando: 'Dentro del gran tiempo de angustia, sobre todo con el decreto de muerte',
       nota: 'Es la experiencia del pueblo de Dios en el gran tiempo de angustia. Viven sin intercesor y, como Jacob en la noche de lucha (Jeremías 30:7; Génesis 32), oran por liberación; no tienen pecados escondidos que confesar. Ya no hay mártires.',
+      egwC: [["CS 674", "La noche de la aflicción de Jacob, cuando luchó en oración para ser librado de manos de Esaú (Génesis 32: 24-30), representa la prueba por la que pasará el pueblo de Dios en el tiempo de angustia.", "La lucha de Jacob en oración es figura de lo que vive el pueblo de Dios en el tiempo de angustia."]],
       egw: 'CS 674-679 y 692; PE 36-37 y 283',
       l: { apo: I('3:10', '«Yo también te guardaré de la hora de la prueba».', 'CS 677', [['Apocalipsis 3:10', 'yo también te guardaré de la hora de la prueba']]) } },
     { id: 'plagas', fase: 'angustia', t: 'Las siete últimas plagas', c: 'Plagas', cuando: 'Cuando Cristo deja de interceder, antes de la venida',
       nota: 'La ira de Dios sin mezcla cae sobre los que tienen la marca de la bestia y adoran su imagen. No son universales; Dios guarda a su pueblo en medio de ellas.',
+      egwC: [["CS 685-686", "Cuando Cristo deje de interceder en el santuario, se derramará sin mezcla la ira de Dios de la que son amenazados los que adoran a la bestia y a su imagen y reciben su marca.", "Las plagas caen después del cierre de la gracia, sobre los que reciben la marca."]],
       egw: 'CS 685-688; PE 36 y 280-282; EUD 203-214',
       l: { ap16: X('16', 'Siete copas de la ira de Dios sobre los que tienen la marca.', 'CS 686', [['Apocalipsis 16:1', 'Id y derramad sobre la tierra las siete copas de la ira de Dios'], ['Apocalipsis 16:2', 'sobre los hombres que tenían la marca de la bestia']]),
         apo: X('15:1', 'Siete ángeles con las siete plagas postreras.', 'CS 686', [['Apocalipsis 15:1', 'siete ángeles con las siete plagas postreras']]) } },
     { id: 'falso', fase: 'angustia', t: 'Satanás se hace pasar por Cristo', c: 'Falso Cristo', cuando: 'Después del cierre de la gracia, en el gran tiempo de angustia',
       nota: '«El acto capital que coronará el gran drama del engaño será que el mismo Satanás se dará por el Cristo» (CS 682). Dice que mudó el sábado al domingo. No puede imitar la manera en que viene Jesús. Los engaños empiezan antes (EUD 138), pero este acto capital va después del cierre de la gracia.',
+      egwC: [["CS 682", "El acto capital que coronará el gran drama del engaño será que el mismo Satanás se dará por el Cristo.", "El engaño final: Satanás se presenta como si fuera Cristo."]],
       egw: 'CS 681-683; EUD 138',
       l: { mt24: X('24:23-27', 'Falsos cristos con grandes señales; pero la venida será como el relámpago.', 'CS 683'),
         ap12: I('12:12', 'El diablo desciende con gran ira, sabiendo que tiene poco tiempo.', 'CS 681', [['Apocalipsis 12:12', 'el diablo ha descendido a vosotros con gran ira, sabiendo que tiene poco tiempo']]),
@@ -833,14 +895,17 @@ const ULTIMOS = {
         ap16: I('16:13-14', 'Espíritus de demonios que hacen señales van a los reyes de la tierra.', 'CS 681-682', [['Apocalipsis 16:14', 'Son espíritus de demonios, que hacen señales y van a los reyes de la tierra']]) } },
     { id: 'huida', fase: 'angustia', t: 'La huida a los lugares solitarios', c: 'Huida', cuando: 'Cuando el decreto les quita la protección de las leyes',
       nota: 'El pueblo de Dios huye de las ciudades y los pueblos y vive en grupos en los lugares más desiertos y solitarios. Muchos son encarcelados; Dios no los olvida.',
+      egwC: [["CS 684", "el pueblo de Dios huirá de las ciudades y de los pueblos y se unirá en grupos para vivir en los lugares más desiertos y solitarios.", "Sin la protección del gobierno, el pueblo de Dios huye a lugares solitarios."]],
       egw: 'CS 683-685; PE 34 y 282', l: {} },
     { id: 'decreto', fase: 'angustia', t: 'El decreto de muerte', c: 'Decreto de muerte', cuando: 'Durante las plagas; fija una noche',
       nota: 'Acusan a los que guardan el sábado de traer los juicios de Dios. Un decreto general fija una noche para darles muerte.',
+      egwC: [["CS 693", "Conforme vaya acercándose el tiempo señalado en el decreto, el pueblo conspirará para extirpar la secta aborrecida.", "El decreto fija una fecha para matar a los que guardan el sábado."]],
       egw: 'CS 673 y 692-693; PE 36-37 y 282-284',
       l: { d11: I('11:45', 'Planta sus tiendas junto al monte glorioso: el decreto contra el pueblo de Dios.', B11 + ', p. 240', [['Daniel 11:45', 'Plantará las tiendas de su palacio entre los mares y el monte glorioso y santo']]),
         ap13: X('13:15', 'La imagen hace matar a todo el que no la adora.', 'CS 692-693', [['Apocalipsis 13:15', 'hiciera matar a todo el que no la adorara']]) } },
     { id: 'liberacion', fase: 'venida', t: 'La liberación del pueblo de Dios', c: 'Liberación', cuando: 'A medianoche, en la séptima plaga',
       nota: 'Cuando van a matarlos, densas tinieblas caen y un arco iris envuelve a los que oran. A medianoche, la voz de Dios dice «Hecho es» y viene un terremoto como nunca hubo. El poder perseguidor llega a su fin sin que nadie lo ayude.',
+      egwC: [["CS 693", "Entonces, en la hora de supremo apuro, es cuando el Dios de Israel intervendrá para librar a sus escogidos.", "Dios libra a su pueblo en el momento de mayor peligro."]],
       egw: 'CS 693-694; PE 285',
       l: { d11: I('11:45', '«Llegará a su fin, y no tendrá quien lo ayude.»', B11 + ', p. 240', [['Daniel 11:45', 'llegará a su fin, y no tendrá quien lo ayude']]),
         d12: X('12:1', 'Es libertado el pueblo inscrito en el libro.', 'CS 693', [['Daniel 12:1', 'en aquel tiempo será libertado tu pueblo, todos los que se hallen inscritos en el libro']]),
@@ -848,15 +913,18 @@ const ULTIMOS = {
         ap17: I('17:16', 'Los reyes aborrecen a la ramera: las multitudes se vuelven contra Babilonia.', B17 + ', p. 23', [['Apocalipsis 17:16', 'aborrecerán a la ramera']]) } },
     { id: 'especial', fase: 'venida', t: 'La resurrección especial', c: 'Resurrección especial', cuando: 'En el terremoto de la séptima plaga, antes de que aparezca Cristo',
       nota: 'Se abren los sepulcros. Resucitan los que murieron en la fe del tercer ángel, para ver la venida, y los que traspasaron a Cristo, para verlo en su gloria.',
+      egwC: [["CS 695", "Todos los que murieron en la fe del mensaje del tercer ángel, salen glorificados de la tumba, para oír el pacto de paz que Dios hace con los que guardaron su ley.", "La resurrección especial: resucitan antes de la venida los que murieron en el mensaje del tercer ángel."]],
       egw: 'CS 695; PE 285',
       l: { d12: X('12:2', 'Muchos despiertan, unos para vida eterna y otros para vergüenza: una resurrección parcial, de las dos clases.', 'CS 695; ' + B11 + ', p. 18', [['Daniel 12:2', 'Muchos de los que duermen en el polvo de la tierra serán despertados: unos para vida eterna, otros para vergüenza y confusión perpetua']]),
         ap16: I('16:18', 'El gran terremoto abre los sepulcros.', 'CS 695; PE 285', [['Apocalipsis 16:18', 'un terremoto tan grande cual no lo hubo jamás']]),
         apo: I('1:7', '«Los que lo traspasaron» lo verán venir.', 'CS 695', [['Apocalipsis 1:7', 'Todo ojo lo verá, y los que lo traspasaron']]) } },
     { id: 'voz', fase: 'venida', t: 'La voz de Dios anuncia el día y la hora', c: 'El día y la hora', cuando: 'Después de la liberación, antes de que aparezca la nube',
       nota: 'Desde el cielo, la voz de Dios proclama el día y la hora de la venida de Jesús y da a su pueblo el pacto eterno. Frase por frase, resuena como truenos.',
+      egwC: [["CS 698", "Desde el cielo se oye la voz de Dios que proclama el día y la hora de la venida de Jesús, y promulga a su pueblo el pacto eterno.", "Dios mismo anuncia el día y la hora de la venida."]],
       egw: 'CS 698; PE 15, 34 y 285', l: {} },
     { id: 'venida', fase: 'venida', t: 'La segunda venida', c: 'Venida', cuando: 'Al final de las plagas', img: 'd2/e-piedra',
       nota: 'Aparece una pequeña nube negra que se hace gran nube blanca. Cristo viene como Rey de reyes. Es la piedra de Daniel 2 y la ejecución del juicio de Daniel 7.',
+      egwC: [["CS 699", "A medida que va acercándose la nube viviente, todos los ojos ven al Príncipe de la vida.", "La segunda venida es visible para todos."]],
       egw: 'CS 698-701; PE 286-287', partes: ['piedra', 'santos', 'x-fases', 'quebrantado'],
       l: { d2: I('2:34, 44-45', 'La piedra cortada sin mano hiere a la imagen en los pies: la venida, sin intervención humana.', B110 + ', p. 63-64', [['Daniel 2:34', 'una piedra se desprendió sin que la cortara mano alguna']]),
         d7: I('7:22, 26', 'Se ejecuta el juicio: los santos reciben el reino y al cuerno le quitan el dominio.', B110 + ', p. 121', [['Daniel 7:22', 'llegó el tiempo, y los santos recibieron el reino'], ['Daniel 7:26', 'le quitarán su dominio']]),
@@ -869,50 +937,61 @@ const ULTIMOS = {
         apo: X('1:7; 6:14-17', 'Viene con las nubes y todo ojo lo verá; los impíos piden a los montes que caigan sobre ellos.', 'CS 683 y 700', [['Apocalipsis 1:7', 'He aquí que viene con las nubes: Todo ojo lo verá'], ['Apocalipsis 6:17', 'el gran día de su ira ha llegado']]) } },
     { id: 'justos', fase: 'venida', t: 'La resurrección de los justos', c: 'Resurrección de los justos', cuando: 'En la venida',
       nota: 'Cristo mira las tumbas de los justos y exclama: «¡Despertaos!». Los muertos en Cristo salen con gloria inmortal. Es la primera resurrección.',
+      egwC: [["CS 702", "el Hijo de Dios llama a la vida a los santos dormidos.", "En la venida resucitan los justos."]],
       egw: 'CS 702; PE 16 y 287',
       l: { d12: X('12:13', 'A Daniel se le promete levantarse para recibir su heredad al fin de los días.', 'CS 702', [['Daniel 12:13', 'te levantarás para recibir tu heredad al fin de los días']]),
         mt24: I('24:31', 'Los ángeles juntan a los escogidos con gran voz de trompeta: la resurrección de los justos.', B11 + ', p. 220'),
         ap20: X('20:5-6', '«Ésta es la primera resurrección.»', 'CS 702', [['Apocalipsis 20:5', 'Ésta es la primera resurrección'], ['Apocalipsis 20:6', 'Bienaventurado y santo el que tiene parte en la primera resurrección']]) } },
     { id: 'traslacion', fase: 'venida', t: 'La traslación de los vivos', c: 'Traslación', cuando: 'En la venida, junto con los resucitados',
       nota: 'Los justos vivos son mudados en un momento y, con los resucitados, suben a recibir a Cristo en el aire (1 Tesalonicenses 4:16-17).',
+      egwC: [["CS 703", "ahora son hechos inmortales, y juntamente con los santos resucitados son arrebatados para recibir a Cristo su Señor en los aires.", "Los justos vivos son transformados y suben con los resucitados."]],
       egw: 'CS 703 y 707; PE 16 y 287',
       l: { mt24: I('24:31', '«Juntarán a sus escogidos de los cuatro vientos.»', 'CS 703'),
         ap14: I('14:1-5', 'Los 144.000, trasladados de entre los vivos, primicias para Dios.', 'CS 707', [['Apocalipsis 14:4', 'Éstos fueron redimidos de entre los hombres como primicias para Dios y para el Cordero']]),
         apo: I('15:2-3', 'Los que vencieron a la bestia, de pie sobre el mar de vidrio.', 'CS 707', [['Apocalipsis 15:2', 'a los que habían alcanzado la victoria sobre la bestia y su imagen']]) } },
     { id: 'desolada', fase: 'mil', t: 'La tierra desolada; Satanás atado', c: 'Tierra desolada', cuando: 'Desde la venida, mil años',
       nota: 'Los impíos vivos mueren en la venida. La tierra queda desolada, y en ella Satanás vaga mil años sin nadie a quien engañar: así está atado.',
+      egwC: [["CS 718", "Durante mil años, Satanás andará errante de un lado para otro en la tierra desolada, considerando los resultados de su rebelión contra la ley de Dios.", "En los mil años la tierra queda desolada y Satanás, atado a ella."]],
       egw: 'CS 711-718; PE 289-290',
       l: { ap18: I('18:8', 'Babilonia es quemada con fuego en un solo día.', 'CS 711', [['Apocalipsis 18:8', 'será quemada con fuego']]),
         ap19: X('19:20-21', 'La bestia y el falso profeta son lanzados al lago de fuego; los demás mueren con la espada de su boca.', 'CS 711-715', [['Apocalipsis 19:21', 'Los demás fueron muertos con la espada que salía de la boca del que montaba el caballo']]),
         ap20: X('20:1-3', 'Satanás es atado y encerrado en el abismo mil años.', 'CS 716-717', [['Apocalipsis 20:2', 'lo ató por mil años']]) } },
     { id: 'juzgan', fase: 'mil', t: 'El juicio de los santos', c: 'Juicio de los santos', cuando: 'Durante los mil años, en el cielo',
       nota: 'Con Cristo, los santos juzgan a los impíos y a los ángeles caídos (1 Corintios 6:2-3). Comparan sus actos con los libros y fijan el castigo de cada uno según sus obras.',
+      egwC: [["CS 719", "Junto con Cristo juzgan a los impíos, comparando sus actos con el libro de la ley, la Biblia, y fallando cada caso en conformidad con los actos que cometieron por medio de su cuerpo.", "En los mil años los santos juzgan con Cristo a los impíos."]],
       egw: 'CS 718-719; PE 52 y 290-291',
-      l: { d7: I('7:22', 'El Anciano de días hace justicia a los santos; Elena de White lo lee «se dio el juicio a los santos».', 'CS 719', [['Daniel 7:22', 'se hizo justicia a los santos del Altísimo']]),
+      /* v227 (Camilo): la celda del milenio se queda con 7:22, con la nota de Elena de White. */
+      l: { d7: I('7:22', 'El Anciano de días hace justicia a los santos (7:22). Elena de White aplica también esta frase al juicio de los mil años.', 'CS 719', [['Daniel 7:22', 'se hizo justicia a los santos del Altísimo']], [["CS 719", "Daniel declara que cuando vino el Anciano de días, ‘se dio el juicio a los santos del Altísimo.’ (Daniel 7: 22.) En ese entonces reinarán los justos como reyes y sacerdotes de Dios.", "Aplica 7:22 también al juicio que los santos hacen con Cristo durante los mil años."]]),
         ap20: X('20:4', 'Tronos para los que recibieron facultad de juzgar.', 'CS 719', [['Apocalipsis 20:4', 'se sentaron sobre ellos los que recibieron facultad de juzgar']]) } },
     { id: 'segunda', fase: 'fin', t: 'La segunda resurrección', c: 'Segunda resurrección', cuando: 'Al fin de los mil años',
       nota: 'Cristo vuelve a la tierra con los santos y manda a los impíos muertos que resuciten para recibir su condenación.',
+      egwC: [["CS 720", "Al descender en majestad aterradora, manda a los muertos impíos que resuciten para recibir su condenación.", "Al fin de los mil años resucitan los impíos."]],
       egw: 'CS 719-720; PE 291-292',
       l: { ap20: X('20:5, 13', 'Los otros muertos no vuelven a vivir hasta que se cumplen los mil años.', 'CS 720', [['Apocalipsis 20:5', 'los otros muertos no volvieron a vivir hasta que se cumplieron mil años']]) } },
     { id: 'jerusalen', fase: 'fin', t: 'Desciende la Nueva Jerusalén', c: 'Nueva Jerusalén', cuando: 'Al fin de los mil años',
       nota: 'Cristo baja sobre el monte de los Olivos (Zacarías 14:4). La ciudad desciende y se asienta en el lugar preparado; Cristo, su pueblo y los ángeles entran en ella.',
+      egwC: [["CS 721", "La nueva Jerusalén, descendiendo del cielo en su deslumbrante esplendor, se asienta en el lugar purificado y preparado para recibirla", "La Nueva Jerusalén baja del cielo a la tierra."]],
       egw: 'CS 720-721; PE 51 y 291-292',
       l: { ap20: I('20:9', '«La ciudad amada» ya está en la tierra cuando la rodean.', 'CS 721-722', [['Apocalipsis 20:9', 'rodearon el campamento de los santos y la ciudad amada']]),
         ap21: X('21:2', 'La santa ciudad desciende del cielo.', 'CS 721', [['Apocalipsis 21:2', 'vi la santa ciudad, la nueva Jerusalén, descender del cielo']]) } },
     { id: 'asedio', fase: 'fin', t: 'El asedio a la ciudad', c: 'Asedio', cuando: 'Cuando resucitan los impíos',
       nota: 'Satanás, suelto otra vez, reúne a la multitud de los impíos y la lleva contra la ciudad. Por orden de Jesús se cierran las puertas.',
+      egwC: [["CS 722", "los ejércitos de Satanás circundan la ciudad y se preparan para el asalto.", "Satanás reúne a los impíos resucitados contra la ciudad."]],
       egw: 'CS 721-723; PE 292-293',
       l: { ap20: X('20:7-9', 'Satanás es suelto, engaña a las naciones y rodean la ciudad.', 'CS 722', [['Apocalipsis 20:7', 'Satanás será suelto de su prisión'], ['Apocalipsis 20:9', 'rodearon el campamento de los santos y la ciudad amada']]) } },
     { id: 'trono', fase: 'fin', t: 'El juicio ante el gran trono blanco', c: 'Gran trono blanco', cuando: 'Con los impíos ante la ciudad',
       nota: 'Se corona a Cristo ante todos. En una vista panorámica pasa la historia del conflicto; impíos y Satanás reconocen que Dios es justo.',
+      egwC: [["CS 724", "el Rey de reyes falla el juicio de aquellos que se rebelaron contra su gobierno, y ejecuta justicia contra los que transgredieron su ley y oprimieron a su pueblo.", "Ante el gran trono blanco se da la sentencia de los perdidos."]],
       egw: 'CS 722-730; PE 293-294',
       l: { ap20: X('20:11-13', 'Los muertos son juzgados según sus obras, por lo escrito en los libros.', 'CS 724', [['Apocalipsis 20:11', 'Vi un gran trono blanco'], ['Apocalipsis 20:12', 'fueron juzgados los muertos por las cosas que estaban escritas en los libros, según sus obras']]) } },
     { id: 'final', fase: 'fin', t: 'La destrucción final', c: 'Destrucción final', cuando: 'Después del juicio ante el trono',
       nota: 'Desciende fuego de Dios. Los impíos y Satanás son consumidos, raíz y rama: es la muerte segunda, de la que no se vuelve.',
+      egwC: [["CS 731", "Dios hace descender fuego del cielo.", "El fuego de Dios destruye a los impíos."]],
       egw: 'CS 730-731; PE 294-295',
       l: { ap20: X('20:9-10, 14-15', 'Fuego del cielo los consume: la muerte segunda.', 'CS 731', [['Apocalipsis 20:9', 'de Dios descendió fuego del cielo y los consumió'], ['Apocalipsis 20:14', 'Ésta es la muerte segunda']]) } },
     { id: 'reino', fase: 'fin', t: 'La tierra nueva', c: 'Tierra nueva', cuando: 'Para siempre', img: 'd2/e-monte',
       nota: 'El fuego que consume a los impíos purifica la tierra. Es el gran monte de Daniel 2: el reino llena toda la tierra después de los mil años. Dios vive con su pueblo para siempre.',
+      egwC: [["CS 732", "El fuego que consume a los impíos purifica la tierra. Desaparece todo rastro de la maldición.", "La tierra purificada es la tierra nueva."]],
       egw: 'CS 732-737; PE 295', partes: ['monte', 'reino'],
       l: { d2: X('2:35, 44', 'La piedra se hace un gran monte; el reino de Dios no será jamás destruido.', B110 + ', p. 121', [['Daniel 2:35', 'la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra'], ['Daniel 2:44', 'el Dios del cielo levantará un reino que no será jamás destruido']]),
         d7: X('7:18, 27', 'Los santos reciben el reino para siempre.', B110 + ', p. 121', [['Daniel 7:27', 'cuyo reino es reino eterno'], ['Daniel 7:18', 'Después recibirán el reino los santos del Altísimo']]),
@@ -929,4 +1008,4 @@ ULTIMOS.eventos.forEach(e => {
   e.partes = e.partes || []; e.fuente = e.egw;
 });
 
-module.exports = { LAMINAS, ULTIMOS };
+module.exports = { LAMINAS, ULTIMOS, REPARTOS };

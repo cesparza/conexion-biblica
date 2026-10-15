@@ -78,7 +78,7 @@ module.exports = {
       tbl(['Lo que ve Daniel', 'Qué enseña'], [
         ['«Fueron puestos unos tronos»', 'El verbo arameo es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.'],
         ['«Se sentó un Anciano de días»', 'Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.'],
-        ['Vestido blanco como la nieve; pelo como lana limpia', 'Pureza sin mancha y eternidad: un Juez que no se puede comprar.'],
+        ['Vestido blanco como la nieve; pelo como lana limpia', 'Pureza sin mancha y eternidad.'],
         ['Trono de llamas con ruedas de fuego, y un río de fuego', 'Un trono que se mueve, como el carro de Ezequiel 1. El fuego es el juicio que purifica.'],
         ['Miles de miles y millones de millones', 'Ángeles, «ministros y testigos» del tribunal (CS 533; Apocalipsis 5:11). No son los juzgados.'],
         ['El Hijo del hombre viene «con las nubes» y «lo hicieron acercarse»', 'Los ángeles lo llevan ante el Padre, no a la tierra. El Día de la Expiación la nube entraba al lugar santísimo (Levítico 16:2).'],

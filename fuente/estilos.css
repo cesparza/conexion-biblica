@@ -4967,7 +4967,7 @@ span.cmp-ult-c{cursor:default}
   .d8-et small{display:none}
   .d8-et.cosa em,.d8-et.reino em{font-size:.78em}
   .d8-et.cita{display:none}
-  .d8-et.op,.d8-et.reino:not(.toma),.d8-dir{display:none}
+  .d8-et.op,.d8-et.reino:not(.toma):not(.gen),.d8-dir{display:none}
   .d8-et.grande b{font-size:1.75em}
   .d8-et.rosa{display:none}
   .d8-et.paso{white-space:normal;max-width:94%}
@@ -4985,7 +4985,7 @@ span.cmp-ult-c{cursor:default}
 .lam-marcas-img.chica .d8-et small{display:none}
 .lam-marcas-img.chica .d8-et.cosa em,.lam-marcas-img.chica .d8-et.reino em{font-size:.78em}
 .lam-marcas-img.chica .d8-et.cita{display:none}
-.lam-marcas-img.chica .d8-et.op,.lam-marcas-img.chica .d8-et.reino:not(.toma),.lam-marcas-img.chica .d8-dir{display:none}
+.lam-marcas-img.chica .d8-et.op,.lam-marcas-img.chica .d8-et.reino:not(.toma):not(.gen),.lam-marcas-img.chica .d8-dir{display:none}
 .lam-marcas-img.chica .d8-et.grande b{font-size:1.75em}
 .lam-marcas-img.chica .d8-et.rosa{display:none}
 .lam-marcas-img.chica .d8-et.paso{white-space:normal;max-width:94%}
@@ -5050,3 +5050,35 @@ span.cmp-ult-c{cursor:default}
 .lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa q{font-size:1rem}
 .lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa.i p{font-size:1rem}
 .lam.pres.ancho .lam-hoja:has(.d8-ley) .lam-capa{padding-top:6px;margin-top:6px}
+/* v227: las citas literales de Elena de White en los últimos acontecimientos. */
+.cmp-ult-egw{display:grid;gap:6px;margin:8px 0 4px}
+.cmp-ult-egw blockquote{margin:0;padding:6px 10px;border-left:3px solid var(--lam-oro,#B98A35);background:color-mix(in srgb,var(--txt) 4%,transparent);border-radius:0 8px 8px 0}
+.cmp-ult-egw blockquote p{margin:0;font-family:var(--cine-serif,Georgia,serif);font-size:1rem;line-height:1.45}
+.cmp-ult-egw cite{font-style:normal;font-size:.75rem;font-weight:700;color:var(--gris)}
+.cmp-ult-egw small{display:block;margin-top:2px;font-size:.875rem;color:var(--gris)}
+/* v227: el reparto del reino de Alejandro: los generales se tocan en el mapa. */
+.d8-et.gen{pointer-events:auto;cursor:pointer;font-family:inherit;border:0;text-align:center;transition:opacity .4s,box-shadow .3s}
+.d8-et.gen.tenue{opacity:.55}
+.d8-et.gen.on{box-shadow:inset 0 0 0 2px #F2C46B}
+.d8-et.gen{--ty:0}
+.d8-et.gen.on{background:rgba(12,9,6,.9);z-index:2}
+.d8-et.gen:focus-visible{outline:2px solid #F2C46B;outline-offset:2px}
+.d8-et.viento.tenue{opacity:.4}
+.d8-nodo.on{fill:#F2C46B}
+/* v227: las once señas en tres pasos, al presentar. */
+.lam-sen-g{list-style:none;margin:.6em 0 0;padding:0;display:grid;gap:.4em}
+.lam-sen-g li{display:flex;gap:.6em;align-items:baseline}
+.lam-sen-g i{font-style:normal;flex:0 0 auto;width:1.7em;height:1.7em;border-radius:50%;background:#F2C46B;color:#1B140A;display:grid;place-items:center;font-weight:800;font-size:.875em}
+.lam-sen-g b{font-weight:700}
+.lam-sen-g .lam-ref{color:#F2C46B;font-size:.875em;white-space:nowrap}
+/* v227: la pregunta para la vida. */
+.lam-aplica-q{font-size:1.375rem;line-height:1.25}
+.d8-et.gen.arriba{--ty:-100%}
+@media (max-width:600px){.d8-et.gen{padding:6px 9px}}
+.lam-marcas-img.chica .d8-et.gen{padding:6px 9px}
+@media (max-width:600px){.d8-et.gen.arriba{--ty:12px}}
+.lam-marcas-img.chica .d8-et.gen.arriba{--ty:12px}
+/* v227: los personajes dentro del texto de una seña siguen en la línea (no son botones de la lista). */
+.lam-sl p .per{display:inline;width:auto;min-height:0;padding:0;gap:0;font-size:inherit;color:inherit;line-height:inherit;text-align:inherit}
+/* Al hundirse no pierde su lugar (el button:active general cambia el transform entero). */
+.d8-et.gen:active:not(:disabled){transform:translate(var(--tx,0),var(--ty,-50%)) scale(.97)}

@@ -2539,7 +2539,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
   const {VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
   const L=LAMINAS.d7, n=t=>String(t).replace(/<[^>]+>/g,'').replace(/[«»“”—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
-  const d7=n(Object.values(VERS.d7).join(' ')), otros=n([...Object.values(VERS.d8),...Object.values(VERS_AP).flatMap(c=>Object.values(c))].join(' '));
+  const d7=n(Object.values(VERS.d7).join(' ')), otros=n([...Object.values(VERS.d2),...Object.values(VERS.d8),...Object.values(VERS_AP).flatMap(c=>Object.values(c))].join(' '));
   ok(L&&L.tipo==='escenas'&&!LAMINAS.d2.tipo,'Daniel 7 es una lámina de escenas y Daniel 2 sigue siendo la estatua');
   const ruta=f=>path.join(RAIZ,'laminas',(f.includes('/')?'':L.dir)+f+'.webp');
   const fs7=[L.inicioF,L.miniF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),L.despues.f,L.cierre.f,...L.escenas.map(e=>e.f)];
@@ -2778,8 +2778,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/lugarArranca\(true\)/.test(js)&&['ir(','verCap(','ponPest(','lamCierra(','cmpToca(','cmpCierra('].every(f=>new RegExp('function '+f.replace('(','\\(')+'[^]*?lugarAnota\\(\\)').test(js)),
     'Cada cambio de lugar lo anota (pantalla, capítulo, pestaña, lámina, Comparar) y el arranque lo aplica');
   /* 3. Explorar en orden, desde el primer paso. */
-  ok(rec2==='h0 h1 h2 h3 h4 est oro plata bronce hierro dedos barro piedra monte desp cierre','Daniel 2 en Explorar: la historia, la estatua, cada parte, la piedra, el monte, el rey y el cierre ('+rec2+')');
-  ok(/^h0 h1 est leon oso leopardo bestia cuernos cuerno x-senas x-periodo juicio hijo x-fases santos reino desp cierre$/.test(rec7),'Daniel 7 en Explorar: el mismo orden que Presentar ('+rec7+')');
+  ok(rec2==='h0 h1 h2 h3 h4 est oro plata bronce hierro dedos barro piedra monte desp cierre aplica','Daniel 2 en Explorar: la historia, la estatua, cada parte, la piedra, el monte, el rey, el cierre y la pregunta para la vida ('+rec2+')');
+  ok(/^h0 h1 est leon oso leopardo bestia cuernos cuerno x-senas x-periodo juicio hijo x-fases santos reino desp cierre aplica$/.test(rec7),'Daniel 7 en Explorar: el mismo orden que Presentar ('+rec7+')');
   /* v225 (revisión de Camilo): B6, A3, B1. */
   const {dd2}=montar("dd2:(lamId='d2',lamEscenasDe(LAMINAS.d2.partes.find(p=>p.id==='dedos')).map(e=>e.y).join())");
   ok(!/1844/.test(dd2)&&LAMINAS.d2.escenas.some(e=>e.y===1844&&e.hoja===false),'v225: la escena del juicio de 1844 va en la línea de tiempo de Daniel 2, no en la hoja de «Los diez dedos» (Roma dividida) ('+dd2+')');
@@ -2917,7 +2917,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(!/\b(según|para) (Bohr|Smith|Maxwell)\b|(Bohr|Smith|Maxwell) (dice|ve|explica|compara)/.test(JSON.stringify(L).replace(/fuente[^,]*,/g,'')),'Daniel 8, voz directa: los autores solo en la fuente');
   /* El recorrido, en orden. */
   const {rec8,cmp,cmpRio}=montar("rec8:(lamId='d8',lamRecorrido().map(x=>x.k).join(' ')), cmp:cmpModelo, cmpRio");
-  ok(rec8==='h0 est carnero macho cuatro cuerno cielo santuario purificado x-periodo quebrantado desp cierre','Daniel 8 en Explorar: la historia, la visión, cada parte, las 2.300 tardes y mañanas, la venida, Gabriel y el cierre ('+rec8+')');
+  ok(rec8==='h0 est carnero macho cuatro cuerno cielo santuario purificado x-periodo quebrantado desp cierre aplica','Daniel 8 en Explorar: la historia, la visión, cada parte, las 2.300 tardes y mañanas, la venida, Gabriel, el cierre y la pregunta para la vida ('+rec8+')');
   /* Cada movimiento: sus piezas existen y caen dentro de su imagen. */
   const M=L.mov,dentro=(c,w,h)=>c[0]>=0&&c[1]>=0&&c[2]<=w&&c[3]<=h&&c[0]<c[2]&&c[1]<c[3];
   const piezas=[[M.carnero.a,M.carnero],[M.carnero.b,M.carnero],[M.macho.cuerno,M.macho],...M.cabeza.cuernos.map(c=>[c,M.cabeza])];
@@ -2974,11 +2974,14 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(inc.en&&inc.en[0]>520&&inc.en[0]<660&&inc.en[1]<320&&cs.find(c=>c.id==='altar').en==null&&cs.filter(c=>c.en).map(c=>c.id).join()==='mesa,candelabro,incienso'&&
     cs.find(c=>c.id==='candelabro').en[0]<300&&cs.find(c=>c.id==='mesa').en[0]>900&&/^VP8/.test(wv)&&san.length<260000,
     'v225: con la imagen nueva llevan punto el candelabro (izquierda), la mesa (derecha) y el altar del incienso (centro, arriba de la punta del cuerno); el altar del holocausto y «la verdad», sin punto; santuario.webp pesa '+Math.round(san.length/1024)+' KB');
-  ok(L.d2Abajo&&L.d2Abajo.includes('santuario')&&/function lamLey8HTML/.test(js)&&/class="d8-num"/.test(js)&&!/d8-punto/.test(js.slice(js.indexOf('function lamMovSantuario'),js.indexOf('function lamMovPurifica')))&&cs.every(c=>!c.dy&&!c.tel),
+  ok(L.d2Abajo&&L.d2Abajo.includes('santuario')&&L.d2Abajo.includes('purificado')&&/function lamLey8HTML/.test(js)&&/class="d8-num"/.test(js)&&!/d8-punto/.test(js.slice(js.indexOf('function lamMovSantuario'),js.indexOf('function lamMovPurifica')))&&cs.every(c=>!c.dy&&!c.tel),
     'v226: el santuario lleva puntos numerados y la lista de las señas debajo (sin rótulos encima), y la comparación va debajo de la imagen');
   const d8txt=JSON.stringify(L)+fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d8.js'),'utf8');
-  ok(!/Pérgamo|Atalo|atálidas|de uno de los cuernos[^»]*(sale|ve)|Otra lectura del hebreo/i.test(d8txt.replace(/\/\*[\s\S]*?\*\//g,''))&&!/atalo-iii/.test(fs.readFileSync(path.join(RAIZ,'fuente','personajes.js'),'utf8')),
-    'v224: Daniel 8 sin la lectura «de uno de los cuernos» (Pérgamo, Atalo III), decisión de Camilo');
+  /* v227 (Camilo): la lista posterior de Bohr (antigónidas, seléucidas, tolomeos, atálidas) puede ir en
+     una sola línea con su fuente; el cuerno pequeño sigue sin salir de Pérgamo. */
+  const d8sin=d8txt.replace(/\/\*[\s\S]*?\*\//g,''),lineaBohr=L.partes.find(p=>p.id==='cuatro').interp.filter(t=>/atálidas/.test(t));
+  ok(!/Atalo|de uno de los cuernos[^»]*(sale|ve)|Otra lectura del hebreo/i.test(d8sin)&&(d8sin.match(/Pérgamo|atálidas/gi)||[]).length===2&&lineaBohr.length===1&&/Bohr, <i>Daniel 1-10<\/i>, p\. 297/.test(lineaBohr[0])&&!/cuerno/.test(lineaBohr[0])&&!/atalo-iii/.test(fs.readFileSync(path.join(RAIZ,'fuente','personajes.js'),'utf8')),
+    'v224: Daniel 8 sin la lectura «de uno de los cuernos» (Pérgamo, Atalo III), decisión de Camilo; v227: los atálidas solo en la línea de Bohr, p. 297');
   const fuera=t=>String(t).replace(/<[^>]+>/g,'').replace(/«[^»]*»/g,'').replace(/"[^"]*"/g,'');
   const expl=[...L.partes.flatMap(p=>p.interp.concat(p.corto)),...CD.secciones.d8.map(x=>x.h)].map(fuera).filter(t=>/sacrificio continuo|continuo sacrificio|sacrificio diario/i.test(t));
   ok(!expl.length,'v224: en Daniel 8 el texto que explica dice «el continuo»; «sacrificio continuo» solo dentro de las citas'+(expl.length?': '+expl[0].slice(0,60):''));
@@ -2986,6 +2989,60 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const C8=require(path.join(RAIZ,'fuente','contenido.js')),c8=JSON.stringify(C8.CONTENIDO?C8.CONTENIDO.d8:C8.d8||'');
   ok(c8.length>1000&&!/pisotea 2\.300|guerra verbal|perplejo|Ese año, sin haber|en cada una de las tres/.test(c8)&&/estaba espantado a causa de la visión, y no la entendía/.test(c8)&&/1818/.test(c8),
     'v223: Daniel 8 en el estudio, sin los errores de la auditoría (2.300 no es el tiempo del pisoteo, 8:27 literal, Miller en 1818, Darío no estuvo en el Gránico)');
+}
+
+/* v227 (Camilo, 15-oct): cada vez que Elena de White aplica un texto, su cita literal y una línea;
+   las dos lecturas del continuo lado a lado; las once señas en tres pasos; la pregunta para la vida;
+   el reparto del reino de Alejandro; purificado.webp es la imagen de Camilo. */
+{
+  const {LAMINAS,ULTIMOS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+  const js=APP;
+  const n=t=>String(t).replace(/<[^>]+>/g,'').replace(/[«»“”—]/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+  const dan=n(Object.keys(VERS).filter(k=>/^d\d+$/.test(k)).flatMap(k=>Object.values(VERS[k])).join(' '));
+  const E=ULTIMOS.eventos,ev=id=>E.find(e=>e.id===id);
+  const conC=E.filter(e=>e.egwC&&e.egwC.length);
+  ok(conC.length>=29&&conC.every(e=>e.egwC.every(([r,q,l])=>/^CS \d+(-\d+)?$/.test(r)&&q.length>25&&!/[«»]/.test(q)&&l&&l.length<160))&&!ev('ciudades').egwC&&/function ultEgwHTML/.test(js),
+    'v227: los últimos acontecimientos traen la cita literal de Elena de White (solo de CS, el libro que está en la biblioteca) y una línea que la explica ('+conC.length+' eventos)');
+  const mt=ev('gran').l.mt24,jz=ev('juzgan').l.d7;
+  ok(mt&&mt[0]==='24:21-22'&&/1260/.test(mt[2])&&/cierre de la gracia/.test(mt[2])&&(mt[5]||[]).filter(x=>/^CS (309|28|672)$/.test(x[0])).length===4,
+    'v227: Mateo 24:21-22 se cumple en los 1260 años y en la tribulación final, con CS 309 (dos), CS 28 y CS 672 literales');
+  ok(jz&&jz[0]==='7:22'&&(jz[5]||[]).some(x=>x[0]==='CS 719'&&/se dio el juicio a los santos del Altísimo/.test(x[1])&&x[2]),
+    'v227: el juicio del milenio en Daniel 7 sigue en 7:22, con CS 719 literal y su línea');
+  const todo=['laminas.js','contenido.js','complementos/daniel/d2.js','complementos/daniel/d7.js','complementos/daniel/d8.js'].map(f=>fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8')).join('\n');
+  /* 1T 361 se queda (Camilo: «no lo quites»; la fuente la trae él, pendiente en el ESTADO). */
+  ok(/1T 361\). Estamos en los dedos/.test(todo)&&/Hoy estamos en los dedos: el mundo sigue dividido \(1T 361\)/.test(todo)&&!/no se puede comprar|Tanto la Roma pagana/.test(todo),
+    'v227: 1T 361 («estamos en los dedos») sigue en Daniel 2; sin «un Juez que no se puede comprar» y sin «Tanto la Roma pagana…»');
+  const L7=LAMINAS.d7,L8=LAMINAS.d8,P8=id=>L8.partes.find(p=>p.id===id),cu7=L7.partes.find(p=>p.id==='cuernos').interp.join(' ');
+  ok(/por una hora/.test(cu7)&&/Apocalipsis 17:12-13|17:12-13/.test(cu7)&&/2:43/.test(cu7)&&/Maxwell/.test(L7.partes.find(p=>p.id==='cuernos').fuente),
+    'v227: «nunca se volvieron a unir» con Apocalipsis 17:12-13 («por una hora»), Daniel 2:43 y Maxwell en la fuente');
+  const sa=P8('santuario');
+  ok(/dos lecturas/i.test(sa.interp.join(' '))&&/el paganismo/.test(sa.interp.join(' '))&&/Smith/.test(sa.fuente)&&/157-159/.test(sa.fuente)&&/Dos lecturas del continuo, lado a lado/.test(todo),
+    'v227: las dos lecturas del continuo, cada una con su fuente (Smith p. 157-159; Bohr p. 307-312), lado a lado');
+  const cont=fs.readFileSync(path.join(RAIZ,'fuente','contenido.js'),'utf8'),c8=cont.slice(cont.indexOf('<em>tamid</em>'),cont.indexOf('<em>tamid</em>')+3000);
+  ok(/9:26/.test(c8)&&/9:27/.test(c8)&&/Mateo 27:51/.test(c8)&&/8:10-11/.test(c8),'v227: solo la fase papal quita el continuo: Daniel 9:26, 9:27, Mateo 27:51 y 8:10-11');
+  const G=L7.senasGrupos,idx=G.flatMap(g=>g.s).sort((a,b)=>a-b).join();
+  const {pres7g}=montar("pres7g:(lamId='d7',lamPasosE().map(x=>x.tipo).join(' '))");
+  ok(G.length===3&&G.map(g=>g.t).join('|')==='De dónde sale|Qué es|Qué hace'&&idx===[...Array(L7.senas.length).keys()].join()&&(pres7g.match(/senasG/g)||[]).length===3&&!/\bsenas\b/.test(pres7g),
+    'v227: al presentar, las once señas van en tres pasos (de dónde sale, qué es, qué hace), cada una una sola vez');
+  const fin=montar("p2:(lamId='d2',lamPasos().map(x=>x.tipo).pop()), p7:(lamId='d7',lamPasosE().map(x=>x.tipo).pop()), p8:(lamId='d8',lamPasosE().map(x=>x.tipo).pop()), r2:(lamId='d2',lamRecorrido().map(x=>x.k).pop()), r7:(lamId='d7',lamRecorrido().map(x=>x.k).pop()), r8:(lamId='d8',lamRecorrido().map(x=>x.k).pop())");
+  const ap=['d2','d7','d8'].map(k=>LAMINAS[k].aplica);
+  ok(Object.values(fin).every(v=>v==='aplica')&&ap.every(a=>a&&/\?$/.test(a.pregunta)&&/^Daniel \d+:\d+$/.test(a.ref)&&dan.includes(n(a.texto)))&&
+    ap[2].pregunta==='¿Qué parte de la obra diaria de Cristo dejaste en manos de otro?'&&ap[1].ref==='Daniel 7:22'&&/piedra/.test(ap[0].pregunta),
+    'v227: cada lámina (Daniel 2, 7 y 8) termina, al presentar y al explorar, con una pregunta para la vida atada a un texto literal');
+  const {REPARTOS}=require(path.join(RAIZ,'fuente','laminas.js'));
+  const cua=P8('cuatro'),R=REPARTOS[cua.reparto],notas=cua.pasos.map(x=>x.nota).join(' '),refs=cua.pasos.map(x=>x.ref+' '+x.nota).join(' ');
+  const cit=[...notas.matchAll(/«([^»]+)»/g)].map(m=>m[1]),malas=cit.filter(c=>!dan.includes(n(c)));
+  ok(cua.pasos.length===6&&R.gen.map(g=>g.t).join()==='Casandro,Lisímaco,Seleuco,Tolomeo'&&R.gen.map(g=>g.v).join('')==='ones'&&/281/.test(R.gen[1].roma)&&R.gen.every(g=>g.roma&&g.s)&&
+    ['8:8','8:22','11:4'].every(r=>refs.includes(r))&&cua.pasos.every(x=>dan.includes(n(x.texto)))&&cit.length>=2&&!malas.length&&/Treiyer/.test(cua.fuente)&&/function lamReparto\(R,id,g,s,j\)/.test(js)&&/lamRepartoToca\(/.test(js)&&!L8.mov.reparto&&!/LAMINAS|LAM\(\)|'cuatro'|d8\./.test(js.slice(js.indexOf('function lamReparto('),js.indexOf('function lamMovCielo'))),
+    'v227: el reparto del reino de Alejandro: cuatro generales en el mapa de los vientos, para tocar, con 8:8, 8:22 y 11:4 literales y cuándo los absorbió Roma'+(malas.length?' — '+malas[0]:''));
+  const per=fs.readFileSync(path.join(RAIZ,'fuente','personajes.js'),'utf8');
+  ok(/id: 'alejandro-iv'/.test(per)&&/id: 'heracles'/.test(per)&&/Treiyer/.test(per),'v227: los herederos de Alejandro (Alejandro IV y Heracles) son personajes, con su fuente');
+  const pu=fs.readFileSync(path.join(RAIZ,'laminas','d8','purificado.webp')),py=fs.readFileSync(path.join(RAIZ,'tools','lamina-d8.py'),'utf8');
+  const vp=pu.toString('latin1',12,16),ancho=vp==='VP8 '?pu.readUInt16LE(26)&0x3fff:vp==='VP8X'?1+pu.readUIntLE(24,3):0,alto=vp==='VP8 '?pu.readUInt16LE(28)&0x3fff:vp==='VP8X'?1+pu.readUIntLE(27,3):0;
+  ok(ancho===1600&&alto===900&&!/guarda\([^)]*'purificado\.webp'/.test(py),'v227: purificado.webp es la imagen de Camilo (1600 × 900) y tools/lamina-d8.py ya no la genera ('+ancho+' × '+alto+')');
+  const tr=L8.mapa&&L8.mapa.reinos?L8.mapa.reinos.find(r=>/Tracia/.test(r.t||r.s||'')):null;
+  ok(!tr||!tr.en||tr.en[1]>150,'v227: «Tracia y Asia Menor» va debajo de «NORTE» (no se encima)');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

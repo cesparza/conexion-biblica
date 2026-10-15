@@ -449,7 +449,7 @@ module.exports = {
     { t: 'mc', v: '7:14', f: 'c',
       q: '¿Qué es «la gran tribulación» de la que salió la multitud?',
       o: ['El tiempo de angustia final de Daniel 12:1', 'Las pruebas de los cristianos de toda época', 'La persecución de Nerón contra la iglesia', 'La destrucción de Jerusalén por Roma'], a: 0,
-      e: 'El griego dice «la tribulación, la grande», la misma de Daniel 12:1 y Mateo 24:21. Otra lectura la ve más amplia. Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 122; Escuela Sabática 2019-1T, p. 44.' },
+      e: 'El griego dice «la tribulación, la grande», la misma de Daniel 12:1 y Mateo 24:21. Elena de White aplica Mateo 24:21-22 a los 1260 años: “Al predecir la ‘gran tribulación’ que había de venir sobre la iglesia, el Salvador había dicho…” (CS 309), y habla de “una gran tribulación final” después del cierre de la gracia (CS 672). Otra lectura la ve más amplia. Fuente: CS 309 y 672; Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 122; Escuela Sabática 2019-1T, p. 44.' },
     { t: 'tf', v: '7:15', f: 'c',
       q: 'Solo los 144.000 entran al templo celestial, y la gran multitud sirve a Dios en su templo; por eso son el mismo grupo.', a: true,
       e: 'Verdadero: es uno de los argumentos para verlos como un solo grupo (PE 19). Fuente: Bohr, <i>Los 144.000 y los 24 ancianos</i>, p. 125; PE 19.' },

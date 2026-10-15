@@ -43,8 +43,25 @@ module.exports = {
         ['Altar del incienso', 'Lugar santo, delante del velo', 'La intercesión de Cristo (Hebreos 7:25)', 'El confesionario, María y los santos'],
       ]) +
       `<p>El arca no está en la lista: queda detrás del velo, en el santísimo, donde Cristo entra en 1844 (8:14). «Echó por tierra la verdad» (8:12) va aparte: es la Ley de Dios (Salmo 119:142) y el sábado, como el cuerno de Daniel 7 que «pensará en cambiar los tiempos y la ley» (7:25).</p>` +
-      wa('Otra lectura ve en «el continuo» el paganismo, quitado para dar lugar al papado. Aquí se sigue la del ministerio de Cristo.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-313; apuntes «Cómo quitó el continuo el papado».</p>` },
+
+    { t: '🧭 Dos lecturas del continuo, lado a lado', capa: 'contexto', h:
+      `<p>Hay dos lecturas del continuo (Bohr, <i>Daniel 1-10</i>, p. 307). Cada una con su fuente:</p>` +
+      tbl(['', 'El ministerio de Cristo', 'El paganismo (los pioneros)'], [
+        ['Qué es el continuo', 'El ministerio continuo de Cristo en el santuario del cielo, que el papado usurpó en la tierra (Bohr, p. 307-312)', '“el asolamiento continuo era el paganismo, y la ‘abominación espantosa,’ el papado” (Smith, p. 157)'],
+        ['Quién lo quita', 'El papado: «por él fue quitado el sacrificio continuo» (8:11)', 'Se quita para que se levante el papado: “Esto sucedió como preparativo para el establecimiento del papado” (Smith, p. 159)'],
+        ['Cuándo', '508: 1798 menos los 1.290 días de 12:11 (apuntes «Cómo quitó el continuo el papado»)', '“el continuo fué quitado hacia 508” (Smith, p. 159)'],
+      ]) +
+      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-312; Smith, <i>Las profecías de Daniel</i>, p. 94 y 157-159; apuntes «Cómo quitó el continuo el papado» y «Periodos proféticos Daniel 12».</p>` },
+
+    { t: '🧭 Roma pagana y el continuo', capa: 'contexto', h:
+      `<p>En Daniel 8 solo la fase papal del cuerno quita el continuo. Lo que dice cada texto:</p>` +
+      li([
+        'Roma pagana destruyó el templo de la tierra: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26).',
+        'Los sacrificios de la tierra los terminó la muerte de Cristo: «a la mitad de la semana hará cesar el sacrificio y la ofrenda» (9:27), y el velo del templo se rasgó (Mateo 27:51).',
+        'El continuo de 8:11 viene después de que el cuerno crece «hasta llegar al ejército del cielo» (8:10): «Aun se engrandeció frente al príncipe de los ejércitos; por él fue quitado el sacrificio continuo» (8:11).',
+      ]) +
+      `<p>Fuente: Daniel 8:10-11; 9:26-27; Mateo 27:51.</p>` },
 
     { t: '🧭 «¿Hasta cuándo durará la visión?»: por qué son años', capa: 'contexto', h:
       `<p>Tres razones del mismo texto:</p>` +

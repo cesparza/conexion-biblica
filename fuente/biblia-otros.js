@@ -1488,6 +1488,9 @@ const OTRAS_VERS = {
   "30": "Y habiendo cantado el himno, salieron al monte de las Olivas.",
   "64": "Jesús le dijo: Tú lo has dicho: y aun os digo, que desde ahora habéis de ver al Hijo del hombre sentado á la diestra de la potencia de Dios, y que viene en las nubes del cielo."
  },
+ "mateo-27": {
+  "51": "Y he aquí, el velo del templo se rompió en dos, de alto á bajo: y la tierra tembló, y las piedras se hendieron;"
+ },
  "mateo-28": {
   "19": "Por tanto, id, y doctrinad á todos los Gentiles, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo:",
   "20": "Enseñándoles que guarden todas las cosas que os he mandado: y he aquí, yo estoy con vosotros todos los días, hasta el fin del mundo. Amén."
@@ -2533,6 +2536,11 @@ const OTRAS_META = {
  "mateo-26": {
   "libro": "Mateo",
   "cap": "26",
+  "version": "RV1909"
+ },
+ "mateo-27": {
+  "libro": "Mateo",
+  "cap": "27",
   "version": "RV1909"
  },
  "mateo-28": {

@@ -1021,6 +1021,25 @@ const PERSONAJES = [
     textos: 'Daniel 7:6; 8:8',
     alias: ['Casandro'],
     fuente: 'Bohr, <i>Daniel 1-10</i>, p. 119' },
+  /* v227: los hijos de Alejandro Magno, que no heredaron el reino (Daniel 11:4). */
+  { id: 'alejandro-iv', nombre: 'Alejandro IV', tipo: 'historico',
+    fechas: '323-311 a.C.',
+    quien: 'Hijo de Alejandro Magno, nacido después de su muerte.',
+    hizo: [
+      'Fue asesinado en 311 a.C.: el reino de su padre no quedó para sus descendientes (Daniel 11:4).'
+    ],
+    textos: 'Daniel 11:4',
+    alias: ['Alejandro IV'],
+    fuente: 'Treiyer, <i>Enigmas descifrados</i>, p. 56; Smith, <i>Las profecías de Daniel</i>, p. 88' },
+  { id: 'heracles', nombre: 'Heracles', tipo: 'historico',
+    fechas: 'murió en 309 a.C.',
+    quien: 'Hijo natural de Alejandro Magno.',
+    hizo: [
+      'Fue asesinado en 309 a.C.: el reino de su padre no quedó para sus descendientes (Daniel 11:4).'
+    ],
+    textos: 'Daniel 11:4',
+    alias: [{ t: 'Heracles', caps: ['d8', 'd11'] }],
+    fuente: 'Treiyer, <i>Enigmas descifrados</i>, p. 56; Smith, <i>Las profecías de Daniel</i>, p. 88' },
   { id: 'lisimaco', nombre: 'Lisímaco', tipo: 'historico',
     fechas: 'hacia 360-281 a.C.',
     quien: 'General de Alejandro.',
