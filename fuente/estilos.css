@@ -5381,3 +5381,45 @@ span.cmp-ult-c{cursor:default}
   .lam.pres.ancho .lam-metro .lm-n{font-size:.75rem}
   .lam.pres.ancho .lam-metro .lm-seg span,.lam.pres.ancho .lam-metro .lm-l2 span{font-size:.75rem}
 }
+/* v233b: el tramo vacío no deja su punto solo; el nombre del tramo en su trecho más largo;
+   estaciones menores (597 y 586 a.C.); ‹ › en la tira con mouse; antes de la primera estación. */
+.lm-cab .lam-seg:empty::before{display:none}
+.lm-seg[style*="--lm-tl"] span{margin-left:var(--lm-tl)}
+.lm-e.menor .lm-p{--lm-p0:var(--lm-p);width:calc(var(--lm-p) * .72);height:calc(var(--lm-p) * .72);margin:calc(var(--lm-p) * -.36) 0 0 calc(var(--lm-p) * -.36);border-width:2.5px}
+.lm-e.menor .lm-a b{font-size:1rem;font-weight:600}
+.lm-e.menor .lm-n{font-size:.75rem}
+.lam-metro.compacto .lm-e.menor .lm-a small,.lam-metro.compacto .lm-e.menor .lm-n{display:none}
+.lam-metro.compacto .lm-e.menor .lm-a b{font-size:.875rem}
+.lam-metro.antes .lm-e:first-child .lm-p{border-color:var(--lam-oro,#B98A35)}
+.lm-ir{display:none}
+@media (hover:hover) and (pointer:fine){
+  .lam-metro.tira .lm-ir{display:flex;align-items:center;justify-content:center;position:absolute;top:calc(var(--lm-top) + var(--lm-h) / 2 - 22px);width:44px;height:44px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;z-index:3;color:var(--txt,#1a1a2e)}
+  .lam-metro.tira .lm-ir::before{content:'';width:32px;height:32px;border-radius:50%;background:var(--lm-fondo,var(--bg,#fff));box-shadow:0 1px 4px rgba(0,0,0,.18),0 0 0 1px color-mix(in srgb,var(--txt,#1a1a2e) 14%,transparent);
+    -webkit-mask:none;display:block}
+  .lam-metro.tira .lm-ir::after{content:'';position:absolute;width:8px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(135deg);margin-left:3px}
+  .lam-metro.tira .lm-ir.sig::after{transform:rotate(-45deg);margin-left:-3px}
+  .lam-metro.tira .lm-ir.ant{left:-6px}.lam-metro.tira .lm-ir.sig{right:-6px}
+  .lam-metro.tira .lm-ir:hover::before{box-shadow:0 2px 8px rgba(0,0,0,.25),0 0 0 1px var(--lam-oro,#B98A35)}
+  .lam-metro.tira .lm-ir:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:-4px}
+  .lam-metro.tira .lm-ir[disabled]{opacity:0;pointer-events:none}
+  .lam.pres .lam-metro.tira .lm-ir{color:#F3EDE2}
+}
+/* v233b: el nombre del tramo deja libre el punto encendido (que crece); en la fila compacta el
+   nombre del reino ya está en su estación: en la línea solo quedan los mil años y la segunda línea. */
+.lm-seg span{padding:0 calc(var(--lm-p) * .75 + 6px)}
+.lam-metro.compacto .lm-seg:not(.mil) span{visibility:hidden}
+/* v233b: en la tira, la línea sigue un poco antes de la primera estación y después de la última
+   (la mitad vacía de la tira se lee como línea que continúa, no como un hueco). */
+.lm-vista.tira .lm-lineas::before,.lm-vista.tira .lm-lineas::after{content:'';position:absolute;top:calc(var(--lm-h) / 2 - 2px);height:4px;width:calc(var(--lm-tira,96px) * 1.6);
+  background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--txt,#1a1a2e) 28%,transparent) 0 5px,transparent 5px 10px)}
+.lm-vista.tira .lm-lineas::before{right:calc(100% - var(--lm-tira,96px) / 2)}
+.lm-vista.tira .lm-lineas::after{left:calc(100% - var(--lm-tira,96px) / 2)}
+/* v233b: fuera de la tira, la estación menor dice su nombre corto en una sola línea (con dos líneas
+   la línea crecía y, al presentar en una pantalla baja, la escena perdía alto). */
+.lam-metro:not(.tira) .lm-e.menor .lm-n .lg{display:none}
+.lam-metro:not(.tira) .lm-e.menor .lm-n .ct{display:inline;white-space:nowrap}
+/* v233b: la venida y el reino nunca en dos líneas; la estación menor, fuera de la tira, sin «a.C.»
+   (lo dice la de al lado) y con su nombre corto en letra chica también al presentar. */
+.lm-e.fut .lm-a b,.lm-e.hoy .lm-a b{white-space:nowrap}
+.lam-metro:not(.tira) .lm-e.menor .lm-a small{display:none}
+.lam.pres.ancho .lam-metro:not(.tira) .lm-e.menor .lm-n{font-size:.75rem}

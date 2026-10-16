@@ -3152,7 +3152,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(kk(q.k2)===1&&kk(q.k7)===1&&kk(q.k8)===0&&Math.abs(x0-pos(476))<.01&&Math.abs(x1-pos(q.ven))<.01&&/data-de="476"/.test(q.k7),
     'v231: el carril de abajo: Roma dividida, de 476 a la venida, en Daniel 2 y 7 (Daniel 8 no la trae)');
   const nPres=(js.match(/getElementById\('lamTano'\)\.textContent=lamRangoTx\(/g)||[]).length;
-  ok(nPres>=4&&!/textContent=lamAnioTx\(p\.de\)\+' – '/.test(js)&&!/textContent=lamAnioTx\(q\.de\)\+' – '/.test(js)&&/r\.value=P\.de;document\.getElementById\('lamTano'\)/.test(js)&&!/r\.value=P\.a;/.test(js)&&
+  ok(nPres>=4&&!/textContent=lamAnioTx\(p\.de\)\+' – '/.test(js)&&!/textContent=lamAnioTx\(q\.de\)\+' – '/.test(js)&&/r\.value=P\.de;(lamLineaPide\(\);)?document\.getElementById\('lamTano'\)/.test(js)&&!/r\.value=P\.a;/.test(js)&&
     /lamTramo\(p\.de,p\.a,p\.hasta\)/.test(js)&&/function lamSanada/.test(js),
     'v231: en Explorar y en Presentar (Daniel 2, 7 y 8) el pulgar y el rótulo van al INICIO de la parte, con su tramo; la cuenta de los 1.260 años empieza en 538 ('+nPres+')');
   /* Las señales, numeradas del 1 al 14. */
@@ -3195,7 +3195,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
 {
   const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js')),js=APP,css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8');
   const fuente=fs.readFileSync(path.join(RAIZ,'fuente','laminas.js'),'utf8').split('\n').filter(l=>!/^\s*metro:/.test(l)).join('\n').toLowerCase();
-  const quiere={d2:[-605,-539,-331,-168,476,538,1798,1844,2026,2226,2526],d7:[-605,-539,-331,-168,476,538,1798,1844,2026,2226,2526],d8:[-539,-457,-331,-301,-168,476,538,1798,1844,2026,2226,2526]};
+  const quiere={d2:[-605,-597,-586,-539,-331,-168,476,538,1798,1844,2026,2226,2526],d7:[-605,-597,-586,-539,-331,-168,476,538,1798,1844,2026,2226,2526],d8:[-539,-457,-331,-301,-168,476,538,1798,1844,2026,2226,2526]};
   const mal=[];
   for(const id of ['d2','d7','d8']){const L=LAMINAS[id],E=L.metro&&L.metro.est||[];
     if(E.map(e=>e[0]).join()!==quiere[id].join())mal.push(id+' estaciones '+E.map(e=>e[0]).join());
@@ -3204,8 +3204,16 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const fut=E.filter(e=>/fut/.test(e[2]||'')),mil=(L.futuro||[]).find(f=>/mil años/i.test(f.t));
     if(fut.length!==2||!mil||mil.de!==fut[0][0])mal.push(id+' los mil años no empiezan en la venida');
     if(!E.some(e=>e[0]===1844&&e[2]==='juicio')||!E.some(e=>e[2]==='hoy'))mal.push(id+' 1844 u hoy');
-    (L.metro.l2||[]).forEach(([de,a])=>{if(!E.some(e=>e[0]===de)||!E.some(e=>e[0]===a))mal.push(id+' segunda línea '+de+'-'+a);});}
-  ok(!mal.length,'v233: la línea de metro de Daniel 2, 7 y 8: cada estación con su marca y con las palabras de la lámina; 1844, hoy, la venida y el reino; los mil años empiezan en la venida'+(mal.length?' — '+mal.slice(0,4).join(' | '):''));
+    (L.metro.l2||[]).forEach(([de,a])=>{if(!E.some(e=>e[0]===de)||!E.some(e=>e[0]===a))mal.push(id+' segunda línea '+de+'-'+a);});
+    /* v233b: toda escena del pasado y todo comienzo de parte es una estación (las que no empiezan
+       una parte, menores); las menores, con las palabras de su escena. */
+    const ys=E.map(e=>e[0]);
+    (L.escenas||[]).filter(e=>e.y<=2026).forEach(e=>{if(!ys.includes(e.y))mal.push(id+' escena '+e.y+' sin estación');});
+    (L.partes||[]).filter(q=>q.de!=null).forEach(q=>{if(!ys.includes(q.de))mal.push(id+' parte '+q.id+' ('+q.de+') sin estación');});
+    E.filter(e=>/menor/.test(e[2]||'')).forEach(([y,n])=>{const es=(L.escenas||[]).find(e=>e.y===y);if(!es||!(es.c+' '+es.t).toLowerCase().includes(n.toLowerCase()))mal.push(id+' menor '+y+' sin su escena');});
+    /* v233b: 457 a.C. dice lo mismo que el panel de las 2.300 tardes y mañanas. */
+    if(L.linea2300)E.filter(e=>e[0]<2026&&e[0]!==1844).forEach(([y,n])=>{const h=L.linea2300.hitos.find(h=>h.y===y);if(h&&h.s!==n)mal.push(id+' '+y+' «'+n+'» ≠ panel «'+h.s+'»');});}
+  ok(!mal.length,'v233: la línea de metro de Daniel 2, 7 y 8: cada estación con su marca y con las palabras de la lámina; toda escena y todo comienzo de parte es una estación (597 y 586, menores); 457 como en el panel de las 2.300; 1844, hoy, la venida y el reino; los mil años empiezan en la venida'+(mal.length?' — '+mal.slice(0,4).join(' | '):''));
   ok(/const LAM_METRO=true;/.test(js)&&/PARA VOLVER A LA LÍNEA DE v232: `const LAM_METRO=false;`/.test(js)&&/t\.classList\.add\('metro'\)/.test(js)&&/\.lam-tiempo\.metro\.escala \.lam-metro\{display:none\}/.test(css)&&
     /prefers-reduced-motion:reduce\)\{\.lm-p,\.lm-a,\.lm-seg\{transition:none\}\.lm-e\.hoy \.lm-p::after\{animation:none/.test(css)&&/scroll-snap-type:x mandatory/.test(css)&&/aria-current','step'/.test(js),
     'v233: la línea de metro cuelga de una bandera (LAM_METRO) y de la clase .metro; «Ver a escala» muestra la de v232; la tira del teléfono con scroll-snap; «hoy» quieto con movimiento reducido');

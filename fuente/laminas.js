@@ -65,8 +65,10 @@ const LAMINAS = {
      metro, sin escala. `est`: las estaciones [año, nombre, clase, nombre más corto], con las palabras de
      la lámina (cada estación es el comienzo de su parte);
      el futuro no tiene año: la venida y el reino van en el año de su tramo (2226, 2526) y los mil años
-     son el tramo entre las dos. `l2`: la segunda línea, paralela [de, a, nombre, color]. */
-  metro: { est: [[-605, 'Babilonia'], [-539, 'Medo-Persia'], [-331, 'Grecia'], [-168, 'Roma imperial', '', 'Roma'], [476, 'Roma dividida'], [538, 'Roma papal'], [1798, 'La herida'], [1844, 'El juicio', 'juicio'], [2026, 'Hoy', 'hoy'], [2226, 'La piedra', 'fut'], [2526, 'El monte', 'fut']],
+     son el tramo entre las dos. `l2`: la segunda línea, paralela [de, a, nombre, color].
+     v233b: toda escena de la lámina empieza en una estación; las deportaciones de 597 y 586 a.C.
+     (escenas e597 y e586, con sus palabras) son estaciones menores (clase 'menor'). */
+  metro: { est: [[-605, 'Babilonia'], [-597, 'Segunda deportación', 'menor', 'Deportación'], [-586, 'Cae Jerusalén', 'menor', 'Jerusalén'], [-539, 'Medo-Persia'], [-331, 'Grecia'], [-168, 'Roma imperial', '', 'Roma'], [476, 'Roma dividida'], [538, 'Roma papal'], [1798, 'La herida'], [1844, 'El juicio', 'juicio'], [2026, 'Hoy', 'hoy'], [2226, 'La piedra', 'fut'], [2526, 'El monte', 'fut']],
     l2: [[476, 2226, 'Roma dividida', '#4E6A8F']] },
   marcas: [[-605, '605 a.C.'], [-539, '539<i> a.C.</i>'], [-331, '331<i> a.C.</i>'], [-168, '168<i> a.C.</i>'], [1, '1<i> d.C.</i>', 'menor'], [476, '476<i> d.C.</i>'], [538, '538<i> d.C.</i>'],
     [1798, '1798'], [1844, '1844<i> · juicio</i>'], [2026, 'hoy'], [2226, 'la piedra', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el monte', 'fut'], [2476, 'futuro', 'tel']],
@@ -285,8 +287,10 @@ LAMINAS.d7 = {
      metro, sin escala. `est`: las estaciones [año, nombre, clase, nombre más corto], con las palabras de
      la lámina (cada estación es el comienzo de su parte);
      el futuro no tiene año: la venida y el reino van en el año de su tramo (2226, 2526) y los mil años
-     son el tramo entre las dos. `l2`: la segunda línea, paralela [de, a, nombre, color]. */
-  metro: { est: [[-605, 'Babilonia'], [-539, 'Medo-Persia'], [-331, 'Grecia'], [-168, 'Roma imperial', '', 'Roma'], [476, 'Roma dividida'], [538, 'Roma papal'], [1798, 'La herida'], [1844, 'El juicio', 'juicio'], [2026, 'Hoy', 'hoy'], [2226, 'La venida', 'fut'], [2526, 'El reino', 'fut']],
+     son el tramo entre las dos. `l2`: la segunda línea, paralela [de, a, nombre, color].
+     v233b: toda escena de la lámina empieza en una estación; las deportaciones de 597 y 586 a.C.
+     (escenas e597 y e586, con sus palabras) son estaciones menores (clase 'menor'). */
+  metro: { est: [[-605, 'Babilonia'], [-597, 'Segunda deportación', 'menor', 'Deportación'], [-586, 'Cae Jerusalén', 'menor', 'Jerusalén'], [-539, 'Medo-Persia'], [-331, 'Grecia'], [-168, 'Roma imperial', '', 'Roma'], [476, 'Roma dividida'], [538, 'Roma papal'], [1798, 'La herida'], [1844, 'El juicio', 'juicio'], [2026, 'Hoy', 'hoy'], [2226, 'La venida', 'fut'], [2526, 'El reino', 'fut']],
     l2: [[476, 2226, 'Roma dividida', '#4E6A8F']] },
   marcas: [[-605, '605 a.C.'], [-539, '539<i> a.C.</i>'], [-331, '331<i> a.C.</i>'], [-168, '168<i> a.C.</i>'], [1, '1<i> d.C.</i>', 'menor'], [476, '476<i> d.C.</i>'], [538, '538<i> d.C.</i>'],
     [1798, '1798'], [1844, '1844<i> · juicio</i>'], [2026, 'hoy'], [2226, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
@@ -603,7 +607,7 @@ LAMINAS.d8 = {
      la lámina (cada estación es el comienzo de su parte);
      el futuro no tiene año: la venida y el reino van en el año de su tramo (2226, 2526) y los mil años
      son el tramo entre las dos. `l2`: la segunda línea, paralela [de, a, nombre, color]. */
-  metro: { est: [[-539, 'Medo-Persia'], [-457, 'La orden de Artajerjes', '', 'Artajerjes'], [-331, 'Grecia'], [-301, 'Cuatro reinos (Ipso)', '', 'Cuatro reinos'], [-168, 'Roma imperial', '', 'Roma'], [476, 'Roma dividida'], [538, 'Roma papal'], [1798, 'La herida'], [1844, 'El juicio', 'juicio'], [2026, 'Hoy', 'hoy'], [2226, 'La venida', 'fut'], [2526, 'El reino', 'fut']],
+  metro: { est: [[-539, 'Medo-Persia'], [-457, 'La orden de Artajerjes I', '', 'Artajerjes I'], [-331, 'Grecia'], [-301, 'Cuatro reinos (Ipso)', '', 'Cuatro reinos'], [-168, 'Roma imperial', '', 'Roma'], [476, 'Roma dividida'], [538, 'Roma papal'], [1798, 'La herida'], [1844, 'El juicio', 'juicio'], [2026, 'Hoy', 'hoy'], [2226, 'La venida', 'fut'], [2526, 'El reino', 'fut']],
     l2: [[-457, 1844, 'Las 2.300 tardes y mañanas', '#B45309']] },
   marcas: [[-539, '539 a.C.'], [-331, '331<i> a.C.</i>'], [-301, '301<i> a.C.</i>'], [-168, '168<i> a.C.</i>'], [1, '1<i> d.C.</i>', 'menor'], [476, '476<i> d.C.</i>'], [538, '538<i> d.C.</i>'],
     [1798, '1798'], [1844, '1844'], [2026, 'hoy'], [2226, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],

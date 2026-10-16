@@ -1583,6 +1583,8 @@ for (const [W, H, modo] of [[1900, 900, 'presentar'], [1440, 900, 'explorar'], [
     const r = await p.evaluate(async () => {
       const espera = ms => new Promise(r => setTimeout(r, ms)), L = LAM(), R = document.getElementById('lamRango'), t = document.querySelector('#lam .lam-tiempo'), m = t.querySelector('.lam-metro'), v = m.querySelector('.lm-vista'), mal = [];
       const bs = [...m.querySelectorAll('.lm-e')], ys = bs.map(b => Number(b.dataset.y)), quiere = L.metro.est.map(e => e[0]);
+      /* v233b: antes de la primera estación (al abrir, el pulgar en -620) ninguna está encendida. */
+      if (Number(R.value) < ys[0] && (m.querySelector('.lm-e.on') || !m.classList.contains('antes'))) mal.push('antes de la primera, una encendida');
       if (ys.join() !== quiere.join()) mal.push('estaciones ' + ys.join());
       if (!t.classList.contains('metro') || getComputedStyle(m).display === 'none' || R.offsetParent) mal.push('no es la de metro');
       if (bs.some(b => !b.getAttribute('aria-label')) || !m.querySelector('ol[aria-label]')) mal.push('aria');
@@ -1600,7 +1602,8 @@ for (const [W, H, modo] of [[1900, 900, 'presentar'], [1440, 900, 'explorar'], [
         if (!document.getElementById('lam').classList.contains('pres') && document.querySelector('#lamTira') && on !== eon) x.push('escena ' + on + '≠' + eon);
         return x; };
       const encima = () => { const rr = [...m.querySelectorAll('.lm-a,.lm-n')].filter(e => e.textContent.trim() && getComputedStyle(e).visibility !== 'hidden').map(e => e.getBoundingClientRect()).filter(r => r.width && dentro(r));
-        const pis = rr.some((a, i) => rr.some((c, j) => j > i && a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1));
+        /* v233b: ni pegados: al menos 3 px entre dos rótulos de la misma fila («605 a.C.539» se tocaba). */
+        const pis = rr.some((a, i) => rr.some((c, j) => j > i && a.left < c.right + 3 && c.left < a.right + 3 && a.top < c.bottom - 1 && c.top < a.bottom - 1));
         const anios = [...m.querySelectorAll('.lm-a')].map(e => e.getBoundingClientRect()).filter(dentro), fila = Math.max(...anios.map(a => a.top + a.height / 2)) - Math.min(...anios.map(a => a.top + a.height / 2));
         const seg = [...m.querySelectorAll('.lm-seg:not(.sin-tx) span,.lm-l2:not(.sin-tx) span')].filter(e => e.textContent.trim() && !e.closest('.lm-l2')).some(e => { const a = e.getBoundingClientRect(), c = e.parentNode.getBoundingClientRect(); return a.width && (a.left < c.left - 1 || a.right > c.right + 1); });
         return (pis ? ['nombres encimados'] : []).concat(fila > 8 ? ['dos filas (' + Math.round(fila) + ')'] : []).concat(seg ? ['nombre de tramo fuera'] : []); };
@@ -1610,6 +1613,21 @@ for (const [W, H, modo] of [[1900, 900, 'presentar'], [1440, 900, 'explorar'], [
         const br = b.getBoundingClientRect(); if (br.height < 44 || br.width < 44) mal.push(y + ': blanco ' + Math.round(br.width) + '×' + Math.round(br.height));
         if (v.classList.contains('tira')) { const c = centro(b); if (Math.abs(c) > 6) mal.push(y + ': no queda al centro (' + Math.round(c) + ')'); } }
       if (document.documentElement.scrollWidth > innerWidth) mal.push('la página se desplaza de lado');
+      /* v233b: elegir cada parte (riel, Anterior/Siguiente) lleva el pulgar y la estación a su COMIENZO;
+         las del futuro, a la venida o al reino. Al presentar, cada paso de una parte deja encendida su
+         estación (la última que ya pasó). */
+      if (!document.getElementById('lam').classList.contains('pres')) {
+        for (let i = 0; i < L.partes.length; i++) { const q = L.partes[i]; lamElige(i); await espera(60); await new Promise(r => requestAnimationFrame(r)); await new Promise(r => requestAnimationFrame(r));
+          const on = m.querySelector('.lm-e.on'), y = Number(R.value), fu = (L.futuro || []).find(f => f.id && f.id === q.id);
+          if (q.de != null && (y !== q.de || !on || Number(on.dataset.y) !== q.de)) mal.push('parte ' + q.id + ': pulgar ' + y + ', estación ' + (on && on.dataset.y) + ' (empieza en ' + q.de + ')');
+          if (fu && (!on || !on.classList.contains('fut'))) mal.push('parte ' + q.id + ': no enciende su estación del futuro'); }
+      } else {
+        for (let k = 0; k < 14; k++) { lamPres(k); if (lamPaso !== k) break; await espera(650);
+          const on = m.querySelector('.lm-e.on'), y = Number(R.value), bien = ys.filter(v => v <= y).pop();
+          if (y > LAM_HOY) continue;
+          if (bien == null ? !!on : (!on || Number(on.dataset.y) !== bien)) mal.push('paso ' + k + ': pulgar ' + y + ', estación ' + (on && on.dataset.y)); }
+        lamPres(0); await espera(300);
+      }
       /* Las flechas del teclado. */
       bs[2].click(); await quieta(); bs[2].focus(); bs[2].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); await espera(150);
       if (Number(R.value) !== ys[3] || document.activeElement !== bs[3]) mal.push('flecha → ' + R.value);
@@ -1639,7 +1657,7 @@ for (const [W, H, modo] of [[1900, 900, 'presentar'], [1440, 900, 'explorar'], [
       b.click(); await espera(200); const z = [t.classList.contains('escala'), b.getAttribute('aria-pressed'), getComputedStyle(t.querySelector('.lam-metro')).display];
       return a[0] && a[1] === 'true' && a[2] === 'none' && a[3] && a[4] && a[5] && !z[0] && z[1] === 'false' && z[2] !== 'none' ? '' : 'escala ' + JSON.stringify([a, z]); });
     const mal = r.mal.concat(drag ? [drag] : [], esc ? [esc] : [], r.venMil ? [] : ['mil años']);
-    ok(!mal.length, W + ' · v233: ' + id + ' (' + (modo === 'presentar' ? 'Presentar' : 'Explorar') + (r.tira ? ', tira' : r.cpt ? ', compacta' : '') + '), línea de metro: ' + r.n + ' estaciones (' + r.ys.join(', ') + '); tocar, ' + (r.tira ? 'deslizar' : 'arrastrar') + ' y las flechas llevan la escena; nombres sin encimarse, en una fila, blancos de 44 px, sin desborde; «Ver a escala» va y vuelve; los mil años desde la venida' + (mal.length ? ' — ' + mal.slice(0, 5).join(' | ') : ''));
+    ok(!mal.length, W + ' · v233: ' + id + ' (' + (modo === 'presentar' ? 'Presentar' : 'Explorar') + (r.tira ? ', tira' : r.cpt ? ', compacta' : '') + '), línea de metro: ' + r.n + ' estaciones (' + r.ys.join(', ') + '); tocar, ' + (r.tira ? 'deslizar' : 'arrastrar') + ' y las flechas llevan la escena; cada parte lleva a su comienzo; nombres sin encimarse ni pegarse, en una fila, blancos de 44 px, sin desborde; «Ver a escala» va y vuelve; los mil años desde la venida' + (mal.length ? ' — ' + mal.slice(0, 5).join(' | ') : ''));
     await p.evaluate(() => lamCierra());
   }
   ok(errores.length === 0, W + ' · v233: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
