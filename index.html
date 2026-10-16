@@ -5263,6 +5263,141 @@ span.cmp-ult-c{cursor:default}
 .lam.pres .lam-tiempo.limpia .lam-futx{position:absolute;right:11px;margin-top:-30px;height:30px;margin-bottom:0;flex-wrap:nowrap;font-size:.75rem;background:inherit}
 .lam.pres .lam-tiempo.limpia .lam-futx button{min-height:24px;padding:0 8px}
 .lam.pres .lam-tiempo.limpia.fut-abierto .lam-marcas span:not(:first-of-type){visibility:hidden}
+/* ── v233: LA LÍNEA DE METRO (app.js, LAM_METRO). Todo va bajo .lam-tiempo.metro; «Ver a escala»
+   (.escala) muestra la línea proporcional de v232. ── */
+.lam-tiempo.metro:not(.escala) .lam-rango,.lam-tiempo.metro:not(.escala) .lam-marcas,.lam-tiempo.metro:not(.escala) .lam-futx,.lam-tiempo.metro:not(.escala) .lam-hley{display:none!important}
+.lam-tiempo.metro.escala .lam-metro{display:none}
+.lam-tiempo.metro .lam-tcab{position:relative}
+.lam-metro{--lm-min:84px;--lm-h:20px;--lm-h2:16px;--lm-p:16px;--lm-top:14px;position:relative;margin:2px 0 4px;color:var(--txt,#1a1a2e)}
+.lm-vista{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.lm-vista::-webkit-scrollbar{display:none}
+.lm-pista{position:relative;min-width:100%;touch-action:pan-y}
+.lm-vista.tira{scroll-snap-type:x mandatory;padding-inline:calc(50% - var(--lm-min) / 2);box-sizing:border-box;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.lm-vista.tira .lm-pista{width:calc(var(--n) * var(--lm-min));min-width:0;touch-action:pan-x}
+.lm-est{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+.lm-est li{display:flex;justify-content:center;min-width:0;scroll-snap-align:center}
+/* Las líneas: la principal, gruesa, con el nombre del reino adentro; la segunda, paralela debajo. */
+.lm-lineas{position:absolute;left:0;right:0;top:var(--lm-top);height:calc(var(--lm-h) + 4px + var(--lm-h2));pointer-events:none}
+.lm-seg,.lm-l2{position:absolute;display:flex;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box;font-style:normal}
+.lm-seg{top:0;height:var(--lm-h);background:var(--c,#8C8576);color:var(--t,#fff);transition:opacity .3s ease,filter .3s ease}
+.lm-seg.on,.lm-seg.mil.on{opacity:1;filter:saturate(1.12)}
+.lm-seg.ini{border-radius:999px 0 0 999px}.lm-seg.fin{border-radius:0 999px 999px 0}
+.lm-seg span,.lm-l2 span{font-size:.75rem;font-weight:700;letter-spacing:.01em;white-space:nowrap;padding:0 calc(var(--lm-p) / 2 + 2px);line-height:1}
+.lm-seg.sin-tx span,.lm-l2.sin-tx span{visibility:hidden}
+.lm-seg.vacio{background:color-mix(in srgb,var(--txt,#1a1a2e) 16%,transparent);height:6px;top:calc(var(--lm-h) / 2 - 3px)}
+.lm-seg.tenue{opacity:.55}
+.lm-seg.sanada{background:repeating-linear-gradient(90deg,var(--c) 0 10px,transparent 10px 15px)}
+.lm-seg.sanada span{color:var(--txt,#1a1a2e);text-shadow:0 0 6px var(--bg,#fff),0 0 2px var(--bg,#fff)}
+.lm-seg.oro{background:linear-gradient(90deg,#D6B26A,#F2C46B);color:#17120A}
+.lm-seg.corte{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--txt,#1a1a2e) 30%,transparent) 0 5px,transparent 5px 9px);height:4px;top:calc(var(--lm-h) / 2 - 2px);overflow:visible;opacity:1}
+.lm-seg.corte b{position:relative;padding:0 4px;background:var(--lm-fondo,var(--bg,#fff));font-size:.875rem;font-weight:800;letter-spacing:-.12em;color:var(--txt,#1a1a2e)}
+.lm-seg.mil{pointer-events:auto;cursor:pointer;background:transparent;border:1.5px dashed color-mix(in srgb,var(--lam-oro,#B98A35) 80%,transparent);color:var(--txt,#1a1a2e);opacity:1;padding:0;font:inherit;border-radius:0}
+.lm-seg.mil.on{background:color-mix(in srgb,var(--lam-oro,#B98A35) 22%,transparent)}
+.lm-seg.mil.fin{border-radius:0 999px 999px 0}
+.lm-l2{top:calc(var(--lm-h) + 4px);height:var(--lm-h2);border-radius:999px;background:var(--c);color:var(--t,#fff);opacity:.9;justify-content:flex-start}
+.lm-l2 span{font-size:.75rem;font-weight:600}
+/* Las estaciones: el punto sobre la línea, el año grande y el nombre. */
+.lm-e{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;width:100%;max-width:150px;min-height:44px;margin:0;
+  padding:calc(var(--lm-top) + var(--lm-h) + 4px + var(--lm-h2) + 8px) 4px 6px;border:0;border-radius:12px;background:none;color:inherit;font:inherit;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.lm-e:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:-2px}
+.lm-p{position:absolute;left:50%;top:calc(var(--lm-top) + var(--lm-h) / 2);width:var(--lm-p);height:var(--lm-p);margin:calc(var(--lm-p) / -2) 0 0 calc(var(--lm-p) / -2);box-sizing:border-box;border-radius:50%;
+  background:var(--lm-fondo,var(--bg,#fff));border:3px solid var(--txt,#1a1a2e);transition:transform .25s ease,box-shadow .25s ease;z-index:1}
+.lm-a{display:flex;align-items:baseline;gap:3px;line-height:1.1;font-variant-numeric:tabular-nums lining-nums;transition:transform .25s ease;transform-origin:50% 100%}
+.lm-a b{font-size:1.125rem;font-weight:700;letter-spacing:-.01em}
+.lm-a small{font-size:.75rem;font-weight:600;color:var(--gris,#5B5F6B)}
+.lm-n{font-size:.75rem;line-height:1.2;color:var(--gris,#5B5F6B);max-width:100%;text-wrap:balance;overflow-wrap:anywhere;min-height:1.2em}
+.lm-e.ya .lm-p{border-color:color-mix(in srgb,var(--txt,#1a1a2e) 55%,transparent)}
+.lm-e.juicio .lm-p{background:#D6B26A;border-color:#8A6A1F}
+.lm-e.hoy .lm-p::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--txt,#1a1a2e);animation:lamHoyLate 1.8s ease-out infinite}
+.lm-e.fut .lm-p{border-style:dashed;border-color:var(--lam-oro,#B98A35)}
+.lm-e.fut .lm-a b,.lm-e.hoy .lm-a b{font-size:1rem}
+.lm-e.fut .lm-a b{color:var(--lam-oro,#B98A35)}
+.lm-e.fut .lm-n{font-style:italic}
+.lm-e.on .lm-p{transform:scale(1.45);border-color:var(--lam-oro,#B98A35);box-shadow:0 0 0 4px color-mix(in srgb,var(--lam-oro,#B98A35) 30%,transparent)}
+.lm-e.on .lm-a{transform:scale(1.18)}
+.lm-e.on .lm-a b{color:var(--lam-oro2,var(--lam-oro,#B98A35))}
+.lm-e.on .lm-n{color:var(--txt,#1a1a2e);font-weight:600}
+@media (prefers-reduced-motion:reduce){.lm-p,.lm-a,.lm-seg{transition:none}.lm-e.hoy .lm-p::after{animation:none;opacity:.5}}
+@media (hover:hover){.lm-e:hover .lm-p{transform:scale(1.2)}.lm-e.on:hover .lm-p{transform:scale(1.45)}}
+.lm-vista.tira .lm-e{max-width:none}
+/* Al presentar en pantalla ancha: para leerse desde el fondo del salón. */
+.lam.pres .lam-metro{--lm-fondo:#0E0D0B;color:#F3EDE2}
+.lam.pres .lam-metro .lm-n,.lam.pres .lam-metro .lm-a small{color:#B8AF9E}
+.lam.pres.ancho .lam-metro{--lm-min:120px;--lm-h:28px;--lm-h2:20px;--lm-p:20px}
+.lam.pres.ancho .lam-metro .lm-a b{font-size:1.375rem}
+.lam.pres.ancho .lam-metro .lm-n{font-size:.875rem}
+.lam.pres.ancho .lam-metro .lm-seg span,.lam.pres.ancho .lam-metro .lm-l2 span{font-size:.875rem}
+.lm-seg:not(.oro):not(.mil):not(.corte):not(.vacio){box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.lm-seg[style*="--lm-tw"]{justify-content:flex-start}
+.lm-seg[style*="--lm-tw"] span{width:var(--lm-tw);box-sizing:border-box;text-align:center;flex:0 0 auto}
+.lm-seg.sanada{background:repeating-linear-gradient(90deg,var(--c) 0 8px,color-mix(in srgb,var(--c) 38%,transparent) 8px 12px)}
+.lm-vista.tira .lm-l2 span{position:sticky;left:calc(14% + 6px)}
+.lm-l2{overflow:visible;clip-path:inset(0 round 999px)}
+/* v233: la fila de arriba: el tramo (con el color de su reino) y «Ver a escala». */
+.lm-cab{display:flex;align-items:center;gap:8px;margin:0 0 2px;min-height:44px}
+.lm-cab .lam-seg{margin:0 0 0 11px;flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px}
+.lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{font-size:1rem;font-weight:700;letter-spacing:-.005em}
+.lam-tiempo.metro:not(.escala) .lm-cab .lam-seg::before{content:'';flex:0 0 auto;width:14px;height:14px;border-radius:50%;background:var(--lm-sc,var(--lam-oro,#B98A35));box-shadow:0 0 0 2px color-mix(in srgb,var(--lm-sc,#B98A35) 25%,transparent)}
+.lm-cab .lam-seg.igual{display:flex;visibility:hidden}
+.lm-escala{margin-left:auto;flex:0 0 auto;min-height:44px;padding:0 12px;border:0;border-radius:999px;background:none;color:var(--gris,#5B5F6B);font:inherit;font-size:.875rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.lm-escala::before{content:'';width:28px;height:16px;border-radius:999px;box-sizing:border-box;border:1.5px solid currentColor;background:radial-gradient(circle at 7px 50%,currentColor 0 4px,transparent 4.5px);transition:background-position .2s ease}
+.lm-escala[aria-pressed="true"]{color:var(--txt,#1a1a2e)}
+.lm-escala[aria-pressed="true"]::before{background:radial-gradient(circle at 19px 50%,var(--lam-oro,#B98A35) 0 4px,transparent 4.5px);border-color:var(--lam-oro,#B98A35)}
+.lm-escala:hover{color:var(--txt,#1a1a2e)}
+.lm-escala:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:2px}
+.lam.pres .lm-escala{color:#B8AF9E}.lam.pres .lm-escala[aria-pressed="true"],.lam.pres .lm-escala:hover{color:#F3EDE2}
+.lam.pres .lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{color:#F3EDE2}
+.lam.pres.ancho .lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{font-size:1.125rem}
+/* Nombre largo y corto: el corto solo en la fila compacta. */
+.lm-n .ct{display:none}
+.lam-metro.compacto .lm-n .lg{display:none}.lam-metro.compacto .lm-n .ct{display:inline}
+/* Compacta (pantalla ancha, columna angosta): todo en una fila, el año más chico. */
+.lam-metro.compacto{--lm-h:16px;--lm-h2:13px;--lm-p:13px}
+.lam-metro.compacto .lm-e{padding-left:1px;padding-right:1px}
+.lam-metro.compacto .lm-a{gap:2px}
+.lam-metro.compacto .lm-a b{font-size:1rem}
+.lam-metro.compacto .lm-a small{font-size:.75rem;letter-spacing:-.02em}
+.lam-metro.compacto .lm-e.fut .lm-a b,.lam-metro.compacto .lm-e.hoy .lm-a b{font-size:.875rem;line-height:1.1}
+.lam-metro.compacto .lm-n{font-size:.75rem;line-height:1.15}
+.lam-metro.compacto .lm-e.on .lm-a{transform:scale(1.12)}
+.lam-metro.compacto .lm-seg span,.lam-metro.compacto .lm-l2 span{font-size:.75rem}
+/* La tira del teléfono: estaciones más holgadas que en una fila. */
+.lam-metro.tira{--lm-tira:96px}
+.lm-vista.tira{padding-inline:calc(50% - var(--lm-tira,96px) / 2)}
+.lm-vista.tira .lm-pista{width:calc(var(--n) * var(--lm-tira,96px))}
+.lam-metro.compacto .lm-seg span{padding:0 4px}
+.lam-metro.compacto .lm-e.fut .lm-a b{font-size:.75rem;white-space:nowrap}
+.lam-metro.compacto .lm-n{hyphens:manual;overflow-wrap:normal}
+.lm-cab .lam-seg{text-wrap:balance}
+@media (max-width:479px){.lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{font-size:.875rem;gap:6px}.lm-cab .lam-seg{margin-left:4px}.lm-escala{padding:0 4px 0 8px;font-size:.75rem}}
+/* Al presentar: el botón va arriba; la fila del tramo solo si dice algo distinto; menos alto. */
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-escala{min-height:36px}
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-cab{min-height:0;margin:0 0 0 auto;flex:0 1 auto;min-width:0}
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-cab .lam-seg{margin:0 4px 0 12px}
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-escala{margin-left:8px}
+.lam.pres .lam-metro{--lm-top:8px}
+.lam.pres.ancho .lam-metro{--lm-min:104px}
+/* El tramo de la parte elegida: un borde de oro alrededor de la línea, de estación a estación. */
+.lm-tramo{position:absolute;top:-5px;height:calc(var(--lm-h) + 10px);box-sizing:border-box;border:2px solid var(--lam-oro,#B98A35);border-radius:999px;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.lm-tramo.ve{opacity:1}
+.lm-l2.on{box-shadow:0 0 0 2px var(--lam-oro,#B98A35);opacity:1}
+@media (prefers-reduced-motion:reduce){.lm-tramo{transition:none}}
+/* Al presentar en grande: el año y el nombre grandes, la línea un poco más baja. */
+.lam.pres.ancho .lam-metro{--lm-h:24px;--lm-h2:16px}
+.lam.pres.ancho .lam-metro .lm-e{padding-bottom:2px}
+/* Al presentar en una pantalla baja (745 px): la línea más baja, para que la escena no pierda alto. */
+@media (max-height:820px){
+  .lam.pres.ancho .lam-metro{--lm-h:18px;--lm-h2:13px;--lm-p:15px;--lm-top:6px}
+  .lam.pres.ancho .lam-metro .lm-e{padding-top:calc(var(--lm-top) + var(--lm-h) + 4px + var(--lm-h2) + 4px);padding-bottom:0}
+  .lam.pres.ancho .lam-metro .lm-a{line-height:1.05}
+  .lam.pres.ancho .lam-tiempo.metro .lam-tcab{margin-bottom:0}
+  .lam.pres.ancho .lam-metro{margin:0}
+  .lam.pres.ancho .lam-tiempo.metro{padding-top:2px}
+  .lam.pres.ancho .lam-metro .lm-a b{font-size:1.125rem}
+  .lam.pres.ancho .lam-metro .lm-n{font-size:.75rem}
+  .lam.pres.ancho .lam-metro .lm-seg span,.lam.pres.ancho .lam-metro .lm-l2 span{font-size:.75rem}
+}
 /* ─── v234: PARALELOS (fuente/paralelos-app.js). Va en la sala de Comparar, con su paleta.
    Ancha: tabla con la característica fija a la izquierda. Angosta (la sala, no la
    pantalla: así sirve dentro de Jóvenes): una tarjeta por característica con los
@@ -5883,7 +6018,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '73e6d48df4dd';
+const VERSION_APP = '5d94d7d01e69';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -59541,6 +59676,68 @@ const LAMINAS = {
    }
   ],
   "juicio": 1844,
+  "metro": {
+   "est": [
+    [
+     -605,
+     "Babilonia"
+    ],
+    [
+     -539,
+     "Medo-Persia"
+    ],
+    [
+     -331,
+     "Grecia"
+    ],
+    [
+     -168,
+     "Roma imperial",
+     "",
+     "Roma"
+    ],
+    [
+     476,
+     "Roma dividida"
+    ],
+    [
+     538,
+     "Roma papal"
+    ],
+    [
+     1798,
+     "La herida"
+    ],
+    [
+     1844,
+     "El juicio",
+     "juicio"
+    ],
+    [
+     2026,
+     "Hoy",
+     "hoy"
+    ],
+    [
+     2226,
+     "La piedra",
+     "fut"
+    ],
+    [
+     2526,
+     "El monte",
+     "fut"
+    ]
+   ],
+   "l2": [
+    [
+     476,
+     2226,
+     "Roma dividida",
+     "#4E6A8F"
+    ]
+   ]
+  },
   "marcas": [
    [
     -605,
@@ -60312,6 +60509,68 @@ const LAMINAS = {
     "t": "Futuro · Cristo vuelve por los suyos (Juan 14:3)"
    }
   ],
+  "metro": {
+   "est": [
+    [
+     -605,
+     "Babilonia"
+    ],
+    [
+     -539,
+     "Medo-Persia"
+    ],
+    [
+     -331,
+     "Grecia"
+    ],
+    [
+     -168,
+     "Roma imperial",
+     "",
+     "Roma"
+    ],
+    [
+     476,
+     "Roma dividida"
+    ],
+    [
+     538,
+     "Roma papal"
+    ],
+    [
+     1798,
+     "La herida"
+    ],
+    [
+     1844,
+     "El juicio",
+     "juicio"
+    ],
+    [
+     2026,
+     "Hoy",
+     "hoy"
+    ],
+    [
+     2226,
+     "La venida",
+     "fut"
+    ],
+    [
+     2526,
+     "El reino",
+     "fut"
+    ]
+   ],
+   "l2": [
+    [
+     476,
+     2226,
+     "Roma dividida",
+     "#4E6A8F"
+    ]
+   ]
+  },
   "marcas": [
    [
     -605,
@@ -61573,6 +61832,76 @@ const LAMINAS = {
     "t": "1798 d.C. · El general Louis-Alexandre Berthier entra en Roma y se lleva preso a Pío VI"
    }
   ],
+  "metro": {
+   "est": [
+    [
+     -539,
+     "Medo-Persia"
+    ],
+    [
+     -457,
+     "La orden de Artajerjes",
+     "",
+     "Artajerjes"
+    ],
+    [
+     -331,
+     "Grecia"
+    ],
+    [
+     -301,
+     "Cuatro reinos (Ipso)",
+     "",
+     "Cuatro reinos"
+    ],
+    [
+     -168,
+     "Roma imperial",
+     "",
+     "Roma"
+    ],
+    [
+     476,
+     "Roma dividida"
+    ],
+    [
+     538,
+     "Roma papal"
+    ],
+    [
+     1798,
+     "La herida"
+    ],
+    [
+     1844,
+     "El juicio",
+     "juicio"
+    ],
+    [
+     2026,
+     "Hoy",
+     "hoy"
+    ],
+    [
+     2226,
+     "La venida",
+     "fut"
+    ],
+    [
+     2526,
+     "El reino",
+     "fut"
+    ]
+   ],
+   "l2": [
+    [
+     -457,
+     1844,
+     "Las 2.300 tardes y mañanas",
+     "#B45309"
+    ]
+   ]
+  },
   "marcas": [
    [
     -539,
@@ -82200,7 +82529,7 @@ function lamAbre(cid,modo){
   /* v229: el escenario cambia de alto sin que cambie la ventana (el panel de las 2.300 tardes
      y mañanas va y viene): la escena se vuelve a medir. */
   if(typeof ResizeObserver==='function'){const es=document.getElementById('lamEsc');if(es){if(!lamEscRO)lamEscRO=new ResizeObserver(()=>{if(lamAncho())requestAnimationFrame(lamHistGeo);});lamEscRO.disconnect();lamEscRO.observe(es);}}
-  lamLimpiaMonta(el);
+  lamLimpiaMonta(el);lamMetroMonta(el,modo);
   if(modo!=='presentar')lamTiempoAlMarco(el);
   lamMarcasSep();if(typeof ResizeObserver==='function'){const mc=el.querySelector('.lam-marcas');if(mc){if(!lamMarcasRO)lamMarcasRO=new ResizeObserver(lamMarcasSep);lamMarcasRO.disconnect();lamMarcasRO.observe(mc);}}
   /* v215: Explorar abre en el primer paso de la historia (Cautivos en Babilonia). */
@@ -82293,10 +82622,11 @@ function lamLimpiaMonta(el){
   const tl=sp.find(x=>/\btel\b/.test(x.className));if(tl){tl.setAttribute('role','button');tl.removeAttribute('aria-hidden');tl.tabIndex=0;tl.setAttribute('aria-label','Futuro: ábrelo');tl.onclick=()=>lamTkToca(Math.round(H.ven));tl.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tl.onclick();}};}
   lamLineaAct();
 }
-function lamTkToca(y){const r=document.getElementById('lamRango');if(!r)return;r.value=y;r.dispatchEvent(new Event('input'));}
+function lamTkToca(y){const r=document.getElementById('lamRango');if(!r)return;const v=document.querySelector('#lam .lm-vista');if(v)v.__mano=false;r.value=y;r.dispatchEvent(new Event('input'));}
 let lamLineaT=0,lamSegFijo=null;
-const lamLineaPide=()=>{if(!LAM_LIMPIA||lamLineaT)return;lamLineaT=requestAnimationFrame(()=>{lamLineaT=0;lamLineaAct();});};
+const lamLineaPide=()=>{if(!(LAM_LIMPIA||LAM_METRO)||lamLineaT)return;lamLineaT=requestAnimationFrame(()=>{lamLineaT=0;lamLineaAct();});};
 function lamLineaAct(){
+  lamMetroAct();
   const t=document.querySelector('#lam .lam-tiempo.limpia'),r=document.getElementById('lamRango');if(!t||!r)return;
   const y=Number(r.value);if(lamSegFijo&&lamSegFijo.y!==y)lamSegFijo=null;
   const g=lamSegFijo||lamSegmento(y),sg=document.getElementById('lamSeg');
@@ -82327,6 +82657,165 @@ function lamMarcasLimpia(){
     else if(rr.right>caja.right){x.style.marginLeft=(caja.right-rr.right).toFixed(1)+'px';rr=x.getBoundingClientRect();}
     if(puestos.some(o=>rr.left<o.right+4&&o.left<rr.right+4)){x.classList.add('oculta');x.classList.remove('izq','der');x.style.marginLeft='';return;}
     x.classList.add('vis');puestos.push(rr);});
+}
+
+/* ── v233 (Camilo: «claro, todas las fechas, que se memoricen, que abarque todo pero no se vea
+   apeñuscado, moderno»): LA LÍNEA DE METRO ──
+   Las fechas clave son estaciones a igual distancia (sin escala): el año grande y, debajo, su nombre
+   corto con las palabras de la lámina (LAMINAS.*.metro). Entre estaciones, el tramo con el color de su
+   reino y su nombre adentro si cabe. Roma dividida (en Daniel 8, las 2.300 tardes y mañanas) es una
+   segunda línea paralela. Antes del futuro, el corte «//»; las estaciones del futuro van en contorno y
+   los mil años son el tramo que empieza en la venida. La estación actual va más grande; tocar una
+   estación lleva ahí (y la escena con ella); arrastrar salta de estación en estación; las flechas
+   del teclado también. En el teléfono las estaciones son una tira que se desliza, con la actual al
+   centro. «Ver a escala» muestra la línea proporcional de v232.
+   PARA VOLVER A LA LÍNEA DE v232: `const LAM_METRO=false;` (la de v231: además LAM_LIMPIA=false). */
+const LAM_METRO=true;
+const lamEsMetro=()=>LAM_METRO&&!!document.querySelector('#lam .lam-tiempo.metro');
+const LM_ALIAS={'Grecia dividida en cuatro':'Cuatro reinos','El juicio en el cielo':'Juicio'};
+/* Las estaciones de la lámina, con su posición (al centro de su columna). */
+function lamMetroEst(L){
+  const M=L.metro;if(!M)return [];
+  return M.est.map(([y,n,c,k],i)=>({y,n,c:c||'',k:k||'',i,x:(i+.5)/M.est.length}));
+}
+/* El tramo entre dos años: el reino que va en la pista (como en la línea a escala). */
+function lamMetroEra(L,de,a){
+  if(de>=LAM_HOY)return null;
+  const m=(de+a)/2,ps=L.tiempo.map(lamParte).filter(p=>p&&p.de!=null&&m>=p.de&&m<p.a),S=lamSanada(L);
+  const arr=ps.filter(p=>!p.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de));
+  if(arr[0]&&arr[0].de<LAM_JUICIO)return {c:arr[0].c,tx:LM_ALIAS[arr[0].reino]||arr[0].reino};
+  if(S&&m>=S.de&&m<LAM_JUICIO)return {c:S.c,tx:'Papado sanado',cl:'sanada'};
+  if(m>=LAM_JUICIO)return {c:'#D6B26A',tx:'Juicio',cl:'oro'};
+  if(ps[0])return {c:ps[0].c,tx:'',cl:'tenue'};
+  return {c:'',tx:'',cl:'vacio'};
+}
+/* ¿Texto claro u oscuro sobre ese color? */
+const lmTinta=c=>{const h=String(c).replace('#','');if(h.length!==6)return '';const [r,g,b]=[0,2,4].map(k=>parseInt(h.slice(k,k+2),16)/255).map(v=>v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4));
+  /* La tinta que más contrasta (WCAG): oscura o clara. */
+  const l=.2126*r+.7152*g+.0722*b;return (l+.05)/.0568>=.99/(l+.05)?'#17120A':'#FFF8EC';};
+/* Si el nombre va en tinta clara y no llega a 4,5:1, el color del tramo se oscurece un poco. */
+const lmFondo=c=>{const h=String(c).replace('#','');if(h.length!==6||lmTinta(c)!=='#FFF8EC')return c;let [r,g,b]=[0,2,4].map(k=>parseInt(h.slice(k,k+2),16));
+  const lum=(r,g,b)=>[r,g,b].map(v=>v/255).map(v=>v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
+  for(let k=0;k<12&&.99/(lum(r,g,b)+.05)<4.6;k++){r*=.95;g*=.95;b*=.95;}
+  return '#'+[r,g,b].map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');};
+function lamMetroHTML(L){
+  const E=lamMetroEst(L);if(!E.length)return '';
+  const P=v=>(v*100).toFixed(3)+'%',H=lamHitos(L),ix=y=>{let k=E.findIndex(e=>e.y===y);if(k<0)k=E.findIndex(e=>e.y>y);return k<0?E.length-1:k;};
+  /* Los tramos, juntando los vecinos del mismo reino para escribir su nombre una sola vez. */
+  const tr=[];
+  for(let i=0;i<E.length-1;i++){const a=E[i],b=E[i+1];let t;
+    if(a.c==='hoy')t={cl:'corte',tx:''};
+    else if(/\bfut\b/.test(a.c))t={cl:'mil',tx:lamTxt(H.milT)||'Mil años',y:H.mil?Math.round((H.mil.de+H.mil.a)/2):a.y+100};
+    else t=lamMetroEra(L,a.y,b.y)||{cl:'vacio',tx:''};
+    const u=tr[tr.length-1];
+    if(u&&u.tx&&u.tx===t.tx&&u.c===t.c&&u.cl===t.cl)u.b=b;else tr.push(Object.assign({a,b},t));}
+  const seg=tr.map((t,k)=>{const x0=t.a.x,x1=t.b.x,st='left:'+P(x0)+';width:'+P(x1-x0)+(t.c?';--c:'+lmFondo(t.c)+';--t:'+lmTinta(t.c):'')+
+      /* Un tramo que pasa por otra estación lleva su nombre en el primer trecho (el punto no lo tapa). */
+      (t.b.i-t.a.i>1?';--lm-tw:'+(100/(t.b.i-t.a.i)).toFixed(3)+'%':'');
+    const cl='lm-seg'+(t.cl?' '+t.cl:'')+(k===0?' ini':'')+(k===tr.length-1?' fin':'');
+    if(t.cl==='mil')return '<button type="button" class="'+cl+'" style="'+st+'" data-y="'+t.y+'" data-de="'+t.a.y+'" aria-label="'+esc(t.tx+', desde la venida')+'" onclick="lamTkToca('+t.y+')"><span>'+esc(t.tx)+'</span></button>';
+    return '<i class="'+cl+'" style="'+st+'" data-de="'+t.a.y+'" data-a="'+t.b.y+'"'+(t.tx?' title="'+esc(t.tx)+'"':'')+'>'+(t.cl==='corte'?'<b aria-hidden="true">//</b>':'<span>'+esc(t.tx)+'</span>')+'</i>';}).join('');
+  const l2=(L.metro.l2||[]).map(([de,a,n,c])=>{const x0=E[ix(de)].x,x1=E[ix(a)].x;
+    return '<i class="lm-l2" data-de="'+de+'" style="left:'+P(x0)+';width:'+P(x1-x0)+';--c:'+lmFondo(c)+';--t:'+lmTinta(c)+'" title="'+esc(n)+'"><span>'+esc(n)+'</span></i>';}).join('');
+  const anio=y=>y>=LAM_HOY?'':y<0?'<b>'+(-y)+'</b><small>a.C.</small>':'<b>'+y+'</b>';
+  const est=E.map(e=>{const fut=e.y>LAM_HOY,hoy=e.c==='hoy';
+    const nom=(hoy?'Hoy':fut?lamTxt(e.n):(e.y<0?(-e.y)+' antes de Cristo':e.y+' después de Cristo')+', '+e.n);
+    return '<li><button type="button" class="lm-e'+(e.c?' '+e.c:'')+'" data-y="'+e.y+'" data-i="'+e.i+'" tabindex="-1" aria-label="'+esc(nom)+'" onclick="lamTkToca('+e.y+')">'+
+      '<i class="lm-p" aria-hidden="true"></i><span class="lm-a">'+(hoy||fut?'<b>'+esc(e.n)+'</b>':anio(e.y))+'</span>'+(hoy||fut?'<span class="lm-n">'+(fut?'futuro':'')+'</span>':'<span class="lm-n">'+(e.k?'<span class="lg">'+esc(e.n)+'</span><span class="ct" aria-hidden="true">'+esc(e.k)+'</span>':esc(e.n))+'</span>')+'</button></li>';}).join('');
+  return '<div class="lam-metro" style="--n:'+E.length+'"><div class="lm-vista"><div class="lm-pista">'+
+    '<div class="lm-lineas" aria-hidden="true">'+seg+l2+'<i class="lm-tramo"></i></div><ol class="lm-est" aria-label="Estaciones de la línea de tiempo">'+est+'</ol></div></div></div>';
+}
+function lamMetroMonta(el,modo){
+  const t=el.querySelector('.lam-tiempo');if(!LAM_METRO||!t)return;
+  const L=LAM(),h=lamMetroHTML(L);if(!h)return;
+  t.classList.add('metro');
+  const rg=t.querySelector('.lam-rango'),d=document.createElement('div');d.innerHTML=h;const m=d.firstChild;rg.before(m);
+  /* Encima de la línea, una fila: el tramo en que estás (con su color) y el botón «Ver a escala». */
+  const sg=t.querySelector('#lamSeg'),fila=document.createElement('div');fila.className='lm-cab';
+  const b=document.createElement('button');b.type='button';b.className='lm-escala';b.setAttribute('aria-pressed','false');b.textContent='Ver a escala';b.onclick=()=>lamEscala();
+  if(sg){sg.before(fila);fila.append(sg);}else m.before(fila);
+  /* Al presentar, el tramo y el botón van a la derecha del rótulo de arriba (sobra ancho y la escena
+     no pierde alto). */
+  const cab=t.querySelector('.lam-tcab');if(modo==='presentar'&&cab){cab.append(fila,b);}else fila.appendChild(b);
+  const v=m.querySelector('.lm-vista'),pi=m.querySelector('.lm-pista');
+  /* Teclado: las flechas van de estación en estación. */
+  m.addEventListener('keydown',e=>{const bs=[...m.querySelectorAll('.lm-e')],k=bs.indexOf(e.target);if(k<0)return;
+    let j=k;if(e.key==='ArrowRight'||e.key==='ArrowDown')j=k+1;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')j=k-1;else if(e.key==='Home')j=0;else if(e.key==='End')j=bs.length-1;else return;
+    e.preventDefault();j=Math.max(0,Math.min(bs.length-1,j));bs[j].focus({preventScroll:true});lamTkToca(Number(bs[j].dataset.y));});
+  /* Arrastrar (mouse, o el dedo cuando todo cabe): salta a la estación más cercana. */
+  let arr=null;
+  const cerca=x=>{let b=null,dm=1e9;m.querySelectorAll('.lm-e').forEach(e=>{const r=e.getBoundingClientRect(),dd=Math.abs(r.left+r.width/2-x);if(dd<dm){dm=dd;b=e;}});return b;};
+  pi.addEventListener('pointerdown',e=>{if(v.classList.contains('tira')&&e.pointerType!=='mouse')return;arr={x:e.clientX,mov:false};});
+  pi.addEventListener('pointermove',e=>{if(!arr)return;if(!arr.mov&&Math.abs(e.clientX-arr.x)<6)return;arr.mov=true;
+    if(pi.setPointerCapture&&e.pointerId!=null&&!pi.hasPointerCapture(e.pointerId))try{pi.setPointerCapture(e.pointerId);}catch(_){}
+    const b=cerca(e.clientX);if(b&&!b.classList.contains('on'))lamTkToca(Number(b.dataset.y));});
+  const fin=e=>{if(arr&&arr.mov){const st=e=>{e.stopPropagation();e.preventDefault();};pi.addEventListener('click',st,{capture:true,once:true});setTimeout(()=>pi.removeEventListener('click',st,{capture:true}),50);}arr=null;};
+  pi.addEventListener('pointerup',fin);pi.addEventListener('pointercancel',()=>{arr=null;});
+  /* La tira del teléfono: al soltarla, la estación del centro es la elegida. */
+  let tq=0;
+  ['pointerdown','touchstart','wheel'].forEach(n=>v.addEventListener(n,()=>{v.__mano=true;},{passive:true}));
+  v.addEventListener('scroll',()=>{if(!v.classList.contains('tira')||!v.__mano)return;clearTimeout(tq);tq=setTimeout(()=>{v.__mano=false;
+    const r=v.getBoundingClientRect(),b=cerca(r.left+r.width/2);if(b&&!b.classList.contains('on'))lamTkToca(Number(b.dataset.y));},140);},{passive:true});
+  lamMetroAjusta();
+  /* Se vuelve a medir si cambia el ancho o el alto (al presentar en grande cambia la letra). */
+  if(typeof ResizeObserver==='function'){if(!lamMetroRO)lamMetroRO=new ResizeObserver(()=>requestAnimationFrame(lamMetroAjusta));lamMetroRO.disconnect();lamMetroRO.observe(v);lamMetroRO.observe(pi);}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>lamMetroAjusta());
+}
+let lamMetroRO=null;
+/* Si no caben todas a lo ancho (menos de 88 px por estación; 120 al presentar en grande), tira
+   que se desliza; los nombres de tramo que no caben se callan (el de la estación los dice). */
+function lamMetroAjusta(){
+  const m=document.querySelector('#lam .lam-metro');if(!m)return;
+  const v=m.querySelector('.lm-vista'),n=m.querySelectorAll('.lm-e').length,w=v.clientWidth;if(!w)return;
+  /* Caben holgadas; si no, en pantalla ancha, compactas (el año más chico y el nombre corto, siempre
+     en una sola fila); si ni así, la tira que se desliza (el teléfono). */
+  const min=parseFloat(getComputedStyle(m).getPropertyValue('--lm-min'))||84,cabe=w>=n*min,cpt=!cabe&&w>=n*48,tira=!cabe&&!cpt;
+  v.classList.toggle('tira',tira);m.classList.toggle('tira',tira);m.classList.toggle('compacto',cpt);
+  /* Compacta, pero algún año o nombre no cabe en su columna: la tira. */
+  if(cpt&&[...m.querySelectorAll('.lm-a,.lm-n')].some(e=>e.scrollWidth>e.closest('li').clientWidth+1||e.scrollWidth>e.clientWidth+1)){v.classList.add('tira');m.classList.add('tira');m.classList.remove('compacto');}
+  m.querySelectorAll('.lm-seg span,.lm-l2 span').forEach(s=>{const q=s.parentNode;q.classList.remove('sin-tx');const caja=q.style.getPropertyValue('--lm-tw')?q.clientWidth*parseFloat(q.style.getPropertyValue('--lm-tw'))/100:q.clientWidth;
+    const rg=document.createRange();rg.selectNodeContents(s);const cs=getComputedStyle(s),need=rg.getBoundingClientRect().width+parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight);
+    if(need>caja-2&&!(q.classList.contains('lm-l2')&&m.classList.contains('tira')))q.classList.add('sin-tx');});
+  lamMetroAct(true);
+}
+/* La estación actual: la última que ya pasó (en el futuro, la de su tramo). */
+function lamMetroAct(sinAnim){
+  const m=document.querySelector('#lam .lam-metro'),r=document.getElementById('lamRango');if(!m||!r)return;
+  const y=Number(r.value),bs=[...m.querySelectorAll('.lm-e')],ys=bs.map(b=>Number(b.dataset.y));
+  let k=-1;ys.forEach((v,i)=>{if(v<=y)k=i;});
+  const ven=ys.findIndex((v,i)=>/\bfut\b/.test(bs[i].className));
+  if(y>LAM_HOY&&ven>=0){k=y<=ys[ven]?ven:k;}
+  const mil=m.querySelector('.lm-seg.mil'),enMil=!!mil&&y>ys[ven]&&lamFuturo(y)===lamFuturo(Number(mil.dataset.y));
+  if(enMil)k=ven;
+  bs.forEach((b,i)=>{const on=i===Math.max(0,k);b.classList.toggle('on',on);b.tabIndex=on?0:-1;if(on)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');b.classList.toggle('ya',i<k);});
+  if(mil)mil.classList.toggle('on',enMil);
+  /* El tramo en que está, encendido; los demás, a media luz. */
+  m.querySelectorAll('.lm-seg:not(.mil)').forEach(s=>{const de=Number(s.dataset.de),a=Number(s.dataset.a);s.classList.toggle('on',y>=de&&y<a);});
+  /* El rótulo del tramo, con el color de su reino. */
+  const on=m.querySelector('.lm-seg.on'),sg=document.getElementById('lamSeg');
+  if(sg){if(on&&on.style.getPropertyValue('--c'))sg.style.setProperty('--lm-sc',on.style.getPropertyValue('--c'));else sg.style.removeProperty('--lm-sc');}
+  const v=m.querySelector('.lm-vista'),b=bs[Math.max(0,k)];
+  /* En la tira, la estación actual al centro (a una posición fija: repetirlo no se pasa). */
+  if(v.classList.contains('tira')&&b&&!v.__mano){const li=b.parentNode,x=li.offsetLeft+li.offsetWidth/2+parseFloat(getComputedStyle(v).paddingLeft)-v.clientWidth/2;
+    if(Math.abs(v.scrollLeft-x)>1)v.scrollTo({left:x,behavior:sinAnim||lamQuieto()?'auto':'smooth'});}
+}
+/* El tramo de la parte elegida (o de los 1.260 años), de su estación a la otra, con un borde de
+   oro; Roma dividida (o las 2.300 tardes y mañanas), en su línea de abajo. */
+function lamMetroTramo(de,a,c2){
+  const m=document.querySelector('#lam .lam-metro');if(!m)return;const b=m.querySelector('.lm-tramo');
+  m.querySelectorAll('.lm-l2').forEach(x=>x.classList.toggle('on',!!c2&&de!=null&&Number(x.dataset.de)===de));
+  if(!b)return;
+  const E=[...m.querySelectorAll('.lm-e')].map(e=>Number(e.dataset.y)),n=E.length,ix=y=>{let k=0;E.forEach((v,i)=>{if(v<=y)k=i;});return k;};
+  const i0=de==null?-1:ix(de),i1=de==null?-1:a==null||a>=LAM_HOY?E.findIndex(v=>v>=LAM_HOY):E.indexOf(a)>=0?E.indexOf(a):ix(a);
+  if(de==null||c2||i1<=i0){b.classList.remove('ve');return;}
+  b.style.left=((i0+.5)/n*100).toFixed(3)+'%';b.style.width=((i1-i0)/n*100).toFixed(3)+'%';b.classList.add('ve');
+}
+/* «Ver a escala»: la línea proporcional (v232), para ver lo largos que son los 1.260 años. */
+function lamEscala(on){
+  const t=document.querySelector('#lam .lam-tiempo.metro');if(!t)return;
+  on=on==null?!t.classList.contains('escala'):!!on;t.classList.toggle('escala',on);
+  const b=t.querySelector('.lm-escala');if(b){b.setAttribute('aria-pressed',String(on));b.textContent=on?'Ver estaciones':'Ver a escala';}
+  if(on){lamMarcasSep();lamLineaAct();}else lamMetroAjusta();
 }
 /* v230 (Camilo: «la línea de tiempo queda lejos de la imagen»): en Explorar la línea va en el
    bloque de la escena, justo debajo de la imagen (antes de «Las partes de la visión»), y el panel
@@ -82361,7 +82850,9 @@ function lamTiempoPega(medir){
   const t=document.querySelector('#lam .lam-marco>.lam-tiempo.en-marco');if(!t)return;
   const sitio=t.previousElementSibling,lam=document.getElementById('lam');if(!sitio||!sitio.classList.contains('lam-tiempo-sitio'))return;
   const fija=t.classList.contains('fija');
-  const pasada=fija?sitio.getBoundingClientRect().bottom<0:t.getBoundingClientRect().bottom<0;
+  /* v233: la línea de metro es más alta: se pega abajo apenas empieza a salir por arriba (antes, al
+     salir entera), y vuelve a su sitio cuando su sitio se ve entero. */
+  const pasada=fija?sitio.getBoundingClientRect().top<0:t.getBoundingClientRect().top<0;
   if(pasada===fija&&!medir)return;
   if(!pasada){t.classList.remove('fija');t.style.left=t.style.width=t.style.bottom='';sitio.style.height='';if(lam)lam.style.removeProperty('--lam-t-alto');return;}
   const es=document.getElementById('lamEsc'),r=es.getBoundingClientRect(),h=t.offsetHeight;
@@ -82454,6 +82945,7 @@ function lamTramo(de,a,c2){
   b.classList.remove('banda');
   /* v231: Roma dividida se marca en su carril de abajo, de 476 a la venida. */
   document.querySelectorAll('#lam .lam-carril2').forEach(x=>x.classList.toggle('on',!!c2&&de!=null&&Number(x.dataset.de)===de));
+  lamMetroTramo(de,a,c2);
   if(de==null||c2){b.classList.remove('ve');return;}
   const x0=lamPos(de),x1=lamPos(a==null?LAM_HOY:a);
   b.style.left=x0.toFixed(3)+'%';b.style.width='max(6px, '+Math.max(0,x1-x0).toFixed(3)+'%)';
@@ -82586,7 +83078,9 @@ function lamCubre(V,lado){
   const recorte=Math.max(1-A/wi,1-H/hi);
   /* El cartel de apertura es fondo de su título: cubre aunque recorte más (hasta 55 %). */
   if(recorte>(lado?lim:lamEnCartel()?.55:.18)){wi=Math.min(A,nat);hi=wi*675/1200;}
-  const x=lado?(A-wi)/2:(W-wi)/2,y=(H-hi)/2;
+  /* v233: con texto al lado, la escena termina donde empieza el texto, nunca debajo de él: si se
+     recorta a lo ancho, se recorta a la izquierda (antes la mitad quedaba debajo del texto). */
+  const x=lado?(wi>A?A-wi:(A-wi)/2):(W-wi)/2,y=(H-hi)/2;
   return [B[0]+x*u,B[1]+y*u,wi*u,hi*u];
 }
 function lamHist(t){
@@ -82905,7 +83399,7 @@ function lamVeAnio(y){
   else lamHoja(lamEscenaHTML(esA)+'<div class="lam-anio-tx">'+txt+'</div>');
   const r=document.getElementById('lamRango');if(r&&Number(r.value)!==y)r.value=y;
   /* Al arrastrar, el tramo cambia en el acto (no espera al cuadro siguiente). */
-  if(LAM_LIMPIA)lamLineaAct();
+  if(LAM_LIMPIA||LAM_METRO)lamLineaAct();
 }
 /* El botón recorre la historia sola, de 605 a.C. a hoy, en unos 14 segundos. */
 function lamRecorre(){

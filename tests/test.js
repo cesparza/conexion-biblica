@@ -3189,5 +3189,27 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v232: en el celular la imagen de Explorar ya no queda pegada arriba; al avanzar se ve entera (suave, salvo movimiento reducido) y la línea va debajo con aire');
 }
 
+/* v233 (Camilo: «claro, todas las fechas, que se memoricen, que abarque todo pero no se vea
+   apeñuscado»): la línea de metro. Las estaciones de cada lámina, con las palabras de la lámina; el
+   futuro (la venida, los mil años desde la venida, el reino); una bandera para volver a v232. */
+{
+  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js')),js=APP,css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8');
+  const fuente=fs.readFileSync(path.join(RAIZ,'fuente','laminas.js'),'utf8').split('\n').filter(l=>!/^\s*metro:/.test(l)).join('\n').toLowerCase();
+  const quiere={d2:[-605,-539,-331,-168,476,538,1798,1844,2026,2226,2526],d7:[-605,-539,-331,-168,476,538,1798,1844,2026,2226,2526],d8:[-539,-457,-331,-301,-168,476,538,1798,1844,2026,2226,2526]};
+  const mal=[];
+  for(const id of ['d2','d7','d8']){const L=LAMINAS[id],E=L.metro&&L.metro.est||[];
+    if(E.map(e=>e[0]).join()!==quiere[id].join())mal.push(id+' estaciones '+E.map(e=>e[0]).join());
+    E.filter(e=>!e[2]||e[2]==='juicio').forEach(([y,n,c,k])=>{if(!L.marcas.some(m=>m[0]===y)&&!(L.hitos||[]).includes(y))mal.push(id+' '+y+' sin marca');
+      [n.replace(/\s*\(.*\)/,''),k].filter(Boolean).forEach(t=>{if(!fuente.includes(t.toLowerCase()))mal.push(id+' «'+t+'» no está en la lámina');});});
+    const fut=E.filter(e=>/fut/.test(e[2]||'')),mil=(L.futuro||[]).find(f=>/mil años/i.test(f.t));
+    if(fut.length!==2||!mil||mil.de!==fut[0][0])mal.push(id+' los mil años no empiezan en la venida');
+    if(!E.some(e=>e[0]===1844&&e[2]==='juicio')||!E.some(e=>e[2]==='hoy'))mal.push(id+' 1844 u hoy');
+    (L.metro.l2||[]).forEach(([de,a])=>{if(!E.some(e=>e[0]===de)||!E.some(e=>e[0]===a))mal.push(id+' segunda línea '+de+'-'+a);});}
+  ok(!mal.length,'v233: la línea de metro de Daniel 2, 7 y 8: cada estación con su marca y con las palabras de la lámina; 1844, hoy, la venida y el reino; los mil años empiezan en la venida'+(mal.length?' — '+mal.slice(0,4).join(' | '):''));
+  ok(/const LAM_METRO=true;/.test(js)&&/PARA VOLVER A LA LÍNEA DE v232: `const LAM_METRO=false;`/.test(js)&&/t\.classList\.add\('metro'\)/.test(js)&&/\.lam-tiempo\.metro\.escala \.lam-metro\{display:none\}/.test(css)&&
+    /prefers-reduced-motion:reduce\)\{\.lm-p,\.lm-a,\.lm-seg\{transition:none\}\.lm-e\.hoy \.lm-p::after\{animation:none/.test(css)&&/scroll-snap-type:x mandatory/.test(css)&&/aria-current','step'/.test(js),
+    'v233: la línea de metro cuelga de una bandera (LAM_METRO) y de la clase .metro; «Ver a escala» muestra la de v232; la tira del teléfono con scroll-snap; «hoy» quieto con movimiento reducido');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

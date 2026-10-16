@@ -438,7 +438,8 @@ for (const W of ANCHOS) {
       W + ' · v211: desde los dedos, Siguiente (a la vista) lleva al barro, la piedra y el monte; la tira los trae (' + vistas.join(' → ') + ')');
     /* La línea de tiempo: una pista, el tramo dentro; el año sobre la imagen; el futuro. */
     await p.evaluate(() => lamElige(1)); await p.waitForTimeout(300);
-    const pista = await p.evaluate(() => { const a = document.getElementById('lamPista').getBoundingClientRect(), t = document.getElementById('lamTramo').getBoundingClientRect(); return [Math.round(t.top - a.top), Math.round(a.bottom - t.bottom), Math.round(t.width)]; });
+    /* v233: en la línea de metro, el tramo es el borde de oro alrededor de la línea, de estación a estación. */
+    const pista = await p.evaluate(() => { const met = lamEsMetro(), a = (met ? document.querySelector('#lam .lm-lineas') : document.getElementById('lamPista')).getBoundingClientRect(), t = (met ? document.querySelector('#lam .lm-tramo.ve') : document.getElementById('lamTramo')).getBoundingClientRect(); return met ? [Math.round(t.top - a.top + 6), Math.round(a.bottom - t.bottom), Math.round(t.width)] : [Math.round(t.top - a.top), Math.round(a.bottom - t.bottom), Math.round(t.width)]; });
     ok(pista[0] >= -1 && pista[1] >= -1 && pista[2] > 4, W + ' · v211: el periodo de la parte va dentro de la pista, no encima (' + pista.join(', ') + ')');
     const ve = async y => { await p.evaluate(y => { const r = document.getElementById('lamRango'); r.value = y; r.dispatchEvent(new Event('input')); }, y); await p.waitForTimeout(700);
       return p.evaluate(() => ({ tq: document.getElementById('lamTq').textContent, anio: !document.getElementById('lamAnioV').hidden && document.getElementById('lamAnioV').textContent,
@@ -717,8 +718,8 @@ for (const W of ANCHOS) {
     ok(t0[0] === 3 && t0[1] === '1.260 días' && /hasta tiempo, tiempos y medio tiempo/.test(t0[2]) && t0[3] === '11 / 19', W + ' · tiempo, tiempos y medio tiempo: 360 + 720 + 180 = 1.260 días (' + t0[1] + ', ' + t0[3] + ')');
     const t2 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 2)); return [document.querySelectorAll('#lamTabla .lam-igual').length, document.getElementById('lamHoja').textContent]; });
     ok(t2[0] === 3 && /cuarenta y dos meses/.test(t2[1]) && /mil doscientos sesenta días/.test(t2[1]) && /Apocalipsis 12:14/.test(t2[1]), W + ' · el mismo tiempo en Apocalipsis: 3½ tiempos, 42 meses, 1.260 días');
-    const t3 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 3)); const b = document.getElementById('lamTramo');
-      return [[...document.querySelectorAll('#lamTabla .lam-cum img')].map(i => i.getAttribute('src').split('/').pop()).join(), b && b.classList.contains('ve') && b.classList.contains('banda') && b.getBoundingClientRect().width > 50, document.getElementById('lamRango').value, document.getElementById('lamTano').textContent]; });
+    const t3 = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'periodo' && x.sub === 3)); const b = document.getElementById('lamTramo'), mt = document.querySelector('#lam .lm-tramo.ve');
+      return [[...document.querySelectorAll('#lamTabla .lam-cum img')].map(i => i.getAttribute('src').split('/').pop()).join(), lamEsMetro() ? !!mt && mt.getBoundingClientRect().width > 50 : b && b.classList.contains('ve') && b.classList.contains('banda') && b.getBoundingClientRect().width > 50, document.getElementById('lamRango').value, document.getElementById('lamTano').textContent]; });
     ok(t3[0] === 'e538.webp,e1798.webp' && t3[1] && t3[2] === '538' && /538 – 1798/.test(t3[3]), W + ' · de 538 a 1798: las dos escenas y la franja en la línea de tiempo; v231: el pulgar al inicio, 538 (' + t3.join(', ') + ')');
     const anchoT = await p.evaluate(() => { const l = document.getElementById('lam'), t = document.getElementById('lamTabla'); return [l.scrollWidth - l.clientWidth, t.scrollHeight - t.clientHeight]; });
     ok(anchoT[0] <= 0 && anchoT[1] <= 2, W + ' · la cuenta de los 1.260 años cabe en la imagen (' + anchoT.join(', ') + ')');
@@ -1326,7 +1327,8 @@ for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
   ok(m2 && m2.lado <= 0 && m2.doc <= 0 && /Paso 2 de 2/.test(paso || ''), W + ' · v228: el segundo paso (la categoría) se ve como segundo paso y no se desplaza de lado');
   await p.evaluate(() => cierraHoja());
   for (const id of ['d2', 'd7', 'd8']) {
-    const t = await p.evaluate(async id => { verCap(id); lamAbre(id, 'explorar'); await new Promise(r => setTimeout(r, 700));
+    /* v233: estos hitos son de la línea a escala («Ver a escala»). */
+    const t = await p.evaluate(async id => { verCap(id); lamAbre(id, 'explorar'); lamEscala(true); await new Promise(r => setTimeout(r, 700));
       const q = s => document.querySelector('#lam .lam-hitos ' + s), x = e => e ? e.getBoundingClientRect().left + e.getBoundingClientRect().width / 2 : NaN;
       /* v230: los años van en dos alturas: se pisan solo si se cruzan de verdad (en x y en y). */
       const ms = [...document.querySelectorAll('#lam .lam-marcas span')].filter(e => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && e.getBoundingClientRect().width > 0).map(e => e.getBoundingClientRect());
@@ -1392,7 +1394,8 @@ for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
   await p.evaluate(() => { S.nombre = 'Camilo Esparza'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
   for (const id of ['d2', 'd7', 'd8']) {
     await p.evaluate(id => { verCap(id); lamAbre(id, 'explorar'); }, id); await p.waitForTimeout(900);
-    const r = await p.evaluate(async () => {
+    /* v233: el barrido de años se mide en la línea a escala («Ver a escala»); la de metro, en el bloque v233. */
+    const r = await p.evaluate(async () => { lamEscala(true);
       const L = LAM(), R = document.getElementById('lamRango'), ms = L.marcas.map(m => m[0]).filter(y => y !== 2476).sort((a, b) => a - b), ys = [];
       ms.forEach((y, i) => { ys.push(y); if (i < ms.length - 1) ys.push(Math.round((y + ms[i + 1]) / 2)); });
       const mal = [];
@@ -1413,7 +1416,7 @@ for (const [W, H] of [[1440, 900], [1024, 768], [390, 844]]) {
       const vis = [...document.querySelectorAll('#lam .lam-marcas span')].filter(e => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && e.getBoundingClientRect().width).map(e => e.getBoundingClientRect());
       const pisan = vis.some((a, i) => vis.some((b, j) => j > i && a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1));
       const ven = document.querySelector('#lam .lam-hito.venida').getBoundingClientRect(), mil = document.querySelector('#lam .lam-mil').getBoundingClientRect();
-      return { n: ys.length, mal, pisan, venMil: Math.abs((ven.left + ven.width / 2) - mil.left) <= 2 }; }, id);
+      lamEscala(false); return { n: ys.length, mal, pisan, venMil: Math.abs((ven.left + ven.width / 2) - mil.left) <= 2 }; }, id);
     ok(!r.mal.length && !r.pisan && r.venMil, W + ' · v230: ' + id + ', arrastrando por las ' + r.n + ' marcas y sus medios: la escena, el año, el rótulo y la parte coinciden; los años no se pisan; los mil años empiezan en la venida' + (r.mal.length ? ' — ' + r.mal.slice(0, 3).join(' | ') : '') + (r.pisan ? ' — se pisan' : ''));
     const lay = await p.evaluate(async () => { const m = document.querySelector('#lam .lam-marco'), t = m.querySelector(':scope>.lam-tiempo'), es = document.getElementById('lamEsc'), ri = m.querySelector('.lam-riel');
       const bj = m.querySelector(':scope>.lam-bajo'), rbj = bj && bj.getBoundingClientRect().height ? bj.getBoundingClientRect() : null, rt = t.getBoundingClientRect(), re0 = es.getBoundingClientRect(), re = rbj ? { top: re0.top, bottom: rbj.bottom, left: re0.left, right: re0.right } : re0, rr = ri.getBoundingClientRect();
@@ -1471,7 +1474,7 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
         lamPres(k); await espera(lamEsE() ? 300 : 150); mira(q, 'presentar'); if (lamPaso !== k) mal.push('presentar ' + q.id + ': paso'); }
       /* Arrastrar a 1000: Roma papal arriba, Roma dividida en su carril, visible. */
       const R = document.getElementById('lamRango'); let drag = null;
-      if (ps.some(p => p.hasta)) { R.value = 1000; R.dispatchEvent(new Event('input')); await espera(lamEsE() ? 900 : 100);
+      if (ps.some(p => p.hasta)) { lamEscala(true); R.value = 1000; R.dispatchEvent(new Event('input')); await espera(lamEsE() ? 900 : 100);
         const c = document.querySelector('#lam .lam-carril2'), cr = c.getBoundingClientRect(), pr = document.getElementById('lamPista').getBoundingClientRect(), x = pr.left + pr.width * lamPos(1000) / 100;
         drag = { tq: document.getElementById('lamTq').textContent, ve: cr.width > 20 && cr.height >= 3 && getComputedStyle(c).display !== 'none', debajo: cr.top >= pr.bottom - 1, cruza: cr.left <= x && cr.right >= x,
           esc: lamEsE() ? document.querySelector('#lamSvg .lam-hist').getAttribute('href').split('/').pop() : [...document.querySelectorAll('#lamSvg .lam-parte.on')].map(e => e.getAttribute('data-p')).sort().join() }; }
@@ -1508,7 +1511,7 @@ for (const [W, H] of [[390, 844], [430, 932], [1440, 900]]) {
   await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
   await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
   for (const id of ['d2', 'd7', 'd8']) {
-    await p.evaluate(id => { verCap(id); lamAbre(id, 'explorar'); }, id); await p.waitForTimeout(3000);
+    await p.evaluate(id => { verCap(id); lamAbre(id, 'explorar'); lamEscala(true); }, id); await p.waitForTimeout(3000);
     const r = await p.evaluate(async () => {
       const espera = ms => new Promise(r => setTimeout(r, ms)), L = LAM(), R = document.getElementById('lamRango'), t = document.querySelector('#lam .lam-tiempo'), mal = [];
       const marcas = L.marcas.filter(m => !/\btel\b/.test(m[2] || '')), tks = [...t.querySelectorAll('.lam-tk')];
@@ -1560,6 +1563,86 @@ for (const [W, H] of [[390, 844], [430, 932], [1440, 900]]) {
     await p.evaluate(() => lamCierra());
   }
   ok(errores.length === 0, W + ' · v232: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+/* ── v233 (Camilo: «claro, todas las fechas, que se memoricen, que abarque todo pero no se vea
+   apeñuscado, moderno»): la línea de metro. Cada estación de la lámina está; los años y los nombres
+   no se pisan y van en una sola fila; la página no se desplaza de lado; tocar, arrastrar (o deslizar
+   la tira en el teléfono) y las flechas llevan la escena; «Ver a escala» va y vuelve; los mil años
+   empiezan en la venida. ── */
+for (const [W, H, modo] of [[1900, 900, 'presentar'], [1440, 900, 'explorar'], [1024, 768, 'explorar'], [430, 932, 'explorar'], [390, 844, 'explorar']]) {
+  const tel = W < 600, ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block', isMobile: tel, hasTouch: tel });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => { errores.push('diálogo'); d.dismiss(); });
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'gm'; guardar(); ponCat('gm'); ir('inicio'); });
+  for (const id of ['d2', 'd7', 'd8']) {
+    await p.evaluate(([id, modo]) => { verCap(id); lamAbre(id, modo); }, [id, modo]); await p.waitForTimeout(1200);
+    await p.evaluate(() => document.querySelector('#lam .lam-tiempo').scrollIntoView({ block: 'center' })); await p.waitForTimeout(300);
+    const r = await p.evaluate(async () => {
+      const espera = ms => new Promise(r => setTimeout(r, ms)), L = LAM(), R = document.getElementById('lamRango'), t = document.querySelector('#lam .lam-tiempo'), m = t.querySelector('.lam-metro'), v = m.querySelector('.lm-vista'), mal = [];
+      const bs = [...m.querySelectorAll('.lm-e')], ys = bs.map(b => Number(b.dataset.y)), quiere = L.metro.est.map(e => e[0]);
+      if (ys.join() !== quiere.join()) mal.push('estaciones ' + ys.join());
+      if (!t.classList.contains('metro') || getComputedStyle(m).display === 'none' || R.offsetParent) mal.push('no es la de metro');
+      if (bs.some(b => !b.getAttribute('aria-label')) || !m.querySelector('ol[aria-label]')) mal.push('aria');
+      if (!m.querySelector('.lm-e.juicio') || !m.querySelector('.lm-e.hoy') || m.querySelectorAll('.lm-e.fut').length !== 2 || (m.querySelector('.lm-seg.corte') || {}).textContent !== '//') mal.push('1844, hoy, el corte o el futuro');
+      const vr = v.getBoundingClientRect(), dentro = r => r.right > vr.left + 2 && r.left < vr.right - 2;
+      /* La tira se mueve suave: se espera a que se quede quieta (hasta 2 s). */
+      const centro = b => { const q = b.getBoundingClientRect(); return q.left + q.width / 2 - (vr.left + vr.width / 2); };
+      const quieta = async () => { const b = m.querySelector('.lm-e.on'); if (!v.classList.contains('tira') || !b) return; for (let k = 0; k < 25 && Math.abs(centro(b)) > 2; k++) await espera(100); };
+      const mira = y => { const fu = y > LAM_HOY ? L.futuro.find(f => y > f.de && y <= f.a) : null, exp = L.tiempo.filter(i => { const q = lamParte(i); return q && q.de != null && y >= q.de && y < q.a; });
+        const on = [...document.querySelectorAll('#lamTira .lam-ri.on')].map(e => e.getAttribute('data-p')).filter(Boolean).sort().join(), eon = (fu ? (fu.id ? [fu.id] : []) : exp).slice().sort().join();
+        const b = m.querySelector('.lm-e.on'), x = [];
+        if (Number(R.value) !== y) x.push('pulgar ' + R.value);
+        if (!b || Number(b.dataset.y) !== y || b.getAttribute('aria-current') !== 'step') x.push('estación ' + (b && b.dataset.y));
+        if (document.getElementById('lamTano').textContent !== lamAnioTx(y)) x.push('año ' + document.getElementById('lamTano').textContent);
+        if (!document.getElementById('lam').classList.contains('pres') && document.querySelector('#lamTira') && on !== eon) x.push('escena ' + on + '≠' + eon);
+        return x; };
+      const encima = () => { const rr = [...m.querySelectorAll('.lm-a,.lm-n')].filter(e => e.textContent.trim() && getComputedStyle(e).visibility !== 'hidden').map(e => e.getBoundingClientRect()).filter(r => r.width && dentro(r));
+        const pis = rr.some((a, i) => rr.some((c, j) => j > i && a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1));
+        const anios = [...m.querySelectorAll('.lm-a')].map(e => e.getBoundingClientRect()).filter(dentro), fila = Math.max(...anios.map(a => a.top + a.height / 2)) - Math.min(...anios.map(a => a.top + a.height / 2));
+        const seg = [...m.querySelectorAll('.lm-seg:not(.sin-tx) span,.lm-l2:not(.sin-tx) span')].filter(e => e.textContent.trim() && !e.closest('.lm-l2')).some(e => { const a = e.getBoundingClientRect(), c = e.parentNode.getBoundingClientRect(); return a.width && (a.left < c.left - 1 || a.right > c.right + 1); });
+        return (pis ? ['nombres encimados'] : []).concat(fila > 8 ? ['dos filas (' + Math.round(fila) + ')'] : []).concat(seg ? ['nombre de tramo fuera'] : []); };
+      /* Tocar cada estación. */
+      for (const b of bs) { const y = Number(b.dataset.y); b.click(); await espera(lamEsE() ? 120 : 40); await new Promise(r => requestAnimationFrame(r)); await quieta();
+        mira(y).forEach(x => mal.push('toca ' + y + ': ' + x)); encima().forEach(x => mal.push(y + ': ' + x));
+        const br = b.getBoundingClientRect(); if (br.height < 44 || br.width < 44) mal.push(y + ': blanco ' + Math.round(br.width) + '×' + Math.round(br.height));
+        if (v.classList.contains('tira')) { const c = centro(b); if (Math.abs(c) > 6) mal.push(y + ': no queda al centro (' + Math.round(c) + ')'); } }
+      if (document.documentElement.scrollWidth > innerWidth) mal.push('la página se desplaza de lado');
+      /* Las flechas del teclado. */
+      bs[2].click(); await quieta(); bs[2].focus(); bs[2].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); await espera(150);
+      if (Number(R.value) !== ys[3] || document.activeElement !== bs[3]) mal.push('flecha → ' + R.value);
+      bs[3].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true })); await espera(150); if (Number(R.value) !== ys[2]) mal.push('flecha ← ' + R.value); await quieta();
+      /* Los mil años: el tramo de la venida al reino. */
+      const ctr = e => { const q = e.querySelector('.lm-p').getBoundingClientRect(); return q.left + q.width / 2; }, fs = bs.filter(b => b.classList.contains('fut')), mil = m.querySelector('.lm-seg.mil').getBoundingClientRect();
+      const venMil = Math.abs(mil.left - ctr(fs[0])) <= 2 && Math.abs(mil.right - ctr(fs[1])) <= 2 && /mil años/i.test(m.querySelector('.lm-seg.mil').textContent);
+      return { mal, n: bs.length, tira: v.classList.contains('tira'), cpt: m.classList.contains('compacto'), venMil, ys }; });
+    /* Arrastrar (mouse): de la segunda estación a la séptima; en el teléfono, deslizar la tira. */
+    let drag = '';
+    if (!r.tira) {
+      await p.waitForTimeout(700);
+      const pt = i => p.evaluate(i => { const q = document.querySelectorAll('#lam .lm-e .lm-p')[i].getBoundingClientRect(); return [q.left + q.width / 2, q.top + q.height / 2]; }, i);
+      const [x0, y0] = await pt(1), [x1] = await pt(6);
+      await p.mouse.move(x0, y0); await p.mouse.down(); for (let k = 1; k <= 8; k++) { await p.mouse.move(x0 + (x1 - x0) * k / 8, y0); await p.waitForTimeout(30); } await p.mouse.up(); await p.waitForTimeout(400);
+      const g = await p.evaluate(() => [Number(document.getElementById('lamRango').value), Number(document.querySelector('#lam .lm-e.on').dataset.y)]);
+      drag = g[0] === r.ys[6] && g[1] === r.ys[6] ? '' : 'arrastre ' + g.join('/');
+    } else {
+      const g = await p.evaluate(async () => { const v = document.querySelector('#lam .lm-vista'), b = document.querySelectorAll('#lam .lm-e')[6], vr = v.getBoundingClientRect(), br = b.getBoundingClientRect();
+        v.dispatchEvent(new Event('touchstart')); v.scrollBy({ left: br.left + br.width / 2 - (vr.left + vr.width / 2), behavior: 'auto' }); await new Promise(r => setTimeout(r, 900));
+        return [Number(document.getElementById('lamRango').value), Number(document.querySelector('#lam .lm-e.on').dataset.y)]; });
+      drag = g[0] === r.ys[6] && g[1] === r.ys[6] ? '' : 'deslizar ' + g.join('/');
+    }
+    /* «Ver a escala» y de vuelta. */
+    const esc = await p.evaluate(async () => { const t = document.querySelector('#lam .lam-tiempo'), b = t.querySelector('.lm-escala'), espera = ms => new Promise(r => setTimeout(r, ms));
+      b.click(); await espera(200); const a = [t.classList.contains('escala'), b.getAttribute('aria-pressed'), getComputedStyle(t.querySelector('.lam-metro')).display, !!document.getElementById('lamRango').offsetParent, t.querySelectorAll('.lam-tk').length > 5, document.documentElement.scrollWidth <= innerWidth];
+      b.click(); await espera(200); const z = [t.classList.contains('escala'), b.getAttribute('aria-pressed'), getComputedStyle(t.querySelector('.lam-metro')).display];
+      return a[0] && a[1] === 'true' && a[2] === 'none' && a[3] && a[4] && a[5] && !z[0] && z[1] === 'false' && z[2] !== 'none' ? '' : 'escala ' + JSON.stringify([a, z]); });
+    const mal = r.mal.concat(drag ? [drag] : [], esc ? [esc] : [], r.venMil ? [] : ['mil años']);
+    ok(!mal.length, W + ' · v233: ' + id + ' (' + (modo === 'presentar' ? 'Presentar' : 'Explorar') + (r.tira ? ', tira' : r.cpt ? ', compacta' : '') + '), línea de metro: ' + r.n + ' estaciones (' + r.ys.join(', ') + '); tocar, ' + (r.tira ? 'deslizar' : 'arrastrar') + ' y las flechas llevan la escena; nombres sin encimarse, en una fila, blancos de 44 px, sin desborde; «Ver a escala» va y vuelve; los mil años desde la venida' + (mal.length ? ' — ' + mal.slice(0, 5).join(' | ') : ''));
+    await p.evaluate(() => lamCierra());
+  }
+  ok(errores.length === 0, W + ' · v233: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();

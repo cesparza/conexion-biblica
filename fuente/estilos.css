@@ -5246,3 +5246,138 @@ span.cmp-ult-c{cursor:default}
 .lam.pres .lam-tiempo.limpia .lam-futx{position:absolute;right:11px;margin-top:-30px;height:30px;margin-bottom:0;flex-wrap:nowrap;font-size:.75rem;background:inherit}
 .lam.pres .lam-tiempo.limpia .lam-futx button{min-height:24px;padding:0 8px}
 .lam.pres .lam-tiempo.limpia.fut-abierto .lam-marcas span:not(:first-of-type){visibility:hidden}
+/* ── v233: LA LÍNEA DE METRO (app.js, LAM_METRO). Todo va bajo .lam-tiempo.metro; «Ver a escala»
+   (.escala) muestra la línea proporcional de v232. ── */
+.lam-tiempo.metro:not(.escala) .lam-rango,.lam-tiempo.metro:not(.escala) .lam-marcas,.lam-tiempo.metro:not(.escala) .lam-futx,.lam-tiempo.metro:not(.escala) .lam-hley{display:none!important}
+.lam-tiempo.metro.escala .lam-metro{display:none}
+.lam-tiempo.metro .lam-tcab{position:relative}
+.lam-metro{--lm-min:84px;--lm-h:20px;--lm-h2:16px;--lm-p:16px;--lm-top:14px;position:relative;margin:2px 0 4px;color:var(--txt,#1a1a2e)}
+.lm-vista{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.lm-vista::-webkit-scrollbar{display:none}
+.lm-pista{position:relative;min-width:100%;touch-action:pan-y}
+.lm-vista.tira{scroll-snap-type:x mandatory;padding-inline:calc(50% - var(--lm-min) / 2);box-sizing:border-box;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.lm-vista.tira .lm-pista{width:calc(var(--n) * var(--lm-min));min-width:0;touch-action:pan-x}
+.lm-est{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+.lm-est li{display:flex;justify-content:center;min-width:0;scroll-snap-align:center}
+/* Las líneas: la principal, gruesa, con el nombre del reino adentro; la segunda, paralela debajo. */
+.lm-lineas{position:absolute;left:0;right:0;top:var(--lm-top);height:calc(var(--lm-h) + 4px + var(--lm-h2));pointer-events:none}
+.lm-seg,.lm-l2{position:absolute;display:flex;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box;font-style:normal}
+.lm-seg{top:0;height:var(--lm-h);background:var(--c,#8C8576);color:var(--t,#fff);transition:opacity .3s ease,filter .3s ease}
+.lm-seg.on,.lm-seg.mil.on{opacity:1;filter:saturate(1.12)}
+.lm-seg.ini{border-radius:999px 0 0 999px}.lm-seg.fin{border-radius:0 999px 999px 0}
+.lm-seg span,.lm-l2 span{font-size:.75rem;font-weight:700;letter-spacing:.01em;white-space:nowrap;padding:0 calc(var(--lm-p) / 2 + 2px);line-height:1}
+.lm-seg.sin-tx span,.lm-l2.sin-tx span{visibility:hidden}
+.lm-seg.vacio{background:color-mix(in srgb,var(--txt,#1a1a2e) 16%,transparent);height:6px;top:calc(var(--lm-h) / 2 - 3px)}
+.lm-seg.tenue{opacity:.55}
+.lm-seg.sanada{background:repeating-linear-gradient(90deg,var(--c) 0 10px,transparent 10px 15px)}
+.lm-seg.sanada span{color:var(--txt,#1a1a2e);text-shadow:0 0 6px var(--bg,#fff),0 0 2px var(--bg,#fff)}
+.lm-seg.oro{background:linear-gradient(90deg,#D6B26A,#F2C46B);color:#17120A}
+.lm-seg.corte{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--txt,#1a1a2e) 30%,transparent) 0 5px,transparent 5px 9px);height:4px;top:calc(var(--lm-h) / 2 - 2px);overflow:visible;opacity:1}
+.lm-seg.corte b{position:relative;padding:0 4px;background:var(--lm-fondo,var(--bg,#fff));font-size:.875rem;font-weight:800;letter-spacing:-.12em;color:var(--txt,#1a1a2e)}
+.lm-seg.mil{pointer-events:auto;cursor:pointer;background:transparent;border:1.5px dashed color-mix(in srgb,var(--lam-oro,#B98A35) 80%,transparent);color:var(--txt,#1a1a2e);opacity:1;padding:0;font:inherit;border-radius:0}
+.lm-seg.mil.on{background:color-mix(in srgb,var(--lam-oro,#B98A35) 22%,transparent)}
+.lm-seg.mil.fin{border-radius:0 999px 999px 0}
+.lm-l2{top:calc(var(--lm-h) + 4px);height:var(--lm-h2);border-radius:999px;background:var(--c);color:var(--t,#fff);opacity:.9;justify-content:flex-start}
+.lm-l2 span{font-size:.75rem;font-weight:600}
+/* Las estaciones: el punto sobre la línea, el año grande y el nombre. */
+.lm-e{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;width:100%;max-width:150px;min-height:44px;margin:0;
+  padding:calc(var(--lm-top) + var(--lm-h) + 4px + var(--lm-h2) + 8px) 4px 6px;border:0;border-radius:12px;background:none;color:inherit;font:inherit;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.lm-e:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:-2px}
+.lm-p{position:absolute;left:50%;top:calc(var(--lm-top) + var(--lm-h) / 2);width:var(--lm-p);height:var(--lm-p);margin:calc(var(--lm-p) / -2) 0 0 calc(var(--lm-p) / -2);box-sizing:border-box;border-radius:50%;
+  background:var(--lm-fondo,var(--bg,#fff));border:3px solid var(--txt,#1a1a2e);transition:transform .25s ease,box-shadow .25s ease;z-index:1}
+.lm-a{display:flex;align-items:baseline;gap:3px;line-height:1.1;font-variant-numeric:tabular-nums lining-nums;transition:transform .25s ease;transform-origin:50% 100%}
+.lm-a b{font-size:1.125rem;font-weight:700;letter-spacing:-.01em}
+.lm-a small{font-size:.75rem;font-weight:600;color:var(--gris,#5B5F6B)}
+.lm-n{font-size:.75rem;line-height:1.2;color:var(--gris,#5B5F6B);max-width:100%;text-wrap:balance;overflow-wrap:anywhere;min-height:1.2em}
+.lm-e.ya .lm-p{border-color:color-mix(in srgb,var(--txt,#1a1a2e) 55%,transparent)}
+.lm-e.juicio .lm-p{background:#D6B26A;border-color:#8A6A1F}
+.lm-e.hoy .lm-p::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--txt,#1a1a2e);animation:lamHoyLate 1.8s ease-out infinite}
+.lm-e.fut .lm-p{border-style:dashed;border-color:var(--lam-oro,#B98A35)}
+.lm-e.fut .lm-a b,.lm-e.hoy .lm-a b{font-size:1rem}
+.lm-e.fut .lm-a b{color:var(--lam-oro,#B98A35)}
+.lm-e.fut .lm-n{font-style:italic}
+.lm-e.on .lm-p{transform:scale(1.45);border-color:var(--lam-oro,#B98A35);box-shadow:0 0 0 4px color-mix(in srgb,var(--lam-oro,#B98A35) 30%,transparent)}
+.lm-e.on .lm-a{transform:scale(1.18)}
+.lm-e.on .lm-a b{color:var(--lam-oro2,var(--lam-oro,#B98A35))}
+.lm-e.on .lm-n{color:var(--txt,#1a1a2e);font-weight:600}
+@media (prefers-reduced-motion:reduce){.lm-p,.lm-a,.lm-seg{transition:none}.lm-e.hoy .lm-p::after{animation:none;opacity:.5}}
+@media (hover:hover){.lm-e:hover .lm-p{transform:scale(1.2)}.lm-e.on:hover .lm-p{transform:scale(1.45)}}
+.lm-vista.tira .lm-e{max-width:none}
+/* Al presentar en pantalla ancha: para leerse desde el fondo del salón. */
+.lam.pres .lam-metro{--lm-fondo:#0E0D0B;color:#F3EDE2}
+.lam.pres .lam-metro .lm-n,.lam.pres .lam-metro .lm-a small{color:#B8AF9E}
+.lam.pres.ancho .lam-metro{--lm-min:120px;--lm-h:28px;--lm-h2:20px;--lm-p:20px}
+.lam.pres.ancho .lam-metro .lm-a b{font-size:1.375rem}
+.lam.pres.ancho .lam-metro .lm-n{font-size:.875rem}
+.lam.pres.ancho .lam-metro .lm-seg span,.lam.pres.ancho .lam-metro .lm-l2 span{font-size:.875rem}
+.lm-seg:not(.oro):not(.mil):not(.corte):not(.vacio){box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.lm-seg[style*="--lm-tw"]{justify-content:flex-start}
+.lm-seg[style*="--lm-tw"] span{width:var(--lm-tw);box-sizing:border-box;text-align:center;flex:0 0 auto}
+.lm-seg.sanada{background:repeating-linear-gradient(90deg,var(--c) 0 8px,color-mix(in srgb,var(--c) 38%,transparent) 8px 12px)}
+.lm-vista.tira .lm-l2 span{position:sticky;left:calc(14% + 6px)}
+.lm-l2{overflow:visible;clip-path:inset(0 round 999px)}
+/* v233: la fila de arriba: el tramo (con el color de su reino) y «Ver a escala». */
+.lm-cab{display:flex;align-items:center;gap:8px;margin:0 0 2px;min-height:44px}
+.lm-cab .lam-seg{margin:0 0 0 11px;flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px}
+.lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{font-size:1rem;font-weight:700;letter-spacing:-.005em}
+.lam-tiempo.metro:not(.escala) .lm-cab .lam-seg::before{content:'';flex:0 0 auto;width:14px;height:14px;border-radius:50%;background:var(--lm-sc,var(--lam-oro,#B98A35));box-shadow:0 0 0 2px color-mix(in srgb,var(--lm-sc,#B98A35) 25%,transparent)}
+.lm-cab .lam-seg.igual{display:flex;visibility:hidden}
+.lm-escala{margin-left:auto;flex:0 0 auto;min-height:44px;padding:0 12px;border:0;border-radius:999px;background:none;color:var(--gris,#5B5F6B);font:inherit;font-size:.875rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.lm-escala::before{content:'';width:28px;height:16px;border-radius:999px;box-sizing:border-box;border:1.5px solid currentColor;background:radial-gradient(circle at 7px 50%,currentColor 0 4px,transparent 4.5px);transition:background-position .2s ease}
+.lm-escala[aria-pressed="true"]{color:var(--txt,#1a1a2e)}
+.lm-escala[aria-pressed="true"]::before{background:radial-gradient(circle at 19px 50%,var(--lam-oro,#B98A35) 0 4px,transparent 4.5px);border-color:var(--lam-oro,#B98A35)}
+.lm-escala:hover{color:var(--txt,#1a1a2e)}
+.lm-escala:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:2px}
+.lam.pres .lm-escala{color:#B8AF9E}.lam.pres .lm-escala[aria-pressed="true"],.lam.pres .lm-escala:hover{color:#F3EDE2}
+.lam.pres .lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{color:#F3EDE2}
+.lam.pres.ancho .lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{font-size:1.125rem}
+/* Nombre largo y corto: el corto solo en la fila compacta. */
+.lm-n .ct{display:none}
+.lam-metro.compacto .lm-n .lg{display:none}.lam-metro.compacto .lm-n .ct{display:inline}
+/* Compacta (pantalla ancha, columna angosta): todo en una fila, el año más chico. */
+.lam-metro.compacto{--lm-h:16px;--lm-h2:13px;--lm-p:13px}
+.lam-metro.compacto .lm-e{padding-left:1px;padding-right:1px}
+.lam-metro.compacto .lm-a{gap:2px}
+.lam-metro.compacto .lm-a b{font-size:1rem}
+.lam-metro.compacto .lm-a small{font-size:.75rem;letter-spacing:-.02em}
+.lam-metro.compacto .lm-e.fut .lm-a b,.lam-metro.compacto .lm-e.hoy .lm-a b{font-size:.875rem;line-height:1.1}
+.lam-metro.compacto .lm-n{font-size:.75rem;line-height:1.15}
+.lam-metro.compacto .lm-e.on .lm-a{transform:scale(1.12)}
+.lam-metro.compacto .lm-seg span,.lam-metro.compacto .lm-l2 span{font-size:.75rem}
+/* La tira del teléfono: estaciones más holgadas que en una fila. */
+.lam-metro.tira{--lm-tira:96px}
+.lm-vista.tira{padding-inline:calc(50% - var(--lm-tira,96px) / 2)}
+.lm-vista.tira .lm-pista{width:calc(var(--n) * var(--lm-tira,96px))}
+.lam-metro.compacto .lm-seg span{padding:0 4px}
+.lam-metro.compacto .lm-e.fut .lm-a b{font-size:.75rem;white-space:nowrap}
+.lam-metro.compacto .lm-n{hyphens:manual;overflow-wrap:normal}
+.lm-cab .lam-seg{text-wrap:balance}
+@media (max-width:479px){.lam-tiempo.metro:not(.escala) .lm-cab .lam-seg{font-size:.875rem;gap:6px}.lm-cab .lam-seg{margin-left:4px}.lm-escala{padding:0 4px 0 8px;font-size:.75rem}}
+/* Al presentar: el botón va arriba; la fila del tramo solo si dice algo distinto; menos alto. */
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-escala{min-height:36px}
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-cab{min-height:0;margin:0 0 0 auto;flex:0 1 auto;min-width:0}
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-cab .lam-seg{margin:0 4px 0 12px}
+.lam.pres .lam-tiempo.metro .lam-tcab .lm-escala{margin-left:8px}
+.lam.pres .lam-metro{--lm-top:8px}
+.lam.pres.ancho .lam-metro{--lm-min:104px}
+/* El tramo de la parte elegida: un borde de oro alrededor de la línea, de estación a estación. */
+.lm-tramo{position:absolute;top:-5px;height:calc(var(--lm-h) + 10px);box-sizing:border-box;border:2px solid var(--lam-oro,#B98A35);border-radius:999px;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.lm-tramo.ve{opacity:1}
+.lm-l2.on{box-shadow:0 0 0 2px var(--lam-oro,#B98A35);opacity:1}
+@media (prefers-reduced-motion:reduce){.lm-tramo{transition:none}}
+/* Al presentar en grande: el año y el nombre grandes, la línea un poco más baja. */
+.lam.pres.ancho .lam-metro{--lm-h:24px;--lm-h2:16px}
+.lam.pres.ancho .lam-metro .lm-e{padding-bottom:2px}
+/* Al presentar en una pantalla baja (745 px): la línea más baja, para que la escena no pierda alto. */
+@media (max-height:820px){
+  .lam.pres.ancho .lam-metro{--lm-h:18px;--lm-h2:13px;--lm-p:15px;--lm-top:6px}
+  .lam.pres.ancho .lam-metro .lm-e{padding-top:calc(var(--lm-top) + var(--lm-h) + 4px + var(--lm-h2) + 4px);padding-bottom:0}
+  .lam.pres.ancho .lam-metro .lm-a{line-height:1.05}
+  .lam.pres.ancho .lam-tiempo.metro .lam-tcab{margin-bottom:0}
+  .lam.pres.ancho .lam-metro{margin:0}
+  .lam.pres.ancho .lam-tiempo.metro{padding-top:2px}
+  .lam.pres.ancho .lam-metro .lm-a b{font-size:1.125rem}
+  .lam.pres.ancho .lam-metro .lm-n{font-size:.75rem}
+  .lam.pres.ancho .lam-metro .lm-seg span,.lam.pres.ancho .lam-metro .lm-l2 span{font-size:.75rem}
+}
