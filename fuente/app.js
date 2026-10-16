@@ -3454,6 +3454,27 @@ async function srvRefresca(){
   }catch(e){return false;}
 }
 
+/* v238: quien puede usar el panel del director. Con la clave es `rol: 'director'`; dentro
+   de Jóvenes lo dice la sesión de esa app (`director: true`), aunque además haya entrado
+   con su código. Con `concursos`, su panel lleva solo esos (los de su club). */
+function esDir(){return !!srvYo&&(srvYo.rol==='director'||srvYo.director===true);}
+function dirVeAct(a){return !srvYo||!Array.isArray(srvYo.concursos)||srvYo.concursos.includes(a);}
+function dirVeCat(k){return !!CATS[k]&&dirVeAct(CATS[k].act);}
+/* v238: «Abrir una evaluación» y «Revisar preguntas» desde afuera (el panel de Jóvenes):
+   #/concursos/director abre «La evaluación del día»; #/concursos/revisar/pendientes, el
+   revisor con el filtro «Pendientes de revisión de Camilo». */
+async function dirDesdeAfuera(o){
+  if(!srvYo)await srvQuienSoy();
+  if(o.revisar){
+    revF=Object.assign({},REV_F0);if(o.pendientes)revF.pend='1';
+    if(esDir()){await abreRevisor();return;}
+  }
+  ir('examen');
+  const p=document.getElementById('cb-panel'),det=p&&p.closest?p.closest('details'):null;
+  if(det)det.open=true;
+  await pintaPanel();
+  llevaA('cb-panel',true);
+}
 async function srvQuienSoy(){
   try{const d=await srvFetch('/yo');srvYo=d&&d.rol?d:null;}
   catch(e){srvYo=null;}
@@ -5906,6 +5927,7 @@ function lugarParte(c){
     else if(s[i]==='lamina'&&s[i+1]&&/^(explorar|presentar)$/.test(s[i+2]||'')){o.lam={id:s[i+1],modo:s[i+2],paso:s[i+3]||''};i+=3;}
     else if(s[i]==='comparar'&&s[i+1]){o.cmp=s[i+1];i++;}
     else if(s[i]==='paralelos'&&s[i+1]){o.par=s[i+1];i++;}
+    else if(o.pant==='examen'&&/^(director|revisar|pendientes)$/.test(s[i]))o[s[i]]=true;
     else if(s[i]==='ultimos'&&s[i+1]){o.ult=s[i+1];i++;if(/^(d\d+|mt24|ap\d+|apo)$/.test(s[i+1]||'')){o.ultK=s[i+1];i++;}}
   }
   return o;
@@ -5937,6 +5959,7 @@ function lugarAplica(c,dondeOk){
   else if(o.par&&parAplica(o.par,dondeOk)){}
   else if(o.ult&&ultIdx(o.ult)>=0&&document.getElementById('cmpUlt')){cmpUlt(ultIdx(o.ult),false,o.ultK||'');
     if(!dondeOk){const m=document.getElementById('cmpUlt');if(m&&m.scrollIntoView)m.scrollIntoView({block:'start'});}}
+  if(o.director||o.revisar)dirDesdeAfuera(o).catch(e=>console.error(e));
   return true;
 }
 /* Al arrancar: el camino del enlace o de la recarga manda sobre lo anotado en el aparato. */
@@ -10981,8 +11004,8 @@ async function entraPanel(){
 async function pintaPanel(){
   const d=document.getElementById('cb-panel');
   if(!d)return;
-  if(!srvYo||srvYo.rol!=='director'){
-    d.innerHTML='<div class="det-cuerpo"><p class="nota">Entra con la clave del director para '+
+  if(!esDir()){
+    d.innerHTML='<div class="det-cuerpo"><p class="nota">'+(enApp()?'Tu cuenta de la app no lleva el panel del director. Si tienes la clave, escríbela para ':'Entra con la clave del director para ')+
       'abrir y cerrar la evaluación del día y para manejar los códigos.</p>'+
       '<div class="ses-fila"><input id="pan-clave" type="password" autocomplete="off" placeholder="Clave">'+
       '<button class="btn azul" onclick="entraPanel()">Entrar</button></div>'+
@@ -11026,7 +11049,7 @@ async function pintaPanel(){
        crear una participante en la actividad equivocada era cuestión de suerte,
        y el error solo se notaba cuando la evaluación «no le llegaba». Lo mismo
        con las dos «Aventureros · 7 a 9 años». */
-    '<select id="pan-cat">'+Object.keys(ACTIVIDADES).map(function(a){
+    '<select id="pan-cat">'+Object.keys(ACTIVIDADES).filter(dirVeAct).map(function(a){
       return '<optgroup label="'+esc(ACTIVIDADES[a].nombre)+'">'+
         CATS_DE_ACT(a).map(function(k){
           return '<option value="'+k+'">'+esc(catLarga(k))+'</option>';
@@ -11153,7 +11176,7 @@ async function pintaPanel(){
       '<div class="pan-grupo-t">A quiénes les toca'+
       '<button type="button" class="pan-listo" onclick="panAbre(\'\')">Listo</button></div>'+
       '<p class="nota">Si no marcas ninguna, les toca a todas.</p>'+
-      '<div class="pan-cats">'+Object.keys(CATS).map(function(k){
+      '<div class="pan-cats">'+Object.keys(CATS).filter(dirVeCat).map(function(k){
         return '<label class="pan-cat"><input type="checkbox" class="pan-cat-ch" value="'+k+'" '+
           'onchange="pintaAvisoCats();pintaFrase()"> '+
           '<span><strong>'+esc(CATS[k].nombre)+'</strong><br><small>'+esc((ACTIVIDADES[CATS[k].act]||{}).nombre||'')+' · '+esc(CATS[k].edad)+'</small></span></label>';
@@ -12228,7 +12251,7 @@ let panReloj=null;
    getClientRects() vacío cubre los dos casos sin preguntar por cada uno. */
 function panelALaVista(){
   const d=document.getElementById('cb-panel');
-  if(!d||!srvYo||srvYo.rol!=='director')return false;
+  if(!d||!esDir())return false;
   /* El DOM de mentiras de las pruebas no trae getClientRects. Sin la guarda,
      cargar este archivo en las suites lanza. */
   return typeof d.getClientRects!=='function'||d.getClientRects().length>0;
@@ -12548,7 +12571,7 @@ const REV_CUENTA='El banco tiene {TOTAL} {QUE} y hay {RET} cosas retiradas en to
 function pintaRevisor(){
   const d=document.getElementById('cb-revisor');
   if(!d)return;
-  if(!srvYo||srvYo.rol!=='director'){
+  if(!esDir()){
     d.innerHTML='<div class="card"><p class="nota">Esta pantalla es del director. '+
       'Entra con la clave en <strong>Examen · La evaluación del día</strong>.</p>'+
       '<button class="btn gho" onclick="ir(\'examen\')">Volver al examen</button></div>';
@@ -12807,7 +12830,7 @@ const hisFiltradas=()=>(hisEvals||[]).filter(e=>hisVacias||e.notas>0);
 function pintaHistorial(){
   const d=document.getElementById('cb-historial');
   if(!d)return;
-  if(!srvYo||srvYo.rol!=='director'){
+  if(!esDir()){
     d.innerHTML='<div class="card"><p class="nota">Esta pantalla es del director. '+
       'Entra con la clave en <strong>Examen · La evaluación del día</strong>.</p>'+
       '<button class="btn gho" onclick="ir(\'examen\')">Volver al examen</button></div>';

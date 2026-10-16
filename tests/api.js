@@ -326,7 +326,7 @@ ok(/i\.evaluacion_id/.test(bloqueIntentos) && /e\.titulo AS evaluacion/.test(blo
    archivo: si la fusion esta mal, nadie pierde una sesion ni ve lo que no
    debe, pero una nina pierde lo que estudio. Y es una funcion pura, asi que se
    saca del archivo y se corre. No hace falta simular D1. */
-ok(API.indexOf("ruta === '/progreso'") > API.indexOf('const sesion = await sesionActual'),
+ok(API.indexOf("ruta === '/progreso'") > API.indexOf('let sesion = await sesionActual'),
   'El progreso se atiende DESPUES de la guarda de sesion');
 ok(/ruta === '\/progreso'[\s\S]{0,300}sesion\.rol !== 'participante'/.test(API),
   'Y exige rol participante: la ficha de una nina no la toca el director');
@@ -447,7 +447,7 @@ async function pruebaMiddleware() {
   /* v230: /nombres (los nombres del libro abierto, Daniel 7:10): solo nombres de pila, sin repetir,
      sin id ni categoría, y solo con sesión (o, dentro de Jóvenes, con SESION_APP que pone la puerta). */
   try {
-    const i = API.indexOf("ruta === '/nombres'"), g = API.indexOf('const sesion = await sesionActual(request, env);');
+    const i = API.indexOf("ruta === '/nombres'"), g = API.indexOf('let sesion = await sesionActual(request, env);');
     ok(i > g && g > 0 && /if \(!sesion && env\.SESION_APP !== true\) return error/.test(API.slice(i, i + 400)), '/nombres va después de leer la sesión y la exige');
     const M = await import('file://' + path.join(RAIZ, 'functions/api/[[ruta]].js'));
     const filas = [{ nombre: 'María Camila Esparza' }, { nombre: 'maría José' }, { nombre: 'Isabella' }, { nombre: '<b>Hack</b>' }, { nombre: 'Luis Pérez' }, { nombre: '' }];
@@ -493,10 +493,74 @@ async function pruebaMiddleware() {
       '/mi-estudio: al fundir gana lo más reciente (quitar después borra; un quitar viejo no borra lo agregado después)');
     ok(s3 === 200 && Object.keys(d3.lista).length === 0 && s4 === 200 && Object.keys(d4.lista).length === 0 && !tabla.has('j:' + 'a'.repeat(64)),
       '/mi-estudio: la persona de Jóvenes (QUIEN_APP de la puerta) y el director tienen cada uno su lista; nadie lee la de otro');
-    const i = API.indexOf("ruta === '/mi-estudio'"), g = API.indexOf('const sesion = await sesionActual(request, env);');
+    const i = API.indexOf("ruta === '/mi-estudio'"), g = API.indexOf('let sesion = await sesionActual(request, env);');
     ok(i > g && /CREATE TABLE IF NOT EXISTS mi_estudio[\s\S]{0,200}dueno\s+TEXT PRIMARY KEY/.test(MIGR) && !/ALTER TABLE|DROP|INSERT|UPDATE|DELETE/.test(fs.readFileSync(path.join(RAIZ, 'migraciones/014_mi_estudio.sql'), 'utf8').replace(/--.*$/gm, '')),
       '/mi-estudio va después de leer la sesión; la migración 014 solo crea su tabla');
   } catch (e) { ok(false, 'La prueba de /mi-estudio no corrió: ' + e.message); }
+  /* v238: el panel del director dentro de Jóvenes lo abre la sesión de esa app
+     (env.DIRECTOR_APP, que pone su puerta). La app sola sigue con la clave. Con una lista de
+     concursos, el panel se acota a las categorías de esos concursos. */
+  try {
+    const M = await import('file://' + path.join(RAIZ, 'functions/api/[[ruta]].js'));
+    const COOKIE = (API.match(/const COOKIE = '([^']+)'/) || [])[1];
+    const evals = [
+      { id: 'e-cb', titulo: 'Aventureros', categorias: 'av,me', participantes: '', abierta: 1, creada_en: '2026-10-02' },
+      { id: 'e-gm', titulo: 'Guías', categorias: 'gm', participantes: '', abierta: 1, creada_en: '2026-10-01' },
+      { id: 'e-todas', titulo: 'Todas', categorias: '*', participantes: '', abierta: 0, creada_en: '2026-09-30' },
+    ];
+    const parts = [{ id: 'p-av', nombre: 'Ana', categoria: 'av' }, { id: 'p-gm', nombre: 'Luis', categoria: 'gm' }];
+    const DB = (rol) => { const cuentas = new Map(), insertadas = []; return { insertadas, prepare: sql => { let a = []; const q = { bind: (...x) => { a = x; return q; },
+      first: async () => {
+        if (/FROM sesion/.test(sql)) return rol ? { token: 't', cuenta_id: 'c-clave', rol, persona_id: null } : null;
+        if (/FROM cuenta WHERE proveedor = 'jovenes'/.test(sql)) return cuentas.has(a[0]) ? { id: cuentas.get(a[0]) } : null;
+        if (/FROM evaluacion WHERE id = \?/.test(sql)) return evals.find(e => e.id === a[0] && (!/abierta = 1/.test(sql) || e.abierta)) || null;
+        if (/FROM evaluacion ORDER BY/.test(sql)) return evals[0];
+        return null; },
+      all: async () => {
+        if (/FROM evaluacion WHERE abierta = 1/.test(sql)) return { results: evals.filter(e => e.abierta) };
+        if (/FROM evaluacion/.test(sql)) return { results: evals };
+        if (/FROM participante/.test(sql)) return { results: parts };
+        return { results: [] }; },
+      run: async () => { if (/INSERT OR IGNORE INTO cuenta/.test(sql)) cuentas.set(a[1], a[0]); if (/INSERT INTO evaluacion/.test(sql)) insertadas.push({ id: a[0], categorias: a[7] }); return { meta: {} }; } }; return q; } }; };
+    const pide = async (metodo, ruta, cuerpo, { rol, app } = {}) => { const db = DB(rol);
+      const r = await M.onRequest({ request: new Request('https://x/api/' + ruta, { method: metodo,
+        headers: Object.assign({ 'content-type': 'application/json' }, rol ? { cookie: COOKIE + '=t' } : {}), body: cuerpo ? JSON.stringify(cuerpo) : undefined }),
+        env: Object.assign({ DB: db, SAL_IP: 's' }, app ? { DIRECTOR_APP: app } : {}), params: { ruta: ruta.split('?')[0].split('/') }, waitUntil: () => {} });
+      return [r.status, await r.json(), db]; };
+    const LL = 'j:' + 'b'.repeat(64), TODOS = { llave: LL, concursos: '*' }, CLUB = { llave: LL, concursos: ['cb'] };
+    const abrir = { titulo: 'Sábado', alcance: 'todo', cuantas: 10 };
+    const [s0] = await pide('POST', 'panel/evaluacion', abrir);
+    const [s1, , db1] = await pide('POST', 'panel/evaluacion', abrir, { rol: 'director' });
+    ok(s0 === 401 && s1 === 200 && db1.insertadas.length === 1 && db1.insertadas[0].categorias === '*',
+      'App sola: sin la clave el panel da 401; con la sesión de la clave abre la evaluación como siempre');
+    const [s2, , db2] = await pide('POST', 'panel/evaluacion', abrir, { app: TODOS });
+    const [s2y, y2] = await pide('GET', 'yo', null, { app: TODOS });
+    const [s2p, y2p] = await pide('GET', 'yo', null, { rol: 'participante', app: TODOS });
+    ok(s2 === 200 && db2.insertadas.length === 1 && s2y === 200 && y2.rol === 'director' && y2.director === true && !y2.concursos && y2p.director === true,
+      'Dentro de Jóvenes, la sesión autorizada abre una evaluación sin clave y /yo la ve como director');
+    const [s3] = await pide('POST', 'panel/evaluacion', abrir, { app: { llave: 'j:<script>', concursos: '*' } });
+    const [s3b] = await pide('POST', 'panel/evaluacion', abrir, { app: { llave: LL, concursos: [] } });
+    const [s3c, y3c] = await pide('GET', 'yo', null, { app: { llave: LL } });
+    ok(s3 === 401 && s3b === 401 && y3c.rol === null, 'Un DIRECTOR_APP mal formado no abre nada (401) y /yo no lo ve como director');
+    const [s4, d4] = await pide('GET', 'panel/evaluacion', null, { app: CLUB });
+    const [s4b, d4b] = await pide('GET', 'panel/evaluaciones', null, { app: CLUB });
+    const [s4c, d4c] = await pide('GET', 'panel/participantes', null, { app: CLUB });
+    const [s4d] = await pide('GET', 'panel/evaluacion?id=e-gm', null, { app: CLUB });
+    const [s4e] = await pide('POST', 'panel/evaluacion/cerrar', { id: 'e-gm' }, { app: CLUB });
+    ok(s4 === 200 && d4.evaluaciones.map(e => e.id).join() === 'e-cb' && d4b.evaluaciones.map(e => e.id).join() === 'e-cb' &&
+      d4c.participantes.map(p => p.id).join() === 'p-av' && s4d === 403 && s4e === 403,
+      'Quien dirige un club ve solo las evaluaciones y participantes de su club; la de otro club da 403 al verla o cerrarla');
+    const [s5] = await pide('POST', 'panel/evaluacion', Object.assign({ categorias: ['gm'] }, abrir), { app: CLUB });
+    const [s5b, , db5b] = await pide('POST', 'panel/evaluacion', abrir, { app: CLUB });
+    const [s5c] = await pide('POST', 'panel/participantes', { nombre: 'Eva', categoria: 'gm' }, { app: CLUB });
+    const [s5d] = await pide('POST', 'panel/retiradas', { clave: 'd1.abc12' }, { app: CLUB });
+    const [s5e] = await pide('GET', 'yo', null, { app: CLUB }).then(([s, d]) => [s === 200 && (d.concursos || []).join() === 'cb']);
+    ok(s5 === 403 && s5b === 200 && db5b.insertadas[0].categorias === 'me,av,pa' && s5c === 403 && s5d === 403 && s5e,
+      'Quien dirige un club abre solo para sus categorías («todas» son las suyas), no crea participantes de otro club ni retira preguntas');
+    const i = API.indexOf("if (ruta.startsWith('/panel/') && dirApp)"), g = API.indexOf("ruta.startsWith('/panel/') && (!sesion || sesion.rol !== 'director')");
+    ok(i > 0 && g > i && !/request\.headers\.get\([^)]*director/i.test(API),
+      'DIRECTOR_APP solo sale de env (lo pone la puerta), nunca de la petición, y se lee antes de la guarda del panel');
+  } catch (e) { ok(false, 'La prueba del director dentro de Jóvenes no corrió: ' + e.message); }
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }
   }

@@ -2022,10 +2022,15 @@ ok(/<div id="p-revisor" class="pantalla">/.test(CUERPO),
   'El revisor es una pantalla propia, como la ayuda');
 ok(/id="cb-revisor"/.test(CUERPO), 'Con su contenedor, que llena pintaRevisor()');
 ok(/if\(id==='revisor'\)pintaRevisor\(\);/.test(APP), 'Y ir() sabe llegar a ella');
-ok(/srvYo\.rol!=='director'/.test(APP.slice(APP.indexOf('function pintaRevisor'),
+ok(/if\(!esDir\(\)\)\{/.test(APP.slice(APP.indexOf('function pintaRevisor'),
   APP.indexOf('function revFila(q)'))),
   'pintaRevisor() tiene su propia guarda: sin sesion de director no pinta el banco');
 ok(/onclick="abreRevisor\(\)"/.test(APP), 'Se entra desde el panel del director');
+/* v238: esDir() es la única regla: la clave (rol director) o, dentro de Jóvenes, su sesión (director: true). */
+ok(/function esDir\(\)\{return !!srvYo&&\(srvYo\.rol==='director'\|\|srvYo\.director===true\);\}/.test(APP) && !/srvYo\.rol!=='director'/.test(APP),
+  'El panel, el revisor y el historial preguntan lo mismo: esDir() (la clave o la sesión de Jóvenes)');
+ok(/o\.pant==='examen'&&\/\^\(director\|revisar\|pendientes\)\$\//.test(APP) && /if\(o\.director\|\|o\.revisar\)dirDesdeAfuera\(o\)/.test(APP),
+  'Los caminos concursos/director y concursos/revisar/pendientes llevan al panel y al revisor');
 
 /* EL FILTRO DE RETIRADAS EN UN SOLO SITIO. bancoDe() es el unico origen de
    preguntas de examen; si apareciera una segunda ruta a BANCO para armar, se
@@ -2147,7 +2152,7 @@ ok(/<div id="p-historial" class="pantalla">/.test(CUERPO),
 ok(/id="cb-historial"/.test(CUERPO), 'Con su contenedor, que llena pintaHistorial()');
 ok(/if\(id==='historial'\)pintaHistorial\(\);/.test(APP), 'Y ir() sabe llegar a el');
 ok(/onclick="abreHistorial\(\)"/.test(APP), 'Se entra desde el panel del director');
-ok(/srvYo\.rol!=='director'/.test(APP.slice(APP.indexOf('function pintaHistorial'),
+ok(/if\(!esDir\(\)\)\{/.test(APP.slice(APP.indexOf('function pintaHistorial'),
   APP.indexOf('function hisResumen'))),
   'pintaHistorial() tiene su propia guarda: sin sesion de director no muestra notas');
 /* El detalle de una evaluacion se pinta con la MISMA funcion que el panel usa

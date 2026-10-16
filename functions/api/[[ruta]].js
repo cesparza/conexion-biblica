@@ -11,6 +11,8 @@
  *
  * Cloudflare Pages Functions. Un binding: env.DB (D1).
  * Secretos: CLAVE_PANEL (clave del director), SAL_IP (sal para hashear IP).
+ * Dentro de Jóvenes (v238), el panel lo abre su sesión: `DIRECTOR_APP`, que pone su
+ * puerta; ahí la clave es opcional (respaldo).
  */
 
 /* Las fichas de fábrica y las reglas del reglamento (derivar, revisar, juntar).
@@ -71,6 +73,45 @@ function leerCookie(req, nombre) {
 function cookieSesion(token, dias, borrar = false) {
   const base = COOKIE + '=' + (borrar ? '' : encodeURIComponent(token)) + '; Path=/; HttpOnly; Secure; SameSite=Lax';
   return borrar ? base + '; Max-Age=0' : base + '; Max-Age=' + dias * 86400;
+}
+
+/* ─────────────── v238: EL DIRECTOR QUE VIENE DE JÓVENES ───────────────
+   QUÉ ES
+   Dentro de la app de Jóvenes, el panel del director (abrir una evaluación, ver
+   notas, revisar el material) no pide la clave: lo abre la sesión de esa app. Quién
+   puede lo decide allá, con sus cargos (servidor/puerta-cb.js en ese repo): quien
+   administra, y quien dirige un club o es encargado de un concurso.
+   POR QUÉ NO LO PUEDE FALSIFICAR EL NAVEGADOR
+   Llega en `env.DIRECTOR_APP`, que pone la puerta al llamar a este servidor. `env` no
+   viaja en la petición: ningún encabezado, cookie ni cuerpo llega ahí. En la app sola
+   (conexion-biblica.pages.dev) no existe y todo sigue con la clave (`CLAVE_PANEL`).
+   FORMA: { llave: 'j:<hex>' (la misma llave opaca de «Mi estudio»), concursos: '*' o
+   ['cb', 'dm', …] }. Con una lista, el panel se acota a las categorías de esos
+   concursos (dirCats, abajo). Lo que no tiene esa forma no abre nada. */
+const FORMA_CONCURSO = /^[a-z][a-z0-9]{1,11}$/;
+function directorDeLaApp(env) {
+  const d = env && env.DIRECTOR_APP;
+  if (!d || typeof d !== 'object') return null;
+  const llave = typeof d.llave === 'string' && /^j:[0-9a-f]{32,64}$/.test(d.llave) ? d.llave : '';
+  if (!llave) return null;
+  const concursos = d.concursos === '*' ? '*'
+    : Array.isArray(d.concursos) ? [...new Set(d.concursos.map(String).filter(x => FORMA_CONCURSO.test(x)))].slice(0, 40) : [];
+  if (concursos !== '*' && !concursos.length) return null;
+  return { llave, concursos };
+}
+/* Su cuenta aquí, para la auditoría y para quién retiró una pregunta: una por persona
+   de Jóvenes (proveedor 'jovenes', la llave opaca). Se crea la primera vez. */
+async function sesionDirectorApp(env, d) {
+  const busca = () => env.DB.prepare("SELECT id FROM cuenta WHERE proveedor = 'jovenes' AND sub_proveedor = ?").bind(d.llave).first();
+  let c = await busca();
+  if (!c) {
+    const cid = id();
+    await env.DB.prepare(
+      "INSERT OR IGNORE INTO cuenta (id, persona_id, proveedor, sub_proveedor, rol) VALUES (?, NULL, 'jovenes', ?, 'director')"
+    ).bind(cid, d.llave).run();
+    c = (await busca()) || { id: cid };
+  }
+  return { token: null, cuenta_id: c.id, rol: 'director', persona_id: null, app: true };
 }
 
 async function sesionActual(request, env) {
@@ -530,20 +571,24 @@ export async function onRequest(context) {
     }
 
     // ─────────────────────────────────────── de aquí abajo, con sesión
-    const sesion = await sesionActual(request, env);
+    let sesion = await sesionActual(request, env);
+    /* v238: dentro de Jóvenes, quien dirige un club entra al panel con su sesión de allá
+       (directorDeLaApp, arriba). Es aparte de la cookie: puede tener además su código. */
+    const dirApp = directorDeLaApp(env);
+    const yoApp = dirApp ? { director: true, app: true, ...(dirApp.concursos === '*' ? {} : { concursos: dirApp.concursos }) } : {};
 
     if (metodo === 'GET' && ruta === '/yo') {
-      if (!sesion) return json({ rol: null });
-      if (sesion.rol === 'director') return json({ rol: 'director' });
+      if (!sesion) return json(dirApp ? { rol: 'director', ...yoApp } : { rol: null });
+      if (sesion.rol === 'director') return json({ rol: 'director', ...yoApp });
       const p = await env.DB.prepare(
         'SELECT id, nombre, categoria FROM participante WHERE id = ? AND borrado_en IS NULL'
       ).bind(sesion.persona_id).first();
-      if (!p) return json({ rol: null });
+      if (!p) return json(dirApp ? { rol: 'director', ...yoApp } : { rol: null });
       /* El `id` viaja a proposito: es lo que ata la ficha del aparato a esta
          persona. Sin el, el aparato solo puede reconocerla por el nombre, y el
          nombre cambia (el director lo corrige desde v110). Es un id opaco de
          su propia cuenta, no un dato de nadie mas. */
-      return json({ rol: 'participante', id: p.id, nombre: p.nombre, categoria: p.categoria });
+      return json({ rol: 'participante', id: p.id, nombre: p.nombre, categoria: p.categoria, ...yoApp });
     }
 
     /* v230 (Camilo, 15-oct): en el libro abierto del juicio (Daniel 7:10), después del nombre de
@@ -859,9 +904,32 @@ export async function onRequest(context) {
     }
 
     // ─────────────────────────────────────── panel del director
+    /* v238: dentro de Jóvenes, la sesión de allá (dirApp) le gana a la cookie en el panel. */
+    if (ruta.startsWith('/panel/') && dirApp) sesion = await sesionDirectorApp(env, dirApp);
     if (ruta.startsWith('/panel/') && (!sesion || sesion.rol !== 'director')) {
       return error('Necesitas entrar como director.', 401);
     }
+    /* v238: EL ALCANCE DE QUIEN DIRIGE UN CLUB. `dirCats` son las categorías de sus
+       concursos; null = todas (la clave del director, o quien en Jóvenes lleva todos).
+       Una evaluación es suya si todas las categorías que convoca son suyas, o si va
+       dirigida a personas y todas son de sus categorías. Una para «todas» no es de un
+       club. Lo mismo para ver, cerrar y analizar: no hay una regla para cada cosa. */
+    let dirCats = null, catDe = null;
+    if (ruta.startsWith('/panel/') && sesion.app && dirApp.concursos !== '*') {
+      const { fichas } = await reglamentoVigente(env);
+      dirCats = new Set(fichas.filter(f => dirApp.concursos.includes(f.id)).flatMap(f => f.categorias.map(c => c.id)));
+      const { results } = await env.DB.prepare('SELECT id, categoria FROM participante').all();
+      catDe = new Map((results || []).map(r => [r.id, r.categoria]));
+    }
+    const catSuya = c => !dirCats || dirCats.has(c);
+    const evSuya = ev => {
+      if (!dirCats) return true;
+      const ps = partsDeFila(ev);
+      if (ps.length) return ps.every(p => dirCats.has(catDe.get(p)));
+      const c = (ev && ev.categorias) || '*';
+      return c !== '*' && c.split(',').every(x => dirCats.has(x));
+    };
+    const FUERA = 'Eso es de otro club: tu panel lleva los concursos de tu club.';
 
     /* Abrir una evaluación: se cierra cualquier otra, se genera la semilla en el
        servidor y con eso la práctica queda cerrada sola. Un solo acto. */
@@ -920,7 +988,12 @@ export async function onRequest(context) {
         : String(b.categorias || '').split(',');
       const validas = await catsValidas(env);
       const limpias = pedidas.map(x => String(x).trim()).filter(x => validas.includes(x));
-      const categorias = (!limpias.length || limpias.length === validas.length) ? '*' : limpias.join(',');
+      /* v238: quien dirige un club abre para sus categorías; «todas» son las suyas. */
+      if (dirCats && limpias.some(c => !dirCats.has(c))) return error(FUERA, 403);
+      const suyasV = dirCats ? validas.filter(c => dirCats.has(c)) : null;
+      if (suyasV && !suyasV.length) return error(FUERA, 403);
+      const categorias = suyasV ? (limpias.length ? limpias : suyasV).join(',')
+        : (!limpias.length || limpias.length === validas.length) ? '*' : limpias.join(',');
       /* A QUIÉNES, EN DOS NIVELES.
          Si vienen participantes, la evaluación va dirigida a esas personas y las
          categorías dejan de decidir. Es lo que permite «Camila del 1 al 10» y
@@ -935,6 +1008,7 @@ export async function onRequest(context) {
         /* Solo ids que existen y no están borrados: una lista con basura dejaría
            una evaluación abierta que no le toca a nadie, y el director la vería
            abierta esperando notas que nunca llegan. */
+        if (dirCats && idsP.some(p => catDe.has(p) && !catSuya(catDe.get(p)))) return error(FUERA, 403);
         const marcas = idsP.map(() => '?').join(',');
         const { results } = await env.DB.prepare(
           'SELECT id FROM participante WHERE borrado_en IS NULL AND id IN (' + marcas + ')'
@@ -985,9 +1059,10 @@ export async function onRequest(context) {
       const evalId = limpiar(b.id, 60);
       if (!evalId) return error('Falta indicar cuál evaluación cerrar.', 400);
       const existe = await env.DB.prepare(
-        'SELECT id FROM evaluacion WHERE id = ? AND abierta = 1'
+        'SELECT id, categorias, participantes FROM evaluacion WHERE id = ? AND abierta = 1'
       ).bind(evalId).first();
       if (!existe) return error('Esa evaluación ya no estaba abierta.', 404);
+      if (!evSuya(existe)) return error(FUERA, 403);
       await env.DB.prepare(
         "UPDATE evaluacion SET abierta = 0, cerrada_en = datetime('now') WHERE id = ?"
       ).bind(evalId).run();
@@ -1053,16 +1128,22 @@ export async function onRequest(context) {
       if (pedida) {
         const ev = await env.DB.prepare('SELECT * FROM evaluacion WHERE id = ?').bind(pedida).first();
         if (!ev) return error('Esa evaluación no existe.', 404);
+        if (!evSuya(ev)) return error(FUERA, 403);
         return json({ evaluacion: await detalle(ev) });
       }
-      const abiertas = await evaluacionesAbiertas(env);
+      const abiertas = (await evaluacionesAbiertas(env)).filter(evSuya);
       const evaluaciones = [];
       for (const ev of abiertas) evaluaciones.push(await detalle(ev));
       /* Sin ninguna abierta, se muestra el resultado de la última que hubo
          (cerrada), para que cerrar no le borre al director lo que acaba de ver. */
       let ultima = null;
       if (!evaluaciones.length) {
-        const u = await env.DB.prepare('SELECT * FROM evaluacion ORDER BY creada_en DESC LIMIT 1').first();
+        let u;
+        if (!dirCats) u = await env.DB.prepare('SELECT * FROM evaluacion ORDER BY creada_en DESC LIMIT 1').first();
+        else {
+          const { results: rec } = await env.DB.prepare('SELECT * FROM evaluacion ORDER BY creada_en DESC LIMIT 50').all();
+          u = (rec || []).find(evSuya);
+        }
         if (u) ultima = await detalle(u);
       }
       return json({ evaluaciones, ultima });
@@ -1085,7 +1166,7 @@ export async function onRequest(context) {
         'FROM evaluacion e ORDER BY e.creada_en DESC LIMIT 200'
       ).all();
       await auditar(env, sesion.cuenta_id, 'ver_historial', 'evaluacion', null, ipHash);
-      return json({ evaluaciones: results || [] });
+      return json({ evaluaciones: (results || []).filter(evSuya) });
     }
 
     /* La revisión de UN intento. Va aparte y no dentro de /panel/evaluacion a
@@ -1099,6 +1180,7 @@ export async function onRequest(context) {
         'FROM intento i JOIN participante p ON p.id = i.participante_id WHERE i.id = ?'
       ).bind(iid).first();
       if (!r) return error('Ese intento no existe.', 404);
+      if (!catSuya(r.categoria)) return error(FUERA, 403);
       await auditar(env, sesion.cuenta_id, 'ver_revision', 'intento', iid, ipHash);
       return json({ intento: r });
     }
@@ -1112,6 +1194,10 @@ export async function onRequest(context) {
     if (metodo === 'GET' && ruta === '/panel/evaluacion/analisis') {
       const eid = limpiar(new URL(request.url).searchParams.get('id') || '', 60);
       if (!eid) return error('Falta la evaluación.', 400);
+      if (dirCats) {
+        const ev = await env.DB.prepare('SELECT id, categorias, participantes FROM evaluacion WHERE id = ?').bind(eid).first();
+        if (!ev || !evSuya(ev)) return error(FUERA, 403);
+      }
       const { results } = await env.DB.prepare(
         'SELECT p.nombre, p.categoria, i.nota, i.total, i.respuestas ' +
         'FROM intento i JOIN participante p ON p.id = i.participante_id ' +
@@ -1130,6 +1216,9 @@ export async function onRequest(context) {
     }
 
     if (metodo === 'POST' && ruta === '/panel/retiradas') {
+      /* v238: el banco es de todos los concursos (una pregunta de Daniel la reciben varios
+         clubes): retirar lo hace quien los lleva todos. Mirarlo, cualquier director. */
+      if (dirCats) return error('Retirar preguntas lo hace quien lleva todos los concursos. Tú puedes revisarlas.', 403);
       const b = await request.json().catch(() => ({}));
       /* Devolver al banco es una acción de primera clase, no un borrado: el
          registro de por qué se retiró en su momento se conserva. */
@@ -1169,7 +1258,7 @@ export async function onRequest(context) {
         'FROM participante p WHERE p.borrado_en IS NULL ORDER BY p.categoria, p.nombre'
       ).all();
       await auditar(env, sesion.cuenta_id, 'ver_participantes', 'participante', null, ipHash);
-      return json({ participantes: results || [] });
+      return json({ participantes: (results || []).filter(x => catSuya(x.categoria)) });
     }
 
     if (metodo === 'POST' && ruta === '/panel/participantes') {
@@ -1179,6 +1268,7 @@ export async function onRequest(context) {
       const categoria = validas.includes(b.categoria) ? b.categoria : null;
       if (!nombre) return error('Falta el nombre.');
       if (!categoria) return error('Categoría inválida: ' + validas.join(', ') + '.');
+      if (!catSuya(categoria)) return error(FUERA, 403);
       /* Reintentar si el código ya existía: con 31^6 combinaciones el choque es
          improbable, pero improbable no es imposible y el índice es único. */
       let codigo = null;
@@ -1219,12 +1309,14 @@ export async function onRequest(context) {
         'SELECT id, nombre, categoria FROM participante WHERE id = ? AND borrado_en IS NULL'
       ).bind(pid).first();
       if (!p) return error('Esa participante ya no está en el club.', 404);
+      if (!catSuya(p.categoria)) return error(FUERA, 403);
       const nombre = b.nombre === undefined ? p.nombre : limpiar(b.nombre, 40);
       const validas = await catsValidas(env);
       const categoria = b.categoria === undefined ? p.categoria
         : (validas.includes(b.categoria) ? b.categoria : null);
       if (!nombre) return error('Falta el nombre.');
       if (!categoria) return error('Categoría inválida: ' + validas.join(', ') + '.');
+      if (!catSuya(categoria)) return error(FUERA, 403);
       await env.DB.prepare('UPDATE participante SET nombre = ?, categoria = ? WHERE id = ?')
         .bind(nombre, categoria, pid).run();
       await auditar(env, sesion.cuenta_id, 'editar_participante', 'participante', pid, ipHash);
@@ -1235,6 +1327,7 @@ export async function onRequest(context) {
        notas que ya se contaron. El DELETE físico es una purga aparte, a mano. */
     if (metodo === 'POST' && ruta.startsWith('/panel/participantes/') && ruta.endsWith('/borrar')) {
       const pid = ruta.slice('/panel/participantes/'.length, -'/borrar'.length);
+      if (dirCats && !catSuya(catDe.get(pid))) return error(FUERA, 403);
       await env.DB.prepare("UPDATE participante SET borrado_en = datetime('now') WHERE id = ?").bind(pid).run();
       await env.DB.prepare(
         'DELETE FROM sesion WHERE cuenta_id IN (SELECT id FROM cuenta WHERE persona_id = ?)'
@@ -1257,7 +1350,7 @@ export async function onRequest(context) {
         'WHERE p.borrado_en IS NULL ORDER BY i.creado_en DESC LIMIT 300'
       ).all();
       await auditar(env, sesion.cuenta_id, 'ver_intentos', 'intento', null, ipHash);
-      return json({ intentos: results || [] });
+      return json({ intentos: (results || []).filter(x => catSuya(x.categoria)) });
     }
 
     return error('Ruta no encontrada', 404);

@@ -855,7 +855,8 @@ const MANUAL = [
     mismo orden, con las opciones en el mismo orden.</p>` },
   { t:'Cómo se abre',
     h:`<p>Entra a <strong>Concursos</strong>, abajo, en <strong>La evaluación del
-    día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay
+    día</strong>, y pon tu clave. Dentro de la app de Jóvenes no hace falta la clave: si
+    diriges un club, el panel abre con tu cuenta. El panel se abre en tres pasos numerados y hay
     que hacerlos en ese orden.</p>
     <ol><li><strong>Los del club, y su código.</strong> Crear a las
     participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle
