@@ -5440,6 +5440,9 @@ span.cmp-ult-c{cursor:default}
 .lm-e.fut .lm-a b,.lm-e.hoy .lm-a b{white-space:nowrap}
 .lam-metro:not(.tira) .lm-e.menor .lm-a small{display:none}
 .lam.pres.ancho .lam-metro:not(.tira) .lm-e.menor .lm-n{font-size:.75rem}
+/* v233b: el tramo del juicio lleva también color de fondo (el degradado no lo lee la medición de
+   contraste de Jóvenes, que medía la tinta oscura contra el fondo de la página). */
+.lm-seg.oro{background-color:#E4BC6A}
 /* ─── v234: PARALELOS (fuente/paralelos-app.js). Va en la sala de Comparar, con su paleta.
    Ancha: tabla con la característica fija a la izquierda. Angosta (la sala, no la
    pantalla: así sirve dentro de Jóvenes): una tarjeta por característica con los
@@ -6060,7 +6063,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '317b8f070b27';
+const VERSION_APP = 'e30d504a63ff';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el

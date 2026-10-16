@@ -5423,3 +5423,6 @@ span.cmp-ult-c{cursor:default}
 .lm-e.fut .lm-a b,.lm-e.hoy .lm-a b{white-space:nowrap}
 .lam-metro:not(.tira) .lm-e.menor .lm-a small{display:none}
 .lam.pres.ancho .lam-metro:not(.tira) .lm-e.menor .lm-n{font-size:.75rem}
+/* v233b: el tramo del juicio lleva también color de fondo (el degradado no lo lee la medición de
+   contraste de Jóvenes, que medía la tinta oscura contra el fondo de la página). */
+.lm-seg.oro{background-color:#E4BC6A}
