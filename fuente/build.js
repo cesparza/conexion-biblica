@@ -31,7 +31,7 @@ const { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META } = require('./biblia-otros.js');
 const PWA = require('./pwa.js');
 /* v236: los capítulos de «El conflicto de los siglos» (título y página), para nombrarlos
    en el alcance de un concurso. Sin texto del libro. */
-const { CS_CAPS, CS_EDICION } = require('./conflicto.js');
+const { CS_CAPS, CS_EDICION, CS_TEMA_CAPS, CS_BANCO, CS_TARJETAS, CS_CONTENIDO } = require('./conflicto.js');
 const { CAMPAMENTOS, revisa, sinUsar } = require('./campamentos.js');
 
 /* Varios temas, un solo archivo. Para quién es cada capítulo y cada repaso lo
@@ -46,6 +46,9 @@ const IDS_DE_TEMA = {
   matutina: [...MAT.MAT_CAPS, ...MAT.MAT_MODULOS].map(x => x.id),
   creencias: [...CR.CR_CAPS, ...CR.CR_MODULOS].map(x => x.id),
   apocalipsis: [...AP.AP_CAPS, ...sinProf(AP.AP_MODULOS)].map(x => x.id),
+  /* v237: El conflicto de los siglos 24-43 (fuente/conflicto.js). Lo pide la ficha `ap`
+     con `obras`, no una ficha propia. */
+  conflicto: CS_TEMA_CAPS.map(x => x.id),
 };
 {
   const mal = [...revisa(CAMPAMENTOS, IDS_DE_TEMA),
@@ -59,7 +62,7 @@ const IDS_DE_TEMA = {
   /* Una sola fuente: si un capítulo o un repaso trae su propia marca, habría
      dos sitios diciendo para quién es, y el día que no coincidan gana uno sin
      avisar. */
-  const conMarca = [...CAPS, ...MODULOS, ...MAT.MAT_CAPS, ...MAT.MAT_MODULOS, ...CR.CR_CAPS, ...CR.CR_MODULOS, ...AP.AP_CAPS, ...AP.AP_MODULOS]
+  const conMarca = [...CAPS, ...MODULOS, ...MAT.MAT_CAPS, ...MAT.MAT_MODULOS, ...CR.CR_CAPS, ...CR.CR_MODULOS, ...AP.AP_CAPS, ...AP.AP_MODULOS, ...CS_TEMA_CAPS]
     .filter(x => 'cats' in x || 'extra' in x).map(x => x.id);
   if (conMarca.length) {
     console.error('❌ Estos traen `cats` o `extra` propios; eso va en campamentos.js: ' + conMarca.join(', '));
@@ -83,7 +86,7 @@ const IDS_DE_TEMA = {
    grupo se deduce del id (fuente/grupos.js), asi que escribirlo a mano en 18
    lineas seria copiar el dato a un segundo lugar. */
 const CAPS_DANIEL = CAPS.map(c => ({ ...c, doc: grupoDaniel(c.id) || undefined }));
-const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS, ...AP.AP_CAPS];
+const CAPS_ALL = [...CAPS_DANIEL, ...MAT.MAT_CAPS, ...CR.CR_CAPS, ...AP.AP_CAPS, ...CS_TEMA_CAPS];
 const CONTENIDO_ALL = { ...CONTENIDO, ...MAT.MAT_CONTENIDO, ...CR.CR_CONTENIDO, ...AP.AP_CONTENIDO };
 /* v179: la interpretación de Daniel (fuente/complementos/daniel.js) va al
    final de cada capítulo, como capa 'contexto'. */
@@ -91,8 +94,11 @@ for (const [cap, secs] of Object.entries(COMP_DANIEL.secciones))
   if (CONTENIDO_ALL[cap]) CONTENIDO_ALL[cap] = [...CONTENIDO_ALL[cap], ...secs];
 /* Las de cobertura van con las demas: son del mismo banco, solo que las
    escribio un generador a partir de los versiculos que no tenian ninguna. */
-const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...BANCO_REAL, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO, ...AP.AP_BANCO, ...COMP_DANIEL.preguntas];
-const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS, ...AP.AP_TARJETAS];
+/* v237: de CS, `lit` (la frase del libro con que se armó) no viaja: la pregunta ya la trae
+   en su explicación, y en el index.html serían otros 100 KB. Se comprueba en tests/test.js. */
+const sinLit = ({ lit, ...x }) => x;
+const BANCO_ALL = [...BANCO, ...BANCO_COBERTURA, ...BANCO_PR, ...BANCO_REAL, ...MAT.MAT_BANCO, ...MAT_COMPLETAR, ...MAT_EXTRA, ...CR.CR_BANCO, ...AP.AP_BANCO, ...COMP_DANIEL.preguntas, ...CS_BANCO.map(sinLit)];
+const TARJETAS_ALL = [...TARJETAS, ...MAT.MAT_TARJETAS, ...CR.CR_TARJETAS, ...AP.AP_TARJETAS, ...CS_TARJETAS.map(sinLit)];
 const MODULOS_ALL = [...MODULOS, ...MAT.MAT_MODULOS, ...CR.CR_MODULOS, ...AP.AP_MODULOS];
 const CONT_MODULOS_ALL = { ...CONT_MODULOS, ...MAT.MAT_CONT_MODULOS, ...CR.CR_CONT_MODULOS, ...AP.AP_CONT_MODULOS };
 
@@ -235,6 +241,27 @@ for (const c of CAPS_ALL) {
   if (extra) CONTENIDO_ALL[c.id] = [...CONTENIDO_ALL[c.id], ...extra];
 }
 
+/* v237: EL TEXTO DE «EL CONFLICTO DE LOS SIGLOS» SE PIDE AL ABRIR (pendiente 19). Son
+   unos 600 KB: en el index.html subirían la primera carga de todos. Cada capítulo va en
+   conflicto/csNN.json (raíz del repo) con su estudio y su «Compruébalo»; la app lo pide
+   con su huella (CS_HUELLAS) la primera vez que se abre y el service worker lo guarda. */
+const CONTENIDO_CS = id => CS_CONTENIDO[id] || [];
+const CS_HUELLAS = {};
+{
+  const dir = path.join(__dirname, '..', 'conflicto');
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.mkdirSync(dir, { recursive: true });
+  for (const c of CS_TEMA_CAPS) {
+    const extra = pestanaComprueba(c.id);
+    /* Compruébalo trae frases enteras del libro: su HTML va partido por tarjeta. */
+    const secs = [...CONTENIDO_CS(c.id), ...(extra || []).map(x => ({ ...x, h: x.h.split(/(?=<div class="rev">)/) }))];
+    const txt = JSON.stringify({ id: c.id, estudio: secs }, null, 1) + '\n';
+    if (txt.split('\n').some(l => l.length > 2000)) { console.error('❌ conflicto/' + c.id + '.json tiene un renglón de más de 2.000 caracteres'); process.exit(1); }
+    fs.writeFileSync(path.join(dir, c.id + '.json'), txt);
+    CS_HUELLAS[c.id] = crypto.createHash('sha1').update(txt).digest('hex').slice(0, 10);
+  }
+}
+
 /* Cada pregunta sale al HTML con su nivel ya calculado (fuente/niveles.js).
    La app solo lee q.nv: la regla vive en un archivo y no se duplica. */
 const BANCO_NV = BANCO_ALL.map(q => ({ ...q, nv: nivelDe(q) }));
@@ -293,6 +320,10 @@ const LAMINAS = ${JSON.stringify(LAMINAS, null, 1)};
 /* v236: los capítulos de las obras que un concurso puede pedir sin que estén en la app
    todavía (fuente/conflicto.js): número, título y página. */
 const OBRAS_CAPS = ${JSON.stringify({ cs: { edicion: CS_EDICION, caps: CS_CAPS } }, null, 1)};
+
+/* v237: los capítulos de El conflicto de los siglos que se piden al abrir
+   (conflicto/<id>.json) y la huella de cada archivo. */
+const CS_HUELLAS = ${JSON.stringify(CS_HUELLAS, null, 1)};
 
 /* v227: el reparto de un reino (los generales de Alejandro), datos de un mapa reutilizable. */
 const REPARTOS = ${JSON.stringify(REPARTOS, null, 1)};
@@ -435,7 +466,7 @@ for (const [tema, ids] of Object.entries(IDS_DE_TEMA)) {
    de Jóvenes la copia junto al módulo. */
 {
   const temaDe = x => Object.keys(IDS_DE_TEMA).find(t => IDS_DE_TEMA[t].includes(x.id)) || x.tema || '';
-  const NOMBRE_TEMA = { daniel: 'Daniel', apocalipsis: 'Apocalipsis', creencias: 'Creencias', matutina: 'Devoción Matutina' };
+  const NOMBRE_TEMA = { daniel: 'Daniel', apocalipsis: 'Apocalipsis', creencias: 'Creencias', matutina: 'Devoción Matutina', conflicto: 'El conflicto de los siglos' };
   const lista = [];
   for (const [k, L] of Object.entries(LAMINAS)) {
     const c = CAPS_ALL.find(x => x.id === k);

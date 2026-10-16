@@ -2263,6 +2263,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     apgm:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',35,3],
     apcq:[[1,2,3,4,5,10,11,12,13,14,19,20,21,22].map(n=>'ap'+n).join(' ')+' | ','',30,2],
     apav:[[1,12,14,21,22].map(n=>'ap'+n).join(' ')+' | ','',30,3],
+    /* v237 (Camilo, 16-oct): vuelven Menores y Padres, dentro de Aventureros y con su alcance. */
+    apme:[[1,12,14,21,22].map(n=>'ap'+n).join(' ')+' | ','',10,1],
+    appa:[[1,12,14,21,22].map(n=>'ap'+n).join(' ')+' | ','',35,3],
   };
   const C=REGLAMENTO.CATS;
   const distintas=Object.keys(VIGENTE).filter(k=>!C[k]||ve(k)!==VIGENTE[k][0]||solo(k)!==VIGENTE[k][1]||C[k].n!==VIGENTE[k][2]||C[k].techo!==VIGENTE[k][3]);
@@ -2270,7 +2273,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'El reglamento vigente no cambió (salvo la política 2027 de Apocalipsis): las 11 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
   /* v164: Guías Mayores tiene su ficha (cbg). Su categoría conserva el id. */
   const AC=REGLAMENTO.ACTIVIDADES;
-  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apgm,apcq,apav'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
+  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apgm,apcq,apav,apme,appa'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
     'Las actividades son cb, cbg, dm, ec y ap; Guías Mayores va en la suya y conserva su categoría gm');
   ok(C.me.club==='aventureros'&&C.pa.club==='aventureros'&&C.gm.club==='guias'&&C.apcq.club==='conquistadores'&&C.apgm.club==='guias'&&C.ec1.club==='',
     'v191: cada categoría de club dice su club (Aventureros, Conquistadores, Guías Mayores)');
@@ -2290,7 +2293,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   /* Una ficha mal escrita no pasa. */
   const TEMAS_P={daniel:[...CAPS,...MODULOS.filter(x=>!x.prof)].map(x=>x.id),matutina:[...MATU.MAT_CAPS,...MATU.MAT_MODULOS].map(x=>x.id),
     creencias:[...CREC.CR_CAPS,...CREC.CR_MODULOS].map(x=>x.id),
-    apocalipsis:require(path.join(RAIZ,'fuente','apocalipsis.js')).AP_CAPS.map(x=>x.id)};
+    apocalipsis:require(path.join(RAIZ,'fuente','apocalipsis.js')).AP_CAPS.map(x=>x.id),
+    conflicto:require(path.join(RAIZ,'fuente','conflicto.js')).CS_TEMA_CAPS.map(x=>x.id)};
   ok(F.revisa(F.CAMPAMENTOS,TEMAS_P).length===0&&F.sinUsar(F.CAMPAMENTOS,TEMAS_P).length===0,
     'Las fichas vigentes cuadran con el contenido y no dejan ningún capítulo sin dueño');
   const cat=(o)=>Object.assign({id:'cq1',nombre:'Conquistadores',edad:'10 a 15 años',n:20,techo:2,sinCompletar:false,
@@ -2310,8 +2314,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Cada ficha trae su fecha: los tres concursos de Aventureros el 10 de octubre de 2026, y Guías Mayores sin fecha');
   ok(!/Tres tarjetas|el 9 de octubre/.test(lee('manual.js')),
     'El manual no cuenta las actividades ni afirma una fecha: las dos cosas salen de las fichas');
-  ok(C.me.seg===100&&C.av.seg===80&&C.apav.seg===80&&C.apcq.seg===80&&['pa','gm','dm1','dm2','ec1','ec2','apgm'].every(k=>C[k].seg===72)&&
-     C.pa.rampa===false&&C.apgm.rampa===false&&Object.keys(C).filter(k=>!['pa','apgm'].includes(k)).every(k=>C[k].rampa===true),
+  ok(C.me.seg===100&&C.apme.seg===100&&C.av.seg===80&&C.apav.seg===80&&C.apcq.seg===80&&['pa','gm','dm1','dm2','ec1','ec2','apgm','appa'].every(k=>C[k].seg===72)&&
+     C.pa.rampa===false&&C.apgm.rampa===false&&C.appa.rampa===false&&Object.keys(C).filter(k=>!['pa','apgm','appa'].includes(k)).every(k=>C[k].rampa===true),
     'El tiempo por pregunta y la rampa son los de antes: 100 s Menores, 80 s Aventureros, 72 s los demás, y solo Padres entra sin rampa');
   ok(!/FECHA_META/.test(lee('app.js'))&&!/S\.cat==='(me|av|pa|gm|dm1|dm2|ec1|ec2)'/.test(lee('app.js')),
     'app.js no tiene fechas ni reglas escritas por categoría');
@@ -2445,10 +2449,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const GEN4=fs.readFileSync(path.join(RAIZ,'fuente','servidor-reglamento.js'),'utf8');
     const cat4=JSON.parse((/export const CATALOGO = (\{[\s\S]*?\n\});/.exec(GEN4)||[])[1]||'{}');
     const d1=((cat4.daniel||{}).caps||[]).find(c=>c.id==='d1')||{n:[]};
-    ok(Object.keys(cat4).join()==='daniel,matutina,creencias,apocalipsis'&&cat4.apocalipsis.caps.length===22&&cat4.daniel.caps.length===18&&cat4.matutina.caps.length===31&&cat4.creencias.caps.length===28&&
+    ok(Object.keys(cat4).join()==='daniel,matutina,creencias,apocalipsis,conflicto'&&cat4.apocalipsis.caps.length===22&&cat4.conflicto.caps.length===20&&cat4.daniel.caps.length===18&&cat4.matutina.caps.length===31&&cat4.creencias.caps.length===28&&
        d1.n.length===3&&d1.n.reduce((a,b)=>a+b,0)===[...BANCO,...require(path.join(RAIZ,'fuente','preguntas-cobertura.js')).BANCO_COBERTURA,...require(path.join(RAIZ,'fuente','examenes-reales.js')).BANCO_REAL,...require(path.join(RAIZ,'fuente','complementos','daniel.js')).preguntas].filter(q=>q.cap==='d1').length&&
        cat4.daniel.repasos.some(r=>r.id==='m-linea'),
-      'El catálogo trae los cuatro temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
+      'El catálogo trae los cinco temas con sus capítulos, sus repasos y cuántas preguntas hay por nivel (Daniel 1: '+d1.n.join(', ')+')'); }
 
   /* ── v172: RETIRAR UN CONCURSO ── */
   { const S5=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
@@ -2737,7 +2741,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/class="lam-riel-l" id="lamTira"/.test(js)&&/function lamNavHTML\(/.test(js)&&LAMINAS.d2.partes.slice(-3).map(p=>p.id).join()==='barro,piedra,monte',
     'Daniel 2 en Explorar: todas las partes en el riel, y Siguiente pasa del barro a la piedra y al monte');
   /* Las categorías: cada pastilla dice su actividad. */
-  ok(actCorta('ap')==='Apocalipsis'&&actCorta('cb')==='Daniel'&&catCorta('apgm')==='Apocalipsis · Jóvenes (Guías Mayores)'&&catCorta('pa')==='Daniel · Padres y consejeros'&&catCorta('gm')==='Daniel · Guías Mayores',
+  ok(actCorta('ap')==='Apocalipsis'&&actCorta('cb')==='Daniel'&&catCorta('apgm')==='Apocalipsis · Guías Mayores (Jóvenes)'&&actCorta('dm')==='Devoción Matutina'&&catCorta('pa')==='Daniel · Padres y consejeros'&&catCorta('gm')==='Daniel · Guías Mayores',
     'Quién estudia: «Apocalipsis · Padres y consejeros» y «Daniel · Padres y consejeros» ya no se ven iguales');
   ok(/class="alu-act-a">'\+esc\(c\?actCorta\(c\.act\)/.test(js)&&/onclick="cambiaAlumno\(\\''\+id\+'\\'\)">'\+\s*'<span class="alu-act-a">/.test(js),'Cada pastilla abre su propia ficha y nombra su actividad');
   /* La portada de Daniel 7: las cuatro bestias. */
@@ -3242,6 +3246,44 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v235: cada pregunta lleva a su capítulo en la Biblioteca y '+q.st.sec+' a la sección cuyo título trae su versículo ('+q.st.cap+' solo al capítulo; ninguna a una sección equivocada)');
   ok(/\.lm-e\.juicio \.lm-a b\{color:var\(--lam-oro/.test(fs.readFileSync(FUENTE('estilos.css'),'utf8'))&&/function bibProximo\(/.test(BJ)&&/function bibPieHTML\(/.test(BJ)&&/bibPieHTML\(\)/.test(APP),
     'v235: 1844 con el año en oro en la línea de metro; el Inicio anuncia el concurso que viene; cada tema termina con su «Bibliografía»');
+}
+
+/* v237 (Camilo, 16-oct, 5:38 a. m.): el concurso 2027 con el club adelante y la fecha tentativa;
+   Menores y Padres de vuelta dentro de Aventureros; El conflicto de los siglos 24-43 como
+   material: un archivo por capítulo, cada pregunta sacada de una frase literal y pendiente de
+   revisión, ligado al alcance de cada categoría, y su texto pedido al abrir (no en el index). */
+{
+  const F=require(path.join(RAIZ,'fuente','campamentos.js')), CS=require(path.join(RAIZ,'fuente','conflicto.js'));
+  const AP=F.CAMPAMENTOS.find(f=>f.id==='ap'), C=REGLAMENTO.CATS, A=REGLAMENTO.ACTIVIDADES;
+  ok(AP.nombre==='Guías Mayores - Conexión Bíblica 2027'&&AP.cuando==='6 de marzo de 2027 (fecha tentativa)'&&AP.fecha==='2027-03-06'&&
+     F.CAMPAMENTOS.find(f=>f.id==='cb').nombre==='Aventureros - Conexión Bíblica: Daniel'&&F.CAMPAMENTOS.find(f=>f.id==='cbg').nombre==='Guias - Conexión Bíblica: Daniel'&&
+     AP.categorias.map(c=>c.nombre.split(/[ (]/)[0]).every(n=>['Guías','Conquistadores','Aventureros'].includes(n)),
+    'v237: el concurso 2027 se llama con el club adelante, como lo guardó Camilo, y su fecha dice «(fecha tentativa)»');
+  const AV=AP.categorias.find(c=>c.id==='apav');
+  ok(['apme','appa'].every(k=>C[k]&&C[k].act==='ap'&&C[k].club==='aventureros'&&/^Aventureros - /.test(C[k].nombre))&&C.apme.edad==='4 a 6 años'&&C.appa.edad==='Adultos'&&
+     ['apme','appa'].every(k=>{const c=AP.categorias.find(x=>x.id===k);return c.estudia.join()===AV.estudia.join()&&JSON.stringify(c.obras)===JSON.stringify(AV.obras);}),
+    'v237: Menores (4 a 6) y Padres (adultos) vuelven a Apocalipsis, dentro de Aventureros y con su mismo alcance (Ap 1, 12, 14, 21, 22; CS 24, 25, 32, 39, 41, 43)');
+  const ids=CS.CS_TEMA_CAPS.map(c=>c.id), arch=fs.readdirSync(path.join(RAIZ,'fuente','conflicto')).filter(f=>/^cap\d\d\.js$/.test(f));
+  const sinLit=CS.CS_BANCO.concat(CS.CS_TARJETAS).filter(q=>!q.lit||!CS.CS_TEXTO[q.cap].includes(q.lit)||!q.pend);
+  const tapada=CS.CS_BANCO.filter(q=>q.t==='mc'&&!q.lit.includes((q.q.match(/«(.*)___/)||[])[1]+q.o[q.a]));
+  ok(arch.length===20&&ids.join()===Array.from({length:20},(_,i)=>'cs'+(24+i)).join()&&CS.CS_BANCO.length>=200&&!sinLit.length&&!tapada.length&&
+     CS.CS_TEMA_CAPS.every(c=>c.pag===(CS.CS_CAPS.find(x=>x.n===+c.id.slice(2))||{}).p),
+    'v237: CS 24-43, un archivo por capítulo con su página de inicio; '+CS.CS_BANCO.length+' preguntas y '+CS.CS_TARJETAS.length+' tarjetas, cada una de una frase literal del capítulo y pendiente de revisión');
+  const caps=k=>montar("x:(S.cat='"+k+"',capsConcurso().map(c=>c.id).join(' '))").x;
+  const banco=montar("x:(S.cat='apav',[...new Set(bancoDe().map(q=>q.cap.replace(/\\d+$/,'')))].sort().join())").x;
+  ok(caps('apav')==='ap1 ap12 ap14 ap21 ap22 cs24 cs25 cs32 cs39 cs41 cs43'&&caps('apme')===caps('apav')&&
+     caps('apcq')===[1,2,3,4,5,10,11,12,13,14,19,20,21,22].map(n=>'ap'+n).concat([24,25,26,29,32,36,37,38,39,41,43].map(n=>'cs'+n)).join(' ')&&
+     caps('apgm').split(' ').filter(x=>/^cs/.test(x)).length===20&&banco==='ap,cs'&&A.ap.temas.join()==='apocalipsis,conflicto',
+    'v237: el alcance de CS de cada categoría 2027 es real: se filtra, se estudia y el examen de práctica mezcla los dos libros ('+banco+')');
+  const libres=montar("x:temasLibres().join()").x, bib=montar("x:bibTemas().join()").x;
+  ok(/conflicto/.test(libres)&&/conflicto/.test(bib)&&fs.readFileSync(path.join(RAIZ,'temas.json'),'utf8').includes('"cap-cs24"'),
+    'v237: la Biblioteca, Mi estudio y la lista de temas traen El conflicto de los siglos solos');
+  const json=ids.map(id=>JSON.parse(fs.readFileSync(path.join(RAIZ,'conflicto',id+'.json'),'utf8')));
+  const huellas=montar('x:CS_HUELLAS').x, txt1=CS.parrafos(require(path.join(RAIZ,'fuente','conflicto','cap24.js')))[3].slice(0,80);
+  ok(json.every((d,i)=>d.id===ids[i]&&d.estudio.some(s=>/^📖 Página/.test(s.t)))&&!html.includes(txt1)&&json[0].estudio.map(s=>[].concat(s.h).join('')).join('').includes(txt1.slice(0,40))&&
+     Object.keys(huellas).join()===ids.join()&&/function csCarga\(/.test(APP)&&/if\(esCS\(id\)&&!CONTENIDO\[id\]\)/.test(APP)&&/CONFLICTO_DIR\+id\+'\.json\?v='\+CS_HUELLAS\[id\]/.test(APP)&&
+     /\.cs-pag,\.cs-ref/.test(APP)&&/q-pend/.test(APP)&&/revF\.pend/.test(APP),
+    'v237: el texto de CS va en conflicto/<id>.json y se pide al abrir el capítulo (no está en el index.html); la página no se lee en voz alta; lo pendiente se marca en el examen y se filtra en «Revisar el material»');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

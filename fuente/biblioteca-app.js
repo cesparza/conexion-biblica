@@ -434,8 +434,10 @@ function bibChips(f){
 function bibAlcanceHTML(k){
   const F=bibAlcanceDe(k);if(!F.length)return '';
   return '<div class="ac">'+F.map(f=>'<div class="ac-f"><div class="ac-t">'+esc(f.t)+' · capítulos'+
-    (f.obra?' <span class="ac-falta">todavía no está en la app</span>':'')+'</div>'+bibChips(f)+'</div>').join('')+'</div>';
+    (f.obra&&!bibObraEnApp(f.obra)?' <span class="ac-falta">todavía no está en la app</span>':'')+'</div>'+bibChips(f)+'</div>').join('')+'</div>';
 }
+/* v237: una obra con su tema en la app (El conflicto de los siglos) ya se estudia aquí. */
+var bibObraEnApp=o=>{const O=REGLAS.OBRAS[o];return !!(O&&O.tema&&(IDS_DE_TEMA[O.tema]||[]).length);};
 var CLUB_TONO={guias:'ac-guias',conquistadores:'ac-conq',aventureros:'ac-avent'};
 function bibCatBloque(k){
   const c=CATS[k];
@@ -447,6 +449,9 @@ function bibObrasLista(a){
   const por={};CATS_DE_ACT(a).forEach(k=>Object.entries(CATS[k].obras||{}).forEach(([o,ns])=>{por[o]=por[o]||new Set();ns.forEach(n=>por[o].add(n));}));
   return Object.entries(por).map(([o,set])=>{const O=REGLAS.OBRAS[o],ed=typeof OBRAS_CAPS!=='undefined'&&OBRAS_CAPS[o]?OBRAS_CAPS[o].edicion:'';
     return '<details class="con-obra"><summary>'+IC('lista')+' Los capítulos de <i>'+esc(O.nombre)+'</i></summary><ol class="con-ol">'+
-      [...set].sort((x,y)=>x-y).map(n=>'<li><b>'+n+'</b> '+esc(bibTituloObra(o,n))+'</li>').join('')+'</ol>'+
-      '<p class="nota">'+esc(O.autor)+(ed?', edición '+esc(ed):'')+'. Este libro todavía no está como material de estudio en la app: lee estos capítulos en el libro. No entran al examen de práctica.</p></details>';}).join('');
+      [...set].sort((x,y)=>x-y).map(n=>{const id=(O.pre||'')+n,hay=bibObraEnApp(o)&&!!buscaItem(id);
+        return '<li><b>'+n+'</b> '+(hay?'<button type="button" class="btn txt" onclick="verCap(\''+id+'\')">'+esc(bibTituloObra(o,n))+'</button>':esc(bibTituloObra(o,n)))+'</li>';}).join('')+'</ol>'+
+      '<p class="nota">'+esc(O.autor)+(ed?', edición '+esc(ed):'')+'. '+(bibObraEnApp(o)
+        ?'Estos capítulos están en la app, con su texto completo: tócalos para estudiarlos. Sus preguntas entran al examen de práctica y están pendientes de revisión de Camilo.'
+        :'Este libro todavía no está como material de estudio en la app: lee estos capítulos en el libro. No entran al examen de práctica.')+'</p></details>';}).join('');
 }

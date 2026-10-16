@@ -1,0 +1,332 @@
+/* El conflicto de los siglos, capítulo 37: «El Conflicto Inminente» (págs. 470-478).
+   Texto de la edición de la biblioteca (Asociación Publicadora Interamericana, 1954;
+   copia digital del Ministerio Evangelio Eterno). Camilo autorizó usar el texto completo
+   (16-oct). Solo se corrigieron cortes obvios de la digitalización («traspasa ron»).
+   {pNNN}: aquí empieza la página NNN de esta edición. [NNN]: la paginación que trae la
+   copia digital entre corchetes, tal cual.
+   Las preguntas y las tarjetas salen de una frase literal del texto (`lit`) con una
+   palabra tapada; `pend: 1` = pendiente de revisión de Camilo. tests/test.js comprueba
+   que cada `lit` esté en el texto. */
+module.exports = {
+  n: 37, titulo: 'El Conflicto Inminente', pag: 470, fin: 478,
+
+  texto: `
+DESDE el origen de la gran controversia en el cielo, el propósito de Satanás ha consistido en
+destruir la ley de Dios. Para realizarlo se rebeló contra el Creador y, aunque expulsado del
+cielo, continuó la misma lucha en la tierra. Engañar a los hombres para inducirlos luego a
+transgredir la ley de Dios, tal fue el objeto que persiguió sin cejar. Sea esto conseguido
+haciendo a un lado toda la ley o descuidando uno de sus preceptos, el resultado será finalmente
+el mismo. El que peca "en un solo punto" manifiesta menosprecio por toda la ley; su influencia y
+su ejemplo están del lado de la transgresión; y viene a ser "culpado de todos" los puntos de la
+ley. (Santiago 2: 10.)
+
+En su afán por desacreditar los preceptos divinos, Satanás pervirtió las doctrinas de la Biblia,
+de suerte que se incorporaron errores en la fe de millares de personas que profesan creer en las
+Santas Escrituras. El último gran conflicto entre la verdad y el error no es más que la última
+batalla de la controversia que se viene desarrollando desde hace tanto tiempo con respecto a la
+ley de Dios. En esta batalla estamos entrando ahora; es la que se libra entre las leyes de los
+hombres y los preceptos de Jehová, entre la religión de la Biblia y la religión de las fábulas y
+de la tradición.
+
+Los elementos que se coligarán en esta lucha contra la verdad y la justicia, están ya obrando
+activamente. La Palabra santa de Dios que nos ha sido transmitida a costa de tanto padecimiento,
+de tanta sangre de los mártires, no es apreciada debidamente. La Biblia está al alcance de
+todos, pero pocos son los que la aceptan verdaderamente por guía de la vida. La incredulidad
+predomina de modo alarmante, no sólo en el mundo sino también en la iglesia. Muchos han llegado
+al [640] punto de negar doctrinas que son el fundamento mismo de la fe cristiana. Los grandes
+hechos de la creación como los presentan los escritores inspirados, la caída del hombre, la
+expiación y el carácter perpetuo de la ley de Dios son en realidad rechazados entera o
+parcialmente por gran número de los que profesan ser cristianos. Miles de personas que se
+envanecen de su sabiduría y de su espíritu independiente, consideran como una debilidad el tener
+fe implícita en la Biblia; piensan que es prueba de talento superior y científico argumentar con
+las Sagradas Escrituras y espiritualizar y eliminar sus más importantes verdades. Muchos
+ministros enseñan a sus congregaciones y muchos profesores y doctores {p471} dicen a sus
+estudiantes que la ley de Dios ha sido cambiada o abrogada, y a los que tienen los
+requerimientos de ella por válidos y dignos de ser obedecidos literalmente, se los considera
+como merecedores tan sólo de burla o desprecio.
+
+Al rechazar la verdad, los hombres rechazan al Autor de ella. Al pisotear la ley de Dios, se
+niega la autoridad del Legislador. Es tan fácil hacer un ídolo de las falsas doctrinas y teorías
+como tallar un ídolo de madera o piedra. Al representar falsamente los atributos de Dios,
+Satanás induce a los hombres a que se formen un falso concepto con respecto a él. Muchos han
+entronizado un ídolo filosófico en lugar de Jehová, mientras que el Dios viviente, tal cual está
+revelado en su Palabra, en Cristo y en las obras de la creación, no es adorado más que por un
+número relativamente pequeño. Miles y miles deifican la naturaleza al paso que niegan al Dios de
+ella. Aunque en forma diferente, la idolatría existe en el mundo cristiano de hoy tan
+ciertamente como existió entre el antiguo Israel en tiempos de Elías. El Dios de muchos así
+llamados sabios, o filósofos, poetas, políticos, periodistas —el Dios de los círculos selectos y
+a la moda, de muchos colegios y universidades y hasta de muchos centros de teología— no es mucho
+mejor que Baal, el dios-sol de los fenicios.
+
+Ninguno de los errores aceptados por el mundo cristiano [641] ataca más atrevidamente la
+autoridad de Dios, ninguno está en tan abierta oposición con las enseñanzas de la razón, ninguno
+es de tan perniciosos resultados como la doctrina moderna que tanto cunde, de que la ley de Dios
+ya no es más de carácter obligatorio para los hombres. Toda nación tiene sus leyes que exigen
+respeto y obediencia; ningún gobierno podría subsistir sin ellas; ¿y es posible imaginarse que
+el Creador del cielo y de la tierra no tenga ley alguna para gobernar los seres a los cuales
+creó? Supongamos que los ministros más eminentes se pusiesen a predicar que las leyes que
+gobiernan a su país y amparan los derechos de los ciudadanos no estaban más en vigencia, que por
+coartar las libertades del pueblo ya no se les debe obediencia. ¿Por cuánto tiempo se tolerarían
+semejantes prédicas? ¿Pero es acaso mayor ofensa desdeñar las leyes de los estados y de las
+naciones que pisotear los preceptos divinos, que son el fundamento de todo gobierno?
+
+Más acertado sería que las naciones aboliesen sus estatutos y dejaran al pueblo hacer lo que
+quisiese, antes de que el Legislador del universo anulase su ley y dejase al mundo sin norma
+para condenar al culpable o justificar al obediente. ¿Queremos saber cuál sería el resultado de
+la abolición de la ley de Dios? El experimento se ha hecho ya. Terribles fueron las escenas que
+se desarrollaron en Francia cuando el ateísmo ejerció el poder. Entonces el mundo vio que
+rechazar las restricciones que Dios impuso equivale a aceptar el gobierno {p472} de los más
+crueles y despóticos. Cuando se echa a un lado la norma de justicia, queda abierto el camino
+para que el príncipe del mal establezca su poder en la tierra.
+
+Siempre que se rechazan los preceptos divinos, el pecado deja de parecer culpa y la justicia
+deja de ser deseable. Los que se niegan a someterse al gobierno de Dios son completamente
+incapaces de gobernarse a sí mismos. Debido a sus enseñanzas perniciosas, se implanta el
+espíritu de insubordinación en el corazón de los niños y jóvenes, de suyo insubordinados, y se
+obtiene como resultado un estado social donde la [642] anarquía reina soberana. Al paso que se
+burlan de la credulidad de los que obedecen las exigencias de Dios, las multitudes aceptan con
+avidez los engaños de Satanás. Se entregan a sus deseos desordenados y practican los pecados que
+acarrearon los juicios de Dios sobre los paganos.
+
+Los que le enseñan al pueblo a considerar superficialmente los mandamientos de Dios, siembran la
+desobediencia para recoger desobediencia. Rechácense enteramente los límites impuestos por la
+ley divina y pronto se despreciarán las leyes humanas. Los hombres están dispuestos a pisotear
+la ley de Dios por considerarla como un obstáculo para su prosperidad material, porque ella
+prohibe las prácticas deshonestas, la codicia, la mentira y el fraude; pero ellos no se imaginan
+lo que resultaría de la abolición de los preceptos divinos. Si la ley no tuviera fuerza alguna
+¿por qué habría de temerse el transgredirla? La propiedad ya no estaría segura. Cada cual se
+apoderaría por la fuerza de los bienes de su vecino, y el más fuerte se haría el más rico. Ni
+siquiera se respetaría la vida. La institución del matrimonio dejaría de ser baluarte sagrado
+para la protección de la familia. El que pudiera, si así lo desease, tomaría la mujer de su
+vecino. El quinto mandamiento sería puesto a un lado junto con el cuarto. Los hijos no
+vacilarían en atentar contra la vida de sus padres, si al hacerlo pudiesen satisfacer los deseos
+de sus corazones corrompidos. El mundo civilizado se convertiría en una horda de ladrones y
+asesinos, y la paz, la tranquilidad y la dicha desaparecerían de la tierra.
+
+La doctrina de que los hombres no están obligados a obedecer los mandamientos de Dios ha
+debilitado ya el sentimiento de la responsabilidad moral y ha abierto anchas las compuertas para
+que la iniquidad aniegue el mundo. La licencia, la disipación y la corrupción nos invaden como
+ola abrumadora. Satanás está trabajando en el seno de las familias. Su bandera flota hasta en
+los hogares de los que profesan ser cristianos. En ellos se ven la envidia, las sospechas, la
+hipocresía, la frialdad, la rivalidad, las disputas, las traiciones y el desenfreno de los [643]
+apetitos. Todo el sistema de doctrinas y principios religiosos que deberían formar el fundamento
+y marco de la vida social, parece una mole tambaleante a punto de desmoronarse en ruinas. Los
+más viles criminales, {p473} echados en la cárcel por sus delitos, son a menudo objeto de
+atenciones y obsequios como si hubiesen llegado a un envidiable grado de distinción. Se da gran
+publicidad a las particularidades de su carácter y a sus crímenes. La prensa publica los
+detalles escandalosos del vicio, iniciando así a otros en la práctica del fraude, del robo y del
+asesinato, y Satanás se regocija del éxito de sus infernales designios. La infatuación del
+vicio, la criminalidad, el terrible incremento de la intemperancia y de la iniquidad, en toda
+forma y grado, deberían llamar la atención de todos los que temen a Dios para que vieran lo que
+podría hacerse para contener el desborde del mal.
+
+Los tribunales están corrompidos. Los magistrados se dejan llevar por el deseo de las ganancias
+y el afán de los placeres sensuales. La intemperancia ha obcecado las facultades de muchos, de
+suerte que Satanás los dirige casi a su gusto. Los juristas se dejan pervertir, sobornar y
+engañar. La embriaguez y las orgías, la pasión, la envidia, la mala fe bajo todas sus formas se
+encuentran entre los que administran las leyes. "La justicia se mantiene a lo lejos, por cuanto
+la verdad está caída en la calle, y la rectitud no puede entrar." (Isaías 59: 14, V.M.)
+
+La iniquidad y las tinieblas espirituales que prevalecieron bajo la supremacía papal fueron
+resultado inevitable de la supresión de las Sagradas Escrituras. ¿Pero dónde está la causa de la
+incredulidad general, del rechazamiento de la ley de Dios y de la corrupción consiguiente bajo
+el pleno resplandor de la luz del Evangelio en esta época de libertad religiosa? Ahora que
+Satanás no puede gobernar al mundo negándole las Escrituras, recurre a otros medios para
+alcanzar el mismo objeto. Destruir la fe en la Biblia responde tan bien a sus designios como
+destruir la Biblia misma. Insinuando la creencia de que la ley de Dios no es obligatoria, empuja
+a los hombres [644] a transgredirla tan seguramente como si ignorasen los preceptos de ella. Y
+ahora, como en tiempos pasados, obra por intermedio de la iglesia para promover sus fines. Las
+organizaciones religiosas de nuestros días se han negado a prestar atención a las verdades
+impopulares claramente enseñadas en las Santas Escrituras, y al combatirlas, han adoptado
+interpretaciones y asumido actitudes que han sembrado al vuelo las semillas del escepticismo.
+Aferrándose al error papal de la inmortalidad natural del alma y al del estado consciente de los
+muertos, han rechazado la única defensa posible contra los engaños del espiritismo. La doctrina
+de los tormentos eternos ha inducido a muchos a dudar de la Biblia. Y cuando se le presenta al
+pueblo la obligación de observar el cuarto mandamiento, se ve que ordena reposar en el séptimo
+día; y como único medio de librarse de un deber que no desean cumplir, muchos de los maestros
+populares declaran que la ley de Dios no está ya en vigencia. De este modo rechazan al mismo
+tiempo la ley y el sábado. A medida que adelante la reforma respecto del sábado, esta manera de
+rechazar la ley divina para evitar la obediencia al cuarto mandamiento se volverá casi
+universal. {p474} Las doctrinas de los caudillos religiosos han abierto la puerta a la
+incredulidad, al espiritismo y al desprecio de la santa ley de Dios, y sobre ellos descansa una
+terrible responsabilidad por la iniquidad que existe en el mundo cristiano.
+
+Sin embargo, esa misma clase de gente asegura que la corrupción que se va generalizando más y
+más, debe achacarse en gran parte a la violación del así llamado "día del Señor" (domingo), y
+que si se hiciese obligatoria la observancia de este día, mejoraría en gran manera la moralidad
+social. Esto se sostiene especialmente en los Estados Unidos de Norteamérica, donde la doctrina
+del verdadero día de reposo, o sea el sábado, se ha predicado con más amplitud que en ninguna
+otra parte. En dicho país la obra de la temperancia que es una de las reformas morales más
+importantes, va a menudo combinada con el movimiento en favor del domingo, y los defensores
+[645] de éste actúan como si estuviesen trabajando para promover los más altos intereses de la
+sociedad; de suerte que los que se niegan a unirse con ellos son denunciados como enemigos de la
+temperancia y de las reformas. Pero la circunstancia de que un movimiento encaminado a
+establecer un error esté ligado con una obra buena en sí misma, no es un argumento en favor del
+error. Podemos encubrir un veneno mezclándolo con un alimento sano pero no por eso cambiamos su
+naturaleza. Por el contrario, lo hacemos más peligroso, pues se lo tomará con menos recelo. Una
+de las trampas de Satanás consiste en mezclar con el error una porción suficiente de verdad para
+cohonestar aquél. Los jefes del movimiento en favor del domingo pueden propagar reformas que el
+pueblo necesita, principios que estén en armonía con la Biblia; pero mientras mezclen con ellas
+algún requisito en pugna con la ley de Dios, los siervos de Dios no pueden unirse a ellos. Nada
+puede autorizarnos a rechazar los mandamientos de Dios para adoptar los preceptos de los
+hombres.
+
+Merced a los dos errores capitales, el de la inmortalidad del alma y el de la santidad del
+domingo, Satanás prenderá a los hombres en sus redes. Mientras aquél forma la base del
+espiritismo, éste crea un lazo de simpatía con Roma. Los protestantes de los Estados Unidos
+serán los primeros en tender las manos a través de un doble abismo al espiritismo y al poder
+romano; y bajo la influencia de esta triple alianza ese país marchará en las huellas de Roma,
+pisoteando los derechos de la conciencia.
+
+En la medida en que el espiritismo imita más de cerca al cristianismo nominal de nuestros días,
+tiene también mayor poder para engañar y seducir. De acuerdo con el pensar moderno, Satanás
+mismo se ha convertido. Se manifestará bajo la forma de un ángel de luz. Por medio del
+espiritismo han de cumplirse milagros, los enfermos sanarán, y se realizarán muchos prodigios
+innegables. Y como los espíritus profesarán creer en la Biblia y manifestarán respeto por las
+instituciones [646] de la iglesia, su obra será aceptada como manifestación del poder divino.
+
+{p475} La línea de separación entre los que profesan ser cristianos y los impíos es actualmente
+apenas perceptible. Los miembros de las iglesias aman lo que el mundo ama y están listos para
+unirse con ellos; Satanás tiene resuelto unirlos en un solo cuerpo y de este modo robustecer su
+causa atrayéndolos a todos a las filas del espiritismo. Los papistas, que se jactan de sus
+milagros como signo cierto de que su iglesia es la verdadera, serán fácilmente engañados por
+este poder maravilloso, y los protestantes, que han arrojado de sí el escudo de la verdad, serán
+igualmente seducidos. Los papistas, los protestantes y los mundanos aceptarán igualmente la
+forma de la piedad sin el poder de ella, y verán en esta unión un gran movimiento para la
+conversión del mundo y el comienzo del milenio tan largamente esperado.
+
+El espiritismo hace aparecer a Satanás como benefactor de la raza humana, que sana las
+enfermedades del pueblo y profesa presentar un sistema religioso nuevo y más elevado; pero al
+mismo tiempo obra como destructor. Sus tentaciones arrastran a multitudes a la ruina. La
+intemperancia destrona la razón, los placeres sensuales, las disputas y los crímenes la siguen.
+Satanás se deleita en la guerra, que despierta las más viles pasiones del alma, y arroja luego a
+sus víctimas, sumidas en el vicio y en la sangre, a la eternidad. Su objeto consiste en hostigar
+a las naciones a hacerse mutuamente la guerra; pues de este modo puede distraer los espíritus de
+los hombres de la obra de preparación necesaria para subsistir en el día del Señor.
+
+Satanás obra asimismo por medio de los elementos para cosechar muchedumbres de almas aún no
+preparadas. Tiene estudiados los secretos de los laboratorios de la naturaleza y emplea todo su
+poder para dirigir los elementos en cuanto Dios se lo permita. Cuando se le dejó que afligiera a
+Job, ¡cuán prestamente fueron destruídos rebaños, ganado, sirvientes, casas e hijos, en una
+serie de desgracias, obra de un momento! [647] Es Dios quien protege a sus criaturas y las
+guarda del poder del destructor. Pero el mundo cristiano ha manifestado su menosprecio de la ley
+de Jehová, y el Señor hará exactamente lo que declaró que haría: alejará sus bendiciones de la
+tierra y retirará su cuidado protector de sobre los que se rebelan contra su ley y que enseñan y
+obligan a los demás a hacer lo mismo. Satanás ejerce dominio sobre todos aquellos a quienes Dios
+no guarda en forma especial. Favorecerá y hará prosperar a algunos para obtener sus fines, y
+atraerá desgracias sobre otros, al mismo tiempo que hará creer a los hombres que es Dios quien
+los aflige.
+
+Al par que se hace pasar ante los hijos de los hombres como un gran médico que puede curar todas
+sus enfermedades, Satanás producirá enfermedades y desastres al punto que ciudades populosas
+sean reducidas a ruinas y desolación. Ahora mismo está obrando. Ejerce su poder en todos los
+lugares y bajo mil {p476} formas: en las desgracias y calamidades de mar y tierra, en las
+grandes conflagraciones, en los tremendos huracanes y en las terribles tempestades de granizo,
+en las inundaciones, en los ciclones, en las mareas extraordinarias y en los terremotos.
+Destruye las mieses casi maduras y a ello siguen la hambruna y la angustia; propaga por el aire
+emanaciones mefíticas y miles de seres perecen en la pestilencia. Estas plagas irán menudeando
+más y más y se harán más y más desastrosas. La destrucción caerá sobre hombres y animales. "La
+tierra se pone de luto y se marchita," "desfallece la gente encumbrada de la tierra. La tierra
+también es profanada bajo sus habitantes; porque traspasaron la ley, cambiaron el estatuto, y
+quebrantaron el pacto eterno." (Isaías 24: 4, 5, V.M.)
+
+Y luego el gran engañador persuadirá a los hombres de que son los que sirven a Dios los que
+causan esos males. La parte de la humanidad que haya provocado el desagrado de Dios lo cargará a
+la cuenta de aquellos cuya obediencia a los mandamientos divinos es una reconvención perpetua
+para los transgresores. Se declarará que los hombres ofenden a Dios al violar [648] el descanso
+del domingo; que este pecado ha atraído calamidades que no concluirán hasta que la observancia
+del domingo no sea estrictamente obligatoria; y que los que proclaman la vigencia del cuarto
+mandamiento, haciendo con ello que se pierda el respeto debido al domingo y rechazando el favor
+divino, turban al pueblo y alejan la prosperidad temporal. Y así se repetirá la acusación hecha
+antiguamente al siervo de Dios y por motivos de la misma índole: "Y sucedió, luego que Acab vio
+a Elías, que le dijo Acab: ¿Estás tú aquí, perturbador de Israel? A lo que respondió: No he
+perturbado yo a Israel, sino tú y la casa de tu padre, por haber dejado los mandamientos de
+Jehová, y haber seguido a los Baales." (1 Reyes 18: 17, 18, V.M.) Cuando con falsos cargos se
+haya despertado la ira del pueblo, éste seguirá con los embajadores de Dios una conducta muy
+parecida a la que siguió el apóstata Israel con Elías.
+
+El poder milagroso que se manifiesta en el espiritismo ejercerá su influencia en perjuicio de
+los que prefieren obedecer a Dios antes que a los hombres. Habrá comunicaciones de espíritus que
+declararán que Dios los envió para convencer de su error a los que rechazan el domingo y
+afirmarán que se debe obedecer a las leyes del país como a la ley de Dios. Lamentarán la gran
+maldad existente en el mundo y apoyarán el testimonio de los ministros de la religión en el
+sentido de que la degradación moral se debe a la profanación del domingo. Grande será la
+indignación despertada contra todos los que se nieguen a aceptar sus aseveraciones.
+
+La política de Satanás en este conflicto final con el pueblo de Dios es la misma que la seguida
+por él al principio de la gran controversia en el cielo. Hacía como si procurase la estabilidad
+del gobierno divino, mientras que por lo bajo hacía cuanto {p477} podía por derribarlo y acusaba
+a los ángeles fieles de esa misma obra que estaba así tratando de realizar. La misma política de
+engaño caracteriza la historia de la iglesia romana. Ha profesado actuar como representante del
+cielo, mientras trataba de elevarse por encima de Dios y de mudar su ley. Bajo [649] el reinado
+de Roma, los que sufrieron la muerte por causa de su fidelidad al Evangelio fueron denunciados
+como malhechores; se los declaró en liga con Satanás, y se emplearon cuantos medios se pudo para
+cubrirlos de oprobio y hacerlos pasar ante los ojos del pueblo y ante ellos mismos por los más
+viles criminales. Otro tanto sucederá ahora. Mientras Satanás trata de destruir a los que honran
+la ley de Dios, los hará acusar como transgresores de la ley, como hombres que están deshonrando
+a Dios y atrayendo sus castigos sobre el mundo.
+
+Dios no violenta nunca la conciencia; pero Satanás recurre constantemente a la violencia para
+dominar a aquellos a quienes no puede seducir de otro modo. Por medio del temor o de la fuerza
+procura regir la conciencia y hacerse tributar homenaje. Para conseguir esto, obra por medio de
+las autoridades religiosas y civiles y las induce a que impongan leyes humanas contrarias a la
+ley de Dios.
+
+Los que honran el sábado de la Biblia serán denunciados como enemigos de la ley y del orden,
+como quebrantadores de las restricciones morales de la sociedad, y por lo tanto causantes de
+anarquía y corrupción que atraen sobre la tierra los altos juicios de Dios. Sus escrúpulos de
+conciencia serán presentados como obstinación, terquedad y rebeldía contra la autoridad. Serán
+acusados de deslealtad hacia el gobierno. Los ministros que niegan la obligación de observar la
+ley divina predicarán desde el púlpito que hay que obedecer a las autoridades civiles porque
+fueron instituídas por Dios. En las asambleas legislativas y en los tribunales se calumniará y
+condenará a los que guardan los mandamientos. Se falsearán sus palabras, y se atribuirán a sus
+móviles las peores intenciones.
+
+A medida que las iglesias protestantes rechacen los argumentos claros de la Biblia en defensa de
+la ley de Dios, desearán imponer silencio a aquellos cuya fe no pueden rebatir con la Biblia.
+Aunque se nieguen a verlo, el hecho es que están asumiendo actualmente una actitud que dará por
+resultado la persecución de los que se niegan en conciencia a hacer lo que [650] el resto del
+mundo cristiano está haciendo y a reconocer los asertos hechos en favor del día de reposo papal.
+
+Los dignatarios de la iglesia y del estado se unirán para hacer que todos honren el domingo, y
+para ello apelarán al cohecho, a la persuasión o a la fuerza. La falta de autoridad divina se
+suplirá con ordenanzas abrumadoras. La corrupción política está destruyendo el amor a la
+justicia y el respeto a la verdad; y hasta en los Estados Unidos de la libre América, se verá a
+los representantes del pueblo y a los legisladores tratar de asegurarse el favor público
+doblegándose a las {p478} exigencias populares por una ley que imponga la observancia del
+domingo. La libertad de conciencia que tantos sacrificios ha costado no será ya respetada. En el
+conflicto que está por estallar veremos realizarse las palabras del profeta: "Airóse el dragón
+contra la mujer, y se fue para hacer guerra contra el residuo de su simiente, los que guardan
+los mandamientos de Dios, y tienen el testimonio de Jesús." (Apocalipsis 12: 17, V.M.) [651]
+`,
+
+  preguntas: [
+    {"t": "mc", "pag": 470, "lit": "Para realizarlo se rebeló contra el Creador y, aunque expulsado del cielo, continuó la misma lucha en la tierra.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 37 (p. 470), ¿qué palabra completa la frase? «Para realizarlo se rebeló contra el ___ y, aunque expulsado del cielo, continuó la misma lucha en la tierra.»", "o": ["Palabra", "Sagradas", "Creador", "Elías"], "a": 2, "e": "El libro dice: «Para realizarlo se rebeló contra el Creador y, aunque expulsado del cielo, continuó la misma lucha en la tierra.»"},
+    {"t": "fill", "pag": 470, "lit": "Sea esto conseguido haciendo a un lado toda la ley o descuidando uno de sus preceptos, el resultado será finalmente el mismo.", "pend": 1, "ins": "El conflicto de los siglos, cap. 37 (p. 470) — Completa la frase del libro:", "p": [{"x": "«Sea esto conseguido haciendo a un lado toda la ley o descuidando uno de sus "}, {"b": "preceptos", "h": "¿qué palabra falta?"}, {"x": ", el resultado será finalmente el mismo.»"}]},
+    {"t": "mc", "pag": 470, "lit": "Los elementos que se coligarán en esta lucha contra la verdad y la justicia, están ya obrando activamente.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 37 (p. 470), ¿qué palabra completa la frase? «Los ___ que se coligarán en esta lucha contra la verdad y la justicia, están ya obrando activamente.»", "o": ["motivos", "resultados", "elementos", "unirlos"], "a": 2, "e": "El libro dice: «Los elementos que se coligarán en esta lucha contra la verdad y la justicia, están ya obrando activamente.»"},
+    {"t": "tf", "pag": 471, "lit": "Al representar falsamente los atributos de Dios, Satanás induce a los hombres a que se formen un falso concepto con respecto a él.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 37 (p. 471), el libro dice: «Al representar falsamente los atributos de Dios, Sagradas induce a los hombres a que se formen un falso concepto con respecto a él.»", "a": false, "e": "Es falso: el libro dice «Al representar falsamente los atributos de Dios, Satanás induce a los hombres a que se formen un falso concepto con respecto a él.»"},
+    {"t": "mc", "pag": 472, "lit": "Rechácense enteramente los límites impuestos por la ley divina y pronto se despreciarán las leyes humanas.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 37 (p. 472), ¿qué palabra completa la frase? «Rechácense enteramente los límites impuestos por la ley divina y pronto se ___ las leyes humanas.»", "o": ["realizarán", "declararán", "despreciarán", "atribuirán"], "a": 2, "e": "El libro dice: «Rechácense enteramente los límites impuestos por la ley divina y pronto se despreciarán las leyes humanas.»"},
+    {"t": "fill", "pag": 472, "lit": "Los hijos no vacilarían en atentar contra la vida de sus padres, si al hacerlo pudiesen satisfacer los deseos de sus corazones corrompidos.", "pend": 1, "ins": "El conflicto de los siglos, cap. 37 (p. 472) — Completa la frase del libro:", "p": [{"x": "«Los hijos no vacilarían en atentar contra la vida de sus padres, si al hacerlo pudiesen satisfacer los deseos de sus corazones "}, {"b": "corrompidos", "h": "¿qué palabra falta?"}, {"x": ".»"}]},
+    {"t": "tf", "pag": 474, "lit": "Podemos encubrir un veneno mezclándolo con un alimento sano pero no por eso cambiamos su naturaleza.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 37 (p. 474), el libro dice: «Podemos encubrir un veneno mezclándolo con un alimento sano pero no por eso cambiamos su naturaleza.»", "a": true, "e": "Es verdadero: el libro dice «Podemos encubrir un veneno mezclándolo con un alimento sano pero no por eso cambiamos su naturaleza.»"},
+    {"t": "mc", "pag": 474, "lit": "En la medida en que el espiritismo imita más de cerca al cristianismo nominal de nuestros días, tiene también mayor poder para engañar y seducir.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 37 (p. 474), ¿qué palabra completa la frase? «En la medida en que el ___ imita más de cerca al cristianismo nominal de nuestros días, tiene también mayor poder para engañar y seducir.»", "o": ["espiritismo", "civilizado", "predicado", "trabajando"], "a": 0, "e": "El libro dice: «En la medida en que el espiritismo imita más de cerca al cristianismo nominal de nuestros días, tiene también mayor poder para engañar y seducir.»"},
+    {"t": "mc", "pag": 474, "lit": "Por medio del espiritismo han de cumplirse milagros, los enfermos sanarán, y se realizarán muchos prodigios innegables.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 37 (p. 474), ¿qué palabra completa la frase? «Por medio del espiritismo han de cumplirse ___, los enfermos sanarán, y se realizarán muchos prodigios innegables.»", "o": ["tormentos", "milagros", "aceptados", "designios"], "a": 1, "e": "El libro dice: «Por medio del espiritismo han de cumplirse milagros, los enfermos sanarán, y se realizarán muchos prodigios innegables.»"},
+    {"t": "fill", "pag": 475, "lit": "Satanás se deleita en la guerra, que despierta las más viles pasiones del alma, y arroja luego a sus víctimas, sumidas en el vicio y en la sangre, a la eternidad.", "pend": 1, "ins": "El conflicto de los siglos, cap. 37 (p. 475) — Completa la frase del libro:", "p": [{"x": "«Satanás se deleita en la guerra, que "}, {"b": "despierta", "h": "¿qué palabra falta?"}, {"x": " las más viles pasiones del alma, y arroja luego a sus víctimas, sumidas en el vicio y en la sangre, a la eternidad.»"}]},
+    {"t": "mc", "pag": 475, "lit": "Su objeto consiste en hostigar a las naciones a hacerse mutuamente la guerra; pues de este modo puede distraer los espíritus de los hombres de la obra de preparación necesaria para subsistir en el día del Señor.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 37 (p. 475), ¿qué palabra completa la frase? «Su objeto consiste en hostigar a las naciones a hacerse mutuamente la guerra; pues de este modo puede distraer los espíritus de los hombres de la obra de preparación necesaria para subsistir en el día del ___.»", "o": ["Satanás", "Palabra", "Señor", "Elías"], "a": 2, "e": "El libro dice: «Su objeto consiste en hostigar a las naciones a hacerse mutuamente la guerra; pues de este modo puede distraer los espíritus de los hombres de la obra de preparación necesaria para subsistir en el día del Señor.»"},
+    {"t": "tf", "pag": 475, "lit": "Tiene estudiados los secretos de los laboratorios de la naturaleza y emplea todo su poder para dirigir los elementos en cuanto Dios se lo permita.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 37 (p. 475), el libro dice: «Tiene estudiados los secretos de los laboratorios de la naturaleza y emplea todo su poder para dirigir los elementos en cuanto Dios se lo permita.»", "a": true, "e": "Es verdadero: el libro dice «Tiene estudiados los secretos de los laboratorios de la naturaleza y emplea todo su poder para dirigir los elementos en cuanto Dios se lo permita.»"},
+    {"t": "mc", "pag": 476, "lit": "Lamentarán la gran maldad existente en el mundo y apoyarán el testimonio de los ministros de la religión en el sentido de que la degradación moral se debe a la profanación del domingo.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 37 (p. 476), ¿qué palabra completa la frase? «Lamentarán la gran maldad existente en el mundo y apoyarán el testimonio de los ministros de la religión en el sentido de que la ___ moral se debe a la profanación del domingo.»", "o": ["degradación", "abolición", "obligación", "atención"], "a": 0, "e": "El libro dice: «Lamentarán la gran maldad existente en el mundo y apoyarán el testimonio de los ministros de la religión en el sentido de que la degradación moral se debe a la profanación del domingo.»"},
+    {"t": "fill", "pag": 477, "lit": "La misma política de engaño caracteriza la historia de la iglesia romana.", "pend": 1, "ins": "El conflicto de los siglos, cap. 37 (p. 477) — Completa la frase del libro:", "p": [{"x": "«La misma política de engaño "}, {"b": "caracteriza", "h": "¿qué palabra falta?"}, {"x": " la historia de la iglesia romana.»"}]},
+    {"t": "tf", "pag": 477, "lit": "En las asambleas legislativas y en los tribunales se calumniará y condenará a los que guardan los mandamientos.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 37 (p. 477), el libro dice: «En las asambleas legislativas y en los facultades se calumniará y condenará a los que guardan los mandamientos.»", "a": false, "e": "Es falso: el libro dice «En las asambleas legislativas y en los tribunales se calumniará y condenará a los que guardan los mandamientos.»"},
+    {"t": "mc", "pag": 477, "lit": "Se falsearán sus palabras, y se atribuirán a sus móviles las peores intenciones.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 37 (p. 477), ¿qué palabra completa la frase? «Se falsearán sus palabras, y se ___ a sus móviles las peores intenciones.»", "o": ["despreciarán", "coligarán", "atribuirán", "declararán"], "a": 2, "e": "El libro dice: «Se falsearán sus palabras, y se atribuirán a sus móviles las peores intenciones.»"}
+  ],
+
+  tarjetas: [
+    {"pag": 470, "lit": "Para realizarlo se rebeló contra el Creador y, aunque expulsado del cielo, continuó la misma lucha en la tierra.", "pend": 1, "f": "CS 37 (p. 470): «Para realizarlo se rebeló contra el ___ y, aunque expulsado del cielo, continuó la misma lucha en la tierra.»", "r": "Creador — «Para realizarlo se rebeló contra el Creador y, aunque expulsado del cielo, continuó la misma lucha en la tierra.»"},
+    {"pag": 470, "lit": "Los elementos que se coligarán en esta lucha contra la verdad y la justicia, están ya obrando activamente.", "pend": 1, "f": "CS 37 (p. 470): «Los ___ que se coligarán en esta lucha contra la verdad y la justicia, están ya obrando activamente.»", "r": "elementos — «Los elementos que se coligarán en esta lucha contra la verdad y la justicia, están ya obrando activamente.»"},
+    {"pag": 472, "lit": "Rechácense enteramente los límites impuestos por la ley divina y pronto se despreciarán las leyes humanas.", "pend": 1, "f": "CS 37 (p. 472): «Rechácense enteramente los límites impuestos por la ley divina y pronto se ___ las leyes humanas.»", "r": "despreciarán — «Rechácense enteramente los límites impuestos por la ley divina y pronto se despreciarán las leyes humanas.»"},
+    {"pag": 474, "lit": "Podemos encubrir un veneno mezclándolo con un alimento sano pero no por eso cambiamos su naturaleza.", "pend": 1, "f": "CS 37 (p. 474): «Podemos encubrir un veneno ___ con un alimento sano pero no por eso cambiamos su naturaleza.»", "r": "mezclándolo — «Podemos encubrir un veneno mezclándolo con un alimento sano pero no por eso cambiamos su naturaleza.»"},
+    {"pag": 474, "lit": "Por medio del espiritismo han de cumplirse milagros, los enfermos sanarán, y se realizarán muchos prodigios innegables.", "pend": 1, "f": "CS 37 (p. 474): «Por medio del espiritismo han de cumplirse ___, los enfermos sanarán, y se realizarán muchos prodigios innegables.»", "r": "milagros — «Por medio del espiritismo han de cumplirse milagros, los enfermos sanarán, y se realizarán muchos prodigios innegables.»"},
+    {"pag": 475, "lit": "Su objeto consiste en hostigar a las naciones a hacerse mutuamente la guerra; pues de este modo puede distraer los espíritus de los hombres de la obra de preparación necesaria para subsistir en el día del Señor.", "pend": 1, "f": "CS 37 (p. 475): «Su objeto consiste en hostigar a las naciones a hacerse mutuamente la guerra; pues de este modo puede distraer los espíritus de los hombres de la obra de preparación necesaria para subsistir en el día del ___.»", "r": "Señor — «Su objeto consiste en hostigar a las naciones a hacerse mutuamente la guerra; pues de este modo puede distraer los espíritus de los hombres de la obra de preparación necesaria para subsistir en el día del Señor.»"},
+    {"pag": 476, "lit": "Lamentarán la gran maldad existente en el mundo y apoyarán el testimonio de los ministros de la religión en el sentido de que la degradación moral se debe a la profanación del domingo.", "pend": 1, "f": "CS 37 (p. 476): «Lamentarán la gran maldad existente en el mundo y apoyarán el testimonio de los ministros de la religión en el sentido de que la ___ moral se debe a la profanación del domingo.»", "r": "degradación — «Lamentarán la gran maldad existente en el mundo y apoyarán el testimonio de los ministros de la religión en el sentido de que la degradación moral se debe a la profanación del domingo.»"},
+    {"pag": 477, "lit": "En las asambleas legislativas y en los tribunales se calumniará y condenará a los que guardan los mandamientos.", "pend": 1, "f": "CS 37 (p. 477): «En las asambleas legislativas y en los ___ se calumniará y condenará a los que guardan los mandamientos.»", "r": "tribunales — «En las asambleas legislativas y en los tribunales se calumniará y condenará a los que guardan los mandamientos.»"}
+  ],
+};

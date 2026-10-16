@@ -22,6 +22,9 @@ const REGLAS = (function () {
     matutina: { tipo: 'dias', nombre: 'Devoción Matutina · Héroes y villanos', corto: 'Devoción Matutina' },
     creencias: { tipo: 'creencias', nombre: 'Las 28 creencias', corto: 'En esto creemos' },
     apocalipsis: { tipo: 'libro', nombre: 'Apocalipsis', corto: 'Apocalipsis' },
+    /* v237: El conflicto de los siglos 24-43 como material (Camilo, 16-oct). Lo pide un
+       concurso de otro tema con `obras` (abajo); sus ids son `cs24`…`cs43`. */
+    conflicto: { tipo: 'libro', nombre: 'El conflicto de los siglos', corto: 'El conflicto de los siglos' },
   };
   const TIPOS = ['libro', 'dias', 'creencias'];
   /* v191: el club de una categoría, si lo tiene. Decide cómo se entra:
@@ -32,11 +35,28 @@ const REGLAS = (function () {
      la Asociación del Alto Magdalena, 15-oct). Un concurso puede pedir capítulos de un
      libro que la app todavía no trae como material (hoy «El conflicto de los siglos»).
      La categoría lo dice en `obras`: { cs: [24, 25, …] }. Se guarda, se muestra y se
-     revisa contra el rango de la obra; no se estudia ni se pregunta hasta que el libro
-     esté en la app. Los títulos de los capítulos viven en fuente/conflicto.js. */
+     revisa contra el rango de la obra. Los títulos de los capítulos viven en
+     fuente/conflicto.js.
+     v237: UNA FICHA, DOS LIBROS. Una obra con `tema` ya es material de la app: sus
+     capítulos (`pre` + número, «cs24») entran a lo que la categoría estudia (estudiaDe),
+     así que se filtran, se estudian y salen en el examen de práctica junto con los del
+     tema de la ficha. Un capítulo que la obra todavía no tiene escrito no aparece y
+     no rompe nada: la lista de la app solo trae los que existen. */
   const OBRAS = {
-    cs: { nombre: 'El conflicto de los siglos', corto: 'CS', autor: 'Elena G. de White', de: 1, a: 43 },
+    cs: { nombre: 'El conflicto de los siglos', corto: 'CS', autor: 'Elena G. de White', de: 1, a: 43, tema: 'conflicto', pre: 'cs' },
   };
+  /** Lo que estudia una categoría: su lista y los capítulos de sus obras que son material. */
+  const estudiaDe = c => {
+    const l = Array.isArray(c.estudia) ? c.estudia.slice() : [];
+    for (const [o, ns] of Object.entries(esObjeto(c.obras) ? c.obras : {})) {
+      const O = Object.prototype.hasOwnProperty.call(OBRAS, o) ? OBRAS[o] : null;
+      if (O && O.pre && Array.isArray(ns)) for (const n of ns) if (Number.isInteger(n) && !l.includes(O.pre + n)) l.push(O.pre + n);
+    }
+    return l;
+  };
+  /** Los temas de una ficha: el suyo y los de las obras que son material. */
+  const temasDe = f => [...new Set([f.tema, ...(f.categorias || []).flatMap(c => Object.keys(esObjeto(c.obras) ? c.obras : {})
+    .map(o => (Object.prototype.hasOwnProperty.call(OBRAS, o) ? OBRAS[o] : {}).tema).filter(Boolean))])];
   const SEG_POR_PREGUNTA = 72;
   const ID = /^[a-z][a-z0-9]{1,11}$/;
   const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
@@ -64,7 +84,7 @@ const REGLAS = (function () {
     const orden = [];
     for (const f of fichas) {
       ACTIVIDADES[f.id] = { nombre: f.nombre, icono: f.icono, cuando: f.cuando, que: f.que,
-        cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '',
+        cats: f.categorias.map(c => c.id), tema: f.tema, temas: temasDe(f), tipo: (tipos[f.tema] || {}).tipo || '',
         fecha: f.fecha || '', organiza: f.organiza || '' };
       for (const c of f.categorias) {
         /* v214: `sinPoliticas`: la categoría no tiene reglamento de concurso (Guías
@@ -77,7 +97,7 @@ const REGLAS = (function () {
         orden.push(c);
       }
     }
-    const catsDe = id => orden.filter(c => c.estudia.includes(id)).map(c => c.id);
+    const catsDe = id => orden.filter(c => estudiaDe(c).includes(id)).map(c => c.id);
     const extraDe = id => orden.filter(c => (c.soloEstudio || []).includes(id)).map(c => c.id);
     /* Le pone a cada capítulo o repaso para quién es. `extra` solo aparece
        cuando hay alguien para quien es de solo estudio. */
@@ -152,7 +172,7 @@ const REGLAS = (function () {
   /* Lo que ningún campamento usa. No es un error de la ficha, pero un capítulo
      escrito que nadie ve casi siempre es un olvido. */
   function sinUsar(fichas, temas) {
-    const usados = new Set(fichas.flatMap(f => f.categorias.flatMap(c => c.estudia)));
+    const usados = new Set(fichas.flatMap(f => f.categorias.flatMap(estudiaDe)));
     return Object.values(temas).flat().filter(id => !usados.has(id));
   }
 
@@ -247,12 +267,13 @@ const REGLAS = (function () {
   function libres(actividades, tipos) {
     tipos = tipos || TEMAS;
     const ACTS = {}, CATS = {};
-    for (const a of Object.values(actividades)) {
-      const id = LIBRE + a.tema;
-      if (ACTS[id] || !tipos[a.tema]) continue;
-      const T = tipos[a.tema];
-      ACTS[id] = { nombre: T.corto || T.nombre, icono: a.icono, cuando: 'Sin concurso', que: T.nombre,
-        cats: [id], tema: a.tema, tipo: T.tipo, fecha: '', libre: true };
+    /* v237: también los temas de las obras que son material (El conflicto de los siglos). */
+    for (const a of Object.values(actividades)) for (const tema of (a.temas || [a.tema])) {
+      const id = LIBRE + tema;
+      if (ACTS[id] || !tipos[tema]) continue;
+      const T = tipos[tema];
+      ACTS[id] = { nombre: T.corto || T.nombre, icono: tema === a.tema ? a.icono : '📕', cuando: 'Sin concurso', que: T.nombre,
+        cats: [id], tema, temas: [tema], tipo: T.tipo, fecha: '', libre: true };
       CATS[id] = { act: id, nombre: 'Estudio libre', edad: 'Para todos', n: 25, techo: 3,
         sinCompletar: false, sinVF: false, tarjetas: 20, alcance: 'Todo el material', seg: SEG_POR_PREGUNTA,
         rampa: false, club: '', sinPoliticas: true, libre: true };
@@ -260,6 +281,6 @@ const REGLAS = (function () {
     return { ACTS, CATS };
   }
 
-  return { TEMAS, TIPOS, CLUBES, OBRAS, deriva, revisa, sinUsar, junta, forma, libres, LIBRE };
+  return { TEMAS, TIPOS, CLUBES, OBRAS, deriva, revisa, sinUsar, junta, forma, libres, LIBRE, estudiaDe, temasDe };
 })();
 if (typeof module !== 'undefined' && module.exports) module.exports = REGLAS;

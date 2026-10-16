@@ -1,0 +1,289 @@
+/* El conflicto de los siglos, capítulo 25: «Jesucristo Nuestro Abogado» (págs. 348-354).
+   Texto de la edición de la biblioteca (Asociación Publicadora Interamericana, 1954;
+   copia digital del Ministerio Evangelio Eterno). Camilo autorizó usar el texto completo
+   (16-oct). Solo se corrigieron cortes obvios de la digitalización («traspasa ron»).
+   {pNNN}: aquí empieza la página NNN de esta edición. [NNN]: la paginación que trae la
+   copia digital entre corchetes, tal cual.
+   Las preguntas y las tarjetas salen de una frase literal del texto (`lit`) con una
+   palabra tapada; `pend: 1` = pendiente de revisión de Camilo. tests/test.js comprueba
+   que cada `lit` esté en el texto. */
+module.exports = {
+  n: 25, titulo: 'Jesucristo Nuestro Abogado', pag: 348, fin: 354,
+
+  texto: `
+EL ASUNTO del santuario fue la clave que aclaró el misterio del desengaño de 1844. Reveló todo
+un sistema de verdades, que formaban un conjunto armonioso y demostraban que la mano de Dios
+había dirigido el gran movimiento adventista, y al poner de manifiesto la situación y la obra de
+su pueblo le indicaba cuál era su deber de allí en adelante. Como los discípulos de Jesús,
+después de la noche terrible de su angustia y desengaño, "se gozaron viendo al Señor," así
+también se regocijaron ahora los que habían esperado con fe su segunda venida. Habían esperado
+que vendría en gloria para recompensar a sus siervos. Como sus esperanzas fuesen chasqueadas,
+perdieron de vista a Jesús, y como María al lado del sepulcro, exclamaron: "Se han llevado a mi
+Señor, y no sé dónde le han puesto." Entonces, en el lugar santísimo, contemplaron otra vez a su
+compasivo Sumo Sacerdote que debía aparecer pronto como su rey y libertador. La luz del
+santuario iluminaba lo pasado, lo presente y lo porvenir. Supieron que Dios les había guiado por
+su providencia infalible. Aunque, como los primeros discípulos, ellos mismos no habían
+comprendido el mensaje que daban, éste había sido correcto en todo sentido. Al proclamarlo
+habían cumplido los designios de Dios, y su labor no había sido vana en el Señor. Reengendrados
+"en esperanza viva," se regocijaron "con gozo inefable y glorificado."
+
+Tanto la profecía de Daniel 8:14: "Hasta dos mil y trescientas tardes y mañanas; entonces será
+purificado el Santuario," como el mensaje del primer ángel: "¡Temed a Dios y dadle gloria;
+porque ha llegado la hora de su juicio!" señalaban al ministerio de Cristo en el lugar
+santísimo, al juicio investigador, y no a la venida de Cristo para la redención de su [477]
+pueblo y la destrucción de los impíos. El error no estaba en el cómputo de los períodos
+proféticos, sino en el acontecimiento que debía verificarse al fin de los 2.300 días. Debido a
+este error los creyentes habían sufrido un desengaño; sin embargo se había realizado todo lo
+predicho por la profecía, y todo lo que alguna garantía bíblica permitía esperar. En el momento
+mismo en que estaban lamentando la defraudación de sus esperanzas, se había realizado el
+acontecimiento que estaba predicho por el mensaje, y que debía cumplirse antes de que el Señor
+pudiese aparecer para recompensar a sus siervos.
+
+Cristo había venido, no a la tierra, como ellos lo esperaban, sino, como estaba {p349}
+simbolizado en el símbolo, al lugar santísimo del templo de Dios en el cielo. El profeta Daniel
+le representa como viniendo en ese tiempo al Anciano de días: "Estaba mirando en visiones de la
+noche, y he aquí que sobre las nubes del ciclo venía Uno parecido a un hijo de hombre; y vino"
+—no a la tierra, sino— "al Anciano de días, y le trajeron delante de él." (Daniel 7: 13, V.M.)
+
+Esta venida está predicha también por el profeta Malaquías: "Repentinamente vendrá a su Templo
+el Señor a quien buscáis: es decir, el Ángel del Pacto, en quien os deleitéis; he aquí que
+vendrá, dice Jehová de los Ejércitos." (Malaquías 3: 1, V.M.) La venida del Señor a su templo
+fue repentina, de modo inesperado, para su pueblo. Este no le esperaba allí. Esperaba que
+vendría a la tierra, "en llama de fuego, para dar el pago a los que no conocieron a Dios, ni
+obedecen al evangelio." (2 Tesalonicenses 1: 8.)
+
+Pero el pueblo no estaba aún preparado para ir al encuentro de su Señor. Todavía le quedaba una
+obra de preparación que cumplir. Debía serle comunicada una luz que dirigiría su espíritu hacia
+el templo de Dios en el cielo; y mientras siguiera allí por fe a su Sumo Sacerdote en el
+desempeño de su ministerio se le revelarían nuevos deberes. Había de darse a la iglesia otro
+mensaje de aviso e instrucción.
+
+El profeta dice: "¿Pero quién es capaz de soportar el día [478] de su advenimiento? ¿y quién
+podrá estar en pie cuando él apareciere? porque será como el fuego del acrisolador, y como el
+jabón de los bataneros; pues que se sentará como acrisolador y purificador de la plata; y
+purificará a los hijos de Leví, y los afinará como el oro y la plata, para que presenten a
+Jehová ofrenda en justicia." (Malaquías 3: 2, 3, V.M.) Los que vivan en la tierra cuando cese la
+intercesión de Cristo en el santuario celestial deberán estar en pie en la presencia del Dios
+santo sin mediador. Sus vestiduras deberán estar sin mácula; sus caracteres, purificados de todo
+pecado por la sangre de la aspersión. Por la gracia de Dios y sus propios y diligentes esfuerzos
+deberán ser vencedores en la lucha con el mal. Mientras se prosigue el juicio investigador en el
+cielo, mientras que los pecados de los creyentes arrepentidos son quitados del santuario, debe
+llevarse a cabo una obra especial de purificación, de liberación del pecado, entre el pueblo de
+Dios en la tierra. Esta obra está presentada con mayor claridad en los mensajes del capítulo 14
+del Apocalipsis.
+
+Cuando esta obra haya quedado consumada, los discípulos de Cristo estarán listos para su venida.
+"Entonces la ofrenda de Judá y de Jerusalem será grata a Jehová, como en los días de la
+antigüedad, y como en los años de remotos tiempos." (Malaquías 3: 4, V.M.) Entonces la iglesia
+que nuestro Señor recibirá {p350} para sí será una "Iglesia gloriosa, no teniendo mancha, ni
+arruga, ni otra cosa semejante." (Efesios 5: 27, V.M.) Entonces ella aparecerá "como el alba;
+hermosa como la luna, esclarecida como el sol, imponente como ejército con banderas
+tremolantes." (Cantares 6: 10, V.M.)
+
+Además de la venida del Señor a su templo, Malaquías predice también su segundo advenimiento, su
+venida para la ejecución del juicio, en estas palabras: "Y yo me acercaré a vosotros para
+juicio; y seré veloz testigo contra los hechiceros, y contra los adúlteros, y contra los que
+juran en falso, y contra los que defraudan al jornalero de su salario, y oprimen a la viuda y al
+huérfano, y apartan al extranjero de su derecho; y no [479] me temen a mí, dice Jehová de los
+Ejércitos." (Malaquías 3: 5, V.M.) San Judas se refiere a la misma escena cuando dice: "¡He aquí
+que viene el Señor, con las huestes innumerables de sus santos ángeles, para ejecutar juicio
+sobre todos, y para convencer a todos los impíos de todas las obras impías que han obrado
+impíamente!" (S. Judas 14, 15, V.M.) Esta venida y la del Señor a su templo son acontecimientos
+distintos que han de realizarse por separado.
+
+La venida de Cristo como nuestro Sumo Sacerdote al lugar santísimo para la purificación del
+santuario, de la que se habla en Daniel 8:14; la venida del Hijo del hombre al lugar donde está
+el Anciano de días, tal como está presentada en Daniel 7: 13; y la venida del Señor a su templo,
+predicha por Malaquías, son descripciones del mismo acontecimiento representado también por la
+venida del Esposo a las bodas, descrita por Cristo en la parábola de las diez vírgenes, según S.
+Mateo 25.
+
+En el verano y otoño de 1844 fue hecha esta proclamación: "¡He aquí que viene el Esposo!" Se
+conocieron entonces las dos clases de personas representadas por las vírgenes prudentes y
+fatuas: la una que esperaba con regocijo la aparición del Señor y se había estado preparando
+diligentemente para ir a su encuentro; la otra que, presa del temor y obrando por impulso, se
+había dado por satisfecha con una teoría de la verdad, pero estaba destituída de la gracia de
+Dios. En la parábola, cuando vino el Esposo, "las que estaban preparadas entraron con él a las
+bodas." La venida del Esposo, presentada aquí, se verifica antes de la boda. La boda representa
+el acto de ser investido Cristo de la dignidad de Rey. La ciudad santa, la nueva Jerusalén, que
+es la capital del reino y lo representa, se llama "la novia, la esposa del Cordero." El ángel
+dijo a San Juan: "Ven acá; te mostraré la novia, la esposa del cordero." "Me llevó en el
+Espíritu," agrega el profeta, "y me mostró la santa ciudad de Jerusalem, descendiendo del cielo,
+desde Dios." (Apocalipsis 21: 9, 10, V.M.) Salta pues a la vista que la Esposa representa la
+ciudad santa, y las vírgenes que van al encuentro del [480] Esposo representan a la iglesia. En
+el Apocalipsis, el pueblo {p351} de Dios lo constituyen los invitados a la cena de las bodas.
+(Apocalipsis 19:9.) Si son los invitados, no pueden representar también a la esposa. Cristo,
+según el profeta Daniel, recibirá del Anciano de días en el cielo "el dominio, y la gloria, y el
+reino," recibirá la nueva Jerusalén, la capital de su reino, "preparada como una novia
+engalanada para su esposo." (Daniel 7: 14; Apocalipsis 21 :2, V.M.) Después de recibir el reino,
+vendrá en su gloria, como Rey de reyes y Señor de señores, para redimir a los suyos, que "se
+sentarán con Abraham, e Isaac, y Jacob," en su reino (S. Mateo 8: 11; S. Lucas 22: 30), para
+participar de la cena de las bodas del Cordero.
+
+La proclamación: "¡He aquí que viene el Esposo!" en el verano de 1844, indujo a miles de
+personas a esperar el advenimiento inmediato del Señor. En el tiempo señalado, vino el Esposo,
+no a la tierra, como el pueblo lo esperaba, sino hasta donde estaba el Anciano de días en el
+cielo, a las bodas; es decir, a recibir su reino. "Las que estaban preparadas entraron con él a
+las bodas; y fue cerrada la puerta." No iban a asistir en persona a las bodas, ya que éstas se
+verifican en el cielo mientras que ellas están en la tierra. Los discípulos de Cristo han de
+esperar "a su Señor, cuando haya de volver de las bodas." (S. Lucas 12: 36, V.M.) Pero deben
+comprender su obra, y seguirle por fe mientras entra en la presencia de Dios. En este sentido es
+en el que se dice que ellos van con él a las bodas.
+
+Según la parábola, fueron las que tenían aceite en sus vasos con sus lámparas quienes entraron a
+las bodas. Los que, junto con el conocimiento de la verdad de las Escrituras, tenían el Espíritu
+y la gracia de Dios, y que en la noche de su amarga prueba habían esperado con paciencia,
+escudriñando la Biblia en busca de más luz —fueron los que reconocieron la verdad referente al
+santuario en el cielo y al cambio de ministerio del Salvador, y por fe le siguieron en su obra
+en el santuario celestial. Y todos los que por el testimonio de las Escrituras aceptan las
+mismas verdades, siguiendo por fe a Cristo mientras se [481] presenta ante Dios para efectuar la
+última obra de mediación y para recibir su reino a la conclusión de ésta — todos ésos están
+representados como si entraran en las bodas.
+
+En la parábola del capítulo 22 de San Mateo, se emplea la misma figura de las bodas y se ve a
+las claras que el juicio investigador se realiza antes de las bodas. Antes de verificarse estas
+entra el Rey para ver a los huéspedes, y cerciorarse de que todos llevan las vestiduras de boda,
+el manto inmaculado del carácter, lavado y emblanquecido en la sangre del Cordero. (S. Mateo
+22:11; Apocalipsis 7:14.) Al que se le encuentra sin traje conveniente, se le expulsa, pero
+todos los que al ser examinados resultan tener las vestiduras de bodas, son aceptados por Dios y
+juzgados dignos de participar en su reino y de sentarse en su trono. Esta tarea de examinar los
+caracteres y de determinar los que están preparados para el reino de Dios es la del juicio
+investigador, la obra final que se lleva a cabo en el santuario {p352} celestial.
+
+Cuando haya terminado este examen, cuando se haya fallado respecto de los que en todos los
+siglos han profesado ser discípulos de Cristo, entonces y no antes habrá terminado el tiempo de
+gracia, y será cerrada la puerta de misericordia. Así que las palabras: "Las que estaban
+preparadas entraron con él a las bodas, y fue cerrada la puerta," nos conducen a través del
+ministerio final del Salvador, hasta el momento en que quedará terminada la gran obra de la
+salvación del hombre.
+
+En el servicio del santuario terrenal que, como ya lo vimos, es una figura del servicio que se
+efectúa en el santuario celestial, cuando el sumo sacerdote entraba el día de la expiación en el
+lugar santísimo terminaba el servicio del primer departamento. Dios mandó: "No ha de haber
+hombre alguno en el Tabernáculo de Reunión cuando él entrare para hacer expiación dentro del
+Santuario, hasta que salga." (Levítico 16: 17, V.M.) Así que cuando Cristo entró en el lugar
+santísimo para consumar la obra final de la expiación, cesó su ministerio en el primer
+departamento. Pero cuando terminó el servicio que se [482] realizaba en el primer departamento,
+se inició el ministerio en el segundo departamento. Cuando en el servicio típico el sumo
+sacerdote salía del lugar santo el día de la expiación, se presentaba ante Dios, para ofrecer la
+sangre de la víctima ofrecida por el pecado de todos los israelitas que se arrepentían
+verdaderamente. Así también Cristo sólo había terminado una parte de su obra como intercesor
+nuestro para empezar otra, y sigue aún ofreciendo su sangre ante el Padre en favor de los
+pecadores.
+
+Este asunto no lo entendieron los adventistas de 1844. Después que transcurriera la fecha en que
+se esperaba al Salvador, siguieron creyendo que su venida estaba cercana; sostenían que habían
+llegado a una crisis importante y que había cesado la obra de Cristo como intercesor del hombre
+ante Dios. Les parecía que la Biblia enseñaba que el tiempo de gracia concedido al hombre
+terminaría poco antes de la venida misma del Señor en las nubes del cielo. Eso parecía
+desprenderse de los pasajes bíblicos que indican un tiempo en que los hombres buscarán,
+golpearán y llamarán a la puerta de la misericordia, sin que ésta se abra. Y se preguntaban si
+la fecha en que habían estado esperando la venida de Cristo no señalaba más bien el comienzo de
+ese período que debía preceder inmediatamente a su venida. Habiendo proclamado la proximidad del
+juicio, consideraban que habían terminado su labor para el mundo, y no sentían más la obligación
+de trabajar por la salvación de los pecadores, en tanto que las mofas atrevidas y blasfemas de
+los impíos les parecían una evidencia adicional de que el Espíritu de Dios se había retirado de
+los que rechazaran su misericordia. Todo esto les confirmaba en la creencia de que el tiempo de
+gracia había terminado, o, como decían ellos entonces, que "la puerta de la misericordia estaba
+cerrada."
+
+{p353} Pero una luz más viva surgió del estudio de la cuestión del santuario. Vieron entonces
+que tenían razón al creer que el fin de los 2.300 días, en 1844, había marcado una crisis
+importante. Pero si bien era cierto que se había cerrado la puerta de esperanza y de gracia por
+la cual los hombres habían encontrado [483] durante mil ochocientos años acceso a Dios, otra
+puerta se les abría, y el perdón de los pecados era ofrecido a los hombres por la intercesión de
+Cristo en el lugar santísimo. Una parte de su obra había terminado tan sólo para dar lugar a
+otra. Había aún una "puerta abierta" para entrar en el santuario celestial donde Cristo oficiaba
+en favor del pecador.
+
+Entonces comprendieron la aplicación de las palabras que Cristo dirigió en el Apocalipsis a la
+iglesia correspondiente al tiempo en que ellos mismos vivían: "Estas cosas dice el que es santo,
+el que es veraz, el que tiene la llave de David, el que abre, y ninguno cierra, y cierra, y
+ninguno abre: Yo conozco tus obras: he aquí he puesto delante de ti una puerta abierta, la cual
+nadie podrá cerrar." (Apocalipsis 3: 7, 8, V.M.)
+
+Son los que por fe siguen a Jesús en su gran obra de expiación, quienes reciben los beneficios
+de su mediación por ellos, mientras que a los que rechazan la luz que pone a la vista este
+ministerio, no les beneficia. Los judíos que rechazaron la luz concedida en el tiempo del primer
+advenimiento de Cristo, y se negaron a creer en él como Salvador del mundo, no podían ser
+perdonados por intermedio de él. Cuando en la ascensión Jesús entró por su propia sangre en el
+santuario celestial para derramar sobre sus discípulos las bendiciones de su mediación, los
+judíos fueron dejados en obscuridad completa y siguieron con sus sacrificios y ofrendas
+inútiles. Había cesado el ministerio de símbolos y sombras. La puerta por la cual los hombres
+habían encontrado antes acceso cerca de Dios, no estaba más abierta. Los judíos se habían negado
+a buscarle de la sola manera en que podía ser encontrado entonces, por el sacerdocio en el
+santuario del cielo. No encontraban por consiguiente comunión con Dios. La puerta estaba cerrada
+para ellos. No conocían a Cristo como verdadero sacrificio y único mediador ante Dios; de ahí
+que no pudiesen recibir los beneficios de su mediación.
+
+La condición de los judíos incrédulos ilustra el estado de los indiferentes e incrédulos entre
+los profesos cristianos, que [484] desconocen voluntariamente la obra de nuestro misericordioso
+Sumo Sacerdote. En el servicio típico, cuando el sumo sacerdote entraba en el lugar santísimo,
+todos los hijos de Israel debían reunirse cerca del santuario y humillar sus almas del modo más
+solemne ante Dios, a fin de recibir el perdón de sus pecados y no ser separados de la
+congregación. ¡Cuánto más esencial es que en nuestra época antitípica de la expiación
+comprendamos la obra de nuestro Sumo Sacerdote, y sepamos qué deberes nos incumben!
+
+{p354} Los hombres no pueden rechazar impunemente los avisos que Dios les envía en su
+misericordia. Un mensaje fue enviado del cielo al mundo en tiempo de Noé, y la salvación de los
+hombres dependía de la manera en que aceptaran ese mensaje. Por el hecho de que ella había
+rechazado la amonestación, el Espíritu de Dios se retiró de la raza pecadora que pereció en las
+aguas del diluvio. En tiempo de Abrahán la misericordia dejó de alegar con los culpables vecinos
+de Sodoma, y todos, excepto Lot con su mujer y dos hijas, fueron consumidos por el fuego que
+descendió del cielo. Otro tanto sucedió en días de Cristo. El Hijo de Dios declaró a los judíos
+incrédulos de aquella generación: "He aquí vuestra casa os es dejada desierta." (S. Mateo 23:
+38.) Considerando los últimos días, el mismo— Poder Infinito declara respecto de los que "no
+recibieron el amor de la verdad para ser salvos:" "Por lo tanto, les envía Dios operación de
+error, para que crean a la mentira; para que sean condenados todos los que no creyeron a la
+verdad, antes consintieron a la iniquidad." (2 Tesalonicenses 2: 10-12.) A medida que se
+rechazan las enseñanzas de su Palabra, Dios retira su Espíritu y deja a los hombres en brazos
+del engaño que tanto les gusta.
+
+Pero Cristo intercede aún por el hombre, y se otorgará luz a los que la buscan. Aunque esto no
+lo comprendieron al principio los adventistas, les resultó claro después, a medida que los
+pasajes bíblicos que definen la verdadera posición de ellos empezaron a hacerse inteligibles.
+[485]
+
+Cuando pasó la fecha fijada para 1844, hubo un tiempo de gran prueba para los que conservaban
+aún la fe adventista. Su único alivio en lo concerniente a determinar su verdadera situación,
+fue la luz que dirigió su espíritu hacia el santuario celestial. Algunos dejaron de creer en la
+manera en que habían calculado antes los períodos proféticos, y atribuyeron a factores humanos o
+satánicos la poderosa influencia del Espíritu Santo que había acompañado al movimiento
+adventista. Otros creyeron firmemente que el Señor los había conducido en su vida pasada; y
+mientras esperaban, velaban y oraban para conocer la voluntad de Dios, llegaron a comprender que
+su gran Sumo Sacerdote había empezado a desempeñar otro ministerio y, siguiéndole con fe, fueron
+inducidos a ver además la obra final de la iglesia. Obtuvieron un conocimiento más claro de los
+mensajes de los primeros ángeles, y quedaron preparados para recibir y dar al mundo la solemne
+amonestación del tercer ángel de Apocalipsis 14. [486]
+`,
+
+  preguntas: [
+    {"t": "mc", "pag": 348, "lit": "Aunque, como los primeros discípulos, ellos mismos no habían comprendido el mensaje que daban, éste había sido correcto en todo sentido.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 25 (p. 348), ¿qué palabra completa la frase? «Aunque, como los ___ discípulos, ellos mismos no habían comprendido el mensaje que daban, éste había sido correcto en todo sentido.»", "o": ["incrédulos", "pecados", "sacrificios", "primeros"], "a": 3, "e": "El libro dice: «Aunque, como los primeros discípulos, ellos mismos no habían comprendido el mensaje que daban, éste había sido correcto en todo sentido.»"},
+    {"t": "mc", "pag": 348, "lit": "El error no estaba en el cómputo de los períodos proféticos, sino en el acontecimiento que debía verificarse al fin de los 2.300 días.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 348), ¿qué palabra completa la frase? «El error no estaba en el cómputo de los períodos proféticos, sino en el acontecimiento que debía verificarse al fin de los ___ días.»", "o": ["1844", "2.299", "2.300", "2.301"], "a": 2, "e": "El libro dice: «El error no estaba en el cómputo de los períodos proféticos, sino en el acontecimiento que debía verificarse al fin de los 2.300 días.»"},
+    {"t": "mc", "pag": 348, "lit": "Debido a este error los creyentes habían sufrido un desengaño; sin embargo se había realizado todo lo predicho por la profecía, y todo lo que alguna garantía bíblica permitía esperar.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 25 (p. 348), ¿qué palabra completa la frase? «Debido a este error los creyentes habían sufrido un desengaño; sin embargo se había realizado todo lo predicho por la profecía, y todo lo que alguna ___ bíblica permitía esperar.»", "o": ["garantía", "dirigiría", "teoría", "dependía"], "a": 0, "e": "El libro dice: «Debido a este error los creyentes habían sufrido un desengaño; sin embargo se había realizado todo lo predicho por la profecía, y todo lo que alguna garantía bíblica permitía esperar.»"},
+    {"t": "tf", "pag": 349, "lit": "Pero el pueblo no estaba aún preparado para ir al encuentro de su Señor.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 349), el libro dice: «Pero el pueblo no estaba aún preparado para ir al encuentro de su Esposo.»", "a": false, "e": "Es falso: el libro dice «Pero el pueblo no estaba aún preparado para ir al encuentro de su Señor.»"},
+    {"t": "mc", "pag": 349, "lit": "Por la gracia de Dios y sus propios y diligentes esfuerzos deberán ser vencedores en la lucha con el mal.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 349), ¿qué palabra completa la frase? «Por la gracia de ___ y sus propios y diligentes esfuerzos deberán ser vencedores en la lucha con el mal.»", "o": ["Dios", "Biblia", "Jesús", "Jehová"], "a": 0, "e": "El libro dice: «Por la gracia de Dios y sus propios y diligentes esfuerzos deberán ser vencedores en la lucha con el mal.»"},
+    {"t": "mc", "pag": 349, "lit": "Esta obra está presentada con mayor claridad en los mensajes del capítulo 14 del Apocalipsis.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 349), ¿qué palabra completa la frase? «Esta obra está presentada con mayor claridad en los mensajes del capítulo ___ del Apocalipsis.»", "o": ["14", "13", "27", "10"], "a": 0, "e": "El libro dice: «Esta obra está presentada con mayor claridad en los mensajes del capítulo 14 del Apocalipsis.»"},
+    {"t": "tf", "pag": 351, "lit": "Según la parábola, fueron las que tenían aceite en sus vasos con sus lámparas quienes entraron a las bodas.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 351), el libro dice: «Según la providencia, fueron las que tenían aceite en sus vasos con sus lámparas quienes entraron a las bodas.»", "a": false, "e": "Es falso: el libro dice «Según la parábola, fueron las que tenían aceite en sus vasos con sus lámparas quienes entraron a las bodas.»"},
+    {"t": "mc", "pag": 351, "lit": "En la parábola del capítulo 22 de San Mateo, se emplea la misma figura de las bodas y se ve a las claras que el juicio investigador se realiza antes de las bodas.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 351), ¿qué palabra completa la frase? «En la parábola del capítulo ___ de San Mateo, se emplea la misma figura de las bodas y se ve a las claras que el juicio investigador se realiza antes de las bodas.»", "o": ["14", "13", "27", "22"], "a": 3, "e": "El libro dice: «En la parábola del capítulo 22 de San Mateo, se emplea la misma figura de las bodas y se ve a las claras que el juicio investigador se realiza antes de las bodas.»"},
+    {"t": "mc", "pag": 353, "lit": "Son los que por fe siguen a Jesús en su gran obra de expiación, quienes reciben los beneficios de su mediación por ellos, mientras que a los que rechazan la luz que pone a la vista este ministerio, no les beneficia.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 353), ¿qué palabra completa la frase? «Son los que por fe siguen a ___ en su gran obra de expiación, quienes reciben los beneficios de su mediación por ellos, mientras que a los que rechazan la luz que pone a la vista este ministerio, no les beneficia.»", "o": ["Cordero", "Daniel", "Jesús", "Anciano"], "a": 2, "e": "El libro dice: «Son los que por fe siguen a Jesús en su gran obra de expiación, quienes reciben los beneficios de su mediación por ellos, mientras que a los que rechazan la luz que pone a la vista este ministerio, no les beneficia.»"},
+    {"t": "mc", "pag": 353, "lit": "Los judíos que rechazaron la luz concedida en el tiempo del primer advenimiento de Cristo, y se negaron a creer en él como Salvador del mundo, no podían ser perdonados por intermedio de él.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 353), ¿qué palabra completa la frase? «Los judíos que rechazaron la luz concedida en el tiempo del primer advenimiento de Cristo, y se negaron a creer en él como ___ del mundo, no podían ser perdonados por intermedio de él.»", "o": ["Santuario", "Salvador", "Escrituras", "Esposo"], "a": 1, "e": "El libro dice: «Los judíos que rechazaron la luz concedida en el tiempo del primer advenimiento de Cristo, y se negaron a creer en él como Salvador del mundo, no podían ser perdonados por intermedio de él.»"},
+    {"t": "fill", "pag": 353, "lit": "Los judíos se habían negado a buscarle de la sola manera en que podía ser encontrado entonces, por el sacerdocio en el santuario del cielo.", "pend": 1, "ins": "El conflicto de los siglos, cap. 25 (p. 353) — Completa la frase del libro:", "p": [{"x": "«Los judíos se habían negado a buscarle de la sola manera en que podía ser encontrado "}, {"b": "entonces", "h": "¿qué palabra falta?"}, {"x": ", por el sacerdocio en el santuario del cielo.»"}]},
+    {"t": "tf", "pag": 354, "lit": "Un mensaje fue enviado del cielo al mundo en tiempo de Noé, y la salvación de los hombres dependía de la manera en que aceptaran ese mensaje.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 354), el libro dice: «Un mensaje fue enviado del cielo al mundo en tiempo de Noé, y la salvación de los hombres dependía de la manera en que aceptaran ese mensaje.»", "a": true, "e": "Es verdadero: el libro dice «Un mensaje fue enviado del cielo al mundo en tiempo de Noé, y la salvación de los hombres dependía de la manera en que aceptaran ese mensaje.»"},
+    {"t": "mc", "pag": 354, "lit": "En tiempo de Abrahán la misericordia dejó de alegar con los culpables vecinos de Sodoma, y todos, excepto Lot con su mujer y dos hijas, fueron consumidos por el fuego que descendió del cielo.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 25 (p. 354), ¿qué palabra completa la frase? «En tiempo de Abrahán la ___ dejó de alegar con los culpables vecinos de Sodoma, y todos, excepto Lot con su mujer y dos hijas, fueron consumidos por el fuego que descendió del cielo.»", "o": ["influencia", "misericordia", "paciencia", "evidencia"], "a": 1, "e": "El libro dice: «En tiempo de Abrahán la misericordia dejó de alegar con los culpables vecinos de Sodoma, y todos, excepto Lot con su mujer y dos hijas, fueron consumidos por el fuego que descendió del cielo.»"},
+    {"t": "mc", "pag": 354, "lit": "Pero Cristo intercede aún por el hombre, y se otorgará luz a los que la buscan.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 354), ¿qué palabra completa la frase? «Pero ___ intercede aún por el hombre, y se otorgará luz a los que la buscan.»", "o": ["Dios", "Cristo", "Biblia", "Anciano"], "a": 1, "e": "El libro dice: «Pero Cristo intercede aún por el hombre, y se otorgará luz a los que la buscan.»"},
+    {"t": "tf", "pag": 354, "lit": "Cuando pasó la fecha fijada para 1844, hubo un tiempo de gran prueba para los que conservaban aún la fe adventista.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 354), el libro dice: «Cuando pasó la fecha fijada para 1844, hubo un tiempo de gran prueba para los que conservaban aún la fe adventista.»", "a": true, "e": "Es verdadero: el libro dice «Cuando pasó la fecha fijada para 1844, hubo un tiempo de gran prueba para los que conservaban aún la fe adventista.»"},
+    {"t": "mc", "pag": 354, "lit": "Algunos dejaron de creer en la manera en que habían calculado antes los períodos proféticos, y atribuyeron a factores humanos o satánicos la poderosa influencia del Espíritu Santo que había acompañado al movimiento adventista.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 25 (p. 354), ¿qué palabra completa la frase? «Algunos dejaron de creer en la manera en que habían calculado antes los períodos proféticos, y atribuyeron a factores humanos o satánicos la poderosa influencia del ___ Santo que había acompañado al movimiento adventista.»", "o": ["Salvador", "Espíritu", "Sacerdote", "Santuario"], "a": 1, "e": "El libro dice: «Algunos dejaron de creer en la manera en que habían calculado antes los períodos proféticos, y atribuyeron a factores humanos o satánicos la poderosa influencia del Espíritu Santo que había acompañado al movimiento adventista.»"}
+  ],
+
+  tarjetas: [
+    {"pag": 348, "lit": "Aunque, como los primeros discípulos, ellos mismos no habían comprendido el mensaje que daban, éste había sido correcto en todo sentido.", "pend": 1, "f": "CS 25 (p. 348): «Aunque, como los ___ discípulos, ellos mismos no habían comprendido el mensaje que daban, éste había sido correcto en todo sentido.»", "r": "primeros — «Aunque, como los primeros discípulos, ellos mismos no habían comprendido el mensaje que daban, éste había sido correcto en todo sentido.»"},
+    {"pag": 348, "lit": "Debido a este error los creyentes habían sufrido un desengaño; sin embargo se había realizado todo lo predicho por la profecía, y todo lo que alguna garantía bíblica permitía esperar.", "pend": 1, "f": "CS 25 (p. 348): «Debido a este error los creyentes habían sufrido un desengaño; sin embargo se había realizado todo lo predicho por la profecía, y todo lo que alguna ___ bíblica permitía esperar.»", "r": "garantía — «Debido a este error los creyentes habían sufrido un desengaño; sin embargo se había realizado todo lo predicho por la profecía, y todo lo que alguna garantía bíblica permitía esperar.»"},
+    {"pag": 349, "lit": "Por la gracia de Dios y sus propios y diligentes esfuerzos deberán ser vencedores en la lucha con el mal.", "pend": 1, "f": "CS 25 (p. 349): «Por la gracia de ___ y sus propios y diligentes esfuerzos deberán ser vencedores en la lucha con el mal.»", "r": "Dios — «Por la gracia de Dios y sus propios y diligentes esfuerzos deberán ser vencedores en la lucha con el mal.»"},
+    {"pag": 351, "lit": "Según la parábola, fueron las que tenían aceite en sus vasos con sus lámparas quienes entraron a las bodas.", "pend": 1, "f": "CS 25 (p. 351): «Según la ___, fueron las que tenían aceite en sus vasos con sus lámparas quienes entraron a las bodas.»", "r": "parábola — «Según la parábola, fueron las que tenían aceite en sus vasos con sus lámparas quienes entraron a las bodas.»"},
+    {"pag": 353, "lit": "Son los que por fe siguen a Jesús en su gran obra de expiación, quienes reciben los beneficios de su mediación por ellos, mientras que a los que rechazan la luz que pone a la vista este ministerio, no les beneficia.", "pend": 1, "f": "CS 25 (p. 353): «Son los que por fe siguen a ___ en su gran obra de expiación, quienes reciben los beneficios de su mediación por ellos, mientras que a los que rechazan la luz que pone a la vista este ministerio, no les beneficia.»", "r": "Jesús — «Son los que por fe siguen a Jesús en su gran obra de expiación, quienes reciben los beneficios de su mediación por ellos, mientras que a los que rechazan la luz que pone a la vista este ministerio, no les beneficia.»"},
+    {"pag": 353, "lit": "Los judíos se habían negado a buscarle de la sola manera en que podía ser encontrado entonces, por el sacerdocio en el santuario del cielo.", "pend": 1, "f": "CS 25 (p. 353): «Los judíos se habían negado a buscarle de la sola manera en que podía ser encontrado ___, por el sacerdocio en el santuario del cielo.»", "r": "entonces — «Los judíos se habían negado a buscarle de la sola manera en que podía ser encontrado entonces, por el sacerdocio en el santuario del cielo.»"},
+    {"pag": 354, "lit": "En tiempo de Abrahán la misericordia dejó de alegar con los culpables vecinos de Sodoma, y todos, excepto Lot con su mujer y dos hijas, fueron consumidos por el fuego que descendió del cielo.", "pend": 1, "f": "CS 25 (p. 354): «En tiempo de Abrahán la ___ dejó de alegar con los culpables vecinos de Sodoma, y todos, excepto Lot con su mujer y dos hijas, fueron consumidos por el fuego que descendió del cielo.»", "r": "misericordia — «En tiempo de Abrahán la misericordia dejó de alegar con los culpables vecinos de Sodoma, y todos, excepto Lot con su mujer y dos hijas, fueron consumidos por el fuego que descendió del cielo.»"},
+    {"pag": 354, "lit": "Cuando pasó la fecha fijada para 1844, hubo un tiempo de gran prueba para los que conservaban aún la fe adventista.", "pend": 1, "f": "CS 25 (p. 354): «Cuando pasó la fecha fijada para ___, hubo un tiempo de gran prueba para los que conservaban aún la fe adventista.»", "r": "1844 — «Cuando pasó la fecha fijada para 1844, hubo un tiempo de gran prueba para los que conservaban aún la fe adventista.»"}
+  ],
+};

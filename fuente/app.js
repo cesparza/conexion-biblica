@@ -2922,7 +2922,8 @@ const actYCat=(k,modo)=>{
    actividad era. Ahora dice las dos cosas, la actividad primero y en corto
    («Apocalipsis · Padres y consejeros»), y van en el orden de las actividades. */
 const actCorta=a=>{const x=ACTIVIDADES[a];if(!x)return String(a||'');
-  const n=String(x.nombre||'');const m=/^Conexión Bíblica:\s*(.+)$/.exec(n);
+  /* v237: el nombre trae el club adelante («Aventureros - …», «Guías Mayores - …»); en corto, sin él. */
+  const n=String(x.nombre||'').replace(/^(?:Aventureros|Conquistadores|Gu[ií]as(?: Mayores)?)\s*[-–:]\s*/,'');const m=/^Conexión Bíblica:\s*(.+)$/.exec(n);
   /* v236: «Conexión Bíblica 2027» no dice el libro: se nombra por su tema (Apocalipsis). */
   const T=REGLAS.TEMAS[x.tema];
   return m?m[1]:(x.tema==='daniel'?'Daniel':T&&T.tipo==='libro'?T.corto:n);};
@@ -3638,7 +3639,9 @@ function llevaA(id,deUna){
    lo que se ve: lo del concurso o todo, según la ficha (verDe). Una categoría sin
    políticas de concurso (Guías Mayores, el estudio libre) ve todo siempre. */
 const capsConcurso=()=>CAPS.filter(c=>c.cats.includes(S.cat));
-const idsTema=()=>IDS_DE_TEMA[ACT().tema]||[];
+/* v237: una actividad puede traer dos libros (Apocalipsis y, por `obras`, El conflicto de
+   los siglos): sus ids son los de todos sus temas (REGLAS.temasDe). */
+const idsTema=()=>{const A=ACT();return [...new Set((A.temas||[A.tema]).flatMap(t=>IDS_DE_TEMA[t]||[]))];};
 const capsTema=()=>{const ids=idsTema();return CAPS.filter(c=>ids.includes(c.id));};
 const sinPoliticas=k=>!!(CATS[k]&&CATS[k].sinPoliticas);
 const verDe=al=>!al||sinPoliticas(al.cat)||al.ver==='todo'?'todo':'concurso';
@@ -4232,6 +4235,8 @@ function pintaHoy(){
     ?'<div class="cuenta"><div class="cd">'+d+'</div><div class="cl">día'+(d===1?'':'s')+
      '<br>para el campamento</div></div>'
     :'<div class="cuenta"><div class="cd">¡Hoy!</div><div class="cl">es el día</div></div>')+
+    /* v237: una fecha tentativa lo dice junto a la cuenta. */
+    (/tentativa/i.test(ACT().cuando||'')?'<div class="sem cs-tent"><div class="sd">'+esc(ACT().cuando)+'</div></div>':'')+
     '<div class="sem"><div class="st">Semana '+sem+' de '+SEMANAS_PLAN+' · '+esc(p.t)+'</div>'+
     '<div class="sd">'+esc(p.d)+'</div></div>';
 
@@ -4720,6 +4725,23 @@ const BIBLIA_CAPS=['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12
 /* v178: DOS LIBROS DE LA BIBLIA EN RV1995. Daniel es 'd'+N y Apocalipsis es
    'ap'+N; de ahí sale el nombre que se rotula en referencias, lectura y
    filtros. Un libro nuevo es una línea aquí, su texto en VERS y su tema. */
+/* v237: EL CONFLICTO DE LOS SIGLOS, PEDIDO AL ABRIR (fuente/conflicto.js). Los capítulos
+   (CAPS), sus preguntas y tarjetas vienen en este archivo; el texto de cada capítulo, en
+   conflicto/<id>.json, que se pide la primera vez que se abre (y el service worker guarda).
+   En Jóvenes, traer.mjs cambia CONFLICTO_DIR. */
+const CONFLICTO_DIR='/conflicto/';
+const esCS=id=>typeof CS_HUELLAS!=='undefined'&&Object.prototype.hasOwnProperty.call(CS_HUELLAS,id);
+const csPedidos={};
+function csCarga(id){
+  if(!esCS(id))return Promise.resolve(false);
+  if(CONTENIDO[id])return Promise.resolve(true);
+  if(!csPedidos[id])csPedidos[id]=fetch(CONFLICTO_DIR+id+'.json?v='+CS_HUELLAS[id]).then(r=>r.ok?r.json():null).then(d=>{
+    if(!d||d.id!==id||!Array.isArray(d.estudio))throw new Error('cs');
+    CONTENIDO[id]=d.estudio.map(x=>({...x,h:Array.isArray(x.h)?x.h.join(''):String(x.h||'')}));
+    return true;
+  }).catch(()=>{delete csPedidos[id];return false;});
+  return csPedidos[id];
+}
 const LIBRO_PRE={d:'Daniel',ap:'Apocalipsis'};
 const PRE_LIBRO={Daniel:'d',Apocalipsis:'ap'};
 const libroCid=cid=>{const m=/^(ap|d)(\d{1,2})$/.exec(String(cid||''));return m?{pre:m[1],n:m[2],nombre:LIBRO_PRE[m[1]]}:null;};
@@ -5646,6 +5668,18 @@ function verCap(id,quieto){
   document.querySelector('.c-'+id)?.classList.add('on');
   const c=buscaItem(id);
   if(!c)return;
+  /* v237: un capítulo de El conflicto de los siglos llega aparte (csCarga). Mientras, el
+     detalle dice que está cargando; al llegar se vuelve a pintar en el mismo lugar. */
+  if(esCS(id)&&!CONTENIDO[id]){
+    const d0=document.getElementById('detalle');
+    d0.innerHTML='<div class="cap-cab"><div class="cap-ante">'+esc(c.label)+'</div><h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
+      '<p class="nota cs-carga">Cargando el capítulo…</p></div>';
+    d0.style.display='block';
+    csCarga(id).then(ok=>{if(capAbierto!==id)return;if(ok)verCap(id,true);
+      else{const n=d0.querySelector('.cs-carga');if(n)n.textContent='No se pudo traer el capítulo. Revisa la conexión y vuelve a tocarlo.';}});
+    if(!quieto)llevaA('detalle',true);
+    return;
+  }
   const secs=CONTENIDO[id]||CONT_MODULOS[id]||[];
   const d=document.getElementById('detalle');
   /* Un repaso de «Para profundizar» es todo interpretación: sin pestañas. */
@@ -5670,7 +5704,7 @@ function verCap(id,quieto){
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
        fuente/biblia-otros.js), no de la RV1960; y los repasos de creencias
        (mc-*) no traen texto bíblico, así que no dicen versión. */
-    (esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
+    (esCS(id)?'Edición '+esc(OBRAS_CAPS.cs.edicion)+' · páginas '+c.pag+' a '+c.fin:esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
     (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
     /* v129: Profetas y Reyes se escucha por su estudio (ver htmlEstVoz). */
     (conEstudioEnVoz(c)?htmlEstVoz(c):'')+
@@ -7000,7 +7034,7 @@ const EGW_PYR='https://m.egwwritings.org/es/book/217/toc';
 function textoLimpio(el){
   try{
     const c=el.cloneNode(true);
-    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,.decl-src,.l28-p,.cr-ir,script,style').forEach(x=>x.remove());
+    c.querySelectorAll('.grupo-voz,.btn-voz,.btn-reinicia,input,.rec,.rev,.fn,.decl-src,.l28-p,.cr-ir,.cs-pag,.cs-ref,script,style').forEach(x=>x.remove());
     c.querySelectorAll('br').forEach(b=>b.replaceWith(' '));
     c.querySelectorAll('td,th,li,p,div').forEach(x=>x.append(' '));
     /* v133: la referencia «(PR 379.1)» sirve para leer, no para oir: la voz
@@ -8678,7 +8712,9 @@ function htmlQ(q,n,ver){
   const voz=!ver&&puedeHablar()?' '+BTN_VOZ:'';
   /* v235: al revisar, cada pregunta lleva a donde se estudia en la Biblioteca. */
   const bib=ver&&typeof bibLinkQ==='function'?bibLinkQ(q):'';
-  return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+cuerpo+bib+'</div>';
+  /* v237: las de El conflicto de los siglos no se presentan como revisadas. */
+  const pend=q.pend?'<div class="q-pend">Pendiente de revisión de Camilo</div>':'';
+  return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+pend+cuerpo+bib+'</div>';
 }
 
 const limpia=s=>String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ');
@@ -12422,7 +12458,7 @@ async function borraParticipante(id){
 
 /* El filtro es UN objeto y no seis variables sueltas: asi «limpiar» es una
    linea y agregar un criterio no obliga a tocar tres funciones. */
-const REV_F0={cat:'',cap:'',t:'',nv:'',fu:'',est:'',q:''};
+const REV_F0={cat:'',cap:'',t:'',nv:'',fu:'',est:'',q:'',pend:''};
 let revF=Object.assign({},REV_F0);
 let revTope=40;
 let revRet=[];        // lo que dice el servidor: clave, quien, motivo, cuando
@@ -12474,6 +12510,7 @@ function revFilas(){
   if(revF.nv)b=b.filter(q=>String(q.nv||1)===revF.nv);
   if(revF.fu)b=b.filter(q=>(esComplementaria(q)?'c':'o')===revF.fu);
   if(revF.est)b=b.filter(q=>(retiradas.has(claveQ(q))?'r':'v')===revF.est);
+  if(revF.pend)b=b.filter(q=>!!q.pend);
   if(revF.q){
     const t=revF.q.toLowerCase();
     b=b.filter(q=>(revTexto(q)+' '+revRespuesta(q)).toLowerCase().indexOf(t)>=0);
@@ -12494,6 +12531,7 @@ function revFilasT(){
   }
   if(revF.cap)b=b.filter(t=>t.cap===revF.cap);
   if(revF.est)b=b.filter(t=>(retiradas.has(claveT(t))?'r':'v')===revF.est);
+  if(revF.pend)b=b.filter(t=>!!t.pend);
   if(revF.q){
     const x=revF.q.toLowerCase();
     b=b.filter(t=>sinEtiquetas(t.f+' '+t.r).toLowerCase().indexOf(x)>=0);
@@ -12563,6 +12601,9 @@ function pintaRevisor(){
         [['','Todas'],['o','Del reglamento'],['c','Complementaria']])+'</label>')+
       '<label class="pan-lb">Estado'+sel('rb-est','est',
         [['','Todas'],['v','A la vista'],['r','Retiradas']])+'</label>'+
+      /* v237: lo que Camilo tiene que revisar (El conflicto de los siglos). */
+      '<label class="pan-lb">Revisión'+sel('rb-pend','pend',
+        [['','Todas'],['1','Pendientes de revisión de Camilo']])+'</label>'+
     '</div>'+
     '<div class="ses-fila"><input id="rb-q" placeholder="Buscar en el enunciado" '+
       'value="'+esc(revF.q)+'" oninput="revBusca(this.value)">'+
@@ -12586,7 +12627,7 @@ function revFila(q){
   const r=revMapa[k];
   const cap=(buscaItem(q.cap)||{}).label||q.cap;
   const etq=[cap,REV_TIPO[q.t]||q.t,REV_NIVEL[q.nv||1]||'',
-    esComplementaria(q)?'Complementaria':'Del reglamento'];
+    esComplementaria(q)?'Complementaria':'Del reglamento'].concat(q.pend?['Pendiente de revisión de Camilo'+(q.pag?' · p. '+q.pag:'')]:[]);
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
     '<div class="rb-etq">'+etq.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>'+
     rbCuerpo(k,ret,revTexto(q),revRespuesta(q),r,'banco')+
@@ -12601,7 +12642,7 @@ function revFilaT(t){
   const r=revMapa[k];
   const cap=(buscaItem(t.cap)||{}).label||t.cap;
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
-    '<div class="rb-etq"><span>'+esc(cap)+'</span></div>'+
+    '<div class="rb-etq"><span>'+esc(cap)+'</span>'+(t.pend?'<span>Pendiente de revisión de Camilo</span>':'')+'</div>'+
     rbCuerpo(k,ret,sinEtiquetas(t.f),sinEtiquetas(t.r),r,'mazo')+
     '</div>';
 }

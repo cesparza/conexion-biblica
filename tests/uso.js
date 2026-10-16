@@ -503,7 +503,7 @@ K.ponNombre('María Camila Ñuñez');
 K.ponCat('dm2');
 const leidoK=K.leeCodigo(K.codigoResumen());
 ok(leidoK.n==='María Camila Ñuñez','Los nombres con tildes y eñes sobreviven al código');
-ok(leidoK.c==='dm2'&&leidoK.ce==='Devoción Matutina','El resumen dice de qué evento es');
+ok(leidoK.c==='dm2'&&leidoK.ce==='Aventureros: Devoción Matutina','El resumen dice de qué evento es');
 
 
 /* ───────── la evaluación del día ─────────
@@ -1396,7 +1396,7 @@ ok(!cat.some(i=>i.g==='Cambiar de material'&&/^\s*$/.test(i.t)),'Ninguna fila qu
    consejeros» contiene «Conexión Bíblica» y «Padres y consejeros» sin ser la
    categoría activa. */
 ok(!cat.some(i=>i.g==='Cambiar de material'&&i.t===N.ACTIVIDADES[N.CATS[N.S().cat].act].nombre+' · '+N.CATS[N.S().cat].nombre)&&
-   cat.some(i=>i.g==='Cambiar de material'&&i.t==='Conexión Bíblica 2027 · Aventureros'),
+   cat.some(i=>i.g==='Cambiar de material'&&i.t==='Guías Mayores - Conexión Bíblica 2027 · Aventureros'),
   'No ofrece cambiar a la categoria en la que ya estas');
 
 /* Sin escribir nada, las ACCIONES van primero: con el orden natural el tope de
@@ -1768,7 +1768,10 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
    no se pueden medir por texto: se revisaron a mano (73 de 79 de P&R estaban,
    las 6 que no se agregaron al estudio). */
 {
-  const Z=montar(`verCap, ponCat, capsDe, modsDe, bancoDe, CATS, el:id=>document.getElementById(id)`,{});
+  const Z=montar(`verCap, ponCat, capsDe, modsDe, bancoDe, CATS, CONTENIDO, el:id=>document.getElementById(id)`,{});
+  /* v237: el texto de El conflicto de los siglos llega aparte (conflicto/<id>.json); aquí se pone como lo pone csCarga. */
+  const fs=require('fs');for(const f of fs.readdirSync(path.join(RAIZ,'conflicto'))){const d=JSON.parse(fs.readFileSync(path.join(RAIZ,'conflicto',f),'utf8'));
+    Z.CONTENIDO[d.id]=d.estudio.map(x=>({...x,h:[].concat(x.h).join('')}));}
   const norm=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ')
     .replace(/&[a-z]+;/g,' ').replace(/[«»"“”.,;:¡!¿?()—–\-]/g,' ').replace(/\b\d+\b/g,' ').replace(/\s+/g,' ').toLowerCase().trim();
   const faltan=[];let n=0;
@@ -1972,10 +1975,12 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const Z=montar(RET+', el:id=>document.getElementById(id), refsTocables, tablaDeCid, textoFiltro, textoLista, nombreBiblia, opcionesMatPanel, abreLectura, poolNivel, NPREG, ACTIVIDADES');
   Z.ponCat('apav');
   const caps=Z.capsDe().map(c=>c.id);
-  ok(caps.join()==='ap1,ap12,ap14,ap21,ap22','v236: Aventureros de Apocalipsis estudia los capítulos de la política 2027 (1, 12, 14, 21 y 22) y nada de Daniel');
+  ok(caps.join()==='ap1,ap12,ap14,ap21,ap22,cs24,cs25,cs32,cs39,cs41,cs43','v237: Aventureros de Apocalipsis estudia los capítulos de la política 2027 (Ap 1, 12, 14, 21 y 22; CS 24, 25, 32, 39, 41 y 43) y nada de Daniel');
   const pool=Z.poolNivel();
-  ok(pool.length>=30&&pool.every(q=>q.t==='mc'&&['ap1','ap12','ap14','ap21','ap22'].includes(q.cap))&&Z.NPREG()===30,
-    'Aventureros de Apocalipsis practica 30 de selección, solo del libro ('+pool.length+' en su nivel)');
+  /* v237: y de los capítulos de CS de su alcance, que ya son material. */
+  const AV_CAPS=['ap1','ap12','ap14','ap21','ap22','cs24','cs25','cs32','cs39','cs41','cs43'];
+  ok(pool.length>=30&&pool.every(q=>q.t==='mc'&&AV_CAPS.includes(q.cap))&&pool.some(q=>/^cs/.test(q.cap))&&pool.some(q=>/^ap/.test(q.cap))&&Z.NPREG()===30,
+    'Aventureros de Apocalipsis practica 30 de selección, de los dos libros de su alcance ('+pool.length+' en su nivel)');
   const h=Z.refsTocables('Dice (1:3) y también Apocalipsis 13:18 y Daniel 2:44.','ap1');
   ok((h.match(/class="vref"/g)||[]).length===3&&/verVers\(this,'ap1',3,3\)/.test(h)&&/'ap13',18/.test(h)&&/'d2',44/.test(h),
     'Las referencias se vuelven tocables: (1:3) dentro de Apocalipsis 1, Apocalipsis 13:18 y Daniel 2:44');
@@ -2406,7 +2411,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
      mismas listas que arman los desplegables. */
   const tm=P.FILAS_EVAL[0][2]();
   const opTramo=P.opcionesMatPanel('dm').find(o=>o[0]==='tramo');
-  ok(tm.indexOf('Devoción Matutina')===0&&tm.indexOf(opTramo[2])>0,
+  ok(tm.indexOf('Aventureros: Devoción Matutina')===0&&tm.indexOf(opTramo[2])>0,
     'El acceso de material nombra la actividad y la opcion escogida, en corto');
   /* Dos etiquetas por opcion y las dos salen de la misma linea: la larga para
      el desplegable, la corta para la tarjeta angosta. Si una se escribiera
@@ -3210,7 +3215,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   Z.nuevaFicha('cargo','Sofía');
   const n=Z.S();
   ok(n.aCargo===true&&n.tutor==='Camilo'&&n.nombre==='Sofía'&&Z.catsDeNino('ap').includes(n.cat)&&!['apgm'].includes(n.cat),'v191: la niña a cargo queda con su tutor y en una categoría de niños ('+n.cat+')');
-  ok(Z.catsDeNino('ap').join()==='apcq,apav'&&Z.catsDeNino('cb').join()==='me,av','v191: a cargo solo Menores, Aventureros y Conquistadores; nunca adultos ni Guías Mayores');
+  ok(Z.catsDeNino('ap').join()==='apcq,apav,apme'&&Z.catsDeNino('cb').join()==='me,av','v191: a cargo solo Menores, Aventureros y Conquistadores; nunca adultos ni Guías Mayores');
 }
 /* v189: los nombres de los personajes se tocan y abren su ficha. */
 {
@@ -3265,7 +3270,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   let malo=[];
   for(const k of todas){
     Z.ponCat(k);Z.ponVer('todo');
-    const tema=Z.ACT().tema,ids=Z.IDS_DE_TEMA[tema].filter(id=>Z.CAPS.some(c=>c.id===id));
+    /* v237: una actividad puede traer dos temas (Apocalipsis y El conflicto de los siglos). */
+    const ids=(Z.ACT().temas||[Z.ACT().tema]).flatMap(t=>Z.IDS_DE_TEMA[t]).filter(id=>Z.CAPS.some(c=>c.id===id));
     if(Z.capsDe().map(c=>c.id).join()!==ids.join())malo.push(k);
     if(!ids.every(id=>Z.buscaItem(id)))malo.push(k+' (abrir)');
   }
@@ -3289,7 +3295,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(A.bancoDe().some(q=>q.cap==='d7')&&A.bancoDe().some(q=>q.cap==='d11'),'v214: y practica el examen sobre todo (Daniel 7 al 12 incluidos)');
   /* v236: la política 2027 le da reglamento a Jóvenes (Guías Mayores) de Apocalipsis. */
   A.ponCat('apgm');A.ponVer('concurso');
-  ok(!A.verTodo()&&Z.CATS.apgm.sinPoliticas===false&&A.capsDe().length===22,'v236: Jóvenes (Guías Mayores) de Apocalipsis ya tiene política de concurso (2027): sus 22 capítulos, por reglamento');
+  ok(!A.verTodo()&&Z.CATS.apgm.sinPoliticas===false&&A.capsDe().length===42,'v236: Guías Mayores (Jóvenes) de Apocalipsis ya tiene política de concurso (2027): sus 22 capítulos y CS 24-43, por reglamento');
   /* 4. Sin preparación: todo, con la dificultad de adultos. */
   A.ponCat(Z.libreDe('daniel'));
   const L=A.S();
@@ -3305,7 +3311,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const h2=P.el('prep').innerHTML;
   ok(['apgm','apcq','apav'].every(k=>h2.includes("prepElige('"+k+"')"))&&!/prepElige\('(me|av|pa|gm)'\)/.test(h2)&&/libre-apocalipsis/.test(h2),'v214: después, solo las categorías de esa actividad (y «Sin concurso»)');
   P.nuevaFicha('cargo','Sofía');
-  ok(P.catsValidas('ap').join()==='apcq,apav'&&P.catsValidas('cbg').length===0,'v214: a un niño a cargo solo le caben categorías de niños; Guías Mayores no');
+  ok(P.catsValidas('ap').join()==='apcq,apav,apme'&&P.catsValidas('cbg').length===0,'v214: a un niño a cargo solo le caben categorías de niños; Guías Mayores no');
   P.abreYo();P.prepAbre();
   ok(!/prepActividad\('cbg'\)/.test(P.el('prep').innerHTML),'v214: y la actividad sin categorías para él no se ofrece');
   P.prepActividad('ap');
@@ -3402,14 +3408,14 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(tr(A[0])==='1-5,10-14,19-22'&&tr(A[1])==='24-26,29,32,36-39,41,43'&&A[1].obra==='cs'&&tr(V[0])==='1,12,14,21,22'&&tr(V[1])==='24,25,32,39,41,43'&&tr(G[0])==='1-22'&&tr(G[1])==='24-43',
     'v236: cada categoría de la política 2027 trae sus capítulos de Apocalipsis y de El conflicto de los siglos '+[A,V,G].map(x=>x.map(tr).join('|')).join(' / '));
   const X=M.ACTIVIDADES.ap,C=M.CATS;
-  ok(X.nombre==='Conexión Bíblica 2027'&&X.organiza==='Asociación del Alto Magdalena'&&X.cuando==='Fecha por confirmar'&&X.cats.join()==='apgm,apcq,apav'&&
+  ok(X.nombre==='Guías Mayores - Conexión Bíblica 2027'&&X.organiza==='Asociación del Alto Magdalena'&&X.cuando==='6 de marzo de 2027 (fecha tentativa)'&&X.cats.join()==='apgm,apcq,apav,apme,appa'&&
      C.apgm.edad==='Desde 16 años'&&C.apcq.edad==='10 a 15 años'&&C.apav.edad==='7 a 9 años'&&C.apgm.sinPoliticas===false&&/Guías Mayores/.test(C.apgm.nombre),
-    'v236: el concurso es «Conexión Bíblica 2027» de la Asociación del Alto Magdalena, con Jóvenes (Guías Mayores), Conquistadores y Aventureros y las edades de antes');
+    'v237: el concurso es «Guías Mayores - Conexión Bíblica 2027» (fecha tentativa) de la Asociación del Alto Magdalena, con Guías Mayores, Conquistadores, Aventureros, Menores y Padres y las edades de antes');
   M.ir('examen');M.pintaConcursos();
   const hc=M.el('con-lista').innerHTML;
-  ok(/Asociación del Alto Magdalena/.test(hc)&&/10 – 14/.test(hc)&&/36 – 39/.test(hc)&&/El conflicto de los siglos/.test(hc)&&/El Templo de Dios/.test(hc)&&/El Fin del Conflicto/.test(hc)&&/todavía no está en la app/.test(hc),
+  ok(/Asociación del Alto Magdalena/.test(hc)&&/10 – 14/.test(hc)&&/36 – 39/.test(hc)&&/El conflicto de los siglos/.test(hc)&&/El Templo de Dios/.test(hc)&&/El Fin del Conflicto/.test(hc)&&!/todavía no está en la app/.test(hc)&&/verCap\('cs24'\)/.test(hc)&&/pendientes de revisión de Camilo/.test(hc),
     'v236: la carta del concurso muestra el organizador y, por categoría, las pastillas de cada libro y los títulos de CS');
-  ok(M.normalizar({cat:'appa'}).cat==='libre-apocalipsis'&&M.normalizar({cat:'apme'}).cat==='libre-apocalipsis','v236: una ficha que estaba en Menores o Padres de Apocalipsis sigue en Apocalipsis, sin concurso');
+  ok(M.normalizar({cat:'appa'}).cat==='appa'&&M.normalizar({cat:'apme'}).cat==='apme','v237: una ficha que estaba en Menores o Padres de Apocalipsis vuelve a su categoría');
 })().catch(e=>{ok(false,'Las pruebas de v236 no corrieron: '+(e&&e.stack||e));}).then(()=>{
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
 process.exit(f?1:0);

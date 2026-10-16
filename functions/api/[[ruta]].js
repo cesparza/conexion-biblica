@@ -104,7 +104,7 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
 /* v236: la política 2027 dejó Apocalipsis en tres categorías (apgm, apcq, apav). `apme` y
    `appa` salieron: verificado en la base el 15-oct, ninguna participante ni evaluación las
    usaba. */
-const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2','apgm','apcq','apav'];
+const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2','apgm','apcq','apav','apme','appa'];
 
 /* Antes esto traía UNA sola fila (LIMIT 1): solo podía existir una
    evaluación abierta a la vez en toda la app. Camilo necesita un caso real:
@@ -547,23 +547,16 @@ export async function onRequest(context) {
     }
 
     /* v230 (Camilo, 15-oct): en el libro abierto del juicio (Daniel 7:10), después del nombre de
-       quien estudia, unos nombres de pila de otras personas de la app. Solo nombres de pila, sin
-       repetir, sin id, sin categoría ni edad, y solo para quien entró: con su código o la clave
-       del director aquí, o (dentro de la app de Jóvenes) con la sesión de esa app, que la puerta
-       pasa como `SESION_APP` y que el navegador no puede inventar. */
+       quien estudia, unos nombres de pila de otras personas de la app.
+       v237 (Camilo, 16-oct): esos nombres son de las personas de la app de Jóvenes, no de los
+       participantes de los concursos (casi todos niños de club). Dentro de Jóvenes los da su
+       puerta (servidor/puerta-cb.js en ese repo), desde su tabla de personas, solo mayores de
+       edad y solo a quien tiene sesión allá: esta ruta no llega a correr ahí. Aquí, en la app
+       sola, no hay personas de Jóvenes: el libro abierto muestra solo el nombre de quien
+       estudia, y esta ruta ya no lee la tabla de participantes. */
     if (metodo === 'GET' && ruta === '/nombres') {
       if (!sesion && env.SESION_APP !== true) return error('Entra para ver los nombres.', 401);
-      const filas = await env.DB.prepare('SELECT nombre FROM participante WHERE borrado_en IS NULL').all();
-      const vistos = new Map();
-      for (const f of (filas.results || [])) {
-        const n = String(f.nombre || '').trim().split(/\s+/)[0] || '';
-        if (!/^[\p{L}][\p{L}'’-]{1,19}$/u.test(n)) continue;
-        const k = n.toLocaleLowerCase('es');
-        if (!vistos.has(k)) vistos.set(k, n.charAt(0).toLocaleUpperCase('es') + n.slice(1).toLocaleLowerCase('es'));
-      }
-      const l = [...vistos.values()];
-      for (let i = l.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [l[i], l[j]] = [l[j], l[i]]; }
-      return json({ nombres: l.slice(0, 24) }, 200, { 'cache-control': 'private, no-store' });
+      return json({ nombres: [] }, 200, { 'cache-control': 'private, no-store' });
     }
 
     /* ─────────────── EL PROGRESO, QUE YA NO ES DEL NAVEGADOR ───────────────
@@ -886,7 +879,7 @@ export async function onRequest(context) {
          que exige que todo id de CAPS la cumpla: si alguien inventa un id con
          otra forma, la prueba falla aquí y no en el campamento. */
       const ALCANCES = ['todo', 'creencias', 'biblia', 'pr', 'q1', 'q2'];
-      const FORMA_CAP = /^(d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})$/;
+      const FORMA_CAP = /^(d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|cs[0-9]{2}|m[0-9]{2}|cr[0-9]{2})$/;
       /* Un RANGO: «desde..hasta» con dos ids del mismo tipo, y el de la
          izquierda no mayor que el de la derecha. El backreference \1 es lo que
          impide `m05..d3`, que no es un rango de nada y dejaría la evaluación
@@ -897,7 +890,7 @@ export async function onRequest(context) {
          cabe: Conexion Biblica entera son 18 capitulos y 71 caracteres. La
          columna es TEXT, asi que no hace falta migracion; antes se cortaba a
          20 y una lista de cinco capitulos llegaba mutilada. */
-      const FORMA_LISTA = /^(?:d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})(?:,(?:d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|m[0-9]{2}|cr[0-9]{2})){1,49}$/;
+      const FORMA_LISTA = /^(?:d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|cs[0-9]{2}|m[0-9]{2}|cr[0-9]{2})(?:,(?:d[0-9]{1,2}|ap[0-9]{1,2}|pr[0-9]{2}|cs[0-9]{2}|m[0-9]{2}|cr[0-9]{2})){1,49}$/;
       /* v139: UNA LISTA DE PREGUNTAS: «q:d1.abc12,pr41.x9y». Es la práctica de
          las más difíciles que arma el análisis de una evaluación (como el
          «kahoot de las difíciles»). Cada clave es capitulo.huella, la misma

@@ -89,7 +89,9 @@ const CAMPAMENTOS = [
   /* Los tres concursos de Aventureros (este, la matutina y las creencias)
      fueron el mismo día, el 10 de octubre de 2026. Lo confirmó Camilo el 11 de
      octubre; el código traía el 9. */
-  { id: 'cb', tema: 'daniel', nombre: 'Conexión Bíblica', icono: '📘', cuando: '10 de octubre', fecha: '2026-10-10',
+  /* v237: los nombres con el club adelante, como los guardó Camilo desde Jóvenes el 15-oct
+     (8:35-8:46 p. m.): la de fábrica dice lo mismo que la base, para que ninguna pise a la otra. */
+  { id: 'cb', tema: 'daniel', nombre: 'Aventureros - Conexión Bíblica: Daniel', icono: '📘', cuando: '10 de octubre', fecha: '2026-10-10',
     que: 'El libro de Daniel y Profetas y Reyes',
     /* El reglamento del campamento pide dos integrantes de 4 a 6 años (solo
        Daniel), dos de 7 a 9 (Daniel y Profetas y Reyes) y dos padres o
@@ -118,7 +120,7 @@ const CAMPAMENTOS = [
      participantes guardados siguen siendo de ella. */
   /* v179: se llama «Conexión Bíblica: Daniel», como la de Apocalipsis (Camilo,
      12-oct). La categoría Guías Mayores sigue adentro, con su mismo id. */
-  { id: 'cbg', tema: 'daniel', nombre: 'Conexión Bíblica: Daniel', icono: '📘', cuando: 'Fecha por confirmar', fecha: '',
+  { id: 'cbg', tema: 'daniel', nombre: 'Guias - Conexión Bíblica: Daniel', icono: '📘', cuando: 'Fecha por confirmar', fecha: '',
     que: 'Daniel 1 al 6 y Profetas y Reyes 39 al 44',
     categorias: [
       /* v214 (Camilo, 14-oct): «Guías Mayores no tiene políticas de concurso»: ve todo
@@ -131,7 +133,7 @@ const CAMPAMENTOS = [
         soloEstudio: ['d7', 'd8', 'd9', 'd10', 'd11', 'd12'] },
     ] },
   /* El concurso fue el 10 de octubre; la lectura sigue todo el mes. */
-  { id: 'dm', tema: 'matutina', nombre: 'Devoción Matutina', icono: '🌅', cuando: '10 de octubre', fecha: '2026-10-10',
+  { id: 'dm', tema: 'matutina', nombre: 'Aventureros: Devoción Matutina', icono: '🌅', cuando: '10 de octubre', fecha: '2026-10-10',
     que: 'Héroes y villanos, un día a la vez',
     categorias: [
       { id: 'dm1', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true,
@@ -143,7 +145,7 @@ const CAMPAMENTOS = [
         /* El 31 cierra la historia del 30; el reglamento llega hasta el 30. */
         soloEstudio: ['m31'] },
     ] },
-  { id: 'ec', tema: 'creencias', nombre: 'En esto creemos', icono: '✝️', cuando: '10 de octubre', fecha: '2026-10-10',
+  { id: 'ec', tema: 'creencias', nombre: 'Aventureros: En esto creemos', icono: '✝️', cuando: '10 de octubre', fecha: '2026-10-10',
     que: 'Las 28 creencias',
     /* El reglamento reparte el club en dos: dos adultos presentan un examen
        escrito y el resto contesta otro cuestionario, y las dos notas se
@@ -163,13 +165,20 @@ const CAMPAMENTOS = [
      Las edades son las que ya tenían esas categorías. Menores (`apme`) y Padres
      (`appa`) salieron: la política no los trae y nadie estaba inscrito en ellos.
      La fecha sigue por confirmar: la imagen no la dice.
-     CS no es todavía material de la app: va en `obras` (ver reglamento.js), se
-     muestra en el concurso y no entra al examen. */
-  { id: 'ap', tema: 'apocalipsis', nombre: 'Conexión Bíblica 2027', icono: '📖', cuando: 'Fecha por confirmar', fecha: '',
+     v237 (Camilo, 16-oct, 5:38 a. m.):
+     - El nombre lleva el club adelante, como lo guardó él desde Jóvenes («Guías - …»; la
+       ficha es del Club de Guías Mayores allá), y cada categoría también.
+     - La fecha, 6 de marzo de 2027, es tentativa y lo dice.
+     - Vuelven Menores y Padres, dentro de Aventureros, con las edades que tenían y el
+       alcance de Aventureros.
+     - CS ya es material de la app (tema `conflicto`): los capítulos de `obras` se
+       estudian y entran al examen de práctica junto con los de Apocalipsis
+       (REGLAS.estudiaDe). */
+  { id: 'ap', tema: 'apocalipsis', nombre: 'Guías Mayores - Conexión Bíblica 2027', icono: '📖', cuando: '6 de marzo de 2027 (fecha tentativa)', fecha: '2027-03-06',
     organiza: 'Asociación del Alto Magdalena',
     que: 'Apocalipsis (RV1995) y El conflicto de los siglos',
     categorias: [
-      { id: 'apgm', nombre: 'Jóvenes (Guías Mayores)', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias', sinPoliticas: false,
+      { id: 'apgm', nombre: 'Guías Mayores (Jóvenes)', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias', sinPoliticas: false,
         alcance: 'Apocalipsis 1-22 · El conflicto de los siglos 24-43',
         estudia: apoc(rango(1, 22)), obras: { cs: rango(24, 43) } },
       { id: 'apcq', nombre: 'Conquistadores', edad: '10 a 15 años', n: 30, techo: 2, sinCompletar: true, segundos: 80, tarjetas: 20, club: 'conquistadores',
@@ -177,6 +186,12 @@ const CAMPAMENTOS = [
         estudia: apoc([...rango(1, 5), ...rango(10, 14), ...rango(19, 22)]),
         obras: { cs: [...rango(24, 26), 29, 32, ...rango(36, 39), 41, 43] } },
       { id: 'apav', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15, club: 'aventureros',
+        alcance: 'Apocalipsis 1, 12, 14, 21, 22 · CS 24, 25, 32, 39, 41, 43',
+        estudia: apoc([1, 12, 14, 21, 22]), obras: { cs: [24, 25, 32, 39, 41, 43] } },
+      { id: 'apme', nombre: 'Aventureros - Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100, club: 'aventureros',
+        alcance: 'Apocalipsis 1, 12, 14, 21, 22 · CS 24, 25, 32, 39, 41, 43',
+        estudia: apoc([1, 12, 14, 21, 22]), obras: { cs: [24, 25, 32, 39, 41, 43] } },
+      { id: 'appa', nombre: 'Aventureros - Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25, club: 'aventureros',
         alcance: 'Apocalipsis 1, 12, 14, 21, 22 · CS 24, 25, 32, 39, 41, 43',
         estudia: apoc([1, 12, 14, 21, 22]), obras: { cs: [24, 25, 32, 39, 41, 43] } },
     ] },

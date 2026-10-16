@@ -29,6 +29,15 @@ const saca = nombre => {
   return eval('(' + m[1] + ')');
 };
 const CAPS = saca('CAPS_BASE'), CONTENIDO = saca('CONTENIDO');
+/* v237: El conflicto de los siglos no va en el index.html: su estudio está en
+   conflicto/<id>.json, que la app pide al abrir el capítulo. Se mide ahí. */
+{
+  const dir = path.join(RAIZ, 'conflicto');
+  if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => /\.json$/.test(f))) {
+    const d = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+    CONTENIDO[d.id] = d.estudio.map(x => ({ ...x, h: [].concat(x.h).join('') }));
+  }
+}
 const BANCO = saca('BANCO'), TARJETAS = saca('TARJETAS');
 const ACT = { cb: 'Conexión Bíblica', dm: 'Devoción Matutina', ec: 'En esto creemos' };
 const actDe = id => /^cr\d\d$/.test(id) ? 'ec' : /^m\d\d$/.test(id) ? 'dm' : 'cb';

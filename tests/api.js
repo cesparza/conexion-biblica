@@ -460,9 +460,12 @@ async function pruebaMiddleware() {
     const conCookie = async extra => { const r = await M.onRequest({ request: new Request('https://x/api/nombres', { headers: { cookie: COOKIE + '=t' } }),
       env: Object.assign({ DB: DB(true), SAL_IP: 's' }, extra || {}), params: { ruta: ['nombres'] }, waitUntil: () => {} }); return [r.status, await r.json()]; };
     const [s0] = await pide(false), [s1, d1] = await conCookie(), [s2, d2] = await pide(false, { SESION_APP: true }), [s3] = await pide(false, { SESION_APP: 'true' });
-    const n1 = (d1.nombres || []).slice().sort().join();
-    ok(s0 === 401 && s3 === 401 && s1 === 200 && s2 === 200 && n1 === 'Isabella,Luis,María' && Object.keys(d1).join() === 'nombres' && (d2.nombres || []).length === 3,
-      '/nombres: sin sesión 401; con sesión (o SESION_APP de la puerta) solo nombres de pila sin repetir ni HTML (' + n1 + ')');
+    /* v237 (Camilo, 16-oct): los nombres ya no salen de los participantes (niños de club). En
+       la app sola la lista va vacía (el libro muestra solo el nombre propio); dentro de Jóvenes
+       los da su puerta desde sus personas mayores de edad. */
+    const leeParticipantes = /FROM participante/.test(API.slice(i, i + 1600));
+    ok(s0 === 401 && s3 === 401 && s1 === 200 && s2 === 200 && (d1.nombres || []).length === 0 && Object.keys(d1).join() === 'nombres' && (d2.nombres || []).length === 0 && !leeParticipantes,
+      '/nombres: sin sesión 401; con sesión, lista vacía y sin leer los participantes de los concursos');
   } catch (e) { ok(false, 'La prueba de /nombres no corrió: ' + e.message); }
   /* v236: «Mi estudio». Solo su dueño (código, director o la persona de Jóvenes que pone la
      puerta), la fusión gana lo más reciente y una llave mal formada no entra. */

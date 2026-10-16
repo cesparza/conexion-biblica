@@ -462,9 +462,9 @@ for (const W of ANCHOS) {
       DB.alumnos = {}; ['apgm', 'gm', 'me'].forEach(k => { DB.alumnos[id(k)] = Object.assign(normalizar(null), { nombre: 'Camilo', cat: k }); });
       DB.activo = id('gm'); S = DB.alumnos[DB.activo]; guardar(); abreYo();
       const ps = [...document.querySelectorAll('.alu-act')].map(x => x.textContent.replace(/\s+/g, ' ').trim());
-      const pa = [...document.querySelectorAll('.alu-act')].find(x => /Jóvenes/.test(x.textContent)); pa.click();
+      const pa = [...document.querySelectorAll('.alu-act')].find(x => /Apocalipsis ?Guías Mayores \(Jóvenes\)/.test(x.textContent)); pa.click();
       return [ps.join(' | '), S.cat]; });
-    ok(/Apocalipsis ?Jóvenes \(Guías Mayores\)/.test(cat[0]) && /Daniel ?Guías Mayores/.test(cat[0]) && cat[1] === 'apgm',
+    ok(/Apocalipsis ?Guías Mayores \(Jóvenes\)/.test(cat[0]) && /Daniel ?Guías Mayores/.test(cat[0]) && cat[1] === 'apgm',
       W + ' · v211: «Quién estudia» dice la actividad de cada pastilla y abre la suya (' + cat.join(' → ') + ')');
     await p.evaluate(() => { cierraHoja(); DB = JSON.parse(window.__dbAntes); S = DB.alumnos[DB.activo]; guardar(); marcaCat(); });
   }
@@ -1813,11 +1813,14 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
     const t11 = document.getElementById('lam').textContent;
     if (!(i11 > 0 && i13 === i11 + 2 && /mataron a la bestia, y su cuerpo fue destrozado/.test(t11) && /Maxwell/.test(t11))) mal.push('7:11 ' + i11 + '/' + i13);
     lamCierra(); await espera(200);
-    /* 6. El concurso 2027: tres categorías con sus pastillas y los títulos de CS. */
+    /* 6. El concurso 2027: cinco categorías (v237: Menores y Padres de vuelta) con sus pastillas y los títulos de CS. */
     ir('examen'); await espera(300);
     const c = [...document.querySelectorAll('#con-lista .con-c')].find(x => /Conexión Bíblica 2027/.test(x.textContent));
-    if (!c || c.querySelectorAll('.con-cb').length !== 3 || !/Asociación del Alto Magdalena/.test(c.textContent) || !/36 – 39/.test(c.textContent) || c.querySelectorAll('.con-ol li').length !== 20) mal.push('concurso 2027');
+    if (!c || c.querySelectorAll('.con-cb').length !== 5 || !/Asociación del Alto Magdalena/.test(c.textContent) || !/36 – 39/.test(c.textContent) || c.querySelectorAll('.con-ol li').length !== 20) mal.push('concurso 2027');
     if (lado()) mal.push('Concursos de lado');
+    /* v237: un capítulo de El conflicto de los siglos llega al abrirlo (conflicto/cs24.json), con sus páginas. */
+    verCap('cs24'); await espera(1200);
+    if (!document.querySelectorAll('#detalle .cs-pag').length || !/páginas 337 a 347/.test(document.querySelector('#detalle .cap-meta').textContent)) mal.push('CS 24 no llegó');
     abreYo(); await espera(300); prepAbre(); prepActividad('ap'); await espera(300);
     if (document.querySelectorAll('#prep .cat-btn .ac-chip').length < 10) mal.push('quién estudia sin pastillas');
     cierraHoja(); await espera(200);

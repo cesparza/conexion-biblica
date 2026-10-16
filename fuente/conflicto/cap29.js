@@ -1,0 +1,382 @@
+/* El conflicto de los siglos, capítulo 29: «El Juicio Investigador» (págs. 390-399).
+   Texto de la edición de la biblioteca (Asociación Publicadora Interamericana, 1954;
+   copia digital del Ministerio Evangelio Eterno). Camilo autorizó usar el texto completo
+   (16-oct). Solo se corrigieron cortes obvios de la digitalización («traspasa ron»).
+   {pNNN}: aquí empieza la página NNN de esta edición. [NNN]: la paginación que trae la
+   copia digital entre corchetes, tal cual.
+   Las preguntas y las tarjetas salen de una frase literal del texto (`lit`) con una
+   palabra tapada; `pend: 1` = pendiente de revisión de Camilo. tests/test.js comprueba
+   que cada `lit` esté en el texto. */
+module.exports = {
+  n: 29, titulo: 'El Juicio Investigador', pag: 390, fin: 399,
+
+  texto: `
+"ESTUVE mirando —dice el profeta Daniel— hasta que fueron puestas sillas: y un Anciano de grande
+edad se sentó, cuyo vestido era blanco como la nieve, y el pelo de su cabeza como lana limpia;
+su silla llama de fuego, sus ruedas fuego ardiente. Un río de fuego procedía y salía de delante
+de él: millares de millares le servían, y millones de millones asistían delante de él: el Juez
+se sentó y los libros se abrieron." (Daniel 7: 9, 10.)
+
+Así se presentó a la visión del profeta el día grande y solemne en que los caracteres y vidas de
+los hombres habrán de ser revistados ante el Juez de toda la tierra, y en que a todos los
+hombres se les dará "conforme a sus obras." El Anciano de días es Dios, el Padre. El salmista
+dice: "Antes que naciesen los montes, y formases la tierra y el mundo, y desde el siglo y hasta
+el siglo, tú eres Dios." (Salmo 90: 2.) Es él, Autor de todo ser y de toda ley, quien debe
+presidir en el juicio. Y "millares de millares . . . y millones de millones" de santos ángeles,
+como ministros y testigos, están presentes en este gran tribunal.
+
+"Y he aquí en las nubes del cielo como un hijo de hombre que venía, y llegó hasta el Anciano de
+grande edad, e hiciéronle llegar delante de él. Y fuéle dado señorío, y gloria, y reino; y todos
+los pueblos, naciones y lenguas le sirvieron; su señorío, señorío eterno, que no será
+transitorio, y su reino no se corromperá." (Daniel 7: 13, 1 4.) La venida de Cristo descrita
+aquí no es su segunda venida a la tierra. El viene hacia el Anciano de días en el cielo para
+recibir el dominio y la gloria, y un reino, que le será dado a la conclusión de su obra de
+mediador. Es esta venida, y no su segundo advenimiento a la tierra, la que la profecía predijo
+que había de realizarse al fin de los 2.300 [534] días, en 1844. Acompañado por ángeles
+celestiales, nuestro gran Sumo Sacerdote entra en el lugar santísimo, y allí, en la presencia de
+Dios, da principio a los últimos actos de su ministerio en beneficio del hombre, a saber,
+cumplir la obra del juicio y hacer expiación por todos aquellos que resulten tener derecho a
+ella.
+
+En el rito típico, sólo aquellos que se habían presentado ante Dios arrepintiéndose y confesando
+sus pecados, y cuyas iniquidades eran llevadas al santuario por medio de la sangre del
+holocausto, tenían participación en el servicio del día de las expiaciones. Así en el gran día
+de la expiación final y del juicio, los únicos casos que se consideran son los de quienes hayan
+profesado ser hijos de {p391} Dios. El juicio de los impíos es obra distinta y se verificará en
+fecha posterior. "Es tiempo de que el juicio comience de la casa de Dios: y si primero comienza
+por nosotros, ¿qué será el fin de aquellos que no obedecen al evangelio?" (1 Pedro 4: 17.)
+
+Los libros del cielo, en los cuales están consignados los nombres y los actos de los hombres,
+determinarán los fallos del juicio. El profeta Daniel dice: "El Juez se sentó, y los libros se
+abrieron." San Juan, describiendo la misma escena en el Apocalipsis, agrega: "Y otro libro fue
+abierto, el cual es de la vida: y fueron juzgados los muertos por las cosas que estaban escritas
+en los libros, según sus obras." (Apocalipsis 20: 12.)
+
+El libro de la vida contiene los nombres de todos los que entraron alguna vez en el servicio de
+Dios. Jesús dijo a sus discípulos: "Gozaos de que vuestros nombres están escritos en los
+cielos." (S. Lucas 10: 20.) San Pablo habla de sus fieles compañeros de trabajo, "cuyos nombres
+están en el libro de la vida." (Filipenses 4: 3.) Daniel, vislumbrando un "tiempo de angustia,
+cual nunca fue," declara que el pueblo de Dios será librado, es decir, "todos los que se
+hallaren escritos en el libro." (Daniel 12: 1.) Y San Juan dice en el Apocalipsis que sólo
+entrarán en la ciudad de Dios aquellos cuyos nombres "están escritos en el libro de la vida del
+Cordero." (Apoc. 21: 27.) [535]
+
+Delante de Dios está escrito "un libro de memoria," en el cual quedan consignadas las buenas
+obras de "los que temen a Jehová, y de los que piensan en su nombre." (Malaquías 3: 16, V.M.)
+Sus palabras de fe, sus actos de amor, están registrados en el cielo. A esto se refiere Nehemías
+cuando dice: "¡Acuérdate de mí, oh Dios mío, . . . y no borres mis obras piadosas que he hecho
+por la Casa de mi Dios!" (Nehemías 13: 14, V.M.) En el "libro de memoria" de Dios, todo acto de
+justicia está inmortalizado. Toda tentación resistida, todo pecado vencido, toda palabra de
+tierna compasión, están fielmente consignados, y apuntados también todo acto de sacrificio, todo
+padecimiento y todo pesar sufridos por causa de Cristo. El salmista dice: "Tú cuentas los pasos
+de mi vida errante: pon mis lágrimas en tu redoma: ¿no están en tu libro?" (Salmo 56: 8, V.M.)
+
+Hay además un registro en el cual figuran los pecados de los hombres. "Pues que Dios traerá toda
+obra a juicio juntamente con toda cosa encubierta, sea buena o sea mala." (Eclesiastés 12: 14,
+V.M.) "De toda palabra ociosa que hablaren los hombres, darán cuenta en el día del juicio." Dice
+el Salvador: "Por tus palabras serás justificado, y por tus palabras serás condenado." (S. Mateo
+12: 36, 37, V.M.) Los propósitos y motivos secretos aparecen en el registro infalible, pues Dios
+"sacará a luz las obras encubiertas de las tinieblas, y pondrá de manifiesto los propósitos de
+los corazones." (1 Corintios 4: 5, V.M.) "He aquí que esto está {p392} escrito delante de mí: .
+. . vuestras iniquidades y las iniquidades de vuestros padres juntamente, dice Jehová." (Isaías
+65: 6, 7, V.M.)
+
+La obra de cada uno pasa bajo la mirada de Dios, y es registrada e imputada ya como señal de
+fidelidad ya de infidelidad. Frente a cada nombre, en los libros del cielo, aparecen, con
+terrible exactitud, cada mala palabra, cada acto egoísta, cada deber descuidado, y cada pecado
+secreto, con todas las tretas arteras. Las admoniciones o reconvenciones divinas despreciadas,
+los momentos perdidos, las oportunidades desperdiciadas, [536] la influencia ejercida para bien
+o para mal, con sus abarcantes resultados, todo fue registrado por el ángel anotador.
+
+La ley de Dios es la regla por la cual los caracteres y las vidas de los hombres serán probados
+en el juicio. Salomón dice: "Teme a Dios, y guarda sus mandamientos; porque esto es la suma del
+deber humano. Pues que Dios traerá toda obra a juicio." (Eclesiastés 12: 13, 14, V.M.) El
+apóstol Santiago amonesta a sus hermanos diciéndoles: "Así hablad pues, y así obrad, como
+hombres que van a ser juzgados por la ley de libertad." (Santiago 2: 12, V.M.)
+
+Los que en el juicio "serán tenidos por dignos," tendrán parte en la resurrección de los justos.
+Jesús dijo: "Los que serán tenidos por dignos de alcanzar aquel siglo venidero, y la
+resurrección de entre los muertos, . . . son iguales a los ángeles, y son hijos de Dios, siendo
+hijos de la resurrección." (S. Lucas 20: 35, 36, V.M.) Y además declara que "los que hicieron
+bien saldrán a resurrección de vida." (S. Juan 5: 29.) Los justos ya muertos no serán
+resucitados más que después del juicio en el cual habrán sido juzgados dignos de la
+"resurrección de vida." No estarán pues presentes en persona ante el tribunal cuando sus
+registros sean examinados y sus causas falladas.
+
+Jesús aparecerá como el abogado de ellos, para interceder en su favor ante Dios. "Si alguno
+hubiere pecado, abogado tenemos para con el Padre, a saber Jesucristo el justo." (1 Juan 2:1.)
+"Porque no entró Cristo en un lugar santo hecho de mano, que es una mera representación del
+verdadero, sino en el cielo mismo, para presentarse ahora delante de Dios por nosotros." "Por lo
+cual también, puede salvar hasta lo sumo a los que se acercan a Dios por medio de él, viviendo
+siempre para interceder por ellos." (Hebreos 9: 24; 7: 25, V.M.)
+
+A medida que los libros de memoria se van abriendo en el juicio, las vidas de todos los que
+hayan creído en Jesús pasan ante Dios para ser examinadas por él. Empezando con los que vivieron
+los primeros en la tierra, nuestro Abogado presenta los casos de cada generación sucesiva, y
+termina con los vivos. [537]
+
+Cada nombre es mencionado, cada caso cuidadosamente investigado. Habrá {p393} nombres que serán
+aceptados, y otros rechazados. En caso de que alguien tenga en los libros de memoria pecados de
+los cuales no se haya arrepentido y que no hayan sido perdonados, su nombre será borrado del
+libro de la vida, y la mención de sus buenas obras será borrada de los registros de Dios. El
+Señor declaró a Moisés: "Al que haya pecado contra mí, a éste borraré de mi libro." (Éxodo 32:
+33, V.M.) Y el profeta Ezequiel dice: "Si el justo se apartare de su justicia, y cometiere
+maldad, . . . todas las justicias que hizo no vendrán en memoria." (Ezequiel 18: 4.)
+
+A todos los que se hayan arrepentido verdaderamente de su pecado, y que hayan aceptado con fe la
+sangre de Cristo como su sacrificio expiatorio, se les ha inscrito el perdón frente a sus
+nombres en los libros del cielo; como llegaron a ser partícipes de la justicia de Cristo y su
+carácter está en armonía con la ley de Dios, sus pecados serán borrados, y ellos mismos serán
+juzgados dignos de la vida eterna. El Señor declara por el profeta Isaías: "Yo, yo soy aquel que
+borro tus transgresiones a causa de mí mismo, y no me acordaré más de tus pecados." (Isaías 43:
+25, V.M.) Jesús dijo: "El que venciere, será así revestido de ropas blancas; y no borraré su
+nombre del libro de la vida, sino confesaré su nombre delante de mi Padre, y delante de sus
+santos ángeles." "A todo aquel, pues, que me confesare delante de los hombres, le confesaré yo
+también delante de mi Padre que está en los cielos. Pero a cualquiera que me negare delante de
+los hombres, le negaré yo también delante de mi Padre que está en los cielos." (Apocalipsis 3:
+5; S. Mateo 10: 32, 33, V.M.)
+
+Todo el más profundo interés manifestado entre los hombres por los fallos de los tribunales
+terrenales no representa sino débilmente el interés manifestado en los atrios celestiales cuando
+los nombres inscritos en el libro de la vida desfilen ante el Juez de toda la tierra. El divino
+Intercesor aboga por que a todos los que han vencido por la fe en su sangre se les perdonen
+[538] sus transgresiones, a fin de que sean restablecidos en su morada edénica y coronados con
+él coherederos del "señorío primero." (Miqueas 4: 8.) Con sus esfuerzos para engañar y tentar a
+nuestra raza, Satanás había pensado frustrar el plan que Dios tenía al crear al hombre, pero
+Cristo pide ahora que este plan sea llevado a cabo como si el hombre no hubiese caído jamás.
+Pide para su pueblo, no sólo el perdón y la justificación, plenos y completos, sino además
+participación en su gloria y un asiento en su trono.
+
+Mientras Jesús intercede por los súbditos de su gracia, Satanás los acusa ante Dios como
+transgresores. El gran seductor procuró arrastrarlos al escepticismo, hacerles perder la
+confianza en Dios, separarse de su amor y transgredir su ley. Ahora él señala la historia de sus
+vidas, los defectos de carácter, la falta de semejanza con Cristo, lo que deshonró a su
+Redentor, todos los pecados que les indujo a cometer, y a causa de éstos los reclama como sus
+súbditos.
+
+{p394} Jesús no disculpa sus pecados, pero muestra su arrepentimiento y su fe, y, reclamando el
+perdón para ellos, levanta sus manos heridas ante el Padre y los santos ángeles, diciendo: Los
+conozco por sus nombres. Los he grabado en las palmas de mis manos. "Los sacrificios de Dios son
+el espíritu Quebrantado: al corazón contrito y humillado no despreciarás tú, oh Dios." (Salmo
+51: 17.) Y al acusador de su pueblo le dice: "Jehová te reprenda, oh Satán; Jehová, que ha
+escogido a Jerusalem, te reprenda. ¿No es éste un tizón arrebatado del incendio?" (Zacarías 3:
+2.) Cristo revestirá a sus fieles con su propia justicia, para presentarlos a su Padre como una
+"Iglesia gloriosa, no teniendo mancha, ni arruga, ni otra cosa semejante." (Efesios 5: 27, V.M.)
+Sus nombres están inscritos en el libro de la vida, y de estos escogidos está escrito: "Andarán
+conmigo en vestiduras blancas; porque son dignos." (Apocalipsis 3: 4.)
+
+Así se cumplirá de un modo completo la promesa del nuevo pacto: "Perdonaré su iniquidad, y no me
+acordaré más de sus [539] pecados. "En aquellos días y en ese tiempo, dice Jehová, será buscada
+la iniquidad de Israel, y no la habrá, y los pecados de Judá, mas no podrán ser hallados." "En
+aquel día el Vástago de Jehová será espléndido y glorioso, y el fruto de la tierra excelente y
+hermoso, para los escapados de Israel. Y será que los que fueren dejados en Sión, y los que
+quedaren en Jerusalem, serán llamados santos; es decir, todo aquel que está inscrito para la
+vida en Jerusalem." (Jeremías 31: 34; 50: 20; Isaías 4: 2, 3, V.M.)
+
+La obra del juicio investigador y el acto de borrar los pecados deben realizarse antes del
+segundo advenimiento del Señor. En vista de que los muertos han de ser juzgados según las cosas
+escritas en los libros, es imposible que los pecados de los hombres sean borrados antes del fin
+del juicio en que sus vidas han de ser examinadas. Pero el apóstol Pedro dice terminantemente
+que los pecados de los creyentes serán borrados "cuando vendrán los tiempos del refrigerio de la
+presencia del Señor, y enviará a Jesucristo." (Hechos 3: 19, 20.) Cuando el juicio investigador
+haya concluido, Cristo vendrá con su recompensa para dar a cada cual según sus obras.
+
+En el servicio ritual típico el sumo sacerdote, hecha la propiciación por Israel, salía y
+bendecía a la congregación. Así también Cristo, una vez terminada su obra de mediador, aparecerá
+"sin pecado . . . para la salvación" (Hebreos 9: 28, V.M.), para bendecir con el don de la vida
+eterna a su pueblo que le espera. Así como, al quitar los pecados del santuario, el sacerdote
+los confesaba sobre la cabeza del macho cabrío emisario, así también Cristo colocará todos estos
+pecados sobre Satanás, autor e instigador del pecado. El macho cabrío emisario, que cargaba con
+los pecados de Israel, era enviado "a tierra inhabitada" (Levítico 16: 22); así también Satanás,
+cargado con la responsabilidad de todos los pecados que ha hecho cometer al pueblo de Dios, será
+confinado durante mil años en la tierra {p395} entonces desolada y sin habitantes, y sufrirá
+finalmente la entera penalidad del pecado en el fuego que destruirá [540] a todos los impíos.
+Así el gran plan de la redención alcanzará su cumplimiento en la extirpación final del pecado y
+la liberación de todos los que estuvieron dispuestos a renunciar al mal.
+
+En el tiempo señalado para el juicio —al fin de los 2.300 días, en 1844— empezó la obra de
+investigación y el acto de borrar los pecados. Todos los que hayan profesado el nombre de Cristo
+deben pasar por ese riguroso examen. Tanto los vivos como los muertos deben ser juzgados "de
+acuerdo con las cosas escritas en los libros, según sus obras."
+
+Los pecados que no hayan inspirado arrepentimiento y que no hayan sido abandonados, no serán
+perdonados ni borrados de los libros de memoria, sino que permanecerán como testimonio contra el
+pecador en el día de Dios. Puede el pecador haber cometido sus malas acciones a la luz del día o
+en la obscuridad de la noche; eran conocidas y manifiestas para Aquel a quien tenemos que dar
+cuenta. Hubo siempre ángeles de Dios que fueron testigos de cada pecado, y lo registraron en los
+libros infalibles. El pecado puede ser ocultado, negado, encubierto para un padre, una madre,
+una esposa, o para los hijos y los amigos; nadie, fuera de los mismos culpables tendrá tal vez
+la más mínima sospecha del mal; no deja por eso de quedar al descubierto ante los seres
+celestiales. La obscuridad de la noche más sombría, el misterio de todas las artes engañosas, no
+alcanzan a velar un solo pensamiento para el conocimiento del Eterno. Dios lleva un registro
+exacto de todo acto injusto e ilícito. No se deja engañar por una apariencia de piedad. No se
+equivoca en su apreciación del carácter. Los hombres pueden ser engañados por entes de corazón
+corrompido, pero Dios penetra todos los disfraces y lee la vida interior.
+
+¡Qué pensamiento tan solemne! Cada día que transcurre lleva consigo su caudal de apuntes para
+los libros del cielo. Una palabra pronunciada, un acto cometido, no pueden ser jamás retirados.
+Los ángeles tomaron nota tanto de lo bueno como de lo malo. El más poderoso conquistador de este
+mundo no puede revocar el registro de un solo día siquiera. [541]
+
+Nuestros actos, nuestras palabras, hasta nuestros más secretos motivos, todo tiene su peso en la
+decisión de nuestro destino para dicha o desdicha. Podremos olvidarlos, pero no por eso dejarán
+de testificar en nuestro favor o contra nosotros.
+
+Así como los rasgos de la fisonomía son reproducidos con minuciosa exactitud sobre la pulida
+placa del artista, así también está el carácter fielmente delineado en los libros del cielo. No
+obstante ¡cuán poca preocupación se siente respecto a ese registro que debe ser examinado por
+los seres celestiales! Si se pudiese descorrer el velo que separa el mundo visible del
+invisible, y los hijos de los {p396} hombres pudiesen ver a un ángel apuntar cada palabra y cada
+acto que volverán a encontrar en el día del juicio, ¡cuántas palabras de las que se pronuncian
+cada día no se dejarían de pronunciar; cuántos actos no se dejarían sin realizar!
+
+En el juicio se examinará el empleo que se haya hecho de cada talento. ¿Cómo hemos empleado el
+capital que el cielo nos concediera? A su venida ¿recibirá el Señor lo que es suyo con interés?
+¿Hemos perfeccionado las facultades que fueran confiadas a nuestras manos, a nuestros corazones
+y a nuestros cerebro para la gloria de Dios y provecho del mundo? ¿Cómo hemos empleado nuestro
+tiempo, nuestra pluma, nuestra, voz, nuestro dinero, nuestra influencia? ¿Qué hemos hecho por
+Cristo en la persona de los pobres, de los afligidos, de los huérfanos o de las viudas? Dios nos
+hizo depositarios de su santa Palabra; ¿qué hemos hecho con la luz y la verdad que se nos confió
+para hacer a los hombres sabios para la salvación? No se da ningún valor a una mera profesión de
+fe en Cristo, sólo se tiene por genuino el amor que se muestra en las obras. Con todo, el amor
+es lo único que ante los ojos del Cielo da valor a un acto cualquiera. Todo lo que se hace por
+amor, por insignificante que aparezca en opinión de los hombres, es aceptado y recompensado por
+Dios.
+
+El egoísmo escondido de los hombres aparece en los libros del cielo. Allí está el registro de
+los deberes que no cumplieron [542] para con el prójimo, el de su olvido de las exigencias del
+Señor. Allí se verá cuán a menudo fueron dados a Satanás tiempo, pensamientos y energías que
+pertenecían a Cristo. Harto tristes son los apuntes que los ángeles llevan al cielo. Seres
+inteligentes que profesan ser discípulos de Cristo están absorbidos por la adquisición de bienes
+mundanos, o por el goce de los placeres terrenales. El dinero, el tiempo y las energías son
+sacrificados a la ostentación y al egoísmo; pero pocos son los momentos dedicados a orar, a
+estudiar las Sagradas Escrituras, a humillar el alma y a confesar los pecados.
+
+Satanás inventa innumerables medios de distraer nuestras mentes de la obra en que precisamente
+deberíamos estar más ocupados. El archiseductor aborrece las grandes verdades que hacen resaltar
+la importancia de un sacrificio expiatorio y de un Mediador todopoderoso. Sabe que su éxito
+estriba en distraer las mentes de Jesús y de su obra.
+
+Los que desean participar de los beneficios de la mediación del Salvador no deben permitir que
+cosa alguna les impida cumplir su deber de perfeccionarse en la santificación en el temor de
+Dios. En vez de dedicar horas preciosas a los placeres, a la ostentación o a la búsqueda de
+ganancias, las consagrarán a un estudio serio y con oración de la Palabra de verdad El pueblo de
+Dios debería comprender claramente el asunto del santuario y del juicio investigador. Todos
+{p397} necesitan conocer por sí mismos el ministerio y la obra de su gran Sumo Sacerdote. De
+otro modo, les será imposible ejercitar la fe tan esencial en nuestros tiempos, o desempeñar el
+puesto al que Dios los llama. Cada cual tiene un alma que salvar o que perder. Todos tienen una
+causa pendiente ante el tribunal de Dios. Cada cual deberá encontrarse cara a cara con el gran
+Juez. ¡Cuán importante es, pues, que cada uno contemple a menudo de antemano la solemne escena
+del juicio en sesión, cuando serán abiertos los libros, cuando con Daniel, cada cual tendrá que
+estar en pie al fin de los días!
+
+Todos los que han recibido la luz sobre estos asuntos deben [543] dar testimonio de las grandes
+verdades que Dios les ha confiado. El santuario en el cielo es el centro mismo de la obra de
+Cristo en favor de los hombres. Concierne a toda alma que vive en la tierra. Nos revela el plan
+de la redención, nos conduce hasta el fin mismo del tiempo y anuncia el triunfo final de la
+lucha entre la justicia y el pecado. Es de la mayor importancia que todos investiguen a fondo
+estos asuntos, y que estén siempre prontos a dar respuesta a todo aquel que les pidiere razón de
+la esperanza que hay en ellos.
+
+La intercesión de Cristo por el hombre en el santuario celestial es tan esencial para el plan de
+la salvación como lo fue su muerte en la cruz. Con su muerte dio principio a aquella obra para
+cuya conclusión ascendió al cielo después de su resurrección. Por la fe debemos entrar velo
+adentro, "donde entró por nosotros como precursor Jesús." (Hebreos 6: 20.) Allí se refleja la
+luz de la cruz del Calvario; y allí podemos obtener una comprensión más clara de los misterios
+de la redención, La salvación del hombre se cumple a un precio infinito para el cielo; el
+sacrificio hecho corresponde a las más amplias exigencias de la ley de Dios quebrantada. Jesús
+abrió el camino que lleva al trono del Padre, y por su mediación pueden ser presentados ante
+Dios los deseos sinceros de todos los que a él se allegan con fe.
+
+"El que encubre sus transgresiones, no prosperará; mas el que las confiesa y las abandona,
+alcanzará misericordia." (Proverbios 28: 13, V.M.) Si los que esconden y disculpan sus faltas
+pudiesen ver cómo Satanás se alegra de ello, y los usa para desafiar a Cristo y sus santos
+ángeles, se apresurarían a confesar sus pecados, y a renunciar a ellos. De los defectos de
+carácter se vale Satanás para intentar dominar toda la mente, y sabe muy bien que si se
+conservan estos defectos, lo logrará. De ahí que trate constantemente de engañar a los
+discípulos de Cristo con su fatal sofisma de que les es imposible vencer. Pero Jesús aboga en su
+favor con sus manos heridas, su cuerpo quebrantado, y declara a todos los que quieran seguirle:
+"Bástate [544] mi gracia." (2 Corintios 12: 9.) "Llevad mi yugo sobre vosotros, y aprended de
+mi, que soy manso y humilde de corazón; y hallaréis descanso para vuestras almas. Porque mi yugo
+es fácil, y ligera mi {p398} carga." (S. Mateo 11: 29, 30.) Nadie considere, pues, sus defectos
+como incurables. Dios concederá fe y gracia para vencerlos.
+
+Estamos viviendo ahora en el gran día de la expiación. Cuando en el servicio simbólico el sumo
+sacerdote hacia la propiciación por Israel, todos debían afligir sus almas arrepintiéndose de
+sus pecados y humillándose ante el Señor, si no querían verse separados del pueblo. De la misma
+manera, todos los que desean que sus nombres sean conservados en el libro de la vida, deben
+ahora, en los pocos días que les quedan de este tiempo de gracia, afligir sus almas ante Dios
+con verdadero arrepentimiento y dolor por sus pecados. Hay que escudriñar honda y sinceramente
+el corazón. Hay que deponer el espíritu liviano y frívolo al que se entregan tantos cristianos
+de profesión. Empeñada lucha espera a todos aquellos que quieran subyugar las malas
+inclinaciones que tratan de dominarlos. La obra de preparación es obra individual. No somos
+salvados en grupos. La pureza y la devoción de uno no suplirá la falta de estas cualidades en
+otro. Si bien todas las naciones deben pasar en juicio ante Dios, sin embargo él examinará el
+caso de cada individuo de un modo tan rígido y minucioso como si no hubiese otro ser en la
+tierra. Cada cual tiene que ser probado y encontrado sin mancha, ni arruga, ni cosa semejante.
+
+Solemnes son las escenas relacionadas con la obra final de la expiación. Incalculables son los
+intereses que ésta envuelve. El juicio se lleva ahora adelante en el santuario celestial. Esta
+obra se viene realizando desde hace muchos años. Pronto —nadie sabe cuándo— les tocará ser
+juzgados a los vivos. En la augusta presencia de Dios nuestras vidas deben ser pasadas en
+revista. En éste más que en cualquier otro tiempo conviene que toda alma preste atención a la
+amonestación del Señor: [545] "Velad y orad: porque no sabéis cuándo será el tiempo." "Y si no
+velares, vendré a ti como ladrón, y no sabrás en qué hora vendré a ti." (S. Marcos 13:33;
+Apocalipsis 3:3)
+
+Cuando quede concluida la obra del juicio investigador, quedará también decidida la suerte de
+todos para vida o para muerte. El tiempo de gracia terminará poco antes de que el Señor aparezca
+en las nubes del cielo. Al mirar hacia ese tiempo, Cristo declara en el Apocalipsis: " ¡El que
+es injusto, sea injusto aún; y el que es sucio, sea sucio aún; y el que es justo, sea justo aún;
+y el que es santo, sea aún santo! He aquí, yo vengo presto, y, mi galardón está conmigo, para
+dar la recompensa a cada uno según sea su obra." (Apocalipsis 22: 11, I2, V.M.)
+
+Los justos y los impíos continuarán viviendo en la tierra en su estado mortal, — los hombres
+seguirán plantando y edificando, comiendo y bebiendo, inconscientes todos ellos de que la
+decisión final e irrevocable ha sido pronunciada en el santuario celestial. Antes del diluvio,
+después que Noé, hubo entrado en el arca, {p399} Dios le encerró en ella, dejando fuera a los
+impíos; pero por espacio de siete días el pueblo, no sabiendo que su suerte estaba decidida
+continuó en su indiferente búsqueda de placeres y se mofó de las advertencias del juicio que le
+amenazaba. "Así —dice el Salvador— será también la venida del Hijo del hombre." (S. Mateo 24:
+39.) Inadvertida como ladrón a medianoche, llegará la hora decisiva que fija el destino de cada
+uno, cuando será retirado definitivamente el ofrecimiento de la gracia que se dirigiera a los
+culpables.
+
+"¡Velad pues; . . . no sea que viniendo de repente, os halle dormidos!" (S. Marcos 13: 35, 36,
+V.M.) Peligroso es el estado de aquellos que cansados de velar, se vuelven a los atractivos del
+mundo. Mientras que el hombre de negocios está absorto en el afán de lucro, mientras el amigo de
+los placeres corre tras ellos, mientras la esclava de la moda está ataviándose, —puede, llegar
+el momento en que el juez de toda la tierra pronuncie la sentencia: "Has sido pesado en la
+balanza y has sido hallado falto." (Daniel 5: 27, V.M.) [546]
+`,
+
+  preguntas: [
+    {"t": "mc", "pag": 391, "lit": "Los libros del cielo, en los cuales están consignados los nombres y los actos de los hombres, determinarán los fallos del juicio.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 29 (p. 391), ¿qué palabra completa la frase? «Los libros del cielo, en los cuales están ___ los nombres y los actos de los hombres, determinarán los fallos del juicio.»", "o": ["defectos", "consignados", "escapados", "revistados"], "a": 1, "e": "El libro dice: «Los libros del cielo, en los cuales están consignados los nombres y los actos de los hombres, determinarán los fallos del juicio.»"},
+    {"t": "fill", "pag": 393, "lit": "Pide para su pueblo, no sólo el perdón y la justificación, plenos y completos, sino además participación en su gloria y un asiento en su trono.", "pend": 1, "ins": "El conflicto de los siglos, cap. 29 (p. 393) — Completa la frase del libro:", "p": [{"x": "«Pide para su pueblo, no sólo el perdón y la justificación, plenos y "}, {"b": "completos", "h": "¿qué palabra falta?"}, {"x": ", sino además participación en su gloria y un asiento en su trono.»"}]},
+    {"t": "mc", "pag": 393, "lit": "Ahora él señala la historia de sus vidas, los defectos de carácter, la falta de semejanza con Cristo, lo que deshonró a su Redentor, todos los pecados que les indujo a cometer, y a causa de éstos los reclama como sus súbditos.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 393), ¿qué palabra completa la frase? «Ahora él señala la historia de sus vidas, los defectos de carácter, la falta de semejanza con ___, lo que deshonró a su Redentor, todos los pecados que les indujo a cometer, y a causa de éstos los reclama como sus súbditos.»", "o": ["Jehová", "Hebreos", "Cristo", "Daniel"], "a": 2, "e": "El libro dice: «Ahora él señala la historia de sus vidas, los defectos de carácter, la falta de semejanza con Cristo, lo que deshonró a su Redentor, todos los pecados que les indujo a cometer, y a causa de éstos los reclama como sus súbditos.»"},
+    {"t": "tf", "pag": 394, "lit": "En vista de que los muertos han de ser juzgados según las cosas escritas en los libros, es imposible que los pecados de los hombres sean borrados antes del fin del juicio en que sus vidas han de ser examinadas.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 394), el libro dice: «En vista de que los muertos han de ser juzgados según las cosas escritas en los libros, es imposible que los pecados de los hombres sean borrados antes del fin del juicio en que sus vidas han de ser examinadas.»", "a": true, "e": "Es verdadero: el libro dice «En vista de que los muertos han de ser juzgados según las cosas escritas en los libros, es imposible que los pecados de los hombres sean borrados antes del fin del juicio en que sus vidas han de ser examinadas.»"},
+    {"t": "mc", "pag": 395, "lit": "Puede el pecador haber cometido sus malas acciones a la luz del día o en la obscuridad de la noche; eran conocidas y manifiestas para Aquel a quien tenemos que dar cuenta.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 29 (p. 395), ¿qué palabra completa la frase? «Puede el pecador haber cometido sus malas acciones a la luz del día o en la obscuridad de la noche; eran conocidas y manifiestas para Aquel a quien ___ que dar cuenta.»", "o": ["cielos", "hallados", "tenidos", "tenemos"], "a": 3, "e": "El libro dice: «Puede el pecador haber cometido sus malas acciones a la luz del día o en la obscuridad de la noche; eran conocidas y manifiestas para Aquel a quien tenemos que dar cuenta.»"},
+    {"t": "fill", "pag": 395, "lit": "Nuestros actos, nuestras palabras, hasta nuestros más secretos motivos, todo tiene su peso en la decisión de nuestro destino para dicha o desdicha.", "pend": 1, "ins": "El conflicto de los siglos, cap. 29 (p. 395) — Completa la frase del libro:", "p": [{"x": "«Nuestros actos, nuestras palabras, hasta nuestros más secretos motivos, todo tiene su peso en la decisión de nuestro "}, {"b": "destino", "h": "¿qué palabra falta?"}, {"x": " para dicha o desdicha.»"}]},
+    {"t": "tf", "pag": 395, "lit": "Así como los rasgos de la fisonomía son reproducidos con minuciosa exactitud sobre la pulida placa del artista, así también está el carácter fielmente delineado en los libros del cielo.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 395), el libro dice: «Así como los rasgos de la fisonomía son reproducidos con minuciosa exactitud sobre la pulida placa del artista, así también está el comprender fielmente delineado en los libros del cielo.»", "a": false, "e": "Es falso: el libro dice «Así como los rasgos de la fisonomía son reproducidos con minuciosa exactitud sobre la pulida placa del artista, así también está el carácter fielmente delineado en los libros del cielo.»"},
+    {"t": "mc", "pag": 396, "lit": "En el juicio se examinará el empleo que se haya hecho de cada talento.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 29 (p. 396), ¿qué palabra completa la frase? «En el juicio se ___ el empleo que se haya hecho de cada talento.»", "o": ["verificará", "terminará", "examinará", "corromperá"], "a": 2, "e": "El libro dice: «En el juicio se examinará el empleo que se haya hecho de cada talento.»"},
+    {"t": "mc", "pag": 396, "lit": "Todo lo que se hace por amor, por insignificante que aparezca en opinión de los hombres, es aceptado y recompensado por Dios.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 396), ¿qué palabra completa la frase? «Todo lo que se hace por amor, por insignificante que aparezca en opinión de los hombres, es aceptado y recompensado por ___.»", "o": ["Isaías", "Dios", "Padre", "Señor"], "a": 1, "e": "El libro dice: «Todo lo que se hace por amor, por insignificante que aparezca en opinión de los hombres, es aceptado y recompensado por Dios.»"},
+    {"t": "fill", "pag": 396, "lit": "El dinero, el tiempo y las energías son sacrificados a la ostentación y al egoísmo; pero pocos son los momentos dedicados a orar, a estudiar las Sagradas Escrituras, a humillar el alma y a confesar los pecados.", "pend": 1, "ins": "El conflicto de los siglos, cap. 29 (p. 396) — Completa la frase del libro:", "p": [{"x": "«El dinero, el tiempo y las "}, {"b": "energías", "h": "¿qué palabra falta?"}, {"x": " son sacrificados a la ostentación y al egoísmo; pero pocos son los momentos dedicados a orar, a estudiar las Sagradas Escrituras, a humillar el alma y a confesar los pecados.»"}]},
+    {"t": "mc", "pag": 396, "lit": "Sabe que su éxito estriba en distraer las mentes de Jesús y de su obra.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 396), ¿qué palabra completa la frase? «Sabe que su éxito estriba en distraer las mentes de ___ y de su obra.»", "o": ["Jesús", "Satanás", "Señor", "Juez"], "a": 0, "e": "El libro dice: «Sabe que su éxito estriba en distraer las mentes de Jesús y de su obra.»"},
+    {"t": "tf", "pag": 397, "lit": "Jesús abrió el camino que lleva al trono del Padre, y por su mediación pueden ser presentados ante Dios los deseos sinceros de todos los que a él se allegan con fe.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 397), el libro dice: «Jesús abrió el camino que lleva al trono del Jehová, y por su mediación pueden ser presentados ante Dios los deseos sinceros de todos los que a él se allegan con fe.»", "a": false, "e": "Es falso: el libro dice «Jesús abrió el camino que lleva al trono del Padre, y por su mediación pueden ser presentados ante Dios los deseos sinceros de todos los que a él se allegan con fe.»"},
+    {"t": "mc", "pag": 397, "lit": "De los defectos de carácter se vale Satanás para intentar dominar toda la mente, y sabe muy bien que si se conservan estos defectos, lo logrará.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 397), ¿qué palabra completa la frase? «De los defectos de carácter se vale ___ para intentar dominar toda la mente, y sabe muy bien que si se conservan estos defectos, lo logrará.»", "o": ["Satanás", "Anciano", "Hebreos", "Cristo"], "a": 0, "e": "El libro dice: «De los defectos de carácter se vale Satanás para intentar dominar toda la mente, y sabe muy bien que si se conservan estos defectos, lo logrará.»"},
+    {"t": "mc", "pag": 398, "lit": "Cuando en el servicio simbólico el sumo sacerdote hacia la propiciación por Israel, todos debían afligir sus almas arrepintiéndose de sus pecados y humillándose ante el Señor, si no querían verse separados del pueblo.", "pend": 1, "nv": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 398), ¿qué palabra completa la frase? «Cuando en el servicio simbólico el sumo sacerdote hacia la propiciación por Israel, todos debían afligir sus almas arrepintiéndose de sus pecados y humillándose ante el ___, si no querían verse separados del pueblo.»", "o": ["Pedro", "Palabra", "Señor", "Dios"], "a": 2, "e": "El libro dice: «Cuando en el servicio simbólico el sumo sacerdote hacia la propiciación por Israel, todos debían afligir sus almas arrepintiéndose de sus pecados y humillándose ante el Señor, si no querían verse separados del pueblo.»"},
+    {"t": "tf", "pag": 398, "lit": "La pureza y la devoción de uno no suplirá la falta de estas cualidades en otro.", "pend": 1, "q": "Según El conflicto de los siglos, cap. 29 (p. 398), el libro dice: «La pureza y la devoción de uno no suplirá la falta de estas cualidades en otro.»", "a": true, "e": "Es verdadero: el libro dice «La pureza y la devoción de uno no suplirá la falta de estas cualidades en otro.»"},
+    {"t": "mc", "pag": 398, "lit": "Solemnes son las escenas relacionadas con la obra final de la expiación.", "pend": 1, "nv": 2, "q": "Según El conflicto de los siglos, cap. 29 (p. 398), ¿qué palabra completa la frase? «Solemnes son las ___ relacionadas con la obra final de la expiación.»", "o": ["sillas", "causas", "escenas", "pasadas"], "a": 2, "e": "El libro dice: «Solemnes son las escenas relacionadas con la obra final de la expiación.»"}
+  ],
+
+  tarjetas: [
+    {"pag": 391, "lit": "Los libros del cielo, en los cuales están consignados los nombres y los actos de los hombres, determinarán los fallos del juicio.", "pend": 1, "f": "CS 29 (p. 391): «Los libros del cielo, en los cuales están ___ los nombres y los actos de los hombres, determinarán los fallos del juicio.»", "r": "consignados — «Los libros del cielo, en los cuales están consignados los nombres y los actos de los hombres, determinarán los fallos del juicio.»"},
+    {"pag": 393, "lit": "Ahora él señala la historia de sus vidas, los defectos de carácter, la falta de semejanza con Cristo, lo que deshonró a su Redentor, todos los pecados que les indujo a cometer, y a causa de éstos los reclama como sus súbditos.", "pend": 1, "f": "CS 29 (p. 393): «Ahora él señala la historia de sus vidas, los defectos de carácter, la falta de semejanza con ___, lo que deshonró a su Redentor, todos los pecados que les indujo a cometer, y a causa de éstos los reclama como sus súbditos.»", "r": "Cristo — «Ahora él señala la historia de sus vidas, los defectos de carácter, la falta de semejanza con Cristo, lo que deshonró a su Redentor, todos los pecados que les indujo a cometer, y a causa de éstos los reclama como sus súbditos.»"},
+    {"pag": 395, "lit": "Puede el pecador haber cometido sus malas acciones a la luz del día o en la obscuridad de la noche; eran conocidas y manifiestas para Aquel a quien tenemos que dar cuenta.", "pend": 1, "f": "CS 29 (p. 395): «Puede el pecador haber cometido sus malas acciones a la luz del día o en la obscuridad de la noche; eran conocidas y manifiestas para Aquel a quien ___ que dar cuenta.»", "r": "tenemos — «Puede el pecador haber cometido sus malas acciones a la luz del día o en la obscuridad de la noche; eran conocidas y manifiestas para Aquel a quien tenemos que dar cuenta.»"},
+    {"pag": 395, "lit": "Así como los rasgos de la fisonomía son reproducidos con minuciosa exactitud sobre la pulida placa del artista, así también está el carácter fielmente delineado en los libros del cielo.", "pend": 1, "f": "CS 29 (p. 395): «Así como los rasgos de la fisonomía son reproducidos con minuciosa exactitud sobre la pulida placa del artista, así también está el ___ fielmente delineado en los libros del cielo.»", "r": "carácter — «Así como los rasgos de la fisonomía son reproducidos con minuciosa exactitud sobre la pulida placa del artista, así también está el carácter fielmente delineado en los libros del cielo.»"},
+    {"pag": 396, "lit": "Todo lo que se hace por amor, por insignificante que aparezca en opinión de los hombres, es aceptado y recompensado por Dios.", "pend": 1, "f": "CS 29 (p. 396): «Todo lo que se hace por amor, por insignificante que aparezca en opinión de los hombres, es aceptado y recompensado por ___.»", "r": "Dios — «Todo lo que se hace por amor, por insignificante que aparezca en opinión de los hombres, es aceptado y recompensado por Dios.»"},
+    {"pag": 396, "lit": "Sabe que su éxito estriba en distraer las mentes de Jesús y de su obra.", "pend": 1, "f": "CS 29 (p. 396): «Sabe que su éxito estriba en distraer las mentes de ___ y de su obra.»", "r": "Jesús — «Sabe que su éxito estriba en distraer las mentes de Jesús y de su obra.»"},
+    {"pag": 397, "lit": "De los defectos de carácter se vale Satanás para intentar dominar toda la mente, y sabe muy bien que si se conservan estos defectos, lo logrará.", "pend": 1, "f": "CS 29 (p. 397): «De los defectos de carácter se vale ___ para intentar dominar toda la mente, y sabe muy bien que si se conservan estos defectos, lo logrará.»", "r": "Satanás — «De los defectos de carácter se vale Satanás para intentar dominar toda la mente, y sabe muy bien que si se conservan estos defectos, lo logrará.»"},
+    {"pag": 398, "lit": "La pureza y la devoción de uno no suplirá la falta de estas cualidades en otro.", "pend": 1, "f": "CS 29 (p. 398): «La pureza y la devoción de uno no suplirá la falta de estas ___ en otro.»", "r": "cualidades — «La pureza y la devoción de uno no suplirá la falta de estas cualidades en otro.»"}
+  ],
+};

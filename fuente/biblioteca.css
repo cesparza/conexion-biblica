@@ -121,3 +121,9 @@
 .bib-fu.btn{min-height:44px}
 /* La sección a la que lleva una pregunta queda debajo de lo fijo arriba (DONDE_TOPE). */
 #detalle .sec[data-i]{scroll-margin-top:84px}
+/* v237: El conflicto de los siglos: la página de la edición en el texto, la de la copia
+   digital en gris, y lo que todavía no revisó Camilo. */
+.cs-par{margin:0 0 .9em;line-height:1.65}
+.cs-pag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.02em;color:var(--cielo-txt);border:1px solid currentColor;border-radius:6px;padding:0 .4em;margin-right:.2em;vertical-align:.1em}
+.cs-ref{font-size:.7rem;color:var(--gris,#6b7280)}
+.q-pend{display:inline-block;font-size:.72rem;font-weight:600;color:var(--naranja-txt);border:1px solid currentColor;border-radius:6px;padding:.1em .5em;margin:.2em 0 .5em}
