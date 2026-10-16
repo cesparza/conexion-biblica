@@ -54,6 +54,13 @@ module.exports = {
       hi('La herida mortal es la caída del papado en 1798; la profecía anuncia que sana y que «toda la tierra» va en pos de la bestia. El hombre de pecado sigue hasta la segunda venida (2 Tesalonicenses 2:8).') +
       `<p>Fuente: CS 492 y 636; Bohr, <i>Daniel 1-10</i>, p. 120-121; Bohr, <i>Apocalipsis 17</i>, p. 7-8.</p>` },
 
+    /* v236: el fin de la bestia y de las otras tres (7:11-12), con fuente y página. */
+    { t: '🧭 El fin de la bestia (7:11-12)', capa: 'contexto', h:
+      `<p>«mientras miraba mataron a la bestia, y su cuerpo fue destrozado y entregado para quemarlo en el fuego» (7:11). Las palabras del cuerno traen su fin: la bestia no se convierte, es destruida.</p>` +
+      `<p>A las otras tres «les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo» (7:12). Babilonia, Medo-Persia y Grecia perdieron el poder, pero sus pueblos siguieron viviendo bajo el reino siguiente. Con la cuarta no pasa así: después de ella no viene otro reino de hombres.</p>` +
+      `<p>Los versículos 11 y 12 adelantan el final. En el orden de los hechos: se ponen los tronos, se sienta el Anciano de días, llega el Hijo del hombre, se hace el juicio, se da la recompensa al Hijo del hombre y a los santos y, al final, se destruye la bestia. El cuerno de Daniel 7 y el de Daniel 8 terminan por obra de Dios, no de hombres (7:11, 26; 8:25).</p>` +
+      `<p>Fuente: Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117; Bohr, <i>Daniel 1-10</i>, p. 305.</p>` },
+
     { t: '🧭 Los tiempos y la ley (7:25)', capa: 'contexto', h:
       `<p>Daniel 7:25 usa dos palabras arameas para «tiempo». En «tiempo, tiempos y medio tiempo» es un <b>lapso</b>: los 1.260 años. En «cambiar los tiempos» es otra palabra, <b>tiempos fijados que se repiten</b>, y va unida a «la Ley», en singular. Dios es el que «muda los tiempos» (2:21); el cuerno quiere hacer lo que solo Dios hace.</p>` +
       li([

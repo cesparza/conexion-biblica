@@ -29,6 +29,9 @@ const { GRUPOS, grupoDaniel } = require('./grupos.js');
 const { VERS } = require('./biblia.js');
 const { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META } = require('./biblia-otros.js');
 const PWA = require('./pwa.js');
+/* v236: los capítulos de «El conflicto de los siglos» (título y página), para nombrarlos
+   en el alcance de un concurso. Sin texto del libro. */
+const { CS_CAPS, CS_EDICION } = require('./conflicto.js');
 const { CAMPAMENTOS, revisa, sinUsar } = require('./campamentos.js');
 
 /* Varios temas, un solo archivo. Para quién es cada capítulo y cada repaso lo
@@ -247,7 +250,7 @@ const REALES = Object.fromEntries(Object.entries(EXAMENES_REALES).map(([id, ex])
    template string: no había chequeo de sintaxis y cada comilla de un onclick
    había que escaparla dos veces. */
 const leer = f => fs.readFileSync(path.join(__dirname, f), 'utf8').replace(/\n+$/, '');
-const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css');
+const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css');
 const CUERPO = leer('cuerpo.html');
 const REGLAS = leer('reglamento.js');
 const IMPR   = leer('imprimible.js');
@@ -255,6 +258,8 @@ const APP    = leer('app.js');
 const APP_PAR = leer('paralelos-app.js');
 /* v235: antes de app.js: sus var ya tienen valor cuando el arranque (al final de app.js) pinta. */
 const APP_BIB = leer('biblioteca-app.js');
+/* v236: «Mi estudio» (la lista personal) e irATema, para quien hospeda el módulo. */
+const APP_ME = leer('mi-estudio.js');
 
 /* Se serializa con indentación para que ninguna línea pase de 2.000
    caracteres: con una sola línea, ningún visor de diff abre el archivo. */
@@ -284,6 +289,10 @@ const MODULOS_BASE = ${JSON.stringify(MODULOS_ALL, null, 1)};
 /* Los estudios interactivos con imagen (fuente/laminas.js); las imágenes van
    aparte, en laminas/, y se piden al abrir. */
 const LAMINAS = ${JSON.stringify(LAMINAS, null, 1)};
+
+/* v236: los capítulos de las obras que un concurso puede pedir sin que estén en la app
+   todavía (fuente/conflicto.js): número, título y página. */
+const OBRAS_CAPS = ${JSON.stringify({ cs: { edicion: CS_EDICION, caps: CS_CAPS } }, null, 1)};
 
 /* v227: el reparto de un reino (los generales de Alejandro), datos de un mapa reutilizable. */
 const REPARTOS = ${JSON.stringify(REPARTOS, null, 1)};
@@ -366,6 +375,7 @@ ${DATA}
 ${REGLAS}
 ${IMPR}
 ${APP_BIB}
+${APP_ME}
 ${APP}
 ${APP_PAR}
 </script>
@@ -416,6 +426,31 @@ for (const [tema, ids] of Object.entries(IDS_DE_TEMA)) {
     'export const IDS_DE_TEMA = ' + JSON.stringify(IDS_DE_TEMA, null, 1) + ';\n\n' +
     'export const CATALOGO = ' + JSON.stringify(CATALOGO, null, 1) + ';\n\n' +
     'export { REGLAS };\n');
+}
+/* v236: LA LISTA DE TEMAS, PUBLICADA (temas.json). La Tertulia de Jóvenes guarda la llave
+   de un tema (`lam-d7`, `cap-d8`, `cap-cr20`) y la usaba de una copia escrita a mano. Aquí
+   sale sola de lo mismo que va al index.html: cada capítulo y repaso (`cap-<id>`) y cada
+   lámina con imagen (`lam-<id>`), con su título, su tipo y su tema. Las llaves son los ids
+   del material, que no cambian: hay filas en producción que las guardan. tools/cb-traer
+   de Jóvenes la copia junto al módulo. */
+{
+  const temaDe = x => Object.keys(IDS_DE_TEMA).find(t => IDS_DE_TEMA[t].includes(x.id)) || x.tema || '';
+  const NOMBRE_TEMA = { daniel: 'Daniel', apocalipsis: 'Apocalipsis', creencias: 'Creencias', matutina: 'Devoción Matutina' };
+  const lista = [];
+  for (const [k, L] of Object.entries(LAMINAS)) {
+    const c = CAPS_ALL.find(x => x.id === k);
+    if (!L || !L.dir || !L.titulo || !c) continue;
+    lista.push({ k: 'lam-' + k, titulo: c.label + ' · ' + L.titulo, tipo: 'lamina', tema: temaDe(c) });
+  }
+  for (const c of CAPS_ALL) lista.push({ k: 'cap-' + c.id, titulo: c.label + (c.sub ? ' · ' + c.sub : ''), tipo: 'capitulo', tema: temaDe(c) });
+  for (const m of MODULOS_ALL) lista.push({ k: 'cap-' + m.id, titulo: m.label + (m.sub ? ' · ' + m.sub : ''), tipo: m.prof ? 'profundizar' : 'repaso', tema: temaDe(m) });
+  for (const x of lista) x.grupo = x.tipo === 'lamina' ? 'Láminas' : NOMBRE_TEMA[x.tema] || x.tema;
+  const vistas = new Set();
+  for (const x of lista) {
+    if (vistas.has(x.k) || !/^(cap|lam)-[a-z0-9-]{1,24}$/.test(x.k)) { console.error('❌ temas.json: llave repetida o mal formada: ' + x.k); process.exit(1); }
+    vistas.add(x.k);
+  }
+  fs.writeFileSync(RAIZ('temas.json'), '{"v":1,"temas":[\n' + lista.map(x => JSON.stringify(x)).join(',\n') + '\n]}\n');
 }
 fs.writeFileSync(RAIZ('manifest.webmanifest'), PWA.manifest());
 fs.writeFileSync(RAIZ('sw.js'), PWA.sw(huella));

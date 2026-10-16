@@ -459,12 +459,12 @@ for (const W of ANCHOS) {
     await p.evaluate(() => lamCierra());
     /* Quién estudia: cada pastilla dice su actividad y abre esa ficha. */
     const cat = await p.evaluate(() => { const id = k => 'v211' + k; window.__dbAntes = JSON.stringify(DB);
-      DB.alumnos = {}; ['appa', 'gm', 'me'].forEach(k => { DB.alumnos[id(k)] = Object.assign(normalizar(null), { nombre: 'Camilo', cat: k }); });
+      DB.alumnos = {}; ['apgm', 'gm', 'me'].forEach(k => { DB.alumnos[id(k)] = Object.assign(normalizar(null), { nombre: 'Camilo', cat: k }); });
       DB.activo = id('gm'); S = DB.alumnos[DB.activo]; guardar(); abreYo();
       const ps = [...document.querySelectorAll('.alu-act')].map(x => x.textContent.replace(/\s+/g, ' ').trim());
-      const pa = [...document.querySelectorAll('.alu-act')].find(x => /Padres/.test(x.textContent)); pa.click();
+      const pa = [...document.querySelectorAll('.alu-act')].find(x => /Jóvenes/.test(x.textContent)); pa.click();
       return [ps.join(' | '), S.cat]; });
-    ok(/Apocalipsis ?Padres y consejeros/.test(cat[0]) && /Daniel ?Guías Mayores/.test(cat[0]) && cat[1] === 'appa',
+    ok(/Apocalipsis ?Jóvenes \(Guías Mayores\)/.test(cat[0]) && /Daniel ?Guías Mayores/.test(cat[0]) && cat[1] === 'apgm',
       W + ' · v211: «Quién estudia» dice la actividad de cada pastilla y abre la suya (' + cat.join(' → ') + ')');
     await p.evaluate(() => { cierraHoja(); DB = JSON.parse(window.__dbAntes); S = DB.alumnos[DB.activo]; guardar(); marcaCat(); });
   }
@@ -574,13 +574,13 @@ for (const W of ANCHOS) {
     ok(sin[0] && sin[1] === 'none' && (W >= 1000 ? sin[2] === 'xMidYMid meet' && amb > .2 : sin[2] === 'xMidYMid slice'), W + ' · la tecla T oculta el texto y la imagen toma toda la escena');
     await p.keyboard.press('t');
     await p.evaluate(() => lamPres(0));
-    /* v205: 28 pasos con el clicker (los 4 del juicio, los 2 del Hijo del hombre y
+    /* v236: 32 pasos (7:11 y 7:12 son dos pasos más del juicio). v205: 28 pasos con el clicker (los 4 del juicio, los 2 del Hijo del hombre y
        las 11 señas van dentro de su parte); el contador cuenta 14. */
     const nPasos = await p.evaluate(() => lamPasos().length);
     for (let i = 0; i < nPasos; i++) await p.keyboard.press(i % 2 ? 'PageDown' : 'ArrowRight');
     await p.waitForTimeout(700);
     const fin = await p.evaluate(() => [document.getElementById('lamCuenta').textContent, document.getElementById('lamHoja').textContent, document.querySelector('#lamSvg .lam-hist').getAttribute('href'), document.getElementById('lamSig').disabled]);
-    ok(nPasos === 30 && fin[0] === '19 / 19' && fin[3] && /se hizo justicia a los santos/.test(fin[1]) && fin[2].endsWith('d7/juicio.webp'), W + ' · Presentar recorre los ' + nPasos + ' pasos de Daniel 7 (contador ' + fin[0] + ') y termina en 7:22');
+    ok(nPasos === 32 && fin[0] === '19 / 19' && fin[3] && /se hizo justicia a los santos/.test(fin[1]) && fin[2].endsWith('d7/juicio.webp'), W + ' · Presentar recorre los ' + nPasos + ' pasos de Daniel 7 (contador ' + fin[0] + ') y termina en 7:22');
     await p.evaluate(() => lamCierra());
   }
   /* ── 3e. Daniel 7 interactivo (v205): con Daniel 2 se enciende el metal de cada
@@ -688,7 +688,7 @@ for (const W of ANCHOS) {
     /* Presentar: las bestias suben del mar, los tres cuernos caen, el juicio por pasos y una seña por paso. */
     await p.evaluate(() => lamAbre('d7', 'presentar'));
     const pres = await p.evaluate(() => lamPasos().map(x => x.tipo === 'parte' ? x.id + (x.sub != null ? x.sub : '') : x.tipo === 'senas' ? 's' + x.sub : x.tipo === 'senasT' ? 'S' : x.tipo === 'senasG' ? 'G' + x.sub : x.tipo === 'periodo' ? 't' + x.sub : x.tipo === 'fases' ? 'f' + x.sub : x.tipo[0]).join(' '));
-    ok(pres === 'p h h leon oso leopardo bestia cuernos cuerno G0 G1 G2 t0 t1 t2 t3 juicio0 juicio1 juicio2 juicio3 hijo0 hijo1 f0 f1 f2 santos reino d c a',
+    ok(pres === 'p h h leon oso leopardo bestia cuernos cuerno G0 G1 G2 t0 t1 t2 t3 juicio0 juicio1 juicio2 juicio3 juicio4 juicio5 hijo0 hijo1 f0 f1 f2 santos reino d c a',
       W + ' · Presentar: ' + pres);
     /* v214: en Presentar también: el nombre sobre la imagen (la seña) se toca y la presentación no se mueve. */
     {
@@ -727,7 +727,7 @@ for (const W of ANCHOS) {
     await p.evaluate(k => lamPres(k), ij);
     const JUICIO2 = await p.evaluate(() => lamParte('juicio').pasos[2].caja.map(n => n.toFixed(1)).join(' '));
     const pj = await p.evaluate(() => [document.getElementById('lamHoja').textContent, document.getElementById('lamZoom').getAttribute('viewBox'), document.getElementById('lamCuenta').textContent]);
-    ok(/paso 3 de 4/.test(pj[0]) && /Un río de fuego procedía/.test(pj[0]) && pj[1] === JUICIO2 && pj[2] === '12 / 19', W + ' · el juicio, paso 3 de 4 en Presentar (' + pj[1] + ', ' + pj[2] + ')');
+    ok(/paso 3 de 6/.test(pj[0]) && /Un río de fuego procedía/.test(pj[0]) && pj[1] === JUICIO2 && pj[2] === '12 / 19', W + ' · el juicio, paso 3 de 6 en Presentar (' + pj[1] + ', ' + pj[2] + ')');
     /* v210: «El Juez se sentó y los libros fueron abiertos»: con «reducir movimiento», el cuadro final (libro abierto, luces, cita). */
     const lb = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.id === 'juicio' && x.sub === 3)); const l = document.getElementById('lamLibro'), c = document.querySelector('.lam-libro-cita');
       return [!!l && l.classList.contains('abre') && l.classList.contains('luz'), !!c && /El Juez se sentó y los libros fueron abiertos/.test(c.textContent) && getComputedStyle(c).opacity === '1',
@@ -1688,7 +1688,7 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
     const blancos = sel => [...document.querySelectorAll(sel)].filter(e => e.getClientRects().length).map(e => e.getBoundingClientRect()).filter(b => b.width && (b.height < 44 || b.width < 44)).length;
     const lado = () => document.documentElement.scrollWidth > innerWidth;
     const tabs = [...document.querySelectorAll('.nav-t button b')].map(b => b.textContent).join(',');
-    if (tabs !== 'Inicio,Biblioteca,Practicar,Concursos,Logros') mal.push('barra ' + tabs);
+    if (tabs !== 'Inicio,Biblioteca,Concursos,Mi estudio') mal.push('barra ' + tabs);
     if (document.querySelectorAll('#ini-entradas .ent').length !== 2 || blancos('#ini-entradas .ent')) mal.push('puertas del inicio');
     /* Lo que invita: los destacados de la Biblioteca (las láminas del tema, Paralelos, los últimos
        acontecimientos) y el concurso que viene, todo tocable a 44 px. */
@@ -1738,6 +1738,103 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
   if (!/^#\/biblioteca\/d7/.test(viejo[0]) || viejo[1] !== 'estudio' || viejo[2] !== 'd7') r.push('camino viejo ' + JSON.stringify(viejo));
   if (ex !== '#/concursos') r.push('examen viejo ' + ex);
   ok(!r.length && !errores.length, W + ' · v235: Biblioteca y Concursos: barra, puertas, otro tema entero, nivel de lectura, bibliografía al final del tema, lo que invita en el inicio (destacados y el concurso que viene), «#/estudio/…» y «#/examen» reescritos, concursos con su edad, cada pregunta a su sección; sin desborde y blancos de 44 px' + (r.length || errores.length ? ' — ' + r.concat(errores).slice(0, 5).join(' | ') : ''));
+  await ctx.close();
+}
+/* ── v236: la navegación de cuatro entradas, las pestañas de la Biblioteca, «Mi estudio» (agregar,
+   quitar, guardar en el aparato y fundir con la cuenta al entrar), irATema sin recargar, Daniel
+   7:11-12 en la lámina y el concurso 2027 con sus pastillas. Sin desborde, blancos de 44 px. ── */
+for (const [W, H] of [[1440, 900], [390, 844]]) {
+  const tel = W < 600, ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block', isMobile: tel, hasTouch: tel });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => d.accept());
+  p.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errores.push('consola: ' + m.text().slice(0, 120)); });
+  /* La cuenta: primero no hay (401); después sí, con un tema guardado desde otro aparato. */
+  let cuenta = false, guardada = { 'cap-d8': [Date.now() - 60000, 1] };
+  await p.route('**/api/**', r => {
+    if (!/\/api\/mi-estudio/.test(r.request().url())) return r.fulfill({ json: {} });
+    if (!cuenta) return r.fulfill({ status: 401, json: { error: 'Entra' } });
+    const b = JSON.parse(r.request().postData() || '{}');
+    for (const [k, v] of Object.entries(b.lista || {})) if (!guardada[k] || v[0] > guardada[k][0]) guardada[k] = v;
+    return r.fulfill({ json: { lista: guardada } });
+  });
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(600);
+  await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'apcq'; guardar(); ponCat('apcq'); ir('inicio'); });
+  const r = await p.evaluate(async () => {
+    const espera = ms => new Promise(r => setTimeout(r, ms)), mal = [];
+    const visibles = sel => [...document.querySelectorAll(sel)].filter(e => e.getClientRects().length);
+    const blancos = sel => visibles(sel).map(e => e.getBoundingClientRect()).filter(b => b.width && (b.height < 44 || b.width < 44)).length;
+    const lado = () => document.documentElement.scrollWidth > innerWidth;
+    window.__sinRecargar = 1;
+    /* 1. La barra: cuatro entradas, del mismo alto, con la ficha de quién estudia arriba. */
+    const bots = visibles('.nav-t button');
+    if (bots.length !== 4 || blancos('.nav-t button')) mal.push('barra ' + bots.length);
+    if (!document.getElementById('nav-yo').getClientRects().length) mal.push('quién estudia');
+    /* 2. Las pestañas de la Biblioteca. */
+    ir('estudio'); await espera(300);
+    const tabs = visibles('#bib-tabs .bt').map(b => b.textContent.trim()).join(',');
+    if (tabs !== 'Temas,Láminas,Comparar,Paralelos,Últimos acontecimientos' || blancos('#bib-tabs .bt')) mal.push('pestañas ' + tabs);
+    visibles('#bib-tabs .bt')[1].click(); await espera(400);
+    if (!/^#\/biblioteca\/laminas$/.test(location.hash) || visibles('#bib-lams .bl-c').length < 3 || !document.getElementById('lista-caps').hidden || blancos('#bib-lams .me-tg, #bib-lams .btn')) mal.push('láminas ' + location.hash);
+    visibles('#bib-tabs .bt')[3].click(); await espera(900);
+    const par = document.getElementById('cmpPar');
+    if (!par || !/comparar/.test(location.hash) || visibles('#bib-tabs .bt.on').map(b => b.textContent.trim()).join() !== 'Paralelos') mal.push('paralelos ' + location.hash);
+    visibles('#bib-tabs .bt')[0].click(); await espera(300);
+    if (S.ultItem || document.getElementById('lista-caps').hidden) mal.push('volver a Temas');
+    if (lado()) mal.push('Biblioteca de lado');
+    /* 3. Mi estudio sin cuenta: agregar un capítulo, una lámina y el tema. */
+    verCap('d7'); await espera(400);
+    const b7 = document.querySelector('#detalle .cap-me .me-tg'); b7.click(); await espera(200);
+    if (b7.getAttribute('aria-pressed') !== 'true' || !/En mi estudio/.test(b7.textContent)) mal.push('agregar capítulo');
+    bibLamina('d7'); await espera(1200);
+    const bl = document.querySelector('#lam .lam-bots .me-tg'); if (bl) bl.click(); await espera(200);
+    if (!bl || !meEsta('lam-d7')) mal.push('agregar lámina');
+    lamCierra(); await espera(300);
+    ir('estudio'); await espera(300);
+    const bt = document.querySelector('#bib-cab .me-tg'); bt.click(); await espera(200);
+    ir('miestudio'); await espera(300);
+    if (!/^#\/mi-estudio$/.test(location.hash) || visibles('#me-cuerpo .me-f').length !== 3 || !/este aparato/.test(document.querySelector('.me-donde').textContent) || blancos('#me-cuerpo .me-abre, #me-cuerpo .me-tg, #me-cuerpo .me-ir')) mal.push('mi estudio ' + visibles('#me-cuerpo .me-f').length + ' ' + location.hash);
+    if (visibles('.nav-t button.on').map(b => b.querySelector('b').textContent).join() !== 'Mi estudio') mal.push('se enciende Mi estudio');
+    ir('tarjetas'); await espera(200);
+    if (visibles('.nav-t button.on').map(b => b.querySelector('b').textContent).join() !== 'Mi estudio') mal.push('Practicar enciende Mi estudio');
+    ir('miestudio'); await espera(200);
+    /* Quitar desde la lista. */
+    document.querySelector('#me-cuerpo .me-f .me-tg').click(); await espera(200);
+    if (visibles('#me-cuerpo .me-f').length !== 2) mal.push('quitar');
+    if (lado()) mal.push('Mi estudio de lado');
+    /* 4. irATema: con la app abierta, sin recargar. */
+    irATema('cap-d8'); await espera(400);
+    if (window.__sinRecargar !== 1 || S.ultItem !== 'd8' || !/^#\/biblioteca\/d8/.test(location.hash)) mal.push('irATema ' + location.hash);
+    irATema('lam-d7'); await espera(1200);
+    if (window.__sinRecargar !== 1 || document.getElementById('lam').hidden || lamId !== 'd7') mal.push('irATema lámina');
+    /* 5. Daniel 7:11-12 en la lámina, en su lugar: después de los libros abiertos y antes del Hijo del hombre. */
+    lamCierra(); await espera(200); lamAbre('d7', 'presentar'); await espera(800);
+    const P = lamPasosE(), i11 = P.findIndex(x => x.tipo === 'parte' && x.id === 'juicio' && x.sub === 4), i13 = P.findIndex(x => x.tipo === 'parte' && x.id === 'hijo');
+    lamPres(i11); await espera(900);
+    const t11 = document.getElementById('lam').textContent;
+    if (!(i11 > 0 && i13 === i11 + 2 && /mataron a la bestia, y su cuerpo fue destrozado/.test(t11) && /Maxwell/.test(t11))) mal.push('7:11 ' + i11 + '/' + i13);
+    lamCierra(); await espera(200);
+    /* 6. El concurso 2027: tres categorías con sus pastillas y los títulos de CS. */
+    ir('examen'); await espera(300);
+    const c = [...document.querySelectorAll('#con-lista .con-c')].find(x => /Conexión Bíblica 2027/.test(x.textContent));
+    if (!c || c.querySelectorAll('.con-cb').length !== 3 || !/Asociación del Alto Magdalena/.test(c.textContent) || !/36 – 39/.test(c.textContent) || c.querySelectorAll('.con-ol li').length !== 20) mal.push('concurso 2027');
+    if (lado()) mal.push('Concursos de lado');
+    abreYo(); await espera(300); prepAbre(); prepActividad('ap'); await espera(300);
+    if (document.querySelectorAll('#prep .cat-btn .ac-chip').length < 10) mal.push('quién estudia sin pastillas');
+    cierraHoja(); await espera(200);
+    return mal;
+  });
+  /* 7. Al entrar con cuenta: lo del aparato sube y se junta con lo de la cuenta. */
+  cuenta = true;
+  await p.evaluate(() => meSincroniza()); await p.waitForTimeout(500);
+  const fund = await p.evaluate(() => { ir('miestudio'); return [meModo, meLista().sort().join(), /tu cuenta/.test(document.querySelector('.me-donde').textContent)]; });
+  if (!(fund[0] === 'cuenta' && /cap-d8/.test(fund[1]) && /lam-d7/.test(fund[1]) && fund[2])) r.push('fusión ' + fund.join(' '));
+  /* 8. Los enlaces nuevos al recargar. */
+  await p.goto(base + '?quedarse=1#/mi-estudio'); await p.reload(); await p.waitForTimeout(900);
+  const rec = await p.evaluate(() => [pantallaAct, location.hash]);
+  await p.goto(base + '?quedarse=1#/biblioteca/laminas'); await p.reload(); await p.waitForTimeout(900);
+  const rec2 = await p.evaluate(() => [pantallaAct, location.hash, !document.getElementById('bib-lams').hidden]);
+  if (rec[0] !== 'miestudio' || rec2[0] !== 'estudio' || !rec2[2]) r.push('recargar ' + rec.concat(rec2).join(' '));
+  ok(!r.length && !errores.length, W + ' · v236: cuatro entradas, pestañas de la Biblioteca (Láminas, Paralelos, Temas), Mi estudio (capítulo, lámina y tema; quitar; aparato y fusión con la cuenta), irATema sin recargar, 7:11-12 en su lugar, el concurso 2027 con pastillas y títulos de CS, y los enlaces nuevos al recargar; sin desborde, 44 px' + (r.length || errores.length ? ' — ' + r.concat(errores).slice(0, 6).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();

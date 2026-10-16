@@ -445,7 +445,7 @@ LAMINAS.d7 = {
   texto:'fueron puestos unos tronos y se sentó un Anciano de días',ref:'7:9',texto2:'El Juez se sentó y los libros fueron abiertos.',ref2:'7:10',
   corto:'Desde 1844 el Padre juzga en el cielo, y el fallo es a favor de los santos (7:22).',
   interp:['El juicio empieza después de los 1.260 años del cuerno (7:25-26), que terminan en 1798, y antes de la segunda venida. La fecha exacta la da Daniel 8:14: las 2.300 tardes y mañanas terminan en 1844.','El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.','Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26).'],
-  fuente:'CS 477 y 533-536; PE 55; '+BOHR+', p. 120-121, 276-280.',
+  fuente:'CS 477 y 533-536; PE 55; '+BOHR+', p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117.',
   /* v205: la escena del juicio por pasos: la imagen se acerca a cada parte
      (`caja`: x, y, ancho y alto en píxeles de juicio.webp, 1200 × 675, en 16:9). */
   pasos:[
@@ -456,7 +456,13 @@ LAMINAS.d7 = {
    {t:'Un río de fuego',ref:'7:9-10',texto:'su trono, llama de fuego, y fuego ardiente las ruedas del mismo. Un río de fuego procedía y salía de delante de él',caja:[250,200,680,383],
     nota:'Un trono con ruedas es un trono que se mueve, como el carro de Ezequiel 1: el Padre pasa al lugar santísimo. Los millones que están delante de él son ángeles, testigos del tribunal (CS 533).'},
    {t:'Los libros fueron abiertos',ref:'7:10',texto:'El Juez se sentó y los libros fueron abiertos.',caja:[380,290,680,383],ms:8200,
-    nota:'El Juez se sienta y empieza la sesión. Los libros guardan cada vida: el libro de la vida, el de memoria y el registro de los pecados (Apocalipsis 20:12; Malaquías 3:16; Eclesiastés 12:14). El fallo es a favor de los santos: «se hizo justicia a los santos del Altísimo» (7:22).'}],
+    nota:'El Juez se sienta y empieza la sesión. Los libros guardan cada vida: el libro de la vida, el de memoria y el registro de los pecados (Apocalipsis 20:12; Malaquías 3:16; Eclesiastés 12:14). El fallo es a favor de los santos: «se hizo justicia a los santos del Altísimo» (7:22).'},
+   /* v236 (pendiente de v234): 7:11-12, el fin de la bestia y de las otras tres, en el orden del
+      texto (después de 7:10 y antes del Hijo del hombre, 7:13). Literal de la RV1995 de la app. */
+   {t:'Mataron a la bestia',ref:'7:11',texto:'Yo entonces miraba a causa del sonido de las grandes insolencias que hablaba el cuerno; y mientras miraba mataron a la bestia, y su cuerpo fue destrozado y entregado para quemarlo en el fuego.',caja:[150,40,880,495],
+    nota:'Las palabras del cuerno traen su fin: la bestia no se convierte, es destruida en el fuego (Smith, <i>Las profecías de Daniel</i>, p. 59-60). Los versículos 11 y 12 adelantan el final: en el orden de los hechos, primero el juicio y la recompensa del Hijo del hombre y de los santos, y al final la destrucción de la bestia (Maxwell, <i>El porvenir del mundo revelado</i>, p. 117). Como el cuerno de Daniel 8, termina por obra de Dios, no de hombres (7:11, 26; 8:25; Bohr, <i>Daniel 1-10</i>, p. 305).'},
+   {t:'Las otras bestias',ref:'7:12',texto:'También a las otras bestias les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo.',caja:[150,40,880,495],
+    nota:'Babilonia, Medo-Persia y Grecia perdieron el dominio, pero sus pueblos siguieron viviendo bajo el reino siguiente. Con la cuarta bestia no pasa así: después de ella no viene otro reino de hombres, y su carrera termina en el fuego (Smith, <i>Las profecías de Daniel</i>, p. 59-60).'}],
   /* v210: LA ANIMACIÓN DEL JUICIO (Camilo, 14-oct: «se puede agregar una animación
      para cuando dice: el Juez se sentó y los libros fueron abiertos»). Sobre
      juicio.webp, en píxeles de 1200 × 675: la luz del trono (el rostro nunca se

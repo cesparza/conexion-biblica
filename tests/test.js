@@ -2258,21 +2258,19 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     dm2:[R(1,31,'m')+' | mm-quien mm-versiculos mm-plan','m31',15,2],
     ec1:[R(1,28,'cr')+' | mc-doctrinas mc-lista','',25,3],
     ec2:[R(1,28,'cr')+' | mc-doctrinas mc-lista','',15,2],
-    /* v178: Apocalipsis entero, con el formato real de Daniel 2026. */
-    apme:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',10,1],
-    apav:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',30,3],
-    appa:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',35,3],
-    /* v191: Conquistadores (10 a 15, sin padres) y Guías Mayores, Camilo 13-oct. */
-    apcq:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',30,2],
+    /* v236: la política Conexión Bíblica 2027 (Asociación del Alto Magdalena): tres
+       categorías, cada una con sus capítulos de Apocalipsis. */
     apgm:[Array.from({length:22},(_,i)=>'ap'+(i+1)).join(' ')+' | ','',35,3],
+    apcq:[[1,2,3,4,5,10,11,12,13,14,19,20,21,22].map(n=>'ap'+n).join(' ')+' | ','',30,2],
+    apav:[[1,12,14,21,22].map(n=>'ap'+n).join(' ')+' | ','',30,3],
   };
   const C=REGLAMENTO.CATS;
   const distintas=Object.keys(VIGENTE).filter(k=>!C[k]||ve(k)!==VIGENTE[k][0]||solo(k)!==VIGENTE[k][1]||C[k].n!==VIGENTE[k][2]||C[k].techo!==VIGENTE[k][3]);
   ok(Object.keys(C).join()===Object.keys(VIGENTE).join()&&!distintas.length,
-    'El reglamento vigente no cambió: las 13 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
+    'El reglamento vigente no cambió (salvo la política 2027 de Apocalipsis): las 11 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
   /* v164: Guías Mayores tiene su ficha (cbg). Su categoría conserva el id. */
   const AC=REGLAMENTO.ACTIVIDADES;
-  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apme,apav,appa,apcq,apgm'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
+  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apgm,apcq,apav'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
     'Las actividades son cb, cbg, dm, ec y ap; Guías Mayores va en la suya y conserva su categoría gm');
   ok(C.me.club==='aventureros'&&C.pa.club==='aventureros'&&C.gm.club==='guias'&&C.apcq.club==='conquistadores'&&C.apgm.club==='guias'&&C.ec1.club==='',
     'v191: cada categoría de club dice su club (Aventureros, Conquistadores, Guías Mayores)');
@@ -2312,8 +2310,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Cada ficha trae su fecha: los tres concursos de Aventureros el 10 de octubre de 2026, y Guías Mayores sin fecha');
   ok(!/Tres tarjetas|el 9 de octubre/.test(lee('manual.js')),
     'El manual no cuenta las actividades ni afirma una fecha: las dos cosas salen de las fichas');
-  ok(C.me.seg===100&&C.av.seg===80&&C.apme.seg===100&&C.apav.seg===80&&C.apcq.seg===80&&['pa','gm','dm1','dm2','ec1','ec2','appa','apgm'].every(k=>C[k].seg===72)&&
-     C.pa.rampa===false&&C.appa.rampa===false&&C.apgm.rampa===false&&Object.keys(C).filter(k=>!['pa','appa','apgm'].includes(k)).every(k=>C[k].rampa===true),
+  ok(C.me.seg===100&&C.av.seg===80&&C.apav.seg===80&&C.apcq.seg===80&&['pa','gm','dm1','dm2','ec1','ec2','apgm'].every(k=>C[k].seg===72)&&
+     C.pa.rampa===false&&C.apgm.rampa===false&&Object.keys(C).filter(k=>!['pa','apgm'].includes(k)).every(k=>C[k].rampa===true),
     'El tiempo por pregunta y la rampa son los de antes: 100 s Menores, 80 s Aventureros, 72 s los demás, y solo Padres entra sin rampa');
   ok(!/FECHA_META/.test(lee('app.js'))&&!/S\.cat==='(me|av|pa|gm|dm1|dm2|ec1|ec2)'/.test(lee('app.js')),
     'app.js no tiene fechas ni reglas escritas por categoría');
@@ -2339,7 +2337,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      puede quedar «sin tipo», así que se le quita el suyo para probar eso. */
   const SIN_AP=Object.assign({},F.TEMAS); delete SIN_AP.apocalipsis;
   const conAp=F.deriva([...F.CAMPAMENTOS,fAp],TIPOS_AP);
-  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP,TIPOS_AP).length===0&&conAp.catsDe('ap2').join()==='apme,apav,appa,apcq,apgm,ap1c'&&
+  ok(F.revisa([...F.CAMPAMENTOS,fAp],TEMAS_AP,TIPOS_AP).length===0&&conAp.catsDe('ap2').join()==='apgm,apcq,ap1c'&&
      conAp.ACTIVIDADES.ap27.tipo==='libro'&&JSON.stringify(conAp.CATS.gm)===JSON.stringify(C.gm)&&
      F.revisa([...F.CAMPAMENTOS.filter(f=>f.id!=='ap'),fAp],TEMAS_AP,SIN_AP).some(m=>/sin tipo/.test(m))&&
      F.revisa([...F.CAMPAMENTOS,ficha(cat({estudia:['ap1']}))],TEMAS_AP,TIPOS_AP).some(m=>/ap1/.test(m)),
@@ -2629,8 +2627,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(fs7.every(f=>fs.existsSync(path.join(RAIZ,'laminas',L.dir+f+'.webp'))),'Las imágenes de hoy (mar, cuarta, cuerno) existen: lo de las capas es una mejora, no una falta');
   const pasos=L.partes.flatMap(p=>(p.pasos||[]).map(x=>Object.assign({p:p.id},x)));
   const malos=pasos.filter(x=>!d7.includes(n(x.texto))||!x.caja||x.caja.length!==4||Math.abs(x.caja[2]/x.caja[3]-1200/675)>.02||x.caja[0]<0||x.caja[1]<0||x.caja[0]+x.caja[2]>1200||x.caja[1]+x.caja[3]>675);
-  ok(pasos.filter(x=>x.p==='juicio').map(x=>x.t).join(' / ')==='Fueron puestos unos tronos / Se sentó un Anciano de días / Un río de fuego / Los libros fueron abiertos'&&pasos.filter(x=>x.p==='hijo').length===2&&!malos.length,
-    'El juicio en 4 pasos y el Hijo del hombre en 2: texto literal RV1995 y la caja dentro de la imagen, en 16:9'+(malos.length?' ('+malos[0].t+')':''));
+  ok(pasos.filter(x=>x.p==='juicio').map(x=>x.t).join(' / ')==='Fueron puestos unos tronos / Se sentó un Anciano de días / Un río de fuego / Los libros fueron abiertos / Mataron a la bestia / Las otras bestias'&&pasos.filter(x=>x.p==='hijo').length===2&&!malos.length,
+    'El juicio en 6 pasos (v236: 7:11 y 7:12 después de los libros abiertos) y el Hijo del hombre en 2: texto literal RV1995 y la caja dentro de la imagen, en 16:9'+(malos.length?' ('+malos[0].t+')':''));
   ok(L.marcas.some(m=>m[0]===1844)&&L.escenas.some(e=>e.y===1844&&e.f==='juicio')&&L.hitos.includes(1844)&&L.partes.find(p=>p.id==='juicio').de===1844,'La línea de tiempo marca 1844: ahí empieza el juicio (8:14)');
   const senQ=L.senas.flatMap(x=>[...(x.t+' '+x.c).matchAll(/«([^»]+)»/g)].map(m=>m[1]));
   ok(L.senas.length===11&&L.senas.every(x=>x.t&&/^7:/.test(x.ref)&&x.c)&&senQ.length>=9&&senQ.every(q=>d7.includes(n(q)))&&/Fuente|Bohr/.test(L.senasFuente),
@@ -2739,7 +2737,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/class="lam-riel-l" id="lamTira"/.test(js)&&/function lamNavHTML\(/.test(js)&&LAMINAS.d2.partes.slice(-3).map(p=>p.id).join()==='barro,piedra,monte',
     'Daniel 2 en Explorar: todas las partes en el riel, y Siguiente pasa del barro a la piedra y al monte');
   /* Las categorías: cada pastilla dice su actividad. */
-  ok(actCorta('ap')==='Apocalipsis'&&actCorta('cb')==='Daniel'&&catCorta('appa')==='Apocalipsis · Padres y consejeros'&&catCorta('pa')==='Daniel · Padres y consejeros'&&catCorta('gm')==='Daniel · Guías Mayores',
+  ok(actCorta('ap')==='Apocalipsis'&&actCorta('cb')==='Daniel'&&catCorta('apgm')==='Apocalipsis · Jóvenes (Guías Mayores)'&&catCorta('pa')==='Daniel · Padres y consejeros'&&catCorta('gm')==='Daniel · Guías Mayores',
     'Quién estudia: «Apocalipsis · Padres y consejeros» y «Daniel · Padres y consejeros» ya no se ven iguales');
   ok(/class="alu-act-a">'\+esc\(c\?actCorta\(c\.act\)/.test(js)&&/onclick="cambiaAlumno\(\\''\+id\+'\\'\)">'\+\s*'<span class="alu-act-a">/.test(js),'Cada pastilla abre su propia ficha y nombra su actividad');
   /* La portada de Daniel 7: las cuatro bestias. */
@@ -2819,7 +2817,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const {dd2}=montar("dd2:(lamId='d2',lamEscenasDe(LAMINAS.d2.partes.find(p=>p.id==='dedos')).map(e=>e.y).join())");
   ok(!/1844/.test(dd2)&&LAMINAS.d2.escenas.some(e=>e.y===1844&&e.hoja===false),'v225: la escena del juicio de 1844 va en la línea de tiempo de Daniel 2, no en la hoja de «Los diez dedos» (Roma dividida) ('+dd2+')');
   const {pres7}=montar("pres7:(lamId='d7',lamPasosE().map(x=>x.tipo==='parte'?x.id+(x.sub!=null?'.'+x.sub:''):x.tipo).join(' '))");
-  ok(/juicio\.3 hijo\.0 hijo\.1 fases fases fases santos/.test(pres7),'v225: al presentar Daniel 7, las tres fases del juicio van después del Hijo del hombre (la sentencia es el reino que recibe)');
+  ok(/juicio\.3 juicio\.4 juicio\.5 hijo\.0 hijo\.1 fases fases fases santos/.test(pres7),'v225: al presentar Daniel 7, las tres fases del juicio van después del Hijo del hombre (la sentencia es el reino que recibe)');
   const fuenteTodo=['laminas.js','contenido.js','complementos/profundizar.js','complementos/daniel/d7.js','complementos/daniel/d2.js','complementos/daniel/d8.js'].map(f=>fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8')).join('\n');
   const L7=LAMINAS.d7,A3=/sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve \(7:21-22, 26\)/;
   ok(!/hasta que viene el Anciano de días|sigue en pie hasta que viene|el cuerno sigue hasta que/.test(fuenteTodo)&&A3.test(L7.periodo.pasos[3].nota)&&A3.test(L7.partes.find(p=>p.id==='cuerno').corto)&&

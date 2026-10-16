@@ -125,6 +125,9 @@ const HECHOS = {
     { p: 'x-periodo', en: 'tiempo.periodo', t: '1.260 años · 538 – 1798 d.C.', f: '@periodo' },
     { p: 'x-periodo', en: 'tiempo.regla', t: 'En la profecía simbólica cada día vale un año. Dios mismo usa esa medida en Números 14:34 y en Ezequiel 4:6.', f: '@periodo' },
     ['cuerno', 'papal.fin', '7:26', 'le quitarán su dominio, para que sea destruido y arruinado hasta el fin'],
+    /* v236: 7:11-12 ya están en la lámina (pasos del juicio): «su fin» de la cuarta bestia y de las otras tres. */
+    ['juicio', 'imperial.fin', '7:11', 'mataron a la bestia, y su cuerpo fue destrozado y entregado para quemarlo en el fuego'],
+    ['juicio', 'babilonia.fin medopersia.fin grecia.fin', '7:12', 'También a las otras bestias les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo.'],
     ['cuerno', 'sanado.santos santos.perseguidos', '7:21', 'este cuerno hacía guerra contra los santos y los vencía'],
     { p: 'cuerno', en: 'sanado.duracion', t: 'el hombre de pecado subsiste hasta la segunda venida' },
     ['santos', 'sanado.fin', '7:22', 'hasta que vino el Anciano de días, y se hizo justicia a los santos del Altísimo'],

@@ -504,6 +504,7 @@ function lamAbre(cid,modo){
     (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
     (modo==='presentar'?'<button type="button" class="btn txt lam-txt" id="lamTxt" aria-pressed="false" onclick="lamTexto()">'+IC('ojo')+' Ocultar texto</button>':'')+
     (modo==='presentar'&&L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' '+esc(L.conTxt||'Con Daniel 2')+'</button>':'')+
+    (modo==='presentar'?'':meBoton('lam-'+cid,true))+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
@@ -1846,7 +1847,8 @@ function lamVista(id,sub,anima){
   else if(C&&id===C.caenEn)lamMomento(anima);
   else if(pa&&pa.caja){
     /* v210: en «Los libros fueron abiertos» la cámara sube primero al trono (el Juez se sienta) y después baja a los libros. */
-    const J=p.anim,ult=sub===p.pasos.length-1;
+    /* v236: «los libros» es el cuarto paso (después vienen 7:11 y 7:12). */
+    const J=p.anim,ult=sub===3;
     if(J&&ult&&anima&&!lamQuieto()){lamAcercaImg(p.img,J.camara[1],true,1500);lamT(()=>lamAcercaImg(p.img,pa.caja,true,1900),2300);}
     else lamAcercaImg(p.img,pa.caja,true);
     if(J)lamJuicio(sub,anima);}
@@ -2028,7 +2030,9 @@ function lamLuz(c){
 /* Un bucle mientras la vista no cambie: la luz que respira, el fuego, las chispas. */
 function lamBucle(fn){const yo=lamAnim;if(lamQuieto()){fn(0);return;}const t0=performance.now(),f=t=>{if(yo!==lamAnim)return;fn((t-t0)/1000);requestAnimationFrame(f);};requestAnimationFrame(f);}
 const lamJFin=[{velo:.52,ray:0,tr:.3,trR:150,se:0,rio:0,ch:0,lib:0},{velo:.18,ray:1,tr:.78,trR:200,se:.6,rio:0,ch:0,lib:0},
-  {velo:.1,ray:.85,tr:.7,trR:200,se:.55,rio:.62,ch:1,lib:0},{velo:.46,ray:.7,tr:.75,trR:210,se:.6,rio:.5,ch:.75,lib:.9}];
+  {velo:.1,ray:.85,tr:.7,trR:200,se:.55,rio:.62,ch:1,lib:0},{velo:.46,ray:.7,tr:.75,trR:210,se:.6,rio:.5,ch:.75,lib:.9},
+  /* v236: 7:11 («entregado para quemarlo en el fuego»): el río de fuego en pleno; 7:12, se aquieta. */
+  {velo:.34,ray:.55,tr:.7,trR:200,se:.55,rio:1,ch:.35,lib:.35},{velo:.4,ray:.6,tr:.72,trR:205,se:.58,rio:.6,ch:.5,lib:.5}];
 function lamJuicio(j,anima){
   const p=lamParte('juicio'),A=p&&p.anim,z=lamZ(),g=z&&z.querySelector('.lam-capa-g');if(!A||!g||j==null)return;
   const q=!anima||lamQuieto(),oro=lamLuz('255,212,128'),blanca=lamLuz('255,249,228'),fuego=lamLuz('255,128,36');
@@ -2046,6 +2050,7 @@ function lamJuicio(j,anima){
   const $=s=>[...g.querySelectorAll(s)],velo=g.querySelector('.lam-j-velo'),ray=g.querySelector('.lam-j-rayos'),tro=g.querySelector('.lam-j-trono'),
     sie=g.querySelector('.lam-j-sienta'),rios=$('.lam-j-rio'),trs=$('.lam-j-tr'),libs=$('.lam-j-lib'),chg=g.querySelector('.lam-j-ch'),chs=[...chg.children];
   /* El estado: de dónde sale este paso (el final del anterior) y a dónde llega. */
+  j=Math.min(j,lamJFin.length-1);
   const fin=lamJFin[j],st=Object.assign({},q||j===0?(q?fin:{velo:.78,ray:0,tr:0,trR:200,se:0,rio:0,ch:0,lib:0}):lamJFin[j-1]),
     gp=trs.map(()=>q||j>0?1:0);let riop=q||j>2?1:0,late=0;
   const pinta=t=>{
@@ -2068,6 +2073,7 @@ function lamJuicio(j,anima){
     if(j===0){hacia(2600,a,fin);trs.forEach((e,i)=>lamT(()=>lamTween(900,k=>{gp[i]=lamSale(k);}),500+i*230));}
     else if(j===1)hacia(2400,a,fin);
     else if(j===2){hacia(2200,a,fin);lamTween(3200,k=>{riop=k;});}
+    else if(j>3){riop=1;hacia(2000,a,fin);}
     else{
       /* «El Juez se sentó»: la luz late una vez; después la cámara baja a los libros. */
       hacia(1200,a,{velo:.2,ray:.9,tr:.8,trR:200,se:.6,rio:.5,ch:.75,lib:0});riop=1;
@@ -2917,7 +2923,9 @@ const actYCat=(k,modo)=>{
    («Apocalipsis · Padres y consejeros»), y van en el orden de las actividades. */
 const actCorta=a=>{const x=ACTIVIDADES[a];if(!x)return String(a||'');
   const n=String(x.nombre||'');const m=/^Conexión Bíblica:\s*(.+)$/.exec(n);
-  return m?m[1]:(x.tema==='daniel'?'Daniel':n);};
+  /* v236: «Conexión Bíblica 2027» no dice el libro: se nombra por su tema (Apocalipsis). */
+  const T=REGLAS.TEMAS[x.tema];
+  return m?m[1]:(x.tema==='daniel'?'Daniel':T&&T.tipo==='libro'?T.corto:n);};
 const catCorta=k=>CATS[k]?actCorta(CATS[k].act)+' · '+CATS[k].nombre:String(k);
 const catLarga=k=>CATS[k]
   ? actYCat(k)+' '+CATS[k].edad
@@ -3006,6 +3014,8 @@ function pintaApariencia(){
 
 const diaHoy=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
 
+/* v236: categorías que salieron de un concurso, y a dónde pasa la ficha que las tenía. */
+const CAT_SALIO={apme:'libre-apocalipsis',appa:'libre-apocalipsis'};
 function normalizar(x){
   const s=JSON.parse(JSON.stringify(BASE));
   CAPS.forEach(c=>s.prog[c.id]=0);
@@ -3019,6 +3029,10 @@ function normalizar(x){
   if(x.aCargo===true)s.aCargo=true;
   if(typeof x.tutor==='string')s.tutor=x.tutor.slice(0,60);
   if(esCat(x.cat))s.cat=x.cat;
+  /* v236: la política 2027 dejó Apocalipsis en tres categorías. Una ficha de este aparato
+     que estaba en Menores o Padres de Apocalipsis sigue en Apocalipsis, sin concurso
+     (Estudio libre): no cae en Daniel ni pierde su avance. */
+  else if(CAT_SALIO[x.cat]&&esCat(CAT_SALIO[x.cat]))s.cat=CAT_SALIO[x.cat];
   /* v214: qué ve de entrada: «concurso» (lo que pide su reglamento) o «todo». Sin
      dato, lo dice la categoría (verDe): una ficha vieja ve lo mismo que antes. */
   if(x.ver==='todo'||x.ver==='concurso')s.ver=x.ver;
@@ -3763,7 +3777,9 @@ function nivelRecomendado(){
 }
 
 /* ───────── navegación ───────── */
-const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
+/* v236 (Camilo aprobó la navegación, 15-oct 10:28 p. m.): cuatro entradas. Practicar y
+   Logros siguen siendo pantallas con su dirección, y encienden «Mi estudio», donde viven. */
+const TABS={inicio:0,estudio:1,examen:2,miestudio:3,tarjetas:3,logros:3};
 /* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
 /* `quedarse`: no sube la página al principio. Lo pide verCap(), que después
@@ -3809,6 +3825,7 @@ function ir(id,quedarse){
   if(id==='tarjetas')pintaTarjetas();
   if(id==='examen')pintaExInicio();
   if(id==='logros')pintaLogros();
+  if(id==='miestudio')pintaMiEstudio();
   if(id==='ayuda')pintaAyuda();
   if(id==='revisor')pintaRevisor();
   if(id==='historial')pintaHistorial();
@@ -4111,7 +4128,9 @@ function pintaPrep(){
     '<p class="nota">El material es el mismo para todos. La categoría pone la dificultad por edad y las reglas del examen.</p>'+
     '<div class="cat-fila">'+catsValidas(prepAct).map(k=>{const c=CATS[k];
       return '<button type="button" class="cat-btn'+(k===S.cat?' on':'')+'" aria-pressed="'+(k===S.cat)+'" onclick="prepElige(\''+k+'\')">'+(c.club?'<div class="cc">'+esc(CLUB_NOMBRE[c.club]||'')+'</div>':'')+
-      '<div class="cn">'+esc(c.nombre)+'</div><div class="cd"><span class="prep-edad">'+esc(c.edad)+'</span><br>'+(c.sinPoliticas?'Sin reglamento de concurso':esc(c.alcance))+'</div>'+
+      '<div class="cn">'+esc(c.nombre)+'</div><div class="cd"><span class="prep-edad">'+esc(c.edad)+'</span><br>'+(c.sinPoliticas?'Sin reglamento de concurso':
+        /* v236: con otra obra en el alcance (política 2027), en pastillas por libro. */
+        (c.obras&&typeof bibAlcanceHTML==='function'&&bibAlcanceHTML(k))||esc(c.alcance))+'</div>'+
       (k===S.cat?'<div class="prep-actual">'+IC('check')+' Tu preparación actual</div>':'')+'</button>';}).join('')+'</div>'+
     '<button type="button" class="alu-op" onclick="prepElige(\''+libreDe(A.tema)+'\')"><b>Sin concurso</b><span>Estudiar todo el material de '+esc(ACTIVIDADES[libreDe(A.tema)].nombre)+', sin categoría</span></button>'+
     '<button type="button" class="btn txt peq" onclick="prepVolver()">'+IC('izq')+' Volver</button></div>';
@@ -4423,6 +4442,8 @@ function pintaSenales(){
        sesión de Practicar: con los dos se veía el mismo 15 en dos pestañas. */
     if(est){est.hidden=true; est.textContent=pct+'%';}
     senal('nv-tj',Math.min(tocanHoy().length,topeSesion()));
+    /* v236: el mismo número en «Practicar», dentro de Mi estudio. */
+    if(document.getElementById('nv-tj2'))senal('nv-tj2',Math.min(tocanHoy().length,topeSesion()));
     const lg=document.getElementById('nv-lg'); if(lg)lg.hidden=true;
     /* El punto verde del examen es lo único que NO sale del progreso propio:
        sale del servidor, y solo si la evaluación está abierta y sin hacer. */
@@ -4494,7 +4515,7 @@ function pintaFiltro(pant){
   /* v214: con reglamento, el primer corte es «Lo del concurso» o «Todo el material»;
      el de capítulos (solo en los libros) va debajo. */
   const conc=hayConcurso(),capitulos=conFiltro()&&caps.length>1;
-  const ver=TABS[pant]!==undefined&&(capitulos||conc)&&!(pant==='estudio'&&typeof bibAjeno==='function'&&bibAjeno());
+  const ver=TABS[pant]!==undefined&&pant!=='miestudio'&&(capitulos||conc)&&!(pant==='estudio'&&typeof bibAjeno==='function'&&bibAjeno());
   z.hidden=!ver;
   if(!ver)return;
   const f=capitulos?idsFiltro():null;
@@ -4666,6 +4687,8 @@ function pintaCaps(){
     (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'')+
     /* v235: cada tema termina con su bibliografía, armada sola (biblioteca-app.js). */
     (typeof bibPieHTML==='function'?bibPieHTML():'');
+  /* v236: la vista de la Biblioteca (Temas o Láminas) y sus pestañas. */
+  if(typeof pintaBibVista==='function')pintaBibVista();
 }
 
 /* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
@@ -5604,6 +5627,8 @@ function verCap(id,quieto){
   /* v235: la estantería de la Biblioteca sigue al capítulo, y el nivel de lectura
      escogido pone la pestaña de entrada (biblioteca-app.js). */
   if(typeof bibSigue==='function'){bibSigue(id);bibNivelAntes();}
+  /* v236: abrir un capítulo es la vista de Temas (o Comparar, si es el repaso de comparar). */
+  if(typeof bibVista!=='undefined'){bibVista='temas';if(!ES_COMPARAR.test(id))bibTabSel='';}
   /* v161: ¿desde dónde se llega? Si ya había un capítulo abierto en esta
      pantalla (Siguiente, Anterior, «Ya lo estudié», otra tarjeta), la página
      se pone de una en el capítulo nuevo. Si se viene de la rejilla sin nada
@@ -5637,6 +5662,8 @@ function verCap(id,quieto){
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
     navCap(id)+
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
+    /* v236: «Agregar a mi estudio» (fuente/mi-estudio.js). */
+    '<div class="cap-me">'+meBoton('cap-'+id)+'</div>'+
     '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
@@ -5688,6 +5715,7 @@ function verCap(id,quieto){
   enlazaCreencias(d);
   divideVista(d,id);
   if(typeof bibAplicaNivel==='function')bibAplicaNivel(id);
+  if(typeof pintaBibVista==='function')pintaBibVista();
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
      creencias en una rejilla de cuatro columnas, el detalle nace siete filas
@@ -5796,14 +5824,16 @@ function lugarEscribe(c){
     if(String(location.hash||'')!==h)history.replaceState(history.state,'',location.pathname+location.search+h);}catch(e){}
 }
 /* LUGAR:FIN */
-const LUGAR_PANT=['inicio','estudio','tarjetas','examen','logros'];
+const LUGAR_PANT=['inicio','estudio','tarjetas','examen','logros','miestudio'];
 let lugarT=0,lugarListo=false;
 /* El camino de lo que se ve ahora. */
 /* v235: en la dirección las pantallas se llaman como en la barra (Biblioteca, Concursos);
    los caminos viejos («estudio/…», «examen») se leen igual y se reescriben con el nuevo. */
-const LUGAR_PUB={estudio:'biblioteca',examen:'concursos'}, LUGAR_DE_PUB={biblioteca:'estudio',concursos:'examen'};
+/* v236: «Mi estudio» es #/mi-estudio, y la vista de láminas de la Biblioteca, #/biblioteca/laminas. */
+const LUGAR_PUB={estudio:'biblioteca',examen:'concursos',miestudio:'mi-estudio'}, LUGAR_DE_PUB={biblioteca:'estudio',concursos:'examen','mi-estudio':'miestudio'};
 function lugarActual(){
   const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[LUGAR_PUB[pant]||pant];
+  if(pant==='estudio'&&!S.ultItem&&typeof bibVista!=='undefined'&&bibVista==='laminas')r.push('laminas');
   if(pant==='estudio'&&S.ultItem){
     r.push(S.ultItem);
     const d=document.getElementById('detalle');
@@ -5834,7 +5864,8 @@ function lugarParte(c){
   const s=c.split('/').filter(Boolean);let i=0;
   if(LUGAR_DE_PUB[s[0]])s[0]=LUGAR_DE_PUB[s[0]];
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
-  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|s\d+)$/.test(s[i]))o.item=s[i++];
+  if(o.pant==='estudio'&&s[i]==='laminas'){o.vista='laminas';i++;}
+  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|laminas|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
     if(s[i]==='profundizar')o.prof=true;
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
@@ -5858,6 +5889,7 @@ function lugarAplica(c,dondeOk){
     else ir(o.pant==='estudio'&&o.item?'estudio':o.pant);
     dondeOk=false;
   }
+  if(o.vista==='laminas'&&!o.item&&typeof bibVer==='function')bibVer('laminas',true);
   if(o.prof&&S.ultItem)ponPest('prof');
   if(!dondeOk&&o.sec!=null&&S.ultItem){
     const pon=()=>{const sec=secsDeDonde()[o.sec];if(sec)window.scrollTo(0,Math.max(0,Math.round(sec.getBoundingClientRect().top+(window.scrollY||0)-DONDE_TOPE)));};
@@ -10776,6 +10808,8 @@ async function entraCodigo(){
     /* El momento exacto en que el progreso deja de ser de este navegador: se
        manda lo que haya en el aparato y baja lo que ella ya tenía. */
     try{await sincronizaProgreso();}catch(e){}
+    /* v236: lo apartado en «Mi estudio» sin cuenta pasa a la cuenta. */
+    meSincroniza();
     pintaSesion();await cargaEvaluacion();pintaExInicio();pintaInicio();
     if(document.getElementById('cb-panel'))await pintaPanel();
     llevaA(evalPend?'cb-eval':'cb-sesion');
@@ -10877,6 +10911,7 @@ function adoptaFicha(d){
 async function salirCodigo(){
   try{await srvFetch('/salir',{method:'POST'});}catch(e){}
   srvYo=null;evalPend=null;evalHecha=false;pintaSesion();pintaEvaluacion();
+  meSale();
   pintaExInicio();pintaInicio();
   if(document.getElementById('cb-panel'))await pintaPanel();
 }
@@ -10892,6 +10927,7 @@ async function entraPanel(){
   try{
     await srvFetch('/panel/entrar',{method:'POST',body:JSON.stringify({clave:i.value})});
     srvYo={rol:'director'};
+    meSincroniza();
     await pintaPanel();
   }catch(e){
     if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo conectar')+'</span>';
@@ -12855,6 +12891,8 @@ async function abreHistorial(){
   try{
     await srvRefresca();
     await srvQuienSoy();
+    /* v236: «Mi estudio» pregunta si hay cuenta (código, director o la sesión de Jóvenes). */
+    meSincroniza();
     pintaSesion();
     /* LA FICHA ACTIVA PUEDE NO SER LA DE LA SESION, y eso importa.
        Un aparato puede tener varias fichas (la misma persona en dos

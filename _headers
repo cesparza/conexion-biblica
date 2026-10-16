@@ -19,3 +19,10 @@
 /version.json
   Cache-Control: no-cache
   Content-Type: application/json; charset=utf-8
+
+# v236: la lista de temas que publica la app (fuente/build.js). La lee la app de
+# Jóvenes; con cada versión puede cambiar.
+/temas.json
+  Cache-Control: no-cache
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *

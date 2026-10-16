@@ -52,6 +52,13 @@ const CREENCIAS = [...sec('cr', 1, 28), 'mc-doctrinas', 'mc-lista'];
 /* Los capítulos de Apocalipsis que ya están escritos (fuente/apocalipsis/). Se
    leen de ahí para que la ficha no nombre uno que todavía no existe. */
 const APOCALIPSIS = require('./apocalipsis.js').AP_CAPS.map(c => c.id);
+/* v236: los capítulos de un tramo, y los de Apocalipsis por número. apoc() se detiene
+   si la política pide un capítulo que la app no tiene escrito. */
+const rango = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
+const apoc = ns => ns.map(n => {
+  if (!APOCALIPSIS.includes('ap' + n)) throw new Error('campamentos.js: falta Apocalipsis ' + n + ' en fuente/apocalipsis/');
+  return 'ap' + n;
+});
 
 /* LOS TEMAS Y SU TIPO
    La app no se porta distinto según el club ni según el campamento: se porta
@@ -147,27 +154,31 @@ const CAMPAMENTOS = [
       { id: 'ec2', nombre: 'El resto del club', edad: 'Cuestionario', n: 15, techo: 2, sinCompletar: true,
         alcance: 'Las 28 creencias', estudia: CREENCIAS },
     ] },
-  /* v178: Apocalipsis, el libro entero en RV1995 (Camilo, 12-oct: «todo el
-     libro, misma versión»). Todavía sin reglamento ni fecha: las categorías
-     copian el formato real de Daniel 2026 (examenes-reales.js) hasta que
-     llegue el de verdad. Ids nuevos, así que el progreso de Daniel no se toca. */
-  { id: 'ap', tema: 'apocalipsis', nombre: 'Conexión Bíblica: Apocalipsis', icono: '📖', cuando: 'Fecha por confirmar', fecha: '',
-    que: 'El libro de Apocalipsis completo, en RV1995',
+  /* v236: CONEXIÓN BÍBLICA 2027, la política de la Asociación del Alto Magdalena
+     (imagen que mandó Camilo el 15-oct). Es la misma ficha `ap` de v178 («todo el
+     libro, misma versión»), ahora con su reglamento: tres categorías, cada una con
+     sus capítulos de Apocalipsis (RV1995) y de «El conflicto de los siglos».
+     Camilo: «Jóvenes es Guías Mayores», así que la categoría de Jóvenes es `apgm` y
+     ya tiene política de concurso (reemplaza la nota de v214 para este concurso).
+     Las edades son las que ya tenían esas categorías. Menores (`apme`) y Padres
+     (`appa`) salieron: la política no los trae y nadie estaba inscrito en ellos.
+     La fecha sigue por confirmar: la imagen no la dice.
+     CS no es todavía material de la app: va en `obras` (ver reglamento.js), se
+     muestra en el concurso y no entra al examen. */
+  { id: 'ap', tema: 'apocalipsis', nombre: 'Conexión Bíblica 2027', icono: '📖', cuando: 'Fecha por confirmar', fecha: '',
+    organiza: 'Asociación del Alto Magdalena',
+    que: 'Apocalipsis (RV1995) y El conflicto de los siglos',
     categorias: [
-      { id: 'apme', nombre: 'Menores', edad: '4 a 6 años', n: 10, techo: 1, sinCompletar: true, segundos: 100, club: 'aventureros',
-        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
-      { id: 'apav', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15, club: 'aventureros',
-        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
-      { id: 'appa', nombre: 'Padres y consejeros', edad: 'Adultos', n: 35, techo: 3, sinCompletar: true, sinRampa: true, tarjetas: 25, club: 'aventureros',
-        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
-      /* v191 (Camilo, 13-oct): en Conquistadores solo entran los del club (10 a
-         15 años, sin padres) y en Guías Mayores cada uno con su cuenta. El
-         material es el mismo; la dificultad la pone el techo. Formato
-         provisional hasta que llegue el reglamento, como las de arriba. */
+      { id: 'apgm', nombre: 'Jóvenes (Guías Mayores)', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias', sinPoliticas: false,
+        alcance: 'Apocalipsis 1-22 · El conflicto de los siglos 24-43',
+        estudia: apoc(rango(1, 22)), obras: { cs: rango(24, 43) } },
       { id: 'apcq', nombre: 'Conquistadores', edad: '10 a 15 años', n: 30, techo: 2, sinCompletar: true, segundos: 80, tarjetas: 20, club: 'conquistadores',
-        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
-      { id: 'apgm', nombre: 'Guías Mayores', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias', sinPoliticas: true,
-        alcance: 'Apocalipsis', estudia: APOCALIPSIS },
+        alcance: 'Apocalipsis 1-5, 10-14, 19-22 · CS 24-26, 29, 32, 36-39, 41, 43',
+        estudia: apoc([...rango(1, 5), ...rango(10, 14), ...rango(19, 22)]),
+        obras: { cs: [...rango(24, 26), 29, 32, ...rango(36, 39), 41, 43] } },
+      { id: 'apav', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15, club: 'aventureros',
+        alcance: 'Apocalipsis 1, 12, 14, 21, 22 · CS 24, 25, 32, 39, 41, 43',
+        estudia: apoc([1, 12, 14, 21, 22]), obras: { cs: [24, 25, 32, 39, 41, 43] } },
     ] },
 ];
 

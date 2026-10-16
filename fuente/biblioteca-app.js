@@ -188,6 +188,7 @@ function bibVerHTML(t){
   return '<section class="bib-ver" aria-labelledby="bib-ver-t"><h3 class="bib-h" id="bib-ver-t">Para ver</h3><div class="bv-fila">'+tarjetas.join('')+'</div></section>';
 }
 function pintaBib(){
+  pintaBibTabs();
   const z=document.getElementById('bib-cab');if(!z)return;
   const t=bibTema(),propio=ACT().tema,nv=bibNivel(),libre=!!(CAT().libre||sinPoliticas(S.cat));
   const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
@@ -198,7 +199,7 @@ function pintaBib(){
     '<p class="bib-p">Lee, escucha y mira cualquier tema, a tu ritmo. No hace falta estar en un concurso.</p>'+
     '<div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div>'+
     '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
-    '<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div>'+
+    '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div>'+
     '<p class="bib-nota">'+(bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
       (BIB_NIVELES.find(n=>n[0]===nv)[1])+': '+BIB_NIVELES.find(n=>n[0]===nv)[2]+'. El nivel lo escoges tú; no depende de tu edad ni de tu categoría.')+'</p></div>'+
     bibVerHTML(t)+
@@ -281,7 +282,10 @@ function pintaConcursos(){
   const carta=a=>{const X=ACTIVIDADES[a],cs=CATS_DE_ACT(a),mia=a===ya;
     return '<li class="con-c'+(mia?' mia':'')+'"><div class="con-ct"><span class="con-ic">'+icoDe(X.icono)+'</span><div><b>'+esc(X.nombre)+'</b>'+
       '<small>'+esc(X.que)+' · '+esc(X.cuando)+'</small></div></div>'+
-      '<div class="con-cats">'+cs.map(k=>{const c=CATS[k];return '<span class="con-cat'+(k===S.cat?' on':'')+'"><b>'+esc(c.nombre)+'</b> '+esc(c.edad)+'</span>';}).join('')+'</div>'+
+      (X.organiza?'<div class="con-org">'+esc(X.organiza)+'</div>':'')+
+      /* v236: cada categoría con lo que entra, en pastillas como la imagen de la política 2027. */
+      (bibConAlcance(a)?'<div class="con-cbs">'+cs.map(k=>bibCatBloque(k)).join('')+'</div>'+bibObrasLista(a):
+      '<div class="con-cats">'+cs.map(k=>{const c=CATS[k];return '<span class="con-cat'+(k===S.cat?' on':'')+'"><b>'+esc(c.nombre)+'</b> '+esc(c.edad)+'</span>';}).join('')+'</div>')+
       '<div class="con-acc">'+(mia?'<span class="con-mia">'+IC('check')+' Te preparas para este</span>':
         '<button type="button" class="btn tono peq" onclick="bibPrepara(\''+a+'\')">Prepararme</button>')+
       '<button type="button" class="btn txt peq" onclick="bibPonTema(\''+X.tema+'\');ir(\'estudio\')">'+IC('libro')+' Su material</button></div></li>';};
@@ -339,4 +343,110 @@ function pintaEntradas(){
     '<span class="ent-tx"><b>Concursos</b><small>Tu categoría por edad, simulacros y exámenes.</small></span>'+IC('der','ent-fl')+'</button>'+
     (X?'<button type="button" class="ent-prox" onclick="ir(\'examen\')"><span class="ent-pr">'+esc(pr.r)+'</span><b>'+esc(X.nombre)+'</b>'+
       '<span class="ent-cu">'+icoDe(X.icono)+' '+esc(pr.pasado?'Fue el '+X.cuando:X.cuando)+'</span></button>':'')+'</div>';
+}
+
+
+/* ───────── v236: LAS PESTAÑAS DE LA BIBLIOTECA (navegación aprobada por Camilo, 15-oct) ─────────
+   Temas (la portada y los capítulos de siempre), Láminas (todas las láminas con imagen, de
+   todos los temas), Comparar, Paralelos y Últimos acontecimientos (los tres viven en el
+   repaso «…-comparar»: se abre y se baja a su sección, como en «Para ver»). La que se
+   enciende sale de lo que se ve: no hay un estado aparte que se pueda desincronizar. */
+var bibVista='temas', bibTabSel='';
+var BIB_TABS=[['temas','Temas','libro'],['laminas','Láminas','estatua'],['comparar','Comparar','comparar'],['paralelos','Paralelos','lista'],['ultimos','Últimos acontecimientos','reloj']];
+function bibTabActual(){
+  if(S.ultItem&&ES_COMPARAR.test(S.ultItem))return bibTabSel==='paralelos'||bibTabSel==='ultimos'?bibTabSel:'comparar';
+  if(!S.ultItem&&bibVista==='laminas')return 'laminas';
+  return 'temas';
+}
+function pintaBibTabs(){
+  const z=document.getElementById('bib-tabs');if(!z)return;
+  const hayCmp=MODULOS.some(x=>ES_COMPARAR.test(x.id)),hayLam=bibLams().length>0,act=bibTabActual();
+  const ve=k=>k==='laminas'?hayLam:k==='temas'?true:k==='paralelos'?hayCmp&&typeof PARALELOS!=='undefined'&&Array.isArray(PARALELOS)&&PARALELOS.length:k==='ultimos'?hayCmp&&typeof ULTIMOS!=='undefined'&&!!ULTIMOS:hayCmp;
+  z.innerHTML='<div class="bt-fila" role="tablist">'+BIB_TABS.filter(x=>ve(x[0])).map(([k,t,ic])=>
+    '<button type="button" role="tab" class="bt'+(k===act?' on':'')+'" aria-selected="'+(k===act)+'" onclick="bibTab(\''+k+'\')">'+IC(ic)+'<span>'+esc(t)+'</span></button>').join('')+'</div>';
+}
+function bibTab(k){
+  if(k==='temas'||k==='laminas'){bibVer(k);return;}
+  bibTabSel=k;bibVista='temas';
+  bibComparar(k==='paralelos'?'cmpPar':k==='ultimos'?'cmpUlt':'');
+  pintaBibTabs();
+}
+/* Todas las láminas con imagen, de todos los temas, en el orden del material. */
+var bibLams=()=>(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>LAMINAS[k]&&LAMINAS[k].titulo&&LAMINAS[k].dir&&buscaItem(k));
+/** Cambia la vista de la Biblioteca. `quieto`: viene de un enlace (no sube la página). */
+function bibVer(v,quieto){
+  bibVista=v==='laminas'?'laminas':'temas';bibTabSel='';
+  /* Ver la portada o las láminas es salir del capítulo abierto. */
+  if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
+  pintaBibVista();
+  if(!quieto)window.scrollTo(0,0);
+  lugarAnota();
+}
+function pintaBibVista(){
+  const lam=bibVista==='laminas'&&!S.ultItem,z=document.getElementById('bib-lams');
+  ['bib-cab','lista-caps'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=lam;});
+  if(z){z.hidden=!lam;if(lam)z.innerHTML=bibLamsHTML();}
+  pintaBibTabs();
+}
+function bibLamsHTML(){
+  const porTema={};bibLams().forEach(k=>{const t=bibTemaDe(k)||'otros';(porTema[t]=porTema[t]||[]).push(k);});
+  return '<div class="bib-hero bl-hero"><div class="bib-ant">'+IC('estatua')+' Láminas</div><h2 class="bib-tit">Las visiones, con imagen</h2>'+
+    '<p class="bib-p">Explora cada lámina por partes o preséntala en grande. Cada una lleva a su capítulo.</p></div>'+
+    Object.entries(porTema).map(([t,ks])=>'<h3 class="bib-h">'+esc(t==='otros'?'Otras':bibNombreTema(t))+'</h3><ul class="bl-l">'+ks.map(k=>{const L=LAMINAS[k],c=buscaItem(k);
+      return '<li class="bl-c"><button type="button" class="bl-abre" onclick="bibLamina(\''+k+'\')"><span class="bv-img">'+lamMiniHTML(k)+'</span>'+
+        '<span class="bv-tx"><small>'+esc(c.label)+'</small><b>'+esc(L.titulo)+'</b></span></button>'+
+        '<div class="bl-acc">'+meBoton('lam-'+k,true)+'<button type="button" class="btn txt peq" onclick="verCap(\''+k+'\')">'+IC('libro')+' El capítulo</button></div></li>';}).join('')+'</ul>').join('');
+}
+
+/* ───────── v236: LO QUE ENTRA EN CADA CATEGORÍA, EN PASTILLAS ─────────
+   Para la política 2027 (Asociación del Alto Magdalena): por categoría, los capítulos de
+   cada libro de la Biblia (RV1995), los de Profetas y Reyes si los hay, y los de otras obras
+   que la app todavía no trae (`obras`, hoy «El conflicto de los siglos»). Todo sale de la
+   ficha: lo que estudia la categoría (la marca `cats` de cada capítulo) y su `obras`. */
+/* Tramos seguidos: [1,2,3,5] → [[1,3],[5,5]]. */
+function bibTramos(ns){
+  const o=[];let a=null,b=null;
+  ns.slice().sort((x,y)=>x-y).forEach(n=>{if(a!==null&&n===b+1){b=n;return;}if(a!==null)o.push([a,b]);a=b=n;});
+  if(a!==null)o.push([a,b]);
+  /* Como la imagen de la política: dos seguidos van sueltos (21, 22); de tres en adelante, en tramo (24 – 26). */
+  return o.flatMap(([x,y])=>y===x+1?[[x,x],[y,y]]:[[x,y]]);
+}
+/** Las filas de alcance de una categoría: [{t: rótulo, tramos: [[a,b]…], obra?}]. */
+function bibAlcanceDe(k){
+  const c=CATS[k];if(!c||c.libre)return [];
+  const ids=[...CAPS,...MODULOS].filter(x=>(x.cats||[]).includes(k)).map(x=>x.id),filas=[];
+  const libros={};
+  ids.forEach(id=>{const l=libroCid(id);if(l){(libros[l.nombre]=libros[l.nombre]||[]).push(+l.n);return;}
+    const m=/^pr(\d+)$/.exec(id);if(m)(libros['Profetas y Reyes']=libros['Profetas y Reyes']||[]).push(+m[1]);});
+  Object.entries(libros).forEach(([n,ns])=>filas.push({t:n+(n==='Profetas y Reyes'?'':' · Reina Valera 1995'),tramos:bibTramos(ns)}));
+  Object.entries(c.obras||{}).forEach(([o,ns])=>{const O=REGLAS.OBRAS[o];if(O)filas.push({t:O.nombre,tramos:bibTramos(ns),obra:o});});
+  return filas;
+}
+/* Solo los concursos de libro con alguna obra o algún capítulo de la Biblia. */
+var bibConAlcance=a=>ACTIVIDADES[a]&&ACTIVIDADES[a].tipo==='libro'&&CATS_DE_ACT(a).some(k=>(CATS[k].obras&&Object.keys(CATS[k].obras).length));
+var bibTituloObra=(o,n)=>{const L=(typeof OBRAS_CAPS!=='undefined'&&OBRAS_CAPS[o]&&OBRAS_CAPS[o].caps)||[];const x=L.find(c=>c.n===n);return x?x.t:'';};
+function bibChips(f){
+  return '<div class="ac-chips">'+f.tramos.map(([a,b])=>{
+    const tit=f.obra?(a===b?a+' · '+bibTituloObra(f.obra,a):Array.from({length:b-a+1},(_,i)=>(a+i)+' · '+bibTituloObra(f.obra,a+i)).join('\n')):'';
+    return '<span class="ac-chip"'+(tit?' title="'+esc(tit)+'"':'')+'>'+(a===b?a:a+' – '+b)+'</span>';}).join('')+'</div>';
+}
+/** El alcance de una categoría en filas de pastillas. '' si no hay qué mostrar así. */
+function bibAlcanceHTML(k){
+  const F=bibAlcanceDe(k);if(!F.length)return '';
+  return '<div class="ac">'+F.map(f=>'<div class="ac-f"><div class="ac-t">'+esc(f.t)+' · capítulos'+
+    (f.obra?' <span class="ac-falta">todavía no está en la app</span>':'')+'</div>'+bibChips(f)+'</div>').join('')+'</div>';
+}
+var CLUB_TONO={guias:'ac-guias',conquistadores:'ac-conq',aventureros:'ac-avent'};
+function bibCatBloque(k){
+  const c=CATS[k];
+  return '<div class="con-cb '+(CLUB_TONO[c.club]||'')+(k===S.cat?' on':'')+'"><div class="con-cbh"><b>'+esc(c.nombre)+'</b><span>'+esc(c.edad)+'</span>'+
+    (k===S.cat?'<span class="con-cbtu">'+IC('check')+' Tu categoría</span>':'')+'</div>'+bibAlcanceHTML(k)+'</div>';
+}
+/* Debajo de la carta: los títulos de los capítulos de cada obra que pide el concurso. */
+function bibObrasLista(a){
+  const por={};CATS_DE_ACT(a).forEach(k=>Object.entries(CATS[k].obras||{}).forEach(([o,ns])=>{por[o]=por[o]||new Set();ns.forEach(n=>por[o].add(n));}));
+  return Object.entries(por).map(([o,set])=>{const O=REGLAS.OBRAS[o],ed=typeof OBRAS_CAPS!=='undefined'&&OBRAS_CAPS[o]?OBRAS_CAPS[o].edicion:'';
+    return '<details class="con-obra"><summary>'+IC('lista')+' Los capítulos de <i>'+esc(O.nombre)+'</i></summary><ol class="con-ol">'+
+      [...set].sort((x,y)=>x-y).map(n=>'<li><b>'+n+'</b> '+esc(bibTituloObra(o,n))+'</li>').join('')+'</ol>'+
+      '<p class="nota">'+esc(O.autor)+(ed?', edición '+esc(ed):'')+'. Este libro todavía no está como material de estudio en la app: lee estos capítulos en el libro. No entran al examen de práctica.</p></details>';}).join('');
 }

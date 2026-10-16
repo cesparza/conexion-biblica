@@ -101,7 +101,10 @@ async function crearSesion(env, cuentaId, dias, ipHash) {
    que NINGUNA se quita nunca de esta lista o esas filas quedarian
    invalidas. `ec1` y `ec2` son las de «En esto creemos», que paso a ser una
    actividad con sus propias categorias en vez de colgarse de `pa` y `gm`. */
-const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2','apme','apav','appa','apcq','apgm'];
+/* v236: la política 2027 dejó Apocalipsis en tres categorías (apgm, apcq, apav). `apme` y
+   `appa` salieron: verificado en la base el 15-oct, ninguna participante ni evaluación las
+   usaba. */
+const CATS_VALIDAS = ['me','av','pa','gm','dm1','dm2','ec1','ec2','apgm','apcq','apav'];
 
 /* Antes esto traía UNA sola fila (LIMIT 1): solo podía existir una
    evaluación abierta a la vez en toda la app. Camilo necesita un caso real:
@@ -703,6 +706,67 @@ export async function onRequest(context) {
       ).bind(p.id, texto).run();
 
       return json({ ficha: fundida });
+    }
+
+    /* ─────────────── v236: «MI ESTUDIO», LA LISTA PERSONAL ───────────────
+       QUÉ ES
+       Los temas que una persona se apartó con «Agregar a mi estudio». Solo la ve y
+       la cambia su dueño. El avance de cada tema no viaja aquí: es el de /progreso.
+       DE QUIÉN
+       Quien entró con su código ('p:' + participante), con la clave del director
+       ('d:' + cuenta) o, dentro de la app de Jóvenes, con la sesión de esa app: la
+       puerta del módulo calcula un hash de su persona y lo pone en `env.QUIEN_APP`
+       ('j:' + hex). El navegador no lo puede poner. Sin ninguno de los tres, 401:
+       la lista se queda en el aparato.
+       LA FUSIÓN, AQUÍ Y SOLO AQUÍ (como /progreso)
+       Cada llave lleva [momento, 1|0]: agregada o quitada, y cuándo. Gana la más
+       reciente; así un aparato que quitó un tema no lo revive otro que lo tenía
+       agregado desde antes. El aparato manda la suya, el servidor funde y devuelve. */
+    const ME_LLAVE = /^(cap|lam|tema)-[a-z0-9-]{1,24}$/;
+    const ME_TOPE = 300;
+    const meDueno = () => {
+      if (sesion && sesion.rol === 'participante' && sesion.persona_id) return 'p:' + sesion.persona_id;
+      if (sesion && sesion.rol === 'director' && sesion.cuenta_id) return 'd:' + sesion.cuenta_id;
+      const j = typeof env.QUIEN_APP === 'string' ? env.QUIEN_APP : '';
+      return /^j:[0-9a-f]{32,64}$/.test(j) ? j : '';
+    };
+    const meLimpia = x => {
+      const out = {}, techo = Date.now() + 86400000;
+      if (!x || typeof x !== 'object' || Array.isArray(x)) return out;
+      for (const [k, v] of Object.entries(x).slice(0, ME_TOPE * 2)) {
+        if (!ME_LLAVE.test(k) || !Array.isArray(v)) continue;
+        const t = Math.round(Number(v[0])), on = v[1] === 1 || v[1] === true ? 1 : 0;
+        if (!Number.isFinite(t) || t < 1.6e12 || t > techo) continue;
+        out[k] = [t, on];
+      }
+      return out;
+    };
+    const meFunde = (a, b) => {
+      const o = Object.assign({}, a);
+      for (const [k, v] of Object.entries(b)) { const x = o[k]; if (!x || v[0] > x[0] || (v[0] === x[0] && v[1] > x[1])) o[k] = v; }
+      /* Si pasa del tope, salen primero las quitadas más viejas y después las agregadas más viejas. */
+      const ks = Object.keys(o);
+      if (ks.length > ME_TOPE) ks.sort((p, q) => (o[p][1] - o[q][1]) || (o[p][0] - o[q][0])).slice(0, ks.length - ME_TOPE).forEach(k => delete o[k]);
+      return o;
+    };
+    if (ruta === '/mi-estudio' && (metodo === 'GET' || metodo === 'POST')) {
+      const dueno = meDueno();
+      if (!dueno) return error('Entra para guardar tu estudio en tu cuenta.', 401);
+      const fila = await env.DB.prepare('SELECT lista FROM mi_estudio WHERE dueno = ?').bind(dueno).first();
+      let guardada = {};
+      if (fila && fila.lista) { try { guardada = meLimpia(JSON.parse(fila.lista)); } catch (e) { guardada = {}; } }
+      if (metodo === 'GET') return json({ lista: guardada });
+      const crudo = await request.text();
+      if (crudo.length > 32000) return error('Esa lista es demasiado grande.', 413);
+      let b = null;
+      try { b = JSON.parse(crudo || 'null'); } catch (e) { return error('Lista ilegible.', 400); }
+      const fundida = meFunde(guardada, meLimpia(b && b.lista));
+      const texto = JSON.stringify(fundida);
+      await env.DB.prepare(
+        'INSERT INTO mi_estudio (dueno, lista) VALUES (?, ?) ' +
+        "ON CONFLICT(dueno) DO UPDATE SET lista = excluded.lista, actualizado_en = datetime('now')"
+      ).bind(dueno, texto).run();
+      return json({ lista: fundida });
     }
 
     /* La receta del examen SOLO se entrega a una participante con sesión. Si

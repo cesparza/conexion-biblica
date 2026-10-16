@@ -29,6 +29,15 @@ const REGLAS = (function () {
      Aventureros puede ir a cargo de un adulto; Conquistadores y Guías Mayores
      estudian con cuenta propia (y un conquistador sin cuenta, a cargo). */
   const CLUBES = ['aventureros', 'conquistadores', 'guias'];
+  /* v236: OTRAS OBRAS EN EL ALCANCE DE UNA CATEGORÍA (política Conexión Bíblica 2027 de
+     la Asociación del Alto Magdalena, 15-oct). Un concurso puede pedir capítulos de un
+     libro que la app todavía no trae como material (hoy «El conflicto de los siglos»).
+     La categoría lo dice en `obras`: { cs: [24, 25, …] }. Se guarda, se muestra y se
+     revisa contra el rango de la obra; no se estudia ni se pregunta hasta que el libro
+     esté en la app. Los títulos de los capítulos viven en fuente/conflicto.js. */
+  const OBRAS = {
+    cs: { nombre: 'El conflicto de los siglos', corto: 'CS', autor: 'Elena G. de White', de: 1, a: 43 },
+  };
   const SEG_POR_PREGUNTA = 72;
   const ID = /^[a-z][a-z0-9]{1,11}$/;
   const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
@@ -39,7 +48,7 @@ const REGLAS = (function () {
      escribir una persona. Lo que abre una etiqueta o cierra un atributo no
      entra, y cada texto tiene un largo máximo. */
   const PROHIBIDO = new RegExp('[<>"\'`\\\\\\u0000-\\u001F\\u007F]');
-  const LARGO = { nombre: 60, icono: 8, cuando: 40, que: 90, edad: 30, alcance: 90 };
+  const LARGO = { nombre: 60, icono: 8, cuando: 40, que: 90, edad: 30, alcance: 90, organiza: 60 };
   const textoMalo = (o, k) => {
     const v = o[k];
     if (typeof v !== 'string' || !v.trim()) return 'no tiene «' + k + '»';
@@ -57,14 +66,14 @@ const REGLAS = (function () {
     for (const f of fichas) {
       ACTIVIDADES[f.id] = { nombre: f.nombre, icono: f.icono, cuando: f.cuando, que: f.que,
         cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '',
-        fecha: f.fecha || '' };
+        fecha: f.fecha || '', organiza: f.organiza || '' };
       for (const c of f.categorias) {
         /* v214: `sinPoliticas`: la categoría no tiene reglamento de concurso (Guías
            Mayores, Camilo 14-oct): ve todo el material y practica el examen sobre todo.
            Si la ficha no lo dice, lo dice el club. */
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
           sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
-          rampa: !c.sinRampa, club: c.club || '',
+          rampa: !c.sinRampa, club: c.club || '', obras: c.obras || null,
           sinPoliticas: c.sinPoliticas !== undefined ? !!c.sinPoliticas : c.club === 'guias' };
         orden.push(c);
       }
@@ -94,6 +103,7 @@ const REGLAS = (function () {
       fichasVistas.add(f.id);
       for (const k of ['nombre', 'icono', 'cuando', 'que']) { const m = textoMalo(f, k); if (m) mal.push(de + ' ' + m); }
       if (typeof f.fecha !== 'string' || (f.fecha && !esFecha(f.fecha))) mal.push(de + ' tiene una fecha que no es AAAA-MM-DD ni vacía');
+      if (f.organiza !== undefined) { const m = textoMalo(f, 'organiza'); if (m) mal.push(de + ' ' + m); }
       const suyos = Object.prototype.hasOwnProperty.call(temas, f.tema) ? temas[f.tema] : null;
       const tipo = Object.prototype.hasOwnProperty.call(tipos, f.tema) ? tipos[f.tema] : null;
       if (!suyos) mal.push(de + ' nombra un tema que no existe: «' + f.tema + '»');
@@ -121,6 +131,15 @@ const REGLAS = (function () {
         if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
         if (suyos) for (const id of c.estudia) {
           if (!suyos.includes(id)) mal.push(dc + ' estudia «' + id + '», que no es del tema «' + f.tema + '»');
+        }
+        if (c.obras !== undefined) {
+          if (!esObjeto(c.obras) || !Object.keys(c.obras).length) mal.push(dc + ' trae «obras» que no es una lista de obras');
+          else for (const [o, caps] of Object.entries(c.obras)) {
+            const O = Object.prototype.hasOwnProperty.call(OBRAS, o) ? OBRAS[o] : null;
+            if (!O) { mal.push(dc + ' nombra una obra que no existe: «' + o + '»'); continue; }
+            if (!Array.isArray(caps) || !caps.length || caps.some(n => !Number.isInteger(n) || n < O.de || n > O.a)) mal.push(dc + ' trae capítulos de «' + O.nombre + '» fuera de ' + O.de + ' a ' + O.a);
+            else if (new Set(caps).size !== caps.length || caps.some((n, i) => i && n <= caps[i - 1])) mal.push(dc + ' trae capítulos de «' + O.nombre + '» repetidos o fuera de orden');
+          }
         }
         if (c.soloEstudio !== undefined && !Array.isArray(c.soloEstudio)) { mal.push(dc + ' trae un «soloEstudio» que no es una lista'); continue; }
         for (const id of c.soloEstudio || []) {
@@ -196,13 +215,17 @@ const REGLAS = (function () {
       if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
       if (c.club !== undefined) o.club = c.club;
       if (c.sinPoliticas !== undefined) o.sinPoliticas = c.sinPoliticas;
+      if (c.obras !== undefined) o.obras = esObjeto(c.obras) ? Object.fromEntries(Object.entries(c.obras).map(([k, v]) => [k, Array.isArray(v) ? v.slice() : v])) : c.obras;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
       return o;
     };
-    return { id: f.id, tema: f.tema, nombre: f.nombre, icono: f.icono, cuando: f.cuando,
-      fecha: f.fecha === undefined ? '' : f.fecha, que: f.que, categorias: f.categorias.map(cat) };
+    const o = { id: f.id, tema: f.tema, nombre: f.nombre, icono: f.icono, cuando: f.cuando,
+      fecha: f.fecha === undefined ? '' : f.fecha, que: f.que };
+    if (f.organiza !== undefined) o.organiza = f.organiza;
+    o.categorias = f.categorias.map(cat);
+    return o;
   }
 
   /* EL ESTUDIO SIN CONCURSO (v214)
@@ -238,7 +261,7 @@ const REGLAS = (function () {
     return { ACTS, CATS };
   }
 
-  return { TEMAS, TIPOS, CLUBES, deriva, revisa, sinUsar, junta, forma, libres, LIBRE };
+  return { TEMAS, TIPOS, CLUBES, OBRAS, deriva, revisa, sinUsar, junta, forma, libres, LIBRE };
 })();
 export const FICHAS_BASE = [
  {
@@ -585,22 +608,25 @@ export const FICHAS_BASE = [
  {
   "id": "ap",
   "tema": "apocalipsis",
-  "nombre": "Conexión Bíblica: Apocalipsis",
+  "nombre": "Conexión Bíblica 2027",
   "icono": "📖",
   "cuando": "Fecha por confirmar",
   "fecha": "",
-  "que": "El libro de Apocalipsis completo, en RV1995",
+  "organiza": "Asociación del Alto Magdalena",
+  "que": "Apocalipsis (RV1995) y El conflicto de los siglos",
   "categorias": [
    {
-    "id": "apme",
-    "nombre": "Menores",
-    "edad": "4 a 6 años",
-    "n": 10,
-    "techo": 1,
-    "sinCompletar": true,
-    "segundos": 100,
-    "club": "aventureros",
-    "alcance": "Apocalipsis",
+    "id": "apgm",
+    "nombre": "Jóvenes (Guías Mayores)",
+    "edad": "Desde 16 años",
+    "n": 35,
+    "techo": 3,
+    "sinCompletar": false,
+    "sinRampa": true,
+    "tarjetas": 25,
+    "club": "guias",
+    "sinPoliticas": false,
+    "alcance": "Apocalipsis 1-22 · El conflicto de los siglos 24-43",
     "estudia": [
      "ap1",
      "ap2",
@@ -624,7 +650,74 @@ export const FICHAS_BASE = [
      "ap20",
      "ap21",
      "ap22"
-    ]
+    ],
+    "obras": {
+     "cs": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43
+     ]
+    }
+   },
+   {
+    "id": "apcq",
+    "nombre": "Conquistadores",
+    "edad": "10 a 15 años",
+    "n": 30,
+    "techo": 2,
+    "sinCompletar": true,
+    "segundos": 80,
+    "tarjetas": 20,
+    "club": "conquistadores",
+    "alcance": "Apocalipsis 1-5, 10-14, 19-22 · CS 24-26, 29, 32, 36-39, 41, 43",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ],
+    "obras": {
+     "cs": [
+      24,
+      25,
+      26,
+      29,
+      32,
+      36,
+      37,
+      38,
+      39,
+      41,
+      43
+     ]
+    }
    },
    {
     "id": "apav",
@@ -637,140 +730,24 @@ export const FICHAS_BASE = [
     "segundos": 80,
     "tarjetas": 15,
     "club": "aventureros",
-    "alcance": "Apocalipsis",
+    "alcance": "Apocalipsis 1, 12, 14, 21, 22 · CS 24, 25, 32, 39, 41, 43",
     "estudia": [
      "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
      "ap12",
-     "ap13",
      "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
      "ap21",
      "ap22"
-    ]
-   },
-   {
-    "id": "appa",
-    "nombre": "Padres y consejeros",
-    "edad": "Adultos",
-    "n": 35,
-    "techo": 3,
-    "sinCompletar": true,
-    "sinRampa": true,
-    "tarjetas": 25,
-    "club": "aventureros",
-    "alcance": "Apocalipsis",
-    "estudia": [
-     "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
-     "ap12",
-     "ap13",
-     "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
-     "ap21",
-     "ap22"
-    ]
-   },
-   {
-    "id": "apcq",
-    "nombre": "Conquistadores",
-    "edad": "10 a 15 años",
-    "n": 30,
-    "techo": 2,
-    "sinCompletar": true,
-    "segundos": 80,
-    "tarjetas": 20,
-    "club": "conquistadores",
-    "alcance": "Apocalipsis",
-    "estudia": [
-     "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
-     "ap12",
-     "ap13",
-     "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
-     "ap21",
-     "ap22"
-    ]
-   },
-   {
-    "id": "apgm",
-    "nombre": "Guías Mayores",
-    "edad": "Desde 16 años",
-    "n": 35,
-    "techo": 3,
-    "sinCompletar": false,
-    "sinRampa": true,
-    "tarjetas": 25,
-    "club": "guias",
-    "sinPoliticas": true,
-    "alcance": "Apocalipsis",
-    "estudia": [
-     "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
-     "ap12",
-     "ap13",
-     "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
-     "ap21",
-     "ap22"
-    ]
+    ],
+    "obras": {
+     "cs": [
+      24,
+      25,
+      32,
+      39,
+      41,
+      43
+     ]
+    }
    }
   ]
  }

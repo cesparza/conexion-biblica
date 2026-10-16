@@ -1,6 +1,6 @@
 // Simula el recorrido de un usuario contra el JS real del index.html.
 // El stub del navegador vive en tests/entorno.js, compartido por las tres suites.
-const {montar,RAIZ}=require('./entorno.js');
+const {montar,RAIZ,HTML}=require('./entorno.js');
 const path=require('path');
 /* Arriba del todo: se usa desde la mitad del archivo en adelante, y un
    `const` usado antes de su declaracion lanza TDZ. Es el mismo tropiezo que
@@ -1396,7 +1396,7 @@ ok(!cat.some(i=>i.g==='Cambiar de material'&&/^\s*$/.test(i.t)),'Ninguna fila qu
    consejeros» contiene «Conexión Bíblica» y «Padres y consejeros» sin ser la
    categoría activa. */
 ok(!cat.some(i=>i.g==='Cambiar de material'&&i.t===N.ACTIVIDADES[N.CATS[N.S().cat].act].nombre+' · '+N.CATS[N.S().cat].nombre)&&
-   cat.some(i=>i.g==='Cambiar de material'&&i.t==='Conexión Bíblica: Apocalipsis · Padres y consejeros'),
+   cat.some(i=>i.g==='Cambiar de material'&&i.t==='Conexión Bíblica 2027 · Aventureros'),
   'No ofrece cambiar a la categoria en la que ya estas');
 
 /* Sin escribir nada, las ACCIONES van primero: con el orden natural el tope de
@@ -1972,9 +1972,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const Z=montar(RET+', el:id=>document.getElementById(id), refsTocables, tablaDeCid, textoFiltro, textoLista, nombreBiblia, opcionesMatPanel, abreLectura, poolNivel, NPREG, ACTIVIDADES');
   Z.ponCat('apav');
   const caps=Z.capsDe().map(c=>c.id);
-  ok(caps.length===22&&caps.every(id=>/^ap\d+$/.test(id)),'En Apocalipsis se estudian sus 22 capítulos y nada de Daniel');
+  ok(caps.join()==='ap1,ap12,ap14,ap21,ap22','v236: Aventureros de Apocalipsis estudia los capítulos de la política 2027 (1, 12, 14, 21 y 22) y nada de Daniel');
   const pool=Z.poolNivel();
-  ok(pool.length>100&&pool.every(q=>q.t==='mc'&&q.cap.startsWith('ap'))&&Z.NPREG()===30,
+  ok(pool.length>=30&&pool.every(q=>q.t==='mc'&&['ap1','ap12','ap14','ap21','ap22'].includes(q.cap))&&Z.NPREG()===30,
     'Aventureros de Apocalipsis practica 30 de selección, solo del libro ('+pool.length+' en su nivel)');
   const h=Z.refsTocables('Dice (1:3) y también Apocalipsis 13:18 y Daniel 2:44.','ap1');
   ok((h.match(/class="vref"/g)||[]).length===3&&/verVers\(this,'ap1',3,3\)/.test(h)&&/'ap13',18/.test(h)&&/'d2',44/.test(h),
@@ -3170,7 +3170,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
    (Camilo, 16:44), y el examen puede traer solo sus preguntas. */
 {
   const Z=montar(`verCap, ponCat, modsDe, poolDe, refrescaEx, cambiaInterp, cambiaFuente, el:id=>document.getElementById(id), get soloInterp(){return soloInterp}, set alc(v){alcance=v}`,{});
-  Z.ponCat('apme');
+  Z.ponCat('apgm');
   ok(!Z.modsDe().some(m=>/^m-interp-/.test(m.id)),'La interpretación ya no va en repasos aparte');
   ok(Z.modsDe().map(m=>m.id).join()==='ma-glosario,ma-simbolos,ma-comparar,ma-personas','v188: Apocalipsis también trae el glosario, los símbolos y la comparación');
   Z.verCap('ma-simbolos');
@@ -3209,8 +3209,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(yo.length===1&&yo[0].fichas.length===2,'v191: Camilo sale una sola vez, con sus dos actividades debajo');
   Z.nuevaFicha('cargo','Sofía');
   const n=Z.S();
-  ok(n.aCargo===true&&n.tutor==='Camilo'&&n.nombre==='Sofía'&&Z.catsDeNino('ap').includes(n.cat)&&!['appa','apgm'].includes(n.cat),'v191: la niña a cargo queda con su tutor y en una categoría de niños ('+n.cat+')');
-  ok(Z.catsDeNino('ap').join()==='apme,apav,apcq'&&Z.catsDeNino('cb').join()==='me,av','v191: a cargo solo Menores, Aventureros y Conquistadores; nunca adultos ni Guías Mayores');
+  ok(n.aCargo===true&&n.tutor==='Camilo'&&n.nombre==='Sofía'&&Z.catsDeNino('ap').includes(n.cat)&&!['apgm'].includes(n.cat),'v191: la niña a cargo queda con su tutor y en una categoría de niños ('+n.cat+')');
+  ok(Z.catsDeNino('ap').join()==='apcq,apav'&&Z.catsDeNino('cb').join()==='me,av','v191: a cargo solo Menores, Aventureros y Conquistadores; nunca adultos ni Guías Mayores');
 }
 /* v189: los nombres de los personajes se tocan y abren su ficha. */
 {
@@ -3287,8 +3287,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   A.ponCat('gm');A.ponVer('concurso');
   ok(A.verTodo()&&!A.hayConcurso()&&A.capsDe().some(c=>c.id==='d12'),'v214: Guías Mayores ve todo aunque la ficha diga «concurso»');
   ok(A.bancoDe().some(q=>q.cap==='d7')&&A.bancoDe().some(q=>q.cap==='d11'),'v214: y practica el examen sobre todo (Daniel 7 al 12 incluidos)');
-  A.ponCat('apgm');
-  ok(A.verTodo()&&!A.hayConcurso(),'v214: también Guías Mayores de Apocalipsis');
+  /* v236: la política 2027 le da reglamento a Jóvenes (Guías Mayores) de Apocalipsis. */
+  A.ponCat('apgm');A.ponVer('concurso');
+  ok(!A.verTodo()&&Z.CATS.apgm.sinPoliticas===false&&A.capsDe().length===22,'v236: Jóvenes (Guías Mayores) de Apocalipsis ya tiene política de concurso (2027): sus 22 capítulos, por reglamento');
   /* 4. Sin preparación: todo, con la dificultad de adultos. */
   A.ponCat(Z.libreDe('daniel'));
   const L=A.S();
@@ -3302,19 +3303,19 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(/prepActividad\('cb'\)/.test(h1)&&/prepActividad\('ap'\)/.test(h1)&&/prepElige\('libre-daniel'\)/.test(h1)&&!/prepElige\('(av|me|pa)'\)/.test(h1),'v214: «Agregar actividad» pregunta primero la actividad');
   P.prepActividad('ap');
   const h2=P.el('prep').innerHTML;
-  ok(['apme','apav','appa','apcq','apgm'].every(k=>h2.includes("prepElige('"+k+"')"))&&!/prepElige\('(me|av|pa|gm)'\)/.test(h2)&&/libre-apocalipsis/.test(h2),'v214: después, solo las categorías de esa actividad (y «Sin concurso»)');
+  ok(['apgm','apcq','apav'].every(k=>h2.includes("prepElige('"+k+"')"))&&!/prepElige\('(me|av|pa|gm)'\)/.test(h2)&&/libre-apocalipsis/.test(h2),'v214: después, solo las categorías de esa actividad (y «Sin concurso»)');
   P.nuevaFicha('cargo','Sofía');
-  ok(P.catsValidas('ap').join()==='apme,apav,apcq'&&P.catsValidas('cbg').length===0,'v214: a un niño a cargo solo le caben categorías de niños; Guías Mayores no');
+  ok(P.catsValidas('ap').join()==='apcq,apav'&&P.catsValidas('cbg').length===0,'v214: a un niño a cargo solo le caben categorías de niños; Guías Mayores no');
   P.abreYo();P.prepAbre();
   ok(!/prepActividad\('cbg'\)/.test(P.el('prep').innerHTML),'v214: y la actividad sin categorías para él no se ofrece');
   P.prepActividad('ap');
-  ok(!/prepElige\('(appa|apgm)'\)/.test(P.el('prep').innerHTML),'v214: ni adultos ni Guías Mayores en la lista del niño');
+  ok(!/prepElige\('apgm'\)/.test(P.el('prep').innerHTML),'v214: ni adultos ni Guías Mayores en la lista del niño');
   /* Elegir otra actividad no toca el avance de la primera. */
   const camilo=()=>P.personasDB().find(p=>p.nombre==='Camilo');
   P.cambiaAlumno(camilo().fichas[0][0]);
-  P.prepElige('appa');
+  P.prepElige('apgm');
   const fichasC=camilo().fichas;
-  ok(P.S().cat==='appa'&&P.S().nombre==='Camilo'&&fichasC.length===2&&fichasC.some(([,al])=>al.cat==='pa'&&al.prog.d1===60),'v214: sumar Apocalipsis crea su ficha y el avance de Daniel sigue en la suya');
+  ok(P.S().cat==='apgm'&&P.S().nombre==='Camilo'&&fichasC.length===2&&fichasC.some(([,al])=>al.cat==='pa'&&al.prog.d1===60),'v214: sumar Apocalipsis crea su ficha y el avance de Daniel sigue en la suya');
 }
 /* 6. La migración: lo guardado sigue igual, sin perder nada. */
 {
@@ -3329,7 +3330,87 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(M.verDe(db.alumnos.a1)==='concurso'&&M.verDe(db.alumnos.a2)==='todo','v214: sin dato nuevo, Aventureros ve lo de siempre (el concurso) y Guías Mayores, todo');
   ok(db.alumnos.a2.prog.d7===80&&db.alumnos.a3.cat==='libre-apocalipsis'&&db.alumnos.a3.prog.ap1===30&&db.alumnos.a3.ver==='todo','v214: el estudio libre se guarda y vuelve igual');
 }
+/* ─── v236: MI ESTUDIO, LA NAVEGACIÓN DE CUATRO ENTRADAS, irATema, LA LISTA DE TEMAS Y LA
+   POLÍTICA 2027 ─── */
+(async()=>{
+  const store={};
+  globalThis.__srvME={dueno:false,lista:{},pedidos:[]};
+  const antes="let fetch=async(u,o)=>{const F=globalThis.__srvME;if(!/\\/api\\/mi-estudio/.test(u))return {ok:false,status:404,json:async()=>({})};"+
+    "const b=o&&o.body?JSON.parse(o.body):{};F.pedidos.push(b);if(!F.dueno)return {ok:false,status:401,json:async()=>({error:'Entra'})};"+
+    "const L=Object.assign({},F.lista);for(const [k,v] of Object.entries(b.lista||{})){const x=L[k];if(!x||v[0]>x[0])L[k]=v;}F.lista=L;return {ok:true,status:200,json:async()=>({lista:L})};};";
+  const RETME='meToca, meEsta, meLista, meSincroniza, meSale, meBoton, pintaMiEstudio, ir, el:id=>document.getElementById(id), meK, get meModo(){return meModo}, irATema, lugarParte, lugarActual, S:()=>S, pantalla:()=>pantallaAct, bibVer, bibAlcanceDe, pintaConcursos, ponCat, normalizar, TABS, ACTIVIDADES, CATS';
+  let M=montar(RETME,{store,antes});
+  /* 1. Sin cuenta: en el aparato. */
+  M.meToca('cap-d7');M.meToca('lam-d7');M.meToca('tema-apocalipsis');M.meToca('cap-zz');
+  ok(M.meEsta('cap-d7')&&M.meEsta('lam-d7')&&M.meEsta('tema-apocalipsis')&&!M.meEsta('cap-zz')&&M.meLista().length===3&&!!store[M.meK('aparato')],
+    'v236: «Agregar a mi estudio» guarda un capítulo, una lámina y un tema en este aparato; una llave que no existe no entra');
+  M.meToca('cap-d7');
+  ok(!M.meEsta('cap-d7')&&M.meLista().join()==='tema-apocalipsis,lam-d7'||M.meLista().length===2,'v236: tocar otra vez lo quita («Quitar»)');
+  const b0=M.meBoton('lam-d7'),b1=M.meBoton('cap-d1');
+  ok(/class="me-tg on"/.test(b0)&&/En mi estudio/.test(b0)&&/Quitar/.test(b0)&&/aria-pressed="true"/.test(b0)&&/Agregar a mi estudio/.test(b1)&&/onclick="meToca\('cap-d1'\)"/.test(b1)&&M.meBoton('cap-zz')==='',
+    'v236: el botón dice «Agregar a mi estudio» o «En mi estudio · Quitar», con aria-pressed');
+  M.ir('miestudio');
+  const hm=M.el('me-cuerpo').innerHTML;
+  ok(M.pantalla()==='miestudio'&&M.TABS.miestudio===3&&/Daniel 7/.test(hm)&&/Las cuatro bestias/.test(hm)&&/Apocalipsis/.test(hm)&&/capítulos leídos/.test(hm)&&/se guarda en este aparato/i.test(hm)&&/ir\('tarjetas'\)/.test(hm)&&/ir\('logros'\)/.test(hm),
+    'v236: la pantalla Mi estudio lista lo apartado con su avance (lo que ya se mide), dice dónde se guarda y lleva a Practicar y Logros');
+  /* 2. Se queda al recargar. */
+  M=montar(RETME,{store,antes});
+  ok(M.meEsta('lam-d7')&&M.meEsta('tema-apocalipsis')&&!M.meEsta('cap-d7'),'v236: la lista sigue ahí al volver a abrir la app');
+  /* 3. Al entrar con cuenta, se funde con la del servidor y deja de ser del aparato. */
+  const T=Date.now();
+  Object.assign(globalThis.__srvME,{dueno:true,lista:{'cap-d8':[T-1000,1]},pedidos:[]});
+  await M.meSincroniza();
+  const env=globalThis.__srvME.pedidos[0]||{};
+  ok(M.meModo==='cuenta'&&M.meEsta('cap-d8')&&M.meEsta('lam-d7')&&M.meEsta('tema-apocalipsis')&&!store[M.meK('aparato')]&&!!(env.lista&&env.lista['lam-d7']),
+    'v236: al entrar, lo del aparato sube a la cuenta y se junta con lo que ya tenía (Daniel 8 de otro aparato)');
+  M.meToca('cap-d1');
+  ok(M.meEsta('cap-d1')&&/cap-d1/.test(store[M.meK('cuenta')]||''),'v236: con cuenta, lo nuevo se guarda en la copia de la cuenta y se sube');
+  M.meSale();
+  ok(!M.meEsta('cap-d8')&&!store[M.meK('cuenta')],'v236: al salir, la lista de la cuenta deja este aparato');
+  globalThis.__srvME.dueno=false;await M.meSincroniza();
+  ok(M.meModo==='aparato','v236: sin cuenta (401), la lista vuelve a ser del aparato');
+  /* 4. La navegación: cuatro entradas y los caminos de siempre. */
+  const nav=(HTML.match(/<div class="nav-t">([\s\S]*?)<\/div>/)||[])[1]||'';
+  const bots=[...nav.matchAll(/onclick="ir\('(\w+)'\)"/g)].map(m=>m[1]).join();
+  ok(bots==='inicio,estudio,examen,miestudio'&&/<b>Mi estudio<\/b>/.test(nav),'v236: la barra tiene exactamente cuatro entradas: Inicio, Biblioteca, Concursos y Mi estudio ('+bots+')');
+  const L=c=>JSON.stringify(M.lugarParte(c));
+  ok(M.lugarParte('estudio/d7').item==='d7'&&M.lugarParte('biblioteca/d7').item==='d7'&&M.lugarParte('examen').pant==='examen'&&M.lugarParte('concursos').pant==='examen'&&
+     M.lugarParte('tarjetas').pant==='tarjetas'&&M.lugarParte('logros').pant==='logros'&&M.lugarParte('mi-estudio').pant==='miestudio'&&
+     M.lugarParte('biblioteca/d7/lamina/d7/explorar').lam.id==='d7'&&M.lugarParte('biblioteca/m-comparar/comparar/538').cmp==='538'&&
+     M.lugarParte('biblioteca/m-comparar/paralelos/papal').par==='papal'&&M.lugarParte('biblioteca/laminas').vista==='laminas'&&!M.lugarParte('biblioteca/laminas').item,
+    'v236: los enlaces de siempre siguen sirviendo (#/estudio, #/examen, #/biblioteca, #/concursos, láminas, comparar, paralelos, #/tarjetas, #/logros) y hay #/mi-estudio y #/biblioteca/laminas');
+  M.ir('miestudio');const lm=M.lugarActual();M.ir('tarjetas');const lt=M.lugarActual();
+  ok(lm==='mi-estudio'&&lt==='tarjetas'&&M.TABS.tarjetas===M.TABS.miestudio&&M.TABS.logros===M.TABS.miestudio,'v236: Mi estudio se anota «mi-estudio»; Practicar y Logros siguen con su dirección y encienden Mi estudio');
+  M.bibVer('laminas');
+  ok(M.lugarActual()==='biblioteca/laminas'&&M.pantalla()==='estudio','v236: la pestaña Láminas de la Biblioteca tiene su dirección');
+  /* 5. irATema: a un tema por su llave, sin recargar. */
+  const okA=M.irATema('cap-d8'),it=M.S().ultItem,okL=M.irATema('lam-zz'),okT=M.irATema('tema-apocalipsis'),pt=M.pantalla(),okC=M.irATema('biblioteca/d2'),it2=M.S().ultItem;
+  ok(okA===true&&it==='d8'&&okL===false&&okT===true&&pt==='estudio'&&okC===true&&it2==='d2'&&!/location\.reload/.test(String(M.irATema)),
+    'v236: irATema lleva a un capítulo, a un tema o a un camino sin recargar; una llave que no existe no hace nada');
+  /* 6. La lista de temas publicada. */
+  const TJ=JSON.parse(require('fs').readFileSync(require('path').join(RAIZ,'temas.json'),'utf8')).temas;
+  const llaves=new Set(TJ.map(x=>x.k));
+  /* El stub no dibuja láminas (classList.contains): lo que la lámina diga en la consola aquí no cuenta; en-navegador.js la abre de verdad. */
+  const errOrig=console.error;console.error=()=>{};
+  const JOV=['lam-d2','lam-d7','lam-d8','cap-d1','cap-d12','cap-ap1','cap-ap22','cap-cr01','cap-cr28','cap-m-comparar','cap-m-simbolos','cap-m-glosario','cap-m-linea','cap-m-profetico'];
+  ok(llaves.size===TJ.length&&JOV.every(k=>llaves.has(k))&&TJ.every(x=>x.titulo&&['capitulo','repaso','profundizar','lamina'].includes(x.tipo)&&x.tema)&&
+     TJ.filter(x=>x.tipo==='lamina').every(x=>M.irATema(x.k)),'v236: temas.json publica cada llave (las de la Tertulia incluidas) con título, tipo y tema, y cada una abre ('+TJ.length+')');
+  console.error=errOrig;
+  /* 7. La política 2027: el alcance por categoría. */
+  const A=M.bibAlcanceDe('apcq'),V=M.bibAlcanceDe('apav'),G=M.bibAlcanceDe('apgm');
+  const tr=f=>f.tramos.map(([a,b])=>a===b?a:a+'-'+b).join(',');
+  ok(tr(A[0])==='1-5,10-14,19-22'&&tr(A[1])==='24-26,29,32,36-39,41,43'&&A[1].obra==='cs'&&tr(V[0])==='1,12,14,21,22'&&tr(V[1])==='24,25,32,39,41,43'&&tr(G[0])==='1-22'&&tr(G[1])==='24-43',
+    'v236: cada categoría de la política 2027 trae sus capítulos de Apocalipsis y de El conflicto de los siglos '+[A,V,G].map(x=>x.map(tr).join('|')).join(' / '));
+  const X=M.ACTIVIDADES.ap,C=M.CATS;
+  ok(X.nombre==='Conexión Bíblica 2027'&&X.organiza==='Asociación del Alto Magdalena'&&X.cuando==='Fecha por confirmar'&&X.cats.join()==='apgm,apcq,apav'&&
+     C.apgm.edad==='Desde 16 años'&&C.apcq.edad==='10 a 15 años'&&C.apav.edad==='7 a 9 años'&&C.apgm.sinPoliticas===false&&/Guías Mayores/.test(C.apgm.nombre),
+    'v236: el concurso es «Conexión Bíblica 2027» de la Asociación del Alto Magdalena, con Jóvenes (Guías Mayores), Conquistadores y Aventureros y las edades de antes');
+  M.ir('examen');M.pintaConcursos();
+  const hc=M.el('con-lista').innerHTML;
+  ok(/Asociación del Alto Magdalena/.test(hc)&&/10 – 14/.test(hc)&&/36 – 39/.test(hc)&&/El conflicto de los siglos/.test(hc)&&/El Templo de Dios/.test(hc)&&/El Fin del Conflicto/.test(hc)&&/todavía no está en la app/.test(hc),
+    'v236: la carta del concurso muestra el organizador y, por categoría, las pastillas de cada libro y los títulos de CS');
+  ok(M.normalizar({cat:'appa'}).cat==='libre-apocalipsis'&&M.normalizar({cat:'apme'}).cat==='libre-apocalipsis','v236: una ficha que estaba en Menores o Padres de Apocalipsis sigue en Apocalipsis, sin concurso');
+})().catch(e=>{ok(false,'Las pruebas de v236 no corrieron: '+(e&&e.stack||e));}).then(()=>{
 console.log('\n'+(f===0?'RECORRIDO DE USO: TODO BIEN':f+' FALLOS'));
-
-
 process.exit(f?1:0);
+});

@@ -1,0 +1,99 @@
+/* ── v236: MI ESTUDIO, LAS PESTAÑAS DE LA BIBLIOTECA Y EL ALCANCE DE CADA CATEGORÍA
+   (fuente/mi-estudio.js y biblioteca-app.js). Solo tokens de la app: claro y oscuro
+   salen solos; todo lo que se toca mide al menos 44 px. ── */
+
+/* Las pestañas de la Biblioteca: una fila que se desliza en el teléfono. */
+.bib-tabs{margin:0 0 .9rem}
+.bt-fila{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bt-fila::-webkit-scrollbar{display:none}
+.bt{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--txt) 14%,transparent);
+  background:var(--card);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.bt .ico-t{width:18px;height:18px;color:var(--gris)}
+.bt.on{background:var(--azul-fondo);border-color:var(--azul-fondo);color:#fff}
+.bt.on .ico-t{color:#fff}
+.bt:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+@media (hover:hover){.bt:hover:not(.on){border-color:color-mix(in srgb,var(--txt) 36%,transparent)}}
+
+/* La vista de láminas. */
+.bl-l{list-style:none;margin:0 0 1rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px}
+.bl-c{display:flex;flex-direction:column;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);overflow:hidden}
+.bl-abre{display:flex;flex-direction:column;padding:0;border:0;background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.bl-abre:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:-2px}
+.bl-acc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:0 .85rem .85rem}
+.bl-acc .btn.txt{min-height:44px}
+
+/* El botón de agregar y quitar. */
+.me-tg{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px dashed color-mix(in srgb,var(--txt) 28%,transparent);
+  background:none;color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.me-tg .me-ico{width:18px;height:18px;color:var(--naranja-txt)}
+.me-tg.on{border-style:solid;border-color:var(--naranja-txt);background:var(--fondo-calido)}
+.me-tg .me-q{margin-left:4px;padding-left:9px;border-left:1px solid color-mix(in srgb,var(--txt) 22%,transparent);font-weight:600;color:var(--gris)}
+.me-tg.chico{padding:0 12px;font-size:.8125rem}
+.me-tg:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+@media (hover:hover){.me-tg:hover{border-color:var(--naranja-txt)}}
+.cap-me{margin:.5rem 0 .2rem}
+.bib-acc{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.lam-bots .me-tg{color:inherit;border-color:color-mix(in srgb,currentColor 40%,transparent)}
+.lam-bots .me-tg.on{background:color-mix(in srgb,var(--naranja) 22%,transparent)}
+
+/* La pantalla de Mi estudio. */
+.me-hero{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:1.25rem 1.25rem 1rem;margin-bottom:1rem}
+.me-donde{display:flex;align-items:flex-start;gap:8px;margin:0;padding:.65rem .85rem;border-radius:12px;background:var(--fondo-suave);font-size:.875rem;line-height:1.4;color:var(--txt)}
+.me-donde .ico-t{flex:0 0 auto;width:18px;height:18px;margin-top:1px;color:var(--verde-txt)}
+.me-l{list-style:none;margin:0 0 1rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px}
+.me-f{display:flex;flex-direction:column;gap:.6rem;padding:.9rem;border-radius:var(--r);background:var(--card);box-shadow:var(--sh)}
+.me-abre{display:flex;align-items:center;gap:12px;min-height:56px;padding:0;border:0;background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.me-abre:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:3px;border-radius:10px}
+.me-fic{flex:0 0 auto;position:relative;display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;background:var(--fondo-prof);color:var(--prof);overflow:hidden}
+.me-fic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.me-fic .ico-t{width:26px;height:26px}
+.me-ftx{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.me-ftx small{font-size:.75rem;font-weight:700;color:var(--naranja-txt)}
+.me-ftx b{font-size:1rem;line-height:1.25}
+.me-ftx span{font-size:.875rem;color:var(--gris);line-height:1.3}
+.me-fl{flex:0 0 auto;width:18px;height:18px;color:var(--gris)}
+.me-av .nv3{margin:0}
+.me-av-t{font-size:.875rem;color:var(--gris);margin-bottom:6px}
+.me-av-t b{color:var(--txt)}
+.me-facc{display:flex;justify-content:flex-end}
+.me-vacio{display:flex;flex-direction:column;align-items:center;gap:.5rem;text-align:center;padding:2rem 1.25rem;margin:0 0 1rem;border-radius:var(--r);border:1.5px dashed color-mix(in srgb,var(--txt) 22%,transparent)}
+.me-vacio p{margin:0 0 .4rem;color:var(--gris);max-width:40ch}
+.me-vic{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:var(--fondo-calido);color:var(--naranja-txt)}
+.me-vic .ico-t{width:28px;height:28px}
+.me-mas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px;margin-bottom:1rem}
+.me-ir{position:relative;display:flex;align-items:center;gap:12px;min-height:64px;padding:.7rem .9rem;border:0;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.me-ir>span:nth-child(2){flex:1;display:flex;flex-direction:column}
+.me-ir small{font-size:.8125rem;color:var(--gris)}
+.me-iric{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:var(--fondo-suave);color:var(--azul)}
+.me-ir .nv{position:static}
+.me-ir:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+
+/* Concursos: el organizador y cada categoría con lo que entra (política 2027). */
+.con-org{align-self:flex-start;padding:4px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--txt) 20%,transparent);font-size:.6875rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
+.con-cbs{display:flex;flex-direction:column;gap:10px}
+/* El tono del club va en el filete de la izquierda y en las pastillas; el texto, siempre en --txt
+   (el rojo sobre fondo oscuro no llegaba al contraste). */
+.con-cb{--tono:var(--azul);padding:.75rem .85rem;border-radius:14px;background:color-mix(in srgb,var(--tono) 7%,var(--card));border:1.5px solid color-mix(in srgb,var(--tono) 22%,transparent);border-left:5px solid var(--tono)}
+.con-cb.on{border-color:var(--tono)}
+.con-cb.ac-guias{--tono:var(--cielo-txt)}
+.con-cb.ac-conq{--tono:var(--naranja-txt)}
+.con-cb.ac-avent{--tono:var(--rojo-txt)}
+.con-cbh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:.45rem}
+.con-cbh b{font-size:1rem;color:var(--txt)}
+.con-cbh span{font-size:.8125rem;color:var(--gris)}
+.con-cbh .con-cbtu{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--verde-txt)}
+.ac{display:flex;flex-direction:column;gap:.5rem}
+.ac-t{font-size:.6875rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);margin-bottom:5px}
+.ac-falta{margin-left:4px;padding:1px 7px;border-radius:999px;background:var(--fondo-calido);color:var(--naranja-txt);letter-spacing:0;text-transform:none;font-weight:700}
+.ac-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ac-chip{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--tono,var(--azul)) 40%,transparent);
+  background:color-mix(in srgb,var(--tono,var(--azul)) 12%,var(--card));color:var(--txt);font-size:.875rem;font-weight:800;font-variant-numeric:tabular-nums}
+.con-obra{border-radius:12px;background:var(--fondo-suave);padding:0 .85rem}
+.con-obra summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;font-size:.875rem;font-weight:700}
+.con-ol{margin:0 0 .4rem;padding:0;list-style:none;columns:2 14rem;column-gap:1.2rem;font-size:.875rem;line-height:1.5}
+.con-ol li{break-inside:avoid}
+.con-ol b{display:inline-block;min-width:1.8em;font-variant-numeric:tabular-nums;color:var(--naranja-txt)}
+.con-obra .nota{margin:.3rem 0 .8rem}
+/* Quién estudia, paso 2: el alcance en pastillas dentro de cada categoría. */
+.cat-btn .ac{margin-top:.5rem;text-align:left}
+.cat-btn .ac-chip{min-height:26px;padding:0 9px;font-size:.75rem}

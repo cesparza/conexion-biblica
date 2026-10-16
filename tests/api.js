@@ -464,6 +464,36 @@ async function pruebaMiddleware() {
     ok(s0 === 401 && s3 === 401 && s1 === 200 && s2 === 200 && n1 === 'Isabella,Luis,María' && Object.keys(d1).join() === 'nombres' && (d2.nombres || []).length === 3,
       '/nombres: sin sesión 401; con sesión (o SESION_APP de la puerta) solo nombres de pila sin repetir ni HTML (' + n1 + ')');
   } catch (e) { ok(false, 'La prueba de /nombres no corrió: ' + e.message); }
+  /* v236: «Mi estudio». Solo su dueño (código, director o la persona de Jóvenes que pone la
+     puerta), la fusión gana lo más reciente y una llave mal formada no entra. */
+  try {
+    const M = await import('file://' + path.join(RAIZ, 'functions/api/[[ruta]].js'));
+    const COOKIE = (API.match(/const COOKIE = '([^']+)'/) || [])[1];
+    const tabla = new Map();
+    const DB = rol => ({ prepare: sql => { let args = []; const q = { bind: (...a) => { args = a; return q; },
+      first: async () => /FROM sesion/.test(sql) ? (rol ? { token: 't', cuenta_id: 'c1', rol, persona_id: rol === 'participante' ? 'p1' : null } : null)
+        : /FROM mi_estudio/.test(sql) ? (tabla.has(args[0]) ? { lista: tabla.get(args[0]) } : null) : null,
+      all: async () => ({ results: [] }), run: async () => { if (/INSERT INTO mi_estudio/.test(sql)) tabla.set(args[0], args[1]); return { meta: {} }; } }; return q; } });
+    const pide = async (metodo, cuerpo, rol, extra) => { const r = await M.onRequest({ request: new Request('https://x/api/mi-estudio', { method: metodo,
+      headers: Object.assign({ 'content-type': 'application/json' }, rol ? { cookie: COOKIE + '=t' } : {}), body: cuerpo ? JSON.stringify(cuerpo) : undefined }),
+      env: Object.assign({ DB: DB(rol), SAL_IP: 's' }, extra || {}), params: { ruta: ['mi-estudio'] }, waitUntil: () => {} }); return [r.status, await r.json()]; };
+    const T = 1.76e12;
+    const [s0] = await pide('GET', null, null);
+    const [s0b] = await pide('GET', null, null, { QUIEN_APP: 'j:<script>' });
+    const [s1, d1] = await pide('POST', { lista: { 'cap-d7': [T, 1], 'lam-d7': [T, 1], 'mala llave': [T, 1], 'cap-x': ['ayer', 1] } }, 'participante');
+    const [s2, d2] = await pide('POST', { lista: { 'cap-d7': [T + 5, 0], 'lam-d7': [T - 5, 0], 'tema-apocalipsis': [T, 1] } }, 'participante');
+    const [s3, d3] = await pide('GET', null, null, { QUIEN_APP: 'j:' + 'a'.repeat(64) });
+    const [s4, d4] = await pide('GET', null, 'director');
+    ok(s0 === 401 && s0b === 401 && s1 === 200 && Object.keys(d1.lista).sort().join() === 'cap-d7,lam-d7' && tabla.has('p:p1'),
+      '/mi-estudio: sin dueño 401; con código guarda en «p:<participante>» y deja fuera las llaves mal formadas');
+    ok(s2 === 200 && d2.lista['cap-d7'][1] === 0 && d2.lista['lam-d7'][1] === 1 && d2.lista['tema-apocalipsis'][1] === 1,
+      '/mi-estudio: al fundir gana lo más reciente (quitar después borra; un quitar viejo no borra lo agregado después)');
+    ok(s3 === 200 && Object.keys(d3.lista).length === 0 && s4 === 200 && Object.keys(d4.lista).length === 0 && !tabla.has('j:' + 'a'.repeat(64)),
+      '/mi-estudio: la persona de Jóvenes (QUIEN_APP de la puerta) y el director tienen cada uno su lista; nadie lee la de otro');
+    const i = API.indexOf("ruta === '/mi-estudio'"), g = API.indexOf('const sesion = await sesionActual(request, env);');
+    ok(i > g && /CREATE TABLE IF NOT EXISTS mi_estudio[\s\S]{0,200}dueno\s+TEXT PRIMARY KEY/.test(MIGR) && !/ALTER TABLE|DROP|INSERT|UPDATE|DELETE/.test(fs.readFileSync(path.join(RAIZ, 'migraciones/014_mi_estudio.sql'), 'utf8').replace(/--.*$/gm, '')),
+      '/mi-estudio va después de leer la sesión; la migración 014 solo crea su tabla');
+  } catch (e) { ok(false, 'La prueba de /mi-estudio no corrió: ' + e.message); }
   if (process.argv.includes('--vivo')) {
     try { await vivo(); } catch (e) { ok(false, 'Las pruebas en vivo no corrieron: ' + e.message); }
   }

@@ -5629,6 +5629,105 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .bib-fu.btn{min-height:44px}
 /* La sección a la que lleva una pregunta queda debajo de lo fijo arriba (DONDE_TOPE). */
 #detalle .sec[data-i]{scroll-margin-top:84px}
+/* ── v236: MI ESTUDIO, LAS PESTAÑAS DE LA BIBLIOTECA Y EL ALCANCE DE CADA CATEGORÍA
+   (fuente/mi-estudio.js y biblioteca-app.js). Solo tokens de la app: claro y oscuro
+   salen solos; todo lo que se toca mide al menos 44 px. ── */
+
+/* Las pestañas de la Biblioteca: una fila que se desliza en el teléfono. */
+.bib-tabs{margin:0 0 .9rem}
+.bt-fila{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bt-fila::-webkit-scrollbar{display:none}
+.bt{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--txt) 14%,transparent);
+  background:var(--card);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.bt .ico-t{width:18px;height:18px;color:var(--gris)}
+.bt.on{background:var(--azul-fondo);border-color:var(--azul-fondo);color:#fff}
+.bt.on .ico-t{color:#fff}
+.bt:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+@media (hover:hover){.bt:hover:not(.on){border-color:color-mix(in srgb,var(--txt) 36%,transparent)}}
+
+/* La vista de láminas. */
+.bl-l{list-style:none;margin:0 0 1rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px}
+.bl-c{display:flex;flex-direction:column;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);overflow:hidden}
+.bl-abre{display:flex;flex-direction:column;padding:0;border:0;background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.bl-abre:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:-2px}
+.bl-acc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:0 .85rem .85rem}
+.bl-acc .btn.txt{min-height:44px}
+
+/* El botón de agregar y quitar. */
+.me-tg{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px dashed color-mix(in srgb,var(--txt) 28%,transparent);
+  background:none;color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.me-tg .me-ico{width:18px;height:18px;color:var(--naranja-txt)}
+.me-tg.on{border-style:solid;border-color:var(--naranja-txt);background:var(--fondo-calido)}
+.me-tg .me-q{margin-left:4px;padding-left:9px;border-left:1px solid color-mix(in srgb,var(--txt) 22%,transparent);font-weight:600;color:var(--gris)}
+.me-tg.chico{padding:0 12px;font-size:.8125rem}
+.me-tg:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+@media (hover:hover){.me-tg:hover{border-color:var(--naranja-txt)}}
+.cap-me{margin:.5rem 0 .2rem}
+.bib-acc{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.lam-bots .me-tg{color:inherit;border-color:color-mix(in srgb,currentColor 40%,transparent)}
+.lam-bots .me-tg.on{background:color-mix(in srgb,var(--naranja) 22%,transparent)}
+
+/* La pantalla de Mi estudio. */
+.me-hero{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:1.25rem 1.25rem 1rem;margin-bottom:1rem}
+.me-donde{display:flex;align-items:flex-start;gap:8px;margin:0;padding:.65rem .85rem;border-radius:12px;background:var(--fondo-suave);font-size:.875rem;line-height:1.4;color:var(--txt)}
+.me-donde .ico-t{flex:0 0 auto;width:18px;height:18px;margin-top:1px;color:var(--verde-txt)}
+.me-l{list-style:none;margin:0 0 1rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px}
+.me-f{display:flex;flex-direction:column;gap:.6rem;padding:.9rem;border-radius:var(--r);background:var(--card);box-shadow:var(--sh)}
+.me-abre{display:flex;align-items:center;gap:12px;min-height:56px;padding:0;border:0;background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.me-abre:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:3px;border-radius:10px}
+.me-fic{flex:0 0 auto;position:relative;display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;background:var(--fondo-prof);color:var(--prof);overflow:hidden}
+.me-fic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.me-fic .ico-t{width:26px;height:26px}
+.me-ftx{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.me-ftx small{font-size:.75rem;font-weight:700;color:var(--naranja-txt)}
+.me-ftx b{font-size:1rem;line-height:1.25}
+.me-ftx span{font-size:.875rem;color:var(--gris);line-height:1.3}
+.me-fl{flex:0 0 auto;width:18px;height:18px;color:var(--gris)}
+.me-av .nv3{margin:0}
+.me-av-t{font-size:.875rem;color:var(--gris);margin-bottom:6px}
+.me-av-t b{color:var(--txt)}
+.me-facc{display:flex;justify-content:flex-end}
+.me-vacio{display:flex;flex-direction:column;align-items:center;gap:.5rem;text-align:center;padding:2rem 1.25rem;margin:0 0 1rem;border-radius:var(--r);border:1.5px dashed color-mix(in srgb,var(--txt) 22%,transparent)}
+.me-vacio p{margin:0 0 .4rem;color:var(--gris);max-width:40ch}
+.me-vic{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:var(--fondo-calido);color:var(--naranja-txt)}
+.me-vic .ico-t{width:28px;height:28px}
+.me-mas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px;margin-bottom:1rem}
+.me-ir{position:relative;display:flex;align-items:center;gap:12px;min-height:64px;padding:.7rem .9rem;border:0;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.me-ir>span:nth-child(2){flex:1;display:flex;flex-direction:column}
+.me-ir small{font-size:.8125rem;color:var(--gris)}
+.me-iric{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:var(--fondo-suave);color:var(--azul)}
+.me-ir .nv{position:static}
+.me-ir:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+
+/* Concursos: el organizador y cada categoría con lo que entra (política 2027). */
+.con-org{align-self:flex-start;padding:4px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--txt) 20%,transparent);font-size:.6875rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
+.con-cbs{display:flex;flex-direction:column;gap:10px}
+/* El tono del club va en el filete de la izquierda y en las pastillas; el texto, siempre en --txt
+   (el rojo sobre fondo oscuro no llegaba al contraste). */
+.con-cb{--tono:var(--azul);padding:.75rem .85rem;border-radius:14px;background:color-mix(in srgb,var(--tono) 7%,var(--card));border:1.5px solid color-mix(in srgb,var(--tono) 22%,transparent);border-left:5px solid var(--tono)}
+.con-cb.on{border-color:var(--tono)}
+.con-cb.ac-guias{--tono:var(--cielo-txt)}
+.con-cb.ac-conq{--tono:var(--naranja-txt)}
+.con-cb.ac-avent{--tono:var(--rojo-txt)}
+.con-cbh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:.45rem}
+.con-cbh b{font-size:1rem;color:var(--txt)}
+.con-cbh span{font-size:.8125rem;color:var(--gris)}
+.con-cbh .con-cbtu{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--verde-txt)}
+.ac{display:flex;flex-direction:column;gap:.5rem}
+.ac-t{font-size:.6875rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);margin-bottom:5px}
+.ac-falta{margin-left:4px;padding:1px 7px;border-radius:999px;background:var(--fondo-calido);color:var(--naranja-txt);letter-spacing:0;text-transform:none;font-weight:700}
+.ac-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ac-chip{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--tono,var(--azul)) 40%,transparent);
+  background:color-mix(in srgb,var(--tono,var(--azul)) 12%,var(--card));color:var(--txt);font-size:.875rem;font-weight:800;font-variant-numeric:tabular-nums}
+.con-obra{border-radius:12px;background:var(--fondo-suave);padding:0 .85rem}
+.con-obra summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;font-size:.875rem;font-weight:700}
+.con-ol{margin:0 0 .4rem;padding:0;list-style:none;columns:2 14rem;column-gap:1.2rem;font-size:.875rem;line-height:1.5}
+.con-ol li{break-inside:avoid}
+.con-ol b{display:inline-block;min-width:1.8em;font-variant-numeric:tabular-nums;color:var(--naranja-txt)}
+.con-obra .nota{margin:.3rem 0 .8rem}
+/* Quién estudia, paso 2: el alcance en pastillas dentro de cada categoría. */
+.cat-btn .ac{margin-top:.5rem;text-align:left}
+.cat-btn .ac-chip{min-height:26px;padding:0 9px;font-size:.75rem}
 </style>
 </head>
 <body>
@@ -5768,6 +5867,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
   <symbol id="i-bajar" viewBox="0 0 24 24"><path d="M12 4v11.2M7.6 11 12 15.4l4.4-4.4M5 19.6h14"/></symbol>
   <symbol id="i-ojo" viewBox="0 0 24 24"><path class="f" d="M2.8 12s3.4-6.4 9.2-6.4 9.2 6.4 9.2 6.4-3.4 6.4-9.2 6.4S2.8 12 2.8 12z"/><path d="M2.8 12s3.4-6.4 9.2-6.4 9.2 6.4 9.2 6.4-3.4 6.4-9.2 6.4S2.8 12 2.8 12z"/><circle cx="12" cy="12" r="2.6"/></symbol>
   <symbol id="i-puntos" viewBox="0 0 24 24"><circle cx="5.6" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="18.4" cy="12" r="1.7" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-marca" viewBox="0 0 24 24"><path class="f" d="M6.6 3.8h10.8v16.4L12 16.6l-5.4 3.6z"/><path d="M6.6 3.8h10.8v16.4L12 16.6l-5.4 3.6z"/></symbol>
   <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-birrete" viewBox="0 0 24 24"><path class="f" d="M2.8 9.6 12 5l9.2 4.6L12 14.2z"/><path d="M2.8 9.6 12 5l9.2 4.6L12 14.2zM6.6 11.6v4.2c1.4 1.4 3.4 2 5.4 2s4-.6 5.4-2v-4.2M21.2 9.6v5"/></symbol>
 </svg>
@@ -5794,12 +5894,13 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
   <!-- Las senales de cada pestana. Van en el HTML y no las crea el JS, para que
        pintaSenales() solo tenga que llenarlas o esconderlas: un nodo que ya
        existe no se puede duplicar por llamar dos veces a la funcion. -->
+  <!-- v236 (Camilo aprobó, 15-oct 10:28 p. m.): cuatro entradas, ni una más. Practicar y
+       Logros viven dentro de «Mi estudio» (siguen con su dirección: #/tarjetas, #/logros). -->
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')"><i><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></i><b>Inicio</b></button>
     <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Biblioteca</b><span class="nv gris" id="nv-est" hidden></span></button>
-    <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Practicar</b><span class="nv" id="nv-tj" hidden></span></button>
     <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Concursos</b><span class="nv-punto" id="nv-ex" hidden></span></button>
-    <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b><span class="nv" id="nv-lg" hidden></span></button>
+    <button onclick="ir('miestudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-marca"/></svg></i><b>Mi estudio</b><span class="nv" id="nv-tj" hidden></span><span class="nv" id="nv-lg" hidden></span></button>
   </div>
 </nav>
 
@@ -5957,7 +6058,11 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="p-estudio" class="pantalla">
   <!-- v235: LA BIBLIOTECA. La portada (temas, nivel de lectura, fuentes, «Para ver»)
        la pinta pintaBib() (fuente/biblioteca-app.js); debajo, la rejilla de siempre. -->
+  <!-- v236: las pestañas de la Biblioteca (Temas, Láminas, Comparar, Paralelos, Últimos
+       acontecimientos); las pinta pintaBibTabs() (fuente/biblioteca-app.js). -->
+  <nav id="bib-tabs" class="bib-tabs" aria-label="Secciones de la Biblioteca"></nav>
   <div id="bib-cab" class="bib-cab"></div>
+  <div id="bib-lams" class="bib-lams" hidden></div>
   <div class="caps" id="lista-caps"></div>
   <div id="detalle" class="card" style="margin-top:1rem;display:none"></div>
 
@@ -5979,6 +6084,11 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
       <div id="impr-est"></div>
     </div>
   </details>
+</div>
+
+<!-- v236: MI ESTUDIO, la lista personal (fuente/mi-estudio.js, pintaMiEstudio). -->
+<div id="p-miestudio" class="pantalla">
+  <div id="me-cuerpo"></div>
 </div>
 
 <div id="p-tarjetas" class="pantalla">
@@ -6197,7 +6307,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'cb72bb615b8b';
+const VERSION_APP = '3555e4ff5188';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -6547,22 +6657,25 @@ const FICHAS_BASE = [
  {
   "id": "ap",
   "tema": "apocalipsis",
-  "nombre": "Conexión Bíblica: Apocalipsis",
+  "nombre": "Conexión Bíblica 2027",
   "icono": "📖",
   "cuando": "Fecha por confirmar",
   "fecha": "",
-  "que": "El libro de Apocalipsis completo, en RV1995",
+  "organiza": "Asociación del Alto Magdalena",
+  "que": "Apocalipsis (RV1995) y El conflicto de los siglos",
   "categorias": [
    {
-    "id": "apme",
-    "nombre": "Menores",
-    "edad": "4 a 6 años",
-    "n": 10,
-    "techo": 1,
-    "sinCompletar": true,
-    "segundos": 100,
-    "club": "aventureros",
-    "alcance": "Apocalipsis",
+    "id": "apgm",
+    "nombre": "Jóvenes (Guías Mayores)",
+    "edad": "Desde 16 años",
+    "n": 35,
+    "techo": 3,
+    "sinCompletar": false,
+    "sinRampa": true,
+    "tarjetas": 25,
+    "club": "guias",
+    "sinPoliticas": false,
+    "alcance": "Apocalipsis 1-22 · El conflicto de los siglos 24-43",
     "estudia": [
      "ap1",
      "ap2",
@@ -6586,7 +6699,74 @@ const FICHAS_BASE = [
      "ap20",
      "ap21",
      "ap22"
-    ]
+    ],
+    "obras": {
+     "cs": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43
+     ]
+    }
+   },
+   {
+    "id": "apcq",
+    "nombre": "Conquistadores",
+    "edad": "10 a 15 años",
+    "n": 30,
+    "techo": 2,
+    "sinCompletar": true,
+    "segundos": 80,
+    "tarjetas": 20,
+    "club": "conquistadores",
+    "alcance": "Apocalipsis 1-5, 10-14, 19-22 · CS 24-26, 29, 32, 36-39, 41, 43",
+    "estudia": [
+     "ap1",
+     "ap2",
+     "ap3",
+     "ap4",
+     "ap5",
+     "ap10",
+     "ap11",
+     "ap12",
+     "ap13",
+     "ap14",
+     "ap19",
+     "ap20",
+     "ap21",
+     "ap22"
+    ],
+    "obras": {
+     "cs": [
+      24,
+      25,
+      26,
+      29,
+      32,
+      36,
+      37,
+      38,
+      39,
+      41,
+      43
+     ]
+    }
    },
    {
     "id": "apav",
@@ -6599,140 +6779,24 @@ const FICHAS_BASE = [
     "segundos": 80,
     "tarjetas": 15,
     "club": "aventureros",
-    "alcance": "Apocalipsis",
+    "alcance": "Apocalipsis 1, 12, 14, 21, 22 · CS 24, 25, 32, 39, 41, 43",
     "estudia": [
      "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
      "ap12",
-     "ap13",
      "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
      "ap21",
      "ap22"
-    ]
-   },
-   {
-    "id": "appa",
-    "nombre": "Padres y consejeros",
-    "edad": "Adultos",
-    "n": 35,
-    "techo": 3,
-    "sinCompletar": true,
-    "sinRampa": true,
-    "tarjetas": 25,
-    "club": "aventureros",
-    "alcance": "Apocalipsis",
-    "estudia": [
-     "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
-     "ap12",
-     "ap13",
-     "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
-     "ap21",
-     "ap22"
-    ]
-   },
-   {
-    "id": "apcq",
-    "nombre": "Conquistadores",
-    "edad": "10 a 15 años",
-    "n": 30,
-    "techo": 2,
-    "sinCompletar": true,
-    "segundos": 80,
-    "tarjetas": 20,
-    "club": "conquistadores",
-    "alcance": "Apocalipsis",
-    "estudia": [
-     "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
-     "ap12",
-     "ap13",
-     "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
-     "ap21",
-     "ap22"
-    ]
-   },
-   {
-    "id": "apgm",
-    "nombre": "Guías Mayores",
-    "edad": "Desde 16 años",
-    "n": 35,
-    "techo": 3,
-    "sinCompletar": false,
-    "sinRampa": true,
-    "tarjetas": 25,
-    "club": "guias",
-    "sinPoliticas": true,
-    "alcance": "Apocalipsis",
-    "estudia": [
-     "ap1",
-     "ap2",
-     "ap3",
-     "ap4",
-     "ap5",
-     "ap6",
-     "ap7",
-     "ap8",
-     "ap9",
-     "ap10",
-     "ap11",
-     "ap12",
-     "ap13",
-     "ap14",
-     "ap15",
-     "ap16",
-     "ap17",
-     "ap18",
-     "ap19",
-     "ap20",
-     "ap21",
-     "ap22"
-    ]
+    ],
+    "obras": {
+     "cs": [
+      24,
+      25,
+      32,
+      39,
+      41,
+      43
+     ]
+    }
    }
   ]
  }
@@ -8981,6 +9045,11 @@ const CONTENIDO = {
    "t": "🧭 Las cuatro etapas de Roma",
    "capa": "contexto",
    "h": "<p>La cuarta bestia, sus diez cuernos y el cuerno pequeño son el mismo imperio en etapas seguidas:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Etapa</th><th>En Daniel 7</th><th>Años</th></tr></thead><tbody><tr><td class=\"key\">1. Roma imperial</td><td>La bestia misma, con dientes de hierro (7:7, 23)</td><td>168 a.C.-476 d.C.</td></tr><tr><td class=\"key\">2. Roma dividida</td><td>Los diez cuernos: «diez reyes» (7:24)</td><td>Desde 476</td></tr><tr><td class=\"key\">3. Roma papal</td><td>El cuerno pequeño (7:8, 24-25)</td><td>538-1798</td></tr><tr><td class=\"key\">4. Roma papal sanada</td><td>No va aparte en Daniel 2 ni 7; la muestra Apocalipsis 13:3, 12 y 17:8: la bestia «era y no es, y será»</td><td>Desde 1798 hasta la venida de Cristo</td></tr></tbody></table></div><p>La cuarta etapa se incluye porque el poder papal sigue hasta el fin. Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34, 44-45). El cuerno de Daniel 8 «será quebrantado, aunque no por mano humana» (8:25), y el rey del norte, recuperado de su herida, «llegará a su fin» (11:40-45).</p><div class=\"highlight-box\">La herida mortal es la caída del papado en 1798; la profecía anuncia que sana y que «toda la tierra» va en pos de la bestia. El hombre de pecado sigue hasta la segunda venida (2 Tesalonicenses 2:8).</div><p>Fuente: CS 492 y 636; Bohr, <i>Daniel 1-10</i>, p. 120-121; Bohr, <i>Apocalipsis 17</i>, p. 7-8.</p>"
+  },
+  {
+   "t": "🧭 El fin de la bestia (7:11-12)",
+   "capa": "contexto",
+   "h": "<p>«mientras miraba mataron a la bestia, y su cuerpo fue destrozado y entregado para quemarlo en el fuego» (7:11). Las palabras del cuerno traen su fin: la bestia no se convierte, es destruida.</p><p>A las otras tres «les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo» (7:12). Babilonia, Medo-Persia y Grecia perdieron el poder, pero sus pueblos siguieron viviendo bajo el reino siguiente. Con la cuarta no pasa así: después de ella no viene otro reino de hombres.</p><p>Los versículos 11 y 12 adelantan el final. En el orden de los hechos: se ponen los tronos, se sienta el Anciano de días, llega el Hijo del hombre, se hace el juicio, se da la recompensa al Hijo del hombre y a los santos y, al final, se destruye la bestia. El cuerno de Daniel 7 y el de Daniel 8 terminan por obra de Dios, no de hombres (7:11, 26; 8:25).</p><p>Fuente: Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117; Bohr, <i>Daniel 1-10</i>, p. 305.</p>"
   },
   {
    "t": "🧭 Los tiempos y la ley (7:25)",
@@ -61472,7 +61541,7 @@ const LAMINAS = {
      "El Anciano de días es Dios el Padre. Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial. Los millones que están delante de él son ángeles, testigos del tribunal.",
      "Los libros se abren (7:10) y «se hizo justicia a los santos» (7:22). Al cuerno «le quitarán su dominio, para que sea destruido» (7:26)."
     ],
-    "fuente": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280.",
+    "fuente": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117.",
     "pasos": [
      {
       "t": "Fueron puestos unos tronos",
@@ -61522,6 +61591,30 @@ const LAMINAS = {
       ],
       "ms": 8200,
       "nota": "El Juez se sienta y empieza la sesión. Los libros guardan cada vida: el libro de la vida, el de memoria y el registro de los pecados (Apocalipsis 20:12; Malaquías 3:16; Eclesiastés 12:14). El fallo es a favor de los santos: «se hizo justicia a los santos del Altísimo» (7:22)."
+     },
+     {
+      "t": "Mataron a la bestia",
+      "ref": "7:11",
+      "texto": "Yo entonces miraba a causa del sonido de las grandes insolencias que hablaba el cuerno; y mientras miraba mataron a la bestia, y su cuerpo fue destrozado y entregado para quemarlo en el fuego.",
+      "caja": [
+       150,
+       40,
+       880,
+       495
+      ],
+      "nota": "Las palabras del cuerno traen su fin: la bestia no se convierte, es destruida en el fuego (Smith, <i>Las profecías de Daniel</i>, p. 59-60). Los versículos 11 y 12 adelantan el final: en el orden de los hechos, primero el juicio y la recompensa del Hijo del hombre y de los santos, y al final la destrucción de la bestia (Maxwell, <i>El porvenir del mundo revelado</i>, p. 117). Como el cuerno de Daniel 8, termina por obra de Dios, no de hombres (7:11, 26; 8:25; Bohr, <i>Daniel 1-10</i>, p. 305)."
+     },
+     {
+      "t": "Las otras bestias",
+      "ref": "7:12",
+      "texto": "También a las otras bestias les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo.",
+      "caja": [
+       150,
+       40,
+       880,
+       495
+      ],
+      "nota": "Babilonia, Medo-Persia y Grecia perdieron el dominio, pero sus pueblos siguieron viviendo bajo el reino siguiente. Con la cuarta bestia no pasa así: después de ella no viene otro reino de hombres, y su carrera termina en el fuego (Smith, <i>Las profecías de Daniel</i>, p. 59-60)."
      }
     ],
     "anim": {
@@ -62972,6 +63065,231 @@ const LAMINAS = {
      "Antes de eso está la cuarta etapa de Roma: herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue hasta el fin (CS 636). Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26)."
     ],
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+   }
+  ]
+ }
+};
+
+/* v236: los capítulos de las obras que un concurso puede pedir sin que estén en la app
+   todavía (fuente/conflicto.js): número, título y página. */
+const OBRAS_CAPS = {
+ "cs": {
+  "edicion": "APIA, 1954",
+  "caps": [
+   {
+    "n": 1,
+    "t": "El Destino del Mundo Predicho",
+    "p": 14
+   },
+   {
+    "n": 2,
+    "t": "La Fe de los Mártires",
+    "p": 31
+   },
+   {
+    "n": 3,
+    "t": "Una Era de Tinieblas Espirituales",
+    "p": 39
+   },
+   {
+    "n": 4,
+    "t": "Fieles Portaantorchas",
+    "p": 49
+   },
+   {
+    "n": 5,
+    "t": "El Lucero de la Reforma",
+    "p": 63
+   },
+   {
+    "n": 6,
+    "t": "Dos Héroes de la Edad Media",
+    "p": 77
+   },
+   {
+    "n": 7,
+    "t": "En la Encrucijada de los Caminos",
+    "p": 95
+   },
+   {
+    "n": 8,
+    "t": "Un Campeón de la Verdad",
+    "p": 114
+   },
+   {
+    "n": 9,
+    "t": "Se Enciende una Luz en Suiza",
+    "p": 134
+   },
+   {
+    "n": 10,
+    "t": "Progresos de la Reforma",
+    "p": 145
+   },
+   {
+    "n": 11,
+    "t": "La Protesta de los Príncipes",
+    "p": 154
+   },
+   {
+    "n": 12,
+    "t": "La Reforma en Francia",
+    "p": 165
+   },
+   {
+    "n": 13,
+    "t": "El Despertar de España",
+    "p": 186
+   },
+   {
+    "n": 14,
+    "t": "En los Países Bajos y Escandinavia",
+    "p": 203
+   },
+   {
+    "n": 15,
+    "t": "La Verdad Progresa en Inglaterra",
+    "p": 209
+   },
+   {
+    "n": 16,
+    "t": "La Biblia y la Revolución Francesa",
+    "p": 225
+   },
+   {
+    "n": 17,
+    "t": "América, Tierra de Libertad",
+    "p": 243
+   },
+   {
+    "n": 18,
+    "t": "Heraldos de una Nueva Era",
+    "p": 251
+   },
+   {
+    "n": 19,
+    "t": "Una Profecía Significativa",
+    "p": 265
+   },
+   {
+    "n": 20,
+    "t": "Luz a Través de las Tinieblas",
+    "p": 286
+   },
+   {
+    "n": 21,
+    "t": "Un Gran Despertar Religioso",
+    "p": 295
+   },
+   {
+    "n": 22,
+    "t": "Una Amonestación Rechazada",
+    "p": 310
+   },
+   {
+    "n": 23,
+    "t": "Profecías Cumplidas",
+    "p": 323
+   },
+   {
+    "n": 24,
+    "t": "El Templo de Dios",
+    "p": 337
+   },
+   {
+    "n": 25,
+    "t": "Jesucristo Nuestro Abogado",
+    "p": 348
+   },
+   {
+    "n": 26,
+    "t": "Los Estados Unidos en la Profecía",
+    "p": 355
+   },
+   {
+    "n": 27,
+    "t": "Una Obra de Reforma",
+    "p": 368
+   },
+   {
+    "n": 28,
+    "t": "La Verdadera Conversión es Esencial",
+    "p": 376
+   },
+   {
+    "n": 29,
+    "t": "El Juicio Investigador",
+    "p": 390
+   },
+   {
+    "n": 30,
+    "t": "El Origen del Mal y del Dolor",
+    "p": 400
+   },
+   {
+    "n": 31,
+    "t": "El Peor Enemigo del Hombre",
+    "p": 410
+   },
+   {
+    "n": 32,
+    "t": "¿Quiénes Son los Ángeles?",
+    "p": 415
+   },
+   {
+    "n": 33,
+    "t": "Las Asechanzas del Enemigo",
+    "p": 421
+   },
+   {
+    "n": 34,
+    "t": "El Misterio de la Inmortalidad",
+    "p": 431
+   },
+   {
+    "n": 35,
+    "t": "¿Pueden Hablarnos Nuestros Muertos?",
+    "p": 446
+   },
+   {
+    "n": 36,
+    "t": "La Libertad de Conciencia Amenazada",
+    "p": 455
+   },
+   {
+    "n": 37,
+    "t": "El Conflicto Inminente",
+    "p": 470
+   },
+   {
+    "n": 38,
+    "t": "Nuestra Única Salvaguardia",
+    "p": 479
+   },
+   {
+    "n": 39,
+    "t": "El Mensaje Final de Dios",
+    "p": 487
+   },
+   {
+    "n": 40,
+    "t": "El Tiempo de Angustia",
+    "p": 495
+   },
+   {
+    "n": 41,
+    "t": "La Liberación del Pueblo de Dios",
+    "p": 511
+   },
+   {
+    "n": 42,
+    "t": "La Desolación de la Tierra",
+    "p": 524
+   },
+   {
+    "n": 43,
+    "t": "El Fin del Conflicto",
+    "p": 531
    }
   ]
  }
@@ -66109,6 +66427,13 @@ const PARALELOS = [
        "ref": "Daniel 7:4",
        "t": "sus alas le fueron arrancadas",
        "f": "Bohr, <i>Daniel 1-10</i>, p. 17 y 122."
+      },
+      {
+       "tipo": "b",
+       "p": "juicio",
+       "ref": "Daniel 7:12",
+       "t": "También a las otras bestias les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo.",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       }
      ]
     }
@@ -66295,6 +66620,15 @@ const PARALELOS = [
        "ref": "Daniel 2:35",
        "t": "fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno",
        "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "juicio",
+       "ref": "Daniel 7:12",
+       "t": "También a las otras bestias les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo.",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       }
      ],
      "d8": [
@@ -66509,6 +66843,15 @@ const PARALELOS = [
        "ref": "Daniel 2:35",
        "t": "fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno",
        "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "juicio",
+       "ref": "Daniel 7:12",
+       "t": "También a las otras bestias les habían quitado su dominio, pero les había sido prolongada la vida hasta cierto tiempo.",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       }
      ]
     }
@@ -66727,6 +67070,15 @@ const PARALELOS = [
        "ref": "Daniel 2:35",
        "t": "fueron como tamo de las eras del verano, y se los llevó el viento sin que de ellos quedara rastro alguno",
        "f": "Bohr, <i>Daniel 1-10</i>, p. 63-64; CS 720-737."
+      }
+     ],
+     "d7": [
+      {
+       "tipo": "b",
+       "p": "juicio",
+       "ref": "Daniel 7:11",
+       "t": "mataron a la bestia, y su cuerpo fue destrozado y entregado para quemarlo en el fuego",
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       }
      ]
     }
@@ -67366,7 +67718,7 @@ const PARALELOS = [
        "tipo": "n",
        "p": "juicio",
        "t": "desde 1844 d.C.",
-       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       }
      ],
      "d8": [
@@ -67389,14 +67741,14 @@ const PARALELOS = [
        "p": "juicio",
        "ref": "Daniel 7:9",
        "t": "fueron puestos unos tronos y se sentó un Anciano de días",
-       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       },
       {
        "tipo": "b",
        "p": "juicio",
        "ref": "Daniel 7:10",
        "t": "El Juez se sentó y los libros fueron abiertos.",
-       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       }
      ]
     }
@@ -67509,7 +67861,7 @@ const PARALELOS = [
   "vacias": {
    "d2": ""
   },
-  "fuente": "CS 374-376, 470-477, 480-481, 533-536 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280, 288 y 313-320; Bohr, <i>15 principios</i> 2:306-307"
+  "fuente": "CS 374-376, 470-477, 480-481, 533-536 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280, 288, 305 y 313-320; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117; Bohr, <i>15 principios</i> 2:306-307"
  },
  {
   "id": "santuario",
@@ -67535,13 +67887,13 @@ const PARALELOS = [
        "p": "juicio",
        "ref": "Daniel 7:9",
        "t": "su trono, llama de fuego, y fuego ardiente las ruedas del mismo",
-       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       },
       {
        "tipo": "n",
        "p": "juicio",
        "t": "Su trono tiene ruedas de fuego: es un trono que se mueve, al lugar santísimo del santuario celestial.",
-       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280."
+       "f": "CS 477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 305; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117."
       }
      ]
     }
@@ -67608,7 +67960,7 @@ const PARALELOS = [
   "vacias": {
    "d2": ""
   },
-  "fuente": "CS 374-376, 470-477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280 y 313-320"
+  "fuente": "CS 374-376, 470-477 y 533-536; PE 55; Bohr, <i>Daniel 1-10</i>, p. 120-121, 276-280, 305 y 313-320; Smith, <i>Las profecías de Daniel</i>, p. 59-60; Maxwell, <i>El porvenir del mundo revelado</i>, p. 117"
  },
  {
   "id": "ley",
@@ -81701,6 +82053,15 @@ const REGLAS = (function () {
      Aventureros puede ir a cargo de un adulto; Conquistadores y Guías Mayores
      estudian con cuenta propia (y un conquistador sin cuenta, a cargo). */
   const CLUBES = ['aventureros', 'conquistadores', 'guias'];
+  /* v236: OTRAS OBRAS EN EL ALCANCE DE UNA CATEGORÍA (política Conexión Bíblica 2027 de
+     la Asociación del Alto Magdalena, 15-oct). Un concurso puede pedir capítulos de un
+     libro que la app todavía no trae como material (hoy «El conflicto de los siglos»).
+     La categoría lo dice en `obras`: { cs: [24, 25, …] }. Se guarda, se muestra y se
+     revisa contra el rango de la obra; no se estudia ni se pregunta hasta que el libro
+     esté en la app. Los títulos de los capítulos viven en fuente/conflicto.js. */
+  const OBRAS = {
+    cs: { nombre: 'El conflicto de los siglos', corto: 'CS', autor: 'Elena G. de White', de: 1, a: 43 },
+  };
   const SEG_POR_PREGUNTA = 72;
   const ID = /^[a-z][a-z0-9]{1,11}$/;
   const esFecha = s => /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + 'T00:00:00').getTime());
@@ -81711,7 +82072,7 @@ const REGLAS = (function () {
      escribir una persona. Lo que abre una etiqueta o cierra un atributo no
      entra, y cada texto tiene un largo máximo. */
   const PROHIBIDO = new RegExp('[<>"\'`\\\\\\u0000-\\u001F\\u007F]');
-  const LARGO = { nombre: 60, icono: 8, cuando: 40, que: 90, edad: 30, alcance: 90 };
+  const LARGO = { nombre: 60, icono: 8, cuando: 40, que: 90, edad: 30, alcance: 90, organiza: 60 };
   const textoMalo = (o, k) => {
     const v = o[k];
     if (typeof v !== 'string' || !v.trim()) return 'no tiene «' + k + '»';
@@ -81729,14 +82090,14 @@ const REGLAS = (function () {
     for (const f of fichas) {
       ACTIVIDADES[f.id] = { nombre: f.nombre, icono: f.icono, cuando: f.cuando, que: f.que,
         cats: f.categorias.map(c => c.id), tema: f.tema, tipo: (tipos[f.tema] || {}).tipo || '',
-        fecha: f.fecha || '' };
+        fecha: f.fecha || '', organiza: f.organiza || '' };
       for (const c of f.categorias) {
         /* v214: `sinPoliticas`: la categoría no tiene reglamento de concurso (Guías
            Mayores, Camilo 14-oct): ve todo el material y practica el examen sobre todo.
            Si la ficha no lo dice, lo dice el club. */
         CATS[c.id] = { act: f.id, nombre: c.nombre, edad: c.edad, n: c.n, techo: c.techo,
           sinCompletar: c.sinCompletar, sinVF: !!c.sinVF, tarjetas: c.tarjetas || 0, alcance: c.alcance, seg: c.segundos || SEG_POR_PREGUNTA,
-          rampa: !c.sinRampa, club: c.club || '',
+          rampa: !c.sinRampa, club: c.club || '', obras: c.obras || null,
           sinPoliticas: c.sinPoliticas !== undefined ? !!c.sinPoliticas : c.club === 'guias' };
         orden.push(c);
       }
@@ -81766,6 +82127,7 @@ const REGLAS = (function () {
       fichasVistas.add(f.id);
       for (const k of ['nombre', 'icono', 'cuando', 'que']) { const m = textoMalo(f, k); if (m) mal.push(de + ' ' + m); }
       if (typeof f.fecha !== 'string' || (f.fecha && !esFecha(f.fecha))) mal.push(de + ' tiene una fecha que no es AAAA-MM-DD ni vacía');
+      if (f.organiza !== undefined) { const m = textoMalo(f, 'organiza'); if (m) mal.push(de + ' ' + m); }
       const suyos = Object.prototype.hasOwnProperty.call(temas, f.tema) ? temas[f.tema] : null;
       const tipo = Object.prototype.hasOwnProperty.call(tipos, f.tema) ? tipos[f.tema] : null;
       if (!suyos) mal.push(de + ' nombra un tema que no existe: «' + f.tema + '»');
@@ -81793,6 +82155,15 @@ const REGLAS = (function () {
         if (new Set(c.estudia).size !== c.estudia.length) mal.push(dc + ' repite algo en «estudia»');
         if (suyos) for (const id of c.estudia) {
           if (!suyos.includes(id)) mal.push(dc + ' estudia «' + id + '», que no es del tema «' + f.tema + '»');
+        }
+        if (c.obras !== undefined) {
+          if (!esObjeto(c.obras) || !Object.keys(c.obras).length) mal.push(dc + ' trae «obras» que no es una lista de obras');
+          else for (const [o, caps] of Object.entries(c.obras)) {
+            const O = Object.prototype.hasOwnProperty.call(OBRAS, o) ? OBRAS[o] : null;
+            if (!O) { mal.push(dc + ' nombra una obra que no existe: «' + o + '»'); continue; }
+            if (!Array.isArray(caps) || !caps.length || caps.some(n => !Number.isInteger(n) || n < O.de || n > O.a)) mal.push(dc + ' trae capítulos de «' + O.nombre + '» fuera de ' + O.de + ' a ' + O.a);
+            else if (new Set(caps).size !== caps.length || caps.some((n, i) => i && n <= caps[i - 1])) mal.push(dc + ' trae capítulos de «' + O.nombre + '» repetidos o fuera de orden');
+          }
         }
         if (c.soloEstudio !== undefined && !Array.isArray(c.soloEstudio)) { mal.push(dc + ' trae un «soloEstudio» que no es una lista'); continue; }
         for (const id of c.soloEstudio || []) {
@@ -81868,13 +82239,17 @@ const REGLAS = (function () {
       if (c.tarjetas !== undefined) o.tarjetas = c.tarjetas;
       if (c.club !== undefined) o.club = c.club;
       if (c.sinPoliticas !== undefined) o.sinPoliticas = c.sinPoliticas;
+      if (c.obras !== undefined) o.obras = esObjeto(c.obras) ? Object.fromEntries(Object.entries(c.obras).map(([k, v]) => [k, Array.isArray(v) ? v.slice() : v])) : c.obras;
       o.alcance = c.alcance;
       o.estudia = Array.isArray(c.estudia) ? c.estudia.slice() : c.estudia;
       if (c.soloEstudio !== undefined) o.soloEstudio = Array.isArray(c.soloEstudio) ? c.soloEstudio.slice() : c.soloEstudio;
       return o;
     };
-    return { id: f.id, tema: f.tema, nombre: f.nombre, icono: f.icono, cuando: f.cuando,
-      fecha: f.fecha === undefined ? '' : f.fecha, que: f.que, categorias: f.categorias.map(cat) };
+    const o = { id: f.id, tema: f.tema, nombre: f.nombre, icono: f.icono, cuando: f.cuando,
+      fecha: f.fecha === undefined ? '' : f.fecha, que: f.que };
+    if (f.organiza !== undefined) o.organiza = f.organiza;
+    o.categorias = f.categorias.map(cat);
+    return o;
   }
 
   /* EL ESTUDIO SIN CONCURSO (v214)
@@ -81910,7 +82285,7 @@ const REGLAS = (function () {
     return { ACTS, CATS };
   }
 
-  return { TEMAS, TIPOS, CLUBES, deriva, revisa, sinUsar, junta, forma, libres, LIBRE };
+  return { TEMAS, TIPOS, CLUBES, OBRAS, deriva, revisa, sinUsar, junta, forma, libres, LIBRE };
 })();
 if (typeof module !== 'undefined' && module.exports) module.exports = REGLAS;
 /* Render del examen imprimible: una sola implementación para los dos
@@ -82400,6 +82775,7 @@ function bibVerHTML(t){
   return '<section class="bib-ver" aria-labelledby="bib-ver-t"><h3 class="bib-h" id="bib-ver-t">Para ver</h3><div class="bv-fila">'+tarjetas.join('')+'</div></section>';
 }
 function pintaBib(){
+  pintaBibTabs();
   const z=document.getElementById('bib-cab');if(!z)return;
   const t=bibTema(),propio=ACT().tema,nv=bibNivel(),libre=!!(CAT().libre||sinPoliticas(S.cat));
   const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
@@ -82410,7 +82786,7 @@ function pintaBib(){
     '<p class="bib-p">Lee, escucha y mira cualquier tema, a tu ritmo. No hace falta estar en un concurso.</p>'+
     '<div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div>'+
     '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
-    '<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div>'+
+    '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div>'+
     '<p class="bib-nota">'+(bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
       (BIB_NIVELES.find(n=>n[0]===nv)[1])+': '+BIB_NIVELES.find(n=>n[0]===nv)[2]+'. El nivel lo escoges tú; no depende de tu edad ni de tu categoría.')+'</p></div>'+
     bibVerHTML(t)+
@@ -82493,7 +82869,10 @@ function pintaConcursos(){
   const carta=a=>{const X=ACTIVIDADES[a],cs=CATS_DE_ACT(a),mia=a===ya;
     return '<li class="con-c'+(mia?' mia':'')+'"><div class="con-ct"><span class="con-ic">'+icoDe(X.icono)+'</span><div><b>'+esc(X.nombre)+'</b>'+
       '<small>'+esc(X.que)+' · '+esc(X.cuando)+'</small></div></div>'+
-      '<div class="con-cats">'+cs.map(k=>{const c=CATS[k];return '<span class="con-cat'+(k===S.cat?' on':'')+'"><b>'+esc(c.nombre)+'</b> '+esc(c.edad)+'</span>';}).join('')+'</div>'+
+      (X.organiza?'<div class="con-org">'+esc(X.organiza)+'</div>':'')+
+      /* v236: cada categoría con lo que entra, en pastillas como la imagen de la política 2027. */
+      (bibConAlcance(a)?'<div class="con-cbs">'+cs.map(k=>bibCatBloque(k)).join('')+'</div>'+bibObrasLista(a):
+      '<div class="con-cats">'+cs.map(k=>{const c=CATS[k];return '<span class="con-cat'+(k===S.cat?' on':'')+'"><b>'+esc(c.nombre)+'</b> '+esc(c.edad)+'</span>';}).join('')+'</div>')+
       '<div class="con-acc">'+(mia?'<span class="con-mia">'+IC('check')+' Te preparas para este</span>':
         '<button type="button" class="btn tono peq" onclick="bibPrepara(\''+a+'\')">Prepararme</button>')+
       '<button type="button" class="btn txt peq" onclick="bibPonTema(\''+X.tema+'\');ir(\'estudio\')">'+IC('libro')+' Su material</button></div></li>';};
@@ -82551,6 +82930,288 @@ function pintaEntradas(){
     '<span class="ent-tx"><b>Concursos</b><small>Tu categoría por edad, simulacros y exámenes.</small></span>'+IC('der','ent-fl')+'</button>'+
     (X?'<button type="button" class="ent-prox" onclick="ir(\'examen\')"><span class="ent-pr">'+esc(pr.r)+'</span><b>'+esc(X.nombre)+'</b>'+
       '<span class="ent-cu">'+icoDe(X.icono)+' '+esc(pr.pasado?'Fue el '+X.cuando:X.cuando)+'</span></button>':'')+'</div>';
+}
+
+
+/* ───────── v236: LAS PESTAÑAS DE LA BIBLIOTECA (navegación aprobada por Camilo, 15-oct) ─────────
+   Temas (la portada y los capítulos de siempre), Láminas (todas las láminas con imagen, de
+   todos los temas), Comparar, Paralelos y Últimos acontecimientos (los tres viven en el
+   repaso «…-comparar»: se abre y se baja a su sección, como en «Para ver»). La que se
+   enciende sale de lo que se ve: no hay un estado aparte que se pueda desincronizar. */
+var bibVista='temas', bibTabSel='';
+var BIB_TABS=[['temas','Temas','libro'],['laminas','Láminas','estatua'],['comparar','Comparar','comparar'],['paralelos','Paralelos','lista'],['ultimos','Últimos acontecimientos','reloj']];
+function bibTabActual(){
+  if(S.ultItem&&ES_COMPARAR.test(S.ultItem))return bibTabSel==='paralelos'||bibTabSel==='ultimos'?bibTabSel:'comparar';
+  if(!S.ultItem&&bibVista==='laminas')return 'laminas';
+  return 'temas';
+}
+function pintaBibTabs(){
+  const z=document.getElementById('bib-tabs');if(!z)return;
+  const hayCmp=MODULOS.some(x=>ES_COMPARAR.test(x.id)),hayLam=bibLams().length>0,act=bibTabActual();
+  const ve=k=>k==='laminas'?hayLam:k==='temas'?true:k==='paralelos'?hayCmp&&typeof PARALELOS!=='undefined'&&Array.isArray(PARALELOS)&&PARALELOS.length:k==='ultimos'?hayCmp&&typeof ULTIMOS!=='undefined'&&!!ULTIMOS:hayCmp;
+  z.innerHTML='<div class="bt-fila" role="tablist">'+BIB_TABS.filter(x=>ve(x[0])).map(([k,t,ic])=>
+    '<button type="button" role="tab" class="bt'+(k===act?' on':'')+'" aria-selected="'+(k===act)+'" onclick="bibTab(\''+k+'\')">'+IC(ic)+'<span>'+esc(t)+'</span></button>').join('')+'</div>';
+}
+function bibTab(k){
+  if(k==='temas'||k==='laminas'){bibVer(k);return;}
+  bibTabSel=k;bibVista='temas';
+  bibComparar(k==='paralelos'?'cmpPar':k==='ultimos'?'cmpUlt':'');
+  pintaBibTabs();
+}
+/* Todas las láminas con imagen, de todos los temas, en el orden del material. */
+var bibLams=()=>(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>LAMINAS[k]&&LAMINAS[k].titulo&&LAMINAS[k].dir&&buscaItem(k));
+/** Cambia la vista de la Biblioteca. `quieto`: viene de un enlace (no sube la página). */
+function bibVer(v,quieto){
+  bibVista=v==='laminas'?'laminas':'temas';bibTabSel='';
+  /* Ver la portada o las láminas es salir del capítulo abierto. */
+  if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
+  pintaBibVista();
+  if(!quieto)window.scrollTo(0,0);
+  lugarAnota();
+}
+function pintaBibVista(){
+  const lam=bibVista==='laminas'&&!S.ultItem,z=document.getElementById('bib-lams');
+  ['bib-cab','lista-caps'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=lam;});
+  if(z){z.hidden=!lam;if(lam)z.innerHTML=bibLamsHTML();}
+  pintaBibTabs();
+}
+function bibLamsHTML(){
+  const porTema={};bibLams().forEach(k=>{const t=bibTemaDe(k)||'otros';(porTema[t]=porTema[t]||[]).push(k);});
+  return '<div class="bib-hero bl-hero"><div class="bib-ant">'+IC('estatua')+' Láminas</div><h2 class="bib-tit">Las visiones, con imagen</h2>'+
+    '<p class="bib-p">Explora cada lámina por partes o preséntala en grande. Cada una lleva a su capítulo.</p></div>'+
+    Object.entries(porTema).map(([t,ks])=>'<h3 class="bib-h">'+esc(t==='otros'?'Otras':bibNombreTema(t))+'</h3><ul class="bl-l">'+ks.map(k=>{const L=LAMINAS[k],c=buscaItem(k);
+      return '<li class="bl-c"><button type="button" class="bl-abre" onclick="bibLamina(\''+k+'\')"><span class="bv-img">'+lamMiniHTML(k)+'</span>'+
+        '<span class="bv-tx"><small>'+esc(c.label)+'</small><b>'+esc(L.titulo)+'</b></span></button>'+
+        '<div class="bl-acc">'+meBoton('lam-'+k,true)+'<button type="button" class="btn txt peq" onclick="verCap(\''+k+'\')">'+IC('libro')+' El capítulo</button></div></li>';}).join('')+'</ul>').join('');
+}
+
+/* ───────── v236: LO QUE ENTRA EN CADA CATEGORÍA, EN PASTILLAS ─────────
+   Para la política 2027 (Asociación del Alto Magdalena): por categoría, los capítulos de
+   cada libro de la Biblia (RV1995), los de Profetas y Reyes si los hay, y los de otras obras
+   que la app todavía no trae (`obras`, hoy «El conflicto de los siglos»). Todo sale de la
+   ficha: lo que estudia la categoría (la marca `cats` de cada capítulo) y su `obras`. */
+/* Tramos seguidos: [1,2,3,5] → [[1,3],[5,5]]. */
+function bibTramos(ns){
+  const o=[];let a=null,b=null;
+  ns.slice().sort((x,y)=>x-y).forEach(n=>{if(a!==null&&n===b+1){b=n;return;}if(a!==null)o.push([a,b]);a=b=n;});
+  if(a!==null)o.push([a,b]);
+  /* Como la imagen de la política: dos seguidos van sueltos (21, 22); de tres en adelante, en tramo (24 – 26). */
+  return o.flatMap(([x,y])=>y===x+1?[[x,x],[y,y]]:[[x,y]]);
+}
+/** Las filas de alcance de una categoría: [{t: rótulo, tramos: [[a,b]…], obra?}]. */
+function bibAlcanceDe(k){
+  const c=CATS[k];if(!c||c.libre)return [];
+  const ids=[...CAPS,...MODULOS].filter(x=>(x.cats||[]).includes(k)).map(x=>x.id),filas=[];
+  const libros={};
+  ids.forEach(id=>{const l=libroCid(id);if(l){(libros[l.nombre]=libros[l.nombre]||[]).push(+l.n);return;}
+    const m=/^pr(\d+)$/.exec(id);if(m)(libros['Profetas y Reyes']=libros['Profetas y Reyes']||[]).push(+m[1]);});
+  Object.entries(libros).forEach(([n,ns])=>filas.push({t:n+(n==='Profetas y Reyes'?'':' · Reina Valera 1995'),tramos:bibTramos(ns)}));
+  Object.entries(c.obras||{}).forEach(([o,ns])=>{const O=REGLAS.OBRAS[o];if(O)filas.push({t:O.nombre,tramos:bibTramos(ns),obra:o});});
+  return filas;
+}
+/* Solo los concursos de libro con alguna obra o algún capítulo de la Biblia. */
+var bibConAlcance=a=>ACTIVIDADES[a]&&ACTIVIDADES[a].tipo==='libro'&&CATS_DE_ACT(a).some(k=>(CATS[k].obras&&Object.keys(CATS[k].obras).length));
+var bibTituloObra=(o,n)=>{const L=(typeof OBRAS_CAPS!=='undefined'&&OBRAS_CAPS[o]&&OBRAS_CAPS[o].caps)||[];const x=L.find(c=>c.n===n);return x?x.t:'';};
+function bibChips(f){
+  return '<div class="ac-chips">'+f.tramos.map(([a,b])=>{
+    const tit=f.obra?(a===b?a+' · '+bibTituloObra(f.obra,a):Array.from({length:b-a+1},(_,i)=>(a+i)+' · '+bibTituloObra(f.obra,a+i)).join('\n')):'';
+    return '<span class="ac-chip"'+(tit?' title="'+esc(tit)+'"':'')+'>'+(a===b?a:a+' – '+b)+'</span>';}).join('')+'</div>';
+}
+/** El alcance de una categoría en filas de pastillas. '' si no hay qué mostrar así. */
+function bibAlcanceHTML(k){
+  const F=bibAlcanceDe(k);if(!F.length)return '';
+  return '<div class="ac">'+F.map(f=>'<div class="ac-f"><div class="ac-t">'+esc(f.t)+' · capítulos'+
+    (f.obra?' <span class="ac-falta">todavía no está en la app</span>':'')+'</div>'+bibChips(f)+'</div>').join('')+'</div>';
+}
+var CLUB_TONO={guias:'ac-guias',conquistadores:'ac-conq',aventureros:'ac-avent'};
+function bibCatBloque(k){
+  const c=CATS[k];
+  return '<div class="con-cb '+(CLUB_TONO[c.club]||'')+(k===S.cat?' on':'')+'"><div class="con-cbh"><b>'+esc(c.nombre)+'</b><span>'+esc(c.edad)+'</span>'+
+    (k===S.cat?'<span class="con-cbtu">'+IC('check')+' Tu categoría</span>':'')+'</div>'+bibAlcanceHTML(k)+'</div>';
+}
+/* Debajo de la carta: los títulos de los capítulos de cada obra que pide el concurso. */
+function bibObrasLista(a){
+  const por={};CATS_DE_ACT(a).forEach(k=>Object.entries(CATS[k].obras||{}).forEach(([o,ns])=>{por[o]=por[o]||new Set();ns.forEach(n=>por[o].add(n));}));
+  return Object.entries(por).map(([o,set])=>{const O=REGLAS.OBRAS[o],ed=typeof OBRAS_CAPS!=='undefined'&&OBRAS_CAPS[o]?OBRAS_CAPS[o].edicion:'';
+    return '<details class="con-obra"><summary>'+IC('lista')+' Los capítulos de <i>'+esc(O.nombre)+'</i></summary><ol class="con-ol">'+
+      [...set].sort((x,y)=>x-y).map(n=>'<li><b>'+n+'</b> '+esc(bibTituloObra(o,n))+'</li>').join('')+'</ol>'+
+      '<p class="nota">'+esc(O.autor)+(ed?', edición '+esc(ed):'')+'. Este libro todavía no está como material de estudio en la app: lee estos capítulos en el libro. No entran al examen de práctica.</p></details>';}).join('');
+}
+/* ───────── v236: «MI ESTUDIO», LA LISTA PERSONAL (Camilo, 15-oct) ─────────
+   QUÉ ES
+   Una lista de temas que cada quien se aparta desde la Biblioteca con «Agregar a mi
+   estudio»: un tema entero (Daniel, Apocalipsis…), un capítulo o repaso, o una
+   lámina. En la pestaña «Mi estudio» se ven juntos con su avance.
+   EL AVANCE NO ES NUEVO
+   Sale de lo que la app ya guarda: Leído (S.prog), Practicado y Dominado (nivelesDe,
+   v205). De un tema entero se cuentan sus capítulos leídos. No se inventa ninguna
+   medida.
+   DÓNDE SE GUARDA
+   - Cada llave lleva [momento, 1|0]: agregada o quitada, y cuándo. Así dos aparatos
+     se funden sin revivir lo que alguien quitó (gana lo más reciente).
+   - En este aparato (localStorage, siempre con try/catch: puede no haber).
+   - En la cuenta, si el servidor sabe quién es: con su código, con la clave del
+     director o, dentro de Jóvenes, con la sesión de esa app (la puerta lo dice). El
+     aparato manda su lista y el servidor la funde y la devuelve (/api/mi-estudio).
+     Al entrar, lo que se apartó sin cuenta pasa a la cuenta y deja de ser del aparato.
+   - Solo su dueño la ve. No hay lista de nadie en ningún otro lugar.
+   LAS LLAVES
+   Las mismas de la Tertulia de Jóvenes y de temas.json: `cap-<id>`, `lam-<id>`, y
+   `tema-<tema>` para un tema entero. */
+
+var ME_K_APARATO=null, ME_K_CUENTA=null;
+/* La llave sigue a la de las fichas (CLAVE): dentro de Jóvenes, una por persona. */
+function meK(cual){const b=(typeof CLAVE==='string'?CLAVE:'conexion-biblica-v4')+'-mi-estudio';return cual==='cuenta'?b+'-cuenta':b;}
+var meModo='aparato', meSabe=false, meEnvio=0, meOcupado=false, mePend=false;
+/* Antes de que el servidor conteste, se usa lo último que se supo: si este aparato tiene
+   la lista de una cuenta, es que había cuenta. */
+function meModoAhora(){if(meSabe)return meModo;try{return Object.keys(meLeeMapa(meK('cuenta'))).length?'cuenta':'aparato';}catch(e){return 'aparato';}}
+var meLeeMapa=k=>{try{const x=JSON.parse(localStorage.getItem(k)||'null');return meLimpio(x);}catch(e){return {};}};
+var meGuardaMapa=(k,m)=>{try{if(m&&Object.keys(m).length)localStorage.setItem(k,JSON.stringify(m));else localStorage.removeItem(k);}catch(e){}};
+var ME_RE=/^(cap|lam|tema)-[a-z0-9-]{1,24}$/;
+function meLimpio(x){
+  const o={};if(!x||typeof x!=='object'||Array.isArray(x))return o;
+  for(const [k,v] of Object.entries(x)){if(!ME_RE.test(k)||!Array.isArray(v))continue;const t=Math.round(Number(v[0]));if(!Number.isFinite(t)||t<1.6e12)continue;o[k]=[t,v[1]===1||v[1]===true?1:0];}
+  return o;
+}
+/* La misma regla que el servidor, para ver la lista sin esperar la red. */
+function meFunde(a,b){const o=Object.assign({},a);for(const [k,v] of Object.entries(b||{})){const x=o[k];if(!x||v[0]>x[0]||(v[0]===x[0]&&v[1]>x[1]))o[k]=v;}return o;}
+/** El mapa que se ve: el de la cuenta si hay cuenta, el del aparato si no. */
+function meMapa(){return meModoAhora()==='cuenta'?meLeeMapa(meK('cuenta')):meLeeMapa(meK('aparato'));}
+/** Las llaves en la lista, de la más reciente a la más vieja, solo las que existen. */
+function meLista(){const m=meMapa();return Object.keys(m).filter(k=>m[k][1]===1&&meExiste(k)).sort((a,b)=>m[b][0]-m[a][0]);}
+var meEsta=k=>{const v=meMapa()[k];return !!(v&&v[1]===1);};
+function meExiste(k){
+  const m=/^(cap|lam|tema)-(.+)$/.exec(k);if(!m)return false;
+  if(m[1]==='cap')return !!buscaItem(m[2]);
+  if(m[1]==='lam')return typeof LAMINAS!=='undefined'&&!!(LAMINAS[m[2]]&&LAMINAS[m[2]].dir)&&!!buscaItem(m[2]);
+  return !!(IDS_DE_TEMA[m[2]]&&IDS_DE_TEMA[m[2]].length);
+}
+/** Qué es una llave: {tipo, id, titulo, sub, tema}. */
+function meQue(k){
+  const m=/^(cap|lam|tema)-(.+)$/.exec(k);if(!m||!meExiste(k))return null;
+  if(m[1]==='tema')return {tipo:'tema',id:m[2],titulo:bibNombreTema(m[2]),sub:'Tema completo',tema:m[2]};
+  const c=buscaItem(m[2]);
+  if(m[1]==='lam')return {tipo:'lam',id:m[2],titulo:c.label,sub:LAMINAS[m[2]].titulo,tema:bibTemaDe(m[2])};
+  return {tipo:c.prof?'prof':CAPS.some(x=>x.id===c.id)?'cap':'rep',id:m[2],titulo:c.label,sub:c.sub||'',tema:bibTemaDe(m[2])||c.tema||''};
+}
+
+/* ── El botón de agregar y quitar (una pieza, un armado) ── */
+function meBoton(k,chico){
+  if(!meExiste(k))return '';
+  const on=meEsta(k);
+  return '<button type="button" class="me-tg'+(on?' on':'')+(chico?' chico':'')+'" data-me="'+k+'" aria-pressed="'+on+'" onclick="meToca(\''+k+'\')">'+meBotonDentro(on)+'</button>';
+}
+var meBotonDentro=on=>on?IC('marca','me-ico')+'<span class="me-tx">En mi estudio</span><span class="me-q">Quitar</span>':IC('mas','me-ico')+'<span class="me-tx">Agregar a mi estudio</span>';
+function meToca(k){
+  if(!ME_RE.test(k)||!meExiste(k))return;
+  const on=!meEsta(k),kk=meK(meModoAhora()),m=meLeeMapa(kk);
+  m[k]=[Math.max(Date.now(),((m[k]||[])[0]||0)+1),on?1:0];meGuardaMapa(kk,m);
+  meRepintaBotones(k);
+  if(pantallaAct==='miestudio')pintaMiEstudio();
+  pintaSenales();
+  if(typeof aviso==='function')aviso(on?'Agregado a Mi estudio':'Quitado de Mi estudio');
+  if(meModoAhora()==='cuenta')meSube();
+}
+function meRepintaBotones(k){
+  const on=meEsta(k);
+  document.querySelectorAll('[data-me="'+k+'"]').forEach(b=>{b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));b.innerHTML=meBotonDentro(on);});
+}
+
+/* ── Con la cuenta ── */
+/* Pregunta y funde: lo del aparato sin cuenta + lo de la cuenta en este aparato + lo del
+   servidor. Si el servidor no sabe quién es (401), la lista se queda en el aparato. */
+async function meSincroniza(){
+  if(meOcupado){mePend=true;return;}
+  meOcupado=true;
+  try{
+    const local=meFunde(meLeeMapa(meK('aparato')),meLeeMapa(meK('cuenta')));
+    const d=await srvFetch('/mi-estudio',{method:'POST',body:JSON.stringify({lista:local})});
+    meGuardaMapa(meK('cuenta'),meLimpio(d&&d.lista));
+    /* Lo apartado sin cuenta ya es de la cuenta: deja de ser del aparato. */
+    meGuardaMapa(meK('aparato'),{});
+    meModo='cuenta';meSabe=true;
+  }catch(e){
+    if(e&&e.status===401){meModo='aparato';meSabe=true;meGuardaMapa(meK('cuenta'),{});}
+    /* Sin red: se queda como estaba y vuelve a intentar la próxima vez. */
+  }finally{meOcupado=false;}
+  if(pantallaAct==='miestudio')pintaMiEstudio();
+  document.querySelectorAll('[data-me]').forEach(b=>meRepintaBotones(b.getAttribute('data-me')));
+  if(mePend){mePend=false;meSincroniza();}
+}
+/* Al tocar, se sube un momento después (varios toques seguidos, una sola subida). */
+function meSube(){clearTimeout(meEnvio);meEnvio=setTimeout(()=>{meSincroniza();},700);}
+/* Al salir de la cuenta, la lista de la cuenta deja este aparato. */
+function meSale(){meModo='aparato';meSabe=true;meGuardaMapa(meK('cuenta'),{});if(pantallaAct==='miestudio')pintaMiEstudio();}
+
+/* ── El avance de cada uno, con lo que ya existe ── */
+function meAvance(q){
+  if(q.tipo==='tema'){
+    const ids=IDS_DE_TEMA[q.id]||[],caps=CAPS.filter(c=>ids.includes(c.id));
+    const leidos=caps.filter(c=>(S.prog[c.id]||0)>=100).length;
+    const pct=caps.length?Math.round(caps.reduce((a,c)=>a+Math.min(100,S.prog[c.id]||0),0)/caps.length):0;
+    return '<div class="me-av"><div class="me-av-t"><b>'+leidos+'</b> de '+caps.length+' capítulos leídos</div>'+
+      '<div class="nv3 fino" aria-label="Leído '+pct+'%"><div class="nv3-b nv3-l"><span class="nv3-pista"><i style="width:'+pct+'%"></i></span></div></div></div>';
+  }
+  const n=nivelesDe(q.id);
+  return '<div class="me-av">'+barrasNivel(n)+'</div>';
+}
+function meAbre(k){
+  const q=meQue(k);if(!q)return;
+  if(q.tipo==='tema'){bibPonTema(q.id);ir('estudio');return;}
+  if(q.tipo==='lam'){bibLamina(q.id);return;}
+  verCap(q.id);
+}
+
+/* ── La pantalla ── */
+var ME_TIPO={tema:'Tema',cap:'Capítulo',rep:'Repaso',prof:'Para profundizar',lam:'Lámina'};
+function pintaMiEstudio(){
+  const z=document.getElementById('me-cuerpo');if(!z)return;
+  const L=meLista().map(k=>[k,meQue(k)]).filter(x=>x[1]);
+  const estado=meModoAhora()==='cuenta'?IC('check')+' Se guarda en tu cuenta: la ves en cualquier aparato donde entres.':
+    IC('persona')+' Se guarda en este aparato. Si entras con tu código, pasa a tu cuenta.';
+  const fila=([k,q])=>'<li class="me-f"><button type="button" class="me-abre" onclick="meAbre(\''+k+'\')">'+
+    '<span class="me-fic">'+(q.tipo==='lam'?lamMiniHTML(q.id):IC(q.tipo==='tema'?'libro':q.tipo==='prof'?'brujula':q.tipo==='rep'?'lupa':'lista'))+'</span>'+
+    '<span class="me-ftx"><small>'+esc(ME_TIPO[q.tipo])+(q.tipo!=='tema'&&q.tema?' · '+esc(bibNombreTema(q.tema)):'')+'</small><b>'+esc(q.titulo)+'</b>'+(q.sub?'<span>'+esc(q.sub)+'</span>':'')+'</span>'+IC('der','me-fl')+'</button>'+
+    meAvance(q)+'<div class="me-facc">'+meBoton(k,true)+'</div></li>';
+  z.innerHTML='<div class="me-hero"><div class="bib-ant">'+IC('marca')+' Mi estudio</div>'+
+    '<h2 class="bib-tit">Lo que te apartaste para estudiar</h2>'+
+    '<p class="bib-p">Agrega temas, capítulos y láminas desde la Biblioteca. Aquí ves tu avance en cada uno.</p>'+
+    '<p class="me-donde">'+estado+'</p></div>'+
+    (L.length?'<ul class="me-l">'+L.map(fila).join('')+'</ul>':
+      '<div class="me-vacio"><span class="me-vic">'+IC('marca')+'</span><b>Todavía no tienes nada aquí</b>'+
+      '<p>En la Biblioteca, cada tema, capítulo y lámina tiene «Agregar a mi estudio».</p>'+
+      '<button type="button" class="btn ver" onclick="ir(\'estudio\')">'+IC('libro')+' Ir a la Biblioteca</button></div>')+
+    '<h3 class="bib-h">Para repasar</h3><div class="me-mas">'+
+    '<button type="button" class="me-ir" onclick="ir(\'tarjetas\')"><span class="me-iric">'+IC('tarjetas')+'</span><span><b>Practicar</b><small>Tarjetas y juegos del día</small></span><span class="nv" id="nv-tj2" hidden></span>'+IC('der','me-fl')+'</button>'+
+    '<button type="button" class="me-ir" onclick="ir(\'logros\')"><span class="me-iric">'+IC('trofeo')+'</span><span><b>Logros</b><small>Tu racha, insignias y exámenes</small></span>'+IC('der','me-fl')+'</button></div>';
+  pintaSenales();
+}
+
+/* ── Ir a un tema desde afuera (Jóvenes: «Estudia el tema de hoy») ──
+   Recibe una llave (`lam-d7`, `cap-d8`, `cap-cr20`, `tema-apocalipsis`) o un camino de
+   la dirección («biblioteca/d7/lamina/d7/explorar»). No recarga nada: lleva al lugar
+   igual que un enlace (lugarAplica). Devuelve si lo encontró. */
+function irATema(x){
+  x=String(x||'').trim();
+  const m=/^(cap|lam|tema)-([a-z0-9-]{1,24})$/.exec(x);
+  let camino=x;
+  if(m){
+    if(!meExiste(x))return false;
+    if(m[1]==='tema'){cierraCapas();bibPonTema(m[2]);ir('estudio');lugarAnota();return true;}
+    camino=m[1]==='lam'?'biblioteca/'+m[2]+'/lamina/'+m[2]+'/explorar':'biblioteca/'+m[2];
+  }
+  const o=lugarParte(camino);
+  if(!o.pant||(o.item&&!buscaItem(o.item)))return false;
+  cierraCapas();
+  try{lugarAplica(camino,false);}catch(e){console.error(e);}
+  lugarAnota();
+  return true;
+}
+/* Lo que tapa la pantalla (una lámina abierta, la hoja del versículo, la lectura) se cierra antes de ir. */
+function cierraCapas(){
+  try{const l=document.getElementById('lam');if(l&&!l.hidden&&typeof lamCierra==='function')lamCierra();}catch(e){}
+  try{if(typeof cierraHoja==='function')cierraHoja();}catch(e){}
 }
 /* ───────── estado ───────── */
 /* ───────── categorías ─────────
@@ -83058,6 +83719,7 @@ function lamAbre(cid,modo){
     (modo==='presentar'&&lamPuedeTodo()?'<button type="button" class="btn txt lam-full" onclick="lamPantalla()">'+IC('expandir')+' Pantalla completa</button>':'')+
     (modo==='presentar'?'<button type="button" class="btn txt lam-txt" id="lamTxt" aria-pressed="false" onclick="lamTexto()">'+IC('ojo')+' Ocultar texto</button>':'')+
     (modo==='presentar'&&L.comparar?'<button type="button" class="btn txt lam-cond2" aria-pressed="'+lamConD2+'" onclick="lamConD2Cambia()">'+IC('estatua')+' '+esc(L.conTxt||'Con Daniel 2')+'</button>':'')+
+    (modo==='presentar'?'':meBoton('lam-'+cid,true))+
     '<button type="button" class="btn txt lam-cerrar" onclick="lamCierra()">'+IC('x')+' Cerrar</button></div></div>'+
     (modo==='presentar'?'':'<div class="lam-pasos">'+hist+'</div>')+
     lamEscena()+
@@ -84400,7 +85062,8 @@ function lamVista(id,sub,anima){
   else if(C&&id===C.caenEn)lamMomento(anima);
   else if(pa&&pa.caja){
     /* v210: en «Los libros fueron abiertos» la cámara sube primero al trono (el Juez se sienta) y después baja a los libros. */
-    const J=p.anim,ult=sub===p.pasos.length-1;
+    /* v236: «los libros» es el cuarto paso (después vienen 7:11 y 7:12). */
+    const J=p.anim,ult=sub===3;
     if(J&&ult&&anima&&!lamQuieto()){lamAcercaImg(p.img,J.camara[1],true,1500);lamT(()=>lamAcercaImg(p.img,pa.caja,true,1900),2300);}
     else lamAcercaImg(p.img,pa.caja,true);
     if(J)lamJuicio(sub,anima);}
@@ -84582,7 +85245,9 @@ function lamLuz(c){
 /* Un bucle mientras la vista no cambie: la luz que respira, el fuego, las chispas. */
 function lamBucle(fn){const yo=lamAnim;if(lamQuieto()){fn(0);return;}const t0=performance.now(),f=t=>{if(yo!==lamAnim)return;fn((t-t0)/1000);requestAnimationFrame(f);};requestAnimationFrame(f);}
 const lamJFin=[{velo:.52,ray:0,tr:.3,trR:150,se:0,rio:0,ch:0,lib:0},{velo:.18,ray:1,tr:.78,trR:200,se:.6,rio:0,ch:0,lib:0},
-  {velo:.1,ray:.85,tr:.7,trR:200,se:.55,rio:.62,ch:1,lib:0},{velo:.46,ray:.7,tr:.75,trR:210,se:.6,rio:.5,ch:.75,lib:.9}];
+  {velo:.1,ray:.85,tr:.7,trR:200,se:.55,rio:.62,ch:1,lib:0},{velo:.46,ray:.7,tr:.75,trR:210,se:.6,rio:.5,ch:.75,lib:.9},
+  /* v236: 7:11 («entregado para quemarlo en el fuego»): el río de fuego en pleno; 7:12, se aquieta. */
+  {velo:.34,ray:.55,tr:.7,trR:200,se:.55,rio:1,ch:.35,lib:.35},{velo:.4,ray:.6,tr:.72,trR:205,se:.58,rio:.6,ch:.5,lib:.5}];
 function lamJuicio(j,anima){
   const p=lamParte('juicio'),A=p&&p.anim,z=lamZ(),g=z&&z.querySelector('.lam-capa-g');if(!A||!g||j==null)return;
   const q=!anima||lamQuieto(),oro=lamLuz('255,212,128'),blanca=lamLuz('255,249,228'),fuego=lamLuz('255,128,36');
@@ -84600,6 +85265,7 @@ function lamJuicio(j,anima){
   const $=s=>[...g.querySelectorAll(s)],velo=g.querySelector('.lam-j-velo'),ray=g.querySelector('.lam-j-rayos'),tro=g.querySelector('.lam-j-trono'),
     sie=g.querySelector('.lam-j-sienta'),rios=$('.lam-j-rio'),trs=$('.lam-j-tr'),libs=$('.lam-j-lib'),chg=g.querySelector('.lam-j-ch'),chs=[...chg.children];
   /* El estado: de dónde sale este paso (el final del anterior) y a dónde llega. */
+  j=Math.min(j,lamJFin.length-1);
   const fin=lamJFin[j],st=Object.assign({},q||j===0?(q?fin:{velo:.78,ray:0,tr:0,trR:200,se:0,rio:0,ch:0,lib:0}):lamJFin[j-1]),
     gp=trs.map(()=>q||j>0?1:0);let riop=q||j>2?1:0,late=0;
   const pinta=t=>{
@@ -84622,6 +85288,7 @@ function lamJuicio(j,anima){
     if(j===0){hacia(2600,a,fin);trs.forEach((e,i)=>lamT(()=>lamTween(900,k=>{gp[i]=lamSale(k);}),500+i*230));}
     else if(j===1)hacia(2400,a,fin);
     else if(j===2){hacia(2200,a,fin);lamTween(3200,k=>{riop=k;});}
+    else if(j>3){riop=1;hacia(2000,a,fin);}
     else{
       /* «El Juez se sentó»: la luz late una vez; después la cámara baja a los libros. */
       hacia(1200,a,{velo:.2,ray:.9,tr:.8,trR:200,se:.6,rio:.5,ch:.75,lib:0});riop=1;
@@ -85471,7 +86138,9 @@ const actYCat=(k,modo)=>{
    («Apocalipsis · Padres y consejeros»), y van en el orden de las actividades. */
 const actCorta=a=>{const x=ACTIVIDADES[a];if(!x)return String(a||'');
   const n=String(x.nombre||'');const m=/^Conexión Bíblica:\s*(.+)$/.exec(n);
-  return m?m[1]:(x.tema==='daniel'?'Daniel':n);};
+  /* v236: «Conexión Bíblica 2027» no dice el libro: se nombra por su tema (Apocalipsis). */
+  const T=REGLAS.TEMAS[x.tema];
+  return m?m[1]:(x.tema==='daniel'?'Daniel':T&&T.tipo==='libro'?T.corto:n);};
 const catCorta=k=>CATS[k]?actCorta(CATS[k].act)+' · '+CATS[k].nombre:String(k);
 const catLarga=k=>CATS[k]
   ? actYCat(k)+' '+CATS[k].edad
@@ -85560,6 +86229,8 @@ function pintaApariencia(){
 
 const diaHoy=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
 
+/* v236: categorías que salieron de un concurso, y a dónde pasa la ficha que las tenía. */
+const CAT_SALIO={apme:'libre-apocalipsis',appa:'libre-apocalipsis'};
 function normalizar(x){
   const s=JSON.parse(JSON.stringify(BASE));
   CAPS.forEach(c=>s.prog[c.id]=0);
@@ -85573,6 +86244,10 @@ function normalizar(x){
   if(x.aCargo===true)s.aCargo=true;
   if(typeof x.tutor==='string')s.tutor=x.tutor.slice(0,60);
   if(esCat(x.cat))s.cat=x.cat;
+  /* v236: la política 2027 dejó Apocalipsis en tres categorías. Una ficha de este aparato
+     que estaba en Menores o Padres de Apocalipsis sigue en Apocalipsis, sin concurso
+     (Estudio libre): no cae en Daniel ni pierde su avance. */
+  else if(CAT_SALIO[x.cat]&&esCat(CAT_SALIO[x.cat]))s.cat=CAT_SALIO[x.cat];
   /* v214: qué ve de entrada: «concurso» (lo que pide su reglamento) o «todo». Sin
      dato, lo dice la categoría (verDe): una ficha vieja ve lo mismo que antes. */
   if(x.ver==='todo'||x.ver==='concurso')s.ver=x.ver;
@@ -86317,7 +86992,9 @@ function nivelRecomendado(){
 }
 
 /* ───────── navegación ───────── */
-const TABS={inicio:0,estudio:1,tarjetas:2,examen:3,logros:4};
+/* v236 (Camilo aprobó la navegación, 15-oct 10:28 p. m.): cuatro entradas. Practicar y
+   Logros siguen siendo pantallas con su dirección, y encienden «Mi estudio», donde viven. */
+const TABS={inicio:0,estudio:1,examen:2,miestudio:3,tarjetas:3,logros:3};
 /* 'bienvenida' y 'ayuda' no están en TABS: son pantallas sin pestaña. */
 
 /* `quedarse`: no sube la página al principio. Lo pide verCap(), que después
@@ -86363,6 +87040,7 @@ function ir(id,quedarse){
   if(id==='tarjetas')pintaTarjetas();
   if(id==='examen')pintaExInicio();
   if(id==='logros')pintaLogros();
+  if(id==='miestudio')pintaMiEstudio();
   if(id==='ayuda')pintaAyuda();
   if(id==='revisor')pintaRevisor();
   if(id==='historial')pintaHistorial();
@@ -86665,7 +87343,9 @@ function pintaPrep(){
     '<p class="nota">El material es el mismo para todos. La categoría pone la dificultad por edad y las reglas del examen.</p>'+
     '<div class="cat-fila">'+catsValidas(prepAct).map(k=>{const c=CATS[k];
       return '<button type="button" class="cat-btn'+(k===S.cat?' on':'')+'" aria-pressed="'+(k===S.cat)+'" onclick="prepElige(\''+k+'\')">'+(c.club?'<div class="cc">'+esc(CLUB_NOMBRE[c.club]||'')+'</div>':'')+
-      '<div class="cn">'+esc(c.nombre)+'</div><div class="cd"><span class="prep-edad">'+esc(c.edad)+'</span><br>'+(c.sinPoliticas?'Sin reglamento de concurso':esc(c.alcance))+'</div>'+
+      '<div class="cn">'+esc(c.nombre)+'</div><div class="cd"><span class="prep-edad">'+esc(c.edad)+'</span><br>'+(c.sinPoliticas?'Sin reglamento de concurso':
+        /* v236: con otra obra en el alcance (política 2027), en pastillas por libro. */
+        (c.obras&&typeof bibAlcanceHTML==='function'&&bibAlcanceHTML(k))||esc(c.alcance))+'</div>'+
       (k===S.cat?'<div class="prep-actual">'+IC('check')+' Tu preparación actual</div>':'')+'</button>';}).join('')+'</div>'+
     '<button type="button" class="alu-op" onclick="prepElige(\''+libreDe(A.tema)+'\')"><b>Sin concurso</b><span>Estudiar todo el material de '+esc(ACTIVIDADES[libreDe(A.tema)].nombre)+', sin categoría</span></button>'+
     '<button type="button" class="btn txt peq" onclick="prepVolver()">'+IC('izq')+' Volver</button></div>';
@@ -86977,6 +87657,8 @@ function pintaSenales(){
        sesión de Practicar: con los dos se veía el mismo 15 en dos pestañas. */
     if(est){est.hidden=true; est.textContent=pct+'%';}
     senal('nv-tj',Math.min(tocanHoy().length,topeSesion()));
+    /* v236: el mismo número en «Practicar», dentro de Mi estudio. */
+    if(document.getElementById('nv-tj2'))senal('nv-tj2',Math.min(tocanHoy().length,topeSesion()));
     const lg=document.getElementById('nv-lg'); if(lg)lg.hidden=true;
     /* El punto verde del examen es lo único que NO sale del progreso propio:
        sale del servidor, y solo si la evaluación está abierta y sin hacer. */
@@ -87048,7 +87730,7 @@ function pintaFiltro(pant){
   /* v214: con reglamento, el primer corte es «Lo del concurso» o «Todo el material»;
      el de capítulos (solo en los libros) va debajo. */
   const conc=hayConcurso(),capitulos=conFiltro()&&caps.length>1;
-  const ver=TABS[pant]!==undefined&&(capitulos||conc)&&!(pant==='estudio'&&typeof bibAjeno==='function'&&bibAjeno());
+  const ver=TABS[pant]!==undefined&&pant!=='miestudio'&&(capitulos||conc)&&!(pant==='estudio'&&typeof bibAjeno==='function'&&bibAjeno());
   z.hidden=!ver;
   if(!ver)return;
   const f=capitulos?idsFiltro():null;
@@ -87220,6 +87902,8 @@ function pintaCaps(){
     (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'')+
     /* v235: cada tema termina con su bibliografía, armada sola (biblioteca-app.js). */
     (typeof bibPieHTML==='function'?bibPieHTML():'');
+  /* v236: la vista de la Biblioteca (Temas o Láminas) y sus pestañas. */
+  if(typeof pintaBibVista==='function')pintaBibVista();
 }
 
 /* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
@@ -88158,6 +88842,8 @@ function verCap(id,quieto){
   /* v235: la estantería de la Biblioteca sigue al capítulo, y el nivel de lectura
      escogido pone la pestaña de entrada (biblioteca-app.js). */
   if(typeof bibSigue==='function'){bibSigue(id);bibNivelAntes();}
+  /* v236: abrir un capítulo es la vista de Temas (o Comparar, si es el repaso de comparar). */
+  if(typeof bibVista!=='undefined'){bibVista='temas';if(!ES_COMPARAR.test(id))bibTabSel='';}
   /* v161: ¿desde dónde se llega? Si ya había un capítulo abierto en esta
      pantalla (Siguiente, Anterior, «Ya lo estudié», otra tarjeta), la página
      se pone de una en el capítulo nuevo. Si se viene de la rejilla sin nada
@@ -88191,6 +88877,8 @@ function verCap(id,quieto){
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
     navCap(id)+
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
+    /* v236: «Agregar a mi estudio» (fuente/mi-estudio.js). */
+    '<div class="cap-me">'+meBoton('cap-'+id)+'</div>'+
     '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
@@ -88242,6 +88930,7 @@ function verCap(id,quieto){
   enlazaCreencias(d);
   divideVista(d,id);
   if(typeof bibAplicaNivel==='function')bibAplicaNivel(id);
+  if(typeof pintaBibVista==='function')pintaBibVista();
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
      creencias en una rejilla de cuatro columnas, el detalle nace siete filas
@@ -88350,14 +89039,16 @@ function lugarEscribe(c){
     if(String(location.hash||'')!==h)history.replaceState(history.state,'',location.pathname+location.search+h);}catch(e){}
 }
 /* LUGAR:FIN */
-const LUGAR_PANT=['inicio','estudio','tarjetas','examen','logros'];
+const LUGAR_PANT=['inicio','estudio','tarjetas','examen','logros','miestudio'];
 let lugarT=0,lugarListo=false;
 /* El camino de lo que se ve ahora. */
 /* v235: en la dirección las pantallas se llaman como en la barra (Biblioteca, Concursos);
    los caminos viejos («estudio/…», «examen») se leen igual y se reescriben con el nuevo. */
-const LUGAR_PUB={estudio:'biblioteca',examen:'concursos'}, LUGAR_DE_PUB={biblioteca:'estudio',concursos:'examen'};
+/* v236: «Mi estudio» es #/mi-estudio, y la vista de láminas de la Biblioteca, #/biblioteca/laminas. */
+const LUGAR_PUB={estudio:'biblioteca',examen:'concursos',miestudio:'mi-estudio'}, LUGAR_DE_PUB={biblioteca:'estudio',concursos:'examen','mi-estudio':'miestudio'};
 function lugarActual(){
   const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[LUGAR_PUB[pant]||pant];
+  if(pant==='estudio'&&!S.ultItem&&typeof bibVista!=='undefined'&&bibVista==='laminas')r.push('laminas');
   if(pant==='estudio'&&S.ultItem){
     r.push(S.ultItem);
     const d=document.getElementById('detalle');
@@ -88388,7 +89079,8 @@ function lugarParte(c){
   const s=c.split('/').filter(Boolean);let i=0;
   if(LUGAR_DE_PUB[s[0]])s[0]=LUGAR_DE_PUB[s[0]];
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
-  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|s\d+)$/.test(s[i]))o.item=s[i++];
+  if(o.pant==='estudio'&&s[i]==='laminas'){o.vista='laminas';i++;}
+  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|laminas|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
     if(s[i]==='profundizar')o.prof=true;
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
@@ -88412,6 +89104,7 @@ function lugarAplica(c,dondeOk){
     else ir(o.pant==='estudio'&&o.item?'estudio':o.pant);
     dondeOk=false;
   }
+  if(o.vista==='laminas'&&!o.item&&typeof bibVer==='function')bibVer('laminas',true);
   if(o.prof&&S.ultItem)ponPest('prof');
   if(!dondeOk&&o.sec!=null&&S.ultItem){
     const pon=()=>{const sec=secsDeDonde()[o.sec];if(sec)window.scrollTo(0,Math.max(0,Math.round(sec.getBoundingClientRect().top+(window.scrollY||0)-DONDE_TOPE)));};
@@ -93330,6 +94023,8 @@ async function entraCodigo(){
     /* El momento exacto en que el progreso deja de ser de este navegador: se
        manda lo que haya en el aparato y baja lo que ella ya tenía. */
     try{await sincronizaProgreso();}catch(e){}
+    /* v236: lo apartado en «Mi estudio» sin cuenta pasa a la cuenta. */
+    meSincroniza();
     pintaSesion();await cargaEvaluacion();pintaExInicio();pintaInicio();
     if(document.getElementById('cb-panel'))await pintaPanel();
     llevaA(evalPend?'cb-eval':'cb-sesion');
@@ -93431,6 +94126,7 @@ function adoptaFicha(d){
 async function salirCodigo(){
   try{await srvFetch('/salir',{method:'POST'});}catch(e){}
   srvYo=null;evalPend=null;evalHecha=false;pintaSesion();pintaEvaluacion();
+  meSale();
   pintaExInicio();pintaInicio();
   if(document.getElementById('cb-panel'))await pintaPanel();
 }
@@ -93446,6 +94142,7 @@ async function entraPanel(){
   try{
     await srvFetch('/panel/entrar',{method:'POST',body:JSON.stringify({clave:i.value})});
     srvYo={rol:'director'};
+    meSincroniza();
     await pintaPanel();
   }catch(e){
     if(m)m.innerHTML='<span style="color:var(--rojo-txt)">'+esc(e.message||'No se pudo conectar')+'</span>';
@@ -95409,6 +96106,8 @@ async function abreHistorial(){
   try{
     await srvRefresca();
     await srvQuienSoy();
+    /* v236: «Mi estudio» pregunta si hay cuenta (código, director o la sesión de Jóvenes). */
+    meSincroniza();
     pintaSesion();
     /* LA FICHA ACTIVA PUEDE NO SER LA DE LA SESION, y eso importa.
        Un aparato puede tener varias fichas (la misma persona en dos
