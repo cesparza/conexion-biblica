@@ -3219,5 +3219,32 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v233: la línea de metro cuelga de una bandera (LAM_METRO) y de la clase .metro; «Ver a escala» muestra la de v232; la tira del teléfono con scroll-snap; «hoy» quieto con movimiento reducido');
 }
 
+/* v235 (Camilo aprobó la opción A y los nombres, 15-oct): dos entradas, «Biblioteca» y
+   «Concursos». Las pantallas siguen siendo 'estudio' y 'examen' por dentro; en la barra y en
+   la dirección tienen el nombre nuevo y los caminos viejos se leen igual. Las fuentes de cada
+   tema salen solas de sus líneas «Fuente:»; cada pregunta lleva a su capítulo y, si una sección
+   trae su versículo en el título, a esa sección. */
+{
+  const cuerpo=fs.readFileSync(FUENTE('cuerpo.html'),'utf8'),BIB_F='biblioteca-'+'app.js',BJ=fs.readFileSync(FUENTE(BIB_F),'utf8'); /* el nombre partido: la cuenta de lecturas de app.js no lo confunde */
+  ok(/<b>Biblioteca<\/b>/.test(cuerpo)&&/<b>Concursos<\/b>/.test(cuerpo)&&!/<b>Estudiar<\/b>/.test(cuerpo)&&!/<b>Examen<\/b>/.test(cuerpo)&&
+    /id="bib-cab"/.test(cuerpo)&&/id="con-cab"/.test(cuerpo)&&/id="con-lista"/.test(cuerpo)&&/id="ini-entradas"/.test(cuerpo)&&/\$\{APP_BIB\}/.test(fs.readFileSync(FUENTE('build.js'),'utf8')),
+    'v235: la barra dice Biblioteca y Concursos; la portada de la Biblioteca, la de Concursos y las dos puertas del Inicio tienen su sitio');
+  const cod=BJ.replace(/\/\*[\s\S]*?\*\//g,'');
+  ok(!/^(const|let) /m.test(cod)&&!/onclick="[^"]*\b(this|event)\b/.test(cod)&&!/document\.(fonts|createRange)/.test(cod),
+    'v235: biblioteca-app.js solo declara funciones y var arriba (se pinta al arrancar) y sus toques son llamadas con literales (Jóvenes)');
+  const {lugarParte,LUGAR_PUB}=montar('lugarParte, LUGAR_PUB');
+  const a=lugarParte('biblioteca/d7/profundizar/lamina/d7/explorar/x-fases'),b=lugarParte('estudio/d7/profundizar/lamina/d7/explorar/x-fases'),c=lugarParte('#/concursos'),d=lugarParte('examen');
+  ok(JSON.stringify(a)===JSON.stringify(b)&&a.pant==='estudio'&&a.item==='d7'&&a.lam&&a.lam.id==='d7'&&c.pant==='examen'&&d.pant==='examen'&&LUGAR_PUB.estudio==='biblioteca'&&LUGAR_PUB.examen==='concursos',
+    'v235: «biblioteca/…» y «concursos» llevan al mismo lugar que los caminos viejos «estudio/…» y «examen»');
+  const q=montar("fd:bibFuentes('daniel'), fa:bibFuentes('apocalipsis'), fm:bibFuentes('matutina'), st:(()=>{const r={sec:0,cap:0,mal:0};for(const q of BANCO){const d=bibDondeQ(q);if(!d){r.mal++;continue;}if(d.i<0){r.cap++;continue;}r.sec++;const s=CONTENIDO[q.cap][d.i];const rg=bibRangos(s.t,libroCid(q.cap).n);const vs=q.v?(()=>{const m=/^(\\d+):(\\d+)(?:-(\\d+))?$/.exec(q.v);const o=[];for(let x=+m[2];x<=(m[3]?+m[3]:+m[2]);x++)o.push(x);return o;})():refsQ(q,q.cap);if(!vs.some(v=>rg.some(([x,y])=>v>=x&&v<=y)))r.mal++;}return r;})()");
+  const bohr=q.fd.find(o=>o.autor==='Bohr'&&o.obra==='Daniel 1-10'),cs=q.fd.find(o=>o.abr==='CS');
+  ok(q.fd.length>20&&q.fa.length>20&&!q.fm.length&&bohr&&bohr.pags.length>10&&bohr.caps.length>3&&cs&&cs.pags.length>10&&!q.fd.some(o=>/^\d+:\d/.test(o.tal||'')),
+    'v235: las fuentes de Daniel ('+q.fd.length+') y Apocalipsis ('+q.fa.length+') salen solas de sus líneas «Fuente:», juntas por obra con sus páginas y capítulos; la matutina no cita otras obras');
+  ok(q.st.mal===0&&q.st.sec>1000&&q.st.cap>0,
+    'v235: cada pregunta lleva a su capítulo en la Biblioteca y '+q.st.sec+' a la sección cuyo título trae su versículo ('+q.st.cap+' solo al capítulo; ninguna a una sección equivocada)');
+  ok(/\.lm-e\.juicio \.lm-a b\{color:var\(--lam-oro/.test(fs.readFileSync(FUENTE('estilos.css'),'utf8'))&&/function bibProximo\(/.test(BJ)&&/function bibPieHTML\(/.test(BJ)&&/bibPieHTML\(\)/.test(APP),
+    'v235: 1844 con el año en oro en la línea de metro; el Inicio anuncia el concurso que viene; cada tema termina con su «Bibliografía»');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

@@ -32,7 +32,7 @@ const MANUAL = [
     edad sino por quién presenta el examen escrito. Preguntando la actividad
     de una, el paso siguiente solo te ofrece lo que sí te aplica.</p>` },
   { t:'Tu código, si el director te dio uno',
-    h:`<p>En la pantalla de <strong>Examen</strong>, arriba, hay un cuadro que
+    h:`<p>En la pantalla de <strong>Concursos</strong>, arriba, hay un cuadro que
     dice <strong>Entra con tu código</strong>. Son 6 letras y números que te da
     el director del club. Se escriben <strong>una sola vez</strong> en tu
     celular y la app se acuerda.</p>
@@ -110,9 +110,23 @@ const MANUAL = [
     primera. No tienes que decidir nada más.</p>` },
   ]},
 
-{ id:'a-estudiar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Estudiar: leer y marcar',
+{ id:'a-estudiar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>', t:'Biblioteca: leer y marcar',
   d:'Y por qué el círculo se queda en 0%',
   secs:[
+  { t:'Biblioteca y Concursos',
+    h:`<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el
+    material, abierto para cualquiera: arriba escoges el tema (Daniel, Apocalipsis,
+    la matutina, las creencias) y cómo quieres leer (<strong>Lo central</strong>,
+    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El
+    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En
+    <strong>Para ver</strong> están las láminas, Comparar, Paralelos y los últimos
+    acontecimientos. Cada tema termina con su <strong>Bibliografía</strong>: las
+    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con
+    las líneas «Fuente:».</p>
+    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus
+    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada
+    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su
+    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>` },
   { t:'Cómo se lee un capítulo',
     h:`<p>Toca la tarjeta del capítulo. Cada uno empieza con
     <strong>«En pocas palabras»</strong>, que es el resumen, y después vienen
@@ -177,11 +191,11 @@ const MANUAL = [
   { t:'Qué significa cada uno',
     h:`<p>La barra de las cinco pestañas lleva los pendientes encima, así que se
     ven desde cualquier pantalla:</p>
-    <p><strong>Estudiar</strong> · el porcentaje que llevas leído, contando los
+    <p><strong>Biblioteca</strong> · el porcentaje que llevas leído, contando los
     capítulos <em>y</em> los repasos.<br>
     <strong>Tarjetas</strong> · cuántas te toca hacer <strong>hoy</strong>, no
     cuántas te faltan en total.<br>
-    <strong>Examen</strong> · un <strong>punto verde</strong> solo cuando el
+    <strong>Concursos</strong> · un <strong>punto verde</strong> solo cuando el
     director tiene una evaluación abierta y tú no la has hecho.<br>
     <strong>Logros</strong> · cuántos errores tienes por repasar.</p>` },
   { t:'Si no aparece un número',
@@ -191,8 +205,8 @@ const MANUAL = [
     todas las tarjetas están vencidas al principio, y eso es justo lo que la app
     te está diciendo.</p>` },
   { t:'De dónde salen',
-    h:`<p>De tu propio progreso guardado en este aparato, menos el punto verde del
-    Examen, que sale del servidor. Son los mismos datos de «Qué estudiar hoy»,
+    h:`<p>De tu propio progreso guardado en este aparato, menos el punto verde de
+    Concursos, que sale del servidor. Son los mismos datos de «Qué estudiar hoy»,
     puestos donde se ven siempre.</p>` },
   ]},
 
@@ -200,7 +214,7 @@ const MANUAL = [
   d:'El capítulo completo, sin nada alrededor',
   secs:[
   { t:'Cómo se abre',
-    h:`<p>Abre un capítulo de la Biblia en <strong>Estudiar</strong>, toca
+    h:`<p>Abre un capítulo de la Biblia en <strong>Biblioteca</strong>, toca
     <strong>Leer el capítulo completo</strong> y en el reproductor de arriba
     toca <strong>Pantalla completa</strong>.</p>
     <p>Se esconde todo: la barra, las pestañas, las secciones de estudio. Queda
@@ -381,7 +395,7 @@ const MANUAL = [
     múltiple, y la pregunta se lee sola.</p>` },
   ]},
 
-{ id:'a-examen', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg>', t:'Examen: practicar',
+{ id:'a-examen', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg>', t:'Concursos: practicar el examen',
   d:'Cómo es, y qué pasa al terminar',
   secs:[
   { t:'Empezar',
@@ -393,7 +407,7 @@ const MANUAL = [
   { t:'Solo Daniel, solo Profetas y Reyes, o los capítulos que escojas',
     h:`<p>En Conexión Bíblica, arriba de las cinco pestañas dice
     <strong>Estoy estudiando</strong>: Todo, Daniel, Profetas y Reyes o
-    Escoger capítulos. Lo que escojas ahí vale para toda la app: Estudiar,
+    Escoger capítulos. Lo que escojas ahí vale para toda la app: Biblioteca,
     Practicar, el repaso de errores, Inicio y el examen de práctica.</p>
     <p>Con <strong>Escoger capítulos</strong> salen fichas por libro: tocas
     las que quieras, por ejemplo Daniel 1, 3 y 6. <strong>todo Daniel</strong>
@@ -468,7 +482,7 @@ const MANUAL = [
     <p>Las que falles quedan guardadas y puedes hacer un examen
     <strong>solo con tus errores</strong> desde «Qué estudiar hoy».</p>` },
   { t:'Si tu director abre una evaluación',
-    h:`<p>Te sale arriba en Examen, con su nombre y un botón. Se hace
+    h:`<p>Te sale arriba en Concursos, con su nombre y un botón. Se hace
     <strong>una sola vez</strong> y al final ves la nota, no las respuestas.</p>
     <p>Los exámenes de práctica, el estudio y las tarjetas <strong>siguen
     abiertos</strong>: la evaluación no te quita nada.</p>` },
@@ -543,7 +557,7 @@ const MANUAL = [
   d:'Todo se puede imprimir desde la app',
   secs:[
   { t:'Dónde está',
-    h:`<p>En <strong>Estudiar</strong>, al final de la pantalla, hay una
+    h:`<p>En <strong>Biblioteca</strong>, al final de la pantalla, hay una
     sección de imprimir. Y dentro de cada capítulo hay un
     <strong>Imprimir este capítulo</strong>.</p>` },
   { t:'Qué puedes sacar',
@@ -569,7 +583,7 @@ const MANUAL = [
     un examen que hacen todos el mismo día para ver cómo va el estudio. No es el
     examen del campamento, es para medir el avance.</p>` },
   { t:'Cómo se hace',
-    h:`<p>Entra a <strong>Examen</strong>. Si hay una evaluación abierta, sale
+    h:`<p>Entra a <strong>Concursos</strong>. Si hay una evaluación abierta, sale
     arriba una tarjeta con su nombre y un botón que dice
     <strong>Hacer la evaluación</strong>. Tócalo y empieza.</p>
     <p>Necesitas haber entrado con tu <strong>código</strong>. Si no lo has
@@ -667,7 +681,7 @@ const MANUAL = [
   { t:'¿Cuántas preguntas trae el examen del campamento?',
     h:`<p>En Conexión Bíblica (Daniel), el de 2026 trajo 35 en Adultos y 30 en
     7 a 9 años, y con la misma nota ganó quien entregó primero. La app practica
-    con esos tamaños y tiene la hoja real en Examen. De los otros concursos no
+    con esos tamaños y tiene la hoja real en Concursos. De los otros concursos no
     se sabe.</p>` },
   ]},
 
@@ -787,7 +801,7 @@ const MANUAL = [
     h:`<p>Los de 4 a 6 años se quedan en nivel 1 y no ven la sección de
     completar: el reglamento no les pide escribir la palabra exacta. Los adultos
     entran directo a nivel 3.</p>
-    <p>Se puede fijar el nivel a mano en <strong>Examen → Cambiar este
+    <p>Se puede fijar el nivel a mano en <strong>Concursos → Cambiar este
     examen</strong>, pero lo normal es dejarlo en Progresivo.</p>` },
   ]},
 
@@ -795,7 +809,7 @@ const MANUAL = [
   d:'Todo sale de la app, no de una carpeta',
   secs:[
   { t:'Dónde está',
-    h:`<p>En <strong>Examen</strong>, debajo del separador que dice
+    h:`<p>En <strong>Concursos</strong>, debajo del separador que dice
     <em>Para el director del club</em>, en
     <strong>Imprimir exámenes y claves</strong>:</p>
     <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del
@@ -840,7 +854,7 @@ const MANUAL = [
     <strong>exactamente el mismo examen</strong>: las mismas preguntas, en el
     mismo orden, con las opciones en el mismo orden.</p>` },
   { t:'Cómo se abre',
-    h:`<p>Entra a <strong>Examen</strong>, abajo, en <strong>La evaluación del
+    h:`<p>Entra a <strong>Concursos</strong>, abajo, en <strong>La evaluación del
     día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay
     que hacerlos en ese orden.</p>
     <ol><li><strong>Los del club, y su código.</strong> Crear a las

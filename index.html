@@ -5309,6 +5309,7 @@ span.cmp-ult-c{cursor:default}
 .lm-n{font-size:.75rem;line-height:1.2;color:var(--gris,#5B5F6B);max-width:100%;text-wrap:balance;overflow-wrap:anywhere;min-height:1.2em}
 .lm-e.ya .lm-p{border-color:color-mix(in srgb,var(--txt,#1a1a2e) 55%,transparent)}
 .lm-e.juicio .lm-p{background:#D6B26A;border-color:#8A6A1F}
+.lm-e.juicio .lm-a b{color:var(--lam-oro2,var(--lam-oro,#B98A35))}
 .lm-e.hoy .lm-p::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--txt,#1a1a2e);animation:lamHoyLate 1.8s ease-out infinite}
 .lm-e.fut .lm-p{border-style:dashed;border-color:var(--lam-oro,#B98A35)}
 .lm-e.fut .lm-a b,.lm-e.hoy .lm-a b{font-size:1rem}
@@ -5505,6 +5506,129 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
   .par-b{font-size:1rem}
 }
 @media (prefers-reduced-motion:reduce){.par-hoja.ve{animation:none}.par-chip,.par-c{transition:none}}
+/* ── v235: BIBLIOTECA Y CONCURSOS (fuente/biblioteca-app.js). Tokens de la app: --card,
+   --txt, --gris, --azul, --naranja-txt; claro y oscuro salen solos. ── */
+.bib-cab,.con-cab{margin:0 0 1.1rem}
+.bib-hero,.con-hero{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:1.25rem 1.25rem 1rem;margin-bottom:1rem}
+.bib-ant{display:flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.bib-tit{margin:.35rem 0 .3rem;font-size:1.375rem;line-height:1.2;font-weight:800;color:var(--txt);letter-spacing:-.01em;text-wrap:balance}
+.bib-p{margin:0 0 .9rem;color:var(--gris);font-size:1rem;line-height:1.45;max-width:62ch}
+.bib-h{margin:1.1rem 0 .6rem;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+/* Los temas: pastillas grandes, una por tema. */
+.bib-temas{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 .9rem}
+.bib-tema{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:6px 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--txt) 16%,transparent);
+  background:var(--card);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.bib-tema small{font-size:.75rem;font-weight:700;color:var(--naranja-txt)}
+.bib-tema.on{border-color:var(--azul-fondo);background:var(--azul-fondo);color:#fff}
+.bib-tema.on small{color:#fff;opacity:.85}
+.bib-tema:focus-visible,.bib-nv:focus-visible,.bv-t:focus-visible,.bib-otra:focus-visible,.q-bib:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+/* El nivel de lectura y las fuentes, en una fila que se dobla en el teléfono. */
+.bib-fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+.bib-nvs{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.bib-nvt{font-size:.75rem;font-weight:700;color:var(--gris);margin-right:4px;flex-basis:100%}
+.bib-nv{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:44px;padding:6px 12px;border-radius:12px;border:1.5px solid color-mix(in srgb,var(--txt) 14%,transparent);
+  background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer;max-width:13rem}
+.bib-nv b{font-size:.875rem}
+.bib-nv small{font-size:.75rem;color:var(--gris);line-height:1.25}
+.bib-nv.on{border-color:var(--naranja-txt);background:var(--fondo-calido)}
+.bib-fu{min-height:44px}
+.bib-nota{margin:.75rem 0 0;font-size:.75rem;color:var(--gris);line-height:1.4}
+/* «Para ver»: tarjetas que se deslizan a lo ancho. */
+.bib-ver{margin:0 0 1rem}
+.bv-fila{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 8px;scrollbar-width:thin}
+.bv-t{display:flex;flex-direction:column;min-width:0;padding:0;border:0;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);color:var(--txt);font:inherit;text-align:left;cursor:pointer;overflow:hidden;scroll-snap-align:start}
+.bv-img{position:relative;display:block;aspect-ratio:16/9;background:#1b1712;overflow:hidden}
+.bv-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bv-ico{display:flex;align-items:center;justify-content:center;background:var(--fondo-prof);color:var(--prof)}
+.bv-ico .ico-t{width:40px;height:40px}
+.bv-tx{display:flex;flex-direction:column;gap:2px;padding:.7rem .85rem .85rem}
+.bv-tx small{font-size:.75rem;font-weight:700;color:var(--gris)}
+.bv-tx b{font-size:1rem;line-height:1.3}
+@media (hover:hover){.bv-t:hover{box-shadow:0 6px 24px rgba(0,0,0,.16)}.bib-tema:hover:not(.on){border-color:color-mix(in srgb,var(--txt) 40%,transparent)}}
+/* El cruce a la otra puerta. */
+.bib-otra{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin:0 0 1rem;padding:.8rem 1rem;border-radius:var(--r);border:1.5px dashed color-mix(in srgb,var(--txt) 22%,transparent);
+  background:none;color:var(--txt);font:inherit;font-size:.875rem;line-height:1.4;text-align:left;cursor:pointer}
+.bib-otra>span{flex:1;min-width:0}
+.bib-otra>.ico-t:first-child{flex:0 0 auto;width:22px;height:22px;color:var(--naranja-txt)}
+/* Las fuentes de un tema, en la hoja de abajo. */
+.bf-intro{margin:0 0 .8rem;font-size:.875rem;color:var(--gris);line-height:1.45}
+.bf-g{margin:1rem 0 .4rem;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.bf-l{list-style:none;margin:0;padding:0}
+.bf-o{display:flex;flex-direction:column;gap:2px;padding:.55rem 0;border-bottom:1px solid color-mix(in srgb,var(--txt) 10%,transparent);font-size:.875rem;line-height:1.4}
+.bf-o abbr{text-decoration:none;font-weight:800}
+.bf-p{color:var(--gris);font-variant-numeric:tabular-nums}
+.bf-p::before{content:'· '}
+.bf-c{font-size:.75rem;color:var(--gris)}
+/* Concursos. */
+.con-tuya{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:.7rem .9rem;border-radius:12px;background:var(--fondo-suave);font-size:.875rem}
+.con-tuya .btn{min-height:44px}
+.con-l{list-style:none;margin:0 0 .4rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px}
+.con-c{display:flex;flex-direction:column;gap:.7rem;padding:1rem;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);border:2px solid transparent}
+.con-c.mia{border-color:var(--naranja-txt)}
+.con-ct{display:flex;gap:10px;align-items:flex-start}
+.con-ct b{display:block;font-size:1rem;line-height:1.3}
+.con-ct small{display:block;font-size:.75rem;color:var(--gris);line-height:1.35;margin-top:2px}
+.con-ic{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:var(--fondo-suave);color:var(--azul)}
+.con-cats{display:flex;flex-wrap:wrap;gap:6px}
+.con-cat{font-size:.75rem;padding:4px 9px;border-radius:999px;background:var(--fondo-suave);color:var(--txt)}
+.con-cat.on{background:var(--fondo-calido);box-shadow:inset 0 0 0 1.5px var(--naranja-txt)}
+.con-acc{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto}
+.con-acc .btn{min-height:44px}
+.con-mia{display:inline-flex;align-items:center;gap:6px;font-size:.875rem;font-weight:700;color:var(--naranja-txt);min-height:44px}
+.con-ex{margin-top:1.4rem}
+/* Inicio: las dos puertas. Cada una: su cabecera (lleva a la pantalla) y debajo lo que
+   invita: los destacados de la Biblioteca y el concurso que viene. */
+.ini-entradas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin:0 0 1.2rem}
+.ent{display:flex;flex-direction:column;min-width:0;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);overflow:hidden}
+.ent-cab{display:flex;align-items:center;gap:14px;min-height:72px;padding:1rem 1.1rem;border:0;background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.ent-ic{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:14px}
+.ent-ic .ico-t{width:24px;height:24px}
+.ent-bib .ent-ic{background:var(--fondo-info);color:var(--cielo-txt)}
+.ent-con .ent-ic{background:var(--fondo-calido);color:var(--naranja-txt)}
+.ent-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ent-tx b{font-size:1.125rem}
+.ent-tx small{font-size:.875rem;color:var(--gris);line-height:1.35}
+.ent-fl{flex:0 0 auto;color:var(--gris)}
+/* Los destacados: miniaturas que se deslizan a lo ancho, sin desbordar la página. */
+.ent-dest{display:flex;gap:8px;overflow-x:auto;padding:0 1.1rem 1rem;scroll-padding-inline:1.1rem;scrollbar-width:none;scroll-snap-type:x proximity}
+@media (min-width:600px){.ent-dest{flex-wrap:wrap;overflow:visible}}
+.ent-dest::-webkit-scrollbar{display:none}
+.ent-d{flex:0 0 auto;display:flex;align-items:center;gap:8px;min-height:44px;padding:4px 12px 4px 4px;border-radius:12px;border:1.5px solid color-mix(in srgb,var(--txt) 12%,transparent);
+  background:none;color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;scroll-snap-align:start;white-space:nowrap}
+.ent-dimg{position:relative;flex:0 0 auto;width:36px;height:36px;border-radius:9px;overflow:hidden;background:#1b1712}
+.ent-dimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ent-dico{display:flex;align-items:center;justify-content:center;background:var(--fondo-prof);color:var(--prof)}
+/* El concurso que viene. */
+.ent-prox{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:0 1.1rem 1rem;padding:.65rem .85rem;min-height:44px;border:0;border-radius:12px;
+  background:var(--fondo-calido);color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.ent-pr{font-size:.6875rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.ent-prox b{font-size:1rem;line-height:1.3}
+.ent-cu{display:inline-flex;align-items:center;gap:6px;font-size:.8125rem;color:var(--gris)}
+.ent-cab:focus-visible,.ent-d:focus-visible,.ent-prox:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:-2px}
+@media (hover:hover){.ent:hover,.con-c:hover{box-shadow:0 6px 24px rgba(0,0,0,.16)}.ent-d:hover{border-color:color-mix(in srgb,var(--txt) 35%,transparent)}}
+/* La pregunta revisada: a dónde se estudia. */
+.q-bib{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;margin:.6rem 0 0;padding:.5rem .7rem;border-radius:10px;border:0;background:var(--fondo-info);color:var(--txt);
+  font:inherit;font-size:.875rem;line-height:1.35;text-align:left;cursor:pointer}
+.q-bib>span{flex:1;min-width:0}
+.q-bib>.ico-t:first-child{color:var(--cielo-txt);flex:0 0 auto}
+.q-bib b{font-weight:700}
+@media (max-width:479px){.bib-hero,.con-hero{padding:1rem}.bib-tit{font-size:1.125rem}.bib-p{font-size:.875rem}.bib-nv{max-width:none;flex:1 1 30%}.bv-fila{grid-auto-columns:78%}}
+/* En pantalla ancha «Para ver» es una rejilla (todo a la vista); en el teléfono, una fila que se desliza. */
+@media (min-width:600px){.bv-fila{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));overflow:visible}}
+/* En el teléfono: los temas en una fila que se desliza y el nivel sin su explicación (la dice
+   la nota de abajo), para que la portada no ocupe la pantalla entera. */
+@media (max-width:479px){
+  .bib-temas{flex-wrap:nowrap;overflow-x:auto;margin-inline:-1rem;padding:0 1rem 4px;scrollbar-width:none}
+  .bib-temas::-webkit-scrollbar{display:none}
+  .bib-tema{flex:0 0 auto}
+  .bib-nv small{display:none}
+  .bib-nv{align-items:center;flex:1 1 0;padding:6px 8px}
+}
+.con-sub{margin:.4rem 0 .5rem;font-size:.875rem;font-weight:700;color:var(--txt)}
+.con-lista{margin-top:1.4rem}
+.bib-fu.btn{min-height:44px}
+/* La sección a la que lleva una pregunta queda debajo de lo fijo arriba (DONDE_TOPE). */
+#detalle .sec[data-i]{scroll-margin-top:84px}
 </style>
 </head>
 <body>
@@ -5672,9 +5796,9 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
        existe no se puede duplicar por llamar dos veces a la funcion. -->
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')"><i><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></i><b>Inicio</b></button>
-    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Estudiar</b><span class="nv gris" id="nv-est" hidden></span></button>
+    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Biblioteca</b><span class="nv gris" id="nv-est" hidden></span></button>
     <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Practicar</b><span class="nv" id="nv-tj" hidden></span></button>
-    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Examen</b><span class="nv-punto" id="nv-ex" hidden></span></button>
+    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Concursos</b><span class="nv-punto" id="nv-ex" hidden></span></button>
     <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b><span class="nv" id="nv-lg" hidden></span></button>
   </div>
 </nav>
@@ -5749,6 +5873,9 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
        pintaHero() con el capítulo y la sección donde se quedó, cuánto falta y
        los tres niveles (leído, practicado, dominado). -->
   <section class="hero-c" id="ini-hero" aria-label="Continuar" hidden></section>
+
+  <!-- v235: las dos puertas de la app (pintaEntradas, fuente/biblioteca-app.js). -->
+  <nav class="ini-entradas" id="ini-entradas" aria-label="Biblioteca y Concursos"></nav>
 
   <section class="ini-sec ini-hoy" aria-labelledby="ini-hoy-t">
     <h2 class="ini-h" id="ini-hoy-t">Para hoy</h2>
@@ -5828,7 +5955,9 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 </div>
 
 <div id="p-estudio" class="pantalla">
-  <h2 class="h2-suelto" style="color:var(--azul);margin-bottom:.9rem"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg><span>Material de estudio</span></h2>
+  <!-- v235: LA BIBLIOTECA. La portada (temas, nivel de lectura, fuentes, «Para ver»)
+       la pinta pintaBib() (fuente/biblioteca-app.js); debajo, la rejilla de siempre. -->
+  <div id="bib-cab" class="bib-cab"></div>
   <div class="caps" id="lista-caps"></div>
   <div id="detalle" class="card" style="margin-top:1rem;display:none"></div>
 
@@ -5876,7 +6005,10 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 </div>
 
 <div id="p-examen" class="pantalla">
+  <!-- v235: CONCURSOS. Los concursos y campamentos con sus categorías por edad los
+       pinta pintaConcursos() (fuente/biblioteca-app.js); debajo, el examen de siempre. -->
   <div id="ex-inicio">
+  <div id="con-cab" class="con-cab"></div>
     <div id="ex-cerrado"></div>
     <div id="cb-eval"></div>
     <div id="cb-sesion"></div>
@@ -5951,6 +6083,8 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
         <p class="nota" id="ex-nota"></p>
       </div>
     </details>
+  <!-- v235: los demás concursos, después de tu examen (pintaConcursos). -->
+  <div id="con-lista" class="con-lista"></div>
   </div>
 
     <div class="sep">
@@ -6063,7 +6197,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'e30d504a63ff';
+const VERSION_APP = 'cb72bb615b8b';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -77222,7 +77356,7 @@ const MANUAL = [
    },
    {
     "t": "Tu código, si el director te dio uno",
-    "h": "<p>En la pantalla de <strong>Examen</strong>, arriba, hay un cuadro que\n    dice <strong>Entra con tu código</strong>. Son 6 letras y números que te da\n    el director del club. Se escriben <strong>una sola vez</strong> en tu\n    celular y la app se acuerda.</p>\n    <p>Para qué sirve: tus notas le llegan al director con tu nombre, y el\n    examen del día de la prueba sabe que eres tú. Sin código puedes estudiar y\n    practicar igual, pero el examen del evento sí lo necesita.</p>\n    <p>Si el código no te sirve, revisa que lo hayas copiado completo. Las letras\n    pueden ir en mayúscula o minúscula, da lo mismo. Si sigue sin servir,\n    pídeselo otra vez al director.</p>"
+    "h": "<p>En la pantalla de <strong>Concursos</strong>, arriba, hay un cuadro que\n    dice <strong>Entra con tu código</strong>. Son 6 letras y números que te da\n    el director del club. Se escriben <strong>una sola vez</strong> en tu\n    celular y la app se acuerda.</p>\n    <p>Para qué sirve: tus notas le llegan al director con tu nombre, y el\n    examen del día de la prueba sabe que eres tú. Sin código puedes estudiar y\n    practicar igual, pero el examen del evento sí lo necesita.</p>\n    <p>Si el código no te sirve, revisa que lo hayas copiado completo. Las letras\n    pueden ir en mayúscula o minúscula, da lo mismo. Si sigue sin servir,\n    pídeselo otra vez al director.</p>"
    },
    {
     "t": "Paso 1 — tu nombre",
@@ -77267,9 +77401,13 @@ const MANUAL = [
   "id": "a-estudiar",
   "para": "estudia",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-libro\"/></svg>",
-  "t": "Estudiar: leer y marcar",
+  "t": "Biblioteca: leer y marcar",
   "d": "Y por qué el círculo se queda en 0%",
   "secs": [
+   {
+    "t": "Biblioteca y Concursos",
+    "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera: arriba escoges el tema (Daniel, Apocalipsis,\n    la matutina, las creencias) y cómo quieres leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Para ver</strong> están las láminas, Comparar, Paralelos y los últimos\n    acontecimientos. Cada tema termina con su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
+   },
    {
     "t": "Cómo se lee un capítulo",
     "h": "<p>Toca la tarjeta del capítulo. Cada uno empieza con\n    <strong>«En pocas palabras»</strong>, que es el resumen, y después vienen\n    los datos, los versículos y las trampas.</p>\n    <p>Tú tienes {CAPS_CAT} capítulos y {MODS_CAT} repasos generales.</p>"
@@ -77318,7 +77456,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Qué significa cada uno",
-    "h": "<p>La barra de las cinco pestañas lleva los pendientes encima, así que se\n    ven desde cualquier pantalla:</p>\n    <p><strong>Estudiar</strong> · el porcentaje que llevas leído, contando los\n    capítulos <em>y</em> los repasos.<br>\n    <strong>Tarjetas</strong> · cuántas te toca hacer <strong>hoy</strong>, no\n    cuántas te faltan en total.<br>\n    <strong>Examen</strong> · un <strong>punto verde</strong> solo cuando el\n    director tiene una evaluación abierta y tú no la has hecho.<br>\n    <strong>Logros</strong> · cuántos errores tienes por repasar.</p>"
+    "h": "<p>La barra de las cinco pestañas lleva los pendientes encima, así que se\n    ven desde cualquier pantalla:</p>\n    <p><strong>Biblioteca</strong> · el porcentaje que llevas leído, contando los\n    capítulos <em>y</em> los repasos.<br>\n    <strong>Tarjetas</strong> · cuántas te toca hacer <strong>hoy</strong>, no\n    cuántas te faltan en total.<br>\n    <strong>Concursos</strong> · un <strong>punto verde</strong> solo cuando el\n    director tiene una evaluación abierta y tú no la has hecho.<br>\n    <strong>Logros</strong> · cuántos errores tienes por repasar.</p>"
    },
    {
     "t": "Si no aparece un número",
@@ -77326,7 +77464,7 @@ const MANUAL = [
    },
    {
     "t": "De dónde salen",
-    "h": "<p>De tu propio progreso guardado en este aparato, menos el punto verde del\n    Examen, que sale del servidor. Son los mismos datos de «Qué estudiar hoy»,\n    puestos donde se ven siempre.</p>"
+    "h": "<p>De tu propio progreso guardado en este aparato, menos el punto verde de\n    Concursos, que sale del servidor. Son los mismos datos de «Qué estudiar hoy»,\n    puestos donde se ven siempre.</p>"
    }
   ]
  },
@@ -77339,7 +77477,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Cómo se abre",
-    "h": "<p>Abre un capítulo de la Biblia en <strong>Estudiar</strong>, toca\n    <strong>Leer el capítulo completo</strong> y en el reproductor de arriba\n    toca <strong>Pantalla completa</strong>.</p>\n    <p>Se esconde todo: la barra, las pestañas, las secciones de estudio. Queda\n    solo el texto, más grande y en letra de libro.</p>"
+    "h": "<p>Abre un capítulo de la Biblia en <strong>Biblioteca</strong>, toca\n    <strong>Leer el capítulo completo</strong> y en el reproductor de arriba\n    toca <strong>Pantalla completa</strong>.</p>\n    <p>Se esconde todo: la barra, las pestañas, las secciones de estudio. Queda\n    solo el texto, más grande y en letra de libro.</p>"
    },
    {
     "t": "La barra de arriba",
@@ -77467,7 +77605,7 @@ const MANUAL = [
   "id": "a-examen",
   "para": "estudia",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-examen\"/></svg>",
-  "t": "Examen: practicar",
+  "t": "Concursos: practicar el examen",
   "d": "Cómo es, y qué pasa al terminar",
   "secs": [
    {
@@ -77476,7 +77614,7 @@ const MANUAL = [
    },
    {
     "t": "Solo Daniel, solo Profetas y Reyes, o los capítulos que escojas",
-    "h": "<p>En Conexión Bíblica, arriba de las cinco pestañas dice\n    <strong>Estoy estudiando</strong>: Todo, Daniel, Profetas y Reyes o\n    Escoger capítulos. Lo que escojas ahí vale para toda la app: Estudiar,\n    Practicar, el repaso de errores, Inicio y el examen de práctica.</p>\n    <p>Con <strong>Escoger capítulos</strong> salen fichas por libro: tocas\n    las que quieras, por ejemplo Daniel 1, 3 y 6. <strong>todo Daniel</strong>\n    y <strong>todo P&amp;R</strong> las marcan de un toque.</p>\n    <p>Dentro de <strong>Cambiar este examen</strong> están las mismas fichas,\n    para un examen distinto sin cambiar lo de arriba.</p>\n    <div class=\"warn-box\">Mientras no esté en Todo, la franja se pone naranja y\n    dice qué estás viendo. La evaluación del director no mira este filtro: trae\n    lo que él abrió.</div>"
+    "h": "<p>En Conexión Bíblica, arriba de las cinco pestañas dice\n    <strong>Estoy estudiando</strong>: Todo, Daniel, Profetas y Reyes o\n    Escoger capítulos. Lo que escojas ahí vale para toda la app: Biblioteca,\n    Practicar, el repaso de errores, Inicio y el examen de práctica.</p>\n    <p>Con <strong>Escoger capítulos</strong> salen fichas por libro: tocas\n    las que quieras, por ejemplo Daniel 1, 3 y 6. <strong>todo Daniel</strong>\n    y <strong>todo P&amp;R</strong> las marcan de un toque.</p>\n    <p>Dentro de <strong>Cambiar este examen</strong> están las mismas fichas,\n    para un examen distinto sin cambiar lo de arriba.</p>\n    <div class=\"warn-box\">Mientras no esté en Todo, la franja se pone naranja y\n    dice qué estás viendo. La evaluación del director no mira este filtro: trae\n    lo que él abrió.</div>"
    },
    {
     "t": "Solo el material del reglamento",
@@ -77504,7 +77642,7 @@ const MANUAL = [
    },
    {
     "t": "Si tu director abre una evaluación",
-    "h": "<p>Te sale arriba en Examen, con su nombre y un botón. Se hace\n    <strong>una sola vez</strong> y al final ves la nota, no las respuestas.</p>\n    <p>Los exámenes de práctica, el estudio y las tarjetas <strong>siguen\n    abiertos</strong>: la evaluación no te quita nada.</p>"
+    "h": "<p>Te sale arriba en Concursos, con su nombre y un botón. Se hace\n    <strong>una sola vez</strong> y al final ves la nota, no las respuestas.</p>\n    <p>Los exámenes de práctica, el estudio y las tarjetas <strong>siguen\n    abiertos</strong>: la evaluación no te quita nada.</p>"
    },
    {
     "t": "El simulacro y la evaluación son distintos",
@@ -77567,7 +77705,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Dónde está",
-    "h": "<p>En <strong>Estudiar</strong>, al final de la pantalla, hay una\n    sección de imprimir. Y dentro de cada capítulo hay un\n    <strong>Imprimir este capítulo</strong>.</p>"
+    "h": "<p>En <strong>Biblioteca</strong>, al final de la pantalla, hay una\n    sección de imprimir. Y dentro de cada capítulo hay un\n    <strong>Imprimir este capítulo</strong>.</p>"
    },
    {
     "t": "Qué puedes sacar",
@@ -77592,7 +77730,7 @@ const MANUAL = [
    },
    {
     "t": "Cómo se hace",
-    "h": "<p>Entra a <strong>Examen</strong>. Si hay una evaluación abierta, sale\n    arriba una tarjeta con su nombre y un botón que dice\n    <strong>Hacer la evaluación</strong>. Tócalo y empieza.</p>\n    <p>Necesitas haber entrado con tu <strong>código</strong>. Si no lo has\n    hecho, la tarjeta no aparece: el director necesita saber de quién es cada\n    nota.</p>"
+    "h": "<p>Entra a <strong>Concursos</strong>. Si hay una evaluación abierta, sale\n    arriba una tarjeta con su nombre y un botón que dice\n    <strong>Hacer la evaluación</strong>. Tócalo y empieza.</p>\n    <p>Necesitas haber entrado con tu <strong>código</strong>. Si no lo has\n    hecho, la tarjeta no aparece: el director necesita saber de quién es cada\n    nota.</p>"
    },
    {
     "t": "Se hace una sola vez",
@@ -77675,7 +77813,7 @@ const MANUAL = [
    },
    {
     "t": "¿Cuántas preguntas trae el examen del campamento?",
-    "h": "<p>En Conexión Bíblica (Daniel), el de 2026 trajo 35 en Adultos y 30 en\n    7 a 9 años, y con la misma nota ganó quien entregó primero. La app practica\n    con esos tamaños y tiene la hoja real en Examen. De los otros concursos no\n    se sabe.</p>"
+    "h": "<p>En Conexión Bíblica (Daniel), el de 2026 trajo 35 en Adultos y 30 en\n    7 a 9 años, y con la misma nota ganó quien entregó primero. La app practica\n    con esos tamaños y tiene la hoja real en Concursos. De los otros concursos no\n    se sabe.</p>"
    }
   ]
  },
@@ -77780,7 +77918,7 @@ const MANUAL = [
    },
    {
     "t": "Las excepciones",
-    "h": "<p>Los de 4 a 6 años se quedan en nivel 1 y no ven la sección de\n    completar: el reglamento no les pide escribir la palabra exacta. Los adultos\n    entran directo a nivel 3.</p>\n    <p>Se puede fijar el nivel a mano en <strong>Examen → Cambiar este\n    examen</strong>, pero lo normal es dejarlo en Progresivo.</p>"
+    "h": "<p>Los de 4 a 6 años se quedan en nivel 1 y no ven la sección de\n    completar: el reglamento no les pide escribir la palabra exacta. Los adultos\n    entran directo a nivel 3.</p>\n    <p>Se puede fijar el nivel a mano en <strong>Concursos → Cambiar este\n    examen</strong>, pero lo normal es dejarlo en Progresivo.</p>"
    }
   ]
  },
@@ -77793,7 +77931,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Dónde está",
-    "h": "<p>En <strong>Examen</strong>, debajo del separador que dice\n    <em>Para el director del club</em>, en\n    <strong>Imprimir exámenes y claves</strong>:</p>\n    <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del\n    concursante, con espacio para nombre, club y puntaje.</li>\n    <li><strong>Este examen, con respuestas</strong> — la clave para\n    calificar.</li>\n    <li><strong>Todas las categorías, sin respuestas</strong> — un documento con\n    un examen por categoría, cada uno en su hoja: las cuatro de Conexión\n    Bíblica, las dos de la Devoción Matutina y las dos de En esto creemos.</li>\n    <li><strong>Todas las categorías, con respuestas</strong> — las mismas\n    hojas, con la clave.</li>\n    <li><strong>Las guías de los dos eventos</strong> — todo el material de\n    estudio de Conexión Bíblica y de la matutina en un solo documento.</li>\n    <li><strong>El manual de la app</strong> — este mismo manual, en papel.</li></ul>\n    <p>Los dos primeros usan lo que esté armado en <strong>Cambiar este\n    examen</strong>: capítulo, cantidad y dificultad.</p>"
+    "h": "<p>En <strong>Concursos</strong>, debajo del separador que dice\n    <em>Para el director del club</em>, en\n    <strong>Imprimir exámenes y claves</strong>:</p>\n    <ul><li><strong>Este examen, sin respuestas</strong> — la hoja del\n    concursante, con espacio para nombre, club y puntaje.</li>\n    <li><strong>Este examen, con respuestas</strong> — la clave para\n    calificar.</li>\n    <li><strong>Todas las categorías, sin respuestas</strong> — un documento con\n    un examen por categoría, cada uno en su hoja: las cuatro de Conexión\n    Bíblica, las dos de la Devoción Matutina y las dos de En esto creemos.</li>\n    <li><strong>Todas las categorías, con respuestas</strong> — las mismas\n    hojas, con la clave.</li>\n    <li><strong>Las guías de los dos eventos</strong> — todo el material de\n    estudio de Conexión Bíblica y de la matutina en un solo documento.</li>\n    <li><strong>El manual de la app</strong> — este mismo manual, en papel.</li></ul>\n    <p>Los dos primeros usan lo que esté armado en <strong>Cambiar este\n    examen</strong>: capítulo, cantidad y dificultad.</p>"
    },
    {
     "t": "Cómo sale el PDF",
@@ -77822,7 +77960,7 @@ const MANUAL = [
    },
    {
     "t": "Cómo se abre",
-    "h": "<p>Entra a <strong>Examen</strong>, abajo, en <strong>La evaluación del\n    día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay\n    que hacerlos en ese orden.</p>\n    <ol><li><strong>Los del club, y su código.</strong> Crear a las\n    participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle\n    la evaluación.</li>\n    <li><strong>Paso 1, ¿qué examen, y a quiénes?</strong> Nombre (por ejemplo «Sábado 6 de\n    septiembre»), cuántas preguntas, qué material, dificultad y a quiénes les\n    toca. El texto debajo de cada lista describe <strong>la opción que tengas\n    puesta</strong>, así que cámbiala y vuelve a leerlo.</li>\n    <li><strong>Paso 2, abrir.</strong> El botón está al final y arranca\n    apagado. Se prende cuando la evaluación tiene nombre y hay por lo menos una\n    participante creada; mientras esté apagado, al lado dice qué falta.</li></ol>\n    <p>Desde ese momento, cada participante que ya entró con su código ve la\n    tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar\n    ningún link.</p>"
+    "h": "<p>Entra a <strong>Concursos</strong>, abajo, en <strong>La evaluación del\n    día</strong>, y pon tu clave. El panel se abre en tres pasos numerados y hay\n    que hacerlos en ese orden.</p>\n    <ol><li><strong>Los del club, y su código.</strong> Crear a las\n    participantes y ver sus códigos. Si no hay ninguna, no hay a quién abrirle\n    la evaluación.</li>\n    <li><strong>Paso 1, ¿qué examen, y a quiénes?</strong> Nombre (por ejemplo «Sábado 6 de\n    septiembre»), cuántas preguntas, qué material, dificultad y a quiénes les\n    toca. El texto debajo de cada lista describe <strong>la opción que tengas\n    puesta</strong>, así que cámbiala y vuelve a leerlo.</li>\n    <li><strong>Paso 2, abrir.</strong> El botón está al final y arranca\n    apagado. Se prende cuando la evaluación tiene nombre y hay por lo menos una\n    participante creada; mientras esté apagado, al lado dice qué falta.</li></ol>\n    <p>Desde ese momento, cada participante que ya entró con su código ve la\n    tarjeta en su pantalla. No hay que mandar nada por WhatsApp ni copiar\n    ningún link.</p>"
    },
    {
     "t": "Qué material: todo, un grupo, unos capítulos o un tramo",
@@ -82072,6 +82210,348 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {
   CSS_IMPR, paginaImpr, EVENTO_IMPR, NOTA_IMPR, ordenaYNumera, htmlExamenImpr,
   hojaExamen, docExamen, hojaGuia, hojaTarjetas, bloquesGuia,
 };
+/* ───────── v235: DOS ENTRADAS, «BIBLIOTECA» Y «CONCURSOS» (Camilo aprobó la opción A y
+   los nombres, 15-oct) ─────────
+   QUÉ ES
+   Una sola app con dos puertas. La BIBLIOTECA está abierta para cualquiera: todos los
+   temas (Daniel, Apocalipsis, la matutina, las creencias), sus capítulos, las láminas,
+   Comparar, Paralelos y los últimos acontecimientos, y las fuentes de cada tema juntas.
+   CONCURSOS reúne los concursos y campamentos, con sus categorías por edad, y el
+   examen de siempre (simulacros y evaluaciones).
+   MECANISMO
+   - Las pantallas siguen siendo 'estudio' y 'examen' por dentro (TABS, S.ultPantalla,
+     pintaCaps, pintaExInicio): nada que ya funciona cambia de nombre. En la barra se
+     llaman Biblioteca y Concursos, y en la dirección «biblioteca/…» y «concursos/…»;
+     los caminos viejos («estudio/…», «examen») se leen igual y se reescriben con el
+     nombre nuevo (lugarActual, lugarParte en app.js).
+   - El tema que se ve en la Biblioteca es el del concurso de la ficha, salvo que la
+     persona escoja otro (bibTemaSel, en este aparato). Otro tema se ve entero: sin
+     filtro de concurso, porque no es el suyo; su examen sigue siendo el de su ficha.
+   - El nivel de lectura lo escoge quien lee (no la edad ni la categoría): «Lo central»
+     abre cada capítulo con «Solo lo central» (si el capítulo lo tiene), «Todo» como
+     siempre y «A fondo» en la pestaña «Para profundizar». Son los mismos controles que
+     ya tiene cada capítulo; aquí solo se elige el de entrada.
+   - Las fuentes de un tema salen solas de las líneas «Fuente:» de su material (las
+     secciones y las láminas): se parten por «;», se junta cada obra con sus páginas y
+     los capítulos donde se usa. Nada se escribe a mano: una fuente nueva aparece sola.
+   - Cada pregunta del examen, al revisarla, lleva a la Biblioteca: a su capítulo
+     siempre (q.cap) y a su sección cuando el título de una sección trae el versículo de
+     la pregunta («(2:41-43)»). Si no hay versículo o ninguna sección lo trae, va al
+     capítulo. No se adivina la sección por palabras. */
+
+var BIB_K='cb-bib-tema', BIB_NV_K='cb-bib-nivel';
+var bibTemaSel=null, bibNivelSel=null;
+var bibLee=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:v;}catch(e){return d;}};
+var bibGuarda=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
+/** Los temas de la Biblioteca, en el orden de las actividades. */
+var bibTemas=()=>temasLibres().filter(t=>(IDS_DE_TEMA[t]||[]).length);
+var bibNombreTema=t=>{const A=ACTIVIDADES[libreDe(t)];return A?A.nombre:t;};
+var bibIconoTema=t=>{const A=ACTIVIDADES[libreDe(t)];return A?A.icono:'';};
+/** El tema que se ve: el escogido en la Biblioteca o el del concurso de la ficha. */
+function bibTema(){
+  if(bibTemaSel===null)bibTemaSel=bibLee(BIB_K,'');
+  return bibTemaSel&&IDS_DE_TEMA[bibTemaSel]?bibTemaSel:ACT().tema;
+}
+/** ¿Se ve un tema que no es el del concurso de la ficha? */
+var bibAjeno=()=>bibTema()!==ACT().tema;
+/** De qué tema es un capítulo o un repaso. */
+var bibTemaDe=id=>bibTemas().find(t=>(IDS_DE_TEMA[t]||[]).includes(id))||'';
+function bibPonTema(t){
+  if(!IDS_DE_TEMA[t])return;
+  bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
+  /* Cambiar de tema es ver otra estantería: se cierra el capítulo abierto. */
+  if(pantallaAct==='estudio'){ir('estudio');}else{pintaCaps();}
+}
+/* Al abrir un capítulo de otro tema (un enlace, una pregunta, la Tertulia), la
+   estantería pasa a ese tema; sin repintar: verCap pinta enseguida. */
+function bibSigue(id){
+  const t=bibTemaDe(id);if(!t||t===bibTema())return;
+  bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
+}
+/* Los capítulos y repasos del tema que se ve, cuando no es el del concurso. */
+var bibCapsAjeno=()=>{const ids=IDS_DE_TEMA[bibTema()]||[];return CAPS.filter(c=>ids.includes(c.id));};
+var bibModsAjeno=()=>{const t=bibTema(),ids=IDS_DE_TEMA[t]||[];return MODULOS.filter(m=>ids.includes(m.id)||(m.prof&&m.tema===t));};
+/** Para Anterior y Siguiente de un capítulo que no es del concurso. */
+function bibListaDe(id){
+  const t=bibTemaDe(id);if(!t)return null;
+  const ids=IDS_DE_TEMA[t]||[];
+  return {caps:CAPS.filter(c=>ids.includes(c.id)),mods:MODULOS.filter(m=>(ids.includes(m.id)||(m.prof&&m.tema===t))&&!m.prof)};
+}
+
+/* ── El nivel de lectura ── */
+var BIB_NIVELES=[['central','Lo central','lo principal de cada capítulo'],['','Todo','todo el estudio'],['fondo','A fondo','con «Para profundizar»: lo que significa']];
+function bibNivel(){if(bibNivelSel===null)bibNivelSel=bibLee(BIB_NV_K,'');return BIB_NIVELES.some(n=>n[0]===bibNivelSel)?bibNivelSel:'';}
+function bibPonNivel(k){
+  if(!BIB_NIVELES.some(n=>n[0]===k))return;
+  bibNivelSel=k;bibGuarda(BIB_NV_K,k);pintaBib();
+  /* Si hay un capítulo abierto, se le aplica ya. */
+  if(S.ultItem&&pantallaAct==='estudio')bibAplicaNivel(S.ultItem,true);
+}
+/* Antes de pintar un capítulo: «A fondo» abre en «Para profundizar». */
+function bibNivelAntes(){if(bibNivel()==='fondo')capPest='prof';else if(bibNivel()==='central')capPest='examen';}
+/* Después de pintarlo: «Lo central» toca «Solo lo central» si el capítulo lo tiene. */
+function bibAplicaNivel(id,ahora){
+  const d=document.getElementById('detalle');if(!d||!d.querySelectorAll)return;
+  const nv=bibNivel();
+  if(ahora&&d.querySelector('.cap-pest'))ponPest(nv==='fondo'?'prof':'examen');
+  const bs=[...d.querySelectorAll('.capa-filtro .cf')];
+  if(bs.length>1){const b=nv==='central'?bs[1]:bs[0];if(nv==='central'||ahora)filtraCapa(b,nv==='central'?'nucleo':'');}
+}
+
+/* ── Las fuentes de un tema, juntas ── */
+var bibSinEt=s=>String(s||'').replace(/<(?!\/?i>)[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+/* Parte una línea de fuentes por «;» que no esté dentro de un paréntesis. */
+function bibPartes(linea){
+  const out=[];let h=0,a='';
+  for(const c of linea){if(c==='(')h++;if(c===')')h=Math.max(0,h-1);if(c===';'&&!h){out.push(a);a='';continue;}a+=c;}
+  out.push(a);return out.map(x=>x.trim().replace(/\.$/,'').trim()).filter(Boolean);
+}
+/* Las líneas «Fuente:» de un capítulo: sus secciones y, si tiene lámina, la lámina. */
+function bibLineasDe(id){
+  const out=[];
+  (CONTENIDO[id]||CONT_MODULOS[id]||[]).forEach(s=>{
+    String(s.h||'').replace(/Fuentes?:\s*([\s\S]*?)(?:<\/p>|<\/small>|<\/div>|$)/g,(m,f)=>{out.push(f);return m;});});
+  const recorre=o=>{if(!o||typeof o!=='object')return;
+    for(const [k,v] of Object.entries(o)){if((k==='fuente'||k==='paraleloFuente')&&typeof v==='string')out.push(v);else if(typeof v==='object')recorre(v);}};
+  if(typeof LAMINAS!=='undefined'&&LAMINAS[id])recorre(LAMINAS[id]);
+  return out.map(bibSinEt).filter(Boolean);
+}
+/* Una pieza: autor, obra y páginas; o una abreviatura de Elena de White con su
+   página («CS 374»); o el texto tal cual. */
+var BIB_EGW=/^((?:\d{1,2}[A-Z]{1,3})|(?:[A-Z]{2,4})|(?:[A-Z][A-Z]?[a-z]{1,2}))(?:\s*\(<i>([^<]+)<\/i>[^)]*\))?\s+(\d[\s\S]*)$/;
+function bibPieza(p){
+  let m=/^([^<,]+?),\s*<i>([^<]+)<\/i>\s*,?\s*([\s\S]*)$/.exec(p);
+  if(m)return {autor:m[1].trim(),obra:m[2].trim(),pag:m[3].trim()};
+  m=/^<i>([^<]+)<\/i>\s*,?\s*([\s\S]*)$/.exec(p);
+  if(m)return {autor:'',obra:m[1].trim(),pag:m[2].trim()};
+  m=BIB_EGW.exec(p);
+  if(m)return {autor:'',abr:m[1],obra:m[2]?m[2].trim():'',pag:m[3].trim()};
+  return {autor:'',obra:'',pag:'',tal:p};
+}
+var bibPags=t=>String(t||'').replace(/^p\.?\s*/i,'').split(/\s*,\s*|\s+y\s+/).map(x=>x.replace(/^p\.?\s*/i,'').trim()).filter(Boolean);
+var bibNum=x=>{const m=/(\d+)(?::(\d+))?/.exec(x);return m?(m[2]?(+m[1])*10000+(+m[2]):+m[1]):1e9;};
+/** Las fuentes de un tema: [{autor, obra, abr, pags:[...], caps:[...]}], ya juntas. */
+var bibCache={};
+function bibFuentes(t){
+  if(bibCache[t])return bibCache[t];
+  const ids=IDS_DE_TEMA[t]||[],obras={},nombreAbr={};
+  ids.forEach(id=>{const it=buscaItem(id);const lab=it?it.label:id;
+    bibLineasDe(id).forEach(l=>bibPartes(l).forEach(p=>{
+      /* Los versículos sueltos no son una obra: la Biblia va aparte (RV1995). */
+      if(/^(\d\s)?([A-ZÁÉÍÓÚ][a-záéíóúñ]+\s+)?\d{1,3}:\d/.test(p))return;
+      const x=bibPieza(p);if(x.abr&&x.obra)nombreAbr[x.abr]=x.obra;
+      /* Una pieza que no dice obra ni página («Bohr» solo) no es una referencia. */
+      if(!x.tal&&!x.obra&&!x.abr)return;
+      const k=x.tal?'tal|'+x.tal:x.abr?'egw|'+x.abr:(x.autor+'|'+x.obra).toLowerCase();
+      const o=obras[k]||(obras[k]={autor:x.autor,obra:x.obra,abr:x.abr||'',tal:x.tal||'',pags:[],caps:[]});
+      bibPags(x.pag).forEach(g=>{if(!o.pags.includes(g))o.pags.push(g);});
+      if(!o.caps.includes(lab))o.caps.push(lab);}));});
+  const lista=Object.values(obras);
+  lista.forEach(o=>{if(o.abr&&!o.obra&&nombreAbr[o.abr])o.obra=nombreAbr[o.abr];o.pags.sort((a,b)=>bibNum(a)-bibNum(b));});
+  /* El orden de la jerarquía de fuentes de Camilo: las siglas (Elena de White), Bohr, los demás por autor. */
+  const rango=o=>o.abr?0:/^Bohr$/i.test(o.autor)?1:o.tal?3:2;
+  lista.sort((a,b)=>rango(a)-rango(b)||(a.autor||'').localeCompare(b.autor||'','es')||(a.obra||a.abr||a.tal).localeCompare(b.obra||b.abr||b.tal,'es'));
+  return (bibCache[t]=lista);
+}
+function bibFuentesHTML(t){
+  const L=bibFuentes(t),fila=o=>'<li class="bf-o"><span class="bf-n">'+
+    (o.tal?'<span class="bf-t">'+o.tal+'</span>':
+      (o.autor?'<b>'+esc(o.autor)+'</b>'+(o.obra||o.abr?', ':''):'')+(o.abr?'<abbr>'+esc(o.abr)+'</abbr>'+(o.obra?' · ':''):'')+(o.obra?'<i>'+esc(o.obra)+'</i>':''))+
+    (o.pags.length?' <span class="bf-p">'+(o.abr?'':'p. ')+esc(o.pags.join(', '))+'</span>':'')+'</span>'+
+    '<span class="bf-c">'+esc(o.caps.join(' · '))+'</span></li>';
+  /* Por sigla van como el material las cita (CS, PE, 4T…; casi todas de Elena G. de White, pero
+     la sigla sola no dice el autor, así que no se le pone). */
+  const grupos=[['Por sigla',L.filter(o=>o.abr)],['Por autor y obra',L.filter(o=>!o.abr&&!o.tal)],['Otras',L.filter(o=>o.tal)]].filter(g=>g[1].length);
+  return '<div class="bf">'+(grupos.length?grupos.map(([g,os])=>'<h4 class="bf-g">'+esc(g)+'</h4><ul class="bf-l">'+os.map(fila).join('')+'</ul>').join(''):
+    '<p class="nota">Este tema sale de su propio texto: '+esc([...new Set(CAPS.filter(c=>(IDS_DE_TEMA[t]||[]).includes(c.id)).map(c=>c.src).filter(Boolean))].join(', '))+'. No cita otras obras.</p>')+'</div>';
+}
+function bibAbreFuentes(t){
+  if(!IDS_DE_TEMA[t])return;
+  abreHojaHtml('<div class="hoja-fondo" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-caja" role="dialog" aria-modal="true" aria-label="Bibliografía de '+esc(bibNombreTema(t))+'">'+
+    '<div class="hoja-asa" onclick="cierraHoja()"></div>'+
+    '<div class="hoja-cab"><div><div class="hoja-ref">Bibliografía</div><div class="hoja-sub">'+icoDe(bibIconoTema(t))+' '+esc(bibNombreTema(t))+'</div></div>'+
+    '<button type="button" class="hoja-x" onclick="cierraHoja()" aria-label="Cerrar">'+IC('x')+'</button></div>'+
+    '<div class="hoja-txt"><p class="bf-intro">Las obras que cita el material de este tema, con sus páginas y los capítulos donde se usan. Se arma sola con las líneas «Fuente:» del material: no se escribe a mano. La Biblia va en RV1995.</p>'+
+    bibFuentesHTML(t)+'</div></div>','fuentes');
+}
+
+/* ── La portada de la Biblioteca ── */
+/* Lo que se ve con imagen o lado a lado: las láminas, Comparar (con Paralelos y los
+   últimos acontecimientos adentro). Solo lo que existe en el tema que se ve. */
+function bibVerHTML(t){
+  const ids=IDS_DE_TEMA[t]||[];
+  const lams=(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>ids.includes(k)&&LAMINAS[k].titulo&&LAMINAS[k].dir);
+  const cmp=MODULOS.find(m=>ES_COMPARAR.test(m.id)&&(ids.includes(m.id)||m.tema===t));
+  const tarjetas=lams.map(k=>{const L=LAMINAS[k],c=buscaItem(k);
+    return '<button type="button" class="bv-t" onclick="bibLamina(\''+k+'\')"><span class="bv-img">'+lamMiniHTML(k)+'</span>'+
+      '<span class="bv-tx"><small>'+esc(c?c.label:'')+' · lámina</small><b>'+esc(L.titulo)+'</b></span></button>';});
+  if(cmp){
+    tarjetas.push('<button type="button" class="bv-t bv-cmp" onclick="bibComparar(\'\')"><span class="bv-img bv-ico">'+IC('comparar')+'</span>'+
+      '<span class="bv-tx"><small>Comparar</small><b>Las visiones lado a lado</b></span></button>');
+    if(typeof PARALELOS!=='undefined'&&Array.isArray(PARALELOS)&&PARALELOS.length)
+      tarjetas.push('<button type="button" class="bv-t bv-cmp" onclick="bibComparar(\'cmpPar\')"><span class="bv-img bv-ico">'+IC('lista')+'</span>'+
+        '<span class="bv-tx"><small>Paralelos</small><b>Un poder o un tema en cada capítulo</b></span></button>');
+    if(typeof ULTIMOS!=='undefined'&&ULTIMOS)
+      tarjetas.push('<button type="button" class="bv-t bv-cmp" onclick="bibComparar(\'cmpUlt\')"><span class="bv-img bv-ico">'+IC('reloj')+'</span>'+
+        '<span class="bv-tx"><small>Los últimos acontecimientos</small><b>Del juicio a la tierra nueva</b></span></button>');
+  }
+  if(!tarjetas.length)return '';
+  return '<section class="bib-ver" aria-labelledby="bib-ver-t"><h3 class="bib-h" id="bib-ver-t">Para ver</h3><div class="bv-fila">'+tarjetas.join('')+'</div></section>';
+}
+function pintaBib(){
+  const z=document.getElementById('bib-cab');if(!z)return;
+  const t=bibTema(),propio=ACT().tema,nv=bibNivel(),libre=!!(CAT().libre||sinPoliticas(S.cat));
+  const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
+    icoDe(bibIconoTema(x))+'<span>'+esc(bibNombreTema(x))+'</span>'+(x===propio&&!libre?'<small>tu concurso</small>':'')+'</button>';
+  const nivel=n=>'<button type="button" class="bib-nv'+(n[0]===nv?' on':'')+'" aria-pressed="'+(n[0]===nv)+'" onclick="bibPonNivel(\''+n[0]+'\')"><b>'+esc(n[1])+'</b><small>'+esc(n[2])+'</small></button>';
+  z.innerHTML='<div class="bib-hero"><div class="bib-ant">'+IC('libro')+' Biblioteca</div>'+
+    '<h2 class="bib-tit">Todo el material, abierto para ti</h2>'+
+    '<p class="bib-p">Lee, escucha y mira cualquier tema, a tu ritmo. No hace falta estar en un concurso.</p>'+
+    '<div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div>'+
+    '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
+    '<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div>'+
+    '<p class="bib-nota">'+(bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
+      (BIB_NIVELES.find(n=>n[0]===nv)[1])+': '+BIB_NIVELES.find(n=>n[0]===nv)[2]+'. El nivel lo escoges tú; no depende de tu edad ni de tu categoría.')+'</p></div>'+
+    bibVerHTML(t)+
+    '<button type="button" class="bib-otra" onclick="ir(\'examen\')">'+IC('examen')+'<span><b>¿Te preparas para un concurso?</b> En Concursos escoges tu categoría por edad y practicas el examen.</span>'+IC('der')+'</button>';
+}
+/** Al final del tema, en la rejilla: su bibliografía. */
+function bibPieHTML(){
+  const t=bibTema(),n=bibFuentes(t).length;
+  return '<button type="button" class="bib-otra bib-pie" style="grid-column:1/-1" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+
+    '<span><b>Bibliografía de '+esc(bibNombreTema(t))+'</b> '+(n?n+' obras citadas, con sus páginas y dónde se usan.':'Este tema sale de su propio texto.')+'</span>'+IC('der')+'</button>';
+}
+function bibLamina(k){if(!LAMINAS[k])return;verCap(k);lamAbre(k,'explorar');}
+/* Comparar vive en el repaso «…-comparar» del tema; `donde`: Paralelos (cmpPar) o
+   los últimos acontecimientos (cmpUlt) dentro de él. */
+function bibComparar(donde){
+  const t=bibTema(),ids=IDS_DE_TEMA[t]||[],m=MODULOS.find(x=>ES_COMPARAR.test(x.id)&&(ids.includes(x.id)||x.tema===t))||MODULOS.find(x=>ES_COMPARAR.test(x.id));
+  if(!m)return;verCap(m.id);
+  const ve=()=>{const e=document.getElementById(donde||'detalle');if(e&&e.scrollIntoView)e.scrollIntoView({block:'start'});};
+  if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(ve));else ve();
+}
+
+/* ── De la pregunta a su sección ── */
+/* Los versículos que el título de una sección dice tratar: «(2:41-43)», «(1:4-8, 1:19)». */
+function bibRangos(t,n){
+  const out=[];String(t||'').replace(/\(([^)]*)\)/g,(m,dentro)=>{
+    dentro.replace(/(\d{1,2}):(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/g,(x,c,v,h)=>{if(c===n)out.push([+v,h?+h:+v]);return x;});return m;});
+  return out;
+}
+/* Por objeto: el id de una pregunta cambia de examen en examen. */
+var bibDondeCache=typeof WeakMap==='function'?new WeakMap():null;
+/** Dónde se estudia una pregunta: {cap, i} (i = índice de la sección en CONTENIDO, o -1). */
+function bibDondeQ(q){
+  if(!q||!q.cap||!buscaItem(q.cap))return null;
+  if(bibDondeCache&&bibDondeCache.has(q))return bibDondeCache.get(q);
+  const lb=libroCid(q.cap),secs=CONTENIDO[q.cap]||[];let i=-1;
+  if(lb){
+    /* El versículo de la pregunta (q.v) manda; sin él, los que cita su enunciado o su explicación. */
+    const vs=new Set();
+    if(q.v){const m=/^(\d{1,2}):(\d{1,3})(?:-(\d{1,3}))?$/.exec(q.v);if(m&&m[1]===lb.n)for(let x=+m[2];x<=(m[3]?+m[3]:+m[2]);x++)vs.add(x);}
+    if(!vs.size)refsQ(q,q.cap).forEach(v=>vs.add(v));
+    if(vs.size){let mejor=1e9;
+      secs.forEach((s,j)=>{bibRangos(s.t,lb.n).forEach(([de,a])=>{if([...vs].some(v=>v>=de&&v<=a)){
+        /* La del estudio («Para el examen») antes que la de interpretación; entre ellas, la más precisa. */
+        const w=(esSecInterp(s)?1000:0)+(a-de);if(w<mejor){mejor=w;i=j;}}});});}
+  }
+  const r={cap:q.cap,i};if(bibDondeCache)bibDondeCache.set(q,r);return r;
+}
+function bibLinkQ(q){
+  const d=bibDondeQ(q);if(!d)return '';
+  const c=buscaItem(d.cap),s=d.i>=0?(CONTENIDO[d.cap]||[])[d.i]:null;
+  return '<button type="button" class="q-bib" onclick="bibIrQ(\''+d.cap+'\','+d.i+')">'+IC('libro')+
+    '<span>Estúdialo en la Biblioteca: <b>'+esc(c.label)+(s?' · '+esc(tituloSec(s.t)):'')+'</b></span>'+IC('der')+'</button>';
+}
+function bibIrQ(cap,i){
+  if(!buscaItem(cap))return;
+  const s=i>=0?(CONTENIDO[cap]||[])[i]:null;
+  if(s&&esSecInterp(s))capPest='prof';
+  verCap(cap);
+  if(!s)return;
+  if(esSecInterp(s))ponPest('prof');
+  const ve=()=>{const e=document.querySelector('#detalle .sec[data-i="'+i+'"]');if(!e)return;
+    if(e.style.display==='none'){const b=document.querySelector('#detalle .capa-filtro .cf');if(b)filtraCapa(b,'');}
+    /* scrollIntoView mueve también la columna del capítulo en pantalla ancha (tiene su propio
+       desplazamiento); scroll-margin-top la deja debajo de lo fijo arriba (biblioteca.css). */
+    e.scrollIntoView({block:'start'});};
+  const marca=()=>{const e=document.querySelector('#detalle .sec[data-i="'+i+'"]');if(e){e.classList.remove('destaca');void e.offsetWidth;e.classList.add('destaca');}};
+  /* Otra vez cuando el capítulo terminó de acomodarse (en pantalla ancha se reparte en columnas). */
+  dondeEspera(900);
+  if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(()=>{ve();marca();}));else{ve();marca();}
+  setTimeout(()=>{ve();lugarAnota();},450);
+}
+
+/* ── Concursos ── */
+function pintaConcursos(){
+  const z=document.getElementById('con-cab');if(!z)return;
+  const ya=ACT_DE(S.cat),A=ACTIVIDADES[ya],libre=!!(CAT().libre);
+  const acts=Object.keys(ACTIVIDADES);
+  const conFecha=acts.filter(a=>ACTIVIDADES[a].fecha).sort((a,b)=>ACTIVIDADES[b].fecha.localeCompare(ACTIVIDADES[a].fecha)),
+    sinFecha=acts.filter(a=>!ACTIVIDADES[a].fecha);
+  const carta=a=>{const X=ACTIVIDADES[a],cs=CATS_DE_ACT(a),mia=a===ya;
+    return '<li class="con-c'+(mia?' mia':'')+'"><div class="con-ct"><span class="con-ic">'+icoDe(X.icono)+'</span><div><b>'+esc(X.nombre)+'</b>'+
+      '<small>'+esc(X.que)+' · '+esc(X.cuando)+'</small></div></div>'+
+      '<div class="con-cats">'+cs.map(k=>{const c=CATS[k];return '<span class="con-cat'+(k===S.cat?' on':'')+'"><b>'+esc(c.nombre)+'</b> '+esc(c.edad)+'</span>';}).join('')+'</div>'+
+      '<div class="con-acc">'+(mia?'<span class="con-mia">'+IC('check')+' Te preparas para este</span>':
+        '<button type="button" class="btn tono peq" onclick="bibPrepara(\''+a+'\')">Prepararme</button>')+
+      '<button type="button" class="btn txt peq" onclick="bibPonTema(\''+X.tema+'\');ir(\'estudio\')">'+IC('libro')+' Su material</button></div></li>';};
+  z.innerHTML='<div class="con-hero"><div class="bib-ant">'+IC('examen')+' Concursos</div>'+
+    '<h2 class="bib-tit">Prepárate para tu concurso</h2>'+
+    '<p class="bib-p">Tu categoría por edad pone la dificultad y las reglas del examen. El material es el mismo para todos, en la Biblioteca.</p>'+
+    '<div class="con-tuya">'+(libre?'<span>Ahora estudias <b>'+esc(A.nombre)+'</b> sin concurso.</span>':
+      '<span>Tu preparación: <b>'+esc(catCorta(S.cat))+'</b> · '+esc(CAT().edad)+'</span>')+
+      '<button type="button" class="btn ver peq" onclick="abreYo()">'+IC('persona')+' Cambiar</button></div></div>'+
+    '<h3 class="bib-h con-ex">Tu examen: simulacros y exámenes</h3>';
+  /* Quien entra a practicar ve primero su examen; los demás concursos van después. */
+  const zl=document.getElementById('con-lista');if(!zl)return;
+  zl.innerHTML='<h3 class="bib-h con-ex">Todos los concursos y campamentos</h3>'+
+    (conFecha.length?'<h4 class="con-sub">Con fecha</h4><ul class="con-l">'+conFecha.map(carta).join('')+'</ul>':'')+
+    (sinFecha.length?'<h4 class="con-sub">Fecha por confirmar</h4><ul class="con-l">'+sinFecha.map(carta).join('')+'</ul>':'')+
+    '<button type="button" class="bib-otra" onclick="ir(\'estudio\')">'+IC('libro')+'<span><b>Todo lo que se pregunta está en la Biblioteca.</b> Cada pregunta del examen, al revisarla, te lleva a donde se estudia.</span>'+IC('der')+'</button>';
+}
+/* «Prepararme»: la hoja de quién estudia, ya en ese concurso (paso de la categoría). */
+function bibPrepara(a){if(!ACTIVIDADES[a])return;abreYo();prepActividad(a);}
+
+/* ── Inicio: las dos puertas ── */
+/* El concurso que se anuncia en el Inicio: el próximo con fecha; si ninguno viene, el
+   tuyo si aún no tiene fecha; si no, el primero sin fecha; si no, el tuyo. Sin inventar
+   fechas: se muestra el «cuando» de la ficha tal cual. */
+function bibProximo(){
+  const d=new Date(),hoy=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const acts=Object.keys(ACTIVIDADES),ya=ACT_DE(S.cat),libre=!!(CAT().libre);
+  const fut=acts.filter(a=>ACTIVIDADES[a].fecha&&ACTIVIDADES[a].fecha>=hoy).sort((a,b)=>ACTIVIDADES[a].fecha.localeCompare(ACTIVIDADES[b].fecha));
+  if(fut.length)return {a:fut[0],r:fut[0]===ya&&!libre?'Tu concurso':'Próximo concurso',pasado:false};
+  const sin=acts.filter(a=>!ACTIVIDADES[a].fecha);
+  if(!libre&&sin.includes(ya))return {a:ya,r:'Tu concurso',pasado:false};
+  if(sin.length)return {a:sin[0],r:'Próximo concurso',pasado:false};
+  return ACTIVIDADES[ya]?{a:ya,r:'Tu concurso',pasado:true}:null;
+}
+/* Lo destacado de la Biblioteca: las láminas del tema que se ve, Paralelos y los últimos
+   acontecimientos (lo mismo que «Para ver»), como atajos. */
+function bibDestacados(){
+  const t=bibTema(),ids=IDS_DE_TEMA[t]||[],out=[];
+  (typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>ids.includes(k)&&LAMINAS[k].titulo&&LAMINAS[k].dir).forEach(k=>{const c=buscaItem(k);
+    out.push('<button type="button" class="ent-d" onclick="bibLamina(\''+k+'\')"><span class="ent-dimg">'+lamMiniHTML(k)+'</span><span>'+esc(c?c.label:k)+'</span></button>');});
+  const cmp=MODULOS.find(m=>ES_COMPARAR.test(m.id)&&(ids.includes(m.id)||m.tema===t));
+  if(cmp&&typeof PARALELOS!=='undefined'&&Array.isArray(PARALELOS)&&PARALELOS.length)
+    out.push('<button type="button" class="ent-d" onclick="bibComparar(\'cmpPar\')"><span class="ent-dimg ent-dico">'+IC('lista')+'</span><span>Paralelos</span></button>');
+  if(cmp&&typeof ULTIMOS!=='undefined'&&ULTIMOS)
+    out.push('<button type="button" class="ent-d" onclick="bibComparar(\'cmpUlt\')"><span class="ent-dimg ent-dico">'+IC('reloj')+'</span><span>Últimos acontecimientos</span></button>');
+  return out.join('');
+}
+function pintaEntradas(){
+  const z=document.getElementById('ini-entradas');if(!z)return;
+  const pr=bibProximo(),X=pr&&ACTIVIDADES[pr.a],dest=bibDestacados();
+  z.innerHTML='<div class="ent ent-bib"><button type="button" class="ent-cab" onclick="ir(\'estudio\')"><span class="ent-ic">'+IC('libro')+'</span>'+
+    '<span class="ent-tx"><b>Biblioteca</b><small>Todos los temas, abiertos: capítulos, láminas, paralelos y su bibliografía.</small></span>'+IC('der','ent-fl')+'</button>'+
+    (dest?'<div class="ent-dest" role="group" aria-label="Destacados de '+esc(bibNombreTema(bibTema()))+'">'+dest+'</div>':'')+'</div>'+
+    '<div class="ent ent-con"><button type="button" class="ent-cab" onclick="ir(\'examen\')"><span class="ent-ic">'+IC('examen')+'</span>'+
+    '<span class="ent-tx"><b>Concursos</b><small>Tu categoría por edad, simulacros y exámenes.</small></span>'+IC('der','ent-fl')+'</button>'+
+    (X?'<button type="button" class="ent-prox" onclick="ir(\'examen\')"><span class="ent-pr">'+esc(pr.r)+'</span><b>'+esc(X.nombre)+'</b>'+
+      '<span class="ent-cu">'+icoDe(X.icono)+' '+esc(pr.pasado?'Fue el '+X.cuando:X.cuando)+'</span></button>':'')+'</div>';
+}
 /* ───────── estado ───────── */
 /* ───────── categorías ─────────
    Salen del reglamento del campamento: cada club presenta dos integrantes de
@@ -82216,12 +82696,17 @@ function lamPrecarga(cid,esc){
   if(esc){const listo=()=>esc.classList.remove('cargando');p.then(listo);setTimeout(listo,8000);}
 }
 /* La tarjeta que invita, dentro del estudio del capítulo. */
+/* v235: la miniatura de una lámina, la misma en el capítulo y en la Biblioteca. */
+function lamMiniHTML(cid){
+  const L=LAMINAS[cid];if(!L)return '';
+  const src=f=>lamRuta(L,f);
+  if(L.tipo==='escenas')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
+  return '<img src="'+src('babilonia')+'" alt="" loading="lazy">'+(L.capas||[]).map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('');
+}
 function lamTarjeta(cid){
   const L=LAMINAS[cid];
   if(!L)return '';
-  const src=f=>lamRuta(L,f);
-  return '<div class="lam-invita"><div class="lam-mini">'+(L.tipo==='escenas'?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'<img src="'+src('babilonia')+'" alt="" loading="lazy">'+
-    L.capas.map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join(''))+'</div>'+
+  return '<div class="lam-invita"><div class="lam-mini">'+lamMiniHTML(cid)+'</div>'+
     '<div class="lam-itx"><div class="lam-ant">Estudio interactivo</div><div class="lam-itit">'+esc(L.titulo)+'</div>'+
     '<p>'+esc(L.invita||'Toca cada parte de la estatua: lo que dice el texto, lo que significa, sus fechas y su fuente.')+'</p>'+
     '<div class="lam-bots"><button type="button" class="btn ver" onclick="lamAbre(\''+cid+'\',\'explorar\')">'+IC('lupa')+' Explorar</button>'+
@@ -86501,6 +86986,8 @@ function pintaSenales(){
 }
 
 function pintaInicio(){
+  /* v235: las dos puertas, Biblioteca y Concursos (biblioteca-app.js). */
+  if(typeof pintaEntradas==='function')pintaEntradas();
   pintaAlumnos();
   pintaYo();
   pintaSenales();
@@ -86561,7 +87048,7 @@ function pintaFiltro(pant){
   /* v214: con reglamento, el primer corte es «Lo del concurso» o «Todo el material»;
      el de capítulos (solo en los libros) va debajo. */
   const conc=hayConcurso(),capitulos=conFiltro()&&caps.length>1;
-  const ver=TABS[pant]!==undefined&&(capitulos||conc);
+  const ver=TABS[pant]!==undefined&&(capitulos||conc)&&!(pant==='estudio'&&typeof bibAjeno==='function'&&bibAjeno());
   z.hidden=!ver;
   if(!ver)return;
   const f=capitulos?idsFiltro():null;
@@ -86687,7 +87174,11 @@ function pintaCaps(){
      primera creencia, y cada tarjeta dice su doctrina. Sale de GRUPOS, así
      que otra actividad que declare grupos lo hereda sin tocar esto. */
   let grupoAbierto=null;
-  const vista=capsVista();
+  /* v235: la portada de la Biblioteca va arriba; si se ve otro tema que el del concurso,
+     sus capítulos y repasos enteros (ver biblioteca-app.js). */
+  if(typeof pintaBib==='function')pintaBib();
+  const aj=typeof bibAjeno==='function'&&bibAjeno();
+  const vista=aj?bibCapsAjeno():capsVista();
   /* Con un solo grupo a la vista el rótulo repetiría el título de arriba. */
   const conRotulos=new Set(vista.map(c=>c.doc).filter(Boolean)).size>1;
   const caps=vista.map(c=>{
@@ -86699,7 +87190,7 @@ function pintaCaps(){
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     /* v147: el número va en el color de la categoría, igual en todos. Siete
        colores sin significado competían con el título. */
-    '<div class="n">'+esc(c.label.replace(/^(Daniel |P&R )/,''))+'</div>'+
+    '<div class="n">'+esc(c.label.replace(/^(Daniel |P&R |Apocalipsis )/,''))+'</div>'+
     '<div class="t">'+esc(c.sub)+'</div>'+
     /* Cuantos versiculos trae, para poder repartir la lectura antes de abrirlo:
        Daniel 2 son 49 y Daniel 1 son 21, y eso cambia como se planea la semana.
@@ -86707,7 +87198,7 @@ function pintaCaps(){
     '<div class="f">'+esc(origenDe(c))+(c.vs?' · '+c.vs+' vers.':'')+'</div>'+
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
-    (soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
+    (!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
     '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
   const botonMod=m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
@@ -86715,16 +87206,20 @@ function pintaCaps(){
     '<div class="s">'+esc(m.sub)+'</div>'+
     '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>';
-  const mods=modsDe().filter(m=>!m.prof).map(botonMod).join('');
-  const prof=modsDe().filter(m=>m.prof).map(botonMod).join('');
+  const ms=aj?bibModsAjeno():modsDe();
+  const mods=ms.filter(m=>!m.prof).map(botonMod).join('');
+  const prof=ms.filter(m=>m.prof).map(botonMod).join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
-    icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos')+
+    (aj?icoDe(bibIconoTema(bibTema()))+' '+esc(bibNombreTema(bibTema()))+' · '+(bibTema()==='creencias'?'las 28 creencias':'capítulos'):
+      icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos'))+
     '</div>'+caps+
     (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'')+
-    (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'');
+    (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'')+
+    /* v235: cada tema termina con su bibliografía, armada sola (biblioteca-app.js). */
+    (typeof bibPieHTML==='function'?bibPieHTML():'');
 }
 
 /* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
@@ -87644,8 +88139,10 @@ function compruebaRec(rid,elegido,correcta){
    Siguiente. El orden es el de la pantalla Estudiar, que es el que ya sigue
    «Ya lo estudié»: los capítulos que el filtro deja ver y después los repasos. */
 function navCap(id){
-  const caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
-  const i=lista.findIndex(x=>x.id===id);
+  let caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
+  let i=lista.findIndex(x=>x.id===id);
+  /* v235: un capítulo de otro tema (la Biblioteca) recorre su propio tema. */
+  if(i<0&&typeof bibListaDe==='function'){const o=bibListaDe(id);if(o){caps=o.caps;mods=o.mods;lista=[...caps,...mods];i=lista.findIndex(x=>x.id===id);}}
   if(i<0||lista.length<2)return '';
   const a=lista[i-1], b=lista[i+1], k=caps.findIndex(x=>x.id===id);
   const donde=k>=0?(k+1)+' de '+caps.length:'Repaso '+(mods.findIndex(x=>x.id===id)+1)+' de '+mods.length;
@@ -87658,6 +88155,9 @@ function navCap(id){
 
 function verCap(id,quieto){
   paraVoz();
+  /* v235: la estantería de la Biblioteca sigue al capítulo, y el nivel de lectura
+     escogido pone la pestaña de entrada (biblioteca-app.js). */
+  if(typeof bibSigue==='function'){bibSigue(id);bibNivelAntes();}
   /* v161: ¿desde dónde se llega? Si ya había un capítulo abierto en esta
      pantalla (Siguiente, Anterior, «Ya lo estudié», otra tarjeta), la página
      se pone de una en el capítulo nuevo. Si se viene de la rejilla sin nada
@@ -87741,6 +88241,7 @@ function verCap(id,quieto){
   numeraDecl(d);
   enlazaCreencias(d);
   divideVista(d,id);
+  if(typeof bibAplicaNivel==='function')bibAplicaNivel(id);
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
      creencias en una rejilla de cuatro columnas, el detalle nace siete filas
@@ -87852,8 +88353,11 @@ function lugarEscribe(c){
 const LUGAR_PANT=['inicio','estudio','tarjetas','examen','logros'];
 let lugarT=0,lugarListo=false;
 /* El camino de lo que se ve ahora. */
+/* v235: en la dirección las pantallas se llaman como en la barra (Biblioteca, Concursos);
+   los caminos viejos («estudio/…», «examen») se leen igual y se reescriben con el nuevo. */
+const LUGAR_PUB={estudio:'biblioteca',examen:'concursos'}, LUGAR_DE_PUB={biblioteca:'estudio',concursos:'examen'};
 function lugarActual(){
-  const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[pant];
+  const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[LUGAR_PUB[pant]||pant];
   if(pant==='estudio'&&S.ultItem){
     r.push(S.ultItem);
     const d=document.getElementById('detalle');
@@ -87882,6 +88386,7 @@ function lugarParte(c){
   const q=c.indexOf('?');
   if(q>=0){const a=/(?:^|&)a=([\w-]{1,24})/.exec(c.slice(q+1));if(a)o.a=a[1];c=c.slice(0,q);}
   const s=c.split('/').filter(Boolean);let i=0;
+  if(LUGAR_DE_PUB[s[0]])s[0]=LUGAR_DE_PUB[s[0]];
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
   if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
@@ -90359,6 +90864,8 @@ function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||
 const refrescaEx=()=>{pintaExInicio();};
 
 function pintaExInicio(){
+  /* v235: arriba, los concursos con sus categorías por edad (biblioteca-app.js). */
+  if(typeof pintaConcursos==='function')pintaConcursos();
   pintaMenuEx();
   const b=bancoDe().length,f=falladasDe().length;
   const nv=nivelEfectivo();
@@ -90691,7 +91198,9 @@ function htmlQ(q,n,ver){
   }
   const cls=ver?(bien(q)?' hecha':' mal'):(hecha(q)?' hecha':'');
   const voz=!ver&&puedeHablar()?' '+BTN_VOZ:'';
-  return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+cuerpo+'</div>';
+  /* v235: al revisar, cada pregunta lleva a donde se estudia en la Biblioteca. */
+  const bib=ver&&typeof bibLinkQ==='function'?bibLinkQ(q):'';
+  return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+cuerpo+bib+'</div>';
 }
 
 const limpia=s=>String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ');

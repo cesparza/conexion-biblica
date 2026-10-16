@@ -1085,7 +1085,7 @@ for (const W of ANCHOS) {
     const h = await p.evaluate(() => location.hash);
     await p.reload(); await p.waitForTimeout(1600);
     const r = await p.evaluate(mira), h2 = await p.evaluate(() => location.hash);
-    ok(r === true && h === h2 && /^#\/estudio\//.test(h), W + ' · v215: recargar deja en el mismo lugar · ' + nombre + ' (' + h + (r === true ? '' : ' → ' + JSON.stringify(r)) + ')');
+    ok(r === true && h === h2 && /^#\/biblioteca\//.test(h), W + ' · v215: recargar deja en el mismo lugar · ' + nombre + ' (' + h + (r === true ? '' : ' → ' + JSON.stringify(r)) + ')');
   };
   await recarga('Daniel 7, «Para profundizar», lámina en las tres fases', () => { verCap('d7'); ponPest('prof'); lamAbre('d7', 'explorar'); lamIr('x-fases'); },
     () => lamModo === 'explorar' && lamId === 'd7' && lamDonde === 'x-fases' && capPest === 'prof' && S.ultItem === 'd7' || [lamModo, lamId, lamDonde, capPest, S.ultItem]);
@@ -1661,6 +1661,83 @@ for (const [W, H, modo] of [[1900, 900, 'presentar'], [1440, 900, 'explorar'], [
     await p.evaluate(() => lamCierra());
   }
   ok(errores.length === 0, W + ' · v233: cero errores' + (errores.length ? ': ' + errores.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+
+/* ── v235: dos entradas, «Biblioteca» y «Concursos». La barra, las portadas, otro tema entero,
+   el nivel de lectura, las fuentes, los caminos viejos que se reescriben, los concursos con sus
+   edades y la pregunta del examen que lleva a su sección. Nada se desplaza de lado y todo
+   blanco mide 44 px. ── */
+for (const [W, H] of [[1440, 900], [390, 844]]) {
+  const tel = W < 600, ctx = await nav.newContext({ viewport: { width: W, height: H }, serviceWorkers: 'block', isMobile: tel, hasTouch: tel });
+  const p = await ctx.newPage(); const errores = [];
+  p.on('pageerror', e => errores.push(e.message)); p.on('dialog', d => d.accept());
+  /* El arranque atrapa sus errores y los manda a la consola: aquí también cuentan. */
+  p.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errores.push('consola: ' + m.text().slice(0, 120)); });
+  await p.route('**/api/**', r => r.fulfill({ json: {} }));
+  await p.goto(base + '?quedarse=1'); await p.waitForTimeout(500);
+  await p.evaluate(() => { S.nombre = 'Camilo'; S.cat = 'pa'; guardar(); ponCat('pa'); ir('inicio'); });
+  /* Un enlace viejo («#/estudio/d7») abre lo mismo y se reescribe con el nombre nuevo. */
+  await p.goto(base + '?quedarse=1#/estudio/d7'); await p.reload(); await p.waitForTimeout(1200);
+  const viejo = await p.evaluate(() => [location.hash, S.ultPantalla, S.ultItem]);
+  await p.goto(base + '?quedarse=1#/examen'); await p.reload(); await p.waitForTimeout(1000);
+  const ex = await p.evaluate(() => location.hash);
+  await p.evaluate(() => ir('inicio'));
+  const r = await p.evaluate(async () => {
+    const espera = ms => new Promise(r => setTimeout(r, ms)), mal = [];
+    const blancos = sel => [...document.querySelectorAll(sel)].filter(e => e.getClientRects().length).map(e => e.getBoundingClientRect()).filter(b => b.width && (b.height < 44 || b.width < 44)).length;
+    const lado = () => document.documentElement.scrollWidth > innerWidth;
+    const tabs = [...document.querySelectorAll('.nav-t button b')].map(b => b.textContent).join(',');
+    if (tabs !== 'Inicio,Biblioteca,Practicar,Concursos,Logros') mal.push('barra ' + tabs);
+    if (document.querySelectorAll('#ini-entradas .ent').length !== 2 || blancos('#ini-entradas .ent')) mal.push('puertas del inicio');
+    /* Lo que invita: los destacados de la Biblioteca (las láminas del tema, Paralelos, los últimos
+       acontecimientos) y el concurso que viene, todo tocable a 44 px. */
+    if (document.querySelectorAll('#ini-entradas .ent-d').length < 4 || !document.querySelector('#ini-entradas .ent-prox b') || blancos('#ini-entradas .ent-d, #ini-entradas .ent-cab, #ini-entradas .ent-prox')) mal.push('lo que invita en el inicio');
+    ir('estudio'); await espera(300);
+    if (!/^#\/biblioteca/.test(location.hash)) mal.push('dirección ' + location.hash);
+    const temas = document.querySelectorAll('#bib-cab .bib-tema').length, ver = document.querySelectorAll('#bib-cab .bv-t').length;
+    if (temas < 4 || ver < 6) mal.push('portada: ' + temas + ' temas, ' + ver + ' para ver');
+    if (blancos('#bib-cab .bib-tema, #bib-cab .bib-nv, #bib-cab .bib-fu, .bib-otra')) mal.push('blancos de la Biblioteca');
+    if (lado()) mal.push('Biblioteca de lado');
+    /* Cada tema termina con su bibliografía. */
+    if (!/Bibliografía de Daniel/.test((document.querySelector('#lista-caps .bib-pie') || {}).textContent || '')) mal.push('bibliografía al final del tema');
+    /* Otro tema: entero, sin el filtro del concurso, y su capítulo con Anterior/Siguiente. */
+    bibPonTema('apocalipsis'); await espera(300);
+    if (!document.querySelector('#lista-caps .c-ap1') || document.querySelector('#lista-caps .c-d1') || !document.getElementById('filtro-est').hidden) mal.push('otro tema');
+    verCap('ap3'); await espera(400);
+    if (!document.querySelector('#detalle .cap-nav') || !/^#\/biblioteca\/ap3/.test(location.hash)) mal.push('capítulo de otro tema ' + location.hash);
+    bibPonTema('daniel'); await espera(200);
+    /* El nivel de lectura: «A fondo» abre en Para profundizar. */
+    bibPonNivel('fondo'); verCap('d2'); await espera(300);
+    if (document.getElementById('detalle').getAttribute('data-pest') !== 'prof') mal.push('A fondo');
+    bibPonNivel(''); verCap('d2'); await espera(300);
+    if (document.getElementById('detalle').getAttribute('data-pest') !== 'examen') mal.push('Todo');
+    /* Las fuentes del tema. */
+    bibAbreFuentes('daniel'); await espera(400);
+    const fu = /Bibliografía/.test((document.querySelector('#hoja .hoja-ref') || {}).textContent || '') ? document.querySelectorAll('#hoja .bf-o').length : 0; cierraHoja(); await espera(300);
+    if (fu < 20) mal.push('fuentes ' + fu);
+    /* Concursos: cada concurso con sus categorías y su edad; «Prepararme» abre la preparación. */
+    ir('examen'); await espera(300);
+    if (!/^#\/concursos/.test(location.hash)) mal.push('dirección ' + location.hash);
+    const cs = document.querySelectorAll('#con-lista .con-c').length, edades = [...document.querySelectorAll('#con-lista .con-cat')].every(e => /\d|Adultos|Cuestionario/.test(e.textContent));
+    if (cs !== Object.keys(ACTIVIDADES).length || !edades) mal.push('concursos ' + cs);
+    if (blancos('#con-cab .btn, #con-lista .btn')) mal.push('blancos de Concursos');
+    if (lado()) mal.push('Concursos de lado');
+    document.querySelector('#con-lista .con-c:not(.mia) .btn.tono').click(); await espera(400);
+    if (!document.querySelector('#hoja #prep .alu-nueva, #hoja .cat-sel')) mal.push('Prepararme');
+    cierraHoja(); await espera(300);
+    /* El examen revisado: cada pregunta a la Biblioteca; una con sección, a su sección. */
+    arrancaExamen('normal'); await espera(300); entregar(); await espera(700);
+    const qs = document.querySelectorAll('#ex-result .q').length, bs = [...document.querySelectorAll('#ex-result .q-bib')];
+    if (!qs || bs.length !== qs || blancos('#ex-result .q-bib')) mal.push('enlaces del examen ' + bs.length + '/' + qs);
+    const b = bs.find(x => /·/.test(x.textContent));
+    if (b) { b.click(); await espera(900); const e = document.querySelector('#detalle .sec.destaca'), t = e && e.getBoundingClientRect().top;
+      if (!e || !/\/s\d+/.test(location.hash) || t < 40 || t > 220 || !b.textContent.includes(e.querySelector('.sec-rot').textContent.trim())) mal.push('a la sección: ' + location.hash + ' ' + t); }
+    return mal;
+  });
+  if (!/^#\/biblioteca\/d7/.test(viejo[0]) || viejo[1] !== 'estudio' || viejo[2] !== 'd7') r.push('camino viejo ' + JSON.stringify(viejo));
+  if (ex !== '#/concursos') r.push('examen viejo ' + ex);
+  ok(!r.length && !errores.length, W + ' · v235: Biblioteca y Concursos: barra, puertas, otro tema entero, nivel de lectura, bibliografía al final del tema, lo que invita en el inicio (destacados y el concurso que viene), «#/estudio/…» y «#/examen» reescritos, concursos con su edad, cada pregunta a su sección; sin desborde y blancos de 44 px' + (r.length || errores.length ? ' — ' + r.concat(errores).slice(0, 5).join(' | ') : ''));
   await ctx.close();
 }
 await nav.close(); srv.close();

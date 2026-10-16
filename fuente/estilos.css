@@ -5292,6 +5292,7 @@ span.cmp-ult-c{cursor:default}
 .lm-n{font-size:.75rem;line-height:1.2;color:var(--gris,#5B5F6B);max-width:100%;text-wrap:balance;overflow-wrap:anywhere;min-height:1.2em}
 .lm-e.ya .lm-p{border-color:color-mix(in srgb,var(--txt,#1a1a2e) 55%,transparent)}
 .lm-e.juicio .lm-p{background:#D6B26A;border-color:#8A6A1F}
+.lm-e.juicio .lm-a b{color:var(--lam-oro2,var(--lam-oro,#B98A35))}
 .lm-e.hoy .lm-p::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--txt,#1a1a2e);animation:lamHoyLate 1.8s ease-out infinite}
 .lm-e.fut .lm-p{border-style:dashed;border-color:var(--lam-oro,#B98A35)}
 .lm-e.fut .lm-a b,.lm-e.hoy .lm-a b{font-size:1rem}

@@ -157,9 +157,9 @@
        existe no se puede duplicar por llamar dos veces a la funcion. -->
   <div class="nav-t">
     <button class="on" onclick="ir('inicio')"><i><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></i><b>Inicio</b></button>
-    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Estudiar</b><span class="nv gris" id="nv-est" hidden></span></button>
+    <button onclick="ir('estudio')"><i><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg></i><b>Biblioteca</b><span class="nv gris" id="nv-est" hidden></span></button>
     <button onclick="ir('tarjetas')"><i><svg class="ico" aria-hidden="true"><use href="#i-tarjetas"/></svg></i><b>Practicar</b><span class="nv" id="nv-tj" hidden></span></button>
-    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Examen</b><span class="nv-punto" id="nv-ex" hidden></span></button>
+    <button onclick="ir('examen')"><i><svg class="ico" aria-hidden="true"><use href="#i-examen"/></svg></i><b>Concursos</b><span class="nv-punto" id="nv-ex" hidden></span></button>
     <button onclick="ir('logros')"><i><svg class="ico" aria-hidden="true"><use href="#i-trofeo"/></svg></i><b>Logros</b><span class="nv" id="nv-lg" hidden></span></button>
   </div>
 </nav>
@@ -234,6 +234,9 @@
        pintaHero() con el capítulo y la sección donde se quedó, cuánto falta y
        los tres niveles (leído, practicado, dominado). -->
   <section class="hero-c" id="ini-hero" aria-label="Continuar" hidden></section>
+
+  <!-- v235: las dos puertas de la app (pintaEntradas, fuente/biblioteca-app.js). -->
+  <nav class="ini-entradas" id="ini-entradas" aria-label="Biblioteca y Concursos"></nav>
 
   <section class="ini-sec ini-hoy" aria-labelledby="ini-hoy-t">
     <h2 class="ini-h" id="ini-hoy-t">Para hoy</h2>
@@ -313,7 +316,9 @@
 </div>
 
 <div id="p-estudio" class="pantalla">
-  <h2 class="h2-suelto" style="color:var(--azul);margin-bottom:.9rem"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg><span>Material de estudio</span></h2>
+  <!-- v235: LA BIBLIOTECA. La portada (temas, nivel de lectura, fuentes, «Para ver»)
+       la pinta pintaBib() (fuente/biblioteca-app.js); debajo, la rejilla de siempre. -->
+  <div id="bib-cab" class="bib-cab"></div>
   <div class="caps" id="lista-caps"></div>
   <div id="detalle" class="card" style="margin-top:1rem;display:none"></div>
 
@@ -361,7 +366,10 @@
 </div>
 
 <div id="p-examen" class="pantalla">
+  <!-- v235: CONCURSOS. Los concursos y campamentos con sus categorías por edad los
+       pinta pintaConcursos() (fuente/biblioteca-app.js); debajo, el examen de siempre. -->
   <div id="ex-inicio">
+  <div id="con-cab" class="con-cab"></div>
     <div id="ex-cerrado"></div>
     <div id="cb-eval"></div>
     <div id="cb-sesion"></div>
@@ -436,6 +444,8 @@
         <p class="nota" id="ex-nota"></p>
       </div>
     </details>
+  <!-- v235: los demás concursos, después de tu examen (pintaConcursos). -->
+  <div id="con-lista" class="con-lista"></div>
   </div>
 
     <div class="sep">

@@ -1,0 +1,123 @@
+/* ── v235: BIBLIOTECA Y CONCURSOS (fuente/biblioteca-app.js). Tokens de la app: --card,
+   --txt, --gris, --azul, --naranja-txt; claro y oscuro salen solos. ── */
+.bib-cab,.con-cab{margin:0 0 1.1rem}
+.bib-hero,.con-hero{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:1.25rem 1.25rem 1rem;margin-bottom:1rem}
+.bib-ant{display:flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.bib-tit{margin:.35rem 0 .3rem;font-size:1.375rem;line-height:1.2;font-weight:800;color:var(--txt);letter-spacing:-.01em;text-wrap:balance}
+.bib-p{margin:0 0 .9rem;color:var(--gris);font-size:1rem;line-height:1.45;max-width:62ch}
+.bib-h{margin:1.1rem 0 .6rem;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+/* Los temas: pastillas grandes, una por tema. */
+.bib-temas{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 .9rem}
+.bib-tema{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:6px 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--txt) 16%,transparent);
+  background:var(--card);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.bib-tema small{font-size:.75rem;font-weight:700;color:var(--naranja-txt)}
+.bib-tema.on{border-color:var(--azul-fondo);background:var(--azul-fondo);color:#fff}
+.bib-tema.on small{color:#fff;opacity:.85}
+.bib-tema:focus-visible,.bib-nv:focus-visible,.bv-t:focus-visible,.bib-otra:focus-visible,.q-bib:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:2px}
+/* El nivel de lectura y las fuentes, en una fila que se dobla en el teléfono. */
+.bib-fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+.bib-nvs{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.bib-nvt{font-size:.75rem;font-weight:700;color:var(--gris);margin-right:4px;flex-basis:100%}
+.bib-nv{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:44px;padding:6px 12px;border-radius:12px;border:1.5px solid color-mix(in srgb,var(--txt) 14%,transparent);
+  background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer;max-width:13rem}
+.bib-nv b{font-size:.875rem}
+.bib-nv small{font-size:.75rem;color:var(--gris);line-height:1.25}
+.bib-nv.on{border-color:var(--naranja-txt);background:var(--fondo-calido)}
+.bib-fu{min-height:44px}
+.bib-nota{margin:.75rem 0 0;font-size:.75rem;color:var(--gris);line-height:1.4}
+/* «Para ver»: tarjetas que se deslizan a lo ancho. */
+.bib-ver{margin:0 0 1rem}
+.bv-fila{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 8px;scrollbar-width:thin}
+.bv-t{display:flex;flex-direction:column;min-width:0;padding:0;border:0;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);color:var(--txt);font:inherit;text-align:left;cursor:pointer;overflow:hidden;scroll-snap-align:start}
+.bv-img{position:relative;display:block;aspect-ratio:16/9;background:#1b1712;overflow:hidden}
+.bv-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bv-ico{display:flex;align-items:center;justify-content:center;background:var(--fondo-prof);color:var(--prof)}
+.bv-ico .ico-t{width:40px;height:40px}
+.bv-tx{display:flex;flex-direction:column;gap:2px;padding:.7rem .85rem .85rem}
+.bv-tx small{font-size:.75rem;font-weight:700;color:var(--gris)}
+.bv-tx b{font-size:1rem;line-height:1.3}
+@media (hover:hover){.bv-t:hover{box-shadow:0 6px 24px rgba(0,0,0,.16)}.bib-tema:hover:not(.on){border-color:color-mix(in srgb,var(--txt) 40%,transparent)}}
+/* El cruce a la otra puerta. */
+.bib-otra{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin:0 0 1rem;padding:.8rem 1rem;border-radius:var(--r);border:1.5px dashed color-mix(in srgb,var(--txt) 22%,transparent);
+  background:none;color:var(--txt);font:inherit;font-size:.875rem;line-height:1.4;text-align:left;cursor:pointer}
+.bib-otra>span{flex:1;min-width:0}
+.bib-otra>.ico-t:first-child{flex:0 0 auto;width:22px;height:22px;color:var(--naranja-txt)}
+/* Las fuentes de un tema, en la hoja de abajo. */
+.bf-intro{margin:0 0 .8rem;font-size:.875rem;color:var(--gris);line-height:1.45}
+.bf-g{margin:1rem 0 .4rem;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.bf-l{list-style:none;margin:0;padding:0}
+.bf-o{display:flex;flex-direction:column;gap:2px;padding:.55rem 0;border-bottom:1px solid color-mix(in srgb,var(--txt) 10%,transparent);font-size:.875rem;line-height:1.4}
+.bf-o abbr{text-decoration:none;font-weight:800}
+.bf-p{color:var(--gris);font-variant-numeric:tabular-nums}
+.bf-p::before{content:'· '}
+.bf-c{font-size:.75rem;color:var(--gris)}
+/* Concursos. */
+.con-tuya{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:.7rem .9rem;border-radius:12px;background:var(--fondo-suave);font-size:.875rem}
+.con-tuya .btn{min-height:44px}
+.con-l{list-style:none;margin:0 0 .4rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px}
+.con-c{display:flex;flex-direction:column;gap:.7rem;padding:1rem;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);border:2px solid transparent}
+.con-c.mia{border-color:var(--naranja-txt)}
+.con-ct{display:flex;gap:10px;align-items:flex-start}
+.con-ct b{display:block;font-size:1rem;line-height:1.3}
+.con-ct small{display:block;font-size:.75rem;color:var(--gris);line-height:1.35;margin-top:2px}
+.con-ic{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:var(--fondo-suave);color:var(--azul)}
+.con-cats{display:flex;flex-wrap:wrap;gap:6px}
+.con-cat{font-size:.75rem;padding:4px 9px;border-radius:999px;background:var(--fondo-suave);color:var(--txt)}
+.con-cat.on{background:var(--fondo-calido);box-shadow:inset 0 0 0 1.5px var(--naranja-txt)}
+.con-acc{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto}
+.con-acc .btn{min-height:44px}
+.con-mia{display:inline-flex;align-items:center;gap:6px;font-size:.875rem;font-weight:700;color:var(--naranja-txt);min-height:44px}
+.con-ex{margin-top:1.4rem}
+/* Inicio: las dos puertas. Cada una: su cabecera (lleva a la pantalla) y debajo lo que
+   invita: los destacados de la Biblioteca y el concurso que viene. */
+.ini-entradas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin:0 0 1.2rem}
+.ent{display:flex;flex-direction:column;min-width:0;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);overflow:hidden}
+.ent-cab{display:flex;align-items:center;gap:14px;min-height:72px;padding:1rem 1.1rem;border:0;background:none;color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.ent-ic{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:14px}
+.ent-ic .ico-t{width:24px;height:24px}
+.ent-bib .ent-ic{background:var(--fondo-info);color:var(--cielo-txt)}
+.ent-con .ent-ic{background:var(--fondo-calido);color:var(--naranja-txt)}
+.ent-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ent-tx b{font-size:1.125rem}
+.ent-tx small{font-size:.875rem;color:var(--gris);line-height:1.35}
+.ent-fl{flex:0 0 auto;color:var(--gris)}
+/* Los destacados: miniaturas que se deslizan a lo ancho, sin desbordar la página. */
+.ent-dest{display:flex;gap:8px;overflow-x:auto;padding:0 1.1rem 1rem;scroll-padding-inline:1.1rem;scrollbar-width:none;scroll-snap-type:x proximity}
+@media (min-width:600px){.ent-dest{flex-wrap:wrap;overflow:visible}}
+.ent-dest::-webkit-scrollbar{display:none}
+.ent-d{flex:0 0 auto;display:flex;align-items:center;gap:8px;min-height:44px;padding:4px 12px 4px 4px;border-radius:12px;border:1.5px solid color-mix(in srgb,var(--txt) 12%,transparent);
+  background:none;color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer;scroll-snap-align:start;white-space:nowrap}
+.ent-dimg{position:relative;flex:0 0 auto;width:36px;height:36px;border-radius:9px;overflow:hidden;background:#1b1712}
+.ent-dimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ent-dico{display:flex;align-items:center;justify-content:center;background:var(--fondo-prof);color:var(--prof)}
+/* El concurso que viene. */
+.ent-prox{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:0 1.1rem 1rem;padding:.65rem .85rem;min-height:44px;border:0;border-radius:12px;
+  background:var(--fondo-calido);color:var(--txt);font:inherit;text-align:left;cursor:pointer}
+.ent-pr{font-size:.6875rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.ent-prox b{font-size:1rem;line-height:1.3}
+.ent-cu{display:inline-flex;align-items:center;gap:6px;font-size:.8125rem;color:var(--gris)}
+.ent-cab:focus-visible,.ent-d:focus-visible,.ent-prox:focus-visible{outline:2px solid var(--naranja-txt);outline-offset:-2px}
+@media (hover:hover){.ent:hover,.con-c:hover{box-shadow:0 6px 24px rgba(0,0,0,.16)}.ent-d:hover{border-color:color-mix(in srgb,var(--txt) 35%,transparent)}}
+/* La pregunta revisada: a dónde se estudia. */
+.q-bib{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;margin:.6rem 0 0;padding:.5rem .7rem;border-radius:10px;border:0;background:var(--fondo-info);color:var(--txt);
+  font:inherit;font-size:.875rem;line-height:1.35;text-align:left;cursor:pointer}
+.q-bib>span{flex:1;min-width:0}
+.q-bib>.ico-t:first-child{color:var(--cielo-txt);flex:0 0 auto}
+.q-bib b{font-weight:700}
+@media (max-width:479px){.bib-hero,.con-hero{padding:1rem}.bib-tit{font-size:1.125rem}.bib-p{font-size:.875rem}.bib-nv{max-width:none;flex:1 1 30%}.bv-fila{grid-auto-columns:78%}}
+/* En pantalla ancha «Para ver» es una rejilla (todo a la vista); en el teléfono, una fila que se desliza. */
+@media (min-width:600px){.bv-fila{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));overflow:visible}}
+/* En el teléfono: los temas en una fila que se desliza y el nivel sin su explicación (la dice
+   la nota de abajo), para que la portada no ocupe la pantalla entera. */
+@media (max-width:479px){
+  .bib-temas{flex-wrap:nowrap;overflow-x:auto;margin-inline:-1rem;padding:0 1rem 4px;scrollbar-width:none}
+  .bib-temas::-webkit-scrollbar{display:none}
+  .bib-tema{flex:0 0 auto}
+  .bib-nv small{display:none}
+  .bib-nv{align-items:center;flex:1 1 0;padding:6px 8px}
+}
+.con-sub{margin:.4rem 0 .5rem;font-size:.875rem;font-weight:700;color:var(--txt)}
+.con-lista{margin-top:1.4rem}
+.bib-fu.btn{min-height:44px}
+/* La sección a la que lleva una pregunta queda debajo de lo fijo arriba (DONDE_TOPE). */
+#detalle .sec[data-i]{scroll-margin-top:84px}

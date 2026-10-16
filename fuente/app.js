@@ -142,12 +142,17 @@ function lamPrecarga(cid,esc){
   if(esc){const listo=()=>esc.classList.remove('cargando');p.then(listo);setTimeout(listo,8000);}
 }
 /* La tarjeta que invita, dentro del estudio del capítulo. */
+/* v235: la miniatura de una lámina, la misma en el capítulo y en la Biblioteca. */
+function lamMiniHTML(cid){
+  const L=LAMINAS[cid];if(!L)return '';
+  const src=f=>lamRuta(L,f);
+  if(L.tipo==='escenas')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
+  return '<img src="'+src('babilonia')+'" alt="" loading="lazy">'+(L.capas||[]).map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('');
+}
 function lamTarjeta(cid){
   const L=LAMINAS[cid];
   if(!L)return '';
-  const src=f=>lamRuta(L,f);
-  return '<div class="lam-invita"><div class="lam-mini">'+(L.tipo==='escenas'?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'<img src="'+src('babilonia')+'" alt="" loading="lazy">'+
-    L.capas.map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join(''))+'</div>'+
+  return '<div class="lam-invita"><div class="lam-mini">'+lamMiniHTML(cid)+'</div>'+
     '<div class="lam-itx"><div class="lam-ant">Estudio interactivo</div><div class="lam-itit">'+esc(L.titulo)+'</div>'+
     '<p>'+esc(L.invita||'Toca cada parte de la estatua: lo que dice el texto, lo que significa, sus fechas y su fuente.')+'</p>'+
     '<div class="lam-bots"><button type="button" class="btn ver" onclick="lamAbre(\''+cid+'\',\'explorar\')">'+IC('lupa')+' Explorar</button>'+
@@ -4427,6 +4432,8 @@ function pintaSenales(){
 }
 
 function pintaInicio(){
+  /* v235: las dos puertas, Biblioteca y Concursos (biblioteca-app.js). */
+  if(typeof pintaEntradas==='function')pintaEntradas();
   pintaAlumnos();
   pintaYo();
   pintaSenales();
@@ -4487,7 +4494,7 @@ function pintaFiltro(pant){
   /* v214: con reglamento, el primer corte es «Lo del concurso» o «Todo el material»;
      el de capítulos (solo en los libros) va debajo. */
   const conc=hayConcurso(),capitulos=conFiltro()&&caps.length>1;
-  const ver=TABS[pant]!==undefined&&(capitulos||conc);
+  const ver=TABS[pant]!==undefined&&(capitulos||conc)&&!(pant==='estudio'&&typeof bibAjeno==='function'&&bibAjeno());
   z.hidden=!ver;
   if(!ver)return;
   const f=capitulos?idsFiltro():null;
@@ -4613,7 +4620,11 @@ function pintaCaps(){
      primera creencia, y cada tarjeta dice su doctrina. Sale de GRUPOS, así
      que otra actividad que declare grupos lo hereda sin tocar esto. */
   let grupoAbierto=null;
-  const vista=capsVista();
+  /* v235: la portada de la Biblioteca va arriba; si se ve otro tema que el del concurso,
+     sus capítulos y repasos enteros (ver biblioteca-app.js). */
+  if(typeof pintaBib==='function')pintaBib();
+  const aj=typeof bibAjeno==='function'&&bibAjeno();
+  const vista=aj?bibCapsAjeno():capsVista();
   /* Con un solo grupo a la vista el rótulo repetiría el título de arriba. */
   const conRotulos=new Set(vista.map(c=>c.doc).filter(Boolean)).size>1;
   const caps=vista.map(c=>{
@@ -4625,7 +4636,7 @@ function pintaCaps(){
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     /* v147: el número va en el color de la categoría, igual en todos. Siete
        colores sin significado competían con el título. */
-    '<div class="n">'+esc(c.label.replace(/^(Daniel |P&R )/,''))+'</div>'+
+    '<div class="n">'+esc(c.label.replace(/^(Daniel |P&R |Apocalipsis )/,''))+'</div>'+
     '<div class="t">'+esc(c.sub)+'</div>'+
     /* Cuantos versiculos trae, para poder repartir la lectura antes de abrirlo:
        Daniel 2 son 49 y Daniel 1 son 21, y eso cambia como se planea la semana.
@@ -4633,7 +4644,7 @@ function pintaCaps(){
     '<div class="f">'+esc(origenDe(c))+(c.vs?' · '+c.vs+' vers.':'')+'</div>'+
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
-    (soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
+    (!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
     '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
   const botonMod=m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
@@ -4641,16 +4652,20 @@ function pintaCaps(){
     '<div class="s">'+esc(m.sub)+'</div>'+
     '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
     '</div></button>';
-  const mods=modsDe().filter(m=>!m.prof).map(botonMod).join('');
-  const prof=modsDe().filter(m=>m.prof).map(botonMod).join('');
+  const ms=aj?bibModsAjeno():modsDe();
+  const mods=ms.filter(m=>!m.prof).map(botonMod).join('');
+  const prof=ms.filter(m=>m.prof).map(botonMod).join('');
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
     '<div class="grupo" style="grid-column:1/-1">'+
-    icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos')+
+    (aj?icoDe(bibIconoTema(bibTema()))+' '+esc(bibNombreTema(bibTema()))+' · '+(bibTema()==='creencias'?'las 28 creencias':'capítulos'):
+      icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos'))+
     '</div>'+caps+
     (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'')+
-    (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'');
+    (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'')+
+    /* v235: cada tema termina con su bibliografía, armada sola (biblioteca-app.js). */
+    (typeof bibPieHTML==='function'?bibPieHTML():'');
 }
 
 /* ═══════════ LOS VERSICULOS DENTRO DEL ESTUDIO ═══════════
@@ -5570,8 +5585,10 @@ function compruebaRec(rid,elegido,correcta){
    Siguiente. El orden es el de la pantalla Estudiar, que es el que ya sigue
    «Ya lo estudié»: los capítulos que el filtro deja ver y después los repasos. */
 function navCap(id){
-  const caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
-  const i=lista.findIndex(x=>x.id===id);
+  let caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
+  let i=lista.findIndex(x=>x.id===id);
+  /* v235: un capítulo de otro tema (la Biblioteca) recorre su propio tema. */
+  if(i<0&&typeof bibListaDe==='function'){const o=bibListaDe(id);if(o){caps=o.caps;mods=o.mods;lista=[...caps,...mods];i=lista.findIndex(x=>x.id===id);}}
   if(i<0||lista.length<2)return '';
   const a=lista[i-1], b=lista[i+1], k=caps.findIndex(x=>x.id===id);
   const donde=k>=0?(k+1)+' de '+caps.length:'Repaso '+(mods.findIndex(x=>x.id===id)+1)+' de '+mods.length;
@@ -5584,6 +5601,9 @@ function navCap(id){
 
 function verCap(id,quieto){
   paraVoz();
+  /* v235: la estantería de la Biblioteca sigue al capítulo, y el nivel de lectura
+     escogido pone la pestaña de entrada (biblioteca-app.js). */
+  if(typeof bibSigue==='function'){bibSigue(id);bibNivelAntes();}
   /* v161: ¿desde dónde se llega? Si ya había un capítulo abierto en esta
      pantalla (Siguiente, Anterior, «Ya lo estudié», otra tarjeta), la página
      se pone de una en el capítulo nuevo. Si se viene de la rejilla sin nada
@@ -5667,6 +5687,7 @@ function verCap(id,quieto){
   numeraDecl(d);
   enlazaCreencias(d);
   divideVista(d,id);
+  if(typeof bibAplicaNivel==='function')bibAplicaNivel(id);
   avanza(id,60);
   /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
      creencias en una rejilla de cuatro columnas, el detalle nace siete filas
@@ -5778,8 +5799,11 @@ function lugarEscribe(c){
 const LUGAR_PANT=['inicio','estudio','tarjetas','examen','logros'];
 let lugarT=0,lugarListo=false;
 /* El camino de lo que se ve ahora. */
+/* v235: en la dirección las pantallas se llaman como en la barra (Biblioteca, Concursos);
+   los caminos viejos («estudio/…», «examen») se leen igual y se reescriben con el nuevo. */
+const LUGAR_PUB={estudio:'biblioteca',examen:'concursos'}, LUGAR_DE_PUB={biblioteca:'estudio',concursos:'examen'};
 function lugarActual(){
-  const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[pant];
+  const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[LUGAR_PUB[pant]||pant];
   if(pant==='estudio'&&S.ultItem){
     r.push(S.ultItem);
     const d=document.getElementById('detalle');
@@ -5808,6 +5832,7 @@ function lugarParte(c){
   const q=c.indexOf('?');
   if(q>=0){const a=/(?:^|&)a=([\w-]{1,24})/.exec(c.slice(q+1));if(a)o.a=a[1];c=c.slice(0,q);}
   const s=c.split('/').filter(Boolean);let i=0;
+  if(LUGAR_DE_PUB[s[0]])s[0]=LUGAR_DE_PUB[s[0]];
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
   if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
@@ -8285,6 +8310,8 @@ function cambiaNivel(){nivel=Number(document.getElementById('ex-nivel').value)||
 const refrescaEx=()=>{pintaExInicio();};
 
 function pintaExInicio(){
+  /* v235: arriba, los concursos con sus categorías por edad (biblioteca-app.js). */
+  if(typeof pintaConcursos==='function')pintaConcursos();
   pintaMenuEx();
   const b=bancoDe().length,f=falladasDe().length;
   const nv=nivelEfectivo();
@@ -8617,7 +8644,9 @@ function htmlQ(q,n,ver){
   }
   const cls=ver?(bien(q)?' hecha':' mal'):(hecha(q)?' hecha':'');
   const voz=!ver&&puedeHablar()?' '+BTN_VOZ:'';
-  return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+cuerpo+'</div>';
+  /* v235: al revisar, cada pregunta lleva a donde se estudia en la Biblioteca. */
+  const bib=ver&&typeof bibLinkQ==='function'?bibLinkQ(q):'';
+  return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+cuerpo+bib+'</div>';
 }
 
 const limpia=s=>String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ');
