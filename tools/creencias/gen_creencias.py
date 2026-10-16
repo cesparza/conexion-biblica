@@ -204,7 +204,10 @@ def pestanas(num):
     # 5. donde encaja
     dn = doc_de(num); nom = doc_nom(num)
     rango = [(a, b) for n2, _, a, b, _ in datos.DOCTRINAS if n2 == dn][0]
-    hermanas = ['<b>%d.</b> %s' % (k, datos.CREENCIAS[k]['nombre']) for k in range(rango[0], rango[1] + 1)]
+    # v239: las hermanas de la misma doctrina son enlaces (irATema); la propia se marca.
+    hermanas = [('<b>%d.</b> %s <small>(esta)</small>' % (k, datos.CREENCIAS[k]['nombre'])) if k == num else
+                ('<b>%d.</b> <a href=\\"#\\" onclick=\\"irATema(\'cap-cr%02d\');return false\\">%s</a>' % (k, k, datos.CREENCIAS[k]['nombre']))
+                for k in range(rango[0], rango[1] + 1)]
     h = hi('<strong>Doctrina %d de 6: %s</strong><br>Son %d creencias, de la %d a la %d.%s'
            % (dn, nom, rango[1]-rango[0]+1, rango[0], rango[1], li(hermanas)))
     h += rev('¿A qué doctrina pertenece esta creencia?', '%s, la número <b>%d</b> de seis' % (nom, dn))

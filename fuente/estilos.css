@@ -502,7 +502,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 @media(max-width:620px){
   .tj-btns{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
   .tj-btns .btn{width:100%;margin:0}
-  #tj-si{order:1} #tj-no{order:2} #tj-ant{order:3} #tj-sig{order:4}
+  #tj-si{order:1} #tj-no{order:2}
   /* Barajar de nuevo vive en su propio .tj-btns y va a lo ancho. Se marca con
      una clase en vez de :has(), que un iPhone viejo puede no entender: si la
      regla no aplicara, el boton quedaria ocupando media fila. */
@@ -5427,3 +5427,10 @@ span.cmp-ult-c{cursor:default}
 /* v233b: el tramo del juicio lleva también color de fondo (el degradado no lo lee la medición de
    contraste de Jóvenes, que medía la tinta oscura contra el fondo de la página). */
 .lm-seg.oro{background-color:#E4BC6A}
+
+/* v239: el icono de voz y el de cerrar se centran con el texto de la cabecera de la hoja. */
+.hoja-cab{align-items:center}
+.hoja-cab .hoja-x{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+.hoja-cab .grupo-voz{align-self:center}
+/* v239: Anterior / Siguiente de las tarjetas son la fila de la hoja (filaNav): mismos botones y el lugar en medio. */
+.tj-nav{padding:.6rem 0 .3rem}

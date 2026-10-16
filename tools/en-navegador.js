@@ -1719,11 +1719,11 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
     /* Concursos: cada concurso con sus categorías y su edad; «Prepararme» abre la preparación. */
     ir('examen'); await espera(300);
     if (!/^#\/concursos/.test(location.hash)) mal.push('dirección ' + location.hash);
-    const cs = document.querySelectorAll('#con-lista .con-c').length, edades = [...document.querySelectorAll('#con-lista .con-cat')].every(e => /\d|Adultos|Cuestionario/.test(e.textContent));
+    const cs = document.querySelectorAll('#con-lista .con-c').length, edades = [...document.querySelectorAll('#con-lista .con-cat')].every(e => /\d|Adultos|Integrantes del club/.test(e.textContent));
     if (cs !== Object.keys(ACTIVIDADES).length || !edades) mal.push('concursos ' + cs);
     if (blancos('#con-cab .btn, #con-lista .btn')) mal.push('blancos de Concursos');
     if (lado()) mal.push('Concursos de lado');
-    document.querySelector('#con-lista .con-c:not(.mia) .btn.tono').click(); await espera(400);
+    [...document.querySelectorAll('#con-lista .con-c:not(.mia)')].find(x => x.querySelectorAll('.con-cb').length > 1).querySelector('.btn.tono').click(); await espera(400);
     if (!document.querySelector('#hoja #prep .alu-nueva, #hoja .cat-sel')) mal.push('Prepararme');
     cierraHoja(); await espera(300);
     /* El examen revisado: cada pregunta a la Biblioteca; una con sección, a su sección. */
@@ -1813,16 +1813,18 @@ for (const [W, H] of [[1440, 900], [390, 844]]) {
     const t11 = document.getElementById('lam').textContent;
     if (!(i11 > 0 && i13 === i11 + 2 && /mataron a la bestia, y su cuerpo fue destrozado/.test(t11) && /Maxwell/.test(t11))) mal.push('7:11 ' + i11 + '/' + i13);
     lamCierra(); await espera(200);
-    /* 6. El concurso 2027: cinco categorías (v237: Menores y Padres de vuelta) con sus pastillas y los títulos de CS. */
+    /* 6. El concurso 2027: tres concursos (v239: uno por club; Aventureros con Menores y Padres) con sus pastillas y los títulos de CS. */
     ir('examen'); await espera(300);
-    const c = [...document.querySelectorAll('#con-lista .con-c')].find(x => /Conexión Bíblica 2027/.test(x.textContent));
-    if (!c || c.querySelectorAll('.con-cb').length !== 5 || !/Asociación del Alto Magdalena/.test(c.textContent) || !/36 – 39/.test(c.textContent) || c.querySelectorAll('.con-ol li').length !== 20) mal.push('concurso 2027');
+    const c27 = [...document.querySelectorAll('#con-lista .con-c')].filter(x => /Conexión Bíblica 2027/.test(x.textContent));
+    const cG = c27.find(x => /^\s*\S*\s*Guías Mayores - /.test(x.textContent)), cC = c27.find(x => /Conquistadores - Conexión/.test(x.textContent)), cA = c27.find(x => /Aventureros - Conexión/.test(x.textContent));
+    if (c27.length !== 3 || !cG || !cC || !cA || cG.querySelectorAll('.con-cb').length !== 1 || cC.querySelectorAll('.con-cb').length !== 1 || cA.querySelectorAll('.con-cb').length !== 3 ||
+      !c27.every(x => /Asociación del Alto Magdalena/.test(x.textContent)) || !/36 – 39/.test(cC.textContent) || cG.querySelectorAll('.con-ol li').length !== 20) mal.push('concurso 2027 en tres');
     if (lado()) mal.push('Concursos de lado');
     /* v237: un capítulo de El conflicto de los siglos llega al abrirlo (conflicto/cs24.json), con sus páginas. */
     verCap('cs24'); await espera(1200);
     if (!document.querySelectorAll('#detalle .cs-pag').length || !/páginas 337 a 347/.test(document.querySelector('#detalle .cap-meta').textContent)) mal.push('CS 24 no llegó');
-    abreYo(); await espera(300); prepAbre(); prepActividad('ap'); await espera(300);
-    if (document.querySelectorAll('#prep .cat-btn .ac-chip').length < 10) mal.push('quién estudia sin pastillas');
+    abreYo(); await espera(300); prepAbre(); prepActividad('apa'); await espera(300);
+    if (document.querySelectorAll('#prep .cat-btn .ac-chip').length < 6) mal.push('quién estudia sin pastillas');
     cierraHoja(); await espera(200);
     return mal;
   });

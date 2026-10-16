@@ -1133,8 +1133,8 @@ for(const id of ['aviso-nuevo','hoja'])
 /* v163: salen de las fichas de campamentos.js, que es de donde las saca la app. */
 const { CATS: CATS_APP, ACTIVIDADES: ACTS_APP } = REGLAMENTO;
 
-ok(Object.keys(ACTS_APP).length===5,'Hay cinco actividades declaradas');
-ok(['cb','cbg','dm','ec','ap'].every(a=>ACTS_APP[a]),'Son cb, cbg, dm, ec y ap (Apocalipsis, v178)');
+ok(Object.keys(ACTS_APP).length===7,'Hay siete actividades declaradas (el concurso 2027 son tres, v239)');
+ok(['cb','cbg','dm','ec','ap','apc','apa'].every(a=>ACTS_APP[a]),'Son cb, cbg, dm, ec, ap, apc y apa (Apocalipsis por club, v239)');
 ok(Object.values(ACTS_APP).every(a=>a.nombre&&a.icono&&a.cuando&&a.que&&Array.isArray(a.cats)),
   'Cada actividad dice su nombre, su icono, cuando es, que se estudia y sus categorias');
 
@@ -2278,8 +2278,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'El reglamento vigente no cambió (salvo la política 2027 de Apocalipsis): las 11 categorías ven lo mismo, con el mismo examen y el mismo techo'+(distintas.length?' (distintas: '+distintas.join(', ')+')':''));
   /* v164: Guías Mayores tiene su ficha (cbg). Su categoría conserva el id. */
   const AC=REGLAMENTO.ACTIVIDADES;
-  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap'&&AC.ap.cats.join()==='apgm,apcq,apav,apme,appa'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
-    'Las actividades son cb, cbg, dm, ec y ap; Guías Mayores va en la suya y conserva su categoría gm');
+  ok(Object.keys(AC).join()==='cb,cbg,dm,ec,ap,apc,apa'&&AC.ap.cats.join()==='apgm'&&AC.apc.cats.join()==='apcq'&&AC.apa.cats.join()==='apav,apme,appa'&&AC.cb.cats.join()==='me,av,pa'&&AC.cbg.cats.join()==='gm'&&C.gm.act==='cbg',
+    'Las actividades son cb, cbg, dm, ec, ap, apc y apa; Guías Mayores va en la suya y conserva su categoría gm');
   ok(C.me.club==='aventureros'&&C.pa.club==='aventureros'&&C.gm.club==='guias'&&C.apcq.club==='conquistadores'&&C.apgm.club==='guias'&&C.ec1.club==='',
     'v191: cada categoría de club dice su club (Aventureros, Conquistadores, Guías Mayores)');
   ok(AC.cb.tipo==='libro'&&AC.cbg.tipo==='libro'&&AC.dm.tipo==='dias'&&AC.ec.tipo==='creencias'&&AC.cbg.tema===AC.cb.tema,
@@ -3264,9 +3264,14 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
      F.CAMPAMENTOS.find(f=>f.id==='cb').nombre==='Aventureros - Conexión Bíblica: Daniel'&&F.CAMPAMENTOS.find(f=>f.id==='cbg').nombre==='Guias - Conexión Bíblica: Daniel'&&
      AP.categorias.map(c=>c.nombre.split(/[ (]/)[0]).every(n=>['Guías','Conquistadores','Aventureros'].includes(n)),
     'v237: el concurso 2027 se llama con el club adelante, como lo guardó Camilo, y su fecha dice «(fecha tentativa)»');
-  const AV=AP.categorias.find(c=>c.id==='apav');
-  ok(['apme','appa'].every(k=>C[k]&&C[k].act==='ap'&&C[k].club==='aventureros'&&/^Aventureros - /.test(C[k].nombre))&&C.apme.edad==='4 a 6 años'&&C.appa.edad==='Adultos'&&
-     ['apme','appa'].every(k=>{const c=AP.categorias.find(x=>x.id===k);return c.estudia.join()===AV.estudia.join()&&JSON.stringify(c.obras)===JSON.stringify(AV.obras);}),
+  const AVF=F.CAMPAMENTOS.find(f=>f.id==='apa'), CQF=F.CAMPAMENTOS.find(f=>f.id==='apc');
+  ok(CQF.nombre==='Conquistadores - Conexión Bíblica 2027'&&AVF.nombre==='Aventureros - Conexión Bíblica 2027'&&[AP,CQF,AVF].every(f=>f.cuando==='6 de marzo de 2027 (fecha tentativa)'&&f.organiza==='Asociación del Alto Magdalena')&&
+     AP.categorias.map(c=>c.id).join()==='apgm'&&CQF.categorias.map(c=>c.id).join()==='apcq'&&AVF.categorias.map(c=>c.id).join()==='apav,apme,appa'&&
+     C.apcq.act==='apc'&&C.apav.act==='apa'&&C.appa.act==='apa'&&C.apgm.act==='ap',
+    'v239: el concurso 2027 son tres, uno por club: Guías Mayores (ap), Conquistadores (apc) y Aventureros con Menores y Padres (apa)');
+  const AV=AVF.categorias.find(c=>c.id==='apav');
+  ok(['apme','appa'].every(k=>C[k]&&C[k].act==='apa'&&C[k].club==='aventureros'&&/^Aventureros - /.test(C[k].nombre))&&C.apme.edad==='4 a 6 años'&&C.appa.edad==='Adultos'&&
+     ['apme','appa'].every(k=>{const c=AVF.categorias.find(x=>x.id===k);return c.estudia.join()===AV.estudia.join()&&JSON.stringify(c.obras)===JSON.stringify(AV.obras);}),
     'v237: Menores (4 a 6) y Padres (adultos) vuelven a Apocalipsis, dentro de Aventureros y con su mismo alcance (Ap 1, 12, 14, 21, 22; CS 24, 25, 32, 39, 41, 43)');
   const ids=CS.CS_TEMA_CAPS.map(c=>c.id), arch=fs.readdirSync(path.join(RAIZ,'fuente','conflicto')).filter(f=>/^cap\d\d\.js$/.test(f));
   const sinLit=CS.CS_BANCO.concat(CS.CS_TARJETAS).filter(q=>!q.lit||!CS.CS_TEXTO[q.cap].includes(q.lit)||!q.pend);

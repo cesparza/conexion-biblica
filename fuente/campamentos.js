@@ -153,7 +153,7 @@ const CAMPAMENTOS = [
     categorias: [
       { id: 'ec1', nombre: 'Los dos del examen escrito', edad: 'Adultos', n: 25, techo: 3, sinCompletar: false,
         alcance: 'Las 28 creencias', estudia: CREENCIAS },
-      { id: 'ec2', nombre: 'El resto del club', edad: 'Cuestionario', n: 15, techo: 2, sinCompletar: true,
+      { id: 'ec2', nombre: 'El resto del club', edad: 'Integrantes del club', n: 15, techo: 2, sinCompletar: true,
         alcance: 'Las 28 creencias', estudia: CREENCIAS },
     ] },
   /* v236: CONEXIÓN BÍBLICA 2027, la política de la Asociación del Alto Magdalena
@@ -174,6 +174,10 @@ const CAMPAMENTOS = [
      - CS ya es material de la app (tema `conflicto`): los capítulos de `obras` se
        estudian y entran al examen de práctica junto con los de Apocalipsis
        (REGLAS.estudiaDe). */
+  /* v239 (Camilo, 16-oct): el concurso 2027 son TRES, uno por club, como los demás:
+     `ap` (Guías Mayores, conserva su id), `apc` (Conquistadores) y `apa` (Aventureros,
+     con Menores y Padres y consejeros). Las categorías conservan sus ids (apgm, apcq,
+     apav, apme, appa), así que lo que cada quien tenía escogido sigue siendo suyo. */
   { id: 'ap', tema: 'apocalipsis', nombre: 'Guías Mayores - Conexión Bíblica 2027', icono: '📖', cuando: '6 de marzo de 2027 (fecha tentativa)', fecha: '2027-03-06',
     organiza: 'Asociación del Alto Magdalena',
     que: 'Apocalipsis (RV1995) y El conflicto de los siglos',
@@ -181,10 +185,20 @@ const CAMPAMENTOS = [
       { id: 'apgm', nombre: 'Guías Mayores (Jóvenes)', edad: 'Desde 16 años', n: 35, techo: 3, sinCompletar: false, sinRampa: true, tarjetas: 25, club: 'guias', sinPoliticas: false,
         alcance: 'Apocalipsis 1-22 · El conflicto de los siglos 24-43',
         estudia: apoc(rango(1, 22)), obras: { cs: rango(24, 43) } },
+    ] },
+  { id: 'apc', tema: 'apocalipsis', nombre: 'Conquistadores - Conexión Bíblica 2027', icono: '📖', cuando: '6 de marzo de 2027 (fecha tentativa)', fecha: '2027-03-06',
+    organiza: 'Asociación del Alto Magdalena',
+    que: 'Apocalipsis (RV1995) y El conflicto de los siglos',
+    categorias: [
       { id: 'apcq', nombre: 'Conquistadores', edad: '10 a 15 años', n: 30, techo: 2, sinCompletar: true, segundos: 80, tarjetas: 20, club: 'conquistadores',
         alcance: 'Apocalipsis 1-5, 10-14, 19-22 · CS 24-26, 29, 32, 36-39, 41, 43',
         estudia: apoc([...rango(1, 5), ...rango(10, 14), ...rango(19, 22)]),
         obras: { cs: [...rango(24, 26), 29, 32, ...rango(36, 39), 41, 43] } },
+    ] },
+  { id: 'apa', tema: 'apocalipsis', nombre: 'Aventureros - Conexión Bíblica 2027', icono: '📖', cuando: '6 de marzo de 2027 (fecha tentativa)', fecha: '2027-03-06',
+    organiza: 'Asociación del Alto Magdalena',
+    que: 'Apocalipsis (RV1995) y El conflicto de los siglos',
+    categorias: [
       { id: 'apav', nombre: 'Aventureros', edad: '7 a 9 años', n: 30, techo: 3, sinCompletar: true, sinVF: true, segundos: 80, tarjetas: 15, club: 'aventureros',
         alcance: 'Apocalipsis 1, 12, 14, 21, 22 · CS 24, 25, 32, 39, 41, 43',
         estudia: apoc([1, 12, 14, 21, 22]), obras: { cs: [24, 25, 32, 39, 41, 43] } },

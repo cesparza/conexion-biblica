@@ -519,7 +519,7 @@ ul.tight{margin:.4rem 0 .4rem 1.2rem;font-size:.875rem;line-height:1.75}
 @media(max-width:620px){
   .tj-btns{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
   .tj-btns .btn{width:100%;margin:0}
-  #tj-si{order:1} #tj-no{order:2} #tj-ant{order:3} #tj-sig{order:4}
+  #tj-si{order:1} #tj-no{order:2}
   /* Barajar de nuevo vive en su propio .tj-btns y va a lo ancho. Se marca con
      una clase en vez de :has(), que un iPhone viejo puede no entender: si la
      regla no aplicara, el boton quedaria ocupando media fila. */
@@ -5444,6 +5444,13 @@ span.cmp-ult-c{cursor:default}
 /* v233b: el tramo del juicio lleva también color de fondo (el degradado no lo lee la medición de
    contraste de Jóvenes, que medía la tinta oscura contra el fondo de la página). */
 .lm-seg.oro{background-color:#E4BC6A}
+
+/* v239: el icono de voz y el de cerrar se centran con el texto de la cabecera de la hoja. */
+.hoja-cab{align-items:center}
+.hoja-cab .hoja-x{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+.hoja-cab .grupo-voz{align-self:center}
+/* v239: Anterior / Siguiente de las tarjetas son la fila de la hoja (filaNav): mismos botones y el lugar en medio. */
+.tj-nav{padding:.6rem 0 .3rem}
 /* ─── v234: PARALELOS (fuente/paralelos-app.js). Va en la sala de Comparar, con su paleta.
    Ancha: tabla con la característica fija a la izquierda. Angosta (la sala, no la
    pantalla: así sirve dentro de Jóvenes): una tarjeta por característica con los
@@ -6104,17 +6111,15 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
   <div class="jg-zona" id="jg-zona" hidden></div>
   <div class="tj-zona">
     <div class="tj-barra">
-      <span id="tj-pos"></span>
       <select id="tj-filtro" onchange="filtraTj(this.value)"></select>
     </div>
     <div class="prog-lin"><div id="tj-prog" style="width:0%"></div></div>
     <div class="tj" id="tj-carta" onclick="voltea()"></div>
     <div class="tj-btns">
-      <button class="btn gho" id="tj-ant" onclick="tjAnt()">← Anterior</button>
       <button class="btn ver" id="tj-si" onclick="tjSabia(true)"><svg class="ico-t" aria-hidden="true"><use href="#i-check"/></svg> La sabía</button>
       <button class="btn nar" id="tj-no" onclick="tjSabia(false)"><svg class="ico-t" aria-hidden="true"><use href="#i-repetir"/></svg> Repasar</button>
-      <button class="btn gho" id="tj-sig" onclick="tjSig()">Siguiente →</button>
     </div>
+    <div class="hoja-pie tj-nav"><button type="button" class="hoja-nav" id="tj-ant" onclick="tjAnt()" aria-label="Anterior">‹ Anterior</button><span class="hoja-cta" id="tj-pos"></span><button type="button" class="hoja-nav" id="tj-sig" onclick="tjSig()" aria-label="Siguiente">Siguiente ›</button></div>
     <div class="tj-btns tj-solo"><button class="btn azul" onclick="tjBaraja()"><svg class="ico-t" aria-hidden="true"><use href="#i-barajar"/></svg> Barajar de nuevo</button></div>
     <p class="nota" id="tj-resumen" style="text-align:center"></p>
   </div>
@@ -6313,7 +6318,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '68c0d1e33b0e';
+const VERSION_APP = '6a946c5a0e6e';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -6620,7 +6625,7 @@ const FICHAS_BASE = [
    {
     "id": "ec2",
     "nombre": "El resto del club",
-    "edad": "Cuestionario",
+    "edad": "Integrantes del club",
     "n": 15,
     "techo": 2,
     "sinCompletar": true,
@@ -6730,7 +6735,19 @@ const FICHAS_BASE = [
       43
      ]
     }
-   },
+   }
+  ]
+ },
+ {
+  "id": "apc",
+  "tema": "apocalipsis",
+  "nombre": "Conquistadores - Conexión Bíblica 2027",
+  "icono": "📖",
+  "cuando": "6 de marzo de 2027 (fecha tentativa)",
+  "fecha": "2027-03-06",
+  "organiza": "Asociación del Alto Magdalena",
+  "que": "Apocalipsis (RV1995) y El conflicto de los siglos",
+  "categorias": [
    {
     "id": "apcq",
     "nombre": "Conquistadores",
@@ -6773,7 +6790,19 @@ const FICHAS_BASE = [
       43
      ]
     }
-   },
+   }
+  ]
+ },
+ {
+  "id": "apa",
+  "tema": "apocalipsis",
+  "nombre": "Aventureros - Conexión Bíblica 2027",
+  "icono": "📖",
+  "cuando": "6 de marzo de 2027 (fecha tentativa)",
+  "fecha": "2027-03-06",
+  "organiza": "Asociación del Alto Magdalena",
+  "que": "Apocalipsis (RV1995) y El conflicto de los siglos",
+  "categorias": [
    {
     "id": "apav",
     "nombre": "Aventureros",
@@ -10856,7 +10885,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> La Palabra de Dios</li><li><b>2.</b> La Deidad</li><li><b>3.</b> Dios el Padre</li><li><b>4.</b> Dios el Hijo</li><li><b>5.</b> Dios el Espíritu Santo</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> La Palabra de Dios <small>(esta)</small></li><li><b>2.</b> <a href=\"#\" onclick=\"irATema('cap-cr02');return false\">La Deidad</a></li><li><b>3.</b> <a href=\"#\" onclick=\"irATema('cap-cr03');return false\">Dios el Padre</a></li><li><b>4.</b> <a href=\"#\" onclick=\"irATema('cap-cr04');return false\">Dios el Hijo</a></li><li><b>5.</b> <a href=\"#\" onclick=\"irATema('cap-cr05');return false\">Dios el Espíritu Santo</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -10936,7 +10965,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> La Palabra de Dios</li><li><b>2.</b> La Deidad</li><li><b>3.</b> Dios el Padre</li><li><b>4.</b> Dios el Hijo</li><li><b>5.</b> Dios el Espíritu Santo</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> <a href=\"#\" onclick=\"irATema('cap-cr01');return false\">La Palabra de Dios</a></li><li><b>2.</b> La Deidad <small>(esta)</small></li><li><b>3.</b> <a href=\"#\" onclick=\"irATema('cap-cr03');return false\">Dios el Padre</a></li><li><b>4.</b> <a href=\"#\" onclick=\"irATema('cap-cr04');return false\">Dios el Hijo</a></li><li><b>5.</b> <a href=\"#\" onclick=\"irATema('cap-cr05');return false\">Dios el Espíritu Santo</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11016,7 +11045,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> La Palabra de Dios</li><li><b>2.</b> La Deidad</li><li><b>3.</b> Dios el Padre</li><li><b>4.</b> Dios el Hijo</li><li><b>5.</b> Dios el Espíritu Santo</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> <a href=\"#\" onclick=\"irATema('cap-cr01');return false\">La Palabra de Dios</a></li><li><b>2.</b> <a href=\"#\" onclick=\"irATema('cap-cr02');return false\">La Deidad</a></li><li><b>3.</b> Dios el Padre <small>(esta)</small></li><li><b>4.</b> <a href=\"#\" onclick=\"irATema('cap-cr04');return false\">Dios el Hijo</a></li><li><b>5.</b> <a href=\"#\" onclick=\"irATema('cap-cr05');return false\">Dios el Espíritu Santo</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11096,7 +11125,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> La Palabra de Dios</li><li><b>2.</b> La Deidad</li><li><b>3.</b> Dios el Padre</li><li><b>4.</b> Dios el Hijo</li><li><b>5.</b> Dios el Espíritu Santo</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> <a href=\"#\" onclick=\"irATema('cap-cr01');return false\">La Palabra de Dios</a></li><li><b>2.</b> <a href=\"#\" onclick=\"irATema('cap-cr02');return false\">La Deidad</a></li><li><b>3.</b> <a href=\"#\" onclick=\"irATema('cap-cr03');return false\">Dios el Padre</a></li><li><b>4.</b> Dios el Hijo <small>(esta)</small></li><li><b>5.</b> <a href=\"#\" onclick=\"irATema('cap-cr05');return false\">Dios el Espíritu Santo</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11176,7 +11205,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> La Palabra de Dios</li><li><b>2.</b> La Deidad</li><li><b>3.</b> Dios el Padre</li><li><b>4.</b> Dios el Hijo</li><li><b>5.</b> Dios el Espíritu Santo</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 1 de 6: La doctrina de Dios</strong><br>Son 5 creencias, de la 1 a la 5.<ul class=\"tight\"><li><b>1.</b> <a href=\"#\" onclick=\"irATema('cap-cr01');return false\">La Palabra de Dios</a></li><li><b>2.</b> <a href=\"#\" onclick=\"irATema('cap-cr02');return false\">La Deidad</a></li><li><b>3.</b> <a href=\"#\" onclick=\"irATema('cap-cr03');return false\">Dios el Padre</a></li><li><b>4.</b> <a href=\"#\" onclick=\"irATema('cap-cr04');return false\">Dios el Hijo</a></li><li><b>5.</b> Dios el Espíritu Santo <small>(esta)</small></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de Dios, la número <b>1</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 1 a la 5)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11261,7 +11290,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 2 de 6: La doctrina del hombre</strong><br>Son 2 creencias, de la 6 a la 7.<ul class=\"tight\"><li><b>6.</b> La creación</li><li><b>7.</b> La naturaleza humana</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina del hombre, la número <b>2</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>2</b> (de la 6 a la 7)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 2 de 6: La doctrina del hombre</strong><br>Son 2 creencias, de la 6 a la 7.<ul class=\"tight\"><li><b>6.</b> La creación <small>(esta)</small></li><li><b>7.</b> <a href=\"#\" onclick=\"irATema('cap-cr07');return false\">La naturaleza humana</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina del hombre, la número <b>2</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>2</b> (de la 6 a la 7)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11341,7 +11370,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 2 de 6: La doctrina del hombre</strong><br>Son 2 creencias, de la 6 a la 7.<ul class=\"tight\"><li><b>6.</b> La creación</li><li><b>7.</b> La naturaleza humana</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina del hombre, la número <b>2</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>2</b> (de la 6 a la 7)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 2 de 6: La doctrina del hombre</strong><br>Son 2 creencias, de la 6 a la 7.<ul class=\"tight\"><li><b>6.</b> <a href=\"#\" onclick=\"irATema('cap-cr06');return false\">La creación</a></li><li><b>7.</b> La naturaleza humana <small>(esta)</small></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina del hombre, la número <b>2</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>2</b> (de la 6 a la 7)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11426,7 +11455,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 3 de 6: La doctrina de la salvación</strong><br>Son 3 creencias, de la 8 a la 10.<ul class=\"tight\"><li><b>8.</b> El gran conflicto</li><li><b>9.</b> La vida, muerte y resurrección de Cristo</li><li><b>10.</b> La experiencia de la salvación</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la salvación, la número <b>3</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>3</b> (de la 8 a la 10)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 3 de 6: La doctrina de la salvación</strong><br>Son 3 creencias, de la 8 a la 10.<ul class=\"tight\"><li><b>8.</b> El gran conflicto <small>(esta)</small></li><li><b>9.</b> <a href=\"#\" onclick=\"irATema('cap-cr09');return false\">La vida, muerte y resurrección de Cristo</a></li><li><b>10.</b> <a href=\"#\" onclick=\"irATema('cap-cr10');return false\">La experiencia de la salvación</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la salvación, la número <b>3</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>3</b> (de la 8 a la 10)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11506,7 +11535,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 3 de 6: La doctrina de la salvación</strong><br>Son 3 creencias, de la 8 a la 10.<ul class=\"tight\"><li><b>8.</b> El gran conflicto</li><li><b>9.</b> La vida, muerte y resurrección de Cristo</li><li><b>10.</b> La experiencia de la salvación</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la salvación, la número <b>3</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>3</b> (de la 8 a la 10)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 3 de 6: La doctrina de la salvación</strong><br>Son 3 creencias, de la 8 a la 10.<ul class=\"tight\"><li><b>8.</b> <a href=\"#\" onclick=\"irATema('cap-cr08');return false\">El gran conflicto</a></li><li><b>9.</b> La vida, muerte y resurrección de Cristo <small>(esta)</small></li><li><b>10.</b> <a href=\"#\" onclick=\"irATema('cap-cr10');return false\">La experiencia de la salvación</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la salvación, la número <b>3</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>3</b> (de la 8 a la 10)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11586,7 +11615,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 3 de 6: La doctrina de la salvación</strong><br>Son 3 creencias, de la 8 a la 10.<ul class=\"tight\"><li><b>8.</b> El gran conflicto</li><li><b>9.</b> La vida, muerte y resurrección de Cristo</li><li><b>10.</b> La experiencia de la salvación</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la salvación, la número <b>3</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>3</b> (de la 8 a la 10)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 3 de 6: La doctrina de la salvación</strong><br>Son 3 creencias, de la 8 a la 10.<ul class=\"tight\"><li><b>8.</b> <a href=\"#\" onclick=\"irATema('cap-cr08');return false\">El gran conflicto</a></li><li><b>9.</b> <a href=\"#\" onclick=\"irATema('cap-cr09');return false\">La vida, muerte y resurrección de Cristo</a></li><li><b>10.</b> La experiencia de la salvación <small>(esta)</small></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la salvación, la número <b>3</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>3</b> (de la 8 a la 10)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11671,7 +11700,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo <small>(esta)</small></li><li><b>12.</b> <a href=\"#\" onclick=\"irATema('cap-cr12');return false\">La iglesia</a></li><li><b>13.</b> <a href=\"#\" onclick=\"irATema('cap-cr13');return false\">El remanente y su misión</a></li><li><b>14.</b> <a href=\"#\" onclick=\"irATema('cap-cr14');return false\">La unidad en el cuerpo de Cristo</a></li><li><b>15.</b> <a href=\"#\" onclick=\"irATema('cap-cr15');return false\">El bautismo</a></li><li><b>16.</b> <a href=\"#\" onclick=\"irATema('cap-cr16');return false\">La Cena del Señor</a></li><li><b>17.</b> <a href=\"#\" onclick=\"irATema('cap-cr17');return false\">Los dones y ministerios espirituales</a></li><li><b>18.</b> <a href=\"#\" onclick=\"irATema('cap-cr18');return false\">El don de profecía</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11751,7 +11780,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> <a href=\"#\" onclick=\"irATema('cap-cr11');return false\">Crecer en Cristo</a></li><li><b>12.</b> La iglesia <small>(esta)</small></li><li><b>13.</b> <a href=\"#\" onclick=\"irATema('cap-cr13');return false\">El remanente y su misión</a></li><li><b>14.</b> <a href=\"#\" onclick=\"irATema('cap-cr14');return false\">La unidad en el cuerpo de Cristo</a></li><li><b>15.</b> <a href=\"#\" onclick=\"irATema('cap-cr15');return false\">El bautismo</a></li><li><b>16.</b> <a href=\"#\" onclick=\"irATema('cap-cr16');return false\">La Cena del Señor</a></li><li><b>17.</b> <a href=\"#\" onclick=\"irATema('cap-cr17');return false\">Los dones y ministerios espirituales</a></li><li><b>18.</b> <a href=\"#\" onclick=\"irATema('cap-cr18');return false\">El don de profecía</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11831,7 +11860,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> <a href=\"#\" onclick=\"irATema('cap-cr11');return false\">Crecer en Cristo</a></li><li><b>12.</b> <a href=\"#\" onclick=\"irATema('cap-cr12');return false\">La iglesia</a></li><li><b>13.</b> El remanente y su misión <small>(esta)</small></li><li><b>14.</b> <a href=\"#\" onclick=\"irATema('cap-cr14');return false\">La unidad en el cuerpo de Cristo</a></li><li><b>15.</b> <a href=\"#\" onclick=\"irATema('cap-cr15');return false\">El bautismo</a></li><li><b>16.</b> <a href=\"#\" onclick=\"irATema('cap-cr16');return false\">La Cena del Señor</a></li><li><b>17.</b> <a href=\"#\" onclick=\"irATema('cap-cr17');return false\">Los dones y ministerios espirituales</a></li><li><b>18.</b> <a href=\"#\" onclick=\"irATema('cap-cr18');return false\">El don de profecía</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11880,7 +11909,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> <a href=\"#\" onclick=\"irATema('cap-cr11');return false\">Crecer en Cristo</a></li><li><b>12.</b> <a href=\"#\" onclick=\"irATema('cap-cr12');return false\">La iglesia</a></li><li><b>13.</b> <a href=\"#\" onclick=\"irATema('cap-cr13');return false\">El remanente y su misión</a></li><li><b>14.</b> La unidad en el cuerpo de Cristo <small>(esta)</small></li><li><b>15.</b> <a href=\"#\" onclick=\"irATema('cap-cr15');return false\">El bautismo</a></li><li><b>16.</b> <a href=\"#\" onclick=\"irATema('cap-cr16');return false\">La Cena del Señor</a></li><li><b>17.</b> <a href=\"#\" onclick=\"irATema('cap-cr17');return false\">Los dones y ministerios espirituales</a></li><li><b>18.</b> <a href=\"#\" onclick=\"irATema('cap-cr18');return false\">El don de profecía</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -11960,7 +11989,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> <a href=\"#\" onclick=\"irATema('cap-cr11');return false\">Crecer en Cristo</a></li><li><b>12.</b> <a href=\"#\" onclick=\"irATema('cap-cr12');return false\">La iglesia</a></li><li><b>13.</b> <a href=\"#\" onclick=\"irATema('cap-cr13');return false\">El remanente y su misión</a></li><li><b>14.</b> <a href=\"#\" onclick=\"irATema('cap-cr14');return false\">La unidad en el cuerpo de Cristo</a></li><li><b>15.</b> El bautismo <small>(esta)</small></li><li><b>16.</b> <a href=\"#\" onclick=\"irATema('cap-cr16');return false\">La Cena del Señor</a></li><li><b>17.</b> <a href=\"#\" onclick=\"irATema('cap-cr17');return false\">Los dones y ministerios espirituales</a></li><li><b>18.</b> <a href=\"#\" onclick=\"irATema('cap-cr18');return false\">El don de profecía</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12040,7 +12069,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> <a href=\"#\" onclick=\"irATema('cap-cr11');return false\">Crecer en Cristo</a></li><li><b>12.</b> <a href=\"#\" onclick=\"irATema('cap-cr12');return false\">La iglesia</a></li><li><b>13.</b> <a href=\"#\" onclick=\"irATema('cap-cr13');return false\">El remanente y su misión</a></li><li><b>14.</b> <a href=\"#\" onclick=\"irATema('cap-cr14');return false\">La unidad en el cuerpo de Cristo</a></li><li><b>15.</b> <a href=\"#\" onclick=\"irATema('cap-cr15');return false\">El bautismo</a></li><li><b>16.</b> La Cena del Señor <small>(esta)</small></li><li><b>17.</b> <a href=\"#\" onclick=\"irATema('cap-cr17');return false\">Los dones y ministerios espirituales</a></li><li><b>18.</b> <a href=\"#\" onclick=\"irATema('cap-cr18');return false\">El don de profecía</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12120,7 +12149,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> <a href=\"#\" onclick=\"irATema('cap-cr11');return false\">Crecer en Cristo</a></li><li><b>12.</b> <a href=\"#\" onclick=\"irATema('cap-cr12');return false\">La iglesia</a></li><li><b>13.</b> <a href=\"#\" onclick=\"irATema('cap-cr13');return false\">El remanente y su misión</a></li><li><b>14.</b> <a href=\"#\" onclick=\"irATema('cap-cr14');return false\">La unidad en el cuerpo de Cristo</a></li><li><b>15.</b> <a href=\"#\" onclick=\"irATema('cap-cr15');return false\">El bautismo</a></li><li><b>16.</b> <a href=\"#\" onclick=\"irATema('cap-cr16');return false\">La Cena del Señor</a></li><li><b>17.</b> Los dones y ministerios espirituales <small>(esta)</small></li><li><b>18.</b> <a href=\"#\" onclick=\"irATema('cap-cr18');return false\">El don de profecía</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12200,7 +12229,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> Crecer en Cristo</li><li><b>12.</b> La iglesia</li><li><b>13.</b> El remanente y su misión</li><li><b>14.</b> La unidad en el cuerpo de Cristo</li><li><b>15.</b> El bautismo</li><li><b>16.</b> La Cena del Señor</li><li><b>17.</b> Los dones y ministerios espirituales</li><li><b>18.</b> El don de profecía</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 4 de 6: La doctrina de la iglesia</strong><br>Son 8 creencias, de la 11 a la 18.<ul class=\"tight\"><li><b>11.</b> <a href=\"#\" onclick=\"irATema('cap-cr11');return false\">Crecer en Cristo</a></li><li><b>12.</b> <a href=\"#\" onclick=\"irATema('cap-cr12');return false\">La iglesia</a></li><li><b>13.</b> <a href=\"#\" onclick=\"irATema('cap-cr13');return false\">El remanente y su misión</a></li><li><b>14.</b> <a href=\"#\" onclick=\"irATema('cap-cr14');return false\">La unidad en el cuerpo de Cristo</a></li><li><b>15.</b> <a href=\"#\" onclick=\"irATema('cap-cr15');return false\">El bautismo</a></li><li><b>16.</b> <a href=\"#\" onclick=\"irATema('cap-cr16');return false\">La Cena del Señor</a></li><li><b>17.</b> <a href=\"#\" onclick=\"irATema('cap-cr17');return false\">Los dones y ministerios espirituales</a></li><li><b>18.</b> El don de profecía <small>(esta)</small></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la iglesia, la número <b>4</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>8</b> (de la 11 a la 18)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12285,7 +12314,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> La ley de Dios</li><li><b>20.</b> El sábado</li><li><b>21.</b> La mayordomía</li><li><b>22.</b> La conducta cristiana</li><li><b>23.</b> El matrimonio y la familia</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> La ley de Dios <small>(esta)</small></li><li><b>20.</b> <a href=\"#\" onclick=\"irATema('cap-cr20');return false\">El sábado</a></li><li><b>21.</b> <a href=\"#\" onclick=\"irATema('cap-cr21');return false\">La mayordomía</a></li><li><b>22.</b> <a href=\"#\" onclick=\"irATema('cap-cr22');return false\">La conducta cristiana</a></li><li><b>23.</b> <a href=\"#\" onclick=\"irATema('cap-cr23');return false\">El matrimonio y la familia</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12365,7 +12394,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> La ley de Dios</li><li><b>20.</b> El sábado</li><li><b>21.</b> La mayordomía</li><li><b>22.</b> La conducta cristiana</li><li><b>23.</b> El matrimonio y la familia</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> <a href=\"#\" onclick=\"irATema('cap-cr19');return false\">La ley de Dios</a></li><li><b>20.</b> El sábado <small>(esta)</small></li><li><b>21.</b> <a href=\"#\" onclick=\"irATema('cap-cr21');return false\">La mayordomía</a></li><li><b>22.</b> <a href=\"#\" onclick=\"irATema('cap-cr22');return false\">La conducta cristiana</a></li><li><b>23.</b> <a href=\"#\" onclick=\"irATema('cap-cr23');return false\">El matrimonio y la familia</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12445,7 +12474,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> La ley de Dios</li><li><b>20.</b> El sábado</li><li><b>21.</b> La mayordomía</li><li><b>22.</b> La conducta cristiana</li><li><b>23.</b> El matrimonio y la familia</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> <a href=\"#\" onclick=\"irATema('cap-cr19');return false\">La ley de Dios</a></li><li><b>20.</b> <a href=\"#\" onclick=\"irATema('cap-cr20');return false\">El sábado</a></li><li><b>21.</b> La mayordomía <small>(esta)</small></li><li><b>22.</b> <a href=\"#\" onclick=\"irATema('cap-cr22');return false\">La conducta cristiana</a></li><li><b>23.</b> <a href=\"#\" onclick=\"irATema('cap-cr23');return false\">El matrimonio y la familia</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12525,7 +12554,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> La ley de Dios</li><li><b>20.</b> El sábado</li><li><b>21.</b> La mayordomía</li><li><b>22.</b> La conducta cristiana</li><li><b>23.</b> El matrimonio y la familia</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> <a href=\"#\" onclick=\"irATema('cap-cr19');return false\">La ley de Dios</a></li><li><b>20.</b> <a href=\"#\" onclick=\"irATema('cap-cr20');return false\">El sábado</a></li><li><b>21.</b> <a href=\"#\" onclick=\"irATema('cap-cr21');return false\">La mayordomía</a></li><li><b>22.</b> La conducta cristiana <small>(esta)</small></li><li><b>23.</b> <a href=\"#\" onclick=\"irATema('cap-cr23');return false\">El matrimonio y la familia</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12605,7 +12634,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> La ley de Dios</li><li><b>20.</b> El sábado</li><li><b>21.</b> La mayordomía</li><li><b>22.</b> La conducta cristiana</li><li><b>23.</b> El matrimonio y la familia</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 5 de 6: La doctrina de la vida cristiana</strong><br>Son 5 creencias, de la 19 a la 23.<ul class=\"tight\"><li><b>19.</b> <a href=\"#\" onclick=\"irATema('cap-cr19');return false\">La ley de Dios</a></li><li><b>20.</b> <a href=\"#\" onclick=\"irATema('cap-cr20');return false\">El sábado</a></li><li><b>21.</b> <a href=\"#\" onclick=\"irATema('cap-cr21');return false\">La mayordomía</a></li><li><b>22.</b> <a href=\"#\" onclick=\"irATema('cap-cr22');return false\">La conducta cristiana</a></li><li><b>23.</b> El matrimonio y la familia <small>(esta)</small></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de la vida cristiana, la número <b>5</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 19 a la 23)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12690,7 +12719,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> El ministerio de Cristo en el Santuario celestial</li><li><b>25.</b> La segunda venida de Cristo</li><li><b>26.</b> La muerte y la resurrección</li><li><b>27.</b> El milenio y el fin del pecado</li><li><b>28.</b> La Tierra Nueva</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> El ministerio de Cristo en el Santuario celestial <small>(esta)</small></li><li><b>25.</b> <a href=\"#\" onclick=\"irATema('cap-cr25');return false\">La segunda venida de Cristo</a></li><li><b>26.</b> <a href=\"#\" onclick=\"irATema('cap-cr26');return false\">La muerte y la resurrección</a></li><li><b>27.</b> <a href=\"#\" onclick=\"irATema('cap-cr27');return false\">El milenio y el fin del pecado</a></li><li><b>28.</b> <a href=\"#\" onclick=\"irATema('cap-cr28');return false\">La Tierra Nueva</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12770,7 +12799,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> El ministerio de Cristo en el Santuario celestial</li><li><b>25.</b> La segunda venida de Cristo</li><li><b>26.</b> La muerte y la resurrección</li><li><b>27.</b> El milenio y el fin del pecado</li><li><b>28.</b> La Tierra Nueva</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> <a href=\"#\" onclick=\"irATema('cap-cr24');return false\">El ministerio de Cristo en el Santuario celestial</a></li><li><b>25.</b> La segunda venida de Cristo <small>(esta)</small></li><li><b>26.</b> <a href=\"#\" onclick=\"irATema('cap-cr26');return false\">La muerte y la resurrección</a></li><li><b>27.</b> <a href=\"#\" onclick=\"irATema('cap-cr27');return false\">El milenio y el fin del pecado</a></li><li><b>28.</b> <a href=\"#\" onclick=\"irATema('cap-cr28');return false\">La Tierra Nueva</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12850,7 +12879,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> El ministerio de Cristo en el Santuario celestial</li><li><b>25.</b> La segunda venida de Cristo</li><li><b>26.</b> La muerte y la resurrección</li><li><b>27.</b> El milenio y el fin del pecado</li><li><b>28.</b> La Tierra Nueva</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> <a href=\"#\" onclick=\"irATema('cap-cr24');return false\">El ministerio de Cristo en el Santuario celestial</a></li><li><b>25.</b> <a href=\"#\" onclick=\"irATema('cap-cr25');return false\">La segunda venida de Cristo</a></li><li><b>26.</b> La muerte y la resurrección <small>(esta)</small></li><li><b>27.</b> <a href=\"#\" onclick=\"irATema('cap-cr27');return false\">El milenio y el fin del pecado</a></li><li><b>28.</b> <a href=\"#\" onclick=\"irATema('cap-cr28');return false\">La Tierra Nueva</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -12930,7 +12959,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> El ministerio de Cristo en el Santuario celestial</li><li><b>25.</b> La segunda venida de Cristo</li><li><b>26.</b> La muerte y la resurrección</li><li><b>27.</b> El milenio y el fin del pecado</li><li><b>28.</b> La Tierra Nueva</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> <a href=\"#\" onclick=\"irATema('cap-cr24');return false\">El ministerio de Cristo en el Santuario celestial</a></li><li><b>25.</b> <a href=\"#\" onclick=\"irATema('cap-cr25');return false\">La segunda venida de Cristo</a></li><li><b>26.</b> <a href=\"#\" onclick=\"irATema('cap-cr26');return false\">La muerte y la resurrección</a></li><li><b>27.</b> El milenio y el fin del pecado <small>(esta)</small></li><li><b>28.</b> <a href=\"#\" onclick=\"irATema('cap-cr28');return false\">La Tierra Nueva</a></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -13010,7 +13039,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Dónde encaja",
    "capa": "apoyo",
-   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> El ministerio de Cristo en el Santuario celestial</li><li><b>25.</b> La segunda venida de Cristo</li><li><b>26.</b> La muerte y la resurrección</li><li><b>27.</b> El milenio y el fin del pecado</li><li><b>28.</b> La Tierra Nueva</li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
+   "h": "<div class=\"highlight-box\"><strong>Doctrina 6 de 6: La doctrina de los acontecimientos finales</strong><br>Son 5 creencias, de la 24 a la 28.<ul class=\"tight\"><li><b>24.</b> <a href=\"#\" onclick=\"irATema('cap-cr24');return false\">El ministerio de Cristo en el Santuario celestial</a></li><li><b>25.</b> <a href=\"#\" onclick=\"irATema('cap-cr25');return false\">La segunda venida de Cristo</a></li><li><b>26.</b> <a href=\"#\" onclick=\"irATema('cap-cr26');return false\">La muerte y la resurrección</a></li><li><b>27.</b> <a href=\"#\" onclick=\"irATema('cap-cr27');return false\">El milenio y el fin del pecado</a></li><li><b>28.</b> La Tierra Nueva <small>(esta)</small></li></ul></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿A qué doctrina pertenece esta creencia?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>La doctrina de los acontecimientos finales, la número <b>6</b> de seis</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Cuántas creencias tiene esa doctrina?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden><b>5</b> (de la 24 a la 28)</div></div><div class=\"warn-box\"><strong>El conteo de siempre</strong><br>28 creencias repartidas en 6 doctrinas: <b>5 · 2 · 3 · 8 · 5 · 5</b>.</div>"
   },
   {
    "t": "✅ Compruébalo",
@@ -83986,7 +84015,7 @@ const MANUAL = [
    },
    {
     "t": "Paso 3 — tu categoría",
-    "h": "<p>Aquí solo aparecen las categorías de la actividad que escogiste, con\n    el material de cada una escrito debajo.</p>\n    <p>En Conexión Bíblica y en la matutina van por edad: <strong>4 a 6</strong>,\n    <strong>7 a 9</strong> y, en Conexión Bíblica, <strong>adultos</strong>.\n    <strong>Guías Mayores</strong> tiene su propia actividad, Conexión Bíblica\n    de Guías Mayores, con una sola categoría. En las 28 creencias no van por edad:\n    <strong>Adultos</strong> son los dos del examen escrito y\n    <strong>Cuestionario</strong> es el resto del club.</p>\n    <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de\n    empezar a estudiar.</p>"
+    "h": "<p>Aquí solo aparecen las categorías de la actividad que escogiste, con\n    el material de cada una escrito debajo.</p>\n    <p>En Conexión Bíblica y en la matutina van por edad: <strong>4 a 6</strong>,\n    <strong>7 a 9</strong> y, en Conexión Bíblica, <strong>adultos</strong>.\n    <strong>Guías Mayores</strong> tiene su propia actividad, Conexión Bíblica\n    de Guías Mayores, con una sola categoría. En las 28 creencias no van por edad:\n    <strong>Adultos</strong> son los dos del examen escrito y\n    <strong>Integrantes del club</strong> son el resto del club (la edad depende del club).</p>\n    <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de\n    empezar a estudiar.</p>"
    },
    {
     "t": "Si escogiste mal",
@@ -94626,13 +94655,18 @@ function hojaMueve(d){
   if(!hojaCid)return;
   const t=tablaDeCid(hojaCid);
   if(!t)return;
+  /* v239: se camina por los versículos que hay, no por sus números: en los capítulos
+     con huecos (los de otros libros guardan solo los citados) el número +1 no existe. */
   const nums=Object.keys(t.mapa).map(Number).sort((a,b)=>a-b);
-  const min=nums[0], max=nums[nums.length-1];
-  const rango=hojaHasta-hojaDe;
-  let de=hojaDe+d;
-  if(de<min||de+rango>max)return;
+  const i0=nums.findIndex(n=>n>=hojaDe),i1=nums.filter(n=>n<=hojaHasta).length-1;
+  if(i0<0)return;
+  const rango=i1-i0;
+  const j=i0+d;
+  if(j<0||j+rango>=nums.length)return;
+  const de=nums[j];
+  hojaHasta=nums[j+rango];
   paraVoz();
-  hojaDe=de; hojaHasta=de+rango;
+  hojaDe=de;
   const h=document.getElementById('hoja');
   if(h)h.innerHTML=htmlHoja();
 }
@@ -94644,6 +94678,8 @@ function htmlHoja(cid,de,hasta){
   const nums=Object.keys(t.mapa).map(Number).sort((a,b)=>a-b);
   const min=nums[0], max=nums[nums.length-1];
   const cap=buscaItem(cid);
+  /* v239: «de N» cuenta los versículos del capítulo que hay, no el número más alto. */
+  const pos=n=>nums.filter(x=>x<=n).length;
   const partes=[];
   for(let i=de;i<=hasta;i++)
     if(t.mapa[i])partes.push('<p><span class="vn">'+i+'</span>'+esc(t.mapa[i])+'</p>');
@@ -94662,7 +94698,7 @@ function htmlHoja(cid,de,hasta){
     '<div class="hoja-txt biblia" data-leer>'+partes.join('')+'</div>'+
     '<div class="hoja-pie">'+
       filaNav(de<=min?null:{clic:'hojaMueve(-1)',aria:'Versículo anterior'},
-        entero?max+' versículos':de+(hasta>de?'-'+hasta:'')+' de '+max,
+        entero?nums.length+' versículos':(pos(de)+(hasta>de?'-'+pos(hasta):''))+' de '+nums.length,
         hasta>=max?null:{clic:'hojaMueve(1)',aria:'Versículo siguiente'})+
     '</div></div>';
 }
@@ -99409,7 +99445,14 @@ const tjDeCap=id=>tarjetasDe().filter(t=>t.cap===id);
 const qDeCap=id=>bancoDe().filter(q=>q.cap===id);
 function nivelesDe(id){
   const leido=Math.max(0,Math.min(100,Math.round(S.prog[id]||0)));
-  const tj=tjDeCap(id), qs=qDeCap(id), tot=tj.length+qs.length;
+  /* v239: un tema fuera de la ficha del concurso también se cuenta: si la categoría no lo
+     trae, se miden sus tarjetas y preguntas enteras (Practicado y Dominado ya no dan 0). */
+  let tj=tjDeCap(id), qs=qDeCap(id);
+  if(!tj.length&&!qs.length){
+    tj=TARJETAS.filter(t=>t.cap===id&&!estaRetiradaT(t));
+    qs=BANCO.filter(q=>q.cap===id&&estaRetirada(q)===false);
+  }
+  const tot=tj.length+qs.length;
   const pr=tj.filter(t=>claveT(t) in S.ft).length+
     qs.filter(q=>{const k=claveQ(q);return (S.qv[k]||0)>0||k in S.fq;}).length;
   const dom=tj.filter(t=>cajaT(t)>=2).length;

@@ -5119,13 +5119,18 @@ function hojaMueve(d){
   if(!hojaCid)return;
   const t=tablaDeCid(hojaCid);
   if(!t)return;
+  /* v239: se camina por los versículos que hay, no por sus números: en los capítulos
+     con huecos (los de otros libros guardan solo los citados) el número +1 no existe. */
   const nums=Object.keys(t.mapa).map(Number).sort((a,b)=>a-b);
-  const min=nums[0], max=nums[nums.length-1];
-  const rango=hojaHasta-hojaDe;
-  let de=hojaDe+d;
-  if(de<min||de+rango>max)return;
+  const i0=nums.findIndex(n=>n>=hojaDe),i1=nums.filter(n=>n<=hojaHasta).length-1;
+  if(i0<0)return;
+  const rango=i1-i0;
+  const j=i0+d;
+  if(j<0||j+rango>=nums.length)return;
+  const de=nums[j];
+  hojaHasta=nums[j+rango];
   paraVoz();
-  hojaDe=de; hojaHasta=de+rango;
+  hojaDe=de;
   const h=document.getElementById('hoja');
   if(h)h.innerHTML=htmlHoja();
 }
@@ -5137,6 +5142,8 @@ function htmlHoja(cid,de,hasta){
   const nums=Object.keys(t.mapa).map(Number).sort((a,b)=>a-b);
   const min=nums[0], max=nums[nums.length-1];
   const cap=buscaItem(cid);
+  /* v239: «de N» cuenta los versículos del capítulo que hay, no el número más alto. */
+  const pos=n=>nums.filter(x=>x<=n).length;
   const partes=[];
   for(let i=de;i<=hasta;i++)
     if(t.mapa[i])partes.push('<p><span class="vn">'+i+'</span>'+esc(t.mapa[i])+'</p>');
@@ -5155,7 +5162,7 @@ function htmlHoja(cid,de,hasta){
     '<div class="hoja-txt biblia" data-leer>'+partes.join('')+'</div>'+
     '<div class="hoja-pie">'+
       filaNav(de<=min?null:{clic:'hojaMueve(-1)',aria:'Versículo anterior'},
-        entero?max+' versículos':de+(hasta>de?'-'+hasta:'')+' de '+max,
+        entero?nums.length+' versículos':(pos(de)+(hasta>de?'-'+pos(hasta):''))+' de '+nums.length,
         hasta>=max?null:{clic:'hojaMueve(1)',aria:'Versículo siguiente'})+
     '</div></div>';
 }
@@ -9902,7 +9909,14 @@ const tjDeCap=id=>tarjetasDe().filter(t=>t.cap===id);
 const qDeCap=id=>bancoDe().filter(q=>q.cap===id);
 function nivelesDe(id){
   const leido=Math.max(0,Math.min(100,Math.round(S.prog[id]||0)));
-  const tj=tjDeCap(id), qs=qDeCap(id), tot=tj.length+qs.length;
+  /* v239: un tema fuera de la ficha del concurso también se cuenta: si la categoría no lo
+     trae, se miden sus tarjetas y preguntas enteras (Practicado y Dominado ya no dan 0). */
+  let tj=tjDeCap(id), qs=qDeCap(id);
+  if(!tj.length&&!qs.length){
+    tj=TARJETAS.filter(t=>t.cap===id&&!estaRetiradaT(t));
+    qs=BANCO.filter(q=>q.cap===id&&estaRetirada(q)===false);
+  }
+  const tot=tj.length+qs.length;
   const pr=tj.filter(t=>claveT(t) in S.ft).length+
     qs.filter(q=>{const k=claveQ(q);return (S.qv[k]||0)>0||k in S.fq;}).length;
   const dom=tj.filter(t=>cajaT(t)>=2).length;

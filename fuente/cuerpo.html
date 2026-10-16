@@ -360,17 +360,15 @@
   <div class="jg-zona" id="jg-zona" hidden></div>
   <div class="tj-zona">
     <div class="tj-barra">
-      <span id="tj-pos"></span>
       <select id="tj-filtro" onchange="filtraTj(this.value)"></select>
     </div>
     <div class="prog-lin"><div id="tj-prog" style="width:0%"></div></div>
     <div class="tj" id="tj-carta" onclick="voltea()"></div>
     <div class="tj-btns">
-      <button class="btn gho" id="tj-ant" onclick="tjAnt()">← Anterior</button>
       <button class="btn ver" id="tj-si" onclick="tjSabia(true)"><svg class="ico-t" aria-hidden="true"><use href="#i-check"/></svg> La sabía</button>
       <button class="btn nar" id="tj-no" onclick="tjSabia(false)"><svg class="ico-t" aria-hidden="true"><use href="#i-repetir"/></svg> Repasar</button>
-      <button class="btn gho" id="tj-sig" onclick="tjSig()">Siguiente →</button>
     </div>
+    <div class="hoja-pie tj-nav"><button type="button" class="hoja-nav" id="tj-ant" onclick="tjAnt()" aria-label="Anterior">‹ Anterior</button><span class="hoja-cta" id="tj-pos"></span><button type="button" class="hoja-nav" id="tj-sig" onclick="tjSig()" aria-label="Siguiente">Siguiente ›</button></div>
     <div class="tj-btns tj-solo"><button class="btn azul" onclick="tjBaraja()"><svg class="ico-t" aria-hidden="true"><use href="#i-barajar"/></svg> Barajar de nuevo</button></div>
     <p class="nota" id="tj-resumen" style="text-align:center"></p>
   </div>

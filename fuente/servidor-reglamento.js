@@ -586,7 +586,7 @@ export const FICHAS_BASE = [
    {
     "id": "ec2",
     "nombre": "El resto del club",
-    "edad": "Cuestionario",
+    "edad": "Integrantes del club",
     "n": 15,
     "techo": 2,
     "sinCompletar": true,
@@ -696,7 +696,19 @@ export const FICHAS_BASE = [
       43
      ]
     }
-   },
+   }
+  ]
+ },
+ {
+  "id": "apc",
+  "tema": "apocalipsis",
+  "nombre": "Conquistadores - Conexión Bíblica 2027",
+  "icono": "📖",
+  "cuando": "6 de marzo de 2027 (fecha tentativa)",
+  "fecha": "2027-03-06",
+  "organiza": "Asociación del Alto Magdalena",
+  "que": "Apocalipsis (RV1995) y El conflicto de los siglos",
+  "categorias": [
    {
     "id": "apcq",
     "nombre": "Conquistadores",
@@ -739,7 +751,19 @@ export const FICHAS_BASE = [
       43
      ]
     }
-   },
+   }
+  ]
+ },
+ {
+  "id": "apa",
+  "tema": "apocalipsis",
+  "nombre": "Aventureros - Conexión Bíblica 2027",
+  "icono": "📖",
+  "cuando": "6 de marzo de 2027 (fecha tentativa)",
+  "fecha": "2027-03-06",
+  "organiza": "Asociación del Alto Magdalena",
+  "que": "Apocalipsis (RV1995) y El conflicto de los siglos",
+  "categorias": [
    {
     "id": "apav",
     "nombre": "Aventureros",

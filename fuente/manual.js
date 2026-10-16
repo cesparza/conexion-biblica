@@ -68,7 +68,7 @@ const MANUAL = [
     <strong>Guías Mayores</strong> tiene su propia actividad, Conexión Bíblica
     de Guías Mayores, con una sola categoría. En las 28 creencias no van por edad:
     <strong>Adultos</strong> son los dos del examen escrito y
-    <strong>Cuestionario</strong> es el resto del club.</p>
+    <strong>Integrantes del club</strong> son el resto del club (la edad depende del club).</p>
     <p>Si no estás seguro de cuál te toca, pregúntale a tu director antes de
     empezar a estudiar.</p>` },
   { t:'Si escogiste mal',

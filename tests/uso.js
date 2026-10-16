@@ -1076,6 +1076,14 @@ ok(/class="hoja-nav" disabled aria-label="Anterior">‹ Anterior</.test(h1)&&/on
 ok(/class="hoja-nav" disabled aria-label="Siguiente">Siguiente ›</.test(h30)&&/onclick="hojaMueve\(-1\)" aria-label="Versículo anterior">‹ Anterior</.test(h30),
   'En el ultimo versiculo, «Siguiente» esta desactivado');
 ok(/hoja-cta">1 de 30</.test(h1),'La hoja dice en que versiculo va y cuantos hay');
+/* v239: en un capítulo con huecos (1 Corintios 10 guarda 4 versículos y el más alto es el 31) «de N» cuenta los que hay, no el número más alto. */
+{const nv=Object.keys(require('../fuente/biblia-otros.js').OTRAS_VERS['1corintios-10']).map(Number).sort((a,b)=>a-b);
+ const hx=AV.htmlHoja('1corintios-10',nv[nv.length-1],nv[nv.length-1]);
+ ok(nv.length<nv[nv.length-1]&&new RegExp('hoja-cta">'+nv.length+' de '+nv.length+'<').test(hx),'v239: el contador de la hoja cuenta los versículos del capítulo que hay ('+nv.length+'), no el más alto ('+nv[nv.length-1]+')');}
+{const src=require('fs').readFileSync(__dirname+'/../fuente/creencias.js','utf8');
+ const dm=src.split('\n').filter(l=>l.includes('Dónde encaja')&&l.includes('{ t:'));
+ ok(dm.length===28&&dm.every((l,i)=>!l.includes("irATema('cap-cr"+String(i+1).padStart(2,'0')+"')")&&/irATema\('cap-cr\d\d'\)/.test(l)),'v239: «Dónde encaja» de las 28 creencias enlaza a las hermanas de su doctrina y no a sí misma');}
+ok(/id="tj-ant"[^>]*>‹ Anterior/.test(require('fs').readFileSync(__dirname+'/../fuente/cuerpo.html','utf8'))&&/class="hoja-pie tj-nav"/.test(require('fs').readFileSync(__dirname+'/../fuente/cuerpo.html','utf8')),'v239: Anterior y Siguiente de las tarjetas usan la fila de la hoja (filaNav)');
 ok(!/disabled/.test(hv.match(/hojaMueve\(-1\)[^>]*/)[0]),
   'En un versiculo del medio, «Anterior» esta activo');
 
@@ -1396,7 +1404,7 @@ ok(!cat.some(i=>i.g==='Cambiar de material'&&/^\s*$/.test(i.t)),'Ninguna fila qu
    consejeros» contiene «Conexión Bíblica» y «Padres y consejeros» sin ser la
    categoría activa. */
 ok(!cat.some(i=>i.g==='Cambiar de material'&&i.t===N.ACTIVIDADES[N.CATS[N.S().cat].act].nombre+' · '+N.CATS[N.S().cat].nombre)&&
-   cat.some(i=>i.g==='Cambiar de material'&&i.t==='Guías Mayores - Conexión Bíblica 2027 · Aventureros'),
+   cat.some(i=>i.g==='Cambiar de material'&&i.t==='Aventureros - Conexión Bíblica 2027 · Aventureros'),
   'No ofrece cambiar a la categoria en la que ya estas');
 
 /* Sin escribir nada, las ACCIONES van primero: con el orden natural el tope de
@@ -3103,7 +3111,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
      JSON.stringify(con.CATS.me)===JSON.stringify(limpia.CATS.me)&&JSON.stringify(con.CATS.gm)===JSON.stringify(limpia.CATS.gm),
     'Con una ficha guardada, la app abre con ese reglamento: Aventureros con 20 preguntas y Daniel 4, y las demás categorías igual');
   con.ponCat('cq1');
-  ok(con.CATS.cq1&&con.ACTIVIDADES.cq27.tipo==='libro'&&con.capsDeCat().join()==='d1,d2,d3,d4,d5,d6'&&Object.keys(con.ACTIVIDADES).join()==='cb,cbg,dm,ec,ap,cq27',
+  ok(con.CATS.cq1&&con.ACTIVIDADES.cq27.tipo==='libro'&&con.capsDeCat().join()==='d1,d2,d3,d4,d5,d6'&&Object.keys(con.ACTIVIDADES).join()==='cb,cbg,dm,ec,ap,apc,apa,cq27',
     'Un concurso guardado con id nuevo aparece al final, con su categoría y sus capítulos, y se porta como libro');
   /* Lo dañado no deja la app en blanco. */
   for(const [malo,que] of [['{no es json','texto que no es JSON'],[JSON.stringify({fichas:'x'}),'una forma que no es lista'],
@@ -3214,8 +3222,8 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(yo.length===1&&yo[0].fichas.length===2,'v191: Camilo sale una sola vez, con sus dos actividades debajo');
   Z.nuevaFicha('cargo','Sofía');
   const n=Z.S();
-  ok(n.aCargo===true&&n.tutor==='Camilo'&&n.nombre==='Sofía'&&Z.catsDeNino('ap').includes(n.cat)&&!['apgm'].includes(n.cat),'v191: la niña a cargo queda con su tutor y en una categoría de niños ('+n.cat+')');
-  ok(Z.catsDeNino('ap').join()==='apcq,apav,apme'&&Z.catsDeNino('cb').join()==='me,av','v191: a cargo solo Menores, Aventureros y Conquistadores; nunca adultos ni Guías Mayores');
+  ok(n.aCargo===true&&n.tutor==='Camilo'&&n.nombre==='Sofía'&&(Z.catsDeNino('apa').includes(n.cat)||n.cat==='libre-apocalipsis')&&!['apgm'].includes(n.cat),'v191: la niña a cargo queda con su tutor y en una categoría de niños ('+n.cat+')');
+  ok((Z.catsDeNino('apc').join()+','+Z.catsDeNino('apa').join())==='apcq,apav,apme'&&Z.catsDeNino('cb').join()==='me,av','v191: a cargo solo Menores, Aventureros y Conquistadores; nunca adultos ni Guías Mayores');
 }
 /* v189: los nombres de los personajes se tocan y abren su ficha. */
 {
@@ -3306,12 +3314,12 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   P.ponCat('pa');P.ponNombre('Camilo');P.avanza('d1',60);
   P.abreYo();P.prepAbre();
   const h1=P.el('prep').innerHTML;
-  ok(/prepActividad\('cb'\)/.test(h1)&&/prepActividad\('ap'\)/.test(h1)&&/prepElige\('libre-daniel'\)/.test(h1)&&!/prepElige\('(av|me|pa)'\)/.test(h1),'v214: «Agregar actividad» pregunta primero la actividad');
-  P.prepActividad('ap');
-  const h2=P.el('prep').innerHTML;
-  ok(['apgm','apcq','apav'].every(k=>h2.includes("prepElige('"+k+"')"))&&!/prepElige\('(me|av|pa|gm)'\)/.test(h2)&&/libre-apocalipsis/.test(h2),'v214: después, solo las categorías de esa actividad (y «Sin concurso»)');
+  ok(/prepActividad\('cb'\)/.test(h1)&&/prepActividad\('ap'\)/.test(h1)&&/prepActividad\('apc'\)/.test(h1)&&/prepActividad\('apa'\)/.test(h1)&&/prepElige\('libre-daniel'\)/.test(h1)&&!/prepElige\('(av|me|pa)'\)/.test(h1),'v214: «Agregar actividad» pregunta primero la actividad');
+  P.prepActividad('apa');
+  const h2b=P.el('prep').innerHTML;
+  ok(['apav','apme','appa'].every(k=>h2b.includes("prepElige('"+k+"')"))&&!/prepElige\('(me|av|pa|gm|apgm|apcq)'\)/.test(h2b)&&/libre-apocalipsis/.test(h2b),'v214: después, solo las categorías de esa actividad (y «Sin concurso»); v239: con una sola categoría (Guías, Conquistadores) se elige sin segundo paso');
   P.nuevaFicha('cargo','Sofía');
-  ok(P.catsValidas('ap').join()==='apcq,apav,apme'&&P.catsValidas('cbg').length===0,'v214: a un niño a cargo solo le caben categorías de niños; Guías Mayores no');
+  ok((P.catsValidas('apc').join()+','+P.catsValidas('apa').join())==='apcq,apav,apme'&&P.catsValidas('cbg').length===0,'v214: a un niño a cargo solo le caben categorías de niños; Guías Mayores no');
   P.abreYo();P.prepAbre();
   ok(!/prepActividad\('cbg'\)/.test(P.el('prep').innerHTML),'v214: y la actividad sin categorías para él no se ofrece');
   P.prepActividad('ap');
@@ -3408,7 +3416,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   ok(tr(A[0])==='1-5,10-14,19-22'&&tr(A[1])==='24-26,29,32,36-39,41,43'&&A[1].obra==='cs'&&tr(V[0])==='1,12,14,21,22'&&tr(V[1])==='24,25,32,39,41,43'&&tr(G[0])==='1-22'&&tr(G[1])==='24-43',
     'v236: cada categoría de la política 2027 trae sus capítulos de Apocalipsis y de El conflicto de los siglos '+[A,V,G].map(x=>x.map(tr).join('|')).join(' / '));
   const X=M.ACTIVIDADES.ap,C=M.CATS;
-  ok(X.nombre==='Guías Mayores - Conexión Bíblica 2027'&&X.organiza==='Asociación del Alto Magdalena'&&X.cuando==='6 de marzo de 2027 (fecha tentativa)'&&X.cats.join()==='apgm,apcq,apav,apme,appa'&&
+  ok(X.nombre==='Guías Mayores - Conexión Bíblica 2027'&&X.organiza==='Asociación del Alto Magdalena'&&X.cuando==='6 de marzo de 2027 (fecha tentativa)'&&X.cats.join()==='apgm'&&M.ACTIVIDADES.apc.nombre==='Conquistadores - Conexión Bíblica 2027'&&M.ACTIVIDADES.apc.cats.join()==='apcq'&&M.ACTIVIDADES.apa.nombre==='Aventureros - Conexión Bíblica 2027'&&M.ACTIVIDADES.apa.cats.join()==='apav,apme,appa'&&
      C.apgm.edad==='Desde 16 años'&&C.apcq.edad==='10 a 15 años'&&C.apav.edad==='7 a 9 años'&&C.apgm.sinPoliticas===false&&/Guías Mayores/.test(C.apgm.nombre),
     'v237: el concurso es «Guías Mayores - Conexión Bíblica 2027» (fecha tentativa) de la Asociación del Alto Magdalena, con Guías Mayores, Conquistadores, Aventureros, Menores y Padres y las edades de antes');
   M.ir('examen');M.pintaConcursos();
