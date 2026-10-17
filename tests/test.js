@@ -3327,7 +3327,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     return !html.includes('<cite>Daniel '+cid.slice(1)+':'+v+'</cite>')||html.includes('«»');
   });
   ok(!mal.length,'El estudio de Daniel cita el versículo de su tema sin comillas duplicadas'+(mal.length?' ('+mal.map(x=>x[1]).join(', ')+')':''));
-  const duplicadas=montar('x:Object.entries(CONTENIDO).flatMap(([cid,ss])=>ss.filter(s=>s.capa==="contexto").map(s=>({cid,t:s.t,html:diceDe(s,cid)}))).filter(s=>/[«»]{2}/.test(s.html))').x;
+  const duplicadas=montar('x:Object.entries(CONTENIDO).flatMap(([cid,ss])=>ss.filter(s=>s.capa==="contexto").map(s=>({cid,t:s.t,html:diceDe(s,cid)}))).filter(s=>/biblia-t">«[«»“”‘’"\x27]|[«»“”‘’"\x27]» <cite>/.test(s.html))').x;
   ok(!duplicadas.length,'Ningún estudio de Daniel o Apocalipsis duplica las comillas bíblicas'+(duplicadas.length?' ('+duplicadas.map(x=>x.cid+': '+x.t).join(', ')+')':''));
   const titulos=montar('x:[tituloSec("🧭 «Fueron puestos unos tronos»"),tituloSec("🤔 ¿La bestia es el dragón?"),tituloSec("📖 Daniel 7")]').x;
   ok(titulos.join('|')==='«Fueron puestos unos tronos»|¿La bestia es el dragón?|Daniel 7',

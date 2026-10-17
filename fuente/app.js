@@ -5534,7 +5534,7 @@ function diceDe(s,cid){
   if(!v0||!VERS[cid][v0])return '';
   const v1=!s.verso&&libre.includes(v0+1)&&(VERS[cid][v0]+VERS[cid][v0+1]).length<260?v0+1:v0;
   const lb=libroCid(cid);
-  const cita=(VERS[cid][v0]+(v1>v0?' '+VERS[cid][v1]:'')).replace(/^[«»]\s*/, '').replace(/\s*[«»]$/, '');
+  const cita=(VERS[cid][v0]+(v1>v0?' '+VERS[cid][v1]:'')).replace(/^[«»“”‘’"']+\s*/, '').replace(/\s*[«»“”‘’"']+$/, '');
   return '<div class="lq-dice"><div class="lq-eti">Lo que dice</div><p class="biblia-t">«'+esc(cita)+'»'+
     ' <cite>'+esc(lb.nombre+' '+lb.n+':'+v0+(v1>v0?'-'+v1:''))+'</cite></p></div>';
 }

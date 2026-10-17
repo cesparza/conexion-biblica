@@ -6318,7 +6318,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '7fab732bf973';
+const VERSION_APP = '180f8d1c0ab5';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -95100,7 +95100,7 @@ function diceDe(s,cid){
   if(!v0||!VERS[cid][v0])return '';
   const v1=!s.verso&&libre.includes(v0+1)&&(VERS[cid][v0]+VERS[cid][v0+1]).length<260?v0+1:v0;
   const lb=libroCid(cid);
-  const cita=(VERS[cid][v0]+(v1>v0?' '+VERS[cid][v1]:'')).replace(/^[«»]\s*/, '').replace(/\s*[«»]$/, '');
+  const cita=(VERS[cid][v0]+(v1>v0?' '+VERS[cid][v1]:'')).replace(/^[«»“”‘’"']+\s*/, '').replace(/\s*[«»“”‘’"']+$/, '');
   return '<div class="lq-dice"><div class="lq-eti">Lo que dice</div><p class="biblia-t">«'+esc(cita)+'»'+
     ' <cite>'+esc(lb.nombre+' '+lb.n+':'+v0+(v1>v0?'-'+v1:''))+'</cite></p></div>';
 }
