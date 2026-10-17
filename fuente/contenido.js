@@ -1583,8 +1583,9 @@ d7: [
     vs(`«Estuve mirando hasta que fueron puestos unos tronos y se sentó un
     Anciano de días... El Juez se sentó y los libros fueron abiertos» (7:9-10).`) +
     `<p>El mensaje del juicio se repite <strong>cuatro veces</strong> en el
-    capítulo: 7:9-14, 7:18, 7:22 y 7:26-27. Y las cuatro veces termina igual:
-    <strong>el reino se le entrega a los santos</strong>.</p>` +
+    capítulo: 7:9-14, 7:18, 7:22 y 7:26-27. La visión muestra que el reino se
+    entrega al Hijo de hombre (7:14) y que los santos participan de ese reino
+    (7:18, 22, 27).</p>` +
     tbl(['En la escena','Qué es'],[
       ['El Anciano','Dios Padre, sentado como juez (7:9)'],
       ['Los libros','El registro de las obras (7:10; Apocalipsis 20:12)'],

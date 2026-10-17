@@ -59,6 +59,7 @@ module.exports = {
     {
       t: '🧭 Mene, mene, tekel, uparsin: lo que no podían entender',
       capa: 'contexto',
+      verso: 25,
       h: `<p>Las palabras estaban en arameo, la lengua de los mismos sabios. <strong>Sí podían leerlas, pero no entenderlas</strong>: cada palabra encerraba una verdad entera y hacía falta interpretación.</p>` +
         tbl(['Palabra', 'Significado literal'], [
           ['MENE', 'Contado'],

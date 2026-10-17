@@ -17,7 +17,7 @@ const { tbl, hi, wa, li } = require('../../apocalipsis/ayudas.js');
 module.exports = {
   cap: 'd7',
   secciones: [
-    { t: '🧭 Las señas del cuerno pequeño (1): de dónde sale', capa: 'contexto', h:
+    { t: '🧭 Las señas del cuerno pequeño (1): de dónde sale', capa: 'contexto', verso: 8, h:
       `<p><b>Cuándo:</b> el primer año de Belsasar (7:1), hacia el 553 a.C., catorce años antes de la caída de Babilonia.</p>` +
       `<p>Daniel 7 da <b>once</b> señas del cuerno, y las once se cumplen en un mismo poder. Las seis primeras dicen de dónde sale:</p>` +
       tbl(['Seña', 'Texto', 'Se cumple en'], [
@@ -81,7 +81,7 @@ module.exports = {
       hi('<b>«Anti» también es «en lugar de».</b> En griego <i>anti</i> no solo es «contra»: Herodes <i>Antipas</i> gobernó «en lugar de» su padre. Un poder que se presenta como representante de Cristo en la tierra encaja con «anticristo».') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 133-134, 198-199 y 201; CS 492.</p>` },
 
-    { t: '🧭 «Fueron puestos unos tronos»: la escena del juicio (7:9-10, 13)', capa: 'contexto', h:
+    { t: '🧭 «Fueron puestos unos tronos»: la escena del juicio (7:9-10, 13)', capa: 'contexto', verso: 9, h:
       tbl(['Lo que ve Daniel', 'Qué enseña'], [
         ['«Fueron puestos unos tronos»', 'El verbo arameo es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.'],
         ['«Se sentó un Anciano de días»', 'Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.'],
@@ -93,7 +93,7 @@ module.exports = {
       hi('El trono con ruedas muestra un <b>traslado</b>: del lugar santo al <b>lugar santísimo</b> del santuario celestial, donde está el arca con la ley. Los tronos son varios: en Apocalipsis 4:4 hay veinticuatro tronos alrededor del de Dios. Otra lectura ve un plural de majestad: un solo gran trono.') +
       `<p>Fuente: CS 533; Bohr, <i>Daniel 1-10</i>, p. 276-280; Smith, <i>Las profecías de Daniel</i>, p. 58-59; Doukhan, <i>Secretos de Daniel</i>, p. 115-116.</p>` },
 
-    { t: '🧭 Dónde y cuándo empieza el juicio', capa: 'contexto', h:
+    { t: '🧭 Dónde y cuándo empieza el juicio', capa: 'contexto', verso: 9, h:
       `<p><b>Dónde: en el cielo.</b> En Daniel 7 lo que pasa en la tierra va en prosa y lo que pasa en el cielo va en poesía:</p>` +
       tbl(['Versículos', 'Escena', 'Estilo'], [
         ['2-8', 'Tierra', 'Prosa'], ['9-10', 'Cielo', 'Poesía'], ['11-12', 'Tierra', 'Prosa'],
@@ -138,7 +138,7 @@ module.exports = {
       hi('Por eso el juicio es una buena noticia para el que está en Cristo: lo que se borra en el juicio no se le devuelve en la resurrección.') +
       `<p>Fuente: Bohr, <i>La hora del juicio</i>, p. 3-13; CS 536-537.</p>` },
 
-    { t: '🧭 «El Juez se sentó y los libros fueron abiertos» (7:10)', capa: 'contexto', h:
+    { t: '🧭 «El Juez se sentó y los libros fueron abiertos» (7:10)', capa: 'contexto', verso: 10, h:
       `<p>En visión, el Padre se levantó y «en un carro de llamas entró en el Lugar Santísimo, al interior del velo, y se sentó» (PE 55). Es el Juez de 7:10. Así está formado el tribunal:</p>` +
       tbl(['En el tribunal', 'Quién es', 'Dónde lo dice'], [
         ['El Juez', 'Dios el Padre, el Anciano de días', 'Daniel 7:9-10; CS 533'],
@@ -170,7 +170,7 @@ module.exports = {
       hi('Apocalipsis 20 sigue el juicio más allá de la venida: en los mil años los santos juzgan con Cristo (20:4) y el gran trono blanco cumple la sentencia de los perdidos (20:11-15). No se contradicen: la ejecución empieza en la venida y termina después del milenio.') +
       `<p>Fuente: PE 55 y 280; CS 368-369, 480-481, 533, 671 y 718-719; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307.</p>` },
 
-    { t: '🧭 La Biblia explica sus símbolos (1): la visión', capa: 'contexto', h:
+    { t: '🧭 La Biblia explica sus símbolos (1): la visión', capa: 'contexto', verso: 17, h:
       `<p>Daniel 7 no deja los símbolos a la imaginación: la misma Biblia dice qué son.</p>` +
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Vientos', 'Guerras y luchas entre naciones', 'Jeremías 25:32-33'],

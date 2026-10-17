@@ -71,6 +71,7 @@ module.exports = {
     {
       t: '🧭 El cuarto en el horno y la palabra «librar»',
       capa: 'contexto',
+      verso: 25,
       h: `<p>El héroe de Daniel 3 no son los jóvenes sino <strong>Cristo</strong>, que en el momento crítico entra al horno. ¿Cómo supo el rey a quién se parecía el cuarto? Los cautivos hebreos le habían hablado de Cristo, el Redentor que vendría, y por esa descripción lo reconoció.</p>` +
         li([
           'La palabra clave del capítulo es <strong>«librar»</strong> (3:15, 17, 28, 29). Vuelve en Daniel 6 y en Daniel 12:1, donde el pueblo de Dios «será librado» en el tiempo de angustia. Por eso los tres pasajes se leen juntos.',

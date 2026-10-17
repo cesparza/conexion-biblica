@@ -101,7 +101,7 @@ module.exports = {
       ]) +
       `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 64-73.</p>` },
 
-    { t: '🧭 Daniel 11:21-30: el papado frente al poder civil', capa: 'contexto', h:
+    { t: '🧭 Daniel 11:21-30: el papado frente al poder civil', capa: 'contexto', verso: 21, h:
       `<p>Así se leen estos versos en la división 16-20 / 21-39 (ver arriba). Desde el v. 21 el norte y el sur ya no son lugares. El rey del norte es el poder religioso, el papado: como Babilonia, una religión falsa. El rey del sur es el poder civil, el Estado: como Egipto, que dijo «no conozco a Jehová» (Éxodo 5:2).</p>` +
       tbl(['Verso', 'Qué significa'], [
         ['21', 'El «hombre despreciable» no es el emperador Tiberio, sino el papado. Empieza pequeño, «sin aviso», y toma el reino «con halagos»: salvación sin arrepentimiento, por indulgencias y sacramentos.'],
@@ -151,7 +151,7 @@ module.exports = {
       `<p>Daniel 3 y 6 son la base: la crisis final será por la adoración y la obediencia a Dios.</p>` +
       `<p>Fuente: Bohr, <i>Daniel 11</i>, p. 17-19, 98-117, 126, 134-136, 157-158 y 175; Bohr, <i>Daniel 1-10</i>, p. 43.</p>` },
 
-    { t: '🧭 Daniel 11:40-45: más detalles', capa: 'contexto', h:
+    { t: '🧭 Daniel 11:40-45: más detalles', capa: 'contexto', verso: 40, h:
       li([
         '<b>La tierra gloriosa (41)</b> aparece a fines del siglo XVIII, guarda la Biblia en su pureza, después se aparta del pacto (11:30) y llega a ser la única superpotencia: Estados Unidos (Apocalipsis 13:11).',
         '<b>El acercamiento.</b> En 1939 Franklin D. Roosevelt manda un representante personal al Vaticano. El 7 de junio de 1982 Ronald Reagan y Juan Pablo II acuerdan en el Vaticano poner fin al comunismo. En 1983 el Congreso aprueba una embajada ante el Vaticano.',

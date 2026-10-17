@@ -57,6 +57,7 @@ module.exports = {
     {
       t: '🧭 «Propuso en su corazón»: fiel en lo poco',
       capa: 'contexto',
+      verso: 8,
       h: `<p>«Propuso en su corazón» (1:8) quiere decir que <strong>tomó una decisión de la voluntad</strong> antes de que llegara la presión. Y hay un detalle que se pasa por alto: en la corte había otros jóvenes hebreos (1:6), pero solo estos cuatro decidieron ser fieles, y son los únicos que Dios usa en el resto del libro.</p>` +
         li([
           'Daniel tenía <strong>18 años</strong> cuando fue llevado: «sólo tenía dieciocho años cuando fue llevado a una corte pagana» (4T 570).',

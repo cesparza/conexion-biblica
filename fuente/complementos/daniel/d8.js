@@ -34,7 +34,7 @@ module.exports = {
       hi('El cuerno no sale “del cuerno seléucida ni de ninguno de los otros tres cuernos” (Simposio, p. 396): aparece «al fin del reinado de estos» (8:23).') +
       `<p>Fuente: Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; apuntes «Daniel 8».</p>` },
 
-    { t: '🧭 Qué quitó el cuerno: «el continuo» del atrio y del lugar santo', capa: 'contexto', h:
+    { t: '🧭 Qué quitó el cuerno: «el continuo» del atrio y del lugar santo', capa: 'contexto', verso: 11, h:
       `<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p>` +
       tbl(['Pieza', 'Dónde', 'Qué representa', 'Qué se puso en su lugar'], [
         ['Altar del holocausto', 'Atrio', 'La muerte de Cristo, una vez para siempre', 'La misa, que lo repite, y la penitencia'],
@@ -63,7 +63,7 @@ module.exports = {
       ]) +
       `<p>Fuente: Daniel 8:10-11; 9:26-27; Mateo 27:51.</p>` },
 
-    { t: '🧭 «¿Hasta cuándo durará la visión?»: por qué son años', capa: 'contexto', h:
+    { t: '🧭 «¿Hasta cuándo durará la visión?»: por qué son años', capa: 'contexto', verso: 13, h:
       `<p>Tres razones del mismo texto:</p>` +
       li([
         '<b>La pregunta es por toda la visión.</b> En 8:13 el santo pregunta «¿Hasta cuándo durará la visión...?» con la palabra <i>jazón</i>, la misma de 8:1-2, que abarca todo: Persia, Grecia, Roma pagana y Roma papal. 2.300 días literales son unos seis años y medio, muy poco para todo eso.',
@@ -85,7 +85,7 @@ module.exports = {
       wa('Es la <b>última fecha</b> del calendario que Dios reveló. No se deben fijar fechas para el cierre de la gracia ni para la segunda venida (PE 75).') +
       `<p>Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8; CS 376; PE 75.</p>` },
 
-    { t: '🧭 La Biblia explica sus símbolos (1): los animales y los cuernos', capa: 'contexto', h:
+    { t: '🧭 La Biblia explica sus símbolos (1): los animales y los cuernos', capa: 'contexto', verso: 20, h:
       `<p>En Daniel 8 el ángel Gabriel explica casi todo él mismo (8:19-26):</p>` +
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Carnero de dos cuernos', 'Media y Persia', 'Daniel 8:20: «éstos son los reyes de Media y de Persia»'],
@@ -97,7 +97,7 @@ module.exports = {
       ]) +
       `<p>Fuente: Bohr, <i>15 principios</i> 2:105; Bohr, <i>Daniel 1-10</i>, p. 296-298 y 307.</p>` },
 
-    { t: '🧭 La Biblia explica sus símbolos (2): el santuario y el tiempo', capa: 'contexto', h:
+    { t: '🧭 La Biblia explica sus símbolos (2): el santuario y el tiempo', capa: 'contexto', verso: 14, h:
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Ejército y estrellas', 'El pueblo de Dios', 'Daniel 8:24: destruirá «al pueblo de los santos»; Daniel 12:3; Éxodo 12:41'],
         ['Príncipe del ejército', 'Cristo', 'Josué 5:13-15 (recibe adoración); Daniel 8:25: «el Príncipe de los príncipes»'],
@@ -108,7 +108,7 @@ module.exports = {
       hi('Por eso 2.300 tardes y mañanas son 2.300 días proféticos, es decir, 2.300 años: de 457 a.C. a 1844.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 306-308 y 315; Bohr, <i>15 principios</i> 2:105.</p>` },
 
-    { t: '🧭 Hacia dónde crece el cuerno: primero a lo ancho, después hacia arriba', capa: 'contexto', h:
+    { t: '🧭 Hacia dónde crece el cuerno: primero a lo ancho, después hacia arriba', capa: 'contexto', verso: 9, h:
       `<p>El carnero «se engrandecía» (8:4), el macho cabrío «creció en gran manera» (8:8) y el cuerno crece más que los dos. Pero no crece igual todo el tiempo:</p>` +
       tbl(['Fase', 'Hacia dónde', 'Cumplimiento'], [
         ['Roma imperial (8:9)', 'A lo ancho, sobre la tierra: al oriente, al sur y a la tierra gloriosa', 'Macedonia (168 a.C.), Siria (65 a.C.), Judea (63 a.C.) y Egipto (30 a.C.)'],
@@ -128,7 +128,7 @@ module.exports = {
       ]) +
       `<p>Fuente: Maxwell, <i>El porvenir del mundo revelado</i>, p. 162-163; Bohr, <i>Daniel 1-10</i>, p. 305-306 y 314-315.</p>` },
 
-    { t: '🧭 De 457 a.C. a 1844: la cuenta de las 2.300 tardes y mañanas', capa: 'contexto', h:
+    { t: '🧭 De 457 a.C. a 1844: la cuenta de las 2.300 tardes y mañanas', capa: 'contexto', verso: 14, h:
       `<p>Daniel 8 da el número y Daniel 9 el punto de partida: «desde la salida de la orden para restaurar y edificar a Jerusalén» (9:25). Gabriel vuelve a explicar lo que en 8:27 quedó sin entender.</p>` +
       tbl(['Paso', 'Cuenta', 'Fecha'], [
         ['La orden de Artajerjes I (Esdras 7:7-26)', 'su séptimo año, contado de otoño a otoño', 'otoño de 457 a.C.'],

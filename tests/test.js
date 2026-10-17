@@ -3296,5 +3296,43 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v237: el texto de CS va en conflicto/<id>.json y se pide al abrir el capítulo (no está en el index.html); la página no se lee en voz alta; lo pendiente se marca en el examen y se filtra en «Revisar el material»');
 }
 
+{
+  const casos=[
+    ['d1','Propuso en su corazón',8],
+    ['d3','El cuarto en el horno',25],
+    ['d5','Mene, mene, tekel',25],
+    ['d6','Por qué Dios dejó',16],
+    ['d7','Las señas del cuerno pequeño (1)',8],
+    ['d7','Fueron puestos unos tronos',9],
+    ['d7','Dónde y cuándo empieza el juicio',9],
+    ['d7','El Juez se sentó y los libros',10],
+    ['d7','La Biblia explica sus símbolos (1)',17],
+    ['d8','Qué quitó el cuerno',11],
+    ['d8','La Biblia explica sus símbolos (1)',20],
+    ['d8','Hacia dónde crece el cuerno',9],
+    ['d8','De 457 a.C. a 1844',14],
+    ['d8','Hasta cuándo durará la visión',13],
+    ['d8','el santuario y el tiempo',14],
+    ['d9','Las seis metas',24],
+    ['d9','príncipe que ha de venir',26],
+    ['d11','Daniel 11:21-30',21],
+    ['d11','Daniel 11:40-45: más detalles',40],
+    ['d12','Se levantará Miguel',1],
+    ['d12','El varón sobre las aguas',5],
+    ['d12','Bienaventurado el que espere',12],
+  ];
+  const mal=casos.filter(([cid,t,v])=>{
+    const expr='x:diceDe(CONTENIDO.'+cid+'.find(s=>s.t.includes('+JSON.stringify(t)+')),'+JSON.stringify(cid)+')';
+    const html=montar(expr).x;
+    return !html.includes('<cite>Daniel '+cid.slice(1)+':'+v+'</cite>')||html.includes('«»');
+  });
+  ok(!mal.length,'El estudio de Daniel cita el versículo de su tema sin comillas duplicadas'+(mal.length?' ('+mal.map(x=>x[1]).join(', ')+')':''));
+  const duplicadas=montar('x:Object.entries(CONTENIDO).flatMap(([cid,ss])=>ss.filter(s=>s.capa==="contexto").map(s=>({cid,t:s.t,html:diceDe(s,cid)}))).filter(s=>/[«»]{2}/.test(s.html))').x;
+  ok(!duplicadas.length,'Ningún estudio de Daniel o Apocalipsis duplica las comillas bíblicas'+(duplicadas.length?' ('+duplicadas.map(x=>x.cid+': '+x.t).join(', ')+')':''));
+  const titulos=montar('x:[tituloSec("🧭 «Fueron puestos unos tronos»"),tituloSec("🤔 ¿La bestia es el dragón?"),tituloSec("📖 Daniel 7")]').x;
+  ok(titulos.join('|')==='«Fueron puestos unos tronos»|¿La bestia es el dragón?|Daniel 7',
+    'Los encabezados conservan sus signos de apertura al quitar el emoji');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

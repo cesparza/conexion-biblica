@@ -5349,10 +5349,10 @@ const CAPA_ETQ={nucleo:'Entra al examen',apoyo:'Ayuda a entender',contexto:'No e
    leer la palabra: relleno entra al examen, contorno ayuda a entender, gris
    no entra. El emoji del título se quita aquí y no en los datos, porque los
    mismos títulos los usan el buscador, la impresión y el revisor. */
-const SIN_EMOJI=/^[^\p{L}\p{N}]+/u;
+const SIN_EMOJI=/^[^\p{L}\p{N}«¿¡"'“‘(]+/u;
 function tituloSec(t){
   try{return String(t||'').replace(SIN_EMOJI,'').trim();}
-  catch(e){return String(t||'').replace(/^[^A-Za-z0-9\u00c0-\u024f]+/,'').trim();}
+  catch(e){return String(t||'').replace(/^[^A-Za-z0-9\u00c0-\u024f«¿¡"'“‘(]+/,'').trim();}
 }
 function cabezaSec(s){
   const cap=s.capa||'';
@@ -5524,15 +5524,18 @@ const conFuente=h=>h.replace(/<p class="fuente"><small>(Fuentes?:[\s\S]*?)<\/sma
    secciones de aplicación que el material ya trae (no se escribe ninguna). */
 function diceDe(s,cid){
   if(typeof VERS==='undefined'||!VERS[cid])return '';
+  if(s.verso===false)return '';
   const vs=refsCap(s.h,cid).filter((v,i,a)=>a.indexOf(v)===i&&VERS[cid][v]);
-  if(!vs.length)return '';
+  if(!vs.length&&!s.verso)return '';
   const norm=t=>String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9ñ ]/g,' ').replace(/\s+/g,' ').trim();
   const citas=[];String(s.h).replace(/«([^»]{12,})»/g,(_,q)=>{citas.push(norm(sinEtiquetas(q)));return '';});
   const libre=vs.filter(v=>{const t=norm(VERS[cid][v]);return !citas.some(q=>t.includes(q)||q.includes(t.slice(0,40)));});
-  if(!libre.length)return '';
-  const v0=libre[0], v1=libre.includes(v0+1)&&(VERS[cid][v0]+VERS[cid][v0+1]).length<260?v0+1:v0;
+  const v0=s.verso||libre[0];
+  if(!v0||!VERS[cid][v0])return '';
+  const v1=!s.verso&&libre.includes(v0+1)&&(VERS[cid][v0]+VERS[cid][v0+1]).length<260?v0+1:v0;
   const lb=libroCid(cid);
-  return '<div class="lq-dice"><div class="lq-eti">Lo que dice</div><p class="biblia-t">«'+esc(VERS[cid][v0]+(v1>v0?' '+VERS[cid][v1]:''))+'»'+
+  const cita=(VERS[cid][v0]+(v1>v0?' '+VERS[cid][v1]:'')).replace(/^[«»]\s*/, '').replace(/\s*[«»]$/, '');
+  return '<div class="lq-dice"><div class="lq-eti">Lo que dice</div><p class="biblia-t">«'+esc(cita)+'»'+
     ' <cite>'+esc(lb.nombre+' '+lb.n+':'+v0+(v1>v0?'-'+v1:''))+'</cite></p></div>';
 }
 const htmlSec=(id,p)=>s=>{

@@ -17,7 +17,7 @@ const { tbl, hi, wa, li } = require('../../apocalipsis/ayudas.js');
 module.exports = {
   cap: 'd12',
   secciones: [
-    { t: '🧭 «Se levantará Miguel» y «será libertado tu pueblo»', capa: 'contexto', h:
+    { t: '🧭 «Se levantará Miguel» y «será libertado tu pueblo»', capa: 'contexto', verso: 1, h:
       `<p><b>Cuándo:</b> es el final de la visión de Daniel 10 y 11, el tercer año de Ciro el Grande, hacia el 535 a.C.</p>` +
       `<p>Dos palabras de 12:1:</p>` +
       li([
@@ -47,7 +47,7 @@ module.exports = {
       hi('<b>«Muchos correrán de aquí para allá».</b> Son ojos que recorren el libro: muchos lo estudiarían y aumentaría el conocimiento de su contenido. Se cumplió en el despertar adventista de los años 1830 y 1840.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 28-29 y 360.</p>` },
 
-    { t: '🧭 El varón sobre las aguas (12:5-8)', capa: 'contexto', h:
+    { t: '🧭 El varón sobre las aguas (12:5-8)', capa: 'contexto', verso: 5, h:
       li([
         'En las orillas del río hay dos seres; sobre las aguas, el varón vestido de lino: Miguel. Al ángel que preguntó, Miguel le responde; después, a Daniel.',
         'Jura con las dos manos alzadas «por el que vive por los siglos». Dios, como no tiene a nadie mayor, jura por sí mismo (Hebreos 6:13, 17): el que jura aquí es divino.',
@@ -68,16 +68,16 @@ module.exports = {
       `<p>Otra lectura hace terminar los 1.335 junto con los 2.300, en 1844.</p>` +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 5; Bohr, <i>Daniel 11</i>, p. 26 y 217; Smith, <i>Las profecías de Daniel</i>, p. 158 y 195-196; Shea, <i>Daniel</i>, p. 275; Doukhan, <i>Secretos de Daniel</i>, p. 192; apuntes «Daniel 12 (Bohr)».</p>` },
 
-    { t: '🧭 Por qué 508 y por qué 1844 (12:11-12)', capa: 'contexto', h:
+    { t: '🧭 Por qué 508 y cómo se relaciona con 1844 (12:11-12)', capa: 'contexto', h:
       li([
         '<b>Treinta años antes.</b> Los 1.290 son 30 más que los 1.260. La abominación tenía que estar puesta antes de poder perseguir, y la persecución termina cuando cae ese poder: los dos períodos terminan juntos en 1798. Así los 1.290 empiezan 30 años antes de 538: en 508.',
         '<b>Qué pasó en 508.</b> Clodoveo I, rey de los francos, se hizo católico hacia 496. En 507 venció en Vouillé a los visigodos arrianos, y en 508 puso el poder de los francos al servicio del obispo de Roma. Por eso a Francia la llamaron «la hija favorita» del papado.',
-        '<b>1843 o 1844.</b> De 508 se llega a 1843. Pero Guillermo Miller contaba 1843 como año judío, y en tiempos de Esdras el año judío iba de otoño a otoño. Ese «1843» termina en el otoño de 1844, el 22 de octubre, Día de la Expiación: los 1.335 terminan con los 2.300.',
+        '<b>1843 y 1844: dos lecturas.</b> La suma de 508 y 1.335 llega a 1843, como en la tabla anterior. Miller calculó el año judío de primavera a primavera y lo hizo llegar a la primavera de 1844. Treiyer propone usar el comienzo civil judío en otoño para relacionar los 1.335 con el 22 de octubre de 1844 y los 2.300. Es una interpretación del calendario; Daniel 12:12 no da por sí solo esa fecha.',
         '<b>La bienaventuranza.</b> En 1844 se vuelve a conocer la obra de Cristo en el santuario del cielo. Por eso es dichoso «el que espere».',
       ]) +
       `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 220-225 y 231-233.</p>` },
 
-    { t: '🧭 «Bienaventurado el que espere»: por qué los 1.335 ya terminaron', capa: 'contexto', h:
+    { t: '🧭 «Bienaventurado el que espere»: por qué los 1.335 ya terminaron', capa: 'contexto', verso: 12, h:
       `<p>Dos bienaventuranzas van juntas:</p>` +
       li([
         '«Bienaventurado el que espere, y llegue a mil trescientos treinta y cinco días» (12:12).',

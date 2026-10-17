@@ -59,6 +59,7 @@ module.exports = {
     {
       t: '🧭 ¿Por qué Dios dejó que lo echaran al foso?',
       capa: 'contexto',
+      verso: 16,
       h: `<p>Dios pudo librar a Daniel antes del foso. No lo hizo. Permitió a sus enemigos llegar hasta ahí para que la liberación fuera <strong>más notable</strong> y la derrota de ellos <strong>más completa</strong>. Como dice el Salmo 76:10, aun la ira del hombre termina alabando a Dios.</p>` +
         li([
           '<strong>Un rey esclavo de su propia ley.</strong> Darío quiso mostrar su poder con el decreto, y quedó atado a él: trabajó hasta la puesta del sol y no pudo librar a Daniel (6:14-15). Hizo falta Uno verdaderamente todopoderoso.',
