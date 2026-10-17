@@ -23,7 +23,7 @@ const srv = http.createServer((q, r) => {
   const u = q.url.split('?')[0], f = path.join(RAIZ, u === '/' ? 'index.html' : u);
   fs.readFile(f, (e, b) => {
     if (e) { r.writeHead(404); r.end(); return; }
-    r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html; charset=utf-8' : f.endsWith('.webp') ? 'image/webp' : f.endsWith('.png') ? 'image/png' : 'application/json' });
+    r.writeHead(200, { 'content-type': f.endsWith('.html') ? 'text/html; charset=utf-8' : f.endsWith('.webp') ? 'image/webp' : f.endsWith('.png') ? 'image/png' : /\.jpe?g$/.test(f) ? 'image/jpeg' : 'application/json' });
     r.end(b);
   });
 });
@@ -733,6 +733,18 @@ for (const W of ANCHOS) {
       return [!!l && l.classList.contains('abre') && l.classList.contains('luz'), !!c && /El Juez se sentó y los libros fueron abiertos/.test(c.textContent) && getComputedStyle(c).opacity === '1',
         document.querySelectorAll('#lamZoom .lam-j-trono,#lamZoom .lam-j-lib').length, getComputedStyle(document.getElementById('lamChip')).opacity, document.getElementById('lamCuenta').textContent]; });
     ok(lb[0] && lb[1] && lb[2] === 4 && lb[3] === '0' && lb[4] === '12 / 19', W + ' · los libros fueron abiertos: el libro abierto, la luz del trono y de los libros, y la cita (' + lb.slice(2).join(', ') + ')');
+    for (const [j, file, title] of [[4, 'fin-cuarta.jpg', 'Mataron a la bestia'], [5, 'otras-bestias.jpg', 'Las otras bestias']]) {
+      await p.evaluate(j => lamPres(lamPasos().findIndex(x => x.id === 'juicio' && x.sub === j)), j);
+      await p.waitForFunction(file => document.querySelector('#lamSvg .lam-hist').getAttribute('href').endsWith('/d7/' + file), file);
+      const escena = await p.evaluate(async file => { const src = lamSrc(file), im = new Image(); im.src = src;
+        try { await im.decode(); } catch (_) { return [0, 0, '', '', -1, '', '', '']; }
+        return [im.naturalWidth, im.naturalHeight, document.querySelector('#lamSvg .lam-hist').getAttribute('href'),
+          document.querySelector('#lamZoom .lam-zoom-img').getAttribute('href'), document.querySelectorAll('#lamZoom .lam-j-trono,#lamZoom .lam-j-rio').length,
+          document.getElementById('lamHoja').textContent, document.getElementById('lamTano').textContent, document.getElementById('lamTq').textContent]; }, file);
+      const tiempo = j === 4 ? escena[6] === 'Futuro' && escena[7].includes('Fin de la cuarta bestia') : escena[6] === '605–168 a.C.' && escena[7].includes('Las tres bestias');
+      ok(escena[0] === 1200 && escena[1] === 675 && escena[2].endsWith('/d7/' + file) && escena[3].endsWith('/d7/' + file) && escena[4] === 0 && escena[5].includes(title) && tiempo,
+        W + ' · ' + title + ': foto propia visible y sin luces del tribunal (' + escena.slice(0, 2).join('×') + ')');
+    }
     const fa = await p.evaluate(() => { lamPres(lamPasos().findIndex(x => x.tipo === 'fases' && x.sub === 1)); const t = document.getElementById('lamTabla');
       return [t.querySelectorAll('.lam-fp').length, t.querySelectorAll('.lam-fp.on').length, [...t.querySelectorAll('.lam-fp')].findIndex(e => e.classList.contains('ahora')), document.getElementById('lamHoja').textContent, document.getElementById('lamCuenta').textContent, t.scrollHeight - t.clientHeight, document.querySelector('#lamSvg .lam-hist').getAttribute('href')]; });
     ok(fa[0] === 3 && fa[1] === 2 && fa[2] === 1 && /Daniel 7:14/.test(fa[3]) && /Sentencia/.test(fa[3]) && fa[4] === '14 / 19' && fa[5] <= 2 && fa[6].endsWith('d7/juicio.webp') && !/Daniel 12:1/.test(fa[3].split('Lo que significa')[0].split('RV1995')[1] || ''),

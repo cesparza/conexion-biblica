@@ -1529,6 +1529,21 @@ function lamTiempoFut(f,tramo){
   document.getElementById('lamTano').textContent='Futuro';document.getElementById('lamTq').textContent=f.t+' · '+f.s;
   if(tramo)lamTramo(f.de,f.a);lamLineaPide();
 }
+/* Daniel 7:11 anticipa el desenlace; 7:12 recuerda reinos anteriores. Ninguno
+   ocurre en 1844, aunque ambos versículos estén en la sección del juicio. */
+function lamTiempoJuicio(p,pa,restaura){
+  if(p.id!=='juicio')return;
+  const r=document.getElementById('lamRango');if(!r)return;
+  if(!pa||!pa.tiempo){if(restaura){r.value=p.de;lamTramo(p.de,p.a);document.getElementById('lamTano').textContent=lamAnioTx(p.de);document.getElementById('lamTq').textContent=p.reino;}return;}
+  lamTramo(null,null);
+  if(pa.tiempo==='fin'){
+    const f=LAM().futuro.find(x=>x.id==='reino');
+    if(f)lamTiempoFut({...f,t:'Fin de la cuarta bestia',s:'sin fecha en Daniel 7'},false);
+  }else{
+    r.value=-168;document.getElementById('lamTano').textContent='605–168 a.C.';
+    document.getElementById('lamTq').textContent='Las tres bestias pierden su dominio';lamLineaPide();
+  }
+}
 function lamAtras(){lamPres(lamPaso-1);}
 function lamAdelante(){lamPres(lamPaso+1);}
 function lamCae(piedra){
@@ -1836,10 +1851,10 @@ function lamLimpia(conserva){
    `anima`: llegar con movimiento (al avanzar), o quedar en el estado final. */
 function lamVista(id,sub,anima){
   const L=LAM(),p=lamParte(id);if(!p)return;
-  const pa=p.pasos&&sub!=null?p.pasos[sub]:null,zi=lamZi();
-  const sigue=!!(pa&&zi&&zi.style.opacity==='1'&&zi.getAttribute('href')===lamSrc(p.img));
+  const pa=p.pasos&&sub!=null?p.pasos[sub]:null,zi=lamZi(),img=pa&&pa.img||p.img;
+  const sigue=!!(pa&&zi&&zi.style.opacity==='1'&&zi.getAttribute('href')===lamSrc(img));
   lamLimpia(sigue);lamVisto=id+(sub!=null?':'+sub:'');
-  lamChip(p,pa?['Paso '+(sub+1)+' de '+p.pasos.length,pa.t]:'');lamD2(id);lamEnciende([id]);
+  lamChip(pa&&pa.fechas?{...p,reino:pa.reino,fechas:pa.fechas}:p,pa?['Paso '+(sub+1)+' de '+p.pasos.length,pa.t]:'');lamD2(id);lamEnciende([id]);
   const C=L.cuernos;
   if(p.mov&&L.mov)lamMov(p,anima,sub);
   else if(L.sube&&L.sube.ids.includes(id))lamSube(p,anima);
@@ -1849,9 +1864,9 @@ function lamVista(id,sub,anima){
     /* v210: en «Los libros fueron abiertos» la cámara sube primero al trono (el Juez se sienta) y después baja a los libros. */
     /* v236: «los libros» es el cuarto paso (después vienen 7:11 y 7:12). */
     const J=p.anim,ult=sub===3;
-    if(J&&ult&&anima&&!lamQuieto()){lamAcercaImg(p.img,J.camara[1],true,1500);lamT(()=>lamAcercaImg(p.img,pa.caja,true,1900),2300);}
-    else lamAcercaImg(p.img,pa.caja,true);
-    if(J)lamJuicio(sub,anima);}
+    if(J&&ult&&anima&&!lamQuieto()){lamAcercaImg(img,J.camara[1],true,1500);lamT(()=>lamAcercaImg(img,pa.caja,true,1900),2300);}
+    else lamAcercaImg(img,pa.caja,true);
+    if(J&&!pa.img)lamJuicio(sub,anima);}
   else lamHist({f:p.img});
 }
 
@@ -2030,9 +2045,7 @@ function lamLuz(c){
 /* Un bucle mientras la vista no cambie: la luz que respira, el fuego, las chispas. */
 function lamBucle(fn){const yo=lamAnim;if(lamQuieto()){fn(0);return;}const t0=performance.now(),f=t=>{if(yo!==lamAnim)return;fn((t-t0)/1000);requestAnimationFrame(f);};requestAnimationFrame(f);}
 const lamJFin=[{velo:.52,ray:0,tr:.3,trR:150,se:0,rio:0,ch:0,lib:0},{velo:.18,ray:1,tr:.78,trR:200,se:.6,rio:0,ch:0,lib:0},
-  {velo:.1,ray:.85,tr:.7,trR:200,se:.55,rio:.62,ch:1,lib:0},{velo:.46,ray:.7,tr:.75,trR:210,se:.6,rio:.5,ch:.75,lib:.9},
-  /* v236: 7:11 («entregado para quemarlo en el fuego»): el río de fuego en pleno; 7:12, se aquieta. */
-  {velo:.34,ray:.55,tr:.7,trR:200,se:.55,rio:1,ch:.35,lib:.35},{velo:.4,ray:.6,tr:.72,trR:205,se:.58,rio:.6,ch:.5,lib:.5}];
+  {velo:.1,ray:.85,tr:.7,trR:200,se:.55,rio:.62,ch:1,lib:0},{velo:.46,ray:.7,tr:.75,trR:210,se:.6,rio:.5,ch:.75,lib:.9}];
 function lamJuicio(j,anima){
   const p=lamParte('juicio'),A=p&&p.anim,z=lamZ(),g=z&&z.querySelector('.lam-capa-g');if(!A||!g||j==null)return;
   const q=!anima||lamQuieto(),oro=lamLuz('255,212,128'),blanca=lamLuz('255,249,228'),fuego=lamLuz('255,128,36');
@@ -2073,7 +2086,6 @@ function lamJuicio(j,anima){
     if(j===0){hacia(2600,a,fin);trs.forEach((e,i)=>lamT(()=>lamTween(900,k=>{gp[i]=lamSale(k);}),500+i*230));}
     else if(j===1)hacia(2400,a,fin);
     else if(j===2){hacia(2200,a,fin);lamTween(3200,k=>{riop=k;});}
-    else if(j>3){riop=1;hacia(2000,a,fin);}
     else{
       /* «El Juez se sentó»: la luz late una vez; después la cámara baja a los libros. */
       hacia(1200,a,{velo:.2,ray:.9,tr:.8,trR:200,se:.6,rio:.5,ch:.75,lib:0});riop=1;
@@ -2575,6 +2587,7 @@ function lamSubE(j,vis){
   const p=lamParte(lamSel);if(!p||!p.pasos||!p.pasos[j])return;
   if(!vis)lamPara();
   lamVista(p.id,j,true);
+  lamTiempoJuicio(p,p.pasos[j],true);
   document.querySelectorAll('.lam-subs button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-j')===String(j)));
   const x=p.pasos[j],t=document.getElementById('lamSubTx');
   if(t)t.innerHTML=lamPer('<div class="lam-capa t"><div class="lam-rot">Paso '+(j+1)+' de '+p.pasos.length+' · RV1995</div><p><q>'+esc(x.texto)+'</q> <span class="lam-ref">'+x.ref+'</span></p></div><p class="lam-nota">'+x.nota+'</p>');
@@ -2786,7 +2799,7 @@ const lamPasosE=()=>{
 function lamHojaSub(p,j){
   const x=p.pasos[j];
   return '<div class="lam-hcab"><span class="lam-metal" style="--c:'+p.c+'"></span><div><div class="lam-p1">'+esc(p.nombre)+' · paso '+(j+1)+' de '+p.pasos.length+'</div>'+
-    '<div class="lam-p2">'+esc(x.t)+'</div><div class="lam-fechas">'+esc(p.fechas)+'</div></div></div>'+
+    '<div class="lam-p2">'+esc(x.t)+'</div><div class="lam-fechas">'+esc(x.fechas||p.fechas)+'</div></div></div>'+
     '<div class="lam-puntos" aria-hidden="true">'+p.pasos.map((y,k)=>'<i'+(k<=j?' class="on"':'')+'></i>').join('')+'</div>'+
     '<div class="lam-capa t"><div class="lam-rot">Lo que dice el texto · RV1995</div><p><q>'+esc(x.texto)+'</q> <span class="lam-ref">'+x.ref+'</span></p></div>'+
     '<div class="lam-capa i"><div class="lam-rot">Lo que significa</div><p>'+x.nota+'</p><div class="lam-fu">Fuente: '+p.fuente+'</div></div>';
@@ -2856,6 +2869,7 @@ function lamPresE(k){
   /* En la cuenta de los 1.260 años el tramo es la franja de 538 a 1798 (lamBanda). */
   if(s.tipo!=='periodo')lamTramo(p?p.de:null,p?p.a:null,p&&p.hasta);
   if(fv)lamTiempoFut(fv,true);
+  if(p&&p.id==='juicio'&&s.sub!=null)lamTiempoJuicio(p,p.pasos[s.sub],false);
   if(!(p&&p.pasos))lamAcerca(lamTodo(),0);
   /* El contador: cada parte, la portada de las señas y la cuenta de los 1.260 años (las señas van dentro de su portada). */
   const prim=pasos.map(x=>x.tipo==='senas'?false:x.sub==null||x.sub===0);
