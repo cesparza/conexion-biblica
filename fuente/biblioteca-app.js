@@ -223,18 +223,17 @@ function pintaBib(){
     '<p class="bib-p">'+esc(bibDescripcionTema(t))+'</p>'+
     '<details class="bib-elige"><summary>Cambiar de tema</summary><div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div></details>'+
     '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
-    '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div>'+
-    '<p class="bib-nota">'+(t==='matutina'?'La Biblioteca siempre muestra la serie completa. La categoría del concurso solo determina qué se evalúa.':bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
-      (BIB_NIVELES.find(n=>n[0]===nv)[1])+': '+BIB_NIVELES.find(n=>n[0]===nv)[2]+'. El nivel lo escoges tú; no depende de tu edad ni de tu categoría.')+'</p></div>'+
+    '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div></div>'+
     (t==='matutina'?bibSerieMatutina():'')+
-    bibVerHTML(t)+
-    '<button type="button" class="bib-otra" onclick="ir(\'examen\')">'+IC('examen')+'<span><b>¿Te preparas para un concurso?</b> En Concursos escoges tu categoría por edad y practicas el examen.</span>'+IC('der')+'</button>';
+    bibVerHTML(t);
 }
-/** Al final del tema, en la rejilla: su bibliografía. */
+/** Al final del tema, en la rejilla: bibliografía y concurso, después del material. */
 function bibPieHTML(){
   const t=bibTema(),n=bibFuentes(t).length;
   return '<button type="button" class="bib-otra bib-pie" style="grid-column:1/-1" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+
-    '<span><b>Bibliografía de '+esc(bibNombreTema(t))+'</b> '+(n?n+' obras citadas, con sus páginas y dónde se usan.':'Este tema sale de su propio texto.')+'</span>'+IC('der')+'</button>';
+    '<span><b>Bibliografía de '+esc(bibNombreTema(t))+'</b> '+(n?n+' obras citadas, con sus páginas y dónde se usan.':'Este tema sale de su propio texto.')+'</span>'+IC('der')+'</button>'+
+    '<button type="button" class="bib-otra bib-pie" style="grid-column:1/-1" onclick="ir(\'examen\')">'+IC('examen')+
+    '<span><b>¿Te preparas para un concurso?</b> En Concursos escoges tu categoría y practicas.</span>'+IC('der')+'</button>';
 }
 function bibLamina(k){if(!LAMINAS[k])return;verCap(k);lamAbre(k,'explorar');}
 /* Comparar vive en el repaso «…-comparar» del tema; `donde`: Paralelos (cmpPar) o

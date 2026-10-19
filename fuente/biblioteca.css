@@ -24,7 +24,6 @@
 .bib-nv small{font-size:.75rem;color:var(--gris);line-height:1.25}
 .bib-nv.on{border-color:var(--naranja-txt);background:var(--fondo-calido)}
 .bib-fu{min-height:44px}
-.bib-nota{margin:.75rem 0 0;font-size:.75rem;color:var(--gris);line-height:1.4}
 .bib-serie{display:grid;gap:.9rem;align-items:center;grid-template-columns:minmax(0,1fr) auto;margin:0 0 1rem;padding:1rem 1.2rem;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);border-left:4px solid var(--naranja-txt)}
 .bib-serie h3{margin:.2rem 0 .3rem;font-size:1.2rem;line-height:1.25}
 .bib-serie p{margin:0 0 .4rem;color:var(--gris);font-size:.875rem;line-height:1.45}
@@ -151,5 +150,4 @@
 .bib-nvt{font-size:.8rem}
 .bib-nv{border-width:1px}
 .bib-nv.on{border-color:var(--naranja-txt)}
-.bib-nota{margin-top:1rem;padding-top:.75rem;border-top:1px solid color-mix(in srgb,var(--txt) 12%,transparent)}
 @media(max-width:479px){.bib-hero{padding:1.2rem}.bib-tit{font-size:2rem}.bib-temas{margin-inline:-1.2rem;padding-inline:1.2rem}}
