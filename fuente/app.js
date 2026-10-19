@@ -3872,6 +3872,7 @@ function ir(id,quedarse){
   filtroAbierto=false;filtroMenu=false;
   pintaFiltro(id);
   pintaSenales();
+  pintaAvisoVer();
   if(!quedarse){
     const det=document.getElementById('detalle');
     const vuelve=antes!==id&&TABS[id]!==undefined&&lugarDe[id]>0;
@@ -13049,7 +13050,7 @@ async function abreHistorial(){
    recargar le borra las respuestas sin entregar. Se avisa y ella decide
    cuando. La unica excepcion es que nunca aplica durante un examen aunque lo
    pida: primero hay que entregar. */
-let verNueva=null, verUltimo=0;
+var verNueva=null, verUltimo=0;
 
 /** Un examen empezado y sin entregar. Recargar aqui pierde las respuestas. */
 const examenEnCurso=()=>prueba&&prueba.length>0&&!entregado;
@@ -13075,7 +13076,8 @@ async function buscaVersion(manual){
 function pintaAvisoVer(){
   const el=document.getElementById('aviso-nuevo');
   if(!el)return;
-  el.hidden=!(verNueva||fichasNuevas);
+  /* Las fichas son de concursos: en Biblioteca libre no interrumpen la lectura. */
+  el.hidden=!(verNueva||fichasNuevas&&pantallaAct!=='estudio');
 }
 
 /** «Después»: se esconde hasta la proxima apertura, no se descarta para

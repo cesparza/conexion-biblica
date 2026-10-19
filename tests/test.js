@@ -1909,8 +1909,8 @@ for(const id of ['nv-est','nv-tj','nv-ex','nv-lg'])
   ok(new RegExp('id="'+id+'"').test(CUERPO),'El nodo '+id+' vive en el HTML, no lo crea el JS');
 ok(!/nv-anillo/.test(CUERPO)&&!/\.nv-ring\{/.test(CSS),
   'No quedo el anillo de progreso, que se descarto por ilegible y por el mask en Safari');
-ok(/function pintaSenales\(\)/.test(js)&&/pintaSenales\(\);\s*if\(!quedarse\)\{/.test(js),
-  'pintaSenales() se llama en cada navegacion, dentro de ir()');
+ok(/function pintaSenales\(\)/.test(js)&&/pintaSenales\(\);\s*pintaAvisoVer\(\);\s*if\(!quedarse\)\{/.test(js),
+  'Las senales y el aviso se actualizan en cada navegacion, dentro de ir()');
 /* v188: cada pestaña recuerda su altura y Estudiar su capítulo abierto. */
 ok(/lugarDe\[antes\]=Math\.round\(window\.scrollY/.test(js)&&/const y=vuelve\?lugarDe\[id\]:0;/.test(js)&&/S\.ultItem=capAbierto/.test(js),
   'Volver a una pestaña regresa a donde se iba; ir a otra empieza arriba');
@@ -2395,7 +2395,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
       'Los capítulos que se sirven no dicen para quién son: eso sale de las fichas al abrir');
     const A=lee('app.js');
     ok(/REGLAS\.junta\(FICHAS_BASE,FICHAS_GUARDADAS,IDS_DE_TEMA\)/.test(A)&&/if\(Array\.isArray\(d\.fichas\)\)fichasLlegan\(d\.fichas\)/.test(A)&&
-       /el\.hidden=!\(verNueva\|\|fichasNuevas\)/.test(A),
+       /el\.hidden=!\(verNueva\|\|fichasNuevas&&pantallaAct!==['"]estudio['"]\)/.test(A),
       'La app junta las de fábrica con las guardadas, guarda las que llegan con /estado y avisa si cambiaron'); }
   { const SRV2=fs.readFileSync(path.join(RAIZ,'functions','api','[[ruta]].js'),'utf8');
     const M=fs.readFileSync(path.join(RAIZ,'migraciones','012_fichas.sql'),'utf8').replace(/^--.*$/gm,'');

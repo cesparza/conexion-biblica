@@ -3095,7 +3095,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
 /* ── v167: EL REGLAMENTO SE ARMA AL ABRIR, CON LO QUE HAYA GUARDADO ── */
 {
   const {CAMPAMENTOS}=require(require('path').join(__dirname,'..','fuente','campamentos.js'));
-  const RETF="CATS, ACTIVIDADES, CAPS, MODULOS, FICHAS_JUNTAS, fichasLlegan, nuevas:()=>fichasNuevas, ponCat, pintaHoy, pintaAvisoVer, capsDeCat:()=>CAPS.filter(c=>c.cats.includes(S.cat)).map(c=>c.id), el:id=>document.getElementById(id)";
+  const RETF="CATS, ACTIVIDADES, CAPS, MODULOS, FICHAS_JUNTAS, fichasLlegan, nuevas:()=>fichasNuevas, ponCat, pintaHoy, pintaAvisoVer, ir, capsDeCat:()=>CAPS.filter(c=>c.cats.includes(S.cat)).map(c=>c.id), el:id=>document.getElementById(id)";
   const copia=x=>JSON.parse(JSON.stringify(x));
   const abre=fichas=>{const store={};if(fichas!==undefined)store['cb-fichas']=typeof fichas==='string'?fichas:JSON.stringify({fichas});
     return {app:montar(RETF,{store}),store};};
@@ -3125,11 +3125,13 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     app.fichasLlegan([]);
     const quieto=!app.nuevas()&&!store['cb-fichas'];
     app.fichasLlegan([cb]); app.pintaAvisoVer();
-    const aviso=app.nuevas()&&JSON.parse(store['cb-fichas']).fichas[0].categorias[1].n===20&&app.el('aviso-nuevo').hidden===false;
+    const libre=app.nuevas()&&JSON.parse(store['cb-fichas']).fichas[0].categorias[1].n===20&&app.el('aviso-nuevo').hidden===true;
+    app.ir('examen'); const concurso=app.el('aviso-nuevo').hidden===false;
+    app.ir('estudio'); const regreso=app.el('aviso-nuevo').hidden===true;
     const sigue=app.CATS.av.n===30;
     app.fichasLlegan([]);
-    ok(quieto&&aviso&&sigue&&!app.nuevas()&&!store['cb-fichas'],
-      'Una ficha que llega se guarda para la próxima apertura y sale el aviso de material nuevo; la que está corriendo no cambia a mitad de uso; si la devuelven, el aviso se quita');
+    ok(quieto&&libre&&concurso&&regreso&&sigue&&!app.nuevas()&&!store['cb-fichas'],
+      'Una ficha nueva avisa al preparar concursos, no interrumpe la Biblioteca libre y no cambia la ficha que corre a mitad de uso');
     const {app:otra,store:st2}=abre([cb]);
     otra.fichasLlegan([cb]);
     ok(!otra.nuevas()&&otra.CATS.av.n===20,'Si llega lo mismo que ya está corriendo, no hay aviso'); }
