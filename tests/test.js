@@ -1247,8 +1247,8 @@ ok(!/slice\(0,600\)\);?\s*const u=/.test(APP)&&!/\.slice\(0,600\)/.test(APP.slic
    El recorrido con navegador está en tools/en-navegador.js. */
 ok(/ir\('estudio',true\);/.test(APP)&&/if\(!quedarse\)\{/.test(APP),
   'Abrir un capítulo no manda primero la página al principio');
-ok(/if\(abierto\|\|!enEstudio\)llevaA\('detalle',true\);/.test(APP)&&/if\(deUna\)\{el\.scrollIntoView\(\{behavior:'auto',block:'start'\}\);return;\}/.test(APP),
-  'Con un capítulo ya abierto, el siguiente se pone en su sitio de una, sin animar');
+/* La posición del título y el regreso al listado se comprueban en el navegador
+   integrado: Jóvenes/tests/estudio-navegacion.mjs, con los estilos aplicados. */
 ok(/if\(i>0&&i<lista\.length\)verCap\(lista\[i\]\.id\);\s*else ir\('inicio'\);/.test(APP),
   '«Ya lo estudié» deja en el capítulo que sigue, no arriba en la rejilla');
 /* v159: la app no se amplía sola. Todo campo de escribir mide 16 px en una

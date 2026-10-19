@@ -56,6 +56,28 @@ function bibCerrarDetalle(){
   if(d)d.style.display='none';
   capAbierto='';
 }
+/* El módulo integrado aplica los estilos de lo recién pintado en un observador.
+   Medir antes deja el destino desplazado cuando la rejilla termina de crecer. */
+function bibTrasPintar(fn){
+  if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(fn));else fn();
+}
+function bibEnfoca(el,foco){
+  if(!el||!el.getClientRects?.().length)return;
+  const nav=document.querySelector('.nav');
+  const techo=nav&&typeof getComputedStyle==='function'?
+    (parseFloat(getComputedStyle(nav).top)||0)+nav.getBoundingClientRect().height:0;
+  window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+(window.scrollY||0)-techo-16),behavior:'instant'});
+  (foco||el).focus?.({preventScroll:true});
+}
+function bibEntraDetalle(){
+  const id=S.ultItem;
+  dondeEspera(400);
+  bibTrasPintar(()=>{
+    if(pantallaAct!=='estudio'||S.ultItem!==id)return;
+    const d=document.getElementById('detalle');
+    bibEnfoca(d,d?.querySelector('.cap-tit'));
+  });
+}
 function bibPonTema(t){
   if(!IDS_DE_TEMA[t])return;
   bibTemaSel=t;bibGuarda(BIB_K,bibTemaSel);
@@ -423,21 +445,24 @@ function bibTab(k){
 var bibLams=()=>(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>LAMINAS[k]&&LAMINAS[k].titulo&&LAMINAS[k].dir&&buscaItem(k));
 /** Cambia la vista de la Biblioteca. `quieto`: viene de un enlace (no sube la página). */
 function bibVer(v,quieto){
+  const anterior=S.ultItem||capAbierto;
   bibVista=v==='laminas'?'laminas':'temas';bibTabSel='';
   /* Ver la portada o las láminas es salir del capítulo abierto. */
   bibCerrarDetalle();
-  if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
+  if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',true);
   pintaBibVista();
   if(!quieto){
-    const destino=document.getElementById('bib-tabs');
-    if(destino&&destino.scrollIntoView)destino.scrollIntoView({block:'start'});
-    else window.scrollTo(0,0);
+    bibTrasPintar(()=>{
+      if(pantallaAct!=='estudio'||S.ultItem)return;
+      const tarjeta=bibVista==='temas'&&anterior?document.getElementById('lista-caps')?.querySelector('.c-'+anterior):null;
+      bibEnfoca(tarjeta||document.getElementById('bib-tabs'));
+    });
   }
   lugarAnota();
 }
 function pintaBibVista(){
-  const lam=bibVista==='laminas'&&!S.ultItem,z=document.getElementById('bib-lams');
-  ['bib-cab','lista-caps'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=lam;});
+  const leyendo=!!S.ultItem,lam=bibVista==='laminas'&&!leyendo,z=document.getElementById('bib-lams');
+  ['bib-cab','lista-caps'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=lam||leyendo;});
   if(z){z.hidden=!lam;if(lam)z.innerHTML=bibLamsHTML();}
   pintaBibTabs();
 }

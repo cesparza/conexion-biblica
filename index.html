@@ -6451,7 +6451,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'e92b95647476';
+const VERSION_APP = '47fecaaf1d92';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -84170,7 +84170,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Biblioteca y Concursos",
-    "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera. Escoge un tema (Daniel, Apocalipsis,\n    la matutina o las creencias): su portada muestra el botón\n    <strong>Empezar a leer</strong> o <strong>Continuar leyendo</strong>, el avance\n    y la Bibliografía. Debajo puedes elegir cómo leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Escenas y recursos</strong> están las láminas, Comparar, Paralelos y\n    los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas\n    del tema. El concurso puede usar solo una parte sin ocultar el resto de la\n    Biblioteca. Dentro de un capítulo, «Todos los capítulos» vuelve al tema.\n    Cada tema tiene su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
+    "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera. Escoge un tema (Daniel, Apocalipsis,\n    la matutina o las creencias): su portada muestra el botón\n    <strong>Empezar a leer</strong> o <strong>Continuar leyendo</strong>, el avance\n    y la Bibliografía. Debajo puedes elegir cómo leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Escenas y recursos</strong> están las láminas, Comparar, Paralelos y\n    los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas\n    del tema. El concurso puede usar solo una parte sin ocultar el resto de la\n    Biblioteca. Al abrir un capítulo, la lectura reemplaza el listado y empieza\n    en su cabecera. <strong>Anterior</strong> y <strong>Siguiente</strong> cambian\n    de lectura sin buscar otra tarjeta. <strong>Todos los capítulos</strong>\n    vuelve al listado, sobre la tarjeta del capítulo que acabas de leer.\n    Cada tema tiene su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
    },
    {
     "t": "La matutina es una serie completa",
@@ -89080,6 +89080,28 @@ function bibCerrarDetalle(){
   if(d)d.style.display='none';
   capAbierto='';
 }
+/* El módulo integrado aplica los estilos de lo recién pintado en un observador.
+   Medir antes deja el destino desplazado cuando la rejilla termina de crecer. */
+function bibTrasPintar(fn){
+  if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(fn));else fn();
+}
+function bibEnfoca(el,foco){
+  if(!el||!el.getClientRects?.().length)return;
+  const nav=document.querySelector('.nav');
+  const techo=nav&&typeof getComputedStyle==='function'?
+    (parseFloat(getComputedStyle(nav).top)||0)+nav.getBoundingClientRect().height:0;
+  window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+(window.scrollY||0)-techo-16),behavior:'instant'});
+  (foco||el).focus?.({preventScroll:true});
+}
+function bibEntraDetalle(){
+  const id=S.ultItem;
+  dondeEspera(400);
+  bibTrasPintar(()=>{
+    if(pantallaAct!=='estudio'||S.ultItem!==id)return;
+    const d=document.getElementById('detalle');
+    bibEnfoca(d,d?.querySelector('.cap-tit'));
+  });
+}
 function bibPonTema(t){
   if(!IDS_DE_TEMA[t])return;
   bibTemaSel=t;bibGuarda(BIB_K,bibTemaSel);
@@ -89447,21 +89469,24 @@ function bibTab(k){
 var bibLams=()=>(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>LAMINAS[k]&&LAMINAS[k].titulo&&LAMINAS[k].dir&&buscaItem(k));
 /** Cambia la vista de la Biblioteca. `quieto`: viene de un enlace (no sube la página). */
 function bibVer(v,quieto){
+  const anterior=S.ultItem||capAbierto;
   bibVista=v==='laminas'?'laminas':'temas';bibTabSel='';
   /* Ver la portada o las láminas es salir del capítulo abierto. */
   bibCerrarDetalle();
-  if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
+  if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',true);
   pintaBibVista();
   if(!quieto){
-    const destino=document.getElementById('bib-tabs');
-    if(destino&&destino.scrollIntoView)destino.scrollIntoView({block:'start'});
-    else window.scrollTo(0,0);
+    bibTrasPintar(()=>{
+      if(pantallaAct!=='estudio'||S.ultItem)return;
+      const tarjeta=bibVista==='temas'&&anterior?document.getElementById('lista-caps')?.querySelector('.c-'+anterior):null;
+      bibEnfoca(tarjeta||document.getElementById('bib-tabs'));
+    });
   }
   lugarAnota();
 }
 function pintaBibVista(){
-  const lam=bibVista==='laminas'&&!S.ultItem,z=document.getElementById('bib-lams');
-  ['bib-cab','lista-caps'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=lam;});
+  const leyendo=!!S.ultItem,lam=bibVista==='laminas'&&!leyendo,z=document.getElementById('bib-lams');
+  ['bib-cab','lista-caps'].forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=lam||leyendo;});
   if(z){z.hidden=!lam;if(lam)z.innerHTML=bibLamsHTML();}
   pintaBibTabs();
 }
@@ -93365,6 +93390,7 @@ const sinEtiquetas=s=>String(s??'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').t
 /* `deUna`: se pone ahí sin animar y sin el destello. Es para cuando la persona
    ya estaba mirando ese sitio y solo cambió su contenido (Siguiente). */
 function llevaA(id,deUna){
+  if(id==='detalle'&&typeof bibEntraDetalle==='function'){bibEntraDetalle();return;}
   const el=document.getElementById(id);
   if(!el)return;
   if(deUna){el.scrollIntoView({behavior:'auto',block:'start'});return;}
@@ -93587,6 +93613,10 @@ function ir(id,quedarse){
     const det=document.getElementById('detalle');
     const vuelve=antes!==id&&TABS[id]!==undefined&&lugarDe[id]>0;
     if(vuelve&&id==='estudio'&&capAbierto&&det&&det.style.display==='block'){S.ultItem=capAbierto;guardar();}
+    if(id==='estudio'&&typeof pintaBibVista==='function'){
+      if(!S.ultItem)bibCerrarDetalle();
+      pintaBibVista();
+    }
     const y=vuelve?lugarDe[id]:0;
     window.scrollTo(0,y);
     /* Otra vez cuando la pantalla terminó de pintarse: la primera medida
@@ -95410,17 +95440,6 @@ function verCap(id,quieto){
   if(typeof bibSigue==='function'){bibSigue(id);bibNivelAntes();}
   /* v236: abrir un capítulo es la vista de Temas (o Comparar, si es el repaso de comparar). */
   if(typeof bibVista!=='undefined'){bibVista='temas';if(!ES_COMPARAR.test(id))bibTabSel='';}
-  /* v161: ¿desde dónde se llega? Si ya había un capítulo abierto en esta
-     pantalla (Siguiente, Anterior, «Ya lo estudié», otra tarjeta), la página
-     se pone de una en el capítulo nuevo. Si se viene de la rejilla sin nada
-     abierto, baja suave desde donde está, para que se vea a dónde fue. Nunca
-     sube primero al principio. */
-  let enEstudio=false, abierto=false;
-  try{
-    const pe=document.getElementById('p-estudio'), d0=document.getElementById('detalle');
-    enEstudio=!!(pe&&pe.classList&&pe.classList.contains&&pe.classList.contains('on'));
-    abierto=enEstudio&&!!(d0&&d0.style&&d0.style.display==='block');
-  }catch(e){}
   ir('estudio',true);
   S.ultItem=id;capAbierto=id;guardar();lugarAnota();
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
@@ -95431,10 +95450,11 @@ function verCap(id,quieto){
      detalle dice que está cargando; al llegar se vuelve a pintar en el mismo lugar. */
   if(esCS(id)&&!CONTENIDO[id]){
     const d0=document.getElementById('detalle');
-    d0.innerHTML='<div class="cap-cab"><div class="cap-ante">'+esc(c.label)+'</div><h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
+    d0.innerHTML='<div class="cap-cab"><div class="cap-ante">'+esc(c.label)+'</div><h2 class="cap-tit" tabindex="-1">'+esc(c.sub)+'</h2>'+
       '<p class="nota cs-carga">Cargando el capítulo…</p></div>';
     d0.style.display='block';
-    csCarga(id).then(ok=>{if(capAbierto!==id)return;if(ok)verCap(id,true);
+    if(typeof pintaBibVista==='function')pintaBibVista();
+    csCarga(id).then(ok=>{if(capAbierto!==id)return;if(ok)verCap(id,quieto);
       else{const n=d0.querySelector('.cs-carga');if(n)n.textContent='No se pudo traer el capítulo. Revisa la conexión y vuelve a tocarlo.';}});
     if(!quieto)llevaA('detalle',true);
     return;
@@ -95458,7 +95478,7 @@ function verCap(id,quieto){
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
     /* v236: «Agregar a mi estudio» (fuente/mi-estudio.js). */
     '<div class="cap-me">'+meBoton('cap-'+id)+'</div>'+
-    '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
+    '<h2 class="cap-tit" tabindex="-1">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
@@ -95511,20 +95531,12 @@ function verCap(id,quieto){
   if(typeof bibAplicaNivel==='function')bibAplicaNivel(id);
   if(typeof pintaBibVista==='function')pintaBibVista();
   avanza(id,60);
-  /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
-     creencias en una rejilla de cuatro columnas, el detalle nace siete filas
-     más abajo, fuera de lo que se ve, y tocar una tarjeta parecía no hacer
-     nada. Mismo defecto que tuvo «abrir evaluación» (v99), mismo arreglo:
-     llevaA() hace scroll y marca dónde aterrizar. */
+  /* La lectura reemplaza el listado. llevaA espera a que termine de pintarse
+     y sitúa su cabecera debajo de la navegación fija, también dentro de Jóvenes. */
   /* v156: al reabrir tras un refresco no se lleva al inicio del detalle: el
      arranque pone la página donde iba leyendo (vuelveADonde). */
   if(!quieto){
-    /* v161: mientras la página va bajando sola hacia el capítulo no se anota
-       dónde va: un refresco en ese medio segundo dejaba guardada una altura a
-       mitad de camino. Sin anotación, el arranque muestra el capítulo desde
-       su título, que es lo que se acababa de pedir. */
-    if(abierto||!enEstudio)llevaA('detalle',true);
-    else{dondeEspera(1200);llevaA('detalle');}
+    llevaA('detalle',true);
   }
 }
 
@@ -95557,7 +95569,7 @@ function dondeEspera(ms){dondeHasta=Date.now()+ms;try{localStorage.removeItem(DO
 function anotaDonde(){
   if(dondeQuieto||Date.now()<dondeHasta)return;
   try{
-    const o={k:dondeLlave(),y:Math.round(window.scrollY||0)};
+    const o={k:dondeLlave(),y:Math.round(window.scrollY||0),lector:true};
     const secs=secsDeDonde();
     const i=secs.findIndex(x=>x.getBoundingClientRect().bottom>DONDE_TOPE);
     if(i>=0){const r=secs[i].getBoundingClientRect();
@@ -95571,6 +95583,8 @@ function vuelveADonde(){
   let o=null;
   try{o=JSON.parse(localStorage.getItem(DONDE_K)||'null');}catch(e){}
   if(!o||o.k!==dondeLlave())return false;
+  /* Las alturas anteriores incluían toda la rejilla encima de la lectura. */
+  if(S.ultItem&&!o.lector)return false;
   const pon=()=>{
     let y=Number(o.y)||0;
     const sec=Number.isInteger(o.s)?secsDeDonde()[o.s]:null;

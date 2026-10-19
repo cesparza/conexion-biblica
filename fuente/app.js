@@ -3655,6 +3655,7 @@ const sinEtiquetas=s=>String(s??'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').t
 /* `deUna`: se pone ahí sin animar y sin el destello. Es para cuando la persona
    ya estaba mirando ese sitio y solo cambió su contenido (Siguiente). */
 function llevaA(id,deUna){
+  if(id==='detalle'&&typeof bibEntraDetalle==='function'){bibEntraDetalle();return;}
   const el=document.getElementById(id);
   if(!el)return;
   if(deUna){el.scrollIntoView({behavior:'auto',block:'start'});return;}
@@ -3877,6 +3878,10 @@ function ir(id,quedarse){
     const det=document.getElementById('detalle');
     const vuelve=antes!==id&&TABS[id]!==undefined&&lugarDe[id]>0;
     if(vuelve&&id==='estudio'&&capAbierto&&det&&det.style.display==='block'){S.ultItem=capAbierto;guardar();}
+    if(id==='estudio'&&typeof pintaBibVista==='function'){
+      if(!S.ultItem)bibCerrarDetalle();
+      pintaBibVista();
+    }
     const y=vuelve?lugarDe[id]:0;
     window.scrollTo(0,y);
     /* Otra vez cuando la pantalla terminó de pintarse: la primera medida
@@ -5700,17 +5705,6 @@ function verCap(id,quieto){
   if(typeof bibSigue==='function'){bibSigue(id);bibNivelAntes();}
   /* v236: abrir un capítulo es la vista de Temas (o Comparar, si es el repaso de comparar). */
   if(typeof bibVista!=='undefined'){bibVista='temas';if(!ES_COMPARAR.test(id))bibTabSel='';}
-  /* v161: ¿desde dónde se llega? Si ya había un capítulo abierto en esta
-     pantalla (Siguiente, Anterior, «Ya lo estudié», otra tarjeta), la página
-     se pone de una en el capítulo nuevo. Si se viene de la rejilla sin nada
-     abierto, baja suave desde donde está, para que se vea a dónde fue. Nunca
-     sube primero al principio. */
-  let enEstudio=false, abierto=false;
-  try{
-    const pe=document.getElementById('p-estudio'), d0=document.getElementById('detalle');
-    enEstudio=!!(pe&&pe.classList&&pe.classList.contains&&pe.classList.contains('on'));
-    abierto=enEstudio&&!!(d0&&d0.style&&d0.style.display==='block');
-  }catch(e){}
   ir('estudio',true);
   S.ultItem=id;capAbierto=id;guardar();lugarAnota();
   document.querySelectorAll('.cap,.mod').forEach(b=>b.classList.remove('on'));
@@ -5721,10 +5715,11 @@ function verCap(id,quieto){
      detalle dice que está cargando; al llegar se vuelve a pintar en el mismo lugar. */
   if(esCS(id)&&!CONTENIDO[id]){
     const d0=document.getElementById('detalle');
-    d0.innerHTML='<div class="cap-cab"><div class="cap-ante">'+esc(c.label)+'</div><h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
+    d0.innerHTML='<div class="cap-cab"><div class="cap-ante">'+esc(c.label)+'</div><h2 class="cap-tit" tabindex="-1">'+esc(c.sub)+'</h2>'+
       '<p class="nota cs-carga">Cargando el capítulo…</p></div>';
     d0.style.display='block';
-    csCarga(id).then(ok=>{if(capAbierto!==id)return;if(ok)verCap(id,true);
+    if(typeof pintaBibVista==='function')pintaBibVista();
+    csCarga(id).then(ok=>{if(capAbierto!==id)return;if(ok)verCap(id,quieto);
       else{const n=d0.querySelector('.cs-carga');if(n)n.textContent='No se pudo traer el capítulo. Revisa la conexión y vuelve a tocarlo.';}});
     if(!quieto)llevaA('detalle',true);
     return;
@@ -5748,7 +5743,7 @@ function verCap(id,quieto){
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
     /* v236: «Agregar a mi estudio» (fuente/mi-estudio.js). */
     '<div class="cap-me">'+meBoton('cap-'+id)+'</div>'+
-    '<h2 class="cap-tit">'+esc(c.sub)+'</h2>'+
+    '<h2 class="cap-tit" tabindex="-1">'+esc(c.sub)+'</h2>'+
     '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
@@ -5801,20 +5796,12 @@ function verCap(id,quieto){
   if(typeof bibAplicaNivel==='function')bibAplicaNivel(id);
   if(typeof pintaBibVista==='function')pintaBibVista();
   avanza(id,60);
-  /* verCap() pinta el detalle pero no movía el foco hasta él: con 28
-     creencias en una rejilla de cuatro columnas, el detalle nace siete filas
-     más abajo, fuera de lo que se ve, y tocar una tarjeta parecía no hacer
-     nada. Mismo defecto que tuvo «abrir evaluación» (v99), mismo arreglo:
-     llevaA() hace scroll y marca dónde aterrizar. */
+  /* La lectura reemplaza el listado. llevaA espera a que termine de pintarse
+     y sitúa su cabecera debajo de la navegación fija, también dentro de Jóvenes. */
   /* v156: al reabrir tras un refresco no se lleva al inicio del detalle: el
      arranque pone la página donde iba leyendo (vuelveADonde). */
   if(!quieto){
-    /* v161: mientras la página va bajando sola hacia el capítulo no se anota
-       dónde va: un refresco en ese medio segundo dejaba guardada una altura a
-       mitad de camino. Sin anotación, el arranque muestra el capítulo desde
-       su título, que es lo que se acababa de pedir. */
-    if(abierto||!enEstudio)llevaA('detalle',true);
-    else{dondeEspera(1200);llevaA('detalle');}
+    llevaA('detalle',true);
   }
 }
 
@@ -5847,7 +5834,7 @@ function dondeEspera(ms){dondeHasta=Date.now()+ms;try{localStorage.removeItem(DO
 function anotaDonde(){
   if(dondeQuieto||Date.now()<dondeHasta)return;
   try{
-    const o={k:dondeLlave(),y:Math.round(window.scrollY||0)};
+    const o={k:dondeLlave(),y:Math.round(window.scrollY||0),lector:true};
     const secs=secsDeDonde();
     const i=secs.findIndex(x=>x.getBoundingClientRect().bottom>DONDE_TOPE);
     if(i>=0){const r=secs[i].getBoundingClientRect();
@@ -5861,6 +5848,8 @@ function vuelveADonde(){
   let o=null;
   try{o=JSON.parse(localStorage.getItem(DONDE_K)||'null');}catch(e){}
   if(!o||o.k!==dondeLlave())return false;
+  /* Las alturas anteriores incluían toda la rejilla encima de la lectura. */
+  if(S.ultItem&&!o.lector)return false;
   const pon=()=>{
     let y=Number(o.y)||0;
     const sec=Number.isInteger(o.s)?secsDeDonde()[o.s]:null;
