@@ -643,9 +643,10 @@ const MANUAL = [
   secs:[
   { t:'Cómo te enteras',
     h:`<p>Cada vez que abres la app <strong>con internet</strong>, ella revisa
-    sola si hay material nuevo. Si lo hay, sale una
+    sola si hay material nuevo. Si cambió el contenido de la app, sale una
     <strong>franja naranja arriba</strong> que dice «Hay material nuevo» con un
-    botón <strong>Actualizar</strong>.</p>
+    botón <strong>Actualizar</strong>. Si solo cambiaron los concursos, la franja
+    aparece al entrar a prepararlos y no interrumpe la Biblioteca libre.</p>
     <p>También revisa cuando vuelves a la app después de haberla dejado. Eso
     hace falta porque el iPhone <strong>no recarga la app al volver a
     ella</strong>: te devuelve la pantalla donde la dejaste, y sin ese aviso
