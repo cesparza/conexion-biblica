@@ -25,6 +25,14 @@
 .bib-nv.on{border-color:var(--naranja-txt);background:var(--fondo-calido)}
 .bib-fu{min-height:44px}
 .bib-nota{margin:.75rem 0 0;font-size:.75rem;color:var(--gris);line-height:1.4}
+.bib-serie{display:grid;gap:.9rem;align-items:center;grid-template-columns:minmax(0,1fr) auto;margin:0 0 1rem;padding:1rem 1.2rem;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);border-left:4px solid var(--naranja-txt)}
+.bib-serie h3{margin:.2rem 0 .3rem;font-size:1.2rem;line-height:1.25}
+.bib-serie p{margin:0 0 .4rem;color:var(--gris);font-size:.875rem;line-height:1.45}
+.bib-serie .bib-serie-av{font-weight:700;color:var(--txt)}
+.bib-serie-k{font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.bib-serie-vinculo{grid-column:1/-1;border-top:1px solid color-mix(in srgb,var(--txt) 14%,transparent);padding-top:.8rem;color:var(--gris);font-size:.875rem;line-height:1.45}
+.bib-serie-vinculo b{color:var(--txt)}
+@media(max-width:600px){.bib-serie{grid-template-columns:1fr}.bib-serie .btn{width:100%}}
 /* «Para ver»: tarjetas que se deslizan a lo ancho. */
 .bib-ver{margin:0 0 1rem}
 .bv-fila{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 8px;scrollbar-width:thin}

@@ -18,19 +18,16 @@ const MANUAL = [
 
 /* ═══════════ PARA QUIEN ESTUDIA ═══════════ */
 
-{ id:'a-empezar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Los tres pasos del principio',
-  d:'Qué te pregunta la app la primera vez',
+{ id:'a-empezar', para:'estudia', icono:'<svg class="ico" aria-hidden="true"><use href="#i-diana"/></svg>', t:'Entrar a estudiar o preparar un concurso',
+  d:'La biblioteca abre sin nombre; el concurso sí necesita una ficha',
   secs:[
-  { t:'Por qué te pregunta antes de dejarte entrar',
-    h:`<p>La app necesita saber dos cosas para mostrarte <strong>tu</strong>
-    material y no el de otro: <strong>en qué actividad estás</strong> y
-    <strong>cuál es tu categoría dentro de ella</strong>. De ahí sale qué
-    capítulos ves, de dónde salen tus preguntas y hasta qué dificultad
-    llegan.</p>
-    <p>Pregunta la actividad primero porque cada actividad tiene sus propias
-    categorías: Conexión Bíblica va por edad, y las 28 creencias no van por
-    edad sino por quién presenta el examen escrito. Preguntando la actividad
-    de una, el paso siguiente solo te ofrece lo que sí te aplica.</p>` },
+  { t:'Si solo quieres leer',
+    h:`<p>Abre <strong>Biblioteca</strong> y escoge un tema o una serie. No tienes
+    que escribir tu nombre, elegir club ni indicar tu edad. Si ya estabas
+    estudiando en este aparato, puedes continuar tus lecturas aquí.</p>
+    <p>Para preparar un concurso, abre <strong>Concursos</strong>. Entonces sí
+    se crea una ficha de participante con nombre, actividad y categoría; así
+    el examen y el avance del concurso pertenecen a la persona correcta.</p>` },
   { t:'Tu código, si el director te dio uno',
     h:`<p>En la pantalla de <strong>Concursos</strong>, arriba, hay un cuadro que
     dice <strong>Entra con tu código</strong>. Son 6 letras y números que te da
@@ -43,10 +40,10 @@ const MANUAL = [
     pueden ir en mayúscula o minúscula, da lo mismo. Si sigue sin servir,
     pídeselo otra vez al director.</p>` },
 
-  { t:'Paso 1 — tu nombre',
-    h:`<p>Escríbelo y toca <strong>Siguiente</strong>. Sirve para que tu
-    progreso sea tuyo: en un mismo teléfono pueden estudiar varias personas sin
-    mezclarse.</p>` },
+  { t:'Paso 1 — tu nombre, solo para concursos',
+    h:`<p>Si decides preparar un concurso y todavía no tienes una ficha, escribe
+    tu nombre y toca <strong>Siguiente</strong>. En un mismo teléfono pueden
+    estudiar varias personas sin mezclar sus fichas de concurso.</p>` },
   { t:'Paso 2 — tu actividad',
     h:`<p>Una tarjeta por actividad, y cada una dice <strong>cuándo es</strong> y
     <strong>qué se estudia</strong>:</p>
@@ -127,6 +124,14 @@ const MANUAL = [
     categorías por edad, tu preparación y tu examen. Al revisar un examen, cada
     pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su
     capítulo y, si el título de una sección trae su versículo, a esa sección.</p>` },
+  { t:'La matutina es una serie completa',
+    h:`<p><strong>Héroes y villanos</strong> tiene 31 lecturas numeradas. Puedes
+    leerlas en cualquier orden y retomar la siguiente pendiente; el número
+    corresponde a la edición de octubre, no obliga a leerla ese día.</p>
+    <p>En el concurso de Aventureros de 2026 se usaron las lecturas 1 a 15
+    para 4 a 6 años, y 1 a 30 para 7 a 9. La lectura 31 sigue abierta para
+    estudio. Esos límites pertenecen al examen de ese evento y no reducen la
+    serie de la Biblioteca.</p>` },
   { t:'Cómo se lee un capítulo',
     h:`<p>Toca la tarjeta del capítulo. Cada uno empieza con
     <strong>«En pocas palabras»</strong>, que es el resumen, y después vienen
@@ -736,9 +741,10 @@ const MANUAL = [
 { id:'d-montar', para:'director', icono:'<svg class="ico" aria-hidden="true"><use href="#i-persona"/></svg>', t:'Montar a los participantes',
   d:'Varias personas en un mismo aparato',
   secs:[
-  { t:'La bienvenida hace el trabajo',
-    h:`<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce
-    la categoría. <strong>El participante nunca escoge entre las {N_CATS}</strong>,
+  { t:'El concurso crea la ficha',
+    h:`<p>La Biblioteca abre sin nombre. Cuando alguien escoge preparar un
+    concurso por primera vez, la app pregunta nombre, edad y evento, y de ahí
+    deduce la categoría. <strong>El participante nunca escoge entre las {N_CATS}</strong>,
     justamente para que un niño de cinco años no termine con el material de
     nueve.</p>
     <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>

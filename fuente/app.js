@@ -4684,7 +4684,7 @@ function pintaCaps(){
   /* v235: la portada de la Biblioteca va arriba; si se ve otro tema que el del concurso,
      sus capítulos y repasos enteros (ver biblioteca-app.js). */
   if(typeof pintaBib==='function')pintaBib();
-  const aj=typeof bibAjeno==='function'&&bibAjeno();
+  const aj=typeof bibAjeno==='function'&&(bibAjeno()||bibTema()==='matutina');
   const vista=aj?bibCapsAjeno():capsVista();
   /* Con un solo grupo a la vista el rótulo repetiría el título de arriba. */
   const conRotulos=new Set(vista.map(c=>c.doc).filter(Boolean)).size>1;
@@ -4705,7 +4705,7 @@ function pintaCaps(){
     '<div class="f">'+esc(origenDe(c))+(c.vs?' · '+c.vs+' vers.':'')+'</div>'+
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
-    (!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
+    (c.id==='m31'||!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
     '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
   const botonMod=m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
@@ -5913,6 +5913,8 @@ const LUGAR_PUB={estudio:'biblioteca',examen:'concursos',miestudio:'mi-estudio'}
 function lugarActual(){
   const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[LUGAR_PUB[pant]||pant];
   if(pant==='estudio'&&!S.ultItem&&typeof bibVista!=='undefined'&&bibVista==='laminas')r.push('laminas');
+  else if(pant==='estudio'&&!S.ultItem&&typeof bibTema==='function'&&bibTema()==='matutina')r.push('serie-matutina');
+  else if(pant==='estudio'&&!S.ultItem&&typeof bibTema==='function')r.push('tema',bibTema());
   if(pant==='estudio'&&S.ultItem){
     r.push(S.ultItem);
     const d=document.getElementById('detalle');
@@ -5944,7 +5946,9 @@ function lugarParte(c){
   if(LUGAR_DE_PUB[s[0]])s[0]=LUGAR_DE_PUB[s[0]];
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
   if(o.pant==='estudio'&&s[i]==='laminas'){o.vista='laminas';i++;}
-  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|laminas|s\d+)$/.test(s[i]))o.item=s[i++];
+  if(o.pant==='estudio'&&s[i]==='serie-matutina'){o.tema='matutina';i++;}
+  else if(o.pant==='estudio'&&s[i]==='tema'&&IDS_DE_TEMA[s[i+1]]){o.tema=s[i+1];i+=2;}
+  else if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|laminas|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
     if(s[i]==='profundizar')o.prof=true;
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
@@ -5959,11 +5963,14 @@ function lugarParte(c){
 /* Lleva al camino. `dondeOk`: el arranque ya puso la pantalla y la altura de este aparato. */
 function lugarAplica(c,dondeOk){
   const o=lugarParte(c);if(!o.pant)return false;
+  if(o.tema){
+    bibTemaSel=o.tema;bibGuarda(BIB_K,bibTemaSel);
+  }
   if(o.a&&o.a!==S.cat&&CATS[o.a]){
     const p=personasDB().find(x=>x.fichas.some(([id])=>id===DB.activo)),f=p&&p.fichas.find(([,al])=>al.cat===o.a);
     if(f){DB.activo=f[0];S=DB.alumnos[f[0]];guardar();marcaCat();pintaYo();}
   }
-  const mismo=o.pant===S.ultPantalla&&(o.item||'')===(S.ultItem||'')&&pantallaAct===o.pant;
+  const mismo=!o.tema&&o.pant===S.ultPantalla&&(o.item||'')===(S.ultItem||'')&&pantallaAct===o.pant;
   if(!mismo){
     if(o.pant==='estudio'&&o.item&&buscaItem(o.item))verCap(o.item,true);
     else ir(o.pant==='estudio'&&o.item?'estudio':o.pant);
@@ -10845,7 +10852,10 @@ try{
       /* Se deja para cuando el archivo termine de cargar: cambiar de ficha
          usa piezas que se declaran más abajo. */
       if(!esNuevo()){S.ultPantalla='inicio';setTimeout(()=>abreConcurso(pedido),0);}else concursoPedido=pedido;} }
-  if(esNuevo()){ir('bienvenida');bvPaso(1);}
+  /* Leer la Biblioteca no requiere nombre. Se pregunta solo al preparar un
+     concurso, donde la evaluación sí necesita identificar a la persona. */
+  if(esNuevo()&&concursoPedido){ir('bienvenida');bvPaso(1);}
+  else if(esNuevo())ir('estudio');
   else if(S.ultPantalla && S.ultPantalla!=='inicio' && TABS[S.ultPantalla]!==undefined){
     if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem,true);
     else ir(S.ultPantalla);
@@ -10855,7 +10865,7 @@ try{
   }else vuelveADonde();
   /* v215: y lo que se abre encima (la lámina, Comparar, la pestaña), del enlace o de la
      recarga. Un tic después: usa piezas que se declaran más abajo. */
-  setTimeout(()=>{if(!esNuevo())lugarArranca(true);else lugarListo=true;},0);
+  setTimeout(()=>{if(!esNuevo()||!concursoPedido)lugarArranca(true);else lugarListo=true;},0);
 }catch(e){console.error(e);}
 
 /* ───────── entrar con el código (v20) ─────────

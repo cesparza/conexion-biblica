@@ -5540,6 +5540,14 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .bib-nv.on{border-color:var(--naranja-txt);background:var(--fondo-calido)}
 .bib-fu{min-height:44px}
 .bib-nota{margin:.75rem 0 0;font-size:.75rem;color:var(--gris);line-height:1.4}
+.bib-serie{display:grid;gap:.9rem;align-items:center;grid-template-columns:minmax(0,1fr) auto;margin:0 0 1rem;padding:1rem 1.2rem;border-radius:var(--r);background:var(--card);box-shadow:var(--sh);border-left:4px solid var(--naranja-txt)}
+.bib-serie h3{margin:.2rem 0 .3rem;font-size:1.2rem;line-height:1.25}
+.bib-serie p{margin:0 0 .4rem;color:var(--gris);font-size:.875rem;line-height:1.45}
+.bib-serie .bib-serie-av{font-weight:700;color:var(--txt)}
+.bib-serie-k{font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--naranja-txt)}
+.bib-serie-vinculo{grid-column:1/-1;border-top:1px solid color-mix(in srgb,var(--txt) 14%,transparent);padding-top:.8rem;color:var(--gris);font-size:.875rem;line-height:1.45}
+.bib-serie-vinculo b{color:var(--txt)}
+@media(max-width:600px){.bib-serie{grid-template-columns:1fr}.bib-serie .btn{width:100%}}
 /* «Para ver»: tarjetas que se deslizan a lo ancho. */
 .bib-ver{margin:0 0 1rem}
 .bv-fila{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 8px;scrollbar-width:thin}
@@ -6318,7 +6326,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '180f8d1c0ab5';
+const VERSION_APP = '99589b104d45';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -84024,20 +84032,20 @@ const MANUAL = [
   "id": "a-empezar",
   "para": "estudia",
   "icono": "<svg class=\"ico\" aria-hidden=\"true\"><use href=\"#i-diana\"/></svg>",
-  "t": "Los tres pasos del principio",
-  "d": "Qué te pregunta la app la primera vez",
+  "t": "Entrar a estudiar o preparar un concurso",
+  "d": "La biblioteca abre sin nombre; el concurso sí necesita una ficha",
   "secs": [
    {
-    "t": "Por qué te pregunta antes de dejarte entrar",
-    "h": "<p>La app necesita saber dos cosas para mostrarte <strong>tu</strong>\n    material y no el de otro: <strong>en qué actividad estás</strong> y\n    <strong>cuál es tu categoría dentro de ella</strong>. De ahí sale qué\n    capítulos ves, de dónde salen tus preguntas y hasta qué dificultad\n    llegan.</p>\n    <p>Pregunta la actividad primero porque cada actividad tiene sus propias\n    categorías: Conexión Bíblica va por edad, y las 28 creencias no van por\n    edad sino por quién presenta el examen escrito. Preguntando la actividad\n    de una, el paso siguiente solo te ofrece lo que sí te aplica.</p>"
+    "t": "Si solo quieres leer",
+    "h": "<p>Abre <strong>Biblioteca</strong> y escoge un tema o una serie. No tienes\n    que escribir tu nombre, elegir club ni indicar tu edad. Si ya estabas\n    estudiando en este aparato, puedes continuar tus lecturas aquí.</p>\n    <p>Para preparar un concurso, abre <strong>Concursos</strong>. Entonces sí\n    se crea una ficha de participante con nombre, actividad y categoría; así\n    el examen y el avance del concurso pertenecen a la persona correcta.</p>"
    },
    {
     "t": "Tu código, si el director te dio uno",
     "h": "<p>En la pantalla de <strong>Concursos</strong>, arriba, hay un cuadro que\n    dice <strong>Entra con tu código</strong>. Son 6 letras y números que te da\n    el director del club. Se escriben <strong>una sola vez</strong> en tu\n    celular y la app se acuerda.</p>\n    <p>Para qué sirve: tus notas le llegan al director con tu nombre, y el\n    examen del día de la prueba sabe que eres tú. Sin código puedes estudiar y\n    practicar igual, pero el examen del evento sí lo necesita.</p>\n    <p>Si el código no te sirve, revisa que lo hayas copiado completo. Las letras\n    pueden ir en mayúscula o minúscula, da lo mismo. Si sigue sin servir,\n    pídeselo otra vez al director.</p>"
    },
    {
-    "t": "Paso 1 — tu nombre",
-    "h": "<p>Escríbelo y toca <strong>Siguiente</strong>. Sirve para que tu\n    progreso sea tuyo: en un mismo teléfono pueden estudiar varias personas sin\n    mezclarse.</p>"
+    "t": "Paso 1 — tu nombre, solo para concursos",
+    "h": "<p>Si decides preparar un concurso y todavía no tienes una ficha, escribe\n    tu nombre y toca <strong>Siguiente</strong>. En un mismo teléfono pueden\n    estudiar varias personas sin mezclar sus fichas de concurso.</p>"
    },
    {
     "t": "Paso 2 — tu actividad",
@@ -84084,6 +84092,10 @@ const MANUAL = [
    {
     "t": "Biblioteca y Concursos",
     "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera: arriba escoges el tema (Daniel, Apocalipsis,\n    la matutina, las creencias) y cómo quieres leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Para ver</strong> están las láminas, Comparar, Paralelos y los últimos\n    acontecimientos. Cada tema termina con su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
+   },
+   {
+    "t": "La matutina es una serie completa",
+    "h": "<p><strong>Héroes y villanos</strong> tiene 31 lecturas numeradas. Puedes\n    leerlas en cualquier orden y retomar la siguiente pendiente; el número\n    corresponde a la edición de octubre, no obliga a leerla ese día.</p>\n    <p>En el concurso de Aventureros de 2026 se usaron las lecturas 1 a 15\n    para 4 a 6 años, y 1 a 30 para 7 a 9. La lectura 31 sigue abierta para\n    estudio. Esos límites pertenecen al examen de ese evento y no reducen la\n    serie de la Biblioteca.</p>"
    },
    {
     "t": "Cómo se lee un capítulo",
@@ -84544,8 +84556,8 @@ const MANUAL = [
   "d": "Varias personas en un mismo aparato",
   "secs": [
    {
-    "t": "La bienvenida hace el trabajo",
-    "h": "<p>La primera vez la app pregunta nombre, edad y evento, y de ahí deduce\n    la categoría. <strong>El participante nunca escoge entre las {N_CATS}</strong>,\n    justamente para que un niño de cinco años no termine con el material de\n    nueve.</p>\n    <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>\n    con el mismo nombre. Son cuentas separadas a propósito: el progreso de una\n    actividad y el de la otra no se deben mezclar.</p>"
+    "t": "El concurso crea la ficha",
+    "h": "<p>La Biblioteca abre sin nombre. Cuando alguien escoge preparar un\n    concurso por primera vez, la app pregunta nombre, edad y evento, y de ahí\n    deduce la categoría. <strong>El participante nunca escoge entre las {N_CATS}</strong>,\n    justamente para que un niño de cinco años no termine con el material de\n    nueve.</p>\n    <p>Si participa en dos actividades, se le crean <strong>dos fichas</strong>\n    con el mismo nombre. Son cuentas separadas a propósito: el progreso de una\n    actividad y el de la otra no se deben mezclar.</p>"
    },
    {
     "t": "Cambiar de persona",
@@ -88966,7 +88978,7 @@ var bibLee=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:v;}catch
 var bibGuarda=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 /** Los temas de la Biblioteca, en el orden de las actividades. */
 var bibTemas=()=>temasLibres().filter(t=>(IDS_DE_TEMA[t]||[]).length);
-var bibNombreTema=t=>{const A=ACTIVIDADES[libreDe(t)];return A?A.nombre:t;};
+var bibNombreTema=t=>{if(t==='matutina')return 'Héroes y villanos';const A=ACTIVIDADES[libreDe(t)];return A?A.nombre:t;};
 var bibIconoTema=t=>{const A=ACTIVIDADES[libreDe(t)];return A?A.icono:'';};
 /** El tema que se ve: el escogido en la Biblioteca o el del concurso de la ficha. */
 function bibTema(){
@@ -88982,6 +88994,17 @@ function bibPonTema(t){
   bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
   /* Cambiar de tema es ver otra estantería: se cierra el capítulo abierto. */
   if(pantallaAct==='estudio'){ir('estudio');}else{pintaCaps();}
+}
+function bibSerieMatutina(){
+  const dias=CAPS.filter(c=>/^m\d{1,2}$/.test(c.id)).sort((a,b)=>Number(a.id.slice(1))-Number(b.id.slice(1)));
+  const terminadas=dias.filter(c=>(S.prog[c.id]||0)>=100).length;
+  const sigue=dias.find(c=>(S.prog[c.id]||0)<100)||dias[0];
+  return '<section class="bib-serie" aria-labelledby="bib-serie-t">'+
+    '<div><span class="bib-serie-k">Serie · 31 lecturas</span><h3 id="bib-serie-t">Héroes y villanos</h3>'+
+    '<p>Lee en el orden que quieras. Los números corresponden a la edición de octubre; no tienes que leer la entrega que marca la fecha de hoy.</p>'+
+    '<p class="bib-serie-av">'+terminadas+' de 31 lecturas terminadas. Tu avance queda en cada lectura.</p></div>'+
+    '<button type="button" class="btn tono" onclick="verCap(\''+sigue.id+'\')">'+(terminadas?'Seguir leyendo':'Empezar la serie')+'</button>'+
+    '<div class="bib-serie-vinculo"><b>También se usó en el concurso de Aventureros 2026.</b> De 4 a 6 años entraron las lecturas 1 a 15; de 7 a 9, las 1 a 30. La 31 completa la historia y queda para estudio. Estos límites solo rigen el examen; aquí puedes leer las 31.</div></section>';
 }
 /* Al abrir un capítulo de otro tema (un enlace, una pregunta, la Tertulia), la
    estantería pasa a ese tema; sin repintar: verCap pinta enseguida. */
@@ -89133,8 +89156,9 @@ function pintaBib(){
     '<div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div>'+
     '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
     '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div>'+
-    '<p class="bib-nota">'+(bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
+    '<p class="bib-nota">'+(t==='matutina'?'La Biblioteca siempre muestra la serie completa. La categoría del concurso solo determina qué se evalúa.':bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
       (BIB_NIVELES.find(n=>n[0]===nv)[1])+': '+BIB_NIVELES.find(n=>n[0]===nv)[2]+'. El nivel lo escoges tú; no depende de tu edad ni de tu categoría.')+'</p></div>'+
+    (t==='matutina'?bibSerieMatutina():'')+
     bibVerHTML(t)+
     '<button type="button" class="bib-otra" onclick="ir(\'examen\')">'+IC('examen')+'<span><b>¿Te preparas para un concurso?</b> En Concursos escoges tu categoría por edad y practicas el examen.</span>'+IC('der')+'</button>';
 }
@@ -89237,7 +89261,11 @@ function pintaConcursos(){
     '<button type="button" class="bib-otra" onclick="ir(\'estudio\')">'+IC('libro')+'<span><b>Todo lo que se pregunta está en la Biblioteca.</b> Cada pregunta del examen, al revisarla, te lleva a donde se estudia.</span>'+IC('der')+'</button>';
 }
 /* «Prepararme»: la hoja de quién estudia, ya en ese concurso (paso de la categoría). */
-function bibPrepara(a){if(!ACTIVIDADES[a])return;abreYo();prepActividad(a);}
+function bibPrepara(a){
+  if(!ACTIVIDADES[a])return;
+  if(!(S.nombre||'').trim()){concursoPedido=a;ir('bienvenida');bvPaso(1);return;}
+  abreYo();prepActividad(a);
+}
 
 /* ── Inicio: las dos puertas ── */
 /* El concurso que se anuncia en el Inicio: el próximo con fecha; si ninguno viene, el
@@ -94250,7 +94278,7 @@ function pintaCaps(){
   /* v235: la portada de la Biblioteca va arriba; si se ve otro tema que el del concurso,
      sus capítulos y repasos enteros (ver biblioteca-app.js). */
   if(typeof pintaBib==='function')pintaBib();
-  const aj=typeof bibAjeno==='function'&&bibAjeno();
+  const aj=typeof bibAjeno==='function'&&(bibAjeno()||bibTema()==='matutina');
   const vista=aj?bibCapsAjeno():capsVista();
   /* Con un solo grupo a la vista el rótulo repetiría el título de arriba. */
   const conRotulos=new Set(vista.map(c=>c.doc).filter(Boolean)).size>1;
@@ -94271,7 +94299,7 @@ function pintaCaps(){
     '<div class="f">'+esc(origenDe(c))+(c.vs?' · '+c.vs+' vers.':'')+'</div>'+
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
-    (!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
+    (c.id==='m31'||!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
     '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
   const botonMod=m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
@@ -95479,6 +95507,8 @@ const LUGAR_PUB={estudio:'biblioteca',examen:'concursos',miestudio:'mi-estudio'}
 function lugarActual(){
   const pant=LUGAR_PANT.includes(S.ultPantalla)?S.ultPantalla:'inicio',r=[LUGAR_PUB[pant]||pant];
   if(pant==='estudio'&&!S.ultItem&&typeof bibVista!=='undefined'&&bibVista==='laminas')r.push('laminas');
+  else if(pant==='estudio'&&!S.ultItem&&typeof bibTema==='function'&&bibTema()==='matutina')r.push('serie-matutina');
+  else if(pant==='estudio'&&!S.ultItem&&typeof bibTema==='function')r.push('tema',bibTema());
   if(pant==='estudio'&&S.ultItem){
     r.push(S.ultItem);
     const d=document.getElementById('detalle');
@@ -95510,7 +95540,9 @@ function lugarParte(c){
   if(LUGAR_DE_PUB[s[0]])s[0]=LUGAR_DE_PUB[s[0]];
   if(LUGAR_PANT.includes(s[i]))o.pant=s[i++];else return o;
   if(o.pant==='estudio'&&s[i]==='laminas'){o.vista='laminas';i++;}
-  if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|laminas|s\d+)$/.test(s[i]))o.item=s[i++];
+  if(o.pant==='estudio'&&s[i]==='serie-matutina'){o.tema='matutina';i++;}
+  else if(o.pant==='estudio'&&s[i]==='tema'&&IDS_DE_TEMA[s[i+1]]){o.tema=s[i+1];i+=2;}
+  else if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|laminas|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
     if(s[i]==='profundizar')o.prof=true;
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
@@ -95525,11 +95557,14 @@ function lugarParte(c){
 /* Lleva al camino. `dondeOk`: el arranque ya puso la pantalla y la altura de este aparato. */
 function lugarAplica(c,dondeOk){
   const o=lugarParte(c);if(!o.pant)return false;
+  if(o.tema){
+    bibTemaSel=o.tema;bibGuarda(BIB_K,bibTemaSel);
+  }
   if(o.a&&o.a!==S.cat&&CATS[o.a]){
     const p=personasDB().find(x=>x.fichas.some(([id])=>id===DB.activo)),f=p&&p.fichas.find(([,al])=>al.cat===o.a);
     if(f){DB.activo=f[0];S=DB.alumnos[f[0]];guardar();marcaCat();pintaYo();}
   }
-  const mismo=o.pant===S.ultPantalla&&(o.item||'')===(S.ultItem||'')&&pantallaAct===o.pant;
+  const mismo=!o.tema&&o.pant===S.ultPantalla&&(o.item||'')===(S.ultItem||'')&&pantallaAct===o.pant;
   if(!mismo){
     if(o.pant==='estudio'&&o.item&&buscaItem(o.item))verCap(o.item,true);
     else ir(o.pant==='estudio'&&o.item?'estudio':o.pant);
@@ -100411,7 +100446,10 @@ try{
       /* Se deja para cuando el archivo termine de cargar: cambiar de ficha
          usa piezas que se declaran más abajo. */
       if(!esNuevo()){S.ultPantalla='inicio';setTimeout(()=>abreConcurso(pedido),0);}else concursoPedido=pedido;} }
-  if(esNuevo()){ir('bienvenida');bvPaso(1);}
+  /* Leer la Biblioteca no requiere nombre. Se pregunta solo al preparar un
+     concurso, donde la evaluación sí necesita identificar a la persona. */
+  if(esNuevo()&&concursoPedido){ir('bienvenida');bvPaso(1);}
+  else if(esNuevo())ir('estudio');
   else if(S.ultPantalla && S.ultPantalla!=='inicio' && TABS[S.ultPantalla]!==undefined){
     if(S.ultPantalla==='estudio' && S.ultItem && buscaItem(S.ultItem))verCap(S.ultItem,true);
     else ir(S.ultPantalla);
@@ -100421,7 +100459,7 @@ try{
   }else vuelveADonde();
   /* v215: y lo que se abre encima (la lámina, Comparar, la pestaña), del enlace o de la
      recarga. Un tic después: usa piezas que se declaran más abajo. */
-  setTimeout(()=>{if(!esNuevo())lugarArranca(true);else lugarListo=true;},0);
+  setTimeout(()=>{if(!esNuevo()||!concursoPedido)lugarArranca(true);else lugarListo=true;},0);
 }catch(e){console.error(e);}
 
 /* ───────── entrar con el código (v20) ─────────

@@ -33,7 +33,7 @@ var bibLee=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:v;}catch
 var bibGuarda=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 /** Los temas de la Biblioteca, en el orden de las actividades. */
 var bibTemas=()=>temasLibres().filter(t=>(IDS_DE_TEMA[t]||[]).length);
-var bibNombreTema=t=>{const A=ACTIVIDADES[libreDe(t)];return A?A.nombre:t;};
+var bibNombreTema=t=>{if(t==='matutina')return 'Héroes y villanos';const A=ACTIVIDADES[libreDe(t)];return A?A.nombre:t;};
 var bibIconoTema=t=>{const A=ACTIVIDADES[libreDe(t)];return A?A.icono:'';};
 /** El tema que se ve: el escogido en la Biblioteca o el del concurso de la ficha. */
 function bibTema(){
@@ -49,6 +49,17 @@ function bibPonTema(t){
   bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
   /* Cambiar de tema es ver otra estantería: se cierra el capítulo abierto. */
   if(pantallaAct==='estudio'){ir('estudio');}else{pintaCaps();}
+}
+function bibSerieMatutina(){
+  const dias=CAPS.filter(c=>/^m\d{1,2}$/.test(c.id)).sort((a,b)=>Number(a.id.slice(1))-Number(b.id.slice(1)));
+  const terminadas=dias.filter(c=>(S.prog[c.id]||0)>=100).length;
+  const sigue=dias.find(c=>(S.prog[c.id]||0)<100)||dias[0];
+  return '<section class="bib-serie" aria-labelledby="bib-serie-t">'+
+    '<div><span class="bib-serie-k">Serie · 31 lecturas</span><h3 id="bib-serie-t">Héroes y villanos</h3>'+
+    '<p>Lee en el orden que quieras. Los números corresponden a la edición de octubre; no tienes que leer la entrega que marca la fecha de hoy.</p>'+
+    '<p class="bib-serie-av">'+terminadas+' de 31 lecturas terminadas. Tu avance queda en cada lectura.</p></div>'+
+    '<button type="button" class="btn tono" onclick="verCap(\''+sigue.id+'\')">'+(terminadas?'Seguir leyendo':'Empezar la serie')+'</button>'+
+    '<div class="bib-serie-vinculo"><b>También se usó en el concurso de Aventureros 2026.</b> De 4 a 6 años entraron las lecturas 1 a 15; de 7 a 9, las 1 a 30. La 31 completa la historia y queda para estudio. Estos límites solo rigen el examen; aquí puedes leer las 31.</div></section>';
 }
 /* Al abrir un capítulo de otro tema (un enlace, una pregunta, la Tertulia), la
    estantería pasa a ese tema; sin repintar: verCap pinta enseguida. */
@@ -200,8 +211,9 @@ function pintaBib(){
     '<div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div>'+
     '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
     '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div>'+
-    '<p class="bib-nota">'+(bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
+    '<p class="bib-nota">'+(t==='matutina'?'La Biblioteca siempre muestra la serie completa. La categoría del concurso solo determina qué se evalúa.':bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
       (BIB_NIVELES.find(n=>n[0]===nv)[1])+': '+BIB_NIVELES.find(n=>n[0]===nv)[2]+'. El nivel lo escoges tú; no depende de tu edad ni de tu categoría.')+'</p></div>'+
+    (t==='matutina'?bibSerieMatutina():'')+
     bibVerHTML(t)+
     '<button type="button" class="bib-otra" onclick="ir(\'examen\')">'+IC('examen')+'<span><b>¿Te preparas para un concurso?</b> En Concursos escoges tu categoría por edad y practicas el examen.</span>'+IC('der')+'</button>';
 }
@@ -304,7 +316,11 @@ function pintaConcursos(){
     '<button type="button" class="bib-otra" onclick="ir(\'estudio\')">'+IC('libro')+'<span><b>Todo lo que se pregunta está en la Biblioteca.</b> Cada pregunta del examen, al revisarla, te lleva a donde se estudia.</span>'+IC('der')+'</button>';
 }
 /* «Prepararme»: la hoja de quién estudia, ya en ese concurso (paso de la categoría). */
-function bibPrepara(a){if(!ACTIVIDADES[a])return;abreYo();prepActividad(a);}
+function bibPrepara(a){
+  if(!ACTIVIDADES[a])return;
+  if(!(S.nombre||'').trim()){concursoPedido=a;ir('bienvenida');bvPaso(1);return;}
+  abreYo();prepActividad(a);
+}
 
 /* ── Inicio: las dos puertas ── */
 /* El concurso que se anuncia en el Inicio: el próximo con fecha; si ninguno viene, el
