@@ -5666,6 +5666,109 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .bib-nv{border-width:1px}
 .bib-nv.on{border-color:var(--naranja-txt)}
 @media(max-width:479px){.bib-hero{padding:1.2rem}.bib-tit{font-size:2rem}.bib-temas{margin-inline:-1.2rem;padding-inline:1.2rem}}
+
+/* El interior del tema comparte la jerarquía visual de la Biblioteca de Sé el Mensaje. */
+#p-estudio .bib-hero{--bib-oscuro:#193c2e;--bib-claro:#456d53;--bib-oro:#e9c98e}
+#p-estudio .bib-hero.tema-apocalipsis{--bib-oscuro:#302a46;--bib-claro:#68536f;--bib-oro:#eec1b2}
+#p-estudio .bib-hero.tema-creencias{--bib-oscuro:#204958;--bib-claro:#477e91;--bib-oro:#e0ebdf}
+#p-estudio .bib-hero.tema-conflicto{--bib-oscuro:#573426;--bib-claro:#9d6843;--bib-oro:#f3d3a5}
+#p-estudio .bib-hero.tema-matutina{--bib-oscuro:#493b60;--bib-claro:#88749f;--bib-oro:#f4d7b8}
+#p-estudio .bib-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.42fr);min-height:300px;padding:0;overflow:hidden;
+  border:0;border-radius:24px;background:linear-gradient(130deg,var(--bib-oscuro),var(--bib-claro));box-shadow:none}
+#p-estudio .bib-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;padding:clamp(1.4rem,3vw,2.5rem);position:relative;z-index:1}
+#p-estudio .bib-ant{color:var(--bib-oro);font-size:.72rem;letter-spacing:.12em}
+#p-estudio .bib-tit{max-width:13ch;margin:.55rem 0 .7rem;color:#fff;font-size:clamp(2.4rem,4.5vw,4.4rem);line-height:1;letter-spacing:-.065em}
+#p-estudio .bib-p{margin:0;color:#edf2ed;font-size:1rem;line-height:1.5;max-width:52ch}
+.bib-hero-meta{display:flex;flex-wrap:wrap;gap:.45rem 1.1rem;margin-top:1rem;color:#ecf2ec;font-size:.78rem;font-weight:700}
+.bib-hero-meta span+span::before{content:'·';margin-right:1.1rem;color:var(--bib-oro)}
+.bib-hero-acciones{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.45rem}
+.bib-empezar,.bib-hero-fuente{display:inline-flex;align-items:center;justify-content:space-between;gap:1.2rem;min-height:46px;padding:.7rem 1rem;border-radius:999px;
+  font-family:inherit;font-size:.85rem;font-weight:800;line-height:1.2;cursor:pointer}
+.bib-empezar{border:1px solid #fff;background:#f7f3e9;color:#1a3028}
+.bib-hero-fuente{border:1px solid #ffffff80;background:transparent;color:#fff}
+.bib-empezar:hover{background:#fff}.bib-hero-fuente:hover{background:#ffffff18}
+.bib-hero-arte{position:relative;display:grid;place-items:center;min-height:280px;overflow:hidden;color:var(--bib-oro)}
+.bib-hero-arte::before,.bib-hero-arte::after{content:'';position:absolute;width:340px;height:340px;border:1px solid #ffffff55;border-radius:50%;transform:translate(50px,-40px)}
+.bib-hero-arte::after{width:210px;height:210px;transform:translate(-55px,85px);border-color:#ffffff35}
+.bib-hero-arte span{position:relative;z-index:1;font:400 clamp(6rem,11vw,11rem)/1 Georgia,serif;letter-spacing:-.12em}
+.bib-herramientas{margin:0 0 1.7rem;padding:1rem 1.2rem;border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:18px;background:var(--card)}
+#p-estudio .bib-elige{margin:0 0 .85rem}
+#p-estudio .bib-elige summary{min-height:34px;color:var(--azul)}
+#p-estudio .bib-fila{align-items:flex-end}
+#p-estudio .bib-nvs{gap:7px}
+#p-estudio .bib-nvt{color:var(--gris);letter-spacing:.03em}
+#p-estudio .bib-nv{min-height:43px;border-radius:10px;background:var(--card)}
+#p-estudio .bib-nv.on{background:color-mix(in srgb,var(--azul) 9%,var(--card));border-color:var(--azul)}
+.bib-seccion-cab{display:flex;align-items:flex-end;justify-content:space-between;margin:0 0 1rem}
+.bib-seccion-k{color:var(--naranja-txt);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.bib-seccion-cab h3{margin:.25rem 0 .2rem;color:var(--txt);font-size:clamp(1.35rem,2.5vw,1.9rem);letter-spacing:-.04em}
+.bib-seccion-cab p{margin:0;color:var(--gris);font-size:.86rem;line-height:1.45}
+#p-estudio .bib-ver{margin:0 0 2.4rem}
+#p-estudio .bv-fila{display:grid;grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;overflow:visible;padding:0}
+#p-estudio .bv-t{border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:18px;box-shadow:none;min-height:190px}
+#p-estudio .bv-img{aspect-ratio:16/8}
+#p-estudio .bv-ico{background:linear-gradient(135deg,#e3ebe7,#d3ded9);color:#255844}
+#p-estudio .bv-tx{padding:.8rem .95rem 1rem}
+#p-estudio .bv-tx small{color:var(--naranja-txt);font-size:.69rem;letter-spacing:.05em;text-transform:uppercase}
+#p-estudio .bv-tx b{font-size:.98rem;line-height:1.3}
+#p-estudio .caps{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:0}
+#p-estudio .caps>.grupo{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;margin:1.4rem 0 .1rem;color:var(--txt);font-size:1.18rem;font-weight:800;letter-spacing:-.02em;text-transform:none}
+#p-estudio .caps>.grupo small{color:var(--gris);font-size:.75rem;font-weight:500;letter-spacing:0;text-transform:none}
+#p-estudio .caps>.grupo-de{padding-top:1.4rem;border-top:1px solid color-mix(in srgb,var(--txt) 14%,transparent)}
+#p-estudio .cap,#p-estudio .mod{display:flex;flex-direction:column;min-width:0;min-height:166px;padding:1rem;border:1px solid color-mix(in srgb,var(--txt) 13%,transparent);border-radius:17px;
+  background:var(--card);box-shadow:none;color:var(--txt);text-align:left;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+#p-estudio .cap:hover,#p-estudio .mod:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--azul) 40%,transparent);box-shadow:0 10px 24px #20302518}
+#p-estudio .cap.on,#p-estudio .mod.on{border-color:var(--azul);background:color-mix(in srgb,var(--azul) 5%,var(--card))}
+#p-estudio .cap-cima{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.65rem}
+#p-estudio .cap .n{font:400 2.3rem/1 Georgia,serif;color:var(--azul);letter-spacing:-.07em}
+#p-estudio .cap-cima>span{color:var(--azul);font-size:1.15rem}
+#p-estudio .cap .t{font-size:1rem;font-weight:800;line-height:1.27;color:var(--txt);letter-spacing:-.02em}
+#p-estudio .cap .f{margin:.4rem 0 .9rem;color:var(--gris);font-size:.76rem;line-height:1.35}
+#p-estudio .cap-abajo{margin-top:auto}
+#p-estudio .cap .p{margin:0 0 .35rem;color:var(--verde-txt);font-size:.75rem;font-weight:800}
+.cap-avance{display:block;height:4px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--txt) 10%,transparent)}
+.cap-avance i{display:block;height:100%;border-radius:inherit;background:var(--verde-txt)}
+#p-estudio .mod{flex-direction:row;min-height:125px}
+#p-estudio .bib-pie{grid-column:1/-1;margin:.2rem 0;padding:1rem;border-style:solid}
+#p-estudio .bib-pie:hover{border-color:var(--azul);background:color-mix(in srgb,var(--azul) 5%,var(--card))}
+#p-estudio #detalle{border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:22px;box-shadow:none}
+#p-estudio #detalle .cap-cab{margin:0 0 1.2rem;padding:clamp(1rem,2vw,1.7rem);border-radius:16px;
+  background:color-mix(in srgb,var(--azul) 7%,var(--card))}
+#p-estudio #detalle .cap-tit{max-width:22ch;font-size:clamp(2rem,4vw,3.25rem);line-height:1.06;letter-spacing:-.05em}
+#p-estudio #detalle .cap-ante{color:var(--naranja-txt);letter-spacing:.1em}
+#p-estudio #detalle .cap-meta{font-size:.83rem;line-height:1.45}
+.bib-volver{display:inline-flex;align-items:center;gap:.4rem;min-height:42px;margin:0 0 .75rem;padding:0;border:0;background:transparent;
+  color:var(--azul);font-family:inherit;font-size:.82rem;font-weight:800;line-height:1.2;cursor:pointer}
+.bib-volver:hover{text-decoration:underline}
+.bib-empezar:focus-visible,.bib-hero-fuente:focus-visible,.bib-volver:focus-visible,#p-estudio .cap:focus-visible,#p-estudio .mod:focus-visible{outline:3px solid var(--naranja-txt);outline-offset:3px}
+@media(max-width:800px){#p-estudio .bib-hero{grid-template-columns:minmax(0,1fr) 190px}#p-estudio .bv-fila,#p-estudio .caps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){
+  #p-estudio .bib-hero{grid-template-columns:1fr;min-height:0;border-radius:20px}
+  #p-estudio .bib-hero-copy{padding:1.4rem}
+  #p-estudio .bib-hero-arte{display:none}
+  #p-estudio .bib-tit{font-size:2.5rem}
+  #p-estudio .bib-p{font-size:.9rem}
+  #p-estudio .bib-hero-acciones{width:100%}
+  #p-estudio .bib-empezar,#p-estudio .bib-hero-fuente{flex:1 1 auto}
+  #p-estudio .bv-fila,#p-estudio .caps{grid-template-columns:1fr}
+  #p-estudio .bv-t{min-height:0}
+  #p-estudio .bv-img{aspect-ratio:16/7}
+  #p-estudio .cap{min-height:0;display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:.7rem}
+  #p-estudio .cap-cima{grid-row:1/4;display:block;margin:0}
+  #p-estudio .cap .n{font-size:2rem}
+  #p-estudio .cap-cima>span{display:none}
+  #p-estudio .cap .f{margin:.25rem 0 .6rem}
+  #p-estudio .cap-abajo{grid-column:2;margin-top:0}
+  #p-estudio .caps>.grupo{margin-top:1rem}
+}
+@media(prefers-reduced-motion:reduce){#p-estudio .cap,#p-estudio .mod{transition:none}#p-estudio .cap:hover,#p-estudio .mod:hover{transform:none}}
+@media print{.bib-volver,.bib-hero-acciones,.bib-herramientas{display:none!important}}
+
+/* En la integración, el lector comparte el ancho útil con la Biblioteca exterior. */
+.cb-cuerpo.cb-cuerpo #p-estudio{max-width:1100px}
+.cb-cuerpo.cb-cuerpo .nav .nav-b,.cb-cuerpo.cb-cuerpo .nav .nav-t{max-width:1100px}
+#p-estudio #detalle{scroll-margin-top:110px}
+@media(max-width:899px){#p-estudio #detalle{scroll-margin-top:170px}}
 /* ── v236: MI ESTUDIO, LAS PESTAÑAS DE LA BIBLIOTECA Y EL ALCANCE DE CADA CATEGORÍA
    (fuente/mi-estudio.js y biblioteca-app.js). Solo tokens de la app: claro y oscuro
    salen solos; todo lo que se toca mide al menos 44 px. ── */
@@ -6342,7 +6445,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'c5446a75db06';
+const VERSION_APP = 'fe0b6ecedd08';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -84061,7 +84164,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Biblioteca y Concursos",
-    "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera: arriba escoges el tema (Daniel, Apocalipsis,\n    la matutina, las creencias) y cómo quieres leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Para ver</strong> están las láminas, Comparar, Paralelos y los últimos\n    acontecimientos. Cada tema termina con su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
+    "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera. Escoge un tema (Daniel, Apocalipsis,\n    la matutina o las creencias): su portada muestra el botón\n    <strong>Empezar a leer</strong> o <strong>Continuar leyendo</strong>, el avance\n    y la Bibliografía. Debajo puedes elegir cómo leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Escenas y recursos</strong> están las láminas, Comparar, Paralelos y\n    los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas\n    del tema. El concurso puede usar solo una parte sin ocultar el resto de la\n    Biblioteca. Dentro de un capítulo, «Todos los capítulos» vuelve al tema.\n    Cada tema tiene su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
    },
    {
     "t": "La matutina es una serie completa",
@@ -84273,7 +84376,7 @@ const MANUAL = [
    },
    {
     "t": "Solo Daniel, solo Profetas y Reyes, o los capítulos que escojas",
-    "h": "<p>En Conexión Bíblica, arriba de las cinco pestañas dice\n    <strong>Estoy estudiando</strong>: Todo, Daniel, Profetas y Reyes o\n    Escoger capítulos. Lo que escojas ahí vale para toda la app: Biblioteca,\n    Practicar, el repaso de errores, Inicio y el examen de práctica.</p>\n    <p>Con <strong>Escoger capítulos</strong> salen fichas por libro: tocas\n    las que quieras, por ejemplo Daniel 1, 3 y 6. <strong>todo Daniel</strong>\n    y <strong>todo P&amp;R</strong> las marcan de un toque.</p>\n    <p>Dentro de <strong>Cambiar este examen</strong> están las mismas fichas,\n    para un examen distinto sin cambiar lo de arriba.</p>\n    <div class=\"warn-box\">Mientras no esté en Todo, la franja se pone naranja y\n    dice qué estás viendo. La evaluación del director no mira este filtro: trae\n    lo que él abrió.</div>"
+    "h": "<p>En Conexión Bíblica, arriba de las cinco pestañas dice\n    <strong>Estoy estudiando</strong>: Todo, Daniel, Profetas y Reyes o\n    Escoger capítulos. Ese filtro ajusta tu preparación: Practicar, el repaso\n    de errores, Inicio y el examen de práctica. Si entras a un tema desde la\n    Biblioteca, ves su material completo.</p>\n    <p>Con <strong>Escoger capítulos</strong> salen fichas por libro: tocas\n    las que quieras, por ejemplo Daniel 1, 3 y 6. <strong>todo Daniel</strong>\n    y <strong>todo P&amp;R</strong> las marcan de un toque.</p>\n    <p>Dentro de <strong>Cambiar este examen</strong> están las mismas fichas,\n    para un examen distinto sin cambiar lo de arriba.</p>\n    <div class=\"warn-box\">Mientras no esté en Todo, la franja se pone naranja y\n    dice qué estás viendo. La evaluación del director no mira este filtro: trae\n    lo que él abrió.</div>"
    },
    {
     "t": "Solo el material del reglamento",
@@ -88962,8 +89065,8 @@ function bibTema(){
   if(bibTemaSel===null)bibTemaSel=bibLee(BIB_K,'');
   return bibTemaSel&&IDS_DE_TEMA[bibTemaSel]?bibTemaSel:ACT().tema;
 }
-/** ¿Se ve un tema que no es el del concurso de la ficha? */
-var bibAjeno=()=>bibTema()!==ACT().tema;
+/** Un tema escogido en Biblioteca conserva su material completo, aunque coincida con el concurso. */
+var bibAjeno=()=>bibTema()!==ACT().tema||!!bibTemaSel;
 /** De qué tema es un capítulo o un repaso. */
 var bibTemaDe=id=>bibTemas().find(t=>(IDS_DE_TEMA[t]||[]).includes(id))||'';
 function bibCerrarDetalle(){
@@ -88973,7 +89076,7 @@ function bibCerrarDetalle(){
 }
 function bibPonTema(t){
   if(!IDS_DE_TEMA[t])return;
-  bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
+  bibTemaSel=t;bibGuarda(BIB_K,bibTemaSel);
   /* Cambiar de tema es ver otra estantería: se cierra el capítulo abierto. */
   bibCerrarDetalle();
   if(pantallaAct==='estudio'){ir('estudio');}else{pintaCaps();}
@@ -88992,8 +89095,8 @@ function bibSerieMatutina(){
 /* Al abrir un capítulo de otro tema (un enlace, una pregunta, la Tertulia), la
    estantería pasa a ese tema; sin repintar: verCap pinta enseguida. */
 function bibSigue(id){
-  const t=bibTemaDe(id);if(!t||t===bibTema())return;
-  bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
+  const t=bibTemaDe(id);if(!t)return;
+  bibTemaSel=t;bibGuarda(BIB_K,bibTemaSel);
 }
 /* Los capítulos y repasos del tema que se ve, cuando no es el del concurso. */
 var bibCapsAjeno=()=>{const ids=IDS_DE_TEMA[bibTema()]||[];return CAPS.filter(c=>ids.includes(c.id));};
@@ -89124,21 +89227,41 @@ function bibVerHTML(t){
         '<span class="bv-tx"><small>Los últimos acontecimientos</small><b>Del juicio a la tierra nueva</b></span></button>');
   }
   if(!tarjetas.length)return '';
-  return '<section class="bib-ver" aria-labelledby="bib-ver-t"><h3 class="bib-h" id="bib-ver-t">Para ver</h3><div class="bv-fila">'+tarjetas.join('')+'</div></section>';
+  return '<section class="bib-ver" aria-labelledby="bib-ver-t"><div class="bib-seccion-cab"><div><span class="bib-seccion-k">Explora el tema</span><h3 id="bib-ver-t">Escenas y recursos</h3><p>Abre una experiencia para entender el texto desde otra perspectiva.</p></div></div><div class="bv-fila">'+tarjetas.join('')+'</div></section>';
+}
+var BIB_PORTADAS={
+  daniel:{signo:'D',tipo:'Libro bíblico'},
+  apocalipsis:{signo:'AΩ',tipo:'Libro bíblico'},
+  creencias:{signo:'28',tipo:'Doctrina'},
+  conflicto:{signo:'CS',tipo:'Libro de apoyo'},
+  matutina:{signo:'31',tipo:'Serie de lecturas'}
+};
+function bibSiguienteCap(t){
+  const ids=IDS_DE_TEMA[t]||[],caps=CAPS.filter(c=>ids.includes(c.id));
+  return caps.find(c=>(S.prog[c.id]||0)<100)||caps[0]||null;
 }
 function pintaBib(){
   pintaBibTabs();
   const z=document.getElementById('bib-cab');if(!z)return;
-  const t=bibTema(),nv=bibNivel();
+  const t=bibTema(),nv=bibNivel(),portada=BIB_PORTADAS[t]||{signo:'•',tipo:'Tema'},
+    ids=IDS_DE_TEMA[t]||[],caps=CAPS.filter(c=>ids.includes(c.id)),sigue=bibSiguienteCap(t),
+    terminados=caps.filter(c=>(S.prog[c.id]||0)>=100).length;
+  const cantidad=t==='daniel'
+    ?caps.filter(c=>/^d\d+$/.test(c.id)).length+' capítulos de Daniel · '+caps.filter(c=>/^pr\d+$/.test(c.id)).length+' de apoyo'
+    :caps.length+' '+(t==='creencias'?'creencias':t==='matutina'?'lecturas':'capítulos');
   const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
     icoDe(bibIconoTema(x))+'<span>'+esc(bibNombreTema(x))+'</span></button>';
   const nivel=n=>'<button type="button" class="bib-nv'+(n[0]===nv?' on':'')+'" aria-pressed="'+(n[0]===nv)+'" onclick="bibPonNivel(\''+n[0]+'\')"><b>'+esc(n[1])+'</b><small>'+esc(n[2])+'</small></button>';
-  z.innerHTML='<div class="bib-hero"><div class="bib-ant">'+IC('libro')+' Biblioteca / Tema</div>'+
+  z.innerHTML='<div class="bib-hero tema-'+t+'"><div class="bib-hero-copy"><div class="bib-ant">'+IC('libro')+' Biblioteca · '+esc(portada.tipo)+'</div>'+
     '<h2 class="bib-tit">'+esc(bibNombreTema(t))+'</h2>'+
     '<p class="bib-p">'+esc(bibDescripcionTema(t))+'</p>'+
-    '<details class="bib-elige"><summary>Cambiar de tema</summary><div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div></details>'+
-    '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
-    '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div></div>'+
+    '<div class="bib-hero-meta"><span>'+cantidad+'</span><span>'+terminados+' terminados</span></div>'+
+    '<div class="bib-hero-acciones">'+(sigue?'<button type="button" class="bib-empezar" onclick="verCap(\''+sigue.id+'\')">'+(terminados?'Continuar leyendo':'Empezar a leer')+' <span aria-hidden="true">↗</span></button>':'')+
+    '<button type="button" class="bib-hero-fuente" onclick="bibAbreFuentes(\''+t+'\')">Bibliografía <span aria-hidden="true">↗</span></button></div></div>'+
+    '<div class="bib-hero-arte" aria-hidden="true"><span>'+esc(portada.signo)+'</span></div></div>'+
+    '<div class="bib-herramientas"><details class="bib-elige"><summary>Cambiar de tema</summary><div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div></details>'+
+    '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Nivel de lectura</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
+    '<div class="bib-acc">'+meBoton('tema-'+t)+'</div></div></div>'+
     (t==='matutina'?bibSerieMatutina():'')+
     bibVerHTML(t);
 }
@@ -94270,11 +94393,12 @@ function pintaCaps(){
     const rotulo=g&&g.id!==grupoAbierto?'<div class="grupo grupo-de" style="grid-column:1/-1">'+
       icoDe(g.icono)+' '+esc(g.nombre)+(g.desde?' <small>'+g.desde+' a '+g.hasta+'</small>':'')+'</div>':'';
     if(g)grupoAbierto=g.id;
+    const avance=Math.max(0,Math.min(100,Math.round(Number(S.prog[c.id])||0)));
     return rotulo+
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     /* v147: el número va en el color de la categoría, igual en todos. Siete
        colores sin significado competían con el título. */
-    '<div class="n">'+esc(c.label.replace(/^(Daniel |P&R |Apocalipsis )/,''))+'</div>'+
+    '<div class="cap-cima"><div class="n">'+esc(c.label.replace(/^(Daniel |P&R |Apocalipsis )/,''))+'</div><span aria-hidden="true">↗</span></div>'+
     '<div class="t">'+esc(c.sub)+'</div>'+
     /* Cuantos versiculos trae, para poder repartir la lectura antes de abrirlo:
        Daniel 2 son 49 y Daniel 1 son 21, y eso cambia como se planea la semana.
@@ -94283,12 +94407,12 @@ function pintaCaps(){
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
     (c.id==='m31'||!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
-    '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
+    '<div class="cap-abajo"><div class="p">'+avance+'% leído</div><span class="cap-avance" aria-hidden="true"><i style="width:'+avance+'%"></i></span></div></button>';}).join('');
   const botonMod=m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
     '<div class="ic-f" style="color:'+(m.color||'var(--azul)')+'">'+icoDe(m.icono,'ico-f')+'</div><div><div class="t">'+esc(m.label)+'</div>'+
     '<div class="s">'+esc(m.sub)+'</div>'+
-    '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
+    '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'% leído</div>'+
     '</div></button>';
   const ms=aj?bibModsAjeno():modsDe();
   const mods=ms.filter(m=>!m.prof).map(botonMod).join('');
@@ -94296,10 +94420,10 @@ function pintaCaps(){
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
-    '<div class="grupo" style="grid-column:1/-1">'+
+    '<div class="grupo bib-cap-grupo" style="grid-column:1/-1">'+
     (aj?icoDe(bibIconoTema(bibTema()))+' '+esc(bibNombreTema(bibTema()))+' · '+(bibTema()==='creencias'?'las 28 creencias':'capítulos'):
       icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos'))+
-    '</div>'+caps+
+    '<small>'+vista.length+' para explorar · Toca uno para leer y ver sus recursos</small></div>'+caps+
     (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'')+
     (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'')+
     /* v235: cada tema termina con su bibliografía, armada sola (biblioteca-app.js). */
@@ -95255,7 +95379,9 @@ function navCap(id){
   let caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
   let i=lista.findIndex(x=>x.id===id);
   /* v235: un capítulo de otro tema (la Biblioteca) recorre su propio tema. */
-  if(i<0&&typeof bibListaDe==='function'){const o=bibListaDe(id);if(o){caps=o.caps;mods=o.mods;lista=[...caps,...mods];i=lista.findIndex(x=>x.id===id);}}
+  if((i<0||typeof bibAjeno==='function'&&bibAjeno())&&typeof bibListaDe==='function'){
+    const o=bibListaDe(id);if(o){caps=o.caps;mods=o.mods;lista=[...caps,...mods];i=lista.findIndex(x=>x.id===id);}
+  }
   if(i<0||lista.length<2)return '';
   const a=lista[i-1], b=lista[i+1], k=caps.findIndex(x=>x.id===id);
   const donde=k>=0?(k+1)+' de '+caps.length:'Repaso '+(mods.findIndex(x=>x.id===id)+1)+' de '+mods.length;
@@ -95314,6 +95440,7 @@ function verCap(id,quieto){
   const deDonde=crVuelve?buscaItem(crVuelve.de):null;
   d.innerHTML=
     '<div class="cap-cab">'+
+    '<button type="button" class="bib-volver" onclick="bibVer(\'temas\')">'+IC('izq')+' Todos los capítulos</button>'+
     (deDonde?'<button type="button" class="btn txt cap-vuelve" onclick="crRegresa()">'+IC('izq')+
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
     navCap(id)+

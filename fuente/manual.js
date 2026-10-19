@@ -112,12 +112,17 @@ const MANUAL = [
   secs:[
   { t:'Biblioteca y Concursos',
     h:`<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el
-    material, abierto para cualquiera: arriba escoges el tema (Daniel, Apocalipsis,
-    la matutina, las creencias) y cómo quieres leer (<strong>Lo central</strong>,
+    material, abierto para cualquiera. Escoge un tema (Daniel, Apocalipsis,
+    la matutina o las creencias): su portada muestra el botón
+    <strong>Empezar a leer</strong> o <strong>Continuar leyendo</strong>, el avance
+    y la Bibliografía. Debajo puedes elegir cómo leer (<strong>Lo central</strong>,
     <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El
     nivel lo escoges tú: no depende de tu edad ni de tu categoría. En
-    <strong>Para ver</strong> están las láminas, Comparar, Paralelos y los últimos
-    acontecimientos. Cada tema termina con su <strong>Bibliografía</strong>: las
+    <strong>Escenas y recursos</strong> están las láminas, Comparar, Paralelos y
+    los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas
+    del tema. El concurso puede usar solo una parte sin ocultar el resto de la
+    Biblioteca. Dentro de un capítulo, «Todos los capítulos» vuelve al tema.
+    Cada tema tiene su <strong>Bibliografía</strong>: las
     obras que cita su material, con sus páginas y dónde se usan. Se arma sola con
     las líneas «Fuente:».</p>
     <p>En <strong>Concursos</strong> están los concursos y campamentos con sus
@@ -412,8 +417,9 @@ const MANUAL = [
   { t:'Solo Daniel, solo Profetas y Reyes, o los capítulos que escojas',
     h:`<p>En Conexión Bíblica, arriba de las cinco pestañas dice
     <strong>Estoy estudiando</strong>: Todo, Daniel, Profetas y Reyes o
-    Escoger capítulos. Lo que escojas ahí vale para toda la app: Biblioteca,
-    Practicar, el repaso de errores, Inicio y el examen de práctica.</p>
+    Escoger capítulos. Ese filtro ajusta tu preparación: Practicar, el repaso
+    de errores, Inicio y el examen de práctica. Si entras a un tema desde la
+    Biblioteca, ves su material completo.</p>
     <p>Con <strong>Escoger capítulos</strong> salen fichas por libro: tocas
     las que quieras, por ejemplo Daniel 1, 3 y 6. <strong>todo Daniel</strong>
     y <strong>todo P&amp;R</strong> las marcan de un toque.</p>

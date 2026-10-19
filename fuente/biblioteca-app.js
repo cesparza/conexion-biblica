@@ -47,8 +47,8 @@ function bibTema(){
   if(bibTemaSel===null)bibTemaSel=bibLee(BIB_K,'');
   return bibTemaSel&&IDS_DE_TEMA[bibTemaSel]?bibTemaSel:ACT().tema;
 }
-/** ¿Se ve un tema que no es el del concurso de la ficha? */
-var bibAjeno=()=>bibTema()!==ACT().tema;
+/** Un tema escogido en Biblioteca conserva su material completo, aunque coincida con el concurso. */
+var bibAjeno=()=>bibTema()!==ACT().tema||!!bibTemaSel;
 /** De qué tema es un capítulo o un repaso. */
 var bibTemaDe=id=>bibTemas().find(t=>(IDS_DE_TEMA[t]||[]).includes(id))||'';
 function bibCerrarDetalle(){
@@ -58,7 +58,7 @@ function bibCerrarDetalle(){
 }
 function bibPonTema(t){
   if(!IDS_DE_TEMA[t])return;
-  bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
+  bibTemaSel=t;bibGuarda(BIB_K,bibTemaSel);
   /* Cambiar de tema es ver otra estantería: se cierra el capítulo abierto. */
   bibCerrarDetalle();
   if(pantallaAct==='estudio'){ir('estudio');}else{pintaCaps();}
@@ -77,8 +77,8 @@ function bibSerieMatutina(){
 /* Al abrir un capítulo de otro tema (un enlace, una pregunta, la Tertulia), la
    estantería pasa a ese tema; sin repintar: verCap pinta enseguida. */
 function bibSigue(id){
-  const t=bibTemaDe(id);if(!t||t===bibTema())return;
-  bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
+  const t=bibTemaDe(id);if(!t)return;
+  bibTemaSel=t;bibGuarda(BIB_K,bibTemaSel);
 }
 /* Los capítulos y repasos del tema que se ve, cuando no es el del concurso. */
 var bibCapsAjeno=()=>{const ids=IDS_DE_TEMA[bibTema()]||[];return CAPS.filter(c=>ids.includes(c.id));};
@@ -209,21 +209,41 @@ function bibVerHTML(t){
         '<span class="bv-tx"><small>Los últimos acontecimientos</small><b>Del juicio a la tierra nueva</b></span></button>');
   }
   if(!tarjetas.length)return '';
-  return '<section class="bib-ver" aria-labelledby="bib-ver-t"><h3 class="bib-h" id="bib-ver-t">Para ver</h3><div class="bv-fila">'+tarjetas.join('')+'</div></section>';
+  return '<section class="bib-ver" aria-labelledby="bib-ver-t"><div class="bib-seccion-cab"><div><span class="bib-seccion-k">Explora el tema</span><h3 id="bib-ver-t">Escenas y recursos</h3><p>Abre una experiencia para entender el texto desde otra perspectiva.</p></div></div><div class="bv-fila">'+tarjetas.join('')+'</div></section>';
+}
+var BIB_PORTADAS={
+  daniel:{signo:'D',tipo:'Libro bíblico'},
+  apocalipsis:{signo:'AΩ',tipo:'Libro bíblico'},
+  creencias:{signo:'28',tipo:'Doctrina'},
+  conflicto:{signo:'CS',tipo:'Libro de apoyo'},
+  matutina:{signo:'31',tipo:'Serie de lecturas'}
+};
+function bibSiguienteCap(t){
+  const ids=IDS_DE_TEMA[t]||[],caps=CAPS.filter(c=>ids.includes(c.id));
+  return caps.find(c=>(S.prog[c.id]||0)<100)||caps[0]||null;
 }
 function pintaBib(){
   pintaBibTabs();
   const z=document.getElementById('bib-cab');if(!z)return;
-  const t=bibTema(),nv=bibNivel();
+  const t=bibTema(),nv=bibNivel(),portada=BIB_PORTADAS[t]||{signo:'•',tipo:'Tema'},
+    ids=IDS_DE_TEMA[t]||[],caps=CAPS.filter(c=>ids.includes(c.id)),sigue=bibSiguienteCap(t),
+    terminados=caps.filter(c=>(S.prog[c.id]||0)>=100).length;
+  const cantidad=t==='daniel'
+    ?caps.filter(c=>/^d\d+$/.test(c.id)).length+' capítulos de Daniel · '+caps.filter(c=>/^pr\d+$/.test(c.id)).length+' de apoyo'
+    :caps.length+' '+(t==='creencias'?'creencias':t==='matutina'?'lecturas':'capítulos');
   const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
     icoDe(bibIconoTema(x))+'<span>'+esc(bibNombreTema(x))+'</span></button>';
   const nivel=n=>'<button type="button" class="bib-nv'+(n[0]===nv?' on':'')+'" aria-pressed="'+(n[0]===nv)+'" onclick="bibPonNivel(\''+n[0]+'\')"><b>'+esc(n[1])+'</b><small>'+esc(n[2])+'</small></button>';
-  z.innerHTML='<div class="bib-hero"><div class="bib-ant">'+IC('libro')+' Biblioteca / Tema</div>'+
+  z.innerHTML='<div class="bib-hero tema-'+t+'"><div class="bib-hero-copy"><div class="bib-ant">'+IC('libro')+' Biblioteca · '+esc(portada.tipo)+'</div>'+
     '<h2 class="bib-tit">'+esc(bibNombreTema(t))+'</h2>'+
     '<p class="bib-p">'+esc(bibDescripcionTema(t))+'</p>'+
-    '<details class="bib-elige"><summary>Cambiar de tema</summary><div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div></details>'+
-    '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
-    '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div></div>'+
+    '<div class="bib-hero-meta"><span>'+cantidad+'</span><span>'+terminados+' terminados</span></div>'+
+    '<div class="bib-hero-acciones">'+(sigue?'<button type="button" class="bib-empezar" onclick="verCap(\''+sigue.id+'\')">'+(terminados?'Continuar leyendo':'Empezar a leer')+' <span aria-hidden="true">↗</span></button>':'')+
+    '<button type="button" class="bib-hero-fuente" onclick="bibAbreFuentes(\''+t+'\')">Bibliografía <span aria-hidden="true">↗</span></button></div></div>'+
+    '<div class="bib-hero-arte" aria-hidden="true"><span>'+esc(portada.signo)+'</span></div></div>'+
+    '<div class="bib-herramientas"><details class="bib-elige"><summary>Cambiar de tema</summary><div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div></details>'+
+    '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Nivel de lectura</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
+    '<div class="bib-acc">'+meBoton('tema-'+t)+'</div></div></div>'+
     (t==='matutina'?bibSerieMatutina():'')+
     bibVerHTML(t);
 }

@@ -151,3 +151,106 @@
 .bib-nv{border-width:1px}
 .bib-nv.on{border-color:var(--naranja-txt)}
 @media(max-width:479px){.bib-hero{padding:1.2rem}.bib-tit{font-size:2rem}.bib-temas{margin-inline:-1.2rem;padding-inline:1.2rem}}
+
+/* El interior del tema comparte la jerarquía visual de la Biblioteca de Sé el Mensaje. */
+#p-estudio .bib-hero{--bib-oscuro:#193c2e;--bib-claro:#456d53;--bib-oro:#e9c98e}
+#p-estudio .bib-hero.tema-apocalipsis{--bib-oscuro:#302a46;--bib-claro:#68536f;--bib-oro:#eec1b2}
+#p-estudio .bib-hero.tema-creencias{--bib-oscuro:#204958;--bib-claro:#477e91;--bib-oro:#e0ebdf}
+#p-estudio .bib-hero.tema-conflicto{--bib-oscuro:#573426;--bib-claro:#9d6843;--bib-oro:#f3d3a5}
+#p-estudio .bib-hero.tema-matutina{--bib-oscuro:#493b60;--bib-claro:#88749f;--bib-oro:#f4d7b8}
+#p-estudio .bib-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.42fr);min-height:300px;padding:0;overflow:hidden;
+  border:0;border-radius:24px;background:linear-gradient(130deg,var(--bib-oscuro),var(--bib-claro));box-shadow:none}
+#p-estudio .bib-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;padding:clamp(1.4rem,3vw,2.5rem);position:relative;z-index:1}
+#p-estudio .bib-ant{color:var(--bib-oro);font-size:.72rem;letter-spacing:.12em}
+#p-estudio .bib-tit{max-width:13ch;margin:.55rem 0 .7rem;color:#fff;font-size:clamp(2.4rem,4.5vw,4.4rem);line-height:1;letter-spacing:-.065em}
+#p-estudio .bib-p{margin:0;color:#edf2ed;font-size:1rem;line-height:1.5;max-width:52ch}
+.bib-hero-meta{display:flex;flex-wrap:wrap;gap:.45rem 1.1rem;margin-top:1rem;color:#ecf2ec;font-size:.78rem;font-weight:700}
+.bib-hero-meta span+span::before{content:'·';margin-right:1.1rem;color:var(--bib-oro)}
+.bib-hero-acciones{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.45rem}
+.bib-empezar,.bib-hero-fuente{display:inline-flex;align-items:center;justify-content:space-between;gap:1.2rem;min-height:46px;padding:.7rem 1rem;border-radius:999px;
+  font-family:inherit;font-size:.85rem;font-weight:800;line-height:1.2;cursor:pointer}
+.bib-empezar{border:1px solid #fff;background:#f7f3e9;color:#1a3028}
+.bib-hero-fuente{border:1px solid #ffffff80;background:transparent;color:#fff}
+.bib-empezar:hover{background:#fff}.bib-hero-fuente:hover{background:#ffffff18}
+.bib-hero-arte{position:relative;display:grid;place-items:center;min-height:280px;overflow:hidden;color:var(--bib-oro)}
+.bib-hero-arte::before,.bib-hero-arte::after{content:'';position:absolute;width:340px;height:340px;border:1px solid #ffffff55;border-radius:50%;transform:translate(50px,-40px)}
+.bib-hero-arte::after{width:210px;height:210px;transform:translate(-55px,85px);border-color:#ffffff35}
+.bib-hero-arte span{position:relative;z-index:1;font:400 clamp(6rem,11vw,11rem)/1 Georgia,serif;letter-spacing:-.12em}
+.bib-herramientas{margin:0 0 1.7rem;padding:1rem 1.2rem;border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:18px;background:var(--card)}
+#p-estudio .bib-elige{margin:0 0 .85rem}
+#p-estudio .bib-elige summary{min-height:34px;color:var(--azul)}
+#p-estudio .bib-fila{align-items:flex-end}
+#p-estudio .bib-nvs{gap:7px}
+#p-estudio .bib-nvt{color:var(--gris);letter-spacing:.03em}
+#p-estudio .bib-nv{min-height:43px;border-radius:10px;background:var(--card)}
+#p-estudio .bib-nv.on{background:color-mix(in srgb,var(--azul) 9%,var(--card));border-color:var(--azul)}
+.bib-seccion-cab{display:flex;align-items:flex-end;justify-content:space-between;margin:0 0 1rem}
+.bib-seccion-k{color:var(--naranja-txt);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.bib-seccion-cab h3{margin:.25rem 0 .2rem;color:var(--txt);font-size:clamp(1.35rem,2.5vw,1.9rem);letter-spacing:-.04em}
+.bib-seccion-cab p{margin:0;color:var(--gris);font-size:.86rem;line-height:1.45}
+#p-estudio .bib-ver{margin:0 0 2.4rem}
+#p-estudio .bv-fila{display:grid;grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;overflow:visible;padding:0}
+#p-estudio .bv-t{border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:18px;box-shadow:none;min-height:190px}
+#p-estudio .bv-img{aspect-ratio:16/8}
+#p-estudio .bv-ico{background:linear-gradient(135deg,#e3ebe7,#d3ded9);color:#255844}
+#p-estudio .bv-tx{padding:.8rem .95rem 1rem}
+#p-estudio .bv-tx small{color:var(--naranja-txt);font-size:.69rem;letter-spacing:.05em;text-transform:uppercase}
+#p-estudio .bv-tx b{font-size:.98rem;line-height:1.3}
+#p-estudio .caps{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:0}
+#p-estudio .caps>.grupo{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;margin:1.4rem 0 .1rem;color:var(--txt);font-size:1.18rem;font-weight:800;letter-spacing:-.02em;text-transform:none}
+#p-estudio .caps>.grupo small{color:var(--gris);font-size:.75rem;font-weight:500;letter-spacing:0;text-transform:none}
+#p-estudio .caps>.grupo-de{padding-top:1.4rem;border-top:1px solid color-mix(in srgb,var(--txt) 14%,transparent)}
+#p-estudio .cap,#p-estudio .mod{display:flex;flex-direction:column;min-width:0;min-height:166px;padding:1rem;border:1px solid color-mix(in srgb,var(--txt) 13%,transparent);border-radius:17px;
+  background:var(--card);box-shadow:none;color:var(--txt);text-align:left;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+#p-estudio .cap:hover,#p-estudio .mod:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--azul) 40%,transparent);box-shadow:0 10px 24px #20302518}
+#p-estudio .cap.on,#p-estudio .mod.on{border-color:var(--azul);background:color-mix(in srgb,var(--azul) 5%,var(--card))}
+#p-estudio .cap-cima{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.65rem}
+#p-estudio .cap .n{font:400 2.3rem/1 Georgia,serif;color:var(--azul);letter-spacing:-.07em}
+#p-estudio .cap-cima>span{color:var(--azul);font-size:1.15rem}
+#p-estudio .cap .t{font-size:1rem;font-weight:800;line-height:1.27;color:var(--txt);letter-spacing:-.02em}
+#p-estudio .cap .f{margin:.4rem 0 .9rem;color:var(--gris);font-size:.76rem;line-height:1.35}
+#p-estudio .cap-abajo{margin-top:auto}
+#p-estudio .cap .p{margin:0 0 .35rem;color:var(--verde-txt);font-size:.75rem;font-weight:800}
+.cap-avance{display:block;height:4px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--txt) 10%,transparent)}
+.cap-avance i{display:block;height:100%;border-radius:inherit;background:var(--verde-txt)}
+#p-estudio .mod{flex-direction:row;min-height:125px}
+#p-estudio .bib-pie{grid-column:1/-1;margin:.2rem 0;padding:1rem;border-style:solid}
+#p-estudio .bib-pie:hover{border-color:var(--azul);background:color-mix(in srgb,var(--azul) 5%,var(--card))}
+#p-estudio #detalle{border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:22px;box-shadow:none}
+#p-estudio #detalle .cap-cab{margin:0 0 1.2rem;padding:clamp(1rem,2vw,1.7rem);border-radius:16px;
+  background:color-mix(in srgb,var(--azul) 7%,var(--card))}
+#p-estudio #detalle .cap-tit{max-width:22ch;font-size:clamp(2rem,4vw,3.25rem);line-height:1.06;letter-spacing:-.05em}
+#p-estudio #detalle .cap-ante{color:var(--naranja-txt);letter-spacing:.1em}
+#p-estudio #detalle .cap-meta{font-size:.83rem;line-height:1.45}
+.bib-volver{display:inline-flex;align-items:center;gap:.4rem;min-height:42px;margin:0 0 .75rem;padding:0;border:0;background:transparent;
+  color:var(--azul);font-family:inherit;font-size:.82rem;font-weight:800;line-height:1.2;cursor:pointer}
+.bib-volver:hover{text-decoration:underline}
+.bib-empezar:focus-visible,.bib-hero-fuente:focus-visible,.bib-volver:focus-visible,#p-estudio .cap:focus-visible,#p-estudio .mod:focus-visible{outline:3px solid var(--naranja-txt);outline-offset:3px}
+@media(max-width:800px){#p-estudio .bib-hero{grid-template-columns:minmax(0,1fr) 190px}#p-estudio .bv-fila,#p-estudio .caps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){
+  #p-estudio .bib-hero{grid-template-columns:1fr;min-height:0;border-radius:20px}
+  #p-estudio .bib-hero-copy{padding:1.4rem}
+  #p-estudio .bib-hero-arte{display:none}
+  #p-estudio .bib-tit{font-size:2.5rem}
+  #p-estudio .bib-p{font-size:.9rem}
+  #p-estudio .bib-hero-acciones{width:100%}
+  #p-estudio .bib-empezar,#p-estudio .bib-hero-fuente{flex:1 1 auto}
+  #p-estudio .bv-fila,#p-estudio .caps{grid-template-columns:1fr}
+  #p-estudio .bv-t{min-height:0}
+  #p-estudio .bv-img{aspect-ratio:16/7}
+  #p-estudio .cap{min-height:0;display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:.7rem}
+  #p-estudio .cap-cima{grid-row:1/4;display:block;margin:0}
+  #p-estudio .cap .n{font-size:2rem}
+  #p-estudio .cap-cima>span{display:none}
+  #p-estudio .cap .f{margin:.25rem 0 .6rem}
+  #p-estudio .cap-abajo{grid-column:2;margin-top:0}
+  #p-estudio .caps>.grupo{margin-top:1rem}
+}
+@media(prefers-reduced-motion:reduce){#p-estudio .cap,#p-estudio .mod{transition:none}#p-estudio .cap:hover,#p-estudio .mod:hover{transform:none}}
+@media print{.bib-volver,.bib-hero-acciones,.bib-herramientas{display:none!important}}
+
+/* En la integración, el lector comparte el ancho útil con la Biblioteca exterior. */
+.cb-cuerpo.cb-cuerpo #p-estudio{max-width:1100px}
+.cb-cuerpo.cb-cuerpo .nav .nav-b,.cb-cuerpo.cb-cuerpo .nav .nav-t{max-width:1100px}
+#p-estudio #detalle{scroll-margin-top:110px}
+@media(max-width:899px){#p-estudio #detalle{scroll-margin-top:170px}}

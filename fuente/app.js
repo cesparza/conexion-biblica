@@ -4693,11 +4693,12 @@ function pintaCaps(){
     const rotulo=g&&g.id!==grupoAbierto?'<div class="grupo grupo-de" style="grid-column:1/-1">'+
       icoDe(g.icono)+' '+esc(g.nombre)+(g.desde?' <small>'+g.desde+' a '+g.hasta+'</small>':'')+'</div>':'';
     if(g)grupoAbierto=g.id;
+    const avance=Math.max(0,Math.min(100,Math.round(Number(S.prog[c.id])||0)));
     return rotulo+
     '<button class="cap c-'+c.id+'" onclick="verCap(\''+c.id+'\')">'+
     /* v147: el número va en el color de la categoría, igual en todos. Siete
        colores sin significado competían con el título. */
-    '<div class="n">'+esc(c.label.replace(/^(Daniel |P&R |Apocalipsis )/,''))+'</div>'+
+    '<div class="cap-cima"><div class="n">'+esc(c.label.replace(/^(Daniel |P&R |Apocalipsis )/,''))+'</div><span aria-hidden="true">↗</span></div>'+
     '<div class="t">'+esc(c.sub)+'</div>'+
     /* Cuantos versiculos trae, para poder repartir la lectura antes de abrirlo:
        Daniel 2 son 49 y Daniel 1 son 21, y eso cambia como se planea la semana.
@@ -4706,12 +4707,12 @@ function pintaCaps(){
     /* Sin este aviso, un capítulo que se estudia y nunca sale en el examen
        parece un error de la app. Se dice donde se toma la decisión de leerlo. */
     (c.id==='m31'||!aj&&soloEstudio(c,S.cat)?'<div class="solo-est">Solo para estudiar</div>':'')+
-    '<div class="p">'+(S.prog[c.id]||0)+'% leído</div></button>';}).join('');
+    '<div class="cap-abajo"><div class="p">'+avance+'% leído</div><span class="cap-avance" aria-hidden="true"><i style="width:'+avance+'%"></i></span></div></button>';}).join('');
   const botonMod=m=>
     '<button class="mod c-'+m.id+'" onclick="verCap(\''+m.id+'\')">'+
     '<div class="ic-f" style="color:'+(m.color||'var(--azul)')+'">'+icoDe(m.icono,'ico-f')+'</div><div><div class="t">'+esc(m.label)+'</div>'+
     '<div class="s">'+esc(m.sub)+'</div>'+
-    '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'%</div>'+
+    '<div class="p" style="font-size:.75rem;color:var(--verde-txt);font-weight:700;margin-top:4px">'+(S.prog[m.id]||0)+'% leído</div>'+
     '</div></button>';
   const ms=aj?bibModsAjeno():modsDe();
   const mods=ms.filter(m=>!m.prof).map(botonMod).join('');
@@ -4719,10 +4720,10 @@ function pintaCaps(){
   document.getElementById('lista-caps').innerHTML=
     /* El rotulo dice en que se esta: «Capitulos» dentro de las 28 creencias
        se lee como si fueran capitulos de la Biblia. */
-    '<div class="grupo" style="grid-column:1/-1">'+
+    '<div class="grupo bib-cap-grupo" style="grid-column:1/-1">'+
     (aj?icoDe(bibIconoTema(bibTema()))+' '+esc(bibNombreTema(bibTema()))+' · '+(bibTema()==='creencias'?'las 28 creencias':'capítulos'):
       icoDe(ACT().icono)+' '+(TIPO()==='creencias'?'Las 28 creencias':'Capítulos'))+
-    '</div>'+caps+
+    '<small>'+vista.length+' para explorar · Toca uno para leer y ver sus recursos</small></div>'+caps+
     (mods?'<div class="grupo" style="grid-column:1/-1">'+IC('lupa')+' Repaso general</div>'+mods:'')+
     (prof?'<div class="grupo grupo-prof" style="grid-column:1/-1">'+IC('brujula')+' Para profundizar <small>no entra al examen</small></div>'+prof:'')+
     /* v235: cada tema termina con su bibliografía, armada sola (biblioteca-app.js). */
@@ -5678,7 +5679,9 @@ function navCap(id){
   let caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
   let i=lista.findIndex(x=>x.id===id);
   /* v235: un capítulo de otro tema (la Biblioteca) recorre su propio tema. */
-  if(i<0&&typeof bibListaDe==='function'){const o=bibListaDe(id);if(o){caps=o.caps;mods=o.mods;lista=[...caps,...mods];i=lista.findIndex(x=>x.id===id);}}
+  if((i<0||typeof bibAjeno==='function'&&bibAjeno())&&typeof bibListaDe==='function'){
+    const o=bibListaDe(id);if(o){caps=o.caps;mods=o.mods;lista=[...caps,...mods];i=lista.findIndex(x=>x.id===id);}
+  }
   if(i<0||lista.length<2)return '';
   const a=lista[i-1], b=lista[i+1], k=caps.findIndex(x=>x.id===id);
   const donde=k>=0?(k+1)+' de '+caps.length:'Repaso '+(mods.findIndex(x=>x.id===id)+1)+' de '+mods.length;
@@ -5737,6 +5740,7 @@ function verCap(id,quieto){
   const deDonde=crVuelve?buscaItem(crVuelve.de):null;
   d.innerHTML=
     '<div class="cap-cab">'+
+    '<button type="button" class="bib-volver" onclick="bibVer(\'temas\')">'+IC('izq')+' Todos los capítulos</button>'+
     (deDonde?'<button type="button" class="btn txt cap-vuelve" onclick="crRegresa()">'+IC('izq')+
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
     navCap(id)+
