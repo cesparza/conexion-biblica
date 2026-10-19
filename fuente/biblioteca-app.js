@@ -429,7 +429,7 @@ function bibVer(v,quieto){
   if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
   pintaBibVista();
   if(!quieto){
-    const destino=document.getElementById(bibVista==='laminas'?'bib-lams':'bib-cab');
+    const destino=document.getElementById('bib-tabs');
     if(destino&&destino.scrollIntoView)destino.scrollIntoView({block:'start'});
     else window.scrollTo(0,0);
   }

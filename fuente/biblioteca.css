@@ -256,3 +256,5 @@
 @media(max-width:899px){#p-estudio #detalle{scroll-margin-top:170px}}
 #p-estudio #bib-cab,#p-estudio #bib-lams{scroll-margin-top:90px}
 .cb-cuerpo.cb-cuerpo #p-estudio #bib-cab,.cb-cuerpo.cb-cuerpo #p-estudio #bib-lams{scroll-margin-top:230px}
+#p-estudio #bib-tabs{scroll-margin-top:90px}
+.cb-cuerpo.cb-cuerpo #p-estudio #bib-tabs{scroll-margin-top:220px}
