@@ -6451,7 +6451,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '47fecaaf1d92';
+const VERSION_APP = '083608029424';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -89087,9 +89087,7 @@ function bibTrasPintar(fn){
 }
 function bibEnfoca(el,foco){
   if(!el||!el.getClientRects?.().length)return;
-  const nav=document.querySelector('.nav');
-  const techo=nav&&typeof getComputedStyle==='function'?
-    (parseFloat(getComputedStyle(nav).top)||0)+nav.getBoundingClientRect().height:0;
+  const techo=altoPegado();
   window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+(window.scrollY||0)-techo-16),behavior:'instant'});
   (foco||el).focus?.({preventScroll:true});
 }
@@ -99852,15 +99850,19 @@ function pintaHero(){
 function altoPegado(){
   let n=0;
   try{n=parseFloat(getComputedStyle(document.body).getPropertyValue('--pega-arriba'))||0;}catch(e){}
-  try{const r=document.querySelector('.nav').getBoundingClientRect();
-    if(r.width>r.height&&r.top<=1&&r.bottom<(window.innerHeight||800)/2)n=Math.max(n,r.bottom);}catch(e){}
+  try{document.querySelectorAll('.nav,.nav-b').forEach(el=>{
+    if(!el.getClientRects().length)return;
+    const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+    if(cs.position==='fixed'&&r.top<=1&&r.height<(window.innerHeight||800)/2)n=Math.max(n,r.bottom);
+    else if(cs.position==='sticky')n=Math.max(n,(parseFloat(cs.top)||0)+r.height);
+  });}catch(e){}
   return n;
 }
 function continuar(){
   const h=heroDatos();
   if(!h)return;
-  verCap(h.c.id);
-  irSeccion(h.k);
+  verCap(h.c.id,true);
+  bibTrasPintar(()=>irSeccion(h.k));
 }
 /* Pone la sección `k` del capítulo abierto a la vista. Con texto, abre la
    lectura y lleva su bloque arriba (dentro de la columna, si la columna tiene

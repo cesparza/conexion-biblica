@@ -10117,15 +10117,19 @@ function pintaHero(){
 function altoPegado(){
   let n=0;
   try{n=parseFloat(getComputedStyle(document.body).getPropertyValue('--pega-arriba'))||0;}catch(e){}
-  try{const r=document.querySelector('.nav').getBoundingClientRect();
-    if(r.width>r.height&&r.top<=1&&r.bottom<(window.innerHeight||800)/2)n=Math.max(n,r.bottom);}catch(e){}
+  try{document.querySelectorAll('.nav,.nav-b').forEach(el=>{
+    if(!el.getClientRects().length)return;
+    const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+    if(cs.position==='fixed'&&r.top<=1&&r.height<(window.innerHeight||800)/2)n=Math.max(n,r.bottom);
+    else if(cs.position==='sticky')n=Math.max(n,(parseFloat(cs.top)||0)+r.height);
+  });}catch(e){}
   return n;
 }
 function continuar(){
   const h=heroDatos();
   if(!h)return;
-  verCap(h.c.id);
-  irSeccion(h.k);
+  verCap(h.c.id,true);
+  bibTrasPintar(()=>irSeccion(h.k));
 }
 /* Pone la sección `k` del capítulo abierto a la vista. Con texto, abre la
    lectura y lleva su bloque arriba (dentro de la columna, si la columna tiene

@@ -63,9 +63,7 @@ function bibTrasPintar(fn){
 }
 function bibEnfoca(el,foco){
   if(!el||!el.getClientRects?.().length)return;
-  const nav=document.querySelector('.nav');
-  const techo=nav&&typeof getComputedStyle==='function'?
-    (parseFloat(getComputedStyle(nav).top)||0)+nav.getBoundingClientRect().height:0;
+  const techo=altoPegado();
   window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+(window.scrollY||0)-techo-16),behavior:'instant'});
   (foco||el).focus?.({preventScroll:true});
 }
