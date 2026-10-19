@@ -234,7 +234,7 @@ function pintaBib(){
   const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
     icoDe(bibIconoTema(x))+'<span>'+esc(bibNombreTema(x))+'</span></button>';
   const nivel=n=>'<button type="button" class="bib-nv'+(n[0]===nv?' on':'')+'" aria-pressed="'+(n[0]===nv)+'" onclick="bibPonNivel(\''+n[0]+'\')"><b>'+esc(n[1])+'</b><small>'+esc(n[2])+'</small></button>';
-  z.innerHTML='<div class="bib-hero tema-'+t+'"><div class="bib-hero-copy"><div class="bib-ant">'+IC('libro')+' Biblioteca · '+esc(portada.tipo)+'</div>'+
+  z.innerHTML='<div class="bib-hero bib-hero--tema tema-'+t+'"><div class="bib-hero-copy"><div class="bib-ant">'+IC('libro')+' Biblioteca · '+esc(portada.tipo)+'</div>'+
     '<h2 class="bib-tit">'+esc(bibNombreTema(t))+'</h2>'+
     '<p class="bib-p">'+esc(bibDescripcionTema(t))+'</p>'+
     '<div class="bib-hero-meta"><span>'+cantidad+'</span><span>'+terminados+' terminados</span></div>'+

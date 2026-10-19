@@ -5673,8 +5673,10 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 #p-estudio .bib-hero.tema-creencias{--bib-oscuro:#204958;--bib-claro:#477e91;--bib-oro:#e0ebdf}
 #p-estudio .bib-hero.tema-conflicto{--bib-oscuro:#573426;--bib-claro:#9d6843;--bib-oro:#f3d3a5}
 #p-estudio .bib-hero.tema-matutina{--bib-oscuro:#493b60;--bib-claro:#88749f;--bib-oro:#f4d7b8}
-#p-estudio .bib-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.42fr);min-height:300px;padding:0;overflow:hidden;
+#p-estudio .bib-hero{display:block;min-height:0;padding:clamp(1.4rem,3vw,2.5rem);overflow:hidden;
   border:0;border-radius:24px;background:linear-gradient(130deg,var(--bib-oscuro),var(--bib-claro));box-shadow:none}
+#p-estudio .bib-hero--tema{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.42fr);min-height:300px;padding:0}
+#p-estudio .bl-hero .bib-tit{max-width:23ch;font-size:clamp(2rem,3.5vw,3.25rem);line-height:1.05}
 #p-estudio .bib-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;padding:clamp(1.4rem,3vw,2.5rem);position:relative;z-index:1}
 #p-estudio .bib-ant{color:var(--bib-oro);font-size:.72rem;letter-spacing:.12em}
 #p-estudio .bib-tit{max-width:13ch;margin:.55rem 0 .7rem;color:#fff;font-size:clamp(2.4rem,4.5vw,4.4rem);line-height:1;letter-spacing:-.065em}
@@ -5741,9 +5743,9 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
   color:var(--azul);font-family:inherit;font-size:.82rem;font-weight:800;line-height:1.2;cursor:pointer}
 .bib-volver:hover{text-decoration:underline}
 .bib-empezar:focus-visible,.bib-hero-fuente:focus-visible,.bib-volver:focus-visible,#p-estudio .cap:focus-visible,#p-estudio .mod:focus-visible{outline:3px solid var(--naranja-txt);outline-offset:3px}
-@media(max-width:800px){#p-estudio .bib-hero{grid-template-columns:minmax(0,1fr) 190px}#p-estudio .bv-fila,#p-estudio .caps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:800px){#p-estudio .bib-hero--tema{grid-template-columns:minmax(0,1fr) 190px}#p-estudio .bv-fila,#p-estudio .caps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){
-  #p-estudio .bib-hero{grid-template-columns:1fr;min-height:0;border-radius:20px}
+  #p-estudio .bib-hero--tema{grid-template-columns:1fr;min-height:0;border-radius:20px}
   #p-estudio .bib-hero-copy{padding:1.4rem}
   #p-estudio .bib-hero-arte{display:none}
   #p-estudio .bib-tit{font-size:2.5rem}
@@ -6449,7 +6451,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '2256eef19e8f';
+const VERSION_APP = 'e92b95647476';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -89256,7 +89258,7 @@ function pintaBib(){
   const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
     icoDe(bibIconoTema(x))+'<span>'+esc(bibNombreTema(x))+'</span></button>';
   const nivel=n=>'<button type="button" class="bib-nv'+(n[0]===nv?' on':'')+'" aria-pressed="'+(n[0]===nv)+'" onclick="bibPonNivel(\''+n[0]+'\')"><b>'+esc(n[1])+'</b><small>'+esc(n[2])+'</small></button>';
-  z.innerHTML='<div class="bib-hero tema-'+t+'"><div class="bib-hero-copy"><div class="bib-ant">'+IC('libro')+' Biblioteca · '+esc(portada.tipo)+'</div>'+
+  z.innerHTML='<div class="bib-hero bib-hero--tema tema-'+t+'"><div class="bib-hero-copy"><div class="bib-ant">'+IC('libro')+' Biblioteca · '+esc(portada.tipo)+'</div>'+
     '<h2 class="bib-tit">'+esc(bibNombreTema(t))+'</h2>'+
     '<p class="bib-p">'+esc(bibDescripcionTema(t))+'</p>'+
     '<div class="bib-hero-meta"><span>'+cantidad+'</span><span>'+terminados+' terminados</span></div>'+
