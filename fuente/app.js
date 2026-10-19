@@ -5965,6 +5965,7 @@ function lugarAplica(c,dondeOk){
   const o=lugarParte(c);if(!o.pant)return false;
   if(o.tema){
     bibTemaSel=o.tema;bibGuarda(BIB_K,bibTemaSel);
+    bibCerrarDetalle();
   }
   if(o.a&&o.a!==S.cat&&CATS[o.a]){
     const p=personasDB().find(x=>x.fichas.some(([id])=>id===DB.activo)),f=p&&p.fichas.find(([,al])=>al.cat===o.a);

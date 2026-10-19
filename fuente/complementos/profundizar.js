@@ -333,8 +333,8 @@ const P = module.exports;
 P.modulos = (pre, tema) => [
   { id: pre + '-glosario', label: 'Glosario', sub: 'Las palabras de la profecía, en sencillo', icono: '📗', color: '#0E6A78', prof: true, tema },
   { id: pre + '-simbolos', label: 'Símbolos proféticos', sub: 'Qué representa cada uno y el texto que lo prueba', icono: '🧭', color: '#0E6A78', prof: true, tema },
-  { id: pre + '-comparar', label: 'Daniel 2, 7, 8, 11 y 12', sub: 'Las visiones lado a lado', icono: '📕', color: '#0E6A78', prof: true, tema },
+  ...(tema === 'daniel' ? [{ id: pre + '-comparar', label: 'Daniel 2, 7, 8, 11 y 12', sub: 'Las visiones lado a lado', icono: '📕', color: '#0E6A78', prof: true, tema }] : []),
   { id: pre + '-personas', label: 'Quién es quién', sub: 'Los personajes bíblicos y de la historia', icono: '👥', color: '#0E6A78', prof: true, tema },
 ];
-P.contenido = pre => ({ [pre + '-glosario']: P.glosario, [pre + '-simbolos']: P.simbolos, [pre + '-comparar']: P.comparar, [pre + '-personas']: P.personas });
-
+P.contenido = (pre, tema) => ({ [pre + '-glosario']: P.glosario, [pre + '-simbolos']: P.simbolos,
+  ...(tema === 'daniel' ? { [pre + '-comparar']: P.comparar } : {}), [pre + '-personas']: P.personas });

@@ -518,6 +518,6 @@ const CONT_MODULOS = {
 /* v188: los repasos de «Para profundizar» (glosario, símbolos, comparación). */
 const PROF = require('./complementos/profundizar.js');
 MODULOS.push(...PROF.modulos('m', 'daniel'));
-Object.assign(CONT_MODULOS, PROF.contenido('m'));
+Object.assign(CONT_MODULOS, PROF.contenido('m', 'daniel'));
 
 module.exports = { MODULOS, CONT_MODULOS };

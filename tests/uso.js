@@ -3185,7 +3185,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const Z=montar(`verCap, ponCat, modsDe, poolDe, refrescaEx, cambiaInterp, cambiaFuente, el:id=>document.getElementById(id), get soloInterp(){return soloInterp}, set alc(v){alcance=v}`,{});
   Z.ponCat('apgm');
   ok(!Z.modsDe().some(m=>/^m-interp-/.test(m.id)),'La interpretación ya no va en repasos aparte');
-  ok(Z.modsDe().map(m=>m.id).join()==='ma-glosario,ma-simbolos,ma-comparar,ma-personas','v188: Apocalipsis también trae el glosario, los símbolos y la comparación');
+  ok(Z.modsDe().map(m=>m.id).join()==='ma-glosario,ma-simbolos,ma-personas','Apocalipsis no presenta la comparación de Daniel como material propio');
   Z.verCap('ma-simbolos');
   const HS=Z.el('detalle').innerHTML;
   ok(!/ponPest\(/.test(HS)&&/No entra al examen|no entra al examen/i.test(HS)&&(HS.match(/data-pest="prof"/g)||[]).length>=5,'v188: un repaso de profundizar no trae pestañas y avisa que no entra al examen');

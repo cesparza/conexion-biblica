@@ -33,7 +33,14 @@ var bibLee=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:v;}catch
 var bibGuarda=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 /** Los temas de la Biblioteca, en el orden de las actividades. */
 var bibTemas=()=>temasLibres().filter(t=>(IDS_DE_TEMA[t]||[]).length);
-var bibNombreTema=t=>{if(t==='matutina')return 'Héroes y villanos';const A=ACTIVIDADES[libreDe(t)];return A?A.nombre:t;};
+var bibNombreTema=t=>({daniel:'Daniel',apocalipsis:'Apocalipsis',creencias:'Las 28 creencias',conflicto:'El conflicto de los siglos',matutina:'Héroes y villanos'})[t]||t;
+var bibDescripcionTema=t=>({
+  daniel:'Relatos, visiones y profecías de Daniel. Lee sus 12 capítulos y el material de apoyo.',
+  apocalipsis:'Una visión de Cristo y del desenlace de la historia. Lee sus 22 capítulos con texto y fuentes.',
+  creencias:'Las creencias fundamentales adventistas, organizadas para leer una por una.',
+  conflicto:'Lee y estudia los capítulos 24 al 43 de El conflicto de los siglos.',
+  matutina:'31 lecturas sobre héroes y villanos. Puedes leerlas en el orden que prefieras.'
+})[t]||'Lee el material completo a tu ritmo.';
 var bibIconoTema=t=>{const A=ACTIVIDADES[libreDe(t)];return A?A.icono:'';};
 /** El tema que se ve: el escogido en la Biblioteca o el del concurso de la ficha. */
 function bibTema(){
@@ -44,10 +51,16 @@ function bibTema(){
 var bibAjeno=()=>bibTema()!==ACT().tema;
 /** De qué tema es un capítulo o un repaso. */
 var bibTemaDe=id=>bibTemas().find(t=>(IDS_DE_TEMA[t]||[]).includes(id))||'';
+function bibCerrarDetalle(){
+  const d=document.getElementById('detalle');
+  if(d)d.style.display='none';
+  capAbierto='';
+}
 function bibPonTema(t){
   if(!IDS_DE_TEMA[t])return;
   bibTemaSel=t===ACT().tema?'':t;bibGuarda(BIB_K,bibTemaSel);
   /* Cambiar de tema es ver otra estantería: se cierra el capítulo abierto. */
+  bibCerrarDetalle();
   if(pantallaAct==='estudio'){ir('estudio');}else{pintaCaps();}
 }
 function bibSerieMatutina(){
@@ -201,14 +214,14 @@ function bibVerHTML(t){
 function pintaBib(){
   pintaBibTabs();
   const z=document.getElementById('bib-cab');if(!z)return;
-  const t=bibTema(),propio=ACT().tema,nv=bibNivel(),libre=!!(CAT().libre||sinPoliticas(S.cat));
+  const t=bibTema(),nv=bibNivel();
   const chip=x=>'<button type="button" class="bib-tema'+(x===t?' on':'')+'" aria-pressed="'+(x===t)+'" onclick="bibPonTema(\''+x+'\')">'+
-    icoDe(bibIconoTema(x))+'<span>'+esc(bibNombreTema(x))+'</span>'+(x===propio&&!libre?'<small>tu concurso</small>':'')+'</button>';
+    icoDe(bibIconoTema(x))+'<span>'+esc(bibNombreTema(x))+'</span></button>';
   const nivel=n=>'<button type="button" class="bib-nv'+(n[0]===nv?' on':'')+'" aria-pressed="'+(n[0]===nv)+'" onclick="bibPonNivel(\''+n[0]+'\')"><b>'+esc(n[1])+'</b><small>'+esc(n[2])+'</small></button>';
-  z.innerHTML='<div class="bib-hero"><div class="bib-ant">'+IC('libro')+' Biblioteca</div>'+
-    '<h2 class="bib-tit">Todo el material, abierto para ti</h2>'+
-    '<p class="bib-p">Lee, escucha y mira cualquier tema, a tu ritmo. No hace falta estar en un concurso.</p>'+
-    '<div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div>'+
+  z.innerHTML='<div class="bib-hero"><div class="bib-ant">'+IC('libro')+' Biblioteca / Tema</div>'+
+    '<h2 class="bib-tit">'+esc(bibNombreTema(t))+'</h2>'+
+    '<p class="bib-p">'+esc(bibDescripcionTema(t))+'</p>'+
+    '<details class="bib-elige"><summary>Cambiar de tema</summary><div class="bib-temas" role="group" aria-label="Tema">'+bibTemas().map(chip).join('')+'</div></details>'+
     '<div class="bib-fila"><div class="bib-nvs" role="group" aria-label="Cómo quieres leer"><span class="bib-nvt">Cómo quieres leer</span>'+BIB_NIVELES.map(nivel).join('')+'</div>'+
     '<div class="bib-acc">'+meBoton('tema-'+t)+'<button type="button" class="btn tono peq bib-fu" onclick="bibAbreFuentes(\''+t+'\')">'+IC('lista')+' Bibliografía</button></div></div>'+
     '<p class="bib-nota">'+(t==='matutina'?'La Biblioteca siempre muestra la serie completa. La categoría del concurso solo determina qué se evalúa.':bibAjeno()?'Estás viendo '+esc(bibNombreTema(t))+': no es el tema de tu concurso, así que se ve completo y no entra a tu examen.':
@@ -376,7 +389,7 @@ function bibTabActual(){
 }
 function pintaBibTabs(){
   const z=document.getElementById('bib-tabs');if(!z)return;
-  const hayCmp=MODULOS.some(x=>ES_COMPARAR.test(x.id)),hayLam=bibLams().length>0,act=bibTabActual();
+  const hayCmp=(bibTema()==='daniel'||!!(S.ultItem&&ES_COMPARAR.test(S.ultItem)))&&MODULOS.some(x=>ES_COMPARAR.test(x.id)),hayLam=bibLams().length>0,act=bibTabActual();
   const ve=k=>k==='laminas'?hayLam:k==='temas'?true:k==='paralelos'?hayCmp&&typeof PARALELOS!=='undefined'&&Array.isArray(PARALELOS)&&PARALELOS.length:k==='ultimos'?hayCmp&&typeof ULTIMOS!=='undefined'&&!!ULTIMOS:hayCmp;
   z.innerHTML='<div class="bt-fila" role="tablist">'+BIB_TABS.filter(x=>ve(x[0])).map(([k,t,ic])=>
     '<button type="button" role="tab" class="bt'+(k===act?' on':'')+'" aria-selected="'+(k===act)+'" onclick="bibTab(\''+k+'\')">'+IC(ic)+'<span>'+esc(t)+'</span></button>').join('')+'</div>';
@@ -393,6 +406,7 @@ var bibLams=()=>(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=
 function bibVer(v,quieto){
   bibVista=v==='laminas'?'laminas':'temas';bibTabSel='';
   /* Ver la portada o las láminas es salir del capítulo abierto. */
+  bibCerrarDetalle();
   if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
   pintaBibVista();
   if(!quieto)window.scrollTo(0,0);
