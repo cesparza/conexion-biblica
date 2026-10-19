@@ -428,7 +428,11 @@ function bibVer(v,quieto){
   bibCerrarDetalle();
   if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
   pintaBibVista();
-  if(!quieto)window.scrollTo(0,0);
+  if(!quieto){
+    const destino=document.getElementById(bibVista==='laminas'?'bib-lams':'bib-cab');
+    if(destino&&destino.scrollIntoView)destino.scrollIntoView({block:'start'});
+    else window.scrollTo(0,0);
+  }
   lugarAnota();
 }
 function pintaBibVista(){

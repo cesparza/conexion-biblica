@@ -5769,6 +5769,8 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .cb-cuerpo.cb-cuerpo .nav .nav-b,.cb-cuerpo.cb-cuerpo .nav .nav-t{max-width:1100px}
 #p-estudio #detalle{scroll-margin-top:110px}
 @media(max-width:899px){#p-estudio #detalle{scroll-margin-top:170px}}
+#p-estudio #bib-cab,#p-estudio #bib-lams{scroll-margin-top:90px}
+.cb-cuerpo.cb-cuerpo #p-estudio #bib-cab,.cb-cuerpo.cb-cuerpo #p-estudio #bib-lams{scroll-margin-top:230px}
 /* ── v236: MI ESTUDIO, LAS PESTAÑAS DE LA BIBLIOTECA Y EL ALCANCE DE CADA CATEGORÍA
    (fuente/mi-estudio.js y biblioteca-app.js). Solo tokens de la app: claro y oscuro
    salen solos; todo lo que se toca mide al menos 44 px. ── */
@@ -6445,7 +6447,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'fe0b6ecedd08';
+const VERSION_APP = '30dfa241b58e';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -89446,7 +89448,11 @@ function bibVer(v,quieto){
   bibCerrarDetalle();
   if(pantallaAct!=='estudio'||S.ultItem)ir('estudio',!!quieto);
   pintaBibVista();
-  if(!quieto)window.scrollTo(0,0);
+  if(!quieto){
+    const destino=document.getElementById(bibVista==='laminas'?'bib-lams':'bib-cab');
+    if(destino&&destino.scrollIntoView)destino.scrollIntoView({block:'start'});
+    else window.scrollTo(0,0);
+  }
   lugarAnota();
 }
 function pintaBibVista(){
