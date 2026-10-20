@@ -5214,7 +5214,7 @@ function seccionLectura(cid){
       '<div class="lect-cab"><span class="lect-sec">Sección '+(k+1)+' de '+nb+'</span><span class="lect-rot">'+rot+'</span>'+
       (puedeHablar()?grupoVoz('btn-voz','Escuchar estos versículos','Escuchar '+rot):'')+
       '</div><div class="biblia" data-leer>'+txt+'</div>'+
-      adsHTML(rep[k]||[],'Antes de seguir')+'</div>');
+      '<details class="lector-repaso"><summary>Comprueba esta sección</summary>'+adsHTML(rep[k]||[],'Antes de seguir')+'</details></div>');
   }
   /* v131: EL REPRODUCTOR TAMBIEN VIVE AQUI, arriba del texto. Antes solo
      estaba en el modo lectura, y en dos columnas (1200 px o mas) el boton que
@@ -5228,12 +5228,10 @@ function seccionLectura(cid){
        Books: es una forma de leer y escuchar, no una caja aparte (tenía casi
        el peso del reproductor y el texto se partía en tres renglones). Sin voz
        en el aparato no hay reproductor, y el botón va solo. */
-    /* v205: va AL FINAL y pegado abajo (CSS): una barra delgada que no tapa
-       el texto mientras se lee, con los mismos controles. */
-    bloques.join('')+
-    '<div class="lect-top">'+(puedeHablar()?htmlLecVoz(nums.length,'texto',cid)
+    /* El audio se abre a petición, antes del texto, sin tapar la lectura. */
+    '<details class="lector-audio"><summary>'+IC('voz')+' Escuchar el capítulo</summary><div class="lect-top">'+(puedeHablar()?htmlLecVoz(nums.length,'texto',cid)
       :'<button type="button" class="btn tono lect-full" onclick="abreLectura(\''+cid+'\')">'+IC('expandir')+' Pantalla completa</button>')+'</div>'+
-    '</div></details>';
+    '</details>'+bloques.join('')+'</div></details>';
 }
 
 /* ───────── MODO LECTURA ─────────
@@ -5578,7 +5576,9 @@ function ponPest(k){
   capPest=k==='prof'?'prof':'examen';
   const d=document.getElementById('detalle');
   if(!d)return;
-  d.setAttribute('data-pest',capPest);lugarAnota();
+  d.setAttribute('data-pest',capPest);
+  if(d.querySelector('.vd'))lectorVer(capPest,false);
+  lugarAnota();
   d.querySelectorAll('.cap-pest .pest').forEach(b=>{const on=b.classList.contains('pest-'+capPest);
     b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on));});
 }
@@ -5834,7 +5834,8 @@ function dondeEspera(ms){dondeHasta=Date.now()+ms;try{localStorage.removeItem(DO
 function anotaDonde(){
   if(dondeQuieto||Date.now()<dondeHasta)return;
   try{
-    const o={k:dondeLlave(),y:Math.round(window.scrollY||0),lector:true};
+    const vista=document.querySelector('#detalle .vd');
+    const o={k:dondeLlave(),y:Math.round(window.scrollY||0),lector:true,vista:vista&&vista.dataset.lector};
     const secs=secsDeDonde();
     const i=secs.findIndex(x=>x.getBoundingClientRect().bottom>DONDE_TOPE);
     if(i>=0){const r=secs[i].getBoundingClientRect();
@@ -5850,6 +5851,7 @@ function vuelveADonde(){
   if(!o||o.k!==dondeLlave())return false;
   /* Las alturas anteriores incluían toda la rejilla encima de la lectura. */
   if(S.ultItem&&!o.lector)return false;
+  if(o.vista)lectorVer(o.vista==='texto'?'texto':capPest,false);
   const pon=()=>{
     let y=Number(o.y)||0;
     const sec=Number.isInteger(o.s)?secsDeDonde()[o.s]:null;
@@ -5912,7 +5914,9 @@ function lugarActual(){
   if(pant==='estudio'&&S.ultItem){
     r.push(S.ultItem);
     const d=document.getElementById('detalle');
-    if(capPest==='prof'&&d&&d.getAttribute&&d.getAttribute('data-pest')==='prof'&&!(CONTENIDO[S.ultItem]||CONT_MODULOS[S.ultItem]||[]).every(esSecInterp))r.push('profundizar');
+    const vista=d&&d.querySelector&&d.querySelector('.vd');
+    if(vista&&vista.dataset.lector==='estudio'&&capPest!=='prof')r.push('estudiar');
+    if((!vista||vista.dataset.lector!=='texto')&&capPest==='prof'&&d&&d.getAttribute&&d.getAttribute('data-pest')==='prof'&&!(CONTENIDO[S.ultItem]||CONT_MODULOS[S.ultItem]||[]).every(esSecInterp))r.push('profundizar');
     const secs=secsDeDonde(),i=secs.findIndex(x=>x.getBoundingClientRect().bottom>DONDE_TOPE);
     if(i>0)r.push('s'+i);
   }
@@ -5944,7 +5948,8 @@ function lugarParte(c){
   else if(o.pant==='estudio'&&s[i]==='tema'&&IDS_DE_TEMA[s[i+1]]){o.tema=s[i+1];i+=2;}
   else if(o.pant==='estudio'&&s[i]&&!/^(profundizar|lamina|comparar|ultimos|paralelos|laminas|s\d+)$/.test(s[i]))o.item=s[i++];
   for(;i<s.length;i++){
-    if(s[i]==='profundizar')o.prof=true;
+    if(s[i]==='estudiar')o.estudiar=true;
+    else if(s[i]==='profundizar')o.prof=true;
     else if(/^s\d{1,3}$/.test(s[i]))o.sec=Number(s[i].slice(1));
     else if(s[i]==='lamina'&&s[i+1]&&/^(explorar|presentar)$/.test(s[i+2]||'')){o.lam={id:s[i+1],modo:s[i+2],paso:s[i+3]||''};i+=3;}
     else if(s[i]==='comparar'&&s[i+1]){o.cmp=s[i+1];i++;}
@@ -5972,7 +5977,7 @@ function lugarAplica(c,dondeOk){
     dondeOk=false;
   }
   if(o.vista==='laminas'&&!o.item&&typeof bibVer==='function')bibVer('laminas',true);
-  if(o.prof&&S.ultItem)ponPest('prof');
+  if(S.ultItem&&(o.prof||o.estudiar||o.sec!=null))ponPest(o.prof?'prof':'examen');
   if(!dondeOk&&o.sec!=null&&S.ultItem){
     const pon=()=>{const sec=secsDeDonde()[o.sec];if(sec)window.scrollTo(0,Math.max(0,Math.round(sec.getBoundingClientRect().top+(window.scrollY||0)-DONDE_TOPE)));};
     pon();if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(pon));
@@ -6166,78 +6171,51 @@ function pcTecla(e){
 if(typeof document!=='undefined'&&document.addEventListener)
   document.addEventListener('keydown',pcTecla);
 
-/* ───────── VISTA DIVIDIDA ─────────
-   MECANISMO
-   El dato y el versículo están en la misma pantalla pero uno debajo del otro,
-   así que compararlos es abrir la hoja del versículo, leerla, cerrarla y volver
-   a buscar el renglón. En un celular no hay alternativa: no hay ancho. En
-   escritorio sí, y a 1440 px sobran 412 px de margen sin usar.
-
-   Aquí el texto queda a la izquierda, PEGADO con `position:sticky`, y el
-   estudio se desplaza solo a la derecha. Es lo único que el escritorio puede
-   hacer y el celular no.
-
-   DECISIÓN DE IMPLEMENTACIÓN: el DOM se reestructura SIEMPRE y el CSS decide si
-   lo pinta en dos columnas. Poner el ancho en un `matchMedia` de JS obligaría a
-   escuchar el `resize` y a rearmar el DOM en cada cambio de tamaño; con la media
-   query, por debajo de 1200 px el flex simplemente no aplica y todo se apila
-   igual que antes.
-
-   Solo en capítulos con texto en `VERS`: Profetas y Reyes y las creencias no
-   tienen el capítulo palabra por palabra, así que no hay nada que poner a la
-   izquierda. */
+/* Una zona de lectura, con índice y audio bajo demanda. */
+function lectorVer(modo,subir){
+  const d=document.getElementById('detalle'),v=d&&d.querySelector('.vd');
+  if(!v)return;
+  const texto=modo==='texto';
+  v.dataset.lector=texto?'texto':'estudio';
+  if(!texto){capPest=modo==='prof'?'prof':'examen';d.setAttribute('data-pest',capPest);}
+  d.querySelectorAll('.cap-pest [role="tab"]').forEach(b=>{
+    const on=texto?b.classList.contains('lector-leer'):b.classList.contains('pest-'+capPest);
+    b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on));
+  });
+  const indice=d.querySelector('.lector-indice');if(indice)indice.open=false;
+  if(subir!==false)bibEnfoca(d.querySelector('.lector-barra'));
+  lugarAnota();
+}
 function divideVista(d,id){
   try{
     if(typeof VERS==='undefined'||!VERS[id])return;
     const det=d.querySelector(':scope>details.lect');
     const secs=[...d.querySelectorAll(':scope>.sec')];
     if(!det||!secs.length)return;
-    /* Abierto de entrada SOLO en dos columnas: ahí un acordeón cerrado deja
-       media pantalla en blanco. En una sola columna sigue cerrado, que es lo
-       que v43 decidió para no estorbarle a quien viene a repasar un dato, y se
-       vio en el render que sin esta guarda quedaba abierto también a 390 px.
-       Es el único sitio donde el JS mira el ancho, y no necesita `resize`: el
-       acordeón lo abre y lo cierra quien quiera con un toque. */
-    det.open=enColumnas(d);
-    const fila=document.createElement('div');fila.className='vd';
-    /* v205: tres columnas. A la izquierda el índice (capítulos y secciones),
-       en medio el texto y a la derecha el estudio, que empieza por «Esta
-       sección» (ver estaSeccionHTML). */
-    const ind=document.createElement('nav');ind.className='vd-ind';
-    if(ind.setAttribute)ind.setAttribute('aria-label','Índice del capítulo');
-    ind.innerHTML=indiceHTML(id);
-    const iz=document.createElement('div');iz.className='vd-izq';
+    det.open=true;
+    const fila=document.createElement('div');fila.className='vd';fila.dataset.lector='texto';
+    const barra=document.createElement('div');barra.className='lector-barra';
+    const cp=d.querySelector(':scope>.cap-pest')||document.createElement('div');
+    cp.className='cap-pest';cp.setAttribute('role','tablist');cp.setAttribute('aria-label','Qué quieres hacer');
+    if(!cp.children.length)cp.innerHTML='<button type="button" role="tab" class="pest pest-examen" onclick="lectorVer(\'examen\')">Estudiar</button>';
+    const tituloEst=cp.querySelector('.pest-examen b'),tituloProf=cp.querySelector('.pest-prof b');
+    if(tituloEst)tituloEst.textContent='Estudiar';if(tituloProf)tituloProf.textContent='Profundizar';
+    const leer=document.createElement('button');leer.type='button';leer.className='lector-leer';
+    leer.setAttribute('role','tab');leer.addEventListener('click',()=>lectorVer('texto'));leer.textContent='Leer';
+    cp.prepend(leer);barra.appendChild(cp);
+    const menu=document.createElement('details');menu.className='lector-indice';
+    menu.innerHTML='<summary>'+IC('lista')+' Capítulos y secciones</summary>';
+    const ind=document.createElement('nav');ind.className='vd-ind';ind.setAttribute('aria-label','Índice del capítulo');
+    ind.innerHTML=indiceHTML(id);menu.appendChild(ind);barra.appendChild(menu);
+    const iz=document.createElement('div');iz.className='vd-izq';iz.appendChild(det);
     const de=document.createElement('div');de.className='vd-der';
-    iz.innerHTML='<p class="vd-rot">El texto · RV1995</p>';
-    /* v147: «Todo / Solo lo central» filtra las secciones de estudio, así
-       que va en la cabecera de SU columna. Se quedaba suelto en `d`, debajo de
-       las dos columnas, y en celular salía al final, después de todo lo que
-       filtra. */
-    de.innerHTML='<div class="vd-cab"><p class="vd-rot">El estudio</p></div>';
-    const cf=d.querySelector(':scope>.capa-filtro');
-    if(cf)de.firstChild.appendChild(cf);
-    const cp=d.querySelector(':scope>.cap-pest');
-    if(cp)de.firstChild.insertBefore(cp,de.firstChild.firstChild.nextSibling);
+    const cf=d.querySelector(':scope>.capa-filtro');if(cf)de.appendChild(cf);
     const ea=document.createElement('div');ea.className='est-ahora';ea.id='est-ahora';ea.hidden=true;
-    if(ea.setAttribute)ea.setAttribute('aria-live','polite');
-    iz.appendChild(det);
-    de.appendChild(ea);
-    secs.forEach(x=>de.appendChild(x));
-    fila.appendChild(ind);fila.appendChild(iz);fila.appendChild(de);
-    d.insertBefore(fila,d.children[1]);
-    eaK=-1;
-    const sg=sigueDe();
-    pintaEstaSeccion(sg&&sg.c===id?sg.s:0);
+    ea.setAttribute('aria-live','polite');de.appendChild(ea);secs.forEach(x=>de.appendChild(x));
+    fila.appendChild(barra);fila.appendChild(iz);fila.appendChild(de);d.insertBefore(fila,d.children[1]);
+    eaK=-1;const sg=sigueDe();pintaEstaSeccion(sg&&sg.c===id?sg.s:0);
+    lectorVer(typeof bibNivel==='function'&&bibNivel()==='fondo'?'prof':'texto',false);
   }catch(e){}
-}
-/* LAS COLUMNAS LAS DECIDE EL ANCHO DEL CAPÍTULO, no el de la ventana (v205).
-   Dentro de la app de Jóvenes el módulo vive en una columna de 46rem aunque
-   la ventana mida 1900 px: con una media query las tres columnas salían
-   apretadas en 736 px. El CSS usa una consulta de contenedor sobre #detalle
-   (VD_ANCHO px, el mismo número), y el JS mide la misma caja. */
-const VD_ANCHO=920;
-function enColumnas(d){
-  try{return !!d&&d.getBoundingClientRect().width>=VD_ANCHO;}catch(e){return false;}
 }
 
 function avanza(id,p){S.prog[id]=Math.max(S.prog[id]||0,p);guardar();pintaCaps();}
@@ -6908,6 +6886,7 @@ const lecVozDesde=p=>vozDesde('lectura',p);
 function txtToca(e){
   if(!puedeHablar()||!e||!e.target||!e.target.closest)return;
   if(e.target.closest('button,a,summary,.lect-top'))return;
+  const audio=document.querySelector('#detalle .lector-audio');if(audio&&!audio.open)return;
   try{if(window.getSelection&&String(window.getSelection()))return;}catch(x){}
   const p=e.target.closest('.biblia p');
   if(p)vozDesde('texto',p);
@@ -10137,6 +10116,7 @@ function continuar(){
 function irSeccion(k){
   const d=document.getElementById('detalle');
   if(!d)return;
+  lectorVer('texto',false);
   k=Number(k)||0;
   const lect=d.querySelector('details.lect');
   const bls=lect?[...lect.querySelectorAll('.lect-bl')]:[];
@@ -10292,7 +10272,8 @@ function abrePreguntaDia(){
 
 /* ───────── EL ÍNDICE DE LA IZQUIERDA ───────── */
 function indiceHTML(id){
-  const caps=capsVista(), sg=sigueDe(), lleg=(sg&&sg.m)||{};
+  const tema=typeof bibListaDe==='function'?bibListaDe(id):null;
+  const caps=tema?tema.caps:capsVista(), sg=sigueDe(), lleg=(sg&&sg.m)||{};
   const bl=bloquesDe(id);
   return '<div class="ind-cab"><span>'+esc(TIPO()==='creencias'?'Las creencias':'Capítulos')+'</span></div>'+
     '<ol class="ind-l">'+caps.map(c=>{
@@ -10368,7 +10349,7 @@ function pintaEstaSeccion(k){
 function irASec(i){
   const d=document.getElementById('detalle');if(!d)return;
   const s=d.querySelector('.sec[data-i="'+i+'"]');if(!s)return;
-  const p=s.getAttribute('data-pest');if(p&&p!==capPest)ponPest(p);
+  const p=s.getAttribute('data-pest');ponPest(p||'examen');
   if(s.style.display==='none')s.style.display='';
   /* En tres columnas la sección vive en la columna del estudio, que tiene su
      propio scroll; si no, se mueve la página. */

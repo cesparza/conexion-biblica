@@ -323,7 +323,7 @@ function bibIrQ(cap,i){
   if(s&&esSecInterp(s))capPest='prof';
   verCap(cap);
   if(!s)return;
-  if(esSecInterp(s))ponPest('prof');
+  ponPest(esSecInterp(s)?'prof':'examen');
   const ve=()=>{const e=document.querySelector('#detalle .sec[data-i="'+i+'"]');if(!e)return;
     if(e.style.display==='none'){const b=document.querySelector('#detalle .capa-filtro .cf');if(b)filtraCapa(b,'');}
     /* scrollIntoView mueve también la columna del capítulo en pantalla ancha (tiene su propio

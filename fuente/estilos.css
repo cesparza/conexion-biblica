@@ -2787,30 +2787,39 @@ h2 .ico-t,h3 .ico-t,.ex-h .ico-t,.grupo .ico-t{color:var(--v-cat);margin-right:.
 .ea-viv .ea-ir{background:var(--fondo-ok)}
 .ea-fu{margin:0;padding-top:10px;border-top:1px solid var(--v-linea,#e5e7eb);font-size:.75rem;color:var(--v-tinta2,#5B5F6B)}
 
-/* TRES COLUMNAS cuando el capítulo mide VD_ANCHO (920 px) o más: índice,
-   texto y estudio. Consulta de CONTENEDOR y no de ventana (ver enColumnas()). */
+/* El lector muestra un contenido a la vez y usa el desplazamiento de la página. */
 #detalle{container:det / inline-size}
-@container det (min-width:920px){
-  .vd{display:grid;grid-template-columns:168px minmax(0,1fr) minmax(280px,340px);gap:0 28px;align-items:start}
-  .vd>div,.vd>nav{min-width:0}
-  .vd-ind{display:block;position:sticky;top:var(--pega-arriba,16px);max-height:calc(100vh - var(--pega-arriba,16px) - 16px);overflow-y:auto;
-    padding:4px 12px 4px 0;border-right:1px solid var(--v-linea,#e5e7eb);scrollbar-width:thin}
-  /* El texto va con la página; lo que se queda pegado es el estudio. */
-  .vd-izq{position:static;max-height:none;overflow:visible}
-  .vd-izq details.lect{margin:0}
-  .vd-izq details.lect>summary{display:none}
-  .vd-izq .lect-cuerpo{padding:0}
-  .vd-izq .biblia{font-size:1.125rem;line-height:1.75;max-width:62ch;margin:0 auto}
-  .vd-izq .lect-bl{max-width:62ch;margin:0 auto 8px}
-  .vd-izq .lect-cab{max-width:62ch;margin-left:auto;margin-right:auto}
-  .vd-izq .ads{max-width:62ch;margin-left:auto;margin-right:auto}
-  .vd-der{position:sticky;top:var(--pega-arriba,16px);max-height:calc(100vh - var(--pega-arriba,16px) - 16px);overflow-y:auto;
-    overscroll-behavior:contain;padding:0 6px 24px 2px;scrollbar-width:thin}
-  .vd-der .sec{margin-bottom:16px}
-  .vd-der .vd-cab{position:sticky;top:0;z-index:2;background:var(--card);padding-bottom:10px}
-  .vd-rot{display:block}
-}
-@container det (max-width:919.98px){.vd-rot{display:none}}
+.vd{display:block;max-width:76ch;margin:0 auto}
+.vd-izq,.vd-der,.vd-ind{position:static;max-height:none;overflow:visible;min-width:0}
+.vd[data-lector="texto"]>.vd-der,.vd[data-lector="estudio"]>.vd-izq{display:none}
+.lector-barra{margin:0 0 2rem}
+.lector-barra .cap-pest{display:flex;gap:.35rem;padding:.3rem;border:1px solid var(--v-linea);border-radius:12px;background:var(--v-sup2);margin:0 0 1rem}
+.lector-barra .cap-pest button{flex:1;min-width:0;min-height:44px;padding:.65rem .6rem;border:0;border-radius:8px;background:transparent;color:var(--v-tinta2);font-family:inherit;font-weight:700;font-size:.875rem;line-height:1.25;cursor:pointer}
+.lector-barra .cap-pest button.on{background:var(--card);color:var(--azul);box-shadow:var(--v-s1)}
+.lector-barra .cap-pest button .ico-t,.lector-barra .cap-pest small{display:none}
+.lector-barra .cap-pest .pest-tx{display:block}
+.lector-barra .cap-pest b{font-size:inherit}
+.lector-indice{border-bottom:1px solid var(--v-linea);padding:0 0 .8rem}
+.lector-indice>summary,.lector-audio>summary,.lector-repaso>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;gap:.6rem;font-weight:650;color:var(--azul);list-style:none}
+.lector-indice>summary::after,.lector-audio>summary::after,.lector-repaso>summary::after{content:'+';margin-left:auto;font-size:1.125rem}
+.lector-indice[open]>summary::after,.lector-audio[open]>summary::after,.lector-repaso[open]>summary::after{content:'−'}
+.lector-indice .vd-ind{display:block;padding:1rem 0 0;border:0}
+.lector-indice .ind-c{grid-template-columns:40px minmax(0,1fr);padding:.65rem .75rem;line-height:1.5}
+.lector-indice .ind-s{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 1rem 3rem}
+.lector-indice .ind-s li{flex:0 1 auto}
+.lector-indice .ind-b{border:1px solid var(--v-linea);border-radius:8px;padding:.4rem .6rem}
+.vd-izq details.lect{margin:0;border:0;background:transparent;box-shadow:none}
+.vd-izq details.lect>summary{display:none}
+.vd-izq .lect-cuerpo{padding:0}
+.vd-izq .biblia{font-size:var(--v-t1,1.125rem);line-height:1.85;max-width:68ch;margin:0}
+.vd-izq .lect-bl{margin:0 0 2.5rem;border:0;border-radius:0;box-shadow:none;background:none;padding:0}
+.vd-izq .lect-cab{margin:1.5rem 0 1rem;padding:0;flex-wrap:wrap;justify-content:space-between}
+.lector-audio{margin:0 0 2rem;border-bottom:1px solid var(--v-linea);padding:0 0 .75rem}
+.lector-audio .lect-top{position:static;margin:.6rem 0 0;background:var(--v-sup2);padding:.7rem;border-radius:12px;box-shadow:none;border:0}
+.lector-repaso{margin:1.2rem 0 0;padding:.6rem 1rem;background:var(--v-sup2);border-radius:12px;font-size:.875rem}
+.vd-der .sec{margin-bottom:2rem}
+.vd-der .est-ahora{display:none}
+@media(max-width:600px){.lector-barra .cap-pest button{font-size:.875rem;padding:.6rem .25rem}.lector-indice .ind-s{margin-left:0}}
 body:not(.cb-cuerpo){--pega-arriba:16px}
 @media (min-width:900px){
   body:not(.cb-cuerpo){--pega-arriba:76px}

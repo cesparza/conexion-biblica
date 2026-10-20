@@ -142,8 +142,13 @@ const MANUAL = [
     serie de la Biblioteca.</p>` },
   { t:'Cómo se lee un capítulo',
     h:`<p>Toca la tarjeta del capítulo. Cada uno empieza con
-    <strong>«En pocas palabras»</strong>, que es el resumen, y después vienen
-    los datos, los versículos y las trampas.</p>
+    el texto bíblico en <strong>Leer</strong>. Cambia a <strong>Estudiar</strong>
+    para consultar el resumen y los datos, o a <strong>Profundizar</strong> para consultar
+    explicación, escenas y fuentes. Solo ves una zona de contenido a la vez.
+    <strong>Capítulos y secciones</strong> abre el índice; <strong>Escuchar el
+    capítulo</strong> despliega los controles de audio. Las preguntas de cada
+    sección se abren con <strong>Comprueba esta sección</strong>. Los materiales
+    sin texto bíblico, como las creencias y los repasos, muestran directamente su estudio.</p>
     <p>Tú tienes {CAPS_CAT} capítulos y {MODS_CAT} repasos generales.</p>` },
   { t:'Lo que más se olvida',
     h:`<p>Al final del capítulo hay un botón <strong>«Ya lo estudié»</strong>.
