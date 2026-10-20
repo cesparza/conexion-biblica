@@ -6470,7 +6470,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'e8565030d4bc';
+const VERSION_APP = 'a990fc83a806';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -65225,7 +65225,7 @@ const LAMINAS = {
     "a": 2426,
     "t": "Los mil años",
     "s": "desde la venida y la primera resurrección: los santos con Cristo en el cielo; la tierra, desolada (CS 718)",
-    "f": "e-piedra",
+    "f": "mil-desolada",
     "ult": "desolada"
    },
    {
@@ -65853,7 +65853,7 @@ const LAMINAS = {
     "a": 2426,
     "t": "Los mil años",
     "s": "desde la venida y la primera resurrección: los santos juzgan con Cristo (CS 718)",
-    "f": "d2/e-piedra",
+    "f": "mil-juicio",
     "ult": "juzgan"
    },
    {
@@ -67245,7 +67245,7 @@ const LAMINAS = {
     "a": 2426,
     "t": "Los mil años",
     "s": "desde la venida y la primera resurrección: la tierra desolada (CS 718)",
-    "f": "d2/e-piedra",
+    "f": "d2/mil-desolada",
     "ult": "desolada"
    },
    {
@@ -71116,6 +71116,7 @@ const ULTIMOS = {
    "t": "La tierra desolada; Satanás atado",
    "c": "Tierra desolada",
    "cuando": "Desde la venida, mil años",
+   "img": "d2/mil-desolada",
    "nota": "Los impíos vivos mueren en la venida. La tierra queda desolada, y en ella Satanás vaga mil años sin nadie a quien engañar: así está atado.",
    "egwC": [
     [
@@ -71199,6 +71200,7 @@ const ULTIMOS = {
    "t": "El juicio de los santos",
    "c": "Juicio de los santos",
    "cuando": "Durante los mil años, en el cielo",
+   "img": "d7/mil-juicio",
    "nota": "Con Cristo, los santos juzgan a los impíos y a los ángeles caídos (1 Corintios 6:2-3). Comparan sus actos con los libros y fijan el castigo de cada uno según sus obras.",
    "egwC": [
     [
@@ -84409,7 +84411,7 @@ const MANUAL = [
    },
    {
     "t": "El estudio interactivo de Daniel 2",
-    "h": "<p>En Daniel 2, en la pestaña <strong>Para profundizar</strong>, está la tarjeta\n    <strong>Estudio interactivo</strong>.</p>\n    <ul><li><strong>Explorar:</strong> cada parte de la estatua, la piedra y el monte tienen su\n    etiqueta. Al tocar una etiqueta o la parte en la imagen, la explicación sale debajo de la\n    imagen (al lado en una pantalla grande), sin taparla: primero lo que dice el texto y después\n    lo que significa, con su fuente. La piedra cae y golpea los pies; el monte nace del polvo.</li>\n    <li><strong>La línea de tiempo:</strong> arrastra el año o toca el botón de reproducir y se enciende la\n    parte que gobernaba en ese momento.</li>\n    <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o\n    con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el\n    polvo que se lleva el viento y el monte que llena la tierra. Tocar una parte de la\n    estatua salta a su paso.</li></ul>"
+    "h": "<p>En Daniel 2, en la pestaña <strong>Para profundizar</strong>, está la tarjeta\n    <strong>Estudio interactivo</strong>.</p>\n    <ul><li><strong>Explorar:</strong> cada parte de la estatua, la piedra y el monte tienen su\n    etiqueta. Al tocar una etiqueta o la parte en la imagen, la explicación sale debajo de la\n    imagen (al lado en una pantalla grande), sin taparla: primero lo que dice el texto y después\n    lo que significa, con su fuente. La piedra cae y golpea los pies; el monte nace del polvo.</li>\n    <li><strong>La línea de tiempo:</strong> arrastra el año o toca el botón de reproducir y se enciende la\n    parte que gobernaba en ese momento. Después de la venida, el tramo\n    <strong>Los mil años</strong> tiene su propia ilustración: la tierra desolada\n    en Daniel 2 y 8, y los santos juzgando con Cristo en Daniel 7.</li>\n    <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o\n    con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el\n    polvo que se lleva el viento y el monte que llena la tierra. Tocar una parte de la\n    estatua salta a su paso.</li></ul>"
    },
    {
     "t": "Para el examen y para profundizar",
@@ -91147,7 +91149,7 @@ function lamQuien(y){
 }
 let lamFutVisto='';
 function lamVeAnio(y){
-  lamAnio=y;lamSel='';lamMarcaPaso('est');lamTramo(null);
+  lamAnio=y;lamSel='';lamCartel(false);lamFin(false);lamMarcaPaso('est');lamTramo(null);
   const q=lamQuien(y);
   const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
   if(lamEsE()){
@@ -91161,7 +91163,10 @@ function lamVeAnio(y){
   /* v211 (Camilo: «la estatua sale fantasma y la piedra flotando»): las partes que no
      gobiernan se ven enteras, en sombra (no transparentes), y la piedra no está hasta
      el tramo del futuro: ahí cae sobre los pies y después crece el monte. */
-  if(fu&&fu.id==='monte'){
+  if(fu&&!fu.id){
+    lamFutVisto='mil';lamVuelo++;lamMonte('no');est.style.opacity='0';pi.style.opacity='0';lamRielMarca([]);
+    lamHist({f:fu.f});
+  }else if(fu&&fu.id==='monte'){
     if(lamFutVisto!=='monte'){lamFutVisto='monte';est.style.opacity='0';lamVuelo++;pi.style.opacity='1';
       pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');
       if(lamQuieto())lamMonte('ya');else{lamPolvo(svg);setTimeout(()=>{if(lamFutVisto==='monte')lamMonte('crece');},500);}}

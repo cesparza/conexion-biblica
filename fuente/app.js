@@ -1395,7 +1395,7 @@ function lamQuien(y){
 }
 let lamFutVisto='';
 function lamVeAnio(y){
-  lamAnio=y;lamSel='';lamMarcaPaso('est');lamTramo(null);
+  lamAnio=y;lamSel='';lamCartel(false);lamFin(false);lamMarcaPaso('est');lamTramo(null);
   const q=lamQuien(y);
   const av=document.getElementById('lamAviso');if(av)av.classList.add('fuera');
   if(lamEsE()){
@@ -1409,7 +1409,10 @@ function lamVeAnio(y){
   /* v211 (Camilo: «la estatua sale fantasma y la piedra flotando»): las partes que no
      gobiernan se ven enteras, en sombra (no transparentes), y la piedra no está hasta
      el tramo del futuro: ahí cae sobre los pies y después crece el monte. */
-  if(fu&&fu.id==='monte'){
+  if(fu&&!fu.id){
+    lamFutVisto='mil';lamVuelo++;lamMonte('no');est.style.opacity='0';pi.style.opacity='0';lamRielMarca([]);
+    lamHist({f:fu.f});
+  }else if(fu&&fu.id==='monte'){
     if(lamFutVisto!=='monte'){lamFutVisto='monte';est.style.opacity='0';lamVuelo++;pi.style.opacity='1';
       pi.setAttribute('transform','translate('+L.golpe[0]+' '+L.golpe[1]+') rotate(40)');
       if(lamQuieto())lamMonte('ya');else{lamPolvo(svg);setTimeout(()=>{if(lamFutVisto==='monte')lamMonte('crece');},500);}}

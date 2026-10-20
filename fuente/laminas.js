@@ -55,7 +55,7 @@ const LAMINAS = {
      entre la piedra y el monte van los mil años. `ult`: el acontecimiento de
      ULTIMOS que muestra el tramo. */
   futuro: [{ id: 'piedra', de: 2026, a: 2226, t: 'La piedra', s: 'Cristo vuelve', f: 'e-piedra', ult: 'venida' },
-    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos con Cristo en el cielo; la tierra, desolada (CS 718)', f: 'e-piedra', ult: 'desolada' },
+    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos con Cristo en el cielo; la tierra, desolada (CS 718)', f: 'mil-desolada', ult: 'desolada' },
     { id: 'monte', de: 2426, a: 2626, t: 'El gran monte', s: 'el reino eterno, después de los mil años', f: 'e-monte', ult: 'reino' }],
   /* Daniel 2 no trae el juicio, pero la historia sí pasa por 1844 (Daniel 7 y 8). */
   juicio: 1844,
@@ -224,7 +224,7 @@ LAMINAS.d7 = {
   tiempo: ['leon', 'oso', 'leopardo', 'bestia', 'cuernos', 'cuerno', 'juicio'],
   /* v218: la venida, los mil años y el reino eterno, como en Daniel 2. */
   futuro: [{ id: 'santos', de: 2026, a: 2226, t: 'La segunda venida', s: 'los santos reciben el reino', f: 'd2/e-piedra', ult: 'venida' },
-    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos juzgan con Cristo (CS 718)', f: 'd2/e-piedra', ult: 'juzgan' },
+    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos juzgan con Cristo (CS 718)', f: 'mil-juicio', ult: 'juzgan' },
     { id: 'reino', de: 2426, a: 2626, t: 'El reino eterno', s: 'después de los mil años', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
     { f: 'd2/babilonia', titulo: 'En el primer año de Belsasar', ref: 'Daniel 7:1', texto: 'En el primer año de Belsasar, rey de Babilonia, tuvo Daniel un sueño y visiones de su cabeza mientras estaba en su lecho',
@@ -295,11 +295,8 @@ LAMINAS.d7 = {
   marcas: [[-605, '605 a.C.'], [-539, '539<i> a.C.</i>'], [-331, '331<i> a.C.</i>'], [-168, '168<i> a.C.</i>'], [1, '1<i> d.C.</i>', 'menor'], [476, '476<i> d.C.</i>'], [538, '538<i> d.C.</i>'],
     [1798, '1798'], [1844, '1844<i> · juicio</i>'], [2026, 'hoy'], [2226, 'la venida', 'fut'], [2326, 'mil años', 'fut'], [2526, 'el reino', 'fut'], [2476, 'futuro', 'tel']],
   hitos: [-539, -331, -168, 476, 538, 1798, 1844],
-  /* v205: LAS BESTIAS SUBEN DEL MAR (7:3), una por paso. Hoy: la imagen entera de
-     cada bestia sube y aparece sobre la anterior. Cuando existan
-     laminas/d7/{leon,oso,leopardo,cuarta}-solo.png (fondo transparente; la que falte sube con su foto entera), suben
-     recortadas sobre mar.webp y las anteriores quedan chicas atrás. Medidas en
-     píxeles de una imagen de 1200 × 675. */
+  /* Cada bestia sube recortada sobre el mar; las anteriores quedan atrás.
+     Las cuatro capas existen. La foto completa queda como respaldo sin conexión. */
   sube: { fondo: 'mar', ids: ['leon', 'oso', 'leopardo', 'bestia'], solo: ['leon-solo.png', 'oso-solo.png', 'leopardo-solo.png', 'cuarta-solo.png'],
     sitio: [370, 110, 600, 440], atras: [[10, 210, 260, 180], [200, 250, 260, 200], [20, 340, 250, 190]], olas: 500 },
   /* v205: LOS DIEZ CUERNOS Y EL CUERNO PEQUEÑO (7:7-8, 24). En «Los diez cuernos» se
@@ -562,7 +559,7 @@ LAMINAS.d8 = {
     /* v232: de 1798 a 1844 decía «Antes de Nabucodonosor». Corren todavía las 2.300 tardes y mañanas (8:14). */
     [1798, 1844, 'Las 2.300 tardes y mañanas: siguen corriendo hasta 1844 (8:14)', 'santuario']],
   futuro: [{ id: 'quebrantado', de: 2026, a: 2226, t: 'La segunda venida', s: 'el cuerno es quebrantado, no por mano humana', f: 'd2/e-piedra', ult: 'venida' },
-    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: la tierra desolada (CS 718)', f: 'd2/e-piedra', ult: 'desolada' },
+    { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: la tierra desolada (CS 718)', f: 'd2/mil-desolada', ult: 'desolada' },
     { id: '', de: 2426, a: 2626, t: 'El reino eterno', s: 'Daniel 8 no lo muestra: llega en Daniel 12:1-3', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
     { f: 'ulai', titulo: 'En el tercer año de Belsasar', ref: 'Daniel 8:1-2', texto: 'En el año tercero del reinado del rey Belsasar, yo, Daniel, tuve una visión, después de aquella que había tenido antes. … En la visión, pues, me veía junto al río Ulai.',
@@ -1059,14 +1056,14 @@ const ULTIMOS = {
       l: { mt24: I('24:31', '«Juntarán a sus escogidos de los cuatro vientos.»', 'CS 703'),
         ap14: I('14:1-5', 'Los 144.000, trasladados de entre los vivos, primicias para Dios.', 'CS 707', [['Apocalipsis 14:4', 'Éstos fueron redimidos de entre los hombres como primicias para Dios y para el Cordero']]),
         apo: I('15:2-3', 'Los que vencieron a la bestia, de pie sobre el mar de vidrio.', 'CS 707', [['Apocalipsis 15:2', 'a los que habían alcanzado la victoria sobre la bestia y su imagen']]) } },
-    { id: 'desolada', fase: 'mil', t: 'La tierra desolada; Satanás atado', c: 'Tierra desolada', cuando: 'Desde la venida, mil años',
+    { id: 'desolada', fase: 'mil', t: 'La tierra desolada; Satanás atado', c: 'Tierra desolada', cuando: 'Desde la venida, mil años', img: 'd2/mil-desolada',
       nota: 'Los impíos vivos mueren en la venida. La tierra queda desolada, y en ella Satanás vaga mil años sin nadie a quien engañar: así está atado.',
       egwC: [["CS 718", "Durante los mil años que transcurrirán entre la primera resurrección y la segunda, se verificará el juicio de los impíos.", "Los mil años empiezan con la primera resurrección, en la venida, y terminan con la segunda."], ["CS 718", "Durante mil años, Satanás andará errante de un lado para otro en la tierra desolada, considerando los resultados de su rebelión contra la ley de Dios.", "En los mil años la tierra queda desolada y Satanás, atado a ella."]],
       egw: 'CS 711-718; PE 289-290',
       l: { ap18: I('18:8', 'Babilonia es quemada con fuego en un solo día.', 'CS 711', [['Apocalipsis 18:8', 'será quemada con fuego']]),
         ap19: X('19:20-21', 'La bestia y el falso profeta son lanzados al lago de fuego; los demás mueren con la espada de su boca.', 'CS 711-715', [['Apocalipsis 19:21', 'Los demás fueron muertos con la espada que salía de la boca del que montaba el caballo']]),
         ap20: X('20:1-3', 'Satanás es atado y encerrado en el abismo mil años.', 'CS 716-717', [['Apocalipsis 20:2', 'lo ató por mil años']]) } },
-    { id: 'juzgan', fase: 'mil', t: 'El juicio de los santos', c: 'Juicio de los santos', cuando: 'Durante los mil años, en el cielo',
+    { id: 'juzgan', fase: 'mil', t: 'El juicio de los santos', c: 'Juicio de los santos', cuando: 'Durante los mil años, en el cielo', img: 'd7/mil-juicio',
       nota: 'Con Cristo, los santos juzgan a los impíos y a los ángeles caídos (1 Corintios 6:2-3). Comparan sus actos con los libros y fijan el castigo de cada uno según sus obras.',
       egwC: [["CS 719", "Junto con Cristo juzgan a los impíos, comparando sus actos con el libro de la ley, la Biblia, y fallando cada caso en conformidad con los actos que cometieron por medio de su cuerpo.", "En los mil años los santos juzgan con Cristo a los impíos."]],
       egw: 'CS 718-719; PE 52 y 290-291',

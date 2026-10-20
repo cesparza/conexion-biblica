@@ -455,7 +455,9 @@ const MANUAL = [
     imagen (al lado en una pantalla grande), sin taparla: primero lo que dice el texto y después
     lo que significa, con su fuente. La piedra cae y golpea los pies; el monte nace del polvo.</li>
     <li><strong>La línea de tiempo:</strong> arrastra el año o toca el botón de reproducir y se enciende la
-    parte que gobernaba en ese momento.</li>
+    parte que gobernaba en ese momento. Después de la venida, el tramo
+    <strong>Los mil años</strong> tiene su propia ilustración: la tierra desolada
+    en Daniel 2 y 8, y los santos juzgando con Cristo en Daniel 7.</li>
     <li><strong>Presentar:</strong> pantalla oscura para una clase, un paso por toque o
     con las flechas: la historia del capítulo, cada metal, la piedra que golpea, el
     polvo que se lleva el viento y el monte que llena la tierra. Tocar una parte de la

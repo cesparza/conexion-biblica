@@ -2616,7 +2616,8 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const fsC=require('fs'),pathC=require('path'),d7=pathC.join(__dirname,'..','laminas','d7');
     ok([C.capas.sin.f,C.capas.pequeno,C.capas.delante.f,...C.capas.tres.map(t=>t.f)].every(f=>fsC.existsSync(pathC.join(d7,f))),'Las piezas del cuerno están en laminas/d7 (tools/lamina-cuernos.py)'); }
   const fs7=[...new Set([L.sube.fondo,C.diezEn&&L.partes.find(p=>p.id===C.diezEn).img,L.partes.find(p=>p.id===C.caenEn).img])];
-  ok(fs7.every(f=>fs.existsSync(path.join(RAIZ,'laminas',L.dir+f+'.webp'))),'Las imágenes de hoy (mar, cuarta, cuerno) existen: lo de las capas es una mejora, no una falta');
+  ok(fs7.every(f=>fs.existsSync(path.join(RAIZ,'laminas',L.dir+f+'.webp')))&&L.sube.solo.every(f=>fs.existsSync(path.join(RAIZ,'laminas',L.dir+f))),
+    'Las cuatro bestias tienen su capa recortada para subir del mar, además de la foto de respaldo');
   const pasos=L.partes.flatMap(p=>(p.pasos||[]).map(x=>Object.assign({p:p.id},x)));
   const malos=pasos.filter(x=>!d7.includes(n(x.texto))||!x.caja||x.caja.length!==4||Math.abs(x.caja[2]/x.caja[3]-1200/675)>.02||x.caja[0]<0||x.caja[1]<0||x.caja[0]+x.caja[2]>1200||x.caja[1]+x.caja[3]>675);
   ok(pasos.filter(x=>x.p==='juicio').map(x=>x.t).join(' / ')==='Fueron puestos unos tronos / Se sentó un Anciano de días / Un río de fuego / Los libros fueron abiertos / Mataron a la bestia / Las otras bestias'&&pasos.filter(x=>x.p==='hijo').length===2&&!malos.length,
@@ -2713,6 +2714,10 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(fu.length===1,'Comparar cita su fuente una sola vez ('+fu.length+')');
   /* La línea de tiempo llega al futuro: 1844, la piedra y el monte después de hoy. */
   const F2=LAMINAS.d2.futuro,F7=LAMINAS.d7.futuro;
+  const mil=[LAMINAS.d2,LAMINAS.d7,LAMINAS.d8].map(L=>[L,L.futuro[1]]);
+  ok(mil.every(([L,f])=>f.f!==L.futuro[0].f&&fs.existsSync(path.join(RAIZ,'laminas',(f.f.includes('/')?'':L.dir)+f.f+'.webp')))&&
+    mil[0][1].f==='mil-desolada'&&mil[1][1].f==='mil-juicio'&&mil[2][1].f==='d2/mil-desolada',
+    'El milenio tiene imagen propia: tierra desolada en Daniel 2 y 8, juicio de los santos en Daniel 7');
   ok(F2.map(f=>f.id).join()==='piedra,,monte'&&F2[0].de===2026&&F2.every((f,i)=>!i||f.de===F2[i-1].a)&&F2.map(f=>f.ult).join()==='venida,desolada,reino'&&
     F7.map(f=>f.id).join()==='santos,,reino'&&F7.map(f=>f.ult).join()==='venida,juzgan,reino',
     'La línea de tiempo sigue después de hoy: la piedra, los mil años y el monte (Daniel 2); la venida, los mil años y el reino (Daniel 7)');
@@ -3315,6 +3320,24 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const titulos=montar('x:[tituloSec("🧭 «Fueron puestos unos tronos»"),tituloSec("🤔 ¿La bestia es el dragón?"),tituloSec("📖 Daniel 7")]').x;
   ok(titulos.join('|')==='«Fueron puestos unos tronos»|¿La bestia es el dragón?|Daniel 7',
     'Los encabezados conservan sus signos de apertura al quitar el emoji');
+}
+
+/* Toda referencia de imagen, incluidas capas, subpasos y tramos futuros. */
+{
+  const {LAMINAS,ULTIMOS}=require(path.join(RAIZ,'fuente','laminas.js')),rutas=new Set();
+  const archivo=/^[a-z0-9_/-]+(?:\.(?:webp|png|jpg))?$/i;
+  for(const L of Object.values(LAMINAS)){
+    const agrega=f=>{if(typeof f==='string'&&archivo.test(f))rutas.add((f.includes('/')?'':L.dir)+f+(/\.\w+$/.test(f)?'':'.webp'));};
+    const visita=o=>{if(!o||typeof o!=='object')return;for(const[k,v]of Object.entries(o)){
+      if(['f','img','fondo','inicioF','miniF','pequeno','portada'].includes(k))agrega(v);
+      if(['solo','precarga'].includes(k)&&Array.isArray(v))v.forEach(agrega);
+      if(v&&typeof v==='object')visita(v);
+    }};
+    visita(L);(L.capas||[]).forEach(agrega);
+  }
+  ULTIMOS.eventos.filter(e=>e.img).forEach(e=>rutas.add(e.img+'.webp'));
+  const faltan=[...rutas].filter(f=>!fs.existsSync(path.join(RAIZ,'laminas',f)));
+  ok(rutas.size>=68&&!faltan.length,'Inventario de '+rutas.size+' imágenes referenciadas sin archivos ausentes'+(faltan.length?': '+faltan.join(', '):''));
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
