@@ -1434,7 +1434,7 @@ function lamVeAnio(y){
      vuelve a pintar solo cuando cambia, si no parpadea. */
   /* v215: en el tramo futuro, la secuencia de los últimos acontecimientos. */
   const futU=q.fut?lamUltHTML([q.fut.ult||(q.fut.id==='monte'||q.fut.id==='reino'?'reino':'venida')]):'';
-  const esA0=lamEscenaAnio(y),esA=lamEnEscena(esA0)?null:esA0,hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>'+futU;
+  const esA0=lamEscenaAnio(y),esA=q.fut||lamEnEscena(esA0)?null:esA0,hj=document.getElementById('lamHoja'),txt='<div class="lam-hcab"><div><div class="lam-p1">La historia, año por año</div><div class="lam-p2 lam-fechas">'+lamAnioTx(y)+'</div></div></div><p class="lam-nota">'+esc(q.tx)+'</p>'+futU;
   const fig=hj&&hj.querySelector('.lam-fig'),igual=fig?(esA&&fig.getAttribute('data-f')===esA.f):!esA;
   if(hj&&igual&&hj.querySelector('.lam-anio-tx')){hj.querySelector('.lam-anio-tx').innerHTML=lamPer(txt);hj.classList.remove('vacia');}
   else lamHoja(lamEscenaHTML(esA)+'<div class="lam-anio-tx">'+txt+'</div>');
