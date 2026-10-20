@@ -3313,8 +3313,8 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   background:radial-gradient(circle,color-mix(in srgb,var(--c) 85%,#fff) 0%,color-mix(in srgb,var(--c) 45%,transparent) 35%,transparent 70%);
   opacity:0;mix-blend-mode:screen;transition:opacity .4s,transform .4s;pointer-events:none}
 .qm-l.on .qm-g{opacity:1;transform:translate(-50%,0) scale(1.05)}
-.qm-l.par .qm-g{opacity:.5;transform:translate(-50%,0) scale(.85)}
-.qm-l.par{opacity:.75}
+.qm-l.qm-par .qm-g{opacity:.5;transform:translate(-50%,0) scale(.85)}
+.qm-l.qm-par{opacity:.75}
 .qm-l.off{opacity:.35}
 .qm-l:active:not(:disabled){transform:translateX(-50%) scale(.97)}
 .qm-l:focus-visible{outline:2px solid var(--c);outline-offset:2px;border-radius:8px}
@@ -6473,7 +6473,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '27d1b05299be';
+const VERSION_APP = '0feb74fbdcc3';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -95273,7 +95273,7 @@ function qmToca(n){
   const par=QM.par[n]||0, misma=q.getAttribute('data-sel')===String(n);
   q.setAttribute('data-sel',misma?'':String(n));
   q.querySelectorAll('.qm-l').forEach(b=>{const k=+b.getAttribute('data-n');
-    b.classList.toggle('on',!misma&&k===n);b.classList.toggle('par',!misma&&k===par);
+    b.classList.toggle('on',!misma&&k===n);b.classList.toggle('qm-par',!misma&&k===par);
     b.classList.toggle('off',!misma&&k!==n&&k!==par);b.setAttribute('aria-pressed',String(!misma&&k===n));});
   const t=QM.txt[Math.min(n,par||n)]||QM.txt[n];
   q.querySelector('.qm-txt').innerHTML=misma?'<p class="qm-pista">Toca una lámpara para ver su pareja.</p>':

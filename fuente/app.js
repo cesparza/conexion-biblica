@@ -5516,7 +5516,7 @@ function qmToca(n){
   const par=QM.par[n]||0, misma=q.getAttribute('data-sel')===String(n);
   q.setAttribute('data-sel',misma?'':String(n));
   q.querySelectorAll('.qm-l').forEach(b=>{const k=+b.getAttribute('data-n');
-    b.classList.toggle('on',!misma&&k===n);b.classList.toggle('par',!misma&&k===par);
+    b.classList.toggle('on',!misma&&k===n);b.classList.toggle('qm-par',!misma&&k===par);
     b.classList.toggle('off',!misma&&k!==n&&k!==par);b.setAttribute('aria-pressed',String(!misma&&k===n));});
   const t=QM.txt[Math.min(n,par||n)]||QM.txt[n];
   q.querySelector('.qm-txt').innerHTML=misma?'<p class="qm-pista">Toca una lámpara para ver su pareja.</p>':
