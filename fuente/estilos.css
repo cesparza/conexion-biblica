@@ -5284,7 +5284,9 @@ span.cmp-ult-c{cursor:default}
 .lm-seg.oro{background:linear-gradient(90deg,#D6B26A,#F2C46B);color:#17120A}
 .lm-seg.corte{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--txt,#1a1a2e) 30%,transparent) 0 5px,transparent 5px 9px);height:4px;top:calc(var(--lm-h) / 2 - 2px);overflow:visible;opacity:1}
 .lm-seg.corte b{position:relative;padding:0 4px;background:var(--lm-fondo,var(--bg,#fff));font-size:.875rem;font-weight:800;letter-spacing:-.12em;color:var(--txt,#1a1a2e)}
-.lm-seg.mil{pointer-events:auto;cursor:pointer;background:transparent;border:1.5px dashed color-mix(in srgb,var(--lam-oro,#B98A35) 80%,transparent);color:var(--txt,#1a1a2e);opacity:1;padding:0;font:inherit;border-radius:0}
+.lm-seg.mil{pointer-events:none;cursor:pointer;background:transparent;border:1.5px dashed color-mix(in srgb,var(--lam-oro,#B98A35) 80%,transparent);color:var(--txt,#1a1a2e);opacity:1;padding:0;font:inherit;border-radius:0;z-index:2;overflow:visible}
+.lm-seg.mil::after{content:'';position:absolute;left:50%;top:50%;width:max(44px,calc(100% - var(--lm-p) * 2));height:44px;transform:translate(-50%,-50%);pointer-events:auto}
+.lm-seg.mil:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:3px}
 .lm-seg.mil.on{background:color-mix(in srgb,var(--lam-oro,#B98A35) 22%,transparent)}
 .lm-seg.mil.fin{border-radius:0 999px 999px 0}
 .lm-l2{top:calc(var(--lm-h) + 4px);height:var(--lm-h2);border-radius:999px;background:var(--c);color:var(--t,#fff);opacity:.9;justify-content:flex-start}

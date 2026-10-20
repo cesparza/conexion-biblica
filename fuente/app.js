@@ -726,9 +726,9 @@ function lamMetroHTML(L){
         return ';--lm-tw:'+((E[j+1].x-E[j].x)/W*100).toFixed(3)+'%;--lm-tl:'+((E[j].x-x0)/W*100).toFixed(3)+'%';})():'');
     const cl='lm-seg'+(t.cl?' '+t.cl:'')+(k===0?' ini':'')+(k===tr.length-1?' fin':'');
     if(t.cl==='mil')return '<button type="button" class="'+cl+'" style="'+st+'" data-y="'+t.y+'" data-de="'+t.a.y+'" aria-label="'+esc(t.tx+', desde la venida')+'" onclick="lamTkToca('+t.y+')"><span>'+esc(t.tx)+'</span></button>';
-    return '<i class="'+cl+'" style="'+st+'" data-de="'+t.a.y+'" data-a="'+t.b.y+'"'+(t.tx?' title="'+esc(t.tx)+'"':'')+'>'+(t.cl==='corte'?'<b aria-hidden="true">//</b>':'<span>'+esc(t.tx)+'</span>')+'</i>';}).join('');
+    return '<i aria-hidden="true" class="'+cl+'" style="'+st+'" data-de="'+t.a.y+'" data-a="'+t.b.y+'"'+(t.tx?' title="'+esc(t.tx)+'"':'')+'>'+(t.cl==='corte'?'<b aria-hidden="true">//</b>':'<span>'+esc(t.tx)+'</span>')+'</i>';}).join('');
   const l2=(L.metro.l2||[]).map(([de,a,n,c])=>{const x0=E[ix(de)].x,x1=E[ix(a)].x;
-    return '<i class="lm-l2" data-de="'+de+'" style="left:'+P(x0)+';width:'+P(x1-x0)+';--c:'+lmFondo(c)+';--t:'+lmTinta(c)+'" title="'+esc(n)+'"><span>'+esc(n)+'</span></i>';}).join('');
+    return '<i aria-hidden="true" class="lm-l2" data-de="'+de+'" style="left:'+P(x0)+';width:'+P(x1-x0)+';--c:'+lmFondo(c)+';--t:'+lmTinta(c)+'" title="'+esc(n)+'"><span>'+esc(n)+'</span></i>';}).join('');
   const anio=y=>y>=LAM_HOY?'':y<0?'<b>'+(-y)+'</b><small>a.C.</small>':'<b>'+y+'</b>';
   const est=E.map(e=>{const fut=e.y>LAM_HOY,hoy=e.c==='hoy';
     const nom=(hoy?'Hoy':fut?lamTxt(e.n):(e.y<0?(-e.y)+' antes de Cristo':e.y+' después de Cristo')+', '+e.n);
@@ -736,7 +736,7 @@ function lamMetroHTML(L){
       '<i class="lm-p" aria-hidden="true"></i><span class="lm-a">'+(hoy||fut?'<b>'+esc(e.n)+'</b>':anio(e.y))+'</span>'+(hoy||fut?'<span class="lm-n">'+(fut?'futuro':'')+'</span>':'<span class="lm-n">'+(e.k?'<span class="lg">'+esc(e.n)+'</span><span class="ct" aria-hidden="true">'+esc(e.k)+'</span>':esc(e.n))+'</span>')+'</button></li>';}).join('');
   const cols=E.map(e=>'minmax(0,'+e.w+'fr)').join(' ');
   return '<div class="lam-metro" style="--n:'+E.u+'"><div class="lm-vista"><div class="lm-pista">'+
-    '<div class="lm-lineas" aria-hidden="true">'+seg+l2+'<i class="lm-tramo"></i></div><ol class="lm-est" style="grid-template-columns:'+cols+'" aria-label="Estaciones de la línea de tiempo">'+est+'</ol></div></div>'+
+    '<div class="lm-lineas">'+seg+l2+'<i class="lm-tramo" aria-hidden="true"></i></div><ol class="lm-est" style="grid-template-columns:'+cols+'" aria-label="Estaciones de la línea de tiempo">'+est+'</ol></div></div>'+
     /* v233b: en la tira, con mouse, ‹ › van a la estación de al lado (en el teléfono se desliza). */
     '<button type="button" class="lm-ir ant" aria-label="Estación anterior" onclick="lamMetroPaso(-1)"></button><button type="button" class="lm-ir sig" aria-label="Estación siguiente" onclick="lamMetroPaso(1)"></button></div>';
 }

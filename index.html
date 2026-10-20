@@ -5301,7 +5301,9 @@ span.cmp-ult-c{cursor:default}
 .lm-seg.oro{background:linear-gradient(90deg,#D6B26A,#F2C46B);color:#17120A}
 .lm-seg.corte{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--txt,#1a1a2e) 30%,transparent) 0 5px,transparent 5px 9px);height:4px;top:calc(var(--lm-h) / 2 - 2px);overflow:visible;opacity:1}
 .lm-seg.corte b{position:relative;padding:0 4px;background:var(--lm-fondo,var(--bg,#fff));font-size:.875rem;font-weight:800;letter-spacing:-.12em;color:var(--txt,#1a1a2e)}
-.lm-seg.mil{pointer-events:auto;cursor:pointer;background:transparent;border:1.5px dashed color-mix(in srgb,var(--lam-oro,#B98A35) 80%,transparent);color:var(--txt,#1a1a2e);opacity:1;padding:0;font:inherit;border-radius:0}
+.lm-seg.mil{pointer-events:none;cursor:pointer;background:transparent;border:1.5px dashed color-mix(in srgb,var(--lam-oro,#B98A35) 80%,transparent);color:var(--txt,#1a1a2e);opacity:1;padding:0;font:inherit;border-radius:0;z-index:2;overflow:visible}
+.lm-seg.mil::after{content:'';position:absolute;left:50%;top:50%;width:max(44px,calc(100% - var(--lm-p) * 2));height:44px;transform:translate(-50%,-50%);pointer-events:auto}
+.lm-seg.mil:focus-visible{outline:2px solid var(--lam-oro,#B98A35);outline-offset:3px}
 .lm-seg.mil.on{background:color-mix(in srgb,var(--lam-oro,#B98A35) 22%,transparent)}
 .lm-seg.mil.fin{border-radius:0 999px 999px 0}
 .lm-l2{top:calc(var(--lm-h) + 4px);height:var(--lm-h2);border-radius:999px;background:var(--c);color:var(--t,#fff);opacity:.9;justify-content:flex-start}
@@ -6470,7 +6472,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'a96d328d88c5';
+const VERSION_APP = 'cf53b9b4e18c';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -90480,9 +90482,9 @@ function lamMetroHTML(L){
         return ';--lm-tw:'+((E[j+1].x-E[j].x)/W*100).toFixed(3)+'%;--lm-tl:'+((E[j].x-x0)/W*100).toFixed(3)+'%';})():'');
     const cl='lm-seg'+(t.cl?' '+t.cl:'')+(k===0?' ini':'')+(k===tr.length-1?' fin':'');
     if(t.cl==='mil')return '<button type="button" class="'+cl+'" style="'+st+'" data-y="'+t.y+'" data-de="'+t.a.y+'" aria-label="'+esc(t.tx+', desde la venida')+'" onclick="lamTkToca('+t.y+')"><span>'+esc(t.tx)+'</span></button>';
-    return '<i class="'+cl+'" style="'+st+'" data-de="'+t.a.y+'" data-a="'+t.b.y+'"'+(t.tx?' title="'+esc(t.tx)+'"':'')+'>'+(t.cl==='corte'?'<b aria-hidden="true">//</b>':'<span>'+esc(t.tx)+'</span>')+'</i>';}).join('');
+    return '<i aria-hidden="true" class="'+cl+'" style="'+st+'" data-de="'+t.a.y+'" data-a="'+t.b.y+'"'+(t.tx?' title="'+esc(t.tx)+'"':'')+'>'+(t.cl==='corte'?'<b aria-hidden="true">//</b>':'<span>'+esc(t.tx)+'</span>')+'</i>';}).join('');
   const l2=(L.metro.l2||[]).map(([de,a,n,c])=>{const x0=E[ix(de)].x,x1=E[ix(a)].x;
-    return '<i class="lm-l2" data-de="'+de+'" style="left:'+P(x0)+';width:'+P(x1-x0)+';--c:'+lmFondo(c)+';--t:'+lmTinta(c)+'" title="'+esc(n)+'"><span>'+esc(n)+'</span></i>';}).join('');
+    return '<i aria-hidden="true" class="lm-l2" data-de="'+de+'" style="left:'+P(x0)+';width:'+P(x1-x0)+';--c:'+lmFondo(c)+';--t:'+lmTinta(c)+'" title="'+esc(n)+'"><span>'+esc(n)+'</span></i>';}).join('');
   const anio=y=>y>=LAM_HOY?'':y<0?'<b>'+(-y)+'</b><small>a.C.</small>':'<b>'+y+'</b>';
   const est=E.map(e=>{const fut=e.y>LAM_HOY,hoy=e.c==='hoy';
     const nom=(hoy?'Hoy':fut?lamTxt(e.n):(e.y<0?(-e.y)+' antes de Cristo':e.y+' después de Cristo')+', '+e.n);
@@ -90490,7 +90492,7 @@ function lamMetroHTML(L){
       '<i class="lm-p" aria-hidden="true"></i><span class="lm-a">'+(hoy||fut?'<b>'+esc(e.n)+'</b>':anio(e.y))+'</span>'+(hoy||fut?'<span class="lm-n">'+(fut?'futuro':'')+'</span>':'<span class="lm-n">'+(e.k?'<span class="lg">'+esc(e.n)+'</span><span class="ct" aria-hidden="true">'+esc(e.k)+'</span>':esc(e.n))+'</span>')+'</button></li>';}).join('');
   const cols=E.map(e=>'minmax(0,'+e.w+'fr)').join(' ');
   return '<div class="lam-metro" style="--n:'+E.u+'"><div class="lm-vista"><div class="lm-pista">'+
-    '<div class="lm-lineas" aria-hidden="true">'+seg+l2+'<i class="lm-tramo"></i></div><ol class="lm-est" style="grid-template-columns:'+cols+'" aria-label="Estaciones de la línea de tiempo">'+est+'</ol></div></div>'+
+    '<div class="lm-lineas">'+seg+l2+'<i class="lm-tramo" aria-hidden="true"></i></div><ol class="lm-est" style="grid-template-columns:'+cols+'" aria-label="Estaciones de la línea de tiempo">'+est+'</ol></div></div>'+
     /* v233b: en la tira, con mouse, ‹ › van a la estación de al lado (en el teléfono se desliza). */
     '<button type="button" class="lm-ir ant" aria-label="Estación anterior" onclick="lamMetroPaso(-1)"></button><button type="button" class="lm-ir sig" aria-label="Estación siguiente" onclick="lamMetroPaso(1)"></button></div>';
 }
