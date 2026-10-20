@@ -5743,11 +5743,21 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 #p-estudio .bib-pie{grid-column:1/-1;margin:.2rem 0;padding:1rem;border-style:solid}
 #p-estudio .bib-pie:hover{border-color:var(--azul);background:color-mix(in srgb,var(--azul) 5%,var(--card))}
 #p-estudio #detalle{border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:22px;box-shadow:none}
-#p-estudio #detalle .cap-cab{margin:0 0 1.2rem;padding:clamp(1rem,2vw,1.7rem);border-radius:16px;
+#p-estudio #detalle .cap-cab{margin:0 0 1.2rem;padding:clamp(1rem,2vw,1.4rem);border-radius:16px;
   background:color-mix(in srgb,var(--azul) 7%,var(--card))}
-#p-estudio #detalle .cap-tit{max-width:22ch;font-size:clamp(2rem,4vw,3.25rem);line-height:1.06;letter-spacing:-.05em}
+#p-estudio #detalle .cap-tit{max-width:30ch;font-size:clamp(1.65rem,3.2vw,2.25rem);line-height:1.12;letter-spacing:-.035em}
 #p-estudio #detalle .cap-ante{color:var(--naranja-txt);letter-spacing:.1em}
 #p-estudio #detalle .cap-meta{font-size:.83rem;line-height:1.45}
+.cap-herramientas{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1rem;margin-bottom:.65rem}
+.cap-herramientas .bib-volver{min-height:44px;margin:0}
+.cap-herramientas .cap-nav{flex:0 0 auto;margin:0;gap:.4rem}
+.cap-herramientas .hoja-nav{width:44px;padding:0;font-size:1.4rem;line-height:1}
+.cap-herramientas .hoja-cta{flex:0 0 auto;min-width:6ch}
+.cap-corto{display:none}
+.cap-pie{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1rem;margin-top:.65rem}
+#p-estudio #detalle .cap-pie .cap-meta,#p-estudio #detalle .cap-me{margin:0}
+.cap-me:empty{display:none}
+@media(max-width:580px){.cap-todos{display:none}.cap-corto{display:inline}}
 .bib-volver{display:inline-flex;align-items:center;gap:.4rem;min-height:42px;margin:0 0 .75rem;padding:0;border:0;background:transparent;
   color:var(--azul);font-family:inherit;font-size:.82rem;font-weight:800;line-height:1.2;cursor:pointer}
 .bib-volver:hover{text-decoration:underline}
@@ -6460,7 +6470,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '13c53fa76c49';
+const VERSION_APP = 'e8565030d4bc';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -84179,7 +84189,7 @@ const MANUAL = [
   "secs": [
    {
     "t": "Biblioteca y Concursos",
-    "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera. Escoge un tema (Daniel, Apocalipsis,\n    la matutina o las creencias): su portada muestra el botón\n    <strong>Empezar a leer</strong> o <strong>Continuar leyendo</strong>, el avance\n    y la Bibliografía. Debajo puedes elegir cómo leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Escenas y recursos</strong> están las láminas, Comparar, Paralelos y\n    los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas\n    del tema. El concurso puede usar solo una parte sin ocultar el resto de la\n    Biblioteca. Al abrir un capítulo, la lectura reemplaza el listado y empieza\n    en su cabecera. <strong>Anterior</strong> y <strong>Siguiente</strong> cambian\n    de lectura sin buscar otra tarjeta. <strong>Todos los capítulos</strong>\n    vuelve al listado, sobre la tarjeta del capítulo que acabas de leer.\n    Cada tema tiene su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
+    "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera. Escoge un tema (Daniel, Apocalipsis,\n    la matutina o las creencias): su portada muestra el botón\n    <strong>Empezar a leer</strong> o <strong>Continuar leyendo</strong>, el avance\n    y la Bibliografía. Debajo puedes elegir cómo leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Escenas y recursos</strong> están las láminas, Comparar, Paralelos y\n    los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas\n    del tema. El concurso puede usar solo una parte sin ocultar el resto de la\n    Biblioteca. Al abrir un capítulo, la lectura reemplaza el listado y empieza\n    en su cabecera. Las flechas junto al número de capítulo cambian\n    de lectura sin buscar otra tarjeta; al final también están\n    <strong>Anterior</strong> y <strong>Siguiente</strong>.\n    <strong>Todos los capítulos</strong> (<strong>Capítulos</strong> en el celular)\n    vuelve al listado, sobre la tarjeta del capítulo que acabas de leer.\n    Cada tema tiene su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
    },
    {
     "t": "La matutina es una serie completa",
@@ -95126,10 +95136,10 @@ function segmentado(aria,ops,clase){
     ops.map(o=>'<button type="button" class="cf'+(o.on?' on':'')+'" aria-pressed="'+(!!o.on)+'" onclick="'+o.clic+'">'+o.t+'</button>').join('')+'</div>';
 }
 /* `ant` y `sig`: {clic, aria}, o null si no hay a dónde ir (el botón sale apagado). */
-function filaNav(ant,centro,sig){
+function filaNav(ant,centro,sig,compacta){
   const b=(x,txt,lado)=>'<button type="button" class="hoja-nav"'+
     (x?' onclick="'+x.clic+'" aria-label="'+esc(x.aria||lado)+'"':' disabled aria-label="'+lado+'"')+'>'+txt+'</button>';
-  return b(ant,'‹ Anterior','Anterior')+'<span class="hoja-cta">'+esc(centro)+'</span>'+b(sig,'Siguiente ›','Siguiente');
+  return b(ant,compacta?'‹':'‹ Anterior','Anterior')+'<span class="hoja-cta">'+esc(centro)+'</span>'+b(sig,compacta?'›':'Siguiente ›','Siguiente');
 }
 function filtroCapas(){
   return segmentado('Qué secciones ver',[
@@ -95423,7 +95433,7 @@ function compruebaRec(rid,elegido,correcta){
    al final, la misma fila de la hoja del versículo: Anterior, por cuál va y
    Siguiente. El orden es el de la pantalla Estudiar, que es el que ya sigue
    «Ya lo estudié»: los capítulos que el filtro deja ver y después los repasos. */
-function navCap(id){
+function navCap(id,compacta){
   let caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
   let i=lista.findIndex(x=>x.id===id);
   /* v235: un capítulo de otro tema (la Biblioteca) recorre su propio tema. */
@@ -95437,7 +95447,7 @@ function navCap(id){
   const ant=a_(a), sig=a_(b);
   if(ant)ant.aria='Anterior: '+a.label+', '+a.sub;
   if(sig)sig.aria='Siguiente: '+b.label+', '+b.sub;
-  return '<div class="cap-nav">'+filaNav(ant,donde,sig)+'</div>';
+  return '<div class="cap-nav">'+filaNav(ant,donde,sig,compacta)+'</div>';
 }
 
 function verCap(id,quieto){
@@ -95478,21 +95488,20 @@ function verCap(id,quieto){
   const deDonde=crVuelve?buscaItem(crVuelve.de):null;
   d.innerHTML=
     '<div class="cap-cab">'+
-    '<button type="button" class="bib-volver" onclick="bibVer(\'temas\')">'+IC('izq')+' Todos los capítulos</button>'+
+    '<div class="cap-herramientas"><button type="button" class="bib-volver" aria-label="Todos los capítulos" onclick="bibVer(\'temas\')">'+IC('izq')+
+    '<span class="cap-todos">Todos los capítulos</span><span class="cap-corto">Capítulos</span></button>'+navCap(id,true)+'</div>'+
     (deDonde?'<button type="button" class="btn txt cap-vuelve" onclick="crRegresa()">'+IC('izq')+
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
-    navCap(id)+
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
-    /* v236: «Agregar a mi estudio» (fuente/mi-estudio.js). */
-    '<div class="cap-me">'+meBoton('cap-'+id)+'</div>'+
     '<h2 class="cap-tit" tabindex="-1">'+esc(c.sub)+'</h2>'+
-    '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
+    '<div class="cap-pie"><div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
        fuente/biblia-otros.js), no de la RV1960; y los repasos de creencias
        (mc-*) no traen texto bíblico, así que no dicen versión. */
     (esCS(id)?'Edición '+esc(OBRAS_CAPS.cs.edicion)+' · páginas '+c.pag+' a '+c.fin:esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
-    (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
+    (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div>'+
+    '<div class="cap-me">'+meBoton('cap-'+id)+'</div></div></div>'+
     /* v129: Profetas y Reyes se escucha por su estudio (ver htmlEstVoz). */
     (conEstudioEnVoz(c)?htmlEstVoz(c):'')+
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera

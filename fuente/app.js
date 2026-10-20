@@ -5384,10 +5384,10 @@ function segmentado(aria,ops,clase){
     ops.map(o=>'<button type="button" class="cf'+(o.on?' on':'')+'" aria-pressed="'+(!!o.on)+'" onclick="'+o.clic+'">'+o.t+'</button>').join('')+'</div>';
 }
 /* `ant` y `sig`: {clic, aria}, o null si no hay a dónde ir (el botón sale apagado). */
-function filaNav(ant,centro,sig){
+function filaNav(ant,centro,sig,compacta){
   const b=(x,txt,lado)=>'<button type="button" class="hoja-nav"'+
     (x?' onclick="'+x.clic+'" aria-label="'+esc(x.aria||lado)+'"':' disabled aria-label="'+lado+'"')+'>'+txt+'</button>';
-  return b(ant,'‹ Anterior','Anterior')+'<span class="hoja-cta">'+esc(centro)+'</span>'+b(sig,'Siguiente ›','Siguiente');
+  return b(ant,compacta?'‹':'‹ Anterior','Anterior')+'<span class="hoja-cta">'+esc(centro)+'</span>'+b(sig,compacta?'›':'Siguiente ›','Siguiente');
 }
 function filtroCapas(){
   return segmentado('Qué secciones ver',[
@@ -5681,7 +5681,7 @@ function compruebaRec(rid,elegido,correcta){
    al final, la misma fila de la hoja del versículo: Anterior, por cuál va y
    Siguiente. El orden es el de la pantalla Estudiar, que es el que ya sigue
    «Ya lo estudié»: los capítulos que el filtro deja ver y después los repasos. */
-function navCap(id){
+function navCap(id,compacta){
   let caps=capsVista(), mods=modsDe(), lista=[...caps,...mods];
   let i=lista.findIndex(x=>x.id===id);
   /* v235: un capítulo de otro tema (la Biblioteca) recorre su propio tema. */
@@ -5695,7 +5695,7 @@ function navCap(id){
   const ant=a_(a), sig=a_(b);
   if(ant)ant.aria='Anterior: '+a.label+', '+a.sub;
   if(sig)sig.aria='Siguiente: '+b.label+', '+b.sub;
-  return '<div class="cap-nav">'+filaNav(ant,donde,sig)+'</div>';
+  return '<div class="cap-nav">'+filaNav(ant,donde,sig,compacta)+'</div>';
 }
 
 function verCap(id,quieto){
@@ -5736,21 +5736,20 @@ function verCap(id,quieto){
   const deDonde=crVuelve?buscaItem(crVuelve.de):null;
   d.innerHTML=
     '<div class="cap-cab">'+
-    '<button type="button" class="bib-volver" onclick="bibVer(\'temas\')">'+IC('izq')+' Todos los capítulos</button>'+
+    '<div class="cap-herramientas"><button type="button" class="bib-volver" aria-label="Todos los capítulos" onclick="bibVer(\'temas\')">'+IC('izq')+
+    '<span class="cap-todos">Todos los capítulos</span><span class="cap-corto">Capítulos</span></button>'+navCap(id,true)+'</div>'+
     (deDonde?'<button type="button" class="btn txt cap-vuelve" onclick="crRegresa()">'+IC('izq')+
       ' Volver a '+esc(deDonde.label)+'</button>':'')+
-    navCap(id)+
     '<div class="cap-ante">'+esc(c.label)+'</div>'+
-    /* v236: «Agregar a mi estudio» (fuente/mi-estudio.js). */
-    '<div class="cap-me">'+meBoton('cap-'+id)+'</div>'+
     '<h2 class="cap-tit" tabindex="-1">'+esc(c.sub)+'</h2>'+
-    '<div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
+    '<div class="cap-pie"><div class="cap-meta">'+(origenDe(c)?esc(origenDe(c))+' · ':'')+
     /* v150: lo que dice aquí tiene que ser lo que se muestra abajo. Las
        creencias traen sus textos de la Reina-Valera 1909 (Biblia Libre, ver
        fuente/biblia-otros.js), no de la RV1960; y los repasos de creencias
        (mc-*) no traen texto bíblico, así que no dicen versión. */
     (esCS(id)?'Edición '+esc(OBRAS_CAPS.cs.edicion)+' · páginas '+c.pag+' a '+c.fin:esCreencia(id)?'textos en Reina-Valera 1909':/^mc-/.test(id)?'En esto creemos':esMatutina()?'Devoción matutina':'texto RV1995')+
-    (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div></div>'+
+    (c.vs?' · '+c.vs+' versículo'+(c.vs===1?'':'s'):'')+'</div>'+
+    '<div class="cap-me">'+meBoton('cap-'+id)+'</div></div></div>'+
     /* v129: Profetas y Reyes se escucha por su estudio (ver htmlEstVoz). */
     (conEstudioEnVoz(c)?htmlEstVoz(c):'')+
     /* El capitulo completo va ARRIBA de las secciones y cerrado: quien quiera

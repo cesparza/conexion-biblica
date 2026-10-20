@@ -122,8 +122,10 @@ const MANUAL = [
     los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas
     del tema. El concurso puede usar solo una parte sin ocultar el resto de la
     Biblioteca. Al abrir un capítulo, la lectura reemplaza el listado y empieza
-    en su cabecera. <strong>Anterior</strong> y <strong>Siguiente</strong> cambian
-    de lectura sin buscar otra tarjeta. <strong>Todos los capítulos</strong>
+    en su cabecera. Las flechas junto al número de capítulo cambian
+    de lectura sin buscar otra tarjeta; al final también están
+    <strong>Anterior</strong> y <strong>Siguiente</strong>.
+    <strong>Todos los capítulos</strong> (<strong>Capítulos</strong> en el celular)
     vuelve al listado, sobre la tarjeta del capítulo que acabas de leer.
     Cada tema tiene su <strong>Bibliografía</strong>: las
     obras que cita su material, con sus páginas y dónde se usan. Se arma sola con

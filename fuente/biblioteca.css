@@ -219,11 +219,21 @@
 #p-estudio .bib-pie{grid-column:1/-1;margin:.2rem 0;padding:1rem;border-style:solid}
 #p-estudio .bib-pie:hover{border-color:var(--azul);background:color-mix(in srgb,var(--azul) 5%,var(--card))}
 #p-estudio #detalle{border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);border-radius:22px;box-shadow:none}
-#p-estudio #detalle .cap-cab{margin:0 0 1.2rem;padding:clamp(1rem,2vw,1.7rem);border-radius:16px;
+#p-estudio #detalle .cap-cab{margin:0 0 1.2rem;padding:clamp(1rem,2vw,1.4rem);border-radius:16px;
   background:color-mix(in srgb,var(--azul) 7%,var(--card))}
-#p-estudio #detalle .cap-tit{max-width:22ch;font-size:clamp(2rem,4vw,3.25rem);line-height:1.06;letter-spacing:-.05em}
+#p-estudio #detalle .cap-tit{max-width:30ch;font-size:clamp(1.65rem,3.2vw,2.25rem);line-height:1.12;letter-spacing:-.035em}
 #p-estudio #detalle .cap-ante{color:var(--naranja-txt);letter-spacing:.1em}
 #p-estudio #detalle .cap-meta{font-size:.83rem;line-height:1.45}
+.cap-herramientas{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1rem;margin-bottom:.65rem}
+.cap-herramientas .bib-volver{min-height:44px;margin:0}
+.cap-herramientas .cap-nav{flex:0 0 auto;margin:0;gap:.4rem}
+.cap-herramientas .hoja-nav{width:44px;padding:0;font-size:1.4rem;line-height:1}
+.cap-herramientas .hoja-cta{flex:0 0 auto;min-width:6ch}
+.cap-corto{display:none}
+.cap-pie{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1rem;margin-top:.65rem}
+#p-estudio #detalle .cap-pie .cap-meta,#p-estudio #detalle .cap-me{margin:0}
+.cap-me:empty{display:none}
+@media(max-width:580px){.cap-todos{display:none}.cap-corto{display:inline}}
 .bib-volver{display:inline-flex;align-items:center;gap:.4rem;min-height:42px;margin:0 0 .75rem;padding:0;border:0;background:transparent;
   color:var(--azul);font-family:inherit;font-size:.82rem;font-weight:800;line-height:1.2;cursor:pointer}
 .bib-volver:hover{text-decoration:underline}

@@ -2998,8 +2998,9 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   N.ponCat('av');
   const hd=N.navCap('d1');
   ok(/>1 de \d+</.test(hd)&&/onclick="verCap\('/.test(hd),'Vale igual para Daniel y los demas materiales: '+(hd.match(/>(\d+ de \d+)</)||[])[1]);
-  const src=require('fs').readFileSync(require('path').join(RAIZ,'fuente','app.js'),'utf8');
-  ok((src.match(/\n    navCap\(id\)\+/g)||[]).length===2,'La fila va arriba y al final del capitulo');
+  const compacta=N.navCap('d1',true);
+  ok((compacta.match(/<button /g)||[]).length===2&&compacta.includes('>‹</button>')&&compacta.includes('>›</button>')&&
+    /aria-label="Siguiente: Daniel 2/.test(compacta),'La cabecera usa flechas con el destino accesible; la fila completa sigue disponible');
 }
 
 /* ─── v157: «En el libro» no publica palabras rotas por la OCR ───
