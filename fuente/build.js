@@ -277,13 +277,15 @@ const REALES = Object.fromEntries(Object.entries(EXAMENES_REALES).map(([id, ex])
    template string: no había chequeo de sintaxis y cada comilla de un onclick
    había que escaparla dos veces. */
 const leer = f => fs.readFileSync(path.join(__dirname, f), 'utf8').replace(/\n+$/, '');
-const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css') + '\n' + leer('daniel9.css');
+const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css') + '\n' + leer('cine.css') + '\n' + leer('viaje.css');
 const CUERPO = leer('cuerpo.html');
 const REGLAS = leer('reglamento.js');
 const IMPR   = leer('imprimible.js');
 const APP    = leer('app.js');
 const APP_PAR = leer('paralelos-app.js');
-const APP_D9 = leer('daniel9-app.js');
+const APP_D9 = leer('cine-app.js');
+/* v266: el Viaje, un modo de Practicar (viaje-app.js). */
+const APP_VI = leer('viaje-app.js');
 /* v235: antes de app.js: sus var ya tienen valor cuando el arranque (al final de app.js) pinta. */
 const APP_BIB = leer('biblioteca-app.js');
 /* v236: «Mi estudio» (la lista personal) e irATema, para quien hospeda el módulo. */
@@ -409,6 +411,7 @@ ${IMPR}
 ${APP_BIB}
 ${APP_ME}
 ${APP_D9}
+${APP_VI}
 ${APP}
 ${APP_PAR}
 </script>

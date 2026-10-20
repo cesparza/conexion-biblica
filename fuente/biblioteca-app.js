@@ -146,9 +146,6 @@ function bibLineasDe(id){
   const recorre=o=>{if(!o||typeof o!=='object')return;
     for(const [k,v] of Object.entries(o)){if((k==='fuente'||k==='paraleloFuente')&&typeof v==='string')out.push(v);else if(typeof v==='object')recorre(v);}};
   if(typeof LAMINAS!=='undefined'&&LAMINAS[id])recorre(LAMINAS[id]);
-  if(typeof LAMINAS!=='undefined'&&LAMINAS[id]?.tipo==='cronologia')Object.values(LAMINAS[id].fuentes).forEach(f=>{
-    const [autor,...obra]=f.nombre.split(' · ');out.push(autor+', <i>'+obra.join(' · ')+'</i>, '+f.lugar);
-  });
   return out.map(bibSinEt).filter(Boolean);
 }
 /* Una pieza: autor, obra y páginas; o una abreviatura de Elena de White con su

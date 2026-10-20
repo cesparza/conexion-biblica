@@ -134,22 +134,25 @@ const MANUAL = [
     categorías por edad, tu preparación y tu examen. Al revisar un examen, cada
     pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su
     capítulo y, si el título de una sección trae su versículo, a esa sección.</p>` },
-  { t:'Daniel 9: recorrer las setenta semanas',
-    h:`<p>En <strong>Biblioteca › Daniel › Escenas y recursos</strong>, o en
-    <strong>Daniel 9 › Profundizar</strong>, abre <strong>Las setenta semanas</strong>.
-    Puedes <strong>Explorar</strong> a tu ritmo o <strong>Presentar</strong> en clase.
-    <strong>Anterior</strong>, <strong>Siguiente</strong> y las flechas del teclado
-    recorren los diez pasos. <strong>Inicio</strong> y <strong>Fin</strong> del teclado
-    llevan al primer y al último paso; <strong>Escape</strong> cierra.</p>
-    <p>En el paso <strong>70 semanas</strong> y en la primera expresión de <strong>Frase a frase</strong> se distinguen el cómputo directo de semanas de años y la explicación mediante día por año. Ambos llevan a 490 años; no se acumulan las conversiones.</p>
-    <p>La línea ofrece tres escalas: <strong>70 semanas</strong>,
-    <strong>Última semana</strong> y <strong>2.300 años</strong>. Toca un tramo
-    o un hito para ver su explicación. <strong>Texto bíblico</strong> muestra el
-    pasaje; <strong>Frase a frase</strong> desarrolla las 22 expresiones de Daniel 9:24–27: significado, pasos del argumento, distinciones y fuente concreta. Abre las relaciones de las seis metas y toca un par para seguir su conexión; en los demás versículos puedes recorrer el esquema de ciudad y Mesías. <strong>Fuentes</strong> reúne también las ocho afirmaciones mesiánicas del Simposio. Cada expresión indica sus referencias y la sección de la obra consultada. El cálculo aclara por
-    qué no hay año cero. <strong>Compartir</strong> copia el enlace público al paso actual. <strong>Comprueba lo aprendido</strong>
-    propone una pregunta de selección y otra abierta, con explicación y pauta.
-    Estas veinte preguntas también alimentan la práctica de profundización y
-    permanecen fuera del examen oficial.</p>` },
+  { t:'Daniel 9: las setenta semanas, en cine',
+    h:`<p>En <strong>Biblioteca › Láminas</strong>, o en <strong>Daniel 9 › Profundizar</strong>,
+    abre <strong>Las setenta semanas</strong>. Se recorre deslizando hacia abajo: son seis
+    escenas (Daniel ora y llega Gabriel; 70 × 7 = 490; la orden de 457 a.C.; el viaje de Esdras;
+    la línea del 408 al 34 d.C.; y los 490 años dentro de los 2.300). Los versículos se encienden
+    a medida que avanzas.</p>
+    <p>El botón de oro de abajo, las flechas del teclado o la barra espaciadora se detienen en cada
+    momento de la escena; así se usa en clase. <strong>Presentar</strong> agranda la letra para la
+    pantalla del salón; <strong>Escape</strong> cierra. Cada cita de Elena de White trae su libro y
+    su página.</p>` },
+  { t:'El viaje: un camino por cada capítulo',
+    h:`<p>En <strong>Practicar › Viaje</strong> escoges un capítulo y aparece su camino de paradas,
+    en el orden del texto. Toca la parada que dice <strong>EMPIEZA</strong> o <strong>SIGUE</strong>:
+    se abre su escena con el versículo y unas preguntas del capítulo.</p>
+    <p>La parada se gana con el 60 % de aciertos. Ganarla abre la siguiente y suma 10 puntos por
+    acierto; repetirla después no suma. Lo que falles va a <strong>Repasar mis errores</strong>, y
+    cada respuesta cuenta para tu racha. En <strong>Para hoy</strong> aparece la parada que sigue.
+    Sirve para todo el material: Daniel, Profetas y Reyes, las creencias y lo demás que tenga
+    preguntas.</p>` },
   { t:'La matutina es una serie completa',
     h:`<p><strong>Héroes y villanos</strong> tiene 31 lecturas numeradas. Puedes
     leerlas en cualquier orden y retomar la siguiente pendiente; el número

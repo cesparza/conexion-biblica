@@ -654,6 +654,9 @@ export async function onRequest(context) {
       out.acc = objContador(A.acc, B.acc);
       out.act = objContador(A.act, B.act);
       out.racha = may(A.racha, B.racha);
+      /* v266: el Viaje. Paradas ganadas por capítulo y sus puntos: solo crecen. */
+      out.via = objMay(A.via, B.via);
+      out.viaPts = may(A.viaPts, B.viaPts);
       /* v139: `ultimo` es un toDateString («Wed Sep 30 2026»). Compararlo como
          texto ordena por el nombre del día: «Wed» le gana a «Thu» y se quedaba
          la fecha VIEJA. Se compara como fecha. Y el protector viaja con ella:

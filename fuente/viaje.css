@@ -1,0 +1,60 @@
+/* ───────── VIAJE (v266): el camino de paradas de Practicar ───────── */
+.via-cab{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
+.via-sel{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 220px}
+.via-sel select{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px;border-radius:12px;border:1px solid var(--borde,#d9dce3);background:var(--card,#fff);color:var(--txt,#1a1a2e)}
+.via-stats{display:flex;gap:6px;flex-wrap:wrap}
+.via-stats span{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:999px;background:var(--card,#fff);box-shadow:var(--sh);font-size:.85rem;font-variant-numeric:tabular-nums}
+.via-stats .ico-t{width:16px;height:16px}
+.via-camino{position:relative;height:calc(var(--n) * 150px + 110px);max-width:440px;margin:6px auto 0}
+.via-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.via-svg path{fill:none;stroke-linecap:round}
+.via-svg path.no{stroke:color-mix(in srgb,var(--txt,#1a1a2e) 18%,transparent);stroke-width:8;stroke-dasharray:1 16}
+.via-svg path.si{stroke:#D4A548;stroke-width:6;filter:drop-shadow(0 0 6px rgba(242,196,107,.7))}
+.via-nodo{position:absolute;left:var(--x);top:calc(var(--y) * 150px + 90px);transform:translate(-50%,-50%);width:130px;display:grid;justify-items:center;gap:6px;border:0;background:none;padding:0;cursor:pointer;color:inherit;font:inherit}
+.via-disco{position:relative;width:78px;height:78px;border-radius:50%;background:#2A2117 center/cover;display:grid;place-items:center;border:4px solid color-mix(in srgb,var(--txt,#1a1a2e) 22%,transparent);box-shadow:0 8px 20px rgba(0,0,0,.25);transition:filter .4s,border-color .4s}
+.via-disco b{font-family:var(--cine-serif,Georgia,serif);font-size:1.6rem;color:#F4EEE2}
+.via-nodo small{font-size:.86rem;line-height:1.2;text-align:center;color:var(--gris,#5b6170)}
+.via-nodo.cerrada .via-disco{filter:grayscale(1) brightness(.55)}
+.via-nodo.hecha .via-disco{border-color:#4E9A73}
+.via-nodo.hecha .via-disco::after{content:"✓";position:absolute;right:-5px;bottom:-5px;width:26px;height:26px;border-radius:50%;background:#4E9A73;color:#fff;display:grid;place-items:center;font-weight:900;font-size:.85rem}
+.via-nodo.hecha small{color:var(--txt,#1a1a2e)}
+.via-nodo.ahora .via-disco{border-color:#D4A548;animation:viaPulso 2s infinite}
+.via-nodo.ahora small{color:var(--naranja-txt,#B65909);font-weight:700}
+.via-ya{position:absolute;top:-34px;background:#D4A548;color:#1A1309;font-size:.72rem;font-weight:900;letter-spacing:.1em;padding:4px 9px;border-radius:8px}
+.via-ya::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#D4A548;border-bottom:0}
+.via-nodo.nop{animation:viaNo .4s}
+@keyframes viaPulso{0%,100%{box-shadow:0 0 0 0 rgba(212,165,72,.55),0 8px 20px rgba(0,0,0,.25)}50%{box-shadow:0 0 0 14px rgba(212,165,72,0),0 8px 20px rgba(0,0,0,.25)}}
+@keyframes viaNo{20%,60%{transform:translate(calc(-50% - 6px),-50%)}40%,80%{transform:translate(calc(-50% + 6px),-50%)}}
+.via-fin{display:flex;gap:8px;align-items:center;justify-content:center;font-weight:700;text-align:center}
+/* La escena de una parada */
+.via-esc{position:fixed;inset:0;z-index:9000;display:grid;grid-template-rows:minmax(150px,1fr) auto;background:#07060A;color:#F4EEE2;color-scheme:dark;opacity:0;transition:opacity .35s;overflow:hidden}
+.via-esc.on{opacity:1}
+.via-x{position:absolute;z-index:3;top:calc(env(safe-area-inset-top,0px) + 12px);right:max(12px,env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;border:1px solid rgba(244,238,226,.2);background:rgba(7,6,10,.6);color:#F4EEE2;display:grid;place-items:center;cursor:pointer}
+.via-img{position:relative;overflow:hidden;display:grid;align-items:end}
+.via-img i{position:absolute;inset:-4%;background:center/cover;animation:viaKen 14s ease-out both}
+.via-img.sin{background:radial-gradient(80% 70% at 50% 30%,#2A1E10,#07060A)}
+.via-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,#07060A 3%,rgba(7,6,10,.2) 60%,rgba(7,6,10,.5))}
+@keyframes viaKen{from{transform:scale(1.16)}to{transform:scale(1.02)}}
+.via-tx{position:relative;z-index:2;max-width:780px;width:100%;margin:0 auto;padding:0 max(20px,env(safe-area-inset-right,0px)) 10px max(20px,env(safe-area-inset-left,0px));display:grid;gap:6px;animation:viaSube .7s .15s both}
+.via-rot{font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#F2C46B}
+.via-tx h2{margin:0;font-family:var(--cine-serif,Georgia,serif);font-weight:600;font-size:clamp(1.5rem,4.4vw,2.4rem)}
+.via-verso{margin:0;font-family:var(--cine-serif,Georgia,serif);font-size:clamp(1rem,2.4vw,1.25rem);line-height:1.4;color:#E9E0CE}
+.via-verso cite{display:block;font-family:inherit;font-style:normal;font-size:.8rem;color:#C9BDA6;margin-top:2px}
+.via-reto{max-height:58vh;overflow:auto;padding:6px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:viaSube .6s .4s both}
+.via-reto>*{max-width:780px;margin-left:auto;margin-right:auto}
+.via-reto .ads{background:#15110C;color:#F4EEE2;border-color:rgba(244,238,226,.14)}
+.via-reto .ads-op{background:rgba(244,238,226,.05);color:#F4EEE2;border-color:rgba(244,238,226,.18)}
+.via-res{display:grid;gap:6px;margin-top:10px;padding:14px;border-radius:14px;border:1px solid rgba(244,238,226,.18)}
+.via-res.si{border-color:#4E9A73;background:rgba(78,154,115,.12)}
+.via-res b{font-family:var(--cine-serif,Georgia,serif);font-size:1.15rem}
+.via-bots{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.via-esc .btn.txt{color:#F4EEE2}
+.via-reto .ads-t,.via-reto .ads-res{color:#F4EEE2}
+.via-reto .ads-k,.via-reto .ads-cab span{color:#C9BDA6}
+.via-reto .ads-v{background:rgba(244,238,226,.06);color:#E9E0CE;border-color:#F2C46B}
+.via-reto .ads-v cite{color:#C9BDA6}
+.via-reto .ads-v .biblia-t{color:#E9E0CE}
+.via-reto .ads-op.bien{background:rgba(78,154,115,.22);border-color:#4E9A73}
+.via-reto .ads-op.mal{background:rgba(224,112,94,.18);border-color:#E0705E}
+@keyframes viaSube{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.via-img i,.via-tx,.via-reto,.via-nodo.ahora .via-disco{animation:none}}

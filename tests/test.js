@@ -3335,7 +3335,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const agrega=f=>{if(typeof f==='string'&&archivo.test(f))rutas.add((f.includes('/')?'':L.dir)+f+(/\.\w+$/.test(f)?'':'.webp'));};
     const visita=o=>{if(!o||typeof o!=='object')return;for(const[k,v]of Object.entries(o)){
       if(['f','img','fondo','inicioF','miniF','pequeno','portada'].includes(k))agrega(v);
-      if(['solo','precarga'].includes(k)&&Array.isArray(v))v.forEach(agrega);
+      if(['solo','precarga','imgs'].includes(k)&&Array.isArray(v))v.forEach(agrega);
       if(v&&typeof v==='object')visita(v);
     }};
     visita(L);(L.capas||[]).forEach(agrega);
@@ -3345,32 +3345,29 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(rutas.size>=68&&!faltan.length,'Inventario de '+rutas.size+' imágenes referenciadas sin archivos ausentes'+(faltan.length?': '+faltan.join(', '):''));
 }
 
-/* Daniel 9: cálculo histórico y contrato de la nueva cronología. */
+/* Daniel 9 en Cine (v266): el motor cuenta sin año cero, cada versículo es el de la app,
+   cada cita de Elena de White lleva libro y página, y el texto no atribuye ideas a autores
+   (regla de Camilo, 13-oct: voz directa; la fuente va aparte, una vez). */
 {
  const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
  const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
- const D=LAMINAS.d9,A=montar('d9Anos,d9Suma,d9Escalas,cmpModelo');
- ok([[49,-408],[483,27],[490,34],[2300,1844]].every(([n,y])=>A.d9Suma(-457,n)===y&&A.d9Anos(-457,y)===n),'Daniel 9 cuenta sin año cero: 49, 483, 490 y 2300 años');
- ok(A.d9Anos(-1,1)===1&&A.d9Suma(-1,1)===1,'El cambio de era no introduce un año cero');
- ok(A.d9Suma(-445,483)===39&&A.d9Anos(-445,39)===483,'Desde 445 a.C., 483 años llegan a 39 d.C., corrigiendo el ejemplo de Bohr');
- const E=A.d9Escalas();
- ok(Object.values(E).every(e=>e.bandas.reduce((s,b)=>s+b[0],0)===e.total)&&E.ultima.inicio===483,'Las tres escalas mantienen duración y origen');
- const C=D.hitos.find(h=>h.id==='cruz');
- ok((C.avance-E.ultima.inicio)/E.ultima.total===.5&&C.fecha.includes('31'),'La cruz está a 3,5 años del bautismo, en el centro de la última semana');
- ok(A.cmpModelo().cols.join(',')==='d2,d7,d8','La cronología de Daniel 9 no añade una columna de reinos a Comparar');
+ const D=LAMINAS.d9,A=montar('cineFecha,cinePausas,CINE_PAUSAS,cmpModelo');
+ ok(D.tipo==='cine'&&D.actos.length===6&&new Set(D.actos.map(a=>a.id)).size===6,'Daniel 9 es una lámina de cine con seis actos de llave única');
+ ok([[0,'457 a.C.'],[49,'408 a.C.'],[456,'1 a.C.'],[457,'1 d.C.'],[483,'27 d.C.'],[486.5,'31 d.C.'],[490,'34 d.C.']].every(([n,f])=>A.cineFecha(n)===f),'Cine cuenta sin año cero: 408 a.C., 27, 31 y 34 d.C.');
+ const est=D.actos.find(a=>a.tipo==='via').estaciones;
+ ok(est.every(e=>A.cineFecha(e.n)===e.fecha),'Cada estación de la línea dice la fecha que da su cuenta');
  const n=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/gi,'').replace(/\s+/g,' ').toLowerCase().trim();
- ok([24,25,26,27].every(v=>D.frases[v].every(f=>n(VERS.d9[v]).includes(n(f.frase)))),'Cada frase explicada pertenece al texto RV1995 del versículo correspondiente');
- ok(D.frases[24].length===9&&Object.values(D.frases).flat().length===22,'Frase a frase cubre 22 expresiones y los seis propósitos de 9:24');
- const Q=require(path.join(RAIZ,'fuente','daniel9-preguntas.js'));
- ok(Q.length===20&&Q.every(q=>q.f==='c'&&q.o.length===4&&q.a>=0&&q.a<4&&q.abierta&&q.pauta)&&new Set(Q.map(q=>q.hito)).size===10,'Veinte preguntas de profundización, con cuatro opciones y pauta abierta, separadas del examen');
- const fuentesD9=montar('bibLineasDe').bibLineasDe('d9').join(' ');
- ok(fuentesD9.includes('Simposio sobre Apocalipsis')&&fuentesD9.includes('Simposio sobre Daniel'),'La Bibliografía de Daniel recoge los dos simposios de la experiencia');
- ok(D.hitos.length===10&&new Set(D.hitos.map(h=>h.id)).size===10&&D.hitos.every(h=>h.versos.every(v=>VERS.d9[v])&&h.fuentes.every(k=>D.fuentes[k])),'Los diez hitos tienen cita canónica y fuentes identificables');
- ok(Object.values(D.frases).flat().every(f=>f.sentido&&f.desarrollo&&f.refs&&f.fuentes.every(k=>D.fuentes[k])),'Cada expresión tiene sentido, desarrollo, referencias y apoyo documental');
- ok(Object.values(D.frases).flat().every(f=>f.pasos.length>=2&&f.precision&&f.fuente),'Las 22 expresiones desarrollan el argumento, la distinción y la fuente concreta');
- ok(D.estudio.pares.length===3&&new Set(D.estudio.pares.flatMap(p=>p.indices)).size===6&&D.estudio.estructura.length===7&&D.estudio.perfil.length===8,'Las seis metas, el esquema del pasaje y las ocho afirmaciones de Shea tienen desarrollo');
- const pacto=require(path.join(RAIZ,'fuente','complementos','daniel','d9.js')).secciones.find(s=>s.t.includes('Confirmará'));
- ok(pacto.verso===27,'El apartado sobre el pacto muestra Daniel 9:27, no el versículo 26');
+ const versos=[...D.actos.filter(a=>a.v).map(a=>a.v),...est.map(e=>e.v)];
+ ok(versos.every(v=>VERS[v.cap]&&VERS[v.cap][v.de]&&(!v.frase||n(VERS[v.cap][v.de]).includes(n(v.frase)))),'Cada versículo que cita Cine es el texto RV1995 de la app');
+ const textos=[],egw=[];
+ const recorre=o=>{if(Array.isArray(o))return o.forEach(recorre);if(!o||typeof o!=='object')return;
+   for(const[k,v]of Object.entries(o)){if(k==='egw')v.forEach(e=>egw.push(e));if(typeof v==='string'&&!['fuente','id','img','dir','tipo','foco2','miniF','portada'].includes(k))textos.push(v);else recorre(v);}};
+ recorre(D);
+ const atribuye=textos.filter(t=>/\b(seg[uú]n|examina|Shea|Bohr|notas de Camilo)\b/i.test(t));
+ ok(!atribuye.length,'El texto de Cine no atribuye ideas a autores'+(atribuye.length?': '+atribuye.join(' | ').slice(0,200):''));
+ ok(egw.length>=8&&egw.every(e=>/Elena G\. de White/.test(e.fuente)&&/pp?\. \d/.test(e.fuente)&&e.t.length>20),'Cada cita de Elena de White en Cine lleva libro y página');
+ ok(D.actos.every(a=>A.cinePausas(a).every(f=>f>0&&f<=1)),'Siguiente tiene paradas válidas en cada acto');
+ ok(A.cmpModelo().cols.join(',')==='d2,d7,d8','Daniel 9 no añade una columna de reinos a Comparar');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

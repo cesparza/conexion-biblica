@@ -134,7 +134,7 @@ const PIEDRA0=[960,330];
 const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
-  if(L.tipo==='cronologia')return;
+  if(L.tipo==='cine')return;
   const C=L.comparar&&LAMINAS[L.comparar];
   const fs=(L.tipo==='escenas'?[...(L.precarga||[]),L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
@@ -147,7 +147,7 @@ function lamPrecarga(cid,esc){
 function lamMiniHTML(cid){
   const L=LAMINAS[cid];if(!L)return '';
   const src=f=>lamRuta(L,f);
-  if(L.tipo==='escenas'||L.tipo==='cronologia')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
+  if(L.tipo==='escenas'||L.tipo==='cine')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
   return '<img src="'+src('babilonia')+'" alt="" loading="lazy">'+(L.capas||[]).map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('');
 }
 function lamTarjeta(cid){
@@ -367,7 +367,7 @@ function lamVeEntrada(k){
 let lamDonde='';
 function lamRecorrido(){
   const L=LAM(),r=[];
-  if(lamEsC())return L.hitos.map(h=>({k:h.id,t:h.corto}));
+  if(lamEsC())return L.actos.map(a=>({k:a.id,t:a.corto}));
   L.historia.forEach((h,i)=>r.push({k:'h'+i,t:h.titulo}));
   r.push({k:'est',t:L.verTodo||'La estatua'});
   lamEntradas().forEach(e=>r.push({k:e.k,e,t:lamEntDice(L,e)[0]}));
@@ -378,7 +378,7 @@ function lamRecorrido(){
   return r;
 }
 function lamIr(k){
-  if(lamEsC())return d9Ir(k);
+  if(lamEsC())return cineIr(k);
   const r=lamIr0(k);
   /* v232: en el celular, al avanzar, la imagen se ve entera. */
   if(lamModo&&lamModo!=='presentar'&&!lamAncho())lamVeEscena();
@@ -493,7 +493,7 @@ function lamFin(on){
 /* ── Abrir y cerrar ── */
 function lamAbre(cid,modo){
   if(!LAMINAS[cid])return;
-  if(LAMINAS[cid].tipo==='cronologia')return d9Abre(cid,modo);
+  if(LAMINAS[cid].tipo==='cine')return cineAbre(cid,modo);
   lamSinTexto=false;lamId=cid;lamModo=modo;lamSel='';lamPaso=0;lamReto=0;lamBien=0;lamListo=false;lamAnio=null;lamPara();
   const el=document.getElementById('lam'),L=LAM();
   el.hidden=false;el.className='lam'+(modo==='presentar'?' pres':'')+(lamAncho()?' ancho':'')+(lamEsE()?' escenas':'');
@@ -913,7 +913,7 @@ function lamPantalla(){
 function lamCierra(){
   const el=document.getElementById('lam');
   if(!el||el.hidden)return;
-  const foco=lamEsC()?d9AlCerrar():null;
+  const foco=lamEsC()?cineAlCerrar():null;
   lamPara();lamCartel(false);clearTimeout(lamOcioT);lamCam++;if(lamEsE())lamLimpia();el.hidden=true;el.innerHTML='';lamModo='';lamDonde='';lugarAnota();
   document.body.classList.remove('leyendo');
   if(foco&&foco.isConnected&&foco.focus)foco.focus({preventScroll:true});
@@ -1476,10 +1476,10 @@ function lamResponde(id){
 }
 
 /* ── Presentar ── */
-const lamPasos=()=>{const L=LAM();if(L.tipo==='cronologia')return L.hitos;if(L.tipo==='escenas')return lamPasosE();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
+const lamPasos=()=>{const L=LAM();if(L.tipo==='cine')return L.actos;if(L.tipo==='escenas')return lamPasosE();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
   {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'},...(L.aplica?[{tipo:'aplica'}]:[])];};
 function lamPres(k){
-  if(lamEsC())return d9IrNumero(k);
+  if(lamEsC())return cineIrNumero(k);
   if(lamEsE())return lamPresE(k);
   const pasos=lamPasos();if(k<0||k>=pasos.length)return;
   const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();lamVuelo++;const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
@@ -1655,7 +1655,7 @@ function lamPersonaCierra(){
 }
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
-  if(lamEsC())return d9Tecla(e);
+  if(lamEsC())return cineTecla(e);
   if(lamPersonaAbierta()){if(e.key==='Escape'){e.preventDefault();lamPersonaCierra();}return;}
   if(e.key==='Escape'){lamCierra();return;}
   if(lamModo!=='presentar'){
@@ -2974,7 +2974,7 @@ const icoDe=(e,c)=>ICO_DE[e]?IC(ICO_DE[e],c):'';
 /* Protectores de racha que se pueden guardar (ver sumaRacha). Va aquí arriba,
    junto a BASE, porque normalizar() la usa al cargar: más abajo daría TDZ. */
 const PROTECTOR_MAX=2;
-const BASE={v:4,pid:'',nombre:'',cat:'av',aCargo:false,tutor:'',prog:{},examenes:[],racha:0,ultimo:null,protector:0,protegio:'',insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:''};
+const BASE={v:4,pid:'',nombre:'',cat:'av',aCargo:false,tutor:'',prog:{},examenes:[],racha:0,ultimo:null,protector:0,protegio:'',insignias:[],fq:{},ft:{},fv:{},qv:{},acc:{},act:{},links:{},ultPantalla:'',ultItem:'',via:{},viaPts:0};
 
 /* Clave estable por pregunta/tarjeta: hash del texto, sobrevive a
    reordenar el banco en fuente/. */
@@ -3058,6 +3058,9 @@ function normalizar(x){
   if(typeof x.ultPantalla==='string')s.ultPantalla=x.ultPantalla.slice(0,20);
   if(typeof x.ultItem==='string')s.ultItem=x.ultItem.slice(0,20);
 
+  /* v266: el Viaje: paradas ganadas por capítulo y sus puntos (solo crecen). */
+  if(x.via&&typeof x.via==='object')for(const [k,v] of Object.entries(x.via)){const n=Math.floor(Number(v));if(/^[\w-]{1,20}$/.test(k)&&Number.isFinite(n)&&n>0)s.via[k]=Math.min(99,n);}
+  {const n=Math.floor(Number(x.viaPts));if(Number.isFinite(n)&&n>0)s.viaPts=Math.min(1e6,n);}
   if(x.prog&&typeof x.prog==='object')
     CAPS.forEach(c=>{const v=Number(x.prog[c.id]);s.prog[c.id]=Number.isFinite(v)?Math.min(100,Math.max(0,v)):0;});
   if(Array.isArray(x.examenes))
@@ -4227,7 +4230,12 @@ function tareasDeHoy(){
       (diasParaMeta()>0&&plazoDominada()<PLAZO[2]?', más seguido porque se acerca el examen':'')+'. ')+
       'Quedan '+porDominar+' por dominar en total.',
     b:'Abrir la sesión',f:"irTarjetasHoy()"});
-  else if(tarjetasVista().length)tareas.push({ic:'tarjetas',t:'Tarjetas al día',
+  /* v266: la parada que sigue del Viaje, en el capítulo por donde va. */
+  const vc=typeof viajeElige==='function'?viajeElige():'';
+  if(vc){const vp=viajeParadas(vc),vh=viajeHechas(vc);
+    if(vh<vp.length)tareas.push({ic:'mapa',t:'Viaje · '+esc((capsVista().find(c=>c.id===vc)||{label:vc}).label),k:'via',
+      c:'Parada '+(vh+1)+' de '+vp.length+' · '+viajeTitulo(vc,vp[vh],vh),d:'La parada que sigue del viaje.',b:'Seguir el viaje',f:"irViaje('"+vc+"')"});}
+  if(!nHoy&&tarjetasVista().length)tareas.push({ic:'tarjetas',t:'Tarjetas al día',
     d:'Ya repasaste lo que tocaba hoy. Las dominadas vuelven a salir en unos días.',
     b:'Repasar igual',f:"irTarjetasTodas()",k:'tj',c:'Ya repasaste las de hoy'});
 
@@ -5000,7 +5008,6 @@ let hojaTipo=null;
 
 function verVers(btn,cid,de,hasta){
   if(saltaAlTexto(btn,cid,de,hasta))return;
-  if(lamModo&&lamEsC())return d9Ref(cid,de,hasta);
   abreHoja(cid,de,hasta);
 }
 
@@ -7465,6 +7472,7 @@ function muestraTj(){
 const JUEGOS = [
   { id:'tarjetas', ic:'tarjetas', et:'Tarjetas',   ayuda:'Lee el frente y comprueba.' },
   { id:'hoy',      ic:'diana', et:'Práctica de hoy', ayuda:'Un poco de todo: primero reconocer, después recordar. Lo que fallaste en un examen sale primero.' },
+  { id:'viaje',    ic:'mapa', et:'Viaje',       ayuda:'Un camino por el capítulo: cada parada es una escena que se gana respondiendo. Lo que falles va a tu repaso.' },
   { id:'quiz',     ic:'rayo', et:'Quiz',        ayuda:'Una pregunta a la vez, y te dice al instante si acertaste.' },
   { id:'vf',       ic:'vf', et:'¿V o F?',     ayuda:'Decide si la frase es verdadera o falsa.' },
   { id:'parear',   ic:'unir', et:'Emparejar',  ayuda:'Toca a la izquierda y después su pareja a la derecha.' },
@@ -7543,6 +7551,7 @@ function juegosDisponibles(){
     if(j.id==='clasif')return gruposDe().length>1;
     if(j.id==='banco')return fillsDe().length>0;
     if(j.id==='error')return fillsDe().filter(q=>q.p.filter(x=>x.b).length>=2).length>0;
+    if(j.id==='viaje')return viajeCaps().length>0;
     if(j.id==='quiz'||j.id==='hoy')return mcsDe().length>=4;
     if(j.id==='vf')return tfsDe().length>=4;
     if(j.id==='cita')return citasDe().length>=4;
@@ -7639,6 +7648,7 @@ const pPaso=()=>jgR.tipo==='hoy'?jgR.pasos[jgR.i].p:jgR.pasos[jgR.i];
 
 function nuevaRonda(){
   jgSel=null;jgN=0;jgBien=0;jgMal=0;
+  if(jgModo==='viaje'){jgR={tipo:'viaje'};viajePinta();return;}
   const cs=mezcla(capsVista().slice());
   if(jgModo==='parear'){
     const sel=cs.slice(0,5);
@@ -7701,6 +7711,7 @@ function ordenCap(c){
 function pintaJuego(){
   const z=document.getElementById('jg-zona');
   if(!z||!jgR)return;
+  if(jgR.tipo==='viaje'){viajePinta();return;}
   const PASO_A_PASO=['quiz','vf','error','cita','hoy'];
   const hechos=jgR.tipo==='parear'?jgR.listos.length
     :jgR.tipo==='clasif'?jgR.i
