@@ -6016,6 +6016,25 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .d9-answer{border-left:2px solid #c6b17e;padding:12px 16px;margin:18px 0;background:#172b31}.d9-answer b{color:#f1d999}.d9-answer p{font-size:13px;margin:8px 0 0}.d9-open-question{padding-top:20px;border-top:1px solid #34474a;margin-top:24px}.d9-open-question h3{font:400 20px/1.4 Georgia,serif;color:#f1e1bf;margin:9px 0}
 
 .d9-ref .vref{color:#c6cdbb;font-size:inherit;text-decoration-color:#647f83}.d9-ref .vref:focus-visible{outline-color:#efce81}
+
+/* En un portátil la cronología forma parte de la primera vista. */
+@media(min-width:761px){
+ .d9-art{min-height:clamp(350px,calc(100dvh - 440px),515px)}
+ .d9-art figcaption{position:absolute;inset:0;min-height:0}
+ .d9-story,.d9-pres .d9-story{min-height:0}
+ .d9-notebook{padding-top:16px;padding-bottom:16px}
+ .d9-reading-tabs{margin-bottom:16px}
+ .d9-panel h2{font-size:clamp(21px,1.5vw,27px);margin:7px 0 12px}
+ .d9-panel p{margin-bottom:12px}
+ .d9-details{margin-top:12px;padding-top:8px}
+ .d9-panel .d9-ref{margin-top:10px;margin-bottom:10px}
+ .d9-actions .d9-practicar{border-top:0;margin-top:0}
+ .d9-time{padding-top:16px}.d9-time-head{margin-bottom:12px}
+ .d9-nav{padding-top:10px}
+}
+@media(min-width:761px) and (max-height:850px){.d9-notebook{padding:12px 22px}.d9-panel{font-size:14px;line-height:1.6}.d9-time>.d9-time-head .d9-kicker{display:none}.d9-calculation summary{min-height:36px}.d9-time-note{margin-top:7px}.d9-art h1{font-size:clamp(30px,3vw,52px)}}
+
+@media(min-width:761px){.d9-pres .d9-panel{font-size:clamp(16px,1.1vw,20px)}.d9-pres .d9-panel h2{font-size:clamp(24px,1.8vw,32px)}}
 </style>
 </head>
 <body>
@@ -6593,7 +6612,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '9a37cdec194a';
+const VERSION_APP = '3d34549d0c21';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -90740,6 +90759,7 @@ let d9Tab='explica',d9Vista='semanas',d9Verso=24,d9Foco=null,d9Cambio=0;
 const lamEsC=()=>!!(LAM()&&LAM().tipo==='cronologia');
 const d9Hitos=()=>LAM().hitos;
 const d9Refs=t=>refsTocables(esc(t),'d9');
+const d9OrdenFuentes=ks=>ks.slice().sort((a,b)=>['dtg','cs','bohr','simd','sima'].indexOf(a)-['dtg','cs','bohr','simd','sima'].indexOf(b));
 const d9Hito=()=>d9Hitos()[lamPaso];
 /* Coordenada histórica sin año cero. */
 function d9Anos(de,a){return a-de-(de<0&&a>0?1:0);}
@@ -90836,15 +90856,13 @@ function d9PintaPanel(){
  if(d9Tab==='frases'){p.innerHTML=d9FrasesHTML();return;}
  if(d9Tab==='fuentes'){
   p.innerHTML='<span class="d9-kicker">Documentación de este hito</span><h2>Del texto a la interpretación</h2><p>Primero la Biblia; después Elena G. de White; luego Bohr y los simposios. Los apuntes de estudio se cotejaron con estas fuentes.</p>'+
-   '<p class="d9-ref">'+d9Refs(h.refs)+'</p>'+h.fuentes.slice().sort((a,b)=>['dtg','cs','bohr','simd','sima'].indexOf(a)-['dtg','cs','bohr','simd','sima'].indexOf(b)).map(k=>d9FuenteHTML(k)).join('')+
+   '<p class="d9-ref">'+d9Refs(h.refs)+'</p>'+d9OrdenFuentes(h.fuentes).map(k=>d9FuenteHTML(k)).join('')+
    '<details class="d9-details"><summary>Cómo se presentan las fechas</summary><p>Las cantidades y expresiones se leen de Daniel 9. Los años 457 a.C., 27, 31 y 34 d.C. pertenecen a la cronología historicista adventista. Las notas de cada hito explican qué parte requiere reconstrucción histórica o interpretación.</p></details>';
   return;
  }
- p.innerHTML='<span class="d9-kicker">La idea central</span><h2>'+esc(h.idea)+'</h2>'+h.explica.map(t=>'<p>'+esc(t)+'</p>').join('')+
-  '<details class="d9-details"><summary>Una distinción importante</summary><p>'+esc(h.matiz)+'</p></details>'+
+ p.innerHTML='<span class="d9-kicker">La idea central</span><h2>'+esc(h.idea)+'</h2><p>'+esc(h.explica[0])+'</p>'+
+  '<details class="d9-details"><summary>Más contexto y precisión</summary>'+h.explica.slice(1).map(t=>'<p>'+esc(t)+'</p>').join('')+'<p>'+esc(h.matiz)+'</p></details>'+
   '<p class="d9-ref">'+d9Refs(h.refs)+'</p><div class="d9-actions">'+
-  '<button type="button" class="d9-text-link" onclick="d9Consulta(\'texto\')">Ver el texto '+IC('der')+'</button>'+
-  '<button type="button" class="d9-text-link" onclick="d9Consulta(\'frases\')">Frase a frase '+IC('der')+'</button>'+
   '<button type="button" class="d9-text-link d9-practicar" onclick="d9Consulta(\'preguntas\')">Comprueba lo aprendido '+IC('der')+'</button></div>';
 }
 function d9FuenteHTML(k){
@@ -90893,7 +90911,7 @@ function d9FrasesHTML(){
   '<p class="d9-verse-whole">'+esc(VERS.d9[d9Verso])+'</p>'+(frases[d9Verso]||[]).map((f,i)=>
    '<details class="d9-phrase" name="d9-frase"'+(i===0?' open':'')+'><summary><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(f.frase)+'</summary>'+
    '<div><p>'+esc(f.sentido)+'</p><p>'+esc(f.desarrollo)+'</p><p class="d9-ref">'+d9Refs(f.refs)+'</p>'+
-   '<p class="d9-phrase-source">Apoyo: '+f.fuentes.map(k=>esc(LAM().fuentes[k].nombre)).join(' · ')+'</p></div></details>').join('');
+   '<p class="d9-phrase-source">Apoyo: '+d9OrdenFuentes(f.fuentes).map(k=>esc(LAM().fuentes[k].nombre)).join(' · ')+'</p></div></details>').join('');
 }
 function d9FraseVerso(v){if(![24,25,26,27].includes(v))return;d9Verso=v;d9PintaPanel();const b=document.querySelector('.d9-verses [aria-pressed="true"]');if(b)b.focus({preventScroll:true});}
 function d9Capitulo(){lamCierra();verCap('d9');}

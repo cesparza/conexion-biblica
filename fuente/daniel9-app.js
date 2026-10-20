@@ -5,6 +5,7 @@ let d9Tab='explica',d9Vista='semanas',d9Verso=24,d9Foco=null,d9Cambio=0;
 const lamEsC=()=>!!(LAM()&&LAM().tipo==='cronologia');
 const d9Hitos=()=>LAM().hitos;
 const d9Refs=t=>refsTocables(esc(t),'d9');
+const d9OrdenFuentes=ks=>ks.slice().sort((a,b)=>['dtg','cs','bohr','simd','sima'].indexOf(a)-['dtg','cs','bohr','simd','sima'].indexOf(b));
 const d9Hito=()=>d9Hitos()[lamPaso];
 /* Coordenada histórica sin año cero. */
 function d9Anos(de,a){return a-de-(de<0&&a>0?1:0);}
@@ -101,15 +102,13 @@ function d9PintaPanel(){
  if(d9Tab==='frases'){p.innerHTML=d9FrasesHTML();return;}
  if(d9Tab==='fuentes'){
   p.innerHTML='<span class="d9-kicker">Documentación de este hito</span><h2>Del texto a la interpretación</h2><p>Primero la Biblia; después Elena G. de White; luego Bohr y los simposios. Los apuntes de estudio se cotejaron con estas fuentes.</p>'+
-   '<p class="d9-ref">'+d9Refs(h.refs)+'</p>'+h.fuentes.slice().sort((a,b)=>['dtg','cs','bohr','simd','sima'].indexOf(a)-['dtg','cs','bohr','simd','sima'].indexOf(b)).map(k=>d9FuenteHTML(k)).join('')+
+   '<p class="d9-ref">'+d9Refs(h.refs)+'</p>'+d9OrdenFuentes(h.fuentes).map(k=>d9FuenteHTML(k)).join('')+
    '<details class="d9-details"><summary>Cómo se presentan las fechas</summary><p>Las cantidades y expresiones se leen de Daniel 9. Los años 457 a.C., 27, 31 y 34 d.C. pertenecen a la cronología historicista adventista. Las notas de cada hito explican qué parte requiere reconstrucción histórica o interpretación.</p></details>';
   return;
  }
- p.innerHTML='<span class="d9-kicker">La idea central</span><h2>'+esc(h.idea)+'</h2>'+h.explica.map(t=>'<p>'+esc(t)+'</p>').join('')+
-  '<details class="d9-details"><summary>Una distinción importante</summary><p>'+esc(h.matiz)+'</p></details>'+
+ p.innerHTML='<span class="d9-kicker">La idea central</span><h2>'+esc(h.idea)+'</h2><p>'+esc(h.explica[0])+'</p>'+
+  '<details class="d9-details"><summary>Más contexto y precisión</summary>'+h.explica.slice(1).map(t=>'<p>'+esc(t)+'</p>').join('')+'<p>'+esc(h.matiz)+'</p></details>'+
   '<p class="d9-ref">'+d9Refs(h.refs)+'</p><div class="d9-actions">'+
-  '<button type="button" class="d9-text-link" onclick="d9Consulta(\'texto\')">Ver el texto '+IC('der')+'</button>'+
-  '<button type="button" class="d9-text-link" onclick="d9Consulta(\'frases\')">Frase a frase '+IC('der')+'</button>'+
   '<button type="button" class="d9-text-link d9-practicar" onclick="d9Consulta(\'preguntas\')">Comprueba lo aprendido '+IC('der')+'</button></div>';
 }
 function d9FuenteHTML(k){
@@ -158,7 +157,7 @@ function d9FrasesHTML(){
   '<p class="d9-verse-whole">'+esc(VERS.d9[d9Verso])+'</p>'+(frases[d9Verso]||[]).map((f,i)=>
    '<details class="d9-phrase" name="d9-frase"'+(i===0?' open':'')+'><summary><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(f.frase)+'</summary>'+
    '<div><p>'+esc(f.sentido)+'</p><p>'+esc(f.desarrollo)+'</p><p class="d9-ref">'+d9Refs(f.refs)+'</p>'+
-   '<p class="d9-phrase-source">Apoyo: '+f.fuentes.map(k=>esc(LAM().fuentes[k].nombre)).join(' · ')+'</p></div></details>').join('');
+   '<p class="d9-phrase-source">Apoyo: '+d9OrdenFuentes(f.fuentes).map(k=>esc(LAM().fuentes[k].nombre)).join(' · ')+'</p></div></details>').join('');
 }
 function d9FraseVerso(v){if(![24,25,26,27].includes(v))return;d9Verso=v;d9PintaPanel();const b=document.querySelector('.d9-verses [aria-pressed="true"]');if(b)b.focus({preventScroll:true});}
 function d9Capitulo(){lamCierra();verCap('d9');}

@@ -117,3 +117,22 @@
 .d9-answer{border-left:2px solid #c6b17e;padding:12px 16px;margin:18px 0;background:#172b31}.d9-answer b{color:#f1d999}.d9-answer p{font-size:13px;margin:8px 0 0}.d9-open-question{padding-top:20px;border-top:1px solid #34474a;margin-top:24px}.d9-open-question h3{font:400 20px/1.4 Georgia,serif;color:#f1e1bf;margin:9px 0}
 
 .d9-ref .vref{color:#c6cdbb;font-size:inherit;text-decoration-color:#647f83}.d9-ref .vref:focus-visible{outline-color:#efce81}
+
+/* En un portátil la cronología forma parte de la primera vista. */
+@media(min-width:761px){
+ .d9-art{min-height:clamp(350px,calc(100dvh - 440px),515px)}
+ .d9-art figcaption{position:absolute;inset:0;min-height:0}
+ .d9-story,.d9-pres .d9-story{min-height:0}
+ .d9-notebook{padding-top:16px;padding-bottom:16px}
+ .d9-reading-tabs{margin-bottom:16px}
+ .d9-panel h2{font-size:clamp(21px,1.5vw,27px);margin:7px 0 12px}
+ .d9-panel p{margin-bottom:12px}
+ .d9-details{margin-top:12px;padding-top:8px}
+ .d9-panel .d9-ref{margin-top:10px;margin-bottom:10px}
+ .d9-actions .d9-practicar{border-top:0;margin-top:0}
+ .d9-time{padding-top:16px}.d9-time-head{margin-bottom:12px}
+ .d9-nav{padding-top:10px}
+}
+@media(min-width:761px) and (max-height:850px){.d9-notebook{padding:12px 22px}.d9-panel{font-size:14px;line-height:1.6}.d9-time>.d9-time-head .d9-kicker{display:none}.d9-calculation summary{min-height:36px}.d9-time-note{margin-top:7px}.d9-art h1{font-size:clamp(30px,3vw,52px)}}
+
+@media(min-width:761px){.d9-pres .d9-panel{font-size:clamp(16px,1.1vw,20px)}.d9-pres .d9-panel h2{font-size:clamp(24px,1.8vw,32px)}}
