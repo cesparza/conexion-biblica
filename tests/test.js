@@ -3352,6 +3352,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
  const D=LAMINAS.d9,A=montar('d9Anos,d9Suma,d9Escalas,cmpModelo');
  ok([[49,-408],[483,27],[490,34],[2300,1844]].every(([n,y])=>A.d9Suma(-457,n)===y&&A.d9Anos(-457,y)===n),'Daniel 9 cuenta sin año cero: 49, 483, 490 y 2300 años');
  ok(A.d9Anos(-1,1)===1&&A.d9Suma(-1,1)===1,'El cambio de era no introduce un año cero');
+ ok(A.d9Suma(-445,483)===39&&A.d9Anos(-445,39)===483,'Desde 445 a.C., 483 años llegan a 39 d.C., corrigiendo el ejemplo de Bohr');
  const E=A.d9Escalas();
  ok(Object.values(E).every(e=>e.bandas.reduce((s,b)=>s+b[0],0)===e.total)&&E.ultima.inicio===483,'Las tres escalas mantienen duración y origen');
  const C=D.hitos.find(h=>h.id==='cruz');

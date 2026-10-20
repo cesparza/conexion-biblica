@@ -58,7 +58,7 @@ module.exports={
    'La frase exige restaurar y edificar Jerusalén. Ciro autoriza el regreso y la reconstrucción del templo; Darío ratifica esa autorización (Esdras 1 y 6).',
    'Esdras 7 añade organización judicial y autoridad para aplicar la ley (versículos 25–26). Esa restauración de la comunidad, además del culto, permite relacionar la orden con el alcance de Daniel 9:25.',
    'El séptimo año de Artajerjes no se convierte en 457 a.C. por una suma de las semanas. Shea estudia primero los datos del reinado y el calendario civil judío; después se hace el cómputo profético.'
-  ],'Las cartas de Nehemías 2 continúan la reconstrucción. No debe escogerse 445 a.C. simplemente porque menciona muros, ignorando las facultades y la fecha de Esdras 7.','Shea, Simposio sobre Apocalipsis, apéndice B, pp. 443–466; CS, cap. 18; Bohr, pp. 330–340.'),
+  ],'Las cartas de Nehemías 2 continúan la reconstrucción. Si se toman 445 a.C. como inicio, 483 años llevan a 39 d.C. (445 + 39 − 1 = 483). El ejemplo de Bohr, p. 333, dice 37; ese número no coincide con esta operación. La identificación de la orden debe considerar además el alcance y la fecha de Esdras 7.','Shea, Simposio sobre Apocalipsis, apéndice B, pp. 443–466; CS, cap. 18; Bohr, pp. 330–340.'),
   '25-2':a([
    'Mesías significa Ungido. Juan 1:41 relaciona ese término con Cristo, y Hechos 10:38 describe a Jesús ungido por Dios con el Espíritu Santo.',
    'Lucas 3 sitúa el bautismo en un contexto histórico y narra el descenso del Espíritu. DTG 23 identifica ese inicio del ministerio con el término de las 69 semanas.',
