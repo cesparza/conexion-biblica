@@ -18,11 +18,11 @@ module.exports = {
         ['Terminar la prevaricación', 'La palabra es «rebelión». Israel podía terminarla recibiendo al Mesías, o llevarla al extremo rechazándolo. La profecía anuncia lo segundo.'],
         ['Poner fin al pecado', 'No al hecho de pecar, sino a los pecados: Jesús los cargó en la cruz (Hebreos 9:26-28).'],
         ['Expiar la iniquidad', 'La reconciliación del hombre con Dios por su muerte (Romanos 5:10).'],
-        ['Traer la justicia perdurable', 'Con su vida sin pecado Jesús tejió un manto de justicia que se acredita al que cree.'],
+        ['Traer la justicia perdurable', 'La expiación hace posible una justicia duradera para el creyente (Romanos 3:21-26). Shea une estos dos propósitos como el centro del versículo.'],
         ['Sellar la visión y la profecía', 'Bohr relaciona el cierre del testimonio a Israel como nación con Esteban. Es un énfasis interpretativo; no una prohibición universal de profetizar ni el rechazo de toda persona judía.'],
-        ['Ungir al Santo de los santos', 'Jesús y el santuario celestial, ungidos cuando él empezó su ministerio allá.'],
+        ['Ungir al Santo de los santos', 'Shea aplica la expresión al santuario inaugurado para el ministerio celestial de Cristo. Se distingue de su unción en el bautismo (Hechos 10:38).'],
       ]) +
-      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329.</p>` },
+      `<p>Shea une la expiación y la justicia en el centro de 9:24; la muerte del Mesías de 9:26 explica su cumplimiento.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329; Shea, <i>Simposio sobre Daniel</i>, PDF 254-258 y 265-268.</p>` },
 
     { t: '🧭 Cuatro decretos persas y por qué cuenta el de 457', capa: 'contexto', h:
       `<p>Daniel 9:25 pide una orden para «restaurar y edificar a Jerusalén», la ciudad, no solo el templo. Hubo cuatro decretos:</p>` +
@@ -38,19 +38,19 @@ module.exports = {
 
     { t: '🧭 ¿Quién es «el príncipe que ha de venir»?', capa: 'contexto', verso: 26, h:
       `<p>Daniel 9:26 dice: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario». En la lectura de Bohr que sigue este estudio, el príncipe es <b>Jesús y su pueblo es Israel</b>. Los ejércitos romanos destruyeron físicamente Jerusalén en el año 70 d.C.</p>` +
-      `<p>Las razones: el «Mesías Príncipe» de 9:25 y el «Mesías» y «príncipe» de 9:26 están en paralelo y son la misma persona; los tres «él» de 9:27 vuelven a ese príncipe; y en Daniel 9 «pueblo» siempre es Israel.</p>` +
+      `<p>Las razones: el «Mesías Príncipe» de 9:25 y el «Mesías» y «príncipe» de 9:26 están en paralelo y son la misma persona; Shea observa la distribución del doble título: Mesías Príncipe (9:25), Mesías (9:26a) y príncipe (9:26b). Ese patrón es su argumento para un solo personaje, no una identidad expresamente aclarada por la traducción.</p>` +
       hi('Entonces, ¿por qué se destruyó la ciudad? Al rechazar al Mesías, la nación misma provocó su ruina, y Dios permitió que lo hicieran los ejércitos romanos (Mateo 22:7): «los judíos habían forjado sus propias cadenas» (CS 39).') +
       `<p>Otra lectura, la adventista tradicional, ve aquí a Tito y los romanos, que destruyeron Jerusalén en el año 70. La futurista ve un anticristo que haría un pacto de siete años con los judíos.</p>` +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 341-345; Shea, <i>Daniel</i>, p. 168; Maxwell, <i>El porvenir del mundo revelado</i>, p. 232; Ruiz, <i>Escuela de laicos: Daniel</i>, p. 32; CS 39.</p>` },
 
-    { t: '🧭 «Confirmará el pacto con muchos»', capa: 'contexto', h:
+    { t: '🧭 «Confirmará el pacto con muchos»', capa: 'contexto', verso: 27, h:
       `<p>El que «confirmará el pacto» es el mismo Mesías de 9:26; no hay razón para meter otro personaje, como el anticristo de la lectura futurista.</p>` +
       li([
-        '<b>«El pacto»</b>, con artículo: en Daniel la palabra siempre es el pacto de Dios con su pueblo (9:4; 11:22, 28, 30, 32), nunca un tratado político. Daniel 9 es además el único capítulo del libro que usa el nombre del pacto, Jehová.',
-        '<b>«Confirmará»</b> traduce <i>gabar</i>, «hacer fuerte». El pacto antiguo era débil porque la sangre de animales no quita el pecado; la sangre de Cristo lo ratifica.',
+        '<b>«El pacto»</b>: la oración ya presenta a Dios como quien guarda el pacto (9:4). La lectura mesiánica sigue ese hilo y lo une con las promesas a los padres; no introduce un tratado político moderno en 9:27.',
+        '<b>«Confirmará»</b> traduce <i>gabar</i>, «hacer firme». Shea entiende que el pacto ya existía: la semana del 27 al 34 es la última del período de oportunidad de Israel, no los primeros siete años de un pacto nuevo fundado en el bautismo. Cristo confirma las promesas hechas a los padres (Romanos 15:8) y ratifica el nuevo pacto con su sangre a mitad de la semana (Marcos 14:24; Hebreos 9:15).',
         '<b>«Con muchos»</b>: es la palabra del sacrificio que sustituye (Isaías 53:11; Marcos 10:45). Jesús la usó en la última cena: «mi sangre del nuevo pacto, que por muchos es derramada» (Mateo 26:28).',
       ]) +
-      `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 346-347.</p>` },
+      `<p>El testimonio abarca siete años: primero Cristo y después sus apóstoles (DTG, cap. 23). Terminar ese período no significa que el nuevo pacto expire en el año 34.</p><p>Fuente: DTG, cap. 23; Bohr, <i>Daniel 1-10</i>, p. 346-347; Shea, <i>Simposio sobre Daniel</i>, PDF 255-256.</p>` },
 
     { t: '🧭 El calendario del Mesías: el día y la hora', capa: 'contexto', h:
       `<p>Las fiestas de Levítico 23 daban el mes, el día y hasta la hora de cada paso de Jesús:</p>` +
@@ -68,7 +68,7 @@ module.exports = {
       `<p>Daniel 9 tiene pocos símbolos, pero son la llave del capítulo. La misma Biblia los explica:</p>` +
       tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
         ['Semana (9:24-27)', 'Siete años: 70 semanas son 490 años', 'Números 14:34; Ezequiel 4:6 (un día por cada año)'],
-        ['«Tu pueblo» y «tu santa ciudad» (9:24)', 'Israel y Jerusalén literales. Hasta el año 34 no son símbolo; después, el pueblo de Dios es la iglesia', 'Daniel 9:24; Gálatas 3:29'],
+        ['«Tu pueblo» y «tu santa ciudad» (9:24)', 'Israel y Jerusalén, por los que Daniel ora. El cierre del período cambia la etapa de la misión; no convierte retrospectivamente la ciudad en símbolo ni impide la salvación de personas judías (Romanos 11:1-5).', 'Daniel 9:24; Gálatas 3:29'],
         ['Mesías, ungir (9:25-26)', 'El Ungido: Jesús, ungido con el Espíritu Santo en su bautismo', 'Hechos 10:38; Juan 1:41'],
         ['Sacrificio y ofrenda (9:27)', 'Señalaban a Cristo, el Cordero; cesan cuando él muere', 'Juan 1:29; 1 Corintios 5:7; Mateo 27:51'],
         ['Inundación (9:26)', 'La invasión de un ejército', 'Isaías 8:7-8; Daniel 11:22: «barridas delante de él como por inundación de aguas»'],
@@ -91,7 +91,7 @@ module.exports = {
     { t: 'mc', v: '9:24', f: 'c', q: '¿Qué fiesta marcó el comienzo del ministerio de intercesión de Cristo en el santuario celestial?', o: ['Pentecostés', 'Las Primicias', 'Los Tabernáculos', 'Las Trompetas'], a: 0, e: 'Cincuenta días después de las primicias, en Pentecostés, Cristo empezó a interceder en el lugar santo del santuario celestial. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 7.' },
 
     { t: 'mc', v: '9:26', f: 'c', q: '¿Qué representa en la profecía una «inundación», como la de Daniel 9:26?', o: ['La invasión de un ejército', 'Un diluvio literal sobre Judea', 'El derramamiento del Espíritu', 'El bautismo de los creyentes'], a: 0, e: 'Isaías 8:7-8 compara una invasión con un río desbordado; en 9:26 son los ejércitos romanos del año 70. Fuente: Bohr, <i>Daniel 1-10</i>, p. 345.' },
-    { t: 'tf', v: '9:24', f: 'c', q: 'En Daniel 9:24 «tu pueblo» y «tu santa ciudad» son todavía el Israel literal y la Jerusalén literal.', a: true, e: 'Verdadero. Hasta el año 34 la profecía habla de un pueblo y una ciudad literales; después, el pueblo de Dios es la iglesia en todo el mundo (Gálatas 3:29). Fuente: Bohr, <i>Daniel 11</i>, p. 21.' },
+    { t: 'tf', v: '9:24', f: 'c', q: 'En Daniel 9:24 «tu pueblo» y «tu santa ciudad» son todavía el Israel literal y la Jerusalén literal.', a: true, e: 'Verdadero. La oración de Daniel 9:16-20 identifica a los destinatarios. El cierre del período no cambia retrospectivamente esa referencia ni excluye a las personas judías de la salvación (Romanos 11:1-5). Fuente: Bohr, <i>Daniel 11</i>, p. 21.' },
     { t: 'mc', v: '9:25', f: 'c', q: 'Según Hechos 10:38, ¿con qué fue ungido Jesús para ser el Mesías?', o: ['Con el Espíritu Santo y poder', 'Con aceite, por el sumo sacerdote', 'Con agua, por Juan el Bautista', 'Con la sangre del cordero'], a: 0, e: 'Mesías significa «ungido». Jesús fue ungido con el Espíritu Santo en su bautismo, en el otoño del 27. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 3.' },
   ],
 };

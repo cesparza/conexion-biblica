@@ -6017,6 +6017,15 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 
 .d9-ref .vref{color:#c6cdbb;font-size:inherit;text-decoration-color:#647f83}.d9-ref .vref:focus-visible{outline-color:#efce81}
 
+/* Las conexiones acompañan la lectura sin añadir otra columna. */
+.d9-reasons{padding-left:22px;margin:13px 0 18px}.d9-reasons li{padding-left:5px;margin:0 0 13px}.d9-reasons li::marker{color:#d8bd81;font-weight:700;font-size:12px}
+.d9-panel .d9-meaning{font-weight:600;color:#f3e6cd}.d9-precision{border-left:2px solid #617f84;padding:10px 14px;background:#172930;margin:17px 0}.d9-precision b{font-size:12px;color:#bdccce}.d9-precision p{margin:6px 0 0;font-size:13px}
+.d9-relations{margin:16px 0 10px;padding:14px 0;border-block:1px solid #43555b}.d9-relations>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#eed8a6;font-size:13px;font-weight:650}.d9-relations>summary:after{content:'+';margin-left:auto}.d9-relations[open]>summary:after{content:'−'}
+.d9-relations p{font-size:13px}.d9-pairs{display:grid;gap:7px;margin:12px 0}.d9-pairs button{display:flex;gap:12px;align-items:center;min-height:44px;border:1px solid #425960;border-radius:7px;background:#13262e;color:#cbd9da;text-align:left;padding:10px 12px;font-size:12px}.d9-pairs button>span{font-size:10px;color:#c2ae7e;min-width:48px}.d9-pairs [aria-pressed=true]{border-color:#d3b77b;background:#30443f;color:#fff0cf}
+#d9PairText h3{font:400 20px/1.4 Georgia,serif;color:#f2dfb6;margin:16px 0}.d9-pair-phrases{display:grid;gap:8px;margin:12px 0}.d9-pair-phrases button{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:44px;border:0;border-bottom:1px solid #3c5358;color:#d7e5dd;background:transparent;text-align:left;font-size:13px;padding:9px 0}.d9-pair-phrases svg{flex:none;width:15px;height:15px}
+.d9-structure{list-style:none;padding:0;display:grid;gap:6px;margin:15px 0}.d9-structure li{display:flex;gap:12px;padding:10px 12px;border-left:2px solid #46676d;background:#14262d}.d9-structure li>span{flex:none;color:#bda773;font-size:12px;min-width:20px}.d9-structure b{font-size:13px;color:#e2ddd0}.d9-structure small{display:block;color:#8facb1;font-size:10px}.d9-structure p{font-size:12px;margin:5px 0 0}.d9-structure .d9-center{border-color:#e1c17e;background:#2b403a}.d9-profile{padding-left:22px}.d9-profile p{font-size:12px}.d9-profile .d9-text-link{font-size:13px;text-align:left}
+.d9-question-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0;font-size:11px;color:#a7bcc1}.d9-question-nav button{border:1px solid #425960;border-radius:6px;background:#152931;color:#e0d6b8;min-height:44px;padding:8px 12px;font-size:11px}
+
 /* En un portátil la cronología forma parte de la primera vista. */
 @media(min-width:761px){
  .d9-art{min-height:clamp(350px,calc(100dvh - 440px),515px)}
@@ -6035,6 +6044,8 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 @media(min-width:761px) and (max-height:850px){.d9-notebook{padding:12px 22px}.d9-panel{font-size:14px;line-height:1.6}.d9-time>.d9-time-head .d9-kicker{display:none}.d9-calculation summary{min-height:36px}.d9-time-note{margin-top:7px}.d9-art h1{font-size:clamp(30px,3vw,52px)}}
 
 @media(min-width:761px){.d9-pres .d9-panel{font-size:clamp(16px,1.1vw,20px)}.d9-pres .d9-panel h2{font-size:clamp(24px,1.8vw,32px)}}
+
+.d9-actions .d9-practicar{flex-basis:auto}.d9-actions{gap:6px 20px}
 </style>
 </head>
 <body>
@@ -6612,7 +6623,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '3d34549d0c21';
+const VERSION_APP = '8ef712ed934d';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -9858,7 +9869,7 @@ const CONTENIDO = {
    "t": "🧭 De 457 a.C. a 1844: la cuenta de las 2.300 tardes y mañanas",
    "capa": "contexto",
    "verso": 14,
-   "h": "<p>Daniel 8 da el número y Daniel 9 el punto de partida: «desde la salida de la orden para restaurar y edificar a Jerusalén» (9:25). Gabriel vuelve a explicar lo que en 8:27 quedó sin entender.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Paso</th><th>Cuenta</th><th>Fecha</th></tr></thead><tbody><tr><td class=\"key\">La orden de Artajerjes I (Esdras 7:7-26)</td><td>su séptimo año, contado de otoño a otoño</td><td>otoño de 457 a.C.</td></tr><tr><td class=\"key\">7 semanas (9:25)</td><td>49 años: Jerusalén reedificada</td><td>408 a.C.</td></tr><tr><td class=\"key\">62 semanas más (9:25)</td><td>483 años: el Mesías Príncipe, ungido en su bautismo</td><td>otoño de 27 d.C.</td></tr><tr><td class=\"key\">La mitad de la última semana (9:27)</td><td>la cruz: cesan el sacrificio y la ofrenda</td><td>primavera de 31 d.C.</td></tr><tr><td class=\"key\">Fin de las 70 semanas (9:24)</td><td>490 años: Esteban muere y el evangelio va a los gentiles</td><td>34 d.C.</td></tr><tr><td class=\"key\">Lo que queda: 2.300 − 490 = 1.810</td><td>34 + 1.810</td><td>1844</td></tr></tbody></table></div><div class=\"highlight-box\">«Determinadas» (9:24) quiere decir cortadas. Solo se pueden cortar 490 años de un periodo más largo que empieza a la vez: los 2.300. Por eso son años, y empiezan juntos en 457 a.C. Sin año cero, 2.300 − 457 da 1843 y se llega a 1844.</div><p>Fuente: CS 372-376; Bohr, <i>Daniel 1-10</i>, p. 325-336.</p>"
+   "h": "<p>Daniel 8 da el número y Daniel 9 el punto de partida: «desde la salida de la orden para restaurar y edificar a Jerusalén» (9:25). Gabriel vuelve a explicar lo que en 8:27 quedó sin entender.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Paso</th><th>Cuenta</th><th>Fecha</th></tr></thead><tbody><tr><td class=\"key\">La orden de Artajerjes I (Esdras 7:7-26)</td><td>su séptimo año, contado de otoño a otoño</td><td>otoño de 457 a.C.</td></tr><tr><td class=\"key\">7 semanas (9:25)</td><td>49 años: Jerusalén reedificada</td><td>408 a.C.</td></tr><tr><td class=\"key\">62 semanas más (9:25)</td><td>483 años: el Mesías Príncipe, ungido en su bautismo</td><td>otoño de 27 d.C.</td></tr><tr><td class=\"key\">La mitad de la última semana (9:27)</td><td>la cruz: cesan el sacrificio y la ofrenda</td><td>primavera de 31 d.C.</td></tr><tr><td class=\"key\">Fin de las 70 semanas (9:24)</td><td>490 años: Esteban muere y el evangelio va a los gentiles</td><td>34 d.C.</td></tr><tr><td class=\"key\">Lo que queda: 2.300 − 490 = 1.810</td><td>34 + 1.810</td><td>1844</td></tr></tbody></table></div><div class=\"highlight-box\">La lectura adventista entiende los 490 años como la primera parte de los 2.300. Shea relaciona el verbo «determinadas», cuyo sentido de «cortar» examina, con otros tres argumentos: la estructura de los períodos, su inicio persa y la referencia de Gabriel a la visión anterior. El verbo por sí solo no establece todo el vínculo. Sin año cero: 2.300 − 457 + 1 = 1844.</div><p>Fuente: CS 372-376; Bohr, <i>Daniel 1-10</i>, p. 325-336; Shea, <i>Simposio sobre Daniel</i>, PDF 251-254.</p>"
   },
   {
    "t": "🧭 «Será purificado»: el Día de la Expiación y el juicio de Daniel 7",
@@ -9893,15 +9904,15 @@ const CONTENIDO = {
  "d9": [
   {
    "t": "📚 En pocas palabras",
-   "h": "<div class=\"highlight-box\">Daniel ora y confiesa el pecado de su pueblo tras leer en Jeremías que el exilio duraría 70 años. En respuesta, el ángel Gabriel vuelve a aparecer y retoma exactamente donde se había interrumpido en Daniel 8: le explica el punto de partida de las 2.300 tardes y mañanas, en forma de \"setenta semanas\" (490 años) que corren desde un decreto para restaurar Jerusalén hasta la muerte del Mesías.</div>"
+   "h": "<div class=\"highlight-box\">Daniel lee a Jeremías, confiesa el pecado y pide misericordia por Jerusalén y su santuario. Gabriel responde con setenta semanas: un período de 490 años que abarca la restauración, el ministerio y la muerte del Mesías, y el testimonio apostólico. La muerte de Cristo ocurre en la mitad de la última semana; no al terminar los 490 años.</div>"
   },
   {
    "t": "📜 Setenta años que terminan, setenta semanas que empiezan",
-   "h": "<div class=\"highlight-box\">Daniel 9:1-2 sitúa la escena en el año primero de Darío el Medo (539 a.C.), justo cuando Daniel entendía por los libros (Jeremías 25:11-12; 29:10) que los 70 años de desolación de Jerusalén estaban por cumplirse. Esa lectura lo lleva a orar con ayuno, cilicio y ceniza, confesando el pecado de Israel (Daniel 9:3-19). Mientras oraba, Gabriel \"voló velozmente\" hacia él (v. 21) para contestarle: no con los 70 años de Jeremías, sino con \"setenta semanas\" (Daniel 9:24), un período distinto y mucho más largo.</div>"
+   "h": "<div class=\"highlight-box\">Daniel 9:1-2 sitúa la escena en el año primero de Darío el Medo, después de la caída de Babilonia, justo cuando Daniel entendía por los libros (Jeremías 25:11-12; 29:10) que los 70 años de desolación de Jerusalén estaban por cumplirse. Esa lectura lo lleva a orar con ayuno, cilicio y ceniza, confesando el pecado de Israel (Daniel 9:3-19). Mientras oraba, Gabriel vino a él «volando con presteza» (v. 21) para contestarle: no con los 70 años de Jeremías, sino con \"setenta semanas\" (Daniel 9:24), un período distinto y mucho más largo.</div>"
   },
   {
    "t": "🔢 Setenta semanas = 490 años",
-   "h": "<div class=\"highlight-box\">«Setenta semanas están determinadas sobre tu pueblo y sobre tu santa ciudad» (Daniel 9:24). En el sistema profético de \"día por año\" que ya se aplicó a los 1.260 años de Daniel 7:25, setenta semanas (70 × 7 días) equivalen a <strong>490 años</strong>. Gabriel había quedado a mitad de explicar los 2.300 años de Daniel 8:14 cuando Daniel se desmayó; ahora retoma el hilo y aclara que, de esos 2.300 años, los primeros 490 —las \"setenta semanas\"— quedan reservados especialmente para el pueblo judío.</div>"
+   "h": "<div class=\"highlight-box\">«Setenta semanas están determinadas sobre tu pueblo y sobre tu santa ciudad» (Daniel 9:24). En el sistema profético de \"día por año\" que ya se aplicó a los 1.260 años de Daniel 7:25, setenta semanas (70 × 7 días) equivalen a <strong>490 años</strong>. Daniel 8:27 dice que el profeta quedó enfermo y no entendía la visión. La lectura adventista relaciona la explicación de Gabriel en Daniel 9 con ese período pendiente de comprensión: los 490 años son la primera parte de los 2.300. Levítico 25:8 ofrece además un precedente de semanas de años.</div>"
   },
   {
    "t": "🗓️ El decreto de 457 a.C.",
@@ -9909,7 +9920,7 @@ const CONTENIDO = {
   },
   {
    "t": "🧮 Las tres divisiones de las setenta semanas",
-   "h": "<div class=\"highlight-box\">Daniel 9:25-27 divide las setenta semanas en tres bloques: <strong>siete semanas</strong> (49 años) para la restauración y reedificación de Jerusalén \"en tiempos angustiosos\" (del 457 a.C. al 408 a.C.); <strong>sesenta y dos semanas</strong> más (434 años) hasta la llegada de \"un Príncipe Mesías\" (del 408 a.C. al año 27 d.C.); y una <strong>última semana</strong> (7 años, del 27 al 34 d.C.) en la que el Mesías «confirmará el pacto con muchos» y, \"a la mitad de la semana\", hará \"cesar el sacrificio y la ofrenda\".</div>"
+   "h": "<div class=\"highlight-box\">Daniel 9:25-27 divide las setenta semanas en tres bloques: <strong>siete semanas</strong> (49 años) para la restauración y reedificación de Jerusalén \"en tiempos angustiosos\" (del 457 a.C. al 408 a.C.); <strong>sesenta y dos semanas</strong> más (434 años) hasta la llegada de «Mesías Príncipe» (del 408 a.C. al año 27 d.C.); y una <strong>última semana</strong> (7 años, del 27 al 34 d.C.) en la que el Mesías «confirmará el pacto con muchos» y, \"a la mitad de la semana\", hará \"cesar el sacrificio y la ofrenda\".</div>"
   },
   {
    "t": "✝️ El Mesías Príncipe: el bautismo de Jesús",
@@ -9917,11 +9928,11 @@ const CONTENIDO = {
   },
   {
    "t": "⏳ La última semana: 27-34 d.C.",
-   "h": "<div class=\"highlight-box\">«A la mitad de la semana» el Mesías haría cesar el sacrificio y la ofrenda (Daniel 9:27): tres años y medio después de su bautismo (27 d.C.), en la primavera del <strong>año 31 d.C.</strong>, Jesús fue crucificado. Su muerte hizo innecesarios, en el plano simbólico, los sacrificios del santuario terrenal, aunque los sacerdotes judíos siguieran ofreciéndolos por costumbre. «Se quitará la vida al Mesías» (v. 26): Jesús murió no por sus propios pecados sino por los de la humanidad.</div>"
+   "h": "<div class=\"highlight-box\">«A la mitad de la semana» el Mesías haría cesar el sacrificio y la ofrenda (Daniel 9:27): tres años y medio después de su bautismo (27 d.C.), en la primavera del <strong>año 31 d.C.</strong>, Jesús fue crucificado. Su muerte hizo innecesarios, en el plano simbólico, los sacrificios del santuario terrenal, aunque los ritos continuaran hasta la destrucción del templo. «Se quitará la vida al Mesías» (v. 26): Jesús murió no por sus propios pecados sino por los de la humanidad.</div>"
   },
   {
    "t": "🪨 El fin de las setenta semanas: 34 d.C.",
-   "h": "<div class=\"highlight-box\">Los 490 años que comenzaron en el otoño de 457 a.C. terminan en el <strong>año 34 d.C.</strong> Ese año, según Hechos 7, los judíos apedrearon a Esteban, el primer mártir cristiano; ese rechazo final marcó simbólicamente el cierre del período especial que Dios había reservado para la nación judía como pueblo depositario exclusivo del pacto. Poco después, con la conversión del centurión romano Cornelio (Hechos 10) y la predicación de Pablo, el evangelio se extendió abiertamente \"a los gentiles\" (Hechos 22:21), sin dejar nunca de incluir también a los judíos que aceptaran a Cristo.</div>"
+   "h": "<div class=\"highlight-box\">Los 490 años que comenzaron en el otoño de 457 a.C. terminan en el <strong>año 34 d.C.</strong> DTG, cap. 23, sitúa en ese año el martirio de Esteban que narra Hechos 7; Hechos no expresa el año 34. Ese acontecimiento y la persecución posterior marcan, en esa cronología, el cierre del período especial de responsabilidad de Israel como nación. Poco después, con la conversión del centurión romano Cornelio (Hechos 10) y la predicación de Pablo, el evangelio se extendió abiertamente \"a los gentiles\" (Hechos 22:21), sin dejar nunca de incluir también a los judíos que aceptaran a Cristo.</div>"
   },
   {
    "t": "➗ Restando 490 de 2.300: quedan 1.810 años",
@@ -9929,23 +9940,24 @@ const CONTENIDO = {
   },
   {
    "t": "🔗 Por qué esto responde la pregunta de Daniel 8",
-   "h": "<div class=\"highlight-box\">El ángel Gabriel había sido interrumpido en Daniel 8:27 antes de aclarar cuándo empezaban a contarse las 2.300 tardes y mañanas; Daniel quedó \"perplejo\" porque no lograba entenderlo. Daniel 9 es la continuación directa de esa misma conversación: Gabriel regresa \"para ilustrar tu inteligencia\" (9:22) y da el dato que faltaba —el decreto del 457 a.C.— exactamente en el mismo punto de la explicación donde se había detenido. Esto solo tiene sentido si los 2.300 años y las 70 semanas comparten el mismo punto de arranque.</div>"
+   "h": "<div class=\"highlight-box\">Daniel no comprendía la visión de las tardes y mañanas (8:26-27). Gabriel, el mismo mensajero, vuelve para darle entendimiento (9:21-23). Shea une cuatro argumentos: la disposición de los períodos, su comienzo en la época persa, la referencia a la visión anterior y el sentido de «determinadas». El término hebreo <i>marʾeh</i> relaciona 9:23 con las tardes y mañanas de 8:26. El verbo <i>ḥātak</i> favorece «cortar», aunque no demuestra por sí solo toda la conexión. Dentro de ese argumento, la orden de 9:25 da el punto de partida; su identificación histórica con Esdras 7 permite fecharlo en 457 a.C.</div><p>Fuente: CS, cap. 18; Shea, <i>Simposio sobre Daniel</i>, PDF 251-254.</p>"
   },
   {
    "t": "🙏 La oración de Daniel 9: un modelo de confesión",
-   "h": "<div class=\"highlight-box\">Antes de recibir la profecía, Daniel ora un capítulo entero (9:3-19) que es, en sí mismo, un modelo de confesión bíblica: reconoce el pecado colectivo de su pueblo («hemos pecado, hemos cometido iniquidad», v. 5) sin excusarlo ni atribuirlo solo a otros, recuerda la fidelidad de Dios a pesar de la infidelidad humana, y basa su pedido no en los méritos de Israel sino «en tus muchas misericordias» (v. 18). Es la misma actitud que Daniel mostró toda su vida: un hombre que se identificaba con las faltas de su nación en vez de considerarse mejor que ella, aun siendo él personalmente irreprochable ante el rey (Daniel 6:4).</div>"
+   "h": "<div class=\"highlight-box\">Antes de recibir la profecía, Daniel dedica una oración extensa a la confesión (9:3-19) que es, en sí mismo, un modelo de confesión bíblica: reconoce el pecado colectivo de su pueblo («hemos pecado, hemos cometido iniquidad», v. 5) sin excusarlo ni atribuirlo solo a otros, recuerda la fidelidad de Dios a pesar de la infidelidad humana, y basa su pedido no en los méritos de Israel sino «en tus muchas misericordias» (v. 18). Es la misma actitud que Daniel mostró toda su vida: un hombre que se identificaba con las faltas de su nación en vez de considerarse mejor que ella, aun siendo él personalmente irreprochable ante el rey (Daniel 6:4).</div>"
   },
   {
    "t": "🌅 De la confesión a la certeza",
    "h": "<div class=\"highlight-box\">Es notable el contraste entre el tono de la oración de Daniel —angustiado, consciente de una deuda que su pueblo no puede pagar— y la respuesta que recibe: no un simple perdón puntual, sino un mapa de 490 años que culmina en el Mesías que \"hará cesar el sacrificio y la ofrenda\" para siempre. La misma estructura se repite en el resto del libro: cada vez que Daniel busca a Dios con sinceridad (el sueño de la estatua, los leones, esta oración), la respuesta no solo resuelve el problema inmediato sino que revela algo mayor sobre el plan de salvación.</div>"
   },
   {
-   "t": "📖 Tres cartas que Daniel tenía abiertas sobre la mesa",
-   "h": "<p>La oración de Daniel 9 no nace de la nada: el profeta acababa de leer tres pasajes escritos justamente para exiliados como él, y su oración cita frases de los tres:</p><ul style=\"margin:.4rem 0 .2rem 1.1rem;padding:0\"><li>Los consejos de Moisés para los futuros exiliados (Levítico 26).</li><li>La oración de Salomón por los futuros exiliados, pronunciada en la dedicación del mismo templo que ahora estaba en ruinas (1 Reyes 8:46-53).</li><li>La carta de Jeremías a los exiliados en Babilonia (Jeremías 29).</li></ul><p>Los tres coinciden en algo: el exilio es consecuencia del pecado, pero la confesión sincera trae perdón y restauración. Sobre esa base, la oración de Daniel reúne al menos seis elementos:</p><ul style=\"margin:.4rem 0 .2rem 1.1rem;padding:0\"><li>Fervor genuino, con ayuno, saco y ceniza.</li><li>Dependencia de la justicia de Dios, no de la propia.</li><li>Uso deliberado de las Escrituras.</li><li>Confesión de sus propios pecados y los de su pueblo.</li><li>Búsqueda de la gloria de Dios y de su santuario.</li><li>El reclamo del cumplimiento de las promesas de la alianza.</li></ul><div class=\"highlight-box\">Daniel era, según sus propios enemigos, intachable en su conducta (Daniel 6:4). Aun así oró: «hemos pecado, hemos cometido iniquidad» (9:5). No mentía: se identificaba con su pueblo en vez de sentirse superior a él.</div>"
+   "t": "📖 Las Escrituras que iluminan la oración",
+   "h": "<p>Daniel 9:2 dice expresamente que el profeta leía a Jeremías. Su oración tiene además paralelos con las advertencias de Moisés y la oración de Salomón. Esos vínculos ayudan a comprenderla; el relato no dice que tuviera tres cartas abiertas:</p><ul style=\"margin:.4rem 0 .2rem 1.1rem;padding:0\"><li>Los consejos de Moisés para los futuros exiliados (Levítico 26).</li><li>La oración de Salomón por los futuros exiliados, pronunciada en la dedicación del mismo templo que ahora estaba en ruinas (1 Reyes 8:46-53).</li><li>La carta de Jeremías a los exiliados en Babilonia (Jeremías 29).</li></ul><p>Los tres coinciden en algo: el exilio es consecuencia del pecado, pero la confesión sincera trae perdón y restauración. Sobre esa base, la oración de Daniel reúne al menos seis elementos:</p><ul style=\"margin:.4rem 0 .2rem 1.1rem;padding:0\"><li>Fervor genuino, con ayuno, saco y ceniza.</li><li>Dependencia de la justicia de Dios, no de la propia.</li><li>Uso deliberado de las Escrituras.</li><li>Confesión de sus propios pecados y los de su pueblo.</li><li>Búsqueda de la gloria de Dios y de su santuario.</li><li>El reclamo del cumplimiento de las promesas de la alianza.</li></ul><div class=\"highlight-box\">Daniel era, según sus propios enemigos, intachable en su conducta (Daniel 6:4). Aun así oró: «hemos pecado, hemos cometido iniquidad» (9:5). No mentía: se identificaba con su pueblo en vez de sentirse superior a él.</div>"
   },
   {
-   "t": "🎭 La poesía escondida en Daniel 9:24",
-   "h": "<p>Daniel 9:24 no es solo información: en hebreo está compuesto como un poema cuidadosamente estructurado, con dos columnas paralelas —una hecha de unidades de dos palabras y otra de tres— que además esconden un juego de palabras entre sí:</p><ul style=\"margin:.4rem 0 .2rem 1.1rem;padding:0\"><li>terminar la transgresión — instaurar justicia eterna</li><li>sellar los pecados — sellar visión y profecía</li><li>expiar la iniquidad — ungir el lugar santísimo</li></ul><p>La palabra traducida \"fijadas\" o \"determinadas\" (hebreo <em>jathak</em>) aparece una sola vez en toda la Biblia, pero fuera de las Escrituras se usaba con el sentido de \"cortar\" o \"amputar\". Por eso Gabriel no está simplemente \"señalando\" un plazo: está anunciando que <strong>490 años se \"cortan\" o \"amputan\"</strong> de un período mayor.</p><div class=\"highlight-box\">Ese detalle resuelve el enigma que traía perplejo a Daniel: como no se pueden cortar 490 años de apenas 2.300 días literales (menos de siete años), los 2.300 \"días\" de Daniel 8:14 tienen que ser, necesariamente, 2.300 años simbólicos.</div>"
+   "t": "🎭 Las seis metas y su centro: expiación y justicia",
+   "verso": 24,
+   "h": "<p>Shea estudia dos grupos de tres propósitos en Daniel 9:24: los tres primeros hablan de pecado; los tres últimos, de la respuesta que Dios trae. Propone una estructura en espejo, con estas correspondencias:</p><ul class=\"tight\"><li><b>A y A′:</b> terminar la prevaricación y ungir el santo de santos: desenlace de la situación antigua e inauguración del servicio celestial.</li><li><b>B y B′:</b> sellar el pecado y sellar la visión y al profeta, según la lectura del hebreo que usa el autor. RV1995 traduce la primera expresión «poner fin al pecado» y la última «la profecía».</li><li><b>C y C′:</b> expiar la iniquidad y traer justicia perdurable: acontecimiento y resultado.</li></ul><div class=\"highlight-box\">El par central explica el significado de la muerte del Mesías. En el esquema de 9:25-27, Shea coloca esa muerte en el centro; al unir ambos esquemas se ve qué ocurre y qué logra: Cristo muere, hace expiación y pone la justicia duradera al alcance del creyente.</div><p>Fuente: Shea, <i>Simposio sobre Daniel</i>, <i>La unidad de Daniel</i>, PDF 265-268. Se presenta su propuesta de estructura sin alterar las citas de RV1995.</p>"
   },
   {
    "t": "📖 Versículo clave",
@@ -9955,7 +9967,7 @@ const CONTENIDO = {
    "t": "🧭 Las seis metas de las setenta semanas",
    "capa": "contexto",
    "verso": 24,
-   "h": "<p><b>Cuándo:</b> el primer año de Darío el medo (9:1), hacia el 538 a.C., un año después de la caída de Babilonia. Daniel estudiaba los setenta años de Jeremías (9:2) y temía que los 2.300 años de la visión anterior los alargaran.</p><p>Daniel 9:24 dice que en las setenta semanas se cumplirían seis cosas:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>La meta</th><th>Qué significa</th></tr></thead><tbody><tr><td class=\"key\">Terminar la prevaricación</td><td>La palabra es «rebelión». Israel podía terminarla recibiendo al Mesías, o llevarla al extremo rechazándolo. La profecía anuncia lo segundo.</td></tr><tr><td class=\"key\">Poner fin al pecado</td><td>No al hecho de pecar, sino a los pecados: Jesús los cargó en la cruz (Hebreos 9:26-28).</td></tr><tr><td class=\"key\">Expiar la iniquidad</td><td>La reconciliación del hombre con Dios por su muerte (Romanos 5:10).</td></tr><tr><td class=\"key\">Traer la justicia perdurable</td><td>Con su vida sin pecado Jesús tejió un manto de justicia que se acredita al que cree.</td></tr><tr><td class=\"key\">Sellar la visión y la profecía</td><td>Bohr relaciona el cierre del testimonio a Israel como nación con Esteban. Es un énfasis interpretativo; no una prohibición universal de profetizar ni el rechazo de toda persona judía.</td></tr><tr><td class=\"key\">Ungir al Santo de los santos</td><td>Jesús y el santuario celestial, ungidos cuando él empezó su ministerio allá.</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329.</p>"
+   "h": "<p><b>Cuándo:</b> el primer año de Darío el medo (9:1), hacia el 538 a.C., un año después de la caída de Babilonia. Daniel estudiaba los setenta años de Jeremías (9:2) y temía que los 2.300 años de la visión anterior los alargaran.</p><p>Daniel 9:24 dice que en las setenta semanas se cumplirían seis cosas:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>La meta</th><th>Qué significa</th></tr></thead><tbody><tr><td class=\"key\">Terminar la prevaricación</td><td>La palabra es «rebelión». Israel podía terminarla recibiendo al Mesías, o llevarla al extremo rechazándolo. La profecía anuncia lo segundo.</td></tr><tr><td class=\"key\">Poner fin al pecado</td><td>No al hecho de pecar, sino a los pecados: Jesús los cargó en la cruz (Hebreos 9:26-28).</td></tr><tr><td class=\"key\">Expiar la iniquidad</td><td>La reconciliación del hombre con Dios por su muerte (Romanos 5:10).</td></tr><tr><td class=\"key\">Traer la justicia perdurable</td><td>La expiación hace posible una justicia duradera para el creyente (Romanos 3:21-26). Shea une estos dos propósitos como el centro del versículo.</td></tr><tr><td class=\"key\">Sellar la visión y la profecía</td><td>Bohr relaciona el cierre del testimonio a Israel como nación con Esteban. Es un énfasis interpretativo; no una prohibición universal de profetizar ni el rechazo de toda persona judía.</td></tr><tr><td class=\"key\">Ungir al Santo de los santos</td><td>Shea aplica la expresión al santuario inaugurado para el ministerio celestial de Cristo. Se distingue de su unción en el bautismo (Hechos 10:38).</td></tr></tbody></table></div><p>Shea une la expiación y la justicia en el centro de 9:24; la muerte del Mesías de 9:26 explica su cumplimiento.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329; Shea, <i>Simposio sobre Daniel</i>, PDF 254-258 y 265-268.</p>"
   },
   {
    "t": "🧭 Cuatro decretos persas y por qué cuenta el de 457",
@@ -9966,12 +9978,13 @@ const CONTENIDO = {
    "t": "🧭 ¿Quién es «el príncipe que ha de venir»?",
    "capa": "contexto",
    "verso": 26,
-   "h": "<p>Daniel 9:26 dice: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario». En la lectura de Bohr que sigue este estudio, el príncipe es <b>Jesús y su pueblo es Israel</b>. Los ejércitos romanos destruyeron físicamente Jerusalén en el año 70 d.C.</p><p>Las razones: el «Mesías Príncipe» de 9:25 y el «Mesías» y «príncipe» de 9:26 están en paralelo y son la misma persona; los tres «él» de 9:27 vuelven a ese príncipe; y en Daniel 9 «pueblo» siempre es Israel.</p><div class=\"highlight-box\">Entonces, ¿por qué se destruyó la ciudad? Al rechazar al Mesías, la nación misma provocó su ruina, y Dios permitió que lo hicieran los ejércitos romanos (Mateo 22:7): «los judíos habían forjado sus propias cadenas» (CS 39).</div><p>Otra lectura, la adventista tradicional, ve aquí a Tito y los romanos, que destruyeron Jerusalén en el año 70. La futurista ve un anticristo que haría un pacto de siete años con los judíos.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 341-345; Shea, <i>Daniel</i>, p. 168; Maxwell, <i>El porvenir del mundo revelado</i>, p. 232; Ruiz, <i>Escuela de laicos: Daniel</i>, p. 32; CS 39.</p>"
+   "h": "<p>Daniel 9:26 dice: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario». En la lectura de Bohr que sigue este estudio, el príncipe es <b>Jesús y su pueblo es Israel</b>. Los ejércitos romanos destruyeron físicamente Jerusalén en el año 70 d.C.</p><p>Las razones: el «Mesías Príncipe» de 9:25 y el «Mesías» y «príncipe» de 9:26 están en paralelo y son la misma persona; Shea observa la distribución del doble título: Mesías Príncipe (9:25), Mesías (9:26a) y príncipe (9:26b). Ese patrón es su argumento para un solo personaje, no una identidad expresamente aclarada por la traducción.</p><div class=\"highlight-box\">Entonces, ¿por qué se destruyó la ciudad? Al rechazar al Mesías, la nación misma provocó su ruina, y Dios permitió que lo hicieran los ejércitos romanos (Mateo 22:7): «los judíos habían forjado sus propias cadenas» (CS 39).</div><p>Otra lectura, la adventista tradicional, ve aquí a Tito y los romanos, que destruyeron Jerusalén en el año 70. La futurista ve un anticristo que haría un pacto de siete años con los judíos.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 341-345; Shea, <i>Daniel</i>, p. 168; Maxwell, <i>El porvenir del mundo revelado</i>, p. 232; Ruiz, <i>Escuela de laicos: Daniel</i>, p. 32; CS 39.</p>"
   },
   {
    "t": "🧭 «Confirmará el pacto con muchos»",
    "capa": "contexto",
-   "h": "<p>El que «confirmará el pacto» es el mismo Mesías de 9:26; no hay razón para meter otro personaje, como el anticristo de la lectura futurista.</p><ul class=\"tight\"><li><b>«El pacto»</b>, con artículo: en Daniel la palabra siempre es el pacto de Dios con su pueblo (9:4; 11:22, 28, 30, 32), nunca un tratado político. Daniel 9 es además el único capítulo del libro que usa el nombre del pacto, Jehová.</li><li><b>«Confirmará»</b> traduce <i>gabar</i>, «hacer fuerte». El pacto antiguo era débil porque la sangre de animales no quita el pecado; la sangre de Cristo lo ratifica.</li><li><b>«Con muchos»</b>: es la palabra del sacrificio que sustituye (Isaías 53:11; Marcos 10:45). Jesús la usó en la última cena: «mi sangre del nuevo pacto, que por muchos es derramada» (Mateo 26:28).</li></ul><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 346-347.</p>"
+   "verso": 27,
+   "h": "<p>El que «confirmará el pacto» es el mismo Mesías de 9:26; no hay razón para meter otro personaje, como el anticristo de la lectura futurista.</p><ul class=\"tight\"><li><b>«El pacto»</b>: la oración ya presenta a Dios como quien guarda el pacto (9:4). La lectura mesiánica sigue ese hilo y lo une con las promesas a los padres; no introduce un tratado político moderno en 9:27.</li><li><b>«Confirmará»</b> traduce <i>gabar</i>, «hacer firme». Shea entiende que el pacto ya existía: la semana del 27 al 34 es la última del período de oportunidad de Israel, no los primeros siete años de un pacto nuevo fundado en el bautismo. Cristo confirma las promesas hechas a los padres (Romanos 15:8) y ratifica el nuevo pacto con su sangre a mitad de la semana (Marcos 14:24; Hebreos 9:15).</li><li><b>«Con muchos»</b>: es la palabra del sacrificio que sustituye (Isaías 53:11; Marcos 10:45). Jesús la usó en la última cena: «mi sangre del nuevo pacto, que por muchos es derramada» (Mateo 26:28).</li></ul><p>El testimonio abarca siete años: primero Cristo y después sus apóstoles (DTG, cap. 23). Terminar ese período no significa que el nuevo pacto expire en el año 34.</p><p>Fuente: DTG, cap. 23; Bohr, <i>Daniel 1-10</i>, p. 346-347; Shea, <i>Simposio sobre Daniel</i>, PDF 255-256.</p>"
   },
   {
    "t": "🧭 El calendario del Mesías: el día y la hora",
@@ -9981,7 +9994,7 @@ const CONTENIDO = {
   {
    "t": "🧭 La Biblia explica sus símbolos",
    "capa": "contexto",
-   "h": "<p>Daniel 9 tiene pocos símbolos, pero son la llave del capítulo. La misma Biblia los explica:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Símbolo</th><th>Qué representa</th><th>Dónde lo explica la Biblia</th></tr></thead><tbody><tr><td class=\"key\">Semana (9:24-27)</td><td>Siete años: 70 semanas son 490 años</td><td>Números 14:34; Ezequiel 4:6 (un día por cada año)</td></tr><tr><td class=\"key\">«Tu pueblo» y «tu santa ciudad» (9:24)</td><td>Israel y Jerusalén literales. Hasta el año 34 no son símbolo; después, el pueblo de Dios es la iglesia</td><td>Daniel 9:24; Gálatas 3:29</td></tr><tr><td class=\"key\">Mesías, ungir (9:25-26)</td><td>El Ungido: Jesús, ungido con el Espíritu Santo en su bautismo</td><td>Hechos 10:38; Juan 1:41</td></tr><tr><td class=\"key\">Sacrificio y ofrenda (9:27)</td><td>Señalaban a Cristo, el Cordero; cesan cuando él muere</td><td>Juan 1:29; 1 Corintios 5:7; Mateo 27:51</td></tr><tr><td class=\"key\">Inundación (9:26)</td><td>La invasión de un ejército</td><td>Isaías 8:7-8; Daniel 11:22: «barridas delante de él como por inundación de aguas»</td></tr></tbody></table></div><p>Fuente: Bohr, <i>15 principios</i> 2:105; Bohr, <i>Daniel 1-10</i>, p. 328 y 345; Bohr, <i>Daniel 11</i>, p. 21; Bohr, <i>El calendario del Mesías</i>, p. 3 y 5.</p>"
+   "h": "<p>Daniel 9 tiene pocos símbolos, pero son la llave del capítulo. La misma Biblia los explica:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Símbolo</th><th>Qué representa</th><th>Dónde lo explica la Biblia</th></tr></thead><tbody><tr><td class=\"key\">Semana (9:24-27)</td><td>Siete años: 70 semanas son 490 años</td><td>Números 14:34; Ezequiel 4:6 (un día por cada año)</td></tr><tr><td class=\"key\">«Tu pueblo» y «tu santa ciudad» (9:24)</td><td>Israel y Jerusalén, por los que Daniel ora. El cierre del período cambia la etapa de la misión; no convierte retrospectivamente la ciudad en símbolo ni impide la salvación de personas judías (Romanos 11:1-5).</td><td>Daniel 9:24; Gálatas 3:29</td></tr><tr><td class=\"key\">Mesías, ungir (9:25-26)</td><td>El Ungido: Jesús, ungido con el Espíritu Santo en su bautismo</td><td>Hechos 10:38; Juan 1:41</td></tr><tr><td class=\"key\">Sacrificio y ofrenda (9:27)</td><td>Señalaban a Cristo, el Cordero; cesan cuando él muere</td><td>Juan 1:29; 1 Corintios 5:7; Mateo 27:51</td></tr><tr><td class=\"key\">Inundación (9:26)</td><td>La invasión de un ejército</td><td>Isaías 8:7-8; Daniel 11:22: «barridas delante de él como por inundación de aguas»</td></tr></tbody></table></div><p>Fuente: Bohr, <i>15 principios</i> 2:105; Bohr, <i>Daniel 1-10</i>, p. 328 y 345; Bohr, <i>Daniel 11</i>, p. 21; Bohr, <i>El calendario del Mesías</i>, p. 3 y 5.</p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -59332,6 +59345,166 @@ const BANCO = [
  },
  {
   "cap": "d9",
+  "v": "9:24",
+  "q": "Según la explicación de Bohr, ¿qué distingue «terminar la prevaricación» de «poner fin al pecado»?",
+  "o": [
+   "La primera aborda la rebelión; la segunda, el sacrificio que carga con los pecados",
+   "Las dos anuncian que toda persona dejó de pecar al terminar los 490 años",
+   "La primera fecha la cruz; la segunda fecha por sí sola la destrucción de Jerusalén",
+   "Las dos se refieren solamente a la terminación del cautiverio de setenta años"
+  ],
+  "a": 0,
+  "e": "Bohr trata la rebelión nacional al explicar la primera y desarrolla Hebreos 9:26–28 al explicar la segunda: Cristo hace frente a los pecados con su ofrenda. No son dos formas de decir que desapareció todo pecado humano. Fuente: Bohr, pp. 327–328.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:24",
+  "q": "¿Por qué Shea relaciona «expiar la iniquidad» con «traer la justicia perdurable»?",
+  "o": [
+   "Porque las dos expresiones describen la reconstrucción de las murallas",
+   "Porque el sacrificio expiatorio hace posible la justicia duradera",
+   "Porque los dos propósitos se cumplen solo en la segunda venida",
+   "Porque son dos nombres hebreos del mismo decreto de Artajerjes"
+  ],
+  "a": 1,
+  "e": "Shea entiende la primera como acontecimiento y la segunda como resultado. Ese par ocupa el centro de su esquema de 9:24, que se relaciona con la muerte del Mesías en el centro de 9:25–27. Fuente: Shea, PDF 257 y 265–268.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:24",
+  "q": "¿Cómo explica el estudio la suficiencia de la cruz junto al ministerio celestial de Cristo?",
+  "o": [
+   "El ministerio celestial repite el sacrificio hasta que pueda ser suficiente",
+   "La cruz hace innecesario cualquier ministerio posterior de Cristo",
+   "El sacrificio es definitivo y Cristo ministra sus beneficios como Sumo Sacerdote",
+   "La expiación de Daniel 9 comienza solamente cuando termina el período de 2.300 años"
+  ],
+  "a": 2,
+  "e": "Hebreos 10:10–14 presenta una sola ofrenda; Hebreos 7:25 y 8:1–2 presenta al Sumo Sacerdote que vive e intercede. Shea une el sacrificio definitivo con el ministerio posterior. Fuente: Shea, PDF 256–258.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:24",
+  "q": "¿Qué significa que la justicia de Daniel 9:24 sea perdurable en la explicación mesiánica?",
+  "o": [
+   "Que desapareció toda injusticia social al comenzar el año 34",
+   "Que el mérito de la nación reemplaza la necesidad de la expiación",
+   "Que se aplaza toda posibilidad de justificación hasta la tierra nueva",
+   "Que Cristo hace posible una justicia duradera frente al sistema sacrificial provisional"
+  ],
+  "a": 3,
+  "e": "Shea conecta la justicia con la expiación del Mesías y la contrasta con el servicio transitorio del templo. Bohr distingue lo que recibimos ahora en Cristo del mundo futuro sin injusticia. Fuente: Shea, PDF 257; Bohr, p. 328.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:24",
+  "q": "¿Qué debe distinguirse al explicar «sellar la visión y la profecía»?",
+  "o": [
+   "La confirmación por cumplimiento y el énfasis de Bohr en el cierre del testimonio nacional",
+   "La clausura del libro de Daniel y la prohibición de leer los profetas después del año 34",
+   "La pérdida del don profético en todo el mundo y la destrucción del templo ese mismo año",
+   "El fin de las sesenta y nueve semanas y el comienzo de un nuevo cautiverio de setenta años"
+  ],
+  "a": 0,
+  "e": "CS 18 usa el cumplimiento para confirmar el período; Bohr relaciona la expresión con Esteban y el testimonio a Israel como nación. Se identifican esos énfasis sin convertirlos en la desaparición universal de la profecía. Fuente: CS 18; Bohr, p. 328; Shea, PDF 265–266.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:24",
+  "q": "¿Qué cadena de preguntas sigue Shea para explicar la unción del «santo de santos»?",
+  "o": [
+   "Qué rey dio el decreto, cuántos muros hizo y qué fecha tenía cada puerta",
+   "Qué se unge, qué santuario es, para qué se unge y cuándo comienza el servicio",
+   "Qué imperio corresponde a cada bestia y cuál fue el último rey de Persia",
+   "Qué traducción tiene el número 490 y dónde se escribió por primera vez"
+  ],
+  "a": 1,
+  "e": "Shea parte del uso de la expresión para el santuario, identifica el celestial, explica la consagración inaugural por Éxodo 40 y la relaciona con la ascensión y Pentecostés. Es distinto de la unción de Jesús en su bautismo. Fuente: Shea, PDF 257–258; HAp, cap. 4.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:27",
+  "q": "¿Por qué Shea no llama a la semana del 27 al 34 «los primeros siete años del nuevo pacto»?",
+  "o": [
+   "Porque sitúa la crucifixión antes del comienzo de las setenta semanas",
+   "Porque sostiene que Jesús no ratificó ningún pacto mediante su muerte",
+   "Porque el pacto se hace firme durante una semana cuya mitad contiene la cruz",
+   "Porque interpreta que las promesas a los padres solo comienzan en el año 34"
+  ],
+  "a": 2,
+  "e": "El verbo implica fortalecer algo existente. La semana es el cierre del período concedido a Israel; Cristo ratifica el nuevo pacto con su sangre a la mitad de ella, no al comienzo del 27. Fuente: Shea, PDF 255–256; Romanos 15:8; Marcos 14:24.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:25-26",
+  "q": "¿Qué argumento literario usa Shea para relacionar los títulos de Daniel 9:25–26?",
+  "o": [
+   "Los tres títulos aparecen traducidos con mayúscula y eso resuelve su identidad",
+   "La palabra príncipe solo se utiliza una vez en todo el pasaje de Gabriel",
+   "Cada título exige un personaje nuevo porque está en una oración distinta",
+   "Mesías y Príncipe aparecen juntos y luego se distribuyen por separado"
+  ],
+  "a": 3,
+  "e": "Shea observa el patrón Mesías + Príncipe en 9:25, Mesías en 9:26a y príncipe en 9:26b. Ese patrón sostiene su lectura de un mismo personaje; otros historicistas interpretan al príncipe de 9:26b como Tito. Fuente: Shea, PDF 248–249.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:26-27",
+  "q": "¿Cómo se complementan «después de las sesenta y dos semanas» y «a la mitad de la semana»?",
+  "o": [
+   "La primera anuncia el acontecimiento; la segunda precisa dónde cae dentro de la última semana",
+   "Las dos sitúan la cruz exactamente al final de los 490 años",
+   "La primera reinicia las primeras siete semanas y la segunda vuelve a contar el cautiverio",
+   "Las dos requieren dejar sin contar un intervalo de siglos después del bautismo"
+  ],
+  "a": 0,
+  "e": "La muerte ocurre después de las 62 que siguen a las primeras 7; el versículo 27 la sitúa en la mitad de la semana restante. DTG 23 ubica el bautismo en otoño del 27 y la cruz en primavera del 31. Fuente: Daniel 9:25–27; DTG 23; Shea, PDF 255–256.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "v": "9:24-27",
+  "q": "¿Qué consigue unir las dos estructuras literarias que estudia Shea?",
+  "o": [
+   "Trasladar la destrucción del año 70 al término del período en el año 34",
+   "Relacionar la muerte central del Mesías con su efecto: expiación y justicia",
+   "Demostrar que la ciudad y el Mesías son dos nombres del mismo símbolo",
+   "Reemplazar las cantidades de semanas por un esquema sin significado histórico"
+  ],
+  "a": 1,
+  "e": "El centro de 9:25–27 es la muerte del Mesías. El centro de 9:24 explica lo que esa muerte logra: expiar la iniquidad y traer justicia perdurable. La propuesta literaria une acontecimiento y significado. Fuente: Shea, PDF 265–268.",
+  "t": "mc",
+  "f": "c",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
   "t": "mc",
   "v": "9:24",
   "f": "c",
@@ -59527,7 +59700,7 @@ const BANCO = [
   "f": "c",
   "q": "En Daniel 9:24 «tu pueblo» y «tu santa ciudad» son todavía el Israel literal y la Jerusalén literal.",
   "a": true,
-  "e": "Verdadero. Hasta el año 34 la profecía habla de un pueblo y una ciudad literales; después, el pueblo de Dios es la iglesia en todo el mundo (Gálatas 3:29). Fuente: Bohr, <i>Daniel 11</i>, p. 21.",
+  "e": "Verdadero. La oración de Daniel 9:16-20 identifica a los destinatarios. El cierre del período no cambia retrospectivamente esa referencia ni excluye a las personas judías de la salvación (Romanos 11:1-5). Fuente: Bohr, <i>Daniel 11</i>, p. 21.",
   "nv": 2
  },
  {
@@ -68708,234 +68881,508 @@ const LAMINAS = {
     {
      "frase": "Setenta semanas",
      "sentido": "Es el período completo anunciado por Gabriel: setenta unidades de siete.",
-     "desarrollo": "La lectura de semanas de años da 70 × 7 = 490 años. No son los setenta años del exilio que Daniel había leído en Jeremías. El horizonte de la respuesta es mayor y conduce al Mesías. Levítico 25:8 ofrece un antecedente bíblico del cómputo de semanas de años.",
      "refs": "Daniel 9:2, 24–27; Levítico 25:8. DTG, cap. 23; Simposio sobre Apocalipsis, pp. 444–446.",
      "fuentes": [
       "dtg",
       "sima"
-     ]
+     ],
+     "pasos": [
+      "Daniel comienza por los setenta años de desolación anunciados por Jeremías (9:2). Gabriel responde con setenta semanas (9:24): no repite el mismo número de años, sino que introduce un período mayor.",
+      "Levítico 25:8 ofrece un precedente explícito de semanas de años. Shea relaciona el lenguaje de Daniel con esos ciclos sabáticos; no deduce los 490 años únicamente de que el libro contenga símbolos.",
+      "El propio pasaje distribuye el período en siete, sesenta y dos y una semana. La cronología de DTG 23 sigue esa secuencia hasta el ministerio y la muerte de Cristo."
+     ],
+     "precision": "«Semana» es una unidad de siete. Para explicar por qué aquí se entiende de años hay que atender al contexto y al argumento bíblico; citar Números 14:34 aisladamente no sustituye esa explicación.",
+     "fuente": "Shea, PDF 249–251; DTG, cap. 23; Bohr, pp. 325–326.",
+     "desarrollo": "Daniel comienza por los setenta años de desolación anunciados por Jeremías (9:2). Gabriel responde con setenta semanas (9:24): no repite el mismo número de años, sino que introduce un período mayor. Levítico 25:8 ofrece un precedente explícito de semanas de años. Shea relaciona el lenguaje de Daniel con esos ciclos sabáticos; no deduce los 490 años únicamente de que el libro contenga símbolos. El propio pasaje distribuye el período en siete, sesenta y dos y una semana. La cronología de DTG 23 sigue esa secuencia hasta el ministerio y la muerte de Cristo."
     },
     {
      "frase": "están determinadas",
      "sentido": "Dios ha delimitado un período para el pueblo y la ciudad por los que Daniel ora.",
-     "desarrollo": "El verbo hebreo ḥātak solo aparece aquí en la Biblia hebrea. La idea de «cortar» fundamenta la lectura adventista que separa los 490 años de los 2.300 de Daniel 8. Shea advierte que el argumento lingüístico favorece esa lectura, pero no la prueba por sí solo: también se examinan el contexto y la continuidad de la explicación de Gabriel.",
      "refs": "Daniel 8:26–27; 9:21–24. Bohr, pp. 325–326; Simposio sobre Daniel, PDF 251–254.",
      "fuentes": [
       "bohr",
       "simd",
       "cs"
-     ]
+     ],
+     "pasos": [
+      "El verbo ḥātak aparece una sola vez en el hebreo de la Biblia. Por eso no es posible demostrar su sentido en este pasaje comparándolo con otros usos bíblicos del mismo verbo.",
+      "Shea examina la raíz, un término relacionado del ugarítico y el uso posterior en el hebreo misnaico. Su conclusión es que favorecen «cortar», aunque la evidencia lingüística por sí sola no resuelve toda la relación.",
+      "El argumento se completa con cuatro vínculos: la disposición de los períodos, su comienzo en la época persa, la referencia de Gabriel a la visión anterior y el sentido del verbo. Así se vinculan los 490 años con los 2.300."
+     ],
+     "precision": "La traducción RV1995 conserva «determinadas». «Cortadas» se explica como argumento de interpretación; no se introduce dentro de la cita bíblica como si la versión dijera otra cosa.",
+     "fuente": "Shea, PDF 251–254; CS, cap. 18; Bohr, pp. 325–326.",
+     "desarrollo": "El verbo ḥātak aparece una sola vez en el hebreo de la Biblia. Por eso no es posible demostrar su sentido en este pasaje comparándolo con otros usos bíblicos del mismo verbo. Shea examina la raíz, un término relacionado del ugarítico y el uso posterior en el hebreo misnaico. Su conclusión es que favorecen «cortar», aunque la evidencia lingüística por sí sola no resuelve toda la relación. El argumento se completa con cuatro vínculos: la disposición de los períodos, su comienzo en la época persa, la referencia de Gabriel a la visión anterior y el sentido del verbo. Así se vinculan los 490 años con los 2.300."
     },
     {
      "frase": "sobre tu pueblo y sobre tu santa ciudad",
      "sentido": "En el contexto inmediato son Israel y Jerusalén, mencionados en la oración de Daniel.",
-     "desarrollo": "La profecía responde a una petición concreta por un pueblo, una ciudad y un santuario desolados. Presenta un período especial de oportunidad y responsabilidad en relación con el Mesías. El fin de ese período no significa que una persona judía deje de poder recibir a Cristo; Romanos 11 rechaza esa conclusión.",
      "refs": "Daniel 9:16–20, 24; Hechos 8:1–4; Romanos 11:1–5. DTG, cap. 23.",
      "fuentes": [
       "dtg",
       "bohr",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "Daniel ha mencionado a Jerusalén, el santuario desolado y su pueblo en 9:16–20. Esos antecedentes identifican a los destinatarios de la respuesta: Israel y Jerusalén.",
+      "El período tiene una responsabilidad histórica concreta: recibir al Mesías y responder al pacto. DTG 23 relaciona el final con el rechazo expresado en el martirio de Esteban y la expansión de la misión.",
+      "Romanos 11:1–5 distingue esa responsabilidad nacional de la respuesta de cada persona. Pablo y los primeros discípulos judíos son parte del pueblo creyente, no una excepción a una prohibición de salvación."
+     ],
+     "precision": "Jerusalén no queda destruida en el año 34. El cierre de los 490 años y la destrucción romana del año 70 son acontecimientos distintos.",
+     "fuente": "Daniel 9:16–24; DTG, cap. 23; Shea, PDF 256; Bohr, p. 328.",
+     "desarrollo": "Daniel ha mencionado a Jerusalén, el santuario desolado y su pueblo en 9:16–20. Esos antecedentes identifican a los destinatarios de la respuesta: Israel y Jerusalén. El período tiene una responsabilidad histórica concreta: recibir al Mesías y responder al pacto. DTG 23 relaciona el final con el rechazo expresado en el martirio de Esteban y la expansión de la misión. Romanos 11:1–5 distingue esa responsabilidad nacional de la respuesta de cada persona. Pablo y los primeros discípulos judíos son parte del pueblo creyente, no una excepción a una prohibición de salvación."
     },
     {
      "frase": "para terminar la prevaricación",
      "sentido": "Prevaricación significa aquí transgresión o rebelión contra Dios.",
-     "desarrollo": "Daniel acaba de confesar la desobediencia de su pueblo. La respuesta mira hacia su desenlace frente al Mesías. Bohr enfatiza que rechazar a Cristo lleva la rebelión nacional a su culminación. No debe confundirse ese énfasis con la afirmación de que el pecado desapareció de la tierra al concluir las 70 semanas, ni aplicarse como condena colectiva de una etnia.",
      "refs": "Daniel 9:5–11, 24; Mateo 21:33–43; Hechos 7:51–60. Bohr, pp. 327–328.",
      "fuentes": [
       "bohr"
-     ]
+     ],
+     "pasos": [
+      "«Prevaricación» designa rebelión: Daniel reconoce que su pueblo desobedeció y se apartó de Dios (9:5, 9–11). El artículo del hebreo, destacado por Bohr, concentra la atención en esa rebelión concreta.",
+      "«Terminar» puede entenderse como abandonar la rebelión o como llevarla a su colmo. Bohr aplica la segunda posibilidad al rechazo del Mesías; Mateo 23:32–38 y Hechos 7:51–52 permiten seguir ese tema de resistencia persistente.",
+      "En la lectura estructural de Shea, esta frase corresponde al extremo inicial del versículo: la antigua situación llega a su desenlace, mientras que la unción del santuario abre el nuevo servicio del Mesías."
+     ],
+     "precision": "La explicación no es que en el año 34 dejara de existir el pecado. Tampoco transforma el rechazo de determinados dirigentes en culpa hereditaria de un pueblo.",
+     "fuente": "Bohr, pp. 327–328; Shea, PDF 265–266.",
+     "desarrollo": "«Prevaricación» designa rebelión: Daniel reconoce que su pueblo desobedeció y se apartó de Dios (9:5, 9–11). El artículo del hebreo, destacado por Bohr, concentra la atención en esa rebelión concreta. «Terminar» puede entenderse como abandonar la rebelión o como llevarla a su colmo. Bohr aplica la segunda posibilidad al rechazo del Mesías; Mateo 23:32–38 y Hechos 7:51–52 permiten seguir ese tema de resistencia persistente. En la lectura estructural de Shea, esta frase corresponde al extremo inicial del versículo: la antigua situación llega a su desenlace, mientras que la unción del santuario abre el nuevo servicio del Mesías."
     },
     {
      "frase": "poner fin al pecado",
-     "sentido": "La profecía anuncia una respuesta decisiva al pecado dentro de la obra mesiánica.",
-     "desarrollo": "En el conjunto del pasaje, la muerte del Mesías y la expiación permiten entender esa respuesta. Bohr también subraya el pecado que llega a su culminación al rechazarlo. Conviene distinguir ambos aspectos: Cristo ofrece el remedio suficiente, y el ser humano puede resistirlo. El texto no afirma que toda persona se volvió impecable en el año 34.",
+     "sentido": "Cristo hace frente a los pecados con su único sacrificio; la frase no anuncia que los seres humanos dejarían de pecar en el año 34.",
      "refs": "Daniel 9:24, 26–27; Hebreos 9:26; 10:10–14. Bohr, pp. 327–328.",
      "fuentes": [
       "bohr",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "La frase anuncia que Dios trata de manera decisiva con el pecado. Bohr distingue «poner fin a los pecados» de afirmar que los seres humanos dejarían de pecar automáticamente.",
+      "Su argumento se apoya en Juan 1:29 y Hebreos 9:26–28: Cristo carga con los pecados y se ofrece una vez para quitarlos. Hebreos 10:12 contrapone ese único sacrificio a los sacrificios repetidos.",
+      "El Simposio también estudia una lectura del hebreo como «sellar el pecado» al analizar la estructura del versículo. Esa observación textual debe distinguirse de la explicación de Bohr, no atribuir a ambos una sola formulación."
+     ],
+     "precision": "En este punto Bohr desarrolla la suficiencia del sacrificio de Cristo; su explicación de la rebelión nacional corresponde al propósito anterior. La consumación de un mundo sin pecado no se sitúa en el año 34.",
+     "fuente": "Bohr, p. 328; Shea, PDF 265–266; Hebreos 9:26–28; 10:10–14.",
+     "desarrollo": "La frase anuncia que Dios trata de manera decisiva con el pecado. Bohr distingue «poner fin a los pecados» de afirmar que los seres humanos dejarían de pecar automáticamente. Su argumento se apoya en Juan 1:29 y Hebreos 9:26–28: Cristo carga con los pecados y se ofrece una vez para quitarlos. Hebreos 10:12 contrapone ese único sacrificio a los sacrificios repetidos. El Simposio también estudia una lectura del hebreo como «sellar el pecado» al analizar la estructura del versículo. Esa observación textual debe distinguirse de la explicación de Bohr, no atribuir a ambos una sola formulación."
     },
     {
      "frase": "expiar la iniquidad",
      "sentido": "Expiar es tratar con la culpa y el pecado para hacer posible la reconciliación con Dios.",
-     "desarrollo": "El versículo 24 anuncia el propósito; el 26 presenta la muerte del Mesías. Al relacionarlos con Isaías 53 y Hebreos 9–10, la lectura mesiánica reconoce el sacrificio de Cristo. La sangre de animales señalaba hacia él; su entrega es suficiente. Esto no elimina su ministerio posterior como nuestro Sumo Sacerdote.",
      "refs": "Daniel 9:24, 26; Isaías 53:5–6; Hebreos 9:12–15; 10:10–14. Simposio sobre Daniel, PDF 256–257.",
      "fuentes": [
       "simd",
       "bohr",
       "dtg"
-     ]
+     ],
+     "pasos": [
+      "El propósito de 9:24 se relaciona con el acontecimiento de 9:26: el Mesías es muerto. Isaías 53:5–6, 10–12 permite entender esa muerte como entrega por la culpa ajena.",
+      "Shea distingue la expiación anunciada aquí de la repetición diaria y anual de los sacrificios del templo: la profecía señala una realización decisiva dentro de las setenta semanas.",
+      "Hebreos 9:12 y 10:10–14 explican por qué la ofrenda es suficiente y no necesita repetirse. Romanos 5:10 expresa su efecto como reconciliación con Dios.",
+      "La misma carta presenta al Cristo ascendido que intercede por nosotros (Hebreos 7:25; 8:1–2). Un sacrificio definitivo y un ministerio sacerdotal vigente se complementan."
+     ],
+     "precision": "No se convierte la cruz en el inicio de una repetición de sacrificios en el cielo. Tampoco se elimina el ministerio celestial ni se confunde este propósito con el comienzo del juicio en 1844.",
+     "fuente": "Shea, PDF 256–258; Bohr, p. 328; DTG, cap. 23.",
+     "desarrollo": "El propósito de 9:24 se relaciona con el acontecimiento de 9:26: el Mesías es muerto. Isaías 53:5–6, 10–12 permite entender esa muerte como entrega por la culpa ajena. Shea distingue la expiación anunciada aquí de la repetición diaria y anual de los sacrificios del templo: la profecía señala una realización decisiva dentro de las setenta semanas. Hebreos 9:12 y 10:10–14 explican por qué la ofrenda es suficiente y no necesita repetirse. Romanos 5:10 expresa su efecto como reconciliación con Dios. La misma carta presenta al Cristo ascendido que intercede por nosotros (Hebreos 7:25; 8:1–2). Un sacrificio definitivo y un ministerio sacerdotal vigente se complementan."
     },
     {
      "frase": "para traer la justicia perdurable",
      "sentido": "La respuesta de Dios ofrece una justicia duradera, no un arreglo temporal basado en méritos humanos.",
-     "desarrollo": "Shea relaciona esta justicia con la expiación realizada por el Mesías. Romanos 3 explica que Dios justifica al que tiene fe en Jesús. Bohr distingue la justicia que recibimos en Cristo ahora del mundo futuro donde morará la justicia. No se afirma que toda injusticia histórica terminara al cumplirse los 490 años.",
      "refs": "Daniel 9:18, 24; Romanos 3:21–26; 2 Pedro 3:13. Simposio sobre Daniel, PDF 257; Bohr, p. 328.",
      "fuentes": [
       "simd",
       "bohr"
-     ]
+     ],
+     "pasos": [
+      "La oración de Daniel descarta confiar en sus propias justicias y apela a la misericordia de Dios (9:18). La respuesta anuncia una justicia que Dios trae, no un mérito que Israel deba producir por sí solo.",
+      "Shea une esta frase con la anterior: la expiación realizada por la muerte del Mesías hace posible una justicia duradera. En su lectura, esa relación ocupa el centro del versículo 24.",
+      "Isaías 53:11 y Romanos 3:21–26 desarrollan la relación entre el Siervo que lleva las iniquidades y la justificación del creyente. «Perdurable» contrasta con el sistema repetido y provisional de sacrificios."
+     ],
+     "precision": "Bohr distingue la justicia disponible ahora en Cristo de la futura tierra donde habita la justicia (2 Pedro 3:13). Esa consumación no debe sustituir el cumplimiento mesiánico de las setenta semanas.",
+     "fuente": "Shea, PDF 257, 265–268; Bohr, p. 328.",
+     "desarrollo": "La oración de Daniel descarta confiar en sus propias justicias y apela a la misericordia de Dios (9:18). La respuesta anuncia una justicia que Dios trae, no un mérito que Israel deba producir por sí solo. Shea une esta frase con la anterior: la expiación realizada por la muerte del Mesías hace posible una justicia duradera. En su lectura, esa relación ocupa el centro del versículo 24. Isaías 53:11 y Romanos 3:21–26 desarrollan la relación entre el Siervo que lleva las iniquidades y la justificación del creyente. «Perdurable» contrasta con el sistema repetido y provisional de sacrificios."
     },
     {
      "frase": "sellar la visión y la profecía",
-     "sentido": "Sellar puede expresar cierre o confirmación; esta frase debe leerse dentro de toda la profecía.",
-     "desarrollo": "El cumplimiento mesiánico confirma la confiabilidad del mensaje. Bohr pone el énfasis en el cierre del testimonio profético dirigido a Israel como nación y relaciona a Esteban con ese desenlace. Ese énfasis interpretativo no autoriza a decir que Dios dejó de revelar su voluntad a todas las personas judías, ni que nunca habría profetas después del año 34.",
+     "sentido": "El cumplimiento acredita el mensaje; Bohr desarrolla además el cierre del testimonio a Israel como nación.",
      "refs": "Daniel 9:24; Hechos 7:55–60. Bohr, p. 328; CS, cap. 18.",
      "fuentes": [
       "bohr",
       "cs"
-     ]
+     ],
+     "pasos": [
+      "El cumplimiento de lo anunciado acredita la visión: el Mesías llega, es rechazado y muere; su obra une la cronología con la salvación. CS 18 presenta ese cumplimiento como confirmación del período profético.",
+      "Bohr desarrolla otro énfasis: el cierre del testimonio dirigido a Israel como nación. Relaciona a Esteban, que ve a Cristo y denuncia el rechazo a los profetas, con la culminación de ese testimonio.",
+      "Shea observa una correspondencia verbal entre «sellar el pecado» y «sellar la visión y al profeta» en su lectura del hebreo. La RV1995, que se cita en esta experiencia, traduce «poner fin al pecado» y «la profecía»."
+     ],
+     "precision": "Confirmación, cierre del testimonio y observación sobre el hebreo son explicaciones relacionadas, pero no intercambiables. La frase no afirma que el don profético desapareciera en el año 34.",
+     "fuente": "CS, cap. 18; Bohr, p. 328; Shea, PDF 265–266.",
+     "desarrollo": "El cumplimiento de lo anunciado acredita la visión: el Mesías llega, es rechazado y muere; su obra une la cronología con la salvación. CS 18 presenta ese cumplimiento como confirmación del período profético. Bohr desarrolla otro énfasis: el cierre del testimonio dirigido a Israel como nación. Relaciona a Esteban, que ve a Cristo y denuncia el rechazo a los profetas, con la culminación de ese testimonio. Shea observa una correspondencia verbal entre «sellar el pecado» y «sellar la visión y al profeta» en su lectura del hebreo. La RV1995, que se cita en esta experiencia, traduce «poner fin al pecado» y «la profecía»."
     },
     {
      "frase": "ungir al Santo de los santos",
-     "sentido": "La expresión hebrea «santo de santos» requiere distinguir la unción del santuario de la unción del Mesías en su bautismo.",
-     "desarrollo": "Shea estudia su uso en el Antiguo Testamento y lo aplica al santuario celestial y su inauguración para el ministerio de Cristo. Bohr incluye al santuario y a Cristo como Sacerdote y Rey. La unción inaugural se vincula con su ascensión y Pentecostés; no debe trasladarse a 1844 ni reducirse a ungir un cuarto del santuario.",
+     "sentido": "En el argumento de Shea se unge el santuario para comenzar el ministerio celestial de Cristo; no es otra descripción de su bautismo.",
      "refs": "Éxodo 40:9–15; Hechos 2:32–36; Hebreos 8:1–5. Simposio sobre Daniel, PDF 257–258; Bohr, pp. 328–329.",
      "fuentes": [
       "simd",
       "bohr"
-     ]
+     ],
+     "pasos": [
+      "Primero hay que identificar el objeto de la unción. Shea examina la expresión hebrea «santo de santos»: se aplica habitualmente al santuario, sus espacios u objetos, no al título personal «Mesías». Señala 1 Crónicas 23:13 como un caso discutido.",
+      "Después pregunta qué santuario. Los templos terrenales habían sido destruidos o, según 9:26, volverían a serlo. Relaciona el anuncio con el santuario celestial del que el terrenal era copia (Éxodo 25:40; Hebreos 8:5).",
+      "Éxodo 40:9–15 explica para qué se ungía: consagrar el santuario para iniciar el servicio. Por analogía, Shea lo relaciona con la inauguración del ministerio de Cristo después de la ascensión.",
+      "Hechos 2:32–36 muestra a Cristo exaltado que derrama el Espíritu. Pentecostés señala la inauguración de su ministerio celestial, dentro de las setenta semanas y antes del año 34."
+     ],
+     "precision": "La unción de Jesús en el bautismo (9:25) y la inauguración del santuario para su ministerio celestial (9:24) no son el mismo acontecimiento. «Santo de los santos» tampoco obliga aquí a limitar la unción a un compartimento ni a fecharla en 1844.",
+     "fuente": "Shea, PDF 257–258; Bohr, pp. 328–329; HAp, cap. 4, «Pentecostés».",
+     "desarrollo": "Primero hay que identificar el objeto de la unción. Shea examina la expresión hebrea «santo de santos»: se aplica habitualmente al santuario, sus espacios u objetos, no al título personal «Mesías». Señala 1 Crónicas 23:13 como un caso discutido. Después pregunta qué santuario. Los templos terrenales habían sido destruidos o, según 9:26, volverían a serlo. Relaciona el anuncio con el santuario celestial del que el terrenal era copia (Éxodo 25:40; Hebreos 8:5). Éxodo 40:9–15 explica para qué se ungía: consagrar el santuario para iniciar el servicio. Por analogía, Shea lo relaciona con la inauguración del ministerio de Cristo después de la ascensión. Hechos 2:32–36 muestra a Cristo exaltado que derrama el Espíritu. Pentecostés señala la inauguración de su ministerio celestial, dentro de las setenta semanas y antes del año 34."
     }
    ],
    "25": [
     {
      "frase": "Sabe, pues, y entiende",
      "sentido": "Gabriel llama a Daniel a comprender la explicación, no solo a memorizar números.",
-     "desarrollo": "La invitación continúa la de 9:22–23. La profecía se estudia siguiendo las relaciones entre sus frases: punto de partida, duración, llegada del Mesías y reconstrucción. El cálculo es una herramienta para entender el mensaje, no su finalidad.",
      "refs": "Daniel 9:22–25. Bohr, pp. 325–326.",
      "fuentes": [
       "bohr"
-     ]
+     ],
+     "pasos": [
+      "Gabriel llega para dar entendimiento (9:22). En 9:23 pide comprender la orden y la visión, y en 9:25 repite el llamado a saber y entender.",
+      "El lector debe seguir los nexos del mensaje: desde una orden, hasta el Mesías, después de un período y a la mitad de la semana. Esos nexos permiten justificar el recorrido, en lugar de aceptar fechas sin explicación."
+     ],
+     "precision": "En Daniel 9 no se narra una nueva sucesión de animales simbólicos. Gabriel explica; la conexión con la visión anterior se argumenta desde las palabras y el contexto.",
+     "fuente": "Daniel 9:21–25; Shea, PDF 251–254; Bohr, pp. 325–327.",
+     "desarrollo": "Gabriel llega para dar entendimiento (9:22). En 9:23 pide comprender la orden y la visión, y en 9:25 repite el llamado a saber y entender. El lector debe seguir los nexos del mensaje: desde una orden, hasta el Mesías, después de un período y a la mitad de la semana. Esos nexos permiten justificar el recorrido, en lugar de aceptar fechas sin explicación."
     },
     {
      "frase": "desde la salida de la orden para restaurar y edificar a Jerusalén",
      "sentido": "La frase establece el comienzo del período y especifica qué debe autorizar la orden.",
-     "desarrollo": "No basta escoger cualquier decreto persa. Ciro inicia el retorno y la reconstrucción del templo; Darío la confirma. La lectura adoptada encuentra en Esdras 7 una restauración más amplia, con autoridad judicial y religiosa. Shea fundamenta el año 457 a.C. por el reinado de Artajerjes y el calendario civil judío; Nehemías 2 continúa después la reconstrucción.",
      "refs": "Esdras 1:1–4; 6:1–12; 7:12–26; Nehemías 2. Simposio sobre Apocalipsis, pp. 446–464; Bohr, pp. 330–340.",
      "fuentes": [
       "dtg",
       "bohr",
       "sima"
-     ]
+     ],
+     "pasos": [
+      "La frase exige restaurar y edificar Jerusalén. Ciro autoriza el regreso y la reconstrucción del templo; Darío ratifica esa autorización (Esdras 1 y 6).",
+      "Esdras 7 añade organización judicial y autoridad para aplicar la ley (versículos 25–26). Esa restauración de la comunidad, además del culto, permite relacionar la orden con el alcance de Daniel 9:25.",
+      "El séptimo año de Artajerjes no se convierte en 457 a.C. por una suma de las semanas. Shea estudia primero los datos del reinado y el calendario civil judío; después se hace el cómputo profético."
+     ],
+     "precision": "Las cartas de Nehemías 2 continúan la reconstrucción. No debe escogerse 445 a.C. simplemente porque menciona muros, ignorando las facultades y la fecha de Esdras 7.",
+     "fuente": "Shea, Simposio sobre Apocalipsis, apéndice B, pp. 443–466; CS, cap. 18; Bohr, pp. 330–340.",
+     "desarrollo": "La frase exige restaurar y edificar Jerusalén. Ciro autoriza el regreso y la reconstrucción del templo; Darío ratifica esa autorización (Esdras 1 y 6). Esdras 7 añade organización judicial y autoridad para aplicar la ley (versículos 25–26). Esa restauración de la comunidad, además del culto, permite relacionar la orden con el alcance de Daniel 9:25. El séptimo año de Artajerjes no se convierte en 457 a.C. por una suma de las semanas. Shea estudia primero los datos del reinado y el calendario civil judío; después se hace el cómputo profético."
     },
     {
      "frase": "hasta el Mesías Príncipe",
      "sentido": "El punto de llegada es el Mesías, el Ungido, presentado también como Príncipe.",
-     "desarrollo": "La interpretación mesiánica cristiana identifica a Jesús. El Nuevo Testamento relaciona su unción con el Espíritu Santo y su bautismo. La cronología conduce al inicio de su ministerio, no a su nacimiento. El título dirige la atención hacia su autoridad y su obra, no solamente hacia una fecha.",
      "refs": "Lucas 3:21–22; Juan 1:41; Hechos 10:38. DTG, cap. 23; Simposio sobre Daniel, PDF 255.",
      "fuentes": [
       "dtg",
       "simd",
       "sima"
-     ]
+     ],
+     "pasos": [
+      "Mesías significa Ungido. Juan 1:41 relaciona ese término con Cristo, y Hechos 10:38 describe a Jesús ungido por Dios con el Espíritu Santo.",
+      "Lucas 3 sitúa el bautismo en un contexto histórico y narra el descenso del Espíritu. DTG 23 identifica ese inicio del ministerio con el término de las 69 semanas.",
+      "Shea observa que «Mesías Príncipe» aparece unido en 9:25, y que ambos términos reaparecen separados en 9:26. Su argumento literario favorece referirlos al mismo personaje."
+     ],
+     "precision": "Se explica el bautismo y la unción para el ministerio; no se presenta el año 27 como nacimiento ni como comienzo de la existencia de Cristo.",
+     "fuente": "DTG, cap. 23; Shea, PDF 248–249, 255.",
+     "desarrollo": "Mesías significa Ungido. Juan 1:41 relaciona ese término con Cristo, y Hechos 10:38 describe a Jesús ungido por Dios con el Espíritu Santo. Lucas 3 sitúa el bautismo en un contexto histórico y narra el descenso del Espíritu. DTG 23 identifica ese inicio del ministerio con el término de las 69 semanas. Shea observa que «Mesías Príncipe» aparece unido en 9:25, y que ambos términos reaparecen separados en 9:26. Su argumento literario favorece referirlos al mismo personaje."
     },
     {
      "frase": "habrá siete semanas y sesenta y dos semanas",
      "sentido": "Los dos tramos suman 69 semanas: 49 + 434 = 483 años.",
-     "desarrollo": "Se distinguen las primeras siete por la restauración de la ciudad y se cuentan juntas con las 62 hasta el Mesías. Shea examina la puntuación hebrea y defiende esa lectura conjunta. Desde 457 a.C. hasta 27 d.C. hay 483 años porque no existe año cero. La semana restante se explica en el versículo 27.",
      "refs": "Daniel 9:25–27. Simposio sobre Apocalipsis, pp. 444–446; DTG, cap. 23.",
      "fuentes": [
       "sima",
       "dtg",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "Las primeras siete semanas corresponden al período de restauración: 7 × 7 = 49 años. Las sesenta y dos siguientes añaden 434 años hasta el Mesías.",
+      "Los dos tramos suman 483 años. No se reinicia el cómputo al pasar de siete a sesenta y dos, y todavía queda la semana de 9:27 para completar las setenta.",
+      "457 + 27 − 1 = 483. Se resta uno porque entre 1 a.C. y 1 d.C. no hay un año cero. DTG 23 sitúa ambos extremos en otoño."
+     ],
+     "precision": "La división de siete y sesenta y dos explica etapas del recorrido. No exige inventar dos Mesías separados ni un lapso sin contar entre los tramos.",
+     "fuente": "DTG, cap. 23; Shea, PDF 255; Simposio sobre Apocalipsis, pp. 444–446.",
+     "desarrollo": "Las primeras siete semanas corresponden al período de restauración: 7 × 7 = 49 años. Las sesenta y dos siguientes añaden 434 años hasta el Mesías. Los dos tramos suman 483 años. No se reinicia el cómputo al pasar de siete a sesenta y dos, y todavía queda la semana de 9:27 para completar las setenta. 457 + 27 − 1 = 483. Se resta uno porque entre 1 a.C. y 1 d.C. no hay un año cero. DTG 23 sitúa ambos extremos en otoño."
     },
     {
      "frase": "se volverán a edificar la plaza y el muro en tiempos angustiosos",
      "sentido": "La restauración no ocurre sin oposición ni dificultades.",
-     "desarrollo": "Esdras y Nehemías muestran resistencia a la reconstrucción y esfuerzos por reorganizar al pueblo. Los 49 años son el primer tramo profético; no significan que el muro requirió 49 años de obra. El límite de 408 a.C. es una fecha calculada; Nehemías no registra ese año como la fecha final de toda la restauración.",
      "refs": "Esdras 4:12–23; Nehemías 4; 6:15. Bohr, pp. 337–340; Simposio sobre Daniel, PDF 255.",
      "fuentes": [
       "bohr",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "La restauración incluye la vida de la ciudad y sus defensas. Los relatos de Esdras 4 y Nehemías 4 muestran oposición política, amenazas y trabajo bajo vigilancia.",
+      "Nehemías 6:15 registra 52 días para completar el muro. Eso no equivale a toda la restauración de Jerusalén ni a la duración del primer tramo profético.",
+      "El límite de 408 a.C. resulta de contar 49 años desde 457 a.C. Debe presentarse como límite del cómputo, sin inventar una ceremonia o un registro bíblico de terminación en ese año."
+     ],
+     "precision": "La cronología no mide 49 años de albañilería ininterrumpida. La frase «tiempos angustiosos» describe las condiciones de la restauración.",
+     "fuente": "Daniel 9:25; Esdras 4; Nehemías 4; 6:15; Bohr, pp. 337–340; Shea, PDF 255.",
+     "desarrollo": "La restauración incluye la vida de la ciudad y sus defensas. Los relatos de Esdras 4 y Nehemías 4 muestran oposición política, amenazas y trabajo bajo vigilancia. Nehemías 6:15 registra 52 días para completar el muro. Eso no equivale a toda la restauración de Jerusalén ni a la duración del primer tramo profético. El límite de 408 a.C. resulta de contar 49 años desde 457 a.C. Debe presentarse como límite del cómputo, sin inventar una ceremonia o un registro bíblico de terminación en ese año."
     }
    ],
    "26": [
     {
      "frase": "Después de las sesenta y dos semanas",
      "sentido": "Las 62 semanas siguen a las primeras siete; «después» nos lleva más allá de las 69.",
-     "desarrollo": "El versículo no vuelve a empezar el cómputo desde cero. La llegada del Mesías ha cerrado los primeros 483 años. Su muerte ocurre después de ese punto; el versículo 27 precisa que sucede a la mitad de la última semana.",
      "refs": "Daniel 9:25–27. DTG, cap. 23; Simposio sobre Daniel, PDF 255–256.",
      "fuentes": [
       "dtg",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "La frase retoma las sesenta y dos semanas que siguen a las primeras siete. «Después» sitúa la muerte del Mesías más allá de los 483 años ya transcurridos.",
+      "El versículo 26 anuncia el acontecimiento, pero no precisa por sí solo cuánto después ocurre. El 27 lo sitúa en el centro de la semana restante.",
+      "Leer juntos los dos versículos evita que la cruz se coloque antes del bautismo o al final de las setenta semanas."
+     ],
+     "precision": "No se cuentan solo 62 semanas desde el decreto: se mantiene el primer tramo de siete. «Después» no introduce por sí mismo un intervalo de siglos.",
+     "fuente": "Daniel 9:25–27; DTG, cap. 23; Shea, PDF 255–256.",
+     "desarrollo": "La frase retoma las sesenta y dos semanas que siguen a las primeras siete. «Después» sitúa la muerte del Mesías más allá de los 483 años ya transcurridos. El versículo 26 anuncia el acontecimiento, pero no precisa por sí solo cuánto después ocurre. El 27 lo sitúa en el centro de la semana restante. Leer juntos los dos versículos evita que la cruz se coloque antes del bautismo o al final de las setenta semanas."
     },
     {
      "frase": "se quitará la vida al Mesías, y nada ya le quedará",
      "sentido": "El Mesías no muere de forma natural: le quitan la vida y queda despojado.",
-     "desarrollo": "La RV1995 dice «nada ya le quedará»; otras traducciones expresan la frase de manera distinta. No conviene reemplazarla por «mas no por sí» mientras se afirma estar citando RV1995. Shea ve en la frase el rechazo que acompaña su muerte. Su carácter salvador se explica al relacionarla con Isaías 53 y la expiación de 9:24.",
      "refs": "Daniel 9:24, 26; Isaías 53:8–12. Simposio sobre Daniel, PDF 255–256; Bohr, pp. 340–341.",
      "fuentes": [
       "simd",
       "bohr"
-     ]
+     ],
+     "pasos": [
+      "El verbo traducido como quitar la vida corresponde a ser «cortado»: el Mesías sufre una muerte violenta. No describe únicamente que termine su gobierno o que muera de vejez.",
+      "La expresión siguiente admite discusión de traducción. Shea considera tanto la falta de posesiones como la de personas a su favor, y favorece el rechazo en el momento de la muerte por el contexto que menciona al pueblo.",
+      "El sentido salvador de esa muerte no depende de cambiar la cita. Se explica uniendo 9:26 con la expiación de 9:24, Isaías 53:8–12 y el único sacrificio de Hebreos 10."
+     ],
+     "precision": "RV1995 dice «nada ya le quedará». «Mas no por sí» pertenece a otra traducción y no debe mezclarse con esta. La muerte y el rechazo son afirmaciones distintas que el Simposio examina por separado.",
+     "fuente": "Shea, PDF 255–256, 267–268; Bohr, pp. 340–341.",
+     "desarrollo": "El verbo traducido como quitar la vida corresponde a ser «cortado»: el Mesías sufre una muerte violenta. No describe únicamente que termine su gobierno o que muera de vejez. La expresión siguiente admite discusión de traducción. Shea considera tanto la falta de posesiones como la de personas a su favor, y favorece el rechazo en el momento de la muerte por el contexto que menciona al pueblo. El sentido salvador de esa muerte no depende de cambiar la cita. Se explica uniendo 9:26 con la expiación de 9:24, Isaías 53:8–12 y el único sacrificio de Hebreos 10."
     },
     {
      "frase": "El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario",
      "sentido": "Se anuncia la destrucción de Jerusalén y su santuario; la identidad del príncipe requiere interpretación.",
-     "desarrollo": "Una lectura historicista tradicional entiende a Tito y los romanos. Bohr y el argumento estructural de Shea identifican al príncipe con el Mesías y distinguen la responsabilidad del pueblo de la ejecución material por los ejércitos romanos. Ambas lecturas se presentan como interpretaciones, sin culpar colectivamente a las personas judías. La destrucción del año 70 ocurre después de las 70 semanas.",
      "refs": "Daniel 9:26; Mateo 23:37–38; 24:1–2; Lucas 21:20. Bohr, pp. 341–345; Simposio sobre Daniel, PDF 248–249.",
      "fuentes": [
       "bohr",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "El texto repite los títulos de 9:25: primero Mesías Príncipe, después Mesías y después príncipe. Shea considera que ese doble título distribuido apoya identificar un mismo personaje.",
+      "Bohr aplica esa lectura al Mesías y a su pueblo. Distingue la responsabilidad en la ruina de la ciudad de quienes la ejecutaron materialmente: los ejércitos de Roma.",
+      "Otros intérpretes historicistas identifican aquí al príncipe con Tito y al pueblo con los romanos. Presentar esta diferencia permite evaluar el argumento de Shea sin afirmar que el consenso adventista es uniforme.",
+      "Lucas 21:20 identifica los ejércitos que cercarían Jerusalén. La destrucción ocurrió en el año 70, después de completados los 490 años; el anuncio de sus consecuencias no alarga el período."
+     ],
+     "precision": "El pacto de 9:27 no se asigna automáticamente al actor más cercano de una traducción. Debe seguirse el argumento del pasaje completo y distinguir sus dos asuntos: el Mesías y la ciudad.",
+     "fuente": "Shea, PDF 248–249, 266–268; Bohr, pp. 341–345; CS, cap. 1.",
+     "desarrollo": "El texto repite los títulos de 9:25: primero Mesías Príncipe, después Mesías y después príncipe. Shea considera que ese doble título distribuido apoya identificar un mismo personaje. Bohr aplica esa lectura al Mesías y a su pueblo. Distingue la responsabilidad en la ruina de la ciudad de quienes la ejecutaron materialmente: los ejércitos de Roma. Otros intérpretes historicistas identifican aquí al príncipe con Tito y al pueblo con los romanos. Presentar esta diferencia permite evaluar el argumento de Shea sin afirmar que el consenso adventista es uniforme. Lucas 21:20 identifica los ejércitos que cercarían Jerusalén. La destrucción ocurrió en el año 70, después de completados los 490 años; el anuncio de sus consecuencias no alarga el período."
     },
     {
      "frase": "su final llegará como una inundación, y hasta el fin de la guerra durarán las devastaciones",
      "sentido": "La imagen de una inundación expresa una destrucción arrolladora.",
-     "desarrollo": "El lenguaje profético puede comparar a un ejército con una corriente que invade; Isaías 8 ofrece un paralelo. La frase describe guerra y desolación, no obliga a imaginar un diluvio literal en Jerusalén. Tampoco añade una fecha nueva para calcular la segunda venida.",
      "refs": "Isaías 8:7–8; Daniel 9:26; Lucas 21:20–24. Bohr, p. 345.",
      "fuentes": [
       "bohr"
-     ]
+     ],
+     "pasos": [
+      "Isaías 8:7–8 compara la invasión de Asiria con aguas desbordadas. Ese paralelo explica cómo una inundación puede expresar la fuerza arrolladora de un ejército.",
+      "Daniel 9:26 añade guerra y devastaciones a la destrucción de ciudad y santuario. Lucas 21:20–24 aplica la desolación de Jerusalén al cerco militar y sus consecuencias."
+     ],
+     "precision": "El paralelo ilustra la imagen; no significa que Asiria sea el ejército de Daniel 9 ni que Jerusalén fuera destruida por una inundación literal.",
+     "fuente": "Isaías 8:7–8; Lucas 21:20–24; Bohr, p. 345.",
+     "desarrollo": "Isaías 8:7–8 compara la invasión de Asiria con aguas desbordadas. Ese paralelo explica cómo una inundación puede expresar la fuerza arrolladora de un ejército. Daniel 9:26 añade guerra y devastaciones a la destrucción de ciudad y santuario. Lucas 21:20–24 aplica la desolación de Jerusalén al cerco militar y sus consecuencias."
     }
    ],
    "27": [
     {
      "frase": "Por otra semana más confirmará el pacto con muchos",
-     "sentido": "La semana restante completa las setenta. En la lectura mesiánica, Cristo hace firme el pacto.",
-     "desarrollo": "El pacto ya está en la oración de Daniel 9:4. Jesús une pacto, sangre y muchos en la última cena. La secuencia 27–34 incluye su ministerio y el testimonio apostólico especialmente dirigido a Israel. No se introduce un salto de siglos entre las semanas 69 y 70 ni un tratado político moderno.",
+     "sentido": "Cristo hace firme el pacto ya existente; la última semana completa el período de oportunidad de Israel y contiene la ratificación del nuevo pacto en la cruz.",
      "refs": "Daniel 9:4, 25–27; Mateo 26:28; Romanos 15:8. DTG, cap. 23; Bohr, pp. 346–347; Simposio sobre Daniel, PDF 255–256.",
      "fuentes": [
       "dtg",
       "bohr",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "El verbo gābar tiene aquí la idea de hacer firme o fortalecer. Shea observa que eso supone un pacto que ya existía, no uno que apareciera por primera vez al terminar la semana.",
+      "La semana va del 27 al 34 y la muerte de Cristo ocurre en su mitad. Por eso Shea la llama la última semana del período de oportunidad de Israel bajo el antiguo pacto, no los primeros siete años de un pacto nuevo fundado al comenzar el año 27.",
+      "Durante ese período Cristo confirma las promesas hechas a los padres (Romanos 15:8). En la cruz ratifica el nuevo pacto con su sangre (Marcos 14:24; Hebreos 9:15). Hay continuidad de la promesa y cumplimiento en su sacrificio.",
+      "DTG 23 explica el testimonio durante toda la semana: primero el ministerio personal de Jesús y luego el de sus apóstoles, dirigido especialmente a Israel. «Muchos» se relaciona con el lenguaje de su entrega por otros."
+     ],
+     "precision": "Distingue el pacto que Cristo confirma, su ratificación con sangre y los siete años del período concedido a Israel. Fortalecer el pacto no significa que el nuevo pacto expire en el año 34.",
+     "fuente": "Romanos 15:8; Marcos 14:24; Hebreos 9:15; DTG, cap. 23; Shea, PDF 255–256; Bohr, pp. 346–347.",
+     "desarrollo": "El verbo gābar tiene aquí la idea de hacer firme o fortalecer. Shea observa que eso supone un pacto que ya existía, no uno que apareciera por primera vez al terminar la semana. La semana va del 27 al 34 y la muerte de Cristo ocurre en su mitad. Por eso Shea la llama la última semana del período de oportunidad de Israel bajo el antiguo pacto, no los primeros siete años de un pacto nuevo fundado al comenzar el año 27. Durante ese período Cristo confirma las promesas hechas a los padres (Romanos 15:8). En la cruz ratifica el nuevo pacto con su sangre (Marcos 14:24; Hebreos 9:15). Hay continuidad de la promesa y cumplimiento en su sacrificio. DTG 23 explica el testimonio durante toda la semana: primero el ministerio personal de Jesús y luego el de sus apóstoles, dirigido especialmente a Israel. «Muchos» se relaciona con el lenguaje de su entrega por otros."
     },
     {
      "frase": "a la mitad de la semana hará cesar el sacrificio y la ofrenda",
      "sentido": "La mitad de siete años son tres años y medio: el punto central es la muerte de Cristo.",
-     "desarrollo": "Del otoño del 27 a la primavera del 31 transcurren tres años y medio. El velo rasgado en el templo señala que el símbolo ha encontrado su cumplimiento. Los sacrificios no dejan de practicarse físicamente ese mismo día; pierden su función de anunciar una muerte todavía futura. Hebreos explica por qué la entrega de Cristo es suficiente y definitiva.",
      "refs": "Mateo 27:50–51; Hebreos 9:26–28; 10:10–14. DTG, cap. 23; Bohr, p. 348; Simposio sobre Daniel, PDF 256.",
      "fuentes": [
       "dtg",
       "bohr",
       "simd"
-     ]
+     ],
+     "pasos": [
+      "La mitad de una semana de siete años son tres años y medio. Del otoño del 27 al otoño del 30 transcurren tres años; hasta la primavera del 31, medio año más.",
+      "Mateo 27:50–51 relaciona la muerte de Jesús con el velo rasgado. El sacrificio al que apuntaban las ofrendas ya se ha realizado: el símbolo ha encontrado su cumplimiento.",
+      "Shea distingue el cese de la función teológica de los sacrificios de su interrupción material. Los ritos continuaron hasta la destrucción del templo, pero ya no podían anticipar una muerte todavía futura.",
+      "Hebreos 10:10–14 fundamenta la suficiencia de la ofrenda de Cristo; Hebreos 8:1–2 presenta su ministerio sacerdotal posterior. La cruz es definitiva y él sigue ministrando sus beneficios."
+     ],
+     "precision": "La destrucción del templo no marca la mitad de la semana. Tampoco se confunde el sacrificio único con la inauguración del santuario celestial o con el juicio de 1844.",
+     "fuente": "DTG, cap. 23; Shea, PDF 256–258; Bohr, p. 348.",
+     "desarrollo": "La mitad de una semana de siete años son tres años y medio. Del otoño del 27 al otoño del 30 transcurren tres años; hasta la primavera del 31, medio año más. Mateo 27:50–51 relaciona la muerte de Jesús con el velo rasgado. El sacrificio al que apuntaban las ofrendas ya se ha realizado: el símbolo ha encontrado su cumplimiento. Shea distingue el cese de la función teológica de los sacrificios de su interrupción material. Los ritos continuaron hasta la destrucción del templo, pero ya no podían anticipar una muerte todavía futura. Hebreos 10:10–14 fundamenta la suficiencia de la ofrenda de Cristo; Hebreos 8:1–2 presenta su ministerio sacerdotal posterior. La cruz es definitiva y él sigue ministrando sus beneficios."
     },
     {
      "frase": "Después, con la muchedumbre de las abominaciones, vendrá el desolador",
      "sentido": "La profecía vuelve del Mesías al destino trágico de la ciudad y el santuario.",
-     "desarrollo": "El lenguaje presenta abominación y desolación; no convierte a Cristo en el autor de la maldad. Jesús relaciona la desolación de Jerusalén con la llegada de ejércitos. La lectura seguida conecta esta consecuencia con la destrucción romana, sin incluir el año 70 dentro de los 490 años ni usar el pasaje para condenar a una etnia.",
      "refs": "Daniel 9:26–27; Mateo 24:15–16; Lucas 21:20–24. Bohr, pp. 342–345; CS, cap. 1.",
      "fuentes": [
       "bohr",
       "cs"
-     ]
+     ],
+     "pasos": [
+      "En los versículos 25–27 se alternan referencias al Mesías y a la ciudad. La primera parte de 9:27 describe el pacto y el cese de sacrificios; la segunda vuelve a abominación y desolación.",
+      "Mateo 24:15–16 y Lucas 21:20–21 permiten relacionar la advertencia con Jerusalén cercada y la necesidad de huir. La lectura historicista estudiada identifica la devastación romana.",
+      "El Simposio describe la reconstrucción y la destrucción a ambos lados de la muerte del Mesías. Es una consecuencia anunciada por la profecía, no un nuevo tramo que deba sumarse a los 490 años."
+     ],
+     "precision": "La frase no debe convertir a Cristo en la abominación. El agente de la devastación y quien confirma el pacto se distinguen por el contexto, no por asumir que todos los verbos tienen el mismo protagonista.",
+     "fuente": "Mateo 24:15–16; Lucas 21:20–24; Shea, PDF 266–268; Bohr, pp. 342–345; CS, cap. 1.",
+     "desarrollo": "En los versículos 25–27 se alternan referencias al Mesías y a la ciudad. La primera parte de 9:27 describe el pacto y el cese de sacrificios; la segunda vuelve a abominación y desolación. Mateo 24:15–16 y Lucas 21:20–21 permiten relacionar la advertencia con Jerusalén cercada y la necesidad de huir. La lectura historicista estudiada identifica la devastación romana. El Simposio describe la reconstrucción y la destrucción a ambos lados de la muerte del Mesías. Es una consecuencia anunciada por la profecía, no un nuevo tramo que deba sumarse a los 490 años."
     },
     {
      "frase": "hasta que venga la consumación y lo que está determinado se derrame sobre el desolador",
      "sentido": "La desolación no queda fuera del juicio de Dios: también el poder destructor tiene un límite.",
-     "desarrollo": "El cierre anuncia que lo determinado llegará a su desenlace. El mal y la violencia no reciben la última palabra. Esta cláusula no proporciona otra cantidad de años para extender la línea de tiempo ni autoriza fijar la fecha de la segunda venida. La esperanza descansa en la justicia de Dios y la obra del Mesías.",
      "refs": "Daniel 9:27; Mateo 24:36. Bohr, sección de Daniel 9; CS, cap. 1.",
      "fuentes": [
       "bohr",
       "cs"
-     ]
+     ],
+     "pasos": [
+      "La cláusula anuncia una consumación determinada por Dios. La desolación no se prolonga fuera de su autoridad: también llega el juicio sobre el poder destructor.",
+      "Esta conclusión cierra la línea de la devastación de ciudad y santuario. La profecía ya ha dado las cantidades de sus semanas; la cláusula no añade una nueva cifra.",
+      "La esperanza del pasaje se sostiene en la obra del Mesías y en el límite que Dios pone al mal, no en calcular una fecha de la segunda venida que Jesús no reveló."
+     ],
+     "precision": "La traducción y la relación exacta de las últimas palabras de 9:27 son difíciles. Se explica aquí el hilo de la lectura seguida, sin atribuir a Shea una demostración completa que este tomo remite a otro volumen.",
+     "fuente": "Daniel 9:27; Mateo 24:36; Shea, PDF 266–268; Bohr, final de Daniel 9; CS, cap. 1.",
+     "desarrollo": "La cláusula anuncia una consumación determinada por Dios. La desolación no se prolonga fuera de su autoridad: también llega el juicio sobre el poder destructor. Esta conclusión cierra la línea de la devastación de ciudad y santuario. La profecía ya ha dado las cantidades de sus semanas; la cláusula no añade una nueva cifra. La esperanza del pasaje se sostiene en la obra del Mesías y en el límite que Dios pone al mal, no en calcular una fecha de la segunda venida que Jesús no reveló."
     }
+   ]
+  },
+  "estudio": {
+   "pares": [
+    {
+     "nombre": "Rebelión y servicio nuevo",
+     "indices": [
+      3,
+      8
+     ],
+     "idea": "El desenlace de la rebelión y la inauguración del santuario enmarcan la obra mesiánica.",
+     "razon": "Shea relaciona el primer propósito con el último: la situación antigua llega a su término y un nuevo servicio comienza. Su lectura del «santo de santos» se refiere al santuario preparado para el ministerio de Cristo. No presenta el bautismo y la inauguración celestial como un solo acontecimiento."
+    },
+    {
+     "nombre": "Pecado y testimonio profético",
+     "indices": [
+      4,
+      7
+     ],
+     "idea": "La repetición de «sellar» en el hebreo establece una correspondencia que la traducción no deja igual de visible.",
+     "razon": "El esquema de Shea usa «sellar el pecado» y «sellar la visión y al profeta». RV1995 traduce la primera frase «poner fin al pecado». Se muestra la observación del autor sin cambiar la cita de la versión usada. Esta relación literaria no basta por sí sola para resolver cada matiz de las dos expresiones."
+    },
+    {
+     "nombre": "Expiación y justicia",
+     "indices": [
+      5,
+      6
+     ],
+     "idea": "La entrega del Mesías hace posible la justicia perdurable: este es el centro teológico del versículo.",
+     "razon": "Shea lee «expiar la iniquidad» y «traer la justicia perdurable» como causa y resultado. En el centro de los versículos 25–27 sitúa la muerte del Mesías. Al unir ambas estructuras explica qué ocurre y qué logra ese acontecimiento: Cristo muere y su sacrificio hace posible la reconciliación y la justicia para el creyente."
+    }
+   ],
+   "estructura": [
+    [
+     "A",
+     "Restaurar Jerusalén",
+     "9:25a",
+     "La orden inicia la restauración de la ciudad."
+    ],
+    [
+     "B",
+     "El tiempo hasta el Mesías",
+     "9:25b",
+     "Siete y sesenta y dos semanas conducen al Ungido."
+    ],
+    [
+     "C",
+     "Reedificación en angustia",
+     "9:25c",
+     "La ciudad vuelve a edificarse en medio de oposición."
+    ],
+    [
+     "D",
+     "La muerte del Mesías",
+     "9:26a",
+     "El Mesías es muerto y queda rechazado: centro del esquema."
+    ],
+    [
+     "C′",
+     "Destrucción de ciudad y santuario",
+     "9:26b",
+     "La restauración contrasta con la devastación posterior."
+    ],
+    [
+     "B′",
+     "El pacto y la mitad de la semana",
+     "9:27a",
+     "Se precisa el tiempo y el efecto de la muerte del Mesías."
+    ],
+    [
+     "A′",
+     "La desolación y su límite",
+     "9:27b",
+     "La profecía concluye la línea sobre el destino de la ciudad."
+    ]
+   ],
+   "perfil": [
+    [
+     "Expiar la iniquidad",
+     "9:24",
+     "Su muerte resuelve el problema de la culpa."
+    ],
+    [
+     "Traer justicia perdurable",
+     "9:24",
+     "La expiación hace posible la justicia duradera."
+    ],
+    [
+     "Un santuario ungido para su ministerio",
+     "9:24",
+     "Después de la ascensión comienza el servicio celestial."
+    ],
+    [
+     "Llegar en el tiempo anunciado",
+     "9:25",
+     "El bautismo y la unción señalan el comienzo de su ministerio."
+    ],
+    [
+     "Ser muerto",
+     "9:26",
+     "Se anuncia una muerte violenta, no simplemente el fin de su vida."
+    ],
+    [
+     "Ser rechazado al morir",
+     "9:26",
+     "Shea lee «nada ya le quedará» en relación con el abandono."
+    ],
+    [
+     "Confirmar el pacto con muchos",
+     "9:27",
+     "Hace firmes las promesas y ratifica el pacto con su sangre."
+    ],
+    [
+     "Dar cumplimiento a los sacrificios",
+     "9:27",
+     "Su ofrenda definitiva termina su función de anticipación."
+    ]
    ]
   },
   "preguntas": [
@@ -69098,6 +69545,166 @@ const LAMINAS = {
     "e": "La oración apela a la misericordia y la respuesta presenta al Mesías y su obra. El capítulo no permite fechar la segunda venida. Fuente: Daniel 9:18, 24–27; Hebreos 4:14–16; Mateo 24:36; DTG, cap. 23.",
     "abierta": "Resume la profecía en un minuto sin mencionar una fecha. Después añade las fechas que aclaran ese mensaje.",
     "pauta": "Habla de la restauración, el Ungido, su entrega, el pacto y el testimonio. Al añadir las fechas, distingue lo que el texto dice de su reconstrucción cronológica."
+   },
+   {
+    "hito": "tiempo",
+    "v": "9:24",
+    "q": "Según la explicación de Bohr, ¿qué distingue «terminar la prevaricación» de «poner fin al pecado»?",
+    "o": [
+     "La primera aborda la rebelión; la segunda, el sacrificio que carga con los pecados",
+     "Las dos anuncian que toda persona dejó de pecar al terminar los 490 años",
+     "La primera fecha la cruz; la segunda fecha por sí sola la destrucción de Jerusalén",
+     "Las dos se refieren solamente a la terminación del cautiverio de setenta años"
+    ],
+    "a": 0,
+    "e": "Bohr trata la rebelión nacional al explicar la primera y desarrolla Hebreos 9:26–28 al explicar la segunda: Cristo hace frente a los pecados con su ofrenda. No son dos formas de decir que desapareció todo pecado humano. Fuente: Bohr, pp. 327–328.",
+    "abierta": "Explica cada expresión sin confundir la respuesta del pueblo con la obra de Cristo.",
+    "pauta": "Comienza con la rebelión confesada en Daniel 9 y después pasa al sacrificio de Cristo. Identifica qué argumento desarrolla Bohr en cada frase.",
+    "t": "mc"
+   },
+   {
+    "hito": "tiempo",
+    "v": "9:24",
+    "q": "¿Por qué Shea relaciona «expiar la iniquidad» con «traer la justicia perdurable»?",
+    "o": [
+     "Porque las dos expresiones describen la reconstrucción de las murallas",
+     "Porque el sacrificio expiatorio hace posible la justicia duradera",
+     "Porque los dos propósitos se cumplen solo en la segunda venida",
+     "Porque son dos nombres hebreos del mismo decreto de Artajerjes"
+    ],
+    "a": 1,
+    "e": "Shea entiende la primera como acontecimiento y la segunda como resultado. Ese par ocupa el centro de su esquema de 9:24, que se relaciona con la muerte del Mesías en el centro de 9:25–27. Fuente: Shea, PDF 257 y 265–268.",
+    "abierta": "Une el centro de 9:24 con el centro de 9:25–27 en dos frases.",
+    "pauta": "El Mesías muere. Su muerte hace expiación por la iniquidad y pone la justicia perdurable al alcance del creyente. Relaciónalo con Romanos 3:21–26.",
+    "t": "mc"
+   },
+   {
+    "hito": "tiempo",
+    "v": "9:24",
+    "q": "¿Cómo explica el estudio la suficiencia de la cruz junto al ministerio celestial de Cristo?",
+    "o": [
+     "El ministerio celestial repite el sacrificio hasta que pueda ser suficiente",
+     "La cruz hace innecesario cualquier ministerio posterior de Cristo",
+     "El sacrificio es definitivo y Cristo ministra sus beneficios como Sumo Sacerdote",
+     "La expiación de Daniel 9 comienza solamente cuando termina el período de 2.300 años"
+    ],
+    "a": 2,
+    "e": "Hebreos 10:10–14 presenta una sola ofrenda; Hebreos 7:25 y 8:1–2 presenta al Sumo Sacerdote que vive e intercede. Shea une el sacrificio definitivo con el ministerio posterior. Fuente: Shea, PDF 256–258.",
+    "abierta": "¿Qué es lo que no se repite y qué es lo que continúa?",
+    "pauta": "No se repite la muerte sacrificial. Continúa el ministerio del Cristo vivo. Distingue ese ministerio de la inauguración del santuario y del juicio de 1844.",
+    "t": "mc"
+   },
+   {
+    "hito": "tiempo",
+    "v": "9:24",
+    "q": "¿Qué significa que la justicia de Daniel 9:24 sea perdurable en la explicación mesiánica?",
+    "o": [
+     "Que desapareció toda injusticia social al comenzar el año 34",
+     "Que el mérito de la nación reemplaza la necesidad de la expiación",
+     "Que se aplaza toda posibilidad de justificación hasta la tierra nueva",
+     "Que Cristo hace posible una justicia duradera frente al sistema sacrificial provisional"
+    ],
+    "a": 3,
+    "e": "Shea conecta la justicia con la expiación del Mesías y la contrasta con el servicio transitorio del templo. Bohr distingue lo que recibimos ahora en Cristo del mundo futuro sin injusticia. Fuente: Shea, PDF 257; Bohr, p. 328.",
+    "abierta": "¿Cómo pueden ser verdaderas la justicia recibida ahora y la esperanza de 2 Pedro 3:13?",
+    "pauta": "Explica la justificación por la fe y distingue esa realidad de la futura eliminación de toda injusticia en el mundo.",
+    "t": "mc"
+   },
+   {
+    "hito": "tiempo",
+    "v": "9:24",
+    "q": "¿Qué debe distinguirse al explicar «sellar la visión y la profecía»?",
+    "o": [
+     "La confirmación por cumplimiento y el énfasis de Bohr en el cierre del testimonio nacional",
+     "La clausura del libro de Daniel y la prohibición de leer los profetas después del año 34",
+     "La pérdida del don profético en todo el mundo y la destrucción del templo ese mismo año",
+     "El fin de las sesenta y nueve semanas y el comienzo de un nuevo cautiverio de setenta años"
+    ],
+    "a": 0,
+    "e": "CS 18 usa el cumplimiento para confirmar el período; Bohr relaciona la expresión con Esteban y el testimonio a Israel como nación. Se identifican esos énfasis sin convertirlos en la desaparición universal de la profecía. Fuente: CS 18; Bohr, p. 328; Shea, PDF 265–266.",
+    "abierta": "¿Por qué no basta decir «se acabaron los profetas»?",
+    "pauta": "Identifica el alcance nacional del argumento de Bohr y el hecho de que el Nuevo Testamento presenta profetas después de la resurrección. No atribuyas a RV1995 una explicación que no está en su frase.",
+    "t": "mc"
+   },
+   {
+    "hito": "santuario",
+    "v": "9:24",
+    "q": "¿Qué cadena de preguntas sigue Shea para explicar la unción del «santo de santos»?",
+    "o": [
+     "Qué rey dio el decreto, cuántos muros hizo y qué fecha tenía cada puerta",
+     "Qué se unge, qué santuario es, para qué se unge y cuándo comienza el servicio",
+     "Qué imperio corresponde a cada bestia y cuál fue el último rey de Persia",
+     "Qué traducción tiene el número 490 y dónde se escribió por primera vez"
+    ],
+    "a": 1,
+    "e": "Shea parte del uso de la expresión para el santuario, identifica el celestial, explica la consagración inaugural por Éxodo 40 y la relaciona con la ascensión y Pentecostés. Es distinto de la unción de Jesús en su bautismo. Fuente: Shea, PDF 257–258; HAp, cap. 4.",
+    "abierta": "Responde las cuatro preguntas con sus apoyos bíblicos.",
+    "pauta": "Objeto: santuario. Lugar: celestial, modelo del terrenal (Hebreos 8:5). Propósito: inaugurar servicio, por analogía con Éxodo 40. Momento: Cristo exaltado y Pentecostés, Hechos 2:32–36; no 1844.",
+    "t": "mc"
+   },
+   {
+    "hito": "pacto",
+    "v": "9:27",
+    "q": "¿Por qué Shea no llama a la semana del 27 al 34 «los primeros siete años del nuevo pacto»?",
+    "o": [
+     "Porque sitúa la crucifixión antes del comienzo de las setenta semanas",
+     "Porque sostiene que Jesús no ratificó ningún pacto mediante su muerte",
+     "Porque el pacto se hace firme durante una semana cuya mitad contiene la cruz",
+     "Porque interpreta que las promesas a los padres solo comienzan en el año 34"
+    ],
+    "a": 2,
+    "e": "El verbo implica fortalecer algo existente. La semana es el cierre del período concedido a Israel; Cristo ratifica el nuevo pacto con su sangre a la mitad de ella, no al comienzo del 27. Fuente: Shea, PDF 255–256; Romanos 15:8; Marcos 14:24.",
+    "abierta": "Explica la continuidad de la promesa y la novedad de su ratificación en Cristo.",
+    "pauta": "Cristo confirma las promesas hechas a los padres y cumple lo que los sacrificios anticipaban. Su sangre ratifica el nuevo pacto. El fin del período en 34 no significa que ese pacto caduque.",
+    "t": "mc"
+   },
+   {
+    "hito": "mesias",
+    "v": "9:25-26",
+    "q": "¿Qué argumento literario usa Shea para relacionar los títulos de Daniel 9:25–26?",
+    "o": [
+     "Los tres títulos aparecen traducidos con mayúscula y eso resuelve su identidad",
+     "La palabra príncipe solo se utiliza una vez en todo el pasaje de Gabriel",
+     "Cada título exige un personaje nuevo porque está en una oración distinta",
+     "Mesías y Príncipe aparecen juntos y luego se distribuyen por separado"
+    ],
+    "a": 3,
+    "e": "Shea observa el patrón Mesías + Príncipe en 9:25, Mesías en 9:26a y príncipe en 9:26b. Ese patrón sostiene su lectura de un mismo personaje; otros historicistas interpretan al príncipe de 9:26b como Tito. Fuente: Shea, PDF 248–249.",
+    "abierta": "Distingue lo que se observa en el texto de la conclusión interpretativa.",
+    "pauta": "Observación: la distribución de las dos palabras. Conclusión de Shea: las tres referencias señalan al Mesías. Nombra la lectura alternativa sin confundir el acuerdo sobre la destrucción romana con el desacuerdo sobre el título.",
+    "t": "mc"
+   },
+   {
+    "hito": "cruz",
+    "v": "9:26-27",
+    "q": "¿Cómo se complementan «después de las sesenta y dos semanas» y «a la mitad de la semana»?",
+    "o": [
+     "La primera anuncia el acontecimiento; la segunda precisa dónde cae dentro de la última semana",
+     "Las dos sitúan la cruz exactamente al final de los 490 años",
+     "La primera reinicia las primeras siete semanas y la segunda vuelve a contar el cautiverio",
+     "Las dos requieren dejar sin contar un intervalo de siglos después del bautismo"
+    ],
+    "a": 0,
+    "e": "La muerte ocurre después de las 62 que siguen a las primeras 7; el versículo 27 la sitúa en la mitad de la semana restante. DTG 23 ubica el bautismo en otoño del 27 y la cruz en primavera del 31. Fuente: Daniel 9:25–27; DTG 23; Shea, PDF 255–256.",
+    "abierta": "Explica por qué anunciar un hecho y precisar su ubicación no son dos predicciones contradictorias.",
+    "pauta": "Usa la secuencia 7 + 62 + 1. El 26 dice que el Mesías muere después del término de las 69; el 27 indica la mitad de la última.",
+    "t": "mc"
+   },
+   {
+    "hito": "esperanza",
+    "v": "9:24-27",
+    "q": "¿Qué consigue unir las dos estructuras literarias que estudia Shea?",
+    "o": [
+     "Trasladar la destrucción del año 70 al término del período en el año 34",
+     "Relacionar la muerte central del Mesías con su efecto: expiación y justicia",
+     "Demostrar que la ciudad y el Mesías son dos nombres del mismo símbolo",
+     "Reemplazar las cantidades de semanas por un esquema sin significado histórico"
+    ],
+    "a": 1,
+    "e": "El centro de 9:25–27 es la muerte del Mesías. El centro de 9:24 explica lo que esa muerte logra: expiar la iniquidad y traer justicia perdurable. La propuesta literaria une acontecimiento y significado. Fuente: Shea, PDF 265–268.",
+    "abierta": "Cuenta el mensaje de las setenta semanas sin empezar por una fecha.",
+    "pauta": "Empieza con el problema del pecado, explica la muerte y la obra sacerdotal de Cristo y después muestra cómo la cronología sitúa esos acontecimientos.",
+    "t": "mc"
    }
   ],
   "fuentes": {
@@ -69111,13 +69718,18 @@ const LAMINAS = {
     "lugar": "Cap. 18, «Una profecía significativa»; relación entre las 70 semanas y los 2.300 años.",
     "url": "https://media4.egwwritings.org/pdf/es_CS%28GC%29.pdf"
    },
+   "hap": {
+    "nombre": "Elena G. de White · Los Hechos de los Apóstoles",
+    "lugar": "Cap. 4, «Pentecostés», pp. 31–32: el derramamiento del Espíritu como señal de la entronización de Cristo.",
+    "url": "https://m.egwwritings.org/es/book/198.132"
+   },
    "bohr": {
     "nombre": "Esteban Bohr · Studies in Daniel 1–10",
     "lugar": "Sección de Daniel 9, pp. 323–348. Decreto: 330–340; Mesías y pacto: 341–348."
    },
    "simd": {
     "nombre": "William H. Shea · Simposio sobre Daniel, Clásicos del Adventismo 5",
-    "lugar": "«La unidad de Daniel», sección «Aspectos especializados de Daniel 9», pp. PDF 247–258 del ejemplar consultado."
+    "lugar": "«La unidad de Daniel», sección «Aspectos especializados de Daniel 9», pp. PDF 247–268: cronología, ocho afirmaciones mesiánicas y las dos estructuras literarias. Este tomo remite la exégesis más extensa al tomo 3 de la colección CDA."
    },
    "sima": {
     "nombre": "William H. Shea · Simposio sobre Apocalipsis, Clásicos del Adventismo 6",
@@ -69164,10 +69776,11 @@ const LAMINAS = {
      27
     ],
     "refs": "Daniel 9:24–27 · Levítico 25:8 · Números 14:34 · Ezequiel 4:6",
-    "idea": "7 + 62 + 1 = 70 semanas; 49 + 434 + 7 = 490 años.",
+    "idea": "Las semanas dan el marco; las seis metas explican qué hará el Mesías dentro de él.",
     "explica": [
-     "Una semana contiene siete días. En esta interpretación de la profecía, cada día representa un año: setenta por siete son 490 años. Levítico 25:8 también muestra cómo la Biblia cuenta semanas de años.",
-     "Las siete y las sesenta y dos semanas conducen al Mesías; queda una semana. Se leen como una secuencia continua, sin trasladar los últimos siete años a un futuro separado."
+     "Daniel 9:24 anuncia seis propósitos. El centro de su explicación es la relación entre expiar la iniquidad y traer justicia perdurable. Los versículos 25–27 muestran cómo la muerte del Mesías realiza esa obra.",
+     "Las siete y las sesenta y dos semanas conducen al Mesías; la semana restante contiene su muerte. Levítico 25:8 ofrece el precedente de semanas de años: 49 + 434 + 7 = 490. Shea relaciona además estas unidades con ciclos sabáticos, no solo con una regla aislada de conversión.",
+     "En «Frase a frase» puedes seguir las razones de cada propósito y explorar cómo se corresponden las seis metas. La cronología y el significado teológico se leen juntos."
     ],
     "matiz": "El principio día por año se aplica aquí dentro de una lectura profética argumentada; no convierte todos los días de la Biblia en años.",
     "fuentes": [
@@ -69263,13 +69876,13 @@ const LAMINAS = {
     "versos": [
      27
     ],
-    "refs": "Daniel 9:27 · Daniel 9:4 · Mateo 26:28 · Hebreos 9:15",
-    "idea": "El centro de la última semana es el pacto de Dios hecho firme por Cristo.",
+    "refs": "Daniel 9:27 · Daniel 9:4 · Romanos 15:8 · Marcos 14:24 · Hebreos 9:15",
+    "idea": "Cristo confirma las promesas; a mitad de la semana ratifica el nuevo pacto con su sangre.",
     "explica": [
-     "La lectura mesiánica identifica a quien confirma el pacto con Cristo. El propio capítulo presenta a Dios como quien guarda el pacto y la misericordia.",
-     "En la última cena, Jesús relaciona su sangre, el pacto y los muchos que reciben perdón. Primero él y después sus discípulos anuncian el evangelio especialmente a Israel durante esta semana."
+     "Confirmar significa hacer firme algo que ya existe. Shea entiende la semana del 27 al 34 como la última del período concedido a Israel bajo el antiguo pacto. No son los primeros siete años de un pacto nuevo iniciado en el bautismo.",
+     "Romanos 15:8 presenta a Cristo confirmando las promesas hechas a los padres. En Marcos 14:24 su sangre ratifica el nuevo pacto. Primero él y después los apóstoles anuncian el evangelio especialmente a Israel durante los siete años. El pacto ratificado en la cruz no caduca al terminar el año 34."
     ],
-    "matiz": "Aquí se explica la lectura mesiánica historicista. La identidad del «príncipe» de 9:26 tiene discusión exegética; se aborda en «Preguntas y fuentes», sin convertir el pacto de 9:27 en un tratado político moderno.",
+    "matiz": "Aquí se explica la lectura mesiánica historicista. La identidad del «príncipe» de 9:26 tiene discusión exegética; se explica en «Frase a frase», versículo 26, sin convertir el pacto de 9:27 en un tratado político moderno.",
     "fuentes": [
      "dtg",
      "bohr",
@@ -69351,6 +69964,7 @@ const LAMINAS = {
     "matiz": "La relación se argumenta por el contexto, Gabriel, la visión y el término «determinadas». Shea aclara que el significado «cortadas» favorece la relación, pero no la demuestra por sí solo. Daniel 9 no escribe explícitamente «1844».",
     "fuentes": [
      "cs",
+     "hap",
      "bohr",
      "simd"
     ],
@@ -85188,7 +85802,7 @@ const MANUAL = [
    },
    {
     "t": "Daniel 9: recorrer las setenta semanas",
-    "h": "<p>En <strong>Biblioteca › Daniel › Escenas y recursos</strong>, o en\n    <strong>Daniel 9 › Profundizar</strong>, abre <strong>Las setenta semanas</strong>.\n    Puedes <strong>Explorar</strong> a tu ritmo o <strong>Presentar</strong> en clase.\n    <strong>Anterior</strong>, <strong>Siguiente</strong> y las flechas del teclado\n    recorren los diez pasos. <strong>Inicio</strong> y <strong>Fin</strong> del teclado\n    llevan al primer y al último paso; <strong>Escape</strong> cierra.</p>\n    <p>La línea ofrece tres escalas: <strong>70 semanas</strong>,\n    <strong>Última semana</strong> y <strong>2.300 años</strong>. Toca un tramo\n    o un hito para ver su explicación. <strong>Texto bíblico</strong> muestra el\n    pasaje; <strong>Frase a frase</strong> desarrolla Daniel 9:24–27, y\n    <strong>Fuentes</strong> identifica la documentación. El cálculo aclara por\n    qué no hay año cero. <strong>Compartir</strong> copia el enlace público al paso actual. <strong>Comprueba lo aprendido</strong>\n    propone una pregunta de selección y otra abierta, con explicación y pauta.\n    Estas diez preguntas también alimentan la práctica de profundización y\n    permanecen fuera del examen oficial.</p>"
+    "h": "<p>En <strong>Biblioteca › Daniel › Escenas y recursos</strong>, o en\n    <strong>Daniel 9 › Profundizar</strong>, abre <strong>Las setenta semanas</strong>.\n    Puedes <strong>Explorar</strong> a tu ritmo o <strong>Presentar</strong> en clase.\n    <strong>Anterior</strong>, <strong>Siguiente</strong> y las flechas del teclado\n    recorren los diez pasos. <strong>Inicio</strong> y <strong>Fin</strong> del teclado\n    llevan al primer y al último paso; <strong>Escape</strong> cierra.</p>\n    <p>La línea ofrece tres escalas: <strong>70 semanas</strong>,\n    <strong>Última semana</strong> y <strong>2.300 años</strong>. Toca un tramo\n    o un hito para ver su explicación. <strong>Texto bíblico</strong> muestra el\n    pasaje; <strong>Frase a frase</strong> desarrolla las 22 expresiones de Daniel 9:24–27: significado, pasos del argumento, distinciones y fuente concreta. Abre las relaciones de las seis metas y toca un par para seguir su conexión; en los demás versículos puedes recorrer el esquema de ciudad y Mesías. <strong>Fuentes</strong> reúne también las ocho afirmaciones mesiánicas del Simposio. Cada expresión indica sus referencias y la sección de la obra consultada. El cálculo aclara por\n    qué no hay año cero. <strong>Compartir</strong> copia el enlace público al paso actual. <strong>Comprueba lo aprendido</strong>\n    propone una pregunta de selección y otra abierta, con explicación y pauta.\n    Estas veinte preguntas también alimentan la práctica de profundización y\n    permanecen fuera del examen oficial.</p>"
    },
    {
     "t": "La matutina es una serie completa",
@@ -87945,6 +88559,9 @@ const OTRAS_VERS = {
  "levitico-23": {
   "32": "Sábado de reposo será á vosotros, y afligiréis vuestras almas, comenzando á los nueve del mes en la tarde: de tarde á tarde holgaréis vuestro sábado."
  },
+ "levitico-25": {
+  "8": "Y te has de contar siete semanas de años, siete veces siete años; de modo que los días de las siete semanas de años vendrán á serte cuarenta y nueve años."
+ },
  "lucas-1": {
   "35": "Y respondiendo el ángel le dijo: El Espíritu Santo vendrá sobre ti, y la virtud del Altísimo te hará sombra; por lo cual también lo Santo que nacerá, será llamado Hijo de Dios."
  },
@@ -89127,6 +89744,11 @@ const OTRAS_META = {
  "levitico-23": {
   "libro": "Levítico",
   "cap": "23",
+  "version": "RV1909"
+ },
+ "levitico-25": {
+  "libro": "Levítico",
+  "cap": "25",
   "version": "RV1909"
  },
  "lucas-1": {
@@ -90754,12 +91376,12 @@ function cierraCapas(){
 }
 /* La cronología conserva el contrato de las otras láminas: abrir, recorrer,
    presentar, compartir el paso y cerrar. No añade almacenamiento ni red. */
-let d9Respuesta=-1,d9Referencia=null;
-let d9Tab='explica',d9Vista='semanas',d9Verso=24,d9Foco=null,d9Cambio=0;
+let d9Respuesta=-1,d9Referencia=null,d9Pregunta=0;
+let d9Tab='explica',d9Vista='semanas',d9Verso=24,d9Foco=null,d9Cambio=0,d9ParElegido=2;
 const lamEsC=()=>!!(LAM()&&LAM().tipo==='cronologia');
 const d9Hitos=()=>LAM().hitos;
 const d9Refs=t=>refsTocables(esc(t),'d9');
-const d9OrdenFuentes=ks=>ks.slice().sort((a,b)=>['dtg','cs','bohr','simd','sima'].indexOf(a)-['dtg','cs','bohr','simd','sima'].indexOf(b));
+const d9OrdenFuentes=ks=>ks.slice().sort((a,b)=>['dtg','cs','hap','bohr','simd','sima'].indexOf(a)-['dtg','cs','hap','bohr','simd','sima'].indexOf(b));
 const d9Hito=()=>d9Hitos()[lamPaso];
 /* Coordenada histórica sin año cero. */
 function d9Anos(de,a){return a-de-(de<0&&a>0?1:0);}
@@ -90782,7 +91404,7 @@ function d9Abre(cid,modo){
  const el=document.getElementById('lam');if(!el)return;
  if(!lamModo){const r=el.getRootNode?el.getRootNode():document;d9Foco=r.activeElement;}
  lamPara();if(lamModo&&lamEsE())lamLimpia();lamId=cid;lamModo=modo==='presentar'?'presentar':'explorar';lamPaso=0;lamDonde='oracion';
- d9Respuesta=-1;d9Tab='explica';d9Vista='semanas';d9Verso=24;d9Cambio++;
+ d9Respuesta=-1;d9Pregunta=0;d9Tab='explica';d9Vista='semanas';d9Verso=24;d9ParElegido=2;d9Cambio++;
  el.hidden=false;el.className='lam d9'+(lamModo==='presentar'?' d9-pres':'');
  el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',LAM().titulo);
  document.body.classList.add('leyendo');
@@ -90803,7 +91425,7 @@ function d9Abre(cid,modo){
 function d9Ir(id){
  const i=d9Hitos().findIndex(h=>h.id===id);if(i<0)return;
  const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document,foco=r.activeElement;
- d9Respuesta=-1;lamPaso=i;lamDonde=id;d9Vista=d9Hito().escala;d9Tab='explica';d9Pinta();
+ d9Respuesta=-1;d9Pregunta=0;lamPaso=i;lamDonde=id;d9Vista=d9Hito().escala;d9Tab='explica';d9Pinta();
  if(el)el.scrollTop=0;
  if(foco&&!foco.isConnected){const t=document.getElementById('d9Titulo');if(t)t.focus({preventScroll:true});}
 }
@@ -90855,14 +91477,16 @@ function d9PintaPanel(){
  }
  if(d9Tab==='frases'){p.innerHTML=d9FrasesHTML();return;}
  if(d9Tab==='fuentes'){
-  p.innerHTML='<span class="d9-kicker">Documentación de este hito</span><h2>Del texto a la interpretación</h2><p>Primero la Biblia; después Elena G. de White; luego Bohr y los simposios. Los apuntes de estudio se cotejaron con estas fuentes.</p>'+
+  p.innerHTML='<span class="d9-kicker">Documentación de este hito</span><h2>Del texto a la interpretación</h2><p>El pasaje bíblico establece el punto de partida. Elena G. de White explica la cronología y la obra de Cristo; Bohr y Shea desarrollan los argumentos. Cada expresión indica la sección consultada y distingue las lecturas que difieren.</p>'+
    '<p class="d9-ref">'+d9Refs(h.refs)+'</p>'+d9OrdenFuentes(h.fuentes).map(k=>d9FuenteHTML(k)).join('')+
+   '<details class="d9-details"><summary>Ocho afirmaciones sobre el Mesías</summary><p>Shea reúne ocho afirmaciones de Daniel 9:24–27. Toca una para seguir su argumento en el texto.</p><ol class="d9-profile">'+LAM().estudio.perfil.map(([t,v,e],i)=>'<li><button type="button" class="d9-text-link" onclick="d9EnlazaFrase('+v.split(':')[1]+','+[5,6,8,2,1,1,0,1][i]+')">'+esc(t)+' · '+v+'</button><p>'+esc(e)+'</p></li>').join('')+'</ol><p class="d9-phrase-source">Shea, Simposio sobre Daniel, PDF 254–258. Este tomo remite el estudio exegético más extenso al tomo 3 de la colección CDA; esa remisión no equivale a haber consultado ese otro tomo.</p></details>'+
    '<details class="d9-details"><summary>Cómo se presentan las fechas</summary><p>Las cantidades y expresiones se leen de Daniel 9. Los años 457 a.C., 27, 31 y 34 d.C. pertenecen a la cronología historicista adventista. Las notas de cada hito explican qué parte requiere reconstrucción histórica o interpretación.</p></details>';
   return;
  }
  p.innerHTML='<span class="d9-kicker">La idea central</span><h2>'+esc(h.idea)+'</h2><p>'+esc(h.explica[0])+'</p>'+
   '<details class="d9-details"><summary>Más contexto y precisión</summary>'+h.explica.slice(1).map(t=>'<p>'+esc(t)+'</p>').join('')+'<p>'+esc(h.matiz)+'</p></details>'+
   '<p class="d9-ref">'+d9Refs(h.refs)+'</p><div class="d9-actions">'+
+  '<button type="button" class="d9-text-link" onclick="d9EnlazaFrase('+({pacto:27,cruz:26,mesias:25,decreto:25,restauracion:25}[h.id]||24)+',0)">Ver el argumento '+IC('der')+'</button>'+
   '<button type="button" class="d9-text-link d9-practicar" onclick="d9Consulta(\'preguntas\')">Comprueba lo aprendido '+IC('der')+'</button></div>';
 }
 function d9FuenteHTML(k){
@@ -90905,13 +91529,38 @@ function d9Tramo(id){
 }
 function d9FrasesHTML(){
  const frases=LAM().frases||{};
- return '<span class="d9-kicker">Daniel 9:24–27 · frase por frase</span><h2>Lee despacio. Une las piezas.</h2>'+
+ return '<span class="d9-kicker">Daniel 9:24–27 · frase por frase</span><h2>Qué dice, por qué y cómo se cumple</h2>'+
   '<div class="d9-verses" role="group" aria-label="Versículo que quieres explicar">'+[24,25,26,27].map(v=>
    '<button type="button" onclick="d9FraseVerso('+v+')" aria-pressed="'+(d9Verso===v)+'">9:'+v+'</button>').join('')+'</div>'+
-  '<p class="d9-verse-whole">'+esc(VERS.d9[d9Verso])+'</p>'+(frases[d9Verso]||[]).map((f,i)=>
+  '<p class="d9-verse-whole">'+esc(VERS.d9[d9Verso])+'</p>'+d9RelacionesHTML()+(frases[d9Verso]||[]).map((f,i)=>
    '<details class="d9-phrase" name="d9-frase"'+(i===0?' open':'')+'><summary><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(f.frase)+'</summary>'+
-   '<div><p>'+esc(f.sentido)+'</p><p>'+esc(f.desarrollo)+'</p><p class="d9-ref">'+d9Refs(f.refs)+'</p>'+
-   '<p class="d9-phrase-source">Apoyo: '+d9OrdenFuentes(f.fuentes).map(k=>esc(LAM().fuentes[k].nombre)).join(' · ')+'</p></div></details>').join('');
+   '<div><p class="d9-meaning">'+esc(f.sentido)+'</p><span class="d9-kicker">Sigue el argumento</span><ol class="d9-reasons">'+f.pasos.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ol>'+
+   '<aside class="d9-precision"><b>Una distinción necesaria</b><p>'+esc(f.precision)+'</p></aside><p class="d9-ref">Compruébalo: '+d9Refs(f.refs)+'</p>'+
+   '<p class="d9-phrase-source">Fuente del desarrollo: '+esc(f.fuente)+'</p></div></details>').join('');
+}
+function d9RelacionesHTML(){
+ if(d9Verso===24){
+  const ps=LAM().estudio.pares;
+  return '<details class="d9-relations"><summary>Cómo se conectan las seis metas</summary><p>Un quiasmo organiza ideas en correspondencia alrededor de un centro. Shea propone tres pares en 9:24; el del centro une la expiación con la justicia.</p>'+
+   '<div class="d9-pairs" role="group" aria-label="Correspondencias de las seis metas">'+ps.map((p,i)=>'<button type="button" aria-pressed="'+(d9ParElegido===i)+'" onclick="d9EligePar('+i+')"><span>'+['A ↔ A′','B ↔ B′','C ↔ C′'][i]+'</span>'+esc(p.nombre)+'</button>').join('')+'</div><div id="d9PairText">'+d9ParHTML()+'</div>'+
+   '<p class="d9-phrase-source">Propuesta literaria de Shea, PDF 265–268. Las citas de las metas mantienen RV1995; las diferencias del hebreo se explican aparte.</p></details>';
+ }
+ return '<details class="d9-relations"><summary>La ciudad y el Mesías: cómo se organiza el pasaje</summary><p>Shea encuentra una disposición en espejo: restauración y destrucción rodean al acontecimiento central, la muerte del Mesías. El orden literario no obliga a que cada frase sea el acontecimiento siguiente en el calendario.</p><ol class="d9-structure">'+LAM().estudio.estructura.map(([letra,t,v,e])=>'<li'+(letra==='D'?' class="d9-center"':'')+'><span>'+letra+'</span><div><b>'+esc(t)+'</b><small>Daniel '+v+'</small><p>'+esc(e)+'</p></div></li>').join('')+'</ol><p>El centro de 9:24 explica el significado de esa muerte: expiación y justicia. El centro de 9:25–27 presenta el acontecimiento que las hace posibles.</p><p class="d9-phrase-source">Shea, Simposio sobre Daniel, PDF 265–268.</p></details>';
+}
+function d9ParHTML(){
+ const p=LAM().estudio.pares[d9ParElegido],fs=LAM().frases[24];
+ return '<h3>'+esc(p.idea)+'</h3><div class="d9-pair-phrases">'+p.indices.map(i=>'<button type="button" onclick="d9EnlazaFrase(24,'+i+')">'+esc(fs[i].frase)+' '+IC('der')+'</button>').join('')+'</div><p>'+esc(p.razon)+'</p>';
+}
+function d9EligePar(i){
+ if(!Number.isInteger(i)||!LAM().estudio.pares[i])return;
+ d9ParElegido=i;const z=document.getElementById('d9PairText');if(z)z.innerHTML=d9ParHTML();
+ document.querySelectorAll('.d9-pairs button').forEach((b,n)=>b.setAttribute('aria-pressed',n===i?'true':'false'));
+}
+function d9EnlazaFrase(v,i){
+ if(!LAM().frases[v]||!LAM().frases[v][i])return;
+ d9Verso=v;d9Consulta('frases');
+ const fs=document.querySelectorAll('.d9-phrase');fs.forEach((e,n)=>e.open=n===i);
+ const summary=fs[i]&&fs[i].querySelector('summary');if(summary){summary.focus({preventScroll:true});summary.scrollIntoView({block:'nearest'});}
 }
 function d9FraseVerso(v){if(![24,25,26,27].includes(v))return;d9Verso=v;d9PintaPanel();const b=document.querySelector('.d9-verses [aria-pressed="true"]');if(b)b.focus({preventScroll:true});}
 function d9Capitulo(){lamCierra();verCap('d9');}
@@ -90952,10 +91601,11 @@ function d9Tecla(e){
 }
 
 function d9PreguntasHTML(){
- const q=LAM().preguntas.find(q=>q.hito===d9Hito().id);if(!q)return '';
+ const qs=LAM().preguntas.filter(q=>q.hito===d9Hito().id),q=qs[d9Pregunta];if(!q)return '';
  const respondido=d9Respuesta>=0;
  return '<button type="button" class="d9-text-link" onclick="d9Consulta(\'explica\')">'+IC('izq')+' Volver a la explicación</button>'+
   '<span class="d9-kicker">Para comprender, no solo recordar</span><h2>'+esc(q.q)+'</h2>'+
+  (qs.length>1?'<div class="d9-question-nav"><button type="button" onclick="d9OtraPregunta(-1)"'+(d9Pregunta===0?' disabled':'')+'>Anterior pregunta</button><span>'+(d9Pregunta+1)+' de '+qs.length+'</span><button type="button" onclick="d9OtraPregunta(1)"'+(d9Pregunta===qs.length-1?' disabled':'')+'>Otra pregunta</button></div>':'')+
   '<div class="d9-options" role="group" aria-label="Escoge una respuesta">'+q.o.map((o,i)=>
    '<button type="button" class="d9-option'+(respondido&&i===q.a?' correcta':'')+(respondido&&i===d9Respuesta&&i!==q.a?' revisar':'')+'" aria-pressed="'+(i===d9Respuesta)+'" onclick="d9Responde('+i+')"><span>'+String.fromCharCode(65+i)+'</span>'+esc(o)+'</button>').join('')+'</div>'+
   (respondido?'<div class="d9-answer" id="d9Respuesta" tabindex="-1" role="status"><b>'+(d9Respuesta===q.a?'La conexión es correcta.':'Revisa esta conexión.')+'</b><p>'+esc(q.e)+'</p></div>':'')+
@@ -90963,8 +91613,14 @@ function d9PreguntasHTML(){
   '<p class="d9-ref">Práctica de profundización. Estas preguntas se mantienen separadas del examen oficial.</p>';
 }
 function d9Responde(i){
- const q=LAM().preguntas.find(q=>q.hito===d9Hito().id);if(!q||!Number.isInteger(i)||i<0||i>=q.o.length)return;
+ const q=LAM().preguntas.filter(q=>q.hito===d9Hito().id)[d9Pregunta];if(!q||!Number.isInteger(i)||i<0||i>=q.o.length)return;
  d9Respuesta=i;d9PintaPanel();const r=document.getElementById('d9Respuesta');if(r)r.focus({preventScroll:true});
+}
+function d9OtraPregunta(d){
+ const n=d9Pregunta+d,qs=LAM().preguntas.filter(q=>q.hito===d9Hito().id);
+ if(!Number.isInteger(n)||n<0||n>=qs.length)return;
+ d9Pregunta=n;d9Respuesta=-1;d9PintaPanel();
+ const h=document.querySelector('#d9Panel h2');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}
 }
 
 function d9Ref(cid,de,hasta){

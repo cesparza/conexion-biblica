@@ -1101,7 +1101,7 @@ export const CATALOGO = {
     "grupo": "Biblia",
     "n": [
      32,
-     25,
+     35,
      20
     ]
    },

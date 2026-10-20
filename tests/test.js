@@ -3361,11 +3361,15 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
  ok([24,25,26,27].every(v=>D.frases[v].every(f=>n(VERS.d9[v]).includes(n(f.frase)))),'Cada frase explicada pertenece al texto RV1995 del versículo correspondiente');
  ok(D.frases[24].length===9&&Object.values(D.frases).flat().length===22,'Frase a frase cubre 22 expresiones y los seis propósitos de 9:24');
  const Q=require(path.join(RAIZ,'fuente','daniel9-preguntas.js'));
- ok(Q.length===10&&Q.every(q=>q.f==='c'&&q.o.length===4&&q.a>=0&&q.a<4&&q.abierta&&q.pauta)&&new Set(Q.map(q=>q.hito)).size===10,'Diez preguntas de profundización, con cuatro opciones y pauta abierta, separadas del examen');
+ ok(Q.length===20&&Q.every(q=>q.f==='c'&&q.o.length===4&&q.a>=0&&q.a<4&&q.abierta&&q.pauta)&&new Set(Q.map(q=>q.hito)).size===10,'Veinte preguntas de profundización, con cuatro opciones y pauta abierta, separadas del examen');
  const fuentesD9=montar('bibLineasDe').bibLineasDe('d9').join(' ');
  ok(fuentesD9.includes('Simposio sobre Apocalipsis')&&fuentesD9.includes('Simposio sobre Daniel'),'La Bibliografía de Daniel recoge los dos simposios de la experiencia');
  ok(D.hitos.length===10&&new Set(D.hitos.map(h=>h.id)).size===10&&D.hitos.every(h=>h.versos.every(v=>VERS.d9[v])&&h.fuentes.every(k=>D.fuentes[k])),'Los diez hitos tienen cita canónica y fuentes identificables');
  ok(Object.values(D.frases).flat().every(f=>f.sentido&&f.desarrollo&&f.refs&&f.fuentes.every(k=>D.fuentes[k])),'Cada expresión tiene sentido, desarrollo, referencias y apoyo documental');
+ ok(Object.values(D.frases).flat().every(f=>f.pasos.length>=2&&f.precision&&f.fuente),'Las 22 expresiones desarrollan el argumento, la distinción y la fuente concreta');
+ ok(D.estudio.pares.length===3&&new Set(D.estudio.pares.flatMap(p=>p.indices)).size===6&&D.estudio.estructura.length===7&&D.estudio.perfil.length===8,'Las seis metas, el esquema del pasaje y las ocho afirmaciones de Shea tienen desarrollo');
+ const pacto=require(path.join(RAIZ,'fuente','complementos','daniel','d9.js')).secciones.find(s=>s.t.includes('Confirmará'));
+ ok(pacto.verso===27,'El apartado sobre el pacto muestra Daniel 9:27, no el versículo 26');
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

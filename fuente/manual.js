@@ -144,11 +144,10 @@ const MANUAL = [
     <p>La línea ofrece tres escalas: <strong>70 semanas</strong>,
     <strong>Última semana</strong> y <strong>2.300 años</strong>. Toca un tramo
     o un hito para ver su explicación. <strong>Texto bíblico</strong> muestra el
-    pasaje; <strong>Frase a frase</strong> desarrolla Daniel 9:24–27, y
-    <strong>Fuentes</strong> identifica la documentación. El cálculo aclara por
+    pasaje; <strong>Frase a frase</strong> desarrolla las 22 expresiones de Daniel 9:24–27: significado, pasos del argumento, distinciones y fuente concreta. Abre las relaciones de las seis metas y toca un par para seguir su conexión; en los demás versículos puedes recorrer el esquema de ciudad y Mesías. <strong>Fuentes</strong> reúne también las ocho afirmaciones mesiánicas del Simposio. Cada expresión indica sus referencias y la sección de la obra consultada. El cálculo aclara por
     qué no hay año cero. <strong>Compartir</strong> copia el enlace público al paso actual. <strong>Comprueba lo aprendido</strong>
     propone una pregunta de selección y otra abierta, con explicación y pauta.
-    Estas diez preguntas también alimentan la práctica de profundización y
+    Estas veinte preguntas también alimentan la práctica de profundización y
     permanecen fuera del examen oficial.</p>` },
   { t:'La matutina es una serie completa',
     h:`<p><strong>Héroes y villanos</strong> tiene 31 lecturas numeradas. Puedes

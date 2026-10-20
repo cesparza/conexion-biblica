@@ -118,6 +118,15 @@
 
 .d9-ref .vref{color:#c6cdbb;font-size:inherit;text-decoration-color:#647f83}.d9-ref .vref:focus-visible{outline-color:#efce81}
 
+/* Las conexiones acompañan la lectura sin añadir otra columna. */
+.d9-reasons{padding-left:22px;margin:13px 0 18px}.d9-reasons li{padding-left:5px;margin:0 0 13px}.d9-reasons li::marker{color:#d8bd81;font-weight:700;font-size:12px}
+.d9-panel .d9-meaning{font-weight:600;color:#f3e6cd}.d9-precision{border-left:2px solid #617f84;padding:10px 14px;background:#172930;margin:17px 0}.d9-precision b{font-size:12px;color:#bdccce}.d9-precision p{margin:6px 0 0;font-size:13px}
+.d9-relations{margin:16px 0 10px;padding:14px 0;border-block:1px solid #43555b}.d9-relations>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#eed8a6;font-size:13px;font-weight:650}.d9-relations>summary:after{content:'+';margin-left:auto}.d9-relations[open]>summary:after{content:'−'}
+.d9-relations p{font-size:13px}.d9-pairs{display:grid;gap:7px;margin:12px 0}.d9-pairs button{display:flex;gap:12px;align-items:center;min-height:44px;border:1px solid #425960;border-radius:7px;background:#13262e;color:#cbd9da;text-align:left;padding:10px 12px;font-size:12px}.d9-pairs button>span{font-size:10px;color:#c2ae7e;min-width:48px}.d9-pairs [aria-pressed=true]{border-color:#d3b77b;background:#30443f;color:#fff0cf}
+#d9PairText h3{font:400 20px/1.4 Georgia,serif;color:#f2dfb6;margin:16px 0}.d9-pair-phrases{display:grid;gap:8px;margin:12px 0}.d9-pair-phrases button{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:44px;border:0;border-bottom:1px solid #3c5358;color:#d7e5dd;background:transparent;text-align:left;font-size:13px;padding:9px 0}.d9-pair-phrases svg{flex:none;width:15px;height:15px}
+.d9-structure{list-style:none;padding:0;display:grid;gap:6px;margin:15px 0}.d9-structure li{display:flex;gap:12px;padding:10px 12px;border-left:2px solid #46676d;background:#14262d}.d9-structure li>span{flex:none;color:#bda773;font-size:12px;min-width:20px}.d9-structure b{font-size:13px;color:#e2ddd0}.d9-structure small{display:block;color:#8facb1;font-size:10px}.d9-structure p{font-size:12px;margin:5px 0 0}.d9-structure .d9-center{border-color:#e1c17e;background:#2b403a}.d9-profile{padding-left:22px}.d9-profile p{font-size:12px}.d9-profile .d9-text-link{font-size:13px;text-align:left}
+.d9-question-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0;font-size:11px;color:#a7bcc1}.d9-question-nav button{border:1px solid #425960;border-radius:6px;background:#152931;color:#e0d6b8;min-height:44px;padding:8px 12px;font-size:11px}
+
 /* En un portátil la cronología forma parte de la primera vista. */
 @media(min-width:761px){
  .d9-art{min-height:clamp(350px,calc(100dvh - 440px),515px)}
@@ -136,3 +145,5 @@
 @media(min-width:761px) and (max-height:850px){.d9-notebook{padding:12px 22px}.d9-panel{font-size:14px;line-height:1.6}.d9-time>.d9-time-head .d9-kicker{display:none}.d9-calculation summary{min-height:36px}.d9-time-note{margin-top:7px}.d9-art h1{font-size:clamp(30px,3vw,52px)}}
 
 @media(min-width:761px){.d9-pres .d9-panel{font-size:clamp(16px,1.1vw,20px)}.d9-pres .d9-panel h2{font-size:clamp(24px,1.8vw,32px)}}
+
+.d9-actions .d9-practicar{flex-basis:auto}.d9-actions{gap:6px 20px}

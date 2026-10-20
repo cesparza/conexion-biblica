@@ -1,11 +1,11 @@
 /* La cronología conserva el contrato de las otras láminas: abrir, recorrer,
    presentar, compartir el paso y cerrar. No añade almacenamiento ni red. */
-let d9Respuesta=-1,d9Referencia=null;
-let d9Tab='explica',d9Vista='semanas',d9Verso=24,d9Foco=null,d9Cambio=0;
+let d9Respuesta=-1,d9Referencia=null,d9Pregunta=0;
+let d9Tab='explica',d9Vista='semanas',d9Verso=24,d9Foco=null,d9Cambio=0,d9ParElegido=2;
 const lamEsC=()=>!!(LAM()&&LAM().tipo==='cronologia');
 const d9Hitos=()=>LAM().hitos;
 const d9Refs=t=>refsTocables(esc(t),'d9');
-const d9OrdenFuentes=ks=>ks.slice().sort((a,b)=>['dtg','cs','bohr','simd','sima'].indexOf(a)-['dtg','cs','bohr','simd','sima'].indexOf(b));
+const d9OrdenFuentes=ks=>ks.slice().sort((a,b)=>['dtg','cs','hap','bohr','simd','sima'].indexOf(a)-['dtg','cs','hap','bohr','simd','sima'].indexOf(b));
 const d9Hito=()=>d9Hitos()[lamPaso];
 /* Coordenada histórica sin año cero. */
 function d9Anos(de,a){return a-de-(de<0&&a>0?1:0);}
@@ -28,7 +28,7 @@ function d9Abre(cid,modo){
  const el=document.getElementById('lam');if(!el)return;
  if(!lamModo){const r=el.getRootNode?el.getRootNode():document;d9Foco=r.activeElement;}
  lamPara();if(lamModo&&lamEsE())lamLimpia();lamId=cid;lamModo=modo==='presentar'?'presentar':'explorar';lamPaso=0;lamDonde='oracion';
- d9Respuesta=-1;d9Tab='explica';d9Vista='semanas';d9Verso=24;d9Cambio++;
+ d9Respuesta=-1;d9Pregunta=0;d9Tab='explica';d9Vista='semanas';d9Verso=24;d9ParElegido=2;d9Cambio++;
  el.hidden=false;el.className='lam d9'+(lamModo==='presentar'?' d9-pres':'');
  el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',LAM().titulo);
  document.body.classList.add('leyendo');
@@ -49,7 +49,7 @@ function d9Abre(cid,modo){
 function d9Ir(id){
  const i=d9Hitos().findIndex(h=>h.id===id);if(i<0)return;
  const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document,foco=r.activeElement;
- d9Respuesta=-1;lamPaso=i;lamDonde=id;d9Vista=d9Hito().escala;d9Tab='explica';d9Pinta();
+ d9Respuesta=-1;d9Pregunta=0;lamPaso=i;lamDonde=id;d9Vista=d9Hito().escala;d9Tab='explica';d9Pinta();
  if(el)el.scrollTop=0;
  if(foco&&!foco.isConnected){const t=document.getElementById('d9Titulo');if(t)t.focus({preventScroll:true});}
 }
@@ -101,14 +101,16 @@ function d9PintaPanel(){
  }
  if(d9Tab==='frases'){p.innerHTML=d9FrasesHTML();return;}
  if(d9Tab==='fuentes'){
-  p.innerHTML='<span class="d9-kicker">Documentación de este hito</span><h2>Del texto a la interpretación</h2><p>Primero la Biblia; después Elena G. de White; luego Bohr y los simposios. Los apuntes de estudio se cotejaron con estas fuentes.</p>'+
+  p.innerHTML='<span class="d9-kicker">Documentación de este hito</span><h2>Del texto a la interpretación</h2><p>El pasaje bíblico establece el punto de partida. Elena G. de White explica la cronología y la obra de Cristo; Bohr y Shea desarrollan los argumentos. Cada expresión indica la sección consultada y distingue las lecturas que difieren.</p>'+
    '<p class="d9-ref">'+d9Refs(h.refs)+'</p>'+d9OrdenFuentes(h.fuentes).map(k=>d9FuenteHTML(k)).join('')+
+   '<details class="d9-details"><summary>Ocho afirmaciones sobre el Mesías</summary><p>Shea reúne ocho afirmaciones de Daniel 9:24–27. Toca una para seguir su argumento en el texto.</p><ol class="d9-profile">'+LAM().estudio.perfil.map(([t,v,e],i)=>'<li><button type="button" class="d9-text-link" onclick="d9EnlazaFrase('+v.split(':')[1]+','+[5,6,8,2,1,1,0,1][i]+')">'+esc(t)+' · '+v+'</button><p>'+esc(e)+'</p></li>').join('')+'</ol><p class="d9-phrase-source">Shea, Simposio sobre Daniel, PDF 254–258. Este tomo remite el estudio exegético más extenso al tomo 3 de la colección CDA; esa remisión no equivale a haber consultado ese otro tomo.</p></details>'+
    '<details class="d9-details"><summary>Cómo se presentan las fechas</summary><p>Las cantidades y expresiones se leen de Daniel 9. Los años 457 a.C., 27, 31 y 34 d.C. pertenecen a la cronología historicista adventista. Las notas de cada hito explican qué parte requiere reconstrucción histórica o interpretación.</p></details>';
   return;
  }
  p.innerHTML='<span class="d9-kicker">La idea central</span><h2>'+esc(h.idea)+'</h2><p>'+esc(h.explica[0])+'</p>'+
   '<details class="d9-details"><summary>Más contexto y precisión</summary>'+h.explica.slice(1).map(t=>'<p>'+esc(t)+'</p>').join('')+'<p>'+esc(h.matiz)+'</p></details>'+
   '<p class="d9-ref">'+d9Refs(h.refs)+'</p><div class="d9-actions">'+
+  '<button type="button" class="d9-text-link" onclick="d9EnlazaFrase('+({pacto:27,cruz:26,mesias:25,decreto:25,restauracion:25}[h.id]||24)+',0)">Ver el argumento '+IC('der')+'</button>'+
   '<button type="button" class="d9-text-link d9-practicar" onclick="d9Consulta(\'preguntas\')">Comprueba lo aprendido '+IC('der')+'</button></div>';
 }
 function d9FuenteHTML(k){
@@ -151,13 +153,38 @@ function d9Tramo(id){
 }
 function d9FrasesHTML(){
  const frases=LAM().frases||{};
- return '<span class="d9-kicker">Daniel 9:24–27 · frase por frase</span><h2>Lee despacio. Une las piezas.</h2>'+
+ return '<span class="d9-kicker">Daniel 9:24–27 · frase por frase</span><h2>Qué dice, por qué y cómo se cumple</h2>'+
   '<div class="d9-verses" role="group" aria-label="Versículo que quieres explicar">'+[24,25,26,27].map(v=>
    '<button type="button" onclick="d9FraseVerso('+v+')" aria-pressed="'+(d9Verso===v)+'">9:'+v+'</button>').join('')+'</div>'+
-  '<p class="d9-verse-whole">'+esc(VERS.d9[d9Verso])+'</p>'+(frases[d9Verso]||[]).map((f,i)=>
+  '<p class="d9-verse-whole">'+esc(VERS.d9[d9Verso])+'</p>'+d9RelacionesHTML()+(frases[d9Verso]||[]).map((f,i)=>
    '<details class="d9-phrase" name="d9-frase"'+(i===0?' open':'')+'><summary><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(f.frase)+'</summary>'+
-   '<div><p>'+esc(f.sentido)+'</p><p>'+esc(f.desarrollo)+'</p><p class="d9-ref">'+d9Refs(f.refs)+'</p>'+
-   '<p class="d9-phrase-source">Apoyo: '+d9OrdenFuentes(f.fuentes).map(k=>esc(LAM().fuentes[k].nombre)).join(' · ')+'</p></div></details>').join('');
+   '<div><p class="d9-meaning">'+esc(f.sentido)+'</p><span class="d9-kicker">Sigue el argumento</span><ol class="d9-reasons">'+f.pasos.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ol>'+
+   '<aside class="d9-precision"><b>Una distinción necesaria</b><p>'+esc(f.precision)+'</p></aside><p class="d9-ref">Compruébalo: '+d9Refs(f.refs)+'</p>'+
+   '<p class="d9-phrase-source">Fuente del desarrollo: '+esc(f.fuente)+'</p></div></details>').join('');
+}
+function d9RelacionesHTML(){
+ if(d9Verso===24){
+  const ps=LAM().estudio.pares;
+  return '<details class="d9-relations"><summary>Cómo se conectan las seis metas</summary><p>Un quiasmo organiza ideas en correspondencia alrededor de un centro. Shea propone tres pares en 9:24; el del centro une la expiación con la justicia.</p>'+
+   '<div class="d9-pairs" role="group" aria-label="Correspondencias de las seis metas">'+ps.map((p,i)=>'<button type="button" aria-pressed="'+(d9ParElegido===i)+'" onclick="d9EligePar('+i+')"><span>'+['A ↔ A′','B ↔ B′','C ↔ C′'][i]+'</span>'+esc(p.nombre)+'</button>').join('')+'</div><div id="d9PairText">'+d9ParHTML()+'</div>'+
+   '<p class="d9-phrase-source">Propuesta literaria de Shea, PDF 265–268. Las citas de las metas mantienen RV1995; las diferencias del hebreo se explican aparte.</p></details>';
+ }
+ return '<details class="d9-relations"><summary>La ciudad y el Mesías: cómo se organiza el pasaje</summary><p>Shea encuentra una disposición en espejo: restauración y destrucción rodean al acontecimiento central, la muerte del Mesías. El orden literario no obliga a que cada frase sea el acontecimiento siguiente en el calendario.</p><ol class="d9-structure">'+LAM().estudio.estructura.map(([letra,t,v,e])=>'<li'+(letra==='D'?' class="d9-center"':'')+'><span>'+letra+'</span><div><b>'+esc(t)+'</b><small>Daniel '+v+'</small><p>'+esc(e)+'</p></div></li>').join('')+'</ol><p>El centro de 9:24 explica el significado de esa muerte: expiación y justicia. El centro de 9:25–27 presenta el acontecimiento que las hace posibles.</p><p class="d9-phrase-source">Shea, Simposio sobre Daniel, PDF 265–268.</p></details>';
+}
+function d9ParHTML(){
+ const p=LAM().estudio.pares[d9ParElegido],fs=LAM().frases[24];
+ return '<h3>'+esc(p.idea)+'</h3><div class="d9-pair-phrases">'+p.indices.map(i=>'<button type="button" onclick="d9EnlazaFrase(24,'+i+')">'+esc(fs[i].frase)+' '+IC('der')+'</button>').join('')+'</div><p>'+esc(p.razon)+'</p>';
+}
+function d9EligePar(i){
+ if(!Number.isInteger(i)||!LAM().estudio.pares[i])return;
+ d9ParElegido=i;const z=document.getElementById('d9PairText');if(z)z.innerHTML=d9ParHTML();
+ document.querySelectorAll('.d9-pairs button').forEach((b,n)=>b.setAttribute('aria-pressed',n===i?'true':'false'));
+}
+function d9EnlazaFrase(v,i){
+ if(!LAM().frases[v]||!LAM().frases[v][i])return;
+ d9Verso=v;d9Consulta('frases');
+ const fs=document.querySelectorAll('.d9-phrase');fs.forEach((e,n)=>e.open=n===i);
+ const summary=fs[i]&&fs[i].querySelector('summary');if(summary){summary.focus({preventScroll:true});summary.scrollIntoView({block:'nearest'});}
 }
 function d9FraseVerso(v){if(![24,25,26,27].includes(v))return;d9Verso=v;d9PintaPanel();const b=document.querySelector('.d9-verses [aria-pressed="true"]');if(b)b.focus({preventScroll:true});}
 function d9Capitulo(){lamCierra();verCap('d9');}
@@ -198,10 +225,11 @@ function d9Tecla(e){
 }
 
 function d9PreguntasHTML(){
- const q=LAM().preguntas.find(q=>q.hito===d9Hito().id);if(!q)return '';
+ const qs=LAM().preguntas.filter(q=>q.hito===d9Hito().id),q=qs[d9Pregunta];if(!q)return '';
  const respondido=d9Respuesta>=0;
  return '<button type="button" class="d9-text-link" onclick="d9Consulta(\'explica\')">'+IC('izq')+' Volver a la explicación</button>'+
   '<span class="d9-kicker">Para comprender, no solo recordar</span><h2>'+esc(q.q)+'</h2>'+
+  (qs.length>1?'<div class="d9-question-nav"><button type="button" onclick="d9OtraPregunta(-1)"'+(d9Pregunta===0?' disabled':'')+'>Anterior pregunta</button><span>'+(d9Pregunta+1)+' de '+qs.length+'</span><button type="button" onclick="d9OtraPregunta(1)"'+(d9Pregunta===qs.length-1?' disabled':'')+'>Otra pregunta</button></div>':'')+
   '<div class="d9-options" role="group" aria-label="Escoge una respuesta">'+q.o.map((o,i)=>
    '<button type="button" class="d9-option'+(respondido&&i===q.a?' correcta':'')+(respondido&&i===d9Respuesta&&i!==q.a?' revisar':'')+'" aria-pressed="'+(i===d9Respuesta)+'" onclick="d9Responde('+i+')"><span>'+String.fromCharCode(65+i)+'</span>'+esc(o)+'</button>').join('')+'</div>'+
   (respondido?'<div class="d9-answer" id="d9Respuesta" tabindex="-1" role="status"><b>'+(d9Respuesta===q.a?'La conexión es correcta.':'Revisa esta conexión.')+'</b><p>'+esc(q.e)+'</p></div>':'')+
@@ -209,8 +237,14 @@ function d9PreguntasHTML(){
   '<p class="d9-ref">Práctica de profundización. Estas preguntas se mantienen separadas del examen oficial.</p>';
 }
 function d9Responde(i){
- const q=LAM().preguntas.find(q=>q.hito===d9Hito().id);if(!q||!Number.isInteger(i)||i<0||i>=q.o.length)return;
+ const q=LAM().preguntas.filter(q=>q.hito===d9Hito().id)[d9Pregunta];if(!q||!Number.isInteger(i)||i<0||i>=q.o.length)return;
  d9Respuesta=i;d9PintaPanel();const r=document.getElementById('d9Respuesta');if(r)r.focus({preventScroll:true});
+}
+function d9OtraPregunta(d){
+ const n=d9Pregunta+d,qs=LAM().preguntas.filter(q=>q.hito===d9Hito().id);
+ if(!Number.isInteger(n)||n<0||n>=qs.length)return;
+ d9Pregunta=n;d9Respuesta=-1;d9PintaPanel();
+ const h=document.querySelector('#d9Panel h2');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}
 }
 
 function d9Ref(cid,de,hasta){

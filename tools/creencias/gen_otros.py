@@ -2,7 +2,7 @@
 """Regenera fuente/biblia-otros.js desde TODOS los files/rv1909-*.txt.
 El .js es un artefacto: la fuente son los .txt, y tools/citas.js los compara
 byte a byte."""
-import os, re, json, glob, sys
+import os, re, json, glob, sys, subprocess
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refs
 
@@ -12,11 +12,25 @@ import refs
 # no dice nada de lo que de verdad pasa. Tampoco corria en el Mac, donde la
 # carpeta vive en otro sitio.
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-FILES = os.path.normpath(os.path.join(RAIZ, '..', '..', 'files'))
+FILES = os.environ.get('CB_FILES') or os.path.normpath(os.path.join(RAIZ, '..', '..', 'files'))
 SALIDA = os.path.join(RAIZ, 'fuente', 'biblia-otros.js')
 
 vers, meta, nombres = {}, {}, {}
-for ruta in sorted(glob.glob(os.path.join(FILES, 'rv1909-*.txt'))):
+# Añadir un pasaje conserva los existentes, aunque falte un archivo externo.
+rutas = sorted(glob.glob(os.path.join(FILES, 'rv1909-*.txt')))
+if len(sys.argv) > 1:
+    if sys.argv[1] != '--agregar' or len(sys.argv) < 3:
+        sys.exit('Uso: gen_otros.py [--agregar rv1909-libro-capitulo.txt ...]')
+    previo = json.loads(subprocess.check_output([
+        'node', '-e', 'process.stdout.write(JSON.stringify(require(process.argv[1])))', SALIDA
+    ], text=True))
+    vers, meta, nombres = previo['OTRAS_VERS'], previo['OTRAS_META'], previo['NOMBRES_OTROS']
+    rutas = []
+    for nombre in sys.argv[2:]:
+        if not re.fullmatch(r'rv1909-[a-z0-9]+-\d+\.txt', nombre):
+            sys.exit('Nombre de fuente inválido: ' + nombre)
+        rutas.append(os.path.join(FILES, nombre))
+for ruta in rutas:
     m = re.match(r'rv1909-(.+)-(\d+)\.txt$', os.path.basename(ruta))
     slug, cap = m.group(1), m.group(2)
     if slug == 'daniel':      # Daniel va por biblia.js (RV1995), no por aqui
@@ -29,7 +43,11 @@ for ruta in sorted(glob.glob(os.path.join(FILES, 'rv1909-*.txt'))):
             d[int(mm.group(1))] = mm.group(2)
     if not d:
         continue
-    vers[cid] = {str(k): d[k] for k in sorted(d)}
+    actual = vers.setdefault(cid, {})
+    for k in sorted(d):
+        if str(k) in actual and actual[str(k)] != d[k]:
+            sys.exit('La fuente difiere del versículo existente: ' + cid + ':' + str(k))
+        actual[str(k)] = d[k]
     meta[cid] = {'libro': refs.NOMBRE[slug], 'cap': cap, 'version': 'RV1909'}
     nombres[slug] = refs.NOMBRE[slug]
 
@@ -57,8 +75,8 @@ cab = '''/* biblia-otros.js — NO EDITAR A MANO.
 '''
 js = (cab
       + 'const NOMBRES_OTROS = ' + dump(dict(sorted(nombres.items()))) + ';\n\n'
-      + 'const OTRAS_VERS = ' + dump(vers) + ';\n\n'
-      + 'const OTRAS_META = ' + dump(meta) + ';\n\n'
+      + 'const OTRAS_VERS = ' + dump(dict(sorted(vers.items()))) + ';\n\n'
+      + 'const OTRAS_META = ' + dump(dict(sorted(meta.items()))) + ';\n\n'
       + 'if (typeof module !== "undefined") module.exports = { NOMBRES_OTROS, OTRAS_VERS, OTRAS_META };\n')
 open(SALIDA, 'w', encoding='utf-8').write(js)
 print('capitulos:', len(vers), '| libros:', len(nombres),

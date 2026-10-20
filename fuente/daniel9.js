@@ -1,10 +1,12 @@
 /* Daniel 9: cronología y explicación separadas del dibujo. Las fechas son la
    lectura historicista adventista; las citas bíblicas se leen de biblia.js. */
+const {pares,estructura,perfil}=require('./daniel9-argumentos.js');
 module.exports = {
  tipo:'cronologia', libro:'Daniel 9', titulo:'Las setenta semanas: el Mesías en el centro',
  dir:'d9/', miniF:'bautismo', portada:'oracion',
  invita:'Recorre las 70 semanas, amplía la última y descubre su conexión con Daniel 8. Cada hito tiene texto bíblico, explicación y fuentes.',
  frases:require('./daniel9-frases.js'),
+ estudio:{pares,estructura,perfil},
  preguntas:require('./daniel9-preguntas.js').map(({f,...q})=>q),
  fuentes:{
   dtg:{nombre:'Elena G. de White · El Deseado de Todas las Gentes',
@@ -13,10 +15,13 @@ module.exports = {
   cs:{nombre:'Elena G. de White · El conflicto de los siglos',
    lugar:'Cap. 18, «Una profecía significativa»; relación entre las 70 semanas y los 2.300 años.',
    url:'https://media4.egwwritings.org/pdf/es_CS%28GC%29.pdf'},
+  hap:{nombre:'Elena G. de White · Los Hechos de los Apóstoles',
+   lugar:'Cap. 4, «Pentecostés», pp. 31–32: el derramamiento del Espíritu como señal de la entronización de Cristo.',
+   url:'https://m.egwwritings.org/es/book/198.132'},
   bohr:{nombre:'Esteban Bohr · Studies in Daniel 1–10',
    lugar:'Sección de Daniel 9, pp. 323–348. Decreto: 330–340; Mesías y pacto: 341–348.'},
   simd:{nombre:'William H. Shea · Simposio sobre Daniel, Clásicos del Adventismo 5',
-   lugar:'«La unidad de Daniel», sección «Aspectos especializados de Daniel 9», pp. PDF 247–258 del ejemplar consultado.'},
+   lugar:'«La unidad de Daniel», sección «Aspectos especializados de Daniel 9», pp. PDF 247–268: cronología, ocho afirmaciones mesiánicas y las dos estructuras literarias. Este tomo remite la exégesis más extensa al tomo 3 de la colección CDA.'},
   sima:{nombre:'William H. Shea · Simposio sobre Apocalipsis, Clásicos del Adventismo 6',
    lugar:'Apéndice B, «¿Cuándo comenzaron las setenta semanas de Daniel 9:24?», pp. impresas 443–466.'}
  },
@@ -33,10 +38,11 @@ module.exports = {
   {id:'tiempo',corto:'70 semanas',fecha:'La estructura de la profecía',titulo:'Setenta semanas. Una historia continua.',
    img:'oracion',alt:'Daniel estudia los rollos; la cronología se despliega debajo de la escena.',
    versos:[24,25,27],refs:'Daniel 9:24–27 · Levítico 25:8 · Números 14:34 · Ezequiel 4:6',
-   idea:'7 + 62 + 1 = 70 semanas; 49 + 434 + 7 = 490 años.',
+   idea:'Las semanas dan el marco; las seis metas explican qué hará el Mesías dentro de él.',
    explica:[
-    'Una semana contiene siete días. En esta interpretación de la profecía, cada día representa un año: setenta por siete son 490 años. Levítico 25:8 también muestra cómo la Biblia cuenta semanas de años.',
-    'Las siete y las sesenta y dos semanas conducen al Mesías; queda una semana. Se leen como una secuencia continua, sin trasladar los últimos siete años a un futuro separado.'
+    'Daniel 9:24 anuncia seis propósitos. El centro de su explicación es la relación entre expiar la iniquidad y traer justicia perdurable. Los versículos 25–27 muestran cómo la muerte del Mesías realiza esa obra.',
+    'Las siete y las sesenta y dos semanas conducen al Mesías; la semana restante contiene su muerte. Levítico 25:8 ofrece el precedente de semanas de años: 49 + 434 + 7 = 490. Shea relaciona además estas unidades con ciclos sabáticos, no solo con una regla aislada de conversión.',
+    'En «Frase a frase» puedes seguir las razones de cada propósito y explorar cómo se corresponden las seis metas. La cronología y el significado teológico se leen juntos.'
    ],matiz:'El principio día por año se aplica aquí dentro de una lectura profética argumentada; no convierte todos los días de la Biblia en años.',
    fuentes:['dtg','simd','sima'],escala:'semanas',avance:0},
   {id:'decreto',corto:'El decreto',fecha:'457 a.C.',titulo:'El punto de partida: restaurar Jerusalén',
@@ -68,12 +74,12 @@ module.exports = {
    fuentes:['dtg','sima','simd'],escala:'semanas',avance:483},
   {id:'pacto',corto:'El pacto',fecha:'27–34 d.C. · la última semana',titulo:'Cristo confirma el pacto',
    img:'bautismo',alt:'Jesús al comenzar su ministerio; el tramo final de siete años se amplía en la cronología.',
-   versos:[27],refs:'Daniel 9:27 · Daniel 9:4 · Mateo 26:28 · Hebreos 9:15',
-   idea:'El centro de la última semana es el pacto de Dios hecho firme por Cristo.',
+   versos:[27],refs:'Daniel 9:27 · Daniel 9:4 · Romanos 15:8 · Marcos 14:24 · Hebreos 9:15',
+   idea:'Cristo confirma las promesas; a mitad de la semana ratifica el nuevo pacto con su sangre.',
    explica:[
-    'La lectura mesiánica identifica a quien confirma el pacto con Cristo. El propio capítulo presenta a Dios como quien guarda el pacto y la misericordia.',
-    'En la última cena, Jesús relaciona su sangre, el pacto y los muchos que reciben perdón. Primero él y después sus discípulos anuncian el evangelio especialmente a Israel durante esta semana.'
-   ],matiz:'Aquí se explica la lectura mesiánica historicista. La identidad del «príncipe» de 9:26 tiene discusión exegética; se aborda en «Preguntas y fuentes», sin convertir el pacto de 9:27 en un tratado político moderno.',
+    'Confirmar significa hacer firme algo que ya existe. Shea entiende la semana del 27 al 34 como la última del período concedido a Israel bajo el antiguo pacto. No son los primeros siete años de un pacto nuevo iniciado en el bautismo.',
+    'Romanos 15:8 presenta a Cristo confirmando las promesas hechas a los padres. En Marcos 14:24 su sangre ratifica el nuevo pacto. Primero él y después los apóstoles anuncian el evangelio especialmente a Israel durante los siete años. El pacto ratificado en la cruz no caduca al terminar el año 34.'
+   ],matiz:'Aquí se explica la lectura mesiánica historicista. La identidad del «príncipe» de 9:26 tiene discusión exegética; se explica en «Frase a frase», versículo 26, sin convertir el pacto de 9:27 en un tratado político moderno.',
    fuentes:['dtg','bohr','simd'],escala:'ultima',avance:483},
   {id:'cruz',corto:'La cruz',fecha:'Primavera del 31 d.C.',titulo:'En la mitad de la semana, la cruz',
    img:'cruz',alt:'Representación respetuosa de las tres cruces fuera de Jerusalén, sin detalles gráficos.',
@@ -101,7 +107,7 @@ module.exports = {
     'Gabriel, que ya había aparecido en Daniel 8, vuelve para dar entendimiento. La lectura adventista relaciona las 70 semanas con la porción temporal que había quedado sin comprender y las considera la primera parte de los 2.300 años.',
     'Desde 457 a.C., 2.300 años llegan a 1844. Esta interpretación lo relaciona con la purificación del santuario celestial y el juicio, no con la segunda venida de Jesús a la tierra.'
    ],matiz:'La relación se argumenta por el contexto, Gabriel, la visión y el término «determinadas». Shea aclara que el significado «cortadas» favorece la relación, pero no la demuestra por sí solo. Daniel 9 no escribe explícitamente «1844».',
-   fuentes:['cs','bohr','simd'],escala:'conexion',avance:2300},
+   fuentes:['cs','hap','bohr','simd'],escala:'conexion',avance:2300},
   {id:'esperanza',corto:'Lo esencial',fecha:'Para comprender y vivir',titulo:'La certeza conduce a Cristo',
    img:'cruz',alt:'La cruz en un paisaje de Jerusalén; cierre de la experiencia centrado en Cristo.',
    versos:[18,24],refs:'Daniel 9:18, 24 · Hebreos 4:14–16 · Mateo 24:36',

@@ -1233,6 +1233,9 @@ const OTRAS_VERS = {
  "levitico-23": {
   "32": "Sábado de reposo será á vosotros, y afligiréis vuestras almas, comenzando á los nueve del mes en la tarde: de tarde á tarde holgaréis vuestro sábado."
  },
+ "levitico-25": {
+  "8": "Y te has de contar siete semanas de años, siete veces siete años; de modo que los días de las siete semanas de años vendrán á serte cuarenta y nueve años."
+ },
  "lucas-1": {
   "35": "Y respondiendo el ángel le dijo: El Espíritu Santo vendrá sobre ti, y la virtud del Altísimo te hará sombra; por lo cual también lo Santo que nacerá, será llamado Hijo de Dios."
  },
@@ -2416,6 +2419,11 @@ const OTRAS_META = {
  "levitico-23": {
   "libro": "Levítico",
   "cap": "23",
+  "version": "RV1909"
+ },
+ "levitico-25": {
+  "libro": "Levítico",
+  "cap": "25",
   "version": "RV1909"
  },
  "lucas-1": {

@@ -138,8 +138,8 @@ module.exports = {
         ['Fin de las 70 semanas (9:24)', '490 años: Esteban muere y el evangelio va a los gentiles', '34 d.C.'],
         ['Lo que queda: 2.300 − 490 = 1.810', '34 + 1.810', '1844'],
       ]) +
-      hi('«Determinadas» (9:24) quiere decir cortadas. Solo se pueden cortar 490 años de un periodo más largo que empieza a la vez: los 2.300. Por eso son años, y empiezan juntos en 457 a.C. Sin año cero, 2.300 − 457 da 1843 y se llega a 1844.') +
-      `<p>Fuente: CS 372-376; Bohr, <i>Daniel 1-10</i>, p. 325-336.</p>` },
+      hi('La lectura adventista entiende los 490 años como la primera parte de los 2.300. Shea relaciona el verbo «determinadas», cuyo sentido de «cortar» examina, con otros tres argumentos: la estructura de los períodos, su inicio persa y la referencia de Gabriel a la visión anterior. El verbo por sí solo no establece todo el vínculo. Sin año cero: 2.300 − 457 + 1 = 1844.') +
+      `<p>Fuente: CS 372-376; Bohr, <i>Daniel 1-10</i>, p. 325-336; Shea, <i>Simposio sobre Daniel</i>, PDF 251-254.</p>` },
 
     { t: '🧭 «Será purificado»: el Día de la Expiación y el juicio de Daniel 7', capa: 'contexto', h:
       `<p>En el santuario, cada día los pecados confesados se llevaban al lugar santo; una vez al año, el Día de la Expiación, el sumo sacerdote entraba al lugar santísimo y purificaba el santuario (Levítico 16:16, 29-30). Era un día de juicio: quien no se afligía era cortado de su pueblo (Levítico 23:29).</p>` +
