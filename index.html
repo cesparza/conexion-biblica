@@ -5464,6 +5464,9 @@ span.cmp-ult-c{cursor:default}
 .hoja-cab .grupo-voz{align-self:center}
 /* v239: Anterior / Siguiente de las tarjetas son la fila de la hoja (filaNav): mismos botones y el lugar en medio. */
 .tj-nav{padding:.6rem 0 .3rem}
+
+/* v270: la palabra hebrea o aramea original junto a su transliteración (fuente/hebreo.js). */
+.heb{font-family:'SBL Hebrew','Ezra SIL','Taamey Frank CLM','Times New Roman',serif;font-size:1.1em;font-style:normal;direction:rtl;unicode-bidi:isolate;white-space:nowrap}
 /* ─── v234: PARALELOS (fuente/paralelos-app.js). Va en la sala de Comparar, con su paleta.
    Ancha: tabla con la característica fija a la izquierda. Angosta (la sala, no la
    pantalla: así sirve dentro de Jóvenes): una tarjeta por característica con los
@@ -6679,7 +6682,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '3b236ea74551';
+const VERSION_APP = 'fcce64188601';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -8809,7 +8812,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Una imagen toda de oro: el desafío a la profecía",
    "capa": "contexto",
-   "h": "<p><strong>Cuándo:</strong> el texto no da el año. Lo más probable es hacia 594 a.C., después de una revuelta en el ejército de Babilonia: la dedicación servía para que todos los oficiales mostraran su lealtad. Ese año Sedequías, rey de Judá, viajó a Babilonia (Jeremías 51:59). La versión griega dice «el año dieciocho» del rey (587 a.C.), pero es muy tarde: Jerusalén ya estaba sitiada.</p><p>Daniel 3 es la respuesta del rey a Daniel 2. Dios le había mostrado que Babilonia, la cabeza de oro, sería seguida por otros reinos. Al rey y a sus sabios no les gustó ese futuro. Con la estatua, el rey decía que la historia iría como él quisiera, no como Dios había dicho.</p><ul class=\"tight\"><li>La idea salió de los sabios del reino: le propusieron hacer una imagen como la del sueño.</li><li>Pero <strong>toda de oro</strong>: sin bajar de valor de la cabeza a los pies, como símbolo de una Babilonia eterna que nunca daría paso a otro reino.</li><li>Dos palabras unen los capítulos: «oro» e «imagen». En arameo «imagen» es la misma palabra en los dos; la RV1995 traduce «imagen» en 2:31 y «estatua» en 3:1.</li><li>Y un verbo: Dios «levantará» un reino que no será destruido (2:44); el capítulo 3 repite que el rey «levantó» la estatua (3:1, 2, 3, 5, 7, 12, 14, 18).</li></ul><div class=\"highlight-box\">La imagen no era solo un monumento político, como saludar una bandera. Era un símbolo religioso: el rey los acusa de no servir a «mis dioses» y de no adorar la estatua (3:14).</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 65-66, 69; Bohr, <i>15 principios</i> 1:18; PR 504; Pfandl, <i>Daniel</i>, p. 18.</p>"
+   "h": "<p><strong>Cuándo:</strong> el texto no da el año. Lo más probable es hacia 594 a.C., después de una revuelta en el ejército de Babilonia: la dedicación servía para que todos los oficiales mostraran su lealtad. Ese año Sedequías, rey de Judá, viajó a Babilonia (Jeremías 51:59). La versión griega dice «el año dieciocho» del rey (587 a.C.), pero es muy tarde: Jerusalén ya estaba sitiada.</p><p>Daniel 3 es la respuesta del rey a Daniel 2. Dios le había mostrado que Babilonia, la cabeza de oro, sería seguida por otros reinos. Al rey y a sus sabios no les gustó ese futuro. Con la estatua, el rey decía que la historia iría como él quisiera, no como Dios había dicho.</p><ul class=\"tight\"><li>La idea salió de los sabios del reino: le propusieron hacer una imagen como la del sueño.</li><li>Pero <strong>toda de oro</strong>: sin bajar de valor de la cabeza a los pies, como símbolo de una Babilonia eterna que nunca daría paso a otro reino.</li><li>Dos palabras unen los capítulos: «oro» e «imagen». En arameo «imagen» es la misma palabra en los dos (<i>tselem</i>, <span class=\"heb\" lang=\"he\">צְלֵם</span>); la RV1995 traduce «imagen» en 2:31 y «estatua» en 3:1.</li><li>Y un verbo: Dios «levantará» un reino que no será destruido (2:44); el capítulo 3 repite que el rey «levantó» la estatua (3:1, 2, 3, 5, 7, 12, 14, 18).</li></ul><div class=\"highlight-box\">La imagen no era solo un monumento político, como saludar una bandera. Era un símbolo religioso: el rey los acusa de no servir a «mis dioses» y de no adorar la estatua (3:14).</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 65-66, 69; Bohr, <i>15 principios</i> 1:18; PR 504; Pfandl, <i>Daniel</i>, p. 18.</p>"
   },
   {
    "t": "🧭 Sesenta por seis: los números de Babilonia",
@@ -9725,13 +9728,13 @@ const CONTENIDO = {
    "t": "🧭 «Fueron puestos unos tronos»: la escena del juicio (7:9-10, 13)",
    "capa": "contexto",
    "verso": 9,
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Lo que ve Daniel</th><th>Qué enseña</th></tr></thead><tbody><tr><td class=\"key\">«Fueron puestos unos tronos»</td><td>El verbo arameo es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.</td></tr><tr><td class=\"key\">«Se sentó un Anciano de días»</td><td>Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.</td></tr><tr><td class=\"key\">Vestido blanco como la nieve; pelo como lana limpia</td><td>Pureza sin mancha y eternidad.</td></tr><tr><td class=\"key\">Trono de llamas con ruedas de fuego, y un río de fuego</td><td>Un trono que se mueve, como el carro de Ezequiel 1. El fuego es el juicio que purifica.</td></tr><tr><td class=\"key\">Miles de miles y millones de millones</td><td>Ángeles, «ministros y testigos» del tribunal (CS 533; Apocalipsis 5:11). No son los juzgados.</td></tr><tr><td class=\"key\">El Hijo del hombre viene «con las nubes» y «lo hicieron acercarse»</td><td>Los ángeles lo llevan ante el Padre, no a la tierra. El Día de la Expiación la nube entraba al lugar santísimo (Levítico 16:2).</td></tr></tbody></table></div><div class=\"highlight-box\">El trono con ruedas muestra un <b>traslado</b>: del lugar santo al <b>lugar santísimo</b> del santuario celestial, donde está el arca con la ley. Los tronos son varios: en Apocalipsis 4:4 hay veinticuatro tronos alrededor del de Dios. Otra lectura ve un plural de majestad: un solo gran trono.</div><p>Fuente: CS 533; Bohr, <i>Daniel 1-10</i>, p. 276-280; Smith, <i>Las profecías de Daniel</i>, p. 58-59; Doukhan, <i>Secretos de Daniel</i>, p. 115-116.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Lo que ve Daniel</th><th>Qué enseña</th></tr></thead><tbody><tr><td class=\"key\">«Fueron puestos unos tronos»</td><td>El verbo arameo (<i>remiv</i>, <span class=\"heb\" lang=\"he\">רְמִיו</span>) es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.</td></tr><tr><td class=\"key\">«Se sentó un Anciano de días»</td><td>Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.</td></tr><tr><td class=\"key\">Vestido blanco como la nieve; pelo como lana limpia</td><td>Pureza sin mancha y eternidad.</td></tr><tr><td class=\"key\">Trono de llamas con ruedas de fuego, y un río de fuego</td><td>Un trono que se mueve, como el carro de Ezequiel 1. El fuego es el juicio que purifica.</td></tr><tr><td class=\"key\">Miles de miles y millones de millones</td><td>Ángeles, «ministros y testigos» del tribunal (CS 533; Apocalipsis 5:11). No son los juzgados.</td></tr><tr><td class=\"key\">El Hijo del hombre viene «con las nubes» y «lo hicieron acercarse»</td><td>Los ángeles lo llevan ante el Padre, no a la tierra. El Día de la Expiación la nube entraba al lugar santísimo (Levítico 16:2).</td></tr></tbody></table></div><div class=\"highlight-box\">El trono con ruedas muestra un <b>traslado</b>: del lugar santo al <b>lugar santísimo</b> del santuario celestial, donde está el arca con la ley. Los tronos son varios: en Apocalipsis 4:4 hay veinticuatro tronos alrededor del de Dios. Otra lectura ve un plural de majestad: un solo gran trono.</div><p>Fuente: CS 533; Bohr, <i>Daniel 1-10</i>, p. 276-280; Smith, <i>Las profecías de Daniel</i>, p. 58-59; Doukhan, <i>Secretos de Daniel</i>, p. 115-116.</p>"
   },
   {
    "t": "🧭 Dónde y cuándo empieza el juicio",
    "capa": "contexto",
    "verso": 9,
-   "h": "<p><b>Dónde: en el cielo.</b> En Daniel 7 lo que pasa en la tierra va en prosa y lo que pasa en el cielo va en poesía:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Versículos</th><th>Escena</th><th>Estilo</th></tr></thead><tbody><tr><td class=\"key\">2-8</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">9-10</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">11-12</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">13-14</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">15-22</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">23-27</td><td>Cielo</td><td>Poesía</td></tr></tbody></table></div><p><b>Cuándo: después de 1798 y antes de la segunda venida.</b> Tres veces el juicio llega como respuesta a la obra del cuerno (7:8 y 9; 7:21 y 22; 7:25 y 26): empieza después de sus 1.260 años (538-1798). En 7:13 el Hijo del hombre va <i>al Padre</i>, al juicio, «no a la tierra» (CS 477), y solo después vuelve a dar el reino. La fecha exacta, 1844, la da Daniel 8:14.</p><p>Daniel 8:14 dice que el santuario «será purificado». El verbo hebreo (<i>nitsdaq</i>) también es «será vindicado, declarado justo»: es el lenguaje de un tribunal. Daniel 8:14 y 7:9-10 hablan del mismo juicio.</p><div class=\"highlight-box\"><b>Tres pasos</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia, cuando el Hijo recibe el reino y el fallo sale a favor de los santos (7:14, 22), y ejecución, cuando los santos reciben el reino y el cuerno pierde su dominio (7:22, 26-27). Son las tres fases del juicio, que van más abajo.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 120-121 y 275-276; Bohr, <i>La hora del juicio</i>, p. 1 y 6; CS 477; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 139-140.</p>"
+   "h": "<p><b>Dónde: en el cielo.</b> En Daniel 7 lo que pasa en la tierra va en prosa y lo que pasa en el cielo va en poesía:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Versículos</th><th>Escena</th><th>Estilo</th></tr></thead><tbody><tr><td class=\"key\">2-8</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">9-10</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">11-12</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">13-14</td><td>Cielo</td><td>Poesía</td></tr><tr><td class=\"key\">15-22</td><td>Tierra</td><td>Prosa</td></tr><tr><td class=\"key\">23-27</td><td>Cielo</td><td>Poesía</td></tr></tbody></table></div><p><b>Cuándo: después de 1798 y antes de la segunda venida.</b> Tres veces el juicio llega como respuesta a la obra del cuerno (7:8 y 9; 7:21 y 22; 7:25 y 26): empieza después de sus 1.260 años (538-1798). En 7:13 el Hijo del hombre va <i>al Padre</i>, al juicio, «no a la tierra» (CS 477), y solo después vuelve a dar el reino. La fecha exacta, 1844, la da Daniel 8:14.</p><p>Daniel 8:14 dice que el santuario «será purificado». El verbo hebreo (<i>nitsdaq</i>, <span class=\"heb\" lang=\"he\">נִצְדַּק</span>) también es «será vindicado, declarado justo»: es el lenguaje de un tribunal. Daniel 8:14 y 7:9-10 hablan del mismo juicio.</p><div class=\"highlight-box\"><b>Tres pasos</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia, cuando el Hijo recibe el reino y el fallo sale a favor de los santos (7:14, 22), y ejecución, cuando los santos reciben el reino y el cuerno pierde su dominio (7:22, 26-27). Son las tres fases del juicio, que van más abajo.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 120-121 y 275-276; Bohr, <i>La hora del juicio</i>, p. 1 y 6; CS 477; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 139-140.</p>"
   },
   {
    "t": "🧭 El juicio es el gran Día de la Expiación",
@@ -9799,7 +9802,7 @@ const CONTENIDO = {
  "d8": [
   {
    "t": "📚 En pocas palabras",
-   "h": "<div class=\"highlight-box\">En el año tercero de Belsasar, 550 a.C. (Daniel 7 fue en el primero, 553 a.C.), Daniel ve un carnero de dos cuernos derrotado por un macho cabrío con un cuerno \"notable\". El cuerno se rompe y salen cuatro; de uno de ellos crece un cuerno pequeño que llega hasta el santuario mismo, quita el continuo (tamid) y echa por tierra el lugar de su santuario. La visión llega hasta el final de 2.300 tardes y mañanas: «luego el santuario será purificado» (8:14).</div>"
+   "h": "<div class=\"highlight-box\">En el año tercero de Belsasar, 550 a.C. (Daniel 7 fue en el primero, 553 a.C.), Daniel ve un carnero de dos cuernos derrotado por un macho cabrío con un cuerno \"notable\". El cuerno se rompe y salen cuatro; de uno de ellos crece un cuerno pequeño que llega hasta el santuario mismo, quita el continuo (tamid, ⁧תָּמִיד⁩) y echa por tierra el lugar de su santuario. La visión llega hasta el final de 2.300 tardes y mañanas: «luego el santuario será purificado» (8:14).</div>"
   },
   {
    "t": "🌊 Cuándo y dónde",
@@ -9819,7 +9822,7 @@ const CONTENIDO = {
   },
   {
    "t": "🗡️ El cuerno pequeño que llega al santuario",
-   "h": "<div class=\"highlight-box\">«De uno de ellos» (8:9): de uno de los cuatro \"vientos\" o puntos cardinales. En hebreo «ellos» es masculino y «cuernos» es femenino, así que no son los cuernos. De allí sale un cuerno pequeño que \"creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa\" (Palestina). Ese cuerno llega hasta \"el príncipe de los ejércitos\", quita el continuo (tamid; la palabra «sacrificio» la agregaron los traductores) y hace caer el lugar de su santuario (Daniel 8:9-11). El texto no dice de qué viento sale. El <em>Simposio sobre Daniel</em> concluye que “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste” y que “Roma salió del oeste (desde el punto de vista de Israel)”; no sale de ninguno de los cuatro cuernos griegos: es <strong>Roma</strong> (Hasel, p. 396-399).</div>"
+   "h": "<div class=\"highlight-box\">«De uno de ellos» (8:9): de uno de los cuatro \"vientos\" o puntos cardinales. En hebreo «ellos» es masculino y «cuernos» es femenino, así que no son los cuernos. De allí sale un cuerno pequeño que \"creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa\" (Palestina). Ese cuerno llega hasta \"el príncipe de los ejércitos\", quita el continuo (tamid, ⁧תָּמִיד⁩; la palabra «sacrificio» la agregaron los traductores) y hace caer el lugar de su santuario (Daniel 8:9-11). El texto no dice de qué viento sale. El <em>Simposio sobre Daniel</em> concluye que “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste” y que “Roma salió del oeste (desde el punto de vista de Israel)”; no sale de ninguno de los cuatro cuernos griegos: es <strong>Roma</strong> (Hasel, p. 396-399).</div>"
   },
   {
    "t": "⚖️ Por qué no es Antíoco Epífanes",
@@ -9827,7 +9830,7 @@ const CONTENIDO = {
   },
   {
    "t": "✝️ El tamid: el ministerio continuo de Cristo",
-   "h": "<div class=\"highlight-box\">La palabra hebrea <em>tamid</em>, que la Reina-Valera traduce \"sacrificio continuo\", no significa literalmente \"sacrificio\": significa \"continuo\" o \"permanente\" y se usaba en el santuario del Antiguo Testamento para el holocausto diario, las lámparas siempre encendidas y el pan siempre presente. En Daniel 8 representa, en sentido más amplio, el ministerio permanente de Cristo como Sumo Sacerdote en el santuario celestial (Hebreos 7:21-25; 8:1-2). Solo la fase papal del cuerno quita el continuo: viene después de que el cuerno crece «hasta llegar al ejército del cielo» (8:10-11). Roma pagana destruyó el templo de la tierra: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26). Y los sacrificios de la tierra los terminó la muerte de Cristo: «a la mitad de la semana hará cesar el sacrificio y la ofrenda» (9:27); el velo del templo se rasgó (Mateo 27:51).</div>"
+   "h": "<div class=\"highlight-box\">La palabra hebrea <em>tamid</em> (<span class=\"heb\" lang=\"he\">תָּמִיד</span>), que la Reina-Valera traduce \"sacrificio continuo\", no significa literalmente \"sacrificio\": significa \"continuo\" o \"permanente\" y se usaba en el santuario del Antiguo Testamento para el holocausto diario, las lámparas siempre encendidas y el pan siempre presente. En Daniel 8 representa, en sentido más amplio, el ministerio permanente de Cristo como Sumo Sacerdote en el santuario celestial (Hebreos 7:21-25; 8:1-2). Solo la fase papal del cuerno quita el continuo: viene después de que el cuerno crece «hasta llegar al ejército del cielo» (8:10-11). Roma pagana destruyó el templo de la tierra: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26). Y los sacrificios de la tierra los terminó la muerte de Cristo: «a la mitad de la semana hará cesar el sacrificio y la ofrenda» (9:27); el velo del templo se rasgó (Mateo 27:51).</div>"
   },
   {
    "t": "⏳ Las 2.300 tardes y mañanas",
@@ -9835,7 +9838,7 @@ const CONTENIDO = {
   },
   {
    "t": "🕊️ Reivindicado, purificado",
-   "h": "<div class=\"highlight-box\">La palabra hebrea que se traduce \"reivindicado\" o \"purificado\" es <em>nitsdaq</em>, emparentada con \"justificar\". El día del año judío dedicado a purificar el santuario era el <strong>Día de la Expiación</strong> (Levítico 16), el día más solemne del calendario, un día de juicio para el pueblo. Que la purificación del santuario celestial de Daniel 8:14 sea paralela a la escena de juicio de Daniel 7:9-14 no es casualidad: ambos pasajes describen, con símbolos distintos, el mismo acontecimiento celestial que marca el comienzo del juicio investigador.</div>"
+   "h": "<div class=\"highlight-box\">La palabra hebrea que se traduce \"reivindicado\" o \"purificado\" es <em>nitsdaq</em> (<span class=\"heb\" lang=\"he\">נִצְדַּק</span>), emparentada con \"justificar\". El día del año judío dedicado a purificar el santuario era el <strong>Día de la Expiación</strong> (Levítico 16), el día más solemne del calendario, un día de juicio para el pueblo. Que la purificación del santuario celestial de Daniel 8:14 sea paralela a la escena de juicio de Daniel 7:9-14 no es casualidad: ambos pasajes describen, con símbolos distintos, el mismo acontecimiento celestial que marca el comienzo del juicio investigador.</div>"
   },
   {
    "t": "🗓️ El punto de partida: 457 a.C.",
@@ -9869,13 +9872,13 @@ const CONTENIDO = {
   {
    "t": "🧭 «De uno de ellos»: de uno de los vientos",
    "capa": "contexto",
-   "h": "<p>En hebreo, «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino: «ellos» no pueden ser los cuernos. El cuerno pequeño sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th></th><th>Daniel 8:9</th></tr></thead><tbody><tr><td class=\"key\">Lo que dice el texto</td><td>Sale de uno de los vientos y «creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9).</td></tr><tr><td class=\"key\">Lo que concluye el Simposio sobre Daniel</td><td>La gramática une «de uno de ellos» con «los cuatro vientos del cielo», no con los cuernos (p. 396-397). La Septuaginta pone “el norte” donde dice «la tierra gloriosa»; así, “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).</td></tr></tbody></table></div><div class=\"highlight-box\">El cuerno no sale “del cuerno seléucida ni de ninguno de los otros tres cuernos” (Simposio, p. 396): aparece «al fin del reinado de estos» (8:23).</div><p>Fuente: Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; apuntes «Daniel 8».</p>"
+   "h": "<p>En hebreo, «ellos» (<i>mehem</i>, <span class=\"heb\" lang=\"he\">מֵהֶם</span>) es masculino y «cuernos» (<i>qeranot</i>, <span class=\"heb\" lang=\"he\">קְרָנוֹת</span>) es femenino: «ellos» no pueden ser los cuernos. El cuerno pequeño sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th></th><th>Daniel 8:9</th></tr></thead><tbody><tr><td class=\"key\">Lo que dice el texto</td><td>Sale de uno de los vientos y «creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9).</td></tr><tr><td class=\"key\">Lo que concluye el Simposio sobre Daniel</td><td>La gramática une «de uno de ellos» con «los cuatro vientos del cielo», no con los cuernos (p. 396-397). La Septuaginta pone “el norte” donde dice «la tierra gloriosa»; así, “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).</td></tr></tbody></table></div><div class=\"highlight-box\">El cuerno no sale “del cuerno seléucida ni de ninguno de los otros tres cuernos” (Simposio, p. 396): aparece «al fin del reinado de estos» (8:23).</div><p>Fuente: Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; apuntes «Daniel 8».</p>"
   },
   {
    "t": "🧭 Qué quitó el cuerno: «el continuo» del atrio y del lugar santo",
    "capa": "contexto",
    "verso": 11,
-   "h": "<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Pieza</th><th>Dónde</th><th>Qué representa</th><th>Qué se puso en su lugar</th></tr></thead><tbody><tr><td class=\"key\">Altar del holocausto</td><td>Atrio</td><td>La muerte de Cristo, una vez para siempre</td><td>La misa, que lo repite, y la penitencia</td></tr><tr><td class=\"key\">Mesa de los panes</td><td>Lugar santo</td><td>La Palabra de Dios</td><td>La tradición: solo el sacerdote la explica</td></tr><tr><td class=\"key\">Candelabro</td><td>Lugar santo</td><td>Cristo, luz del mundo, y su Espíritu</td><td>Una iglesia a oscuras</td></tr><tr><td class=\"key\">Altar del incienso</td><td>Lugar santo, delante del velo</td><td>La intercesión de Cristo (Hebreos 7:25)</td><td>El confesionario, María y los santos</td></tr></tbody></table></div><p>El arca no está en la lista: queda detrás del velo, en el santísimo, donde Cristo entra en 1844 (8:14). «Echó por tierra la verdad» (8:12) va aparte: es la Ley de Dios (Salmo 119:142) y el sábado, como el cuerno de Daniel 7 que «pensará en cambiar los tiempos y la ley» (7:25).</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-313; apuntes «Cómo quitó el continuo el papado».</p>"
+   "h": "<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>, <span class=\"heb\" lang=\"he\">הַתָּמִיד</span>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Pieza</th><th>Dónde</th><th>Qué representa</th><th>Qué se puso en su lugar</th></tr></thead><tbody><tr><td class=\"key\">Altar del holocausto</td><td>Atrio</td><td>La muerte de Cristo, una vez para siempre</td><td>La misa, que lo repite, y la penitencia</td></tr><tr><td class=\"key\">Mesa de los panes</td><td>Lugar santo</td><td>La Palabra de Dios</td><td>La tradición: solo el sacerdote la explica</td></tr><tr><td class=\"key\">Candelabro</td><td>Lugar santo</td><td>Cristo, luz del mundo, y su Espíritu</td><td>Una iglesia a oscuras</td></tr><tr><td class=\"key\">Altar del incienso</td><td>Lugar santo, delante del velo</td><td>La intercesión de Cristo (Hebreos 7:25)</td><td>El confesionario, María y los santos</td></tr></tbody></table></div><p>El arca no está en la lista: queda detrás del velo, en el santísimo, donde Cristo entra en 1844 (8:14). «Echó por tierra la verdad» (8:12) va aparte: es la Ley de Dios (Salmo 119:142) y el sábado, como el cuerno de Daniel 7 que «pensará en cambiar los tiempos y la ley» (7:25).</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 307-313; apuntes «Cómo quitó el continuo el papado».</p>"
   },
   {
    "t": "🧭 Dos lecturas del continuo, lado a lado",
@@ -9891,7 +9894,7 @@ const CONTENIDO = {
    "t": "🧭 «¿Hasta cuándo durará la visión?»: por qué son años",
    "capa": "contexto",
    "verso": 13,
-   "h": "<p>Tres razones del mismo texto:</p><ul class=\"tight\"><li><b>La pregunta es por toda la visión.</b> En 8:13 el santo pregunta «¿Hasta cuándo durará la visión...?» con la palabra <i>jazón</i>, la misma de 8:1-2, que abarca todo: Persia, Grecia, Roma pagana y Roma papal. 2.300 días literales son unos seis años y medio, muy poco para todo eso.</li><li><b>Pregunta por el final</b>, no por la duración: «hasta cuándo», y la respuesta es «luego el santuario será purificado».</li><li><b>No son sacrificios.</b> El hebreo dice «tarde-mañana» en singular, como en la creación. Los sacrificios siempre se nombran al revés, «mañana y tarde» (Éxodo 29:39), así que no se puede partir en 1.150 de cada uno.</li></ul><div class=\"highlight-box\"><i>Jazón</i> es la visión completa; <i>mareh</i>, la parte de la visión sobre el tiempo (8:26). Gabriel explicó la <i>jazón</i>, pero la <i>mareh</i> quedó sin entender (8:27), y por eso vuelve en el capítulo 9.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 313-316.</p>"
+   "h": "<p>Tres razones del mismo texto:</p><ul class=\"tight\"><li><b>La pregunta es por toda la visión.</b> En 8:13 el santo pregunta «¿Hasta cuándo durará la visión...?» con la palabra <i>jazón</i> (<span class=\"heb\" lang=\"he\">חָזוֹן</span>), la misma de 8:1-2, que abarca todo: Persia, Grecia, Roma pagana y Roma papal. 2.300 días literales son unos seis años y medio, muy poco para todo eso.</li><li><b>Pregunta por el final</b>, no por la duración: «hasta cuándo», y la respuesta es «luego el santuario será purificado».</li><li><b>No son sacrificios.</b> El hebreo dice «tarde-mañana» (<span class=\"heb\" lang=\"he\">עֶרֶב בֹּקֶר</span>, <i>ereb boqer</i>) en singular, como en la creación. Los sacrificios siempre se nombran al revés, «mañana y tarde» (Éxodo 29:39), así que no se puede partir en 1.150 de cada uno.</li></ul><div class=\"highlight-box\"><i>Jazón</i> (<span class=\"heb\" lang=\"he\">חָזוֹן</span>) es la visión completa; <i>mareh</i> (<span class=\"heb\" lang=\"he\">מַרְאֶה</span>), la parte de la visión sobre el tiempo (8:26). Gabriel explicó la <i>jazón</i>, pero la <i>mareh</i> quedó sin entender (8:27), y por eso vuelve en el capítulo 9.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 313-316.</p>"
   },
   {
    "t": "🧭 El año, el mes y el día: 22 de octubre de 1844",
@@ -9930,7 +9933,7 @@ const CONTENIDO = {
   {
    "t": "🧭 «Será purificado»: el Día de la Expiación y el juicio de Daniel 7",
    "capa": "contexto",
-   "h": "<p>En el santuario, cada día los pecados confesados se llevaban al lugar santo; una vez al año, el Día de la Expiación, el sumo sacerdote entraba al lugar santísimo y purificaba el santuario (Levítico 16:16, 29-30). Era un día de juicio: quien no se afligía era cortado de su pueblo (Levítico 23:29).</p><ul class=\"tight\"><li><b>La palabra.</b> Daniel 8:14 usa <i>nitsdaq</i>: será justificado, vindicado. Las traducciones antiguas la leyeron «purificado», y en la Biblia «justo» y «limpio» van juntos (Job 4:17; 25:4).</li><li><b>El mismo suceso que Daniel 7.</b> Daniel 7 pasa del cuerno al juicio (7:9-10) y Daniel 8 del cuerno al santuario purificado (8:14): las dos visiones ponen en el mismo lugar el comienzo del juicio, en 1844.</li><li><b>En el cielo.</b> El templo de Jerusalén ya no existía cuando terminaron los 2.300 años. Cristo entró en 1844 al lugar santísimo del santuario celestial para su obra final: el juicio investigador.</li></ul><div class=\"warn-box\">La purificación del santuario no es la segunda venida: eso esperaba la mayoría en 1844. Es la obra que Cristo hace en el cielo antes de volver.</div><p>Fuente: CS 451 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 315-320.</p>"
+   "h": "<p>En el santuario, cada día los pecados confesados se llevaban al lugar santo; una vez al año, el Día de la Expiación, el sumo sacerdote entraba al lugar santísimo y purificaba el santuario (Levítico 16:16, 29-30). Era un día de juicio: quien no se afligía era cortado de su pueblo (Levítico 23:29).</p><ul class=\"tight\"><li><b>La palabra.</b> Daniel 8:14 usa <i>nitsdaq</i> (<span class=\"heb\" lang=\"he\">נִצְדַּק</span>): será justificado, vindicado. Las traducciones antiguas la leyeron «purificado», y en la Biblia «justo» y «limpio» van juntos (Job 4:17; 25:4).</li><li><b>El mismo suceso que Daniel 7.</b> Daniel 7 pasa del cuerno al juicio (7:9-10) y Daniel 8 del cuerno al santuario purificado (8:14): las dos visiones ponen en el mismo lugar el comienzo del juicio, en 1844.</li><li><b>En el cielo.</b> El templo de Jerusalén ya no existía cuando terminaron los 2.300 años. Cristo entró en 1844 al lugar santísimo del santuario celestial para su obra final: el juicio investigador.</li></ul><div class=\"warn-box\">La purificación del santuario no es la segunda venida: eso esperaba la mayoría en 1844. Es la obra que Cristo hace en el cielo antes de volver.</div><p>Fuente: CS 451 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 315-320.</p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -9938,7 +9941,7 @@ const CONTENIDO = {
   },
   {
    "t": "📜 Versículos 9 a 16",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table vpv\"><tbody><tr><td class=\"key\">9</td><td>De uno de ellos sale un cuerno pequeño que crece mucho hacia el sur, el oriente y «la tierra gloriosa».</td></tr><tr><td class=\"key\">10</td><td>Crece hasta el ejército del cielo y echa por tierra parte del ejército y de las estrellas, y las pisotea.</td></tr><tr><td class=\"key\">11</td><td>Se engrandece frente al príncipe de los ejércitos; por él es quitado el continuo (el tamid; «sacrificio» lo agregaron los traductores) y el lugar de su santuario es echado por tierra.</td></tr><tr><td class=\"key\">12</td><td>A causa de la prevaricación le es entregado el ejército junto con el continuo; «echó por tierra la verdad e hizo cuanto quiso, y prosperó».</td></tr><tr><td class=\"key\">13</td><td>La pregunta de los dos santos: «¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?».</td></tr><tr><td class=\"key\">14</td><td>La respuesta, el versículo eje del adventismo: «Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado».</td></tr><tr><td class=\"key\">15</td><td>Mientras procura comprenderla, se pone delante de él «uno con apariencia de hombre».</td></tr><tr><td class=\"key\">16</td><td>Una voz entre las riberas del Ulai ordena: «Gabriel, enseña a éste la visión». Es la primera vez que se nombra a Gabriel en la Biblia.</td></tr></tbody></table></div>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table vpv\"><tbody><tr><td class=\"key\">9</td><td>De uno de ellos sale un cuerno pequeño que crece mucho hacia el sur, el oriente y «la tierra gloriosa».</td></tr><tr><td class=\"key\">10</td><td>Crece hasta el ejército del cielo y echa por tierra parte del ejército y de las estrellas, y las pisotea.</td></tr><tr><td class=\"key\">11</td><td>Se engrandece frente al príncipe de los ejércitos; por él es quitado el continuo (el tamid, ⁧תָּמִיד⁩; «sacrificio» lo agregaron los traductores) y el lugar de su santuario es echado por tierra.</td></tr><tr><td class=\"key\">12</td><td>A causa de la prevaricación le es entregado el ejército junto con el continuo; «echó por tierra la verdad e hizo cuanto quiso, y prosperó».</td></tr><tr><td class=\"key\">13</td><td>La pregunta de los dos santos: «¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?».</td></tr><tr><td class=\"key\">14</td><td>La respuesta, el versículo eje del adventismo: «Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado».</td></tr><tr><td class=\"key\">15</td><td>Mientras procura comprenderla, se pone delante de él «uno con apariencia de hombre».</td></tr><tr><td class=\"key\">16</td><td>Una voz entre las riberas del Ulai ordena: «Gabriel, enseña a éste la visión». Es la primera vez que se nombra a Gabriel en la Biblia.</td></tr></tbody></table></div>"
   },
   {
    "t": "📜 Versículos 17 a 24",
@@ -9954,7 +9957,7 @@ const CONTENIDO = {
   },
   {
    "t": "✅ Y estas",
-   "h": "<div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Qué significa la palabra hebrea tamid?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>\"Continuo\" o \"permanente\"; en el santuario se aplicaba al holocausto diario, las lámparas y el pan siempre presentes. En Daniel 8 representa el ministerio permanente de Cristo como Sumo Sacerdote.</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Qué pasó en 1844 según esta interpretación?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Comenzó el juicio investigador en el santuario celestial (no el regreso visible de Cristo, que era lo que esperaba el movimiento de Guillermo Miller).</div></div>"
+   "h": "<div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Qué significa la palabra hebrea tamid (⁧תָּמִיד⁩)?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>\"Continuo\" o \"permanente\"; en el santuario se aplicaba al holocausto diario, las lámparas y el pan siempre presentes. En Daniel 8 representa el ministerio permanente de Cristo como Sumo Sacerdote.</div></div><div class=\"rev\"><button type=\"button\" class=\"rev-q\" onclick=\"revela(this)\"><span class=\"rev-t\">¿Qué pasó en 1844 según esta interpretación?</span><span class=\"rev-p\">tocar para ver</span></button><div class=\"rev-a\" hidden>Comenzó el juicio investigador en el santuario celestial (no el regreso visible de Cristo, que era lo que esperaba el movimiento de Guillermo Miller).</div></div>"
   }
  ],
  "d9": [
@@ -9996,7 +9999,7 @@ const CONTENIDO = {
   },
   {
    "t": "🔗 Por qué esto responde la pregunta de Daniel 8",
-   "h": "<div class=\"highlight-box\">Daniel no comprendía la visión de las tardes y mañanas (8:26-27). Gabriel, el mismo mensajero, vuelve para darle entendimiento (9:21-23). Cuatro argumentos se unen: la disposición de los períodos, su comienzo en la época persa, la referencia a la visión anterior y el sentido de «determinadas». El término hebreo <i>marʾeh</i> relaciona 9:23 con las tardes y mañanas de 8:26. El verbo <i>ḥātak</i> favorece «cortar», aunque no demuestra por sí solo toda la conexión. Dentro de ese argumento, la orden de 9:25 da el punto de partida; su identificación histórica con Esdras 7 permite fecharlo en 457 a.C.</div><p>Fuente: CS, cap. 18; Shea, <i>Simposio sobre Daniel</i>, PDF 251-254.</p>"
+   "h": "<div class=\"highlight-box\">Daniel no comprendía la visión de las tardes y mañanas (8:26-27). Gabriel, el mismo mensajero, vuelve para darle entendimiento (9:21-23). Cuatro argumentos se unen: la disposición de los períodos, su comienzo en la época persa, la referencia a la visión anterior y el sentido de «determinadas». El término hebreo <i>mareh</i> (<span class=\"heb\" lang=\"he\">מַרְאֶה</span>) relaciona 9:23 con las tardes y mañanas de 8:26. El verbo <i>jatak</i> (en 9:24, <span class=\"heb\" lang=\"he\">נֶחְתַּךְ</span>, <i>nejtak</i>) favorece «cortar», aunque no demuestra por sí solo toda la conexión. Dentro de ese argumento, la orden de 9:25 da el punto de partida; su identificación histórica con Esdras 7 permite fecharlo en 457 a.C.</div><p>Fuente: CS, cap. 18; Shea, <i>Simposio sobre Daniel</i>, PDF 251-254.</p>"
   },
   {
    "t": "🙏 La oración de Daniel 9: un modelo de confesión",
@@ -10040,7 +10043,7 @@ const CONTENIDO = {
    "t": "🧭 «Confirmará el pacto con muchos»",
    "capa": "contexto",
    "verso": 27,
-   "h": "<p>La lectura mesiánica sigue al Mesías de 9:25-26 al explicar quién confirma el pacto. Para evaluar esa identificación hay que leer la estructura del pasaje y las referencias al pacto, no introducir un protagonista sin argumentarlo.</p><ul class=\"tight\"><li><b>«El pacto»</b>: la oración ya presenta a Dios como quien guarda el pacto (9:4). La lectura mesiánica sigue ese hilo y lo une con las promesas a los padres; no introduce un tratado político moderno en 9:27.</li><li><b>«Confirmará»</b> traduce <i>gabar</i>, «hacer firme». El pacto ya existía: la semana del 27 al 34 es la última del período de oportunidad de Israel, no los primeros siete años de un pacto nuevo fundado en el bautismo. Cristo confirma las promesas hechas a los padres (Romanos 15:8) y ratifica el nuevo pacto con su sangre a mitad de la semana (Marcos 14:24; Hebreos 9:15).</li><li><b>«Con muchos»</b>: es la palabra del sacrificio que sustituye (Isaías 53:11; Marcos 10:45). Jesús la usó en la última cena: «mi sangre del nuevo pacto, que por muchos es derramada» (Mateo 26:28).</li></ul><p>El testimonio abarca siete años: primero Cristo y después sus apóstoles (DTG, cap. 23). Terminar ese período no significa que el nuevo pacto expire en el año 34.</p><p>Fuente: DTG, cap. 23; Bohr, <i>Daniel 1-10</i>, p. 346-347; Shea, <i>Simposio sobre Daniel</i>, PDF 255-256.</p>"
+   "h": "<p>La lectura mesiánica sigue al Mesías de 9:25-26 al explicar quién confirma el pacto. Para evaluar esa identificación hay que leer la estructura del pasaje y las referencias al pacto, no introducir un protagonista sin argumentarlo.</p><ul class=\"tight\"><li><b>«El pacto»</b>: la oración ya presenta a Dios como quien guarda el pacto (9:4). La lectura mesiánica sigue ese hilo y lo une con las promesas a los padres; no introduce un tratado político moderno en 9:27.</li><li><b>«Confirmará»</b> traduce <i>gabar</i> (en 9:27, <span class=\"heb\" lang=\"he\">וְהִגְבִּיר</span>, <i>vehigbir</i>), «hacer firme». El pacto ya existía: la semana del 27 al 34 es la última del período de oportunidad de Israel, no los primeros siete años de un pacto nuevo fundado en el bautismo. Cristo confirma las promesas hechas a los padres (Romanos 15:8) y ratifica el nuevo pacto con su sangre a mitad de la semana (Marcos 14:24; Hebreos 9:15).</li><li><b>«Con muchos»</b>: es la palabra del sacrificio que sustituye (Isaías 53:11; Marcos 10:45). Jesús la usó en la última cena: «mi sangre del nuevo pacto, que por muchos es derramada» (Mateo 26:28).</li></ul><p>El testimonio abarca siete años: primero Cristo y después sus apóstoles (DTG, cap. 23). Terminar ese período no significa que el nuevo pacto expire en el año 34.</p><p>Fuente: DTG, cap. 23; Bohr, <i>Daniel 1-10</i>, p. 346-347; Shea, <i>Simposio sobre Daniel</i>, PDF 255-256.</p>"
   },
   {
    "t": "🧭 El calendario del Mesías: el día y la hora",
@@ -10097,7 +10100,7 @@ const CONTENIDO = {
   },
   {
    "t": "⚔️ Miguel: el arcángel",
-   "h": "<div class=\"highlight-box\">Judas 9 llama a Miguel \"el arcángel\" —literalmente \"el jefe de los ángeles\"—; en las Escrituras solo existe un arcángel, y es Miguel. Su nombre en hebreo es una pregunta: \"¿Quién es semejante a Dios?\". Según Apocalipsis 12:7, Miguel comandó a los ángeles de Dios en la guerra celestial contra Satanás y sus ángeles.</div>"
+   "h": "<div class=\"highlight-box\">Judas 9 llama a Miguel \"el arcángel\" —literalmente \"el jefe de los ángeles\"—; en las Escrituras solo existe un arcángel, y es Miguel. Su nombre en hebreo, <span class=\"heb\" lang=\"he\">מִיכָאֵל</span> (<i>Mikael</i>), es una pregunta: \"¿Quién es semejante a Dios?\". Según Apocalipsis 12:7, Miguel comandó a los ángeles de Dios en la guerra celestial contra Satanás y sus ángeles.</div>"
   },
   {
    "t": "👑 Miguel es Jesús",
@@ -10134,7 +10137,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Daniel 8 a 12: una sola visión que se explica por partes",
    "capa": "contexto",
-   "h": "<p><b>Cuándo:</b> el tercer año de Ciro el Grande (10:1), hacia el 535 a.C. Daniel seguía en Babilonia, junto al Tigris (10:4), y tenía unos 88 años: llegó cautivo a los 18, en 605 a.C.</p><p>El libro tiene dos mitades: los capítulos 2 a 7 están escritos en arameo y los 8 a 12 en hebreo. La segunda mitad es una sola profecía, y la palabra que la une es <b>«entender»</b>:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Texto</th><th>Qué pasa</th></tr></thead><tbody><tr><td class=\"key\">8:16-17</td><td>Gabriel recibe la orden de hacer entender la visión a Daniel.</td></tr><tr><td class=\"key\">8:27</td><td>Daniel queda espantado: no la entendió.</td></tr><tr><td class=\"key\">9:22-23</td><td>Gabriel vuelve: «Entiende, pues, la orden, y entiende la visión».</td></tr><tr><td class=\"key\">10:1</td><td>Daniel «comprendió la palabra y tuvo inteligencia en la visión».</td></tr><tr><td class=\"key\">10:12-14</td><td>Aun así pide más luz, y el ángel viene a explicarle «lo que ha de sucederle a tu pueblo en los últimos días».</td></tr><tr><td class=\"key\">12:8</td><td>Ni al final lo entendió todo: por eso Dios dio después el Apocalipsis.</td></tr></tbody></table></div><div class=\"highlight-box\">En 10:14 la palabra para «visión» es <i>jazón</i>, la visión completa de Daniel 8, porque el capítulo 11 la vuelve a recorrer entera: desde Persia hasta el fin del juicio y la liberación del pueblo de Dios.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 25, 357 y 359-360.</p>"
+   "h": "<p><b>Cuándo:</b> el tercer año de Ciro el Grande (10:1), hacia el 535 a.C. Daniel seguía en Babilonia, junto al Tigris (10:4), y tenía unos 88 años: llegó cautivo a los 18, en 605 a.C.</p><p>El libro tiene dos mitades: los capítulos 2 a 7 están escritos en arameo y los 8 a 12 en hebreo. La segunda mitad es una sola profecía, y la palabra que la une es <b>«entender»</b>:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Texto</th><th>Qué pasa</th></tr></thead><tbody><tr><td class=\"key\">8:16-17</td><td>Gabriel recibe la orden de hacer entender la visión a Daniel.</td></tr><tr><td class=\"key\">8:27</td><td>Daniel queda espantado: no la entendió.</td></tr><tr><td class=\"key\">9:22-23</td><td>Gabriel vuelve: «Entiende, pues, la orden, y entiende la visión».</td></tr><tr><td class=\"key\">10:1</td><td>Daniel «comprendió la palabra y tuvo inteligencia en la visión».</td></tr><tr><td class=\"key\">10:12-14</td><td>Aun así pide más luz, y el ángel viene a explicarle «lo que ha de sucederle a tu pueblo en los últimos días».</td></tr><tr><td class=\"key\">12:8</td><td>Ni al final lo entendió todo: por eso Dios dio después el Apocalipsis.</td></tr></tbody></table></div><div class=\"highlight-box\">En 10:14 la palabra para «visión» es <i>jazón</i> (<span class=\"heb\" lang=\"he\">חָזוֹן</span>), la visión completa de Daniel 8, porque el capítulo 11 la vuelve a recorrer entera: desde Persia hasta el fin del juicio y la liberación del pueblo de Dios.</div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 25, 357 y 359-360.</p>"
   },
   {
    "t": "🧭 Qué buscaba Daniel con su ayuno",
@@ -10296,7 +10299,7 @@ const CONTENIDO = {
   {
    "t": "🧭 Daniel 11:31-39: palabras clave",
    "capa": "contexto",
-   "h": "<ul class=\"tight\"><li><b>«El santuario y la fortaleza» (31).</b> En hebreo no hay «y»: es «el santuario fortaleza», el santuario del cielo, de donde le viene la fuerza al creyente (Hebreos 4:14-16).</li><li><b>«El sacrificio continuo» (31).</b> «Sacrificio» fue agregado. «Continuo» (hebreo <i>tamid</i>) sale 103 veces en el Antiguo Testamento, y solo en Daniel va sin sustantivo (8:11-13; 11:31; 12:11). Es la obra continua de Cristo, que intercede en el santuario del cielo (Hebreos 7:24-25).</li><li><b>«Lisonjas» (32).</b> Promesas fáciles: perdón sin arrepentimiento, indulgencias, la intercesión de los santos.</li><li><b>«Algunos días» (33).</b> Varios manuscritos hebreos dicen «muchos días»: los 1.260 años.</li><li><b>«Hasta el tiempo determinado» (35).</b> Hasta el tiempo del fin, en 1798.</li><li><b>«Repartirá tierras» (39).</b> El papa repartió tierras y reinos: en 1493 dividió las tierras de América entre España y Portugal. La Inquisición, fundada en 1232 por Gregorio IX, daba a los delatores los bienes de los condenados.</li></ul><p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 39, 120-130, 140 y 148-149.</p>"
+   "h": "<ul class=\"tight\"><li><b>«El santuario y la fortaleza» (31).</b> En hebreo no hay «y»: es «el santuario fortaleza», el santuario del cielo, de donde le viene la fuerza al creyente (Hebreos 4:14-16).</li><li><b>«El sacrificio continuo» (31).</b> «Sacrificio» fue agregado. «Continuo» (hebreo <i>tamid</i>, <span class=\"heb\" lang=\"he\">תָּמִיד</span>) sale 103 veces en el Antiguo Testamento, y solo en Daniel va sin sustantivo (8:11-13; 11:31; 12:11). Es la obra continua de Cristo, que intercede en el santuario del cielo (Hebreos 7:24-25).</li><li><b>«Lisonjas» (32).</b> Promesas fáciles: perdón sin arrepentimiento, indulgencias, la intercesión de los santos.</li><li><b>«Algunos días» (33).</b> Varios manuscritos hebreos dicen «muchos días»: los 1.260 años.</li><li><b>«Hasta el tiempo determinado» (35).</b> Hasta el tiempo del fin, en 1798.</li><li><b>«Repartirá tierras» (39).</b> El papa repartió tierras y reinos: en 1493 dividió las tierras de América entre España y Portugal. La Inquisición, fundada en 1232 por Gregorio IX, daba a los delatores los bienes de los condenados.</li></ul><p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 39, 120-130, 140 y 148-149.</p>"
   },
   {
    "t": "🧭 Norte y sur: de lo literal a lo espiritual",
@@ -10428,7 +10431,7 @@ const CONTENIDO = {
    "t": "🧭 «Se levantará Miguel» y «será libertado tu pueblo»",
    "capa": "contexto",
    "verso": 1,
-   "h": "<p><b>Cuándo:</b> es el final de la visión de Daniel 10 y 11, el tercer año de Ciro el Grande, hacia el 535 a.C.</p><p>Dos palabras de 12:1:</p><ul class=\"tight\"><li><b>«Se levantará»</b>: en Daniel, un rey «se levanta» cuando empieza a reinar (11:2-3; 8:22). Miguel se levanta cuando termina el juicio y recibe el reino: «todos los casos habían sido fallados para vida o para muerte» (PE 280).</li><li><b>«Será libertado»</b>: es la palabra clave que une a Daniel 3 (el horno), Daniel 6 (los leones) y Daniel 12:1. Como entonces, el pueblo de Dios será librado en el momento más crítico. Y es la misma palabra hebrea de «escaparán» en 11:41.</li></ul><p>12:1 empieza con «en aquel tiempo»: sigue directamente a 11:45. La división entre capítulos aquí corta el relato.</p><div class=\"highlight-box\"><b>El orden de 12:1-2</b>, el mismo de <i>El conflicto de los siglos</i>: Miguel se levanta, viene el tiempo de angustia, el pueblo de Dios es librado y ocurre la resurrección especial.</div><p>Fuente: Bohr, <i>La gran cadena</i>, p. 44; Bohr, <i>Daniel 11</i>, p. 11 y 136; Bohr, <i>Daniel 1-10</i>, p. 357; PE 280.</p>"
+   "h": "<p><b>Cuándo:</b> es el final de la visión de Daniel 10 y 11, el tercer año de Ciro el Grande, hacia el 535 a.C.</p><p>Dos palabras de 12:1:</p><ul class=\"tight\"><li><b>«Se levantará»</b>: en Daniel, un rey «se levanta» cuando empieza a reinar (11:2-3; 8:22). Miguel se levanta cuando termina el juicio y recibe el reino: «todos los casos habían sido fallados para vida o para muerte» (PE 280).</li><li><b>«Será libertado»</b>: es la palabra clave que une a Daniel 3 (el horno), Daniel 6 (los leones) y Daniel 12:1. Como entonces, el pueblo de Dios será librado en el momento más crítico. Y es la misma palabra hebrea de «escaparán» en 11:41 (12:1 <span class=\"heb\" lang=\"he\">יִמָּלֵט</span>, <i>yimmalet</i>; 11:41 <span class=\"heb\" lang=\"he\">יִמָּלְטוּ</span>, <i>yimmaletu</i>).</li></ul><p>12:1 empieza con «en aquel tiempo»: sigue directamente a 11:45. La división entre capítulos aquí corta el relato.</p><div class=\"highlight-box\"><b>El orden de 12:1-2</b>, el mismo de <i>El conflicto de los siglos</i>: Miguel se levanta, viene el tiempo de angustia, el pueblo de Dios es librado y ocurre la resurrección especial.</div><p>Fuente: Bohr, <i>La gran cadena</i>, p. 44; Bohr, <i>Daniel 11</i>, p. 11 y 136; Bohr, <i>Daniel 1-10</i>, p. 357; PE 280.</p>"
   },
   {
    "t": "🧭 Daniel 12:1: Miguel y el tiempo de angustia",
@@ -21704,7 +21707,7 @@ const BANCO = [
  {
   "cap": "d8",
   "t": "mc",
-  "q": "¿Qué significa la palabra hebrea tamid, traducida \"sacrificio continuo\"?",
+  "q": "¿Qué significa la palabra hebrea tamid (⁧תָּמִיד⁩), traducida \"sacrificio continuo\"?",
   "o": [
    "Sacrificio de sangre animal",
    "Continuo, permanente, sin fin",
@@ -21717,7 +21720,7 @@ const BANCO = [
  {
   "cap": "d8",
   "t": "mc",
-  "q": "¿A qué representa el tamid (ministerio continuo) en el santuario celestial, según Daniel 8?",
+  "q": "¿A qué representa el tamid, ⁧תָּמִיד⁩ (ministerio continuo) en el santuario celestial, según Daniel 8?",
   "o": [
    "Al sumo sacerdocio permanente de Cristo",
    "A la guardia de los ángeles del cielo",
@@ -21758,10 +21761,10 @@ const BANCO = [
   "t": "mc",
   "q": "¿Qué palabra hebrea usa Daniel 8:14 para \"reivindicado\" o \"purificado\", emparentada con \"justificar\"?",
   "o": [
-   "La palabra tamid, \"continuo\"",
-   "La palabra nitsdaq, \"justificado\"",
-   "La palabra miqdash, \"santuario\"",
-   "La palabra kadosh, \"santo\""
+   "La palabra tamid (⁧תָּמִיד⁩), \"continuo\"",
+   "La palabra nitsdaq (⁧נִצְדַּק⁩), \"justificado\"",
+   "La palabra miqdash (⁧מִקְדָּשׁ⁩), \"santuario\"",
+   "La palabra kadosh (⁧קָדוֹשׁ⁩), \"santo\""
   ],
   "a": 1,
   "nv": 1
@@ -22186,7 +22189,7 @@ const BANCO = [
  {
   "cap": "d10",
   "t": "mc",
-  "q": "¿Qué significa el nombre \"Miguel\" en hebreo?",
+  "q": "¿Qué significa el nombre \"Miguel\" (⁧מִיכָאֵל⁩, Mikael) en hebreo?",
   "o": [
    "Significa \"Dios con nosotros\"",
    "Significa \"¿Quién como Dios?\"",
@@ -25064,7 +25067,7 @@ const BANCO = [
  {
   "cap": "d9",
   "t": "mc",
-  "q": "¿Qué significa literalmente la palabra hebrea \"jathak\", traducida como \"fijadas\" o \"determinadas\" en Daniel 9:24?",
+  "q": "¿Qué significa literalmente la palabra hebrea jatak (en Daniel 9:24, ⁧נֶחְתַּךְ⁩, nejtak), traducida como \"fijadas\" o \"determinadas\" en Daniel 9:24?",
   "o": [
    "Cortar o amputar",
    "Multiplicar",
@@ -25077,7 +25080,7 @@ const BANCO = [
  {
   "cap": "d9",
   "t": "mc",
-  "q": "¿Por qué el significado literal de \"jathak\" (cortar/amputar) resuelve el enigma de los 2.300 días de Daniel 8:14?",
+  "q": "¿Por qué el significado literal de jatak (⁧נֶחְתַּךְ⁩; cortar/amputar) resuelve el enigma de los 2.300 días de Daniel 8:14?",
   "o": [
    "Porque no se pueden \"cortar\" 490 años de solo 2.300 días literales, así que esos días tienen que ser 2.300 años simbólicos",
    "Porque confirma sin ninguna duda que los 2.300 días deben entenderse de forma literal, como días de veinticuatro horas",
@@ -59077,7 +59080,7 @@ const BANCO = [
   "t": "mc",
   "v": "8:13",
   "f": "c",
-  "q": "¿Qué abarca la «visión» (jazón) por la que pregunta el ángel en 8:13?",
+  "q": "¿Qué abarca la «visión» (jazón, ⁧חָזוֹן⁩) por la que pregunta el ángel en 8:13?",
   "o": [
    "Toda la visión, desde Persia",
    "Solo la obra del cuerno pequeño",
@@ -59095,7 +59098,7 @@ const BANCO = [
   "f": "c",
   "q": "Las «tardes y mañanas» de 8:14 son 1.150 sacrificios de la tarde y 1.150 de la mañana.",
   "a": false,
-  "e": "Falso: el hebreo dice «tarde-mañana» en singular, como en la creación, y los sacrificios siempre se nombran «mañana y tarde». Es una lectura para hacer encajar a Antíoco IV Epífanes. Fuente: Bohr, <i>Daniel 1-10</i>, p. 315.",
+  "e": "Falso: el hebreo dice «tarde-mañana» (⁧עֶרֶב בֹּקֶר⁩, ereb boqer) en singular, como en la creación, y los sacrificios siempre se nombran «mañana y tarde». Es una lectura para hacer encajar a Antíoco IV Epífanes. Fuente: Bohr, <i>Daniel 1-10</i>, p. 315.",
   "nv": 2
  },
  {
@@ -59345,7 +59348,7 @@ const BANCO = [
   "t": "mc",
   "v": "9:27",
   "f": "c",
-  "q": "¿Qué significa el verbo hebreo (gabar) que se traduce «confirmará» el pacto?",
+  "q": "¿Qué significa el verbo hebreo gabar (⁧וְהִגְבִּיר⁩) que se traduce «confirmará» el pacto?",
   "o": [
    "Hacer fuerte, ratificar",
    "Romper o anular",
@@ -59705,7 +59708,7 @@ const BANCO = [
   "t": "tf",
   "v": "11:41",
   "f": "c",
-  "q": "La palabra hebrea traducida «escaparán» en 11:41 es la misma que «será libertado» en 12:1.",
+  "q": "La palabra hebrea traducida «escaparán» en 11:41 (yimmaletu, ⁧יִמָּלְטוּ⁩) es la misma que «será libertado» en 12:1 (yimmalet, ⁧יִמָּלֵט⁩).",
   "a": true,
   "e": "Verdadero. Por eso los que escapan en 11:41 son los mismos que serán librados en el tiempo de angustia. Fuente: Bohr, <i>Daniel 11</i>, p. 136.",
   "nv": 2
@@ -59907,7 +59910,7 @@ const BANCO = [
   "f": "c",
   "q": "En Daniel 11:31 la palabra «sacrificio» no está en el hebreo: dice solo «el continuo».",
   "a": true,
-  "e": "Verdadero. En Daniel, «continuo» (<i>tamid</i>) va siempre sin sustantivo: es la obra continua de Cristo en el santuario del cielo. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 39 y 128.",
+  "e": "Verdadero. En Daniel, «continuo» (<i>tamid</i>, <span class=\"heb\" lang=\"he\">תָּמִיד</span>) va siempre sin sustantivo: es la obra continua de Cristo en el santuario del cielo. Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 39 y 128.",
   "nv": 2
  },
  {
@@ -68506,7 +68509,7 @@ const LAMINAS = {
     "interp": [
      "El cuerno sale al final de los cuatro reinos, «al fin del reinado de estos» (8:23), y crece más que el carnero y el macho cabrío. Es Roma, la misma de Daniel 2 y 7: primero imperial y después papal, en un solo símbolo.",
      "Crece primero a lo ancho, sobre la tierra: al oriente (Macedonia, 168 a.C.; Siria, 65 a.C.), a la tierra gloriosa (Judea, 63 a.C.) y al sur (Egipto, 30 a.C.).",
-     "«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos (Simposio, p. 396-397). El texto no nombra el viento: dice que creció «hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9). La Septuaginta pone “el norte” donde dice «la tierra gloriosa», y el Simposio concluye: “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).",
+     "«De uno de ellos» (8:9): en hebreo «ellos» (<i>mehem</i>, <span class=\"heb\" lang=\"he\">מֵהֶם</span>) es masculino y «cuernos» (<i>qeranot</i>, <span class=\"heb\" lang=\"he\">קְרָנוֹת</span>) es femenino, así que «ellos» no son los cuernos. El cuerno sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos (Simposio, p. 396-397). El texto no nombra el viento: dice que creció «hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9). La Septuaginta pone “el norte” donde dice «la tierra gloriosa», y el Simposio concluye: “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).",
      "En la fase pagana, un gobernador romano, Poncio Pilato, crucificó a Cristo, y Roma destruyó el templo de la tierra en 70 d.C.: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario» (9:26). El continuo lo quita después la fase papal (8:10-11)."
     ],
     "fuente": "Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; Bohr, <i>Daniel 1-10</i>, p. 297-306; Maxwell, <i>El porvenir del mundo revelado</i>, p. 161-164; Smith, <i>Las profecías de Daniel</i>, p. 89-91."
@@ -68551,7 +68554,7 @@ const LAMINAS = {
     "ref2": "8:12",
     "corto": "El cuerno quita el continuo: pone en la tierra lo que Cristo hace cada día por nosotros en el santuario del cielo. Y echa por tierra la verdad.",
     "interp": [
-     "En hebreo dice solo «continuo» (<i>hatamid</i>), con artículo: «sacrificio» lo agregaron los traductores. La palabra nombra el servicio de cada día en el atrio y en el lugar santo, nunca en el santísimo: el holocausto de la mañana y de la tarde, el pan, la luz y el incienso. En el cielo es la obra de Cristo, que vive siempre para interceder por nosotros (Hebreos 7:25).",
+     "En hebreo dice solo «continuo» (<i>hatamid</i>, <span class=\"heb\" lang=\"he\">הַתָּמִיד</span>), con artículo: «sacrificio» lo agregaron los traductores. La palabra nombra el servicio de cada día en el atrio y en el lugar santo, nunca en el santísimo: el holocausto de la mañana y de la tarde, el pan, la luz y el incienso. En el cielo es la obra de Cristo, que vive siempre para interceder por nosotros (Hebreos 7:25).",
      "El cuerno no puede subir al cielo: pone en la tierra un sustituto de cada pieza. En lugar del sacrificio de una vez para siempre, la misa; en lugar de la Palabra, la tradición; en lugar de la luz, una iglesia a oscuras; en lugar de la intercesión de Cristo, el único mediador (1 Timoteo 2:5), el confesionario y las oraciones a María y a los santos. Así «el lugar de su santuario fue echado por tierra».",
      "El continuo es del atrio y del lugar santo; el santísimo queda fuera, porque Cristo entra allí al terminar las 2.300 tardes y mañanas, en 1844 (8:14). El arca no está entre lo que el cuerno quita: queda detrás del velo.",
      "«Echó por tierra la verdad» (8:12) va aparte: no es un mueble del santuario. Es la Ley de Dios, que el Salmo 119:142 llama la verdad, y con ella el sábado: el cuerno de Daniel 7 «pensará en cambiar los tiempos y la ley» (7:25).",
@@ -68579,7 +68582,7 @@ const LAMINAS = {
     "interp": [
      "Un santo pregunta «¿Hasta cuándo?»: no cuánto dura, sino cuándo termina. La respuesta da el final: «luego el santuario será purificado» (8:14). Aquí también la palabra «sacrificio» la agregaron los traductores: el hebreo dice solo el continuo.",
      "Son 2.300 años: de 457 a.C. a 1844. Daniel 9 da el punto de partida.",
-     "La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio. La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia. Es el mismo suceso de Daniel 7:9-10: el Juez se sienta y se abren los libros, en 1844."
+     "La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio. La palabra hebrea (<i>nitsdaq</i>, <span class=\"heb\" lang=\"he\">נִצְדַּק</span>) quiere decir también justificado, vindicado: Dios hace justicia. Es el mismo suceso de Daniel 7:9-10: el Juez se sienta y se abren los libros, en 1844."
     ],
     "fuente": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
    },
@@ -73589,7 +73592,7 @@ const PARALELOS = [
       {
        "tipo": "n",
        "p": "purificado",
-       "t": "La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia.",
+       "t": "La palabra hebrea (<i>nitsdaq</i>, <span class=\"heb\" lang=\"he\">נִצְדַּק</span>) quiere decir también justificado, vindicado: Dios hace justicia.",
        "f": "CS 374-376 y 470-477; Bohr, <i>Daniel 1-10</i>, p. 313-320."
       }
      ]
@@ -78890,7 +78893,7 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Glosario: C – D (1)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Palabra</th><th>Qué significa</th><th>Texto</th></tr></thead><tbody><tr><td class=\"key\">Caldeos</td><td>El pueblo que gobernó Babilonia. También, la clase de sabios y sacerdotes de la corte; su nombre llegó a significar «mago» o «adivino».</td><td>Daniel 1:4; 2:2, 4; 5:30</td></tr><tr><td class=\"key\">Ciro el Grande</td><td>Rey de Persia. Tomó Babilonia en 539 a.C. y dejó volver a los judíos. Dios lo llamó por nombre mucho antes.</td><td>Isaías 44:28; 45:1; Daniel 1:21; 6:28</td></tr><tr><td class=\"key\">Continuo, el</td><td>En hebreo <i>hatamid</i>: lo diario. Es el ministerio diario de Cristo como sacerdote, que el cuerno pequeño quiso quitar. La palabra «sacrificio» la agregaron los traductores.</td><td>Daniel 8:11-13; 11:31; 12:11; Hebreos 8:1-2</td></tr><tr><td class=\"key\">Cuerno</td><td>Un rey o un reino.</td><td>Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»</td></tr><tr><td class=\"key\">Cuerno pequeño</td><td>En Daniel 7, Roma papal: sale de la cuarta bestia y domina 1.260 años. En Daniel 8, Roma en sus dos fases, pagana y papal.</td><td>Daniel 7:8, 24-25; 8:9-12</td></tr></tbody></table></div><p>Fuente: Pfandl, <i>Daniel</i>, p. 5; Smith, <i>Las profecías de Daniel</i>, p. 2 y 18; Bohr, <i>Daniel 1-10</i>, p. 119-125 y 293-316; Bohr, <i>El calendario del Mesías</i>, p. 8; CS 374, 451.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Palabra</th><th>Qué significa</th><th>Texto</th></tr></thead><tbody><tr><td class=\"key\">Caldeos</td><td>El pueblo que gobernó Babilonia. También, la clase de sabios y sacerdotes de la corte; su nombre llegó a significar «mago» o «adivino».</td><td>Daniel 1:4; 2:2, 4; 5:30</td></tr><tr><td class=\"key\">Ciro el Grande</td><td>Rey de Persia. Tomó Babilonia en 539 a.C. y dejó volver a los judíos. Dios lo llamó por nombre mucho antes.</td><td>Isaías 44:28; 45:1; Daniel 1:21; 6:28</td></tr><tr><td class=\"key\">Continuo, el</td><td>En hebreo <i>hatamid</i> (<span class=\"heb\" lang=\"he\">הַתָּמִיד</span>): lo diario. Es el ministerio diario de Cristo como sacerdote, que el cuerno pequeño quiso quitar. La palabra «sacrificio» la agregaron los traductores.</td><td>Daniel 8:11-13; 11:31; 12:11; Hebreos 8:1-2</td></tr><tr><td class=\"key\">Cuerno</td><td>Un rey o un reino.</td><td>Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»</td></tr><tr><td class=\"key\">Cuerno pequeño</td><td>En Daniel 7, Roma papal: sale de la cuarta bestia y domina 1.260 años. En Daniel 8, Roma en sus dos fases, pagana y papal.</td><td>Daniel 7:8, 24-25; 8:9-12</td></tr></tbody></table></div><p>Fuente: Pfandl, <i>Daniel</i>, p. 5; Smith, <i>Las profecías de Daniel</i>, p. 2 y 18; Bohr, <i>Daniel 1-10</i>, p. 119-125 y 293-316; Bohr, <i>El calendario del Mesías</i>, p. 8; CS 374, 451.</p>"
   },
   {
    "t": "🧭 Glosario: C – D (2)",
@@ -79231,7 +79234,7 @@ const CONT_MODULOS = {
   {
    "t": "🧭 Glosario: C – D (1)",
    "capa": "contexto",
-   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Palabra</th><th>Qué significa</th><th>Texto</th></tr></thead><tbody><tr><td class=\"key\">Caldeos</td><td>El pueblo que gobernó Babilonia. También, la clase de sabios y sacerdotes de la corte; su nombre llegó a significar «mago» o «adivino».</td><td>Daniel 1:4; 2:2, 4; 5:30</td></tr><tr><td class=\"key\">Ciro el Grande</td><td>Rey de Persia. Tomó Babilonia en 539 a.C. y dejó volver a los judíos. Dios lo llamó por nombre mucho antes.</td><td>Isaías 44:28; 45:1; Daniel 1:21; 6:28</td></tr><tr><td class=\"key\">Continuo, el</td><td>En hebreo <i>hatamid</i>: lo diario. Es el ministerio diario de Cristo como sacerdote, que el cuerno pequeño quiso quitar. La palabra «sacrificio» la agregaron los traductores.</td><td>Daniel 8:11-13; 11:31; 12:11; Hebreos 8:1-2</td></tr><tr><td class=\"key\">Cuerno</td><td>Un rey o un reino.</td><td>Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»</td></tr><tr><td class=\"key\">Cuerno pequeño</td><td>En Daniel 7, Roma papal: sale de la cuarta bestia y domina 1.260 años. En Daniel 8, Roma en sus dos fases, pagana y papal.</td><td>Daniel 7:8, 24-25; 8:9-12</td></tr></tbody></table></div><p>Fuente: Pfandl, <i>Daniel</i>, p. 5; Smith, <i>Las profecías de Daniel</i>, p. 2 y 18; Bohr, <i>Daniel 1-10</i>, p. 119-125 y 293-316; Bohr, <i>El calendario del Mesías</i>, p. 8; CS 374, 451.</p>"
+   "h": "<div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Palabra</th><th>Qué significa</th><th>Texto</th></tr></thead><tbody><tr><td class=\"key\">Caldeos</td><td>El pueblo que gobernó Babilonia. También, la clase de sabios y sacerdotes de la corte; su nombre llegó a significar «mago» o «adivino».</td><td>Daniel 1:4; 2:2, 4; 5:30</td></tr><tr><td class=\"key\">Ciro el Grande</td><td>Rey de Persia. Tomó Babilonia en 539 a.C. y dejó volver a los judíos. Dios lo llamó por nombre mucho antes.</td><td>Isaías 44:28; 45:1; Daniel 1:21; 6:28</td></tr><tr><td class=\"key\">Continuo, el</td><td>En hebreo <i>hatamid</i> (<span class=\"heb\" lang=\"he\">הַתָּמִיד</span>): lo diario. Es el ministerio diario de Cristo como sacerdote, que el cuerno pequeño quiso quitar. La palabra «sacrificio» la agregaron los traductores.</td><td>Daniel 8:11-13; 11:31; 12:11; Hebreos 8:1-2</td></tr><tr><td class=\"key\">Cuerno</td><td>Un rey o un reino.</td><td>Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»</td></tr><tr><td class=\"key\">Cuerno pequeño</td><td>En Daniel 7, Roma papal: sale de la cuarta bestia y domina 1.260 años. En Daniel 8, Roma en sus dos fases, pagana y papal.</td><td>Daniel 7:8, 24-25; 8:9-12</td></tr></tbody></table></div><p>Fuente: Pfandl, <i>Daniel</i>, p. 5; Smith, <i>Las profecías de Daniel</i>, p. 2 y 18; Bohr, <i>Daniel 1-10</i>, p. 119-125 y 293-316; Bohr, <i>El calendario del Mesías</i>, p. 8; CS 374, 451.</p>"
   },
   {
    "t": "🧭 Glosario: C – D (2)",
@@ -80174,7 +80177,7 @@ const TARJETAS = [
  {
   "cap": "d8",
   "f": "¿Qué tres cosas hace el cuerno pequeño de Daniel 8?",
-  "r": "Crece hacia el sur, el oriente y la tierra gloriosa; quita el continuo (tamid; «sacrificio» lo agregaron los traductores); hace caer el lugar del santuario."
+  "r": "Crece hacia el sur, el oriente y la tierra gloriosa; quita el continuo (tamid, ⁧תָּמִיד⁩; «sacrificio» lo agregaron los traductores); hace caer el lugar del santuario."
  },
  {
   "cap": "d8",
@@ -80188,7 +80191,7 @@ const TARJETAS = [
  },
  {
   "cap": "d8",
-  "f": "¿Qué significa la palabra hebrea tamid?",
+  "f": "¿Qué significa la palabra hebrea tamid (⁧תָּמִיד⁩)?",
   "r": "\"Continuo\" o \"permanente\"; en el santuario se aplicaba al holocausto diario, las lámparas y el pan siempre presentes. En Daniel 8 representa el ministerio permanente de Cristo como Sumo Sacerdote."
  },
  {
@@ -80198,7 +80201,7 @@ const TARJETAS = [
  },
  {
   "cap": "d8",
-  "f": "¿Qué significa la palabra hebrea nitsdaq, traducida \"reivindicado\" o \"purificado\"?",
+  "f": "¿Qué significa la palabra hebrea nitsdaq (⁧נִצְדַּק⁩), traducida \"reivindicado\" o \"purificado\"?",
   "r": "Está emparentada con \"justificar\"; señala el Día de la Expiación, el día de juicio del santuario del Antiguo Testamento."
  },
  {
@@ -80318,7 +80321,7 @@ const TARJETAS = [
  },
  {
   "cap": "d10",
-  "f": "¿Qué significa el nombre \"Miguel\" en hebreo?",
+  "f": "¿Qué significa el nombre \"Miguel\" (⁧מִיכָאֵל⁩, Mikael) en hebreo?",
   "r": "Es una pregunta: \"¿Quién es semejante a Dios?\""
  },
  {
@@ -80823,12 +80826,12 @@ const TARJETAS = [
  },
  {
   "cap": "d9",
-  "f": "¿Qué significa literalmente la palabra hebrea \"jathak\", traducida \"fijadas\" en Daniel 9:24?",
+  "f": "¿Qué significa literalmente la palabra hebrea jatak (en Daniel 9:24, ⁧נֶחְתַּךְ⁩, nejtak), traducida \"fijadas\" en Daniel 9:24?",
   "r": "\"Cortar\" o \"amputar\""
  },
  {
   "cap": "d9",
-  "f": "¿Por qué el sentido de \"cortar/amputar\" de jathak prueba que los 2.300 días de Daniel 8:14 son simbólicos?",
+  "f": "¿Por qué el sentido de \"cortar/amputar\" de jatak (⁧נֶחְתַּךְ⁩) prueba que los 2.300 días de Daniel 8:14 son simbólicos?",
   "r": "Porque no se pueden \"cortar\" 490 años literales de solo 2.300 días literales (menos de 7 años)"
  },
  {

@@ -22,7 +22,7 @@ module.exports = {
       `<p>Dos palabras de 12:1:</p>` +
       li([
         '<b>«Se levantará»</b>: en Daniel, un rey «se levanta» cuando empieza a reinar (11:2-3; 8:22). Miguel se levanta cuando termina el juicio y recibe el reino: «todos los casos habían sido fallados para vida o para muerte» (PE 280).',
-        '<b>«Será libertado»</b>: es la palabra clave que une a Daniel 3 (el horno), Daniel 6 (los leones) y Daniel 12:1. Como entonces, el pueblo de Dios será librado en el momento más crítico. Y es la misma palabra hebrea de «escaparán» en 11:41.',
+        '<b>«Será libertado»</b>: es la palabra clave que une a Daniel 3 (el horno), Daniel 6 (los leones) y Daniel 12:1. Como entonces, el pueblo de Dios será librado en el momento más crítico. Y es la misma palabra hebrea de «escaparán» en 11:41 (12:1 <span class="heb" lang="he">יִמָּלֵט</span>, <i>yimmalet</i>; 11:41 <span class="heb" lang="he">יִמָּלְטוּ</span>, <i>yimmaletu</i>).',
       ]) +
       `<p>12:1 empieza con «en aquel tiempo»: sigue directamente a 11:45. La división entre capítulos aquí corta el relato.</p>` +
       hi('<b>El orden de 12:1-2</b>, el mismo de <i>El conflicto de los siglos</i>: Miguel se levanta, viene el tiempo de angustia, el pueblo de Dios es librado y ocurre la resurrección especial.') +

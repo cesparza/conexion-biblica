@@ -2986,7 +2986,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'v223: el carnero hiere al poniente (Babilonia 539), al norte (Lidia 546) y al sur (Egipto 525), como Bohr, Daniel 1-10, p. 295');
   const Mp=M.mapa,app8=js.slice(js.indexOf('function lamMovCrece'),js.indexOf('/* Hasta el ejército del cielo'));
   ok(Mp.rosa&&Mp.rosa.vientos.map(v=>v[1]).join()==='n,e,s,o'&&Mp.pasos.length===4&&/«De uno de ellos»: de uno de los cuatro vientos/.test(Mp.pasos[1][0])&&/Simposio sobre Daniel/.test(Mp.pasos[1][1])&&!/deduc/.test(Mp.pasos.join(' '))&&Mp.roma[0]<Mp.rosa.c[0]-Mp.rosa.dx+80&&
-    /paso\(0\)[\s\S]*poniente\(\)[\s\S]*paso\(2\)[\s\S]*paso\(3\)/.test(app8)&&/«ellos» \(<i>mehem<\/i>\) es masculino y «cuernos» \(<i>qeranot<\/i>\) es femenino/.test(P('cuerno').interp.join(' '))&&!/deduc/.test(P('cuerno').interp.join(' '))&&/solo puede ser el oeste/.test(P('cuerno').interp.join(' '))&&/Simposio sobre Daniel<\/i>, p\. 394-399/.test(P('cuerno').fuente),
+    /paso\(0\)[\s\S]*poniente\(\)[\s\S]*paso\(2\)[\s\S]*paso\(3\)/.test(app8)&&/«ellos» \(<i>mehem<\/i>[^)]*\) es masculino y «cuernos» \(<i>qeranot<\/i>[^)]*\) es femenino/.test(P('cuerno').interp.join(' '))&&!/deduc/.test(P('cuerno').interp.join(' '))&&/solo puede ser el oeste/.test(P('cuerno').interp.join(' '))&&/Simposio sobre Daniel<\/i>, p\. 394-399/.test(P('cuerno').fuente),
     'v223/v225: el cuerno pequeño sigue 8:8-9: los cuatro vientos, «de uno de ellos» (uno de los vientos, por el género hebreo), Roma (el oeste, de Hasel, Simposio sobre Daniel, p. 399, no una deducción de la app), y después crece al oriente, a la tierra gloriosa y al sur');
   const appC=js.slice(js.indexOf('function lamMovChoque'),js.indexOf('function lamMovCuatro'));
   ok(/cuerpo\.style\.opacity=\(1-f\)/.test(appC)&&/lamTween\(1600,cae\)/.test(appC),'v223: el carnero cae a tierra y se apaga (8:7); al final queda solo el macho cabrío, sin cuerpos encimados');
@@ -3377,6 +3377,16 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
  const material=['contenido.js','laminas.js','paralelos.js','personajes.js','modulos.js','daniel9.js',...fs.readdirSync(path.join(RAIZ,'fuente','complementos','daniel')).map(f=>'complementos/daniel/'+f),'complementos/profundizar.js','complementos/daniel.js',...fs.readdirSync(path.join(RAIZ,'fuente','apocalipsis')).filter(f=>f.endsWith('.js')).map(f=>'apocalipsis/'+f)];
  const atrib=material.flatMap(f=>{const t=sinComent(fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8'));const m=t.match(new RegExp('.{0,30}(?:'+ATRIB.source+').{0,30}','g'))||[];return m.map(x=>f+': '+x);});
  ok(!atrib.length,'Ningún texto de estudio atribuye ideas a un autor (voz directa; el autor va en la fuente)'+(atrib.length?': '+atrib.join(' | '):''));
+ /* v270: toda palabra hebrea o aramea del material sale de fuente/hebreo.js (una sola lista, con su
+    transliteración y dónde está), y ya no queda la transliteración vieja sin la palabra original. */
+ const {HEBREO}=require(path.join(RAIZ,'fuente','hebreo.js'));
+ const formas=new Set(Object.values(HEBREO).flatMap(x=>x.he.split(' ')));
+ const conHebreo=[...material,'preguntas.js','tarjetas.js','mapa-versiculos.js'];
+ const palabras=conHebreo.flatMap(f=>(sinComent(fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8')).match(/[\u05D0-\u05EA][\u0591-\u05C7\u05D0-\u05EA]*/g)||[]).map(w=>[f,w]));
+ const ajenas=palabras.filter(([,w])=>!formas.has(w));
+ ok(palabras.length>=30&&!ajenas.length,palabras.length+' palabras hebreas en el material, todas de fuente/hebreo.js'+(ajenas.length?': '+ajenas.map(x=>x.join(' ')).join(', '):''));
+ const viejas=conHebreo.filter(f=>/jathak|ḥātak|marʾeh/.test(fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8')));
+ ok(!viejas.length,'Sin transliteraciones viejas (jathak, ḥātak, marʾeh)'+(viejas.length?': '+viejas.join(', '):''));
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));

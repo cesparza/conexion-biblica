@@ -21,7 +21,7 @@ module.exports = {
         ['10:12-14', 'Aun así pide más luz, y el ángel viene a explicarle «lo que ha de sucederle a tu pueblo en los últimos días».'],
         ['12:8', 'Ni al final lo entendió todo: por eso Dios dio después el Apocalipsis.'],
       ]) +
-      hi('En 10:14 la palabra para «visión» es <i>jazón</i>, la visión completa de Daniel 8, porque el capítulo 11 la vuelve a recorrer entera: desde Persia hasta el fin del juicio y la liberación del pueblo de Dios.') +
+      hi('En 10:14 la palabra para «visión» es <i>jazón</i> (<span class="heb" lang="he">חָזוֹן</span>), la visión completa de Daniel 8, porque el capítulo 11 la vuelve a recorrer entera: desde Persia hasta el fin del juicio y la liberación del pueblo de Dios.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 20, 25, 357 y 359-360.</p>` },
 
     { t: '🧭 Qué buscaba Daniel con su ayuno', capa: 'contexto', h:

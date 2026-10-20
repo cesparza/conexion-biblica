@@ -26,7 +26,7 @@ module.exports = {
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 293-295 y 305-306.</p>` },
 
     { t: '🧭 «De uno de ellos»: de uno de los vientos', capa: 'contexto', h:
-      `<p>En hebreo, «ellos» (<i>mehem</i>) es masculino y «cuernos» (<i>qeranot</i>) es femenino: «ellos» no pueden ser los cuernos. El cuerno pequeño sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos.</p>` +
+      `<p>En hebreo, «ellos» (<i>mehem</i>, <span class="heb" lang="he">מֵהֶם</span>) es masculino y «cuernos» (<i>qeranot</i>, <span class="heb" lang="he">קְרָנוֹת</span>) es femenino: «ellos» no pueden ser los cuernos. El cuerno pequeño sale de uno de los cuatro vientos del cielo (8:8), un punto cardinal, y no de uno de los cuatro cuernos.</p>` +
       tbl(['', 'Daniel 8:9'], [
         ['Lo que dice el texto', 'Sale de uno de los vientos y «creció mucho hacia el sur y el oriente, y hacia la tierra gloriosa» (8:9).'],
         ['Lo que concluye el Simposio sobre Daniel', 'La gramática une «de uno de ellos» con «los cuatro vientos del cielo», no con los cuernos (p. 396-397). La Septuaginta pone “el norte” donde dice «la tierra gloriosa»; así, “el punto cardinal del que salió el ‘cuerno pequeño’ solo puede ser el oeste”, y “Roma salió del oeste (desde el punto de vista de Israel)” (p. 399).'],
@@ -35,7 +35,7 @@ module.exports = {
       `<p>Fuente: Hasel, “El ‘cuerno pequeño’, el santuario celestial y el tiempo del fin”, <i>Simposio sobre Daniel</i>, p. 394-399; apuntes «Daniel 8».</p>` },
 
     { t: '🧭 Qué quitó el cuerno: «el continuo» del atrio y del lugar santo', capa: 'contexto', verso: 11, h:
-      `<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p>` +
+      `<p>El texto dice «<b>el</b> continuo» (<i>hatamid</i>, <span class="heb" lang="he">הַתָּמִיד</span>), sin la palabra «sacrificio», que agregaron los traductores. En el santuario esa palabra describe el ministerio diario del sacerdote en el <b>atrio y el lugar santo</b>, nunca en el santísimo. El cuerno no puede subir al cielo: copia en la tierra lo que le pertenece al Príncipe en el cielo.</p>` +
       tbl(['Pieza', 'Dónde', 'Qué representa', 'Qué se puso en su lugar'], [
         ['Altar del holocausto', 'Atrio', 'La muerte de Cristo, una vez para siempre', 'La misa, que lo repite, y la penitencia'],
         ['Mesa de los panes', 'Lugar santo', 'La Palabra de Dios', 'La tradición: solo el sacerdote la explica'],
@@ -66,11 +66,11 @@ module.exports = {
     { t: '🧭 «¿Hasta cuándo durará la visión?»: por qué son años', capa: 'contexto', verso: 13, h:
       `<p>Tres razones del mismo texto:</p>` +
       li([
-        '<b>La pregunta es por toda la visión.</b> En 8:13 el santo pregunta «¿Hasta cuándo durará la visión...?» con la palabra <i>jazón</i>, la misma de 8:1-2, que abarca todo: Persia, Grecia, Roma pagana y Roma papal. 2.300 días literales son unos seis años y medio, muy poco para todo eso.',
+        '<b>La pregunta es por toda la visión.</b> En 8:13 el santo pregunta «¿Hasta cuándo durará la visión...?» con la palabra <i>jazón</i> (<span class="heb" lang="he">חָזוֹן</span>), la misma de 8:1-2, que abarca todo: Persia, Grecia, Roma pagana y Roma papal. 2.300 días literales son unos seis años y medio, muy poco para todo eso.',
         '<b>Pregunta por el final</b>, no por la duración: «hasta cuándo», y la respuesta es «luego el santuario será purificado».',
-        '<b>No son sacrificios.</b> El hebreo dice «tarde-mañana» en singular, como en la creación. Los sacrificios siempre se nombran al revés, «mañana y tarde» (Éxodo 29:39), así que no se puede partir en 1.150 de cada uno.',
+        '<b>No son sacrificios.</b> El hebreo dice «tarde-mañana» (<span class="heb" lang="he">עֶרֶב בֹּקֶר</span>, <i>ereb boqer</i>) en singular, como en la creación. Los sacrificios siempre se nombran al revés, «mañana y tarde» (Éxodo 29:39), así que no se puede partir en 1.150 de cada uno.',
       ]) +
-      hi('<i>Jazón</i> es la visión completa; <i>mareh</i>, la parte de la visión sobre el tiempo (8:26). Gabriel explicó la <i>jazón</i>, pero la <i>mareh</i> quedó sin entender (8:27), y por eso vuelve en el capítulo 9.') +
+      hi('<i>Jazón</i> (<span class="heb" lang="he">חָזוֹן</span>) es la visión completa; <i>mareh</i> (<span class="heb" lang="he">מַרְאֶה</span>), la parte de la visión sobre el tiempo (8:26). Gabriel explicó la <i>jazón</i>, pero la <i>mareh</i> quedó sin entender (8:27), y por eso vuelve en el capítulo 9.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 313-316.</p>` },
 
     { t: '🧭 El año, el mes y el día: 22 de octubre de 1844', capa: 'contexto', h:
@@ -144,7 +144,7 @@ module.exports = {
     { t: '🧭 «Será purificado»: el Día de la Expiación y el juicio de Daniel 7', capa: 'contexto', h:
       `<p>En el santuario, cada día los pecados confesados se llevaban al lugar santo; una vez al año, el Día de la Expiación, el sumo sacerdote entraba al lugar santísimo y purificaba el santuario (Levítico 16:16, 29-30). Era un día de juicio: quien no se afligía era cortado de su pueblo (Levítico 23:29).</p>` +
       li([
-        '<b>La palabra.</b> Daniel 8:14 usa <i>nitsdaq</i>: será justificado, vindicado. Las traducciones antiguas la leyeron «purificado», y en la Biblia «justo» y «limpio» van juntos (Job 4:17; 25:4).',
+        '<b>La palabra.</b> Daniel 8:14 usa <i>nitsdaq</i> (<span class="heb" lang="he">נִצְדַּק</span>): será justificado, vindicado. Las traducciones antiguas la leyeron «purificado», y en la Biblia «justo» y «limpio» van juntos (Job 4:17; 25:4).',
         '<b>El mismo suceso que Daniel 7.</b> Daniel 7 pasa del cuerno al juicio (7:9-10) y Daniel 8 del cuerno al santuario purificado (8:14): las dos visiones ponen en el mismo lugar el comienzo del juicio, en 1844.',
         '<b>En el cielo.</b> El templo de Jerusalén ya no existía cuando terminaron los 2.300 años. Cristo entró en 1844 al lugar santísimo del santuario celestial para su obra final: el juicio investigador.',
       ]) +
@@ -161,8 +161,8 @@ module.exports = {
     { t: 'tf', v: '8:8', f: 'c', q: 'Daniel 11:4 ayuda a entender que los «cuatro vientos del cielo» de Daniel 8:8 son los cuatro puntos cardinales hacia donde se repartió el reino de Alejandro.', a: true, e: 'Verdadero: 11:4 dice que su reino sería «repartido hacia los cuatro vientos del cielo». Fuente: Bohr, <i>Daniel 1-10</i>, p. 296 y 298.' },
     { t: 'mc', v: '8:11', f: 'c', q: '¿En qué partes del santuario se hacía el ministerio llamado «el continuo»?', o: ['En el atrio y el lugar santo', 'Solo en el lugar santísimo', 'Solo en el altar del atrio', 'En el santísimo y el atrio'], a: 0, e: 'La palabra describe el servicio diario del sacerdote en el atrio y el lugar santo; nunca se usa para el santísimo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 308.' },
     { t: 'mc', v: '8:11', f: 'c', q: '¿Qué puso el papado en lugar del altar del incienso, que representa la intercesión de Cristo?', o: ['El confesionario, María y los santos', 'El rosario y las procesiones', 'La misa en latín de cada domingo', 'Las peregrinaciones a Roma'], a: 0, e: 'En vez de llevar la oración a Dios por medio de Cristo, el único mediador (1 Timoteo 2:5), se pidió confesarse ante un sacerdote y orar a María y a los santos. Fuente: Bohr, <i>Daniel 1-10</i>, p. 312; apuntes «Cómo quitó el continuo el papado».' },
-    { t: 'mc', v: '8:13', f: 'c', q: '¿Qué abarca la «visión» (jazón) por la que pregunta el ángel en 8:13?', o: ['Toda la visión, desde Persia', 'Solo la obra del cuerno pequeño', 'Solo la profanación de Antíoco', 'Solo los 1.260 años papales'], a: 0, e: 'Es la misma palabra de 8:1-2. Si la visión va de Persia hasta la purificación del santuario, 2.300 días literales no alcanzan: tienen que ser años. Fuente: Bohr, <i>Daniel 1-10</i>, p. 314.' },
-    { t: 'tf', v: '8:14', f: 'c', q: 'Las «tardes y mañanas» de 8:14 son 1.150 sacrificios de la tarde y 1.150 de la mañana.', a: false, e: 'Falso: el hebreo dice «tarde-mañana» en singular, como en la creación, y los sacrificios siempre se nombran «mañana y tarde». Es una lectura para hacer encajar a Antíoco IV Epífanes. Fuente: Bohr, <i>Daniel 1-10</i>, p. 315.' },
+    { t: 'mc', v: '8:13', f: 'c', q: '¿Qué abarca la «visión» (jazón, \u2067חָזוֹן\u2069) por la que pregunta el ángel en 8:13?', o: ['Toda la visión, desde Persia', 'Solo la obra del cuerno pequeño', 'Solo la profanación de Antíoco', 'Solo los 1.260 años papales'], a: 0, e: 'Es la misma palabra de 8:1-2. Si la visión va de Persia hasta la purificación del santuario, 2.300 días literales no alcanzan: tienen que ser años. Fuente: Bohr, <i>Daniel 1-10</i>, p. 314.' },
+    { t: 'tf', v: '8:14', f: 'c', q: 'Las «tardes y mañanas» de 8:14 son 1.150 sacrificios de la tarde y 1.150 de la mañana.', a: false, e: 'Falso: el hebreo dice «tarde-mañana» (\u2067עֶרֶב בֹּקֶר\u2069, ereb boqer) en singular, como en la creación, y los sacrificios siempre se nombran «mañana y tarde». Es una lectura para hacer encajar a Antíoco IV Epífanes. Fuente: Bohr, <i>Daniel 1-10</i>, p. 315.' },
     { t: 'mc', v: '8:14', f: 'c', q: '¿Qué pasaje da el mes y el día en que terminaron los 2.300 años?', o: ['Levítico 23:27', 'Éxodo 12:6', 'Números 29:1', 'Ezequiel 4:6'], a: 0, e: 'Daniel 8:14 da el año (1844) y Levítico 23:27 el día diez del mes séptimo, el Día de la Expiación, que en 1844 cayó el 22 de octubre. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8.' },
     { t: 'mc', v: '8:14', f: 'c', q: '¿Cuándo creyeron primero Miller y sus colaboradores que terminarían los 2.300 días?', o: ['En la primavera de 1844', 'En el otoño de 1843', 'En el invierno de 1844', 'En el verano de 1845'], a: 0, e: 'Primero pensaron en la primavera de 1844, pero la profecía señalaba el otoño de ese año. Fuente: CS 376.' },
     { t: 'tf', v: '8:14', f: 'c', q: 'El 22 de octubre de 1844 es la última fecha del calendario profético que Dios ha revelado.', a: true, e: 'Verdadero. Dios tiene fecha para el cierre de la gracia y la segunda venida, pero no la ha revelado; por eso no se deben fijar fechas. Fuente: Bohr, <i>El calendario del Mesías</i>, p. 8; PE 75.' },

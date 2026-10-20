@@ -184,7 +184,7 @@ const HECHOS = {
     ['purificado', 'santuario.ataque', '8:13', 'la entrega del santuario y el ejército para ser pisoteados'],
     ['purificado', 'santuario.purif juicio.fallo tiempo.periodo', '8:14', 'Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado.'],
     { p: 'purificado', en: 'santuario.purif', t: 'La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio.' },
-    { p: 'purificado', en: 'juicio.fallo', t: 'La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia.' },
+    { p: 'purificado', en: 'juicio.fallo', t: 'La palabra hebrea (<i>nitsdaq</i>, <span class="heb" lang="he">נִצְדַּק</span>) quiere decir también justificado, vindicado: Dios hace justicia.' },
     { p: 'x-periodo', en: 'tiempo.periodo', t: '2.300 años · 457 a.C. – 1844 d.C.', f: '@periodo' },
     { p: 'x-periodo', en: 'tiempo.regla', t: 'Una tarde y una mañana son un día, como en la creación (Génesis 1:5).', f: '@periodo' },
     ['quebrantado', 'tiempo.fin', '8:17', 'la visión es para el tiempo del fin'],

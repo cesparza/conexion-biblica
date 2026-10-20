@@ -260,7 +260,7 @@ const MAPA_VERSICULOS = {
   8: "En su mayor fuerza el gran cuerno es quebrado y salen cuatro cuernos notables «hacia los cuatro vientos del cielo».",
   9: "De uno de ellos sale un cuerno pequeño que crece mucho hacia el sur, el oriente y «la tierra gloriosa».",
   10: "Crece hasta el ejército del cielo y echa por tierra parte del ejército y de las estrellas, y las pisotea.",
-  11: "Se engrandece frente al príncipe de los ejércitos; por él es quitado el continuo (el tamid; «sacrificio» lo agregaron los traductores) y el lugar de su santuario es echado por tierra.",
+  11: "Se engrandece frente al príncipe de los ejércitos; por él es quitado el continuo (el tamid, \u2067תָּמִיד\u2069; «sacrificio» lo agregaron los traductores) y el lugar de su santuario es echado por tierra.",
   12: "A causa de la prevaricación le es entregado el ejército junto con el continuo; «echó por tierra la verdad e hizo cuanto quiso, y prosperó».",
   13: "La pregunta de los dos santos: «¿Hasta cuándo durará la visión del sacrificio continuo, la prevaricación asoladora y la entrega del santuario y el ejército para ser pisoteados?».",
   14: "La respuesta, el versículo eje del adventismo: «Hasta dos mil trescientas tardes y mañanas; luego el santuario será purificado».",

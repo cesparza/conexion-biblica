@@ -5447,3 +5447,6 @@ span.cmp-ult-c{cursor:default}
 .hoja-cab .grupo-voz{align-self:center}
 /* v239: Anterior / Siguiente de las tarjetas son la fila de la hoja (filaNav): mismos botones y el lugar en medio. */
 .tj-nav{padding:.6rem 0 .3rem}
+
+/* v270: la palabra hebrea o aramea original junto a su transliteración (fuente/hebreo.js). */
+.heb{font-family:'SBL Hebrew','Ezra SIL','Taamey Frank CLM','Times New Roman',serif;font-size:1.1em;font-style:normal;direction:rtl;unicode-bidi:isolate;white-space:nowrap}

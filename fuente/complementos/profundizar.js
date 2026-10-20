@@ -38,7 +38,7 @@ module.exports = {
       h: tbl(G, [
           ['Caldeos', 'El pueblo que gobernó Babilonia. También, la clase de sabios y sacerdotes de la corte; su nombre llegó a significar «mago» o «adivino».', 'Daniel 1:4; 2:2, 4; 5:30'],
           ['Ciro el Grande', 'Rey de Persia. Tomó Babilonia en 539 a.C. y dejó volver a los judíos. Dios lo llamó por nombre mucho antes.', 'Isaías 44:28; 45:1; Daniel 1:21; 6:28'],
-          ['Continuo, el', 'En hebreo <i>hatamid</i>: lo diario. Es el ministerio diario de Cristo como sacerdote, que el cuerno pequeño quiso quitar. La palabra «sacrificio» la agregaron los traductores.', 'Daniel 8:11-13; 11:31; 12:11; Hebreos 8:1-2'],
+          ['Continuo, el', 'En hebreo <i>hatamid</i> (<span class="heb" lang="he">הַתָּמִיד</span>): lo diario. Es el ministerio diario de Cristo como sacerdote, que el cuerno pequeño quiso quitar. La palabra «sacrificio» la agregaron los traductores.', 'Daniel 8:11-13; 11:31; 12:11; Hebreos 8:1-2'],
           ['Cuerno', 'Un rey o un reino.', 'Daniel 7:24: «Los diez cuernos significan que de aquel reino se levantarán diez reyes»'],
           ['Cuerno pequeño', 'En Daniel 7, Roma papal: sale de la cuarta bestia y domina 1.260 años. En Daniel 8, Roma en sus dos fases, pagana y papal.', 'Daniel 7:8, 24-25; 8:9-12'],
           ['Darío de Media', 'El rey medo que tomó el reino de Babilonia a los 62 años.', 'Daniel 5:31; 9:1'],

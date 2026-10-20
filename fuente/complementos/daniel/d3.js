@@ -20,7 +20,7 @@ module.exports = {
         li([
           'La idea salió de los sabios del reino: le propusieron hacer una imagen como la del sueño.',
           'Pero <strong>toda de oro</strong>: sin bajar de valor de la cabeza a los pies, como símbolo de una Babilonia eterna que nunca daría paso a otro reino.',
-          'Dos palabras unen los capítulos: «oro» e «imagen». En arameo «imagen» es la misma palabra en los dos; la RV1995 traduce «imagen» en 2:31 y «estatua» en 3:1.',
+          'Dos palabras unen los capítulos: «oro» e «imagen». En arameo «imagen» es la misma palabra en los dos (<i>tselem</i>, <span class="heb" lang="he">צְלֵם</span>); la RV1995 traduce «imagen» en 2:31 y «estatua» en 3:1.',
           'Y un verbo: Dios «levantará» un reino que no será destruido (2:44); el capítulo 3 repite que el rey «levantó» la estatua (3:1, 2, 3, 5, 7, 12, 14, 18).',
         ]) +
         hi(`La imagen no era solo un monumento político, como saludar una bandera. Era un símbolo religioso: el rey los acusa de no servir a «mis dioses» y de no adorar la estatua (3:14).`) +

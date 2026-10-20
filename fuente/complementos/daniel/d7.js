@@ -83,7 +83,7 @@ module.exports = {
 
     { t: '🧭 «Fueron puestos unos tronos»: la escena del juicio (7:9-10, 13)', capa: 'contexto', verso: 9, h:
       tbl(['Lo que ve Daniel', 'Qué enseña'], [
-        ['«Fueron puestos unos tronos»', 'El verbo arameo es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.'],
+        ['«Fueron puestos unos tronos»', 'El verbo arameo (<i>remiv</i>, <span class="heb" lang="he">רְמִיו</span>) es el mismo de «echar» al horno (3:6) y al foso (6:16); aquí es <b>colocar</b>. Los tronos se ponen porque antes no estaban: empieza algo nuevo.'],
         ['«Se sentó un Anciano de días»', 'Dios el Padre, el Eterno (Salmo 90:2), preside el juicio. En 7:22 «vino»: llega al lugar del juicio.'],
         ['Vestido blanco como la nieve; pelo como lana limpia', 'Pureza sin mancha y eternidad.'],
         ['Trono de llamas con ruedas de fuego, y un río de fuego', 'Un trono que se mueve, como el carro de Ezequiel 1. El fuego es el juicio que purifica.'],
@@ -100,7 +100,7 @@ module.exports = {
         ['13-14', 'Cielo', 'Poesía'], ['15-22', 'Tierra', 'Prosa'], ['23-27', 'Cielo', 'Poesía'],
       ]) +
       `<p><b>Cuándo: después de 1798 y antes de la segunda venida.</b> Tres veces el juicio llega como respuesta a la obra del cuerno (7:8 y 9; 7:21 y 22; 7:25 y 26): empieza después de sus 1.260 años (538-1798). En 7:13 el Hijo del hombre va <i>al Padre</i>, al juicio, «no a la tierra» (CS 477), y solo después vuelve a dar el reino. La fecha exacta, 1844, la da Daniel 8:14.</p>` +
-      `<p>Daniel 8:14 dice que el santuario «será purificado». El verbo hebreo (<i>nitsdaq</i>) también es «será vindicado, declarado justo»: es el lenguaje de un tribunal. Daniel 8:14 y 7:9-10 hablan del mismo juicio.</p>` +
+      `<p>Daniel 8:14 dice que el santuario «será purificado». El verbo hebreo (<i>nitsdaq</i>, <span class="heb" lang="he">נִצְדַּק</span>) también es «será vindicado, declarado justo»: es el lenguaje de un tribunal. Daniel 8:14 y 7:9-10 hablan del mismo juicio.</p>` +
       hi('<b>Tres pasos</b>, como en un juicio humano: investigación (se abren los libros, 7:10), sentencia, cuando el Hijo recibe el reino y el fallo sale a favor de los santos (7:14, 22), y ejecución, cuando los santos reciben el reino y el cuerno pierde su dominio (7:22, 26-27). Son las tres fases del juicio, que van más abajo.') +
       `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 120-121 y 275-276; Bohr, <i>La hora del juicio</i>, p. 1 y 6; CS 477; Treiyer, <i>Los tiempos apocalípticos del santuario</i>, p. 139-140.</p>` },
 
