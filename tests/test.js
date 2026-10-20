@@ -3345,5 +3345,28 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(rutas.size>=68&&!faltan.length,'Inventario de '+rutas.size+' imágenes referenciadas sin archivos ausentes'+(faltan.length?': '+faltan.join(', '):''));
 }
 
+/* Daniel 9: cálculo histórico y contrato de la nueva cronología. */
+{
+ const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js'));
+ const {VERS}=require(path.join(RAIZ,'fuente','biblia.js'));
+ const D=LAMINAS.d9,A=montar('d9Anos,d9Suma,d9Escalas,cmpModelo');
+ ok([[49,-408],[483,27],[490,34],[2300,1844]].every(([n,y])=>A.d9Suma(-457,n)===y&&A.d9Anos(-457,y)===n),'Daniel 9 cuenta sin año cero: 49, 483, 490 y 2300 años');
+ ok(A.d9Anos(-1,1)===1&&A.d9Suma(-1,1)===1,'El cambio de era no introduce un año cero');
+ const E=A.d9Escalas();
+ ok(Object.values(E).every(e=>e.bandas.reduce((s,b)=>s+b[0],0)===e.total)&&E.ultima.inicio===483,'Las tres escalas mantienen duración y origen');
+ const C=D.hitos.find(h=>h.id==='cruz');
+ ok((C.avance-E.ultima.inicio)/E.ultima.total===.5&&C.fecha.includes('31'),'La cruz está a 3,5 años del bautismo, en el centro de la última semana');
+ ok(A.cmpModelo().cols.join(',')==='d2,d7,d8','La cronología de Daniel 9 no añade una columna de reinos a Comparar');
+ const n=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/gi,'').replace(/\s+/g,' ').toLowerCase().trim();
+ ok([24,25,26,27].every(v=>D.frases[v].every(f=>n(VERS.d9[v]).includes(n(f.frase)))),'Cada frase explicada pertenece al texto RV1995 del versículo correspondiente');
+ ok(D.frases[24].length===9&&Object.values(D.frases).flat().length===22,'Frase a frase cubre 22 expresiones y los seis propósitos de 9:24');
+ const Q=require(path.join(RAIZ,'fuente','daniel9-preguntas.js'));
+ ok(Q.length===10&&Q.every(q=>q.f==='c'&&q.o.length===4&&q.a>=0&&q.a<4&&q.abierta&&q.pauta)&&new Set(Q.map(q=>q.hito)).size===10,'Diez preguntas de profundización, con cuatro opciones y pauta abierta, separadas del examen');
+ const fuentesD9=montar('bibLineasDe').bibLineasDe('d9').join(' ');
+ ok(fuentesD9.includes('Simposio sobre Apocalipsis')&&fuentesD9.includes('Simposio sobre Daniel'),'La Bibliografía de Daniel recoge los dos simposios de la experiencia');
+ ok(D.hitos.length===10&&new Set(D.hitos.map(h=>h.id)).size===10&&D.hitos.every(h=>h.versos.every(v=>VERS.d9[v])&&h.fuentes.every(k=>D.fuentes[k])),'Los diez hitos tienen cita canónica y fuentes identificables');
+ ok(Object.values(D.frases).flat().every(f=>f.sentido&&f.desarrollo&&f.refs&&f.fuentes.every(k=>D.fuentes[k])),'Cada expresión tiene sentido, desarrollo, referencias y apoyo documental');
+}
+
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
 process.exit(fallos?1:0);

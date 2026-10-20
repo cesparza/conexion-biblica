@@ -1,0 +1,32 @@
+{
+ "fecha": "2026-10-19",
+ "herramienta": "image_gen.imagegen integrada",
+ "tipo": "ilustraciones artísticas originales; no documentación fotográfica",
+ "imagenes": [
+  {
+   "archivo": "oracion.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 9 educational experience. Respectful depiction; every visible detail should fit the stated ancient setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: the elderly Hebrew prophet Daniel, around 538 BC in a modest room in the Persian empire, kneels in prayer beside an open window, studying Hebrew prophetic scrolls on a low wooden desk. Worn linen robe, gray beard, warm lamplight, blue dawn outside with ancient Near Eastern architecture. Camera close enough for quiet emotion; distant Jerusalem is NOT visible outside this Babylonian room. Hope and humility, no angel and no fantasy objects.",
+   "sha256": "4a01b25e4f709a46592258cfdd3c65c8fe7b397dd436a663c3df4fe443987bbd"
+  },
+  {
+   "archivo": "restauracion.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 9 educational experience. Respectful depiction; every visible detail should fit the stated ancient setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Persian-period Jerusalem in the fifth century BC, Jewish families and workers rebuilding stone streets and damaged gates, ancient city on limestone hills, timber beams, baskets and hand tools, a scribe in foreground respectfully holding a rolled royal document with NO legible text. Warm late-afternoon rays, purposeful restoration after exile. Historically plausible modest city, no modern buildings, no medieval European architecture, no Temple of Herod.",
+   "sha256": "9b9c4d91d01444ec38eb99372c4a3d25621d5df88d891b672da18ad7f1ddbc88"
+  },
+  {
+   "archivo": "bautismo.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 9 educational experience. Respectful depiction; every visible detail should fit the stated ancient setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: baptism of Jesus by John in the Jordan river, two first-century Jewish men in simple linen, waist-deep water with reeds and limestone hills, Jesus emerging from immersion with reverent calm, John beside him, small onlookers at a respectful distance. The Holy Spirit represented as ONE natural white dove descending in a subtle shaft of light from the opened cloudy sky, not a giant bird. Natural faces, no halo discs, no text, no modern baptism stage. Wide majestic river landscape and intimate sacred event.",
+   "sha256": "502190ab0b5cde3957fdd8e68a6372e86cbb33529f7863fd53a5a7efb9d75a91"
+  },
+  {
+   "archivo": "cruz.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 9 educational experience. Respectful depiction; every visible detail should fit the stated ancient setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: the crucifixion of Jesus outside first-century Jerusalem, three wooden crosses on a rocky hill, central cross clearly identifiable but seen at a respectful middle distance, small human silhouettes at the foot, ancient city walls distant. Sky darkened with a narrow warm light breaking through the clouds. A solemn redemptive scene, not a horror image; no gore, no exposed genitalia, no invented cosmic clock, no resurrected figure, no modern elements. Layered cinematic depth, powerful restrained composition.",
+   "sha256": "de240103a66cc06a605c01068e05a1898d2046fcdfec332e57e3ded69e5a3b69"
+  },
+  {
+   "archivo": "testigos.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 9 educational experience. Respectful depiction; every visible detail should fit the stated ancient setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: the gospel spreading from Jerusalem after the ministry of Jesus, a small diverse group of first-century Jewish disciples walking out from an ancient limestone city gate onto a road that opens toward distant sunlit lands. One middle-aged disciple speaks with a family of travelers, others carry modest travel sacks. No Jesus figure, no martyrdom or violence, no modern flags, no maps, no Roman basilica. The message moves outward with hope, no ethnic caricatures, truthful human warmth, strong sense of the journey continuing.",
+   "sha256": "ecd01ff229bfe9690df2b779374d6bb1498924ca80203e20c000d63538604dda"
+  }
+ ]
+}

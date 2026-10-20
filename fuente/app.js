@@ -134,6 +134,7 @@ const PIEDRA0=[960,330];
 const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
+  if(L.tipo==='cronologia')return;
   const C=L.comparar&&LAMINAS[L.comparar];
   const fs=(L.tipo==='escenas'?[...(L.precarga||[]),L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
@@ -146,7 +147,7 @@ function lamPrecarga(cid,esc){
 function lamMiniHTML(cid){
   const L=LAMINAS[cid];if(!L)return '';
   const src=f=>lamRuta(L,f);
-  if(L.tipo==='escenas')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
+  if(L.tipo==='escenas'||L.tipo==='cronologia')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
   return '<img src="'+src('babilonia')+'" alt="" loading="lazy">'+(L.capas||[]).map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('');
 }
 function lamTarjeta(cid){
@@ -366,6 +367,7 @@ function lamVeEntrada(k){
 let lamDonde='';
 function lamRecorrido(){
   const L=LAM(),r=[];
+  if(lamEsC())return L.hitos.map(h=>({k:h.id,t:h.corto}));
   L.historia.forEach((h,i)=>r.push({k:'h'+i,t:h.titulo}));
   r.push({k:'est',t:L.verTodo||'La estatua'});
   lamEntradas().forEach(e=>r.push({k:e.k,e,t:lamEntDice(L,e)[0]}));
@@ -376,6 +378,7 @@ function lamRecorrido(){
   return r;
 }
 function lamIr(k){
+  if(lamEsC())return d9Ir(k);
   const r=lamIr0(k);
   /* v232: en el celular, al avanzar, la imagen se ve entera. */
   if(lamModo&&lamModo!=='presentar'&&!lamAncho())lamVeEscena();
@@ -490,6 +493,7 @@ function lamFin(on){
 /* ── Abrir y cerrar ── */
 function lamAbre(cid,modo){
   if(!LAMINAS[cid])return;
+  if(LAMINAS[cid].tipo==='cronologia')return d9Abre(cid,modo);
   lamSinTexto=false;lamId=cid;lamModo=modo;lamSel='';lamPaso=0;lamReto=0;lamBien=0;lamListo=false;lamAnio=null;lamPara();
   const el=document.getElementById('lam'),L=LAM();
   el.hidden=false;el.className='lam'+(modo==='presentar'?' pres':'')+(lamAncho()?' ancho':'')+(lamEsE()?' escenas':'');
@@ -909,8 +913,10 @@ function lamPantalla(){
 function lamCierra(){
   const el=document.getElementById('lam');
   if(!el||el.hidden)return;
+  const foco=lamEsC()?d9AlCerrar():null;
   lamPara();lamCartel(false);clearTimeout(lamOcioT);lamCam++;if(lamEsE())lamLimpia();el.hidden=true;el.innerHTML='';lamModo='';lamDonde='';lugarAnota();
   document.body.classList.remove('leyendo');
+  if(foco&&foco.isConnected&&foco.focus)foco.focus({preventScroll:true});
 }
 
 /* ── La tarjeta dentro de la imagen ── */
@@ -1470,9 +1476,10 @@ function lamResponde(id){
 }
 
 /* ── Presentar ── */
-const lamPasos=()=>{const L=LAM();if(L.tipo==='escenas')return lamPasosE();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
+const lamPasos=()=>{const L=LAM();if(L.tipo==='cronologia')return L.hitos;if(L.tipo==='escenas')return lamPasosE();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
   {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'},...(L.aplica?[{tipo:'aplica'}]:[])];};
 function lamPres(k){
+  if(lamEsC())return d9IrNumero(k);
   if(lamEsE())return lamPresE(k);
   const pasos=lamPasos();if(k<0||k>=pasos.length)return;
   const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();lamVuelo++;const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
@@ -1609,7 +1616,7 @@ function lamPolvo(svg){
 /* v211: con cualquier cambio de tamaño la escena se vuelve a medir (llena el escenario). */
 let lamResT=0;
 if(typeof addEventListener==='function')addEventListener('resize',()=>{
-  if(!lamModo)return;
+  if(!lamModo||lamEsC())return;
   clearTimeout(lamResT);lamResT=setTimeout(()=>{
     const e=document.getElementById('lam');if(!e||e.hidden)return;
     if(lamModo!=='presentar'){lamGeo();lamNavAlto();lamPasosBordes();return;}
@@ -1648,6 +1655,7 @@ function lamPersonaCierra(){
 }
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
+  if(lamEsC())return d9Tecla(e);
   if(lamPersonaAbierta()){if(e.key==='Escape'){e.preventDefault();lamPersonaCierra();}return;}
   if(e.key==='Escape'){lamCierra();return;}
   if(lamModo!=='presentar'){
@@ -4992,6 +5000,7 @@ let hojaTipo=null;
 
 function verVers(btn,cid,de,hasta){
   if(saltaAlTexto(btn,cid,de,hasta))return;
+  if(lamModo&&lamEsC())return d9Ref(cid,de,hasta);
   abreHoja(cid,de,hasta);
 }
 

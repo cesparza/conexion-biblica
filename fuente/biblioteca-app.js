@@ -146,6 +146,9 @@ function bibLineasDe(id){
   const recorre=o=>{if(!o||typeof o!=='object')return;
     for(const [k,v] of Object.entries(o)){if((k==='fuente'||k==='paraleloFuente')&&typeof v==='string')out.push(v);else if(typeof v==='object')recorre(v);}};
   if(typeof LAMINAS!=='undefined'&&LAMINAS[id])recorre(LAMINAS[id]);
+  if(typeof LAMINAS!=='undefined'&&LAMINAS[id]?.tipo==='cronologia')Object.values(LAMINAS[id].fuentes).forEach(f=>{
+    const [autor,...obra]=f.nombre.split(' · ');out.push(autor+', <i>'+obra.join(' · ')+'</i>, '+f.lugar);
+  });
   return out.map(bibSinEt).filter(Boolean);
 }
 /* Una pieza: autor, obra y páginas; o una abreviatura de Elena de White con su
@@ -181,7 +184,7 @@ function bibFuentes(t){
   const lista=Object.values(obras);
   lista.forEach(o=>{if(o.abr&&!o.obra&&nombreAbr[o.abr])o.obra=nombreAbr[o.abr];o.pags.sort((a,b)=>bibNum(a)-bibNum(b));});
   /* El orden de la jerarquía de fuentes de Camilo: las siglas (Elena de White), Bohr, los demás por autor. */
-  const rango=o=>o.abr?0:/^Bohr$/i.test(o.autor)?1:o.tal?3:2;
+  const rango=o=>o.abr||/Elena.*White/i.test(o.autor)?0:/^(?:Esteban )?Bohr$/i.test(o.autor)?1:o.tal?3:2;
   lista.sort((a,b)=>rango(a)-rango(b)||(a.autor||'').localeCompare(b.autor||'','es')||(a.obra||a.abr||a.tal).localeCompare(b.obra||b.abr||b.tal,'es'));
   return (bibCache[t]=lista);
 }
@@ -189,7 +192,7 @@ function bibFuentesHTML(t){
   const L=bibFuentes(t),fila=o=>'<li class="bf-o"><span class="bf-n">'+
     (o.tal?'<span class="bf-t">'+o.tal+'</span>':
       (o.autor?'<b>'+esc(o.autor)+'</b>'+(o.obra||o.abr?', ':''):'')+(o.abr?'<abbr>'+esc(o.abr)+'</abbr>'+(o.obra?' · ':''):'')+(o.obra?'<i>'+esc(o.obra)+'</i>':''))+
-    (o.pags.length?' <span class="bf-p">'+(o.abr?'':'p. ')+esc(o.pags.join(', '))+'</span>':'')+'</span>'+
+    (o.pags.length?' <span class="bf-p">'+(o.abr||/^(?:Cap|Sección|Apéndice|PDF|«)/i.test(o.pags[0])?'':'p. ')+esc(o.pags.join(', '))+'</span>':'')+'</span>'+
     '<span class="bf-c">'+esc(o.caps.join(' · '))+'</span></li>';
   /* Por sigla van como el material las cita (CS, PE, 4T…; casi todas de Elena G. de White, pero
      la sigla sola no dice el autor, así que no se le pone). */

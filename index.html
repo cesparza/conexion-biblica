@@ -5897,6 +5897,125 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 /* Quién estudia, paso 2: el alcance en pastillas dentro de cada categoría. */
 .cat-btn .ac{margin-top:.5rem;text-align:left}
 .cat-btn .ac-chip{min-height:26px;padding:0 9px;font-size:.75rem}
+/* Una escena y una lectura; la página es el único contenedor que se desplaza. */
+.lam.d9{display:block;position:fixed;inset:0;z-index:9000;margin:0;padding:0;overflow:auto;background:#091319;color:#e9ece8;color-scheme:dark;font-family:var(--sans,Arial,sans-serif);line-height:1.5;isolation:isolate}
+.d9 *{box-sizing:border-box}
+.d9 button,.d9 a,.d9 summary{touch-action:manipulation}
+.d9 button{font:inherit;cursor:pointer}
+.d9 button:disabled{opacity:.3;cursor:default}
+.d9 button:focus-visible,.d9 a:focus-visible,.d9 summary:focus-visible,.d9 input:focus-visible{outline:3px solid #efce81;outline-offset:4px}
+.d9-wrap{max-width:1720px;margin:0 auto;padding:0 30px 12px;display:flex;flex-direction:column;min-height:100%}
+.d9-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 0}
+.d9-header>div:first-child{display:grid;gap:1px}.d9-header b{font-size:16px;letter-spacing:.01em}
+.d9-kicker{display:block;color:#ceae6f;font-size:11px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}
+.d9-tools{display:flex;gap:8px;align-items:center}
+.d9-tools button{min-width:44px;min-height:44px;padding:8px 14px;border:1px solid #405057;border-radius:100px;background:#14232a;color:#e9ece8;font-size:13px;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:5px}
+.d9-tools .d9-close{padding:8px;background:#29383c}
+.d9-tools svg{width:17px;height:17px}
+.d9-story{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(350px,1fr);border:1px solid #2d3d42;border-radius:18px;overflow:clip;background:#101f26;min-height:440px}
+.d9-art{margin:0;position:relative;min-height:440px;background:radial-gradient(ellipse at 70% 40%,#344147,#0b171c);overflow:hidden;align-self:stretch}
+.d9-art img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:d9-reveal .65s ease-out both}
+.d9-art:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,12,16,.96),rgba(4,12,16,.2) 55%,transparent 80%);pointer-events:none}
+.d9-art figcaption{position:relative;z-index:1;padding:clamp(24px,3vw,54px);min-height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:12px}
+.d9-art h1{font:400 clamp(32px,3.1vw,58px)/1.08 Georgia,serif;letter-spacing:-.025em;margin:0;color:#fff7e7;max-width:17ch;text-wrap:balance;scroll-margin:20px}
+.d9-scene-date{color:#ebc981;font-size:13px;font-weight:650;letter-spacing:.025em}
+.d9-art-note{position:absolute;z-index:2;top:13px;left:15px;background:#0d161cb3;color:#d5dcd9;padding:4px 8px;font-size:10px;border-radius:4px;max-width:90%}
+.d9-notebook{min-width:0;padding:18px 26px 24px;display:flex;flex-direction:column}
+.d9-reading-tabs{display:flex;align-items:stretch;gap:4px;border-bottom:1px solid #33444a;margin-bottom:22px}
+.d9-reading-tabs button{padding:11px 8px 13px;min-height:44px;border:0;border-bottom:2px solid transparent;background:transparent;color:#b0c0c4;font-size:12px;font-weight:650;flex:1;white-space:nowrap}
+.d9-reading-tabs button[aria-pressed=true]{border-color:#eccb85;color:#f5d99b}
+.d9-panel{min-width:0;max-width:68ch;font-size:15px;line-height:1.65}
+.d9-panel h2{font:400 clamp(21px,1.6vw,29px)/1.3 Georgia,serif;color:#f6ead1;margin:8px 0 16px;text-wrap:balance}
+.d9-panel p{margin:0 0 15px;color:#c4d0d2}
+.d9-panel .d9-ref{font-size:11px;line-height:1.6;color:#93a8ae;margin-top:17px}
+.d9-details{border-top:1px solid #33444a;padding-top:12px;margin-top:20px}
+.d9-details summary{font-size:12px;color:#ecd295;cursor:pointer;min-height:34px}
+.d9-details p{font-size:13px;margin-top:8px}
+.d9-actions{display:flex;gap:22px;flex-wrap:wrap}
+.d9-text-link{border:0;background:transparent;color:#efcf8a;padding:9px 0;min-height:44px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.d9-text-link svg{width:14px;height:14px}
+.d9-bible{font:400 19px/1.75 Georgia,serif;margin-top:15px}
+.d9-bible p{color:#f1e8d7}.d9-bible sup{font:700 10px Arial,sans-serif;color:#d4b66e;padding-right:5px}
+.d9-source{padding:14px 0;border-top:1px solid #314249;font-size:12px}
+.d9-source b{color:#efdfbd;font-size:13px}.d9-source p{margin:5px 0}.d9-source a{color:#e9c983;display:inline-block;padding:9px 0;min-height:36px}
+.d9-time{padding:20px 0 10px}
+.d9-time-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:15px}
+.d9-time-head>div:first-child{display:grid;gap:2px}.d9-time-head b{font-size:15px;font-weight:550}
+.d9-scale{display:flex;padding:4px;border:1px solid #30434a;border-radius:10px;background:#101f26}
+.d9-scale button{border:0;background:transparent;color:#b3c4c7;font-size:12px;min-height:36px;padding:7px 15px;border-radius:7px;white-space:nowrap}
+.d9-scale button[aria-pressed=true]{background:#2a4147;color:#fff1cf}
+.d9-chronology{padding:0 4px}
+.d9-track{display:flex;gap:2px;height:35px;position:relative}
+.d9-band{border:0;color:#fff6db;background:#496a65;min-width:0;padding:0;position:relative;overflow:visible}
+.d9-band:first-child{border-radius:5px 0 0 5px}.d9-band:last-of-type{border-radius:0 5px 5px 0}
+.d9-band-1{background:#66778b}.d9-band-2{background:#d1af69}
+.d9-band span{font-size:11px;font-weight:700;white-space:nowrap}
+.d9-track .d9-band-last span{position:absolute;bottom:39px;right:0;color:#edcc82;font-size:10px}
+.d9-position{position:absolute;top:-4px;height:43px;width:2px;background:#fff3cb;box-shadow:0 0 10px #e4b96a;pointer-events:none;transition:left .6s cubic-bezier(.2,.7,.3,1);transform:translateX(-1px)}
+.d9-position:before{content:'';position:absolute;top:-4px;left:-3px;border:4px solid transparent;border-top-color:#fff3cb}
+.d9-points{display:flex;justify-content:space-between;gap:12px;margin-top:7px}
+.d9-points button{border:0;border-bottom:2px solid transparent;padding:4px 0;min-height:44px;background:transparent;color:#a4b9bf;display:grid;gap:1px;text-align:center;min-width:0}
+.d9-points button:first-child{text-align:left}.d9-points button:last-child{text-align:right}
+.d9-points b{font-size:13px;font-weight:650}.d9-points span{font-size:10px}
+.d9-points [aria-pressed=true]{color:#f4d693;border-bottom-color:#d4b36d}
+.d9-time-note{font-size:11px;color:#91a7ad;margin:10px 0 5px;max-width:110ch}
+.d9-calculation{font-size:12px;color:#b5c5c8;padding:6px 0}
+.d9-calculation summary{color:#d9be85;cursor:pointer;padding:6px 0;min-height:32px}
+.d9-calculation p{max-width:95ch;line-height:1.7}
+.d9-math{display:flex;gap:25px;flex-wrap:wrap;padding-top:10px}.d9-math p{display:grid;gap:5px}.d9-math span{font-size:11px;color:#8ba3ac}.d9-math b{color:#f3d596;font-size:16px}
+.d9-nav{display:grid;grid-template-columns:150px minmax(60px,1fr) 150px;align-items:center;gap:25px;padding:14px 0 8px;border-top:1px solid #2d3d43;background:#091319;margin-top:auto}
+.d9-nav>button{border:1px solid #405057;background:transparent;color:#e2e8e6;border-radius:100px;display:flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:8px 16px;font-size:13px}
+.d9-nav>button.d9-next{background:#e1bd78;color:#12252b;border-color:#e1bd78;font-weight:750}
+.d9-nav svg{width:16px;height:16px}.d9-nav>div{display:grid;gap:5px;text-align:center}
+.d9-nav input[type=range]{width:100%;accent-color:#e5c183;height:20px;padding:0;background:transparent;border:0;box-shadow:none}
+.d9-nav #d9Cuenta{font-size:11px;color:#a8bcc1}
+.d9-status{font-size:12px;color:#e7cb95;min-height:0;text-align:center}.d9-status:not(:empty){padding:10px}
+.d9-verses{display:flex;gap:7px;margin:14px 0}.d9-verses button{min-height:40px;flex:1;border:1px solid #43545a;border-radius:6px;background:transparent;color:#b5c7cd;font-size:13px}
+.d9-verses button[aria-pressed=true]{background:#2b454a;border-color:#b9a16d;color:#fae4af}
+.d9-panel .d9-verse-whole{font:400 16px/1.6 Georgia,serif;color:#f5e5c5;padding:14px 0;border-bottom:1px solid #3b4b50}
+.d9-phrase{border-bottom:1px solid #34464c}.d9-phrase summary{padding:15px 0;cursor:pointer;font-size:14px;font-weight:650;color:#ead8af;list-style:none;display:flex;gap:12px;align-items:baseline}
+.d9-phrase summary:after{content:'+';margin-left:auto;color:#94aeb7}.d9-phrase[open] summary:after{content:'−'}
+.d9-phrase summary span{font-size:10px;min-width:18px;color:#8a9fa7}.d9-phrase>div{padding:0 0 8px 30px;font-size:14px}
+.d9-panel .d9-phrase-source{font-size:10px;color:#8ba1aa}
+.d9-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.d9-pres .d9-panel{font-size:clamp(16px,1.25vw,22px)}
+.d9-pres .d9-story{min-height:480px}.d9-pres .d9-panel h2{font-size:clamp(25px,2vw,36px)}
+@keyframes d9-reveal{from{opacity:.4;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}
+@media(min-width:1600px){.d9-wrap{padding:0 44px 16px}.d9-art{min-height:515px}.d9-notebook{padding:24px 35px 28px}.d9-panel{font-size:16px}}
+@media(max-width:1050px) and (min-width:761px){.d9-wrap{padding:0 18px 12px}.d9-story{grid-template-columns:minmax(0,1.15fr) minmax(330px,1fr)}.d9-notebook{padding:15px 20px}.d9-reading-tabs button{padding-left:4px;padding-right:4px;font-size:11px}}
+@media(max-width:760px){
+ .d9-wrap{padding:0 14px 0}.d9-header{padding:11px 0;gap:8px;order:0}.d9-header b{font-size:13px}.d9-header .d9-kicker{font-size:9px;letter-spacing:.06em}
+ .d9-tools{gap:5px}.d9-tools button{padding:7px 10px;font-size:11px;min-width:40px;min-height:44px}.d9-tools .d9-full,.d9-tool-label{display:none}
+ .d9-story{grid-template-columns:minmax(0,1fr);order:2;border-radius:12px;min-height:0}
+ .d9-art{min-height:0;aspect-ratio:1.6}.d9-art figcaption{position:absolute;inset:0;padding:24px 22px 20px;gap:7px}.d9-art h1{font-size:29px;max-width:19ch}.d9-scene-date{font-size:10px}.d9-art-note{font-size:8px;top:8px;left:9px}
+ .d9-notebook{padding:10px 20px 20px}.d9-reading-tabs{margin-bottom:18px}.d9-reading-tabs button{font-size:10px;padding:10px 3px;min-height:44px}.d9-panel{font-size:15px;line-height:1.65}.d9-panel h2{font-size:24px}
+ .d9-time{order:1;padding:4px 0 14px}.d9-time-head{display:block;margin-bottom:14px}.d9-time-head>div:first-child{display:none}.d9-scale{width:100%;padding:3px}.d9-scale button{flex:1;padding:7px 3px;font-size:11px;min-height:38px}
+ .d9-track{height:26px}.d9-band span{font-size:9px}.d9-position{height:34px}.d9-track .d9-band-last span{bottom:29px;font-size:9px;background:#091319;padding:0 2px}
+ .d9-points{gap:5px;margin-top:4px}.d9-points button{min-height:36px;padding:3px 0}.d9-points b{font-size:10px}.d9-points span{font-size:9px}.d9-time-note{font-size:10px;margin:7px 0 0;line-height:1.5}.d9-calculation{font-size:11px}.d9-calculation summary{min-height:34px;padding:8px 0}
+ .d9-nav{order:3;position:sticky;bottom:0;grid-template-columns:44px minmax(60px,1fr) 44px;gap:16px;padding:12px 0 max(12px,env(safe-area-inset-bottom));margin-top:15px;box-shadow:0 -10px 25px #091319e6;z-index:4}
+ .d9-nav>button{padding:7px;min-height:44px}.d9-nav>button span{display:none}.d9-nav #d9Cuenta{font-size:10px}.d9-status{order:4}
+ .d9-pres .d9-story{min-height:0}.d9-pres .d9-panel{font-size:16px}.d9-pres .d9-panel h2{font-size:25px}.d9-math{gap:12px 25px}
+}
+@media(prefers-reduced-motion:reduce){.d9-art img{animation:none}.d9-position{transition:none}}
+
+.d9-axis{display:flex;justify-content:space-between;color:#a8bdc3;font-size:10px;margin-top:6px}
+.d9-points button{flex:1;border:1px solid #30444b;border-radius:7px;padding:7px 10px;text-align:left;background:#112129}
+.d9-points button:last-child{text-align:left}.d9-points [aria-pressed=true]{background:#263a3e;border-color:#b39c69}
+.d9-track{height:44px}.d9-position{height:52px}.d9-track .d9-band-last span{bottom:48px}
+.d9-scale button,.d9-points button,.d9-calculation summary,.d9-verses button{min-height:44px}
+@media(max-width:760px){.d9-points button{padding:5px 6px}.d9-points b{font-size:10px}.d9-time-head{margin-bottom:16px}.d9-axis{font-size:9px}}
+
+.lam.d9>.d9-wrap{max-width:1680px}
+.d9-nav{position:sticky;bottom:0;z-index:5;box-shadow:0 -10px 25px #091319e6}
+.d9-nav select{font:inherit;font-size:11px;color:#b8ccd1;background:#091319;border:0;border-radius:5px;min-height:36px;max-width:100%;width:auto;margin:0 auto;text-align:center;padding:6px 16px 6px 8px;cursor:pointer}
+.d9-nav select:focus-visible{outline:3px solid #efce81;outline-offset:2px}
+@media(max-width:760px){.d9-nav select{font-size:11px;min-height:38px}.d9-art h1{font-size:28px}}
+
+.d9-actions .d9-practicar{color:#e5f2df;border-top:1px solid #34474a;flex-basis:100%;margin-top:2px}
+.d9-options{display:grid;gap:9px;margin:18px 0}.d9-option{display:flex;align-items:baseline;gap:11px;min-height:52px;width:100%;text-align:left;padding:13px 15px;border:1px solid #465b62;border-radius:9px;color:#d4e1e2;background:#14272f;font-size:14px;line-height:1.5}.d9-option span{font-size:10px;color:#a0b2b5;font-weight:700}.d9-option.correcta{border-color:#78b89b;background:#18382f;color:#e1f5e7}.d9-option.revisar{border-color:#cb9d64;background:#392e23}
+.d9-answer{border-left:2px solid #c6b17e;padding:12px 16px;margin:18px 0;background:#172b31}.d9-answer b{color:#f1d999}.d9-answer p{font-size:13px;margin:8px 0 0}.d9-open-question{padding-top:20px;border-top:1px solid #34474a;margin-top:24px}.d9-open-question h3{font:400 20px/1.4 Georgia,serif;color:#f1e1bf;margin:9px 0}
+
+.d9-ref .vref{color:#c6cdbb;font-size:inherit;text-decoration-color:#647f83}.d9-ref .vref:focus-visible{outline-color:#efce81}
 </style>
 </head>
 <body>
@@ -6474,7 +6593,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '717b0657c584';
+const VERSION_APP = '9a37cdec194a';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -9817,7 +9936,7 @@ const CONTENIDO = {
    "t": "🧭 Las seis metas de las setenta semanas",
    "capa": "contexto",
    "verso": 24,
-   "h": "<p><b>Cuándo:</b> el primer año de Darío el medo (9:1), hacia el 538 a.C., un año después de la caída de Babilonia. Daniel estudiaba los setenta años de Jeremías (9:2) y temía que los 2.300 años de la visión anterior los alargaran.</p><p>Daniel 9:24 dice que en las setenta semanas se cumplirían seis cosas:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>La meta</th><th>Qué significa</th></tr></thead><tbody><tr><td class=\"key\">Terminar la prevaricación</td><td>La palabra es «rebelión». Israel podía terminarla recibiendo al Mesías, o llevarla al extremo rechazándolo. La profecía anuncia lo segundo.</td></tr><tr><td class=\"key\">Poner fin al pecado</td><td>No al hecho de pecar, sino a los pecados: Jesús los cargó en la cruz (Hebreos 9:26-28).</td></tr><tr><td class=\"key\">Expiar la iniquidad</td><td>La reconciliación del hombre con Dios por su muerte (Romanos 5:10).</td></tr><tr><td class=\"key\">Traer la justicia perdurable</td><td>Con su vida sin pecado Jesús tejió un manto de justicia que se acredita al que cree.</td></tr><tr><td class=\"key\">Sellar la visión y la profecía</td><td>Al rechazar al Mesías, Israel cerró el tiempo de las visiones para la nación. Esteban fue el último profeta enviado a Israel.</td></tr><tr><td class=\"key\">Ungir al Santo de los santos</td><td>Jesús y el santuario celestial, ungidos cuando él empezó su ministerio allá.</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329.</p>"
+   "h": "<p><b>Cuándo:</b> el primer año de Darío el medo (9:1), hacia el 538 a.C., un año después de la caída de Babilonia. Daniel estudiaba los setenta años de Jeremías (9:2) y temía que los 2.300 años de la visión anterior los alargaran.</p><p>Daniel 9:24 dice que en las setenta semanas se cumplirían seis cosas:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>La meta</th><th>Qué significa</th></tr></thead><tbody><tr><td class=\"key\">Terminar la prevaricación</td><td>La palabra es «rebelión». Israel podía terminarla recibiendo al Mesías, o llevarla al extremo rechazándolo. La profecía anuncia lo segundo.</td></tr><tr><td class=\"key\">Poner fin al pecado</td><td>No al hecho de pecar, sino a los pecados: Jesús los cargó en la cruz (Hebreos 9:26-28).</td></tr><tr><td class=\"key\">Expiar la iniquidad</td><td>La reconciliación del hombre con Dios por su muerte (Romanos 5:10).</td></tr><tr><td class=\"key\">Traer la justicia perdurable</td><td>Con su vida sin pecado Jesús tejió un manto de justicia que se acredita al que cree.</td></tr><tr><td class=\"key\">Sellar la visión y la profecía</td><td>Bohr relaciona el cierre del testimonio a Israel como nación con Esteban. Es un énfasis interpretativo; no una prohibición universal de profetizar ni el rechazo de toda persona judía.</td></tr><tr><td class=\"key\">Ungir al Santo de los santos</td><td>Jesús y el santuario celestial, ungidos cuando él empezó su ministerio allá.</td></tr></tbody></table></div><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329.</p>"
   },
   {
    "t": "🧭 Cuatro decretos persas y por qué cuenta el de 457",
@@ -59035,6 +59154,166 @@ const BANCO = [
  {
   "cap": "d9",
   "t": "mc",
+  "v": "9:18",
+  "f": "c",
+  "q": "¿Qué aporta el contexto de la oración al estudio de las 70 semanas?",
+  "o": [
+   "La respuesta de Dios une restauración y misericordia",
+   "Daniel pide solo la fecha del nacimiento del Mesías",
+   "Gabriel repite los setenta años que anunció Jeremías",
+   "Daniel ora para aplazar la restauración de Jerusalén"
+  ],
+  "a": 0,
+  "e": "Daniel estudia a Jeremías, confiesa el pecado y pide misericordia por Jerusalén y el santuario. La cronología se recibe dentro de esa relación con Dios. Fuente: Daniel 9:2–3, 16–19; Bohr, Daniel 1–10, pp. 323–326.",
+  "nv": 1
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:24-27",
+  "f": "c",
+  "q": "¿Qué explica la lectura historicista al mantener juntas las divisiones 7 + 62 + 1?",
+  "o": [
+   "Una secuencia de 483 años, porque la última semana queda fuera",
+   "Tres períodos independientes, cada uno con un comienzo distinto",
+   "Una secuencia interrumpida, con la última semana aún en el futuro",
+   "Una secuencia de 490 años, con la última semana unida a las otras"
+  ],
+  "a": 3,
+  "e": "Son 49 + 434 + 7 años. Las 69 semanas llegan al Mesías y la restante completa el mismo período. Fuente: Daniel 9:24–27; DTG, cap. 23; Simposio sobre Daniel, PDF 255–256.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:25",
+  "f": "c",
+  "q": "¿Cómo se fundamenta el año 457 a.C. como inicio de las 70 semanas?",
+  "o": [
+   "Mediante la orden de Ciro, porque todos los decretos tenían igual alcance",
+   "Mediante el año en que Daniel recibió la visita de Gabriel junto al río",
+   "Mediante Esdras 7 y la reconstrucción histórica del reinado de Artajerjes",
+   "Mediante el número 457 que Daniel escribió expresamente en su profecía"
+  ],
+  "a": 2,
+  "e": "Esdras fecha el regreso en el séptimo año del rey. La equivalencia histórica exige examinar su reinado y el calendario civil judío, además del alcance restaurador del decreto. Fuente: Esdras 7:7–9, 12–26; Shea, Simposio sobre Apocalipsis, pp. 446–464.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:25",
+  "f": "c",
+  "q": "¿Qué afirmación sobre el límite de 408 a.C. distingue cálculo y evidencia textual?",
+  "o": [
+   "Se obtiene al dividir en dos partes iguales las primeras 69 semanas",
+   "Es el límite calculado de 49 años, no una fecha expresa en Nehemías",
+   "Es la fecha que Nehemías registra para inaugurar todas las obras",
+   "Demuestra que la obra material del muro duró exactamente 49 años"
+  ],
+  "a": 1,
+  "e": "El límite sale del primer tramo profético. Nehemías 6:15 habla de 52 días para el muro, lo que no debe confundirse con todo el período de restauración. Fuente: Daniel 9:25; Nehemías 6:15; Bohr, Daniel 1–10, pp. 337–340.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:25",
+  "f": "c",
+  "q": "¿Por qué los 483 años conducen al bautismo de Jesús en esta interpretación?",
+  "o": [
+   "El Mesías es el Ungido y Jesús recibe la unción al ser bautizado",
+   "La profecía llega a su nacimiento y el bautismo no tiene relación",
+   "El título Príncipe anuncia su coronación como emperador de Roma",
+   "El período termina con la ascensión, después de todo su ministerio"
+  ],
+  "a": 0,
+  "e": "Mesías significa Ungido; Hechos 10:38 relaciona a Jesús con la unción del Espíritu. DTG sitúa el bautismo en el otoño del 27. Fuente: Lucas 3:21–22; Hechos 10:38; DTG, cap. 23.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:27",
+  "f": "c",
+  "q": "¿Qué conexión bíblica sostiene la lectura mesiánica de «confirmará el pacto con muchos»?",
+  "o": [
+   "La profecía menciona de forma expresa un tratado político moderno",
+   "El contexto relaciona el pacto solo con una alianza militar de Persia",
+   "La palabra pacto no aparece en la oración que introduce el capítulo",
+   "Las palabras de Jesús relacionan su sangre con el pacto y los muchos"
+  ],
+  "a": 3,
+  "e": "Daniel 9:4 habla del Dios que guarda el pacto. Mateo 26:28 une pacto, sangre y muchos en las palabras de Jesús. Fuente: Daniel 9:4, 27; Mateo 26:28; Bohr, Daniel 1–10, pp. 346–347.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:27",
+  "f": "c",
+  "q": "¿Por qué el punto medio de la semana se sitúa en la primavera del 31 d.C.?",
+  "o": [
+   "Al bautismo hay que añadir siete años completos para llegar a la cruz",
+   "La mitad se calcula trasladando la última semana después del año 1844",
+   "Del otoño del 27 a la primavera del 31 transcurren tres años y medio",
+   "Del otoño del 27 a la primavera del 31 transcurren cuatro años completos"
+  ],
+  "a": 2,
+  "e": "Del otoño del 27 al del 30 hay tres años; hasta la primavera del 31 hay medio año más. El cese de los sacrificios se entiende por su cumplimiento en Cristo, no como la desaparición inmediata de los ritos. Fuente: Daniel 9:27; Mateo 27:51; DTG, cap. 23; Simposio sobre Daniel, PDF 256.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:24",
+  "f": "c",
+  "q": "¿Qué conclusión mantiene juntos el final de las 70 semanas y Romanos 11:1?",
+  "o": [
+   "La cruz pone fin a los 490 años y deja sin lugar al testimonio apostólico",
+   "El cierre del período cambia la misión sin excluir a las personas judías",
+   "El cierre del período impide a toda persona judía recibir a Jesucristo",
+   "La fecha del martirio está escrita como 34 d.C. en el relato de Hechos"
+  ],
+  "a": 1,
+  "e": "La cronología relaciona el término con Esteban y la dispersión. Hechos narra esos sucesos sin dar ese año. Pablo niega que Dios haya rechazado a todo su pueblo. Fuente: Hechos 7:54–60; 8:1–4; Romanos 11:1–5; DTG, cap. 23.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:21-24",
+  "f": "c",
+  "q": "¿Cómo argumenta la interpretación adventista la conexión entre Daniel 8 y 9?",
+  "o": [
+   "Por Gabriel, la visión, el contexto y el sentido del período delimitado",
+   "Por una frase de Daniel 9 que escribe de forma expresa el año 1844",
+   "Porque las 70 semanas y los 2.300 años tienen que terminar juntos",
+   "Porque el fin de los 2.300 años señala la segunda venida a la tierra"
+  ],
+  "a": 0,
+  "e": "La relación no depende únicamente de traducir determinadas como cortadas. Se examinan varios vínculos; 490 + 1.810 = 2.300, desde 457 a.C. hasta 1844. Fuente: Daniel 8:26–27; 9:21–24; CS, cap. 18; Shea, Simposio sobre Daniel, PDF 251–254.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
+  "v": "9:18",
+  "f": "c",
+  "q": "¿Qué uso de la cronología conserva el propósito del capítulo?",
+  "o": [
+   "Extender los 490 años para descubrir el día de la segunda venida",
+   "Reemplazar la oración con un dominio exacto de los datos históricos",
+   "Demostrar que conocer las fechas hace innecesaria la fe en Cristo",
+   "Comprender la obra del Mesías y confiar en la misericordia de Dios"
+  ],
+  "a": 3,
+  "e": "La oración apela a la misericordia y la respuesta presenta al Mesías y su obra. El capítulo no permite fechar la segunda venida. Fuente: Daniel 9:18, 24–27; Hebreos 4:14–16; Mateo 24:36; DTG, cap. 23.",
+  "nv": 2
+ },
+ {
+  "cap": "d9",
+  "t": "mc",
   "v": "9:24",
   "f": "c",
   "q": "¿Qué es «la prevaricación» que terminaría con las setenta semanas?",
@@ -59053,7 +59332,7 @@ const BANCO = [
   "t": "mc",
   "v": "9:24",
   "f": "c",
-  "q": "¿Qué significa que las setenta semanas iban a «sellar la visión y la profecía»?",
+  "q": "Según el énfasis de Bohr, ¿qué significa «sellar la visión y la profecía» para Israel como nación?",
   "o": [
    "Que cesaron las visiones dadas a Israel",
    "Que el libro de Daniel quedó cerrado",
@@ -59061,8 +59340,8 @@ const BANCO = [
    "Que terminó la obra de Juan el Bautista"
   ],
   "a": 0,
-  "e": "Al rechazar al Mesías, la nación cerró el tiempo de las visiones para ella; Esteban, que vio a Cristo en visión, fue el último profeta enviado a Israel. Fuente: Bohr, <i>Daniel 1-10</i>, p. 328.",
-  "nv": 1
+  "e": "Bohr relaciona el cierre con Esteban y el testimonio dirigido a Israel como nación. Es su énfasis interpretativo; no significa que Dios dejara de revelar su voluntad a toda persona judía ni que cesaran los profetas en el mundo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 328.",
+  "nv": 2
  },
  {
   "cap": "d9",
@@ -68394,6 +68673,695 @@ const LAMINAS = {
      "Antes de eso está la cuarta etapa de Roma, leída en paralelo con Apocalipsis 13:3, 11-15: la restauración final de su poder perseguidor es futura. No empieza en 1798; ese año corresponde a la herida. No se fija una fecha para su curación (CS 439). Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26)."
     ],
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 63; CS 636 y 698-703."
+   }
+  ]
+ },
+ "d9": {
+  "tipo": "cronologia",
+  "libro": "Daniel 9",
+  "titulo": "Las setenta semanas: el Mesías en el centro",
+  "dir": "d9/",
+  "miniF": "bautismo",
+  "portada": "oracion",
+  "invita": "Recorre las 70 semanas, amplía la última y descubre su conexión con Daniel 8. Cada hito tiene texto bíblico, explicación y fuentes.",
+  "frases": {
+   "24": [
+    {
+     "frase": "Setenta semanas",
+     "sentido": "Es el período completo anunciado por Gabriel: setenta unidades de siete.",
+     "desarrollo": "La lectura de semanas de años da 70 × 7 = 490 años. No son los setenta años del exilio que Daniel había leído en Jeremías. El horizonte de la respuesta es mayor y conduce al Mesías. Levítico 25:8 ofrece un antecedente bíblico del cómputo de semanas de años.",
+     "refs": "Daniel 9:2, 24–27; Levítico 25:8. DTG, cap. 23; Simposio sobre Apocalipsis, pp. 444–446.",
+     "fuentes": [
+      "dtg",
+      "sima"
+     ]
+    },
+    {
+     "frase": "están determinadas",
+     "sentido": "Dios ha delimitado un período para el pueblo y la ciudad por los que Daniel ora.",
+     "desarrollo": "El verbo hebreo ḥātak solo aparece aquí en la Biblia hebrea. La idea de «cortar» fundamenta la lectura adventista que separa los 490 años de los 2.300 de Daniel 8. Shea advierte que el argumento lingüístico favorece esa lectura, pero no la prueba por sí solo: también se examinan el contexto y la continuidad de la explicación de Gabriel.",
+     "refs": "Daniel 8:26–27; 9:21–24. Bohr, pp. 325–326; Simposio sobre Daniel, PDF 251–254.",
+     "fuentes": [
+      "bohr",
+      "simd",
+      "cs"
+     ]
+    },
+    {
+     "frase": "sobre tu pueblo y sobre tu santa ciudad",
+     "sentido": "En el contexto inmediato son Israel y Jerusalén, mencionados en la oración de Daniel.",
+     "desarrollo": "La profecía responde a una petición concreta por un pueblo, una ciudad y un santuario desolados. Presenta un período especial de oportunidad y responsabilidad en relación con el Mesías. El fin de ese período no significa que una persona judía deje de poder recibir a Cristo; Romanos 11 rechaza esa conclusión.",
+     "refs": "Daniel 9:16–20, 24; Hechos 8:1–4; Romanos 11:1–5. DTG, cap. 23.",
+     "fuentes": [
+      "dtg",
+      "bohr",
+      "simd"
+     ]
+    },
+    {
+     "frase": "para terminar la prevaricación",
+     "sentido": "Prevaricación significa aquí transgresión o rebelión contra Dios.",
+     "desarrollo": "Daniel acaba de confesar la desobediencia de su pueblo. La respuesta mira hacia su desenlace frente al Mesías. Bohr enfatiza que rechazar a Cristo lleva la rebelión nacional a su culminación. No debe confundirse ese énfasis con la afirmación de que el pecado desapareció de la tierra al concluir las 70 semanas, ni aplicarse como condena colectiva de una etnia.",
+     "refs": "Daniel 9:5–11, 24; Mateo 21:33–43; Hechos 7:51–60. Bohr, pp. 327–328.",
+     "fuentes": [
+      "bohr"
+     ]
+    },
+    {
+     "frase": "poner fin al pecado",
+     "sentido": "La profecía anuncia una respuesta decisiva al pecado dentro de la obra mesiánica.",
+     "desarrollo": "En el conjunto del pasaje, la muerte del Mesías y la expiación permiten entender esa respuesta. Bohr también subraya el pecado que llega a su culminación al rechazarlo. Conviene distinguir ambos aspectos: Cristo ofrece el remedio suficiente, y el ser humano puede resistirlo. El texto no afirma que toda persona se volvió impecable en el año 34.",
+     "refs": "Daniel 9:24, 26–27; Hebreos 9:26; 10:10–14. Bohr, pp. 327–328.",
+     "fuentes": [
+      "bohr",
+      "simd"
+     ]
+    },
+    {
+     "frase": "expiar la iniquidad",
+     "sentido": "Expiar es tratar con la culpa y el pecado para hacer posible la reconciliación con Dios.",
+     "desarrollo": "El versículo 24 anuncia el propósito; el 26 presenta la muerte del Mesías. Al relacionarlos con Isaías 53 y Hebreos 9–10, la lectura mesiánica reconoce el sacrificio de Cristo. La sangre de animales señalaba hacia él; su entrega es suficiente. Esto no elimina su ministerio posterior como nuestro Sumo Sacerdote.",
+     "refs": "Daniel 9:24, 26; Isaías 53:5–6; Hebreos 9:12–15; 10:10–14. Simposio sobre Daniel, PDF 256–257.",
+     "fuentes": [
+      "simd",
+      "bohr",
+      "dtg"
+     ]
+    },
+    {
+     "frase": "para traer la justicia perdurable",
+     "sentido": "La respuesta de Dios ofrece una justicia duradera, no un arreglo temporal basado en méritos humanos.",
+     "desarrollo": "Shea relaciona esta justicia con la expiación realizada por el Mesías. Romanos 3 explica que Dios justifica al que tiene fe en Jesús. Bohr distingue la justicia que recibimos en Cristo ahora del mundo futuro donde morará la justicia. No se afirma que toda injusticia histórica terminara al cumplirse los 490 años.",
+     "refs": "Daniel 9:18, 24; Romanos 3:21–26; 2 Pedro 3:13. Simposio sobre Daniel, PDF 257; Bohr, p. 328.",
+     "fuentes": [
+      "simd",
+      "bohr"
+     ]
+    },
+    {
+     "frase": "sellar la visión y la profecía",
+     "sentido": "Sellar puede expresar cierre o confirmación; esta frase debe leerse dentro de toda la profecía.",
+     "desarrollo": "El cumplimiento mesiánico confirma la confiabilidad del mensaje. Bohr pone el énfasis en el cierre del testimonio profético dirigido a Israel como nación y relaciona a Esteban con ese desenlace. Ese énfasis interpretativo no autoriza a decir que Dios dejó de revelar su voluntad a todas las personas judías, ni que nunca habría profetas después del año 34.",
+     "refs": "Daniel 9:24; Hechos 7:55–60. Bohr, p. 328; CS, cap. 18.",
+     "fuentes": [
+      "bohr",
+      "cs"
+     ]
+    },
+    {
+     "frase": "ungir al Santo de los santos",
+     "sentido": "La expresión hebrea «santo de santos» requiere distinguir la unción del santuario de la unción del Mesías en su bautismo.",
+     "desarrollo": "Shea estudia su uso en el Antiguo Testamento y lo aplica al santuario celestial y su inauguración para el ministerio de Cristo. Bohr incluye al santuario y a Cristo como Sacerdote y Rey. La unción inaugural se vincula con su ascensión y Pentecostés; no debe trasladarse a 1844 ni reducirse a ungir un cuarto del santuario.",
+     "refs": "Éxodo 40:9–15; Hechos 2:32–36; Hebreos 8:1–5. Simposio sobre Daniel, PDF 257–258; Bohr, pp. 328–329.",
+     "fuentes": [
+      "simd",
+      "bohr"
+     ]
+    }
+   ],
+   "25": [
+    {
+     "frase": "Sabe, pues, y entiende",
+     "sentido": "Gabriel llama a Daniel a comprender la explicación, no solo a memorizar números.",
+     "desarrollo": "La invitación continúa la de 9:22–23. La profecía se estudia siguiendo las relaciones entre sus frases: punto de partida, duración, llegada del Mesías y reconstrucción. El cálculo es una herramienta para entender el mensaje, no su finalidad.",
+     "refs": "Daniel 9:22–25. Bohr, pp. 325–326.",
+     "fuentes": [
+      "bohr"
+     ]
+    },
+    {
+     "frase": "desde la salida de la orden para restaurar y edificar a Jerusalén",
+     "sentido": "La frase establece el comienzo del período y especifica qué debe autorizar la orden.",
+     "desarrollo": "No basta escoger cualquier decreto persa. Ciro inicia el retorno y la reconstrucción del templo; Darío la confirma. La lectura adoptada encuentra en Esdras 7 una restauración más amplia, con autoridad judicial y religiosa. Shea fundamenta el año 457 a.C. por el reinado de Artajerjes y el calendario civil judío; Nehemías 2 continúa después la reconstrucción.",
+     "refs": "Esdras 1:1–4; 6:1–12; 7:12–26; Nehemías 2. Simposio sobre Apocalipsis, pp. 446–464; Bohr, pp. 330–340.",
+     "fuentes": [
+      "dtg",
+      "bohr",
+      "sima"
+     ]
+    },
+    {
+     "frase": "hasta el Mesías Príncipe",
+     "sentido": "El punto de llegada es el Mesías, el Ungido, presentado también como Príncipe.",
+     "desarrollo": "La interpretación mesiánica cristiana identifica a Jesús. El Nuevo Testamento relaciona su unción con el Espíritu Santo y su bautismo. La cronología conduce al inicio de su ministerio, no a su nacimiento. El título dirige la atención hacia su autoridad y su obra, no solamente hacia una fecha.",
+     "refs": "Lucas 3:21–22; Juan 1:41; Hechos 10:38. DTG, cap. 23; Simposio sobre Daniel, PDF 255.",
+     "fuentes": [
+      "dtg",
+      "simd",
+      "sima"
+     ]
+    },
+    {
+     "frase": "habrá siete semanas y sesenta y dos semanas",
+     "sentido": "Los dos tramos suman 69 semanas: 49 + 434 = 483 años.",
+     "desarrollo": "Se distinguen las primeras siete por la restauración de la ciudad y se cuentan juntas con las 62 hasta el Mesías. Shea examina la puntuación hebrea y defiende esa lectura conjunta. Desde 457 a.C. hasta 27 d.C. hay 483 años porque no existe año cero. La semana restante se explica en el versículo 27.",
+     "refs": "Daniel 9:25–27. Simposio sobre Apocalipsis, pp. 444–446; DTG, cap. 23.",
+     "fuentes": [
+      "sima",
+      "dtg",
+      "simd"
+     ]
+    },
+    {
+     "frase": "se volverán a edificar la plaza y el muro en tiempos angustiosos",
+     "sentido": "La restauración no ocurre sin oposición ni dificultades.",
+     "desarrollo": "Esdras y Nehemías muestran resistencia a la reconstrucción y esfuerzos por reorganizar al pueblo. Los 49 años son el primer tramo profético; no significan que el muro requirió 49 años de obra. El límite de 408 a.C. es una fecha calculada; Nehemías no registra ese año como la fecha final de toda la restauración.",
+     "refs": "Esdras 4:12–23; Nehemías 4; 6:15. Bohr, pp. 337–340; Simposio sobre Daniel, PDF 255.",
+     "fuentes": [
+      "bohr",
+      "simd"
+     ]
+    }
+   ],
+   "26": [
+    {
+     "frase": "Después de las sesenta y dos semanas",
+     "sentido": "Las 62 semanas siguen a las primeras siete; «después» nos lleva más allá de las 69.",
+     "desarrollo": "El versículo no vuelve a empezar el cómputo desde cero. La llegada del Mesías ha cerrado los primeros 483 años. Su muerte ocurre después de ese punto; el versículo 27 precisa que sucede a la mitad de la última semana.",
+     "refs": "Daniel 9:25–27. DTG, cap. 23; Simposio sobre Daniel, PDF 255–256.",
+     "fuentes": [
+      "dtg",
+      "simd"
+     ]
+    },
+    {
+     "frase": "se quitará la vida al Mesías, y nada ya le quedará",
+     "sentido": "El Mesías no muere de forma natural: le quitan la vida y queda despojado.",
+     "desarrollo": "La RV1995 dice «nada ya le quedará»; otras traducciones expresan la frase de manera distinta. No conviene reemplazarla por «mas no por sí» mientras se afirma estar citando RV1995. Shea ve en la frase el rechazo que acompaña su muerte. Su carácter salvador se explica al relacionarla con Isaías 53 y la expiación de 9:24.",
+     "refs": "Daniel 9:24, 26; Isaías 53:8–12. Simposio sobre Daniel, PDF 255–256; Bohr, pp. 340–341.",
+     "fuentes": [
+      "simd",
+      "bohr"
+     ]
+    },
+    {
+     "frase": "El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario",
+     "sentido": "Se anuncia la destrucción de Jerusalén y su santuario; la identidad del príncipe requiere interpretación.",
+     "desarrollo": "Una lectura historicista tradicional entiende a Tito y los romanos. Bohr y el argumento estructural de Shea identifican al príncipe con el Mesías y distinguen la responsabilidad del pueblo de la ejecución material por los ejércitos romanos. Ambas lecturas se presentan como interpretaciones, sin culpar colectivamente a las personas judías. La destrucción del año 70 ocurre después de las 70 semanas.",
+     "refs": "Daniel 9:26; Mateo 23:37–38; 24:1–2; Lucas 21:20. Bohr, pp. 341–345; Simposio sobre Daniel, PDF 248–249.",
+     "fuentes": [
+      "bohr",
+      "simd"
+     ]
+    },
+    {
+     "frase": "su final llegará como una inundación, y hasta el fin de la guerra durarán las devastaciones",
+     "sentido": "La imagen de una inundación expresa una destrucción arrolladora.",
+     "desarrollo": "El lenguaje profético puede comparar a un ejército con una corriente que invade; Isaías 8 ofrece un paralelo. La frase describe guerra y desolación, no obliga a imaginar un diluvio literal en Jerusalén. Tampoco añade una fecha nueva para calcular la segunda venida.",
+     "refs": "Isaías 8:7–8; Daniel 9:26; Lucas 21:20–24. Bohr, p. 345.",
+     "fuentes": [
+      "bohr"
+     ]
+    }
+   ],
+   "27": [
+    {
+     "frase": "Por otra semana más confirmará el pacto con muchos",
+     "sentido": "La semana restante completa las setenta. En la lectura mesiánica, Cristo hace firme el pacto.",
+     "desarrollo": "El pacto ya está en la oración de Daniel 9:4. Jesús une pacto, sangre y muchos en la última cena. La secuencia 27–34 incluye su ministerio y el testimonio apostólico especialmente dirigido a Israel. No se introduce un salto de siglos entre las semanas 69 y 70 ni un tratado político moderno.",
+     "refs": "Daniel 9:4, 25–27; Mateo 26:28; Romanos 15:8. DTG, cap. 23; Bohr, pp. 346–347; Simposio sobre Daniel, PDF 255–256.",
+     "fuentes": [
+      "dtg",
+      "bohr",
+      "simd"
+     ]
+    },
+    {
+     "frase": "a la mitad de la semana hará cesar el sacrificio y la ofrenda",
+     "sentido": "La mitad de siete años son tres años y medio: el punto central es la muerte de Cristo.",
+     "desarrollo": "Del otoño del 27 a la primavera del 31 transcurren tres años y medio. El velo rasgado en el templo señala que el símbolo ha encontrado su cumplimiento. Los sacrificios no dejan de practicarse físicamente ese mismo día; pierden su función de anunciar una muerte todavía futura. Hebreos explica por qué la entrega de Cristo es suficiente y definitiva.",
+     "refs": "Mateo 27:50–51; Hebreos 9:26–28; 10:10–14. DTG, cap. 23; Bohr, p. 348; Simposio sobre Daniel, PDF 256.",
+     "fuentes": [
+      "dtg",
+      "bohr",
+      "simd"
+     ]
+    },
+    {
+     "frase": "Después, con la muchedumbre de las abominaciones, vendrá el desolador",
+     "sentido": "La profecía vuelve del Mesías al destino trágico de la ciudad y el santuario.",
+     "desarrollo": "El lenguaje presenta abominación y desolación; no convierte a Cristo en el autor de la maldad. Jesús relaciona la desolación de Jerusalén con la llegada de ejércitos. La lectura seguida conecta esta consecuencia con la destrucción romana, sin incluir el año 70 dentro de los 490 años ni usar el pasaje para condenar a una etnia.",
+     "refs": "Daniel 9:26–27; Mateo 24:15–16; Lucas 21:20–24. Bohr, pp. 342–345; CS, cap. 1.",
+     "fuentes": [
+      "bohr",
+      "cs"
+     ]
+    },
+    {
+     "frase": "hasta que venga la consumación y lo que está determinado se derrame sobre el desolador",
+     "sentido": "La desolación no queda fuera del juicio de Dios: también el poder destructor tiene un límite.",
+     "desarrollo": "El cierre anuncia que lo determinado llegará a su desenlace. El mal y la violencia no reciben la última palabra. Esta cláusula no proporciona otra cantidad de años para extender la línea de tiempo ni autoriza fijar la fecha de la segunda venida. La esperanza descansa en la justicia de Dios y la obra del Mesías.",
+     "refs": "Daniel 9:27; Mateo 24:36. Bohr, sección de Daniel 9; CS, cap. 1.",
+     "fuentes": [
+      "bohr",
+      "cs"
+     ]
+    }
+   ]
+  },
+  "preguntas": [
+   {
+    "hito": "oracion",
+    "t": "mc",
+    "v": "9:18",
+    "q": "¿Qué aporta el contexto de la oración al estudio de las 70 semanas?",
+    "o": [
+     "La respuesta de Dios une restauración y misericordia",
+     "Daniel pide solo la fecha del nacimiento del Mesías",
+     "Gabriel repite los setenta años que anunció Jeremías",
+     "Daniel ora para aplazar la restauración de Jerusalén"
+    ],
+    "a": 0,
+    "e": "Daniel estudia a Jeremías, confiesa el pecado y pide misericordia por Jerusalén y el santuario. La cronología se recibe dentro de esa relación con Dios. Fuente: Daniel 9:2–3, 16–19; Bohr, Daniel 1–10, pp. 323–326.",
+    "abierta": "¿Cómo cambia tu lectura de la profecía cuando comienzas por Daniel 9:18?",
+    "pauta": "Relaciona la confianza en las muchas misericordias de Dios con la respuesta acerca del Mesías. Las fechas deben conducir a comprender su obra, no a sustituir la oración por un cálculo."
+   },
+   {
+    "hito": "tiempo",
+    "t": "mc",
+    "v": "9:24-27",
+    "q": "¿Qué explica la lectura historicista al mantener juntas las divisiones 7 + 62 + 1?",
+    "o": [
+     "Una secuencia de 483 años, porque la última semana queda fuera",
+     "Tres períodos independientes, cada uno con un comienzo distinto",
+     "Una secuencia interrumpida, con la última semana aún en el futuro",
+     "Una secuencia de 490 años, con la última semana unida a las otras"
+    ],
+    "a": 3,
+    "e": "Son 49 + 434 + 7 años. Las 69 semanas llegan al Mesías y la restante completa el mismo período. Fuente: Daniel 9:24–27; DTG, cap. 23; Simposio sobre Daniel, PDF 255–256.",
+    "abierta": "Explica por qué no basta memorizar «490» para comprender la estructura.",
+    "pauta": "Nombra el inicio, los tres tramos y el punto de llegada de las 69 semanas. Luego ubica el ministerio de Cristo y la cruz dentro de la última semana."
+   },
+   {
+    "hito": "decreto",
+    "t": "mc",
+    "v": "9:25",
+    "q": "¿Cómo se fundamenta el año 457 a.C. como inicio de las 70 semanas?",
+    "o": [
+     "Mediante la orden de Ciro, porque todos los decretos tenían igual alcance",
+     "Mediante el año en que Daniel recibió la visita de Gabriel junto al río",
+     "Mediante Esdras 7 y la reconstrucción histórica del reinado de Artajerjes",
+     "Mediante el número 457 que Daniel escribió expresamente en su profecía"
+    ],
+    "a": 2,
+    "e": "Esdras fecha el regreso en el séptimo año del rey. La equivalencia histórica exige examinar su reinado y el calendario civil judío, además del alcance restaurador del decreto. Fuente: Esdras 7:7–9, 12–26; Shea, Simposio sobre Apocalipsis, pp. 446–464.",
+    "abierta": "¿Por qué importa distinguir entre restaurar la comunidad y construir un edificio?",
+    "pauta": "Compara la reconstrucción del templo con las facultades judiciales y religiosas de Esdras 7:25–26. No afirmes que todos los decretos persas autorizaban exactamente lo mismo."
+   },
+   {
+    "hito": "restauracion",
+    "t": "mc",
+    "v": "9:25",
+    "q": "¿Qué afirmación sobre el límite de 408 a.C. distingue cálculo y evidencia textual?",
+    "o": [
+     "Se obtiene al dividir en dos partes iguales las primeras 69 semanas",
+     "Es el límite calculado de 49 años, no una fecha expresa en Nehemías",
+     "Es la fecha que Nehemías registra para inaugurar todas las obras",
+     "Demuestra que la obra material del muro duró exactamente 49 años"
+    ],
+    "a": 1,
+    "e": "El límite sale del primer tramo profético. Nehemías 6:15 habla de 52 días para el muro, lo que no debe confundirse con todo el período de restauración. Fuente: Daniel 9:25; Nehemías 6:15; Bohr, Daniel 1–10, pp. 337–340.",
+    "abierta": "¿Cómo explicarías la diferencia entre una fecha calculada y una fecha expresamente narrada?",
+    "pauta": "Usa 408 a.C. como ejemplo del primer caso y los 52 días de Nehemías como dato del relato. Una interpretación puede ser razonada sin convertirse por ello en una cita literal."
+   },
+   {
+    "hito": "mesias",
+    "t": "mc",
+    "v": "9:25",
+    "q": "¿Por qué los 483 años conducen al bautismo de Jesús en esta interpretación?",
+    "o": [
+     "El Mesías es el Ungido y Jesús recibe la unción al ser bautizado",
+     "La profecía llega a su nacimiento y el bautismo no tiene relación",
+     "El título Príncipe anuncia su coronación como emperador de Roma",
+     "El período termina con la ascensión, después de todo su ministerio"
+    ],
+    "a": 0,
+    "e": "Mesías significa Ungido; Hechos 10:38 relaciona a Jesús con la unción del Espíritu. DTG sitúa el bautismo en el otoño del 27. Fuente: Lucas 3:21–22; Hechos 10:38; DTG, cap. 23.",
+    "abierta": "Explica el cálculo 457 + 27 − 1 = 483 y su significado cristológico.",
+    "pauta": "Primero aclara que entre 1 a.C. y 1 d.C. no hay año cero. Después relaciona el resultado con la unción de Jesús y el inicio de su ministerio, no con su nacimiento."
+   },
+   {
+    "hito": "pacto",
+    "t": "mc",
+    "v": "9:27",
+    "q": "¿Qué conexión bíblica sostiene la lectura mesiánica de «confirmará el pacto con muchos»?",
+    "o": [
+     "La profecía menciona de forma expresa un tratado político moderno",
+     "El contexto relaciona el pacto solo con una alianza militar de Persia",
+     "La palabra pacto no aparece en la oración que introduce el capítulo",
+     "Las palabras de Jesús relacionan su sangre con el pacto y los muchos"
+    ],
+    "a": 3,
+    "e": "Daniel 9:4 habla del Dios que guarda el pacto. Mateo 26:28 une pacto, sangre y muchos en las palabras de Jesús. Fuente: Daniel 9:4, 27; Mateo 26:28; Bohr, Daniel 1–10, pp. 346–347.",
+    "abierta": "¿Qué diferencia hay entre identificar el pacto por el contexto y asignarle un protagonista externo al pasaje?",
+    "pauta": "Comienza por el Mesías de 9:25–26 y el pacto de 9:4. Conecta después las palabras de Jesús, indicando que esta es una lectura mesiánica argumentada."
+   },
+   {
+    "hito": "cruz",
+    "t": "mc",
+    "v": "9:27",
+    "q": "¿Por qué el punto medio de la semana se sitúa en la primavera del 31 d.C.?",
+    "o": [
+     "Al bautismo hay que añadir siete años completos para llegar a la cruz",
+     "La mitad se calcula trasladando la última semana después del año 1844",
+     "Del otoño del 27 a la primavera del 31 transcurren tres años y medio",
+     "Del otoño del 27 a la primavera del 31 transcurren cuatro años completos"
+    ],
+    "a": 2,
+    "e": "Del otoño del 27 al del 30 hay tres años; hasta la primavera del 31 hay medio año más. El cese de los sacrificios se entiende por su cumplimiento en Cristo, no como la desaparición inmediata de los ritos. Fuente: Daniel 9:27; Mateo 27:51; DTG, cap. 23; Simposio sobre Daniel, PDF 256.",
+    "abierta": "Une «expiar la iniquidad» con «hará cesar el sacrificio y la ofrenda».",
+    "pauta": "Explica cómo el propósito de 9:24 se ilumina por la muerte del Mesías y por Hebreos 10:10–14. Distingue la suficiencia de la cruz del ministerio sacerdotal posterior de Cristo."
+   },
+   {
+    "hito": "mision",
+    "t": "mc",
+    "v": "9:24",
+    "q": "¿Qué conclusión mantiene juntos el final de las 70 semanas y Romanos 11:1?",
+    "o": [
+     "La cruz pone fin a los 490 años y deja sin lugar al testimonio apostólico",
+     "El cierre del período cambia la misión sin excluir a las personas judías",
+     "El cierre del período impide a toda persona judía recibir a Jesucristo",
+     "La fecha del martirio está escrita como 34 d.C. en el relato de Hechos"
+    ],
+    "a": 1,
+    "e": "La cronología relaciona el término con Esteban y la dispersión. Hechos narra esos sucesos sin dar ese año. Pablo niega que Dios haya rechazado a todo su pueblo. Fuente: Hechos 7:54–60; 8:1–4; Romanos 11:1–5; DTG, cap. 23.",
+    "abierta": "¿Qué dato viene del relato de Hechos y cuál de la reconstrucción cronológica?",
+    "pauta": "Del relato: martirio, persecución y expansión del testimonio. De la cronología: año 34 como término de los 490 años. Evita convertir una etapa de la misión en una condena étnica."
+   },
+   {
+    "hito": "santuario",
+    "t": "mc",
+    "v": "9:21-24",
+    "q": "¿Cómo argumenta la interpretación adventista la conexión entre Daniel 8 y 9?",
+    "o": [
+     "Por Gabriel, la visión, el contexto y el sentido del período delimitado",
+     "Por una frase de Daniel 9 que escribe de forma expresa el año 1844",
+     "Porque las 70 semanas y los 2.300 años tienen que terminar juntos",
+     "Porque el fin de los 2.300 años señala la segunda venida a la tierra"
+    ],
+    "a": 0,
+    "e": "La relación no depende únicamente de traducir determinadas como cortadas. Se examinan varios vínculos; 490 + 1.810 = 2.300, desde 457 a.C. hasta 1844. Fuente: Daniel 8:26–27; 9:21–24; CS, cap. 18; Shea, Simposio sobre Daniel, PDF 251–254.",
+    "abierta": "¿Por qué la inauguración del santuario y el juicio de 1844 deben distinguirse?",
+    "pauta": "Relaciona la inauguración con la ascensión y Pentecostés, y la purificación con la lectura de Daniel 8:14. No conviertas «ungir al Santo de los santos» en una fecha de inicio del ministerio celestial en 1844."
+   },
+   {
+    "hito": "esperanza",
+    "t": "mc",
+    "v": "9:18",
+    "q": "¿Qué uso de la cronología conserva el propósito del capítulo?",
+    "o": [
+     "Extender los 490 años para descubrir el día de la segunda venida",
+     "Reemplazar la oración con un dominio exacto de los datos históricos",
+     "Demostrar que conocer las fechas hace innecesaria la fe en Cristo",
+     "Comprender la obra del Mesías y confiar en la misericordia de Dios"
+    ],
+    "a": 3,
+    "e": "La oración apela a la misericordia y la respuesta presenta al Mesías y su obra. El capítulo no permite fechar la segunda venida. Fuente: Daniel 9:18, 24–27; Hebreos 4:14–16; Mateo 24:36; DTG, cap. 23.",
+    "abierta": "Resume la profecía en un minuto sin mencionar una fecha. Después añade las fechas que aclaran ese mensaje.",
+    "pauta": "Habla de la restauración, el Ungido, su entrega, el pacto y el testimonio. Al añadir las fechas, distingue lo que el texto dice de su reconstrucción cronológica."
+   }
+  ],
+  "fuentes": {
+   "dtg": {
+    "nombre": "Elena G. de White · El Deseado de Todas las Gentes",
+    "lugar": "Cap. 23, «El reino de Dios está cerca»; cronología del bautismo, la cruz y el año 34.",
+    "url": "https://media4.egwwritings.org/pdf/es_DTG%28DA%29.pdf"
+   },
+   "cs": {
+    "nombre": "Elena G. de White · El conflicto de los siglos",
+    "lugar": "Cap. 18, «Una profecía significativa»; relación entre las 70 semanas y los 2.300 años.",
+    "url": "https://media4.egwwritings.org/pdf/es_CS%28GC%29.pdf"
+   },
+   "bohr": {
+    "nombre": "Esteban Bohr · Studies in Daniel 1–10",
+    "lugar": "Sección de Daniel 9, pp. 323–348. Decreto: 330–340; Mesías y pacto: 341–348."
+   },
+   "simd": {
+    "nombre": "William H. Shea · Simposio sobre Daniel, Clásicos del Adventismo 5",
+    "lugar": "«La unidad de Daniel», sección «Aspectos especializados de Daniel 9», pp. PDF 247–258 del ejemplar consultado."
+   },
+   "sima": {
+    "nombre": "William H. Shea · Simposio sobre Apocalipsis, Clásicos del Adventismo 6",
+    "lugar": "Apéndice B, «¿Cuándo comenzaron las setenta semanas de Daniel 9:24?», pp. impresas 443–466."
+   }
+  },
+  "hitos": [
+   {
+    "id": "oracion",
+    "corto": "La oración",
+    "fecha": "El exilio · siglo VI a.C.",
+    "titulo": "Antes de contar años, Daniel ora",
+    "img": "oracion",
+    "alt": "Ilustración de Daniel anciano orando junto a los rollos de las Escrituras.",
+    "versos": [
+     2,
+     18,
+     23
+    ],
+    "refs": "Daniel 9:1–23 · Jeremías 25:11–12; 29:10",
+    "idea": "La profecía comienza con una petición de misericordia, no con una operación matemática.",
+    "explica": [
+     "Daniel lee a Jeremías y comprende que la desolación de Jerusalén no durará para siempre. Confiesa su pecado y el de su pueblo, y pide que Dios restaure la ciudad y el santuario.",
+     "Mientras ora, Gabriel llega para darle entendimiento. La respuesta amplía su mirada: de la restauración de Jerusalén a la obra del Mesías."
+    ],
+    "matiz": "Los setenta años del exilio y las setenta semanas son períodos distintos. Daniel 9 los relaciona en la historia, pero no los hace equivalentes.",
+    "fuentes": [
+     "bohr",
+     "simd"
+    ],
+    "escala": "semanas",
+    "avance": null
+   },
+   {
+    "id": "tiempo",
+    "corto": "70 semanas",
+    "fecha": "La estructura de la profecía",
+    "titulo": "Setenta semanas. Una historia continua.",
+    "img": "oracion",
+    "alt": "Daniel estudia los rollos; la cronología se despliega debajo de la escena.",
+    "versos": [
+     24,
+     25,
+     27
+    ],
+    "refs": "Daniel 9:24–27 · Levítico 25:8 · Números 14:34 · Ezequiel 4:6",
+    "idea": "7 + 62 + 1 = 70 semanas; 49 + 434 + 7 = 490 años.",
+    "explica": [
+     "Una semana contiene siete días. En esta interpretación de la profecía, cada día representa un año: setenta por siete son 490 años. Levítico 25:8 también muestra cómo la Biblia cuenta semanas de años.",
+     "Las siete y las sesenta y dos semanas conducen al Mesías; queda una semana. Se leen como una secuencia continua, sin trasladar los últimos siete años a un futuro separado."
+    ],
+    "matiz": "El principio día por año se aplica aquí dentro de una lectura profética argumentada; no convierte todos los días de la Biblia en años.",
+    "fuentes": [
+     "dtg",
+     "simd",
+     "sima"
+    ],
+    "escala": "semanas",
+    "avance": 0
+   },
+   {
+    "id": "decreto",
+    "corto": "El decreto",
+    "fecha": "457 a.C.",
+    "titulo": "El punto de partida: restaurar Jerusalén",
+    "img": "restauracion",
+    "alt": "Ilustración de familias y trabajadores restaurando Jerusalén en época persa.",
+    "versos": [
+     25
+    ],
+    "refs": "Daniel 9:25 · Esdras 7:7–9, 12–26",
+    "idea": "La orden de Artajerjes a Esdras da comienzo al recorrido.",
+    "explica": [
+     "La profecía comienza con una orden para restaurar y edificar Jerusalén. Esdras 7 autoriza el regreso, sostiene el culto y permite organizar jueces y aplicar la ley de Dios: incluye restauración de la vida de la comunidad.",
+     "La cronología adoptada sitúa el séptimo año de Artajerjes en 457 a.C. Shea examina la evidencia histórica y el calendario civil judío de otoño a otoño. Elena de White sitúa en el otoño de ese año la entrada en vigor de la orden."
+    ],
+    "matiz": "Esdras expresa la fecha como un año del reinado de Artajerjes. Su equivalencia con 457 a.C. requiere reconstrucción histórica; ese número no está escrito en el versículo.",
+    "fuentes": [
+     "dtg",
+     "bohr",
+     "sima"
+    ],
+    "escala": "semanas",
+    "avance": 0
+   },
+   {
+    "id": "restauracion",
+    "corto": "7 semanas",
+    "fecha": "49 años · hasta 408 a.C.",
+    "titulo": "La restauración abre el camino",
+    "img": "restauracion",
+    "alt": "Trabajadores reconstruyen calles y puertas de Jerusalén en una representación histórica.",
+    "versos": [
+     25
+    ],
+    "refs": "Daniel 9:25 · Esdras 4:12–23 · Nehemías 4; 6:15",
+    "idea": "El primer tramo abarca siete semanas: 7 × 7 = 49 años.",
+    "explica": [
+     "La plaza y el muro vuelven a edificarse en tiempos de dificultad. Esdras y Nehemías describen oposición, organización de la comunidad y reconstrucción.",
+     "Al contar 49 años desde 457 a.C. se llega a 408 a.C. Desde ese límite, otras 62 semanas, equivalentes a 434 años, conducen al Mesías."
+    ],
+    "matiz": "408 a.C. es el límite calculado del primer tramo. La Biblia no fecha en ese año una ceremonia de terminación de todas las obras. Nehemías 6:15 habla de 52 días para el muro, no de 49 años de trabajo continuo.",
+    "fuentes": [
+     "bohr",
+     "simd",
+     "cs"
+    ],
+    "escala": "semanas",
+    "avance": 49
+   },
+   {
+    "id": "mesias",
+    "corto": "El Ungido",
+    "fecha": "Otoño del 27 d.C.",
+    "titulo": "El Mesías entra en escena",
+    "img": "bautismo",
+    "alt": "Ilustración del bautismo de Jesús por Juan en el Jordán y de una paloma descendiendo.",
+    "versos": [
+     25
+    ],
+    "refs": "Daniel 9:25 · Lucas 3:1, 21–22 · Hechos 10:38 · Marcos 1:14–15",
+    "idea": "69 semanas = 483 años. El punto de llegada es su unción, no su nacimiento.",
+    "explica": [
+     "Mesías significa Ungido. En el bautismo, Jesús recibe la unción del Espíritu Santo para su ministerio. Pedro lo explica al hablar de cómo Dios ungió a Jesús con el Espíritu y con poder.",
+     "Desde el otoño de 457 a.C., 483 años llegan al otoño del 27 d.C. Así comienza la última semana. La cronología identifica el inicio de su ministerio público, no la fecha de su nacimiento."
+    ],
+    "matiz": "Lucas fecha el contexto por el reinado de Tiberio. La equivalencia con el año 27 pertenece a esta reconstrucción cronológica, expuesta por las fuentes consultadas.",
+    "fuentes": [
+     "dtg",
+     "sima",
+     "simd"
+    ],
+    "escala": "semanas",
+    "avance": 483
+   },
+   {
+    "id": "pacto",
+    "corto": "El pacto",
+    "fecha": "27–34 d.C. · la última semana",
+    "titulo": "Cristo confirma el pacto",
+    "img": "bautismo",
+    "alt": "Jesús al comenzar su ministerio; el tramo final de siete años se amplía en la cronología.",
+    "versos": [
+     27
+    ],
+    "refs": "Daniel 9:27 · Daniel 9:4 · Mateo 26:28 · Hebreos 9:15",
+    "idea": "El centro de la última semana es el pacto de Dios hecho firme por Cristo.",
+    "explica": [
+     "La lectura mesiánica identifica a quien confirma el pacto con Cristo. El propio capítulo presenta a Dios como quien guarda el pacto y la misericordia.",
+     "En la última cena, Jesús relaciona su sangre, el pacto y los muchos que reciben perdón. Primero él y después sus discípulos anuncian el evangelio especialmente a Israel durante esta semana."
+    ],
+    "matiz": "Aquí se explica la lectura mesiánica historicista. La identidad del «príncipe» de 9:26 tiene discusión exegética; se aborda en «Preguntas y fuentes», sin convertir el pacto de 9:27 en un tratado político moderno.",
+    "fuentes": [
+     "dtg",
+     "bohr",
+     "simd"
+    ],
+    "escala": "ultima",
+    "avance": 483
+   },
+   {
+    "id": "cruz",
+    "corto": "La cruz",
+    "fecha": "Primavera del 31 d.C.",
+    "titulo": "En la mitad de la semana, la cruz",
+    "img": "cruz",
+    "alt": "Representación respetuosa de las tres cruces fuera de Jerusalén, sin detalles gráficos.",
+    "versos": [
+     26,
+     27
+    ],
+    "refs": "Daniel 9:26–27 · Isaías 53:8 · Mateo 27:50–51 · Hebreos 10:10–14",
+    "idea": "Tres años y medio después del bautismo, Cristo entrega su vida.",
+    "explica": [
+     "La muerte del Mesías está anunciada después de las 62 semanas que siguen a las primeras siete. El versículo 27 precisa su lugar: la mitad de la última semana.",
+     "Del otoño del 27 a la primavera del 31 transcurren tres años y medio. El velo rasgado señala que los sacrificios encuentran su cumplimiento en Cristo. Su entrega es suficiente y no necesita repetirse."
+    ],
+    "matiz": "Cesar el sacrificio describe aquí la pérdida de su función como símbolo de una muerte todavía futura. No significa que todos los ritos del templo se detuvieran físicamente ese mismo día.",
+    "fuentes": [
+     "dtg",
+     "bohr",
+     "simd"
+    ],
+    "escala": "ultima",
+    "avance": 486.5
+   },
+   {
+    "id": "mision",
+    "corto": "El testimonio",
+    "fecha": "34 d.C. · se completan 490 años",
+    "titulo": "El testimonio se extiende a las naciones",
+    "img": "testigos",
+    "alt": "Ilustración de discípulos saliendo de Jerusalén y compartiendo el mensaje con viajeros.",
+    "versos": [
+     24,
+     27
+    ],
+    "refs": "Daniel 9:24, 27 · Hechos 7:54–60; 8:1–4 · Romanos 11:1–5",
+    "idea": "La última semana termina tres años y medio después de la cruz.",
+    "explica": [
+     "Después de la ascensión, los apóstoles continúan el llamado. Elena de White relaciona el término del período en el año 34 con el martirio de Esteban y la dispersión que lleva el mensaje a nuevos lugares.",
+     "El relato de Hechos muestra cómo el testimonio sale de Jerusalén. El cambio de etapa de la misión no cierra la salvación a las personas judías: Pablo, los apóstoles y muchos creyentes eran judíos."
+    ],
+    "matiz": "Hechos narra el martirio y la dispersión, pero no escribe «año 34». La fecha procede de la cronología de las 70 semanas. Romanos 11:1 impide afirmar que Dios rechazó a toda persona judía.",
+    "fuentes": [
+     "dtg",
+     "cs",
+     "simd"
+    ],
+    "escala": "ultima",
+    "avance": 490
+   },
+   {
+    "id": "santuario",
+    "corto": "Daniel 8",
+    "fecha": "1844 · conexión con los 2.300 años",
+    "titulo": "Una profecía ilumina la otra",
+    "img": "d7/juicio",
+    "alt": "Ilustración simbólica del juicio celestial, relacionada con el estudio de Daniel 7 y 8.",
+    "versos": [
+     21,
+     23,
+     24
+    ],
+    "refs": "Daniel 8:14, 26–27; 9:21–24 · Hebreos 8:1–2; 9:23–24",
+    "idea": "490 + 1.810 = 2.300 años, con el mismo punto de partida.",
+    "explica": [
+     "Gabriel, que ya había aparecido en Daniel 8, vuelve para dar entendimiento. La lectura adventista relaciona las 70 semanas con la porción temporal que había quedado sin comprender y las considera la primera parte de los 2.300 años.",
+     "Desde 457 a.C., 2.300 años llegan a 1844. Esta interpretación lo relaciona con la purificación del santuario celestial y el juicio, no con la segunda venida de Jesús a la tierra."
+    ],
+    "matiz": "La relación se argumenta por el contexto, Gabriel, la visión y el término «determinadas». Shea aclara que el significado «cortadas» favorece la relación, pero no la demuestra por sí solo. Daniel 9 no escribe explícitamente «1844».",
+    "fuentes": [
+     "cs",
+     "bohr",
+     "simd"
+    ],
+    "escala": "conexion",
+    "avance": 2300
+   },
+   {
+    "id": "esperanza",
+    "corto": "Lo esencial",
+    "fecha": "Para comprender y vivir",
+    "titulo": "La certeza conduce a Cristo",
+    "img": "cruz",
+    "alt": "La cruz en un paisaje de Jerusalén; cierre de la experiencia centrado en Cristo.",
+    "versos": [
+     18,
+     24
+    ],
+    "refs": "Daniel 9:18, 24 · Hebreos 4:14–16 · Mateo 24:36",
+    "idea": "La cronología señala una persona y su obra de salvación.",
+    "explica": [
+     "Daniel apela a la misericordia de Dios. La respuesta presenta al Mesías, su muerte, su pacto y su ministerio. Conocer las fechas tiene sentido cuando ayuda a comprender por qué podemos acercarnos a él con confianza.",
+     "Repasa la secuencia: restauración, unción, cruz y testimonio. Después vuelve al texto y explica con tus palabras cómo se relacionan los tres tramos."
+    ],
+    "matiz": "La línea de tiempo no calcula el día de la segunda venida ni añade fechas proféticas posteriores a 1844. Jesús llama a confiar y permanecer preparados.",
+    "fuentes": [
+     "dtg",
+     "cs"
+    ],
+    "escala": "semanas",
+    "avance": 490
    }
   ]
  }
@@ -84200,6 +85168,10 @@ const MANUAL = [
     "h": "<p>La app tiene dos puertas. En la <strong>Biblioteca</strong> está todo el\n    material, abierto para cualquiera. Escoge un tema (Daniel, Apocalipsis,\n    la matutina o las creencias): su portada muestra el botón\n    <strong>Empezar a leer</strong> o <strong>Continuar leyendo</strong>, el avance\n    y la Bibliografía. Debajo puedes elegir cómo leer (<strong>Lo central</strong>,\n    <strong>Todo</strong> o <strong>A fondo</strong>, con «Para profundizar»). El\n    nivel lo escoges tú: no depende de tu edad ni de tu categoría. En\n    <strong>Escenas y recursos</strong> están las láminas, Comparar, Paralelos y\n    los últimos acontecimientos. Luego aparecen todos los capítulos o lecturas\n    del tema. El concurso puede usar solo una parte sin ocultar el resto de la\n    Biblioteca. Al abrir un capítulo, la lectura reemplaza el listado y empieza\n    en su cabecera. Las flechas junto al número de capítulo cambian\n    de lectura sin buscar otra tarjeta; al final también están\n    <strong>Anterior</strong> y <strong>Siguiente</strong>.\n    <strong>Todos los capítulos</strong> (<strong>Capítulos</strong> en el celular)\n    vuelve al listado, sobre la tarjeta del capítulo que acabas de leer.\n    Cada tema tiene su <strong>Bibliografía</strong>: las\n    obras que cita su material, con sus páginas y dónde se usan. Se arma sola con\n    las líneas «Fuente:».</p>\n    <p>En <strong>Concursos</strong> están los concursos y campamentos con sus\n    categorías por edad, tu preparación y tu examen. Al revisar un examen, cada\n    pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su\n    capítulo y, si el título de una sección trae su versículo, a esa sección.</p>"
    },
    {
+    "t": "Daniel 9: recorrer las setenta semanas",
+    "h": "<p>En <strong>Biblioteca › Daniel › Escenas y recursos</strong>, o en\n    <strong>Daniel 9 › Profundizar</strong>, abre <strong>Las setenta semanas</strong>.\n    Puedes <strong>Explorar</strong> a tu ritmo o <strong>Presentar</strong> en clase.\n    <strong>Anterior</strong>, <strong>Siguiente</strong> y las flechas del teclado\n    recorren los diez pasos. <strong>Inicio</strong> y <strong>Fin</strong> del teclado\n    llevan al primer y al último paso; <strong>Escape</strong> cierra.</p>\n    <p>La línea ofrece tres escalas: <strong>70 semanas</strong>,\n    <strong>Última semana</strong> y <strong>2.300 años</strong>. Toca un tramo\n    o un hito para ver su explicación. <strong>Texto bíblico</strong> muestra el\n    pasaje; <strong>Frase a frase</strong> desarrolla Daniel 9:24–27, y\n    <strong>Fuentes</strong> identifica la documentación. El cálculo aclara por\n    qué no hay año cero. <strong>Compartir</strong> copia el enlace público al paso actual. <strong>Comprueba lo aprendido</strong>\n    propone una pregunta de selección y otra abierta, con explicación y pauta.\n    Estas diez preguntas también alimentan la práctica de profundización y\n    permanecen fuera del examen oficial.</p>"
+   },
+   {
     "t": "La matutina es una serie completa",
     "h": "<p><strong>Héroes y villanos</strong> tiene 31 lecturas numeradas. Puedes\n    leerlas en cualquier orden y retomar la siguiente pendiente; el número\n    corresponde a la edición de octubre, no obliga a leerla ese día.</p>\n    <p>En el concurso de Aventureros de 2026 se usaron las lecturas 1 a 15\n    para 4 a 6 años, y 1 a 30 para 7 a 9. La lectura 31 sigue abierta para\n    estudio. Esos límites pertenecen al examen de ese evento y no reducen la\n    serie de la Biblioteca.</p>"
    },
@@ -89197,6 +90169,9 @@ function bibLineasDe(id){
   const recorre=o=>{if(!o||typeof o!=='object')return;
     for(const [k,v] of Object.entries(o)){if((k==='fuente'||k==='paraleloFuente')&&typeof v==='string')out.push(v);else if(typeof v==='object')recorre(v);}};
   if(typeof LAMINAS!=='undefined'&&LAMINAS[id])recorre(LAMINAS[id]);
+  if(typeof LAMINAS!=='undefined'&&LAMINAS[id]?.tipo==='cronologia')Object.values(LAMINAS[id].fuentes).forEach(f=>{
+    const [autor,...obra]=f.nombre.split(' · ');out.push(autor+', <i>'+obra.join(' · ')+'</i>, '+f.lugar);
+  });
   return out.map(bibSinEt).filter(Boolean);
 }
 /* Una pieza: autor, obra y páginas; o una abreviatura de Elena de White con su
@@ -89232,7 +90207,7 @@ function bibFuentes(t){
   const lista=Object.values(obras);
   lista.forEach(o=>{if(o.abr&&!o.obra&&nombreAbr[o.abr])o.obra=nombreAbr[o.abr];o.pags.sort((a,b)=>bibNum(a)-bibNum(b));});
   /* El orden de la jerarquía de fuentes de Camilo: las siglas (Elena de White), Bohr, los demás por autor. */
-  const rango=o=>o.abr?0:/^Bohr$/i.test(o.autor)?1:o.tal?3:2;
+  const rango=o=>o.abr||/Elena.*White/i.test(o.autor)?0:/^(?:Esteban )?Bohr$/i.test(o.autor)?1:o.tal?3:2;
   lista.sort((a,b)=>rango(a)-rango(b)||(a.autor||'').localeCompare(b.autor||'','es')||(a.obra||a.abr||a.tal).localeCompare(b.obra||b.abr||b.tal,'es'));
   return (bibCache[t]=lista);
 }
@@ -89240,7 +90215,7 @@ function bibFuentesHTML(t){
   const L=bibFuentes(t),fila=o=>'<li class="bf-o"><span class="bf-n">'+
     (o.tal?'<span class="bf-t">'+o.tal+'</span>':
       (o.autor?'<b>'+esc(o.autor)+'</b>'+(o.obra||o.abr?', ':''):'')+(o.abr?'<abbr>'+esc(o.abr)+'</abbr>'+(o.obra?' · ':''):'')+(o.obra?'<i>'+esc(o.obra)+'</i>':''))+
-    (o.pags.length?' <span class="bf-p">'+(o.abr?'':'p. ')+esc(o.pags.join(', '))+'</span>':'')+'</span>'+
+    (o.pags.length?' <span class="bf-p">'+(o.abr||/^(?:Cap|Sección|Apéndice|PDF|«)/i.test(o.pags[0])?'':'p. ')+esc(o.pags.join(', '))+'</span>':'')+'</span>'+
     '<span class="bf-c">'+esc(o.caps.join(' · '))+'</span></li>';
   /* Por sigla van como el material las cita (CS, PE, 4T…; casi todas de Elena G. de White, pero
      la sigla sola no dice el autor, así que no se le pone). */
@@ -89758,6 +90733,236 @@ function cierraCapas(){
   try{const l=document.getElementById('lam');if(l&&!l.hidden&&typeof lamCierra==='function')lamCierra();}catch(e){}
   try{if(typeof cierraHoja==='function')cierraHoja();}catch(e){}
 }
+/* La cronología conserva el contrato de las otras láminas: abrir, recorrer,
+   presentar, compartir el paso y cerrar. No añade almacenamiento ni red. */
+let d9Respuesta=-1,d9Referencia=null;
+let d9Tab='explica',d9Vista='semanas',d9Verso=24,d9Foco=null,d9Cambio=0;
+const lamEsC=()=>!!(LAM()&&LAM().tipo==='cronologia');
+const d9Hitos=()=>LAM().hitos;
+const d9Refs=t=>refsTocables(esc(t),'d9');
+const d9Hito=()=>d9Hitos()[lamPaso];
+/* Coordenada histórica sin año cero. */
+function d9Anos(de,a){return a-de-(de<0&&a>0?1:0);}
+function d9Suma(de,n){const a=de+n;return de<0&&a>=0?a+1:a;}
+function d9Escalas(){return {
+ semanas:{titulo:'Las 70 semanas',total:490,inicio:0,
+  bandas:[[49,'7 sem.','restauracion'],[434,'62 semanas','mesias'],[7,'1 semana','pacto']],
+  puntos:[['457 a.C.','El decreto','decreto'],['408 a.C.','49 años','restauracion'],['27 d.C.','El Ungido','mesias'],['34 d.C.','490 años','mision']],
+  nota:'Proporción real: 49 + 434 + 7 = 490 años. Toca un tramo para explorarlo.'},
+ ultima:{titulo:'La última semana',total:7,inicio:483,
+  bandas:[[3.5,'3½ años','cruz'],[3.5,'3½ años','mision']],
+  puntos:[['Otoño · 27','Bautismo','mesias'],['Primavera · 31','La cruz','cruz'],['34 d.C.','Testimonio','mision']],
+  nota:'Ampliación de los últimos 7 años: la cruz está en el centro, sin un intervalo entre las semanas 69 y 70.'},
+ conexion:{titulo:'La conexión con Daniel 8',total:2300,inicio:0,
+  bandas:[[490,'490 años','mision'],[1810,'1.810 años','santuario']],
+  puntos:[['457 a.C.','Inicio común','decreto'],['34 d.C.','Fin de las 70','mision'],['1844','2.300 años','santuario']],
+  nota:'Lectura adventista: las 70 semanas son la primera parte de los 2.300 años. 1844 se refiere al santuario celestial, no a la segunda venida.'}
+};}
+function d9Abre(cid,modo){
+ const el=document.getElementById('lam');if(!el)return;
+ if(!lamModo){const r=el.getRootNode?el.getRootNode():document;d9Foco=r.activeElement;}
+ lamPara();if(lamModo&&lamEsE())lamLimpia();lamId=cid;lamModo=modo==='presentar'?'presentar':'explorar';lamPaso=0;lamDonde='oracion';
+ d9Respuesta=-1;d9Tab='explica';d9Vista='semanas';d9Verso=24;d9Cambio++;
+ el.hidden=false;el.className='lam d9'+(lamModo==='presentar'?' d9-pres':'');
+ el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',LAM().titulo);
+ document.body.classList.add('leyendo');
+ el.innerHTML='<div class="d9-wrap">'+
+  '<header class="d9-header"><div><span class="d9-kicker">Daniel 9 · experiencia interactiva</span><b>Las setenta semanas</b></div>'+
+  '<div class="d9-tools"><button type="button" onclick="d9Modo()" id="d9Modo">'+(lamModo==='presentar'?'Estudiar':'Presentar')+'</button>'+
+  '<button type="button" class="d9-full" onclick="d9Pantalla()" aria-label="Pantalla completa">'+IC('expandir')+'</button>'+
+  '<button type="button" onclick="d9Comparte()" aria-label="Copiar enlace de este paso">'+IC('compartir')+'<span class="d9-tool-label"> Compartir</span></button>'+
+  '<button type="button" onclick="lamCierra()" class="d9-close" aria-label="Cerrar experiencia">'+IC('x')+'</button></div></header>'+
+  '<div class="d9-story" id="d9Story"></div><section class="d9-time" aria-label="Línea de tiempo" id="d9Time"></section>'+
+  '<nav class="d9-nav" aria-label="Recorrer la explicación"><button type="button" id="d9Prev" onclick="d9Mueve(-1)" aria-label="Paso anterior">'+IC('izq')+'<span>Anterior</span></button>'+
+  '<div><label class="d9-sr" for="d9Rango">Paso de la explicación</label><input id="d9Rango" type="range" min="0" max="'+(d9Hitos().length-1)+'" value="0" oninput="d9IrNumero(this.value)">'+
+  '<span id="d9Cuenta" class="d9-sr" aria-live="polite"></span><select id="d9Salta" aria-label="Ir a un paso de la explicación" onchange="d9IrNumero(this.value)">'+d9Hitos().map((h,i)=>'<option value="'+i+'">'+(i+1)+' de '+d9Hitos().length+' · '+esc(h.corto)+'</option>').join('')+'</select></div><button type="button" id="d9Next" class="d9-next" onclick="d9Mueve(1)" aria-label="Paso siguiente"><span>Siguiente</span>'+IC('der')+'</button></nav>'+
+  '<div class="d9-status" id="d9Status" role="status"></div></div>';
+ d9Pinta();el.scrollTop=0;
+ const b=el.querySelector('.d9-close');if(b&&b.focus)b.focus({preventScroll:true});
+}
+function d9Ir(id){
+ const i=d9Hitos().findIndex(h=>h.id===id);if(i<0)return;
+ const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document,foco=r.activeElement;
+ d9Respuesta=-1;lamPaso=i;lamDonde=id;d9Vista=d9Hito().escala;d9Tab='explica';d9Pinta();
+ if(el)el.scrollTop=0;
+ if(foco&&!foco.isConnected){const t=document.getElementById('d9Titulo');if(t)t.focus({preventScroll:true});}
+}
+function d9IrNumero(n){const h=d9Hitos()[Number(n)];if(h)d9Ir(h.id);}
+function d9Mueve(d){d9IrNumero(lamPaso+d);}
+function d9Modo(){
+ lamModo=lamModo==='presentar'?'explorar':'presentar';
+ const el=document.getElementById('lam');el.classList.toggle('d9-pres',lamModo==='presentar');
+ const b=document.getElementById('d9Modo');if(b)b.textContent=lamModo==='presentar'?'Estudiar':'Presentar';
+ lamLugar();
+}
+function d9Pinta(){
+ const h=d9Hito(),z=document.getElementById('d9Story');if(!z)return;
+ const foto=lamRuta(LAM(),h.img),cambio=++d9Cambio;
+ z.innerHTML='<figure class="d9-art"><img id="d9Imagen" src="'+foto+'" alt="'+esc(h.alt)+'" decoding="async">'+
+  '<figcaption><span class="d9-scene-date">'+esc(h.fecha)+'</span><h1 tabindex="-1" id="d9Titulo">'+esc(h.titulo)+'</h1></figcaption>'+
+  '<span class="d9-art-note">Ilustración artística</span></figure>'+
+  '<section class="d9-notebook" aria-label="Explicación y documentación"><div class="d9-reading-tabs" role="group" aria-label="Qué quieres consultar">'+
+  [['explica','Explicación'],['texto','Texto bíblico'],['frases','Frase a frase'],['fuentes','Fuentes']].map(([k,t])=>
+   '<button type="button" aria-pressed="'+(d9Tab===k)+'" onclick="d9Consulta(\''+k+'\')">'+t+'</button>').join('')+
+  '</div><div class="d9-panel" id="d9Panel"></div></section>';
+ const im=document.getElementById('d9Imagen');
+ if(im)im.onerror=()=>{if(cambio===d9Cambio){im.hidden=true;const a=z.querySelector('.d9-art-note');if(a)a.textContent='La imagen no pudo cargarse. El texto y la cronología siguen disponibles.';}};
+ d9PintaPanel();d9PintaTiempo();
+ const salto=document.getElementById('d9Salta');if(salto)salto.value=String(lamPaso);
+ const cuenta=document.getElementById('d9Cuenta');if(cuenta)cuenta.textContent=(lamPaso+1)+' de '+d9Hitos().length+' · '+h.corto;
+ const r=document.getElementById('d9Rango');if(r){r.value=lamPaso;r.setAttribute('aria-valuetext',h.corto+' · '+h.fecha);}
+ const ant=document.getElementById('d9Prev'),sig=document.getElementById('d9Next');
+ if(ant)ant.disabled=lamPaso===0;if(sig)sig.disabled=lamPaso===d9Hitos().length-1;
+ /* Solo anticipa la escena siguiente, sin descargar todo el catálogo. */
+ const siguiente=d9Hitos()[lamPaso+1];if(siguiente&&typeof Image!=='undefined'){const p=new Image();p.src=lamRuta(LAM(),siguiente.img);}
+ lamLugar();
+}
+function d9Consulta(k){
+ if(!['explica','texto','frases','fuentes','preguntas'].includes(k))return;
+ d9Tab=k;
+ document.querySelectorAll('.d9-reading-tabs button').forEach((b,i)=>b.setAttribute('aria-pressed',['explica','texto','frases','fuentes'][i]===k?'true':'false'));
+ d9PintaPanel();
+}
+function d9PintaPanel(){
+ const p=document.getElementById('d9Panel');if(!p)return;
+ const h=d9Hito();
+ if(d9Tab==='referencia'){p.innerHTML=d9ReferenciaHTML();return;}
+ if(d9Tab==='preguntas'){p.innerHTML=d9PreguntasHTML();return;}
+ if(d9Tab==='texto'){
+  p.innerHTML='<span class="d9-kicker">Daniel 9 · Reina-Valera 1995</span><div class="d9-bible">'+h.versos.map(v=>
+   '<p><sup>'+v+'</sup> '+esc(VERS.d9[v])+'</p>').join('')+'</div><p class="d9-ref">Leer también: '+d9Refs(h.refs)+'</p>'+
+   '<button type="button" class="d9-text-link" onclick="d9Capitulo()">Abrir el capítulo completo '+IC('der')+'</button>';return;
+ }
+ if(d9Tab==='frases'){p.innerHTML=d9FrasesHTML();return;}
+ if(d9Tab==='fuentes'){
+  p.innerHTML='<span class="d9-kicker">Documentación de este hito</span><h2>Del texto a la interpretación</h2><p>Primero la Biblia; después Elena G. de White; luego Bohr y los simposios. Los apuntes de estudio se cotejaron con estas fuentes.</p>'+
+   '<p class="d9-ref">'+d9Refs(h.refs)+'</p>'+h.fuentes.slice().sort((a,b)=>['dtg','cs','bohr','simd','sima'].indexOf(a)-['dtg','cs','bohr','simd','sima'].indexOf(b)).map(k=>d9FuenteHTML(k)).join('')+
+   '<details class="d9-details"><summary>Cómo se presentan las fechas</summary><p>Las cantidades y expresiones se leen de Daniel 9. Los años 457 a.C., 27, 31 y 34 d.C. pertenecen a la cronología historicista adventista. Las notas de cada hito explican qué parte requiere reconstrucción histórica o interpretación.</p></details>';
+  return;
+ }
+ p.innerHTML='<span class="d9-kicker">La idea central</span><h2>'+esc(h.idea)+'</h2>'+h.explica.map(t=>'<p>'+esc(t)+'</p>').join('')+
+  '<details class="d9-details"><summary>Una distinción importante</summary><p>'+esc(h.matiz)+'</p></details>'+
+  '<p class="d9-ref">'+d9Refs(h.refs)+'</p><div class="d9-actions">'+
+  '<button type="button" class="d9-text-link" onclick="d9Consulta(\'texto\')">Ver el texto '+IC('der')+'</button>'+
+  '<button type="button" class="d9-text-link" onclick="d9Consulta(\'frases\')">Frase a frase '+IC('der')+'</button>'+
+  '<button type="button" class="d9-text-link d9-practicar" onclick="d9Consulta(\'preguntas\')">Comprueba lo aprendido '+IC('der')+'</button></div>';
+}
+function d9FuenteHTML(k){
+ const f=LAM().fuentes[k];return '<div class="d9-source"><b>'+esc(f.nombre)+'</b><p>'+esc(f.lugar)+'</p>'+
+  (f.url?'<a href="'+f.url+'" target="_blank" rel="noopener noreferrer">Consultar la obra ↗</a>':'')+'</div>';
+}
+function d9PintaTiempo(){
+ const z=document.getElementById('d9Time');if(!z)return;
+ const e=d9Escalas()[d9Vista],h=d9Hito(),a=h.avance;
+ const progreso=a===null?null:(a-e.inicio)/e.total*100;
+ const posicion=z.querySelector('.d9-position'),anterior=posicion&&z.dataset.escala===d9Vista?posicion.style.left:null;
+ z.dataset.escala=d9Vista;
+ z.innerHTML='<div class="d9-time-head"><div><span class="d9-kicker">La línea de tiempo</span><b>'+e.titulo+'</b></div>'+
+  '<div class="d9-scale" role="group" aria-label="Escala de la línea de tiempo">'+
+   [['semanas','70 semanas'],['ultima','Última semana'],['conexion','2.300 años']].map(([k,t])=>
+    '<button type="button" onclick="d9Escala(\''+k+'\')" aria-pressed="'+(d9Vista===k)+'">'+t+'</button>').join('')+'</div></div>'+
+  '<div class="d9-chronology" aria-label="'+esc(e.titulo)+'"><div class="d9-track">'+
+   e.bandas.map(([n,t,id],i)=>'<button type="button" class="d9-band d9-band-'+i+(d9Vista==='semanas'&&i===2?' d9-band-last':'')+'" style="flex:'+n+'" onclick="d9Tramo(\''+id+'\')" aria-label="'+t+' · '+n+' años"><span>'+t+'</span></button>').join('')+
+   (progreso!==null&&progreso>=0&&progreso<=100?'<span class="d9-position" aria-hidden="true" style="left:'+progreso+'%"></span>':'')+'</div>'+
+  '<div class="d9-axis"><span>'+esc(e.puntos[0][0])+'</span><span>'+esc(e.puntos[e.puntos.length-1][0])+'</span></div><div class="d9-points" aria-label="Explorar hitos">'+e.puntos.map(([t,sub,id])=>'<button type="button" onclick="d9Tramo(\''+id+'\')" aria-pressed="'+(h.id===id)+'"><b>'+t+'</b><span>'+sub+'</span></button>').join('')+'</div></div>'+
+  '<p class="d9-time-note">'+esc(e.nota)+'</p>'+
+  '<details class="d9-calculation"><summary>Entender el cálculo · sin año cero</summary>'+d9CalculoHTML()+'</details>';
+ const nueva=z.querySelector('.d9-position');if(nueva&&anterior&&!lamQuieto()){nueva.style.left=anterior;requestAnimationFrame(()=>{if(nueva.isConnected)nueva.style.left=progreso+'%';});}
+}
+function d9CalculoHTML(){
+ return '<div class="d9-math"><p><b>7 × 7 = 49</b><span>Primer tramo</span></p><p><b>62 × 7 = 434</b><span>Segundo tramo</span></p><p><b>1 × 7 = 7</b><span>Última semana</span></p><p><b>49 + 434 + 7 = 490</b><span>Una secuencia continua</span></p></div>'+
+  '<p>Entre 1 a.C. y 1 d.C. transcurre un año: no existe un año cero. Por eso, al cruzar las eras, se resta uno: <b>457 + 27 − 1 = 483</b>; <b>457 + 34 − 1 = 490</b>; <b>457 + 1844 − 1 = 2.300</b>.</p>'+
+  '<p>En la última semana importan también las estaciones: del otoño del 27 al otoño del 30 hay tres años; hasta la primavera del 31 hay medio año más. El dibujo sitúa la cruz en el punto medio de los siete años.</p>';
+}
+function d9Escala(k){
+ if(!d9Escalas()[k])return;
+ if(k==='ultima'&&(lamPaso<4||lamPaso>7))d9Ir('mesias');
+ d9Vista=k;d9PintaTiempo();
+ const b=document.querySelector('.d9-scale [aria-pressed="true"]');if(b)b.focus({preventScroll:true});
+}
+function d9Tramo(id){
+ const vista=d9Vista;d9Ir(id);
+ d9Vista=id==='pacto'?'ultima':vista;d9PintaTiempo();
+ const t=document.getElementById('d9Titulo');if(t)t.focus({preventScroll:true});
+}
+function d9FrasesHTML(){
+ const frases=LAM().frases||{};
+ return '<span class="d9-kicker">Daniel 9:24–27 · frase por frase</span><h2>Lee despacio. Une las piezas.</h2>'+
+  '<div class="d9-verses" role="group" aria-label="Versículo que quieres explicar">'+[24,25,26,27].map(v=>
+   '<button type="button" onclick="d9FraseVerso('+v+')" aria-pressed="'+(d9Verso===v)+'">9:'+v+'</button>').join('')+'</div>'+
+  '<p class="d9-verse-whole">'+esc(VERS.d9[d9Verso])+'</p>'+(frases[d9Verso]||[]).map((f,i)=>
+   '<details class="d9-phrase" name="d9-frase"'+(i===0?' open':'')+'><summary><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(f.frase)+'</summary>'+
+   '<div><p>'+esc(f.sentido)+'</p><p>'+esc(f.desarrollo)+'</p><p class="d9-ref">'+d9Refs(f.refs)+'</p>'+
+   '<p class="d9-phrase-source">Apoyo: '+f.fuentes.map(k=>esc(LAM().fuentes[k].nombre)).join(' · ')+'</p></div></details>').join('');
+}
+function d9FraseVerso(v){if(![24,25,26,27].includes(v))return;d9Verso=v;d9PintaPanel();const b=document.querySelector('.d9-verses [aria-pressed="true"]');if(b)b.focus({preventScroll:true});}
+function d9Capitulo(){lamCierra();verCap('d9');}
+function d9Pantalla(){
+ const el=document.getElementById('lam');if(!el)return;
+ const r=el.getRootNode?el.getRootNode():document;
+ const p=(r.fullscreenElement||document.fullscreenElement)&&document.exitFullscreen?document.exitFullscreen():el.requestFullscreen?el.requestFullscreen():null;
+ if(p&&p.catch)p.catch(()=>d9Aviso('La pantalla completa no está disponible en este navegador. Puedes usar Presentar.'));
+}
+function d9Aviso(t){const s=document.getElementById('d9Status');if(s)s.textContent=t;}
+async function d9Comparte(){
+ lugarEscribe(lugarActual());
+ try{const url=new URL(location.href);url.search='';if(/^\/app\/?$/.test(url.pathname))url.pathname='/estudiar/';
+  await navigator.clipboard.writeText(url.href);d9Aviso('Enlace público de este paso copiado.');}
+ catch(e){d9Aviso('Copia la dirección de la barra del navegador: incluye el paso que estás viendo.');}
+}
+function d9AlCerrar(){
+ d9Cambio++;
+ const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document;
+ if((r.fullscreenElement||document.fullscreenElement)&&document.exitFullscreen){const p=document.exitFullscreen();if(p&&p.catch)p.catch(()=>{});}
+ if(el){el.removeAttribute('role');el.removeAttribute('aria-modal');el.removeAttribute('aria-label');}
+ const foco=d9Foco;d9Foco=null;return foco;
+}
+function d9Tecla(e){
+ const el=document.getElementById('lam'),t=e.target;
+ if(e.key==='Escape'){e.preventDefault();lamCierra();return;}
+ if(e.key==='Tab'){
+  const bs=[...el.querySelectorAll('button:not(:disabled),a[href],input,summary')].filter(b=>b.getClientRects().length);
+  const root=el.getRootNode?el.getRootNode():document,a=root.activeElement;
+  if(bs.length&&((e.shiftKey&&a===bs[0])||(!e.shiftKey&&a===bs[bs.length-1]))){e.preventDefault();bs[e.shiftKey?bs.length-1:0].focus();}
+  return;
+ }
+ if(e.altKey||e.metaKey||e.ctrlKey||(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName||'')))return;
+ if(['ArrowRight','PageDown'].includes(e.key)){e.preventDefault();d9Mueve(1);}
+ else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();d9Mueve(-1);}
+ else if(e.key==='Home'){e.preventDefault();d9IrNumero(0);}
+ else if(e.key==='End'){e.preventDefault();d9IrNumero(d9Hitos().length-1);}
+}
+
+function d9PreguntasHTML(){
+ const q=LAM().preguntas.find(q=>q.hito===d9Hito().id);if(!q)return '';
+ const respondido=d9Respuesta>=0;
+ return '<button type="button" class="d9-text-link" onclick="d9Consulta(\'explica\')">'+IC('izq')+' Volver a la explicación</button>'+
+  '<span class="d9-kicker">Para comprender, no solo recordar</span><h2>'+esc(q.q)+'</h2>'+
+  '<div class="d9-options" role="group" aria-label="Escoge una respuesta">'+q.o.map((o,i)=>
+   '<button type="button" class="d9-option'+(respondido&&i===q.a?' correcta':'')+(respondido&&i===d9Respuesta&&i!==q.a?' revisar':'')+'" aria-pressed="'+(i===d9Respuesta)+'" onclick="d9Responde('+i+')"><span>'+String.fromCharCode(65+i)+'</span>'+esc(o)+'</button>').join('')+'</div>'+
+  (respondido?'<div class="d9-answer" id="d9Respuesta" tabindex="-1" role="status"><b>'+(d9Respuesta===q.a?'La conexión es correcta.':'Revisa esta conexión.')+'</b><p>'+esc(q.e)+'</p></div>':'')+
+  '<div class="d9-open-question"><span class="d9-kicker">Explícalo con tus palabras</span><h3>'+esc(q.abierta)+'</h3><details class="d9-details"><summary>Ver una pauta de respuesta</summary><p>'+esc(q.pauta)+'</p></details></div>'+
+  '<p class="d9-ref">Práctica de profundización. Estas preguntas se mantienen separadas del examen oficial.</p>';
+}
+function d9Responde(i){
+ const q=LAM().preguntas.find(q=>q.hito===d9Hito().id);if(!q||!Number.isInteger(i)||i<0||i>=q.o.length)return;
+ d9Respuesta=i;d9PintaPanel();const r=document.getElementById('d9Respuesta');if(r)r.focus({preventScroll:true});
+}
+
+function d9Ref(cid,de,hasta){
+ const t=tablaDeCid(cid);if(!t)return;
+ d9Referencia={cid,de,hasta:hasta||de,volver:d9Tab==='referencia'?(d9Referencia?.volver||'explica'):d9Tab};
+ d9Tab='referencia';d9PintaPanel();
+ const titulo=document.getElementById('d9RefTitulo');if(titulo)titulo.focus({preventScroll:true});
+}
+function d9ReferenciaHTML(){
+ const r=d9Referencia,t=r&&tablaDeCid(r.cid);if(!t)return '';
+ const vs=Object.keys(t.mapa).map(Number).filter(v=>v>=r.de&&v<=r.hasta);
+ return '<button type="button" class="d9-text-link" onclick="d9RefVolver()">'+IC('izq')+' Volver al estudio</button>'+
+  '<span class="d9-kicker">Consulta bíblica · '+esc(t.version)+'</span><h2 id="d9RefTitulo" tabindex="-1">'+esc(t.ref)+':'+r.de+(r.hasta>r.de?'–'+r.hasta:'')+'</h2>'+
+  '<div class="d9-bible">'+vs.map(v=>'<p><sup>'+v+'</sup> '+esc(t.mapa[v])+'</p>').join('')+'</div>';
+}
+function d9RefVolver(){d9Tab=d9Referencia?.volver||'explica';d9PintaPanel();}
 /* ───────── estado ───────── */
 /* ───────── categorías ─────────
    Salen del reglamento del campamento: cada club presenta dos integrantes de
@@ -89894,6 +91099,7 @@ const PIEDRA0=[960,330];
 const lamPrecargadas={};
 function lamPrecarga(cid,esc){
   const L=LAMINAS[cid];if(!L||typeof Image==='undefined')return;
+  if(L.tipo==='cronologia')return;
   const C=L.comparar&&LAMINAS[L.comparar];
   const fs=(L.tipo==='escenas'?[...(L.precarga||[]),L.inicioF,...L.partes.map(p=>p.img),...L.historia.map(h=>h.f),...[L.despues,L.cierre].filter(x=>x&&x.f).map(x=>x.f)]:[...L.capas,'babilonia','monte','piedra',...L.historia.map(h=>h.f),L.despues.f]).map(f=>lamRuta(L,f))
     .concat(C?[...C.capas,'piedra','monte'].map(f=>lamRuta(C,f)):[]);
@@ -89906,7 +91112,7 @@ function lamPrecarga(cid,esc){
 function lamMiniHTML(cid){
   const L=LAMINAS[cid];if(!L)return '';
   const src=f=>lamRuta(L,f);
-  if(L.tipo==='escenas')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
+  if(L.tipo==='escenas'||L.tipo==='cronologia')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
   return '<img src="'+src('babilonia')+'" alt="" loading="lazy">'+(L.capas||[]).map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('');
 }
 function lamTarjeta(cid){
@@ -90126,6 +91332,7 @@ function lamVeEntrada(k){
 let lamDonde='';
 function lamRecorrido(){
   const L=LAM(),r=[];
+  if(lamEsC())return L.hitos.map(h=>({k:h.id,t:h.corto}));
   L.historia.forEach((h,i)=>r.push({k:'h'+i,t:h.titulo}));
   r.push({k:'est',t:L.verTodo||'La estatua'});
   lamEntradas().forEach(e=>r.push({k:e.k,e,t:lamEntDice(L,e)[0]}));
@@ -90136,6 +91343,7 @@ function lamRecorrido(){
   return r;
 }
 function lamIr(k){
+  if(lamEsC())return d9Ir(k);
   const r=lamIr0(k);
   /* v232: en el celular, al avanzar, la imagen se ve entera. */
   if(lamModo&&lamModo!=='presentar'&&!lamAncho())lamVeEscena();
@@ -90250,6 +91458,7 @@ function lamFin(on){
 /* ── Abrir y cerrar ── */
 function lamAbre(cid,modo){
   if(!LAMINAS[cid])return;
+  if(LAMINAS[cid].tipo==='cronologia')return d9Abre(cid,modo);
   lamSinTexto=false;lamId=cid;lamModo=modo;lamSel='';lamPaso=0;lamReto=0;lamBien=0;lamListo=false;lamAnio=null;lamPara();
   const el=document.getElementById('lam'),L=LAM();
   el.hidden=false;el.className='lam'+(modo==='presentar'?' pres':'')+(lamAncho()?' ancho':'')+(lamEsE()?' escenas':'');
@@ -90669,8 +91878,10 @@ function lamPantalla(){
 function lamCierra(){
   const el=document.getElementById('lam');
   if(!el||el.hidden)return;
+  const foco=lamEsC()?d9AlCerrar():null;
   lamPara();lamCartel(false);clearTimeout(lamOcioT);lamCam++;if(lamEsE())lamLimpia();el.hidden=true;el.innerHTML='';lamModo='';lamDonde='';lugarAnota();
   document.body.classList.remove('leyendo');
+  if(foco&&foco.isConnected&&foco.focus)foco.focus({preventScroll:true});
 }
 
 /* ── La tarjeta dentro de la imagen ── */
@@ -91230,9 +92441,10 @@ function lamResponde(id){
 }
 
 /* ── Presentar ── */
-const lamPasos=()=>{const L=LAM();if(L.tipo==='escenas')return lamPasosE();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
+const lamPasos=()=>{const L=LAM();if(L.tipo==='cronologia')return L.hitos;if(L.tipo==='escenas')return lamPasosE();return [{tipo:'portada'},...L.historia.map((h,i)=>({tipo:'hist',i})),...L.tiempo.map(id=>({tipo:'parte',id})),
   {tipo:'parte',id:'piedra',anim:'cae'},{tipo:'parte',id:'monte',anim:'monte'},{tipo:'desp'},{tipo:'cierre'},...(L.aplica?[{tipo:'aplica'}]:[])];};
 function lamPres(k){
+  if(lamEsC())return d9IrNumero(k);
   if(lamEsE())return lamPresE(k);
   const pasos=lamPasos();if(k<0||k>=pasos.length)return;
   const dir=k>lamPaso?1:-1;lamPaso=k;lamPara();lamVuelo++;const s=pasos[k],L=LAM(),svg=document.getElementById('lamSvg');
@@ -91369,7 +92581,7 @@ function lamPolvo(svg){
 /* v211: con cualquier cambio de tamaño la escena se vuelve a medir (llena el escenario). */
 let lamResT=0;
 if(typeof addEventListener==='function')addEventListener('resize',()=>{
-  if(!lamModo)return;
+  if(!lamModo||lamEsC())return;
   clearTimeout(lamResT);lamResT=setTimeout(()=>{
     const e=document.getElementById('lam');if(!e||e.hidden)return;
     if(lamModo!=='presentar'){lamGeo();lamNavAlto();lamPasosBordes();return;}
@@ -91408,6 +92620,7 @@ function lamPersonaCierra(){
 }
 document.addEventListener('keydown',e=>{
   if(!lamModo)return;
+  if(lamEsC())return d9Tecla(e);
   if(lamPersonaAbierta()){if(e.key==='Escape'){e.preventDefault();lamPersonaCierra();}return;}
   if(e.key==='Escape'){lamCierra();return;}
   if(lamModo!=='presentar'){
@@ -94752,6 +95965,7 @@ let hojaTipo=null;
 
 function verVers(btn,cid,de,hasta){
   if(saltaAlTexto(btn,cid,de,hasta))return;
+  if(lamModo&&lamEsC())return d9Ref(cid,de,hasta);
   abreHoja(cid,de,hasta);
 }
 

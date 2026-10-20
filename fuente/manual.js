@@ -134,6 +134,22 @@ const MANUAL = [
     categorías por edad, tu preparación y tu examen. Al revisar un examen, cada
     pregunta trae <strong>«Estúdialo en la Biblioteca»</strong>: te lleva a su
     capítulo y, si el título de una sección trae su versículo, a esa sección.</p>` },
+  { t:'Daniel 9: recorrer las setenta semanas',
+    h:`<p>En <strong>Biblioteca › Daniel › Escenas y recursos</strong>, o en
+    <strong>Daniel 9 › Profundizar</strong>, abre <strong>Las setenta semanas</strong>.
+    Puedes <strong>Explorar</strong> a tu ritmo o <strong>Presentar</strong> en clase.
+    <strong>Anterior</strong>, <strong>Siguiente</strong> y las flechas del teclado
+    recorren los diez pasos. <strong>Inicio</strong> y <strong>Fin</strong> del teclado
+    llevan al primer y al último paso; <strong>Escape</strong> cierra.</p>
+    <p>La línea ofrece tres escalas: <strong>70 semanas</strong>,
+    <strong>Última semana</strong> y <strong>2.300 años</strong>. Toca un tramo
+    o un hito para ver su explicación. <strong>Texto bíblico</strong> muestra el
+    pasaje; <strong>Frase a frase</strong> desarrolla Daniel 9:24–27, y
+    <strong>Fuentes</strong> identifica la documentación. El cálculo aclara por
+    qué no hay año cero. <strong>Compartir</strong> copia el enlace público al paso actual. <strong>Comprueba lo aprendido</strong>
+    propone una pregunta de selección y otra abierta, con explicación y pauta.
+    Estas diez preguntas también alimentan la práctica de profundización y
+    permanecen fuera del examen oficial.</p>` },
   { t:'La matutina es una serie completa',
     h:`<p><strong>Héroes y villanos</strong> tiene 31 lecturas numeradas. Puedes
     leerlas en cualquier orden y retomar la siguiente pendiente; el número

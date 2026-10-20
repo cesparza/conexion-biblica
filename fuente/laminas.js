@@ -1115,4 +1115,6 @@ ULTIMOS.eventos.forEach(e => {
   e.partes = e.partes || []; e.fuente = e.egw;
 });
 
+LAMINAS.d9 = require('./daniel9.js');
+
 module.exports = { LAMINAS, ULTIMOS, REPARTOS };
