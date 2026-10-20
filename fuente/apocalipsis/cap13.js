@@ -186,8 +186,10 @@ module.exports = {
     { t: '🧭 La herida sanada (13:3-4, 12)', capa: 'contexto', h:
       hi(`La curación de la herida es la <strong>cuarta etapa</strong> del
       dragón: el papado volverá a contar con el poder civil de las naciones, y
-      el mundo entero se maravillará en pos de él. Hoy estamos en el tiempo de
-      la herida que <strong>se va sanando</strong>.`) +
+      el mundo entero se maravillará en pos de él. <strong>1798 corresponde a
+      la herida, no a su curación.</strong> La recuperación de influencia no
+      equivale a la restauración final del poder para imponer creencias,
+      que se presenta como futura, sin fecha fijada.`) +
       li([`<strong>Qué la sanará:</strong> que los gobiernos quiten los
            frenos que hoy limitan a Roma: «Deróguense las medidas restrictivas
            impuestas en la actualidad por los gobiernos civiles» (CS 620), y
@@ -195,9 +197,11 @@ module.exports = {
           `<strong>Quién la sanará:</strong> la bestia de la tierra, que hace
            que el mundo adore «a la primera bestia, cuya herida mortal fue
            sanada» (13:12). Ella le devuelve la espada que perdió.`,
-          `<strong>Señales:</strong> el llamado papal a una «verdadera Autoridad
-           política mundial» (encíclica Caritas in Veritate) y la creciente
-           cercanía entre los gobiernos y el Vaticano.`,
+          `<strong>La imagen de la bestia:</strong> el protestantismo apóstata
+           buscará el apoyo del Estado para imponer sus creencias. La primera
+           bestia y su imagen son símbolos relacionados, pero distintos
+           (13:11-15; CS 439). Una relación diplomática no prueba por sí sola
+           que esta restauración final ya se haya cumplido.`,
           `<strong>«Adoraron al dragón»</strong> (13:4): al seguir a la bestia,
            el mundo en el fondo honra a Satanás, que le dio su autoridad.`]) +
       wa(`La herida quedará plenamente sanada cuando los Estados Unidos ayuden

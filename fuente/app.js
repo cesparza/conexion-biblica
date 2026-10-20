@@ -582,16 +582,15 @@ function lamMarcasSep(){
 const LAM_LIMPIA=true;
 const lamEsLimpia=()=>LAM_LIMPIA&&!!document.querySelector('#lam .lam-tiempo.limpia');
 const lamTxt=h=>String(h).replace(/<[^>]+>/g,'').trim();
-/* El tramo del año y: lo que va en la pista (la parte más corta que gobierna, el papado sanado,
+/* El tramo del año y: lo que va en la pista (la parte más corta que gobierna,
    el juicio), con sus fechas. */
 function lamSegmento(y){
   const L=LAM();
   if(y>LAM_HOY){const f=lamFuturo(y);return f?{de:f.de,a:f.a,tx:'Futuro · '+f.t,fut:true}:{de:LAM_HOY,a:LAM_FIN,tx:'Futuro',fut:true};}
   const ps=L.tiempo.map(lamParte).filter(p=>p&&p.de!=null&&y>=p.de&&y<p.a);
-  const arr=ps.filter(p=>!p.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de)),S=lamSanada(L);
+  const arr=ps.filter(p=>!p.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de));
   const rg=(de,a,h)=>(de<0&&a<0?(-de)+' – '+lamAnioTx(a):de>=0&&!h&&a<LAM_HOY?de+' – '+lamAnioTx(a):lamAnioTx(de)+' – '+(h?'hasta la venida':a>=LAM_HOY?'hoy':lamAnioTx(a)));
   if(arr[0])return {de:arr[0].de,a:arr[0].a,tx:rg(arr[0].de,arr[0].a)+' · '+arr[0].reino};
-  if(S&&y>=S.de&&y<LAM_JUICIO)return {de:S.de,a:LAM_JUICIO,tx:rg(S.de,0,true)+' · '+S.reino};
   if(y>=LAM_JUICIO)return {de:LAM_JUICIO,a:LAM_HOY,tx:'1844 d.C. – hoy · El juicio en el cielo'};
   if(ps[0])return {de:ps[0].de,a:ps[0].a,tx:rg(ps[0].de,ps[0].a,ps[0].hasta)+' · '+ps[0].reino};
   const v=(L.vacios||[]).find(x=>y>=x[0]&&y<x[1]);
@@ -691,10 +690,9 @@ function lamMetroEst(L){
 /* El tramo entre dos años: el reino que va en la pista (como en la línea a escala). */
 function lamMetroEra(L,de,a){
   if(de>=LAM_HOY)return null;
-  const m=(de+a)/2,ps=L.tiempo.map(lamParte).filter(p=>p&&p.de!=null&&m>=p.de&&m<p.a),S=lamSanada(L);
+  const m=(de+a)/2,ps=L.tiempo.map(lamParte).filter(p=>p&&p.de!=null&&m>=p.de&&m<p.a);
   const arr=ps.filter(p=>!p.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de));
   if(arr[0]&&arr[0].de<LAM_JUICIO)return {c:arr[0].c,tx:LM_ALIAS[arr[0].reino]||arr[0].reino};
-  if(S&&m>=S.de&&m<LAM_JUICIO)return {c:S.c,tx:'Papado sanado',cl:'sanada'};
   if(m>=LAM_JUICIO)return {c:'#D6B26A',tx:'Juicio',cl:'oro'};
   if(ps[0])return {c:ps[0].c,tx:'',cl:'tenue'};
   return {c:'',tx:'',cl:'vacio'};
@@ -1349,24 +1347,16 @@ function lamPista(){
      entre 1798 y 1844), el gris de la pista. */
   /* v231 (Camilo: «las eras que se solapan, en dos carriles»): en la pista va, año por año, la
      parte más corta de las que gobiernan (538-1798, Roma papal sobre Roma dividida); de 1798 a
-     1844, el papado sanado, rayado. Roma dividida va en su carril de abajo hasta la venida. */
+     1844, Roma dividida. La restauración final no tiene un año asignado. */
   const NEU='#4a4032',ps=L.tiempo.map(lamParte).filter(p=>p&&p.de!=null&&p.de<LAM_JUICIO),seg=[];
-  const S=lamSanada(L),cortes=[...new Set([-620,LAM_JUICIO].concat(...ps.map(p=>[p.de,p.a]),S?[S.de]:[]).filter(y=>y>=-620&&y<=LAM_JUICIO))].sort((a,b)=>a-b);
+  const cortes=[...new Set([-620,LAM_JUICIO].concat(...ps.map(p=>[p.de,p.a])).filter(y=>y>=-620&&y<=LAM_JUICIO))].sort((a,b)=>a-b);
   cortes.slice(0,-1).forEach((a,i)=>{const b=cortes[i+1],m=(a+b)/2,p=ps.filter(q=>m>=q.de&&m<q.a&&!q.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de))[0]||ps.filter(q=>m>=q.de&&m<q.a)[0];
-    const c=S&&m>=S.de?S.c:p?p.c:NEU;seg.push(c+' '+r(lamPos(a))+'% '+r(lamPos(b))+'%');});
+    const c=p?p.c:NEU;seg.push(c+' '+r(lamPos(a))+'% '+r(lamPos(b))+'%');});
   const j=r(lamPos(LAM_JUICIO)),v=r(lamPos(H.ven)),re=H.rei&&H.rei.id?lamParte(H.rei.id):null,rd=H.rei?r(lamPos(H.rei.de)):'100';
   const fut=['#D6B26A '+j+'%','#F2C46B '+v+'%','#8C8576 '+v+'%','#8C8576 '+rd+'%',(re?re.c:'#B98A35')+' '+rd+'%','transparent 100%'];
   /* El futuro, rayado: todavía no ha pasado (desde la venida). */
-  const sx=S?lamPos(S.de)/100:0,sw=S?(lamPos(LAM_JUICIO)-lamPos(S.de))/100:0;
   return 'repeating-linear-gradient(115deg,rgba(14,13,11,.4) 0 4px,transparent 4px 9px) right 0 / '+r(100-lamPos(H.ven))+'% 100% no-repeat,'+
-    (S?'repeating-linear-gradient(115deg,rgba(255,244,214,.38) 0 3px,transparent 3px 7px) '+r(sx/(1-sw)*100)+'% 0 / '+r(sw*100)+'% 100% no-repeat,':'')+
     'linear-gradient(90deg,'+seg.concat(fut).join(',')+')';
-}
-/* v231: el papado sanado (de 1798 en adelante) en la pista principal, sobre Roma dividida. */
-function lamSanada(L){
-  const h=L.herida||['dedos','barro'],d=L.tiempo.includes(h[0])&&lamParte(h[0]),p=L.tiempo.includes(h[1])&&lamParte(h[1]);if(!d||!p||!d.hasta)return null;
-  const x=(L.cmpExtra||[]).find(e=>e.de===p.a);
-  return {de:p.a,c:x?x.c:p.c,reino:x?x.reino:p.reino+' sanada'};
 }
 /* El carril de abajo: lo que sigue hasta la venida (Roma dividida), con su color. */
 function lamCarrilHTML(L){
@@ -1381,12 +1371,12 @@ function lamQuien(y){
   for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&y<p.a)on.push(id);}
   const [hd,hs]=LAM().herida||['dedos','barro'];
   if(y>=1798&&on.includes(hd))suave.push(hs);
-  /* v231: primero la fase de la pista (Roma papal, o el papado que sana); después lo que sigue
+  /* Primero la fase de la pista; después lo que sigue
      debajo, a la vez (Roma dividida, hasta la venida). */
   const P=on.map(lamParte),arr=P.filter(p=>!p.hasta).sort((x,z)=>(x.a-x.de)-(z.a-z.de)),aba=P.filter(p=>p.hasta);
   const n=arr.map((p,i)=>i&&/^El /.test(p.reino)?'e'+p.reino.slice(1):p.reino),seg=[];
   if(n.length)seg.push(n.join(' y '));
-  if(suave.length)seg.push('Roma papal, herida en 1798, se va sanando (Ap 13:3)');
+  if(suave.length)seg.push('Roma papal, herida en 1798; restauración final futura, sin fecha fijada (Ap 13:3, 11-15)');
   if(aba.length)seg.push((seg.length?'a la vez, ':'')+aba.map(p=>p.reino).join(' y ')+(seg.length?' sigue hasta la venida':', hasta la venida'));
   const vac=(LAM().vacios||[]).find(v=>y>=v[0]&&y<v[1]);
   let tx=!on.length?(vac?vac[2]:'Antes de Nabucodonosor'):seg.join('; ');
@@ -10428,7 +10418,10 @@ const CMP_FIN='fin';
    pueden ir lado a lado»). Lo que no tiene fecha se reparte por su `fin`: 'venida' (la
    piedra, los santos reciben el reino) o 'reino' (el monte, el reino eterno). Cada uno
    es su propia época, en ese orden; sin `fin` cae en el reino. */
-const CMP_FINES={venida:{reino:'La segunda venida',fechas:'Cristo vuelve: la piedra'},reino:{reino:'El reino eterno',fechas:'Después de los mil años, para siempre'}};
+const CMP_FINES={sanada:{reino:'Roma papal sanada',fechas:'Restauración final futura · sin fecha fijada'},venida:{reino:'La segunda venida',fechas:'Cristo vuelve: la piedra'},reino:{reino:'El reino eterno',fechas:'Después de los mil años, para siempre'}};
+const cmpNota=k=>k==='fin-sanada'?'<p class="cmp-p">1798 corresponde a la herida. Esta fase futura es una lectura de Daniel junto con Apocalipsis 13:3, 11-15 y 17:12-14. La imagen de la bestia representa al protestantismo apóstata que busca el poder civil para imponer sus creencias; es un símbolo relacionado con la primera bestia, no el mismo. Fuente: <a href="https://text.egwwritings.org/amp/read/1710.2047" target="_blank" rel="noopener">El conflicto de los siglos, cap. 26, p. 439</a>; Bohr, <i>Tres ángeles</i>, tomo 1, p. 170-171.</p>':'';
+/* Los enlaces anteriores usaban el año de la herida para la fase restaurada. */
+const cmpNormaliza=k=>String(k)==='1798'?'fin-sanada':k;
 const cmpEsFin=k=>String(k).indexOf(CMP_FIN)===0;
 /* v211 (Camilo, 14-oct): la fila de una parte es su `era` si la tiene, si no su `de`.
    El Hijo del hombre no tiene tramo propio (de:null) pero NO es «lo que no pasa»:
@@ -10443,7 +10436,7 @@ function cmpModelo(Ls){
   const filas=new Map();
   cols.forEach(k=>{
     const L=Ls[k];
-    /* v225: `cmpExtra`, lo que solo va en Comparar (la cuarta etapa de Roma, desde 1798). */
+    /* `cmpExtra`: la restauración final futura, sin año de inicio asignado. */
     L.partes.concat(L.cmpExtra||[]).forEach(p=>{
       const key=cmpClave(p);
       const fin=cmpEsFin(key)?CMP_FINES[key.slice(CMP_FIN.length+1)]:null;
@@ -10577,7 +10570,7 @@ function comparaHTML(){
       '<section class="cmp-epoca" data-k="'+esc(f.key)+'" style="--c:'+esc(f.c)+'">'+
       '<button type="button" class="cmp-ecab" onclick="cmpToca(\''+f.key+'\')"><span class="cmp-num">'+(CMP_ROM[i]||i+1)+'</span>'+
         '<span class="cmp-et"><b>'+esc(f.reino)+'</b>'+(f.fechas?'<small>'+esc(f.fechas)+'</small>':'')+'</span><span class="cmp-abre">Lado a lado'+IC('der')+'</span></button>'+
-      '<div class="cmp-cartas">'+M.cols.map(k=>{const ps=f.celdas[k]||[],p=ps[0];
+      cmpNota(f.key)+'<div class="cmp-cartas">'+M.cols.map(k=>{const ps=f.celdas[k]||[],p=ps[0];
         if(!p)return '<div class="cmp-carta vacia"><span class="cmp-img"></span><span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>'+esc(cmpNoTrae(k,f.key)||'No la trae')+'</b></span></div>';
         return '<button type="button" class="cmp-carta" onclick="cmpToca(\''+f.key+'\')">'+cmpMini(LAMINAS[k],p,16/10,p.nombre)+
           '<span class="cmp-lt"><small>'+esc(cmpNom(k))+'</small><b>'+esc(ps.map(q=>q.nombre).join(' · '))+'</b></span></button>';}).join('')+'</div>'+
@@ -10757,7 +10750,7 @@ function cmpSalaHTML(M){
       '<button type="button" class="cmp-x" onclick="cmpCierra()">'+IC('x')+' Cerrar</button></div>'+
     '<header class="cmp-sala-cab"><span class="cmp-num">'+(CMP_ROM[i]||i+1)+'</span><div><h2 id="cmpSalaT">'+esc(f.reino)+'</h2>'+
       (f.fechas?'<p class="cmp-sala-f">'+esc(f.fechas)+'</p>':'')+'</div></header>'+linea+
-    '<div class="cmp-sala-g">'+con.map(vis).join('')+'</div>'+
+    cmpNota(f.key)+'<div class="cmp-sala-g">'+con.map(vis).join('')+'</div>'+
     (sin.length?'<p class="cmp-sala-sin">No aparece en '+esc(sin.map(cmpNom).join(' ni en '))+'.'+sin.filter(k=>cmpNoTrae(k,f.key)).map(k=>' '+esc(cmpNom(k))+': '+esc(cmpNoTrae(k,f.key).replace(/^./,c=>c.toLowerCase()))+'.').join('')+'</p>':'')+
     cmpFasesHTML(f,M,false)+
     '<nav class="cmp-sala-nav" aria-label="Épocas">'+
@@ -10777,6 +10770,7 @@ function cmpFasesHTML(f,M,corto){
 }
 let cmpVuelve='';
 function cmpToca(key){
+  key=cmpNormaliza(key);
   const M=cmpModelo();if(!M.filas.some(f=>f.key===key))return;
   const s=document.getElementById('cmpSala');if(!s)return;
   const nueva=s.hidden;cmpSel=key;if(nueva)cmpVuelve=key;lugarAnota();

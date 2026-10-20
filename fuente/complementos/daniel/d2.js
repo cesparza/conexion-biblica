@@ -34,15 +34,15 @@ module.exports = {
           ['Oro', 'Babilonia', '605-539 a.C.'],
           ['Plata', 'Medo-Persia', '539-331 a.C.'],
           ['Bronce', 'Grecia', '331-168 a.C.'],
-          ['Piernas de hierro', 'Roma imperial, una monarquía de hierro', '168 a.C.-476 d.C.'],
-          ['Diez dedos', 'Roma dividida en los reinos bárbaros', 'Desde 476 d.C.'],
-          ['Hierro mezclado con barro', 'Roma papal: el poder político unido al religioso', 'Supremacía 538-1798 d.C.; herida en 1798, sana y vuelve al final'],
+          ['Piernas de hierro', 'Roma imperial', '168 a.C.-476 d.C.'],
+          ['Diez dedos', 'Roma dividida', 'Desde 476 d.C.'],
+          ['Hierro mezclado con barro', 'Roma papal: el poder político unido al religioso', 'Supremacía 538-1798 d.C.; herida en 1798; restauración final futura, sin fecha fijada'],
           ['La piedra', 'La segunda venida de Cristo', 'Futuro'],
           ['El gran monte', 'El reino eterno de Cristo', 'Después de los mil años'],
         ]) +
-        `<p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial (las piernas), dividida (los dedos) y papal (el hierro mezclado con barro). Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p><p>Y una <strong>cuarta</strong>: el papado sanado de su herida (Apocalipsis 13:3), en pie cuando la piedra golpea los pies (2:34).</p>` +
-        `<p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro hecha por el hombre; va en descenso. Muestra también el deterioro moral: las naciones que olvidan a Dios terminan imponiendo la moral por la fuerza.</p>` +
-        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; CBA 4:1168.</p>`,
+        `<p>Roma pasa por <strong>tres fases</strong> en la imagen: imperial (las piernas), dividida (los dedos) y papal (el hierro mezclado con barro). Las tres son hierro: el poder de Roma sigue, pero cambia de forma.</p><p>Apocalipsis 13:3, 11-15 añade una fase final: el poder papal restaurado. Es futura, sin fecha fijada; 1798 es la herida. Estará en pie cuando la piedra golpee los pies (2:34).</p>` +
+        `<p>Los metales <strong>bajan de valor</strong> (del oro al hierro) pero <strong>suben en dureza</strong>. La historia no avanza hacia una edad de oro humana. Las naciones que olvidan a Dios terminan imponiendo la moral por la fuerza.</p>` +
+        `<p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 57-58; Bohr, <i>La gran cadena</i>, p. 39; <i>Tres ángeles</i> 1:170-171; CS 439.</p>`,
     },
     {
       t: '🧭 La cabeza de oro: Babilonia (605-539 a.C.)',

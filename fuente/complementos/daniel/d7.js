@@ -48,10 +48,10 @@ module.exports = {
         ['1. Roma imperial', 'La bestia misma, con dientes de hierro (7:7, 23)', '168 a.C.-476 d.C.'],
         ['2. Roma dividida', 'Los diez cuernos: «diez reyes» (7:24)', 'Desde 476'],
         ['3. Roma papal', 'El cuerno pequeño (7:8, 24-25)', '538-1798'],
-        ['4. Roma papal sanada', 'No va aparte en Daniel 2 ni 7; la muestra Apocalipsis 13:3, 12 y 17:8: la bestia «era y no es, y será»', 'Desde 1798 hasta la venida de Cristo'],
+        ['4. Roma papal sanada', 'No va aparte en Daniel 2 ni 7; la muestra Apocalipsis 13:3, 12 y 17:8: la bestia «era y no es, y será»', 'Restauración final futura, sin fecha fijada'],
       ]) +
-      `<p>La cuarta etapa se incluye porque el poder papal sigue hasta el fin. Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34, 44-45). El cuerno de Daniel 8 «será quebrantado, aunque no por mano humana» (8:25), y el rey del norte, recuperado de su herida, «llegará a su fin» (11:40-45).</p>` +
-      hi('La herida mortal es la caída del papado en 1798; la profecía anuncia que sana y que «toda la tierra» va en pos de la bestia. El hombre de pecado sigue hasta la segunda venida (2 Tesalonicenses 2:8).') +
+      `<p>La cuarta etapa se incluye porque el poder papal sigue hasta el fin. 1798 corresponde a la herida, no a su curación. La restauración final de su poder perseguidor es futura (Apocalipsis 13:3, 11-15; CS 439), y volverá a perseguir a los santos hasta que el juicio le quite el dominio y Cristo vuelva (7:21-22, 26). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34, 44-45). El cuerno de Daniel 8 «será quebrantado, aunque no por mano humana» (8:25), y el rey del norte, recuperado de su herida, «llegará a su fin» (11:40-45).</p>` +
+      hi('La herida mortal corresponde a la pérdida del poder civil coercitivo en 1798. La profecía anuncia una restauración final futura, sin fijar fecha, cuando «toda la tierra» irá en pos de la bestia. El hombre de pecado sigue hasta la segunda venida (2 Tesalonicenses 2:8).') +
       `<p>Fuente: CS 492 y 636; Bohr, <i>Daniel 1-10</i>, p. 120-121; Bohr, <i>Apocalipsis 17</i>, p. 7-8.</p>` },
 
     /* v236: el fin de la bestia y de las otras tres (7:11-12), con fuente y página. */

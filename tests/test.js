@@ -2816,14 +2816,20 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   const {pres7}=montar("pres7:(lamId='d7',lamPasosE().map(x=>x.tipo==='parte'?x.id+(x.sub!=null?'.'+x.sub:''):x.tipo).join(' '))");
   ok(/juicio\.3 juicio\.4 juicio\.5 hijo\.0 hijo\.1 fases fases fases santos/.test(pres7),'v225: al presentar Daniel 7, las tres fases del juicio van después del Hijo del hombre (la sentencia es el reino que recibe)');
   const fuenteTodo=['laminas.js','contenido.js','complementos/profundizar.js','complementos/daniel/d7.js','complementos/daniel/d2.js','complementos/daniel/d8.js'].map(f=>fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8')).join('\n');
-  const L7=LAMINAS.d7,A3=/sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve \(7:21-22, 26\)/;
+  const L7=LAMINAS.d7,A3=/volverá a perseguir a los santos hasta que el juicio le quite el dominio y Cristo vuelva \(7:21-22, 26\)/;
   ok(!/hasta que viene el Anciano de días|sigue en pie hasta que viene|el cuerno sigue hasta que/.test(fuenteTodo)&&A3.test(L7.periodo.pasos[3].nota)&&A3.test(L7.partes.find(p=>p.id==='cuerno').corto)&&
-    (fuenteTodo.match(/sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve/g)||[]).length>=6&&/El Padre le da el reino al Hijo, que está ante él desde 1844/.test(L7.fases.pasos[1].quien),
+    (fuenteTodo.match(/volverá a perseguir a los santos hasta que el juicio le quite el dominio y Cristo vuelva/g)||[]).length>=6&&/El Padre le da el reino al Hijo, que está ante él desde 1844/.test(L7.fases.pasos[1].quien),
     'v225: ya no dice que el cuerno sigue «hasta que viene el Anciano de días» (7:13 es 1844): sigue hasta que el juicio le quita el dominio y Cristo vuelve; la sentencia: el Padre le da el reino al Hijo, que está ante él desde 1844');
-  const Mc=montar('cmpModelo').cmpModelo(LAMINAS),is=Mc.filas.findIndex(f=>f.key==='1798'),fs98=Mc.filas[is];
-  ok(fs98&&fs98.reino==='Roma papal sanada'&&/1798/.test(fs98.fechas)&&/venida/.test(fs98.fechas)&&['d2','d7','d8'].every(k=>(fs98.celdas[k]||[]).length===1)&&
-    Mc.filas[is-1].key==='538'&&Mc.filas[is+1].key==='1844'&&!LAMINAS.d7.partes.some(p=>p.de===1798),
-    'v225: Comparar nombra la cuarta etapa: «Roma papal sanada · desde 1798 hasta la venida», entre Roma papal y el juicio, en Daniel 2, 7 y 8 (sin tocar las láminas)');
+  const Mc=montar('cmpModelo').cmpModelo(LAMINAS),is=Mc.filas.findIndex(f=>f.key==='fin-sanada'),fs98=Mc.filas[is];
+  ok(fs98&&fs98.reino==='Roma papal sanada'&&/futura/.test(fs98.fechas)&&/sin fecha/.test(fs98.fechas)&&!/1798/.test(fs98.fechas)&&['d2','d7','d8'].every(k=>(fs98.celdas[k]||[]).length===1)&&
+    Mc.filas[is-1].key==='1844'&&Mc.filas[is+1].key==='fin-venida'&&['d2','d7','d8'].every(k=>LAMINAS[k].cmpExtra.every(p=>p.de===null&&p.fin==='sanada'&&!('a' in p)))&&!LAMINAS.d7.partes.some(p=>p.de===1798),
+    'v259: la restauración final es futura, sin año asignado, después del inicio del juicio y antes de la venida; 1798 es la herida');
+  const v259=montar("alias:cmpNormaliza('1798'), nota:cmpNota('fin-sanada'), seg:(lamId='d7',lamSegmento(1820).tx), metro:(lamId='d7',lamMetroEra(LAMINAS.d7,1798,1844)), mini:cmpMini");
+  ok(v259.alias==='fin-sanada'&&/1798 corresponde a la herida/.test(v259.nota)&&/protestantismo apóstata/.test(v259.nota)&&/cap. 26, p. 439/.test(v259.nota)&&/Roma dividida/.test(v259.seg)&&!/sanad/.test(JSON.stringify(v259.metro)),
+    'v259: enlace antiguo compatible, explicación de la imagen de la bestia con fuente; la línea de 1798 no dice que la herida ya está sanada');
+  const imagenes=[['d2','piedra','piedra-impacto'],['d7','santos','santos-venida'],['d8','quebrantado','quebrantado'],['d2','monte','monte-eterno'],['d7','reino','d2/e-monte']];
+  ok(imagenes.every(([k,id,img])=>{const L=LAMINAS[k],p=L.partes.find(p=>p.id===id),ruta='laminas/'+(img.includes('/')?'':L.dir)+img+'.webp';return p.img===img&&fs.existsSync(path.join(RAIZ,ruta))&&v259.mini(L,p,1.6).includes(ruta);})&&new Set(imagenes.map(x=>x[2])).size===5&&!Mc.filas.find(f=>f.key==='fin-reino').celdas.d8,
+    'v259: cinco imágenes diferenciadas por símbolo en Comparar; Daniel 8 no añade una escena del reino eterno');
   ok(/lamIr\('h0'\);lamPintaReto\(\)/.test(js)&&/function lamNavHTML\(k\)\{\s*const P=lamRecorrido\(\)/.test(js),'Explorar abre en «Cautivos en Babilonia» y Anterior/Siguiente siguen el recorrido entero');
   /* La piedra: oculta hasta su paso, y sin rótulo sobre la estatua. */
   ok(/function lamPiedraArriba\(\)\{[\s\S]*?pi\.style\.opacity='0'/.test(js)&&/data-p="piedra" style="opacity:0"/.test(js)&&/Object\.keys\(E\)\.filter\(id=>id!=='piedra'\)/.test(js)&&/esPiedra\)\{lamPiedraArriba\(\);pi\.style\.opacity='1'/.test(js),
@@ -3119,17 +3125,16 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     const st=[...lin.matchAll(/(#[0-9A-Fa-f]{6}|transparent) ([\d.]+)% ([\d.]+)%/g)].map(m=>[m[1],+m[2],+m[3]]);
     const pos=y=>(y+620)/(2626+620)*100;
     /* v231: donde se solapan, la pista lleva la parte más corta (Roma papal sobre Roma dividida, que va en
-       su carril de abajo); de 1798 a 1844, el papado sanado. */
-    const hd=L.herida||['dedos','barro'],san=L.tiempo.includes(hd[1])&&L.partes.find(p=>p.id===hd[0]).hasta?L.partes.find(p=>p.id===hd[1]):null,sanC=san&&((L.cmpExtra||[]).find(e=>e.de===san.a)||san).c;
+       su carril de abajo); después de la herida, Roma dividida continúa. */
     for(let y=-615;y<1844;y+=7){const x=pos(y),s=st.find(q=>x>=q[1]&&x<q[2]),act=L.tiempo.map(id=>L.partes.find(p=>p.id===id)).filter(p=>p.de!=null&&y>=p.de&&y<p.a),gob=act.filter(p=>!p.hasta).sort((a,b)=>(a.a-a.de)-(b.a-b.de))[0]||act[0];
-      const quiere=san&&y>=san.a?sanC:gob?gob.c:'#4a4032';if(!s||s[0].toLowerCase()!==quiere.toLowerCase()){mal.push(k+' '+y+' '+(s&&s[0])+'≠'+quiere);break;}}}
+      const quiere=gob?gob.c:'#4a4032';if(!s||s[0].toLowerCase()!==quiere.toLowerCase()){mal.push(k+' '+y+' '+(s&&s[0])+'≠'+quiere);break;}}}
   ok(!mal.length,'v230: la pista tiene, año por año, el color del reino que gobierna, de borde a borde, y gris donde el capítulo no tiene reino'+(mal.length?' — '+mal.join(', '):''));
   ok(/function lamTiempoAlMarco/.test(js)&&/function lamTiempoPega/.test(js)&&/function lamBordeAbajo/.test(js)&&/lam-l23-sec/.test(js),'v230: en Explorar la línea va debajo de la escena, se pega abajo al pasarla y el panel de las 2.300 tardes y mañanas sigue aparte');
   ok(/srvFetch\('\/nombres'\)/.test(js)&&/e\.textContent=x/.test(js)&&!/lb-otros[^\n]*innerHTML/.test(js),'v230: el libro abierto pide los nombres de pila al servidor y los escribe con textContent');
 }
 
 /* v231 (Camilo, 15-oct): las eras que se solapan van en dos carriles (Roma dividida, delgada, hasta
-   la venida; Roma papal y el papado sanado, encima); al elegir o llegar a una parte, el pulgar, la
+   la venida; Roma papal, encima hasta la herida); al elegir o llegar a una parte, el pulgar, la
    escena y el rótulo van a su INICIO; las catorce señales numeradas; las siete plagas. */
 {
   const {LAMINAS,ULTIMOS}=require(path.join(RAIZ,'fuente','laminas.js')),{VERS_AP}=require(path.join(RAIZ,'fuente','biblia-apocalipsis.js'));
@@ -3140,15 +3145,15 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(pa('d2','dedos').hasta==='venida'&&pa('d7','cuernos').hasta==='venida'&&!pa('d2','barro').hasta&&!pa('d7','cuerno').hasta&&
     q.r2==='476 d.C. – hasta la venida'&&q.r7==='476 d.C. – hasta la venida'&&q.rp==='538 d.C. – 1798 d.C.'&&/Maxwell, <i>El porvenir del mundo revelado<\/i>, p\. 39-40/.test(pa('d2','dedos').fuente+pa('d7','cuernos').fuente),
     'v231: Roma dividida (los diez dedos y los diez cuernos) va de 476 «hasta la venida» (2:43-44; Maxwell, p. 39-40); Roma papal, de 538 a 1798 ('+[q.r2,q.r7,q.rp].join(' · ')+')');
-  ok(/^Roma papal; a la vez, Roma dividida sigue hasta la venida/.test(q.a2)&&/^Roma papal; a la vez, Roma dividida sigue hasta la venida/.test(q.a7)&&/^Roma papal, herida en 1798, se va sanando \(Ap 13:3\); a la vez, Roma dividida sigue/.test(q.b2)&&/^Roma dividida, hasta la venida/.test(q.c2),
-    'v231: al arrastrar, el rótulo dice primero la fase de arriba (Roma papal, o el papado que sana) y después que Roma dividida sigue a la vez ('+q.a2+' | '+q.b2+')');
+  ok(/^Roma papal; a la vez, Roma dividida sigue hasta la venida/.test(q.a2)&&/^Roma papal; a la vez, Roma dividida sigue hasta la venida/.test(q.a7)&&/^Roma papal, herida en 1798; restauración final futura, sin fecha fijada \(Ap 13:3, 11-15\); a la vez, Roma dividida sigue/.test(q.b2)&&/^Roma dividida, hasta la venida/.test(q.c2),
+    'v231: al arrastrar, el rótulo dice primero la fase de arriba (Roma papal, después herida) y después que Roma dividida sigue a la vez ('+q.a2+' | '+q.b2+')');
   const kk=h=>(h.match(/class="lam-carril2"/g)||[]).length,lf=h=>{const m=h.match(/left:([\d.]+)%;width:([\d.]+)%/);return m?[+m[1],+m[1]+ +m[2]]:[];};
   const pos=y=>(y+620)/(2626+620)*100,[x0,x1]=lf(q.k2);
   ok(kk(q.k2)===1&&kk(q.k7)===1&&kk(q.k8)===0&&Math.abs(x0-pos(476))<.01&&Math.abs(x1-pos(q.ven))<.01&&/data-de="476"/.test(q.k7),
     'v231: el carril de abajo: Roma dividida, de 476 a la venida, en Daniel 2 y 7 (Daniel 8 no la trae)');
   const nPres=(js.match(/getElementById\('lamTano'\)\.textContent=lamRangoTx\(/g)||[]).length;
   ok(nPres>=4&&!/textContent=lamAnioTx\(p\.de\)\+' – '/.test(js)&&!/textContent=lamAnioTx\(q\.de\)\+' – '/.test(js)&&/r\.value=P\.de;(lamLineaPide\(\);)?document\.getElementById\('lamTano'\)/.test(js)&&!/r\.value=P\.a;/.test(js)&&
-    /lamTramo\(p\.de,p\.a,p\.hasta\)/.test(js)&&/function lamSanada/.test(js),
+    /lamTramo\(p\.de,p\.a,p\.hasta\)/.test(js),
     'v231: en Explorar y en Presentar (Daniel 2, 7 y 8) el pulgar y el rótulo van al INICIO de la parte, con su tramo; la cuenta de los 1.260 años empieza en 538 ('+nPres+')');
   /* Las señales, numeradas del 1 al 14. */
   const se=ev('senales'),h=montar("h:ultDetHTML(ultIdx('senales'),'')").h;
@@ -3174,7 +3179,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
 {
   const {LAMINAS}=require(path.join(RAIZ,'fuente','laminas.js')),js=APP,css=fs.readFileSync(path.join(RAIZ,'fuente','estilos.css'),'utf8');
   const q=montar("a:(lamId='d8',lamSegmento(-320).tx), b:(lamId='d2',lamSegmento(1000).tx), c:(lamId='d2',lamSegmento(1820).tx), d:(lamId='d8',lamSegmento(1820).tx), e:(lamId='d7',lamSegmento(1900).tx), f:(lamId='d8',lamSegmento(-600).tx), g:(lamId='d8',lamQuien(1820).tx)");
-  ok(q.a==='331 – 301 a.C. · Grecia'&&q.b==='538 – 1798 d.C. · Roma papal'&&/^1798 d\.C\. – hasta la venida · Roma papal sanada$/.test(q.c)&&/^1798 – 1844 d\.C\. · Las 2\.300 tardes y mañanas$/.test(q.d)&&/^1844 d\.C\. – hoy · El juicio en el cielo$/.test(q.e)&&q.f==='Antes de 539 a.C. · Babilonia'&&!/Nabucodonosor/.test(q.g),
+  ok(q.a==='331 – 301 a.C. · Grecia'&&q.b==='538 – 1798 d.C. · Roma papal'&&/^476 d\.C\. – hasta la venida · Roma dividida$/.test(q.c)&&/^1798 – 1844 d\.C\. · Las 2\.300 tardes y mañanas$/.test(q.d)&&/^1844 d\.C\. – hoy · El juicio en el cielo$/.test(q.e)&&q.f==='Antes de 539 a.C. · Babilonia'&&!/Nabucodonosor/.test(q.g),
     'v232: encima de la línea, el tramo con sus fechas ('+[q.a,q.b,q.c,q.d,q.e,q.f].join(' | ')+'); Daniel 8 de 1798 a 1844 ya no dice «Antes de Nabucodonosor»');
   ok(/const LAM_LIMPIA=true;/.test(js)&&/PARA VOLVER A LA LÍNEA DE v231 basta poner/.test(js)&&/t\.classList\.add\('limpia'\)/.test(js)&&/\.lam-tiempo\.limpia \.lam-hley\{display:none!important\}/.test(css)&&
     (css.match(/\.lam-tk|\.lam-futx|\.lam-seg/g)||[]).length>=6&&!/\.lam-tiempo:not\(\.limpia\)/.test(css),

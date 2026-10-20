@@ -42,7 +42,7 @@ const HOJAS = [
   { id: 'imperial', tipo: 'poder', t: 'Roma imperial', reinos: ['Roma imperial'], cmp: '-168' },
   { id: 'dividida', tipo: 'poder', t: 'Roma dividida', reinos: ['Roma dividida'], cmp: '476' },
   { id: 'papal', tipo: 'poder', t: 'Roma papal', reinos: ['Roma papal'], cmp: '538' },
-  { id: 'sanado', tipo: 'poder', t: 'El papado sanado', reinos: ['Roma papal sanada'], cmp: '1798',
+  { id: 'sanado', tipo: 'poder', t: 'El papado sanado', s: 'Restauración final futura, sin fecha fijada; 1798 es la herida', reinos: ['Roma papal sanada'], cmp: 'fin-sanada',
     enlace: { d7: 'cuerno', d8: 'quebrantado' },
     lema: ['Apocalipsis 13:3', 'Vi una de sus cabezas como herida de muerte, pero su herida mortal fue sanada.'] },
   { id: 'juicio', tipo: 'tema', t: 'El juicio', s: 'Desde 1844, en el cielo', reinos: ['El juicio en el cielo'],
@@ -290,7 +290,7 @@ function armaParalelos(LAMINAS, hechos = HECHOS, hojas = HOJAS) {
     for (const f of h.filas) for (const k in f.celdas) f.celdas[k].sort((a, b) => ORDEN[a.tipo] - ORDEN[b.tipo]);
     for (const cap of cols) if (!h.filas.some(f => (f.celdas[cap] || []).length))
       h.vacias[cap] = ((LAMINAS[cap].noTrae || {})[h.cmp] || '');
-    if (h.tipo === 'poder') h.s = h._nom.join(' · ');
+    if (h.tipo === 'poder' && !h.s) h.s = h._nom.join(' · ');
     h.fuente = juntaFuentes(h._f);
     delete h._f; delete h._nom;
   }

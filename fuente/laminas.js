@@ -54,9 +54,9 @@ const LAMINAS = {
      v218 (Camilo, 14-oct 16:01: «la piedra y el gran monte son eventos separados»):
      entre la piedra y el monte van los mil años. `ult`: el acontecimiento de
      ULTIMOS que muestra el tramo. */
-  futuro: [{ id: 'piedra', de: 2026, a: 2226, t: 'La piedra', s: 'Cristo vuelve', f: 'e-piedra', ult: 'venida' },
+  futuro: [{ id: 'piedra', de: 2026, a: 2226, t: 'La piedra', s: 'Cristo vuelve', f: 'piedra-impacto', ult: 'venida' },
     { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos con Cristo en el cielo; la tierra, desolada (CS 718)', f: 'mil-desolada', ult: 'desolada' },
-    { id: 'monte', de: 2426, a: 2626, t: 'El gran monte', s: 'el reino eterno, después de los mil años', f: 'e-monte', ult: 'reino' }],
+    { id: 'monte', de: 2426, a: 2626, t: 'El gran monte', s: 'el reino eterno, después de los mil años', f: 'monte-eterno', ult: 'reino' }],
   /* Daniel 2 no trae el juicio, pero la historia sí pasa por 1844 (Daniel 7 y 8). */
   juicio: 1844,
   /* v230 (Camilo: «faltan fechas»): una marca por cada reino que empieza (605, 539, 331, 168, 476,
@@ -134,15 +134,15 @@ const LAMINAS = {
        (el juicio no es de Roma dividida; Daniel 2 no lo trae). */
     { y: 1844, f: 'd7/juicio', hoja: false, c: '1844 d.C. · Empieza el juicio en el cielo', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (Daniel 7:9-10; 8:14)' },
     /* v195: lo que viene. v211: con año del tramo «futuro» de la línea de tiempo (no es un año real). */
-    { y: 2027, f: 'e-piedra', parte: 'piedra', t: 'Futuro · Cristo vuelve en su gloria con todos sus ángeles (2:34, 45; Mateo 25:31)' },
-    { y: 2427, f: 'e-monte', parte: 'monte', t: 'Después de los mil años · El reino de Dios llena toda la tierra (2:35, 44; Apocalipsis 21:1)' },
+    { y: 2027, f: 'piedra-impacto', parte: 'piedra', t: 'Futuro · La piedra hiere los pies: Dios pone fin a los reinos humanos (2:34, 44-45)' },
+    { y: 2427, f: 'monte-eterno', parte: 'monte', t: 'Después de los mil años · El reino de Dios llena toda la tierra (2:35, 44; Apocalipsis 21:1)' },
   ],
   /* v225 (revisión de Camilo, B1): la cuarta etapa de Roma con nombre en Comparar. `cmpExtra` va
-     solo a Comparar (una época «Roma papal sanada · desde 1798 hasta la venida»), no a la lámina
+     solo a Comparar (restauración final futura, sin fecha fijada), no a la lámina
      ni al río. En Daniel 2 lleva el id del barro: su retrato es el de los pies. */
-  cmpExtra: [{ id: 'barro', nombre: 'Los pies, hasta que cae la piedra', reino: 'Roma papal sanada', fechas: 'desde 1798 d.C. hasta la venida', de: 1798, a: 2026, c: '#8A5A3C',
+  cmpExtra: [{ id: 'barro', nombre: 'Los pies, hasta que cae la piedra', reino: 'Roma papal sanada', fechas: 'restauración final futura, sin fecha fijada', de: null, fin: 'sanada', c: '#8A5A3C',
     texto: 'hirió a la imagen en sus pies de hierro y de barro cocido', ref: '2:34',
-    corto: 'Herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue en los pies hasta que la piedra los hiere: la segunda venida (2:34, 44-45).' }],
+    corto: '1798 es la herida, no su curación. La restauración final del poder perseguidor es futura (Apocalipsis 13:3, 11-15); los pies siguen hasta que la piedra los hiere: la segunda venida (2:34, 44-45).' }],
   partes: [
  {id:'oro',nombre:'Cabeza de oro',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La cabeza de esta imagen era de oro fino',ref:'2:32',texto2:'Tú eres aquella cabeza de oro.',ref2:'2:38',
@@ -172,14 +172,14 @@ const LAMINAS = {
  {id:'barro',nombre:'Hierro mezclado con barro',reino:'Roma papal',fechas:'desde 538 d.C. · supremacía 538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',
   texto:'sus pies, en parte de hierro y en parte de barro cocido',ref:'2:33',texto2:'se mezclarán por medio de alianzas humanas; pero no se unirán el uno con el otro',ref2:'2:43',
   corto:'Tercera fase: el poder político unido al religioso.',
-  interp:['La tercera fase: el poder político unido al religioso. El hierro es el poder civil de Roma; el barro «de alfarero» representa en la Biblia al pueblo de Dios (Jeremías 18:6). Mezclados, es la iglesia que dejó a Cristo para unirse al Estado, la ramera de Apocalipsis 17:2. La piedra desmenuza también «el barro cocido» (2:35).','Domina 1.260 años, de 538 a 1798 d.C. (Daniel 7:25): es el cuerno pequeño. En 538 los ostrogodos son expulsados de Roma; en 1798 el general Louis-Alexandre Berthier entra en Roma y toma prisionero al papa. En 1798 recibe la herida; la herida sana y, al final, la mezcla vuelve en todo el mundo (Apocalipsis 13:3; 17:12-14). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34).','Los reyes de la tierra fornican con la ramera (Apocalipsis 17:2) y entregan «su poder y autoridad a la bestia» (17:13), pero la unión no dura: «no se unirán el uno con el otro, como el hierro no se mezcla con el barro» (2:43), y «aborrecerán a la ramera» (17:16).','«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).'],
+  interp:['La tercera fase: el poder político unido al religioso. El hierro es el poder civil de Roma; el barro «de alfarero» representa en la Biblia al pueblo de Dios (Jeremías 18:6). Mezclados, es la iglesia que dejó a Cristo para unirse al Estado, la ramera de Apocalipsis 17:2. La piedra desmenuza también «el barro cocido» (2:35).','Domina 1.260 años, de 538 a 1798 d.C. (Daniel 7:25): es el cuerno pequeño. En 538 los ostrogodos son expulsados de Roma; en 1798 el general Louis-Alexandre Berthier entra en Roma y toma prisionero al papa. En 1798 recibe la herida. Su restauración final es futura: la unión religiosa y civil vuelve a imponer la adoración en todo el mundo (Apocalipsis 13:3; 17:12-14). La piedra hiere la imagen «en sus pies de hierro y de barro cocido» (2:34).','Los reyes de la tierra fornican con la ramera (Apocalipsis 17:2) y entregan «su poder y autoridad a la bestia» (17:13), pero la unión no dura: «no se unirán el uno con el otro, como el hierro no se mezcla con el barro» (2:43), y «aborrecerán a la ramera» (17:16).','«La mezcla de los asuntos de la iglesia con los del Estado se representa con el hierro y el barro» (Ms 63, 1899).'],
   fuente:'Bohr, <i>¿Cuán cerca al fin?</i>, p. 42-46 y 64-65; '+BOHR+', p. 58-62; CBA 4:1168.'},
- {id:'piedra',nombre:'La piedra',reino:'La segunda venida de Cristo',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
+ {id:'piedra',img:'piedra-impacto',nombre:'La piedra',reino:'La segunda venida de Cristo',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
   texto:'una piedra se desprendió sin que la cortara mano alguna, e hirió a la imagen en sus pies',ref:'2:34',texto2:'el Dios del cielo levantará un reino que no será jamás destruido',ref2:'2:44',
   corto:'Cristo en su segunda venida. «Sin que la cortara mano alguna»: no lo hace el hombre.',
   interp:['La piedra es Cristo en su segunda venida. Golpea los pies, no la cabeza: llega «en los días de estos reyes» (2:44), con Europa ya dividida.','«Sin que la cortara mano alguna» (2:34, 45): es Dios quien interviene al final, no una iglesia que conquista el mundo poco a poco.','La piedra y el monte no pasan al mismo tiempo. La piedra deshace los reinos cuando Cristo vuelve; el monte llena la tierra después de los mil años (Apocalipsis 20:4; 21:1).'],
   fuente:BOHR+', p. 63-64; CS 698-703 y 732.'},
- {id:'monte',nombre:'El gran monte',reino:'El reino eterno',fechas:'después de los mil años, para siempre',de:null,fin:'reino',c:'#0E7490',
+ {id:'monte',img:'monte-eterno',nombre:'El gran monte',reino:'El reino eterno',fechas:'después de los mil años, para siempre',de:null,fin:'reino',c:'#0E7490',
   texto:'la piedra que hirió a la imagen se hizo un gran monte que llenó toda la tierra',ref:'2:35',texto2:'él permanecerá para siempre',ref2:'2:44',
   corto:'Después de los mil años. Todo lo demás se lo lleva el viento; solo queda el reino de Dios.',
   interp:['La piedra sale del monte Sion (2:45; 1 Pedro 2:6) y se convierte en el gran monte: el reino eterno. En la Biblia un monte es un reino (Isaías 2:2). Todo lo demás se lo lleva el viento «como tamo» (2:35).','No es la venida: es lo que viene después. Cristo vuelve (la piedra), pasan los mil años, baja la Nueva Jerusalén, el fuego consume a los impíos y la tierra es hecha nueva (Apocalipsis 20-21). Ahí el reino llena toda la tierra.','Daniel 7 termina igual: el reino se da «al pueblo de los santos del Altísimo, cuyo reino es reino eterno» (7:27).'],
@@ -223,7 +223,7 @@ LAMINAS.d7 = {
   herida: ['cuernos', 'cuerno'],
   tiempo: ['leon', 'oso', 'leopardo', 'bestia', 'cuernos', 'cuerno', 'juicio'],
   /* v218: la venida, los mil años y el reino eterno, como en Daniel 2. */
-  futuro: [{ id: 'santos', de: 2026, a: 2226, t: 'La segunda venida', s: 'los santos reciben el reino', f: 'd2/e-piedra', ult: 'venida' },
+  futuro: [{ id: 'santos', de: 2026, a: 2226, t: 'La segunda venida', s: 'los santos reciben el reino', f: 'santos-venida', ult: 'venida' },
     { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: los santos juzgan con Cristo (CS 718)', f: 'mil-juicio', ult: 'juzgan' },
     { id: 'reino', de: 2426, a: 2626, t: 'El reino eterno', s: 'después de los mil años', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
@@ -278,7 +278,7 @@ LAMINAS.d7 = {
   escenas: LAMINAS.d2.escenas.filter(e => e.y <= 2026 && e.y !== 1844).map(e => Object.assign({}, e, { f: 'd2/' + e.f }, e.parte ? { parte: D2_A_D7[e.parte] } : {}))
     /* v205: al pasar de 1798 a 1844 la línea de tiempo llega al juicio. */
     .concat([{ y: 1844, f: 'juicio', c: '1844 d.C. · Empieza el juicio en el cielo (8:14)', t: '1844 d.C. · Terminan las 2.300 tardes y mañanas y empieza el juicio en el cielo (7:9-10; 8:14)' },
-      { y: 2027, f: 'd2/e-piedra', t: 'Futuro · Cristo vuelve por los suyos (Juan 14:3)' }]),
+      { y: 2027, f: 'santos-venida', t: 'Futuro · Cristo vuelve por los suyos (Juan 14:3; 1 Tesalonicenses 4:16-17)' }]),
   /* v205: la línea de tiempo con 1844 (va arriba de la pista: abajo choca con 1798),
      y los años donde el recorrido se detiene un momento. */
   /* v230 (Camilo: «faltan fechas»): una marca por cada reino que empieza (605, 539, 331, 168, 476,
@@ -368,7 +368,7 @@ LAMINAS.d7 = {
       { t: 'El mismo tiempo en Apocalipsis', v: 'mismo', citas: [['Apocalipsis 12:14', 'un tiempo, tiempos y la mitad de un tiempo'], ['Apocalipsis 12:6', 'mil doscientos sesenta días'], ['Apocalipsis 11:3', 'mil doscientos sesenta días'], ['Apocalipsis 13:5', 'cuarenta y dos meses'], ['Apocalipsis 11:2', 'cuarenta y dos meses']],
         nota: 'Tres maneras de decir el mismo periodo: tres tiempos y medio, 42 meses (42 × 30) y 1.260 días.' },
       { t: 'De 538 a 1798', v: 'cumple', citas: [['Apocalipsis 13:3', 'Vi una de sus cabezas como herida de muerte, pero su herida mortal fue sanada.']],
-        nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Louis-Alexandre Berthier toma preso al papa Pío VI: es la herida de muerte. Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26).' }],
+        nota: 'En 538 los ostrogodos dejan Roma y empieza la supremacía papal. 1.260 años después, en 1798, el general Louis-Alexandre Berthier toma preso al papa Pío VI: es la herida de muerte. Herido en 1798, tendrá una restauración final futura, sin fecha fijada (Apocalipsis 13:3, 11-15), y volverá a perseguir a los santos hasta que el juicio le quite el dominio y Cristo vuelva (7:21-22, 26).' }],
     fuente: BOHR + ', p. 198-199; Bohr, <i>15 principios</i> 1:226-231; CS 309, 492 y 636.',
   },
   /* v210: LAS TRES FASES DEL JUICIO (Camilo, 14-oct: «y el asunto de las tres fases
@@ -404,9 +404,9 @@ LAMINAS.d7 = {
     nota: 'Es el orden de Daniel 7: se abren los libros (7:10), el Hijo recibe el reino (7:14) y después los santos lo reciben (7:22, 27). Apocalipsis 20 sigue el juicio más allá de la venida: los santos juzgan durante los mil años y el gran trono blanco cumple la sentencia de los perdidos. No se contradicen: la ejecución empieza en la venida y termina después del milenio.',
     fuente: 'CS 480-481, 533 y 671; PE 55 y 280; Bohr, <i>Daniel 1-10</i>, p. 121 y 288; Bohr, <i>15 principios</i> 2:306-307.',
   },
-  cmpExtra: [{ id: 'sanado', img: 'cuerno', nombre: 'El cuerno, sanado de su herida', reino: 'Roma papal sanada', fechas: 'desde 1798 d.C. hasta la venida', de: 1798, a: 2026, c: '#8A5A3C',
+  cmpExtra: [{ id: 'sanado', img: 'cuerno', nombre: 'El cuerno, sanado de su herida', reino: 'Roma papal sanada', fechas: 'restauración final futura, sin fecha fijada', de: null, fin: 'sanada', c: '#8A5A3C',
     texto: 'este cuerno hacía guerra contra los santos y los vencía', ref: '7:21',
-    corto: 'Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26).' }],
+    corto: 'Herido en 1798, tendrá una restauración final futura, sin fecha fijada (Apocalipsis 13:3, 11-15), y volverá a perseguir a los santos hasta que el juicio le quite el dominio y Cristo vuelva (7:21-22, 26).' }],
   partes: [
  {id:'leon',img:'leon',nombre:'León con alas de águila',reino:'Babilonia',fechas:'605 – 539 a.C.',de:-605,a:-539,c:'#C9971C',
   texto:'La primera era como un león, y tenía alas de águila.',ref:'7:4',texto2:'Estas cuatro grandes bestias son cuatro reyes que se levantarán en la tierra.',ref2:'7:17',
@@ -435,8 +435,8 @@ LAMINAS.d7 = {
   fuente:BOHR+', p. 124; Smith, <i>Las profecías de Daniel</i>, p. 24; Maxwell, <i>El porvenir del mundo revelado</i>, p. 39-40.'},
  {id:'cuerno',img:'cuerno',nombre:'El cuerno pequeño',reino:'Roma papal',fechas:'supremacía 538 – 1798 d.C.',de:538,a:1798,c:'#A0694A',
   texto:'otro cuerno pequeño salió entre ellos, y delante de él fueron arrancados tres cuernos de los primeros',ref:'7:8',texto2:'serán entregados en sus manos hasta tiempo, tiempos y medio tiempo.',ref2:'7:25',
-  corto:'Roma papal: 1.260 años, de 538 a 1798. Herido en 1798, sana (Apocalipsis 13:3) y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26).',
-  interp:['La tercera etapa de Roma: el poder religioso unido al político. Sale entre los diez cuernos, después de ellos (7:24), y arranca a tres: hérulos (493), vándalos (534) y ostrogodos (538).','Tiene ojos de hombre y una boca que habla «con gran insolencia» (7:8). Habla contra el Altísimo, persigue a los santos y piensa en cambiar los tiempos y la Ley (7:25).','Domina «tiempo, tiempos y medio tiempo»: 1.260 años, de 538 a 1798 d.C. En 1798 el general Louis-Alexandre Berthier entra en Roma y toma preso al papa Pío VI.','Hay una cuarta etapa: el papado sanado de su herida, «su herida mortal fue sanada» (Apocalipsis 13:3). Herido en 1798, sana y sigue haciendo guerra contra los santos hasta que el juicio le quita el dominio y Cristo vuelve (7:21-22, 26). Elena de White lo dice así: el hombre de pecado subsiste hasta la segunda venida (CS 636; 2 Tesalonicenses 2:8).'],
+  corto:'Roma papal: 1.260 años, de 538 a 1798. Herido en 1798, tendrá una restauración final futura, sin fecha fijada (Apocalipsis 13:3, 11-15), y volverá a perseguir a los santos hasta que el juicio le quite el dominio y Cristo vuelva (7:21-22, 26).',
+  interp:['La tercera etapa de Roma: el poder religioso unido al político. Sale entre los diez cuernos, después de ellos (7:24), y arranca a tres: hérulos (493), vándalos (534) y ostrogodos (538).','Tiene ojos de hombre y una boca que habla «con gran insolencia» (7:8). Habla contra el Altísimo, persigue a los santos y piensa en cambiar los tiempos y la Ley (7:25).','Domina «tiempo, tiempos y medio tiempo»: 1.260 años, de 538 a 1798 d.C. En 1798 el general Louis-Alexandre Berthier entra en Roma y toma preso al papa Pío VI.','Hay una cuarta etapa: el papado sanado de su herida, «su herida mortal fue sanada» (Apocalipsis 13:3). Herido en 1798, tendrá una restauración final futura, sin fecha fijada, y volverá a perseguir a los santos hasta que el juicio le quite el dominio y Cristo vuelva (7:21-22, 26). Elena de White lo dice así: el hombre de pecado subsiste hasta la segunda venida (CS 636; 2 Tesalonicenses 2:8).'],
   fuente:BOHR+', p. 120-121, 124-127, 133-134; Smith, <i>Las profecías de Daniel</i>, p. 58; CS 492 y 636.'},
  {id:'juicio',img:'juicio',nombre:'El juicio',reino:'El juicio en el cielo',fechas:'desde 1844 d.C.',de:1844,a:2026,c:'#B45309',
   texto:'fueron puestos unos tronos y se sentó un Anciano de días',ref:'7:9',texto2:'El Juez se sentó y los libros fueron abiertos.',ref2:'7:10',
@@ -485,7 +485,7 @@ LAMINAS.d7 = {
     nota:'Recibe el reino al terminar el juicio, cuando se cierra la gracia. Después vuelve por los suyos: el reino se da también «al pueblo de los santos del Altísimo» (7:27).'}]},
  /* v218: la segunda venida en Daniel 7 (Camilo, 14-oct 16:01): los santos reciben el reino y al
     cuerno le quitan el dominio. Es la piedra de Daniel 2. El reino eterno (7:27), después. */
- {id:'santos',img:'d2/e-piedra',nombre:'Los santos reciben el reino',reino:'La segunda venida',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
+ {id:'santos',img:'santos-venida',nombre:'Los santos reciben el reino',reino:'La segunda venida',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
   texto:'y llegó el tiempo, y los santos recibieron el reino.',ref:'7:22',texto2:'Pero se sentará el Juez, y le quitarán su dominio, para que sea destruido y arruinado hasta el fin,',ref2:'7:26',
   corto:'Cristo vuelve: los santos reciben el reino y al cuerno le quitan el dominio. Es la piedra de Daniel 2.',
   interp:['Es la ejecución del juicio. El Hijo ya recibió el reino en el cielo; ahora vuelve como «Rey de reyes y Señor de señores» (Apocalipsis 19:16) y los santos lo reciben (7:22).','Al cuerno le quitan el dominio (7:26), como la piedra deshace la imagen en sus pies (2:34). Los santos van con Cristo; el reino eterno llena la tierra después de los mil años (Apocalipsis 20:4; 21:1).'],
@@ -558,7 +558,7 @@ LAMINAS.d8 = {
   vacios: [[-620, -539, 'Babilonia: Daniel 8 empieza en Medo-Persia; Babilonia está por caer (539 a.C.)'], [476, 538, 'Roma dividida: Daniel 8 pasa de Roma imperial a Roma papal', 'pequeno'],
     /* v232: de 1798 a 1844 decía «Antes de Nabucodonosor». Corren todavía las 2.300 tardes y mañanas (8:14). */
     [1798, 1844, 'Las 2.300 tardes y mañanas: siguen corriendo hasta 1844 (8:14)', 'santuario']],
-  futuro: [{ id: 'quebrantado', de: 2026, a: 2226, t: 'La segunda venida', s: 'el cuerno es quebrantado, no por mano humana', f: 'd2/e-piedra', ult: 'venida' },
+  futuro: [{ id: 'quebrantado', de: 2026, a: 2226, t: 'La segunda venida', s: 'el cuerno es quebrantado, no por mano humana', f: 'quebrantado', ult: 'venida' },
     { id: '', de: 2226, a: 2426, t: 'Los mil años', s: 'desde la venida y la primera resurrección: la tierra desolada (CS 718)', f: 'd2/mil-desolada', ult: 'desolada' },
     { id: '', de: 2426, a: 2626, t: 'El reino eterno', s: 'Daniel 8 no lo muestra: llega en Daniel 12:1-3', f: 'd2/e-monte', ult: 'reino' }],
   historia: [
@@ -721,9 +721,9 @@ LAMINAS.d8 = {
     fuente: 'CS 372-376, 451 y 470-477; ' + BOHR + ', p. 293, 313-316 y 325-336.',
     ir: [['d7', 'juicio', 'El juicio de Daniel 7']],
   },
-  cmpExtra: [{ id: 'sanado', img: 'cielo', nombre: 'Hasta ser quebrantado', reino: 'Roma papal sanada', fechas: 'desde 1798 d.C. hasta la venida', de: 1798, a: 2026, c: '#8A5A3C',
+  cmpExtra: [{ id: 'sanado', img: 'cielo', nombre: 'Hasta ser quebrantado', reino: 'Roma papal sanada', fechas: 'restauración final futura, sin fecha fijada', de: null, fin: 'sanada', c: '#8A5A3C',
     texto: 'Se levantará contra el Príncipe de los príncipes', ref: '8:25',
-    corto: 'Herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue hasta el fin (CS 636): se levanta contra el Príncipe de los príncipes hasta ser quebrantado (8:25).' }],
+    corto: '1798 es la herida. La restauración final de su poder perseguidor es futura, sin fecha fijada (Apocalipsis 13:3, 11-15; CS 439): se levanta contra el Príncipe de los príncipes hasta ser quebrantado (8:25).' }],
   partes: [
  {id:'carnero',img:'carnero',nombre:'El carnero de dos cuernos',reino:'Medo-Persia',fechas:'539 – 331 a.C.',de:-539,a:-331,c:'#8C98A6',mov:'carnero',ms:6400,
   texto:'había un carnero que estaba delante del río, y tenía dos cuernos; y aunque los cuernos eran altos, uno era más alto que el otro, y el más alto creció después.',ref:'8:3',texto2:'En cuanto al carnero que viste, que tenía dos cuernos: éstos son los reyes de Media y de Persia.',ref2:'8:20',
@@ -781,10 +781,10 @@ LAMINAS.d8 = {
   corto:'En 1844 terminan las 2.300 tardes y mañanas: empieza la purificación del santuario, el juicio de Daniel 7.',
   interp:['Un santo pregunta «¿Hasta cuándo?»: no cuánto dura, sino cuándo termina. La respuesta da el final: «luego el santuario será purificado» (8:14). Aquí también la palabra «sacrificio» la agregaron los traductores: el hebreo dice solo el continuo.','Son 2.300 años: de 457 a.C. a 1844. Daniel 9 da el punto de partida.','La purificación del santuario era el Día de la Expiación (Levítico 16), un día de juicio. La palabra hebrea (<i>nitsdaq</i>) quiere decir también justificado, vindicado: Dios hace justicia. Es el mismo suceso de Daniel 7:9-10: el Juez se sienta y se abren los libros, en 1844.'],
   fuente:'CS 374-376 y 470-477; '+BOHR+', p. 313-320.'},
- {id:'quebrantado',img:'d2/e-piedra',nombre:'Quebrantado, no por mano humana',reino:'La segunda venida',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
+ {id:'quebrantado',img:'quebrantado',nombre:'Quebrantado, no por mano humana',reino:'La segunda venida',fechas:'futuro',de:null,fin:'venida',c:'#6B7B5A',
   texto:'Se levantará contra el Príncipe de los príncipes, pero será quebrantado, aunque no por mano humana.',ref:'8:25',texto2:'la visión es para el tiempo del fin.',ref2:'8:17',
   corto:'El cuerno llega hasta el fin y lo quebranta Dios, no un hombre: es la piedra de Daniel 2.',
-  interp:['Ningún reino le sigue al cuerno: llega hasta «el tiempo del fin» (8:17, 19). Lo quebranta Dios, «no por mano humana», como la piedra que se desprendió «sin que la cortara mano alguna» (2:34).','Antes de eso está la cuarta etapa de Roma: herido en 1798, el papado sana de su herida (Apocalipsis 13:3) y sigue hasta el fin (CS 636). Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26).'],
+  interp:['Ningún reino le sigue al cuerno: llega hasta «el tiempo del fin» (8:17, 19). Lo quebranta Dios, «no por mano humana», como la piedra que se desprendió «sin que la cortara mano alguna» (2:34).','Antes de eso está la cuarta etapa de Roma, leída en paralelo con Apocalipsis 13:3, 11-15: la restauración final de su poder perseguidor es futura. No empieza en 1798; ese año corresponde a la herida. No se fija una fecha para su curación (CS 439). Es la segunda venida, cuando al cuerno de Daniel 7 «le quitarán su dominio» (7:26).'],
   fuente:BOHR+', p. 63; CS 636 y 698-703.'},
   ],
 };
