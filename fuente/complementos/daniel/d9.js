@@ -64,16 +64,17 @@ module.exports = {
       hi('Cuando Jesús murió, el sacerdote en el templo estaba por matar al cordero de la tarde; el cuchillo se le cayó y «el cordero escapó» (DTG 704-705): el símbolo se había encontrado con la realidad.') +
       `<p>Fuente: Bohr, <i>El calendario del Mesías</i>, p. 3-7; DTG 704-705.</p>` },
 
-    { t: '🧭 La Biblia explica sus símbolos', capa: 'contexto', h:
-      `<p>Daniel 9 tiene pocos símbolos, pero son la llave del capítulo. La misma Biblia los explica:</p>` +
-      tbl(['Símbolo', 'Qué representa', 'Dónde lo explica la Biblia'], [
-        ['Semana (9:24-27)', 'Siete años: 70 semanas son 490 años', 'Números 14:34; Ezequiel 4:6 (un día por cada año)'],
+    { t: '🧭 Unidades, expresiones y referencias bíblicas', verso: 24, capa: 'contexto', h:
+      `<p>Distingue unidades, destinatarios e imágenes; no todos son símbolos:</p>` +
+      tbl(['Expresión', 'Cómo se entiende en esta lectura', 'Fundamento bíblico'], [
+        ['Semana (9:24-27)', 'Semana de años: siete años. Cómputo directo: 70 × 7 años = 490 años, sin otra conversión.', 'Levítico 25:8: precedente explícito; Daniel 9:24-27: divisiones del período.'],
         ['«Tu pueblo» y «tu santa ciudad» (9:24)', 'Israel y Jerusalén, por los que Daniel ora. El cierre del período cambia la etapa de la misión; no convierte retrospectivamente la ciudad en símbolo ni impide la salvación de personas judías (Romanos 11:1-5).', 'Daniel 9:24; Gálatas 3:29'],
         ['Mesías, ungir (9:25-26)', 'El Ungido: Jesús, ungido con el Espíritu Santo en su bautismo', 'Hechos 10:38; Juan 1:41'],
         ['Sacrificio y ofrenda (9:27)', 'Señalaban a Cristo, el Cordero; cesan cuando él muere', 'Juan 1:29; 1 Corintios 5:7; Mateo 27:51'],
         ['Inundación (9:26)', 'La invasión de un ejército', 'Isaías 8:7-8; Daniel 11:22: «barridas delante de él como por inundación de aguas»'],
       ]) +
-      `<p>Fuente: Bohr, <i>15 principios</i> 2:105; Bohr, <i>Daniel 1-10</i>, p. 328 y 345; Bohr, <i>Daniel 11</i>, p. 21; Bohr, <i>El calendario del Mesías</i>, p. 3 y 5.</p>` },
+      `<p>Daniel 9:24 no añade las palabras «de años». Elena de White explica la duración mediante el principio día por año: 490 días proféticos representan 490 años. Shea compara esa explicación con el cómputo directo de semanas de años; ambos llegan al mismo período. No se convierten de nuevo los años ya calculados.</p>` +
+      `<p>Fuente: DTG, cap. 23; Shea, <i>Simposio sobre Apocalipsis</i>, p. 444; <i>Simposio sobre Daniel</i>, PDF 249–251; Bohr, <i>15 principios</i> 2:105; Bohr, <i>Daniel 1-10</i>, p. 328 y 345; Bohr, <i>Daniel 11</i>, p. 21; Bohr, <i>El calendario del Mesías</i>, p. 3 y 5.</p>` },
   ],
   preguntas: [
     ...require('../../daniel9-preguntas.js').map(({hito,abierta,pauta,...q})=>q),

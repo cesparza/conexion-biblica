@@ -141,6 +141,7 @@ const MANUAL = [
     <strong>Anterior</strong>, <strong>Siguiente</strong> y las flechas del teclado
     recorren los diez pasos. <strong>Inicio</strong> y <strong>Fin</strong> del teclado
     llevan al primer y al último paso; <strong>Escape</strong> cierra.</p>
+    <p>En el paso <strong>70 semanas</strong> y en la primera expresión de <strong>Frase a frase</strong> se distinguen el cómputo directo de semanas de años y la explicación mediante día por año. Ambos llevan a 490 años; no se acumulan las conversiones.</p>
     <p>La línea ofrece tres escalas: <strong>70 semanas</strong>,
     <strong>Última semana</strong> y <strong>2.300 años</strong>. Toca un tramo
     o un hito para ver su explicación. <strong>Texto bíblico</strong> muestra el

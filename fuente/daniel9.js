@@ -41,9 +41,9 @@ module.exports = {
    idea:'Las semanas dan el marco; las seis metas explican qué hará el Mesías dentro de él.',
    explica:[
     'Daniel 9:24 anuncia seis propósitos. El centro de su explicación es la relación entre expiar la iniquidad y traer justicia perdurable. Los versículos 25–27 muestran cómo la muerte del Mesías realiza esa obra.',
-    'Las siete y las sesenta y dos semanas conducen al Mesías; la semana restante contiene su muerte. Levítico 25:8 ofrece el precedente de semanas de años: 49 + 434 + 7 = 490. Shea relaciona además estas unidades con ciclos sabáticos, no solo con una regla aislada de conversión.',
+    'Una semana de años reúne siete años, como en Levítico 25:8. Entendidas así, las setenta semanas suman directamente 70 × 7 años = 490 años; no requieren una conversión adicional de días a años. Las siete y las sesenta y dos semanas conducen al Mesías; la restante contiene su muerte: 49 + 434 + 7 = 490.',
     'En «Frase a frase» puedes seguir las razones de cada propósito y explorar cómo se corresponden las seis metas. La cronología y el significado teológico se leen juntos.'
-   ],matiz:'El principio día por año se aplica aquí dentro de una lectura profética argumentada; no convierte todos los días de la Biblia en años.',
+   ],matiz:'Daniel 9:24 dice «Setenta semanas», sin especificar «de años». Elena de White explica los 490 años mediante el principio día por año (DTG 23). Shea compara esa explicación con el cómputo directo de semanas de años (Simposio sobre Apocalipsis, p. 444). Son dos maneras de fundamentar la misma duración, no dos conversiones sucesivas.',
    fuentes:['dtg','simd','sima'],escala:'semanas',avance:0},
   {id:'decreto',corto:'El decreto',fecha:'457 a.C.',titulo:'El punto de partida: restaurar Jerusalén',
    img:'restauracion',alt:'Ilustración de familias y trabajadores restaurando Jerusalén en época persa.',

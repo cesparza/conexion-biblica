@@ -5,9 +5,10 @@ module.exports={
  frases:{
   '24-0':a([
    'Daniel comienza por los setenta años de desolación anunciados por Jeremías (9:2). Gabriel responde con setenta semanas (9:24): no repite el mismo número de años, sino que introduce un período mayor.',
-   'Levítico 25:8 ofrece un precedente explícito de semanas de años. Shea relaciona el lenguaje de Daniel con esos ciclos sabáticos; no deduce los 490 años únicamente de que el libro contenga símbolos.',
-   'El propio pasaje distribuye el período en siete, sesenta y dos y una semana. La cronología de DTG 23 sigue esa secuencia hasta el ministerio y la muerte de Cristo.'
-  ],'«Semana» es una unidad de siete. Para explicar por qué aquí se entiende de años hay que atender al contexto y al argumento bíblico; citar Números 14:34 aisladamente no sustituye esa explicación.','Shea, PDF 249–251; DTG, cap. 23; Bohr, pp. 325–326.'),
+   'Una semana agrupa siete unidades. Levítico 25:8 habla expresamente de semanas de años; Shea examina la relación con los ciclos sabáticos. Entendidas así, las setenta semanas se cuentan directamente: 70 × 7 años = 490 años. No hace falta convertir primero el período en días.',
+   'Elena de White presenta el resultado mediante el principio día por año: 70 × 7 días proféticos representan 490 años históricos. Shea compara las dos explicaciones en el apéndice B del Simposio sobre Apocalipsis y conserva esta segunda para la traducción «semanas». Ambas llegan al mismo período; no se aplican una después de la otra.',
+   'El propio pasaje distribuye el período en siete, sesenta y dos y una semana: 49 + 434 + 7 años. La cronología de DTG 23 sigue esa secuencia hasta el ministerio y la muerte de Cristo.'
+  ],'RV1995 dice «Setenta semanas», sin añadir «de años». La unidad anual se fundamenta mediante el contexto y la interpretación. El cómputo directo de semanas de años no necesita una conversión adicional; eso no permite afirmar que Elena de White o Shea descarten el principio día por año aquí.','Levítico 25:8; DTG, cap. 23; Shea, Simposio sobre Daniel, PDF 249–251; Simposio sobre Apocalipsis, p. 444; Bohr, pp. 325–326.'),
   '24-1':a([
    'El verbo ḥātak aparece una sola vez en el hebreo de la Biblia. Por eso no es posible demostrar su sentido en este pasaje comparándolo con otros usos bíblicos del mismo verbo.',
    'Shea examina la raíz, un término relacionado del ugarítico y el uso posterior en el hebreo misnaico. Su conclusión es que favorecen «cortar», aunque la evidencia lingüística por sí sola no resuelve toda la relación.',

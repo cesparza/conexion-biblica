@@ -22,17 +22,17 @@ module.exports=[
     "t": "mc",
     "v": "9:24-27",
     "f": "c",
-    "q": "¿Qué explica la lectura historicista al mantener juntas las divisiones 7 + 62 + 1?",
+    "q": "Si las setenta semanas se entienden como semanas de años, ¿cómo se calcula su duración?",
     "o": [
-      "Una secuencia de 483 años, porque la última semana queda fuera",
-      "Tres períodos independientes, cada uno con un comienzo distinto",
-      "Una secuencia interrumpida, con la última semana aún en el futuro",
-      "Una secuencia de 490 años, con la última semana unida a las otras"
+      "Se convierten los 490 años en un segundo período profético",
+      "Se cuentan setenta días literales sin considerar el contexto",
+      "Se añaden 490 años a los setenta años anunciados por Jeremías",
+      "Se multiplican directamente setenta unidades de siete años"
     ],
     "a": 3,
-    "e": "Son 49 + 434 + 7 años. Las 69 semanas llegan al Mesías y la restante completa el mismo período. Fuente: Daniel 9:24–27; DTG, cap. 23; Simposio sobre Daniel, PDF 255–256.",
-    "abierta": "Explica por qué no basta memorizar «490» para comprender la estructura.",
-    "pauta": "Nombra el inicio, los tres tramos y el punto de llegada de las 69 semanas. Luego ubica el ministerio de Cristo y la cruz dentro de la última semana."
+    "e": "El cómputo directo es 70 × 7 años = 490 años, sin otra conversión. DTG 23 explica la misma duración mediante 490 días proféticos que representan años; Shea compara los dos enfoques. Daniel 9:24 no añade literalmente «de años». Fuente: Levítico 25:8; Daniel 9:24–27; DTG, cap. 23; Shea, Simposio sobre Apocalipsis, p. 444.",
+    "abierta": "Explica las dos maneras de llegar a 490 años sin confundirlas ni aplicarlas sucesivamente.",
+    "pauta": "Si la unidad ya es una semana de años, cuenta siete años por semana. Después distingue la explicación de DTG mediante día por año. Ambas llevan a 49 + 434 + 7 = 490 años: las 69 semanas llegan al Mesías y la última sigue unida al período. No atribuyas a RV1995 las palabras «de años» ni a Shea el rechazo del principio día por año."
   },
   {
     "hito": "decreto",
