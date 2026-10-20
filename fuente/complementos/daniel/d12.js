@@ -72,7 +72,7 @@ module.exports = {
       li([
         '<b>Treinta años antes.</b> Los 1.290 son 30 más que los 1.260. La abominación tenía que estar puesta antes de poder perseguir, y la persecución termina cuando cae ese poder: los dos períodos terminan juntos en 1798. Así los 1.290 empiezan 30 años antes de 538: en 508.',
         '<b>Qué pasó en 508.</b> Clodoveo I, rey de los francos, se hizo católico hacia 496. En 507 venció en Vouillé a los visigodos arrianos, y en 508 puso el poder de los francos al servicio del obispo de Roma. Por eso a Francia la llamaron «la hija favorita» del papado.',
-        '<b>1843 y 1844: dos lecturas.</b> La suma de 508 y 1.335 llega a 1843, como en la tabla anterior. Miller calculó el año judío de primavera a primavera y lo hizo llegar a la primavera de 1844. Treiyer propone usar el comienzo civil judío en otoño para relacionar los 1.335 con el 22 de octubre de 1844 y los 2.300. Es una interpretación del calendario; Daniel 12:12 no da por sí solo esa fecha.',
+        '<b>1843 y 1844: dos lecturas.</b> La suma de 508 y 1.335 llega a 1843, como en la tabla anterior. Miller calculó el año judío de primavera a primavera y lo hizo llegar a la primavera de 1844. Con el comienzo civil judío en otoño, los 1.335 se relacionan con el 22 de octubre de 1844 y los 2.300. Es una interpretación del calendario; Daniel 12:12 no da por sí solo esa fecha.',
         '<b>La bienaventuranza.</b> En 1844 se vuelve a conocer la obra de Cristo en el santuario del cielo. Por eso es dichoso «el que espere».',
       ]) +
       `<p>Fuente: Treiyer, <i>Enigmas descifrados</i>, p. 220-225 y 231-233.</p>` },

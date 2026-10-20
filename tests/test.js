@@ -3368,9 +3368,15 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
  ok(egw.length>=8&&egw.every(e=>/Elena G\. de White/.test(e.fuente)&&/pp?\. \d/.test(e.fuente)&&e.t.length>20),'Cada cita de Elena de White en Cine lleva libro y página');
  ok(D.actos.every(a=>A.cinePausas(a).every(f=>f>0&&f<=1)),'Siguiente tiene paradas válidas en cada acto');
  ok(A.cmpModelo().cols.join(',')==='d2,d7,d8','Daniel 9 no añade una columna de reinos a Comparar');
- const comp=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d9.js'),'utf8').replace(/^\/\*[\s\S]*?\*\//,'').replace(/Fuentes?:[\s\S]*?(?=<\/p>|'\s*\}|`)/g,'');
- const nombra=comp.match(/.{0,40}(?:\b(?:Shea|Bohr)\b|[Ss]eg[uú]n (?:Bohr|Shea)).{0,40}/g)||[];
- ok(!nombra.length,'«Para profundizar» de Daniel 9 no atribuye ideas a autores fuera de su línea «Fuente:»'+(nombra.length?': '+nombra.join(' | '):''));
+ /* v269: la regla vale para todo el material, no solo Daniel 9: ningún texto dice «Shea compara», «Bohr relaciona»
+    ni «según Bohr». Las fuentes (líneas «Fuente:», campos fuente/f y citas entre paréntesis) sí nombran al autor. */
+ const AUT='(?:Shea|Bohr|Smith|Maxwell|Hasel|Treiyer|Doukhan|Ruiz|Stefanovic|Wadsworth|Nichol|Gane|Froom|Hardinge|Anderson)';
+ const VERBO='(?:compara|une|relaciona|examina|propone|entiende|observa|aplica|identifica|sostiene|ve|lee|considera|explica|dice|señala|afirma|muestra|subraya|interpreta|insiste|añade|agrega|plantea|ubica)';
+ const ATRIB=new RegExp('\\b'+AUT+'\\s+(?:también\\s+|lo\\s+|la\\s+|los\\s+|las\\s+|se\\s+)?'+VERBO+'\\b|[Ss]eg[uú]n\\s+(?:el\\s+énfasis\\s+de\\s+|la\\s+lectura\\s+de\\s+)?'+AUT+'|\\b[Pp]ara\\s+'+AUT+'\\b|lectura de '+AUT+'|notas de Camilo');
+ const sinComent=t=>t.replace(/\/\*[\s\S]*?\*\//g,'').replace(/^\s*\/\/.*$/gm,'');
+ const material=['contenido.js','laminas.js','paralelos.js','personajes.js','modulos.js','daniel9.js',...fs.readdirSync(path.join(RAIZ,'fuente','complementos','daniel')).map(f=>'complementos/daniel/'+f),'complementos/profundizar.js','complementos/daniel.js',...fs.readdirSync(path.join(RAIZ,'fuente','apocalipsis')).filter(f=>f.endsWith('.js')).map(f=>'apocalipsis/'+f)];
+ const atrib=material.flatMap(f=>{const t=sinComent(fs.readFileSync(path.join(RAIZ,'fuente',f),'utf8'));const m=t.match(new RegExp('.{0,30}(?:'+ATRIB.source+').{0,30}','g'))||[];return m.map(x=>f+': '+x);});
+ ok(!atrib.length,'Ningún texto de estudio atribuye ideas a un autor (voz directa; el autor va en la fuente)'+(atrib.length?': '+atrib.join(' | '):''));
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
