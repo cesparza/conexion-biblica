@@ -3287,9 +3287,9 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
    igual en claro y oscuro, como la lámina. */
 .qm{margin:.8rem 0;border-radius:18px;overflow:hidden;background:#15110B;color:#F4EEE2;box-shadow:var(--sh)}
 .qm-esc{position:relative;width:min(100%,520px);margin:0 auto;aspect-ratio:900/990;padding-top:0}
-.qm-img{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;transition:filter .4s}
+.qm-img{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;transition:filter .4s;pointer-events:none}
 .qm[data-sel]:not([data-sel=""]) .qm-img{filter:brightness(.55) saturate(.8)}
-.qm-l{position:absolute;top:0;width:13%;height:27%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+.qm-l{position:absolute;z-index:1;top:0;width:13%;height:27%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
   gap:2px;padding:0;border:0;background:none;color:var(--c);font:inherit;cursor:pointer;transition:opacity .35s}
 .qm-l b{font-size:.75rem;font-weight:800;letter-spacing:.02em;white-space:nowrap;text-shadow:0 1px 3px #000}
 .qm-g{position:absolute;top:18%;left:50%;width:120%;aspect-ratio:1;transform:translate(-50%,0) scale(.6);border-radius:50%;
@@ -3299,6 +3299,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
 .qm-l.par .qm-g{opacity:.5;transform:translate(-50%,0) scale(.85)}
 .qm-l.par{opacity:.75}
 .qm-l.off{opacity:.35}
+.qm-l:active:not(:disabled){transform:translateX(-50%) scale(.97)}
 .qm-l:focus-visible{outline:2px solid var(--c);outline-offset:2px;border-radius:8px}
 .qm-txt{padding:12px 16px 14px;border-top:1px solid rgba(255,255,255,.08);min-height:3.2rem}
 .qm-txt p{margin:.2rem 0 0;font-size:1rem;line-height:1.45;color:#E6DCC8}
