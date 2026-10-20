@@ -145,7 +145,8 @@ const CINE_FX={
 const CINE_PAUSAS={luz:[.4,.9],cuenta:[.45,.95],sello:[.3,.7],mapa:[.55,.95],via:null,barra:[.5,.95]};
 function cinePausas(a){
   if(a.tipo!=='via')return CINE_PAUSAS[a.tipo];
-  return a.estaciones.map((e,i)=>Math.min(.98,(i+.12)/(a.estaciones.length-1+.12)+.02));
+  /* La estación i queda en el centro cuando el avance es (0,9·i + 0,54) / (0,9·(n−1) + 0,54): ver CINE_FX.via. */
+  const n=a.estaciones.length;return a.estaciones.map((e,i)=>Math.min(.985,(.9*i+.54)/(.9*(n-1)+.54)));
 }
 
 /* ── Abrir, mover y cerrar ── */
@@ -199,9 +200,12 @@ function cineSalto(d){
   const y=el.scrollTop,dest=d>0?ys.find(v=>v>y+4):ys.slice().reverse().find(v=>v<y-4);
   el.scrollTo({top:dest===undefined?(d>0?el.scrollHeight:0):dest,behavior:cineQuieto()?'auto':'smooth'});
 }
-function cineIrNumero(n){
+function cineIrNumero(n,intento){
   const a=cineActos()[Number(n)];if(!a)return;
-  const el=document.getElementById('lam'),ps=cinePausas(a);
+  const el=document.getElementById('lam'),ps=cinePausas(a),s=el&&el.querySelectorAll('.cine-acto')[Number(n)];if(!s)return;
+  /* Dentro de Jóvenes la hoja de estilos llega después de abrir (enlace o recarga): sin ella los
+     actos aún no miden lo suyo y el salto quedaría corto. Se espera a que midan, hasta ~3 s. */
+  if(s.offsetHeight<el.clientHeight*1.5&&(intento||0)<180){requestAnimationFrame(()=>cineIrNumero(n,(intento||0)+1));return;}
   el.scrollTop=Math.round(cineY(Number(n),ps[ps.length-1]));cinePinta();
 }
 function cineIr(k){const i=cineActos().findIndex(a=>a.id===k);if(i>=0)cineIrNumero(i);}

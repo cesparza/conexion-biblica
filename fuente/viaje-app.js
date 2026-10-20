@@ -44,6 +44,7 @@ function viajeElige(){
   const u=cs.find(c=>c.id===S.ultItem);if(u&&viajeHechas(u.id)<viajeParadas(u.id).length)return u.id;
   return (cs.find(c=>viajeHechas(c.id)<viajeParadas(c.id).length)||cs[0]).id;
 }
+function viajePonCap(cap){viajeCap=String(cap||'');viajePinta();}
 function irViaje(cap){viajeCap=cap||viajeElige();jgModo='viaje';jgR=null;ir('tarjetas');}
 /* El camino del capítulo, dentro de Practicar (#jg-zona). */
 function viajePinta(){
@@ -53,7 +54,7 @@ function viajePinta(){
   const ps=viajeParadas(viajeCap),h=Math.min(viajeHechas(viajeCap),ps.length),imgs=viajeImgs(viajeCap);
   const cap=(capsVista().find(c=>c.id===viajeCap)||{label:viajeCap});
   const X=[50,74,38,22,56,80,60,30,46,70];
-  z.innerHTML='<div class="via-cab"><label class="via-sel">'+IC('mapa')+'<select id="viaCap" onchange="viajeCap=this.value;viajePinta()" aria-label="Capítulo del viaje">'+
+  z.innerHTML='<div class="via-cab"><label class="via-sel">'+IC('mapa')+'<select id="viaCap" onchange="viajePonCap(this.value)" aria-label="Capítulo del viaje">'+
     viajeCaps().map(c=>'<option value="'+c.id+'"'+(c.id===viajeCap?' selected':'')+'>'+esc(c.label)+' · '+Math.min(viajeHechas(c.id),viajeParadas(c.id).length)+'/'+viajeParadas(c.id).length+'</option>').join('')+'</select></label>'+
     '<div class="via-stats"><span title="Días seguidos">'+IC('fuego')+'<b>'+(S.racha||0)+'</b> días</span><span title="Puntos del viaje">'+IC('trofeo')+'<b>'+(S.viaPts||0)+'</b> pts</span>'+
     '<span><b>'+h+'</b>/'+ps.length+' paradas</span></div></div>'+

@@ -6669,7 +6669,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = 'a42af86382bf';
+const VERSION_APP = '50cd534e1963';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -90346,7 +90346,8 @@ const CINE_FX={
 const CINE_PAUSAS={luz:[.4,.9],cuenta:[.45,.95],sello:[.3,.7],mapa:[.55,.95],via:null,barra:[.5,.95]};
 function cinePausas(a){
   if(a.tipo!=='via')return CINE_PAUSAS[a.tipo];
-  return a.estaciones.map((e,i)=>Math.min(.98,(i+.12)/(a.estaciones.length-1+.12)+.02));
+  /* La estación i queda en el centro cuando el avance es (0,9·i + 0,54) / (0,9·(n−1) + 0,54): ver CINE_FX.via. */
+  const n=a.estaciones.length;return a.estaciones.map((e,i)=>Math.min(.985,(.9*i+.54)/(.9*(n-1)+.54)));
 }
 
 /* ── Abrir, mover y cerrar ── */
@@ -90400,9 +90401,12 @@ function cineSalto(d){
   const y=el.scrollTop,dest=d>0?ys.find(v=>v>y+4):ys.slice().reverse().find(v=>v<y-4);
   el.scrollTo({top:dest===undefined?(d>0?el.scrollHeight:0):dest,behavior:cineQuieto()?'auto':'smooth'});
 }
-function cineIrNumero(n){
+function cineIrNumero(n,intento){
   const a=cineActos()[Number(n)];if(!a)return;
-  const el=document.getElementById('lam'),ps=cinePausas(a);
+  const el=document.getElementById('lam'),ps=cinePausas(a),s=el&&el.querySelectorAll('.cine-acto')[Number(n)];if(!s)return;
+  /* Dentro de Jóvenes la hoja de estilos llega después de abrir (enlace o recarga): sin ella los
+     actos aún no miden lo suyo y el salto quedaría corto. Se espera a que midan, hasta ~3 s. */
+  if(s.offsetHeight<el.clientHeight*1.5&&(intento||0)<180){requestAnimationFrame(()=>cineIrNumero(n,(intento||0)+1));return;}
   el.scrollTop=Math.round(cineY(Number(n),ps[ps.length-1]));cinePinta();
 }
 function cineIr(k){const i=cineActos().findIndex(a=>a.id===k);if(i>=0)cineIrNumero(i);}
@@ -90476,6 +90480,7 @@ function viajeElige(){
   const u=cs.find(c=>c.id===S.ultItem);if(u&&viajeHechas(u.id)<viajeParadas(u.id).length)return u.id;
   return (cs.find(c=>viajeHechas(c.id)<viajeParadas(c.id).length)||cs[0]).id;
 }
+function viajePonCap(cap){viajeCap=String(cap||'');viajePinta();}
 function irViaje(cap){viajeCap=cap||viajeElige();jgModo='viaje';jgR=null;ir('tarjetas');}
 /* El camino del capítulo, dentro de Practicar (#jg-zona). */
 function viajePinta(){
@@ -90485,7 +90490,7 @@ function viajePinta(){
   const ps=viajeParadas(viajeCap),h=Math.min(viajeHechas(viajeCap),ps.length),imgs=viajeImgs(viajeCap);
   const cap=(capsVista().find(c=>c.id===viajeCap)||{label:viajeCap});
   const X=[50,74,38,22,56,80,60,30,46,70];
-  z.innerHTML='<div class="via-cab"><label class="via-sel">'+IC('mapa')+'<select id="viaCap" onchange="viajeCap=this.value;viajePinta()" aria-label="Capítulo del viaje">'+
+  z.innerHTML='<div class="via-cab"><label class="via-sel">'+IC('mapa')+'<select id="viaCap" onchange="viajePonCap(this.value)" aria-label="Capítulo del viaje">'+
     viajeCaps().map(c=>'<option value="'+c.id+'"'+(c.id===viajeCap?' selected':'')+'>'+esc(c.label)+' · '+Math.min(viajeHechas(c.id),viajeParadas(c.id).length)+'/'+viajeParadas(c.id).length+'</option>').join('')+'</select></label>'+
     '<div class="via-stats"><span title="Días seguidos">'+IC('fuego')+'<b>'+(S.racha||0)+'</b> días</span><span title="Puntos del viaje">'+IC('trofeo')+'<b>'+(S.viaPts||0)+'</b> pts</span>'+
     '<span><b>'+h+'</b>/'+ps.length+' paradas</span></div></div>'+
