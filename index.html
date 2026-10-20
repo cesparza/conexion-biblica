@@ -6032,6 +6032,16 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .cine-pres .cine-verso{font-size:clamp(1.5rem,3.6vw,2.6rem)}
 .cine-pres .cine-egw,.cine-pres .cine-otro,.cine-pres .cine-exp{font-size:clamp(1.15rem,2.4vw,1.55rem)}
 @media (prefers-reduced-motion:reduce){.lam.cine *{animation:none!important;transition:none!important}}
+
+/* La voz de la app dentro del cine */
+.cine-fila{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:36px}
+.cine-cuenta>.cine-fila,.cine-final>.cine-fila{width:min(92vw,720px)}
+.lam.cine .grupo-voz{display:inline-flex;gap:4px;flex:0 0 auto}
+.lam.cine .grupo-voz .btn-voz{display:inline-flex}
+.lam.cine .grupo-voz button{align-items:center;gap:6px;min-height:36px;border:1px solid var(--c-linea);border-radius:999px;padding:0 12px;background:rgba(17,14,11,.6);color:var(--c-perg);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+.lam.cine .grupo-voz .btn-voz.sonando{background:var(--c-oro);border-color:var(--c-oro);color:#1A1309}
+.lam.cine p.suena{background:rgba(242,196,107,.16);border-radius:8px;box-shadow:0 0 0 6px rgba(242,196,107,.16)}
+@media (max-width:520px){.cine-sello{width:clamp(92px,24vw,140px);right:6%}}
 /* ───────── VIAJE (v266): el camino de paradas de Practicar ───────── */
 .via-cab{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
 .via-sel{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 220px}
@@ -6669,7 +6679,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '50cd534e1963';
+const VERSION_APP = 'a13f8e9c8db3';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -10013,24 +10023,24 @@ const CONTENIDO = {
    "t": "🧭 Las seis metas de las setenta semanas",
    "capa": "contexto",
    "verso": 24,
-   "h": "<p><b>Cuándo:</b> el primer año de Darío el medo (9:1), hacia el 538 a.C., un año después de la caída de Babilonia. Daniel estudiaba los setenta años de Jeremías (9:2) y temía que los 2.300 años de la visión anterior los alargaran.</p><p>Daniel 9:24 dice que en las setenta semanas se cumplirían seis cosas:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>La meta</th><th>Qué significa</th></tr></thead><tbody><tr><td class=\"key\">Terminar la prevaricación</td><td>La palabra es «rebelión». Israel podía terminarla recibiendo al Mesías, o llevarla al extremo rechazándolo. La profecía anuncia lo segundo.</td></tr><tr><td class=\"key\">Poner fin al pecado</td><td>No al hecho de pecar, sino a los pecados: Jesús los cargó en la cruz (Hebreos 9:26-28).</td></tr><tr><td class=\"key\">Expiar la iniquidad</td><td>La reconciliación del hombre con Dios por su muerte (Romanos 5:10).</td></tr><tr><td class=\"key\">Traer la justicia perdurable</td><td>La expiación hace posible una justicia duradera para el creyente (Romanos 3:21-26). Shea une estos dos propósitos como el centro del versículo.</td></tr><tr><td class=\"key\">Sellar la visión y la profecía</td><td>Bohr relaciona el cierre del testimonio a Israel como nación con Esteban. Es un énfasis interpretativo; no una prohibición universal de profetizar ni el rechazo de toda persona judía.</td></tr><tr><td class=\"key\">Ungir al Santo de los santos</td><td>Shea aplica la expresión al santuario inaugurado para el ministerio celestial de Cristo. Se distingue de su unción en el bautismo (Hechos 10:38).</td></tr></tbody></table></div><p>Shea une la expiación y la justicia en el centro de 9:24; la muerte del Mesías de 9:26 explica su cumplimiento.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329; Shea, <i>Simposio sobre Daniel</i>, PDF 254-258 y 265-268.</p>"
+   "h": "<p><b>Cuándo:</b> el primer año de Darío el medo (9:1), hacia el 538 a.C., un año después de la caída de Babilonia. Daniel estudiaba los setenta años de Jeremías (9:2) y temía que los 2.300 años de la visión anterior los alargaran.</p><p>Daniel 9:24 dice que en las setenta semanas se cumplirían seis cosas:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>La meta</th><th>Qué significa</th></tr></thead><tbody><tr><td class=\"key\">Terminar la prevaricación</td><td>La palabra es «rebelión». Israel podía terminarla recibiendo al Mesías, o llevarla al extremo rechazándolo. La profecía anuncia lo segundo.</td></tr><tr><td class=\"key\">Poner fin al pecado</td><td>No al hecho de pecar, sino a los pecados: Jesús los cargó en la cruz (Hebreos 9:26-28).</td></tr><tr><td class=\"key\">Expiar la iniquidad</td><td>La reconciliación del hombre con Dios por su muerte (Romanos 5:10).</td></tr><tr><td class=\"key\">Traer la justicia perdurable</td><td>La expiación hace posible una justicia duradera para el creyente (Romanos 3:21-26). Estos dos propósitos forman el centro del versículo.</td></tr><tr><td class=\"key\">Sellar la visión y la profecía</td><td>El cierre del testimonio a Israel como nación se relaciona con Esteban. No es una prohibición universal de profetizar ni el rechazo de toda persona judía.</td></tr><tr><td class=\"key\">Ungir al Santo de los santos</td><td>La expresión se aplica al santuario inaugurado para el ministerio celestial de Cristo. Se distingue de su unción en el bautismo (Hechos 10:38).</td></tr></tbody></table></div><p>La expiación y la justicia están en el centro de 9:24; la muerte del Mesías de 9:26 explica su cumplimiento.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 323 y 327-329; Shea, <i>Simposio sobre Daniel</i>, PDF 254-258 y 265-268.</p>"
   },
   {
    "t": "🧭 Cuatro decretos persas y por qué cuenta el de 457",
    "capa": "contexto",
-   "h": "<p>Daniel 9:25 pide una orden para «restaurar y edificar a Jerusalén», la ciudad, no solo el templo. Hubo cuatro decretos:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Año a.C.</th><th>Rey</th><th>Qué ordenó</th></tr></thead><tbody><tr><td class=\"key\">536</td><td>Ciro el Grande</td><td>Reconstruir el templo (original). Lo suspendió Cambises II.</td></tr><tr><td class=\"key\">520</td><td>Darío I</td><td>Confirmó el de Ciro. Solo el templo.</td></tr><tr><td class=\"key\">457</td><td>Artajerjes I</td><td>Restaurar y edificar Jerusalén (original), en el otoño de su séptimo año (Esdras 7).</td></tr><tr><td class=\"key\">445</td><td>Artajerjes I</td><td>No fue un decreto nuevo: permiso a Nehemías que levantó la suspensión del de 457.</td></tr></tbody></table></div><p>Identificar el séptimo año con 457 a.C. exige estudiar el inicio del reinado de Artajerjes, cómo se cuentan los años de acceso y el calendario civil judío de otoño a otoño. Shea examina esos datos en el apéndice B del <i>Simposio sobre Apocalipsis</i>. No es solo restar siete al año de acceso.</p><div class=\"warn-box\">Con el mismo cómputo de 483 años, comenzar en 445 a.C. lleva a 39 d.C.: 445 + 39 − 1 = 483. No llega al bautismo del año 27 de la cronología adoptada. El ejemplo de Bohr, p. 333, dice 37; esa cifra no coincide con esta operación.</div><p>Fuente: CS, cap. 18; Bohr, <i>Daniel 1-10</i>, p. 330-333; Shea, <i>Simposio sobre Apocalipsis</i>, apéndice B.</p>"
+   "h": "<p>Daniel 9:25 pide una orden para «restaurar y edificar a Jerusalén», la ciudad, no solo el templo. Hubo cuatro decretos:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Año a.C.</th><th>Rey</th><th>Qué ordenó</th></tr></thead><tbody><tr><td class=\"key\">536</td><td>Ciro el Grande</td><td>Reconstruir el templo (original). Lo suspendió Cambises II.</td></tr><tr><td class=\"key\">520</td><td>Darío I</td><td>Confirmó el de Ciro. Solo el templo.</td></tr><tr><td class=\"key\">457</td><td>Artajerjes I</td><td>Restaurar y edificar Jerusalén (original), en el otoño de su séptimo año (Esdras 7).</td></tr><tr><td class=\"key\">445</td><td>Artajerjes I</td><td>No fue un decreto nuevo: permiso a Nehemías que levantó la suspensión del de 457.</td></tr></tbody></table></div><p>Identificar el séptimo año con 457 a.C. exige estudiar el inicio del reinado de Artajerjes, cómo se cuentan los años de acceso y el calendario civil judío de otoño a otoño. No es solo restar siete al año de acceso.</p><div class=\"warn-box\">Con el mismo cómputo de 483 años, comenzar en 445 a.C. lleva a 39 d.C.: 445 + 39 − 1 = 483. No llega al bautismo del año 27 de la cronología adoptada.</div><p>Fuente: CS, cap. 18; Bohr, <i>Daniel 1-10</i>, p. 330-333; Shea, <i>Simposio sobre Apocalipsis</i>, apéndice B.</p>"
   },
   {
    "t": "🧭 ¿Quién es «el príncipe que ha de venir»?",
    "capa": "contexto",
    "verso": 26,
-   "h": "<p>Daniel 9:26 dice: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario». En la lectura de Bohr que sigue este estudio, el príncipe es <b>Jesús y su pueblo es Israel</b>. Los ejércitos romanos destruyeron físicamente Jerusalén en el año 70 d.C.</p><p>Las razones: el «Mesías Príncipe» de 9:25 y el «Mesías» y «príncipe» de 9:26 están en paralelo y son la misma persona; Shea observa la distribución del doble título: Mesías Príncipe (9:25), Mesías (9:26a) y príncipe (9:26b). Ese patrón es su argumento para un solo personaje, no una identidad expresamente aclarada por la traducción.</p><div class=\"highlight-box\">Entonces, ¿por qué se destruyó la ciudad? Al rechazar al Mesías, la nación misma provocó su ruina, y Dios permitió que lo hicieran los ejércitos romanos (Mateo 22:7): «los judíos habían forjado sus propias cadenas» (CS 39).</div><p>Otra lectura, la adventista tradicional, ve aquí a Tito y los romanos, que destruyeron Jerusalén en el año 70. La futurista ve un anticristo que haría un pacto de siete años con los judíos.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 341-345; Shea, <i>Daniel</i>, p. 168; Maxwell, <i>El porvenir del mundo revelado</i>, p. 232; Ruiz, <i>Escuela de laicos: Daniel</i>, p. 32; CS 39.</p>"
+   "h": "<p>Daniel 9:26 dice: «El pueblo de un príncipe que ha de venir destruirá la ciudad y el santuario». En la lectura que sigue este estudio, el príncipe es <b>Jesús y su pueblo es Israel</b>. Los ejércitos romanos destruyeron físicamente Jerusalén en el año 70 d.C.</p><p>Las razones: el «Mesías Príncipe» de 9:25 y el «Mesías» y «príncipe» de 9:26 están en paralelo y son la misma persona. El doble título se distribuye así: Mesías Príncipe (9:25), Mesías (9:26a) y príncipe (9:26b). Ese patrón es el argumento para un solo personaje, no una identidad expresamente aclarada por la traducción.</p><div class=\"highlight-box\">Entonces, ¿por qué se destruyó la ciudad? Al rechazar al Mesías, la nación misma provocó su ruina, y Dios permitió que lo hicieran los ejércitos romanos (Mateo 22:7): «los judíos habían forjado sus propias cadenas» (CS 39).</div><p>Otra lectura, la adventista tradicional, ve aquí a Tito y los romanos, que destruyeron Jerusalén en el año 70. La futurista ve un anticristo que haría un pacto de siete años con los judíos.</p><p>Fuente: Bohr, <i>Daniel 1-10</i>, p. 341-345; Shea, <i>Daniel</i>, p. 168; Maxwell, <i>El porvenir del mundo revelado</i>, p. 232; Ruiz, <i>Escuela de laicos: Daniel</i>, p. 32; CS 39.</p>"
   },
   {
    "t": "🧭 «Confirmará el pacto con muchos»",
    "capa": "contexto",
    "verso": 27,
-   "h": "<p>La lectura mesiánica sigue al Mesías de 9:25-26 al explicar quién confirma el pacto. Para evaluar esa identificación hay que leer la estructura del pasaje y las referencias al pacto, no introducir un protagonista sin argumentarlo.</p><ul class=\"tight\"><li><b>«El pacto»</b>: la oración ya presenta a Dios como quien guarda el pacto (9:4). La lectura mesiánica sigue ese hilo y lo une con las promesas a los padres; no introduce un tratado político moderno en 9:27.</li><li><b>«Confirmará»</b> traduce <i>gabar</i>, «hacer firme». Shea entiende que el pacto ya existía: la semana del 27 al 34 es la última del período de oportunidad de Israel, no los primeros siete años de un pacto nuevo fundado en el bautismo. Cristo confirma las promesas hechas a los padres (Romanos 15:8) y ratifica el nuevo pacto con su sangre a mitad de la semana (Marcos 14:24; Hebreos 9:15).</li><li><b>«Con muchos»</b>: es la palabra del sacrificio que sustituye (Isaías 53:11; Marcos 10:45). Jesús la usó en la última cena: «mi sangre del nuevo pacto, que por muchos es derramada» (Mateo 26:28).</li></ul><p>El testimonio abarca siete años: primero Cristo y después sus apóstoles (DTG, cap. 23). Terminar ese período no significa que el nuevo pacto expire en el año 34.</p><p>Fuente: DTG, cap. 23; Bohr, <i>Daniel 1-10</i>, p. 346-347; Shea, <i>Simposio sobre Daniel</i>, PDF 255-256.</p>"
+   "h": "<p>La lectura mesiánica sigue al Mesías de 9:25-26 al explicar quién confirma el pacto. Para evaluar esa identificación hay que leer la estructura del pasaje y las referencias al pacto, no introducir un protagonista sin argumentarlo.</p><ul class=\"tight\"><li><b>«El pacto»</b>: la oración ya presenta a Dios como quien guarda el pacto (9:4). La lectura mesiánica sigue ese hilo y lo une con las promesas a los padres; no introduce un tratado político moderno en 9:27.</li><li><b>«Confirmará»</b> traduce <i>gabar</i>, «hacer firme». El pacto ya existía: la semana del 27 al 34 es la última del período de oportunidad de Israel, no los primeros siete años de un pacto nuevo fundado en el bautismo. Cristo confirma las promesas hechas a los padres (Romanos 15:8) y ratifica el nuevo pacto con su sangre a mitad de la semana (Marcos 14:24; Hebreos 9:15).</li><li><b>«Con muchos»</b>: es la palabra del sacrificio que sustituye (Isaías 53:11; Marcos 10:45). Jesús la usó en la última cena: «mi sangre del nuevo pacto, que por muchos es derramada» (Mateo 26:28).</li></ul><p>El testimonio abarca siete años: primero Cristo y después sus apóstoles (DTG, cap. 23). Terminar ese período no significa que el nuevo pacto expire en el año 34.</p><p>Fuente: DTG, cap. 23; Bohr, <i>Daniel 1-10</i>, p. 346-347; Shea, <i>Simposio sobre Daniel</i>, PDF 255-256.</p>"
   },
   {
    "t": "🧭 El calendario del Mesías: el día y la hora",
@@ -10041,7 +10051,7 @@ const CONTENIDO = {
    "t": "🧭 Unidades, expresiones y referencias bíblicas",
    "verso": 24,
    "capa": "contexto",
-   "h": "<p>Distingue unidades, destinatarios e imágenes; no todos son símbolos:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Expresión</th><th>Cómo se entiende en esta lectura</th><th>Fundamento bíblico</th></tr></thead><tbody><tr><td class=\"key\">Semana (9:24-27)</td><td>Semana de años: siete años. Cómputo directo: 70 × 7 años = 490 años, sin otra conversión.</td><td>Levítico 25:8: precedente explícito; Daniel 9:24-27: divisiones del período.</td></tr><tr><td class=\"key\">«Tu pueblo» y «tu santa ciudad» (9:24)</td><td>Israel y Jerusalén, por los que Daniel ora. El cierre del período cambia la etapa de la misión; no convierte retrospectivamente la ciudad en símbolo ni impide la salvación de personas judías (Romanos 11:1-5).</td><td>Daniel 9:24; Gálatas 3:29</td></tr><tr><td class=\"key\">Mesías, ungir (9:25-26)</td><td>El Ungido: Jesús, ungido con el Espíritu Santo en su bautismo</td><td>Hechos 10:38; Juan 1:41</td></tr><tr><td class=\"key\">Sacrificio y ofrenda (9:27)</td><td>Señalaban a Cristo, el Cordero; cesan cuando él muere</td><td>Juan 1:29; 1 Corintios 5:7; Mateo 27:51</td></tr><tr><td class=\"key\">Inundación (9:26)</td><td>La invasión de un ejército</td><td>Isaías 8:7-8; Daniel 11:22: «barridas delante de él como por inundación de aguas»</td></tr></tbody></table></div><p>Daniel 9:24 no añade las palabras «de años». Elena de White explica la duración mediante el principio día por año: 490 días proféticos representan 490 años. Shea compara esa explicación con el cómputo directo de semanas de años; ambos llegan al mismo período. No se convierten de nuevo los años ya calculados.</p><p>Fuente: DTG, cap. 23; Shea, <i>Simposio sobre Apocalipsis</i>, p. 444; <i>Simposio sobre Daniel</i>, PDF 249–251; Bohr, <i>15 principios</i> 2:105; Bohr, <i>Daniel 1-10</i>, p. 328 y 345; Bohr, <i>Daniel 11</i>, p. 21; Bohr, <i>El calendario del Mesías</i>, p. 3 y 5.</p>"
+   "h": "<p>Distingue unidades, destinatarios e imágenes; no todos son símbolos:</p><div class=\"tabla-scroll\"><table class=\"info-table\"><thead><tr><th>Expresión</th><th>Cómo se entiende en esta lectura</th><th>Fundamento bíblico</th></tr></thead><tbody><tr><td class=\"key\">Semana (9:24-27)</td><td>Semana de años: siete años. Cómputo directo: 70 × 7 años = 490 años, sin otra conversión.</td><td>Levítico 25:8: precedente explícito; Daniel 9:24-27: divisiones del período.</td></tr><tr><td class=\"key\">«Tu pueblo» y «tu santa ciudad» (9:24)</td><td>Israel y Jerusalén, por los que Daniel ora. El cierre del período cambia la etapa de la misión; no convierte retrospectivamente la ciudad en símbolo ni impide la salvación de personas judías (Romanos 11:1-5).</td><td>Daniel 9:24; Gálatas 3:29</td></tr><tr><td class=\"key\">Mesías, ungir (9:25-26)</td><td>El Ungido: Jesús, ungido con el Espíritu Santo en su bautismo</td><td>Hechos 10:38; Juan 1:41</td></tr><tr><td class=\"key\">Sacrificio y ofrenda (9:27)</td><td>Señalaban a Cristo, el Cordero; cesan cuando él muere</td><td>Juan 1:29; 1 Corintios 5:7; Mateo 27:51</td></tr><tr><td class=\"key\">Inundación (9:26)</td><td>La invasión de un ejército</td><td>Isaías 8:7-8; Daniel 11:22: «barridas delante de él como por inundación de aguas»</td></tr></tbody></table></div><p>Daniel 9:24 no añade las palabras «de años». Elena de White explica la duración mediante el principio día por año: 490 días proféticos representan 490 años. El cómputo directo de semanas de años llega al mismo período. No se convierten de nuevo los años ya calculados.</p><p>Fuente: DTG, cap. 23; Shea, <i>Simposio sobre Apocalipsis</i>, p. 444; <i>Simposio sobre Daniel</i>, PDF 249–251; Bohr, <i>15 principios</i> 2:105; Bohr, <i>Daniel 1-10</i>, p. 328 y 345; Bohr, <i>Daniel 11</i>, p. 21; Bohr, <i>El calendario del Mesías</i>, p. 3 y 5.</p>"
   },
   {
    "t": "📜 Versículos 1 a 8",
@@ -59251,7 +59261,7 @@ const BANCO = [
   "t": "mc",
   "v": "9:24",
   "f": "c",
-  "q": "Según el énfasis de Bohr, ¿qué significa «sellar la visión y la profecía» para Israel como nación?",
+  "q": "¿Qué significa «sellar la visión y la profecía» para Israel como nación?",
   "o": [
    "Que cesaron las visiones dadas a Israel",
    "Que el libro de Daniel quedó cerrado",
@@ -59259,8 +59269,8 @@ const BANCO = [
    "Que terminó la obra de Juan el Bautista"
   ],
   "a": 0,
-  "e": "Bohr relaciona el cierre con Esteban y el testimonio dirigido a Israel como nación. Es su énfasis interpretativo; no significa que Dios dejara de revelar su voluntad a toda persona judía ni que cesaran los profetas en el mundo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 328.",
-  "nv": 2
+  "e": "El cierre se relaciona con Esteban y el testimonio dirigido a Israel como nación. No significa que Dios dejara de revelar su voluntad a toda persona judía ni que cesaran los profetas en el mundo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 328.",
+  "nv": 1
  },
  {
   "cap": "d9",
@@ -59301,7 +59311,7 @@ const BANCO = [
   "f": "c",
   "q": "Si las setenta semanas se contaran desde el decreto de 445 a.C., Jesús tendría que haberse bautizado en el año 37 d.C.",
   "a": false,
-  "e": "Falso. Sin año cero, 445 + 39 − 1 = 483: el resultado es 39 d.C. El ejemplo de Bohr, p. 333, dice 37, pero esa cifra no coincide con la operación. El inicio adoptado en 457 a.C. conduce al año 27 (DTG, cap. 23). Fuente: Daniel 9:25; DTG, cap. 23; Bohr, p. 333, con el cálculo corregido.",
+  "e": "Falso. Sin año cero, 445 + 39 − 1 = 483: el resultado es 39 d.C. El inicio en 457 a.C. conduce al año 27 (DTG, cap. 23). Fuente: Daniel 9:25; DTG, cap. 23.",
   "nv": 2
  },
  {
@@ -59309,7 +59319,7 @@ const BANCO = [
   "t": "mc",
   "v": "9:26",
   "f": "c",
-  "q": "Según la lectura de Bohr presentada aquí, ¿quién es «el príncipe que ha de venir» de Daniel 9:26?",
+  "q": "En la lectura de este estudio, ¿quién es «el príncipe que ha de venir» de Daniel 9:26?",
   "o": [
    "El mismo Mesías Príncipe",
    "El general romano Tito",
@@ -59317,17 +59327,17 @@ const BANCO = [
    "El rey Antíoco Epífanes"
   ],
   "a": 0,
-  "e": "Bohr lo identifica con Jesús y considera a Israel su pueblo; los ejércitos romanos destruyeron la ciudad. Otra lectura adventista ve a Tito y los romanos; la futurista, un anticristo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 341-342.",
-  "nv": 2
+  "e": "Es Jesús, y su pueblo es Israel; los ejércitos romanos destruyeron la ciudad. Otra lectura adventista ve a Tito y los romanos; la futurista, un anticristo. Fuente: Bohr, <i>Daniel 1-10</i>, p. 341-342.",
+  "nv": 1
  },
  {
   "cap": "d9",
   "t": "tf",
   "v": "9:26",
   "f": "c",
-  "q": "Según Bohr, la estructura de Daniel 9:25-27 identifica al «príncipe que ha de venir» con el Mesías, aunque otra lectura adventista lo identifica con Tito.",
+  "q": "La estructura de Daniel 9:25-27 permite identificar al «príncipe que ha de venir» con el Mesías, aunque otra lectura adventista lo identifica con Tito.",
   "a": true,
-  "e": "Verdadero. Son dos lecturas de Daniel 9:26; la pregunta presenta la de Bohr. Fuente: Bohr, <i>Daniel 1-10</i>, p. 341.",
+  "e": "Verdadero. Son dos lecturas de Daniel 9:26. Fuente: Bohr, <i>Daniel 1-10</i>, p. 341.",
   "nv": 2
  },
  {
@@ -90230,7 +90240,7 @@ const cineEgw=e=>'<p class="cine-egw">«'+esc(e.t)+'»<span>'+e.fuente+'</span><
 const cineOtro=o=>'<p class="cine-otro">«'+esc(o.t)+'»<span>'+esc(o.ref)+' · '+esc(o.ver)+'</span></p>';
 function cineTexto(a,extra){
   const v=a.v?cineVerso(a.v):null;
-  return '<div class="cine-capa"><span class="cine-rot">'+esc(a.rot||'')+'</span>'+
+  return '<div class="cine-capa" data-leer>'+cineFila(a.rot)+
     (v?'<p class="cine-verso">«'+cinePalabras(v.t,a.clave)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>':'')+
     (a.otros||[]).map(cineOtro).join('')+(extra||'')+'</div>';
 }
@@ -90238,10 +90248,13 @@ function cineTexto(a,extra){
    la carta de Esdras y cómo lo aplica Elena de White. Así nada tapa la escena en el teléfono. */
 function cinePila(a){
   const v=cineVerso(a.v);
-  return '<div class="cine-capa"><span class="cine-rot">'+esc(a.rot||'')+'</span><div class="cine-pila">'+
+  return '<div class="cine-capa" data-leer>'+cineFila(a.rot)+'<div class="cine-pila">'+
     '<div class="uno"><p class="cine-verso">«'+cinePalabras(v.t,a.clave)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span></div>'+
     '<div class="dos">'+(a.otros||[]).map(cineOtro).join('')+(a.egw||[]).map(cineEgw).join('')+(a.explica?'<p class="cine-exp">'+esc(a.explica)+'</p>':'')+'</div></div></div>';
 }
+/* El botón de voz de la app (grupoVoz/leeCerca), el mismo de los versículos: lee la escena. */
+const cineVoz=()=>typeof puedeHablar==='function'&&puedeHablar()?grupoVoz('btn-voz','Escuchar','Escuchar esta escena'):'';
+const cineFila=rot=>'<div class="cine-fila"><span class="cine-rot">'+esc(rot||'')+'</span>'+cineVoz()+'</div>';
 const cineFondo=(src,cls,est)=>'<div class="cine-f'+(cls?' '+cls:'')+'" style="background-image:url(\''+src+'\')'+(est?';'+est:'')+'"></div>';
 
 /* ── Cada tipo de acto: su HTML ── */
@@ -90249,7 +90262,7 @@ const CINE_HTML={
   luz:(a,L)=>cineFondo(lamRuta(L,a.imgs[0]),'f1')+cineFondo(lamRuta(L,a.imgs[1]),'f2','background-position:'+(a.foco2||'center'))+
     '<div class="cine-luz"></div><div class="cine-vel"></div>'+
     (a.cartel?'<div class="cine-cartel"><h2>'+esc(a.cartel)+'</h2><p>'+esc(L.libro)+'</p></div><div class="cine-baja"><span>Desliza</span><i></i></div>':'')+cineTexto(a),
-  cuenta:a=>'<div class="cine-cuenta"><span class="cine-rot">'+esc(a.rot)+'</span>'+
+  cuenta:a=>'<div class="cine-cuenta" data-leer>'+cineFila(a.rot)+
     '<div class="cine-num"><b>'+a.de+'</b><small>semanas</small></div><div class="cine-rej" aria-hidden="true">'+'<i></i>'.repeat(a.a)+'</div>'+
     '<div class="cine-ley">'+a.nombres.map((n,i)=>'<span><b class="t'+i+'"></b>'+esc(n)+'</span>').join('')+'</div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
@@ -90271,9 +90284,9 @@ const CINE_HTML={
     '<div class="cine-est" data-i="-1"><i></i><b>'+esc(a.inicio)+'</b></div>'+
     a.estaciones.map((e,i)=>'<div class="cine-est" data-i="'+i+'"><i></i><b>'+esc(e.fecha)+'</b></div>').join('')+'</div></div>'+
     '<div class="cine-tarj">'+a.estaciones.map((e,i)=>{const v=cineVerso(e.v);
-      return '<div class="cine-capa" data-t="'+i+'"><span class="cine-rot">'+esc(e.rot)+'</span><p class="cine-verso">«'+esc(v.t)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>'+
+      return '<div class="cine-capa" data-leer data-t="'+i+'">'+cineFila(e.rot)+'<p class="cine-verso">«'+esc(v.t)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>'+
         (e.egw||[]).map(cineEgw).join('')+(e.nota?'<p class="cine-egw nota">'+esc(e.nota)+'<span>'+e.fuente+'</span></p>':'')+'</div>';}).join('')+'</div>',
-  barra:a=>'<div class="cine-final"><span class="cine-rot">'+esc(a.rot)+'</span><h2>'+esc(a.cartel)+'</h2>'+
+  barra:a=>'<div class="cine-final" data-leer>'+cineFila(a.rot)+'<h2>'+esc(a.cartel)+'</h2>'+
     '<div class="cine-dos"><div class="cine-2300"><i class="p"></i><i class="r"></i></div><div class="cine-marcas">'+a.marcas.map(m=>'<span>'+esc(m)+'</span>').join('')+'</div></div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
     (a.egw||[]).map(cineEgw).join('')+'</div>'
@@ -90310,7 +90323,7 @@ const CINE_FX={
     const g=s.querySelector('.cine-sello'),cae=p>=.46;
     if(g.classList.contains('cae')!==cae){g.classList.toggle('cae',cae);
       if(cae&&!cineQuieto()){const f=s.querySelector('.cine-flash');f.classList.remove('va');void f.offsetWidth;f.classList.add('va');s.classList.remove('tiembla');void s.offsetWidth;s.classList.add('tiembla');}}
-    const q=cineTramo(p,.56,.66);s.querySelector('.cine-pila .uno').style.opacity=1-q;const d=s.querySelector('.cine-pila .dos');d.style.opacity=q;d.style.transform='translateY('+(16*(1-q))+'px)';
+    const q=cineTramo(p,.56,.66);s.querySelector('.cine-pila .uno').style.opacity=1-q;g.style.opacity=cae?String(1-.7*q):'';const d=s.querySelector('.cine-pila .dos');d.style.opacity=q;d.style.transform='translateY('+(16*(1-q))+'px)';
   },
   mapa(s,p){
     const r=s.querySelector('.ruta'),L=r.getTotalLength(),q=cineTramo(p,.1,.85);
@@ -90417,6 +90430,7 @@ function cineModo(){
   cinePinta();lamLugar();
 }
 function cineAlCerrar(){
+  if(typeof paraVoz==='function')paraVoz();
   if(cineCuadro){cancelAnimationFrame(cineCuadro);cineCuadro=0;}
   const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document;
   if((r.fullscreenElement||document.fullscreenElement)&&document.exitFullscreen){const p=document.exitFullscreen();if(p&&p.catch)p.catch(()=>{});}

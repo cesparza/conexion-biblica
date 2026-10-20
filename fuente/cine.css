@@ -133,3 +133,13 @@
 .cine-pres .cine-verso{font-size:clamp(1.5rem,3.6vw,2.6rem)}
 .cine-pres .cine-egw,.cine-pres .cine-otro,.cine-pres .cine-exp{font-size:clamp(1.15rem,2.4vw,1.55rem)}
 @media (prefers-reduced-motion:reduce){.lam.cine *{animation:none!important;transition:none!important}}
+
+/* La voz de la app dentro del cine */
+.cine-fila{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:36px}
+.cine-cuenta>.cine-fila,.cine-final>.cine-fila{width:min(92vw,720px)}
+.lam.cine .grupo-voz{display:inline-flex;gap:4px;flex:0 0 auto}
+.lam.cine .grupo-voz .btn-voz{display:inline-flex}
+.lam.cine .grupo-voz button{align-items:center;gap:6px;min-height:36px;border:1px solid var(--c-linea);border-radius:999px;padding:0 12px;background:rgba(17,14,11,.6);color:var(--c-perg);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+.lam.cine .grupo-voz .btn-voz.sonando{background:var(--c-oro);border-color:var(--c-oro);color:#1A1309}
+.lam.cine p.suena{background:rgba(242,196,107,.16);border-radius:8px;box-shadow:0 0 0 6px rgba(242,196,107,.16)}
+@media (max-width:520px){.cine-sello{width:clamp(92px,24vw,140px);right:6%}}

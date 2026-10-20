@@ -1100,8 +1100,8 @@ export const CATALOGO = {
     "sub": "Las setenta semanas y el Mesías",
     "grupo": "Biblia",
     "n": [
-     31,
-     16,
+     33,
+     14,
      20
     ]
    },

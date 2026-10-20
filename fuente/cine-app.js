@@ -29,7 +29,7 @@ const cineEgw=e=>'<p class="cine-egw">«'+esc(e.t)+'»<span>'+e.fuente+'</span><
 const cineOtro=o=>'<p class="cine-otro">«'+esc(o.t)+'»<span>'+esc(o.ref)+' · '+esc(o.ver)+'</span></p>';
 function cineTexto(a,extra){
   const v=a.v?cineVerso(a.v):null;
-  return '<div class="cine-capa"><span class="cine-rot">'+esc(a.rot||'')+'</span>'+
+  return '<div class="cine-capa" data-leer>'+cineFila(a.rot)+
     (v?'<p class="cine-verso">«'+cinePalabras(v.t,a.clave)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>':'')+
     (a.otros||[]).map(cineOtro).join('')+(extra||'')+'</div>';
 }
@@ -37,10 +37,13 @@ function cineTexto(a,extra){
    la carta de Esdras y cómo lo aplica Elena de White. Así nada tapa la escena en el teléfono. */
 function cinePila(a){
   const v=cineVerso(a.v);
-  return '<div class="cine-capa"><span class="cine-rot">'+esc(a.rot||'')+'</span><div class="cine-pila">'+
+  return '<div class="cine-capa" data-leer>'+cineFila(a.rot)+'<div class="cine-pila">'+
     '<div class="uno"><p class="cine-verso">«'+cinePalabras(v.t,a.clave)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span></div>'+
     '<div class="dos">'+(a.otros||[]).map(cineOtro).join('')+(a.egw||[]).map(cineEgw).join('')+(a.explica?'<p class="cine-exp">'+esc(a.explica)+'</p>':'')+'</div></div></div>';
 }
+/* El botón de voz de la app (grupoVoz/leeCerca), el mismo de los versículos: lee la escena. */
+const cineVoz=()=>typeof puedeHablar==='function'&&puedeHablar()?grupoVoz('btn-voz','Escuchar','Escuchar esta escena'):'';
+const cineFila=rot=>'<div class="cine-fila"><span class="cine-rot">'+esc(rot||'')+'</span>'+cineVoz()+'</div>';
 const cineFondo=(src,cls,est)=>'<div class="cine-f'+(cls?' '+cls:'')+'" style="background-image:url(\''+src+'\')'+(est?';'+est:'')+'"></div>';
 
 /* ── Cada tipo de acto: su HTML ── */
@@ -48,7 +51,7 @@ const CINE_HTML={
   luz:(a,L)=>cineFondo(lamRuta(L,a.imgs[0]),'f1')+cineFondo(lamRuta(L,a.imgs[1]),'f2','background-position:'+(a.foco2||'center'))+
     '<div class="cine-luz"></div><div class="cine-vel"></div>'+
     (a.cartel?'<div class="cine-cartel"><h2>'+esc(a.cartel)+'</h2><p>'+esc(L.libro)+'</p></div><div class="cine-baja"><span>Desliza</span><i></i></div>':'')+cineTexto(a),
-  cuenta:a=>'<div class="cine-cuenta"><span class="cine-rot">'+esc(a.rot)+'</span>'+
+  cuenta:a=>'<div class="cine-cuenta" data-leer>'+cineFila(a.rot)+
     '<div class="cine-num"><b>'+a.de+'</b><small>semanas</small></div><div class="cine-rej" aria-hidden="true">'+'<i></i>'.repeat(a.a)+'</div>'+
     '<div class="cine-ley">'+a.nombres.map((n,i)=>'<span><b class="t'+i+'"></b>'+esc(n)+'</span>').join('')+'</div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
@@ -70,9 +73,9 @@ const CINE_HTML={
     '<div class="cine-est" data-i="-1"><i></i><b>'+esc(a.inicio)+'</b></div>'+
     a.estaciones.map((e,i)=>'<div class="cine-est" data-i="'+i+'"><i></i><b>'+esc(e.fecha)+'</b></div>').join('')+'</div></div>'+
     '<div class="cine-tarj">'+a.estaciones.map((e,i)=>{const v=cineVerso(e.v);
-      return '<div class="cine-capa" data-t="'+i+'"><span class="cine-rot">'+esc(e.rot)+'</span><p class="cine-verso">«'+esc(v.t)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>'+
+      return '<div class="cine-capa" data-leer data-t="'+i+'">'+cineFila(e.rot)+'<p class="cine-verso">«'+esc(v.t)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>'+
         (e.egw||[]).map(cineEgw).join('')+(e.nota?'<p class="cine-egw nota">'+esc(e.nota)+'<span>'+e.fuente+'</span></p>':'')+'</div>';}).join('')+'</div>',
-  barra:a=>'<div class="cine-final"><span class="cine-rot">'+esc(a.rot)+'</span><h2>'+esc(a.cartel)+'</h2>'+
+  barra:a=>'<div class="cine-final" data-leer>'+cineFila(a.rot)+'<h2>'+esc(a.cartel)+'</h2>'+
     '<div class="cine-dos"><div class="cine-2300"><i class="p"></i><i class="r"></i></div><div class="cine-marcas">'+a.marcas.map(m=>'<span>'+esc(m)+'</span>').join('')+'</div></div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
     (a.egw||[]).map(cineEgw).join('')+'</div>'
@@ -109,7 +112,7 @@ const CINE_FX={
     const g=s.querySelector('.cine-sello'),cae=p>=.46;
     if(g.classList.contains('cae')!==cae){g.classList.toggle('cae',cae);
       if(cae&&!cineQuieto()){const f=s.querySelector('.cine-flash');f.classList.remove('va');void f.offsetWidth;f.classList.add('va');s.classList.remove('tiembla');void s.offsetWidth;s.classList.add('tiembla');}}
-    const q=cineTramo(p,.56,.66);s.querySelector('.cine-pila .uno').style.opacity=1-q;const d=s.querySelector('.cine-pila .dos');d.style.opacity=q;d.style.transform='translateY('+(16*(1-q))+'px)';
+    const q=cineTramo(p,.56,.66);s.querySelector('.cine-pila .uno').style.opacity=1-q;g.style.opacity=cae?String(1-.7*q):'';const d=s.querySelector('.cine-pila .dos');d.style.opacity=q;d.style.transform='translateY('+(16*(1-q))+'px)';
   },
   mapa(s,p){
     const r=s.querySelector('.ruta'),L=r.getTotalLength(),q=cineTramo(p,.1,.85);
@@ -216,6 +219,7 @@ function cineModo(){
   cinePinta();lamLugar();
 }
 function cineAlCerrar(){
+  if(typeof paraVoz==='function')paraVoz();
   if(cineCuadro){cancelAnimationFrame(cineCuadro);cineCuadro=0;}
   const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document;
   if((r.fullscreenElement||document.fullscreenElement)&&document.exitFullscreen){const p=document.exitFullscreen();if(p&&p.catch)p.catch(()=>{});}

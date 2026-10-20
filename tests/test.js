@@ -3368,6 +3368,9 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
  ok(egw.length>=8&&egw.every(e=>/Elena G\. de White/.test(e.fuente)&&/pp?\. \d/.test(e.fuente)&&e.t.length>20),'Cada cita de Elena de White en Cine lleva libro y página');
  ok(D.actos.every(a=>A.cinePausas(a).every(f=>f>0&&f<=1)),'Siguiente tiene paradas válidas en cada acto');
  ok(A.cmpModelo().cols.join(',')==='d2,d7,d8','Daniel 9 no añade una columna de reinos a Comparar');
+ const comp=fs.readFileSync(path.join(RAIZ,'fuente','complementos','daniel','d9.js'),'utf8').replace(/^\/\*[\s\S]*?\*\//,'').replace(/Fuentes?:[\s\S]*?(?=<\/p>|'\s*\}|`)/g,'');
+ const nombra=comp.match(/.{0,40}(?:\b(?:Shea|Bohr)\b|[Ss]eg[uú]n (?:Bohr|Shea)).{0,40}/g)||[];
+ ok(!nombra.length,'«Para profundizar» de Daniel 9 no atribuye ideas a autores fuera de su línea «Fuente:»'+(nombra.length?': '+nombra.join(' | '):''));
 }
 
 console.log('\n'+(fallos===0?'TODAS LAS PRUEBAS PASARON':fallos+' FALLOS'));
