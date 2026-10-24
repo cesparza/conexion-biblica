@@ -1116,5 +1116,6 @@ ULTIMOS.eventos.forEach(e => {
 });
 
 LAMINAS.d9 = require('./daniel9.js');
+LAMINAS.d11 = require('./daniel11.js').lamina;
 
 module.exports = { LAMINAS, ULTIMOS, REPARTOS };

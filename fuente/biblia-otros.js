@@ -205,6 +205,11 @@ const OTRAS_VERS = {
   "12": "Los diáconos sean maridos de una mujer, que gobiernen bien sus hijos y sus casas.",
   "13": "Porque los que bien ministraren, ganan para sí buen grado, y mucha confianza en la fe que es en Cristo Jesús."
  },
+ "1timoteo-4": {
+  "1": "EMPERO el Espíritu dice manifiestamente, que en los venideros tiempos algunos apostatarán de la fe, escuchando á espíritus de error y á doctrinas de demonios;",
+  "2": "Que con hipocresía hablarán mentira, teniendo cauterizada la conciencia.",
+  "3": "Que prohibirán casarse, y mandarán abstenerse de las viandas que Dios crió para que con hacimiento de gracias participasen de ellas los fieles, y los que han conocido la verdad."
+ },
  "1timoteo-6": {
   "15": "La cual á su tiempo mostrará el Bienaventurado y solo Poderoso, Rey de reyes, y Señor de señores;",
   "16": "Quien sólo tiene inmortalidad, que habita en luz inaccesible; á quien ninguno de los hombres ha visto ni puede ver: al cual sea la honra y el imperio sempiterno. Amén."
@@ -360,6 +365,8 @@ const OTRAS_VERS = {
   "10": "Cuando viniere para ser glorificado en sus santos, y á hacerse admirable en aquel día en todos los que creyeron: (por cuanto nuestro testimonio ha sido creído entre vosotros.)"
  },
  "2tesalonicenses-2": {
+  "3": "No os engañe nadie en ninguna manera; porque no vendrá sin que venga antes la apostasía, y se manifieste el hombre de pecado, el hijo de perdición,",
+  "4": "Oponiéndose, y levantándose contra todo lo que se llama Dios, ó que se adora; tanto que se asiente en el templo de Dios como Dios, haciéndose parecer Dios.",
   "8": "Y entonces será manifestado aquel inicuo, al cual el Señor matará con el espíritu de su boca, y destruirá con el resplandor de su venida;"
  },
  "2timoteo-2": {
@@ -403,7 +410,21 @@ const OTRAS_VERS = {
   "17": "Entonces el dragón fué airado contra la mujer; y se fué á hacer guerra contra los otros de la simiente de ella, los cuales guardan los mandamientos de Dios, y tienen el testimonio de Jesucristo."
  },
  "apocalipsis-13": {
-  "5": "Y le fué dada boca que hablaba grandes cosas y blasfemias: y le fué dada potencia de obrar cuarenta y dos meses."
+  "3": "Y vi una de sus cabezas como herida de muerte, y la llaga de su muerte fué curada: y se maravilló toda la tierra en pos de la bestia.",
+  "4": "Y adoraron al dragón que había dado la potestad á la bestia, y adoraron á la bestia, diciendo: ¿Quién es semejante á la bestia, y quién podrá lidiar con ella?",
+  "5": "Y le fué dada boca que hablaba grandes cosas y blasfemias: y le fué dada potencia de obrar cuarenta y dos meses.",
+  "6": "Y abrió su boca en blasfemias contra Dios, para blasfemar su nombre, y su tabernáculo, y á los que moran en el cielo.",
+  "7": "Y le fué dado hacer guerra contra los santos, y vencerlos. También le fué dada potencia sobre toda tribu y pueblo y lengua y gente.",
+  "8": "Y todos los que moran en la tierra le adoraron, cuyos nombres no están escritos en el libro de la vida del Cordero, el cual fué muerto desde el principio del mundo.",
+  "9": "Si alguno tiene oído, oiga.",
+  "10": "El que lleva en cautividad, va en cautividad: el que á cuchillo matare, es necesario que á cuchillo sea muerto. Aquí está la paciencia y la fe de los santos.",
+  "11": "Después vi otra bestia que subía de la tierra; y tenía dos cuernos semejantes á los de un cordero, mas hablaba como un dragón.",
+  "12": "Y ejerce todo el poder de la primera bestia en presencia de ella; y hace á la tierra y á los moradores de ella adorar la primera bestia, cuya llaga de muerte fué curada.",
+  "13": "Y hace grandes señales, de tal manera que aun hace descender fuego del cielo á la tierra delante de los hombres.",
+  "14": "Y engaña á los moradores de la tierra por las señales que le ha sido dado hacer en presencia de la bestia, mandando á los moradores de la tierra que hagan la imagen de la bestia que tiene la herida de cuchillo, y vivió.",
+  "15": "Y le fué dado que diese espíritu á la imagen de la bestia, para que la imagen de la bestia hable; y hará que cualesquiera que no adoraren la imagen de la bestia sean muertos.",
+  "16": "Y hacía que á todos, á los pequeños y grandes, ricos y pobres, libres y siervos, se pusiese una marca en su mano derecha, ó en sus frentes:",
+  "17": "Y que ninguno pudiese comprar ó vender, sino el que tuviera la señal, ó el nombre de la bestia, ó el número de su nombre."
  },
  "apocalipsis-14": {
   "6": "Y vi otro ángel volar por en medio del cielo, que tenía el evangelio eterno para predicarlo á los que moran en la tierra, y á toda nación y tribu y lengua y pueblo,",
@@ -420,6 +441,14 @@ const OTRAS_VERS = {
   "18": "Y otro ángel salió del altar, el cual tenía poder sobre el fuego, y clamó con gran voz al que tenía la hoz aguda, diciendo: Mete tu hoz aguda, y vendimia los racimos de la tierra; porque están maduras sus uvas.",
   "19": "Y el ángel echó su hoz aguda en la tierra, y vendimió la viña de la tierra, y echó la uva en el grande lagar de la ira de Dios.",
   "20": "Y el lagar fué hollado fuera de la ciudad, y del lagar salió sangre hasta los frenos de los caballos por mil y seiscientos estadios."
+ },
+ "apocalipsis-16": {
+  "12": "Y el sexto ángel derramó su copa sobre el gran río Eufrates; y el agua de él se secó, para que fuese preparado el camino de los reyes del Oriente."
+ },
+ "apocalipsis-17": {
+  "15": "Y él me dice: Las aguas que has visto donde la ramera se sienta, son pueblos y muchedumbres y naciones y lenguas.",
+  "16": "Y los diez cuernos que viste en la bestia, éstos aborrecerán á la ramera, y la harán desolada y desnuda: y comerán sus carnes, y la quemarán con fuego:",
+  "17": "Porque Dios ha puesto en sus corazones ejecutar lo que le plugo, y el ponerse de acuerdo, y dar su reino á la bestia, hasta que sean cumplidas las palabras de Dios."
  },
  "apocalipsis-18": {
   "1": "Y DESPUÉS de estas cosas vi otro ángel descender del cielo teniendo grande potencia; y la tierra fué alumbrada de su gloria.",
@@ -491,6 +520,10 @@ const OTRAS_VERS = {
  },
  "apocalipsis-4": {
   "11": "Señor, digno eres de recibir gloria y honra y virtud: porque tú criaste todas las cosas, y por tu voluntad tienen ser y fueron criadas."
+ },
+ "apocalipsis-7": {
+  "2": "Y vi otro ángel que subía del nacimiento del sol, teniendo el sello del Dios vivo: y clamó con gran voz á los cuatro ángeles, á los cuales era dado hacer daño á la tierra y á la mar,",
+  "3": "Diciendo: No hagáis daño á la tierra, ni al mar, ni á los árboles, hasta que señalemos á los siervos de nuestro Dios en sus frentes."
  },
  "colosenses-1": {
   "13": "Que nos ha librado de la potestad de las tinieblas, y trasladado al reino de su amado Hijo;",
@@ -767,6 +800,11 @@ const OTRAS_VERS = {
   "2": "Y haré de ti una nación grande, y bendecirte he, y engrandeceré tu nombre, y serás bendición:",
   "3": "Y bendeciré á los que te bendijeren, y á los que te maldijeren maldeciré: y serán benditas en ti todas las familias de la tierra."
  },
+ "genesis-19": {
+  "36": "Y concibieron las dos hijas de Lot, de su padre.",
+  "37": "Y parió la mayor un hijo, y llamó su nombre Moab, el cual es padre de los Moabitas hasta hoy.",
+  "38": "La menor también parió un hijo, y llamó su nombre Ben-ammí, el cual es padre de los Ammonitas hasta hoy."
+ },
  "genesis-2": {
   "1": "Y FUERON acabados los cielos y la tierra, y todo su ornamento.",
   "2": "Y acabó Dios en el día séptimo su obra que hizo, y reposó el día séptimo de toda su obra que había hecho.",
@@ -1030,6 +1068,10 @@ const OTRAS_VERS = {
   "25": "Miré, y no parecía hombre, y todas las aves del cielo se habían ido.",
   "26": "Miré, y he aquí el Carmelo desierto, y todas sus ciudades eran asoladas á la presencia de Jehová, á la presencia del furor de su ira."
  },
+ "jeremias-9": {
+  "23": "Así dijo Jehová: No se alabe el sabio en su sabiduría, ni en su valentía se alabe el valiente, ni el rico se alabe en sus riquezas.",
+  "24": "Mas alábese en esto el que se hubiere de alabar: en entenderme y conocerme, que yo soy Jehová, que hago misericordia, juicio, y justicia en la tierra: porque estas cosas quiero, dice Jehová."
+ },
  "joel-2": {
   "28": "Y será que después de esto, derramaré mi Espíritu sobre toda carne, y profetizarán vuestros hijos y vuestras hijas; vuestros viejos soñarán sueños, y vuestros mancebos verán visiones.",
   "29": "Y aun también sobre los siervos y sobre las siervas derramaré mi Espíritu en aquellos días."
@@ -1096,7 +1138,11 @@ const OTRAS_VERS = {
   "13": "Pero cuando viniere aquel Espíritu de verdad, él os guiará á toda verdad; porque no hablará de sí mismo, sino que hablará todo lo que oyere, y os hará saber las cosas que han de venir."
  },
  "juan-17": {
+  "3": "Esta empero es la vida eterna: que te conozcan el solo Dios verdadero, y á Jesucristo, al cual has enviado.",
   "17": "Santifícalos en tu verdad: tu palabra es verdad."
+ },
+ "juan-18": {
+  "36": "Respondió Jesús: Mi reino no es de este mundo: si de este mundo fuera mi reino, mis servidores pelearían para que yo no fuera entregado á los Judíos: ahora, pues, mi reino no es de aquí."
  },
  "juan-2": {
   "1": "Y AL tercer día hiciéronse unas bodas en Caná de Galilea; y estaba allí la madre de Jesús.",
@@ -1255,6 +1301,9 @@ const OTRAS_VERS = {
   "5": "Y dijeron los apóstoles al Señor: Auméntanos la fe."
  },
  "lucas-2": {
+  "1": "Y ACONTECIÓ en aquellos días que salió edicto de parte de Augusto César, que toda la tierra fuese empadronada.",
+  "2": "Este empadronamiento primero fué hecho siendo Cirenio gobernador de la Siria.",
+  "3": "E iban todos para ser empadronados, cada uno á su ciudad.",
   "46": "Y aconteció, que tres días después le hallaron en el templo, sentado en medio de los doctores, oyéndoles y preguntándoles.",
   "47": "Y todos los que le oían, se pasmaban de su entendimiento y de sus respuestas."
  },
@@ -1851,6 +1900,11 @@ const OTRAS_META = {
   "cap": "3",
   "version": "RV1909"
  },
+ "1timoteo-4": {
+  "libro": "1 Timoteo",
+  "cap": "4",
+  "version": "RV1909"
+ },
  "1timoteo-6": {
   "libro": "1 Timoteo",
   "cap": "6",
@@ -1981,6 +2035,16 @@ const OTRAS_META = {
   "cap": "14",
   "version": "RV1909"
  },
+ "apocalipsis-16": {
+  "libro": "Apocalipsis",
+  "cap": "16",
+  "version": "RV1909"
+ },
+ "apocalipsis-17": {
+  "libro": "Apocalipsis",
+  "cap": "17",
+  "version": "RV1909"
+ },
  "apocalipsis-18": {
   "libro": "Apocalipsis",
   "cap": "18",
@@ -2019,6 +2083,11 @@ const OTRAS_META = {
  "apocalipsis-4": {
   "libro": "Apocalipsis",
   "cap": "4",
+  "version": "RV1909"
+ },
+ "apocalipsis-7": {
+  "libro": "Apocalipsis",
+  "cap": "7",
   "version": "RV1909"
  },
  "colosenses-1": {
@@ -2169,6 +2238,11 @@ const OTRAS_META = {
  "genesis-12": {
   "libro": "Génesis",
   "cap": "12",
+  "version": "RV1909"
+ },
+ "genesis-19": {
+  "libro": "Génesis",
+  "cap": "19",
   "version": "RV1909"
  },
  "genesis-2": {
@@ -2331,6 +2405,11 @@ const OTRAS_META = {
   "cap": "4",
   "version": "RV1909"
  },
+ "jeremias-9": {
+  "libro": "Jeremías",
+  "cap": "9",
+  "version": "RV1909"
+ },
  "joel-2": {
   "libro": "Joel",
   "cap": "2",
@@ -2374,6 +2453,11 @@ const OTRAS_META = {
  "juan-17": {
   "libro": "Juan",
   "cap": "17",
+  "version": "RV1909"
+ },
+ "juan-18": {
+  "libro": "Juan",
+  "cap": "18",
   "version": "RV1909"
  },
  "juan-2": {

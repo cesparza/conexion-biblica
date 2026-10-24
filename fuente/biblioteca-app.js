@@ -181,7 +181,7 @@ function bibFuentes(t){
   const lista=Object.values(obras);
   lista.forEach(o=>{if(o.abr&&!o.obra&&nombreAbr[o.abr])o.obra=nombreAbr[o.abr];o.pags.sort((a,b)=>bibNum(a)-bibNum(b));});
   /* El orden de la jerarquía de fuentes de Camilo: las siglas (Elena de White), Bohr, los demás por autor. */
-  const rango=o=>o.abr||/Elena.*White/i.test(o.autor)?0:/^(?:Esteban )?Bohr$/i.test(o.autor)?1:o.tal?3:2;
+  const rango=o=>o.abr||/Elena.*White/i.test(o.autor)?0:/^(?:(?:Esteban|Stephen) )?Bohr$/i.test(o.autor)?1:o.tal?3:2;
   lista.sort((a,b)=>rango(a)-rango(b)||(a.autor||'').localeCompare(b.autor||'','es')||(a.obra||a.abr||a.tal).localeCompare(b.obra||b.abr||b.tal,'es'));
   return (bibCache[t]=lista);
 }

@@ -16,5 +16,6 @@ jobs:
       - name: El index.html corresponde a las fuentes
         run: node fuente/build.js && git diff --exit-code -- index.html sw.js
       - run: node tests/test.js
+      - run: node tests/daniel11.js
       - run: node tests/uso.js
       - run: node tests/api.js

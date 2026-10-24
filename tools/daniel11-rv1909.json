@@ -1,0 +1,139 @@
+{
+  "checked_at": "2026-10-24T14:51:35.552585+00:00",
+  "edition": "RV1909",
+  "rights": "Public Domain",
+  "rights_url": "https://ebible.org/details.php?id=spaRV1909",
+  "source_archive": "https://ebible.org/Scriptures/spaRV1909_usfx.zip",
+  "archive_sha256": "1f428eb17271ee2c51e72b05ed5e3f24926d2e45ec21f664c078d0c5ee68c32c",
+  "source_before_sha256": "a85c5213d11d00ccbb590fef11a0e236f4978b0529e92176b1f93a0e8847d42f",
+  "source_after_sha256": "a611581b97381877f236ac69e56d0e22f8477435ccad64d4e9acbb59ac8c4ee4",
+  "new_verses": 32,
+  "new_chapter_metadata": 7,
+  "all_existing_verses_unchanged": true,
+  "all_existing_metadata_unchanged": true,
+  "all_selected_verses_match_usfx_and_html": true,
+  "chapters": [
+    {
+      "chapter": "jeremias-9",
+      "url": "https://ebible.org/spaRV1909/JER09.htm",
+      "html_sha256": "5e78a31f7044229430e24719aa08ef3d7b7f8e9a847c4bd3cd01859577c2d996",
+      "verified": {
+        "23": "Así dijo Jehová: No se alabe el sabio en su sabiduría, ni en su valentía se alabe el valiente, ni el rico se alabe en sus riquezas.",
+        "24": "Mas alábese en esto el que se hubiere de alabar: en entenderme y conocerme, que yo soy Jehová, que hago misericordia, juicio, y justicia en la tierra: porque estas cosas quiero, dice Jehová."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "juan-17",
+      "url": "https://ebible.org/spaRV1909/JHN17.htm",
+      "html_sha256": "2dd8cc72d2f7bc42c2713cfb3c51af4a012cdd889a7c1a0d135036111a3c4a75",
+      "verified": {
+        "3": "Esta empero es la vida eterna: que te conozcan el solo Dios verdadero, y á Jesucristo, al cual has enviado."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "juan-18",
+      "url": "https://ebible.org/spaRV1909/JHN18.htm",
+      "html_sha256": "9b1c7fa752650c75c9ed988933b0be836a88d84a8a916cab16bd60393785b80a",
+      "verified": {
+        "36": "Respondió Jesús: Mi reino no es de este mundo: si de este mundo fuera mi reino, mis servidores pelearían para que yo no fuera entregado á los Judíos: ahora, pues, mi reino no es de aquí."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "2tesalonicenses-2",
+      "url": "https://ebible.org/spaRV1909/2TH02.htm",
+      "html_sha256": "b46f67c6d7664677d32dfeb6c39b88c243b544ab08085e849d718771776b917c",
+      "verified": {
+        "3": "No os engañe nadie en ninguna manera; porque no vendrá sin que venga antes la apostasía, y se manifieste el hombre de pecado, el hijo de perdición,",
+        "4": "Oponiéndose, y levantándose contra todo lo que se llama Dios, ó que se adora; tanto que se asiente en el templo de Dios como Dios, haciéndose parecer Dios."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "1timoteo-4",
+      "url": "https://ebible.org/spaRV1909/1TI04.htm",
+      "html_sha256": "738e4bca5a9221c831d8f56f48dc4d990cd0531375163606063a21570a0aaca0",
+      "verified": {
+        "1": "EMPERO el Espíritu dice manifiestamente, que en los venideros tiempos algunos apostatarán de la fe, escuchando á espíritus de error y á doctrinas de demonios;",
+        "2": "Que con hipocresía hablarán mentira, teniendo cauterizada la conciencia.",
+        "3": "Que prohibirán casarse, y mandarán abstenerse de las viandas que Dios crió para que con hacimiento de gracias participasen de ellas los fieles, y los que han conocido la verdad."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "apocalipsis-13",
+      "url": "https://ebible.org/spaRV1909/REV13.htm",
+      "html_sha256": "6ad1fdb3e859e190e2cf69e010d31567c1aa9cf8aba50cb95a7a1bea162cbcf5",
+      "verified": {
+        "3": "Y vi una de sus cabezas como herida de muerte, y la llaga de su muerte fué curada: y se maravilló toda la tierra en pos de la bestia.",
+        "4": "Y adoraron al dragón que había dado la potestad á la bestia, y adoraron á la bestia, diciendo: ¿Quién es semejante á la bestia, y quién podrá lidiar con ella?",
+        "6": "Y abrió su boca en blasfemias contra Dios, para blasfemar su nombre, y su tabernáculo, y á los que moran en el cielo.",
+        "7": "Y le fué dado hacer guerra contra los santos, y vencerlos. También le fué dada potencia sobre toda tribu y pueblo y lengua y gente.",
+        "8": "Y todos los que moran en la tierra le adoraron, cuyos nombres no están escritos en el libro de la vida del Cordero, el cual fué muerto desde el principio del mundo.",
+        "9": "Si alguno tiene oído, oiga.",
+        "10": "El que lleva en cautividad, va en cautividad: el que á cuchillo matare, es necesario que á cuchillo sea muerto. Aquí está la paciencia y la fe de los santos.",
+        "11": "Después vi otra bestia que subía de la tierra; y tenía dos cuernos semejantes á los de un cordero, mas hablaba como un dragón.",
+        "12": "Y ejerce todo el poder de la primera bestia en presencia de ella; y hace á la tierra y á los moradores de ella adorar la primera bestia, cuya llaga de muerte fué curada.",
+        "13": "Y hace grandes señales, de tal manera que aun hace descender fuego del cielo á la tierra delante de los hombres.",
+        "14": "Y engaña á los moradores de la tierra por las señales que le ha sido dado hacer en presencia de la bestia, mandando á los moradores de la tierra que hagan la imagen de la bestia que tiene la herida de cuchillo, y vivió.",
+        "15": "Y le fué dado que diese espíritu á la imagen de la bestia, para que la imagen de la bestia hable; y hará que cualesquiera que no adoraren la imagen de la bestia sean muertos.",
+        "16": "Y hacía que á todos, á los pequeños y grandes, ricos y pobres, libres y siervos, se pusiese una marca en su mano derecha, ó en sus frentes:",
+        "17": "Y que ninguno pudiese comprar ó vender, sino el que tuviera la señal, ó el nombre de la bestia, ó el número de su nombre."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "genesis-19",
+      "url": "https://ebible.org/spaRV1909/GEN19.htm",
+      "html_sha256": "6c182b7bd2e21e6d78805999485c1355aa9a1bc02a3d24c04f8994fbb8898c3b",
+      "verified": {
+        "36": "Y concibieron las dos hijas de Lot, de su padre.",
+        "37": "Y parió la mayor un hijo, y llamó su nombre Moab, el cual es padre de los Moabitas hasta hoy.",
+        "38": "La menor también parió un hijo, y llamó su nombre Ben-ammí, el cual es padre de los Ammonitas hasta hoy."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "apocalipsis-7",
+      "url": "https://ebible.org/spaRV1909/REV07.htm",
+      "html_sha256": "4f34b7a0a03345456475e53911f2ce6fe82c8e9ab82abdd13384c4ba044f65fe",
+      "verified": {
+        "2": "Y vi otro ángel que subía del nacimiento del sol, teniendo el sello del Dios vivo: y clamó con gran voz á los cuatro ángeles, á los cuales era dado hacer daño á la tierra y á la mar,",
+        "3": "Diciendo: No hagáis daño á la tierra, ni al mar, ni á los árboles, hasta que señalemos á los siervos de nuestro Dios en sus frentes."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "apocalipsis-17",
+      "url": "https://ebible.org/spaRV1909/REV17.htm",
+      "html_sha256": "daeea6138e30c2041f28117492fb5dd43edb2d76792353ca7051b75f21d6a419",
+      "verified": {
+        "15": "Y él me dice: Las aguas que has visto donde la ramera se sienta, son pueblos y muchedumbres y naciones y lenguas.",
+        "16": "Y los diez cuernos que viste en la bestia, éstos aborrecerán á la ramera, y la harán desolada y desnuda: y comerán sus carnes, y la quemarán con fuego:",
+        "17": "Porque Dios ha puesto en sus corazones ejecutar lo que le plugo, y el ponerse de acuerdo, y dar su reino á la bestia, hasta que sean cumplidas las palabras de Dios."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    },
+    {
+      "chapter": "apocalipsis-16",
+      "url": "https://ebible.org/spaRV1909/REV16.htm",
+      "html_sha256": "41e23f2e9a0011feb079b3f77eec1261fa86d99a97c8b5c96d3606bdbbbbb366",
+      "verified": {
+        "12": "Y el sexto ángel derramó su copa sobre el gran río Eufrates; y el agua de él se secó, para que fuese preparado el camino de los reyes del Oriente."
+      },
+      "already_present": [],
+      "existing_typographic_differences": []
+    }
+  ]
+}

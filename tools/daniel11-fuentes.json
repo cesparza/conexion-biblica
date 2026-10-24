@@ -1,0 +1,338 @@
+{
+ "auditedAt": "2026-10-24",
+ "scope": "Fuentes de Daniel11, solo lectura; borrador editorial para integrar en componente común. No afirma publicación.",
+ "bibliography": [
+  {
+   "id": "biblia",
+   "title": "Daniel10–12; Daniel7–9; Apocalipsis11–18",
+   "authority": 1,
+   "verified": "Texto de referencia; conservar traducción bíblica de la app y enlaces por versículo."
+  },
+  {
+   "id": "egw-lt103",
+   "title": "ElenaG.deWhite, Carta103,1904",
+   "date": "1904-02-24",
+   "recipient": "HiramA.Craw",
+   "locator": "19LtMs,Lt103,1904,pars17–21;13MR390–394",
+   "url": "https://text.egwwritings.org/amp/read/14069.8547001",
+   "authority": 2,
+   "verified": "Fuente oficial indexada: citaDaniel11:30–36 enpars17–19, repetición de escenaspar20, Daniel12:1–4par21. La apertura directa devuelve403; el resultado de búsqueda oficial permite leer el pasaje y la fecha."
+  },
+  {
+   "id": "egw-cs",
+   "title": "ElenaG.deWhite, El conflicto de los siglos",
+   "authority": 2,
+   "localPath": "/Users/camilo.esparza/Library/Mobile Documents/com~apple~CloudDocs/Iglesia/Biblioteca/Autores/Elena de White/El conflicto de los siglos.pdf",
+   "verified": "557 páginas PDF, texto completo extraído para búsqueda; pasajes relevantes cotejados. Los Estados Unidos en la profecía es cap.26, no35. PDF359 contiene538–1798/marcador492;cap39PDF489–494;cap40PDF495/marcador671;cap41PDF511ss. Las páginasPDF y marcadores de edición son distintos."
+  },
+  {
+   "id": "egw-pe",
+   "title": "ElenaG.deWhite, Primeros escritos",
+   "authority": 2,
+   "localPath": "/Users/camilo.esparza/Library/Mobile Documents/com~apple~CloudDocs/Iglesia/Biblioteca/Autores/Elena de White/Primeros escritos.pdf",
+   "verified": "315 páginas PDF; extracción de texto completa disponible /tmp/camilo-d11-pe.txt. El material de Bohr hace un cotejo entre esta obra y El conflicto. No se afirma verificación individual de todas las citas de PE incluidas en las notas."
+  },
+  {
+   "id": "bohr11",
+   "title": "StephenBohr, Studies on Daniel11",
+   "authority": 3,
+   "pages": 267,
+   "pagination": "Páginaimpresa=PDF",
+   "localPath": "/Users/camilo.esparza/Library/Mobile Documents/com~apple~CloudDocs/Iglesia/Biblioteca/Autores/Esteban Bohr/Studies on Daniel 11.pdf",
+   "officialCatalog": "https://sumtv.store/studies-on-daniel-11-digital-download/",
+   "verified": "PDF267p cotejado; índice1; marco3–22; exposición31–39p23–92;40–45p93–184;12:1p185ss;estudioadicional223ss."
+  },
+  {
+   "id": "bohr1",
+   "title": "StephenBohr, Studies in Daniel1–10",
+   "authority": 3,
+   "pages": 369,
+   "pagination": "Páginaimpresa=PDF",
+   "localPath": "/Users/camilo.esparza/Library/Mobile Documents/com~apple~CloudDocs/Iglesia/Biblioteca/Autores/Esteban Bohr/Studies in Daniel 1-10.pdf",
+   "verified": "Ediciónlocal369p, distinta delBDAN459poficial antiguo. ResumenDaniel8–12en366–367."
+  },
+  {
+   "id": "treiyer",
+   "title": "Humberto Raúl Treiyer Blank, Enigmas descifrados:Conozca los fascinantes misterios de Daniel capítulos11y12",
+   "authority": 4,
+   "copyright": 2006,
+   "edition": "Edición delautor, tercera impresiónenero2007",
+   "isbn": "978-1-59975-726-1",
+   "localPath": "/Users/camilo.esparza/Library/Mobile Documents/com~apple~CloudDocs/Iglesia/Biblioteca/Autores/Alberto Treiyer/Enigmas descifrados.pdf",
+   "verified": "Autor confirmado enportadaPDF2/legalPDF3. CarpetadeAlbertoTreiyer está malclasificada; no cambiararchivo sinpedir. Paginaciónvaría: p34=PDF33,p35=PDF34,p76=PDF75,p85=PDF84; haciafinal hayotrasomisionesdeescaneo."
+  }
+ ],
+ "noteInventory": [
+  {
+   "file": "/tmp/camilo-d11-note-0.txt",
+   "title": "8.Daniel11(PrimeraParte)B",
+   "coverage": "Bohr;introducción,EGW,paralelosDaniel7–12"
+  },
+  {
+   "file": "/tmp/camilo-d11-note-1.txt",
+   "title": "8.Daniel11-El Rey delNorte yelReydelSur(clave)",
+   "coverage": "Bohr, introducción y escenas finales; contiene también extractos de Treiyer en la segunda parte, identificables por coincidencia con Enigmas. No atribuir todo su contenido al mismo autor."
+  },
+  {
+   "file": "/tmp/camilo-d11-note-2.txt",
+   "title": "Daniel11",
+   "coverage": "Introducciónyversos1–17deTreiyer"
+  },
+  {
+   "file": "/tmp/camilo-d11-note-3.txt",
+   "title": "Daniel11(Treiyer)",
+   "coverage": "ExtensoextractoyapuntesdelibroTreiyer"
+  },
+  {
+   "file": "/tmp/camilo-d11-note-4.txt",
+   "title": "Daniel11Coronado",
+   "coverage": "Artículos de Oliver Coronado, siete partes; lectura alternativa y errores de cronología detectados. No se usa para reemplazar la secuencia de Bohr."
+  },
+  {
+   "file": "/tmp/camilo-d11-note-5.txt",
+   "title": "EstructuradeDaniel11/eventosfinales/CS/PE",
+   "coverage": "MatrizCS/PEcasirepetida"
+  },
+  {
+   "file": "/tmp/camilo-d11-note-6.txt",
+   "title": "EstructuradeDaniel11/eventosfinales/CS/PE",
+   "coverage": "MatrizCS/PE, versiónmáscorta"
+  },
+  {
+   "file": "/tmp/camilo-d11-note-7.txt",
+   "title": "Introduccion-Daniel11",
+   "coverage": "Soloaudiom4a2.9MB, sintranscripción; noafirmarleídaaudición"
+  }
+ ],
+ "guardrails": [
+  "Daniel11noesunalistadeprediccionespolíticasactuales. Leereltexto,losparaleloscanónicosylímitefinalen12:1.",
+  "Bohr267pconcentraexposiciónversículoporversoen31ss. Para1–30Treiyeraportaelrelatohistórico,perosudivisión21–30nopuedemezclarseconla22imperialdelasnotasBohr.",
+  "EGWaplicaexplícitamenteDaniel12:1alfindeintercesiónenCS40. Lacorrespondenciapuntoporpuntode11:40–45conCSesargumentodeBohr,nounaexégesisexplícitafirmadaporEGW.",
+  "1798señalaenelmarcohistoricistaelgolpealsupremacíapapal. Noeselcomienzodeunpapadosanado.Recuperaciónhistóricaparcialyplenacoerciónfinalsoncosasdiferentes.",
+  "LaRevoluciónfrancesa,lasituacióndepapadoen1798yelcolapsoURSSsonhistoriadocumentable;identificarcadacosaexactamenteconunversoesinterpretaciónynodebeetiquetarsecomodatobíblico.",
+  "Laenseñanzaproféticacuestionaunsistemadominante;noatribuyepecadopersonalacolectivosdecreyentesniprediceculpadetodocatólico.",
+  "Nodarfechasalaleydominicalmundial,findelagracia,lluvia tardíaoliberación.",
+  "Controversiasdelverso37ygeografíadel45vanenProfundizarconexplicación. Noenseñardetallesdiscutidoscomosi fueranexpresionesbíblicas inequívocas."
+ ],
+ "differences": [
+  {
+   "verses": "21–30",
+   "bohr": "Notas0–1,11:22:CristoeselpríncipedelpactoquebrantadobajoRomaimperial. ResumenBohr369p366–367asumeRomaimperialantesdepapal31–39.",
+   "treiyer": "Enigmasp76–85/PDF75–84:21papado;22noescrucifixión,sinocultoquenublaintercesióndeCristo;21–30panoramapolítico538–1798.",
+   "decision": "Noeslamismaexplicacióncondistintafrontera. Conservarcomparaciónexplícita;rutaprincipalpriorizaBohr."
+  },
+  {
+   "verses": "37",
+   "bohr": "StudiesonDaniel11pp88–89:eldeseodelasmujeresrelacionadoconprohibicióndematrimonio/celibato,1Tim4:1–3.",
+   "notes": "Nota0inserta'(Jesús)'comoidentidadsinbaseallí.",
+   "decision": "Noimponerestaidentidad. ExponerlecturaBohrcomointerpretaciónyconservarliteralbíblico."
+  },
+  {
+   "verses": "40b",
+   "bohr": "pp107–119relacionancolapsoComunismoSoviéticoconretornodelpapado,conrecortesdeprensayargumentaciónpropia.",
+   "treiyer": "pp156–159/PDF155–158:recuperaciónprogresivadelsistemareligioso;noesplenitudobligatoria1929.",
+   "decision": "HistoriaenProfundizar;sinfechardehierromundialniherida plenamente sanaen1989/1991."
+  },
+  {
+   "verses": "41",
+   "bohr": "pp120–126:EE.UU.comobastióndeprincipiosprotestantes,no merasociedadcivil.",
+   "treiyer": "pp161–165/PDF159–164:EE.UU.yaportaciónpoderpolítico.",
+   "decision": "Complementariosenlocentral:laentradaesejerciciodeinfluenciaycoerciónreligiosa;noinvasióngeográficafuturaobligatoria."
+  },
+  {
+   "verses": "43",
+   "bohr": "p164:Libiapobre/Etiopíaricacomosímbolodenaciones;Treiyerp154mismageneralización.",
+   "decision": "Eltextonodainventariodemundorico/pobre. Centrarentensióneconómicaycontroltesoros;si se incluyeequivalencia,rotularlaexplicaciónsecundariadeautores,sinpresentarlacomorealidaduniformedetodaantigüedad."
+  }
+ ],
+ "corrections": [
+  {
+   "where": "Notas0y1, Carta103",
+   "error": "Afirmaquecita31–36y37–39",
+   "fix": "Cita30–36;no37–39.",
+   "evidence": "Carta103,1904,pars17–21,fuenteoficial."
+  },
+  {
+   "where": "Nota2y3,Ulai",
+   "error": "Ulai=Éufrates",
+   "fix": "UlainoesÉufrates;Dan8:2loasociaconSusa,provinciaElam. MantenerUlai,canal/ríodeSusa;Hidekel=Tigris.",
+   "evidence": "Daniel8:2;10:4;Treiyerintroducción."
+  },
+  {
+   "where": "Notas2y3,Gálatas",
+   "error": "Gálatas6:18paraIsraeldeDios",
+   "fix": "Gálatas6:16.",
+   "evidence": "TextoBíblicoGal6:16vsbendiciónfinal6:18."
+  },
+  {
+   "where": "Notas2y3,Ciro",
+   "error": "TercerañodeCiro536–535d.C.",
+   "fix": "a.C.,no d.C.",
+   "evidence": "Daniel10:1;contextopersa;Treiyerp34/PDF33."
+  },
+  {
+   "where": "Nota3,intervalo",
+   "error": "1260añosentre313y538",
+   "fix": "313–538sonantecedentes;1260historicistas538–1798.",
+   "evidence": "Treiyer, Enigmas descifrados, p. 35/PDF 34; El conflicto de los siglos, cap. 26, PDF local 359."
+  },
+  {
+   "where": "fuente/contenido.jsbloquepacto",
+   "error": "PactoConstantinoySilvestre312",
+   "fix": "Silvestreocupósede31ene314–31dic335. Noafirmar pactoespecífico312. Distinguirapoyoimperial,Milán313ybautismo337.",
+   "evidence": "VaticanoSilvestreoficialhttps://www.vatican.va/content/vatican/en/holy-father/silvestro-i.html;Lateranobautismo337https://www.basilicasangiovanni.va/en/san-giovanni-in-laterano/battistero.html"
+  },
+  {
+   "where": "fuente/contenido.jspacto",
+   "error": "EdictoJustiniano533–538vigentedesde538",
+   "fix": "Correspondencia533y534,incorporadaalCódigo534;538eslevantamientodelsitiodeRomaymarcadorinterpretativo. Noinventarfechajurídicavigenciadelacartaen538.",
+   "evidence": "Codex1.1.8fuentehttps://www.thelatinlibrary.com/justinian/codex1.shtml;Bono2025https://iris.unipa.it/handle/10447/715804"
+  },
+  {
+   "where": "fuente/complementos/daniel/d11.jsdivisiones",
+   "error": "'Solocambiadóndecaelalínea'/'lasdosdivisionescaben'",
+   "fix": "Identificacionesdiferentesde21–30;22cruzvsintercesiónocultanoesunalíneaúnica.",
+   "evidence": "Treiyerp85/PDF84niegaexpresamentecrucifixión."
+  },
+  {
+   "where": "fuente/complementos/daniel/d11.js508",
+   "error": "Clodoveo508primeroenfavorecerpoderpapal",
+   "fix": "508esmarcadorcronológicodelalecturaproféticadeBohr,quenodebeconvertirseenprimerapoyocivilhistóricogeneral:Constantinoantes.",
+   "evidence": "Bohr11pp25–26;historiapreviadelsigloIVdocumentadaenmismaapp."
+  },
+  {
+   "where": "Notas0y1sobreEGW",
+   "error": "DeduccióndequeporCarta103ellaespecificacumplimientohasta39",
+   "fix": "Elpasajenoenumeraestafronteracomoconclusiónexplícita. Distinguircita30–36,inferenciahistoricista39yformulacióncasitotaldeEGW.",
+   "evidence": "Elena G. de White, Carta103,24febrero1904,párrs17–21;fuenteoficial."
+  },
+  {
+   "where": "Notas5y6,páginasCS",
+   "error": "Paginaciónvariablepresentadacomosecuenciaintercambiable",
+   "fix": "Noescerrarerratassinconocerlaedición. Referircapítulo yPDFespecífico. 599/613/671puedenlocalizarmismocapítuloendistintasediciones.",
+   "evidence": "CSlocal557p,cap40PDF495ymarcador671;Bohrcitaversióninglesap613."
+  },
+  {
+   "where": "Nota5y6,1848",
+   "error": "Potencialmalacorreccióna1844",
+   "fix": "Noeserror1848sisehabladevisióndelgranconflicto. Primera visiónsendero esdiciembre1844;panoramadelgranconflicto1848,repetido1858.",
+   "evidence": "WhiteEstateSpiritualGift2:170/LS162;https://whiteestate.org/legacy/issues-4sop-supp-html/;fuenteoficialindexadaEGWMR50.17–19."
+  },
+  {
+   "where": "Treiyer, pp. 95–98",
+   "error": "Enrique IV de 21 años en Canossa; castillo sobre Monte Cenis",
+   "fix": "En enero 1077 tenía 26 años (nació11nov1050); rey hasta coronaciónimperial1084. Castillo en Apeninosreggianos, no MonteCenis.",
+   "evidence": "https://hls-dhs-dss.ch/it/articles/029197/2007-12-05/;https://www.senato.it/CESUS/8marzo2024/"
+  },
+  {
+   "where": "Treiyer p.103",
+   "error": "León III (1795–1816) como papa en800",
+   "fix": "LeónIII reinó795–816; cronologíaimpresacon1adicional. No copiarerroredición.",
+   "evidence": "SucesiónoficialVaticano; enlibropropio muere816mencionadop105."
+  },
+  {
+   "where": "Nota Daniel11Coronado",
+   "error": "Dominio personal de Alejandro338–168a.C.",
+   "fix": "Su reinado336–323a.C.;331/168sonmarcadores usadosparadominiohelenístico,noañospersonalesdeAlejandro.",
+   "evidence": "Treiyer,Enigmaspp52–55;Daniel11:3–4."
+  },
+  {
+   "where": "Nota Daniel11Coronado",
+   "error": "Tiberio14a.C.–37d.C.",
+   "fix": "Elreinadocomenzó14d.C.,noa.C.",
+   "evidence": "Cronologíaimperial;Lucas3:1–2encuadraTiberioyPilato."
+  },
+  {
+   "where": "Nota Daniel11Coronado",
+   "error": "Desde11:5sehabladeRoma;31es70d.C.yfinaldoblecumplimiento",
+   "fix": "NoeslamismalecturadeBohr/Treiyer:5ssTolomeosySeleúcidas;Bohr31papal. Mantenerdiferenciadeescuela,nofusionarlaafirmación.",
+   "evidence": "Treiyerpp55–66;Bohr11pp23–53."
+  },
+  {
+   "where": "Nota Daniel11Coronado",
+   "error": "ReydelsurseparacióndeIglesiayEstado,ateísmo einmoralidadcomounamismaidentidad",
+   "fix": "Distinguir autoridadcivillegítima/libertaddeconcienciaderechazoaDios. Noconvertirseparacióninstitucionalenpecadoporsímisma.",
+   "evidence": "Mateo22:21;Romanos13:1–7;Juan18:36;Bohr11pp54–56."
+  }
+ ],
+ "frasesVerification": {
+  "count": 45,
+  "verses": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45
+  ],
+  "explanationWords": 2983,
+  "range": "50–90 palabras por explicación",
+  "sourceOfKeys": "Las claves son etiquetas pedagógicas, no citas literales. Los 45 versículos proceden de fuente/biblia.js (RV1995); consulta externa BibleGateway RV1995."
+ },
+ "verificationLimits": [
+  "Se recuperó el cuerpo completo de siete notas y un registro que solo contiene audio. No se transcribió el audio.",
+  "PDF completos se extrajeron como índices de búsqueda. Se leyeron y contrastaron los pasajes usados; extracción completa no equivale a auditoría de cada frase de cada libro.",
+  "No se ha validado una identificación histórica detallada y única para21–28quecombineBohrconTreiyer. Laentregacomparalosargumentos,sinarmonizaciónforzada.",
+  "Las citas y páginas de Primeros escritos de las matrices se conservan como pistas, no se afirma cotejo individual de todas.",
+  "Este trabajo no verifica app, migración, publicación, progreso por cuenta ni interfaz; esa entrega corresponde al agente padre."
+ ],
+ "rv1909Supplement": "32 versículos adicionales de otros libros, cotejados USFX/HTML de eBible; Lucas 2:1–3 cotejado contra Sociedad Bíblica Argentina.",
+ "images": {
+  "engine": "image_gen integrado",
+  "type": "recreaciones ilustrativas, no retratos ni fotografías históricas",
+  "date": "2026-10-24",
+  "assets": [
+   {
+    "name": "camino.webp",
+    "prompt": "Cinematic historical illustration, landscape16:9, eastern Mediterranean corridor in the Hellenistic era seen from a rocky ridge in Judea. Quiet limestone path and olive tree, caravans, Mediterranean coast, mountains. No fantasy or modern architecture. Warm bronze dawn and deep teal shadows, restrained grain. Main details right, calm dark left for app text. No words, labels or logos."
+   },
+   {
+    "name": "alianza.webp",
+    "prompt": "Cinematic historical illustration, landscape16:9, Hellenistic royal diplomacy around250BCE. Ptolemaic Egyptian and Seleucid Greek envoys in credible linen and wool, sealed papyrus, young royal woman in threequarter back view at right. Eastern Mediterranean stone palace and harbor. No identified portrait, fantasy or modern objects. Warmgold and coolteal, darkleft negative space, no lettering."
+   },
+   {
+    "name": "testigos.webp",
+    "prompt": "Cinematic historical illustration, landscape16:9, anonymous late1400s Christian community studying a handcopied Bible by candlelight in a modest Alpine stone house. Teacher, woman and two young adults, plain wool and linen. Cooldark mountains outside. Dignity under pressure, no halos, attack or flames. Realistic period materials, warmgold and slateblue chiaroscuro. Figures right, darkleft for overlay, no text."
+   }
+  ]
+ }
+}

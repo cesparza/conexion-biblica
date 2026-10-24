@@ -46,8 +46,87 @@ const cineVoz=()=>typeof puedeHablar==='function'&&puedeHablar()?grupoVoz('btn-v
 const cineFila=rot=>'<div class="cine-fila"><span class="cine-rot">'+esc(rot||'')+'</span>'+cineVoz()+'</div>';
 const cineFondo=(src,cls,est)=>'<div class="cine-f'+(cls?' '+cls:'')+'" style="background-image:url(\''+src+'\')'+(est?';'+est:'')+'"></div>';
 
+/* El estudio muestra el pasaje completo de la tabla bíblica, nunca una paráfrasis del acto. */
+function cineEstudioVersos(v){
+  const t=v&&tablaDeCid(v.cap),de=Number(v&&v.de),hasta=v&&v.hasta!==undefined?Number(v.hasta):de;
+  if(!t||!Number.isInteger(de)||!Number.isInteger(hasta)||de<1||hasta<de||hasta>Math.max(...Object.keys(t.mapa).map(Number)))return '';
+  const ns=Array.from({length:hasta-de+1},(_,i)=>de+i);if(ns.some(n=>!t.mapa[n]))return '';
+  return '<p class="cine-ref">'+esc(t.ref+':'+de+(hasta>de?'–'+hasta:'')+' · '+t.version)+'</p>'+ns.map(n=>
+    '<p class="cine-estudio-verso"><sup>'+n+'</sup> '+esc(t.mapa[n])+'</p>').join('');
+}
+/* Párrafos de texto simple: los saltos de línea son estructura, no HTML de los datos. */
+function cineEstudioTexto(texto){
+  const ps=Array.isArray(texto)?texto:String(texto||'').split(/\n\s*\n/);
+  return ps.filter(p=>p!==undefined&&p!==null&&String(p).trim()).map(p=>'<p>'+esc(p)+'</p>').join('');
+}
+function cineEstudioFuentes(fuentes){
+  return '<ul class="cine-estudio-fuentes">'+(fuentes||[]).map(f=>{
+    let url='';try{const u=new URL(String(f.url||''));if(u.protocol==='https:'&&!u.username&&!u.password)url=u.href;}catch(e){}
+    return '<li>'+(url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(f.titulo)+'</a>':esc(f.titulo))+'</li>';
+  }).join('')+'</ul>';
+}
+function cineEstudioRelaciones(a,i){
+  let h='';
+  if(a.mapa){
+    const claves=['norte','centro','sur'],inicial=a.mapa.centro?'centro':claves.find(k=>a.mapa[k]);
+    if(inicial)h+='<details class="cine-estudio-extra"><summary>Ubicar las relaciones</summary><p class="cine-estudio-ayuda">Esquema de relaciones, no mapa a escala.</p><div class="cine-estudio-mapa" role="group" aria-label="Relaciones entre los territorios">'+claves.map((k,n)=>a.mapa[k]?'<button type="button" aria-pressed="'+(k===inicial)+'" aria-controls="cineE-'+i+'-mapa" onclick="cineEstudioMapa('+i+','+n+')"><small>'+['Norte','Tierra de paso','Sur'][n]+'</small><span>'+esc(a.mapa[k].titulo)+'</span></button>':'').join('')+'</div><div id="cineE-'+i+'-mapa" class="cine-estudio-hallazgo" aria-live="polite"><h3>'+esc(a.mapa[inicial].titulo)+'</h3>'+cineEstudioTexto(a.mapa[inicial].texto)+'</div></details>';
+  }
+  if(a.huellas&&a.huellas.length)h+='<details class="cine-estudio-extra"><summary>Cruzar con otras visiones</summary><div class="cine-estudio-huellas" role="group" aria-label="Pasajes relacionados">'+a.huellas.map((r,n)=>'<button type="button" aria-pressed="'+(n===0)+'" aria-controls="cineE-'+i+'-huella" onclick="cineEstudioCruce('+i+','+n+')">'+esc(r.titulo)+'</button>').join('')+'</div><div id="cineE-'+i+'-huella" class="cine-estudio-hallazgo" aria-live="polite">'+cineEstudioTexto(a.huellas[0].texto)+'</div></details>';
+  return h;
+}
+function cineEstudioFrases(a){
+  if(!Array.isArray(a.frases)||!a.frases.length)return '';
+  return '<details class="cine-estudio-extra"><summary>Versículo a versículo</summary>'+a.frases.map(f=>
+    '<details class="cine-estudio-frase"><summary><b>'+esc('11:'+f.verso)+'</b> '+esc(f.clave)+'</summary>'+cineEstudioTexto(f.explicacion)+
+    '<p class="cine-estudio-ayuda">Fuente: '+esc(f.fuente)+'</p></details>').join('')+'</details>';
+}
+function cineEstudio(a,L){
+  const i=L.actos.indexOf(a),base='cineE-'+i,preg=a.pregunta||{},capas=['El texto','La explicación','Profundizar','Comprueba'];
+  const img=typeof a.img==='string'&&/^[a-z0-9_/-]+(?:\.(?:webp|png|jpe?g))?$/i.test(a.img)?
+    '<img class="cine-estudio-img" src="'+esc(lamRuta(L,a.img))+'"'+(a.adaptable?' srcset="'+esc(lamRuta(L,a.img+'-640'))+' 640w, '+esc(lamRuta(L,a.img))+' 1600w" sizes="(max-width: 900px) 100vw, 65vw"':'')+' alt="" loading="'+(i===0?'eager':'lazy')+'" fetchpriority="'+(i===0?'high':'auto')+'" decoding="async">':'';
+  const cuerpo=[cineEstudioVersos(a.v),cineEstudioTexto(a.relato)+cineEstudioTexto(a.explica)+cineEstudioFrases(a)+cineEstudioRelaciones(a,i),
+    cineEstudioTexto(a.profundiza)+(a.cita?'<blockquote>'+cineEstudioTexto(a.cita.texto)+(a.cita.traduccion?'<p>Traducción del original: '+esc(a.cita.traduccion)+'</p>':'')+'<cite>'+esc(a.cita.referencia)+(a.cita.idioma==='en'?' · Original en inglés':'')+'</cite></blockquote>':'')+(a.fuentes&&a.fuentes.length?'<h3>Fuentes para seguir estudiando</h3>'+cineEstudioFuentes(a.fuentes):''),
+    '<p class="cine-estudio-preg">'+esc(preg.q||'¿Qué enseña este pasaje?')+'</p><button type="button" class="cine-estudio-revela" aria-expanded="false" aria-controls="'+base+'-respuesta" onclick="cineEstudioRespuesta('+i+')">Mostrar respuesta</button><div id="'+base+'-respuesta" class="cine-estudio-respuesta" hidden></div>'];
+  return img+'<div class="cine-estudio-velo"></div>'+(img&&L.creditoImagen?'<span class="cine-estudio-credito">Recreación ilustrativa</span>':'')+'<div class="cine-estudio" data-estudio="'+i+'"><header class="cine-estudio-cab"><span class="cine-rot">'+esc(a.rot||'')+'</span><h2>'+esc(a.titulo||a.corto)+'</h2></header>'+
+    '<div class="cine-estudio-tabs" role="tablist" aria-label="Capas de esta escena">'+capas.map((c,j)=>'<button type="button" role="tab" id="'+base+'-tab-'+j+'" aria-controls="'+base+'-capa-'+j+'" aria-selected="'+(j===0)+'" tabindex="'+(j===0?'0':'-1')+'" onclick="cineEstudioCapa('+i+','+j+')">'+c+'</button>').join('')+'</div>'+
+    '<div class="cine-estudio-lectura">'+cuerpo.map((c,j)=>'<div role="tabpanel" id="'+base+'-capa-'+j+'" aria-labelledby="'+base+'-tab-'+j+'" tabindex="0" data-leer'+(j?' hidden':'')+'><div class="cine-estudio-voz">'+cineVoz()+'</div>'+c+'</div>').join('')+'</div></div>';
+}
+function cineEstudioCapa(i,n){
+  const el=document.getElementById('lam'),sec=el&&el.querySelectorAll('.cine-acto')[Number(i)];
+  if(!sec||!Number.isInteger(Number(n))||n<0||n>3)return;
+  if(typeof paraVoz==='function')paraVoz();
+  sec.querySelectorAll('[role="tab"]').forEach((b,j)=>{b.setAttribute('aria-selected',String(j===Number(n)));b.tabIndex=j===Number(n)?0:-1;});
+  sec.querySelectorAll('[role="tabpanel"]').forEach((p,j)=>{p.hidden=j!==Number(n);});
+  const caja=sec.querySelector('.cine-estudio-lectura');if(caja)caja.scrollTop=0;
+}
+function cineEstudioRespuesta(i){
+  const a=cineActos()[Number(i)],el=document.getElementById('cineE-'+Number(i)+'-respuesta');if(!a||!el)return;
+  const b=el.previousElementSibling,abierta=b.getAttribute('aria-expanded')==='true';
+  if(!abierta)el.innerHTML=cineEstudioTexto(a.pregunta&&a.pregunta.respuesta);
+  el.hidden=abierta;b.setAttribute('aria-expanded',String(!abierta));b.textContent=abierta?'Mostrar respuesta':'Ocultar respuesta';
+}
+function cineEstudioMapa(i,n){
+  const a=cineActos()[Number(i)],k=['norte','centro','sur'][Number(n)],dato=a&&a.mapa&&a.mapa[k],el=document.getElementById('cineE-'+Number(i)+'-mapa');if(!dato||!el)return;
+  if(typeof paraVoz==='function')paraVoz();
+  el.innerHTML='<h3>'+esc(dato.titulo)+'</h3>'+cineEstudioTexto(dato.texto);
+  const activos=['norte','centro','sur'].filter(c=>a.mapa[c]);el.previousElementSibling.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(activos[j]===k)));
+}
+function cineEstudioCruce(i,n){
+  const a=cineActos()[Number(i)],dato=a&&a.huellas&&a.huellas[Number(n)],el=document.getElementById('cineE-'+Number(i)+'-huella');if(!dato||!el)return;
+  if(typeof paraVoz==='function')paraVoz();
+  el.innerHTML=cineEstudioTexto(dato.texto);el.previousElementSibling.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(j===Number(n))));
+}
+function cineEstudioTecla(e){
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+  const lista=e.target.closest('.cine-estudio-tabs'),est=lista&&lista.closest('.cine-estudio');if(!est)return;
+  const bs=[...lista.querySelectorAll('[role="tab"]')],actual=bs.indexOf(e.target);if(actual<0)return;
+  const n=e.key==='Home'?0:e.key==='End'?bs.length-1:(actual+(e.key==='ArrowRight'?1:-1)+bs.length)%bs.length;
+  e.preventDefault();cineEstudioCapa(Number(est.dataset.estudio),n);bs[n].focus({preventScroll:true});
+}
+
 /* ── Cada tipo de acto: su HTML ── */
 const CINE_HTML={
+  estudio:(a,L)=>cineEstudio(a,L),
   luz:(a,L)=>cineFondo(lamRuta(L,a.imgs[0]),'f1')+cineFondo(lamRuta(L,a.imgs[1]),'f2','background-position:'+(a.foco2||'center'))+
     '<div class="cine-luz"></div><div class="cine-vel"></div>'+
     (a.cartel?'<div class="cine-cartel"><h2>'+esc(a.cartel)+'</h2><p>'+esc(L.libro)+'</p></div><div class="cine-baja"><span>Desliza</span><i></i></div>':'')+cineTexto(a),
@@ -85,6 +164,9 @@ const CINE_RUTA='M905 445 C 820 400, 760 300, 690 210 S 520 70, 380 120 S 200 23
 /* ── Cada tipo de acto: cómo se mueve con el avance p (0 a 1) ── */
 function cineEnciende(sec,p){const ws=sec.querySelectorAll('.cine-capa .cine-w'),n=Math.round(p*ws.length);ws.forEach((w,i)=>w.classList.toggle('si',i<n));}
 const CINE_FX={
+  estudio(s,p){
+    const img=s.querySelector('.cine-estudio-img');if(img)img.style.transform=cineQuieto()?'none':'scale('+(1.02+.035*p)+')';
+  },
   luz(s,p){
     s.querySelector('.f1').style.transform='scale('+(1.02+.16*p)+')';
     const f2=s.querySelector('.f2');f2.style.opacity=cineTramo(p,.68,.8);f2.style.transform='scale('+(1.12-.1*cineTramo(p,.68,1))+')';
@@ -145,7 +227,7 @@ const CINE_FX={
   }
 };
 /* Los momentos donde se detiene «Siguiente» en cada tipo (fracción del acto). */
-const CINE_PAUSAS={luz:[.4,.9],cuenta:[.45,.95],sello:[.3,.7],mapa:[.55,.95],via:null,barra:[.5,.95]};
+const CINE_PAUSAS={estudio:[.1],luz:[.4,.9],cuenta:[.45,.95],sello:[.3,.7],mapa:[.55,.95],via:null,barra:[.5,.95]};
 function cinePausas(a){
   if(a.tipo!=='via')return CINE_PAUSAS[a.tipo];
   /* La estación i queda en el centro cuando el avance es (0,9·i + 0,54) / (0,9·(n−1) + 0,54): ver CINE_FX.via. */
@@ -159,7 +241,7 @@ function cineAbre(cid,modo){
   lamPara();if(lamModo&&lamEsE())lamLimpia();
   lamId=cid;lamModo=modo==='presentar'?'presentar':'explorar';lamPaso=0;lamDonde=LAM().actos[0].id;cineActo=-1;
   const L=LAM();
-  el.hidden=false;el.className='lam cine'+(lamModo==='presentar'?' cine-pres':'')+(cineQuieto()?' quieto':'');
+  el.hidden=false;el.className='lam cine'+(L.selector?' cine-con-selector':'')+(lamModo==='presentar'?' cine-pres':'')+(cineQuieto()?' quieto':'');
   el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',L.libro+' · '+L.titulo);
   document.body.classList.add('leyendo');
   el.innerHTML='<header class="cine-cab"><div class="cine-tit"><span>'+esc(L.libro)+' · cine</span><b>'+esc(L.titulo)+'</b></div><div class="cine-bots">'+
@@ -168,6 +250,7 @@ function cineAbre(cid,modo){
     (typeof meBoton==='function'?meBoton('lam-'+cid,true):'')+
     '<button type="button" class="cine-x" onclick="lamCierra()" aria-label="Cerrar">'+IC('x')+'</button></div></header>'+
     '<div class="cine-prog" aria-hidden="true"><i id="cineProg"></i></div>'+
+    (L.selector?'<div class="cine-selector"><label for="cineSelector">Ir a una escena</label><select id="cineSelector" onchange="cineElige(this.value)">'+L.actos.map((a,i)=>'<option value="'+i+'">'+esc((i+1)+' · '+a.corto)+'</option>').join('')+'</select></div>':'')+
     L.actos.map((a,i)=>'<section class="cine-acto c-'+a.tipo+'" data-i="'+i+'" style="--alto:'+a.alto+'" aria-label="'+esc(a.corto)+'"><div class="cine-esc">'+CINE_HTML[a.tipo](a,L)+'</div></section>').join('')+
     '<nav class="cine-nav" aria-label="Recorrer"><button type="button" onclick="cineSalto(-1)" aria-label="Anterior">'+IC('izq')+'</button>'+
     '<span id="cineDonde" aria-live="polite"></span><button type="button" class="sig" onclick="cineSalto(1)" aria-label="Siguiente">'+IC('der')+'</button></nav>';
@@ -190,6 +273,9 @@ function cinePinta(){
   });
   const tot=el.scrollHeight-vh;const pr=document.getElementById('cineProg');if(pr)pr.style.width=(tot>0?y/tot*100:0)+'%';
   if(act!==cineActo){cineActo=act;lamPaso=act;lamDonde=cineActos()[act].id;
+    const selector=document.getElementById('cineSelector');if(selector)selector.value=String(act);
+    const estudio=cineActos()[act].tipo==='estudio',prev=el.querySelector('.cine-nav button'),sig=el.querySelector('.cine-nav .sig');
+    if(prev)prev.disabled=estudio&&act===0;if(sig)sig.disabled=estudio&&act===secs.length-1;
     const d=document.getElementById('cineDonde');if(d)d.textContent=(act+1)+' de '+secs.length+' · '+cineActos()[act].corto;lamLugar();}
 }
 /* La posición de desplazamiento de una pausa (acto i, fracción f). */
@@ -199,6 +285,10 @@ function cineY(i,f){
 }
 function cineSalto(d){
   const el=document.getElementById('lam');if(!el)return;
+  if(cineActos()[cineActo]&&cineActos()[cineActo].tipo==='estudio'){
+    const n=cineActo+d,a=cineActos()[n];if(!a)return;
+    const ps=cinePausas(a);el.scrollTo({top:Math.round(cineY(n,ps[ps.length-1])),behavior:cineQuieto()?'auto':'smooth'});return;
+  }
   const ys=[];cineActos().forEach((a,i)=>cinePausas(a).forEach(f=>ys.push(Math.round(cineY(i,f)))));
   const y=el.scrollTop,dest=d>0?ys.find(v=>v>y+4):ys.slice().reverse().find(v=>v<y-4);
   el.scrollTo({top:dest===undefined?(d>0?el.scrollHeight:0):dest,behavior:cineQuieto()?'auto':'smooth'});
@@ -208,10 +298,12 @@ function cineIrNumero(n,intento){
   const el=document.getElementById('lam'),ps=cinePausas(a),s=el&&el.querySelectorAll('.cine-acto')[Number(n)];if(!s)return;
   /* Dentro de Jóvenes la hoja de estilos llega después de abrir (enlace o recarga): sin ella los
      actos aún no miden lo suyo y el salto quedaría corto. Se espera a que midan, hasta ~3 s. */
-  if(s.offsetHeight<el.clientHeight*1.5&&(intento||0)<180){requestAnimationFrame(()=>cineIrNumero(n,(intento||0)+1));return;}
+  const minAlto=a.tipo==='estudio'?Math.max(1,Number(a.alto)||1.4)*.9:1.5;
+  if(s.offsetHeight<el.clientHeight*minAlto&&(intento||0)<180){requestAnimationFrame(()=>cineIrNumero(n,(intento||0)+1));return;}
   el.scrollTop=Math.round(cineY(Number(n),ps[ps.length-1]));cinePinta();
 }
 function cineIr(k){const i=cineActos().findIndex(a=>a.id===k);if(i>=0)cineIrNumero(i);}
+function cineElige(valor){cineIrNumero(Number(valor));}
 function cineModo(){
   lamModo=lamModo==='presentar'?'explorar':'presentar';
   const el=document.getElementById('lam');el.classList.toggle('cine-pres',lamModo==='presentar');
@@ -229,6 +321,7 @@ function cineAlCerrar(){
 function cineTecla(e){
   const el=document.getElementById('lam');
   if(e.key==='Escape'){e.preventDefault();lamCierra();return;}
+  if(e.key!=='Tab'&&e.target.closest&&e.target.closest('.cine-estudio')){cineEstudioTecla(e);return;}
   if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(1);return;}
   if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(-1);return;}
   if(e.key==='Tab'){
