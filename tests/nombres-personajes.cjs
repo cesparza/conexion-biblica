@@ -21,7 +21,7 @@ assert.equal(uno('moises').nombres.formas[0].escritura,'מֹשֶׁה');
 assert.equal(uno('pablo').nombres.formas.find(f=>f.idioma==='hebreo').nombre,'Saulo');
 assert(uno('pablo').nombres.formas.some(f=>f.nombre==='Pablo'&&f.idioma==='griego'));
 assert(uno('persona-jesus').nombres.formas.some(f=>f.strong==='H3442'&&f.equivalenciaGriega==='G2424'));
-for(const id of ['antioco-ii','berenice','tolomeo-i','neron'])assert.equal(uno(id).nombres.formas.length,0,'no inventar hebreo para '+id);
+for(const id of PERSONAJES.filter(p=>p.tipo!=='biblico').map(p=>p.id))assert.equal(uno(id).nombres.formas.length,0,'no inventar hebreo para '+id);
 const joacim=normalizarNombre({id:'juda-joacim',nombre:'Eliaquim, llamado Joacim',alias:['Eliaquim','Joacim']},catalogo);
 assert.equal(joacim.nombre,'Joacim (Eliaquim)');assert(joacim.alias.includes('Eliaquim'));
 assert(joacim.nombres.formas.some(f=>f.nombre==='Joacim'));
