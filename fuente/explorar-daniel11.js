@@ -142,8 +142,8 @@ export const estilosDaniel11 = `
 .d11lab{--d11lab-bg:var(--c-noche,#090a10);--d11lab-fg:var(--c-perg,#f4eee2);--d11lab-muted:var(--c-tenue,#c9bda6);--d11lab-gold:var(--c-oro,#f2c46b);--d11lab-line:rgba(244,238,226,.2);color:var(--d11lab-fg);background:var(--d11lab-bg);border:1px solid var(--d11lab-line);border-radius:24px;padding:clamp(16px,3vw,30px);font:400 16px/1.6 var(--cine-sans,system-ui,sans-serif);overflow-wrap:anywhere;color-scheme:dark}
 .d11lab *{box-sizing:border-box}.d11lab h2,.d11lab h3,.d11lab p{margin:0}.d11lab h2{font:500 clamp(1.65rem,4vw,2.6rem)/1.15 var(--cine-serif,Georgia,serif);max-width:25ch}.d11lab h3{font:500 clamp(1.35rem,3vw,1.8rem)/1.2 var(--cine-serif,Georgia,serif)}
 .d11lab .d11lab-eyebrow{color:var(--d11lab-gold);font-size:.74rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.d11lab .d11lab-intro{color:var(--d11lab-muted);max-width:70ch;margin-top:12px}.d11lab .d11lab-nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}
-.d11lab button{appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab button[aria-pressed=true]{background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
-.d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.d11lab :where(button){appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab :where(button[aria-pressed=true]){background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
+.d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px;min-width:0}.d11lab-dinastias{min-width:0}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
 .d11lab .d11lab-visual{background:radial-gradient(ellipse at center,rgba(242,196,107,.09),transparent 75%);border:1px solid var(--d11lab-line);border-radius:18px;min-width:0;padding:12px}.d11lab svg{display:block;width:100%;height:auto;max-height:440px;overflow:visible}.d11lab svg text{font-family:var(--cine-sans,system-ui,sans-serif);fill:var(--d11lab-fg);font-size:18px}.d11lab svg .d11lab-small{font-size:15px;fill:var(--d11lab-muted)}
 .d11lab svg .d11lab-node{fill:#14151d;stroke:var(--d11lab-line);stroke-width:2}.d11lab svg .d11lab-on .d11lab-node{fill:rgba(242,196,107,.15);stroke:var(--d11lab-gold);stroke-width:3}.d11lab svg .d11lab-wire{fill:none;stroke:var(--d11lab-muted);stroke-width:3;stroke-linecap:round}.d11lab svg .d11lab-wire.d11lab-on{stroke:var(--d11lab-gold);stroke-width:5}.d11lab svg .d11lab-dim{opacity:.35}
 .d11lab svg.d11lab-map{max-height:none}.d11lab svg.d11lab-map text{font-size:22px}
@@ -226,25 +226,31 @@ export function montarDaniel11(root, opciones = {}) {
   const doc = root.ownerDocument || document;
   const host = doc.createElement('section');
   const id = 'd11lab-' + (++siguienteInstancia);
-  const estado = { actividad: 0, territorio: 1, alianza: 0, visiones: 0, escape: 0 };
+  const estado = { actividad: opciones.dinastias ? 4 : 0, territorio: 1, alianza: 0, visiones: 0, escape: 0 };
+  let retirarDinastias;
   const vistas = [territorio, alianza, visiones, escape];
   const claves = ['territorio', 'alianza', 'visiones', 'escape'];
   const nombres = ['Norte, Judea y sur', 'La alianza de Berenice', 'Cruzar las visiones', 'Personas que escapan'];
   host.className = 'd11lab';
   host.setAttribute('aria-label', 'Laboratorio de Daniel 11');
-  host.innerHTML = `${opciones.estilos === false ? '' : '<style>' + estilosDaniel11 + '</style>'}<header><p class="d11lab-eyebrow">Daniel 11 · Explorar para comprender</p><h2>Los reinos, el pacto y las personas</h2><p class="d11lab-intro">Cuatro exploraciones del contenido existente. Elige, compara y consulta la evidencia sin perder el hilo del pasaje.</p></header><nav class="d11lab-nav" aria-label="Exploraciones de Daniel 11">${nombres.map((nombre, i) => `<button type="button" data-d11lab-action="actividad" data-d11lab-value="${i}" aria-pressed="${i === 0}" aria-controls="${id}-body">${i + 1}. ${nombre}</button>`).join('')}</nav><div class="d11lab-body" id="${id}-body"></div>`;
+  const entradas = opciones.dinastias ? [[4, 'Árbol y dinastías'], ...nombres.map((n,i)=>[i,n])] : nombres.map((n,i)=>[i,n]);
+  host.innerHTML = `${opciones.estilos === false ? '' : '<style>' + estilosDaniel11 + '</style>'}<header><p class="d11lab-eyebrow">Daniel 11 · Explorar para comprender</p><h2>Los reinos, el pacto y las personas</h2><p class="d11lab-intro">Elige, compara y consulta la evidencia sin perder el hilo del pasaje.</p></header><nav class="d11lab-nav" aria-label="Exploraciones de Daniel 11">${entradas.map(([i,nombre]) => `<button type="button" data-d11lab-action="actividad" data-d11lab-value="${i}" aria-pressed="${i === estado.actividad}" aria-controls="${id}-body">${nombre}</button>`).join('')}</nav><div class="d11lab-body" id="${id}-body"></div>`;
   const cuerpo = host.querySelector('.d11lab-body');
   const pintar = () => {
+    retirarDinastias?.(); retirarDinastias = null;
     const clave = claves[estado.actividad];
-    cuerpo.innerHTML = vistas[estado.actividad](estado[clave], id);
-    host.querySelectorAll('[data-d11lab-action="actividad"]').forEach((b, i) => b.setAttribute('aria-pressed', String(i === estado.actividad)));
+    if (estado.actividad === 4) {
+      cuerpo.innerHTML = '<div class="d11lab-dinastias"></div>';
+      retirarDinastias = opciones.dinastias(cuerpo.firstElementChild);
+    } else cuerpo.innerHTML = vistas[estado.actividad](estado[clave], id);
+    host.querySelectorAll(':scope > nav [data-d11lab-action="actividad"]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.d11labValue) === estado.actividad)));
   };
   const elegir = event => {
     const boton = event.target.closest('button[data-d11lab-action]');
-    if (!boton || !host.contains(boton)) return;
+    if (!boton || !host.contains(boton) || boton.closest('.d11lab') !== host) return;
     const accion = boton.dataset.d11labAction;
     const valor = Number(boton.dataset.d11labValue);
-    const limites = { actividad: 4, territorio: 3, alianza: 3, visiones: 3, escape: 4 };
+    const limites = { actividad: opciones.dinastias ? 5 : 4, territorio: 3, alianza: 3, visiones: 3, escape: 4 };
     if (!Object.hasOwn(limites, accion) || !Number.isInteger(valor) || valor < 0 || valor >= limites[accion]) return;
     estado[accion] = valor;
     pintar();
@@ -254,6 +260,7 @@ export function montarDaniel11(root, opciones = {}) {
   pintar();
   root.append(host);
   return () => {
+    retirarDinastias?.();
     host.removeEventListener('click', elegir);
     host.remove();
   };

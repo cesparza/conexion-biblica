@@ -68,6 +68,7 @@ function cineEstudioFuentes(fuentes){
 }
 function cineEstudioRelaciones(a,i){
   let h='';
+  if(lamId==='d11'&&a.v&&a.v.de<=15&&a.v.hasta>=5)h+='<p><button type="button" class="cine-estudio-revela" onclick="cineExploraAbre()">Explorar el árbol de las dinastías</button></p>';
   if(a.mapa){
     const claves=['norte','centro','sur'],inicial=a.mapa.centro?'centro':claves.find(k=>a.mapa[k]);
     if(inicial)h+='<details class="cine-estudio-extra"><summary>Ubicar las relaciones</summary><p class="cine-estudio-ayuda">Esquema de relaciones, no mapa a escala.</p><div class="cine-estudio-mapa" role="group" aria-label="Relaciones entre los territorios">'+claves.map((k,n)=>a.mapa[k]?'<button type="button" aria-pressed="'+(k===inicial)+'" aria-controls="cineE-'+i+'-mapa" onclick="cineEstudioMapa('+i+','+n+')"><small>'+['Norte','Tierra de paso','Sur'][n]+'</small><span>'+esc(a.mapa[k].titulo)+'</span></button>':'').join('')+'</div><div id="cineE-'+i+'-mapa" class="cine-estudio-hallazgo" aria-live="polite"><h3>'+esc(a.mapa[inicial].titulo)+'</h3>'+cineEstudioTexto(a.mapa[inicial].texto)+'</div></details>';
@@ -281,7 +282,14 @@ function cineExploraAbre(){
   seccion.innerHTML='<header class="cine-explora-cab"><h2 id="cineExploraTitulo" tabindex="-1">Explorar y comparar</h2><button type="button" id="cineVolverRecorrido" onclick="cineExploraVuelve()">'+IC('izq')+' Volver al recorrido</button></header><div class="cine-explora-contenido"></div>';
   cineExploraEstado={scroll:el.scrollTop,foco:raiz.activeElement,seccion,limpia:null,personaFoco:null,eventos:new AbortController()};
   el.append(seccion);el.classList.add('cine-explorando');
-  cineExploraEstado.limpia=montar(seccion.querySelector('.cine-explora-contenido'),{estilos:false});
+  cineExploraEstado.limpia=montar(seccion.querySelector('.cine-explora-contenido'),{
+    estilos:false,
+    biografias:new Set(PERSONAJES.map(p=>p.id)),
+    onBiografia:(id,boton)=>{
+      const p=perPorId(id);if(!p||!cineExploraEstado)return;
+      cineExploraEstado.personaFoco=boton;lamPersona(p);
+    },
+  });
   cineExploraPersonas();
   cineExploraEstado.observador=new MutationObserver(cineExploraPersonas);
   cineExploraEstado.observador.observe(seccion,{childList:true,subtree:true,characterData:true});

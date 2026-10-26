@@ -6224,8 +6224,8 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .d11lab{--d11lab-bg:var(--c-noche,#090a10);--d11lab-fg:var(--c-perg,#f4eee2);--d11lab-muted:var(--c-tenue,#c9bda6);--d11lab-gold:var(--c-oro,#f2c46b);--d11lab-line:rgba(244,238,226,.2);color:var(--d11lab-fg);background:var(--d11lab-bg);border:1px solid var(--d11lab-line);border-radius:24px;padding:clamp(16px,3vw,30px);font:400 16px/1.6 var(--cine-sans,system-ui,sans-serif);overflow-wrap:anywhere;color-scheme:dark}
 .d11lab *{box-sizing:border-box}.d11lab h2,.d11lab h3,.d11lab p{margin:0}.d11lab h2{font:500 clamp(1.65rem,4vw,2.6rem)/1.15 var(--cine-serif,Georgia,serif);max-width:25ch}.d11lab h3{font:500 clamp(1.35rem,3vw,1.8rem)/1.2 var(--cine-serif,Georgia,serif)}
 .d11lab .d11lab-eyebrow{color:var(--d11lab-gold);font-size:.74rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.d11lab .d11lab-intro{color:var(--d11lab-muted);max-width:70ch;margin-top:12px}.d11lab .d11lab-nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}
-.d11lab button{appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab button[aria-pressed=true]{background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
-.d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.d11lab :where(button){appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab :where(button[aria-pressed=true]){background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
+.d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px;min-width:0}.d11lab-dinastias{min-width:0}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
 .d11lab .d11lab-visual{background:radial-gradient(ellipse at center,rgba(242,196,107,.09),transparent 75%);border:1px solid var(--d11lab-line);border-radius:18px;min-width:0;padding:12px}.d11lab svg{display:block;width:100%;height:auto;max-height:440px;overflow:visible}.d11lab svg text{font-family:var(--cine-sans,system-ui,sans-serif);fill:var(--d11lab-fg);font-size:18px}.d11lab svg .d11lab-small{font-size:15px;fill:var(--d11lab-muted)}
 .d11lab svg .d11lab-node{fill:#14151d;stroke:var(--d11lab-line);stroke-width:2}.d11lab svg .d11lab-on .d11lab-node{fill:rgba(242,196,107,.15);stroke:var(--d11lab-gold);stroke-width:3}.d11lab svg .d11lab-wire{fill:none;stroke:var(--d11lab-muted);stroke-width:3;stroke-linecap:round}.d11lab svg .d11lab-wire.d11lab-on{stroke:var(--d11lab-gold);stroke-width:5}.d11lab svg .d11lab-dim{opacity:.35}
 .d11lab svg.d11lab-map{max-height:none}.d11lab svg.d11lab-map text{font-size:22px}
@@ -6812,7 +6812,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '83129a223885';
+const VERSION_APP = '9e3335534a77';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -77863,7 +77863,7 @@ const PERSONAJES = [
     ]
    }
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "seleuco-ii",
@@ -77879,7 +77879,7 @@ const PERSONAJES = [
   "alias": [
    "Seleuco II"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "tolomeo-i",
@@ -77903,7 +77903,7 @@ const PERSONAJES = [
     ]
    }
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "tolomeo-ii",
@@ -77919,7 +77919,7 @@ const PERSONAJES = [
   "alias": [
    "Tolomeo II"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "tolomeo-iii",
@@ -77935,7 +77935,7 @@ const PERSONAJES = [
   "alias": [
    "Tolomeo III"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "tolomeo-iv",
@@ -77951,7 +77951,7 @@ const PERSONAJES = [
   "alias": [
    "Tolomeo IV"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 60–64; Christopher Bennett, <i>Ptolemy IV</i>, notas 2 y 17"
  },
  {
   "id": "tolomeo-v",
@@ -77968,7 +77968,7 @@ const PERSONAJES = [
    "Tolomeo V",
    "Ptolomeo V"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 60–64; Christopher Bennett, <i>Ptolemy IV</i>, notas 2 y 17"
  },
  {
   "id": "antioco-i",
@@ -77984,7 +77984,7 @@ const PERSONAJES = [
   "alias": [
    "Antíoco I"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "antioco-ii",
@@ -77994,7 +77994,7 @@ const PERSONAJES = [
   "quien": "Rey seléucida, «rey del norte».",
   "hizo": [
    "Se divorció de su esposa Laódice para casarse con Berenice, hija del rey del sur (Daniel 11:6).",
-   "Cuando murió Tolomeo II volvió con Laódice, que lo hizo matar junto con Berenice y su hijo."
+   "Murió en 246 a.C., en la crisis que también acabó con Berenice y el hijo de ambos. Los relatos antiguos atribuyen intrigas a Laodice; el supuesto envenenamiento no se presenta aquí como un hecho comprobado."
   ],
   "textos": "Daniel 11:6",
   "alias": [
@@ -78006,7 +78006,7 @@ const PERSONAJES = [
     ]
    }
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "antioco-iii",
@@ -78029,7 +78029,7 @@ const PERSONAJES = [
     ]
    }
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12; Bohr, <i>Las siete iglesias</i>, p. 115"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 60–64; Apiano, <i>Guerras sirias</i>, 66; Bohr, <i>Las siete iglesias</i>, p. 115"
  },
  {
   "id": "antioco-iv",
@@ -78066,13 +78066,13 @@ const PERSONAJES = [
   "quien": "Hija de Tolomeo II, rey del sur.",
   "hizo": [
    "Se casó con Antíoco II, rey del norte, para sellar la paz: «la hija del rey del sur» (Daniel 11:6).",
-   "El pacto fracasó: ella, su hijo y Antíoco fueron asesinados."
+   "El pacto fracasó: ella y su hijo murieron en la crisis sucesoria de 246 a.C. No debe confundirse a ese niño con Seleuco II, hijo de Antíoco II y Laodice."
   ],
   "textos": "Daniel 11:6",
   "alias": [
    "Berenice"
   ],
-  "fuente": "Bohr, <i>Daniel 11</i>, p. 5-12"
+  "fuente": "Treiyer, <i>Enigmas descifrados</i>, pp. 57–60; Apiano, <i>Guerras sirias</i>, 65–66"
  },
  {
   "id": "onias-iii",
@@ -78114,7 +78114,7 @@ const PERSONAJES = [
   "quien": "Primera esposa de Antíoco II Teos, rey del norte.",
   "hizo": [
    "Antíoco II la repudió para casarse con Berenice, «la hija del rey del sur» (Daniel 11:6).",
-   "Fingió reconciliarse con él y lo envenenó. Después murieron Berenice y su hijo (246 a.C.).",
+   "La muerte de Antíoco II en 246 a.C. abrió una disputa por la sucesión. Los relatos antiguos le atribuyen un envenenamiento, pero sus detalles no deben tratarse como certezas; Berenice y su hijo murieron en esa crisis.",
    "Su hijo Seleuco II Calínico subió al trono."
   ],
   "textos": "Daniel 11:6",
@@ -92279,6 +92279,7 @@ d9: (() => {
   return montarDaniel9;
 })(),
 d11: (() => {
+  const montarDaniel11 = (() => {
   /* Las selecciones exploran contenido; no registran avance. */
   let siguienteInstancia = 0;
 
@@ -92423,8 +92424,8 @@ d11: (() => {
   .d11lab{--d11lab-bg:var(--c-noche,#090a10);--d11lab-fg:var(--c-perg,#f4eee2);--d11lab-muted:var(--c-tenue,#c9bda6);--d11lab-gold:var(--c-oro,#f2c46b);--d11lab-line:rgba(244,238,226,.2);color:var(--d11lab-fg);background:var(--d11lab-bg);border:1px solid var(--d11lab-line);border-radius:24px;padding:clamp(16px,3vw,30px);font:400 16px/1.6 var(--cine-sans,system-ui,sans-serif);overflow-wrap:anywhere;color-scheme:dark}
   .d11lab *{box-sizing:border-box}.d11lab h2,.d11lab h3,.d11lab p{margin:0}.d11lab h2{font:500 clamp(1.65rem,4vw,2.6rem)/1.15 var(--cine-serif,Georgia,serif);max-width:25ch}.d11lab h3{font:500 clamp(1.35rem,3vw,1.8rem)/1.2 var(--cine-serif,Georgia,serif)}
   .d11lab .d11lab-eyebrow{color:var(--d11lab-gold);font-size:.74rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.d11lab .d11lab-intro{color:var(--d11lab-muted);max-width:70ch;margin-top:12px}.d11lab .d11lab-nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}
-  .d11lab button{appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab button[aria-pressed=true]{background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
-  .d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+  .d11lab :where(button){appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab :where(button[aria-pressed=true]){background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
+  .d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px;min-width:0}.d11lab-dinastias{min-width:0}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
   .d11lab .d11lab-visual{background:radial-gradient(ellipse at center,rgba(242,196,107,.09),transparent 75%);border:1px solid var(--d11lab-line);border-radius:18px;min-width:0;padding:12px}.d11lab svg{display:block;width:100%;height:auto;max-height:440px;overflow:visible}.d11lab svg text{font-family:var(--cine-sans,system-ui,sans-serif);fill:var(--d11lab-fg);font-size:18px}.d11lab svg .d11lab-small{font-size:15px;fill:var(--d11lab-muted)}
   .d11lab svg .d11lab-node{fill:#14151d;stroke:var(--d11lab-line);stroke-width:2}.d11lab svg .d11lab-on .d11lab-node{fill:rgba(242,196,107,.15);stroke:var(--d11lab-gold);stroke-width:3}.d11lab svg .d11lab-wire{fill:none;stroke:var(--d11lab-muted);stroke-width:3;stroke-linecap:round}.d11lab svg .d11lab-wire.d11lab-on{stroke:var(--d11lab-gold);stroke-width:5}.d11lab svg .d11lab-dim{opacity:.35}
   .d11lab svg.d11lab-map{max-height:none}.d11lab svg.d11lab-map text{font-size:22px}
@@ -92507,25 +92508,31 @@ d11: (() => {
     const doc = root.ownerDocument || document;
     const host = doc.createElement('section');
     const id = 'd11lab-' + (++siguienteInstancia);
-    const estado = { actividad: 0, territorio: 1, alianza: 0, visiones: 0, escape: 0 };
+    const estado = { actividad: opciones.dinastias ? 4 : 0, territorio: 1, alianza: 0, visiones: 0, escape: 0 };
+    let retirarDinastias;
     const vistas = [territorio, alianza, visiones, escape];
     const claves = ['territorio', 'alianza', 'visiones', 'escape'];
     const nombres = ['Norte, Judea y sur', 'La alianza de Berenice', 'Cruzar las visiones', 'Personas que escapan'];
     host.className = 'd11lab';
     host.setAttribute('aria-label', 'Laboratorio de Daniel 11');
-    host.innerHTML = `${opciones.estilos === false ? '' : '<style>' + estilosDaniel11 + '</style>'}<header><p class="d11lab-eyebrow">Daniel 11 · Explorar para comprender</p><h2>Los reinos, el pacto y las personas</h2><p class="d11lab-intro">Cuatro exploraciones del contenido existente. Elige, compara y consulta la evidencia sin perder el hilo del pasaje.</p></header><nav class="d11lab-nav" aria-label="Exploraciones de Daniel 11">${nombres.map((nombre, i) => `<button type="button" data-d11lab-action="actividad" data-d11lab-value="${i}" aria-pressed="${i === 0}" aria-controls="${id}-body">${i + 1}. ${nombre}</button>`).join('')}</nav><div class="d11lab-body" id="${id}-body"></div>`;
+    const entradas = opciones.dinastias ? [[4, 'Árbol y dinastías'], ...nombres.map((n,i)=>[i,n])] : nombres.map((n,i)=>[i,n]);
+    host.innerHTML = `${opciones.estilos === false ? '' : '<style>' + estilosDaniel11 + '</style>'}<header><p class="d11lab-eyebrow">Daniel 11 · Explorar para comprender</p><h2>Los reinos, el pacto y las personas</h2><p class="d11lab-intro">Elige, compara y consulta la evidencia sin perder el hilo del pasaje.</p></header><nav class="d11lab-nav" aria-label="Exploraciones de Daniel 11">${entradas.map(([i,nombre]) => `<button type="button" data-d11lab-action="actividad" data-d11lab-value="${i}" aria-pressed="${i === estado.actividad}" aria-controls="${id}-body">${nombre}</button>`).join('')}</nav><div class="d11lab-body" id="${id}-body"></div>`;
     const cuerpo = host.querySelector('.d11lab-body');
     const pintar = () => {
+      retirarDinastias?.(); retirarDinastias = null;
       const clave = claves[estado.actividad];
-      cuerpo.innerHTML = vistas[estado.actividad](estado[clave], id);
-      host.querySelectorAll('[data-d11lab-action="actividad"]').forEach((b, i) => b.setAttribute('aria-pressed', String(i === estado.actividad)));
+      if (estado.actividad === 4) {
+        cuerpo.innerHTML = '<div class="d11lab-dinastias"></div>';
+        retirarDinastias = opciones.dinastias(cuerpo.firstElementChild);
+      } else cuerpo.innerHTML = vistas[estado.actividad](estado[clave], id);
+      host.querySelectorAll(':scope > nav [data-d11lab-action="actividad"]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.d11labValue) === estado.actividad)));
     };
     const elegir = event => {
       const boton = event.target.closest('button[data-d11lab-action]');
-      if (!boton || !host.contains(boton)) return;
+      if (!boton || !host.contains(boton) || boton.closest('.d11lab') !== host) return;
       const accion = boton.dataset.d11labAction;
       const valor = Number(boton.dataset.d11labValue);
-      const limites = { actividad: 4, territorio: 3, alianza: 3, visiones: 3, escape: 4 };
+      const limites = { actividad: opciones.dinastias ? 5 : 4, territorio: 3, alianza: 3, visiones: 3, escape: 4 };
       if (!Object.hasOwn(limites, accion) || !Number.isInteger(valor) || valor < 0 || valor >= limites[accion]) return;
       estado[accion] = valor;
       pintar();
@@ -92535,11 +92542,175 @@ d11: (() => {
     pintar();
     root.append(host);
     return () => {
+      retirarDinastias?.();
       host.removeEventListener('click', elegir);
       host.remove();
     };
   }
   return montarDaniel11;
+  })();
+  const montarDinastias = (() => {
+  /* Selective family links for Daniel 11:5–15. Political succession is separate. */
+  const FUENTES_DINASTIAS = {
+    biblia:{titulo:'Daniel 11:5–15 · RV1995',url:'https://www.biblegateway.com/passage/?search=Daniel%2011%3A5-15&version=RVR1995'},
+    treiyer:{titulo:'Humberto R. Treiyer, Enigmas descifrados, 2006, 3.ª impresión 2007, pp. 57–64'},
+    apiano:{titulo:'Apiano, Guerras sirias, 66 · traducción de Horace White',url:'https://www.livius.org/sources/content/appian/appian-the-syrian-wars/appian-the-syrian-wars-14/'},
+    apiano65:{titulo:'Apiano, Guerras sirias, 65 · matrimonios y crisis dinástica',url:'https://www.livius.org/sources/content/appian/appian-the-syrian-wars/appian-the-syrian-wars-13/'},
+    eusebio:{titulo:'Eusebio, Crónica, libro I, pp. 161–163 · sucesión tolemaica',url:'https://www.attalus.org/translate/eusebius1.html'},
+    polibio:{titulo:'Polibio, Historias, 2.71.2; 15.25 · filiación de Tolomeo IV y sucesión de Tolomeo V',url:'https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0234%3Abook%3D15%3Achapter%3D25'},
+    bennett:{titulo:'Christopher Bennett, Ptolemy IV, notas 2 y 17 · documentos y testimonios antiguos',url:'https://www.trismegistos.org/calendar/bennett/ptolemies/ptolemy_iv.htm'},
+  };
+  const p=(id,nombre,corto,casa,resumen,fuentes)=>({id,nombre,corto,casa,resumen,fuentes});
+  const PERSONAS_DINASTIAS = [
+    p('tolomeo-i','Tolomeo I Sóter','Tolomeo I','sur','General de Alejandro. Estableció en Egipto la casa de los Tolomeos. Su antigua colaboración con Seleuco dio paso a dos poderes rivales.',['treiyer']),
+    p('tolomeo-ii','Tolomeo II Filadelfo','Tolomeo II','sur','Hijo de Tolomeo I y padre de Berenice y Tolomeo III. La unión de su hija con Antíoco II buscó asegurar la paz entre las dos cortes.',['treiyer','eusebio']),
+    p('tolomeo-iii','Tolomeo III Evérgetes','Tolomeo III','sur','Hijo de Tolomeo II y hermano de Berenice. Su campaña contra el norte continúa el conflicto después del fracaso de la alianza matrimonial.',['treiyer','apiano65']),
+    p('tolomeo-iv','Tolomeo IV Filopátor','Tolomeo IV','sur','Hijo de Tolomeo III. Combatió contra Antíoco III y venció en Rafia, en 217 a. C. Esa victoria no puso fin a la rivalidad.',['polibio','bennett','treiyer']),
+    p('tolomeo-v','Tolomeo V Epífanes','Tolomeo V','sur','Hijo de Tolomeo IV. Durante su minoría de edad, Antíoco III volvió a disputar el dominio de la región situada entre Egipto y Siria.',['polibio','bennett','treiyer']),
+    p('seleuco-i','Seleuco I Nicátor','Seleuco I','norte','General de Alejandro y fundador de la casa seléucida. Su reino abarcó Siria y extensas regiones orientales. No era hijo de Tolomeo I.',['treiyer']),
+    p('antioco-i','Antíoco I Sóter','Antíoco I','norte','Hijo de Seleuco I. Une al fundador de la dinastía con Antíoco II, el rey que se casó con Berenice.',['treiyer','apiano65']),
+    p('antioco-ii','Antíoco II Teos','Antíoco II','norte','Hijo de Antíoco I. Tuvo hijos con Laodice y con Berenice. Los dos matrimonios ayudan a entender la disputa por la sucesión.',['treiyer','apiano65']),
+    p('laodice','Laodice I','Laodice I','norte','Esposa de Antíoco II y madre de Seleuco II. La alianza con Berenice desplazó su posición y abrió una rivalidad entre las ramas familiares. El árbol no la presenta como hermana de Antíoco: ese vínculo no se establece aquí.',['apiano65','treiyer']),
+    p('berenice','Berenice','Berenice','sur','Hija de Tolomeo II, hermana de Tolomeo III y esposa de Antíoco II. Su hijo pertenecía a ambas casas. Ella y el niño murieron en la crisis de 246 a. C.',['treiyer','apiano65']),
+    p('hijo-berenice','Hijo de Berenice y Antíoco II','Hijo de Berenice','ambas','Niño de la unión entre las dos casas. Murió en la crisis sucesoria de 246 a. C. No es Seleuco II: este era hijo de Laodice. El esquema evita confundir a los dos hijos.',['treiyer','apiano65']),
+    p('seleuco-ii','Seleuco II Calínico','Seleuco II','norte','Hijo de Antíoco II y Laodice I. Accedió al trono en la crisis de 246 a. C. y se enfrentó a Tolomeo III.',['treiyer','apiano65']),
+    p('seleuco-iii','Seleuco III Cerauno','Seleuco III','norte','Hijo de Seleuco II y hermano de Antíoco III. Reinó antes que su hermano. La sucesión entre ellos no es una relación de padre e hijo.',['apiano','treiyer']),
+    p('antioco-iii','Antíoco III el Grande','Antíoco III','norte','Hijo de Seleuco II y hermano de Seleuco III. Combatió contra Tolomeo IV y después contra el poder egipcio de Tolomeo V.',['apiano','treiyer']),
+  ];
+  const r=(desde,hasta,tipo,fuentes)=>({desde,hasta,tipo,fuentes});
+  const VINCULOS_DINASTIAS = [
+    r('tolomeo-i','tolomeo-ii','filiacion',['treiyer','eusebio']),r('tolomeo-ii','tolomeo-iii','filiacion',['treiyer','apiano65']),
+    r('tolomeo-ii','berenice','filiacion',['treiyer','apiano65']),r('tolomeo-iii','tolomeo-iv','filiacion',['polibio','bennett']),
+    r('tolomeo-iv','tolomeo-v','filiacion',['polibio','bennett']),r('seleuco-i','antioco-i','filiacion',['treiyer','apiano65']),
+    r('antioco-i','antioco-ii','filiacion',['treiyer','apiano65']),r('antioco-ii','seleuco-ii','filiacion',['apiano']),
+    r('laodice','seleuco-ii','filiacion',['apiano']),r('antioco-ii','hijo-berenice','filiacion',['treiyer','apiano65']),
+    r('berenice','hijo-berenice','filiacion',['treiyer','apiano65']),r('seleuco-ii','seleuco-iii','filiacion',['apiano']),
+    r('seleuco-ii','antioco-iii','filiacion',['apiano']),r('berenice','antioco-ii','matrimonio',['treiyer','apiano65']),
+    r('laodice','antioco-ii','matrimonio',['treiyer','apiano65']),
+  ];
+  const ETAPAS_DINASTIAS = [
+    {id:'origen',titulo:'Dos casas reales',fecha:'Después de Alejandro',ref:'Daniel 11:5',sur:'tolomeo-i',norte:'seleuco-i',
+      texto:'Dos antiguos generales establecen casas distintas. «Norte» y «sur» ubican los poderes respecto de Judea; no son los nombres de dos personas que vivieron durante todo el capítulo.',foco:'tolomeo-i'},
+    {id:'alianza',titulo:'La alianza matrimonial',fecha:'Hacia 253–252 a. C.',ref:'Daniel 11:6',sur:'tolomeo-ii',norte:'antioco-ii',
+      texto:'Berenice, hija del rey egipcio, se une a Antíoco II. Su hermano Tolomeo III y el hijo de Laodice, Seleuco II, pertenecen a ramas diferentes. El matrimonio intenta resolver una rivalidad política.',foco:'berenice'},
+    {id:'ruptura',titulo:'La paz se rompe',fecha:'246 a. C.',ref:'Daniel 11:6–9',sur:'tolomeo-iii',norte:'seleuco-ii',
+      texto:'La muerte de Berenice y su hijo destruye la garantía familiar del acuerdo. Su hermano Tolomeo III interviene contra el reino de Seleuco II. Los detalles de las intrigas varían entre testimonios: el árbol no convierte el supuesto envenenamiento en certeza.',foco:'berenice'},
+    {id:'rafia',titulo:'Rafia',fecha:'217 a. C.',ref:'Daniel 11:10–12',sur:'tolomeo-iv',norte:'antioco-iii',
+      texto:'Los protagonistas han cambiado. Tolomeo IV vence a Antíoco III en Rafia. Antes de Antíoco III reinó su hermano Seleuco III: ambos eran hijos de Seleuco II.',foco:'antioco-iii'},
+    {id:'retorno',titulo:'El norte vuelve',fecha:'Comienzos del siglo II a. C.',ref:'Daniel 11:13–15',sur:'tolomeo-v',norte:'antioco-iii',
+      texto:'Antíoco III vuelve a combatir cuando Egipto está bajo el joven Tolomeo V. La disputa afecta a las ciudades y tierras situadas entre ambas potencias. El esquema termina en este tramo; no prolonga la genealogía hacia Roma ni hacia acontecimientos futuros.',foco:'tolomeo-v'},
+  ];
+  function familiaDinastica(id){
+    if(!PERSONAS_DINASTIAS.some(p=>p.id===id))throw new RangeError('Personaje no reconocido.');
+    return {padres:VINCULOS_DINASTIAS.filter(v=>v.tipo==='filiacion'&&v.hasta===id).map(v=>v.desde),
+      parejas:VINCULOS_DINASTIAS.filter(v=>v.tipo==='matrimonio'&&(v.desde===id||v.hasta===id)).map(v=>v.desde===id?v.hasta:v.desde),
+      hijos:VINCULOS_DINASTIAS.filter(v=>v.tipo==='filiacion'&&v.desde===id).map(v=>v.hasta)};
+  }
+
+  /** Returns only the children documented for the selected couple. */
+  function hogarDinastico(id,pareja){
+    const f=familiaDinastica(id);
+    if(pareja&&!f.parejas.includes(pareja))throw new RangeError('Matrimonio no documentado.');
+    return {...f,hijos:f.hijos.filter(h=>!pareja||familiaDinastica(h).padres.includes(pareja))};
+  }
+  const PERSONAS=PERSONAS_DINASTIAS,VINCULOS=VINCULOS_DINASTIAS,ETAPAS=ETAPAS_DINASTIAS,FUENTES=FUENTES_DINASTIAS;
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const persona=id=>PERSONAS.find(p=>p.id===id);
+  const vinculoTexto=v=>{const a=persona(v.desde),b=persona(v.hasta);if(v.tipo==='matrimonio')return a.nombre+' contrajo matrimonio con '+b.nombre+'.';const mujer=['berenice','laodice'].includes(a.id);return a.nombre+' es '+(mujer?'madre':'padre')+(b.id==='hijo-berenice'?' del niño de Berenice y Antíoco II':' de '+b.nombre)+'.';};
+  const casa=p=>p.casa==='sur'?'Casa de Egipto':p.casa==='norte'?'Casa seléucida':'Ambas casas';
+  const POSICIONES={
+   'tolomeo-i':[25,60],'tolomeo-ii':[25,215],'tolomeo-iii':[25,525],'tolomeo-iv':[25,680],'tolomeo-v':[25,835],
+   'seleuco-i':[610,60],'antioco-i':[610,215],'antioco-ii':[610,370],'laodice':[850,370],
+   'berenice':[290,370],'hijo-berenice':[450,525],'seleuco-ii':[730,525],'seleuco-iii':[610,680],'antioco-iii':[850,680],
+  };
+  const estilosDinastias=`
+  .d11dyn{--dy-bg:#09080d;--dy-panel:#131116;--dy-fg:#f4eee2;--dy-muted:#c9bda6;--dy-line:#4b443b;--dy-gold:#f2c46b;--dy-south:#91c6bc;--dy-north:#f2c46b;background:var(--dy-bg);color:var(--dy-fg);font:400 16px/1.6 Geist,system-ui,sans-serif;padding:clamp(18px,3vw,32px);overflow-wrap:anywhere;container-type:inline-size}
+  .d11dyn *{box-sizing:border-box}.d11dyn [hidden]{display:none!important}.d11dyn h2,.d11dyn h3,.d11dyn p{margin:0}.d11dyn h2{font:500 clamp(24px,3.3vw,34px)/1.2 Lora,Georgia,serif}.d11dyn h3{font:500 24px/1.25 Lora,Georgia,serif}
+  .d11dyn button,.d11dyn select{font:inherit;color:inherit;min-height:44px}.d11dyn button{cursor:pointer}.d11dyn button:focus-visible,.d11dyn a:focus-visible,.d11dyn summary:focus-visible{outline:3px solid var(--dy-gold);outline-offset:3px}.d11dyn a{color:var(--dy-gold);text-underline-offset:3px}
+  .dy-kicker{font-size:11px;color:var(--dy-gold);text-transform:uppercase;letter-spacing:.13em;font-weight:750}.dy-intro{max-width:76ch;color:var(--dy-muted);font-size:14px;margin-top:12px!important}
+  .dy-steps{display:flex;gap:6px;overflow:auto;margin:24px 0 18px;padding:4px 3px 8px}.dy-steps button{min-width:135px;flex:1;background:none;border:0;border-bottom:2px solid var(--dy-line);padding:10px 9px;text-align:left;font-size:12px}.dy-steps small{display:block;color:var(--dy-muted);font-size:10px}.dy-steps button[aria-pressed=true]{color:var(--dy-gold);border-color:var(--dy-gold)}
+  .dy-period{padding:18px 0;border-bottom:1px solid var(--dy-line);margin-bottom:22px}.dy-period-head{display:flex;gap:12px;justify-content:space-between;align-items:start;flex-wrap:wrap}.dy-ref{font-size:12px;color:var(--dy-gold)}.dy-period>p{max-width:90ch;font-size:14px;color:var(--dy-muted);margin-top:12px}.dy-rivals{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:12px}.dy-rivals span{padding:6px 10px;border-left:3px solid var(--dy-south);background:#91c6bc0d}.dy-rivals span+span{border-color:var(--dy-north);background:#f2c46b0d}
+  .dy-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}.dy-modes{display:flex;gap:4px;flex-wrap:wrap}.dy-modes button,.dy-quiet{background:none;border:1px solid var(--dy-line);border-radius:8px;padding:9px 12px;font-size:12px}.dy-modes button[aria-pressed=true]{background:var(--dy-gold);color:#21170a;border-color:var(--dy-gold)}.dy-tools label{font-size:12px;color:var(--dy-muted)}.dy-tools select{background:var(--dy-panel);border:1px solid var(--dy-line);padding:7px;border-radius:7px;max-width:220px}
+  .dy-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:26px;align-items:start}.dy-stage{min-width:0}.dy-content.dy-wide{grid-template-columns:1fr}.dy-wide .dy-side{position:static;border-left:0;border-top:1px solid var(--dy-line);padding:22px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:30px}.dy-side{border-left:1px solid var(--dy-line);padding-left:24px;position:sticky;top:16px;min-width:0}.dy-detail{display:grid;gap:13px;min-width:0}.dy-period{padding:0 0 19px;margin-bottom:20px}.dy-period h3{font-size:22px}.dy-period-head{gap:8px}.dy-period>p{font-size:13px}.dy-detail>p{font-size:14px;color:var(--dy-muted)}.dy-detail h3{font-size:26px}.dy-detail ul{padding-left:18px;font-size:13px;margin:0;display:grid;gap:8px}.dy-source{border-top:1px solid var(--dy-line);padding-top:12px}.dy-source summary{cursor:pointer;min-height:44px;font-size:12px;color:var(--dy-gold)}.dy-source ul{font-size:12px;gap:10px}
+  .dy-person{border:1px solid var(--dy-line);border-top:3px solid var(--dy-south);border-radius:9px;background:var(--dy-panel);padding:14px 10px;text-align:left;display:grid;align-content:center;gap:3px;min-width:0;width:100%;line-height:1.25}.dy-person[data-house=norte]{border-top-color:var(--dy-north)}.dy-person[data-house=ambas]{border-top-color:#dcaeac}.dy-person small{color:var(--dy-muted);font-size:10px}.dy-person b{font-size:14px;font-weight:650}.dy-person[aria-pressed=true]{box-shadow:0 0 0 2px var(--dy-gold);border-color:var(--dy-gold)}
+  .dy-family{padding:20px 12px;border:1px solid var(--dy-line);border-radius:12px}.dy-family-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dy-muted);text-align:center;margin:0 0 12px!important}.dy-generation{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.dy-generation .dy-person{width:min(200px,calc(50% - 6px));min-height:88px}.dy-stem{height:32px;width:1px;background:var(--dy-line);margin:0 auto}.dy-union{display:grid;width:min(100%,452px);margin:auto;grid-template-columns:repeat(2,minmax(0,1fr));justify-content:center;align-items:center;gap:12px;position:relative;padding:22px 0 13px}.dy-union::after{content:"";position:absolute;bottom:0;left:25%;right:25%;border-bottom:1px dashed var(--dy-gold)}.dy-ancestors.side{width:calc((min(100%,452px) - 12px)/2);margin-left:max(0px,calc((100% - 452px)/2))}.dy-ancestors.side .dy-stem{height:54px;margin-bottom:-22px}.dy-ancestors.side .dy-person{width:100%;max-width:200px}.dy-households{justify-content:center;margin-bottom:16px}.dy-union>span{position:absolute;top:0;left:0;right:0;text-align:center;font-size:11px;color:var(--dy-gold)}.dy-union .dy-person{width:100%;min-height:98px;position:relative}.dy-union .dy-person::after{content:"";position:absolute;width:1px;height:13px;bottom:-13px;left:50%;background:var(--dy-gold)}.dy-focus-name{font-size:13px;color:var(--dy-gold);text-align:center;margin-bottom:15px!important}.dy-empty{font-size:13px;color:var(--dy-muted);text-align:center}.dy-caption{font-size:12px;color:var(--dy-muted);margin-top:13px!important}
+  .dy-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--dy-muted);margin:14px 0}.dy-legend span{display:flex;gap:6px;align-items:center}.dy-legend i{width:24px;height:0;border-top:2px solid var(--dy-muted)}.dy-legend .dy-marriage{border-top:2px dashed var(--dy-gold)}
+  .dy-overview{overflow-x:auto;overflow-y:hidden;border:1px solid var(--dy-line);border-radius:12px;scrollbar-width:thin;scrollbar-color:#8c7b60 #17141b}.dy-board{position:relative;width:1060px;height:960px;background:var(--dy-bg)}.dy-board svg{max-height:none;position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.dy-board path{fill:none;stroke:var(--dy-muted);stroke-width:2;stroke-linejoin:round}.dy-board .dy-marriage{stroke:var(--dy-gold);stroke-dasharray:6 5}.dy-board .dy-person{position:absolute;width:180px;height:90px;left:var(--dx);top:var(--dy)}.dy-board .dy-house-title{position:absolute;top:14px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dy-south)}.dy-board .dy-house-title.north{left:610px;color:var(--dy-north)}.dy-board .dy-house-title.south{left:25px}
+  .dy-map-host .d11lab>header,.dy-map-host .d11lab>nav,.dy-map-host .d11lab-body>.d11lab-head{display:none}.dy-map-host .d11lab{padding:0;border:0;background:transparent}.dy-map-host .d11lab-work{grid-template-columns:1fr}.dy-map-host .d11lab-visual{padding:0;border:0;background:none;max-width:480px;margin:auto}.dy-map-host .d11lab-visual svg{max-height:480px}.dy-map-host .d11lab-work>div+div .d11lab-detail{display:none}.dy-map-host .d11lab-controls{justify-content:center;margin:0}.dy-map-host .d11lab-controls button{font-size:12px}.dy-map-host .d11lab-sources{font-size:12px}.dy-map-host .d11lab-caption{font-size:11px}
+  .dy-list{display:grid;gap:16px}.dy-list section{border-bottom:1px solid var(--dy-line);padding-bottom:14px}.dy-list h3{font-size:21px;margin-bottom:12px}.dy-list .dy-person{max-width:300px}.dy-list ul{font-size:13px;color:var(--dy-muted);padding-left:20px}.dy-foot{border-top:1px solid var(--dy-line);margin-top:24px;padding-top:16px;font-size:12px;color:var(--dy-muted)}
+  @container(max-width:850px){.dy-wide .dy-side{grid-template-columns:1fr}.dy-content{grid-template-columns:1fr}.dy-side{position:static;border-left:0;border-top:1px solid var(--dy-line);padding:22px 0 0}.dy-tools select{font-size:16px}.dy-union .dy-person{padding:12px 9px}.dy-union .dy-person b{font-size:13px}.dy-union>span{font-size:10px}.dy-steps button{min-width:128px}.dy-period h3{font-size:22px}}
+  @media(prefers-reduced-motion:reduce){.d11dyn *{scroll-behavior:auto!important}}
+  `;
+  function montarDinastias(root,{vista='familia',biografias=new Set(),onBiografia}={}){
+   const state={vista,etapa:1,foco:'berenice',persona:'berenice',pareja:null};let retirarMapa;
+   root.classList.add('d11dyn');root.innerHTML='<style>'+estilosDinastias+'</style><header><p class="dy-kicker">Daniel 11:5–15 · Apoyo visual</p><h2>Dos dinastías, muchas personas.</h2><p class="dy-intro">Una dinastía es una familia que conserva el poder durante varias generaciones. Explora los nombres y sus vínculos.</p></header><nav class="dy-steps" aria-label="Etapas del conflicto"></nav><div class="dy-tools"><div class="dy-modes" aria-label="Consultar las dinastías"></div><label>Buscar por nombre <select aria-label="Buscar un personaje"></select></label></div><div class="dy-content"><div class="dy-stage"></div><aside class="dy-side"><section class="dy-period" aria-live="polite"></section><div class="dy-detail" aria-live="polite"></div></aside></div><footer class="dy-foot">14 protagonistas y 15 vínculos seleccionados, con fuentes. No es la genealogía completa de ambos reinos. Las filas muestran parentescos, no años ni contemporaneidad. La sucesión política se explica en cada etapa.</footer>';
+   const $=s=>root.querySelector(s);
+   const card=id=>{const p=persona(id);return '<button type="button" class="dy-person" data-person="'+id+'" data-house="'+p.casa+'" aria-pressed="'+(state.persona===id)+'"><small>'+casa(p)+'</small><b>'+esc(p.corto)+'</b></button>';};
+   const sourceList=keys=>'<ul>'+[...new Set(keys)].map(k=>{const f=FUENTES[k];return '<li>'+(f.url?'<a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.titulo)+'</a>':esc(f.titulo))+'</li>';}).join('')+'</ul>';
+   const relations=id=>VINCULOS.filter(v=>v.desde===id||v.hasta===id);
+   function detalle(){
+    const p=persona(state.persona),v=relations(p.id);
+    $('.dy-detail').innerHTML='<p class="dy-kicker">'+casa(p)+'</p><h3>'+esc(p.nombre)+'</h3><p>'+esc(p.resumen)+'</p><button class="dy-quiet" data-family="'+p.id+'">Centrar su familia</button>'+(biografias.has(p.id)?'<button class="dy-quiet" '+(onBiografia?'data-biography="'+p.id+'"':'data-reyes-persona="cb-'+p.id+'"')+'>Leer biografía</button>':'')+'<ul>'+v.map(x=>'<li>'+esc(vinculoTexto(x))+'</li>').join('')+'</ul><details class="dy-source"><summary>Fuentes de la persona y sus vínculos</summary>'+sourceList(['biblia',...p.fuentes,...v.flatMap(x=>x.fuentes)])+'</details><p class="dy-caption">El hijo de Berenice y Seleuco II son personas distintas: tenían madres diferentes.</p>';
+    root.querySelectorAll('[data-person]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.person===p.id)));
+    $('select').value=p.id;
+   }
+   function familia(){
+    const f=familiaDinastica(state.foco),p=persona(state.foco);
+    const pareja=f.parejas.includes(state.pareja)?state.pareja:f.parejas[0];
+    const hijos=hogarDinastico(p.id,pareja).hijos;
+    const elegir=f.parejas.length>1?'<div class="dy-modes dy-households" aria-label="Matrimonio que se consulta">'+f.parejas.map(id=>'<button data-household="'+id+'" aria-pressed="'+(id===pareja)+'">Con '+esc(persona(id).corto)+'</button>').join('')+'</div>':'';
+    return '<div class="dy-family"><p class="dy-focus-name">La familia de '+esc(p.nombre)+'</p>'+elegir+
+     (f.padres.length?'<div class="dy-ancestors'+(pareja?' side':'')+'"><p class="dy-family-label">Progenitores de '+esc(p.corto)+'</p><div class="dy-generation">'+f.padres.map(card).join('')+'</div><div class="dy-stem"></div></div>':'<p class="dy-empty">No se amplía su ascendencia en este esquema.</p>')+
+     (pareja?'<div class="dy-union">'+card(p.id)+'<span>Matrimonio</span>'+card(pareja)+'</div>':'<div class="dy-generation">'+card(p.id)+'</div>')+
+     (hijos.length?'<div class="dy-stem"></div><p class="dy-family-label">'+(pareja?'Hijos de esta unión':'Descendientes documentados')+'</p><div class="dy-generation">'+hijos.map(card).join('')+'</div>':'')+
+     (f.parejas.length>1?'<p class="dy-caption">Cambia de matrimonio para consultar los hijos de cada unión.</p>':'')+'</div><p class="dy-caption">Toca un nombre para consultar su papel y sus vínculos. «Centrar su familia» cambia el árbol; leer la ficha mantiene el contexto.</p>';
+   }
+   function panoramica(){
+    const wire=(a,b)=>{const [x,y]=POSICIONES[a],[u,v]=POSICIONES[b];return 'M'+(x+90)+','+(y+90)+'V'+(v-25)+'H'+(u+90)+'V'+v;};
+    const directa=[['tolomeo-i','tolomeo-ii'],['tolomeo-ii','tolomeo-iii'],['tolomeo-ii','berenice'],['tolomeo-iii','tolomeo-iv'],['tolomeo-iv','tolomeo-v'],['seleuco-i','antioco-i'],['antioco-i','antioco-ii'],['seleuco-ii','seleuco-iii'],['seleuco-ii','antioco-iii']];
+    const paths=directa.map(([a,b])=>'<path d="'+wire(a,b)+'"/>').join('')+'<path class="dy-marriage" d="M470 415H610M790 415H850"/><path d="M540 415V525M820 415V525"/>';
+    return '<div class="dy-legend"><span><i></i> Progenitores y descendencia</span><span><i class="dy-marriage"></i> Matrimonio</span></div><div class="dy-overview" tabindex="0" role="region" aria-label="Panorámica genealógica; desplaza horizontalmente"><div class="dy-board"><span class="dy-house-title south">Egipto · Tolomeos</span><span class="dy-house-title north">Siria · Seléucidas</span><svg viewBox="0 0 1060 960" aria-hidden="true">'+paths+'</svg>'+PERSONAS.map(p=>card(p.id)).join('')+'</div></div><p class="dy-caption">Desplaza el diagrama horizontalmente. La página conserva su desplazamiento vertical. Seleuco III y Antíoco III aparecen como hermanos; Berenice y Tolomeo III comparten padre.</p>';
+   }
+   function dibujar(){
+    retirarMapa?.();retirarMapa=null;
+    $('.dy-modes').innerHTML=[['familia','Familia a familia'],['panorama','Panorámica'],['mapa','Mapa'],['lista','Lista accesible']].map(([k,n])=>'<button data-view="'+k+'" aria-pressed="'+(state.vista===k)+'">'+n+'</button>').join('');
+    $('.dy-content').classList.toggle('dy-wide',state.vista==='panorama');
+    const s=$('.dy-stage');s.innerHTML=state.vista==='familia'?familia():state.vista==='panorama'?panoramica():state.vista==='mapa'?'<div class="dy-map-host"></div>':'<div class="dy-list">'+PERSONAS.map(p=>'<section>'+card(p.id)+'<ul>'+relations(p.id).map(v=>'<li>'+esc(vinculoTexto(v))+'</li>').join('')+'</ul></section>').join('')+'</div>';
+    s.querySelectorAll('.dy-board [data-person]').forEach(b=>{const [x,y]=POSICIONES[b.dataset.person];b.style.setProperty('--dx',x+'px');b.style.setProperty('--dy',y+'px');});
+    if(state.vista==='mapa')retirarMapa=montarDaniel11(s.querySelector('.dy-map-host'));
+    detalle();
+   }
+   function etapa(){
+    const e=ETAPAS[state.etapa];$('.dy-steps').innerHTML=ETAPAS.map((e,i)=>'<button data-step="'+i+'" aria-pressed="'+(i===state.etapa)+'"><small>'+esc(e.fecha)+'</small>'+esc(e.titulo)+'</button>').join('');
+    $('.dy-period').innerHTML='<div class="dy-period-head"><h3>'+esc(e.titulo)+'</h3><span class="dy-ref">'+e.ref+'</span></div><p>'+esc(e.texto)+'</p><div class="dy-rivals"><span>Sur · '+esc(persona(e.sur).nombre)+'</span><span>Norte · '+esc(persona(e.norte).nombre)+'</span></div>';
+   }
+   $('select').innerHTML=PERSONAS.map(p=>'<option value="'+p.id+'">'+esc(p.nombre)+'</option>').join('');
+   const click=e=>{const b=e.target.closest('button');if(!b||!root.contains(b))return;
+    if(b.dataset.biography&&biografias.has(b.dataset.biography))onBiografia?.(b.dataset.biography,b);
+    if(b.dataset.person){state.persona=b.dataset.person;detalle();}
+    if(b.dataset.household){state.pareja=b.dataset.household;dibujar();root.querySelector('[data-household="'+state.pareja+'"]').focus({preventScroll:true});}
+    if(b.dataset.family){state.pareja=null;state.foco=b.dataset.family;state.vista='familia';dibujar();$('.dy-modes button').focus({preventScroll:true});}
+    if(b.dataset.view){state.vista=b.dataset.view;dibujar();root.querySelector('[data-view="'+state.vista+'"]').focus({preventScroll:true});}
+    if(b.dataset.step){state.etapa=Number(b.dataset.step);state.foco=ETAPAS[state.etapa].foco;state.persona=state.foco;etapa();dibujar();root.querySelector('[data-step="'+state.etapa+'"]').focus({preventScroll:true});}
+   };
+   const change=e=>{if(e.target===$('select')){state.persona=e.target.value;state.foco=state.persona;dibujar();}};
+   root.addEventListener('click',click);root.addEventListener('change',change);etapa();dibujar();
+   return ()=>{retirarMapa?.();root.removeEventListener('click',click);root.removeEventListener('change',change);root.replaceChildren();root.classList.remove('d11dyn');};
+  }
+  return montarDinastias;
+  })();
+
+  /** Reuses the map and reading tools without coupling them to the family data. */
+  function montarDaniel11Completo(root, opciones={}){
+    return montarDaniel11(root,{
+      ...opciones,
+      dinastias: host=>montarDinastias(host,{
+        biografias:opciones.biografias,
+        onBiografia:opciones.onBiografia,
+      }),
+    });
+  }
+  return montarDaniel11Completo;
 })()
 };
 /* ───────── CINE: una lámina que se recorre con el dedo (v266) ─────────
@@ -92612,6 +92783,7 @@ function cineEstudioFuentes(fuentes){
 }
 function cineEstudioRelaciones(a,i){
   let h='';
+  if(lamId==='d11'&&a.v&&a.v.de<=15&&a.v.hasta>=5)h+='<p><button type="button" class="cine-estudio-revela" onclick="cineExploraAbre()">Explorar el árbol de las dinastías</button></p>';
   if(a.mapa){
     const claves=['norte','centro','sur'],inicial=a.mapa.centro?'centro':claves.find(k=>a.mapa[k]);
     if(inicial)h+='<details class="cine-estudio-extra"><summary>Ubicar las relaciones</summary><p class="cine-estudio-ayuda">Esquema de relaciones, no mapa a escala.</p><div class="cine-estudio-mapa" role="group" aria-label="Relaciones entre los territorios">'+claves.map((k,n)=>a.mapa[k]?'<button type="button" aria-pressed="'+(k===inicial)+'" aria-controls="cineE-'+i+'-mapa" onclick="cineEstudioMapa('+i+','+n+')"><small>'+['Norte','Tierra de paso','Sur'][n]+'</small><span>'+esc(a.mapa[k].titulo)+'</span></button>':'').join('')+'</div><div id="cineE-'+i+'-mapa" class="cine-estudio-hallazgo" aria-live="polite"><h3>'+esc(a.mapa[inicial].titulo)+'</h3>'+cineEstudioTexto(a.mapa[inicial].texto)+'</div></details>';
@@ -92825,7 +92997,14 @@ function cineExploraAbre(){
   seccion.innerHTML='<header class="cine-explora-cab"><h2 id="cineExploraTitulo" tabindex="-1">Explorar y comparar</h2><button type="button" id="cineVolverRecorrido" onclick="cineExploraVuelve()">'+IC('izq')+' Volver al recorrido</button></header><div class="cine-explora-contenido"></div>';
   cineExploraEstado={scroll:el.scrollTop,foco:raiz.activeElement,seccion,limpia:null,personaFoco:null,eventos:new AbortController()};
   el.append(seccion);el.classList.add('cine-explorando');
-  cineExploraEstado.limpia=montar(seccion.querySelector('.cine-explora-contenido'),{estilos:false});
+  cineExploraEstado.limpia=montar(seccion.querySelector('.cine-explora-contenido'),{
+    estilos:false,
+    biografias:new Set(PERSONAJES.map(p=>p.id)),
+    onBiografia:(id,boton)=>{
+      const p=perPorId(id);if(!p||!cineExploraEstado)return;
+      cineExploraEstado.personaFoco=boton;lamPersona(p);
+    },
+  });
   cineExploraPersonas();
   cineExploraEstado.observador=new MutationObserver(cineExploraPersonas);
   cineExploraEstado.observador.observe(seccion,{childList:true,subtree:true,characterData:true});

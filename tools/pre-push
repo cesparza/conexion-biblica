@@ -18,6 +18,9 @@ if ! git diff --quiet HEAD -- index.html sw.js; then
   exit 1
 fi
 
+node --no-warnings tests/daniel11-dinastias.mjs || exit 1
+node tests/daniel11.js || exit 1
+
 for t in test uso api; do
   LOG="${TMPDIR:-/tmp}/cb-prepush-$t.log"
   if ! node "tests/$t.js" > "$LOG" 2>&1; then

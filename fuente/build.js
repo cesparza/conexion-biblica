@@ -282,11 +282,20 @@ const exploraciones = [9, 11].map(n => {
   const fuente = leer('explorar-daniel' + n + '.js');
   const css = fuente.match(new RegExp('export const estilosDaniel' + n + ' = `([\\s\\S]*?)`;'));
   if (!css) throw new Error('Faltan los estilos de las actividades de Daniel ' + n);
-  return { n, css: css[1], js: fuente.replace(/\bexport /g, '') };
+  if(n !== 11) return { n, css: css[1], js: fuente.replace(/\bexport /g, '') };
+  const sinModulos = t => t.replace(/^import .*;\n/gm, '').replace(/\bexport /g, '');
+  const privado = (t, nombre) => '(() => {\n' + t + '\nreturn ' + nombre + ';\n})()';
+  const datos = sinModulos(leer('daniel11-dinastias.js'));
+  const vista = sinModulos(leer('daniel11-dinastias-vista.js'));
+  const enlaces = 'const PERSONAS=PERSONAS_DINASTIAS,VINCULOS=VINCULOS_DINASTIAS,ETAPAS=ETAPAS_DINASTIAS,FUENTES=FUENTES_DINASTIAS;';
+  const js = 'const montarDaniel11 = ' + privado(sinModulos(fuente), 'montarDaniel11') + ';\n' +
+    'const montarDinastias = ' + privado(datos + '\n' + enlaces + '\n' + vista, 'montarDinastias') + ';\n' +
+    sinModulos(leer('explorar-daniel11-completo.js'));
+  return {n, css:css[1], js, monta:'montarDaniel11Completo'};
 });
 /* El traslado reconoce las acciones globales en columna cero; las fábricas son privadas. */
 const APP_EXPLORAR = 'const EXPLORAR_DANIEL = {\n' + exploraciones.map(x =>
-  'd' + x.n + ': (() => {\n' + x.js.split('\n').map(l => l ? '  ' + l : '').join('\n') + '\n  return montarDaniel' + x.n + ';\n})()').join(',\n') + '\n};';
+  'd' + x.n + ': (() => {\n' + x.js.split('\n').map(l => l ? '  ' + l : '').join('\n') + '\n  return ' + (x.monta || 'montarDaniel' + x.n) + ';\n})()').join(',\n') + '\n};';
 const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css') + '\n' + leer('cine.css') + '\n' + leer('viaje.css') + '\n' + exploraciones.map(x => x.css).join('\n');
 const CUERPO = leer('cuerpo.html');
 const REGLAS = leer('reglamento.js');
