@@ -16,7 +16,6 @@ function normalizarNombre(persona, catalogo){
   const griegas = Object.keys(catalogo.formas).filter(k=>k.endsWith(' (griego)')&&textos.some(t=>{const a=normal(t),b=normal(k.replace(' (griego)',''));return a===b||a.startsWith(b+',')||a.startsWith(b+' (')||a.startsWith(b+' ');}));
   const formas = persona.tipo&&persona.tipo!=='biblico' ? [] : [...elegidas.flatMap(k=>[catalogo.formas[k],catalogo.formas[k+' (arameo)']].filter(Boolean)),...griegas.map(k=>catalogo.formas[k])];
   const variantes = persona.nombres?.variantes || [...new Set(alias.filter(x=>typeof x==='string'))].filter(a=>normal(a)!==normal(nombre));
-  for(const f of formas)for(const a of [f.escritura,f.escritura.replace(/[\u0591-\u05BD\u05BF-\u05C7]/g,''),f.transliteracion,f.pronunciacion].filter(Boolean))if(!alias.includes(a))alias.push(a);
   return {...persona,nombre,alias,nombres:{variantes,formas,criterio:catalogo.criterio,fuente:catalogo.fuente}};
 }
 /** Shared biography fragment, without changing identity, layout or navigation. */

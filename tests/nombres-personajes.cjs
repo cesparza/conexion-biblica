@@ -9,6 +9,7 @@ assert.equal(new Set(PERSONAJES.map(p=>p.id)).size,PERSONAJES.length);
 for(const p of PERSONAJES){
  assert.deepEqual(normalizarNombre(p,catalogo),p,'normalizar dos veces conserva '+p.id);
  assert(Array.isArray(p.nombres.variantes));
+ assert(!p.alias.some(a=>typeof a==='string'&&/[\u05d0-\u05ea]/.test(a)),'no introducir alias sin contexto en el lector: '+p.id);
 }
 for(const [nombre,f] of Object.entries(catalogo.formas)){
  assert(f.nombre&&f.escritura&&f.transliteracion,nombre);
