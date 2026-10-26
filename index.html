@@ -3129,14 +3129,14 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-itit,.lam-tit{font-size:1.125rem;font-weight:800;color:var(--azul);line-height:1.2;text-wrap:balance}
 .lam-bots{display:flex;gap:.5rem;flex-wrap:wrap}
 .lam{position:fixed;inset:0;z-index:3000;overflow:auto;background:var(--bg);color:var(--txt);padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 24px);display:flex;flex-direction:column;gap:12px;align-items:center}
-.lam>*{width:100%;max-width:1000px;flex:0 0 auto}
+.lam:not(.cine)>*{width:100%;max-width:1000px;flex:0 0 auto}
 .lam-cab{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .lam-cabtx{min-width:0}
 .lam-pasos{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
 .lam-paso{flex:0 0 auto;display:flex;align-items:center;gap:6px;min-height:40px;padding:0 12px 0 6px;border-radius:999px;border:2px solid var(--v-linea,#F0E6D2);background:var(--card,#fff);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
 .lam-paso i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--v-sup2,#FFF4E0);color:var(--azul);font-size:.75rem}
 .lam-paso.on{border-color:var(--azul)}
-.lam:not(.pres)>*{max-width:1180px}
+.lam:not(.pres):not(.cine)>*{max-width:1180px}
 /* v187: la imagen y su explicación. En el celular, una debajo de la otra y la
    imagen pegada arriba mientras se lee; en pantalla ancha, lado a lado. */
 .lam-marco{display:grid;gap:12px;justify-items:center;align-items:start}
@@ -4338,7 +4338,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   .lam:not(.pres):not(.escenas) .lam-riel{justify-self:end;width:min(100%,calc((100vh - 300px) * 1100 / 1152))}
 }
 @media (min-width:1100px){
-  .lam:not(.pres)>*{max-width:1480px}
+  .lam:not(.pres):not(.cine)>*{max-width:1480px}
   .lam:not(.pres):not(.escenas) .lam-marco,.lam.escenas:not(.pres) .lam-marco{--rw:clamp(224px,15vw,264px);--hw:clamp(340px,24vw,420px);
     grid-template-columns:var(--rw) minmax(0,var(--ew)) var(--hw);grid-template-rows:auto;justify-content:center;align-items:start;column-gap:clamp(20px,2vw,36px)}
   .lam:not(.pres):not(.escenas) .lam-marco{--ew:min(680px,calc((100vh - 250px) * 1100 / 1152));--eh:calc(var(--ew) * 1152 / 1100)}
@@ -5906,6 +5906,8 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
   display:block;position:fixed;inset:0;z-index:9000;margin:0;padding:0;overflow-y:auto;overflow-x:hidden;background:var(--c-noche);color:var(--c-perg);color-scheme:dark;
   font-family:var(--cine-sans,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif);line-height:1.5;isolation:isolate;-webkit-overflow-scrolling:touch}
 .lam.cine *{box-sizing:border-box}
+.lam.cine{scrollbar-width:thin;scrollbar-color:#958b7b var(--c-noche)}
+.cine-estudio-lectura{scrollbar-width:thin;scrollbar-color:#958b7b transparent}
 .cine-cab{position:fixed;inset:0 0 auto;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding:calc(env(safe-area-inset-top,0px) + 10px) max(14px,env(safe-area-inset-right,0px)) 14px max(14px,env(safe-area-inset-left,0px));background:linear-gradient(rgba(7,6,10,.88),rgba(7,6,10,0))}
 .cine-tit{display:grid;min-width:0}
@@ -6118,6 +6120,32 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
   .cine-estudio-cab h2{font-size:1.4rem}.cine-estudio-cab .cine-rot{font-size:.62rem}
   .cine-con-selector .cine-estudio{padding-top:134px;gap:6px}.cine-con-selector .cine-estudio-cab h2{font-size:1.2rem}
 }
+
+/* Explorar mantiene el recorrido montado y comparte su cabecera y cierre. */
+.cine-bots>#cineExplorar{background:var(--c-oro);border-color:var(--c-oro);color:#211809}
+.cine-explorando>.cine-acto,.cine-explorando>.cine-selector,.cine-explorando>.cine-nav,.cine-explorando>.cine-prog{display:none}
+.cine-explorando>.cine-cab{background:var(--c-noche);border-bottom:1px solid var(--c-linea)}
+.cine-explorando #cineExplorar{display:none}
+.cine-exploraciones{max-width:1600px;margin:auto;padding:calc(94px + env(safe-area-inset-top,0px)) clamp(18px,3vw,42px) 48px}
+.cine-explora-cab{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}
+.cine-explora-cab h2{margin:0;color:var(--c-perg);font:500 clamp(1.4rem,3vw,2rem)/1.2 var(--cine-serif,Georgia,serif)}
+.cine-explora-cab button{display:flex;align-items:center;gap:8px;min-height:44px;border:1px solid var(--c-linea);border-radius:12px;padding:10px 14px;background:transparent;color:var(--c-perg);font:650 .86rem/1.3 var(--cine-sans,system-ui,sans-serif);cursor:pointer}
+.cine-exploraciones .d11lab,.cine-exploraciones .d9lab{padding:0;border:0;border-radius:0;background:transparent;max-width:none;width:100%;margin:0;display:grid;grid-template-columns:190px minmax(0,1fr);gap:28px;align-items:start}
+.cine-exploraciones .d11lab>header,.cine-exploraciones .d9lab>header{display:none}
+.cine-exploraciones .d11lab .d11lab-nav,.cine-exploraciones .d9lab .d9lab-activities{display:flex;flex-direction:column;margin:0;gap:8px}
+.cine-exploraciones .d11lab-nav button,.cine-exploraciones .d9lab-activities button{text-align:left;min-height:55px;width:100%}
+.cine-exploraciones .d11lab-body,.cine-exploraciones .d9lab-grid{min-width:0}
+.cine-exploraciones .d11lab .d11lab-work,.cine-exploraciones .d9lab .d9lab-work{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+.cine-exploraciones .d11lab [hidden],.cine-exploraciones .d9lab [hidden]{display:none!important}
+@media(max-width:900px){.cine-exploraciones .d11lab .d11lab-work,.cine-exploraciones .d9lab .d9lab-work{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:680px){
+ .cine-exploraciones{padding:calc(84px + env(safe-area-inset-top,0px)) 18px 32px}
+ .cine-explora-cab{align-items:flex-start;flex-direction:column;gap:12px;margin-bottom:22px}
+ .cine-exploraciones .d11lab,.cine-exploraciones .d9lab{grid-template-columns:minmax(0,1fr);gap:22px}
+ .cine-exploraciones .d11lab .d11lab-nav,.cine-exploraciones .d9lab .d9lab-activities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .cine-exploraciones .d11lab-nav button,.cine-exploraciones .d9lab-activities button{font-size:.8rem;min-height:52px}
+ .cine-bots{gap:4px}.cine-bots>button{min-height:38px}
+}
 /* ───────── VIAJE (v266): el camino de paradas de Practicar ───────── */
 .via-cab{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
 .via-sel{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 220px}
@@ -6178,6 +6206,35 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .via-reto .ads-op.mal{background:rgba(224,112,94,.18);border-color:#E0705E}
 @keyframes viaSube{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.via-img i,.via-tx,.via-reto,.via-nodo.ahora .via-disco{animation:none}}
+
+      .d9lab{--d9lab-bg:var(--c-noche,#07060a);--d9lab-card:var(--c-noche,#100e12);--d9lab-ink:var(--c-perg,#f4eee2);--d9lab-muted:var(--c-tenue,#c9bda6);--d9lab-gold:var(--c-oro,#f2c46b);--d9lab-line:var(--c-linea,rgba(244,238,226,.16));color:var(--d9lab-ink);background:var(--d9lab-bg);font:400 16px/1.55 var(--cine-sans,system-ui,sans-serif);border-radius:20px;padding:clamp(16px,3vw,32px);max-width:1180px;margin:auto;isolation:isolate}
+      .d9lab *{box-sizing:border-box}.d9lab [hidden]{display:none!important}.d9lab h2,.d9lab h3,.d9lab p{margin:0 0 .8rem}.d9lab h2{font:600 clamp(1.65rem,3vw,2.4rem)/1.16 var(--cine-serif,Georgia,serif);max-width:23ch}.d9lab h3{font-size:1.15rem;line-height:1.3}.d9lab p{max-width:74ch}.d9lab small{font-size:.85rem}.d9lab .d9lab-kicker{color:var(--d9lab-gold);font-size:.76rem;text-transform:uppercase;letter-spacing:.13em;font-weight:700}.d9lab .d9lab-intro{color:var(--d9lab-muted);max-width:68ch}
+      .d9lab .d9lab-grid{display:grid;gap:18px;margin-top:24px}.d9lab .d9lab-panel{background:var(--d9lab-card);border:1px solid var(--d9lab-line);border-radius:16px;padding:clamp(16px,2.5vw,25px);min-width:0}.d9lab .d9lab-panel>header{margin-bottom:18px}.d9lab .d9lab-panel>header p{color:var(--d9lab-muted)}
+      .d9lab button{appearance:none;font:inherit;color:inherit;background:transparent;border:1px solid var(--d9lab-line);border-radius:11px;padding:10px 12px;min-height:48px;cursor:pointer;line-height:1.35;text-align:left;transition:background .16s,border-color .16s}.d9lab button[aria-pressed="true"]{border-color:var(--d9lab-gold);background:#e7bf7420;box-shadow:inset 0 -3px var(--d9lab-gold)}.d9lab button:hover{background:#ffffff0c}.d9lab button:focus-visible,.d9lab summary:focus-visible{outline:3px solid var(--d9lab-gold);outline-offset:4px}.d9lab .d9lab-options{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.d9lab .d9lab-options button{flex:1 1 100px}.d9lab .d9lab-options strong,.d9lab .d9lab-options small{display:block}.d9lab .d9lab-options small{color:var(--d9lab-muted);margin-top:3px}
+      .d9lab .d9lab-equation{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;color:var(--d9lab-gold);font-size:clamp(1.25rem,3vw,1.8rem);font-variant-numeric:tabular-nums;margin:12px 0}.d9lab .d9lab-equation small{font-size:.95rem;color:var(--d9lab-ink)}.d9lab .d9lab-note{font-size:.88rem;color:var(--d9lab-muted)}.d9lab .d9lab-visual{background:#0812108c;border:1px solid var(--d9lab-line);border-radius:12px;overflow:hidden;margin:16px 0;padding:8px 0}.d9lab svg{display:block;width:100%;height:auto}.d9lab svg text{fill:var(--d9lab-ink);font-family:var(--cine-sans,system-ui,sans-serif);font-size:23px}.d9lab .d9lab-bar{fill:#617e70;stroke:#101817;stroke-width:2;transition:opacity .16s,fill .16s}.d9lab .d9lab-bar[data-active="true"]{fill:var(--d9lab-gold)}.d9lab .d9lab-bar[data-active="false"]{opacity:.34}.d9lab .d9lab-svg-label{font-size:20px;fill:var(--d9lab-muted)}.d9lab .d9lab-svg-line{stroke:var(--d9lab-gold);stroke-width:3}.d9lab .d9lab-dot{fill:var(--d9lab-bg);stroke:var(--d9lab-gold);stroke-width:3}.d9lab .d9lab-dot[data-active="true"]{fill:var(--d9lab-gold);stroke:var(--d9lab-ink);stroke-width:4}
+      .d9lab .d9lab-reading{border-left:3px solid var(--d9lab-gold);padding:2px 0 2px 15px;margin:18px 0}.d9lab .d9lab-reading h3{color:var(--d9lab-gold)}.d9lab .d9lab-reading p:last-child{margin-bottom:0}.d9lab details{border-top:1px solid var(--d9lab-line);margin-top:12px;padding-top:10px}.d9lab summary{cursor:pointer;min-height:44px;display:list-item;padding:9px 4px;font-weight:600;color:var(--d9lab-gold)}.d9lab details p,.d9lab blockquote{font-size:.94rem}.d9lab blockquote{margin:10px 0;padding:10px 14px;border-left:2px solid var(--d9lab-line);color:var(--d9lab-ink)}.d9lab .d9lab-source{color:var(--d9lab-muted);font-size:.84rem}
+      .d9lab .d9lab-date-row{display:flex;justify-content:space-between;gap:10px;margin:4px 16px;font-size:.84rem;color:var(--d9lab-muted)}.d9lab .d9lab-period-caption{padding:6px 16px;color:var(--d9lab-gold);font-size:.9rem;min-height:2.2em}.d9lab .d9lab-nozero{display:flex;justify-content:center;align-items:center;gap:12px;padding:12px;border:1px dashed var(--d9lab-line);border-radius:10px;margin:12px 0;color:var(--d9lab-ink)}.d9lab .d9lab-crossed{color:var(--d9lab-muted);text-decoration:line-through}
+      .d9lab .d9lab-evidence-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.d9lab .d9lab-evidence-pair>div{border:1px solid var(--d9lab-line);border-radius:10px;padding:12px}.d9lab .d9lab-evidence-pair strong{color:var(--d9lab-gold)}.d9lab .d9lab-chain{display:flex;gap:8px;margin:16px 0}.d9lab .d9lab-chain button{flex:1;min-width:0;font-size:.9rem}.d9lab .d9lab-chain-num{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:50%;background:#42534b;margin-bottom:8px}.d9lab .d9lab-chain button[aria-pressed="true"] .d9lab-chain-num{background:var(--d9lab-gold);color:#101817}.d9lab .d9lab-chain-name{display:block}
+      .d9lab .d9lab-activities{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:22px}.d9lab .d9lab-activities button{font-size:.92rem;text-align:center}.d9lab .d9lab-work{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px}.d9lab .d9lab-stage,.d9lab .d9lab-lesson{min-width:0}.d9lab .d9lab-lesson>.d9lab-reading:first-child{margin-top:0}.d9lab[data-d9lab-layout="b"] .d9lab-work{grid-template-columns:1fr}
+      @media(max-width:900px){.d9lab .d9lab-work{grid-template-columns:1fr;gap:12px}.d9lab .d9lab-activities{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:480px){.d9lab{padding:14px;border-radius:14px}.d9lab .d9lab-panel{padding:15px}.d9lab .d9lab-options{gap:6px}.d9lab .d9lab-options button{padding:10px 8px;flex-basis:80px}.d9lab .d9lab-evidence-pair{grid-template-columns:1fr}.d9lab .d9lab-chain{gap:5px}.d9lab .d9lab-chain button{padding:10px 7px;font-size:.8rem}.d9lab .d9lab-nozero{gap:9px;font-size:.9rem}.d9lab .d9lab-date-row{font-size:.76rem}}
+      @media(prefers-reduced-motion:reduce){.d9lab *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+
+.d11lab{--d11lab-bg:var(--c-noche,#090a10);--d11lab-fg:var(--c-perg,#f4eee2);--d11lab-muted:var(--c-tenue,#c9bda6);--d11lab-gold:var(--c-oro,#f2c46b);--d11lab-line:rgba(244,238,226,.2);color:var(--d11lab-fg);background:var(--d11lab-bg);border:1px solid var(--d11lab-line);border-radius:24px;padding:clamp(16px,3vw,30px);font:400 16px/1.6 var(--cine-sans,system-ui,sans-serif);overflow-wrap:anywhere;color-scheme:dark}
+.d11lab *{box-sizing:border-box}.d11lab h2,.d11lab h3,.d11lab p{margin:0}.d11lab h2{font:500 clamp(1.65rem,4vw,2.6rem)/1.15 var(--cine-serif,Georgia,serif);max-width:25ch}.d11lab h3{font:500 clamp(1.35rem,3vw,1.8rem)/1.2 var(--cine-serif,Georgia,serif)}
+.d11lab .d11lab-eyebrow{color:var(--d11lab-gold);font-size:.74rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.d11lab .d11lab-intro{color:var(--d11lab-muted);max-width:70ch;margin-top:12px}.d11lab .d11lab-nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}
+.d11lab button{appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab button[aria-pressed=true]{background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
+.d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.d11lab .d11lab-visual{background:radial-gradient(ellipse at center,rgba(242,196,107,.09),transparent 75%);border:1px solid var(--d11lab-line);border-radius:18px;min-width:0;padding:12px}.d11lab svg{display:block;width:100%;height:auto;max-height:440px;overflow:visible}.d11lab svg text{font-family:var(--cine-sans,system-ui,sans-serif);fill:var(--d11lab-fg);font-size:18px}.d11lab svg .d11lab-small{font-size:15px;fill:var(--d11lab-muted)}
+.d11lab svg .d11lab-node{fill:#14151d;stroke:var(--d11lab-line);stroke-width:2}.d11lab svg .d11lab-on .d11lab-node{fill:rgba(242,196,107,.15);stroke:var(--d11lab-gold);stroke-width:3}.d11lab svg .d11lab-wire{fill:none;stroke:var(--d11lab-muted);stroke-width:3;stroke-linecap:round}.d11lab svg .d11lab-wire.d11lab-on{stroke:var(--d11lab-gold);stroke-width:5}.d11lab svg .d11lab-dim{opacity:.35}
+.d11lab svg.d11lab-map{max-height:none}.d11lab svg.d11lab-map text{font-size:22px}
+.d11lab .d11lab-caption{font-size:.78rem;color:var(--d11lab-muted);margin-top:8px}.d11lab .d11lab-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.d11lab .d11lab-detail{display:grid;gap:14px;min-width:0}.d11lab .d11lab-detail dl{display:grid;gap:12px;margin:0}.d11lab .d11lab-detail dt{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--d11lab-gold);font-weight:750}.d11lab .d11lab-detail dd{margin:2px 0 0}
+.d11lab .d11lab-callout{border-left:3px solid var(--d11lab-gold);padding:10px 14px;background:rgba(242,196,107,.055)}.d11lab .d11lab-quote{font:500 1.1rem/1.7 var(--cine-serif,Georgia,serif)}.d11lab .d11lab-ref{font-size:.8rem;color:var(--d11lab-gold)}.d11lab .d11lab-sources{border-top:1px solid var(--d11lab-line);padding-top:14px;font-size:.82rem}.d11lab .d11lab-sources summary{cursor:pointer;min-height:44px;display:list-item;padding:9px 0;color:var(--d11lab-gold);font-weight:700}.d11lab .d11lab-sources ul{padding-left:20px;margin:6px 0;display:grid;gap:8px}.d11lab a{color:var(--d11lab-gold);text-underline-offset:3px}
+.d11lab .d11lab-sequence{display:grid;gap:10px}.d11lab .d11lab-sequence>div{padding:13px;border:1px solid var(--d11lab-line);border-radius:12px}.d11lab .d11lab-sequence>div.d11lab-active{border-color:var(--d11lab-gold);background:rgba(242,196,107,.08)}.d11lab .d11lab-symbols{display:grid;gap:12px}.d11lab .d11lab-symbol{border:1px solid var(--d11lab-line);border-radius:12px;padding:14px;color:var(--d11lab-muted);opacity:.5}.d11lab .d11lab-symbol.d11lab-active{color:var(--d11lab-fg);border-color:var(--d11lab-gold);opacity:1}.d11lab .d11lab-symbol strong{display:block;color:var(--d11lab-gold)}
+@media(max-width:650px){.d11lab .d11lab-work{grid-template-columns:1fr}.d11lab .d11lab-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.d11lab .d11lab-nav button{font-size:.8rem;padding:10px}.d11lab .d11lab-visual{max-width:480px;width:100%;margin:auto}.d11lab svg{max-height:350px}.d11lab .d11lab-controls button{flex:1 1 110px}.d11lab .d11lab-detail{gap:12px}}
+@media(prefers-reduced-motion:reduce){.d11lab *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
 </style>
 </head>
 <body>
@@ -6755,7 +6812,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '85e18d83ffa0';
+const VERSION_APP = '0a8337715f56';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -91898,6 +91955,523 @@ function cierraCapas(){
   try{const l=document.getElementById('lam');if(l&&!l.hidden&&typeof lamCierra==='function')lamCierra();}catch(e){}
   try{if(typeof cierraHoja==='function')cierraHoja();}catch(e){}
 }
+const EXPLORAR_DANIEL = {
+d9: (() => {
+  const estilosDaniel9 = `
+        .d9lab{--d9lab-bg:var(--c-noche,#07060a);--d9lab-card:var(--c-noche,#100e12);--d9lab-ink:var(--c-perg,#f4eee2);--d9lab-muted:var(--c-tenue,#c9bda6);--d9lab-gold:var(--c-oro,#f2c46b);--d9lab-line:var(--c-linea,rgba(244,238,226,.16));color:var(--d9lab-ink);background:var(--d9lab-bg);font:400 16px/1.55 var(--cine-sans,system-ui,sans-serif);border-radius:20px;padding:clamp(16px,3vw,32px);max-width:1180px;margin:auto;isolation:isolate}
+        .d9lab *{box-sizing:border-box}.d9lab [hidden]{display:none!important}.d9lab h2,.d9lab h3,.d9lab p{margin:0 0 .8rem}.d9lab h2{font:600 clamp(1.65rem,3vw,2.4rem)/1.16 var(--cine-serif,Georgia,serif);max-width:23ch}.d9lab h3{font-size:1.15rem;line-height:1.3}.d9lab p{max-width:74ch}.d9lab small{font-size:.85rem}.d9lab .d9lab-kicker{color:var(--d9lab-gold);font-size:.76rem;text-transform:uppercase;letter-spacing:.13em;font-weight:700}.d9lab .d9lab-intro{color:var(--d9lab-muted);max-width:68ch}
+        .d9lab .d9lab-grid{display:grid;gap:18px;margin-top:24px}.d9lab .d9lab-panel{background:var(--d9lab-card);border:1px solid var(--d9lab-line);border-radius:16px;padding:clamp(16px,2.5vw,25px);min-width:0}.d9lab .d9lab-panel>header{margin-bottom:18px}.d9lab .d9lab-panel>header p{color:var(--d9lab-muted)}
+        .d9lab button{appearance:none;font:inherit;color:inherit;background:transparent;border:1px solid var(--d9lab-line);border-radius:11px;padding:10px 12px;min-height:48px;cursor:pointer;line-height:1.35;text-align:left;transition:background .16s,border-color .16s}.d9lab button[aria-pressed="true"]{border-color:var(--d9lab-gold);background:#e7bf7420;box-shadow:inset 0 -3px var(--d9lab-gold)}.d9lab button:hover{background:#ffffff0c}.d9lab button:focus-visible,.d9lab summary:focus-visible{outline:3px solid var(--d9lab-gold);outline-offset:4px}.d9lab .d9lab-options{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.d9lab .d9lab-options button{flex:1 1 100px}.d9lab .d9lab-options strong,.d9lab .d9lab-options small{display:block}.d9lab .d9lab-options small{color:var(--d9lab-muted);margin-top:3px}
+        .d9lab .d9lab-equation{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;color:var(--d9lab-gold);font-size:clamp(1.25rem,3vw,1.8rem);font-variant-numeric:tabular-nums;margin:12px 0}.d9lab .d9lab-equation small{font-size:.95rem;color:var(--d9lab-ink)}.d9lab .d9lab-note{font-size:.88rem;color:var(--d9lab-muted)}.d9lab .d9lab-visual{background:#0812108c;border:1px solid var(--d9lab-line);border-radius:12px;overflow:hidden;margin:16px 0;padding:8px 0}.d9lab svg{display:block;width:100%;height:auto}.d9lab svg text{fill:var(--d9lab-ink);font-family:var(--cine-sans,system-ui,sans-serif);font-size:23px}.d9lab .d9lab-bar{fill:#617e70;stroke:#101817;stroke-width:2;transition:opacity .16s,fill .16s}.d9lab .d9lab-bar[data-active="true"]{fill:var(--d9lab-gold)}.d9lab .d9lab-bar[data-active="false"]{opacity:.34}.d9lab .d9lab-svg-label{font-size:20px;fill:var(--d9lab-muted)}.d9lab .d9lab-svg-line{stroke:var(--d9lab-gold);stroke-width:3}.d9lab .d9lab-dot{fill:var(--d9lab-bg);stroke:var(--d9lab-gold);stroke-width:3}.d9lab .d9lab-dot[data-active="true"]{fill:var(--d9lab-gold);stroke:var(--d9lab-ink);stroke-width:4}
+        .d9lab .d9lab-reading{border-left:3px solid var(--d9lab-gold);padding:2px 0 2px 15px;margin:18px 0}.d9lab .d9lab-reading h3{color:var(--d9lab-gold)}.d9lab .d9lab-reading p:last-child{margin-bottom:0}.d9lab details{border-top:1px solid var(--d9lab-line);margin-top:12px;padding-top:10px}.d9lab summary{cursor:pointer;min-height:44px;display:list-item;padding:9px 4px;font-weight:600;color:var(--d9lab-gold)}.d9lab details p,.d9lab blockquote{font-size:.94rem}.d9lab blockquote{margin:10px 0;padding:10px 14px;border-left:2px solid var(--d9lab-line);color:var(--d9lab-ink)}.d9lab .d9lab-source{color:var(--d9lab-muted);font-size:.84rem}
+        .d9lab .d9lab-date-row{display:flex;justify-content:space-between;gap:10px;margin:4px 16px;font-size:.84rem;color:var(--d9lab-muted)}.d9lab .d9lab-period-caption{padding:6px 16px;color:var(--d9lab-gold);font-size:.9rem;min-height:2.2em}.d9lab .d9lab-nozero{display:flex;justify-content:center;align-items:center;gap:12px;padding:12px;border:1px dashed var(--d9lab-line);border-radius:10px;margin:12px 0;color:var(--d9lab-ink)}.d9lab .d9lab-crossed{color:var(--d9lab-muted);text-decoration:line-through}
+        .d9lab .d9lab-evidence-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.d9lab .d9lab-evidence-pair>div{border:1px solid var(--d9lab-line);border-radius:10px;padding:12px}.d9lab .d9lab-evidence-pair strong{color:var(--d9lab-gold)}.d9lab .d9lab-chain{display:flex;gap:8px;margin:16px 0}.d9lab .d9lab-chain button{flex:1;min-width:0;font-size:.9rem}.d9lab .d9lab-chain-num{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:50%;background:#42534b;margin-bottom:8px}.d9lab .d9lab-chain button[aria-pressed="true"] .d9lab-chain-num{background:var(--d9lab-gold);color:#101817}.d9lab .d9lab-chain-name{display:block}
+        .d9lab .d9lab-activities{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:22px}.d9lab .d9lab-activities button{font-size:.92rem;text-align:center}.d9lab .d9lab-work{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px}.d9lab .d9lab-stage,.d9lab .d9lab-lesson{min-width:0}.d9lab .d9lab-lesson>.d9lab-reading:first-child{margin-top:0}.d9lab[data-d9lab-layout="b"] .d9lab-work{grid-template-columns:1fr}
+        @media(max-width:900px){.d9lab .d9lab-work{grid-template-columns:1fr;gap:12px}.d9lab .d9lab-activities{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        @media(max-width:480px){.d9lab{padding:14px;border-radius:14px}.d9lab .d9lab-panel{padding:15px}.d9lab .d9lab-options{gap:6px}.d9lab .d9lab-options button{padding:10px 8px;flex-basis:80px}.d9lab .d9lab-evidence-pair{grid-template-columns:1fr}.d9lab .d9lab-chain{gap:5px}.d9lab .d9lab-chain button{padding:10px 7px;font-size:.8rem}.d9lab .d9lab-nozero{gap:9px;font-size:.9rem}.d9lab .d9lab-date-row{font-size:.76rem}}
+        @media(prefers-reduced-motion:reduce){.d9lab *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+  `;
+
+  /** Monta las actividades de Daniel 9 y devuelve su limpieza. */
+  function montarDaniel9(root, opciones = {}) {
+    if (!root || typeof root.append !== 'function') throw new TypeError('Falta el contenedor de Daniel 9.');
+    const doc = root.ownerDocument || document;
+    const caja = doc.createElement('section');
+    caja.className = 'd9lab';
+    caja.setAttribute('aria-label', 'Daniel 9: sigue el argumento');
+    const vida = new AbortController();
+    const bloques = [
+      { semanas: 7, anos: 49, desde: '457 a.C.', hasta: '408 a.C.', titulo: 'La restauración de Jerusalén',
+        texto: 'Las primeras siete semanas reúnen 49 años. El pasaje sitúa la reconstrucción de la plaza y el muro en tiempos angustiosos. El diagrama de El conflicto de los siglos ubica el final de este tramo en 408 a.C.',
+        biblia: 'Daniel 9:25: «se volverán a edificar la plaza y el muro en tiempos angustiosos».', fuente: 'El conflicto de los siglos, cap. 18, diagrama de p. 374; PDF de la biblioteca, pp. 272–273.' },
+      { semanas: 62, anos: 434, desde: '408 a.C.', hasta: '27 d.C.', titulo: 'Hasta el Mesías Príncipe',
+        texto: 'A las siete semanas se añaden sesenta y dos: 7 + 62 = 69 semanas, o 483 años desde la orden. El término señala al Mesías Príncipe. Su unción con el Espíritu Santo se sitúa en el bautismo de Jesús, en el otoño del 27 d.C.',
+        biblia: 'Daniel 9:25: «hasta el Mesías Príncipe, habrá siete semanas y sesenta y dos semanas».', fuente: 'El Deseado de todas las gentes, cap. 23, pp. 200–201; El conflicto de los siglos, cap. 18, pp. 373–374.' },
+      { semanas: 1, anos: 7, desde: '27 d.C.', hasta: '34 d.C.', titulo: 'La última semana pertenece a las setenta',
+        texto: 'Después de 69 semanas queda una, de siete años. Durante ella se confirma el pacto con muchos. La muerte del Mesías ocurre a la mitad, no al terminar los 490 años. Amplía este tramo en «La última semana».',
+        biblia: 'Daniel 9:27: «Por otra semana más confirmará el pacto con muchos; a la mitad de la semana hará cesar el sacrificio y la ofrenda».', fuente: 'El Deseado de todas las gentes, cap. 23, pp. 200–201; Bohr, Studies in Daniel 1–10, pp. 346–347.' }
+    ];
+    const semana = [
+      { fecha: 'Otoño del 27 d.C.', titulo: 'Jesús es ungido en su bautismo', x: 24,
+        texto: 'Mesías significa ungido. El bautismo marca el comienzo de su ministerio y el inicio de la semana final. Los primeros tres años y medio corresponden al testimonio de Cristo.',
+        biblia: 'Daniel 9:25 señala al Mesías Príncipe. Mateo 3:16–17 relata el bautismo; Hechos 10:38 explica su unción con el Espíritu Santo.',
+        cita: '«En el año 27 de nuestra era, Jesús, en ocasión de su bautismo, recibió la unción del Espíritu Santo».', fuente: 'El Deseado de todas las gentes, cap. 23, p. 200; PDF de la biblioteca, p. 199.' },
+      { fecha: 'Primavera del 31 d.C.', titulo: 'La cruz: la mitad de la semana', x: 340,
+        texto: 'Del otoño del 27 a la primavera del 31 transcurren tres años y medio. La muerte de Jesús cumple lo que señalaban los sacrificios. Eso explica que cesen su significado y su función; el texto no exige afirmar que todos los ritos del templo se detuvieron ese día.',
+        biblia: 'Daniel 9:26–27 une la muerte del Mesías con el cese del sacrificio. Mateo 27:50–51 relata su muerte y el velo rasgado.',
+        cita: '«En la primavera del año 31 de nuestra era, Cristo, el verdadero sacrificio, fué ofrecido en el Calvario».', fuente: 'El Deseado de todas las gentes, cap. 23, p. 200; PDF de la biblioteca, p. 199.' },
+      { fecha: 'Otoño del 34 d.C.', titulo: 'Se completan los siete años', x: 656,
+        texto: 'Después de la cruz, los apóstoles continúan el testimonio especialmente dirigido a los judíos. La cronología del estudio relaciona su término con el martirio de Esteban y la expansión del evangelio. Termina ese período; el nuevo pacto no expira y las personas judías siguen incluidas en la salvación.',
+        biblia: 'Daniel 9:24 delimita el período para el pueblo y la ciudad. Hechos 7 y 8:1–4 narran el martirio y la dispersión; Hechos no expresa el año 34.',
+        cita: '«La semana—siete años—terminó en el año 34 de nuestra era».', fuente: 'El Deseado de todas las gentes, cap. 23, pp. 200–201; PDF de la biblioteca, p. 199.' }
+    ];
+    const pasos = [
+      { nombre: 'La pregunta queda abierta', ref: 'Daniel 8:14, 26–27',
+        cita: '«estaba espantado a causa de la visión, y no la entendía».',
+        texto: 'La visión anuncia 2.300 tardes y mañanas y la purificación del santuario. Al final del capítulo, Daniel sigue sin comprender. El tiempo no tiene todavía un comienzo fechado.',
+        apoyo: 'El conflicto de los siglos, cap. 18, pp. 372–373; Bohr, Studies in Daniel 1–10, pp. 325–326.' },
+      { nombre: 'Gabriel vuelve para explicar', ref: 'Daniel 9:21–23',
+        cita: '«el varón Gabriel, a quien había visto en la visión, al principio».',
+        texto: 'El propio relato identifica al mismo mensajero. Gabriel viene para dar entendimiento y pide considerar la visión. Esa continuidad conecta la explicación con el capítulo anterior; la relación no depende solamente de una palabra.',
+        apoyo: 'El conflicto de los siglos, cap. 18, pp. 372–373; Bohr, Studies in Daniel 1–10, pp. 325–327.' },
+      { nombre: 'Se delimita la primera parte', ref: 'Daniel 9:24–25',
+        cita: '«Setenta semanas están determinadas sobre tu pueblo y sobre tu santa ciudad».',
+        texto: 'La explicación delimita 490 años y da el punto de partida: la orden de restaurar y edificar Jerusalén. El conflicto de los siglos aplica estas semanas como la primera parte de los 2.300 años, con un comienzo compartido.',
+        apoyo: 'El conflicto de los siglos, cap. 18, p. 373; Bohr, Studies in Daniel 1–10, p. 325. La identificación del decreto con 457 a.C. se explica en CS 373–374 y Esdras 7.' }
+    ];
+    const pregunta = (titulo, respuesta) => `<details class="d9lab-pregunta"><summary>${titulo}</summary><p>${respuesta}</p></details>`;
+    caja.innerHTML = `
+      ${opciones.estilos === false ? '' : '<style>' + estilosDaniel9 + '</style>'}
+      <header><p class="d9lab-kicker">Daniel 9 · sigue el argumento</p><h2>Una profecía que puedes recorrer y comprobar</h2><p class="d9lab-intro">Selecciona un tramo, amplía la última semana y contrasta los textos. Cada cambio muestra qué se cuenta, qué significa y dónde se sostiene.</p></header>
+      <div class="d9lab-grid">
+        <section class="d9lab-panel" data-d9lab-panel="semanas" aria-label="Las tres divisiones de las setenta semanas">
+          <header><p class="d9lab-kicker">La duración</p><h3>Setenta semanas, tres tramos</h3><p>Una semana agrupa siete unidades. Aquí se cuentan años: 7 + 62 + 1 = 70 semanas.</p></header>
+          <p class="d9lab-equation"><strong>70 × 7 = 490</strong><small>años en total</small></p>
+          <div class="d9lab-options" role="group" aria-label="Elegir un tramo de las setenta semanas">
+            <button type="button" data-d9lab-action="bloque" data-d9lab-value="0" aria-pressed="true"><strong>7 semanas</strong><small>49 años</small></button>
+            <button type="button" data-d9lab-action="bloque" data-d9lab-value="1" aria-pressed="false"><strong>62 semanas</strong><small>434 años</small></button>
+            <button type="button" data-d9lab-action="bloque" data-d9lab-value="2" aria-pressed="false"><strong>1 semana</strong><small>7 años</small></button>
+          </div>
+          <div class="d9lab-visual"><svg viewBox="0 0 680 120" role="img" aria-label="490 años divididos en 49, 434 y 7 años" data-d9lab-chart="bloques">
+            <text x="24" y="30">490 años</text><text x="656" y="30" text-anchor="end" class="d9lab-svg-label">proporción real</text>
+            <rect class="d9lab-bar" data-d9lab-block="0" x="24" y="50" width="63.2" height="40" rx="4"/>
+            <rect class="d9lab-bar" data-d9lab-block="1" x="87.2" y="50" width="559.8" height="40" rx="4"/>
+            <rect class="d9lab-bar" data-d9lab-block="2" x="647" y="50" width="9" height="40" rx="2"/>
+          </svg><div class="d9lab-date-row"><span>457 a.C.</span><span>34 d.C.</span></div></div>
+          <p class="d9lab-note">La semana final es pequeña en esta escala. En «La última semana» puedes ampliarla sin cambiar su duración.</p>
+          <div class="d9lab-reading" aria-live="polite" aria-atomic="true"><h3 data-d9lab-field="bloque-titulo"></h3><p class="d9lab-equation" data-d9lab-field="bloque-cuenta"></p><p data-d9lab-field="bloque-fechas"></p><p data-d9lab-field="bloque-texto"></p></div>
+          <details><summary>Consultar la evidencia de este tramo</summary><blockquote data-d9lab-field="bloque-biblia"></blockquote><p class="d9lab-source" data-d9lab-field="bloque-fuente"></p><p>Levítico 25:8 ofrece el precedente de semanas de años. DTG, cap. 23, explica 490 días proféticos como 490 años. Son dos formas de explicar la duración: los años ya obtenidos no se vuelven a convertir.</p></details>
+          ${pregunta('Comprueba: ¿por qué no multiplicamos otra vez los 490 años?', 'Porque el resultado ya está expresado en años. Las semanas de años dan 70 × 7 = 490 años. La explicación mediante días proféticos llega a la misma duración; no es una segunda operación sobre esos años. Referencia: Levítico 25:8; DTG, cap. 23.')}
+        </section>
+        <section class="d9lab-panel" data-d9lab-panel="ultima" aria-label="La última semana ampliada">
+          <header><p class="d9lab-kicker">El centro de la profecía</p><h3>Una semana: antes y después de la cruz</h3><p>La ampliación conserva los siete años. Selecciona un acontecimiento para relacionar fecha, texto y significado.</p></header>
+          <div class="d9lab-options" role="group" aria-label="Elegir un acontecimiento de la última semana">
+            <button type="button" data-d9lab-action="semana" data-d9lab-value="0" aria-pressed="false"><strong>27 · Bautismo</strong><small>Otoño</small></button>
+            <button type="button" data-d9lab-action="semana" data-d9lab-value="1" aria-pressed="true"><strong>31 · Cruz</strong><small>Primavera</small></button>
+            <button type="button" data-d9lab-action="semana" data-d9lab-value="2" aria-pressed="false"><strong>34 · Testimonio</strong><small>Otoño</small></button>
+          </div>
+          <div class="d9lab-visual"><svg viewBox="0 0 680 172" role="img" aria-label="Siete años: tres y medio antes de la cruz y tres y medio después" data-d9lab-chart="semana">
+            <text x="182" y="30" text-anchor="middle">Cristo · 3½ años</text><text x="498" y="30" text-anchor="middle">Apóstoles · 3½ años</text>
+            <rect class="d9lab-bar" data-d9lab-half="0" x="24" y="54" width="316" height="40" rx="4"/>
+            <rect class="d9lab-bar" data-d9lab-half="1" x="340" y="54" width="316" height="40" rx="4"/>
+            <line class="d9lab-svg-line" data-d9lab-marker x1="340" y1="43" x2="340" y2="110"/>
+            <circle class="d9lab-dot" data-d9lab-point="0" cx="24" cy="74" r="9"/><circle class="d9lab-dot" data-d9lab-point="1" cx="340" cy="74" r="9"/><circle class="d9lab-dot" data-d9lab-point="2" cx="656" cy="74" r="9"/>
+            <text x="24" y="140">27 · otoño</text><text x="340" y="140" text-anchor="middle">31 · primavera</text><text x="656" y="140" text-anchor="end">34 · otoño</text>
+          </svg></div>
+          <div class="d9lab-reading" aria-live="polite" aria-atomic="true"><p class="d9lab-kicker" data-d9lab-field="semana-fecha"></p><h3 data-d9lab-field="semana-titulo"></h3><p data-d9lab-field="semana-texto"></p></div>
+          <details><summary>Consultar el texto y la aplicación</summary><p data-d9lab-field="semana-biblia"></p><blockquote data-d9lab-field="semana-cita"></blockquote><p class="d9lab-source" data-d9lab-field="semana-fuente"></p><p>Las fechas 27, 31 y 34 corresponden a la cronología explicada por Elena de White. Daniel no escribe esos años de nuestra era.</p></details>
+          <details><summary>¿Qué significa confirmar el pacto con muchos?</summary><p>El pacto está en la oración de Daniel (9:4). Cristo confirma las promesas hechas a los padres (Romanos 15:8), y Jesús une pacto, sangre y muchos en Mateo 26:28. La semana delimita el testimonio especialmente dirigido a Israel; no fija una fecha de vencimiento del nuevo pacto.</p><p class="d9lab-source">DTG, cap. 23, pp. 200–201; Bohr, Studies in Daniel 1–10, pp. 346–347.</p></details>
+          ${pregunta('Comprueba: ¿qué termina en la cruz y qué termina en el 34?', 'En la cruz se cumple la realidad anunciada por los sacrificios; su significado ritual ha llegado a su fin. En el 34 termina el período de 490 años de esta cronología. El pacto no expira y la salvación sigue incluyendo a las personas judías. Referencias: Daniel 9:24–27; Mateo 27:50–51; DTG, cap. 23; Romanos 11:1–5.')}
+        </section>
+        <section class="d9lab-panel" data-d9lab-panel="periodos" aria-label="Las setenta semanas dentro de los dos mil trescientos años">
+          <header><p class="d9lab-kicker">La relación entre los períodos</p><h3>490 años dentro de 2.300</h3><p>La vista general conserva la proporción. La ampliación permite ver la primera parte con más detalle.</p></header>
+          <div class="d9lab-options" role="group" aria-label="Elegir la escala del período">
+            <button type="button" data-d9lab-action="escala" data-d9lab-value="general" aria-pressed="true"><strong>Ver los 2.300</strong><small>457 a.C. → 1844</small></button>
+            <button type="button" data-d9lab-action="escala" data-d9lab-value="ampliada" aria-pressed="false"><strong>Ampliar los 490</strong><small>457 a.C. → 34 d.C.</small></button>
+          </div>
+          <div class="d9lab-visual"><svg viewBox="0 0 680 154" role="img" data-d9lab-chart="periodos" aria-label="490 años y 1810 años restantes forman 2300 años">
+            <text x="24" y="30" data-d9lab-period-title>2.300 años · vista general</text>
+            <rect class="d9lab-bar" data-active="true" data-d9lab-period-first x="24" y="50" width="134.64" height="40" rx="4"/>
+            <rect class="d9lab-bar" data-active="false" data-d9lab-period-rest x="158.64" y="50" width="497.36" height="40" rx="4"/>
+            <text x="24" y="125">457 a.C.</text><text x="158.64" y="125" text-anchor="middle" data-d9lab-period-mid>34 d.C.</text><text x="656" y="125" text-anchor="end" data-d9lab-period-end>1844</text>
+          </svg><p class="d9lab-period-caption" data-d9lab-field="periodo-caption" role="status" aria-live="polite" aria-atomic="true">El tramo dorado ocupa el 21,3 % del período completo.</p></div>
+          <div class="d9lab-reading"><h3>El tiempo que queda</h3><p class="d9lab-equation"><strong>2.300 − 490 = 1.810</strong><small>años restantes</small></p><p class="d9lab-equation"><strong>34 + 1.810 = 1844</strong></p><p>Ambos períodos empiezan con la orden de restaurar y edificar Jerusalén, identificada con el decreto completo de Artajerjes en 457 a.C.</p></div>
+          <div class="d9lab-nozero" aria-label="El año uno antes de Cristo es seguido por el año uno después de Cristo"><span>1 a.C.</span><span>→</span><span class="d9lab-crossed">año 0</span><span>→</span><span>1 d.C.</span></div>
+          <p class="d9lab-note">El año 0 no existe: de 457 a.C. a 34 d.C. son 457 + 34 − 1 = 490 años. De 457 a.C. a 1844 son 457 + 1844 − 1 = 2.300.</p>
+          <details><summary>¿Dónde se sostiene el comienzo compartido?</summary><p>Daniel 8:14 presenta el período mayor; Daniel 9:24–25 delimita las setenta semanas y la orden inicial. Elena de White aplica esa relación:</p><blockquote>«las setenta semanas deben por consiguiente formar parte de los 2.300 días, y ambos períodos deben comenzar juntos».</blockquote><p class="d9lab-source">El conflicto de los siglos, cap. 18, p. 373; PDF de la biblioteca, p. 272. El diagrama de p. 374 sitúa el término de los 2.300 años en 1844; PDF p. 273.</p><p>El término se aplica a la purificación del santuario celestial y el juicio; no a una fecha de la segunda venida.</p></details>
+          ${pregunta('Comprueba: ¿los 1.810 años comienzan en 457 a.C. o en el 34 d.C.?', 'En el 34 d.C. Los primeros 490 años ya transcurrieron desde 457 a.C. Los 1.810 restantes completan el mismo período hasta 1844. Comenzarlos otra vez en 457 superpondría los dos tramos. Referencia: CS, cap. 18, pp. 373–374.')}
+        </section>
+        <section class="d9lab-panel" data-d9lab-panel="gabriel" aria-label="Cómo se relacionan Daniel ocho y nueve">
+          <header><p class="d9lab-kicker">El argumento bíblico</p><h3>¿Por qué vuelve Gabriel?</h3><p>Lee ambos capítulos juntos. Sigue la pregunta, el regreso del mensajero y la explicación del tiempo.</p></header>
+          <div class="d9lab-evidence-pair"><div><strong>Daniel 8</strong><p>2.300 tardes y mañanas. Daniel termina sin comprender.</p><small>8:14, 26–27</small></div><div><strong>Daniel 9</strong><p>El mismo Gabriel vuelve para dar entendimiento.</p><small>9:21–25</small></div></div>
+          <div class="d9lab-chain" role="group" aria-label="Seguir la explicación de Gabriel">
+            <button type="button" data-d9lab-action="gabriel" data-d9lab-value="0" aria-pressed="true"><span class="d9lab-chain-num">1</span><span class="d9lab-chain-name">La pregunta</span></button>
+            <button type="button" data-d9lab-action="gabriel" data-d9lab-value="1" aria-pressed="false"><span class="d9lab-chain-num">2</span><span class="d9lab-chain-name">El regreso</span></button>
+            <button type="button" data-d9lab-action="gabriel" data-d9lab-value="2" aria-pressed="false"><span class="d9lab-chain-num">3</span><span class="d9lab-chain-name">La explicación</span></button>
+          </div>
+          <div class="d9lab-visual"><svg viewBox="0 0 680 100" role="img" data-d9lab-chart="gabriel" aria-label="Conexión entre la pregunta de Daniel ocho y la explicación de Daniel nueve">
+            <line x1="84" y1="50" x2="596" y2="50" stroke="#42534b" stroke-width="8"/><line data-d9lab-gabriel-line x1="84" y1="50" x2="84" y2="50" class="d9lab-svg-line"/>
+            <circle data-d9lab-link="0" class="d9lab-dot" cx="84" cy="50" r="16"/><circle data-d9lab-link="1" class="d9lab-dot" cx="340" cy="50" r="16"/><circle data-d9lab-link="2" class="d9lab-dot" cx="596" cy="50" r="16"/>
+            <text x="84" y="90" text-anchor="middle" class="d9lab-svg-label">8:26–27</text><text x="340" y="90" text-anchor="middle" class="d9lab-svg-label">9:21–23</text><text x="596" y="90" text-anchor="middle" class="d9lab-svg-label">9:24–25</text>
+          </svg></div>
+          <div class="d9lab-reading" aria-live="polite" aria-atomic="true"><p class="d9lab-kicker" data-d9lab-field="gabriel-ref"></p><h3 data-d9lab-field="gabriel-titulo"></h3><blockquote data-d9lab-field="gabriel-cita"></blockquote><p data-d9lab-field="gabriel-texto"></p></div>
+          <details><summary>Consultar la fuente de este paso</summary><p class="d9lab-source" data-d9lab-field="gabriel-fuente"></p><p>El texto bíblico muestra la continuidad del mensajero y su propósito. La aplicación de los 490 años como parte inicial de los 2.300 se explica en CS 373. La palabra «determinadas» se estudia dentro de ese argumento; por sí sola no reemplaza la comparación de los pasajes.</p></details>
+          ${pregunta('Comprueba: ¿qué dos evidencias conectan los capítulos?', 'Daniel termina sin comprender la visión (8:26–27), y 9:21 identifica al mismo Gabriel antes de explicar el tiempo (9:22–25). La continuidad del mensajero y la continuidad de la explicación se leen juntas. Referencia: Daniel 8:26–27; 9:21–25; CS, cap. 18, pp. 372–373.')}
+        </section>
+      </div>`;
+    const navegacion = doc.createElement('nav');
+    navegacion.className = 'd9lab-activities';
+    navegacion.setAttribute('aria-label', 'Actividades de Daniel 9');
+    navegacion.innerHTML = '<button type="button" data-d9lab-action="actividad" data-d9lab-value="semanas" aria-pressed="true">70 semanas</button><button type="button" data-d9lab-action="actividad" data-d9lab-value="ultima" aria-pressed="false">La última semana</button><button type="button" data-d9lab-action="actividad" data-d9lab-value="periodos" aria-pressed="false">Los 2.300 años</button><button type="button" data-d9lab-action="actividad" data-d9lab-value="gabriel" aria-pressed="false">Gabriel vuelve</button>';
+    caja.querySelector('header').after(navegacion);
+    caja.querySelectorAll('[data-d9lab-panel]').forEach((panel, i) => {
+      const trabajo = doc.createElement('div'), escena = doc.createElement('div'), lectura = doc.createElement('div');
+      trabajo.className = 'd9lab-work';
+      escena.className = 'd9lab-stage';
+      lectura.className = 'd9lab-lesson';
+      let enLectura = false;
+      [...panel.children].filter(e => e.tagName !== 'HEADER').forEach(e => {
+        if (e.classList.contains('d9lab-reading')) enLectura = true;
+        (enLectura ? lectura : escena).append(e);
+      });
+      trabajo.append(escena, lectura);
+      panel.append(trabajo);
+      panel.hidden = i !== 0;
+    });
+    root.append(caja);
+    const campo = (k, t) => { caja.querySelector(`[data-d9lab-field="${k}"]`).textContent = t; };
+    const pulsado = (accion, valor) => caja.querySelectorAll(`[data-d9lab-action="${accion}"]`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.d9labValue === String(valor))));
+    function eligeBloque(n) {
+      const b = bloques[n];
+      if (!b) return;
+      pulsado('bloque', n);
+      caja.querySelectorAll('[data-d9lab-block]').forEach(e => e.dataset.active = String(Number(e.dataset.d9labBlock) === n));
+      campo('bloque-titulo', b.titulo);
+      campo('bloque-cuenta', `${b.semanas} × 7 = ${b.anos} años`);
+      campo('bloque-fechas', `${b.desde} → ${b.hasta}`);
+      campo('bloque-texto', b.texto);
+      campo('bloque-biblia', b.biblia);
+      campo('bloque-fuente', b.fuente);
+      caja.querySelector('[data-d9lab-chart="bloques"]').setAttribute('aria-label', `${b.semanas} semanas: ${b.anos} años, de ${b.desde} a ${b.hasta}. El tramo seleccionado se ilumina dentro de los 490 años.`);
+    }
+    function eligeSemana(n) {
+      const s = semana[n];
+      if (!s) return;
+      pulsado('semana', n);
+      caja.querySelectorAll('[data-d9lab-point]').forEach(e => e.dataset.active = String(Number(e.dataset.d9labPoint) === n));
+      caja.querySelectorAll('[data-d9lab-half]').forEach(e => e.dataset.active = String(n === 1 || Number(e.dataset.d9labHalf) === (n === 0 ? 0 : 1)));
+      const marcador = caja.querySelector('[data-d9lab-marker]');
+      marcador.setAttribute('x1', String(s.x));
+      marcador.setAttribute('x2', String(s.x));
+      campo('semana-fecha', s.fecha);
+      campo('semana-titulo', s.titulo);
+      campo('semana-texto', s.texto);
+      campo('semana-biblia', s.biblia);
+      campo('semana-cita', s.cita);
+      campo('semana-fuente', s.fuente);
+      caja.querySelector('[data-d9lab-chart="semana"]').setAttribute('aria-label', `${s.fecha}: ${s.titulo}. La semana tiene dos mitades de tres años y medio.`);
+    }
+    function eligeEscala(valor) {
+      if (!['general', 'ampliada'].includes(valor)) return;
+      const amplia = valor === 'ampliada', ancho = amplia ? 632 : 632 * 490 / 2300;
+      pulsado('escala', valor);
+      caja.querySelector('[data-d9lab-period-first]').setAttribute('width', String(ancho));
+      const resto = caja.querySelector('[data-d9lab-period-rest]');
+      resto.setAttribute('x', String(24 + ancho));
+      resto.setAttribute('width', String(632 - ancho));
+      resto.style.display = amplia ? 'none' : '';
+      const medio = caja.querySelector('[data-d9lab-period-mid]');
+      medio.setAttribute('x', String(24 + ancho));
+      medio.setAttribute('text-anchor', amplia ? 'end' : 'middle');
+      caja.querySelector('[data-d9lab-period-end]').style.display = amplia ? 'none' : '';
+      caja.querySelector('[data-d9lab-period-title]').textContent = amplia ? '490 años · primera parte ampliada' : '2.300 años · vista general';
+      campo('periodo-caption', amplia ? 'Ampliación de 457 a.C. a 34 d.C. Los 1.810 años restantes continúan hasta 1844, fuera de esta ventana.' : 'El tramo dorado ocupa el 21,3 % del período completo. El resto representa 1.810 años.');
+      caja.querySelector('[data-d9lab-chart="periodos"]').setAttribute('aria-label', amplia ? 'Primera parte ampliada: 490 años, de 457 antes de Cristo a 34 después de Cristo. El resto del período queda fuera de esta ventana.' : 'Vista general: 490 años de 457 antes de Cristo a 34 después de Cristo, seguidos por 1810 años hasta 1844.');
+    }
+    function eligeGabriel(n) {
+      const p = pasos[n];
+      if (!p) return;
+      pulsado('gabriel', n);
+      caja.querySelectorAll('[data-d9lab-link]').forEach(e => e.dataset.active = String(Number(e.dataset.d9labLink) <= n));
+      caja.querySelector('[data-d9lab-gabriel-line]').setAttribute('x2', String([84, 340, 596][n]));
+      campo('gabriel-ref', p.ref);
+      campo('gabriel-titulo', p.nombre);
+      campo('gabriel-cita', p.cita);
+      campo('gabriel-texto', p.texto);
+      campo('gabriel-fuente', p.apoyo);
+      caja.querySelector('[data-d9lab-chart="gabriel"]').setAttribute('aria-label', `Paso ${n + 1} de tres: ${p.nombre}, ${p.ref}.`);
+    }
+    function eligeActividad(valor) {
+      if (!['semanas', 'ultima', 'periodos', 'gabriel'].includes(valor)) return;
+      pulsado('actividad', valor);
+      caja.querySelectorAll('[data-d9lab-panel]').forEach(panel => panel.hidden = panel.dataset.d9labPanel !== valor);
+    }
+    const acciones = { actividad: eligeActividad, bloque: v => eligeBloque(Number(v)), semana: v => eligeSemana(Number(v)), escala: eligeEscala, gabriel: v => eligeGabriel(Number(v)) };
+    caja.addEventListener('click', e => {
+      const b = e.target.closest('button[data-d9lab-action]');
+      if (b && caja.contains(b)) acciones[b.dataset.d9labAction]?.(b.dataset.d9labValue);
+    }, { signal: vida.signal });
+    caja.addEventListener('keydown', e => {
+      const b = e.target.closest('button[data-d9lab-action]');
+      if (!b || !['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) return;
+      const bs = [...caja.querySelectorAll(`button[data-d9lab-action="${b.dataset.d9labAction}"]`)];
+      const i = bs.indexOf(b), n = e.key === 'Home' ? 0 : e.key === 'End' ? bs.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + bs.length) % bs.length;
+      e.preventDefault();
+      bs[n].focus();
+      bs[n].click();
+    }, { signal: vida.signal });
+    eligeBloque(0);
+    eligeSemana(1);
+    eligeEscala('general');
+    eligeGabriel(0);
+    return () => { vida.abort(); caja.remove(); };
+  }
+  return montarDaniel9;
+})(),
+d11: (() => {
+  /* Las selecciones exploran contenido; no registran avance. */
+  let siguienteInstancia = 0;
+
+  const BIBLIA = 'https://www.biblegateway.com/passage/?search=Daniel%2011&version=RVR1995';
+  const TREIYER = 'Humberto R. Treiyer, Enigmas descifrados (2006, tercera impresión 2007)';
+  const FUENTES = {
+    territorio: [
+      ['Daniel 11:5–9 · RV1995', BIBLIA],
+      [TREIYER + ', pp. 55–60'],
+      ['Natural Earth · tierra física 1:50m; costa recortada, sin fronteras administrativas', 'https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_50m_land.geojson'],
+      ['Natural Earth · puntos de referencia: Damasco, Jerusalén y El Cairo', 'https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_50m_populated_places.geojson'],
+      ['Natural Earth · datos de dominio público; se permite adaptar su geometría', 'https://www.naturalearthdata.com/about/terms-of-use/'],
+    ],
+    alianza: [
+      ['Daniel 11:6–8 · RV1995', BIBLIA],
+      [TREIYER + ', pp. 56–60'],
+      ['Bevan, The House of Ptolemy, cap. VI · tradiciones antiguas comparadas'],
+    ],
+    visiones: [
+      ['Daniel 11:3–4; 8:21–22 · RV1995', BIBLIA],
+      ['Daniel 2:32, 39; 7:6; 8:8 · RV1995', 'https://www.biblegateway.com/passage/?search=Daniel%202%3A32%2C39%3B7%3A6%3B8%3A8&version=RVR1995'],
+      [TREIYER + ', pp. 52–55'],
+    ],
+    escape: [
+      ['Daniel 11:41; 12:1; 8:9 · RV1995', BIBLIA],
+      ['Génesis 19:36–38; 36:1; Apocalipsis 18:4; 13:11–17', 'https://www.biblegateway.com/passage/?search=Genesis%2019%3A36-38%3B36%3A1%3BApocalipsis%2018%3A4%3B13%3A11-17&version=RVR1995'],
+      ['Elena G. de White, El conflicto de los siglos, cap. 26: formación de la imagen, PDF 364', 'https://text.egwwritings.org/amp/read/1710.2047'],
+      ['Stephen Bohr, Studies on Daniel 11 (267 pp.), pp. 120–157', 'https://sumtv.store/studies-on-daniel-11-digital-download/'],
+      [TREIYER + ', pp. 161–177'],
+    ],
+  };
+
+  /* Natural Earth 1:50m physical land, public domain; cropped to 27–39 E, 28–37.5 N.
+     Source: https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_50m_land.geojson
+     SHA256 e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b.
+     Terms: https://www.naturalearthdata.com/about/terms-of-use/
+     Polygon clipping preserves the physical coast, without administrative boundaries.
+     Projection: equirectangular, longitude scaled by cos(33 degrees).
+     Reference points use ne_50m_populated_places.geojson from the same source.
+     They locate places, not ancient capitals or territorial extents. */
+  const COSTA_D11 = [
+    "M281.7,96.9L263.1,109.7L261.9,113.5L262.8,116.2L265.4,119.4L266.0,120.2L267.0,122.6L262.9,123.3L258.9,123.6L256.6,123.3L254.5,123.4L247.9,130.3L244.4,132.7L240.2,134.1L235.9,134.9L233.7,135.0L231.8,135.9L230.5,137.5L230.5,139.1L229.9,140.4L227.5,140.1L226.5,137.6L224.9,136.5L220.7,137.1L218.7,137.0L212.0,134.6L210.0,133.6L208.7,131.5L205.3,124.1L204.7,118.6L207.9,120.0L210.9,118.3L213.8,115.5L217.2,114.4L219.4,114.9L221.5,115.3L225.3,114.5L227.0,110.3L227.5,105.5L234.0,106.9L240.6,107.6L245.9,107.9L251.2,107.1L267.5,102.0L272.1,99.0L274.9,97.9L279.8,95.4L285.0,94.0L281.7,96.9ZM46.0,82.7L43.4,83.6L42.5,83.4L41.5,81.5L43.0,76.7L41.6,73.7L41.5,72.4L43.6,70.6L45.0,67.9L48.6,65.0L57.7,61.6L59.9,61.3L59.8,64.0L56.7,70.8L54.0,74.2L54.7,76.9L50.4,77.7L46.0,82.7ZM22.3,102.4L20.9,104.8L19.5,102.7L20.1,100.4L18.5,96.7L21.6,91.3L21.6,88.6L23.9,87.3L23.4,91.8L21.6,95.4L23.4,98.4L24.3,101.8L22.3,102.4ZM46.6,56.2L45.8,56.8L44.1,54.9L44.0,53.9L45.8,52.7L46.7,52.5L47.0,53.2L46.9,54.9L46.6,56.2ZM16.7,39.0L16.0,39.1L16.0,36.2L16.6,36.8L17.4,37.2L17.2,38.2L16.7,39.0ZM16.0,45.6L18.2,44.0L23.7,41.5L25.5,41.3L28.5,42.8L22.9,45.3L21.4,46.7L17.2,47.0L16.0,47.7ZM443.2,16.0L443.2,419.3L308.2,419.3L307.2,417.",
+    "8L303.6,415.6L294.7,414.6L290.9,413.7L287.4,416.5L287.1,413.0L289.5,408.0L293.0,397.7L293.6,388.7L299.0,361.8L300.2,356.2L299.9,353.2L297.4,356.5L295.4,358.5L291.4,365.3L287.2,387.1L281.1,404.1L280.4,414.7L279.4,418.6L279.1,419.3L258.9,419.3L256.7,417.2L250.8,408.4L244.4,402.7L238.4,395.2L236.8,389.7L236.9,386.2L234.2,377.7L232.3,373.7L225.0,364.7L222.9,359.8L221.3,357.7L219.7,354.7L217.0,342.9L214.1,335.5L210.8,337.5L211.4,340.7L208.5,345.0L206.8,350.0L208.1,354.2L214.1,360.4L215.3,363.1L216.7,369.1L216.5,377.1L217.5,379.9L221.9,385.9L223.5,389.4L224.5,392.5L226.0,395.3L230.4,400.5L236.8,410.4L242.9,417.1L245.8,419.3L16.0,419.3L16.0,273.8L24.8,275.9L35.2,282.9L38.1,283.8L45.5,283.6L50.4,287.8L69.9,289.8L80.3,294.3L86.2,298.0L89.8,299.1L92.9,298.9L97.1,297.6L102.5,295.0L108.3,291.4L120.3,282.3L124.6,280.6L127.3,281.1L130.7,280.9L132.1,278.5L133.9,276.8L135.0,274.8L136.9,272.5L143.1,271.8L155.7,267.9L154.3,269.7L142.8,274.2L147.7,274.8L152.8,273.2L158.5,272.3L159.5,270.4L160.2,266.8L161.4,266.3L165.3,267.0L177.1,272.5L180.0,272.6L188.3,269.6L190.0,268.9L192.7,270.6L198.8,277.4L196.7,277.3L190.2,271.4L189.6,274.4L185.9,279.5L190.5,281.7L194.3,282.6L196.3,285.4L197.6,288.0L201.4,286.9",
+    "L204.0,283.4L202.6,281.4L201.7,279.4L202.9,279.4L205.5,281.0L213.0,287.6L215.5,289.0L218.4,288.8L224.4,286.9L226.1,287.2L234.2,284.8L235.2,286.6L236.5,288.3L243.1,286.4L253.3,286.4L261.7,284.2L271.5,279.0L272.3,278.2L279.0,271.4L282.2,267.1L282.4,266.8L289.4,253.9L293.8,241.1L298.0,223.4L301.0,214.4L303.5,208.4L304.7,203.5L306.3,200.2L308.0,196.0L309.7,190.4L312.8,185.6L319.0,169.7L322.6,163.2L323.9,154.0L329.4,146.0L333.6,143.6L335.6,141.3L335.6,137.9L332.8,128.4L332.4,124.3L332.5,119.6L334.4,112.6L333.5,109.4L333.4,107.2L332.9,104.3L328.0,97.9L330.7,86.1L332.6,83.2L334.9,79.8L332.4,72.9L329.7,66.5L332.2,62.4L337.5,57.5L343.1,51.7L343.1,48.1L342.8,45.4L341.2,43.5L338.1,41.0L333.0,43.7L329.3,46.6L326.9,47.2L324.3,48.9L323.1,52.0L319.9,54.3L314.8,55.3L307.1,52.7L298.8,48.9L294.1,45.7L290.2,45.0L286.6,46.4L275.9,54.0L266.0,65.2L263.6,67.1L254.3,71.9L248.2,73.6L245.3,73.2L233.1,75.3L227.1,75.6L222.3,78.1L213.0,75.4L207.4,71.9L204.1,68.3L198.6,60.6L194.8,56.9L186.1,53.7L171.0,45.7L167.0,44.8L156.6,43.6L145.7,42.9L143.5,45.8L142.7,57.4L140.8,60.5L140.0,66.5L138.7,68.2L136.6,69.3L133.3,67.5L131.0,66.6L125.8,69.1L115.3,72.5L111.7,73.0L99.6,68.7L95.2,65.9L92.3,62.8L91.3,57.6L89.5,54.6L89.3",
+    ",52.6L88.6,50.2L86.1,49.3L83.5,51.1L80.7,51.0L77.1,49.9L68.8,45.6L62.4,45.2L58.6,50.5L55.6,52.2L52.3,52.7L52.1,51.2L54.6,47.8L44.6,48.4L39.3,51.0L35.2,50.6L32.2,49.4L32.6,48.0L35.7,47.5L38.5,46.3L49.3,45.3L51.8,44.4L54.6,40.6L59.6,37.4L60.2,36.0L56.4,36.0L39.8,36.9L28.4,36.4L27.1,38.0L25.4,38.2L24.9,33.9L26.7,31.8L29.1,32.0L35.0,30.3L34.5,26.6L30.3,24.2L29.4,22.8L26.3,22.4L23.8,20.7L23.3,16.4L23.1,16.0Z",
+  ].join('');
+
+  const TERRITORIOS = [
+    {
+      id: 'norte', nombre: 'Reino seléucida', lugar: 'Norte',
+      quien: 'Seleuco I Nicátor y sus sucesores; su dominio incluía Siria.',
+      epoca: 'Después de Alejandro; conflicto dinástico del siglo III a. C.',
+      sentido: 'Desde Judea, este reino quedaba al norte. Sus sucesores disputaron a los Tolomeos el corredor entre ambas potencias.',
+      pacto: 'La rivalidad alcanza la tierra del pueblo de Daniel. Por eso el relato sigue estas guerras y sus alianzas.',
+    },
+    {
+      id: 'centro', nombre: 'Judea', lugar: 'Punto de referencia',
+      quien: 'La tierra del pueblo de Daniel, situada entre los reinos enfrentados.',
+      epoca: 'Egipto y Siria en el siglo III a. C.',
+      sentido: 'Norte y sur se leen desde aquí. Judea no es una tercera dinastía equivalente a las otras dos.',
+      pacto: 'Las decisiones de cortes lejanas afectan al pueblo y a su fidelidad. El mapa ayuda a entender el hilo del capítulo.',
+    },
+    {
+      id: 'sur', nombre: 'Egipto de los Tolomeos', lugar: 'Sur',
+      quien: 'Tolomeo I Sóter fundó la dinastía egipcia; Berenice pertenecía a esta familia real.',
+      epoca: 'Después de Alejandro; conflicto dinástico del siglo III a. C.',
+      sentido: 'Egipto quedaba al sur de Judea. Sus gobernantes buscaban conservar su influencia mediante campañas y acuerdos.',
+      pacto: 'Una alianza matrimonial pretende asegurar la paz, pero su fracaso devuelve la región a la guerra.',
+    },
+  ];
+
+  const ALIANZA = [
+    {
+      nombre: 'La alianza', ref: 'Daniel 11:6', titulo: 'Una familia como garantía de paz',
+      decision: 'Berenice, hija de Tolomeo II, se casa con Antíoco II para acercar Egipto y el reino seléucida.',
+      resultado: 'La unión intenta cerrar la disputa política; abre también una rivalidad sucesoria con Laodice y su hijo Seleuco II.',
+      enlace: 'Matrimonio político', naturaleza: 'Relato histórico y aplicación a Daniel 11:6',
+    },
+    {
+      nombre: 'La ruptura', ref: 'Daniel 11:6', titulo: 'La alianza no protege a Berenice',
+      decision: 'La rivalidad por la sucesión rompe el acuerdo entre las familias reales.',
+      resultado: 'Berenice y su hijo mueren. Las fuentes antiguas no aclaran todos los detalles de las intrigas; el envenenamiento no se presenta aquí como un hecho probado.',
+      enlace: 'Acuerdo roto', naturaleza: 'Historia; detalles de la intriga con límites documentales',
+    },
+    {
+      nombre: 'La campaña', ref: 'Daniel 11:7–8', titulo: 'El hermano interviene',
+      decision: 'Tolomeo III, hermano de Berenice, asume el trono egipcio e interviene contra el reino de Seleuco II.',
+      resultado: 'La campaña lleva botín e imágenes religiosas a Egipto. El parentesco explica la continuidad entre el fracaso de la paz y la nueva guerra.',
+      enlace: 'Campaña y regreso con botín', naturaleza: 'Relato histórico y lectura de Daniel 11:7–8',
+    },
+  ];
+
+  const VISIONES = [
+    {
+      id: 'd2', nombre: 'Daniel 2', simbolo: 'Bronce', ref: 'Daniel 2:32, 39',
+      frase: 'su vientre y sus muslos, de bronce',
+      conexion: 'La secuencia pasa de la plata al bronce. La lectura histórica reconoce el poder griego que sucede a Medopersia; Daniel 11 continúa hacia el rey poderoso y la división de su reino.',
+      limite: 'Daniel 2 no nombra aquí a Alejandro ni describe los cuatro reinos sucesores.',
+    },
+    {
+      id: 'd7', nombre: 'Daniel 7', simbolo: 'Leopardo · cuatro cabezas', ref: 'Daniel 7:6',
+      frase: 'Esta bestia tenía cuatro cabezas; y le fue dado dominio.',
+      conexion: 'Las cuatro cabezas permiten comparar la pluralidad del dominio griego con el reino repartido de Daniel 11:4. La conexión se estudia dentro de la secuencia de las visiones.',
+      limite: 'El versículo no da los nombres de los cuatro generales. Su identificación pertenece a la explicación histórica.',
+    },
+    {
+      id: 'd8', nombre: 'Daniel 8', simbolo: 'Macho cabrío · cuatro cuernos', ref: 'Daniel 8:8, 21–22',
+      frase: 'cuatro reinos se levantarán de esa nación, aunque no con la fuerza de él.',
+      conexion: 'Daniel 8:21 nombra a Grecia y al primer rey; 8:22 explica los cuatro reinos. Daniel 11:4 añade que el dominio no pasaría a sus descendientes.',
+      limite: 'La consolidación de los reinos ocurrió tras conflictos. El reparto no fue un acuerdo pacífico e instantáneo al morir Alejandro.',
+    },
+  ];
+
+  const ESCAPE = [
+    {
+      nombre: 'El pasaje', alcance: 'Texto bíblico', titulo: 'El dominio encuentra un límite',
+      texto: 'Entrará en la tierra gloriosa, y muchas provincias caerán; pero escaparán de sus manos Edom, Moab y la mayoría de los hijos de Amón.',
+      ref: 'Daniel 11:41 · RV1995',
+      explica: 'La entrada y la caída no agotan el versículo: el texto conserva la diferencia entre caer bajo el poder y escapar de sus manos.',
+    },
+    {
+      nombre: 'La aplicación', alcance: 'Interpretación del estudio', titulo: 'Libertad de conciencia y escape',
+      texto: 'La lectura seguida relaciona la tierra gloriosa con Estados Unidos como baluarte de principios protestantes y de libertad de conciencia.',
+      ref: 'Bohr, Studies on Daniel 11, pp. 120–157',
+      explica: 'Edom, Moab y Amón representan en esta aplicación personas que dejan la esfera del opresor. La conexión se compara con el llamado de Apocalipsis 18:4.',
+    },
+    {
+      nombre: 'La evidencia', alcance: 'Pasajes comparados y fuentes', titulo: 'Cada conexión tiene su referencia',
+      texto: 'Daniel 11:41 presenta el escape; Daniel 12:1 desarrolla la liberación. Apocalipsis 13:11–17 trata la coerción y 18:4 el llamado a salir.',
+      ref: 'Daniel 11:41; 12:1 · Apocalipsis 13:11–17; 18:4',
+      explica: 'El conflicto de los siglos, cap. 26, estudia la formación de la imagen. La aplicación precisa de Daniel 11:41 se desarrolla en Bohr, pp. 120–157, y Treiyer, pp. 161–177.',
+    },
+    {
+      nombre: 'El límite', alcance: 'Expectativa futura sin fecha', titulo: 'El esquema no es una invasión fechada',
+      texto: 'El versículo no nombra a Estados Unidos. Esa identificación es una aplicación interpretativa; no documenta por sí sola una invasión geográfica moderna.',
+      ref: 'Alcance de la lectura de Daniel 11:41',
+      explica: 'No se asignan fechas al desenlace ni los tres pueblos a tres denominaciones modernas. El pueblo de Dios tiene alcance mundial; la promesa no condena personas por su origen.',
+    },
+  ];
+
+  const estilosDaniel11 = `
+  .d11lab{--d11lab-bg:var(--c-noche,#090a10);--d11lab-fg:var(--c-perg,#f4eee2);--d11lab-muted:var(--c-tenue,#c9bda6);--d11lab-gold:var(--c-oro,#f2c46b);--d11lab-line:rgba(244,238,226,.2);color:var(--d11lab-fg);background:var(--d11lab-bg);border:1px solid var(--d11lab-line);border-radius:24px;padding:clamp(16px,3vw,30px);font:400 16px/1.6 var(--cine-sans,system-ui,sans-serif);overflow-wrap:anywhere;color-scheme:dark}
+  .d11lab *{box-sizing:border-box}.d11lab h2,.d11lab h3,.d11lab p{margin:0}.d11lab h2{font:500 clamp(1.65rem,4vw,2.6rem)/1.15 var(--cine-serif,Georgia,serif);max-width:25ch}.d11lab h3{font:500 clamp(1.35rem,3vw,1.8rem)/1.2 var(--cine-serif,Georgia,serif)}
+  .d11lab .d11lab-eyebrow{color:var(--d11lab-gold);font-size:.74rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.d11lab .d11lab-intro{color:var(--d11lab-muted);max-width:70ch;margin-top:12px}.d11lab .d11lab-nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}
+  .d11lab button{appearance:none;min-height:44px;border:1px solid var(--d11lab-line);border-radius:12px;padding:10px 14px;background:rgba(244,238,226,.04);color:var(--d11lab-fg);font:650 .88rem/1.3 var(--cine-sans,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background .18s,border-color .18s}.d11lab button:hover{border-color:var(--d11lab-gold)}.d11lab button[aria-pressed=true]{background:var(--d11lab-gold);border-color:var(--d11lab-gold);color:#20170b}
+  .d11lab button:focus-visible,.d11lab a:focus-visible,.d11lab summary:focus-visible{outline:3px solid var(--d11lab-gold);outline-offset:4px}.d11lab .d11lab-body{display:grid;gap:20px}.d11lab .d11lab-head{display:grid;gap:8px}.d11lab .d11lab-nature{color:var(--d11lab-gold);font-size:.8rem}.d11lab .d11lab-work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+  .d11lab .d11lab-visual{background:radial-gradient(ellipse at center,rgba(242,196,107,.09),transparent 75%);border:1px solid var(--d11lab-line);border-radius:18px;min-width:0;padding:12px}.d11lab svg{display:block;width:100%;height:auto;max-height:440px;overflow:visible}.d11lab svg text{font-family:var(--cine-sans,system-ui,sans-serif);fill:var(--d11lab-fg);font-size:18px}.d11lab svg .d11lab-small{font-size:15px;fill:var(--d11lab-muted)}
+  .d11lab svg .d11lab-node{fill:#14151d;stroke:var(--d11lab-line);stroke-width:2}.d11lab svg .d11lab-on .d11lab-node{fill:rgba(242,196,107,.15);stroke:var(--d11lab-gold);stroke-width:3}.d11lab svg .d11lab-wire{fill:none;stroke:var(--d11lab-muted);stroke-width:3;stroke-linecap:round}.d11lab svg .d11lab-wire.d11lab-on{stroke:var(--d11lab-gold);stroke-width:5}.d11lab svg .d11lab-dim{opacity:.35}
+  .d11lab svg.d11lab-map{max-height:none}.d11lab svg.d11lab-map text{font-size:22px}
+  .d11lab .d11lab-caption{font-size:.78rem;color:var(--d11lab-muted);margin-top:8px}.d11lab .d11lab-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.d11lab .d11lab-detail{display:grid;gap:14px;min-width:0}.d11lab .d11lab-detail dl{display:grid;gap:12px;margin:0}.d11lab .d11lab-detail dt{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--d11lab-gold);font-weight:750}.d11lab .d11lab-detail dd{margin:2px 0 0}
+  .d11lab .d11lab-callout{border-left:3px solid var(--d11lab-gold);padding:10px 14px;background:rgba(242,196,107,.055)}.d11lab .d11lab-quote{font:500 1.1rem/1.7 var(--cine-serif,Georgia,serif)}.d11lab .d11lab-ref{font-size:.8rem;color:var(--d11lab-gold)}.d11lab .d11lab-sources{border-top:1px solid var(--d11lab-line);padding-top:14px;font-size:.82rem}.d11lab .d11lab-sources summary{cursor:pointer;min-height:44px;display:list-item;padding:9px 0;color:var(--d11lab-gold);font-weight:700}.d11lab .d11lab-sources ul{padding-left:20px;margin:6px 0;display:grid;gap:8px}.d11lab a{color:var(--d11lab-gold);text-underline-offset:3px}
+  .d11lab .d11lab-sequence{display:grid;gap:10px}.d11lab .d11lab-sequence>div{padding:13px;border:1px solid var(--d11lab-line);border-radius:12px}.d11lab .d11lab-sequence>div.d11lab-active{border-color:var(--d11lab-gold);background:rgba(242,196,107,.08)}.d11lab .d11lab-symbols{display:grid;gap:12px}.d11lab .d11lab-symbol{border:1px solid var(--d11lab-line);border-radius:12px;padding:14px;color:var(--d11lab-muted);opacity:.5}.d11lab .d11lab-symbol.d11lab-active{color:var(--d11lab-fg);border-color:var(--d11lab-gold);opacity:1}.d11lab .d11lab-symbol strong{display:block;color:var(--d11lab-gold)}
+  @media(max-width:650px){.d11lab .d11lab-work{grid-template-columns:1fr}.d11lab .d11lab-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.d11lab .d11lab-nav button{font-size:.8rem;padding:10px}.d11lab .d11lab-visual{max-width:480px;width:100%;margin:auto}.d11lab svg{max-height:350px}.d11lab .d11lab-controls button{flex:1 1 110px}.d11lab .d11lab-detail{gap:12px}}
+  @media(prefers-reduced-motion:reduce){.d11lab *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+  `;
+
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const controles = (accion, datos, actual) => '<div class="d11lab-controls">' + datos.map((d, i) =>
+    `<button type="button" data-d11lab-action="${accion}" data-d11lab-value="${i}" aria-pressed="${i === actual}">${esc(d.nombre)}</button>`).join('') + '</div>';
+  const fuentes = clave => '<details class="d11lab-sources"><summary>Consultar fuentes y localizadores</summary><ul>' + FUENTES[clave].map(([texto, url]) =>
+    '<li>' + (url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(texto)}</a>` : esc(texto)) + '</li>').join('') + '</ul></details>';
+  const encabezado = (numero, titulo, tipo, ayuda) => `<header class="d11lab-head"><p class="d11lab-eyebrow">Exploración ${numero} de 4</p><h3>${titulo}</h3><p class="d11lab-nature">${tipo}</p><p>${ayuda}</p></header>`;
+  const svg = (titulo, contenido) => `<svg viewBox="0 0 460 380" role="img" aria-label="${esc(titulo)}"><title>${esc(titulo)}</title>${contenido}</svg>`;
+  const nodo = (x, y, ancho, alto, titulo, subtitulo, activo = false) => `<g class="${activo ? 'd11lab-on' : ''}"><rect class="d11lab-node" x="${x}" y="${y}" width="${ancho}" height="${alto}" rx="14"/><text x="${x + ancho / 2}" y="${y + 31}" text-anchor="middle">${esc(titulo)}</text><text class="d11lab-small" x="${x + ancho / 2}" y="${y + 54}" text-anchor="middle">${esc(subtitulo)}</text></g>`;
+
+  function territorio(i, id) {
+    const t = TERRITORIOS[i];
+    const proyecta = (lon, lat) => [16 + (lon - 27) * 35.6, 16 + (37.5 - lat) * 35.6 / Math.cos(33 * Math.PI / 180)];
+    const puntos = [[36.29805, 33.50198], [35.206626, 31.778408], [31.248022, 30.051906]].map(p => proyecta(...p));
+    const [norte, centro, sur] = puntos;
+    const flecha = (destino, activa, nombre) => `<path class="d11lab-map-route" data-d11lab-route="${nombre}" data-active="${activa}" d="M${centro.join(',')}L${destino.join(',')}" fill="none" stroke="${activa ? '#f2c46b' : '#6e8384'}" stroke-width="${activa ? 4 : 2}" stroke-dasharray="8 6" marker-end="url(#${id}-${activa ? 'oro' : 'tenue'})"/>`;
+    const marcas = puntos.map(([x, y], n) => `<g class="d11lab-map-point" data-d11lab-point="${TERRITORIOS[n].id}" data-active="${n === i}"><circle cx="${x}" cy="${y}" r="${n === i ? 25 : 15}" fill="#f2c46b" opacity="${n === i ? .2 : .07}"/><circle cx="${x}" cy="${y}" r="${n === i ? 8 : 5}" fill="${n === i || n === 1 ? '#f2c46b' : '#c9bda6'}" stroke="#090a10" stroke-width="2"/></g>`).join('');
+    const dibujo = `<svg class="d11lab-map" viewBox="0 0 460 442" role="img" aria-label="Costa del Mediterráneo oriental. Siria al norte de Judea y Egipto al suroeste. Selección: ${esc(t.nombre)}"><title>Mediterráneo oriental · ${esc(t.nombre)}</title><defs><clipPath id="${id}-mapa"><rect x="8" y="8" width="444" height="426" rx="14"/></clipPath><marker id="${id}-oro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#f2c46b"/></marker><marker id="${id}-tenue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#6e8384"/></marker></defs>` +
+      `<g clip-path="url(#${id}-mapa)"><rect x="8" y="8" width="444" height="426" fill="#122732"/><path d="${COSTA_D11}" fill="#353d31" stroke="#939d82" stroke-width="1.3" stroke-linejoin="round"/>` +
+      '<text x="42" y="164" style="fill:#a0c3cf;font-size:21px">Mar</text><text x="42" y="190" style="fill:#a0c3cf;font-size:21px">Mediterráneo</text>' +
+      flecha(norte, i !== 2, 'norte') + flecha(sur, i !== 0, 'sur') + marcas +
+      '<g style="font-size:22px;font-weight:700;paint-order:stroke;stroke:#14201e;stroke-width:4px;stroke-linejoin:round"><text x="291" y="135">Siria</text><text x="332" y="276">Judea</text><text x="48" y="375">Egipto</text></g>' +
+      '<g style="paint-order:stroke;stroke:#14201e;stroke-width:3px;font-weight:600"><text x="291" y="157" style="font-size:18px">Reino seléucida</text><text x="332" y="298" style="font-size:18px">Jerusalén</text><text x="48" y="397" style="font-size:18px">Tolomeos</text></g>' +
+      '<g stroke="#c9bda6" stroke-width="1" fill="none"><path d="M332 165L344 180"/><path d="M320 263L331 271"/><path d="M159 338L129 362"/></g><path d="M419 48V24L414 32M419 24L424 32" stroke="#c9bda6" fill="none" stroke-width="2"/><text x="419" y="68" text-anchor="middle" style="font-size:17px">N</text></g></svg>';
+    return encabezado(1, '¿Desde dónde se leen norte y sur?', 'Contexto geográfico e identificación histórica · Daniel 11:5–9', 'Elige un territorio. Observa su posición respecto de Judea y por qué entra en el relato.') +
+      `<div class="d11lab-work"><div class="d11lab-visual">${dibujo}<p class="d11lab-caption">Costa de referencia actual · Natural Earth 1:50m. Los puntos ubican regiones; las flechas esquematizan relaciones respecto de Judea, sin fronteras de época ni trayectos militares exactos.</p></div><div>${controles('territorio', TERRITORIOS, i)}<div class="d11lab-detail" id="${id}-info" aria-live="polite"><h3>${esc(t.nombre)}</h3><dl><div><dt>Quién</dt><dd>${esc(t.quien)}</dd></div><div><dt>Época</dt><dd>${esc(t.epoca)}</dd></div><div><dt>Desde Judea</dt><dd>${esc(t.sentido)}</dd></div></dl><p class="d11lab-callout">${esc(t.pacto)}</p></div></div></div>` + fuentes('territorio');
+  }
+
+  function alianza(i, id) {
+    const a = ALIANZA[i];
+    let enlaces = i === 0 ? '<path class="d11lab-wire d11lab-on" d="M194 150H265"/><text class="d11lab-small" x="230" y="88" text-anchor="middle">alianza</text>' :
+      '<path class="d11lab-wire" stroke-dasharray="7 7" d="M194 150H265"/><path class="d11lab-wire d11lab-on" d="M218 138L242 162M242 138L218 162"/>';
+    if (i === 2) enlaces = '<path class="d11lab-wire d11lab-on" d="M140 276Q190 203 265 150"/><path d="M265 150L249 156L257 167Z" fill="var(--d11lab-gold)"/><text class="d11lab-small" x="305" y="244" text-anchor="middle">campaña</text>';
+    const dibujo = svg('Relaciones dinásticas: ' + a.nombre,
+      enlaces + nodo(4, 112, 190, 76, 'Berenice', 'Hija de Tolomeo II', i !== 2) +
+      nodo(265, 112, 190, 76, i === 2 ? 'Seleuco II' : 'Antíoco II', 'Reino seléucida', true) +
+      '<path class="d11lab-wire" stroke-dasharray="3 7" d="M99 188V270"/>' +
+      nodo(4, 276, 225, 76, 'Tolomeo III', 'Hermano de Berenice', i === 2));
+    return encabezado(2, 'Una paz que desemboca en guerra', a.naturaleza, 'Recorre tres decisiones. La línea punteada vertical indica parentesco; la horizontal, el acuerdo político.') +
+      `<div class="d11lab-work"><div class="d11lab-visual">${dibujo}<p class="d11lab-caption">${esc(a.enlace)} · ${esc(a.ref)}. El esquema selecciona protagonistas, no representa un árbol familiar completo.</p></div><div>${controles('alianza', ALIANZA, i)}<div class="d11lab-detail" id="${id}-info" aria-live="polite"><p class="d11lab-eyebrow">Paso ${i + 1} de 3 · ${a.ref}</p><h3>${a.titulo}</h3><dl><div><dt>Decisión y conflicto</dt><dd>${a.decision}</dd></div><div><dt>Resultado</dt><dd>${a.resultado}</dd></div></dl></div></div></div>` + fuentes('alianza');
+  }
+
+  function visiones(i, id) {
+    const v = VISIONES[i];
+    const iconos = [
+      '<path d="M190 34H270L285 90L269 150H191L175 90Z" fill="#b97a45" stroke="#f2c46b" stroke-width="3"/><path d="M198 151L188 194M262 151L272 194" stroke="#b97a45" stroke-width="20"/>',
+      '<ellipse cx="230" cy="100" rx="92" ry="37" fill="none" stroke="#f2c46b" stroke-width="3"/>' + [164,208,252,296].map(x => `<circle cx="${x}" cy="65" r="18" fill="#33271c" stroke="#f2c46b" stroke-width="2"/>`).join('') + '<path d="M157 125L142 160M201 132V166M259 132V166M302 123L316 158" stroke="#f2c46b" stroke-width="5"/>',
+      '<ellipse cx="230" cy="115" rx="74" ry="37" fill="none" stroke="#f2c46b" stroke-width="3"/><circle cx="320" cy="87" r="22" fill="none" stroke="#f2c46b" stroke-width="3"/><path d="M174 139L165 173M257 147L270 173" stroke="#f2c46b" stroke-width="5"/>' + [191,220,249,278].map(x => `<path d="M${x} 76Q${x - 13} 46 ${x} 22" fill="none" stroke="#f2c46b" stroke-width="4"/>`).join(''),
+    ];
+    const dibujo = svg(v.simbolo + '. Correspondencia seleccionada con Daniel 11:4.',
+      iconos[i] + '<path class="d11lab-wire d11lab-on" d="M230 198V246"/>' + nodo(50, 254, 360, 82, 'Daniel 11:4', 'El reino repartido', true));
+    return encabezado(3, 'Una secuencia, más detalle en cada visión', 'Texto bíblico y comparación interpretativa · Daniel 11:3–4', 'Elige una visión. Cambian el símbolo destacado, la frase bíblica y lo que añade a la comparación.') +
+      `<div class="d11lab-work"><div class="d11lab-visual">${dibujo}<p class="d11lab-caption">Símbolos esquemáticos para comparar el texto. No son retratos ni reconstrucciones históricas.</p><p class="d11lab-quote">«su reino será quebrantado y repartido hacia los cuatro vientos del cielo»</p><p class="d11lab-ref">Daniel 11:4 · RV1995</p></div><div>${controles('visiones', VISIONES, i)}<div class="d11lab-detail" id="${id}-info" aria-live="polite"><h3>${v.simbolo}</h3><p class="d11lab-quote">«${esc(v.frase)}»</p><p class="d11lab-ref">${v.ref} · RV1995</p><p>${v.conexion}</p><p class="d11lab-callout">${v.limite}</p></div></div></div>` + fuentes('visiones');
+  }
+
+  function escape(i, id) {
+    const e = ESCAPE[i];
+    const dibujo = svg('El texto distingue presión y escape; no representa países modernos.',
+      nodo(28, 22, 404, 76, 'Daniel 11:41', 'La entrada no alcanza a todos', true) +
+      `<path class="d11lab-wire ${i === 0 ? 'd11lab-on' : ''}" d="M170 98L110 175"/><path class="d11lab-wire ${i !== 0 ? 'd11lab-on' : ''}" d="M290 98L350 175"/>` +
+      nodo(5, 180, 215, 76, 'Muchas caen', 'Presión del poder', i === 0) +
+      nodo(240, 180, 215, 76, 'Otros escapan', 'Edom · Moab · Amón', i !== 0) +
+      '<path class="d11lab-wire d11lab-on" d="M350 258V306H260"/><text x="245" y="339" text-anchor="middle">La promesa conserva una salida</text>');
+    return encabezado(4, 'Personas que escapan · escena 13', 'Interpretación y promesa · Daniel 11:41', 'Examina el pasaje, su aplicación, la evidencia y su límite. Cada selección mantiene visible qué clase de afirmación estás leyendo.') +
+      `<div class="d11lab-work"><div class="d11lab-visual">${dibujo}<p class="d11lab-caption">Esquema del argumento. No es un mapa de una invasión moderna ni una cronología del futuro.</p></div><div>${controles('escape', ESCAPE, i)}<div class="d11lab-detail" id="${id}-info" aria-live="polite"><p class="d11lab-eyebrow">${e.alcance}</p><h3>${e.titulo}</h3><p class="${i === 0 ? 'd11lab-quote' : ''}">${i === 0 ? '«' : ''}${esc(e.texto)}${i === 0 ? '»' : ''}</p><p class="d11lab-ref">${e.ref}</p><p class="d11lab-callout">${e.explica}</p></div></div></div>` + fuentes('escape');
+  }
+
+  /** Monta una exploración independiente y devuelve una función que la retira. */
+  function montarDaniel11(root, opciones = {}) {
+    if (!root || typeof root.append !== 'function') throw new TypeError('Hace falta un contenedor para Daniel 11.');
+    const doc = root.ownerDocument || document;
+    const host = doc.createElement('section');
+    const id = 'd11lab-' + (++siguienteInstancia);
+    const estado = { actividad: 0, territorio: 1, alianza: 0, visiones: 0, escape: 0 };
+    const vistas = [territorio, alianza, visiones, escape];
+    const claves = ['territorio', 'alianza', 'visiones', 'escape'];
+    const nombres = ['Norte, Judea y sur', 'La alianza de Berenice', 'Cruzar las visiones', 'Personas que escapan'];
+    host.className = 'd11lab';
+    host.setAttribute('aria-label', 'Laboratorio de Daniel 11');
+    host.innerHTML = `${opciones.estilos === false ? '' : '<style>' + estilosDaniel11 + '</style>'}<header><p class="d11lab-eyebrow">Daniel 11 · Explorar para comprender</p><h2>Los reinos, el pacto y las personas</h2><p class="d11lab-intro">Cuatro exploraciones del contenido existente. Elige, compara y consulta la evidencia sin perder el hilo del pasaje.</p></header><nav class="d11lab-nav" aria-label="Exploraciones de Daniel 11">${nombres.map((nombre, i) => `<button type="button" data-d11lab-action="actividad" data-d11lab-value="${i}" aria-pressed="${i === 0}" aria-controls="${id}-body">${i + 1}. ${nombre}</button>`).join('')}</nav><div class="d11lab-body" id="${id}-body"></div>`;
+    const cuerpo = host.querySelector('.d11lab-body');
+    const pintar = () => {
+      const clave = claves[estado.actividad];
+      cuerpo.innerHTML = vistas[estado.actividad](estado[clave], id);
+      host.querySelectorAll('[data-d11lab-action="actividad"]').forEach((b, i) => b.setAttribute('aria-pressed', String(i === estado.actividad)));
+    };
+    const elegir = event => {
+      const boton = event.target.closest('button[data-d11lab-action]');
+      if (!boton || !host.contains(boton)) return;
+      const accion = boton.dataset.d11labAction;
+      const valor = Number(boton.dataset.d11labValue);
+      const limites = { actividad: 4, territorio: 3, alianza: 3, visiones: 3, escape: 4 };
+      if (!Object.hasOwn(limites, accion) || !Number.isInteger(valor) || valor < 0 || valor >= limites[accion]) return;
+      estado[accion] = valor;
+      pintar();
+      if (accion !== 'actividad') host.querySelector(`[data-d11lab-action="${accion}"][data-d11lab-value="${valor}"]`)?.focus({ preventScroll: true });
+    };
+    host.addEventListener('click', elegir);
+    pintar();
+    root.append(host);
+    return () => {
+      host.removeEventListener('click', elegir);
+      host.remove();
+    };
+  }
+  return montarDaniel11;
+})()
+};
 /* ───────── CINE: una lámina que se recorre con el dedo (v266) ─────────
    Camilo (20-oct): Daniel 9 «tipo producción de Hollywood», que se mueva como
    Daniel 2, 7 y 8. MECANISMO: la lámina (#lam) es el contenedor que se desplaza.
@@ -91906,6 +92480,7 @@ function cierraCapas(){
    (LAMINAS[id].actos) y los efectos son seis piezas que se reusan: luz, cuenta,
    sello, mapa, via y barra. Sin librerías. */
 let cineFoco=null,cineCuadro=0,cineActo=-1;
+let cineExploraEstado=null;
 const lamEsC=()=>!!(LAM()&&LAM().tipo==='cine');
 const cineActos=()=>LAM().actos;
 const cineLim=(x,a,b)=>Math.max(a,Math.min(b,x));
@@ -92078,8 +92653,10 @@ const CINE_FX={
   },
   cuenta(s,p,a){
     const cs=s.querySelectorAll('.cine-rej i'),ver=Math.round(a.a*cineTramo(p,.12,.42));
-    const n=Math.round(a.de+(a.a-a.de)*cineTramo(p,.16,.42));
-    s.querySelector('.cine-num b').textContent=n;s.querySelector('.cine-num small').textContent=n>=a.a?'años':'semanas';
+    // Son dos expresiones del mismo período, no cantidades intermedias de semanas.
+    const enAnios=p>=.42;
+    s.querySelector('.cine-num b').textContent=enAnios?a.a:a.de;
+    s.querySelector('.cine-num small').textContent=enAnios?'años · '+a.de+' × 7':'semanas proféticas';
     const [t0,t1]=[a.tramos[0],a.tramos[0]+a.tramos[1]],q=[cineTramo(p,.48,.56),cineTramo(p,.56,.68),cineTramo(p,.68,.74)];
     cs.forEach((c,i)=>{c.classList.toggle('v',i<ver);
       const k=i<t0?0:i<t1?1:2,lim=k===0?t0*q[0]:k===1?t0+(t1-t0)*q[1]:t1+(a.a-t1)*q[2];c.className=(i<ver?'v':'')+(i<lim?' t'+k:'');});
@@ -92135,8 +92712,34 @@ function cinePausas(a){
 }
 
 /* ── Abrir, mover y cerrar ── */
+function cineExploraLimpia(){
+  const anterior=cineExploraEstado;if(!anterior)return null;
+  cineExploraEstado=null;
+  if(anterior.limpia)anterior.limpia();
+  anterior.seccion.remove();
+  const el=document.getElementById('lam');if(el)el.classList.remove('cine-explorando');
+  return anterior;
+}
+function cineExploraAbre(){
+  const el=document.getElementById('lam'),montar=EXPLORAR_DANIEL[lamId];if(!el||!montar||cineExploraEstado)return;
+  if(typeof paraVoz==='function')paraVoz();
+  const raiz=el.getRootNode(),seccion=el.ownerDocument.createElement('section');
+  seccion.id='cineExploraciones';seccion.className='cine-exploraciones';seccion.setAttribute('aria-labelledby','cineExploraTitulo');
+  seccion.innerHTML='<header class="cine-explora-cab"><h2 id="cineExploraTitulo" tabindex="-1">Explorar y comparar</h2><button type="button" id="cineVolverRecorrido" onclick="cineExploraVuelve()">'+IC('izq')+' Volver al recorrido</button></header><div class="cine-explora-contenido"></div>';
+  cineExploraEstado={scroll:el.scrollTop,foco:raiz.activeElement,seccion,limpia:null};
+  el.append(seccion);el.classList.add('cine-explorando');
+  cineExploraEstado.limpia=montar(seccion.querySelector('.cine-explora-contenido'),{estilos:false});
+  el.scrollTop=0;seccion.querySelector('h2').focus({preventScroll:true});
+}
+function cineExploraVuelve(){
+  const anterior=cineExploraLimpia(),el=document.getElementById('lam');if(!anterior||!el)return;
+  if(typeof paraVoz==='function')paraVoz();
+  el.scrollTop=anterior.scroll;cinePinta();
+  if(anterior.foco&&anterior.foco.isConnected)anterior.foco.focus({preventScroll:true});
+}
 function cineAbre(cid,modo){
   const el=document.getElementById('lam');if(!el)return;
+  cineExploraLimpia();
   if(!lamModo){const r=el.getRootNode?el.getRootNode():document;cineFoco=r.activeElement;}
   lamPara();if(lamModo&&lamEsE())lamLimpia();
   lamId=cid;lamModo=modo==='presentar'?'presentar':'explorar';lamPaso=0;lamDonde=LAM().actos[0].id;cineActo=-1;
@@ -92145,6 +92748,7 @@ function cineAbre(cid,modo){
   el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',L.libro+' · '+L.titulo);
   document.body.classList.add('leyendo');
   el.innerHTML='<header class="cine-cab"><div class="cine-tit"><span>'+esc(L.libro)+' · cine</span><b>'+esc(L.titulo)+'</b></div><div class="cine-bots">'+
+    (EXPLORAR_DANIEL[cid]?'<button type="button" id="cineExplorar" onclick="cineExploraAbre()" aria-label="Explorar relaciones">'+IC('comparar')+'<span> Explorar</span></button>':'')+
     '<button type="button" onclick="cineModo()" id="cineModo">'+(lamModo==='presentar'?IC('libro')+'<span> Estudiar</span>':IC('play')+'<span> Presentar</span>')+'</button>'+
     (lamPuedeTodo()?'<button type="button" onclick="lamPantalla()" aria-label="Pantalla completa">'+IC('expandir')+'</button>':'')+
     (typeof meBoton==='function'?meBoton('lam-'+cid,true):'')+
@@ -92163,6 +92767,7 @@ function cineAbre(cid,modo){
 /* El avance de cada acto y su efecto. Solo se mueven los actos a la vista. */
 function cinePinta(){
   cineCuadro=0;
+  if(cineExploraEstado)return;
   const el=document.getElementById('lam');if(!el||el.hidden||!lamEsC())return;
   const vh=el.clientHeight,y=el.scrollTop,secs=el.querySelectorAll('.cine-acto');let act=0;
   secs.forEach((s,i)=>{
@@ -92184,6 +92789,7 @@ function cineY(i,f){
   return s.offsetTop+f*Math.max(0,s.offsetHeight-el.clientHeight);
 }
 function cineSalto(d){
+  if(cineExploraEstado)return;
   const el=document.getElementById('lam');if(!el)return;
   if(cineActos()[cineActo]&&cineActos()[cineActo].tipo==='estudio'){
     const n=cineActo+d,a=cineActos()[n];if(!a)return;
@@ -92194,6 +92800,7 @@ function cineSalto(d){
   el.scrollTo({top:dest===undefined?(d>0?el.scrollHeight:0):dest,behavior:cineQuieto()?'auto':'smooth'});
 }
 function cineIrNumero(n,intento){
+  if(cineExploraEstado)return;
   const a=cineActos()[Number(n)];if(!a)return;
   const el=document.getElementById('lam'),ps=cinePausas(a),s=el&&el.querySelectorAll('.cine-acto')[Number(n)];if(!s)return;
   /* Dentro de Jóvenes la hoja de estilos llega después de abrir (enlace o recarga): sin ella los
@@ -92211,6 +92818,7 @@ function cineModo(){
   cinePinta();lamLugar();
 }
 function cineAlCerrar(){
+  cineExploraLimpia();
   if(typeof paraVoz==='function')paraVoz();
   if(cineCuadro){cancelAnimationFrame(cineCuadro);cineCuadro=0;}
   const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document;
@@ -92221,6 +92829,7 @@ function cineAlCerrar(){
 function cineTecla(e){
   const el=document.getElementById('lam');
   if(e.key==='Escape'){e.preventDefault();lamCierra();return;}
+  if(cineExploraEstado&&e.key!=='Tab')return;
   if(e.key!=='Tab'&&e.target.closest&&e.target.closest('.cine-estudio')){cineEstudioTecla(e);return;}
   if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(1);return;}
   if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(-1);return;}

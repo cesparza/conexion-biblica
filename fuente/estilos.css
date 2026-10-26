@@ -3112,14 +3112,14 @@ blockquote.decl:not(.frase-libro) .decl-src::before{display:none}
 .lam-itit,.lam-tit{font-size:1.125rem;font-weight:800;color:var(--azul);line-height:1.2;text-wrap:balance}
 .lam-bots{display:flex;gap:.5rem;flex-wrap:wrap}
 .lam{position:fixed;inset:0;z-index:3000;overflow:auto;background:var(--bg);color:var(--txt);padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 24px);display:flex;flex-direction:column;gap:12px;align-items:center}
-.lam>*{width:100%;max-width:1000px;flex:0 0 auto}
+.lam:not(.cine)>*{width:100%;max-width:1000px;flex:0 0 auto}
 .lam-cab{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .lam-cabtx{min-width:0}
 .lam-pasos{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
 .lam-paso{flex:0 0 auto;display:flex;align-items:center;gap:6px;min-height:40px;padding:0 12px 0 6px;border-radius:999px;border:2px solid var(--v-linea,#F0E6D2);background:var(--card,#fff);color:var(--txt);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
 .lam-paso i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--v-sup2,#FFF4E0);color:var(--azul);font-size:.75rem}
 .lam-paso.on{border-color:var(--azul)}
-.lam:not(.pres)>*{max-width:1180px}
+.lam:not(.pres):not(.cine)>*{max-width:1180px}
 /* v187: la imagen y su explicación. En el celular, una debajo de la otra y la
    imagen pegada arriba mientras se lee; en pantalla ancha, lado a lado. */
 .lam-marco{display:grid;gap:12px;justify-items:center;align-items:start}
@@ -4321,7 +4321,7 @@ button.per:hover,button.per:focus-visible{color:var(--prof);text-decoration-styl
   .lam:not(.pres):not(.escenas) .lam-riel{justify-self:end;width:min(100%,calc((100vh - 300px) * 1100 / 1152))}
 }
 @media (min-width:1100px){
-  .lam:not(.pres)>*{max-width:1480px}
+  .lam:not(.pres):not(.cine)>*{max-width:1480px}
   .lam:not(.pres):not(.escenas) .lam-marco,.lam.escenas:not(.pres) .lam-marco{--rw:clamp(224px,15vw,264px);--hw:clamp(340px,24vw,420px);
     grid-template-columns:var(--rw) minmax(0,var(--ew)) var(--hw);grid-template-rows:auto;justify-content:center;align-items:start;column-gap:clamp(20px,2vw,36px)}
   .lam:not(.pres):not(.escenas) .lam-marco{--ew:min(680px,calc((100vh - 250px) * 1100 / 1152));--eh:calc(var(--ew) * 1152 / 1100)}

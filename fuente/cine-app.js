@@ -6,6 +6,7 @@
    (LAMINAS[id].actos) y los efectos son seis piezas que se reusan: luz, cuenta,
    sello, mapa, via y barra. Sin librerías. */
 let cineFoco=null,cineCuadro=0,cineActo=-1;
+let cineExploraEstado=null;
 const lamEsC=()=>!!(LAM()&&LAM().tipo==='cine');
 const cineActos=()=>LAM().actos;
 const cineLim=(x,a,b)=>Math.max(a,Math.min(b,x));
@@ -178,8 +179,10 @@ const CINE_FX={
   },
   cuenta(s,p,a){
     const cs=s.querySelectorAll('.cine-rej i'),ver=Math.round(a.a*cineTramo(p,.12,.42));
-    const n=Math.round(a.de+(a.a-a.de)*cineTramo(p,.16,.42));
-    s.querySelector('.cine-num b').textContent=n;s.querySelector('.cine-num small').textContent=n>=a.a?'años':'semanas';
+    // Son dos expresiones del mismo período, no cantidades intermedias de semanas.
+    const enAnios=p>=.42;
+    s.querySelector('.cine-num b').textContent=enAnios?a.a:a.de;
+    s.querySelector('.cine-num small').textContent=enAnios?'años · '+a.de+' × 7':'semanas proféticas';
     const [t0,t1]=[a.tramos[0],a.tramos[0]+a.tramos[1]],q=[cineTramo(p,.48,.56),cineTramo(p,.56,.68),cineTramo(p,.68,.74)];
     cs.forEach((c,i)=>{c.classList.toggle('v',i<ver);
       const k=i<t0?0:i<t1?1:2,lim=k===0?t0*q[0]:k===1?t0+(t1-t0)*q[1]:t1+(a.a-t1)*q[2];c.className=(i<ver?'v':'')+(i<lim?' t'+k:'');});
@@ -235,8 +238,34 @@ function cinePausas(a){
 }
 
 /* ── Abrir, mover y cerrar ── */
+function cineExploraLimpia(){
+  const anterior=cineExploraEstado;if(!anterior)return null;
+  cineExploraEstado=null;
+  if(anterior.limpia)anterior.limpia();
+  anterior.seccion.remove();
+  const el=document.getElementById('lam');if(el)el.classList.remove('cine-explorando');
+  return anterior;
+}
+function cineExploraAbre(){
+  const el=document.getElementById('lam'),montar=EXPLORAR_DANIEL[lamId];if(!el||!montar||cineExploraEstado)return;
+  if(typeof paraVoz==='function')paraVoz();
+  const raiz=el.getRootNode(),seccion=el.ownerDocument.createElement('section');
+  seccion.id='cineExploraciones';seccion.className='cine-exploraciones';seccion.setAttribute('aria-labelledby','cineExploraTitulo');
+  seccion.innerHTML='<header class="cine-explora-cab"><h2 id="cineExploraTitulo" tabindex="-1">Explorar y comparar</h2><button type="button" id="cineVolverRecorrido" onclick="cineExploraVuelve()">'+IC('izq')+' Volver al recorrido</button></header><div class="cine-explora-contenido"></div>';
+  cineExploraEstado={scroll:el.scrollTop,foco:raiz.activeElement,seccion,limpia:null};
+  el.append(seccion);el.classList.add('cine-explorando');
+  cineExploraEstado.limpia=montar(seccion.querySelector('.cine-explora-contenido'),{estilos:false});
+  el.scrollTop=0;seccion.querySelector('h2').focus({preventScroll:true});
+}
+function cineExploraVuelve(){
+  const anterior=cineExploraLimpia(),el=document.getElementById('lam');if(!anterior||!el)return;
+  if(typeof paraVoz==='function')paraVoz();
+  el.scrollTop=anterior.scroll;cinePinta();
+  if(anterior.foco&&anterior.foco.isConnected)anterior.foco.focus({preventScroll:true});
+}
 function cineAbre(cid,modo){
   const el=document.getElementById('lam');if(!el)return;
+  cineExploraLimpia();
   if(!lamModo){const r=el.getRootNode?el.getRootNode():document;cineFoco=r.activeElement;}
   lamPara();if(lamModo&&lamEsE())lamLimpia();
   lamId=cid;lamModo=modo==='presentar'?'presentar':'explorar';lamPaso=0;lamDonde=LAM().actos[0].id;cineActo=-1;
@@ -245,6 +274,7 @@ function cineAbre(cid,modo){
   el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',L.libro+' · '+L.titulo);
   document.body.classList.add('leyendo');
   el.innerHTML='<header class="cine-cab"><div class="cine-tit"><span>'+esc(L.libro)+' · cine</span><b>'+esc(L.titulo)+'</b></div><div class="cine-bots">'+
+    (EXPLORAR_DANIEL[cid]?'<button type="button" id="cineExplorar" onclick="cineExploraAbre()" aria-label="Explorar relaciones">'+IC('comparar')+'<span> Explorar</span></button>':'')+
     '<button type="button" onclick="cineModo()" id="cineModo">'+(lamModo==='presentar'?IC('libro')+'<span> Estudiar</span>':IC('play')+'<span> Presentar</span>')+'</button>'+
     (lamPuedeTodo()?'<button type="button" onclick="lamPantalla()" aria-label="Pantalla completa">'+IC('expandir')+'</button>':'')+
     (typeof meBoton==='function'?meBoton('lam-'+cid,true):'')+
@@ -263,6 +293,7 @@ function cineAbre(cid,modo){
 /* El avance de cada acto y su efecto. Solo se mueven los actos a la vista. */
 function cinePinta(){
   cineCuadro=0;
+  if(cineExploraEstado)return;
   const el=document.getElementById('lam');if(!el||el.hidden||!lamEsC())return;
   const vh=el.clientHeight,y=el.scrollTop,secs=el.querySelectorAll('.cine-acto');let act=0;
   secs.forEach((s,i)=>{
@@ -284,6 +315,7 @@ function cineY(i,f){
   return s.offsetTop+f*Math.max(0,s.offsetHeight-el.clientHeight);
 }
 function cineSalto(d){
+  if(cineExploraEstado)return;
   const el=document.getElementById('lam');if(!el)return;
   if(cineActos()[cineActo]&&cineActos()[cineActo].tipo==='estudio'){
     const n=cineActo+d,a=cineActos()[n];if(!a)return;
@@ -294,6 +326,7 @@ function cineSalto(d){
   el.scrollTo({top:dest===undefined?(d>0?el.scrollHeight:0):dest,behavior:cineQuieto()?'auto':'smooth'});
 }
 function cineIrNumero(n,intento){
+  if(cineExploraEstado)return;
   const a=cineActos()[Number(n)];if(!a)return;
   const el=document.getElementById('lam'),ps=cinePausas(a),s=el&&el.querySelectorAll('.cine-acto')[Number(n)];if(!s)return;
   /* Dentro de Jóvenes la hoja de estilos llega después de abrir (enlace o recarga): sin ella los
@@ -311,6 +344,7 @@ function cineModo(){
   cinePinta();lamLugar();
 }
 function cineAlCerrar(){
+  cineExploraLimpia();
   if(typeof paraVoz==='function')paraVoz();
   if(cineCuadro){cancelAnimationFrame(cineCuadro);cineCuadro=0;}
   const el=document.getElementById('lam'),r=el&&el.getRootNode?el.getRootNode():document;
@@ -321,6 +355,7 @@ function cineAlCerrar(){
 function cineTecla(e){
   const el=document.getElementById('lam');
   if(e.key==='Escape'){e.preventDefault();lamCierra();return;}
+  if(cineExploraEstado&&e.key!=='Tab')return;
   if(e.key!=='Tab'&&e.target.closest&&e.target.closest('.cine-estudio')){cineEstudioTecla(e);return;}
   if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(1);return;}
   if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(-1);return;}

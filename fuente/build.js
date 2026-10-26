@@ -277,7 +277,17 @@ const REALES = Object.fromEntries(Object.entries(EXAMENES_REALES).map(([id, ex])
    template string: no había chequeo de sintaxis y cada comilla de un onclick
    había que escaparla dos veces. */
 const leer = f => fs.readFileSync(path.join(__dirname, f), 'utf8').replace(/\n+$/, '');
-const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css') + '\n' + leer('cine.css') + '\n' + leer('viaje.css');
+/* Las mismas fuentes sirven al producto y a la comparación de diseño. */
+const exploraciones = [9, 11].map(n => {
+  const fuente = leer('explorar-daniel' + n + '.js');
+  const css = fuente.match(new RegExp('export const estilosDaniel' + n + ' = `([\\s\\S]*?)`;'));
+  if (!css) throw new Error('Faltan los estilos de las actividades de Daniel ' + n);
+  return { n, css: css[1], js: fuente.replace(/\bexport /g, '') };
+});
+/* El traslado reconoce las acciones globales en columna cero; las fábricas son privadas. */
+const APP_EXPLORAR = 'const EXPLORAR_DANIEL = {\n' + exploraciones.map(x =>
+  'd' + x.n + ': (() => {\n' + x.js.split('\n').map(l => l ? '  ' + l : '').join('\n') + '\n  return montarDaniel' + x.n + ';\n})()').join(',\n') + '\n};';
+const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css') + '\n' + leer('cine.css') + '\n' + leer('viaje.css') + '\n' + exploraciones.map(x => x.css).join('\n');
 const CUERPO = leer('cuerpo.html');
 const REGLAS = leer('reglamento.js');
 const IMPR   = leer('imprimible.js');
@@ -410,6 +420,7 @@ ${REGLAS}
 ${IMPR}
 ${APP_BIB}
 ${APP_ME}
+${APP_EXPLORAR}
 ${APP_D9}
 ${APP_VI}
 ${APP}
