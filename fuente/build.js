@@ -291,7 +291,9 @@ const exploraciones = [9, 11].map(n => {
   const js = 'const montarDaniel11 = ' + privado(sinModulos(fuente), 'montarDaniel11') + ';\n' +
     'const montarDinastias = ' + privado(datos + '\n' + enlaces + '\n' + vista, 'montarDinastias') + ';\n' +
     sinModulos(leer('explorar-daniel11-completo.js'));
-  return {n, css:css[1], js, monta:'montarDaniel11Completo'};
+  const cssDinastias = vista.match(/const estilosDinastias=`([\s\S]*?)`;/);
+  if(!cssDinastias)throw new Error('Faltan los estilos compartidos de las dinastías');
+  return {n, css:css[1]+'\n'+cssDinastias[1], js, monta:'montarDaniel11Completo'};
 });
 /* El traslado reconoce las acciones globales en columna cero; las fábricas son privadas. */
 const APP_EXPLORAR = 'const EXPLORAR_DANIEL = {\n' + exploraciones.map(x =>

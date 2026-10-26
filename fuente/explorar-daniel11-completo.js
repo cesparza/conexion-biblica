@@ -8,6 +8,7 @@ export function montarDaniel11Completo(root, opciones={}){
     dinastias: host=>montarDinastias(host,{
       biografias:opciones.biografias,
       onBiografia:opciones.onBiografia,
+      estilos:opciones.estilos,
     }),
   });
 }
