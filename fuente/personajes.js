@@ -341,9 +341,9 @@ const PERSONAJES = [
       'Vio la gloria de Jesús en la Transfiguración, con Santiago y Juan (Mateo 17:1-6).',
       'Llama a Jesús «la piedra» escogida (1 Pedro 2:6), como la piedra de Daniel 2.'
     ],
-    textos: 'Mateo 17:1-6; 1 Pedro 2:6',
+    textos: 'Juan 1:40–42; Mateo 17:1-6; 1 Pedro 2:6',
     alias: ['Pedro'],
-    fuente: 'Mateo 17; 1 Pedro 2:6' },
+    fuente: 'Juan 1:40–42; Mateo 17; 1 Pedro 2:6' },
   { id: 'santiago-zebedeo', nombre: 'Santiago, hijo de Zebedeo', tipo: 'biblico',
     fechas: 'murió hacia 44 d.C.',
     quien: 'Apóstol, hermano de Juan.',

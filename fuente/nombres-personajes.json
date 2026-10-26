@@ -58,6 +58,10 @@
   ],
   "pablo": [
    "Saulo"
+  ],
+  "pedro": [
+   "Simón Pedro",
+   "Cefas"
   ]
  },
  "formas": {
@@ -2248,6 +2252,24 @@
    "strong": "H4977",
    "equivalenciaGriega": "G3157",
    "nota": "Equivalencia del nombre documentada en el léxico griego; no identifica a este personaje con otro homónimo."
+  },
+  "Simón": {
+   "nombre": "Simón",
+   "escritura": "שִׁמְעוֹן",
+   "transliteracion": "Shimʻôwn",
+   "pronunciacion": "Shimón",
+   "idioma": "hebreo",
+   "strong": "H8095",
+   "equivalenciaGriega": "G4613",
+   "nota": "Juan 1:40–42 relaciona a Simón Pedro con Cefas. La forma hebrea del nombre se documenta en la equivalencia G4613 / H8095."
+  },
+  "Cefas (griego)": {
+   "nombre": "Cefas",
+   "escritura": "Κηφᾶς",
+   "transliteracion": "Kēphâs",
+   "idioma": "griego",
+   "strong": "G2786",
+   "nota": "Forma griega de un sobrenombre arameo; Juan 1:42. No se inventa aquí una grafía aramea a partir de la transcripción griega."
   }
  }
 }

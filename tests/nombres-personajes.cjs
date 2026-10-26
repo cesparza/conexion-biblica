@@ -32,4 +32,6 @@ const peligro=normalizarNombre({id:'sin-forma',nombre:'Nombre',alias:['<img src=
 assert(!nombresHTML(peligro).includes('<img'));
 assert(nombresHTML(uno('moises')).includes('dir="rtl" lang="he"'));
 assert(nombresHTML(uno('pedro')).includes('dir="ltr" lang="grc"'));
+assert(uno('pedro').alias.includes('Simón Pedro')&&uno('pedro').alias.includes('Cefas'));
+assert(!uno('pedro').alias.includes('Simón'),'se conserva el calificador del nombre ambiguo');
 console.log('Nombres: '+PERSONAJES.length+' identidades, '+Object.keys(catalogo.formas).length+' formas documentadas; alias, homónimos, idiomas, HTML y fuente publicada coherentes.');
