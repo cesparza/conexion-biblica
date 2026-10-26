@@ -1781,7 +1781,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
   const fs=require('fs');for(const f of fs.readdirSync(path.join(RAIZ,'conflicto'))){const d=JSON.parse(fs.readFileSync(path.join(RAIZ,'conflicto',f),'utf8'));
     Z.CONTENIDO[d.id]=d.estudio.map(x=>({...x,h:[].concat(x.h).join('')}));}
   const norm=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ')
-    .replace(/&[a-z]+;/g,' ').replace(/[«»"“”.,;:¡!¿?()—–\-]/g,' ').replace(/\b\d+\b/g,' ').replace(/\s+/g,' ').toLowerCase().trim();
+    .replace(/&[a-z]+;/g,' ').replace(/[«»"“”.,;:¡!¿?()\[\]—–\-]/g,' ').replace(/\b\d+\b/g,' ').replace(/\s+/g,' ').toLowerCase().trim();
   const faltan=[];let n=0;
   for(const cat of Object.keys(Z.CATS)){Z.ponCat(cat);const st={};
     for(const c of [...Z.capsDe(),...Z.modsDe()]){Z.verCap(c.id);st[c.id]=norm(Z.el('detalle').innerHTML);}
