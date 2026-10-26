@@ -19,6 +19,7 @@ if ! git diff --quiet HEAD -- index.html sw.js; then
 fi
 
 node --no-warnings tests/daniel11-dinastias.mjs || exit 1
+node tests/nombres-personajes.cjs || exit 1
 node tests/daniel11.js || exit 1
 
 for t in test uso api; do

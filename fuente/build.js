@@ -300,7 +300,8 @@ const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer(
 const CUERPO = leer('cuerpo.html');
 const REGLAS = leer('reglamento.js');
 const IMPR   = leer('imprimible.js');
-const APP    = leer('app.js');
+const APP_NOMBRES = 'const nombresHTML = (() => {\n' + leer('nombres-personajes.cjs').replace(/module\.exports = \{normalizarNombre,nombresHTML\};/, '').split('\n').map(l=>l?'  '+l:'').join('\n') + '\n  return nombresHTML;\n})();';
+const APP    = APP_NOMBRES + '\n' + leer('app.js');
 const APP_PAR = leer('paralelos-app.js');
 const APP_D9 = leer('cine-app.js');
 /* v266: el Viaje, un modo de Practicar (viaje-app.js). */

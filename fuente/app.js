@@ -5472,7 +5472,7 @@ function personasTocables(html,capId){
 const perTipo=p=>p.tipo==='biblico'?'Personaje bíblico':p.tipo==='pueblo'?'Pueblo':'Personaje histórico';
 /* Lo de adentro de la ficha: lo mismo en la hoja del estudio y en la tarjeta de la lámina. */
 function perFichaHTML(p,cid){
-  return '<div class="per-txt"><p class="per-quien">'+p.quien+'</p>'+
+  return '<div class="per-txt"><p class="per-quien">'+p.quien+'</p>'+nombresHTML(p)+
     '<ul class="per-hizo">'+p.hizo.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
     (p.textos?'<p class="per-textos"><b>Textos:</b> '+(cid==null?esc(p.textos):refsTocables(esc(p.textos),cid))+'</p>':'')+
     '<p class="sec-fuente">Fuente: '+p.fuente+'</p></div>';

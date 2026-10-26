@@ -1980,4 +1980,6 @@ const PERSONAJES = [
     fuente: 'Wikipedia, «Charles Albert Tindley»' },
 ];
 
-module.exports = { PERSONAJES };
+const {normalizarNombre}=require('./nombres-personajes.cjs');
+const catalogoNombres=require('./nombres-personajes.json');
+module.exports = { PERSONAJES:PERSONAJES.map(p=>normalizarNombre(p,catalogoNombres)) };

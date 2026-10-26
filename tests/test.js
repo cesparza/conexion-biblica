@@ -103,7 +103,7 @@ ok(max<2000,`La sección más larga tiene ${max} caracteres (límite 2000)`);
 // 10. El index.html generado no tiene líneas largas
 const lineas=html.split('\n');
 const nLargas=lineas.filter(l=>l.length>2000).length;
-const maxL=Math.max(...lineas.map(l=>l.length));
+const maxL=lineas.reduce((max,l)=>Math.max(max,l.length),0);
 ok(nLargas===0,`index.html: 0 líneas sobre 2000 caracteres (máx ${maxL})`);
 
 // 11. El examen sigue funcionando con el banco ampliado
