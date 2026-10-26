@@ -3,7 +3,7 @@ function normalizarNombre(persona, catalogo){
   const normal = s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es');
   const nombre = catalogo.preferidos[persona.id] || persona.nombre;
   const alias = [...(persona.alias||[])];
-  for(const a of [persona.nombre,...(catalogo.adicionales[persona.id]||[])]){
+  for(const a of [persona.nombre,nombre,...(catalogo.adicionales[persona.id]||[])]){
     if(a&&!alias.some(x=>(typeof x==='string'?x:x.t)===a))alias.push(a);
   }
   const textos = [nombre,...alias.map(x=>typeof x==='string'?x:x.t)];

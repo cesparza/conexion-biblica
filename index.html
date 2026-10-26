@@ -6812,7 +6812,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '78e492d150de';
+const VERSION_APP = '5e31630c4763';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -77391,6 +77391,7 @@ const PERSONAJES = [
     ]
    },
    "Santiago, hijo de Zebedeo",
+   "Santiago (Jacobo), hijo de Zebedeo",
    "Jacobo, hijo de Zebedeo",
    "יַעֲקֹב",
    "יעקב",
@@ -97252,7 +97253,7 @@ const nombresHTML = (() => {
     const normal = s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es');
     const nombre = catalogo.preferidos[persona.id] || persona.nombre;
     const alias = [...(persona.alias||[])];
-    for(const a of [persona.nombre,...(catalogo.adicionales[persona.id]||[])]){
+    for(const a of [persona.nombre,nombre,...(catalogo.adicionales[persona.id]||[])]){
       if(a&&!alias.some(x=>(typeof x==='string'?x:x.t)===a))alias.push(a);
     }
     const textos = [nombre,...alias.map(x=>typeof x==='string'?x:x.t)];
