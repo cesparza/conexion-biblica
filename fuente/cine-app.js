@@ -238,9 +238,36 @@ function cinePausas(a){
 }
 
 /* ── Abrir, mover y cerrar ── */
+function cineExploraPersonas(){
+  const estado=cineExploraEstado;if(!estado)return;
+  const omitir='svg,button,a,blockquote,cite,q,h1,h2,h3,h4,h5,h6,[role="heading"],.d11lab-sources,.d9lab-source,.d11lab-ref,.d11lab-quote,.d9lab-kicker,.d11lab-eyebrow,.sec-fuente,.lam-fu,[data-d9lab-field$="-biblia"],[data-d9lab-field$="-cita"],[data-d9lab-field$="-ref"]';
+  estado.seccion.querySelectorAll('p,dd').forEach(p=>{
+    if(p.closest(omitir))return;
+    const antes=p.innerHTML,html=personasTocables(antes,lamId);if(html===antes)return;
+    const caja=p.ownerDocument.createElement('div');caja.innerHTML=html;
+    caja.querySelectorAll('button.per').forEach(b=>{
+      if(/^(?:Elena(?: G\.)? de White|Stephen Bohr|Esteban Bohr|Humberto(?: R\.)? Treiyer)$/.test(b.textContent))b.replaceWith(b.ownerDocument.createTextNode(b.textContent));
+    });
+    if(caja.innerHTML!==antes)p.innerHTML=caja.innerHTML;
+  });
+}
+function cineExploraPersonaVuelve(){
+  const estado=cineExploraEstado;if(!estado||lamPersonaAbierta())return;
+  const foco=estado.personaFoco;estado.personaFoco=null;
+  if(foco&&foco.isConnected)foco.focus({preventScroll:true});
+}
+function cineEnfocables(contenedor){
+  return [...contenedor.querySelectorAll('button,a[href],summary,input,select,textarea,[tabindex]')]
+    .filter(b=>b.tabIndex>=0&&!b.matches(':disabled')&&b.getClientRects().length);
+}
 function cineExploraLimpia(){
   const anterior=cineExploraEstado;if(!anterior)return null;
   cineExploraEstado=null;
+  if(anterior.observador)anterior.observador.disconnect();
+  if(anterior.eventos)anterior.eventos.abort();
+  clearTimeout(anterior.personaEspera);
+  lamPersonaCierra();
+  const tarjeta=document.getElementById('lamPerC');if(tarjeta)tarjeta.remove();
   if(anterior.limpia)anterior.limpia();
   anterior.seccion.remove();
   const el=document.getElementById('lam');if(el)el.classList.remove('cine-explorando');
@@ -252,9 +279,23 @@ function cineExploraAbre(){
   const raiz=el.getRootNode(),seccion=el.ownerDocument.createElement('section');
   seccion.id='cineExploraciones';seccion.className='cine-exploraciones';seccion.setAttribute('aria-labelledby','cineExploraTitulo');
   seccion.innerHTML='<header class="cine-explora-cab"><h2 id="cineExploraTitulo" tabindex="-1">Explorar y comparar</h2><button type="button" id="cineVolverRecorrido" onclick="cineExploraVuelve()">'+IC('izq')+' Volver al recorrido</button></header><div class="cine-explora-contenido"></div>';
-  cineExploraEstado={scroll:el.scrollTop,foco:raiz.activeElement,seccion,limpia:null};
+  cineExploraEstado={scroll:el.scrollTop,foco:raiz.activeElement,seccion,limpia:null,personaFoco:null,eventos:new AbortController()};
   el.append(seccion);el.classList.add('cine-explorando');
   cineExploraEstado.limpia=montar(seccion.querySelector('.cine-explora-contenido'),{estilos:false});
+  cineExploraPersonas();
+  cineExploraEstado.observador=new MutationObserver(cineExploraPersonas);
+  cineExploraEstado.observador.observe(seccion,{childList:true,subtree:true,characterData:true});
+  const estado=cineExploraEstado;
+  el.addEventListener('click',e=>{
+    const boton=e.target.closest('button.per');
+    if(boton&&seccion.contains(boton)){estado.personaFoco=boton;return;}
+    if(e.target.closest('.lam-perc .lam-x,.lam-perc-fondo')){
+      clearTimeout(estado.personaEspera);estado.personaEspera=setTimeout(cineExploraPersonaVuelve,0);return;
+    }
+    if(seccion.contains(e.target)&&e.target.closest('button')&&lamPersonaAbierta()){
+      lamPersonaCierra();estado.personaFoco=null;
+    }
+  },{capture:true,signal:estado.eventos.signal});
   el.scrollTop=0;seccion.querySelector('h2').focus({preventScroll:true});
 }
 function cineExploraVuelve(){
@@ -354,13 +395,22 @@ function cineAlCerrar(){
 }
 function cineTecla(e){
   const el=document.getElementById('lam');
+  if(lamPersonaAbierta()){
+    if(e.key==='Escape'){e.preventDefault();lamPersonaCierra();cineExploraPersonaVuelve();return;}
+    if(e.key==='Tab'){
+      const tarjeta=document.getElementById('lamPerC'),bs=cineEnfocables(tarjeta);
+      const actual=el.getRootNode().activeElement;
+      if(bs.length&&((e.shiftKey&&actual===bs[0])||(!e.shiftKey&&actual===bs[bs.length-1]))){e.preventDefault();bs[e.shiftKey?bs.length-1:0].focus();}
+    }
+    return;
+  }
   if(e.key==='Escape'){e.preventDefault();lamCierra();return;}
   if(cineExploraEstado&&e.key!=='Tab')return;
   if(e.key!=='Tab'&&e.target.closest&&e.target.closest('.cine-estudio')){cineEstudioTecla(e);return;}
   if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(1);return;}
   if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)&&!/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName||'')){e.preventDefault();cineSalto(-1);return;}
   if(e.key==='Tab'){
-    const bs=[...el.querySelectorAll('button:not(:disabled),a[href]')].filter(b=>b.getClientRects().length);
+    const bs=cineEnfocables(el);
     const root=el.getRootNode?el.getRootNode():document,a=root.activeElement;
     if(bs.length&&((e.shiftKey&&a===bs[0])||(!e.shiftKey&&a===bs[bs.length-1]))){e.preventDefault();bs[e.shiftKey?bs.length-1:0].focus();}
   }

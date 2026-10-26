@@ -289,18 +289,21 @@ module.exports = {
    se parte por filas en dos o más secciones con el mismo título numerado; cada
    parte lleva el texto de antes en la primera y la fuente al final. */
 const LIM = 1900;
+// El límite se aplica al JSON serializado: las comillas y los acentos también ocupan bytes.
+const medida = t => Buffer.byteLength(JSON.stringify(t), 'utf8');
 function parte(sec) {
-  if (sec.h.length <= LIM) return [sec];
+  if (medida(sec.h) <= LIM) return [sec];
   const m = sec.h.match(/^([\s\S]*?<tbody>)([\s\S]*?)(<\/tbody>[\s\S]*?<\/div>)([\s\S]*)$/);
   if (!m) return [sec];
   const [, ini, cuerpo, cierre, resto] = m;
   const filas = cuerpo.match(/<tr>[\s\S]*?<\/tr>/g) || [];
   const fuente = (resto.match(/<p>Fuentes?:[\s\S]*?<\/p>/) || [''])[0];
   const antes = ini.slice(0, ini.indexOf('<div class="tabla-scroll">')), cab = ini.slice(antes.length);
-  let n = Math.ceil(sec.h.length / LIM), k;
+  let n = Math.ceil(medida(sec.h) / LIM), k;
   /* Las filas no miden lo mismo: se parte más fino hasta que ninguna parte pase. */
-  const mide = k => { let m = 0; for (let i = 0; i < filas.length; i += k) m = Math.max(m, filas.slice(i, i + k).join('').length); return m; };
-  for (k = Math.ceil(filas.length / n); k > 1 && mide(k) + ini.length + resto.length > LIM; k--);
+  const mide = k => { let m = 0; for (let i = 0; i < filas.length; i += k) m = Math.max(m,
+    medida((i === 0 ? antes : '') + cab + filas.slice(i, i + k).join('') + cierre + (i + k >= filas.length ? resto : fuente))); return m; };
+  for (k = Math.ceil(filas.length / n); k > 1 && mide(k) > LIM; k--);
   const out = [];
   for (let i = 0; i < filas.length; i += k) {
     const primera = i === 0, ultima = i + k >= filas.length;

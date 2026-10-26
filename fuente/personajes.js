@@ -3,6 +3,55 @@
    tocable. Un alias { t, caps } solo vale en esos capítulos (nombre ambiguo).
    Fuentes: la Biblia primero, después Elena de White, después Bohr y otros. */
 const PERSONAJES = [
+  /* Misma identidad y contenido de reyes-personas/biografias/persona-jesus.json. */
+  {
+    "id": "persona-jesus",
+    "nombre": "Jesús, el Cristo",
+    "tipo": "biblico",
+    "quien": "Hijo de María; Mesías del linaje de David",
+    "hizo": [
+      "Jesús es el punto de llegada de la genealogía de Mateo, que lo presenta desde su primera línea como Cristo, hijo de David e hijo de Abraham. El evangelista recorre las etapas de la promesa, la monarquía y el exilio hasta José, esposo de María. Al llegar al nacimiento precisa que Jesús nació de ella.",
+      "Mateo y Lucas atribuyen la concepción a la acción divina y no a la paternidad biológica de José. La relación con José se conserva como vínculo legal y familiar; la maternidad de María se representa por separado. Este árbol no pretende convertir una afirmación teológica en una filiación humana no documentada.",
+      "Gálatas 3:16 identifica a Cristo como la simiente a la que apunta la promesa hecha a Abraham. Lucas 1:32–33 relaciona su misión con el trono de David. Los textos permiten seguir la continuidad de la promesa, aun cuando las genealogías seleccionan nombres y no explican todas sus diferencias."
+    ],
+    "textos": "Mateo 1:1–25; Lucas 1:26–35; Lucas 3:23–38; Gálatas 3:16",
+    "alias": [
+      "Cristo",
+      "Jesucristo",
+      "Jesús",
+      "Jesús, el Cristo"
+    ],
+    "fuente": "Biblia · Mateo 1:1–25 · RV1909; Biblia · Lucas 1:26–35 · RV1909; Biblia · Lucas 3:23–38 · RV1909; Biblia · Gálatas 3:16 · RV1909",
+    "fuentes": [
+      {
+        "base": "Biblia",
+        "pasaje": "Mateo 1:1–25",
+        "titulo": "Biblia · Mateo 1:1–25 · RV1909",
+        "url": "https://ebible.org/spaRV1909/MAT01.htm"
+      },
+      {
+        "base": "Biblia",
+        "pasaje": "Lucas 1:26–35",
+        "titulo": "Biblia · Lucas 1:26–35 · RV1909",
+        "url": "https://ebible.org/spaRV1909/LUK01.htm"
+      },
+      {
+        "base": "Biblia",
+        "pasaje": "Lucas 3:23–38",
+        "titulo": "Biblia · Lucas 3:23–38 · RV1909",
+        "url": "https://ebible.org/spaRV1909/LUK03.htm"
+      },
+      {
+        "base": "Biblia",
+        "pasaje": "Gálatas 3:16",
+        "titulo": "Biblia · Gálatas 3:16 · RV1909",
+        "url": "https://ebible.org/spaRV1909/GAL03.htm"
+      }
+    ],
+    "limites": [
+      "La genealogía de Mateo es selectiva; no se presenta como una secuencia exhaustiva de grados biológicos. La identidad mesiánica y la filiación humana tienen evidencias distintas."
+    ]
+  },
   { id: 'daniel', nombre: 'Daniel (Beltsasar)', tipo: 'biblico',
     fechas: 'n. hacia 623 a.C.; llevado a Babilonia en 605 a.C.',
     quien: 'Profeta hebreo de la familia real de Judá. Lo llevaron cautivo a Babilonia a los 18 años y allí le pusieron el nombre de Beltsasar.',
@@ -1058,7 +1107,7 @@ const PERSONAJES = [
       'Fundó la ciudad de Seleucia y se llevó gente y ladrillos de Babilonia, que fue quedando vacía.'
     ],
     textos: 'Daniel 8:8; 11:5',
-    alias: ['Seleuco I Nicátor', 'Seleuco Nicátor', { t: 'Seleuco', caps: ['d7', 'd8', 'd11'] }],
+    alias: ['Seleuco I Nicátor', 'Seleuco Nicátor', 'Seleuco I', { t: 'Seleuco', caps: ['d7', 'd8', 'd11'] }],
     fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
   { id: 'seleuco-ii', nombre: 'Seleuco II Calínico', tipo: 'historico',
     fechas: 'reinó 246-225 a.C.',
@@ -1078,7 +1127,7 @@ const PERSONAJES = [
       'Su dinastía, los tolomeos, gobernó Egipto hasta el año 30 a.C.'
     ],
     textos: 'Daniel 7:6; 11:5',
-    alias: ['Tolomeo I Sóter', { t: 'Tolomeo', caps: ['d7', 'd8'] }],
+    alias: ['Tolomeo I Sóter', 'Tolomeo I', { t: 'Tolomeo', caps: ['d7', 'd8'] }],
     fuente: 'Bohr, <i>Daniel 11</i>, p. 5-12' },
   { id: 'tolomeo-ii', nombre: 'Tolomeo II Filadelfo', tipo: 'historico',
     fechas: 'reinó 285-246 a.C.',
