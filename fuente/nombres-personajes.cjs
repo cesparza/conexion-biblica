@@ -23,12 +23,19 @@ function nombresHTML(persona){
   const n=persona.nombres;if(!n)return '';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const forma=f=>'<bdi dir="'+(f.idioma==='griego'?'ltr':'rtl')+'" lang="'+(f.idioma==='griego'?'grc':f.idioma==='arameo'?'arc':'he')+'">'+esc(f.escritura)+'</bdi> · '+esc(f.pronunciacion||f.transliteracion);
+  const significado=(f,documentar=false)=>{
+    const s=f.significado;if(!s)return '';
+    const referencias=s.referencias.map(r=>'<a href="'+esc(r.startsWith('G')?n.fuente.griego:n.fuente.url)+'" target="_blank" rel="noopener noreferrer">Strong '+esc(r)+'</a>').join(' · ');
+    return '<p class="rp-nombre-significado"><b>'+(s.estado==='incierto'?'Significado · incierto:':'Significado propuesto:')+'</b> '+esc(s.texto)+
+      (documentar?'<br>'+referencias+(s.contraste?' · <a href="'+esc(s.contraste.url)+'" target="_blank" rel="noopener noreferrer">'+esc(s.contraste.titulo)+'</a>':'')+(s.nota?'<br>'+esc(s.nota):''):'')+'</p>';
+  };
   if(!n.formas.length&&!n.variantes.length)return '';
   return '<div class="rp-nombres sec-fuente" data-personas-omitir>'+
     (n.formas.length?'<p><b>'+esc(n.formas[0].nombre)+' · '+esc(n.formas[0].idioma)+':</b> '+forma(n.formas[0])+'</p>':'')+
+    (n.formas.length?significado(n.formas[0]):'')+
     '<details><summary>Otros nombres y documentación</summary>'+
     (n.variantes.length?'<p><b>También aparece como:</b> '+n.variantes.map(esc).join(' · ')+'</p>':'')+
-    n.formas.map(f=>'<p><b>'+esc(f.nombre)+' · '+esc(f.idioma)+':</b> '+forma(f)+' · Transliteración: '+esc(f.transliteracion)+' · '+esc(f.strong)+(f.equivalenciaGriega?' · '+esc(f.equivalenciaGriega):'')+(f.nota?' · '+esc(f.nota):'')+'</p>').join('')+
+    n.formas.map(f=>'<p><b>'+esc(f.nombre)+' · '+esc(f.idioma)+':</b> '+forma(f)+' · Transliteración: '+esc(f.transliteracion)+' · '+esc(f.strong)+(f.equivalenciaGriega?' · '+esc(f.equivalenciaGriega):'')+(f.nota?' · '+esc(f.nota):'')+'</p>'+significado(f,true)).join('')+
     (n.formas.length?'<p>'+esc(n.criterio)+'</p><p><a href="'+esc(n.fuente.url)+'" target="_blank" rel="noopener noreferrer">'+esc(n.fuente.titulo)+'</a>'+(n.fuente.griego?' · <a href="'+esc(n.fuente.griego)+'" target="_blank" rel="noopener noreferrer">Léxico griego</a>':'')+'. '+esc(n.fuente.licencia)+'</p>':'')+'</details></div>';
 }
 module.exports = {normalizarNombre,nombresHTML};

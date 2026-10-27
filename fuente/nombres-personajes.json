@@ -1,10 +1,10 @@
 {
- "version": 1,
- "criterio": "Nombre habitual, calificativo conservado y variantes documentadas. La forma hebrea de un nombre no identifica por sí sola a una persona ni demuestra su lengua materna. La transliteración ayuda a leerlo; no es una grabación ni una pronunciación antigua reconstruida.",
+ "version": 2,
+ "criterio": "Nombre habitual, calificativo conservado y variantes documentadas. La forma hebrea de un nombre no identifica por sí sola a una persona ni demuestra su lengua materna. La transliteración ayuda a leerlo; no es una grabación ni una pronunciación antigua reconstruida. Los significados son propuestas de diccionario, no descripciones del carácter ni profecías sobre la persona. Las etimologías inciertas se señalan. Yah es una forma breve del nombre divino Yahweh. Una escritura hebrea puede representar un nombre de otro origen.",
  "fuente": {
   "titulo": "James Strong, diccionarios hebreo (1894) y griego (1890), edición digital Open Scriptures / David Troidl y Ulrik Petersen",
   "url": "https://github.com/openscriptures/strongs/blob/0acd2f251c2d35ff8db2dece4e0593979d3ac223/hebrew/strongs-hebrew-dictionary.js",
-  "licencia": "CC-BY-SA, como indica la cabecera de la edición digital; las formas y transliteraciones de este catálogo conservan esa licencia.",
+  "licencia": "CC-BY-SA, como indica la cabecera de la edición digital; las formas, transliteraciones y glosas traducidas de este catálogo conservan esa licencia. Los contrastes con Brown–Driver–Briggs (1906, dominio público) se enlazan en su entrada.",
   "sha256": "5ce6aeed551c709f49bcfa341cadf2f34bc7599b85d9de9e6ac2ecbf60fc3739",
   "griego": "https://github.com/openscriptures/strongs/blob/0acd2f251c2d35ff8db2dece4e0593979d3ac223/greek/strongs-greek-dictionary.js",
   "sha256Griego": "7624ee738ae47e80f1a352223e28a26d011c9cd4898822cee52f47a010c04efd"
@@ -71,28 +71,57 @@
    "transliteracion": "ʼAhărôwn",
    "idioma": "hebreo",
    "strong": "H175",
-   "pronunciacion": "Aharón"
+   "pronunciacion": "Aharón",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H175"
+    ]
+   }
   },
   "Abdías": {
    "nombre": "Abdías",
    "escritura": "עֹבַדְיָה",
    "transliteracion": "ʻÔbadyâh",
    "idioma": "hebreo",
-   "strong": "H5662"
+   "strong": "H5662",
+   "significado": {
+    "texto": "Servidor de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5662"
+    ]
+   }
   },
   "Abel": {
    "nombre": "Abel",
    "escritura": "הֶבֶל",
    "transliteracion": "Hebel",
    "idioma": "hebreo",
-   "strong": "H1893"
+   "strong": "H1893",
+   "significado": {
+    "texto": "Vapor o algo pasajero.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1893",
+     "H1892"
+    ]
+   }
   },
   "Abí": {
    "nombre": "Abí",
    "escritura": "אֲבִי",
    "transliteracion": "ʼĂbîy",
    "idioma": "hebreo",
-   "strong": "H21"
+   "strong": "H21",
+   "significado": {
+    "texto": "Paternal.",
+    "estado": "propuesta",
+    "referencias": [
+     "H21"
+    ]
+   }
   },
   "Abías": {
    "nombre": "Abías",
@@ -100,7 +129,18 @@
    "transliteracion": "ʼĂbîyâh",
    "idioma": "hebreo",
    "strong": "H29",
-   "pronunciacion": "Aviyá"
+   "pronunciacion": "Aviyá",
+   "significado": {
+    "texto": "Yah es mi padre.",
+    "estado": "propuesta",
+    "referencias": [
+     "H29"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H29",
+     "url": "https://biblehub.com/bdb/29.htm"
+    }
+   }
   },
   "Abiam": {
    "nombre": "Abiam",
@@ -108,56 +148,112 @@
    "transliteracion": "ʼĂbîyâm",
    "idioma": "hebreo",
    "strong": "H38",
-   "pronunciacion": "Aviyam"
+   "pronunciacion": "Aviyam",
+   "significado": {
+    "texto": "Padre del mar.",
+    "estado": "propuesta",
+    "referencias": [
+     "H38"
+    ]
+   }
   },
   "Abiatar": {
    "nombre": "Abiatar",
    "escritura": "אֶבְיָתָר",
    "transliteracion": "ʼEbyâthâr",
    "idioma": "hebreo",
-   "strong": "H54"
+   "strong": "H54",
+   "significado": {
+    "texto": "Padre de abundancia.",
+    "estado": "propuesta",
+    "referencias": [
+     "H54"
+    ]
+   }
   },
   "Abigail": {
    "nombre": "Abigail",
    "escritura": "אֲבִיגַיִל",
    "transliteracion": "ʼĂbîygayil",
    "idioma": "hebreo",
-   "strong": "H26"
+   "strong": "H26",
+   "significado": {
+    "texto": "Padre de alegría.",
+    "estado": "propuesta",
+    "referencias": [
+     "H26"
+    ]
+   }
   },
   "Abimelec": {
    "nombre": "Abimelec",
    "escritura": "אֲבִימֶלֶךְ",
    "transliteracion": "ʼĂbîymelek",
    "idioma": "hebreo",
-   "strong": "H40"
+   "strong": "H40",
+   "significado": {
+    "texto": "Padre del rey.",
+    "estado": "propuesta",
+    "referencias": [
+     "H40"
+    ]
+   }
   },
   "Abinadab": {
    "nombre": "Abinadab",
    "escritura": "אֲבִינָדָב",
    "transliteracion": "ʼĂbîynâdâb",
    "idioma": "hebreo",
-   "strong": "H41"
+   "strong": "H41",
+   "significado": {
+    "texto": "Padre de generosidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H41"
+    ]
+   }
   },
   "Abiram": {
    "nombre": "Abiram",
    "escritura": "אֲבִירָם",
    "transliteracion": "ʼĂbîyrâm",
    "idioma": "hebreo",
-   "strong": "H48"
+   "strong": "H48",
+   "significado": {
+    "texto": "Padre de altura, elevado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H48"
+    ]
+   }
   },
   "Abisai": {
    "nombre": "Abisai",
    "escritura": "אֲבִישַׁי",
    "transliteracion": "ʼĂbîyshay",
    "idioma": "hebreo",
-   "strong": "H52"
+   "strong": "H52",
+   "significado": {
+    "texto": "Padre de un don; la entrada propone la idea de generosidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H52"
+    ]
+   }
   },
   "Abner": {
    "nombre": "Abner",
    "escritura": "אַבְנֵר",
    "transliteracion": "ʼAbnêr",
    "idioma": "hebreo",
-   "strong": "H74"
+   "strong": "H74",
+   "significado": {
+    "texto": "Padre de luz.",
+    "estado": "propuesta",
+    "referencias": [
+     "H74"
+    ]
+   }
   },
   "Abraham": {
    "nombre": "Abraham",
@@ -165,49 +261,98 @@
    "transliteracion": "ʼAbrâhâm",
    "idioma": "hebreo",
    "strong": "H85",
-   "pronunciacion": "Avraham"
+   "pronunciacion": "Avraham",
+   "significado": {
+    "texto": "Padre de una multitud.",
+    "estado": "propuesta",
+    "referencias": [
+     "H85"
+    ]
+   }
   },
   "Abram": {
    "nombre": "Abram",
    "escritura": "אַבְרָם",
    "transliteracion": "ʼAbrâm",
    "idioma": "hebreo",
-   "strong": "H87"
+   "strong": "H87",
+   "significado": {
+    "texto": "Padre elevado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H87"
+    ]
+   }
   },
   "Absalón": {
    "nombre": "Absalón",
    "escritura": "אֲבִישָׁלוֹם",
    "transliteracion": "ʼĂbîyshâlôwm",
    "idioma": "hebreo",
-   "strong": "H53"
+   "strong": "H53",
+   "significado": {
+    "texto": "Padre de paz.",
+    "estado": "propuesta",
+    "referencias": [
+     "H53"
+    ]
+   }
   },
   "Acab": {
    "nombre": "Acab",
    "escritura": "אַחְאָב",
    "transliteracion": "ʼAchʼâb",
    "idioma": "hebreo",
-   "strong": "H256"
+   "strong": "H256",
+   "significado": {
+    "texto": "Hermano de su padre.",
+    "estado": "propuesta",
+    "referencias": [
+     "H256"
+    ]
+   }
   },
   "Acán": {
    "nombre": "Acán",
    "escritura": "עָכָן",
    "transliteracion": "ʻÂkân",
    "idioma": "hebreo",
-   "strong": "H5912"
+   "strong": "H5912",
+   "significado": {
+    "texto": "Perturbador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5912"
+    ]
+   }
   },
   "Acaz": {
    "nombre": "Acaz",
    "escritura": "אָחָז",
    "transliteracion": "ʼÂchâz",
    "idioma": "hebreo",
-   "strong": "H271"
+   "strong": "H271",
+   "significado": {
+    "texto": "Poseedor.",
+    "estado": "propuesta",
+    "referencias": [
+     "H271"
+    ]
+   }
   },
   "Adaía": {
    "nombre": "Adaía",
    "escritura": "עֲדָיָה",
    "transliteracion": "ʻĂdâyâh",
    "idioma": "hebreo",
-   "strong": "H5718"
+   "strong": "H5718",
+   "significado": {
+    "texto": "Yah ha adornado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5718"
+    ]
+   }
   },
   "Adán": {
    "nombre": "Adán",
@@ -215,238 +360,489 @@
    "transliteracion": "ʼÂdâm",
    "idioma": "hebreo",
    "strong": "H121",
-   "pronunciacion": "Adam"
+   "pronunciacion": "Adam",
+   "significado": {
+    "texto": "Ser humano.",
+    "estado": "propuesta",
+    "referencias": [
+     "H121",
+     "H120"
+    ]
+   }
   },
   "Adonías": {
    "nombre": "Adonías",
    "escritura": "אֲדֹנִיָּה",
    "transliteracion": "ʼĂdônîyâh",
    "idioma": "hebreo",
-   "strong": "H138"
+   "strong": "H138",
+   "significado": {
+    "texto": "Mi Señor es Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H138"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H138",
+     "url": "https://biblehub.com/bdb/138.htm"
+    }
+   }
   },
   "Adoram": {
    "nombre": "Adoram",
    "escritura": "אֲדֹרָם",
    "transliteracion": "ʼĂdôrâm",
    "idioma": "hebreo",
-   "strong": "H151"
+   "strong": "H151",
+   "significado": {
+    "texto": "Señor de altura.",
+    "estado": "propuesta",
+    "referencias": [
+     "H151",
+     "H141"
+    ]
+   }
   },
   "Agag": {
    "nombre": "Agag",
    "escritura": "אֲגַג",
    "transliteracion": "ʼĂgag",
    "idioma": "hebreo",
-   "strong": "H90"
+   "strong": "H90",
+   "significado": {
+    "texto": "La entrada propone «llama», pero declara incierta su derivación.",
+    "estado": "propuesta",
+    "referencias": [
+     "H90"
+    ]
+   }
   },
   "Ahías": {
    "nombre": "Ahías",
    "escritura": "אֲחִיָּה",
    "transliteracion": "ʼĂchîyâh",
    "idioma": "hebreo",
-   "strong": "H281"
+   "strong": "H281",
+   "significado": {
+    "texto": "Hermano de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H281"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H281",
+     "url": "https://biblehub.com/bdb/281.htm"
+    }
+   }
   },
   "Ahimelec": {
    "nombre": "Ahimelec",
    "escritura": "אֲחִימֶלֶךְ",
    "transliteracion": "ʼĂchîymelek",
    "idioma": "hebreo",
-   "strong": "H288"
+   "strong": "H288",
+   "significado": {
+    "texto": "Hermano del rey.",
+    "estado": "propuesta",
+    "referencias": [
+     "H288"
+    ]
+   }
   },
   "Ahinoam": {
    "nombre": "Ahinoam",
    "escritura": "אֲחִינֹעַם",
    "transliteracion": "ʼĂchîynôʻam",
    "idioma": "hebreo",
-   "strong": "H293"
+   "strong": "H293",
+   "significado": {
+    "texto": "Hermano de agrado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H293"
+    ]
+   }
   },
   "Amán": {
    "nombre": "Amán",
    "escritura": "הָמָן",
    "transliteracion": "Hâmân",
    "idioma": "hebreo",
-   "strong": "H2001"
+   "strong": "H2001",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H2001"
+    ]
+   }
   },
   "Amasías": {
    "nombre": "Amasías",
    "escritura": "אֲמַצְיָה",
    "transliteracion": "ʼĂmatsyâh",
    "idioma": "hebreo",
-   "strong": "H558"
+   "strong": "H558",
+   "significado": {
+    "texto": "Fuerza de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H558"
+    ]
+   }
   },
   "Aminadab": {
    "nombre": "Aminadab",
    "escritura": "עַמִּינָדָב",
    "transliteracion": "ʻAmmîynâdâb",
    "idioma": "hebreo",
-   "strong": "H5992"
+   "strong": "H5992",
+   "significado": {
+    "texto": "Pueblo de generosidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5992"
+    ]
+   }
   },
   "Amitai": {
    "nombre": "Amitai",
    "escritura": "אֲמִתַּי",
    "transliteracion": "ʼĂmittay",
    "idioma": "hebreo",
-   "strong": "H573"
+   "strong": "H573",
+   "significado": {
+    "texto": "Veraz.",
+    "estado": "propuesta",
+    "referencias": [
+     "H573"
+    ]
+   }
   },
   "Amnón": {
    "nombre": "Amnón",
    "escritura": "אַמְנוֹן",
    "transliteracion": "ʼAmnôwn",
    "idioma": "hebreo",
-   "strong": "H550"
+   "strong": "H550",
+   "significado": {
+    "texto": "Fiel.",
+    "estado": "propuesta",
+    "referencias": [
+     "H550"
+    ]
+   }
   },
   "Amón": {
    "nombre": "Amón",
    "escritura": "אָמוֹן",
    "transliteracion": "ʼÂmôwn",
    "idioma": "hebreo",
-   "strong": "H526"
+   "strong": "H526",
+   "significado": {
+    "texto": "Hábil o artesano; la raíz propuesta es incierta.",
+    "estado": "propuesta",
+    "referencias": [
+     "H526",
+     "H525"
+    ]
+   }
   },
   "Amós": {
    "nombre": "Amós",
    "escritura": "עָמוֹס",
    "transliteracion": "ʻÂmôwç",
    "idioma": "hebreo",
-   "strong": "H5986"
+   "strong": "H5986",
+   "significado": {
+    "texto": "Cargado o portador de una carga.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5986"
+    ]
+   }
   },
   "Ananías": {
    "nombre": "Ananías",
    "escritura": "חֲנַנְיָה",
    "transliteracion": "Chănanyâh",
    "idioma": "hebreo",
-   "strong": "H2608"
+   "strong": "H2608",
+   "significado": {
+    "texto": "Yah ha favorecido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2608"
+    ]
+   }
   },
   "Arfaxad": {
    "nombre": "Arfaxad",
    "escritura": "אַרְפַּכְשַׁד",
    "transliteracion": "ʼArpakshad",
    "idioma": "hebreo",
-   "strong": "H775"
+   "strong": "H775",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H775"
+    ]
+   }
   },
   "Argob": {
    "nombre": "Argob",
    "escritura": "אַרְגֹּב",
    "transliteracion": "ʼArgôb",
    "idioma": "hebreo",
-   "strong": "H709"
+   "strong": "H709",
+   "significado": {
+    "texto": "Pedregoso.",
+    "estado": "propuesta",
+    "referencias": [
+     "H709"
+    ]
+   }
   },
   "Arioc": {
    "nombre": "Arioc",
    "escritura": "אֲרְיוֹךְ",
    "transliteracion": "ʼĂryôwk",
    "idioma": "hebreo",
-   "strong": "H746"
+   "strong": "H746",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H746"
+    ]
+   }
   },
   "Arie": {
    "nombre": "Arie",
    "escritura": "אַרְיֵה",
    "transliteracion": "ʼAryêh",
    "idioma": "hebreo",
-   "strong": "H745"
+   "strong": "H745",
+   "significado": {
+    "texto": "León.",
+    "estado": "propuesta",
+    "referencias": [
+     "H745",
+     "H738"
+    ]
+   }
   },
   "Arsa": {
    "nombre": "Arsa",
    "escritura": "אַרְצָא",
    "transliteracion": "ʼartsâʼ",
    "idioma": "hebreo",
-   "strong": "H777"
+   "strong": "H777",
+   "significado": {
+    "texto": "Terrenal.",
+    "estado": "propuesta",
+    "referencias": [
+     "H777"
+    ]
+   }
   },
   "Asa": {
    "nombre": "Asa",
    "escritura": "אָסָא",
    "transliteracion": "ʼÂçâʼ",
    "idioma": "hebreo",
-   "strong": "H609"
+   "strong": "H609",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H609"
+    ]
+   }
   },
   "Asael": {
    "nombre": "Asael",
    "escritura": "עֲשָׂהאֵל",
    "transliteracion": "ʻĂsâhʼêl",
    "idioma": "hebreo",
-   "strong": "H6214"
+   "strong": "H6214",
+   "significado": {
+    "texto": "Dios ha hecho.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6214"
+    ]
+   }
   },
   "Aspenaz": {
    "nombre": "Aspenaz",
    "escritura": "אַשְׁפְּנַז",
    "transliteracion": "ʼAshpᵉnaz",
    "idioma": "hebreo",
-   "strong": "H828"
+   "strong": "H828",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H828"
+    ]
+   }
   },
   "Atalía": {
    "nombre": "Atalía",
    "escritura": "עֲתַלְיָה",
    "transliteracion": "ʻĂthalyâh",
    "idioma": "hebreo",
-   "strong": "H6271"
+   "strong": "H6271",
+   "significado": {
+    "texto": "Yah ha constreñido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6271"
+    ]
+   }
   },
   "Azarías": {
    "nombre": "Azarías",
    "escritura": "עֲזַרְיָה",
    "transliteracion": "ʻĂzaryâh",
    "idioma": "hebreo",
-   "strong": "H5838"
+   "strong": "H5838",
+   "significado": {
+    "texto": "Yah ha ayudado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5838"
+    ]
+   }
   },
   "Azuba": {
    "nombre": "Azuba",
    "escritura": "עֲזוּבָה",
    "transliteracion": "ʻĂzûwbâh",
    "idioma": "hebreo",
-   "strong": "H5806"
+   "strong": "H5806",
+   "significado": {
+    "texto": "Abandonada.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5806",
+     "H5805"
+    ]
+   }
   },
   "Baasa": {
    "nombre": "Baasa",
    "escritura": "בַּעְשָׁא",
    "transliteracion": "Baʻshâʼ",
    "idioma": "hebreo",
-   "strong": "H1201"
+   "strong": "H1201",
+   "significado": {
+    "texto": "Ofensividad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1201"
+    ]
+   }
   },
   "Balaam": {
    "nombre": "Balaam",
    "escritura": "בִּלְעָם",
    "transliteracion": "Bilʻâm",
    "idioma": "hebreo",
-   "strong": "H1109"
+   "strong": "H1109",
+   "significado": {
+    "texto": "La entrada propone «no del pueblo» o «extranjero», como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1109"
+    ]
+   }
   },
   "Balac": {
    "nombre": "Balac",
    "escritura": "בָּלָק",
    "transliteracion": "Bâlâq",
    "idioma": "hebreo",
-   "strong": "H1111"
+   "strong": "H1111",
+   "significado": {
+    "texto": "Devastador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1111"
+    ]
+   }
   },
   "Baruc": {
    "nombre": "Baruc",
    "escritura": "בָּרוּךְ",
    "transliteracion": "Bârûwk",
    "idioma": "hebreo",
-   "strong": "H1263"
+   "strong": "H1263",
+   "significado": {
+    "texto": "Bendito.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1263"
+    ]
+   }
   },
   "Beeri": {
    "nombre": "Beeri",
    "escritura": "בְּאֵרִי",
    "transliteracion": "Bᵉʼêrîy",
    "idioma": "hebreo",
-   "strong": "H882"
+   "strong": "H882",
+   "significado": {
+    "texto": "Con fuentes de agua.",
+    "estado": "propuesta",
+    "referencias": [
+     "H882"
+    ]
+   }
   },
   "Belsasar": {
    "nombre": "Belsasar",
    "escritura": "בֵּלְשַׁאצַּר",
    "transliteracion": "Bêlshaʼtstsar",
    "idioma": "hebreo",
-   "strong": "H1112"
+   "strong": "H1112",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1112"
+    ]
+   }
   },
   "Beltsasar": {
    "nombre": "Beltsasar",
    "escritura": "בֵּלְטְשַׁאצַּר",
    "transliteracion": "Bêlṭᵉshaʼtstsar",
    "idioma": "hebreo",
-   "strong": "H1095"
+   "strong": "H1095",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1095"
+    ]
+   }
   },
   "Ben-adad": {
    "nombre": "Ben-adad",
    "escritura": "בֶּן־הֲדַד",
    "transliteracion": "Ben-Hădad",
    "idioma": "hebreo",
-   "strong": "H1130"
+   "strong": "H1130",
+   "significado": {
+    "texto": "Hijo de Hadad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1130"
+    ]
+   }
   },
   "Betsabé": {
    "nombre": "Betsabé",
@@ -454,7 +850,14 @@
    "transliteracion": "Bath-Shebaʻ",
    "idioma": "hebreo",
    "strong": "H1339",
-   "pronunciacion": "Bat Sheva"
+   "pronunciacion": "Bat Sheva",
+   "significado": {
+    "texto": "Hija de un juramento.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1339"
+    ]
+   }
   },
   "Booz": {
    "nombre": "Booz",
@@ -462,63 +865,129 @@
    "transliteracion": "Bôʻaz",
    "idioma": "hebreo",
    "strong": "H1162",
-   "pronunciacion": "Boaz"
+   "pronunciacion": "Boaz",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1162"
+    ]
+   }
   },
   "Caín": {
    "nombre": "Caín",
    "escritura": "קַיִן",
    "transliteracion": "Qayin",
    "idioma": "hebreo",
-   "strong": "H7014"
+   "strong": "H7014",
+   "significado": {
+    "texto": "La entrada lo relaciona con adquirir y con una lanza; no ofrece una única explicación.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7014",
+     "H7013",
+     "H7069"
+    ]
+   }
   },
   "Cainán": {
    "nombre": "Cainán",
    "escritura": "קֵינָן",
    "transliteracion": "Qêynân",
    "idioma": "hebreo",
-   "strong": "H7018"
+   "strong": "H7018",
+   "significado": {
+    "texto": "Fijo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7018"
+    ]
+   }
   },
   "Chileab": {
    "nombre": "Chileab",
    "escritura": "כִּלְאָב",
    "transliteracion": "Kilʼâb",
    "idioma": "hebreo",
-   "strong": "H3609"
+   "strong": "H3609",
+   "significado": {
+    "texto": "La entrada propone «restricción de su padre», sin certeza.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3609"
+    ]
+   }
   },
   "Ciro": {
    "nombre": "Ciro",
    "escritura": "כּוֹרֶשׁ",
    "transliteracion": "Kôwresh",
    "idioma": "hebreo",
-   "strong": "H3566"
+   "strong": "H3566",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H3566"
+    ]
+   }
   },
   "Cis": {
    "nombre": "Cis",
    "escritura": "קִישׁ",
    "transliteracion": "Qîysh",
    "idioma": "hebreo",
-   "strong": "H7027"
+   "strong": "H7027",
+   "significado": {
+    "texto": "Arco.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7027"
+    ]
+   }
   },
   "Conías": {
    "nombre": "Conías",
    "escritura": "כׇּנְיָהוּ",
    "transliteracion": "Konyâhûw",
    "idioma": "hebreo",
-   "strong": "H3659"
+   "strong": "H3659",
+   "significado": {
+    "texto": "Yah establecerá; forma abreviada de Jeconías.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3659",
+     "H3204"
+    ]
+   }
   },
   "Coré": {
    "nombre": "Coré",
    "escritura": "קֹרַח",
    "transliteracion": "Qôrach",
    "idioma": "hebreo",
-   "strong": "H7141"
+   "strong": "H7141",
+   "significado": {
+    "texto": "Hielo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7141"
+    ]
+   }
   },
   "Dalila": {
    "nombre": "Dalila",
    "escritura": "דְּלִילָה",
    "transliteracion": "Dᵉlîylâh",
    "idioma": "hebreo",
-   "strong": "H1807"
+   "strong": "H1807",
+   "significado": {
+    "texto": "Lánguida.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1807"
+    ]
+   }
   },
   "Daniel": {
    "nombre": "Daniel",
@@ -526,21 +995,46 @@
    "transliteracion": "Dânîyêʼl",
    "idioma": "hebreo",
    "strong": "H1840",
-   "pronunciacion": "Daniyel"
+   "pronunciacion": "Daniyel",
+   "significado": {
+    "texto": "Dios es mi juez.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1840"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H1840",
+     "url": "https://biblehub.com/bdb/1840.htm"
+    }
+   }
   },
   "Darío": {
    "nombre": "Darío",
    "escritura": "דָּֽרְיָוֵשׁ",
    "transliteracion": "Dârᵉyâvêsh",
    "idioma": "hebreo",
-   "strong": "H1867"
+   "strong": "H1867",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1867"
+    ]
+   }
   },
   "Datán": {
    "nombre": "Datán",
    "escritura": "דָּתָן",
    "transliteracion": "Dâthân",
    "idioma": "hebreo",
-   "strong": "H1885"
+   "strong": "H1885",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1885"
+    ]
+   }
   },
   "David": {
    "nombre": "David",
@@ -548,70 +1042,145 @@
    "transliteracion": "Dâvid",
    "idioma": "hebreo",
    "strong": "H1732",
-   "pronunciacion": "David"
+   "pronunciacion": "David",
+   "significado": {
+    "texto": "Amado; el léxico presenta esta explicación con reserva.",
+    "estado": "incierto",
+    "referencias": [
+     "H1732"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H1732",
+     "url": "https://biblehub.com/bdb/1732.htm"
+    }
+   }
   },
   "Dodava": {
    "nombre": "Dodava",
    "escritura": "דּוֹדָוָהוּ",
    "transliteracion": "Dôwdâvâhûw",
    "idioma": "hebreo",
-   "strong": "H1735"
+   "strong": "H1735",
+   "significado": {
+    "texto": "Amor de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1735"
+    ]
+   }
   },
   "Doeg": {
    "nombre": "Doeg",
    "escritura": "דֹּאֵג",
    "transliteracion": "Dôʼêg",
    "idioma": "hebreo",
-   "strong": "H1673"
+   "strong": "H1673",
+   "significado": {
+    "texto": "Ansioso.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1673"
+    ]
+   }
   },
   "Ebed-melec": {
    "nombre": "Ebed-melec",
    "escritura": "עֶבֶד מֶלֶךְ",
    "transliteracion": "ʻEbed Melek",
    "idioma": "hebreo",
-   "strong": "H5663"
+   "strong": "H5663",
+   "significado": {
+    "texto": "Servidor del rey.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5663"
+    ]
+   }
   },
   "Efraín": {
    "nombre": "Efraín",
    "escritura": "אֶפְרַיִם",
    "transliteracion": "ʼEphrayim",
    "idioma": "hebreo",
-   "strong": "H669"
+   "strong": "H669",
+   "significado": {
+    "texto": "Doble fruto.",
+    "estado": "propuesta",
+    "referencias": [
+     "H669"
+    ]
+   }
   },
   "Ela": {
    "nombre": "Ela",
    "escritura": "אֵלָה",
    "transliteracion": "ʼÊlâh",
    "idioma": "hebreo",
-   "strong": "H425"
+   "strong": "H425",
+   "significado": {
+    "texto": "Encina u otro árbol fuerte.",
+    "estado": "propuesta",
+    "referencias": [
+     "H425",
+     "H424"
+    ]
+   }
   },
   "Elí": {
    "nombre": "Elí",
    "escritura": "עֵלִי",
    "transliteracion": "ʻÊlîy",
    "idioma": "hebreo",
-   "strong": "H5941"
+   "strong": "H5941",
+   "significado": {
+    "texto": "Elevado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5941"
+    ]
+   }
   },
   "Eliada": {
    "nombre": "Eliada",
    "escritura": "אֶלְיָדָע",
    "transliteracion": "ʼElyâdâʻ",
    "idioma": "hebreo",
-   "strong": "H450"
+   "strong": "H450",
+   "significado": {
+    "texto": "Dios conoce.",
+    "estado": "propuesta",
+    "referencias": [
+     "H450"
+    ]
+   }
   },
   "Eliam": {
    "nombre": "Eliam",
    "escritura": "אֱלִיעָם",
    "transliteracion": "ʼĔlîyʻâm",
    "idioma": "hebreo",
-   "strong": "H463"
+   "strong": "H463",
+   "significado": {
+    "texto": "Dios del pueblo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H463"
+    ]
+   }
   },
   "Eliaquim": {
    "nombre": "Eliaquim",
    "escritura": "אֶלְיָקִים",
    "transliteracion": "ʼElyâqîym",
    "idioma": "hebreo",
-   "strong": "H471"
+   "strong": "H471",
+   "significado": {
+    "texto": "Dios levanta.",
+    "estado": "propuesta",
+    "referencias": [
+     "H471"
+    ]
+   }
   },
   "Elías": {
    "nombre": "Elías",
@@ -619,14 +1188,32 @@
    "transliteracion": "ʼÊlîyâh",
    "idioma": "hebreo",
    "strong": "H452",
-   "pronunciacion": "Eliyá"
+   "pronunciacion": "Eliyá",
+   "significado": {
+    "texto": "Yahweh es Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "H452"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H452",
+     "url": "https://biblehub.com/bdb/452.htm"
+    }
+   }
   },
   "Eliezer": {
    "nombre": "Eliezer",
    "escritura": "אֱלִיעֶזֶר",
    "transliteracion": "ʼĔlîyʻezer",
    "idioma": "hebreo",
-   "strong": "H461"
+   "strong": "H461",
+   "significado": {
+    "texto": "Dios de ayuda.",
+    "estado": "propuesta",
+    "referencias": [
+     "H461"
+    ]
+   }
   },
   "Eliseo": {
    "nombre": "Eliseo",
@@ -634,42 +1221,91 @@
    "transliteracion": "ʼĔlîyshâʻ",
    "idioma": "hebreo",
    "strong": "H477",
-   "pronunciacion": "Elishá"
+   "pronunciacion": "Elishá",
+   "significado": {
+    "texto": "Dios es salvación.",
+    "estado": "propuesta",
+    "referencias": [
+     "H477",
+     "H474"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H477",
+     "url": "https://biblehub.com/bdb/477.htm"
+    }
+   }
   },
   "Elnatán": {
    "nombre": "Elnatán",
    "escritura": "אֶלְנָתָן",
    "transliteracion": "ʼElnâthân",
    "idioma": "hebreo",
-   "strong": "H494"
+   "strong": "H494",
+   "significado": {
+    "texto": "Dios es quien da.",
+    "estado": "propuesta",
+    "referencias": [
+     "H494"
+    ]
+   }
   },
   "Enoc": {
    "nombre": "Enoc",
    "escritura": "חֲנוֹךְ",
    "transliteracion": "Chănôwk",
    "idioma": "hebreo",
-   "strong": "H2585"
+   "strong": "H2585",
+   "significado": {
+    "texto": "Iniciado o dedicado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2585"
+    ]
+   }
   },
   "Enós": {
    "nombre": "Enós",
    "escritura": "אֱנוֹשׁ",
    "transliteracion": "ʼĔnôwsh",
    "idioma": "hebreo",
-   "strong": "H583"
+   "strong": "H583",
+   "significado": {
+    "texto": "Ser humano, mortal.",
+    "estado": "propuesta",
+    "referencias": [
+     "H583",
+     "H582"
+    ]
+   }
   },
   "Esdras": {
    "nombre": "Esdras",
    "escritura": "עֶזְרָא",
    "transliteracion": "ʻEzrâʼ",
    "idioma": "hebreo",
-   "strong": "H5830"
+   "strong": "H5830",
+   "significado": {
+    "texto": "Ayuda.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5830",
+     "H5833"
+    ]
+   }
   },
   "Esrom": {
    "nombre": "Esrom",
    "escritura": "חֶצְרוֹן",
    "transliteracion": "Chetsrôwn",
    "idioma": "hebreo",
-   "strong": "H2696"
+   "strong": "H2696",
+   "significado": {
+    "texto": "Patio.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2696"
+    ]
+   }
   },
   "Ester": {
    "nombre": "Ester",
@@ -677,14 +1313,28 @@
    "transliteracion": "ʼEçtêr",
    "idioma": "hebreo",
    "strong": "H635",
-   "pronunciacion": "Ester"
+   "pronunciacion": "Ester",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H635"
+    ]
+   }
   },
   "Et-baal": {
    "nombre": "Et-baal",
    "escritura": "אֶתְבַּעַל",
    "transliteracion": "ʼEthbaʻal",
    "idioma": "hebreo",
-   "strong": "H856"
+   "strong": "H856",
+   "significado": {
+    "texto": "Con Baal.",
+    "estado": "propuesta",
+    "referencias": [
+     "H856"
+    ]
+   }
   },
   "Eva": {
    "nombre": "Eva",
@@ -692,14 +1342,28 @@
    "transliteracion": "Chavvâh",
    "idioma": "hebreo",
    "strong": "H2332",
-   "pronunciacion": "Javá"
+   "pronunciacion": "Javá",
+   "significado": {
+    "texto": "La que da vida.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2332"
+    ]
+   }
   },
   "Evil-merodac": {
    "nombre": "Evil-merodac",
    "escritura": "אֱוִיל מְרֹדַךְ",
    "transliteracion": "ʼĔvîyl Mᵉrôdak",
    "idioma": "hebreo",
-   "strong": "H192"
+   "strong": "H192",
+   "significado": {
+    "texto": "La entrada propone «soldado de Merodac» como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H192"
+    ]
+   }
   },
   "Ezequías": {
    "nombre": "Ezequías",
@@ -707,7 +1371,14 @@
    "transliteracion": "Chizqîyâh",
    "idioma": "hebreo",
    "strong": "H2396",
-   "pronunciacion": "Jizqiyá"
+   "pronunciacion": "Jizqiyá",
+   "significado": {
+    "texto": "Fortalecido por Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2396"
+    ]
+   }
   },
   "Ezequiel": {
    "nombre": "Ezequiel",
@@ -715,21 +1386,43 @@
    "transliteracion": "Yᵉchezqêʼl",
    "idioma": "hebreo",
    "strong": "H3168",
-   "pronunciacion": "Yejezqel"
+   "pronunciacion": "Yejezqel",
+   "significado": {
+    "texto": "Dios fortalecerá.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3168"
+    ]
+   }
   },
   "Fares": {
    "nombre": "Fares",
    "escritura": "פֶּרֶץ",
    "transliteracion": "Perets",
    "idioma": "hebreo",
-   "strong": "H6557"
+   "strong": "H6557",
+   "significado": {
+    "texto": "Brecha o abertura.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6557",
+     "H6556"
+    ]
+   }
   },
   "Finees": {
    "nombre": "Finees",
    "escritura": "פִּינְחָס",
    "transliteracion": "Pîynᵉchâç",
    "idioma": "hebreo",
-   "strong": "H6372"
+   "strong": "H6372",
+   "significado": {
+    "texto": "La entrada propone «boca de una serpiente», sin certeza.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6372"
+    ]
+   }
   },
   "Gabriel": {
    "nombre": "Gabriel",
@@ -737,140 +1430,288 @@
    "transliteracion": "Gabrîyʼêl",
    "idioma": "hebreo",
    "strong": "H1403",
-   "pronunciacion": "Gavriel"
+   "pronunciacion": "Gavriel",
+   "significado": {
+    "texto": "Hombre de Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1403"
+    ]
+   }
   },
   "Gad": {
    "nombre": "Gad",
    "escritura": "גָּד",
    "transliteracion": "Gâd",
    "idioma": "hebreo",
-   "strong": "H1410"
+   "strong": "H1410",
+   "significado": {
+    "texto": "Afortunado, como propuesta; el origen es discutido.",
+    "estado": "incierto",
+    "referencias": [
+     "H1410",
+     "H1464"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H1410",
+     "url": "https://biblehub.com/bdb/1410.htm"
+    }
+   }
   },
   "Gadi": {
    "nombre": "Gadi",
    "escritura": "גָּדִי",
    "transliteracion": "Gâdîy",
    "idioma": "hebreo",
-   "strong": "H1424"
+   "strong": "H1424",
+   "significado": {
+    "texto": "Afortunado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1424"
+    ]
+   }
   },
   "Ginat": {
    "nombre": "Ginat",
    "escritura": "גִּינַת",
    "transliteracion": "Gîynath",
    "idioma": "hebreo",
-   "strong": "H1527"
+   "strong": "H1527",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1527"
+    ]
+   }
   },
   "Goliat": {
    "nombre": "Goliat",
    "escritura": "גׇּלְיַת",
    "transliteracion": "Golyath",
    "idioma": "hebreo",
-   "strong": "H1555"
+   "strong": "H1555",
+   "significado": {
+    "texto": "La entrada propone «exilio» como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1555"
+    ]
+   }
   },
   "Hadad": {
    "nombre": "Hadad",
    "escritura": "הֲדַד",
    "transliteracion": "Hădad",
    "idioma": "hebreo",
-   "strong": "H1908"
+   "strong": "H1908",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1908"
+    ]
+   }
   },
   "Haguit": {
    "nombre": "Haguit",
    "escritura": "חַגִּית",
    "transliteracion": "Chaggîyth",
    "idioma": "hebreo",
-   "strong": "H2294"
+   "strong": "H2294",
+   "significado": {
+    "texto": "Festiva.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2294"
+    ]
+   }
   },
   "Hamutal": {
    "nombre": "Hamutal",
    "escritura": "חֲמוּטַל",
    "transliteracion": "Chămûwṭal",
    "idioma": "hebreo",
-   "strong": "H2537"
+   "strong": "H2537",
+   "significado": {
+    "texto": "Suegro de rocío.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2537"
+    ]
+   }
   },
   "Hanani": {
    "nombre": "Hanani",
    "escritura": "חֲנָנִי",
    "transliteracion": "Chănânîy",
    "idioma": "hebreo",
-   "strong": "H2607"
+   "strong": "H2607",
+   "significado": {
+    "texto": "Bondadoso.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2607"
+    ]
+   }
   },
   "Hananías": {
    "nombre": "Hananías",
    "escritura": "חֲנַנְיָה",
    "transliteracion": "Chănanyâh",
    "idioma": "hebreo",
-   "strong": "H2608"
+   "strong": "H2608",
+   "significado": {
+    "texto": "Yah ha favorecido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2608"
+    ]
+   }
   },
   "Haruz": {
    "nombre": "Haruz",
    "escritura": "חָרוּץ",
    "transliteracion": "Chârûwts",
    "idioma": "hebreo",
-   "strong": "H2743"
+   "strong": "H2743",
+   "significado": {
+    "texto": "Diligente.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2743"
+    ]
+   }
   },
   "Hazael": {
    "nombre": "Hazael",
    "escritura": "חֲזָאֵל",
    "transliteracion": "Chăzâʼêl",
    "idioma": "hebreo",
-   "strong": "H2371"
+   "strong": "H2371",
+   "significado": {
+    "texto": "Dios ha visto.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2371"
+    ]
+   }
   },
   "Heber": {
    "nombre": "Heber",
    "escritura": "עֵבֵר",
    "transliteracion": "ʻÊbêr",
    "idioma": "hebreo",
-   "strong": "H5677"
+   "strong": "H5677",
+   "significado": {
+    "texto": "El otro lado o la región de más allá.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5677",
+     "H5676"
+    ]
+   }
   },
   "Hefzi-bá": {
    "nombre": "Hefzi-bá",
    "escritura": "חֶפְצִי בָּהּ",
    "transliteracion": "Chephtsîy bâhh",
    "idioma": "hebreo",
-   "strong": "H2657"
+   "strong": "H2657",
+   "significado": {
+    "texto": "Mi deleite está en ella.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2657"
+    ]
+   }
   },
   "Hepsiba": {
    "nombre": "Hepsiba",
    "escritura": "חֶפְצִי בָּהּ",
    "transliteracion": "Chephtsîy bâhh",
    "idioma": "hebreo",
-   "strong": "H2657"
+   "strong": "H2657",
+   "significado": {
+    "texto": "Mi deleite está en ella.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2657"
+    ]
+   }
   },
   "Hilcías": {
    "nombre": "Hilcías",
    "escritura": "חִלְקִיָּה",
    "transliteracion": "Chilqîyâh",
    "idioma": "hebreo",
-   "strong": "H2518"
+   "strong": "H2518",
+   "significado": {
+    "texto": "Porción de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2518"
+    ]
+   }
   },
   "Hiram": {
    "nombre": "Hiram",
    "escritura": "חִירָם",
    "transliteracion": "Chîyrâm",
    "idioma": "hebreo",
-   "strong": "H2438"
+   "strong": "H2438",
+   "significado": {
+    "texto": "La entrada propone «blancura» y, por extensión, «noble», como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2438",
+     "H2361"
+    ]
+   }
   },
   "Hulda": {
    "nombre": "Hulda",
    "escritura": "חֻלְדָּה",
    "transliteracion": "Chuldâh",
    "idioma": "hebreo",
-   "strong": "H2468"
+   "strong": "H2468",
+   "significado": {
+    "texto": "Comadreja; forma femenina del nombre del animal.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2468",
+     "H2467"
+    ]
+   }
   },
   "Iddo": {
    "nombre": "Iddo",
    "escritura": "עִדּוֹ",
    "transliteracion": "ʻIddôw",
    "idioma": "hebreo",
-   "strong": "H5714"
+   "strong": "H5714",
+   "significado": {
+    "texto": "Oportuno.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5714"
+    ]
+   }
   },
   "Imla": {
    "nombre": "Imla",
    "escritura": "יִמְלָא",
    "transliteracion": "Yimlâʼ",
    "idioma": "hebreo",
-   "strong": "H3229"
+   "strong": "H3229",
+   "significado": {
+    "texto": "Lleno.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3229"
+    ]
+   }
   },
   "Isaac": {
    "nombre": "Isaac",
@@ -878,21 +1719,42 @@
    "transliteracion": "Yitschâq",
    "idioma": "hebreo",
    "strong": "H3327",
-   "pronunciacion": "Yitsjaq"
+   "pronunciacion": "Yitsjaq",
+   "significado": {
+    "texto": "Risa.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3327"
+    ]
+   }
   },
   "Isaí": {
    "nombre": "Isaí",
    "escritura": "יִשַׁי",
    "transliteracion": "Yishay",
    "idioma": "hebreo",
-   "strong": "H3448"
+   "strong": "H3448",
+   "significado": {
+    "texto": "Existente.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3448"
+    ]
+   }
   },
   "Isacar": {
    "nombre": "Isacar",
    "escritura": "יִשָּׂשכָר",
    "transliteracion": "Yissâˢkâr",
    "idioma": "hebreo",
-   "strong": "H3485"
+   "strong": "H3485",
+   "significado": {
+    "texto": "Él traerá una recompensa.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3485"
+    ]
+   }
   },
   "Isaías": {
    "nombre": "Isaías",
@@ -900,14 +1762,28 @@
    "transliteracion": "Yᵉshaʻyâh",
    "idioma": "hebreo",
    "strong": "H3470",
-   "pronunciacion": "Yeshayá"
+   "pronunciacion": "Yeshayá",
+   "significado": {
+    "texto": "Yah ha salvado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3470"
+    ]
+   }
   },
   "Isboset": {
    "nombre": "Isboset",
    "escritura": "אִישׁ־בֹּשֶׁת",
    "transliteracion": "ʼÎysh-Bôsheth",
    "idioma": "hebreo",
-   "strong": "H378"
+   "strong": "H378",
+   "significado": {
+    "texto": "Hombre de vergüenza.",
+    "estado": "propuesta",
+    "referencias": [
+     "H378"
+    ]
+   }
   },
   "Israel": {
    "nombre": "Israel",
@@ -915,14 +1791,33 @@
    "transliteracion": "Yisrâʼêl",
    "idioma": "hebreo",
    "strong": "H3478",
-   "pronunciacion": "Yisrael"
+   "pronunciacion": "Yisrael",
+   "significado": {
+    "texto": "Se proponen «Dios persevera» y «Dios contiende»; la explicación del nombre se relaciona con la lucha de Jacob.",
+    "estado": "incierto",
+    "referencias": [
+     "H3478"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H3478",
+     "url": "https://biblehub.com/bdb/3478.htm"
+    }
+   }
   },
   "Jabes": {
    "nombre": "Jabes",
    "escritura": "יָבֵשׁ",
    "transliteracion": "Yâbêsh",
    "idioma": "hebreo",
-   "strong": "H3003"
+   "strong": "H3003",
+   "significado": {
+    "texto": "Seco.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3003",
+     "H3002"
+    ]
+   }
   },
   "Jacob": {
    "nombre": "Jacob",
@@ -930,21 +1825,42 @@
    "transliteracion": "Yaʻăqôb",
    "idioma": "hebreo",
    "strong": "H3290",
-   "pronunciacion": "Yaakov"
+   "pronunciacion": "Yaakov",
+   "significado": {
+    "texto": "El que toma del talón; por extensión, suplantador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3290"
+    ]
+   }
   },
   "Jahaziel": {
    "nombre": "Jahaziel",
    "escritura": "יַחֲזִיאֵל",
    "transliteracion": "Yachăzîyʼêl",
    "idioma": "hebreo",
-   "strong": "H3166"
+   "strong": "H3166",
+   "significado": {
+    "texto": "Visto por Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3166"
+    ]
+   }
   },
   "Jared": {
    "nombre": "Jared",
    "escritura": "יֶרֶד",
    "transliteracion": "Yered",
    "idioma": "hebreo",
-   "strong": "H3382"
+   "strong": "H3382",
+   "significado": {
+    "texto": "Descenso.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3382"
+    ]
+   }
   },
   "Jeconías": {
    "nombre": "Jeconías",
@@ -952,35 +1868,71 @@
    "transliteracion": "Yᵉkonyâh",
    "idioma": "hebreo",
    "strong": "H3204",
-   "pronunciacion": "Yejonyá"
+   "pronunciacion": "Yejonyá",
+   "significado": {
+    "texto": "Yah establecerá.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3204"
+    ]
+   }
   },
   "Jecolías": {
    "nombre": "Jecolías",
    "escritura": "יְכׇלְיָה",
    "transliteracion": "Yᵉkolyâh",
    "idioma": "hebreo",
-   "strong": "H3203"
+   "strong": "H3203",
+   "significado": {
+    "texto": "Yah capacitará.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3203"
+    ]
+   }
   },
   "Jedida": {
    "nombre": "Jedida",
    "escritura": "יְדִידָה",
    "transliteracion": "Yᵉdîydâh",
    "idioma": "hebreo",
-   "strong": "H3040"
+   "strong": "H3040",
+   "significado": {
+    "texto": "Amada.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3040"
+    ]
+   }
   },
   "Jehú": {
    "nombre": "Jehú",
    "escritura": "יֵהוּא",
    "transliteracion": "Yêhûwʼ",
    "idioma": "hebreo",
-   "strong": "H3058"
+   "strong": "H3058",
+   "significado": {
+    "texto": "Yahweh es él.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3058"
+    ]
+   }
   },
   "Jehudí": {
    "nombre": "Jehudí",
    "escritura": "יְהוּדִי",
    "transliteracion": "Yᵉhûwdîy",
    "idioma": "hebreo",
-   "strong": "H3065"
+   "strong": "H3065",
+   "significado": {
+    "texto": "Judío o de Judá.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3065",
+     "H3064"
+    ]
+   }
   },
   "Jeremías": {
    "nombre": "Jeremías",
@@ -988,56 +1940,114 @@
    "transliteracion": "Yirmᵉyâh",
    "idioma": "hebreo",
    "strong": "H3414",
-   "pronunciacion": "Yirmeyá"
+   "pronunciacion": "Yirmeyá",
+   "significado": {
+    "texto": "Yah se levantará.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3414"
+    ]
+   }
   },
   "Jeroboam": {
    "nombre": "Jeroboam",
    "escritura": "יָרׇבְעָם",
    "transliteracion": "Yârobʻâm",
    "idioma": "hebreo",
-   "strong": "H3379"
+   "strong": "H3379",
+   "significado": {
+    "texto": "El pueblo contenderá.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3379"
+    ]
+   }
   },
   "Jerusa": {
    "nombre": "Jerusa",
    "escritura": "יְרוּשָׁא",
    "transliteracion": "Yᵉrûwshâʼ",
    "idioma": "hebreo",
-   "strong": "H3388"
+   "strong": "H3388",
+   "significado": {
+    "texto": "Poseída.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3388"
+    ]
+   }
   },
   "Jezabel": {
    "nombre": "Jezabel",
    "escritura": "אִיזֶבֶל",
    "transliteracion": "ʼÎyzebel",
    "idioma": "hebreo",
-   "strong": "H348"
+   "strong": "H348",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H348"
+    ]
+   }
   },
   "Joab": {
    "nombre": "Joab",
    "escritura": "יוֹאָב",
    "transliteracion": "Yôwʼâb",
    "idioma": "hebreo",
-   "strong": "H3097"
+   "strong": "H3097",
+   "significado": {
+    "texto": "Engendrado por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3097"
+    ]
+   }
   },
   "Joacaz": {
    "nombre": "Joacaz",
    "escritura": "יוֹאָחָז",
    "transliteracion": "Yôwʼâchâz",
    "idioma": "hebreo",
-   "strong": "H3099"
+   "strong": "H3099",
+   "significado": {
+    "texto": "Tomado por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3099",
+     "H3059"
+    ]
+   }
   },
   "Joadán": {
    "nombre": "Joadán",
    "escritura": "יְהוֹעַדִּין",
    "transliteracion": "Yᵉhôwʻaddîyn",
    "idioma": "hebreo",
-   "strong": "H3086"
+   "strong": "H3086",
+   "significado": {
+    "texto": "Complacida por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3086"
+    ]
+   }
   },
   "Joás": {
    "nombre": "Joás",
    "escritura": "יוֹאָשׁ",
    "transliteracion": "Yôwʼâsh",
    "idioma": "hebreo",
-   "strong": "H3101"
+   "strong": "H3101",
+   "significado": {
+    "texto": "La entrada propone «encendido por Yahweh», con reserva sobre la raíz.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3101",
+     "H3060"
+    ]
+   }
   },
   "Joacim": {
    "nombre": "Joacim",
@@ -1045,7 +2055,14 @@
    "transliteracion": "Yᵉhôwyâqîym",
    "idioma": "hebreo",
    "strong": "H3079",
-   "pronunciacion": "Yehoyaqim"
+   "pronunciacion": "Yehoyaqim",
+   "significado": {
+    "texto": "Yahweh levantará.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3079"
+    ]
+   }
   },
   "Joaquín": {
    "nombre": "Joaquín",
@@ -1053,7 +2070,15 @@
    "transliteracion": "Yôwyâkîyn",
    "idioma": "hebreo",
    "strong": "H3112",
-   "pronunciacion": "Yehoyajín"
+   "pronunciacion": "Yehoyajín",
+   "significado": {
+    "texto": "Yahweh establecerá.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3112",
+     "H3078"
+    ]
+   }
   },
   "Job": {
    "nombre": "Job",
@@ -1061,21 +2086,44 @@
    "transliteracion": "ʼÎyôwb",
    "idioma": "hebreo",
    "strong": "H347",
-   "pronunciacion": "Iyov"
+   "pronunciacion": "Iyov",
+   "significado": {
+    "texto": "Odiado o perseguido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H347"
+    ]
+   }
   },
   "Joiada": {
    "nombre": "Joiada",
    "escritura": "יוֹיָדָע",
    "transliteracion": "Yôwyâdâʻ",
    "idioma": "hebreo",
-   "strong": "H3111"
+   "strong": "H3111",
+   "significado": {
+    "texto": "Conocido por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3111",
+     "H3077"
+    ]
+   }
   },
   "Jonadab": {
    "nombre": "Jonadab",
    "escritura": "יוֹנָדָב",
    "transliteracion": "Yôwnâdâb",
    "idioma": "hebreo",
-   "strong": "H3122"
+   "strong": "H3122",
+   "significado": {
+    "texto": "Favorecido con generosidad por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3122",
+     "H3082"
+    ]
+   }
   },
   "Jonás": {
    "nombre": "Jonás",
@@ -1083,42 +2131,88 @@
    "transliteracion": "Yôwnâh",
    "idioma": "hebreo",
    "strong": "H3124",
-   "pronunciacion": "Yoná"
+   "pronunciacion": "Yoná",
+   "significado": {
+    "texto": "Paloma.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3124",
+     "H3123"
+    ]
+   }
   },
   "Jonatán": {
    "nombre": "Jonatán",
    "escritura": "יוֹנָתָן",
    "transliteracion": "Yôwnâthân",
    "idioma": "hebreo",
-   "strong": "H3129"
+   "strong": "H3129",
+   "significado": {
+    "texto": "Dado por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3129",
+     "H3083"
+    ]
+   }
   },
   "Joram": {
    "nombre": "Joram",
    "escritura": "יוֹרָם",
    "transliteracion": "Yôwrâm",
    "idioma": "hebreo",
-   "strong": "H3141"
+   "strong": "H3141",
+   "significado": {
+    "texto": "Elevado por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3141",
+     "H3088"
+    ]
+   }
   },
   "Josaba": {
    "nombre": "Josaba",
    "escritura": "יְהוֹשֶׁבַע",
    "transliteracion": "Yᵉhôwshebaʻ",
    "idioma": "hebreo",
-   "strong": "H3089"
+   "strong": "H3089",
+   "significado": {
+    "texto": "Yahweh ha jurado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3089"
+    ]
+   }
   },
   "Josabet": {
    "nombre": "Josabet",
    "escritura": "יְהוֹשַׁבְעַת",
    "transliteracion": "Yᵉhôwshabʻath",
    "idioma": "hebreo",
-   "strong": "H3090"
+   "strong": "H3090",
+   "significado": {
+    "texto": "Yahweh ha jurado; variante de Josaba.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3090",
+     "H3089"
+    ]
+   }
   },
   "Josafat": {
    "nombre": "Josafat",
    "escritura": "יְהוֹשָׁפָט",
    "transliteracion": "Yᵉhôwshâphâṭ",
    "idioma": "hebreo",
-   "strong": "H3092"
+   "strong": "H3092",
+   "significado": {
+    "texto": "Juzgado por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3092"
+    ]
+   }
   },
   "José": {
    "nombre": "José",
@@ -1126,14 +2220,28 @@
    "transliteracion": "Yôwçêph",
    "idioma": "hebreo",
    "strong": "H3130",
-   "pronunciacion": "Yosef"
+   "pronunciacion": "Yosef",
+   "significado": {
+    "texto": "Que él añada.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3130"
+    ]
+   }
   },
   "Josías": {
    "nombre": "Josías",
    "escritura": "יֹאשִׁיָּה",
    "transliteracion": "Yôʼshîyâh",
    "idioma": "hebreo",
-   "strong": "H2977"
+   "strong": "H2977",
+   "significado": {
+    "texto": "Fundado por Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2977"
+    ]
+   }
   },
   "Josué": {
    "nombre": "Josué",
@@ -1141,14 +2249,28 @@
    "transliteracion": "Yᵉhôwshûwaʻ",
    "idioma": "hebreo",
    "strong": "H3091",
-   "pronunciacion": "Yehoshúa"
+   "pronunciacion": "Yehoshúa",
+   "significado": {
+    "texto": "Salvado por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3091"
+    ]
+   }
   },
   "Jotam": {
    "nombre": "Jotam",
    "escritura": "יוֹתָם",
    "transliteracion": "Yôwthâm",
    "idioma": "hebreo",
-   "strong": "H3147"
+   "strong": "H3147",
+   "significado": {
+    "texto": "Yahweh es perfecto.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3147"
+    ]
+   }
   },
   "Judá": {
    "nombre": "Judá",
@@ -1156,28 +2278,57 @@
    "transliteracion": "Yᵉhûwdâh",
    "idioma": "hebreo",
    "strong": "H3063",
-   "pronunciacion": "Yehudá"
+   "pronunciacion": "Yehudá",
+   "significado": {
+    "texto": "Alabado o celebrado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3063"
+    ]
+   }
   },
   "Labán": {
    "nombre": "Labán",
    "escritura": "לָבָן",
    "transliteracion": "Lâbân",
    "idioma": "hebreo",
-   "strong": "H3837"
+   "strong": "H3837",
+   "significado": {
+    "texto": "Blanco.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3837",
+     "H3836"
+    ]
+   }
   },
   "Lamec": {
    "nombre": "Lamec",
    "escritura": "לֶמֶךְ",
    "transliteracion": "Lemek",
    "idioma": "hebreo",
-   "strong": "H3929"
+   "strong": "H3929",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H3929"
+    ]
+   }
   },
   "Lea": {
    "nombre": "Lea",
    "escritura": "לֵאָה",
    "transliteracion": "Lêʼâh",
    "idioma": "hebreo",
-   "strong": "H3812"
+   "strong": "H3812",
+   "significado": {
+    "texto": "Cansada.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3812"
+    ]
+   }
   },
   "Leví": {
    "nombre": "Leví",
@@ -1185,91 +2336,187 @@
    "transliteracion": "Lêvîy",
    "idioma": "hebreo",
    "strong": "H3878",
-   "pronunciacion": "Leví"
+   "pronunciacion": "Leví",
+   "significado": {
+    "texto": "Unido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3878"
+    ]
+   }
   },
   "Maaca": {
    "nombre": "Maaca",
    "escritura": "מַעֲכָה",
    "transliteracion": "Maʻăkâh",
    "idioma": "hebreo",
-   "strong": "H4601"
+   "strong": "H4601",
+   "significado": {
+    "texto": "Depresión o hundimiento.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4601"
+    ]
+   }
   },
   "Mahalaleel": {
    "nombre": "Mahalaleel",
    "escritura": "מַהֲלַלְאֵל",
    "transliteracion": "Mahălalʼêl",
    "idioma": "hebreo",
-   "strong": "H4111"
+   "strong": "H4111",
+   "significado": {
+    "texto": "Alabanza de Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4111"
+    ]
+   }
   },
   "Manahem": {
    "nombre": "Manahem",
    "escritura": "מְנַחֵם",
    "transliteracion": "Mᵉnachêm",
    "idioma": "hebreo",
-   "strong": "H4505"
+   "strong": "H4505",
+   "significado": {
+    "texto": "Consolador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4505"
+    ]
+   }
   },
   "Manasés": {
    "nombre": "Manasés",
    "escritura": "מְנַשֶּׁה",
    "transliteracion": "Mᵉnashsheh",
    "idioma": "hebreo",
-   "strong": "H4519"
+   "strong": "H4519",
+   "significado": {
+    "texto": "El que hace olvidar.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4519"
+    ]
+   }
   },
   "Matanías": {
    "nombre": "Matanías",
    "escritura": "מַתַּנְיָה",
    "transliteracion": "Mattanyâh",
    "idioma": "hebreo",
-   "strong": "H4983"
+   "strong": "H4983",
+   "significado": {
+    "texto": "Don de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4983"
+    ]
+   }
   },
   "Matusalén": {
    "nombre": "Matusalén",
    "escritura": "מְתוּשֶׁלַח",
    "transliteracion": "Mᵉthûwshelach",
    "idioma": "hebreo",
-   "strong": "H4968"
+   "strong": "H4968",
+   "significado": {
+    "texto": "Hombre de un dardo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4968"
+    ]
+   }
   },
   "Mefiboset": {
    "nombre": "Mefiboset",
    "escritura": "מְפִיבֹשֶׁת",
    "transliteracion": "Mᵉphîybôsheth",
    "idioma": "hebreo",
-   "strong": "H4648"
+   "strong": "H4648",
+   "significado": {
+    "texto": "La entrada propone «el que disipa la vergüenza», como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4648"
+    ]
+   }
   },
   "Melsar": {
    "nombre": "Melsar",
    "escritura": "מֶלְצָר",
    "transliteracion": "meltsâr",
    "idioma": "hebreo",
-   "strong": "H4453"
+   "strong": "H4453",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H4453"
+    ]
+   }
   },
   "Mesa": {
    "nombre": "Mesa",
    "escritura": "מֵישַׁע",
    "transliteracion": "Mêyshaʻ",
    "idioma": "hebreo",
-   "strong": "H4338"
+   "strong": "H4338",
+   "significado": {
+    "texto": "Seguridad o salvación.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4338",
+     "H4337"
+    ]
+   }
   },
   "Mesulemet": {
    "nombre": "Mesulemet",
    "escritura": "מְשֻׁלֶּמֶת",
    "transliteracion": "Mᵉshullemeth",
    "idioma": "hebreo",
-   "strong": "H4922"
+   "strong": "H4922",
+   "significado": {
+    "texto": "Aliada; forma femenina de Mesulam.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4922",
+     "H4918"
+    ]
+   }
   },
   "Mical": {
    "nombre": "Mical",
    "escritura": "מִיכָל",
    "transliteracion": "Mîykâl",
    "idioma": "hebreo",
-   "strong": "H4324"
+   "strong": "H4324",
+   "significado": {
+    "texto": "La entrada propone «arroyuelo», con reserva.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4324",
+     "H4323"
+    ]
+   }
   },
   "Micaías": {
    "nombre": "Micaías",
    "escritura": "מִיכָיְהוּ",
    "transliteracion": "Mîykâyᵉhûw",
    "idioma": "hebreo",
-   "strong": "H4321"
+   "strong": "H4321",
+   "significado": {
+    "texto": "¿Quién como Yah?",
+    "estado": "propuesta",
+    "referencias": [
+     "H4321",
+     "H4322",
+     "H4320"
+    ]
+   }
   },
   "Miguel": {
    "nombre": "Miguel",
@@ -1277,7 +2524,14 @@
    "transliteracion": "Mîykâʼêl",
    "idioma": "hebreo",
    "strong": "H4317",
-   "pronunciacion": "Mijael"
+   "pronunciacion": "Mijael",
+   "significado": {
+    "texto": "¿Quién como Dios?",
+    "estado": "propuesta",
+    "referencias": [
+     "H4317"
+    ]
+   }
   },
   "Miqueas": {
    "nombre": "Miqueas",
@@ -1285,14 +2539,29 @@
    "transliteracion": "Mîykâh",
    "idioma": "hebreo",
    "strong": "H4318",
-   "pronunciacion": "Mijá"
+   "pronunciacion": "Mijá",
+   "significado": {
+    "texto": "¿Quién como Yah?",
+    "estado": "propuesta",
+    "referencias": [
+     "H4318",
+     "H4320"
+    ]
+   }
   },
   "Misael": {
    "nombre": "Misael",
    "escritura": "מִישָׁאֵל",
    "transliteracion": "Mîyshâʼêl",
    "idioma": "hebreo",
-   "strong": "H4332"
+   "strong": "H4332",
+   "significado": {
+    "texto": "¿Quién es lo que Dios es?",
+    "estado": "propuesta",
+    "referencias": [
+     "H4332"
+    ]
+   }
   },
   "Moisés": {
    "nombre": "Moisés",
@@ -1300,112 +2569,231 @@
    "transliteracion": "Môsheh",
    "idioma": "hebreo",
    "strong": "H4872",
-   "pronunciacion": "Moshé"
+   "pronunciacion": "Moshé",
+   "significado": {
+    "texto": "Sacado del agua, en la explicación de Éxodo 2:10.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4872"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H4872",
+     "url": "https://biblehub.com/bdb/4872.htm"
+    },
+    "nota": "Esta es la asociación del relato bíblico. Brown–Driver–Briggs propone también un origen egipcio relacionado con «hijo»; no deben confundirse ambas explicaciones."
+   }
   },
   "Naama": {
    "nombre": "Naama",
    "escritura": "נַעֲמָה",
    "transliteracion": "Naʻămâh",
    "idioma": "hebreo",
-   "strong": "H5279"
+   "strong": "H5279",
+   "significado": {
+    "texto": "Agradable o placentera.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5279"
+    ]
+   }
   },
   "Naasón": {
    "nombre": "Naasón",
    "escritura": "נַחְשׁוֹן",
    "transliteracion": "Nachshôwn",
    "idioma": "hebreo",
-   "strong": "H5177"
+   "strong": "H5177",
+   "significado": {
+    "texto": "Encantador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5177"
+    ]
+   }
   },
   "Nabal": {
    "nombre": "Nabal",
    "escritura": "נָבָל",
    "transliteracion": "Nâbâl",
    "idioma": "hebreo",
-   "strong": "H5037"
+   "strong": "H5037",
+   "significado": {
+    "texto": "Insensato.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5037"
+    ]
+   }
   },
   "Nabat": {
    "nombre": "Nabat",
    "escritura": "נְבָט",
    "transliteracion": "Nᵉbâṭ",
    "idioma": "hebreo",
-   "strong": "H5028"
+   "strong": "H5028",
+   "significado": {
+    "texto": "Mirada o consideración.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5028"
+    ]
+   }
   },
   "Nabot": {
    "nombre": "Nabot",
    "escritura": "נָבוֹת",
    "transliteracion": "Nâbôwth",
    "idioma": "hebreo",
-   "strong": "H5022"
+   "strong": "H5022",
+   "significado": {
+    "texto": "Frutos.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5022"
+    ]
+   }
   },
   "Nabucodonosor": {
    "nombre": "Nabucodonosor",
    "escritura": "נְבוּכַדְנֶאצַּר",
    "transliteracion": "Nᵉbûwkadneʼtstsar",
    "idioma": "hebreo",
-   "strong": "H5019"
+   "strong": "H5019",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5019"
+    ]
+   }
   },
   "Nabuzaradán": {
    "nombre": "Nabuzaradán",
    "escritura": "נְבוּזַרְאֲדָן",
    "transliteracion": "Nᵉbûwzarʼădân",
    "idioma": "hebreo",
-   "strong": "H5018"
+   "strong": "H5018",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5018"
+    ]
+   }
   },
   "Nacor": {
    "nombre": "Nacor",
    "escritura": "נָחוֹר",
    "transliteracion": "Nâchôwr",
    "idioma": "hebreo",
-   "strong": "H5152"
+   "strong": "H5152",
+   "significado": {
+    "texto": "Roncador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5152"
+    ]
+   }
   },
   "Nadab": {
    "nombre": "Nadab",
    "escritura": "נָדָב",
    "transliteracion": "Nâdâb",
    "idioma": "hebreo",
-   "strong": "H5070"
+   "strong": "H5070",
+   "significado": {
+    "texto": "Generoso.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5070"
+    ]
+   }
   },
   "Nahas": {
    "nombre": "Nahas",
    "escritura": "נָחָשׁ",
    "transliteracion": "Nâchâsh",
    "idioma": "hebreo",
-   "strong": "H5176"
+   "strong": "H5176",
+   "significado": {
+    "texto": "Serpiente.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5176",
+     "H5175"
+    ]
+   }
   },
   "Natán": {
    "nombre": "Natán",
    "escritura": "נָתָן",
    "transliteracion": "Nâthân",
    "idioma": "hebreo",
-   "strong": "H5416"
+   "strong": "H5416",
+   "significado": {
+    "texto": "Dado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5416"
+    ]
+   }
   },
   "Necao": {
    "nombre": "Necao",
    "escritura": "נְכוֹ",
    "transliteracion": "Nᵉkôw",
    "idioma": "hebreo",
-   "strong": "H5224"
+   "strong": "H5224",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5224"
+    ]
+   }
   },
   "Nehusta": {
    "nombre": "Nehusta",
    "escritura": "נְחֻשְׁתָּא",
    "transliteracion": "Nᵉchushtâʼ",
    "idioma": "hebreo",
-   "strong": "H5179"
+   "strong": "H5179",
+   "significado": {
+    "texto": "Cobre.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5179"
+    ]
+   }
   },
   "Ner": {
    "nombre": "Ner",
    "escritura": "נֵר",
    "transliteracion": "Nêr",
    "idioma": "hebreo",
-   "strong": "H5369"
+   "strong": "H5369",
+   "significado": {
+    "texto": "Lámpara.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5369",
+     "H5216"
+    ]
+   }
   },
   "Nerías": {
    "nombre": "Nerías",
    "escritura": "נֵרִיָּה",
    "transliteracion": "Nêrîyâh",
    "idioma": "hebreo",
-   "strong": "H5374"
+   "strong": "H5374",
+   "significado": {
+    "texto": "Luz de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5374"
+    ]
+   }
   },
   "Nimrod": {
    "nombre": "Nimrod",
@@ -1413,14 +2801,28 @@
    "transliteracion": "Nimrôwd",
    "idioma": "hebreo",
    "strong": "H5248",
-   "pronunciacion": "Nimrod"
+   "pronunciacion": "Nimrod",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5248"
+    ]
+   }
   },
   "Nimsi": {
    "nombre": "Nimsi",
    "escritura": "נִמְשִׁי",
    "transliteracion": "Nimshîy",
    "idioma": "hebreo",
-   "strong": "H5250"
+   "strong": "H5250",
+   "significado": {
+    "texto": "La entrada propone «extraído» o «liberado», como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5250"
+    ]
+   }
   },
   "Noé": {
    "nombre": "Noé",
@@ -1428,42 +2830,84 @@
    "transliteracion": "Nôach",
    "idioma": "hebreo",
    "strong": "H5146",
-   "pronunciacion": "Nóaj"
+   "pronunciacion": "Nóaj",
+   "significado": {
+    "texto": "Reposo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5146"
+    ]
+   }
   },
   "Obed": {
    "nombre": "Obed",
    "escritura": "עוֹבֵד",
    "transliteracion": "ʻÔwbêd",
    "idioma": "hebreo",
-   "strong": "H5744"
+   "strong": "H5744",
+   "significado": {
+    "texto": "Servidor.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5744"
+    ]
+   }
   },
   "Ocozías": {
    "nombre": "Ocozías",
    "escritura": "אֲחַזְיָה",
    "transliteracion": "ʼĂchazyâh",
    "idioma": "hebreo",
-   "strong": "H274"
+   "strong": "H274",
+   "significado": {
+    "texto": "Yah ha tomado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H274"
+    ]
+   }
   },
   "Oded": {
    "nombre": "Oded",
    "escritura": "עוֹדֵד",
    "transliteracion": "ʻÔwdêd",
    "idioma": "hebreo",
-   "strong": "H5752"
+   "strong": "H5752",
+   "significado": {
+    "texto": "Reiteración.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5752"
+    ]
+   }
   },
   "Ofni": {
    "nombre": "Ofni",
    "escritura": "חׇפְנִי",
    "transliteracion": "Chophnîy",
    "idioma": "hebreo",
-   "strong": "H2652"
+   "strong": "H2652",
+   "significado": {
+    "texto": "La entrada propone «pugilista» como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2652"
+    ]
+   }
   },
   "Omri": {
    "nombre": "Omri",
    "escritura": "עׇמְרִי",
    "transliteracion": "ʻOmrîy",
    "idioma": "hebreo",
-   "strong": "H6018"
+   "strong": "H6018",
+   "significado": {
+    "texto": "El que amontona.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6018"
+    ]
+   }
   },
   "Oseas": {
    "nombre": "Oseas",
@@ -1471,126 +2915,257 @@
    "transliteracion": "Hôwshêaʻ",
    "idioma": "hebreo",
    "strong": "H1954",
-   "pronunciacion": "Hoshéa"
+   "pronunciacion": "Hoshéa",
+   "significado": {
+    "texto": "Libertador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H1954"
+    ]
+   }
   },
   "Palti": {
    "nombre": "Palti",
    "escritura": "פַּלְטִי",
    "transliteracion": "Palṭîy",
    "idioma": "hebreo",
-   "strong": "H6406"
+   "strong": "H6406",
+   "significado": {
+    "texto": "Liberado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6406"
+    ]
+   }
   },
   "Paltiel": {
    "nombre": "Paltiel",
    "escritura": "פַּלְטִיאֵל",
    "transliteracion": "Palṭîyʼêl",
    "idioma": "hebreo",
-   "strong": "H6409"
+   "strong": "H6409",
+   "significado": {
+    "texto": "Liberación de Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6409"
+    ]
+   }
   },
   "Pedaías": {
    "nombre": "Pedaías",
    "escritura": "פְּדָיָה",
    "transliteracion": "Pᵉdâyâh",
    "idioma": "hebreo",
-   "strong": "H6305"
+   "strong": "H6305",
+   "significado": {
+    "texto": "Yah ha rescatado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6305"
+    ]
+   }
   },
   "Peka": {
    "nombre": "Peka",
    "escritura": "פֶּקַח",
    "transliteracion": "Peqach",
    "idioma": "hebreo",
-   "strong": "H6492"
+   "strong": "H6492",
+   "significado": {
+    "texto": "Vigilancia.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6492"
+    ]
+   }
   },
   "Pekaía": {
    "nombre": "Pekaía",
    "escritura": "פְּקַחְיָה",
    "transliteracion": "Pᵉqachyâh",
    "idioma": "hebreo",
-   "strong": "H6494"
+   "strong": "H6494",
+   "significado": {
+    "texto": "Yah ha observado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6494"
+    ]
+   }
   },
   "Peleg": {
    "nombre": "Peleg",
    "escritura": "פֶּלֶג",
    "transliteracion": "Peleg",
    "idioma": "hebreo",
-   "strong": "H6389"
+   "strong": "H6389",
+   "significado": {
+    "texto": "Relacionado con división y con un canal de agua; la entrada propone también «terremoto».",
+    "estado": "propuesta",
+    "referencias": [
+     "H6389",
+     "H6388",
+     "H6385"
+    ]
+   }
   },
   "Pérez": {
    "nombre": "Pérez",
    "escritura": "פֶּרֶץ",
    "transliteracion": "Perets",
    "idioma": "hebreo",
-   "strong": "H6557"
+   "strong": "H6557",
+   "significado": {
+    "texto": "Brecha o abertura.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6557",
+     "H6556"
+    ]
+   }
   },
   "Pul": {
    "nombre": "Pul",
    "escritura": "פּוּל",
    "transliteracion": "Pûwl",
    "idioma": "hebreo",
-   "strong": "H6322"
+   "strong": "H6322",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H6322"
+    ]
+   }
   },
   "Rahab": {
    "nombre": "Rahab",
    "escritura": "רָחָב",
    "transliteracion": "Râchâb",
    "idioma": "hebreo",
-   "strong": "H7343"
+   "strong": "H7343",
+   "significado": {
+    "texto": "Amplia; relacionado con la palabra que expresa amplitud.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7343",
+     "H7342"
+    ]
+   }
   },
   "Ram": {
    "nombre": "Ram",
    "escritura": "רָם",
    "transliteracion": "Râm",
    "idioma": "hebreo",
-   "strong": "H7410"
+   "strong": "H7410",
+   "significado": {
+    "texto": "Elevado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7410"
+    ]
+   }
   },
   "Rebeca": {
    "nombre": "Rebeca",
    "escritura": "רִבְקָה",
    "transliteracion": "Ribqâh",
    "idioma": "hebreo",
-   "strong": "H7259"
+   "strong": "H7259",
+   "significado": {
+    "texto": "La entrada propone «la que ata», figuradamente por su belleza, como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7259"
+    ]
+   }
   },
   "Recab": {
    "nombre": "Recab",
    "escritura": "רֵכָב",
    "transliteracion": "Rêkâb",
    "idioma": "hebreo",
-   "strong": "H7394"
+   "strong": "H7394",
+   "significado": {
+    "texto": "Jinete.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7394"
+    ]
+   }
   },
   "Remalías": {
    "nombre": "Remalías",
    "escritura": "רְמַלְיָהוּ",
    "transliteracion": "Rᵉmalyâhûw",
    "idioma": "hebreo",
-   "strong": "H7425"
+   "strong": "H7425",
+   "significado": {
+    "texto": "La entrada propone «Yah ha adornado», con reserva sobre la raíz.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7425"
+    ]
+   }
   },
   "Rezín": {
    "nombre": "Rezín",
    "escritura": "רְצִין",
    "transliteracion": "Rᵉtsîyn",
    "idioma": "hebreo",
-   "strong": "H7526"
+   "strong": "H7526",
+   "significado": {
+    "texto": "La entrada lo relaciona, como posibilidad, con agrado o favor.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7526",
+     "H7522"
+    ]
+   }
   },
   "Rezón": {
    "nombre": "Rezón",
    "escritura": "רְזוֹן",
    "transliteracion": "Rᵉzôwn",
    "idioma": "hebreo",
-   "strong": "H7331"
+   "strong": "H7331",
+   "significado": {
+    "texto": "Príncipe.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7331"
+    ]
+   }
   },
   "Reu": {
    "nombre": "Reu",
    "escritura": "רְעוּ",
    "transliteracion": "Rᵉʻûw",
    "idioma": "hebreo",
-   "strong": "H7466"
+   "strong": "H7466",
+   "significado": {
+    "texto": "Amigo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7466"
+    ]
+   }
   },
   "Roboam": {
    "nombre": "Roboam",
    "escritura": "רְחַבְעָם",
    "transliteracion": "Rᵉchabʻâm",
    "idioma": "hebreo",
-   "strong": "H7346"
+   "strong": "H7346",
+   "significado": {
+    "texto": "Un pueblo se ha ensanchado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7346"
+    ]
+   }
   },
   "Rut": {
    "nombre": "Rut",
@@ -1598,70 +3173,146 @@
    "transliteracion": "Rûwth",
    "idioma": "hebreo",
    "strong": "H7327",
-   "pronunciacion": "Rut"
+   "pronunciacion": "Rut",
+   "significado": {
+    "texto": "La entrada propone «amiga», como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7327"
+    ]
+   }
   },
   "Sadoc": {
    "nombre": "Sadoc",
    "escritura": "צָדוֹק",
    "transliteracion": "Tsâdôwq",
    "idioma": "hebreo",
-   "strong": "H6659"
+   "strong": "H6659",
+   "significado": {
+    "texto": "Justo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6659"
+    ]
+   }
   },
   "Safán": {
    "nombre": "Safán",
    "escritura": "שָׁפָן",
    "transliteracion": "shâphân",
    "idioma": "hebreo",
-   "strong": "H8227"
+   "strong": "H8227",
+   "significado": {
+    "texto": "Damán, un pequeño mamífero de las rocas.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8227"
+    ]
+   }
   },
   "Salatiel": {
    "nombre": "Salatiel",
    "escritura": "שְׁאַלְתִּיאֵל",
    "transliteracion": "Shᵉʼaltîyʼêl",
    "idioma": "hebreo",
-   "strong": "H7597"
+   "strong": "H7597",
+   "significado": {
+    "texto": "He pedido a Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7597"
+    ]
+   }
   },
   "Sala": {
    "nombre": "Sala",
    "escritura": "שֵׁלָה",
    "transliteracion": "Shêlâh",
    "idioma": "hebreo",
-   "strong": "H7956"
+   "strong": "H7956",
+   "significado": {
+    "texto": "Petición.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7956"
+    ]
+   }
   },
   "Salma": {
    "nombre": "Salma",
    "escritura": "שַׂלְמָא",
    "transliteracion": "Salmâʼ",
    "idioma": "hebreo",
-   "strong": "H8007"
+   "strong": "H8007",
+   "significado": {
+    "texto": "La entrada propone «vestidura», como posibilidad.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8007",
+     "H8008"
+    ]
+   }
   },
   "Salmón": {
    "nombre": "Salmón",
    "escritura": "שַׂלְמוֹן",
    "transliteracion": "Salmôwn",
    "idioma": "hebreo",
-   "strong": "H8012"
+   "strong": "H8012",
+   "significado": {
+    "texto": "Investidura o vestidura.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8012"
+    ]
+   }
   },
   "Salmanasar": {
    "nombre": "Salmanasar",
    "escritura": "שַׁלְמַנְאֶסֶר",
    "transliteracion": "Shalmanʼeçer",
    "idioma": "hebreo",
-   "strong": "H8022"
+   "strong": "H8022",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H8022"
+    ]
+   }
   },
   "Salum": {
    "nombre": "Salum",
    "escritura": "שַׁלּוּם",
    "transliteracion": "Shallûwm",
    "idioma": "hebreo",
-   "strong": "H7967"
+   "strong": "H7967",
+   "significado": {
+    "texto": "Recompensa o retribución.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7967",
+     "H7966"
+    ]
+   }
   },
   "Samuel": {
    "nombre": "Samuel",
    "escritura": "שְׁמוּאֵל",
    "transliteracion": "Shᵉmûwʼêl",
    "idioma": "hebreo",
-   "strong": "H8050"
+   "strong": "H8050",
+   "significado": {
+    "texto": "Se proponen «oído por Dios» y «nombre de Dios»; no hay una única explicación aceptada.",
+    "estado": "incierto",
+    "referencias": [
+     "H8050"
+    ],
+    "contraste": {
+     "titulo": "Brown–Driver–Briggs, entrada H8050",
+     "url": "https://biblehub.com/bdb/8050.htm"
+    }
+   }
   },
   "Sara": {
    "nombre": "Sara",
@@ -1669,28 +3320,57 @@
    "transliteracion": "Sârâh",
    "idioma": "hebreo",
    "strong": "H8283",
-   "pronunciacion": "Sará"
+   "pronunciacion": "Sará",
+   "significado": {
+    "texto": "Princesa o señora noble.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8283",
+     "H8282"
+    ]
+   }
   },
   "Sarai": {
    "nombre": "Sarai",
    "escritura": "שָׂרַי",
    "transliteracion": "Sâray",
    "idioma": "hebreo",
-   "strong": "H8297"
+   "strong": "H8297",
+   "significado": {
+    "texto": "La que gobierna.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8297"
+    ]
+   }
   },
   "Sargón": {
    "nombre": "Sargón",
    "escritura": "סַרְגּוֹן",
    "transliteracion": "Çargôwn",
    "idioma": "hebreo",
-   "strong": "H5623"
+   "strong": "H5623",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5623"
+    ]
+   }
   },
   "Sarvia": {
    "nombre": "Sarvia",
    "escritura": "צְרוּיָה",
    "transliteracion": "Tsᵉrûwyâh",
    "idioma": "hebreo",
-   "strong": "H6870"
+   "strong": "H6870",
+   "significado": {
+    "texto": "Herida.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6870"
+    ]
+   }
   },
   "Saúl": {
    "nombre": "Saúl",
@@ -1698,14 +3378,28 @@
    "transliteracion": "Shâʼûwl",
    "idioma": "hebreo",
    "strong": "H7586",
-   "pronunciacion": "Shaúl"
+   "pronunciacion": "Shaúl",
+   "significado": {
+    "texto": "Pedido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7586"
+    ]
+   }
   },
   "Sear-jasub": {
    "nombre": "Sear-jasub",
    "escritura": "שְׁאָר יָשׁוּב",
    "transliteracion": "Shᵉʼâr Yâshûwb",
    "idioma": "hebreo",
-   "strong": "H7610"
+   "strong": "H7610",
+   "significado": {
+    "texto": "Un remanente volverá.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7610"
+    ]
+   }
   },
   "Sedequías": {
    "nombre": "Sedequías",
@@ -1713,49 +3407,99 @@
    "transliteracion": "Tsidqîyâh",
    "idioma": "hebreo",
    "strong": "H6667",
-   "pronunciacion": "Tsidqiyá"
+   "pronunciacion": "Tsidqiyá",
+   "significado": {
+    "texto": "Justicia de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6667"
+    ]
+   }
   },
   "Sem": {
    "nombre": "Sem",
    "escritura": "שֵׁם",
    "transliteracion": "Shêm",
    "idioma": "hebreo",
-   "strong": "H8035"
+   "strong": "H8035",
+   "significado": {
+    "texto": "Nombre.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8035"
+    ]
+   }
   },
   "Semaías": {
    "nombre": "Semaías",
    "escritura": "שְׁמַעְיָה",
    "transliteracion": "Shᵉmaʻyâh",
    "idioma": "hebreo",
-   "strong": "H8098"
+   "strong": "H8098",
+   "significado": {
+    "texto": "Yah ha oído.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8098"
+    ]
+   }
   },
   "Semer": {
    "nombre": "Semer",
    "escritura": "שֶׁמֶר",
    "transliteracion": "Shemer",
    "idioma": "hebreo",
-   "strong": "H8106"
+   "strong": "H8106",
+   "significado": {
+    "texto": "Sedimento del vino.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8106",
+     "H8105"
+    ]
+   }
   },
   "Senaquerib": {
    "nombre": "Senaquerib",
    "escritura": "סַנְחֵרִיב",
    "transliteracion": "Çanchêrîyb",
    "idioma": "hebreo",
-   "strong": "H5576"
+   "strong": "H5576",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5576"
+    ]
+   }
   },
   "Seraías": {
    "nombre": "Seraías",
    "escritura": "שְׂרָיָה",
    "transliteracion": "Sᵉrâyâh",
    "idioma": "hebreo",
-   "strong": "H8304"
+   "strong": "H8304",
+   "significado": {
+    "texto": "Yah ha prevalecido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8304"
+    ]
+   }
   },
   "Serug": {
    "nombre": "Serug",
    "escritura": "שְׂרוּג",
    "transliteracion": "Sᵉrûwg",
    "idioma": "hebreo",
-   "strong": "H8286"
+   "strong": "H8286",
+   "significado": {
+    "texto": "Zarcillo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8286"
+    ]
+   }
   },
   "Set": {
    "nombre": "Set",
@@ -1763,203 +3507,410 @@
    "transliteracion": "Shêth",
    "idioma": "hebreo",
    "strong": "H8352",
-   "pronunciacion": "Shet"
+   "pronunciacion": "Shet",
+   "significado": {
+    "texto": "Puesto o sustituido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8352"
+    ]
+   }
   },
   "Sibia": {
    "nombre": "Sibia",
    "escritura": "צִבְיָּה",
    "transliteracion": "Tsibyâh",
    "idioma": "hebreo",
-   "strong": "H6645"
+   "strong": "H6645",
+   "significado": {
+    "texto": "Gacela.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6645",
+     "H6646"
+    ]
+   }
   },
   "Silhi": {
    "nombre": "Silhi",
    "escritura": "שִׁלְחִי",
    "transliteracion": "Shilchîy",
    "idioma": "hebreo",
-   "strong": "H7977"
+   "strong": "H7977",
+   "significado": {
+    "texto": "Armado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7977"
+    ]
+   }
   },
   "Sisac": {
    "nombre": "Sisac",
    "escritura": "שִׁישַׁק",
    "transliteracion": "Shîyshaq",
    "idioma": "hebreo",
-   "strong": "H7895"
+   "strong": "H7895",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H7895"
+    ]
+   }
   },
   "So": {
    "nombre": "So",
    "escritura": "סוֹא",
    "transliteracion": "Çôwʼ",
    "idioma": "hebreo",
-   "strong": "H5471"
+   "strong": "H5471",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5471"
+    ]
+   }
   },
   "Tabeel": {
    "nombre": "Tabeel",
    "escritura": "טָבְאֵל",
    "transliteracion": "ṭâbᵉʼêl",
    "idioma": "hebreo",
-   "strong": "H2870"
+   "strong": "H2870",
+   "significado": {
+    "texto": "Agradable a Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2870"
+    ]
+   }
   },
   "Talmai": {
    "nombre": "Talmai",
    "escritura": "תַּלְמַי",
    "transliteracion": "Talmay",
    "idioma": "hebreo",
-   "strong": "H8526"
+   "strong": "H8526",
+   "significado": {
+    "texto": "Con surcos.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8526"
+    ]
+   }
   },
   "Tamar": {
    "nombre": "Tamar",
    "escritura": "תָּמָר",
    "transliteracion": "Tâmâr",
    "idioma": "hebreo",
-   "strong": "H8559"
+   "strong": "H8559",
+   "significado": {
+    "texto": "Palmera.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8559",
+     "H8558"
+    ]
+   }
   },
   "Taré": {
    "nombre": "Taré",
    "escritura": "תֶּרַח",
    "transliteracion": "Terach",
    "idioma": "hebreo",
-   "strong": "H8646"
+   "strong": "H8646",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H8646"
+    ]
+   }
   },
   "Tibni": {
    "nombre": "Tibni",
    "escritura": "תִּבְנִי",
    "transliteracion": "Tibnîy",
    "idioma": "hebreo",
-   "strong": "H8402"
+   "strong": "H8402",
+   "significado": {
+    "texto": "De paja.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8402"
+    ]
+   }
   },
   "Tiglat-pileser": {
    "nombre": "Tiglat-pileser",
    "escritura": "תִּגְלַת פִּלְאֶסֶר",
    "transliteracion": "Tiglath Pilʼeçer",
    "idioma": "hebreo",
-   "strong": "H8407"
+   "strong": "H8407",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H8407"
+    ]
+   }
   },
   "Urías": {
    "nombre": "Urías",
    "escritura": "אוּרִיָּה",
    "transliteracion": "ʼÛwrîyâh",
    "idioma": "hebreo",
-   "strong": "H223"
+   "strong": "H223",
+   "significado": {
+    "texto": "Llama de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H223"
+    ]
+   }
   },
   "Uza": {
    "nombre": "Uza",
    "escritura": "עֻזָּא",
    "transliteracion": "ʻUzzâʼ",
    "idioma": "hebreo",
-   "strong": "H5798"
+   "strong": "H5798",
+   "significado": {
+    "texto": "Fuerza.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5798"
+    ]
+   }
   },
   "Uzías": {
    "nombre": "Uzías",
    "escritura": "עֻזִּיָּה",
    "transliteracion": "ʻUzzîyâh",
    "idioma": "hebreo",
-   "strong": "H5818"
+   "strong": "H5818",
+   "significado": {
+    "texto": "Fuerza de Yah.",
+    "estado": "propuesta",
+    "referencias": [
+     "H5818"
+    ]
+   }
   },
   "Zacarías": {
    "nombre": "Zacarías",
    "escritura": "זְכַרְיָה",
    "transliteracion": "Zᵉkaryâh",
    "idioma": "hebreo",
-   "strong": "H2148"
+   "strong": "H2148",
+   "significado": {
+    "texto": "Yah ha recordado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2148"
+    ]
+   }
   },
   "Zara": {
    "nombre": "Zara",
    "escritura": "זֶרַח",
    "transliteracion": "Zerach",
    "idioma": "hebreo",
-   "strong": "H2226"
+   "strong": "H2226",
+   "significado": {
+    "texto": "Aparición de la luz.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2226",
+     "H2225"
+    ]
+   }
   },
   "Zebuda": {
    "nombre": "Zebuda",
    "escritura": "זְבִידָה",
    "transliteracion": "Zᵉbîydâh",
    "idioma": "hebreo",
-   "strong": "H2080"
+   "strong": "H2080",
+   "significado": {
+    "texto": "Dádiva.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2080"
+    ]
+   }
   },
   "Zera": {
    "nombre": "Zera",
    "escritura": "זֶרַח",
    "transliteracion": "Zerach",
    "idioma": "hebreo",
-   "strong": "H2226"
+   "strong": "H2226",
+   "significado": {
+    "texto": "Aparición de la luz.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2226",
+     "H2225"
+    ]
+   }
   },
   "Zerúa": {
    "nombre": "Zerúa",
    "escritura": "צְרוּעָה",
    "transliteracion": "Tsᵉrûwʻâh",
    "idioma": "hebreo",
-   "strong": "H6871"
+   "strong": "H6871",
+   "significado": {
+    "texto": "Leprosa.",
+    "estado": "propuesta",
+    "referencias": [
+     "H6871"
+    ]
+   }
   },
   "Zimri": {
    "nombre": "Zimri",
    "escritura": "זִמְרִי",
    "transliteracion": "Zimrîy",
    "idioma": "hebreo",
-   "strong": "H2174"
+   "strong": "H2174",
+   "significado": {
+    "texto": "Musical.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2174"
+    ]
+   }
   },
   "Zorobabel": {
    "nombre": "Zorobabel",
    "escritura": "זְרֻבָּבֶל",
    "transliteracion": "Zᵉrubbâbel",
    "idioma": "hebreo",
-   "strong": "H2216"
+   "strong": "H2216",
+   "significado": {
+    "texto": "Nacido en Babilonia.",
+    "estado": "propuesta",
+    "referencias": [
+     "H2216"
+    ]
+   }
   },
   "Sadrac": {
    "nombre": "Sadrac",
    "escritura": "שַׁדְרַךְ",
    "transliteracion": "Shadrak",
    "idioma": "hebreo",
-   "strong": "H7714"
+   "strong": "H7714",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H7714"
+    ]
+   }
   },
   "Mesac": {
    "nombre": "Mesac",
    "escritura": "מֵישַׁךְ",
    "transliteracion": "Mêyshak",
    "idioma": "hebreo",
-   "strong": "H4335"
+   "strong": "H4335",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H4335"
+    ]
+   }
   },
   "Abed-nego": {
    "nombre": "Abed-nego",
    "escritura": "עֲבֵד נְגוֹ",
    "transliteracion": "ʻĂbêd Nᵉgôw",
    "idioma": "hebreo",
-   "strong": "H5664"
+   "strong": "H5664",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5664"
+    ]
+   }
   },
   "Belsasar (arameo)": {
    "nombre": "Belsasar (arameo)",
    "escritura": "בֵּלְשַׁאצַּר",
    "transliteracion": "Bêlshaʼtstsar",
    "idioma": "arameo",
-   "strong": "H1113"
+   "strong": "H1113",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1113"
+    ]
+   }
   },
   "Beltsasar (arameo)": {
    "nombre": "Beltsasar (arameo)",
    "escritura": "בֵּלְטְשַׁאצַּר",
    "transliteracion": "Bêlṭᵉshaʼtstsar",
    "idioma": "arameo",
-   "strong": "H1096"
+   "strong": "H1096",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H1096"
+    ]
+   }
   },
   "Sadrac (arameo)": {
    "nombre": "Sadrac (arameo)",
    "escritura": "שַׁדְרַךְ",
    "transliteracion": "Shadrak",
    "idioma": "arameo",
-   "strong": "H7715"
+   "strong": "H7715",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H7715"
+    ]
+   }
   },
   "Mesac (arameo)": {
    "nombre": "Mesac (arameo)",
    "escritura": "מֵישַׁךְ",
    "transliteracion": "Mêyshak",
    "idioma": "arameo",
-   "strong": "H4336"
+   "strong": "H4336",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H4336"
+    ]
+   }
   },
   "Abed-nego (arameo)": {
    "nombre": "Abed-nego (arameo)",
    "escritura": "עֲבֵד נְגוֹא",
    "transliteracion": "ʻĂbêd Nᵉgôwʼ",
    "idioma": "arameo",
-   "strong": "H5665"
+   "strong": "H5665",
+   "significado": {
+    "texto": "Nombre de origen extranjero; esta entrada no establece una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H5665"
+    ]
+   }
   },
   "Abiú": {
    "nombre": "Abiú",
@@ -1967,7 +3918,14 @@
    "transliteracion": "ʼĂbîyhûwʼ",
    "idioma": "hebreo",
    "strong": "H30",
-   "pronunciacion": "Avihú"
+   "pronunciacion": "Avihú",
+   "significado": {
+    "texto": "Padre de él, referido a Dios en la explicación del léxico.",
+    "estado": "propuesta",
+    "referencias": [
+     "H30"
+    ]
+   }
   },
   "Salomón": {
    "nombre": "Salomón",
@@ -1975,7 +3933,14 @@
    "transliteracion": "Shᵉlômôh",
    "idioma": "hebreo",
    "strong": "H8010",
-   "pronunciacion": "Shelomó"
+   "pronunciacion": "Shelomó",
+   "significado": {
+    "texto": "Pacífico.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8010"
+    ]
+   }
   },
   "Eleazar": {
    "nombre": "Eleazar",
@@ -1983,7 +3948,14 @@
    "transliteracion": "ʼElʻâzâr",
    "idioma": "hebreo",
    "strong": "H499",
-   "pronunciacion": "Elazar"
+   "pronunciacion": "Elazar",
+   "significado": {
+    "texto": "Dios es ayudador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H499"
+    ]
+   }
   },
   "Jesús": {
    "nombre": "Jesús",
@@ -1993,7 +3965,16 @@
    "strong": "H3442",
    "pronunciacion": "Yeshúa",
    "equivalenciaGriega": "G2424",
-   "nota": "H3442 documenta la forma breve de H3091 (Yehoshúa), equivalencia hebrea a la que remite G2424. No se afirma una pronunciación antigua reconstruida."
+   "nota": "H3442 documenta la forma breve de H3091 (Yehoshúa), equivalencia hebrea a la que remite G2424. No se afirma una pronunciación antigua reconstruida.",
+   "significado": {
+    "texto": "Él salvará; forma abreviada de Yehoshúa.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3442",
+     "H3091"
+    ],
+    "nota": "Yehoshúa incluye el nombre divino. Mateo 1:21 vincula el nombre de Jesús con su misión de salvar."
+   }
   },
   "Juan": {
    "nombre": "Juan",
@@ -2003,7 +3984,15 @@
    "strong": "H3110",
    "pronunciacion": "Yojanán",
    "equivalenciaGriega": "G2491",
-   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció."
+   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció.",
+   "significado": {
+    "texto": "Favorecido por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3110",
+     "H3076"
+    ]
+   }
   },
   "Santiago": {
    "nombre": "Santiago",
@@ -2013,7 +4002,14 @@
    "strong": "H3290",
    "pronunciacion": "Yaakov",
    "equivalenciaGriega": "G2385",
-   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció. G2385 remite a G2384, del hebreo H3290."
+   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció. G2385 remite a G2384, del hebreo H3290.",
+   "significado": {
+    "texto": "El que toma del talón; por extensión, suplantador.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3290"
+    ]
+   }
   },
   "Saulo": {
    "nombre": "Saulo",
@@ -2023,7 +4019,14 @@
    "strong": "H7586",
    "pronunciacion": "Shaúl",
    "equivalenciaGriega": "G4569",
-   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció. G4569 remite a G4549, del hebreo H7586; Hechos 13:9 relaciona Saulo y Pablo."
+   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció. G4569 remite a G4549, del hebreo H7586; Hechos 13:9 relaciona Saulo y Pablo.",
+   "significado": {
+    "texto": "Pedido.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7586"
+    ]
+   }
   },
   "María": {
    "nombre": "María",
@@ -2033,7 +4036,14 @@
    "strong": "H4813",
    "pronunciacion": "Miryam",
    "equivalenciaGriega": "G3137",
-   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció."
+   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció.",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "H4813"
+    ]
+   }
   },
   "Judas": {
    "nombre": "Judas",
@@ -2043,154 +4053,321 @@
    "strong": "H3063",
    "pronunciacion": "Yehudá",
    "equivalenciaGriega": "G2455",
-   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció."
+   "nota": "Equivalencia del nombre documentada en el léxico griego; no es un testimonio de cómo esta persona lo pronunció.",
+   "significado": {
+    "texto": "Alabado o celebrado.",
+    "estado": "propuesta",
+    "referencias": [
+     "H3063"
+    ]
+   }
   },
   "Jesús (griego)": {
    "nombre": "Jesús",
    "escritura": "Ἰησοῦς",
    "transliteracion": "Iēsoûs",
    "idioma": "griego",
-   "strong": "G2424"
+   "strong": "G2424",
+   "significado": {
+    "texto": "Él salvará; forma abreviada de Yehoshúa.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2424",
+     "H3442",
+     "H3091"
+    ],
+    "nota": "Yehoshúa incluye el nombre divino. Mateo 1:21 vincula el nombre de Jesús con su misión de salvar."
+   }
   },
   "Juan (griego)": {
    "nombre": "Juan",
    "escritura": "Ἰωάννης",
    "transliteracion": "Iōánnēs",
    "idioma": "griego",
-   "strong": "G2491"
+   "strong": "G2491",
+   "significado": {
+    "texto": "Favorecido por Yahweh.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2491",
+     "H3110",
+     "H3076"
+    ]
+   }
   },
   "Santiago (griego)": {
    "nombre": "Santiago",
    "escritura": "Ἰάκωβος",
    "transliteracion": "Iákōbos",
    "idioma": "griego",
-   "strong": "G2385"
+   "strong": "G2385",
+   "significado": {
+    "texto": "El que toma del talón; por extensión, suplantador.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2385",
+     "H3290"
+    ]
+   }
   },
   "Pablo (griego)": {
    "nombre": "Pablo",
    "escritura": "Παῦλος",
    "transliteracion": "Paûlos",
    "idioma": "griego",
-   "strong": "G3972"
+   "strong": "G3972",
+   "significado": {
+    "texto": "Pequeño; nombre de origen latino.",
+    "estado": "propuesta",
+    "referencias": [
+     "G3972"
+    ]
+   }
   },
   "Pedro (griego)": {
    "nombre": "Pedro",
    "escritura": "Πέτρος",
    "transliteracion": "Pétros",
    "idioma": "griego",
-   "strong": "G4074"
+   "strong": "G4074",
+   "significado": {
+    "texto": "Piedra o roca.",
+    "estado": "propuesta",
+    "referencias": [
+     "G4074"
+    ]
+   }
   },
   "Herodías (griego)": {
    "nombre": "Herodías",
    "escritura": "Ἡρωδιάς",
    "transliteracion": "Hērōdiás",
    "idioma": "griego",
-   "strong": "G2266"
+   "strong": "G2266",
+   "significado": {
+    "texto": "Nombre femenino relacionado con Herodes.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2266",
+     "G2264"
+    ]
+   }
   },
   "María (griego)": {
    "nombre": "María",
    "escritura": "Μαρία",
    "transliteracion": "María",
    "idioma": "griego",
-   "strong": "G3137"
+   "strong": "G3137",
+   "significado": {
+    "texto": "Significado incierto; esta entrada no permite fijar una traducción segura.",
+    "estado": "incierto",
+    "referencias": [
+     "G3137",
+     "H4813"
+    ]
+   }
   },
   "Herodes (griego)": {
    "nombre": "Herodes",
    "escritura": "Ἡρώδης",
    "transliteracion": "Hērṓdēs",
    "idioma": "griego",
-   "strong": "G2264"
+   "strong": "G2264",
+   "significado": {
+    "texto": "Heroico.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2264"
+    ]
+   }
   },
   "Pilato (griego)": {
    "nombre": "Pilato",
    "escritura": "Πιλᾶτος",
    "transliteracion": "Pilâtos",
    "idioma": "griego",
-   "strong": "G4091"
+   "strong": "G4091",
+   "significado": {
+    "texto": "El léxico propone «firme»; es un nombre de origen latino.",
+    "estado": "propuesta",
+    "referencias": [
+     "G4091"
+    ]
+   }
   },
   "Barrabás (griego)": {
    "nombre": "Barrabás",
    "escritura": "Βαραββᾶς",
    "transliteracion": "Barabbâs",
    "idioma": "griego",
-   "strong": "G912"
+   "strong": "G912",
+   "significado": {
+    "texto": "Hijo de Abba.",
+    "estado": "propuesta",
+    "referencias": [
+     "G912"
+    ]
+   }
   },
   "Judas (griego)": {
    "nombre": "Judas",
    "escritura": "Ἰούδας",
    "transliteracion": "Ioúdas",
    "idioma": "griego",
-   "strong": "G2455"
+   "strong": "G2455",
+   "significado": {
+    "texto": "Alabado o celebrado.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2455",
+     "H3063"
+    ]
+   }
   },
   "Lázaro (griego)": {
    "nombre": "Lázaro",
    "escritura": "Λάζαρος",
    "transliteracion": "Lázaros",
    "idioma": "griego",
-   "strong": "G2976"
+   "strong": "G2976",
+   "significado": {
+    "texto": "Dios es ayudador.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2976",
+     "H499"
+    ]
+   }
   },
   "Esteban (griego)": {
    "nombre": "Esteban",
    "escritura": "Στέφανος",
    "transliteracion": "Stéphanos",
    "idioma": "griego",
-   "strong": "G4736"
+   "strong": "G4736",
+   "significado": {
+    "texto": "Corona.",
+    "estado": "propuesta",
+    "referencias": [
+     "G4736",
+     "G4735"
+    ]
+   }
   },
   "Cornelio (griego)": {
    "nombre": "Cornelio",
    "escritura": "Κορνήλιος",
    "transliteracion": "Kornḗlios",
    "idioma": "griego",
-   "strong": "G2883"
+   "strong": "G2883",
+   "significado": {
+    "texto": "Nombre latino; esta entrada no establece su significado.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2883"
+    ]
+   }
   },
   "Felipe (griego)": {
    "nombre": "Felipe",
    "escritura": "Φίλιππος",
    "transliteracion": "Phílippos",
    "idioma": "griego",
-   "strong": "G5376"
+   "strong": "G5376",
+   "significado": {
+    "texto": "Amante de los caballos.",
+    "estado": "propuesta",
+    "referencias": [
+     "G5376"
+    ]
+   }
   },
   "Agabo (griego)": {
    "nombre": "Agabo",
    "escritura": "Ἄγαβος",
    "transliteracion": "Ágabos",
    "idioma": "griego",
-   "strong": "G13"
+   "strong": "G13",
+   "significado": {
+    "texto": "La entrada lo compara con una palabra hebrea para langosta, sin establecer una derivación segura.",
+    "estado": "propuesta",
+    "referencias": [
+     "G13",
+     "H2285"
+    ]
+   }
   },
   "Antipas (griego)": {
    "nombre": "Antipas",
    "escritura": "Ἀντίπας",
    "transliteracion": "Antípas",
    "idioma": "griego",
-   "strong": "G493"
+   "strong": "G493",
+   "significado": {
+    "texto": "Forma abreviada relacionada con las palabras «en lugar de» y «padre»; la entrada no da una traducción única.",
+    "estado": "propuesta",
+    "referencias": [
+     "G493"
+    ]
+   }
   },
   "Lidia (griego)": {
    "nombre": "Lidia",
    "escritura": "Λυδία",
    "transliteracion": "Lydía",
    "idioma": "griego",
-   "strong": "G3070"
+   "strong": "G3070",
+   "significado": {
+    "texto": "Mujer de Lidia, región de Asia Menor.",
+    "estado": "propuesta",
+    "referencias": [
+     "G3070"
+    ]
+   }
   },
   "Epafras (griego)": {
    "nombre": "Epafras",
    "escritura": "Ἐπαφρᾶς",
    "transliteracion": "Epaphrâs",
    "idioma": "griego",
-   "strong": "G1889"
+   "strong": "G1889",
+   "significado": {
+    "texto": "Forma abreviada de Epafrodito: dedicado a Afrodita, deidad griega.",
+    "estado": "propuesta",
+    "referencias": [
+     "G1889",
+     "G1891"
+    ]
+   }
   },
   "Timoteo (griego)": {
    "nombre": "Timoteo",
    "escritura": "Τιμόθεος",
    "transliteracion": "Timótheos",
    "idioma": "griego",
-   "strong": "G5095"
+   "strong": "G5095",
+   "significado": {
+    "texto": "Querido por Dios.",
+    "estado": "propuesta",
+    "referencias": [
+     "G5095"
+    ]
+   }
   },
   "Poncio Pilato (griego)": {
    "nombre": "Pilato",
    "escritura": "Πιλᾶτος",
    "transliteracion": "Pilâtos",
    "idioma": "griego",
-   "strong": "G4091"
+   "strong": "G4091",
+   "significado": {
+    "texto": "El léxico propone «firme»; es un nombre de origen latino.",
+    "estado": "propuesta",
+    "referencias": [
+     "G4091"
+    ]
+   }
   },
   "Satanás": {
    "nombre": "Satanás",
@@ -2198,42 +4375,88 @@
    "transliteracion": "sâṭân",
    "idioma": "hebreo",
    "strong": "H7854",
-   "nota": "Término hebreo para adversario, usado en Job 1:6. Lucifer es una forma latina, no la transcripción de un nombre propio hebreo."
+   "nota": "Término hebreo para adversario, usado en Job 1:6. Lucifer es una forma latina, no la transcripción de un nombre propio hebreo.",
+   "significado": {
+    "texto": "Adversario.",
+    "estado": "propuesta",
+    "referencias": [
+     "H7854"
+    ]
+   }
   },
   "Abiud (griego)": {
    "nombre": "Abiud",
    "escritura": "Ἀβιούδ",
    "transliteracion": "Abioúd",
    "idioma": "griego",
-   "strong": "G10"
+   "strong": "G10",
+   "significado": {
+    "texto": "Padre de renombre.",
+    "estado": "propuesta",
+    "referencias": [
+     "G10",
+     "H31"
+    ]
+   }
   },
   "Azor (griego)": {
    "nombre": "Azor",
    "escritura": "Ἀζώρ",
    "transliteracion": "Azṓr",
    "idioma": "griego",
-   "strong": "G107"
+   "strong": "G107",
+   "significado": {
+    "texto": "La entrada lo compara con un nombre hebreo relacionado con ayuda, sin asegurar la derivación.",
+    "estado": "propuesta",
+    "referencias": [
+     "G107",
+     "H5809"
+    ]
+   }
   },
   "Aquim (griego)": {
    "nombre": "Aquim",
    "escritura": "Ἀχείμ",
    "transliteracion": "Acheím",
    "idioma": "griego",
-   "strong": "G885"
+   "strong": "G885",
+   "significado": {
+    "texto": "La entrada propone un origen hebreo y lo compara con Yoquim, sin asegurar la derivación.",
+    "estado": "propuesta",
+    "referencias": [
+     "G885",
+     "H3137"
+    ]
+   }
   },
   "Eliud (griego)": {
    "nombre": "Eliud",
    "escritura": "Ἐλιούδ",
    "transliteracion": "Elioúd",
    "idioma": "griego",
-   "strong": "G1664"
+   "strong": "G1664",
+   "significado": {
+    "texto": "Dios de majestad.",
+    "estado": "propuesta",
+    "referencias": [
+     "G1664"
+    ]
+   }
   },
   "Matán (griego)": {
    "nombre": "Matán",
    "escritura": "Ματθάν",
    "transliteracion": "Matthán",
    "idioma": "griego",
-   "strong": "G3157"
+   "strong": "G3157",
+   "significado": {
+    "texto": "Don o regalo.",
+    "estado": "propuesta",
+    "referencias": [
+     "G3157",
+     "H4977"
+    ]
+   }
   },
   "Abiud": {
    "nombre": "Abiud",
@@ -2242,7 +4465,14 @@
    "idioma": "hebreo",
    "strong": "H31",
    "equivalenciaGriega": "G10",
-   "nota": "Equivalencia del nombre documentada en el léxico griego; no identifica a este personaje con otro homónimo."
+   "nota": "Equivalencia del nombre documentada en el léxico griego; no identifica a este personaje con otro homónimo.",
+   "significado": {
+    "texto": "Padre de renombre.",
+    "estado": "propuesta",
+    "referencias": [
+     "H31"
+    ]
+   }
   },
   "Matán": {
    "nombre": "Matán",
@@ -2251,7 +4481,15 @@
    "idioma": "hebreo",
    "strong": "H4977",
    "equivalenciaGriega": "G3157",
-   "nota": "Equivalencia del nombre documentada en el léxico griego; no identifica a este personaje con otro homónimo."
+   "nota": "Equivalencia del nombre documentada en el léxico griego; no identifica a este personaje con otro homónimo.",
+   "significado": {
+    "texto": "Don o regalo.",
+    "estado": "propuesta",
+    "referencias": [
+     "H4977",
+     "H4976"
+    ]
+   }
   },
   "Simón": {
    "nombre": "Simón",
@@ -2261,7 +4499,14 @@
    "idioma": "hebreo",
    "strong": "H8095",
    "equivalenciaGriega": "G4613",
-   "nota": "Juan 1:40–42 relaciona a Simón Pedro con Cefas. La forma hebrea del nombre se documenta en la equivalencia G4613 / H8095."
+   "nota": "Juan 1:40–42 relaciona a Simón Pedro con Cefas. La forma hebrea del nombre se documenta en la equivalencia G4613 / H8095.",
+   "significado": {
+    "texto": "El que oye.",
+    "estado": "propuesta",
+    "referencias": [
+     "H8095"
+    ]
+   }
   },
   "Cefas (griego)": {
    "nombre": "Cefas",
@@ -2269,7 +4514,14 @@
    "transliteracion": "Kēphâs",
    "idioma": "griego",
    "strong": "G2786",
-   "nota": "Forma griega de un sobrenombre arameo; Juan 1:42. No se inventa aquí una grafía aramea a partir de la transcripción griega."
+   "nota": "Forma griega de un sobrenombre arameo; Juan 1:42. No se inventa aquí una grafía aramea a partir de la transcripción griega.",
+   "significado": {
+    "texto": "Roca; nombre de origen arameo.",
+    "estado": "propuesta",
+    "referencias": [
+     "G2786"
+    ]
+   }
   }
  }
 }

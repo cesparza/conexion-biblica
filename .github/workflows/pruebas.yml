@@ -17,5 +17,6 @@ jobs:
         run: node fuente/build.js && git diff --exit-code -- index.html sw.js
       - run: node tests/test.js
       - run: node tests/daniel11.js
+      - run: node tests/nombres-personajes.cjs
       - run: node tests/uso.js
       - run: node tests/api.js

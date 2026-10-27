@@ -16,6 +16,8 @@ for(const [nombre,f] of Object.entries(catalogo.formas)){
  assert(/^[HG]\d+$/.test(f.strong));
  assert(['hebreo','arameo','griego'].includes(f.idioma));
  assert((f.idioma==='griego'?/[\u0370-\u03ff\u1f00-\u1fff]/:/[\u05d0-\u05ea]/).test(f.escritura));
+ assert(f.significado?.texto&&['propuesta','incierto'].includes(f.significado.estado),nombre+' lleva significado o incertidumbre explícita');
+ assert(f.significado.referencias.includes(f.strong),nombre+' conserva su entrada léxica');
 }
 const uno=id=>PERSONAJES.find(p=>p.id===id);
 assert.equal(uno('moises').nombres.formas[0].escritura,'מֹשֶׁה');
@@ -31,6 +33,13 @@ assert.equal(oded.nombres.formas[0].strong,'H5752');assert(!oded.nombres.formas.
 const peligro=normalizarNombre({id:'sin-forma',nombre:'Nombre',alias:['<img src=x onerror=alert(1)>']},catalogo);
 assert(!nombresHTML(peligro).includes('<img'));
 assert(nombresHTML(uno('moises')).includes('dir="rtl" lang="he"'));
+assert(nombresHTML(uno('moises')).includes('Significado propuesto:'));
+assert(nombresHTML(uno('moises')).includes('Éxodo 2:10')&&nombresHTML(uno('moises')).includes('origen egipcio'));
+assert(nombresHTML(uno('daniel')).includes('Dios es mi juez.'));
+assert(nombresHTML(uno('maria')).includes('Significado · incierto:'));
+assert.equal(catalogo.formas['Ciro'].significado.estado,'incierto','una forma hebrea no inventa una traducción del persa');
+const significadoPeligroso=normalizarNombre({id:'p',nombre:'Moisés'}, {...catalogo,formas:{'Moisés':{...catalogo.formas['Moisés'],significado:{texto:'<img src=x onerror=alert(1)>',estado:'propuesta',referencias:['H4872']}}}});
+assert(!nombresHTML(significadoPeligroso).includes('<img'),'el significado se escapa igual que el nombre');
 assert(nombresHTML(uno('pedro')).includes('dir="ltr" lang="grc"'));
 assert(uno('pedro').alias.includes('Simón Pedro')&&uno('pedro').alias.includes('Cefas'));
 assert(!uno('pedro').alias.includes('Simón'),'se conserva el calificador del nombre ambiguo');
