@@ -332,7 +332,7 @@ const PERSONAJES = [
       'Enseña que las autoridades vienen de Dios (Romanos 13:1), la misma idea de Daniel 4:17.'
     ],
     textos: 'Hechos 9; 19; Romanos 13:1',
-    alias: [{ t: 'Pablo', caps: ['ap11', 'ap12', 'ap2', 'ap5', 'cr19', 'd10', 'd4', 'd9', 'm21'] }],
+    alias: [{ t: 'Pablo', caps: ['ap11', 'ap12', 'ap2', 'ap5', 'cr19', 'd10', 'd4', 'd9', 'm21', 'cs24', 'cs25', 'cs26', 'cs27', 'cs28', 'cs29', 'cs30', 'cs31', 'cs32', 'cs33', 'cs34', 'cs35', 'cs36', 'cs37', 'cs38', 'cs39', 'cs40', 'cs41', 'cs42', 'cs43'] }],
     fuente: 'Hechos 9; 19' },
   { id: 'pedro', nombre: 'Pedro, el apóstol', tipo: 'biblico',
     fechas: 'siglo I d.C.',
@@ -363,7 +363,7 @@ const PERSONAJES = [
       'El «cántico de Moisés» lo cantan los vencedores en el mar de vidrio (Apocalipsis 15:3).'
     ],
     textos: 'Éxodo 3; 25:8-9; Apocalipsis 15:3',
-    alias: [{ t: 'Moisés', caps: ['ap1', 'ap11', 'ap12', 'ap13', 'ap14', 'ap15', 'ap18', 'ap2', 'ap20', 'ap22', 'ap4', 'ap5', 'ap7', 'd1', 'd10', 'd12', 'd4', 'd5', 'd8', 'd9', 'm-glosario', 'm21', 'ma-glosario'] }],
+    alias: [{ t: 'Moisés', caps: ['ap1', 'ap11', 'ap12', 'ap13', 'ap14', 'ap15', 'ap18', 'ap2', 'ap20', 'ap22', 'ap4', 'ap5', 'ap7', 'd1', 'd10', 'd12', 'd4', 'd5', 'd8', 'd9', 'm-glosario', 'm21', 'ma-glosario', 'cs24', 'cs25', 'cs26', 'cs27', 'cs28', 'cs29', 'cs30', 'cs31', 'cs32', 'cs33', 'cs34', 'cs35', 'cs36', 'cs37', 'cs38', 'cs39', 'cs40', 'cs41', 'cs42', 'cs43'] }],
     fuente: 'Éxodo 3; 25; Apocalipsis 15:3' },
   { id: 'elias', nombre: 'Elías', tipo: 'biblico',
     fechas: 'siglo IX a.C.',

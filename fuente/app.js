@@ -4850,9 +4850,11 @@ const LETRA_ANTES=/[0-9A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/;
 const COLA_CITA='((?:\\s*,\\s*\\d{1,3}(?:\\s*[-–]\\s*\\d{1,3})?)*)';
 const COLA_TRAMO=/(\s*,\s*)(\d{1,3})(?:(\s*[-–]\s*)(\d{1,3}))?/g;
 
+/* «Daniel 8: 14», con espacio: así viene en la edición de 1954 de El conflicto de los
+   siglos (450 citas, 30-oct). Un solo espacio opcional después de los dos puntos. */
 const OTRO_LIBRO_CITA=(typeof NOMBRES_OTROS!=='undefined')
   ?new RegExp('('+Object.values(NOMBRES_OTROS).map(n=>n.replace(/\s+/g,'\\s+'))
-      .sort((a,b)=>b.length-a.length).join('|')+')\\s+(\\d{1,3}):(\\d{1,3})(?:\\s*[-–]\\s*(\\d{1,3}))?'+COLA_CITA,'g')
+      .sort((a,b)=>b.length-a.length).join('|')+')\\s+(\\d{1,3}):\\s?(\\d{1,3})(?:\\s*[-–]\\s*(\\d{1,3}))?'+COLA_CITA,'g')
   :null;
 
 /** El unico sitio donde se arma un boton de versiculo. Si el capitulo no
@@ -4950,7 +4952,7 @@ function refsTocables(html,capId){
        Se marca el trozo ya convertido con \u0000 para que las pasadas
        siguientes no vuelvan a entrar en el, que anidaria un boton dentro de
        otro. */
-    let out=tr.replace(/(Daniel|Apocalipsis)\s+(\d{1,2}):(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?((?:\s*,\s*\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)/g,
+    let out=tr.replace(/(Daniel|Apocalipsis)\s+(\d{1,2}):\s?(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?((?:\s*,\s*\d{1,3}(?:\s*[-–]\s*\d{1,3})?)*)/g,
       (todo,lb,c,v,v2,cola)=>{const b=botonRef(todo,c,v,v2,cola,PRE_LIBRO[lb]);return b===todo?todo:'\u0000'+b+'\u0000';});
     /* Pasada 2: «Libro N:M» para un libro distinto de Daniel, en cualquier
        parte (fuera o dentro de parentesis). El nombre completo del libro ya
