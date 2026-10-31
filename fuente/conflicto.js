@@ -80,7 +80,7 @@ function estudio(c) {
   const secs = [{ t: '📚 El capítulo', capa: 'apoyo', h: ['<div class="highlight-box"><strong>Capítulo ' + c.n + ': «' + esc(c.titulo) +
     '»</strong>, páginas ' + c.pag + ' a ' + c.fin + ' de esta edición (' + CS_EDICION + ').<br><br>' +
     'Abajo está el capítulo completo, por páginas. Toca ▶ para escucharlo. Las preguntas y las tarjetas ' +
-    'de este capítulo salen de sus frases, tal cual, y están <strong>pendientes de revisión de Camilo</strong>.</div>'] }];
+    'de este capítulo salen de sus frases, tal cual, y están <strong>pendientes de revisión</strong>.</div>'] }];
   let pag = c.pag, desde = c.pag, actual = [];
   const cierra = hasta => {
     if (!actual.length) return;

@@ -3480,7 +3480,7 @@ function dirVeAct(a){return !srvYo||!Array.isArray(srvYo.concursos)||srvYo.concu
 function dirVeCat(k){return !!CATS[k]&&dirVeAct(CATS[k].act);}
 /* v238: «Abrir una evaluación» y «Revisar preguntas» desde afuera (el panel de Jóvenes):
    #/concursos/director abre «La evaluación del día»; #/concursos/revisar/pendientes, el
-   revisor con el filtro «Pendientes de revisión de Camilo». */
+   revisor con el filtro «Pendientes de revisión». */
 async function dirDesdeAfuera(o){
   if(!srvYo)await srvQuienSoy();
   if(o.revisar){
@@ -8755,7 +8755,7 @@ function htmlQ(q,n,ver){
   /* v235: al revisar, cada pregunta lleva a donde se estudia en la Biblioteca. */
   const bib=ver&&typeof bibLinkQ==='function'?bibLinkQ(q):'';
   /* v237: las de El conflicto de los siglos no se presentan como revisadas. */
-  const pend=q.pend?'<div class="q-pend">Pendiente de revisión de Camilo</div>':'';
+  const pend=q.pend?'<div class="q-pend">Pendiente de revisión</div>':'';
   return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+pend+cuerpo+bib+'</div>';
 }
 
@@ -12665,7 +12665,7 @@ function pintaRevisor(){
         [['','Todas'],['v','A la vista'],['r','Retiradas']])+'</label>'+
       /* v237: lo que Camilo tiene que revisar (El conflicto de los siglos). */
       '<label class="pan-lb">Revisión'+sel('rb-pend','pend',
-        [['','Todas'],['1','Pendientes de revisión de Camilo']])+'</label>'+
+        [['','Todas'],['1','Pendientes de revisión']])+'</label>'+
     '</div>'+
     '<div class="ses-fila"><input id="rb-q" placeholder="Buscar en el enunciado" '+
       'value="'+esc(revF.q)+'" oninput="revBusca(this.value)">'+
@@ -12689,7 +12689,7 @@ function revFila(q){
   const r=revMapa[k];
   const cap=(buscaItem(q.cap)||{}).label||q.cap;
   const etq=[cap,REV_TIPO[q.t]||q.t,REV_NIVEL[q.nv||1]||'',
-    esComplementaria(q)?'Complementaria':'Del reglamento'].concat(q.pend?['Pendiente de revisión de Camilo'+(q.pag?' · p. '+q.pag:'')]:[]);
+    esComplementaria(q)?'Complementaria':'Del reglamento'].concat(q.pend?['Pendiente de revisión'+(q.pag?' · p. '+q.pag:'')]:[]);
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
     '<div class="rb-etq">'+etq.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>'+
     rbCuerpo(k,ret,revTexto(q),revRespuesta(q),r,'banco')+
@@ -12704,7 +12704,7 @@ function revFilaT(t){
   const r=revMapa[k];
   const cap=(buscaItem(t.cap)||{}).label||t.cap;
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
-    '<div class="rb-etq"><span>'+esc(cap)+'</span>'+(t.pend?'<span>Pendiente de revisión de Camilo</span>':'')+'</div>'+
+    '<div class="rb-etq"><span>'+esc(cap)+'</span>'+(t.pend?'<span>Pendiente de revisión</span>':'')+'</div>'+
     rbCuerpo(k,ret,sinEtiquetas(t.f),sinEtiquetas(t.r),r,'mazo')+
     '</div>';
 }

@@ -528,6 +528,6 @@ function bibObrasLista(a){
       [...set].sort((x,y)=>x-y).map(n=>{const id=(O.pre||'')+n,hay=bibObraEnApp(o)&&!!buscaItem(id);
         return '<li><b>'+n+'</b> '+(hay?'<button type="button" class="btn txt" onclick="verCap(\''+id+'\')">'+esc(bibTituloObra(o,n))+'</button>':esc(bibTituloObra(o,n)))+'</li>';}).join('')+'</ol>'+
       '<p class="nota">'+esc(O.autor)+(ed?', edición '+esc(ed):'')+'. '+(bibObraEnApp(o)
-        ?'Estos capítulos están en la app, con su texto completo: tócalos para estudiarlos. Sus preguntas entran al examen de práctica y están pendientes de revisión de Camilo.'
+        ?'Estos capítulos están en la app, con su texto completo: tócalos para estudiarlos. Sus preguntas entran al examen de práctica y están pendientes de revisión.'
         :'Este libro todavía no está como material de estudio en la app: lee estos capítulos en el libro. No entran al examen de práctica.')+'</p></details>';}).join('');
 }

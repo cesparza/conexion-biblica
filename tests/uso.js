@@ -3424,7 +3424,7 @@ ok(JD.ronda().izq.length===5&&JD.ronda().izq.every(c=>/^d\d+$|^pr/.test(c.id)),
     'v237: el concurso es «Guías Mayores - Conexión Bíblica 2027» (fecha tentativa) de la Asociación del Alto Magdalena, con Guías Mayores, Conquistadores, Aventureros, Menores y Padres y las edades de antes');
   M.ir('examen');M.pintaConcursos();
   const hc=M.el('con-lista').innerHTML;
-  ok(/Asociación del Alto Magdalena/.test(hc)&&/10 – 14/.test(hc)&&/36 – 39/.test(hc)&&/El conflicto de los siglos/.test(hc)&&/El Templo de Dios/.test(hc)&&/El Fin del Conflicto/.test(hc)&&!/todavía no está en la app/.test(hc)&&/verCap\('cs24'\)/.test(hc)&&/pendientes de revisión de Camilo/.test(hc),
+  ok(/Asociación del Alto Magdalena/.test(hc)&&/10 – 14/.test(hc)&&/36 – 39/.test(hc)&&/El conflicto de los siglos/.test(hc)&&/El Templo de Dios/.test(hc)&&/El Fin del Conflicto/.test(hc)&&!/todavía no está en la app/.test(hc)&&/verCap\('cs24'\)/.test(hc)&&/pendientes de revisión\./.test(hc)&&!/revisión de Camilo/.test(hc),
     'v236: la carta del concurso muestra el organizador y, por categoría, las pastillas de cada libro y los títulos de CS');
   ok(M.normalizar({cat:'appa'}).cat==='appa'&&M.normalizar({cat:'apme'}).cat==='apme','v237: una ficha que estaba en Menores o Padres de Apocalipsis vuelve a su categoría');
 })().catch(e=>{ok(false,'Las pruebas de v236 no corrieron: '+(e&&e.stack||e));}).then(()=>{

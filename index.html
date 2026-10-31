@@ -6831,7 +6831,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '4ddcef1be172';
+const VERSION_APP = '84bdfa338192';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -70743,26 +70743,26 @@ const OBRAS_CAPS = {
 /* v237: los capítulos de El conflicto de los siglos que se piden al abrir
    (conflicto/<id>.json) y la huella de cada archivo. */
 const CS_HUELLAS = {
- "cs24": "d06602a7f1",
- "cs25": "9d9b4432bd",
- "cs26": "41b0dc514f",
- "cs27": "681bc0e78f",
- "cs28": "0f0f8ea67b",
- "cs29": "4e646a61da",
- "cs30": "4f9dffc9ef",
- "cs31": "329f1a0fa8",
- "cs32": "c802a17656",
- "cs33": "8227d66bd5",
- "cs34": "7f8d89a09d",
- "cs35": "7afdad9a49",
- "cs36": "1f653ed3d5",
- "cs37": "b96b02e270",
- "cs38": "2a5ff3557d",
- "cs39": "cfbd19dc3b",
- "cs40": "c4e55d85bd",
- "cs41": "c06969848a",
- "cs42": "29a0f5573f",
- "cs43": "3ce98d97cc"
+ "cs24": "ece238b628",
+ "cs25": "5ee36877ca",
+ "cs26": "6cade7df39",
+ "cs27": "18bffc28dc",
+ "cs28": "1dfce4471b",
+ "cs29": "39c814c2a3",
+ "cs30": "b1fb495f85",
+ "cs31": "56964d18de",
+ "cs32": "8752046dfa",
+ "cs33": "6d694a1870",
+ "cs34": "b0e2f5845d",
+ "cs35": "a03064f37f",
+ "cs36": "a2ca49c689",
+ "cs37": "c558146213",
+ "cs38": "84f3208fc4",
+ "cs39": "33ce74bc84",
+ "cs40": "cb0f11c0c7",
+ "cs41": "edb9fcf13a",
+ "cs42": "f1a47febe8",
+ "cs43": "6b1e8b521d"
 };
 
 /* v227: el reparto de un reino (los generales de Alejandro), datos de un mapa reutilizable. */
@@ -96221,7 +96221,7 @@ function bibObrasLista(a){
       [...set].sort((x,y)=>x-y).map(n=>{const id=(O.pre||'')+n,hay=bibObraEnApp(o)&&!!buscaItem(id);
         return '<li><b>'+n+'</b> '+(hay?'<button type="button" class="btn txt" onclick="verCap(\''+id+'\')">'+esc(bibTituloObra(o,n))+'</button>':esc(bibTituloObra(o,n)))+'</li>';}).join('')+'</ol>'+
       '<p class="nota">'+esc(O.autor)+(ed?', edición '+esc(ed):'')+'. '+(bibObraEnApp(o)
-        ?'Estos capítulos están en la app, con su texto completo: tócalos para estudiarlos. Sus preguntas entran al examen de práctica y están pendientes de revisión de Camilo.'
+        ?'Estos capítulos están en la app, con su texto completo: tócalos para estudiarlos. Sus preguntas entran al examen de práctica y están pendientes de revisión.'
         :'Este libro todavía no está como material de estudio en la app: lee estos capítulos en el libro. No entran al examen de práctica.')+'</p></details>';}).join('');
 }
 /* ───────── v236: «MI ESTUDIO», LA LISTA PERSONAL (Camilo, 15-oct) ─────────
@@ -101165,7 +101165,7 @@ function dirVeAct(a){return !srvYo||!Array.isArray(srvYo.concursos)||srvYo.concu
 function dirVeCat(k){return !!CATS[k]&&dirVeAct(CATS[k].act);}
 /* v238: «Abrir una evaluación» y «Revisar preguntas» desde afuera (el panel de Jóvenes):
    #/concursos/director abre «La evaluación del día»; #/concursos/revisar/pendientes, el
-   revisor con el filtro «Pendientes de revisión de Camilo». */
+   revisor con el filtro «Pendientes de revisión». */
 async function dirDesdeAfuera(o){
   if(!srvYo)await srvQuienSoy();
   if(o.revisar){
@@ -106440,7 +106440,7 @@ function htmlQ(q,n,ver){
   /* v235: al revisar, cada pregunta lleva a donde se estudia en la Biblioteca. */
   const bib=ver&&typeof bibLinkQ==='function'?bibLinkQ(q):'';
   /* v237: las de El conflicto de los siglos no se presentan como revisadas. */
-  const pend=q.pend?'<div class="q-pend">Pendiente de revisión de Camilo</div>':'';
+  const pend=q.pend?'<div class="q-pend">Pendiente de revisión</div>':'';
   return '<div class="q'+cls+'" id="c-'+q.id+'"'+(voz?' data-leer="preg"':'')+'><div class="qt"><span class="qn">'+n+'.</span> '+esc(q.q||'')+voz+'</div>'+pend+cuerpo+bib+'</div>';
 }
 
@@ -110350,7 +110350,7 @@ function pintaRevisor(){
         [['','Todas'],['v','A la vista'],['r','Retiradas']])+'</label>'+
       /* v237: lo que Camilo tiene que revisar (El conflicto de los siglos). */
       '<label class="pan-lb">Revisión'+sel('rb-pend','pend',
-        [['','Todas'],['1','Pendientes de revisión de Camilo']])+'</label>'+
+        [['','Todas'],['1','Pendientes de revisión']])+'</label>'+
     '</div>'+
     '<div class="ses-fila"><input id="rb-q" placeholder="Buscar en el enunciado" '+
       'value="'+esc(revF.q)+'" oninput="revBusca(this.value)">'+
@@ -110374,7 +110374,7 @@ function revFila(q){
   const r=revMapa[k];
   const cap=(buscaItem(q.cap)||{}).label||q.cap;
   const etq=[cap,REV_TIPO[q.t]||q.t,REV_NIVEL[q.nv||1]||'',
-    esComplementaria(q)?'Complementaria':'Del reglamento'].concat(q.pend?['Pendiente de revisión de Camilo'+(q.pag?' · p. '+q.pag:'')]:[]);
+    esComplementaria(q)?'Complementaria':'Del reglamento'].concat(q.pend?['Pendiente de revisión'+(q.pag?' · p. '+q.pag:'')]:[]);
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
     '<div class="rb-etq">'+etq.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>'+
     rbCuerpo(k,ret,revTexto(q),revRespuesta(q),r,'banco')+
@@ -110389,7 +110389,7 @@ function revFilaT(t){
   const r=revMapa[k];
   const cap=(buscaItem(t.cap)||{}).label||t.cap;
   return '<div class="rb-it'+(ret?' fuera':'')+'">'+
-    '<div class="rb-etq"><span>'+esc(cap)+'</span>'+(t.pend?'<span>Pendiente de revisión de Camilo</span>':'')+'</div>'+
+    '<div class="rb-etq"><span>'+esc(cap)+'</span>'+(t.pend?'<span>Pendiente de revisión</span>':'')+'</div>'+
     rbCuerpo(k,ret,sinEtiquetas(t.f),sinEtiquetas(t.r),r,'mazo')+
     '</div>';
 }
