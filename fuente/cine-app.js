@@ -431,3 +431,69 @@ function cineTecla(e){
     if(bs.length&&((e.shiftKey&&a===bs[0])||(!e.shiftKey&&a===bs[bs.length-1]))){e.preventDefault();bs[e.shiftKey?bs.length-1:0].focus();}
   }
 }
+
+/* ───────── PIEZAS QUE SE TOCAN (7-nov) ─────────
+   Camilo: «debía ser muy interactiva». La balanza, el diluvio y el repaso se tocan; su
+   estado vive en el DOM del acto (no se guarda nada). `piensa` pregunta antes de mostrar.
+   Son funciones de primer nivel: el despacho de Jóvenes las llama por su nombre. */
+const cineMiles=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+function cineActoDe(el){const s=el&&el.closest?el.closest('.cine-acto'):null;return s?cineActos()[Number(s.dataset.i)]:null;}
+function cinePiensaHTML(a){const q=a.piensa;if(!q)return '';
+  return '<div class="cine-piensa"><p class="cine-piensa-q"><b>Piensa primero.</b> '+esc(q.q)+'</p><div class="cine-piensa-o">'+
+    q.o.map((t,i)=>'<button type="button" onclick="cinePiensa(this,'+i+')">'+esc(t)+'</button>').join('')+'</div>'+
+    '<p class="cine-piensa-r" hidden></p></div>';}
+function cinePiensa(el,i){const box=el.closest('.cine-piensa'),a=cineActoDe(el);if(!box||!a||box.classList.contains('hecho'))return;
+  box.classList.add('hecho');
+  const r=box.querySelector('.cine-piensa-r');r.hidden=false;
+  r.innerHTML='<b>'+(i===a.piensa.ok?'¡Exacto!':'Era «'+esc(a.piensa.o[a.piensa.ok])+'».')+'</b> '+lamPer(esc(a.piensa.r));}
+function cineFicha(el,i){const a=cineActoDe(el),c=el.closest('.cine-int');if(!a||!c)return;
+  el.setAttribute('aria-pressed',el.getAttribute('aria-pressed')==='true'?'false':'true');
+  const on=[...c.querySelectorAll('.cine-ficha')].map(b=>b.getAttribute('aria-pressed')==='true');
+  const tot=a.fichas.reduce((s,f,j)=>s+(on[j]?f.d:0),0),bien=a.fichas.every((f,j)=>!!f.va===on[j]);
+  c.querySelector('.cine-bal-n').textContent=cineMiles(tot);
+  c.querySelector('.cine-bal-barra i').style.width=Math.min(100,tot/a.meta*100)+'%';
+  c.classList.toggle('pasa',tot>a.meta);c.classList.toggle('logrado',bien);
+  c.querySelector('.cine-bal-msg').textContent=bien?'¡Exacto! Suma '+cineMiles(a.meta)+'.':tot>a.meta?'Te pasaste: quita una pieza.':
+    tot===a.meta?'Suma '+cineMiles(a.meta)+', pero con una pieza que el texto no nombra.':'Faltan '+cineMiles(a.meta-tot)+' días.';
+  c.querySelector('.cine-logro').hidden=!bien;}
+function cineDiluvio(el){const a=cineActoDe(el),c=el.closest('.cine-int');if(!a||!c)return;
+  const m=Number(el.value),n=m-a.desde,fin=m>=a.hasta;
+  c.querySelector('.cine-dil-m').textContent='Mes '+m+', día 17';
+  c.querySelector('.cine-dil-c').textContent=!n?'Empieza el diluvio':fin?n+' meses = '+a.dias+' días: el arca reposa':n+(n===1?' mes':' meses')+' de agua sobre la tierra';
+  c.querySelectorAll('.cine-otro[data-en]').forEach(o=>{o.hidden=Number(o.dataset.en)!==(fin?a.hasta:a.desde)||(n>0&&!fin);});
+  c.querySelector('.cine-logro').hidden=!fin;c.classList.toggle('logrado',fin);}
+function cineResponde(el,i,j){const a=cineActoDe(el),q=a&&a.preguntas[i],box=el.closest('.cine-q');if(!q||!box||box.classList.contains('hecho'))return;
+  box.classList.add('hecho');box.querySelectorAll('.cine-piensa-o button').forEach((b,k)=>{b.disabled=true;if(k===q.ok)b.classList.add('si');});
+  const bien=j===q.ok;if(!bien)el.classList.add('no');box.dataset.bien=bien?'1':'0';
+  const e=box.querySelector('.cine-q-e');e.hidden=false;e.innerHTML='<b>'+(bien?'Correcto.':'No es esa.')+'</b> '+lamPer(esc(q.e));
+  box.querySelector('.cine-q-sig').hidden=false;}
+function cineSigPregunta(el,i){const c=el.closest('.cine-rep');if(!c)return;const qs=c.querySelectorAll('.cine-q');
+  qs[i].hidden=true;if(qs[i+1]){qs[i+1].hidden=false;return;}
+  const b=[...qs].filter(q=>q.dataset.bien==='1').length,f=c.querySelector('.cine-q-fin');
+  f.hidden=false;f.querySelector('b').textContent=b+' de '+qs.length+' correctas. '+(b===qs.length?'¡Lo entendiste completo!':'Repasa las escenas y vuelve a intentarlo.');}
+function cineRepasoOtra(el){const c=el.closest('.cine-rep');if(!c)return;
+  c.querySelectorAll('.cine-q').forEach((q,i)=>{q.hidden=i>0;q.classList.remove('hecho');delete q.dataset.bien;
+    q.querySelectorAll('.cine-piensa-o button').forEach(b=>{b.disabled=false;b.classList.remove('si','no');});
+    q.querySelector('.cine-q-e').hidden=true;q.querySelector('.cine-q-sig').hidden=true;});
+  c.querySelector('.cine-q-fin').hidden=true;}
+Object.assign(CINE_HTML,{
+  balanza:a=>'<div class="cine-int" data-leer>'+cineFila(a.rot)+cinePiensaHTML(a)+
+    '<div class="cine-toca"><div class="cine-bal-plato"><b class="cine-bal-n">0</b><small>de '+cineMiles(a.meta)+' días</small><div class="cine-bal-barra"><i></i></div></div>'+
+    '<div class="cine-fichas">'+a.fichas.map((f,i)=>'<button type="button" class="cine-ficha" aria-pressed="false" onclick="cineFicha(this,'+i+')"><b>'+esc(f.t)+'</b><small>'+esc(f.s)+'</small></button>').join('')+'</div>'+
+    '<p class="cine-bal-msg" aria-live="polite">'+esc(a.instruye||'Toca las piezas para ponerlas en la balanza.')+'</p></div>'+
+    '<div class="cine-logro" hidden><p class="cine-exp">'+lamPer(esc(a.exito))+'</p></div></div>',
+  diluvio:(a,L)=>cineFondo(lamRuta(L,a.img),'f1 tenue')+'<div class="cine-vel"></div><div class="cine-int" data-leer>'+cineFila(a.rot)+cinePiensaHTML(a)+
+    '<div class="cine-toca"><label class="cine-dil"><span>Mueve el mes</span><input type="range" min="'+a.desde+'" max="'+a.hasta+'" step="1" value="'+a.desde+'" oninput="cineDiluvio(this)"></label>'+
+    '<p class="cine-dil-l" aria-live="polite"><b class="cine-dil-m">Mes '+a.desde+', día 17</b><small class="cine-dil-c">Empieza el diluvio</small></p></div>'+
+    (a.otros||[]).map(o=>'<p class="cine-otro" data-en="'+o.en+'"'+(o.en===a.desde?'':' hidden')+'>«'+esc(o.t)+'»<span>'+esc(o.ref)+' · '+esc(o.ver)+'</span></p>').join('')+
+    '<div class="cine-logro" hidden><p class="cine-exp">'+lamPer(esc(a.cierre))+'</p></div></div>',
+  repaso:a=>'<div class="cine-int cine-rep" data-leer>'+cineFila(a.rot)+'<h2>'+esc(a.cartel||'Repasa')+'</h2>'+
+    a.preguntas.map((q,i)=>'<div class="cine-q" data-q="'+i+'"'+(i?' hidden':'')+'><p class="cine-q-n">Pregunta '+(i+1)+' de '+a.preguntas.length+'</p><p class="cine-q-t">'+esc(q.q)+'</p>'+
+      '<div class="cine-piensa-o">'+q.o.map((t,j)=>'<button type="button" onclick="cineResponde(this,'+i+','+j+')">'+esc(t)+'</button>').join('')+'</div>'+
+      '<p class="cine-q-e" hidden></p><button type="button" class="cine-q-sig" hidden onclick="cineSigPregunta(this,'+i+')">'+(i<a.preguntas.length-1?'Siguiente pregunta':'Ver resultado')+'</button></div>').join('')+
+    '<div class="cine-q-fin" hidden><b></b><button type="button" class="cine-q-sig" onclick="cineRepasoOtra(this)">Volver a intentarlo</button></div></div>'
+});
+const cineAparece=(s,p)=>{const c=s.querySelector('.cine-int');if(c)c.style.opacity=cineQuieto()?1:cineTramo(p,0,.08);
+  const f=s.querySelector('.f1');if(f)f.style.transform='scale('+(1.04+.04*p)+')';};
+Object.assign(CINE_FX,{balanza:cineAparece,diluvio:cineAparece,repaso:cineAparece});
+Object.assign(CINE_PAUSAS,{balanza:[.5],diluvio:[.5],repaso:[.5]});

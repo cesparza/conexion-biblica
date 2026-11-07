@@ -37,6 +37,11 @@
    "archivo": "libro.webp",
    "prompt": "Early 19th century, after 1798. Ordinary men and women in 1830s clothing gather around a wooden table studying an open Bible and a hand-drawn prophetic chart without legible text, oil lamp, window open at sunrise. A sense of discovery: the sealed book of Daniel is now open.",
    "sha256": "f39d1d4700342c7c179e1a94e6e3cfee6d753f1af10b1c1adef06bea041093e0"
+  },
+  {
+   "archivo": "arca.webp",
+   "prompt": "Genesis 8:3-4. After the flood, the waters are receding and Noah s great wooden ark, a long rectangular box-shaped vessel of gopher wood, rests on a high rocky ridge of the mountains of Ararat at sunrise. Water still covers the valleys below, mist, first light on the peaks. No people visible, no animals on deck, no rainbow, no fantasy ship shape.",
+   "sha256": "193548892f0b9c503a045748647d7ad60aa3ebb7c3f7d50381b0878bff84befe"
   }
  ]
 }

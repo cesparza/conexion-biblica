@@ -17,7 +17,7 @@ for (const a of L.actos) {
   for (const e of a.estaciones || []) { versos.push(e.v); imgs.push(e.img); }
   imgs.push(...(a.imgs || []), ...(a.img ? [a.img] : []));
   for (const e of [...(a.egw || []), ...(a.estaciones || []).flatMap(x => x.egw || [])]) { assert(/pp?\. \d/.test(e.fuente), 'cita de Elena de White con página: ' + e.t.slice(0, 40)); assert(!/\b(the|and|which|would|of the)\b/i.test(e.t) && !/Great Controversy/.test(e.fuente), 'cita en español, de la edición en español: ' + e.t.slice(0, 40)); }
-  for (const o of a.otros || []) { const [lib, cv] = o.ref.split(' '); const [c, v] = cv.split(':'); const k = lib.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') + '-' + c; assert.equal(o.t, OTRAS[k][v], 'texto literal: ' + o.ref); }
+  for (const o of a.otros || []) { const [lib, cv] = o.ref.split(' '); const [c, v] = cv.split(':'); const k = lib.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') + '-' + c; if (!OTRAS[k]) { assert(a.tipo === 'diluvio' && o.ver === 'RV1909' && /^Génesis [78]:/.test(o.ref), 'texto fuera de la Biblia de la app solo en el diluvio: ' + o.ref); continue; } assert.equal(o.t, OTRAS[k][v], 'texto literal: ' + o.ref); }
 }
 for (const v of versos) { const t = TODO[v.cap] && TODO[v.cap][v.de]; assert(t, 'el versículo existe: ' + v.cap + ':' + v.de); if (v.frase) assert(t.includes(v.frase), 'la frase es literal: ' + v.cap + ':' + v.de); }
 for (const f of new Set(imgs)) assert(fs.existsSync(path.join(__dirname, '../laminas', L.dir, f + '.webp')), 'imagen existente: ' + f);
@@ -34,4 +34,14 @@ const todos = L.actos.flatMap(a => [a.v, ...(a.estaciones || []).map(e => e.v)])
 assert.equal(new Set(todos).size, todos.length, 'ningún versículo se repite entre escenas');
 const marcas = L.actos.find(a => a.id === 'nombres').estaciones.map(e => e.fecha);
 assert.equal(new Set(marcas).size, marcas.length, 'cada estación de la línea tiene su propia marca');
+const bal = L.actos.find(a => a.tipo === 'balanza');
+assert.equal(bal.fichas.filter(f => f.va).reduce((x, f) => x + f.d, 0), bal.meta, 'las piezas correctas de la balanza suman 1.260');
+assert(bal.fichas.some(f => !f.va), 'la balanza tiene una pieza que sobra');
+const dil = L.actos.find(a => a.tipo === 'diluvio');
+assert.equal(dil.dias / (dil.hasta - dil.desde), 30, 'el diluvio: 150 días en 5 meses son 30 por mes');
+const rep = L.actos.find(a => a.tipo === 'repaso');
+assert(rep.preguntas.length >= 5 && rep.preguntas.every(q => q.o[q.ok] && q.e.length > 30), 'el repaso tiene preguntas con respuesta y explicación');
+for (const x of [bal, dil, rep, ...L.actos.filter(a => a.piensa)]) if (x.piensa) assert(x.piensa.o[x.piensa.ok], 'piensa primero tiene respuesta');
+const A = montar('CINE_HTML, CINE_FX, CINE_PAUSAS');
+for (const a of L.actos) assert(A.CINE_HTML[a.tipo] && A.CINE_FX[a.tipo] && A.CINE_PAUSAS[a.tipo] !== undefined, 'el motor sabe dibujar, mover y pausar ' + a.tipo);
 console.log('Los 1.260 años: fuente y entrega, versículos literales, citas con página, imágenes, enlaces y aritmética: TODO BIEN');

@@ -256,3 +256,45 @@
 .cine-suma{font-family:var(--cine-sans,sans-serif);font-size:.95rem;letter-spacing:.04em;color:var(--c-oro,#f2c46b);opacity:0}
 /* En teléfonos bajos (Safari con sus barras) la escena entra completa: menos aire entre bloques. */
 @media (max-height:760px){.cine-final,.cine-cuenta{gap:10px;padding-top:72px;padding-bottom:84px}.cine-final h2{font-size:clamp(1.4rem,6.4vw,2.2rem)}.cine-bbs{gap:12px}}
+
+/* Piezas que se tocan: balanza, diluvio y repaso (7-nov). */
+.c-balanza .cine-esc,.c-repaso .cine-esc{background:radial-gradient(80% 60% at 50% 40%,#1A140C,#07060A)}
+.cine-int{position:relative;z-index:2;display:grid;justify-items:center;align-content:safe center;gap:14px;height:100%;box-sizing:border-box;padding:76px 16px 92px;text-align:center;max-width:720px;margin:0 auto}
+.cine-int [hidden]{display:none!important}
+.cine-piensa{display:grid;gap:10px;width:100%}
+.cine-piensa-q,.cine-q-t{margin:0;font-family:var(--cine-serif,Georgia,serif);font-size:clamp(1.05rem,4.4vw,1.35rem);line-height:1.35;color:var(--c-perg)}
+.cine-piensa-q b{color:var(--c-oro);font-weight:600}
+.cine-piensa-o{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.cine-piensa-o button,.cine-ficha,.cine-q-sig{min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid var(--c-linea);background:rgba(244,238,226,.06);color:var(--c-perg);font:600 .95rem var(--cine-sans,sans-serif);cursor:pointer;transition:background-color .2s,border-color .2s,transform .2s}
+.cine-piensa-o button.si{border-color:var(--c-t0);background:rgba(94,156,126,.28)}
+.cine-piensa-o button.no{border-color:#c2410c;background:rgba(194,65,12,.24)}
+.cine-piensa-r,.cine-q-e{margin:0;font-family:var(--cine-sans,sans-serif);font-size:.95rem;line-height:1.45;color:#E5DBC8}
+.cine-piensa-r b,.cine-q-e b{color:var(--c-oro)}
+.cine-piensa.hecho .cine-piensa-o{display:none}
+.cine-toca{display:grid;gap:12px;width:100%;justify-items:center}
+.cine-bal-plato{display:grid;justify-items:center;gap:6px;width:min(100%,420px)}
+.cine-bal-n{font:500 clamp(2.6rem,12vw,4.2rem)/1 var(--cine-serif,Georgia,serif);color:var(--c-perg);font-variant-numeric:tabular-nums}
+.cine-bal-plato small,.cine-dil{font:700 .72rem var(--cine-sans,sans-serif);letter-spacing:.18em;text-transform:uppercase;color:var(--c-tenue)}
+.cine-bal-barra{width:100%;height:12px;border-radius:6px;background:rgba(244,238,226,.1);overflow:hidden}
+.cine-bal-barra i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c-t0),var(--c-t1),var(--c-t2));transition:width .35s}
+.cine-int.pasa .cine-bal-barra i{background:#c2410c}
+.cine-fichas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,460px)}
+.cine-ficha{display:grid;gap:2px;text-align:center}
+.cine-ficha small{font-weight:500;font-size:.78rem;color:var(--c-tenue)}
+.cine-ficha[aria-pressed="true"]{border-color:var(--c-oro);background:rgba(242,196,107,.2);transform:translateY(-2px)}
+.cine-bal-msg{margin:0;font:600 .92rem var(--cine-sans,sans-serif);color:var(--c-tenue)}
+.cine-int.logrado .cine-bal-msg,.cine-int.logrado .cine-dil-c{color:var(--c-oro)}
+.cine-logro{display:grid;gap:8px;justify-items:center;animation:cineLogro .5s ease}
+@keyframes cineLogro{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cine-dil{display:grid;gap:8px;width:min(100%,460px)}
+.cine-dil input{width:100%;min-height:44px;accent-color:var(--c-oro)}
+.cine-dil-l{display:grid;gap:4px;margin:0}
+.cine-dil-m{font:500 clamp(1.6rem,7vw,2.4rem) var(--cine-serif,Georgia,serif);color:var(--c-perg)}
+.cine-dil-c{font:600 .92rem var(--cine-sans,sans-serif);color:var(--c-tenue)}
+.cine-rep h2{margin:0;font:500 clamp(1.5rem,6vw,2.2rem) var(--cine-serif,Georgia,serif);color:var(--c-perg)}
+.cine-q,.cine-q-fin{display:grid;gap:12px;width:100%;justify-items:center}
+.cine-q-n{margin:0;font:700 .72rem var(--cine-sans,sans-serif);letter-spacing:.18em;text-transform:uppercase;color:var(--c-oro)}
+.cine-q-fin b{font:500 1.3rem var(--cine-serif,Georgia,serif);color:var(--c-oro)}
+.cine-q-sig{background:var(--c-oro);color:#1d2730;border-color:transparent}
+@media (prefers-reduced-motion:reduce){.cine-logro{animation:none}.cine-ficha[aria-pressed="true"]{transform:none}}
+.cine-int.logrado .cine-piensa{display:none}

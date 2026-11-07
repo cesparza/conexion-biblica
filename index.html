@@ -6165,6 +6165,48 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .cine-suma{font-family:var(--cine-sans,sans-serif);font-size:.95rem;letter-spacing:.04em;color:var(--c-oro,#f2c46b);opacity:0}
 /* En teléfonos bajos (Safari con sus barras) la escena entra completa: menos aire entre bloques. */
 @media (max-height:760px){.cine-final,.cine-cuenta{gap:10px;padding-top:72px;padding-bottom:84px}.cine-final h2{font-size:clamp(1.4rem,6.4vw,2.2rem)}.cine-bbs{gap:12px}}
+
+/* Piezas que se tocan: balanza, diluvio y repaso (7-nov). */
+.c-balanza .cine-esc,.c-repaso .cine-esc{background:radial-gradient(80% 60% at 50% 40%,#1A140C,#07060A)}
+.cine-int{position:relative;z-index:2;display:grid;justify-items:center;align-content:safe center;gap:14px;height:100%;box-sizing:border-box;padding:76px 16px 92px;text-align:center;max-width:720px;margin:0 auto}
+.cine-int [hidden]{display:none!important}
+.cine-piensa{display:grid;gap:10px;width:100%}
+.cine-piensa-q,.cine-q-t{margin:0;font-family:var(--cine-serif,Georgia,serif);font-size:clamp(1.05rem,4.4vw,1.35rem);line-height:1.35;color:var(--c-perg)}
+.cine-piensa-q b{color:var(--c-oro);font-weight:600}
+.cine-piensa-o{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.cine-piensa-o button,.cine-ficha,.cine-q-sig{min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid var(--c-linea);background:rgba(244,238,226,.06);color:var(--c-perg);font:600 .95rem var(--cine-sans,sans-serif);cursor:pointer;transition:background-color .2s,border-color .2s,transform .2s}
+.cine-piensa-o button.si{border-color:var(--c-t0);background:rgba(94,156,126,.28)}
+.cine-piensa-o button.no{border-color:#c2410c;background:rgba(194,65,12,.24)}
+.cine-piensa-r,.cine-q-e{margin:0;font-family:var(--cine-sans,sans-serif);font-size:.95rem;line-height:1.45;color:#E5DBC8}
+.cine-piensa-r b,.cine-q-e b{color:var(--c-oro)}
+.cine-piensa.hecho .cine-piensa-o{display:none}
+.cine-toca{display:grid;gap:12px;width:100%;justify-items:center}
+.cine-bal-plato{display:grid;justify-items:center;gap:6px;width:min(100%,420px)}
+.cine-bal-n{font:500 clamp(2.6rem,12vw,4.2rem)/1 var(--cine-serif,Georgia,serif);color:var(--c-perg);font-variant-numeric:tabular-nums}
+.cine-bal-plato small,.cine-dil{font:700 .72rem var(--cine-sans,sans-serif);letter-spacing:.18em;text-transform:uppercase;color:var(--c-tenue)}
+.cine-bal-barra{width:100%;height:12px;border-radius:6px;background:rgba(244,238,226,.1);overflow:hidden}
+.cine-bal-barra i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c-t0),var(--c-t1),var(--c-t2));transition:width .35s}
+.cine-int.pasa .cine-bal-barra i{background:#c2410c}
+.cine-fichas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,460px)}
+.cine-ficha{display:grid;gap:2px;text-align:center}
+.cine-ficha small{font-weight:500;font-size:.78rem;color:var(--c-tenue)}
+.cine-ficha[aria-pressed="true"]{border-color:var(--c-oro);background:rgba(242,196,107,.2);transform:translateY(-2px)}
+.cine-bal-msg{margin:0;font:600 .92rem var(--cine-sans,sans-serif);color:var(--c-tenue)}
+.cine-int.logrado .cine-bal-msg,.cine-int.logrado .cine-dil-c{color:var(--c-oro)}
+.cine-logro{display:grid;gap:8px;justify-items:center;animation:cineLogro .5s ease}
+@keyframes cineLogro{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cine-dil{display:grid;gap:8px;width:min(100%,460px)}
+.cine-dil input{width:100%;min-height:44px;accent-color:var(--c-oro)}
+.cine-dil-l{display:grid;gap:4px;margin:0}
+.cine-dil-m{font:500 clamp(1.6rem,7vw,2.4rem) var(--cine-serif,Georgia,serif);color:var(--c-perg)}
+.cine-dil-c{font:600 .92rem var(--cine-sans,sans-serif);color:var(--c-tenue)}
+.cine-rep h2{margin:0;font:500 clamp(1.5rem,6vw,2.2rem) var(--cine-serif,Georgia,serif);color:var(--c-perg)}
+.cine-q,.cine-q-fin{display:grid;gap:12px;width:100%;justify-items:center}
+.cine-q-n{margin:0;font:700 .72rem var(--cine-sans,sans-serif);letter-spacing:.18em;text-transform:uppercase;color:var(--c-oro)}
+.cine-q-fin b{font:500 1.3rem var(--cine-serif,Georgia,serif);color:var(--c-oro)}
+.cine-q-sig{background:var(--c-oro);color:#1d2730;border-color:transparent}
+@media (prefers-reduced-motion:reduce){.cine-logro{animation:none}.cine-ficha[aria-pressed="true"]{transform:none}}
+.cine-int.logrado .cine-piensa{display:none}
 /* ───────── VIAJE (v266): el camino de paradas de Practicar ───────── */
 .via-cab{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
 .via-sel{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 220px}
@@ -6850,7 +6892,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '8114ca12f87f';
+const VERSION_APP = '240ab82f1df0';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -70669,7 +70711,7 @@ const LAMINAS = {
    "cuarenta y dos meses",
    "42 meses"
   ],
-  "invita": "Siete escenas: la pregunta junto al río, los 1.260 días contados uno por uno, los tres nombres que la Biblia le da al mismo período, un día por un año, 538, los días acortados, 1798, el tiempo del fin y los 1.290 días.",
+  "invita": "Diez escenas para tocar: la pregunta junto al río, el diluvio que cuenta los días de un mes, la balanza de los 1.260 días, los 1.260 días contados uno por uno, los tres nombres que la Biblia le da al mismo período, un día por un año, 538, los días acortados, 1798, el tiempo del fin y los 1.290 días, y un repaso.",
   "actos": [
    {
     "id": "rio",
@@ -70693,6 +70735,87 @@ const LAMINAS = {
      "tiempos",
      "mitad"
     ]
+   },
+   {
+    "id": "diluvio",
+    "corto": "El diluvio",
+    "tipo": "diluvio",
+    "alto": 2.6,
+    "img": "arca",
+    "rot": "Génesis 7 y 8 · cuántos días tiene un mes",
+    "piensa": {
+     "q": "¿Cuántos días tenía un mes en el calendario de la Biblia?",
+     "o": [
+      "28 días",
+      "30 días",
+      "31 días"
+     ],
+     "ok": 1,
+     "r": "Compruébalo con el diluvio: mueve el control del mes 2 al mes 7."
+    },
+    "desde": 2,
+    "hasta": 7,
+    "dias": 150,
+    "otros": [
+     {
+      "en": 2,
+      "ref": "Génesis 7:11",
+      "ver": "RV1909",
+      "t": "El año seiscientos de la vida de Noé, en el mes segundo, á diecisiete días del mes, aquel día fueron rotas todas las fuentes del grande abismo, y las cataratas de los cielos fueron abiertas;"
+     },
+     {
+      "en": 7,
+      "ref": "Génesis 8:3-4",
+      "ver": "RV1909",
+      "t": "y decrecieron las aguas al cabo de ciento y cincuenta días. Y reposó el arca en el mes séptimo, á diecisiete días del mes, sobre los montes de Armenia."
+     }
+    ],
+    "cierre": "Del 17 del mes segundo al 17 del mes séptimo hay cinco meses, y el texto dice que fueron 150 días (Génesis 7:24; 8:3). 150 ÷ 5 = 30 días por mes; doce meses de 30 días son 360 días."
+   },
+   {
+    "id": "balanza",
+    "corto": "La balanza",
+    "tipo": "balanza",
+    "alto": 2.6,
+    "rot": "Apocalipsis 12:6 y 12:14 · haz la cuenta",
+    "piensa": {
+     "q": "¿Cuántos días son «tiempo, tiempos y la mitad de un tiempo»?",
+     "o": [
+      "3½ días",
+      "1.260 días",
+      "1.290 días"
+     ],
+     "ok": 1,
+     "r": "Apocalipsis 12 lo dice de dos maneras (12:6 y 12:14). Ármalo en la balanza."
+    },
+    "meta": 1260,
+    "instruye": "Pon en la balanza las piezas que nombra Apocalipsis 12:14.",
+    "fichas": [
+     {
+      "t": "Un tiempo",
+      "s": "un año · 360 días",
+      "d": 360,
+      "va": true
+     },
+     {
+      "t": "Tiempos",
+      "s": "dos años · 720 días",
+      "d": 720,
+      "va": true
+     },
+     {
+      "t": "La mitad de un tiempo",
+      "s": "medio año · 180 días",
+      "d": 180,
+      "va": true
+     },
+     {
+      "t": "Una semana",
+      "s": "7 días",
+      "d": 7
+     }
+    ],
+    "exito": "360 + 720 + 180 = 1.260: «tiempo, tiempos y la mitad de un tiempo» (Apocalipsis 12:14) son los 1.260 días de Apocalipsis 12:6."
    },
    {
     "id": "cuenta",
@@ -70948,6 +71071,76 @@ const LAMINAS = {
     },
     "nota": "Los 1.290 años empiezan treinta años antes que los 1.260, en 508, cuando Clodoveo I, rey de los francos, comprometió el poder de Francia a la protección del papado. Los dos períodos terminan en 1798.",
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 361-364; Treiyer, <i>Enigmas descifrados</i>, p. 220-222"
+   },
+   {
+    "id": "repaso",
+    "corto": "Repaso",
+    "tipo": "repaso",
+    "alto": 2.6,
+    "rot": "Repaso · seis preguntas",
+    "cartel": "¿Qué aprendiste?",
+    "preguntas": [
+     {
+      "q": "¿Qué texto muestra que «tiempo, tiempos y la mitad de un tiempo» son 1.260 días?",
+      "o": [
+       "Apocalipsis 12:6 y 12:14",
+       "Daniel 4:25",
+       "Mateo 24:22"
+      ],
+      "ok": 0,
+      "e": "La misma mujer en el mismo desierto: 1.260 días en Apocalipsis 12:6, y tiempo, tiempos y la mitad de un tiempo en 12:14."
+     },
+     {
+      "q": "¿Cuántos días tenía un mes según el diluvio?",
+      "o": [
+       "28",
+       "30",
+       "31"
+      ],
+      "ok": 1,
+      "e": "Cinco meses (del mes segundo al séptimo) fueron 150 días (Génesis 7:11, 24; 8:3-4): 30 días por mes."
+     },
+     {
+      "q": "¿Qué regla convierte los días de la profecía en años?",
+      "o": [
+       "Un día por un mes",
+       "Un día por un año",
+       "Un día por una semana"
+      ],
+      "ok": 1,
+      "e": "«Un año por cada día» (Números 14:34); «día por año» (Ezequiel 4:6)."
+     },
+     {
+      "q": "¿En qué año empezaron los 1.260 años?",
+      "o": [
+       "476",
+       "508",
+       "538"
+      ],
+      "ok": 2,
+      "e": "«Los 1260 años del dominio temporal del papa comenzaron en el año 538 de J. C.» (El conflicto de los siglos, p. 309)."
+     },
+     {
+      "q": "¿Qué pasó en 1798?",
+      "o": [
+       "El ejército francés tomó preso al papa",
+       "Lutero publicó sus tesis",
+       "Cayó la Roma imperial"
+      ],
+      "ok": 0,
+      "e": "Louis-Alexandre Berthier entró en Roma y Pío VI fue llevado prisionero: «el poder papal recibió su golpe mortal» (El conflicto de los siglos, p. 492)."
+     },
+     {
+      "q": "¿Por qué la persecución terminó antes de 1798?",
+      "o": [
+       "Porque Dios acortó esos días",
+       "Porque el papa la prohibió",
+       "Porque terminaron los 1.290 días"
+      ],
+      "ok": 0,
+      "e": "«Si aquellos días no fuesen acortados, ninguna carne sería salva» (Mateo 24:22); por la Reforma, «las persecuciones cesaron antes del año 1798» (El conflicto de los siglos, pp. 309-310)."
+     }
+    ]
    }
   ]
  },
@@ -98247,6 +98440,72 @@ function cineTecla(e){
     if(bs.length&&((e.shiftKey&&a===bs[0])||(!e.shiftKey&&a===bs[bs.length-1]))){e.preventDefault();bs[e.shiftKey?bs.length-1:0].focus();}
   }
 }
+
+/* ───────── PIEZAS QUE SE TOCAN (7-nov) ─────────
+   Camilo: «debía ser muy interactiva». La balanza, el diluvio y el repaso se tocan; su
+   estado vive en el DOM del acto (no se guarda nada). `piensa` pregunta antes de mostrar.
+   Son funciones de primer nivel: el despacho de Jóvenes las llama por su nombre. */
+const cineMiles=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+function cineActoDe(el){const s=el&&el.closest?el.closest('.cine-acto'):null;return s?cineActos()[Number(s.dataset.i)]:null;}
+function cinePiensaHTML(a){const q=a.piensa;if(!q)return '';
+  return '<div class="cine-piensa"><p class="cine-piensa-q"><b>Piensa primero.</b> '+esc(q.q)+'</p><div class="cine-piensa-o">'+
+    q.o.map((t,i)=>'<button type="button" onclick="cinePiensa(this,'+i+')">'+esc(t)+'</button>').join('')+'</div>'+
+    '<p class="cine-piensa-r" hidden></p></div>';}
+function cinePiensa(el,i){const box=el.closest('.cine-piensa'),a=cineActoDe(el);if(!box||!a||box.classList.contains('hecho'))return;
+  box.classList.add('hecho');
+  const r=box.querySelector('.cine-piensa-r');r.hidden=false;
+  r.innerHTML='<b>'+(i===a.piensa.ok?'¡Exacto!':'Era «'+esc(a.piensa.o[a.piensa.ok])+'».')+'</b> '+lamPer(esc(a.piensa.r));}
+function cineFicha(el,i){const a=cineActoDe(el),c=el.closest('.cine-int');if(!a||!c)return;
+  el.setAttribute('aria-pressed',el.getAttribute('aria-pressed')==='true'?'false':'true');
+  const on=[...c.querySelectorAll('.cine-ficha')].map(b=>b.getAttribute('aria-pressed')==='true');
+  const tot=a.fichas.reduce((s,f,j)=>s+(on[j]?f.d:0),0),bien=a.fichas.every((f,j)=>!!f.va===on[j]);
+  c.querySelector('.cine-bal-n').textContent=cineMiles(tot);
+  c.querySelector('.cine-bal-barra i').style.width=Math.min(100,tot/a.meta*100)+'%';
+  c.classList.toggle('pasa',tot>a.meta);c.classList.toggle('logrado',bien);
+  c.querySelector('.cine-bal-msg').textContent=bien?'¡Exacto! Suma '+cineMiles(a.meta)+'.':tot>a.meta?'Te pasaste: quita una pieza.':
+    tot===a.meta?'Suma '+cineMiles(a.meta)+', pero con una pieza que el texto no nombra.':'Faltan '+cineMiles(a.meta-tot)+' días.';
+  c.querySelector('.cine-logro').hidden=!bien;}
+function cineDiluvio(el){const a=cineActoDe(el),c=el.closest('.cine-int');if(!a||!c)return;
+  const m=Number(el.value),n=m-a.desde,fin=m>=a.hasta;
+  c.querySelector('.cine-dil-m').textContent='Mes '+m+', día 17';
+  c.querySelector('.cine-dil-c').textContent=!n?'Empieza el diluvio':fin?n+' meses = '+a.dias+' días: el arca reposa':n+(n===1?' mes':' meses')+' de agua sobre la tierra';
+  c.querySelectorAll('.cine-otro[data-en]').forEach(o=>{o.hidden=Number(o.dataset.en)!==(fin?a.hasta:a.desde)||(n>0&&!fin);});
+  c.querySelector('.cine-logro').hidden=!fin;c.classList.toggle('logrado',fin);}
+function cineResponde(el,i,j){const a=cineActoDe(el),q=a&&a.preguntas[i],box=el.closest('.cine-q');if(!q||!box||box.classList.contains('hecho'))return;
+  box.classList.add('hecho');box.querySelectorAll('.cine-piensa-o button').forEach((b,k)=>{b.disabled=true;if(k===q.ok)b.classList.add('si');});
+  const bien=j===q.ok;if(!bien)el.classList.add('no');box.dataset.bien=bien?'1':'0';
+  const e=box.querySelector('.cine-q-e');e.hidden=false;e.innerHTML='<b>'+(bien?'Correcto.':'No es esa.')+'</b> '+lamPer(esc(q.e));
+  box.querySelector('.cine-q-sig').hidden=false;}
+function cineSigPregunta(el,i){const c=el.closest('.cine-rep');if(!c)return;const qs=c.querySelectorAll('.cine-q');
+  qs[i].hidden=true;if(qs[i+1]){qs[i+1].hidden=false;return;}
+  const b=[...qs].filter(q=>q.dataset.bien==='1').length,f=c.querySelector('.cine-q-fin');
+  f.hidden=false;f.querySelector('b').textContent=b+' de '+qs.length+' correctas. '+(b===qs.length?'¡Lo entendiste completo!':'Repasa las escenas y vuelve a intentarlo.');}
+function cineRepasoOtra(el){const c=el.closest('.cine-rep');if(!c)return;
+  c.querySelectorAll('.cine-q').forEach((q,i)=>{q.hidden=i>0;q.classList.remove('hecho');delete q.dataset.bien;
+    q.querySelectorAll('.cine-piensa-o button').forEach(b=>{b.disabled=false;b.classList.remove('si','no');});
+    q.querySelector('.cine-q-e').hidden=true;q.querySelector('.cine-q-sig').hidden=true;});
+  c.querySelector('.cine-q-fin').hidden=true;}
+Object.assign(CINE_HTML,{
+  balanza:a=>'<div class="cine-int" data-leer>'+cineFila(a.rot)+cinePiensaHTML(a)+
+    '<div class="cine-toca"><div class="cine-bal-plato"><b class="cine-bal-n">0</b><small>de '+cineMiles(a.meta)+' días</small><div class="cine-bal-barra"><i></i></div></div>'+
+    '<div class="cine-fichas">'+a.fichas.map((f,i)=>'<button type="button" class="cine-ficha" aria-pressed="false" onclick="cineFicha(this,'+i+')"><b>'+esc(f.t)+'</b><small>'+esc(f.s)+'</small></button>').join('')+'</div>'+
+    '<p class="cine-bal-msg" aria-live="polite">'+esc(a.instruye||'Toca las piezas para ponerlas en la balanza.')+'</p></div>'+
+    '<div class="cine-logro" hidden><p class="cine-exp">'+lamPer(esc(a.exito))+'</p></div></div>',
+  diluvio:(a,L)=>cineFondo(lamRuta(L,a.img),'f1 tenue')+'<div class="cine-vel"></div><div class="cine-int" data-leer>'+cineFila(a.rot)+cinePiensaHTML(a)+
+    '<div class="cine-toca"><label class="cine-dil"><span>Mueve el mes</span><input type="range" min="'+a.desde+'" max="'+a.hasta+'" step="1" value="'+a.desde+'" oninput="cineDiluvio(this)"></label>'+
+    '<p class="cine-dil-l" aria-live="polite"><b class="cine-dil-m">Mes '+a.desde+', día 17</b><small class="cine-dil-c">Empieza el diluvio</small></p></div>'+
+    (a.otros||[]).map(o=>'<p class="cine-otro" data-en="'+o.en+'"'+(o.en===a.desde?'':' hidden')+'>«'+esc(o.t)+'»<span>'+esc(o.ref)+' · '+esc(o.ver)+'</span></p>').join('')+
+    '<div class="cine-logro" hidden><p class="cine-exp">'+lamPer(esc(a.cierre))+'</p></div></div>',
+  repaso:a=>'<div class="cine-int cine-rep" data-leer>'+cineFila(a.rot)+'<h2>'+esc(a.cartel||'Repasa')+'</h2>'+
+    a.preguntas.map((q,i)=>'<div class="cine-q" data-q="'+i+'"'+(i?' hidden':'')+'><p class="cine-q-n">Pregunta '+(i+1)+' de '+a.preguntas.length+'</p><p class="cine-q-t">'+esc(q.q)+'</p>'+
+      '<div class="cine-piensa-o">'+q.o.map((t,j)=>'<button type="button" onclick="cineResponde(this,'+i+','+j+')">'+esc(t)+'</button>').join('')+'</div>'+
+      '<p class="cine-q-e" hidden></p><button type="button" class="cine-q-sig" hidden onclick="cineSigPregunta(this,'+i+')">'+(i<a.preguntas.length-1?'Siguiente pregunta':'Ver resultado')+'</button></div>').join('')+
+    '<div class="cine-q-fin" hidden><b></b><button type="button" class="cine-q-sig" onclick="cineRepasoOtra(this)">Volver a intentarlo</button></div></div>'
+});
+const cineAparece=(s,p)=>{const c=s.querySelector('.cine-int');if(c)c.style.opacity=cineQuieto()?1:cineTramo(p,0,.08);
+  const f=s.querySelector('.f1');if(f)f.style.transform='scale('+(1.04+.04*p)+')';};
+Object.assign(CINE_FX,{balanza:cineAparece,diluvio:cineAparece,repaso:cineAparece});
+Object.assign(CINE_PAUSAS,{balanza:[.5],diluvio:[.5],repaso:[.5]});
 /* ───────── VIAJE: un camino de paradas por capítulo (v266) ─────────
    Camilo (20-oct): «que sea un método más de estudio… para todo». Es un modo de
    Practicar, como Quiz o Tarjetas, y como ellos no trae material propio: sale de

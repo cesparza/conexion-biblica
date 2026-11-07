@@ -12,11 +12,26 @@ module.exports = { tipo: 'cine', libro: 'Los 1.260 años', titulo: 'Tiempo, tiem
   /* Donde la app nombra el período, la frase abre este artículo (artTocables en app.js). */
   toca: ['1.260 años', '1260 años', '1.260 días', '1260 días', 'mil doscientos sesenta días', 'mil doscientos sesenta años',
     'tiempo, tiempos y medio tiempo', 'tiempo, tiempos y la mitad de un tiempo', 'un tiempo, y dos tiempos, y la mitad de un tiempo', 'cuarenta y dos meses', '42 meses'],
-  invita: 'Siete escenas: la pregunta junto al río, los 1.260 días contados uno por uno, los tres nombres que la Biblia le da al mismo período, un día por un año, 538, los días acortados, 1798, el tiempo del fin y los 1.290 días.',
+  invita: 'Diez escenas para tocar: la pregunta junto al río, el diluvio que cuenta los días de un mes, la balanza de los 1.260 días, los 1.260 días contados uno por uno, los tres nombres que la Biblia le da al mismo período, un día por un año, 538, los días acortados, 1798, el tiempo del fin y los 1.290 días, y un repaso.',
   actos: [
   { id: 'rio', corto: 'Junto al río', tipo: 'luz', alto: 4.2, imgs: ['rio', 'cuerno'], foco2: '60% center',
     cartel: '¿Hasta cuándo?', rot: 'Junto al río · Daniel 12:6-7',
     v: { cap: 'd12', de: 7 }, clave: ['juró', 'tiempo,', 'tiempos', 'mitad'] },
+  { id: 'diluvio', corto: 'El diluvio', tipo: 'diluvio', alto: 2.6, img: 'arca', rot: 'Génesis 7 y 8 · cuántos días tiene un mes',
+    piensa: { q: '¿Cuántos días tenía un mes en el calendario de la Biblia?', o: ['28 días', '30 días', '31 días'], ok: 1,
+      r: 'Compruébalo con el diluvio: mueve el control del mes 2 al mes 7.' },
+    desde: 2, hasta: 7, dias: 150,
+    /* RV1909 (Génesis no está en biblia-otros.js): texto literal de biblia/rv1909/01.json de Jóvenes. */
+    otros: [{ en: 2, ref: 'Génesis 7:11', ver: 'RV1909', t: 'El año seiscientos de la vida de Noé, en el mes segundo, á diecisiete días del mes, aquel día fueron rotas todas las fuentes del grande abismo, y las cataratas de los cielos fueron abiertas;' },
+      { en: 7, ref: 'Génesis 8:3-4', ver: 'RV1909', t: 'y decrecieron las aguas al cabo de ciento y cincuenta días. Y reposó el arca en el mes séptimo, á diecisiete días del mes, sobre los montes de Armenia.' }],
+    cierre: 'Del 17 del mes segundo al 17 del mes séptimo hay cinco meses, y el texto dice que fueron 150 días (Génesis 7:24; 8:3). 150 ÷ 5 = 30 días por mes; doce meses de 30 días son 360 días.' },
+  { id: 'balanza', corto: 'La balanza', tipo: 'balanza', alto: 2.6, rot: 'Apocalipsis 12:6 y 12:14 · haz la cuenta',
+    piensa: { q: '¿Cuántos días son «tiempo, tiempos y la mitad de un tiempo»?', o: ['3½ días', '1.260 días', '1.290 días'], ok: 1,
+      r: 'Apocalipsis 12 lo dice de dos maneras (12:6 y 12:14). Ármalo en la balanza.' },
+    meta: 1260, instruye: 'Pon en la balanza las piezas que nombra Apocalipsis 12:14.',
+    fichas: [{ t: 'Un tiempo', s: 'un año · 360 días', d: 360, va: true }, { t: 'Tiempos', s: 'dos años · 720 días', d: 720, va: true },
+      { t: 'La mitad de un tiempo', s: 'medio año · 180 días', d: 180, va: true }, { t: 'Una semana', s: '7 días', d: 7 }],
+    exito: '360 + 720 + 180 = 1.260: «tiempo, tiempos y la mitad de un tiempo» (Apocalipsis 12:14) son los 1.260 días de Apocalipsis 12:6.' },
   { id: 'cuenta', corto: '1.260 días', tipo: 'cuenta', alto: 3.8, rot: 'Daniel 7:25 · el cuerno pequeño',
     de: '3½', a: 1260, cols: 60, tramos: [360, 720, 180], uniIni: 'tiempos', uniIni2: 'tiempo, tiempos y medio tiempo', uniFin: 'días proféticos',
     nombres: ['Un tiempo · 360 días', 'Tiempos · 720 días', 'Medio tiempo · 180 días'],
@@ -64,5 +79,20 @@ module.exports = { tipo: 'cine', libro: 'Los 1.260 años', titulo: 'Tiempo, tiem
     sub: '508 + 1.290 = 1798 · 538 + 1.260 = 1798',
     v: { cap: 'd12', de: 11 },
     nota: 'Los 1.290 años empiezan treinta años antes que los 1.260, en 508, cuando Clodoveo I, rey de los francos, comprometió el poder de Francia a la protección del papado. Los dos períodos terminan en 1798.',
-    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 361-364; Treiyer, <i>Enigmas descifrados</i>, p. 220-222' }
+    fuente: 'Bohr, <i>Daniel 1-10</i>, p. 361-364; Treiyer, <i>Enigmas descifrados</i>, p. 220-222' },
+  { id: 'repaso', corto: 'Repaso', tipo: 'repaso', alto: 2.6, rot: 'Repaso · seis preguntas', cartel: '¿Qué aprendiste?',
+    preguntas: [
+      { q: '¿Qué texto muestra que «tiempo, tiempos y la mitad de un tiempo» son 1.260 días?', o: ['Apocalipsis 12:6 y 12:14', 'Daniel 4:25', 'Mateo 24:22'], ok: 0,
+        e: 'La misma mujer en el mismo desierto: 1.260 días en Apocalipsis 12:6, y tiempo, tiempos y la mitad de un tiempo en 12:14.' },
+      { q: '¿Cuántos días tenía un mes según el diluvio?', o: ['28', '30', '31'], ok: 1,
+        e: 'Cinco meses (del mes segundo al séptimo) fueron 150 días (Génesis 7:11, 24; 8:3-4): 30 días por mes.' },
+      { q: '¿Qué regla convierte los días de la profecía en años?', o: ['Un día por un mes', 'Un día por un año', 'Un día por una semana'], ok: 1,
+        e: '«Un año por cada día» (Números 14:34); «día por año» (Ezequiel 4:6).' },
+      { q: '¿En qué año empezaron los 1.260 años?', o: ['476', '508', '538'], ok: 2,
+        e: '«Los 1260 años del dominio temporal del papa comenzaron en el año 538 de J. C.» (El conflicto de los siglos, p. 309).' },
+      { q: '¿Qué pasó en 1798?', o: ['El ejército francés tomó preso al papa', 'Lutero publicó sus tesis', 'Cayó la Roma imperial'], ok: 0,
+        e: 'Louis-Alexandre Berthier entró en Roma y Pío VI fue llevado prisionero: «el poder papal recibió su golpe mortal» (El conflicto de los siglos, p. 492).' },
+      { q: '¿Por qué la persecución terminó antes de 1798?', o: ['Porque Dios acortó esos días', 'Porque el papa la prohibió', 'Porque terminaron los 1.290 días'], ok: 0,
+        e: '«Si aquellos días no fuesen acortados, ninguna carne sería salva» (Mateo 24:22); por la Reforma, «las persecuciones cesaron antes del año 1798» (El conflicto de los siglos, pp. 309-310).' }
+    ] }
 ] };
