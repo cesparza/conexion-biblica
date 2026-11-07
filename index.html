@@ -4891,9 +4891,16 @@ span.cmp-ult-c{cursor:default}
 .l23-s7{flex:0 0 22%}.l23-s62{flex:0 0 48%}.l23-s1{flex:1;background:rgba(242,196,107,.2)!important;box-shadow:inset 0 0 0 1px #F2C46B!important}
 .l23-sem b{display:block;font-size:.95em}.l23-sem small{color:#C9BFA9;font-size:.78em}
 .l23-sm{position:relative;height:3.1em;margin:.25em 0 .3em}
-.l23-sm span{position:absolute;top:0;transform:translateX(-50%);text-align:center;white-space:nowrap}
-.l23-sm span:first-child{transform:none;text-align:left}
-.l23-sm span:last-child{transform:translateX(-100%);text-align:right}
+/* 6-nov (Camilo: «el año 34 está lejos del diagrama»): el centrado va en `translate` y no en `transform`,
+   porque `.lam-tabla [data-o].ve{transform:none}` lo borraba al aparecer y cada fecha quedaba corrida a la
+   derecha de su marca: el 34 por fuera de la última semana, y «su bautismo» encima de «la cruz». */
+.l23-sm span{position:absolute;top:0;translate:-50% 0;text-align:center;white-space:nowrap}
+.l23-sm span:first-child{translate:none;text-align:left}
+.l23-sm span:last-child{translate:-100% 0;text-align:right}
+/* La cuña que abre el tramo aguamarina (457 a.C.–34 d.C., el 21,3 % de la barra de arriba) en las tres
+   partes de abajo: sin ella, la barra de 490 años quedaba encima de «7 semanas» y parecía que las siete
+   semanas terminaban en 34 d.C. (6-nov, Camilo). */
+.l23-zoom{height:2.2em;margin:.1em 0 .25em;background:linear-gradient(180deg,rgba(127,209,194,.5),rgba(127,209,194,.12));clip-path:polygon(0 0,21.3% 0,100% 100%,0 100%)}
 .l23-sm b{display:block;font-size:.95em}.l23-sm small{display:block;font-size:.72em;color:#C9BFA9}
 .l23-sm .oro b{color:#F2C46B}
 .l23-igual{display:flex;align-items:center;justify-content:center;gap:.6em;margin:.2em 0}
@@ -6831,7 +6838,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '84bdfa338192';
+const VERSION_APP = 'f78e9569d881';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -100187,7 +100194,7 @@ const lamL23={
     '<div class="lam-eq grande" data-o="3"><span>2.300 días</span><i>→</i><span class="oro">2.300 años</span></div>',
   decreto:()=>'<div class="l23-tarj" data-o="1"><b>Artajerjes I</b><span>la orden de restaurar y edificar Jerusalén · Esdras 7</span><small>su séptimo año: otoño de 457 a.C.</small></div>'+lamL23Linea(2,1)+
     '<div class="lam-per-nota" data-o="3">¿Hasta cuándo? 2.300 años desde aquí</div>',
-  semanas:()=>lamL23Linea(1,2)+'<div class="l23-sem" data-o="2"><div class="l23-s7"><b>7 semanas</b><small>49 años</small></div><div class="l23-s62"><b>62 semanas</b><small>434 años</small></div><div class="l23-s1"><b>1 semana</b><small>7 años</small></div></div>'+
+  semanas:()=>lamL23Linea(1,2)+'<div class="l23-zoom" data-o="2" aria-hidden="true"></div><div class="l23-sem" data-o="2"><div class="l23-s7"><b>7 semanas</b><small>49 años</small></div><div class="l23-s62"><b>62 semanas</b><small>434 años</small></div><div class="l23-s1"><b>1 semana</b><small>7 años</small></div></div>'+
     '<div class="l23-sm"><span data-o="3" style="left:0"><b>457 a.C.</b><small>la orden</small></span><span data-o="3" style="left:22%"><b>408 a.C.</b><small>Jerusalén reedificada</small></span>'+
     '<span data-o="4" class="oro" style="left:70%"><b>27 d.C.</b><small>el Mesías Príncipe: su bautismo</small></span><span data-o="5" class="oro" style="left:85%"><b>31</b><small>la cruz</small></span><span data-o="6" style="left:100%"><b>34</b><small>Esteban</small></span></div>'+
     '<div class="lam-per-nota" data-o="6">70 semanas = 490 años, cortados de los 2.300 · sin escala</div>',

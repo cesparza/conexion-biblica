@@ -4874,9 +4874,16 @@ span.cmp-ult-c{cursor:default}
 .l23-s7{flex:0 0 22%}.l23-s62{flex:0 0 48%}.l23-s1{flex:1;background:rgba(242,196,107,.2)!important;box-shadow:inset 0 0 0 1px #F2C46B!important}
 .l23-sem b{display:block;font-size:.95em}.l23-sem small{color:#C9BFA9;font-size:.78em}
 .l23-sm{position:relative;height:3.1em;margin:.25em 0 .3em}
-.l23-sm span{position:absolute;top:0;transform:translateX(-50%);text-align:center;white-space:nowrap}
-.l23-sm span:first-child{transform:none;text-align:left}
-.l23-sm span:last-child{transform:translateX(-100%);text-align:right}
+/* 6-nov (Camilo: «el año 34 está lejos del diagrama»): el centrado va en `translate` y no en `transform`,
+   porque `.lam-tabla [data-o].ve{transform:none}` lo borraba al aparecer y cada fecha quedaba corrida a la
+   derecha de su marca: el 34 por fuera de la última semana, y «su bautismo» encima de «la cruz». */
+.l23-sm span{position:absolute;top:0;translate:-50% 0;text-align:center;white-space:nowrap}
+.l23-sm span:first-child{translate:none;text-align:left}
+.l23-sm span:last-child{translate:-100% 0;text-align:right}
+/* La cuña que abre el tramo aguamarina (457 a.C.–34 d.C., el 21,3 % de la barra de arriba) en las tres
+   partes de abajo: sin ella, la barra de 490 años quedaba encima de «7 semanas» y parecía que las siete
+   semanas terminaban en 34 d.C. (6-nov, Camilo). */
+.l23-zoom{height:2.2em;margin:.1em 0 .25em;background:linear-gradient(180deg,rgba(127,209,194,.5),rgba(127,209,194,.12));clip-path:polygon(0 0,21.3% 0,100% 100%,0 100%)}
 .l23-sm b{display:block;font-size:.95em}.l23-sm small{display:block;font-size:.72em;color:#C9BFA9}
 .l23-sm .oro b{color:#F2C46B}
 .l23-igual{display:flex;align-items:center;justify-content:center;gap:.6em;margin:.2em 0}

@@ -2502,7 +2502,7 @@ const lamL23={
     '<div class="lam-eq grande" data-o="3"><span>2.300 días</span><i>→</i><span class="oro">2.300 años</span></div>',
   decreto:()=>'<div class="l23-tarj" data-o="1"><b>Artajerjes I</b><span>la orden de restaurar y edificar Jerusalén · Esdras 7</span><small>su séptimo año: otoño de 457 a.C.</small></div>'+lamL23Linea(2,1)+
     '<div class="lam-per-nota" data-o="3">¿Hasta cuándo? 2.300 años desde aquí</div>',
-  semanas:()=>lamL23Linea(1,2)+'<div class="l23-sem" data-o="2"><div class="l23-s7"><b>7 semanas</b><small>49 años</small></div><div class="l23-s62"><b>62 semanas</b><small>434 años</small></div><div class="l23-s1"><b>1 semana</b><small>7 años</small></div></div>'+
+  semanas:()=>lamL23Linea(1,2)+'<div class="l23-zoom" data-o="2" aria-hidden="true"></div><div class="l23-sem" data-o="2"><div class="l23-s7"><b>7 semanas</b><small>49 años</small></div><div class="l23-s62"><b>62 semanas</b><small>434 años</small></div><div class="l23-s1"><b>1 semana</b><small>7 años</small></div></div>'+
     '<div class="l23-sm"><span data-o="3" style="left:0"><b>457 a.C.</b><small>la orden</small></span><span data-o="3" style="left:22%"><b>408 a.C.</b><small>Jerusalén reedificada</small></span>'+
     '<span data-o="4" class="oro" style="left:70%"><b>27 d.C.</b><small>el Mesías Príncipe: su bautismo</small></span><span data-o="5" class="oro" style="left:85%"><b>31</b><small>la cruz</small></span><span data-o="6" style="left:100%"><b>34</b><small>Esteban</small></span></div>'+
     '<div class="lam-per-nota" data-o="6">70 semanas = 490 años, cortados de los 2.300 · sin escala</div>',
