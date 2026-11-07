@@ -1,0 +1,37 @@
+{
+ "fecha": "2026-11-07",
+ "herramienta": "ChatGPT (Codex, image_gen)",
+ "tipo": "ilustraciones artísticas originales; no documentación fotográfica",
+ "imagenes": [
+  {
+   "archivo": "libro.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 11 and 12 educational experience. Respectful depiction; every visible detail should fit the stated setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Daniel 12:1, symbolic. A great open book of life shining on a heavenly table, its pages glowing with light (no readable letters), while below a small group of people in simple clothing are delivered from a dark storm, light falling on them. Reverent and hopeful.",
+   "sha256": "4d63b7633b8c0b32b402b240a8004be71c79db847513c0d022305144ed99869c"
+  },
+  {
+   "archivo": "resurreccion.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 11 and 12 educational experience. Respectful depiction; every visible detail should fit the stated setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Daniel 12:2. Dawn over an ancient hillside cemetery: graves open as people of many eras rise in light, looking upward in joy; a few others in shadow. Brilliant sky, no horror, no skeletons, reverent and hopeful.",
+   "sha256": "d7281e5202b43b3fe8baad192443cfe134069d3a0238633e2529be15865097e5"
+  },
+  {
+   "archivo": "estrellas.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 11 and 12 educational experience. Respectful depiction; every visible detail should fit the stated setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Daniel 12:3. Night sky full of bright stars over a quiet landscape; on a hill, a few teachers and humble people who taught righteousness glow softly, as their light joins the stars above. Peaceful wonder, no text.",
+   "sha256": "07208118f989df222110a15ed797b653e852bba321c5cf588187ca6b5ab934cb"
+  },
+  {
+   "archivo": "purificados.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 11 and 12 educational experience. Respectful depiction; every visible detail should fit the stated setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Daniel 12:10, symbolic. A long line of people in plain clothing walk out of a dark river onto the bank, their garments becoming white in the morning light; refining fire glows faintly on the horizon. Purity, calm, no text.",
+   "sha256": "cc3a62fb32e2ef253aa18fb8e8eceee3324b4ab878f0c7f77b5973bc161fdfe4"
+  },
+  {
+   "archivo": "millerita.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 11 and 12 educational experience. Respectful depiction; every visible detail should fit the stated setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Daniel 12:12. A Millerite camp meeting in rural New England, 1843-1844: a large white tent, farmers and families in 1840s clothing listen to a preacher who points to a large hand-painted prophetic chart with beasts and images (no readable letters or numbers). Summer evening light, expectation and joy.",
+   "sha256": "047a4b495990c325e97572c92eddc97981cd4c9a04ad61ca4b04e2a2ea19e6e8"
+  },
+  {
+   "archivo": "heredad.webp",
+   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 11 and 12 educational experience. Respectful depiction; every visible detail should fit the stated setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Daniel 12:13. The very old prophet Daniel, gray beard and simple linen robe, lies at rest in peace on a stone bench at sunset in ancient Persia; in the background, a faint vision of a bright city of light on the horizon promising his inheritance. Serene, hopeful.",
+   "sha256": "48ef3f1c1de4fa34faeaf90dd61d9d0077dec20d81a43586552ce3464071be9f"
+  }
+ ]
+}

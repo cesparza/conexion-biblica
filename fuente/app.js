@@ -10783,7 +10783,7 @@ function cmpSalaHTML(M){
       '<div class="cmp-vis-tx"><small>'+esc(cmpNom(k))+'</small><b>'+esc(p.nombre)+'</b>'+
       (p.texto?'<p class="cmp-cita"><q>'+esc(p.texto)+'</q> <cite>'+esc(l.n+':'+String(p.ref||'').replace(/^\d+:/,''))+'</cite></p>':'')+
       (p.corto?'<p>'+esc(p.corto)+'</p>':'')+'</div></div>').join('')+
-      '<button type="button" class="cmp-lam" onclick="cmpALamina(\''+k+'\')">'+IC('lupa')+' Ver en la lámina de '+esc(cmpNom(k))+'</button></article>';};
+      (()=>{const a=ps[0].acto,cine=L.tipo==='cine'&&a;return '<button type="button" class="cmp-lam" onclick="cmpALamina(\''+k+'\''+(cine?',\''+a+'\'':'')+')">'+IC(cine?'play':'lupa')+(cine?' Ver la escena en el cine · '+esc(cmpNom(k)+':'+String(ps[0].ref||'').replace(/^\d+:/,'')):' Ver en la lámina de '+esc(cmpNom(k)))+'</button>';})()+'</article>';};
   return '<div class="cmp-sala-in" style="--c:'+esc(f.c)+';--n:'+con.length+'">'+
     '<div class="cmp-sala-bar"><span class="cmp-sala-cu">Época '+(CMP_ROM[i]||i+1)+' de '+M.filas.length+'</span>'+
       '<button type="button" class="cmp-x" onclick="cmpCierra()">'+IC('x')+' Cerrar</button></div>'+
@@ -10832,7 +10832,9 @@ function cmpCierra(){
   const b=document.querySelector('.cmp-epoca[data-k="'+cmpVuelve+'"] .cmp-ecab');if(b&&b.focus)b.focus();
   cmpSel='';lugarAnota();
 }
-function cmpALamina(k){cmpCierra();lamAbre(k,'explorar');}
+function cmpALamina(k,a){cmpCierra();lamAbre(k,'explorar');
+  /* v: en un cine, la comparación abre la escena de esa parte (`acto`). */
+  if(a&&LAMINAS[k]&&LAMINAS[k].tipo==='cine'&&typeof cineIr==='function')setTimeout(()=>cineIr(a),80);}
 /* v222: lo que una visión dice que no trae, con su razón (Daniel 8 empieza en Medo-Persia). */
 const cmpNoTrae=(k,key)=>((LAMINAS[k]||{}).noTrae||{})[key]||'';
 document.addEventListener('keydown',e=>{

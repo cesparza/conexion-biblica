@@ -2711,7 +2711,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
   ok(/function cmpFasesHTML\(/.test(js)&&/cmpFasesHTML\(f,M,false\)/.test(js)&&/cmpFasesHTML\(f,M,true\)/.test(js),'La época del juicio se conecta con sus tres fases (en la lista y lado a lado)');
   /* Las fuentes de Comparar, una vez cada una. */
   const fu=[...new Set(M.cols.map(k=>String(LAMINAS[k].paraleloFuente||'').trim().replace(/\.$/,'')))];
-  ok(fu.length===1,'Comparar cita su fuente una sola vez ('+fu.length+')');
+  ok(fu.length===3&&new Set(fu).size===fu.length,'Comparar cita cada fuente una sola vez: Daniel 2, 7 y 8 comparten la suya; Daniel 11 y 12 traen la propia ('+fu.length+')');
   /* La línea de tiempo llega al futuro: 1844, la piedra y el monte después de hoy. */
   const F2=LAMINAS.d2.futuro,F7=LAMINAS.d7.futuro;
   const mil=[LAMINAS.d2,LAMINAS.d7,LAMINAS.d8].map(L=>[L,L.futuro[1]]);
@@ -2969,7 +2969,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
     'Las 2.300 tardes y mañanas: de 457 a.C. a 1844 (sin año cero), 70 semanas hasta 34 d.C., 1.810 años después, y el paso al juicio de Daniel 7');
   /* Comparar y los últimos acontecimientos. */
   const Mo=cmp(LAMINAS),fila=k=>Mo.filas.find(f=>f.key===k),ids=(f,c)=>((f&&f.celdas[c])||[]).map(p=>p.id).join();
-  ok(Mo.cols.join()==='d2,d7,d8'&&ids(fila('-539'),'d8')==='carnero'&&ids(fila('-331'),'d8')==='macho,cuatro'&&ids(fila('-168'),'d8')==='cuerno'&&ids(fila('538'),'d8')==='cielo,santuario'&&ids(fila('1844'),'d8')==='purificado'&&ids(fila('fin-venida'),'d8')==='quebrantado'&&!ids(fila('-605'),'d8')&&/Medo-Persia/.test(L.noTrae['-605']),
+  ok(Mo.cols.join()==='d2,d7,d8,d11,d12'&&ids(fila('-539'),'d8')==='carnero'&&ids(fila('-331'),'d8')==='macho,cuatro'&&ids(fila('-168'),'d8')==='cuerno'&&ids(fila('538'),'d8')==='cielo,santuario'&&ids(fila('1844'),'d8')==='purificado'&&ids(fila('fin-venida'),'d8')==='quebrantado'&&!ids(fila('-605'),'d8')&&/Medo-Persia/.test(L.noTrae['-605']),
     'Comparar suma la columna de Daniel 8: carnero, macho cabrío y cuatro cuernos, Roma imperial, papal, 1844 y la venida; Babilonia no, y dice por qué');
   ok(L.paralelo.every(r=>r.length===6&&(r[3]===null||[].concat(r[3]).every(k=>LAMINAS.d2.capas.includes(k)||['piedra','monte'].includes(k)))&&LAMINAS.d7.partes.some(p=>p.id===r[5])),'Con Daniel 2 y 7: cada parte enciende su metal y muestra su parte de Daniel 7');
   const ev=id=>ULTIMOS.eventos.find(e=>e.id===id);
@@ -3367,7 +3367,7 @@ ok(/function verVers\([^)]*\)\{\s*if\(saltaAlTexto\(/.test(APP)&&/data-cid="'\+c
  ok(!atribuye.length,'El texto de Cine no atribuye ideas a autores'+(atribuye.length?': '+atribuye.join(' | ').slice(0,200):''));
  ok(egw.length>=8&&egw.every(e=>/Elena G\. de White/.test(e.fuente)&&/pp?\. \d/.test(e.fuente)&&e.t.length>20),'Cada cita de Elena de White en Cine lleva libro y página');
  ok(D.actos.every(a=>A.cinePausas(a).every(f=>f>0&&f<=1)),'Siguiente tiene paradas válidas en cada acto');
- ok(A.cmpModelo().cols.join(',')==='d2,d7,d8','Daniel 9 no añade una columna de reinos a Comparar');
+ ok(A.cmpModelo().cols.join(',')==='d2,d7,d8,d11,d12','Daniel 9 no añade una columna de reinos a Comparar');
  /* v269: la regla vale para todo el material, no solo Daniel 9: ningún texto dice «Shea compara», «Bohr relaciona»
     ni «según Bohr». Las fuentes (líneas «Fuente:», campos fuente/f y citas entre paréntesis) sí nombran al autor. */
  const AUT='(?:Shea|Bohr|Smith|Maxwell|Hasel|Treiyer|Doukhan|Ruiz|Stefanovic|Wadsworth|Nichol|Gane|Froom|Hardinge|Anderson)';

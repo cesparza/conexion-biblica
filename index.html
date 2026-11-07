@@ -6838,7 +6838,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '79391163927c';
+const VERSION_APP = '9f52ddce7ef1';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -69479,7 +69479,7 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "camino",
+    "img": "d11-persia",
     "adaptable": true,
     "v": {
      "cap": "d11",
@@ -69529,8 +69529,8 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "d8/cuatro",
-    "adaptable": false,
+    "img": "d11-alejandro",
+    "adaptable": true,
     "v": {
      "cap": "d11",
      "de": 3,
@@ -69695,7 +69695,7 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "camino",
+    "img": "d11-rafia",
     "adaptable": true,
     "v": {
      "cap": "d11",
@@ -69779,8 +69779,8 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "d2/e168",
-    "adaptable": false,
+    "img": "d11-roma",
+    "adaptable": true,
     "v": {
      "cap": "d11",
      "de": 14,
@@ -69952,7 +69952,7 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "testigos",
+    "img": "d11-quitim",
     "adaptable": true,
     "v": {
      "cap": "d11",
@@ -70004,8 +70004,8 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "d8/santuario",
-    "adaptable": false,
+    "img": "d11-continuo",
+    "adaptable": true,
     "v": {
      "cap": "d11",
      "de": 31,
@@ -70062,7 +70062,7 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "testigos",
+    "img": "d11-comunidad",
     "adaptable": true,
     "v": {
      "cap": "d11",
@@ -70206,7 +70206,7 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "testigos",
+    "img": "d11-autoridad",
     "adaptable": true,
     "v": {
      "cap": "d11",
@@ -70262,8 +70262,8 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "camino",
-    "adaptable": true,
+    "img": "p1260/roma1798",
+    "adaptable": false,
     "v": {
      "cap": "d11",
      "de": 40,
@@ -70328,7 +70328,7 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "camino",
+    "img": "d11-refugio",
     "adaptable": true,
     "v": {
      "cap": "d11",
@@ -70386,7 +70386,7 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "camino",
+    "img": "d11-economia",
     "adaptable": true,
     "v": {
      "cap": "d11",
@@ -70438,8 +70438,8 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "d8/cielo",
-    "adaptable": false,
+    "img": "d11-mensaje",
+    "adaptable": true,
     "v": {
      "cap": "d11",
      "de": 44,
@@ -70500,8 +70500,8 @@ const LAMINAS = {
      }
     ],
     "alto": 1.4,
-    "img": "d7/hijo",
-    "adaptable": false,
+    "img": "miguel",
+    "adaptable": true,
     "v": {
      "cap": "d11",
      "de": 45,
@@ -70518,7 +70518,117 @@ const LAMINAS = {
      }
     ]
    }
-  ]
+  ],
+  "partes": [
+   {
+    "id": "persia",
+    "img": "d11-persia",
+    "nombre": "Tres reyes y el cuarto, rico",
+    "reino": "Medo-Persia",
+    "fechas": "539 – 331 a.C.",
+    "de": -539,
+    "a": -331,
+    "c": "#8C98A6",
+    "texto": "Aún habrá tres reyes en Persia, y el cuarto se hará de grandes riquezas, más que todos ellos",
+    "ref": "11:2",
+    "acto": "d11-persia",
+    "corto": "Cambises II, Bardiya y Darío I; el cuarto es Jerjes I (Asuero), que levantó a todos contra Grecia."
+   },
+   {
+    "id": "valiente",
+    "img": "d11-alejandro",
+    "nombre": "Un rey valiente",
+    "reino": "Grecia",
+    "fechas": "331 – 301 a.C.",
+    "de": -331,
+    "a": -301,
+    "c": "#A85A2A",
+    "texto": "Se levantará luego un rey valiente, que dominará con gran poder y hará su voluntad",
+    "ref": "11:3",
+    "acto": "d11-alejandro",
+    "corto": "Alejandro Magno. Su reino, «repartido hacia los cuatro vientos del cielo» (11:4)."
+   },
+   {
+    "id": "nortesur",
+    "img": "alianza",
+    "nombre": "El rey del norte y el rey del sur",
+    "reino": "Grecia dividida en cuatro",
+    "fechas": "301 – 168 a.C.",
+    "de": -301,
+    "a": -168,
+    "cmp": -331,
+    "c": "#B97A45",
+    "texto": "su reino será quebrantado y repartido hacia los cuatro vientos del cielo",
+    "ref": "11:4",
+    "acto": "d11-dinastias",
+    "corto": "Después, Siria, el rey del norte, contra Egipto, el rey del sur, con Judea en medio (11:5-15)."
+   },
+   {
+    "id": "gloriosa",
+    "img": "d11-roma",
+    "nombre": "Permanecerá en la tierra gloriosa",
+    "reino": "Roma imperial",
+    "fechas": "168 a.C. – 476 d.C.",
+    "de": -168,
+    "a": 476,
+    "c": "#3E4651",
+    "texto": "permanecerá en la tierra gloriosa, que será consumida bajo su poder",
+    "ref": "11:16",
+    "acto": "d11-roma",
+    "corto": "Roma se queda en Judea (11:16), y el príncipe del pacto es quebrantado (11:22). Abarca 11:16-28, o 11:16-20 según dónde se ponga la línea."
+   },
+   {
+    "id": "continuo",
+    "img": "d11-continuo",
+    "nombre": "Quitan el continuo",
+    "reino": "Roma papal",
+    "fechas": "538 – 1798 d.C.",
+    "de": 538,
+    "a": 1798,
+    "c": "#A0694A",
+    "texto": "quitarán el sacrificio continuo y pondrán la abominación desoladora",
+    "ref": "11:31",
+    "acto": "d11-santuario",
+    "corto": "Desde 508 (11:31); se engrandece sobre todo dios (11:36). Abarca 11:29-39, o 11:21-39."
+   },
+   {
+    "id": "sufin",
+    "img": "miguel",
+    "nombre": "Llegará a su fin",
+    "reino": "La segunda venida",
+    "fechas": "",
+    "de": null,
+    "fin": "venida",
+    "c": "#6B7B5A",
+    "texto": "pero llegará a su fin, y no tendrá quien lo ayude",
+    "ref": "11:45",
+    "acto": "d11-liberacion",
+    "corto": "«No tendrá quien lo ayude»: en aquel tiempo se levanta Miguel (12:1)."
+   }
+  ],
+  "cmpExtra": [
+   {
+    "id": "tempestad",
+    "img": "d11-economia",
+    "nombre": "Como una tempestad",
+    "reino": "Roma papal sanada",
+    "fechas": "restauración final futura, sin fecha fijada",
+    "de": null,
+    "fin": "sanada",
+    "c": "#8A5A3C",
+    "texto": "el rey del norte se levantará contra él como una tempestad",
+    "ref": "11:40",
+    "acto": "d11-herida",
+    "corto": "Herido en 1798, el rey del norte se recupera, se extiende por el mundo y «llegará a su fin» (11:40-45)."
+   }
+  ],
+  "noTrae": {
+   "476": "Pasa de Roma imperial a Roma papal",
+   "1844": "No lo nombra: lo marcan Daniel 8:14 y 12:12",
+   "-605": "Empieza en Persia: Babilonia ya cayó (11:1-2)",
+   "fin-reino": "Termina con la liberación de Daniel 12:1"
+  },
+  "paraleloFuente": "Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Treiyer, <i>Enigmas descifrados</i>, p. 50-52"
  },
  "p1260": {
   "tipo": "cine",
@@ -70840,6 +70950,292 @@ const LAMINAS = {
     "fuente": "Bohr, <i>Daniel 1-10</i>, p. 361-364; Treiyer, <i>Enigmas descifrados</i>, p. 220-222"
    }
   ]
+ },
+ "d12": {
+  "tipo": "cine",
+  "libro": "Daniel 12",
+  "titulo": "El tiempo del fin",
+  "dir": "d12/",
+  "miniF": "libro",
+  "portada": "libro",
+  "invita": "Ocho escenas: Miguel se levanta, los que despiertan, los que brillan como estrellas, el libro que se abre en 1798, el juramento junto al río, los purificados, los 1.290 y los 1.335 días, y la heredad de Daniel.",
+  "actos": [
+   {
+    "id": "miguel",
+    "corto": "Miguel se levanta",
+    "tipo": "luz",
+    "alto": 4.2,
+    "imgs": [
+     "d11/miguel",
+     "libro"
+    ],
+    "foco2": "55% center",
+    "cartel": "En aquel tiempo",
+    "rot": "Daniel 12:1 · el final de Daniel 11",
+    "v": {
+     "cap": "d12",
+     "de": 1
+    },
+    "clave": [
+     "Miguel",
+     "libertado",
+     "libro"
+    ]
+   },
+   {
+    "id": "despertar",
+    "corto": "Despertarán",
+    "tipo": "luz",
+    "alto": 4,
+    "imgs": [
+     "resurreccion",
+     "estrellas"
+    ],
+    "foco2": "50% center",
+    "rot": "Daniel 12:2 · la resurrección",
+    "v": {
+     "cap": "d12",
+     "de": 2
+    },
+    "clave": [
+     "despertados",
+     "vida",
+     "eterna"
+    ]
+   },
+   {
+    "id": "entendidos",
+    "corto": "Como las estrellas",
+    "tipo": "luz",
+    "alto": 4,
+    "imgs": [
+     "estrellas",
+     "purificados"
+    ],
+    "foco2": "50% center",
+    "rot": "Daniel 12:3 · los entendidos",
+    "v": {
+     "cap": "d12",
+     "de": 3
+    },
+    "clave": [
+     "entendidos",
+     "resplandecerán",
+     "estrellas"
+    ]
+   },
+   {
+    "id": "sellado",
+    "corto": "El libro se abre",
+    "tipo": "sello",
+    "alto": 3.4,
+    "img": "p1260/libro",
+    "fecha": "1798",
+    "era": "se abre",
+    "rot": "Daniel 12:4 · sellado hasta el tiempo del fin",
+    "v": {
+     "cap": "d12",
+     "de": 4
+    },
+    "clave": [
+     "sella",
+     "tiempo",
+     "fin",
+     "ciencia"
+    ],
+    "egw": [
+     {
+      "t": "Pero desde 1798 el libro de Daniel ha sido desellado, la ciencia de las profecías ha aumentado y muchos han proclamado el solemne mensaje del juicio cercano.",
+      "fuente": "Elena G. de White, <i>El conflicto de los siglos</i>, p. 405"
+     }
+    ],
+    "explica": "Elena de White pone en 1798 el comienzo del tiempo del fin: desde entonces el libro de Daniel se entiende y crece el conocimiento de sus profecías."
+   },
+   {
+    "id": "juramento",
+    "corto": "El juramento",
+    "tipo": "sello",
+    "alto": 3.4,
+    "img": "p1260/rio",
+    "fecha": "1.260",
+    "era": "años",
+    "rot": "Daniel 12:7 · el varón sobre las aguas",
+    "v": {
+     "cap": "d12",
+     "de": 7,
+     "frase": "juró por el que vive por los siglos, que será por tiempo, tiempos y la mitad de un tiempo"
+    },
+    "clave": [
+     "juró",
+     "tiempo,",
+     "tiempos",
+     "mitad"
+    ],
+    "egw": [
+     {
+      "t": "Los 1260 años del dominio temporal del papa comenzaron en el año 538 de J. C. y debían terminar en 1798.",
+      "fuente": "Elena G. de White, <i>El conflicto de los siglos</i>, p. 309"
+     }
+    ],
+    "explica": "Elena de White da el plazo del juramento: los 1.260 años, de 538 a 1798."
+   },
+   {
+    "id": "purificados",
+    "corto": "Purificados",
+    "tipo": "luz",
+    "alto": 4,
+    "imgs": [
+     "purificados",
+     "millerita"
+    ],
+    "foco2": "50% center",
+    "rot": "Daniel 12:10 · dos grupos",
+    "v": {
+     "cap": "d12",
+     "de": 10
+    },
+    "clave": [
+     "limpios",
+     "emblanquecidos",
+     "purificados",
+     "entendidos"
+    ]
+   },
+   {
+    "id": "periodos",
+    "corto": "1.290 y 1.335",
+    "tipo": "via",
+    "alto": 6,
+    "inicio": "508 d.C.",
+    "estaciones": [
+     {
+      "n": 1,
+      "fecha": "1798",
+      "img": "p1260/roma1798",
+      "rot": "1.290 días",
+      "v": {
+       "cap": "d12",
+       "de": 11
+      },
+      "nota": "Desde 508, cuando Clodoveo I, rey de los francos, puso el poder civil al servicio del papado, hasta 1798. Son treinta más que los 1.260 años, y terminan juntos.",
+      "fuente": "Bohr, <i>Daniel 11</i>, p. 26; Treiyer, <i>Enigmas descifrados</i>, p. 220-222"
+     },
+     {
+      "n": 2,
+      "fecha": "1843",
+      "img": "millerita",
+      "rot": "1.335 días · la lectura principal",
+      "v": {
+       "cap": "d12",
+       "de": 12
+      },
+      "nota": "508 más 1.335 llega a 1843: el movimiento millerita anuncia el juicio. Los 2.300 días marcan algo en el cielo, el comienzo del juicio; los 1.335, algo en la tierra: el pueblo que Dios levantó para anunciarlo.",
+      "fuente": "Bohr, <i>Daniel 1-10</i>, p. 5; Bohr, <i>Daniel 11</i>, p. 26 y 217"
+     },
+     {
+      "n": 3,
+      "fecha": "22 oct. 1844",
+      "img": "d8/purificado",
+      "rot": "1.335 días · otra lectura",
+      "v": {
+       "cap": "d8",
+       "de": 14
+      },
+      "nota": "Con el año judío que empieza en otoño, los 1.335 llegan al 22 de octubre de 1844, junto con los 2.300. Donde las dos lecturas coinciden: el cumplimiento está en el despertar adventista de 1843 y 1844, que anunció el juicio que empezó en 1844, y no queda un período futuro por contar.",
+      "fuente": "Treiyer, <i>Enigmas descifrados</i>, p. 220-225 y 231-233; Bohr, <i>Daniel 11</i>, p. 217-218"
+     }
+    ]
+   },
+   {
+    "id": "heredad",
+    "corto": "Su heredad",
+    "tipo": "luz",
+    "alto": 4,
+    "imgs": [
+     "heredad",
+     "d11/miguel"
+    ],
+    "foco2": "55% center",
+    "rot": "Daniel 12:13 · la promesa a Daniel",
+    "v": {
+     "cap": "d12",
+     "de": 13
+    },
+    "clave": [
+     "reposarás",
+     "levantarás",
+     "heredad"
+    ]
+   }
+  ],
+  "partes": [
+   {
+    "id": "juramento",
+    "img": "p1260/rio",
+    "nombre": "Tiempo, tiempos y la mitad de un tiempo",
+    "reino": "Roma papal",
+    "fechas": "538 – 1798 d.C.",
+    "de": 538,
+    "a": 1798,
+    "c": "#A0694A",
+    "texto": "que será por tiempo, tiempos y la mitad de un tiempo",
+    "ref": "12:7",
+    "acto": "juramento",
+    "corto": "Los 1.260 años, de 538 a 1798. Los 1.290 días (12:11) van de 508 a 1798."
+   },
+   {
+    "id": "bienaventurado",
+    "img": "millerita",
+    "nombre": "Bienaventurado el que espere",
+    "reino": "El juicio en el cielo",
+    "fechas": "desde 1844",
+    "era": 1844,
+    "de": 1844,
+    "a": 2026,
+    "c": "#B45309",
+    "texto": "Bienaventurado el que espere, y llegue a mil trescientos treinta y cinco días",
+    "ref": "12:12",
+    "acto": "periodos",
+    "corto": "Los 1.335 días llegan a 1843, al anuncio del juicio; otra lectura los cierra el 22 de octubre de 1844, con los 2.300. El juicio termina cuando «se levantará Miguel» (12:1)."
+   },
+   {
+    "id": "libertado",
+    "img": "d11/miguel",
+    "nombre": "Se levanta Miguel",
+    "reino": "La segunda venida",
+    "fechas": "",
+    "de": null,
+    "fin": "venida",
+    "c": "#6B7B5A",
+    "texto": "en aquel tiempo será libertado tu pueblo, todos los que se hallen inscritos en el libro",
+    "ref": "12:1",
+    "acto": "miguel",
+    "corto": "Tiempo de angustia; el pueblo de Dios es librado y hay resurrección (12:1-2)."
+   },
+   {
+    "id": "heredad",
+    "img": "heredad",
+    "nombre": "Las estrellas y la heredad",
+    "reino": "El reino eterno",
+    "fechas": "",
+    "de": null,
+    "fin": "reino",
+    "c": "#0E7490",
+    "texto": "como las estrellas, a perpetua eternidad",
+    "ref": "12:3",
+    "acto": "heredad",
+    "corto": "Los entendidos resplandecen para siempre, y Daniel se levanta para recibir su heredad (12:13)."
+   }
+  ],
+  "noTrae": {
+   "476": "Empieza «en aquel tiempo»: al final de Daniel 11 (12:1)",
+   "-605": "Empieza «en aquel tiempo»: al final de Daniel 11 (12:1)",
+   "-539": "Empieza «en aquel tiempo»: al final de Daniel 11 (12:1)",
+   "-331": "Empieza «en aquel tiempo»: al final de Daniel 11 (12:1)",
+   "-168": "Empieza «en aquel tiempo»: al final de Daniel 11 (12:1)",
+   "fin-sanada": "Lo cuenta Daniel 11:40-45; Daniel 12 empieza cuando se levanta Miguel"
+  },
+  "paraleloFuente": "Bohr, <i>Daniel 11</i>, p. 15-26 y 98-99; Bohr, <i>Daniel 1-10</i>, p. 5 y 357; Treiyer, <i>Enigmas descifrados</i>, p. 220-233"
  }
 };
 
@@ -108796,7 +109192,7 @@ function cmpSalaHTML(M){
       '<div class="cmp-vis-tx"><small>'+esc(cmpNom(k))+'</small><b>'+esc(p.nombre)+'</b>'+
       (p.texto?'<p class="cmp-cita"><q>'+esc(p.texto)+'</q> <cite>'+esc(l.n+':'+String(p.ref||'').replace(/^\d+:/,''))+'</cite></p>':'')+
       (p.corto?'<p>'+esc(p.corto)+'</p>':'')+'</div></div>').join('')+
-      '<button type="button" class="cmp-lam" onclick="cmpALamina(\''+k+'\')">'+IC('lupa')+' Ver en la lámina de '+esc(cmpNom(k))+'</button></article>';};
+      (()=>{const a=ps[0].acto,cine=L.tipo==='cine'&&a;return '<button type="button" class="cmp-lam" onclick="cmpALamina(\''+k+'\''+(cine?',\''+a+'\'':'')+')">'+IC(cine?'play':'lupa')+(cine?' Ver la escena en el cine · '+esc(cmpNom(k)+':'+String(ps[0].ref||'').replace(/^\d+:/,'')):' Ver en la lámina de '+esc(cmpNom(k)))+'</button>';})()+'</article>';};
   return '<div class="cmp-sala-in" style="--c:'+esc(f.c)+';--n:'+con.length+'">'+
     '<div class="cmp-sala-bar"><span class="cmp-sala-cu">Época '+(CMP_ROM[i]||i+1)+' de '+M.filas.length+'</span>'+
       '<button type="button" class="cmp-x" onclick="cmpCierra()">'+IC('x')+' Cerrar</button></div>'+
@@ -108845,7 +109241,9 @@ function cmpCierra(){
   const b=document.querySelector('.cmp-epoca[data-k="'+cmpVuelve+'"] .cmp-ecab');if(b&&b.focus)b.focus();
   cmpSel='';lugarAnota();
 }
-function cmpALamina(k){cmpCierra();lamAbre(k,'explorar');}
+function cmpALamina(k,a){cmpCierra();lamAbre(k,'explorar');
+  /* v: en un cine, la comparación abre la escena de esa parte (`acto`). */
+  if(a&&LAMINAS[k]&&LAMINAS[k].tipo==='cine'&&typeof cineIr==='function')setTimeout(()=>cineIr(a),80);}
 /* v222: lo que una visión dice que no trae, con su razón (Daniel 8 empieza en Medo-Persia). */
 const cmpNoTrae=(k,key)=>((LAMINAS[k]||{}).noTrae||{})[key]||'';
 document.addEventListener('keydown',e=>{
