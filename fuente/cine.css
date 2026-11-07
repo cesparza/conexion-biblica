@@ -53,12 +53,12 @@
 @keyframes cineCae{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 /* 70 × 7 */
 .c-cuenta .cine-esc{background:radial-gradient(80% 60% at 50% 40%,#1A140C,#07060A)}
-.cine-cuenta{display:grid;justify-items:center;align-content:center;gap:16px;padding:78px 16px 86px;text-align:center}
+.cine-cuenta{display:grid;justify-items:center;align-content:safe center;gap:16px;padding:78px 16px 86px;text-align:center}
 .cine-num{display:grid;font-family:var(--cine-serif,Georgia,serif);transition:transform .2s}
 .cine-num b{font-weight:500;font-size:clamp(4.5rem,20vw,12rem);line-height:.85;font-variant-numeric:tabular-nums;text-shadow:0 0 60px rgba(242,196,107,.35)}
 .cine-num small{font-family:var(--cine-sans,sans-serif);font-size:.82rem;letter-spacing:.3em;text-transform:uppercase;color:var(--c-tenue);margin-top:8px}
-.cine-rej{display:grid;grid-template-columns:repeat(var(--cols,35),1fr);gap:3px;width:min(92vw,720px)}
-.cine-rej i{aspect-ratio:1;border-radius:2px;background:rgba(244,238,226,.14);opacity:0;transform:scale(.3);transition:opacity .25s,transform .25s,background-color .3s}
+.cine-rej{display:grid;grid-template-columns:repeat(var(--cols,35),minmax(0,1fr));gap:var(--gap,3px);width:min(92vw,720px)}
+.cine-rej i{min-width:0;aspect-ratio:1;border-radius:2px;background:rgba(244,238,226,.14);opacity:0;transform:scale(.3);transition:opacity .25s,transform .25s,background-color .3s}
 .cine-rej i.v{opacity:1;transform:none}
 .cine-rej i.t0{background:var(--c-t0)}.cine-rej i.t1{background:var(--c-t1)}.cine-rej i.t2{background:var(--c-t2);box-shadow:0 0 8px var(--c-t2)}
 .cine-ley{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:.84rem;color:var(--c-tenue);opacity:0}
@@ -113,7 +113,7 @@
 .cine-tarj .cine-capa.on{opacity:1;transform:none;pointer-events:auto}
 /* 490 dentro de 2300 */
 .c-barra .cine-esc{background:radial-gradient(70% 60% at 50% 45%,#16112A,#07060A)}
-.cine-final{display:grid;justify-items:center;align-content:center;gap:20px;padding:78px 16px 90px;text-align:center}
+.cine-final{display:grid;justify-items:center;align-content:safe center;gap:20px;padding:78px 16px 90px;text-align:center}
 .cine-final h2{margin:0;font-family:var(--cine-serif,Georgia,serif);font-weight:600;font-size:clamp(1.7rem,5vw,3rem);opacity:0}
 .cine-dos{width:min(92vw,880px);display:grid;gap:10px}
 .cine-2300{position:relative;height:26px;border-radius:8px;background:rgba(244,238,226,.12);overflow:hidden}
@@ -244,3 +244,15 @@
  .cine-exploraciones .d11lab-nav button,.cine-exploraciones .d9lab-activities button{font-size:.8rem;min-height:52px}
  .cine-bots{gap:4px}.cine-bots>button{min-height:38px}
 }
+
+/* Barra con varios períodos a la misma escala (Los 1.290 y los 1.260 terminan juntos). */
+.cine-bbs{display:grid;gap:18px;width:min(92vw,620px)}
+.cine-bb{display:grid;gap:6px;text-align:left}
+.cine-bb .t{font-family:var(--cine-sans,sans-serif);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c-tenue)}
+.cine-bb .pista{position:relative;height:14px;border-radius:7px;background:rgba(244,238,226,.08)}
+.cine-bb .pista i{position:absolute;top:0;bottom:0;width:0;border-radius:7px;background:linear-gradient(90deg,#6b5b95,#a58fd6)}
+.cine-bb:first-child .pista i{background:linear-gradient(90deg,#c2410c,#f2c46b)}
+.cine-bb .fechas{display:flex;justify-content:space-between;font-family:var(--cine-serif,Georgia,serif);font-size:1.05rem}
+.cine-suma{font-family:var(--cine-sans,sans-serif);font-size:.95rem;letter-spacing:.04em;color:var(--c-oro,#f2c46b);opacity:0}
+/* En teléfonos bajos (Safari con sus barras) la escena entra completa: menos aire entre bloques. */
+@media (max-height:760px){.cine-final,.cine-cuenta{gap:10px;padding-top:72px;padding-bottom:84px}.cine-final h2{font-size:clamp(1.4rem,6.4vw,2.2rem)}.cine-bbs{gap:12px}}

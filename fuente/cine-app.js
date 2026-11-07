@@ -133,7 +133,7 @@ const CINE_HTML={
     '<div class="cine-luz"></div><div class="cine-vel"></div>'+
     (a.cartel?'<div class="cine-cartel"><h2>'+esc(a.cartel)+'</h2><p>'+esc(L.libro)+'</p></div><div class="cine-baja"><span>Desliza</span><i></i></div>':'')+cineTexto(a),
   cuenta:a=>'<div class="cine-cuenta" data-leer>'+cineFila(a.rot)+
-    '<div class="cine-num"><b>'+a.de+'</b><small>'+esc(a.uniIni||'semanas')+'</small></div><div class="cine-rej" aria-hidden="true"'+(a.cols?' style="--cols:'+a.cols+'"':'')+'>'+'<i></i>'.repeat(a.a)+'</div>'+
+    '<div class="cine-num"><b>'+a.de+'</b><small>'+esc(a.uniIni||'semanas')+'</small></div><div class="cine-rej" aria-hidden="true"'+(a.cols?' style="--cols:'+a.cols+(a.cols>40?';--gap:2px':'')+'"':'')+'>'+'<i></i>'.repeat(a.a)+'</div>'+
     '<div class="cine-ley">'+a.nombres.map((n,i)=>'<span><b class="t'+i+'"></b>'+esc(n)+'</span>').join('')+'</div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
     (a.egw||[]).map(cineEgw).join('')+'</div>',
@@ -157,7 +157,13 @@ const CINE_HTML={
       return '<div class="cine-capa" data-leer data-t="'+i+'">'+cineFila(e.rot)+'<p class="cine-verso">«'+esc(v.t)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>'+
         (e.egw||[]).map(cineEgw).join('')+(e.nota?'<p class="cine-egw nota">'+lamPer(esc(e.nota))+'<span>'+e.fuente+'</span></p>':'')+'</div>';}).join('')+'</div>',
   barra:a=>'<div class="cine-final" data-leer>'+cineFila(a.rot)+'<h2>'+esc(a.cartel)+'</h2>'+
-    '<div class="cine-dos"><div class="cine-2300"><i class="p"></i><i class="r"></i></div><div class="cine-marcas">'+a.marcas.map(m=>'<span>'+esc(m)+'</span>').join('')+'</div></div>'+
+    /* `barras`: varios períodos a la misma escala, uno debajo del otro, cada uno desde su
+       comienzo (`desde`, fracción del más largo) con sus fechas en sus extremos. */
+    (a.barras?'<div class="cine-bbs">'+a.barras.map(b=>'<div class="cine-bb"><span class="t">'+esc(b.t)+'</span>'+
+      '<div class="pista"><i style="left:'+(b.desde*100).toFixed(2)+'%"></i></div>'+
+      '<div class="fechas" style="margin-left:'+(b.desde*100).toFixed(2)+'%"><span>'+esc(b.de)+'</span><span>'+esc(b.a)+'</span></div></div>').join('')+'</div>'+
+      (a.sub?'<p class="cine-suma">'+esc(a.sub)+'</p>':''):
+    '<div class="cine-dos"><div class="cine-2300"><i class="p"></i><i class="r"></i></div><div class="cine-marcas">'+a.marcas.map(m=>'<span>'+esc(m)+'</span>').join('')+'</div></div>')+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
     (a.egw||[]).map(cineEgw).join('')+(a.nota?'<p class="cine-egw nota">'+lamPer(esc(a.nota))+'<span>'+a.fuente+'</span></p>':'')+'</div>'
 };
@@ -221,10 +227,12 @@ const CINE_FX={
     s.querySelectorAll('.cine-tarj .cine-capa').forEach((t,i)=>t.classList.toggle('on',i===act));
   },
   barra(s,p,a){
-    const q=a.parte/a.total*100;
+    if(a.barras)s.querySelectorAll('.cine-bb i').forEach((x,i)=>{x.style.width=((1-a.barras[i].desde)*100*cineTramo(p,.1+i*.14,.36+i*.14))+'%';});
+    else{const q=a.parte/a.total*100;
     s.querySelector('.cine-2300 .p').style.width=(100-(100-q)*cineTramo(p,.12,.4))+'%';
     s.querySelector('.cine-2300 .r').style.width=((100-q)*cineTramo(p,.3,.6))+'%';
-    s.querySelector('.cine-marcas span:last-child').style.opacity=cineTramo(p,.55,.62);
+    s.querySelector('.cine-marcas span:last-child').style.opacity=cineTramo(p,.55,.62);}
+    s.querySelectorAll('.cine-suma').forEach(e=>e.style.opacity=cineTramo(p,.5,.6));
     s.querySelector('.cine-final h2').style.opacity=cineTramo(p,0,.12);
     s.querySelectorAll('.cine-final>.cine-verso,.cine-final>.cine-ref').forEach(e=>e.style.opacity=cineTramo(p,.35,.45));
     s.querySelectorAll('.cine-final .cine-egw').forEach((e,i)=>e.style.opacity=cineTramo(p,.6+i*.12,.68+i*.12));

@@ -26,8 +26,12 @@ for (const c of L.en) assert(VERS[c] || VERS_AP[c], 'el capítulo enlazado exist
 const cuenta = L.actos.find(a => a.tipo === 'cuenta');
 assert.equal(cuenta.tramos.reduce((x, y) => x + y, 0), cuenta.a, 'tiempo + tiempos + medio tiempo = 1.260');
 const b = L.actos.find(a => a.tipo === 'barra');
-assert.equal(b.total - b.parte, 1260, 'los 1.290 menos los treinta años antes son los 1.260');
+assert(508 + 1290 === 1798 && 538 + 1260 === 1798 && b.barras.length === 2 && Math.abs(b.barras[1].desde * 1290 - 30) < 1e-9 && b.barras.every(x => x.a === '1798'), 'los 1.290 (508) y los 1.260 (538) terminan juntos en 1798, a la misma escala');
 assert(L.actos.find(a => a.id === 'inicio').egw.some(e => e.t.includes('538') && e.t.includes('1798')), '538 y 1798 vienen de Elena de White');
 const nom = L.actos.find(a => a.id === 'nombres').estaciones.map(e => e.v.cap + ':' + e.v.de);
-for (const r of ['d7:25', 'd12:7', 'ap12:6', 'ap12:14', 'ap11:2', 'ap11:3', 'ap13:5']) assert(nom.includes(r), 'la Biblia nombra el período en ' + r);
+for (const r of ['ap12:6', 'ap12:14', 'ap11:2', 'ap11:3', 'ap13:5']) assert(nom.includes(r), 'la Biblia nombra el período en ' + r);
+const todos = L.actos.flatMap(a => [a.v, ...(a.estaciones || []).map(e => e.v)]).filter(Boolean).map(v => v.cap + ':' + v.de);
+assert.equal(new Set(todos).size, todos.length, 'ningún versículo se repite entre escenas');
+const marcas = L.actos.find(a => a.id === 'nombres').estaciones.map(e => e.fecha);
+assert.equal(new Set(marcas).size, marcas.length, 'cada estación de la línea tiene su propia marca');
 console.log('Los 1.260 años: fuente y entrega, versículos literales, citas con página, imágenes, enlaces y aritmética: TODO BIEN');

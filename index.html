@@ -5962,12 +5962,12 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 @keyframes cineCae{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 /* 70 × 7 */
 .c-cuenta .cine-esc{background:radial-gradient(80% 60% at 50% 40%,#1A140C,#07060A)}
-.cine-cuenta{display:grid;justify-items:center;align-content:center;gap:16px;padding:78px 16px 86px;text-align:center}
+.cine-cuenta{display:grid;justify-items:center;align-content:safe center;gap:16px;padding:78px 16px 86px;text-align:center}
 .cine-num{display:grid;font-family:var(--cine-serif,Georgia,serif);transition:transform .2s}
 .cine-num b{font-weight:500;font-size:clamp(4.5rem,20vw,12rem);line-height:.85;font-variant-numeric:tabular-nums;text-shadow:0 0 60px rgba(242,196,107,.35)}
 .cine-num small{font-family:var(--cine-sans,sans-serif);font-size:.82rem;letter-spacing:.3em;text-transform:uppercase;color:var(--c-tenue);margin-top:8px}
-.cine-rej{display:grid;grid-template-columns:repeat(var(--cols,35),1fr);gap:3px;width:min(92vw,720px)}
-.cine-rej i{aspect-ratio:1;border-radius:2px;background:rgba(244,238,226,.14);opacity:0;transform:scale(.3);transition:opacity .25s,transform .25s,background-color .3s}
+.cine-rej{display:grid;grid-template-columns:repeat(var(--cols,35),minmax(0,1fr));gap:var(--gap,3px);width:min(92vw,720px)}
+.cine-rej i{min-width:0;aspect-ratio:1;border-radius:2px;background:rgba(244,238,226,.14);opacity:0;transform:scale(.3);transition:opacity .25s,transform .25s,background-color .3s}
 .cine-rej i.v{opacity:1;transform:none}
 .cine-rej i.t0{background:var(--c-t0)}.cine-rej i.t1{background:var(--c-t1)}.cine-rej i.t2{background:var(--c-t2);box-shadow:0 0 8px var(--c-t2)}
 .cine-ley{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:.84rem;color:var(--c-tenue);opacity:0}
@@ -6022,7 +6022,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 .cine-tarj .cine-capa.on{opacity:1;transform:none;pointer-events:auto}
 /* 490 dentro de 2300 */
 .c-barra .cine-esc{background:radial-gradient(70% 60% at 50% 45%,#16112A,#07060A)}
-.cine-final{display:grid;justify-items:center;align-content:center;gap:20px;padding:78px 16px 90px;text-align:center}
+.cine-final{display:grid;justify-items:center;align-content:safe center;gap:20px;padding:78px 16px 90px;text-align:center}
 .cine-final h2{margin:0;font-family:var(--cine-serif,Georgia,serif);font-weight:600;font-size:clamp(1.7rem,5vw,3rem);opacity:0}
 .cine-dos{width:min(92vw,880px);display:grid;gap:10px}
 .cine-2300{position:relative;height:26px;border-radius:8px;background:rgba(244,238,226,.12);overflow:hidden}
@@ -6153,6 +6153,18 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
  .cine-exploraciones .d11lab-nav button,.cine-exploraciones .d9lab-activities button{font-size:.8rem;min-height:52px}
  .cine-bots{gap:4px}.cine-bots>button{min-height:38px}
 }
+
+/* Barra con varios períodos a la misma escala (Los 1.290 y los 1.260 terminan juntos). */
+.cine-bbs{display:grid;gap:18px;width:min(92vw,620px)}
+.cine-bb{display:grid;gap:6px;text-align:left}
+.cine-bb .t{font-family:var(--cine-sans,sans-serif);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c-tenue)}
+.cine-bb .pista{position:relative;height:14px;border-radius:7px;background:rgba(244,238,226,.08)}
+.cine-bb .pista i{position:absolute;top:0;bottom:0;width:0;border-radius:7px;background:linear-gradient(90deg,#6b5b95,#a58fd6)}
+.cine-bb:first-child .pista i{background:linear-gradient(90deg,#c2410c,#f2c46b)}
+.cine-bb .fechas{display:flex;justify-content:space-between;font-family:var(--cine-serif,Georgia,serif);font-size:1.05rem}
+.cine-suma{font-family:var(--cine-sans,sans-serif);font-size:.95rem;letter-spacing:.04em;color:var(--c-oro,#f2c46b);opacity:0}
+/* En teléfonos bajos (Safari con sus barras) la escena entra completa: menos aire entre bloques. */
+@media (max-height:760px){.cine-final,.cine-cuenta{gap:10px;padding-top:72px;padding-bottom:84px}.cine-final h2{font-size:clamp(1.4rem,6.4vw,2.2rem)}.cine-bbs{gap:12px}}
 /* ───────── VIAJE (v266): el camino de paradas de Practicar ───────── */
 .via-cab{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
 .via-sel{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 220px}
@@ -6838,7 +6850,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '6a4d599891f9';
+const VERSION_APP = '8114ca12f87f';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -70707,56 +70719,30 @@ const LAMINAS = {
     "v": {
      "cap": "d7",
      "de": 25
-    },
-    "egw": [
-     {
-      "t": "Los cuarenta y dos meses son lo mismo que «un tiempo, y dos tiempos, y la mitad de un tiempo», tres años y medio, o 1.260 días de Daniel 7, el tiempo durante el cual el poder papal debía oprimir al pueblo de Dios.",
-      "fuente": "Elena G. de White, <i>El conflicto de los siglos</i>, p. 492"
-     }
-    ]
+    }
    },
    {
     "id": "nombres",
     "corto": "Tres nombres",
     "tipo": "via",
-    "alto": 7,
-    "inicio": "Un solo período",
+    "alto": 6,
+    "inicio": "Daniel 7:25 y 12:7",
     "estaciones": [
      {
       "n": 1,
-      "fecha": "3½ tiempos",
-      "img": "cuerno",
-      "rot": "Daniel 7:25 · el cuerno pequeño",
-      "v": {
-       "cap": "d7",
-       "de": 25
-      }
-     },
-     {
-      "n": 2,
-      "fecha": "3½ tiempos",
-      "img": "rio",
-      "rot": "Daniel 12:7 · el juramento junto al río",
-      "v": {
-       "cap": "d12",
-       "de": 7
-      }
-     },
-     {
-      "n": 3,
-      "fecha": "1.260 días",
+      "fecha": "Ap 12:6",
       "img": "desierto",
-      "rot": "Apocalipsis 12:6 · la mujer en el desierto",
+      "rot": "1.260 días · la mujer en el desierto",
       "v": {
        "cap": "ap12",
        "de": 6
       }
      },
      {
-      "n": 4,
-      "fecha": "3½ tiempos",
+      "n": 2,
+      "fecha": "Ap 12:14",
       "img": "desierto",
-      "rot": "Apocalipsis 12:14 · la misma mujer, el mismo desierto",
+      "rot": "Tiempo, tiempos y la mitad · la misma mujer",
       "v": {
        "cap": "ap12",
        "de": 14
@@ -70765,20 +70751,20 @@ const LAMINAS = {
       "fuente": "Apocalipsis 12:6, 14"
      },
      {
-      "n": 5,
-      "fecha": "42 meses",
+      "n": 3,
+      "fecha": "Ap 11:2",
       "img": "valdenses",
-      "rot": "Apocalipsis 11:2 · la ciudad hollada",
+      "rot": "42 meses · la ciudad hollada",
       "v": {
        "cap": "ap11",
        "de": 2
       }
      },
      {
-      "n": 6,
-      "fecha": "1.260 días",
+      "n": 4,
+      "fecha": "Ap 11:3",
       "img": "valdenses",
-      "rot": "Apocalipsis 11:3 · los dos testigos",
+      "rot": "1.260 días · los dos testigos",
       "v": {
        "cap": "ap11",
        "de": 3
@@ -70791,14 +70777,20 @@ const LAMINAS = {
       ]
      },
      {
-      "n": 7,
-      "fecha": "42 meses",
+      "n": 5,
+      "fecha": "Ap 13:5",
       "img": "roma538",
-      "rot": "Apocalipsis 13:5 · la bestia",
+      "rot": "42 meses · la bestia",
       "v": {
        "cap": "ap13",
        "de": 5
-      }
+      },
+      "egw": [
+       {
+        "t": "Los cuarenta y dos meses son lo mismo que «un tiempo, y dos tiempos, y la mitad de un tiempo», tres años y medio, o 1.260 días de Daniel 7, el tiempo durante el cual el poder papal debía oprimir al pueblo de Dios.",
+        "fuente": "Elena G. de White, <i>El conflicto de los siglos</i>, p. 492"
+       }
+      ]
      }
     ]
    },
@@ -70935,13 +70927,21 @@ const LAMINAS = {
     "alto": 3,
     "cartel": "Los 1.290 y los 1.260 terminan juntos",
     "rot": "Daniel 12:11",
-    "total": 1290,
-    "parte": 30,
-    "marcas": [
-     "508",
-     "538",
-     "1798"
+    "barras": [
+     {
+      "t": "1.290 días · Daniel 12:11",
+      "de": "508",
+      "a": "1798",
+      "desde": 0
+     },
+     {
+      "t": "1.260 días · Daniel 7:25; 12:7",
+      "de": "538",
+      "a": "1798",
+      "desde": 0.023255813953488372
+     }
     ],
+    "sub": "508 + 1.290 = 1798 · 538 + 1.260 = 1798",
     "v": {
      "cap": "d12",
      "de": 11
@@ -97949,7 +97949,7 @@ const CINE_HTML={
     '<div class="cine-luz"></div><div class="cine-vel"></div>'+
     (a.cartel?'<div class="cine-cartel"><h2>'+esc(a.cartel)+'</h2><p>'+esc(L.libro)+'</p></div><div class="cine-baja"><span>Desliza</span><i></i></div>':'')+cineTexto(a),
   cuenta:a=>'<div class="cine-cuenta" data-leer>'+cineFila(a.rot)+
-    '<div class="cine-num"><b>'+a.de+'</b><small>'+esc(a.uniIni||'semanas')+'</small></div><div class="cine-rej" aria-hidden="true"'+(a.cols?' style="--cols:'+a.cols+'"':'')+'>'+'<i></i>'.repeat(a.a)+'</div>'+
+    '<div class="cine-num"><b>'+a.de+'</b><small>'+esc(a.uniIni||'semanas')+'</small></div><div class="cine-rej" aria-hidden="true"'+(a.cols?' style="--cols:'+a.cols+(a.cols>40?';--gap:2px':'')+'"':'')+'>'+'<i></i>'.repeat(a.a)+'</div>'+
     '<div class="cine-ley">'+a.nombres.map((n,i)=>'<span><b class="t'+i+'"></b>'+esc(n)+'</span>').join('')+'</div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
     (a.egw||[]).map(cineEgw).join('')+'</div>',
@@ -97973,7 +97973,13 @@ const CINE_HTML={
       return '<div class="cine-capa" data-leer data-t="'+i+'">'+cineFila(e.rot)+'<p class="cine-verso">«'+esc(v.t)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>'+
         (e.egw||[]).map(cineEgw).join('')+(e.nota?'<p class="cine-egw nota">'+lamPer(esc(e.nota))+'<span>'+e.fuente+'</span></p>':'')+'</div>';}).join('')+'</div>',
   barra:a=>'<div class="cine-final" data-leer>'+cineFila(a.rot)+'<h2>'+esc(a.cartel)+'</h2>'+
-    '<div class="cine-dos"><div class="cine-2300"><i class="p"></i><i class="r"></i></div><div class="cine-marcas">'+a.marcas.map(m=>'<span>'+esc(m)+'</span>').join('')+'</div></div>'+
+    /* `barras`: varios períodos a la misma escala, uno debajo del otro, cada uno desde su
+       comienzo (`desde`, fracción del más largo) con sus fechas en sus extremos. */
+    (a.barras?'<div class="cine-bbs">'+a.barras.map(b=>'<div class="cine-bb"><span class="t">'+esc(b.t)+'</span>'+
+      '<div class="pista"><i style="left:'+(b.desde*100).toFixed(2)+'%"></i></div>'+
+      '<div class="fechas" style="margin-left:'+(b.desde*100).toFixed(2)+'%"><span>'+esc(b.de)+'</span><span>'+esc(b.a)+'</span></div></div>').join('')+'</div>'+
+      (a.sub?'<p class="cine-suma">'+esc(a.sub)+'</p>':''):
+    '<div class="cine-dos"><div class="cine-2300"><i class="p"></i><i class="r"></i></div><div class="cine-marcas">'+a.marcas.map(m=>'<span>'+esc(m)+'</span>').join('')+'</div></div>')+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
     (a.egw||[]).map(cineEgw).join('')+(a.nota?'<p class="cine-egw nota">'+lamPer(esc(a.nota))+'<span>'+a.fuente+'</span></p>':'')+'</div>'
 };
@@ -98037,10 +98043,12 @@ const CINE_FX={
     s.querySelectorAll('.cine-tarj .cine-capa').forEach((t,i)=>t.classList.toggle('on',i===act));
   },
   barra(s,p,a){
-    const q=a.parte/a.total*100;
+    if(a.barras)s.querySelectorAll('.cine-bb i').forEach((x,i)=>{x.style.width=((1-a.barras[i].desde)*100*cineTramo(p,.1+i*.14,.36+i*.14))+'%';});
+    else{const q=a.parte/a.total*100;
     s.querySelector('.cine-2300 .p').style.width=(100-(100-q)*cineTramo(p,.12,.4))+'%';
     s.querySelector('.cine-2300 .r').style.width=((100-q)*cineTramo(p,.3,.6))+'%';
-    s.querySelector('.cine-marcas span:last-child').style.opacity=cineTramo(p,.55,.62);
+    s.querySelector('.cine-marcas span:last-child').style.opacity=cineTramo(p,.55,.62);}
+    s.querySelectorAll('.cine-suma').forEach(e=>e.style.opacity=cineTramo(p,.5,.6));
     s.querySelector('.cine-final h2').style.opacity=cineTramo(p,0,.12);
     s.querySelectorAll('.cine-final>.cine-verso,.cine-final>.cine-ref').forEach(e=>e.style.opacity=cineTramo(p,.35,.45));
     s.querySelectorAll('.cine-final .cine-egw').forEach((e,i)=>e.style.opacity=cineTramo(p,.6+i*.12,.68+i*.12));

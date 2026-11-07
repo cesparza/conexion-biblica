@@ -20,19 +20,19 @@ module.exports = { tipo: 'cine', libro: 'Los 1.260 años', titulo: 'Tiempo, tiem
   { id: 'cuenta', corto: '1.260 días', tipo: 'cuenta', alto: 3.8, rot: 'Daniel 7:25 · el cuerno pequeño',
     de: '3½', a: 1260, cols: 60, tramos: [360, 720, 180], uniIni: 'tiempos', uniIni2: 'tiempo, tiempos y medio tiempo', uniFin: 'días proféticos',
     nombres: ['Un tiempo · 360 días', 'Tiempos · 720 días', 'Medio tiempo · 180 días'],
-    v: { cap: 'd7', de: 25 },
-    egw: [{ t: 'Los cuarenta y dos meses son lo mismo que «un tiempo, y dos tiempos, y la mitad de un tiempo», tres años y medio, o 1.260 días de Daniel 7, el tiempo durante el cual el poder papal debía oprimir al pueblo de Dios.', fuente: CS + ', p. 492' }] },
-  { id: 'nombres', corto: 'Tres nombres', tipo: 'via', alto: 7, inicio: 'Un solo período',
+    v: { cap: 'd7', de: 25 } },
+  /* Daniel 7:25 y 12:7 ya se vieron en las dos primeras escenas: aquí van los cinco textos de
+     Apocalipsis. La marca de cada estación es su referencia y el rótulo dice el nombre que usa. */
+  { id: 'nombres', corto: 'Tres nombres', tipo: 'via', alto: 6, inicio: 'Daniel 7:25 y 12:7',
     estaciones: [
-     { n: 1, fecha: '3½ tiempos', img: 'cuerno', rot: 'Daniel 7:25 · el cuerno pequeño', v: { cap: 'd7', de: 25 } },
-     { n: 2, fecha: '3½ tiempos', img: 'rio', rot: 'Daniel 12:7 · el juramento junto al río', v: { cap: 'd12', de: 7 } },
-     { n: 3, fecha: '1.260 días', img: 'desierto', rot: 'Apocalipsis 12:6 · la mujer en el desierto', v: { cap: 'ap12', de: 6 } },
-     { n: 4, fecha: '3½ tiempos', img: 'desierto', rot: 'Apocalipsis 12:14 · la misma mujer, el mismo desierto', v: { cap: 'ap12', de: 14 },
+     { n: 1, fecha: 'Ap 12:6', img: 'desierto', rot: '1.260 días · la mujer en el desierto', v: { cap: 'ap12', de: 6 } },
+     { n: 2, fecha: 'Ap 12:14', img: 'desierto', rot: 'Tiempo, tiempos y la mitad · la misma mujer', v: { cap: 'ap12', de: 14 },
        nota: 'Apocalipsis 12 dice el mismo período de dos maneras: en el versículo 6 son 1.260 días, y en el 14, tiempo, tiempos y la mitad de un tiempo.', fuente: 'Apocalipsis 12:6, 14' },
-     { n: 5, fecha: '42 meses', img: 'valdenses', rot: 'Apocalipsis 11:2 · la ciudad hollada', v: { cap: 'ap11', de: 2 } },
-     { n: 6, fecha: '1.260 días', img: 'valdenses', rot: 'Apocalipsis 11:3 · los dos testigos', v: { cap: 'ap11', de: 3 },
+     { n: 3, fecha: 'Ap 11:2', img: 'valdenses', rot: '42 meses · la ciudad hollada', v: { cap: 'ap11', de: 2 } },
+     { n: 4, fecha: 'Ap 11:3', img: 'valdenses', rot: '1.260 días · los dos testigos', v: { cap: 'ap11', de: 3 },
        egw: [{ t: 'Los «cuarenta y dos meses» y los «mil doscientos sesenta días» designan el mismo plazo, o sea el tiempo durante el cual la iglesia de Cristo iba a sufrir bajo la opresión de Roma.', fuente: CS + ', p. 309' }] },
-     { n: 7, fecha: '42 meses', img: 'roma538', rot: 'Apocalipsis 13:5 · la bestia', v: { cap: 'ap13', de: 5 } }
+     { n: 5, fecha: 'Ap 13:5', img: 'roma538', rot: '42 meses · la bestia', v: { cap: 'ap13', de: 5 },
+       egw: [{ t: 'Los cuarenta y dos meses son lo mismo que «un tiempo, y dos tiempos, y la mitad de un tiempo», tres años y medio, o 1.260 días de Daniel 7, el tiempo durante el cual el poder papal debía oprimir al pueblo de Dios.', fuente: CS + ', p. 492' }] }
     ] },
   { id: 'dia', corto: 'Un día, un año', tipo: 'sello', alto: 3.4, img: 'libro', fecha: '1 día', era: '= 1 año', rot: 'La regla de la Biblia',
     v: { cap: 'numeros-14', de: 34 }, clave: ['año', 'día'],
@@ -60,7 +60,8 @@ module.exports = { tipo: 'cine', libro: 'Los 1.260 años', titulo: 'Tiempo, tiem
        egw: [{ t: 'Pero desde 1798 el libro de Daniel ha sido desellado, la ciencia de las profecías ha aumentado y muchos han proclamado el solemne mensaje del juicio cercano.', fuente: CS + ', p. 405' }] }
     ] },
   { id: 'juntos', corto: '1.290 y 1.260', tipo: 'barra', alto: 3, cartel: 'Los 1.290 y los 1.260 terminan juntos', rot: 'Daniel 12:11',
-    total: 1290, parte: 30, marcas: ['508', '538', '1798'],
+    barras: [{ t: '1.290 días · Daniel 12:11', de: '508', a: '1798', desde: 0 }, { t: '1.260 días · Daniel 7:25; 12:7', de: '538', a: '1798', desde: 30 / 1290 }],
+    sub: '508 + 1.290 = 1798 · 538 + 1.260 = 1798',
     v: { cap: 'd12', de: 11 },
     nota: 'Los 1.290 años empiezan treinta años antes que los 1.260, en 508, cuando Clodoveo I, rey de los francos, comprometió el poder de Francia a la protección del papado. Los dos períodos terminan en 1798.',
     fuente: 'Bohr, <i>Daniel 1-10</i>, p. 361-364; Treiyer, <i>Enigmas descifrados</i>, p. 220-222' }
