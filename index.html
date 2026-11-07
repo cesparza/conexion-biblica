@@ -6838,7 +6838,7 @@ button.par-c:hover .par-b q{color:var(--cine-tinta)}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '9f52ddce7ef1';
+const VERSION_APP = 'eed7f0817f70';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -96630,11 +96630,11 @@ function bibAbreFuentes(t){
    últimos acontecimientos adentro). Solo lo que existe en el tema que se ve. */
 function bibVerHTML(t){
   const ids=IDS_DE_TEMA[t]||[];
-  const lams=(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>ids.includes(k)&&LAMINAS[k].titulo&&LAMINAS[k].dir);
+  const lams=(typeof LAMINAS!=='undefined'?Object.keys(LAMINAS):[]).filter(k=>(ids.includes(k)||(LAMINAS[k].en||[]).some(c=>ids.includes(c)))&&LAMINAS[k].titulo&&LAMINAS[k].dir);
   const cmp=MODULOS.find(m=>ES_COMPARAR.test(m.id)&&(ids.includes(m.id)||m.tema===t));
   const tarjetas=lams.map(k=>{const L=LAMINAS[k],c=buscaItem(k);
     return '<button type="button" class="bv-t" onclick="bibLamina(\''+k+'\')"><span class="bv-img">'+lamMiniHTML(k)+'</span>'+
-      '<span class="bv-tx"><small>'+esc(c?c.label:'')+' · lámina</small><b>'+esc(L.titulo)+'</b></span></button>';});
+      '<span class="bv-tx"><small>'+esc(c?c.label:(L.libro||''))+(L.en?' · artículo':' · lámina')+'</small><b>'+esc(L.titulo)+'</b></span></button>';});
   if(cmp){
     tarjetas.push('<button type="button" class="bv-t bv-cmp" onclick="bibComparar(\'\')"><span class="bv-img bv-ico">'+IC('comparar')+'</span>'+
       '<span class="bv-tx"><small>Comparar</small><b>Las visiones lado a lado</b></span></button>');
@@ -96692,7 +96692,7 @@ function bibPieHTML(){
     '<button type="button" class="bib-otra bib-pie" style="grid-column:1/-1" onclick="ir(\'examen\')">'+IC('examen')+
     '<span><b>¿Te preparas para un concurso?</b> En Concursos escoges tu categoría y practicas.</span>'+IC('der')+'</button>';
 }
-function bibLamina(k){if(!LAMINAS[k])return;verCap(k);lamAbre(k,'explorar');}
+function bibLamina(k){if(!LAMINAS[k])return;verCap(LAMINAS[k].en?LAMINAS[k].en[0]:k);lamAbre(k,'explorar');}
 /* Comparar vive en el repaso «…-comparar» del tema; `donde`: Paralelos (cmpPar) o
    los últimos acontecimientos (cmpUlt) dentro de él. */
 function bibComparar(donde){
