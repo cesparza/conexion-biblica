@@ -35,7 +35,7 @@ for (const a of datos) {
   secciones.push({t:'🧭 Para pensar · ' + a.titulo, capa:'contexto', verso:a.versos[0], h:
     '<p><b>' + esc(a.pregunta.q) + '</b></p><details><summary>Ver pauta de respuesta</summary>' + texto(a.pregunta.respuesta) + '</details>' + fuentes(a) });
 }
-const imagenes = ['d11-persia','d11-alejandro','alianza','d11-rafia','d11-roma','d9/cruz','d11-quitim','d11-continuo','d11-comunidad','testigos','d11-autoridad','p1260/roma1798','d11-refugio','d11-economia','d11-mensaje','miguel'];
+const imagenes = ['d11-persia','d11-alejandro','alianza','d11-rafia','d11-roma','d9/cruz','d11-quitim','d11-continuo','d11-comunidad','testigos','d11-autoridad','p1260/roma1798','d11-refugio','d11-mercado','d11-mensaje','miguel'];
 const cortos = ['Persia','Grecia dividida','Norte y sur','Rafia y retorno','El dominio romano','El príncipe del pacto','Alianzas y ruptura','Santuario y continuo','Conocer a Dios','Los testigos','El poder se exalta','Herida y retorno','La tierra gloriosa','Poder económico','Noticias y mensaje','El desenlace'];
 const actos = datos.map((a,i) => ({...a,corto:cortos[i], tipo:'estudio', alto:1.4, img:imagenes[i], adaptable:!imagenes[i].includes('/'), v:{cap:'d11',de:a.versos[0],hasta:a.versos[1]}}));
 actos[2].mapa = {
@@ -77,7 +77,7 @@ const lamina = {tipo:'cine',libro:'Daniel 11',titulo:'Los reinos y el pacto',dir
       texto:'pero llegará a su fin, y no tendrá quien lo ayude',ref:'11:45',acto:'d11-liberacion',
       corto:'«No tendrá quien lo ayude»: en aquel tiempo se levanta Miguel (12:1).'}
   ],
-  cmpExtra:[{id:'tempestad',img:'d11-economia',nombre:'Como una tempestad',reino:'Roma papal sanada',fechas:'restauración final futura, sin fecha fijada',de:null,fin:'sanada',c:'#8A5A3C',
+  cmpExtra:[{id:'tempestad',img:'d11-mercado',nombre:'Como una tempestad',reino:'Roma papal sanada',fechas:'restauración final futura, sin fecha fijada',de:null,fin:'sanada',c:'#8A5A3C',
     texto:'el rey del norte se levantará contra él como una tempestad',ref:'11:40',acto:'d11-herida',
     corto:'Herido en 1798, el rey del norte se recupera, se extiende por el mundo y «llegará a su fin» (11:40-45).'}],
   noTrae:{'-605':'Empieza en Persia: Babilonia ya cayó (11:1-2)','476':'Pasa de Roma imperial a Roma papal','1844':'No lo nombra: lo marcan Daniel 8:14 y 12:12','fin-reino':'Termina con la liberación de Daniel 12:1'},

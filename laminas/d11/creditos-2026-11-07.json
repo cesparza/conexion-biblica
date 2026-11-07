@@ -49,9 +49,10 @@
    "sha256": "51ecf870c0888c40d2f957b8dd5aa2b8b58d87bd67f5958b88fe9a82f411ba09"
   },
   {
-   "archivo": "d11-economia.webp",
-   "prompt": "Use case: historical-scene. Create a finished cinematic biblical illustration, landscape 16:9, premium epic historical film still with painterly realism, physically credible materials, restrained amber highlights and deep petrol shadows, fine atmospheric depth, no text, no letters, no dates, no diagram, no watermark. For an interactive Daniel 11 and 12 educational experience. Respectful depiction; every visible detail should fit the stated setting. Compose essential action in the middle and right with some dark calm space at left for optional interface overlay. Not a collage. Scene: Daniel 11:43, symbolic. A great hall of treasures: gold, silver and precious objects piled before a massive vault door, merchants and nations in varied historical dress bowing as they hand over coins and goods. Heavy, controlled atmosphere, cold gold light. No modern logos, no text.",
-   "sha256": "59ae343f5daa4ac171bac964232cd49ba3adee3ee887267d264d7b3baac27b3e"
+   "archivo": "d11-mercado.webp",
+   "prompt": "Create a finished cinematic biblical illustration, landscape 16:9, premium epic film still with painterly realism, restrained amber highlights and deep petrol shadows. No text, no letters, no numbers, no logos, no watermark. Not a collage. Put the main action in the middle and right, with dark calm space at left. Scene (symbolic, Daniel 11:43): a vast marketplace hall at dusk. People of many nations and eras stand in long lines before closed counters and locked gates. A heavy golden seal hangs over the gates; only those who bow before a distant throne may pass and trade. In the foreground, a family holding bread steps back from the line, refusing to bow. Coins, grain and treasures are piled behind bars. Faces show pressure and decision, not violence. No identifiable real person, no church or papal symbols, no modern brands or screens, no Roman emperor.",
+   "sha256": "a860b48afb0df23aa388c856bd9719c4b6c2441db38898b8526784616e101fd8",
+   "nota": "Reemplaza la primera versión (7-nov 10:41, pedido de Camilo): sin emperador romano; la presión económica sobre la conciencia (11:42-43; Apocalipsis 13:16-17). Generada en ChatGPT y entregada por Camilo en el chat."
   },
   {
    "archivo": "d11-mensaje.webp",
