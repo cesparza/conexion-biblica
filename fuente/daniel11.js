@@ -52,7 +52,7 @@ actos[11].huellas = [{titulo:'Daniel 7',texto:'El poder perseguidor actúa duran
   {titulo:'Apocalipsis 13',texto:'La herida, su sanación y la imposición del culto se estudian juntas, distinguiendo el golpe de 1798 de la futura coerción religiosa (Apocalipsis 13:3, 10–17).'}];
 actos[15].huellas = [{titulo:'Daniel 12',texto:'La expresión «en aquel tiempo» continúa la crisis del final de Daniel 11. Miguel interviene en favor del pueblo escrito en el libro (Daniel 12:1–3).'},
   {titulo:'Apocalipsis 17–19',texto:'Babilonia pierde el apoyo de sus aliados y Cristo vence al poder perseguidor. El ataque después del milenio de Apocalipsis 20 es otro acontecimiento.'}];
-const lamina = {tipo:'cine',libro:'Daniel 11',titulo:'El rey del norte y el rey del sur',dir:'d11/',miniF:'camino',portada:'camino',selector:true,creditoImagen:true,
+const lamina = {tipo:'cine',historias:true,libro:'Daniel 11',titulo:'El rey del norte y el rey del sur',dir:'d11/',miniF:'camino',portada:'camino',selector:true,creditoImagen:true,
   invita:'Un recorrido por los 45 versículos: el texto, la historia, las fuentes, los paralelos y una pregunta para comprender cada escena.',actos,
   /* Comparar: Daniel 11 como columna, el microscopio de Daniel 2, 7 y 8. Las lecturas son las
      de «Daniel 8, 11 y 12 lado a lado» (complementos/profundizar.js). `acto` lleva de la

@@ -298,7 +298,7 @@ const exploraciones = [9, 11].map(n => {
 /* El traslado reconoce las acciones globales en columna cero; las fábricas son privadas. */
 const APP_EXPLORAR = 'const EXPLORAR_DANIEL = {\n' + exploraciones.map(x =>
   'd' + x.n + ': (() => {\n' + x.js.split('\n').map(l => l ? '  ' + l : '').join('\n') + '\n  return ' + (x.monta || 'montarDaniel' + x.n) + ';\n})()').join(',\n') + '\n};';
-const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css') + '\n' + leer('cine.css') + '\n' + leer('viaje.css') + '\n' + exploraciones.map(x => x.css).join('\n');
+const CSS    = leer('estilos.css') + '\n' + leer('paralelos.css') + '\n' + leer('biblioteca.css') + '\n' + leer('mi-estudio.css') + '\n' + leer('cine.css') + '\n' + leer('historias.css') + '\n' + leer('viaje.css') + '\n' + exploraciones.map(x => x.css).join('\n');
 const CUERPO = leer('cuerpo.html');
 const REGLAS = leer('reglamento.js');
 const IMPR   = leer('imprimible.js');
@@ -306,6 +306,9 @@ const APP_NOMBRES = 'const nombresHTML = (() => {\n' + leer('nombres-personajes.
 const APP    = APP_NOMBRES + '\n' + leer('app.js');
 const APP_PAR = leer('paralelos-app.js');
 const APP_D9 = leer('cine-app.js');
+/* v272: el modo historias (historias-app.js) y los datos de las dos casas reales que usa. */
+const HIST_DIN_JS = 'const HIST_DIN = (() => {\n' + leer('daniel11-dinastias.js').replace(/^import .*;\n/gm, '').replace(/\bexport /g, '') + '\nreturn {p:PERSONAS_DINASTIAS,v:VINCULOS_DINASTIAS,e:ETAPAS_DINASTIAS};\n})();';
+const APP_HIST = HIST_DIN_JS + '\n' + leer('historias-app.js');
 /* v266: el Viaje, un modo de Practicar (viaje-app.js). */
 const APP_VI = leer('viaje-app.js');
 /* v235: antes de app.js: sus var ya tienen valor cuando el arranque (al final de app.js) pinta. */
@@ -434,6 +437,7 @@ ${APP_BIB}
 ${APP_ME}
 ${APP_EXPLORAR}
 ${APP_D9}
+${APP_HIST}
 ${APP_VI}
 ${APP}
 ${APP_PAR}

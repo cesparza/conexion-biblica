@@ -6,7 +6,7 @@
    explica cómo Elena de White aplica el texto; la historia va en `nota` con su fuente. */
 const CS = 'Elena G. de White, <i>El conflicto de los siglos</i>';
 const DTG = 'Elena G. de White, <i>El Deseado de todas las gentes</i>, cap. 23';
-module.exports = { tipo: 'cine', libro: 'Los 1.260 años', titulo: 'Tiempo, tiempos y medio tiempo', dir: 'p1260/',
+module.exports = { tipo: 'cine', historias: true, libro: 'Los 1.260 años', titulo: 'Tiempo, tiempos y medio tiempo', dir: 'p1260/',
   miniF: 'rio', portada: 'rio',
   en: ['d7', 'd12', 'ap11', 'ap12', 'ap13'],
   /* Donde la app nombra el período, la frase abre este artículo (artTocables en app.js). */

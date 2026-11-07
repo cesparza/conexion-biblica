@@ -8,7 +8,7 @@
 const CS = 'Elena G. de White, <i>El conflicto de los siglos</i>';
 const C = { papal: '#A0694A', juicio: '#B45309', venida: '#6B7B5A', reino: '#0E7490' };
 const empieza = 'Empieza «en aquel tiempo»: al final de Daniel 11 (12:1)';
-module.exports = { tipo: 'cine', libro: 'Daniel 12', titulo: 'El tiempo del fin', dir: 'd12/',
+module.exports = { tipo: 'cine', historias: true, libro: 'Daniel 12', titulo: 'El tiempo del fin', dir: 'd12/',
   miniF: 'libro', portada: 'libro',
   invita: 'Ocho escenas: Miguel se levanta, los que despiertan, los que brillan como estrellas, el libro que se abre en 1798, el juramento junto al río, los purificados, los 1.290 y los 1.335 días, y la heredad de Daniel.',
   actos: [

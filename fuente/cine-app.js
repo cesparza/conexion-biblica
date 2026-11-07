@@ -321,6 +321,7 @@ function cineExploraVuelve(){
   if(anterior.foco&&anterior.foco.isConnected)anterior.foco.focus({preventScroll:true});
 }
 function cineAbre(cid,modo){
+  if(LAMINAS[cid]&&LAMINAS[cid].historias)return HIST.abre(cid);
   const el=document.getElementById('lam');if(!el)return;
   cineExploraLimpia();
   if(!lamModo){const r=el.getRootNode?el.getRootNode():document;cineFoco=r.activeElement;}
@@ -383,6 +384,7 @@ function cineSalto(d){
   el.scrollTo({top:dest===undefined?(d>0?el.scrollHeight:0):dest,behavior:cineQuieto()?'auto':'smooth'});
 }
 function cineIrNumero(n,intento){
+  if(HIST.activa())return HIST.irNumero(n);
   if(cineExploraEstado)return;
   const a=cineActos()[Number(n)];if(!a)return;
   const el=document.getElementById('lam'),ps=cinePausas(a),s=el&&el.querySelectorAll('.cine-acto')[Number(n)];if(!s)return;
@@ -392,7 +394,7 @@ function cineIrNumero(n,intento){
   if(s.offsetHeight<el.clientHeight*minAlto&&(intento||0)<180){requestAnimationFrame(()=>cineIrNumero(n,(intento||0)+1));return;}
   el.scrollTop=Math.round(cineY(Number(n),ps[ps.length-1]));cinePinta();
 }
-function cineIr(k){const i=cineActos().findIndex(a=>a.id===k);if(i>=0)cineIrNumero(i);}
+function cineIr(k){if(HIST.activa())return HIST.irActo(k);const i=cineActos().findIndex(a=>a.id===k);if(i>=0)cineIrNumero(i);}
 function cineElige(valor){cineIrNumero(Number(valor));}
 function cineModo(){
   lamModo=lamModo==='presentar'?'explorar':'presentar';
@@ -401,6 +403,7 @@ function cineModo(){
   cinePinta();lamLugar();
 }
 function cineAlCerrar(){
+  if(HIST.activa())HIST.cierra();
   cineExploraLimpia();
   if(typeof paraVoz==='function')paraVoz();
   if(cineCuadro){cancelAnimationFrame(cineCuadro);cineCuadro=0;}
@@ -410,6 +413,7 @@ function cineAlCerrar(){
   const f=cineFoco;cineFoco=null;cineActo=-1;return f;
 }
 function cineTecla(e){
+  if(HIST.activa())return HIST.tecla(e);
   const el=document.getElementById('lam');
   if(lamPersonaAbierta()){
     if(e.key==='Escape'){e.preventDefault();lamPersonaCierra();cineExploraPersonaVuelve();return;}
