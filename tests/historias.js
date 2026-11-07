@@ -30,5 +30,13 @@ for (const cid of cids) {
 /* Daniel 11: los 45 versículos, cada uno en su pantalla. */
 { const { S } = g.HIST.pantallas('d11'); const vs = new Set(); S.forEach(s => { const m = s.html.match(/class="h-nver h-a">(\d+)</); if (m) vs.add(+m[1]); });
   if (vs.size !== 45) falla('Daniel 11 versículo a versículo: ' + vs.size + ' de 45'); }
+/* Nada del módulo en la columna cero: Jóvenes la lee como acción global (7-nov, rompió todos los botones). */
+{ const src = fs.readFileSync(path.join(raiz, 'fuente', 'historias-app.js'), 'utf8');
+  const dentro = src.slice(src.indexOf('const HIST=(()=>{') + 1, src.lastIndexOf('})();'));
+  const sueltas = dentro.split('\n').slice(1).filter(l => /^(async\s+)?function\b|^(const|let|var)\s/.test(l));
+  if (sueltas.length) falla('historias-app.js tiene ' + sueltas.length + ' declaraciones en la columna cero: ' + sueltas[0].slice(0, 60)); }
+{ const html = fs.readFileSync(path.join(raiz, 'index.html'), 'utf8'), i = html.indexOf('const HIST_DIN');
+  const bloque = i < 0 ? '' : html.slice(i, html.indexOf('const HIST=(()=>{', i));
+  if (i < 0 || /\n(async\s+)?function\b|\n(const|let|var)\s/.test(bloque)) falla('HIST_DIN en index.html con declaraciones en la columna cero'); }
 if (mal) { console.error(mal + ' fallas'); process.exit(1); }
 console.log('✅ historias: todo en orden');

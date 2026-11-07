@@ -306,8 +306,9 @@ const APP_NOMBRES = 'const nombresHTML = (() => {\n' + leer('nombres-personajes.
 const APP    = APP_NOMBRES + '\n' + leer('app.js');
 const APP_PAR = leer('paralelos-app.js');
 const APP_D9 = leer('cine-app.js');
-/* v272: el modo historias (historias-app.js) y los datos de las dos casas reales que usa. */
-const HIST_DIN_JS = 'const HIST_DIN = (() => {\n' + leer('daniel11-dinastias.js').replace(/^import .*;\n/gm, '').replace(/\bexport /g, '') + '\nreturn {p:PERSONAS_DINASTIAS,v:VINCULOS_DINASTIAS,e:ETAPAS_DINASTIAS};\n})();';
+/* v272: el modo historias (historias-app.js) y los datos de las dos casas reales que usa.
+   Sangrado: en Jóvenes toda función en la columna cero es una acción global. */
+const HIST_DIN_JS = 'const HIST_DIN = (() => {\n' + leer('daniel11-dinastias.js').replace(/^import .*;\n/gm, '').replace(/\bexport /g, '').split('\n').map(l => l ? '  ' + l : l).join('\n') + '\n  return {p:PERSONAS_DINASTIAS,v:VINCULOS_DINASTIAS,e:ETAPAS_DINASTIAS};\n})();';
 const APP_HIST = HIST_DIN_JS + '\n' + leer('historias-app.js');
 /* v266: el Viaje, un modo de Practicar (viaje-app.js). */
 const APP_VI = leer('viaje-app.js');
