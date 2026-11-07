@@ -150,6 +150,11 @@ function lamMiniHTML(cid){
   if(L.tipo==='escenas'||L.tipo==='cine')return L.miniF?'<img src="'+src(L.miniF)+'" alt="" loading="lazy">':'';
   return '<img src="'+src('babilonia')+'" alt="" loading="lazy">'+(L.capas||[]).map(k=>'<img src="'+src(k)+'" alt="" loading="lazy">').join('');
 }
+/** Los artículos aparte (lámina con `en`) que se ofrecen en este capítulo. */
+function lamVinculadas(cid){
+  if(typeof LAMINAS==='undefined')return '';
+  return Object.keys(LAMINAS).filter(k=>k!==cid&&(LAMINAS[k].en||[]).includes(cid)).map(lamTarjeta).join('');
+}
 function lamTarjeta(cid){
   const L=LAMINAS[cid];
   if(!L)return '';
@@ -5435,9 +5440,21 @@ const perPorId=id=>(typeof PERSONAJES!=='undefined'?PERSONAJES:[]).find(p=>p.id=
    lámina, su portada, el «Sigue…» de la navegación, el rótulo sobre la imagen, el cartel y el cierre. */
 const PER_TITULOS=new Set(['lam-p1','lam-p2','lam-intro-tit','lam-nav-p','lam-chip-t','lam-cartel-tit','lam-fin-tit','lam-rot','lam-tit','sin-per']);
 const PER_VACIAS=/^(img|br|hr|input|source|meta|link|wbr|col|area|base|embed|track|param)$/;
+/* Los artículos aparte con `toca`: la frase que los nombra abre el artículo. */
+let artRe,artDe={};
+function artPrepara(){
+  if(artRe!==undefined)return;artRe=null;if(typeof LAMINAS==='undefined')return;
+  const fr=[];Object.keys(LAMINAS).forEach(k=>(LAMINAS[k].toca||[]).forEach(t=>{artDe[t.toLowerCase()]=k;fr.push(t);}));
+  if(!fr.length)return;
+  const lista=fr.sort((a,b)=>b.length-a.length).map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+  try{artRe=new RegExp('(?<![\\p{L}\\p{N}.])('+lista+')(?![\\p{L}\\p{N}])','giu');}catch(e){artRe=null;}
+}
+const artTocables=(tr,capId)=>{artPrepara();if(!artRe)return tr;
+  return tr.replace(artRe,n=>{const k=artDe[n.toLowerCase()];if(!k||k===capId)return n;
+    return '<button type="button" class="per art" aria-label="'+esc(n+': abrir el artículo '+LAMINAS[k].libro)+'" onclick="lamAbre(\''+k+'\',\'explorar\')">'+n+'</button>';});};
 function personasTocables(html,capId){
   perPrepara();
-  if(!perRe)return html;
+  if(!perRe)return artTocables(html,capId);
   /* La línea de la fuente no se toca: ahí van autores, no personajes. Dentro
      de una cita bíblica SÍ (Camilo, 13-oct 10:12), pero no en la referencia:
      en «Daniel 11:2» o «1 Juan 3» el nombre es el libro, no la persona. */
@@ -5461,12 +5478,12 @@ function personasTocables(html,capId){
         return tr;
       }
       if(dentro>0||!tr.trim())return tr;
-      return tr.replace(perRe,(n,_g,pos,todo)=>{
+      return artTocables(tr,capId).split(/(<button[\s\S]*?<\/button>)/).map(t=>/^<button/.test(t)?t:t.replace(perRe,(n,_g,pos,todo)=>{
         if(/^\s*\d/.test(todo.slice(pos+n.length))||/\d\s*$/.test(todo.slice(Math.max(0,pos-3),pos)))return n;
         const c=(perDe[n]||[]).find(x=>!x.caps||x.caps.includes(capId));
         if(!c)return n;
         return '<button type="button" class="per" onclick="verPersona(\''+c.id+'\')">'+n+'</button>';
-      });
+      })).join('');
     }).join('');
   }).join('');
 }
@@ -5778,14 +5795,14 @@ function verCap(id,quieto){
       '<div class="sec interp-cab" data-capa="contexto" data-pest="prof" id="interp-de-cap"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
       '<p class="interp-nota"><b>Esto no entra al examen.</b> Es lo que significa el capítulo y cómo la Biblia explica sus símbolos. Cada sección cierra con su fuente.</p>'+
       /* v185: el estudio interactivo con imagen, si el capítulo lo tiene. */
-      lamTarjeta(id)+cmpBoton(id)+'</div>'+
+      lamTarjeta(id)+lamVinculadas(id)+cmpBoton(id)+'</div>'+
       secs.filter(esSecInterp).map(htmlSec(id,'prof')).join(''):
       soloI?'<div class="sec interp-cab" data-capa="contexto" data-pest="prof"><h3 class="interp-tit">'+IC('brujula')+' Para profundizar</h3>'+
         '<p class="interp-nota"><b>Esto no entra al examen.</b> Cada sección cierra con su fuente.</p></div>'+
         /* v205: el repaso de comparar abre con la tabla que se toca. */
         (ES_COMPARAR.test(id)?'<div class="sec cmp-sec" data-capa="contexto" data-pest="prof">'+comparaHTML()+'</div>':'')+
         secs.map(htmlSec(id,'prof')).join(''):
-      lamTarjeta(id))+
+      lamTarjeta(id)+lamVinculadas(id))+
     (esLibroPR(c)?secFrasesLibro(id):'')+
     /* v146: UN botón principal. Al terminar de leer lo que se espera es
        marcarlo; Tarjetas y Examen quedan a mano en tono suave e Imprimir como

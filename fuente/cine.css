@@ -57,7 +57,7 @@
 .cine-num{display:grid;font-family:var(--cine-serif,Georgia,serif);transition:transform .2s}
 .cine-num b{font-weight:500;font-size:clamp(4.5rem,20vw,12rem);line-height:.85;font-variant-numeric:tabular-nums;text-shadow:0 0 60px rgba(242,196,107,.35)}
 .cine-num small{font-family:var(--cine-sans,sans-serif);font-size:.82rem;letter-spacing:.3em;text-transform:uppercase;color:var(--c-tenue);margin-top:8px}
-.cine-rej{display:grid;grid-template-columns:repeat(35,1fr);gap:3px;width:min(92vw,720px)}
+.cine-rej{display:grid;grid-template-columns:repeat(var(--cols,35),1fr);gap:3px;width:min(92vw,720px)}
 .cine-rej i{aspect-ratio:1;border-radius:2px;background:rgba(244,238,226,.14);opacity:0;transform:scale(.3);transition:opacity .25s,transform .25s,background-color .3s}
 .cine-rej i.v{opacity:1;transform:none}
 .cine-rej i.t0{background:var(--c-t0)}.cine-rej i.t1{background:var(--c-t1)}.cine-rej i.t2{background:var(--c-t2);box-shadow:0 0 8px var(--c-t2)}

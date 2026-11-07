@@ -40,7 +40,7 @@ function cinePila(a){
   const v=cineVerso(a.v);
   return '<div class="cine-capa" data-leer>'+cineFila(a.rot)+'<div class="cine-pila">'+
     '<div class="uno"><p class="cine-verso">«'+cinePalabras(v.t,a.clave)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span></div>'+
-    '<div class="dos">'+(a.otros||[]).map(cineOtro).join('')+(a.egw||[]).map(cineEgw).join('')+(a.explica?'<p class="cine-exp">'+esc(a.explica)+'</p>':'')+'</div></div></div>';
+    '<div class="dos">'+(a.otros||[]).map(cineOtro).join('')+(a.egw||[]).map(cineEgw).join('')+(a.explica?'<p class="cine-exp">'+lamPer(esc(a.explica))+'</p>':'')+'</div></div></div>';
 }
 /* El botón de voz de la app (grupoVoz/leeCerca), el mismo de los versículos: lee la escena. */
 const cineVoz=()=>typeof puedeHablar==='function'&&puedeHablar()?grupoVoz('btn-voz','Escuchar','Escuchar esta escena'):'';
@@ -133,7 +133,7 @@ const CINE_HTML={
     '<div class="cine-luz"></div><div class="cine-vel"></div>'+
     (a.cartel?'<div class="cine-cartel"><h2>'+esc(a.cartel)+'</h2><p>'+esc(L.libro)+'</p></div><div class="cine-baja"><span>Desliza</span><i></i></div>':'')+cineTexto(a),
   cuenta:a=>'<div class="cine-cuenta" data-leer>'+cineFila(a.rot)+
-    '<div class="cine-num"><b>'+a.de+'</b><small>semanas</small></div><div class="cine-rej" aria-hidden="true">'+'<i></i>'.repeat(a.a)+'</div>'+
+    '<div class="cine-num"><b>'+a.de+'</b><small>'+esc(a.uniIni||'semanas')+'</small></div><div class="cine-rej" aria-hidden="true"'+(a.cols?' style="--cols:'+a.cols+'"':'')+'>'+'<i></i>'.repeat(a.a)+'</div>'+
     '<div class="cine-ley">'+a.nombres.map((n,i)=>'<span><b class="t'+i+'"></b>'+esc(n)+'</span>').join('')+'</div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
     (a.egw||[]).map(cineEgw).join('')+'</div>',
@@ -155,11 +155,11 @@ const CINE_HTML={
     a.estaciones.map((e,i)=>'<div class="cine-est" data-i="'+i+'"><i></i><b>'+esc(e.fecha)+'</b></div>').join('')+'</div></div>'+
     '<div class="cine-tarj">'+a.estaciones.map((e,i)=>{const v=cineVerso(e.v);
       return '<div class="cine-capa" data-leer data-t="'+i+'">'+cineFila(e.rot)+'<p class="cine-verso">«'+esc(v.t)+'»</p><span class="cine-ref">'+esc(v.ref)+'</span>'+
-        (e.egw||[]).map(cineEgw).join('')+(e.nota?'<p class="cine-egw nota">'+esc(e.nota)+'<span>'+e.fuente+'</span></p>':'')+'</div>';}).join('')+'</div>',
+        (e.egw||[]).map(cineEgw).join('')+(e.nota?'<p class="cine-egw nota">'+lamPer(esc(e.nota))+'<span>'+e.fuente+'</span></p>':'')+'</div>';}).join('')+'</div>',
   barra:a=>'<div class="cine-final" data-leer>'+cineFila(a.rot)+'<h2>'+esc(a.cartel)+'</h2>'+
     '<div class="cine-dos"><div class="cine-2300"><i class="p"></i><i class="r"></i></div><div class="cine-marcas">'+a.marcas.map(m=>'<span>'+esc(m)+'</span>').join('')+'</div></div>'+
     '<p class="cine-verso chico">«'+esc(cineVerso(a.v).t)+'»</p><span class="cine-ref">'+esc(cineVerso(a.v).ref)+'</span>'+
-    (a.egw||[]).map(cineEgw).join('')+'</div>'
+    (a.egw||[]).map(cineEgw).join('')+(a.nota?'<p class="cine-egw nota">'+lamPer(esc(a.nota))+'<span>'+a.fuente+'</span></p>':'')+'</div>'
 };
 const CINE_RUTA='M905 445 C 820 400, 760 300, 690 210 S 520 70, 380 120 S 200 230, 150 300';
 
@@ -183,7 +183,7 @@ const CINE_FX={
     // Son dos expresiones del mismo período, no cantidades intermedias de semanas.
     const enAnios=p>=.42;
     s.querySelector('.cine-num b').textContent=enAnios?a.a:a.de;
-    s.querySelector('.cine-num small').textContent=enAnios?'años · '+a.de+' × 7':'semanas proféticas';
+    s.querySelector('.cine-num small').textContent=enAnios?(a.uniFin||'años · '+a.de+' × 7'):(a.uniIni2||'semanas proféticas');
     const [t0,t1]=[a.tramos[0],a.tramos[0]+a.tramos[1]],q=[cineTramo(p,.48,.56),cineTramo(p,.56,.68),cineTramo(p,.68,.74)];
     cs.forEach((c,i)=>{c.classList.toggle('v',i<ver);
       const k=i<t0?0:i<t1?1:2,lim=k===0?t0*q[0]:k===1?t0+(t1-t0)*q[1]:t1+(a.a-t1)*q[2];c.className=(i<ver?'v':'')+(i<lim?' t'+k:'');});

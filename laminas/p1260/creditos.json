@@ -1,0 +1,42 @@
+{
+ "fecha": "2026-11-07",
+ "herramienta": "ChatGPT (Codex, image_gen)",
+ "tipo": "ilustraciones artísticas originales; no documentación fotográfica",
+ "imagenes": [
+  {
+   "archivo": "rio.webp",
+   "prompt": "Daniel 12:5-7. The very old Hebrew prophet Daniel, gray beard, worn linen robe, stands on the bank of the great river Tigris in the Persian era. Above the waters stands a radiant man clothed in white linen, both hands raised toward heaven as if swearing an oath. Two other figures stand on each bank. Dawn light, mist on the water. No wings.",
+   "sha256": "5b65f6ac5b4fca1942512a9bc06b651dbba3865a6fa7833346302ef46e79fcfa"
+  },
+  {
+   "archivo": "desierto.webp",
+   "prompt": "Revelation 12:6, 14, symbolic. A woman in pure white, modestly dressed, symbol of God's faithful church, carried on two wings of a great eagle toward a vast wilderness of mountains and desert at dawn. Far behind her, in shadow, a great red serpent-dragon spews a flood of water that the earth swallows. Hope and protection.",
+   "sha256": "d2e28c16700eb4b2c395763d7c02205f2d0a6daf0db036b2e142c6ca3ef8d34c"
+  },
+  {
+   "archivo": "cuerno.webp",
+   "prompt": "Daniel 7:7-8, symbolic prophetic vision. A terrible fourth beast rising from a stormy night sea, dreadful and very strong, with great iron teeth and ten tall horns. Among the ten, one NOTICEABLY SMALLER horn grows; three of the first horns are being torn out by the roots before it. On the small horn only two subtle human-like eyes and a small open mouth are carved into the horn surface, NOT a human face, NOT a head, nothing comical. Dignified, solemn, painterly, like a classic biblical engraving brought to life.",
+   "sha256": "ad34f42c50a22bb69959fbe26bddfc8ad7c14f17d6d4019c9f3048a079b38c25"
+  },
+  {
+   "archivo": "roma538.webp",
+   "prompt": "Rome, March AD 538. From the Aurelian walls, Byzantine soldiers of general Belisarius watch the Ostrogothic army burn its camps and withdraw north after a year-long siege. 6th-century armor, banners without symbols or letters, ancient Rome behind the walls. A turning point, no gore.",
+   "sha256": "7adb6124b3a125ba892759ebc2b46579b4cf712c395d900f770b51d675f79a33"
+  },
+  {
+   "archivo": "valdenses.webp",
+   "prompt": "Medieval Waldensian believers hidden in a cave high in the Alps: a family and an elder read a handwritten Bible by oil lamp, snow outside, faithful and peaceful under persecution. Plausible 13th-century peasant clothing.",
+   "sha256": "628703618f8d8a8674f68ed0b49024018602d1924f188682a00a0661763ce62c"
+  },
+  {
+   "archivo": "roma1798.webp",
+   "prompt": "Rome, night of 20 February 1798. French Revolutionary soldiers in accurate 1798 uniforms and bicorne hats escort the frail 80-year-old Pope Pius VI, in white cassock and red cape, from the Vatican palace to a waiting carriage. General Berthier on horseback supervises. Cold night blue with torchlight amber. Solemn, not violent.",
+   "sha256": "3ecb46dbd7702c582c713428dc8acd47e2da023cfb82ad89ad13ddfea59e0e34"
+  },
+  {
+   "archivo": "libro.webp",
+   "prompt": "Early 19th century, after 1798. Ordinary men and women in 1830s clothing gather around a wooden table studying an open Bible and a hand-drawn prophetic chart without legible text, oil lamp, window open at sunrise. A sense of discovery: the sealed book of Daniel is now open.",
+   "sha256": "f39d1d4700342c7c179e1a94e6e3cfee6d753f1af10b1c1adef06bea041093e0"
+  }
+ ]
+}
