@@ -5184,14 +5184,16 @@ span.cmp-ult-c{cursor:default}
   background:linear-gradient(90deg,rgba(5,4,3,0),rgba(5,4,3,.82) clamp(36px,3.6vw,72px),rgba(5,4,3,.92))}
 /* v229: el nombre de quien estudia en la página derecha del libro abierto (Daniel 7:10), después
    de que pasan las hojas; y debajo de 7:10, Apocalipsis 3:5 con su condición («El vencedor»). */
-.lb-3d>.lb-nombre{position:absolute;left:53%;width:44%;top:18%;height:64%;margin:0;border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  transform:translateZ(7px);opacity:0;transition:opacity .7s ease 1.7s;color:#4A250B;text-align:center;pointer-events:none;font-family:var(--cine-serif,Georgia,serif)}
-.lb-nombre small{font-family:var(--cine-sans,system-ui,sans-serif);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#8A5A22;font-weight:700}
-.lb-nombre b{font-size:1.375rem;font-weight:600;line-height:1.1;overflow-wrap:anywhere;max-width:100%}
-.lb-nombre.vacio b{font-style:italic;font-weight:400;opacity:.75}
+.lam-libro{container-type:inline-size;--v-t-libro-etiqueta:4cqw}
+.lb-3d>.lb-nombre{position:absolute;left:54%;width:40%;top:20%;height:58%;margin:0;border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5cqw;overflow:hidden;
+  transform:translateZ(7px);opacity:0;transition:opacity .7s ease 1.7s;color:#4A250B;text-align:center;pointer-events:none;font-family:var(--cine-sans,system-ui,sans-serif)}
+.lb-nombre small{font-family:var(--cine-sans,system-ui,sans-serif);font-size:var(--v-t-libro-etiqueta);letter-spacing:.04em;text-transform:uppercase;color:#8A5A22;font-weight:700}
+.lb-nombre b{--v-t-libro-nombre:min(8cqw,calc(62cqw / var(--lb-letras,7)));font-size:var(--v-t-libro-nombre);font-weight:650;line-height:1.2;white-space:nowrap;max-width:100%}
+.lb-nombre.vacio b{font-weight:500;opacity:.8}
 .lam-libro.abre .lb-3d>.lb-nombre{opacity:1}
 .lam-libro.quieto .lb-3d>.lb-nombre{transition:none}
-@media (max-width:900px){.lb-nombre small{display:none}.lb-nombre b{font-size:1rem}}
+@media (max-width:900px){.lb-nombre small{display:none}}
+@media (max-width:560px){.lam-libro{width:44%}}
 .lam-libro-cita .lb-ap{display:block;margin-top:.5em;font-size:.75em}
 /* v230: los años de la línea de tiempo en dos alturas (lamMarcasSep); el sufijo «a.C.» se esconde
    donde no cabe, nunca el año. */
@@ -5223,9 +5225,10 @@ span.cmp-ult-c{cursor:default}
   .lam:not(.pres):not(.escenas) .lam-riel{grid-column:1;grid-row:3}
   .lam:not(.pres):not(.escenas) .lam-hoja{grid-row:1 / span 3}
 }
-.lb-nombre .lb-otros{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:3px;font-size:1rem;line-height:1.15;color:#5A3412}
+.lb-nombre .lb-otros{display:flex;flex-direction:column;align-items:center;gap:1cqw;margin-top:1cqw;max-width:100%;line-height:1.2;color:#5A3412}
+.lb-nombre .lb-otros span{--v-t-libro-otros:min(6.5cqw,calc(62cqw / var(--lb-letras,7)));font-size:var(--v-t-libro-otros);white-space:nowrap}
 .lb-nombre .lb-otros:empty{display:none}
-@media (max-width:900px){.lb-nombre .lb-otros{font-size:.75rem}}
+
 /* v231 (Camilo: «las eras que se solapan, en dos carriles»): Roma dividida, delgada, debajo de
    la pista y hasta la venida; Roma papal y el papado sanado van en la pista, encima. */
 .lam-carriles{position:absolute;left:11px;right:11px;top:calc(50% + 5px);height:4px;pointer-events:none}
@@ -5399,6 +5402,16 @@ span.cmp-ult-c{cursor:default}
 .lam.pres .lam-tiempo.metro .lam-tcab .lm-escala{margin-left:8px}
 .lam.pres .lam-metro{--lm-top:8px}
 .lam.pres.ancho .lam-metro{--lm-min:104px}
+/* En columnas estrechas, los rótulos conservan una línea de lectura propia. */
+@container (max-width:700px){
+  .lam.pres .lam-tiempo.metro .lam-tcab{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:start;gap:10px 12px}
+  .lam.pres .lam-tiempo.metro .lam-tcab>button:first-child{width:44px;height:44px;min-height:44px}
+  .lam.pres .lam-tiempo.metro .lam-tcab>div{min-width:0}
+  .lam.pres .lam-tiempo.metro .lam-tcab .lm-cab{grid-column:1 / -1;width:100%;margin:0}
+  .lam.pres .lam-tiempo.metro .lam-tcab .lm-cab:has(.lam-seg.igual){display:none}
+  .lam.pres .lam-tiempo.metro .lam-tcab .lm-cab .lam-seg{margin:0;overflow-wrap:normal;text-wrap:pretty;font-size:.875rem;line-height:1.45}
+  .lam.pres .lam-tiempo.metro .lam-tcab .lm-escala{grid-column:2;justify-self:start;min-height:44px;margin:0;padding:0;font-size:.875rem}
+}
 /* El tramo de la parte elegida: un borde de oro alrededor de la línea, de estación a estación. */
 .lm-tramo{position:absolute;top:-5px;height:calc(var(--lm-h) + 10px);box-sizing:border-box;border:2px solid var(--lam-oro,#B98A35);border-radius:999px;opacity:0;transition:opacity .3s ease;pointer-events:none}
 .lm-tramo.ve{opacity:1}
@@ -7112,7 +7125,7 @@ canvas.h-reja{width:100%;display:block;margin:6px 0 10px}
 <div id="lam" class="lam" hidden role="dialog" aria-label="Estudio interactivo"></div>
 <div id="cmpSala" class="cmp-sala" hidden role="dialog" aria-modal="true"></div>
 <script>
-const VERSION_APP = '7ee6cfc67b49';
+const VERSION_APP = 'e52ec35836df';
 
 /* Las fichas de fábrica (fuente/campamentos.js) y los ids que aporta cada
    tema. ACTIVIDADES, CATS, CAPS y MODULOS se derivan al abrir: ver el
@@ -100642,7 +100655,7 @@ function lamQuien(y){
   const on=[],suave=[];
   const fu=lamFuturo(y);
   if(y>LAM_HOY)return {on:fu&&fu.id?[fu.id]:[],suave,tx:fu?fu.t+' · '+fu.s:'Lo que viene',fut:fu};
-  for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&y<p.a)on.push(id);}
+  for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&(y<p.a||(p.a===LAM_HOY&&y===LAM_HOY)))on.push(id);}
   const [hd,hs]=LAM().herida||['dedos','barro'];
   if(y>=1798&&on.includes(hd))suave.push(hs);
   /* Primero la fase de la pista; después lo que sigue
@@ -101396,18 +101409,18 @@ function lamLibro(q){
    como HTML. Sin nombre, «tu nombre».
    v230 (Camilo): después, dos nombres de pila de otras personas de la app, al azar. Los da el
    servidor (/nombres) solo a quien entró, y solo nombres de pila; sin sesión, solo el propio. */
-const lamNombreLibro=()=>String((typeof S!=='undefined'&&S&&S.nombre)||'').trim().split(/\s+/)[0].slice(0,24);
+const lamNombreLibro=()=>String((typeof S!=='undefined'&&S&&S.nombre)||(typeof OPC_APP!=='undefined'&&OPC_APP.nombre)||'').trim().split(/\s+/)[0].slice(0,24);
 let lamOtrosNombres=null;
 function lamLibroNombre(s){
   const p=s&&s.querySelector('.lb-nombre');if(!p)return;
-  const n=lamNombreLibro(),b=p.querySelector('b'),o=p.querySelector('.lb-otros');b.textContent=n||'tu nombre';p.classList.toggle('vacio',!n);
+  const n=lamNombreLibro(),b=p.querySelector('b'),o=p.querySelector('.lb-otros');b.textContent=n||'tu nombre';b.style.setProperty('--lb-letras',Math.max(7,b.textContent.length));p.classList.toggle('vacio',!n);
   if(lamOtrosNombres===null){lamOtrosNombres=[];
     srvFetch('/nombres').then(d=>{lamOtrosNombres=(d&&Array.isArray(d.nombres)?d.nombres:[]).filter(x=>typeof x==='string'&&x.length<25);
       if(p.isConnected)lamLibroNombre(s);}).catch(()=>{});}
   if(!o)return;
   const mio=n.toLocaleLowerCase('es'),otros=lamOtrosNombres.filter(x=>x.toLocaleLowerCase('es')!==mio);
   const dos=[];for(const x of otros.slice().sort(()=>Math.random()-.5)){if(dos.length===2)break;dos.push(x);}
-  o.textContent='';dos.forEach(x=>{const e=document.createElement('span');e.textContent=x;o.appendChild(e);});
+  o.textContent='';dos.forEach(x=>{const e=document.createElement('span');e.textContent=x;e.style.setProperty('--lb-letras',Math.max(7,x.length));o.appendChild(e);});
 }
 /* ── v222: DANIEL 8, LO QUE SE MUEVE (LAMINAS.d8.mov) ──
    Camilo (14-oct): «lo mismo de Daniel 2 y 7: premium, cinematográfico, interactivo».

@@ -1379,7 +1379,7 @@ function lamQuien(y){
   const on=[],suave=[];
   const fu=lamFuturo(y);
   if(y>LAM_HOY)return {on:fu&&fu.id?[fu.id]:[],suave,tx:fu?fu.t+' · '+fu.s:'Lo que viene',fut:fu};
-  for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&y<p.a)on.push(id);}
+  for(const id of LAM().tiempo){const p=lamParte(id);if(y>=p.de&&(y<p.a||(p.a===LAM_HOY&&y===LAM_HOY)))on.push(id);}
   const [hd,hs]=LAM().herida||['dedos','barro'];
   if(y>=1798&&on.includes(hd))suave.push(hs);
   /* Primero la fase de la pista; después lo que sigue
@@ -2133,18 +2133,18 @@ function lamLibro(q){
    como HTML. Sin nombre, «tu nombre».
    v230 (Camilo): después, dos nombres de pila de otras personas de la app, al azar. Los da el
    servidor (/nombres) solo a quien entró, y solo nombres de pila; sin sesión, solo el propio. */
-const lamNombreLibro=()=>String((typeof S!=='undefined'&&S&&S.nombre)||'').trim().split(/\s+/)[0].slice(0,24);
+const lamNombreLibro=()=>String((typeof S!=='undefined'&&S&&S.nombre)||(typeof OPC_APP!=='undefined'&&OPC_APP.nombre)||'').trim().split(/\s+/)[0].slice(0,24);
 let lamOtrosNombres=null;
 function lamLibroNombre(s){
   const p=s&&s.querySelector('.lb-nombre');if(!p)return;
-  const n=lamNombreLibro(),b=p.querySelector('b'),o=p.querySelector('.lb-otros');b.textContent=n||'tu nombre';p.classList.toggle('vacio',!n);
+  const n=lamNombreLibro(),b=p.querySelector('b'),o=p.querySelector('.lb-otros');b.textContent=n||'tu nombre';b.style.setProperty('--lb-letras',Math.max(7,b.textContent.length));p.classList.toggle('vacio',!n);
   if(lamOtrosNombres===null){lamOtrosNombres=[];
     srvFetch('/nombres').then(d=>{lamOtrosNombres=(d&&Array.isArray(d.nombres)?d.nombres:[]).filter(x=>typeof x==='string'&&x.length<25);
       if(p.isConnected)lamLibroNombre(s);}).catch(()=>{});}
   if(!o)return;
   const mio=n.toLocaleLowerCase('es'),otros=lamOtrosNombres.filter(x=>x.toLocaleLowerCase('es')!==mio);
   const dos=[];for(const x of otros.slice().sort(()=>Math.random()-.5)){if(dos.length===2)break;dos.push(x);}
-  o.textContent='';dos.forEach(x=>{const e=document.createElement('span');e.textContent=x;o.appendChild(e);});
+  o.textContent='';dos.forEach(x=>{const e=document.createElement('span');e.textContent=x;e.style.setProperty('--lb-letras',Math.max(7,x.length));o.appendChild(e);});
 }
 /* ── v222: DANIEL 8, LO QUE SE MUEVE (LAMINAS.d8.mov) ──
    Camilo (14-oct): «lo mismo de Daniel 2 y 7: premium, cinematográfico, interactivo».
